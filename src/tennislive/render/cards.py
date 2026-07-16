@@ -1,14 +1,13 @@
 """晨报卡片图生成（Pillow）：小红书 3:4 竖版（1080x1440）.
 
-固定 5 卡结构（内容不足时自动省略对应卡片）：
-  1. 封面        —— 品牌 + 日期 + 今日焦点
-  2. 昨夜焦点    —— 评分最高的 3 场赛果（rating.py 规则）
-  3. 中国军团    —— 中国球员昨日赛果 + 今日出场
-  4. 今晚看球    —— 推荐 3-5 场 + 熬夜指数
-  5. 冷门/话题   —— 昨夜最大冷门；没有冷门则生成互动竞猜
+视觉体系（小红书审美）：
+- 深绿渐变背景 + 右上装饰弧线，品牌网球荧光黄做强调色
+- 每场比赛一个圆角面板（中国球员场次用荧光黄描边高亮）
+- 栏目头中英混排（大黄字 + 英文小字），日期用 "7.16 · 周四"
+- 内容少时自动垂直居中，不留大面积空白
 
-需要中文字体：按 TENNISLIVE_FONT 环境变量 → 项目 fonts/ 目录 →
-系统 Noto CJK 路径的顺序查找。CI 中 apt 安装 fonts-noto-cjk 即可。
+固定 5 卡结构（内容不足时自动省略对应卡片）：
+  封面 / 昨夜焦点 / 中国军团 / 今晚看球 / 冷门或竞猜（周一附排名卡）
 """
 
 from __future__ import annotations
@@ -22,7 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from ..digest import Digest
 from ..models import Match
-from ..timeutil import fmt_time_beijing
+from ..timeutil import WEEKDAY_ZH, fmt_time_beijing
 from ..zh import player_zh
 from .common import (
     group_by_tournament,
@@ -41,13 +40,17 @@ MARGIN = 64
 BRAND = "网球时差"
 COLUMN = "网球晨报"
 
-# 配色：深绿底 + 网球荧光黄
+# 配色：深绿渐变底 + 网球荧光黄
+BG_TOP = (14, 44, 36)
+BG_BOTTOM = (7, 23, 18)
 BG = (11, 38, 31)
-PANEL = (18, 54, 44)
-PANEL_LINE = (28, 74, 61)
+PANEL = (20, 58, 47)
+PANEL_HI = (26, 70, 56)
+PANEL_LINE = (34, 84, 68)
 ACCENT = (204, 255, 0)
 WHITE = (245, 248, 246)
-GREY = (156, 175, 168)
+GREY = (168, 186, 179)
+SCORE_GREY = (190, 205, 198)
 RED = (255, 107, 87)
 
 _FONT_CANDIDATES = [
@@ -100,11 +103,12 @@ class _Fonts:
         def load(path: str, idx: int, size: int) -> ImageFont.FreeTypeFont:
             return ImageFont.truetype(path, size=size, index=idx)
 
-        self.title = load(bold, b_idx, 76)
+        self.title = load(bold, b_idx, 78)
         self.huge = load(bold, b_idx, 170)
         self.subtitle = load(regular, r_idx, 40)
-        self.section = load(bold, b_idx, 46)
+        self.section = load(bold, b_idx, 48)
         self.label = load(regular, r_idx, 28)
+        self.en = load(bold, b_idx, 24)
         self.main = load(bold, b_idx, 42)
         self.score = load(bold, b_idx, 36)
         self.body = load(regular, r_idx, 34)
@@ -127,37 +131,70 @@ def _strip(s: str) -> str:
     return re.sub(r"\s{2,}", " ", _EMOJI_RE.sub("", s)).strip()
 
 
-def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int) -> None:
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=ACCENT)
+def _wrap_text(draw, text: str, font, max_w: int, max_lines: int = 3) -> list[str]:
+    lines, cur = [], ""
+    for ch in text:
+        if draw.textlength(cur + ch, font=font) > max_w:
+            lines.append(cur)
+            cur = ch
+        else:
+            cur += ch
+    if cur:
+        lines.append(cur)
+    return lines[:max_lines]
+
+
+def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=ACCENT, width_ratio=9) -> None:
+    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=color)
     draw.arc(
         [cx - int(r * 1.7), cy - r, cx - int(r * 0.1), cy + r],
-        start=-60, end=60, fill=BG, width=max(3, r // 9),
+        start=-60, end=60, fill=BG_TOP, width=max(3, r // width_ratio),
     )
     draw.arc(
         [cx + int(r * 0.1), cy - r, cx + int(r * 1.7), cy + r],
-        start=120, end=240, fill=BG, width=max(3, r // 9),
+        start=120, end=240, fill=BG_TOP, width=max(3, r // width_ratio),
     )
 
 
-def _page(fonts: _Fonts, date_label: str, column_title: str, accent=ACCENT):
-    """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
-    img = Image.new("RGB", (W, H), BG)
+def _canvas() -> tuple[Image.Image, ImageDraw.ImageDraw]:
+    """渐变背景 + 右上装饰弧线."""
+    img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
+    for y in range(H):
+        t = y / H
+        c = tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM))
+        draw.line([(0, y), (W, y)], fill=c)
+    # 装饰：右上角大圆弧（比背景略亮的绿，低调纹理感）
+    deco = (22, 62, 50)
+    draw.arc([W - 460, -300, W + 320, 480], start=60, end=250, fill=deco, width=56)
+    draw.arc([W - 320, -220, W + 220, 320], start=60, end=260, fill=deco, width=30)
+    return img, draw
+
+
+def _date_label(d) -> str:
+    return f"{d.month}.{d.day} · {WEEKDAY_ZH[d.weekday()]}"
+
+
+def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent=ACCENT):
+    """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
+    img, draw = _canvas()
     _draw_ball(draw, MARGIN + 26, MARGIN + 30, 24)
     draw.text((MARGIN + 70, MARGIN), BRAND, font=fonts.section, fill=WHITE)
     tl = draw.textlength(date_label, font=fonts.small)
-    draw.text((W - MARGIN - tl, MARGIN + 14), date_label, font=fonts.small, fill=GREY)
-    y = MARGIN + 92
+    draw.text((W - MARGIN - tl, MARGIN + 16), date_label, font=fonts.small, fill=GREY)
+    y = MARGIN + 96
+    draw.text((MARGIN, y), en_sub, font=fonts.en, fill=GREY)
+    y += 40
     draw.text((MARGIN, y), column_title, font=fonts.title, fill=accent)
-    y += 108
+    y += 112
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
-    return img, draw, y + 36
+    return img, draw, y + 40
 
 
 def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, text: str = "") -> None:
     line = text or "数据来自公开比分接口 · 时间为北京时间"
     tl = draw.textlength(line, font=fonts.small)
-    draw.text(((W - tl) / 2, H - MARGIN - 20), line, font=fonts.small, fill=GREY)
+    draw.text(((W - tl) / 2, H - MARGIN - 20), line, font=fonts.small, fill=(110, 128, 120))
 
 
 def _match_label(m: Match) -> str:
@@ -166,7 +203,10 @@ def _match_label(m: Match) -> str:
     return f"{g.name_zh}{('·' + r) if r else ''}"
 
 
-def _block(
+_PAD = 26  # 面板内边距
+
+
+def _panel_block(
     draw: ImageDraw.ImageDraw,
     fonts: _Fonts,
     y: int,
@@ -175,32 +215,58 @@ def _block(
     sub: str = "",
     accent: bool = False,
     tag: str = "",
+    tag_color=RED,
 ) -> int:
-    """一场比赛的内容块：小标签 + 主行 + 副行；返回新的 y."""
-    content_w = W - 2 * MARGIN
-    x = MARGIN + 20
-    top = y
-    # 标签行
-    draw.text((x, y), _fit(draw, label, fonts.label, content_w - 220), font=fonts.label, fill=GREY)
+    """一场比赛的圆角面板：小标签 + 主行 + 副行；返回新的 y."""
+    inner_h = 44 + 58 + (50 if sub else 0) + 2 * _PAD - 20
+    x0, x1 = MARGIN, W - MARGIN
+    fill = PANEL_HI if accent else PANEL
+    draw.rounded_rectangle([x0, y, x1, y + inner_h], radius=22, fill=fill)
+    if accent:
+        draw.rounded_rectangle(
+            [x0, y, x1, y + inner_h], radius=22, outline=ACCENT, width=3
+        )
+
+    tx = x0 + _PAD
+    ty = y + _PAD - 6
+    max_label_w = x1 - tx - _PAD - (draw.textlength(tag, font=fonts.label) + 70 if tag else 0)
+    draw.text(
+        (tx, ty), _fit(draw, label, fonts.label, int(max_label_w)),
+        font=fonts.label, fill=GREY,
+    )
     if tag:
         tw = draw.textlength(tag, font=fonts.label)
-        draw.rounded_rectangle(
-            [W - MARGIN - tw - 36, y - 4, W - MARGIN - 8, y + 36],
-            radius=8, fill=RED if tag == "冷门" else PANEL_LINE,
-        )
-        draw.text((W - MARGIN - tw - 22, y), tag, font=fonts.label, fill=WHITE)
-    y += 44
-    # 主行
+        bx1 = x1 - _PAD
+        bx0 = bx1 - tw - 32
+        draw.rounded_rectangle([bx0, ty - 4, bx1, ty + 38], radius=10, fill=tag_color)
+        draw.text((bx0 + 16, ty), tag, font=fonts.label, fill=(255, 255, 255))
+    ty += 46
     color = ACCENT if accent else WHITE
-    draw.text((x, y), _fit(draw, _strip(main), fonts.main, content_w - 40), font=fonts.main, fill=color)
-    y += 58
-    # 副行（比分/看点）
+    draw.text(
+        (tx, ty), _fit(draw, _strip(main), fonts.main, x1 - tx - _PAD),
+        font=fonts.main, fill=color,
+    )
+    ty += 60
     if sub:
-        draw.text((x, y), _fit(draw, _strip(sub), fonts.score, content_w - 40), font=fonts.score, fill=GREY)
-        y += 52
-    # 左侧竖线装饰
-    draw.rectangle([MARGIN, top + 4, MARGIN + 6, y - 10], fill=ACCENT if accent else PANEL_LINE)
-    return y + 34
+        draw.text(
+            (tx, ty), _fit(draw, _strip(sub), fonts.score, x1 - tx - _PAD),
+            font=fonts.score, fill=SCORE_GREY,
+        )
+    return y + inner_h + 24
+
+
+_BLOCK_H = 44 + 58 + 50 + 2 * _PAD - 20 + 24   # 带副行的面板总高
+_BLOCK_H_NOSUB = _BLOCK_H - 50
+
+
+def _spread(n_blocks: int, block_h: int = _BLOCK_H) -> tuple[int, int]:
+    """按块数计算 (起始下移, 块间额外间距)，让少量内容垂直居中更饱满."""
+    available = H - 350 - MARGIN - 60
+    rest = available - n_blocks * block_h
+    if rest <= 0:
+        return 0, 0
+    extra = min(64, rest // (n_blocks + 1))
+    return extra, extra
 
 
 def _split_result(m: Match) -> tuple[str, str]:
@@ -212,65 +278,62 @@ def _split_result(m: Match) -> tuple[str, str]:
     return line, ""
 
 
+# ---------- 各卡片 ----------
+
 def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
-    img = Image.new("RGB", (W, H), BG)
-    draw = ImageDraw.Draw(img)
-    _draw_ball(draw, W - 180, 240, 96)
+    img, draw = _canvas()
+    _draw_ball(draw, W - 190, 250, 100)
     d = digest.today
-    draw.text((MARGIN, 180), BRAND, font=fonts.subtitle, fill=GREY)
-    draw.text((MARGIN, 250), f"{d.month}.{d.day}", font=fonts.huge, fill=WHITE)
-    draw.text((MARGIN, 460), COLUMN, font=fonts.title, fill=ACCENT)
+    draw.text((MARGIN, 170), f"{BRAND} · TENNIS JETLAG", font=fonts.en, fill=GREY)
+    draw.text((MARGIN, 220), f"{d.month}.{d.day}", font=fonts.huge, fill=WHITE)
+    wd = WEEKDAY_ZH[d.weekday()]
+    tl = draw.textlength(f"{d.month}.{d.day}", font=fonts.huge)
+    draw.text((MARGIN + tl + 24, 340), wd, font=fonts.subtitle, fill=GREY)
+    draw.text((MARGIN, 440), COLUMN, font=fonts.title, fill=ACCENT)
     draw.text(
-        (MARGIN, 570), "替你熬夜看网球 · 昨夜赛果，今晨看懂", font=fonts.subtitle, fill=GREY
+        (MARGIN, 556), "替你熬夜看网球 · 昨夜赛果，今晨看懂",
+        font=fonts.subtitle, fill=GREY,
     )
 
-    y = 700
+    y = 690
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
-    y += 48
-    draw.text((MARGIN, y), "今日焦点", font=fonts.section, fill=WHITE)
-    y += 82
-    draw.text(
-        (MARGIN, y),
-        _fit(draw, _strip(headline), fonts.section, W - 2 * MARGIN),
-        font=fonts.section,
-        fill=ACCENT,
-    )
-    y += 110
-    stats = []
+    y += 44
+    draw.text((MARGIN, y), "今日焦点", font=fonts.label, fill=GREY)
+    y += 52
+    for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN, 2):
+        draw.text((MARGIN, y), chunk, font=fonts.section, fill=ACCENT)
+        y += 72
+    y += 40
+
+    # 数据 chips
+    chips = []
     if digest.results:
-        stats.append(f"昨夜赛果 {len(digest.results)} 场")
+        chips.append(f"昨夜赛果 {len(digest.results)} 场")
     if digest.schedule:
-        stats.append(f"今日赛程 {len(digest.schedule)} 场")
-    if stats:
-        draw.text((MARGIN, y), " · ".join(stats), font=fonts.subtitle, fill=WHITE)
+        chips.append(f"今日赛程 {len(digest.schedule)} 场")
+    cx = MARGIN
+    for chip in chips:
+        tw = draw.textlength(chip, font=fonts.body)
+        draw.rounded_rectangle([cx, y, cx + tw + 48, y + 62], radius=31, fill=PANEL)
+        draw.text((cx + 24, y + 11), chip, font=fonts.body, fill=WHITE)
+        cx += tw + 48 + 20
     _footer(draw, fonts)
     return img
 
 
-def _spread(n_blocks: int, est_block: int = 190) -> tuple[int, int]:
-    """按块数计算 (起始下移, 块间额外间距)，让少量内容垂直居中更饱满."""
-    available = H - 330 - MARGIN - 60  # 页眉下方到页脚上方
-    rest = available - n_blocks * est_block
-    if rest <= 0:
-        return 0, 0
-    extra = min(70, rest // (n_blocks + 1))
-    return extra, extra
-
-
 def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "昨夜焦点")
+    img, draw, y = _page(fonts, date_label, "昨夜焦点", "OVERNIGHT RESULTS")
     lead, gap = _spread(len(matches))
     y += lead
     for m in matches:
         main, score = _split_result(m)
-        tag = "冷门" if find_upset([m]) else ""
-        y = _block(
+        y = _panel_block(
             draw, fonts, y,
             label=_match_label(m),
             main=main,
             sub=score,
             accent=is_chinese_involved(m),
-            tag=tag,
+            tag="冷门" if find_upset([m]) else "",
         ) + gap
     _footer(draw, fonts)
     return img
@@ -279,69 +342,104 @@ def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.I
 def _card_china(
     fonts: _Fonts, date_label: str, results: list[Match], today: list[Match]
 ) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "中国军团")
+    img, draw, y = _page(fonts, date_label, "中国军团", "TEAM CHINA")
     results = results[:3]
-    today = today[: max(0, 5 - len(results))]  # 总块数 ≤5，避免顶到页脚
+    today = today[: max(0, 5 - len(results))]  # 总块数 ≤5
     n = len(results) + len(today)
-    lead, gap = _spread(n, est_block=190)
+    lead, gap = _spread(n, block_h=_BLOCK_H - 20)
     y += lead
     if results:
-        draw.text((MARGIN, y), "— 昨日战报 —", font=fonts.label, fill=GREY)
+        draw.text((MARGIN + 4, y), "— 昨日战报 —", font=fonts.label, fill=GREY)
         y += 52
         for m in results:
             main, score = _split_result(m)
-            y = _block(draw, fonts, y, _match_label(m), main, score, accent=True) + gap
+            y = _panel_block(draw, fonts, y, _match_label(m), main, score, accent=True) + gap
     if today:
-        draw.text((MARGIN, y), "— 今日出场（北京时间）—", font=fonts.label, fill=GREY)
+        draw.text((MARGIN + 4, y), "— 今日出场（北京时间）—", font=fonts.label, fill=GREY)
         y += 52
         for m in today:
             main = (
                 f"{fmt_time_beijing(m.start_utc)} "
                 f"{side_display(m.home, short_en=True)} vs {side_display(m.away, short_en=True)}"
             )
-            y = _block(draw, fonts, y, _match_label(m), main, accent=True) + gap
+            y = _panel_block(draw, fonts, y, _match_label(m), main, accent=True) + gap
     _footer(draw, fonts)
     return img
 
 
 def _card_tonight(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "今晚看球")
-    lead, gap = _spread(len(matches), est_block=150)
+    img, draw, y = _page(fonts, date_label, "今晚看球", "TONIGHT'S PICKS")
+    lead, gap = _spread(len(matches), block_h=_BLOCK_H_NOSUB)
     y += lead
     for m in matches:
-        stars = "★" * stay_up_stars(m) + "☆" * (5 - stay_up_stars(m))
-        main = (
-            f"{fmt_time_beijing(m.start_utc)}  "
-            f"{side_display(m.home, short_en=True)} vs {side_display(m.away, short_en=True)}"
-        )
-        y = _block(
+        stars = stay_up_stars(m)
+        y = _panel_block(
             draw, fonts, y,
-            label=f"{_match_label(m)}　熬夜指数 {stars}",
-            main=main,
+            label=f"{_match_label(m)} · {fmt_time_beijing(m.start_utc)}",
+            main=(
+                f"{side_display(m.home, short_en=True)} vs "
+                f"{side_display(m.away, short_en=True)}"
+            ),
             accent=is_chinese_involved(m),
+            tag="★" * stars,
+            tag_color=(38, 92, 74) if stars < 4 else (176, 122, 20),
         ) + gap
     _footer(draw, fonts)
     return img
 
 
-def _card_upset(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "昨夜冷门", accent=RED)
-    main, score = _split_result(m)
-    winners = m.winner_players() or []
-    losers = m.loser_players() or []
-    y += 10
-    y = _block(draw, fonts, y, _match_label(m), main, score, tag="冷门")
-    y += 20
-    w_name = player_zh(winners[0].name) if winners else "胜者"
-    l_name = player_zh(losers[0].name) if losers else "对手"
-    lines = [
-        f"{w_name} 掀翻 {l_name}",
-        "你看好这匹黑马能走多远？",
-        "评论区聊聊 👇",
-    ]
+def _hero_cta(draw, fonts, y: int, lines: list[str], cta: str) -> int:
+    """互动区：大字问题 + 居中仿按钮."""
     for text in lines:
-        draw.text((MARGIN + 20, y), _strip(text), font=fonts.section, fill=WHITE)
-        y += 84
+        for chunk in _wrap_text(draw, _strip(text), fonts.section, W - 2 * MARGIN - 20, 2):
+            draw.text((MARGIN + 10, y), chunk, font=fonts.section, fill=WHITE)
+            y += 74
+        y += 8
+    y += 30
+    tw = draw.textlength(cta, font=fonts.main)
+    bx0 = (W - tw - 96) / 2
+    draw.rounded_rectangle([bx0, y, bx0 + tw + 96, y + 92], radius=46, fill=ACCENT)
+    draw.text((bx0 + 48, y + 20), cta, font=fonts.main, fill=BG_BOTTOM)
+    return y + 92
+
+
+def _card_upset(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
+    img, draw, y = _page(fonts, date_label, "昨夜冷门", "UPSET ALERT", accent=RED)
+    y += 60
+    main, score = _split_result(m)
+    y = _panel_block(draw, fonts, y, _match_label(m), main, score, tag="冷门")
+    y += 70
+    winners = m.winner_players() or []
+    w_name = player_zh(winners[0].name) if winners else "黑马"
+    if w_name.isascii():
+        w_name = w_name.split()[-1]  # 未翻译的英文名只留姓氏
+    _hero_cta(
+        draw, fonts, y,
+        [f"{w_name}爆了个大冷", "你看好这匹黑马能走多远？"],
+        "评论区聊聊",
+    )
+    _footer(draw, fonts)
+    return img
+
+
+def _card_topic(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
+    img, draw, y = _page(fonts, date_label, "今日竞猜", "MATCH POLL")
+    y += 60
+    y = _panel_block(
+        draw, fonts, y,
+        label=f"{_match_label(m)} · {fmt_time_beijing(m.start_utc)} 开打",
+        main=(
+            f"{side_display(m.home, short_en=True, with_flag=False)} vs "
+            f"{side_display(m.away, short_en=True, with_flag=False)}"
+        ),
+        accent=True,
+    )
+    y += 70
+    _hero_cta(
+        draw, fonts, y,
+        ["你猜谁赢？", "猜中的今晚一起庆祝"],
+        "评论区扣 1 或 2",
+    )
     _footer(draw, fonts)
     return img
 
@@ -350,7 +448,7 @@ def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
     """周一排名卡：两巡回赛 Top5 + 中国球员动态."""
     from .common import CHINESE_PLAYER_NAMES
 
-    img, draw, y = _page(fonts, date_label, "本周排名")
+    img, draw, y = _page(fonts, date_label, "本周排名", "WEEKLY RANKINGS")
 
     def arrow(e) -> tuple[str, tuple]:
         if e.move > 0:
@@ -360,20 +458,26 @@ def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
         return "—", GREY
 
     def section(title: str, entries, y: int) -> int:
-        draw.text((MARGIN, y), title, font=fonts.label, fill=GREY)
+        draw.text((MARGIN + 4, y), title, font=fonts.label, fill=GREY)
         y += 46
+        x0, x1 = MARGIN, W - MARGIN
+        panel_h = len(entries) * 56 + 24
+        draw.rounded_rectangle([x0, y, x1, y + panel_h], radius=18, fill=PANEL)
+        ry = y + 12
         for e in entries:
             name = player_zh(e.name)
             mark, color = arrow(e)
-            draw.text((MARGIN + 20, y), f"{e.rank}", font=fonts.score, fill=ACCENT)
-            draw.text((MARGIN + 100, y), _fit(draw, name, fonts.score, 520), font=fonts.score, fill=WHITE)
+            draw.text((x0 + 28, ry), f"{e.rank}", font=fonts.score, fill=ACCENT)
+            draw.text(
+                (x0 + 116, ry), _fit(draw, name, fonts.score, 470),
+                font=fonts.score, fill=WHITE,
+            )
             if e.points:
-                pts = f"{int(e.points)}分"
-                draw.text((MARGIN + 640, y), pts, font=fonts.label, fill=GREY)
+                draw.text((x0 + 620, ry + 6), f"{int(e.points)}分", font=fonts.label, fill=GREY)
             tw = draw.textlength(mark, font=fonts.score)
-            draw.text((W - MARGIN - tw - 20, y), mark, font=fonts.score, fill=color)
-            y += 56
-        return y + 26
+            draw.text((x1 - tw - 28, ry), mark, font=fonts.score, fill=color)
+            ry += 56
+        return y + panel_h + 30
 
     y = section("— ATP Top5 —", rankings.atp[:5], y)
     y = section("— WTA Top5 —", rankings.wta[:5], y)
@@ -383,30 +487,9 @@ def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
             if player_zh(e.name) in CHINESE_PLAYER_NAMES
         ),
         key=lambda e: e.rank,
-    )[:6]
+    )[:5]
     if cn:
         y = section("— 中国球员 —", cn, y)
-    _footer(draw, fonts)
-    return img
-
-
-def _card_topic(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "今日竞猜")
-    y += 20
-    main = (
-        f"{side_display(m.home, short_en=True, with_flag=False)} vs "
-        f"{side_display(m.away, short_en=True, with_flag=False)}"
-    )
-    y = _block(
-        draw, fonts, y,
-        label=f"{_match_label(m)} · {fmt_time_beijing(m.start_utc)} 开打",
-        main=main,
-        accent=True,
-    )
-    y += 30
-    for text in ("你猜谁赢？", "评论区扣 1 或 2", "猜中的今晚一起庆祝 🎉"):
-        draw.text((MARGIN + 20, y), _strip(text), font=fonts.section, fill=WHITE)
-        y += 84
     _footer(draw, fonts)
     return img
 
@@ -416,10 +499,10 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
     outpath = Path(outpath)
     outpath.parent.mkdir(parents=True, exist_ok=True)
     fonts = _Fonts()
-    img, draw, y = _page(fonts, "赛后速报", "刚刚结束", accent=RED)
-    y += 60
+    img, draw, y = _page(fonts, "刚刚结束", "赛后速报", "FLASH REPORT", accent=RED)
+    y += 80
     main, score = _split_result(m)
-    y = _block(
+    y = _panel_block(
         draw, fonts, y,
         label=_match_label(m),
         main=main,
@@ -427,30 +510,17 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
         accent=is_chinese_involved(m),
         tag="速报",
     )
+    y += 70
+    for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN - 20, 3):
+        draw.text((MARGIN + 10, y), chunk, font=fonts.section, fill=ACCENT)
+        y += 74
     y += 40
-    for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN - 20):
-        draw.text((MARGIN + 20, y), chunk, font=fonts.section, fill=ACCENT)
-        y += 76
-    y += 30
     draw.text(
-        (MARGIN + 20, y), "完整战报见明晨《网球晨报》", font=fonts.body, fill=GREY
+        (MARGIN + 10, y), "完整战报见明晨《网球晨报》", font=fonts.body, fill=GREY
     )
     _footer(draw, fonts)
     img.save(outpath, "PNG")
     return outpath
-
-
-def _wrap_text(draw, text: str, font, max_w: int) -> list[str]:
-    lines, cur = [], ""
-    for ch in text:
-        if draw.textlength(cur + ch, font=font) > max_w:
-            lines.append(cur)
-            cur = ch
-        else:
-            cur += ch
-    if cur:
-        lines.append(cur)
-    return lines[:3]
 
 
 def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
@@ -463,8 +533,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         old.unlink()
 
     fonts = _Fonts()
-    d = digest.today
-    date_label = f"{d.year}-{d.month:02d}-{d.day:02d}"
+    date_label = _date_label(digest.today)
 
     images: list[tuple[str, Image.Image]] = []
     headline = pick_headline_auto(digest)
