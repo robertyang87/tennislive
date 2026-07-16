@@ -74,7 +74,7 @@ _THEMES = {
         WHITE=(30, 42, 37),          # 主文字改为深色
         GREY=(122, 134, 126),
         SCORE_GREY=(96, 110, 103),
-        RED=(233, 84, 62),
+        RED=(224, 112, 92),
         FOOT=(160, 168, 160),
         STAR_PILL=(120, 158, 60),
         STAR_PILL_HOT=(214, 154, 26),
@@ -140,16 +140,16 @@ class _Fonts:
         def load(path: str, idx: int, size: int) -> ImageFont.FreeTypeFont:
             return ImageFont.truetype(path, size=size, index=idx)
 
-        self.title = load(bold, b_idx, 78)
-        self.huge = load(bold, b_idx, 170)
-        self.subtitle = load(regular, r_idx, 40)
-        self.section = load(bold, b_idx, 48)
-        self.label = load(regular, r_idx, 28)
-        self.en = load(bold, b_idx, 24)
-        self.main = load(bold, b_idx, 42)
-        self.score = load(bold, b_idx, 36)
-        self.body = load(regular, r_idx, 34)
-        self.small = load(regular, r_idx, 26)
+        self.title = load(bold, b_idx, 84)
+        self.huge = load(bold, b_idx, 176)
+        self.subtitle = load(regular, r_idx, 42)
+        self.section = load(bold, b_idx, 52)
+        self.label = load(regular, r_idx, 31)
+        self.en = load(bold, b_idx, 26)
+        self.main = load(bold, b_idx, 46)
+        self.score = load(bold, b_idx, 38)
+        self.body = load(regular, r_idx, 36)
+        self.small = load(regular, r_idx, 27)
 
 
 def _fit(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_w: int) -> str:
@@ -221,17 +221,19 @@ def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent
     draw.text((W - MARGIN - tl, MARGIN + 16), date_label, font=fonts.small, fill=GREY)
     y = MARGIN + 96
     draw.text((MARGIN, y), en_sub, font=fonts.en, fill=GREY)
-    y += 40
+    y += 42
     draw.text((MARGIN, y), column_title, font=fonts.title, fill=accent or ACCENT)
-    y += 112
+    y += 120
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
     return img, draw, y + 40
 
 
 def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, text: str = "") -> None:
-    line = text or "数据来自公开比分接口 · 时间为北京时间"
-    tl = draw.textlength(line, font=fonts.small)
-    draw.text(((W - tl) / 2, H - MARGIN - 20), line, font=fonts.small, fill=FOOT)
+    line = text or "数据来自公开比分接口 · 北京时间"
+    draw.text((MARGIN, H - MARGIN - 20), line, font=fonts.small, fill=FOOT)
+    mark = f"@{BRAND}"
+    tw = draw.textlength(mark, font=fonts.small)
+    draw.text((W - MARGIN - tw, H - MARGIN - 20), mark, font=fonts.small, fill=GREY)
 
 
 def _match_label(m: Match) -> str:
@@ -240,7 +242,7 @@ def _match_label(m: Match) -> str:
     return f"{g.name_zh}{('·' + r) if r else ''}"
 
 
-_PAD = 26  # 面板内边距
+_PAD = 28  # 面板内边距
 
 
 def _panel_block(
@@ -255,7 +257,7 @@ def _panel_block(
     tag_color=RED,
 ) -> int:
     """一场比赛的圆角面板：小标签 + 主行 + 副行；返回新的 y."""
-    inner_h = 44 + 58 + (50 if sub else 0) + 2 * _PAD - 20
+    inner_h = 48 + 64 + (54 if sub else 0) + 2 * _PAD - 20
     x0, x1 = MARGIN, W - MARGIN
     fill = PANEL_HI if accent else PANEL
     draw.rounded_rectangle([x0, y, x1, y + inner_h], radius=22, fill=fill)
@@ -277,13 +279,13 @@ def _panel_block(
         bx0 = bx1 - tw - 32
         draw.rounded_rectangle([bx0, ty - 4, bx1, ty + 38], radius=10, fill=tag_color)
         draw.text((bx0 + 16, ty), tag, font=fonts.label, fill=(255, 255, 255))
-    ty += 46
+    ty += 50
     color = ACCENT if accent else WHITE
     draw.text(
         (tx, ty), _fit(draw, _strip(main), fonts.main, x1 - tx - _PAD),
         font=fonts.main, fill=color,
     )
-    ty += 60
+    ty += 66
     if sub:
         draw.text(
             (tx, ty), _fit(draw, _strip(sub), fonts.score, x1 - tx - _PAD),
@@ -292,8 +294,8 @@ def _panel_block(
     return y + inner_h + 24
 
 
-_BLOCK_H = 44 + 58 + 50 + 2 * _PAD - 20 + 24   # 带副行的面板总高
-_BLOCK_H_NOSUB = _BLOCK_H - 50
+_BLOCK_H = 48 + 64 + 54 + 2 * _PAD - 20 + 24   # 带副行的面板总高
+_BLOCK_H_NOSUB = _BLOCK_H - 54
 
 
 def _spread(n_blocks: int, block_h: int = _BLOCK_H) -> tuple[int, int]:
@@ -328,13 +330,21 @@ def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
     draw.text((MARGIN + tl + 24, 340), wd, font=fonts.subtitle, fill=GREY)
     draw.text((MARGIN, 440), COLUMN, font=fonts.title, fill=ACCENT)
     draw.text(
-        (MARGIN, 556), "替你熬夜看网球 · 昨夜赛果，今晨看懂",
+        (MARGIN, 560), "替你熬夜看网球 · 昨夜赛果，今晨看懂",
         font=fonts.subtitle, fill=GREY,
     )
+    # 吸睛标签（card-xiaohongshu 规范：封面带 engaging tag）
+    tag = "每天 7:30 更新"
+    tw = draw.textlength(tag, font=fonts.label)
+    draw.rounded_rectangle(
+        [MARGIN, 626, MARGIN + tw + 44, 626 + 56], radius=28,
+        outline=OUTLINE, width=3,
+    )
+    draw.text((MARGIN + 22, 626 + 11), tag, font=fonts.label, fill=ACCENT)
 
-    y = 690
+    y = 726
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
-    y += 44
+    y += 42
     draw.text((MARGIN, y), "今日焦点", font=fonts.label, fill=GREY)
     y += 52
     for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN, 2):
@@ -481,6 +491,48 @@ def _card_topic(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
     return img
 
 
+def _card_end(fonts: _Fonts, date_label: str) -> Image.Image:
+    """收尾 CTA 卡（card-xiaohongshu 规范：总结 + 关注/收藏/评论引导）."""
+    img, draw = _canvas()
+    _draw_ball(draw, W // 2, 360, 120)
+    y = 560
+    for text, font, color in (
+        ("今天的网球时差", fonts.title, WHITE),
+        ("就倒到这里", fonts.title, WHITE),
+    ):
+        tw = draw.textlength(text, font=font)
+        draw.text(((W - tw) / 2, y), text, font=font, fill=color)
+        y += 110
+    y += 16
+    sub = "明早 7:30 · 准时更新"
+    tw = draw.textlength(sub, font=fonts.subtitle)
+    draw.text(((W - tw) / 2, y), sub, font=fonts.subtitle, fill=GREY)
+    y += 110
+
+    # 三个引导药丸
+    pills = ["点赞", "收藏", "评论"]
+    pill_w, pill_h, gap = 200, 76, 28
+    total = len(pills) * pill_w + (len(pills) - 1) * gap
+    px = (W - total) / 2
+    for label in pills:
+        draw.rounded_rectangle(
+            [px, y, px + pill_w, y + pill_h], radius=38,
+            outline=OUTLINE, width=3,
+        )
+        tw = draw.textlength(label, font=fonts.body)
+        draw.text((px + (pill_w - tw) / 2, y + 16), label, font=fonts.body, fill=WHITE)
+        px += pill_w + gap
+    y += pill_h + 70
+
+    cta = f"关注 @{BRAND}"
+    tw = draw.textlength(cta, font=fonts.main)
+    bx0 = (W - tw - 120) / 2
+    draw.rounded_rectangle([bx0, y, bx0 + tw + 120, y + 100], radius=50, fill=BALL)
+    draw.text((bx0 + 60, y + 24), cta, font=fonts.main, fill=BTN_TEXT)
+    _footer(draw, fonts)
+    return img
+
+
 def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
     """周一排名卡：两巡回赛 Top5 + 中国球员动态."""
     from .common import CHINESE_PLAYER_NAMES
@@ -609,6 +661,8 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         images.append(("upset", _card_upset(fonts, date_label, upset)))
     elif tonight:
         images.append(("topic", _card_topic(fonts, date_label, tonight[0])))
+
+    images.append(("end", _card_end(fonts, date_label)))
 
     paths: list[Path] = []
     for i, (kind, img) in enumerate(images):
