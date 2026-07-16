@@ -75,11 +75,11 @@
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
-- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 1-2
+- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 1-3
 
 ### WTA ATV Bancomat Tennis Open
 
-- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 0-0
+- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 0-1
 
 ## 📅 今日赛程（30 场，北京时间）
 
