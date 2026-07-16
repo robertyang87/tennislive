@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import logging
 import os
+import re
+import tempfile
 from pathlib import Path
 
 import requests
@@ -172,6 +174,27 @@ class WeChatPublisher:
         return str(publish_id)
 
 
+def _rehost_external_flags(pub: "WeChatPublisher", html: str) -> str:
+    """把正文里的外链旗帜小图（flagcdn.com）转存为微信图片 URL.
+
+    微信会过滤非微信域名的正文图片；每面旗帜只上传一次。
+    """
+    urls = sorted(set(re.findall(r'https://flagcdn\.com/[^"]+\.png', html)))
+    for url in urls:
+        try:
+            resp = requests.get(url, timeout=15)
+            resp.raise_for_status()
+            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
+                f.write(resp.content)
+                tmp = f.name
+            wx_url = pub.upload_content_image(tmp)
+            html = html.replace(url, wx_url)
+            os.unlink(tmp)
+        except Exception as e:  # 单面旗帜失败不阻塞发文
+            logger.warning("旗帜图转存失败 %s: %s", url, e)
+    return html
+
+
 def publish_article(
     title: str,
     html_content: str,
@@ -187,6 +210,7 @@ def publish_article(
     """
     pub = WeChatPublisher()
     thumb_id = pub.upload_thumb(cover_image)
+    html_content = _rehost_external_flags(pub, html_content)
 
     for img in content_images or []:
         placeholder = f"{{{{IMAGE:{img.name}}}}}"

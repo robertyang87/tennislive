@@ -63,9 +63,24 @@ def round_order(round_name_zh: str | None) -> int:
     return 7
 
 
-def player_display(p: Player, with_flag: bool = True, with_seed: bool = True) -> str:
-    """'🇮🇹 辛纳' 或 '🇮🇹 [1]辛纳'."""
+def _abbrev_en(name: str) -> str:
+    """未翻译的英文全名缩写化：'Federico Agustin Gomez' → 'F.A. Gomez'."""
+    words = name.split()
+    if len(words) < 2:
+        return name
+    return "".join(w[0] + "." for w in words[:-1]) + " " + words[-1]
+
+
+def player_display(
+    p: Player,
+    with_flag: bool = True,
+    with_seed: bool = True,
+    short_en: bool = False,
+) -> str:
+    """'🇮🇹 辛纳' 或 '🇮🇹 [1]辛纳'；short_en=True 时英文名缩写（卡片版面用）."""
     name = player_zh(p.name)
+    if short_en and name == p.name and name.isascii():
+        name = _abbrev_en(name)
     parts = []
     if with_flag:
         flag = country_flag(p.country)
@@ -78,11 +93,19 @@ def player_display(p: Player, with_flag: bool = True, with_seed: bool = True) ->
     return " ".join(parts)
 
 
-def side_display(players: list[Player], with_flag: bool = True, with_seed: bool = True) -> str:
+def side_display(
+    players: list[Player],
+    with_flag: bool = True,
+    with_seed: bool = True,
+    short_en: bool = False,
+) -> str:
     """单打给单人，双打给 'A/B' 组合."""
     if len(players) == 1:
-        return player_display(players[0], with_flag, with_seed)
-    return "/".join(player_display(p, with_flag=with_flag, with_seed=False) for p in players)
+        return player_display(players[0], with_flag, with_seed, short_en=short_en)
+    return "/".join(
+        player_display(p, with_flag=with_flag, with_seed=False, short_en=short_en)
+        for p in players
+    )
 
 
 def status_display(m: Match) -> str:
@@ -101,10 +124,11 @@ def status_display(m: Match) -> str:
     return "完赛"
 
 
-def result_line(m: Match) -> str:
+def result_line(m: Match, short_en: bool = False) -> str:
     """赛果一行：'[1]辛纳 2-0 [5]德约科维奇（6-4 7-6(3)）'，从胜者视角."""
     if m.winner is None:
-        home_s, away_s = side_display(m.home), side_display(m.away)
+        home_s = side_display(m.home, short_en=short_en)
+        away_s = side_display(m.away, short_en=short_en)
         score = m.score_display(from_winner=False)
         return f"{home_s} vs {away_s}" + (f"（{score}）" if score else "")
     w = m.winner_players() or []
@@ -116,7 +140,10 @@ def result_line(m: Match) -> str:
     )
     l_sets = len([s for s in m.sets if s.home != s.away]) - w_sets
     score = m.score_display(from_winner=True)
-    line = f"{side_display(w)} {w_sets}-{l_sets} {side_display(l)}"
+    line = (
+        f"{side_display(w, short_en=short_en)} {w_sets}-{l_sets} "
+        f"{side_display(l, short_en=short_en)}"
+    )
     extras = []
     if score:
         extras.append(score)
