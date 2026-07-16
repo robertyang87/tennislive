@@ -75,16 +75,16 @@
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
-- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 2-5
-- **男单·四分之一决赛** 🇦🇷 布鲁查加 vs 🇦🇷 [7]乌戈·卡拉贝利　当前 0-0
+- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 4-5
+- **男单·四分之一决赛** 🇦🇷 布鲁查加 vs 🇦🇷 [7]乌戈·卡拉贝利　当前 1-1
 
 ### WTA ATV Bancomat Tennis Open
 
-- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 1-4
+- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 1-6
 
 ### WTA 雅典公开赛
 
-- **女单·第二轮** 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　当前 1-0
+- **女单·第二轮** 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　当前 2-0
 
 ## 📅 今日赛程（29 场，北京时间）
 
@@ -96,7 +96,7 @@
 
 - `17:00` 🇵🇾 Adolfo Daniel Vallejo vs 🇮🇹 Stefano Travaglia　·男单·四分之一决赛
 - `18:30` 🇵🇹 [5]博尔热斯 vs 🇮🇹 [2]达尔代里　·男单·四分之一决赛
-- `00:50` 🇳🇱 德容 vs 🇦🇷 [8]巴埃斯　·男单·第二轮
+- `01:05` 🇳🇱 德容 vs 🇦🇷 [8]巴埃斯　·男单·第二轮
 
 ### ATP 瑞士公开赛（ATP 250）
 
@@ -109,7 +109,7 @@
 
 - `18:00` 🇰🇿 [9]普汀塞娃 vs 🇪🇬 谢里夫　·女单·四分之一决赛
 - `19:30` 🇺🇦 [3]Oleksandra Oliynykova vs 🇫🇷 Clara Burel　·女单·四分之一决赛
-- `00:50` 🇭🇺 [5]Panna Udvardy vs 🇵🇱 Katarzyna Kawa　·女单·第二轮
+- `01:10` 🇭🇺 [5]Panna Udvardy vs 🇵🇱 Katarzyna Kawa　·女单·第二轮
 
 ### WTA ATV Bancomat Tennis Open
 
