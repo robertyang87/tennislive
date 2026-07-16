@@ -42,6 +42,8 @@ _DARK_CSS = """<style>
   .tl-sec { color: #ccff00 !important; }
   .tl-dim { color: #93a39b !important; }
   .tl-hr { border-top-color: #2a3a33 !important; }
+  .tl-copy { background-color: #0d1a15 !important; color: #dfe7e3 !important;
+             border-color: #2a3a33 !important; }
 }
 </style>"""
 
@@ -61,7 +63,11 @@ _REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 _CDN = f"https://cdn.jsdelivr.net/gh/{_REPO}@main"
 
 
-def to_push_html(digest: Digest, cards: list[str] | None = None) -> str:
+def to_push_html(
+    digest: Digest,
+    cards: list[str] | None = None,
+    xhs_text: str | None = None,
+) -> str:
     d = digest.today
     parts: list[str] = [_DARK_CSS, f'<div class="tl-card" style="{_CARD}">']
     parts.append(
@@ -118,6 +124,19 @@ def to_push_html(digest: Digest, cards: list[str] | None = None) -> str:
                 f"{_short_side(m.away)}<br/>"
                 f'<span class="tl-dim" style="{_DIM}">{_label(m)} · 熬夜指数 {stars}</span>'
             )
+        parts.append(_HR)
+
+    if xhs_text:
+        parts.append(
+            f'<div class="tl-sec" style="{_SEC}">📋 小红书文案（长按整段复制）</div>'
+        )
+        copy_style = (
+            "background-color:#ffffff;color:#1c2b26;border-radius:10px;"
+            "padding:12px 14px;font-size:14px;line-height:1.8;"
+            "white-space:pre-wrap;word-break:break-word;"
+            "border:1px solid #d8e2dc;"
+        )
+        parts.append(f'<div class="tl-copy" style="{copy_style}">{xhs_text}</div>')
         parts.append(_HR)
 
     if cards:
