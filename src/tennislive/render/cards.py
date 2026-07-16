@@ -346,6 +346,50 @@ def _card_upset(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
     return img
 
 
+def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
+    """周一排名卡：两巡回赛 Top5 + 中国球员动态."""
+    from .common import CHINESE_PLAYER_NAMES
+
+    img, draw, y = _page(fonts, date_label, "本周排名")
+
+    def arrow(e) -> tuple[str, tuple]:
+        if e.move > 0:
+            return f"↑{e.move}", ACCENT
+        if e.move < 0:
+            return f"↓{-e.move}", RED
+        return "—", GREY
+
+    def section(title: str, entries, y: int) -> int:
+        draw.text((MARGIN, y), title, font=fonts.label, fill=GREY)
+        y += 46
+        for e in entries:
+            name = player_zh(e.name)
+            mark, color = arrow(e)
+            draw.text((MARGIN + 20, y), f"{e.rank}", font=fonts.score, fill=ACCENT)
+            draw.text((MARGIN + 100, y), _fit(draw, name, fonts.score, 520), font=fonts.score, fill=WHITE)
+            if e.points:
+                pts = f"{int(e.points)}分"
+                draw.text((MARGIN + 640, y), pts, font=fonts.label, fill=GREY)
+            tw = draw.textlength(mark, font=fonts.score)
+            draw.text((W - MARGIN - tw - 20, y), mark, font=fonts.score, fill=color)
+            y += 56
+        return y + 26
+
+    y = section("— ATP Top5 —", rankings.atp[:5], y)
+    y = section("— WTA Top5 —", rankings.wta[:5], y)
+    cn = sorted(
+        (
+            e for e in rankings.atp + rankings.wta
+            if player_zh(e.name) in CHINESE_PLAYER_NAMES
+        ),
+        key=lambda e: e.rank,
+    )[:6]
+    if cn:
+        y = section("— 中国球员 —", cn, y)
+    _footer(draw, fonts)
+    return img
+
+
 def _card_topic(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
     img, draw, y = _page(fonts, date_label, "今日竞猜")
     y += 20
@@ -365,6 +409,48 @@ def _card_topic(fonts: _Fonts, date_label: str, m: Match) -> Image.Image:
         y += 84
     _footer(draw, fonts)
     return img
+
+
+def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
+    """单场比赛的「赛后速报」卡（闪发模式用）."""
+    outpath = Path(outpath)
+    outpath.parent.mkdir(parents=True, exist_ok=True)
+    fonts = _Fonts()
+    img, draw, y = _page(fonts, "赛后速报", "刚刚结束", accent=RED)
+    y += 60
+    main, score = _split_result(m)
+    y = _block(
+        draw, fonts, y,
+        label=_match_label(m),
+        main=main,
+        sub=score,
+        accent=is_chinese_involved(m),
+        tag="速报",
+    )
+    y += 40
+    for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN - 20):
+        draw.text((MARGIN + 20, y), chunk, font=fonts.section, fill=ACCENT)
+        y += 76
+    y += 30
+    draw.text(
+        (MARGIN + 20, y), "完整战报见明晨《网球晨报》", font=fonts.body, fill=GREY
+    )
+    _footer(draw, fonts)
+    img.save(outpath, "PNG")
+    return outpath
+
+
+def _wrap_text(draw, text: str, font, max_w: int) -> list[str]:
+    lines, cur = [], ""
+    for ch in text:
+        if draw.textlength(cur + ch, font=font) > max_w:
+            lines.append(cur)
+            cur = ch
+        else:
+            cur += ch
+    if cur:
+        lines.append(cur)
+    return lines[:3]
 
 
 def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
@@ -400,6 +486,15 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     tonight = top_schedule([m for m in digest.schedule if m.is_singles], 5)
     if tonight:
         images.append(("tonight", _card_tonight(fonts, date_label, tonight)))
+
+    # 周一排名日：排名每周一更新
+    if digest.today.weekday() == 0 and digest.rankings is not None:
+        try:
+            images.append(
+                ("rankings", _card_rankings(fonts, date_label, digest.rankings))
+            )
+        except Exception as e:  # noqa: BLE001
+            logger.warning("排名卡生成失败（跳过）: %s", e)
 
     upset = find_upset(digest.results)
     if upset:

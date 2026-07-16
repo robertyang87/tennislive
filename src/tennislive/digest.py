@@ -21,6 +21,7 @@ class Digest:
     live: list[Match] = field(default_factory=list)      # 进行中
     schedule: list[Match] = field(default_factory=list)  # 今日未开赛
     source: str = ""
+    rankings: object = None                              # sources.rankings.Rankings（可选）
 
     @property
     def yesterday(self) -> date:
@@ -64,10 +65,29 @@ def build_digest(
             seen.add(key)
             deduped.append(m)
 
-    return Digest(
+    digest = Digest(
         today=today,
         results=deduped,
         live=today_data.live(),
         schedule=today_data.upcoming(),
         source=today_data.source or yesterday_data.source or "",
     )
+
+    # 用世界排名补全球员 rank（供冷门检测/评分/排名卡使用），失败不阻塞
+    try:
+        from .sources.rankings import fetch_rankings, rank_map
+
+        rankings = fetch_rankings()
+        if not rankings.is_empty:
+            digest.rankings = rankings
+            lookup = rank_map(rankings)
+            for m in digest.results + digest.live + digest.schedule:
+                for p in m.home + m.away:
+                    if p.rank is None:
+                        key = " ".join(p.name.strip().lower().split())
+                        if key in lookup:
+                            p.rank = lookup[key]
+    except Exception as e:  # noqa: BLE001
+        logger.warning("排名补全失败（不影响内容生成）: %s", e)
+
+    return digest

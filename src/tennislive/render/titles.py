@@ -104,3 +104,27 @@ def title_candidates(digest: Digest) -> list[str]:
 
 def pick_headline_auto(digest: Digest) -> str:
     return title_candidates(digest)[0]
+
+
+def flash_headline(m) -> str:
+    """单场比赛的闪发标题，如 '郑钦文晋级！雅典公开赛八强'."""
+    from .common import group_by_tournament
+
+    g = group_by_tournament([m])[0]
+    r = _flat_round(m)
+    w = (m.winner_players() or [None])[0]
+    l = (m.loser_players() or [None])[0]
+    if not w:
+        return f"{g.name_zh}{r}战报"
+    is_final = r.endswith("决赛") and "半" not in r and "四" not in r
+    cn_won = _cn_side(m.winner_players() or [])
+    cn_lost = _cn_side(m.loser_players() or [])
+    if cn_won:
+        if is_final:
+            return f"{player_zh(w.name)}夺冠！{g.name_zh}登顶"
+        return f"{player_zh(w.name)}晋级！赢下{g.name_zh}{r or '本轮'}"
+    if cn_lost and l is not None:
+        return f"{player_zh(l.name)}止步{g.name_zh}{r or '本轮'}"
+    if is_final:
+        return f"{player_zh(w.name)}问鼎{g.name_zh}"
+    return f"{player_zh(w.name)}晋级{g.name_zh}{r or ''}"

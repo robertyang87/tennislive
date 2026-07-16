@@ -108,6 +108,25 @@ def stay_up_stars(m: Match) -> int:
     return 1
 
 
+# 闪发（战报）触发级别：大满贯 / 1000 / 年终
+FLASH_LEVELS = {"GS", "M1000", "W1000", "Finals"}
+
+
+def flash_candidates(matches: list[Match]) -> list[Match]:
+    """值得即时战报的已完赛比赛：中国球员场次，或高级别赛事单打决赛."""
+    out = []
+    for m in matches:
+        if not m.status.is_final:
+            continue
+        if is_chinese_involved(m):
+            out.append(m)
+            continue
+        r = round_zh(m.round_name) or ""
+        if m.is_singles and r == "决赛" and (_level_of(m) in FLASH_LEVELS):
+            out.append(m)
+    return out
+
+
 def find_upset(matches: list[Match]) -> Match | None:
     """昨夜最大冷门（只看单打）."""
     upsets = [
