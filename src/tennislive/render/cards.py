@@ -40,18 +40,55 @@ MARGIN = 64
 BRAND = "网球时差"
 COLUMN = "网球晨报"
 
-# 配色：深绿渐变底 + 网球荧光黄
-BG_TOP = (14, 44, 36)
-BG_BOTTOM = (7, 23, 18)
-BG = (11, 38, 31)
-PANEL = (20, 58, 47)
-PANEL_HI = (26, 70, 56)
-PANEL_LINE = (34, 84, 68)
-ACCENT = (204, 255, 0)
-WHITE = (245, 248, 246)
-GREY = (168, 186, 179)
-SCORE_GREY = (190, 205, 198)
-RED = (255, 107, 87)
+# 主题：dark=品牌深绿（默认），light=小红书奶油风
+# BTN_TEXT 固定深色（荧光按钮上的字两种主题都要深）
+_THEMES = {
+    "dark": dict(
+        BG_TOP=(14, 44, 36),
+        BG_BOTTOM=(7, 23, 18),
+        PANEL=(20, 58, 47),
+        PANEL_HI=(26, 70, 56),
+        PANEL_LINE=(34, 84, 68),
+        DECO=(22, 62, 50),
+        ACCENT=(204, 255, 0),        # 标题/高亮文字
+        BALL=(204, 255, 0),          # 网球图形
+        OUTLINE=(204, 255, 0),       # 高亮面板描边
+        WHITE=(245, 248, 246),       # 主文字
+        GREY=(168, 186, 179),
+        SCORE_GREY=(190, 205, 198),
+        RED=(255, 107, 87),
+        FOOT=(110, 128, 120),
+        STAR_PILL=(38, 92, 74),
+        STAR_PILL_HOT=(176, 122, 20),
+    ),
+    "light": dict(
+        BG_TOP=(250, 247, 239),
+        BG_BOTTOM=(241, 235, 222),
+        PANEL=(255, 255, 255),
+        PANEL_HI=(250, 252, 235),
+        PANEL_LINE=(224, 216, 198),
+        DECO=(235, 228, 210),
+        ACCENT=(13, 96, 60),         # 浅底上用深绿做强调字
+        BALL=(198, 246, 0),
+        OUTLINE=(168, 208, 40),
+        WHITE=(30, 42, 37),          # 主文字改为深色
+        GREY=(122, 134, 126),
+        SCORE_GREY=(96, 110, 103),
+        RED=(233, 84, 62),
+        FOOT=(160, 168, 160),
+        STAR_PILL=(120, 158, 60),
+        STAR_PILL_HOT=(214, 154, 26),
+    ),
+}
+BTN_TEXT = (10, 26, 20)
+
+
+def set_theme(name: str) -> None:
+    """切换配色主题（dark/light），直接更新模块级颜色常量."""
+    globals().update(_THEMES.get(name, _THEMES["dark"]))
+
+
+set_theme("dark")
 
 _FONT_CANDIDATES = [
     ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", 2),
@@ -144,8 +181,8 @@ def _wrap_text(draw, text: str, font, max_w: int, max_lines: int = 3) -> list[st
     return lines[:max_lines]
 
 
-def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=ACCENT, width_ratio=9) -> None:
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=color)
+def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=None, width_ratio=9) -> None:
+    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=color or BALL)
     draw.arc(
         [cx - int(r * 1.7), cy - r, cx - int(r * 0.1), cy + r],
         start=-60, end=60, fill=BG_TOP, width=max(3, r // width_ratio),
@@ -165,7 +202,7 @@ def _canvas() -> tuple[Image.Image, ImageDraw.ImageDraw]:
         c = tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM))
         draw.line([(0, y), (W, y)], fill=c)
     # 装饰：右上角大圆弧（比背景略亮的绿，低调纹理感）
-    deco = (22, 62, 50)
+    deco = DECO
     draw.arc([W - 460, -300, W + 320, 480], start=60, end=250, fill=deco, width=56)
     draw.arc([W - 320, -220, W + 220, 320], start=60, end=260, fill=deco, width=30)
     return img, draw
@@ -175,7 +212,7 @@ def _date_label(d) -> str:
     return f"{d.month}.{d.day} · {WEEKDAY_ZH[d.weekday()]}"
 
 
-def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent=ACCENT):
+def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent=None):
     """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
     img, draw = _canvas()
     _draw_ball(draw, MARGIN + 26, MARGIN + 30, 24)
@@ -185,7 +222,7 @@ def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent
     y = MARGIN + 96
     draw.text((MARGIN, y), en_sub, font=fonts.en, fill=GREY)
     y += 40
-    draw.text((MARGIN, y), column_title, font=fonts.title, fill=accent)
+    draw.text((MARGIN, y), column_title, font=fonts.title, fill=accent or ACCENT)
     y += 112
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
     return img, draw, y + 40
@@ -194,7 +231,7 @@ def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent
 def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, text: str = "") -> None:
     line = text or "数据来自公开比分接口 · 时间为北京时间"
     tl = draw.textlength(line, font=fonts.small)
-    draw.text(((W - tl) / 2, H - MARGIN - 20), line, font=fonts.small, fill=(110, 128, 120))
+    draw.text(((W - tl) / 2, H - MARGIN - 20), line, font=fonts.small, fill=FOOT)
 
 
 def _match_label(m: Match) -> str:
@@ -224,7 +261,7 @@ def _panel_block(
     draw.rounded_rectangle([x0, y, x1, y + inner_h], radius=22, fill=fill)
     if accent:
         draw.rounded_rectangle(
-            [x0, y, x1, y + inner_h], radius=22, outline=ACCENT, width=3
+            [x0, y, x1, y + inner_h], radius=22, outline=OUTLINE, width=3
         )
 
     tx = x0 + _PAD
@@ -382,7 +419,7 @@ def _card_tonight(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image
             ),
             accent=is_chinese_involved(m),
             tag="★" * stars,
-            tag_color=(38, 92, 74) if stars < 4 else (176, 122, 20),
+            tag_color=STAR_PILL if stars < 4 else STAR_PILL_HOT,
         ) + gap
     _footer(draw, fonts)
     return img
@@ -398,8 +435,8 @@ def _hero_cta(draw, fonts, y: int, lines: list[str], cta: str) -> int:
     y += 30
     tw = draw.textlength(cta, font=fonts.main)
     bx0 = (W - tw - 96) / 2
-    draw.rounded_rectangle([bx0, y, bx0 + tw + 96, y + 92], radius=46, fill=ACCENT)
-    draw.text((bx0 + 48, y + 20), cta, font=fonts.main, fill=BG_BOTTOM)
+    draw.rounded_rectangle([bx0, y, bx0 + tw + 96, y + 92], radius=46, fill=BALL)
+    draw.text((bx0 + 48, y + 20), cta, font=fonts.main, fill=BTN_TEXT)
     return y + 92
 
 
@@ -496,6 +533,7 @@ def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
 
 def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
     """单场比赛的「赛后速报」卡（闪发模式用）."""
+    set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
     outpath = Path(outpath)
     outpath.parent.mkdir(parents=True, exist_ok=True)
     fonts = _Fonts()
@@ -527,6 +565,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     """生成晨报 5 卡，返回文件路径列表（内容不足时自动省略）."""
     from .titles import pick_headline_auto
 
+    set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     for old in outdir.glob("card_*.png"):
