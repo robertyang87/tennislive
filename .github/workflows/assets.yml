@@ -1,0 +1,27 @@
+name: assets
+
+# 一次性/按需：下载国旗小图等静态资源并提交回仓库
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  flags:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests pillow
+      - run: python tools/fetch_flags.py
+      - name: Commit flags
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/flags
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "assets: pre-downloaded flag images (56x42) for card rendering"
+          git push
