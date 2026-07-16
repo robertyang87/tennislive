@@ -13,7 +13,7 @@
 - **ATV Bancomat Tennis Open**·女双·半决赛：待定 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant
 - **雅典公开赛**·女双·四分之一决赛：待定 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧
 
-## 🏆 最新赛果（59 场）
+## 🏆 最新赛果（57 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -34,12 +34,8 @@
 ### ATP 瑞典公开赛（ATP 250）
 
 - **男单·第二轮** 🇵🇾 Adolfo Daniel Vallejo 2-1 🇳🇱 范德赞德舒尔普（4-6 6-3 7-6(4)）
-- **男单·第二轮** 🇵🇾 Adolfo Daniel Vallejo 2-1 🇳🇱 范德赞德舒尔普（4-6 6-3 7-6(4)）
-- **男单·第二轮** 🇵🇹 博尔热斯 2-0 🇧🇬 迪米特洛夫（6-4 6-2）
 - **男单·第二轮** 🇵🇹 博尔热斯 2-0 🇧🇬 迪米特洛夫（6-4 6-2）
 - **男单·第二轮** 🇮🇹 Stefano Travaglia 2-0 🇦🇷 纳沃内（6-4 6-2）
-- **男单·第二轮** 🇮🇹 Stefano Travaglia 2-0 🇦🇷 纳沃内（6-4 6-2）
-- **男单·第二轮** 🇮🇹 达尔代里 2-0 🇩🇪 阿尔特迈尔（6-4 6-4）
 - **男单·第二轮** 🇮🇹 达尔代里 2-0 🇩🇪 阿尔特迈尔（6-4 6-4）
 
 ### ATP 瑞士公开赛（ATP 250）
@@ -47,6 +43,7 @@
 - **男单·第二轮** 🇧🇪 科利尼翁 2-0 🇮🇹 索内戈（7-6(2) 7-6(5)）
 - **男单·第二轮** 🇫🇷 林德克内希 2-1 🇫🇷 Clement Tabur（6-7(9) 7-6(5) 7-5）
 - **男单·第二轮** 🇲🇨 瓦舍罗 2-1 🇩🇪 汉夫曼（4-6 6-3 6-4）
+- **男单·第二轮** 🇦🇷 Juan Manuel Cerundolo 2-1 凯茨马诺维奇（3-6 6-3 7-5）
 
 ### WTA 雅西公开赛（WTA 250）
 
@@ -83,6 +80,7 @@
 - **女单·第二轮** 🇸🇮 Veronika Erjavec 2-0 🇩🇪 Mona Barthel（6-4 6-1）
 - **女单·第二轮** 🇷🇺 埃里卡·安德烈耶娃 2-1 Mia Ristic（6-4 2-6 6-2）
 - **女单·第二轮** 🇦🇹 Sinja Kraus 2-0 🇩🇪 Eva Bennemann（6-1 6-1）
+- **女单·第二轮** 🇧🇪 Jeline Vandromme 2-0 🇸🇮 Polona Hercog（6-4 3-0 对手退赛）
 - **女单·第一轮** 🇧🇪 Jeline Vandromme 2-0 🇺🇸 Vivian Wolff（6-1 7-6(3)）
 
 ### WTA 雅典公开赛
@@ -98,26 +96,25 @@
 - **女双·四分之一决赛** 🇨🇳 蒋欣玗/吴芳娴 2-0 🇫🇷 Carole Monnet/🇬🇷 Sapfo Sakellaridi（7-5 6-3）
 - **女双·第一轮** 🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 
-## 🔴 正在进行（5 场）
+## 🔴 正在进行（4 场）
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- **男单·第二轮** 🇬🇪 巴西拉什维利 vs 🇦🇷 Thiago Agustin Tirante　当前 5-7 2-3
-- **男单·第二轮** 🇬🇪 巴西拉什维利 vs 🇦🇷 Thiago Agustin Tirante　当前 5-7 2-3
+- **男单·第二轮** 🇬🇪 巴西拉什维利 vs 🇦🇷 Thiago Agustin Tirante　当前 5-7 6-3 4-4
 
 ### ATP 瑞士公开赛（ATP 250）
 
-- **男单·第二轮** 🇦🇷 Juan Manuel Cerundolo vs 凯茨马诺维奇　当前 3-6 6-3 4-4
+- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 3-4
 
 ### WTA 雅西公开赛（WTA 250）
 
-- **女单·第二轮** 🇪🇬 谢里夫 vs 🇪🇸 Kaitlin Quevedo　当前 2-3
+- **女单·第二轮** 🇪🇬 谢里夫 vs 🇪🇸 Kaitlin Quevedo　当前 6-3 3-4
 
 ### WTA 基茨比厄尔公开赛
 
-- **女单·第二轮** 🇵🇱 Gina Feistel vs 🇨🇿 萨姆森　当前 2-0
+- **女单·第二轮** 🇵🇱 Gina Feistel vs 🇨🇿 萨姆森　当前 6-3 3-0
 
-## 📅 今日赛程（37 场，北京时间）
+## 📅 今日赛程（31 场，北京时间）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -127,19 +124,13 @@
 
 - `待定` 🇵🇹 博尔热斯 vs 🇮🇹 达尔代里　·男单·四分之一决赛
 - `待定` 🇵🇾 Adolfo Daniel Vallejo vs 🇮🇹 Stefano Travaglia　·男单·四分之一决赛
-- `待定` 🇵🇹 博尔热斯 vs 🇮🇹 达尔代里　·男单·四分之一决赛
-- `待定` 🇵🇾 Adolfo Daniel Vallejo vs 🇮🇹 Stefano Travaglia　·男单·四分之一决赛
-- `19:00` 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　·男单·第二轮
-- `19:00` 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　·男单·第二轮
-- `20:00` 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　·男单·第二轮
-- `20:00` 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　·男单·第二轮
-- `21:30` 🇳🇱 德容 vs 🇦🇷 巴埃斯　·男单·第二轮
-- `21:30` 🇳🇱 德容 vs 🇦🇷 巴埃斯　·男单·第二轮
+- `20:00` 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　·男单·第二轮
+- `21:00` 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　·男单·第二轮
+- `22:30` 🇳🇱 德容 vs 🇦🇷 巴埃斯　·男单·第二轮
 
 ### ATP 瑞士公开赛（ATP 250）
 
 - `待定` 🇧🇪 科利尼翁 vs 🇲🇨 瓦舍罗　·男单·四分之一决赛
-- `18:50` 🇵🇹 法里亚 vs 🇳🇴 鲁德　·男单·第二轮
 - `20:30` 🇨🇭 Jerome Kym vs 🇬🇷 西西帕斯　·男单·第二轮
 - `22:00` 🇰🇿 布勃利克 vs 🇫🇷 阿利斯　·男单·第二轮
 - `23:30` 🇰🇿 Aleksandr Shevchenko vs 🇨🇭 斯特里克　·男单·第二轮
@@ -147,7 +138,7 @@
 ### WTA 雅西公开赛（WTA 250）
 
 - `待定` 🇸🇮 齐丹舍克 vs 🇭🇷 Petra Marcinko　·女单·四分之一决赛
-- `19:30` 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　·女单·第二轮
+- `19:50` 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　·女单·第二轮
 - `22:30` 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　·女单·第二轮
 
 ### WTA ATV Bancomat Tennis Open
@@ -168,8 +159,8 @@
 
 ### WTA 基茨比厄尔公开赛
 
+- `待定` 🇦🇹 Julia Grabher vs 🇧🇪 Jeline Vandromme　·女单·四分之一决赛
 - `待定` 🇷🇺 埃里卡·安德烈耶娃 vs 🇦🇹 Sinja Kraus　·女单·四分之一决赛
-- `18:35` 🇸🇮 Polona Hercog vs 🇧🇪 Jeline Vandromme　·女单·第二轮
 - `20:00` 🇦🇷 Maria Lourdes Carle vs 🇨🇿 Barbora Palicova　·女单·第二轮
 - `20:30` 🇪🇸 Marina Bassols Ribera vs 🇳🇱 鲁斯　·女单·第二轮
 
