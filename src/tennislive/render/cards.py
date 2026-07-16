@@ -27,8 +27,11 @@ from .common import (
 )
 from .wechat import pick_headline
 
-# 小红书最多 18 张图；控制在封面 + 赛果/赛程各最多 4 页
-MAX_PAGES_PER_SECTION = 4
+# 图片数量控制：封面 + 赛果/赛程各最多 2 页（总共 ≤5 张）；
+# 每站限额，优先深轮次（分组内已按轮次重要性排序）
+MAX_PAGES_PER_SECTION = 2
+MAX_RESULT_LINES_PER_TOURNAMENT = 6
+MAX_SCHEDULE_LINES_PER_TOURNAMENT = 5
 
 logger = logging.getLogger(__name__)
 
@@ -303,7 +306,7 @@ def _result_sections(matches: list[Match]) -> list[CardSection]:
     sections = []
     for group in group_by_tournament(matches):
         lines = []
-        for m in group.matches:
+        for m in group.matches[:MAX_RESULT_LINES_PER_TOURNAMENT]:
             r = match_round_display(m)
             main = result_line(m).replace("（", " (").replace("）", ")")
             if m.is_doubles:
@@ -323,7 +326,7 @@ def _schedule_sections(matches: list[Match]) -> list[CardSection]:
     sections = []
     for group in group_by_tournament(matches):
         lines = []
-        for m in group.matches:
+        for m in group.matches[:MAX_SCHEDULE_LINES_PER_TOURNAMENT]:
             main = f"{side_display(m.home)} vs {side_display(m.away)}"
             if m.is_doubles:
                 main = "[双打] " + main
