@@ -27,8 +27,11 @@ from .common import (
 )
 from .wechat import pick_headline
 
-# 小红书最多 18 张图；控制在封面 + 赛果/赛程各最多 4 页
-MAX_PAGES_PER_SECTION = 4
+# 图片数量控制：封面 + 赛果/赛程各最多 2 页（总共 ≤5 张）；
+# 每站限额，优先深轮次（分组内已按轮次重要性排序）
+MAX_PAGES_PER_SECTION = 2
+MAX_RESULT_LINES_PER_TOURNAMENT = 6
+MAX_SCHEDULE_LINES_PER_TOURNAMENT = 5
 
 logger = logging.getLogger(__name__)
 
@@ -99,8 +102,8 @@ class _Fonts:
         self.subtitle = load(regular, r_idx, 40)
         self.section = load(bold, b_idx, 46)
         self.tournament = load(bold, b_idx, 38)
-        self.body = load(regular, r_idx, 34)
-        self.body_bold = load(bold, b_idx, 34)
+        self.body = load(regular, r_idx, 32)
+        self.body_bold = load(bold, b_idx, 32)
         self.small = load(regular, r_idx, 28)
         self.badge = load(bold, b_idx, 28)
 
@@ -158,23 +161,24 @@ def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, page: int, pages: int) -> 
     draw.text(((W - tl) / 2, H - MARGIN - 20), text, font=fonts.small, fill=GREY)
 
 
-def _paginate(sections: list[CardSection], per_page: int = 13) -> list[list[CardSection]]:
-    """按行数分页；一场赛事的行可以跨页（重复赛事标题）."""
+def _paginate(sections: list[CardSection], per_page: int = 14) -> list[list[CardSection]]:
+    """按行数分页；整站不拆分——放不下就整体挪到下一页.
+
+    （每站行数已有上限，单站不会超过一页。）
+    """
     pages: list[list[CardSection]] = []
     cur: list[CardSection] = []
     used = 0
     for sec in sections:
-        remaining = sec.lines[:]
-        while remaining:
-            cap = per_page - used - 1  # 赛事标题占 1 行
-            if cap <= 0:
-                pages.append(cur)
-                cur, used = [], 0
-                continue
-            take = remaining[:cap]
-            remaining = remaining[cap:]
-            cur.append(CardSection(title=sec.title, lines=take))
-            used += 1 + len(take)
+        units = 1 + len(sec.lines)  # 赛事标题占 1 行
+        if cur and used + units > per_page:
+            pages.append(cur)
+            cur, used = [], 0
+        if units > per_page:  # 兜底：单站超一页时截断
+            sec = CardSection(title=sec.title, lines=sec.lines[: per_page - 1])
+            units = per_page
+        cur.append(sec)
+        used += units
     if cur:
         pages.append(cur)
     return pages
@@ -192,8 +196,9 @@ def _render_page(
     draw = ImageDraw.Draw(img)
     y = _header(draw, fonts, date_label, page_title)
 
-    line_h = 62
+    line_h = 58
     sec_title_h = 74
+    left_w = 118
     content_w = W - 2 * MARGIN
 
     for sec in sections:
@@ -212,19 +217,18 @@ def _render_page(
         )
         y += sec_title_h
         for line in sec.lines:
-            left_w = 150
             if line.left:
-                draw.text((MARGIN + 16, y + 8), line.left, font=fonts.badge, fill=GREY)
+                draw.text((MARGIN + 8, y + 8), line.left, font=fonts.badge, fill=GREY)
             main_font = fonts.body_bold if line.accent else fonts.body
             color = ACCENT if line.accent else WHITE
             draw.text(
-                (MARGIN + left_w + 14, y + 4),
-                _fit(draw, line.main, main_font, content_w - left_w - 40),
+                (MARGIN + left_w + 10, y + 4),
+                _fit(draw, line.main, main_font, content_w - left_w - 24),
                 font=main_font,
                 fill=color,
             )
             y += line_h
-        y += 20
+        y += 18
 
     _footer(draw, fonts, page, pages)
     return img
@@ -303,9 +307,9 @@ def _result_sections(matches: list[Match]) -> list[CardSection]:
     sections = []
     for group in group_by_tournament(matches):
         lines = []
-        for m in group.matches:
+        for m in group.matches[:MAX_RESULT_LINES_PER_TOURNAMENT]:
             r = match_round_display(m)
-            main = result_line(m).replace("（", " (").replace("）", ")")
+            main = result_line(m, short_en=True).replace("（", " (").replace("）", ")")
             if m.is_doubles:
                 main = "[双打] " + main
             lines.append(
@@ -323,8 +327,11 @@ def _schedule_sections(matches: list[Match]) -> list[CardSection]:
     sections = []
     for group in group_by_tournament(matches):
         lines = []
-        for m in group.matches:
-            main = f"{side_display(m.home)} vs {side_display(m.away)}"
+        for m in group.matches[:MAX_SCHEDULE_LINES_PER_TOURNAMENT]:
+            main = (
+                f"{side_display(m.home, short_en=True)} vs "
+                f"{side_display(m.away, short_en=True)}"
+            )
             if m.is_doubles:
                 main = "[双打] " + main
             lines.append(

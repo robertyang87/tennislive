@@ -122,7 +122,7 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
                 count += 1
         lines.append("")
 
-    lines.append("完整赛程赛果看图片～")
+    lines.append("更多赛程赛果看图片～")
     lines.append("")
     lines.append(" ".join(_tags(digest)))
     return lines

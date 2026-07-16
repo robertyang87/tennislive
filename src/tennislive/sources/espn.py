@@ -279,8 +279,10 @@ class EspnSource(TennisSource):
 
         event_id = str(event.get("id") or "")
         comp_id = str(comp.get("id") or "")
+        # 不能用 uid 做去重键：合办赛事在 atp/wta 两个接口里 uid 的联赛段不同
+        # （l:851 vs l:900），会导致同一场比赛重复
         return Match(
-            match_id=comp.get("uid") or f"{event_id}:{comp_id}",
+            match_id=f"{event_id}:{comp_id}",
             tour=tour,
             tournament=tournament,
             home=home,
