@@ -86,10 +86,16 @@ def fetch_rankings(timeout: int = 30) -> Rankings:
     return result
 
 
-def rank_map(rankings: Rankings) -> dict[str, int]:
-    """姓名（含词序反转）→ 排名 的查找表，用于补全比赛数据."""
+def rank_map(entries: list[RankEntry] | Rankings) -> dict[str, int]:
+    """姓名（含词序反转）→ 排名 的查找表，用于补全比赛数据.
+
+    传入单巡回赛的榜单（rankings.atp 或 rankings.wta）可避免
+    ATP/WTA 同名球员的跨巡回赛误匹配。
+    """
+    if isinstance(entries, Rankings):
+        entries = entries.atp + entries.wta
     m: dict[str, int] = {}
-    for entry in rankings.atp + rankings.wta:
+    for entry in entries:
         key = " ".join(entry.name.strip().lower().split())
         m.setdefault(key, entry.rank)
         words = key.split(" ")

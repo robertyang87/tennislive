@@ -80,8 +80,10 @@ def build_digest(
         rankings = fetch_rankings()
         if not rankings.is_empty:
             digest.rankings = rankings
-            lookup = rank_map(rankings)
+            # 按巡回赛分表查找，避免 ATP/WTA 同名误匹配
+            lookups = {"ATP": rank_map(rankings.atp), "WTA": rank_map(rankings.wta)}
             for m in digest.results + digest.live + digest.schedule:
+                lookup = lookups.get(m.tour.value, {})
                 for p in m.home + m.away:
                     if p.rank is None:
                         key = " ".join(p.name.strip().lower().split())
