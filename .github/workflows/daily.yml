@@ -80,10 +80,12 @@ jobs:
 
       - name: PushPlus 推送到微信（配置了 PUSHPLUS_TOKEN 才执行）
         if: env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true  # 推送失败不影响内容生成与入库
         run: tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"
 
       - name: 公众号存草稿/发布（WECHAT_MODE=draft 或 publish 才执行）
         if: env.WECHAT_APPID != '' && env.WECHAT_MODE != 'off'
+        continue-on-error: true
         run: |
           EXTRA=""
           if [ "$WECHAT_MODE" = "publish" ]; then EXTRA="--publish"; fi
