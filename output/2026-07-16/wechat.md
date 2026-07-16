@@ -102,26 +102,26 @@
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- **男单·第二轮** 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　当前 6-5
+- **男单·第二轮** 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　当前 6-6(2)
 
 ### ATP 瑞士公开赛（ATP 250）
 
-- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 7-6(1) 4-5
+- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 7-6(1) 4-6
 
 ### WTA 雅西公开赛（WTA 250）
 
-- **女单·第二轮** 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　当前 5-1
+- **女单·第二轮** 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　当前 6-1
 
 ### WTA Enka Open
 
-- **女单·第二轮** 🇷🇺 Vera Zvonareva vs 🇸🇰 Viktoria Hruncakova　当前 6-6
-- **女单·第二轮** 🇧🇾 Darya Khamutsianskaya vs 🇷🇺 Tatiana Prozorova　当前 4-6
-- **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina vs 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying　当前 6-6
+- **女单·第二轮** 🇷🇺 Vera Zvonareva vs 🇸🇰 Viktoria Hruncakova　当前 7-6(4)
+- **女单·第二轮** 🇧🇾 Darya Khamutsianskaya vs 🇷🇺 Tatiana Prozorova　当前 4-6 1-1
+- **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina vs 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying　当前 6-7(2)
 
 ### WTA 基茨比厄尔公开赛
 
-- **女单·第二轮** 🇦🇷 Maria Lourdes Carle vs 🇨🇿 Barbora Palicova　当前 0-6 6-1 1-2
-- **女单·第二轮** 🇪🇸 Marina Bassols Ribera vs 🇳🇱 鲁斯　当前 0-6
+- **女单·第二轮** 🇦🇷 Maria Lourdes Carle vs 🇨🇿 Barbora Palicova　当前 0-6 6-1 2-2
+- **女单·第二轮** 🇪🇸 Marina Bassols Ribera vs 🇳🇱 鲁斯　当前 0-6 0-0
 
 ## 📅 今日赛程（24 场，北京时间）
 
