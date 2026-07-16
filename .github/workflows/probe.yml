@@ -1,0 +1,93 @@
+name: probe-data-sources
+
+# 手动触发：在真实网络环境（GitHub Actions）中探测各候选数据源，
+# 打印 HTTP 状态与响应片段到日志，并上传完整响应作为 artifact。
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Probe candidate endpoints
+        shell: bash
+        run: |
+          set +e
+          mkdir -p probe-out
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+          TODAY=$(date -u +%Y-%m-%d)
+          YESTERDAY=$(date -u -d "yesterday" +%Y-%m-%d)
+          TODAY8=$(date -u +%Y%m%d)
+          YESTERDAY8=$(date -u -d "yesterday" +%Y%m%d)
+          echo "TODAY=$TODAY YESTERDAY=$YESTERDAY"
+
+          probe () {
+            local name="$1"; shift
+            local url="$1"; shift
+            echo ""
+            echo "======================================================================"
+            echo "== PROBE: $name"
+            echo "== URL: $url"
+            local code
+            code=$(curl -sS -m 30 -L -w '%{http_code}' -o "probe-out/$name.body" -D "probe-out/$name.headers" \
+              -H "User-Agent: $UA" -H "Accept: application/json, text/html;q=0.9, */*;q=0.8" \
+              "$@" "$url" 2>"probe-out/$name.err") || code="CURL_FAIL($?)"
+            echo "== HTTP: $code  size: $(wc -c < "probe-out/$name.body" 2>/dev/null || echo 0)"
+            echo "-- response headers (first 800 bytes) --"
+            head -c 800 "probe-out/$name.headers" 2>/dev/null
+            echo ""
+            echo "-- body (first 3500 bytes) --"
+            head -c 3500 "probe-out/$name.body" 2>/dev/null
+            echo ""
+            if [ -s "probe-out/$name.err" ]; then echo "-- curl stderr --"; cat "probe-out/$name.err"; fi
+          }
+
+          # ---- ESPN hidden API (site.api.espn.com) ----
+          probe espn_atp_today "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=$TODAY8"
+          probe espn_wta_today "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates=$TODAY8"
+          probe espn_atp_yday  "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=$YESTERDAY8"
+
+          # ---- SofaScore (两个主机名都试) ----
+          probe sofa_api "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/$TODAY" \
+            -H "Referer: https://www.sofascore.com/" -H "Origin: https://www.sofascore.com"
+          probe sofa_www "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/$TODAY" \
+            -H "Referer: https://www.sofascore.com/"
+
+          # ---- WTA 官网 API (Pulselive) ----
+          probe wta_matches "https://api.wtatennis.com/tennis/matches/?from=$YESTERDAY&to=$TODAY&page=0&pageSize=50&sort=asc" \
+            -H "account: wta" -H "Origin: https://www.wtatennis.com" -H "Referer: https://www.wtatennis.com/"
+          probe wta_tournaments "https://api.wtatennis.com/tennis/tournaments/?page=0&pageSize=20&from=2026-01-01&to=2026-12-31" \
+            -H "account: wta" -H "Origin: https://www.wtatennis.com"
+
+          # ---- ATP 官网 ----
+          probe atp_calendar "https://www.atptour.com/en/-/tournaments/calendar/tour"
+          probe atp_headshot "https://www.atptour.com/-/media/alias/player-headshot/S0AG" -o /dev/null -I
+
+          # ---- live-tennis.cn（用户指定的参考站）----
+          probe livetennis_home "https://www.live-tennis.cn/zh/home"
+          echo ""
+          echo "== live-tennis.cn 页面里出现的候选 API/脚本地址 =="
+          grep -oE '(https?:)?//[^"'"'"'<> ]+' probe-out/livetennis_home.body 2>/dev/null | sort -u | head -60
+          echo "== script src 列表 =="
+          grep -oE '<script[^>]+src="[^"]+"' probe-out/livetennis_home.body 2>/dev/null | head -30
+          echo "== 内联的 api/json/feed 关键字上下文 =="
+          grep -oE '.{60}(api|json|feed|fetch)[^"'"'"' ]{0,80}' probe-out/livetennis_home.body 2>/dev/null | head -40
+
+          echo ""
+          echo "======================================================================"
+          echo "PROBE SUMMARY"
+          for f in probe-out/*.headers; do
+            n=$(basename "$f" .headers)
+            first=$(head -n1 "$f" 2>/dev/null | tr -d '\r')
+            sz=$(wc -c < "probe-out/$n.body" 2>/dev/null || echo 0)
+            echo "$n: $first (body ${sz}B)"
+          done
+          true
+
+      - name: Upload full responses
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-out
+          path: probe-out/
+          if-no-files-found: warn
