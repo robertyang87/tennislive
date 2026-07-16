@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 W, H = 1080, 1440
 MARGIN = 64
 
-BRAND = "网球早餐局"
+BRAND = "网球时差"
 COLUMN = "网球晨报"
 
 # 配色：深绿底 + 网球荧光黄
@@ -221,7 +221,7 @@ def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
     draw.text((MARGIN, 250), f"{d.month}.{d.day}", font=fonts.huge, fill=WHITE)
     draw.text((MARGIN, 460), COLUMN, font=fonts.title, fill=ACCENT)
     draw.text(
-        (MARGIN, 570), "昨夜赛果，今晨看懂", font=fonts.subtitle, fill=GREY
+        (MARGIN, 570), "替你熬夜看网球 · 昨夜赛果，今晨看懂", font=fonts.subtitle, fill=GREY
     )
 
     y = 700
