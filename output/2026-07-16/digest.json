@@ -7180,6 +7180,61 @@
       "note": null,
       "court": "Roy Emerson Arena",
       "status_detail": "Suspended"
+    },
+    {
+      "match_id": "1069-2026:180312",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Vanda Pharmaceuticals Athens Open",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1069-2026"
+      },
+      "home": [
+        {
+          "name": "Alina Korneeva",
+          "country": "RUS",
+          "seed": null,
+          "rank": 90,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "away": [
+        {
+          "name": "Ann Li",
+          "country": "USA",
+          "seed": null,
+          "rank": 2,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "status": "finished",
+      "round_name": "Round 2",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-16 14:35:00+00:00",
+      "sets": [
+        {
+          "home": 6,
+          "away": 2,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 6,
+          "away": 2,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": 0,
+      "note": null,
+      "court": "Center Court",
+      "status_detail": "Final"
     }
   ],
   "live": [
@@ -7227,8 +7282,8 @@
           "away_tiebreak": 6
         },
         {
-          "home": 0,
-          "away": 0,
+          "home": 3,
+          "away": 3,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7276,63 +7331,14 @@
       "start_utc": "2026-07-16 14:35:00+00:00",
       "sets": [
         {
-          "home": 5,
-          "away": 5,
-          "home_tiebreak": null,
-          "away_tiebreak": null
-        }
-      ],
-      "winner": null,
-      "note": null,
-      "court": "Center Court",
-      "status_detail": "1st Set"
-    },
-    {
-      "match_id": "1069-2026:180312",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Vanda Pharmaceuticals Athens Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1069-2026"
-      },
-      "home": [
-        {
-          "name": "Alina Korneeva",
-          "country": "RUS",
-          "seed": null,
-          "rank": 90,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Ann Li",
-          "country": "USA",
-          "seed": null,
-          "rank": 2,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "live",
-      "round_name": "Round 2",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-16 14:35:00+00:00",
-      "sets": [
-        {
           "home": 6,
-          "away": 2,
-          "home_tiebreak": null,
-          "away_tiebreak": null
+          "away": 7,
+          "home_tiebreak": 5,
+          "away_tiebreak": 7
         },
         {
-          "home": 4,
-          "away": 1,
+          "home": 0,
+          "away": 0,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7402,8 +7408,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 1,
-          "away": 1,
+          "home": 4,
+          "away": 5,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7457,8 +7463,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 0,
-          "away": 1,
+          "home": 6,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7523,7 +7529,13 @@
       "sets": [
         {
           "home": 2,
-          "away": 5,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 2,
+          "away": 3,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7531,7 +7543,7 @@
       "winner": null,
       "note": null,
       "court": "Grandstand",
-      "status_detail": "1st Set"
+      "status_detail": "2nd Set"
     },
     {
       "match_id": "306-2026:178638",
@@ -7571,8 +7583,14 @@
       "start_utc": "2026-07-16 15:05:00+00:00",
       "sets": [
         {
-          "home": 3,
-          "away": 2,
+          "home": 6,
+          "away": 4,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 0,
+          "away": 0,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -7580,10 +7598,8 @@
       "winner": null,
       "note": null,
       "court": "Centre Court",
-      "status_detail": "1st Set"
-    }
-  ],
-  "schedule": [
+      "status_detail": "2nd Set"
+    },
     {
       "match_id": "1071-2026:179207",
       "tour": "WTA",
@@ -7632,116 +7648,25 @@
           "player_id": null
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Quarterfinal",
       "discipline": "Women's Doubles",
-      "start_utc": "2026-07-16 15:35:00+00:00",
-      "sets": [],
+      "start_utc": "2026-07-16 15:40:00+00:00",
+      "sets": [
+        {
+          "home": 2,
+          "away": 2,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Court A",
-      "status_detail": "Thu, July 16th at 11:35 AM EDT"
-    },
-    {
-      "match_id": "1017-2026:179233",
-      "tour": "WTA",
-      "tournament": {
-        "name": "ATV Bancomat Tennis Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1017-2026"
-      },
-      "home": [
-        {
-          "name": "Aurora Zantedeschi",
-          "country": "ITA",
-          "seed": null,
-          "rank": null,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Martina Trevisan",
-          "country": "ITA",
-          "seed": null,
-          "rank": null,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 2",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-16 15:40:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Court 1",
-      "status_detail": "Thu, July 16th at 11:40 AM EDT"
-    },
-    {
-      "match_id": "1017-2026:179250",
-      "tour": "WTA",
-      "tournament": {
-        "name": "ATV Bancomat Tennis Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1017-2026"
-      },
-      "home": [
-        {
-          "name": "Darya Astakhova",
-          "country": "RUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": null,
-          "player_id": null
-        },
-        {
-          "name": "Sofya Lansere",
-          "country": "RUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Lucija Ciric Bagaric",
-          "country": "CRO",
-          "seed": null,
-          "rank": 2,
-          "headshot_url": null,
-          "player_id": null
-        },
-        {
-          "name": "Nika Radisic",
-          "country": "SLO",
-          "seed": null,
-          "rank": 2,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Quarterfinal",
-      "discipline": "Women's Doubles",
-      "start_utc": "2026-07-16 15:40:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Court 2",
-      "status_detail": "Thu, July 16th at 11:40 AM EDT"
-    },
+      "status_detail": "1st Set"
+    }
+  ],
+  "schedule": [
     {
       "match_id": "1017-2026:179239",
       "tour": "WTA",
@@ -8019,132 +7944,6 @@
       "status": "scheduled",
       "round_name": "Semifinal",
       "discipline": "Women's Doubles",
-      "start_utc": null,
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": null,
-      "status_detail": "M/d - 'TBD'"
-    },
-    {
-      "match_id": "874-2026:179325",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Unicredit Iasi Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "874-2026"
-      },
-      "home": [
-        {
-          "name": "Tamara Zidansek",
-          "country": "SLO",
-          "seed": null,
-          "rank": 148,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Petra Marcinko",
-          "country": "CRO",
-          "seed": null,
-          "rank": 2,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Quarterfinal",
-      "discipline": "Women's Singles",
-      "start_utc": null,
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": null,
-      "status_detail": "M/d - 'TBD'"
-    },
-    {
-      "match_id": "874-2026:179329",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Unicredit Iasi Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "874-2026"
-      },
-      "home": [
-        {
-          "name": "Oleksandra Oliynykova",
-          "country": "UKR",
-          "seed": null,
-          "rank": 3,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Clara Burel",
-          "country": "FRA",
-          "seed": null,
-          "rank": null,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Quarterfinal",
-      "discipline": "Women's Singles",
-      "start_utc": null,
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": null,
-      "status_detail": "M/d - 'TBD'"
-    },
-    {
-      "match_id": "874-2026:179330",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Unicredit Iasi Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "874-2026"
-      },
-      "home": [
-        {
-          "name": "Yulia Putintseva",
-          "country": "KAZ",
-          "seed": null,
-          "rank": 9,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Mayar Sherif",
-          "country": "EGY",
-          "seed": null,
-          "rank": 97,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Quarterfinal",
-      "discipline": "Women's Singles",
       "start_utc": null,
       "sets": [],
       "winner": null,

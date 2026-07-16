@@ -13,7 +13,7 @@
 - **ATV Bancomat Tennis Open**·女双·半决赛：待定 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant
 - **雅典公开赛**·女双·四分之一决赛：待定 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧
 
-## 🏆 最新赛果（72 场）
+## 🏆 最新赛果（73 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -104,6 +104,7 @@
 - **女单·第二轮** 🇬🇷 萨卡里 2-0 🇬🇧 Harriet Dart（6-1 6-2）
 - **女单·第二轮** 🇺🇸 帕克斯 2-1 🇯🇵 Mai Hontama（6-7(4) 6-2 7-5）
 - **女单·第二轮** 🇨🇿 贝莱克 2-0 🇦🇹 Lilli Tagger（6-2 6-2）
+- **女单·第二轮** 🇷🇺 Alina Korneeva 2-0 🇺🇸 安·李（6-2 6-2）
 - **女单·第一轮** 🇩🇰 陶森 2-0 🇯🇵 日比野菜绪（7-5 6-4）
 - **女单·第一轮** 🇧🇾 萨斯诺维奇 2-1 🇷🇺 布林科娃（3-6 6-2 6-2）
 - **女单·第一轮** 🇺🇸 安·李 2-0 🇺🇿 Maria Timofeeva（6-2 6-1）
@@ -111,37 +112,29 @@
 - **女双·四分之一决赛** 🇨🇳 蒋欣玗/吴芳娴 2-0 🇫🇷 Carole Monnet/🇬🇷 Sapfo Sakellaridi（7-5 6-3）
 - **女双·第一轮** 🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 
-## 🔴 正在进行（5 场）
+## 🔴 正在进行（4 场）
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- **男单·第二轮** 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　当前 3-2
+- **男单·第二轮** 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　当前 6-4 0-0
 
 ### WTA 雅西公开赛（WTA 250）
 
-- **女单·第二轮** 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　当前 5-5
+- **女单·第二轮** 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　当前 6-7(5) 0-0
 
 ### WTA Enka Open
 
-- **女单·第二轮** 🇷🇺 扎哈罗娃 vs 🇷🇺 Alexandra Shubladze　当前 7-6(6) 0-0
+- **女单·第二轮** 🇷🇺 扎哈罗娃 vs 🇷🇺 Alexandra Shubladze　当前 7-6(6) 3-3
 
 ### WTA 雅典公开赛
 
-- **女单·第二轮** 🇷🇺 Alina Korneeva vs 🇺🇸 安·李　当前 6-2 4-1
-- **女单·第二轮** 🇨🇿 瓦伦托娃 vs 🇧🇾 萨斯诺维奇　当前 6-3 0-1
+- **女单·第二轮** 🇨🇿 瓦伦托娃 vs 🇧🇾 萨斯诺维奇　当前 6-3 6-2
 
-## 📅 今日赛程（11 场，北京时间）
-
-### WTA 雅西公开赛（WTA 250）
-
-- `待定` 🇸🇮 齐丹舍克 vs 🇭🇷 Petra Marcinko　·女单·四分之一决赛
-- `待定` 🇺🇦 Oleksandra Oliynykova vs 🇫🇷 Clara Burel　·女单·四分之一决赛
-- `待定` 🇰🇿 普汀塞娃 vs 🇪🇬 谢里夫　·女单·四分之一决赛
+## 📅 今日赛程（7 场，北京时间）
 
 ### WTA ATV Bancomat Tennis Open
 
 - `待定` 🇬🇧 弗朗西斯卡·琼斯 vs 🇩🇪 Noma Noha Akugue　·女单·四分之一决赛
-- `23:40` 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　·女单·第二轮
 - `待定` 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant　·女双·半决赛
 
 ### WTA Enka Open
