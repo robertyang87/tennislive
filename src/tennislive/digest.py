@@ -31,16 +31,29 @@ class Digest:
         return not (self.results or self.live or self.schedule)
 
 
-def build_digest(today: date, prefer: str | None = None) -> Digest:
+def _is_qualifying(m: Match) -> bool:
+    return bool(m.round_name and "qualif" in m.round_name.lower())
+
+
+def build_digest(
+    today: date, prefer: str | None = None, include_qualifying: bool = False
+) -> Digest:
     """抓取并组装一期内容.
 
     - 昨日（北京时间）已完赛 → 赛果
     - 今日（北京时间）已完赛（凌晨结束的欧美比赛）→ 也并入赛果
     - 今日进行中 → live
     - 今日未开赛 → 赛程
+    - 资格赛默认不收录（篇幅原因）
     """
     yesterday_data = fetch_day(today - timedelta(days=1), prefer=prefer)
     today_data = fetch_day(today, prefer=prefer)
+
+    if not include_qualifying:
+        yesterday_data.matches = [
+            m for m in yesterday_data.matches if not _is_qualifying(m)
+        ]
+        today_data.matches = [m for m in today_data.matches if not _is_qualifying(m)]
 
     results = yesterday_data.finished() + today_data.finished()
     seen: set[str] = set()

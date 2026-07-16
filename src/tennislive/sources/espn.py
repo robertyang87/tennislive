@@ -1,14 +1,21 @@
-"""ESPN 公开数据接口数据源.
+"""ESPN 公开数据接口数据源（主数据源）.
 
 ESPN 提供无需鉴权的公开 JSON 接口（其官网前端同款），覆盖 ATP/WTA 巡回赛的
-赛程、实时比分与赛果，且对数据中心 IP（如 GitHub Actions）友好：
+赛程、实时比分与赛果，且对数据中心 IP（如 GitHub Actions）友好（已实测）：
 
     https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=YYYYMMDD
     https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates=YYYYMMDD
 
-网球的返回结构中 events[] 是"赛事（tournament）"，每个赛事内含
-groupings[]（按单打/双打分组），分组内 competitions[] 才是一场场比赛。
-部分历史结构没有 groupings 而是直接 events[].competitions[]，两者都兼容。
+实测结构要点（2026-07）：
+- events[] 是赛事（tournament），内含 groupings[]（男单/女单/男双/女双），
+  分组内 competitions[] 才是一场场比赛；
+- 一个赛事包含整个赛程周期的所有比赛（不只请求日期当天），必须按比赛
+  start 时间的北京日期过滤；
+- 合办赛事（如 Nordea Open）会同时出现在 atp 与 wta 两个接口里，且分组里
+  同时有男子与女子项目 —— tour 必须从分组名推导，去重用 event+competition id；
+- 双打 competitor.type == "team"，球员在 roster.athletes[]（dict 而非 list）；
+- 比赛的 status.type: state=pre/in/post, description=Final/Walkover/Retired/Scheduled;
+- round.displayName 如 "Round 1" / "Quarterfinal" / "Qualifying 1st Round"。
 """
 
 from __future__ import annotations
@@ -62,50 +69,62 @@ def _status_of(comp: dict[str, Any]) -> tuple[MatchStatus, str | None, str | Non
     return MatchStatus.FINISHED, detail, None
 
 
+def _country_of(athlete: dict[str, Any]) -> str | None:
+    flag = athlete.get("flag") or {}
+    if not isinstance(flag, dict):
+        return None
+    # 优先从旗帜图 URL 提取三字码（.../countries/500/ita.png → ITA），
+    # 取不到再用 alt（国家英文全名）
+    href = flag.get("href") or ""
+    m = re.search(r"/countries/\d+/([a-zA-Z]{2,3})\.png", href)
+    if m:
+        return m.group(1).upper()
+    return flag.get("alt") or None
+
+
+def _mk_player(athlete: dict[str, Any]) -> Player:
+    aid = str(athlete.get("id") or "") or None
+    return Player(
+        name=athlete.get("displayName") or athlete.get("shortName") or "?",
+        country=_country_of(athlete),
+        player_id=aid,
+        headshot_url=HEADSHOT_URL.format(athlete_id=aid) if aid else None,
+    )
+
+
 def _players_of(competitor: dict[str, Any]) -> list[Player]:
-    """从 competitor 结构提取球员（单打 athlete / 双打 roster 或 team）."""
+    """从 competitor 提取球员：单打 athlete；双打 roster.athletes."""
     players: list[Player] = []
 
-    def mk(athlete: dict[str, Any]) -> Player:
-        aid = str(athlete.get("id") or "") or None
-        country = None
-        flag = athlete.get("flag") or {}
-        if isinstance(flag, dict):
-            # 优先从旗帜图 URL 提取三字码（.../countries/500/ita.png → ITA），
-            # 取不到再用 alt（国家英文全名）
-            href = flag.get("href") or ""
-            m = re.search(r"/countries/\d+/([a-zA-Z]{2,3})\.png", href)
-            if m:
-                country = m.group(1).upper()
-            else:
-                country = flag.get("alt") or None
-        headshot = HEADSHOT_URL.format(athlete_id=aid) if aid else None
-        return Player(
-            name=athlete.get("displayName") or athlete.get("shortName") or "?",
-            country=country,
-            player_id=aid,
-            headshot_url=headshot,
-        )
-
     roster = competitor.get("roster")
-    if isinstance(roster, list) and roster:
+    if isinstance(roster, dict):
+        for ath in roster.get("athletes") or []:
+            if isinstance(ath, dict):
+                players.append(_mk_player(ath))
+    elif isinstance(roster, list):  # 兼容旧结构
         for entry in roster:
             ath = entry.get("athlete") if isinstance(entry, dict) else None
             if ath:
-                players.append(mk(ath))
+                players.append(_mk_player(ath))
+
     if not players:
         ath = competitor.get("athlete")
         if isinstance(ath, dict):
-            players.append(mk(ath))
+            players.append(_mk_player(ath))
+
     if not players:
+        # 兜底：team.displayName 形如 "A. Krajicek / H. Patten"
         team = competitor.get("team")
+        name = None
         if isinstance(team, dict):
-            name = team.get("displayName") or team.get("name") or "?"
-            # 双打组合名形如 "A. Krajicek / H. Patten"
+            name = team.get("displayName") or team.get("name")
+        if not name and isinstance(roster, dict):
+            name = roster.get("displayName")
+        if name:
             for part in str(name).split("/"):
                 players.append(Player(name=part.strip()))
 
-    # 种子/排名
+    # 种子/排名（部分正赛数据带 seed / curatedRank）
     for p in players:
         seed = competitor.get("seed")
         if seed is not None:
@@ -124,6 +143,15 @@ def _players_of(competitor: dict[str, Any]) -> list[Player]:
     return players
 
 
+def _int_or_none(v: Any) -> int | None:
+    if v is None:
+        return None
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+
+
 def _sets_of(home: dict[str, Any], away: dict[str, Any]) -> list[SetScore]:
     hs = home.get("linescores") or []
     as_ = away.get("linescores") or []
@@ -131,37 +159,34 @@ def _sets_of(home: dict[str, Any], away: dict[str, Any]) -> list[SetScore]:
     for i in range(max(len(hs), len(as_))):
         h = hs[i] if i < len(hs) else {}
         a = as_[i] if i < len(as_) else {}
-
-        def games(d: dict[str, Any]) -> int | None:
-            v = d.get("value")
-            if v is None:
-                return None
-            try:
-                return int(v)
-            except (TypeError, ValueError):
-                return None
-
-        def tb(d: dict[str, Any]) -> int | None:
-            v = d.get("tiebreak")
-            if v is None:
-                return None
-            try:
-                return int(v)
-            except (TypeError, ValueError):
-                return None
-
-        hg, ag = games(h), games(a)
+        hg = _int_or_none(h.get("value"))
+        ag = _int_or_none(a.get("value"))
         if hg is None and ag is None:
             continue
         sets.append(
             SetScore(
                 home=hg if hg is not None else 0,
                 away=ag if ag is not None else 0,
-                home_tiebreak=tb(h),
-                away_tiebreak=tb(a),
+                home_tiebreak=_int_or_none(h.get("tiebreak")),
+                away_tiebreak=_int_or_none(a.get("tiebreak")),
             )
         )
     return sets
+
+
+def _tour_of(discipline: str | None, league_tour: Tour) -> Tour:
+    """从项目名推导巡回赛：合办赛事在两个接口里都有男女项目.
+
+    注意 "women's" 字符串里包含 "men's"，必须先判女子。
+    """
+    d = (discipline or "").lower()
+    if "mixed" in d:
+        return league_tour
+    if d.startswith("wom") or "women" in d:
+        return Tour.WTA
+    if d.startswith("men") or "men's" in d:
+        return Tour.ATP
+    return league_tour
 
 
 class EspnSource(TennisSource):
@@ -198,7 +223,7 @@ class EspnSource(TennisSource):
 
     def _parse_match(
         self,
-        tour: Tour,
+        league_tour: Tour,
         event: dict[str, Any],
         comp: dict[str, Any],
         grouping: str | None,
@@ -214,6 +239,13 @@ class EspnSource(TennisSource):
         if not home or not away:
             return None
 
+        # 项目名：competition.type.text 优先，其次分组名
+        discipline = grouping
+        ctype = comp.get("type")
+        if isinstance(ctype, dict) and ctype.get("text"):
+            discipline = ctype["text"]
+        tour = _tour_of(discipline, league_tour)
+
         status, detail, note = _status_of(comp)
         winner: int | None = None
         if c_home.get("winner"):
@@ -225,12 +257,6 @@ class EspnSource(TennisSource):
         rnd = comp.get("round")
         if isinstance(rnd, dict):
             round_name = rnd.get("displayName") or rnd.get("shortName")
-        if not round_name:
-            for n in comp.get("notes") or []:
-                headline = n.get("headline") if isinstance(n, dict) else None
-                if headline:
-                    round_name = headline
-                    break
 
         tournament = Tournament(
             name=event.get("name") or event.get("shortName") or "?",
@@ -241,18 +267,24 @@ class EspnSource(TennisSource):
         court = None
         venue = comp.get("venue")
         if isinstance(venue, dict):
-            court = venue.get("fullName") or None
+            court = venue.get("court") or None
 
+        start_utc = None
+        if comp.get("timeValid", True):
+            start_utc = _parse_iso(comp.get("date"))
+
+        event_id = str(event.get("id") or "")
+        comp_id = str(comp.get("id") or "")
         return Match(
-            match_id=str(comp.get("id") or "") or f"{tournament.name}-{home[0].name}-{away[0].name}",
+            match_id=comp.get("uid") or f"{event_id}:{comp_id}",
             tour=tour,
             tournament=tournament,
             home=home,
             away=away,
             status=status,
             round_name=round_name,
-            discipline=grouping,
-            start_utc=_parse_iso(comp.get("date") or event.get("date")),
+            discipline=discipline,
+            start_utc=start_utc,
             sets=_sets_of(c_home, c_away),
             winner=winner,
             note=note,
@@ -263,39 +295,35 @@ class EspnSource(TennisSource):
     def fetch_day(self, d: date) -> list[Match]:
         """抓取北京时间 d 当天的比赛.
 
-        北京的一天横跨两个 UTC 日期，而 ESPN 的 dates 参数按美东日期组织，
-        因此拉取 d-1、d、d+1 三天并按比赛开始时间的北京日期过滤去重。
+        北京的一天横跨 UTC 的 d-1 与 d，且 ESPN 返回赛事全周期比赛，
+        因此拉取 d-1、d 两天并按比赛开始时间的北京日期过滤、按比赛 id 去重。
         """
         matches: dict[str, Match] = {}
         errors: list[str] = []
-        for tour, league in ((Tour.ATP, "atp"), (Tour.WTA, "wta")):
-            got_any = False
-            for delta in (-1, 0, 1):
-                day = d + timedelta(days=delta)
+        fetched_any = False
+        for league, league_tour in (("atp", Tour.ATP), ("wta", Tour.WTA)):
+            for day in (d - timedelta(days=1), d):
                 d8 = day.strftime("%Y%m%d")
                 try:
                     data = self._fetch_scoreboard(league, d8)
-                    got_any = True
+                    fetched_any = True
                 except SourceError as e:
                     errors.append(str(e))
                     logger.warning("ESPN %s %s 抓取失败: %s", league, d8, e)
                     continue
                 for event, comp, grouping in self._iter_competitions(data):
-                    m = self._parse_match(tour, event, comp, grouping)
+                    m = self._parse_match(league_tour, event, comp, grouping)
                     if m is None:
                         continue
                     if m.start_utc is not None:
-                        beijing_day = m.start_utc.astimezone(BEIJING).date()
-                        if beijing_day != d:
+                        if m.start_utc.astimezone(BEIJING).date() != d:
                             continue
-                    elif delta != 0:
+                    elif day != d:
+                        # 无有效时间的比赛只在目标日期的请求中收录一次
                         continue
-                    key = f"{tour.value}:{m.match_id}"
-                    matches[key] = m
-            if not got_any:
-                raise SourceError(
-                    f"ESPN {league} 三天全部抓取失败: {'; '.join(errors[-3:])}"
-                )
+                    matches.setdefault(m.match_id, m)
+        if not fetched_any:
+            raise SourceError(f"ESPN 全部抓取失败: {'; '.join(errors[:4])}")
         return sorted(
             matches.values(),
             key=lambda m: (

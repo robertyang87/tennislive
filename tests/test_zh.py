@@ -32,7 +32,7 @@ def test_discipline_zh():
 
 def test_tournament_zh():
     assert tournament_zh("Wimbledon") == "温布尔登网球锦标赛"
-    assert tournament_zh("Mutua Madrid Open") == "马德里站"
+    assert tournament_zh("Mutua Madrid Open") == "马德里公开赛"
 
 
 def test_tournament_level_by_tour():
