@@ -151,12 +151,13 @@ class _Fonts:
         self.score = load(bold, b_idx, 38)
         self.body = load(regular, r_idx, 36)
         self.small = load(regular, r_idx, 27)
-        # 记分牌卡专用
+        # 记分牌卡专用（字号偏小以放下全名）
         self.cell_meta = load(regular, r_idx, 25)
-        self.cell_name = load(bold, b_idx, 31)
-        self.cell_seed = load(regular, r_idx, 22)
-        self.cell_score = load(bold, b_idx, 46)
-        self.cell_sup = load(bold, b_idx, 24)
+        self.cell_name = load(bold, b_idx, 28)
+        self.cell_name_sm = load(bold, b_idx, 25)
+        self.cell_seed = load(regular, r_idx, 21)
+        self.cell_score = load(bold, b_idx, 40)
+        self.cell_sup = load(bold, b_idx, 21)
 
 
 def _fit(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_w: int) -> str:
@@ -303,8 +304,8 @@ def _page(
 
 
 def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, text: str = "") -> None:
-    line = text or "数据来自公开比分接口 · 北京时间"
-    draw.text((MARGIN, H - MARGIN - 20), line, font=fonts.small, fill=FOOT)
+    if text:
+        draw.text((MARGIN, H - MARGIN - 20), text, font=fonts.small, fill=FOOT)
     mark = f"@{BRAND}"
     tw = draw.textlength(mark, font=fonts.small)
     draw.text((W - MARGIN - tw, H - MARGIN - 20), mark, font=fonts.small, fill=GREY)
@@ -465,26 +466,22 @@ CELL_BG = (248, 250, 247)
 CELL_WIN = (213, 238, 207)
 CELL_TEXT = (24, 34, 29)
 CELL_GREY = (128, 140, 133)
-CELL_CHECK = (32, 148, 82)
 CELL_LINE = (222, 230, 224)
 
 
-def _draw_check(draw, cx: int, cy: int, r: int = 16) -> None:
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CELL_CHECK)
-    draw.line([cx - 7, cy, cx - 2, cy + 6], fill=(255, 255, 255), width=4)
-    draw.line([cx - 2, cy + 6, cx + 8, cy - 6], fill=(255, 255, 255), width=4)
-
-
-# 比分列：每盘步宽 + 右端对勾预留（上下两行按列对齐）
-_SCORE_STEP = 56
-_SCORE_CHECK = 42
+# 比分列：每盘步宽 + 右缘留白（上下两行按列对齐）
+_SCORE_STEP = 50
+_SCORE_PAD = 22
 
 
 def _cell_side_line(
     img, draw, fonts, x: int, y: int, w: int, row_h: int,
     players, sets_pairs, won: bool, score_zone: int,
 ) -> None:
-    """记分牌里一方的一行：国旗 + 种子号 + 姓名 +（世界排名）+ 比分 + 胜者对勾."""
+    """记分牌里一方的一行：国旗 + 种子号 + 姓名 +（世界排名）+ 比分.
+
+    胜者由绿色底条区分（不再画对勾，给全名留空间）。
+    """
     from .flags import flag_image
 
     color = CELL_TEXT if won else CELL_GREY
@@ -492,14 +489,14 @@ def _cell_side_line(
     nx = x + 18
     # 国旗（双打两面并排）
     for p in players[:2]:
-        flag = flag_image(p.country, height=27)
+        flag = flag_image(p.country, height=26)
         if flag is not None:
             img.paste(flag, (int(nx), cy - 13), flag)
             nx += flag.width + 8
     # 种子号（介于国旗与人名之间）
     seed = players[0].seed if players else None
     if seed:
-        draw.text((nx, cy - 12), str(seed), font=fonts.cell_seed, fill=CELL_GREY)
+        draw.text((nx, cy - 11), str(seed), font=fonts.cell_seed, fill=CELL_GREY)
         nx += draw.textlength(str(seed), font=fonts.cell_seed) + 6
     # 人名（无译名的英文名缩写化，如 'V. Valdmannova'）+ 单打世界排名（小括号）
     def _disp(p) -> str:
@@ -513,28 +510,30 @@ def _cell_side_line(
     rank_txt = f"({rank})" if rank else ""
     rank_w = draw.textlength(rank_txt, font=fonts.cell_seed) + 6 if rank_txt else 0
     max_name_w = x + w - score_zone - nx - rank_w - 10
+    # 放全名优先：标准字号放不下就降一号，再不行（纯英文）只留姓氏
+    name_font = fonts.cell_name
+    if draw.textlength(name, font=name_font) > max_name_w:
+        name_font = fonts.cell_name_sm
     if (
         len(players) == 1
         and name.isascii()
-        and draw.textlength(name, font=fonts.cell_name) > max_name_w
+        and draw.textlength(name, font=name_font) > max_name_w
     ):
-        name = players[0].name.split()[-1]  # 缩写仍放不下 → 仅姓氏
-    name = _fit(draw, name, fonts.cell_name, int(max_name_w))
-    draw.text((nx, cy - 19), name, font=fonts.cell_name, fill=color)
+        name = players[0].name.split()[-1]
+    name = _fit(draw, name, name_font, int(max_name_w))
+    draw.text((nx, cy - name_font.size // 2 - 3), name, font=name_font, fill=color)
     if rank_txt:
-        nw = draw.textlength(name, font=fonts.cell_name)
-        draw.text((nx + nw + 6, cy - 12), rank_txt, font=fonts.cell_seed, fill=CELL_GREY)
+        nw = draw.textlength(name, font=name_font)
+        draw.text((nx + nw + 6, cy - 11), rank_txt, font=fonts.cell_seed, fill=CELL_GREY)
     # 比分（右对齐、两行同列），抢七小分上标
-    sx = x + w - _SCORE_CHECK - len(sets_pairs) * _SCORE_STEP
+    sx = x + w - _SCORE_PAD - len(sets_pairs) * _SCORE_STEP
     for games, tb in sets_pairs:
         g = str(games)
-        draw.text((sx, cy - 25), g, font=fonts.cell_score, fill=color)
+        draw.text((sx, cy - 22), g, font=fonts.cell_score, fill=color)
         if tb is not None:
             gw = draw.textlength(g, font=fonts.cell_score)
-            draw.text((sx + gw + 2, cy - 29), str(tb), font=fonts.cell_sup, fill=color)
+            draw.text((sx + gw + 2, cy - 26), str(tb), font=fonts.cell_sup, fill=color)
         sx += _SCORE_STEP
-    if won:
-        _draw_check(draw, x + w - 28, cy)
 
 
 def _scoreboard_cell(
@@ -562,7 +561,7 @@ def _scoreboard_cell(
     draw.line([x + 22, y + 54, x + w - 22, y + 54], fill=CELL_LINE, width=2)
 
     # 比分区宽度按盘数预留，保证上下两行同列对齐
-    score_zone = _SCORE_CHECK + len(m.sets) * _SCORE_STEP
+    score_zone = _SCORE_PAD + len(m.sets) * _SCORE_STEP
     row_h = (h - 66) // 2
     for i, (players, competitor_sets) in enumerate(
         ((m.home, [(s.home, s.home_tiebreak) for s in m.sets]),
