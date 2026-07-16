@@ -1,0 +1,269 @@
+{
+  "leagues": [{"id": "851", "name": "ATP", "slug": "atp"}],
+  "events": [
+    {
+      "id": "306-2026",
+      "uid": "s:850~l:851~e:306-2026",
+      "name": "Nordea Open",
+      "shortName": "Nordea Open",
+      "groupings": [
+        {
+          "grouping": {"slug": "womens-singles", "displayName": "Women's Singles"},
+          "competitions": [
+            {
+              "id": "178001",
+              "uid": "s:850~l:900~e:306-2026~c:178001",
+              "date": "2026-07-15T11:00Z",
+              "startDate": "2026-07-15T11:00Z",
+              "timeValid": true,
+              "status": {
+                "period": 3,
+                "type": {
+                  "id": "3",
+                  "name": "STATUS_FINAL",
+                  "state": "post",
+                  "completed": true,
+                  "description": "Final",
+                  "detail": "Final",
+                  "shortDetail": "Final"
+                }
+              },
+              "venue": {"fullName": "Båstad, Sweden", "court": "Center Court"},
+              "format": {"regulation": {"periods": 3}},
+              "notes": [
+                {"text": "Qinwen Zheng (CHN) bt Miriam Bulgaru (ROU) 6-4 3-6 7-6(4)", "type": "event"}
+              ],
+              "competitors": [
+                {
+                  "id": "3568",
+                  "uid": "s:850~l:900~a:3568",
+                  "type": "athlete",
+                  "order": 1,
+                  "homeAway": "home",
+                  "winner": true,
+                  "linescores": [
+                    {"value": 6.0, "winner": true},
+                    {"value": 3.0, "winner": false},
+                    {"value": 7.0, "tiebreak": 7, "winner": true}
+                  ],
+                  "curatedRank": {"current": 5},
+                  "athlete": {
+                    "guid": "x1",
+                    "displayName": "Qinwen Zheng",
+                    "shortName": "Q. Zheng",
+                    "fullName": "Qinwen Zheng",
+                    "flag": {
+                      "href": "https://a.espncdn.com/i/teamlogos/countries/500/chn.png",
+                      "alt": "China",
+                      "rel": ["country-flag"]
+                    }
+                  },
+                  "statistics": []
+                },
+                {
+                  "id": "3042",
+                  "uid": "s:850~l:900~a:3042",
+                  "type": "athlete",
+                  "order": 2,
+                  "homeAway": "away",
+                  "winner": false,
+                  "linescores": [
+                    {"value": 4.0, "winner": false},
+                    {"value": 6.0, "winner": true},
+                    {"value": 6.0, "tiebreak": 4, "winner": false}
+                  ],
+                  "athlete": {
+                    "guid": "x2",
+                    "displayName": "Miriam Bulgaru",
+                    "shortName": "M. Bulgaru",
+                    "fullName": "Miriam Bulgaru",
+                    "flag": {
+                      "href": "https://a.espncdn.com/i/teamlogos/countries/500/rom.png",
+                      "alt": "Romania",
+                      "rel": ["country-flag"]
+                    }
+                  },
+                  "statistics": []
+                }
+              ],
+              "tournamentId": 306,
+              "type": {"id": "2", "text": "Women's Singles", "slug": "womens-singles"},
+              "round": {"id": "3", "displayName": "Quarterfinal"},
+              "wasSuspended": false
+            }
+          ]
+        },
+        {
+          "grouping": {"slug": "womens-doubles", "displayName": "Women's Doubles"},
+          "competitions": [
+            {
+              "id": "178705",
+              "uid": "s:850~l:900~e:306-2026~c:178705",
+              "date": "2026-07-15T10:45Z",
+              "timeValid": true,
+              "status": {
+                "period": 2,
+                "type": {
+                  "id": "3",
+                  "name": "STATUS_FINAL",
+                  "state": "post",
+                  "completed": true,
+                  "description": "Final",
+                  "detail": "Final",
+                  "shortDetail": "Final"
+                }
+              },
+              "venue": {"fullName": "Båstad, Sweden", "court": "Court 3"},
+              "competitors": [
+                {
+                  "id": "5201-2575",
+                  "type": "team",
+                  "order": 2,
+                  "homeAway": "away",
+                  "winner": true,
+                  "linescores": [{"value": 6.0}, {"value": 6.0}],
+                  "roster": {
+                    "displayName": "Ya Hsin Lee / Ye Qiu Yu",
+                    "shortDisplayName": "Y. Lee / Q. Ye",
+                    "athletes": [
+                      {"guid": "g1", "displayName": "Ya Hsin Lee", "shortName": "Y. Lee", "fullName": "Ya Hsin Lee"},
+                      {
+                        "guid": "g2",
+                        "displayName": "Ye Qiu Yu",
+                        "shortName": "Q. Ye",
+                        "fullName": "Ye Qiu Yu",
+                        "flag": {"href": "https://a.espncdn.com/i/teamlogos/countries/500/chn.png", "alt": "China"}
+                      }
+                    ]
+                  },
+                  "statistics": []
+                },
+                {
+                  "id": "4292-4392",
+                  "type": "team",
+                  "order": 1,
+                  "homeAway": "home",
+                  "winner": false,
+                  "linescores": [{"value": 4.0}, {"value": 2.0}],
+                  "roster": {
+                    "displayName": "Mana Ayukawa / Kanako Morisaki",
+                    "shortDisplayName": "M. Ayukawa / K. Morisaki",
+                    "athletes": [
+                      {"guid": "g3", "displayName": "Mana Ayukawa", "shortName": "M. Ayukawa"},
+                      {"guid": "g4", "displayName": "Kanako Morisaki", "shortName": "K. Morisaki"}
+                    ]
+                  },
+                  "statistics": []
+                }
+              ],
+              "tournamentId": 306,
+              "type": {"id": "4", "text": "Women's Doubles", "slug": "womens-doubles"},
+              "round": {"id": "1", "displayName": "Round 1"},
+              "wasSuspended": false
+            }
+          ]
+        },
+        {
+          "grouping": {"slug": "mens-singles", "displayName": "Men's Singles"},
+          "competitions": [
+            {
+              "id": "179001",
+              "uid": "s:850~l:851~e:306-2026~c:179001",
+              "date": "2026-07-15T14:00Z",
+              "timeValid": true,
+              "status": {
+                "type": {
+                  "id": "1",
+                  "name": "STATUS_SCHEDULED",
+                  "state": "pre",
+                  "completed": false,
+                  "description": "Scheduled",
+                  "detail": "2026-07-15T14:00Z",
+                  "shortDetail": "7/15 - 2:00 PM UTC"
+                }
+              },
+              "competitors": [
+                {
+                  "id": "1001",
+                  "type": "athlete",
+                  "order": 1,
+                  "homeAway": "home",
+                  "winner": false,
+                  "linescores": [],
+                  "seed": 2,
+                  "athlete": {
+                    "guid": "g5",
+                    "displayName": "Casper Ruud",
+                    "shortName": "C. Ruud",
+                    "flag": {"href": "https://a.espncdn.com/i/teamlogos/countries/500/nor.png", "alt": "Norway"}
+                  }
+                },
+                {
+                  "id": "1002",
+                  "type": "athlete",
+                  "order": 2,
+                  "homeAway": "away",
+                  "winner": false,
+                  "linescores": [],
+                  "athlete": {
+                    "guid": "g6",
+                    "displayName": "Andrea Pellegrino",
+                    "shortName": "A. Pellegrino",
+                    "flag": {"href": "https://a.espncdn.com/i/teamlogos/countries/500/ita.png", "alt": "Italy"}
+                  }
+                }
+              ],
+              "tournamentId": 306,
+              "type": {"id": "1", "text": "Men's Singles", "slug": "mens-singles"},
+              "round": {"id": "2", "displayName": "Round 2"},
+              "wasSuspended": false
+            },
+            {
+              "id": "179002",
+              "uid": "s:850~l:851~e:306-2026~c:179002",
+              "date": "2026-07-14T09:00Z",
+              "timeValid": true,
+              "status": {
+                "type": {
+                  "id": "3",
+                  "name": "STATUS_FINAL",
+                  "state": "post",
+                  "completed": true,
+                  "description": "Retired",
+                  "detail": "Final - Retired",
+                  "shortDetail": "Final - RET"
+                }
+              },
+              "competitors": [
+                {
+                  "id": "1003",
+                  "type": "athlete",
+                  "order": 1,
+                  "homeAway": "home",
+                  "winner": true,
+                  "linescores": [{"value": 6.0}, {"value": 2.0}],
+                  "athlete": {"guid": "g7", "displayName": "Elmer Moller", "shortName": "E. Moller",
+                    "flag": {"href": "https://a.espncdn.com/i/teamlogos/countries/500/den.png", "alt": "Denmark"}}
+                },
+                {
+                  "id": "1004",
+                  "type": "athlete",
+                  "order": 2,
+                  "homeAway": "away",
+                  "winner": false,
+                  "linescores": [{"value": 3.0}, {"value": 1.0}],
+                  "athlete": {"guid": "g8", "displayName": "Hugo Gaston", "shortName": "H. Gaston",
+                    "flag": {"href": "https://a.espncdn.com/i/teamlogos/countries/500/fra.png", "alt": "France"}}
+                }
+              ],
+              "tournamentId": 306,
+              "type": {"id": "1", "text": "Men's Singles", "slug": "mens-singles"},
+              "round": {"id": "1", "displayName": "Qualifying Final"},
+              "wasSuspended": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

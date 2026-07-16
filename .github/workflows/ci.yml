@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  push:
+    paths-ignore:
+      - "output/**"
+      - "*.md"
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: 安装中文字体（卡片图测试需要）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - name: 安装依赖
+        run: pip install -q -e ".[dev]"
+      - name: 运行测试
+        run: pytest -v
+      - name: 冒烟测试：真实抓取今日数据
+        run: tennislive today || echo "::warning::真实抓取失败（可能是数据源临时不可用）"
