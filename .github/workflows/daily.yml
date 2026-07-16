@@ -32,6 +32,8 @@ jobs:
       WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}
       # 公众号模式：off（默认，只生成文件）/ draft（存草稿箱）/ publish（直接发布）
       WECHAT_MODE: ${{ vars.WECHAT_MODE || 'off' }}
+      # 卡片主题：dark=品牌深绿（默认）/ light=奶油浅色
+      TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
       # 公众号样式：pic=图片消息（小红书式竖图+文字，默认）/ article=传统图文
       WECHAT_STYLE: ${{ vars.WECHAT_STYLE || 'pic' }}
     steps:

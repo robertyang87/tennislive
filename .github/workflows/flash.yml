@@ -25,6 +25,8 @@ jobs:
       WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
       WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}
       WECHAT_MODE: ${{ vars.WECHAT_MODE || 'off' }}
+      # 卡片主题：dark=品牌深绿（默认）/ light=奶油浅色
+      TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
     steps:
       - uses: actions/checkout@v4
 
