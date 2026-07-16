@@ -156,7 +156,7 @@ def cmd_digest(args) -> int:
     from .render.pushmsg import to_push_html
 
     (outdir / "push.html").write_text(
-        to_push_html(digest, cards=[p.name for p in card_paths]),
+        to_push_html(digest, cards=[p.name for p in card_paths], xhs_text=xhs),
         encoding="utf-8",
     )
 

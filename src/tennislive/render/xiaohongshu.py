@@ -61,10 +61,24 @@ def _tags(digest: Digest) -> list[str]:
     return tags[:10]
 
 
+def _hook(digest: Digest) -> str:
+    """开头一句口语化钩子（小红书语气）."""
+    head = pick_headline(digest)
+    if "夺冠" in head:
+        return f"起床刷到大新闻：{head}🏆"
+    if "爆冷" in head or "掀翻" in head:
+        return f"昨晚网坛炸了个冷门💥 {head}"
+    if "止步" in head:
+        return f"可惜了😢 {head}，但网球就是这样"
+    return "边吃早餐边看，昨夜网坛 3 分钟速览👇"
+
+
 def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
     cn_cap, res_cap, sched_cap = quota
     d = digest.today
     lines: list[str] = []
+    lines.append(_hook(digest))
+    lines.append("")
     lines.append(f"📅 {d.month}月{d.day}日 · 北京时间")
     lines.append("")
 
@@ -122,7 +136,8 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
                 count += 1
         lines.append("")
 
-    lines.append("更多赛程赛果看图片～")
+    lines.append("你今晚打算熬夜看哪场？评论区聊聊👇")
+    lines.append("关注 @网球时差 ⏰ 每天7:30帮你倒好网球时差")
     lines.append("")
     lines.append(" ".join(_tags(digest)))
     return lines
