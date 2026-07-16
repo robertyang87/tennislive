@@ -199,28 +199,95 @@ def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=None, 
     )
 
 
-def _canvas() -> tuple[Image.Image, ImageDraw.ImageDraw]:
-    """渐变背景 + 右上装饰弧线."""
+def _draw_court(draw: ImageDraw.ImageDraw, y_top: int, y_bottom: int, color) -> None:
+    """透视网球场线稿（原创插画，替代版权球场照片做背景）."""
+    base_l, base_r = MARGIN - 120, W - MARGIN + 120
+    net_l, net_r = int(W * 0.26), int(W * 0.74)
+
+    def edge(t: float) -> tuple[float, float, float]:
+        """t=0 底线，t=1 球网；返回 (左x, 右x, y)."""
+        return (
+            base_l + (net_l - base_l) * t,
+            base_r + (net_r - base_r) * t,
+            y_bottom + (y_top - y_bottom) * t,
+        )
+
+    lw = 4
+    # 外框（双打场）
+    l0, r0, yb = edge(0.0)
+    l1, r1, yn = edge(1.0)
+    draw.polygon([(l0, yb), (r0, yb), (r1, yn), (l1, yn)], outline=color, width=lw)
+    # 单打边线（内缩 11%）
+    for side in (0.11, 0.89):
+        pts = []
+        for t in (0.0, 1.0):
+            l, r, yy = edge(t)
+            pts.append((l + (r - l) * side, yy))
+        draw.line(pts, fill=color, width=lw)
+    # 发球线 + 中线
+    ls, rs, ys = edge(0.62)
+    draw.line([(ls + (rs - ls) * 0.11, ys), (ls + (rs - ls) * 0.89, ys)], fill=color, width=lw)
+    lm0, rm0, ym0 = edge(0.62)
+    lm1, rm1, ym1 = edge(1.0)
+    draw.line(
+        [((lm0 + rm0) / 2, ym0), ((lm1 + rm1) / 2, ym1)], fill=color, width=lw
+    )
+    # 球网（顶边加厚 + 网柱）
+    draw.line([(l1 - 14, yn), (r1 + 14, yn)], fill=color, width=10)
+    draw.line([(l1 - 14, yn), (l1 - 14, yn + 26)], fill=color, width=6)
+    draw.line([(r1 + 14, yn), (r1 + 14, yn + 26)], fill=color, width=6)
+
+
+def _canvas(deco: str = "arcs") -> tuple[Image.Image, ImageDraw.ImageDraw]:
+    """渐变背景 + 装饰（arcs=右上弧线 / court=透视球场线稿 / none）."""
     img = Image.new("RGB", (W, H), BG_TOP)
     draw = ImageDraw.Draw(img)
     for y in range(H):
         t = y / H
         c = tuple(int(a + (b - a) * t) for a, b in zip(BG_TOP, BG_BOTTOM))
         draw.line([(0, y), (W, y)], fill=c)
-    # 装饰：右上角大圆弧（比背景略亮的绿，低调纹理感）
-    deco = DECO
-    draw.arc([W - 460, -300, W + 320, 480], start=60, end=250, fill=deco, width=56)
-    draw.arc([W - 320, -220, W + 220, 320], start=60, end=260, fill=deco, width=30)
+    if deco == "arcs":
+        draw.arc([W - 460, -300, W + 320, 480], start=60, end=250, fill=DECO, width=56)
+        draw.arc([W - 320, -220, W + 220, 320], start=60, end=260, fill=DECO, width=30)
+    elif deco == "court":
+        _draw_court(draw, y_top=380, y_bottom=H + 80, color=DECO)
     return img, draw
+
+
+# 赛事级别徽章配色
+LEVEL_BADGE_COLOR = {
+    "GS": (122, 84, 168),
+    "M1000": (188, 152, 50),
+    "W1000": (188, 152, 50),
+    "Finals": (188, 152, 50),
+    "ATP500": (74, 128, 176),
+    "WTA500": (74, 128, 176),
+    "ATP250": (40, 138, 84),
+    "WTA250": (40, 138, 84),
+}
+
+
+def _tournament_badge(draw, fonts, cx: int, cy: int, r: int, level: str | None) -> None:
+    """生成式赛事徽章：级别配色圆环 + 网球图形（原创，替代官方 logo）."""
+    ring = LEVEL_BADGE_COLOR.get(level or "", (110, 128, 120))
+    draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=ring, width=6)
+    _draw_ball(draw, cx, cy, int(r * 0.55))
 
 
 def _date_label(d) -> str:
     return f"{d.month}.{d.day} · {WEEKDAY_ZH[d.weekday()]}"
 
 
-def _page(fonts: _Fonts, date_label: str, column_title: str, en_sub: str, accent=None):
+def _page(
+    fonts: _Fonts,
+    date_label: str,
+    column_title: str,
+    en_sub: str,
+    accent=None,
+    deco: str = "arcs",
+):
     """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
-    img, draw = _canvas()
+    img, draw = _canvas(deco)
     _draw_ball(draw, MARGIN + 26, MARGIN + 30, 24)
     draw.text((MARGIN + 70, MARGIN), BRAND, font=fonts.section, fill=WHITE)
     tl = draw.textlength(date_label, font=fonts.small)
@@ -326,7 +393,7 @@ def _split_result(m: Match) -> tuple[str, str]:
 # ---------- 各卡片 ----------
 
 def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
-    img, draw = _canvas()
+    img, draw = _canvas("court")
     _draw_ball(draw, W - 190, 250, 100)
     d = digest.today
     draw.text((MARGIN, 170), f"{BRAND} · TENNIS JETLAG", font=fonts.en, fill=GREY)
@@ -436,15 +503,19 @@ def _cell_side_row(
         sx += step
 
 
-def _scoreboard_cell(draw, fonts, x: int, y: int, w: int, h: int, m: Match, tag_upset: bool = False) -> None:
+def _scoreboard_cell(
+    draw, fonts, x: int, y: int, w: int, h: int, m: Match,
+    tag_upset: bool = False, show_tournament: bool = True,
+) -> None:
     draw.rounded_rectangle([x, y, x + w, y + h], radius=18, fill=CELL_BG)
-    # 元信息行：项目·轮次 | 赛事
+    # 元信息行：项目·轮次 | 赛事（有顶部横幅时省略赛事名）
     meta_left = match_round_display(m) or "单打"
-    g = group_by_tournament([m])[0]
     draw.text((x + 22, y + 16), meta_left, font=fonts.cell_meta, fill=CELL_GREY)
-    right = _fit(draw, g.name_zh, fonts.cell_meta, int(w * 0.45))
-    tw = draw.textlength(right, font=fonts.cell_meta)
-    draw.text((x + w - tw - 22, y + 16), right, font=fonts.cell_meta, fill=CELL_GREY)
+    if show_tournament:
+        g = group_by_tournament([m])[0]
+        right = _fit(draw, g.name_zh, fonts.cell_meta, int(w * 0.45))
+        tw = draw.textlength(right, font=fonts.cell_meta)
+        draw.text((x + w - tw - 22, y + 16), right, font=fonts.cell_meta, fill=CELL_GREY)
     draw.line([x + 22, y + 54, x + w - 22, y + 54], fill=CELL_LINE, width=2)
 
     row_h = (h - 66) // 2
@@ -471,9 +542,30 @@ def _scoreboard_cell(draw, fonts, x: int, y: int, w: int, h: int, m: Match, tag_
 
 
 def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    """赛果记分牌卡：2 列白色格子，胜者绿条+对勾，抢七小分上标."""
-    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD")
+    """赛果记分牌卡：2 列白色格子，胜者绿条+对勾，抢七小分上标.
+
+    背景为透视球场线稿；全部比赛同属一个赛事时显示赛事横幅（徽章+名称）。
+    """
+    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD", deco="court")
     matches = matches[:6]
+
+    # 全部比赛同属一个赛事（如大满贯日）→ 顶部赛事横幅，格子内不再重复赛事名
+    names = {m.tournament.name for m in matches}
+    single_event = len(names) == 1
+    if single_event:
+        g = group_by_tournament(matches[:1])[0]
+        title = g.title
+        # 合办赛事（ATP+WTA 同名，如大满贯）不带单一巡回赛前缀
+        if len({m.tour for m in matches}) > 1 and title.startswith(("ATP ", "WTA ")):
+            title = title[4:]
+        _tournament_badge(draw, fonts, MARGIN + 40, y + 34, 38, g.level)
+        draw.text(
+            (MARGIN + 100, y + 4),
+            _fit(draw, title, fonts.section, W - 2 * MARGIN - 110),
+            font=fonts.section,
+            fill=WHITE,
+        )
+        y += 100
     cols = 2
     rows = (len(matches) + cols - 1) // cols
     gap = 22
@@ -489,6 +581,7 @@ def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Im
         _scoreboard_cell(
             draw, fonts, cx, cy, cell_w, cell_h, m,
             tag_upset=(top_upset is not None and m.match_id == top_upset.match_id),
+            show_tournament=not single_event,
         )
     _footer(draw, fonts)
     return img
