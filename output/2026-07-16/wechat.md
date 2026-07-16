@@ -98,18 +98,32 @@
 - **女双·四分之一决赛** 🇨🇳 蒋欣玗/吴芳娴 2-0 🇫🇷 Carole Monnet/🇬🇷 Sapfo Sakellaridi（7-5 6-3）
 - **女双·第一轮** 🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 
-## 🔴 正在进行（3 场）
+## 🔴 正在进行（8 场）
+
+### ATP 瑞典公开赛（ATP 250）
+
+- **男单·第二轮** 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　当前 6-5
 
 ### ATP 瑞士公开赛（ATP 250）
 
-- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 6-5
+- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 7-6(1) 4-5
+
+### WTA 雅西公开赛（WTA 250）
+
+- **女单·第二轮** 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　当前 5-1
 
 ### WTA Enka Open
 
-- **女单·第二轮** 🇷🇺 Vera Zvonareva vs 🇸🇰 Viktoria Hruncakova　当前 0-1
-- **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina vs 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying　当前 0-1
+- **女单·第二轮** 🇷🇺 Vera Zvonareva vs 🇸🇰 Viktoria Hruncakova　当前 6-6
+- **女单·第二轮** 🇧🇾 Darya Khamutsianskaya vs 🇷🇺 Tatiana Prozorova　当前 4-6
+- **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina vs 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying　当前 6-6
 
-## 📅 今日赛程（31 场，北京时间）
+### WTA 基茨比厄尔公开赛
+
+- **女单·第二轮** 🇦🇷 Maria Lourdes Carle vs 🇨🇿 Barbora Palicova　当前 0-6 6-1 1-2
+- **女单·第二轮** 🇪🇸 Marina Bassols Ribera vs 🇳🇱 鲁斯　当前 0-6
+
+## 📅 今日赛程（24 场，北京时间）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -117,24 +131,20 @@
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- `待定` 🇵🇹 博尔热斯 vs 🇮🇹 达尔代里　·男单·四分之一决赛
-- `待定` 🇵🇾 Adolfo Daniel Vallejo vs 🇮🇹 Stefano Travaglia　·男单·四分之一决赛
-- `20:10` 🇷🇺 卢布列夫 vs 🇮🇹 Andrea Pellegrino　·男单·第二轮
-- `21:00` 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　·男单·第二轮
+- `21:30` 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　·男单·第二轮
 - `22:30` 🇳🇱 德容 vs 🇦🇷 巴埃斯　·男单·第二轮
 
 ### ATP 瑞士公开赛（ATP 250）
 
 - `待定` 🇧🇪 科利尼翁 vs 🇲🇨 瓦舍罗　·男单·四分之一决赛
-- `20:30` 🇨🇭 Jerome Kym vs 🇬🇷 西西帕斯　·男单·第二轮
-- `22:00` 🇰🇿 布勃利克 vs 🇫🇷 阿利斯　·男单·第二轮
+- `21:30` 🇨🇭 Jerome Kym vs 🇬🇷 西西帕斯　·男单·第二轮
+- `22:30` 🇰🇿 布勃利克 vs 🇫🇷 阿利斯　·男单·第二轮
 - `23:30` 🇰🇿 Aleksandr Shevchenko vs 🇨🇭 斯特里克　·男单·第二轮
 
 ### WTA 雅西公开赛（WTA 250）
 
 - `待定` 🇸🇮 齐丹舍克 vs 🇭🇷 Petra Marcinko　·女单·四分之一决赛
 - `待定` 🇰🇿 普汀塞娃 vs 🇪🇬 谢里夫　·女单·四分之一决赛
-- `20:15` 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　·女单·第二轮
 - `22:30` 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　·女单·第二轮
 
 ### WTA ATV Bancomat Tennis Open
@@ -147,7 +157,6 @@
 ### WTA Enka Open
 
 - `待定` 🇧🇪 Hanne Vandewinkel vs 🇫🇷 Harmony Tan　·女单·四分之一决赛
-- `20:10` 🇧🇾 Darya Khamutsianskaya vs 🇷🇺 Tatiana Prozorova　·女单·第二轮
 - `21:30` 🇨🇳 高馨妤 vs 🇨🇿 Vendula Valdmannova　·女单·第二轮
 - `22:00` 🇷🇺 扎哈罗娃 vs 🇷🇺 Alexandra Shubladze　·女单·第二轮
 
@@ -156,8 +165,6 @@
 - `待定` 🇸🇮 Veronika Erjavec vs 🇵🇱 Gina Feistel　·女单·四分之一决赛
 - `待定` 🇦🇹 Julia Grabher vs 🇧🇪 Jeline Vandromme　·女单·四分之一决赛
 - `待定` 🇷🇺 埃里卡·安德烈耶娃 vs 🇦🇹 Sinja Kraus　·女单·四分之一决赛
-- `20:15` 🇦🇷 Maria Lourdes Carle vs 🇨🇿 Barbora Palicova　·女单·第二轮
-- `20:30` 🇪🇸 Marina Bassols Ribera vs 🇳🇱 鲁斯　·女单·第二轮
 
 ### WTA 雅典公开赛
 
