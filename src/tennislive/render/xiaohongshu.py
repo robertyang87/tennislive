@@ -23,17 +23,17 @@ from .wechat import pick_headline
 
 MAX_BODY = 950  # 小红书正文上限 1000 字，留余量
 
-BASE_TAGS = ["#网球", "#WTA", "#ATP", "#网球比分", "#每日赛报"]
+BASE_TAGS = ["#网球", "#WTA", "#ATP", "#网球晨报", "#网球比分"]
 
 # 逐档收缩的配额：(中国军团, 赛果, 看点)
 _QUOTAS = [(6, 10, 8), (5, 8, 6), (4, 6, 4), (3, 4, 3), (2, 3, 2)]
 
 
 def post_title(digest: Digest) -> str:
-    """≤20 字的标题，如 '🎾7.16网球速报|辛纳进决赛'."""
+    """≤20 字的标题，如 '🎾7.16网球晨报|辛纳进决赛'."""
     d = digest.today
     head = pick_headline(digest)
-    title = f"🎾{d.month}.{d.day}网球速报|{head}"
+    title = f"🎾{d.month}.{d.day}网球晨报|{head}"
     if len(title) > 20:
         title = title[:19] + "…"
     return title

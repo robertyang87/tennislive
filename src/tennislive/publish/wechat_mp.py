@@ -158,6 +158,41 @@ class WeChatPublisher:
         logger.info("公众号草稿创建成功 media_id=%s", media_id)
         return media_id
 
+    def add_image_draft(
+        self,
+        title: str,
+        content: str,
+        image_media_ids: list[str],
+    ) -> str:
+        """新建「图片消息」草稿（小红书式：竖版图片轮播 + 文字），返回 media_id.
+
+        content 为纯文本（支持换行与 emoji），第一张图自动作为封面。
+        """
+        article = {
+            "article_type": "newspic",
+            "title": title[:64],
+            "content": content[:1000],
+            "need_open_comment": 1,
+            "only_fans_can_comment": 0,
+            "image_info": {
+                "image_list": [
+                    {"image_media_id": mid} for mid in image_media_ids[:20]
+                ]
+            },
+        }
+        resp = self.session.post(
+            f"{API}/draft/add",
+            params={"access_token": self.access_token()},
+            json={"articles": [article]},
+            timeout=self.timeout,
+        )
+        data = self._check(resp.json())
+        media_id = data.get("media_id")
+        if not media_id:
+            raise WeChatError(f"新建图片消息草稿失败: {data}")
+        logger.info("公众号图片消息草稿创建成功 media_id=%s", media_id)
+        return media_id
+
     def publish_draft(self, media_id: str) -> str:
         """把草稿提交发布（异步），返回 publish_id."""
         resp = self.session.post(
@@ -222,6 +257,24 @@ def publish_article(
             )
 
     media_id = pub.add_draft(title, html_content, thumb_id, digest=digest)
+    result = {"draft_media_id": media_id}
+    if do_publish:
+        result["publish_id"] = pub.publish_draft(media_id)
+    return result
+
+
+def publish_image_post(
+    title: str,
+    content: str,
+    images: list[Path],
+    do_publish: bool = False,
+) -> dict:
+    """小红书式图片消息：上传卡片图为素材 → 建图片消息草稿 →（可选）发布."""
+    if not images:
+        raise WeChatError("图片消息至少需要一张图片")
+    pub = WeChatPublisher()
+    media_ids = [pub.upload_thumb(p) for p in images[:20]]
+    media_id = pub.add_image_draft(title, content, media_ids)
     result = {"draft_media_id": media_id}
     if do_publish:
         result["publish_id"] = pub.publish_draft(media_id)

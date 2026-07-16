@@ -22,59 +22,17 @@ from .common import (
 
 
 def pick_headline(digest: Digest) -> str:
-    """生成标题亮点：优先中国球员赛果，其次最高级别赛事的最靠后轮次赛果."""
-    candidates = digest.results or digest.schedule
-    if not candidates:
+    """标题亮点（全自动）：委托 titles 模块的规则选择."""
+    if not (digest.results or digest.schedule):
         return "今日暂无巡回赛比赛"
+    from .titles import pick_headline_auto
 
-    chinese = [m for m in digest.results if _is_chinese_involved(m)]
-    if chinese:
-        m = chinese[0]
-        w = m.winner_players()
-        if w:
-            zh = player_zh(w[0].name)
-            won = _is_chinese_involved_side(w)
-            r = match_round_display(m)
-            is_final = bool(r) and r.split("·")[-1] == "决赛"
-            r_flat = (r or "").replace("·", "")
-            if won and is_final:
-                return f"{zh}夺冠！"
-            if not won:
-                loser = m.loser_players() or []
-                zh = player_zh(loser[0].name) if loser else zh
-                return f"{zh}止步{r_flat or '本轮'}"
-            return f"{zh}晋级{r_flat or '下一轮'}"
-
-    groups = group_by_tournament(digest.results)
-    if groups:
-        g = groups[0]
-        m = g.matches[0]
-        w = m.winner_players()
-        if w:
-            return f"{player_zh(w[0].name)}赢下{g.name_zh}{match_round_display(m)}"
-    upcoming_cn = [m for m in digest.schedule if _is_chinese_involved(m)]
-    if upcoming_cn:
-        m = upcoming_cn[0]
-        for p in m.home + m.away:
-            if _is_chinese_involved_side([p]):
-                return f"{player_zh(p.name)}今日出战"
-    return "每日赛程赛果速览"
-
-
-def _is_chinese_involved_side(players: list) -> bool:
-    from .common import CHINESE_PLAYER_NAMES
-
-    for p in players:
-        if (p.country or "").upper() in ("CHN", "CN"):
-            return True
-        if player_zh(p.name) in CHINESE_PLAYER_NAMES:
-            return True
-    return False
+    return pick_headline_auto(digest)
 
 
 def article_title(digest: Digest) -> str:
     d = digest.today
-    return f"网球速报 | {d.month}月{d.day}日 {pick_headline(digest)}"
+    return f"网球晨报 | {d.month}月{d.day}日 {pick_headline(digest)}"
 
 
 # ---------- Markdown ----------

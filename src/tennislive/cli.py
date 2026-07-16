@@ -128,8 +128,16 @@ def cmd_digest(args) -> int:
         except Exception as e:  # 字体缺失等不阻塞文字内容生成
             console.print(f"[yellow]卡片图生成失败（跳过）：{e}[/yellow]")
 
+    # 标题：自动选用 + 候选留档
+    from .render.titles import title_candidates
+
+    title = article_title(digest)
+    (outdir / "wechat_title.txt").write_text(title, encoding="utf-8")
+    (outdir / "title_candidates.txt").write_text(
+        "\n".join(title_candidates(digest)), encoding="utf-8"
+    )
+
     # 公众号
-    (outdir / "wechat_title.txt").write_text(article_title(digest), encoding="utf-8")
     (outdir / "wechat.md").write_text(to_markdown(digest), encoding="utf-8")
     html = to_html(digest)
     if card_paths:
@@ -141,10 +149,27 @@ def cmd_digest(args) -> int:
     (outdir / "wechat.html").write_text(html, encoding="utf-8")
 
     # 小红书
-    (outdir / "xiaohongshu.txt").write_text(to_post(digest), encoding="utf-8")
+    xhs = to_post(digest)
+    (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
 
     # 原始数据
     _dump_json(digest, outdir / "digest.json")
+
+    # 自动质检（替代人工审核）
+    from .qa import run_checks
+
+    fatal, warns = run_checks(digest, title, xhs)
+    (outdir / "qa.txt").write_text(
+        "\n".join(["[FATAL] " + f for f in fatal] + ["[WARN] " + w for w in warns])
+        or "OK",
+        encoding="utf-8",
+    )
+    for w in warns:
+        console.print(f"[yellow]质检警告：{w}[/yellow]")
+    if fatal:
+        for f in fatal:
+            console.print(f"[red]质检不通过：{f}[/red]")
+        return 2  # 非零退出阻断后续自动发布
 
     console.print(f"[green]内容包已生成：{outdir}[/green]")
     console.print(
@@ -160,40 +185,62 @@ def cmd_digest(args) -> int:
 # ---------- 发布 ----------
 
 def cmd_publish_wechat(args) -> int:
-    from .publish.wechat_mp import WeChatError, publish_article
+    from .publish.wechat_mp import (
+        WeChatError,
+        publish_article,
+        publish_image_post,
+    )
     from .render.terminal import console
 
     d = Path(args.dir)
-    title_f, html_f = d / "wechat_title.txt", d / "wechat.html"
-    if not html_f.exists():
-        console.print(f"[red]{html_f} 不存在，请先运行 tennislive digest[/red]")
-        return 1
-    cards_dir = d / "cards"
-    cover = cards_dir / "card_00_cover.png"
-    if not cover.exists():
-        console.print(f"[red]封面图 {cover} 不存在（公众号文章必须有封面）[/red]")
-        return 1
-    content_images = sorted(
-        p for p in cards_dir.glob("card_*.png") if "cover" not in p.name
-    )
+    title_f = d / "wechat_title.txt"
     title = (
-        title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球每日速报"
+        title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球晨报"
     )
+    cards_dir = d / "cards"
+    cards = sorted(cards_dir.glob("card_*.png"))
+
     try:
-        result = publish_article(
-            title=title,
-            html_content=html_f.read_text(encoding="utf-8"),
-            cover_image=cover,
-            content_images=content_images,
-            digest=title,
-            do_publish=args.publish,
-        )
+        if args.style == "pic":
+            # 小红书式图片消息：竖版卡片轮播 + 文案
+            xhs_f = d / "xiaohongshu.txt"
+            if not cards:
+                console.print(f"[red]{cards_dir} 里没有卡片图[/red]")
+                return 1
+            content = ""
+            if xhs_f.exists():
+                lines = xhs_f.read_text(encoding="utf-8").splitlines()
+                content = "\n".join(lines[2:]) if len(lines) > 2 else ""
+            result = publish_image_post(
+                title=title,
+                content=content,
+                images=cards,
+                do_publish=args.publish,
+            )
+        else:
+            html_f = d / "wechat.html"
+            if not html_f.exists():
+                console.print(f"[red]{html_f} 不存在，请先运行 tennislive digest[/red]")
+                return 1
+            cover = next((p for p in cards if "cover" in p.name), None)
+            if cover is None:
+                console.print("[red]找不到封面卡片（图文消息必须有封面）[/red]")
+                return 1
+            content_images = [p for p in cards if "cover" not in p.name]
+            result = publish_article(
+                title=title,
+                html_content=html_f.read_text(encoding="utf-8"),
+                cover_image=cover,
+                content_images=content_images,
+                digest=title,
+                do_publish=args.publish,
+            )
     except WeChatError as e:
         console.print(f"[red]{e}[/red]")
         return 1
     console.print(f"[green]公众号操作成功：{result}[/green]")
     if not args.publish:
-        console.print("已存入草稿箱，请到公众号后台确认后群发。加 --publish 可直接发布。")
+        console.print("已存入草稿箱。加 --publish 可直接发布。")
     return 0
 
 
@@ -268,6 +315,12 @@ def build_parser() -> argparse.ArgumentParser:
     spw = pub_sub.add_parser("wechat", help="公众号：上传素材并创建草稿")
     spw.add_argument("--dir", required=True, help="digest 生成的内容目录，如 output/2026-07-16")
     spw.add_argument("--publish", action="store_true", help="创建草稿后直接提交发布")
+    spw.add_argument(
+        "--style",
+        choices=["pic", "article"],
+        default="pic",
+        help="pic=图片消息（小红书式竖图+文字，默认）；article=传统图文",
+    )
     spp = pub_sub.add_parser("pushplus", help="通过 PushPlus 推送到自己微信")
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
 

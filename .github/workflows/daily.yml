@@ -1,11 +1,11 @@
 name: daily-tennis-digest
 
-# 每天北京时间 09:10 生成前一日赛果 + 当日赛程的内容包，
-# 提交回仓库，并按配置推送/发布。
+# 每天北京时间 07:30 生成晨报（昨夜赛果 + 今日赛程），
+# 提交回仓库，并按配置全自动推送/发布。
 # 注意：GitHub 定时任务可能有 10~30 分钟延迟。
 on:
   schedule:
-    - cron: "10 1 * * *"   # 01:10 UTC = 09:10 北京时间
+    - cron: "30 23 * * *"   # 23:30 UTC = 次日 07:30 北京时间
   workflow_dispatch:
     inputs:
       date:
@@ -30,8 +30,10 @@ jobs:
       WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
       WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
       WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}
-      # 公众号模式：off（默认，只生成文件）/ draft（存草稿箱）/ publish（直接群发）
+      # 公众号模式：off（默认，只生成文件）/ draft（存草稿箱）/ publish（直接发布）
       WECHAT_MODE: ${{ vars.WECHAT_MODE || 'off' }}
+      # 公众号样式：pic=图片消息（小红书式竖图+文字，默认）/ article=传统图文
+      WECHAT_STYLE: ${{ vars.WECHAT_STYLE || 'pic' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -85,4 +87,5 @@ jobs:
         run: |
           EXTRA=""
           if [ "$WECHAT_MODE" = "publish" ]; then EXTRA="--publish"; fi
-          tennislive publish wechat --dir "${{ steps.gen.outputs.outdir }}" $EXTRA
+          tennislive publish wechat --dir "${{ steps.gen.outputs.outdir }}" \
+            --style "$WECHAT_STYLE" $EXTRA
