@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+import re
+
 from ..digest import Digest
 from ..models import Match, MatchStatus
 from ..timeutil import fmt_date_zh, fmt_time_beijing
@@ -187,6 +189,28 @@ def _esc(s: str) -> str:
     )
 
 
+# 旗帜 emoji（一对区域指示符）→ 旗帜小图。
+# Windows 浏览器/编辑器不渲染旗帜 emoji（只显示字母码），HTML 版统一换成图片；
+# 走公众号 API 发布时 publish 模块会把这些外链图转存为微信素材。
+_FLAG_PAIR_RE = re.compile("([\U0001F1E6-\U0001F1FF])([\U0001F1E6-\U0001F1FF])")
+FLAG_IMG_STYLE = (
+    "width:20px;height:15px;display:inline-block;vertical-align:-2px;"
+    "margin-right:3px;border-radius:2px;"
+)
+
+
+def _flag_img(match: re.Match) -> str:
+    iso2 = "".join(chr(ord(c) - 0x1F1E6 + ord("a")) for c in match.groups())
+    return (
+        f'<img src="https://flagcdn.com/40x30/{iso2}.png" '
+        f'alt="{iso2.upper()}" style="{FLAG_IMG_STYLE}" />'
+    )
+
+
+def _emoji_flags_to_img(html: str) -> str:
+    return _FLAG_PAIR_RE.sub(_flag_img, html)
+
+
 def to_html(digest: Digest) -> str:
     parts: list[str] = []
     parts.append(
@@ -257,4 +281,4 @@ def to_html(digest: Digest) -> str:
         f'<p style="{_S["footer"]}">时间均为北京时间；单打全收录，双打仅收录决赛与'
         f"中国球员场次；数据来自公开比分接口，以官方为准。</p>"
     )
-    return "\n".join(parts)
+    return _emoji_flags_to_img("\n".join(parts))
