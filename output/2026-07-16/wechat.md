@@ -100,15 +100,15 @@
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- **男单·第二轮** 🇬🇪 巴西拉什维利 vs 🇦🇷 Thiago Agustin Tirante　当前 5-7 6-3 4-4
+- **男单·第二轮** 🇬🇪 巴西拉什维利 vs 🇦🇷 Thiago Agustin Tirante　当前 5-7 6-3 4-5
 
 ### ATP 瑞士公开赛（ATP 250）
 
-- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 3-4
+- **男单·第二轮** 🇵🇹 法里亚 vs 🇳🇴 鲁德　当前 4-4
 
 ### WTA 雅西公开赛（WTA 250）
 
-- **女单·第二轮** 🇪🇬 谢里夫 vs 🇪🇸 Kaitlin Quevedo　当前 6-3 3-4
+- **女单·第二轮** 🇪🇬 谢里夫 vs 🇪🇸 Kaitlin Quevedo　当前 6-3 5-4
 
 ### WTA 基茨比厄尔公开赛
 
@@ -138,7 +138,7 @@
 ### WTA 雅西公开赛（WTA 250）
 
 - `待定` 🇸🇮 齐丹舍克 vs 🇭🇷 Petra Marcinko　·女单·四分之一决赛
-- `19:50` 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　·女单·第二轮
+- `20:00` 🇺🇦 Oleksandra Oliynykova vs 🇷🇺 Elena Pridankina　·女单·第二轮
 - `22:30` 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　·女单·第二轮
 
 ### WTA ATV Bancomat Tennis Open
