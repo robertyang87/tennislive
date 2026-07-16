@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -16,8 +17,18 @@ from PIL import Image, ImageDraw, ImageFont
 from ..digest import Digest
 from ..models import Match
 from ..timeutil import fmt_time_beijing
-from .common import group_by_tournament, match_round_display, result_line, side_display
+from .common import (
+    curate_for_social,
+    group_by_tournament,
+    is_chinese_involved,
+    match_round_display,
+    result_line,
+    side_display,
+)
 from .wechat import pick_headline
+
+# 小红书最多 18 张图；控制在封面 + 赛果/赛程各最多 4 页
+MAX_PAGES_PER_SECTION = 4
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +158,7 @@ def _footer(draw: ImageDraw.ImageDraw, fonts: _Fonts, page: int, pages: int) -> 
     draw.text(((W - tl) / 2, H - MARGIN - 20), text, font=fonts.small, fill=GREY)
 
 
-def _paginate(sections: list[CardSection], per_page: int = 12) -> list[list[CardSection]]:
+def _paginate(sections: list[CardSection], per_page: int = 13) -> list[list[CardSection]]:
     """按行数分页；一场赛事的行可以跨页（重复赛事标题）."""
     pages: list[list[CardSection]] = []
     cur: list[CardSection] = []
@@ -261,16 +272,46 @@ def _cover(fonts: _Fonts, digest: Digest) -> Image.Image:
     return img
 
 
+# CJK 字体没有 emoji 字形（会画成方框），卡片文本统一剥离 emoji（含国旗）
+_EMOJI_RE = re.compile(
+    "[\U0001F1E6-\U0001F1FF\U0001F300-\U0001FAFF☀-➿️‍]+"
+)
+
+
+def _strip_emoji(s: str) -> str:
+    return re.sub(r"\s{2,}", " ", _EMOJI_RE.sub("", s)).strip()
+
+
+# 卡片左栏宽度有限（150px ≈ 5个汉字），用短轮次名
+_SHORT_ROUND = {
+    "四分之一决赛": "1/4决赛",
+    "资格赛首轮": "资格赛",
+    "资格赛次轮": "资格赛",
+    "资格赛决胜轮": "资格赛",
+}
+
+
+def _short_left(r: str | None) -> str:
+    if not r:
+        return ""
+    # 去掉项目前缀（男单·半决赛 → 半决赛），卡片按分组已能区分
+    r = r.split("·")[-1]
+    return _SHORT_ROUND.get(r, r)[:5]
+
+
 def _result_sections(matches: list[Match]) -> list[CardSection]:
     sections = []
     for group in group_by_tournament(matches):
         lines = []
         for m in group.matches:
             r = match_round_display(m)
+            main = result_line(m).replace("（", " (").replace("）", ")")
+            if m.is_doubles:
+                main = "[双打] " + main
             lines.append(
                 CardLine(
-                    left=(r or "")[:6],
-                    main=result_line(m).replace("（", " (").replace("）", ")"),
+                    left=_short_left(r),
+                    main=_strip_emoji(main),
                     accent=_has_chinese(m),
                 )
             )
@@ -283,10 +324,13 @@ def _schedule_sections(matches: list[Match]) -> list[CardSection]:
     for group in group_by_tournament(matches):
         lines = []
         for m in group.matches:
+            main = f"{side_display(m.home)} vs {side_display(m.away)}"
+            if m.is_doubles:
+                main = "[双打] " + main
             lines.append(
                 CardLine(
                     left=fmt_time_beijing(m.start_utc),
-                    main=f"{side_display(m.home)} vs {side_display(m.away)}",
+                    main=_strip_emoji(main),
                     accent=_has_chinese(m),
                 )
             )
@@ -295,36 +339,54 @@ def _schedule_sections(matches: list[Match]) -> list[CardSection]:
 
 
 def _has_chinese(m: Match) -> bool:
-    from .wechat import _is_chinese_involved
-
-    return _is_chinese_involved(m)
+    return is_chinese_involved(m)
 
 
 def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
-    """生成封面 + 赛果页 + 赛程页，返回文件路径列表."""
+    """生成封面 + 赛果页 + 赛程页，返回文件路径列表.
+
+    内容用社媒精选（单打 + 决赛/中国球员双打），每节最多 4 页，
+    文件名用全局递增序号保证排序正确。
+    """
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
+    # 清理上次生成的卡片，避免定时任务提交时残留过期文件
+    for old in outdir.glob("card_*.png"):
+        old.unlink()
     fonts = _Fonts()
     d = digest.today
     date_label = f"{d.year}-{d.month:02d}-{d.day:02d} 北京时间"
 
     images: list[tuple[str, Image.Image]] = [("card_00_cover.png", _cover(fonts, digest))]
+    seq = 1
 
-    result_pages = _paginate(_result_sections(digest.results)) if digest.results else []
+    results = curate_for_social(digest.results)
+    result_pages = _paginate(_result_sections(results)) if results else []
+    if len(result_pages) > MAX_PAGES_PER_SECTION:
+        logger.info(
+            "赛果 %d 页超出上限，截取前 %d 页", len(result_pages), MAX_PAGES_PER_SECTION
+        )
+        result_pages = result_pages[:MAX_PAGES_PER_SECTION]
     for i, page_secs in enumerate(result_pages):
         img = _render_page(
             fonts, date_label, "昨日赛果", page_secs, i + 1, len(result_pages)
         )
-        images.append((f"card_1{i}_results.png", img))
+        images.append((f"card_{seq:02d}_results.png", img))
+        seq += 1
 
-    schedule_pages = (
-        _paginate(_schedule_sections(digest.schedule)) if digest.schedule else []
-    )
+    schedule = curate_for_social(digest.schedule)
+    schedule_pages = _paginate(_schedule_sections(schedule)) if schedule else []
+    if len(schedule_pages) > MAX_PAGES_PER_SECTION:
+        logger.info(
+            "赛程 %d 页超出上限，截取前 %d 页", len(schedule_pages), MAX_PAGES_PER_SECTION
+        )
+        schedule_pages = schedule_pages[:MAX_PAGES_PER_SECTION]
     for i, page_secs in enumerate(schedule_pages):
         img = _render_page(
             fonts, date_label, "今日赛程", page_secs, i + 1, len(schedule_pages)
         )
-        images.append((f"card_2{i}_schedule.png", img))
+        images.append((f"card_{seq:02d}_schedule.png", img))
+        seq += 1
 
     paths: list[Path] = []
     for name, img in images:

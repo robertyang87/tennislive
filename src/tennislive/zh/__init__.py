@@ -45,8 +45,9 @@ def _player_lookup() -> dict[str, str]:
 def player_zh(name: str) -> str:
     """球员英文名 → 中文译名；没有译名时原样返回英文名.
 
-    支持 "Jannik Sinner" 全名精确匹配；对 "J. Sinner" / "Sinner J." 这类
-    缩写形式，尝试按姓氏唯一匹配。
+    支持 "Jannik Sinner" 全名精确匹配；数据源对东亚球员常用"姓 名"序
+    （如 ESPN 的 "Zheng Qinwen"），因此再试一次词序反转；对 "J. Sinner" /
+    "Sinner J." 这类缩写形式，尝试按姓氏唯一匹配。
     """
     if not name:
         return name
@@ -54,6 +55,19 @@ def player_zh(name: str) -> str:
     hit = lookup.get(_normalize_name(name))
     if hit:
         return hit
+
+    # 词序反转："Zheng Qinwen" → "Qinwen Zheng"
+    words = _normalize_name(name).split(" ")
+    if 2 <= len(words) <= 3:
+        hit = lookup.get(" ".join(reversed(words)))
+        if hit:
+            return hit
+
+    # 去掉中间名："Roman Andres Burruchaga" → "Roman Burruchaga"
+    if len(words) >= 3:
+        hit = lookup.get(f"{words[0]} {words[-1]}")
+        if hit:
+            return hit
 
     # 缩写形式："J. Sinner" 或 "Sinner J."
     cleaned = name.replace(",", " ").strip()

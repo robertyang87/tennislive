@@ -10,27 +10,13 @@ from ..models import Match, MatchStatus
 from ..timeutil import fmt_date_zh, fmt_time_beijing
 from ..zh import player_zh
 from .common import (
+    curate_for_social,
     group_by_tournament,
+    is_chinese_involved as _is_chinese_involved,
     match_round_display,
     result_line,
     side_display,
 )
-
-# 中国球员中文名（用于挑「中国金花/金草」看点）
-CHINESE_PLAYERS_HINT = (
-    "郑钦文", "王欣瑜", "王曦雨", "袁悦", "王雅繁", "朱琳", "张帅", "韩馨蕴",
-    "张之臻", "商竣程", "布云朝克特", "吴易昺", "特日格乐",
-)
-
-
-def _is_chinese_involved(m: Match) -> bool:
-    for p in m.home + m.away:
-        zh = player_zh(p.name)
-        if any(zh.startswith(c) or c in zh for c in CHINESE_PLAYERS_HINT):
-            return True
-        if (p.country or "").upper() in ("CHN", "CN"):
-            return True
-    return False
 
 
 def pick_headline(digest: Digest) -> str:
@@ -46,12 +32,16 @@ def pick_headline(digest: Digest) -> str:
         if w:
             zh = player_zh(w[0].name)
             won = _is_chinese_involved_side(w)
-            verb = "晋级" if won else "止步"
             r = match_round_display(m)
+            is_final = bool(r) and r.split("·")[-1] == "决赛"
+            r_flat = (r or "").replace("·", "")
+            if won and is_final:
+                return f"{zh}夺冠！"
             if not won:
                 loser = m.loser_players() or []
                 zh = player_zh(loser[0].name) if loser else zh
-            return f"{zh}{verb}{r or '下一轮'}"
+                return f"{zh}止步{r_flat or '本轮'}"
+            return f"{zh}晋级{r_flat or '下一轮'}"
 
     groups = group_by_tournament(digest.results)
     if groups:
@@ -70,11 +60,12 @@ def pick_headline(digest: Digest) -> str:
 
 
 def _is_chinese_involved_side(players: list) -> bool:
+    from .common import CHINESE_PLAYER_NAMES
+
     for p in players:
-        zh = player_zh(p.name)
-        if any(c in zh for c in CHINESE_PLAYERS_HINT):
-            return True
         if (p.country or "").upper() in ("CHN", "CN"):
+            return True
+        if player_zh(p.name) in CHINESE_PLAYER_NAMES:
             return True
     return False
 
@@ -110,10 +101,14 @@ def to_markdown(digest: Digest) -> str:
                 )
         lines.append("")
 
-    if digest.results:
-        lines.append(f"## 🏆 最新赛果（{len(digest.results)} 场）")
+    results = curate_for_social(digest.results)
+    live = curate_for_social(digest.live)
+    schedule = curate_for_social(digest.schedule)
+
+    if results:
+        lines.append(f"## 🏆 最新赛果（{len(results)} 场）")
         lines.append("")
-        for group in group_by_tournament(digest.results):
+        for group in group_by_tournament(results):
             lines.append(f"### {group.title}")
             lines.append("")
             for m in group.matches:
@@ -122,10 +117,10 @@ def to_markdown(digest: Digest) -> str:
                 lines.append(f"- {prefix}{result_line(m)}")
             lines.append("")
 
-    if digest.live:
-        lines.append(f"## 🔴 正在进行（{len(digest.live)} 场）")
+    if live:
+        lines.append(f"## 🔴 正在进行（{len(live)} 场）")
         lines.append("")
-        for group in group_by_tournament(digest.live):
+        for group in group_by_tournament(live):
             lines.append(f"### {group.title}")
             lines.append("")
             for m in group.matches:
@@ -138,10 +133,10 @@ def to_markdown(digest: Digest) -> str:
                 )
             lines.append("")
 
-    if digest.schedule:
-        lines.append(f"## 📅 今日赛程（{len(digest.schedule)} 场，北京时间）")
+    if schedule:
+        lines.append(f"## 📅 今日赛程（{len(schedule)} 场，北京时间）")
         lines.append("")
-        for group in group_by_tournament(digest.schedule):
+        for group in group_by_tournament(schedule):
             lines.append(f"### {group.title}")
             lines.append("")
             for m in group.matches:
@@ -155,7 +150,10 @@ def to_markdown(digest: Digest) -> str:
 
     lines.append("---")
     lines.append("")
-    lines.append("*时间均为北京时间；数据来自公开比分接口，以官方为准。*")
+    lines.append(
+        "*时间均为北京时间；单打全收录，双打仅收录决赛与中国球员场次；"
+        "数据来自公开比分接口，以官方为准。*"
+    )
     lines.append("")
     return "\n".join(lines)
 
@@ -239,21 +237,24 @@ def to_html(digest: Digest) -> str:
             parts.append(f'<li style="{_S["li"]}">{body}</li>')
         parts.append("</ul>")
 
-    if digest.results:
+    results = curate_for_social(digest.results)
+    live = curate_for_social(digest.live)
+    schedule = curate_for_social(digest.schedule)
+
+    if results:
+        parts.append(f'<h2 style="{_S["h2"]}">🏆 最新赛果（{len(results)} 场）</h2>')
+        emit_group_matches(results, "result")
+    if live:
+        parts.append(f'<h2 style="{_S["h2"]}">🔴 正在进行（{len(live)} 场）</h2>')
+        emit_group_matches(live, "live")
+    if schedule:
         parts.append(
-            f'<h2 style="{_S["h2"]}">🏆 最新赛果（{len(digest.results)} 场）</h2>'
+            f'<h2 style="{_S["h2"]}">📅 今日赛程（{len(schedule)} 场，北京时间）</h2>'
         )
-        emit_group_matches(digest.results, "result")
-    if digest.live:
-        parts.append(f'<h2 style="{_S["h2"]}">🔴 正在进行（{len(digest.live)} 场）</h2>')
-        emit_group_matches(digest.live, "live")
-    if digest.schedule:
-        parts.append(
-            f'<h2 style="{_S["h2"]}">📅 今日赛程（{len(digest.schedule)} 场，北京时间）</h2>'
-        )
-        emit_group_matches(digest.schedule, "schedule")
+        emit_group_matches(schedule, "schedule")
 
     parts.append(
-        f'<p style="{_S["footer"]}">时间均为北京时间；数据来自公开比分接口，以官方为准。</p>'
+        f'<p style="{_S["footer"]}">时间均为北京时间；单打全收录，双打仅收录决赛与'
+        f"中国球员场次；数据来自公开比分接口，以官方为准。</p>"
     )
     return "\n".join(parts)

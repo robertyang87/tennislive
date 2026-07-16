@@ -238,6 +238,10 @@ class EspnSource(TennisSource):
         away = _players_of(c_away)
         if not home or not away:
             return None
+        # 过滤对阵未定的占位比赛（后续轮次的 "TBD vs TBD"）
+        placeholder = {"tbd", "?", ""}
+        if any(p.name.strip().lower() in placeholder for p in home + away):
+            return None
 
         # 项目名：competition.type.text 优先，其次分组名
         discipline = grouping
