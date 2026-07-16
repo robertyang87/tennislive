@@ -33,13 +33,21 @@ def source(monkeypatch) -> EspnSource:
 def test_fetch_day_parses_and_dedupes(source):
     # 2026-07-15 UTC 11:00 = 北京 19:00 → 属于北京时间 7 月 15 日
     matches = source.fetch_day(date(2026, 7, 15))
-    # atp+wta 两个 league、各 2 天 = 4 次请求，比赛按 uid 去重
+    # atp+wta 两个 league、各 2 天 = 4 次请求
     assert len(source._calls) == 4
     ids = [m.match_id for m in matches]
     assert len(ids) == len(set(ids))
     # 179002 是 7-14 的比赛（北京 17:00），不属于 7-15
     assert not any("179002" in i for i in ids)
     assert len(matches) == 3
+
+
+def test_dedup_ignores_league_dependent_uid(source):
+    """合办赛事同一场比赛在 atp/wta 接口里 uid 联赛段不同（l:851/l:900），
+    去重键必须是 事件ID:比赛ID 而非 uid."""
+    matches = source.fetch_day(date(2026, 7, 15))
+    for m in matches:
+        assert m.match_id.startswith("306-2026:"), m.match_id
 
 
 def test_singles_result(source):
