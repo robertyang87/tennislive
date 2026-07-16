@@ -475,6 +475,11 @@ def _draw_check(draw, cx: int, cy: int, r: int = 16) -> None:
     draw.line([cx - 2, cy + 6, cx + 8, cy - 6], fill=(255, 255, 255), width=4)
 
 
+# 比分列：每盘步宽 + 右端对勾预留（上下两行按列对齐）
+_SCORE_STEP = 56
+_SCORE_CHECK = 42
+
+
 def _cell_side_line(
     img, draw, fonts, x: int, y: int, w: int, row_h: int,
     players, sets_pairs, won: bool, score_zone: int,
@@ -484,18 +489,18 @@ def _cell_side_line(
 
     color = CELL_TEXT if won else CELL_GREY
     cy = y + row_h // 2  # 行内垂直中心
-    nx = x + 20
+    nx = x + 18
     # 国旗（双打两面并排）
     for p in players[:2]:
-        flag = flag_image(p.country, height=30)
+        flag = flag_image(p.country, height=27)
         if flag is not None:
-            img.paste(flag, (int(nx), cy - 15), flag)
-            nx += flag.width + 10
+            img.paste(flag, (int(nx), cy - 13), flag)
+            nx += flag.width + 8
     # 种子号（介于国旗与人名之间）
     seed = players[0].seed if players else None
     if seed:
         draw.text((nx, cy - 12), str(seed), font=fonts.cell_seed, fill=CELL_GREY)
-        nx += draw.textlength(str(seed), font=fonts.cell_seed) + 8
+        nx += draw.textlength(str(seed), font=fonts.cell_seed) + 6
     # 人名（无译名的英文名缩写化，如 'V. Valdmannova'）+ 单打世界排名（小括号）
     def _disp(p) -> str:
         n = player_zh(p.name)
@@ -507,24 +512,29 @@ def _cell_side_line(
     rank = players[0].rank if len(players) == 1 else None
     rank_txt = f"({rank})" if rank else ""
     rank_w = draw.textlength(rank_txt, font=fonts.cell_seed) + 6 if rank_txt else 0
-    max_name_w = x + w - score_zone - nx - rank_w - 12
+    max_name_w = x + w - score_zone - nx - rank_w - 10
+    if (
+        len(players) == 1
+        and name.isascii()
+        and draw.textlength(name, font=fonts.cell_name) > max_name_w
+    ):
+        name = players[0].name.split()[-1]  # 缩写仍放不下 → 仅姓氏
     name = _fit(draw, name, fonts.cell_name, int(max_name_w))
     draw.text((nx, cy - 19), name, font=fonts.cell_name, fill=color)
     if rank_txt:
         nw = draw.textlength(name, font=fonts.cell_name)
         draw.text((nx + nw + 6, cy - 12), rank_txt, font=fonts.cell_seed, fill=CELL_GREY)
     # 比分（右对齐、两行同列），抢七小分上标
-    step = 64
-    sx = x + w - 48 - len(sets_pairs) * step
+    sx = x + w - _SCORE_CHECK - len(sets_pairs) * _SCORE_STEP
     for games, tb in sets_pairs:
         g = str(games)
         draw.text((sx, cy - 25), g, font=fonts.cell_score, fill=color)
         if tb is not None:
             gw = draw.textlength(g, font=fonts.cell_score)
             draw.text((sx + gw + 2, cy - 29), str(tb), font=fonts.cell_sup, fill=color)
-        sx += step
+        sx += _SCORE_STEP
     if won:
-        _draw_check(draw, x + w - 30, cy)
+        _draw_check(draw, x + w - 28, cy)
 
 
 def _scoreboard_cell(
@@ -552,7 +562,7 @@ def _scoreboard_cell(
     draw.line([x + 22, y + 54, x + w - 22, y + 54], fill=CELL_LINE, width=2)
 
     # 比分区宽度按盘数预留，保证上下两行同列对齐
-    score_zone = 48 + len(m.sets) * 64
+    score_zone = _SCORE_CHECK + len(m.sets) * _SCORE_STEP
     row_h = (h - 66) // 2
     for i, (players, competitor_sets) in enumerate(
         ((m.home, [(s.home, s.home_tiebreak) for s in m.sets]),
