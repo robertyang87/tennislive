@@ -12,7 +12,7 @@
 - **ATV Bancomat Tennis Open**·女双·半决赛：待定 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant
 - **雅典公开赛**·女双·四分之一决赛：待定 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧
 
-## 🏆 最新赛果（34 场）
+## 🏆 最新赛果（33 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -33,7 +33,6 @@
 - **男单·第二轮** 🇦🇷 [6]Juan Manuel Cerundolo 2-1 凯茨马诺维奇（3-6 6-3 7-5）
 - **男单·第二轮** 🇳🇴 [2]鲁德 2-1 🇵🇹 法里亚（6-7(1) 6-4 6-2）
 - **男单·第二轮** 🇬🇷 西西帕斯 2-1 🇨🇭 Jerome Kym（6-4 6-7(2) 7-6(5)）
-- **男单·第二轮** 🇰🇿 [1]布勃利克 vs 🇫🇷 阿利斯（7-6(4) 0-0）
 
 ### WTA 雅西公开赛（WTA 250）
 
@@ -72,21 +71,25 @@
 - **女双·四分之一决赛** 🇨🇳 蒋欣玗/吴芳娴 2-0 🇫🇷 Carole Monnet/🇬🇷 Sapfo Sakellaridi（7-5 6-3）
 - **女双·第一轮** 🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 
-## 🔴 正在进行（2 场）
+## 🔴 正在进行（4 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
-- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 2-3
+- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 2-5
+- **男单·四分之一决赛** 🇦🇷 布鲁查加 vs 🇦🇷 [7]乌戈·卡拉贝利　当前 0-0
 
 ### WTA ATV Bancomat Tennis Open
 
-- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 0-2
+- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 1-4
 
-## 📅 今日赛程（30 场，北京时间）
+### WTA 雅典公开赛
+
+- **女单·第二轮** 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　当前 1-0
+
+## 📅 今日赛程（29 场，北京时间）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
-- `00:30` 🇦🇷 布鲁查加 vs 🇦🇷 [7]乌戈·卡拉贝利　·男单·四分之一决赛
 - `03:00` 🇸🇰 Alex Molcan vs 🇪🇸 [2]达维多维奇·福基纳　·男单·四分之一决赛
 
 ### ATP 瑞典公开赛（ATP 250）
@@ -118,6 +121,7 @@
 
 ### WTA Enka Open
 
+- `待定` 🇷🇺 [1]扎哈罗娃 vs 🇷🇺 [8]Tatiana Prozorova　·女单·四分之一决赛
 - `待定` 🇧🇪 [3]Hanne Vandewinkel vs 🇫🇷 Harmony Tan　·女单·四分之一决赛
 - `待定` 🇨🇿 Vendula Valdmannova vs 🇧🇾 Aliona Falei　·女单·四分之一决赛
 - `待定` 🇷🇺 Vera Zvonareva vs 🇹🇭 [2]Lanlana Tararudee　·女单·四分之一决赛
@@ -128,13 +132,12 @@
 - `18:30` 🇦🇹 [4]Julia Grabher vs 🇧🇪 [7]Jeline Vandromme　·女单·四分之一决赛
 - `18:30` 🇪🇸 [5]Marina Bassols Ribera vs 🇦🇷 Maria Lourdes Carle　·女单·四分之一决赛
 - `20:30` 🇸🇮 [1]Veronika Erjavec vs 🇵🇱 Gina Feistel　·女单·四分之一决赛
-- `23:00` 🇬🇧 Alicia Barnett/🇫🇷 Elixane Lechemia vs 🇪🇸 Yvonne Cavalle-Reimers/🇧🇷 Laura Pigossi　·女双·决赛
+- `22:00` 🇬🇧 Alicia Barnett/🇫🇷 Elixane Lechemia vs 🇪🇸 Yvonne Cavalle-Reimers/🇧🇷 Laura Pigossi　·女双·决赛
 
 ### WTA 雅典公开赛
 
 - `待定` 🇺🇸 帕克斯 vs 🇬🇷 [4]萨卡里　·女单·四分之一决赛
 - `待定` 🇨🇿 [7]瓦伦托娃 vs 🇷🇺 Alina Korneeva　·女单·四分之一决赛
-- `00:35` 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　·女单·第二轮
 - `02:00` 🇩🇰 [1]陶森 vs 🇮🇹 Miriana Tona　·女单·第二轮
 - `待定` 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧　·女双·四分之一决赛
 
