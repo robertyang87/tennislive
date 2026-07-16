@@ -12,7 +12,7 @@
 - **ATV Bancomat Tennis Open**·女双·半决赛：待定 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant
 - **雅典公开赛**·女双·四分之一决赛：待定 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧
 
-## 🏆 最新赛果（33 场）
+## 🏆 最新赛果（34 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -51,6 +51,7 @@
 - **女单·第二轮** 🇷🇺 Vera Zvonareva 2-0 🇸🇰 Viktoria Hruncakova（7-6(4) 6-3）
 - **女单·第二轮** 🇷🇺 [8]Tatiana Prozorova 2-0 🇧🇾 Darya Khamutsianskaya（6-4 6-3）
 - **女单·第二轮** 🇨🇿 Vendula Valdmannova 2-0 🇨🇳 高馨妤（6-4 6-3）
+- **女单·第二轮** 🇷🇺 [1]扎哈罗娃 2-0 🇷🇺 Alexandra Shubladze（7-6(6) 7-6(2)）
 - **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina 2-1 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying（6-7(2) 7-5 12-10(抢十)）
 
 ### WTA 基茨比厄尔公开赛
@@ -75,11 +76,11 @@
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
-- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 1-3
+- **男单·四分之一决赛** 🇧🇦 朱姆胡尔 vs 🇮🇹 [4]阿尔纳尔迪　当前 2-3
 
 ### WTA ATV Bancomat Tennis Open
 
-- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 0-1
+- **女单·第二轮** 🇮🇹 Aurora Zantedeschi vs 🇮🇹 Martina Trevisan　当前 0-2
 
 ## 📅 今日赛程（30 场，北京时间）
 
@@ -92,14 +93,14 @@
 
 - `17:00` 🇵🇾 Adolfo Daniel Vallejo vs 🇮🇹 Stefano Travaglia　·男单·四分之一决赛
 - `18:30` 🇵🇹 [5]博尔热斯 vs 🇮🇹 [2]达尔代里　·男单·四分之一决赛
-- `00:30` 🇳🇱 德容 vs 🇦🇷 [8]巴埃斯　·男单·第二轮
+- `00:50` 🇳🇱 德容 vs 🇦🇷 [8]巴埃斯　·男单·第二轮
 
 ### ATP 瑞士公开赛（ATP 250）
 
 - `16:30` 🇧🇪 [7]科利尼翁 vs 🇲🇨 [3]瓦舍罗　·男单·四分之一决赛
 - `18:00` 🇦🇷 [6]Juan Manuel Cerundolo vs 🇳🇴 [2]鲁德　·男单·四分之一决赛
 - `23:30` 🇫🇷 [4]林德克内希 vs 🇬🇷 西西帕斯　·男单·四分之一决赛
-- `00:30` 🇰🇿 Aleksandr Shevchenko vs 🇨🇭 斯特里克　·男单·第二轮
+- `01:00` 🇰🇿 Aleksandr Shevchenko vs 🇨🇭 斯特里克　·男单·第二轮
 
 ### WTA 雅西公开赛（WTA 250）
 
@@ -133,7 +134,7 @@
 
 - `待定` 🇺🇸 帕克斯 vs 🇬🇷 [4]萨卡里　·女单·四分之一决赛
 - `待定` 🇨🇿 [7]瓦伦托娃 vs 🇷🇺 Alina Korneeva　·女单·四分之一决赛
-- `00:30` 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　·女单·第二轮
+- `00:35` 🇨🇿 [3]克雷吉茨科娃 vs 🇫🇷 Carole Monnet　·女单·第二轮
 - `02:00` 🇩🇰 [1]陶森 vs 🇮🇹 Miriana Tona　·女单·第二轮
 - `待定` 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧　·女双·四分之一决赛
 
