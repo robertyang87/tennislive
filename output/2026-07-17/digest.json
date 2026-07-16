@@ -3173,8 +3173,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 0,
-          "away": 1,
+          "home": 1,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3222,7 +3222,7 @@
       "start_utc": "2026-07-16 16:05:00+00:00",
       "sets": [
         {
-          "home": 2,
+          "home": 4,
           "away": 5,
           "home_tiebreak": null,
           "away_tiebreak": null
@@ -3291,12 +3291,18 @@
           "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
+        },
+        {
+          "home": 1,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
         }
       ],
       "winner": null,
       "note": null,
       "court": "Grandstand",
-      "status_detail": "1st Set"
+      "status_detail": "2nd Set"
     },
     {
       "match_id": "1017-2026:179233",
@@ -3337,7 +3343,7 @@
       "sets": [
         {
           "home": 1,
-          "away": 4,
+          "away": 6,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3385,8 +3391,8 @@
       "start_utc": "2026-07-16 16:35:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 0,
+          "home": 1,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3434,7 +3440,7 @@
       "start_utc": "2026-07-16 16:35:00+00:00",
       "sets": [
         {
-          "home": 1,
+          "home": 2,
           "away": 0,
           "home_tiebreak": null,
           "away_tiebreak": null
@@ -3444,9 +3450,7 @@
       "note": null,
       "court": "Center Court",
       "status_detail": "1st Set"
-    }
-  ],
-  "schedule": [
+    },
     {
       "match_id": "1071-2026:179208",
       "tour": "WTA",
@@ -3495,100 +3499,25 @@
           "player_id": null
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Quarterfinal",
       "discipline": "Women's Doubles",
       "start_utc": "2026-07-16 16:45:00+00:00",
-      "sets": [],
+      "sets": [
+        {
+          "home": 1,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Center Court",
-      "status_detail": "Thu, July 16th at 12:45 PM EDT"
-    },
-    {
-      "match_id": "306-2026:178643",
-      "tour": "ATP",
-      "tournament": {
-        "name": "Nordea Open",
-        "tour": "ATP",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "306-2026"
-      },
-      "home": [
-        {
-          "name": "Jesper de Jong",
-          "country": "NED",
-          "seed": null,
-          "rank": 73,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Sebastian Baez",
-          "country": "ARG",
-          "seed": 8,
-          "rank": 56,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 2",
-      "discipline": "Men's Singles",
-      "start_utc": "2026-07-16 16:50:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Centre Court",
-      "status_detail": "Thu, July 16th at 12:50 PM EDT"
-    },
-    {
-      "match_id": "874-2026:179317",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Unicredit Iasi Open",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "874-2026"
-      },
-      "home": [
-        {
-          "name": "Panna Udvardy",
-          "country": "HUN",
-          "seed": 5,
-          "rank": 71,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "away": [
-        {
-          "name": "Katarzyna Kawa",
-          "country": "POL",
-          "seed": null,
-          "rank": 142,
-          "headshot_url": null,
-          "player_id": null
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 2",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-16 16:50:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Center Court",
-      "status_detail": "Thu, July 16th at 12:50 PM EDT"
-    },
+      "status_detail": "1st Set"
+    }
+  ],
+  "schedule": [
     {
       "match_id": "1017-2026:179234",
       "tour": "WTA",
@@ -3830,6 +3759,90 @@
       "note": null,
       "court": "Court 5",
       "status_detail": "Thu, July 16th at 1:00 PM EDT"
+    },
+    {
+      "match_id": "306-2026:178643",
+      "tour": "ATP",
+      "tournament": {
+        "name": "Nordea Open",
+        "tour": "ATP",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "306-2026"
+      },
+      "home": [
+        {
+          "name": "Jesper de Jong",
+          "country": "NED",
+          "seed": null,
+          "rank": 73,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "away": [
+        {
+          "name": "Sebastian Baez",
+          "country": "ARG",
+          "seed": 8,
+          "rank": 56,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 2",
+      "discipline": "Men's Singles",
+      "start_utc": "2026-07-16 17:05:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Centre Court",
+      "status_detail": "Thu, July 16th at 1:05 PM EDT"
+    },
+    {
+      "match_id": "874-2026:179317",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Unicredit Iasi Open",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "874-2026"
+      },
+      "home": [
+        {
+          "name": "Panna Udvardy",
+          "country": "HUN",
+          "seed": 5,
+          "rank": 71,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "away": [
+        {
+          "name": "Katarzyna Kawa",
+          "country": "POL",
+          "seed": null,
+          "rank": 142,
+          "headshot_url": null,
+          "player_id": null
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 2",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-16 17:10:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Center Court",
+      "status_detail": "Thu, July 16th at 1:10 PM EDT"
     },
     {
       "match_id": "7-2026:178759",
