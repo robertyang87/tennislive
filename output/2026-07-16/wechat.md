@@ -9,10 +9,11 @@
 - **雅典公开赛**·女双·第一轮：🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 - **ATV Bancomat Tennis Open**·女双·四分之一决赛：🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo 2-1 🇮🇹 布隆泽蒂/🇮🇹 Martina Trevisan（6-2 2-6 10-8(抢十)）
 - **Enka Open**·女双·四分之一决赛：🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina 2-1 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying（6-7(2) 7-5 12-10(抢十)）
+- **Enka Open**·女单·第二轮：🇨🇿 Vendula Valdmannova 2-0 🇨🇳 高馨妤（6-4 6-3）
 - **ATV Bancomat Tennis Open**·女双·半决赛：待定 🇫🇷 Estelle Cascino/🇨🇳 Feng Shuo vs 🇮🇹 Nuria Brancaccio/🇮🇹 Tyra Caterina Grant
 - **雅典公开赛**·女双·四分之一决赛：待定 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel vs 🇬🇧 Maia Lumsden/🇨🇳 汤千慧
 
-## 🏆 最新赛果（71 场）
+## 🏆 最新赛果（72 场）
 
 ### ATP 克罗地亚公开赛（ATP 250）
 
@@ -81,6 +82,7 @@
 - **女单·第二轮** 🇹🇭 Lanlana Tararudee 2-1 🇨🇿 Gabriela Knutson（4-6 6-4 6-1）
 - **女单·第二轮** 🇷🇺 Vera Zvonareva 2-0 🇸🇰 Viktoria Hruncakova（7-6(4) 6-3）
 - **女单·第二轮** 🇷🇺 Tatiana Prozorova 2-0 🇧🇾 Darya Khamutsianskaya（6-4 6-3）
+- **女单·第二轮** 🇨🇿 Vendula Valdmannova 2-0 🇨🇳 高馨妤（6-4 6-3）
 - **女单·第一轮** 🇸🇰 Viktoria Hruncakova 2-0 🇹🇷 Cagla Buyukakcay（6-0 6-4）
 - **女双·四分之一决赛** 🇮🇩 Priska Nugroho/🇷🇺 Varvara Panshina 2-1 🇨🇳 Yujia Huang/🇨🇳 Zhang Ying（6-7(2) 7-5 12-10(抢十)）
 
@@ -109,27 +111,26 @@
 - **女双·四分之一决赛** 🇨🇳 蒋欣玗/吴芳娴 2-0 🇫🇷 Carole Monnet/🇬🇷 Sapfo Sakellaridi（7-5 6-3）
 - **女双·第一轮** 🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-0 🇺🇸 Carmen Corley/🇦🇺 Alexandra Osborne（6-4 6-2）
 
-## 🔴 正在进行（6 场）
+## 🔴 正在进行（5 场）
 
 ### ATP 瑞典公开赛（ATP 250）
 
-- **男单·第二轮** 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　当前 2-1
+- **男单·第二轮** 🇨🇱 塔比洛 vs 🇦🇷 Lautaro Midon　当前 3-2
 
 ### WTA 雅西公开赛（WTA 250）
 
-- **女单·第二轮** 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　当前 5-4
+- **女单·第二轮** 🇷🇺 Alevtina Ibragimova vs 🇪🇸 巴多萨　当前 5-5
 
 ### WTA Enka Open
 
-- **女单·第二轮** 🇨🇳 高馨妤 vs 🇨🇿 Vendula Valdmannova　当前 4-6 3-5
-- **女单·第二轮** 🇷🇺 扎哈罗娃 vs 🇷🇺 Alexandra Shubladze　当前 7-6(6)
+- **女单·第二轮** 🇷🇺 扎哈罗娃 vs 🇷🇺 Alexandra Shubladze　当前 7-6(6) 0-0
 
 ### WTA 雅典公开赛
 
-- **女单·第二轮** 🇷🇺 Alina Korneeva vs 🇺🇸 安·李　当前 6-2 3-0
-- **女单·第二轮** 🇨🇿 瓦伦托娃 vs 🇧🇾 萨斯诺维奇　当前 6-3
+- **女单·第二轮** 🇷🇺 Alina Korneeva vs 🇺🇸 安·李　当前 6-2 4-1
+- **女单·第二轮** 🇨🇿 瓦伦托娃 vs 🇧🇾 萨斯诺维奇　当前 6-3 0-1
 
-## 📅 今日赛程（10 场，北京时间）
+## 📅 今日赛程（11 场，北京时间）
 
 ### WTA 雅西公开赛（WTA 250）
 
@@ -146,6 +147,7 @@
 ### WTA Enka Open
 
 - `待定` 🇧🇪 Hanne Vandewinkel vs 🇫🇷 Harmony Tan　·女单·四分之一决赛
+- `待定` 🇨🇿 Vendula Valdmannova vs 🇧🇾 Aliona Falei　·女单·四分之一决赛
 - `待定` 🇷🇺 Vera Zvonareva vs 🇹🇭 Lanlana Tararudee　·女单·四分之一决赛
 
 ### WTA 雅典公开赛
