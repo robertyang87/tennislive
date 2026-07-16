@@ -1,0 +1,56 @@
+name: flash-report
+
+# 即时战报：每小时检测刚完赛的重点比赛（中国球员场次 / 大满贯、1000赛、
+# 年终总决赛的单打决赛），生成战报卡并按配置自动发布。
+# 覆盖北京时间 17:00 - 次日 01:00（欧洲赛事时段）；美洲赛事由晨报收口。
+on:
+  schedule:
+    - cron: "0 9-17 * * *"   # 09:00-17:00 UTC = 17:00-01:00 北京时间，每小时
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flash-report
+  cancel-in-progress: false
+
+jobs:
+  flash:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+      WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
+      WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}
+      WECHAT_MODE: ${{ vars.WECHAT_MODE || 'off' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装中文字体
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 安装 tennislive
+        run: pip install -q -e .
+
+      - name: 检测并闪发
+        run: tennislive flash --outdir output
+
+      - name: 提交战报与状态
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/ data/
+          if git diff --cached --quiet; then
+            echo "没有新战报"
+          else
+            git commit -m "content: flash report $(date -u +%H:%MZ)"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi

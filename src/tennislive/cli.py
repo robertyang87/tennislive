@@ -182,6 +182,106 @@ def cmd_digest(args) -> int:
     return 0
 
 
+# ---------- 闪发（即时战报） ----------
+
+def cmd_flash(args) -> int:
+    """检测刚完赛的重点比赛（中国球员/高级别决赛），生成战报卡并自动发布.
+
+    用 data/flash_state.json 去重，适合每小时定时运行。
+    """
+    import os
+    from datetime import timedelta
+
+    from .render.common import result_line
+    from .render.rating import flash_candidates
+    from .render.terminal import console
+    from .render.titles import flash_headline
+    from .timeutil import beijing_today, now_beijing
+
+    today = beijing_today()
+    matches = []
+    for d in (today - timedelta(days=1), today):
+        try:
+            matches.extend(fetch_day(d, prefer=args.source).matches)
+        except SourceError as e:
+            console.print(f"[yellow]{d} 抓取失败：{e}[/yellow]")
+    if not matches:
+        console.print("[red]无数据，跳过[/red]")
+        return 1
+
+    state_path = Path("data/flash_state.json")
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state: dict[str, str] = {}
+    if state_path.exists():
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+    # 清理两天前的记录
+    cutoff = (today - timedelta(days=2)).isoformat()
+    state = {k: v for k, v in state.items() if v >= cutoff}
+
+    new = [m for m in flash_candidates(matches) if m.match_id not in state]
+    if not new:
+        state_path.write_text(
+            json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+        )
+        console.print("没有新完赛的重点比赛")
+        return 0
+
+    outdir = Path(args.outdir) / today.isoformat() / "flash"
+    outdir.mkdir(parents=True, exist_ok=True)
+    stamp = now_beijing().strftime("%H%M")
+    published = 0
+    for i, m in enumerate(new):
+        headline = flash_headline(m)
+        card = outdir / f"flash_{stamp}_{i:02d}.png"
+        try:
+            from .render.cards import generate_flash_card
+
+            generate_flash_card(m, card, headline)
+        except Exception as e:
+            console.print(f"[yellow]战报卡生成失败（跳过图片）：{e}[/yellow]")
+            card = None
+        text = f"{headline}\n\n{result_line(m)}\n\n完整战报见明晨《网球晨报》 #网球 #网球晨报"
+        (outdir / f"flash_{stamp}_{i:02d}.txt").write_text(text, encoding="utf-8")
+
+        # 自动发布（配置了才执行）
+        if os.environ.get("PUSHPLUS_TOKEN"):
+            try:
+                from .publish.pushplus import push
+
+                push(f"⚡{headline}", text.replace("\n", "<br/>"))
+                published += 1
+            except Exception as e:
+                console.print(f"[yellow]PushPlus 失败：{e}[/yellow]")
+        wechat_mode = os.environ.get("WECHAT_MODE", "off")
+        if (
+            not args.no_publish
+            and card is not None
+            and os.environ.get("WECHAT_APPID")
+            and wechat_mode != "off"
+        ):
+            try:
+                from .publish.wechat_mp import publish_image_post
+
+                publish_image_post(
+                    title=f"⚡{headline}"[:64],
+                    content=text,
+                    images=[card],
+                    do_publish=(wechat_mode == "publish"),
+                )
+                published += 1
+            except Exception as e:
+                console.print(f"[yellow]公众号闪发失败：{e}[/yellow]")
+
+        state[m.match_id] = today.isoformat()
+        console.print(f"[green]⚡ {headline}[/green]")
+
+    state_path.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    console.print(f"闪发 {len(new)} 条（发布动作 {published} 次）")
+    return 0
+
+
 # ---------- 发布 ----------
 
 def cmd_publish_wechat(args) -> int:
@@ -304,6 +404,11 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("live", help="进行中的比赛")
     add_common(sp, with_date=False)
 
+    sp = sub.add_parser("flash", help="即时战报：检测刚完赛的重点比赛并闪发")
+    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
+    sp.add_argument("--no-publish", action="store_true", help="只生成不发布")
+
     sp = sub.add_parser("digest", help="生成每日内容包（公众号+小红书+卡片图）")
     sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -344,6 +449,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "live":
         args.date = "today"
         return cmd_day(args, [MatchStatus.LIVE], "进行中")
+    if args.command == "flash":
+        return cmd_flash(args)
     if args.command == "digest":
         return cmd_digest(args)
     if args.command == "publish":
