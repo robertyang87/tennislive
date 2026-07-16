@@ -239,6 +239,17 @@ def country_zh(code_or_name: str | None) -> str | None:
     return code_or_name
 
 
+def country_iso2(code_or_name: str | None) -> str | None:
+    """IOC/ISO2/英文名 → ISO 3166-1 alpha-2（用于旗帜图片）；不适用返回 None."""
+    ioc = _resolve_ioc(code_or_name)
+    if ioc:
+        return IOC[ioc][1]
+    s = (code_or_name or "").strip()
+    if len(s) == 2 and s.isalpha():
+        return s.upper()
+    return None
+
+
 def _iso2_flag(iso2: str) -> str:
     return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in iso2.upper())
 

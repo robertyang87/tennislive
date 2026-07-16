@@ -58,7 +58,7 @@ def test_singles_result(source):
     assert m.winner == 0
     assert m.home[0].name == "Qinwen Zheng"
     assert m.home[0].country == "CHN"
-    assert m.home[0].rank == 5
+    assert m.home[0].seed == 5  # curatedRank 是赛事种子号，不是世界排名
     assert m.away[0].country == "ROM"  # ESPN 用非 IOC 的 rom 码
     assert [s.display() for s in m.sets] == ["6-4", "3-6", "7-6(4)"]
     assert m.round_name == "Quarterfinal"

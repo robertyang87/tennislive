@@ -124,20 +124,17 @@ def _players_of(competitor: dict[str, Any]) -> list[Player]:
             for part in str(name).split("/"):
                 players.append(Player(name=part.strip()))
 
-    # 种子/排名（部分正赛数据带 seed / curatedRank）
+    # 种子号：seed 字段，或 curatedRank（实测为赛事种子而非世界排名，
+    # 如 250 赛头号种子 curatedRank=1）。世界排名统一由 rankings 接口补全。
     for p in players:
         seed = competitor.get("seed")
+        if seed is None:
+            seed = (competitor.get("curatedRank") or {}).get("current")
         if seed is not None:
             try:
-                p.seed = int(seed)
-            except (TypeError, ValueError):
-                pass
-        rank = (competitor.get("curatedRank") or {}).get("current")
-        if rank is not None and p.rank is None:
-            try:
-                r = int(rank)
-                if 0 < r < 9999:
-                    p.rank = r
+                s = int(seed)
+                if 0 < s <= 40:  # 种子号最多 33（大满贯），再大视为脏数据
+                    p.seed = s
             except (TypeError, ValueError):
                 pass
     return players
