@@ -152,6 +152,14 @@ def cmd_digest(args) -> int:
     xhs = to_post(digest)
     (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
 
+    # 手机推送专用模板（窄屏 + 深色模式安全，内嵌卡片图便于保存转发）
+    from .render.pushmsg import to_push_html
+
+    (outdir / "push.html").write_text(
+        to_push_html(digest, cards=[p.name for p in card_paths]),
+        encoding="utf-8",
+    )
+
     # 原始数据
     _dump_json(digest, outdir / "digest.json")
 
@@ -349,15 +357,18 @@ def cmd_publish_pushplus(args) -> int:
     from .render.terminal import console
 
     d = Path(args.dir)
-    title_f, html_f = d / "wechat_title.txt", d / "wechat.html"
-    if not html_f.exists():
-        console.print(f"[red]{html_f} 不存在，请先运行 tennislive digest[/red]")
+    title_f = d / "wechat_title.txt"
+    # 优先用手机推送专用模板；老目录没有时回退公众号 HTML
+    push_f, html_f = d / "push.html", d / "wechat.html"
+    src = push_f if push_f.exists() else html_f
+    if not src.exists():
+        console.print(f"[red]{src} 不存在，请先运行 tennislive digest[/red]")
         return 1
     title = (
-        title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球每日速报"
+        title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球晨报"
     )
-    html = html_f.read_text(encoding="utf-8")
-    # 推送消息里去掉图片占位符
+    html = src.read_text(encoding="utf-8")
+    # 兼容旧模板：去掉图片占位符
     import re
 
     html = re.sub(r"\{\{IMAGE:[^}]+\}\}", "", html)
