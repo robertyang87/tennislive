@@ -4,6 +4,9 @@ name: probe-data-sources
 # 打印 HTTP 状态与响应片段到日志，并上传完整响应作为 artifact。
 on:
   workflow_dispatch: {}
+  push:
+    paths:
+      - ".github/workflows/probe.yml"
 
 jobs:
   probe:
