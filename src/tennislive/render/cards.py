@@ -155,6 +155,7 @@ class _Fonts:
         self.cell_meta = load(regular, r_idx, 25)
         self.cell_name = load(bold, b_idx, 28)
         self.cell_name_sm = load(bold, b_idx, 25)
+        self.cell_name_xs = load(bold, b_idx, 22)
         self.cell_seed = load(regular, r_idx, 21)
         self.cell_score = load(bold, b_idx, 40)
         self.cell_sup = load(bold, b_idx, 21)
@@ -510,10 +511,12 @@ def _cell_side_line(
     rank_txt = f"({rank})" if rank else ""
     rank_w = draw.textlength(rank_txt, font=fonts.cell_seed) + 6 if rank_txt else 0
     max_name_w = x + w - score_zone - nx - rank_w - 10
-    # 放全名优先：标准字号放不下就降一号，再不行（纯英文）只留姓氏
+    # 放全名优先：标准字号放不下就逐档降号，再不行（纯英文）只留姓氏
     name_font = fonts.cell_name
-    if draw.textlength(name, font=name_font) > max_name_w:
-        name_font = fonts.cell_name_sm
+    for smaller in (fonts.cell_name_sm, fonts.cell_name_xs):
+        if draw.textlength(name, font=name_font) <= max_name_w:
+            break
+        name_font = smaller
     if (
         len(players) == 1
         and name.isascii()
