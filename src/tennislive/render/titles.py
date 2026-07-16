@@ -120,9 +120,13 @@ def flash_headline(m) -> str:
     cn_won = _cn_side(m.winner_players() or [])
     cn_lost = _cn_side(m.loser_players() or [])
     if cn_won:
+        # 双打时用中国球员的名字打头
+        cn_w = next(
+            (p for p in (m.winner_players() or []) if _cn_side([p])), w
+        )
         if is_final:
-            return f"{player_zh(w.name)}夺冠！{g.name_zh}登顶"
-        return f"{player_zh(w.name)}晋级！赢下{g.name_zh}{r or '本轮'}"
+            return f"{player_zh(cn_w.name)}夺冠！{g.name_zh}登顶"
+        return f"{player_zh(cn_w.name)}晋级！赢下{g.name_zh}{r or '本轮'}"
     if cn_lost and l is not None:
         return f"{player_zh(l.name)}止步{g.name_zh}{r or '本轮'}"
     if is_final:
