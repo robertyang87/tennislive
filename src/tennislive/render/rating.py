@@ -37,7 +37,10 @@ def _level_of(m: Match) -> str | None:
 
 
 def is_upset(m: Match) -> bool:
-    """冷门：种子选手输给非种子，或排名差 ≥30 的下克上."""
+    """冷门（从严）：种子落马，或 Top30 被排名低 30+ 位的选手掀翻.
+
+    250 赛里排名差 30 位是常态，标准太松会让"爆冷"标签泛滥失去意义。
+    """
     if m.winner is None:
         return False
     winners = m.winner_players() or []
@@ -49,7 +52,7 @@ def is_upset(m: Match) -> bool:
         return True
     if l.seed and w.seed and w.seed - l.seed >= 8:
         return True
-    if w.rank and l.rank and w.rank - l.rank >= 30:
+    if w.rank and l.rank and l.rank <= 30 and w.rank - l.rank >= 30:
         return True
     return False
 
