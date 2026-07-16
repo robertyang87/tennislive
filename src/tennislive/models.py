@@ -50,7 +50,14 @@ class SetScore:
     away_tiebreak: Optional[int] = None
 
     def display(self) -> str:
-        """如 '7-6(5)' 或 '6-3'（从 home 视角）."""
+        """如 '7-6(5)' 或 '6-3'（从 home 视角）；决胜盘超级抢十显示 '10-8(抢十)'."""
+        # 超级抢十（match tiebreak）：数据源常记为 1-0 + 抢十比分
+        if (
+            {self.home, self.away} == {1, 0}
+            and self.home_tiebreak is not None
+            and self.away_tiebreak is not None
+        ):
+            return f"{self.home_tiebreak}-{self.away_tiebreak}(抢十)"
         s = f"{self.home}-{self.away}"
         # 抢七分数：只标输方小分（惯例）
         if self.home_tiebreak is not None and self.away_tiebreak is not None:

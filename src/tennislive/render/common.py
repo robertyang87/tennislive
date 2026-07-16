@@ -191,6 +191,42 @@ def _round_of(m: Match) -> str | None:
     return m.round_name
 
 
+# 中国大陆球员中文名（用于「中国军团」板块与内容精选）
+CHINESE_PLAYER_NAMES = {
+    "郑钦文", "王欣瑜", "王曦雨", "袁悦", "王雅繁", "朱琳", "张帅", "韩馨蕴",
+    "郑赛赛", "杨钊煊", "蒋欣玗", "汤千慧", "郭涵煜", "徐一幡", "马烨欣",
+    "孙心然", "魏思佳", "高馨妤", "张之臻", "商竣程", "布云朝克特", "吴易昺",
+    "周意", "孙发京",
+}
+
+
+def is_chinese_involved(m: Match) -> bool:
+    """比赛双方是否有中国大陆球员（国籍 CHN 或译名命中名单）."""
+    for p in m.home + m.away:
+        if (p.country or "").upper() in ("CHN", "CN"):
+            return True
+        if player_zh(p.name) in CHINESE_PLAYER_NAMES:
+            return True
+    return False
+
+
+def curate_for_social(matches: list[Match]) -> list[Match]:
+    """社媒版精选：全部单打 + （中国球员参与或决赛的）双打.
+
+    一天可能有 8 站 200+ 场比赛，卡片图与文章需要控制篇幅；
+    完整数据保留在 digest.json。
+    """
+    kept = []
+    for m in matches:
+        if m.is_singles:
+            kept.append(m)
+            continue
+        r = round_zh(m.round_name)
+        if r == "决赛" or is_chinese_involved(m):
+            kept.append(m)
+    return kept
+
+
 def match_round_display(m: Match) -> str:
     """'女单·半决赛' / '男双·决赛' / '16强赛'."""
     parts = []

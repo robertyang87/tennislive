@@ -231,6 +231,7 @@ PLAYER_ZH: dict[str, str] = {
     "Yexin Ma": "马烨欣",
     "Xinran Sun": "孙心然",
     "Su-Wei Hsieh": "谢淑薇",
+    "Fang-Hsien Wu": "吴芳娴",
     "Hao-Ching Chan": "詹皓晴",
     "Latisha Chan": "詹咏然",
     "Jaqueline Cristian": "克里斯蒂安",
