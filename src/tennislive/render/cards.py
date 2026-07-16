@@ -31,7 +31,7 @@ from .common import (
     result_line,
     side_display,
 )
-from .rating import find_upset, stay_up_stars, top_results, top_schedule
+from .rating import find_upset, is_upset, stay_up_stars, top_results, top_schedule
 
 logger = logging.getLogger(__name__)
 
@@ -151,14 +151,20 @@ class _Fonts:
         self.score = load(bold, b_idx, 38)
         self.body = load(regular, r_idx, 36)
         self.small = load(regular, r_idx, 27)
-        # 记分牌卡专用（字号偏小以放下全名）
+        # 赛果速递卡专用：列表行
         self.cell_meta = load(regular, r_idx, 25)
-        self.cell_name = load(bold, b_idx, 28)
-        self.cell_name_sm = load(bold, b_idx, 25)
-        self.cell_name_xs = load(bold, b_idx, 22)
+        self.cell_name = load(bold, b_idx, 34)
+        self.cell_name_sm = load(bold, b_idx, 30)
+        self.cell_name_xs = load(bold, b_idx, 26)
         self.cell_seed = load(regular, r_idx, 21)
-        self.cell_score = load(bold, b_idx, 40)
-        self.cell_sup = load(bold, b_idx, 21)
+        self.cell_score = load(bold, b_idx, 38)
+        self.cell_sup = load(bold, b_idx, 20)
+        # 赛果速递卡专用：头条区（字号大、对比强）
+        self.hero_name = load(bold, b_idx, 52)
+        self.hero_name_sm = load(bold, b_idx, 44)
+        self.hero_name_xs = load(bold, b_idx, 36)
+        self.hero_score = load(bold, b_idx, 84)
+        self.hero_sup = load(bold, b_idx, 30)
 
 
 def _fit(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_w: int) -> str:
@@ -254,6 +260,10 @@ def _canvas(deco: str = "arcs") -> tuple[Image.Image, ImageDraw.ImageDraw]:
         draw.arc([W - 320, -220, W + 220, 320], start=60, end=260, fill=DECO, width=30)
     elif deco == "court":
         _draw_court(draw, y_top=380, y_bottom=H + 80, color=DECO)
+    elif deco == "court-faint":
+        # 更淡的球场线稿：正文密集的卡片用，避免线条干扰文字
+        faint = tuple((d + 2 * b) // 3 for d, b in zip(DECO, BG_BOTTOM))
+        _draw_court(draw, y_top=380, y_bottom=H + 80, color=faint)
     return img, draw
 
 
@@ -462,135 +472,189 @@ def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.I
     return img
 
 
-# 记分牌格子配色（两种主题下都用浅色格子，还原参考图的对比效果）
-CELL_BG = (248, 250, 247)
-CELL_WIN = (213, 238, 207)
-CELL_TEXT = (24, 34, 29)
-CELL_GREY = (128, 140, 133)
-CELL_LINE = (222, 230, 224)
+# ---------- 赛果速递：头条 + 列表版式 ----------
+# 设计依据（card-xiaohongshu / impeccable-design-polish skill）：
+# 一卡一个视觉焦点，字号大对比强；避免"满屏同权重圆角卡片"的平庸网格。
+# 当日最重磅一场放大为头条区（大字人名 + 强调色大比分 + 故事标签），
+# 其余比赛用带细分隔线的暗色行列表，安静地衬托头条。
 
 
-# 比分列：每盘步宽 + 右缘留白（上下两行按列对齐）
-_SCORE_STEP = 50
-_SCORE_PAD = 22
+def _short_name(p) -> str:
+    """有译名用中文；无译名的英文名缩写化（'V. Valdmannova'）."""
+    n = player_zh(p.name)
+    if n == p.name and n.isascii():
+        n = _abbrev_en(n)
+    return n
 
 
-def _cell_side_line(
-    img, draw, fonts, x: int, y: int, w: int, row_h: int,
-    players, sets_pairs, won: bool, score_zone: int,
+def _side_pairs(m: Match, side: int) -> list[tuple[int, int | None]]:
+    if side == 0:
+        return [(s.home, s.home_tiebreak) for s in m.sets]
+    return [(s.away, s.away_tiebreak) for s in m.sets]
+
+
+def _score_run(
+    draw, x: int, y: int, pairs, font, sup_font, color, step: int
 ) -> None:
-    """记分牌里一方的一行：国旗 + 种子号 + 姓名 +（世界排名）+ 比分.
+    """从 x 起向右画一串盘分（抢七小分上标）."""
+    for games, tb in pairs:
+        g = str(games)
+        draw.text((x, y), g, font=font, fill=color)
+        if tb is not None:
+            gw = draw.textlength(g, font=font)
+            draw.text((x + gw + 2, y - sup_font.size // 4), str(tb), font=sup_font, fill=color)
+        x += step
 
-    胜者由绿色底条区分（不再画对勾，给全名留空间）。
-    """
+
+def _name_line(
+    img, draw, fonts, x: int, cy: int, max_right: int,
+    players, color, name_fonts, flag_h: int, meta_font,
+) -> None:
+    """一方的姓名行：国旗 + 种子号 + 姓名 +（世界排名），字号自动降档放全名."""
     from .flags import flag_image
 
-    color = CELL_TEXT if won else CELL_GREY
-    cy = y + row_h // 2  # 行内垂直中心
-    nx = x + 18
-    # 国旗（双打两面并排）
     for p in players[:2]:
-        flag = flag_image(p.country, height=26)
+        flag = flag_image(p.country, height=flag_h)
         if flag is not None:
-            img.paste(flag, (int(nx), cy - 13), flag)
-            nx += flag.width + 8
-    # 种子号（介于国旗与人名之间）
+            img.paste(flag, (int(x), cy - flag_h // 2), flag)
+            x += flag.width + 10
     seed = players[0].seed if players else None
     if seed:
-        draw.text((nx, cy - 11), str(seed), font=fonts.cell_seed, fill=CELL_GREY)
-        nx += draw.textlength(str(seed), font=fonts.cell_seed) + 6
-    # 人名（无译名的英文名缩写化，如 'V. Valdmannova'）+ 单打世界排名（小括号）
-    def _disp(p) -> str:
-        n = player_zh(p.name)
-        if n == p.name and n.isascii():
-            n = _abbrev_en(n)
-        return n
-
-    name = "/".join(_disp(p) for p in players)
+        draw.text((x, cy - meta_font.size // 2), str(seed), font=meta_font, fill=GREY)
+        x += draw.textlength(str(seed), font=meta_font) + 7
+    name = "/".join(_short_name(p) for p in players)
     rank = players[0].rank if len(players) == 1 else None
     rank_txt = f"({rank})" if rank else ""
-    rank_w = draw.textlength(rank_txt, font=fonts.cell_seed) + 6 if rank_txt else 0
-    max_name_w = x + w - score_zone - nx - rank_w - 10
-    # 放全名优先：标准字号放不下就逐档降号，再不行（纯英文）只留姓氏
-    name_font = fonts.cell_name
-    for smaller in (fonts.cell_name_sm, fonts.cell_name_xs):
-        if draw.textlength(name, font=name_font) <= max_name_w:
+    rank_w = draw.textlength(rank_txt, font=meta_font) + 8 if rank_txt else 0
+    max_name_w = max_right - x - rank_w
+    font = name_fonts[0]
+    for smaller in name_fonts[1:]:
+        if draw.textlength(name, font=font) <= max_name_w:
             break
-        name_font = smaller
-    if (
-        len(players) == 1
-        and name.isascii()
-        and draw.textlength(name, font=name_font) > max_name_w
-    ):
+        font = smaller
+    if len(players) == 1 and name.isascii() and draw.textlength(name, font=font) > max_name_w:
         name = players[0].name.split()[-1]
-    name = _fit(draw, name, name_font, int(max_name_w))
-    draw.text((nx, cy - name_font.size // 2 - 3), name, font=name_font, fill=color)
+    name = _fit(draw, name, font, int(max_name_w))
+    draw.text((x, cy - font.size // 2 - 3), name, font=font, fill=color)
     if rank_txt:
-        nw = draw.textlength(name, font=name_font)
-        draw.text((nx + nw + 6, cy - 11), rank_txt, font=fonts.cell_seed, fill=CELL_GREY)
-    # 比分（右对齐、两行同列），抢七小分上标
-    sx = x + w - _SCORE_PAD - len(sets_pairs) * _SCORE_STEP
-    for games, tb in sets_pairs:
-        g = str(games)
-        draw.text((sx, cy - 22), g, font=fonts.cell_score, fill=color)
-        if tb is not None:
-            gw = draw.textlength(g, font=fonts.cell_score)
-            draw.text((sx + gw + 2, cy - 26), str(tb), font=fonts.cell_sup, fill=color)
-        sx += _SCORE_STEP
+        nw = draw.textlength(name, font=font)
+        draw.text((x + nw + 8, cy - meta_font.size // 2), rank_txt, font=meta_font, fill=GREY)
 
 
-def _scoreboard_cell(
-    img, draw, fonts, x: int, y: int, w: int, h: int, m: Match,
-    tag_upset: bool = False, show_tournament: bool = True,
-) -> None:
-    draw.rounded_rectangle([x, y, x + w, y + h], radius=18, fill=CELL_BG)
-    # 元信息行：项目·轮次 | 爆冷标签 | 赛事（有顶部横幅时省略赛事名）
-    meta_left = match_round_display(m) or "单打"
-    draw.text((x + 22, y + 16), meta_left, font=fonts.cell_meta, fill=CELL_GREY)
-    rx = x + w - 22
+def _hero_story(m: Match) -> str:
+    """头条故事标签：给这场比赛一个一眼能懂的看点."""
+    from ..zh.terms import round_zh
+
+    if is_chinese_involved(m):
+        return "中国军团"
+    if (round_zh(m.round_name) or "") == "决赛":
+        return "夺冠时刻"
+    if is_upset(m):
+        return "爆冷"
+    return "今日头条"
+
+
+def _hero_block(
+    img, draw, fonts, y: int, m: Match, show_tournament: bool = True
+) -> int:
+    """头条区：当日最重磅一场，大字 + 强调色大比分. 返回底部 y."""
+    x0, x1 = MARGIN, W - MARGIN
+    h = 290
+    draw.rounded_rectangle(
+        [x0, y, x1, y + h], radius=26, fill=PANEL_HI, outline=PANEL_LINE, width=2
+    )
+    story = _hero_story(m)
+    story_fill = RED if story == "爆冷" else ACCENT
+    # 强调色上的可读文字色：深色强调色（浅色主题）配浅字，霓虹色配深字
+    on_accent = BTN_TEXT if sum(ACCENT) > 380 else (245, 248, 245)
+    story_text = (255, 255, 255) if story == "爆冷" else on_accent
+    tw = draw.textlength(story, font=fonts.label)
+    draw.rounded_rectangle(
+        [x0 + 30, y + 26, x0 + 30 + tw + 40, y + 26 + 48], radius=24, fill=story_fill
+    )
+    draw.text((x0 + 50, y + 26 + 8), story, font=fonts.label, fill=story_text)
+    meta = match_round_display(m) or ""
     if show_tournament:
         g = group_by_tournament([m])[0]
-        right = _fit(draw, g.name_zh, fonts.cell_meta, int(w * 0.42))
-        tw = draw.textlength(right, font=fonts.cell_meta)
-        rx -= tw
-        draw.text((rx, y + 16), right, font=fonts.cell_meta, fill=CELL_GREY)
-        rx -= 14
-    if tag_upset:
-        tag = "爆冷"
-        tw = draw.textlength(tag, font=fonts.cell_seed)
-        bx0 = rx - tw - 24
-        draw.rounded_rectangle([bx0, y + 11, rx, y + 45], radius=8, fill=RED)
-        draw.text((bx0 + 12, y + 14), tag, font=fonts.cell_seed, fill=(255, 255, 255))
-    draw.line([x + 22, y + 54, x + w - 22, y + 54], fill=CELL_LINE, width=2)
+        meta = f"{g.name_zh} · {meta}" if meta else g.name_zh
+    meta = _fit(draw, meta, fonts.small, int((x1 - x0) * 0.5))
+    mw = draw.textlength(meta, font=fonts.small)
+    draw.text((x1 - 30 - mw, y + 38), meta, font=fonts.small, fill=GREY)
 
-    # 比分区宽度按盘数预留，保证上下两行同列对齐
-    score_zone = _SCORE_PAD + len(m.sets) * _SCORE_STEP
-    row_h = (h - 66) // 2
-    for i, (players, competitor_sets) in enumerate(
-        ((m.home, [(s.home, s.home_tiebreak) for s in m.sets]),
-         (m.away, [(s.away, s.away_tiebreak) for s in m.sets]))
-    ):
-        ry = y + 60 + i * row_h
-        won = m.winner == i
-        if won:
-            draw.rounded_rectangle(
-                [x + 8, ry + 2, x + w - 8, ry + row_h - 2], radius=12, fill=CELL_WIN
-            )
-        _cell_side_line(
-            img, draw, fonts, x, ry, w, row_h,
-            players, competitor_sets, won, score_zone,
+    order = (0, 1) if m.winner in (None, 0) else (1, 0)
+    step = 78
+    for row_i, side in enumerate(order):
+        players = m.home if side == 0 else m.away
+        won = m.winner == side
+        cy = y + 128 + row_i * 94
+        pairs = _side_pairs(m, side)
+        score_w = len(pairs) * step
+        _score_run(
+            draw, x1 - 34 - score_w, cy - 38, pairs,
+            fonts.hero_score, fonts.hero_sup,
+            ACCENT if won else GREY, step,
         )
+        _name_line(
+            img, draw, fonts, x0 + 34, cy, x1 - 50 - score_w,
+            players, WHITE if won else GREY,
+            (fonts.hero_name, fonts.hero_name_sm, fonts.hero_name_xs),
+            38, fonts.cell_meta,
+        )
+    if not m.sets and m.note:
+        draw.text((x1 - 34 - 200, y + 128), _strip(m.note)[:12], font=fonts.body, fill=GREY)
+    return y + h
+
+
+def _list_row(
+    img, draw, fonts, y: int, row_h: int, m: Match,
+    tag_upset: bool, show_tournament: bool, divider: bool,
+) -> int:
+    """列表区一场比赛：元信息行 + 胜者行 + 负者行 + 细分隔线. 返回底部 y."""
+    x0, x1 = MARGIN + 6, W - MARGIN - 6
+    meta = match_round_display(m) or ""
+    if show_tournament:
+        g = group_by_tournament([m])[0]
+        meta = f"{g.name_zh} · {meta}" if meta else g.name_zh
+    meta = _fit(draw, meta, fonts.cell_meta, int((x1 - x0) * 0.6))
+    draw.text((x0, y + 6), meta, font=fonts.cell_meta, fill=GREY)
+    if tag_upset:
+        mx = x0 + draw.textlength(meta, font=fonts.cell_meta) + 16
+        tw = draw.textlength("爆冷", font=fonts.cell_seed)
+        draw.rounded_rectangle([mx, y + 2, mx + tw + 22, y + 36], radius=8, fill=RED)
+        draw.text((mx + 11, y + 5), "爆冷", font=fonts.cell_seed, fill=(255, 255, 255))
+
+    order = (0, 1) if m.winner in (None, 0) else (1, 0)
+    step = 48
+    for row_i, side in enumerate(order):
+        players = m.home if side == 0 else m.away
+        won = m.winner == side
+        cy = y + 62 + row_i * 46
+        pairs = _side_pairs(m, side)
+        score_w = len(pairs) * step
+        _score_run(
+            draw, x1 - score_w, cy - 20, pairs,
+            fonts.cell_score, fonts.cell_sup,
+            WHITE if won else GREY, step,
+        )
+        _name_line(
+            img, draw, fonts, x0, cy, x1 - 16 - score_w,
+            players, WHITE if won else GREY,
+            (fonts.cell_name, fonts.cell_name_sm, fonts.cell_name_xs),
+            26, fonts.cell_seed,
+        )
+    if divider:
+        draw.line([x0, y + row_h - 8, x1, y + row_h - 8], fill=PANEL_LINE, width=2)
+    return y + row_h
 
 
 def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    """赛果记分牌卡：2 列白色格子，胜者绿条+对勾，抢七小分上标.
+    """赛果速递卡：头条大比分 + 其余比赛暗色行列表.
 
     背景为透视球场线稿；全部比赛同属一个赛事时显示赛事横幅（徽章+名称）。
     """
-    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD", deco="court")
-    matches = matches[:8]
+    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD", deco="court-faint")
 
-    # 全部比赛同属一个赛事（如大满贯日）→ 顶部赛事横幅，格子内不再重复赛事名
+    # 全部比赛同属一个赛事（如大满贯日）→ 顶部赛事横幅，行内不再重复赛事名
     names = {m.tournament.name for m in matches}
     single_event = len(names) == 1
     if single_event:
@@ -607,22 +671,22 @@ def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Im
             fill=WHITE,
         )
         y += 100
-    cols = 2
-    rows = (len(matches) + cols - 1) // cols
-    gap = 22
-    cell_w = (W - 2 * MARGIN - gap) // cols
-    avail = H - y - MARGIN - 60
-    cell_h = min(210, (avail - (rows - 1) * gap) // rows)
-    lead = max(0, (avail - rows * cell_h - (rows - 1) * gap) // 2)
-    y += lead
-    top_upset = find_upset(matches)
-    for i, m in enumerate(matches):
-        cx = MARGIN + (i % cols) * (cell_w + gap)
-        cy = y + (i // cols) * (cell_h + gap)
-        _scoreboard_cell(
-            img, draw, fonts, cx, cy, cell_w, cell_h, m,
+
+    hero, rest = matches[0], matches[1:]
+    y = _hero_block(img, draw, fonts, y + 6, hero, show_tournament=not single_event)
+    y += 26
+
+    row_h = 132
+    avail = H - y - MARGIN - 16
+    n = max(0, min(len(rest), avail // row_h))
+    rest = rest[:n]
+    top_upset = find_upset(rest)
+    for i, m in enumerate(rest):
+        y = _list_row(
+            img, draw, fonts, y, row_h, m,
             tag_upset=(top_upset is not None and m.match_id == top_upset.match_id),
             show_tournament=not single_event,
+            divider=i < len(rest) - 1,
         )
     _footer(draw, fonts)
     return img
