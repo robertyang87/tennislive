@@ -150,6 +150,12 @@ class _Fonts:
         self.score = load(bold, b_idx, 38)
         self.body = load(regular, r_idx, 36)
         self.small = load(regular, r_idx, 27)
+        # 记分牌卡专用
+        self.cell_meta = load(regular, r_idx, 25)
+        self.cell_name = load(bold, b_idx, 31)
+        self.cell_seed = load(regular, r_idx, 22)
+        self.cell_score = load(bold, b_idx, 46)
+        self.cell_sup = load(bold, b_idx, 24)
 
 
 def _fit(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont, max_w: int) -> str:
@@ -382,6 +388,108 @@ def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.I
             accent=is_chinese_involved(m),
             tag="冷门" if find_upset([m]) else "",
         ) + gap
+    _footer(draw, fonts)
+    return img
+
+
+# 记分牌格子配色（两种主题下都用浅色格子，还原参考图的对比效果）
+CELL_BG = (248, 250, 247)
+CELL_WIN = (213, 238, 207)
+CELL_TEXT = (24, 34, 29)
+CELL_GREY = (128, 140, 133)
+CELL_CHECK = (32, 148, 82)
+CELL_LINE = (222, 230, 224)
+
+
+def _draw_check(draw, cx: int, cy: int, r: int = 16) -> None:
+    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CELL_CHECK)
+    draw.line([cx - 7, cy, cx - 2, cy + 6], fill=(255, 255, 255), width=4)
+    draw.line([cx - 2, cy + 6, cx + 8, cy - 6], fill=(255, 255, 255), width=4)
+
+
+def _cell_side_row(
+    draw, fonts, x: int, y: int, w: int, players, seed, sets_pairs, won: bool
+) -> None:
+    """记分牌里一方的两行：姓名行 + 比分行（含抢七上标）."""
+    name = "/".join(player_zh(p.name) for p in players)
+    color = CELL_TEXT if won else CELL_GREY
+    nx = x + 22
+    if seed:
+        draw.text((nx, y + 8), str(seed), font=fonts.cell_seed, fill=CELL_GREY)
+        nx += draw.textlength(str(seed), font=fonts.cell_seed) + 8
+    max_name_w = x + w - nx - (56 if won else 24)
+    draw.text(
+        (nx, y), _fit(draw, name, fonts.cell_name, int(max_name_w)),
+        font=fonts.cell_name, fill=color,
+    )
+    if won:
+        _draw_check(draw, x + w - 38, y + 20)
+    sy = y + 46
+    sx = x + 22
+    step = min(78, (w - 60) // max(1, len(sets_pairs)))
+    for games, tb in sets_pairs:
+        g = str(games)
+        draw.text((sx, sy), g, font=fonts.cell_score, fill=color)
+        if tb is not None:
+            gw = draw.textlength(g, font=fonts.cell_score)
+            draw.text((sx + gw + 2, sy - 4), str(tb), font=fonts.cell_sup, fill=color)
+        sx += step
+
+
+def _scoreboard_cell(draw, fonts, x: int, y: int, w: int, h: int, m: Match, tag_upset: bool = False) -> None:
+    draw.rounded_rectangle([x, y, x + w, y + h], radius=18, fill=CELL_BG)
+    # 元信息行：项目·轮次 | 赛事
+    meta_left = match_round_display(m) or "单打"
+    g = group_by_tournament([m])[0]
+    draw.text((x + 22, y + 16), meta_left, font=fonts.cell_meta, fill=CELL_GREY)
+    right = _fit(draw, g.name_zh, fonts.cell_meta, int(w * 0.45))
+    tw = draw.textlength(right, font=fonts.cell_meta)
+    draw.text((x + w - tw - 22, y + 16), right, font=fonts.cell_meta, fill=CELL_GREY)
+    draw.line([x + 22, y + 54, x + w - 22, y + 54], fill=CELL_LINE, width=2)
+
+    row_h = (h - 66) // 2
+    for i, (players, competitor_sets) in enumerate(
+        ((m.home, [(s.home, s.home_tiebreak) for s in m.sets]),
+         (m.away, [(s.away, s.away_tiebreak) for s in m.sets]))
+    ):
+        ry = y + 62 + i * row_h
+        won = m.winner == i
+        if won:
+            draw.rounded_rectangle(
+                [x + 8, ry - 4, x + w - 8, ry + row_h - 10], radius=12, fill=CELL_WIN
+            )
+        seed = players[0].seed if players else None
+        _cell_side_row(draw, fonts, x, ry + 6, w, players, seed, competitor_sets, won)
+
+    if tag_upset:
+        tag = "爆冷"
+        tw = draw.textlength(tag, font=fonts.cell_seed)
+        bx1 = x + w - 20
+        bx0 = bx1 - tw - 24
+        draw.rounded_rectangle([bx0, y + h - 44, bx1, y + h - 10], radius=8, fill=RED)
+        draw.text((bx0 + 12, y + h - 41), tag, font=fonts.cell_seed, fill=(255, 255, 255))
+
+
+def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
+    """赛果记分牌卡：2 列白色格子，胜者绿条+对勾，抢七小分上标."""
+    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD")
+    matches = matches[:6]
+    cols = 2
+    rows = (len(matches) + cols - 1) // cols
+    gap = 22
+    cell_w = (W - 2 * MARGIN - gap) // cols
+    avail = H - y - MARGIN - 60
+    cell_h = min(300, (avail - (rows - 1) * gap) // rows)
+    lead = max(0, (avail - rows * cell_h - (rows - 1) * gap) // 2)
+    y += lead
+    top_upset = find_upset(matches)
+    for i, m in enumerate(matches):
+        cx = MARGIN + (i % cols) * (cell_w + gap)
+        cy = y + (i // cols) * (cell_h + gap)
+        _scoreboard_cell(
+            draw, fonts, cx, cy, cell_w, cell_h, m,
+            tag_upset=(top_upset is not None and m.match_id == top_upset.match_id),
+        )
     _footer(draw, fonts)
     return img
 
@@ -630,8 +738,14 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     headline = pick_headline_auto(digest)
     images.append(("cover", _cover(fonts, digest, headline)))
 
-    focus = top_results([m for m in digest.results if m.is_singles], 3)
-    if focus:
+    singles_results = [m for m in digest.results if m.is_singles]
+    if len(singles_results) >= 4:
+        # 赛果多：记分牌网格（参考专业赛果速递版式）
+        board = top_results(singles_results, 6)
+        images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
+    elif singles_results:
+        # 赛果少：大块 hero 版式
+        focus = top_results(singles_results, 3)
         images.append(("focus", _card_focus(fonts, date_label, focus)))
 
     cn_results = [m for m in digest.results if is_chinese_involved(m)]
