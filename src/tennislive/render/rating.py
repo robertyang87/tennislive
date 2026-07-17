@@ -103,6 +103,34 @@ def top_schedule(matches: list[Match], n: int = 5) -> list[Match]:
     return sorted(upcoming, key=match_score, reverse=True)[:n]
 
 
+def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[Match]:
+    """今晚焦点：3-5 场中国球员或知名单打，不足时按重要性补足."""
+    singles = [m for m in matches if m.is_singles and not m.status.is_final]
+
+    def known(match: Match) -> bool:
+        if is_chinese_involved(match):
+            return True
+        players = match.home + match.away
+        return any(
+            (p.rank is not None and p.rank <= 30)
+            or (p.seed is not None and p.seed <= 8)
+            for p in players
+        )
+
+    ranked = sorted(singles, key=match_score, reverse=True)
+    preferred = [m for m in ranked if known(m)]
+    target = min(max_n, max(min_n, len(preferred)))
+    selected = preferred[:target]
+    selected_ids = {m.match_id for m in selected}
+    for match in ranked:
+        if len(selected) >= target:
+            break
+        if match.match_id not in selected_ids:
+            selected.append(match)
+            selected_ids.add(match.match_id)
+    return selected
+
+
 def stay_up_stars(m: Match) -> int:
     """熬夜指数 1-5 星."""
     s = match_score(m)

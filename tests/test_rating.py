@@ -7,6 +7,7 @@ from tennislive.render.rating import (
     is_upset,
     match_score,
     stay_up_stars,
+    tonight_focus,
     top_results,
 )
 from tennislive.render.titles import flash_headline, title_candidates
@@ -58,6 +59,50 @@ def test_flash_headline_cn_win():
 def test_title_candidates_cn_first(sample_digest):
     cands = title_candidates(sample_digest)
     assert cands and "郑钦文" in cands[0]
+
+
+def test_upcoming_cn_focus_outranks_cn_loss():
+    from datetime import datetime, timezone
+
+    from tennislive.digest import Digest
+    from tennislive.render.titles import title_candidates
+
+    loss = make_match(
+        home_name="Xinyu Gao", home_country="CHN", winner=1, match_id="loss"
+    )
+    upcoming = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        start_utc=datetime(2026, 7, 17, 14, 30, tzinfo=timezone.utc),
+        match_id="upcoming",
+    )
+    digest = Digest(
+        today=date(2026, 7, 17), results=[loss], schedule=[upcoming]
+    )
+    assert title_candidates(digest)[0].startswith("郑钦文22:30")
+
+
+def test_tonight_focus_prefers_cn_and_known_players():
+    cn = make_match(
+        home_name="Qinwen Zheng", home_country="CHN",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(), match_id="cn"
+    )
+    star = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(), match_id="star"
+    )
+    star.home[0].rank = 1
+    low = make_match(
+        home_name="Player A", away_name="Player B",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(), match_id="low"
+    )
+    low.home[0].seed = low.away[0].seed = None
+    picks = tonight_focus([low, star, cn], min_n=2, max_n=3)
+    assert picks[0].match_id == "cn"
+    assert {m.match_id for m in picks[:2]} == {"cn", "star"}
 
 
 def test_rankings_parse_and_map():

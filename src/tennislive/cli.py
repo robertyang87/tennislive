@@ -115,6 +115,29 @@ def cmd_digest(args) -> int:
         console.print(f"[red]抓取失败：{e}[/red]")
         return 1
 
+    # 只通过已配置的数据许可 API 补充专业统计。没有 API key 时保留基础
+    # 比分页，不在 GitHub Actions 中抓取 ATP/WTA/TDI 官网页面。
+    from .render.focus import select_focus_match
+    from .sources.sportradar import SportradarOfficialStats
+
+    focus_match = select_focus_match(digest)
+    licensed_stats = SportradarOfficialStats.from_env()
+    if focus_match and licensed_stats:
+        try:
+            focus_match.stats = licensed_stats.fetch_match_stats(focus_match)
+            digest.source_status["Sportradar 技术统计"] = "正常 · 1 场授权统计"
+        except SourceError as e:
+            digest.source_status["Sportradar 技术统计"] = f"降级 · {e}"
+    elif focus_match:
+        digest.source_status["专业技术统计"] = (
+            "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计"
+        )
+
+    # 用同站上一轮的官网技术统计或可核查赛果生成今晚焦点看点。
+    from .render.authority import enrich_schedule_editorial
+
+    enrich_schedule_editorial(digest)
+
     outdir = Path(args.outdir) / d.isoformat()
     outdir.mkdir(parents=True, exist_ok=True)
 
@@ -160,6 +183,13 @@ def cmd_digest(args) -> int:
     (outdir / "push.html").write_text(
         to_push_html(digest, cards=[p.name for p in card_paths], xhs_text=xhs),
         encoding="utf-8",
+    )
+
+    # 每期输出覆盖清单，便于快速核对 ATP/WTA 各级别赛事是否被收录。
+    from .render.coverage import coverage_report
+
+    (outdir / "coverage.txt").write_text(
+        coverage_report(digest), encoding="utf-8"
     )
 
     # 原始数据

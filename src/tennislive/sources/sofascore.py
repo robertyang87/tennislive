@@ -3,7 +3,7 @@
     https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/{YYYY-MM-DD}
 
 数据全面（含 ATP/WTA/挑战赛/ITF），但对数据中心 IP 有封锁风险（403），
-因此仅作为 ESPN 之后的备用源。只保留 category 为 ATP/WTA 的巡回赛正赛。
+因此仅作为末级备用源。只保留 category 为 ATP/WTA 的巡回赛正赛。
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from ..models import Match, MatchStatus, Player, SetScore, Tour, Tournament
 from ..timeutil import BEIJING
+from ..zh.tournaments import tournament_level
 from .base import SourceError, TennisSource, make_session
 
 logger = logging.getLogger(__name__)
@@ -127,6 +128,9 @@ class SofaScoreSource(TennisSource):
         tournament = Tournament(
             name=unique.get("name") or tournament_info.get("name") or "?",
             tour=tour,
+            level=tournament_level(
+                unique.get("name") or tournament_info.get("name"), tour.value
+            ),
             surface=ev.get("groundType") or None,
             tournament_id=str(unique.get("id") or "") or None,
         )

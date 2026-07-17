@@ -1,59 +1,86 @@
-"""标题全自动生成与选择：三个角度各出一个候选，按规则自动选用.
-
-优先级：中国球员 > 冷门 > 球星战报 > 兜底。
-所有候选都会写入 title_candidates.txt 留档，便于日后复盘哪类标题表现好。
-"""
+"""标题全自动生成与选择：用可解释评分挑当天最值得点击的故事."""
 
 from __future__ import annotations
+
+from dataclasses import dataclass
 
 from ..digest import Digest
 from ..timeutil import fmt_time_beijing
 from ..zh import player_zh
 from .common import is_chinese_involved, match_round_display
-from .rating import find_upset, top_results, top_schedule
+from .rating import find_upset, match_score, top_results, top_schedule
+from .story import china_summary, chinese_side_won, is_chinese_player
+
+
+@dataclass(frozen=True)
+class _Candidate:
+    text: str
+    score: int
+    kind: str
 
 
 def _cn_side(players) -> bool:
-    from .common import CHINESE_PLAYER_NAMES
-
-    for p in players:
-        if (p.country or "").upper() in ("CHN", "CN"):
-            return True
-        if player_zh(p.name) in CHINESE_PLAYER_NAMES:
-            return True
-    return False
+    return any(is_chinese_player(p) for p in players)
 
 
 def _flat_round(m) -> str:
     return (match_round_display(m) or "").replace("·", "")
 
 
-def cn_headline(digest: Digest) -> str | None:
-    """中国球员角度：赛果优先，其次今日出场."""
-    finished = [m for m in digest.results if is_chinese_involved(m) and m.is_singles]
-    finished = finished or [m for m in digest.results if is_chinese_involved(m)]
-    if finished:
-        m = finished[0]
-        w = m.winner_players()
-        if w:
-            r = _flat_round(m)
-            won = _cn_side(w)
-            if won and r.endswith("决赛") and "半" not in r and "四" not in r:
-                return f"{player_zh(w[0].name)}夺冠！"
-            if won:
-                return f"{player_zh(w[0].name)}晋级{r or '下一轮'}"
-            loser = (m.loser_players() or [None])[0]
-            if loser is not None:
-                return f"{player_zh(loser.name)}止步{r or '本轮'}"
-    upcoming = [m for m in digest.schedule if is_chinese_involved(m) and m.is_singles]
-    if upcoming:
-        m = upcoming[0]
-        for p in m.home + m.away:
-            if _cn_side([p]):
-                t = fmt_time_beijing(m.start_utc)
-                suffix = f"今晚{t}登场" if t != "待定" else "今日登场"
-                return f"{player_zh(p.name)}{suffix}"
+def _cn_match_headline(m) -> str | None:
+    w = m.winner_players()
+    if not w:
+        return None
+    r = _flat_round(m)
+    if chinese_side_won(m):
+        cn_winner = next((p for p in w if is_chinese_player(p)), w[0])
+        if r.endswith("决赛") and "半" not in r and "四" not in r:
+            return f"{player_zh(cn_winner.name)}夺冠！"
+        return f"{player_zh(cn_winner.name)}晋级{r or '下一轮'}"
+    loser = next(
+        (p for p in (m.loser_players() or []) if is_chinese_player(p)), None
+    )
+    if loser is not None:
+        return f"{player_zh(loser.name)}止步{r or '本轮'}"
     return None
+
+
+def _cn_candidates(digest: Digest) -> list[_Candidate]:
+    candidates: list[_Candidate] = []
+    for m in digest.results:
+        if not is_chinese_involved(m):
+            continue
+        text = _cn_match_headline(m)
+        if not text:
+            continue
+        positive = chinese_side_won(m)
+        base = 300 if positive and m.is_singles else 215 if positive else 70
+        candidates.append(_Candidate(text, base + match_score(m), "china"))
+
+    for m in digest.schedule:
+        if not (is_chinese_involved(m) and m.is_singles):
+            continue
+        p = next((p for p in m.home + m.away if is_chinese_player(p)), None)
+        if p is None:
+            continue
+        t = fmt_time_beijing(m.start_utc)
+        when = f"{t}出战" if t != "待定" else "今日出战"
+        candidates.append(
+            _Candidate(f"{player_zh(p.name)}{when}", 270 + match_score(m), "china")
+        )
+
+    summary = china_summary(digest)
+    if summary:
+        wins = sum(
+            1 for m in digest.results if is_chinese_involved(m) and chinese_side_won(m)
+        )
+        candidates.append(_Candidate(summary, 230 + wins * 18, "china-summary"))
+    return candidates
+
+
+def cn_headline(digest: Digest) -> str | None:
+    candidates = _cn_candidates(digest)
+    return max(candidates, key=lambda c: c.score).text if candidates else None
 
 
 def upset_headline(digest: Digest) -> str | None:
@@ -90,16 +117,36 @@ def star_headline(digest: Digest) -> str | None:
 
 
 def title_candidates(digest: Digest) -> list[str]:
-    """去重后的候选列表，按优先级排序."""
-    seen = set()
-    out = []
-    for h in (cn_headline(digest), upset_headline(digest), star_headline(digest)):
+    """去重后的候选列表，按故事价值评分排序."""
+    candidates = _cn_candidates(digest)
+    upset = upset_headline(digest)
+    if upset:
+        m = find_upset(digest.results)
+        candidates.append(_Candidate(upset, 200 + (match_score(m) if m else 0), "upset"))
+    star = star_headline(digest)
+    if star:
+        candidates.append(_Candidate(star, 150, "star"))
+
+    seen: set[str] = set()
+    out: list[str] = []
+    for candidate in sorted(candidates, key=lambda c: c.score, reverse=True):
+        h = candidate.text
         if h and h not in seen:
             seen.add(h)
             out.append(h)
     if not out:
         out.append("每日赛程赛果速览")
     return out
+
+
+def cover_highlights(digest: Digest) -> tuple[str, str]:
+    """Main cover hook plus a distinct secondary proof point."""
+    candidates = title_candidates(digest)
+    primary = candidates[0]
+    secondary = next((h for h in candidates[1:] if h != primary), "")
+    if not secondary:
+        secondary = "昨夜赛果与今晚重点，一页看懂"
+    return primary, secondary
 
 
 def pick_headline_auto(digest: Digest) -> str:

@@ -1,155 +1,183 @@
-"""微信公众号文章生成：Markdown（便于编辑）与内联样式 HTML（可直接粘贴/走 API）.
-
-公众号编辑器会剥离 <style> 块，所以 HTML 必须全部内联样式。
-"""
+"""微信公众号文案：结论先行、精选信息、专业复盘与内联样式 HTML."""
 
 from __future__ import annotations
 
 import re
 
 from ..digest import Digest
-from ..models import Match, MatchStatus
+from ..models import Match
 from ..timeutil import fmt_date_zh, fmt_time_beijing
-from ..zh import player_zh
 from .common import (
-    curate_for_social,
     group_by_tournament,
-    is_chinese_involved as _is_chinese_involved,
+    is_chinese_involved,
     match_round_display,
     result_line,
     side_display,
 )
+from .focus import focus_comparison, select_focus_match
+from .rating import tonight_focus, top_results
+from .story import (
+    chinese_side_won,
+    result_insight,
+    schedule_insight,
+    sort_china_matches,
+)
+from .titles import cover_highlights, pick_headline_auto
+from .tournament_story import pick_tournament_story
 
 
 def pick_headline(digest: Digest) -> str:
-    """标题亮点（全自动）：委托 titles 模块的规则选择."""
     if not (digest.results or digest.schedule):
         return "今日暂无巡回赛比赛"
-    from .titles import pick_headline_auto
-
     return pick_headline_auto(digest)
 
 
 def article_title(digest: Digest) -> str:
     d = digest.today
-    return f"网球晨报 | {d.month}月{d.day}日 {pick_headline(digest)}"
+    return f"网球晨报｜{d.month}月{d.day}日 {pick_headline(digest)}"
 
 
-# ---------- Markdown ----------
+def _china_matches(digest: Digest, cap: int = 6) -> list[Match]:
+    return sort_china_matches(
+        [
+            m
+            for m in digest.results + digest.live + digest.schedule
+            if is_chinese_involved(m)
+        ]
+    )[:cap]
+
+
+def _focus_results(digest: Digest, cap: int = 8) -> list[Match]:
+    return top_results(
+        [m for m in digest.results if m.is_singles], cap, cn_boost=False
+    )
+
+
+def _tonight(digest: Digest, cap: int = 5) -> list[Match]:
+    return tonight_focus(digest.schedule, min_n=3, max_n=cap)
+
 
 def to_markdown(digest: Digest) -> str:
-    lines: list[str] = []
-    lines.append(f"# {article_title(digest)}")
-    lines.append("")
-    lines.append(f"> {fmt_date_zh(digest.today)}（北京时间）· WTA/ATP 巡回赛每日速报")
-    lines.append("")
+    primary, secondary = cover_highlights(digest)
+    lines = [
+        f"# {article_title(digest)}",
+        "",
+        f"> {fmt_date_zh(digest.today)}（北京时间）· 替你筛完赛果，只留下值得看的重点",
+        "",
+        "## 今日先看",
+        "",
+        f"**{primary}**",
+        "",
+        f"第二条主线：{secondary}。",
+        "",
+    ]
 
-    focus = [m for m in digest.results + digest.schedule if _is_chinese_involved(m)]
-    if focus:
-        lines.append("## 🇨🇳 中国军团")
-        lines.append("")
-        for m in focus:
-            g_zh = group_by_tournament([m])[0]
-            r = match_round_display(m)
+    china = _china_matches(digest)
+    if china:
+        lines.extend(["## 🇨🇳 中国军团", ""])
+        for m in china:
+            group = group_by_tournament([m])[0]
+            label = f"{group.name_zh}·{match_round_display(m)}".rstrip("·")
             if m.status.is_final:
-                lines.append(f"- **{g_zh.name_zh}**{('·' + r) if r else ''}：{result_line(m)}")
+                mark = "胜" if chinese_side_won(m) else "负"
+                lines.append(f"- **{mark}｜{label}**：{result_line(m)}")
             else:
-                t = fmt_time_beijing(m.start_utc)
                 lines.append(
-                    f"- **{g_zh.name_zh}**{('·' + r) if r else ''}：{t} "
+                    f"- **{fmt_time_beijing(m.start_utc)}｜{label}**："
                     f"{side_display(m.home)} vs {side_display(m.away)}"
                 )
         lines.append("")
 
-    results = curate_for_social(digest.results)
-    live = curate_for_social(digest.live)
-    schedule = curate_for_social(digest.schedule)
-
+    results = _focus_results(digest)
     if results:
-        lines.append(f"## 🏆 最新赛果（{len(results)} 场）")
+        lines.extend(["## 🏆 昨夜焦点赛果", ""])
+        for m in results:
+            group = group_by_tournament([m])[0]
+            lines.append(
+                f"- **{group.name_zh}·{match_round_display(m)}**：{result_line(m)}"
+            )
+            lines.append(f"  看点：{result_insight(m)}")
         lines.append("")
-        for group in group_by_tournament(results):
-            lines.append(f"### {group.title}")
-            lines.append("")
-            for m in group.matches:
-                r = match_round_display(m)
-                prefix = f"**{r}** " if r else ""
-                lines.append(f"- {prefix}{result_line(m)}")
-            lines.append("")
 
-    if live:
-        lines.append(f"## 🔴 正在进行（{len(live)} 场）")
-        lines.append("")
-        for group in group_by_tournament(live):
-            lines.append(f"### {group.title}")
-            lines.append("")
-            for m in group.matches:
-                r = match_round_display(m)
-                prefix = f"**{r}** " if r else ""
-                score = m.score_display(from_winner=False)
-                lines.append(
-                    f"- {prefix}{side_display(m.home)} vs {side_display(m.away)}"
-                    + (f"　当前 {score}" if score else "")
-                )
-            lines.append("")
-
+    schedule = _tonight(digest)
     if schedule:
-        lines.append(f"## 📅 今日赛程（{len(schedule)} 场，北京时间）")
+        lines.extend(["## ⏰ 今晚焦点", ""])
+        for m in schedule:
+            group = group_by_tournament([m])[0]
+            lines.append(
+                f"- **{fmt_time_beijing(m.start_utc)}｜{group.name_zh}**："
+                f"{side_display(m.home)} vs {side_display(m.away)}"
+            )
+            lines.append(f"  推荐理由：{schedule_insight(m)}")
         lines.append("")
-        for group in group_by_tournament(schedule):
-            lines.append(f"### {group.title}")
-            lines.append("")
-            for m in group.matches:
-                r = match_round_display(m)
-                suffix = f"　·{r}" if r else ""
-                lines.append(
-                    f"- `{fmt_time_beijing(m.start_utc)}` "
-                    f"{side_display(m.home)} vs {side_display(m.away)}{suffix}"
-                )
+
+    focus = select_focus_match(digest)
+    if focus:
+        comparison = focus_comparison(focus)
+        lines.extend(["## 🎯 焦点复盘", ""])
+        lines.append(f"**{comparison.left_name} vs {comparison.right_name}**")
+        lines.append("")
+        for label, left, right in comparison.rows:
+            lines.append(f"- {label}：{left} vs {right}")
+        lines.extend(["", f"**一句判断：**{comparison.verdict}"])
+        if comparison.source_label:
+            source = comparison.source_label
+            duration = f"｜{comparison.duration_label}" if comparison.duration_label else ""
+            lines.extend([f"数据：{source}{duration}", ""])
+        else:
             lines.append("")
 
-    lines.append("---")
-    lines.append("")
-    lines.append(
-        "*时间均为北京时间；单打全收录，双打仅收录决赛与中国球员场次；"
-        "数据来自公开比分接口，以官方为准。*"
+    story = pick_tournament_story(digest)
+    if story:
+        lines.extend(
+            [
+                "## 📚 赛事档案",
+                "",
+                f"**{story.title}**｜{story.location}｜{story.level}｜{story.surface}",
+                "",
+                f"{story.founded}。{story.hero_fact}",
+                "",
+            ]
+        )
+        lines.extend(f"- {fact}" for fact in story.facts)
+        lines.append("")
+
+    lines.extend(
+        [
+            "---",
+            "",
+            "*时间均为北京时间；完整原始数据保留在 digest.json。数据来自公开比分接口，以赛事官方为准。*",
+            "",
+        ]
     )
-    lines.append("")
     return "\n".join(lines)
 
 
-# ---------- 内联样式 HTML（公众号可直接粘贴） ----------
-
 _S = {
+    "lead": (
+        "margin:16px 0 24px;padding:18px 20px;background:#eff6f1;"
+        "border-left:5px solid #c7f000;color:#173c2d;font-size:16px;line-height:1.8;"
+    ),
     "h2": (
-        "margin:28px 0 14px;padding:8px 14px;font-size:17px;font-weight:bold;"
-        "color:#0b3d2e;background:linear-gradient(90deg,#d6f5e3,#ffffff);"
-        "border-left:4px solid #16a34a;border-radius:4px;"
+        "margin:30px 0 14px;padding:9px 14px;font-size:18px;font-weight:bold;"
+        "color:#f7f3ea;background:#0b4d33;border-left:5px solid #c7f000;"
     ),
-    "h3": (
-        "margin:18px 0 8px;font-size:15px;font-weight:bold;color:#111;"
-        "padding-bottom:4px;border-bottom:1px dashed #bbb;"
+    "h3": "margin:18px 0 8px;font-size:16px;font-weight:bold;color:#173c2d;",
+    "item": (
+        "margin:0 0 12px;padding:12px 14px;background:#f8f8f5;"
+        "border-bottom:1px solid #e2e7e2;font-size:15px;line-height:1.75;color:#25342d;"
     ),
-    "li": "margin:6px 0;font-size:14px;line-height:1.7;color:#333;",
-    "meta": "font-size:13px;color:#888;margin:8px 0 20px;",
-    "round": "color:#16a34a;font-weight:bold;margin-right:4px;",
-    "time": (
-        "display:inline-block;min-width:44px;color:#0b63c4;font-weight:bold;"
-        "font-family:Menlo,monospace;margin-right:6px;"
-    ),
-    "footer": "font-size:12px;color:#aaa;margin-top:26px;",
+    "insight": "display:block;margin-top:3px;color:#b5492f;font-size:13px;line-height:1.6;",
+    "time": "color:#0b6b49;font-weight:bold;margin-right:5px;",
+    "meta": "font-size:13px;color:#778179;margin:8px 0 20px;line-height:1.6;",
+    "footer": "font-size:12px;color:#999;margin-top:28px;line-height:1.7;",
 }
 
 
-def _esc(s: str) -> str:
-    return (
-        s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    )
+def _esc(value: str) -> str:
+    return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-# 旗帜 emoji（一对区域指示符）→ 旗帜小图。
-# Windows 浏览器/编辑器不渲染旗帜 emoji（只显示字母码），HTML 版统一换成图片；
-# 走公众号 API 发布时 publish 模块会把这些外链图转存为微信素材。
 _FLAG_PAIR_RE = re.compile("([\U0001F1E6-\U0001F1FF])([\U0001F1E6-\U0001F1FF])")
 FLAG_IMG_STYLE = (
     "width:20px;height:15px;display:inline-block;vertical-align:-2px;"
@@ -165,78 +193,105 @@ def _flag_img(match: re.Match) -> str:
     )
 
 
-def _emoji_flags_to_img(html: str) -> str:
-    return _FLAG_PAIR_RE.sub(_flag_img, html)
+def _emoji_flags_to_img(content: str) -> str:
+    return _FLAG_PAIR_RE.sub(_flag_img, content)
+
+
+def _section(title: str) -> str:
+    return f'<h2 style="{_S["h2"]}">{title}</h2>'
+
+
+def _item(main: str, insight: str = "") -> str:
+    extra = f'<span style="{_S["insight"]}">{_esc(insight)}</span>' if insight else ""
+    return f'<div style="{_S["item"]}">{main}{extra}</div>'
 
 
 def to_html(digest: Digest) -> str:
-    parts: list[str] = []
-    parts.append(
+    primary, secondary = cover_highlights(digest)
+    parts = [
         f'<p style="{_S["meta"]}">{_esc(fmt_date_zh(digest.today))}（北京时间）'
-        f"· WTA/ATP 巡回赛每日速报</p>"
-    )
+        "· WTA/ATP 每日精选</p>",
+        f'<div style="{_S["lead"]}"><strong>{_esc(primary)}</strong><br/>'
+        f'第二条主线：{_esc(secondary)}。</div>',
+    ]
 
-    def emit_group_matches(matches: list[Match], mode: str) -> None:
-        for group in group_by_tournament(matches):
-            parts.append(f'<h3 style="{_S["h3"]}">{_esc(group.title)}</h3>')
-            parts.append('<ul style="margin:0;padding-left:18px;">')
-            for m in group.matches:
-                r = match_round_display(m)
-                round_html = (
-                    f'<span style="{_S["round"]}">{_esc(r)}</span>' if r else ""
-                )
-                if mode == "result":
-                    body = _esc(result_line(m))
-                elif mode == "live":
-                    score = m.score_display(from_winner=False)
-                    body = _esc(
-                        f"{side_display(m.home)} vs {side_display(m.away)}"
-                        + (f"　当前 {score}" if score else "")
-                    )
-                else:
-                    body = (
-                        f'<span style="{_S["time"]}">{_esc(fmt_time_beijing(m.start_utc))}</span>'
-                        + _esc(f"{side_display(m.home)} vs {side_display(m.away)}")
-                    )
-                parts.append(f'<li style="{_S["li"]}">{round_html}{body}</li>')
-            parts.append("</ul>")
-
-    focus = [m for m in digest.results + digest.schedule if _is_chinese_involved(m)]
-    if focus:
-        parts.append(f'<h2 style="{_S["h2"]}">🇨🇳 中国军团</h2>')
-        parts.append('<ul style="margin:0;padding-left:18px;">')
-        for m in focus:
-            g = group_by_tournament([m])[0]
-            r = match_round_display(m)
-            label = f"{g.name_zh}{('·' + r) if r else ''}："
+    china = _china_matches(digest)
+    if china:
+        parts.append(_section("🇨🇳 中国军团"))
+        for m in china:
+            group = group_by_tournament([m])[0]
+            label = _esc(f"{group.name_zh}·{match_round_display(m)}".rstrip("·"))
             if m.status.is_final:
-                body = _esc(label + result_line(m))
+                mark = "胜" if chinese_side_won(m) else "负"
+                main = f"<strong>{mark}｜{label}</strong><br/>{_esc(result_line(m))}"
             else:
-                body = _esc(
-                    f"{label}{fmt_time_beijing(m.start_utc)} "
-                    f"{side_display(m.home)} vs {side_display(m.away)}"
+                main = (
+                    f'<strong><span style="{_S["time"]}">{_esc(fmt_time_beijing(m.start_utc))}</span>'
+                    f'{label}</strong><br/>{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
                 )
-            parts.append(f'<li style="{_S["li"]}">{body}</li>')
-        parts.append("</ul>")
+            parts.append(_item(main))
 
-    results = curate_for_social(digest.results)
-    live = curate_for_social(digest.live)
-    schedule = curate_for_social(digest.schedule)
-
+    results = _focus_results(digest)
     if results:
-        parts.append(f'<h2 style="{_S["h2"]}">🏆 最新赛果（{len(results)} 场）</h2>')
-        emit_group_matches(results, "result")
-    if live:
-        parts.append(f'<h2 style="{_S["h2"]}">🔴 正在进行（{len(live)} 场）</h2>')
-        emit_group_matches(live, "live")
+        parts.append(_section("🏆 昨夜焦点赛果"))
+        for m in results:
+            group = group_by_tournament([m])[0]
+            main = (
+                f"<strong>{_esc(group.name_zh)}·{_esc(match_round_display(m))}</strong><br/>"
+                f"{_esc(result_line(m))}"
+            )
+            parts.append(_item(main, result_insight(m)))
+
+    schedule = _tonight(digest)
     if schedule:
-        parts.append(
-            f'<h2 style="{_S["h2"]}">📅 今日赛程（{len(schedule)} 场，北京时间）</h2>'
+        parts.append(_section("⏰ 今晚焦点"))
+        for m in schedule:
+            group = group_by_tournament([m])[0]
+            main = (
+                f'<strong><span style="{_S["time"]}">{_esc(fmt_time_beijing(m.start_utc))}</span>'
+                f'{_esc(group.name_zh)}</strong><br/>'
+                f'{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
+            )
+            parts.append(_item(main, schedule_insight(m)))
+
+    focus = select_focus_match(digest)
+    if focus:
+        comparison = focus_comparison(focus)
+        parts.append(_section("🎯 焦点复盘"))
+        rows = "".join(
+            f'<tr><td style="padding:6px;color:#777;">{_esc(label)}</td>'
+            f'<td style="padding:6px;font-weight:bold;text-align:center;">{_esc(left)}</td>'
+            f'<td style="padding:6px;font-weight:bold;text-align:center;">{_esc(right)}</td></tr>'
+            for label, left, right in comparison.rows
         )
-        emit_group_matches(schedule, "schedule")
+        table = (
+            '<table style="width:100%;border-collapse:collapse;font-size:14px;">'
+            f'<tr><th></th><th>{_esc(comparison.left_name)}</th><th>{_esc(comparison.right_name)}</th></tr>'
+            f"{rows}</table>"
+        )
+        if comparison.source_label:
+            source = comparison.source_label
+            duration = f"｜{comparison.duration_label}" if comparison.duration_label else ""
+            table += (
+                '<p style="margin:8px 0 0;text-align:right;font-size:12px;color:#778179;">'
+                f"数据：{_esc(source + duration)}</p>"
+            )
+        parts.append(_item(table, comparison.verdict))
+
+    story = pick_tournament_story(digest)
+    if story:
+        parts.append(_section("📚 赛事档案"))
+        facts = "<br/>".join(f"· {_esc(fact)}" for fact in story.facts)
+        parts.append(
+            _item(
+                f"<strong>{_esc(story.title)}</strong>｜{_esc(story.level)}｜{_esc(story.surface)}<br/>"
+                f"{_esc(story.founded)} · {_esc(story.location)}<br/><br/>{facts}",
+                story.hero_fact,
+            )
+        )
 
     parts.append(
-        f'<p style="{_S["footer"]}">时间均为北京时间；单打全收录，双打仅收录决赛与'
-        f"中国球员场次；数据来自公开比分接口，以官方为准。</p>"
+        f'<p style="{_S["footer"]}">时间均为北京时间；完整原始数据保留在 digest.json。'
+        "数据来自公开比分接口，以赛事官方为准。</p>"
     )
     return _emoji_flags_to_img("\n".join(parts))

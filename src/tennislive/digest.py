@@ -21,6 +21,7 @@ class Digest:
     live: list[Match] = field(default_factory=list)      # 进行中
     schedule: list[Match] = field(default_factory=list)  # 今日未开赛
     source: str = ""
+    source_status: dict[str, str] = field(default_factory=dict)
     rankings: object = None                              # sources.rankings.Rankings（可选）
 
     @property
@@ -71,6 +72,11 @@ def build_digest(
         live=today_data.live(),
         schedule=today_data.upcoming(),
         source=today_data.source or yesterday_data.source or "",
+        source_status={
+            name: status
+            for data in (yesterday_data, today_data)
+            for name, status in data.source_status.items()
+        },
     )
 
     # 用世界排名补全球员 rank（供冷门检测/评分/排名卡使用），失败不阻塞

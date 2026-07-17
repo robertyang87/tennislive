@@ -420,7 +420,7 @@ def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
         font=fonts.subtitle, fill=GREY,
     )
     # 吸睛标签（card-xiaohongshu 规范：封面带 engaging tag）
-    tag = "每天 7:30 更新"
+    tag = "每天早间更新"
     tw = draw.textlength(tag, font=fonts.label)
     draw.rounded_rectangle(
         [MARGIN, 626, MARGIN + tw + 44, 626 + 56], radius=28,
@@ -803,7 +803,7 @@ def _card_end(fonts: _Fonts, date_label: str) -> Image.Image:
         draw.text(((W - tw) / 2, y), text, font=font, fill=color)
         y += 110
     y += 16
-    sub = "明早 7:30 · 准时更新"
+    sub = "每天早间更新 · 发布前人工确认"
     tw = draw.textlength(sub, font=fonts.subtitle)
     draw.text(((W - tw) / 2, y), sub, font=fonts.subtitle, fill=GREY)
     y += 110
@@ -976,13 +976,13 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
-    upset = find_upset(digest.results)
-    if upset:
-        images.append(("upset", _card_upset(fonts, date_label, upset)))
-    elif tonight:
-        images.append(("topic", _card_topic(fonts, date_label, tonight[0])))
+    # Playwright unavailable: still keep the requested deck structure and never
+    # resurrect the removed upset/end pages in the Pillow fallback.
+    from .focus import select_focus_match
 
-    images.append(("end", _card_end(fonts, date_label)))
+    focus_match = select_focus_match(digest)
+    if focus_match and not any(kind == "focus" for kind, _ in images):
+        images.append(("focus", _card_focus(fonts, date_label, [focus_match])))
 
     paths: list[Path] = []
     for i, (kind, img) in enumerate(images):

@@ -1,4 +1,4 @@
-"""ESPN 公开数据接口数据源（主数据源）.
+"""ESPN 公开数据接口数据源（聚合备用）.
 
 ESPN 提供无需鉴权的公开 JSON 接口（其官网前端同款），覆盖 ATP/WTA 巡回赛的
 赛程、实时比分与赛果，且对数据中心 IP（如 GitHub Actions）友好（已实测）：
@@ -27,6 +27,7 @@ from typing import Any, Iterable
 
 from ..models import Match, MatchStatus, Player, SetScore, Tour, Tournament
 from ..timeutil import BEIJING
+from ..zh.tournaments import tournament_level
 from .base import SourceError, TennisSource, make_session
 
 logger = logging.getLogger(__name__)
@@ -278,6 +279,9 @@ class EspnSource(TennisSource):
         tournament = Tournament(
             name=event.get("name") or event.get("shortName") or "?",
             tour=tour,
+            level=tournament_level(
+                event.get("name") or event.get("shortName"), tour.value
+            ),
             tournament_id=str(event.get("id") or "") or None,
         )
 
