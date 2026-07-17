@@ -36,11 +36,15 @@ def _compact_secondary(text: str) -> str:
 
 
 def post_title(digest: Digest) -> str:
-    """用当天最大事件做标题，不浪费字符重复栏目名和日期."""
+    """用日期和当天最大事件组成便于检索的小红书标题."""
     primary, secondary = cover_highlights(digest)
     combined = f"{primary}｜{_compact_secondary(secondary)}"
-    title = combined if len(combined) <= 20 else primary
-    return title if len(title) <= 20 else title[:19] + "…"
+    event = combined if len(combined) <= 20 else primary
+    prefix = f"{digest.today.month}月{digest.today.day}日｜"
+    available = 20 - len(prefix)
+    if len(event) > available:
+        event = event[: max(available - 1, 0)] + "…"
+    return prefix + event
 
 
 def _tags(digest: Digest) -> list[str]:
