@@ -58,8 +58,18 @@ def flag_image(country: str | None, height: int = 30) -> Image.Image | None:
     if raw is None:
         _cache[key] = None
         return None
-    # 平面旗按各国官方比例缩放（多数 3:2，瑞士 1:1 等特例保持原比例）
-    w = max(1, round(raw.width * height / raw.height))
+    # 统一外框 4:3：超宽/方形旗先居中裁切再缩放，保证所有旗大小一致
+    w = round(height * 4 / 3)
+    target = w / height
+    ratio = raw.width / raw.height
+    if ratio > target:  # 过宽（如波黑 2:1）→ 裁两侧
+        crop_w = round(raw.height * target)
+        x0 = (raw.width - crop_w) // 2
+        raw = raw.crop((x0, 0, x0 + crop_w, raw.height))
+    elif ratio < target:  # 过窄/方形（如瑞士）→ 裁上下
+        crop_h = round(raw.width / target)
+        y0 = (raw.height - crop_h) // 2
+        raw = raw.crop((0, y0, raw.width, y0 + crop_h))
     img = raw.resize((w, height), Image.LANCZOS)
     # 圆角遮罩 + 1px 描边（白底旗帜如日本需要边界）
     mask = Image.new("L", (w, height), 0)
