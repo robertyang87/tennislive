@@ -1,6 +1,6 @@
 """预下载全部国旗小图到 assets/flags/（CI 环境运行，见 assets.yml）.
 
-覆盖 zh/countries.py 中映射到 ISO2 的所有国家/地区，56x42 PNG 每张 1-3KB。
+覆盖 zh/countries.py 中映射到 ISO2 的所有国家/地区，w80 平面旗 PNG 每张 1-3KB。
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from tennislive.render.flags import ASSETS_DIR, FLAG_H, FLAG_W  # noqa: E402
+from tennislive.render.flags import ASSETS_DIR, FLAG_SIZE  # noqa: E402
 from tennislive.zh.countries import IOC  # noqa: E402
 
 
@@ -27,7 +27,7 @@ def main() -> int:
             continue
         try:
             resp = requests.get(
-                f"https://flagcdn.com/{FLAG_W}x{FLAG_H}/{iso2.lower()}.png",
+                f"https://flagcdn.com/{FLAG_SIZE}/{iso2.lower()}.png",
                 timeout=15,
             )
             resp.raise_for_status()
