@@ -89,13 +89,13 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
             g = group_by_tournament([m])[0]
             r = match_round_display(m)
             label = f"{g.name_zh}{('·' + r) if r else ''}"
+            # 赛事·轮次 与 对阵比分 分行，手机上更易读
             if m.status.is_final:
-                lines.append(f"▪️{label} {result_line(m)}")
+                lines.append(f"▪️{label}")
+                lines.append(result_line(m))
             else:
-                lines.append(
-                    f"▪️{label} {fmt_time_beijing(m.start_utc)} "
-                    f"{side_display(m.home)} vs {side_display(m.away)}"
-                )
+                lines.append(f"▪️{fmt_time_beijing(m.start_utc)} {label}")
+                lines.append(f"{side_display(m.home)} vs {side_display(m.away)}")
         lines.append("")
 
     results = [m for m in curate_for_social(digest.results) if m.is_singles]
@@ -113,7 +113,11 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
                     lines.append(f"—— {group.title} ——")
                     shown_any = True
                 r = match_round_display(m)
-                lines.append(f"▪️{(r + ' ') if r else ''}{result_line(m)}")
+                if r:
+                    lines.append(f"▪️{r}")
+                    lines.append(result_line(m))
+                else:
+                    lines.append(f"▪️{result_line(m)}")
                 count += 1
         lines.append("")
 
@@ -130,7 +134,10 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
                 r = match_round_display(m)
                 lines.append(
                     f"▪️{fmt_time_beijing(m.start_utc)} {group.name_zh}"
-                    f"{('·' + r) if r else ''} {side_display(m.home, with_seed=False)}"
+                    f"{('·' + r) if r else ''}"
+                )
+                lines.append(
+                    f"{side_display(m.home, with_seed=False)}"
                     f" vs {side_display(m.away, with_seed=False)}"
                 )
                 count += 1
