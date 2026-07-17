@@ -1,7 +1,7 @@
 name: probe-data-sources
 
 # 手动触发：在真实网络环境（GitHub Actions）中探测数据源结构。
-# 当前目标：① 比分接口里球员 ID 的位置；② 全量实时排名的可用接口。
+# 当前目标：① ESPN 单球员接口的排名字段；② WTA 全量分页；③ 双打 roster 的球员 ID。
 on:
   workflow_dispatch: {}
   push:
@@ -13,85 +13,67 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: 球员ID与全量排名探测
+      - name: 排名字段深挖
         shell: bash
         run: |
-          python3 - <<'EOF'
-          import json, urllib.request, datetime
+          python3 - <<'EOF2'
+          import json, re, urllib.request, datetime
 
           UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126 Safari/537.36"}
 
-          def get(url, extra=None, as_json=True):
+          def get(url, extra=None):
               headers = dict(UA)
               if extra:
                   headers.update(extra)
               req = urllib.request.Request(url, headers=headers)
               with urllib.request.urlopen(req, timeout=30) as r:
-                  body = r.read().decode()
-                  return json.loads(body) if as_json else body
+                  return json.loads(r.read().decode())
 
           print("=" * 70)
-          print("== 1) 比分接口 competitor 结构（找球员 ID）")
+          print("== 1) ESPN 单球员 v3 接口全文找 rank")
+          for league, aid in (("wta", "3042"),):
+              data = get(f"https://site.web.api.espn.com/apis/common/v3/sports/tennis/{league}/athletes/{aid}")
+              ath = data.get("athlete") or {}
+              print("athlete keys:", sorted(ath.keys()))
+              s = json.dumps(data, ensure_ascii=False)
+              hits = set(m.group(0)[:70] for m in re.finditer(r'"[a-zA-Z]*[Rr]ank[a-zA-Z]*"\s*:\s*[^,}]{1,30}', s))
+              for h in sorted(hits)[:15]:
+                  print("   ", h)
+
+          print("=" * 70)
+          print("== 2) WTA 全量分页（pageSize=500 / 翻页）")
+          W = "https://api.wtatennis.com/tennis/players/ranked?page={p}&pageSize={n}&type=rankSingles&sort=asc&name=&metric=SINGLES&at="
+          H = {"account": "wta", "Origin": "https://www.wtatennis.com",
+               "Referer": "https://www.wtatennis.com/rankings/singles"}
+          for p, n in ((0, 500), (1, 100), (4, 100)):
+              try:
+                  rows = get(W.format(p=p, n=n), extra=H)
+                  rows = rows if isinstance(rows, list) else rows.get("content") or []
+                  last = rows[-1] if rows else {}
+                  print(f"page={p} size={n} -> rows:{len(rows)} last_rank:{last.get('ranking')}")
+              except Exception as e:
+                  print(f"page={p} size={n} FAIL {e}")
+
+          print("=" * 70)
+          print("== 3) 双打 roster 球员 ID 结构")
           d = datetime.date.today() - datetime.timedelta(days=1)
           sb = get(f"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates={d:%Y%m%d}")
-          aid = None
+          found = False
           for ev in sb.get("events") or []:
               for grp in ev.get("groupings") or []:
                   for comp in grp.get("competitions") or []:
-                      cs = comp.get("competitors") or []
-                      if cs:
-                          c = cs[0]
-                          print("competitor keys:", sorted(c.keys()))
-                          print("competitor id/uid:", c.get("id"), "|", c.get("uid"))
-                          ath = c.get("athlete")
-                          if isinstance(ath, dict):
-                              print("athlete keys:", sorted(ath.keys()))
-                              print("athlete sample:", json.dumps(ath, ensure_ascii=False)[:500])
+                      for c in comp.get("competitors") or []:
                           rost = c.get("roster")
-                          if isinstance(rost, dict):
-                              a0 = (rost.get("athletes") or [{}])[0]
-                              print("roster athlete keys:", sorted(a0.keys()) if isinstance(a0, dict) else a0)
-                          # 从 uid 提取 athlete id：形如 s:850~l:851~a:12345
-                          uid = c.get("uid") or ""
-                          for part in uid.split("~"):
-                              if part.startswith("a:"):
-                                  aid = part[2:]
-                      break
-                  break
-              break
-          print("提取到的 athlete id:", aid)
-
-          print("=" * 70)
-          print("== 2) ESPN 单球员接口的实时排名字段")
-          if aid:
-              for url in (
-                  f"https://site.web.api.espn.com/apis/common/v3/sports/tennis/atp/athletes/{aid}",
-                  f"https://site.web.api.espn.com/apis/common/v3/sports/tennis/atp/athletes/{aid}/overview",
-                  f"https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/athletes/{aid}",
-              ):
-                  try:
-                      data = get(url)
-                      s = json.dumps(data, ensure_ascii=False)
-                      print(url, "OK keys:", list(data)[:12])
-                      import re
-                      for mtc in re.finditer(r'"(rank|current|displayRank)[^,}]{0,40}', s[:8000]):
-                          print("   rank-ish:", mtc.group(0)[:60])
-                  except Exception as e:
-                      print(url, "FAIL", e)
-
-          print("=" * 70)
-          print("== 3) WTA 官方 API 变体重试")
-          for url in (
-              "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=100&type=rankSingles&sort=asc&name=&metric=SINGLES&at=",
-              "https://api.wtatennis.com/tennis/players/ranked?type=rankSingles&sort=asc&pageSize=100&page=0",
-          ):
-              try:
-                  data = get(url, extra={"account": "wta", "Origin": "https://www.wtatennis.com",
-                                         "Referer": "https://www.wtatennis.com/rankings/singles"})
-                  rows = data if isinstance(data, list) else data.get("content") or []
-                  print(url[:80], "rows:", len(rows))
-                  if rows:
-                      print("  sample:", json.dumps(rows[0], ensure_ascii=False)[:300])
-              except Exception as e:
-                  print(url[:80], "FAIL", e)
-          EOF
+                          if isinstance(rost, dict) and rost.get("athletes"):
+                              a0 = rost["athletes"][0]
+                              print("roster athlete keys:", sorted(a0.keys()))
+                              print("sample:", json.dumps(a0, ensure_ascii=False)[:400])
+                              print("competitor id/uid:", c.get("id"), c.get("uid"))
+                              found = True
+                              break
+                      if found: break
+                  if found: break
+              if found: break
+          if not found:
+              print("昨天没有双打数据（或结构不同）")
+          EOF2
