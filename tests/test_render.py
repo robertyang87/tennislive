@@ -63,6 +63,9 @@ def test_wechat_title_length(sample_digest):
 def test_xhs_post(sample_digest):
     post = to_post(sample_digest)
     title = post_title(sample_digest)
+    assert title.startswith(
+        f"{sample_digest.today.month}月{sample_digest.today.day}日｜"
+    )
     assert len(title) <= 20
     assert "#网球" in post
     body = post.split("\n", 2)[2]
