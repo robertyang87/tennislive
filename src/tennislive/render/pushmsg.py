@@ -67,6 +67,10 @@ def _score_of(m) -> str:
 # 卡片图 CDN：jsDelivr 镜像 GitHub 内容，国内可访问
 _REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 _CDN = f"https://cdn.jsdelivr.net/gh/{_REPO}@main"
+_OWNER, _REPO_NAME = _REPO.split("/", 1)
+_PAGES = os.environ.get(
+    "TENNISLIVE_PAGES_URL", f"https://{_OWNER}.github.io/{_REPO_NAME}"
+).rstrip("/")
 
 
 def to_copy_page(xhs_text: str) -> str:
@@ -216,7 +220,7 @@ def to_push_html(
         parts.append(
             f'<div class="tl-sec" style="{_SEC}">📋 贴图发布文案</div>'
         )
-        copy_url = f"{_CDN}/output/{d.isoformat()}/copy.html"
+        copy_url = f"{_PAGES}/output/{d.isoformat()}/copy.html"
         parts.append(
             f'<a href="{copy_url}" style="{_COPY_BUTTON}">打开并复制文案</a>'
         )

@@ -48,6 +48,8 @@ tennislive digest                   # 生成今日内容包到 output/YYYY-MM-DD
 1. 在 [pushplus.plus](https://www.pushplus.plus) 微信扫码注册，复制 token
 2. 仓库 Settings → Secrets and variables → Actions → 新建 Secret：`PUSHPLUS_TOKEN`
 
+推送里的复制按钮由 GitHub Pages 承载；仓库需在 Settings → Pages 中选择 `main` 分支根目录发布。
+
 ### 方案 B：公众号 API 自动存草稿 / 发布
 
 **前提**：已认证的公众号（个人未认证订阅号无草稿/发布接口权限）。
