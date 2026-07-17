@@ -39,9 +39,9 @@
 ## ⏰ 今晚焦点
 
 - **22:30｜雅典公开赛**：🇨🇿 [3]克雷吉茨科娃 vs 🇨🇳 郑钦文
-  推荐理由：郑钦文在2024年WTA总决赛半决赛以6比3、7比5击败克雷吉茨科娃。（[WTA原文](https://www.wtatennis.com/news/4165464/one-win-away-zheng-edges-krejcikova-to-book-spot-in-wta-finals-championship)）
+  推荐理由：郑钦文在2024年总决赛半决赛以6比3、7比5击败克雷吉茨科娃。（[WTA原文](https://www.wtatennis.com/news/4165464/one-win-away-zheng-edges-krejcikova-to-book-spot-in-wta-finals-championship)）
 - **19:00｜瑞典公开赛**：🇵🇹 [5]博尔热斯 vs 🇮🇹 [2]达尔代里
-  推荐理由：博尔热斯上一轮在对手二发上拿到67%的分数，底线调动压过迪米特洛夫。（[ATP Tour原文](https://www.atptour.com/en/news/dimitrov-borges-bastad-2026-wednesday)）
+  推荐理由：博尔热斯上一轮在对手二发上拿到67%，底线调动压过迪米特洛夫。（[ATP Tour原文](https://www.atptour.com/en/news/dimitrov-borges-bastad-2026-wednesday)）
 - **19:30｜瑞士公开赛**：🇦🇷 [6]胡安·塞伦多洛 vs 🇳🇴 [2]鲁德
   推荐理由：两人上一轮都完成三盘逆转；塞伦多洛五月还曾在法网击败辛纳。（[ATP Tour原文](https://www.atptour.com/en/news/ruud-faria-gstaad-2026-thursday)）
 - **20:00｜瑞典公开赛**：🇷🇺 [1]卢布列夫 vs 🇦🇷 [8]巴埃斯
