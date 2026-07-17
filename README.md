@@ -33,6 +33,7 @@ tennislive digest                   # 生成今日内容包到 output/YYYY-MM-DD
 | `wechat.md` | 公众号文章 Markdown（配合 md2wechat 等工具排版） |
 | `wechat.html` | 内联样式 HTML，可直接粘贴进公众号编辑器或走 API 发草稿 |
 | `xiaohongshu.txt` | 小红书文案（标题 ≤20 字、正文 ≤1000 字、话题标签） |
+| `copy.html` | 手机文案复制页（标题、正文可分别一键复制） |
 | `cards/*.png` | 1080×1440 竖版卡片图：封面 + 赛果页 + 赛程页 |
 | `digest.json` | 当期原始数据 |
 
@@ -42,7 +43,7 @@ tennislive digest                   # 生成今日内容包到 output/YYYY-MM-DD
 
 ### 方案 A：PushPlus 推送到微信（最简单，推荐起步）
 
-每天把排版好的内容推到你自己的微信，人工确认后转发/粘贴发布：
+每天把排版好的内容推到你自己的微信：点击按钮复制标题/正文，卡片图逐张保存后导入发布：
 
 1. 在 [pushplus.plus](https://www.pushplus.plus) 微信扫码注册，复制 token
 2. 仓库 Settings → Secrets and variables → Actions → 新建 Secret：`PUSHPLUS_TOKEN`

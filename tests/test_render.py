@@ -2,6 +2,7 @@ from pathlib import Path
 
 from tennislive.models import MatchStatus
 from tennislive.render.common import group_by_tournament, result_line, schedule_line
+from tennislive.render.pushmsg import to_copy_page, to_push_html
 from tennislive.render.wechat import article_title, to_html, to_markdown
 from tennislive.render.xiaohongshu import post_title, to_post
 
@@ -63,6 +64,21 @@ def test_xhs_post(sample_digest):
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
+
+
+def test_push_copy_page_and_button(sample_digest):
+    xhs = "测试标题 <1>\n\n正文第一行\n正文第二行"
+    page = to_copy_page(xhs)
+    push_html = to_push_html(
+        sample_digest, cards=["card_00_cover.png"], xhs_text=xhs
+    )
+
+    assert "复制标题" in page and "复制正文" in page
+    assert "测试标题 &lt;1&gt;" in page
+    assert "正文第一行" in page
+    assert "copy.html" in push_html
+    assert "打开并复制文案" in push_html
+    assert "正文第一行" not in push_html
 
 
 def test_cards_generation(tmp_path, sample_digest):
