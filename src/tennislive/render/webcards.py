@@ -165,8 +165,9 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 .hero .flag { width:48px; height:36px; }
 .slash { font-style:normal; font-weight:700; font-size:26px; color:var(--fade); margin:0 2px; }
 .seed { font-family:'Barlow Condensed'; font-weight:600; font-style:normal;
-  font-size:22px; color:var(--gold); line-height:1; }
-.hero .seed { font-size:27px; }
+  font-size:22px; color:var(--gold); line-height:1;
+  width:26px; text-align:right; flex:none; }
+.hero .seed { font-size:27px; width:32px; }
 .name { font-style:normal; font-weight:700; font-size:30px; line-height:1.25;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .hero .name { font-size:42px; letter-spacing:1px; }
@@ -300,8 +301,9 @@ def _names_html(players) -> tuple[str, str]:
 def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     players = m.home if side == 0 else m.away
     won = m.winner == side
+    # 种子槽位固定宽度：无种子留空，保证上下两行国旗对齐
     seed = players[0].seed if players else None
-    seed_html = f'<i class="seed">{seed}</i>' if seed else ""
+    seed_html = f'<i class="seed">{seed if seed else ""}</i>'
     main_html, en = _names_html(players)
     rank = players[0].rank if len(players) == 1 else None
     rank_html = f'<i class="rank">({rank})</i>' if rank else ""
