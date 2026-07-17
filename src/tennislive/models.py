@@ -71,6 +71,32 @@ class SetScore:
 
 
 @dataclass
+class StatPair:
+    home: float
+    away: float
+
+
+@dataclass
+class MatchStats:
+    """Detailed match statistics in home/away order."""
+
+    source: str
+    source_url: Optional[str] = None
+    total_points_won: Optional[StatPair] = None
+    service_points_won: Optional[StatPair] = None
+    first_serve_in_pct: Optional[StatPair] = None
+    first_serve_won_pct: Optional[StatPair] = None
+    second_serve_won_pct: Optional[StatPair] = None
+    aces: Optional[StatPair] = None
+    double_faults: Optional[StatPair] = None
+    break_points_won: Optional[StatPair] = None
+    break_points_chances: Optional[StatPair] = None
+    winners: Optional[StatPair] = None
+    unforced_errors: Optional[StatPair] = None
+    duration_minutes: Optional[int] = None
+
+
+@dataclass
 class Tournament:
     name: str                          # 英文名，如 "Wimbledon"
     tour: Tour
@@ -97,6 +123,9 @@ class Match:
     note: Optional[str] = None         # 备注（退赛原因等）
     court: Optional[str] = None
     status_detail: Optional[str] = None  # 直播状态原始描述，如 "Set 3"
+    stats: Optional[MatchStats] = None
+    editorial_note: Optional[str] = None
+    editorial_source: Optional[str] = None
 
     @property
     def is_doubles(self) -> bool:
@@ -146,6 +175,7 @@ class DailyData:
     date_beijing: str                  # 北京时间日期 YYYY-MM-DD
     matches: list[Match] = field(default_factory=list)
     source: Optional[str] = None       # 数据来源名称
+    source_status: dict[str, str] = field(default_factory=dict)
     fetched_at_utc: Optional[datetime] = None
 
     def finished(self) -> list[Match]:

@@ -226,6 +226,7 @@ PLAYER_ZH: dict[str, str] = {
     "Zhaoxuan Yang": "杨钊煊",
     "Xinyu Jiang": "蒋欣玗",
     "Qianhui Tang": "汤千慧",
+    "Feng Shuo": "冯硕",
     "Hanyu Guo": "郭涵煜",
     "Yifan Xu": "徐一璠",
     "Yexin Ma": "马烨欣",

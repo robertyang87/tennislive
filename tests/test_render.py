@@ -1,7 +1,8 @@
 from pathlib import Path
 
-from tennislive.models import MatchStatus
+from tennislive.models import MatchStats, MatchStatus, StatPair
 from tennislive.render.common import group_by_tournament, result_line, schedule_line
+from tennislive.render.focus import focus_comparison
 from tennislive.render.pushmsg import to_copy_page, to_push_html
 from tennislive.render.wechat import article_title, to_html, to_markdown
 from tennislive.render.xiaohongshu import post_title, to_post
@@ -40,8 +41,8 @@ def test_group_by_tournament_orders_gs_first():
 def test_wechat_markdown(sample_digest):
     md = to_markdown(sample_digest)
     assert "中国军团" in md          # 郑钦文在赛果里 → 中国军团板块
-    assert "最新赛果" in md
-    assert "今日赛程" in md
+    assert "昨夜焦点赛果" in md
+    assert "今晚焦点" in md
     assert "郑钦文" in md
     assert "北京时间" in md
 
@@ -64,6 +65,8 @@ def test_xhs_post(sample_digest):
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
+    assert "一场球看细一点" in post
+    assert "7:30" not in post
 
 
 def test_push_copy_page_and_button(sample_digest):
@@ -91,3 +94,64 @@ def test_cards_generation(tmp_path, sample_digest):
         assert Path(p).stat().st_size > 10_000  # 是实际渲染的 PNG 而非空文件
     names = [p.name for p in paths]
     assert "card_00_cover.png" in names
+    assert any("focus" in name for name in names)
+    assert not any("upset" in name or "end" in name for name in names)
+
+
+def test_coverage_report_lists_tour_level(sample_digest):
+    from tennislive.render.coverage import coverage_report
+
+    sample_digest.results[0].tournament.level = "GS"
+    report = coverage_report(sample_digest)
+    assert "ATP GS" in report
+    assert "总场次" in report
+
+
+def test_focus_comparison_prefers_detailed_official_stats():
+    match = make_match()
+    match.stats = MatchStats(
+        source="Sportradar 授权网球数据",
+        source_url="https://api.sportradar.com/tennis/trial/v3/en/sport_events/example/summary.json",
+        total_points_won=StatPair(130, 129),
+        first_serve_in_pct=StatPair(68, 54),
+        first_serve_won_pct=StatPair(73, 73),
+        second_serve_won_pct=StatPair(49, 52),
+        aces=StatPair(2, 6),
+        double_faults=StatPair(3, 3),
+        break_points_won=StatPair(9, 7),
+        break_points_chances=StatPair(10, 11),
+        winners=StatPair(29, 62),
+        unforced_errors=StatPair(25, 67),
+        duration_minutes=222,
+    )
+
+    comparison = focus_comparison(match)
+
+    assert comparison.rows[0] == ("总得分", "130", "129")
+    assert ("一发成功率", "68%", "54%") in comparison.rows
+    assert ("破发兑现", "9/10", "7/11") in comparison.rows
+    assert ("制胜分 / 非受迫", "29 / 25", "62 / 67") in comparison.rows
+    assert comparison.duration_label == "3小时42分"
+    assert "总得分只差1分" in comparison.verdict
+    assert "少犯42次" in comparison.verdict
+
+
+def test_focus_comparison_keeps_score_fallback_without_stats():
+    comparison = focus_comparison(make_match())
+    assert comparison.rows[0][0] == "盘数"
+    assert comparison.rows[1][0] == "总局数"
+    assert any(row[0] == "首盘" for row in comparison.rows)
+    assert comparison.source_label is None
+
+
+def test_focus_comparison_supports_five_set_grand_slam_match():
+    match = make_match(
+        sets=((6, 4), (3, 6), (7, 6), (4, 6), (6, 3)),
+        tiebreaks=(None, None, (7, 5), None, None),
+    )
+
+    comparison = focus_comparison(match)
+
+    assert len(comparison.rows) == 8
+    assert comparison.rows[-2][0] == "第四盘"
+    assert comparison.rows[-1] == ("第五盘", "6", "3")
