@@ -4710,8 +4710,8 @@
           "away_tiebreak": 7
         },
         {
-          "home": 3,
-          "away": 2,
+          "home": 4,
+          "away": 5,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -4763,7 +4763,13 @@
       "sets": [
         {
           "home": 4,
-          "away": 5,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 0,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -4771,7 +4777,7 @@
       "winner": null,
       "note": null,
       "court": "Grandstand",
-      "status_detail": "1st Set",
+      "status_detail": "2nd Set",
       "stats": null,
       "editorial_note": null,
       "editorial_source": null
@@ -4836,7 +4842,7 @@
           "away_tiebreak": null
         },
         {
-          "home": 1,
+          "home": 4,
           "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
@@ -4888,10 +4894,10 @@
       "start_utc": "2026-07-17 09:10:00+00:00",
       "sets": [
         {
-          "home": 5,
-          "away": 4,
-          "home_tiebreak": null,
-          "away_tiebreak": null
+          "home": 6,
+          "away": 6,
+          "home_tiebreak": 1,
+          "away_tiebreak": 1
         }
       ],
       "winner": null,
@@ -4939,7 +4945,7 @@
       "status": "scheduled",
       "round_name": "Round 2",
       "discipline": "Men's Singles",
-      "start_utc": "2026-07-17 10:00:00+00:00",
+      "start_utc": "2026-07-17 10:05:00+00:00",
       "sets": [
         {
           "home": 3,
@@ -4951,71 +4957,7 @@
       "winner": null,
       "note": null,
       "court": "Court 1",
-      "status_detail": "Fri, July 17th at 6:00 AM EDT",
-      "stats": null,
-      "editorial_note": null,
-      "editorial_source": null
-    },
-    {
-      "match_id": "7-2026:178728",
-      "tour": "ATP",
-      "tournament": {
-        "name": "EFG Swiss Open Gstaad",
-        "tour": "ATP",
-        "level": "ATP250",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "7-2026"
-      },
-      "home": [
-        {
-          "name": "Alexander Bublik",
-          "country": "KAZ",
-          "seed": 1,
-          "rank": 11,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2865.png",
-          "player_id": "2865"
-        }
-      ],
-      "away": [
-        {
-          "name": "Quentin Halys",
-          "country": "FRA",
-          "seed": null,
-          "rank": 90,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
-          "player_id": "2362"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 2",
-      "discipline": "Men's Singles",
-      "start_utc": "2026-07-17 10:00:00+00:00",
-      "sets": [
-        {
-          "home": 7,
-          "away": 6,
-          "home_tiebreak": 7,
-          "away_tiebreak": 4
-        },
-        {
-          "home": 4,
-          "away": 6,
-          "home_tiebreak": null,
-          "away_tiebreak": null
-        },
-        {
-          "home": 6,
-          "away": 5,
-          "home_tiebreak": null,
-          "away_tiebreak": null
-        }
-      ],
-      "winner": null,
-      "note": null,
-      "court": "Roy Emerson Arena",
-      "status_detail": "Fri, July 17th at 6:00 AM EDT",
+      "status_detail": "Fri, July 17th at 6:05 AM EDT",
       "stats": null,
       "editorial_note": null,
       "editorial_source": null
@@ -5055,15 +4997,79 @@
       "status": "scheduled",
       "round_name": "Quarterfinal",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-17 10:00:00+00:00",
+      "start_utc": "2026-07-17 10:05:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "Center Court",
-      "status_detail": "Fri, July 17th at 6:00 AM EDT",
+      "status_detail": "Fri, July 17th at 6:05 AM EDT",
       "stats": null,
       "editorial_note": "聚合赛果：谢里夫上一轮直落两盘过关",
       "editorial_source": "espn"
+    },
+    {
+      "match_id": "7-2026:178728",
+      "tour": "ATP",
+      "tournament": {
+        "name": "EFG Swiss Open Gstaad",
+        "tour": "ATP",
+        "level": "ATP250",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "7-2026"
+      },
+      "home": [
+        {
+          "name": "Alexander Bublik",
+          "country": "KAZ",
+          "seed": 1,
+          "rank": 11,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2865.png",
+          "player_id": "2865"
+        }
+      ],
+      "away": [
+        {
+          "name": "Quentin Halys",
+          "country": "FRA",
+          "seed": null,
+          "rank": 90,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2362.png",
+          "player_id": "2362"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 2",
+      "discipline": "Men's Singles",
+      "start_utc": "2026-07-17 10:20:00+00:00",
+      "sets": [
+        {
+          "home": 7,
+          "away": 6,
+          "home_tiebreak": 7,
+          "away_tiebreak": 4
+        },
+        {
+          "home": 4,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 6,
+          "away": 5,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": null,
+      "note": null,
+      "court": "Roy Emerson Arena",
+      "status_detail": "Fri, July 17th at 6:20 AM EDT",
+      "stats": null,
+      "editorial_note": null,
+      "editorial_source": null
     },
     {
       "match_id": "306-2026:178644",
