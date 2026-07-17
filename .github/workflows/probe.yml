@@ -1,7 +1,7 @@
 name: probe-data-sources
 
 # 手动触发：在真实网络环境（GitHub Actions）中探测数据源结构。
-# 当前目标：ATP/WTA 排名接口的 JSON 结构。
+# 当前目标：找到能实时取"全量"世界排名（不止 Top150）的接口。
 on:
   workflow_dispatch: {}
   push:
@@ -13,50 +13,86 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: 分析排名接口 JSON 结构
+      - name: 全量排名接口探测
         shell: bash
         run: |
           python3 - <<'EOF'
           import json, urllib.request
 
-          UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+          UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126 Safari/537.36"}
 
-          def get(url, extra=None):
+          def get(url, extra=None, as_json=True):
               headers = dict(UA)
               if extra:
                   headers.update(extra)
               req = urllib.request.Request(url, headers=headers)
               with urllib.request.urlopen(req, timeout=30) as r:
-                  return json.loads(r.read().decode())
+                  body = r.read().decode()
+                  return json.loads(body) if as_json else body
+
+          def espn_ranks_len(data):
+              out = []
+              for ranking in data.get("rankings") or []:
+                  rs = ranking.get("ranks") or []
+                  out.append((ranking.get("shortName") or ranking.get("name"),
+                              len(rs), rs[-1].get("current") if rs else None))
+              return out
 
           print("=" * 70)
-          print("== ESPN ATP rankings")
-          for url in (
-              "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
-              "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/rankings",
-          ):
+          print("== 1) ESPN site API 扩容参数")
+          BASE = "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings"
+          for url in (BASE, BASE + "?count=1000", BASE + "?limit=1000"):
               try:
-                  data = get(url)
-                  print(f"\nURL OK: {url}")
-                  print("top-level keys:", sorted(data.keys()) if isinstance(data, dict) else type(data))
-                  s = json.dumps(data, ensure_ascii=False)
-                  print("size:", len(s))
-                  print(s[:3000])
-                  break
+                  print(url, "->", espn_ranks_len(get(url)))
               except Exception as e:
-                  print(f"FAIL {url}: {e}")
+                  print(url, "FAIL", e)
 
           print("=" * 70)
-          print("== WTA official rankings (Pulselive)")
+          print("== 2) ESPN core v2 分页")
+          CORE = "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp/rankings"
+          try:
+              data = get(CORE)
+              print("keys:", list(data)[:8], "| count:", data.get("count"))
+              items = data.get("items") or []
+              if items:
+                  ref = items[0].get("$ref", "")
+                  ref = ref if ref.startswith("http") else "https:" + ref
+                  print("first ref:", ref[:120])
+                  d2 = get(ref)
+                  print("ref keys:", list(d2)[:12])
+                  ranks = d2.get("ranks")
+                  if isinstance(ranks, list):
+                      print("ranks inline len:", len(ranks))
+                  elif isinstance(ranks, dict):
+                      print("ranks paged:", {k: ranks.get(k) for k in ("count", "pageSize", "pageCount")})
+          except Exception as e:
+              print("CORE FAIL", e)
+
+          print("=" * 70)
+          print("== 3) WTA 官方 API（全量+实时）")
           try:
               data = get(
-                  "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=20&type=rankSingles&sort=asc&metric=SINGLES&at=latest&nationality=",
+                  "https://api.wtatennis.com/tennis/players/ranked?page=0&pageSize=500&type=rankSingles&sort=asc&metric=SINGLES&at=latest&nationality=",
                   extra={"account": "wta", "Origin": "https://www.wtatennis.com"},
               )
-              print("type:", type(data))
-              s = json.dumps(data, ensure_ascii=False)
-              print("size:", len(s))
-              print(s[:3500])
+              rows = data if isinstance(data, list) else data.get("content") or []
+              print("rows:", len(rows))
+              if rows:
+                  last = rows[-1]
+                  print("first:", json.dumps(rows[0], ensure_ascii=False)[:400])
+                  print("last rank:", last.get("ranking") or last.get("rank"))
           except Exception as e:
-              print("FAIL:", e)
+              print("WTA FAIL", e)
+
+          print("=" * 70)
+          print("== 4) ATP 官网 JSON 端点（可能被 Cloudflare 拦）")
+          for url in (
+              "https://www.atptour.com/en/-/www/rank/sglroll/0/1000",
+              "https://www.atptour.com/en/-/www/rank/sgl/0/1000",
+          ):
+              try:
+                  body = get(url, as_json=False)
+                  print(url, "OK len:", len(body), body[:300])
+              except Exception as e:
+                  print(url, "FAIL", e)
           EOF
