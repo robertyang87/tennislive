@@ -368,8 +368,13 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     if hero:
         text, cls = _story_chip(m)
         chip_html = f'<b class="chip {cls}">{text}</b>'
-    elif tag_upset:
-        chip_html = '<b class="chip chip-red chip-sm">爆冷</b>'
+    else:
+        chips = []
+        if is_chinese_involved(m):
+            chips.append('<b class="chip chip-green chip-sm">中国军团</b>')
+        if tag_upset:
+            chips.append('<b class="chip chip-red chip-sm">爆冷</b>')
+        chip_html = "".join(chips)
     set_index = ""
     if hero and n:
         idx = "".join(f"<i>{i + 1}</i>" for i in range(n))
@@ -662,7 +667,8 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
 
     singles = [m for m in digest.results if m.is_singles]
     if singles:
-        board = top_results(singles, 10)
+        # 速递页按比赛本身分量排序（中国场次不加权放大，出现时打标签即可）
+        board = top_results(singles, 10, cn_boost=False)
         page2 = board[5:]
         total = 2 if page2 else 1
         pages.append(("scoreboard", scoreboard_body(
