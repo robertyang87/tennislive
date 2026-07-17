@@ -41,13 +41,20 @@ def _b64(path: Path) -> str | None:
 
 def _font_css() -> str:
     css = []
-    for weight, fname in ((500, "BarlowCondensed-Medium.ttf"),
-                          (600, "BarlowCondensed-SemiBold.ttf"),
-                          (700, "BarlowCondensed-Bold.ttf")):
+    faces = [
+        ("Barlow Condensed", 500, "BarlowCondensed-Medium.ttf"),
+        ("Barlow Condensed", 600, "BarlowCondensed-SemiBold.ttf"),
+        ("Barlow Condensed", 700, "BarlowCondensed-Bold.ttf"),
+        # 子集化的思源字体（tools/build_fonts.py 产出），本地与 CI 渲染一致
+        ("TL Serif SC", 900, "NotoSerifSC-Black-sub.ttf"),
+        ("TL Sans SC", 700, "NotoSansSC-Bold-sub.ttf"),
+        ("TL Sans SC", 400, "NotoSansSC-Regular-sub.ttf"),
+    ]
+    for family, weight, fname in faces:
         b = _b64(ASSETS / "fonts" / fname)
         if b:
             css.append(
-                f"@font-face{{font-family:'Barlow Condensed';font-weight:{weight};"
+                f"@font-face{{font-family:'{family}';font-weight:{weight};"
                 f"src:url(data:font/ttf;base64,{b}) format('truetype');}}"
             )
     return "\n".join(css)
@@ -64,11 +71,19 @@ def _flag_uri(country: str | None) -> str | None:
 # ---------- 内容组装 ----------
 
 
-def _short_name(p) -> str:
-    n = player_zh(p.name)
-    if n == p.name and n.isascii():
-        n = _abbrev_en(n)
-    return n
+def _names(players) -> tuple[str, str]:
+    """(主行, 英文小字行)：有译名→中文为主+英文原名小字；无译名→缩写英文为主."""
+    zh_parts, en_parts = [], []
+    for p in players[:2]:
+        zh = player_zh(p.name)
+        if zh != p.name:
+            zh_parts.append(zh)
+            en_parts.append(p.name)
+        elif p.name.isascii():
+            zh_parts.append(_abbrev_en(p.name))
+        else:
+            zh_parts.append(p.name)
+    return "/".join(zh_parts), " / ".join(en_parts)
 
 
 def _story_chip(m: Match) -> tuple[str, str] | None:
@@ -93,9 +108,10 @@ def _side_html(m: Match, side: int, n_sets: int) -> str:
             flags.append(f'<img class="flag" src="{uri}" alt=""/>')
     seed = players[0].seed if players else None
     seed_html = f'<i class="seed">{seed}</i>' if seed else ""
-    name = html.escape("/".join(_short_name(p) for p in players))
+    main, en = _names(players)
     rank = players[0].rank if len(players) == 1 else None
     rank_html = f'<i class="rank">({rank})</i>' if rank else ""
+    en_html = f'<span class="en">{html.escape(en)}</span>' if en else ""
     cells = []
     for s in m.sets:
         games = s.home if side == 0 else s.away
@@ -108,8 +124,9 @@ def _side_html(m: Match, side: int, n_sets: int) -> str:
     return (
         f'<div class="side {"won" if won else "lost"}" '
         f'style="--sets:{n_sets}">'
-        f'<span class="who">{"".join(flags)}{seed_html}'
-        f'<em class="name">{name}</em>{rank_html}{note}</span>'
+        f'<span class="who">{"".join(flags)}<span class="names">'
+        f'<span class="zh">{seed_html}<em class="name">{html.escape(main)}</em>'
+        f'{rank_html}{note}</span>{en_html}</span></span>'
         f'{"".join(cells)}</div>'
     )
 
@@ -200,11 +217,11 @@ html.light {{
 body {{
   width:{W}px; height:{H}px; overflow:hidden; position:relative;
   background:linear-gradient(168deg, var(--ground0) 0%, var(--ground1) 100%);
-  font-family:'Noto Sans CJK SC','Noto Sans SC','WenQuanYi Zen Hei',sans-serif;
+  font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC','WenQuanYi Zen Hei',sans-serif;
   color:var(--pagetext);
 }}
 .court {{ position:absolute; left:0; bottom:0; width:100%; height:1060px; }}
-.poster {{ position:relative; height:100%; padding:50px 64px 30px; display:flex; flex-direction:column; }}
+.poster {{ position:relative; height:100%; padding:40px 64px 24px; display:flex; flex-direction:column; }}
 
 .masthead {{ display:flex; align-items:center; gap:16px; }}
 .ball {{ width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; }}
@@ -213,22 +230,23 @@ body {{
 .brand {{ font-weight:700; font-size:34px; letter-spacing:2px; line-height:1.2; }}
 .date {{ margin-left:auto; font-family:'Barlow Condensed'; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }}
 
-.titleband {{ margin:26px 0 20px; }}
+.titleband {{ margin:18px 0 14px; }}
 .kicker {{ font-family:'Barlow Condensed'; font-weight:600; font-size:26px; line-height:1.1;
   letter-spacing:.42em; text-transform:uppercase; color:var(--gold); }}
-h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; color:var(--neon); }}
+h1 {{ font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-weight:900;
+  letter-spacing:3px; line-height:1.15; color:var(--neon); margin-top:2px; }}
 
 .event {{ display:flex; align-items:center; gap:18px; margin:-6px 0 22px; }}
 .event i {{ flex:1; height:1px; background:var(--gold-soft); }}
 .event span {{ font-size:30px; font-weight:700; color:var(--pagetext); letter-spacing:2px; line-height:1.2; }}
 
 .card {{ background:var(--ivory); color:var(--ink); border-radius:14px;
-  box-shadow:var(--cardshadow); padding:13px 30px 14px; margin-bottom:10px; }}
-.card.hero {{ border-top:3px solid var(--gold); padding:20px 34px 22px; }}
+  box-shadow:var(--cardshadow); padding:10px 30px 12px; margin-bottom:8px; }}
+.card.hero {{ border-top:3px solid var(--gold); padding:16px 34px 18px; }}
 
 .card header {{ display:flex; align-items:center; justify-content:space-between;
-  height:44px; border-bottom:1px solid var(--gold-soft); }}
-.hero header {{ height:56px; }}
+  height:42px; border-bottom:1px solid var(--gold-soft); }}
+.hero header {{ height:52px; }}
 .hl {{ display:flex; align-items:center; gap:14px; }}
 .round {{ font-size:24px; color:var(--fade); letter-spacing:1px; }}
 .tour {{ font-size:24px; color:var(--fade); letter-spacing:1px; }}
@@ -238,28 +256,34 @@ h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; col
 .chip-sm {{ font-size:20px; padding:3px 12px 4px; }}
 
 .set-index {{ display:grid; grid-template-columns:1fr repeat(var(--sets), 88px);
-  height:32px; align-items:end; padding-bottom:4px; }}
+  height:28px; align-items:end; padding-bottom:3px; }}
 .set-index i {{ font-family:'Barlow Condensed'; font-weight:600; font-size:22px;
   font-style:normal; color:var(--gold); text-align:center; letter-spacing:1px; line-height:1; }}
 
 /* 行高固定，布局与字体度量脱钩（CI 的 Noto 行框远高于本地字体） */
 .side {{ display:grid; grid-template-columns:1fr repeat(var(--sets), 72px);
-  align-items:center; border-radius:10px; margin-top:4px; padding:0 14px; height:54px; }}
-.hero .side {{ grid-template-columns:1fr repeat(var(--sets), 88px); height:88px; margin-top:6px; }}
+  align-items:center; border-radius:10px; margin-top:4px; padding:0 14px; height:62px; }}
+.hero .side {{ grid-template-columns:1fr repeat(var(--sets), 88px); height:96px; margin-top:6px; }}
 .side.won {{ background:var(--winband); }}
 .who {{ display:flex; align-items:center; gap:12px; min-width:0; }}
+.names {{ display:flex; flex-direction:column; justify-content:center; min-width:0; }}
+.zh {{ display:flex; align-items:center; gap:8px; min-width:0; }}
 .flag {{ height:27px; border-radius:4px; box-shadow:0 0 0 1px rgba(0,0,0,.12); }}
 .hero .flag {{ height:36px; }}
 .seed {{ font-family:'Barlow Condensed'; font-weight:600; font-style:normal;
-  font-size:22px; color:var(--gold); }}
+  font-size:22px; color:var(--gold); line-height:1; }}
 .hero .seed {{ font-size:27px; }}
-.name {{ font-style:normal; font-weight:700; font-size:30px; line-height:1.2;
+.name {{ font-style:normal; font-weight:700; font-size:30px; line-height:1.25;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
-.hero .name {{ font-size:44px; letter-spacing:1px; }}
+.hero .name {{ font-size:42px; letter-spacing:1px; }}
 .side.lost .name {{ color:var(--fade); font-weight:500; }}
 .rank {{ font-family:'Barlow Condensed'; font-weight:500; font-style:normal;
-  font-size:22px; color:var(--fade); }}
+  font-size:22px; color:var(--fade); line-height:1; }}
 .hero .rank {{ font-size:26px; }}
+.en {{ font-family:'Barlow Condensed'; font-weight:500; font-size:19px; line-height:1.1;
+  letter-spacing:1.2px; color:var(--fade); margin-top:2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
+.hero .en {{ font-size:23px; margin-top:4px; }}
 .note {{ font-style:normal; font-size:22px; color:var(--fade); }}
 .set {{ font-family:'Barlow Condensed'; font-weight:700; font-size:42px;
   text-align:center; color:var(--court); font-variant-numeric:tabular-nums; line-height:1; }}
