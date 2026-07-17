@@ -82,8 +82,21 @@ def _country_of(athlete: dict[str, Any]) -> str | None:
     return flag.get("alt") or None
 
 
-def _mk_player(athlete: dict[str, Any]) -> Player:
+def _athlete_id(athlete: dict[str, Any], fallback: str | None = None) -> str | None:
+    """athlete 对象本身无 id：从 playercard 链接提取（/player/_/id/3042/...）."""
     aid = str(athlete.get("id") or "") or None
+    if aid:
+        return aid
+    for link in athlete.get("links") or []:
+        href = link.get("href") if isinstance(link, dict) else ""
+        m = re.search(r"/id/(\d+)", href or "")
+        if m:
+            return m.group(1)
+    return fallback
+
+
+def _mk_player(athlete: dict[str, Any], aid: str | None = None) -> Player:
+    aid = _athlete_id(athlete, fallback=aid)
     return Player(
         name=athlete.get("displayName") or athlete.get("shortName") or "?",
         country=_country_of(athlete),
@@ -95,12 +108,15 @@ def _mk_player(athlete: dict[str, Any]) -> Player:
 def _players_of(competitor: dict[str, Any]) -> list[Player]:
     """从 competitor 提取球员：单打 athlete；双打 roster.athletes."""
     players: list[Player] = []
+    comp_id = str(competitor.get("id") or "")  # 单打=athlete id；双打="id1-id2"
 
     roster = competitor.get("roster")
     if isinstance(roster, dict):
-        for ath in roster.get("athletes") or []:
+        team_ids = comp_id.split("-") if "-" in comp_id else []
+        for i, ath in enumerate(roster.get("athletes") or []):
             if isinstance(ath, dict):
-                players.append(_mk_player(ath))
+                fallback = team_ids[i] if i < len(team_ids) else None
+                players.append(_mk_player(ath, aid=fallback))
     elif isinstance(roster, list):  # 兼容旧结构
         for entry in roster:
             ath = entry.get("athlete") if isinstance(entry, dict) else None
@@ -110,7 +126,7 @@ def _players_of(competitor: dict[str, Any]) -> list[Player]:
     if not players:
         ath = competitor.get("athlete")
         if isinstance(ath, dict):
-            players.append(_mk_player(ath))
+            players.append(_mk_player(ath, aid=comp_id or None))
 
     if not players:
         # 兜底：team.displayName 形如 "A. Krajicek / H. Patten"
