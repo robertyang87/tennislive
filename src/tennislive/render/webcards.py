@@ -159,8 +159,9 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 .who { display:flex; align-items:center; gap:12px; min-width:0; }
 .names { display:flex; flex-direction:column; justify-content:center; min-width:0; }
 .zh { display:flex; align-items:center; gap:8px; min-width:0; }
-.flag { height:27px; border-radius:4px; box-shadow:0 0 0 1px rgba(0,0,0,.12); }
+.flag { height:27px; border-radius:4px; box-shadow:0 0 0 1px rgba(0,0,0,.12); flex:none; }
 .hero .flag { height:36px; }
+.slash { font-style:normal; font-weight:700; font-size:26px; color:var(--fade); margin:0 2px; }
 .seed { font-family:'Barlow Condensed'; font-weight:600; font-style:normal;
   font-size:22px; color:var(--gold); line-height:1; }
 .hero .seed { font-size:27px; }
@@ -273,32 +274,33 @@ _FOOTER = '<div class="footer"><b>@网球时差 · TENNIS JETLAG</b></div>'
 # ---------- 比赛卡组件 ----------
 
 
-def _names(players) -> tuple[str, str]:
-    """(主行, 英文小字行)：有译名→中文为主+英文原名小字；无译名→缩写英文为主."""
+def _names_html(players) -> tuple[str, str]:
+    """(主行 HTML, 英文小字行)：中文名为主（各自国旗紧贴人名前），英文原名小字.
+
+    双打时国旗放在对应球员名前：🇫🇷卡斯基诺/🇨🇳冯朔。
+    """
     zh_parts, en_parts = [], []
     for p in players[:2]:
         zh = player_zh(p.name)
         if zh != p.name:
-            zh_parts.append(zh)
+            shown = zh
             en_parts.append(p.name)
         elif p.name.isascii():
-            zh_parts.append(_abbrev_en(p.name))
+            shown = _abbrev_en(p.name)
         else:
-            zh_parts.append(p.name)
-    return "/".join(zh_parts), " / ".join(en_parts)
+            shown = p.name
+        uri = _flag_uri(p.country)
+        flag = f'<img class="flag" src="{uri}" alt=""/>' if uri else ""
+        zh_parts.append(f'{flag}<em class="name">{html.escape(shown)}</em>')
+    return '<i class="slash">/</i>'.join(zh_parts), " / ".join(en_parts)
 
 
 def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     players = m.home if side == 0 else m.away
     won = m.winner == side
-    flags = []
-    for p in players[:2]:
-        uri = _flag_uri(p.country)
-        if uri:
-            flags.append(f'<img class="flag" src="{uri}" alt=""/>')
     seed = players[0].seed if players else None
     seed_html = f'<i class="seed">{seed}</i>' if seed else ""
-    main, en = _names(players)
+    main_html, en = _names_html(players)
     rank = players[0].rank if len(players) == 1 else None
     rank_html = f'<i class="rank">({rank})</i>' if rank else ""
     en_html = f'<span class="en">{html.escape(en)}</span>' if en else ""
@@ -330,8 +332,8 @@ def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
         cls += " nosets"
     return (
         f'<div class="{cls}" style="--sets:{max(n_sets, 1)}">'
-        f'<span class="who">{"".join(flags)}<span class="names">'
-        f'<span class="zh">{seed_html}<em class="name">{html.escape(main)}</em>'
+        f'<span class="who"><span class="names">'
+        f'<span class="zh">{seed_html}{main_html}'
         f'{rank_html}{note}</span>{en_html}</span></span>'
         f'{"".join(cells)}</div>'
     )
@@ -428,7 +430,11 @@ def cover_body(digest: Digest, headline: str, date_label: str) -> str:
     )
 
 
-def scoreboard_body(matches: list[Match], date_label: str) -> str:
+def scoreboard_body(
+    matches: list[Match], date_label: str, *,
+    with_hero: bool = True, page: int = 1, total: int = 1,
+) -> str:
+    """赛果页：首页头条 + 4 场；续页 5 场重要赛果（page/total 标注页码）."""
     names = {m.tournament.name for m in matches}
     single_event = len(names) == 1
     banner = ""
@@ -438,19 +444,26 @@ def scoreboard_body(matches: list[Match], date_label: str) -> str:
         if len({m.tour for m in matches}) > 1 and title.startswith(("ATP ", "WTA ")):
             title = title[4:]
         banner = f'<div class="event"><i></i><span>{html.escape(title)}</span><i></i></div>'
-    hero, rest = matches[0], matches[1:]
-    rest = rest[: 3 if single_event else 4]
+    cards = []
+    if with_hero:
+        hero, rest = matches[0], matches[1:]
+        rest = rest[: 3 if single_event else 4]
+        cards.append(_result_card(hero, hero=True, show_tournament=not single_event, tag_upset=False))
+    else:
+        rest = matches[:5]
     top_upset = find_upset(rest)
-    cards = [_result_card(hero, hero=True, show_tournament=not single_event, tag_upset=False)]
     for m in rest:
         cards.append(_result_card(
             m, hero=False, show_tournament=not single_event,
             tag_upset=(top_upset is not None and m.match_id == top_upset.match_id),
         ))
+    kicker = "Overnight Results · 昨夜赛果"
+    if total > 1:
+        kicker += f" · {page}/{total}"
     return (
         '<div class="poster">'
         + _masthead(date_label)
-        + _titleband("Overnight Results · 昨夜赛果", "赛果速递")
+        + _titleband(kicker, "赛果速递")
         + banner
         + "".join(cards)
         + _FOOTER
@@ -644,8 +657,16 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
 
     singles = [m for m in digest.results if m.is_singles]
     if singles:
-        board = top_results(singles, 8)
-        pages.append(("scoreboard", scoreboard_body(board, date_label)))
+        board = top_results(singles, 10)
+        page2 = board[5:]
+        total = 2 if page2 else 1
+        pages.append(("scoreboard", scoreboard_body(
+            board[:5], date_label, with_hero=True, page=1, total=total,
+        )))
+        if page2:
+            pages.append(("results2", scoreboard_body(
+                page2, date_label, with_hero=False, page=2, total=total,
+            )))
 
     cn_results = [m for m in digest.results if is_chinese_involved(m)]
     cn_today = [m for m in digest.schedule + digest.live if is_chinese_involved(m)]
