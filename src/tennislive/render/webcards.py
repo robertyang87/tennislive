@@ -210,24 +210,25 @@ body {{
 .ball {{ width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; }}
 .ball::before, .ball::after {{ content:""; position:absolute; width:36px; height:36px; border:4px solid var(--ground0); border-radius:50%; }}
 .ball::before {{ left:-22px; top:4px; }} .ball::after {{ right:-22px; top:4px; }}
-.brand {{ font-weight:700; font-size:34px; letter-spacing:2px; }}
+.brand {{ font-weight:700; font-size:34px; letter-spacing:2px; line-height:1.2; }}
 .date {{ margin-left:auto; font-family:'Barlow Condensed'; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }}
 
 .titleband {{ margin:26px 0 20px; }}
-.kicker {{ font-family:'Barlow Condensed'; font-weight:600; font-size:26px;
+.kicker {{ font-family:'Barlow Condensed'; font-weight:600; font-size:26px; line-height:1.1;
   letter-spacing:.42em; text-transform:uppercase; color:var(--gold); }}
 h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; color:var(--neon); }}
 
 .event {{ display:flex; align-items:center; gap:18px; margin:-6px 0 22px; }}
 .event i {{ flex:1; height:1px; background:var(--gold-soft); }}
-.event span {{ font-size:30px; font-weight:700; color:var(--ivory); letter-spacing:2px; }}
+.event span {{ font-size:30px; font-weight:700; color:var(--pagetext); letter-spacing:2px; line-height:1.2; }}
 
 .card {{ background:var(--ivory); color:var(--ink); border-radius:14px;
-  box-shadow:var(--cardshadow); padding:13px 30px 14px; margin-bottom:12px; }}
+  box-shadow:var(--cardshadow); padding:13px 30px 14px; margin-bottom:10px; }}
 .card.hero {{ border-top:3px solid var(--gold); padding:20px 34px 22px; }}
 
-.card header {{ display:flex; align-items:baseline; justify-content:space-between;
-  padding-bottom:9px; border-bottom:1px solid var(--gold-soft); }}
+.card header {{ display:flex; align-items:center; justify-content:space-between;
+  height:44px; border-bottom:1px solid var(--gold-soft); }}
+.hero header {{ height:56px; }}
 .hl {{ display:flex; align-items:center; gap:14px; }}
 .round {{ font-size:24px; color:var(--fade); letter-spacing:1px; }}
 .tour {{ font-size:24px; color:var(--fade); letter-spacing:1px; }}
@@ -237,13 +238,14 @@ h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; col
 .chip-sm {{ font-size:20px; padding:3px 12px 4px; }}
 
 .set-index {{ display:grid; grid-template-columns:1fr repeat(var(--sets), 88px);
-  margin-top:10px; }}
+  height:32px; align-items:end; padding-bottom:4px; }}
 .set-index i {{ font-family:'Barlow Condensed'; font-weight:600; font-size:22px;
-  font-style:normal; color:var(--gold); text-align:center; letter-spacing:1px; }}
+  font-style:normal; color:var(--gold); text-align:center; letter-spacing:1px; line-height:1; }}
 
+/* 行高固定，布局与字体度量脱钩（CI 的 Noto 行框远高于本地字体） */
 .side {{ display:grid; grid-template-columns:1fr repeat(var(--sets), 72px);
-  align-items:center; border-radius:10px; margin-top:4px; padding:6px 14px; }}
-.hero .side {{ grid-template-columns:1fr repeat(var(--sets), 88px); padding:12px 14px; margin-top:6px; }}
+  align-items:center; border-radius:10px; margin-top:4px; padding:0 14px; height:54px; }}
+.hero .side {{ grid-template-columns:1fr repeat(var(--sets), 88px); height:88px; margin-top:6px; }}
 .side.won {{ background:var(--winband); }}
 .who {{ display:flex; align-items:center; gap:12px; min-width:0; }}
 .flag {{ height:27px; border-radius:4px; box-shadow:0 0 0 1px rgba(0,0,0,.12); }}
@@ -251,7 +253,7 @@ h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; col
 .seed {{ font-family:'Barlow Condensed'; font-weight:600; font-style:normal;
   font-size:22px; color:var(--gold); }}
 .hero .seed {{ font-size:27px; }}
-.name {{ font-style:normal; font-weight:700; font-size:30px;
+.name {{ font-style:normal; font-weight:700; font-size:30px; line-height:1.2;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
 .hero .name {{ font-size:44px; letter-spacing:1px; }}
 .side.lost .name {{ color:var(--fade); font-weight:500; }}
@@ -266,7 +268,7 @@ h1 {{ font-size:84px; font-weight:900; letter-spacing:6px; line-height:1.12; col
 .set sup {{ font-size:.46em; font-weight:600; vertical-align:.62em; margin-left:1px; }}
 
 .footer {{ margin-top:auto; display:flex; align-items:center; }}
-.footer b {{ margin-left:auto; font-size:26px; font-weight:700; color:var(--fade); letter-spacing:2px; }}
+.footer b {{ margin-left:auto; font-size:26px; font-weight:700; color:var(--fade); letter-spacing:2px; line-height:1.2; }}
 </style></head>
 <body>
 {_COURT_SVG}
