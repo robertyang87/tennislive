@@ -177,8 +177,9 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 .hero .rank { font-size:26px; }
 .en { font-family:'Barlow Condensed'; font-weight:500; font-size:19px; line-height:1.1;
   letter-spacing:1.2px; color:var(--fade); margin-top:2px;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.hero .en { font-size:23px; margin-top:4px; }
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  margin-left:78px; /* 种子槽26+间距8+国旗36+间距8：与中文名左对齐 */ }
+.hero .en { font-size:23px; margin-top:4px; margin-left:96px; }
 .note { font-style:normal; font-size:22px; color:var(--fade); }
 /* 每盘独立强调：赢下该盘的一方数字深绿加粗，输的一方浅灰 */
 .set { font-family:'Barlow Condensed'; font-size:42px;
