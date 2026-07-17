@@ -1,0 +1,17 @@
+name: verify-names
+
+# 按需：用维基百科核验球员译名词典，结果打印到日志
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q requests
+      - run: python tools/verify_names.py
