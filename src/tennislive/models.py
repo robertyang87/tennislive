@@ -126,6 +126,7 @@ class Match:
     stats: Optional[MatchStats] = None
     editorial_note: Optional[str] = None
     editorial_source: Optional[str] = None
+    editorial_url: Optional[str] = None
 
     @property
     def is_doubles(self) -> bool:

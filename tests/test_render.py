@@ -1,9 +1,11 @@
+from datetime import date
 from pathlib import Path
 
+from tennislive.digest import Digest
 from tennislive.models import MatchStats, MatchStatus, StatPair
 from tennislive.render.common import group_by_tournament, result_line, schedule_line
-from tennislive.render.focus import focus_comparison
-from tennislive.render.pushmsg import to_copy_page, to_push_html
+from tennislive.render.focus import focus_comparison, has_detailed_stats
+from tennislive.render.pushmsg import pin_asset_revision, to_copy_page, to_push_html
 from tennislive.render.wechat import article_title, to_html, to_markdown
 from tennislive.render.xiaohongshu import post_title, to_post
 
@@ -65,8 +67,27 @@ def test_xhs_post(sample_digest):
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
-    assert "一场球看细一点" in post
+    assert "一场球看细一点" not in post
     assert "7:30" not in post
+
+
+def test_professional_focus_is_published_only_with_detailed_stats(sample_digest):
+    match = sample_digest.results[1]
+    assert not has_detailed_stats(match)
+    assert "焦点复盘" not in to_markdown(sample_digest)
+
+    match.stats = MatchStats(
+        source="Sportradar 授权网球数据",
+        aces=StatPair(7, 3),
+        double_faults=StatPair(2, 5),
+        first_serve_won_pct=StatPair(76, 61),
+        break_points_won=StatPair(4, 1),
+        break_points_chances=StatPair(8, 4),
+    )
+
+    assert has_detailed_stats(match)
+    assert "一场球看细一点" in to_post(sample_digest)
+    assert "焦点复盘" in to_markdown(sample_digest)
 
 
 def test_push_copy_page_and_button(sample_digest):
@@ -85,6 +106,22 @@ def test_push_copy_page_and_button(sample_digest):
     assert "正文第一行" not in push_html
 
 
+def test_pin_asset_revision_only_rewrites_valid_jsdelivr_main_urls():
+    html = (
+        '<img src="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
+        'output/2026-07-17/cards/card_00_cover.png">'
+        '<img src="https://example.com/image.png">'
+    )
+    revision = "a1b2c3d4e5f6789012345678901234567890abcd"
+
+    pinned = pin_asset_revision(html, revision)
+
+    assert f"tennislive@{revision}/output/" in pinned
+    assert "https://example.com/image.png" in pinned
+    assert pin_asset_revision(html, "abc123") == html
+    assert pin_asset_revision(html, "not-a-commit") == html
+
+
 def test_cards_generation(tmp_path, sample_digest):
     from tennislive.render.cards import generate_cards
 
@@ -94,8 +131,23 @@ def test_cards_generation(tmp_path, sample_digest):
         assert Path(p).stat().st_size > 10_000  # 是实际渲染的 PNG 而非空文件
     names = [p.name for p in paths]
     assert "card_00_cover.png" in names
-    assert any("focus" in name for name in names)
+    assert not any("focus" in name for name in names)
     assert not any("upset" in name or "end" in name for name in names)
+
+
+def test_umag_story_has_precise_champion_timeline():
+    from tennislive.render.tournament_story import pick_tournament_story
+
+    match = make_match(tournament="Plava Laguna Croatia Open Umag")
+    story = pick_tournament_story(
+        Digest(today=date(2026, 7, 17), results=[match])
+    )
+
+    assert story is not None
+    assert [moment.date for moment in story.moments] == ["2006-07-30", "2021-07-25"]
+    assert "瓦林卡" in story.moments[0].player
+    assert "6-2、6-2" in story.moments[1].detail
+    assert "44 场" in story.facts[1]
 
 
 def test_coverage_report_lists_tour_level(sample_digest):

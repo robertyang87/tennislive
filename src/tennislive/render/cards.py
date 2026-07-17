@@ -978,10 +978,12 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
 
     # Playwright unavailable: still keep the requested deck structure and never
     # resurrect the removed upset/end pages in the Pillow fallback.
-    from .focus import select_focus_match
+    from .focus import has_detailed_stats, select_focus_match
 
     focus_match = select_focus_match(digest)
-    if focus_match and not any(kind == "focus" for kind, _ in images):
+    if has_detailed_stats(focus_match) and not any(
+        kind == "focus" for kind, _ in images
+    ):
         images.append(("focus", _card_focus(fonts, date_label, [focus_match])))
 
     paths: list[Path] = []

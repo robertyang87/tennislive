@@ -3,6 +3,7 @@ from datetime import date, datetime, timezone
 from tennislive.digest import Digest
 from tennislive.models import MatchStats, MatchStatus, StatPair, Tour
 from tennislive.render.authority import (
+    apply_curated_editorial,
     build_schedule_evidence,
     enrich_schedule_editorial,
 )
@@ -125,3 +126,27 @@ def test_schedule_fallback_uses_round_and_observation_not_seed():
     assert "四分之一决赛" in insight
     assert "接发" in insight and "关键分" in insight
     assert "种子" not in insight
+
+
+def test_curated_media_note_wins_and_keeps_source_url():
+    result = make_match(tournament="Vanda Pharmaceuticals Athens Open")
+    scheduled = make_match(
+        home_name="Barbora Krejcikova",
+        away_name="Zheng Qinwen",
+        home_country="CZE",
+        away_country="CHN",
+        tournament="Vanda Pharmaceuticals Athens Open",
+        tour=Tour.WTA,
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+    )
+    digest = _digest(result, scheduled)
+
+    assert apply_curated_editorial(digest) == 1
+    enrich_schedule_editorial(digest)
+
+    assert scheduled.editorial_source == "WTA"
+    assert scheduled.editorial_url.startswith("https://www.wtatennis.com/")
+    assert "6比3、7比5" in scheduled.editorial_note

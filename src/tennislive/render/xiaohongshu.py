@@ -11,7 +11,7 @@ from .common import (
     result_line,
     side_display,
 )
-from .focus import focus_comparison, select_focus_match
+from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .rating import tonight_focus, top_results
 from .story import (
     chinese_side_won,
@@ -93,7 +93,7 @@ def _china_block(digest: Digest, cap: int) -> list[str]:
 
 def _focus_block(digest: Digest) -> list[str]:
     match = select_focus_match(digest)
-    if match is None:
+    if not has_detailed_stats(match):
         return []
     comparison = focus_comparison(match)
     group = group_by_tournament([match])[0]
@@ -152,7 +152,8 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
                 f"{side_display(m.home, with_seed=False)} vs "
                 f"{side_display(m.away, with_seed=False)}"
             )
-            lines.append(f"↳ {schedule_insight(m)}")
+            source = f"{m.editorial_source}｜" if m.editorial_url and m.editorial_source else ""
+            lines.append(f"↳ {source}{schedule_insight(m)}")
         lines.append("")
 
     focus = _focus_block(digest)
@@ -161,14 +162,12 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
 
     story = pick_tournament_story(digest)
     if story:
-        lines.extend(
-            [
-                "📚 赛事一分钟",
-                f"{story.title}｜{story.level}｜{story.surface}｜{story.founded}",
-                story.hero_fact,
-                "",
-            ]
-        )
+        lines.extend(["📚 赛事一分钟", f"{story.title}｜{story.level}｜{story.surface}"])
+        for moment in story.moments[:2]:
+            lines.append(
+                f"▪ {moment.date[:4]} {moment.player}（{moment.age}）：{moment.headline}"
+            )
+        lines.append("")
 
     lines.extend(
         [

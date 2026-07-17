@@ -128,6 +128,11 @@ def _pair_rows(match: Match) -> list[tuple[str, str, str]]:
     return rows
 
 
+def has_detailed_stats(match: Match | None) -> bool:
+    """Whether a match has enough licensed statistics for a recap page."""
+    return bool(match is not None and _pair_rows(match))
+
+
 def _stats_verdict(match: Match) -> str | None:
     stats = match.stats
     if stats is None:

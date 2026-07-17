@@ -14,7 +14,7 @@ from .common import (
     result_line,
     side_display,
 )
-from .focus import focus_comparison, select_focus_match
+from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .rating import tonight_focus, top_results
 from .story import (
     chinese_side_won,
@@ -108,11 +108,14 @@ def to_markdown(digest: Digest) -> str:
                 f"- **{fmt_time_beijing(m.start_utc)}｜{group.name_zh}**："
                 f"{side_display(m.home)} vs {side_display(m.away)}"
             )
-            lines.append(f"  推荐理由：{schedule_insight(m)}")
+            source = ""
+            if m.editorial_url and m.editorial_source:
+                source = f"（[{m.editorial_source}原文]({m.editorial_url})）"
+            lines.append(f"  推荐理由：{schedule_insight(m)}{source}")
         lines.append("")
 
     focus = select_focus_match(digest)
-    if focus:
+    if has_detailed_stats(focus):
         comparison = focus_comparison(focus)
         lines.extend(["## 🎯 焦点复盘", ""])
         lines.append(f"**{comparison.left_name} vs {comparison.right_name}**")
@@ -139,7 +142,16 @@ def to_markdown(digest: Digest) -> str:
                 "",
             ]
         )
+        lines.extend(["**冠军时间轴**", ""])
+        for moment in story.moments:
+            date = moment.date.replace("-", ".")
+            lines.append(
+                f"- **[{date}｜{moment.player}｜{moment.age}]({moment.source_url})**："
+                f"{moment.headline}。{moment.detail}"
+            )
+        lines.append("")
         lines.extend(f"- {fact}" for fact in story.facts)
+        lines.extend(["", f"[赛事官方历史资料]({story.source_url})"])
         lines.append("")
 
     lines.extend(
@@ -201,8 +213,23 @@ def _section(title: str) -> str:
     return f'<h2 style="{_S["h2"]}">{title}</h2>'
 
 
-def _item(main: str, insight: str = "") -> str:
-    extra = f'<span style="{_S["insight"]}">{_esc(insight)}</span>' if insight else ""
+def _item(
+    main: str,
+    insight: str = "",
+    *,
+    source_name: str = "",
+    source_url: str = "",
+) -> str:
+    source = ""
+    if source_name and source_url.startswith("https://"):
+        source = (
+            f' <a href="{_esc(source_url)}" style="color:#0b6b49;text-decoration:none;">'
+            f'来源：{_esc(source_name)} ↗</a>'
+        )
+    extra = (
+        f'<span style="{_S["insight"]}">{_esc(insight)}{source}</span>'
+        if insight or source else ""
+    )
     return f'<div style="{_S["item"]}">{main}{extra}</div>'
 
 
@@ -252,10 +279,17 @@ def to_html(digest: Digest) -> str:
                 f'{_esc(group.name_zh)}</strong><br/>'
                 f'{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
             )
-            parts.append(_item(main, schedule_insight(m)))
+            parts.append(
+                _item(
+                    main,
+                    schedule_insight(m),
+                    source_name=m.editorial_source or "",
+                    source_url=m.editorial_url or "",
+                )
+            )
 
     focus = select_focus_match(digest)
-    if focus:
+    if has_detailed_stats(focus):
         comparison = focus_comparison(focus)
         parts.append(_section("🎯 焦点复盘"))
         rows = "".join(
@@ -282,10 +316,24 @@ def to_html(digest: Digest) -> str:
     if story:
         parts.append(_section("📚 赛事档案"))
         facts = "<br/>".join(f"· {_esc(fact)}" for fact in story.facts)
+        moments = "".join(
+            '<div style="margin:10px 0;padding:11px 12px;background:#eef3ed;'
+            'border-left:4px solid #d5b44d;line-height:1.7;">'
+            f'<strong>{_esc(moment.date.replace("-", "."))}｜'
+            f'{_esc(moment.player)}｜{_esc(moment.age)}</strong><br/>'
+            f'{_esc(moment.headline)}<br/>'
+            f'<span style="color:#66756d;">{_esc(moment.detail)}</span><br/>'
+            f'<a href="{_esc(moment.source_url)}" style="color:#0b6b49;'
+            'text-decoration:none;font-size:12px;">官方资料 ↗</a></div>'
+            for moment in story.moments
+        )
         parts.append(
             _item(
                 f"<strong>{_esc(story.title)}</strong>｜{_esc(story.level)}｜{_esc(story.surface)}<br/>"
-                f"{_esc(story.founded)} · {_esc(story.location)}<br/><br/>{facts}",
+                f"{_esc(story.founded)} · {_esc(story.location)}<br/><br/>"
+                f"{moments}{facts}<br/>"
+                f'<a href="{_esc(story.source_url)}" style="color:#0b6b49;'
+                'text-decoration:none;font-size:12px;">赛事官方历史 ↗</a>',
                 story.hero_fact,
             )
         )
