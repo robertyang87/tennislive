@@ -77,6 +77,7 @@ def test_push_copy_page_and_button(sample_digest):
     assert "测试标题 &lt;1&gt;" in page
     assert "正文第一行" in page
     assert "copy.html" in push_html
+    assert "robertyang87.github.io/tennislive" in push_html
     assert "打开并复制文案" in push_html
     assert "正文第一行" not in push_html
 
