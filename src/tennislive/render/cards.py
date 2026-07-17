@@ -925,22 +925,30 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     fonts = _Fonts()
     date_label = _date_label(digest.today)
 
+    # 优先整组 HTML/Chromium 精细排版；浏览器不可用时回退 Pillow 版全组
+    try:
+        from .webcards import generate_deck
+
+        theme = os.environ.get("TENNISLIVE_THEME", "dark")
+        images = generate_deck(digest, date_label, theme)
+        paths: list[Path] = []
+        for i, (kind, img) in enumerate(images):
+            p = outdir / f"card_{i:02d}_{kind}.png"
+            img.save(p, "PNG")
+            paths.append(p)
+        logger.info("生成 %d 张晨报卡片（HTML 渲染）到 %s", len(paths), outdir)
+        return paths
+    except Exception as e:  # noqa: BLE001
+        logger.warning("HTML 渲染不可用，回退 Pillow 版卡片: %s", e)
+
     images: list[tuple[str, Image.Image]] = []
     headline = pick_headline_auto(digest)
     images.append(("cover", _cover(fonts, digest, headline)))
 
     singles_results = [m for m in digest.results if m.is_singles]
     if len(singles_results) >= 4:
-        # 赛果多：官方板式赛果速递（优先 HTML/Chromium 精细排版，缺浏览器时回退 Pillow）
         board = top_results(singles_results, 8)
-        try:
-            from .webcards import render_scoreboard
-
-            theme = os.environ.get("TENNISLIVE_THEME", "dark")
-            images.append(("scoreboard", render_scoreboard(board, date_label, theme)))
-        except Exception as e:  # noqa: BLE001
-            logger.warning("HTML 渲染不可用，回退 Pillow 版赛果卡: %s", e)
-            images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
+        images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
     elif singles_results:
         # 赛果少：大块 hero 版式
         focus = top_results(singles_results, 3)
