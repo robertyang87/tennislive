@@ -8,6 +8,9 @@
 
 from __future__ import annotations
 
+import html
+import os
+
 from ..digest import Digest
 from ..timeutil import fmt_time_beijing
 from .common import (
@@ -32,6 +35,11 @@ _HEAD = "color:#0a7d43;font-weight:bold;font-size:16px;"
 _SEC = "font-weight:bold;color:#0b3d2e;margin-top:6px;"
 _DIM = "color:#5f6f68;font-size:13px;"
 _HR = '<div class="tl-hr" style="border-top:1px solid #d8e2dc;margin:10px 0;"></div>'
+_COPY_BUTTON = (
+    "display:block;background-color:#0a7d43;color:#ffffff;"
+    "text-align:center;text-decoration:none;font-weight:bold;"
+    "padding:12px 16px;border-radius:8px;margin:8px 0;"
+)
 
 # 深色模式：品牌深绿底 + 荧光黄强调
 _DARK_CSS = """<style>
@@ -56,11 +64,89 @@ def _score_of(m) -> str:
     return m.score_display(from_winner=True)
 
 
-import os
-
 # 卡片图 CDN：jsDelivr 镜像 GitHub 内容，国内可访问
 _REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 _CDN = f"https://cdn.jsdelivr.net/gh/{_REPO}@main"
+
+
+def to_copy_page(xhs_text: str) -> str:
+    """生成适合手机打开的一键复制页面。"""
+    lines = xhs_text.splitlines()
+    title = lines[0].strip() if lines else ""
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    safe_title = html.escape(title)
+    safe_body = html.escape(body)
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root {{ color-scheme: light dark; }}
+    * {{ box-sizing: border-box; }}
+    body {{ margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
+    main {{ width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }}
+    h1 {{ margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }}
+    .sub {{ margin: 0 0 20px; color: #5f6f68; font-size: 14px; }}
+    section {{ margin-top: 18px; }}
+    .label {{ display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }}
+    button {{ border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }}
+    textarea {{ display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
+    #title {{ min-height: 76px; }}
+    #body {{ min-height: 55vh; }}
+    #toast {{ position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }}
+    #toast.show {{ opacity: 1; }}
+    @media (prefers-color-scheme: dark) {{
+      body {{ background: #10201a; color: #e2e9e5; }}
+      .sub {{ color: #93a39b; }}
+      textarea {{ background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }}
+      button {{ background: #b8e986; color: #10201a; }}
+    }}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>{safe_title}</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>{safe_body}</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {{
+      const field = document.getElementById(id);
+      try {{
+        await navigator.clipboard.writeText(field.value);
+      }} catch (_) {{
+        field.focus(); field.select(); document.execCommand('copy');
+      }}
+      toast.textContent = id === 'title' ? '标题已复制' : '正文已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }}
+    document.querySelectorAll('[data-copy]').forEach((button) => {{
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    }});
+  </script>
+</body>
+</html>
+"""
 
 
 def to_push_html(
@@ -128,15 +214,15 @@ def to_push_html(
 
     if xhs_text:
         parts.append(
-            f'<div class="tl-sec" style="{_SEC}">📋 小红书文案（长按整段复制）</div>'
+            f'<div class="tl-sec" style="{_SEC}">📋 贴图发布文案</div>'
         )
-        copy_style = (
-            "background-color:#ffffff;color:#1c2b26;border-radius:10px;"
-            "padding:12px 14px;font-size:14px;line-height:1.8;"
-            "white-space:pre-wrap;word-break:break-word;"
-            "border:1px solid #d8e2dc;"
+        copy_url = f"{_CDN}/output/{d.isoformat()}/copy.html"
+        parts.append(
+            f'<a href="{copy_url}" style="{_COPY_BUTTON}">打开并复制文案</a>'
         )
-        parts.append(f'<div class="tl-copy" style="{copy_style}">{xhs_text}</div>')
+        parts.append(
+            f'<div class="tl-dim" style="{_DIM}">标题、正文可分别一键复制。</div>'
+        )
         parts.append(_HR)
 
     if cards:
@@ -151,8 +237,7 @@ def to_push_html(
             )
         parts.append(_HR)
     parts.append(
-        f'<div class="tl-dim" style="{_DIM}">📦 文案在仓库 output/{d.isoformat()}/xiaohongshu.txt'
-        f"（可从推送标题直接复制标题）</div>"
+        f'<div class="tl-dim" style="{_DIM}">📦 原始文案：output/{d.isoformat()}/xiaohongshu.txt</div>'
     )
     parts.append("</div>")
     return "\n".join(parts)

@@ -152,8 +152,10 @@ def cmd_digest(args) -> int:
     xhs = to_post(digest)
     (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
 
-    # 手机推送专用模板（窄屏 + 深色模式安全，内嵌卡片图便于保存转发）
-    from .render.pushmsg import to_push_html
+    # 手机推送模板：文案走独立复制页，卡片图留在消息中便于保存。
+    from .render.pushmsg import to_copy_page, to_push_html
+
+    (outdir / "copy.html").write_text(to_copy_page(xhs), encoding="utf-8")
 
     (outdir / "push.html").write_text(
         to_push_html(digest, cards=[p.name for p in card_paths], xhs_text=xhs),
