@@ -75,7 +75,7 @@ def build_digest(
 
     # 用世界排名补全球员 rank（供冷门检测/评分/排名卡使用），失败不阻塞
     try:
-        from .sources.rankings import fetch_rankings, rank_map
+        from .sources.rankings import fetch_rankings, norm_name, rank_map
 
         rankings = fetch_rankings()
         if not rankings.is_empty:
@@ -86,7 +86,7 @@ def build_digest(
                 lookup = lookups.get(m.tour.value, {})
                 for p in m.home + m.away:
                     if p.rank is None:
-                        key = " ".join(p.name.strip().lower().split())
+                        key = norm_name(p.name)
                         if key in lookup:
                             p.rank = lookup[key]
     except Exception as e:  # noqa: BLE001
