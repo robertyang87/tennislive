@@ -328,7 +328,7 @@ PLAYER_ZH: dict[str, str] = {
     "Simona Halep": "哈勒普",
     # ===== 补充批次：巡回赛常客 / 挑战赛升组球员（新华社式音译） =====
     # ATP
-    "Alex Molcan": "莫尔灿",
+    "Alex Molcan": "莫尔坎",
     "Andrea Pellegrino": "佩莱格里诺",
     "Marco Trungelliti": "特伦盖利蒂",
     "Daniel Merida": "梅里达",
@@ -348,7 +348,7 @@ PLAYER_ZH: dict[str, str] = {
     "Kyrian Jacquet": "雅凯",
     # WTA
     "Vendula Valdmannova": "瓦尔德曼诺娃",
-    "Alina Korneeva": "科尔涅耶娃",
+    "Alina Korneeva": "科尔涅娃",
     "Clara Burel": "布雷尔",
     "Elena Micic": "米契奇",
     "Gina Feistel": "费斯特尔",
