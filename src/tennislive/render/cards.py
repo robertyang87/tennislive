@@ -931,9 +931,16 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
 
     singles_results = [m for m in digest.results if m.is_singles]
     if len(singles_results) >= 4:
-        # 赛果多：记分牌网格（参考专业赛果速递版式）
+        # 赛果多：官方板式赛果速递（优先 HTML/Chromium 精细排版，缺浏览器时回退 Pillow）
         board = top_results(singles_results, 8)
-        images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
+        try:
+            from .webcards import render_scoreboard
+
+            theme = os.environ.get("TENNISLIVE_THEME", "dark")
+            images.append(("scoreboard", render_scoreboard(board, date_label, theme)))
+        except Exception as e:  # noqa: BLE001
+            logger.warning("HTML 渲染不可用，回退 Pillow 版赛果卡: %s", e)
+            images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
     elif singles_results:
         # 赛果少：大块 hero 版式
         focus = top_results(singles_results, 3)

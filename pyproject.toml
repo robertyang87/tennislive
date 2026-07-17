@@ -17,6 +17,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
+# HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
+webrender = ["playwright>=1.40"]
 
 [project.scripts]
 tennislive = "tennislive.cli:main"
