@@ -57,10 +57,14 @@ def is_upset(m: Match) -> bool:
     return False
 
 
-def match_score(m: Match) -> int:
-    """比赛重要性总分，越高越值得报道."""
+def match_score(m: Match, cn_boost: bool = True) -> int:
+    """比赛重要性总分，越高越值得报道.
+
+    cn_boost=False 时不给中国球员场次加权（赛果速递卡用：
+    中国军团有专页，速递页按比赛本身分量排序，出现时只打标签）。
+    """
     s = 0
-    if is_chinese_involved(m):
+    if cn_boost and is_chinese_involved(m):
         s += 100
     s += LEVEL_PTS.get(_level_of(m) or "", 0)
     r = round_zh(m.round_name) or ""
@@ -85,10 +89,12 @@ def match_score(m: Match) -> int:
     return s
 
 
-def top_results(matches: list[Match], n: int = 3) -> list[Match]:
-    """昨夜焦点：评分最高的 n 场已完赛单打（中国球员场次天然置顶）."""
+def top_results(matches: list[Match], n: int = 3, cn_boost: bool = True) -> list[Match]:
+    """昨夜焦点：评分最高的 n 场已完赛单打（cn_boost 见 match_score）."""
     finished = [m for m in matches if m.status.is_final]
-    return sorted(finished, key=match_score, reverse=True)[:n]
+    return sorted(
+        finished, key=lambda m: match_score(m, cn_boost=cn_boost), reverse=True
+    )[:n]
 
 
 def top_schedule(matches: list[Match], n: int = 5) -> list[Match]:
