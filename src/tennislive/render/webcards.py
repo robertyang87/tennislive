@@ -159,8 +159,8 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 .who { display:flex; align-items:center; gap:12px; min-width:0; }
 .names { display:flex; flex-direction:column; justify-content:center; min-width:0; }
 .zh { display:flex; align-items:center; gap:8px; min-width:0; }
-/* 统一外框 4:3，超宽/方形旗居中裁切，避免拉伸或长短不齐 */
-.flag { width:36px; height:27px; object-fit:cover; border-radius:4px;
+/* 统一外框 4:3，超宽/方形旗居中裁切；直角矩形展示 */
+.flag { width:36px; height:27px; object-fit:cover;
   box-shadow:0 0 0 1px rgba(0,0,0,.12); flex:none; }
 .hero .flag { width:48px; height:36px; }
 .slash { font-style:normal; font-weight:700; font-size:26px; color:var(--fade); margin:0 2px; }

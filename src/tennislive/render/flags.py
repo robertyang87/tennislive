@@ -71,14 +71,10 @@ def flag_image(country: str | None, height: int = 30) -> Image.Image | None:
         y0 = (raw.height - crop_h) // 2
         raw = raw.crop((0, y0, raw.width, y0 + crop_h))
     img = raw.resize((w, height), Image.LANCZOS)
-    # 圆角遮罩 + 1px 描边（白底旗帜如日本需要边界）
-    mask = Image.new("L", (w, height), 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, w - 1, height - 1], radius=5, fill=255)
-    img.putalpha(mask)
-    border = Image.new("RGBA", (w, height), (0, 0, 0, 0))
-    ImageDraw.Draw(border).rounded_rectangle(
-        [0, 0, w - 1, height - 1], radius=5, outline=(0, 0, 0, 36), width=1
+    # 直角矩形 + 1px 描边（白底旗帜如日本需要边界）
+    img = img.convert("RGBA")
+    ImageDraw.Draw(img).rectangle(
+        [0, 0, w - 1, height - 1], outline=(0, 0, 0, 36), width=1
     )
-    img = Image.alpha_composite(img, border)
     _cache[key] = img
     return img
