@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import os
+import re
 
 from ..digest import Digest
 from ..timeutil import fmt_time_beijing
@@ -71,6 +72,18 @@ _OWNER, _REPO_NAME = _REPO.split("/", 1)
 _PAGES = os.environ.get(
     "TENNISLIVE_PAGES_URL", f"https://{_OWNER}.github.io/{_REPO_NAME}"
 ).rstrip("/")
+
+_ASSET_REVISION_RE = re.compile(r"[0-9a-fA-F]{7,40}")
+_JSDELIVR_MAIN_RE = re.compile(
+    r"(https://cdn\.jsdelivr\.net/gh/[^/@\s\"'<>]+/[^/@\s\"'<>]+)@main/"
+)
+
+
+def pin_asset_revision(html_content: str, revision: str) -> str:
+    """Pin jsDelivr GitHub assets to an immutable commit revision."""
+    if not _ASSET_REVISION_RE.fullmatch(revision):
+        return html_content
+    return _JSDELIVR_MAIN_RE.sub(rf"\g<1>@{revision}/", html_content)
 
 
 def to_copy_page(xhs_text: str) -> str:

@@ -16,6 +16,7 @@ import argparse
 import dataclasses
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 
@@ -133,9 +134,22 @@ def cmd_digest(args) -> int:
             "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计"
         )
 
-    # 用同站上一轮的官网技术统计或可核查赛果生成今晚焦点看点。
-    from .render.authority import enrich_schedule_editorial
+    # 人工核验的权威媒体摘要优先；未覆盖的比赛才使用同站上一轮
+    # 授权技术统计或可核查赛果生成数据看点。
+    from .render.authority import apply_curated_editorial, enrich_schedule_editorial
 
+    curated_count = apply_curated_editorial(digest)
+    if curated_count:
+        digest.source_status["编辑台媒体看点"] = (
+            f"正常 · {curated_count} 场人工核验并保留原文链接"
+        )
+    try:
+        from .render.ai_editorial import enrich_with_github_models
+
+        ai_result = enrich_with_github_models(digest)
+        digest.source_status["GitHub Models 数据编辑"] = ai_result.status
+    except Exception as e:  # noqa: BLE001
+        digest.source_status["GitHub Models 数据编辑"] = f"降级 · {e}"
     enrich_schedule_editorial(digest)
 
     outdir = Path(args.outdir) / d.isoformat()
@@ -386,6 +400,7 @@ def cmd_publish_wechat(args) -> int:
 
 def cmd_publish_pushplus(args) -> int:
     from .publish.pushplus import PushPlusError, push
+    from .render.pushmsg import pin_asset_revision
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -404,6 +419,7 @@ def cmd_publish_pushplus(args) -> int:
     import re
 
     html = re.sub(r"\{\{IMAGE:[^}]+\}\}", "", html)
+    html = pin_asset_revision(html, os.environ.get("TENNISLIVE_ASSET_REV", ""))
     try:
         push(title, html)
     except PushPlusError as e:

@@ -29,7 +29,7 @@ from .common import (
     is_chinese_involved,
     match_round_display,
 )
-from .focus import focus_comparison, select_focus_match
+from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .rating import find_upset, is_upset, tonight_focus, top_results
 from .story import recommendation_label, schedule_insight, sort_china_matches
 from .tournament_story import TournamentStory, pick_tournament_story
@@ -226,14 +226,6 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 
 .footer { margin-top:auto; display:flex; align-items:center; }
 .footer b { margin-left:auto; font-size:26px; font-weight:700; color:var(--fade); letter-spacing:2px; line-height:1.2; }
-.page-stat { position:absolute; left:64px; right:64px; bottom:62px; display:flex;
-  align-items:flex-end; gap:14px; min-height:82px;
-  padding:10px 0 7px; border-top:1px solid rgba(255,255,255,.24); color:var(--pagetext); }
-.page-stat strong { font-family:'Barlow Condensed'; font-size:68px; font-weight:700;
-  line-height:.78; color:var(--section-accent); }
-.page-stat span { font-size:22px; font-weight:700; line-height:1.1; }
-.page-stat small { display:block; margin-top:5px; font-family:'Barlow Condensed';
-  font-size:16px; font-weight:500; color:#B8C6BF; letter-spacing:2px; text-transform:uppercase; }
 .poster:not(.cover) .footer { position:absolute; left:64px; right:64px; bottom:24px; }
 
 /* ---------- 封面 ---------- */
@@ -289,6 +281,9 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
 .pick .reason { margin:5px 14px 0; padding-top:7px; border-top:1px solid #DDE4DE;
   font-size:22px; line-height:1.25; color:#4D6157; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .pick .reason b { color:#B7472F; margin-right:8px; }
+.pick .reason i { display:inline-block; margin-right:9px; padding:2px 7px; border-radius:4px;
+  background:#E5EEE8; color:#0A7048; font-family:'Barlow Condensed'; font-size:18px;
+  font-weight:700; font-style:normal; letter-spacing:1px; vertical-align:2px; }
 
 /* ---------- 栏目段落 ---------- */
 .seclabel { display:flex; align-items:center; gap:16px; margin:10px 0 10px; }
@@ -314,20 +309,35 @@ h1 { font-family:'TL Serif SC','Noto Serif CJK SC',serif; font-size:76px; font-w
   background:rgba(247,243,232,.1); font-size:25px; line-height:1.42; }
 .verdict b { color:var(--gold); margin-right:12px; }
 
-.venue-photo { position:relative; height:560px; margin-top:4px; background-size:cover;
+.venue-photo { position:relative; height:365px; margin-top:4px; background-size:cover;
   background-position:center; border-radius:8px; overflow:hidden; box-shadow:var(--cardshadow); }
 .venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(4,22,16,.92)); }
-.venue-caption { position:absolute; left:28px; right:28px; bottom:24px; z-index:1; }
-.venue-caption b { display:block; font-size:38px; color:#fff; line-height:1.2; }
-.venue-caption span { display:block; font-size:22px; color:#DDE8E1; margin-top:7px; }
-.story-meta { display:flex; gap:10px; margin-top:20px; }
-.story-meta span { padding:8px 14px; background:var(--coral); color:#fff; border-radius:5px;
-  font-size:21px; font-weight:700; }
-.story-hero { margin-top:18px; font-family:'TL Serif SC',serif; font-size:38px; font-weight:900;
-  line-height:1.45; color:var(--pagetext); }
-.story-facts { margin-top:12px; padding-left:26px; }
-.story-facts li { font-size:23px; line-height:1.55; color:#D4DED7; margin-top:5px; }
-.photo-credit { font-size:16px; color:var(--fade); margin-top:8px; }
+.venue-caption { position:absolute; left:24px; right:24px; bottom:20px; z-index:1; }
+.venue-caption b { display:block; font-size:32px; color:#fff; line-height:1.2; }
+.venue-caption span { display:block; font-size:20px; color:#DDE8E1; margin-top:5px; }
+.story-meta { display:flex; gap:8px; margin-top:13px; }
+.story-meta span { padding:6px 12px; background:var(--coral); color:#fff; border-radius:4px;
+  font-size:18px; font-weight:700; }
+.story-hero { margin-top:11px; font-family:'TL Serif SC',serif; font-size:29px; font-weight:900;
+  line-height:1.4; color:var(--pagetext); }
+.story-timeline { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+.story-moment { min-height:194px; padding:13px 16px 14px; background:var(--ivory); color:var(--ink);
+  border-top:5px solid var(--gold); border-radius:7px; box-shadow:var(--cardshadow); }
+.story-moment:nth-child(2) { border-top-color:var(--coral); }
+.moment-top { display:flex; align-items:center; gap:10px; }
+.moment-date { font-family:'Barlow Condensed'; font-size:26px; font-weight:700; color:var(--court); }
+.moment-age { margin-left:auto; padding:2px 8px; border-radius:4px; background:#E4EBDD;
+  color:#4B6155; font-size:16px; font-weight:700; }
+.moment-player { margin-top:6px; font-family:'TL Serif SC',serif; font-size:29px;
+  font-weight:900; line-height:1.2; }
+.moment-title { margin-top:3px; color:#B7472F; font-size:18px; font-weight:700; line-height:1.3; }
+.moment-detail { margin-top:7px; color:#52645B; font-size:17px; line-height:1.45; }
+.story-facts { display:grid; gap:5px; margin-top:10px; list-style:none; }
+.story-facts li { display:grid; grid-template-columns:28px 1fr; align-items:start; gap:7px;
+  font-size:17px; line-height:1.42; color:#D4DED7; }
+.story-facts i { font-family:'Barlow Condensed'; font-size:18px; font-weight:700;
+  font-style:normal; color:var(--gold); }
+.photo-credit { font-size:14px; color:var(--fade); margin-top:6px; }
 
 .cta-wrap { display:flex; flex-direction:column; align-items:center; text-align:center; }
 .cta-copy { font-family:'TL Serif SC',serif; font-weight:900; font-size:58px; line-height:1.5;
@@ -517,8 +527,14 @@ def _sched_card(m: Match, *, with_reason: bool = False) -> str:
     card_class = "card"
     if with_reason:
         right = f'<span class="rating">{recommendation_label(m)}</span>' + right
+        source = ""
+        reason_label = "数据"
+        if m.editorial_url and m.editorial_source:
+            reason_label = "媒体"
+            source = f'<i>{html.escape(m.editorial_source.upper())}</i>'
         reason = (
-            f'<div class="reason"><b>看点</b>{html.escape(schedule_insight(m))}</div>'
+            f'<div class="reason"><b>{reason_label}</b>{source}'
+            f'{html.escape(schedule_insight(m))}</div>'
         )
         card_class += " pick"
     return (
@@ -713,8 +729,6 @@ def focus_body(m: Match, date_label: str) -> str:
         + f'<div class="compare-grid">{"".join(rows)}</div>'
         + source_html
         + f'<div class="verdict"><b>一句判断</b>{html.escape(comparison.verdict)}</div>'
-        + f'<div class="page-stat"><strong>{len(m.sets):02d}</strong>'
-        + '<span>盘比赛脉络<small>Match structure review</small></span></div>'
         + _FOOTER
         + "</div>"
     )
@@ -724,7 +738,20 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
     uri = _asset_image_uri(story.image)
     if not uri:
         raise FileNotFoundError(story.image)
-    facts = "".join(f"<li>{html.escape(fact)}</li>" for fact in story.facts)
+    facts = "".join(
+        f"<li><i>{index:02d}</i><span>{html.escape(fact)}</span></li>"
+        for index, fact in enumerate(story.facts, 1)
+    )
+    moments = "".join(
+        '<article class="story-moment">'
+        f'<div class="moment-top"><span class="moment-date">'
+        f'{html.escape(moment.date.replace("-", "."))}</span>'
+        f'<span class="moment-age">{html.escape(moment.age)}</span></div>'
+        f'<div class="moment-player">{html.escape(moment.player)}</div>'
+        f'<div class="moment-title">{html.escape(moment.headline)}</div>'
+        f'<div class="moment-detail">{html.escape(moment.detail)}</div></article>'
+        for moment in story.moments
+    )
     return (
         '<div class="poster story-page">'
         + _masthead(date_label)
@@ -737,8 +764,10 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + f'<span>{html.escape(story.level)}</span><span>{html.escape(story.surface)}</span>'
         + f'<span>{html.escape(story.founded)}</span></div>'
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
+        + f'<div class="story-timeline">{moments}</div>'
         + f'<ul class="story-facts">{facts}</ul>'
-        + f'<div class="photo-credit">图源：{html.escape(story.image_credit)}</div>'
+        + f'<div class="photo-credit">资料：ATP Tour / Croatia Open · '
+        + f'图源：{html.escape(story.image_credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -869,7 +898,7 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         pages.append(("tonight", tonight_body(tonight, date_label)))
 
     focus = select_focus_match(digest)
-    if focus:
+    if has_detailed_stats(focus):
         pages.append(("focus", focus_body(focus, date_label)))
 
     story = pick_tournament_story(digest)
