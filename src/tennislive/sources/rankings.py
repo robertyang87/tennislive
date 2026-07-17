@@ -138,8 +138,10 @@ def _fetch_live_tennis_atp(
     )
     if resp.status_code != 200:
         raise SourceError(f"HTTP {resp.status_code}")
+    # 页面实为 UTF-8，但响应头未声明，requests 会误判成 latin-1（名字乱码）
+    text = resp.content.decode("utf-8", "ignore")
     out: list[RankEntry] = []
-    for row in _LT_ROW.finditer(resp.text):
+    for row in _LT_ROW.finditer(text):
         body = row.group(1)
         mr, mn = _LT_RANK.search(body), _LT_NAME.search(body)
         if not mr or not mn:
@@ -199,6 +201,15 @@ def fetch_rankings(timeout: int = 30) -> Rankings:
     return result
 
 
+def norm_name(name: str) -> str:
+    """匹配键：小写 + 去重音（ESPN 名字无重音，官方/实时榜带重音）+ 归一空白."""
+    import unicodedata
+
+    folded = unicodedata.normalize("NFKD", name)
+    folded = "".join(c for c in folded if not unicodedata.combining(c))
+    return " ".join(folded.strip().lower().split())
+
+
 def rank_map(entries: list[RankEntry] | Rankings) -> dict[str, int]:
     """姓名（含词序反转）→ 排名 的查找表，用于补全比赛数据.
 
@@ -209,7 +220,7 @@ def rank_map(entries: list[RankEntry] | Rankings) -> dict[str, int]:
         entries = entries.atp + entries.wta
     m: dict[str, int] = {}
     for entry in entries:
-        key = " ".join(entry.name.strip().lower().split())
+        key = norm_name(entry.name)
         m.setdefault(key, entry.rank)
         words = key.split(" ")
         if 2 <= len(words) <= 3:
