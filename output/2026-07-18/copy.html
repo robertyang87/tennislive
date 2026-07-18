@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    #body { min-height: 55vh; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>7月18日｜袁悦今日出战｜冯硕晋级女双…</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>今天先抓两条主线：
+① 袁悦今日出战
+② 冯硕晋级女双半决赛
+
+🇨🇳 中国军团
+✅ ATV Bancomat Tennis Open·女双·半决赛
+🇫🇷 Estelle Cascino/🇨🇳 冯硕 2-1 🇮🇹 布兰卡乔/🇮🇹 格兰特（6-4 0-6 10-8(抢十)）
+✅ 雅典公开赛·女双·四分之一决赛
+🇬🇧 Maia Lumsden/🇨🇳 汤千慧 2-1 🇺🇸 Catherine Harrison/🇪🇪 Ingrid Neel（6-2 5-7 10-5(抢十)）
+
+🏆 昨夜值得记住
+▪ 瑞士公开赛·男单·四分之一决赛
+🇦🇷 [6]胡安·塞伦多洛 2-1 🇳🇴 [2]鲁德（3-6 7-5 6-2）
+↳ 鏖战三盘，掀翻2号种子
+▪ 克罗地亚公开赛·男单·四分之一决赛
+🇧🇦 朱姆胡尔 2-1 🇮🇹 [4]阿尔纳尔迪（7-6(5) 6-7(4) 7-6(4)）
+↳ 三盘全部进入抢七，硬仗掀翻4号种子
+
+⏰ 今晚焦点（北京时间）
+▪ 待定 布拉格公开赛·女单·第一轮
+🇨🇿 巴尔通科娃 vs 🇨🇳 袁悦
+↳ 中国球员出战第一轮，关注接发开局与关键分执行
+▪ 待定 基茨比厄尔公开赛·女单·决赛
+🇦🇹 格拉布赫尔 vs 🇦🇹 克劳斯
+↳ 格拉布赫尔上一轮直落两盘过关，仅丢5局，而克劳斯则是在先丢一盘后连扳两盘逆转晋级。
+▪ 22:20 瑞典公开赛·男单·半决赛
+🇷🇺 卢布列夫 vs 🇨🇱 塔比洛
+↳ 卢布列夫上一轮直落两盘过关，仅丢3局，展现出较强的晋级势头。
+
+📚 赛事一分钟
+克罗地亚公开赛｜ATP 250｜室外红土
+▪ 2006 斯坦·瓦林卡（21 岁）：生涯首座 ATP 单打冠军
+▪ 2021 卡洛斯·阿尔卡拉斯（18 岁 2 个月）：生涯首座 ATP 冠军 · 赛事最年轻冠军
+
+你最想看哪场？评论区留下球员名，我优先跟进呼声最高的一场。
+关注 @网球时差｜持续更新，不堆数据，只讲重点。
+
+#网球 #WTA #ATP #网球时差 #网球晨报 #郑钦文 #汤千慧 #冯硕 #蒋欣玗</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      toast.textContent = id === 'title' ? '标题已复制' : '正文已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
