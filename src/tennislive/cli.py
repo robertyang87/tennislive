@@ -225,6 +225,16 @@ def cmd_digest(args) -> int:
             console.print(f"[red]质检不通过：{f}[/red]")
         return 2  # 非零退出阻断后续自动发布
 
+    # 生成成功后记录"赛事一分钟"已使用（30 天内不再重复同一赛事）
+    try:
+        from .render.tournament_story import mark_story_used, pick_tournament_story
+
+        story = pick_tournament_story(digest)
+        if story:
+            mark_story_used(story.slug, digest.today)
+    except Exception as e:  # noqa: BLE001
+        logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
+
     console.print(f"[green]内容包已生成：{outdir}[/green]")
     console.print(
         f"  赛果 {len(digest.results)} 场 | 进行中 {len(digest.live)} 场 | "
