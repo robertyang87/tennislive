@@ -166,7 +166,11 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
 
     story = pick_tournament_story(digest)
     if story:
-        lines.extend(["📚 赛事一分钟", f"{story.title}｜{story.level}｜{story.surface}"])
+        if story.kind == "player":
+            # 球员特写：venue 字段复用为身份行（如"2024 巴黎奥运女单金牌得主"）
+            lines.extend(["🌟 球员一分钟", f"{story.title}｜{story.venue}"])
+        else:
+            lines.extend(["📚 赛事一分钟", f"{story.title}｜{story.level}｜{story.surface}"])
         for moment in story.moments[:2]:
             lines.append(
                 f"▪ {moment.date[:4]} {moment.player}（{moment.age}）：{moment.headline}"

@@ -752,10 +752,15 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         f'<div class="moment-detail">{html.escape(moment.detail)}</div></article>'
         for moment in story.moments
     )
+    kicker = (
+        "Player Spotlight · 球员特写"
+        if story.kind == "player"
+        else "Tournament Archive · 赛事档案"
+    )
     return (
         '<div class="poster story-page">'
         + _masthead(date_label)
-        + _titleband("Tournament Archive · 赛事档案", story.title)
+        + _titleband(kicker, story.title)
         + f'<div class="venue-photo" style="background-image:url(\'{uri}\')">'
         + '<div class="venue-caption">'
         + f'<b>{html.escape(story.venue)}</b><span>{html.escape(story.location)}</span>'
@@ -766,7 +771,7 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
         + f'<div class="story-timeline">{moments}</div>'
         + f'<ul class="story-facts">{facts}</ul>'
-        + f'<div class="photo-credit">资料：ATP Tour / Croatia Open · '
+        + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
         + f'图源：{html.escape(story.image_credit)}</div>'
         + _FOOTER
         + "</div>"

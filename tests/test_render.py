@@ -141,9 +141,14 @@ def test_cards_generation(tmp_path, sample_digest):
 def test_umag_story_has_precise_champion_timeline(tmp_path, monkeypatch):
     from tennislive.render import tournament_story
 
-    # 隔离冷却状态文件，避免仓库 data/ 的真实状态影响断言
+    # 隔离冷却状态文件，避免仓库 data/ 的真实状态影响断言；
+    # 球员名取中性值，避免命中球员特写（其新闻分高于赛事档案）
     monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
-    match = make_match(tournament="Plava Laguna Croatia Open Umag")
+    match = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Player One",
+        away_name="Player Two",
+    )
     story = tournament_story.pick_tournament_story(
         Digest(today=date(2026, 7, 17), results=[match])
     )
@@ -159,7 +164,11 @@ def test_story_cooldown_prevents_repeat(tmp_path, monkeypatch):
     from tennislive.render import tournament_story
 
     monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
-    match = make_match(tournament="Plava Laguna Croatia Open Umag")
+    match = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Player One",
+        away_name="Player Two",
+    )
     digest = Digest(today=date(2026, 7, 17), results=[match])
 
     first = tournament_story.pick_tournament_story(digest)
@@ -170,6 +179,64 @@ def test_story_cooldown_prevents_repeat(tmp_path, monkeypatch):
     assert tournament_story.pick_tournament_story(digest) is None
     later = Digest(today=date(2026, 8, 17), results=[match])
     assert tournament_story.pick_tournament_story(later) is not None
+
+
+def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
+    from dataclasses import replace
+
+    from tennislive.models import MatchStatus
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    # 用同一张假图激活全部故事（本地没有 assets/players 时球员特写会被跳过）
+    fake_img = tmp_path / "img.jpg"
+    fake_img.write_bytes(b"\xff\xd8fake")
+    monkeypatch.setattr(
+        tournament_story,
+        "STORIES",
+        tuple(replace(s, image=fake_img) for s in tournament_story.STORIES),
+    )
+
+    # 昨日赢球的球员特写（3 分）压过进行中的赛事档案（2 分）
+    won = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Qinwen Zheng",
+        away_name="Player Two",
+        winner=0,
+    )
+    story = tournament_story.pick_tournament_story(
+        Digest(today=date(2026, 7, 18), results=[won])
+    )
+    assert story is not None and story.slug == "zheng-qinwen"
+    assert story.kind == "player"
+
+    # 球员仅出场（赛程 1 分）时，赛事档案（2 分）优先
+    scheduled = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Iga Swiatek",
+        away_name="Player Two",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+    )
+    story = tournament_story.pick_tournament_story(
+        Digest(today=date(2026, 7, 18), schedule=[scheduled])
+    )
+    assert story is not None and story.slug == "umag"
+
+
+def test_player_story_card_uses_spotlight_branding(tmp_path):
+    from dataclasses import replace
+
+    from tennislive.render import webcards
+    from tennislive.render.tournament_story import STORIES
+
+    story = next(s for s in STORIES if s.kind == "player")
+    fake_img = tmp_path / "player.jpg"
+    fake_img.write_bytes(b"\xff\xd8fake")
+    body = webcards.tournament_story_body(replace(story, image=fake_img), "07.18 星期六")
+
+    assert "球员特写" in body and "赛事档案" not in body
+    assert story.source_label in body
 
 
 def test_coverage_report_lists_tour_level(sample_digest):
