@@ -2,13 +2,19 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 
 from ..digest import Digest
 
 
 ASSETS = Path(__file__).resolve().parents[3] / "assets" / "venues"
+
+# 同一赛事的故事 30 天内只讲一次（一届赛事约一周，避免赛期内天天重复）
+STATE_PATH = Path(__file__).resolve().parents[3] / "data" / "story_state.json"
+COOLDOWN_DAYS = 30
 
 
 @dataclass(frozen=True)
@@ -94,6 +100,34 @@ STORIES = (
 )
 
 
+def _load_state() -> dict[str, str]:
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def _recently_used(slug: str, today: date) -> bool:
+    last_str = _load_state().get(slug)
+    if not last_str:
+        return False
+    try:
+        last = date.fromisoformat(last_str)
+    except ValueError:
+        return False
+    return (today - last).days < COOLDOWN_DAYS
+
+
+def mark_story_used(slug: str, today: date) -> None:
+    """记录故事已使用（由 CLI 在生成成功后调用，data/ 随 workflow 提交）."""
+    state = _load_state()
+    state[slug] = today.isoformat()
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+
+
 def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     active_names = {
         m.tournament.name.casefold()
@@ -101,6 +135,8 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     }
     for story in STORIES:
         if not story.image.exists():
+            continue
+        if _recently_used(story.slug, digest.today):
             continue
         if any(alias in name for alias in story.aliases for name in active_names):
             return story
