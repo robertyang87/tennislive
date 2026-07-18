@@ -138,11 +138,13 @@ def test_cards_generation(tmp_path, sample_digest):
     assert not any("upset" in name or "end" in name for name in names)
 
 
-def test_umag_story_has_precise_champion_timeline():
-    from tennislive.render.tournament_story import pick_tournament_story
+def test_umag_story_has_precise_champion_timeline(tmp_path, monkeypatch):
+    from tennislive.render import tournament_story
 
+    # 隔离冷却状态文件，避免仓库 data/ 的真实状态影响断言
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
     match = make_match(tournament="Plava Laguna Croatia Open Umag")
-    story = pick_tournament_story(
+    story = tournament_story.pick_tournament_story(
         Digest(today=date(2026, 7, 17), results=[match])
     )
 
@@ -151,6 +153,23 @@ def test_umag_story_has_precise_champion_timeline():
     assert "瓦林卡" in story.moments[0].player
     assert "6-2、6-2" in story.moments[1].detail
     assert "44 场" in story.facts[1]
+
+
+def test_story_cooldown_prevents_repeat(tmp_path, monkeypatch):
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    match = make_match(tournament="Plava Laguna Croatia Open Umag")
+    digest = Digest(today=date(2026, 7, 17), results=[match])
+
+    first = tournament_story.pick_tournament_story(digest)
+    assert first is not None
+    tournament_story.mark_story_used(first.slug, digest.today)
+
+    # 冷却期内（含次日）不再重复；冷却期满后恢复
+    assert tournament_story.pick_tournament_story(digest) is None
+    later = Digest(today=date(2026, 8, 17), results=[match])
+    assert tournament_story.pick_tournament_story(later) is not None
 
 
 def test_coverage_report_lists_tour_level(sample_digest):
