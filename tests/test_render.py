@@ -243,13 +243,40 @@ def test_story_cooldown_prevents_repeat(tmp_path, monkeypatch):
     digest = Digest(today=date(2026, 7, 17), results=[match])
 
     first = tournament_story.pick_tournament_story(digest)
-    assert first is not None
+    assert first is not None and first.slug == "umag"
     tournament_story.mark_story_used(first.slug, digest.today)
 
-    # 冷却期内（含次日）不再重复；冷却期满后恢复
-    assert tournament_story.pick_tournament_story(digest) is None
+    # 冷却期内换讲冷知识兜底，不重复也不留白；冷却期满恢复赛事优先
+    second = tournament_story.pick_tournament_story(digest)
+    assert second is not None and second.slug != "umag"
+    assert second.kind == "trivia"
     later = Digest(today=date(2026, 8, 17), results=[match])
-    assert tournament_story.pick_tournament_story(later) is not None
+    assert tournament_story.pick_tournament_story(later).slug == "umag"
+
+
+def test_story_slot_never_empty(tmp_path, monkeypatch):
+    """没有可讲的赛事/球员时用冷知识兜底；全部冷却时重讲最久远的一条."""
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    match = make_match(
+        tournament="Some Unknown Cup",
+        home_name="Player One",
+        away_name="Player Two",
+    )
+    digest = Digest(today=date(2026, 7, 18), results=[match])
+
+    first = tournament_story.pick_tournament_story(digest)
+    assert first is not None and first.kind == "trivia"
+
+    # 第一条最早用过，其余冷知识晚一天——全部冷却时应重讲最早那条
+    tournament_story.mark_story_used(first.slug, date(2026, 7, 1))
+    for story in tournament_story.STORIES:
+        if story.kind == "trivia" and story.slug != first.slug:
+            tournament_story.mark_story_used(story.slug, date(2026, 7, 2))
+
+    again = tournament_story.pick_tournament_story(digest)
+    assert again is not None and again.slug == first.slug
 
 
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):

@@ -299,9 +299,9 @@ STORIES = (
         ),
         venue="阿瑟·阿什球场 · 23,771 席（全球最大网球场）",
         image=ASSETS / "usopen-arthur-ashe-stadium.jpg",
-        image_credit="Wikimedia Commons",
+        image_credit="manalahmadkhan / Wikimedia Commons · CC BY 2.0",
         source_url="https://www.usopen.org/en_US/visit/history/ustimeline.html",
-        image_source_url="https://commons.wikimedia.org/wiki/Category:Arthur_Ashe_Stadium",
+        image_source_url="https://commons.wikimedia.org/wiki/File:Arthur_Ashe_Stadium_2010.jpg",
         source_label="美网官网 / USTA",
     ),
     # ---- 球员特写（kind="player"）：当天有球员赢球/出场时按新闻价值优先选用 ----
@@ -683,6 +683,461 @@ STORIES = (
 )
 
 
+# ---- 网球冷知识（kind="trivia"）：没有赛事/球员可讲时的兜底，板块永不空着 ----
+# 配图从已入库的场馆图中就近取用，署名跟随所选图片
+
+_STOCK_IMAGES = {
+    "umag": (
+        ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        "Silverije / Wikimedia Commons · CC BY-SA 4.0",
+    ),
+    "washington": (
+        ASSETS / "washington-fitzgerald-tennis-center.jpg",
+        "Asolsma1988 / Wikimedia Commons · CC0",
+    ),
+    "canada": (
+        ASSETS / "canada-national-bank-open-stadium.jpg",
+        "Raysonho / Wikimedia Commons · CC BY 3.0",
+    ),
+    "cincinnati": (
+        ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        "RandyFitz / Wikimedia Commons · CC0",
+    ),
+    "usopen": (
+        ASSETS / "usopen-arthur-ashe-stadium.jpg",
+        "manalahmadkhan / Wikimedia Commons · CC BY 2.0",
+    ),
+}
+
+
+def _stock_image(*keys: str) -> tuple[Path, str]:
+    """按偏好顺序取第一张已存在的库存图（乌马格图随仓库分发，始终可用）."""
+    for key in (*keys, "umag"):
+        path, credit = _STOCK_IMAGES[key]
+        if path.exists():
+            return path, credit
+    return _STOCK_IMAGES["umag"]
+
+
+def _trivia_story(
+    slug: str,
+    title: str,
+    subtitle: str,
+    identity: str,
+    chips: tuple[str, str, str],
+    hero: str,
+    facts: tuple[str, ...],
+    moments: tuple[ChampionMoment, ...],
+    image_keys: tuple[str, ...],
+    source_label: str,
+    source_url: str,
+) -> TournamentStory:
+    image, credit = _stock_image(*image_keys)
+    return TournamentStory(
+        slug=slug,
+        aliases=(),
+        title=title,
+        location=subtitle,
+        level=chips[0],
+        surface=chips[1],
+        founded=chips[2],
+        hero_fact=hero,
+        facts=facts,
+        moments=moments,
+        venue=identity,
+        image=image,
+        image_credit=credit,
+        source_url=source_url,
+        image_source_url=source_url,
+        kind="trivia",
+        source_label=source_label,
+    )
+
+
+STORIES = STORIES + (
+    _trivia_story(
+        slug="scoring-history",
+        title="15、30、40 的秘密",
+        subtitle="网球冷知识 · 起源篇",
+        identity="从法国宫廷游戏到现代网球",
+        chips=("冷知识", "规则起源", "中世纪法国"),
+        hero=(
+            "为什么不是 1、2、3，而是 15、30、40？"
+            "网球最常被问起的谜题，答案要回到 600 年前的法国宫廷。"
+        ),
+        facts=(
+            "最主流的考证指向钟面计分：得一分拨一刻钟，15、30、45——"
+            "后来 45 念着拗口，被简化成了 40。",
+            "0 分叫 'love'，流传最广的说法源自法语 l'œuf（鸡蛋，形似 0）；"
+            "'deuce' 则来自 à deux，意为'还差两分'。",
+            "连 tennis 一词都来自法语 'Tenez!'（接住！）——"
+            "中世纪发球前的一声提醒，喊了几百年喊成了运动的名字。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1877-07-09",
+                player="全英俱乐部",
+                age="1877 年",
+                headline="首届温网开打",
+                detail=(
+                    "22 名选手、一座木看台——现代网球从这里开始，"
+                    "计分规则一路沿用至今。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/1877_Wimbledon_Championship",
+            ),
+            ChampionMoment(
+                date="1970-09-02",
+                player="吉米·范艾伦",
+                age="1970 年",
+                headline="抢七登场",
+                detail=(
+                    "美网率先启用范艾伦发明的抢七制，终结无限拖长的盘分——"
+                    "当年它有个吓人的名字：'猝死局'。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Tiebreaker",
+            ),
+        ),
+        image_keys=("washington",),
+        source_label="温网 / 美网官方史料",
+        source_url="https://en.wikipedia.org/wiki/Tennis_scoring_system",
+    ),
+    _trivia_story(
+        slug="yellow-ball",
+        title="网球为什么是黄色的",
+        subtitle="网球冷知识 · 装备篇",
+        identity="一颗小球的电视时代",
+        chips=("冷知识", "装备演化", "1972 改色"),
+        hero=(
+            "网球并非从来都是黄的——1972 年之前它是白色或黑色。"
+            "改变它颜色的，是你家客厅里的彩色电视机。"
+        ),
+        facts=(
+            "彩色电视普及后，研究发现白球在屏幕上最难追踪，"
+            "荧光黄辨识度最高——ITF 于 1972 年正式为比赛用球改色。",
+            "最矜持的是温网：坚持用白球到 1986 年才改用黄球，"
+            "是四大满贯里最后一个'松口'的。",
+            "如今的比赛用球以加压罐保存，每 7 局与 9 局交替换新——"
+            "转播里那句 'new balls please' 就是为此。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1968-04-22",
+                player="公开赛时代",
+                age="1968 年",
+                headline="职业与业余的墙倒了",
+                detail=(
+                    "伯恩茅斯打响公开赛时代第一战，电视转播与商业化浪潮"
+                    "随之而来——黄球正是这股浪潮的产物。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Open_era",
+            ),
+            ChampionMoment(
+                date="1986-06-23",
+                player="温布尔登",
+                age="1986 年",
+                headline="白球谢幕",
+                detail="草地上最后的白色网球退役，从此四大满贯统一荧光黄。",
+                source_url="https://en.wikipedia.org/wiki/1986_Wimbledon_Championships",
+            ),
+        ),
+        image_keys=("cincinnati",),
+        source_label="ITF / 温网官方史料",
+        source_url="https://en.wikipedia.org/wiki/Tennis_ball",
+    ),
+    _trivia_story(
+        slug="longest-match",
+        title="11 小时 5 分钟",
+        subtitle="网球冷知识 · 纪录篇",
+        identity="一场打了三天的网球赛",
+        chips=("冷知识", "纪录之最", "70-68"),
+        hero=(
+            "2010 年温网首轮，伊斯内尔与马胡把决胜盘打到 70-68——"
+            "11 小时 5 分钟、跨越三天，连记分牌都死机了。"
+        ),
+        facts=(
+            "两人合计轰出 216 记 ACE（伊斯内尔 113、马胡 103），"
+            "单场 ACE 纪录至今无人接近。",
+            "决胜盘打到 47-47 时，电子记分牌因超出程序设定直接黑屏；"
+            "18 号球场如今立着这场比赛的纪念牌。",
+            "它直接催生了规则改革——四大满贯自 2022 年起统一"
+            "决胜盘 6-6 打 10 分抢十，'无限决胜盘'成为历史。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2010-06-24",
+                player="伊斯内尔 vs 马胡",
+                age="第 3 天",
+                headline="70-68，终于结束",
+                detail=(
+                    "第三个比赛日，伊斯内尔在决胜盘第 138 局完成致胜破发——"
+                    "赛后两位主角与主裁一起在记分牌前合影。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/Isner%E2%80%93Mahut_match_"
+                    "at_the_2010_Wimbledon_Championships"
+                ),
+            ),
+            ChampionMoment(
+                date="2022-03-16",
+                player="四大满贯",
+                age="2022 年",
+                headline="决胜盘规则统一",
+                detail=(
+                    "大满贯委员会宣布四项赛事决胜盘 6-6 一律改打 10 分抢十——"
+                    "马拉松式对决就此封存进历史。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Tiebreaker",
+            ),
+        ),
+        image_keys=("usopen",),
+        source_label="温网官方史料",
+        source_url=(
+            "https://en.wikipedia.org/wiki/Isner%E2%80%93Mahut_match_"
+            "at_the_2010_Wimbledon_Championships"
+        ),
+    ),
+    _trivia_story(
+        slug="hawkeye",
+        title="鹰眼是怎么来的",
+        subtitle="网球冷知识 · 科技篇",
+        identity="从误判之夜到毫米级判罚",
+        chips=("冷知识", "科技进化", "误差毫米级"),
+        hero=(
+            "让网球拥抱科技的，是一场糟糕的误判：2004 年美网小威"
+            "遭遇连串错判出局；两年后，鹰眼挑战制走进大满贯。"
+        ),
+        facts=(
+            "鹰眼用 10 台高速摄像机三角定位，重建球的飞行轨迹，"
+            "落点误差仅几毫米，回放动画数秒内生成。",
+            "2006 年美网率先引入挑战制：每盘 3 次挑战机会，抢七加 1 次——"
+            "'举手挑战'从此成了比赛的一部分。",
+            "进化没有停：2021 年澳网全场启用电子司线，"
+            "2025 年温网也告别了沿用近 150 年的人工司线员。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2004-09-07",
+                player="小威 vs 卡普里亚蒂",
+                age="2004 美网",
+                headline="改变历史的误判",
+                detail=(
+                    "1/4 决赛多个关键球肉眼误判，赛后当值主裁被撤换、"
+                    "官方公开道歉——回放技术上马的最后一根稻草。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+            ),
+            ChampionMoment(
+                date="2006-08-28",
+                player="美国网球公开赛",
+                age="2006 年",
+                headline="鹰眼首秀大满贯",
+                detail=(
+                    "挑战制正式上线，首年球员挑战成功率仅三成上下——"
+                    "数据证明，肉眼真的会看错。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+            ),
+        ),
+        image_keys=("usopen",),
+        source_label="美网 / ITF 官方史料",
+        source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+    ),
+    _trivia_story(
+        slug="golden-slam",
+        title="金满贯有多难",
+        subtitle="网球冷知识 · 荣誉篇",
+        identity="1988 年，格拉芙做到了唯一",
+        chips=("冷知识", "荣誉体系", "史上仅 1 人"),
+        hero=(
+            "同一年拿下四大满贯，再加一枚奥运金牌——'年度金满贯'"
+            "网球史上只有一个人做到过：1988 年的格拉芙。"
+        ),
+        facts=(
+            "'大满贯'一词借自桥牌术语，1933 年被记者首次用于网球——"
+            "从此成为这项运动的最高标准。",
+            "年度全满贯史上仅 5 人：巴奇、康诺利、拉沃尔（两次）、"
+            "考特与格拉芙——公开赛时代的男子无人完成。",
+            "把标准放宽到'生涯金满贯'，男子也只有阿加西、纳达尔、"
+            "德约科维奇三人集齐。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1969-09-08",
+                player="罗德·拉沃尔",
+                age="31 岁",
+                headline="第二次年度全满贯",
+                detail=(
+                    "美网决赛胜罗切封王，公开赛时代唯一的年度全满贯——"
+                    "墨尔本的中央球场后来以他命名。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rod_Laver",
+            ),
+            ChampionMoment(
+                date="1988-10-01",
+                player="施特菲·格拉芙",
+                age="19 岁",
+                headline="史上唯一金满贯",
+                detail=(
+                    "汉城奥运决赛击败萨巴蒂尼，把四大满贯与奥运金牌装进同一年——"
+                    "19 岁的赛季，前无古人，至今无来者。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+            ),
+        ),
+        image_keys=("usopen",),
+        source_label="ITF / 奥运官方史料",
+        source_url="https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+    ),
+    _trivia_story(
+        slug="surfaces",
+        title="红土、草地、硬地",
+        subtitle="网球冷知识 · 场地篇",
+        identity="三种场地，三种网球",
+        chips=("冷知识", "场地科学", "三种脾气"),
+        hero=(
+            "法网的红土其实只有约 2 毫米厚，温网的草被精确修剪到 8 毫米——"
+            "场地的物理差异，造就了三种完全不同的网球。"
+        ),
+        facts=(
+            "罗兰·加洛斯的'红土'是白色石灰岩上铺的一层红砖粉——"
+            "球速慢、弹跳高，最考验耐心与上旋。",
+            "温网草地是 100% 黑麦草、恒定 8 毫米——球速快、弹跳低，"
+            "发球上网曾在这里统治几十年。",
+            "纳达尔在法网 112 胜 4 负、14 次夺冠——单一赛事的统治力之最，"
+            "'红土之王'的战绩大概率无人再能接近。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1988-01-11",
+                player="澳大利亚网球公开赛",
+                age="1988 年",
+                headline="草地改硬地",
+                detail=(
+                    "澳网告别草地、搬进墨尔本公园——"
+                    "四大满贯从此三种材质各领风骚。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/1988_Australian_Open",
+            ),
+            ChampionMoment(
+                date="2005-06-05",
+                player="拉斐尔·纳达尔",
+                age="19 岁",
+                headline="红土王朝开篇",
+                detail=(
+                    "首次参加法网即夺冠——此后近二十年，"
+                    "他在这片红土上总共只输过 4 场球。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2005_French_Open",
+            ),
+        ),
+        image_keys=("canada",),
+        source_label="四大满贯官方史料",
+        source_url="https://en.wikipedia.org/wiki/Tennis_court",
+    ),
+    _trivia_story(
+        slug="big-three",
+        title="三巨头的数字",
+        subtitle="网球冷知识 · 时代篇",
+        identity="费德勒 · 纳达尔 · 德约科维奇",
+        chips=("冷知识", "时代档案", "66 座大满贯"),
+        hero=(
+            "66 座大满贯、连续 18 年的年终第一——'三巨头'统治男子网坛"
+            "二十年，这样的时代此前没有过，此后大概率也不会再有。"
+        ),
+        facts=(
+            "费德勒 20 冠、纳达尔 22 冠、德约科维奇 24 冠，"
+            "三人合计 66 座大满贯，约占同期大满贯总数的八成。",
+            "德约与纳达尔交手 60 次（德约 31-29 领先），"
+            "是公开赛时代男子对决次数之最。",
+            "2004 到 2021，年终世界第一连续 18 年被三巨头与穆雷包揽——"
+            "直到 2022 年才被 19 岁的阿尔卡拉斯打破。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2008-07-06",
+                player="费德勒 vs 纳达尔",
+                age="温网决赛",
+                headline="被称为史上最伟大一战",
+                detail=(
+                    "4 小时 48 分钟、两度因雨中断，纳达尔在近乎黑暗的暮色里"
+                    "9-7 拿下决胜盘，终结费德勒温网五连冠。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/2008_Wimbledon_Championships_"
+                    "%E2%80%93_Men%27s_singles_final"
+                ),
+            ),
+            ChampionMoment(
+                date="2012-01-29",
+                player="德约科维奇 vs 纳达尔",
+                age="澳网决赛",
+                headline="大满贯最长决赛",
+                detail=(
+                    "5 小时 53 分钟的鏖战，颁奖礼上两人累得站不住，"
+                    "主办方搬来了椅子——这项纪录保持至今。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/2012_Australian_Open_"
+                    "%E2%80%93_Men%27s_singles_final"
+                ),
+            ),
+        ),
+        image_keys=("cincinnati",),
+        source_label="ATP / 大满贯官方史料",
+        source_url="https://en.wikipedia.org/wiki/Big_Three_(tennis)",
+    ),
+    _trivia_story(
+        slug="china-tennis",
+        title="中国网球这二十年",
+        subtitle="网球冷知识 · 中国篇",
+        identity="从雅典首金到巴黎单打金牌",
+        chips=("冷知识", "中国军团", "2004-2024"),
+        hero=(
+            "2004 年雅典，李婷/孙甜甜拿下中国网球的奥运首金；"
+            "二十年后的巴黎，郑钦文把单打金牌也带回了中国。"
+        ),
+        facts=(
+            "2011 年法网李娜夺冠，成为首位大满贯单打冠军的亚洲球员，"
+            "国内超过 1 亿人观看了那场决赛；2019 年她入选国际网球名人堂。",
+            "李娜效应带动金花集体爆发：如今每个赛季都有约 10 位"
+            "中国女将征战 WTA 巡回赛正赛，武汉、北京均有高级别赛事。",
+            "男子也在破冰：2023 年吴易昺在达拉斯夺冠，成为公开赛时代"
+            "首位拿到 ATP 巡回赛单打冠军的中国大陆男球员。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2011-06-04",
+                player="李娜",
+                age="29 岁",
+                headline="亚洲首个大满贯单打冠军",
+                detail=(
+                    "法网决赛击败卫冕冠军斯齐亚沃尼——"
+                    "'中国一姐'把亚洲网球带进了新纪元。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Li_Na",
+            ),
+            ChampionMoment(
+                date="2024-08-03",
+                player="郑钦文",
+                age="21 岁",
+                headline="奥运单打金牌",
+                detail=(
+                    "巴黎红土连克强敌，为中国拿下奥运网球单打首金——"
+                    "距离雅典的首金恰好二十年。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_"
+                    "%E2%80%93_Women%27s_singles"
+                ),
+            ),
+        ),
+        image_keys=("canada",),
+        source_label="中国网球协会 / 奥运官方档案",
+        source_url="https://en.wikipedia.org/wiki/Li_Na",
+    ),
+)
+
+
 def _load_state() -> dict[str, str]:
     try:
         return json.loads(STATE_PATH.read_text(encoding="utf-8"))
@@ -725,19 +1180,23 @@ def _matched(aliases: tuple[str, ...], names: set[str]) -> bool:
 
 
 def pick_tournament_story(digest: Digest) -> TournamentStory | None:
-    """按新闻价值选故事：昨日赢球的球员特写 > 进行中赛事档案 > 仅出场的球员特写."""
+    """按新闻价值选故事，板块永不空着.
+
+    昨日赢球的球员特写 3 > 进行中赛事档案 2 > 仅出场的球员特写 1 >
+    冷知识兜底 0；全部处于冷却期时，重讲距上次最久的一条，而不是留白。
+    """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
     winners = {
         _norm(p.name) for m in digest.results for p in (m.winner_players() or [])
     }
     todays = {_norm(p.name) for m in matches for p in m.home + m.away}
+    state = _load_state()
 
-    best: tuple[int, TournamentStory] | None = None
-    for story in STORIES:
+    fresh: list[tuple[int, int, TournamentStory]] = []
+    cooling: list[tuple[str, int, int, TournamentStory]] = []
+    for order, story in enumerate(STORIES):
         if not story.image.exists():
-            continue
-        if _recently_used(story.slug, digest.today):
             continue
         aliases = tuple(_norm(alias) for alias in story.aliases)
         if story.kind == "player":
@@ -747,10 +1206,19 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
                 score = 1
             else:
                 continue
+        elif story.kind == "trivia":
+            score = 0
         else:
             if not _matched(aliases, tournaments):
                 continue
             score = 2
-        if best is None or score > best[0]:
-            best = (score, story)
-    return best[1] if best else None
+        if _recently_used(story.slug, digest.today):
+            cooling.append((state.get(story.slug, ""), -score, order, story))
+        else:
+            fresh.append((-score, order, story))
+    if fresh:
+        return min(fresh)[-1]
+    if cooling:
+        # ISO 日期字符串最小 = 距上次讲述最久
+        return min(cooling)[-1]
+    return None
