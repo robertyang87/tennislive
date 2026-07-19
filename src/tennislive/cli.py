@@ -134,8 +134,8 @@ def cmd_digest(args) -> int:
             "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计"
         )
 
-    # 人工核验的权威媒体摘要优先；未覆盖的比赛才使用同站上一轮
-    # 授权技术统计或可核查赛果生成数据看点。
+    # 人工核验的权威媒体摘要优先；未覆盖的比赛使用当前排名、赛事阶段
+    # 与晋级目标生成背景看点，不复述上一轮比分或泛化技战术套话。
     from .render.authority import apply_curated_editorial, enrich_schedule_editorial
 
     curated_count = apply_curated_editorial(digest)

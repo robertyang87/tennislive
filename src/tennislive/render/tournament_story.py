@@ -833,15 +833,15 @@ STORIES = STORIES + (
         ),
         moments=(
             ChampionMoment(
-                date="1968-04-22",
-                player="公开赛时代",
-                age="1968 年",
-                headline="职业与业余的墙倒了",
+                date="1972-01-01",
+                player="国际网联",
+                age="1972 年",
+                headline="比赛用球正式改色",
                 detail=(
-                    "伯恩茅斯打响公开赛时代第一战，电视转播与商业化浪潮"
-                    "随之而来——黄球正是这股浪潮的产物。"
+                    "彩色电视普及后，白球在屏幕上难以追踪；"
+                    "ITF 正式把荧光黄写进比赛用球标准。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Open_era",
+                source_url="https://en.wikipedia.org/wiki/Tennis_ball",
             ),
             ChampionMoment(
                 date="1986-06-23",

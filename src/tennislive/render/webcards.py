@@ -30,8 +30,14 @@ from .common import (
     match_round_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
-from .rating import find_upset, is_upset, tonight_focus, top_results
-from .story import recommendation_label, schedule_insight, sort_china_matches
+from .rating import find_upset, is_upset, match_score, tonight_focus, top_results
+from .story import (
+    recommendation_label,
+    result_insight,
+    schedule_insight,
+    sort_china_matches,
+)
+from .titles import cover_result_hook
 from .tournament_story import TournamentStory, pick_tournament_story
 
 logger = logging.getLogger(__name__)
@@ -93,6 +99,18 @@ def _flag_uri(country: str | None) -> str | None:
         return None
     b = _b64(ASSETS / "flags" / f"{iso2.lower()}.png")
     return f"data:image/png;base64,{b}" if b else None
+
+
+def _icon_uri(name: str) -> str | None:
+    b = _b64(ASSETS / "icons" / f"{name}.svg")
+    return f"data:image/svg+xml;base64,{b}" if b else None
+
+
+def _icon_html(name: str, *, alt: str = "") -> str:
+    uri = _icon_uri(name)
+    if not uri:
+        return ""
+    return f'<img class="ui-icon" src="{uri}" alt="{html.escape(alt)}"/>'
 
 
 # ---------- 页面骨架 ----------
@@ -203,7 +221,10 @@ html.light .tour-level { color:#fff; }
 .tour-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .htime { font-family:'Barlow Condensed'; font-weight:600; font-size:30px; color:var(--gold); letter-spacing:1px; }
 .rating { font-size:20px; font-weight:700; color:#082018; background:var(--section-accent);
-  padding:4px 12px; border-radius:5px; letter-spacing:1px; }
+  padding:4px 11px; border-radius:5px; letter-spacing:1px; display:inline-flex;
+  align-items:center; gap:6px; }
+.ui-icon { width:20px; height:20px; flex:none; object-fit:contain; }
+.rating .ui-icon { width:19px; height:19px; filter:brightness(0) saturate(100%); }
 .chip { font-size:24px; font-weight:700; color:#fff; padding:5px 16px 6px; border-radius:6px; }
 .chip-green { background:var(--neon); color:#0B2018; }
 html.light .chip-green { color:#fff; }
@@ -280,26 +301,29 @@ html.light .chip-green { color:#fff; }
   color:var(--neon); font-family:'Barlow Condensed'; font-size:24px; font-weight:600; letter-spacing:4px; line-height:1.2; }
 .cover .focus-label { font-family:'Barlow Condensed'; font-weight:600; font-size:23px;
   letter-spacing:.34em; color:#E4C96E; text-transform:uppercase; margin-top:24px; }
-.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:94px; font-weight:400;
-  line-height:1.05; letter-spacing:0; margin-top:10px; color:#fff; max-width:830px;
+.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:66px; font-weight:400;
+  line-height:1.1; letter-spacing:0; margin-top:12px; color:#fff; max-width:900px;
   text-shadow:0 6px 24px rgba(0,0,0,.55); display:-webkit-box; -webkit-line-clamp:2;
   -webkit-box-orient:vertical; overflow:hidden; }
 .cover .secondary { margin-top:22px; padding-left:18px; border-left:6px solid var(--coral);
-  color:#E6EEEA; font-size:32px; font-weight:700; line-height:1.4; max-width:760px;
+  color:#E6EEEA; font-size:28px; font-weight:700; line-height:1.45; max-width:820px;
   text-shadow:0 3px 14px rgba(0,0,0,.7); }
-.cover-lower { position:relative; z-index:3; width:820px; margin-top:auto; margin-bottom:20px; }
-.cover-match { padding:16px 0 18px; border-top:1px solid rgba(255,255,255,.38);
-  border-bottom:1px solid rgba(255,255,255,.38); }
-.cover-match-head { display:flex; align-items:center; font-family:'Barlow Condensed';
-  color:#D5E0DB; font-size:22px; letter-spacing:3px; text-transform:uppercase; }
-.cover-match-head b { margin-left:auto; color:var(--neon); font-size:36px; letter-spacing:1px; }
-.cover-versus { display:flex; align-items:baseline; gap:16px; margin-top:7px; }
-.cover-versus b { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:48px;
-  font-weight:400; color:#fff; line-height:1.1; max-width:350px; min-width:0;
+.cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px; }
+.cover-highlights { display:grid; grid-template-columns:1fr 1fr; gap:24px;
+  padding:18px 0 20px; border-top:1px solid rgba(255,255,255,.42);
+  border-bottom:1px solid rgba(255,255,255,.32); }
+.cover-highlight { min-width:0; }
+.cover-highlight + .cover-highlight { padding-left:24px; border-left:1px solid rgba(255,255,255,.24); }
+.cover-highlight small { display:block; font-family:'Barlow Condensed'; font-size:20px;
+  font-weight:600; letter-spacing:3px; color:var(--sky); text-transform:uppercase; line-height:1.2; }
+.cover-highlight small { display:flex; align-items:center; gap:8px; }
+.cover-highlight small .ui-icon { width:19px; height:19px; }
+.cover-highlight:first-child small { color:var(--coral); }
+.cover-highlight b { display:block; margin-top:9px; font-family:'TL Display SC','TL Sans SC',sans-serif;
+  font-size:37px; font-weight:400; color:#fff; line-height:1.12;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.cover-versus i { font-family:'Barlow Condensed'; font-size:24px; font-weight:700;
-  font-style:normal; color:var(--coral); }
-.cover-match-meta { margin-top:8px; color:#C6D2CC; font-size:22px; line-height:1.2; }
+.cover-highlight span { display:block; margin-top:8px; color:#C6D2CC; font-size:20px;
+  line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .cover .chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
 .cover .chips span { background:rgba(4,26,21,.72); border:1px solid rgba(255,255,255,.32);
   color:#F6F7F2; font-size:21px; font-weight:700; padding:9px 14px; border-radius:5px;
@@ -307,11 +331,25 @@ html.light .chip-green { color:#fff; }
 .cover .footer { margin-top:0; color:#C2CEC8; }
 
 /* ---------- 今晚焦点 ---------- */
-.pick { border-left:5px solid var(--sky); padding-bottom:10px; }
-.pick .side.nosets { height:51px; }
-.pick .reason { margin:5px 14px 0; padding-top:7px; border-top:1px solid var(--divider);
-  font-size:22px; line-height:1.25; color:var(--reason); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.pick .reason b { color:var(--coral); margin-right:8px; }
+.tonight-page h1 { font-size:62px; }
+.tonight-page .titleband { margin:16px 0 10px; }
+.pick { border-left:5px solid var(--sky); padding:7px 26px 8px; margin-bottom:8px; }
+.pick header { height:36px; }
+.pick header > .hl:first-child { min-width:0; flex:1; }
+.pick .round { font-size:22px; }
+.pick header .round { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pick .htime { font-size:28px; }
+.pick .rating { font-size:18px; padding:3px 9px; }
+.pick .rating .ui-icon { width:17px; height:17px; }
+.pick .side.nosets { height:55px; margin-top:2px; padding:2px 12px; }
+.pick .name { font-size:28px; line-height:1.02; }
+.pick .en { margin-top:4px; font-size:15px; line-height:1; letter-spacing:1px; }
+.pick .reason { margin:4px 12px 0; padding-top:5px; border-top:1px solid var(--divider);
+  font-size:20px; line-height:1.2; color:var(--reason); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.pick .reason b { display:inline-flex; align-items:center; gap:6px; margin-right:9px;
+  padding:2px 7px 3px; border-radius:4px; background:var(--coral); color:#fff;
+  font-size:16px; line-height:1; vertical-align:2px; }
+.pick .reason b .ui-icon { width:15px; height:15px; }
 .pick .reason i { display:inline-block; margin-right:9px; padding:2px 7px; border-radius:4px;
   background:rgba(118,215,234,.14); color:var(--sky); font-family:'Barlow Condensed'; font-size:18px;
   font-weight:700; font-style:normal; letter-spacing:1px; vertical-align:2px; }
@@ -365,7 +403,9 @@ html.light .chip-green { color:#fff; }
 .discussion-card p { margin-top:28px; padding-top:24px; border-top:1px solid var(--divider);
   font-size:27px; line-height:1.5; color:var(--reason); }
 
-.venue-photo { position:relative; height:365px; margin-top:4px; background-size:cover;
+.story-page .titleband { margin-bottom:12px; }
+.story-page h1 { font-size:76px; }
+.venue-photo { position:relative; height:375px; margin-top:0; background-size:cover;
   background-position:center; border:1px solid var(--panel-border); border-radius:8px;
   overflow:hidden; box-shadow:var(--cardshadow); }
 .venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(4,22,16,.92)); }
@@ -375,8 +415,8 @@ html.light .chip-green { color:#fff; }
 .venue-photo .ph-main { position:absolute; inset:0; background-size:contain;
   background-repeat:no-repeat; background-position:center; }
 .venue-caption { position:absolute; left:24px; right:24px; bottom:20px; z-index:1; }
-.venue-caption b { display:block; font-size:32px; color:#fff; line-height:1.2; }
-.venue-caption span { display:block; font-size:20px; color:#DDE8E1; margin-top:5px; }
+.venue-caption b { display:block; font-size:34px; color:#fff; line-height:1.2; }
+.venue-caption span { display:block; font-size:22px; color:#DDE8E1; margin-top:6px; }
 /* 大字报钩子封面：一句话讲清当日最大事件 */
 .hook-page { --section-accent:var(--neon); }
 .hook-wrap { flex:1; display:flex; flex-direction:column; justify-content:center; padding-bottom:70px; }
@@ -387,30 +427,27 @@ html.light .chip-green { color:#fff; }
 .hook-main em { font-style:normal; color:var(--section-accent); }
 .hook-sub { margin-top:34px; font-size:34px; color:var(--fade); letter-spacing:1px; }
 .hook-more { position:absolute; left:64px; bottom:96px; font-size:24px; color:var(--fade); }
-.story-meta { display:flex; gap:8px; margin-top:13px; }
-.story-meta span { padding:6px 12px; background:var(--coral); color:#fff; border-radius:4px;
-  font-size:18px; font-weight:700; }
-.story-hero { margin-top:11px; font-family:'TL Serif SC',serif; font-size:29px; font-weight:900;
-  line-height:1.4; color:var(--pagetext); }
-.story-timeline { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
-.story-moment { min-height:194px; padding:13px 16px 14px; background:var(--panel);
-  color:var(--panel-text); border:1px solid var(--panel-border); border-top:5px solid var(--gold);
-  border-radius:7px; box-shadow:var(--cardshadow); backdrop-filter:blur(14px); }
-.story-moment:nth-child(2) { border-top-color:var(--coral); }
-.moment-top { display:flex; align-items:center; gap:10px; }
-.moment-date { font-family:'Barlow Condensed'; font-size:26px; font-weight:700; color:var(--score-win); }
-.moment-age { margin-left:auto; padding:2px 8px; border-radius:4px;
-  background:var(--panel-soft); color:var(--panel-muted); font-size:16px; font-weight:700; }
-.moment-player { margin-top:6px; font-family:'TL Display SC','TL Sans SC',sans-serif;
-  font-size:31px; font-weight:400; line-height:1.2; }
-.moment-title { margin-top:3px; color:var(--coral); font-size:18px; font-weight:700; line-height:1.3; }
-.moment-detail { margin-top:7px; color:var(--reason); font-size:17px; line-height:1.45; }
-.story-facts { display:grid; gap:5px; margin-top:10px; list-style:none; }
-.story-facts li { display:grid; grid-template-columns:28px 1fr; align-items:start; gap:7px;
-  font-size:17px; line-height:1.42; color:#D4DED7; }
-.story-facts i { font-family:'Barlow Condensed'; font-size:18px; font-weight:700;
-  font-style:normal; color:var(--gold); }
-.photo-credit { font-size:14px; color:var(--fade); margin-top:6px; }
+.story-hero { margin-top:26px; font-family:'TL Serif SC',serif; font-size:34px; font-weight:900;
+  line-height:1.5; color:var(--pagetext); }
+.story-timeline { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:44px;
+  margin-top:32px; padding-top:36px; border-top:3px solid var(--coral); }
+.story-moment { position:relative; min-height:230px; color:var(--pagetext); }
+.story-moment::before { content:""; position:absolute; top:-41px; left:0; width:20px; height:20px;
+  border-radius:50%; background:var(--coral); border:5px solid var(--ivory); }
+.moment-top { display:flex; align-items:baseline; gap:12px; }
+.moment-date { font-family:'Barlow Condensed'; font-size:42px; font-weight:700; color:var(--coral); line-height:1; }
+.moment-age { color:var(--fade); font-size:19px; font-weight:700; }
+.moment-player { margin-top:10px; font-family:'TL Sans SC',sans-serif;
+  font-size:32px; font-weight:700; line-height:1.12; }
+.moment-title { margin-top:5px; color:var(--pagetext); font-size:23px; font-weight:700; line-height:1.3; }
+.moment-detail { margin-top:9px; color:var(--reason); font-size:21px; line-height:1.48; }
+.story-facts { margin-top:26px; border-top:1px solid var(--divider); list-style:none; }
+.story-facts li { display:grid; grid-template-columns:64px 1fr; align-items:center; gap:16px;
+  min-height:96px; padding:15px 0; border-bottom:1px solid var(--divider);
+  font-size:26px; line-height:1.42; color:#E6ECE8; }
+.story-facts i { font-family:'Barlow Condensed'; font-size:31px; font-weight:700;
+  font-style:normal; color:var(--coral); }
+.photo-credit { font-size:15px; color:var(--fade); margin-top:10px; }
 
 .cta-wrap { display:flex; flex-direction:column; align-items:center; text-align:center; }
 .cta-copy { font-family:'TL Serif SC',serif; font-weight:900; font-size:58px; line-height:1.5;
@@ -597,25 +634,32 @@ def _sched_card(m: Match, *, with_reason: bool = False) -> str:
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
     tour_txt = html.escape(g.name_zh)
+    level_badge = html.escape(g.compact_level)
     t = fmt_time_beijing(m.start_utc)
     right = f'<span class="htime">{t}</span>'
     reason = ""
     card_class = "card"
     if with_reason:
-        right = f'<span class="rating">{recommendation_label(m)}</span>' + right
+        label = recommendation_label(m)
+        label_icon = {"必看": "flame", "推荐": "star", "关注": "eye", "可选": "circle"}[label]
+        right = (
+            f'<span class="rating">{_icon_html(label_icon)}'
+            f'<span>{html.escape(label)}</span></span>' + right
+        )
         source = ""
-        reason_label = "数据"
+        reason_label = "看点"
         if m.editorial_url and m.editorial_source:
             reason_label = "媒体"
             source = f'<i>{html.escape(m.editorial_source.upper())}</i>'
         reason = (
-            f'<div class="reason"><b>{reason_label}</b>{source}'
+            f'<div class="reason"><b>{_icon_html("eye")}<span>{reason_label}</span></b>{source}'
             f'{html.escape(schedule_insight(m))}</div>'
         )
         card_class += " pick"
     return (
         f'<article class="{card_class}">'
-        f'<header><span class="hl"><span class="round">{tour_txt} · {meta}</span></span>'
+        f'<header><span class="hl"><b class="tour-level">{level_badge}</b>'
+        f'<span class="round">{tour_txt} · {meta}</span></span>'
         f'<span class="hl">{right}</span></header>'
         f"{_side_html(m, 0, 0, with_sets=False)}{_side_html(m, 1, 0, with_sets=False)}"
         f"{reason}"
@@ -644,11 +688,15 @@ def cover_body(
         chips.append(f"赛果复盘 {len(digest.results)} 场")
     if digest.schedule:
         chips.append(f"后续赛程 {len(digest.schedule)} 场")
+    overnight = top_results(
+        [match for match in digest.results if match.is_singles],
+        2,
+        cn_boost=False,
+    )
+    lead = overnight[0] if overnight else None
+    if lead is not None:
+        headline, secondary = cover_result_hook(lead)
     focus_matches = tonight_focus(digest.schedule)
-    if not focus_matches and digest.schedule:
-        focus_matches = digest.schedule[:1]
-    if not focus_matches and digest.results:
-        focus_matches = digest.results[:1]
     focus_count = len(focus_matches)
     if focus_count:
         chips.append(f"今晚焦点 {focus_count} 场")
@@ -661,32 +709,57 @@ def cover_body(
     secondary_html = (
         f'<div class="secondary">{html.escape(secondary)}</div>' if secondary else ""
     )
-    match_html = ""
-    if focus_matches:
-        focus_match = focus_matches[0]
-        left = " / ".join(player_zh(p.name) for p in focus_match.home)
-        right = " / ".join(player_zh(p.name) for p in focus_match.away)
-        group = group_by_tournament([focus_match])[0]
+    def cover_highlight(label: str, match: Match) -> str:
+        group = group_by_tournament([match])[0]
+        if match.status.is_final:
+            winners = match.winner_players() or match.home
+            name = " / ".join(player_zh(player.name) for player in winners)
+            value = f"{name} {match.score_display(from_winner=True) or '胜'}"
+        else:
+            left = " / ".join(player_zh(player.name) for player in match.home)
+            right = " / ".join(player_zh(player.name) for player in match.away)
+            value = f"{left} vs {right}"
         meta = " · ".join(
             part for part in (
-                focus_match.tournament.level,
-                group.title,
-                match_round_display(focus_match),
+                fmt_time_beijing(match.start_utc) if not match.status.is_final else "",
+                group.compact_level,
+                match_round_display(match),
             ) if part
         )
-        result_value = fmt_time_beijing(focus_match.start_utc)
-        result_label = "Focus Match · 焦点对阵"
-        if focus_match.status.is_final:
-            result_value = focus_match.score_display(from_winner=True) or "已完赛"
-            result_label = "Final Result · 完赛比分"
-        match_html = (
-            '<div class="cover-match"><div class="cover-match-head">'
-            f'<span>{result_label}</span>'
-            f'<b>{html.escape(result_value)}</b></div>'
-            f'<div class="cover-versus"><b>{html.escape(left)}</b><i>VS</i>'
-            f'<b>{html.escape(right)}</b></div>'
-            f'<div class="cover-match-meta">{html.escape(meta)}</div></div>'
+        icon = "flame" if "必看" in label else "star" if "亮点" in label else "eye"
+        return (
+            '<article class="cover-highlight">'
+            f'<small>{_icon_html(icon)}{html.escape(label)}</small><b>{html.escape(value)}</b>'
+            f'<span>{html.escape(meta)}</span></article>'
         )
+
+    support: list[tuple[str, Match]] = []
+    lead_id = lead.match_id if lead else None
+    chinese = [
+        match for match in digest.results + digest.schedule
+        if is_chinese_involved(match) and match.match_id != lead_id
+    ]
+    if chinese:
+        support.append(("China Focus · 中国焦点", max(chinese, key=match_score)))
+    elif len(overnight) > 1:
+        support.append(("More Result · 昨夜亮点", overnight[1]))
+    for focus_match in focus_matches:
+        if all(match.match_id != focus_match.match_id for _, match in support):
+            support.append(("Tonight · 今晚必看", focus_match))
+            break
+    if len(support) < 2:
+        for result in overnight[1:]:
+            if all(match.match_id != result.match_id for _, match in support):
+                support.append(("More Result · 昨夜亮点", result))
+                break
+    highlights_html = "".join(
+        cover_highlight(label, match) for label, match in support[:2]
+    )
+    highlights_html = (
+        f'<div class="cover-highlights">{highlights_html}</div>'
+        if highlights_html else ""
+    )
+    lead_label = "Overnight Lead · 昨夜头条" if lead else "Today's Lead · 今日头条"
     return (
         '<div class="poster cover">'
         + background
@@ -695,11 +768,11 @@ def cover_body(
         + f'<div class="cover-date"><b>{d.month:02d}.{d.day:02d}</b><span>'
         + f'<i>{weekday}</i><small>{weekday_en} · BEIJING TIME</small></span></div>'
         + '<div class="edition">DAILY MATCH BRIEF · 每日网球速递</div>'
-        + '<div class="focus-label">Today\'s Lead · 今日头条</div>'
+        + f'<div class="focus-label">{lead_label}</div>'
         + f'<div class="focus">{html.escape(headline)}</div>'
         + secondary_html
         + '</div><div class="cover-lower">'
-        + match_html
+        + highlights_html
         + f'<div class="chips">{chips_html}</div></div>'
         + _FOOTER
         + "</div>"
@@ -773,6 +846,7 @@ def china_body(results: list[Match], today: list[Match], date_label: str) -> str
 
 
 def tonight_body(matches: list[Match], date_label: str) -> str:
+    # Keep the page curated, but allow five matches without spilling past 9:16.
     cards = [_sched_card(m, with_reason=True) for m in matches[:5]]
     return (
         '<div class="poster tonight-page">'
@@ -910,13 +984,18 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         pass
     facts = "".join(
         f"<li><i>{index:02d}</i><span>{html.escape(fact)}</span></li>"
-        for index, fact in enumerate(story.facts, 1)
+        for index, fact in enumerate(story.facts[:2], 1)
     )
     moments = "".join(
         '<article class="story-moment">'
         f'<div class="moment-top"><span class="moment-date">'
-        f'{html.escape(moment.date.replace("-", "."))}</span>'
-        f'<span class="moment-age">{html.escape(moment.age)}</span></div>'
+        f'{html.escape(moment.date.split("-", 1)[0])}</span>'
+        + (
+            f'<span class="moment-age">{html.escape(moment.age)}</span>'
+            if not moment.age.replace(" ", "").startswith(moment.date.split("-", 1)[0])
+            else ""
+        )
+        + '</div>'
         f'<div class="moment-player">{html.escape(moment.player)}</div>'
         f'<div class="moment-title">{html.escape(moment.headline)}</div>'
         f'<div class="moment-detail">{html.escape(moment.detail)}</div></article>'
@@ -940,9 +1019,6 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + '<div class="venue-caption">'
         + f'<b>{html.escape(story.venue)}</b><span>{html.escape(story.location)}</span>'
         + "</div></div>"
-        + '<div class="story-meta">'
-        + f'<span>{html.escape(story.level)}</span><span>{html.escape(story.surface)}</span>'
-        + f'<span>{html.escape(story.founded)}</span></div>'
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
         + f'<div class="story-timeline">{moments}</div>'
         + f'<ul class="story-facts">{facts}</ul>'

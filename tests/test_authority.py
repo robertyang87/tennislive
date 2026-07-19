@@ -4,7 +4,6 @@ from tennislive.digest import Digest
 from tennislive.models import MatchStats, MatchStatus, StatPair, Tour
 from tennislive.render.authority import (
     apply_curated_editorial,
-    build_schedule_evidence,
     enrich_schedule_editorial,
 )
 from tennislive.render.story import schedule_insight
@@ -21,7 +20,7 @@ def _digest(result, scheduled, source="espn+sofascore"):
     )
 
 
-def test_official_stats_become_attributed_schedule_note():
+def test_schedule_note_prefers_current_rank_and_stakes_over_previous_stats():
     result = make_match(
         home_name="Qinwen Zheng",
         away_name="Maria Sakkari",
@@ -52,19 +51,22 @@ def test_official_stats_become_attributed_schedule_note():
         sets=(),
         tiebreaks=(),
         start_utc=datetime(2026, 7, 17, 14, tzinfo=timezone.utc),
+        round_name="Quarterfinals",
     )
+    scheduled.home[0].rank = 6
+    scheduled.away[0].rank = 18
     digest = _digest(result, scheduled)
 
     enrich_schedule_editorial(digest)
 
-    assert "Sportradar授权技术统计" in scheduled.editorial_note
-    assert "郑钦文上一轮8记Ace" in scheduled.editorial_note
-    assert "一发得分率78%" in scheduled.editorial_note
-    assert scheduled.editorial_source == "Sportradar 授权网球数据"
+    assert scheduled.editorial_note == "郑钦文（世界第6）冲击四强席位，对手克雷吉茨科娃（世界第18）"
+    assert "上一轮" not in scheduled.editorial_note
+    assert "Ace" not in scheduled.editorial_note
+    assert scheduled.editorial_source == "实时排名与赛程"
     assert schedule_insight(scheduled) == scheduled.editorial_note
 
 
-def test_official_score_fallback_describes_straight_sets_without_rank_hype():
+def test_previous_score_is_not_used_as_schedule_background():
     result = make_match(
         home_name="Qinwen Zheng",
         away_name="Maria Sakkari",
@@ -89,27 +91,15 @@ def test_official_score_fallback_describes_straight_sets_without_rank_hype():
         tiebreaks=(),
         start_utc=datetime(2026, 7, 17, 14, tzinfo=timezone.utc),
     )
-    evidence = build_schedule_evidence(_digest(result, scheduled), scheduled)
+    digest = _digest(result, scheduled)
+    enrich_schedule_editorial(digest)
 
-    assert evidence is not None
-    assert evidence.text == "聚合赛果：郑钦文上一轮直落两盘过关，仅丢5局"
-    assert "种子" not in evidence.text
-
-
-def test_unrelated_tournament_is_not_used_as_previous_round():
-    result = make_match(tournament="Iasi")
-    scheduled = make_match(
-        tournament="Umag",
-        status=MatchStatus.SCHEDULED,
-        winner=None,
-        sets=(),
-        tiebreaks=(),
-    )
-
-    assert build_schedule_evidence(_digest(result, scheduled), scheduled) is None
+    assert "上一轮" not in scheduled.editorial_note
+    assert "直落两盘" not in scheduled.editorial_note
+    assert "6" not in scheduled.editorial_note
 
 
-def test_schedule_fallback_uses_round_and_observation_not_seed():
+def test_schedule_fallback_explains_current_stakes_without_technique_cliches():
     scheduled = make_match(
         home_name="Qinwen Zheng",
         away_name="Barbora Krejcikova",
@@ -123,9 +113,8 @@ def test_schedule_fallback_uses_round_and_observation_not_seed():
     )
 
     insight = schedule_insight(scheduled)
-    assert "四分之一决赛" in insight
-    assert "接发" in insight and "关键分" in insight
-    assert "种子" not in insight
+    assert "冲击四强席位" in insight
+    assert "接发" not in insight and "关键分" not in insight
 
 
 def test_curated_media_note_wins_and_keeps_source_url():

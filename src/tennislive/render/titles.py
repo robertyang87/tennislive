@@ -19,6 +19,24 @@ class _Candidate:
     kind: str
 
 
+@dataclass(frozen=True)
+class _HistoricalProfile:
+    peak_rank: int
+    legacy: str
+    source_url: str
+
+
+# Curated, source-backed context for cover hooks. Keep this list deliberately
+# small: an absent profile falls back to match facts instead of invented lore.
+_HISTORICAL_PROFILES = {
+    "Stefanos Tsitsipas": _HistoricalProfile(
+        peak_rank=3,
+        legacy="两进大满贯决赛",
+        source_url="https://www.atptour.com/en/players/tsitsipas-stefanos/te51/bio",
+    ),
+}
+
+
 def _cn_side(players) -> bool:
     return any(is_chinese_player(p) for p in players)
 
@@ -230,3 +248,41 @@ def hook_cover(digest: Digest) -> tuple[str, str] | None:
                 return f"{player_zh(l.name)}，退赛。", sub_of(m)
 
     return None
+
+
+def cover_result_hook(m) -> tuple[str, str]:
+    """Turn the lead result into a significance-first cover hook.
+
+    Historical claims come only from reviewed profiles. Everyone else keeps the
+    conservative, match-derived headline and insight path.
+    """
+    from .story import result_insight
+
+    winner = (m.winner_players() or [None])[0]
+    if winner is None:
+        return flash_headline(m), result_insight(m)
+
+    profile = _HISTORICAL_PROFILES.get(winner.name)
+    if profile is None:
+        return flash_headline(m), result_insight(m)
+
+    name = player_zh(winner.name)
+    rank = winner.rank
+    round_name = _flat_round(m)
+    is_final = round_name.endswith("决赛") and "半" not in round_name and "四" not in round_name
+    if rank is not None and rank >= profile.peak_rank + 20:
+        action = "终于捧杯" if is_final else "重新赢球"
+        headline = f"跌至世界第{rank}，{name}{action}"
+        result = "这座冠军" if is_final else "这场胜利"
+        secondary = (
+            f"曾高居世界第{profile.peak_rank}、{profile.legacy}；"
+            f"{result}，是排名低谷里的反弹信号"
+        )
+        return headline, secondary
+
+    if is_final:
+        return (
+            f"{profile.legacy}，{name}再迎冠军夜",
+            "这不只是一场决赛胜利，更是生涯坐标上的新节点",
+        )
+    return flash_headline(m), f"{profile.legacy}再度过关，胜负之外更要看状态走向"
