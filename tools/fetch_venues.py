@@ -55,6 +55,11 @@ TRIVIA = [
     ("trivia-surfaces.jpg", None, "Roland Garros clay court"),
     ("trivia-big-three.jpg", None, "Federer Nadal"),
     ("trivia-china-tennis.jpg", None, "Category:Li Na (tennis player)"),
+    # 历史上的今天：抓当年事件现场照，无合规候选时回退对应场馆图
+    ("trivia-otd-0725.jpg", None, "Carlos Alcaraz 2021 Umag"),
+    ("trivia-otd-0803.jpg", None, "Zheng Qinwen 2024 Olympics Paris"),
+    ("trivia-otd-0820.jpg", None, "Djokovic Alcaraz Cincinnati 2023"),
+    ("trivia-otd-0909.jpg", None, "Coco Gauff 2023 US Open"),
 ]
 
 
