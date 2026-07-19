@@ -23,11 +23,13 @@ from tennislive.sources.rankings import RankEntry, Rankings, _parse, rank_map
 from conftest import make_match
 
 
-def test_chinese_match_outranks_everything():
+def test_chinese_weight_is_significant_but_not_a_bypass():
+    """V1 §2.2：中国相关性固定 +35（与爆冷同级），大满贯决赛不会被常规中国场次压过."""
     cn = make_match(home_name="Qinwen Zheng", home_country="CHN", tournament="Iasi Open")
     gs_final = make_match(round_name="Final", tournament="Wimbledon", match_id="x")
-    assert match_score(cn) > match_score(gs_final) - 50  # CN +100 是最大权重
-    assert top_results([gs_final, cn])[0] is cn
+    non_cn = make_match(home_name="Player One", home_country="ITA", tournament="Iasi Open", match_id="y")
+    assert match_score(cn) - match_score(non_cn) == 35
+    assert top_results([gs_final, cn])[0] is gs_final
 
 
 def test_upset_by_seed_and_rank():

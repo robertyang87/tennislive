@@ -8,7 +8,7 @@ from ..digest import Digest
 from ..timeutil import fmt_time_beijing
 from ..zh import player_zh
 from .common import is_chinese_involved, match_round_display
-from .rating import find_upset, match_score, top_results, top_schedule
+from .rating import find_upset, is_upset, match_score, top_results, top_schedule
 from .story import china_summary, chinese_side_won, is_chinese_player
 
 
@@ -199,54 +199,38 @@ def flash_headline(m) -> str:
     return f"{player_zh(w.name)}晋级{g.name_zh}{r or ''}"
 
 
-def hook_cover(digest: Digest) -> tuple[str, str] | None:
-    """大字报封面文案：当日最大事件 -> (主行, 副行)；无爆点返回 None.
+def _whitelist_meaning(m) -> str | None:
+    """V1 意义句白名单的机械模式：证据不足返回 None（调用方降级为结果句）.
 
-    小红书封面 3 秒法则：短句、人名、情绪。比分板做内页，封面只讲一件事。
-    优先级：中国球员 > 夺冠 > 爆冷 > 伤退。
+    仅覆盖可从当日数据机械验证的四类：退赛、爆冷、先丢一盘逆转、
+    决胜盘抢七/抢十。退赛不得推断原因；历史类表述走人工档案。
     """
     from ..models import MatchStatus
-    from .common import group_by_tournament
 
-    def sub_of(m) -> str:
-        g = group_by_tournament([m])[0]
-        return f"{g.name_zh} {_flat_round(m)} · {m.score_display()}"
+    w = (m.winner_players() or [None])[0]
+    l = (m.loser_players() or [None])[0]
+    if not w or not l:
+        return None
+    wn, ln = player_zh(w.name), player_zh(l.name)
+    r = _flat_round(m)
 
-    # 中国球员的胜负永远是头条（主行去掉"女单/男单"，副行已有完整信息）
-    best_cn, best_cn_score = None, -1
-    for m in digest.results:
-        if not is_chinese_involved(m) or m.winner is None:
-            continue
-        text = _cn_match_headline(m)
-        if text and match_score(m) > best_cn_score:
-            main = text.replace("女单", "").replace("男单", "").replace("女双", "").replace("男双", "")
-            best_cn, best_cn_score = (main, sub_of(m)), match_score(m)
-    if best_cn:
-        return best_cn
-
-    # 夺冠时刻
-    for m in top_results([x for x in digest.results if x.is_singles], 5):
-        r = _flat_round(m)
-        if r.endswith("决赛") and "半" not in r and "四" not in r:
-            w = (m.winner_players() or [None])[0]
-            if w:
-                return f"{player_zh(w.name)}，夺冠。", sub_of(m)
-
-    # 爆冷
-    m = find_upset(digest.results)
-    if m is not None:
-        w = (m.winner_players() or [None])[0]
-        l = (m.loser_players() or [None])[0]
-        if w and l:
-            return f"爆冷。{player_zh(l.name)}出局", sub_of(m)
-
-    # 球星伤退
-    for m in top_results([x for x in digest.results if x.is_singles], 5):
-        if m.status is MatchStatus.RETIRED:
-            l = (m.loser_players() or [None])[0]
-            if l and (l.rank or 999) <= 40:
-                return f"{player_zh(l.name)}，退赛。", sub_of(m)
-
+    if m.status is MatchStatus.RETIRED:
+        return f"{ln}退赛，{wn}晋级{r or '下一轮'}"
+    if is_upset(m):
+        return f"爆冷：{wn}掀翻{ln}"
+    sets = m.sets or []
+    decided = [s for s in sets if s.home != s.away]
+    if len(decided) >= 2:
+        first, last = decided[0], decided[-1]
+        winner_is_home = m.winner == 0
+        lost_first = (first.home < first.away) if winner_is_home else (first.home > first.away)
+        if lost_first:
+            return f"{wn}先丢一盘，逆转晋级"
+        super_tb = {last.home, last.away} == {1, 0}
+        tb = last.home_tiebreak is not None and last.away_tiebreak is not None
+        if len(decided) >= 3 and (super_tb or tb):
+            how = "抢十" if super_tb else "抢七"
+            return f"决胜盘{how}，{wn}惊险过关"
     return None
 
 
@@ -264,6 +248,9 @@ def cover_result_hook(m) -> tuple[str, str]:
 
     profile = _HISTORICAL_PROFILES.get(winner.name)
     if profile is None:
+        mechanical = _whitelist_meaning(m)
+        if mechanical:
+            return mechanical, result_insight(m)
         return flash_headline(m), result_insight(m)
 
     name = player_zh(winner.name)

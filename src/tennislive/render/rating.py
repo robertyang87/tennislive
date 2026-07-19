@@ -64,8 +64,10 @@ def match_score(m: Match, cn_boost: bool = True) -> int:
     中国军团有专页，速递页按比赛本身分量排序，出现时只打标签）。
     """
     s = 0
+    # V1 头条规则：中国相关性固定 +35（与爆冷同级），单场只加一次，
+    # 不再设置"中国比赛永远第一"的旁路（见 docs/xiaohongshu-playbook.md §2.2）
     if cn_boost and is_chinese_involved(m):
-        s += 100
+        s += 35
     s += LEVEL_PTS.get(_level_of(m) or "", 0)
     r = round_zh(m.round_name) or ""
     s += ROUND_PTS.get(r, 0)
