@@ -598,7 +598,7 @@ def _match_card(
         draw.text((lx + 11, y + 13), "爆冷", font=fonts.cell_seed, fill=(255, 255, 255))
     if show_tournament:
         g = group_by_tournament([m])[0]
-        right = _fit(draw, g.name_zh, meta_font, int((x1 - x0) * 0.42))
+        right = _fit(draw, g.compact_title, meta_font, int((x1 - x0) * 0.42))
         rw = draw.textlength(right, font=meta_font)
         draw.text((x1 - pad - rw, ty), right, font=meta_font, fill=CARD_GREY)
     draw.line([x0 + pad, y + top_h, x1 - pad, y + top_h], fill=CARD_LINE, width=2)

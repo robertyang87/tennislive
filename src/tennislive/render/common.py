@@ -37,6 +37,22 @@ LEVEL_BADGE = {
     "TeamCup": "团体赛",
 }
 
+LEVEL_COMPACT_BADGE = {
+    "GS": "大满贯",
+    "M1000": "ATP1000",
+    "W1000": "WTA1000",
+    "ATP1000": "ATP1000",
+    "WTA1000": "WTA1000",
+    "ATP500": "ATP500",
+    "WTA500": "WTA500",
+    "W500": "WTA500",
+    "ATP250": "ATP250",
+    "WTA250": "WTA250",
+    "W250": "WTA250",
+    "Finals": "年终总决赛",
+    "TeamCup": "团体赛",
+}
+
 # 轮次排序权重（决赛最前）
 _ROUND_ORDER = [
     ("决赛", 0),
@@ -169,6 +185,18 @@ class TournamentGroup:
     name_zh: str
     level: str | None
     matches: list[Match]
+
+    @property
+    def compact_level(self) -> str:
+        """比分卡紧凑级别：ATP250 / WTA1000 / 大满贯。"""
+        level = self.level or ""
+        if level in ("1000", "500", "250"):
+            return f"{self.tour.value}{level}"
+        return LEVEL_COMPACT_BADGE.get(level, self.tour.value)
+
+    @property
+    def compact_title(self) -> str:
+        return f"{self.compact_level}·{self.name_zh}"
 
     @property
     def title(self) -> str:
