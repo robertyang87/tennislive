@@ -765,7 +765,105 @@ def _trivia_story(
     )
 
 
+# ---- 历史上的今天（slug=otd-MMDD，仅当日参选，逐步补齐 365 天）----
 STORIES = STORIES + (
+    _trivia_story(
+        slug="otd-0725",
+        title="18 岁的第一冠",
+        subtitle="历史上的今天 · 7 月 25 日",
+        identity="2021 · 阿尔卡拉斯生涯首冠",
+        chips=("历史上的今天", "2021", "乌马格"),
+        hero="2021 年的今天，18 岁的阿尔卡拉斯在乌马格拿下生涯首冠——四年后，他已是多座大满贯得主。",
+        facts=(
+            "决赛仅用 77 分钟，6-2、6-2 击败加斯奎特——对手比他大 17 岁。",
+            "他就此成为赛会史上最年轻冠军；一年后的美网，他登顶世界第一。",
+            "同一片球场也见证过 2006 年瓦林卡的生涯首冠——乌马格是首冠福地。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2021-07-25", player="卡洛斯·阿尔卡拉斯", age="18 岁 2 个月",
+                headline="生涯首座 ATP 冠军",
+                detail="从这座 250 赛奖杯到史上最年轻世界第一，他只用了 14 个月。",
+                source_url="https://en.wikipedia.org/wiki/2021_Croatia_Open_Umag",
+            ),
+        ),
+        image_keys=("umag",),
+        source_label="ATP 官方档案",
+        source_url="https://en.wikipedia.org/wiki/2021_Croatia_Open_Umag",
+    ),
+    _trivia_story(
+        slug="otd-0803",
+        title="巴黎的金牌",
+        subtitle="历史上的今天 · 8 月 3 日",
+        identity="2024 · 郑钦文奥运夺金",
+        chips=("历史上的今天", "2024", "巴黎"),
+        hero="2024 年的今天，郑钦文在巴黎为中国拿下奥运网球单打首金——亚洲球员的第一次。",
+        facts=(
+            "半决赛掀翻红土女王斯瓦泰克，决赛直落两盘击败维基奇。",
+            "距离李婷/孙甜甜的雅典女双首金，恰好二十年。",
+            "她赛后说这是'为中国而战'——那周她的名字刷遍全网热搜。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-08-03", player="郑钦文", age="21 岁",
+                headline="奥运女单金牌 · 亚洲第一人",
+                detail="从武汉的训练场到罗兰·加洛斯的最高领奖台。",
+                source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=("canada",),
+        source_label="奥运官方档案",
+        source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+    ),
+    _trivia_story(
+        slug="otd-0820",
+        title="3 小时 49 分",
+        subtitle="历史上的今天 · 8 月 20 日",
+        identity="2023 · 辛辛那提史诗决赛",
+        chips=("历史上的今天", "2023", "辛辛那提"),
+        hero="2023 年的今天，德约科维奇与阿尔卡拉斯鏖战 3 小时 49 分——ATP 史上最长的三盘制决赛之一。",
+        facts=(
+            "德约第二盘濒临出局，5-7、7-6、7-6 完成翻盘，赛后两人相拥致意。",
+            "同一天高芙拿下生涯首个 WTA 1000 冠军——三周后她在美网再胜同一对手夺冠。",
+            "这场决赛被视作'德阿对决'系列的巅峰之作。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2023-08-20", player="德约科维奇 vs 阿尔卡拉斯", age="36 岁 vs 20 岁",
+                headline="挽救赛点的史诗逆转",
+                detail="打完最后一分，两代天王在网前抱在一起。",
+                source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
+            ),
+        ),
+        image_keys=("cincinnati",),
+        source_label="ATP 官方档案",
+        source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
+    ),
+    _trivia_story(
+        slug="otd-0909",
+        title="主场圆梦夜",
+        subtitle="历史上的今天 · 9 月 9 日",
+        identity="2023 · 高芙美网夺冠",
+        chips=("历史上的今天", "2023", "纽约"),
+        hero="2023 年的今天，19 岁的高芙在阿瑟·阿什球场逆转萨巴伦卡，美国主场沸腾。",
+        facts=(
+            "决赛先丢一盘后连扳两盘——她两座大满贯决赛都是逆转同一个对手。",
+            "15 岁温网击败偶像维纳斯一战成名，四年后主场圆梦。",
+            "两万人的欢呼声中，她跪地掩面——那一晚纽约属于她。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2023-09-09", player="科科·高芙", age="19 岁",
+                headline="生涯首座大满贯",
+                detail="从天才少女到美网冠军，她只让美国等了四年。",
+                source_url="https://en.wikipedia.org/wiki/2023_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=("usopen",),
+        source_label="美网官方档案",
+        source_url="https://en.wikipedia.org/wiki/2023_US_Open_%E2%80%93_Women%27s_singles",
+    ),
+
     _trivia_story(
         slug="scoring-history",
         title="15、30、40 的秘密",
@@ -1298,7 +1396,13 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
                 continue
             heat = _alias_heat(aliases, player_heat)
         elif story.kind == "trivia":
-            score = 0
+            if story.slug.startswith("otd-"):
+                # 历史上的今天：只在对应日期参选，优先于普通冷知识
+                if not story.slug.endswith(digest.today.strftime("%m%d")):
+                    continue
+                score = 1
+            else:
+                score = 0
             heat = 0.0
         else:
             if not _matched(aliases, tournaments):
