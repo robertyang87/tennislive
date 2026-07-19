@@ -60,9 +60,15 @@ TRIVIA = [
 
 def api(params: dict) -> dict:
     params = {"format": "json", **params}
-    r = requests.get(API, params=params, headers=UA, timeout=30)
-    r.raise_for_status()
-    return r.json()
+    for attempt in range(4):
+        r = requests.get(API, params=params, headers=UA, timeout=30)
+        if r.status_code == 429:
+            wait = int(r.headers.get("Retry-After") or 0) or 15 * (attempt + 1)
+            time.sleep(min(wait, 90))
+            continue
+        r.raise_for_status()
+        return r.json()
+    raise RuntimeError("Commons API 429 rate limited after retries")
 
 
 def imageinfo(titles: list[str]) -> list[dict]:
@@ -217,10 +223,21 @@ def fetch_set(
     out_dir: Path, wanted: list, min_width: int, prefer_portrait: bool = False
 ) -> list[str]:
     out_dir.mkdir(parents=True, exist_ok=True)
+    credits_path = out_dir / "credits.json"
+    try:
+        old_credits = json.loads(credits_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        old_credits = {}
     credits = {}
     failed = []
     for out_name, pinned_title, term in wanted:
         dest = out_dir / out_name
+        # 已入库的图不再重选：避免署名与图片错位，也少打 API（限流敏感）
+        if dest.exists():
+            if out_name in old_credits:
+                credits[out_name] = old_credits[out_name]
+            print(f"KEEP {out_name}")
+            continue
         try:
             if pinned_title:
                 cand = next(iter(imageinfo([pinned_title])), None)
@@ -230,15 +247,15 @@ def fetch_set(
                 )
             if not cand:
                 raise RuntimeError("无符合授权/画质的候选")
-            if not dest.exists():
-                dest.write_bytes(shrink(download(cand)))
+            dest.write_bytes(shrink(download(cand)))
             credits[out_name] = {k: cand[k] for k in ("title", "license", "artist", "page")}
             print(f"OK {out_name} <- {cand['title']} [{cand['license']}] by {cand['artist']}")
+            time.sleep(3)
         except Exception as e:  # noqa: BLE001
             failed.append(f"{out_name}: {e}")
             print(f"FAIL {out_name}: {e}")
-        time.sleep(3)
-    (out_dir / "credits.json").write_text(
+            time.sleep(3)
+    credits_path.write_text(
         json.dumps(credits, ensure_ascii=False, indent=1), encoding="utf-8"
     )
     return failed
