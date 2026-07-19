@@ -172,7 +172,8 @@ def test_cards_generation(tmp_path, sample_digest):
     for p in paths:
         assert Path(p).stat().st_size > 10_000  # 是实际渲染的 PNG 而非空文件
     names = [p.name for p in paths]
-    assert "card_00_cover.png" in names
+    # 有爆点时大字报钩子卡是第一张（card_00_hook），设计版封面顺延
+    assert any("_cover.png" in n for n in names)
     assert not any("focus" in name for name in names)
     assert not any("upset" in name or "end" in name for name in names)
 
