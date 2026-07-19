@@ -883,31 +883,79 @@ def _card_rankings(fonts: _Fonts, date_label: str, rankings) -> Image.Image:
 
 
 def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
-    """单场比赛的「赛后速报」卡（闪发模式用）."""
+    """单场热点首图：强钩子、比分证据和一句判断。"""
+    from .hotspot import hotspot_reasons
+    from .story import result_insight
+
     set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
     outpath = Path(outpath)
     outpath.parent.mkdir(parents=True, exist_ok=True)
     fonts = _Fonts()
-    img, draw, y = _page(fonts, "刚刚结束", "赛后速报", "FLASH REPORT", accent=RED)
-    y += 80
+    img, draw, y = _page(
+        fonts,
+        "刚刚结束",
+        "热点闪报",
+        "BREAK POINT · JUST IN",
+        accent=RED,
+        deco="court",
+    )
+
+    group = group_by_tournament([m])[0]
+    badge = group.compact_level
+    badge_w = draw.textlength(badge, font=fonts.en)
+    draw.rounded_rectangle(
+        [MARGIN, y, MARGIN + badge_w + 36, y + 48],
+        radius=10,
+        fill=ACCENT,
+    )
+    draw.text((MARGIN + 18, y + 8), badge, font=fonts.en, fill=BTN_TEXT)
+    reason = " · ".join(hotspot_reasons(m)[:3])
+    reason_w = draw.textlength(reason, font=fonts.small)
+    draw.text((W - MARGIN - reason_w, y + 8), reason, font=fonts.small, fill=GREY)
+    y += 72
+
+    for chunk in _wrap_text(
+        draw,
+        _strip(headline),
+        fonts.title,
+        W - 2 * MARGIN,
+        2,
+    ):
+        draw.text((MARGIN, y), chunk, font=fonts.title, fill=ACCENT)
+        y += 102
+    y += 18
+
     main, score = _split_result(m)
     y = _panel_block(
-        draw, fonts, y,
-        label=_match_label(m),
+        draw,
+        fonts,
+        y,
+        label=f"{group.compact_title}·{match_round_display(m)}".rstrip("·"),
         main=main,
         sub=score,
         accent=is_chinese_involved(m),
-        tag="速报",
+        tag="刚刚",
     )
-    y += 70
-    for chunk in _wrap_text(draw, _strip(headline), fonts.section, W - 2 * MARGIN - 20, 3):
-        draw.text((MARGIN + 10, y), chunk, font=fonts.section, fill=ACCENT)
-        y += 74
-    y += 40
-    draw.text(
-        (MARGIN + 10, y), "完整战报见明晨《网球晨报》", font=fonts.body, fill=GREY
+
+    y += 24
+    draw.text((MARGIN, y), "一句看懂 · WHY IT MATTERS", font=fonts.en, fill=RED)
+    y += 52
+    insight = _strip(result_insight(m))
+    for chunk in _wrap_text(draw, insight, fonts.body, W - 2 * MARGIN, 3):
+        draw.text((MARGIN, y), chunk, font=fonts.body, fill=WHITE)
+        y += 52
+
+    cta = "这场结果符合你的预期吗？"
+    cta_w = draw.textlength(cta, font=fonts.label)
+    cta_y = min(y + 34, H - MARGIN - 120)
+    draw.rounded_rectangle(
+        [MARGIN, cta_y, MARGIN + cta_w + 44, cta_y + 58],
+        radius=29,
+        outline=OUTLINE,
+        width=3,
     )
-    _footer(draw, fonts)
+    draw.text((MARGIN + 22, cta_y + 11), cta, font=fonts.label, fill=ACCENT)
+    _footer(draw, fonts, "完赛后快速看懂，不堆数据")
     img.save(outpath, "PNG")
     return outpath
 

@@ -1,11 +1,11 @@
 name: flash-report
 
-# 即时战报：每小时检测刚完赛的重点比赛（中国球员场次 / 大满贯、1000赛、
-# 年终总决赛的单打决赛），生成战报卡并按配置自动发布。
-# 覆盖北京时间 17:00 - 次日 01:00（欧洲赛事时段）；美洲赛事由晨报收口。
+# 热点雷达：全天每 15 分钟检测传播窗口内的重点赛果，自动生成
+# 小红书单场标题、文案和首图，提交图片后再推送到微信待发布。
 on:
   schedule:
-    - cron: "0 9-17 * * *"   # 09:00-17:00 UTC = 17:00-01:00 北京时间，每小时
+    # 避开整点高峰；GitHub 定时可能延迟，因此保留四个错峰检查窗口。
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -27,6 +27,8 @@ jobs:
       WECHAT_MODE: ${{ vars.WECHAT_MODE || 'off' }}
       # 卡片主题：dark=品牌深绿（默认）/ light=奶油浅色
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+      TENNISLIVE_FONT: assets/fonts/NotoSansSC-Regular-sub.ttf
+      TENNISLIVE_FONT_BOLD: assets/fonts/NotoSansSC-Bold-sub.ttf
     steps:
       - uses: actions/checkout@v4
 
@@ -35,14 +37,19 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 安装中文字体
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
-
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 检测并闪发
-        run: tennislive flash --outdir output
+      - name: 检测并生成热点包
+        id: generate
+        run: |
+          rm -f .flash-publish.json
+          tennislive flash --outdir output --no-publish --manifest .flash-publish.json
+          if [ -f .flash-publish.json ] && jq -e '.items | length > 0' .flash-publish.json >/dev/null; then
+            echo "has_new=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_new=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: 提交战报与状态
         run: |
@@ -56,3 +63,9 @@ jobs:
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
+
+      - name: 推送小红书热点待发布包到微信
+        if: steps.generate.outputs.has_new == 'true' && env.PUSHPLUS_TOKEN != ''
+        run: |
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish flash --manifest .flash-publish.json

@@ -1,8 +1,9 @@
-"""小红书文案：事件型标题、明确结论、专业复盘与互动入口."""
+"""小红书文案：一篇只讲三件事，热点另发单场闪报。"""
 
 from __future__ import annotations
 
 from ..digest import Digest
+from ..models import Match, MatchStatus
 from ..timeutil import fmt_time_beijing
 from .common import (
     group_by_tournament,
@@ -12,34 +13,22 @@ from .common import (
     side_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
+from .hotspot import hotspot_score, hotspot_title_candidates
 from .rating import tonight_focus, top_results
 from .story import (
-    chinese_side_won,
     result_insight,
     schedule_insight,
-    sort_china_matches,
 )
-from .titles import cover_highlights
 from .tournament_story import pick_tournament_story
 
 MAX_BODY = 950
 BASE_TAGS = ["#网球", "#WTA", "#ATP", "#网球时差", "#网球晨报"]
-_QUOTAS = [(4, 4, 5), (4, 3, 4), (3, 3, 3), (2, 2, 3)]
-
-
-def _compact_secondary(text: str) -> str:
-    return (
-        text.replace("中国双打", "双打")
-        .replace("中国军团", "中国队")
-        .replace("收获", "拿下")
-    )
 
 
 def post_title(digest: Digest) -> str:
-    """用日期和当天最大事件组成便于检索的小红书标题."""
-    primary, secondary = cover_highlights(digest)
-    combined = f"{primary}｜{_compact_secondary(secondary)}"
-    event = combined if len(combined) <= 20 else primary
+    """日期 + 当天最强单场钩子；不再把两三件事挤进标题。"""
+    stories = _daily_stories(digest)
+    event = hotspot_title_candidates(stories[0])[0] if stories else "今日网球三件事"
     prefix = f"{digest.today.month}月{digest.today.day}日｜"
     available = 20 - len(prefix)
     if len(event) > available:
@@ -68,30 +57,65 @@ def _tags(digest: Digest) -> list[str]:
     return tags[:9]
 
 
-def _china_block(digest: Digest, cap: int) -> list[str]:
-    matches = sort_china_matches(
-        [
-            m
-            for m in digest.results + digest.live + digest.schedule
-            if is_chinese_involved(m)
-        ]
-    )[:cap]
-    if not matches:
-        return []
-    lines = ["🇨🇳 中国军团"]
-    for m in matches:
-        group = group_by_tournament([m])[0]
-        label = f"{group.name_zh}·{match_round_display(m)}".rstrip("·")
-        if m.status.is_final:
-            marker = "✅" if chinese_side_won(m) else "◽"
-            lines.append(f"{marker} {label}")
-            lines.append(result_line(m))
-        else:
-            lines.append(f"⏰ {fmt_time_beijing(m.start_utc)} {label}")
-            lines.append(
-                f"{side_display(m.home, with_seed=False)} vs "
-                f"{side_display(m.away, with_seed=False)}"
-            )
+def _daily_stories(digest: Digest) -> list[Match]:
+    """中国主线、最重磅赛果、今晚焦点各取一条，去重后补足三条。"""
+    all_matches = digest.results + digest.live + digest.schedule
+    chinese = sorted(
+        [match for match in all_matches if is_chinese_involved(match)],
+        key=hotspot_score,
+        reverse=True,
+    )
+    results = top_results(
+        [match for match in digest.results if match.is_singles],
+        5,
+        cn_boost=True,
+    )
+    schedule = tonight_focus(digest.schedule, min_n=1, max_n=4)
+
+    selected: list[Match] = []
+    selected_ids: set[str] = set()
+
+    def add(match) -> None:
+        if match is not None and match.match_id not in selected_ids and len(selected) < 3:
+            selected.append(match)
+            selected_ids.add(match.match_id)
+
+    def add_first_distinct(candidates) -> None:
+        for match in candidates:
+            before = len(selected)
+            add(match)
+            if len(selected) > before:
+                break
+
+    add_first_distinct(chinese)
+    add_first_distinct(results)
+    add_first_distinct(schedule)
+    for match in sorted(all_matches, key=hotspot_score, reverse=True):
+        add(match)
+    return selected
+
+
+def _story_lines(match: Match, number: str, *, compact: bool) -> list[str]:
+    group = group_by_tournament([match])[0]
+    label = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
+    if match.status.is_final:
+        lines = [f"{number} {label}", result_line(match)]
+        if not compact:
+            lines.append(f"↳ {result_insight(match)}")
+        return lines
+
+    status = (
+        "进行中"
+        if match.status == MatchStatus.LIVE
+        else fmt_time_beijing(match.start_utc)
+    )
+    lines = [
+        f"{number} {status}｜{label}",
+        f"{side_display(match.home, with_seed=False)} vs "
+        f"{side_display(match.away, with_seed=False)}",
+    ]
+    if not compact:
+        lines.append(f"↳ {schedule_insight(match)}")
     return lines
 
 
@@ -117,74 +141,43 @@ def _focus_block(digest: Digest) -> list[str]:
     return lines
 
 
-def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
-    cn_cap, result_cap, schedule_cap = quota
-    primary, secondary = cover_highlights(digest)
-    lines = [
-        "今天先抓两条主线：",
-        f"① {primary}",
-        f"② {secondary}",
-        "",
-    ]
-
-    china = _china_block(digest, cn_cap)
-    if china:
-        lines.extend(china + [""])
-
-    results = top_results(
-        [m for m in digest.results if m.is_singles], result_cap, cn_boost=False
-    )
-    if results:
-        lines.append("🏆 昨夜值得记住")
-        for m in results:
-            group = group_by_tournament([m])[0]
-            lines.append(f"▪ {group.name_zh}·{match_round_display(m)}")
-            lines.append(result_line(m))
-            lines.append(f"↳ {result_insight(m)}")
-        lines.append("")
-
-    schedule = tonight_focus(digest.schedule, min_n=min(3, schedule_cap), max_n=schedule_cap)
-    if schedule:
-        lines.append("⏰ 今晚焦点（北京时间）")
-        for m in schedule:
-            group = group_by_tournament([m])[0]
-            lines.append(
-                f"▪ {fmt_time_beijing(m.start_utc)} {group.name_zh}·"
-                f"{match_round_display(m)}"
-            )
-            lines.append(
-                f"{side_display(m.home, with_seed=False)} vs "
-                f"{side_display(m.away, with_seed=False)}"
-            )
-            source = f"{m.editorial_source}｜" if m.editorial_url and m.editorial_source else ""
-            lines.append(f"↳ {source}{schedule_insight(m)}")
-        lines.append("")
+def _build(digest: Digest, *, compact: bool = False) -> list[str]:
+    stories = _daily_stories(digest)
+    lines = ["今天只讲三件事：", ""]
+    numbers = ("①", "②", "③")
+    for index, match in enumerate(stories):
+        lines.extend(_story_lines(match, numbers[index], compact=compact) + [""])
 
     focus = _focus_block(digest)
     if focus:
         lines.extend(focus + [""])
 
-    story = pick_tournament_story(digest)
-    if story:
+    story = pick_tournament_story(digest) if not compact else None
+    if story is not None:
         if story.kind == "player":
-            # 球员特写：venue 字段复用为身份行（如"2024 巴黎奥运女单金牌得主"）
-            lines.extend(["🌟 球员一分钟", f"{story.title}｜{story.venue}"])
+            label = "🌟 球员一分钟"
         elif story.kind == "trivia":
-            lines.extend(["🎾 网球冷知识", f"{story.title}｜{story.venue}"])
+            label = "🎾 网球冷知识"
         else:
-            lines.extend(["📚 赛事一分钟", f"{story.title}｜{story.level}｜{story.surface}"])
-        for moment in story.moments[:2]:
-            # 球员特写的主角就是标题本人，时刻行不再重复人名
-            who = "" if story.kind == "player" else f" {moment.player}"
-            lines.append(
-                f"▪ {moment.date[:4]}{who}（{moment.age}）：{moment.headline}"
-            )
-        lines.append("")
+            label = "📚 赛事一分钟"
+        lines.extend([label, f"{story.title}｜{story.venue}"])
+        if story.moments:
+            moment = story.moments[0]
+            lines.extend([f"▪ {moment.headline}", ""])
+
+    upcoming = [match for match in stories if not match.status.is_final]
+    if upcoming:
+        choice = "、".join(
+            hotspot_title_candidates(match)[0] for match in upcoming[:2]
+        )
+        question = f"今晚只选一场，你会追哪场？{choice}"
+    else:
+        question = "这三件事里，哪一条最出乎你的意料？"
 
     lines.extend(
         [
-            "你最想看哪场？评论区留下球员名，我优先跟进呼声最高的一场。",
-            "关注 @网球时差｜持续更新，不堆数据，只讲重点。",
+            question,
+            "关注 @网球时差｜睡醒看懂昨夜，开赛前只提醒值得看的。",
             "",
             " ".join(_tags(digest)),
         ]
@@ -193,9 +186,7 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
 
 
 def to_post(digest: Digest) -> str:
-    body = _build(digest, _QUOTAS[0])
-    for quota in _QUOTAS[1:]:
-        if len("\n".join(body)) <= MAX_BODY:
-            break
-        body = _build(digest, quota)
+    body = _build(digest)
+    if len("\n".join(body)) > MAX_BODY:
+        body = _build(digest, compact=True)
     return "\n".join([post_title(digest), ""] + body)

@@ -1,7 +1,14 @@
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 
 from tennislive.digest import Digest
-from tennislive.models import MatchStatus
+from tennislive.models import MatchStatus, Tour
+from tennislive.render.hotspot import (
+    HOTSPOT_THRESHOLD,
+    hotspot_candidates,
+    hotspot_post,
+    hotspot_score,
+    hotspot_title_candidates,
+)
 from tennislive.render.rating import (
     flash_candidates,
     is_upset,
@@ -48,6 +55,58 @@ def test_flash_candidates():
     ids = [m.match_id for m in flash_candidates([cn, gs_final, small_final, scheduled])]
     assert "cn" in ids and "gs" in ids
     assert "small" not in ids and "pre" not in ids
+
+
+def test_hotspot_engine_prefers_fresh_story_worthy_matches():
+    now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
+    cn = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        tournament="Prague Open",
+        tour=Tour.WTA,
+        start_utc=now - timedelta(hours=3),
+        match_id="cn-hot",
+    )
+    cn.tournament.tour = cn.tour
+    cn.tournament.level = "WTA250"
+    old = make_match(start_utc=now - timedelta(hours=14), match_id="old")
+    qualifying = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        tournament="Prague Open",
+        tour=Tour.WTA,
+        round_name="Qualification",
+        start_utc=now - timedelta(hours=2),
+        match_id="qualifying",
+    )
+    qualifying.tournament.tour = qualifying.tour
+    qualifying.tournament.level = "WTA250"
+
+    picks = hotspot_candidates([old, qualifying, cn, cn], now=now)
+
+    assert [match.match_id for match in picks] == ["cn-hot"]
+    assert hotspot_score(cn) >= HOTSPOT_THRESHOLD
+    assert hotspot_score(qualifying) < HOTSPOT_THRESHOLD
+
+
+def test_hotspot_package_has_three_compact_titles_and_evidence():
+    match = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        tournament="Wimbledon",
+        match_id="story",
+    )
+    match.tournament.level = "GS"
+
+    titles = hotspot_title_candidates(match)
+    post = hotspot_post(match)
+
+    assert len(titles) == 3
+    assert all(len(title) <= 20 and " " not in title for title in titles)
+    assert titles[0] in post
+    assert "大满贯·温布尔登网球锦标赛" in post
+    assert "6-4 7-6(3)" in post
+    assert "一句看懂" in post
 
 
 def test_flash_headline_cn_win():

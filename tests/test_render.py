@@ -106,6 +106,9 @@ def test_xhs_post(sample_digest):
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
+    assert "今天只讲三件事" in post
+    assert all(marker in post for marker in ("①", "②", "③"))
+    assert "ATP 250" not in post and "WTA 250" not in post
     assert "一场球看细一点" not in post
     assert "7:30" not in post
 
