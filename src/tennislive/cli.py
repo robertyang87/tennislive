@@ -22,7 +22,7 @@ from pathlib import Path
 
 from . import __version__
 from .digest import Digest, build_digest
-from .models import MatchStatus
+from .models import Match, MatchStatus
 from .sources import SourceError, fetch_day
 from .timeutil import beijing_today, parse_date_arg
 
@@ -399,6 +399,128 @@ def cmd_flash(args) -> int:
     return 0
 
 
+def cmd_content(args) -> int:
+    """统一内容雷达：自动选择完赛热点或赛前焦点并生成完整待发布包。"""
+    import re
+    from datetime import timedelta
+
+    from .content_ops import prune_state, select_content
+    from .render.content_package import (
+        ContentGenerationError,
+        generate_content_package,
+    )
+    from .render.terminal import console
+    from .timeutil import beijing_today, now_beijing
+
+    today = beijing_today()
+    now = now_beijing()
+    manifest_path = Path(args.manifest) if args.manifest else None
+    if manifest_path and manifest_path.exists():
+        manifest_path.unlink()
+
+    matches = []
+    for requested in (
+        today - timedelta(days=1),
+        today,
+        today + timedelta(days=1),
+    ):
+        try:
+            matches.extend(fetch_day(requested, prefer=args.source).matches)
+        except SourceError as exc:
+            console.print(f"[yellow]{requested} 抓取失败：{exc}[/yellow]")
+    if not matches:
+        console.print("[red]无数据，跳过[/red]")
+        return 1
+
+    # 同源跨日接口可能返回同一场；优先保留已完赛和信息更完整的版本。
+    priority = {
+        MatchStatus.SCHEDULED: 0,
+        MatchStatus.LIVE: 1,
+        MatchStatus.FINISHED: 2,
+        MatchStatus.RETIRED: 2,
+        MatchStatus.WALKOVER: 2,
+    }
+    deduped: dict[tuple[str, str], Match] = {}
+    for match in matches:
+        key = (match.tour.value, match.match_id)
+        current = deduped.get(key)
+        if current is None or priority.get(match.status, -1) > priority.get(
+            current.status, -1
+        ):
+            deduped[key] = match
+    matches = list(deduped.values())
+
+    state_path = Path("data/content_state.json")
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state: dict[str, str] = {}
+    if state_path.exists():
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+    state = prune_state(state, today=today)
+
+    legacy_ids: set[str] = set()
+    legacy_path = Path("data/flash_state.json")
+    if legacy_path.exists():
+        legacy_ids = set(json.loads(legacy_path.read_text(encoding="utf-8")))
+
+    picks = select_content(
+        matches,
+        now=now,
+        state=state,
+        legacy_result_ids=legacy_ids,
+    )
+    if not picks:
+        state_path.write_text(
+            json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+        )
+        console.print("本轮没有达到规则的待发布内容")
+        return 0
+
+    items = []
+    stamp = now.strftime("%H%M")
+    for index, pick in enumerate(picks):
+        safe_id = re.sub(r"[^A-Za-z0-9_-]+", "-", pick.match.match_id)[-32:]
+        package_dir = (
+            Path(args.outdir)
+            / today.isoformat()
+            / "queue"
+            / f"{pick.kind}_{stamp}_{index:02d}_{safe_id}"
+        )
+        try:
+            item = generate_content_package(
+                pick,
+                outdir=package_dir,
+                today=today,
+                generated_at=now,
+            )
+        except ContentGenerationError as exc:
+            console.print(f"[red]内容质检未通过：{exc}[/red]")
+            return 2
+        items.append(item)
+        state[pick.key] = today.isoformat()
+        label = "完赛热点" if pick.kind == "result" else "赛前焦点"
+        console.print(f"[green]{label} · {item['title']}[/green]")
+
+    state_path.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    if manifest_path:
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "generated_at": now.isoformat(),
+                    "date": today.isoformat(),
+                    "items": items,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+    console.print(f"已生成 {len(items)} 个完整待发布内容包")
+    return 0
+
+
 # ---------- 发布 ----------
 
 def cmd_publish_wechat(args) -> int:
@@ -493,7 +615,7 @@ def cmd_publish_pushplus(args) -> int:
 
 
 def cmd_publish_flash(args) -> int:
-    """提交图片后发送热点包，固定资源版本以绕开 CDN 旧图缓存。"""
+    """提交图片后发送内容包，固定资源版本以绕开 CDN 旧图缓存。"""
     import html
     import re
 
@@ -524,26 +646,27 @@ def cmd_publish_flash(args) -> int:
         if lines and lines[0].strip() == title:
             lines = lines[2:] if len(lines) > 1 and not lines[1].strip() else lines[1:]
         text_html = "<br/>".join(html.escape(line) for line in lines)
-        card = item.get("card")
-        image_html = ""
-        if card:
-            image_url = asset_root + str(card).lstrip("/")
-            image_html = (
-                f'<img src="{html.escape(image_url)}" '
-                'style="width:100%;border-radius:10px;display:block;margin:0 0 12px;" />'
-            )
+        cards = item.get("cards") or ([item.get("card")] if item.get("card") else [])
+        image_html = "".join(
+            f'<img src="{html.escape(asset_root + str(card).lstrip("/"))}" '
+            'style="width:100%;border-radius:10px;display:block;margin:0 0 12px;" />'
+            for card in cards
+        )
         candidates = " / ".join(item.get("title_candidates") or [])
+        pinned = str(item.get("pinned_comment") or "")
         review = (
             '<div style="color:#65756d;font-size:12px;margin-top:12px;">'
-            f"备选标题：{html.escape(candidates)}</div>"
+            f"备选标题：{html.escape(candidates)}<br/>"
+            f"置顶评论：{html.escape(pinned)}</div>"
         )
+        prefix = "⏰" if item.get("kind") == "preview" else "⚡"
         try:
-            push(f"⚡{title}", image_html + text_html + review)
+            push(f"{prefix}{title}", image_html + text_html + review)
             sent += 1
         except PushPlusError as exc:
             console.print(f"[red]{exc}[/red]")
             return 1
-    console.print(f"[green]已发送 {sent} 条热点待发布包到微信[/green]")
+    console.print(f"[green]已发送 {sent} 条内容待发布包到微信[/green]")
     return 0
 
 
@@ -590,6 +713,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="写出本批待发布清单；工作流提交图片后再据此发送",
     )
 
+    sp = sub.add_parser("content", help="内容雷达：自动选择完赛热点和赛前焦点")
+    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
+    sp.add_argument(
+        "--manifest",
+        help="写出本批待发布清单；工作流提交图片后再据此发送",
+    )
+
     sp = sub.add_parser("digest", help="生成每日内容包（公众号+小红书+卡片图）")
     sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -611,6 +742,8 @@ def build_parser() -> argparse.ArgumentParser:
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
     spf = pub_sub.add_parser("flash", help="发送已提交的热点待发布包")
     spf.add_argument("--manifest", required=True, help="flash 生成的批次清单 JSON")
+    spc = pub_sub.add_parser("content", help="发送已提交的内容待发布包")
+    spc.add_argument("--manifest", required=True, help="content 生成的批次清单 JSON")
 
     return p
 
@@ -634,6 +767,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_day(args, [MatchStatus.LIVE], "进行中")
     if args.command == "flash":
         return cmd_flash(args)
+    if args.command == "content":
+        return cmd_content(args)
     if args.command == "digest":
         return cmd_digest(args)
     if args.command == "publish":
@@ -642,6 +777,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.channel == "pushplus":
             return cmd_publish_pushplus(args)
         if args.channel == "flash":
+            return cmd_publish_flash(args)
+        if args.channel == "content":
             return cmd_publish_flash(args)
         build_parser().parse_args(["publish", "--help"])
         return 1

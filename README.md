@@ -15,6 +15,7 @@ tennislive results --date yesterday # 昨日赛果
 tennislive schedule --date tomorrow # 明日赛程
 tennislive live                     # 进行中的比赛
 tennislive digest                   # 生成今日内容包到 output/YYYY-MM-DD/
+tennislive content                  # 自动选题并生成完整待发布内容包
 ```
 
 所有时间均为北京时间；`--date` 支持 `YYYY-MM-DD` / `today` / `yesterday` / `tomorrow` / `±N`。
@@ -82,10 +83,19 @@ Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ 
 
 配合 PushPlus，内容生成后可直接推到微信里，发帖前人工确认一次即可。
 
-热点赛果由 `.github/workflows/flash.yml` 全天每 15 分钟错峰检测。系统只选择
-仍在传播窗口内的高价值比赛，每批最多两条，自动生成三版标题、单场文案和
-1080×1440 首图；图片提交到仓库后再推送到微信，避免 CDN 旧图缓存。小红书
-发布仍保留一次人工确认，不使用模拟登录或第三方群控。
+内容雷达由 `.github/workflows/flash.yml` 全天每 15 分钟错峰检测。系统按固定规则
+自动完成选题、去重、频控、文案和图片生成：
+
+- 完赛热点优先：只取完赛 10 小时内、传播价值达到阈值的比赛，每天最多 3 条
+- 赛前焦点补位：只取开赛前 45–210 分钟的高价值单打，每天最多 2 条
+- 每轮最多生成 2 条；同场同类型只生成一次，并兼容旧热点状态避免重复推送
+- 每条生成 3 个标题候选、完整正文、置顶评论、事实快照、质检报告，以及 4–5 张
+  1080×1440 卡片；全部复用晨报的同一套字体、配色和 HTML 视觉系统
+- 内容包提交到 `output/YYYY-MM-DD/queue/`，同时上传 Actions artifact 并推送到微信
+
+晨报在无强热点时仍会按现有规则自动选取赛事知识/场馆故事，承担常青内容供给。
+人只需在微信或 artifact 中检查事实与观感，然后在小红书确认发布；不使用模拟登录
+或第三方群控，避免账号风险。
 
 ## 数据源
 
@@ -120,7 +130,7 @@ src/tennislive/
 └── publish/          # 公众号草稿 API / PushPlus
 .github/workflows/
 ├── daily.yml         # 每日晨报主班次 + 幂等备份班次
-├── flash.yml         # 全天热点雷达（15 分钟错峰检测）
+├── flash.yml         # 全天内容雷达（完赛热点 + 赛前焦点）
 ├── ci.yml            # 测试 + 真实抓取冒烟
 └── probe.yml         # 数据源诊断（手动触发）
 ```

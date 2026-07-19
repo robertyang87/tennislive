@@ -1,7 +1,7 @@
-name: flash-report
+name: content-radar
 
-# 热点雷达：全天每 15 分钟检测传播窗口内的重点赛果，自动生成
-# 小红书单场标题、文案和首图，提交图片后再推送到微信待发布。
+# 内容雷达：全天每 15 分钟自动选择完赛热点或赛前焦点，生成
+# 标题、正文、置顶评论和统一卡组；提交图片后推送微信待发布。
 on:
   schedule:
     # 避开整点高峰；GitHub 定时可能延迟，因此保留四个错峰检查窗口。
@@ -12,13 +12,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: flash-report
+  group: content-radar
   cancel-in-progress: false
 
 jobs:
-  flash:
+  content:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
       WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
@@ -38,34 +38,54 @@ jobs:
           cache: pip
 
       - name: 安装 tennislive
-        run: pip install -q -e .
+        run: pip install -q -e ".[webrender]"
 
-      - name: 检测并生成热点包
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: 安装 Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: 自动选题并生成完整内容包
         id: generate
         run: |
-          rm -f .flash-publish.json
-          tennislive flash --outdir output --no-publish --manifest .flash-publish.json
-          if [ -f .flash-publish.json ] && jq -e '.items | length > 0' .flash-publish.json >/dev/null; then
+          rm -f .content-publish.json
+          tennislive content --outdir output --manifest .content-publish.json
+          if [ -f .content-publish.json ] && jq -e '.items | length > 0' .content-publish.json >/dev/null; then
             echo "has_new=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_new=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: 提交战报与状态
+      - name: 提交内容包与状态
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add output/ data/
           if git diff --cached --quiet; then
-            echo "没有新战报"
+            echo "没有新内容"
           else
-            git commit -m "content: flash report $(date -u +%H:%MZ)"
+            git commit \
+              -m "Keep selected tennis content ready for human approval" \
+              -m "The content radar generated this review queue at $(date -u +%H:%MZ)." \
+              -m $'Constraint: Xiaohongshu publishing remains a human-confirmed action\nConfidence: high\nScope-risk: narrow\nTested: deterministic selection, content QA, and card rendering completed in this run'
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
 
-      - name: 推送小红书热点待发布包到微信
+      - name: 上传待审核内容包
+        if: steps.generate.outputs.has_new == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-queue-${{ github.run_number }}
+          path: output/*/queue/
+          retention-days: 14
+
+      - name: 推送小红书待发布包到微信
         if: steps.generate.outputs.has_new == 'true' && env.PUSHPLUS_TOKEN != ''
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          tennislive publish flash --manifest .flash-publish.json
+          tennislive publish content --manifest .content-publish.json
