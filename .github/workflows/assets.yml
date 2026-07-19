@@ -26,4 +26,5 @@ jobs:
           git add assets/flags assets/venues assets/players
           git diff --cached --quiet && echo "no changes" && exit 0
           git commit -m "assets: flags and licensed venue/player images for story cards"
+          git pull --rebase origin main
           git push

@@ -83,8 +83,8 @@ def _usable(title: str) -> bool:
     return low.endswith((".jpg", ".jpeg")) and not any(w in low for w in BAD_TITLE_WORDS)
 
 
-def _category_files(cat: str, recurse: bool = True) -> list[str]:
-    """分类下的图片文件；名人分类的照片多归档在 'X in 2024' 年份子分类里."""
+def _category_files(cat: str, depth: int = 2) -> list[str]:
+    """分类下的图片文件；名人分类常见两层结构：'X by year' -> 'X in 2024'."""
     data = api({
         "action": "query", "list": "categorymembers", "cmtitle": cat,
         "cmtype": "file|subcat", "cmlimit": 100,
@@ -96,27 +96,33 @@ def _category_files(cat: str, recurse: bool = True) -> list[str]:
             subcats.append(title)
         elif _usable(title):
             files.append(title)
-    if recurse:
-        year_subcats = sorted(
+    if depth > 0 and len(files) < 60:
+        # 年份子分类新到旧优先，再钻 "by year" 中间层
+        drill = sorted(
             (c for c in subcats if re.search(r"\b20\d\d$", c)), reverse=True
         )
-        for sub in year_subcats[:4]:
+        drill += [c for c in subcats if c.lower().endswith("by year")]
+        for sub in drill[:5]:
             time.sleep(0.5)
-            files += _category_files(sub, recurse=False)
+            files += _category_files(sub, depth - 1)
             if len(files) >= 60:
                 break
     return files
 
 
-def _candidate_titles(term: str) -> list[str]:
-    if term.startswith("Category:"):
-        return _category_files(term)
+def _search_files(query: str) -> list[str]:
     data = api({
-        "action": "query", "list": "search", "srsearch": term,
+        "action": "query", "list": "search", "srsearch": query,
         "srnamespace": 6, "srlimit": 10,
     })
     hits = data.get("query", {}).get("search", [])
     return [h["title"] for h in hits if _usable(h["title"])]
+
+
+def _candidate_titles(term: str) -> list[str]:
+    if term.startswith("Category:"):
+        return _category_files(term) or _search_files(term.removeprefix("Category:"))
+    return _search_files(term)
 
 
 def pick_by_search(term: str, min_width: int = 1600) -> dict | None:
@@ -141,10 +147,11 @@ def download(cand: dict) -> bytes:
     """缩略图优先（体积小），429 退避重试；缩略图始终被拒时回退原图."""
     last: Exception | None = None
     for url in filter(None, (cand.get("thumb"), cand.get("url"))):
-        for attempt in range(4):
+        for attempt in range(5):
             try:
                 r = requests.get(url, headers=UA, timeout=90)
                 if r.status_code == 429:
+                    last = RuntimeError(f"429 Too Many Requests: {url}")
                     wait = int(r.headers.get("Retry-After") or 0) or 20 * (attempt + 1)
                     time.sleep(min(wait, 120))
                     continue
