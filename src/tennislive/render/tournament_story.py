@@ -710,6 +710,9 @@ _STOCK_IMAGES = {
 }
 
 
+TRIVIA_ASSETS = Path(__file__).resolve().parents[3] / "assets" / "trivia"
+
+
 def _stock_image(*keys: str) -> tuple[Path, str]:
     """按偏好顺序取第一张已存在的库存图（乌马格图随仓库分发，始终可用）."""
     for key in (*keys, "umag"):
@@ -731,8 +734,15 @@ def _trivia_story(
     image_keys: tuple[str, ...],
     source_label: str,
     source_url: str,
+    image_credit: str = "Wikimedia Commons",
 ) -> TournamentStory:
-    image, credit = _stock_image(*image_keys)
+    # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取），
+    # 未入库时回退场馆库存图，署名跟随实际所用图片
+    dedicated = TRIVIA_ASSETS / f"trivia-{slug}.jpg"
+    if dedicated.exists():
+        image, credit = dedicated, image_credit
+    else:
+        image, credit = _stock_image(*image_keys)
     return TournamentStory(
         slug=slug,
         aliases=(),
