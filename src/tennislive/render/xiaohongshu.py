@@ -172,8 +172,10 @@ def _build(digest: Digest, quota: tuple[int, int, int]) -> list[str]:
         else:
             lines.extend(["📚 赛事一分钟", f"{story.title}｜{story.level}｜{story.surface}"])
         for moment in story.moments[:2]:
+            # 球员特写的主角就是标题本人，时刻行不再重复人名
+            who = "" if story.kind == "player" else f" {moment.player}"
             lines.append(
-                f"▪ {moment.date[:4]} {moment.player}（{moment.age}）：{moment.headline}"
+                f"▪ {moment.date[:4]}{who}（{moment.age}）：{moment.headline}"
             )
         lines.append("")
 
