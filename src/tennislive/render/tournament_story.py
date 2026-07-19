@@ -408,7 +408,7 @@ STORIES = (
         ),
         venue="意大利史上首位 ATP 世界第一",
         image=PLAYER_ASSETS / "jannik-sinner.jpg",
-        image_credit="Wikimedia Commons",
+        image_credit="Daniel Cooper / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://www.atptour.com/en/players/jannik-sinner/s0ag/overview",
         image_source_url="https://commons.wikimedia.org/wiki/Category:Jannik_Sinner",
         kind="player",
@@ -512,7 +512,7 @@ STORIES = (
         ),
         venue="2023 年澳网加冕后登顶世界第一",
         image=PLAYER_ASSETS / "aryna-sabalenka.jpg",
-        image_credit="Wikimedia Commons",
+        image_credit="Rick Munroe / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://en.wikipedia.org/wiki/Aryna_Sabalenka",
         image_source_url="https://commons.wikimedia.org/wiki/Category:Aryna_Sabalenka",
         kind="player",
@@ -567,7 +567,7 @@ STORIES = (
         ),
         venue="四冠法网的'红土女王'",
         image=PLAYER_ASSETS / "iga-swiatek.jpg",
-        image_credit="Wikimedia Commons",
+        image_credit="QWisps / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://en.wikipedia.org/wiki/Iga_%C5%9Awi%C4%85tek",
         image_source_url="https://commons.wikimedia.org/wiki/Category:Iga_%C5%9Awi%C4%85tek",
         kind="player",
@@ -736,10 +736,11 @@ def _trivia_story(
     source_url: str,
     image_credit: str = "Wikimedia Commons",
 ) -> TournamentStory:
-    # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取），
-    # 未入库时回退场馆库存图，署名跟随实际所用图片
+    # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取）；
+    # 未入库时仅在场馆库存图与主题贴合时兜底（image_keys 为空 = 宁缺毋滥，
+    # 图缺失则该故事暂不参选），署名永远跟随实际所用图片
     dedicated = TRIVIA_ASSETS / f"trivia-{slug}.jpg"
-    if dedicated.exists():
+    if dedicated.exists() or not image_keys:
         image, credit = dedicated, image_credit
     else:
         image, credit = _stock_image(*image_keys)
@@ -809,6 +810,7 @@ STORIES = STORIES + (
         ),
         image_keys=("washington",),
         source_label="温网 / 美网官方史料",
+        image_credit="Gary Houston / Wikimedia Commons · CC0",
         source_url="https://en.wikipedia.org/wiki/Tennis_scoring_system",
     ),
     _trivia_story(
@@ -850,7 +852,7 @@ STORIES = STORIES + (
                 source_url="https://en.wikipedia.org/wiki/1986_Wimbledon_Championships",
             ),
         ),
-        image_keys=("cincinnati",),
+        image_keys=(),
         source_label="ITF / 温网官方史料",
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
@@ -901,6 +903,7 @@ STORIES = STORIES + (
         ),
         image_keys=("usopen",),
         source_label="温网官方史料",
+        image_credit="Pahcal123 / Wikimedia Commons · CC BY-SA 4.0",
         source_url=(
             "https://en.wikipedia.org/wiki/Isner%E2%80%93Mahut_match_"
             "at_the_2010_Wimbledon_Championships"
@@ -1042,6 +1045,7 @@ STORIES = STORIES + (
         ),
         image_keys=("canada",),
         source_label="四大满贯官方史料",
+        image_credit="JC / Wikimedia Commons · CC BY-SA 2.0",
         source_url="https://en.wikipedia.org/wiki/Tennis_court",
     ),
     _trivia_story(
@@ -1094,6 +1098,7 @@ STORIES = STORIES + (
         ),
         image_keys=("cincinnati",),
         source_label="ATP / 大满贯官方史料",
+        image_credit="Tatiana (Moscow) / Wikimedia Commons · CC BY-SA 2.0",
         source_url="https://en.wikipedia.org/wiki/Big_Three_(tennis)",
     ),
     _trivia_story(
@@ -1143,6 +1148,7 @@ STORIES = STORIES + (
         ),
         image_keys=("canada",),
         source_label="中国网球协会 / 奥运官方档案",
+        image_credit="Création CARAVEO / Wikimedia Commons · CC BY 2.0",
         source_url="https://en.wikipedia.org/wiki/Li_Na",
     ),
 )

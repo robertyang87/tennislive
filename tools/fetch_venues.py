@@ -51,7 +51,7 @@ TRIVIA = [
     ("trivia-yellow-ball.jpg", None, "Category:Tennis balls"),
     ("trivia-longest-match.jpg", None, "Isner Mahut"),
     ("trivia-hawkeye.jpg", None, "Hawk-Eye tennis review"),
-    ("trivia-golden-slam.jpg", None, "Category:Steffi Graf"),
+    ("trivia-golden-slam.jpg", None, "Steffi Graf 1988"),
     ("trivia-surfaces.jpg", None, "Roland Garros clay court"),
     ("trivia-big-three.jpg", None, "Federer Nadal"),
     ("trivia-china-tennis.jpg", None, "Category:Li Na (tennis player)"),
@@ -93,13 +93,41 @@ def imageinfo(titles: list[str]) -> list[dict]:
     return out
 
 
-# 非比赛照片的杂项文件（签名、画像、邮票等）不作候选
-BAD_TITLE_WORDS = ("signature", "autograph", "caricature", "drawing", "stamp", "logo")
+# 非比赛照片的杂项文件（签名、画像、红毯、渲染图等）不作候选
+BAD_TITLE_WORDS = (
+    "signature", "autograph", "caricature", "drawing", "stamp", "logo",
+    "red carpet", "laureus", "award", "gala", "premiere", "3d", "render",
+)
+
+# 人工目检不合格的具体文件（远景/合影/渲染图），永不再选
+REJECTED_TITLES = {
+    "File:Lttc4284 28.jpg",
+    "File:Świątek Yuan AO26 R1.jpg",
+    "File:Aryna Sabalenka vs. Qinwen Zheng in a quarterfinals of the 2024 US Open - 01.jpg",
+    "File:3D Tennis Ball.jpg",
+    "File:Opdenhövel und Graf.jpg",
+    "File:25th Laureus World Sports Awards - Red Carpet - Novak Djokovic - 240422 193213-2.jpg",
+}
+
+# 文件名里带这些词的多为球场内照片，优先于活动照/生活照
+TENNIS_CONTEXT_WORDS = (
+    "open", "wimbledon", "roland", "garros", "wta", "atp", "tennis", "court",
+    "cup", "masters", "final", "match", "serving", "serve", "practice", "trophy",
+)
 
 
 def _usable(title: str) -> bool:
     low = title.lower()
-    return low.endswith((".jpg", ".jpeg")) and not any(w in low for w in BAD_TITLE_WORDS)
+    return (
+        low.endswith((".jpg", ".jpeg"))
+        and title not in REJECTED_TITLES
+        and not any(w in low for w in BAD_TITLE_WORDS)
+    )
+
+
+def _tennis_context(title: str) -> bool:
+    low = title.lower()
+    return any(w in low for w in TENNIS_CONTEXT_WORDS)
 
 
 def _category_files(cat: str, depth: int = 2) -> list[str]:
@@ -167,11 +195,15 @@ def pick_by_search(
     term: str, min_width: int = 1600, prefer_portrait: bool = False
 ) -> dict | None:
     titles = _candidate_titles(term)
-    # 人物分类里常混着场馆/合影杂图：文件名必须含本人姓名才算候选
+    # 人物分类里常混着场馆/合影杂图：文件名必须含本人姓名，
+    # 且排除 "X vs. Y" 式对阵照（多为看台全景，人物只是小点）
     if term.startswith("Category:"):
         tokens = _subject_tokens(term)
         if tokens:
-            titles = [t for t in titles if _title_matches_subject(t, tokens)]
+            titles = [
+                t for t in titles
+                if _title_matches_subject(t, tokens) and " vs" not in t.lower()
+            ]
     time.sleep(1)
     ok = []
     for batch_start in range(0, min(len(titles), 24), 8):
@@ -187,7 +219,10 @@ def pick_by_search(
     def _orient(c: dict) -> bool:
         return c["height"] >= c["width"] if prefer_portrait else c["width"] > c["height"]
 
-    ok.sort(key=lambda c: (_orient(c), c["width"]), reverse=True)
+    ok.sort(
+        key=lambda c: (_tennis_context(c["title"]), _orient(c), c["width"]),
+        reverse=True,
+    )
     return ok[0]
 
 
