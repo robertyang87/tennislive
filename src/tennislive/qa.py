@@ -10,7 +10,13 @@ from .digest import Digest
 from .zh import player_zh
 
 
-def run_checks(digest: Digest, title: str, xhs_post: str) -> tuple[list[str], list[str]]:
+def run_checks(
+    digest: Digest,
+    title: str,
+    xhs_post: str,
+    *,
+    cover_copy: tuple[str, str] | None = None,
+) -> tuple[list[str], list[str]]:
     fatal: list[str] = []
     warn: list[str] = []
 
@@ -58,4 +64,11 @@ def run_checks(digest: Digest, title: str, xhs_post: str) -> tuple[list[str], li
 
     if digest.is_empty:
         warn.append("当天无巡回赛比赛（休赛日），内容为空档说明")
+
+    if cover_copy is not None:
+        from .render.titles import cover_fact_errors, daily_lead_match
+
+        lead = daily_lead_match(digest)
+        if lead is not None:
+            fatal.extend(cover_fact_errors(lead, *cover_copy))
     return fatal, warn

@@ -19,6 +19,8 @@ from .hotspot import (
     hotspot_title_candidates,
 )
 from .pushmsg import to_copy_page
+from .story import schedule_insight
+from .titles import cover_fact_bundle, cover_highlights
 
 logger = logging.getLogger(__name__)
 
@@ -109,7 +111,14 @@ def generate_content_package(
         results=[pick.match] if pick.kind == "result" else [],
         schedule=[] if pick.kind == "result" else [pick.match],
     )
-    fatal, warns = run_checks(digest, headline, post)
+    cover_copy = (
+        cover_highlights(digest)
+        if pick.kind == "result"
+        else (headline, schedule_insight(pick.match))
+    )
+    fatal, warns = run_checks(
+        digest, headline, post, cover_copy=cover_copy
+    )
     (outdir / "qa.txt").write_text(
         "\n".join(
             ["[FATAL] " + item for item in fatal]
@@ -135,6 +144,11 @@ def generate_content_package(
         "selection_score": pick.score,
         "selection_reasons": hotspot_reasons(pick.match),
         "match": pick.match,
+        "cover": {
+            "main": cover_copy[0],
+            "secondary": cover_copy[1],
+            "evidence": cover_fact_bundle(pick.match),
+        },
     }
     (outdir / "facts.json").write_text(
         json.dumps(facts, default=_json_default, ensure_ascii=False, indent=2),

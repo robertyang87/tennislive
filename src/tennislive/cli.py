@@ -166,9 +166,15 @@ def cmd_digest(args) -> int:
             console.print(f"[yellow]卡片图生成失败（跳过）：{e}[/yellow]")
 
     # 标题：自动选用 + 候选留档
-    from .render.titles import title_candidates
+    from .render.titles import (
+        cover_fact_bundle,
+        cover_highlights,
+        daily_lead_match,
+        title_candidates,
+    )
 
     title = article_title(digest)
+    cover_copy = cover_highlights(digest)
     (outdir / "wechat_title.txt").write_text(title, encoding="utf-8")
     (outdir / "title_candidates.txt").write_text(
         "\n".join(title_candidates(digest)), encoding="utf-8"
@@ -208,11 +214,17 @@ def cmd_digest(args) -> int:
 
     # 原始数据
     _dump_json(digest, outdir / "digest.json")
+    lead = daily_lead_match(digest)
+    if lead is not None:
+        _dump_json(
+            cover_fact_bundle(lead, source=digest.source),
+            outdir / "cover_facts.json",
+        )
 
     # 自动质检（替代人工审核）
     from .qa import run_checks
 
-    fatal, warns = run_checks(digest, title, xhs)
+    fatal, warns = run_checks(digest, title, xhs, cover_copy=cover_copy)
     (outdir / "qa.txt").write_text(
         "\n".join(["[FATAL] " + f for f in fatal] + ["[WARN] " + w for w in warns])
         or "OK",
