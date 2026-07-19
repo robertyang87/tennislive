@@ -788,11 +788,10 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         f'<div class="moment-detail">{html.escape(moment.detail)}</div></article>'
         for moment in story.moments
     )
-    kicker = (
-        "Player Spotlight · 球员特写"
-        if story.kind == "player"
-        else "Tournament Archive · 赛事档案"
-    )
+    kicker = {
+        "player": "Player Spotlight · 球员特写",
+        "trivia": "Tennis Story · 网球冷知识",
+    }.get(story.kind, "Tournament Archive · 赛事档案")
     return (
         '<div class="poster story-page">'
         + _masthead(date_label)
