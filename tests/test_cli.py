@@ -2,12 +2,32 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from tennislive import cli, timeutil
 from tennislive.models import DailyData, Tour
+from tennislive.render.cards import MARGIN, W, _flash_headline_lines, _Fonts
 
 from conftest import make_match
+
+
+def test_flash_headline_wrap_balances_long_chinese_title(monkeypatch):
+    regular_font = Path("assets/fonts/NotoSansSC-Regular-sub.ttf").resolve()
+    bold_font = Path("assets/fonts/NotoSansSC-Bold-sub.ttf").resolve()
+    monkeypatch.setenv("TENNISLIVE_FONT", str(regular_font))
+    monkeypatch.setenv("TENNISLIVE_FONT_BOLD", str(bold_font))
+    draw = ImageDraw.Draw(Image.new("RGB", (W, 300)))
+
+    lines = _flash_headline_lines(
+        draw,
+        "西西帕斯爆冷淘汰科利尼翁",
+        _Fonts().title,
+        W - 2 * MARGIN,
+    )
+
+    assert len(lines) == 2
+    assert min(len(line) for line in lines) >= 3
+    assert abs(len(lines[0]) - len(lines[1])) <= 1
 
 
 def test_flash_writes_one_review_manifest_for_duplicate_source_rows(

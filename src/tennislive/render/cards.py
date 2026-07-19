@@ -196,6 +196,25 @@ def _wrap_text(draw, text: str, font, max_w: int, max_lines: int = 3) -> list[st
     return lines[:max_lines]
 
 
+def _flash_headline_lines(draw, text: str, font, max_w: int) -> list[str]:
+    """把长标题均衡分成两行，避免末行只剩一两个字。"""
+    text = _strip(text)
+    if draw.textlength(text, font=font) <= max_w:
+        return [text]
+
+    candidates: list[tuple[float, float, int]] = []
+    for split_at in range(3, len(text) - 2):
+        left, right = text[:split_at], text[split_at:]
+        left_w = draw.textlength(left, font=font)
+        right_w = draw.textlength(right, font=font)
+        if left_w <= max_w and right_w <= max_w:
+            candidates.append((abs(left_w - right_w), max(left_w, right_w), split_at))
+    if candidates:
+        _, _, split_at = min(candidates)
+        return [text[:split_at], text[split_at:]]
+    return _wrap_text(draw, text, font, max_w, 2)
+
+
 def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=None, width_ratio=9) -> None:
     draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=color or BALL)
     draw.arc(
@@ -914,12 +933,11 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
     draw.text((W - MARGIN - reason_w, y + 8), reason, font=fonts.small, fill=GREY)
     y += 72
 
-    for chunk in _wrap_text(
+    for chunk in _flash_headline_lines(
         draw,
-        _strip(headline),
+        headline,
         fonts.title,
         W - 2 * MARGIN,
-        2,
     ):
         draw.text((MARGIN, y), chunk, font=fonts.title, fill=ACCENT)
         y += 102
