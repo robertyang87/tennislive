@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from ..digest import Digest
 from ..timeutil import fmt_time_beijing
 from ..zh import player_zh
+from ..zh.terms import discipline_zh, round_zh
 from .common import is_chinese_involved, match_round_display
 from .rating import (
     deciding_set_tiebreak,
@@ -51,6 +52,26 @@ def _cn_side(players) -> bool:
 
 def _flat_round(m) -> str:
     return (match_round_display(m) or "").replace("·", "")
+
+
+_NEXT_ROUND = {
+    "第一轮": "第二轮",
+    "64强赛": "32强赛",
+    "第二轮": "第三轮",
+    "32强赛": "16强赛",
+    "第三轮": "第四轮",
+    "第四轮": "四分之一决赛",
+    "16强赛": "四分之一决赛",
+    "四分之一决赛": "半决赛",
+    "半决赛": "决赛",
+}
+
+
+def _advance_round(m) -> str:
+    current = round_zh(m.round_name) or ""
+    upcoming = _NEXT_ROUND.get(current, "下一轮")
+    discipline = discipline_zh(m.discipline) or ""
+    return f"{discipline}{upcoming}"
 
 
 def cover_fact_bundle(m, *, source: str = "") -> dict:
@@ -144,7 +165,7 @@ def _cn_match_headline(m) -> str | None:
         cn_winner = next((p for p in w if is_chinese_player(p)), w[0])
         if r.endswith("决赛") and "半" not in r and "四" not in r:
             return f"{player_zh(cn_winner.name)}夺冠！"
-        return f"{player_zh(cn_winner.name)}晋级{r or '下一轮'}"
+        return f"{player_zh(cn_winner.name)}晋级{_advance_round(m)}"
     loser = next(
         (p for p in (m.loser_players() or []) if is_chinese_player(p)), None
     )
@@ -214,7 +235,7 @@ def star_headline(digest: Digest) -> str | None:
             r = _flat_round(m)
             if r == "决赛":
                 return f"{player_zh(w[0].name)}问鼎{g.name_zh}"
-            return f"{player_zh(w[0].name)}晋级{g.name_zh}{r or ''}"
+            return f"{player_zh(w[0].name)}晋级{g.name_zh}{_advance_round(m)}"
     tonight = top_schedule([x for x in digest.schedule if x.is_singles], 1)
     if tonight:
         m = tonight[0]
@@ -373,12 +394,12 @@ def flash_headline(m) -> str:
         )
         if is_final:
             return f"{player_zh(cn_w.name)}夺冠！{g.name_zh}登顶"
-        return f"{player_zh(cn_w.name)}晋级！赢下{g.name_zh}{r or '本轮'}"
+        return f"{player_zh(cn_w.name)}晋级{_advance_round(m)}！{g.name_zh}过关"
     if cn_lost and l is not None:
         return f"{player_zh(l.name)}止步{g.name_zh}{r or '本轮'}"
     if is_final:
         return f"{player_zh(w.name)}问鼎{g.name_zh}"
-    return f"{player_zh(w.name)}晋级{g.name_zh}{r or ''}"
+    return f"{player_zh(w.name)}晋级{g.name_zh}{_advance_round(m)}"
 
 
 def _whitelist_meaning(m) -> str | None:
@@ -394,10 +415,9 @@ def _whitelist_meaning(m) -> str | None:
     if not w or not l:
         return None
     wn, ln = player_zh(w.name), player_zh(l.name)
-    r = _flat_round(m)
 
     if m.status is MatchStatus.RETIRED:
-        return f"{ln}退赛，{wn}晋级{r or '下一轮'}"
+        return f"{ln}退赛，{wn}晋级{_advance_round(m)}"
     if is_upset(m):
         return f"爆冷：{wn}掀翻{ln}"
     sets = m.sets or []

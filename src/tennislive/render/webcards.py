@@ -1155,6 +1155,13 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
+    # V1 每日包最多 7 张。内容同时触发时先舍弃额外技术复盘，再舍弃
+    # 周榜和第二赛果页；封面、首张赛果、中国、今晚与故事主链不动。
+    for optional_kind in ("focus", "rankings", "results2"):
+        if len(pages) <= 7:
+            break
+        pages = [page for page in pages if page[0] != optional_kind]
+
     return _screenshot_pages(pages, theme)
 
 
