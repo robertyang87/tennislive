@@ -445,6 +445,86 @@ def test_player_story_card_uses_spotlight_branding(tmp_path):
     assert story.source_label in body
 
 
+def test_story_card_uses_spacious_single_flow(tmp_path):
+    from dataclasses import replace
+
+    from tennislive.render import webcards
+    from tennislive.render.tournament_story import STORIES
+
+    story = next(s for s in STORIES if s.slug == "yellow-ball")
+    fake_img = tmp_path / "story.jpg"
+    fake_img.write_bytes(b"\xff\xd8fake")
+    body = webcards.tournament_story_body(
+        replace(story, image=fake_img), "07.20 · 周一"
+    )
+
+    assert "story-meta" not in body
+    assert body.count('class="story-moment"') == 2
+    assert body.count("<li>") == 2
+    assert "1972" in body and "1986" in body
+    assert 'class="moment-age"' not in body
+
+
+def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
+    from tennislive.render import webcards
+
+    body = webcards.cover_body(
+        sample_digest,
+        "fallback headline",
+        "fallback secondary",
+        "07.16 · 周四",
+    )
+
+    assert "Overnight Lead · 昨夜头条" in body
+    assert "辛纳" in body
+    assert "China Focus · 中国焦点" in body
+    assert "Tonight · 今晚必看" in body
+    assert body.count('class="cover-highlight"') == 2
+
+
+def test_tonight_reason_uses_editorial_label(sample_digest):
+    from tennislive.render import webcards
+
+    body = webcards.tonight_body(sample_digest.schedule, "07.16 · 周四")
+
+    assert "<span>看点</span>" in body
+    assert "数据" not in body
+    assert "icons/" not in body  # icons are embedded so CI rendering is self-contained
+    assert "data:image/svg+xml;base64" in body
+
+
+def test_cover_uses_historical_hook_for_ranked_comeback():
+    from tennislive.render.titles import cover_result_hook
+
+    match = make_match(
+        home_name="Stefanos Tsitsipas",
+        away_name="Alexander Shevchenko",
+        home_country="GRE",
+        away_country="KAZ",
+        round_name="Final",
+        tournament="Swiss Open Gstaad",
+    )
+    match.home[0].rank = 85
+
+    headline, secondary = cover_result_hook(match)
+
+    assert headline == "跌至世界第85，西西帕斯终于捧杯"
+    assert "世界第3" in secondary
+    assert "两进大满贯决赛" in secondary
+    assert "反弹信号" in secondary
+
+
+def test_tonight_card_separates_bilingual_player_lines(sample_digest):
+    from tennislive.render import webcards
+
+    body = webcards.tonight_body(sample_digest.schedule, "07.16 · 周四")
+
+    assert '<span class="en">Carlos Alcaraz</span>' in body
+    assert "class=\"names\"" in body
+    assert '<b class="tour-level">大满贯</b>' in body
+    assert body.index('class="tour-level"') < body.index("温布尔登")
+
+
 def test_coverage_report_lists_tour_level(sample_digest):
     from tennislive.render.coverage import coverage_report
 

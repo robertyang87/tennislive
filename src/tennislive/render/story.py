@@ -111,28 +111,52 @@ def result_insight(match: Match) -> str:
 
 
 def schedule_insight(match: Match) -> str:
-    """A concise viewing reason without inventing form or injury claims."""
+    """Explain why the match matters using only current, verifiable context."""
     if match.editorial_note:
         return match.editorial_note
 
-    cn = chinese_players(match)
-    r = round_zh(match.round_name) or ""
-    if cn:
-        stage = f"出战{r}" if r else "登场"
-        if match.is_doubles:
-            return f"中国组合{stage}，关注发球轮转与网前衔接"
-        return f"中国球员{stage}，关注接发开局与关键分执行"
+    from .common import group_by_tournament
 
-    if r == "决赛":
-        return "冠军归属战，关注发球局稳定性与关键分执行"
-    if r in {"半决赛", "四分之一决赛"}:
-        target = "决赛" if r == "半决赛" else "四强"
-        return f"争夺{target}席位，关注接发压迫与关键分执行"
+    def identity(player) -> str:
+        name = player_zh(player.name)
+        if player.rank is not None:
+            return f"{name}（世界第{player.rank}）"
+        if player.seed is not None:
+            return f"{name}（{player.seed}号种子）"
+        return name
+
+    home = identity(match.home[0]) if match.home else "主队"
+    away = identity(match.away[0]) if match.away else "客队"
+    r = round_zh(match.round_name) or ""
+    target = {
+        "决赛": "冠军",
+        "半决赛": "决赛席位",
+        "四分之一决赛": "四强席位",
+        "八分之一决赛": "八强席位",
+    }.get(r, "下一轮席位")
+
     if match.is_doubles:
-        return "关注发球轮转、网前封堵与抢十阶段的执行质量"
+        sides = " / ".join(player_zh(p.name) for p in match.home[:2])
+        opponents = " / ".join(player_zh(p.name) for p in match.away[:2])
+        return f"{sides}与{opponents}争夺{target}"
+
+    cn = chinese_players(match)
+    if cn:
+        chinese = cn[0]
+        chinese_text = identity(chinese)
+        opponent = match.away[0] if chinese in match.home else match.home[0]
+        return f"{chinese_text}冲击{target}，对手{identity(opponent)}"
+
+    event = group_by_tournament([match])[0].name_zh
+    if r == "决赛":
+        return f"{home}与{away}争夺{event}冠军"
+    if r in {"半决赛", "四分之一决赛", "八分之一决赛"}:
+        return f"{home}与{away}争夺{target}"
+    if match.is_doubles:
+        return f"{home}与{away}争夺{target}"
     if r:
-        return f"{r}对决，关注发接发开局与相持阶段的线路变化"
-    return "关注发接发开局、相持线路与关键分执行"
+        return f"{home}对阵{away}，胜者进入{target}"
+    return f"{home}对阵{away}，本场决定下一轮席位"
 
 
 def recommendation_label(match: Match) -> str:

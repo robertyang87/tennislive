@@ -37,6 +37,7 @@ def _digest():
         tiebreaks=(),
         start_utc=datetime(2026, 7, 17, 12, tzinfo=timezone.utc),
         match_id="qf-1",
+        round_name="Quarterfinals",
     )
     return Digest(
         today=date(2026, 7, 17),
@@ -46,27 +47,30 @@ def _digest():
     )
 
 
-def test_github_models_rewrite_is_applied_from_existing_evidence(monkeypatch):
+def test_github_models_rewrite_is_applied_from_current_context(monkeypatch):
     digest = _digest()
 
     def fake_post(*args, **kwargs):
         assert kwargs["json"]["model"] == "openai/gpt-4.1"
-        return _Response('{"qf-1":"博尔热斯上一轮直落两盘，仅丢5局，状态更利落。"}')
+        payload = kwargs["json"]["messages"][1]["content"]
+        assert "四强席位" in payload
+        assert "上一轮" not in payload
+        return _Response('{"qf-1":"博尔热斯与达德里争夺四强席位，这场决定谁继续前进。"}')
 
     monkeypatch.setattr("tennislive.render.ai_editorial.requests.post", fake_post)
     result = enrich_with_github_models(digest, token="test-token")
 
     assert result.applied == 1
-    assert digest.schedule[0].editorial_source == "数据编辑"
-    assert "直落两盘" in digest.schedule[0].editorial_note
+    assert digest.schedule[0].editorial_source == "背景编辑"
+    assert "争夺四强席位" in digest.schedule[0].editorial_note
 
 
-def test_github_models_rejects_numbers_not_present_in_evidence(monkeypatch):
+def test_github_models_rejects_numbers_not_present_in_context(monkeypatch):
     digest = _digest()
     monkeypatch.setattr(
         "tennislive.render.ai_editorial.requests.post",
         lambda *args, **kwargs: _Response(
-            '{"qf-1":"博尔热斯上一轮轰出12记Ace，发球表现非常强势。"}'
+            '{"qf-1":"世界第12的博尔热斯与达德里争夺四强席位。"}'
         ),
     )
 

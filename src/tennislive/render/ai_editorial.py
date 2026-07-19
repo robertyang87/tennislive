@@ -13,16 +13,20 @@ import requests
 from ..digest import Digest
 from ..models import Match
 from ..zh import player_zh
-from .authority import collect_schedule_evidence
 from .common import group_by_tournament, match_round_display
 from .rating import tonight_focus
+from .story import schedule_insight
 
 logger = logging.getLogger(__name__)
 
 ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4.1"
 _DIGITS = re.compile(r"\d+(?:[.:/]\d+)*%?")
-_BANNED = ("伤病", "退赛", "赔率", "必胜", "爆冷", "大概率", "预测")
+_BANNED = (
+    "伤病", "退赛", "赔率", "必胜", "爆冷", "大概率", "预测",
+    "上一轮", "直落", "比分", "发球", "接发", "关键分",
+)
+_CONTEXT_MARKERS = ("争夺", "冲击", "冠军", "决赛", "四强", "八强", "世界第", "排名")
 
 
 @dataclass(frozen=True)
@@ -37,21 +41,18 @@ def _side_name(match: Match, side: int) -> str:
 
 
 def _match_payload(digest: Digest, match: Match) -> dict | None:
-    evidence = collect_schedule_evidence(digest, match)
-    if not evidence:
-        return None
     group = group_by_tournament([match])[0]
     return {
         "match_id": match.match_id,
         "event": group.name_zh,
         "round": match_round_display(match),
         "players": [_side_name(match, 0), _side_name(match, 1)],
-        "evidence": [item.text for item in evidence[:2]],
-        "sources": [item.source for item in evidence[:2]],
+        "context": schedule_insight(match),
+        "source": digest.source or "赛程数据",
     }
 
 
-def _valid_note(note: object, evidence_text: str) -> str | None:
+def _valid_note(note: object, context_text: str) -> str | None:
     if not isinstance(note, str):
         return None
     cleaned = " ".join(note.strip().split())
@@ -59,8 +60,10 @@ def _valid_note(note: object, evidence_text: str) -> str | None:
         return None
     if any(word in cleaned for word in _BANNED):
         return None
-    # Every Arabic number in the rewrite must already exist in supplied evidence.
-    if not set(_DIGITS.findall(cleaned)).issubset(set(_DIGITS.findall(evidence_text))):
+    if not any(marker in cleaned for marker in _CONTEXT_MARKERS):
+        return None
+    # Every Arabic number in the rewrite must already exist in supplied context.
+    if not set(_DIGITS.findall(cleaned)).issubset(set(_DIGITS.findall(context_text))):
         return None
     return cleaned
 
@@ -80,10 +83,10 @@ def enrich_with_github_models(
     model: str | None = None,
     timeout: int = 35,
 ) -> AiEditorialResult:
-    """Rewrite score evidence for tonight's focus matches in one model call.
+    """Rewrite verified match context for tonight's focus matches in one call.
 
-    This is not a media quote. The resulting copy is labelled ``数据编辑`` and
-    is accepted only when it stays within the supplied evidence.
+    The resulting copy is labelled ``背景编辑`` and is accepted only when it
+    preserves the supplied current ranking/stage context.
     """
     if os.environ.get("TENNISLIVE_AI_EDITORIAL", "on").casefold() in {
         "0", "false", "off", "no"
@@ -106,10 +109,11 @@ def enrich_with_github_models(
         return AiEditorialResult(0, "没有待改写的证据")
 
     system = (
-        "你是严谨的中文网球编辑。只根据用户给出的 evidence，为每场写一句18至38个"
-        "汉字左右的赛前观察。优先对照双方上一轮的具体表现；不得预测胜负，不得用种子"
-        "或排名替代看点，不得补充输入之外的伤病、交手、技术或评价。数字必须原样来自"
-        "evidence。只返回JSON对象，键为match_id，值为一句话，不要Markdown。"
+        "你是严谨的中文网球编辑。只根据用户给出的context，为每场写一句18至38个汉字"
+        "左右的赛前看点。必须说明这场比赛的现实意义：当前排名身份、晋级目标或冠军归属。"
+        "不得复述上一轮比分，不得写泛化的发球、接发、关键分套话，不得预测胜负，也不得"
+        "补充输入之外的伤病、交手或评价。数字必须原样来自context。只返回JSON对象，"
+        "键为match_id，值为一句话，不要Markdown。"
     )
     response = requests.post(
         ENDPOINT,
@@ -136,14 +140,12 @@ def enrich_with_github_models(
     notes = _parse_json_content(content)
 
     applied = 0
-    evidence_by_id = {
-        item["match_id"]: " ".join(item["evidence"]) for item in payloads
-    }
+    context_by_id = {item["match_id"]: item["context"] for item in payloads}
     for match_id, match in matches.items():
-        note = _valid_note(notes.get(match_id), evidence_by_id[match_id])
+        note = _valid_note(notes.get(match_id), context_by_id[match_id])
         if not note:
             continue
         match.editorial_note = note
-        match.editorial_source = "数据编辑"
+        match.editorial_source = "背景编辑"
         applied += 1
-    return AiEditorialResult(applied, f"正常 · {applied} 场证据约束改写")
+    return AiEditorialResult(applied, f"正常 · {applied} 场背景约束改写")
