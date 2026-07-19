@@ -318,6 +318,57 @@ def test_wishlist_records_uncovered_hot_winners(tmp_path, monkeypatch):
     assert wishlist["flavio cobolli"]["hits"] == 2
 
 
+def test_dramatic_loser_is_a_headliner(tmp_path, monkeypatch):
+    """带伤退赛/遭爆冷的输球方与胜者同级：热度属于比赛事件，不只属于赢家."""
+    import json
+
+    from dataclasses import replace
+
+    from tennislive.models import MatchStatus
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    monkeypatch.setattr(
+        tournament_story, "WISHLIST_PATH", tmp_path / "story_wishlist.json"
+    )
+    fake_img = tmp_path / "img.jpg"
+    fake_img.write_bytes(b"\xff\xd8fake")
+    monkeypatch.setattr(
+        tournament_story,
+        "STORIES",
+        tuple(replace(s, image=fake_img) for s in tournament_story.STORIES),
+    )
+
+    # 德约带伤退赛输球 + 乌马格赛事进行中：输球方的球员特写应压过赛事档案
+    retired = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Player One",
+        away_name="Novak Djokovic",
+        winner=0,
+        status=MatchStatus.RETIRED,
+    )
+    digest = Digest(today=date(2026, 7, 20), results=[retired])
+
+    story = tournament_story.pick_tournament_story(digest)
+    assert story is not None and story.slug == "djokovic"
+
+    # 扩库清单也记录高事件性比赛的输球方（库外球员），并标注原因
+    retired2 = make_match(
+        tournament="Wimbledon",
+        home_name="Player One",
+        away_name="Stan Wawrinka",
+        winner=0,
+        status=MatchStatus.RETIRED,
+        match_id="w1",
+    )
+    tournament_story.record_story_wishlist(
+        Digest(today=date(2026, 7, 20), results=[retired2])
+    )
+    wishlist = json.loads((tmp_path / "story_wishlist.json").read_text("utf-8"))
+    assert "stan wawrinka" in wishlist
+    assert "伤退惜败" in wishlist["stan wawrinka"]["evidence"][0]["note"]
+
+
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace
 
