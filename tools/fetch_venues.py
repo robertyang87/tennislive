@@ -44,6 +44,18 @@ PLAYERS = [
     ("novak-djokovic.jpg", None, "Category:Novak Djokovic"),
 ]
 
+# 冷知识配图：与故事主题对应（文件名 = trivia-<slug>.jpg）
+TRIVIA = [
+    ("trivia-scoring-history.jpg", None, "real tennis court jeu de paume"),
+    ("trivia-yellow-ball.jpg", None, "Category:Tennis balls"),
+    ("trivia-longest-match.jpg", None, "Isner Mahut"),
+    ("trivia-hawkeye.jpg", None, "Hawk-Eye tennis review"),
+    ("trivia-golden-slam.jpg", None, "Category:Steffi Graf"),
+    ("trivia-surfaces.jpg", None, "Roland Garros clay court"),
+    ("trivia-big-three.jpg", None, "Federer Nadal"),
+    ("trivia-china-tennis.jpg", None, "Category:Li Na (tennis player)"),
+]
+
 
 def api(params: dict) -> dict:
     params = {"format": "json", **params}
@@ -201,6 +213,7 @@ def fetch_set(out_dir: Path, wanted: list, min_width: int) -> list[str]:
 def main() -> int:
     failed = fetch_set(ROOT / "assets" / "venues", VENUES, min_width=1600)
     failed += fetch_set(ROOT / "assets" / "players", PLAYERS, min_width=1000)
+    failed += fetch_set(ROOT / "assets" / "trivia", TRIVIA, min_width=1000)
     return 1 if failed else 0
 
 
