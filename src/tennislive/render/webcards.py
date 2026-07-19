@@ -377,6 +377,16 @@ html.light .chip-green { color:#fff; }
 .venue-caption { position:absolute; left:24px; right:24px; bottom:20px; z-index:1; }
 .venue-caption b { display:block; font-size:32px; color:#fff; line-height:1.2; }
 .venue-caption span { display:block; font-size:20px; color:#DDE8E1; margin-top:5px; }
+/* 大字报钩子封面：一句话讲清当日最大事件 */
+.hook-page { --section-accent:var(--neon); }
+.hook-wrap { flex:1; display:flex; flex-direction:column; justify-content:center; padding-bottom:70px; }
+.hook-kicker { font-family:'Barlow Condensed'; font-weight:600; font-size:28px; letter-spacing:.4em;
+  text-transform:uppercase; color:var(--section-accent); margin-bottom:34px; }
+.hook-main { font-family:'TL Display SC','TL Serif SC',serif; font-weight:400; line-height:1.22;
+  color:var(--pagetext); letter-spacing:2px; text-shadow:0 8px 30px rgba(0,0,0,.35); }
+.hook-main em { font-style:normal; color:var(--section-accent); }
+.hook-sub { margin-top:34px; font-size:34px; color:var(--fade); letter-spacing:1px; }
+.hook-more { position:absolute; left:64px; bottom:96px; font-size:24px; color:var(--fade); }
 .story-meta { display:flex; gap:8px; margin-top:13px; }
 .story-meta span { padding:6px 12px; background:var(--coral); color:#fff; border-radius:4px;
   font-size:18px; font-weight:700; }
@@ -1036,11 +1046,40 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
     return out
 
 
+def hook_cover_body(main: str, sub: str, date_label: str) -> str:
+    """大字报钩子封面：当日最大事件一句话，比分板全部退居内页."""
+    size = 150 if len(main) <= 8 else (118 if len(main) <= 12 else 94)
+    # 首个停顿前的人名/关键词用荧光色强调
+    head, _, tail = main.partition("，")
+    if tail:
+        main_html = (
+            f'<em>{html.escape(head)}</em>，{html.escape(tail)}'
+        )
+    else:
+        main_html = html.escape(main)
+    return (
+        '<div class="poster hook-page">'
+        + _masthead(date_label)
+        + '<div class="hook-wrap">'
+        + '<div class="hook-kicker">Breaking Overnight · 你睡着时</div>'
+        + f'<div class="hook-main" style="font-size:{size}px">{main_html}</div>'
+        + f'<div class="hook-sub">{html.escape(sub)}</div>'
+        + "</div>"
+        + '<div class="hook-more">比分板和完整战报，往后滑 →</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
 def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
     """整组晨报卡（与 cards.generate_cards 的选卡逻辑一致），返回 [(kind, Image)]."""
-    from .titles import cover_highlights
+    from .titles import cover_highlights, hook_cover
 
     pages: list[tuple[str, str]] = []
+    # 有爆点时大字报做第一张图（小红书封面即钩子），设计版封面退居第二
+    hook = hook_cover(digest)
+    if hook:
+        pages.append(("hook", hook_cover_body(hook[0], hook[1], date_label)))
     headline, secondary = cover_highlights(digest)
     pages.append(("cover", cover_body(digest, headline, secondary, date_label)))
 

@@ -372,6 +372,20 @@ def test_dramatic_loser_is_a_headliner(tmp_path, monkeypatch):
     assert "伤退惜败" in wishlist["stan wawrinka"]["evidence"][0]["note"]
 
 
+def test_hook_cover_leads_deck_on_big_events(sample_digest):
+    """有爆点时大字报封面做第一张图；文案短句化、副行带赛事与比分."""
+    from tennislive.render.titles import hook_cover
+    from tennislive.render.webcards import hook_cover_body
+
+    hook = hook_cover(sample_digest)  # 样例数据里郑钦文有赛果 → 中国角度头条
+    assert hook is not None
+    main, sub = hook
+    assert "郑钦文" in main
+    assert "女单" not in main  # 冗余项别占主行
+    body = hook_cover_body(main, sub, "07.19 星期日")
+    assert "Breaking Overnight" in body and "hook-main" in body
+
+
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace
 

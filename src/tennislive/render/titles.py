@@ -179,3 +179,54 @@ def flash_headline(m) -> str:
     if is_final:
         return f"{player_zh(w.name)}问鼎{g.name_zh}"
     return f"{player_zh(w.name)}晋级{g.name_zh}{r or ''}"
+
+
+def hook_cover(digest: Digest) -> tuple[str, str] | None:
+    """大字报封面文案：当日最大事件 -> (主行, 副行)；无爆点返回 None.
+
+    小红书封面 3 秒法则：短句、人名、情绪。比分板做内页，封面只讲一件事。
+    优先级：中国球员 > 夺冠 > 爆冷 > 伤退。
+    """
+    from ..models import MatchStatus
+    from .common import group_by_tournament
+
+    def sub_of(m) -> str:
+        g = group_by_tournament([m])[0]
+        return f"{g.name_zh} {_flat_round(m)} · {m.score_display()}"
+
+    # 中国球员的胜负永远是头条（主行去掉"女单/男单"，副行已有完整信息）
+    best_cn, best_cn_score = None, -1
+    for m in digest.results:
+        if not is_chinese_involved(m) or m.winner is None:
+            continue
+        text = _cn_match_headline(m)
+        if text and match_score(m) > best_cn_score:
+            main = text.replace("女单", "").replace("男单", "").replace("女双", "").replace("男双", "")
+            best_cn, best_cn_score = (main, sub_of(m)), match_score(m)
+    if best_cn:
+        return best_cn
+
+    # 夺冠时刻
+    for m in top_results([x for x in digest.results if x.is_singles], 5):
+        r = _flat_round(m)
+        if r.endswith("决赛") and "半" not in r and "四" not in r:
+            w = (m.winner_players() or [None])[0]
+            if w:
+                return f"{player_zh(w.name)}，夺冠。", sub_of(m)
+
+    # 爆冷
+    m = find_upset(digest.results)
+    if m is not None:
+        w = (m.winner_players() or [None])[0]
+        l = (m.loser_players() or [None])[0]
+        if w and l:
+            return f"爆冷。{player_zh(l.name)}出局", sub_of(m)
+
+    # 球星伤退
+    for m in top_results([x for x in digest.results if x.is_singles], 5):
+        if m.status is MatchStatus.RETIRED:
+            l = (m.loser_players() or [None])[0]
+            if l and (l.rank or 999) <= 40:
+                return f"{player_zh(l.name)}，退赛。", sub_of(m)
+
+    return None
