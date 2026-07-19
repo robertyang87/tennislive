@@ -1299,7 +1299,7 @@ def _matched(aliases: tuple[str, ...], names: set[str]) -> bool:
 def _match_drama(m) -> float:
     """比赛本身的事件性：伤退、爆冷、鏖战——这些热度同样属于输球一方."""
     from ..models import MatchStatus
-    from .rating import is_upset
+    from .rating import is_upset, went_to_deciding_set
 
     drama = 0.0
     if m.status is MatchStatus.RETIRED:
@@ -1310,7 +1310,7 @@ def _match_drama(m) -> float:
     except Exception:  # noqa: BLE001
         pass
     sets = m.sets or []
-    if len(sets) >= 3:
+    if went_to_deciding_set(m):
         drama += 0.4  # 打满盘数
         last = sets[-1]
         super_tb = {last.home, last.away} == {1, 0}
