@@ -950,9 +950,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         board = top_results(singles_results, 8)
         images.append(("scoreboard", _card_scoreboard(fonts, date_label, board)))
     elif singles_results:
-        # 赛果少：大块 hero 版式
-        focus = top_results(singles_results, 3)
-        images.append(("focus", _card_focus(fonts, date_label, focus)))
+        # 赛果少：大块 hero 版式（仍是赛果页，不叫 focus——焦点页已从卡组移除）
+        board = top_results(singles_results, 3)
+        images.append(("results", _card_focus(fonts, date_label, board)))
 
     cn_results = [m for m in digest.results if is_chinese_involved(m)]
     cn_today = [
@@ -975,16 +975,6 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
             )
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
-
-    # Playwright unavailable: still keep the requested deck structure and never
-    # resurrect the removed upset/end pages in the Pillow fallback.
-    from .focus import has_detailed_stats, select_focus_match
-
-    focus_match = select_focus_match(digest)
-    if has_detailed_stats(focus_match) and not any(
-        kind == "focus" for kind, _ in images
-    ):
-        images.append(("focus", _card_focus(fonts, date_label, [focus_match])))
 
     paths: list[Path] = []
     for i, (kind, img) in enumerate(images):
