@@ -2,7 +2,7 @@ from datetime import date
 from pathlib import Path
 
 from tennislive.digest import Digest
-from tennislive.models import MatchStats, MatchStatus, StatPair
+from tennislive.models import MatchStats, MatchStatus, StatPair, Tour
 from tennislive.render.common import group_by_tournament, result_line, schedule_line
 from tennislive.render.focus import focus_comparison, has_detailed_stats
 from tennislive.render.pushmsg import pin_asset_revision, to_copy_page, to_push_html
@@ -38,6 +38,42 @@ def test_group_by_tournament_orders_gs_first():
     groups = group_by_tournament([small, gs])
     assert groups[0].name_en == "Wimbledon"
     assert "大满贯" in groups[0].title
+
+
+def test_scoreboard_tournament_level_is_compact_and_precedes_name():
+    from tennislive.render.webcards import _result_card
+
+    atp = make_match(tournament="Swiss Open", match_id="atp250")
+    atp.tournament.level = "ATP250"
+    atp_card = _result_card(
+        atp, hero=False, show_tournament=True, tag_upset=False
+    )
+
+    wta = make_match(tournament="Miami Open", match_id="wta1000")
+    wta.tour = wta.tournament.tour = Tour.WTA
+    wta.tournament.level = "W1000"
+    wta_card = _result_card(
+        wta, hero=False, show_tournament=True, tag_upset=False
+    )
+
+    slam = make_match(tournament="Wimbledon", match_id="slam")
+    slam.tournament.level = "GS"
+    slam_card = _result_card(
+        slam, hero=False, show_tournament=True, tag_upset=False
+    )
+
+    wta500 = make_match(tournament="Berlin Open", match_id="wta500")
+    wta500.tour = wta500.tournament.tour = Tour.WTA
+    wta500.tournament.level = "WTA500"
+    wta500_card = _result_card(
+        wta500, hero=False, show_tournament=True, tag_upset=False
+    )
+
+    assert '<b class="tour-level">ATP250</b>' in atp_card
+    assert '<b class="tour-level">WTA1000</b>' in wta_card
+    assert '<b class="tour-level">WTA500</b>' in wta500_card
+    assert '<b class="tour-level">大满贯</b>' in slam_card
+    assert "ATP 250" not in atp_card
 
 
 def test_wechat_markdown(sample_digest):
@@ -136,6 +172,20 @@ def test_cards_generation(tmp_path, sample_digest):
     assert "card_00_cover.png" in names
     assert not any("focus" in name for name in names)
     assert not any("upset" in name or "end" in name for name in names)
+
+
+def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
+    from tennislive.render.webcards import _shell, scoreboard_body
+
+    page = _shell(
+        scoreboard_body(sample_digest.results, "7.16 · 周四"),
+        theme="dark",
+    )
+
+    assert "--panel:rgba(3,24,19,.82)" in page
+    assert "background:var(--panel)" in page
+    assert "font-family:'TL Display SC'" in page
+    assert ".poster:not(.cover)::before" in page
 
 
 def test_umag_story_has_precise_champion_timeline(tmp_path, monkeypatch):
