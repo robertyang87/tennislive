@@ -1,3 +1,4 @@
+import json
 from datetime import date, datetime, timezone
 
 from tennislive.digest import Digest
@@ -138,4 +139,35 @@ def test_curated_media_note_wins_and_keeps_source_url():
 
     assert scheduled.editorial_source == "WTA"
     assert scheduled.editorial_url.startswith("https://www.wtatennis.com/")
-    assert "6比3、7比5" in scheduled.editorial_note
+    assert "首次参加年终总决赛便闯入决赛" in scheduled.editorial_note
+    assert "6比3" not in scheduled.editorial_note
+
+
+def test_curated_previous_match_analysis_is_rejected(tmp_path):
+    scheduled = make_match(
+        home_name="Nuno Borges",
+        away_name="Luciano Darderi",
+        tournament="Nordea Open",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+    )
+    digest = _digest(make_match(), scheduled)
+    notes = {
+        "2026-07-17": [
+            {
+                "tour": "ATP",
+                "tournament_aliases": ["nordea"],
+                "players": ["Nuno Borges", "Luciano Darderi"],
+                "text": "博尔热斯上一轮以6比3取胜，发球表现更稳定。",
+                "source_name": "ATP Tour",
+                "source_url": "https://www.atptour.com/example",
+            }
+        ]
+    }
+    path = tmp_path / "editorial_notes.json"
+    path.write_text(json.dumps(notes, ensure_ascii=False), encoding="utf-8")
+
+    assert apply_curated_editorial(digest, path) == 0
+    assert scheduled.editorial_note is None

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import unicodedata
 from pathlib import Path
 
@@ -11,11 +12,30 @@ from ..digest import Digest
 
 logger = logging.getLogger(__name__)
 EDITORIAL_NOTES = Path(__file__).resolve().parents[3] / "data" / "editorial_notes.json"
+_SCORE_PATTERN = re.compile(r"(?<!\d)\d{1,2}\s*(?:比|[-:])\s*\d{1,2}(?!\d)")
+_PREVIOUS_MATCH_PHRASES = (
+    "上一轮",
+    "直落",
+    "仅丢",
+    "二发",
+    "发球",
+    "接发",
+    "关键分",
+    "赛点",
+    "正手火力",
+)
 
 
 def _name_key(value: str) -> str:
     plain = unicodedata.normalize("NFKD", value.casefold())
     return "".join(ch for ch in plain if ch.isalnum())
+
+
+def _is_background_note(text: str) -> bool:
+    """Reject score-led or previous-match analysis from preview copy."""
+    return not _SCORE_PATTERN.search(text) and not any(
+        phrase in text for phrase in _PREVIOUS_MATCH_PHRASES
+    )
 
 
 def apply_curated_editorial(
@@ -58,7 +78,12 @@ def apply_curated_editorial(
             text = str(entry.get("text", "")).strip()
             source = str(entry.get("source_name", "")).strip()
             source_url = str(entry.get("source_url", "")).strip()
-            if not (text and source and source_url.startswith("https://")):
+            if not (
+                text
+                and _is_background_note(text)
+                and source
+                and source_url.startswith("https://")
+            ):
                 continue
             match.editorial_note = text
             match.editorial_source = source
