@@ -17,13 +17,14 @@ from .common import (
     side_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
-from .hotspot import hotspot_score, hotspot_title_candidates
-from .rating import tonight_focus, top_results
+from .hotspot import hotspot_title_candidates
+from .rating import match_score, tonight_focus, top_results
 from .story import (
     result_insight,
     schedule_insight,
 )
 from .tournament_story import pick_tournament_story
+from .titles import daily_lead_match
 
 MAX_BODY = 950
 BASE_TAGS = ["#网球", "#WTA", "#ATP", "#网球时差", "#网球晨报"]
@@ -97,11 +98,11 @@ def _tags(digest: Digest) -> list[str]:
 
 
 def _daily_stories(digest: Digest) -> list[Match]:
-    """中国主线、最重磅赛果、今晚焦点各取一条，去重后补足三条。"""
+    """真正头条、中国焦点、今晚焦点各取一条，去重后补足三条。"""
     all_matches = digest.results + digest.live + digest.schedule
     chinese = sorted(
         [match for match in all_matches if is_chinese_involved(match)],
-        key=hotspot_score,
+        key=match_score,
         reverse=True,
     )
     results = top_results(
@@ -126,10 +127,12 @@ def _daily_stories(digest: Digest) -> list[Match]:
             if len(selected) > before:
                 break
 
+    add(daily_lead_match(digest))
     add_first_distinct(chinese)
-    add_first_distinct(results)
     add_first_distinct(schedule)
-    for match in sorted(all_matches, key=hotspot_score, reverse=True):
+    for match in results:
+        add(match)
+    for match in sorted(all_matches, key=match_score, reverse=True):
         add(match)
     return selected
 

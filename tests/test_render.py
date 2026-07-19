@@ -435,6 +435,59 @@ def test_china_weight_is_fixed_35_no_bypass():
     routine_cn.tournament.level = "ATP250"
     assert match_score(slam_final) > match_score(routine_cn)
 
+
+def test_cover_title_and_post_share_one_headliner():
+    """封面、候选标题和小红书正文必须使用同一个 V1 头条选择器。"""
+    import re
+
+    from tennislive.render.titles import daily_lead_match, title_candidates
+    from tennislive.render.webcards import cover_body
+    from tennislive.render.xiaohongshu import _daily_stories, post_title
+
+    slam_final = make_match(
+        tournament="Wimbledon", round_name="Final",
+        home_name="Jannik Sinner", away_name="Novak Djokovic", match_id="slam",
+    )
+    slam_final.tournament.level = "GS"
+    routine_cn = make_match(
+        tournament="Swiss Open", round_name="Round of 32",
+        home_name="Qinwen Zheng", home_country="CHN",
+        away_name="Player Two", match_id="routine-cn",
+    )
+    routine_cn.tournament.level = "WTA250"
+    digest = Digest(
+        today=date(2026, 7, 20), results=[slam_final, routine_cn]
+    )
+
+    assert daily_lead_match(digest) is slam_final
+    assert _daily_stories(digest)[0] is slam_final
+    assert "辛纳" in title_candidates(digest)[0]
+    assert "辛纳" in post_title(digest)
+    body = cover_body(digest, *title_candidates(digest)[:2], "07.20")
+    assert "辛纳" in re.search(r'class="focus">(.*?)</div>', body).group(1)
+
+
+def test_cover_applies_china_weight_instead_of_input_order():
+    import re
+
+    from tennislive.render.titles import cover_highlights, daily_lead_match
+    from tennislive.render.webcards import cover_body
+
+    global_match = make_match(
+        home_name="Jannik Sinner", away_name="Novak Djokovic", match_id="global"
+    )
+    chinese_match = make_match(
+        home_name="Qinwen Zheng", home_country="CHN",
+        away_name="Aryna Sabalenka", away_country="BLR", match_id="china",
+    )
+    digest = Digest(
+        today=date(2026, 7, 20), results=[global_match, chinese_match]
+    )
+
+    assert daily_lead_match(digest) is chinese_match
+    body = cover_body(digest, *cover_highlights(digest), "07.20")
+    assert "郑钦文" in re.search(r'class="focus">(.*?)</div>', body).group(1)
+
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace
 
@@ -525,7 +578,7 @@ def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
     )
 
     assert "Overnight Lead · 昨夜头条" in body
-    assert "辛纳" in body
+    assert "郑钦文" in body  # 同级比赛由固定 +35 中国相关性决定头条
     assert "China Focus · 中国焦点" in body
     assert "Tonight · 今晚必看" in body
     assert body.count('class="cover-highlight"') == 2

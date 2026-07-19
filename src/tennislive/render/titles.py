@@ -144,55 +144,116 @@ def _tonight_headline(digest: Digest) -> str | None:
     return f"今晚焦点：{a}对阵{b}"
 
 
+def daily_lead_match(digest: Digest):
+    """V1 唯一头条选择器：赛果优先，所有入口共享同一套 +35 评分。"""
+    results = top_results(
+        [match for match in digest.results if match.is_singles],
+        1,
+        cn_boost=True,
+    )
+    if results:
+        return results[0]
+    live = [match for match in digest.live if match.is_singles]
+    if live:
+        return max(live, key=match_score)
+    schedule = top_schedule(
+        [match for match in digest.schedule if match.is_singles], 1
+    )
+    if schedule:
+        return schedule[0]
+    fallback = digest.results + digest.live + digest.schedule
+    return max(fallback, key=match_score) if fallback else None
+
+
+def _match_title(match) -> str:
+    if match.status.is_final:
+        return cover_result_hook(match)[0]
+    chinese = next(
+        (player for player in match.home + match.away if is_chinese_player(player)),
+        None,
+    )
+    if chinese is not None:
+        time = fmt_time_beijing(match.start_utc)
+        when = f"{time}出战" if time != "待定" else "今日出战"
+        return f"{player_zh(chinese.name)}{when}"
+    left = player_zh(match.home[0].name) if match.home else "焦点"
+    right = player_zh(match.away[0].name) if match.away else "对决"
+    return f"今晚焦点：{left}对阵{right}"
+
+
+def _trim_candidate(text: str, limit: int = 20) -> str:
+    text = text.strip()
+    return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
 def title_candidates(digest: Digest) -> list[str]:
     """V1 §3.1：固定输出 3 个候选——事件意义 / 人物处境 / 今晚悬念.
 
     每个 ≤20 字且可被证据支持；素材不足时用中性速览句补足，不硬造。
     """
-    scored = _cn_candidates(digest)
-    upset = upset_headline(digest)
-    if upset:
-        m = find_upset(digest.results)
-        scored.append(_Candidate(upset, 200 + (match_score(m) if m else 0), "upset"))
-    star = star_headline(digest)
-    if star:
-        scored.append(_Candidate(star, 150, "star"))
+    lead = daily_lead_match(digest)
+    all_matches = digest.results + digest.live + digest.schedule
+    chinese = sorted(
+        [match for match in all_matches if is_chinese_involved(match)],
+        key=match_score,
+        reverse=True,
+    )
+    tonight = top_schedule(
+        [match for match in digest.schedule if match.is_singles], 1
+    )
+    other_results = top_results(
+        [match for match in digest.results if match.is_singles],
+        len(digest.results),
+        cn_boost=True,
+    )
 
-    ranked: list[str] = []
-    seen: set[str] = set()
-    for candidate in sorted(scored, key=lambda c: c.score, reverse=True):
-        if candidate.text and candidate.text not in seen:
-            seen.add(candidate.text)
-            ranked.append(candidate.text)
+    out: list[str] = []
+    used_matches: set[str] = set()
 
-    out: list[str] = ranked[:2]  # ① 事件意义 ② 人物处境（最高两条不同故事）
-    tonight = _tonight_headline(digest)
-    if tonight and tonight not in out:
-        out.append(tonight)
-    fillers = (
+    def add_match(match) -> None:
+        if match is None or match.match_id in used_matches:
+            return
+        used_matches.add(match.match_id)
+        add_text(_match_title(match))
+
+    def add_text(text: str | None) -> None:
+        if not text:
+            return
+        candidate = _trim_candidate(text)
+        if candidate not in out:
+            out.append(candidate)
+
+    add_match(lead)                       # ① 当日真正头条
+    add_match(chinese[0] if chinese else None)  # ② 中国焦点（若与头条不同）
+    add_match(tonight[0] if tonight else None)  # ③ 今晚悬念
+    for match in other_results:
+        if len(out) >= 3:
+            break
+        add_match(match)
+    for filler in (
         china_summary(digest),
         "每日赛程赛果速览",
         "昨夜赛果与今晚看点",
         "网球晨报：今日一页看懂",
-    )
-    for filler in fillers:
+    ):
         if len(out) >= 3:
             break
-        if filler and filler not in out:
-            out.append(filler)
-    for extra in ranked[2:]:
-        if len(out) >= 3:
-            break
-        if extra not in out:
-            out.append(extra)
-    return [t[:20] for t in out[:3]]
+        add_text(filler)
+    return out[:3]
 
 
 def cover_highlights(digest: Digest) -> tuple[str, str]:
     """Main cover hook plus a distinct secondary proof point."""
+    lead = daily_lead_match(digest)
     candidates = title_candidates(digest)
-    primary = candidates[0]
+    if lead is not None and lead.status.is_final:
+        primary, lead_secondary = cover_result_hook(lead)
+    else:
+        primary = _match_title(lead) if lead is not None else candidates[0]
+        lead_secondary = ""
     secondary = next((h for h in candidates[1:] if h != primary), "")
+    if lead_secondary:
+        secondary = lead_secondary
     if not secondary:
         secondary = "昨夜赛果与今晚重点，一页看懂"
     return primary, secondary

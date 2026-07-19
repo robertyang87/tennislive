@@ -37,7 +37,7 @@ from .story import (
     schedule_insight,
     sort_china_matches,
 )
-from .titles import cover_result_hook
+from .titles import daily_lead_match
 from .tournament_story import TournamentStory, pick_tournament_story
 
 logger = logging.getLogger(__name__)
@@ -672,11 +672,9 @@ def cover_body(
     overnight = top_results(
         [match for match in digest.results if match.is_singles],
         2,
-        cn_boost=False,
+        cn_boost=True,
     )
-    lead = overnight[0] if overnight else None
-    if lead is not None:
-        headline, secondary = cover_result_hook(lead)
+    lead = daily_lead_match(digest)
     focus_matches = tonight_focus(digest.schedule)
     focus_count = len(focus_matches)
     if focus_count:
@@ -722,10 +720,16 @@ def cover_body(
     ]
     if chinese:
         support.append(("China Focus · 中国焦点", max(chinese, key=match_score)))
+    elif lead is not None and is_chinese_involved(lead):
+        # 中国场次成为总头条时，底部仍保留固定的“中国焦点”信息位。
+        support.append(("China Focus · 中国焦点", lead))
     elif len(overnight) > 1:
         support.append(("More Result · 昨夜亮点", overnight[1]))
     for focus_match in focus_matches:
-        if all(match.match_id != focus_match.match_id for _, match in support):
+        if (
+            focus_match.match_id != lead_id
+            and all(match.match_id != focus_match.match_id for _, match in support)
+        ):
             support.append(("Tonight · 今晚必看", focus_match))
             break
     if len(support) < 2:
