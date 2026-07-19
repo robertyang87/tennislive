@@ -13,6 +13,7 @@ import io
 import json
 import re
 import time
+import unicodedata
 import urllib.parse
 from pathlib import Path
 
@@ -137,8 +138,32 @@ def _candidate_titles(term: str) -> list[str]:
     return _search_files(term)
 
 
+def _subject_tokens(term: str) -> list[str]:
+    """人物分类名 -> 匹配用词（'Category:Iga Świątek' -> ['iga', 'swiatek']）."""
+    name = re.sub(r"\(.*?\)", "", term.removeprefix("Category:")).strip()
+    folded = unicodedata.normalize("NFKD", name)
+    folded = "".join(ch for ch in folded if not unicodedata.combining(ch))
+    return [w.lower() for w in folded.split() if w]
+
+
+def _title_matches_subject(title: str, tokens: list[str]) -> bool:
+    folded = unicodedata.normalize("NFKD", title)
+    folded = "".join(ch for ch in folded if not unicodedata.combining(ch)).lower()
+    for tok in tokens:
+        if len(tok) >= 4 and tok in folded:
+            return True
+        if len(tok) < 4 and re.search(rf"\b{re.escape(tok)}\b", folded):
+            return True
+    return False
+
+
 def pick_by_search(term: str, min_width: int = 1600) -> dict | None:
     titles = _candidate_titles(term)
+    # 人物分类里常混着场馆/合影杂图：文件名必须含本人姓名才算候选
+    if term.startswith("Category:"):
+        tokens = _subject_tokens(term)
+        if tokens:
+            titles = [t for t in titles if _title_matches_subject(t, tokens)]
     time.sleep(1)
     ok = []
     for batch_start in range(0, min(len(titles), 24), 8):
