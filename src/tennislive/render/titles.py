@@ -175,6 +175,11 @@ def _cn_match_headline(m) -> str | None:
 
 
 def _cn_candidates(digest: Digest) -> list[_Candidate]:
+    """V1 §2.2：标题分 = match_score（其中中国相关性已固定 +35）.
+
+    只保留 ±10 内的编辑偏好（胜场 > 出战预告 > 失利），不再用手工基分
+    制造"中国场次永远第一"的旁路——大满贯决赛可以正常压过常规中国胜场。
+    """
     candidates: list[_Candidate] = []
     for m in digest.results:
         if not is_chinese_involved(m):
@@ -182,9 +187,8 @@ def _cn_candidates(digest: Digest) -> list[_Candidate]:
         text = _cn_match_headline(m)
         if not text:
             continue
-        positive = chinese_side_won(m)
-        base = 300 if positive and m.is_singles else 215 if positive else 70
-        candidates.append(_Candidate(text, base + match_score(m), "china"))
+        nudge = 10 if chinese_side_won(m) else 0
+        candidates.append(_Candidate(text, match_score(m) + nudge, "china"))
 
     for m in digest.schedule:
         if not (is_chinese_involved(m) and m.is_singles):
@@ -195,7 +199,7 @@ def _cn_candidates(digest: Digest) -> list[_Candidate]:
         t = fmt_time_beijing(m.start_utc)
         when = f"{t}出战" if t != "待定" else "今日出战"
         candidates.append(
-            _Candidate(f"{player_zh(p.name)}{when}", 270 + match_score(m), "china")
+            _Candidate(f"{player_zh(p.name)}{when}", match_score(m) + 5, "china")
         )
 
     summary = china_summary(digest)
@@ -203,7 +207,8 @@ def _cn_candidates(digest: Digest) -> list[_Candidate]:
         wins = sum(
             1 for m in digest.results if is_chinese_involved(m) and chinese_side_won(m)
         )
-        candidates.append(_Candidate(summary, 230 + wins * 18, "china-summary"))
+        # 汇总句只在没有更强的单场故事时兜底，分数刻意压低
+        candidates.append(_Candidate(summary, 20 + wins * 5, "china-summary"))
     return candidates
 
 
@@ -415,8 +420,13 @@ def _whitelist_meaning(m) -> str | None:
     if not w or not l:
         return None
     wn, ln = player_zh(w.name), player_zh(l.name)
+    r = _flat_round(m)
+    # 决赛的赢家措辞是"夺冠"而非"晋级"——冠军没有下一轮
+    is_final = r.endswith("决赛") and "半" not in r and "四" not in r
 
     if m.status is MatchStatus.RETIRED:
+        if is_final:
+            return f"{ln}退赛，{wn}夺冠"
         return f"{ln}退赛，{wn}晋级{_advance_round(m)}"
     if is_upset(m):
         return f"爆冷：{wn}掀翻{ln}"
@@ -427,10 +437,10 @@ def _whitelist_meaning(m) -> str | None:
         winner_is_home = m.winner == 0
         lost_first = (first.home < first.away) if winner_is_home else (first.home > first.away)
         if lost_first:
-            return f"{wn}先丢一盘，逆转晋级"
+            return f"{wn}先丢一盘，逆转{'夺冠' if is_final else '晋级'}"
         how = deciding_set_tiebreak(m)
         if how:
-            return f"决胜盘{how}，{wn}惊险过关"
+            return f"决胜盘{how}，{wn}{'夺冠' if is_final else '惊险过关'}"
     return None
 
 
