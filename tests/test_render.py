@@ -188,6 +188,27 @@ def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
     assert ".poster:not(.cover)::before" in page
 
 
+def test_cards_fallback_matches_deck_policy(tmp_path, sample_digest, monkeypatch):
+    """Pillow 兜底与正式卡组同规：不复活已移除的 focus/upset/end 页。
+
+    ci 曾只在无 playwright 环境跑到兜底路径才暴露此问题；
+    这里显式模拟渲染器不可用，让兜底路径在任何环境下都有覆盖。
+    """
+    from tennislive.render import cards, webcards
+
+    def unavailable(*args, **kwargs):
+        raise RuntimeError("simulated: playwright unavailable")
+
+    monkeypatch.setattr(webcards, "generate_deck", unavailable)
+
+    paths = cards.generate_cards(sample_digest, tmp_path / "cards")
+    assert len(paths) >= 3
+    names = [p.name for p in paths]
+    assert "card_00_cover.png" in names
+    assert not any(
+        kind in name for name in names for kind in ("focus", "upset", "end")
+    )
+
 def test_umag_story_has_precise_champion_timeline(tmp_path, monkeypatch):
     from tennislive.render import tournament_story
 

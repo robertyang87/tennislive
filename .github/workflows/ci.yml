@@ -20,7 +20,16 @@ jobs:
       - name: 安装中文字体（卡片图测试需要）
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
       - name: 安装依赖
-        run: pip install -q -e ".[dev]"
+        run: pip install -q -e ".[dev,webrender]"
+      # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
+      # Pillow 兜底路径由 test_cards_fallback_matches_deck_policy 显式覆盖
+      - name: 缓存 Chromium（HTML 卡片渲染）
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+      - name: 安装 Chromium
+        run: python -m playwright install --with-deps chromium
       - name: 运行测试
         run: pytest -v
       - name: 冒烟测试：真实抓取今日数据
