@@ -50,7 +50,7 @@ TRIVIA = [
     ("trivia-scoring-history.jpg", None, "real tennis court jeu de paume"),
     ("trivia-yellow-ball.jpg", None, "Category:Tennis balls"),
     ("trivia-longest-match.jpg", None, "Isner Mahut"),
-    ("trivia-hawkeye.jpg", None, "Hawk-Eye tennis review"),
+    ("trivia-hawkeye.jpg", None, "Category:Hawk-Eye"),
     ("trivia-golden-slam.jpg", None, "Steffi Graf 1988"),
     ("trivia-surfaces.jpg", None, "Roland Garros clay court"),
     ("trivia-big-three.jpg", None, "Federer Nadal"),
