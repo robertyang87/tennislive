@@ -404,8 +404,8 @@ html.light .chip-green { color:#fff; }
   font-size:27px; line-height:1.5; color:var(--reason); }
 
 .story-page .titleband { margin-bottom:12px; }
-.story-page h1 { font-size:76px; }
-.venue-photo { position:relative; height:375px; margin-top:0; background-size:cover;
+.story-page h1 { font-size:86px; }
+.venue-photo { position:relative; height:365px; margin-top:0; background-size:cover;
   background-position:center; border:1px solid var(--panel-border); border-radius:8px;
   overflow:hidden; box-shadow:var(--cardshadow); }
 .venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(4,22,16,.92)); }
@@ -427,26 +427,17 @@ html.light .chip-green { color:#fff; }
 .hook-main em { font-style:normal; color:var(--section-accent); }
 .hook-sub { margin-top:34px; font-size:34px; color:var(--fade); letter-spacing:1px; }
 .hook-more { position:absolute; left:64px; bottom:96px; font-size:24px; color:var(--fade); }
-.story-hero { margin-top:26px; font-family:'TL Serif SC',serif; font-size:34px; font-weight:900;
-  line-height:1.5; color:var(--pagetext); }
-.story-timeline { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:44px;
-  margin-top:32px; padding-top:36px; border-top:3px solid var(--coral); }
-.story-moment { position:relative; min-height:230px; color:var(--pagetext); }
-.story-moment::before { content:""; position:absolute; top:-41px; left:0; width:20px; height:20px;
-  border-radius:50%; background:var(--coral); border:5px solid var(--ivory); }
-.moment-top { display:flex; align-items:baseline; gap:12px; }
-.moment-date { font-family:'Barlow Condensed'; font-size:42px; font-weight:700; color:var(--coral); line-height:1; }
-.moment-age { color:var(--fade); font-size:19px; font-weight:700; }
-.moment-player { margin-top:10px; font-family:'TL Sans SC',sans-serif;
-  font-size:32px; font-weight:700; line-height:1.12; }
-.moment-title { margin-top:5px; color:var(--pagetext); font-size:23px; font-weight:700; line-height:1.3; }
-.moment-detail { margin-top:9px; color:var(--reason); font-size:21px; line-height:1.48; }
-.story-facts { margin-top:26px; border-top:1px solid var(--divider); list-style:none; }
-.story-facts li { display:grid; grid-template-columns:64px 1fr; align-items:center; gap:16px;
-  min-height:96px; padding:15px 0; border-bottom:1px solid var(--divider);
-  font-size:26px; line-height:1.42; color:#E6ECE8; }
-.story-facts i { font-family:'Barlow Condensed'; font-size:31px; font-weight:700;
-  font-style:normal; color:var(--coral); }
+.story-hero { margin-top:24px; font-family:'TL Serif SC',serif; font-size:40px; font-weight:900;
+  line-height:1.42; color:var(--pagetext); }
+.story-list { margin-top:24px; border-top:2px solid var(--coral); list-style:none; }
+.story-list li { display:grid; grid-template-columns:96px 1fr; align-items:center; gap:24px;
+  min-height:132px; padding:18px 0; border-bottom:1px solid var(--divider); }
+.story-index { font-family:'Barlow Condensed'; font-size:54px; font-weight:700;
+  font-style:normal; color:var(--neon); line-height:1; }
+.story-copy { min-width:0; padding-left:22px; border-left:1px solid rgba(255,255,255,.42); }
+.story-copy strong { display:block; font-family:'TL Display SC','TL Sans SC',sans-serif;
+  font-size:31px; font-weight:400; line-height:1.18; color:var(--pagetext); }
+.story-copy p { margin-top:7px; font-size:20px; line-height:1.42; color:var(--reason); }
 .photo-credit { font-size:15px; color:var(--fade); margin-top:10px; }
 
 .cta-wrap { display:flex; flex-direction:column; align-items:center; text-align:center; }
@@ -982,24 +973,27 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
             portrait = im.height > im.width
     except OSError:
         pass
-    facts = "".join(
-        f"<li><i>{index:02d}</i><span>{html.escape(fact)}</span></li>"
-        for index, fact in enumerate(story.facts[:2], 1)
+    def moment_item(moment) -> tuple[str, str]:
+        year = moment.date.split("-", 1)[0]
+        title = " · ".join((year, moment.player, moment.headline))
+        return title, moment.detail
+
+    moment_items = [moment_item(moment) for moment in story.moments[:2]]
+    fact_item = (
+        ("为什么会改变" if story.kind == "trivia" else "关键事实", story.facts[0])
+        if story.facts
+        else None
     )
-    moments = "".join(
-        '<article class="story-moment">'
-        f'<div class="moment-top"><span class="moment-date">'
-        f'{html.escape(moment.date.split("-", 1)[0])}</span>'
-        + (
-            f'<span class="moment-age">{html.escape(moment.age)}</span>'
-            if not moment.age.replace(" ", "").startswith(moment.date.split("-", 1)[0])
-            else ""
-        )
-        + '</div>'
-        f'<div class="moment-player">{html.escape(moment.player)}</div>'
-        f'<div class="moment-title">{html.escape(moment.headline)}</div>'
-        f'<div class="moment-detail">{html.escape(moment.detail)}</div></article>'
-        for moment in story.moments
+    if story.kind == "trivia" and len(moment_items) == 2 and fact_item:
+        story_items = [moment_items[0], fact_item, moment_items[1]]
+    else:
+        story_items = moment_items + ([fact_item] if fact_item else [])
+    rows = "".join(
+        '<li>'
+        f'<i class="story-index">{index:02d}</i>'
+        f'<div class="story-copy"><strong>{html.escape(title)}</strong>'
+        f'<p>{html.escape(detail)}</p></div></li>'
+        for index, (title, detail) in enumerate(story_items[:3], 1)
     )
     kicker = {
         "player": "Player Spotlight · 球员特写",
@@ -1020,8 +1014,7 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + f'<b>{html.escape(story.venue)}</b><span>{html.escape(story.location)}</span>'
         + "</div></div>"
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
-        + f'<div class="story-timeline">{moments}</div>'
-        + f'<ul class="story-facts">{facts}</ul>'
+        + f'<ol class="story-list">{rows}</ol>'
         + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
         + f'图源：{html.escape(story.image_credit)}</div>'
         + _FOOTER
