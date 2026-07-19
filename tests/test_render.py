@@ -383,6 +383,40 @@ def test_single_cover_no_hook_page(tmp_path, sample_digest):
     assert names[0] == "card_00_cover.png"
 
 
+def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
+    from copy import deepcopy
+
+    from tennislive.render import webcards
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.sources.rankings import Rankings
+
+    digest = deepcopy(sample_digest)
+    digest.today = date(2026, 7, 20)  # 周一，同时触发排名页
+    digest.results.extend(
+        make_match(
+            home_name=f"Player {index}",
+            away_name=f"Opponent {index}",
+            match_id=f"extra-{index}",
+        )
+        for index in range(6)
+    )
+    digest.results[0].stats = MatchStats(
+        source="licensed-test",
+        total_points_won=StatPair(80, 70),
+    )
+    digest.rankings = Rankings()
+    monkeypatch.setattr(webcards, "pick_tournament_story", lambda _digest: STORIES[0])
+    monkeypatch.setattr(
+        webcards, "_screenshot_pages", lambda pages, _theme: pages
+    )
+
+    pages = webcards.generate_deck(digest, "07.20 · 周一")
+    kinds = [kind for kind, _body in pages]
+    assert len(kinds) == 7
+    assert kinds.count("cover") == 1
+    assert "focus" not in kinds
+
+
 def test_meaning_whitelist_downgrades_without_evidence():
     """意义句白名单：证据不足降级为结果句；退赛/爆冷/逆转可机械验证."""
     from tennislive.models import MatchStatus

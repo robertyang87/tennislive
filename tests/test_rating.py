@@ -133,7 +133,24 @@ def test_hotspot_package_has_three_compact_titles_and_evidence():
 def test_flash_headline_cn_win():
     m = make_match(home_name="Qinwen Zheng", home_country="CHN", tournament="Wimbledon")
     h = flash_headline(m)
-    assert "郑钦文" in h and ("晋级" in h or "夺冠" in h)
+    assert "郑钦文" in h and "晋级男单决赛" in h
+
+
+def test_flash_headline_advances_from_current_round():
+    semifinal = make_match(
+        home_name="Jannik Sinner",
+        away_name="Novak Djokovic",
+        round_name="Semifinals",
+    )
+    quarterfinal = make_match(
+        home_name="Jannik Sinner",
+        away_name="Novak Djokovic",
+        round_name="Quarterfinals",
+        match_id="qf",
+    )
+
+    assert "晋级温布尔登网球锦标赛男单决赛" in flash_headline(semifinal)
+    assert "晋级温布尔登网球锦标赛男单半决赛" in flash_headline(quarterfinal)
 
 
 def test_title_candidates_follow_shared_lead(sample_digest):
