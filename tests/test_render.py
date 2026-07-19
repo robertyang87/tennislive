@@ -373,19 +373,67 @@ def test_dramatic_loser_is_a_headliner(tmp_path, monkeypatch):
     assert "伤退惜败" in wishlist["stan wawrinka"]["evidence"][0]["note"]
 
 
-def test_hook_cover_leads_deck_on_big_events(sample_digest):
-    """有爆点时大字报封面做第一张图；文案短句化、副行带赛事与比分."""
-    from tennislive.render.titles import hook_cover
-    from tennislive.render.webcards import hook_cover_body
+def test_single_cover_no_hook_page(tmp_path, sample_digest):
+    """V1 唯一封面：卡组不再输出钩子页，封面有且只有一张（P0 规则测试）."""
+    from tennislive.render.cards import generate_cards
 
-    hook = hook_cover(sample_digest)  # 样例数据里郑钦文有赛果 → 中国角度头条
-    assert hook is not None
-    main, sub = hook
-    assert "郑钦文" in main
-    assert "女单" not in main  # 冗余项别占主行
-    body = hook_cover_body(main, sub, "07.19 星期日")
-    assert "Breaking Overnight" in body and "hook-main" in body
+    names = [p.name for p in generate_cards(sample_digest, tmp_path / "cards")]
+    assert sum("_cover.png" in n for n in names) == 1
+    assert not any("hook" in n for n in names)
+    assert names[0] == "card_00_cover.png"
 
+
+def test_meaning_whitelist_downgrades_without_evidence():
+    """意义句白名单：证据不足降级为结果句；退赛/爆冷/逆转可机械验证."""
+    from tennislive.models import MatchStatus
+    from tennislive.render.titles import _whitelist_meaning, cover_result_hook
+
+    plain = make_match(
+        home_name="Player One", away_name="Player Two",
+        sets=((6, 4), (6, 3)), tiebreaks=(),
+    )
+    assert _whitelist_meaning(plain) is None  # 干净直落两盘：无意义句可证
+    main, _ = cover_result_hook(plain)
+    assert "晋级" in main  # 降级为准确结果句
+
+    retired = make_match(
+        home_name="Player One", away_name="Player Two",
+        status=MatchStatus.RETIRED,
+    )
+    line = _whitelist_meaning(retired)
+    assert line is not None and "退赛" in line
+    assert "伤" not in line  # 不得推断退赛原因
+
+    comeback = make_match(
+        home_name="Player One", away_name="Player Two",
+        sets=((4, 6), (6, 3), (6, 4)), tiebreaks=(),
+    )
+    assert "逆转" in (_whitelist_meaning(comeback) or "")
+
+
+def test_china_weight_is_fixed_35_no_bypass():
+    """中国相关性固定 +35（与爆冷同级），无"永远第一"旁路."""
+    from tennislive.render.rating import match_score
+
+    cn = make_match(home_name="Qinwen Zheng", home_country="CHN",
+                    away_name="Player Two", away_country="USA")
+    non = make_match(home_name="Player One", home_country="ITA",
+                     away_name="Player Two", away_country="USA")
+    assert match_score(cn) - match_score(non) == 35
+
+    # 常规轮次的中国比赛不应压过大满贯决赛（旁路已删）
+    slam_final = make_match(
+        tournament="Wimbledon", round_name="Final",
+        home_name="Player One", away_name="Player Two", match_id="f",
+    )
+    slam_final.tournament.level = "GS"
+    routine_cn = make_match(
+        tournament="Swiss Open", round_name="Round of 32",
+        home_name="Qinwen Zheng", home_country="CHN",
+        away_name="Player Two", match_id="r32",
+    )
+    routine_cn.tournament.level = "ATP250"
+    assert match_score(slam_final) > match_score(routine_cn)
 
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace
