@@ -151,6 +151,8 @@ body::before { content:""; position:absolute; left:0; top:0; width:100%; height:
 .focus-page { --section-accent:var(--gold); }
 .story-page { --section-accent:var(--coral); }
 .rankings-page { --section-accent:var(--gold); }
+.insight-page { --section-accent:var(--gold); }
+.discussion-page { --section-accent:var(--coral); }
 .poster:not(.cover) { isolation:isolate; }
 .poster:not(.cover)::before { content:""; position:absolute; inset:0;
   background:
@@ -338,6 +340,30 @@ html.light .chip-green { color:#fff; }
 .verdict { margin-top:12px; padding:15px 22px; border-left:7px solid var(--gold);
   background:rgba(247,243,232,.1); font-size:25px; line-height:1.42; }
 .verdict b { color:var(--gold); margin-right:12px; }
+
+.insight-hero { margin-top:18px; padding:28px 30px 30px;
+  background:var(--panel-strong); border:1px solid var(--panel-border);
+  border-left:7px solid var(--section-accent); border-radius:8px;
+  box-shadow:var(--cardshadow); }
+.insight-hero small { display:block; font-family:'Barlow Condensed'; font-size:24px;
+  font-weight:600; letter-spacing:.28em; color:var(--section-accent); text-transform:uppercase; }
+.insight-hero strong { display:block; margin-top:14px; font-family:'TL Serif SC','TL Sans SC',serif;
+  font-size:44px; line-height:1.48; color:var(--pagetext); }
+.fact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
+.fact { min-height:150px; padding:20px 18px; background:var(--panel);
+  border:1px solid var(--panel-border); border-radius:8px; text-align:center;
+  display:flex; flex-direction:column; justify-content:center; box-shadow:var(--cardshadow); }
+.fact b { font-family:'Barlow Condensed'; font-size:34px; color:var(--section-accent); line-height:1.05; }
+.fact span { margin-top:10px; color:var(--panel-muted); font-size:22px; line-height:1.3; }
+.discussion-card { margin-top:74px; padding:42px 46px 48px; background:var(--panel-strong);
+  border:1px solid var(--panel-border); border-top:6px solid var(--section-accent);
+  border-radius:8px; box-shadow:var(--cardshadow); }
+.discussion-card small { font-family:'Barlow Condensed'; font-size:25px; font-weight:600;
+  letter-spacing:.3em; color:var(--section-accent); text-transform:uppercase; }
+.discussion-card strong { display:block; margin-top:24px; font-family:'TL Display SC','TL Sans SC',sans-serif;
+  font-size:64px; font-weight:400; line-height:1.3; color:var(--pagetext); }
+.discussion-card p { margin-top:28px; padding-top:24px; border-top:1px solid var(--divider);
+  font-size:27px; line-height:1.5; color:var(--reason); }
 
 .venue-photo { position:relative; height:365px; margin-top:4px; background-size:cover;
   background-position:center; border:1px solid var(--panel-border); border-radius:8px;
@@ -609,6 +635,10 @@ def cover_body(
     if digest.schedule:
         chips.append(f"后续赛程 {len(digest.schedule)} 场")
     focus_matches = tonight_focus(digest.schedule)
+    if not focus_matches and digest.schedule:
+        focus_matches = digest.schedule[:1]
+    if not focus_matches and digest.results:
+        focus_matches = digest.results[:1]
     focus_count = len(focus_matches)
     if focus_count:
         chips.append(f"今晚焦点 {focus_count} 场")
@@ -634,10 +664,15 @@ def cover_body(
                 match_round_display(focus_match),
             ) if part
         )
+        result_value = fmt_time_beijing(focus_match.start_utc)
+        result_label = "Focus Match · 焦点对阵"
+        if focus_match.status.is_final:
+            result_value = focus_match.score_display(from_winner=True) or "已完赛"
+            result_label = "Final Result · 完赛比分"
         match_html = (
             '<div class="cover-match"><div class="cover-match-head">'
-            '<span>Focus Match · 焦点对阵</span>'
-            f'<b>{html.escape(fmt_time_beijing(focus_match.start_utc))}</b></div>'
+            f'<span>{result_label}</span>'
+            f'<b>{html.escape(result_value)}</b></div>'
             f'<div class="cover-versus"><b>{html.escape(left)}</b><i>VS</i>'
             f'<b>{html.escape(right)}</b></div>'
             f'<div class="cover-match-meta">{html.escape(meta)}</div></div>'
@@ -770,6 +805,81 @@ def focus_body(m: Match, date_label: str) -> str:
         + f'<div class="compare-grid">{"".join(rows)}</div>'
         + source_html
         + f'<div class="verdict"><b>一句判断</b>{html.escape(comparison.verdict)}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def insight_body(m: Match, date_label: str, kind: str) -> str:
+    """单场内容解释页：只使用可验证的比分和赛程事实。"""
+    from .hotspot import hotspot_reasons
+    from .story import result_insight, schedule_insight
+
+    group = group_by_tournament([m])[0]
+    if kind == "result":
+        kicker = "Why It Matters · 一句看懂"
+        title = "这场意味着什么"
+        insight = result_insight(m)
+        facts = [
+            (group.compact_level, "赛事级别"),
+            (match_round_display(m) or "完赛", "比赛轮次"),
+            (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
+        ]
+    else:
+        kicker = "Match Preview · 赛前看点"
+        title = "为什么值得看"
+        insight = schedule_insight(m)
+        facts = [
+            (fmt_time_beijing(m.start_utc), "北京时间"),
+            (group.compact_level, "赛事级别"),
+            (match_round_display(m) or "待定", "比赛轮次"),
+        ]
+    reason = " · ".join(hotspot_reasons(m)[:3])
+    facts_html = "".join(
+        f'<article class="fact"><b>{html.escape(value)}</b>'
+        f'<span>{html.escape(label)}</span></article>'
+        for value, label in facts
+    )
+    return (
+        '<div class="poster insight-page">'
+        + _masthead(date_label)
+        + _titleband(kicker, title)
+        + f'<div class="event"><i></i><span>{html.escape(group.compact_title)}</span><i></i></div>'
+        + '<article class="insight-hero">'
+        + f'<small>{html.escape(reason)}</small><strong>{html.escape(insight)}</strong></article>'
+        + f'<div class="fact-grid">{facts_html}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def discussion_body(m: Match, date_label: str, kind: str) -> str:
+    """开放式讨论页，避免低质的固定答案诱导。"""
+    from ..zh.terms import round_zh
+    from .common import is_chinese_involved
+    from .rating import is_upset
+
+    if kind == "preview":
+        question = "如果只观察一个胜负变量，你会盯发球还是接发？"
+        helper = "开赛前留下你的判断，赛后回来对照比赛走势。"
+    elif round_zh(m.round_name) == "决赛":
+        question = "回看这场决赛，冠军最关键的胜负手是什么？"
+        helper = "从发球、接发、相持或关键分里，留下你的具体判断。"
+    elif is_upset(m):
+        question = "这场冷门的真正转折，你会选哪一盘？为什么？"
+        helper = "欢迎写下你看到的比赛细节，而不只是最终比分。"
+    elif is_chinese_involved(m):
+        question = "下一场继续往前走，最需要守住哪个环节？"
+        helper = "发球、接发、相持或关键分，留下你的具体判断。"
+    else:
+        question = "这场结果，改变了你对哪位球员的判断？"
+        helper = "评论区聊比赛本身：过程、转折和下一场。"
+    return (
+        '<div class="poster discussion-page">'
+        + _masthead(date_label)
+        + _titleband("Your Take · 继续聊这场", "你的判断")
+        + '<article class="discussion-card"><small>OPEN QUESTION · 开放讨论</small>'
+        + f'<strong>{html.escape(question)}</strong><p>{html.escape(helper)}</p></article>'
         + _FOOTER
         + "</div>"
     )
@@ -971,6 +1081,46 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
+    return _screenshot_pages(pages, theme)
+
+
+def generate_match_deck(
+    match: Match,
+    *,
+    headline: str,
+    today,
+    date_label: str,
+    kind: str,
+    theme: str = "dark",
+):
+    """单场热点/赛前统一卡组，复用晨报同一套HTML视觉组件。"""
+    from .story import result_insight, schedule_insight
+
+    is_result = kind == "result"
+    digest = Digest(
+        today=today,
+        results=[match] if is_result else [],
+        schedule=[] if is_result else [match],
+    )
+    secondary = result_insight(match) if is_result else schedule_insight(match)
+    pages: list[tuple[str, str]] = [
+        ("cover", cover_body(digest, headline, secondary, date_label)),
+    ]
+    if is_result:
+        pages.extend(
+            [
+                ("score", scoreboard_body([match], date_label)),
+                ("breakdown", focus_body(match, date_label)),
+            ]
+        )
+    else:
+        pages.append(("match", tonight_body([match], date_label)))
+    pages.extend(
+        [
+            ("insight", insight_body(match, date_label, kind)),
+            ("discussion", discussion_body(match, date_label, kind)),
+        ]
+    )
     return _screenshot_pages(pages, theme)
 
 

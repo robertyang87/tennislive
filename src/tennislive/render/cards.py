@@ -116,7 +116,7 @@ def _find_font(bold: bool = False) -> tuple[str, int]:
     env = os.environ.get("TENNISLIVE_FONT_BOLD" if bold else "TENNISLIVE_FONT")
     if env and Path(env).exists():
         return env, 0
-    project_fonts = Path(__file__).resolve().parents[3] / "fonts"
+    project_fonts = Path(__file__).resolve().parents[3] / "assets" / "fonts"
     if project_fonts.is_dir():
         pattern = "*Bold*" if bold else "*"
         for f in sorted(project_fonts.glob(pattern)):
