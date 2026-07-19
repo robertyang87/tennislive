@@ -238,6 +238,10 @@ def cmd_digest(args) -> int:
         if story:
             mark_story_used(story.slug, digest.today)
         record_story_wishlist(digest)
+        # 保存今日竞猜场次，明早文案里自动开奖
+        from .render.xiaohongshu import record_quiz
+
+        record_quiz()
     except Exception as e:  # noqa: BLE001
         logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
 
