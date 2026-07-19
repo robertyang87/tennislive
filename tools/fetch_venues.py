@@ -157,7 +157,9 @@ def _title_matches_subject(title: str, tokens: list[str]) -> bool:
     return False
 
 
-def pick_by_search(term: str, min_width: int = 1600) -> dict | None:
+def pick_by_search(
+    term: str, min_width: int = 1600, prefer_portrait: bool = False
+) -> dict | None:
     titles = _candidate_titles(term)
     # 人物分类里常混着场馆/合影杂图：文件名必须含本人姓名才算候选
     if term.startswith("Category:"):
@@ -175,8 +177,11 @@ def pick_by_search(term: str, min_width: int = 1600) -> dict | None:
         time.sleep(1)
     if not ok:
         return None
-    # 横图优先（卡片上是宽幅横幅位），再按分辨率取最大
-    ok.sort(key=lambda c: (c["width"] > c["height"], c["width"]), reverse=True)
+    # 场馆/主题图横幅位用横图；球员图优先竖版（竖版多为特写，横版常是全场远景）
+    def _orient(c: dict) -> bool:
+        return c["height"] >= c["width"] if prefer_portrait else c["width"] > c["height"]
+
+    ok.sort(key=lambda c: (_orient(c), c["width"]), reverse=True)
     return ok[0]
 
 
@@ -208,7 +213,9 @@ def shrink(data: bytes) -> bytes:
     return buf.getvalue()
 
 
-def fetch_set(out_dir: Path, wanted: list, min_width: int) -> list[str]:
+def fetch_set(
+    out_dir: Path, wanted: list, min_width: int, prefer_portrait: bool = False
+) -> list[str]:
     out_dir.mkdir(parents=True, exist_ok=True)
     credits = {}
     failed = []
@@ -218,7 +225,9 @@ def fetch_set(out_dir: Path, wanted: list, min_width: int) -> list[str]:
             if pinned_title:
                 cand = next(iter(imageinfo([pinned_title])), None)
             else:
-                cand = pick_by_search(term, min_width=min_width)
+                cand = pick_by_search(
+                    term, min_width=min_width, prefer_portrait=prefer_portrait
+                )
             if not cand:
                 raise RuntimeError("无符合授权/画质的候选")
             if not dest.exists():
@@ -237,7 +246,9 @@ def fetch_set(out_dir: Path, wanted: list, min_width: int) -> list[str]:
 
 def main() -> int:
     failed = fetch_set(ROOT / "assets" / "venues", VENUES, min_width=1600)
-    failed += fetch_set(ROOT / "assets" / "players", PLAYERS, min_width=1000)
+    failed += fetch_set(
+        ROOT / "assets" / "players", PLAYERS, min_width=1000, prefer_portrait=True
+    )
     failed += fetch_set(ROOT / "assets" / "trivia", TRIVIA, min_width=1000)
     return 1 if failed else 0
 
