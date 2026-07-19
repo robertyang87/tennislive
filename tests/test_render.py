@@ -740,25 +740,43 @@ def test_fatal_qa_blocks_publish(sample_digest):
 
 
 def test_cover_facts_trace_back_to_match_evidence():
-    """V1 §5.1 事实回溯：封面主标题里的人名与数字必须来自当场证据."""
-    import re
-
-    from tennislive.render.titles import cover_result_hook
-    from tennislive.zh import player_zh
+    """V1 §5.1：主副标题的完整数字声明必须出现在结构化证据包。"""
+    from tennislive.render.titles import (
+        cover_fact_bundle,
+        cover_fact_errors,
+        cover_result_hook,
+    )
 
     m = make_match(
         home_name="Qinwen Zheng", home_country="CHN",
         away_name="Aryna Sabalenka", away_country="BLR",
         sets=((4, 6), (6, 3), (7, 6)), tiebreaks=(None, None, (10, 8)),
     )
-    main, _ = cover_result_hook(m)
+    main, secondary = cover_result_hook(m)
+    bundle = cover_fact_bundle(m, source="espn")
+    assert bundle["source"] == "espn"
+    assert not cover_fact_errors(m, main, secondary)
+    assert "83" not in bundle["allowed_numbers"]
+    assert "封面数字无证据: 83" in cover_fact_errors(
+        m, f"{main}，世界第83", secondary
+    )
 
-    evidence_names = {player_zh(p.name) for p in m.home + m.away}
-    assert any(name in main for name in evidence_names)
-    evidence_digits = set("".join(
-        str(x) for s in m.sets for x in (s.home, s.away,
-                                         s.home_tiebreak or "", s.away_tiebreak or "")
-    ) + "".join(str(p.rank or "") + str(p.seed or "") for p in m.home + m.away))
-    for ch in main:
-        if ch.isdigit():
-            assert ch in evidence_digits  # 主标题不得出现证据之外的数字
+    historical = make_match(
+        home_name="Stefanos Tsitsipas",
+        away_name="Alexander Shevchenko",
+        home_country="GRE",
+        away_country="KAZ",
+        round_name="Final",
+        tournament="Swiss Open Gstaad",
+    )
+    historical.home[0].rank = 85
+    historical_main, historical_secondary = cover_result_hook(historical)
+    historical_bundle = cover_fact_bundle(historical)
+    assert not cover_fact_errors(
+        historical, historical_main, historical_secondary
+    )
+    assert historical_bundle["historical_profile"] == {
+        "peak_rank": 3,
+        "legacy": "两进大满贯决赛",
+        "source_url": "https://www.atptour.com/en/players/tsitsipas-stefanos/te51/bio",
+    }

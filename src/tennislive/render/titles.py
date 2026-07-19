@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from ..digest import Digest
@@ -50,6 +51,88 @@ def _cn_side(players) -> bool:
 
 def _flat_round(m) -> str:
     return (match_round_display(m) or "").replace("·", "")
+
+
+def cover_fact_bundle(m, *, source: str = "") -> dict:
+    """封面允许使用的比赛事实与人工审核历史档案。"""
+    winner = (m.winner_players() or [None])[0]
+    profile = _HISTORICAL_PROFILES.get(winner.name) if winner is not None else None
+    players = [
+        {
+            "name": player.name,
+            "display_name": player_zh(player.name),
+            "country": player.country,
+            "seed": player.seed,
+            "rank": player.rank,
+        }
+        for player in m.home + m.away
+    ]
+    sets = [
+        {
+            "home": item.home,
+            "away": item.away,
+            "home_tiebreak": item.home_tiebreak,
+            "away_tiebreak": item.away_tiebreak,
+        }
+        for item in m.sets
+    ]
+    number_sources = [
+        m.round_name or "",
+        m.tournament.name,
+        m.tournament.level or "",
+        m.start_utc.isoformat() if m.start_utc is not None else "",
+        fmt_time_beijing(m.start_utc),
+    ]
+    number_sources.extend(
+        str(value)
+        for player in players
+        for value in (player["seed"], player["rank"])
+        if value is not None
+    )
+    number_sources.extend(
+        str(value)
+        for item in sets
+        for value in item.values()
+        if value is not None
+    )
+    historical = None
+    if profile is not None:
+        historical = {
+            "peak_rank": profile.peak_rank,
+            "legacy": profile.legacy,
+            "source_url": profile.source_url,
+        }
+        number_sources.extend((str(profile.peak_rank), profile.legacy))
+    return {
+        "match_id": m.match_id,
+        "source": source,
+        "tournament": m.tournament.name,
+        "round": m.round_name,
+        "status": m.status.value,
+        "winner": m.winner,
+        "players": players,
+        "sets": sets,
+        "historical_profile": historical,
+        "allowed_numbers": sorted(
+            set(re.findall(r"\d+", " ".join(number_sources)))
+        ),
+    }
+
+
+def cover_fact_errors(m, main: str, secondary: str) -> list[str]:
+    """检查封面完整数字声明和主角姓名是否能回溯到证据包。"""
+    bundle = cover_fact_bundle(m)
+    allowed_numbers = set(bundle["allowed_numbers"])
+    claimed_numbers = set(re.findall(r"\d+", f"{main} {secondary}"))
+    errors = [
+        f"封面数字无证据: {number}"
+        for number in sorted(claimed_numbers - allowed_numbers)
+    ]
+    if m.winner is not None:
+        names = {player["display_name"] for player in bundle["players"]}
+        if not any(name and name in main for name in names):
+            errors.append("封面主标题未包含证据包内球员")
+    return errors
 
 
 def _cn_match_headline(m) -> str | None:
