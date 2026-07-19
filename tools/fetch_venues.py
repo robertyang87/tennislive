@@ -48,7 +48,7 @@ PLAYERS = [
 # 冷知识配图：与故事主题对应（文件名 = trivia-<slug>.jpg）
 TRIVIA = [
     ("trivia-scoring-history.jpg", None, "real tennis court jeu de paume"),
-    ("trivia-yellow-ball.jpg", None, "Category:Tennis balls"),
+    ("trivia-yellow-ball.jpg", None, "tennis ball close-up"),
     ("trivia-longest-match.jpg", None, "Isner Mahut"),
     ("trivia-hawkeye.jpg", None, "Category:Hawk-Eye"),
     ("trivia-golden-slam.jpg", None, "Steffi Graf 1988"),
@@ -107,6 +107,7 @@ REJECTED_TITLES = {
     "File:3D Tennis Ball.jpg",
     "File:Opdenhövel und Graf.jpg",
     "File:25th Laureus World Sports Awards - Red Carpet - Novak Djokovic - 240422 193213-2.jpg",
+    "File:Aktion Tennisball auf dem Bumke-Gelaende 3.jpg",
 }
 
 # 文件名里带这些词的多为球场内照片，优先于活动照/生活照

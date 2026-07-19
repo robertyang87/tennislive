@@ -953,6 +953,7 @@ STORIES = STORIES + (
         ),
         image_keys=("usopen",),
         source_label="美网 / ITF 官方史料",
+        image_credit="Daniel (Galashiels) / Wikimedia Commons · CC BY 2.0",
         source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
     ),
     _trivia_story(
@@ -999,6 +1000,7 @@ STORIES = STORIES + (
         ),
         image_keys=("usopen",),
         source_label="ITF / 奥运官方史料",
+        image_credit="Photocapy / Wikimedia Commons · CC BY-SA 2.0",
         source_url="https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
     ),
     _trivia_story(
