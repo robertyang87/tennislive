@@ -255,20 +255,27 @@ def cmd_digest(args) -> int:
 # ---------- 闪发（即时战报） ----------
 
 def cmd_flash(args) -> int:
-    """检测刚完赛的重点比赛（中国球员/高级别决赛），生成战报卡并自动发布.
+    """检测传播窗口内的重点比赛，生成小红书单场内容包.
 
-    用 data/flash_state.json 去重，适合每小时定时运行。
+    用 data/flash_state.json 去重，适合高频定时运行。
     """
     import os
     from datetime import timedelta
 
-    from .render.common import result_line
-    from .render.rating import flash_candidates
+    from .render.hotspot import (
+        hotspot_candidates,
+        hotspot_post,
+        hotspot_reasons,
+        hotspot_score,
+        hotspot_title_candidates,
+    )
     from .render.terminal import console
-    from .render.titles import flash_headline
     from .timeutil import beijing_today, now_beijing
 
     today = beijing_today()
+    manifest_path = Path(args.manifest) if args.manifest else None
+    if manifest_path and manifest_path.exists():
+        manifest_path.unlink()
     matches = []
     for d in (today - timedelta(days=1), today):
         try:
@@ -288,7 +295,12 @@ def cmd_flash(args) -> int:
     cutoff = (today - timedelta(days=2)).isoformat()
     state = {k: v for k, v in state.items() if v >= cutoff}
 
-    new = [m for m in flash_candidates(matches) if m.match_id not in state]
+    now = now_beijing()
+    new = [
+        m
+        for m in hotspot_candidates(matches, now=now)
+        if m.match_id not in state
+    ]
     if not new:
         state_path.write_text(
             json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
@@ -298,10 +310,12 @@ def cmd_flash(args) -> int:
 
     outdir = Path(args.outdir) / today.isoformat() / "flash"
     outdir.mkdir(parents=True, exist_ok=True)
-    stamp = now_beijing().strftime("%H%M")
+    stamp = now.strftime("%H%M")
     published = 0
+    manifest_items = []
     for i, m in enumerate(new):
-        headline = flash_headline(m)
+        titles = hotspot_title_candidates(m)
+        headline = titles[0]
         card = outdir / f"flash_{stamp}_{i:02d}.png"
         try:
             from .render.cards import generate_flash_card
@@ -310,11 +324,29 @@ def cmd_flash(args) -> int:
         except Exception as e:
             console.print(f"[yellow]战报卡生成失败（跳过图片）：{e}[/yellow]")
             card = None
-        text = f"{headline}\n\n{result_line(m)}\n\n完整战报见明晨《网球晨报》 #网球 #网球晨报"
+        text = hotspot_post(m)
         (outdir / f"flash_{stamp}_{i:02d}.txt").write_text(text, encoding="utf-8")
 
+        card_ref = None
+        if card is not None:
+            try:
+                card_ref = card.resolve().relative_to(Path.cwd().resolve()).as_posix()
+            except ValueError:
+                card_ref = card.as_posix()
+        manifest_items.append(
+            {
+                "match_id": m.match_id,
+                "title": headline,
+                "title_candidates": titles,
+                "text": text,
+                "card": card_ref,
+                "hotspot_score": hotspot_score(m),
+                "reasons": hotspot_reasons(m),
+            }
+        )
+
         # 自动发布（配置了才执行）
-        if os.environ.get("PUSHPLUS_TOKEN"):
+        if not args.no_publish and os.environ.get("PUSHPLUS_TOKEN"):
             try:
                 from .publish.pushplus import push
 
@@ -344,6 +376,21 @@ def cmd_flash(args) -> int:
 
         state[m.match_id] = today.isoformat()
         console.print(f"[green]⚡ {headline}[/green]")
+
+    if manifest_path:
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text(
+            json.dumps(
+                {
+                    "generated_at": now.isoformat(),
+                    "date": today.isoformat(),
+                    "items": manifest_items,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
 
     state_path.write_text(
         json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
@@ -445,6 +492,61 @@ def cmd_publish_pushplus(args) -> int:
     return 0
 
 
+def cmd_publish_flash(args) -> int:
+    """提交图片后发送热点包，固定资源版本以绕开 CDN 旧图缓存。"""
+    import html
+    import re
+
+    from .publish.pushplus import PushPlusError, push
+    from .render.terminal import console
+
+    manifest = Path(args.manifest)
+    if not manifest.exists():
+        console.print(f"[red]{manifest} 不存在[/red]")
+        return 1
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    items = payload.get("items") or []
+    if not items:
+        console.print("没有待发送热点")
+        return 0
+
+    repository = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    revision = os.environ.get("TENNISLIVE_ASSET_REV", "main")
+    if revision != "main" and not re.fullmatch(r"[0-9a-fA-F]{7,40}", revision):
+        revision = "main"
+    asset_root = f"https://cdn.jsdelivr.net/gh/{repository}@{revision}/"
+
+    sent = 0
+    for item in items:
+        title = str(item.get("title") or "网球热点")
+        raw_text = str(item.get("text") or "")
+        lines = raw_text.splitlines()
+        if lines and lines[0].strip() == title:
+            lines = lines[2:] if len(lines) > 1 and not lines[1].strip() else lines[1:]
+        text_html = "<br/>".join(html.escape(line) for line in lines)
+        card = item.get("card")
+        image_html = ""
+        if card:
+            image_url = asset_root + str(card).lstrip("/")
+            image_html = (
+                f'<img src="{html.escape(image_url)}" '
+                'style="width:100%;border-radius:10px;display:block;margin:0 0 12px;" />'
+            )
+        candidates = " / ".join(item.get("title_candidates") or [])
+        review = (
+            '<div style="color:#65756d;font-size:12px;margin-top:12px;">'
+            f"备选标题：{html.escape(candidates)}</div>"
+        )
+        try:
+            push(f"⚡{title}", image_html + text_html + review)
+            sent += 1
+        except PushPlusError as exc:
+            console.print(f"[red]{exc}[/red]")
+            return 1
+    console.print(f"[green]已发送 {sent} 条热点待发布包到微信[/green]")
+    return 0
+
+
 # ---------- 入口 ----------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -483,6 +585,10 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
     sp.add_argument("--no-publish", action="store_true", help="只生成不发布")
+    sp.add_argument(
+        "--manifest",
+        help="写出本批待发布清单；工作流提交图片后再据此发送",
+    )
 
     sp = sub.add_parser("digest", help="生成每日内容包（公众号+小红书+卡片图）")
     sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
@@ -503,6 +609,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     spp = pub_sub.add_parser("pushplus", help="通过 PushPlus 推送到自己微信")
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
+    spf = pub_sub.add_parser("flash", help="发送已提交的热点待发布包")
+    spf.add_argument("--manifest", required=True, help="flash 生成的批次清单 JSON")
 
     return p
 
@@ -533,6 +641,8 @@ def main(argv: list[str] | None = None) -> int:
             return cmd_publish_wechat(args)
         if args.channel == "pushplus":
             return cmd_publish_pushplus(args)
+        if args.channel == "flash":
+            return cmd_publish_flash(args)
         build_parser().parse_args(["publish", "--help"])
         return 1
 
