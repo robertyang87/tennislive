@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from ..digest import Digest
 from ..models import Match, MatchStatus
+from ..zh import player_zh
 from ..timeutil import fmt_time_beijing
 from .common import (
     group_by_tournament,
@@ -23,6 +27,41 @@ from .tournament_story import pick_tournament_story
 
 MAX_BODY = 950
 BASE_TAGS = ["#网球", "#WTA", "#ATP", "#网球时差", "#网球晨报"]
+
+# 每日一帖模式：竞猜折叠进正文，次日开奖制造回访（data/ 随 workflow 提交）
+QUIZ_PATH = Path(__file__).resolve().parents[3] / "data" / "quiz_state.json"
+_LAST_QUIZ: dict | None = None
+
+
+def _quiz_reveal(digest: Digest) -> str | None:
+    """昨日竞猜场次已出结果 -> 开奖行；无状态/未完赛返回 None."""
+    try:
+        state = json.loads(QUIZ_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    if state.get("date") != digest.yesterday.isoformat():
+        return None
+    asked = set(state.get("players") or [])
+    if not asked:
+        return None
+    for m in digest.results:
+        if asked <= {p.name for p in m.home + m.away} and m.winner is not None:
+            w = (m.winner_players() or [None])[0]
+            if w:
+                return (
+                    f"📢 昨晚竞猜开奖：{player_zh(w.name)}拿下——"
+                    "猜对的评论区扣 1！"
+                )
+    return None
+
+
+def record_quiz() -> None:
+    """CLI 在生成成功后调用：保存今日竞猜场次，明早开奖."""
+    if _LAST_QUIZ:
+        QUIZ_PATH.parent.mkdir(parents=True, exist_ok=True)
+        QUIZ_PATH.write_text(
+            json.dumps(_LAST_QUIZ, ensure_ascii=False), encoding="utf-8"
+        )
 
 
 def post_title(digest: Digest) -> str:
@@ -170,18 +209,26 @@ def _build(digest: Digest, *, compact: bool = False) -> list[str]:
         choice = "、".join(
             hotspot_title_candidates(match)[0] for match in upcoming[:2]
         )
-        question = f"今晚只选一场，你会追哪场？{choice}"
+        question = f"今晚只选一场，你会追哪场？评论区站队：{choice}"
+        global _LAST_QUIZ
+        top = upcoming[0]
+        _LAST_QUIZ = {
+            "date": digest.today.isoformat(),
+            "players": [p.name for p in top.home + top.away],
+        }
     else:
         question = "这三件事里，哪一条最出乎你的意料？"
 
-    lines.extend(
-        [
-            question,
-            "关注 @网球时差｜睡醒看懂昨夜，开赛前只提醒值得看的。",
-            "",
-            " ".join(_tags(digest)),
-        ]
-    )
+    ending = [
+        question,
+        "关注 @网球时差｜睡醒看懂昨夜，开赛前只提醒值得看的。",
+        "",
+        " ".join(_tags(digest)),
+    ]
+    reveal = _quiz_reveal(digest)
+    if reveal:
+        ending.insert(0, reveal)
+    lines.extend(ending)
     return lines
 
 
