@@ -30,6 +30,16 @@ def test_flash_headline_wrap_balances_long_chinese_title(monkeypatch):
     assert abs(len(lines[0]) - len(lines[1])) <= 1
 
 
+def test_flash_uses_bundled_editorial_display_fonts(monkeypatch):
+    monkeypatch.delenv("TENNISLIVE_FONT_DISPLAY", raising=False)
+    monkeypatch.delenv("TENNISLIVE_FONT_LATIN", raising=False)
+
+    fonts = _Fonts()
+
+    assert "Smiley Sans" in fonts.display_title.getname()[0]
+    assert "Barlow Condensed" in fonts.latin.getname()[0]
+
+
 def test_flash_writes_one_review_manifest_for_duplicate_source_rows(
     tmp_path, monkeypatch
 ):
