@@ -343,6 +343,11 @@ html.light .chip-green { color:#fff; }
   background-position:center; border:1px solid var(--panel-border); border-radius:8px;
   overflow:hidden; box-shadow:var(--cardshadow); }
 .venue-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(4,22,16,.92)); }
+/* 竖版人像：完整显示不裁脸，同图模糊铺满做底 */
+.venue-photo .ph-back { position:absolute; inset:0; background-size:cover; background-position:center;
+  filter:blur(24px) brightness(.68); transform:scale(1.15); }
+.venue-photo .ph-main { position:absolute; inset:0; background-size:contain;
+  background-repeat:no-repeat; background-position:center; }
 .venue-caption { position:absolute; left:24px; right:24px; bottom:20px; z-index:1; }
 .venue-caption b { display:block; font-size:32px; color:#fff; line-height:1.2; }
 .venue-caption span { display:block; font-size:20px; color:#DDE8E1; margin-top:5px; }
@@ -774,6 +779,15 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
     uri = _asset_image_uri(story.image)
     if not uri:
         raise FileNotFoundError(story.image)
+    # 竖版人像在宽幅横幅位里裁切会切掉人脸——完整显示 + 同图模糊铺底
+    portrait = False
+    try:
+        from PIL import Image as _Image
+
+        with _Image.open(story.image) as im:
+            portrait = im.height > im.width
+    except OSError:
+        pass
     facts = "".join(
         f"<li><i>{index:02d}</i><span>{html.escape(fact)}</span></li>"
         for index, fact in enumerate(story.facts, 1)
@@ -796,7 +810,13 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         '<div class="poster story-page">'
         + _masthead(date_label)
         + _titleband(kicker, story.title)
-        + f'<div class="venue-photo" style="background-image:url(\'{uri}\')">'
+        + (
+            f'<div class="venue-photo">'
+            f'<i class="ph-back" style="background-image:url(\'{uri}\')"></i>'
+            f'<i class="ph-main" style="background-image:url(\'{uri}\')"></i>'
+            if portrait
+            else f'<div class="venue-photo" style="background-image:url(\'{uri}\')">'
+        )
         + '<div class="venue-caption">'
         + f'<b>{html.escape(story.venue)}</b><span>{html.escape(story.location)}</span>'
         + "</div></div>"

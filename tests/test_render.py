@@ -279,6 +279,45 @@ def test_story_slot_never_empty(tmp_path, monkeypatch):
     assert again is not None and again.slug == first.slug
 
 
+def test_wishlist_records_uncovered_hot_winners(tmp_path, monkeypatch):
+    """昨日热门胜者不在故事库时记入扩库清单；库内球员不重复记."""
+    import json
+
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(
+        tournament_story, "WISHLIST_PATH", tmp_path / "story_wishlist.json"
+    )
+    covered = make_match(
+        tournament="Wimbledon",
+        home_name="Jannik Sinner",
+        away_name="Player Two",
+        winner=0,
+        match_id="a",
+    )
+    uncovered = make_match(
+        tournament="Wimbledon",
+        home_name="Flavio Cobolli",
+        away_name="Player Four",
+        winner=0,
+        match_id="b",
+    )
+    digest = Digest(today=date(2026, 7, 19), results=[covered, uncovered])
+
+    tournament_story.record_story_wishlist(digest)
+    wishlist = json.loads((tmp_path / "story_wishlist.json").read_text("utf-8"))
+
+    assert "flavio cobolli" in wishlist
+    assert wishlist["flavio cobolli"]["hits"] == 1
+    assert wishlist["flavio cobolli"]["evidence"][0]["tournament"] == "Wimbledon"
+    assert not any("sinner" in key for key in wishlist)  # 库内球员不进清单
+
+    # 再次记录累计热度
+    tournament_story.record_story_wishlist(digest)
+    wishlist = json.loads((tmp_path / "story_wishlist.json").read_text("utf-8"))
+    assert wishlist["flavio cobolli"]["hits"] == 2
+
+
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace
 

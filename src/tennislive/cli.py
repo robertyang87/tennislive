@@ -225,13 +225,19 @@ def cmd_digest(args) -> int:
             console.print(f"[red]质检不通过：{f}[/red]")
         return 2  # 非零退出阻断后续自动发布
 
-    # 生成成功后记录"赛事一分钟"已使用（30 天内不再重复同一赛事）
+    # 生成成功后记录"一分钟"故事已使用（30 天冷却），并把昨日最热
+    # 但库里还没有故事的胜者记入扩库清单——选题跟着热度走
     try:
-        from .render.tournament_story import mark_story_used, pick_tournament_story
+        from .render.tournament_story import (
+            mark_story_used,
+            pick_tournament_story,
+            record_story_wishlist,
+        )
 
         story = pick_tournament_story(digest)
         if story:
             mark_story_used(story.slug, digest.today)
+        record_story_wishlist(digest)
     except Exception as e:  # noqa: BLE001
         logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
 
