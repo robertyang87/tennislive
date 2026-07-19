@@ -86,7 +86,9 @@ def match_score(m: Match, cn_boost: bool = True) -> int:
         s += 10
     if any({x.home, x.away} == {1, 0} for x in m.sets):
         s += 5
-    if m.is_doubles and not is_chinese_involved(m):
+    # 双打是基础内容形态惩罚，与国籍无关；中国相关性仍只通过上面的
+    # 单次 +35 体现，否则中国双打相对其他双打会形成隐含 +75 旁路。
+    if m.is_doubles:
         s -= 40
     return s
 

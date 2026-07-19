@@ -17,7 +17,7 @@ from tennislive.render.rating import (
     tonight_focus,
     top_results,
 )
-from tennislive.render.titles import flash_headline, title_candidates
+from tennislive.render.titles import daily_lead_match, flash_headline, title_candidates
 from tennislive.sources.rankings import RankEntry, Rankings, _parse, rank_map
 
 from conftest import make_match
@@ -30,6 +30,25 @@ def test_chinese_weight_is_significant_but_not_a_bypass():
     non_cn = make_match(home_name="Player One", home_country="ITA", tournament="Iasi Open", match_id="y")
     assert match_score(cn) - match_score(non_cn) == 35
     assert top_results([gs_final, cn])[0] is gs_final
+
+
+def test_chinese_weight_is_exactly_35_for_doubles_too():
+    from tennislive.models import Player
+
+    cn = make_match(home_name="Qinwen Zheng", home_country="CHN")
+    cn.home.append(Player(name="Xinyu Wang", country="CHN"))
+    cn.away.append(Player(name="Player Four", country="USA"))
+    non_cn = make_match(
+        home_name="Player One", home_country="ITA", match_id="non-cn-doubles"
+    )
+    non_cn.home.append(Player(name="Player Three", country="FRA"))
+    non_cn.away.append(Player(name="Player Four", country="USA"))
+
+    assert cn.is_doubles and non_cn.is_doubles
+    assert match_score(cn) - match_score(non_cn) == 35
+    assert match_score(cn, cn_boost=False) == match_score(
+        non_cn, cn_boost=False
+    )
 
 
 def test_upset_by_seed_and_rank():
@@ -117,12 +136,14 @@ def test_flash_headline_cn_win():
     assert "郑钦文" in h and ("晋级" in h or "夺冠" in h)
 
 
-def test_title_candidates_cn_first(sample_digest):
+def test_title_candidates_follow_shared_lead(sample_digest):
     cands = title_candidates(sample_digest)
+    lead = daily_lead_match(sample_digest)
+    assert lead is not None and lead.match_id == "m2"
     assert cands and "郑钦文" in cands[0]
 
 
-def test_upcoming_cn_focus_outranks_cn_loss():
+def test_upcoming_cn_focus_is_retained_without_bypassing_result_lead():
     from datetime import datetime, timezone
 
     from tennislive.digest import Digest
@@ -144,7 +165,9 @@ def test_upcoming_cn_focus_outranks_cn_loss():
     digest = Digest(
         today=date(2026, 7, 17), results=[loss], schedule=[upcoming]
     )
-    assert title_candidates(digest)[0].startswith("郑钦文22:30")
+    candidates = title_candidates(digest)
+    assert not candidates[0].startswith("郑钦文22:30")
+    assert any(candidate.startswith("郑钦文22:30") for candidate in candidates)
 
 
 def test_tonight_focus_prefers_cn_and_known_players():
