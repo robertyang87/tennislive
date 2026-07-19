@@ -134,27 +134,52 @@ def star_headline(digest: Digest) -> str | None:
     return None
 
 
+def _tonight_headline(digest: Digest) -> str | None:
+    """③ 今晚悬念：来自可核实的今晚焦点对阵."""
+    tonight = top_schedule([x for x in digest.schedule if x.is_singles], 1)
+    if not tonight:
+        return None
+    m = tonight[0]
+    a, b = player_zh(m.home[0].name), player_zh(m.away[0].name)
+    return f"今晚焦点：{a}对阵{b}"
+
+
 def title_candidates(digest: Digest) -> list[str]:
-    """去重后的候选列表，按故事价值评分排序."""
-    candidates = _cn_candidates(digest)
+    """V1 §3.1：固定输出 3 个候选——事件意义 / 人物处境 / 今晚悬念.
+
+    每个 ≤20 字且可被证据支持；素材不足时用中性速览句补足，不硬造。
+    """
+    scored = _cn_candidates(digest)
     upset = upset_headline(digest)
     if upset:
         m = find_upset(digest.results)
-        candidates.append(_Candidate(upset, 200 + (match_score(m) if m else 0), "upset"))
+        scored.append(_Candidate(upset, 200 + (match_score(m) if m else 0), "upset"))
     star = star_headline(digest)
     if star:
-        candidates.append(_Candidate(star, 150, "star"))
+        scored.append(_Candidate(star, 150, "star"))
 
+    ranked: list[str] = []
     seen: set[str] = set()
-    out: list[str] = []
-    for candidate in sorted(candidates, key=lambda c: c.score, reverse=True):
-        h = candidate.text
-        if h and h not in seen:
-            seen.add(h)
-            out.append(h)
-    if not out:
-        out.append("每日赛程赛果速览")
-    return out
+    for candidate in sorted(scored, key=lambda c: c.score, reverse=True):
+        if candidate.text and candidate.text not in seen:
+            seen.add(candidate.text)
+            ranked.append(candidate.text)
+
+    out: list[str] = ranked[:2]  # ① 事件意义 ② 人物处境（最高两条不同故事）
+    tonight = _tonight_headline(digest)
+    if tonight and tonight not in out:
+        out.append(tonight)
+    for filler in (china_summary(digest), "每日赛程赛果速览", "昨夜赛果与今晚看点"):
+        if len(out) >= 3:
+            break
+        if filler and filler not in out:
+            out.append(filler)
+    for extra in ranked[2:]:
+        if len(out) >= 3:
+            break
+        if extra not in out:
+            out.append(extra)
+    return [t[:20] for t in out[:3]]
 
 
 def cover_highlights(digest: Digest) -> tuple[str, str]:
