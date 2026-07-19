@@ -411,6 +411,34 @@ def test_meaning_whitelist_downgrades_without_evidence():
     assert "逆转" in (_whitelist_meaning(comeback) or "")
 
 
+def test_deciding_set_requires_level_score_before_last_set():
+    from tennislive.render.rating import deciding_set_tiebreak, went_to_deciding_set
+    from tennislive.render.titles import _whitelist_meaning
+
+    straight_sets = make_match(
+        sets=((6, 4), (6, 4), (7, 6)),
+        tiebreaks=(None, None, (7, 5)),
+    )
+    assert not went_to_deciding_set(straight_sets)
+    assert deciding_set_tiebreak(straight_sets) is None
+    assert "决胜盘" not in (_whitelist_meaning(straight_sets) or "")
+
+    three_setter = make_match(
+        sets=((6, 4), (4, 6), (7, 6)),
+        tiebreaks=(None, None, (10, 8)),
+    )
+    assert went_to_deciding_set(three_setter)
+    assert deciding_set_tiebreak(three_setter) == "抢七"
+    assert "决胜盘抢七" in (_whitelist_meaning(three_setter) or "")
+
+    five_setter = make_match(
+        sets=((6, 4), (4, 6), (6, 3), (3, 6), (1, 0)),
+        tiebreaks=(None, None, None, None, None),
+    )
+    assert went_to_deciding_set(five_setter)
+    assert deciding_set_tiebreak(five_setter) == "抢十"
+
+
 def test_china_weight_is_fixed_35_no_bypass():
     """中国相关性固定 +35（与爆冷同级），无"永远第一"旁路."""
     from tennislive.render.rating import match_score

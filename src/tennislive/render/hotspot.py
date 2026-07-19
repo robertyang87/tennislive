@@ -19,7 +19,7 @@ from .common import (
     result_line,
     side_display,
 )
-from .rating import _level_of, is_upset
+from .rating import _level_of, is_upset, went_to_deciding_set
 from .story import (
     chinese_side_won,
     is_chinese_player,
@@ -94,8 +94,7 @@ def hotspot_score(match: Match) -> int:
 
     if match.status.is_final and is_upset(match):
         score += 15
-    decided_sets = [item for item in match.sets if item.home != item.away]
-    if len(decided_sets) >= 3:
+    if went_to_deciding_set(match):
         score += 10
     if any(
         item.home_tiebreak is not None or item.away_tiebreak is not None
@@ -121,7 +120,7 @@ def hotspot_reasons(match: Match) -> list[str]:
     translated_round = round_zh(match.round_name) or ""
     if translated_round in _ROUND_PTS:
         reasons.append(translated_round)
-    if len([item for item in match.sets if item.home != item.away]) >= 3:
+    if went_to_deciding_set(match):
         reasons.append("决胜盘")
     return reasons or ["焦点对阵"]
 
@@ -214,8 +213,8 @@ def hotspot_title_candidates(match: Match) -> list[str]:
             primary = f"{winner}爆冷淘汰{loser}"
         elif translated_round == "决赛":
             primary = f"{winner}夺冠"
-        elif len([item for item in match.sets if item.home != item.away]) >= 3:
-            primary = f"{winner}三盘过关"
+        elif went_to_deciding_set(match):
+            primary = f"{winner}鏖战过关"
         else:
             primary = f"{winner}直落两盘晋级"
         group = group_by_tournament([match])[0]

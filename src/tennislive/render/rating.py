@@ -57,6 +57,29 @@ def is_upset(m: Match) -> bool:
     return False
 
 
+def went_to_deciding_set(m: Match) -> bool:
+    """最后一盘开打前双方盘数相等，才算真正的决胜盘。"""
+    decided = [item for item in m.sets if item.home != item.away]
+    if len(decided) < 2:
+        return False
+    home_wins = sum(item.home > item.away for item in decided[:-1])
+    away_wins = sum(item.away > item.home for item in decided[:-1])
+    return home_wins == away_wins
+
+
+def deciding_set_tiebreak(m: Match) -> str | None:
+    """真正决胜盘以抢七或抢十结束时返回对应名称。"""
+    if not went_to_deciding_set(m):
+        return None
+    decided = [item for item in m.sets if item.home != item.away]
+    last = decided[-1]
+    if {last.home, last.away} == {1, 0}:
+        return "抢十"
+    if last.home_tiebreak is not None and last.away_tiebreak is not None:
+        return "抢七"
+    return None
+
+
 def match_score(m: Match, cn_boost: bool = True) -> int:
     """比赛重要性总分，越高越值得报道.
 
@@ -81,8 +104,7 @@ def match_score(m: Match, cn_boost: bool = True) -> int:
     if is_upset(m):
         s += 35
     # 激烈程度：决胜盘 / 抢十
-    decided = [x for x in m.sets if x.home != x.away]
-    if len(decided) >= 3:
+    if went_to_deciding_set(m):
         s += 10
     if any({x.home, x.away} == {1, 0} for x in m.sets):
         s += 5

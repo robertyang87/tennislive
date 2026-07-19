@@ -8,7 +8,14 @@ from ..digest import Digest
 from ..timeutil import fmt_time_beijing
 from ..zh import player_zh
 from .common import is_chinese_involved, match_round_display
-from .rating import find_upset, is_upset, match_score, top_results, top_schedule
+from .rating import (
+    deciding_set_tiebreak,
+    find_upset,
+    is_upset,
+    match_score,
+    top_results,
+    top_schedule,
+)
 from .story import china_summary, chinese_side_won, is_chinese_player
 
 
@@ -313,15 +320,13 @@ def _whitelist_meaning(m) -> str | None:
     sets = m.sets or []
     decided = [s for s in sets if s.home != s.away]
     if len(decided) >= 2:
-        first, last = decided[0], decided[-1]
+        first = decided[0]
         winner_is_home = m.winner == 0
         lost_first = (first.home < first.away) if winner_is_home else (first.home > first.away)
         if lost_first:
             return f"{wn}先丢一盘，逆转晋级"
-        super_tb = {last.home, last.away} == {1, 0}
-        tb = last.home_tiebreak is not None and last.away_tiebreak is not None
-        if len(decided) >= 3 and (super_tb or tb):
-            how = "抢十" if super_tb else "抢七"
+        how = deciding_set_tiebreak(m)
+        if how:
             return f"决胜盘{how}，{wn}惊险过关"
     return None
 

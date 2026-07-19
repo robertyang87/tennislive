@@ -7,7 +7,7 @@ from ..models import Match
 from ..zh import player_zh
 from ..zh.terms import round_zh
 from .common import CHINESE_PLAYER_NAMES, is_chinese_involved
-from .rating import is_upset, match_score, stay_up_stars
+from .rating import is_upset, match_score, stay_up_stars, went_to_deciding_set
 
 
 _CN_COUNTRIES = {"CHN", "CN"}
@@ -103,8 +103,13 @@ def result_insight(match: Match) -> str:
         return "先丢一盘后完成逆转，比赛韧性是胜负手"
     if len(sets) == 2:
         return "直落两盘拿下，关键分处理更加稳定"
+    if went_to_deciding_set(match):
+        length = (
+            "三盘" if len(sets) == 3 else "五盘" if len(sets) == 5 else "多盘"
+        )
+        return f"鏖战{length}过关，决胜盘把握住了关键机会"
     if len(sets) >= 3:
-        return "鏖战三盘过关，决胜盘把握住了关键机会"
+        return f"用{len(sets)}盘结束比赛，没有把胜负拖入决胜盘"
     if match.is_doubles:
         return "双打配合经受住关键分考验"
     return "这场结果值得继续关注后续走势"
