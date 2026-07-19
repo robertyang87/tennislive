@@ -631,3 +631,16 @@ def test_focus_comparison_supports_five_set_grand_slam_match():
     assert len(comparison.rows) == 8
     assert comparison.rows[-2][0] == "第四盘"
     assert comparison.rows[-1] == ("第五盘", "6", "3")
+
+
+def test_title_candidates_always_exactly_three(sample_digest):
+    """V1 §3.1：任何场景稳定输出 3 个候选，每个 ≤20 字."""
+    from tennislive.render.titles import title_candidates
+
+    rich = title_candidates(sample_digest)
+    assert len(rich) == 3 and len(set(rich)) == 3
+    assert all(len(t) <= 20 for t in rich)
+
+    empty = title_candidates(Digest(today=date(2026, 7, 21)))
+    assert len(empty) == 3 and len(set(empty)) == 3
+    assert all(len(t) <= 20 for t in empty)
