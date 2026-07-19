@@ -459,10 +459,11 @@ def test_story_card_uses_spacious_single_flow(tmp_path):
     )
 
     assert "story-meta" not in body
-    assert body.count('class="story-moment"') == 2
-    assert body.count("<li>") == 2
+    assert "story-timeline" not in body
+    assert body.count('class="story-copy"') == 3
+    assert body.count("<li>") == 3
     assert "1972" in body and "1986" in body
-    assert 'class="moment-age"' not in body
+    assert "为什么会改变" in body
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
