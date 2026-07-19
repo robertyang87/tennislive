@@ -17,7 +17,8 @@ jobs:
           python-version: "3.12"
       - run: pip install requests pillow
       - run: python tools/fetch_flags.py
-      - run: python tools/fetch_venues.py
+      # 个别图片抓取失败（Commons 限流/无合规候选）不阻断提交已成功的部分
+      - run: python tools/fetch_venues.py || echo "::warning::some assets failed to fetch"
       - name: Commit assets
         run: |
           git config user.name "github-actions[bot]"

@@ -74,20 +74,49 @@ def imageinfo(titles: list[str]) -> list[dict]:
     return out
 
 
+# 非比赛照片的杂项文件（签名、画像、邮票等）不作候选
+BAD_TITLE_WORDS = ("signature", "autograph", "caricature", "drawing", "stamp", "logo")
+
+
+def _usable(title: str) -> bool:
+    low = title.lower()
+    return low.endswith((".jpg", ".jpeg")) and not any(w in low for w in BAD_TITLE_WORDS)
+
+
+def _category_files(cat: str, recurse: bool = True) -> list[str]:
+    """分类下的图片文件；名人分类的照片多归档在 'X in 2024' 年份子分类里."""
+    data = api({
+        "action": "query", "list": "categorymembers", "cmtitle": cat,
+        "cmtype": "file|subcat", "cmlimit": 100,
+    })
+    files, subcats = [], []
+    for m in data.get("query", {}).get("categorymembers", []):
+        title = m["title"]
+        if title.startswith("Category:"):
+            subcats.append(title)
+        elif _usable(title):
+            files.append(title)
+    if recurse:
+        year_subcats = sorted(
+            (c for c in subcats if re.search(r"\b20\d\d$", c)), reverse=True
+        )
+        for sub in year_subcats[:4]:
+            time.sleep(0.5)
+            files += _category_files(sub, recurse=False)
+            if len(files) >= 60:
+                break
+    return files
+
+
 def _candidate_titles(term: str) -> list[str]:
     if term.startswith("Category:"):
-        data = api({
-            "action": "query", "list": "categorymembers", "cmtitle": term,
-            "cmtype": "file", "cmlimit": 40,
-        })
-        hits = data.get("query", {}).get("categorymembers", [])
-    else:
-        data = api({
-            "action": "query", "list": "search", "srsearch": term,
-            "srnamespace": 6, "srlimit": 10,
-        })
-        hits = data.get("query", {}).get("search", [])
-    return [h["title"] for h in hits if h["title"].lower().endswith((".jpg", ".jpeg"))]
+        return _category_files(term)
+    data = api({
+        "action": "query", "list": "search", "srsearch": term,
+        "srnamespace": 6, "srlimit": 10,
+    })
+    hits = data.get("query", {}).get("search", [])
+    return [h["title"] for h in hits if _usable(h["title"])]
 
 
 def pick_by_search(term: str, min_width: int = 1600) -> dict | None:
