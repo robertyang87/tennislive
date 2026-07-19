@@ -1198,11 +1198,38 @@ def _matched(aliases: tuple[str, ...], names: set[str]) -> bool:
     return any(alias in name for alias in aliases for name in names)
 
 
+def _result_heat(digest: Digest) -> tuple[dict[str, float], dict[str, float]]:
+    """昨日热度：胜者/赛事 -> 其最重要一场比赛的评分（决赛、爆冷、排名加权）."""
+    from .rating import match_score
+
+    player_heat: dict[str, float] = {}
+    tournament_heat: dict[str, float] = {}
+    for m in digest.results:
+        try:
+            heat = match_score(m, cn_boost=False)
+        except Exception:  # noqa: BLE001
+            heat = 0.0
+        key = _norm(m.tournament.name)
+        tournament_heat[key] = max(heat, tournament_heat.get(key, 0.0))
+        for p in m.winner_players() or []:
+            name = _norm(p.name)
+            player_heat[name] = max(heat, player_heat.get(name, 0.0))
+    return player_heat, tournament_heat
+
+
+def _alias_heat(aliases: tuple[str, ...], heat: dict[str, float]) -> float:
+    return max(
+        (value for name, value in heat.items() if any(a in name for a in aliases)),
+        default=0.0,
+    )
+
+
 def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     """按新闻价值选故事，板块永不空着.
 
     昨日赢球的球员特写 3 > 进行中赛事档案 2 > 仅出场的球员特写 1 >
-    冷知识兜底 0；全部处于冷却期时，重讲距上次最久的一条，而不是留白。
+    冷知识兜底 0；同级候选按前一天比赛的热度分排序（决赛/爆冷优先），
+    全部处于冷却期时，重讲距上次最久的一条，而不是留白。
     """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
@@ -1210,10 +1237,11 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
         _norm(p.name) for m in digest.results for p in (m.winner_players() or [])
     }
     todays = {_norm(p.name) for m in matches for p in m.home + m.away}
+    player_heat, tournament_heat = _result_heat(digest)
     state = _load_state()
 
-    fresh: list[tuple[int, int, TournamentStory]] = []
-    cooling: list[tuple[str, int, int, TournamentStory]] = []
+    fresh: list[tuple[int, float, int, TournamentStory]] = []
+    cooling: list[tuple[str, int, float, int, TournamentStory]] = []
     for order, story in enumerate(STORIES):
         if not story.image.exists():
             continue
@@ -1225,19 +1253,70 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
                 score = 1
             else:
                 continue
+            heat = _alias_heat(aliases, player_heat)
         elif story.kind == "trivia":
             score = 0
+            heat = 0.0
         else:
             if not _matched(aliases, tournaments):
                 continue
             score = 2
+            heat = _alias_heat(aliases, tournament_heat)
         if _recently_used(story.slug, digest.today):
-            cooling.append((state.get(story.slug, ""), -score, order, story))
+            cooling.append((state.get(story.slug, ""), -score, -heat, order, story))
         else:
-            fresh.append((-score, order, story))
+            fresh.append((-score, -heat, order, story))
     if fresh:
         return min(fresh)[-1]
     if cooling:
         # ISO 日期字符串最小 = 距上次讲述最久
         return min(cooling)[-1]
     return None
+
+
+WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"
+
+
+def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
+    """昨日最热、但库里还没有故事的胜者记入扩库清单（data/ 随 workflow 提交）.
+
+    选题跟着巡回赛的实际热度走：清单里 hits 高的球员就是下一批
+    该补写"球员特写"的对象，附赛果证据便于核实后成稿。
+    """
+    from .rating import match_score
+
+    covered = tuple(
+        _norm(alias) for story in STORIES for alias in story.aliases if alias
+    )
+    singles = [
+        m for m in digest.results if m.is_singles and m.winner_players() is not None
+    ]
+    singles.sort(key=lambda m: match_score(m, cn_boost=False), reverse=True)
+
+    try:
+        wishlist = json.loads(WISHLIST_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        wishlist = {}
+
+    changed = False
+    for m in singles[:top_n]:
+        for p in m.winner_players() or []:
+            key = _norm(p.name)
+            if any(alias in key for alias in covered):
+                continue
+            entry = wishlist.setdefault(key, {"name": p.name, "hits": 0, "evidence": []})
+            entry["hits"] += 1
+            entry["evidence"] = (entry["evidence"] + [
+                {
+                    "date": digest.today.isoformat(),
+                    "tournament": m.tournament.name,
+                    "round": str(m.round_name or ""),
+                    "score": m.score_display(),
+                }
+            ])[-5:]
+            changed = True
+    if changed:
+        WISHLIST_PATH.parent.mkdir(parents=True, exist_ok=True)
+        WISHLIST_PATH.write_text(
+            json.dumps(wishlist, ensure_ascii=False, indent=1), encoding="utf-8"
+        )
