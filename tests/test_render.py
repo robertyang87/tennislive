@@ -473,6 +473,68 @@ def test_deciding_set_requires_level_score_before_last_set():
     assert deciding_set_tiebreak(five_setter) == "抢十"
 
 
+def test_meaning_whitelist_bo5_straight_sets_is_not_deciding_set():
+    """五盘制 3-0（末盘抢七）没有决胜盘，不得声称"决胜盘抢七"."""
+    from tennislive.render.titles import _whitelist_meaning
+
+    sweep = make_match(
+        home_name="Player One", away_name="Player Two",
+        sets=((7, 6), (6, 4), (7, 6)), tiebreaks=((7, 3), None, (7, 5)),
+    )
+    assert _whitelist_meaning(sweep) is None
+
+    # 真正打满决胜盘（3-2）且末盘抢七时仍然生效
+    distance = make_match(
+        home_name="Player One", away_name="Player Two",
+        sets=((6, 4), (4, 6), (6, 4), (4, 6), (7, 6)),
+        tiebreaks=(None, None, None, None, (7, 5)),
+    )
+    line = _whitelist_meaning(distance)
+    assert line is not None and "决胜盘抢七" in line
+
+
+def test_meaning_whitelist_final_says_champion_not_advance():
+    """决赛场景措辞：冠军是"夺冠"，不是"晋级"."""
+    from tennislive.models import MatchStatus
+    from tennislive.render.titles import _whitelist_meaning
+
+    retired_final = make_match(
+        home_name="Player One", away_name="Player Two",
+        round_name="Final", status=MatchStatus.RETIRED,
+    )
+    line = _whitelist_meaning(retired_final)
+    assert line is not None and "夺冠" in line and "晋级" not in line
+
+    comeback_final = make_match(
+        home_name="Player One", away_name="Player Two",
+        round_name="Final", sets=((4, 6), (6, 3), (6, 4)), tiebreaks=(),
+    )
+    assert "逆转夺冠" in (_whitelist_meaning(comeback_final) or "")
+
+
+def test_title_layer_has_no_cn_bypass():
+    """V1 §2.2 也约束标题候选层：常规中国胜场不压过大满贯决赛头条."""
+    from tennislive.render.titles import title_candidates
+
+    routine_cn = make_match(
+        tournament="Prague Open", round_name="Round of 32",
+        home_name="Qinwen Zheng", home_country="CHN",
+        away_name="Player Two", away_country="USA", match_id="cn-r32",
+    )
+    routine_cn.tournament.level = "WTA250"
+    routine_cn.home[0].seed = routine_cn.away[0].seed = None
+    slam_final = make_match(
+        tournament="Wimbledon", round_name="Final", match_id="gs-final",
+    )
+    slam_final.tournament.level = "GS"
+    digest = Digest(
+        today=date(2026, 7, 17), results=[routine_cn, slam_final], schedule=[]
+    )
+    cands = title_candidates(digest)
+    assert "郑钦文" not in cands[0]  # 头条是大满贯决赛，不是常规中国胜场
+    assert any("郑钦文" in c for c in cands)  # 中国角度仍在三候选之内
+
+
 def test_china_weight_is_fixed_35_no_bypass():
     """中国相关性固定 +35（与爆冷同级），无"永远第一"旁路."""
     from tennislive.render.rating import match_score
