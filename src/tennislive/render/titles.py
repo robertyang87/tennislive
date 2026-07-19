@@ -169,7 +169,13 @@ def title_candidates(digest: Digest) -> list[str]:
     tonight = _tonight_headline(digest)
     if tonight and tonight not in out:
         out.append(tonight)
-    for filler in (china_summary(digest), "每日赛程赛果速览", "昨夜赛果与今晚看点"):
+    fillers = (
+        china_summary(digest),
+        "每日赛程赛果速览",
+        "昨夜赛果与今晚看点",
+        "网球晨报：今日一页看懂",
+    )
+    for filler in fillers:
         if len(out) >= 3:
             break
         if filler and filler not in out:
