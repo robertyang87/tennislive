@@ -1198,23 +1198,64 @@ def _matched(aliases: tuple[str, ...], names: set[str]) -> bool:
     return any(alias in name for alias in aliases for name in names)
 
 
-def _result_heat(digest: Digest) -> tuple[dict[str, float], dict[str, float]]:
-    """昨日热度：胜者/赛事 -> 其最重要一场比赛的评分（决赛、爆冷、排名加权）."""
+def _match_drama(m) -> float:
+    """比赛本身的事件性：伤退、爆冷、鏖战——这些热度同样属于输球一方."""
+    from ..models import MatchStatus
+    from .rating import is_upset
+
+    drama = 0.0
+    if m.status is MatchStatus.RETIRED:
+        drama += 1.5  # 伤退：坚持到退赛的一方往往才是新闻主角
+    try:
+        if is_upset(m):
+            drama += 1.0  # 爆冷：被掀翻的种子也是话题
+    except Exception:  # noqa: BLE001
+        pass
+    sets = m.sets or []
+    if len(sets) >= 3:
+        drama += 0.4  # 打满盘数
+        last = sets[-1]
+        super_tb = {last.home, last.away} == {1, 0}
+        if super_tb or max(last.home, last.away) == 7 or last.home_tiebreak is not None:
+            drama += 0.5  # 决胜盘抢七/抢十
+    return drama
+
+
+# 输球方也值得讲的事件性阈值（伤退或爆冷即达标）
+DRAMA_THRESHOLD = 1.0
+
+
+def _result_heat(
+    digest: Digest,
+) -> tuple[dict[str, float], dict[str, float], set[str]]:
+    """昨日热度：球员/赛事 -> 最重要一场比赛的评分 + 事件戏剧性.
+
+    返回 (球员热度, 赛事热度, 高事件性比赛的输球方)——伤退、遭爆冷、
+    鏖战惜败的一方与胜者同样有新闻价值。
+    """
     from .rating import match_score
 
     player_heat: dict[str, float] = {}
     tournament_heat: dict[str, float] = {}
+    newsworthy_losers: set[str] = set()
     for m in digest.results:
         try:
-            heat = match_score(m, cn_boost=False)
+            base = float(match_score(m, cn_boost=False))
         except Exception:  # noqa: BLE001
-            heat = 0.0
+            base = 0.0
+        drama = _match_drama(m)
+        heat = base + drama
         key = _norm(m.tournament.name)
         tournament_heat[key] = max(heat, tournament_heat.get(key, 0.0))
         for p in m.winner_players() or []:
             name = _norm(p.name)
             player_heat[name] = max(heat, player_heat.get(name, 0.0))
-    return player_heat, tournament_heat
+        if drama >= DRAMA_THRESHOLD:
+            for p in m.loser_players() or []:
+                name = _norm(p.name)
+                player_heat[name] = max(heat, player_heat.get(name, 0.0))
+                newsworthy_losers.add(name)
+    return player_heat, tournament_heat, newsworthy_losers
 
 
 def _alias_heat(aliases: tuple[str, ...], heat: dict[str, float]) -> float:
@@ -1227,8 +1268,9 @@ def _alias_heat(aliases: tuple[str, ...], heat: dict[str, float]) -> float:
 def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     """按新闻价值选故事，板块永不空着.
 
-    昨日赢球的球员特写 3 > 进行中赛事档案 2 > 仅出场的球员特写 1 >
-    冷知识兜底 0；同级候选按前一天比赛的热度分排序（决赛/爆冷优先），
+    昨日高光球员特写 3（赢球，或虽败但比赛本身是事件——伤退/遭爆冷/
+    鏖战）> 进行中赛事档案 2 > 仅出场的球员特写 1 > 冷知识兜底 0；
+    同级候选按前一天比赛的热度分排序（决赛/爆冷/伤退优先），
     全部处于冷却期时，重讲距上次最久的一条，而不是留白。
     """
     matches = digest.results + digest.live + digest.schedule
@@ -1237,7 +1279,8 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
         _norm(p.name) for m in digest.results for p in (m.winner_players() or [])
     }
     todays = {_norm(p.name) for m in matches for p in m.home + m.away}
-    player_heat, tournament_heat = _result_heat(digest)
+    player_heat, tournament_heat, newsworthy_losers = _result_heat(digest)
+    headliners = winners | newsworthy_losers
     state = _load_state()
 
     fresh: list[tuple[int, float, int, TournamentStory]] = []
@@ -1247,7 +1290,7 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
             continue
         aliases = tuple(_norm(alias) for alias in story.aliases)
         if story.kind == "player":
-            if _matched(aliases, winners):
+            if _matched(aliases, headliners):
                 score = 3
             elif _matched(aliases, todays):
                 score = 1
@@ -1277,11 +1320,30 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"
 
 
-def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
-    """昨日最热、但库里还没有故事的胜者记入扩库清单（data/ 随 workflow 提交）.
+def _drama_note(m, loser: bool) -> str:
+    """事件标注：为什么这场比赛/这名球员有热度."""
+    from ..models import MatchStatus
+    from .rating import is_upset
 
-    选题跟着巡回赛的实际热度走：清单里 hits 高的球员就是下一批
-    该补写"球员特写"的对象，附赛果证据便于核实后成稿。
+    notes = []
+    if m.status is MatchStatus.RETIRED:
+        notes.append("伤退惜败" if loser else "对手伤退")
+    try:
+        if is_upset(m):
+            notes.append("遭遇爆冷" if loser else "爆冷取胜")
+    except Exception:  # noqa: BLE001
+        pass
+    if len(m.sets or []) >= 3:
+        notes.append("鏖战")
+    return " · ".join(notes)
+
+
+def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
+    """昨日最热、但库里还没有故事的主角记入扩库清单（data/ 随 workflow 提交）.
+
+    选题跟着巡回赛的实际热度走：不但记胜者，伤退/遭爆冷/鏖战惜败的
+    输球方同样是新闻主角。清单里 hits 高的球员就是下一批该补写
+    "球员特写"的对象，附赛果证据与事件标注，便于核实后成稿。
     """
     from .rating import match_score
 
@@ -1291,7 +1353,9 @@ def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
     singles = [
         m for m in digest.results if m.is_singles and m.winner_players() is not None
     ]
-    singles.sort(key=lambda m: match_score(m, cn_boost=False), reverse=True)
+    singles.sort(
+        key=lambda m: match_score(m, cn_boost=False) + _match_drama(m), reverse=True
+    )
 
     try:
         wishlist = json.loads(WISHLIST_PATH.read_text(encoding="utf-8"))
@@ -1300,21 +1364,29 @@ def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
 
     changed = False
     for m in singles[:top_n]:
-        for p in m.winner_players() or []:
-            key = _norm(p.name)
-            if any(alias in key for alias in covered):
-                continue
-            entry = wishlist.setdefault(key, {"name": p.name, "hits": 0, "evidence": []})
-            entry["hits"] += 1
-            entry["evidence"] = (entry["evidence"] + [
-                {
+        sides = [(m.winner_players() or [], False)]
+        if _match_drama(m) >= DRAMA_THRESHOLD:
+            sides.append((m.loser_players() or [], True))
+        for players, is_loser in sides:
+            for p in players:
+                key = _norm(p.name)
+                if any(alias in key for alias in covered):
+                    continue
+                entry = wishlist.setdefault(
+                    key, {"name": p.name, "hits": 0, "evidence": []}
+                )
+                entry["hits"] += 1
+                evidence = {
                     "date": digest.today.isoformat(),
                     "tournament": m.tournament.name,
                     "round": str(m.round_name or ""),
                     "score": m.score_display(),
                 }
-            ])[-5:]
-            changed = True
+                note = _drama_note(m, loser=is_loser)
+                if note:
+                    evidence["note"] = note
+                entry["evidence"] = (entry["evidence"] + [evidence])[-5:]
+                changed = True
     if changed:
         WISHLIST_PATH.parent.mkdir(parents=True, exist_ok=True)
         WISHLIST_PATH.write_text(
