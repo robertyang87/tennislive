@@ -644,3 +644,40 @@ def test_title_candidates_always_exactly_three(sample_digest):
     empty = title_candidates(Digest(today=date(2026, 7, 21)))
     assert len(empty) == 3 and len(set(empty)) == 3
     assert all(len(t) <= 20 for t in empty)
+
+
+def test_fatal_qa_blocks_publish(sample_digest):
+    """V1 §0/§4：FATAL 质检必须能触发停发（cli 依 fatal 非空返回 2 阻断发布）."""
+    from tennislive.qa import run_checks
+
+    fatal, _ = run_checks(sample_digest, "", "标题\n\n正文")
+    assert any("标题为空" in f for f in fatal)  # 空标题 = FATAL
+
+    sample_digest.results[0].home[0].name = "?"
+    fatal2, _ = run_checks(sample_digest, "正常标题", "标题\n\n正文")
+    assert any("空球员名" in f for f in fatal2)
+
+
+def test_cover_facts_trace_back_to_match_evidence():
+    """V1 §5.1 事实回溯：封面主标题里的人名与数字必须来自当场证据."""
+    import re
+
+    from tennislive.render.titles import cover_result_hook
+    from tennislive.zh import player_zh
+
+    m = make_match(
+        home_name="Qinwen Zheng", home_country="CHN",
+        away_name="Aryna Sabalenka", away_country="BLR",
+        sets=((4, 6), (6, 3), (7, 6)), tiebreaks=(None, None, (10, 8)),
+    )
+    main, _ = cover_result_hook(m)
+
+    evidence_names = {player_zh(p.name) for p in m.home + m.away}
+    assert any(name in main for name in evidence_names)
+    evidence_digits = set("".join(
+        str(x) for s in m.sets for x in (s.home, s.away,
+                                         s.home_tiebreak or "", s.away_tiebreak or "")
+    ) + "".join(str(p.rank or "") + str(p.seed or "") for p in m.home + m.away))
+    for ch in main:
+        if ch.isdigit():
+            assert ch in evidence_digits  # 主标题不得出现证据之外的数字
