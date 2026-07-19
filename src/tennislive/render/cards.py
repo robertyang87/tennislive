@@ -137,16 +137,37 @@ class _Fonts:
     def __init__(self) -> None:
         regular, r_idx = _find_font(False)
         bold, b_idx = _find_font(True)
+        asset_dir = Path(__file__).resolve().parents[3] / "assets" / "fonts"
+
+        def optional_font(env_name: str, asset_name: str, fallback: str) -> str:
+            configured = os.environ.get(env_name)
+            if configured and Path(configured).exists():
+                return configured
+            bundled = asset_dir / asset_name
+            return str(bundled) if bundled.exists() else fallback
+
+        display = optional_font(
+            "TENNISLIVE_FONT_DISPLAY",
+            "SmileySans-Oblique.woff2",
+            bold,
+        )
+        latin = optional_font(
+            "TENNISLIVE_FONT_LATIN",
+            "BarlowCondensed-SemiBold.ttf",
+            bold,
+        )
 
         def load(path: str, idx: int, size: int) -> ImageFont.FreeTypeFont:
             return ImageFont.truetype(path, size=size, index=idx)
 
         self.title = load(bold, b_idx, 84)
+        self.display_title = load(display, 0, 84)
         self.huge = load(bold, b_idx, 176)
         self.subtitle = load(regular, r_idx, 42)
         self.section = load(bold, b_idx, 52)
         self.label = load(regular, r_idx, 31)
         self.en = load(bold, b_idx, 26)
+        self.latin = load(latin, 0, 28)
         self.main = load(bold, b_idx, 46)
         self.score = load(bold, b_idx, 38)
         self.body = load(regular, r_idx, 36)
@@ -317,6 +338,7 @@ def _page(
     en_sub: str,
     accent=None,
     deco: str = "arcs",
+    title_font=None,
 ):
     """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
     img, draw = _canvas(deco)
@@ -325,9 +347,14 @@ def _page(
     tl = draw.textlength(date_label, font=fonts.small)
     draw.text((W - MARGIN - tl, MARGIN + 16), date_label, font=fonts.small, fill=GREY)
     y = MARGIN + 96
-    draw.text((MARGIN, y), en_sub, font=fonts.en, fill=GREY)
+    draw.text((MARGIN, y), en_sub, font=fonts.latin, fill=GREY)
     y += 42
-    draw.text((MARGIN, y), column_title, font=fonts.title, fill=accent or ACCENT)
+    draw.text(
+        (MARGIN, y),
+        column_title,
+        font=title_font or fonts.title,
+        fill=accent or ACCENT,
+    )
     y += 120
     draw.line([MARGIN, y, W - MARGIN, y], fill=PANEL_LINE, width=3)
     return img, draw, y + 40
@@ -917,17 +944,19 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
         "BREAK POINT · JUST IN",
         accent=RED,
         deco="court",
+        title_font=fonts.display_title,
     )
 
     group = group_by_tournament([m])[0]
     badge = group.compact_level
-    badge_w = draw.textlength(badge, font=fonts.en)
+    badge_font = fonts.latin if badge.isascii() else fonts.en
+    badge_w = draw.textlength(badge, font=badge_font)
     draw.rounded_rectangle(
         [MARGIN, y, MARGIN + badge_w + 36, y + 48],
         radius=10,
         fill=ACCENT,
     )
-    draw.text((MARGIN + 18, y + 8), badge, font=fonts.en, fill=BTN_TEXT)
+    draw.text((MARGIN + 18, y + 6), badge, font=badge_font, fill=BTN_TEXT)
     reason = " · ".join(hotspot_reasons(m)[:3])
     reason_w = draw.textlength(reason, font=fonts.small)
     draw.text((W - MARGIN - reason_w, y + 8), reason, font=fonts.small, fill=GREY)
@@ -936,10 +965,10 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
     for chunk in _flash_headline_lines(
         draw,
         headline,
-        fonts.title,
+        fonts.display_title,
         W - 2 * MARGIN,
     ):
-        draw.text((MARGIN, y), chunk, font=fonts.title, fill=ACCENT)
+        draw.text((MARGIN, y), chunk, font=fonts.display_title, fill=ACCENT)
         y += 102
     y += 18
 
