@@ -127,6 +127,11 @@ class Match:
     editorial_note: Optional[str] = None
     editorial_source: Optional[str] = None
     editorial_url: Optional[str] = None
+    data_sources: list[str] = field(default_factory=list)
+    time_observations: dict[str, Optional[str]] = field(default_factory=dict)
+    schedule_time_status: Optional[str] = None
+    schedule_note: Optional[str] = None
+    schedule_source_urls: list[str] = field(default_factory=list)
 
     @property
     def is_doubles(self) -> bool:

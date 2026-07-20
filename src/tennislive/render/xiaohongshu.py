@@ -9,7 +9,7 @@ from pathlib import Path
 from ..digest import Digest
 from ..models import Match, MatchStatus
 from ..zh import player_zh
-from ..timeutil import fmt_time_beijing
+from ..timeutil import fmt_schedule_time, fmt_time_beijing
 from .common import (
     group_by_tournament,
     is_chinese_involved,
@@ -237,7 +237,7 @@ def _lead_section(match: Match, *, compact: bool, today) -> XhsSection:
             tuple(lines),
         )
 
-    status = "进行中" if match.status == MatchStatus.LIVE else fmt_time_beijing(match.start_utc)
+    status = "进行中" if match.status == MatchStatus.LIVE else fmt_schedule_time(match)
     group = group_by_tournament([match])[0]
     stage = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
     return XhsSection(
@@ -272,7 +272,7 @@ def _china_line(match: Match) -> str:
             action = "捧杯" if round_name == "决赛" else "过关"
             return f"✅ {name}{action}｜{group.compact_title}·{round_name}"
         return f"▫️ {name}止步{round_name}｜{group.compact_title}"
-    status = "正在比赛" if match.status == MatchStatus.LIVE else f"{fmt_time_beijing(match.start_utc)}出战"
+    status = "正在比赛" if match.status == MatchStatus.LIVE else f"{fmt_schedule_time(match)}出战"
     return f"⏰ {name}{status}｜{group.compact_title}"
 
 
@@ -296,7 +296,7 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
             lines.append("")
         lines.extend(
             [
-                f"⏰ {fmt_time_beijing(match.start_utc)}｜{stage}",
+                f"⏰ {fmt_schedule_time(match)}｜{stage}",
                 _matchup(match),
                 "看点：" + _short(preview_angle(match, digest.today), 34 if compact else 44) + "。",
             ]

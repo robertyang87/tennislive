@@ -40,6 +40,24 @@ def fmt_time_beijing(dt: datetime | None) -> str:
     return to_beijing(dt).strftime("%H:%M")
 
 
+def fmt_schedule_time(match) -> str:
+    """Display schedule certainty instead of presenting every feed time as exact."""
+    status = getattr(match, "schedule_time_status", None)
+    if status == "conflict":
+        return "时间待核"
+    if status == "official-unlisted":
+        return "待官方排期"
+    if status in {"official-order-estimate", "single-source"}:
+        return (
+            f"预计 {fmt_time_beijing(match.start_utc)}*"
+            if match.start_utc is not None
+            else "待官方排期"
+        )
+    if match.start_utc is None:
+        return "待官方排期" if status == "unpublished" else "待定"
+    return fmt_time_beijing(match.start_utc)
+
+
 def fmt_date_zh(d: date) -> str:
     """'2026年7月16日 周四'."""
     return f"{d.year}年{d.month}月{d.day}日 {WEEKDAY_ZH[d.weekday()]}"

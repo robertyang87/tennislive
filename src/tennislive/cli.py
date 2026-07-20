@@ -116,6 +116,12 @@ def cmd_digest(args) -> int:
         console.print(f"[red]抓取失败：{e}[/red]")
         return 1
 
+    # 巡回赛官方 OOP 决定时间是否精确、仅有场序，或尚未发布；
+    # ESPN 与 SofaScore 保留为覆盖面和交叉验证来源。
+    from .sources.official_schedule import enrich_official_schedules
+
+    digest.source_status.update(enrich_official_schedules(digest))
+
     # 只通过已配置的数据许可 API 补充专业统计。没有 API key 时保留基础
     # 比分页，不在 GitHub Actions 中抓取 ATP/WTA/TDI 官网页面。
     from .render.focus import select_focus_match

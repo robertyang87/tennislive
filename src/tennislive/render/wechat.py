@@ -6,7 +6,7 @@ import re
 
 from ..digest import Digest
 from ..models import Match
-from ..timeutil import fmt_date_zh, fmt_time_beijing
+from ..timeutil import fmt_date_zh, fmt_schedule_time, fmt_time_beijing
 from .common import (
     group_by_tournament,
     is_chinese_involved,
@@ -83,7 +83,7 @@ def to_markdown(digest: Digest) -> str:
                 lines.append(f"- **{mark}｜{label}**：{result_line(m)}")
             else:
                 lines.append(
-                    f"- **{fmt_time_beijing(m.start_utc)}｜{label}**："
+                    f"- **{fmt_schedule_time(m)}｜{label}**："
                     f"{side_display(m.home)} vs {side_display(m.away)}"
                 )
         lines.append("")
@@ -105,7 +105,7 @@ def to_markdown(digest: Digest) -> str:
         for m in schedule:
             group = group_by_tournament([m])[0]
             lines.append(
-                f"- **{fmt_time_beijing(m.start_utc)}｜{group.name_zh}**："
+                f"- **{fmt_schedule_time(m)}｜{group.name_zh}**："
                 f"{side_display(m.home)} vs {side_display(m.away)}"
             )
             source = ""
@@ -253,7 +253,7 @@ def to_html(digest: Digest) -> str:
                 main = f"<strong>{mark}｜{label}</strong><br/>{_esc(result_line(m))}"
             else:
                 main = (
-                    f'<strong><span style="{_S["time"]}">{_esc(fmt_time_beijing(m.start_utc))}</span>'
+                    f'<strong><span style="{_S["time"]}">{_esc(fmt_schedule_time(m))}</span>'
                     f'{label}</strong><br/>{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
                 )
             parts.append(_item(main))
@@ -275,7 +275,7 @@ def to_html(digest: Digest) -> str:
         for m in schedule:
             group = group_by_tournament([m])[0]
             main = (
-                f'<strong><span style="{_S["time"]}">{_esc(fmt_time_beijing(m.start_utc))}</span>'
+                f'<strong><span style="{_S["time"]}">{_esc(fmt_schedule_time(m))}</span>'
                 f'{_esc(group.name_zh)}</strong><br/>'
                 f'{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
             )
