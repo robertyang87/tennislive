@@ -111,8 +111,11 @@ def test_xhs_post(sample_digest):
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
-    assert "今天只讲三件事" in post
-    assert all(marker in post for marker in ("①", "②", "③"))
+    assert "今天先看这一件事" in post
+    assert "今晚只看这三场" in post
+    assert "📝 我的一票" in post
+    assert "💬 留个答案" in post
+    assert result_line(sample_digest.results[0]) not in post
     assert "ATP 250" not in post and "WTA 250" not in post
     assert "一场球看细一点" not in post
     assert "7:30" not in post
@@ -326,10 +329,23 @@ def test_wishlist_records_uncovered_hot_winners(tmp_path, monkeypatch):
     assert wishlist["flavio cobolli"]["evidence"][0]["tournament"] == "Wimbledon"
     assert not any("sinner" in key for key in wishlist)  # 库内球员不进清单
 
-    # 再次记录累计热度
+    # workflow 重试不会把同一天同一场比赛重复计数
     tournament_story.record_story_wishlist(digest)
     wishlist = json.loads((tmp_path / "story_wishlist.json").read_text("utf-8"))
-    assert wishlist["flavio cobolli"]["hits"] == 2
+    assert wishlist["flavio cobolli"]["hits"] == 1
+    assert len(wishlist["flavio cobolli"]["evidence"]) == 1
+
+    # 旧版已经产生的重复记录也会在下一次运行时归一化
+    entry = wishlist["flavio cobolli"]
+    entry["hits"] = 3
+    entry["evidence"] *= 3
+    (tmp_path / "story_wishlist.json").write_text(
+        json.dumps(wishlist, ensure_ascii=False), encoding="utf-8"
+    )
+    tournament_story.record_story_wishlist(digest)
+    repaired = json.loads((tmp_path / "story_wishlist.json").read_text("utf-8"))
+    assert repaired["flavio cobolli"]["hits"] == 1
+    assert len(repaired["flavio cobolli"]["evidence"]) == 1
 
 
 def test_dramatic_loser_is_a_headliner(tmp_path, monkeypatch):
@@ -576,7 +592,7 @@ def test_cover_title_and_post_share_one_headliner():
 
     from tennislive.render.titles import daily_lead_match, title_candidates
     from tennislive.render.webcards import cover_body
-    from tennislive.render.xiaohongshu import _daily_stories, post_title
+    from tennislive.render.xiaohongshu import build_post_plan, post_title
 
     slam_final = make_match(
         tournament="Wimbledon", round_name="Final",
@@ -594,7 +610,7 @@ def test_cover_title_and_post_share_one_headliner():
     )
 
     assert daily_lead_match(digest) is slam_final
-    assert _daily_stories(digest)[0] is slam_final
+    assert build_post_plan(digest).lead_match_id == slam_final.match_id
     assert "辛纳" in title_candidates(digest)[0]
     assert "辛纳" in post_title(digest)
     body = cover_body(digest, *title_candidates(digest)[:2], "07.20")
@@ -621,6 +637,26 @@ def test_cover_applies_china_weight_instead_of_input_order():
     assert daily_lead_match(digest) is chinese_match
     body = cover_body(digest, *cover_highlights(digest), "07.20")
     assert "郑钦文" in re.search(r'class="focus">(.*?)</div>', body).group(1)
+
+
+def test_cover_china_focus_uses_chinese_outcome_instead_of_full_score():
+    from tennislive.render.webcards import cover_body
+
+    lead = make_match(match_id="lead")
+    chinese_final = make_match(
+        home_name="Player One",
+        away_name="Qinwen Zheng",
+        away_country="CHN",
+        winner=0,
+        round_name="Final",
+        match_id="china-final",
+    )
+    digest = Digest(today=date(2026, 7, 20), results=[lead, chinese_final])
+
+    body = cover_body(digest, "今日头条", "可靠副标题", "7.20 · 周一")
+
+    assert "郑钦文 止步男单决赛" in body
+    assert "郑钦文 6-4" not in body
 
 def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
     from dataclasses import replace

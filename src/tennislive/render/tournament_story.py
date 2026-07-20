@@ -1473,6 +1473,23 @@ def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
         wishlist = {}
 
     changed = False
+    # 旧版本在 workflow 重试时会把同一场证据重复计数。先就地归一化，
+    # hits 只扣除能明确识别的重复项，不影响已经滚出最近 5 条的历史累计。
+    for entry in wishlist.values():
+        evidence = entry.get("evidence") or []
+        unique: list[dict] = []
+        seen: set[str] = set()
+        for item in evidence:
+            key = json.dumps(item, ensure_ascii=False, sort_keys=True)
+            if key not in seen:
+                seen.add(key)
+                unique.append(item)
+        duplicates = len(evidence) - len(unique)
+        if duplicates:
+            entry["evidence"] = unique[-5:]
+            entry["hits"] = len(unique)
+            changed = True
+
     for m in singles[:top_n]:
         sides = [(m.winner_players() or [], False)]
         if _match_drama(m) >= DRAMA_THRESHOLD:
@@ -1485,7 +1502,6 @@ def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
                 entry = wishlist.setdefault(
                     key, {"name": p.name, "hits": 0, "evidence": []}
                 )
-                entry["hits"] += 1
                 evidence = {
                     "date": digest.today.isoformat(),
                     "tournament": m.tournament.name,
@@ -1495,8 +1511,15 @@ def record_story_wishlist(digest: Digest, top_n: int = 3) -> None:
                 note = _drama_note(m, loser=is_loser)
                 if note:
                     evidence["note"] = note
-                entry["evidence"] = (entry["evidence"] + [evidence])[-5:]
-                changed = True
+                evidence_key = json.dumps(evidence, ensure_ascii=False, sort_keys=True)
+                existing = {
+                    json.dumps(item, ensure_ascii=False, sort_keys=True)
+                    for item in entry["evidence"]
+                }
+                if evidence_key not in existing:
+                    entry["hits"] += 1
+                    entry["evidence"] = (entry["evidence"] + [evidence])[-5:]
+                    changed = True
     if changed:
         WISHLIST_PATH.parent.mkdir(parents=True, exist_ok=True)
         WISHLIST_PATH.write_text(

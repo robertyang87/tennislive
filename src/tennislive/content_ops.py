@@ -11,9 +11,9 @@ from .timeutil import BEIJING
 from .zh.terms import round_zh
 
 PREVIEW_THRESHOLD = 38
-RESULT_DAILY_LIMIT = 3
-PREVIEW_DAILY_LIMIT = 2
-RUN_LIMIT = 2
+RESULT_DAILY_LIMIT = 1
+PREVIEW_DAILY_LIMIT = 1
+RUN_LIMIT = 1
 
 
 @dataclass(frozen=True)

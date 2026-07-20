@@ -1,7 +1,7 @@
 name: daily-tennis-digest
 
-# 每天北京时间 ~07:20 自动生成晨报（昨夜赛果 + 今日赛程），
-# 提交回仓库，并按配置推送/发布；也可手动触发。
+# 每天北京时间早间生成内容包（昨夜赛果 + 今日赛程）。这是材料生成
+# 窗口，不是强制发布时间；提交回仓库并按配置推送，也可手动触发。
 # GitHub 定时任务在 :00/:30 高峰时段可能被延迟或丢弃，
 # 因此：主班次避开热门分钟 + 备份班次带幂等检查兜底。
 on:
@@ -53,8 +53,12 @@ jobs:
         id: guard
         run: |
           TODAY=$(TZ=Asia/Shanghai date +%F)
-          if [ "${{ github.event_name }}" = "schedule" ] && [ -f "output/$TODAY/digest.json" ]; then
-            echo "今日内容已生成（主班次已跑），本次跳过"
+          QA_FILE="output/$TODAY/qa.txt"
+          if [ "${{ github.event_name }}" = "schedule" ] \
+             && [ -f "output/$TODAY/digest.json" ] \
+             && [ -f "$QA_FILE" ] \
+             && ! grep -q '^\[FATAL\]' "$QA_FILE"; then
+            echo "今日内容已生成且通过质量闸门，本次跳过"
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"

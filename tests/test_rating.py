@@ -12,7 +12,9 @@ from tennislive.render.hotspot import (
 from tennislive.render.rating import (
     flash_candidates,
     is_upset,
+    lead_story_breakdown,
     match_score,
+    select_lead_story,
     stay_up_stars,
     tonight_focus,
     top_results,
@@ -126,8 +128,10 @@ def test_hotspot_package_has_three_compact_titles_and_evidence():
     assert all(len(title) <= 20 and " " not in title for title in titles)
     assert titles[0] in post
     assert "大满贯·温布尔登网球锦标赛" in post
-    assert "6-4 7-6(3)" in post
-    assert "一句看懂" in post
+    assert "6-4 7-6(3)" not in post
+    assert "刚刚结束，但这场不该只看比分" in post
+    assert "📝 我的一票" in post
+    assert "💬 留个答案" in post
 
 
 def test_flash_headline_cn_win():
@@ -204,6 +208,104 @@ def test_tonight_focus_prefers_cn_and_known_players():
     picks = tonight_focus([low, star, cn], min_n=2, max_n=3)
     assert picks[0].match_id == "cn"
     assert {m.match_id for m in picks[:2]} == {"cn", "star"}
+
+
+def test_lead_story_explains_china_headliner_stage_and_official_evidence():
+    chinese = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        tournament="China Open",
+        tour=Tour.WTA,
+        round_name="Semifinals",
+        match_id="cn-evidence",
+    )
+    chinese.tournament.level = "WTA500"
+    chinese.editorial_note = "官方赛后报道摘要"
+    chinese.editorial_source = "WTA"
+    chinese.editorial_url = "https://www.wtatennis.com/news/example"
+    comparable = make_match(
+        tournament="Halle Open",
+        round_name="Semifinals",
+        match_id="star-no-evidence",
+    )
+    comparable.tournament.level = "ATP500"
+    digest = Digest(today=date(2026, 7, 20), results=[comparable, chinese])
+
+    selected = select_lead_story(digest)
+
+    assert selected is not None and selected.match is chinese
+    assert selected.breakdown.china == 45
+    assert selected.breakdown.evidence == 20
+    assert "中国球员相关" in selected.reasons
+    assert "处于半决赛" in selected.reasons
+    assert "有WTA原文支撑" in selected.reasons
+
+
+def test_lead_story_keeps_major_final_above_routine_chinese_result():
+    chinese = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        tournament="Iasi Open",
+        round_name="Round of 32",
+        match_id="cn-routine",
+    )
+    chinese.tournament.level = "WTA250"
+    major = make_match(
+        tournament="Wimbledon",
+        round_name="Final",
+        match_id="major-final",
+    )
+    major.tournament.level = "GS"
+    digest = Digest(today=date(2026, 7, 20), results=[chinese, major])
+
+    selected = select_lead_story(digest)
+
+    assert selected is not None and selected.match is major
+    assert selected.breakdown.event == 50
+    assert selected.breakdown.stage == 35
+
+
+def test_lead_story_recaps_a_result_before_previewing_schedule():
+    result = make_match(
+        tournament="Iasi Open",
+        round_name="Round of 32",
+        match_id="finished",
+    )
+    result.tournament.level = "ATP250"
+    scheduled = make_match(
+        home_name="Qinwen Zheng",
+        home_country="CHN",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Wimbledon",
+        round_name="Final",
+        match_id="scheduled",
+    )
+    scheduled.tournament.level = "GS"
+    digest = Digest(today=date(2026, 7, 20), results=[result], schedule=[scheduled])
+
+    selected = select_lead_story(digest)
+
+    assert selected is not None and selected.match is result
+    assert "已有完整赛果可复盘" in selected.reasons
+
+
+def test_lead_story_score_does_not_reward_an_upset():
+    upset = make_match(match_id="upset", winner=0)
+    upset.home[0].seed = upset.away[0].seed = None
+    upset.home[0].rank, upset.away[0].rank = 80, 5
+    expected = make_match(match_id="expected", winner=1)
+    expected.home[0].seed = expected.away[0].seed = None
+    expected.home[0].rank, expected.away[0].rank = 80, 5
+
+    upset_breakdown, upset_reasons = lead_story_breakdown(upset)
+    expected_breakdown, _ = lead_story_breakdown(expected)
+
+    assert is_upset(upset) and not is_upset(expected)
+    assert upset_breakdown.total == expected_breakdown.total
+    assert all("爆冷" not in reason and "冷门" not in reason for reason in upset_reasons)
 
 
 def test_rankings_parse_and_map():

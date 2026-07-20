@@ -183,6 +183,7 @@ def test_content_command_generates_complete_preview_package(tmp_path, monkeypatc
     item = payload["items"][0]
     assert item["kind"] == "preview"
     assert item["match_id"] == "preview-cn"
+    assert "7.19｜" in item["title"]
     assert len(item["cards"]) == 4
     assert all(Path(card).exists() for card in item["cards"])
     package = Path(item["package_dir"])
@@ -192,7 +193,7 @@ def test_content_command_generates_complete_preview_package(tmp_path, monkeypatc
     assert (package / "qa.txt").read_text(encoding="utf-8") == "OK"
     facts = json.loads((package / "facts.json").read_text(encoding="utf-8"))
     assert facts["cover"]["evidence"]["match_id"] == "preview-cn"
-    assert facts["cover"]["main"] == item["title"]
+    assert facts["cover"]["main"] == item["cover_headline"]
 
 
 def test_digest_cli_fatal_returns_two_without_advancing_state(tmp_path, monkeypatch):
@@ -224,11 +225,6 @@ def test_digest_cli_fatal_returns_two_without_advancing_state(tmp_path, monkeypa
         "tennislive.render.xiaohongshu.record_quiz",
         lambda *args, **kwargs: state_calls.append("quiz"),
     )
-    monkeypatch.setattr(
-        "tennislive.render.xiaohongshu.pick_tournament_story",
-        lambda *args, **kwargs: None,
-    )
-
     outdir = tmp_path / "output"
     result = cli.main(
         [

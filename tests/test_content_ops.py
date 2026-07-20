@@ -44,7 +44,7 @@ def test_preview_candidates_use_lead_window_score_and_dedupe():
     assert [match.match_id for match in picks] == ["preview"]
 
 
-def test_content_selector_prefers_result_then_fills_with_preview():
+def test_content_selector_prefers_one_result_per_run():
     now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
     result = make_match(
         home_name="Qinwen Zheng",
@@ -60,7 +60,6 @@ def test_content_selector_prefers_result_then_fills_with_preview():
 
     assert [(pick.kind, pick.match.match_id) for pick in picks] == [
         ("result", "result"),
-        ("preview", "preview"),
     ]
 
 

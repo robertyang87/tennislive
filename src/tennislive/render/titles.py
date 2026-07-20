@@ -15,6 +15,7 @@ from .rating import (
     find_upset,
     is_upset,
     match_score,
+    select_lead_story,
     top_results,
     top_schedule,
 )
@@ -261,24 +262,9 @@ def _tonight_headline(digest: Digest) -> str | None:
 
 
 def daily_lead_match(digest: Digest):
-    """V1 唯一头条选择器：赛果优先，所有入口共享同一套 +35 评分。"""
-    results = top_results(
-        [match for match in digest.results if match.is_singles],
-        1,
-        cn_boost=True,
-    )
-    if results:
-        return results[0]
-    live = [match for match in digest.live if match.is_singles]
-    if live:
-        return max(live, key=match_score)
-    schedule = top_schedule(
-        [match for match in digest.schedule if match.is_singles], 1
-    )
-    if schedule:
-        return schedule[0]
-    fallback = digest.results + digest.live + digest.schedule
-    return max(fallback, key=match_score) if fallback else None
+    """唯一头条入口，选择逻辑与可解释分项统一由 rating 管理。"""
+    selection = select_lead_story(digest)
+    return selection.match if selection is not None else None
 
 
 def _match_title(match) -> str:
