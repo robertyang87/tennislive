@@ -65,15 +65,47 @@ def record_quiz() -> None:
         )
 
 
-def post_title(digest: Digest) -> str:
-    """V1 §3.1：发布标题 = 头条候选 ①，与封面主钩子同源.
+def xhs_title_len(text: str) -> float:
+    """小红书标题字数：全角/汉字/emoji 记 1，半角字符记 0.5."""
+    return sum(0.5 if ord(c) < 128 else 1 for c in text)
 
-    日期不占标题字数（发布时间自带日期）；备选 ②③ 由复制页提供，
-    人工从 3 个候选里选 1 个。
+
+def _title_emoji(hook: str) -> str:
+    """按钩子内容挑 emoji：夺冠🏆 / 爆冷💥 / 今晚看点🔥 / 默认🎾."""
+    if any(k in hook for k in ("夺冠", "问鼎", "捧杯", "冠军", "登顶")):
+        return "🏆"
+    if any(k in hook for k in ("爆冷", "掀翻")):
+        return "💥"
+    if any(k in hook for k in ("出战", "对阵", "今晚", "焦点")):
+        return "🔥"
+    return "🎾"
+
+
+def decorate_title(digest: Digest, hook: str) -> str:
+    """发布标题 = emoji + 日期 + 钩子，如 '🏆7.20｜跌至世界第85，西西帕斯终于捧杯'.
+
+    按小红书 20 字预算（半角记 0.5）裁剪钩子，日期与 emoji 不挤占核心信息。
+    """
+    prefix = f"{_title_emoji(hook)}{digest.today.month}.{digest.today.day}｜"
+    budget = 20 - xhs_title_len(prefix)
+    if xhs_title_len(hook) > budget:
+        out = ""
+        for ch in hook:
+            if xhs_title_len(out + ch) > budget - 1:
+                break
+            out += ch
+        hook = out.rstrip("，。、：") + "…"
+    return prefix + hook
+
+
+def post_title(digest: Digest) -> str:
+    """V1 §3.1：发布标题 = 头条候选 ①（与封面主钩子同源）+ 日期与 emoji.
+
+    备选 ②③ 由复制页提供，人工从 3 个候选里选 1 个。
     """
     from .titles import pick_headline_auto
 
-    return pick_headline_auto(digest)
+    return decorate_title(digest, pick_headline_auto(digest))
 
 
 def _tags(digest: Digest) -> list[str]:
