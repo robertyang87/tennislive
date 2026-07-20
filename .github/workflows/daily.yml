@@ -9,6 +9,9 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/daily.yml"
+      - "assets/venues/**"
+      - "data/venue_assets.json"
+      - "src/tennislive/render/**"
       - "src/tennislive/video/**"
       - "src/tennislive/cli.py"
   schedule:

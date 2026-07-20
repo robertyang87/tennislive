@@ -28,6 +28,11 @@ MAX_EDGE = 1920
 
 # (输出文件名, Commons 文件名或 None, 检索词/分类名)
 VENUES = [
+    ("athens-parthenon.jpg", "File:Parthenon Athens.jpg", None),
+    ("kitzbuhel-panorama.jpg", "File:Kitzbuehel Panorama.jpg", None),
+    ("prague-castle-panorama.jpg", "File:Prague castle panorama.jpg", None),
+    ("estoril-coast.jpg", "File:Estoril - panoramio.jpg", None),
+    ("hamburg-skyline.jpg", "File:Hamburg city skyline.jpg", None),
     ("washington-fitzgerald-tennis-center.jpg", "File:FitzGerald Tennis Center.jpg", None),
     ("canada-national-bank-open-stadium.jpg", "File:RogersCup2011-2.jpg", None),
     ("cincinnati-lindner-tennis-center.jpg", "File:Lindner Family Tennis Center 2025.jpg", None),

@@ -47,6 +47,7 @@ from .tournament_story import (
     pick_tournament_story,
     story_matches_match,
 )
+from .venue_assets import venue_asset_for_match
 
 logger = logging.getLogger(__name__)
 
@@ -190,6 +191,14 @@ body::before { content:""; position:absolute; left:0; top:0; width:100%; height:
 html.light .poster:not(.cover)::before { opacity:.16; }
 .poster:not(.cover)>* { position:relative; z-index:1; }
 
+.poster.tonight-page::before {
+  background:
+    linear-gradient(180deg,rgba(2,16,20,.30) 0%,rgba(2,16,20,.42) 30%,rgba(2,20,18,.86) 55%,rgba(2,20,18,.98) 100%),
+    var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
+  opacity:1;
+}
+html.light .poster.tonight-page::before { opacity:.52; }
+
 .masthead { display:flex; align-items:center; gap:16px; }
 .brand-icon { width:54px; height:54px; object-fit:contain; flex:none; }
 .ball { width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; flex:none; }
@@ -198,7 +207,7 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 .brand { font-weight:700; font-size:34px; letter-spacing:2px; line-height:1.2; }
 .poster:not(.cover) .brand { font-family:'TL Display SC','TL Sans SC',sans-serif;
   font-size:40px; font-weight:400; letter-spacing:0; }
-.date { margin-left:auto; font-family:'Barlow Condensed'; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }
+.date { margin-left:auto; font-family:'Barlow Condensed','TL Sans SC',sans-serif; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }
 
 .titleband { margin:20px 0 16px; padding-left:18px; border-left:6px solid var(--section-accent); }
 .poster:not(.cover)>.save-badge { position:absolute; top:126px; right:64px; padding:7px 13px;
@@ -351,7 +360,27 @@ html.light .chip-green { color:#fff; }
 
 /* ---------- 今晚焦点 ---------- */
 .tonight-page h1 { font-size:62px; }
-.tonight-page .titleband { margin:16px 0 10px; }
+.tonight-page .titleband { margin:16px 0 4px; }
+.event-meta { display:flex; align-items:center; gap:14px; min-height:40px; color:#fff; }
+.event-meta b { padding:5px 10px; border-radius:4px; background:var(--section-accent);
+  color:#09221B; font-family:'Barlow Condensed'; font-size:21px; letter-spacing:1px; }
+.event-meta span { font-size:23px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.65); }
+.event-meta i { margin-left:auto; font-size:19px; font-style:normal; color:#E4EBE7; }
+.event-spacer { height:220px; flex:none; }
+.tonight-page.count-1 .event-spacer { height:310px; }
+.tonight-page.count-2 .event-spacer { height:230px; }
+.tonight-page.count-3 .event-spacer { height:110px; }
+.tonight-page.count-4 .event-spacer,
+.tonight-page.count-5 .event-spacer { height:30px; }
+.court-label { display:flex; align-items:center; gap:12px; height:35px; margin:0 0 7px;
+  color:#F5F7F4; font-size:21px; font-weight:700; letter-spacing:1px; }
+.court-label::before { content:""; width:24px; height:3px; background:var(--section-accent); }
+.china-marker { display:inline-flex; align-items:center; margin-right:8px; padding:3px 8px;
+  border:1px solid var(--gold); border-radius:4px; color:var(--gold); font-size:16px;
+  line-height:1; vertical-align:2px; }
+.venue-credit { position:absolute!important; left:64px; bottom:28px; max-width:500px;
+  overflow:hidden; color:#AAB8B1; font-size:15px; line-height:1.2; white-space:nowrap;
+  text-overflow:ellipsis; }
 .pick { border-left:5px solid var(--sky); padding:7px 26px 8px; margin-bottom:8px; }
 .pick header { height:36px; }
 .pick header > .hl:first-child { min-width:0; flex:1; }
@@ -540,9 +569,13 @@ def _masthead(date_label: str) -> str:
         if icon_uri
         else '<span class="ball"></span>'
     )
+    # The bundled condensed Latin font is deterministic across local Chromium
+    # and GitHub Actions; keep the masthead date numeric and let the cover carry
+    # the Chinese weekday separately.
+    compact_date = date_label.split("·", 1)[0].strip()
     return (
         f'<div class="masthead">{icon}<span class="brand">网球时差</span>'
-        f'<span class="date">{html.escape(date_label)}</span></div>'
+        f'<span class="date">{html.escape(compact_date)}</span></div>'
     )
 
 
@@ -673,12 +706,20 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     )
 
 
-def _sched_card(m: Match, *, with_reason: bool = False) -> str:
+def _sched_card(
+    m: Match,
+    *,
+    with_reason: bool = False,
+    show_tournament: bool = True,
+) -> str:
     """赛程卡：时间、对阵，以及可核验的推荐理由."""
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
-    tour_txt = html.escape(g.name_zh)
+    tour_txt = html.escape(g.name_zh) if show_tournament else ""
     level_badge = html.escape(g.compact_level)
+    level_html = (
+        f'<b class="tour-level">{level_badge}</b>' if show_tournament else ""
+    )
     t = fmt_time_beijing(m.start_utc)
     right = f'<span class="htime">{t}</span>'
     reason = ""
@@ -700,10 +741,14 @@ def _sched_card(m: Match, *, with_reason: bool = False) -> str:
             f'{html.escape(preview_angle(m))}</div>'
         )
         card_class += " pick"
+    chinese = (
+        '<b class="china-marker">中国选手</b>' if is_chinese_involved(m) else ""
+    )
+    event_meta = f"{tour_txt} · " if tour_txt else ""
     return (
         f'<article class="{card_class}">'
-        f'<header><span class="hl"><b class="tour-level">{level_badge}</b>'
-        f'<span class="round">{tour_txt} · {meta}</span></span>'
+        f'<header><span class="hl">{level_html}'
+        f'<span class="round">{chinese}{event_meta}{meta}</span></span>'
         f'<span class="hl">{right}</span></header>'
         f"{_side_html(m, 0, 0, with_sets=False)}{_side_html(m, 1, 0, with_sets=False)}"
         f"{reason}"
@@ -928,15 +973,80 @@ def china_body(results: list[Match], today: list[Match], date_label: str) -> str
     )
 
 
+def _tonight_event_groups(matches: list[Match]):
+    """Merge ATP/WTA draws that belong to the same named tournament."""
+    buckets: dict[str, list] = {}
+    order: list[str] = []
+    for group in group_by_tournament(matches):
+        key = " ".join(group.name_en.casefold().split())
+        if key not in buckets:
+            buckets[key] = []
+            order.append(key)
+        buckets[key].append(group)
+    return [buckets[key] for key in order]
+
+
 def tonight_body(matches: list[Match], date_label: str) -> str:
-    # Keep the page curated, but allow five matches without spilling past 9:16.
-    cards = [_sched_card(m, with_reason=True) for m in matches[:5]]
+    # A schedule page belongs to one event. Mixed input is intentionally narrowed
+    # to its highest-priority event; generate_deck emits the remaining groups as
+    # separate pages.
+    event_groups = _tonight_event_groups(matches)[0]
+    group = event_groups[0]
+    matches = [
+        match for event_group in event_groups for match in event_group.matches
+    ][:5]
+    cards: list[str] = []
+    courts = {m.court.strip() for m in matches if m.court and m.court.strip()}
+    show_courts = len(courts) > 1
+    last_court = None
+    for match in sorted(
+        matches,
+        key=lambda m: (
+            m.court or "",
+            m.start_utc.timestamp() if m.start_utc else float("inf"),
+        ),
+    ):
+        court = (match.court or "").strip()
+        if show_courts and court != last_court:
+            cards.append(
+                f'<div class="court-label">{html.escape(court or "场地待定")}</div>'
+            )
+            last_court = court
+        cards.append(
+            _sched_card(match, with_reason=True, show_tournament=False)
+        )
+
+    venue = venue_asset_for_match(matches[0])
+    page_style = ""
+    location = ""
+    credit = ""
+    if venue is not None:
+        uri = _asset_image_uri(venue.image)
+        if uri:
+            page_style = (
+                f"--page-bg:url('{uri}');"
+                f"--page-bg-pos:{html.escape(venue.focal_point)}"
+            )
+            location = venue.location
+            credit = f'<div class="venue-credit">{html.escape(venue.credit_label)}</div>'
+    first = matches[0].tournament
+    location = location or " · ".join(filter(None, (first.city, first.country)))
+    levels = list(dict.fromkeys(event_group.compact_level for event_group in event_groups))
+    level_label = " / ".join(levels)
+    meta = "".join(
+        (
+            f'<b class="event-level">{html.escape(level_label)}</b>',
+            f'<span>{html.escape(location)}</span>' if location else "",
+            '<i>北京时间</i>',
+        )
+    )
     return (
-        f'<div class="poster tonight-page count-{min(len(cards), 5)}">'
+        f'<div class="poster tonight-page count-{len(matches)}" style="{page_style}">'
         + _masthead(date_label)
-        + _titleband("Tonight's Focus · 今晚焦点", "今晚焦点")
-        + '<div class="save-badge">建议收藏 · 开赛前看</div>'
+        + _titleband("Tonight's Focus · 今晚焦点", group.name_zh)
+        + f'<div class="event-meta">{meta}</div><div class="event-spacer"></div>'
         + "".join(cards)
+        + credit
         + _FOOTER
         + "</div>"
     )
@@ -1324,14 +1434,14 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
                 page2, date_label, with_hero=False, page=2, total=total,
             )))
 
-    cn_results = [m for m in digest.results if is_chinese_involved(m)]
-    cn_today = [m for m in digest.schedule + digest.live if is_chinese_involved(m)]
-    if cn_results or cn_today:
-        pages.append(("china", china_body(cn_results, cn_today, date_label)))
-
     tonight = editorial_tonight_focus(digest.schedule)
     if tonight:
-        pages.append(("tonight", tonight_body(tonight, date_label)))
+        for index, event_groups in enumerate(_tonight_event_groups(tonight), start=1):
+            kind = "tonight" if index == 1 else f"tonight{index}"
+            event_matches = [
+                match for group in event_groups for match in group.matches
+            ]
+            pages.append((kind, tonight_body(event_matches, date_label)))
 
     story = direct_story_for_match(lead, prefer_player=True) if lead is not None else None
     if story is None:
@@ -1345,10 +1455,15 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
-    # 数据反馈版每日包最多 7 张。优先保留封面、头条解释、专业复盘、
-    # 中国球员与今晚焦点；周榜和额外赛果先让位。
+    # 通常控制在 7 张；当 3–5 场焦点分属不同赛事时，为避免混排，
+    # 赛事页属于不可压缩内容，卡组上限随之扩展。
+    protected = sum(
+        kind in {"cover", "lead", "media", "focus"} or kind.startswith("tonight")
+        for kind, _body in pages
+    )
+    target_pages = max(7, protected)
     for optional_kind in ("rankings", "results2", "scoreboard", "story"):
-        if len(pages) <= 7:
+        if len(pages) <= target_pages:
             break
         pages = [page for page in pages if page[0] != optional_kind]
 
