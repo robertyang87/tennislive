@@ -22,7 +22,8 @@ from PIL import Image, ImageDraw, ImageFont
 from ..digest import Digest
 from ..models import Match
 from ..timeutil import WEEKDAY_ZH, fmt_time_beijing
-from ..zh import player_zh
+from ..zh import player_zh, surface_zh
+from ..zh.tournaments import tournament_surface
 from .common import (
     _abbrev_en,
     group_by_tournament,
@@ -31,7 +32,13 @@ from .common import (
     result_line,
     side_display,
 )
-from .rating import editorial_tonight_focus, find_upset, is_upset, stay_up_stars, top_results
+from .rating import (
+    find_upset,
+    is_upset,
+    stay_up_stars,
+    tonight_event_focus,
+    top_results,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -779,6 +786,15 @@ def _card_tonight(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image
     group = group_by_tournament(matches)[0]
     matches = group.matches
     img, draw, y = _page(fonts, date_label, group.name_zh, "TONIGHT'S FOCUS")
+    first = matches[0].tournament
+    surface = surface_zh(first.surface or tournament_surface(first.name)) or "场地待核"
+    draw.text(
+        (MARGIN + 4, y),
+        f"{group.compact_level} · {surface}",
+        font=fonts.label,
+        fill=ACCENT,
+    )
+    y += 48
     lead, gap = _spread(len(matches), block_h=_BLOCK_H_NOSUB)
     y += lead
     for m in matches:
@@ -1067,13 +1083,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         board = top_results(singles_results, 3)
         images.append(("results", _card_focus(fonts, date_label, board)))
 
-    tonight = editorial_tonight_focus(digest.schedule)
-    if tonight:
-        event_buckets: dict[str, list[Match]] = {}
-        for match in tonight:
-            key = " ".join(match.tournament.name.casefold().split())
-            event_buckets.setdefault(key, []).append(match)
-        for index, event_matches in enumerate(event_buckets.values(), start=1):
+    tonight_events = tonight_event_focus(digest.schedule)
+    if tonight_events:
+        for index, event_matches in enumerate(tonight_events, start=1):
             kind = "tonight" if index == 1 else f"tonight{index}"
             images.append((kind, _card_tonight(fonts, date_label, event_matches)))
 

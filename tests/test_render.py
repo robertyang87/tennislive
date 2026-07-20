@@ -228,6 +228,15 @@ def test_cards_fallback_matches_deck_policy(tmp_path, sample_digest, monkeypatch
         raise RuntimeError("simulated: playwright unavailable")
 
     monkeypatch.setattr(webcards, "generate_deck", unavailable)
+    sample_digest.schedule.append(
+        make_match(
+            status=MatchStatus.SCHEDULED,
+            winner=None,
+            sets=(),
+            tiebreaks=(),
+            match_id="fallback-second-scheduled",
+        )
+    )
 
     paths = cards.generate_cards(sample_digest, tmp_path / "cards")
     assert len(paths) >= 3
@@ -432,6 +441,15 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
 
     digest = deepcopy(sample_digest)
     digest.today = date(2026, 7, 20)  # 周一，同时触发排名页
+    digest.schedule.append(
+        make_match(
+            status=MatchStatus.SCHEDULED,
+            winner=None,
+            sets=(),
+            tiebreaks=(),
+            match_id="second-scheduled",
+        )
+    )
     digest.results.extend(
         make_match(
             home_name=f"Player {index}",
@@ -996,7 +1014,7 @@ def test_tonight_page_does_not_invent_tbd_from_same_event_anchor():
         winner=None,
         sets=(),
         tiebreaks=(),
-        tournament="Athens Open",
+        tournament="Prague Open",
         start_utc=datetime(2026, 7, 20, 12, 30, tzinfo=timezone.utc),
         match_id="athens-anchor",
     )
@@ -1054,6 +1072,27 @@ def test_tonight_page_marks_official_unlisted_as_waiting_for_oop():
     assert "待官方排期" in body
 
 
+def test_five_match_tonight_page_hides_court_headers_to_protect_footer():
+    from tennislive.render import webcards
+
+    matches = []
+    for index in range(5):
+        match = make_match(
+            status=MatchStatus.SCHEDULED,
+            winner=None,
+            sets=(),
+            tiebreaks=(),
+            tournament="Generali Open",
+            match_id=f"kitzbuhel-{index}",
+        )
+        match.court = "Center Court" if index < 3 else "Grandstand"
+        matches.append(match)
+
+    body = webcards.tonight_body(matches, "07.20 · 周一")
+
+    assert 'class="court-label"' not in body
+
+
 def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(
     sample_digest, monkeypatch
 ):
@@ -1062,7 +1101,7 @@ def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(
     from tennislive.render import webcards
 
     digest = deepcopy(sample_digest)
-    athens = make_match(
+    prague = make_match(
         home_name="Qinwen Zheng",
         away_name="Maria Sakkari",
         home_country="CHN",
@@ -1071,11 +1110,38 @@ def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(
         winner=None,
         sets=(),
         tiebreaks=(),
-        tournament="Athens Open",
+        tournament="Prague Open",
         tour=Tour.WTA,
-        match_id="athens-focus",
+        match_id="prague-focus",
     )
-    digest.schedule.append(athens)
+    digest.schedule.append(prague)
+    digest.schedule.extend(
+        [
+            make_match(
+                home_name="Linda Noskova",
+                away_name="Marketa Vondrousova",
+                home_country="CZE",
+                away_country="CZE",
+                status=MatchStatus.SCHEDULED,
+                winner=None,
+                sets=(),
+                tiebreaks=(),
+                tournament="Prague Open",
+                tour=Tour.WTA,
+                match_id="prague-second",
+            ),
+            make_match(
+                home_name="Jannik Sinner",
+                away_name="Novak Djokovic",
+                status=MatchStatus.SCHEDULED,
+                winner=None,
+                sets=(),
+                tiebreaks=(),
+                tournament="Wimbledon",
+                match_id="wimbledon-second",
+            ),
+        ]
+    )
     monkeypatch.setattr(
         webcards, "editorial_tonight_focus", lambda _matches: digest.schedule
     )
@@ -1088,7 +1154,7 @@ def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(
     assert "china" not in kinds
     assert len(tonight_pages) == 2
     assert all(
-        not ("Athens Open" in body and "温布尔登" in body)
+        not ("Prague Open" in body and "温布尔登" in body)
         for body in tonight_pages
     )
 
@@ -1159,6 +1225,7 @@ def test_tonight_card_separates_bilingual_player_lines(sample_digest):
     assert '<span class="en">Carlos Alcaraz</span>' in body
     assert "class=\"names\"" in body
     assert '<b class="event-level">大满贯</b>' in body
+    assert '<b class="event-surface">草地</b>' in body
     assert body.index("温布尔登") < body.index('class="event-level"')
 
 

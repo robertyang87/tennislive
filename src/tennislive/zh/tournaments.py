@@ -315,6 +315,7 @@ TOURNAMENT_LEVEL: dict[str, str] = {
     "guangzhou": "W250",
     "guangzhou open": "W250",
     "halle": "500",
+    "hamburg ladies": "W250",
     "hamburg": "500",
     "hamburg open": "500",
     "hangzhou": "250",
@@ -384,14 +385,15 @@ TOURNAMENT_LEVEL: dict[str, str] = {
     "open de rouen": "W250",
     "open occitanie": "250",
     "osaka": "W250",
-    "palermo": "W250",
-    "palermo ladies open": "W250",
+    "palermo": "W125",
+    "palermo ladies open": "W125",
     "pan pacific open": "W500",
     "paris": "M1000",
     "paris masters": "M1000",
     "porsche tennis grand prix": "W500",
     "prague": "W250",
     "prague open": "W250",
+    "millennium estoril": "250",
     "qatar exxonmobil open": "500",
     "qatar open": "W1000/500",
     "qatar totalenergies open": "W1000",
@@ -462,6 +464,37 @@ def tournament_zh(name: str | None) -> str | None:
     return name
 
 
+# Official-calendar fallback for feeds that omit the court surface.
+TOURNAMENT_SURFACE: dict[str, str] = {
+    "livesport prague open": "Hard",
+    "prague open": "Hard",
+    "msc hamburg ladies open": "Clay",
+    "hamburg ladies open": "Clay",
+    "generali open": "Clay",
+    "kitzbuhel": "Clay",
+    "kitzbuehel": "Clay",
+    "millennium estoril open": "Clay",
+    "estoril open": "Clay",
+    "australian open": "Hard",
+    "roland garros": "Clay",
+    "wimbledon": "Grass",
+    "us open": "Hard",
+}
+
+
+def tournament_surface(name: str | None) -> str | None:
+    """Infer the official surface when discovery feeds omit it."""
+    if not name:
+        return None
+    key = name.strip().lower()
+    for alias, surface in sorted(
+        TOURNAMENT_SURFACE.items(), key=lambda item: -len(item[0])
+    ):
+        if alias in key:
+            return surface
+    return None
+
+
 def _resolve_level_token(raw: str, tour: str | None) -> str | None:
     """把 "500/W500"、"M1000/W1000" 这类组合码按巡回赛解析成单一级别."""
     tokens = [t.strip() for t in raw.split("/") if t.strip()]
@@ -487,7 +520,12 @@ def _resolve_level_token(raw: str, tour: str | None) -> str | None:
     if t == "M1000":
         return "M1000"
     if t.startswith("W"):
-        return {"W1000": "W1000", "W500": "WTA500", "W250": "WTA250"}.get(t, t)
+        return {
+            "W1000": "W1000",
+            "W500": "WTA500",
+            "W250": "WTA250",
+            "W125": "WTA125",
+        }.get(t, t)
     if t.isdigit():
         prefix = "WTA" if tour == "WTA" else "ATP"
         return f"{prefix}{t}"

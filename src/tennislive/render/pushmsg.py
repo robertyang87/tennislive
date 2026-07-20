@@ -21,7 +21,7 @@ from .common import (
     match_round_display,
     side_display,
 )
-from .rating import stay_up_stars, top_results, top_schedule
+from .rating import stay_up_stars, tonight_event_focus, top_results
 from .titles import pick_headline_auto
 
 # 主题策略：内联浅色样式兜底 + <style> 媒体查询做深色覆盖。
@@ -241,7 +241,7 @@ def to_push_html(
             )
         parts.append(_HR)
 
-    tonight = top_schedule([m for m in digest.schedule if m.is_singles], 3)
+    tonight = [event[0] for event in tonight_event_focus(digest.schedule)]
     if tonight:
         parts.append(f'<div class="tl-sec" style="{_SEC}">🌙 今晚看点</div>')
         for m in tonight:

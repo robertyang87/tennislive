@@ -22,7 +22,8 @@ from ..digest import Digest
 from ..models import Match
 from ..research.media import brief_for_match
 from ..timeutil import fmt_schedule_time, fmt_time_beijing
-from ..zh import player_zh
+from ..zh import player_zh, surface_zh
+from ..zh.tournaments import tournament_surface
 from ..zh.countries import country_iso2
 from .common import (
     _abbrev_en,
@@ -32,7 +33,14 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats
 from .narrative import preview_angle
-from .rating import editorial_tonight_focus, find_upset, is_upset, match_score, top_results
+from .rating import (
+    editorial_tonight_focus,
+    find_upset,
+    is_upset,
+    match_score,
+    tonight_event_focus,
+    top_results,
+)
 from .story import (
     chinese_side_won,
     is_chinese_player,
@@ -783,10 +791,12 @@ def cover_body(
         cn_boost=True,
     )
     lead = daily_lead_match(digest)
+    focus_events = tonight_event_focus(digest.schedule)
+    # The cover may tease a lone confirmed fixture; event pages stay stricter
+    # and require 2-5 matches so they remain useful schedule boards.
     focus_matches = editorial_tonight_focus(digest.schedule)
-    focus_count = len(focus_matches)
-    if focus_count:
-        chips.append(f"今晚焦点 {focus_count} 场")
+    if focus_events:
+        chips.append(f"今晚焦点 {len(focus_events)} 项赛事")
     chips_html = "".join(f"<span>{c}</span>" for c in chips)
     background_uri = _asset_image_uri(ASSETS / "covers" / "tennis-night-court.png")
     background = (
@@ -1000,7 +1010,10 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     )
     cards: list[str] = []
     courts = {m.court.strip() for m in matches if m.court and m.court.strip()}
-    show_courts = len(courts) > 1
+    # Five-match pages need the vertical space for the fixtures themselves;
+    # court group headings are useful metadata but must never collide with the
+    # venue credit or footer.
+    show_courts = len(courts) > 1 and len(matches) <= 4
     last_court = None
     for match in sorted(
         matches,
@@ -1040,9 +1053,12 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     location = location or " · ".join(filter(None, (first.city, first.country)))
     levels = list(dict.fromkeys(event_group.compact_level for event_group in event_groups))
     level_label = " / ".join(levels)
+    surface = first.surface or tournament_surface(first.name)
+    surface_label = surface_zh(surface) or "场地待核"
     meta = "".join(
         (
             f'<b class="event-level">{html.escape(level_label)}</b>',
+            f'<b class="event-surface">{html.escape(surface_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
             '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
         )
@@ -1441,13 +1457,10 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
                 page2, date_label, with_hero=False, page=2, total=total,
             )))
 
-    tonight = editorial_tonight_focus(digest.schedule)
-    if tonight:
-        for index, event_groups in enumerate(_tonight_event_groups(tonight), start=1):
+    tonight_events = tonight_event_focus(digest.schedule)
+    if tonight_events:
+        for index, event_matches in enumerate(tonight_events, start=1):
             kind = "tonight" if index == 1 else f"tonight{index}"
-            event_matches = [
-                match for group in event_groups for match in group.matches
-            ]
             pages.append((kind, tonight_body(event_matches, date_label)))
 
     story = direct_story_for_match(lead, prefer_player=True) if lead is not None else None
