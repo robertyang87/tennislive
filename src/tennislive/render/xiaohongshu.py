@@ -300,6 +300,23 @@ def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool) -> str:
     return "今天没有必要追满所有场次，把时间留给真正重要的比赛。"
 
 
+def _discussion_question(match: Match | None) -> str:
+    """Generate one low-friction tennis question that can be answered in a comment."""
+    if match is None:
+        return "今天这条主线里，你最想继续追哪位球员？"
+
+    chinese = [
+        player for player in match.home + match.away if is_chinese_player(player)
+    ]
+    if chinese:
+        name = player_zh(chinese[0].name)
+        return f"{name}想赢这场，你会先盯发球还是接发？"
+
+    left = side_display(match.home, with_seed=False)
+    right = side_display(match.away, with_seed=False)
+    return f"只选一边：{left}还是{right}？"
+
+
 def _evidence(digest: Digest, matches: list[Match]) -> tuple[dict[str, str], ...]:
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
@@ -375,7 +392,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
         sections.append(XhsSection(focus[0], tuple(focus[1:])))
 
     if tonight_matches:
-        question = "今晚只选一场，你会守哪场？"
+        question = _discussion_question(tonight_matches[0])
         global _LAST_QUIZ
         top = tonight_matches[0]
         _LAST_QUIZ = {
@@ -383,7 +400,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
             "players": [p.name for p in top.home + top.away],
         }
     else:
-        question = "今天这条主线里，你最想继续追哪位球员？"
+        question = _discussion_question(lead)
 
     reveal = _quiz_reveal(digest)
     if reveal:
@@ -398,7 +415,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
         sections=tuple(sections),
         opinion=_opinion(lead, tonight_matches, compact=compact),
         question=question,
-        signature="这里是 @网球时差｜睡醒看懂昨夜，开赛前只提醒值得看的。",
+        signature="关注 @网球时差｜明早用赛果和胜负手，把今天这场接着讲完。",
         tags=tuple(_tags(evidence_matches)),
         evidence=_evidence(digest, evidence_matches),
     )
