@@ -203,6 +203,17 @@ def cmd_digest(args) -> int:
         except Exception as e:  # noqa: BLE001
             console.print(f"[yellow]竖版视频生成失败（跳过）：{e}[/yellow]")
 
+    try:
+        from .video.official import generate_official_video
+
+        official_video = generate_official_video(digest, outdir / "video")
+        if official_video:
+            video_paths.append(official_video)
+            digest.source_status["官方视频雷达"] = "正常 · 已生成中文竖版片段"
+    except Exception as e:  # noqa: BLE001
+        digest.source_status["官方视频雷达"] = f"降级 · {e}"
+        console.print(f"[yellow]官方视频生成失败（跳过）：{e}[/yellow]")
+
     # 标题：自动选用 + 候选留档
     from .render.titles import (
         cover_fact_bundle,

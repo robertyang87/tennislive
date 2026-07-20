@@ -50,6 +50,8 @@ jobs:
       GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL || 'openai/gpt-4.1' }}
       TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'on' }}
+      # 从官方巡回赛视频页选择与当日球员相关的片段，生成中文竖版视频。
+      TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
     steps:
       - uses: actions/checkout@v4
 
