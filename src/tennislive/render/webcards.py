@@ -32,6 +32,8 @@ from .common import (
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .rating import find_upset, is_upset, match_score, tonight_focus, top_results
 from .story import (
+    chinese_side_won,
+    is_chinese_player,
     recommendation_label,
     result_insight,
     schedule_insight,
@@ -697,14 +699,38 @@ def cover_body(
     )
     def cover_highlight(label: str, match: Match) -> str:
         group = group_by_tournament([match])[0]
+        round_name = match_round_display(match).replace("·", "") or "本轮"
         if match.status.is_final:
-            winners = match.winner_players() or match.home
-            name = " / ".join(player_zh(player.name) for player in winners)
-            value = f"{name} {match.score_display(from_winner=True) or '胜'}"
+            if "中国焦点" in label and is_chinese_involved(match):
+                chinese = [
+                    player
+                    for player in match.home + match.away
+                    if is_chinese_player(player)
+                ]
+                name = " / ".join(player_zh(player.name) for player in chinese)
+                if chinese_side_won(match):
+                    action = "捧杯" if round_name.endswith("决赛") and "半" not in round_name else "过关"
+                else:
+                    action = f"止步{round_name}"
+                value = f"{name} {action}"
+            else:
+                winners = match.winner_players() or match.home
+                name = " / ".join(player_zh(player.name) for player in winners)
+                action = "捧杯" if round_name.endswith("决赛") and "半" not in round_name else "过关"
+                value = f"{name} {action}"
         else:
-            left = " / ".join(player_zh(player.name) for player in match.home)
-            right = " / ".join(player_zh(player.name) for player in match.away)
-            value = f"{left} vs {right}"
+            if "中国焦点" in label and is_chinese_involved(match):
+                chinese = [
+                    player
+                    for player in match.home + match.away
+                    if is_chinese_player(player)
+                ]
+                name = " / ".join(player_zh(player.name) for player in chinese)
+                value = f"{name} 今日出战"
+            else:
+                left = " / ".join(player_zh(player.name) for player in match.home)
+                right = " / ".join(player_zh(player.name) for player in match.away)
+                value = f"{left} vs {right}"
         meta = " · ".join(
             part for part in (
                 fmt_time_beijing(match.start_utc) if not match.status.is_final else "",

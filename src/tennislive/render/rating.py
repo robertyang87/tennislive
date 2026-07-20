@@ -6,7 +6,11 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
+from ..digest import Digest
 from ..models import Match
+from ..zh import player_zh
 from ..zh.terms import round_zh
 from ..zh.tournaments import tournament_level
 from .common import is_chinese_involved
@@ -32,8 +36,179 @@ ROUND_PTS = {
 }
 
 
+# A deliberately small set for feeds that occasionally omit rankings. Rankings
+# remain the primary signal; this list only keeps established headliners from
+# disappearing when one upstream field is temporarily unavailable.
+HEADLINER_NAMES = {
+    "Carlos Alcaraz",
+    "Novak Djokovic",
+    "Jannik Sinner",
+    "Alexander Zverev",
+    "Daniil Medvedev",
+    "Aryna Sabalenka",
+    "Iga Swiatek",
+    "Coco Gauff",
+    "Qinwen Zheng",
+    "Naomi Osaka",
+    "Emma Raducanu",
+}
+
+LEAD_ROUND_PTS = {
+    "决赛": 35,
+    "半决赛": 25,
+    "四分之一决赛": 15,
+    "八分之一决赛": 8,
+    "16强赛": 8,
+    "第四轮": 8,
+}
+
+
+@dataclass(frozen=True)
+class LeadStoryBreakdown:
+    """Auditable components used to choose the day's single lead story."""
+
+    event: int = 0
+    stage: int = 0
+    china: int = 0
+    headliner: int = 0
+    evidence: int = 0
+    result: int = 0
+    format: int = 0
+
+    @property
+    def total(self) -> int:
+        return sum(
+            (
+                self.event,
+                self.stage,
+                self.china,
+                self.headliner,
+                self.evidence,
+                self.result,
+                self.format,
+            )
+        )
+
+
+@dataclass(frozen=True)
+class LeadStorySelection:
+    """The selected match plus a human-readable editorial rationale."""
+
+    match: Match
+    breakdown: LeadStoryBreakdown
+    reasons: tuple[str, ...]
+
+    @property
+    def score(self) -> int:
+        return self.breakdown.total
+
+    @property
+    def reason(self) -> str:
+        return "；".join(self.reasons)
+
+
 def _level_of(m: Match) -> str | None:
     return m.tournament.level or tournament_level(m.tournament.name, m.tour.value)
+
+
+def _headliner_points(match: Match) -> tuple[int, str | None]:
+    players = match.home + match.away
+    top_rank = min((p.rank for p in players if p.rank is not None), default=None)
+    top_seed = min((p.seed for p in players if p.seed is not None), default=None)
+    named = next((p for p in players if p.name in HEADLINER_NAMES), None)
+    if top_rank is not None and top_rank <= 10:
+        return 25, "有世界前10球员"
+    if named is not None:
+        return 22, f"有知名球员{player_zh(named.name)}"
+    if (top_rank is not None and top_rank <= 30) or (
+        top_seed is not None and top_seed <= 8
+    ):
+        return 14, "有前30或高排位种子"
+    return 0, None
+
+
+def _evidence_points(match: Match) -> tuple[int, str | None]:
+    if match.editorial_url:
+        source = match.editorial_source or "权威媒体"
+        official_tokens = ("ATP", "WTA", "ITF", "温网", "澳网", "法网", "美网")
+        if any(token.lower() in source.lower() for token in official_tokens):
+            return 20, f"有{source}原文支撑"
+        return 15, f"有{source}来源链接"
+    if match.stats is not None and match.stats.source_url:
+        return 14, f"有{match.stats.source}技术统计"
+    if match.editorial_note and match.editorial_source:
+        return 6, f"有{match.editorial_source}证据摘要"
+    return 0, None
+
+
+def lead_story_breakdown(match: Match) -> tuple[LeadStoryBreakdown, tuple[str, ...]]:
+    """Score one lead-story candidate without rewarding an upset label.
+
+    The components intentionally differ from ``match_score``: a surprise result
+    is not a content pillar, while a source-backed Chinese or star match is.
+    """
+    level = _level_of(match) or ""
+    event = LEVEL_PTS.get(level, 0)
+    stage = LEAD_ROUND_PTS.get(round_zh(match.round_name) or "", 0)
+    china = 45 if is_chinese_involved(match) else 0
+    headliner, headliner_reason = _headliner_points(match)
+    evidence, evidence_reason = _evidence_points(match)
+    result = 8 if match.status.is_final else 4 if match.status.value == "live" else 0
+    format_points = -35 if match.is_doubles else 0
+
+    reasons: list[str] = []
+    if china:
+        reasons.append("中国球员相关")
+    if headliner_reason:
+        reasons.append(headliner_reason)
+    if stage:
+        reasons.append(f"处于{round_zh(match.round_name)}")
+    if event:
+        reasons.append(f"赛事级别为{level}")
+    if evidence_reason:
+        reasons.append(evidence_reason)
+    if match.status.is_final:
+        reasons.append("已有完整赛果可复盘")
+    if match.is_doubles:
+        reasons.append("双打题材降权")
+
+    return (
+        LeadStoryBreakdown(
+            event=event,
+            stage=stage,
+            china=china,
+            headliner=headliner,
+            evidence=evidence,
+            result=result,
+            format=format_points,
+        ),
+        tuple(reasons),
+    )
+
+
+def select_lead_story(digest: Digest) -> LeadStorySelection | None:
+    """Select one explainable editorial lead from the strongest content pool.
+
+    A daily edition first recaps completed singles. Only when there is no such
+    result does it move to live, upcoming, and finally doubles. This prevents an
+    ordinary evening fixture from displacing the actual news of the day.
+    """
+    pools = (
+        [match for match in digest.results if match.is_singles],
+        [match for match in digest.live if match.is_singles],
+        [match for match in digest.schedule if match.is_singles],
+        digest.results + digest.live + digest.schedule,
+    )
+    candidates = next((pool for pool in pools if pool), [])
+    if not candidates:
+        return None
+
+    scored = []
+    for index, match in enumerate(candidates):
+        breakdown, reasons = lead_story_breakdown(match)
+        scored.append((breakdown.total, -index, match, breakdown, reasons))
+    _, _, match, breakdown, reasons = max(scored, key=lambda item: item[:2])
+    return LeadStorySelection(match=match, breakdown=breakdown, reasons=reasons)
 
 
 def is_upset(m: Match) -> bool:

@@ -16,7 +16,6 @@ from .common import (
     group_by_tournament,
     is_chinese_involved,
     match_round_display,
-    result_line,
     side_display,
 )
 from .rating import _level_of, is_upset, went_to_deciding_set
@@ -250,30 +249,67 @@ def _tags(match: Match) -> list[str]:
     return output[:8]
 
 
-def hotspot_post(match: Match) -> str:
-    """小红书单场成稿；首行标题，后续可直接复制发布。"""
-    title = hotspot_title_candidates(match)[0]
+def hotspot_post(match: Match, *, title: str | None = None) -> str:
+    """小红书单场成稿：一条主线、清晰留白，不复述图片里的完整比分。"""
+    title = title or hotspot_title_candidates(match)[0]
     group = group_by_tournament([match])[0]
     label = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
-    lines = [title, "", f"刚刚结束｜{label}"]
     if match.status.is_final:
-        lines.extend([result_line(match), f"一句看懂：{result_insight(match)}"])
+        winner, loser = _winner_and_loser(match)
+        lines = [
+            title,
+            "",
+            "刚刚结束，但这场不该只看比分。",
+            "",
+            "🎾 先说结果",
+            f"{winner}击败{loser}｜{label}",
+            _short_sentence(result_insight(match)),
+            "",
+            "📝 我的一票",
+            f"我更想继续观察{winner}下一场会把这股势头带到哪里。",
+            "",
+        ]
         if is_upset(match):
-            question = "这场冷门，你觉得转折发生在哪一盘？"
+            question = "如果只选一个转折点，你会选哪一盘？"
         elif is_chinese_involved(match):
-            question = "下一轮还要继续跟吗？评论区留下球员名。"
+            question = f"{winner}下一场，你会继续守吗？"
         else:
             question = "这场结果符合你的预期吗？"
     else:
-        lines[2] = f"今晚焦点｜{label}"
-        lines.extend(
-            [
-                f"{fmt_time_beijing(match.start_utc)}｜"
-                f"{side_display(match.home, with_seed=False)} vs "
-                f"{side_display(match.away, with_seed=False)}",
-                f"为什么看：{schedule_insight(match)}",
-            ]
+        matchup = (
+            f"{side_display(match.home, with_seed=False)} vs "
+            f"{side_display(match.away, with_seed=False)}"
         )
+        lines = [
+            title,
+            "",
+            "今晚不必守满所有比赛，先给这一场留时间。",
+            "",
+            "🌙 今晚焦点",
+            f"{fmt_time_beijing(match.start_utc)}｜{label}",
+            matchup,
+            _short_sentence(schedule_insight(match)),
+            "",
+            "📝 我的一票",
+            f"我会先看{matchup}，因为这场的现实意义最清楚。",
+            "",
+        ]
         question = "今晚只选一场，你会看这场吗？"
-    lines.extend(["", question, "", " ".join(_tags(match))])
+    lines.extend(
+        [
+            "💬 留个答案",
+            question,
+            "",
+            "这里是 @网球时差｜只提醒真正值得看的比赛。",
+            "",
+            " ".join(_tags(match)),
+        ]
+    )
     return "\n".join(lines)
+
+
+def _short_sentence(text: str, limit: int = 54) -> str:
+    cleaned = " ".join(text.strip().split()).rstrip("。")
+    if len(cleaned) > limit:
+        cleaned = cleaned[: limit - 1].rstrip("，,；;") + "…"
+    return cleaned + "。"

@@ -107,7 +107,7 @@ def cmd_today(args) -> int:
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
-    from .render.xiaohongshu import post_title, to_post
+    from .render.xiaohongshu import plan_post
 
     d = parse_date_arg(args.date)
     try:
@@ -192,8 +192,39 @@ def cmd_digest(args) -> int:
     (outdir / "wechat.html").write_text(html, encoding="utf-8")
 
     # 小红书
-    xhs = to_post(digest)
+    xhs_plan, xhs = plan_post(digest)
     (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
+    _dump_json(xhs_plan, outdir / "xiaohongshu_plan.json")
+
+    # 与最近 7 期比较，阻止标题钩子或正文机械复用。固定栏目、日期、标签
+    # 和账号签名会被忽略，因此这里只拦真实内容重复。
+    from .render.history_dedupe import check_recent_posts
+
+    dedupe = check_recent_posts(
+        xhs,
+        Path(args.outdir),
+        current_date=d,
+        history_limit=7,
+    )
+    _dump_json(
+        {
+            "passed": dedupe.passed,
+            "history_count": dedupe.history_count,
+            "reason": dedupe.reason,
+            "comparisons": [
+                {
+                    "date": item.published_on.isoformat(),
+                    "title_similarity": item.title_similarity,
+                    "opening_similarity": item.opening_similarity,
+                    "body_similarity": item.body_similarity,
+                    "repeated_phrases": item.repeated_phrases,
+                    "triggers": item.triggers,
+                }
+                for item in dedupe.comparisons
+            ],
+        },
+        outdir / "xiaohongshu_similarity.json",
+    )
 
     # 手机推送模板：文案走独立复制页，卡片图留在消息中便于保存。
     from .render.pushmsg import to_copy_page, to_push_html
@@ -235,6 +266,8 @@ def cmd_digest(args) -> int:
     from .qa import run_checks
 
     fatal, warns = run_checks(digest, title, xhs, cover_copy=cover_copy)
+    if not dedupe.passed:
+        fatal.append(f"小红书近7期重复度过高: {dedupe.reason}")
     (outdir / "qa.txt").write_text(
         "\n".join(["[FATAL] " + f for f in fatal] + ["[WARN] " + w for w in warns])
         or "OK",

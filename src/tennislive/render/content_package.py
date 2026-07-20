@@ -103,14 +103,17 @@ def generate_content_package(
 ) -> dict:
     """生成标题、正文、置顶评论、事实、质检和统一卡组。"""
     outdir.mkdir(parents=True, exist_ok=True)
-    titles = hotspot_title_candidates(pick.match)
-    headline = titles[0]
-    post = hotspot_post(pick.match)
     digest = Digest(
         today=today,
         results=[pick.match] if pick.kind == "result" else [],
         schedule=[] if pick.kind == "result" else [pick.match],
     )
+    from .xiaohongshu import decorate_title
+
+    raw_titles = hotspot_title_candidates(pick.match)
+    titles = [decorate_title(digest, candidate) for candidate in raw_titles]
+    headline = raw_titles[0]
+    post = hotspot_post(pick.match, title=titles[0])
     cover_copy = (
         cover_highlights(digest)
         if pick.kind == "result"
@@ -163,7 +166,8 @@ def generate_content_package(
     item = {
         "kind": pick.kind,
         "match_id": pick.match.match_id,
-        "title": headline,
+        "title": titles[0],
+        "cover_headline": headline,
         "title_candidates": titles,
         "text": post,
         "pinned_comment": _pinned_comment(pick),
