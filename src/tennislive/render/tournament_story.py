@@ -680,6 +680,157 @@ STORIES = (
         kind="player",
         source_label="ATP 官方档案",
     ),
+    TournamentStory(
+        slug="tsitsipas",
+        aliases=("stefanos tsitsipas",),
+        title="斯特凡诺斯·西西帕斯",
+        location="希腊 · 雅典",
+        level="ATP",
+        surface="两届大满贯亚军",
+        founded="1998 年生",
+        hero_fact=(
+            "21岁成为ATP年终总决赛冠军，随后两次站上大满贯决赛；"
+            "当排名和信心一起下滑，他仍在寻找重返最高舞台的路。"
+        ),
+        facts=(
+            "2019年首次参加ATP年终总决赛便夺冠，决赛三盘击败蒂姆，"
+            "那是他从新生代代表迈向顶尖球员的标志。",
+            "2021年法网决赛一度大比分2比0领先德约科维奇，最终遭到逆转；"
+            "2023年澳网，他第二次获得大满贯亚军。",
+            "2026年格施塔德冠军结束了长达16个月的冠军等待，"
+            "这座ATP 250奖杯更像一次重新出发，而非已经回到巅峰。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2019-11-17",
+                player="斯特凡诺斯·西西帕斯",
+                age="21 岁",
+                headline="初登年终总决赛便夺冠",
+                detail="决赛逆转蒂姆，成为当时十八年来最年轻的赛事冠军。",
+                source_url="https://www.atptour.com/en/news/tsitsipas-thiem-nitto-atp-finals-2019-final",
+            ),
+            ChampionMoment(
+                date="2026-07-19",
+                player="斯特凡诺斯·西西帕斯",
+                age="27 岁",
+                headline="格施塔德夺冠 · 结束16个月等待",
+                detail="三盘击败科利尼翁，拿到生涯第13座巡回赛单打冠军。",
+                source_url="https://www.atptour.com/en/scores/current/gstaad/314/results",
+            ),
+        ),
+        venue="前世界第三 · 2019 ATP年终总决赛冠军",
+        image=PLAYER_ASSETS / "stefanos-tsitsipas.jpg",
+        image_credit="si.robi / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://www.atptour.com/en/players/stefanos-tsitsipas/te51/overview",
+        image_source_url="https://commons.wikimedia.org/wiki/Category:Stefanos_Tsitsipas",
+        kind="player",
+        source_label="ATP Tour / 审核媒体简报",
+    ),
+    TournamentStory(
+        slug="yuan-yue",
+        aliases=("yuan yue", "yue yuan"),
+        title="袁悦",
+        location="中国 · 江苏",
+        level="WTA",
+        surface="巡回赛冠军",
+        founded="1998 年生",
+        hero_fact=(
+            "2024年奥斯汀，袁悦在一场中国德比中拿到生涯首座WTA单打冠军；"
+            "那座奖杯也把她第一次送进世界前50。"
+        ),
+        facts=(
+            "2023年首尔站获得亚军，几个月后在奥斯汀第二次站上巡回赛决赛，终于捧杯。",
+            "奥斯汀决赛面对王曦雨，她在错过多个冠军点后稳住抢七，拿下首冠。",
+            "这段经历让她的比赛不只剩排名：真正值得追踪的是低谷之后还能否重新建立连续胜场。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-03-03",
+                player="袁悦",
+                age="25 岁",
+                headline="奥斯汀首冠 · 首进世界前50",
+                detail="在首次于亚洲以外举行的中国球员WTA决赛中击败王曦雨。",
+                source_url="https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
+            ),
+        ),
+        venue="2024 奥斯汀 WTA 250 冠军",
+        image=PLAYER_ASSETS / "yuan-yue.jpg",
+        image_credit="",
+        source_url="https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
+        image_source_url="",
+        kind="player",
+        source_label="WTA 官方报道",
+    ),
+    TournamentStory(
+        slug="gao-xinyu",
+        aliases=("gao xinyu", "xinyu gao"),
+        title="高馨妤",
+        location="中国",
+        level="WTA",
+        surface="联合杯代表",
+        founded="1997 年生",
+        hero_fact=(
+            "高馨妤的巡回赛履历并不显眼，但2025年联合杯连续击败两位世界前100，"
+            "其中包括当时世界第17的玛雅，第一次让更多人看见她。"
+        ),
+        facts=(
+            "2024年从资格赛突围，在华欣拿到生涯首场巡回赛正赛胜利。",
+            "2025年联合杯首次面对世界前50便击败玛雅，随后又战胜西格蒙德。",
+            "她的看点不是一张排名表，而是能否把国家队比赛里证明过的韧性带回巡回赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-12-27",
+                player="高馨妤",
+                age="27 岁",
+                headline="联合杯爆冷世界第17",
+                detail="苦战三盘击败玛雅，拿到生涯首次对阵世界前50的胜利。",
+                source_url="https://www.wtatennis.com/players/322925/xinyu-gao",
+            ),
+        ),
+        venue="2025 联合杯中国队成员",
+        image=PLAYER_ASSETS / "gao-xinyu.jpg",
+        image_credit="",
+        source_url="https://www.wtatennis.com/players/322925/xinyu-gao",
+        image_source_url="",
+        kind="player",
+        source_label="WTA 官方球员档案",
+    ),
+    TournamentStory(
+        slug="barbora-krejcikova",
+        aliases=("barbora krejcikova",),
+        title="巴尔博拉·克雷吉茨科娃",
+        location="捷克",
+        level="WTA",
+        surface="两届大满贯单打冠军",
+        founded="1995 年生",
+        hero_fact=(
+            "从2021年法网到2024年温网，克雷吉茨科娃在两种完全不同的场地上赢下大满贯，"
+            "双打锻造的手感最终也成为她的单打武器。"
+        ),
+        facts=(
+            "2021年法网首夺大满贯单打冠军，同届还与西尼亚科娃赢得女双冠军。",
+            "2024年温网决赛三盘击败保利尼，成为公开赛年代少数兼夺法网和温网的女单球员。",
+            "她的比赛值得看的是变化与手感，而不是把大满贯冠军简化成一个种子号。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-07-13",
+                player="巴尔博拉·克雷吉茨科娃",
+                age="28 岁",
+                headline="温网夺冠 · 第二座大满贯",
+                detail="三盘击败保利尼，把红土大满贯冠军的履历延伸到草地。",
+                source_url="https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown",
+            ),
+        ),
+        venue="2021 法网 / 2024 温网女单冠军",
+        image=PLAYER_ASSETS / "barbora-krejcikova.jpg",
+        image_credit="",
+        source_url="https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown",
+        image_source_url="",
+        kind="player",
+        source_label="WTA 官方报道",
+    ),
 )
 
 
@@ -1309,6 +1460,29 @@ def story_matches_match(story: TournamentStory, match) -> bool:
             _norm(getattr(match.tournament, "name_zh", "") or ""),
         }
     return _matched(aliases, subjects)
+
+
+def direct_story_for_match(
+    match,
+    *,
+    prefer_player: bool = True,
+) -> TournamentStory | None:
+    """Return reviewed context directly connected to one match.
+
+    Unlike ``pick_tournament_story`` this helper is deterministic and ignores
+    cooldown state, so previews, covers, and evidence pages can reuse the same
+    verified player or tournament identity without rotating to unrelated lore.
+    """
+    matches = [story for story in STORIES if story_matches_match(story, match)]
+    if not matches:
+        return None
+    matches.sort(
+        key=lambda story: (
+            0 if (prefer_player and story.kind == "player") else 1,
+            0 if story.kind == "tournament" else 1,
+        )
+    )
+    return matches[0]
 
 
 def _match_drama(m) -> float:

@@ -112,14 +112,14 @@ def test_xhs_post(sample_digest):
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
     assert "今天先看这一件事" in post
-    assert "今晚只看这三场" in post
+    assert "今晚焦点 · 1场" in post
     assert "📝 我的一票" in post
     assert "💬 留个答案" in post
     assert any(
         phrase in post
         for phrase in ("第一次记住", "一句赛前提醒", "说一个让你相信的理由")
     )
-    assert "明早用赛果和胜负手" in post
+    assert "下一篇，用赛果和胜负手" in post
     plan, _ = plan_post(sample_digest)
     assert plan.question in plan.pinned_comment
     assert "标准答案" in plan.pinned_comment or "明早回来对照赛果" in plan.pinned_comment
@@ -480,6 +480,9 @@ def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
     monkeypatch.setattr(
         webcards, "pick_tournament_story", lambda _digest: unrelated
     )
+    monkeypatch.setattr(
+        webcards, "direct_story_for_match", lambda _match, prefer_player=True: None
+    )
     monkeypatch.setattr(webcards, "scoreboard_body", capture_scoreboard)
     monkeypatch.setattr(
         webcards, "_screenshot_pages", lambda pages, _theme: pages
@@ -523,8 +526,9 @@ def test_historical_context_turns_profile_facts_into_human_background():
     context = historical_context(match, date(2026, 7, 20))
 
     assert context is not None
-    assert "漫长下坡" in context.summary
-    assert "低谷没有抹掉曾经的高度" in context.summary
+    assert "两进大满贯决赛" in context.summary
+    assert "比分只是故事的新一页" in context.summary
+    assert "世界第85" not in context.summary
     assert ("世界第3", "生涯最高") in context.facts
     assert context.source_url.startswith("https://www.atptour.com/")
 
@@ -845,8 +849,8 @@ def test_decorated_title_date_emoji_and_budget():
     from tennislive.render.xiaohongshu import decorate_title, xhs_title_len
 
     digest = Digest(today=date(2026, 7, 20))
-    champion = decorate_title(digest, "跌至世界第85，西西帕斯终于捧杯")
-    assert champion == "🏆7.20｜跌至世界第85，西西帕斯终于捧杯"
+    champion = decorate_title(digest, "时隔16个月，西西帕斯再夺冠")
+    assert champion == "🏆7.20｜时隔16个月，西西帕斯再夺冠"
     assert xhs_title_len(champion) <= 20
 
     assert decorate_title(digest, "爆冷：黑马掀翻头号种子").startswith("💥")
@@ -952,7 +956,7 @@ def test_tonight_reason_uses_editorial_label(sample_digest):
     assert "data:image/svg+xml;base64" in body
 
 
-def test_cover_uses_historical_hook_for_ranked_comeback():
+def test_cover_uses_sourced_wait_for_historical_comeback():
     from tennislive.render.titles import cover_result_hook
 
     match = make_match(
@@ -964,13 +968,15 @@ def test_cover_uses_historical_hook_for_ranked_comeback():
         tournament="Swiss Open Gstaad",
     )
     match.home[0].rank = 85
+    match.editorial_note = "时隔16个月，西西帕斯再次赢得巡回赛冠军。"
+    match.editorial_url = "https://example.test/sourced-recap"
 
     headline, secondary = cover_result_hook(match)
 
-    assert headline == "跌至世界第85，西西帕斯终于捧杯"
-    assert "世界第3" in secondary
+    assert headline == "时隔16个月，西西帕斯再夺冠"
     assert "两进大满贯决赛" in secondary
-    assert "反弹信号" in secondary
+    assert "新的起点" in secondary
+    assert "世界第85" not in headline + secondary
 
 
 def test_tonight_card_separates_bilingual_player_lines(sample_digest):

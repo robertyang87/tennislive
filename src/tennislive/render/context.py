@@ -18,6 +18,12 @@ class HistoricalContext:
     source_label: str
     source_url: str = ""
     continuity: str = ""
+    media_headline: str = ""
+    media_consensus: str = ""
+    media_divergence: str = ""
+    media_data_point: str = ""
+    media_takeaway: str = ""
+    media_sources: tuple[tuple[str, str], ...] = ()
 
 
 def _profile_context(match, profile: dict) -> HistoricalContext:
@@ -25,20 +31,13 @@ def _profile_context(match, profile: dict) -> HistoricalContext:
     name = player_zh(winner.name) if winner is not None else "这位球员"
     peak = int(profile["peak_rank"])
     legacy = str(profile["legacy"])
-    current = winner.rank if winner is not None else None
-    if current is not None and current >= peak + 20:
-        summary = (
-            f"从世界第{peak}到如今第{current}，{name}走过的是一段漫长下坡。"
-            f"{legacy}仍在那里，这座奖杯提醒人们：低谷没有抹掉曾经的高度。"
-        )
-    else:
-        summary = (
-            f"{name}曾高居世界第{peak}，也曾{legacy}。"
-            "把今天放回整段生涯里看，比分只是故事的新一页。"
-        )
+    summary = (
+        f"{name}曾高居世界第{peak}，也曾{legacy}。"
+        "把今天放回整段生涯里看，比分只是故事的新一页。"
+    )
     facts = [(f"世界第{peak}", "生涯最高"), (legacy, "大赛履历")]
-    if current is not None:
-        facts.append((f"世界第{current}", "当前排名"))
+    if winner is not None and winner.rank is not None:
+        facts.append((f"第{winner.rank}位", "当日排名快照"))
     return HistoricalContext(
         summary=summary,
         facts=tuple(facts[:3]),
@@ -74,23 +73,42 @@ def _story_context(match) -> HistoricalContext | None:
 
 
 def historical_context(match, today: date | None = None) -> HistoricalContext | None:
+    from ..research.media import brief_for_match
+
     profile = cover_fact_bundle(match).get("historical_profile")
     context = _profile_context(match, profile) if profile else _story_context(match)
     memory = recent_context(match, today) if today is not None else None
-    if context is None and memory is None:
+    media = brief_for_match(match, today) if today is not None else None
+    if context is None and memory is None and media is None:
         return None
     if context is None:
-        return HistoricalContext(
-            summary=memory.summary,
+        context = HistoricalContext(
+            summary=memory.summary if memory is not None else media.takeaway,
             facts=(),
-            source_label=memory.source_label,
+            source_label=(memory.source_label if memory is not None else media.source_label),
+            source_url=("" if memory is not None else media.primary_url),
         )
-    if memory is None:
-        return context
+    continuity = memory.summary if memory is not None else context.continuity
+    if media is None:
+        if not continuity:
+            return context
+        return HistoricalContext(
+            summary=context.summary,
+            facts=context.facts,
+            source_label=context.source_label,
+            source_url=context.source_url,
+            continuity=continuity,
+        )
     return HistoricalContext(
         summary=context.summary,
         facts=context.facts,
         source_label=context.source_label,
         source_url=context.source_url,
-        continuity=memory.summary,
+        continuity=continuity,
+        media_headline=media.headline,
+        media_consensus=media.consensus,
+        media_divergence=media.divergence,
+        media_data_point=media.data_point,
+        media_takeaway=media.takeaway,
+        media_sources=tuple((source.name, source.url) for source in media.sources),
     )

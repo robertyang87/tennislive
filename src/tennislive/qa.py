@@ -58,6 +58,7 @@ def _is_daily_post(digest: Digest, post: str, first_line: str) -> bool:
         "昨夜焦点",
         "今晚我只圈",
         "今晚只看这三场",
+        "今晚焦点",
         "中国球员速报",
     )
     return (
@@ -257,8 +258,8 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
             warn.append(f"小红书存在手机端过长行: {len(long_lines)} 行")
 
         tonight_count = len(_scheduled_mentions(digest, body))
-        if tonight_count > 3:
-            fatal.append(f"小红书今晚焦点超过3场: {tonight_count} > 3")
+        if tonight_count > 5:
+            fatal.append(f"小红书今晚焦点超过5场: {tonight_count} > 5")
 
     if "■" in post or "□" in post:
         fatal.append("小红书使用黑方块式数据库列表符号")

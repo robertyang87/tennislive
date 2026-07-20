@@ -20,6 +20,7 @@ from pathlib import Path
 
 from ..digest import Digest
 from ..models import Match
+from ..research.media import brief_for_match
 from ..timeutil import fmt_time_beijing
 from ..zh import player_zh
 from ..zh.countries import country_iso2
@@ -30,18 +31,19 @@ from .common import (
     match_round_display,
 )
 from .focus import focus_comparison, has_detailed_stats
-from .rating import find_upset, is_upset, match_score, tonight_focus, top_results
+from .narrative import preview_angle
+from .rating import editorial_tonight_focus, find_upset, is_upset, match_score, top_results
 from .story import (
     chinese_side_won,
     is_chinese_player,
     recommendation_label,
     result_insight,
-    schedule_insight,
     sort_china_matches,
 )
 from .titles import daily_lead_match
 from .tournament_story import (
     TournamentStory,
+    direct_story_for_match,
     pick_tournament_story,
     story_matches_match,
 )
@@ -177,6 +179,7 @@ body::before { content:""; position:absolute; left:0; top:0; width:100%; height:
 .rankings-page { --section-accent:var(--gold); }
 .insight-page { --section-accent:var(--gold); }
 .discussion-page { --section-accent:var(--coral); }
+.media-page { --section-accent:var(--sky); }
 .poster:not(.cover) { isolation:isolate; }
 .poster:not(.cover)::before { content:""; position:absolute; inset:0;
   background:
@@ -298,6 +301,12 @@ html.light .chip-green { color:#fff; }
 .cover::after { content:""; position:absolute; left:0; right:0; top:0; height:12px; z-index:5;
   background:linear-gradient(90deg,var(--neon) 0 42%,var(--coral) 42% 72%,var(--sky) 72%); }
 .cover-bg { position:absolute; inset:0; z-index:0; background-size:cover; background-position:center; }
+.cover-subject { position:absolute; z-index:0; right:-30px; top:42px; width:61%; height:78%;
+  background-position:right center; background-repeat:no-repeat; background-size:contain;
+  filter:saturate(.9) contrast(1.04); }
+.cover.has-subject .cover-copy { width:690px; }
+.cover.has-subject .focus { max-width:690px; font-size:64px; }
+.cover.has-subject .secondary { max-width:650px; }
 .cover .masthead,.cover .footer { position:relative; z-index:3; }
 .cover .brand { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:42px; font-weight:400; letter-spacing:0; }
 .cover .date { color:#D6E3DD; }
@@ -363,6 +372,13 @@ html.light .chip-green { color:#fff; }
 .pick .reason i { display:inline-block; margin-right:9px; padding:2px 7px; border-radius:4px;
   background:rgba(118,215,234,.14); color:var(--sky); font-family:'Barlow Condensed'; font-size:18px;
   font-weight:700; font-style:normal; letter-spacing:1px; vertical-align:2px; }
+.tonight-page.count-3 .pick { padding:12px 26px 16px; margin-bottom:16px; }
+.tonight-page.count-3 .pick header { height:44px; }
+.tonight-page.count-3 .pick .side.nosets { height:68px; }
+.tonight-page.count-3 .pick .name { font-size:30px; }
+.tonight-page.count-3 .pick .reason { margin-top:8px; padding-top:9px; min-height:52px;
+  font-size:22px; line-height:1.34; white-space:normal; display:-webkit-box;
+  -webkit-line-clamp:2; -webkit-box-orient:vertical; }
 
 /* ---------- 栏目段落 ---------- */
 .seclabel { display:flex; align-items:center; gap:16px; margin:10px 0 10px; }
@@ -439,6 +455,37 @@ html.light .chip-green { color:#fff; }
   font-size:31px; font-weight:400; line-height:1.18; color:var(--pagetext); }
 .story-copy p { margin-top:7px; font-size:20px; line-height:1.42; color:var(--reason); }
 .photo-credit { font-size:15px; color:var(--fade); margin-top:10px; }
+
+/* ---------- 外媒赛后室 ---------- */
+.media-page h1 { font-size:72px; }
+.media-visual { position:relative; height:310px; margin-top:16px; overflow:hidden;
+  border-radius:8px; background:var(--panel-strong); box-shadow:var(--cardshadow); }
+.media-visual img { width:100%; height:100%; object-fit:cover; object-position:50% 24%;
+  filter:saturate(.84) contrast(1.06); }
+.media-visual::after { content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(0,25,20,.96) 0%,rgba(0,25,20,.78) 47%,rgba(0,25,20,.12) 100%); }
+.media-visual-copy { position:absolute; z-index:2; left:30px; top:34px; width:64%; }
+.media-visual small { font-family:'TL Sans SC'; color:var(--sky); font-size:20px;
+  font-weight:700; }
+.media-visual strong { display:block; margin-top:14px; font-family:'TL Serif SC',serif;
+  color:#fff; font-size:44px; line-height:1.34; }
+.media-visual-credit { position:absolute; z-index:2; right:16px; bottom:12px;
+  color:rgba(255,255,255,.7); font-size:13px; }
+.media-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+.media-stat { min-height:118px; padding:18px 20px; border-top:4px solid var(--neon);
+  background:var(--panel); box-shadow:var(--cardshadow); }
+.media-stat strong { display:block; color:var(--neon); font-family:'Barlow Condensed';
+  font-size:44px; line-height:1; }
+.media-stat span { display:block; margin-top:9px; color:var(--reason); font-size:18px; }
+.media-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+.media-card { min-height:148px; padding:20px 22px; border-radius:8px;
+  border:1px solid var(--panel-border); background:var(--panel); box-shadow:var(--cardshadow); }
+.media-card b { display:block; color:var(--section-accent); font-size:22px; line-height:1.2; }
+.media-card p { margin-top:10px; color:var(--reason); font-size:25px; line-height:1.38; }
+.media-verdict { margin-top:16px; padding:18px 24px; border-left:6px solid var(--coral);
+  background:rgba(255,119,93,.09); color:var(--pagetext); font-size:25px; line-height:1.42; }
+.media-verdict b { color:var(--coral); margin-right:12px; }
+.media-sources { margin-top:14px; color:var(--fade); font-size:16px; line-height:1.4; }
 
 .cta-wrap { display:flex; flex-direction:column; align-items:center; text-align:center; }
 .cta-copy { font-family:'TL Serif SC',serif; font-weight:900; font-size:58px; line-height:1.5;
@@ -650,7 +697,7 @@ def _sched_card(m: Match, *, with_reason: bool = False) -> str:
             source = f'<i>{html.escape(m.editorial_source.upper())}</i>'
         reason = (
             f'<div class="reason"><b>{_icon_html("eye")}<span>{reason_label}</span></b>{source}'
-            f'{html.escape(schedule_insight(m))}</div>'
+            f'{html.escape(preview_angle(m))}</div>'
         )
         card_class += " pick"
     return (
@@ -691,7 +738,7 @@ def cover_body(
         cn_boost=True,
     )
     lead = daily_lead_match(digest)
-    focus_matches = tonight_focus(digest.schedule)
+    focus_matches = editorial_tonight_focus(digest.schedule)
     focus_count = len(focus_matches)
     if focus_count:
         chips.append(f"今晚焦点 {focus_count} 场")
@@ -700,6 +747,16 @@ def cover_body(
     background = (
         f'<div class="cover-bg" style="background-image:url(\'{background_uri}\')"></div>'
         if background_uri else ""
+    )
+    subject = direct_story_for_match(lead, prefer_player=True) if lead else None
+    subject_uri = (
+        _asset_image_uri(subject.image)
+        if subject is not None and subject.kind == "player" and subject.image.exists()
+        else None
+    )
+    subject_html = (
+        f'<div class="cover-subject" style="background-image:url(\'{subject_uri}\')"></div>'
+        if subject_uri else ""
     )
     secondary_html = (
         f'<div class="secondary">{html.escape(secondary)}</div>' if secondary else ""
@@ -786,8 +843,9 @@ def cover_body(
     )
     lead_label = "Overnight Lead · 昨夜头条" if lead else "Today's Lead · 今日头条"
     return (
-        '<div class="poster cover">'
+        f'<div class="poster cover{" has-subject" if subject_uri else ""}">'
         + background
+        + subject_html
         + _masthead(date_label)
         + '<div class="cover-copy">'
         + f'<div class="cover-date"><b>{d.month:02d}.{d.day:02d}</b><span>'
@@ -874,11 +932,55 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     # Keep the page curated, but allow five matches without spilling past 9:16.
     cards = [_sched_card(m, with_reason=True) for m in matches[:5]]
     return (
-        '<div class="poster tonight-page">'
+        f'<div class="poster tonight-page count-{min(len(cards), 5)}">'
         + _masthead(date_label)
         + _titleband("Tonight's Focus · 今晚焦点", "今晚焦点")
         + '<div class="save-badge">建议收藏 · 开赛前看</div>'
         + "".join(cards)
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def media_body(m: Match, date_label: str, today) -> str:
+    brief = brief_for_match(m, today)
+    if brief is None:
+        raise ValueError("match has no reviewed media brief")
+    sources = " · ".join(
+        f"{source.name}（{source.published_at}）" for source in brief.sources
+    )
+    highlights = brief.highlights or (("多源", "交叉核验"), ("1场", "继续追踪"), ("原创", "中文摘要"))
+    stats = "".join(
+        f'<article class="media-stat"><strong>{html.escape(value)}</strong>'
+        f'<span>{html.escape(label)}</span></article>'
+        for value, label in highlights
+    )
+    cards = "".join(
+        '<article class="media-card">'
+        f'<b>{html.escape(source.name)}</b><p>{html.escape(source.lens)}</p></article>'
+        for source in brief.sources[:2]
+    )
+    story = direct_story_for_match(m, prefer_player=True)
+    photo = ""
+    if story is not None:
+        uri = _asset_image_uri(story.image)
+        if uri:
+            photo = (
+                f'<img src="{uri}" alt="">'
+                f'<div class="media-visual-credit">图源：{html.escape(story.image_credit)}</div>'
+            )
+    return (
+        '<div class="poster media-page">'
+        + _masthead(date_label)
+        + _titleband("POST-MATCH LENS · 赛后观察", "赛后显微镜")
+        + '<article class="media-visual">'
+        + photo
+        + '<div class="media-visual-copy"><small>先别急着说“回来了”</small>'
+        + f'<strong>{html.escape(brief.headline)}</strong></div></article>'
+        + f'<div class="media-stats">{stats}</div>'
+        + f'<div class="media-grid">{cards}</div>'
+        + f'<div class="media-verdict"><b>我的判断</b>{html.escape(brief.takeaway)}</div>'
+        + f'<div class="media-sources">资料：{html.escape(sources)} · 原文链接见证据包</div>'
         + _FOOTER
         + "</div>"
     )
@@ -924,7 +1026,7 @@ def focus_body(m: Match, date_label: str) -> str:
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
     from .hotspot import hotspot_reasons
-    from .story import result_insight, schedule_insight
+    from .story import result_insight
     from .context import historical_context
 
     group = group_by_tournament([m])[0]
@@ -964,7 +1066,7 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         else:
             kicker = "Match Preview · 赛前看点"
             title = "为什么值得看"
-            insight = schedule_insight(m)
+            insight = preview_angle(m, today)
             facts = [
                 (fmt_time_beijing(m.start_utc), "北京时间"),
                 (group.compact_level, "赛事级别"),
@@ -1199,6 +1301,9 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         lead_kind = "result" if lead.status.is_final else "preview"
         pages.append(("lead", insight_body(lead, date_label, lead_kind, digest.today)))
 
+    if lead is not None and brief_for_match(lead, digest.today) is not None:
+        pages.append(("media", media_body(lead, date_label, digest.today)))
+
     if lead is not None and lead.status.is_final and has_detailed_stats(lead):
         pages.append(("focus", focus_body(lead, date_label)))
 
@@ -1224,11 +1329,13 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
     if cn_results or cn_today:
         pages.append(("china", china_body(cn_results, cn_today, date_label)))
 
-    tonight = tonight_focus(digest.schedule)
+    tonight = editorial_tonight_focus(digest.schedule)
     if tonight:
         pages.append(("tonight", tonight_body(tonight, date_label)))
 
-    story = pick_tournament_story(digest)
+    story = direct_story_for_match(lead, prefer_player=True) if lead is not None else None
+    if story is None:
+        story = pick_tournament_story(digest)
     if story and lead is not None and story_matches_match(story, lead):
         pages.append(("story", tournament_story_body(story, date_label)))
 
@@ -1240,7 +1347,7 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
 
     # 数据反馈版每日包最多 7 张。优先保留封面、头条解释、专业复盘、
     # 中国球员与今晚焦点；周榜和额外赛果先让位。
-    for optional_kind in ("rankings", "results2", "story", "scoreboard"):
+    for optional_kind in ("rankings", "results2", "scoreboard", "story"):
         if len(pages) <= 7:
             break
         pages = [page for page in pages if page[0] != optional_kind]
@@ -1258,7 +1365,7 @@ def generate_match_deck(
     theme: str = "dark",
 ):
     """单场热点/赛前统一卡组，复用晨报同一套HTML视觉组件。"""
-    from .story import result_insight, schedule_insight
+    from .story import result_insight
 
     is_result = kind == "result"
     digest = Digest(
@@ -1266,7 +1373,7 @@ def generate_match_deck(
         results=[match] if is_result else [],
         schedule=[] if is_result else [match],
     )
-    secondary = result_insight(match) if is_result else schedule_insight(match)
+    secondary = result_insight(match) if is_result else preview_angle(match, today)
     pages: list[tuple[str, str]] = [
         ("cover", cover_body(digest, headline, secondary, date_label)),
     ]

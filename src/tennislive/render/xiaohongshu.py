@@ -17,12 +17,12 @@ from .common import (
     side_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
-from .rating import match_score, select_lead_story, tonight_focus
+from .narrative import editor_takeaway, preview_angle
+from .rating import editorial_tonight_focus, match_score, select_lead_story
 from .story import (
     chinese_side_won,
     is_chinese_player,
     result_insight,
-    schedule_insight,
 )
 
 MAX_BODY = 700
@@ -245,7 +245,7 @@ def _lead_section(match: Match, *, compact: bool, today) -> XhsSection:
         (
             f"{status}｜{stage}",
             _matchup(match),
-            _short(schedule_insight(match), 40 if compact else 52) + "。",
+            _short(preview_angle(match, today), 40 if compact else 52) + "。",
         ),
     )
 
@@ -284,7 +284,7 @@ def _china_section(digest: Digest, lead: Match | None) -> XhsSection | None:
 
 
 def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | None, list[Match]]:
-    matches = tonight_focus(digest.schedule, min_n=3, max_n=3)
+    matches = editorial_tonight_focus(digest.schedule)
     if not matches:
         return None, []
     lines: list[str] = []
@@ -298,10 +298,10 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
             [
                 f"⏰ {fmt_time_beijing(match.start_utc)}｜{stage}",
                 _matchup(match),
-                "看点：" + _short(schedule_insight(match), 32 if compact else 42) + "。",
+                "看点：" + _short(preview_angle(match, digest.today), 34 if compact else 44) + "。",
             ]
         )
-    return XhsSection("🌙 今晚只看这三场", tuple(lines)), matches
+    return XhsSection(f"🌙 今晚焦点 · {len(matches)}场", tuple(lines)), matches
 
 
 def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) -> str:
@@ -309,10 +309,7 @@ def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) 
         from .context import historical_context
 
         if historical_context(lead, today) is not None:
-            return (
-                "我更在意的不是排名会升到哪里，而是一个见过最高舞台的人，"
-                "还愿意从低谷里一场场往回走。"
-            )
+            return editor_takeaway(lead, today)
     if tonight:
         choice = tonight[0]
         chinese = [
@@ -497,7 +494,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
             has_upcoming=bool(tonight_matches),
             reflective=reflective,
         ),
-        signature="关注 @网球时差｜明早用赛果和胜负手，把今天这场接着讲完。",
+        signature="关注 @网球时差｜下一篇，用赛果和胜负手把这条故事接着讲完。",
         tags=tuple(_tags(evidence_matches)),
         evidence=_evidence(digest, evidence_matches),
     )

@@ -143,6 +143,22 @@ def cmd_digest(args) -> int:
         digest.source_status["编辑台媒体看点"] = (
             f"正常 · {curated_count} 场人工核验并保留原文链接"
         )
+    from .research.media import apply_media_briefs
+
+    media_count = apply_media_briefs(digest)
+    digest.source_status["外媒观点雷达"] = (
+        f"正常 · {media_count} 场多源原创摘要"
+        if media_count
+        else "本期无达到多源证据门槛的事件"
+    )
+    from .render.narrative import apply_knowledge_angles
+
+    knowledge_count = apply_knowledge_angles(digest)
+    digest.source_status["球员与赛事知识库"] = (
+        f"正常 · {knowledge_count} 场接入历史背景"
+        if knowledge_count
+        else "本期焦点暂无直接命中的审核档案"
+    )
     try:
         from .render.ai_editorial import enrich_with_github_models
 
@@ -206,6 +222,13 @@ def cmd_digest(args) -> int:
         xhs_plan.pinned_comment, encoding="utf-8"
     )
     _dump_json(xhs_plan, outdir / "xiaohongshu_plan.json")
+
+    # V2 证据资产：来源、逐项事实、选题理由和外媒共识都独立留档。
+    # 发布端只消费这些经过审核的摘要，不保存或转载媒体正文。
+    from .render.evidence import evidence_artifacts
+
+    for filename, artifact in evidence_artifacts(digest, xhs_plan).items():
+        _dump_json(artifact, outdir / filename)
 
     # 与最近 7 期比较，阻止标题钩子或正文机械复用。固定栏目、日期、标签
     # 和账号签名会被忽略，因此这里只拦真实内容重复。
@@ -744,6 +767,32 @@ def cmd_publish_flash(args) -> int:
     return 0
 
 
+# ---------- 授权视频中文化 ----------
+
+def cmd_video(args) -> int:
+    """Translate local, rights-cleared subtitles and optionally burn them."""
+    from .video import GitHubModelsTranslator, VideoPipelineError, localize_video
+
+    try:
+        translator = GitHubModelsTranslator(model=args.model)
+        audit = localize_video(
+            video_path=Path(args.video),
+            subtitle_path=Path(args.subtitles),
+            rights_path=Path(args.rights),
+            output_dir=Path(args.outdir),
+            translator=translator,
+            bilingual=args.bilingual,
+            burn=not args.no_burn,
+            overwrite=args.overwrite,
+            ffmpeg_bin=args.ffmpeg,
+        )
+    except VideoPipelineError as exc:
+        print(f"视频中文化失败：{exc}", file=sys.stderr)
+        return 2
+    print(json.dumps(audit, ensure_ascii=False, indent=2))
+    return 0
+
+
 # ---------- 入口 ----------
 
 def build_parser() -> argparse.ArgumentParser:
@@ -801,6 +850,17 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--no-cards", action="store_true", help="不生成卡片图")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
 
+    sp = sub.add_parser("video", help="中文化本地且已授权的视频素材")
+    sp.add_argument("--video", required=True, help="本地视频文件；不接受 URL")
+    sp.add_argument("--subtitles", required=True, help="本地原文 SRT 字幕")
+    sp.add_argument("--rights", required=True, help="与视频绑定的授权清单 JSON")
+    sp.add_argument("--outdir", required=True, help="中文字幕、成片与授权审计输出目录")
+    sp.add_argument("--model", help="GitHub Models 模型，默认 openai/gpt-4.1")
+    sp.add_argument("--bilingual", action="store_true", help="生成原文+中文双语字幕")
+    sp.add_argument("--no-burn", action="store_true", help="只生成 SRT，不调用 ffmpeg")
+    sp.add_argument("--overwrite", action="store_true", help="覆盖已存在的输出文件")
+    sp.add_argument("--ffmpeg", default="ffmpeg", help="ffmpeg 可执行文件名或路径")
+
     pub = sub.add_parser("publish", help="发布内容")
     pub_sub = pub.add_subparsers(dest="channel")
     spw = pub_sub.add_parser("wechat", help="公众号：上传素材并创建草稿")
@@ -845,6 +905,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_content(args)
     if args.command == "digest":
         return cmd_digest(args)
+    if args.command == "video":
+        return cmd_video(args)
     if args.command == "publish":
         if args.channel == "wechat":
             return cmd_publish_wechat(args)

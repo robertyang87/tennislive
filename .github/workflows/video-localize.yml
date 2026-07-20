@@ -1,0 +1,83 @@
+name: 授权视频中文化
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_path:
+        description: 仓库内本地视频路径
+        required: true
+        type: string
+      subtitle_path:
+        description: 仓库内英文 SRT 路径
+        required: true
+        type: string
+      rights_path:
+        description: 仓库内授权清单 JSON 路径
+        required: true
+        type: string
+      bilingual:
+        description: 是否生成中英双语字幕
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  localize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_MODELS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 安装项目
+        run: pip install -e .
+
+      - name: 校验输入只指向仓库内文件
+        env:
+          VIDEO_PATH: ${{ inputs.video_path }}
+          SUBTITLE_PATH: ${{ inputs.subtitle_path }}
+          RIGHTS_PATH: ${{ inputs.rights_path }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+
+          root = Path.cwd().resolve()
+          for name in ("VIDEO_PATH", "SUBTITLE_PATH", "RIGHTS_PATH"):
+              path = (root / os.environ[name]).resolve()
+              if root not in path.parents or not path.is_file():
+                  raise SystemExit(f"{name} 必须是仓库内已存在的文件: {path}")
+          PY
+
+      - name: 翻译并烧录中文字幕
+        env:
+          VIDEO_PATH: ${{ inputs.video_path }}
+          SUBTITLE_PATH: ${{ inputs.subtitle_path }}
+          RIGHTS_PATH: ${{ inputs.rights_path }}
+          BILINGUAL: ${{ inputs.bilingual }}
+        run: |
+          EXTRA=""
+          if [ "$BILINGUAL" = "true" ]; then EXTRA="--bilingual"; fi
+          tennislive video \
+            --video "$VIDEO_PATH" \
+            --subtitles "$SUBTITLE_PATH" \
+            --rights "$RIGHTS_PATH" \
+            --outdir output/video-localized \
+            $EXTRA
+
+      - name: 上传成片、字幕与授权审计
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-localized-${{ github.run_number }}
+          path: output/video-localized
+          if-no-files-found: error
+          retention-days: 14
