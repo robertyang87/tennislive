@@ -21,6 +21,7 @@
       border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
       font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     #title { min-height: 76px; }
+    .alt { min-height: 52px; }
     #body { min-height: 55vh; }
     #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
       background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
@@ -40,7 +41,15 @@
     <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
     <section>
       <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
-      <textarea id="title" readonly>7月20日｜西西帕斯爆冷淘汰科利尼翁</textarea>
+      <textarea id="title" readonly>跌至世界第85，西西帕斯终于捧杯</textarea>
+    </section>
+    <section>
+      <div class="label"><span>备选标题 2</span><button type="button" data-copy="alt0">复制</button></div>
+      <textarea id="alt0" class="alt" readonly>决胜盘抢十，詹皓晴夺冠</textarea>
+    </section>
+    <section>
+      <div class="label"><span>备选标题 3</span><button type="button" data-copy="alt1">复制</button></div>
+      <textarea id="alt1" class="alt" readonly>袁悦今日出战</textarea>
     </section>
     <section>
       <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
@@ -48,7 +57,7 @@
 
 ① ATP250·瑞士公开赛·男单·决赛
 🇬🇷 西西帕斯 2-1 🇧🇪 [7]科利尼翁（6-4 6-7(3) 6-3）
-↳ 鏖战三盘，掀翻7号种子
+↳ 曾高居世界第3、两进大满贯决赛；这座冠军，是排名低谷里的反弹信号
 
 ② WTA·雅典公开赛·女双·决赛
 詹皓晴/🇯🇵 Miyu Kato 2-1 🇬🇧 Maia Lumsden/🇨🇳 汤千慧（7-6(3) 4-6 10-7(抢十)）
@@ -78,7 +87,7 @@
       } catch (_) {
         field.focus(); field.select(); document.execCommand('copy');
       }
-      toast.textContent = id === 'title' ? '标题已复制' : '正文已复制';
+      toast.textContent = id === 'body' ? '正文已复制' : '标题已复制';
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 1400);
     }
