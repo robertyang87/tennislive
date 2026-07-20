@@ -6,8 +6,7 @@
 - 栏目头中英混排（大黄字 + 英文小字），日期用 "7.16 · 周四"
 - 内容少时自动垂直居中，不留大面积空白
 
-固定 5 卡结构（内容不足时自动省略对应卡片）：
-  封面 / 昨夜焦点 / 中国军团 / 今晚看球 / 冷门或竞猜（周一附排名卡）
+赛程按赛事拆页；中国球员在所属赛事中高亮，不再重复生成独立页面。
 """
 
 from __future__ import annotations
@@ -32,7 +31,7 @@ from .common import (
     result_line,
     side_display,
 )
-from .rating import find_upset, is_upset, stay_up_stars, top_results, top_schedule
+from .rating import editorial_tonight_focus, find_upset, is_upset, stay_up_stars, top_results
 
 logger = logging.getLogger(__name__)
 
@@ -777,7 +776,9 @@ def _card_china(
 
 
 def _card_tonight(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "今晚看球", "TONIGHT'S PICKS")
+    group = group_by_tournament(matches)[0]
+    matches = group.matches
+    img, draw, y = _page(fonts, date_label, group.name_zh, "TONIGHT'S FOCUS")
     lead, gap = _spread(len(matches), block_h=_BLOCK_H_NOSUB)
     y += lead
     for m in matches:
@@ -1066,18 +1067,15 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         board = top_results(singles_results, 3)
         images.append(("results", _card_focus(fonts, date_label, board)))
 
-    cn_results = [m for m in digest.results if is_chinese_involved(m)]
-    cn_today = [
-        m for m in digest.schedule + digest.live if is_chinese_involved(m)
-    ]
-    if cn_results or cn_today:
-        images.append(
-            ("china", _card_china(fonts, date_label, cn_results, cn_today))
-        )
-
-    tonight = top_schedule([m for m in digest.schedule if m.is_singles], 5)
+    tonight = editorial_tonight_focus(digest.schedule)
     if tonight:
-        images.append(("tonight", _card_tonight(fonts, date_label, tonight)))
+        event_buckets: dict[str, list[Match]] = {}
+        for match in tonight:
+            key = " ".join(match.tournament.name.casefold().split())
+            event_buckets.setdefault(key, []).append(match)
+        for index, event_matches in enumerate(event_buckets.values(), start=1):
+            kind = "tonight" if index == 1 else f"tonight{index}"
+            images.append((kind, _card_tonight(fonts, date_label, event_matches)))
 
     # 周一排名日：排名每周一更新
     if digest.today.weekday() == 0 and digest.rankings is not None:

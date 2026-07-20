@@ -956,6 +956,106 @@ def test_tonight_reason_uses_editorial_label(sample_digest):
     assert "data:image/svg+xml;base64" in body
 
 
+def test_tonight_page_uses_event_landmark_and_chinese_marker():
+    from tennislive.render import webcards
+
+    match = make_match(
+        home_name="Qinwen Zheng",
+        away_name="Maria Sakkari",
+        home_country="CHN",
+        away_country="GRE",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Athens Open",
+        match_id="athens-focus",
+    )
+    match.tournament.level = "WTA250"
+    match.court = "Center Court"
+
+    body = webcards.tonight_body([match], "07.20 · 周一")
+
+    assert "雅典 · 希腊" in body
+    assert "--page-bg:url('data:image/jpeg;base64," in body
+    assert "中国选手" in body
+    assert body.count('class="card pick"') == 1
+
+
+def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(
+    sample_digest, monkeypatch
+):
+    from copy import deepcopy
+
+    from tennislive.render import webcards
+
+    digest = deepcopy(sample_digest)
+    athens = make_match(
+        home_name="Qinwen Zheng",
+        away_name="Maria Sakkari",
+        home_country="CHN",
+        away_country="GRE",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Athens Open",
+        tour=Tour.WTA,
+        match_id="athens-focus",
+    )
+    digest.schedule.append(athens)
+    monkeypatch.setattr(
+        webcards, "editorial_tonight_focus", lambda _matches: digest.schedule
+    )
+    monkeypatch.setattr(webcards, "_screenshot_pages", lambda pages, _theme: pages)
+
+    pages = webcards.generate_deck(digest, "07.20 · 周一")
+    kinds = [kind for kind, _body in pages]
+    tonight_pages = [body for kind, body in pages if kind.startswith("tonight")]
+
+    assert "china" not in kinds
+    assert len(tonight_pages) == 2
+    assert all(
+        not ("Athens Open" in body and "温布尔登" in body)
+        for body in tonight_pages
+    )
+
+
+def test_deck_keeps_atp_and_wta_draws_of_same_event_on_one_page(
+    sample_digest, monkeypatch
+):
+    from copy import deepcopy
+
+    from tennislive.render import webcards
+
+    digest = deepcopy(sample_digest)
+    wta = make_match(
+        home_name="Qinwen Zheng",
+        away_name="Iga Swiatek",
+        home_country="CHN",
+        away_country="POL",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Wimbledon",
+        tour=Tour.WTA,
+        match_id="wta-wimbledon",
+    )
+    digest.schedule.append(wta)
+    monkeypatch.setattr(
+        webcards, "editorial_tonight_focus", lambda _matches: digest.schedule
+    )
+    monkeypatch.setattr(webcards, "_screenshot_pages", lambda pages, _theme: pages)
+
+    pages = webcards.generate_deck(digest, "07.20 · 周一")
+    tonight_pages = [body for kind, body in pages if kind.startswith("tonight")]
+
+    assert len(tonight_pages) == 1
+    assert "Carlos Alcaraz" in tonight_pages[0]
+    assert "Qinwen Zheng" in tonight_pages[0]
+
+
 def test_cover_uses_sourced_wait_for_historical_comeback():
     from tennislive.render.titles import cover_result_hook
 
@@ -986,8 +1086,8 @@ def test_tonight_card_separates_bilingual_player_lines(sample_digest):
 
     assert '<span class="en">Carlos Alcaraz</span>' in body
     assert "class=\"names\"" in body
-    assert '<b class="tour-level">大满贯</b>' in body
-    assert body.index('class="tour-level"') < body.index("温布尔登")
+    assert '<b class="event-level">大满贯</b>' in body
+    assert body.index("温布尔登") < body.index('class="event-level"')
 
 
 def test_coverage_report_lists_tour_level(sample_digest):
