@@ -1296,6 +1296,21 @@ def _matched(aliases: tuple[str, ...], names: set[str]) -> bool:
     return any(alias in name for alias in aliases for name in names)
 
 
+def story_matches_match(story: TournamentStory, match) -> bool:
+    """Only attach a story when it directly explains the daily lead match."""
+    if story.kind == "trivia":
+        return False
+    aliases = tuple(_norm(alias) for alias in story.aliases)
+    if story.kind == "player":
+        subjects = {_norm(player.name) for player in match.home + match.away}
+    else:
+        subjects = {
+            _norm(match.tournament.name),
+            _norm(getattr(match.tournament, "name_zh", "") or ""),
+        }
+    return _matched(aliases, subjects)
+
+
 def _match_drama(m) -> float:
     """比赛本身的事件性：伤退、爆冷、鏖战——这些热度同样属于输球一方."""
     from ..models import MatchStatus

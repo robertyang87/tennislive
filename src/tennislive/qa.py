@@ -156,6 +156,18 @@ def _numeric_evidence(digest: Digest) -> tuple[set[str], set[str], set[str], set
                 for value in historical.values()
                 if value is not None
             )
+        from .render.context import historical_context
+
+        context = historical_context(lead, digest.today)
+        if context:
+            source_fragments.extend(
+                [context.summary, context.continuity]
+                + [value for value, _label in context.facts]
+            )
+            for value, _label in context.facts:
+                rank_match = re.search(r"世界第(\d+)", value)
+                if rank_match:
+                    ranks.add(rank_match.group(1))
     return score_pairs, times, seeds, ranks, "\n".join(source_fragments)
 
 

@@ -86,7 +86,11 @@ def pin_asset_revision(html_content: str, revision: str) -> str:
     return _JSDELIVR_MAIN_RE.sub(rf"\g<1>@{revision}/", html_content)
 
 
-def to_copy_page(xhs_text: str, alt_titles: list[str] | None = None) -> str:
+def to_copy_page(
+    xhs_text: str,
+    alt_titles: list[str] | None = None,
+    pinned_comment: str | None = None,
+) -> str:
     """生成适合手机打开的一键复制页面。
 
     alt_titles：V1 §3.1 的备选标题（候选 ②③），人工从 3 个候选里选 1 个。
@@ -97,6 +101,7 @@ def to_copy_page(xhs_text: str, alt_titles: list[str] | None = None) -> str:
     body = "\n".join(lines[body_start:]).strip()
     safe_title = html.escape(title)
     safe_body = html.escape(body)
+    safe_comment = html.escape((pinned_comment or "").strip())
     alt_sections = ""
     for i, alt in enumerate(t for t in (alt_titles or []) if t and t != title):
         safe_alt = html.escape(alt)
@@ -130,6 +135,7 @@ def to_copy_page(xhs_text: str, alt_titles: list[str] | None = None) -> str:
     #title {{ min-height: 76px; }}
     .alt {{ min-height: 52px; }}
     #body {{ min-height: 55vh; }}
+    #comment {{ min-height: 118px; }}
     #toast {{ position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
       background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
       opacity: 0; pointer-events: none; transition: opacity .18s ease; }}
@@ -154,6 +160,10 @@ def to_copy_page(xhs_text: str, alt_titles: list[str] | None = None) -> str:
       <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
       <textarea id="body" readonly>{safe_body}</textarea>
     </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>{safe_comment}</textarea>
+    </section>
   </main>
   <div id="toast" role="status">已复制</div>
   <script>
@@ -165,7 +175,8 @@ def to_copy_page(xhs_text: str, alt_titles: list[str] | None = None) -> str:
       }} catch (_) {{
         field.focus(); field.select(); document.execCommand('copy');
       }}
-      toast.textContent = id === 'body' ? '正文已复制' : '标题已复制';
+      const labels = {{body: '正文已复制', comment: '评论已复制'}};
+      toast.textContent = labels[id] || '标题已复制';
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 1400);
     }}

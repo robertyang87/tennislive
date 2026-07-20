@@ -29,7 +29,7 @@ from .common import (
     is_chinese_involved,
     match_round_display,
 )
-from .focus import focus_comparison, has_detailed_stats, select_focus_match
+from .focus import focus_comparison, has_detailed_stats
 from .rating import find_upset, is_upset, match_score, tonight_focus, top_results
 from .story import (
     chinese_side_won,
@@ -40,7 +40,11 @@ from .story import (
     sort_china_matches,
 )
 from .titles import daily_lead_match
-from .tournament_story import TournamentStory, pick_tournament_story
+from .tournament_story import (
+    TournamentStory,
+    pick_tournament_story,
+    story_matches_match,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -194,6 +198,9 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 .date { margin-left:auto; font-family:'Barlow Condensed'; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }
 
 .titleband { margin:20px 0 16px; padding-left:18px; border-left:6px solid var(--section-accent); }
+.poster:not(.cover)>.save-badge { position:absolute; top:126px; right:64px; padding:7px 13px;
+  border:1px solid var(--section-accent); border-radius:5px;
+  color:var(--section-accent); font-size:19px; font-weight:700; line-height:1.2; }
 .kicker { font-family:'Barlow Condensed'; font-weight:600; font-size:26px; line-height:1.1;
   letter-spacing:.36em; text-transform:uppercase; color:var(--section-accent); }
 h1 { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:82px; font-weight:400;
@@ -870,6 +877,7 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
         '<div class="poster tonight-page">'
         + _masthead(date_label)
         + _titleband("Tonight's Focus · 今晚焦点", "今晚焦点")
+        + '<div class="save-badge">建议收藏 · 开赛前看</div>'
         + "".join(cards)
         + _FOOTER
         + "</div>"
@@ -898,6 +906,7 @@ def focus_body(m: Match, date_label: str) -> str:
         '<div class="poster focus-page">'
         + _masthead(date_label)
         + _titleband("Match Breakdown · 单场复盘", "焦点复盘")
+        + '<div class="save-badge">建议收藏 · 技术对比</div>'
         + _result_card(m, hero=True, show_tournament=True, tag_upset=False)
         + '<div class="compare-head"><span>'
         + ("专业技术统计" if comparison.source_label else "比赛结构")
@@ -912,31 +921,62 @@ def focus_body(m: Match, date_label: str) -> str:
     )
 
 
-def insight_body(m: Match, date_label: str, kind: str) -> str:
+def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
     from .hotspot import hotspot_reasons
     from .story import result_insight, schedule_insight
+    from .context import historical_context
 
     group = group_by_tournament([m])[0]
+    context = historical_context(m, today)
     if kind == "result":
-        kicker = "Why It Matters · 一句看懂"
-        title = "这场意味着什么"
-        insight = result_insight(m)
-        facts = [
-            (group.compact_level, "赛事级别"),
-            (match_round_display(m) or "完赛", "比赛轮次"),
-            (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
-        ]
+        if context is not None:
+            kicker = "Career Context · 人物背景"
+            title = "把今天放回生涯里"
+            insight = context.summary
+            facts = list(context.facts) or [
+                (group.compact_level, "赛事级别"),
+                (match_round_display(m) or "完赛", "比赛轮次"),
+                (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
+            ]
+        else:
+            kicker = "Why It Matters · 一句看懂"
+            title = "这场意味着什么"
+            insight = result_insight(m)
+            facts = [
+                (group.compact_level, "赛事级别"),
+                (match_round_display(m) or "完赛", "比赛轮次"),
+                (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
+            ]
+        match_card = _result_card(
+            m, hero=True, show_tournament=False, tag_upset=False
+        )
     else:
-        kicker = "Match Preview · 赛前看点"
-        title = "为什么值得看"
-        insight = schedule_insight(m)
-        facts = [
-            (fmt_time_beijing(m.start_utc), "北京时间"),
-            (group.compact_level, "赛事级别"),
-            (match_round_display(m) or "待定", "比赛轮次"),
-        ]
+        if context is not None:
+            kicker = "Player Context · 人物背景"
+            title = "今晚看这条故事"
+            insight = context.summary
+            facts = list(context.facts) or [
+                (fmt_time_beijing(m.start_utc), "北京时间"),
+                (group.compact_level, "赛事级别"),
+                (match_round_display(m) or "待定", "比赛轮次"),
+            ]
+        else:
+            kicker = "Match Preview · 赛前看点"
+            title = "为什么值得看"
+            insight = schedule_insight(m)
+            facts = [
+                (fmt_time_beijing(m.start_utc), "北京时间"),
+                (group.compact_level, "赛事级别"),
+                (match_round_display(m) or "待定", "比赛轮次"),
+            ]
+        match_card = _sched_card(m, with_reason=False)
     reason = " · ".join(hotspot_reasons(m)[:3])
+    source_html = ""
+    if context is not None:
+        source_html = (
+            f'<div class="stats-source">背景来源：{html.escape(context.source_label)}</div>'
+        )
     facts_html = "".join(
         f'<article class="fact"><b>{html.escape(value)}</b>'
         f'<span>{html.escape(label)}</span></article>'
@@ -947,9 +987,11 @@ def insight_body(m: Match, date_label: str, kind: str) -> str:
         + _masthead(date_label)
         + _titleband(kicker, title)
         + f'<div class="event"><i></i><span>{html.escape(group.compact_title)}</span><i></i></div>'
+        + match_card
         + '<article class="insight-hero">'
         + f'<small>{html.escape(reason)}</small><strong>{html.escape(insight)}</strong></article>'
         + f'<div class="fact-grid">{facts_html}</div>'
+        + source_html
         + _FOOTER
         + "</div>"
     )
@@ -1151,7 +1193,19 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
     headline, secondary = cover_highlights(digest)
     pages.append(("cover", cover_body(digest, headline, secondary, date_label)))
 
-    singles = [m for m in digest.results if m.is_singles]
+    lead = daily_lead_match(digest)
+    lead_id = lead.match_id if lead is not None else None
+    if lead is not None:
+        lead_kind = "result" if lead.status.is_final else "preview"
+        pages.append(("lead", insight_body(lead, date_label, lead_kind, digest.today)))
+
+    if lead is not None and lead.status.is_final and has_detailed_stats(lead):
+        pages.append(("focus", focus_body(lead, date_label)))
+
+    singles = [
+        m for m in digest.results
+        if m.is_singles and m.match_id != lead_id
+    ]
     if singles:
         # 速递页按比赛本身分量排序（中国场次不加权放大，出现时打标签即可）
         board = top_results(singles, 8, cn_boost=False)
@@ -1174,12 +1228,8 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
     if tonight:
         pages.append(("tonight", tonight_body(tonight, date_label)))
 
-    focus = select_focus_match(digest)
-    if has_detailed_stats(focus):
-        pages.append(("focus", focus_body(focus, date_label)))
-
     story = pick_tournament_story(digest)
-    if story:
+    if story and lead is not None and story_matches_match(story, lead):
         pages.append(("story", tournament_story_body(story, date_label)))
 
     if digest.today.weekday() == 0 and digest.rankings is not None:
@@ -1188,9 +1238,9 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
-    # V1 每日包最多 7 张。内容同时触发时先舍弃额外技术复盘，再舍弃
-    # 周榜和第二赛果页；封面、首张赛果、中国、今晚与故事主链不动。
-    for optional_kind in ("focus", "rankings", "results2"):
+    # 数据反馈版每日包最多 7 张。优先保留封面、头条解释、专业复盘、
+    # 中国球员与今晚焦点；周榜和额外赛果先让位。
+    for optional_kind in ("rankings", "results2", "story", "scoreboard"):
         if len(pages) <= 7:
             break
         pages = [page for page in pages if page[0] != optional_kind]
@@ -1231,7 +1281,7 @@ def generate_match_deck(
         pages.append(("match", tonight_body([match], date_label)))
     pages.extend(
         [
-            ("insight", insight_body(match, date_label, kind)),
+            ("insight", insight_body(match, date_label, kind, today)),
             ("discussion", discussion_body(match, date_label, kind)),
         ]
     )
