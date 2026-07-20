@@ -66,14 +66,14 @@ def record_quiz() -> None:
 
 
 def post_title(digest: Digest) -> str:
-    """日期 + 当天最强单场钩子；不再把两三件事挤进标题。"""
-    stories = _daily_stories(digest)
-    event = hotspot_title_candidates(stories[0])[0] if stories else "今日网球三件事"
-    prefix = f"{digest.today.month}月{digest.today.day}日｜"
-    available = 20 - len(prefix)
-    if len(event) > available:
-        event = event[: max(available - 1, 0)] + "…"
-    return prefix + event
+    """V1 §3.1：发布标题 = 头条候选 ①，与封面主钩子同源.
+
+    日期不占标题字数（发布时间自带日期）；备选 ②③ 由复制页提供，
+    人工从 3 个候选里选 1 个。
+    """
+    from .titles import pick_headline_auto
+
+    return pick_headline_auto(digest)
 
 
 def _tags(digest: Digest) -> list[str]:
@@ -137,13 +137,21 @@ def _daily_stories(digest: Digest) -> list[Match]:
     return selected
 
 
-def _story_lines(match: Match, number: str, *, compact: bool) -> list[str]:
+def _story_lines(
+    match: Match, number: str, *, compact: bool, lead: bool = False
+) -> list[str]:
     group = group_by_tournament([match])[0]
     label = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
     if match.status.is_final:
         lines = [f"{number} {label}", result_line(match)]
         if not compact:
-            lines.append(f"↳ {result_insight(match)}")
+            if lead:
+                # 头条故事的意义行与封面副标题同源，让标题声明在正文里有支撑
+                from .titles import cover_result_hook
+
+                lines.append(f"↳ {cover_result_hook(match)[1]}")
+            else:
+                lines.append(f"↳ {result_insight(match)}")
         return lines
 
     status = (
@@ -188,7 +196,12 @@ def _build(digest: Digest, *, compact: bool = False) -> list[str]:
     lines = ["今天只讲三件事：", ""]
     numbers = ("①", "②", "③")
     for index, match in enumerate(stories):
-        lines.extend(_story_lines(match, numbers[index], compact=compact) + [""])
+        lines.extend(
+            _story_lines(
+                match, numbers[index], compact=compact, lead=index == 0
+            )
+            + [""]
+        )
 
     focus = _focus_block(digest)
     if focus:
