@@ -193,6 +193,7 @@ def to_push_html(
     digest: Digest,
     cards: list[str] | None = None,
     xhs_text: str | None = None,
+    videos: list[str] | None = None,
 ) -> str:
     d = digest.today
     parts: list[str] = [_DARK_CSS, f'<div class="tl-card" style="{_CARD}">']
@@ -275,6 +276,21 @@ def to_push_html(
                 f'<img src="{url}" style="width:100%;border-radius:8px;'
                 f'margin:6px 0;display:block;" />'
             )
+        parts.append(_HR)
+    if videos:
+        parts.append(f'<div class="tl-sec" style="{_SEC}">🎬 今日视频版</div>')
+        poster = f"{_CDN}/output/{d.isoformat()}/cards/{cards[0]}" if cards else ""
+        for name in videos:
+            url = f"{_CDN}/output/{d.isoformat()}/video/{name}"
+            if poster:
+                parts.append(
+                    f'<a href="{url}" style="display:block;text-decoration:none;">'
+                    f'<img src="{poster}" style="width:100%;border-radius:8px;display:block;" />'
+                    f'<span style="{_COPY_BUTTON}">▶ 播放竖版视频</span></a>'
+                )
+            else:
+                parts.append(f'<a href="{url}" style="{_COPY_BUTTON}">▶ 播放竖版视频</a>')
+        parts.append(f'<div class="tl-dim" style="{_DIM}">约 25 秒 · 适合微信预览和视频笔记复用</div>')
         parts.append(_HR)
     parts.append(
         f'<div class="tl-dim" style="{_DIM}">📦 原始文案：output/{d.isoformat()}/xiaohongshu.txt</div>'

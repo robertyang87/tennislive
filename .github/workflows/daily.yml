@@ -89,6 +89,10 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         run: python -m playwright install --with-deps chromium
 
+      - name: 安装视频渲染器
+        if: steps.guard.outputs.skip != 'true'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
       - name: 生成每日内容包
         if: steps.guard.outputs.skip != 'true'
         id: gen

@@ -189,6 +189,20 @@ def cmd_digest(args) -> int:
         except Exception as e:  # 字体缺失等不阻塞文字内容生成
             console.print(f"[yellow]卡片图生成失败（跳过）：{e}[/yellow]")
 
+    video_paths: list[Path] = []
+    if card_paths:
+        try:
+            from .render.video_digest import generate_digest_video
+
+            video_paths = [
+                generate_digest_video(
+                    card_paths,
+                    outdir / "video" / "daily-brief.mp4",
+                )
+            ]
+        except Exception as e:  # noqa: BLE001
+            console.print(f"[yellow]竖版视频生成失败（跳过）：{e}[/yellow]")
+
     # 标题：自动选用 + 候选留档
     from .render.titles import (
         cover_fact_bundle,
@@ -277,7 +291,12 @@ def cmd_digest(args) -> int:
     )
 
     (outdir / "push.html").write_text(
-        to_push_html(digest, cards=[p.name for p in card_paths], xhs_text=xhs),
+        to_push_html(
+            digest,
+            cards=[p.name for p in card_paths],
+            xhs_text=xhs,
+            videos=[p.name for p in video_paths],
+        ),
         encoding="utf-8",
     )
 
