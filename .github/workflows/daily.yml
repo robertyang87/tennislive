@@ -9,6 +9,8 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/daily.yml"
+      - "src/tennislive/video/**"
+      - "src/tennislive/cli.py"
   schedule:
     - cron: "17 23 * * *"   # 主班次：23:17 UTC = 次日 07:17 北京时间
     - cron: "5 0 * * *"     # 备份班次：00:05 UTC = 08:05 北京时间（当日已生成则跳过）
