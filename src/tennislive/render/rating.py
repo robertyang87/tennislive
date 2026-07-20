@@ -51,6 +51,18 @@ HEADLINER_NAMES = {
     "Qinwen Zheng",
     "Naomi Osaka",
     "Emma Raducanu",
+    "Stan Wawrinka",
+}
+
+TOUR_FOCUS_LEVELS = {
+    "GS",
+    "Finals",
+    "M1000",
+    "W1000",
+    "ATP500",
+    "WTA500",
+    "ATP250",
+    "WTA250",
 }
 
 LEAD_ROUND_PTS = {
@@ -304,8 +316,52 @@ def top_schedule(matches: list[Match], n: int = 5) -> list[Match]:
     return sorted(upcoming, key=match_score, reverse=True)[:n]
 
 
+def tonight_event_focus(
+    matches: list[Match], min_matches: int = 2, max_matches: int = 5
+) -> list[list[Match]]:
+    """Select 2-5 matches per event for tour-level 250+ tournaments only."""
+    buckets: dict[str, list[Match]] = {}
+    for match in matches:
+        if match.status.is_final:
+            continue
+        key = " ".join(match.tournament.name.casefold().split())
+        buckets.setdefault(key, []).append(match)
+
+    pages: list[tuple[int, int, str, list[Match]]] = []
+    for event_matches in buckets.values():
+        level = _level_of(event_matches[0])
+        if level not in TOUR_FOCUS_LEVELS:
+            continue
+
+        singles = sorted(
+            (match for match in event_matches if match.is_singles),
+            key=match_score,
+            reverse=True,
+        )
+        doubles = sorted(
+            (match for match in event_matches if match.is_doubles),
+            key=match_score,
+            reverse=True,
+        )
+        chosen = singles[:max_matches]
+        if len(chosen) < min_matches:
+            chosen.extend(doubles[: min_matches - len(chosen)])
+        if len(chosen) < min_matches:
+            continue
+        best_score = max(match_score(match) for match in chosen)
+        pages.append(
+            (
+                0,
+                -best_score,
+                event_matches[0].tournament.name,
+                chosen[:max_matches],
+            )
+        )
+    return [row[3] for row in sorted(pages, key=lambda row: row[:3])]
+
+
 def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[Match]:
-    """今晚焦点：3-5 场中国球员或知名单打，不足时按重要性补足."""
+    """今晚焦点：优先中国/名将，同时覆盖最多四项赛事."""
     singles = [m for m in matches if m.is_singles and not m.status.is_final]
 
     def known(match: Match) -> bool:
@@ -320,15 +376,39 @@ def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[
 
     ranked = sorted(singles, key=match_score, reverse=True)
     preferred = [m for m in ranked if known(m)]
-    target = min(max_n, max(min_n, len(preferred)))
-    selected = preferred[:target]
-    selected_ids = {m.match_id for m in selected}
-    for match in ranked:
+    ordered = preferred + [m for m in ranked if m not in preferred]
+    target = min(max_n, len(ranked))
+    if target < min_n:
+        target = len(ranked)
+
+    def event_key(match: Match) -> str:
+        return " ".join(match.tournament.name.casefold().split())
+
+    selected: list[Match] = []
+    selected_ids: set[str] = set()
+    event_counts: dict[str, int] = {}
+    # First pass gives the reader a useful cross-tour slate rather than five
+    # matches from whichever event happens to contain the most Chinese players.
+    for match in ordered:
+        key = event_key(match)
+        if key in event_counts or len(event_counts) >= min(4, target):
+            continue
+        selected.append(match)
+        selected_ids.add(match.match_id)
+        event_counts[key] = 1
+        if len(selected) >= target:
+            return selected
+
+    # Second pass restores depth for the strongest event, capped at two matches.
+    for match in ordered:
         if len(selected) >= target:
             break
-        if match.match_id not in selected_ids:
-            selected.append(match)
-            selected_ids.add(match.match_id)
+        key = event_key(match)
+        if match.match_id in selected_ids or event_counts.get(key, 0) >= 2:
+            continue
+        selected.append(match)
+        selected_ids.add(match.match_id)
+        event_counts[key] = event_counts.get(key, 0) + 1
     return selected
 
 
@@ -338,9 +418,8 @@ def editorial_tonight_focus(
     """Prefer reviewed context, then fill a useful three-to-five match list."""
     candidates = tonight_focus(matches, min_n=min_n, max_n=max_n)
     reviewed = [match for match in candidates if match.editorial_url]
-    target = min(max_n, max(min_n, len(reviewed)))
     ordered = reviewed + [match for match in candidates if match not in reviewed]
-    return ordered[:target]
+    return ordered
 
 
 def stay_up_stars(m: Match) -> int:

@@ -17,6 +17,7 @@ from tennislive.render.rating import (
     select_lead_story,
     stay_up_stars,
     tonight_focus,
+    tonight_event_focus,
     top_results,
 )
 from tennislive.render.titles import daily_lead_match, flash_headline, title_candidates
@@ -208,6 +209,113 @@ def test_tonight_focus_prefers_cn_and_known_players():
     picks = tonight_focus([low, star, cn], min_n=2, max_n=3)
     assert picks[0].match_id == "cn"
     assert {m.match_id for m in picks[:2]} == {"cn", "star"}
+
+
+def test_tonight_focus_spreads_five_matches_across_four_events():
+    matches = []
+    for index, tournament in enumerate(
+        ["Prague Open", "Prague Open", "Prague Open", "Kitzbuhel Open", "Estoril Open", "Hamburg Open"]
+    ):
+        match = make_match(
+            home_name=f"Player {index}A",
+            away_name=f"Player {index}B",
+            tournament=tournament,
+            status=MatchStatus.SCHEDULED,
+            winner=None,
+            sets=(),
+            tiebreaks=(),
+            match_id=f"event-{index}",
+        )
+        match.home[0].rank = index + 1
+        matches.append(match)
+
+    picks = tonight_focus(matches, min_n=3, max_n=5)
+    events = [match.tournament.name for match in picks]
+
+    assert len(picks) == 5
+    assert len(set(events)) == 4
+    assert events.count("Prague Open") == 2
+
+
+def test_tonight_event_focus_builds_one_page_per_250_plus_event():
+    events = []
+    for tournament, level in (
+        ("Prague Open", "WTA250"),
+        ("Hamburg Open", "WTA250"),
+        ("Kitzbuhel Open", "ATP250"),
+        ("Millennium Estoril Open", "ATP250"),
+        ("Palermo 125", "WTA125"),
+    ):
+        for index in range(3):
+            match = make_match(
+                home_name=f"{tournament} Player {index}A",
+                away_name=f"{tournament} Player {index}B",
+                tournament=tournament,
+                status=MatchStatus.SCHEDULED,
+                winner=None,
+                sets=(),
+                tiebreaks=(),
+                match_id=f"{tournament}-{index}",
+            )
+            match.tournament.level = level
+            events.append(match)
+
+    pages = tonight_event_focus(events)
+
+    assert len(pages) == 4
+    assert all(2 <= len(page) <= 5 for page in pages)
+    assert {page[0].tournament.name for page in pages} == {
+        "Prague Open",
+        "Hamburg Open",
+        "Kitzbuhel Open",
+        "Millennium Estoril Open",
+    }
+
+
+def test_tonight_event_focus_prioritizes_singles_and_uses_doubles_only_as_fill():
+    singles = make_match(
+        home_name="Singles A",
+        away_name="Singles B",
+        tournament="Millennium Estoril Open",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        match_id="estoril-singles",
+    )
+    doubles = make_match(
+        home_name="Doubles A",
+        away_name="Doubles C",
+        tournament="Millennium Estoril Open",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        discipline="Men's Doubles",
+        match_id="estoril-doubles",
+    )
+    doubles.home.append(doubles.home[0])
+    doubles.away.append(doubles.away[0])
+    spare_doubles = make_match(
+        home_name="Doubles E",
+        away_name="Doubles G",
+        tournament="Millennium Estoril Open",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        discipline="Men's Doubles",
+        match_id="estoril-spare-doubles",
+    )
+    spare_doubles.home.append(spare_doubles.home[0])
+    spare_doubles.away.append(spare_doubles.away[0])
+
+    pages = tonight_event_focus([spare_doubles, doubles, singles])
+
+    assert len(pages) == 1
+    assert len(pages[0]) == 2
+    assert pages[0][0] is singles
+    assert pages[0][1] in (doubles, spare_doubles)
 
 
 def test_lead_story_explains_china_headliner_stage_and_official_evidence():

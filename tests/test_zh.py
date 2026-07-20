@@ -1,6 +1,10 @@
 from tennislive.zh import country_flag, country_zh, player_zh
 from tennislive.zh.terms import discipline_zh, round_zh
-from tennislive.zh.tournaments import tournament_level, tournament_zh
+from tennislive.zh.tournaments import (
+    tournament_level,
+    tournament_surface,
+    tournament_zh,
+)
 
 
 def test_player_full_name():
@@ -41,6 +45,17 @@ def test_tournament_level_by_tour():
     assert tournament_level("Miami Open", "ATP") == "M1000"
     assert tournament_level("Miami Open", "WTA") == "W1000"
     assert tournament_level("Wimbledon", "ATP") == "GS"
+    assert tournament_level("Millennium Estoril Open", "ATP") == "ATP250"
+    assert tournament_level("Estoril Open", "ATP") == "ATP250"
+    assert tournament_level("Palermo", "WTA") == "WTA125"
+
+
+def test_tournament_surface_official_fallbacks():
+    assert tournament_surface("Livesport Prague Open") == "Hard"
+    assert tournament_surface("MSC Hamburg Ladies Open") == "Clay"
+    assert tournament_surface("Generali Open") == "Clay"
+    assert tournament_surface("Millennium Estoril Open") == "Clay"
+    assert tournament_surface("Wimbledon") == "Grass"
 
 
 def test_country():
