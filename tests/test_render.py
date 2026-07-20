@@ -115,6 +115,8 @@ def test_xhs_post(sample_digest):
     assert "今晚只看这三场" in post
     assert "📝 我的一票" in post
     assert "💬 留个答案" in post
+    assert "发球还是接发" in post or "只选一边" in post
+    assert "明早用赛果和胜负手" in post
     assert result_line(sample_digest.results[0]) not in post
     assert "ATP 250" not in post and "WTA 250" not in post
     assert "一场球看细一点" not in post
