@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import logging
 import unicodedata
-from datetime import date
+from datetime import date, datetime
 
 from ..models import DailyData, Match
-from ..timeutil import now_utc, to_beijing
+from ..timeutil import now_utc
 from ..zh.tournaments import tournament_level
 from .base import SourceError, TennisSource
 from .espn import EspnSource
@@ -53,13 +53,12 @@ def _side_key(players) -> tuple[str, ...]:
 
 
 def _match_key(match: Match) -> tuple:
-    """跨数据源比赛身份：不依赖各家不同的 event/match id."""
+    """跨数据源比赛身份：fetch_day 已限定日期，不让缺失时间阻断合并."""
     sides = []
     for players in (match.home, match.away):
         sides.append(_side_key(players))
-    day = to_beijing(match.start_utc).date().isoformat() if match.start_utc else "unknown"
     discipline = "doubles" if match.is_doubles else "singles"
-    return match.tour.value, day, discipline, tuple(sorted(sides))
+    return match.tour.value, discipline, tuple(sorted(sides))
 
 
 def _quality(match: Match) -> int:
@@ -72,6 +71,36 @@ def _quality(match: Match) -> int:
         + (4 if match.round_name else 0)
         + (2 if match.tournament.level else 0)
     )
+
+
+def _refresh_time_status(match: Match) -> None:
+    """Classify schedule time evidence without discarding useful observations."""
+    values = []
+    for value in match.time_observations.values():
+        if not value:
+            continue
+        try:
+            values.append(datetime.fromisoformat(value))
+        except ValueError:
+            continue
+    if not values:
+        match.schedule_time_status = "unpublished"
+    elif len(values) == 1:
+        match.schedule_time_status = "single-source"
+    else:
+        spread = max(values) - min(values)
+        match.schedule_time_status = (
+            "cross-verified" if spread.total_seconds() <= 15 * 60 else "conflict"
+        )
+
+
+def _record_source(match: Match, source_name: str) -> None:
+    if source_name not in match.data_sources:
+        match.data_sources.append(source_name)
+    match.time_observations[source_name] = (
+        match.start_utc.isoformat() if match.start_utc else None
+    )
+    _refresh_time_status(match)
 
 
 def _merge_match(primary: Match, extra: Match) -> Match:
@@ -102,6 +131,14 @@ def _merge_match(primary: Match, extra: Match) -> Match:
             player.seed = player.seed or candidate.seed
             player.headshot_url = player.headshot_url or candidate.headshot_url
             player.player_id = player.player_id or candidate.player_id
+    for source_name in other.data_sources:
+        if source_name not in best.data_sources:
+            best.data_sources.append(source_name)
+    best.time_observations.update(other.time_observations)
+    for url in other.schedule_source_urls:
+        if url not in best.schedule_source_urls:
+            best.schedule_source_urls.append(url)
+    _refresh_time_status(best)
     return best
 
 
@@ -118,6 +155,7 @@ def fetch_day(d: date, prefer: str | None = None) -> DailyData:
             used_sources.append(source.name)
             source_status[source.name] = f"正常 · {len(matches)} 场"
             for match in matches:
+                _record_source(match, source.name)
                 match.tournament.level = match.tournament.level or tournament_level(
                     match.tournament.name, match.tour.value
                 )

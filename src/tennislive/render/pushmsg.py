@@ -13,7 +13,7 @@ import os
 import re
 
 from ..digest import Digest
-from ..timeutil import fmt_time_beijing
+from ..timeutil import fmt_schedule_time, fmt_time_beijing
 from .common import (
     curate_for_social,
     group_by_tournament,
@@ -221,7 +221,7 @@ def to_push_html(
             )
         for m in cn_today:
             parts.append(
-                f"⏰ {fmt_time_beijing(m.start_utc)} {_short_side(m.home)} vs "
+                f"⏰ {fmt_schedule_time(m)} {_short_side(m.home)} vs "
                 f"{_short_side(m.away)}<br/>"
                 f'<span class="tl-dim" style="{_DIM}">{_label(m)}</span>'
             )
@@ -247,7 +247,7 @@ def to_push_html(
         for m in tonight:
             stars = "★" * stay_up_stars(m)
             parts.append(
-                f"{fmt_time_beijing(m.start_utc)} {_short_side(m.home)} vs "
+                f"{fmt_schedule_time(m)} {_short_side(m.home)} vs "
                 f"{_short_side(m.away)}<br/>"
                 f'<span class="tl-dim" style="{_DIM}">{_label(m)} · 熬夜指数 {stars}</span>'
             )

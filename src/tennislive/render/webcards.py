@@ -21,7 +21,7 @@ from pathlib import Path
 from ..digest import Digest
 from ..models import Match
 from ..research.media import brief_for_match
-from ..timeutil import fmt_time_beijing
+from ..timeutil import fmt_schedule_time, fmt_time_beijing
 from ..zh import player_zh
 from ..zh.countries import country_iso2
 from .common import (
@@ -193,7 +193,7 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 
 .poster.tonight-page::before {
   background:
-    linear-gradient(180deg,rgba(2,16,20,.30) 0%,rgba(2,16,20,.42) 30%,rgba(2,20,18,.86) 55%,rgba(2,20,18,.98) 100%),
+    linear-gradient(180deg,rgba(2,16,20,.16) 0%,rgba(2,16,20,.22) 30%,rgba(2,20,18,.42) 58%,rgba(2,20,18,.76) 100%),
     var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
   opacity:1;
 }
@@ -382,6 +382,14 @@ html.light .chip-green { color:#fff; }
   overflow:hidden; color:#AAB8B1; font-size:15px; line-height:1.2; white-space:nowrap;
   text-overflow:ellipsis; }
 .pick { border-left:5px solid var(--sky); padding:7px 26px 8px; margin-bottom:8px; }
+.tonight-page .pick {
+  background:linear-gradient(90deg,rgba(2,29,23,.72),rgba(2,29,23,.52));
+  border-top-color:rgba(118,215,234,.28);
+  border-right-color:rgba(118,215,234,.28);
+  border-bottom-color:rgba(118,215,234,.28);
+  box-shadow:0 10px 24px rgba(0,0,0,.20);
+  backdrop-filter:blur(3px) saturate(1.08);
+}
 .pick header { height:36px; }
 .pick header > .hl:first-child { min-width:0; flex:1; }
 .pick .round { font-size:22px; }
@@ -398,9 +406,6 @@ html.light .chip-green { color:#fff; }
   padding:2px 7px 3px; border-radius:4px; background:var(--coral); color:#fff;
   font-size:16px; line-height:1; vertical-align:2px; }
 .pick .reason b .ui-icon { width:15px; height:15px; }
-.pick .reason i { display:inline-block; margin-right:9px; padding:2px 7px; border-radius:4px;
-  background:rgba(118,215,234,.14); color:var(--sky); font-family:'Barlow Condensed'; font-size:18px;
-  font-weight:700; font-style:normal; letter-spacing:1px; vertical-align:2px; }
 .tonight-page.count-3 .pick { padding:12px 26px 16px; margin-bottom:16px; }
 .tonight-page.count-3 .pick header { height:44px; }
 .tonight-page.count-3 .pick .side.nosets { height:68px; }
@@ -720,7 +725,7 @@ def _sched_card(
     level_html = (
         f'<b class="tour-level">{level_badge}</b>' if show_tournament else ""
     )
-    t = fmt_time_beijing(m.start_utc)
+    t = fmt_schedule_time(m)
     right = f'<span class="htime">{t}</span>'
     reason = ""
     card_class = "card"
@@ -731,13 +736,8 @@ def _sched_card(
             f'<span class="rating">{_icon_html(label_icon)}'
             f'<span>{html.escape(label)}</span></span>' + right
         )
-        source = ""
-        reason_label = "看点"
-        if m.editorial_url and m.editorial_source:
-            reason_label = "媒体"
-            source = f'<i>{html.escape(m.editorial_source.upper())}</i>'
         reason = (
-            f'<div class="reason"><b>{_icon_html("eye")}<span>{reason_label}</span></b>{source}'
+            f'<div class="reason"><b>{_icon_html("eye")}<span>看点</span></b>'
             f'{html.escape(preview_angle(m))}</div>'
         )
         card_class += " pick"
@@ -995,6 +995,9 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     matches = [
         match for event_group in event_groups for match in event_group.matches
     ][:5]
+    has_estimates = any(
+        fmt_schedule_time(match).startswith("预计") for match in matches
+    )
     cards: list[str] = []
     courts = {m.court.strip() for m in matches if m.court and m.court.strip()}
     show_courts = len(courts) > 1
@@ -1013,7 +1016,11 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
             )
             last_court = court
         cards.append(
-            _sched_card(match, with_reason=True, show_tournament=False)
+            _sched_card(
+                match,
+                with_reason=True,
+                show_tournament=False,
+            )
         )
 
     venue = venue_asset_for_match(matches[0])
@@ -1037,7 +1044,7 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
         (
             f'<b class="event-level">{html.escape(level_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
-            '<i>北京时间</i>',
+            '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
         )
     )
     return (

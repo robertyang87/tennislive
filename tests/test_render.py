@@ -948,9 +948,13 @@ def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
 def test_tonight_reason_uses_editorial_label(sample_digest):
     from tennislive.render import webcards
 
+    sample_digest.schedule[0].editorial_source = "WTA 官方报道"
+    sample_digest.schedule[0].editorial_url = "https://example.test/wta-preview"
     body = webcards.tonight_body(sample_digest.schedule, "07.16 · 周四")
 
     assert "<span>看点</span>" in body
+    assert "<span>媒体</span>" not in body
+    assert "WTA 官方报道" not in body
     assert "数据" not in body
     assert "icons/" not in body  # icons are embedded so CI rendering is self-contained
     assert "data:image/svg+xml;base64" in body
@@ -980,6 +984,74 @@ def test_tonight_page_uses_event_landmark_and_chinese_marker():
     assert "--page-bg:url('data:image/jpeg;base64," in body
     assert "中国选手" in body
     assert body.count('class="card pick"') == 1
+
+
+def test_tonight_page_does_not_invent_tbd_from_same_event_anchor():
+    from datetime import datetime, timezone
+
+    from tennislive.render import webcards
+
+    anchor = make_match(
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Athens Open",
+        start_utc=datetime(2026, 7, 20, 12, 30, tzinfo=timezone.utc),
+        match_id="athens-anchor",
+    )
+    focus = make_match(
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Athens Open",
+        start_utc=None,
+        match_id="athens-tbd",
+    )
+
+    body = webcards.tonight_body([anchor, focus], "07.20 · 周一")
+
+    assert "待定" in body
+    assert "预计 22:15*" not in body
+
+
+def test_tonight_page_keeps_tbd_without_event_anchor():
+    from tennislive.render import webcards
+
+    focus = make_match(
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Example Open",
+        start_utc=None,
+        match_id="unanchored-tbd",
+    )
+
+    body = webcards.tonight_body([focus], "07.20 · 周一")
+
+    assert "待定" in body
+    assert "*为预计时间" not in body
+
+
+def test_tonight_page_marks_official_unlisted_as_waiting_for_oop():
+    from tennislive.render import webcards
+
+    focus = make_match(
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        tournament="Example Open",
+        start_utc=None,
+        match_id="official-unlisted",
+    )
+    focus.schedule_time_status = "official-unlisted"
+
+    body = webcards.tonight_body([focus], "07.20 · 周一")
+
+    assert "待官方排期" in body
 
 
 def test_deck_splits_tonight_focus_by_event_and_has_no_china_page(

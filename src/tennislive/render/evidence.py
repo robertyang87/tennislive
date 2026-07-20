@@ -45,6 +45,20 @@ def source_manifest(digest: Digest, plan) -> dict:
             kind="score-data",
             usage="赛程、赛果、轮次与排名快照",
         )
+    if "espn" in (digest.source or "").casefold():
+        add(
+            "ESPN",
+            _scoreboard_url(digest),
+            kind="discovery-feed",
+            usage="比赛覆盖、比分与时间交叉验证",
+        )
+    if "sofascore" in (digest.source or "").casefold():
+        add(
+            "SofaScore",
+            "https://www.sofascore.com/tennis",
+            kind="discovery-feed",
+            usage="比赛补漏、比分与时间交叉验证",
+        )
     for row in plan.evidence:
         add(
             row.get("source", "赛程数据"),
@@ -53,6 +67,21 @@ def source_manifest(digest: Digest, plan) -> dict:
             usage="人物背景或赛前看点",
         )
     for match in digest.results + digest.live + digest.schedule:
+        for url in match.schedule_source_urls:
+            name = next(
+                (
+                    source
+                    for source in match.data_sources
+                    if "官方 OOP" in source
+                ),
+                "巡回赛官方 OOP",
+            )
+            add(
+                name,
+                url,
+                kind="official-order-of-play",
+                usage="核验比赛日期、场序与开赛时间性质",
+            )
         brief = brief_for_match(match, digest.today)
         if brief is None:
             continue
@@ -107,6 +136,20 @@ def fact_ledger(digest: Digest) -> dict:
                 )
                 if text
             )
+    for match in digest.schedule:
+        if not match.schedule_time_status:
+            continue
+        claims.append(
+            {
+                "match_id": match.match_id,
+                "kind": "schedule-verification",
+                "claim": match.schedule_note or match.schedule_time_status,
+                "status": match.schedule_time_status,
+                "observations": match.time_observations,
+                "sources": match.data_sources,
+                "urls": match.schedule_source_urls,
+            }
+        )
     return {
         "edition": digest.today.isoformat(),
         "generated_from_snapshot": True,
