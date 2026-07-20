@@ -58,7 +58,7 @@ def test_wta_metadata_resolves_public_hls_stream():
         if url == candidate.url:
             return Response(
                 text=(
-                    '&quot;bcGuid&quot;:&quot;6401619474112&quot;,'
+                    '&quot;mediaId&quot;:&quot;6401619474112&quot;,'
                     '&quot;description&quot;:&quot;Ninth career title.&quot;,'
                     '&quot;thumbnailUrl&quot;:&quot;https://img.example/poster.jpg&quot;'
                 )
