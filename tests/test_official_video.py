@@ -3,6 +3,7 @@ from pathlib import Path
 from tennislive.video.official import (
     OfficialVideoCandidate,
     OfficialVideoMetadata,
+    _source_cues,
     fetch_wta_video_metadata,
     parse_wta_video_candidates,
     render_wta_video,
@@ -114,3 +115,24 @@ def test_render_wta_video_builds_vertical_ffmpeg_command(tmp_path, monkeypatch):
     assert "scale=1080:1440" in command[command.index("-filter_complex") + 1]
     assert "0:a?" in command
     assert kwargs["timeout"] == 240
+
+
+def test_video_context_keeps_seed_abbreviation_and_splits_long_sentence():
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate("Champions Reel", "https://example.com"),
+        description=(
+            "No. 3 seed Krejcikova captured her ninth career WTA title, "
+            "fourth on outdoor hard courts and first since Wimbledon 2024. "
+            "Athens hosted its first WTA event since 1990."
+        ),
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=60000,
+    )
+
+    cues = _source_cues(metadata, 38)
+
+    assert len(cues) == 4
+    assert cues[1].text.startswith("No. 3 seed")
+    assert all(cue.text != "No." for cue in cues)
+    assert "fourth on outdoor" in cues[2].text

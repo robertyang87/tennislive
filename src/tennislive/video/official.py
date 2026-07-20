@@ -197,9 +197,10 @@ def fetch_wta_video_metadata(
 
 def _source_cues(metadata: OfficialVideoMetadata, clip_seconds: int) -> list[SubtitleCue]:
     sentences = [metadata.candidate.title]
+    description = re.sub(r"\bNo\.\s+(?=\d)", "No.\u2060", metadata.description)
     sentences.extend(
-        sentence.strip()
-        for sentence in re.split(r"(?<=[.!?])\s+", metadata.description)
+        sentence.replace("\u2060", " ").strip()
+        for sentence in re.split(r"(?<=[.!?])\s+|[,;]\s+", description)
         if sentence.strip()
     )
     sentences = sentences[:4]
