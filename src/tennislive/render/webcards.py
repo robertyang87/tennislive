@@ -52,8 +52,6 @@ from .titles import daily_lead_match
 from .tournament_story import (
     TournamentStory,
     direct_story_for_match,
-    pick_tournament_story,
-    story_matches_match,
 )
 from .venue_assets import venue_asset_for_match
 
@@ -739,7 +737,12 @@ def _sched_card(
     card_class = "card"
     if with_reason:
         label = recommendation_label(m)
-        label_icon = {"必看": "flame", "推荐": "star", "关注": "eye", "可选": "circle"}[label]
+        label_icon = {
+            "必看": "flame",
+            "重点": "star",
+            "悬念": "eye",
+            "有看头": "circle",
+        }[label]
         right = (
             f'<span class="rating">{_icon_html(label_icon)}'
             f'<span>{html.escape(label)}</span></span>' + right
@@ -1463,29 +1466,31 @@ def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
             kind = "tonight" if index == 1 else f"tonight{index}"
             pages.append((kind, tonight_body(event_matches, date_label)))
 
-    story = direct_story_for_match(lead, prefer_player=True) if lead is not None else None
-    if story is None:
-        story = pick_tournament_story(digest)
-    if story and lead is not None and story_matches_match(story, lead):
-        pages.append(("story", tournament_story_body(story, date_label)))
-
     if digest.today.weekday() == 0 and digest.rankings is not None:
         try:
             pages.append(("rankings", rankings_body(digest.rankings, date_label)))
         except Exception as e:  # noqa: BLE001
             logger.warning("排名卡生成失败（跳过）: %s", e)
 
-    # 通常控制在 7 张；当 3–5 场焦点分属不同赛事时，为避免混排，
-    # 赛事页属于不可压缩内容，卡组上限随之扩展。
+    # Cover, result recap, and every eligible event page are core editorial
+    # content. Only weekly rankings may be
+    # dropped when the deck grows; yesterday's scoreboards must never disappear
+    # merely because several tour events share the same day.
     protected = sum(
-        kind in {"cover", "lead", "media", "focus"} or kind.startswith("tonight")
+        kind in {
+            "cover",
+            "lead",
+            "media",
+            "focus",
+            "scoreboard",
+            "results2",
+        }
+        or kind.startswith("tonight")
         for kind, _body in pages
     )
-    target_pages = max(7, protected)
-    for optional_kind in ("rankings", "results2", "scoreboard", "story"):
-        if len(pages) <= target_pages:
-            break
-        pages = [page for page in pages if page[0] != optional_kind]
+    target_pages = max(10, protected)
+    if len(pages) > target_pages:
+        pages = [page for page in pages if page[0] != "rankings"]
 
     return _screenshot_pages(pages, theme)
 

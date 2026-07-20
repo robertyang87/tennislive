@@ -176,6 +176,7 @@ def cmd_digest(args) -> int:
 
     outdir = Path(args.outdir) / d.isoformat()
     outdir.mkdir(parents=True, exist_ok=True)
+    theme = os.environ.get("TENNISLIVE_THEME", "dark")
 
     # 一次性主页配置包放在 output/profile；内容稳定时不会产生重复提交。
     try:
@@ -186,6 +187,21 @@ def cmd_digest(args) -> int:
         console.print(f"[yellow]主页配置物料生成失败（跳过）：{e}[/yellow]")
 
     # 卡片图
+    knowledge_story = None
+    if not args.no_cards:
+        try:
+            from .render.knowledge import generate_knowledge_package
+
+            knowledge_story = generate_knowledge_package(
+                digest,
+                outdir / "knowledge",
+                theme=theme,
+            )
+        except Exception as e:  # noqa: BLE001
+            console.print(
+                f"[yellow]每日网球知识生成失败（跳过）：{e}[/yellow]"
+            )
+
     card_paths: list[Path] = []
     if not args.no_cards:
         try:
@@ -356,13 +372,11 @@ def cmd_digest(args) -> int:
     try:
         from .render.tournament_story import (
             mark_story_used,
-            pick_tournament_story,
             record_story_wishlist,
         )
 
-        story = pick_tournament_story(digest)
-        if story:
-            mark_story_used(story.slug, digest.today)
+        if knowledge_story:
+            mark_story_used(knowledge_story.slug, digest.today)
         record_story_wishlist(digest)
         # 保存今日竞猜场次，明早文案里自动开奖
         from .render.xiaohongshu import record_quiz

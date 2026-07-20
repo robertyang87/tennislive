@@ -23,7 +23,6 @@ from .story import (
     sort_china_matches,
 )
 from .titles import cover_highlights, pick_headline_auto
-from .tournament_story import pick_tournament_story
 
 
 def pick_headline(digest: Digest) -> str:
@@ -130,7 +129,7 @@ def to_markdown(digest: Digest) -> str:
         else:
             lines.append("")
 
-    story = pick_tournament_story(digest)
+    story = None
     if story:
         lines.extend(
             [
@@ -312,7 +311,7 @@ def to_html(digest: Digest) -> str:
             )
         parts.append(_item(table, comparison.verdict))
 
-    story = pick_tournament_story(digest)
+    story = None
     if story:
         parts.append(_section("📚 赛事档案"))
         facts = "<br/>".join(f"· {_esc(fact)}" for fact in story.facts)

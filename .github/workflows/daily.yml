@@ -166,6 +166,17 @@ jobs:
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"
 
+      - name: PushPlus 单独推送每日网球知识
+        if: steps.guard.outputs.skip != 'true' && env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          if [ -s "${{ steps.gen.outputs.outdir }}/knowledge/push.html" ]; then
+            tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}/knowledge"
+          else
+            echo "本期无独立知识包，跳过"
+          fi
+
       - name: 公众号存草稿/发布（WECHAT_MODE=draft 或 publish 才执行）
         if: steps.guard.outputs.skip != 'true' && env.WECHAT_APPID != '' && env.WECHAT_MODE != 'off'
         continue-on-error: true

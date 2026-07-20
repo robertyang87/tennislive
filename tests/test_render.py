@@ -431,11 +431,10 @@ def test_single_cover_no_hook_page(tmp_path, sample_digest):
     assert names[0] == "card_00_cover.png"
 
 
-def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
+def test_daily_deck_keeps_result_pages_before_optional_pages(sample_digest, monkeypatch):
     from copy import deepcopy
 
     from tennislive.render import webcards
-    from tennislive.render.tournament_story import STORIES
     from tennislive.render.titles import daily_lead_match
     from tennislive.sources.rankings import Rankings
 
@@ -465,8 +464,6 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
         total_points_won=StatPair(80, 70),
     )
     digest.rankings = Rankings()
-    story = next(s for s in STORIES if s.slug == "zheng-qinwen")
-    monkeypatch.setattr(webcards, "pick_tournament_story", lambda _digest: story)
     monkeypatch.setattr(
         webcards, "_screenshot_pages", lambda pages, _theme: pages
     )
@@ -477,17 +474,15 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
     assert kinds.count("cover") == 1
     assert kinds[1] == "lead"
     assert "focus" in kinds
-    assert "rankings" not in kinds
+    assert "scoreboard" in kinds and "results2" in kinds
 
 
 def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
     sample_digest, monkeypatch
 ):
     from tennislive.render import webcards
-    from tennislive.render.tournament_story import STORIES
     from tennislive.render.titles import daily_lead_match
 
-    unrelated = next(s for s in STORIES if s.slug == "yellow-ball")
     scoreboard_match_ids: list[str] = []
     original_scoreboard = webcards.scoreboard_body
 
@@ -495,12 +490,6 @@ def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
         scoreboard_match_ids.extend(match.match_id for match in matches)
         return original_scoreboard(matches, *args, **kwargs)
 
-    monkeypatch.setattr(
-        webcards, "pick_tournament_story", lambda _digest: unrelated
-    )
-    monkeypatch.setattr(
-        webcards, "direct_story_for_match", lambda _match, prefer_player=True: None
-    )
     monkeypatch.setattr(webcards, "scoreboard_body", capture_scoreboard)
     monkeypatch.setattr(
         webcards, "_screenshot_pages", lambda pages, _theme: pages
@@ -944,6 +933,40 @@ def test_story_card_uses_spacious_single_flow(tmp_path):
     assert body.count("<li>") == 3
     assert "1972" in body and "1986" in body
     assert "为什么会改变" in body
+
+
+def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypatch):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render import knowledge
+    from tennislive.render.tournament_story import STORIES
+
+    fake_img = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
+    monkeypatch.setattr(
+        knowledge,
+        "_screenshot_pages",
+        lambda pages, _theme: [("knowledge", Image.new("RGB", (1080, 1440), "black"))],
+    )
+
+    selected = knowledge.generate_knowledge_package(
+        sample_digest,
+        tmp_path / "knowledge",
+        story=story,
+    )
+
+    assert selected is story
+    assert (tmp_path / "knowledge" / "cards" / "card_00_knowledge.png").exists()
+    xhs = (tmp_path / "knowledge" / "xiaohongshu.txt").read_text("utf-8")
+    push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
+    assert "今天单独讲一个网球知识点" in xhs
+    assert story.hero_fact in xhs
+    assert story.source_label in xhs
+    assert "/knowledge/cards/card_00_knowledge.png" in push
+    assert "/knowledge/copy.html" in push
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
