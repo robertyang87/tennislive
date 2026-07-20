@@ -3,6 +3,7 @@ from pathlib import Path
 from tennislive.video.official import (
     OfficialVideoCandidate,
     OfficialVideoMetadata,
+    _curated_chinese_cues,
     _source_cues,
     fetch_wta_video_metadata,
     parse_wta_video_candidates,
@@ -136,3 +137,31 @@ def test_video_context_keeps_seed_abbreviation_and_splits_long_sentence():
     assert cues[1].text.startswith("No. 3 seed")
     assert all(cue.text != "No." for cue in cues)
     assert "fourth on outdoor" in cues[2].text
+
+
+def test_champion_description_becomes_concise_chinese_captions():
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate(
+            "Champions Reel: How Barbora Krejcikova won Athens 2026",
+            "https://example.com",
+        ),
+        description=(
+            "No. 3 seed Barbora Krejcikova captured her ninth career WTA Tour "
+            "Driven by Mercedes-Benz title, fourth on outdoor hard courts and first "
+            "since Wimbledon 2024. It was the first time a WTA tournament had been "
+            "held in Athens since 1990."
+        ),
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=60000,
+    )
+
+    cues = _curated_chinese_cues(metadata, 38)
+
+    assert cues is not None
+    assert [cue.text for cue in cues] == [
+        "克雷吉茨科娃｜雅典夺冠之路",
+        "生涯第 9 座 WTA 单打冠军",
+        "这是她自 2024 年温网后的第一冠",
+        "雅典自 1990 年以来首次迎回 WTA 赛事",
+    ]

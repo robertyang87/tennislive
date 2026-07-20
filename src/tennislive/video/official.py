@@ -16,6 +16,7 @@ from typing import Callable
 import requests
 
 from ..digest import Digest
+from ..zh import PLAYER_ZH, player_zh
 from .pipeline import (
     GitHubModelsTranslator,
     SubtitleCue,
@@ -37,6 +38,21 @@ _BC_GUID = re.compile(r'"(?:bcGuid|mediaId)":"(?P<guid>\d{8,})"')
 _DESCRIPTION = re.compile(r'"description":"(?P<value>(?:\\.|[^"])*)"')
 _THUMBNAIL = re.compile(r'"thumbnailUrl":"(?P<value>(?:\\.|[^"])*)"')
 _POLICY_KEY = re.compile(r"BCpk[A-Za-z0-9_-]{20,}")
+_ORDINALS = {
+    "first": 1,
+    "second": 2,
+    "third": 3,
+    "fourth": 4,
+    "fifth": 5,
+    "sixth": 6,
+    "seventh": 7,
+    "eighth": 8,
+    "ninth": 9,
+    "tenth": 10,
+    "eleventh": 11,
+    "twelfth": 12,
+}
+_CITY_ZH = {"athens": "雅典"}
 
 
 @dataclass(frozen=True)
@@ -218,6 +234,59 @@ def _source_cues(metadata: OfficialVideoMetadata, clip_seconds: int) -> list[Sub
     ]
 
 
+def _curated_chinese_cues(
+    metadata: OfficialVideoMetadata,
+    clip_seconds: int,
+) -> list[SubtitleCue] | None:
+    """Build concise fact captions when the official description is structured."""
+    combined = f"{metadata.candidate.title} {metadata.description}"
+    player_en = next((name for name in PLAYER_ZH if name in combined), "")
+    career = re.search(
+        r"her (?P<ordinal>\w+) career WTA(?: Tour.*?)? title",
+        metadata.description,
+        re.IGNORECASE,
+    )
+    since_slam = re.search(
+        r"first since (?P<slam>Wimbledon|Roland Garros|the US Open|the Australian Open) "
+        r"(?P<year>\d{4})",
+        metadata.description,
+        re.IGNORECASE,
+    )
+    city_history = re.search(
+        r"first time a WTA tournament had been held in (?P<city>[A-Za-z ]+) since "
+        r"(?P<year>\d{4})",
+        metadata.description,
+        re.IGNORECASE,
+    )
+    ordinal = _ORDINALS.get(career.group("ordinal").casefold()) if career else None
+    if not (player_en and ordinal and since_slam and city_history):
+        return None
+    city_en = city_history.group("city").strip()
+    city = _CITY_ZH.get(city_en.casefold(), city_en)
+    slam = {
+        "wimbledon": "温网",
+        "roland garros": "法网",
+        "the us open": "美网",
+        "the australian open": "澳网",
+    }[since_slam.group("slam").casefold()]
+    lines = [
+        f"{player_zh(player_en)}｜{city}夺冠之路",
+        f"生涯第 {ordinal} 座 WTA 单打冠军",
+        f"这是她自 {since_slam.group('year')} 年{slam}后的第一冠",
+        f"{city}自 {city_history.group('year')} 年以来首次迎回 WTA 赛事",
+    ]
+    slot = clip_seconds * 1000 // len(lines)
+    return [
+        SubtitleCue(
+            index=index,
+            start_ms=(index - 1) * slot,
+            end_ms=clip_seconds * 1000 if index == len(lines) else index * slot,
+            text=text,
+        )
+        for index, text in enumerate(lines, start=1)
+    ]
+
+
 def render_wta_video(
     metadata: OfficialVideoMetadata,
     output_dir: Path,
@@ -229,8 +298,10 @@ def render_wta_video(
     """Render a short vertical clip with translated contextual subtitles."""
     if shutil.which(ffmpeg_bin) is None:
         raise VideoPipelineError(f"ffmpeg executable not found: {ffmpeg_bin}")
-    translator = GitHubModelsTranslator()
-    localized = translate_cues(_source_cues(metadata, clip_seconds), translator)
+    localized = _curated_chinese_cues(metadata, clip_seconds)
+    if localized is None:
+        translator = GitHubModelsTranslator()
+        localized = translate_cues(_source_cues(metadata, clip_seconds), translator)
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     subtitle_path = output_dir / "official-highlight.zh-CN.srt"
