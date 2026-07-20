@@ -15,7 +15,7 @@ from ..models import Match
 from ..zh import player_zh
 from .common import group_by_tournament, match_round_display
 from .rating import tonight_focus
-from .story import schedule_insight
+from .narrative import preview_angle
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ def _match_payload(digest: Digest, match: Match) -> dict | None:
         "event": group.name_zh,
         "round": match_round_display(match),
         "players": [_side_name(match, 0), _side_name(match, 1)],
-        "context": schedule_insight(match),
+        "context": preview_angle(match, digest.today),
         "source": digest.source or "赛程数据",
     }
 

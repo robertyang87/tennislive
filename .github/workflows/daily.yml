@@ -101,6 +101,24 @@ jobs:
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           ls -la "$OUT_DIR"
 
+      - name: 校验证据包完整性
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          OUT_DIR="${{ steps.gen.outputs.outdir }}"
+          for name in source_manifest fact_ledger editorial_decision media_synthesis; do
+            FILE="$OUT_DIR/$name.json"
+            test -s "$FILE" || {
+              echo "::error file=$FILE::缺少可审计证据文件"
+              exit 1
+            }
+            jq -e 'type == "object"' "$FILE" >/dev/null || {
+              echo "::error file=$FILE::证据文件不是有效 JSON 对象"
+              exit 1
+            }
+          done
+          jq -e '.sources | type == "array"' "$OUT_DIR/source_manifest.json" >/dev/null
+          jq -e '.claims | type == "array"' "$OUT_DIR/fact_ledger.json" >/dev/null
+
       - name: 提交内容到仓库
         if: steps.guard.outputs.skip != 'true'
         run: |

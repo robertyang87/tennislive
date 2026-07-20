@@ -332,6 +332,17 @@ def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[
     return selected
 
 
+def editorial_tonight_focus(
+    matches: list[Match], min_n: int = 3, max_n: int = 5
+) -> list[Match]:
+    """Prefer reviewed context, then fill a useful three-to-five match list."""
+    candidates = tonight_focus(matches, min_n=min_n, max_n=max_n)
+    reviewed = [match for match in candidates if match.editorial_url]
+    target = min(max_n, max(min_n, len(reviewed)))
+    ordered = reviewed + [match for match in candidates if match not in reviewed]
+    return ordered[:target]
+
+
 def stay_up_stars(m: Match) -> int:
     """熬夜指数 1-5 星."""
     s = match_score(m)

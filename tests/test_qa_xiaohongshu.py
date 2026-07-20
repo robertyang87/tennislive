@@ -9,7 +9,7 @@ from tennislive.models import MatchStats, MatchStatus, StatPair
 from tennislive.qa import check_xhs_post
 
 
-TITLE = "🎾7.20｜今晚三场值得守"
+TITLE = "🎾7.20｜今晚焦点值得守"
 
 
 def _digest(*, schedule_count: int = 3) -> Digest:
@@ -37,7 +37,7 @@ def _spacious_body(*, matchups: int = 3) -> str:
         "昨夜最值得记住的，不是整张比分表，而是关键分上的处理方式。",
         "主角在接发端更早站进场内，也让下一拍进攻变得更从容。",
         "🇨🇳 中国球员速报\n今天的中国球员线索单独整理，阅读时更容易找到重点。",
-        "🌙 今晚只看这三场",
+        f"🌙 今晚焦点 · {matchups}场",
     ]
     for index in range(matchups):
         blocks.append(
@@ -75,7 +75,7 @@ def test_xhs_daily_title_requires_current_date_and_platform_length():
     digest = _digest()
 
     missing_date, _ = check_xhs_post(
-        digest, _post(_spacious_body(), title="🎾今晚三场值得守")
+        digest, _post(_spacious_body(), title="🎾今晚焦点值得守")
     )
     too_long, _ = check_xhs_post(
         digest,
@@ -134,12 +134,14 @@ def test_xhs_body_target_warns_but_hard_limits_block():
     assert any("正文过密" in item for item in dense_fatal)
 
 
-def test_xhs_tonight_focus_is_capped_at_three_unique_matches():
+def test_xhs_tonight_focus_allows_three_to_five_unique_matches():
     three_fatal, _ = check_xhs_post(_digest(schedule_count=3), _post(_spacious_body(matchups=3)))
-    four_fatal, _ = check_xhs_post(_digest(schedule_count=4), _post(_spacious_body(matchups=4)))
+    five_fatal, _ = check_xhs_post(_digest(schedule_count=5), _post(_spacious_body(matchups=5)))
+    six_fatal, _ = check_xhs_post(_digest(schedule_count=6), _post(_spacious_body(matchups=6)))
 
     assert not any("今晚焦点" in item for item in three_fatal)
-    assert any("今晚焦点超过3场" in item for item in four_fatal)
+    assert not any("今晚焦点" in item for item in five_fatal)
+    assert any("今晚焦点超过5场" in item for item in six_fatal)
 
 
 def test_xhs_rejects_black_square_and_unbroken_database_layout():

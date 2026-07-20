@@ -43,6 +43,7 @@ PLAYERS = [
     ("iga-swiatek.jpg", None, "Category:Iga Świątek"),
     ("coco-gauff.jpg", None, "Category:Coco Gauff"),
     ("novak-djokovic.jpg", None, "Category:Novak Djokovic"),
+    ("stefanos-tsitsipas.jpg", None, "Category:Stefanos Tsitsipas"),
 ]
 
 # 冷知识配图：与故事主题对应（文件名 = trivia-<slug>.jpg）

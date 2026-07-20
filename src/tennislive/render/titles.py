@@ -117,6 +117,10 @@ def cover_fact_bundle(m, *, source: str = "") -> dict:
         for value in item.values()
         if value is not None
     )
+    # Reviewed editorial notes may contribute stable time spans or career
+    # counts. They only enter the cover fact gate when a source URL is kept.
+    if m.editorial_note and m.editorial_url:
+        number_sources.append(m.editorial_note)
     historical = None
     if profile is not None:
         historical = {
@@ -450,18 +454,16 @@ def cover_result_hook(m) -> tuple[str, str]:
         return flash_headline(m), result_insight(m)
 
     name = player_zh(winner.name)
-    rank = winner.rank
     round_name = _flat_round(m)
     is_final = round_name.endswith("决赛") and "半" not in round_name and "四" not in round_name
-    if rank is not None and rank >= profile.peak_rank + 20:
-        action = "终于捧杯" if is_final else "重新赢球"
-        headline = f"跌至世界第{rank}，{name}{action}"
-        result = "这座冠军" if is_final else "这场胜利"
-        secondary = (
-            f"曾高居世界第{profile.peak_rank}、{profile.legacy}；"
-            f"{result}，是排名低谷里的反弹信号"
-        )
-        return headline, secondary
+    if is_final and m.editorial_url and m.editorial_note:
+        wait = re.search(r"时隔\s*(\d+)\s*个?月", m.editorial_note)
+        if wait:
+            months = wait.group(1)
+            return (
+                f"时隔{months}个月，{name}再夺冠",
+                f"{profile.legacy}仍是过去；这座奖杯为低谷期写下新的起点",
+            )
 
     if is_final:
         return (
