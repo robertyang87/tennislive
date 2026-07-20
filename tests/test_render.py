@@ -98,12 +98,16 @@ def test_wechat_title_length(sample_digest):
 
 def test_xhs_post(sample_digest):
     from tennislive.render.titles import pick_headline_auto
+    from tennislive.render.xiaohongshu import xhs_title_len
 
     post = to_post(sample_digest)
     title = post_title(sample_digest)
-    # V1 §3.1：发布标题与封面主钩子同源（头条候选 ①），不再另走一套
-    assert title == pick_headline_auto(sample_digest)
-    assert len(title) <= 20
+    # V1 §3.1：发布标题与封面主钩子同源（头条候选 ①）+ 日期与 emoji
+    d = sample_digest.today
+    assert f"{d.month}.{d.day}｜" in title
+    hook = title.split("｜", 1)[1]
+    assert pick_headline_auto(sample_digest).startswith(hook.rstrip("…"))
+    assert xhs_title_len(title) <= 20  # 平台口径：半角记 0.5
     assert "#网球" in post
     body = post.split("\n", 2)[2]
     assert len(body) <= 1000
@@ -659,6 +663,25 @@ def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
         Digest(today=date(2026, 7, 18), schedule=[scheduled])
     )
     assert story is not None and story.slug == "umag"
+
+
+def test_decorated_title_date_emoji_and_budget():
+    """发布标题带日期与内容匹配的 emoji，且不超过小红书 20 字预算."""
+    from tennislive.render.xiaohongshu import decorate_title, xhs_title_len
+
+    digest = Digest(today=date(2026, 7, 20))
+    champion = decorate_title(digest, "跌至世界第85，西西帕斯终于捧杯")
+    assert champion == "🏆7.20｜跌至世界第85，西西帕斯终于捧杯"
+    assert xhs_title_len(champion) <= 20
+
+    assert decorate_title(digest, "爆冷：黑马掀翻头号种子").startswith("💥")
+    assert decorate_title(digest, "袁悦今日出战").startswith("🔥")
+    assert decorate_title(digest, "每日赛程赛果速览").startswith("🎾")
+
+    # 超预算的钩子被裁剪并加省略号，总长仍在预算内
+    long_hook = "这是一个非常非常长的钩子标题肯定放不下二十个字"
+    trimmed = decorate_title(digest, long_hook)
+    assert trimmed.endswith("…") and xhs_title_len(trimmed) <= 20
 
 
 def test_story_pick_is_idempotent_within_same_day(tmp_path, monkeypatch):

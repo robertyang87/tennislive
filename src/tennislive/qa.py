@@ -41,8 +41,13 @@ def run_checks(
     if len(title) > 64:
         fatal.append(f"公众号标题超长: {len(title)} > 64")
     lines = xhs_post.splitlines()
-    if lines and len(lines[0]) > 20:
-        warn.append(f"小红书标题超长: {len(lines[0])} > 20")
+    if lines:
+        from .render.xiaohongshu import xhs_title_len
+
+        # 与平台一致：半角记 0.5，全角/emoji 记 1
+        xhs_title = xhs_title_len(lines[0])
+        if xhs_title > 20:
+            warn.append(f"小红书标题超长: {xhs_title:g} > 20")
     body = "\n".join(lines[2:]) if len(lines) > 2 else ""
     if len(body) > 1000:
         fatal.append(f"小红书正文超长: {len(body)} > 1000")

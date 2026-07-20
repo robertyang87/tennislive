@@ -198,8 +198,15 @@ def cmd_digest(args) -> int:
     # 手机推送模板：文案走独立复制页，卡片图留在消息中便于保存。
     from .render.pushmsg import to_copy_page, to_push_html
 
+    from .render.xiaohongshu import decorate_title
+
     (outdir / "copy.html").write_text(
-        to_copy_page(xhs, alt_titles=title_candidates(digest)[1:]),
+        to_copy_page(
+            xhs,
+            alt_titles=[
+                decorate_title(digest, t) for t in title_candidates(digest)[1:]
+            ],
+        ),
         encoding="utf-8",
     )
 
