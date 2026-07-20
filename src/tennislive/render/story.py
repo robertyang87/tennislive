@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from ..digest import Digest
 from ..models import Match
-from ..zh import player_zh
+from ..zh import player_zh, surface_zh
 from ..zh.terms import round_zh
+from ..zh.tournaments import tournament_surface
 from .common import CHINESE_PLAYER_NAMES, is_chinese_involved
 from .rating import is_upset, match_score, stay_up_stars, went_to_deciding_set
 
@@ -116,7 +117,7 @@ def result_insight(match: Match) -> str:
 
 
 def schedule_insight(match: Match) -> str:
-    """Explain why the match matters using only current, verifiable context."""
+    """Write a compact hook from verifiable identity, stage, and surface facts."""
     if match.editorial_note:
         return match.editorial_note
 
@@ -130,8 +131,10 @@ def schedule_insight(match: Match) -> str:
             return f"{name}（{player.seed}号种子）"
         return name
 
-    home = identity(match.home[0]) if match.home else "主队"
-    away = identity(match.away[0]) if match.away else "客队"
+    home_player = match.home[0] if match.home else None
+    away_player = match.away[0] if match.away else None
+    home = identity(home_player) if home_player else "主队"
+    away = identity(away_player) if away_player else "客队"
     r = round_zh(match.round_name) or ""
     target = {
         "决赛": "冠军",
@@ -140,32 +143,71 @@ def schedule_insight(match: Match) -> str:
         "八分之一决赛": "八强席位",
     }.get(r, "下一轮席位")
 
+    event = group_by_tournament([match])[0].name_zh
+    surface = surface_zh(
+        match.tournament.surface or tournament_surface(match.tournament.name)
+    )
+
     if match.is_doubles:
         sides = " / ".join(player_zh(p.name) for p in match.home[:2])
         opponents = " / ".join(player_zh(p.name) for p in match.away[:2])
-        return f"{sides}与{opponents}争夺{target}"
+        if target == "下一轮席位":
+            return f"双打最怕默契还没上线：{sides}与{opponents}，首轮就得把组合感打出来。"
+        return f"{sides}与{opponents}只差这一场，就能把默契换成{target}。"
 
     cn = chinese_players(match)
     if cn:
         chinese = cn[0]
-        chinese_text = identity(chinese)
         opponent = match.away[0] if chinese in match.home else match.home[0]
-        if target == "下一轮席位":
-            return f"{chinese_text}力争晋级下一轮，对手{identity(opponent)}"
-        return f"{chinese_text}冲击{target}，对手{identity(opponent)}"
+        cn_name = player_zh(chinese.name)
+        if target != "下一轮席位":
+            return f"{cn_name}离{target}只差一场；排名只是入场券，真正要兑现的是热门身份。"
+        if chinese.rank is not None and opponent.rank is not None:
+            gap = abs(chinese.rank - opponent.rank)
+            if chinese.rank > opponent.rank and gap >= 20:
+                return f"{cn_name}要跨过{gap}位排名差；这不是来陪跑，而是一次硬仗成色测试。"
+            if chinese.rank < opponent.rank and gap >= 20:
+                return f"{cn_name}背着更高排名进场，首轮最大的考题，是扛住“必须拿下”的压力。"
+            return f"{cn_name}与对手只差{gap}位，纸面没有安全边；这场从开局就值得盯紧。"
+        return f"{cn_name}的{r or '首轮'}不缺关注，真正的悬念是她能否一上来就接管比赛。"
 
-    event = group_by_tournament([match])[0].name_zh
     if r == "决赛":
-        return f"{home}与{away}争夺{event}冠军"
-    if r in {"半决赛", "四分之一决赛", "八分之一决赛"}:
-        return f"{home}与{away}争夺{target}"
-    if match.is_doubles:
-        return f"{home}与{away}争夺{target}"
-    if r:
-        if target == "下一轮席位":
-            return f"{home}对阵{away}，胜者晋级下一轮"
-        return f"{home}对阵{away}，胜者进入{target}"
-    return f"{home}对阵{away}，本场决定下一轮席位"
+        return f"{event}只剩最后一问：{home}和{away}，谁能把这一周换成奖杯？"
+    if r == "半决赛":
+        return "离决赛只差一场，纸面身份不再是答案，只会变成必须兑现的压力。"
+    if r == "四分之一决赛":
+        return "八强是签表真正的分水岭：这场赢下来的不只是四强席位，还有争冠声量。"
+    if r == "八分之一决赛":
+        return "八强门票摆在眼前，比赛也从热身阶段切进真正的淘汰压力。"
+
+    if home_player and away_player:
+        ranks = [home_player.rank, away_player.rank]
+        if all(rank is not None for rank in ranks):
+            gap = abs(ranks[0] - ranks[1])
+            favorite = home_player if ranks[0] < ranks[1] else away_player
+            favorite_name = player_zh(favorite.name)
+            if gap >= 35:
+                return f"排名差{gap}位，{favorite_name}背着纸面优势；越像“该赢”的球，越怕慢热。"
+            if gap >= 12:
+                return f"{favorite_name}占着{gap}位排名优势，但首轮没有存款：优势得现场兑现。"
+            return f"排名只差{gap}位，这不是谁压着谁打的签；第一轮就有五五开的火药味。"
+
+        seeded = next(
+            (player for player in (home_player, away_player) if player.seed), None
+        )
+        if seeded is not None:
+            return f"{player_zh(seeded.name)}背着{seeded.seed}号种子的签位，首轮先过“必须赢”这一关。"
+        if (home_player.country or "") == (away_player.country or "") and home_player.country:
+            return "同国对决自带比较：首轮不只争晋级，也争谁先在本站留下名字。"
+
+    surface_openers = {
+        "红土": "红土首轮最会放大耐心差距",
+        "草地": "草地不给慢热留下多少时间",
+        "硬地": "硬地首轮的节奏来得很快",
+        "室内硬地": "室内硬地把每一次犹豫都放大",
+    }
+    opener = surface_openers.get(surface, "首轮没有纸面答案")
+    return f"{opener}；双方都没有明显身份光环，反而更像一场抢戏之战。"
 
 
 def recommendation_label(match: Match) -> str:
@@ -173,7 +215,7 @@ def recommendation_label(match: Match) -> str:
     if stars >= 5:
         return "必看"
     if stars >= 4:
-        return "推荐"
+        return "重点"
     if stars >= 3:
-        return "关注"
-    return "可选"
+        return "悬念"
+    return "有看头"

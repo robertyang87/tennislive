@@ -213,13 +213,21 @@ def test_tonight_focus_prefers_cn_and_known_players():
 
 def test_tonight_focus_spreads_five_matches_across_four_events():
     matches = []
-    for index, tournament in enumerate(
-        ["Prague Open", "Prague Open", "Prague Open", "Kitzbuhel Open", "Estoril Open", "Hamburg Open"]
+    for index, (tournament, tour) in enumerate(
+        [
+            ("Prague Open", Tour.WTA),
+            ("Prague Open", Tour.WTA),
+            ("Prague Open", Tour.WTA),
+            ("Kitzbuhel Open", Tour.ATP),
+            ("Estoril Open", Tour.ATP),
+            ("Hamburg Ladies Open", Tour.WTA),
+        ]
     ):
         match = make_match(
             home_name=f"Player {index}A",
             away_name=f"Player {index}B",
             tournament=tournament,
+            tour=tour,
             status=MatchStatus.SCHEDULED,
             winner=None,
             sets=(),

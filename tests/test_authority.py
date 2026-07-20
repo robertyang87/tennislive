@@ -60,7 +60,7 @@ def test_schedule_note_prefers_current_rank_and_stakes_over_previous_stats():
 
     enrich_schedule_editorial(digest)
 
-    assert scheduled.editorial_note == "郑钦文（世界第6）冲击四强席位，对手克雷吉茨科娃（世界第18）"
+    assert scheduled.editorial_note == "郑钦文离四强席位只差一场；排名只是入场券，真正要兑现的是热门身份。"
     assert "上一轮" not in scheduled.editorial_note
     assert "Ace" not in scheduled.editorial_note
     assert scheduled.editorial_source == "实时排名与赛程"
@@ -114,7 +114,7 @@ def test_schedule_fallback_explains_current_stakes_without_technique_cliches():
     )
 
     insight = schedule_insight(scheduled)
-    assert "冲击四强席位" in insight
+    assert "四强席位" in insight
     assert "接发" not in insight and "关键分" not in insight
 
 

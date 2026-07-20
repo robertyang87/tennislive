@@ -362,7 +362,13 @@ def tonight_event_focus(
 
 def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[Match]:
     """今晚焦点：优先中国/名将，同时覆盖最多四项赛事."""
-    singles = [m for m in matches if m.is_singles and not m.status.is_final]
+    singles = [
+        m
+        for m in matches
+        if m.is_singles
+        and not m.status.is_final
+        and _level_of(m) in TOUR_FOCUS_LEVELS
+    ]
 
     def known(match: Match) -> bool:
         if is_chinese_involved(match):

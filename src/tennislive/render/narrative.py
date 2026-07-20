@@ -25,7 +25,9 @@ def preview_angle(match: Match, today: date | None = None) -> str:
     media = brief_for_match(match, today) if today is not None else None
     if media is not None:
         return media.consensus
-    if match.editorial_note and match.editorial_url:
+    if match.editorial_note and (
+        match.editorial_url or match.editorial_source == "背景编辑"
+    ):
         return match.editorial_note
 
     story = direct_story_for_match(match, prefer_player=True)
@@ -37,11 +39,10 @@ def preview_angle(match: Match, today: date | None = None) -> str:
         None,
     )
     if chinese is not None:
-        stage = match_round_display(match).replace("·", "") or "本轮"
-        return f"{player_zh(chinese.name)}的{stage}，值得看的不是纸面排名，而是能否把比赛带进自己的节奏。"
+        return schedule_insight(match)
 
     if story is not None:
-        return f"这场发生在{story.title}的历史现场；胜负之外，也会成为本届赛事的新坐标。"
+        return f"{story.title}又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心。"
     return schedule_insight(match)
 
 
