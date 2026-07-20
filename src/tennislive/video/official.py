@@ -33,7 +33,7 @@ _ANCHOR = re.compile(
     re.IGNORECASE,
 )
 _TAG = re.compile(r"<[^>]+>")
-_BC_GUID = re.compile(r'"bcGuid":"(?P<guid>\d+)"')
+_BC_GUID = re.compile(r'"(?:bcGuid|mediaId)":"(?P<guid>\d{8,})"')
 _DESCRIPTION = re.compile(r'"description":"(?P<value>(?:\\.|[^"])*)"')
 _THUMBNAIL = re.compile(r'"thumbnailUrl":"(?P<value>(?:\\.|[^"])*)"')
 _POLICY_KEY = re.compile(r"BCpk[A-Za-z0-9_-]{20,}")
