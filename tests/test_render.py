@@ -97,11 +97,12 @@ def test_wechat_title_length(sample_digest):
 
 
 def test_xhs_post(sample_digest):
+    from tennislive.render.titles import pick_headline_auto
+
     post = to_post(sample_digest)
     title = post_title(sample_digest)
-    assert title.startswith(
-        f"{sample_digest.today.month}月{sample_digest.today.day}日｜"
-    )
+    # V1 §3.1：发布标题与封面主钩子同源（头条候选 ①），不再另走一套
+    assert title == pick_headline_auto(sample_digest)
     assert len(title) <= 20
     assert "#网球" in post
     body = post.split("\n", 2)[2]
@@ -134,7 +135,7 @@ def test_professional_focus_is_published_only_with_detailed_stats(sample_digest)
 
 def test_push_copy_page_and_button(sample_digest):
     xhs = "测试标题 <1>\n\n正文第一行\n正文第二行"
-    page = to_copy_page(xhs)
+    page = to_copy_page(xhs, alt_titles=["备选钩子一", "测试标题 <1>", ""])
     push_html = to_push_html(
         sample_digest, cards=["card_00_cover.png"], xhs_text=xhs
     )
@@ -142,6 +143,9 @@ def test_push_copy_page_and_button(sample_digest):
     assert "复制标题" in page and "复制正文" in page
     assert "测试标题 &lt;1&gt;" in page
     assert "正文第一行" in page
+    # V1 §3.1：备选标题可复制；与主标题重复或为空的候选不重复展示
+    assert "备选标题 2" in page and "备选钩子一" in page
+    assert "备选标题 3" not in page
     assert "copy.html" in push_html
     assert "robertyang87.github.io/tennislive" in push_html
     assert "打开并复制文案" in push_html
@@ -250,8 +254,10 @@ def test_story_cooldown_prevents_repeat(tmp_path, monkeypatch):
     assert first is not None and first.slug == "umag"
     tournament_story.mark_story_used(first.slug, digest.today)
 
-    # 冷却期内换讲冷知识兜底，不重复也不留白；冷却期满恢复赛事优先
-    second = tournament_story.pick_tournament_story(digest)
+    # 次日仍在冷却期：换讲冷知识兜底，不重复也不留白；冷却期满恢复赛事优先
+    # （同日重跑不换卡，见 test_story_pick_is_idempotent_within_same_day）
+    next_day = Digest(today=date(2026, 7, 18), results=[match])
+    second = tournament_story.pick_tournament_story(next_day)
     assert second is not None and second.slug != "umag"
     assert second.kind == "trivia"
     later = Digest(today=date(2026, 8, 17), results=[match])
@@ -653,6 +659,35 @@ def test_player_story_newsworthiness_ranking(tmp_path, monkeypatch):
         Digest(today=date(2026, 7, 18), schedule=[scheduled])
     )
     assert story is not None and story.slug == "umag"
+
+
+def test_story_pick_is_idempotent_within_same_day(tmp_path, monkeypatch):
+    """同日重跑不换卡：当天已定的故事在重新生成时被直接复用."""
+    from dataclasses import replace
+
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    fake_img = tmp_path / "img.jpg"
+    fake_img.write_bytes(b"\xff\xd8fake")
+    monkeypatch.setattr(
+        tournament_story,
+        "STORIES",
+        tuple(replace(s, image=fake_img) for s in tournament_story.STORIES),
+    )
+
+    won = make_match(
+        tournament="Plava Laguna Croatia Open Umag",
+        home_name="Qinwen Zheng",
+        away_name="Player Two",
+        winner=0,
+    )
+    digest = Digest(today=date(2026, 7, 18), results=[won])
+    first = tournament_story.pick_tournament_story(digest)
+    assert first is not None
+    tournament_story.mark_story_used(first.slug, digest.today)
+    again = tournament_story.pick_tournament_story(digest)
+    assert again is not None and again.slug == first.slug
 
 
 def test_player_story_card_uses_spotlight_branding(tmp_path):

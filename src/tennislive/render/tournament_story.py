@@ -1381,6 +1381,12 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     headliners = winners | newsworthy_losers
     state = _load_state()
 
+    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡
+    today_iso = digest.today.isoformat()
+    for story in STORIES:
+        if state.get(story.slug) == today_iso and story.image.exists():
+            return story
+
     fresh: list[tuple[int, float, int, TournamentStory]] = []
     cooling: list[tuple[str, int, float, int, TournamentStory]] = []
     for order, story in enumerate(STORIES):
