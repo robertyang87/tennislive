@@ -69,6 +69,7 @@ class OfficialVideoMetadata:
     thumbnail_url: str
     playback_url: str
     duration_ms: int
+    fallback_url: str = ""
 
 
 def _response_text(response: object) -> str:
@@ -123,6 +124,20 @@ def select_wta_video_candidate(
     for index, candidate in enumerate(candidates):
         haystack = re.sub(r"[^a-z0-9 ]", "", candidate.title.casefold())
         score = sum(100 if " " in token else 35 for token in tokens if token in haystack)
+        is_title_match = bool(
+            re.search(r"\b(claim|win|wins|won|capture|lift).{0,35}\b(title|trophy)\b", haystack)
+            or re.search(r"\btitle\s+over\b", haystack)
+        )
+        if "final" in haystack or "championship" in haystack or is_title_match:
+            score += 220
+        elif "champions reel" in haystack or "road to the title" in haystack:
+            score += 80
+        elif "interview" in haystack:
+            score += 65
+        elif "highlights" in haystack:
+            score += 45
+        if "hot shot" in haystack:
+            score -= 30
         if score:
             scored.append((score, -index, candidate))
     return max(scored, default=(0, 0, None))[2]
@@ -183,6 +198,19 @@ def fetch_wta_video_metadata(
     playback_response.raise_for_status()
     playback = playback_response.json()
     sources = playback.get("sources", [])
+    progressive_sources = [
+        source
+        for source in sources
+        if (
+            source.get("container") == "MP4" or source.get("type") == "video/mp4"
+        )
+        and str(source.get("src", "")).startswith("https://")
+    ]
+    progressive = min(
+        progressive_sources,
+        key=lambda source: int(source.get("avg_bitrate") or source.get("size") or 10**12),
+        default={},
+    ).get("src", "")
     hls = next(
         (
             source.get("src", "")
@@ -192,8 +220,9 @@ def fetch_wta_video_metadata(
         ),
         "",
     )
-    if not hls:
-        raise VideoPipelineError("WTA playback response has no HTTPS HLS stream")
+    playback_url = str(hls or progressive)
+    if not playback_url:
+        raise VideoPipelineError("WTA playback response has no HTTPS video stream")
     return OfficialVideoMetadata(
         candidate=candidate,
         description=(
@@ -206,8 +235,9 @@ def fetch_wta_video_metadata(
             if thumbnail_match
             else str(playback.get("poster", ""))
         ),
-        playback_url=hls,
+        playback_url=playback_url,
         duration_ms=int(playback.get("duration") or 0),
+        fallback_url=str(progressive if hls else ""),
     )
 
 
@@ -287,6 +317,23 @@ def _curated_chinese_cues(
     ]
 
 
+def _montage_starts(metadata: OfficialVideoMetadata, clip_seconds: int) -> list[float]:
+    """Sample an official title reel across the full tournament story."""
+    title = metadata.candidate.title.casefold()
+    is_reel = "champions reel" in title or "road to the title" in title
+    source_seconds = metadata.duration_ms / 1000
+    if not is_reel or source_seconds <= clip_seconds + 4:
+        return [0.0]
+    segment_seconds = clip_seconds / 4
+    last_start = max(0.0, source_seconds - segment_seconds)
+    return [
+        min(2.0, last_start),
+        last_start * 0.34,
+        last_start * 0.68,
+        last_start,
+    ]
+
+
 def render_wta_video(
     metadata: OfficialVideoMetadata,
     output_dir: Path,
@@ -311,12 +358,42 @@ def render_wta_video(
     escaped = subtitle_path.as_posix().replace(":", r"\:").replace("'", r"\'")
     subtitle_filter = (
         f"subtitles=filename='{escaped}':force_style='"
-        "FontName=Noto Sans CJK SC,FontSize=22,PrimaryColour=&H00FFFFFF,"
-        "OutlineColour=&H00101814,BorderStyle=3,BackColour=&H9005100D,"
-        "Outline=2,Shadow=0,MarginV=70,Alignment=2'"
+        "FontName=Noto Sans CJK SC,FontSize=18,Bold=-1,"
+        "PrimaryColour=&H00F7F7F7,OutlineColour=&H005F5AFF,"
+        "BorderStyle=1,BackColour=&H00000000,Outline=1.6,Shadow=0.7,"
+        "MarginV=28,Alignment=2'"
     )
-    filters = (
-        "[0:v]split=2[bg][fg];"
+    starts = _montage_starts(metadata, clip_seconds)
+    segment_seconds = clip_seconds / len(starts)
+    input_args: list[str] = []
+    for start in starts:
+        input_args.extend(
+            [
+                "-reconnect",
+                "1",
+                "-reconnect_streamed",
+                "1",
+                "-reconnect_delay_max",
+                "5",
+                "-ss",
+                f"{start:.3f}",
+                "-t",
+                f"{segment_seconds:.3f}",
+                "-i",
+                metadata.playback_url,
+            ]
+        )
+    if len(starts) > 1:
+        concat_inputs = "".join(f"[{index}:v][{index}:a]" for index in range(len(starts)))
+        montage = f"{concat_inputs}concat=n={len(starts)}:v=1:a=1[montagev][outa];"
+        video_input = "[montagev]"
+        audio_map = ["-map", "[outa]"]
+    else:
+        montage = ""
+        video_input = "[0:v]"
+        audio_map = ["-map", "0:a?"]
+    filters = montage + (
+        f"{video_input}split=2[bg][fg];"
         "[bg]scale=1080:1440:force_original_aspect_ratio=increase,"
         "crop=1080:1440,gblur=sigma=28,eq=brightness=-0.3[bg2];"
         "[fg]scale=1080:-2[fg2];"
@@ -328,16 +405,12 @@ def render_wta_video(
         "-loglevel",
         "error",
         "-y",
-        "-i",
-        metadata.playback_url,
-        "-t",
-        str(clip_seconds),
+        *input_args,
         "-filter_complex",
         filters,
         "-map",
         "[outv]",
-        "-map",
-        "0:a?",
+        *audio_map,
         "-c:v",
         "libx264",
         "-preset",
@@ -352,10 +425,21 @@ def render_wta_video(
         "+faststart",
         str(output_path),
     ]
+    render_timeout = 600 if len(starts) > 1 else 240
     try:
-        runner(command, check=True, timeout=240)
+        runner(command, check=True, timeout=render_timeout)
     except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
-        raise VideoPipelineError(f"Official video render failed: {exc}") from exc
+        if not metadata.fallback_url:
+            raise VideoPipelineError(f"Official video render failed: {exc}") from exc
+        fallback_command = [
+            metadata.fallback_url if part == metadata.playback_url else part for part in command
+        ]
+        try:
+            runner(fallback_command, check=True, timeout=render_timeout)
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as fallback_exc:
+            raise VideoPipelineError(
+                f"Official video render failed on primary and fallback sources: {fallback_exc}"
+            ) from fallback_exc
     if not output_path.is_file():
         raise VideoPipelineError("Official video render created no output")
     audit = {
@@ -365,6 +449,7 @@ def render_wta_video(
         "thumbnail_url": metadata.thumbnail_url,
         "source_duration_ms": metadata.duration_ms,
         "clip_seconds": clip_seconds,
+        "montage_starts_seconds": starts,
         "output": output_path.name,
     }
     (output_dir / "official-video.json").write_text(

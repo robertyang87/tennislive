@@ -4,6 +4,7 @@ from tennislive.video.official import (
     OfficialVideoCandidate,
     OfficialVideoMetadata,
     _curated_chinese_cues,
+    _montage_starts,
     _source_cues,
     fetch_wta_video_metadata,
     parse_wta_video_candidates,
@@ -32,6 +33,33 @@ def test_wta_video_selection_matches_player_in_digest(sample_digest):
     candidates = [
         OfficialVideoCandidate("Unrelated match highlights", "https://example.com/1"),
         OfficialVideoCandidate("Zheng Qinwen post-match interview", "https://example.com/2"),
+    ]
+
+    selected = select_wta_video_candidate(sample_digest, candidates)
+
+    assert selected == candidates[1]
+
+
+def test_wta_video_selection_prefers_final_story_for_same_player(sample_digest):
+    candidates = [
+        OfficialVideoCandidate("Zheng Qinwen hot shot", "https://example.com/1"),
+        OfficialVideoCandidate("Zheng Qinwen final highlights", "https://example.com/2"),
+    ]
+
+    selected = select_wta_video_candidate(sample_digest, candidates)
+
+    assert selected == candidates[1]
+
+
+def test_wta_video_selection_prefers_title_match_over_champions_reel(sample_digest):
+    candidates = [
+        OfficialVideoCandidate(
+            "Champions Reel: How Zheng Qinwen won Athens", "https://example.com/1"
+        ),
+        OfficialVideoCandidate(
+            "Zheng Qinwen rallies to claim Athens title over Sakkari",
+            "https://example.com/2",
+        ),
     ]
 
     selected = select_wta_video_candidate(sample_digest, candidates)
@@ -71,7 +99,11 @@ def test_wta_metadata_resolves_public_hls_stream():
             payload={
                 "duration": 651285,
                 "sources": [
-                    {"type": "video/mp4", "src": "https://cdn.example/full.mp4"},
+                    {
+                        "type": "video/mp4",
+                        "avg_bitrate": 2_000_000,
+                        "src": "https://cdn.example/full.mp4",
+                    },
                     {
                         "type": "application/x-mpegURL",
                         "src": "https://manifest.example/master.m3u8",
@@ -83,6 +115,7 @@ def test_wta_metadata_resolves_public_hls_stream():
     metadata = fetch_wta_video_metadata(candidate, get=get)
 
     assert metadata.playback_url == "https://manifest.example/master.m3u8"
+    assert metadata.fallback_url == "https://cdn.example/full.mp4"
     assert metadata.description == "Ninth career title."
     assert metadata.duration_ms == 651285
 
@@ -165,3 +198,49 @@ def test_champion_description_becomes_concise_chinese_captions():
         "这是她自 2024 年温网后的第一冠",
         "雅典自 1990 年以来首次迎回 WTA 赛事",
     ]
+
+
+def test_champions_reel_samples_the_whole_source():
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate("Champions Reel: Krejcikova wins Athens", "x"),
+        description="",
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=651_285,
+    )
+
+    starts = _montage_starts(metadata, 38)
+
+    assert starts[0] == 2.0
+    assert len(starts) == 4
+    assert starts[-1] == 641.785
+
+
+def test_champions_reel_render_uses_four_segments(tmp_path, monkeypatch):
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate("Champions Reel: Krejcikova wins Athens", "x"),
+        description=(
+            "No. 3 seed Barbora Krejcikova captured her ninth career WTA Tour title, "
+            "first since Wimbledon 2024. It was the first time a WTA tournament had "
+            "been held in Athens since 1990."
+        ),
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=651_285,
+    )
+    calls = []
+    monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
+
+    def runner(command, **kwargs):
+        calls.append(command)
+        Path(command[-1]).write_bytes(b"mp4")
+
+    render_wta_video(metadata, tmp_path, runner=runner)
+
+    command = calls[0]
+    assert command.count("-i") == 4
+    filters = command[command.index("-filter_complex") + 1]
+    assert "concat=n=4:v=1:a=1" in filters
+    assert "BorderStyle=1" in filters
+    assert "BackColour=&H00000000" in filters
+    assert "MarginV=28" in filters
