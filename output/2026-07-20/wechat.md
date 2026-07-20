@@ -39,14 +39,14 @@
 
 - **待官方排期｜布拉格公开赛**：🇨🇿 [4]巴尔通科娃 vs 🇨🇳 袁悦
   推荐理由：2024年奥斯汀首夺WTA冠军并跻身前50，今晚看她能否重新接上那段上升势头（[WTA 官方报道原文](https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin)）
+- **19:30｜汉堡站**：🇪🇸 Kaitlin Quevedo vs 🇺🇦 [2]卡利尼娜
+  推荐理由：卡利尼娜以世界第56身份迎战第101的Quevedo，争夺汉堡站女单第二轮席位。
+- **待官方排期｜埃斯托利尔公开赛**：🇨🇱 [3]塔比洛 vs 🇵🇹 Tiago Torres
+  推荐理由：塔比洛以世界第30身份出战Tiago Torres，两人力争埃斯托利尔男单八强资格。
+- **待官方排期｜巴勒莫女子公开赛**：🇮🇹 Ilary Pistola vs 🇮🇹 [2]布龙泽蒂
+  推荐理由：布龙泽蒂以世界第120身份对阵Ilary Pistola，胜者将晋级巴勒莫女单第二轮。
 - **待官方排期｜布拉格公开赛**：🇨🇳 高馨妤 vs 🇦🇹 塔格尔
   推荐理由：她曾在联合杯爆冷世界第17的玛雅；回到巡回赛，韧性能否再次兑现（[WTA 官方球员档案原文](https://www.wtatennis.com/players/322925/xinyu-gao)）
-- **待官方排期｜布拉格公开赛**：🇨🇿 琳达·弗鲁维尔托娃 vs 🇨🇿 [2]克雷吉茨科娃
-  推荐理由：法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线（[WTA 官方报道原文](https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown)）
-- **待官方排期｜布拉格公开赛**：🇷🇺 布林科娃 vs 🇨🇿 [3]贝莱克
-  推荐理由：布林科娃（第105）挑战贝莱克（第40），争夺布拉格公开赛女单第二轮席位。
-- **待官方排期｜巴勒莫女子公开赛**：🇮🇹 Ilary Pistola vs 🇮🇹 [2]布龙泽蒂
-  推荐理由：Ilary Pistola对阵布龙泽蒂（世界第120），胜者晋级下一轮
 
 ## 📚 赛事档案
 
