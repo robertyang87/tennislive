@@ -35,7 +35,16 @@ tennislive content                  # 自动选题并生成完整待发布内容
 | `wechat.html` | 内联样式 HTML，可直接粘贴进公众号编辑器或走 API 发草稿 |
 | `xiaohongshu.txt` | 小红书文案（标题 ≤20 字、正文 ≤1000 字、话题标签） |
 | `copy.html` | 手机文案复制页（标题、正文可分别一键复制） |
+| `pinned_comment.txt` | 小红书置顶评论，可在复制页单独一键复制 |
 | `cards/*.png` | 1080×1440 竖版卡片图：封面 + 赛果页 + 赛程页 |
+
+首次运行还会生成 `output/profile/`：主页简介 `bio.txt`、品牌背景图
+`background.png` 和三篇置顶规划 `pinned_plan.md`。这些是一次性主页配置物料，
+不会自动修改或提交小红书账号设置。
+
+每次日报通过质量检查后，系统会把头条人物与结果追加到
+`data/editorial_memory.json`。后续同一球员再次出现时，文案会把最近一次已发布
+记录与已核验的球员/赛事档案接起来；所有历史数字仍需通过事实闸门。
 | `coverage.txt` | ATP/WTA 赛事覆盖与每个数据源的健康状态 |
 | `digest.json` | 当期原始数据 |
 

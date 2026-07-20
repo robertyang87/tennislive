@@ -150,6 +150,8 @@ def schedule_insight(match: Match) -> str:
         chinese = cn[0]
         chinese_text = identity(chinese)
         opponent = match.away[0] if chinese in match.home else match.home[0]
+        if target == "下一轮席位":
+            return f"{chinese_text}力争晋级下一轮，对手{identity(opponent)}"
         return f"{chinese_text}冲击{target}，对手{identity(opponent)}"
 
     event = group_by_tournament([match])[0].name_zh
@@ -160,6 +162,8 @@ def schedule_insight(match: Match) -> str:
     if match.is_doubles:
         return f"{home}与{away}争夺{target}"
     if r:
+        if target == "下一轮席位":
+            return f"{home}对阵{away}，胜者晋级下一轮"
         return f"{home}对阵{away}，胜者进入{target}"
     return f"{home}对阵{away}，本场决定下一轮席位"
 

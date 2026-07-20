@@ -160,6 +160,7 @@ class XhsPostPlan:
     sections: tuple[XhsSection, ...]
     opinion: str
     question: str
+    pinned_comment: str
     signature: str
     tags: tuple[str, ...]
     evidence: tuple[dict[str, str], ...]
@@ -171,6 +172,14 @@ class XhsPostPlan:
 def _short(text: str, limit: int) -> str:
     cleaned = " ".join(text.strip().split()).rstrip("。；;，,")
     return cleaned if len(cleaned) <= limit else cleaned[: limit - 1].rstrip("，,；;") + "…"
+
+
+def _context_lines(text: str, *, compact: bool) -> list[str]:
+    limit = 46 if compact else 56
+    sentences = [part.strip() for part in text.split("。") if part.strip()]
+    if not sentences:
+        return [_short(text, limit) + "。"]
+    return [_short(sentence, limit) + "。" for sentence in sentences[:2]]
 
 
 def _matchup(match: Match) -> str:
@@ -212,15 +221,20 @@ def _lead_hook(digest: Digest, match: Match | None) -> tuple[str, ...]:
     return (_SCHEDULE_OPENINGS[index],)
 
 
-def _lead_section(match: Match, *, compact: bool) -> XhsSection:
+def _lead_section(match: Match, *, compact: bool, today) -> XhsSection:
     if match.status.is_final:
         from .titles import cover_result_hook
+        from .context import historical_context
 
         headline, meaning = cover_result_hook(match)
-        detail = meaning or result_insight(match)
+        context = historical_context(match, today)
+        detail = context.summary if context is not None else (meaning or result_insight(match))
+        lines = [headline.rstrip("。") + "。", *_context_lines(detail, compact=compact)]
+        if context is not None and context.continuity:
+            lines.append(_short(context.continuity, 58 if compact else 76) + "。")
         return XhsSection(
             "🎾 今天先看这一件事",
-            (headline.rstrip("。") + "。", _short(detail, 44 if compact else 58) + "。"),
+            tuple(lines),
         )
 
     status = "进行中" if match.status == MatchStatus.LIVE else fmt_time_beijing(match.start_utc)
@@ -290,11 +304,31 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
     return XhsSection("🌙 今晚只看这三场", tuple(lines)), matches
 
 
-def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool) -> str:
+def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) -> str:
+    if lead is not None and lead.status.is_final:
+        from .context import historical_context
+
+        if historical_context(lead, today) is not None:
+            return (
+                "我更在意的不是排名会升到哪里，而是一个见过最高舞台的人，"
+                "还愿意从低谷里一场场往回走。"
+            )
     if tonight:
         choice = tonight[0]
-        reason = _short(schedule_insight(choice), 28 if compact else 38)
-        return f"我会先看{_matchup(choice)}。\n因为{reason}。"
+        chinese = [
+            player for player in choice.home + choice.away if is_chinese_player(player)
+        ]
+        if chinese:
+            name = player_zh(chinese[0].name)
+            return (
+                f"我会先看{_matchup(choice)}。\n"
+                f"排名差距摆在这里，但更想看{name}能不能先站稳自己的发球局，"
+                "把比赛拖进熟悉的节奏。"
+            )
+        return (
+            f"我会先看{_matchup(choice)}。\n"
+            "比起赛前排名，更值得盯的是谁先把自己的节奏压到对方身上。"
+        )
     if lead is not None and lead.status.is_final:
         return f"我更在意的不是一场比分，而是{_short(result_insight(lead), 38)}。"
     return "今天没有必要追满所有场次，把时间留给真正重要的比赛。"
@@ -310,11 +344,26 @@ def _discussion_question(match: Match | None) -> str:
     ]
     if chinese:
         name = player_zh(chinese[0].name)
-        return f"{name}想赢这场，你会先盯发球还是接发？"
+        return f"如果只给{name}一句赛前提醒，你会写什么？"
 
     left = side_display(match.home, with_seed=False)
     right = side_display(match.away, with_seed=False)
-    return f"只选一边：{left}还是{right}？"
+    return f"这场你站{left}还是{right}？说一个让你相信的理由。"
+
+
+def _pinned_comment(
+    question: str, *, has_upcoming: bool, reflective: bool = False
+) -> str:
+    if reflective:
+        return (
+            f"{question}\n\n我先不写标准答案。想听你记住的是哪一场、"
+            "哪一分，或者哪个瞬间。"
+        )
+    if has_upcoming:
+        follow_up = "我先写：别急着追比分，先把自己的发球局守住。明早回来对照赛果。"
+    else:
+        follow_up = "说具体一点更好：发球、接发、相持或关键分。"
+    return f"{question}\n\n{follow_up}"
 
 
 def _evidence(digest: Digest, matches: list[Match]) -> tuple[dict[str, str], ...]:
@@ -333,6 +382,7 @@ def _evidence(digest: Digest, matches: list[Match]) -> tuple[dict[str, str], ...
         )
         if match is matches[0]:
             from .titles import cover_fact_bundle
+            from .context import historical_context
 
             historical = cover_fact_bundle(match).get("historical_profile")
             if historical and historical.get("source_url"):
@@ -341,6 +391,17 @@ def _evidence(digest: Digest, matches: list[Match]) -> tuple[dict[str, str], ...
                         "match_id": match.match_id,
                         "source": "ATP Tour 人工核验球员档案",
                         "url": str(historical["source_url"]),
+                    }
+                )
+            context = historical_context(match, digest.today)
+            if context and context.source_url and all(
+                row.get("url") != context.source_url for row in rows
+            ):
+                rows.append(
+                    {
+                        "match_id": match.match_id,
+                        "source": context.source_label,
+                        "url": context.source_url,
                     }
                 )
     return tuple(rows)
@@ -374,7 +435,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
     sections: list[XhsSection] = []
     evidence_matches: list[Match] = []
     if lead is not None:
-        sections.append(_lead_section(lead, compact=compact))
+        sections.append(_lead_section(lead, compact=compact, today=digest.today))
         evidence_matches.append(lead)
 
     china = _china_section(digest, lead)
@@ -391,9 +452,23 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
     if focus:
         sections.append(XhsSection(focus[0], tuple(focus[1:])))
 
-    if tonight_matches:
+    from .context import historical_context
+
+    lead_context = (
+        historical_context(lead, digest.today)
+        if lead is not None and lead.status.is_final
+        else None
+    )
+    reflective = False
+    global _LAST_QUIZ
+    _LAST_QUIZ = None
+    if lead_context is not None and lead is not None:
+        winner = (lead.winner_players() or [None])[0]
+        name = player_zh(winner.name) if winner is not None else "这位球员"
+        question = f"你第一次记住{name}，是哪一场球？"
+        reflective = True
+    elif tonight_matches:
         question = _discussion_question(tonight_matches[0])
-        global _LAST_QUIZ
         top = tonight_matches[0]
         _LAST_QUIZ = {
             "date": digest.today.isoformat(),
@@ -413,8 +488,15 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
         lead_score=selection.score if selection is not None else None,
         lead_reasons=selection.reasons if selection is not None else (),
         sections=tuple(sections),
-        opinion=_opinion(lead, tonight_matches, compact=compact),
+        opinion=_opinion(
+            lead, tonight_matches, compact=compact, today=digest.today
+        ),
         question=question,
+        pinned_comment=_pinned_comment(
+            question,
+            has_upcoming=bool(tonight_matches),
+            reflective=reflective,
+        ),
         signature="关注 @网球时差｜明早用赛果和胜负手，把今天这场接着讲完。",
         tags=tuple(_tags(evidence_matches)),
         evidence=_evidence(digest, evidence_matches),

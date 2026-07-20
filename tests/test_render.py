@@ -7,7 +7,7 @@ from tennislive.render.common import group_by_tournament, result_line, schedule_
 from tennislive.render.focus import focus_comparison, has_detailed_stats
 from tennislive.render.pushmsg import pin_asset_revision, to_copy_page, to_push_html
 from tennislive.render.wechat import article_title, to_html, to_markdown
-from tennislive.render.xiaohongshu import post_title, to_post
+from tennislive.render.xiaohongshu import plan_post, post_title, to_post
 
 from conftest import make_match
 
@@ -115,8 +115,14 @@ def test_xhs_post(sample_digest):
     assert "今晚只看这三场" in post
     assert "📝 我的一票" in post
     assert "💬 留个答案" in post
-    assert "发球还是接发" in post or "只选一边" in post
+    assert any(
+        phrase in post
+        for phrase in ("第一次记住", "一句赛前提醒", "说一个让你相信的理由")
+    )
     assert "明早用赛果和胜负手" in post
+    plan, _ = plan_post(sample_digest)
+    assert plan.question in plan.pinned_comment
+    assert "标准答案" in plan.pinned_comment or "明早回来对照赛果" in plan.pinned_comment
     assert result_line(sample_digest.results[0]) not in post
     assert "ATP 250" not in post and "WTA 250" not in post
     assert "一场球看细一点" not in post
@@ -144,7 +150,11 @@ def test_professional_focus_is_published_only_with_detailed_stats(sample_digest)
 
 def test_push_copy_page_and_button(sample_digest):
     xhs = "测试标题 <1>\n\n正文第一行\n正文第二行"
-    page = to_copy_page(xhs, alt_titles=["备选钩子一", "测试标题 <1>", ""])
+    page = to_copy_page(
+        xhs,
+        alt_titles=["备选钩子一", "测试标题 <1>", ""],
+        pinned_comment="只选一边：甲还是乙？",
+    )
     push_html = to_push_html(
         sample_digest, cards=["card_00_cover.png"], xhs_text=xhs
     )
@@ -155,6 +165,7 @@ def test_push_copy_page_and_button(sample_digest):
     # V1 §3.1：备选标题可复制；与主标题重复或为空的候选不重复展示
     assert "备选标题 2" in page and "备选钩子一" in page
     assert "备选标题 3" not in page
+    assert "复制评论" in page and "只选一边：甲还是乙？" in page
     assert "copy.html" in push_html
     assert "robertyang87.github.io/tennislive" in push_html
     assert "打开并复制文案" in push_html
@@ -416,6 +427,7 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
 
     from tennislive.render import webcards
     from tennislive.render.tournament_story import STORIES
+    from tennislive.render.titles import daily_lead_match
     from tennislive.sources.rankings import Rankings
 
     digest = deepcopy(sample_digest)
@@ -428,12 +440,15 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
         )
         for index in range(6)
     )
-    digest.results[0].stats = MatchStats(
+    lead = daily_lead_match(digest)
+    assert lead is not None
+    lead.stats = MatchStats(
         source="licensed-test",
         total_points_won=StatPair(80, 70),
     )
     digest.rankings = Rankings()
-    monkeypatch.setattr(webcards, "pick_tournament_story", lambda _digest: STORIES[0])
+    story = next(s for s in STORIES if s.slug == "zheng-qinwen")
+    monkeypatch.setattr(webcards, "pick_tournament_story", lambda _digest: story)
     monkeypatch.setattr(
         webcards, "_screenshot_pages", lambda pages, _theme: pages
     )
@@ -442,7 +457,129 @@ def test_daily_deck_caps_optional_pages_at_seven(sample_digest, monkeypatch):
     kinds = [kind for kind, _body in pages]
     assert len(kinds) == 7
     assert kinds.count("cover") == 1
-    assert "focus" not in kinds
+    assert kinds[1] == "lead"
+    assert "focus" in kinds
+    assert "rankings" not in kinds
+
+
+def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
+    sample_digest, monkeypatch
+):
+    from tennislive.render import webcards
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.titles import daily_lead_match
+
+    unrelated = next(s for s in STORIES if s.slug == "yellow-ball")
+    scoreboard_match_ids: list[str] = []
+    original_scoreboard = webcards.scoreboard_body
+
+    def capture_scoreboard(matches, *args, **kwargs):
+        scoreboard_match_ids.extend(match.match_id for match in matches)
+        return original_scoreboard(matches, *args, **kwargs)
+
+    monkeypatch.setattr(
+        webcards, "pick_tournament_story", lambda _digest: unrelated
+    )
+    monkeypatch.setattr(webcards, "scoreboard_body", capture_scoreboard)
+    monkeypatch.setattr(
+        webcards, "_screenshot_pages", lambda pages, _theme: pages
+    )
+
+    pages = webcards.generate_deck(sample_digest, "07.16 · 周四")
+    kinds = [kind for kind, _body in pages]
+    assert kinds[:2] == ["cover", "lead"]
+    assert "story" not in kinds
+
+    lead = daily_lead_match(sample_digest)
+    assert lead is not None and lead.match_id not in scoreboard_match_ids
+
+
+def test_profile_pack_has_ready_to_use_assets(tmp_path):
+    from PIL import Image
+
+    from tennislive.render.profile import generate_profile_pack
+
+    paths = generate_profile_pack(tmp_path / "profile")
+    assert {path.name for path in paths} == {
+        "bio.txt", "pinned_plan.md", "background.png"
+    }
+    assert "一觉醒来" in (tmp_path / "profile" / "bio.txt").read_text("utf-8")
+    with Image.open(tmp_path / "profile" / "background.png") as image:
+        assert image.size == (1080, 720)
+
+
+def test_historical_context_turns_profile_facts_into_human_background():
+    from tennislive.render.context import historical_context
+
+    match = make_match(
+        home_name="Stefanos Tsitsipas",
+        away_name="Alexander Shevchenko",
+        home_country="GRE",
+        away_country="KAZ",
+        round_name="Final",
+    )
+    match.home[0].rank = 85
+
+    context = historical_context(match, date(2026, 7, 20))
+
+    assert context is not None
+    assert "漫长下坡" in context.summary
+    assert "低谷没有抹掉曾经的高度" in context.summary
+    assert ("世界第3", "生涯最高") in context.facts
+    assert context.source_url.startswith("https://www.atptour.com/")
+
+
+def test_historical_context_uses_curated_player_origin_story():
+    from tennislive.render.context import historical_context
+
+    match = make_match(
+        home_name="Qinwen Zheng",
+        away_name="Player Two",
+        home_country="CHN",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+    )
+
+    context = historical_context(match, date(2026, 7, 20))
+
+    assert context is not None
+    assert "李娜" in context.summary and "奥运金牌" in context.summary
+    assert context.source_url
+
+
+def test_editorial_memory_connects_a_players_next_appearance(tmp_path, monkeypatch):
+    from tennislive.render import editorial_memory
+    from tennislive.render.context import historical_context
+
+    monkeypatch.setattr(
+        editorial_memory, "STATE_PATH", tmp_path / "editorial_memory.json"
+    )
+    past = make_match(
+        home_name="Alex Example",
+        away_name="Player Two",
+        match_id="past-match",
+    )
+    editorial_memory.record_daily_lead(
+        Digest(today=date(2026, 7, 19), results=[past])
+    )
+    upcoming = make_match(
+        home_name="Alex Example",
+        away_name="Player Three",
+        match_id="next-match",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+    )
+
+    context = historical_context(upcoming, date(2026, 7, 20))
+
+    assert context is not None
+    assert "7月19日" in context.summary
+    assert "下一章" in context.summary
+    assert context.source_label == "网球时差历史内容记录"
 
 
 def test_meaning_whitelist_downgrades_without_evidence():

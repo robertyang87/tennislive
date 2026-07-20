@@ -241,6 +241,8 @@ def test_digest_cli_fatal_returns_two_without_advancing_state(tmp_path, monkeypa
     assert result == 2
     assert "[FATAL] 存在空球员名" in (package / "qa.txt").read_text("utf-8")
     assert (package / "cover_facts.json").exists()
+    assert (package / "pinned_comment.txt").exists()
+    assert (outdir / "profile" / "background.png").exists()
     assert state_calls == []
 
 

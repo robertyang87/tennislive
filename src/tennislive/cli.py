@@ -155,6 +155,14 @@ def cmd_digest(args) -> int:
     outdir = Path(args.outdir) / d.isoformat()
     outdir.mkdir(parents=True, exist_ok=True)
 
+    # 一次性主页配置包放在 output/profile；内容稳定时不会产生重复提交。
+    try:
+        from .render.profile import generate_profile_pack
+
+        generate_profile_pack(Path(args.outdir) / "profile")
+    except Exception as e:  # noqa: BLE001
+        console.print(f"[yellow]主页配置物料生成失败（跳过）：{e}[/yellow]")
+
     # 卡片图
     card_paths: list[Path] = []
     if not args.no_cards:
@@ -194,6 +202,9 @@ def cmd_digest(args) -> int:
     # 小红书
     xhs_plan, xhs = plan_post(digest)
     (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
+    (outdir / "pinned_comment.txt").write_text(
+        xhs_plan.pinned_comment, encoding="utf-8"
+    )
     _dump_json(xhs_plan, outdir / "xiaohongshu_plan.json")
 
     # 与最近 7 期比较，阻止标题钩子或正文机械复用。固定栏目、日期、标签
@@ -237,6 +248,7 @@ def cmd_digest(args) -> int:
             alt_titles=[
                 decorate_title(digest, t) for t in title_candidates(digest)[1:]
             ],
+            pinned_comment=xhs_plan.pinned_comment,
         ),
         encoding="utf-8",
     )
@@ -297,6 +309,9 @@ def cmd_digest(args) -> int:
         from .render.xiaohongshu import record_quiz
 
         record_quiz()
+        from .render.editorial_memory import record_daily_lead
+
+        record_daily_lead(digest)
     except Exception as e:  # noqa: BLE001
         logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
 
