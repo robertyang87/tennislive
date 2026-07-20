@@ -182,6 +182,7 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 .poster:not(.cover)>* { position:relative; z-index:1; }
 
 .masthead { display:flex; align-items:center; gap:16px; }
+.brand-icon { width:54px; height:54px; object-fit:contain; flex:none; }
 .ball { width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; flex:none; }
 .ball::before, .ball::after { content:""; position:absolute; width:36px; height:36px; border:4px solid var(--ground0); border-radius:50%; }
 .ball::before { left:-22px; top:4px; } .ball::after { right:-22px; top:4px; }
@@ -477,8 +478,14 @@ def _shell(body: str, theme: str) -> str:
 
 
 def _masthead(date_label: str) -> str:
+    icon_uri = _asset_image_uri(ASSETS / "logo" / "tennis-clock-icon.png")
+    icon = (
+        f'<img class="brand-icon" src="{icon_uri}" alt="">'
+        if icon_uri
+        else '<span class="ball"></span>'
+    )
     return (
-        '<div class="masthead"><span class="ball"></span><span class="brand">网球时差</span>'
+        f'<div class="masthead">{icon}<span class="brand">网球时差</span>'
         f'<span class="date">{html.escape(date_label)}</span></div>'
     )
 

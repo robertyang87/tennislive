@@ -15,6 +15,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+from functools import lru_cache
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -37,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 W, H = 1080, 1440
 MARGIN = 64
+ASSETS = Path(__file__).resolve().parents[3] / "assets"
 
 BRAND = "网球时差"
 COLUMN = "网球晨报"
@@ -248,6 +250,17 @@ def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=None, 
     )
 
 
+@lru_cache(maxsize=8)
+def _brand_icon(size: int) -> Image.Image | None:
+    """Load the transparent brand mark used in every page masthead."""
+    path = ASSETS / "logo" / "tennis-clock-icon.png"
+    try:
+        icon = Image.open(path).convert("RGBA")
+    except OSError:
+        return None
+    return icon.resize((size, size), Image.Resampling.LANCZOS)
+
+
 def _draw_court(draw: ImageDraw.ImageDraw, y_top: int, y_bottom: int, color) -> None:
     """透视网球场线稿（原创插画，替代版权球场照片做背景）."""
     base_l, base_r = MARGIN - 120, W - MARGIN + 120
@@ -342,7 +355,11 @@ def _page(
 ):
     """新建一页并画页眉，返回 (img, draw, 内容起始 y)."""
     img, draw = _canvas(deco)
-    _draw_ball(draw, MARGIN + 26, MARGIN + 30, 24)
+    icon = _brand_icon(56)
+    if icon is not None:
+        img.paste(icon, (MARGIN - 2, MARGIN + 2), icon)
+    else:
+        _draw_ball(draw, MARGIN + 26, MARGIN + 30, 24)
     draw.text((MARGIN + 70, MARGIN), BRAND, font=fonts.section, fill=WHITE)
     tl = draw.textlength(date_label, font=fonts.small)
     draw.text((W - MARGIN - tl, MARGIN + 16), date_label, font=fonts.small, fill=GREY)
