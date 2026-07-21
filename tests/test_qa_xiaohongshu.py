@@ -188,8 +188,8 @@ def test_xhs_plan_post_tightens_copy_after_compact_still_runs_long(monkeypatch):
 
     assert len(body) <= xiaohongshu.MAX_BODY
     assert "🎯 一场球看细一点" not in post
-    assert "🌙 今晚焦点 · 3场" in post
-    assert plan.signature == "关注 @网球时差｜明早继续复盘。"
+    assert "🌙 今晚焦点｜3场" in post
+    assert plan.signature == "关注 @网球时差｜明早一起对答案。"
 
 
 def test_xhs_rejects_black_square_and_unbroken_database_layout():

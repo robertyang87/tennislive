@@ -30,7 +30,7 @@ from .story import (
     result_insight,
 )
 
-MAX_BODY = 700
+MAX_BODY = 520
 BASE_TAGS = ["#网球", "#网球时差"]
 
 # 每日一帖模式：竞猜折叠进正文，次日开奖制造回访（data/ 随 workflow 提交）
@@ -85,12 +85,15 @@ def _title_emoji(hook: str) -> str:
     return "🎾"
 
 
-def decorate_title(digest: Digest, hook: str) -> str:
+def decorate_title(digest: Digest, hook: str, *, category: str = "") -> str:
     """发布标题 = emoji + 日期 + 钩子，如 '🏆7.20｜跌至世界第85，西西帕斯终于捧杯'.
 
     按小红书 20 字预算（半角记 0.5）裁剪钩子，日期与 emoji 不挤占核心信息。
     """
-    prefix = f"{_title_emoji(hook)}{digest.today.month}.{digest.today.day}｜"
+    prefix = (
+        f"{_title_emoji(hook)}{digest.today.month}.{digest.today.day}"
+        f"{category}｜"
+    )
     budget = 20 - xhs_title_len(prefix)
     if xhs_title_len(hook) > budget:
         out = ""
@@ -109,7 +112,7 @@ def post_title(digest: Digest) -> str:
     """
     from .titles import pick_headline_auto
 
-    return decorate_title(digest, pick_headline_auto(digest))
+    return decorate_title(digest, pick_headline_auto(digest), category="今日球局")
 
 
 def _tags(matches: list[Match]) -> list[str]:
@@ -197,11 +200,11 @@ def _complete_opinion(text: str, limit: int = 56) -> str:
 
 
 def _context_lines(text: str, *, compact: bool) -> list[str]:
-    limit = 46 if compact else 56
+    limit = 40 if compact else 48
     sentences = [part.strip() for part in text.split("。") if part.strip()]
     if not sentences:
         return [_short(text, limit) + "。"]
-    return [_short(sentence, limit) + "。" for sentence in sentences[:2]]
+    return [_short(sentences[0], limit) + "。"]
 
 
 def _matchup(match: Match) -> str:
@@ -252,10 +255,8 @@ def _lead_section(match: Match, *, compact: bool, today) -> XhsSection:
         context = historical_context(match, today)
         detail = context.summary if context is not None else (meaning or result_insight(match))
         lines = [headline.rstrip("。") + "。", *_context_lines(detail, compact=compact)]
-        if context is not None and context.continuity:
-            lines.append(_short(context.continuity, 58 if compact else 76) + "。")
         return XhsSection(
-            "🎾 今天先看这一件事",
+            "🎾 昨夜最值回看",
             tuple(lines),
         )
 
@@ -263,7 +264,7 @@ def _lead_section(match: Match, *, compact: bool, today) -> XhsSection:
     group = group_by_tournament([match])[0]
     stage = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
     return XhsSection(
-        "🎾 今天先看这一件事",
+        "🔥 今晚先蹲这一场",
         (
             f"{status}｜{stage}",
             _matchup(match),
@@ -303,11 +304,11 @@ def _china_section(digest: Digest, lead: Match | None) -> XhsSection | None:
     matches = _china_matches(digest, lead)
     if not matches:
         return None
-    return XhsSection("🇨🇳 中国球员速报", tuple(_china_line(match) for match in matches))
+    return XhsSection("🇨🇳 中国球员｜一眼看完", tuple(_china_line(match) for match in matches))
 
 
 def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | None, list[Match]]:
-    matches = editorial_tonight_focus(digest.schedule)
+    matches = editorial_tonight_focus(digest.schedule)[:3]
     if not matches:
         return None, []
     lines: list[str] = []
@@ -324,17 +325,17 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
             for name in (player_zh(player.name), player.name):
                 if len(name) >= 7:
                     angle = angle.replace(name, pronoun)
-        angle = _short(angle, 34 if compact else 44)
+        angle = _short(angle, 28 if compact else 34)
         if index:
             lines.append("")
         lines.extend(
             [
                 f"⏰ {fmt_schedule_time(match)}｜{stage}",
                 _matchup(match),
-                "看点：" + angle + "。",
+                "看点｜" + angle + "。",
             ]
         )
-    return XhsSection(f"🌙 今晚焦点 · {len(matches)}场", tuple(lines)), matches
+    return XhsSection(f"🌙 今晚焦点｜{len(matches)}场", tuple(lines)), matches
 
 
 def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) -> str:
@@ -374,18 +375,18 @@ def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) 
 def _discussion_question(match: Match | None) -> str:
     """Generate one low-friction tennis question that can be answered in a comment."""
     if match is None:
-        return "今天这条主线里，你最想继续追哪位球员？"
+        return "今天你最想追谁？评论区留一个名字👇"
 
     chinese = [
         player for player in match.home + match.away if is_chinese_player(player)
     ]
     if chinese:
         name = player_zh(chinese[0].name)
-        return f"如果只给{name}一句赛前提醒，你会写什么？"
+        return f"你会给{name}哪句赛前提醒？👇"
 
     left = side_display(match.home, with_seed=False)
     right = side_display(match.away, with_seed=False)
-    return f"这场你站{left}还是{right}？说一个让你相信的理由。"
+    return f"你站{left}还是{right}？评论区押一个名字👇"
 
 
 def _pinned_comment(
@@ -534,7 +535,7 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
             has_upcoming=bool(tonight_matches),
             reflective=reflective,
         ),
-        signature="关注 @网球时差｜下一篇，用赛果和胜负手把这条故事接着讲完。",
+        signature="关注 @网球时差｜明早一起对答案。",
         tags=tuple(_tags(evidence_matches)),
         evidence=_evidence(digest, evidence_matches),
     )
@@ -543,14 +544,12 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
 def render_post_plan(plan: XhsPostPlan) -> list[str]:
     lines = [plan.title, "", *plan.hook, ""]
     for section in plan.sections:
-        lines.extend([section.label, *section.lines, ""])
+        lines.extend([section.label, "", *section.lines, ""])
     lines.extend(
         [
-            "📝 我的一票",
-            plan.opinion,
+            f"📝 我先站｜{_complete_opinion(plan.opinion, 36)}",
             "",
-            "💬 留个答案",
-            plan.question,
+            f"💬 {plan.question}",
             "",
             plan.signature,
             "",
@@ -585,8 +584,8 @@ def _limit_tonight_section(section: XhsSection, max_matches: int = 3) -> XhsSect
             lines.append("")
         lines.extend(block)
     label = section.label
-    if "·" in label:
-        label = f"🌙 今晚焦点 · {len(kept)}场"
+    if "｜" in label or "·" in label:
+        label = f"🌙 今晚焦点｜{len(kept)}场"
     return replace(section, label=label, lines=tuple(lines))
 
 
@@ -596,17 +595,31 @@ def _tighten_post_plan(plan: XhsPostPlan) -> XhsPostPlan:
         if section.label.startswith("🎯") or "昨日竞猜" in section.label:
             continue
         if "今晚焦点" in section.label:
-            sections.append(_limit_tonight_section(section))
+            limited = _limit_tonight_section(section)
+            sections.append(
+                replace(
+                    limited,
+                    lines=tuple(
+                        _short(line, 42) if line else "" for line in limited.lines
+                    ),
+                )
+            )
         else:
-            sections.append(section)
+            sections.append(
+                replace(
+                    section,
+                    lines=tuple(_short(line, 48) for line in section.lines[:2]),
+                )
+            )
     return replace(
         plan,
+        hook=tuple(_short(line, 46) for line in plan.hook[:1]),
         sections=tuple(sections),
         opinion=_complete_opinion(plan.opinion),
         question=_short(plan.question, 34),
         pinned_comment=_short(plan.pinned_comment.replace("\n", " "), 60),
-        signature="关注 @网球时差｜明早继续复盘。",
-        tags=tuple(plan.tags[:6]),
+        signature="关注 @网球时差｜明早一起对答案。",
+        tags=tuple(plan.tags[:4]),
     )
 
 

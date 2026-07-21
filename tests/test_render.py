@@ -104,22 +104,22 @@ def test_xhs_post(sample_digest):
     title = post_title(sample_digest)
     # V1 §3.1：发布标题与封面主钩子同源（头条候选 ①）+ 日期与 emoji
     d = sample_digest.today
-    assert f"{d.month}.{d.day}｜" in title
+    assert f"{d.month}.{d.day}今日球局｜" in title
     hook = title.split("｜", 1)[1]
     assert pick_headline_auto(sample_digest).startswith(hook.rstrip("…"))
     assert xhs_title_len(title) <= 20  # 平台口径：半角记 0.5
     assert "#网球" in post
     body = post.split("\n", 2)[2]
-    assert len(body) <= 1000
-    assert "今天先看这一件事" in post
-    assert "今晚焦点 · 1场" in post
-    assert "📝 我的一票" in post
-    assert "💬 留个答案" in post
+    assert len(body) <= 520
+    assert "昨夜最值回看" in post
+    assert "今晚焦点｜1场" in post
+    assert "📝 " in post
+    assert "💬 " in post
     assert any(
         phrase in post
-        for phrase in ("第一次记住", "一句赛前提醒", "说一个让你相信的理由")
+        for phrase in ("第一次记住", "哪句赛前提醒", "评论区押一个名字")
     )
-    assert "下一篇，用赛果和胜负手" in post
+    assert "明早一起对答案" in post
     plan, _ = plan_post(sample_digest)
     assert plan.question in plan.pinned_comment
     assert "标准答案" in plan.pinned_comment or "明早回来对照赛果" in plan.pinned_comment
@@ -150,7 +150,7 @@ def test_xhs_preview_replaces_long_player_name_before_shortening(sample_digest, 
     section, _ = xiaohongshu._tonight_section(sample_digest, compact=True)
 
     assert section is not None
-    assert "看点：他背着1号种子的签位，首轮先过必须赢这一关。" in section.lines
+    assert "看点｜他背着1号种子的签位，首轮先过必须赢这一关。" in section.lines
     assert "…。" not in section.lines[-1]
 
 
@@ -246,6 +246,7 @@ def test_social_card_output_uses_high_quality_compact_jpeg(tmp_path):
     with Image.open(output) as rendered:
         assert rendered.format == "JPEG"
         assert rendered.size == image.size
+        assert not rendered.info.get("progressive")
 
 
 def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
@@ -1010,17 +1011,19 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
     copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
     pinned = (tmp_path / "knowledge" / "pinned_comment.txt").read_text("utf-8")
-    assert xhs.startswith("🏟️")
-    assert "👀 先看赛程外" in xhs
-    assert "📍 3个记忆点" in xhs
-    assert "💬 轮到你" in xhs
+    assert xhs.startswith("📖")
+    assert "👀 赛程之外" in xhs
+    assert "📍 记住这3点" in xhs
+    assert "💬 " in xhs
     assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
     assert story.source_label in xhs
     assert "/knowledge/cards/card_00_knowledge.jpg" in push
+    assert "图片未显示？点此打开原图" in push
+    assert 'referrerpolicy="no-referrer"' in push
     assert "/knowledge/copy.html" in push
     assert "分别复制标题 / 正文 / 置顶评论" in push
-    assert "3个记忆点" in push
+    assert "记住这3点" in push
     assert pinned in copy
 
 
@@ -1033,14 +1036,14 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
 
     assert all(xhs_title_len(title) <= 20 for title in titles.values())
     assert "很多人会答错" not in "\n".join(titles.values())
-    assert "一场误判，催生了网球鹰眼" in titles["hawkeye"]
+    assert "网球有故事｜误判催生网球鹰眼" in titles["hawkeye"]
     assert "的来路" in titles["alcaraz"]
 
     hawkeye = next(story for story in STORIES if story.slug == "hawkeye")
     post = knowledge_copy(hawkeye, sample_digest)
-    assert "🧠 先猜一下" in post
+    assert "🧠 先猜" in post
     assert "1️⃣ 2004" in post and "2️⃣ 2006" in post
-    assert "落点误差仅几毫米" in post and "回放动画数秒内生成" not in post
+    assert "10 台高速摄像机" in post and "回放动画数秒内生成" not in post
     assert "关键分上，你更信主裁第一判断，还是鹰眼回放？" in post
     assert "今天单独讲一个网球知识点" not in post
 

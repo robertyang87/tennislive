@@ -327,7 +327,8 @@ def cmd_digest(args) -> int:
         to_copy_page(
             xhs,
             alt_titles=[
-                decorate_title(digest, t) for t in title_candidates(digest)[1:]
+                decorate_title(digest, t, category="今日球局")
+                for t in title_candidates(digest)[1:]
             ],
             pinned_comment=xhs_plan.pinned_comment,
         ),

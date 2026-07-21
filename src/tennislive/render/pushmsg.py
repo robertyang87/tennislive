@@ -227,7 +227,8 @@ def to_push_html(
             safe_name = html.escape(name, quote=True)
             url = f"{_CDN}/output/{d.isoformat()}/cards/{safe_name}"
             parts.append(
-                f'<img src="{url}" style="width:100%;border-radius:6px;'
+                f'<img src="{url}" data-src="{url}" width="100%" '
+                'referrerpolicy="no-referrer" style="width:100%;border-radius:6px;'
                 'margin:0 0 10px;display:block;" />'
             )
         parts.append(

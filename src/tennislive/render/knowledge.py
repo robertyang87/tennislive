@@ -41,22 +41,25 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         "scoring-history": "网球为什么是15、30、40？",
         "yellow-ball": "网球为什么从白色变黄？",
         "longest-match": "最长一场网球，到底打了多久？",
-        "hawkeye": "一场误判，催生了网球鹰眼",
+        "hawkeye": "误判催生网球鹰眼",
         "golden-slam": "金满贯到底有多难？",
         "surfaces": "三种场地，真像三项运动？",
         "big-three": "三巨头统治了多少年？",
         "china-tennis": "中国网球，从哪一冠开始？",
     }
     if story.kind == "player":
-        emoji, hook = "👤", f"{story.title}，不只是一场比分"
-    if story.kind == "trivia":
-        emoji, hook = "👀", trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
-    if story.kind not in ("player", "trivia"):
-        emoji, hook = "🏟️", f"为什么要记住{story.title}？"
-    prefix = f"{emoji}{day}｜"
+        hook = f"{story.title}，不只是一场比分"
+    elif story.kind == "trivia":
+        hook = trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
+    else:
+        hook = f"为什么要记住{story.title}？"
+    prefix = f"📖{day}网球有故事｜"
     if xhs_title_len(prefix + hook) > 20:
-        suffix = "的来路" if story.kind == "player" else "的故事"
-        hook = f"{story.title}{suffix}"
+        if story.kind == "player":
+            short_name = story.title.rsplit("·", 1)[-1]
+            hook = f"{short_name}的来路"
+        else:
+            hook = f"{story.title}的故事"
     if xhs_title_len(prefix + hook) > 20:
         hook = story.title
     return prefix + hook
@@ -68,7 +71,8 @@ def _caption_items(story: TournamentStory) -> list[str]:
     for moment in story.moments[:2]:
         year = moment.date.split("-", 1)[0]
         years.add(year)
-        items.append(f"{year}｜{moment.player}：{moment.headline.rstrip('。')}")
+        item = f"{year}｜{moment.player}：{moment.headline.rstrip('。')}"
+        items.append(item if len(item) <= 34 else item[:33].rstrip("，；") + "…")
     for fact in story.facts:
         if len(items) >= 3:
             break
@@ -79,7 +83,7 @@ def _caption_items(story: TournamentStory) -> list[str]:
             clauses: list[str] = []
             for clause in first_sentence.split("，"):
                 candidate = "，".join([*clauses, clause])
-                if clauses and len(candidate) > 38:
+                if clauses and len(candidate) > 28:
                     break
                 clauses.append(clause)
             items.append(f"再记一个｜{'，'.join(clauses)}")
@@ -125,39 +129,38 @@ def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
         f"{number_icons[index]} {item}" for index, item in enumerate(items)
     )
     why = {
-        "player": "下次再看到这位球员站上关键分，你看的就不只是一场胜负，而是一段走到今天的路。",
-        "trivia": "冷知识不是背答案。它会让下一次判罚、换场或关键分，多一层看得懂的乐趣。",
+        "player": "再看他的关键分，你会看到比分背后的来路。",
+        "trivia": "它不是一道考题，而是让你下次看球时多懂一层。",
     }.get(
         story.kind,
-        "下次镜头扫过中央球场，你看到的不只是一站赛程，还有那些在这里发生过的冠军故事。",
+        "再看到中央球场，你也会认出赛程背后的历史。",
     )
     question = _knowledge_question(story)
     if story.kind == "trivia":
         opener = f"先别往下滑，猜一下：{story.title.rstrip('？?')}？"
-        opening_label = "🧠 先猜一下"
-        answer_label = "🎾 答案藏在这段历史里"
+        opening_label = "🧠 先猜"
+        answer_label = "🎾 答案"
     elif story.kind == "player":
         opener = f"先别急着看下一场：{story.title}为什么会走到今天？"
-        opening_label = "👀 先认识一个人"
-        answer_label = "🎾 故事要从这里说起"
+        opening_label = "👀 先认识他"
+        answer_label = "🎾 故事从这里开始"
     else:
         opener = f"赛程表没告诉你的事：{story.title}为什么值得记住？"
-        opening_label = "👀 先看赛程外"
-        answer_label = "🎾 先记住这一句话"
+        opening_label = "👀 赛程之外"
+        answer_label = "🎾 先记一句"
     return (
         f"{title}\n\n"
         f"{opening_label}\n"
         f"{opener}\n\n"
         f"{answer_label}\n"
         f"{story.hero_fact}\n\n"
-        "📍 3个记忆点\n"
+        "📍 记住这3点\n"
         f"{bullets}\n\n"
-        "💡 为什么今天还值得聊？\n"
+        "💡 我为什么想讲它\n"
         f"{why}\n\n"
-        "💬 轮到你\n"
-        f"{question}\n\n"
-        "我是 @网球时差｜每天多懂一点，再去看下一场。\n\n"
-        f"资料核对：{story.source_label}\n\n"
+        f"💬 {question}\n\n"
+        "关注 @网球时差｜把网球故事讲得好懂一点。\n\n"
+        f"资料｜{story.source_label}\n\n"
         "#网球 #网球知识 #网球时差 #网球科普 #网球故事"
     )
 
@@ -188,7 +191,8 @@ def knowledge_push_html(
 <div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
   <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">小红书知识帖 · {d.month}.{d.day}</div>
   <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
-  <img src="{card_url}" style="width:100%;border-radius:6px;margin:0 0 16px;display:block;" />
+  <img src="{card_url}" data-src="{card_url}" width="100%" alt="{title}" referrerpolicy="no-referrer" style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />
+  <div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" style="color:#087747;font-size:13px;text-decoration:none;">图片未显示？点此打开原图</a></div>
   {''.join(paragraphs)}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
   <a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
