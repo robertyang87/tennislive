@@ -75,6 +75,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: 手动任务同步最新主分支
+        if: github.event_name == 'workflow_dispatch'
+        run: git pull --ff-only origin "${{ github.ref_name }}"
+
       - name: 幂等检查（备份班次：当日内容已存在则跳过）
         id: guard
         run: |

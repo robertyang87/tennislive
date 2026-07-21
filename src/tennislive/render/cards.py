@@ -1037,8 +1037,9 @@ def generate_flash_card(m: Match, outpath: str | Path, headline: str) -> Path:
     )
     draw.text((MARGIN + 22, cta_y + 11), cta, font=fonts.label, fill=ACCENT)
     _footer(draw, fonts, "完赛后快速看懂，不堆数据")
-    img.save(outpath, "PNG")
-    return outpath
+    from .image_output import save_social_image
+
+    return save_social_image(img, outpath)
 
 
 def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
@@ -1048,8 +1049,11 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    for old in outdir.glob("card_*.png"):
-        old.unlink()
+    for old in outdir.glob("card_*.*"):
+        if old.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+            old.unlink()
+
+    from .image_output import save_social_image
 
     fonts = _Fonts()
     date_label = _date_label(digest.today)
@@ -1062,8 +1066,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         images = generate_deck(digest, date_label, theme)
         paths: list[Path] = []
         for i, (kind, img) in enumerate(images):
-            p = outdir / f"card_{i:02d}_{kind}.png"
-            img.save(p, "PNG")
+            p = save_social_image(img, outdir / f"card_{i:02d}_{kind}")
             paths.append(p)
         logger.info("生成 %d 张晨报卡片（HTML 渲染）到 %s", len(paths), outdir)
         return paths
@@ -1100,8 +1103,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
 
     paths: list[Path] = []
     for i, (kind, img) in enumerate(images):
-        p = outdir / f"card_{i:02d}_{kind}.png"
-        img.save(p, "PNG")
+        p = save_social_image(img, outdir / f"card_{i:02d}_{kind}")
         paths.append(p)
     logger.info("生成 %d 张晨报卡片到 %s", len(paths), outdir)
     return paths

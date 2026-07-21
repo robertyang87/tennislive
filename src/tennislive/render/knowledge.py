@@ -210,16 +210,18 @@ def generate_knowledge_package(
     outdir = Path(outdir)
     cards_dir = outdir / "cards"
     cards_dir.mkdir(parents=True, exist_ok=True)
-    for old in cards_dir.glob("card_*.png"):
-        old.unlink()
+    for old in cards_dir.glob("card_*.*"):
+        if old.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+            old.unlink()
 
     date_label = _date_label(digest.today)
     image = _screenshot_pages(
         [("knowledge", tournament_story_body(story, date_label))],
         theme,
     )[0][1]
-    card_path = cards_dir / "card_00_knowledge.png"
-    image.save(card_path, "PNG")
+    from .image_output import save_social_image
+
+    card_path = save_social_image(image, cards_dir / "card_00_knowledge")
 
     xhs_text = knowledge_copy(story, digest)
     pinned_comment = knowledge_pinned_comment(story)
