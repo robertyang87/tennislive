@@ -2921,8 +2921,7 @@
       "trend_signals": []
     }
   ],
-  "live": [],
-  "schedule": [
+  "live": [
     {
       "match_id": "1002-2026:179372",
       "tour": "WTA",
@@ -2955,32 +2954,35 @@
           "player_id": "3000"
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-21 08:00:00+00:00",
-      "sets": [],
+      "start_utc": "2026-07-21 08:05:00+00:00",
+      "sets": [
+        {
+          "home": 1,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "M1",
-      "status_detail": "Tue, July 21st at 4:00 AM EDT",
+      "status_detail": "1st Set",
       "stats": null,
-      "editorial_note": "乌德瓦尔迪背着3号种子的签位，首轮先过“必须赢”这一关。",
-      "editorial_source": "实时排名与赛程",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
-        "espn",
-        "WTA 官方 OOP"
+        "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-21T08:00:00+00:00",
-        "WTA 官方 OOP": "2026-07-21T08:00:00+00:00"
+        "espn": "2026-07-21T08:05:00+00:00"
       },
-      "schedule_time_status": "official-exact",
-      "schedule_note": "WTA 官方 OOP：Starting at 10:00 AM",
-      "schedule_source_urls": [
-        "https://wtafiles.wtatennis.com/pdf/draws/2026/2042/OP.pdf"
-      ],
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -3033,24 +3035,31 @@
           "player_id": "2048"
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Round 1",
       "discipline": "Women's Doubles",
-      "start_utc": "2026-07-21 08:00:00+00:00",
-      "sets": [],
+      "start_utc": "2026-07-21 08:05:00+00:00",
+      "sets": [
+        {
+          "home": 3,
+          "away": 0,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "M2",
-      "status_detail": "Tue, July 21st at 4:00 AM EDT",
+      "status_detail": "1st Set",
       "stats": null,
-      "editorial_note": "双打最怕默契还没上线：Irina Bara / Naima Karamoko与Miriam Skoch / Jesika Maleckova，首轮就得把组合感打出来。",
-      "editorial_source": "赛程背景",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-21T08:00:00+00:00"
+        "espn": "2026-07-21T08:05:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -3058,7 +3067,9 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    },
+    }
+  ],
+  "schedule": [
     {
       "match_id": "304-2026:178858",
       "tour": "ATP",
@@ -3258,7 +3269,7 @@
       "trend_signals": []
     },
     {
-      "match_id": "401-2026:179402",
+      "match_id": "401-2026:179413",
       "tour": "WTA",
       "tournament": {
         "name": "Livesport Prague Open",
@@ -3271,22 +3282,22 @@
       },
       "home": [
         {
-          "name": "Nikola Bartunkova",
-          "country": "CZE",
-          "seed": 4,
-          "rank": 44,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7804.png",
-          "player_id": "7804"
+          "name": "Diane Parry",
+          "country": "FRA",
+          "seed": 7,
+          "rank": 60,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3332.png",
+          "player_id": "3332"
         }
       ],
       "away": [
         {
-          "name": "Yuan Yue",
-          "country": "CHN",
+          "name": "Mai Hontama",
+          "country": "JPN",
           "seed": null,
-          "rank": 121,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2916.png",
-          "player_id": "2916"
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3153.png",
+          "player_id": "3153"
         }
       ],
       "status": "scheduled",
@@ -3296,12 +3307,12 @@
       "sets": [],
       "winner": null,
       "note": null,
-      "court": "Livesport Arena",
+      "court": "Court 1",
       "status_detail": "Tue, July 21st at 5:00 AM EDT",
       "stats": null,
-      "editorial_note": "奥斯汀首冠证明过她能打硬仗；这次重回红土首轮，先看节奏能否站稳",
-      "editorial_source": "WTA 官方报道",
-      "editorial_url": "https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
+      "editorial_note": "帕里背着7号种子的签位，首轮先过“必须赢”这一关。",
+      "editorial_source": "实时排名与赛程",
+      "editorial_url": null,
       "data_sources": [
         "espn",
         "WTA 官方 OOP"
@@ -3382,7 +3393,7 @@
       "trend_signals": []
     },
     {
-      "match_id": "401-2026:179413",
+      "match_id": "401-2026:179402",
       "tour": "WTA",
       "tournament": {
         "name": "Livesport Prague Open",
@@ -3395,22 +3406,22 @@
       },
       "home": [
         {
-          "name": "Diane Parry",
-          "country": "FRA",
-          "seed": 7,
-          "rank": 60,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3332.png",
-          "player_id": "3332"
+          "name": "Nikola Bartunkova",
+          "country": "CZE",
+          "seed": 4,
+          "rank": 44,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7804.png",
+          "player_id": "7804"
         }
       ],
       "away": [
         {
-          "name": "Mai Hontama",
-          "country": "JPN",
+          "name": "Yuan Yue",
+          "country": "CHN",
           "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3153.png",
-          "player_id": "3153"
+          "rank": 121,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2916.png",
+          "player_id": "2916"
         }
       ],
       "status": "scheduled",
@@ -3420,12 +3431,12 @@
       "sets": [],
       "winner": null,
       "note": null,
-      "court": "Court 1",
+      "court": "Livesport Arena",
       "status_detail": "Tue, July 21st at 5:00 AM EDT",
       "stats": null,
-      "editorial_note": "帕里背着7号种子的签位，首轮先过“必须赢”这一关。",
-      "editorial_source": "实时排名与赛程",
-      "editorial_url": null,
+      "editorial_note": "奥斯汀首冠证明过她能打硬仗；这次重回红土首轮，先看节奏能否站稳",
+      "editorial_source": "WTA 官方报道",
+      "editorial_url": "https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
       "data_sources": [
         "espn",
         "WTA 官方 OOP"
@@ -3885,67 +3896,6 @@
       "trend_signals": []
     },
     {
-      "match_id": "401-2026:179395",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Livesport Prague Open",
-        "tour": "WTA",
-        "level": "WTA250",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "401-2026"
-      },
-      "home": [
-        {
-          "name": "Priscilla Hon",
-          "country": "AUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2582.png",
-          "player_id": "2582"
-        }
-      ],
-      "away": [
-        {
-          "name": "Tereza Valentova",
-          "country": "CZE",
-          "seed": 5,
-          "rank": 63,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8419.png",
-          "player_id": "8419"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-21 10:30:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Livesport Arena",
-      "status_detail": "Tue, July 21st at 6:30 AM EDT",
-      "stats": null,
-      "editorial_note": "瓦伦托娃背着5号种子的签位，首轮先过“必须赢”这一关。",
-      "editorial_source": "实时排名与赛程",
-      "editorial_url": null,
-      "data_sources": [
-        "espn",
-        "WTA 官方 OOP"
-      ],
-      "time_observations": {
-        "espn": "2026-07-21T10:30:00+00:00"
-      },
-      "schedule_time_status": "official-order-estimate",
-      "schedule_note": "WTA 官方 OOP：Followed by",
-      "schedule_source_urls": [
-        "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
-      ],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
       "match_id": "401-2026:179422",
       "tour": "WTA",
       "tournament": {
@@ -3990,6 +3940,67 @@
       "editorial_note": "联合杯的高光不会自动带来胜利，但能提醒人：她打逆风球有底气",
       "editorial_source": "WTA 官方球员档案",
       "editorial_url": "https://www.wtatennis.com/players/322925/xinyu-gao",
+      "data_sources": [
+        "espn",
+        "WTA 官方 OOP"
+      ],
+      "time_observations": {
+        "espn": "2026-07-21T10:30:00+00:00"
+      },
+      "schedule_time_status": "official-order-estimate",
+      "schedule_note": "WTA 官方 OOP：Followed by",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
+      ],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "401-2026:179395",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Livesport Prague Open",
+        "tour": "WTA",
+        "level": "WTA250",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "401-2026"
+      },
+      "home": [
+        {
+          "name": "Priscilla Hon",
+          "country": "AUS",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2582.png",
+          "player_id": "2582"
+        }
+      ],
+      "away": [
+        {
+          "name": "Tereza Valentova",
+          "country": "CZE",
+          "seed": 5,
+          "rank": 63,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/8419.png",
+          "player_id": "8419"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-21 10:30:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Livesport Arena",
+      "status_detail": "Tue, July 21st at 6:30 AM EDT",
+      "stats": null,
+      "editorial_note": "瓦伦托娃背着5号种子的签位，首轮先过“必须赢”这一关。",
+      "editorial_source": "实时排名与赛程",
+      "editorial_url": null,
       "data_sources": [
         "espn",
         "WTA 官方 OOP"
@@ -4538,67 +4549,6 @@
       "trend_signals": []
     },
     {
-      "match_id": "401-2026:179419",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Livesport Prague Open",
-        "tour": "WTA",
-        "level": "WTA250",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "401-2026"
-      },
-      "home": [
-        {
-          "name": "Anna Blinkova",
-          "country": "RUS",
-          "seed": null,
-          "rank": 105,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2902.png",
-          "player_id": "2902"
-        }
-      ],
-      "away": [
-        {
-          "name": "Sara Bejlek",
-          "country": "CZE",
-          "seed": 3,
-          "rank": 40,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7819.png",
-          "player_id": "7819"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-21 12:00:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Livesport Arena",
-      "status_detail": "Tue, July 21st at 8:00 AM EDT",
-      "stats": null,
-      "editorial_note": "排名差65位，贝莱克背着纸面优势；越像“该赢”的球，越怕慢热。",
-      "editorial_source": "实时排名与赛程",
-      "editorial_url": null,
-      "data_sources": [
-        "espn",
-        "WTA 官方 OOP"
-      ],
-      "time_observations": {
-        "espn": "2026-07-21T12:00:00+00:00"
-      },
-      "schedule_time_status": "official-order-estimate",
-      "schedule_note": "WTA 官方 OOP：Followed by",
-      "schedule_source_urls": [
-        "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
-      ],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
       "match_id": "401-2026:179398",
       "tour": "WTA",
       "tournament": {
@@ -4641,6 +4591,67 @@
       "status_detail": "Tue, July 21st at 8:00 AM EDT",
       "stats": null,
       "editorial_note": "硬地首轮的节奏来得很快；双方都没有明显身份光环，反而更像一场抢戏之战。",
+      "editorial_source": "实时排名与赛程",
+      "editorial_url": null,
+      "data_sources": [
+        "espn",
+        "WTA 官方 OOP"
+      ],
+      "time_observations": {
+        "espn": "2026-07-21T12:00:00+00:00"
+      },
+      "schedule_time_status": "official-order-estimate",
+      "schedule_note": "WTA 官方 OOP：Followed by",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
+      ],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "401-2026:179419",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Livesport Prague Open",
+        "tour": "WTA",
+        "level": "WTA250",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "401-2026"
+      },
+      "home": [
+        {
+          "name": "Anna Blinkova",
+          "country": "RUS",
+          "seed": null,
+          "rank": 105,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2902.png",
+          "player_id": "2902"
+        }
+      ],
+      "away": [
+        {
+          "name": "Sara Bejlek",
+          "country": "CZE",
+          "seed": 3,
+          "rank": 40,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7819.png",
+          "player_id": "7819"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-21 12:00:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Livesport Arena",
+      "status_detail": "Tue, July 21st at 8:00 AM EDT",
+      "stats": null,
+      "editorial_note": "排名差65位，贝莱克背着纸面优势；越像“该赢”的球，越怕慢热。",
       "editorial_source": "实时排名与赛程",
       "editorial_url": null,
       "data_sources": [
@@ -5932,14 +5943,18 @@
       "editorial_source": "实时排名与赛程",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
-        "espn": "2026-07-21T15:00:00+00:00"
+        "espn": "2026-07-21T15:00:00+00:00",
+        "WTA 官方 OOP": "2026-07-21T15:00:00+00:00"
       },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-exact",
+      "schedule_note": "WTA 官方 OOP：Starting at 5:00 PM",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -5990,14 +6005,18 @@
       "editorial_source": "赛程背景",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
-        "espn": "2026-07-21T15:00:00+00:00"
+        "espn": "2026-07-21T15:00:00+00:00",
+        "WTA 官方 OOP": "2026-07-21T15:00:00+00:00"
       },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-exact",
+      "schedule_note": "WTA 官方 OOP：Starting at 5:00 PM",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -6048,14 +6067,18 @@
       "editorial_source": "实时排名与赛程",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
-        "espn": "2026-07-21T15:00:00+00:00"
+        "espn": "2026-07-21T15:00:00+00:00",
+        "WTA 官方 OOP": "2026-07-21T15:00:00+00:00"
       },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-exact",
+      "schedule_note": "WTA 官方 OOP：Starting at 5:00 PM",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -6871,9 +6894,17 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 2,
+      "media_heat": 12,
       "search_heat": 0,
       "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Sky Sports",
+          "title": "Arthur Fery: British No 1 heads into American hard-court swing with areas he can improve ahead of US Open, according to Tim Henman",
+          "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxOajJoc0xmZXI4VEdEajBfQkVWQnNzTjNzT1NKcEpjaGhFMGszbmJUOVV1eGNIdldrVzlUVEtNYkVjOG5PWGVEOTc4WXl4QkNfV2lJWFN6MVR2YjlGLXFCb1AxR0x3STltcVNyZVZrY3l4OGxIN3ZxdnlWTUd1ZlhJMDJ3czl2UGtveUJNQmhDdUhvTC1DNGhUVVdJdHV0STlrZHczOWxtcThpaXkyV19aQkxlMldNSUJva1pwSjNfeUtWbmIzV19aaXRkOWhpMHlOd1F3OFRsMlA0UW1GRDV5RGx3UmFMS3l0QllzYTlvQ2QyRWJFV3B1bXVqNDNkc0RiNTIwbFVzZUVhVjlTOVE?oc=5",
+          "published_at": "2026-07-21T06:01:16+00:00",
+          "traffic": ""
+        },
         {
           "kind": "official-news",
           "source": "ATP Tour",
@@ -7869,14 +7900,17 @@
       "editorial_source": "赛程背景",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
         "espn": null
       },
-      "schedule_time_status": "unpublished",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-unlisted",
+      "schedule_note": "WTA 官方 OOP 2026-07-21 未列出该场，等待下一版官方排期",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -7927,14 +7961,17 @@
       "editorial_source": "赛程背景",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
         "espn": null
       },
-      "schedule_time_status": "unpublished",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-unlisted",
+      "schedule_note": "WTA 官方 OOP 2026-07-21 未列出该场，等待下一版官方排期",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -7985,14 +8022,17 @@
       "editorial_source": "赛程背景",
       "editorial_url": null,
       "data_sources": [
-        "espn"
+        "espn",
+        "WTA 官方 OOP"
       ],
       "time_observations": {
         "espn": null
       },
-      "schedule_time_status": "unpublished",
-      "schedule_note": null,
-      "schedule_source_urls": [],
+      "schedule_time_status": "official-unlisted",
+      "schedule_note": "WTA 官方 OOP 2026-07-21 未列出该场，等待下一版官方排期",
+      "schedule_source_urls": [
+        "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf"
+      ],
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
@@ -8372,11 +8412,11 @@
   "source_status": {
     "espn": "正常 · 87 场",
     "sofascore": "失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）",
-    "WTA 官方 OOP · MSC Hamburg Ladies Open": "正常 · 精确 5 场 / 场序 6 场 / 待下一版 2 场",
     "ATP 官方 OOP · Generali Open": "正常 · 精确 2 场 / 场序 5 场 / 待下一版 2 场",
     "WTA 官方 OOP · Livesport Prague Open": "正常 · 精确 3 场 / 场序 6 场 / 待下一版 3 场",
+    "WTA 官方 OOP · MSC Hamburg Ladies Open": "正常 · 精确 4 场 / 场序 6 场 / 待下一版 2 场",
     "ATP 官方 OOP · Millennium Estoril Open": "正常 · 精确 3 场 / 场序 5 场 / 待下一版 2 场",
-    "WTA 官方 OOP · Palermo Ladies Open": "失败 · Cannot read an empty file",
+    "WTA 官方 OOP · Palermo Ladies Open": "正常 · 精确 3 场 / 场序 0 场 / 待下一版 3 场",
     "实时选题雷达": "正常 · 64 条信号，命中 29 场比赛",
     "专业技术统计": "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计",
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
