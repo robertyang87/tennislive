@@ -118,7 +118,7 @@ jobs:
           OUT_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print('output/' + parse_date_arg('$DATE_ARG').isoformat())")
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           set +e
-          tennislive digest --date "$DATE_ARG" --outdir output 2>&1 | tee "$OUT_DIR.digest.log"
+          TENNISLIVE_AI_EDITORIAL=off tennislive digest --date "$DATE_ARG" --outdir output 2>&1 | tee "$OUT_DIR.digest.log"
           CODE=${PIPESTATUS[0]}
           if [ -f "$OUT_DIR/qa.txt" ]; then
             echo "----- qa.txt -----"
