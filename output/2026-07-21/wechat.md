@@ -35,10 +35,10 @@
 
 ## ⏰ 今晚焦点
 
-- **预计 23:20*｜布拉格公开赛**：🇨🇿 琳达·弗鲁维尔托娃 vs 🇨🇿 [2]克雷吉茨科娃
-  推荐理由：法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线（[WTA 官方报道原文](https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown)）
 - **待官方排期｜汉堡站**：🇺🇦 [1]Oleksandra Oliynykova vs 🇩🇪 Nastasja Schunk
   推荐理由：Oleksandra Oliynykova背着1号种子的签位，首轮先过“必须赢”这一关。
+- **待官方排期｜布拉格公开赛**：🇨🇿 琳达·弗鲁维尔托娃 vs 🇨🇿 [2]克雷吉茨科娃
+  推荐理由：法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线（[WTA 官方报道原文](https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown)）
 - **待官方排期｜基茨比厄尔公开赛**：🇦🇷 [4]埃切维里 vs 🇦🇹 Jurij Rodionov
   推荐理由：排名差114位，埃切维里背着纸面优势；越像“该赢”的球，越怕慢热。
 - **待官方排期｜埃斯托利尔公开赛**：🇪🇸 马丁内斯 vs 🇮🇹 [2]达尔代里
