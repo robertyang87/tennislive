@@ -506,9 +506,9 @@ html.light .chip-green { color:#fff; }
 .knowledge-page .knowledge-kicker { margin-top:22px; color:var(--coral);
   font-family:'Barlow Condensed','TL Sans SC'; font-size:24px; font-weight:600;
   letter-spacing:.26em; text-transform:uppercase; }
-.knowledge-photo { position:relative; height:330px; margin-top:22px; overflow:hidden;
+.knowledge-photo { position:relative; height:390px; margin-top:18px; overflow:hidden;
   border:1px solid var(--panel-border); border-radius:8px; background:var(--panel-strong); }
-.knowledge-photo.compact { height:260px; margin-top:18px; }
+.knowledge-photo.compact { height:340px; margin-top:14px; }
 .knowledge-photo .kn-back { position:absolute; inset:0; background-size:cover;
   background-position:center; filter:blur(22px) brightness(.58); transform:scale(1.12); }
 .knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
@@ -520,9 +520,9 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo-copy small { display:block; color:#D4E0D9; font-size:19px; }
 .knowledge-photo-copy strong { display:block; margin-top:7px; color:#fff;
   font-family:'TL Display SC','TL Sans SC'; font-size:36px; font-weight:400; line-height:1.25; }
-.knowledge-photo.compact .knowledge-photo-copy { bottom:18px; }
-.knowledge-photo.compact .knowledge-photo-copy small { font-size:16px; }
-.knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:30px; }
+.knowledge-photo.compact .knowledge-photo-copy { bottom:20px; }
+.knowledge-photo.compact .knowledge-photo-copy small { font-size:18px; }
+.knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:34px; }
 .knowledge-cover .knowledge-photo { height:560px; }
 .knowledge-cover .knowledge-hook { margin-top:36px; padding:30px 30px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
@@ -554,16 +554,17 @@ html.light .chip-green { color:#fff; }
   font-style:normal; color:var(--neon); }
 .knowledge-moment div { padding-left:28px; border-left:1px solid rgba(255,255,255,.35); }
 .knowledge-moment b { display:block; font-family:'TL Display SC','TL Sans SC';
-  font-size:30px; font-weight:400; line-height:1.22; }
-.knowledge-moment p { margin-top:13px; color:var(--reason); font-size:20px; line-height:1.56; }
+  font-size:34px; font-weight:400; line-height:1.22; }
+.knowledge-moment p { margin-top:13px; color:var(--reason); font-size:24px; line-height:1.5; }
 .knowledge-verdict { margin-top:31px; padding:25px 27px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
   border-radius:8px; background:rgba(10,55,44,.88);
   font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
-  font-size:28px; font-weight:900; line-height:1.56; }
-.has-page-photo .knowledge-timeline { margin-top:22px; }
-.has-page-photo .knowledge-moment { min-height:137px; padding:18px 0; }
-.has-page-photo .knowledge-moment p { margin-top:8px; line-height:1.45; }
+  font-size:32px; font-weight:900; line-height:1.5; }
+.has-page-photo .knowledge-timeline { margin-top:16px; }
+.has-page-photo .knowledge-moment { min-height:124px; padding:15px 0; }
+.has-page-photo .knowledge-moment b { font-size:33px; }
+.has-page-photo .knowledge-moment p { margin-top:8px; font-size:24px; line-height:1.42; }
 .has-page-photo .knowledge-verdict { margin-top:20px; padding:20px 24px; }
 .official-flow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
 .official-step { height:292px; padding:19px 21px; overflow:hidden; border-radius:8px;
@@ -598,7 +599,7 @@ html.light .chip-green { color:#fff; }
   border-bottom:1px solid var(--divider); background:transparent; }
 .knowledge-fact-card i { color:var(--sky); font-family:'Barlow Condensed';
   font-size:72px; font-weight:700; font-style:normal; }
-.knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:27px; line-height:1.62; }
+.knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:29px; line-height:1.56; }
 .player-pillars { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
 .player-pillar { min-height:550px; padding:50px 28px 38px; border-right:1px solid var(--divider); }
@@ -607,11 +608,11 @@ html.light .chip-green { color:#fff; }
   font-size:112px; font-weight:700; font-style:normal; line-height:1; }
 .player-pillar small { display:block; margin-top:7px; color:var(--coral); font-size:15px;
   font-weight:700; letter-spacing:.15em; }
-.player-pillar p { margin-top:34px; color:var(--pagetext); font-size:24px; line-height:1.64; }
-.has-page-photo .player-pillars { margin-top:25px; }
-.has-page-photo .player-pillar { min-height:385px; padding:34px 25px 28px; }
+.player-pillar p { margin-top:34px; color:var(--pagetext); font-size:26px; line-height:1.56; }
+.has-page-photo .player-pillars { margin-top:18px; }
+.has-page-photo .player-pillar { min-height:315px; padding:26px 25px 24px; }
 .has-page-photo .player-pillar em { font-size:82px; }
-.has-page-photo .player-pillar p { margin-top:22px; font-size:21px; line-height:1.52; }
+.has-page-photo .player-pillar p { margin-top:18px; font-size:25px; line-height:1.46; }
 .event-profile { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
 .event-profile article { min-height:230px; padding:35px 28px; border-right:1px solid var(--divider); }
@@ -624,14 +625,14 @@ html.light .chip-green { color:#fff; }
   padding:27px 0; align-items:center; border-bottom:1px solid var(--divider); }
 .event-note i { color:var(--sky); font-family:'Barlow Condensed'; font-size:48px;
   font-weight:700; font-style:normal; }
-.event-note p { color:var(--pagetext); font-size:23px; line-height:1.58; }
+.event-note p { color:var(--pagetext); font-size:25px; line-height:1.52; }
 .has-page-photo .event-profile { margin-top:24px; }
 .has-page-photo .event-profile article { min-height:170px; padding:26px 24px; }
 .has-page-photo .event-profile em { font-size:43px; }
 .has-page-photo .event-notes { margin-top:20px; display:grid; grid-template-columns:1fr 1fr; }
 .has-page-photo .event-note { min-height:160px; padding:20px 18px; grid-template-columns:54px 1fr; }
 .has-page-photo .event-note:nth-child(3) { display:none; }
-.has-page-photo .event-note p { font-size:19px; line-height:1.48; }
+.has-page-photo .event-note p { font-size:23px; line-height:1.44; }
 .explainer-mark { height:115px; margin-top:34px; border-top:2px solid var(--coral);
   border-bottom:1px solid var(--divider); }
 .explainer-mark svg { width:100%; height:100%; }
@@ -647,8 +648,8 @@ html.light .chip-green { color:#fff; }
   box-shadow:0 0 0 7px rgba(211,255,18,.13); }
 .knowledge-year time { font-family:'Barlow Condensed'; font-size:52px; color:var(--neon); line-height:1; }
 .knowledge-year b { display:block; font-family:'TL Display SC','TL Sans SC';
-  font-size:30px; font-weight:400; }
-.knowledge-year p { margin-top:13px; color:var(--reason); font-size:20px; line-height:1.55; }
+  font-size:34px; font-weight:400; }
+.knowledge-year p { margin-top:12px; color:var(--reason); font-size:24px; line-height:1.5; }
 .knowledge-years.count-2 .knowledge-year { min-height:245px; padding-top:22px; }
 .today-visual { height:155px; margin-top:36px; border-top:2px solid var(--coral);
   border-bottom:1px solid var(--divider); }
@@ -661,11 +662,15 @@ html.light .chip-green { color:#fff; }
   background:rgba(10,55,44,.88); color:var(--pagetext); }
 .knowledge-question small { color:#E85545; font-size:16px; font-weight:700; letter-spacing:.18em; }
 .knowledge-question strong { display:block; margin-top:14px; color:var(--ivory);
-  font-family:'TL Serif SC','TL Sans SC'; font-size:30px; line-height:1.52; }
-.has-page-photo .knowledge-years { margin-top:24px; }
-.has-page-photo .knowledge-year { min-height:142px; padding:8px 0 18px; }
-.has-page-photo .knowledge-year p { margin-top:8px; line-height:1.42; }
-.has-page-photo .knowledge-question { margin-top:20px; padding:22px 25px; }
+  font-family:'TL Serif SC','TL Sans SC'; font-size:34px; line-height:1.46; }
+.has-page-photo .knowledge-years { margin-top:16px; }
+.has-page-photo .knowledge-year,
+.has-page-photo .knowledge-years.count-2 .knowledge-year {
+  min-height:132px; padding:8px 0 16px;
+}
+.has-page-photo .knowledge-year b { font-size:34px; }
+.has-page-photo .knowledge-year p { margin-top:8px; font-size:24px; line-height:1.42; }
+.has-page-photo .knowledge-question { margin-top:16px; padding:22px 25px; }
 
 /* ---------- 外媒赛后室 ---------- */
 .media-page h1 { font-size:72px; }
@@ -2023,8 +2028,16 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                 # Chromium may preserve the previous document's scroll offset
                 # when one page is taller during layout. Every card must start
                 # at the same top edge or the masthead gets clipped.
-                page.evaluate("window.scrollTo(0, 0)")
-                shot = page.screenshot(type="png")
+                page.evaluate(
+                    "document.documentElement.scrollTop = 0; "
+                    "document.body.scrollTop = 0; window.scrollTo(0, 0)"
+                )
+                page.wait_for_timeout(50)
+                # Capture page coordinates explicitly. A viewport screenshot can
+                # inherit Chromium's previous scroll offset on content-heavy cards.
+                shot = page.screenshot(
+                    type="png", clip={"x": 0, "y": 0, "width": W, "height": H}
+                )
                 img = Image.open(io.BytesIO(shot)).convert("RGB")
                 if img.size != (W, H):
                     img = img.resize((W, H), Image.LANCZOS)
