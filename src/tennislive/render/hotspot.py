@@ -105,6 +105,8 @@ def hotspot_score(match: Match) -> int:
         score -= 25
     if match.is_doubles and not is_chinese_involved(match):
         score -= 18
+    score += min(35, max(0, match.media_heat))
+    score += min(35, max(0, match.search_heat))
     return score
 
 
@@ -121,6 +123,15 @@ def hotspot_reasons(match: Match) -> list[str]:
         reasons.append(translated_round)
     if went_to_deciding_set(match):
         reasons.append("决胜盘")
+    if match.search_heat:
+        reasons.append("搜索升温")
+    if match.media_heat:
+        sources = {
+            item.get("source", "")
+            for item in match.trend_signals
+            if item.get("kind") == "official-news"
+        }
+        reasons.append("多源热议" if len(sources) > 1 else "官网热点")
     return reasons or ["焦点对阵"]
 
 
@@ -249,11 +260,32 @@ def _tags(match: Match) -> list[str]:
     return output[:8]
 
 
+def _trend_context(match: Match) -> str:
+    sources = list(
+        dict.fromkeys(
+            item.get("source", "")
+            for item in match.trend_signals
+            if item.get("kind") == "official-news" and item.get("source")
+        )
+    )[:2]
+    source_text = "、".join(sources)
+    if match.search_heat and source_text:
+        return f"搜索端开始升温，{source_text}的近期报道也在跟进这个话题。"
+    if match.search_heat:
+        return "相关搜索正在升温，这场球已经开始走出核心球迷圈。"
+    if len(sources) > 1:
+        return f"这不只停在比分页：{source_text}都在跟进这个话题。"
+    if source_text and match.media_heat >= 12:
+        return f"{source_text}的近期报道，也把这场球推到了话题面。"
+    return ""
+
+
 def hotspot_post(match: Match, *, title: str | None = None) -> str:
     """小红书单场成稿：一条主线、清晰留白，不复述图片里的完整比分。"""
     title = title or hotspot_title_candidates(match)[0]
     group = group_by_tournament([match])[0]
     label = f"{group.compact_title}·{match_round_display(match)}".rstrip("·")
+    trend_context = _trend_context(match)
     if match.status.is_final:
         winner, loser = _winner_and_loser(match)
         lines = [
@@ -264,7 +296,7 @@ def hotspot_post(match: Match, *, title: str | None = None) -> str:
             "🎾 先说结果",
             f"{winner}击败{loser}｜{label}",
             _short_sentence(result_insight(match)),
-            "",
+            *([trend_context, ""] if trend_context else [""]),
             "📝 我的一票",
             f"我更想继续观察{winner}下一场会把这股势头带到哪里。",
             "",
@@ -289,7 +321,7 @@ def hotspot_post(match: Match, *, title: str | None = None) -> str:
             f"{fmt_time_beijing(match.start_utc)}｜{label}",
             matchup,
             _short_sentence(schedule_insight(match)),
-            "",
+            *([trend_context, ""] if trend_context else [""]),
             "📝 我的一票",
             f"我会先看{matchup}，因为这场的现实意义最清楚。",
             "",

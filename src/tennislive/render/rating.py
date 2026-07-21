@@ -86,6 +86,7 @@ class LeadStoryBreakdown:
     evidence: int = 0
     result: int = 0
     format: int = 0
+    trend: int = 0
 
     @property
     def total(self) -> int:
@@ -98,6 +99,7 @@ class LeadStoryBreakdown:
                 self.evidence,
                 self.result,
                 self.format,
+                self.trend,
             )
         )
 
@@ -172,6 +174,7 @@ def lead_story_breakdown(match: Match) -> tuple[LeadStoryBreakdown, tuple[str, .
     evidence, evidence_reason = _evidence_points(match)
     result = 8 if match.status.is_final else 4 if match.status.value == "live" else 0
     format_points = -35 if match.is_doubles else 0
+    trend = min(30, max(0, match.media_heat) + max(0, match.search_heat))
 
     reasons: list[str] = []
     if china:
@@ -188,6 +191,10 @@ def lead_story_breakdown(match: Match) -> tuple[LeadStoryBreakdown, tuple[str, .
         reasons.append("已有完整赛果可复盘")
     if match.is_doubles:
         reasons.append("双打题材降权")
+    if match.search_heat:
+        reasons.append("搜索热度正在上升")
+    if match.media_heat:
+        reasons.append("官方媒体近期集中报道")
 
     return (
         LeadStoryBreakdown(
@@ -198,6 +205,7 @@ def lead_story_breakdown(match: Match) -> tuple[LeadStoryBreakdown, tuple[str, .
             evidence=evidence,
             result=result,
             format=format_points,
+            trend=trend,
         ),
         tuple(reasons),
     )

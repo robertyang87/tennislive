@@ -1531,7 +1531,7 @@ def _result_heat(
         except Exception:  # noqa: BLE001
             base = 0.0
         drama = _match_drama(m)
-        heat = base + drama
+        heat = base + drama + (m.media_heat + m.search_heat) / 5
         key = _norm(m.tournament.name)
         tournament_heat[key] = max(heat, tournament_heat.get(key, 0.0))
         for p in m.winner_players() or []:
