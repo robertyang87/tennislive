@@ -50,6 +50,9 @@ class TournamentStory:
     kind: str = "tournament"
     source_label: str = "ATP/WTA 官方资料"
     evidence_urls: tuple[str, ...] = ()
+    # Rules must declare a topic-specific diagram. Supported renderers are
+    # intentionally explicit so CI fails instead of silently using a stock photo.
+    diagram_type: str = ""
 
 
 STORIES = (
@@ -888,6 +891,7 @@ def _trivia_story(
     source_url: str,
     image_credit: str = "Wikimedia Commons",
     evidence_urls: tuple[str, ...] = (),
+    diagram_type: str = "",
 ) -> TournamentStory:
     # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取）；
     # 未入库时仅在场馆库存图与主题贴合时兜底（image_keys 为空 = 宁缺毋滥，
@@ -916,6 +920,7 @@ def _trivia_story(
         kind="trivia",
         source_label=source_label,
         evidence_urls=evidence_urls,
+        diagram_type=diagram_type,
     )
 
 
@@ -1226,6 +1231,7 @@ STORIES = STORIES + (
             "de-l-arbitrage-francais-le-dernier-bastion-en-grand-chelem-resiste-il-y-aura-"
             "encore-des-juges-de-ligne-a-roland-garros-en-2026/1597696",
         ),
+        diagram_type="trajectory",
     ),
     _trivia_story(
         slug="golden-slam",

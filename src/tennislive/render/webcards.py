@@ -15,8 +15,10 @@ from __future__ import annotations
 import base64
 import html
 import logging
+import re
 from functools import lru_cache
 from pathlib import Path
+from typing import Any, Mapping
 
 from ..digest import Digest
 from ..models import Match
@@ -206,7 +208,7 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 }
 html.light .poster.tonight-page::before { opacity:.52; }
 
-.masthead { display:flex; align-items:center; gap:16px; }
+.masthead { display:flex; flex:none; align-items:center; gap:16px; }
 .brand-icon { width:54px; height:54px; object-fit:contain; flex:none; }
 .ball { width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; flex:none; }
 .ball::before, .ball::after { content:""; position:absolute; width:36px; height:36px; border:4px solid var(--ground0); border-radius:50%; }
@@ -216,7 +218,7 @@ html.light .poster.tonight-page::before { opacity:.52; }
   font-size:40px; font-weight:400; letter-spacing:0; }
 .date { margin-left:auto; font-family:'Barlow Condensed','TL Sans SC',sans-serif; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }
 
-.titleband { margin:20px 0 16px; padding-left:18px; border-left:6px solid var(--section-accent); }
+.titleband { flex:none; margin:20px 0 16px; padding-left:18px; border-left:6px solid var(--section-accent); }
 .poster:not(.cover)>.save-badge { position:absolute; top:126px; right:64px; padding:7px 13px;
   border:1px solid var(--section-accent); border-radius:5px;
   color:var(--section-accent); font-size:19px; font-weight:700; line-height:1.2; }
@@ -506,6 +508,7 @@ html.light .chip-green { color:#fff; }
   letter-spacing:.26em; text-transform:uppercase; }
 .knowledge-photo { position:relative; height:330px; margin-top:22px; overflow:hidden;
   border:1px solid var(--panel-border); border-radius:8px; background:var(--panel-strong); }
+.knowledge-photo.compact { height:260px; margin-top:18px; }
 .knowledge-photo .kn-back { position:absolute; inset:0; background-size:cover;
   background-position:center; filter:blur(22px) brightness(.58); transform:scale(1.12); }
 .knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
@@ -517,28 +520,51 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo-copy small { display:block; color:#D4E0D9; font-size:19px; }
 .knowledge-photo-copy strong { display:block; margin-top:7px; color:#fff;
   font-family:'TL Display SC','TL Sans SC'; font-size:36px; font-weight:400; line-height:1.25; }
+.knowledge-photo.compact .knowledge-photo-copy { bottom:18px; }
+.knowledge-photo.compact .knowledge-photo-copy small { font-size:16px; }
+.knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:30px; }
 .knowledge-cover .knowledge-photo { height:560px; }
-.knowledge-cover .knowledge-hook { margin-top:28px; padding:24px 27px;
+.knowledge-cover .knowledge-hook { margin-top:36px; padding:30px 30px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
   border-radius:8px; background:rgba(10,55,44,.88);
-  display:grid; grid-template-columns:145px 1fr; gap:24px; align-items:center; }
+  display:grid; grid-template-columns:145px 1fr; gap:32px; align-items:center; }
 .knowledge-hook b { font-family:'Barlow Condensed'; font-size:65px; color:var(--neon); line-height:1; }
 .knowledge-hook p { color:var(--pagetext); font-family:'TL Serif SC','TL Sans SC';
-  font-size:31px; font-weight:900; line-height:1.48; }
-.knowledge-timeline { margin-top:22px; border-top:2px solid var(--coral); }
+  font-size:31px; font-weight:900; line-height:1.62; }
+.knowledge-scene { display:grid; grid-template-columns:180px 1fr; gap:34px; margin-top:38px;
+  padding:34px 0 38px; border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
+.knowledge-scene time { color:var(--neon); font-family:'Barlow Condensed'; font-size:82px;
+  font-weight:700; line-height:1; }
+.knowledge-scene small { display:block; margin-top:12px; color:var(--coral); font-size:16px;
+  font-weight:700; letter-spacing:.16em; }
+.knowledge-scene b { display:block; font-family:'TL Display SC','TL Sans SC';
+  font-size:34px; font-weight:400; line-height:1.28; }
+.knowledge-scene p { margin-top:16px; color:var(--reason); font-size:22px; line-height:1.58; }
+.knowledge-story-visual { height:205px; margin-top:38px; overflow:hidden;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
+.knowledge-story-visual svg { width:100%; height:100%; }
+.knowledge-story-visual .path { fill:none; stroke:var(--sky); stroke-width:6; }
+.knowledge-story-visual .node { fill:var(--neon); stroke:#073126; stroke-width:5; }
+.knowledge-story-visual .year { fill:var(--ivory); font:700 35px 'Barlow Condensed'; }
+.knowledge-story-visual .label { fill:var(--reason); font:18px 'TL Sans SC'; }
+.knowledge-timeline { margin-top:34px; border-top:2px solid var(--coral); }
 .knowledge-moment { display:grid; grid-template-columns:82px 1fr; gap:24px;
-  min-height:145px; padding:20px 0; align-items:center; border-bottom:1px solid var(--divider); }
+  min-height:174px; padding:28px 0; align-items:center; border-bottom:1px solid var(--divider); }
 .knowledge-moment i { font-family:'Barlow Condensed'; font-size:52px; font-weight:700;
   font-style:normal; color:var(--neon); }
-.knowledge-moment div { padding-left:22px; border-left:1px solid rgba(255,255,255,.35); }
+.knowledge-moment div { padding-left:28px; border-left:1px solid rgba(255,255,255,.35); }
 .knowledge-moment b { display:block; font-family:'TL Display SC','TL Sans SC';
   font-size:30px; font-weight:400; line-height:1.22; }
-.knowledge-moment p { margin-top:7px; color:var(--reason); font-size:20px; line-height:1.42; }
-.knowledge-verdict { margin-top:22px; padding:20px 24px;
+.knowledge-moment p { margin-top:13px; color:var(--reason); font-size:20px; line-height:1.56; }
+.knowledge-verdict { margin-top:31px; padding:25px 27px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
   border-radius:8px; background:rgba(10,55,44,.88);
   font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
-  font-size:28px; font-weight:900; line-height:1.45; }
+  font-size:28px; font-weight:900; line-height:1.56; }
+.has-page-photo .knowledge-timeline { margin-top:22px; }
+.has-page-photo .knowledge-moment { min-height:137px; padding:18px 0; }
+.has-page-photo .knowledge-moment p { margin-top:8px; line-height:1.45; }
+.has-page-photo .knowledge-verdict { margin-top:20px; padding:20px 24px; }
 .official-flow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
 .official-step { height:292px; padding:19px 21px; overflow:hidden; border-radius:8px;
   border:1px solid var(--panel-border); background:rgba(255,255,255,.035); }
@@ -565,30 +591,81 @@ html.light .chip-green { color:#fff; }
   border-radius:8px; background:rgba(10,55,44,.88); color:var(--ivory);
   font-size:20px; line-height:1.42; }
 .official-summary b { color:#E85545; }
-.knowledge-fact-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px; }
-.knowledge-fact-card { min-height:205px; padding:23px; border-top:5px solid var(--sky);
-  background:var(--panel); border-radius:8px; box-shadow:var(--cardshadow); }
+.knowledge-fact-grid { display:grid; grid-template-columns:1fr; gap:0; margin-top:40px;
+  border-top:2px solid var(--coral); }
+.knowledge-fact-card { min-height:238px; padding:34px 28px; display:grid;
+  grid-template-columns:110px 1fr; gap:32px; align-items:center;
+  border-bottom:1px solid var(--divider); background:transparent; }
 .knowledge-fact-card i { color:var(--sky); font-family:'Barlow Condensed';
-  font-size:42px; font-weight:700; font-style:normal; }
-.knowledge-fact-card p { margin-top:10px; color:var(--pagetext); font-size:22px; line-height:1.48; }
-.knowledge-years { margin-top:24px; padding-left:50px; position:relative; }
+  font-size:72px; font-weight:700; font-style:normal; }
+.knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:27px; line-height:1.62; }
+.player-pillars { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
+.player-pillar { min-height:550px; padding:50px 28px 38px; border-right:1px solid var(--divider); }
+.player-pillar:last-child { border-right:0; }
+.player-pillar em { display:block; color:var(--neon); font-family:'Barlow Condensed';
+  font-size:112px; font-weight:700; font-style:normal; line-height:1; }
+.player-pillar small { display:block; margin-top:7px; color:var(--coral); font-size:15px;
+  font-weight:700; letter-spacing:.15em; }
+.player-pillar p { margin-top:34px; color:var(--pagetext); font-size:24px; line-height:1.64; }
+.has-page-photo .player-pillars { margin-top:25px; }
+.has-page-photo .player-pillar { min-height:385px; padding:34px 25px 28px; }
+.has-page-photo .player-pillar em { font-size:82px; }
+.has-page-photo .player-pillar p { margin-top:22px; font-size:21px; line-height:1.52; }
+.event-profile { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
+.event-profile article { min-height:230px; padding:35px 28px; border-right:1px solid var(--divider); }
+.event-profile article:last-child { border-right:0; }
+.event-profile em { display:block; color:var(--neon); font-family:'Barlow Condensed';
+  font-size:54px; font-weight:700; font-style:normal; line-height:1.05; }
+.event-profile span { display:block; margin-top:18px; color:var(--reason); font-size:19px; }
+.event-notes { margin-top:34px; border-top:1px solid var(--divider); }
+.event-note { display:grid; grid-template-columns:70px 1fr; gap:24px; min-height:170px;
+  padding:27px 0; align-items:center; border-bottom:1px solid var(--divider); }
+.event-note i { color:var(--sky); font-family:'Barlow Condensed'; font-size:48px;
+  font-weight:700; font-style:normal; }
+.event-note p { color:var(--pagetext); font-size:23px; line-height:1.58; }
+.has-page-photo .event-profile { margin-top:24px; }
+.has-page-photo .event-profile article { min-height:170px; padding:26px 24px; }
+.has-page-photo .event-profile em { font-size:43px; }
+.has-page-photo .event-notes { margin-top:20px; display:grid; grid-template-columns:1fr 1fr; }
+.has-page-photo .event-note { min-height:160px; padding:20px 18px; grid-template-columns:54px 1fr; }
+.has-page-photo .event-note:nth-child(3) { display:none; }
+.has-page-photo .event-note p { font-size:19px; line-height:1.48; }
+.explainer-mark { height:115px; margin-top:34px; border-top:2px solid var(--coral);
+  border-bottom:1px solid var(--divider); }
+.explainer-mark svg { width:100%; height:100%; }
+.explainer-mark path { fill:none; stroke:var(--sky); stroke-width:5; }
+.explainer-mark circle { fill:var(--neon); stroke:#073126; stroke-width:4; }
+.knowledge-years { margin-top:38px; padding-left:50px; position:relative; }
 .knowledge-years::before { content:""; position:absolute; left:17px; top:12px; bottom:12px;
   width:3px; background:linear-gradient(var(--coral),var(--sky),var(--neon)); }
 .knowledge-year { position:relative; display:grid; grid-template-columns:150px 1fr; gap:18px;
-  min-height:143px; padding:7px 0 18px; }
+  min-height:182px; padding:13px 0 30px; }
 .knowledge-year::before { content:""; position:absolute; left:-41px; top:16px; width:16px;
   height:16px; border-radius:50%; background:var(--neon);
   box-shadow:0 0 0 7px rgba(211,255,18,.13); }
 .knowledge-year time { font-family:'Barlow Condensed'; font-size:52px; color:var(--neon); line-height:1; }
 .knowledge-year b { display:block; font-family:'TL Display SC','TL Sans SC';
   font-size:30px; font-weight:400; }
-.knowledge-year p { margin-top:7px; color:var(--reason); font-size:20px; line-height:1.4; }
-.knowledge-question { margin-top:17px; padding:24px 27px; border:1px solid rgba(120,211,220,.26);
+.knowledge-year p { margin-top:13px; color:var(--reason); font-size:20px; line-height:1.55; }
+.knowledge-years.count-2 .knowledge-year { min-height:245px; padding-top:22px; }
+.today-visual { height:155px; margin-top:36px; border-top:2px solid var(--coral);
+  border-bottom:1px solid var(--divider); }
+.today-visual svg { width:100%; height:100%; }
+.today-visual line { stroke:var(--sky); stroke-width:5; }
+.today-visual circle { fill:var(--neon); stroke:#073126; stroke-width:5; }
+.today-visual text { fill:var(--ivory); font:700 31px 'Barlow Condensed'; }
+.knowledge-question { margin-top:30px; padding:28px 29px; border:1px solid rgba(120,211,220,.26);
   border-left:7px solid var(--coral); border-radius:8px;
   background:rgba(10,55,44,.88); color:var(--pagetext); }
 .knowledge-question small { color:#E85545; font-size:16px; font-weight:700; letter-spacing:.18em; }
-.knowledge-question strong { display:block; margin-top:8px; color:var(--ivory);
-  font-family:'TL Serif SC','TL Sans SC'; font-size:30px; line-height:1.4; }
+.knowledge-question strong { display:block; margin-top:14px; color:var(--ivory);
+  font-family:'TL Serif SC','TL Sans SC'; font-size:30px; line-height:1.52; }
+.has-page-photo .knowledge-years { margin-top:24px; }
+.has-page-photo .knowledge-year { min-height:142px; padding:8px 0 18px; }
+.has-page-photo .knowledge-year p { margin-top:8px; line-height:1.42; }
+.has-page-photo .knowledge-question { margin-top:20px; padding:22px 25px; }
 
 /* ---------- 外媒赛后室 ---------- */
 .media-page h1 { font-size:72px; }
@@ -1430,27 +1507,113 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
     )
 
 
-def _knowledge_photo(story: TournamentStory, caption: str, subline: str = "") -> str:
-    uri = _asset_image_uri(story.image)
+def _card_excerpt(text: str, limit: int) -> str:
+    """Keep card copy spacious without cutting a fact mid-clause when possible."""
+    clean = " ".join(text.split())
+    if len(clean) <= limit:
+        return clean
+    window = clean[: limit + 1]
+    stops = [window.rfind(mark) for mark in ("。", "；", "：", "，")]
+    cut = max(stops)
+    if cut >= max(16, limit // 2):
+        return window[: cut + 1]
+    return clean[:limit].rstrip("，；：、 ") + "…"
+
+
+def _timeline_visual(years: list[str], *, css_class: str) -> str:
+    clean = [re.sub(r"[^0-9]", "", year)[:4] or "NOW" for year in years[:3]]
+    while len(clean) < 3:
+        clean.append("NOW")
+    xs = (120, 475, 830)
+    nodes = "".join(
+        f'<circle class="node" cx="{x}" cy="92" r="17"/>'
+        f'<text class="year" x="{x}" y="55" text-anchor="middle">{html.escape(year)}</text>'
+        for x, year in zip(xs, clean)
+    )
+    if css_class == "knowledge-story-visual":
+        path = '<path class="path" d="M120 92 Q300 18 475 92 T830 92"/>'
+        labels = (
+            '<text class="label" x="120" y="145" text-anchor="middle">起点</text>'
+            '<text class="label" x="475" y="145" text-anchor="middle">转折</text>'
+            '<text class="label" x="830" y="145" text-anchor="middle">回响</text>'
+        )
+    else:
+        path = '<line x1="120" y1="92" x2="830" y2="92"/>'
+        labels = ""
+    return (
+        f'<div class="{css_class}" aria-label="故事时间节点图">'
+        f'<svg viewBox="0 0 950 180">{path}{nodes}{labels}</svg></div>'
+    )
+
+
+def _explainer_mark() -> str:
+    return (
+        '<div class="explainer-mark" aria-label="三节点视觉导览"><svg viewBox="0 0 950 110">'
+        '<path d="M95 57 C250 7 330 99 475 57 S700 7 855 57"/>'
+        '<circle cx="95" cy="57" r="15"/><circle cx="475" cy="57" r="15"/>'
+        '<circle cx="855" cy="57" r="15"/></svg></div>'
+    )
+
+
+def _visual_value(visual: object | None, key: str, default: Any) -> Any:
+    if visual is None:
+        return default
+    if isinstance(visual, Mapping):
+        return visual.get(key, default)
+    return getattr(visual, key, default)
+
+
+def _knowledge_photo(
+    story: TournamentStory,
+    caption: str,
+    subline: str = "",
+    *,
+    visual: object | None = None,
+    compact: bool = False,
+) -> str:
+    image_path = Path(_visual_value(visual, "path", story.image))
+    image_source = str(
+        _visual_value(visual, "source_url", story.image_source_url)
+    ).strip()
+    uri = _asset_image_uri(image_path)
     if not uri:
-        raise FileNotFoundError(story.image)
+        raise FileNotFoundError(image_path)
     portrait = False
     try:
         from PIL import Image as _Image
 
-        with _Image.open(story.image) as image:
+        with _Image.open(image_path) as image:
             portrait = image.height > image.width
     except OSError:
         pass
     portrait_class = " portrait" if portrait else ""
+    compact_class = " compact" if compact else ""
     sub = f"<small>{html.escape(subline)}</small>" if subline else ""
+    # Keep player faces above the caption gradient. Do not zoom portraits: the
+    # old scale transform was the reason heads were clipped in exported cards.
+    default_focus = "50% 24%" if story.kind == "player" else "50% 42%"
+    focus = str(_visual_value(visual, "focus", default_focus))
+    photo_source = (
+        f' data-photo-source="{html.escape(image_source, quote=True)}"'
+        if image_source
+        else ""
+    )
     return (
-        f'<div class="knowledge-photo{portrait_class}">'
+        f'<div class="knowledge-photo{portrait_class}{compact_class}"{photo_source}>'
         f'<i class="kn-back" style="background-image:url(\'{uri}\')"></i>'
-        f'<img src="{uri}" alt="">'
+        f'<img src="{uri}" alt="" style="object-position:{html.escape(focus, quote=True)}">'
         '<div class="knowledge-photo-copy">'
         f'{sub}<strong>{html.escape(caption)}</strong></div></div>'
     )
+
+
+def _knowledge_visual_credit(visual: object | None) -> str:
+    if visual is None:
+        return ""
+    credit = str(_visual_value(visual, "credit", "")).strip()
+    license_name = str(_visual_value(visual, "license", "")).strip()
+    parts = [part for part in (credit, license_name) if part]
+    return " · ".join(parts)
 
 
 def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
@@ -1465,20 +1628,24 @@ def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
         "china-tennis": "中国网球的二十年，从哪一冠开始",
     }
     hook = hooks.get(story.slug, story.title)
-    year = story.moments[0].date[:4] if story.moments else "STORY"
+    if story.kind == "player":
+        born = re.search(r"\b(19|20)\d{2}\b", story.founded)
+        year = born.group(0) if born else "PLAYER"
+    else:
+        year = story.moments[0].date[:4] if story.moments else "STORY"
     promise = (
         "那一夜之后，人的眼睛不再拥有最后一句话。"
         if story.slug == "hawkeye"
         else story.hero_fact
     )
     return (
-        '<div class="poster knowledge-page knowledge-cover">'
+        '<div class="poster knowledge-page knowledge-cover" data-visual="verified-photo">'
         + _masthead(date_label)
         + '<div class="knowledge-kicker">Tennis Story · 网球有故事</div>'
         + f'<h1>{html.escape(hook)}</h1>'
         + _knowledge_photo(story, story.venue, story.location.replace("网球冷知识", "网球有故事"))
         + '<div class="knowledge-hook">'
-        + f'<b>{html.escape(year)}</b><p>{html.escape(promise)}</p></div>'
+        + f'<b>{html.escape(year)}</b><p>{html.escape(_card_excerpt(promise, 62))}</p></div>'
         + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
         + f'图源：{html.escape(story.image_credit)}</div>'
         + _FOOTER
@@ -1486,7 +1653,11 @@ def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
     )
 
 
-def _knowledge_timeline_body(story: TournamentStory, date_label: str) -> str:
+def _knowledge_timeline_body(
+    story: TournamentStory,
+    date_label: str,
+    visual: object | None = None,
+) -> str:
     title = "那一夜，发生了什么？" if story.slug == "hawkeye" else "故事，从这里开始"
     items: list[tuple[str, str]] = []
     if story.moments:
@@ -1500,7 +1671,7 @@ def _knowledge_timeline_body(story: TournamentStory, date_label: str) -> str:
     rows = "".join(
         '<div class="knowledge-moment">'
         f'<i>{index:02d}</i><div><b>{html.escape(headline)}</b>'
-        f'<p>{html.escape(detail)}</p></div></div>'
+        f'<p>{html.escape(_card_excerpt(detail, 58))}</p></div></div>'
         for index, (headline, detail) in enumerate(items[:3], 1)
     )
     verdict = (
@@ -1508,15 +1679,36 @@ def _knowledge_timeline_body(story: TournamentStory, date_label: str) -> str:
         if story.slug == "hawkeye"
         else story.hero_fact
     )
-    subline = "2004 · 美国网球公开赛" if story.slug == "hawkeye" else story.location
-    caption = story.moments[0].player if story.moments else story.venue
+    visual_years = [moment.date[:4] for moment in story.moments[:3]]
+    if story.founded:
+        visual_years.insert(0, story.founded)
+    has_photo = visual is not None
+    if has_photo:
+        first = story.moments[0] if story.moments else None
+        media = _knowledge_photo(
+            story,
+            first.headline if first else story.venue,
+            f"{first.date[:4]} · {first.player}" if first else story.location,
+            visual=visual,
+            compact=True,
+        )
+    else:
+        media = _timeline_visual(visual_years, css_class="knowledge-story-visual")
+    page_class = " has-page-photo" if has_photo else ""
+    visual_credit = _knowledge_visual_credit(visual)
+    credit = (
+        f'<div class="photo-credit">图源：{html.escape(visual_credit)}</div>'
+        if visual_credit
+        else ""
+    )
     return (
-        '<div class="poster knowledge-page">'
+        f'<div class="poster knowledge-page{page_class}" data-visual="narrative-timeline">'
         + _masthead(date_label)
         + _titleband("The Story · 故事现场", title)
-        + _knowledge_photo(story, caption, subline)
+        + media
         + f'<div class="knowledge-timeline">{rows}</div>'
-        + f'<div class="knowledge-verdict">{html.escape(verdict)}</div>'
+        + f'<div class="knowledge-verdict">{html.escape(_card_excerpt(verdict, 60))}</div>'
+        + credit
         + _FOOTER
         + "</div>"
     )
@@ -1524,7 +1716,7 @@ def _knowledge_timeline_body(story: TournamentStory, date_label: str) -> str:
 
 def _hawkeye_official_flow_body(date_label: str) -> str:
     return (
-        '<div class="poster knowledge-page">'
+        '<div class="poster knowledge-page" data-visual="rule-diagram">'
         + _masthead(date_label)
         + _titleband("Sony / Hawk-Eye Official Workflow", "鹰眼不是“看回放”，而是在重建一颗球")
         + '<div class="official-flow">'
@@ -1566,19 +1758,70 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
     )
 
 
-def _knowledge_fact_body(story: TournamentStory, date_label: str) -> str:
+def _knowledge_fact_body(
+    story: TournamentStory,
+    date_label: str,
+    visual: object | None = None,
+) -> str:
     facts = story.facts[:3]
-    cards = "".join(
-        f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(fact)}</p></article>'
-        for index, fact in enumerate(facts, 1)
+    lead = "" if visual is not None else _explainer_mark()
+    if story.kind == "player":
+        cards = []
+        for index, fact in enumerate(facts, 1):
+            age = re.search(r"(\d{1,2})\s*岁", fact)
+            marker = age.group(1) if age else f"{index:02d}"
+            cards.append(
+                '<article class="player-pillar">'
+                f'<em>{html.escape(marker)}</em><small>AGE / MOMENT</small>'
+                f'<p>{html.escape(_card_excerpt(fact, 48))}</p></article>'
+            )
+        content = lead + '<div class="player-pillars">' + "".join(cards) + "</div>"
+        title = f"三个年龄，看懂{story.title}"
+    elif story.kind == "tournament":
+        profile = (
+            '<div class="event-profile">'
+            f'<article><em>{html.escape(story.founded.replace("始于 ", ""))}</em><span>赛事起点</span></article>'
+            f'<article><em>{html.escape(story.level)}</em><span>巡回赛级别</span></article>'
+            f'<article><em>{html.escape(story.surface)}</em><span>场地类型</span></article></div>'
+        )
+        notes = "".join(
+            '<div class="event-note">'
+            f'<i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 54))}</p></div>'
+            for index, fact in enumerate(facts, 1)
+        )
+        content = lead + profile + f'<div class="event-notes">{notes}</div>'
+        title = f"一张图，读懂{story.title}"
+    else:
+        cards = "".join(
+            f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 62))}</p></article>'
+            for index, fact in enumerate(facts, 1)
+        )
+        content = lead + f'<div class="knowledge-fact-grid">{cards}</div>'
+        title = f"三个细节，看懂{story.title}"
+    has_photo = visual is not None
+    page_class = " has-page-photo" if has_photo else ""
+    media = (
+        _knowledge_photo(
+            story,
+            story.venue,
+            story.location,
+            visual=visual,
+            compact=True,
+        )
+        if visual is not None
+        else ""
     )
+    visual_credit = _knowledge_visual_credit(visual)
+    credit = f"资料：{story.source_label}"
+    if visual_credit:
+        credit += f" · 图源：{visual_credit}"
     return (
-        '<div class="poster knowledge-page">'
+        f'<div class="poster knowledge-page{page_class}" data-visual="{html.escape(story.kind)}-explainer">'
         + _masthead(date_label)
-        + _titleband("Visual Explainer · 图解", f"三个细节，看懂{story.title}")
-        + _knowledge_photo(story, story.venue, story.location)
-        + f'<div class="knowledge-fact-grid">{cards}</div>'
-        + f'<div class="photo-credit">资料：{html.escape(story.source_label)}</div>'
+        + _titleband("Visual Explainer · 图解", title)
+        + media
+        + content
+        + f'<div class="photo-credit">{html.escape(credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -1589,10 +1832,10 @@ def _knowledge_today_body(
     date_label: str,
     question: str,
     year: int,
+    visual: object | None = None,
 ) -> str:
     if story.slug == "hawkeye":
         title = "从举手挑战，到实时电子司线"
-        photo_caption = "从球员申请复核，到系统实时判定每一次落点"
         rows = (
             ("2006", "鹰眼挑战制进入美网", "球员可以主动挑战判罚，现场大屏给出结果。"),
             ("2021", "澳网、美网采用实时电子司线", "从“球员申请复核”，走向系统主动完成判定。"),
@@ -1602,7 +1845,6 @@ def _knowledge_today_body(
         question = "四大满贯中，只剩法网仍保留人工司线。红土球印，足够可靠吗？"
     else:
         title = "为什么今天还值得聊？"
-        photo_caption = story.hero_fact
         rows = tuple(
             (
                 moment.date[:4],
@@ -1615,18 +1857,35 @@ def _knowledge_today_body(
     years = "".join(
         '<div class="knowledge-year">'
         f'<time>{html.escape(row_year)}</time><div><b>{html.escape(headline)}</b>'
-        f'<p>{html.escape(detail)}</p></div></div>'
+        f'<p>{html.escape(_card_excerpt(detail, 56))}</p></div></div>'
         for row_year, headline, detail in rows
     )
+    has_photo = visual is not None
+    if has_photo:
+        last = story.moments[-1] if story.moments else None
+        media = _knowledge_photo(
+            story,
+            last.headline if last else story.hero_fact,
+            f"{last.date[:4]} · {last.player}" if last else story.location,
+            visual=visual,
+            compact=True,
+        )
+    else:
+        media = _timeline_visual([row[0] for row in rows], css_class="today-visual")
+    page_class = " has-page-photo" if has_photo else ""
+    visual_credit = _knowledge_visual_credit(visual)
+    credit = f"资料：{story.source_label}"
+    if visual_credit:
+        credit += f" · 图源：{visual_credit}"
     return (
-        '<div class="poster knowledge-page">'
+        f'<div class="poster knowledge-page{page_class}" data-visual="history-timeline">'
         + _masthead(date_label)
         + _titleband("Then & Now · 从过去到今天", title)
-        + _knowledge_photo(story, photo_caption)
-        + f'<div class="knowledge-years">{years}</div>'
+        + media
+        + f'<div class="knowledge-years count-{len(rows)}">{years}</div>'
         + '<div class="knowledge-question">'
         + f'<small>{html.escape(eyebrow)}</small><strong>{html.escape(question)}</strong></div>'
-        + f'<div class="photo-credit">资料：{html.escape(story.source_label)}</div>'
+        + f'<div class="photo-credit">{html.escape(credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -1638,18 +1897,39 @@ def knowledge_deck_bodies(
     *,
     question: str,
     year: int,
+    page_visuals: Mapping[str, object] | None = None,
 ) -> list[tuple[str, str]]:
     """Return a four-page, evidence-backed story deck for social publishing."""
-    explainer = (
-        _hawkeye_official_flow_body(date_label)
-        if story.slug == "hawkeye"
-        else _knowledge_fact_body(story, date_label)
-    )
+    page_visuals = page_visuals or {}
+    diagram_builders = {"trajectory": _hawkeye_official_flow_body}
+    if story.diagram_type:
+        try:
+            explainer = diagram_builders[story.diagram_type](date_label)
+        except KeyError as exc:
+            raise ValueError(f"未实现的规则示意图类型：{story.diagram_type}") from exc
+    else:
+        explainer = _knowledge_fact_body(
+            story,
+            date_label,
+            page_visuals.get("explainer"),
+        )
     return [
         ("knowledge", _knowledge_cover_body(story, date_label)),
-        ("story", _knowledge_timeline_body(story, date_label)),
+        (
+            "story",
+            _knowledge_timeline_body(story, date_label, page_visuals.get("story")),
+        ),
         ("explainer", explainer),
-        ("today", _knowledge_today_body(story, date_label, question, year)),
+        (
+            "today",
+            _knowledge_today_body(
+                story,
+                date_label,
+                question,
+                year,
+                page_visuals.get("today"),
+            ),
+        ),
     ]
 
 
@@ -1736,6 +2016,14 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                 page.wait_for_function(
                     "document.fonts.status === 'loaded'", timeout=15000
                 )
+                page.wait_for_function(
+                    "Array.from(document.images).every(img => img.complete)",
+                    timeout=15000,
+                )
+                # Chromium may preserve the previous document's scroll offset
+                # when one page is taller during layout. Every card must start
+                # at the same top edge or the masthead gets clipped.
+                page.evaluate("window.scrollTo(0, 0)")
                 shot = page.screenshot(type="png")
                 img = Image.open(io.BytesIO(shot)).convert("RGB")
                 if img.size != (W, H):

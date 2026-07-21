@@ -72,6 +72,8 @@ jobs:
       TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'off' }}
       # 从官方巡回赛视频页选择与当日球员相关的片段，生成中文竖版视频。
       TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
+      # 知识帖配图：官方页用于核验，Commons/Openverse 仅下载授权与相关性达标素材。
+      TENNISLIVE_VISUAL_FETCH: ${{ vars.TENNISLIVE_VISUAL_FETCH || 'on' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -174,6 +176,32 @@ jobs:
           done
           jq -e '.sources | type == "array"' "$OUT_DIR/source_manifest.json" >/dev/null
           jq -e '.claims | type == "array"' "$OUT_DIR/fact_ledger.json" >/dev/null
+
+          if [ -d "$OUT_DIR/knowledge" ]; then
+            for name in story evidence visual_sources visual_qa; do
+              FILE="$OUT_DIR/knowledge/$name.json"
+              test -s "$FILE" || {
+                echo "::error file=$FILE::知识帖缺少 $name.json"
+                exit 1
+              }
+            done
+            jq -e '.status == "pass" and (.errors | length == 0)' \
+              "$OUT_DIR/knowledge/visual_qa.json" >/dev/null || {
+                echo "::error file=$OUT_DIR/knowledge/visual_qa.json::知识帖视觉质检未通过"
+                cat "$OUT_DIR/knowledge/visual_qa.json"
+                exit 1
+              }
+            jq -e '.status == "pass" and (.attempts | type == "array")' \
+              "$OUT_DIR/knowledge/visual_sources.json" >/dev/null || {
+                echo "::error file=$OUT_DIR/knowledge/visual_sources.json::知识帖素材来源清单无效"
+                cat "$OUT_DIR/knowledge/visual_sources.json"
+                exit 1
+              }
+            test "$(find "$OUT_DIR/knowledge/cards" -maxdepth 1 -type f -name 'card_*.jpg' | wc -l)" -eq 4 || {
+              echo "::error::知识帖必须完整生成 4 张卡片"
+              exit 1
+            }
+          fi
 
       - name: 提交内容到仓库
         if: steps.guard.outputs.skip != 'true'
