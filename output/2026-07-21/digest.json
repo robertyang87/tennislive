@@ -3000,88 +3000,6 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    }
-  ],
-  "live": [
-    {
-      "match_id": "1002-2026:179372",
-      "tour": "WTA",
-      "tournament": {
-        "name": "MSC Hamburg Ladies Open",
-        "tour": "WTA",
-        "level": "WTA250",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1002-2026"
-      },
-      "home": [
-        {
-          "name": "Elena Pridankina",
-          "country": "RUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/14946.png",
-          "player_id": "14946"
-        }
-      ],
-      "away": [
-        {
-          "name": "Panna Udvardy",
-          "country": "HUN",
-          "seed": 3,
-          "rank": 71,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3000.png",
-          "player_id": "3000"
-        }
-      ],
-      "status": "live",
-      "round_name": "Round 1",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-21 08:05:00+00:00",
-      "sets": [
-        {
-          "home": 4,
-          "away": 6,
-          "home_tiebreak": null,
-          "away_tiebreak": null
-        },
-        {
-          "home": 1,
-          "away": 2,
-          "home_tiebreak": null,
-          "away_tiebreak": null
-        }
-      ],
-      "winner": null,
-      "note": null,
-      "court": "M1",
-      "status_detail": "2nd Set",
-      "stats": null,
-      "editorial_note": null,
-      "editorial_source": null,
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": "2026-07-21T08:05:00+00:00"
-      },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 14,
-      "trend_signals": [
-        {
-          "kind": "search-trend",
-          "source": "Google Trends US",
-          "title": "panna udvardy",
-          "url": "https://trends.google.com/trending/rss?geo=US",
-          "published_at": "2026-07-21T08:10:00+00:00",
-          "traffic": ""
-        }
-      ]
     },
     {
       "match_id": "1002-2026:179380",
@@ -3131,7 +3049,7 @@
           "player_id": "2048"
         }
       ],
-      "status": "live",
+      "status": "finished",
       "round_name": "Round 1",
       "discipline": "Women's Doubles",
       "start_utc": "2026-07-21 08:05:00+00:00",
@@ -3147,12 +3065,18 @@
           "away": 6,
           "home_tiebreak": null,
           "away_tiebreak": null
+        },
+        {
+          "home": 0,
+          "away": 1,
+          "home_tiebreak": 3,
+          "away_tiebreak": 10
         }
       ],
-      "winner": null,
+      "winner": 1,
       "note": null,
       "court": "M2",
-      "status_detail": "2nd Set",
+      "status_detail": "Final",
       "stats": null,
       "editorial_note": null,
       "editorial_source": null,
@@ -3169,6 +3093,88 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
+    }
+  ],
+  "live": [
+    {
+      "match_id": "1002-2026:179372",
+      "tour": "WTA",
+      "tournament": {
+        "name": "MSC Hamburg Ladies Open",
+        "tour": "WTA",
+        "level": "WTA250",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1002-2026"
+      },
+      "home": [
+        {
+          "name": "Elena Pridankina",
+          "country": "RUS",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/14946.png",
+          "player_id": "14946"
+        }
+      ],
+      "away": [
+        {
+          "name": "Panna Udvardy",
+          "country": "HUN",
+          "seed": 3,
+          "rank": 71,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3000.png",
+          "player_id": "3000"
+        }
+      ],
+      "status": "live",
+      "round_name": "Round 1",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-21 08:05:00+00:00",
+      "sets": [
+        {
+          "home": 4,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 2,
+          "away": 5,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": null,
+      "note": null,
+      "court": "M1",
+      "status_detail": "2nd Set",
+      "stats": null,
+      "editorial_note": null,
+      "editorial_source": null,
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": "2026-07-21T08:05:00+00:00"
+      },
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 14,
+      "trend_signals": [
+        {
+          "kind": "search-trend",
+          "source": "Google Trends US",
+          "title": "panna udvardy",
+          "url": "https://trends.google.com/trending/rss?geo=US",
+          "published_at": "2026-07-21T08:10:00+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "304-2026:178882",
@@ -3208,8 +3214,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 0,
+          "home": 1,
+          "away": 4,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3273,8 +3279,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 1,
+          "home": 1,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3338,8 +3344,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 0,
+          "home": 2,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3412,8 +3418,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 1,
+          "home": 1,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3486,8 +3492,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 1,
+          "home": 2,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3560,8 +3566,8 @@
       "start_utc": "2026-07-21 09:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 1,
+          "home": 3,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -3639,7 +3645,14 @@
       "round_name": "Round 1",
       "discipline": "Men's Doubles",
       "start_utc": "2026-07-21 09:10:00+00:00",
-      "sets": [],
+      "sets": [
+        {
+          "home": 2,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Küchenmeister",
@@ -3759,12 +3772,12 @@
       "status": "scheduled",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-21 09:30:00+00:00",
+      "start_utc": "2026-07-21 09:35:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "M2",
-      "status_detail": "Tue, July 21st at 5:30 AM EDT",
+      "status_detail": "Tue, July 21st at 5:35 AM EDT",
       "stats": null,
       "editorial_note": "红土首轮最会放大耐心差距；双方都没有明显身份光环，反而更像一场抢戏之战。",
       "editorial_source": "实时排名与赛程",
@@ -3774,7 +3787,7 @@
         "WTA 官方 OOP"
       ],
       "time_observations": {
-        "espn": "2026-07-21T09:30:00+00:00"
+        "espn": "2026-07-21T09:35:00+00:00"
       },
       "schedule_time_status": "official-order-estimate",
       "schedule_note": "WTA 官方 OOP：Followed by",
@@ -8689,7 +8702,7 @@
     "WTA 官方 OOP · Livesport Prague Open": "正常 · 精确 0 场 / 场序 6 场 / 待下一版 3 场",
     "ATP 官方 OOP · Millennium Estoril Open": "正常 · 精确 3 场 / 场序 5 场 / 待下一版 2 场",
     "WTA 官方 OOP · Palermo Ladies Open": "正常 · 精确 3 场 / 场序 0 场 / 待下一版 3 场",
-    "实时选题雷达": "正常 · 65 条信号，命中 55 场比赛",
+    "实时选题雷达": "正常 · 64 条信号，命中 55 场比赛",
     "专业技术统计": "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计",
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
     "球员与赛事知识库": "正常 · 2 场接入历史背景",
