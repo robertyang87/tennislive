@@ -980,6 +980,8 @@ def test_story_card_uses_spacious_single_flow(tmp_path):
     assert body.count("<li>") == 3
     assert "1972" in body and "1986" in body
     assert "为什么会改变" in body
+    assert body.count("网球有故事") == 2
+    assert "网球冷知识" not in body
 
 
 def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypatch):
