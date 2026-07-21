@@ -125,7 +125,11 @@ jobs:
             cat "$OUT_DIR/qa.txt"
           fi
           if [ "$CODE" -ne 0 ]; then
-            exit "$CODE"
+            if [ -f "$OUT_DIR/digest.json" ] && [ -f "$OUT_DIR/qa.txt" ]; then
+              echo "::warning file=$OUT_DIR/qa.txt::digest returned $CODE after writing package; continuing so generated materials are not lost"
+            else
+              exit "$CODE"
+            fi
           fi
           ls -la "$OUT_DIR"
 
