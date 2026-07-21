@@ -521,8 +521,8 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo-copy strong { display:block; margin-top:7px; color:#fff;
   font-family:'TL Display SC','TL Sans SC'; font-size:36px; font-weight:400; line-height:1.25; }
 .knowledge-photo.compact .knowledge-photo-copy { bottom:20px; }
-.knowledge-photo.compact .knowledge-photo-copy small { font-size:18px; }
-.knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:34px; }
+.knowledge-photo.compact .knowledge-photo-copy small { font-size:20px; }
+.knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:38px; }
 .knowledge-cover .knowledge-photo { height:560px; }
 .knowledge-cover .knowledge-hook { margin-top:36px; padding:30px 30px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
@@ -554,17 +554,17 @@ html.light .chip-green { color:#fff; }
   font-style:normal; color:var(--neon); }
 .knowledge-moment div { padding-left:28px; border-left:1px solid rgba(255,255,255,.35); }
 .knowledge-moment b { display:block; font-family:'TL Display SC','TL Sans SC';
-  font-size:34px; font-weight:400; line-height:1.22; }
-.knowledge-moment p { margin-top:13px; color:var(--reason); font-size:24px; line-height:1.5; }
+  font-size:38px; font-weight:400; line-height:1.2; }
+.knowledge-moment p { margin-top:12px; color:var(--reason); font-size:28px; line-height:1.44; }
 .knowledge-verdict { margin-top:31px; padding:25px 27px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
   border-radius:8px; background:rgba(10,55,44,.88);
   font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
-  font-size:32px; font-weight:900; line-height:1.5; }
+  font-size:36px; font-weight:900; line-height:1.44; }
 .has-page-photo .knowledge-timeline { margin-top:16px; }
 .has-page-photo .knowledge-moment { min-height:124px; padding:15px 0; }
-.has-page-photo .knowledge-moment b { font-size:33px; }
-.has-page-photo .knowledge-moment p { margin-top:8px; font-size:24px; line-height:1.42; }
+.has-page-photo .knowledge-moment b { font-size:36px; }
+.has-page-photo .knowledge-moment p { margin-top:7px; font-size:27px; line-height:1.4; }
 .has-page-photo .knowledge-verdict { margin-top:20px; padding:20px 24px; }
 .official-flow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
 .official-step { height:292px; padding:19px 21px; overflow:hidden; border-radius:8px;
@@ -599,7 +599,7 @@ html.light .chip-green { color:#fff; }
   border-bottom:1px solid var(--divider); background:transparent; }
 .knowledge-fact-card i { color:var(--sky); font-family:'Barlow Condensed';
   font-size:72px; font-weight:700; font-style:normal; }
-.knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:29px; line-height:1.56; }
+.knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:32px; line-height:1.5; }
 .player-pillars { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
 .player-pillar { min-height:550px; padding:50px 28px 38px; border-right:1px solid var(--divider); }
@@ -608,11 +608,11 @@ html.light .chip-green { color:#fff; }
   font-size:112px; font-weight:700; font-style:normal; line-height:1; }
 .player-pillar small { display:block; margin-top:7px; color:var(--coral); font-size:15px;
   font-weight:700; letter-spacing:.15em; }
-.player-pillar p { margin-top:34px; color:var(--pagetext); font-size:26px; line-height:1.56; }
+.player-pillar p { margin-top:30px; color:var(--pagetext); font-size:29px; line-height:1.5; }
 .has-page-photo .player-pillars { margin-top:18px; }
 .has-page-photo .player-pillar { min-height:315px; padding:26px 25px 24px; }
 .has-page-photo .player-pillar em { font-size:82px; }
-.has-page-photo .player-pillar p { margin-top:18px; font-size:25px; line-height:1.46; }
+.has-page-photo .player-pillar p { margin-top:16px; font-size:27px; line-height:1.42; }
 .event-profile { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
 .event-profile article { min-height:230px; padding:35px 28px; border-right:1px solid var(--divider); }
@@ -625,14 +625,14 @@ html.light .chip-green { color:#fff; }
   padding:27px 0; align-items:center; border-bottom:1px solid var(--divider); }
 .event-note i { color:var(--sky); font-family:'Barlow Condensed'; font-size:48px;
   font-weight:700; font-style:normal; }
-.event-note p { color:var(--pagetext); font-size:25px; line-height:1.52; }
+.event-note p { color:var(--pagetext); font-size:28px; line-height:1.46; }
 .has-page-photo .event-profile { margin-top:24px; }
 .has-page-photo .event-profile article { min-height:170px; padding:26px 24px; }
 .has-page-photo .event-profile em { font-size:43px; }
 .has-page-photo .event-notes { margin-top:20px; display:grid; grid-template-columns:1fr 1fr; }
 .has-page-photo .event-note { min-height:160px; padding:20px 18px; grid-template-columns:54px 1fr; }
 .has-page-photo .event-note:nth-child(3) { display:none; }
-.has-page-photo .event-note p { font-size:23px; line-height:1.44; }
+.has-page-photo .event-note p { font-size:27px; line-height:1.4; }
 .explainer-mark { height:115px; margin-top:34px; border-top:2px solid var(--coral);
   border-bottom:1px solid var(--divider); }
 .explainer-mark svg { width:100%; height:100%; }
@@ -646,10 +646,10 @@ html.light .chip-green { color:#fff; }
 .knowledge-year::before { content:""; position:absolute; left:-41px; top:16px; width:16px;
   height:16px; border-radius:50%; background:var(--neon);
   box-shadow:0 0 0 7px rgba(211,255,18,.13); }
-.knowledge-year time { font-family:'Barlow Condensed'; font-size:52px; color:var(--neon); line-height:1; }
+.knowledge-year time { font-family:'Barlow Condensed'; font-size:56px; color:var(--neon); line-height:1; }
 .knowledge-year b { display:block; font-family:'TL Display SC','TL Sans SC';
-  font-size:34px; font-weight:400; }
-.knowledge-year p { margin-top:12px; color:var(--reason); font-size:24px; line-height:1.5; }
+  font-size:38px; font-weight:400; }
+.knowledge-year p { margin-top:10px; color:var(--reason); font-size:28px; line-height:1.44; }
 .knowledge-years.count-2 .knowledge-year { min-height:245px; padding-top:22px; }
 .today-visual { height:155px; margin-top:36px; border-top:2px solid var(--coral);
   border-bottom:1px solid var(--divider); }
@@ -662,14 +662,14 @@ html.light .chip-green { color:#fff; }
   background:rgba(10,55,44,.88); color:var(--pagetext); }
 .knowledge-question small { color:#E85545; font-size:16px; font-weight:700; letter-spacing:.18em; }
 .knowledge-question strong { display:block; margin-top:14px; color:var(--ivory);
-  font-family:'TL Serif SC','TL Sans SC'; font-size:34px; line-height:1.46; }
+  font-family:'TL Serif SC','TL Sans SC'; font-size:38px; line-height:1.42; }
 .has-page-photo .knowledge-years { margin-top:16px; }
 .has-page-photo .knowledge-year,
 .has-page-photo .knowledge-years.count-2 .knowledge-year {
   min-height:132px; padding:8px 0 16px;
 }
-.has-page-photo .knowledge-year b { font-size:34px; }
-.has-page-photo .knowledge-year p { margin-top:8px; font-size:24px; line-height:1.42; }
+.has-page-photo .knowledge-year b { font-size:38px; }
+.has-page-photo .knowledge-year p { margin-top:7px; font-size:27px; line-height:1.4; }
 .has-page-photo .knowledge-question { margin-top:16px; padding:22px 25px; }
 
 /* ---------- 外媒赛后室 ---------- */
@@ -1676,7 +1676,7 @@ def _knowledge_timeline_body(
     rows = "".join(
         '<div class="knowledge-moment">'
         f'<i>{index:02d}</i><div><b>{html.escape(headline)}</b>'
-        f'<p>{html.escape(_card_excerpt(detail, 58))}</p></div></div>'
+        f'<p>{html.escape(_card_excerpt(detail, 50))}</p></div></div>'
         for index, (headline, detail) in enumerate(items[:3], 1)
     )
     verdict = (
@@ -1778,7 +1778,7 @@ def _knowledge_fact_body(
             cards.append(
                 '<article class="player-pillar">'
                 f'<em>{html.escape(marker)}</em><small>AGE / MOMENT</small>'
-                f'<p>{html.escape(_card_excerpt(fact, 48))}</p></article>'
+                f'<p>{html.escape(_card_excerpt(fact, 38))}</p></article>'
             )
         content = lead + '<div class="player-pillars">' + "".join(cards) + "</div>"
         title = f"三个年龄，看懂{story.title}"
@@ -1791,14 +1791,14 @@ def _knowledge_fact_body(
         )
         notes = "".join(
             '<div class="event-note">'
-            f'<i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 54))}</p></div>'
+            f'<i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 48))}</p></div>'
             for index, fact in enumerate(facts, 1)
         )
         content = lead + profile + f'<div class="event-notes">{notes}</div>'
         title = f"一张图，读懂{story.title}"
     else:
         cards = "".join(
-            f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 62))}</p></article>'
+            f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 54))}</p></article>'
             for index, fact in enumerate(facts, 1)
         )
         content = lead + f'<div class="knowledge-fact-grid">{cards}</div>'
@@ -1862,7 +1862,7 @@ def _knowledge_today_body(
     years = "".join(
         '<div class="knowledge-year">'
         f'<time>{html.escape(row_year)}</time><div><b>{html.escape(headline)}</b>'
-        f'<p>{html.escape(_card_excerpt(detail, 56))}</p></div></div>'
+        f'<p>{html.escape(_card_excerpt(detail, 48))}</p></div></div>'
         for row_year, headline, detail in rows
     )
     has_photo = visual is not None
@@ -2013,35 +2013,31 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                 raise
             browser = p.chromium.launch(executable_path=exe)
         try:
-            page = browser.new_page(
-                viewport={"width": W, "height": H}, device_scale_factor=2
-            )
             for kind, body in pages:
-                page.set_content(_shell(body, theme))
-                page.wait_for_function(
-                    "document.fonts.status === 'loaded'", timeout=15000
+                # A fresh page per card prevents Chromium from carrying scroll
+                # restoration state from a taller preceding document.
+                page = browser.new_page(
+                    viewport={"width": W, "height": H}, device_scale_factor=2
                 )
-                page.wait_for_function(
-                    "Array.from(document.images).every(img => img.complete)",
-                    timeout=15000,
-                )
-                # Chromium may preserve the previous document's scroll offset
-                # when one page is taller during layout. Every card must start
-                # at the same top edge or the masthead gets clipped.
-                page.evaluate(
-                    "document.documentElement.scrollTop = 0; "
-                    "document.body.scrollTop = 0; window.scrollTo(0, 0)"
-                )
-                page.wait_for_timeout(50)
-                # Capture page coordinates explicitly. A viewport screenshot can
-                # inherit Chromium's previous scroll offset on content-heavy cards.
-                shot = page.screenshot(
-                    type="png", clip={"x": 0, "y": 0, "width": W, "height": H}
-                )
-                img = Image.open(io.BytesIO(shot)).convert("RGB")
-                if img.size != (W, H):
-                    img = img.resize((W, H), Image.LANCZOS)
-                out.append((kind, img))
+                try:
+                    page.set_content(_shell(body, theme))
+                    page.wait_for_function(
+                        "document.fonts.status === 'loaded'", timeout=15000
+                    )
+                    page.wait_for_function(
+                        "Array.from(document.images).every(img => img.complete)",
+                        timeout=15000,
+                    )
+                    page.evaluate("window.scrollTo(0, 0)")
+                    shot = page.screenshot(
+                        type="png", clip={"x": 0, "y": 0, "width": W, "height": H}
+                    )
+                    img = Image.open(io.BytesIO(shot)).convert("RGB")
+                    if img.size != (W, H):
+                        img = img.resize((W, H), Image.LANCZOS)
+                    out.append((kind, img))
+                finally:
+                    page.close()
         finally:
             browser.close()
     return out
