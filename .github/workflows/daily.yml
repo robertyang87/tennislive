@@ -58,7 +58,7 @@ jobs:
       # 无需额外 AI key：GitHub Models 只改写已有证据，不检索或编造新闻。
       GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL || 'openai/gpt-4.1' }}
-      TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'on' }}
+      TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'off' }}
       # 从官方巡回赛视频页选择与当日球员相关的片段，生成中文竖版视频。
       TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
     steps:
@@ -114,11 +114,29 @@ jobs:
         run: |
           DATE_ARG="${{ github.event.inputs.date }}"
           if [ -z "$DATE_ARG" ]; then DATE_ARG="today"; fi
-          tennislive digest --date "$DATE_ARG" --outdir output
           # 计算实际输出目录（北京时间日期）
           OUT_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print('output/' + parse_date_arg('$DATE_ARG').isoformat())")
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          set +e
+          tennislive digest --date "$DATE_ARG" --outdir output 2>&1 | tee "$OUT_DIR.digest.log"
+          CODE=${PIPESTATUS[0]}
+          if [ -f "$OUT_DIR/qa.txt" ]; then
+            echo "----- qa.txt -----"
+            cat "$OUT_DIR/qa.txt"
+          fi
+          if [ "$CODE" -ne 0 ]; then
+            exit "$CODE"
+          fi
           ls -la "$OUT_DIR"
+
+      - name: Upload digest failure diagnostics
+        if: failure() && steps.guard.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-failure-${{ github.run_number }}
+          path: |
+            ${{ steps.gen.outputs.outdir }}*
+            output/*.digest.log
 
       - name: 校验证据包完整性
         if: steps.guard.outputs.skip != 'true'
