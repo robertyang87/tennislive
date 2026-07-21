@@ -12,7 +12,7 @@
 
 - **负｜布拉格公开赛·女单·第一轮**：🇨🇿 [4]巴尔通科娃 2-1 🇨🇳 袁悦（3-6 6-4 6-1）
 - **负｜布拉格公开赛·女单·第一轮**：🇦🇹 塔格尔 2-0 🇨🇳 高馨妤（6-2 6-4）
-- **预计 22:45*｜布拉格公开赛·女双·第一轮**：Ya Hsin Lee/🇨🇳 Ye Qiu Yu vs 🇯🇵 柴原瑛菜/🇷🇺 Vera Zvonareva
+- **预计 23:00*｜布拉格公开赛·女双·第一轮**：Ya Hsin Lee/🇨🇳 Ye Qiu Yu vs 🇯🇵 柴原瑛菜/🇷🇺 Vera Zvonareva
 
 ## 🏆 昨夜焦点赛果
 
@@ -35,9 +35,9 @@
 
 ## ⏰ 今晚焦点
 
-- **预计 22:30*｜布拉格公开赛**：🇨🇿 琳达·弗鲁维尔托娃 vs 🇨🇿 [2]克雷吉茨科娃
+- **预计 23:20*｜布拉格公开赛**：🇨🇿 琳达·弗鲁维尔托娃 vs 🇨🇿 [2]克雷吉茨科娃
   推荐理由：法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线（[WTA 官方报道原文](https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown)）
-- **22:00｜汉堡站**：🇺🇦 [1]Oleksandra Oliynykova vs 🇩🇪 Nastasja Schunk
+- **待官方排期｜汉堡站**：🇺🇦 [1]Oleksandra Oliynykova vs 🇩🇪 Nastasja Schunk
   推荐理由：Oleksandra Oliynykova背着1号种子的签位，首轮先过“必须赢”这一关。
 - **待官方排期｜基茨比厄尔公开赛**：🇦🇷 [4]埃切维里 vs 🇦🇹 Jurij Rodionov
   推荐理由：排名差114位，埃切维里背着纸面优势；越像“该赢”的球，越怕慢热。
