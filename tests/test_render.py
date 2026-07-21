@@ -221,12 +221,31 @@ def test_cards_generation(tmp_path, sample_digest):
     paths = generate_cards(sample_digest, tmp_path / "cards")
     assert len(paths) >= 3  # 封面 + 赛果页 + 赛程页
     for p in paths:
-        assert Path(p).stat().st_size > 10_000  # 是实际渲染的 PNG 而非空文件
+        assert Path(p).stat().st_size > 10_000  # 是实际渲染的图片而非空文件
     names = [p.name for p in paths]
     # 有爆点时大字报钩子卡是第一张（card_00_hook），设计版封面顺延
-    assert any("_cover.png" in n for n in names)
+    assert any("_cover.jpg" in n for n in names)
     assert not any("focus" in name for name in names)
     assert not any("upset" in name or "end" in name for name in names)
+
+
+def test_social_card_output_uses_high_quality_compact_jpeg(tmp_path):
+    from PIL import Image, ImageDraw
+
+    from tennislive.render.image_output import save_social_image
+
+    image = Image.effect_noise((640, 480), 32).convert("RGB")
+    ImageDraw.Draw(image).text((24, 24), "TENNIS 7-6 6-4", fill="white")
+    lossless = tmp_path / "source.png"
+    image.save(lossless, "PNG")
+
+    output = save_social_image(image, tmp_path / "card")
+
+    assert output.suffix == ".jpg"
+    assert output.stat().st_size < lossless.stat().st_size
+    with Image.open(output) as rendered:
+        assert rendered.format == "JPEG"
+        assert rendered.size == image.size
 
 
 def test_inner_deck_pages_reuse_cover_visual_language(sample_digest):
@@ -268,7 +287,7 @@ def test_cards_fallback_matches_deck_policy(tmp_path, sample_digest, monkeypatch
     paths = cards.generate_cards(sample_digest, tmp_path / "cards")
     assert len(paths) >= 3
     names = [p.name for p in paths]
-    assert "card_00_cover.png" in names
+    assert "card_00_cover.jpg" in names
     assert not any(
         kind in name for name in names for kind in ("focus", "upset", "end")
     )
@@ -453,9 +472,9 @@ def test_single_cover_no_hook_page(tmp_path, sample_digest):
     from tennislive.render.cards import generate_cards
 
     names = [p.name for p in generate_cards(sample_digest, tmp_path / "cards")]
-    assert sum("_cover.png" in n for n in names) == 1
+    assert sum("_cover.jpg" in n for n in names) == 1
     assert not any("hook" in n for n in names)
-    assert names[0] == "card_00_cover.png"
+    assert names[0] == "card_00_cover.jpg"
 
 
 def test_daily_deck_keeps_result_pages_before_optional_pages(sample_digest, monkeypatch):
@@ -986,7 +1005,7 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     )
 
     assert selected is story
-    assert (tmp_path / "knowledge" / "cards" / "card_00_knowledge.png").exists()
+    assert (tmp_path / "knowledge" / "cards" / "card_00_knowledge.jpg").exists()
     xhs = (tmp_path / "knowledge" / "xiaohongshu.txt").read_text("utf-8")
     push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
     copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
@@ -998,7 +1017,7 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
     assert story.source_label in xhs
-    assert "/knowledge/cards/card_00_knowledge.png" in push
+    assert "/knowledge/cards/card_00_knowledge.jpg" in push
     assert "/knowledge/copy.html" in push
     assert "分别复制标题 / 正文 / 置顶评论" in push
     assert "3个记忆点" in push

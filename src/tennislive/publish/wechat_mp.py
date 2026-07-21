@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import logging
+import mimetypes
 import os
 import re
 import tempfile
@@ -100,7 +101,13 @@ class WeChatPublisher:
             resp = self.session.post(
                 f"{API}/material/add_material",
                 params={"access_token": self.access_token(), "type": "image"},
-                files={"media": (Path(image_path).name, f, "image/png")},
+                files={
+                    "media": (
+                        Path(image_path).name,
+                        f,
+                        mimetypes.guess_type(str(image_path))[0] or "image/jpeg",
+                    )
+                },
                 timeout=self.timeout,
             )
         data = self._check(resp.json())
@@ -115,7 +122,13 @@ class WeChatPublisher:
             resp = self.session.post(
                 f"{API}/media/uploadimg",
                 params={"access_token": self.access_token()},
-                files={"media": (Path(image_path).name, f, "image/png")},
+                files={
+                    "media": (
+                        Path(image_path).name,
+                        f,
+                        mimetypes.guess_type(str(image_path))[0] or "image/jpeg",
+                    )
+                },
                 timeout=self.timeout,
             )
         data = self._check(resp.json())

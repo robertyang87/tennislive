@@ -474,11 +474,11 @@ def cmd_flash(args) -> int:
     for i, m in enumerate(new):
         titles = hotspot_title_candidates(m)
         headline = titles[0]
-        card = outdir / f"flash_{stamp}_{i:02d}.png"
+        card = outdir / f"flash_{stamp}_{i:02d}.jpg"
         try:
             from .render.cards import generate_flash_card
 
-            generate_flash_card(m, card, headline)
+            card = generate_flash_card(m, card, headline)
         except Exception as e:
             console.print(f"[yellow]战报卡生成失败（跳过图片）：{e}[/yellow]")
             card = None
@@ -703,7 +703,11 @@ def cmd_publish_wechat(args) -> int:
         title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球晨报"
     )
     cards_dir = d / "cards"
-    cards = sorted(cards_dir.glob("card_*.png"))
+    cards = sorted(
+        path
+        for path in cards_dir.glob("card_*.*")
+        if path.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp")
+    )
 
     try:
         if args.style == "pic":

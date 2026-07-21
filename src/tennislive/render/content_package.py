@@ -75,10 +75,13 @@ def _render_cards(
             kind=pick.kind,
             theme=theme,
         )
+        from .image_output import save_social_image
+
         paths: list[Path] = []
         for index, (card_kind, image) in enumerate(rendered, 1):
-            path = cards_dir / f"card_{index:02d}_{card_kind}.png"
-            image.save(path, "PNG")
+            path = save_social_image(
+                image, cards_dir / f"card_{index:02d}_{card_kind}"
+            )
             paths.append(path)
         return paths
     except Exception as exc:
