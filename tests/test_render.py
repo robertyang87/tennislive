@@ -129,6 +129,31 @@ def test_xhs_post(sample_digest):
     assert "7:30" not in post
 
 
+def test_xhs_preview_replaces_long_player_name_before_shortening(sample_digest, monkeypatch):
+    from tennislive.render import xiaohongshu
+
+    match = sample_digest.schedule[0]
+    match.home[0].name = "Oleksandra Oliynykova"
+    monkeypatch.setattr(
+        xiaohongshu,
+        "editorial_tonight_focus",
+        lambda _matches: [match],
+    )
+    monkeypatch.setattr(
+        xiaohongshu,
+        "preview_angle",
+        lambda _match, _today: (
+            "Oleksandra Oliynykova背着1号种子的签位，首轮先过必须赢这一关"
+        ),
+    )
+
+    section, _ = xiaohongshu._tonight_section(sample_digest, compact=True)
+
+    assert section is not None
+    assert "看点：他背着1号种子的签位，首轮先过必须赢这一关。" in section.lines
+    assert "…。" not in section.lines[-1]
+
+
 def test_professional_focus_is_published_only_with_detailed_stats(sample_digest):
     match = sample_digest.results[1]
     assert not has_detailed_stats(match)

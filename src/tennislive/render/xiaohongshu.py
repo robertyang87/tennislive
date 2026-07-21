@@ -315,13 +315,23 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
         group = group_by_tournament([match])[0]
         round_name = match_round_display(match).replace("·", "")
         stage = f"{group.name_zh}·{round_name}".rstrip("·")
+        angle = preview_angle(match, digest.today)
+        pronoun = "她" if match.tour.value == "WTA" else "他"
+        # Long transliterated names can consume the entire mobile line. The
+        # matchup immediately above already names both players, so a pronoun is
+        # clearer here and prevents an unfinished "首轮…。" fragment.
+        for player in sorted(match.home + match.away, key=lambda p: len(p.name), reverse=True):
+            for name in (player_zh(player.name), player.name):
+                if len(name) >= 7:
+                    angle = angle.replace(name, pronoun)
+        angle = _short(angle, 34 if compact else 44)
         if index:
             lines.append("")
         lines.extend(
             [
                 f"⏰ {fmt_schedule_time(match)}｜{stage}",
                 _matchup(match),
-                "看点：" + _short(preview_angle(match, digest.today), 34 if compact else 44) + "。",
+                "看点：" + angle + "。",
             ]
         )
     return XhsSection(f"🌙 今晚焦点 · {len(matches)}场", tuple(lines)), matches
