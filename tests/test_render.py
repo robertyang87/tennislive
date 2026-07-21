@@ -989,11 +989,41 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert (tmp_path / "knowledge" / "cards" / "card_00_knowledge.png").exists()
     xhs = (tmp_path / "knowledge" / "xiaohongshu.txt").read_text("utf-8")
     push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
-    assert "今天单独讲一个网球知识点" in xhs
+    copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
+    pinned = (tmp_path / "knowledge" / "pinned_comment.txt").read_text("utf-8")
+    assert xhs.startswith("🏟️")
+    assert "👀 先看赛程外" in xhs
+    assert "📍 3个记忆点" in xhs
+    assert "💬 轮到你" in xhs
+    assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
     assert story.source_label in xhs
     assert "/knowledge/cards/card_00_knowledge.png" in push
     assert "/knowledge/copy.html" in push
+    assert "分别复制标题 / 正文 / 置顶评论" in push
+    assert "3个记忆点" in push
+    assert pinned in copy
+
+
+def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
+    from tennislive.render.knowledge import knowledge_copy, knowledge_title
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.xiaohongshu import xhs_title_len
+
+    titles = {story.slug: knowledge_title(story, sample_digest) for story in STORIES}
+
+    assert all(xhs_title_len(title) <= 20 for title in titles.values())
+    assert "很多人会答错" not in "\n".join(titles.values())
+    assert "一场误判，催生了网球鹰眼" in titles["hawkeye"]
+    assert "的来路" in titles["alcaraz"]
+
+    hawkeye = next(story for story in STORIES if story.slug == "hawkeye")
+    post = knowledge_copy(hawkeye, sample_digest)
+    assert "🧠 先猜一下" in post
+    assert "1️⃣ 2004" in post and "2️⃣ 2006" in post
+    assert "落点误差仅几毫米" in post and "回放动画数秒内生成" not in post
+    assert "关键分上，你更信主裁第一判断，还是鹰眼回放？" in post
+    assert "今天单独讲一个网球知识点" not in post
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
