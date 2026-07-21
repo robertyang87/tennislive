@@ -497,6 +497,99 @@ html.light .chip-green { color:#fff; }
 .story-copy p { margin-top:7px; font-size:20px; line-height:1.42; color:var(--reason); }
 .photo-credit { font-size:15px; color:var(--fade); margin-top:10px; }
 
+/* ---------- 网球有故事 · 多页知识卡 ---------- */
+.knowledge-page { --section-accent:var(--coral); }
+.knowledge-page .titleband { margin:18px 0 16px; }
+.knowledge-page h1 { font-size:72px; line-height:1.08; }
+.knowledge-page .knowledge-kicker { margin-top:22px; color:var(--coral);
+  font-family:'Barlow Condensed','TL Sans SC'; font-size:24px; font-weight:600;
+  letter-spacing:.26em; text-transform:uppercase; }
+.knowledge-photo { position:relative; height:330px; margin-top:22px; overflow:hidden;
+  border:1px solid var(--panel-border); border-radius:8px; background:var(--panel-strong); }
+.knowledge-photo .kn-back { position:absolute; inset:0; background-size:cover;
+  background-position:center; filter:blur(22px) brightness(.58); transform:scale(1.12); }
+.knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  object-position:center; }
+.knowledge-photo.portrait img { object-fit:contain; }
+.knowledge-photo::after { content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 38%,rgba(2,21,16,.94)); }
+.knowledge-photo-copy { position:absolute; z-index:2; left:28px; right:28px; bottom:24px; }
+.knowledge-photo-copy small { display:block; color:#D4E0D9; font-size:19px; }
+.knowledge-photo-copy strong { display:block; margin-top:7px; color:#fff;
+  font-family:'TL Display SC','TL Sans SC'; font-size:36px; font-weight:400; line-height:1.25; }
+.knowledge-cover .knowledge-photo { height:560px; }
+.knowledge-cover .knowledge-hook { margin-top:28px; padding:24px 27px;
+  border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
+  border-radius:8px; background:rgba(10,55,44,.88);
+  display:grid; grid-template-columns:145px 1fr; gap:24px; align-items:center; }
+.knowledge-hook b { font-family:'Barlow Condensed'; font-size:65px; color:var(--neon); line-height:1; }
+.knowledge-hook p { color:var(--pagetext); font-family:'TL Serif SC','TL Sans SC';
+  font-size:31px; font-weight:900; line-height:1.48; }
+.knowledge-timeline { margin-top:22px; border-top:2px solid var(--coral); }
+.knowledge-moment { display:grid; grid-template-columns:82px 1fr; gap:24px;
+  min-height:145px; padding:20px 0; align-items:center; border-bottom:1px solid var(--divider); }
+.knowledge-moment i { font-family:'Barlow Condensed'; font-size:52px; font-weight:700;
+  font-style:normal; color:var(--neon); }
+.knowledge-moment div { padding-left:22px; border-left:1px solid rgba(255,255,255,.35); }
+.knowledge-moment b { display:block; font-family:'TL Display SC','TL Sans SC';
+  font-size:30px; font-weight:400; line-height:1.22; }
+.knowledge-moment p { margin-top:7px; color:var(--reason); font-size:20px; line-height:1.42; }
+.knowledge-verdict { margin-top:22px; padding:20px 24px;
+  border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
+  border-radius:8px; background:rgba(10,55,44,.88);
+  font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
+  font-size:28px; font-weight:900; line-height:1.45; }
+.official-flow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
+.official-step { height:292px; padding:19px 21px; overflow:hidden; border-radius:8px;
+  border:1px solid var(--panel-border); background:rgba(255,255,255,.035); }
+.official-step header { display:flex; align-items:baseline; gap:11px; }
+.official-step header i { color:var(--neon); font-family:'Barlow Condensed';
+  font-size:34px; font-weight:700; font-style:normal; }
+.official-step header b { font-family:'TL Display SC','TL Sans SC'; font-size:28px;
+  font-weight:400; line-height:1.15; }
+.official-step header span { margin-left:auto; color:var(--fade); font-size:14px; }
+.official-visual { position:relative; height:198px; margin-top:12px;
+  border-top:1px solid var(--divider); }
+.official-visual svg { width:100%; height:172px; }
+.official-visual p { position:absolute; left:0; right:0; bottom:0; text-align:center;
+  color:var(--reason); font-size:17px; line-height:1.3; }
+.official-facts { display:grid; grid-template-columns:repeat(3,1fr); margin-top:18px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
+.official-facts div { min-height:104px; padding:16px 18px; border-right:1px solid var(--divider); }
+.official-facts div:last-child { border-right:0; }
+.official-facts b { display:block; color:var(--coral); font-family:'Barlow Condensed';
+  font-size:31px; line-height:1; }
+.official-facts span { display:block; margin-top:7px; color:var(--reason); font-size:17px; }
+.official-summary { margin-top:17px; padding:17px 20px;
+  border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
+  border-radius:8px; background:rgba(10,55,44,.88); color:var(--ivory);
+  font-size:20px; line-height:1.42; }
+.official-summary b { color:#E85545; }
+.knowledge-fact-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px; }
+.knowledge-fact-card { min-height:205px; padding:23px; border-top:5px solid var(--sky);
+  background:var(--panel); border-radius:8px; box-shadow:var(--cardshadow); }
+.knowledge-fact-card i { color:var(--sky); font-family:'Barlow Condensed';
+  font-size:42px; font-weight:700; font-style:normal; }
+.knowledge-fact-card p { margin-top:10px; color:var(--pagetext); font-size:22px; line-height:1.48; }
+.knowledge-years { margin-top:24px; padding-left:50px; position:relative; }
+.knowledge-years::before { content:""; position:absolute; left:17px; top:12px; bottom:12px;
+  width:3px; background:linear-gradient(var(--coral),var(--sky),var(--neon)); }
+.knowledge-year { position:relative; display:grid; grid-template-columns:150px 1fr; gap:18px;
+  min-height:143px; padding:7px 0 18px; }
+.knowledge-year::before { content:""; position:absolute; left:-41px; top:16px; width:16px;
+  height:16px; border-radius:50%; background:var(--neon);
+  box-shadow:0 0 0 7px rgba(211,255,18,.13); }
+.knowledge-year time { font-family:'Barlow Condensed'; font-size:52px; color:var(--neon); line-height:1; }
+.knowledge-year b { display:block; font-family:'TL Display SC','TL Sans SC';
+  font-size:30px; font-weight:400; }
+.knowledge-year p { margin-top:7px; color:var(--reason); font-size:20px; line-height:1.4; }
+.knowledge-question { margin-top:17px; padding:24px 27px; border:1px solid rgba(120,211,220,.26);
+  border-left:7px solid var(--coral); border-radius:8px;
+  background:rgba(10,55,44,.88); color:var(--pagetext); }
+.knowledge-question small { color:#E85545; font-size:16px; font-weight:700; letter-spacing:.18em; }
+.knowledge-question strong { display:block; margin-top:8px; color:var(--ivory);
+  font-family:'TL Serif SC','TL Sans SC'; font-size:30px; line-height:1.4; }
+
 /* ---------- 外媒赛后室 ---------- */
 .media-page h1 { font-size:72px; }
 .media-visual { position:relative; height:310px; margin-top:16px; overflow:hidden;
@@ -1335,6 +1428,229 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + _FOOTER
         + "</div>"
     )
+
+
+def _knowledge_photo(story: TournamentStory, caption: str, subline: str = "") -> str:
+    uri = _asset_image_uri(story.image)
+    if not uri:
+        raise FileNotFoundError(story.image)
+    portrait = False
+    try:
+        from PIL import Image as _Image
+
+        with _Image.open(story.image) as image:
+            portrait = image.height > image.width
+    except OSError:
+        pass
+    portrait_class = " portrait" if portrait else ""
+    sub = f"<small>{html.escape(subline)}</small>" if subline else ""
+    return (
+        f'<div class="knowledge-photo{portrait_class}">'
+        f'<i class="kn-back" style="background-image:url(\'{uri}\')"></i>'
+        f'<img src="{uri}" alt="">'
+        '<div class="knowledge-photo-copy">'
+        f'{sub}<strong>{html.escape(caption)}</strong></div></div>'
+    )
+
+
+def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
+    hooks = {
+        "hawkeye": "一场误判，逼网球把判罚交给机器",
+        "scoring-history": "网球最奇怪的数字，已经用了几百年",
+        "yellow-ball": "网球从白色变黄，不只是为了好看",
+        "longest-match": "一场比赛，打了整整三天",
+        "golden-slam": "一年拿齐五座最高荣誉，到底有多难",
+        "surfaces": "换一块场地，像换了一项运动",
+        "big-three": "三个人，重新画出了网球时代",
+        "china-tennis": "中国网球的二十年，从哪一冠开始",
+    }
+    hook = hooks.get(story.slug, story.title)
+    year = story.moments[0].date[:4] if story.moments else "STORY"
+    promise = (
+        "那一夜之后，人的眼睛不再拥有最后一句话。"
+        if story.slug == "hawkeye"
+        else story.hero_fact
+    )
+    return (
+        '<div class="poster knowledge-page knowledge-cover">'
+        + _masthead(date_label)
+        + '<div class="knowledge-kicker">Tennis Story · 网球有故事</div>'
+        + f'<h1>{html.escape(hook)}</h1>'
+        + _knowledge_photo(story, story.venue, story.location.replace("网球冷知识", "网球有故事"))
+        + '<div class="knowledge-hook">'
+        + f'<b>{html.escape(year)}</b><p>{html.escape(promise)}</p></div>'
+        + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
+        + f'图源：{html.escape(story.image_credit)}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _knowledge_timeline_body(story: TournamentStory, date_label: str) -> str:
+    title = "那一夜，发生了什么？" if story.slug == "hawkeye" else "故事，从这里开始"
+    items: list[tuple[str, str]] = []
+    if story.moments:
+        items.append((story.moments[0].headline, story.moments[0].detail))
+    if len(story.facts) > 1:
+        items.append(("后来发生了什么", story.facts[1]))
+    if len(story.moments) > 1:
+        items.append((story.moments[1].headline, story.moments[1].detail))
+    if not items:
+        items = [("关键事实", fact) for fact in story.facts[:3]]
+    rows = "".join(
+        '<div class="knowledge-moment">'
+        f'<i>{index:02d}</i><div><b>{html.escape(headline)}</b>'
+        f'<p>{html.escape(detail)}</p></div></div>'
+        for index, (headline, detail) in enumerate(items[:3], 1)
+    )
+    verdict = (
+        "问题不只是一个球看错，而是关键分曾经无处申诉。"
+        if story.slug == "hawkeye"
+        else story.hero_fact
+    )
+    subline = "2004 · 美国网球公开赛" if story.slug == "hawkeye" else story.location
+    caption = story.moments[0].player if story.moments else story.venue
+    return (
+        '<div class="poster knowledge-page">'
+        + _masthead(date_label)
+        + _titleband("The Story · 故事现场", title)
+        + _knowledge_photo(story, caption, subline)
+        + f'<div class="knowledge-timeline">{rows}</div>'
+        + f'<div class="knowledge-verdict">{html.escape(verdict)}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _hawkeye_official_flow_body(date_label: str) -> str:
+    return (
+        '<div class="poster knowledge-page">'
+        + _masthead(date_label)
+        + _titleband("Sony / Hawk-Eye Official Workflow", "鹰眼不是“看回放”，而是在重建一颗球")
+        + '<div class="official-flow">'
+        + '<article class="official-step"><header><i>01</i><b>每台相机先找球心</b><span>2D VISION</span></header>'
+        + '<div class="official-visual"><svg viewBox="0 0 420 172">'
+        + '<rect x="16" y="17" width="168" height="112" fill="#0F4B3D" stroke="#78D3DC" stroke-width="2"/>'
+        + '<rect x="236" y="17" width="168" height="112" fill="#0F4B3D" stroke="#78D3DC" stroke-width="2"/>'
+        + '<circle cx="122" cy="55" r="12" fill="#D3FF12"/><circle cx="284" cy="91" r="12" fill="#D3FF12"/>'
+        + '<text x="61" y="154" fill="#A9B9B0" font-size="17">CAMERA A</text>'
+        + '<text x="281" y="154" fill="#A9B9B0" font-size="17">CAMERA B</text></svg>'
+        + '<p>同一颗球，在不同画面里的位置不同</p></div></article>'
+        + '<article class="official-step"><header><i>02</i><b>视线交会，算出空间位置</b><span>3D</span></header>'
+        + '<div class="official-visual"><svg viewBox="0 0 420 172">'
+        + '<circle cx="42" cy="39" r="12" fill="#FF765F"/><circle cx="42" cy="137" r="12" fill="#FF765F"/>'
+        + '<line x1="54" y1="39" x2="292" y2="88" stroke="#78D3DC" stroke-width="3"/>'
+        + '<line x1="54" y1="137" x2="292" y2="88" stroke="#78D3DC" stroke-width="3"/>'
+        + '<circle cx="292" cy="88" r="15" fill="#D3FF12"/><text x="320" y="96" fill="#78D3DC" font-size="20">X / Y / Z</text></svg>'
+        + '<p>两台以上相机交叉定位</p></div></article>'
+        + '<article class="official-step"><header><i>03</i><b>连续帧连成3D轨迹</b><span>TIME</span></header>'
+        + '<div class="official-visual"><svg viewBox="0 0 420 172">'
+        + '<path d="M35 135 Q190 8 382 138" fill="none" stroke="#78D3DC" stroke-width="4"/>'
+        + '<g fill="#D3FF12"><circle cx="43" cy="129" r="9"/><circle cx="112" cy="70" r="9"/>'
+        + '<circle cx="193" cy="43" r="9"/><circle cx="282" cy="65" r="9"/><circle cx="372" cy="130" r="9"/></g></svg>'
+        + '<p>球心位置随时间连接，得到完整路径</p></div></article>'
+        + '<article class="official-step"><header><i>04</i><b>计算弹跳点，再与边线比对</b><span>CALL</span></header>'
+        + '<div class="official-visual"><svg viewBox="0 0 420 172">'
+        + '<rect x="62" y="73" width="298" height="22" fill="#F7F3E8"/>'
+        + '<ellipse cx="257" cy="68" rx="42" ry="28" fill="#D3FF12" stroke="#0C362B" stroke-width="4"/>'
+        + '<text x="274" y="135" fill="#D3FF12" font-size="30" font-weight="700">IN · 界内</text></svg>'
+        + '<p>最终画面是CG可视化，不是慢动作录像</p></div></article></div>'
+        + '<div class="official-facts"><div><b>8–12台</b><span>多机位光学摄像机</span></div>'
+        + '<div><b>最高340fps</b><span>同步捕捉高速网球</span></div>'
+        + '<div><b>&lt;2mm</b><span>Sony公布的系统误差</span></div></div>'
+        + '<div class="official-summary"><b>一句看懂：</b>先在每幅画面找到球，'
+        + '再用多个角度算出它在三维空间的位置。</div>'
+        + '<div class="photo-credit">原理依据：Sony / Hawk-Eye 官方技术说明</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _knowledge_fact_body(story: TournamentStory, date_label: str) -> str:
+    facts = story.facts[:3]
+    cards = "".join(
+        f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(fact)}</p></article>'
+        for index, fact in enumerate(facts, 1)
+    )
+    return (
+        '<div class="poster knowledge-page">'
+        + _masthead(date_label)
+        + _titleband("Visual Explainer · 图解", f"三个细节，看懂{story.title}")
+        + _knowledge_photo(story, story.venue, story.location)
+        + f'<div class="knowledge-fact-grid">{cards}</div>'
+        + f'<div class="photo-credit">资料：{html.escape(story.source_label)}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _knowledge_today_body(
+    story: TournamentStory,
+    date_label: str,
+    question: str,
+    year: int,
+) -> str:
+    if story.slug == "hawkeye":
+        title = "从举手挑战，到实时电子司线"
+        photo_caption = "从球员申请复核，到系统实时判定每一次落点"
+        rows = (
+            ("2006", "鹰眼挑战制进入美网", "球员可以主动挑战判罚，现场大屏给出结果。"),
+            ("2021", "澳网、美网采用实时电子司线", "从“球员申请复核”，走向系统主动完成判定。"),
+            ("2025", "温网告别人工司线", "延续近150年的传统，也最终让位于电子判罚。"),
+        )
+        eyebrow = f"{year} · 最后的例外"
+        question = "四大满贯中，只剩法网仍保留人工司线。红土球印，足够可靠吗？"
+    else:
+        title = "为什么今天还值得聊？"
+        photo_caption = story.hero_fact
+        rows = tuple(
+            (
+                moment.date[:4],
+                moment.headline,
+                moment.detail,
+            )
+            for moment in story.moments[:3]
+        )
+        eyebrow = f"{year} · 今天的回响"
+    years = "".join(
+        '<div class="knowledge-year">'
+        f'<time>{html.escape(row_year)}</time><div><b>{html.escape(headline)}</b>'
+        f'<p>{html.escape(detail)}</p></div></div>'
+        for row_year, headline, detail in rows
+    )
+    return (
+        '<div class="poster knowledge-page">'
+        + _masthead(date_label)
+        + _titleband("Then & Now · 从过去到今天", title)
+        + _knowledge_photo(story, photo_caption)
+        + f'<div class="knowledge-years">{years}</div>'
+        + '<div class="knowledge-question">'
+        + f'<small>{html.escape(eyebrow)}</small><strong>{html.escape(question)}</strong></div>'
+        + f'<div class="photo-credit">资料：{html.escape(story.source_label)}</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def knowledge_deck_bodies(
+    story: TournamentStory,
+    date_label: str,
+    *,
+    question: str,
+    year: int,
+) -> list[tuple[str, str]]:
+    """Return a four-page, evidence-backed story deck for social publishing."""
+    explainer = (
+        _hawkeye_official_flow_body(date_label)
+        if story.slug == "hawkeye"
+        else _knowledge_fact_body(story, date_label)
+    )
+    return [
+        ("knowledge", _knowledge_cover_body(story, date_label)),
+        ("story", _knowledge_timeline_body(story, date_label)),
+        ("explainer", explainer),
+        ("today", _knowledge_today_body(story, date_label, question, year)),
+    ]
 
 
 def rankings_body(rankings, date_label: str) -> str:

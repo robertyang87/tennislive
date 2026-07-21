@@ -15,7 +15,7 @@ from ..digest import Digest
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
 from .tournament_story import TournamentStory, pick_tournament_story
-from .webcards import _screenshot_pages, tournament_story_body
+from .webcards import _screenshot_pages, knowledge_deck_bodies
 from .xiaohongshu import xhs_title_len
 
 
@@ -95,7 +95,7 @@ def _knowledge_question(story: TournamentStory) -> str:
         "scoring-history": "你第一次学网球记分时，最难理解的是哪一项？",
         "yellow-ball": "如果网球还是白色，你觉得电视上还能看清吗？",
         "longest-match": "一场比赛打到第几小时，你会先撑不住？",
-        "hawkeye": "关键分上，你更信主裁第一判断，还是鹰眼回放？",
+        "hawkeye": "四大满贯只剩法网保留人工司线，红土球印足够可靠吗？",
         "golden-slam": "金满贯和世界第一，你觉得哪个更难？",
         "surfaces": "硬地、红土、草地只能选一种看，你选哪块？",
         "big-three": "三巨头时代，你最先站谁？",
@@ -113,7 +113,7 @@ def _knowledge_question(story: TournamentStory) -> str:
 def knowledge_pinned_comment(story: TournamentStory) -> str:
     question = _knowledge_question(story)
     if story.slug == "hawkeye":
-        reply = "我先站鹰眼：关键分可以输，但最好别输给一次看错。"
+        reply = "我更看重判罚标准一致：红土有球印，但人工找印和解释球印仍可能出错。"
     elif story.kind == "player":
         reply = "我先不设标准答案，想看看大家记住的是同一场，还是不同的瞬间。"
     else:
@@ -169,11 +169,10 @@ def knowledge_push_html(
     digest: Digest,
     story: TournamentStory,
     *,
-    card_name: str,
+    card_names: list[str],
     xhs_text: str,
 ) -> str:
     d = digest.today
-    card_url = f"{_CDN}/output/{d.isoformat()}/knowledge/cards/{card_name}"
     copy_url = f"{_PAGES}/output/{d.isoformat()}/knowledge/copy.html"
     lines = xhs_text.strip().splitlines()
     title = html.escape(lines[0] if lines else knowledge_title(story, digest))
@@ -187,18 +186,102 @@ def knowledge_push_html(
             f"{safe}</div>"
         )
     source = html.escape(story.source_label)
+    images = []
+    for index, card_name in enumerate(card_names, 1):
+        card_url = f"{_CDN}/output/{d.isoformat()}/knowledge/cards/{card_name}"
+        images.append(
+            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
+            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
+            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
+            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
+            'style="color:#087747;font-size:13px;text-decoration:none;">'
+            f'第{index}张未显示？点此打开原图</a></div>'
+        )
     return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
 <div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
   <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">小红书知识帖 · {d.month}.{d.day}</div>
   <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
-  <img src="{card_url}" data-src="{card_url}" width="100%" alt="{title}" referrerpolicy="no-referrer" style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />
-  <div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" style="color:#087747;font-size:13px;text-decoration:none;">图片未显示？点此打开原图</a></div>
+  {''.join(images)}
   {''.join(paragraphs)}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
   <a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
   <div style="text-align:center;color:#7a8580;font-size:12px;">资料核对：{source} · 图片长按保存</div>
 </div>
 </div>"""
+
+
+def _validate_story_for_publish(story: TournamentStory, digest: Digest) -> None:
+    """Fail closed when a story contains unsupported or logically stale claims."""
+    errors: list[str] = []
+    claims = "\n".join((story.hero_fact, *story.facts))
+    if not story.source_url.startswith("https://"):
+        errors.append("主来源必须是 HTTPS")
+    if "截至" in claims and str(digest.today.year) not in claims:
+        errors.append("时效性结论必须包含生成年份")
+    forbidden = (
+        "目前只剩法网",
+        "主裁第一判断，还是鹰眼",
+        "技术没有替比赛做决定",
+    )
+    for phrase in forbidden:
+        if phrase in claims:
+            errors.append(f"存在范围或角色不清的表述：{phrase}")
+    if story.slug == "hawkeye":
+        required = ("2D", "3D", "四大满贯中", "实时电子司线", str(digest.today.year))
+        for phrase in required:
+            if phrase not in claims:
+                errors.append(f"鹰眼事实缺少必要范围：{phrase}")
+        if len(story.evidence_urls) < 4:
+            errors.append("鹰眼故事至少需要四个交叉核验来源")
+    if errors:
+        raise ValueError("知识帖事实校验失败：" + "；".join(errors))
+
+
+def _knowledge_evidence(story: TournamentStory, digest: Digest) -> dict:
+    source_urls = list(dict.fromkeys(
+        [
+            story.source_url,
+            *story.evidence_urls,
+            *(moment.source_url for moment in story.moments),
+            story.image_source_url,
+        ]
+    ))
+    source_urls = [url for url in source_urls if url]
+    claims = [
+        {
+            "type": "hero",
+            "text": story.hero_fact,
+            "source_urls": source_urls[:2] or [story.source_url],
+        }
+    ]
+    for index, fact in enumerate(story.facts):
+        if story.slug == "hawkeye":
+            mapping = (
+                source_urls[:2],
+                [url for url in source_urls if "usopen.org" in url or "sony.com" in url],
+                [url for url in source_urls if "wimbledon.com" in url or "lequipe.fr" in url],
+            )
+            urls = mapping[index] if index < len(mapping) else source_urls[:1]
+        else:
+            urls = source_urls[:1]
+        claims.append({"type": "fact", "text": fact, "source_urls": urls})
+    claims.extend(
+        {
+            "type": "moment",
+            "date": moment.date,
+            "text": f"{moment.player}：{moment.headline}。{moment.detail}",
+            "source_urls": [moment.source_url],
+        }
+        for moment in story.moments
+    )
+    return {
+        "schema_version": 1,
+        "generated_for": digest.today.isoformat(),
+        "story_slug": story.slug,
+        "scope": "已核验事实；观点与互动问题不作为事实结论",
+        "claims": claims,
+        "sources": source_urls,
+    }
 
 
 def generate_knowledge_package(
@@ -211,6 +294,7 @@ def generate_knowledge_package(
     story = story or pick_tournament_story(digest)
     if story is None:
         return None
+    _validate_story_for_publish(story, digest)
     outdir = Path(outdir)
     cards_dir = outdir / "cards"
     cards_dir.mkdir(parents=True, exist_ok=True)
@@ -219,13 +303,28 @@ def generate_knowledge_package(
             old.unlink()
 
     date_label = _date_label(digest.today)
-    image = _screenshot_pages(
-        [("knowledge", tournament_story_body(story, date_label))],
+    question = _knowledge_question(story)
+    images = _screenshot_pages(
+        knowledge_deck_bodies(
+            story,
+            date_label,
+            question=question,
+            year=digest.today.year,
+        ),
         theme,
-    )[0][1]
+    )
     from .image_output import save_social_image
 
-    card_path = save_social_image(image, cards_dir / "card_00_knowledge")
+    card_stems = {
+        "knowledge": "card_00_knowledge",
+        "story": "card_01_story",
+        "explainer": "card_02_explainer",
+        "today": "card_03_today",
+    }
+    card_paths = [
+        save_social_image(image, cards_dir / card_stems[kind])
+        for kind, image in images
+    ]
 
     xhs_text = knowledge_copy(story, digest)
     pinned_comment = knowledge_pinned_comment(story)
@@ -241,7 +340,7 @@ def generate_knowledge_package(
         knowledge_push_html(
             digest,
             story,
-            card_name=card_path.name,
+            card_names=[path.name for path in card_paths],
             xhs_text=xhs_text,
         ),
         encoding="utf-8",
@@ -256,10 +355,15 @@ def generate_knowledge_package(
                 "source_url": story.source_url,
                 "image": str(story.image),
                 "image_credit": story.image_credit,
+                "card_count": len(card_paths),
             },
             ensure_ascii=False,
             indent=2,
         ),
+        encoding="utf-8",
+    )
+    (outdir / "evidence.json").write_text(
+        json.dumps(_knowledge_evidence(story, digest), ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     return story
