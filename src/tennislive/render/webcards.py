@@ -1307,8 +1307,13 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
     )
     kicker = {
         "player": "Player Spotlight · 球员特写",
-        "trivia": "Tennis Story · 网球冷知识",
+        "trivia": "Tennis Story · 网球有故事",
     }.get(story.kind, "Tournament Archive · 赛事档案")
+    location = (
+        story.location.replace("网球冷知识", "网球有故事")
+        if story.kind == "trivia"
+        else story.location
+    )
     return (
         '<div class="poster story-page">'
         + _masthead(date_label)
@@ -1321,7 +1326,7 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
             else f'<div class="venue-photo" style="background-image:url(\'{uri}\')">'
         )
         + '<div class="venue-caption">'
-        + f'<b>{html.escape(story.venue)}</b><span>{html.escape(story.location)}</span>'
+        + f'<b>{html.escape(story.venue)}</b><span>{html.escape(location)}</span>'
         + "</div></div>"
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
         + f'<ol class="story-list">{rows}</ol>'
