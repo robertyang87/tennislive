@@ -200,111 +200,87 @@ def to_push_html(
     xhs_text: str | None = None,
     videos: list[str] | None = None,
 ) -> str:
+    """Render the PushPlus review message as the actual Xiaohongshu post."""
     d = digest.today
-    parts: list[str] = [_DARK_CSS, f'<div class="tl-card" style="{_CARD}">']
-    parts.append(
-        f'<div class="tl-title" style="{_TITLE}">🎾 网球晨报 · {d.month}月{d.day}日</div>'
-    )
-    parts.append(
-        f'<div class="tl-head" style="{_HEAD}">{pick_headline_auto(digest)}</div>'
-    )
-    parts.append(_HR)
+    raw = (xhs_text or "").strip()
+    lines = raw.splitlines()
+    title = lines[0].strip() if lines else pick_headline_auto(digest)
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    safe_title = html.escape(title)
 
-    cn_results = [
-        m for m in digest.results
-        if is_chinese_involved(m) and is_tour_focus_match(m)
-    ][:4]
-    cn_today = [
-        m for m in digest.schedule + digest.live
-        if is_chinese_involved(m) and is_tour_focus_match(m)
-    ][:3]
-    if cn_results or cn_today:
-        parts.append(f'<div class="tl-sec" style="{_SEC}">🇨🇳 中国军团</div>')
-        for m in cn_results:
-            w = m.winner_players() or []
-            mark = "✅" if any(is_chinese_involved_side([p]) for p in w) else "❌"
-            parts.append(
-                f"{mark} {_short_side(m.home if m.winner == 0 else m.away)} "
-                f"胜 {_short_side(m.away if m.winner == 0 else m.home)}<br/>"
-                f'<span class="tl-dim" style="{_DIM}">{_score_of(m)} · {_label(m)}</span>'
-            )
-        for m in cn_today:
-            parts.append(
-                f"⏰ {fmt_schedule_time(m)} {_short_side(m.home)} vs "
-                f"{_short_side(m.away)}<br/>"
-                f'<span class="tl-dim" style="{_DIM}">{_label(m)}</span>'
-            )
-        parts.append(_HR)
+    parts = [
+        '<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;'
+        'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">',
+        '<div style="max-width:680px;margin:0 auto;background-color:#ffffff;'
+        'border-top:5px solid #ff2442;padding:18px 16px 22px;">',
+        '<div style="display:inline-block;background-color:#e7f5ea;color:#087747;'
+        'font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">'
+        f'小红书待发稿 · {d.month}.{d.day}</div>',
+        f'<div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;'
+        f'margin:10px 0 14px;">{safe_title}</div>',
+    ]
 
-    focus = top_results([m for m in digest.results if m.is_singles], 3)
-    focus = [m for m in focus if not is_chinese_involved(m)]
-    if focus:
-        parts.append(f'<div class="tl-sec" style="{_SEC}">🏆 昨夜焦点</div>')
-        for m in focus:
-            w, l = m.winner_players() or [], m.loser_players() or []
-            if not w or not l:
-                continue
+    # Keep the image deck above the caption so the phone review mirrors a note.
+    if cards:
+        for name in cards:
+            safe_name = html.escape(name, quote=True)
+            url = f"{_CDN}/output/{d.isoformat()}/cards/{safe_name}"
             parts.append(
-                f"{_short_side(w)} 胜 {_short_side(l)}<br/>"
-                f'<span class="tl-dim" style="{_DIM}">{_score_of(m)} · {_label(m)}</span>'
+                f'<img src="{url}" style="width:100%;border-radius:6px;'
+                'margin:0 0 10px;display:block;" />'
             )
-        parts.append(_HR)
+        parts.append(
+            '<div style="color:#7a8580;font-size:12px;margin:0 0 18px;">'
+            '长按保存图片 · 按当前顺序上传小红书</div>'
+        )
 
-    tonight = [event[0] for event in tonight_event_focus(digest.schedule)]
-    if tonight:
-        parts.append(f'<div class="tl-sec" style="{_SEC}">🌙 今晚看点</div>')
-        for m in tonight:
-            stars = "★" * stay_up_stars(m)
-            parts.append(
-                f"{fmt_schedule_time(m)} {_short_side(m.home)} vs "
-                f"{_short_side(m.away)}<br/>"
-                f'<span class="tl-dim" style="{_DIM}">{_label(m)} · 熬夜指数 {stars}</span>'
+    if body:
+        parts.append(
+            '<div style="border-left:3px solid #f1c84b;padding-left:12px;'
+            'margin:4px 0 14px;font-size:13px;font-weight:bold;color:#087747;">'
+            '可直接发布的正文</div>'
+        )
+        for paragraph in re.split(r"\n\s*\n", body):
+            safe_paragraph = "<br/>".join(
+                html.escape(line) for line in paragraph.splitlines()
             )
-        parts.append(_HR)
+            if paragraph.lstrip().startswith("#"):
+                style = "color:#087747;font-size:14px;line-height:1.8;margin:14px 0 0;"
+            else:
+                style = "color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px;"
+            parts.append(f'<div style="{style}">{safe_paragraph}</div>')
 
     if xhs_text:
-        parts.append(
-            f'<div class="tl-sec" style="{_SEC}">📋 贴图发布文案</div>'
-        )
         copy_url = f"{_PAGES}/output/{d.isoformat()}/copy.html"
-        parts.append(
-            f'<a href="{copy_url}" style="{_COPY_BUTTON}">打开并复制文案</a>'
+        parts.extend(
+            [
+                '<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>',
+                f'<a href="{copy_url}" style="display:block;background-color:#ff2442;'
+                'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+                'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
+                '分别复制标题 / 正文 / 置顶评论</a>',
+                '<div style="text-align:center;color:#7a8580;font-size:12px;">'
+                '标题与正文已拆分，粘贴后即可发布</div>',
+            ]
         )
-        parts.append(
-            f'<div class="tl-dim" style="{_DIM}">标题、正文可分别一键复制。</div>'
-        )
-        parts.append(_HR)
 
-    if cards:
-        parts.append(
-            f'<div class="tl-sec" style="{_SEC}">📸 今日卡片（长按保存 → 订阅号助手/小红书发图）</div>'
-        )
-        for name in cards:
-            url = f"{_CDN}/output/{d.isoformat()}/cards/{name}"
-            parts.append(
-                f'<img src="{url}" style="width:100%;border-radius:8px;'
-                f'margin:6px 0;display:block;" />'
-            )
-        parts.append(_HR)
     if videos:
-        parts.append(f'<div class="tl-sec" style="{_SEC}">🎬 今日视频版</div>')
-        poster = f"{_CDN}/output/{d.isoformat()}/cards/{cards[0]}" if cards else ""
+        parts.append(
+            '<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>'
+            '<div style="font-size:15px;font-weight:bold;color:#102d23;margin-bottom:8px;">'
+            '视频素材</div>'
+        )
         for name in videos:
-            url = f"{_CDN}/output/{d.isoformat()}/video/{name}"
-            if poster:
-                parts.append(
-                    f'<a href="{url}" style="display:block;text-decoration:none;">'
-                    f'<img src="{poster}" style="width:100%;border-radius:8px;display:block;" />'
-                    f'<span style="{_COPY_BUTTON}">▶ 播放竖版视频</span></a>'
-                )
-            else:
-                parts.append(f'<a href="{url}" style="{_COPY_BUTTON}">▶ 播放竖版视频</a>')
-        parts.append(f'<div class="tl-dim" style="{_DIM}">约 25 秒 · 适合微信预览和视频笔记复用</div>')
-        parts.append(_HR)
-    parts.append(
-        f'<div class="tl-dim" style="{_DIM}">📦 原始文案：output/{d.isoformat()}/xiaohongshu.txt</div>'
-    )
-    parts.append("</div>")
+            safe_name = html.escape(name, quote=True)
+            url = f"{_CDN}/output/{d.isoformat()}/video/{safe_name}"
+            parts.append(
+                f'<a href="{url}" style="display:block;background-color:#102d23;'
+                'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+                'padding:12px 16px;border-radius:6px;margin:6px 0;">▶ 播放竖版视频</a>'
+            )
+
+    parts.extend(["</div>", "</div>"])
     return "\n".join(parts)
 
 
