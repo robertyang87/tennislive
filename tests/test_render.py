@@ -1094,6 +1094,32 @@ def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_p
     assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass"
 
 
+def test_visual_qa_rejects_internal_generation_labels(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    fake_img = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
+    bodies = knowledge_deck_bodies(
+        story,
+        "07.21 · 周二",
+        question="你最想去现场看哪一场？",
+        year=2026,
+    )
+    bodies[2] = (bodies[2][0], bodies[2][1].replace("</div>", "程序生成信息图</div>", 1))
+
+    report = evaluate_knowledge_visuals(story, bodies)
+
+    assert report["status"] == "fail"
+    assert any("生产描述：程序生成" in error for error in report["errors"])
+
+
 def test_visual_qa_rejects_reused_inner_page_photo(tmp_path):
     from dataclasses import replace
 
