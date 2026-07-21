@@ -132,6 +132,9 @@ class Match:
     schedule_time_status: Optional[str] = None
     schedule_note: Optional[str] = None
     schedule_source_urls: list[str] = field(default_factory=list)
+    media_heat: int = 0
+    search_heat: int = 0
+    trend_signals: list[dict] = field(default_factory=list)
 
     @property
     def is_doubles(self) -> bool:

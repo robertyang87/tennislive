@@ -67,6 +67,13 @@ def source_manifest(digest: Digest, plan) -> dict:
             usage="人物背景或赛前看点",
         )
     for match in digest.results + digest.live + digest.schedule:
+        for signal in match.trend_signals:
+            add(
+                signal.get("source", "趋势雷达"),
+                signal.get("url", ""),
+                kind=signal.get("kind", "trend-signal"),
+                usage="选题热度判断；不直接作为比赛事实",
+            )
         for url in match.schedule_source_urls:
             name = next(
                 (

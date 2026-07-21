@@ -122,6 +122,17 @@ def cmd_digest(args) -> int:
 
     digest.source_status.update(enrich_official_schedules(digest))
 
+    from .research.trends import apply_trend_signals
+
+    trend_result = apply_trend_signals(
+        digest.results + digest.live + digest.schedule
+    )
+    trend_state = "正常" if trend_result.signals else "降级"
+    digest.source_status["实时选题雷达"] = (
+        f"{trend_state} · {trend_result.signals} 条信号，"
+        f"命中 {trend_result.matched_matches} 场比赛"
+    )
+
     # 只通过已配置的数据许可 API 补充专业统计。没有 API key 时保留基础
     # 比分页，不在 GitHub Actions 中抓取 ATP/WTA/TDI 官网页面。
     from .render.focus import select_focus_match
@@ -596,6 +607,14 @@ def cmd_content(args) -> int:
         ):
             deduped[key] = match
     matches = list(deduped.values())
+
+    from .research.trends import apply_trend_signals
+
+    trend_result = apply_trend_signals(matches, now=now)
+    console.print(
+        f"趋势雷达 {trend_result.signals} 条信号，"
+        f"命中 {trend_result.matched_matches} 场比赛"
+    )
 
     state_path = Path("data/content_state.json")
     state_path.parent.mkdir(parents=True, exist_ok=True)
