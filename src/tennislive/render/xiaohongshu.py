@@ -179,6 +179,23 @@ def _short(text: str, limit: int) -> str:
     return cleaned if len(cleaned) <= limit else cleaned[: limit - 1].rstrip("，,；;") + "…"
 
 
+def _complete_opinion(text: str, limit: int = 56) -> str:
+    """Shorten an opinion at sentence boundaries instead of mid-thought."""
+    cleaned = " ".join(text.strip().split())
+    if len(cleaned) <= limit:
+        return cleaned
+    kept: list[str] = []
+    for fragment in cleaned.split("。"):
+        sentence = fragment.strip()
+        if not sentence:
+            continue
+        candidate = "".join(kept) + sentence + "。"
+        if len(candidate) > limit:
+            break
+        kept.append(sentence + "。")
+    return "".join(kept) or "这一票我先保留，等比赛自己给答案。"
+
+
 def _context_lines(text: str, *, compact: bool) -> list[str]:
     limit = 46 if compact else 56
     sentences = [part.strip() for part in text.split("。") if part.strip()]
@@ -323,11 +340,18 @@ def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) 
         ]
         if chinese:
             name = player_zh(chinese[0].name)
+            if compact:
+                return (
+                    f"我的一票投给{name}：先守住发球局，才有机会把比赛"
+                    "拖进自己的节奏。"
+                )
             return (
                 f"我会先看{_matchup(choice)}。\n"
                 f"排名差距摆在这里，但更想看{name}能不能先站稳自己的发球局，"
                 "把比赛拖进熟悉的节奏。"
             )
+        if compact:
+            return "我会先看这场：与其盯排名，不如看谁先把节奏压到对方身上。"
         return (
             f"我会先看{_matchup(choice)}。\n"
             "比起赛前排名，更值得盯的是谁先把自己的节奏压到对方身上。"
@@ -568,7 +592,7 @@ def _tighten_post_plan(plan: XhsPostPlan) -> XhsPostPlan:
     return replace(
         plan,
         sections=tuple(sections),
-        opinion=_short(plan.opinion.replace("\n", " "), 56),
+        opinion=_complete_opinion(plan.opinion),
         question=_short(plan.question, 34),
         pinned_comment=_short(plan.pinned_comment.replace("\n", " "), 60),
         signature="关注 @网球时差｜明早继续复盘。",

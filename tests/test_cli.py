@@ -282,3 +282,21 @@ def test_publish_content_includes_all_cards_and_review_fields(tmp_path, monkeypa
     assert sent[0][1].count("<img ") == 2
     assert "置顶评论" in sent[0][1]
     assert "最关键的变量" in sent[0][1]
+
+
+def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
+    package = tmp_path / "2026-07-21"
+    package.mkdir()
+    (package / "wechat_title.txt").write_text("网球晨报｜旧标题", encoding="utf-8")
+    (package / "xiaohongshu.txt").write_text(
+        "🏆7.21｜谢里夫这冠有点意外\n\n正文", encoding="utf-8"
+    )
+    (package / "push.html").write_text("<div>待发稿</div>", encoding="utf-8")
+    sent = []
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.push",
+        lambda title, content: sent.append((title, content)),
+    )
+
+    assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(package))) == 0
+    assert sent == [("🏆7.21｜谢里夫这冠有点意外", "<div>待发稿</div>")]

@@ -756,15 +756,19 @@ def cmd_publish_pushplus(args) -> int:
 
     d = Path(args.dir)
     title_f = d / "wechat_title.txt"
+    xhs_f = d / "xiaohongshu.txt"
     # 优先用手机推送专用模板；老目录没有时回退公众号 HTML
     push_f, html_f = d / "push.html", d / "wechat.html"
     src = push_f if push_f.exists() else html_f
     if not src.exists():
         console.print(f"[red]{src} 不存在，请先运行 tennislive digest[/red]")
         return 1
-    title = (
-        title_f.read_text(encoding="utf-8").strip() if title_f.exists() else "网球晨报"
-    )
+    title = "网球时差"
+    if xhs_f.exists():
+        xhs_lines = xhs_f.read_text(encoding="utf-8").splitlines()
+        title = next((line.strip() for line in xhs_lines if line.strip()), title)
+    elif title_f.exists():
+        title = title_f.read_text(encoding="utf-8").strip() or title
     html = src.read_text(encoding="utf-8")
     # 兼容旧模板：去掉图片占位符
     import re

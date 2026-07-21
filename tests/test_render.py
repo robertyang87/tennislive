@@ -168,8 +168,10 @@ def test_push_copy_page_and_button(sample_digest):
     assert "复制评论" in page and "只选一边：甲还是乙？" in page
     assert "copy.html" in push_html
     assert "robertyang87.github.io/tennislive" in push_html
-    assert "打开并复制文案" in push_html
-    assert "正文第一行" not in push_html
+    assert "分别复制标题 / 正文 / 置顶评论" in push_html
+    assert "测试标题 &lt;1&gt;" in push_html
+    assert "正文第一行" in push_html
+    assert push_html.index("card_00_cover.png") < push_html.index("正文第一行")
 
 
 def test_pin_asset_revision_only_rewrites_valid_jsdelivr_main_urls():
