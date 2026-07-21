@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "hawkeye",
+  "standards": {
+    "photo_count_max": 4,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires a photo or a topic-specific infographic",
+    "non_cover_visual": "distinct licensed photo or structured infographic",
+    "rule_explainer": "topic-specific diagram required",
+    "player_crop": "head-safe object position",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 1,
+  "photo_sources": [
+    "https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
+  ],
+  "resolved_visuals": [],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 188,
+      "longest_text_block": 78,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 244,
+      "longest_text_block": 54,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "explainer",
+      "visual": "rule-diagram",
+      "text_chars": 311,
+      "longest_text_block": 33,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 228,
+      "longest_text_block": 29,
+      "photo_count": 0,
+      "photo_sources": []
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 246235
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 226413
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 278414
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 219504
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

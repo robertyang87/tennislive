@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "hawkeye",
+  "fetch_enabled": true,
+  "policy": "官方页面用于核对；仅下载许可明确且相关性达标的 Commons/Openverse 图片；否则生成事实图解",
+  "selected_count": 0,
+  "attempts": [
+    {
+      "provider": "official-page",
+      "page_url": "https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/",
+      "status": "error",
+      "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
+      "image_url": "",
+      "status": "reference-only",
+      "reason": "未发现明确再利用许可，不直接下载发布"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.usopen.org/en_US/news/articles/2018-04-18/50_moments_that_mattered_hawkeye_instant_replay_makes_its_debut.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.wimbledon.com/en_GB/atoz/umpires.html",
+      "image_url": "https://content.wimbledon.com/is/image/AELTC/626664:16by9-Large",
+      "status": "reference-only",
+      "reason": "未发现明确再利用许可，不直接下载发布"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.lequipe.fr/Tennis/Actualites/-mettre-a-l-honneur-l-excellence-de-l-arbitrage-francais-le-dernier-bastion-en-grand-chelem-resiste-il-y-aura-encore-des-juges-de-ligne-a-roland-garros-en-2026/1597696",
+      "image_url": "https://www.lequipe.fr/_medias/img-photo-jpg/tallon-griekspoor-devant-un-juge-de-ligne-lors-de-l-edition-2025-de-roland-garros-s-boue-l-equipe/1500000002282266/101:168,1634:1190-1200-800-75/77b15.jpg",
+      "status": "reference-only",
+      "reason": "未发现明确再利用许可，不直接下载发布"
+    },
+    {
+      "page": "story",
+      "status": "generated-visual",
+      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+      "query": "hawkeye 2004 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "wikimedia-commons",
+        "openverse"
+      ]
+    },
+    {
+      "page": "explainer",
+      "status": "generated-visual",
+      "reason": "规则示意图或联网检索未启用",
+      "query": "hawkeye 科技进化 网球冷知识 tennis"
+    },
+    {
+      "page": "today",
+      "status": "generated-visual",
+      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+      "query": "hawkeye 2006 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "wikimedia-commons",
+        "openverse"
+      ]
+    }
+  ]
+}
