@@ -20,6 +20,28 @@ _PLAYER_PREVIEWS = {
 }
 
 
+_PLAYER_PREVIEW_VARIANTS = {
+    "yuan-yue": (
+        "\u5965\u65af\u6c40\u9996\u51a0\u8bc1\u660e\u8fc7\u5979\u80fd\u6253\u786c\u4ed7\uff1b\u8fd9\u6b21\u91cd\u56de\u7ea2\u571f\u9996\u8f6e\uff0c\u5148\u770b\u8282\u594f\u80fd\u5426\u7ad9\u7a33",
+        "\u5979\u7684\u5de1\u56de\u8d5b\u4e0a\u5347\u671f\u4e0d\u7f3a\u9ad8\u5149\uff0c\u4eca\u665a\u66f4\u5173\u952e\u7684\u662f\u628a\u9996\u8f6e\u538b\u529b\u62c6\u6210\u4e00\u5c40\u4e00\u5c40",
+        "\u4ece\u5965\u65af\u6c40\u5230\u5e03\u62c9\u683c\uff0c\u5979\u8981\u627e\u56de\u7684\u4e0d\u53ea\u662f\u80dc\u573a\uff0c\u8fd8\u6709\u5148\u628a\u5bf9\u624b\u62d6\u8fdb\u81ea\u5df1\u8282\u594f\u7684\u80fd\u529b",
+    ),
+    "gao-xinyu": (
+        "\u8054\u5408\u676f\u7684\u9ad8\u5149\u4e0d\u4f1a\u81ea\u52a8\u5e26\u6765\u80dc\u5229\uff0c\u4f46\u80fd\u63d0\u9192\u4eba\uff1a\u5979\u6253\u9006\u98ce\u7403\u6709\u5e95\u6c14",
+        "\u5979\u66fe\u5728\u8054\u5408\u676f\u7206\u51b7\u4e16\u754c\u7b2c17\u7684\u739b\u96c5\uff1b\u56de\u5230\u5de1\u56de\u8d5b\uff0c\u97e7\u6027\u80fd\u5426\u518d\u6b21\u5151\u73b0",
+    ),
+}
+
+
+def _player_preview(slug: str, today: date | None) -> str | None:
+    choices = _PLAYER_PREVIEW_VARIANTS.get(slug)
+    if not choices:
+        return None
+    if today is None:
+        return choices[0]
+    return choices[today.toordinal() % len(choices)]
+
+
 def preview_angle(match: Match, today: date | None = None) -> str:
     """Explain why a match matters without treating ranking as the story."""
     media = brief_for_match(match, today) if today is not None else None
@@ -32,7 +54,7 @@ def preview_angle(match: Match, today: date | None = None) -> str:
 
     story = direct_story_for_match(match, prefer_player=True)
     if story is not None and story.kind == "player":
-        return _PLAYER_PREVIEWS.get(story.slug, story.hero_fact)
+        return _player_preview(story.slug, today) or _PLAYER_PREVIEWS.get(story.slug, story.hero_fact)
 
     chinese = next(
         (player for player in match.home + match.away if is_chinese_player(player)),
