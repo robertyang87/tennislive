@@ -2029,10 +2029,12 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                         timeout=15000,
                     )
                     page.evaluate("window.scrollTo(0, 0)")
-                    shot = page.screenshot(
-                        type="png", clip={"x": 0, "y": 0, "width": W, "height": H}
-                    )
+                    # Full-page capture always starts at document coordinates 0,0.
+                    # Fixed clips have shown intermittent viewport offsets on CI.
+                    shot = page.screenshot(type="png", full_page=True)
                     img = Image.open(io.BytesIO(shot)).convert("RGB")
+                    if img.height > img.width * H / W:
+                        img = img.crop((0, 0, img.width, round(img.width * H / W)))
                     if img.size != (W, H):
                         img = img.resize((W, H), Image.LANCZOS)
                     out.append((kind, img))
