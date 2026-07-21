@@ -20,6 +20,7 @@ MAX_CARD_TEXT_CHARS = 520
 MAX_CARD_BYTES = 950_000
 MIN_SOURCE_WIDTH = 900
 MIN_SOURCE_HEIGHT = 540
+FORBIDDEN_PRODUCTION_LABELS = ("程序生成", "自动生成", "AI生成", "AI 生成")
 
 
 class _VisibleText(HTMLParser):
@@ -153,6 +154,7 @@ def evaluate_knowledge_visuals(
     }
     for kind, body in bodies:
         blocks = _visible_blocks(body)
+        visible_text = " ".join(blocks)
         total_chars = sum(len(block) for block in blocks)
         longest = max((len(block) for block in blocks), default=0)
         match = re.search(r'data-visual="([^"]+)"', body)
@@ -174,6 +176,12 @@ def evaluate_knowledge_visuals(
             errors.append(f"{kind} 页文字总量 {total_chars}，超过 {MAX_CARD_TEXT_CHARS}")
         if longest > MAX_TEXT_BLOCK_CHARS:
             errors.append(f"{kind} 页最长文字块 {longest} 字，超过 {MAX_TEXT_BLOCK_CHARS}")
+        forbidden = next(
+            (label for label in FORBIDDEN_PRODUCTION_LABELS if label in visible_text),
+            "",
+        )
+        if forbidden:
+            errors.append(f"{kind} 页含面向内部的生产描述：{forbidden}")
         if not visual:
             errors.append(f"{kind} 页没有声明视觉主体")
         if page_photo_count > 1:
@@ -227,6 +235,7 @@ def evaluate_knowledge_visuals(
             "non_cover_visual": "distinct licensed photo or structured infographic",
             "rule_explainer": "topic-specific diagram required",
             "player_crop": "head-safe object position",
+            "production_labels": "internal generation labels are forbidden",
             "max_text_block_chars": MAX_TEXT_BLOCK_CHARS,
             "max_card_text_chars": MAX_CARD_TEXT_CHARS,
             "card_size": list(CARD_SIZE),
