@@ -280,6 +280,34 @@ def test_tonight_event_focus_builds_one_page_per_250_plus_event():
     }
 
 
+def test_lead_story_ignores_events_below_250_even_with_chinese_player():
+    from tennislive.render.rating import select_lead_story, top_results
+
+    wta125 = make_match(
+        home_name="Yufei Ren",
+        home_country="CHN",
+        tournament="Palermo 125",
+        tour=Tour.WTA,
+        match_id="wta125-cn",
+    )
+    wta125.tournament.level = "WTA125"
+    tour = make_match(
+        home_name="Tour Player",
+        away_name="Known Player",
+        tournament="Prague Open",
+        tour=Tour.WTA,
+        match_id="wta250",
+    )
+    tour.tournament.level = "WTA250"
+    digest = Digest(today=date(2026, 7, 21), results=[wta125, tour])
+
+    selected = select_lead_story(digest)
+
+    assert selected is not None
+    assert selected.match.match_id == "wta250"
+    assert [match.match_id for match in top_results([wta125, tour], 3)] == ["wta250"]
+
+
 def test_tonight_event_focus_prioritizes_singles_and_uses_doubles_only_as_fill():
     singles = make_match(
         home_name="Singles A",

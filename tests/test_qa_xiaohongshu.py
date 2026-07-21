@@ -144,6 +144,54 @@ def test_xhs_tonight_focus_allows_three_to_five_unique_matches():
     assert any("今晚焦点超过5场" in item for item in six_fatal)
 
 
+def test_xhs_plan_post_tightens_copy_after_compact_still_runs_long(monkeypatch):
+    from tennislive.render import xiaohongshu
+    from tennislive.render.xiaohongshu import XhsPostPlan, XhsSection
+
+    digest = _digest(schedule_count=5)
+    tonight_lines: list[str] = []
+    for index in range(5):
+        if index:
+            tonight_lines.append("")
+        tonight_lines.extend(
+            [
+                f"⏰ 18:{index}0｜布拉格公开赛·女单第一轮",
+                f"Home Player {index} vs Away Player {index}",
+                "看点：" + "这是一句很长但仍然基于赛程身份的看点。" * 3,
+            ]
+        )
+    long_plan = XhsPostPlan(
+        title=TITLE,
+        hook=("昨夜比赛不少，但头条其实很清楚。",),
+        lead_match_id="result",
+        lead_score=1,
+        lead_reasons=(),
+        sections=(
+            XhsSection("🎾 今天先看这一件事", ("头条结果说明。" * 8,)),
+            XhsSection("🇨🇳 中国球员速报", ("袁悦17:00出战。", "高馨妤预计 18:30*出战。")),
+            XhsSection("🌙 今晚焦点 · 5场", tuple(tonight_lines)),
+            XhsSection("🎯 一场球看细一点", ("技术统计很长。" * 12,)),
+        ),
+        opinion="我会先看第一场。" + "这里继续展开很多主观看法。" * 10,
+        question="如果只给中国球员一句赛前提醒，你会写什么？",
+        pinned_comment="",
+        signature="关注 @网球时差｜下一篇，用赛果和胜负手把这条故事接着讲完。",
+        tags=("#网球", "#网球时差", "#WTA", "#ATP", "#中国网球", "#布拉格公开赛", "#汉堡公开赛"),
+        evidence=(),
+    )
+    monkeypatch.setattr(
+        xiaohongshu, "build_post_plan", lambda _digest, compact=False: long_plan
+    )
+
+    plan, post = xiaohongshu.plan_post(digest)
+    body = post.split("\n", 2)[2]
+
+    assert len(body) <= xiaohongshu.MAX_BODY
+    assert "🎯 一场球看细一点" not in post
+    assert "🌙 今晚焦点 · 3场" in post
+    assert plan.signature == "关注 @网球时差｜明早继续复盘。"
+
+
 def test_xhs_rejects_black_square_and_unbroken_database_layout():
     digest = _digest()
     black_square, _ = check_xhs_post(
