@@ -998,7 +998,10 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     monkeypatch.setattr(
         knowledge,
         "_screenshot_pages",
-        lambda pages, _theme: [("knowledge", Image.new("RGB", (1080, 1440), "black"))],
+        lambda pages, _theme: [
+            (kind, Image.new("RGB", (1080, 1440), "black"))
+            for kind, _body in pages
+        ],
     )
 
     selected = knowledge.generate_knowledge_package(
@@ -1008,7 +1011,16 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     )
 
     assert selected is story
-    assert (tmp_path / "knowledge" / "cards" / "card_00_knowledge.jpg").exists()
+    card_names = (
+        "card_00_knowledge.jpg",
+        "card_01_story.jpg",
+        "card_02_explainer.jpg",
+        "card_03_today.jpg",
+    )
+    assert all(
+        (tmp_path / "knowledge" / "cards" / card_name).exists()
+        for card_name in card_names
+    )
     xhs = (tmp_path / "knowledge" / "xiaohongshu.txt").read_text("utf-8")
     push = (tmp_path / "knowledge" / "push.html").read_text("utf-8")
     copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
@@ -1020,13 +1032,70 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
     assert story.source_label in xhs
-    assert "/knowledge/cards/card_00_knowledge.jpg" in push
-    assert "图片未显示？点此打开原图" in push
+    assert all(f"/knowledge/cards/{card_name}" in push for card_name in card_names)
+    assert push.count("<img ") == 4
+    assert "第1张未显示？点此打开原图" in push
     assert 'referrerpolicy="no-referrer"' in push
     assert "/knowledge/copy.html" in push
     assert "分别复制标题 / 正文 / 置顶评论" in push
     assert "记住这3点" in push
     assert pinned in copy
+    story_data = __import__("json").loads(
+        (tmp_path / "knowledge" / "story.json").read_text("utf-8")
+    )
+    evidence = __import__("json").loads(
+        (tmp_path / "knowledge" / "evidence.json").read_text("utf-8")
+    )
+    assert story_data["card_count"] == 4
+    assert evidence["story_slug"] == story.slug
+    assert evidence["claims"] and evidence["sources"]
+
+
+def test_hawkeye_knowledge_deck_uses_official_process_and_current_scope(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    fake_img = tmp_path / "hawkeye.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "hawkeye"), image=fake_img)
+
+    pages = knowledge_deck_bodies(
+        story,
+        "07.21 · 周二",
+        question="四大满贯只剩法网保留人工司线，红土球印足够可靠吗？",
+        year=2026,
+    )
+    kinds = [kind for kind, _body in pages]
+    combined = "\n".join(body for _kind, body in pages)
+
+    assert kinds == ["knowledge", "story", "explainer", "today"]
+    assert "2D VISION" in combined and "X / Y / Z" in combined
+    assert "8–12台" in combined and "最高340fps" in combined
+    assert "实时电子司线" in combined and "四大满贯中" in combined
+    assert "主裁第一判断" not in combined
+    assert "技术没有替比赛做决定" not in combined
+
+
+def test_hawkeye_publish_validation_rejects_stale_scope(sample_digest):
+    from dataclasses import replace
+
+    import pytest
+
+    from tennislive.render.knowledge import _validate_story_for_publish
+    from tennislive.render.tournament_story import STORIES
+
+    story = next(s for s in STORIES if s.slug == "hawkeye")
+    stale = replace(
+        story,
+        facts=story.facts[:-1] + ("目前只剩法网仍保留人工司线。",),
+    )
+
+    with pytest.raises(ValueError, match="事实校验失败"):
+        _validate_story_for_publish(stale, sample_digest)
 
 
 def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
@@ -1045,8 +1114,9 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
     post = knowledge_copy(hawkeye, sample_digest)
     assert "🧠 先猜" in post
     assert "1️⃣ 2004" in post and "2️⃣ 2006" in post
-    assert "10 台高速摄像机" in post and "回放动画数秒内生成" not in post
-    assert "关键分上，你更信主裁第一判断，还是鹰眼回放？" in post
+    assert "2D 视觉处理与 3D 三角测量" in post
+    assert "回放动画数秒内生成" not in post
+    assert "四大满贯只剩法网保留人工司线" in post
     assert "今天单独讲一个网球知识点" not in post
 
 

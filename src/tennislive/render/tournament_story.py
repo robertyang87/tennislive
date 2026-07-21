@@ -49,6 +49,7 @@ class TournamentStory:
     # kind="player" 时字段语义复用：venue=身份行，level/surface/founded=标签行
     kind: str = "tournament"
     source_label: str = "ATP/WTA 官方资料"
+    evidence_urls: tuple[str, ...] = ()
 
 
 STORIES = (
@@ -886,6 +887,7 @@ def _trivia_story(
     source_label: str,
     source_url: str,
     image_credit: str = "Wikimedia Commons",
+    evidence_urls: tuple[str, ...] = (),
 ) -> TournamentStory:
     # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取）；
     # 未入库时仅在场馆库存图与主题贴合时兜底（image_keys 为空 = 宁缺毋滥，
@@ -913,6 +915,7 @@ def _trivia_story(
         image_source_url=source_url,
         kind="trivia",
         source_label=source_label,
+        evidence_urls=evidence_urls,
     )
 
 
@@ -1170,12 +1173,12 @@ STORIES = STORIES + (
             "遭遇连串错判出局；两年后，鹰眼挑战制走进大满贯。"
         ),
         facts=(
-            "鹰眼用 10 台高速摄像机三角定位，重建球的飞行轨迹，"
-            "落点误差仅几毫米，回放动画数秒内生成。",
-            "2006 年美网率先引入挑战制：每盘 3 次挑战机会，抢七加 1 次——"
-            "'举手挑战'从此成了比赛的一部分。",
-            "进化没有停：2021 年澳网全场启用电子司线，"
-            "2025 年温网也告别了沿用近 150 年的人工司线员。",
+            "Sony/Hawk-Eye 官方说明：球追踪由 2D 视觉处理与 3D 三角测量组成，"
+            "通常使用 8 至 12 台摄像机，最高 340fps，系统误差小于 2 毫米。",
+            "2006 年国际网球赛事引入挑战规则：球员申请复核后，"
+            "系统根据多个机位的数据生成轨迹与落点的 CG 可视化。",
+            "截至 2026 年，四大满贯中只有法网仍保留人工司线、"
+            "未采用实时电子司线；澳网、美网与温网均已完成转换。",
         ),
         moments=(
             ChampionMoment(
@@ -1187,7 +1190,10 @@ STORIES = STORIES + (
                     "1/4 决赛多个关键球肉眼误判，赛后当值主裁被撤换、"
                     "官方公开道歉——回放技术上马的最后一根稻草。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+                source_url=(
+                    "https://www.usopen.org/en_US/news/articles/2018-04-18/"
+                    "50_moments_that_mattered_hawkeye_instant_replay_makes_its_debut.html"
+                ),
             ),
             ChampionMoment(
                 date="2006-08-28",
@@ -1198,13 +1204,28 @@ STORIES = STORIES + (
                     "挑战制正式上线，首年球员挑战成功率仅三成上下——"
                     "数据证明，肉眼真的会看错。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+                source_url=(
+                    "https://www.usopen.org/en_US/news/articles/2018-04-18/"
+                    "50_moments_that_mattered_hawkeye_instant_replay_makes_its_debut.html"
+                ),
             ),
         ),
         image_keys=("usopen",),
-        source_label="美网 / ITF 官方史料",
+        source_label="Sony / ITF / 大满贯资料",
         image_credit="Daniel (Galashiels) / Wikimedia Commons · CC BY 2.0",
-        source_url="https://en.wikipedia.org/wiki/Hawk-Eye",
+        source_url=(
+            "https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
+        ),
+        evidence_urls=(
+            "https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/",
+            "https://www.itftennis.com/media/12242/line-calling.pdf",
+            "https://www.usopen.org/en_US/news/articles/2018-04-18/"
+            "50_moments_that_mattered_hawkeye_instant_replay_makes_its_debut.html",
+            "https://www.wimbledon.com/en_GB/atoz/umpires.html",
+            "https://www.lequipe.fr/Tennis/Actualites/-mettre-a-l-honneur-l-excellence-"
+            "de-l-arbitrage-francais-le-dernier-bastion-en-grand-chelem-resiste-il-y-aura-"
+            "encore-des-juges-de-ligne-a-roland-garros-en-2026/1597696",
+        ),
     ),
     _trivia_story(
         slug="golden-slam",
