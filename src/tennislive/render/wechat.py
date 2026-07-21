@@ -15,7 +15,7 @@ from .common import (
     side_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
-from .rating import tonight_focus, top_results
+from .rating import is_tour_focus_match, tonight_focus, top_results
 from .story import (
     chinese_side_won,
     result_insight,
@@ -42,6 +42,7 @@ def _china_matches(digest: Digest, cap: int = 6) -> list[Match]:
             m
             for m in digest.results + digest.live + digest.schedule
             if is_chinese_involved(m)
+            and is_tour_focus_match(m)
         ]
     )[:cap]
 

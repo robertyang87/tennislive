@@ -123,6 +123,11 @@ def _level_of(m: Match) -> str | None:
     return m.tournament.level or tournament_level(m.tournament.name, m.tour.value)
 
 
+def is_tour_focus_match(m: Match) -> bool:
+    """Return whether a match belongs in the daily public-facing digest."""
+    return _level_of(m) in TOUR_FOCUS_LEVELS
+
+
 def _headliner_points(match: Match) -> tuple[int, str | None]:
     players = match.home + match.away
     top_rank = min((p.rank for p in players if p.rank is not None), default=None)
@@ -206,10 +211,22 @@ def select_lead_story(digest: Digest) -> LeadStorySelection | None:
     ordinary evening fixture from displacing the actual news of the day.
     """
     pools = (
-        [match for match in digest.results if match.is_singles],
-        [match for match in digest.live if match.is_singles],
-        [match for match in digest.schedule if match.is_singles],
-        digest.results + digest.live + digest.schedule,
+        [
+            match for match in digest.results
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+        [
+            match for match in digest.live
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+        [
+            match for match in digest.schedule
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+        [
+            match for match in digest.results + digest.live + digest.schedule
+            if is_tour_focus_match(match)
+        ],
     )
     candidates = next((pool for pool in pools if pool), [])
     if not candidates:
@@ -304,7 +321,10 @@ def match_score(m: Match, cn_boost: bool = True) -> int:
 
 def top_results(matches: list[Match], n: int = 3, cn_boost: bool = True) -> list[Match]:
     """昨夜焦点：评分最高的 n 场已完赛单打（cn_boost 见 match_score）."""
-    finished = [m for m in matches if m.status.is_final]
+    finished = [
+        m for m in matches
+        if m.status.is_final and is_tour_focus_match(m)
+    ]
     return sorted(
         finished, key=lambda m: match_score(m, cn_boost=cn_boost), reverse=True
     )[:n]
@@ -367,7 +387,7 @@ def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[
         for m in matches
         if m.is_singles
         and not m.status.is_final
-        and _level_of(m) in TOUR_FOCUS_LEVELS
+        and is_tour_focus_match(m)
     ]
 
     def known(match: Match) -> bool:

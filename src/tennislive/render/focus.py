@@ -8,7 +8,7 @@ from ..digest import Digest
 from ..models import Match
 from ..zh import player_zh
 from .common import is_chinese_involved
-from .rating import is_upset, match_score
+from .rating import is_tour_focus_match, is_upset, match_score
 from .story import result_insight
 
 
@@ -175,7 +175,10 @@ def _stats_verdict(match: Match) -> str | None:
 
 
 def select_focus_match(digest: Digest) -> Match | None:
-    singles = [m for m in digest.results if m.is_singles and m.sets]
+    singles = [
+        m for m in digest.results
+        if m.is_singles and m.sets and is_tour_focus_match(m)
+    ]
     if not singles:
         return None
 

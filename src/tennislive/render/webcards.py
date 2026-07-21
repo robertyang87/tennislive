@@ -36,6 +36,7 @@ from .narrative import preview_angle
 from .rating import (
     editorial_tonight_focus,
     find_upset,
+    is_tour_focus_match,
     is_upset,
     match_score,
     tonight_event_focus,
@@ -871,7 +872,9 @@ def cover_body(
     lead_id = lead.match_id if lead else None
     chinese = [
         match for match in digest.results + digest.schedule
-        if is_chinese_involved(match) and match.match_id != lead_id
+        if is_chinese_involved(match)
+        and match.match_id != lead_id
+        and is_tour_focus_match(match)
     ]
     if chinese:
         support.append(("China Focus · 中国焦点", max(chinese, key=match_score)))

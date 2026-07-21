@@ -21,7 +21,12 @@ from .common import (
     match_round_display,
     side_display,
 )
-from .rating import stay_up_stars, tonight_event_focus, top_results
+from .rating import (
+    is_tour_focus_match,
+    stay_up_stars,
+    tonight_event_focus,
+    top_results,
+)
 from .titles import pick_headline_auto
 
 # 主题策略：内联浅色样式兜底 + <style> 媒体查询做深色覆盖。
@@ -205,9 +210,13 @@ def to_push_html(
     )
     parts.append(_HR)
 
-    cn_results = [m for m in digest.results if is_chinese_involved(m)][:4]
+    cn_results = [
+        m for m in digest.results
+        if is_chinese_involved(m) and is_tour_focus_match(m)
+    ][:4]
     cn_today = [
-        m for m in digest.schedule + digest.live if is_chinese_involved(m)
+        m for m in digest.schedule + digest.live
+        if is_chinese_involved(m) and is_tour_focus_match(m)
     ][:3]
     if cn_results or cn_today:
         parts.append(f'<div class="tl-sec" style="{_SEC}">🇨🇳 中国军团</div>')

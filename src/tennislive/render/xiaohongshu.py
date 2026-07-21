@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 from ..digest import Digest
@@ -18,7 +18,12 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .narrative import editor_takeaway, preview_angle
-from .rating import editorial_tonight_focus, match_score, select_lead_story
+from .rating import (
+    editorial_tonight_focus,
+    is_tour_focus_match,
+    match_score,
+    select_lead_story,
+)
 from .story import (
     chinese_side_won,
     is_chinese_player,
@@ -256,6 +261,7 @@ def _china_matches(digest: Digest, lead: Match | None) -> list[Match]:
         for match in digest.results + digest.live + digest.schedule
         if is_chinese_involved(match)
         and (lead is None or match.match_id != lead.match_id)
+        and is_tour_focus_match(match)
     ]
     return sorted(matches, key=match_score, reverse=True)[:2]
 
@@ -520,12 +526,64 @@ def render_post_plan(plan: XhsPostPlan) -> list[str]:
     return lines
 
 
+def _post_body_len(post: str) -> int:
+    body = post.split("\n", 2)[2] if "\n\n" in post else ""
+    return len(body)
+
+
+def _limit_tonight_section(section: XhsSection, max_matches: int = 3) -> XhsSection:
+    """Keep the XHS copy airy when a rich event deck already carries the detail."""
+    blocks: list[list[str]] = []
+    current: list[str] = []
+    for line in section.lines:
+        if line == "":
+            if current:
+                blocks.append(current)
+                current = []
+            continue
+        current.append(line)
+    if current:
+        blocks.append(current)
+    kept = blocks[:max_matches]
+    lines: list[str] = []
+    for index, block in enumerate(kept):
+        if index:
+            lines.append("")
+        lines.extend(block)
+    label = section.label
+    if "·" in label:
+        label = f"🌙 今晚焦点 · {len(kept)}场"
+    return replace(section, label=label, lines=tuple(lines))
+
+
+def _tighten_post_plan(plan: XhsPostPlan) -> XhsPostPlan:
+    sections: list[XhsSection] = []
+    for section in plan.sections:
+        if section.label.startswith("🎯") or "昨日竞猜" in section.label:
+            continue
+        if "今晚焦点" in section.label:
+            sections.append(_limit_tonight_section(section))
+        else:
+            sections.append(section)
+    return replace(
+        plan,
+        sections=tuple(sections),
+        opinion=_short(plan.opinion.replace("\n", " "), 56),
+        question=_short(plan.question, 34),
+        pinned_comment=_short(plan.pinned_comment.replace("\n", " "), 60),
+        signature="关注 @网球时差｜明早继续复盘。",
+        tags=tuple(plan.tags[:6]),
+    )
+
+
 def plan_post(digest: Digest) -> tuple[XhsPostPlan, str]:
     plan = build_post_plan(digest)
     post = "\n".join(render_post_plan(plan))
-    body = post.split("\n", 2)[2] if "\n\n" in post else ""
-    if len(body) > MAX_BODY:
+    if _post_body_len(post) > MAX_BODY:
         plan = build_post_plan(digest, compact=True)
+        post = "\n".join(render_post_plan(plan))
+    if _post_body_len(post) > MAX_BODY:
+        plan = _tighten_post_plan(plan)
         post = "\n".join(render_post_plan(plan))
     return plan, post
 
