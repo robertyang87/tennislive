@@ -9,11 +9,14 @@ from __future__ import annotations
 import html
 import json
 import os
+import shutil
 from pathlib import Path
 
 from ..digest import Digest
+from ..research.visual_sources import resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
+from .knowledge_visual_qa import evaluate_knowledge_visuals
 from .tournament_story import TournamentStory, pick_tournament_story
 from .webcards import _screenshot_pages, knowledge_deck_bodies
 from .xiaohongshu import xhs_title_len
@@ -301,18 +304,37 @@ def generate_knowledge_package(
     for old in cards_dir.glob("card_*.*"):
         if old.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
             old.unlink()
+    visuals_dir = outdir / "visuals"
+    visuals_dir.mkdir(parents=True, exist_ok=True)
+    for old in visuals_dir.iterdir():
+        if old.is_file():
+            old.unlink()
+
+    page_visuals, visual_sources = resolve_story_visuals(story, visuals_dir)
+    (outdir / "visual_sources.json").write_text(
+        json.dumps(visual_sources, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
     date_label = _date_label(digest.today)
     question = _knowledge_question(story)
-    images = _screenshot_pages(
-        knowledge_deck_bodies(
-            story,
-            date_label,
-            question=question,
-            year=digest.today.year,
-        ),
-        theme,
+    bodies = knowledge_deck_bodies(
+        story,
+        date_label,
+        question=question,
+        year=digest.today.year,
+        page_visuals=page_visuals,
     )
+    visual_qa = evaluate_knowledge_visuals(
+        story,
+        bodies,
+        page_visuals=page_visuals,
+    )
+    (outdir / "visual_qa.json").write_text(
+        json.dumps(visual_qa, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if visual_qa["status"] != "pass":
+        raise ValueError("知识帖视觉校验失败：" + "；".join(visual_qa["errors"]))
+    images = _screenshot_pages(bodies, theme)
     from .image_output import save_social_image
 
     card_stems = {
@@ -325,6 +347,20 @@ def generate_knowledge_package(
         save_social_image(image, cards_dir / card_stems[kind])
         for kind, image in images
     ]
+    visual_qa = evaluate_knowledge_visuals(
+        story,
+        bodies,
+        card_paths,
+        page_visuals=page_visuals,
+    )
+    (outdir / "visual_qa.json").write_text(
+        json.dumps(visual_qa, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if visual_qa["status"] != "pass":
+        raise ValueError("知识帖渲染校验失败：" + "；".join(visual_qa["errors"]))
+    # The four compressed cards and source manifest are durable artifacts.
+    # Raw downloads are only a render cache and would otherwise bloat Git daily.
+    shutil.rmtree(visuals_dir, ignore_errors=True)
 
     xhs_text = knowledge_copy(story, digest)
     pinned_comment = knowledge_pinned_comment(story)
@@ -356,6 +392,9 @@ def generate_knowledge_package(
                 "image": str(story.image),
                 "image_credit": story.image_credit,
                 "card_count": len(card_paths),
+                "visual_qa": "visual_qa.json",
+                "visual_sources": "visual_sources.json",
+                "resolved_visual_count": len(page_visuals),
             },
             ensure_ascii=False,
             indent=2,

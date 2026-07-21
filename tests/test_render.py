@@ -1046,9 +1046,130 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     evidence = __import__("json").loads(
         (tmp_path / "knowledge" / "evidence.json").read_text("utf-8")
     )
+    visual_qa = __import__("json").loads(
+        (tmp_path / "knowledge" / "visual_qa.json").read_text("utf-8")
+    )
     assert story_data["card_count"] == 4
     assert evidence["story_slug"] == story.slug
     assert evidence["claims"] and evidence["sources"]
+    visual_sources = __import__("json").loads(
+        (tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8")
+    )
+    assert visual_qa["status"] == "pass"
+    assert visual_qa["photo_uses"] == 1
+    assert len(visual_qa["rendered_cards"]) == 4
+    assert visual_sources["status"] == "pass"
+    assert not (tmp_path / "knowledge" / "visuals").exists()
+
+
+def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    fake_img = tmp_path / "alcaraz.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "alcaraz"), image=fake_img)
+    bodies = knowledge_deck_bodies(
+        story,
+        "07.21 · 周二",
+        question="你第一次记住他，是哪一场球？",
+        year=2026,
+    )
+
+    import re
+
+    assert sum(
+        len(re.findall(r'class="knowledge-photo(?:\s|\")', body))
+        for _kind, body in bodies
+    ) == 1
+    assert "object-position:50% 24%" in bodies[0][1]
+    assert 'data-visual="narrative-timeline"' in bodies[1][1]
+    assert 'data-visual="player-explainer"' in bodies[2][1]
+    assert 'data-visual="history-timeline"' in bodies[3][1]
+    assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass"
+
+
+def test_visual_qa_rejects_reused_inner_page_photo(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    fake_img = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
+    bodies = knowledge_deck_bodies(
+        story,
+        "07.21 · 周二",
+        question="你最想见证谁的第一冠？",
+        year=2026,
+    )
+    duplicated = list(bodies)
+    source = story.image_source_url
+    duplicated[1] = (
+        "story",
+        duplicated[1][1].replace(
+            'data-visual="narrative-timeline"',
+            'data-visual="narrative-timeline"><div class="knowledge-photo" '
+            f'data-photo-source="{source}"',
+            1,
+        ),
+    )
+
+    report = evaluate_knowledge_visuals(story, duplicated)
+    assert report["status"] == "fail"
+    assert any("重复使用" in error for error in report["errors"])
+
+
+def test_knowledge_deck_accepts_three_distinct_licensed_page_photos(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    cover = tmp_path / "cover.jpg"
+    Image.new("RGB", (1200, 800), "white").save(cover)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
+    page_visuals = {}
+    for index, page in enumerate(("story", "explainer", "today"), 1):
+        path = tmp_path / f"{page}.jpg"
+        Image.new("RGB", (1200, 800), (index * 30, 90, 120)).save(path)
+        page_visuals[page] = {
+            "path": path,
+            "source_url": f"https://example.com/{page}",
+            "credit": f"Photographer {index}",
+            "license": "CC BY-SA 4.0",
+            "focus": "50% 30%",
+        }
+
+    bodies = knowledge_deck_bodies(
+        story,
+        "07.21 · 周二",
+        question="你最想见证谁的第一冠？",
+        year=2026,
+        page_visuals=page_visuals,
+    )
+    report = evaluate_knowledge_visuals(
+        story,
+        bodies,
+        page_visuals=page_visuals,
+    )
+
+    assert report["status"] == "pass"
+    assert report["photo_uses"] == 4
+    assert len(set(report["photo_sources"])) == 4
+    assert len(report["resolved_visuals"]) == 3
 
 
 def test_hawkeye_knowledge_deck_uses_official_process_and_current_scope(tmp_path):

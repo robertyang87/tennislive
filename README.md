@@ -58,7 +58,9 @@ tennislive content                  # 自动选题并生成完整待发布内容
 
 无人参与时，`daily.yml` 可以自动完成比分抓取与跨源去重、规则选题、已审核背景库与媒体摘要的匹配、原创文案、卡片渲染、事实/版式质检、证据包归档，以及按配置推送到微信或公众号草稿箱。Action 会显式检查上述四个 JSON 证据文件；缺失任一文件即视为生成失败。
 
-它不会在运行时自由浏览新闻并把未经审核的说法写进正文，也不会替人裁决冲突来源、判断素材授权、下载国外视频或在小红书自动发帖。某日没有匹配的已审核媒体摘要时，内容会降级到比分、赛程和已核验档案，不会让模型补写“权威评价”。最终发布前仍需人工核对事实、观感和素材权利。
+知识帖配图会先读取 ATP/WTA/赛事或史料来源页的公开元数据用于核对，再从 Wikimedia Commons 与 Openverse 检索明确标注可复用许可的高清图。球员故事还要求照片标题/分类匹配具体赛事锚点，例如美网、法网或奥运会；只匹配到“球员名 + 年份”的泛相关照片会被拒绝。没有同时通过授权、分辨率、去重和事件相关性检查时，该页自动改用主题专属时间轴或规则示意图。每次生成都会输出 `knowledge/visual_sources.json` 与 `knowledge/visual_qa.json`，Action 在推送前强制检查。
+
+它不会在运行时自由浏览新闻并把未经审核的说法写进正文，也不会下载权利不明的图片/国外视频或在小红书自动发帖。某日没有匹配的已审核媒体摘要时，内容会降级到比分、赛程和已核验档案，不会让模型补写“权威评价”。最终发布前仍建议人工核对事实、观感和素材权利。
 
 ## 发布渠道配置（GitHub Secrets / Variables）
 
@@ -84,7 +86,7 @@ Secrets：
 | `WECHAT_API_PROXY` | （见下方 IP 白名单说明）固定出口 IP 的 HTTP 代理，如 `http://user:pass@1.2.3.4:8080` |
 | `SPORTRADAR_API_KEY` | Sportradar Tennis API key，用于焦点赛专业技术统计；未配置时自动使用比分结构复盘 |
 
-Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft`（自动存草稿箱，后台一键群发）/ `publish`（直接发布，慎用）；`SPORTRADAR_ACCESS_LEVEL` = API 套餐级别，试用账号默认为 `trial`。
+Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft`（自动存草稿箱，后台一键群发）/ `publish`（直接发布，慎用）；`SPORTRADAR_ACCESS_LEVEL` = API 套餐级别，试用账号默认为 `trial`；`TENNISLIVE_VISUAL_FETCH` = `on`（默认，多源检索授权图片）/ `off`（完全使用本地图片与程序生成信息图）。
 
 > ⚠️ **IP 白名单**：微信获取 access_token 要求调用方 IP 在公众号后台白名单内，而 GitHub Actions 出口 IP 不固定。两种解法：
 > 1. 购买/自建一个固定 IP 的 HTTP 代理，配置 `WECHAT_API_PROXY` 并把代理 IP 加入白名单（公众号后台 → 基本配置）；
