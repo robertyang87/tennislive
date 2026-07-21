@@ -1,0 +1,42 @@
+name: Push existing content to PlusPlus
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Content date (YYYY-MM-DD)
+        required: true
+        default: "2026-07-21"
+  push:
+    branches: [main]
+    paths:
+      - "output/**/knowledge/**"
+      - ".github/workflows/push-existing.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  push-knowledge:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[push-knowledge]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        run: pip install -q -e .
+      - name: Push existing knowledge package
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
+          OUT_DIR="output/${DATE}/knowledge"
+          test -s "${OUT_DIR}/push.html"
+          test -s "${OUT_DIR}/xiaohongshu.txt"
+          test -n "${PUSHPLUS_TOKEN}"
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish pushplus --dir "${OUT_DIR}"
