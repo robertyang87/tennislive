@@ -46,6 +46,7 @@ def save_social_image(image: Image.Image, path: str | Path) -> Path:
         quality=quality,
         subsampling=0,
         optimize=True,
-        progressive=True,
+        # PushPlus/WeChat image proxies are more reliable with baseline JPEG.
+        progressive=False,
     )
     return target
