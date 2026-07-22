@@ -86,6 +86,7 @@ def test_official_youtube_feed_verifies_channel_identity():
 def test_all_official_upload_feeds_use_verified_upload_playlist_ids():
     assert set(OFFICIAL_YOUTUBE_CHANNEL_IDS) == {
         "ATP",
+        "WTA",
         "AO",
         "RG",
         "WIMBLEDON",
