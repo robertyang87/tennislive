@@ -89,6 +89,7 @@ _OFFICIAL_HOSTS = {
 }
 _OFFICIAL_YOUTUBE_TOURS = {
     "ATP": "ATP Tour 官方视频",
+    "WTA": "WTA 官方视频",
     "AO": "澳网官方视频",
     "RG": "法网官方视频",
     "WIMBLEDON": "温网官方视频",
@@ -669,6 +670,25 @@ def discover_atp_point(
     )
 
 
+def discover_wta_youtube_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve WTA's verified YouTube uploads as a second WTA path."""
+    return _discover_official_youtube_point(
+        digest,
+        tour="WTA",
+        feed_url=OFFICIAL_YOUTUBE_FEEDS["WTA"],
+        channel_id=OFFICIAL_YOUTUBE_CHANNEL_IDS["WTA"],
+        get=get,
+        timeout=timeout,
+        metadata_fetcher=metadata_fetcher,
+    )
+
+
 def discover_slam_point(
     digest: Digest,
     tour: str,
@@ -695,7 +715,12 @@ def discover_slam_point(
 def discover_official_point(digest: Digest) -> PointSelection | None:
     """Query independent official feeds and keep the single strongest consensus pick."""
     selections: list[PointSelection] = []
-    for resolver in (discover_tennistv_point, discover_wta_point, discover_atp_point):
+    for resolver in (
+        discover_tennistv_point,
+        discover_wta_point,
+        discover_wta_youtube_point,
+        discover_atp_point,
+    ):
         try:
             selection = resolver(digest)
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
