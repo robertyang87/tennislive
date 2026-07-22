@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "golden-slam",
+  "fetch_enabled": true,
+  "policy": "官方页面用于核对；仅下载许可明确且相关性达标的 Commons/Openverse 图片；否则生成事实图解",
+  "selected_count": 1,
+  "attempts": [
+    {
+      "provider": "official-page",
+      "page_url": "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+      "image_url": "",
+      "status": "reference-only",
+      "reason": "未发现明确再利用许可，不直接下载发布"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://en.wikipedia.org/wiki/Rod_Laver",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Tennis_%27great%27%2C_Rod_Laver_%28cropped%29.jpg",
+      "status": "reference-only",
+      "reason": "未发现明确再利用许可，不直接下载发布"
+    },
+    {
+      "page": "story",
+      "status": "generated-visual",
+      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+      "query": "golden-slam 1969 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "wikimedia-commons",
+        "openverse"
+      ]
+    },
+    {
+      "page": "explainer",
+      "status": "generated-visual",
+      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+      "query": "golden-slam 荣誉体系 网球冷知识 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "wikimedia-commons",
+        "openverse"
+      ]
+    },
+    {
+      "page": "today",
+      "status": "selected",
+      "required_event_terms": [],
+      "provider": "wikimedia-commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Seoul_women%27s_tennis_results.jpg/1920px-Seoul_women%27s_tennis_results.jpg",
+      "credit": "Photocapy",
+      "license": "cc by-sa 2.0",
+      "query": "golden-slam 1988 tennis",
+      "relevance": 11,
+      "sha256": "b6700f8e0b025807544b66ca88c9d5cb226bbe47ff9ecbedac4e8d8edb285136",
+      "focus": "50% 38%",
+      "cached_file": "today-b6700f8e0b02.jpg"
+    }
+  ]
+}

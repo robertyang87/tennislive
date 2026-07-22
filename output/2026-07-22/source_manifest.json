@@ -1,0 +1,111 @@
+{
+  "edition": "2026-07-22",
+  "policy": "只发布原创摘要；媒体正文、摄影与视频不进入仓库。",
+  "sources": [
+    {
+      "id": "https://www.espn.com/tennis/scoreboard/_/date/20260721",
+      "name": "espn",
+      "url": "https://www.espn.com/tennis/scoreboard/_/date/20260721",
+      "kind": "score-data",
+      "usage": "赛程、赛果、轮次与排名快照"
+    },
+    {
+      "id": "data-context:espn",
+      "name": "espn",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
+      "name": "WTA 官方报道",
+      "url": "https://www.wtatennis.com/news/3921438/yuan-battles-to-first-career-title-in-austin",
+      "kind": "editorial-evidence",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "data-context:实时排名与赛程",
+      "name": "实时排名与赛程",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBZVU9fc3lDd044d1dWbmVFS1RDbURMei1mXzc3UE1URWNVaHRxMW9McGMzUzBacWlRcEJUWmxqZGVtMXd6RF9EaTdPOVBHLXlMTVdPSlQwOWdiMXh1aHdRUnJRTUZSQ01NNkxPWFRiT1E2OWdCZDVyOVRn?oc=5",
+      "name": "ATP Tour",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBZVU9fc3lDd044d1dWbmVFS1RDbURMei1mXzc3UE1URWNVaHRxMW9McGMzUzBacWlRcEJUWmxqZGVtMXd6RF9EaTdPOVBHLXlMTVdPSlQwOWdiMXh1aHdRUnJRTUZSQ01NNkxPWFRiT1E2OWdCZDVyOVRn?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQby0yRG81c3NpczJ2MDJOYzBpSnQxbUxxLW5QY05lc2JXeDV4cENXbU1wXzBFMEpoUzZpd0hBai00NWhjazl4c0N4Smw3MkIzSDZuWGdRSWs0TnAxUEQ4RjR1RXhoa1FKZkNodm91Mzdtam5xdERsZ2FXbWxBRVFyeVJXRWV4VU1jbUFCNDN0OWxPYzFsQ3ZzYlJxa0lvbGg5OWJnOVZqTEQ?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQby0yRG81c3NpczJ2MDJOYzBpSnQxbUxxLW5QY05lc2JXeDV4cENXbU1wXzBFMEpoUzZpd0hBai00NWhjazl4c0N4Smw3MkIzSDZuWGdRSWs0TnAxUEQ4RjR1RXhoa1FKZkNodm91Mzdtam5xdERsZ2FXbWxBRVFyeVJXRWV4VU1jbUFCNDN0OWxPYzFsQ3ZzYlJxa0lvbGg5OWJnOVZqTEQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPejRxY202UnJxV3FSV1otLUVoVGRweWVhWGNRN29UWlRZV0tkcG53Qmh3bzBzUTNoa0hIcjBvRm15WXBaNkFxaDNSYWNuR3U4a3pSc1pORjlTNGdBdUxnbkp6UGhORlFDRU5SMmRTcFpVTHhYUWJHelEyMG42d19NTlJ5VDBsM3RHWG5HYXcxV2hhT3B2N2J1TUJlbGRxekNuSWZHTnhfTVpTZndDNkJGSGF4bllOZHh5?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPejRxY202UnJxV3FSV1otLUVoVGRweWVhWGNRN29UWlRZV0tkcG53Qmh3bzBzUTNoa0hIcjBvRm15WXBaNkFxaDNSYWNuR3U4a3pSc1pORjlTNGdBdUxnbkp6UGhORlFDRU5SMmRTcFpVTHhYUWJHelEyMG42d19NTlJ5VDBsM3RHWG5HYXcxV2hhT3B2N2J1TUJlbGRxekNuSWZHTnhfTVpTZndDNkJGSGF4bllOZHh5?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/2042/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/2042/OP.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://www.protennislive.com/posting/2026/319/op.pdf",
+      "name": "ATP 官方 OOP",
+      "url": "https://www.protennislive.com/posting/2026/319/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZVN6WU8zc21uSDBpanhlanVtNzQySXdNNm5CS0oxcjYxYk0xRkRBRTJNRWZFM2JUMmc2aERYMjQyeXRZM2M2QXJoR2tkTlhPVDRLU0lZWDNFVlNWQlR1WkdMcmc4S3lTeW5WRF9OTXFmTEhWMWRQb0N4czV1T0lzMnlRV2V1SzBjZkVyVzZWbjFoWWRWTFNBQUFhRFl4aTNudi1mSGQwYw?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOZVN6WU8zc21uSDBpanhlanVtNzQySXdNNm5CS0oxcjYxYk0xRkRBRTJNRWZFM2JUMmc2aERYMjQyeXRZM2M2QXJoR2tkTlhPVDRLU0lZWDNFVlNWQlR1WkdMcmc4S3lTeW5WRF9OTXFmTEhWMWRQb0N4czV1T0lzMnlRV2V1SzBjZkVyVzZWbjFoWWRWTFNBQUFhRFl4aTNudi1mSGQwYw?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOVkJwSXVTOTdHWmJlWlRod3F2ZFVfdHNYQUEyU1c1SnpOWktZTmNLdnpoWWxiRWZ1OGhjR3QwV0c2X1hPXzFudGF4eVRSR3dZSWpHb3N0UzVMQjNQR0ppNnRWN29uSG85QVZIM3NWdTFJWWl2NlFBb3FlOF83ZWhQT213Ym95Z3JJdUZLcmZKcXNXQi1zZmZpUXJFZm5aQmdUR2ZwWGJR?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOVkJwSXVTOTdHWmJlWlRod3F2ZFVfdHNYQUEyU1c1SnpOWktZTmNLdnpoWWxiRWZ1OGhjR3QwV0c2X1hPXzFudGF4eVRSR3dZSWpHb3N0UzVMQjNQR0ppNnRWN29uSG85QVZIM3NWdTFJWWl2NlFBb3FlOF83ZWhQT213Ym95Z3JJdUZLcmZKcXNXQi1zZmZpUXJFZm5aQmdUR2ZwWGJR?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://www.protennislive.com/posting/2026/7290/op.pdf",
+      "name": "ATP 官方 OOP",
+      "url": "https://www.protennislive.com/posting/2026/7290/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMickFVX3lxTFBNNzVWbHk1bU4wekFhUjgwT0tBZDE1MFcybTVRcHFKTmF6SzFobzBjQ0ZOSzBtUkx2NklsTjJXRkRkLWFSc0hZQUJTam1nOV9fUEhmQXBEMUloUDNOR0xZbmF0Z1BqVmh1UHFla1UyX1BUUQ?oc=5",
+      "name": "ATP Tour",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBNNzVWbHk1bU4wekFhUjgwT0tBZDE1MFcybTVRcHFKTmF6SzFobzBjQ0ZOSzBtUkx2NklsTjJXRkRkLWFSc0hZQUJTam1nOV9fUEhmQXBEMUloUDNOR0xZbmF0Z1BqVmh1UHFla1UyX1BUUQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    }
+  ]
+}
