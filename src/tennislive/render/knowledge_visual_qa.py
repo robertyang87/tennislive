@@ -52,7 +52,7 @@ def _visible_blocks(body: str) -> list[str]:
 
 
 def _photo_count(body: str) -> int:
-    return len(re.findall(r'class="knowledge-photo(?:\s|\")', body))
+    return len(re.findall(r'data-photo-source="[^"]+"', body))
 
 
 def _photo_sources(body: str) -> list[str]:
@@ -201,9 +201,15 @@ def evaluate_knowledge_visuals(
             }
         )
 
-    if story.kind == "player":
+    if story.kind == "player" or story.slug in {"golden-slam", "big-three", "china-tennis"}:
         cover = next((body for kind, body in bodies if kind == "knowledge"), "")
-        if "object-position:50% 24%" not in cover:
+        if not any(
+            marker in cover
+            for marker in (
+                "object-position:50% 24%",
+                "--knowledge-cover-focus:50% 22%",
+            )
+        ):
             errors.append("人物主图未使用头部安全焦点")
 
     rendered: list[dict] = []

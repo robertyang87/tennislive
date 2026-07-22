@@ -289,7 +289,23 @@ def _match_title(match) -> str:
 
 def _trim_candidate(text: str, limit: int = 20) -> str:
     text = text.strip()
-    return text if len(text) <= limit else text[: limit - 1] + "…"
+    for long_name, short_name in (
+        ("温布尔登网球锦标赛", "温网"),
+        ("澳大利亚网球公开赛", "澳网"),
+        ("法国网球公开赛", "法网"),
+        ("美国网球公开赛", "美网"),
+        ("澳大利亚公开赛", "澳网"),
+        ("法国公开赛", "法网"),
+        ("美国公开赛", "美网"),
+    ):
+        text = text.replace(long_name, short_name)
+    if len(text) <= limit:
+        return text
+    clauses = [part.strip() for part in re.split(r"[，,；;：:]", text) if part.strip()]
+    for clause in reversed(clauses):
+        if len(clause) <= limit:
+            return clause
+    return "今日网球焦点"
 
 
 def title_candidates(digest: Digest) -> list[str]:

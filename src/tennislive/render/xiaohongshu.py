@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
@@ -95,14 +96,75 @@ def decorate_title(digest: Digest, hook: str, *, category: str = "") -> str:
         f"{category}｜"
     )
     budget = 20 - xhs_title_len(prefix)
-    if xhs_title_len(hook) > budget:
-        out = ""
-        for ch in hook:
-            if xhs_title_len(out + ch) > budget - 1:
-                break
-            out += ch
-        hook = out.rstrip("，。、：") + "…"
-    return prefix + hook
+    return prefix + _compact_title_hook(hook, budget)
+
+
+def _latin_short_name(value: str) -> str:
+    value = value.strip()
+    if not value or not value.isascii():
+        return value
+    words = value.split()
+    return words[-1] if len(words) > 1 else value
+
+
+def _compact_title_hook(hook: str, budget: float) -> str:
+    """Fit a complete hook into XHS's title budget without an ellipsis."""
+    cleaned = " ".join(hook.strip().split()).strip("，。、：|｜")
+    for long_name, short_name in (
+        ("温布尔登网球锦标赛", "温网"),
+        ("澳大利亚网球公开赛", "澳网"),
+        ("法国网球公开赛", "法网"),
+        ("美国网球公开赛", "美网"),
+        ("澳大利亚公开赛", "澳网"),
+        ("法国公开赛", "法网"),
+        ("美国公开赛", "美网"),
+    ):
+        cleaned = cleaned.replace(long_name, short_name)
+    if xhs_title_len(cleaned) <= budget:
+        return cleaned
+
+    candidates: list[str] = []
+
+    matchup = re.search(r"(?:今晚焦点[：｜]?)?(.+?)(?:对阵|\s+vs\s+)(.+)$", cleaned, re.I)
+    if matchup:
+        left = _latin_short_name(matchup.group(1).strip())
+        right = _latin_short_name(matchup.group(2).strip())
+        candidates.extend((f"{left}对{right}", f"{left}vs{right}"))
+
+    clauses = [part.strip() for part in re.split(r"[，,；;：:]", cleaned) if part.strip()]
+    if len(clauses) >= 2:
+        subject = re.split(
+            r"先丢|苦战|鏖战|历经|经过|耗时|直落|连赢|三盘|两盘",
+            clauses[0],
+            maxsplit=1,
+        )[0].strip()
+        action = next(
+            (
+                keyword
+                for keyword in (
+                    "逆转夺冠", "逆转晋级", "爆冷晋级", "力克晋级",
+                    "夺冠", "捧杯", "晋级", "爆冷", "逆转", "出战",
+                )
+                if any(keyword in clause for clause in clauses[1:])
+            ),
+            "",
+        )
+        if subject and action:
+            candidates.append(subject + action)
+        candidates.extend(reversed(clauses))
+        candidates.extend(clauses)
+
+    for candidate in candidates:
+        candidate = candidate.strip("，。、：|｜")
+        if candidate and xhs_title_len(candidate) <= budget:
+            return candidate
+
+    # A generic but complete fallback is preferable to publishing half a name
+    # or half a sentence. The deck carries the detailed headline in full.
+    for fallback in ("今日焦点已锁定", "昨夜最值回看", "今晚值得一看"):
+        if xhs_title_len(fallback) <= budget:
+            return fallback
+    return "焦点"
 
 
 def post_title(digest: Digest) -> str:
@@ -179,7 +241,30 @@ class XhsPostPlan:
 
 def _short(text: str, limit: int) -> str:
     cleaned = " ".join(text.strip().split()).rstrip("。；;，,")
-    return cleaned if len(cleaned) <= limit else cleaned[: limit - 1].rstrip("，,；;") + "…"
+    if len(cleaned) <= limit:
+        return cleaned
+    clauses = [part.strip() for part in re.split(r"[。！？；;]", cleaned) if part.strip()]
+    for clause in clauses:
+        comma_parts = [part.strip() for part in re.split(r"[，,]", clause) if part.strip()]
+        built = ""
+        for part in comma_parts:
+            candidate = f"{built}，{part}" if built else part
+            if len(candidate) > limit:
+                break
+            built = candidate
+        if built:
+            return built
+    words = cleaned.split()
+    if len(words) > 1:
+        built = ""
+        for word in words:
+            candidate = f"{built} {word}".strip()
+            if len(candidate) > limit:
+                break
+            built = candidate
+        if built:
+            return built
+    return cleaned
 
 
 def _complete_opinion(text: str, limit: int = 56) -> str:
@@ -632,6 +717,8 @@ def plan_post(digest: Digest) -> tuple[XhsPostPlan, str]:
     if _post_body_len(post) > MAX_BODY:
         plan = _tighten_post_plan(plan)
         post = "\n".join(render_post_plan(plan))
+    if "…" in post or "..." in post:
+        raise ValueError("小红书成品含截断省略号，拒绝发布")
     return plan, post
 
 

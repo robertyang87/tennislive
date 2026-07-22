@@ -6,6 +6,7 @@ import dataclasses
 import json
 import logging
 import os
+import shutil
 from datetime import date, datetime
 from pathlib import Path
 
@@ -67,6 +68,21 @@ def _render_cards(
     try:
         from .webcards import generate_match_deck
 
+        cover_visual = None
+        visual_cache = outdir / ".cover-visual-cache"
+        if os.environ.get("TENNISLIVE_COVER_VISUAL_FETCH", "off").lower() in {
+            "1", "on", "true",
+        }:
+            from ..research.visual_sources import resolve_match_cover_visual
+
+            cover_visual, cover_report = resolve_match_cover_visual(
+                pick.match, visual_cache
+            )
+            (outdir / "cover_visual.json").write_text(
+                json.dumps(cover_report, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+
         rendered = generate_match_deck(
             pick.match,
             headline=headline,
@@ -74,6 +90,7 @@ def _render_cards(
             date_label=date_label,
             kind=pick.kind,
             theme=theme,
+            cover_visual=cover_visual,
         )
         from .image_output import save_social_image
 
@@ -83,6 +100,7 @@ def _render_cards(
                 image, cards_dir / f"card_{index:02d}_{card_kind}"
             )
             paths.append(path)
+        shutil.rmtree(visual_cache, ignore_errors=True)
         return paths
     except Exception as exc:
         # 本地或精简环境没有 Chromium 时，复用晨报的 Pillow 回退卡组。
