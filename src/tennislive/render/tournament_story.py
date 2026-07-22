@@ -53,6 +53,10 @@ class TournamentStory:
     # Rules must declare a topic-specific diagram. Supported renderers are
     # intentionally explicit so CI fails instead of silently using a stock photo.
     diagram_type: str = ""
+    # Explicit cover marker wins over prose inference. Use four digits for years.
+    hero_marker: str = ""
+    # Optional semantic roles for facts; the renderer still has a keyword fallback.
+    fact_roles: tuple[str, ...] = ()
 
 
 STORIES = (
@@ -454,7 +458,7 @@ STORIES = (
                 date="2024-06-09",
                 player="卡洛斯·阿尔卡拉斯",
                 age="21 岁",
-                headline="法网折桂 · 三种场地全满贯",
+                headline="法网夺冠 · 硬地红土草地都拿过大满贯",
                 detail=(
                     "五盘击败兹维列夫，集齐三种场地的大满贯冠军，"
                     "公开赛时代无人比他更年轻。"
@@ -892,6 +896,8 @@ def _trivia_story(
     image_credit: str = "Wikimedia Commons",
     evidence_urls: tuple[str, ...] = (),
     diagram_type: str = "",
+    hero_marker: str = "",
+    fact_roles: tuple[str, ...] = (),
 ) -> TournamentStory:
     # 优先用主题相关的专属图（assets/trivia/，由 fetch_venues.py 抓取）；
     # 未入库时仅在场馆库存图与主题贴合时兜底（image_keys 为空 = 宁缺毋滥，
@@ -927,6 +933,8 @@ def _trivia_story(
         source_label=source_label,
         evidence_urls=evidence_urls,
         diagram_type=diagram_type,
+        hero_marker=hero_marker,
+        fact_roles=fact_roles,
     )
 
 
@@ -1238,6 +1246,7 @@ STORIES = STORIES + (
             "encore-des-juges-de-ligne-a-roland-garros-en-2026/1597696",
         ),
         diagram_type="trajectory",
+        fact_roles=("technology", "rule", "today"),
     ),
     _trivia_story(
         slug="golden-slam",
@@ -1267,7 +1276,10 @@ STORIES = STORIES + (
                     "美网决赛胜罗切封王，公开赛时代唯一的年度全满贯——"
                     "墨尔本的中央球场后来以他命名。"
                 ),
-                source_url="https://www.usopen.org/en_US/visit/grand_slam_alltime_champions.html",
+                source_url=(
+                    "https://www.itftennis.com/en/tournament/us-open/usa/1969/"
+                    "m-sl-usa-01a-1969/champions/"
+                ),
             ),
             ChampionMoment(
                 date="1988-10-01",
@@ -1292,10 +1304,14 @@ STORIES = STORIES + (
         evidence_urls=(
             "https://www.usopen.org/en_US/visit/grand_slam_alltime_champions.html",
             "https://www.usopen.org/en_US/visit/year_by_year.html",
+            "https://www.itftennis.com/en/tournament/us-open/usa/1969/"
+            "m-sl-usa-01a-1969/champions/",
             "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
             "https://www.itftennis.com/en/news-and-media/articles/"
             "nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
         ),
+        hero_marker="1988",
+        fact_roles=("surface", "cycle", "trophy"),
     ),
     _trivia_story(
         slug="surfaces",
