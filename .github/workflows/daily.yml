@@ -80,6 +80,11 @@ jobs:
       TENNISLIVE_VISUAL_CANDIDATES: ${{ vars.TENNISLIVE_VISUAL_CANDIDATES || '6' }}
       # 日报/热点封面：只抓取头条球员本人赛场照；失败时保留本地已核验人物资产。
       TENNISLIVE_COVER_VISUAL_FETCH: ${{ vars.TENNISLIVE_COVER_VISUAL_FETCH || 'on' }}
+      TENNISLIVE_COVER_ATP_OFFICIAL: ${{ vars.TENNISLIVE_COVER_ATP_OFFICIAL || 'on' }}
+      TENNISLIVE_COVER_WTA_OFFICIAL: ${{ vars.TENNISLIVE_COVER_WTA_OFFICIAL || 'on' }}
+      # 日报封面必须通过动作/情绪场景、清晰度和 3:4 安全裁切门禁。
+      TENNISLIVE_COVER_VISUAL_STRICT: ${{ vars.TENNISLIVE_COVER_VISUAL_STRICT || 'on' }}
+      TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '72' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -114,7 +119,7 @@ jobs:
 
       - name: 安装 tennislive
         if: steps.guard.outputs.skip != 'true'
-        run: pip install -q -e ".[webrender,dev]"
+        run: pip install -q -e ".[webrender,visualqa,dev]"
 
       - name: 缓存 Chromium（HTML 卡片渲染）
         if: steps.guard.outputs.skip != 'true'
@@ -146,19 +151,24 @@ jobs:
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           # 同日重跑必须重新生成知识包，不能复用仓库里上一次的旧图片与质检结果。
           rm -rf "$OUT_DIR/knowledge"
+          # 封面报告同样不可复用；选择器异常或当日没有合格图片时，旧报告
+          # 不能让后续发布门禁误判为通过。
+          rm -f "$OUT_DIR/cover_visual.json"
           set +e
           TENNISLIVE_AI_EDITORIAL=off tennislive digest --date "$DATE_ARG" --outdir output 2>&1 | tee "$OUT_DIR.digest.log"
           CODE=${PIPESTATUS[0]}
+          set -e
           if [ -f "$OUT_DIR/qa.txt" ]; then
             echo "----- qa.txt -----"
             cat "$OUT_DIR/qa.txt"
           fi
+          if [ -f "$OUT_DIR/qa.txt" ] && grep -q '^\[FATAL\]' "$OUT_DIR/qa.txt"; then
+            echo "::error file=$OUT_DIR/qa.txt::内容质检包含 FATAL，本次任务禁止提交和发布"
+            exit 2
+          fi
           if [ "$CODE" -ne 0 ]; then
-            if [ -f "$OUT_DIR/digest.json" ] && [ -f "$OUT_DIR/qa.txt" ]; then
-              echo "::warning file=$OUT_DIR/qa.txt::digest returned $CODE after writing package; continuing so generated materials are not lost"
-            else
-              exit "$CODE"
-            fi
+            echo "::error::$OUT_DIR 生成命令以状态码 $CODE 失败，本次任务禁止提交和发布"
+            exit "$CODE"
           fi
           ls -la "$OUT_DIR"
 
@@ -188,6 +198,57 @@ jobs:
           done
           jq -e '.sources | type == "array"' "$OUT_DIR/source_manifest.json" >/dev/null
           jq -e '.claims | type == "array"' "$OUT_DIR/fact_ledger.json" >/dev/null
+
+          COVER_REPORT="$OUT_DIR/cover_visual.json"
+          test -s "$COVER_REPORT" || {
+            echo "::error file=$COVER_REPORT::日报封面缺少视觉质量报告"
+            exit 1
+          }
+          COVER_FACTS="$OUT_DIR/cover_facts.json"
+          test -s "$COVER_FACTS" || {
+            echo "::error file=$COVER_FACTS::日报封面缺少本期头条事实包"
+            exit 1
+          }
+          EXPECTED_MATCH_ID="$(jq -r '.match_id // empty' "$COVER_FACTS")"
+          test -n "$EXPECTED_MATCH_ID" || {
+            echo "::error file=$COVER_FACTS::本期头条事实包缺少 match_id"
+            exit 1
+          }
+          jq -e \
+            --arg expected_match_id "$EXPECTED_MATCH_ID" \
+            --argjson minimum "${TENNISLIVE_COVER_VISUAL_MIN_SCORE:-72}" '
+            .status == "selected"
+            and .match_id == $expected_match_id
+            and (.selected_player as $player | .match_players | index($player) != null)
+            and .exact_match == true
+            and .both_sides_match == true
+            and (.scene | IN("match_action", "on_court_reaction", "solo_trophy", "prominent_person"))
+            and (.quality_score >= $minimum)
+            and (.quality.status == "pass")
+            and (.quality.hard_failures | length == 0)
+            and (.selected_asset_sha256 | test("^[0-9a-f]{64}$"))
+            and .render_binding.status == "bound"
+            and .render_binding.renderer == "html-chromium"
+            and .render_binding.match_id == $expected_match_id
+            and .render_binding.selected_asset_sha256 == .selected_asset_sha256
+            and .render_binding.card_file == "cards/card_00_cover.jpg"
+            and (.render_binding.card_sha256 | test("^[0-9a-f]{64}$"))
+          ' "$COVER_REPORT" >/dev/null || {
+            echo "::error file=$COVER_REPORT::日报封面未通过素材、画质或最终 card_00 渲染绑定门禁"
+            cat "$COVER_REPORT"
+            exit 1
+          }
+          COVER_CARD="$OUT_DIR/$(jq -r '.render_binding.card_file' "$COVER_REPORT")"
+          test -s "$COVER_CARD" || {
+            echo "::error file=$COVER_REPORT::报告绑定的最终封面文件不存在"
+            exit 1
+          }
+          EXPECTED_CARD_SHA="$(jq -r '.render_binding.card_sha256' "$COVER_REPORT")"
+          ACTUAL_CARD_SHA="$(sha256sum "$COVER_CARD" | awk '{print $1}')"
+          test "$ACTUAL_CARD_SHA" = "$EXPECTED_CARD_SHA" || {
+            echo "::error file=$COVER_CARD::最终 card_00 与封面报告哈希不一致"
+            exit 1
+          }
 
           test -d "$OUT_DIR/knowledge" || {
             echo "::error::$OUT_DIR/knowledge 不存在，本次知识帖未生成"

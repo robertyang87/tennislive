@@ -1,0 +1,154 @@
+name: yesterday-tennis-point
+
+on:
+  schedule:
+    # 给官方赛后视频留出上架时间：北京时间每天 09:23。
+    - cron: "23 1 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "发布日期（YYYY-MM-DD，北京时间；留空=今天）"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/yesterday-point.yml"
+      - "src/tennislive/video/daily_point.py"
+      - "src/tennislive/video/official.py"
+      - "src/tennislive/video/pipeline.py"
+      - "src/tennislive/cli.py"
+      - "tests/test_daily_point.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yesterday-tennis-point
+  cancel-in-progress: false
+
+jobs:
+  point:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      TENNISLIVE_YESTERDAY_POINT: "on"
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 手动任务同步最新主分支
+        if: github.event_name == 'workflow_dispatch'
+        run: git pull --ff-only origin "${{ github.ref_name }}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: |
+          pip install -q -e ".[dev,video]"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+
+      - name: 校验昨日好球规则
+        run: pytest -q tests/test_daily_point.py tests/test_official_video.py
+
+      - name: 生成独立视频包
+        id: generate
+        run: |
+          DATE_ARG="${{ github.event.inputs.date }}"
+          if [ -z "$DATE_ARG" ]; then DATE_ARG="today"; fi
+          DATE_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print(parse_date_arg('$DATE_ARG').isoformat())")
+          OUT_DIR="output/$DATE_DIR/yesterday-point"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          rm -rf "$OUT_DIR"
+          tennislive point --date "$DATE_ARG" --outdir output
+
+      - name: 严格质量门禁
+        run: |
+          OUT_DIR="${{ steps.generate.outputs.outdir }}"
+          MANIFEST="$OUT_DIR/manifest.json"
+          test -s "$MANIFEST"
+          STATUS=$(jq -r '.status' "$MANIFEST")
+          if [ "$STATUS" = "skipped" ]; then
+            echo "::notice::$(jq -r '.reason' "$MANIFEST")"
+            exit 0
+          fi
+          test "$STATUS" = "pass"
+          jq -e '
+            .complete_rally.verified == true and
+            .complete_rally.montage == false and
+            .complete_rally.source_window_ms[0] == 0 and
+            .consensus.verified == true and
+            (
+              (.consensus.rank == 3 and
+               .consensus.score == 100 and
+               .consensus.basis == "official-daily-best" and
+               any(.consensus.signals[];
+                   .kind == "official-best-designation" and .scope == "day")) or
+              (.consensus.rank == 1 and
+               .consensus.score == 72 and
+               .consensus.basis == "official-hot-shot" and
+               any(.consensus.signals[];
+                   .kind == "official-hot-shot" and .scope == "hot-shot"))
+            ) and
+            .framing.mode == "contain" and
+            .framing.dynamic_tracking_crop == false and
+            (.source_resolution | length) == 2 and
+            (.source_resolution | min) >= 720 and
+            (.source_resolution | max) >= 1280
+          ' "$MANIFEST" >/dev/null
+          test -s "$OUT_DIR/yesterday-point.mp4"
+          test -s "$OUT_DIR/yesterday-point.zh-CN.srt"
+          test -s "$OUT_DIR/xiaohongshu.txt"
+          test -s "$OUT_DIR/copy.html"
+          test -s "$OUT_DIR/push.html"
+          test "$(grep -c '^$' "$OUT_DIR/xiaohongshu.txt")" -eq 1
+          ! grep -Eq '来源：|图源：|摄影/图源|非商业资料引用' \
+            "$OUT_DIR/xiaohongshu.txt" "$OUT_DIR/copy.html" \
+            "$OUT_DIR/push.html" "$OUT_DIR/yesterday-point.zh-CN.srt"
+          ffprobe -v error -select_streams v:0 \
+            -show_entries stream=width,height \
+            -of csv=s=x:p=0 "$OUT_DIR/yesterday-point.mp4" | grep -qx '1080x1920'
+
+      - name: 上传独立内容包
+        uses: actions/upload-artifact@v4
+        with:
+          name: yesterday-point-${{ github.run_number }}
+          path: ${{ steps.generate.outputs.outdir }}
+
+      - name: 提交通过门禁的成片
+        id: commit
+        if: github.event_name != 'push'
+        run: |
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          OUT_DIR="${{ steps.generate.outputs.outdir }}"
+          if [ "$(jq -r '.status' "$OUT_DIR/manifest.json")" != "pass" ]; then
+            echo "没有满足门槛的完整回合，不提交空包"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT_DIR"
+          if git diff --cached --quiet; then
+            echo "内容与仓库一致，不重复提交或推送"
+            exit 0
+          fi
+          git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "${{ github.ref_name }}"
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: PushPlus 推送昨日 Hot Shots / 最佳回合
+        if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          OUT_DIR="${{ steps.generate.outputs.outdir }}"
+          if [ "$(jq -r '.status' "$OUT_DIR/manifest.json")" != "pass" ]; then
+            echo "没有经官方 Hot Shots / 最佳回合标签验证的完整回合，跳过推送"
+            exit 0
+          fi
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish pushplus --dir "$OUT_DIR"

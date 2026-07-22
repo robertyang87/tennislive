@@ -243,7 +243,6 @@ def _golden_slam_copy(story: TournamentStory, digest: Digest) -> str:
         "格拉芙又往前走了一步。直到今天，年度金满贯仍只有她一人。\n\n"
         f"💬 {question}\n\n"
         "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
-        f"资料｜{story.source_label}\n\n"
         "#网球 #格拉芙 #金满贯 #网球历史 #网球时差"
     )
 
@@ -306,7 +305,6 @@ def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
         f"{moments}\n\n"
         f"💬 {question}\n\n"
         "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
-        f"资料｜{story.source_label}\n\n"
         "#网球 #网球知识 #网球时差 #网球科普 #网球故事"
     )
 
@@ -323,6 +321,9 @@ def _validate_copy_for_publish(copy: str) -> None:
             )
     if "…" in copy or "..." in copy:
         raise ValueError("知识帖文案不得用省略号掩盖截断内容")
+    public_citation_markers = ("资料｜", "来源：", "图源：", "摄影/图源", "非商业资料引用")
+    if any(marker in copy for marker in public_citation_markers):
+        raise ValueError("知识帖发布文案不得显示资料或图片来源")
     lines = copy.strip().splitlines()
     if not lines or xhs_title_len(lines[0]) > 20:
         raise ValueError("知识帖标题必须完整且不超过小红书 20 字限制")
@@ -356,7 +357,6 @@ def knowledge_push_html(
             '<div style="font-size:15px;line-height:1.85;margin:0 0 13px;">'
             f"{safe}</div>"
         )
-    source = html.escape(story.source_label)
     images = []
     for index, card_name in enumerate(card_names, 1):
         card_url = f"{_CDN}/output/{d.isoformat()}/knowledge/cards/{card_name}"
@@ -376,7 +376,7 @@ def knowledge_push_html(
   {''.join(paragraphs)}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
   <a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
-  <div style="text-align:center;color:#7a8580;font-size:12px;">资料核对：{source} · 图片长按保存</div>
+  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
 </div>
 </div>"""
 

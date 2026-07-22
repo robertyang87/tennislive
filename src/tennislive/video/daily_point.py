@@ -1,0 +1,1074 @@
+"""Build an auditable vertical ``yesterday's point`` package.
+
+The source must already be an official single-point clip.  The renderer keeps
+that source clip intact and places its full 16:9 frame inside a 9:16 canvas;
+it never guesses rally boundaries or follows a player with an unverified crop.
+"""
+
+from __future__ import annotations
+
+import html
+import json
+import os
+import re
+import shutil
+import subprocess
+from dataclasses import asdict, dataclass
+from datetime import date, datetime, timezone
+from fractions import Fraction
+from pathlib import Path
+from typing import Callable, Iterable
+from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
+
+import requests
+
+from ..digest import Digest
+from ..models import Match
+from ..zh import player_zh, tournament_zh
+from .official import (
+    ATP_YOUTUBE_CHANNEL_ID,
+    ATP_YOUTUBE_FEED,
+    OFFICIAL_YOUTUBE_CHANNEL_IDS,
+    OFFICIAL_YOUTUBE_FEEDS,
+    WTA_VIDEO_HUB,
+    OfficialVideoCandidate,
+    OfficialVideoMetadata,
+    fetch_youtube_video_metadata,
+    fetch_wta_video_metadata,
+    parse_official_youtube_feed,
+    parse_wta_video_candidates,
+)
+from .pipeline import SubtitleCue, VideoPipelineError, render_srt
+
+BEIJING = ZoneInfo("Asia/Shanghai")
+MIN_POINT_SECONDS = 6.0
+MAX_POINT_SECONDS = 120.0
+MIN_SOURCE_WIDTH = 1280
+MIN_SOURCE_HEIGHT = 720
+MIN_OUTPUT_FPS = 23.0
+OUTPUT_WIDTH = 1080
+OUTPUT_HEIGHT = 1920
+
+_OFFICIAL_BEST_RE = re.compile(
+    r"\b(?P<kind>point|play|shot|rally)\s+of\s+(?:the\s+)?"
+    r"(?P<scope>day|match)\b"
+)
+_NON_POINT_TERMS = (
+    "highlights",
+    "champions reel",
+    "road to the title",
+    "interview",
+    "press conference",
+    "practice",
+    "top 10",
+    "top 20",
+    "best of",
+    "countdown",
+    "season so far",
+    "montage",
+)
+_OFFICIAL_HOSTS = {
+    "www.wtatennis.com": "WTA 官方视频",
+    "wtatennis.com": "WTA 官方视频",
+    "www.atptour.com": "ATP Tour 官方视频",
+    "atptour.com": "ATP Tour 官方视频",
+    "www.ausopen.com": "澳网官方视频",
+    "ausopen.com": "澳网官方视频",
+    "www.rolandgarros.com": "法网官方视频",
+    "rolandgarros.com": "法网官方视频",
+    "www.wimbledon.com": "温网官方视频",
+    "wimbledon.com": "温网官方视频",
+    "www.usopen.org": "美网官方视频",
+    "usopen.org": "美网官方视频",
+    "www.tennistv.com": "Tennis TV / ATP Media",
+    "tennistv.com": "Tennis TV / ATP Media",
+}
+_OFFICIAL_YOUTUBE_TOURS = {
+    "ATP": "ATP Tour 官方视频",
+    "AO": "澳网官方视频",
+    "RG": "法网官方视频",
+    "WIMBLEDON": "温网官方视频",
+    "USOPEN": "美网官方视频",
+}
+_SLAM_EVENT_ALIASES = {
+    "AO": ("australian open",),
+    "RG": ("roland garros", "french open"),
+    "WIMBLEDON": ("wimbledon",),
+    "USOPEN": ("us open", "u s open"),
+}
+
+
+@dataclass(frozen=True)
+class PointSelection:
+    metadata: OfficialVideoMetadata
+    match: Match
+    published_at: str
+    source_label: str
+    editorial_score: int
+    consensus_rank: int
+    consensus_basis: str
+    consensus_score: int
+    consensus_signals: tuple[dict, ...]
+    complete_point_evidence: str
+
+
+@dataclass(frozen=True)
+class VideoProbe:
+    width: int
+    height: int
+    duration_seconds: float
+    fps: float
+    codec: str
+    size_bytes: int
+
+
+def _clean(value: str) -> str:
+    return re.sub(r"[^a-z0-9 ]", " ", html.unescape(value).casefold())
+
+
+def _player_tokens(match: Match) -> set[str]:
+    tokens: set[str] = set()
+    for player in [*match.home, *match.away]:
+        name = _clean(player.name)
+        if not name:
+            continue
+        tokens.add(name)
+        parts = name.split()
+        tokens.update(
+            part
+            for part in dict.fromkeys(parts[:1] + parts[-1:])
+            if len(part) >= 3
+        )
+    return tokens
+
+
+def _match_player_matches(player, text: str, participants: list) -> bool:
+    """Allow a unique family-name display without reusing a shared token."""
+    cleaned_name = _clean(player.name).strip()
+    if not cleaned_name:
+        return False
+    if re.search(
+        rf"(?<![a-z0-9]){re.escape(cleaned_name)}(?![a-z0-9])",
+        text,
+    ):
+        return True
+    parts = cleaned_name.split()
+    aliases = [parts[-1]]
+    if str(player.country or "").upper() in {"CHN", "HKG", "TPE", "JPN", "KOR"}:
+        aliases.append(parts[0])
+    other_tokens = {
+        token
+        for other in participants
+        if other is not player
+        for token in _clean(other.name).split()
+    }
+    return any(
+        len(alias) >= 3
+        and alias not in other_tokens
+        and re.search(rf"(?<![a-z0-9]){re.escape(alias)}(?![a-z0-9])", text)
+        for alias in dict.fromkeys(aliases)
+    )
+
+
+_GENERIC_EVENT_TERMS = {
+    "open",
+    "tennis",
+    "championship",
+    "championships",
+    "masters",
+    "international",
+    "classic",
+    "ladies",
+}
+
+
+def _event_matches(match: Match, text: str) -> bool:
+    """Require a distinctive tournament or host-city anchor."""
+    values = [match.tournament.name, match.tournament.city or ""]
+    terms: set[str] = set()
+    for value in values:
+        terms.update(
+            token
+            for token in _clean(value).split()
+            if len(token) >= 4 and token not in _GENERIC_EVENT_TERMS
+        )
+    return any(
+        re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", text)
+        for term in terms
+    )
+
+
+def _slam_event_matches(tour: str, match: Match, text: str) -> bool:
+    aliases = _SLAM_EVENT_ALIASES.get(tour, ())
+    if not aliases:
+        return False
+    match_text = _clean(
+        f"{match.tournament.name} {match.tournament.city or ''}"
+    )
+    return any(alias in match_text for alias in aliases) and any(
+        alias in text for alias in aliases
+    )
+
+
+def _candidate_matches_tour_and_event(
+    match: Match,
+    metadata: OfficialVideoMetadata,
+    text: str,
+) -> bool:
+    tour = metadata.candidate.tour.upper()
+    if tour in {"ATP", "WTA"}:
+        return match.tour.value == tour
+    if tour not in _SLAM_EVENT_ALIASES or not _slam_event_matches(tour, match, text):
+        return False
+    # Slam channels publish archive videos throughout the year.  Requiring the
+    # edition in the page text prevents a fresh upload of an old match from
+    # being attached to yesterday's current-edition score.
+    match_year = str(match.start_utc.year) if match.start_utc is not None else ""
+    return bool(match_year and re.search(rf"(?<!\d){match_year}(?!\d)", text))
+
+
+def _linked_match(matches: Iterable[Match], metadata: OfficialVideoMetadata) -> Match | None:
+    """Resolve a clip to one match without guessing an opponent or score.
+
+    Naming both sides is conclusive.  A one-player official title is accepted
+    only when it also names the event and maps to exactly one yesterday match.
+    """
+    text = _clean(f"{metadata.candidate.title} {metadata.description}")
+    exact: list[Match] = []
+    one_side_with_event: list[Match] = []
+    for match in matches:
+        if not _candidate_matches_tour_and_event(match, metadata, text):
+            continue
+        participants = [*match.home, *match.away]
+        side_hits = [
+            any(_match_player_matches(player, text, participants) for player in side)
+            for side in (match.home, match.away)
+        ]
+        if all(side_hits):
+            exact.append(match)
+        elif any(side_hits) and (
+            _event_matches(match, text)
+            or metadata.candidate.tour.upper() in _SLAM_EVENT_ALIASES
+        ):
+            one_side_with_event.append(match)
+    if len(exact) == 1:
+        return exact[0]
+    if exact:
+        return None
+    if len(one_side_with_event) == 1:
+        return one_side_with_event[0]
+    return None
+
+
+def _beijing_match_date(match: Match) -> date | None:
+    if match.start_utc is None:
+        return None
+    value = match.start_utc
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(BEIJING).date()
+
+
+def yesterday_matches(digest: Digest) -> list[Match]:
+    """Return completed singles that can be proven to belong to yesterday."""
+    return [
+        match
+        for match in digest.results
+        if match.is_singles
+        and match.status.is_final
+        and _beijing_match_date(match) == digest.yesterday
+    ]
+
+
+def is_explicit_single_point(title: str, description: str = "") -> bool:
+    """Accept one official day/match point or a single official hot shot.
+
+    ``Hot Shot`` is a strong editorial/heat signal from ATP Media/Tennis TV,
+    but it is deliberately ranked below an explicit ``Point/Play/Shot/Rally
+    of the Day`` label. This keeps the automated package useful on days when
+    no outlet names a formal daily winner without pretending that a hot shot
+    is a consensus award.
+    """
+    text = _clean(f"{title} {description}")
+    if any(term in text for term in _NON_POINT_TERMS):
+        return False
+    # A numeric shot-count usually describes a rally package or montage, not
+    # one auditable point clip.
+    if re.search(r"\b\d+\s+shot\s+rally\b", text):
+        return False
+    return bool(_OFFICIAL_BEST_RE.search(text) or re.search(r"\bhot\s+shot\b", text))
+
+
+def official_best_signal(title: str, description: str = "") -> tuple[int, str] | None:
+    """Return the editorial tier for a point clip.
+
+    Tier 3 is an explicit daily-best label, tier 2 is a match-best label, and
+    tier 1 is an official single ``Hot Shot``. The latter is publishable when
+    it clears the same date, match-linkage, duration, HD, and full-source
+    gates, but its manifest is marked as a hot-shot signal rather than a best
+    of day claim.
+    """
+    text = _clean(f"{title} {description}")
+    scopes = {match.group("scope") for match in _OFFICIAL_BEST_RE.finditer(text)}
+    if "day" in scopes:
+        return 3, "official-daily-best"
+    if "match" in scopes:
+        return 2, "official-match-best"
+    if re.search(r"\bhot\s+shot\b", text) and not any(
+        term in text for term in _NON_POINT_TERMS
+    ):
+        return 1, "official-hot-shot"
+    return None
+
+
+def _is_hd_source(width: int, height: int) -> bool:
+    """Treat landscape and portrait HD sources equivalently."""
+    short_side, long_side = sorted((width, height))
+    return short_side >= MIN_SOURCE_HEIGHT and long_side >= MIN_SOURCE_WIDTH
+
+
+def _parse_source_time(value: str) -> datetime | None:
+    raw = value.strip()
+    if not raw:
+        return None
+    try:
+        if raw.endswith("Z"):
+            raw = raw[:-1] + "+00:00"
+        parsed = datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed
+
+
+def _published_near_yesterday(value: str, digest: Digest) -> bool:
+    """Allow official uploads through the following Beijing day."""
+    parsed = _parse_source_time(value)
+    if parsed is None:
+        return False
+    local_date = parsed.astimezone(BEIJING).date()
+    return local_date in {digest.yesterday, digest.today}
+
+
+def _official_source_label(url: str, tour: str = "") -> str:
+    host = (urlparse(url).hostname or "").casefold()
+    direct = _OFFICIAL_HOSTS.get(host, "")
+    if direct:
+        return direct
+    if host in {"youtube.com", "www.youtube.com", "youtu.be"}:
+        return _OFFICIAL_YOUTUBE_TOURS.get(tour.upper(), "")
+    return ""
+
+
+def _round_weight(round_name: str | None) -> int:
+    text = (round_name or "").casefold()
+    if "final" in text and "semi" not in text:
+        return 36
+    if "semi" in text:
+        return 24
+    if "quarter" in text:
+        return 16
+    return 4
+
+
+def _consensus_evidence(
+    metadata: OfficialVideoMetadata,
+    *,
+    source_label: str,
+    consensus_rank: int,
+) -> tuple[int, tuple[dict, ...]] | None:
+    official_signal = {
+        "kind": (
+            "official-best-designation"
+            if consensus_rank > 1
+            else "official-hot-shot"
+        ),
+        "scope": (
+            "day"
+            if consensus_rank == 3
+            else "match"
+            if consensus_rank == 2
+            else "hot-shot"
+        ),
+        "source": source_label,
+        "title": metadata.candidate.title,
+        "url": metadata.candidate.url,
+        "independent": False,
+    }
+    # Match/news/search heat describes the event or players, not this exact
+    # rally. A formal daily-best label is the strongest signal; Tennis TV / an
+    # official tour's single Hot Shot is a lower, but still publishable, heat
+    # signal. The manifest keeps the distinction so copy never calls it
+    # "全日最佳" by accident.
+    if consensus_rank == 3:
+        return 100, (official_signal,)
+    if consensus_rank == 2:
+        # A match-best label is useful context, but it is not a daily heat
+        # signal on its own. Keep the existing corroboration gate here.
+        return None
+    if consensus_rank == 1:
+        return 72, (official_signal,)
+    return None
+
+
+def select_daily_point(
+    digest: Digest,
+    metadata_items: Iterable[OfficialVideoMetadata],
+) -> PointSelection | None:
+    """Rank only verified, recent, full-source single-point clips."""
+    matches = yesterday_matches(digest)
+    ranked: list[tuple[int, int, PointSelection]] = []
+    for order, metadata in enumerate(metadata_items):
+        source_label = _official_source_label(
+            metadata.candidate.url, metadata.candidate.tour
+        )
+        if not source_label:
+            continue
+        if not is_explicit_single_point(
+            metadata.candidate.title, metadata.description
+        ):
+            continue
+        consensus = official_best_signal(
+            metadata.candidate.title, metadata.description
+        )
+        if consensus is None:
+            continue
+        consensus_rank, consensus_basis = consensus
+        duration = metadata.duration_ms / 1000
+        if not MIN_POINT_SECONDS <= duration <= MAX_POINT_SECONDS:
+            continue
+        if not _is_hd_source(metadata.source_width, metadata.source_height):
+            continue
+        if not _published_near_yesterday(metadata.published_at, digest):
+            continue
+        haystack = _clean(
+            f"{metadata.candidate.title} {metadata.description}"
+        )
+        match = _linked_match(matches, metadata)
+        if match is None:
+            continue
+        consensus_evidence = _consensus_evidence(
+            metadata,
+            source_label=source_label,
+            consensus_rank=consensus_rank,
+        )
+        if consensus_evidence is None:
+            continue
+        consensus_score, consensus_signals = consensus_evidence
+        named_players = sum(token in haystack for token in _player_tokens(match))
+        china = any(p.country == "CHN" for p in [*match.home, *match.away])
+        score = (
+            consensus_rank * 1000
+            + named_players * 35
+            + _round_weight(match.round_name)
+            + match.media_heat
+            + match.search_heat
+            + (30 if china else 0)
+            + (18 if "rally" in haystack else 10)
+        )
+        ranked.append(
+            (
+                score,
+                -order,
+                PointSelection(
+                    metadata=metadata,
+                    match=match,
+                    published_at=metadata.published_at,
+                    source_label=source_label,
+                    editorial_score=score,
+                    consensus_rank=consensus_rank,
+                    consensus_basis=consensus_basis,
+                    consensus_score=consensus_score,
+                    consensus_signals=consensus_signals,
+                    complete_point_evidence=(
+                        "官方标题或说明明确标注当日/全场最佳回合，"
+                        "成片保留源视频从 0 秒到结尾"
+                    ),
+                ),
+            )
+        )
+    selections = [item[2] for item in ranked]
+    return _unique_consensus_pick(selections)
+
+
+def _unique_consensus_pick(
+    selections: Iterable[PointSelection],
+) -> PointSelection | None:
+    """Return one auditable consensus leader; an exact tie is a clean skip."""
+    ordered = sorted(
+        selections,
+        key=lambda item: (
+            item.consensus_rank,
+            item.consensus_score,
+        ),
+        reverse=True,
+    )
+    if not ordered:
+        return None
+    if len(ordered) > 1 and (
+        ordered[0].consensus_rank,
+        ordered[0].consensus_score,
+    ) == (
+        ordered[1].consensus_rank,
+        ordered[1].consensus_score,
+    ):
+        return None
+    return ordered[0]
+
+
+def discover_wta_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_wta_video_metadata,
+) -> PointSelection | None:
+    """Resolve a small shortlist from the official WTA video hub."""
+    response = get(
+        WTA_VIDEO_HUB,
+        headers={"User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"},
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    candidates = parse_wta_video_candidates(str(response.text))
+    matches = yesterday_matches(digest)
+    shortlist: list[OfficialVideoCandidate] = []
+    for candidate in candidates[:60]:
+        if official_best_signal(candidate.title) is None:
+            continue
+        text = _clean(candidate.title)
+        if not any(any(token in text for token in _player_tokens(match)) for match in matches):
+            continue
+        shortlist.append(candidate)
+        if len(shortlist) == 8:
+            break
+    metadata_items: list[OfficialVideoMetadata] = []
+    for candidate in shortlist:
+        try:
+            metadata_items.append(metadata_fetcher(candidate, get=get, timeout=timeout))
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+            continue
+    return select_daily_point(digest, metadata_items)
+
+
+def _discover_official_youtube_point(
+    digest: Digest,
+    *,
+    tour: str,
+    feed_url: str,
+    channel_id: str,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve one verified official YouTube uploads feed."""
+    response = get(
+        feed_url,
+        headers={"User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"},
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    candidates = parse_official_youtube_feed(
+        str(response.text),
+        channel_id=channel_id,
+        tour=tour,
+    )
+    matches = yesterday_matches(digest)
+    shortlist: list[OfficialVideoCandidate] = []
+    for candidate in candidates[:30]:
+        if official_best_signal(candidate.title) is None:
+            continue
+        text = _clean(candidate.title)
+        # Slam day-award titles sometimes omit the player; fetch that small
+        # official shortlist so the full description can prove the match.
+        if tour == "ATP" and not any(
+            any(token in text for token in _player_tokens(match))
+            for match in matches
+        ):
+            continue
+        shortlist.append(candidate)
+        if len(shortlist) == 8:
+            break
+    metadata_items: list[OfficialVideoMetadata] = []
+    for candidate in shortlist:
+        try:
+            metadata_items.append(metadata_fetcher(candidate))
+        except (VideoPipelineError, ValueError, TypeError):
+            continue
+    return select_daily_point(digest, metadata_items)
+
+
+def discover_atp_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve ATP's verified official YouTube feed without scraping its CF page."""
+    return _discover_official_youtube_point(
+        digest,
+        tour="ATP",
+        feed_url=ATP_YOUTUBE_FEED,
+        channel_id=ATP_YOUTUBE_CHANNEL_ID,
+        get=get,
+        timeout=timeout,
+        metadata_fetcher=metadata_fetcher,
+    )
+
+
+def discover_slam_point(
+    digest: Digest,
+    tour: str,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve an official Grand Slam uploads feed through the same hard gate."""
+    code = tour.upper()
+    if code not in _SLAM_EVENT_ALIASES:
+        raise ValueError(f"Unsupported Grand Slam source: {tour}")
+    return _discover_official_youtube_point(
+        digest,
+        tour=code,
+        feed_url=OFFICIAL_YOUTUBE_FEEDS[code],
+        channel_id=OFFICIAL_YOUTUBE_CHANNEL_IDS[code],
+        get=get,
+        timeout=timeout,
+        metadata_fetcher=metadata_fetcher,
+    )
+
+
+def discover_official_point(digest: Digest) -> PointSelection | None:
+    """Query independent official feeds and keep the single strongest consensus pick."""
+    selections: list[PointSelection] = []
+    for resolver in (discover_wta_point, discover_atp_point):
+        try:
+            selection = resolver(digest)
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+            continue
+        if selection is not None:
+            selections.append(selection)
+    for tour in _SLAM_EVENT_ALIASES:
+        try:
+            selection = discover_slam_point(digest, tour)
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+            continue
+        if selection is not None:
+            selections.append(selection)
+    return _unique_consensus_pick(selections)
+
+
+def _match_names(match: Match) -> tuple[str, str]:
+    home = " / ".join(player_zh(player.name) for player in match.home)
+    away = " / ".join(player_zh(player.name) for player in match.away)
+    return home, away
+
+
+def _winner_loser(match: Match) -> tuple[str, str]:
+    home, away = _match_names(match)
+    if match.winner == 1:
+        return away, home
+    return home, away
+
+
+def _featured_and_opponent(selection: PointSelection) -> tuple[str, str]:
+    match = selection.match
+    haystack = _clean(
+        f"{selection.metadata.candidate.title} {selection.metadata.description}"
+    )
+    players = [*match.home, *match.away]
+    featured = next(
+        (
+            player
+            for player in players
+            if any(token in haystack for token in _player_tokens_for_name(player.name))
+        ),
+        (match.winner_players() or players)[0],
+    )
+    opponent = next(player for player in players if player is not featured)
+    return player_zh(featured.name), player_zh(opponent.name)
+
+
+def _player_tokens_for_name(name: str) -> set[str]:
+    cleaned = _clean(name)
+    if not cleaned:
+        return set()
+    tokens = {cleaned}
+    parts = cleaned.split()
+    tokens.update(
+        part
+        for part in dict.fromkeys(parts[:1] + parts[-1:])
+        if len(part) >= 3
+    )
+    return tokens
+
+
+def _context_text(selection: PointSelection) -> tuple[str, str]:
+    match = selection.match
+    winner, loser = _winner_loser(match)
+    tournament = tournament_zh(match.tournament.name) or match.tournament.name
+    round_name = match.round_name or "正赛"
+    line1 = f"这一分，值回放｜{winner} vs {loser}"
+    score = match.score_display(from_winner=True)
+    line2 = f"{tournament} · {round_name}｜赛果 {winner} {score}"
+    return line1, line2
+
+
+def _caption_cues(selection: PointSelection) -> list[SubtitleCue]:
+    duration_ms = selection.metadata.duration_ms
+    first, second = _context_text(selection)
+    split = max(1, duration_ms // 2)
+    return [
+        SubtitleCue(1, 0, split, first),
+        SubtitleCue(2, split, duration_ms, second),
+    ]
+
+
+def _escape_filter_path(path: Path) -> str:
+    return path.resolve().as_posix().replace(":", r"\:").replace("'", r"\'")
+
+
+def build_point_ffmpeg_command(
+    selection: PointSelection,
+    output_path: Path,
+    subtitle_path: Path,
+    *,
+    ffmpeg_bin: str = "ffmpeg",
+) -> list[str]:
+    """Build a full-frame vertical render; there is intentionally no crop tracker."""
+    subtitle = _escape_filter_path(subtitle_path)
+    subtitle_filter = (
+        f"subtitles=filename='{subtitle}':force_style='"
+        "FontName=Noto Sans CJK SC,FontSize=19,Bold=-1,"
+        "PrimaryColour=&H00FFFFFF,OutlineColour=&H00101010,"
+        "BorderStyle=1,BackColour=&H00000000,Outline=1.7,Shadow=0.5,"
+        "MarginV=235,Alignment=2'"
+    )
+    filters = (
+        "[0:v]split=2[bg][fg];"
+        "[bg]scale=1080:1920:force_original_aspect_ratio=increase,"
+        "crop=1080:1920,gblur=sigma=32,eq=brightness=-0.22:saturation=0.82[bg2];"
+        "[fg]scale=1080:1920:force_original_aspect_ratio=decrease[fg2];"
+        "[bg2][fg2]overlay=(W-w)/2:(H-h)/2[full];"
+        f"[full]{subtitle_filter}[outv]"
+    )
+    return [
+        ffmpeg_bin,
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-y",
+        "-reconnect",
+        "1",
+        "-reconnect_streamed",
+        "1",
+        "-reconnect_delay_max",
+        "5",
+        "-i",
+        selection.metadata.playback_url,
+        "-filter_complex",
+        filters,
+        "-map",
+        "[outv]",
+        "-map",
+        "0:a?",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "medium",
+        "-crf",
+        "21",
+        "-pix_fmt",
+        "yuv420p",
+        "-c:a",
+        "aac",
+        "-b:a",
+        "128k",
+        "-movflags",
+        "+faststart",
+        str(output_path),
+    ]
+
+
+def probe_video(
+    path: Path,
+    *,
+    ffprobe_bin: str = "ffprobe",
+    runner: Callable[..., object] = subprocess.run,
+) -> VideoProbe:
+    command = [
+        ffprobe_bin,
+        "-v",
+        "error",
+        "-show_entries",
+        "format=duration,size:stream=codec_type,codec_name,width,height,r_frame_rate",
+        "-of",
+        "json",
+        str(path),
+    ]
+    try:
+        completed = runner(command, check=True, capture_output=True, text=True)
+        payload = json.loads(completed.stdout)
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError) as exc:
+        raise VideoPipelineError(f"昨日好球 ffprobe 失败：{exc}") from exc
+    stream = next(
+        (item for item in payload.get("streams", []) if item.get("codec_type") == "video"),
+        {},
+    )
+    try:
+        fps = float(Fraction(str(stream.get("r_frame_rate") or "0/1")))
+        return VideoProbe(
+            width=int(stream.get("width") or 0),
+            height=int(stream.get("height") or 0),
+            duration_seconds=float(payload.get("format", {}).get("duration") or 0),
+            fps=fps,
+            codec=str(stream.get("codec_name") or ""),
+            size_bytes=int(payload.get("format", {}).get("size") or path.stat().st_size),
+        )
+    except (TypeError, ValueError, ZeroDivisionError) as exc:
+        raise VideoPipelineError("昨日好球 ffprobe 返回字段无效") from exc
+
+
+def validate_rendered_point(
+    selection: PointSelection,
+    probe: VideoProbe,
+) -> None:
+    errors: list[str] = []
+    source_seconds = selection.metadata.duration_ms / 1000
+    if (probe.width, probe.height) != (OUTPUT_WIDTH, OUTPUT_HEIGHT):
+        errors.append(f"画布应为 1080x1920，实际 {probe.width}x{probe.height}")
+    if abs(probe.duration_seconds - source_seconds) > 0.9:
+        errors.append(
+            f"成片时长 {probe.duration_seconds:.2f}s 未完整保留源片 {source_seconds:.2f}s"
+        )
+    if probe.fps < MIN_OUTPUT_FPS:
+        errors.append(f"帧率过低：{probe.fps:.2f}fps")
+    if probe.codec not in {"h264", "hevc"}:
+        errors.append(f"视频编码不适合发布：{probe.codec or '未知'}")
+    if probe.size_bytes < 200_000:
+        errors.append("成片体积异常，可能为空白或渲染不完整")
+    if errors:
+        raise VideoPipelineError("昨日好球质量门禁未通过：" + "；".join(errors))
+
+
+def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
+    """One mobile-screen paragraph: hook, plain recap, and one question."""
+    featured, opponent = _featured_and_opponent(selection)
+    winner, _loser = _winner_loser(selection.match)
+    score = selection.match.score_display(from_winner=True)
+    category = "Hot Shots" if selection.consensus_rank == 1 else "这一分，值回放"
+    title = f"🎾{published_for.month}.{published_for.day}｜{category}"
+    source_title = _clean(selection.metadata.candidate.title)
+    if selection.consensus_rank == 3:
+        hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
+    elif selection.consensus_rank == 2:
+        hook = "这场比赛里最值得回放的一分，不是只看最后一拍就够了。"
+    elif selection.consensus_rank == 1:
+        hook = "Tennis TV 的 Hot Shot：还没看到最后，观众已经开始喊了。"
+    elif "rally" in source_title:
+        hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
+    elif "shot" in source_title:
+        hook = "只看最后一拍会漏掉一半精彩：这球拿下了当日最佳。"
+    elif "play" in source_title:
+        hook = "昨天比赛那么多，回放按钮最后留给了这一分。"
+    else:
+        hook = "如果昨天只补一段比赛录像，就补这段当日最佳。"
+    body = (
+        f"{hook}主角是{featured}，对面是{opponent}；"
+        f"这段{tournament_zh(selection.match.tournament.name) or selection.match.tournament.name}"
+        f"短片保留了完整回合，全场比分是{winner} {score}。"
+        "从起手看到收尾，节奏怎样变化、最后一拍怎样落地，都不用靠脑补。"
+        "如果只能重看一次，你会盯最后一拍，还是前面的铺垫？"
+        "#网球 #网球名场面 #精彩回合 #网球时差"
+    )
+    copy = title + "\n\n" + body
+    validate_point_copy(copy)
+    return copy
+
+
+def point_push_html(digest: Digest, copy: str) -> str:
+    """Build a phone-friendly PushPlus package without public source credits."""
+    lines = copy.strip().splitlines()
+    title = lines[0].strip() if lines else "昨日好球"
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    repository = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    video_url = (
+        f"https://cdn.jsdelivr.net/gh/{repository}@main/output/"
+        f"{digest.today.isoformat()}/yesterday-point/yesterday-point.mp4"
+    )
+    owner, _, repo_name = repository.partition("/")
+    pages_root = os.environ.get(
+        "TENNISLIVE_PAGES_URL", f"https://{owner}.github.io/{repo_name}"
+    ).rstrip("/")
+    copy_url = (
+        f"{pages_root}/output/{digest.today.isoformat()}/yesterday-point/copy.html"
+    )
+    return (
+        '<div style="background:#f6f7f4;color:#17251f;padding:12px 10px;">'
+        '<div style="max-width:680px;margin:0 auto;background:#fff;border-top:5px solid #ff2442;'
+        'padding:18px 16px 22px;">'
+        '<div style="font-size:12px;font-weight:700;color:#087747;">这一分，值得回放</div>'
+        f'<div style="font-size:22px;line-height:1.4;font-weight:800;margin:8px 0 14px;">'
+        f'{html.escape(title)}</div>'
+        f'<a href="{html.escape(video_url, quote=True)}" style="display:block;background:#102d23;'
+        'color:#fff;text-align:center;text-decoration:none;font-weight:700;padding:14px 16px;'
+        'border-radius:6px;margin:0 0 16px;">打开 / 下载竖屏成片</a>'
+        f'<div style="font-size:15px;line-height:1.85;color:#25342e;margin-bottom:16px;">'
+        f'{html.escape(body)}</div>'
+        f'<a href="{html.escape(copy_url, quote=True)}" style="display:block;background:#ff2442;'
+        'color:#fff;text-align:center;text-decoration:none;font-weight:700;padding:13px 16px;'
+        'border-radius:6px;">分别复制标题 / 正文</a>'
+        '</div></div>'
+    )
+
+
+def validate_point_copy(copy: str) -> None:
+    parts = [part.strip() for part in copy.split("\n\n") if part.strip()]
+    if len(parts) != 2 or "\n" in parts[1]:
+        raise VideoPipelineError("昨日好球正文必须只有一段")
+    body = parts[1]
+    if len(body) > 280:
+        raise VideoPipelineError("昨日好球正文超过手机一屏长度")
+    if body.count("？") != 1 or not any(word in body for word in ("比分", "赛果")):
+        raise VideoPipelineError("昨日好球正文必须含比分上下文和一个评论问题")
+    public_citation_markers = ("来源：", "图源：", "摄影/图源", "非商业资料引用")
+    if any(marker in body for marker in public_citation_markers):
+        raise VideoPipelineError("昨日好球正文不得显示资料或图片来源")
+    if not 3 <= body.count("#") <= 6:
+        raise VideoPipelineError("昨日好球正文缺少话题标签")
+
+
+def render_daily_point(
+    selection: PointSelection,
+    output_dir: Path,
+    *,
+    ffmpeg_bin: str = "ffmpeg",
+    ffprobe_bin: str = "ffprobe",
+    runner: Callable[..., object] = subprocess.run,
+    prober: Callable[[Path], VideoProbe] | None = None,
+) -> Path:
+    if shutil.which(ffmpeg_bin) is None:
+        raise VideoPipelineError(f"ffmpeg executable not found: {ffmpeg_bin}")
+    if prober is None and shutil.which(ffprobe_bin) is None:
+        raise VideoPipelineError(f"ffprobe executable not found: {ffprobe_bin}")
+    output_dir = Path(output_dir).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    subtitle_path = output_dir / "yesterday-point.zh-CN.srt"
+    output_path = output_dir / "yesterday-point.mp4"
+    subtitle_path.write_text(render_srt(_caption_cues(selection)), encoding="utf-8")
+    command = build_point_ffmpeg_command(
+        selection,
+        output_path,
+        subtitle_path,
+        ffmpeg_bin=ffmpeg_bin,
+    )
+    try:
+        runner(command, check=True, timeout=300)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+        fallback = selection.metadata.fallback_url
+        if not fallback:
+            raise VideoPipelineError(f"昨日好球渲染失败：{exc}") from exc
+        fallback_command = [
+            fallback if part == selection.metadata.playback_url else part
+            for part in command
+        ]
+        try:
+            runner(fallback_command, check=True, timeout=300)
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as fallback_exc:
+            raise VideoPipelineError(
+                f"昨日好球主播放源与备用源均渲染失败：{fallback_exc}"
+            ) from fallback_exc
+    if not output_path.is_file():
+        raise VideoPipelineError("昨日好球渲染未产生成片")
+    measured = (
+        prober(output_path)
+        if prober is not None
+        else probe_video(output_path, ffprobe_bin=ffprobe_bin)
+    )
+    validate_rendered_point(selection, measured)
+    return output_path
+
+
+def generate_yesterday_point(digest: Digest, output_dir: Path) -> Path | None:
+    """GitHub Actions entry point; missing a verified clip is a clean skip."""
+    if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
+        return None
+    selection = discover_official_point(digest)
+    if selection is None:
+        return None
+    output_dir = Path(output_dir).resolve()
+    output = render_daily_point(selection, output_dir)
+    copy = point_xiaohongshu_copy(selection, digest.today)
+    (output_dir / "xiaohongshu.txt").write_text(copy, encoding="utf-8")
+    from ..render.pushmsg import to_copy_page
+
+    (output_dir / "copy.html").write_text(to_copy_page(copy), encoding="utf-8")
+    (output_dir / "push.html").write_text(
+        point_push_html(digest, copy), encoding="utf-8"
+    )
+    manifest = {
+        "status": "pass",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "project": "yesterday-point",
+        "published_for": digest.today.isoformat(),
+        "match_date": digest.yesterday.isoformat(),
+        "source": asdict(selection.metadata.candidate),
+        "source_label": selection.source_label,
+        "source_published_at": selection.published_at,
+        "source_duration_ms": selection.metadata.duration_ms,
+        "source_resolution": [
+            selection.metadata.source_width,
+            selection.metadata.source_height,
+        ],
+        "match": {
+            "id": selection.match.match_id,
+            "players": list(_match_names(selection.match)),
+            "tournament": selection.match.tournament.name,
+            "round": selection.match.round_name,
+            "score": selection.match.score_display(from_winner=True),
+        },
+        "selection_score": selection.editorial_score,
+        "consensus": {
+            "verified": True,
+            "rank": selection.consensus_rank,
+            "basis": selection.consensus_basis,
+            "score": selection.consensus_score,
+            "signals": list(selection.consensus_signals),
+            "evidence": (
+                "官方当日最佳标签"
+                if selection.consensus_rank == 3
+                else "官方全场最佳标签"
+                if selection.consensus_rank == 2
+                else "官方 Hot Shots 单分视频；热度信号优先于‘最佳’断言"
+            ),
+        },
+        "complete_rally": {
+            "verified": True,
+            "evidence": selection.complete_point_evidence,
+            "source_window_ms": [0, selection.metadata.duration_ms],
+            "montage": False,
+        },
+        "framing": {
+            "canvas": "9:16",
+            "foreground": "full-source-frame",
+            "mode": "contain",
+            "dynamic_tracking_crop": False,
+            "reason": "没有逐帧高置信度追踪证据，完整 16:9 主体优先",
+        },
+        "outputs": {
+            "video": output.name,
+            "subtitles": "yesterday-point.zh-CN.srt",
+            "copy": "xiaohongshu.txt",
+            "copy_page": "copy.html",
+            "pushplus": "push.html",
+        },
+    }
+    (output_dir / "manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    return output

@@ -20,6 +20,8 @@ dependencies = [
 dev = ["pytest>=7.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
+visualqa = ["opencv-python-headless>=4.10,<5"]
+video = ["yt-dlp>=2026.7.4"]
 
 [project.scripts]
 tennislive = "tennislive.cli:main"
