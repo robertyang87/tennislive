@@ -717,6 +717,45 @@ def discover_wta_youtube_point(
     )
 
 
+def discover_youtube_search_point(
+    digest: Digest,
+    *,
+    searcher: Callable[..., list[OfficialVideoCandidate]] = search_official_youtube_candidates,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Search verified tour channels using yesterday's match context.
+
+    RSS feeds are intentionally short-lived and Tennis TV cards can lag a
+    result by a few hours. This bounded search is the catch-up path: it never
+    searches arbitrary creators, and the normal date/match/full-source gates
+    still decide whether a result is publishable.
+    """
+    metadata_items: list[OfficialVideoMetadata] = []
+    seen: set[str] = set()
+    for match in yesterday_matches(digest)[:10]:
+        tour = match.tour.value
+        event_text = _clean(f"{match.tournament.name} {match.tournament.city or ''}")
+        for slam_code, aliases in _SLAM_EVENT_ALIASES.items():
+            if any(alias in event_text for alias in aliases):
+                tour = slam_code
+                break
+        names = [player.name for player in [*match.home, *match.away]]
+        query = f'"{names[0]}" "{names[1]}" {match.tournament.name} hot shot'
+        try:
+            candidates = searcher(query, tour=tour, limit=6)
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+            continue
+        for candidate in candidates:
+            if candidate.url in seen or official_best_signal(candidate.title) is None:
+                continue
+            seen.add(candidate.url)
+            try:
+                metadata_items.append(metadata_fetcher(candidate))
+            except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+                continue
+    return select_daily_point(digest, metadata_items)
+
+
 def discover_slam_point(
     digest: Digest,
     tour: str,
@@ -748,6 +787,7 @@ def discover_official_point(digest: Digest) -> PointSelection | None:
         discover_wta_point,
         discover_wta_youtube_point,
         discover_atp_point,
+        discover_youtube_search_point,
     ):
         try:
             selection = resolver(digest)
