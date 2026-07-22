@@ -997,6 +997,8 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     fake_img = tmp_path / "story.jpg"
     Image.new("RGB", (1200, 800), "white").save(fake_img)
     story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
+    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "off")
+    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "off")
     monkeypatch.setattr(
         knowledge,
         "_screenshot_pages",
