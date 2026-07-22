@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import hashlib
+import html
+import json
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -22,6 +25,10 @@ _PAGES = ("story", "explainer", "today")
 _NEGATIVE_PERSON_TERMS = {
     "scoreboard", "results", "draw", "bracket", "stadium", "arena",
     "court", "ball", "logo", "poster", "ticket", "building", "map",
+}
+_WATERMARK_LIBRARY_TERMS = {
+    "gettyimages", "getty images", "alamy", "shutterstock", "dreamstime",
+    "depositphotos", "istockphoto", "123rf",
 }
 _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...], bool]]] = {
     # page: (person/subject, exact years, event/location anchors, person required)
@@ -129,7 +136,7 @@ def _briefs(story: TournamentStory) -> dict[str, tuple[str, tuple[str, ...], tup
 def _queries(story: TournamentStory) -> dict[str, str]:
     briefs = _briefs(story)
     queries: dict[str, str] = {}
-    for page in _PAGES:
+    for page in ("cover", *_PAGES):
         subject, years, event_terms, _person_required = briefs[page]
         context = (
             story.surface,
@@ -169,10 +176,8 @@ def _candidate_matches(
     subject_match = bool(subject_tokens) and all(token in image_text for token in subject_tokens)
     year_match = not years or any(year in text for year in years)
     event_match = not event_terms or any(term in text for term in event_terms)
-    negative_only = any(term in text for term in _NEGATIVE_PERSON_TERMS) and not any(
-        term in text for term in ("player", "woman", "man", "portrait", "serve", "forehand", "backhand", "athlete")
-    )
-    person_match = not person_required or (subject_match and not negative_only)
+    negative_visual = any(term in image_text for term in _NEGATIVE_PERSON_TERMS)
+    person_match = not person_required or (subject_match and not negative_visual)
     return subject_match, year_match, event_match, person_match
 
 
@@ -239,7 +244,10 @@ def _commons_candidates(query: str, session: requests.Session) -> list[dict]:
     params = {
         "action": "query",
         "generator": "search",
-        "gsrsearch": f"filetype:bitmap {query}",
+        # Namespace 6 already limits results to files.  ``filetype:bitmap`` is
+        # not a supported Commons search operator and used to make many valid
+        # athlete searches return an empty result set.
+        "gsrsearch": query,
         "gsrnamespace": 6,
         "gsrlimit": 12,
         "prop": "imageinfo",
@@ -278,9 +286,77 @@ def _commons_candidates(query: str, session: requests.Session) -> list[dict]:
                 "height": info.get("thumbheight") or info.get("height") or 0,
                 "relevance": _relevance(query, text),
                 "search_text": re.sub(r"<[^>]+>", " ", text).lower(),
+                # Person validation must use what the image itself is called,
+                # not a description that may merely mention the athlete.
+                "image_text": " ".join((page.get("title", ""), info.get("url", ""))).lower(),
             }
         )
     return candidates
+
+
+def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
+    """Return public web-image results as a last-resort editorial source.
+
+    Official pages, Commons and Openverse remain preferred.  Bing is useful for
+    historical event photographs whose page metadata is too sparse for the
+    media-library APIs.  Every result retains its source page and is subjected
+    to the same person/year/event relevance checks as the other providers.
+    """
+    try:
+        response = session.get(
+            "https://www.bing.com/images/search",
+            params={"q": query, "form": "HDRSC2", "first": 1},
+            timeout=15,
+        )
+        response.raise_for_status()
+    except requests.RequestException:
+        return []
+    candidates: list[dict] = []
+    for tag in re.findall(r"<a\b[^>]*\biusc\b[^>]*>", response.text, re.I):
+        match = re.search(r'\bm=["\']([^"\']+)["\']', tag, re.I)
+        if not match:
+            continue
+        try:
+            item = json.loads(html.unescape(match.group(1)))
+        except (TypeError, ValueError):
+            continue
+        image_url = str(item.get("murl") or "").strip()
+        source_url = str(item.get("purl") or "").strip()
+        title = str(item.get("t") or item.get("desc") or "").strip()
+        if not image_url.startswith("http") or not source_url.startswith("https://"):
+            continue
+        domain = urlparse(source_url).netloc.removeprefix("www.")
+        text = " ".join((title, source_url, image_url)).lower()
+        candidates.append(
+            {
+                "provider": "bing-web-image",
+                "source_url": source_url,
+                "image_url": image_url,
+                "credit": domain or "Public web source",
+                "license": "公开网页图片 · 非商业资讯引用",
+                "width": int(item.get("ow") or 0),
+                "height": int(item.get("oh") or 0),
+                "relevance": _relevance(query, text),
+                "search_text": text,
+                "image_text": text,
+            }
+        )
+    return candidates
+
+
+def _query_variants(
+    brief: tuple[str, tuple[str, ...], tuple[str, ...], bool],
+    exact_query: str,
+) -> tuple[str, ...]:
+    """Search the precise scene first, then broaden only to the exact subject."""
+    subject, years, event_terms, _person_required = brief
+    variants = [exact_query]
+    if years:
+        variants.append(" ".join(filter(None, (subject, years[0], "tennis"))))
+    if event_terms:
+        variants.append(" ".join(filter(None, (subject, event_terms[0], "tennis"))))
+    variants.append(" ".join(filter(None, (subject, "tennis"))))
+    return tuple(dict.fromkeys(variants))
 
 
 def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
@@ -315,6 +391,9 @@ def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
                 "height": item.get("height") or 0,
                 "relevance": _relevance(query, text),
                 "search_text": text.lower(),
+                "image_text": " ".join(
+                    (str(item.get("title", "")), str(item.get("url", "")))
+                ).lower(),
             }
         )
     return candidates
@@ -404,6 +483,8 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     # around one verified cover photo. They do not need weakly matched filler
     # photos merely to increase the photo count.
     required_pages = set() if story.diagram_type else set(_PAGES)
+    if cover_audit["status"] != "selected":
+        required_pages.add("cover")
     fact_domains = sorted(
         {
             urlparse(url).netloc.removeprefix("www.")
@@ -417,8 +498,6 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         if not any(name in domain for name in ("wikipedia.org", "wikimedia.org", "openverse.org"))
     ]
     preflight_errors: list[str] = []
-    if cover_audit["status"] != "selected":
-        preflight_errors.append(cover_audit["reason"])
     if len(fact_domains) < 2:
         preflight_errors.append("事实输入源少于 2 个独立域名")
     if not primary_domains:
@@ -443,11 +522,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         }
     session = requests.Session()
     session.headers.update({"User-Agent": _UA})
-    official_references = (
-        _official_references(story, session)
-        if enabled and not story.diagram_type
-        else []
-    )
+    official_references = _official_references(story, session) if enabled else []
     attempts = [dict(reference) for reference in official_references]
     attempts.append(cover_audit)
     selected: dict[str, ResolvedVisual] = {}
@@ -459,7 +534,9 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     briefs = _briefs(story)
     for page, query in _queries(story).items():
         required_anchors = anchors_by_page.get(page, ())
-        if story.diagram_type:
+        if page == "cover" and cover_audit["status"] == "selected":
+            continue
+        if story.diagram_type and page != "cover":
             attempts.append(
                 {
                     "page": page,
@@ -481,33 +558,85 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             candidate = dict(reference)
             candidate["relevance"] = _relevance(query, candidate.get("search_text", ""))
             official_candidates.append(candidate)
+        variants = _query_variants(briefs[page], query)
+        fetches = []
+        with ThreadPoolExecutor(max_workers=min(10, len(variants) * 3)) as pool:
+            for variant in variants:
+                fetches.extend(
+                    (
+                        ("wikimedia-commons", pool.submit(_commons_candidates, variant, session)),
+                        ("openverse", pool.submit(_openverse_candidates, variant, session)),
+                        ("bing-web-image", pool.submit(_bing_candidates, variant, session)),
+                    )
+                )
+        fetched: dict[str, list[dict]] = {
+            "wikimedia-commons": [],
+            "openverse": [],
+            "bing-web-image": [],
+        }
+        for provider, future in fetches:
+            try:
+                fetched[provider].extend(future.result())
+            except Exception:  # noqa: BLE001 - one media index must not stop the fallback chain
+                continue
         providers = (
             ("official-media", official_candidates),
-            ("wikimedia-commons", _commons_candidates(query, session)),
-            ("openverse", _openverse_candidates(query, session)),
+            ("wikimedia-commons", fetched["wikimedia-commons"]),
+            ("openverse", fetched["openverse"]),
+            ("bing-web-image", fetched["bing-web-image"]),
         )
         candidates = [candidate for _provider, items in providers for candidate in items]
         candidates.sort(key=lambda item: (item["relevance"], item.get("width", 0)), reverse=True)
         chosen = None
+        exact_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
+        archive_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
+        seen_candidates: set[tuple[str, str]] = set()
         for candidate in candidates:
+            key = (str(candidate.get("source_url", "")), str(candidate.get("image_url", "")))
+            if key in seen_candidates:
+                continue
+            seen_candidates.add(key)
             if candidate["source_url"] in used_sources or candidate["relevance"] < 3:
                 continue
-            subject_match, year_match, event_match, person_match = _candidate_matches(
-                candidate, briefs[page]
+            candidate_text = " ".join(
+                (
+                    str(candidate.get("source_url", "")),
+                    str(candidate.get("image_url", "")),
+                    str(candidate.get("image_text", "")),
+                )
+            ).lower()
+            if any(term in candidate_text for term in _WATERMARK_LIBRARY_TERMS):
+                continue
+            matches = _candidate_matches(candidate, briefs[page])
+            subject_match, year_match, event_match, person_match = matches
+            if not (subject_match and person_match):
+                continue
+            if page == "cover" and briefs[page][3]:
+                image_text = str(candidate.get("image_text", "")).lower()
+                scene_terms = (
+                    "serve", "forehand", "backhand", "playing", "match", "court",
+                    "final", "champion", "trophy", "medal", "olympic", "slam",
+                    "interview", "press conference", "celebrat",
+                )
+                if not any(term in image_text for term in scene_terms):
+                    continue
+            anchor_match = not required_anchors or any(
+                anchor in candidate.get("search_text", "") for anchor in required_anchors
             )
-            if not (subject_match and year_match and event_match and person_match):
-                continue
-            if required_anchors and not any(
-                anchor in candidate.get("search_text", "")
-                for anchor in required_anchors
-            ):
-                continue
+            row = (candidate, matches, "exact-event" if year_match and event_match and anchor_match else "subject-archive")
+            (exact_candidates if row[2] == "exact-event" else archive_candidates).append(row)
+        for candidate, matches, match_level in (*exact_candidates, *archive_candidates):
+            subject_match, year_match, event_match, person_match = matches
             downloaded = _download(candidate, page, query, folder, session)
             if downloaded and downloaded.sha256 in used_hashes:
                 downloaded.path.unlink(missing_ok=True)
                 continue
             if downloaded:
-                focus = "50% 24%" if briefs[page][3] else "50% 38%"
+                focus = (
+                    "50% 22%"
+                    if page == "cover" and briefs[page][3]
+                    else "50% 24%" if briefs[page][3] else "50% 38%"
+                )
                 chosen = replace(
                     downloaded,
                     focus=focus,
@@ -516,6 +645,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                     event_match=event_match,
                     person_required=briefs[page][3],
                 )
+                candidate["match_level"] = match_level
                 break
         if chosen:
             selected[page] = chosen
@@ -529,6 +659,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                     "page": page,
                     "status": "selected",
                     "required_event_terms": list(required_anchors),
+                    "match_level": candidate.get("match_level", "exact-event"),
                     **selected_record,
                 }
             )
@@ -546,10 +677,12 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     missing_pages = sorted(required_pages - set(selected))
     status = "pass"
     errors: list[str] = []
-    if strict and cover_audit["status"] != "selected":
-        errors.append(cover_audit["reason"])
     if strict and missing_pages:
-        errors.append("缺少通过精确核验的页面照片：" + "、".join(missing_pages))
+        if "cover" in missing_pages:
+            errors.append("封面缺少通过人物与场景核验的照片")
+        inner_missing = [page for page in missing_pages if page != "cover"]
+        if inner_missing:
+            errors.append("缺少通过精确核验的页面照片：" + "、".join(inner_missing))
     input_urls = [
         story.source_url,
         *story.evidence_urls,
@@ -580,8 +713,8 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         "input_domains": input_domains,
         "providers_queried": (
             []
-            if story.diagram_type
-            else ["official-media", "wikimedia-commons", "openverse"]
+            if story.diagram_type or not enabled
+            else ["official-media", "wikimedia-commons", "openverse", "bing-web-image"]
         ),
         "selected_providers": sorted({visual.provider for visual in selected.values()}),
         "errors": errors,

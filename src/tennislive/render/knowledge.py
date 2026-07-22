@@ -79,7 +79,10 @@ def _caption_items(story: TournamentStory) -> list[str]:
         year = moment.date.split("-", 1)[0]
         years.add(year)
         item = f"{year}｜{moment.player}：{moment.headline.rstrip('。')}"
-        items.append(item if len(item) <= 34 else item[:33].rstrip("，；") + "…")
+        if len(item) > 34:
+            short_headline = moment.headline.split("·", 1)[0].rstrip("，；：。 ")
+            item = f"{year}｜{moment.player}：{short_headline}。"
+        items.append(item)
     for fact in story.facts:
         if len(items) >= 3:
             break
@@ -232,6 +235,19 @@ def _validate_copy_for_publish(copy: str) -> None:
     repeated = [phrase for phrase in _FORBIDDEN_COPY_BOILERPLATE if phrase in copy]
     if repeated:
         raise ValueError("知识帖文案仍含固定模板话术：" + "、".join(repeated))
+    if "…" in copy or "..." in copy:
+        raise ValueError("知识帖文案不得用省略号掩盖截断内容")
+    lines = copy.strip().splitlines()
+    if not lines or xhs_title_len(lines[0]) > 20:
+        raise ValueError("知识帖标题必须完整且不超过小红书 20 字限制")
+    paragraphs = [part.strip() for part in copy.split("\n\n") if part.strip()]
+    if len(paragraphs) < 6 or any(len(part) > 120 for part in paragraphs[1:]):
+        raise ValueError("知识帖正文必须使用适合手机阅读的短段落")
+    if "💬" not in copy:
+        raise ValueError("知识帖正文缺少可评论的具体问题")
+    hashtags = [token for token in copy.split() if token.startswith("#")]
+    if not 3 <= len(hashtags) <= 8:
+        raise ValueError("知识帖话题标签应保持 3 至 8 个")
 
 
 def knowledge_push_html(

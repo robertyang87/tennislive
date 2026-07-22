@@ -1576,11 +1576,13 @@ def _card_excerpt(text: str, limit: int) -> str:
     if len(clean) <= limit:
         return clean
     window = clean[: limit + 1]
-    stops = [window.rfind(mark) for mark in ("。", "；", "：", "，")]
+    stops = [window.rfind(mark) for mark in ("。", "！", "？", "；", "：", "，")]
     cut = max(stops)
     if cut >= max(16, limit // 2):
-        return window[: cut + 1]
-    return clean[:limit].rstrip("，；：、 ") + "…"
+        result = window[: cut + 1].rstrip("，；：、 ")
+    else:
+        result = clean[:limit].rstrip("，；：、 ")
+    return result if result.endswith(("。", "！", "？")) else result + "。"
 
 
 def _timeline_visual(years: list[str], *, css_class: str) -> str:
@@ -1721,7 +1723,11 @@ def _knowledge_visual_credit(visual: object | None) -> str:
     return " · ".join(parts)
 
 
-def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
+def _knowledge_cover_body(
+    story: TournamentStory,
+    date_label: str,
+    visual: object | None = None,
+) -> str:
     hooks = {
         "hawkeye": "一场误判，逼网球把判罚交给机器",
         "scoring-history": "网球最奇怪的数字，已经用了几百年",
@@ -1743,17 +1749,20 @@ def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
         if story.slug == "hawkeye"
         else story.hero_fact
     )
-    uri = _asset_image_uri(story.image)
+    image_path = Path(_visual_value(visual, "path", story.image))
+    image_source = str(_visual_value(visual, "source_url", story.image_source_url)).strip()
+    image_credit = _knowledge_visual_credit(visual) or story.image_credit
+    uri = _asset_image_uri(image_path)
     if not uri:
-        raise FileNotFoundError(story.image)
+        raise FileNotFoundError(image_path)
     person_led = story.kind == "player" or story.slug in {
         "golden-slam", "big-three", "china-tennis",
     }
-    focus = "50% 22%" if person_led else "50% 38%"
+    focus = str(_visual_value(visual, "focus", "50% 22%" if person_led else "50% 38%"))
     hook_html = html.escape(hook).replace("，", "，<br>", 1)
     return (
         '<div class="poster cover knowledge-page knowledge-cover" data-visual="verified-photo">'
-        + f'<div class="knowledge-cover-bg" data-photo-source="{html.escape(story.image_source_url, quote=True)}" '
+        + f'<div class="knowledge-cover-bg" data-photo-source="{html.escape(image_source, quote=True)}" '
         + f'style="background-image:url(\'{uri}\');--knowledge-cover-focus:{focus}"></div>'
         + _masthead(date_label)
         + '<div class="knowledge-cover-copy">'
@@ -1762,7 +1771,7 @@ def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
         + '<div class="knowledge-hook">'
         + f'<b>{html.escape(year)}</b><p>{html.escape(_card_excerpt(promise, 62))}</p></div>'
         + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
-        + f'图源：{html.escape(story.image_credit)}</div>'
+        + f'图源：{html.escape(image_credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -2087,7 +2096,7 @@ def knowledge_deck_bodies(
             page_visuals.get("explainer"),
         )
     return [
-        ("knowledge", _knowledge_cover_body(story, date_label)),
+        ("knowledge", _knowledge_cover_body(story, date_label, page_visuals.get("cover"))),
         (
             "story",
             _knowledge_timeline_body(story, date_label, page_visuals.get("story")),
