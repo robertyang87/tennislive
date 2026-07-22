@@ -57,6 +57,7 @@ def test_resolved_visual_manifest_is_json_serializable(tmp_path, monkeypatch):
         ],
     )
     monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
 
     def fake_download(candidate, page, query, folder, _session):
         path = folder / f"{page}.jpg"

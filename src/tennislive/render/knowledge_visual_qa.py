@@ -115,7 +115,7 @@ def evaluate_knowledge_visuals(
         source_url = str(_visual_value(visual, "source_url")).strip()
         credit = str(_visual_value(visual, "credit")).strip()
         license_name = str(_visual_value(visual, "license")).strip()
-        if page not in {"story", "explainer", "today"}:
+        if page not in {"cover", "story", "explainer", "today"}:
             errors.append(f"未知的页面配图槽位：{page}")
         if not source_url.startswith("https://"):
             errors.append(f"{page} 页配图缺少 HTTPS 来源页")
