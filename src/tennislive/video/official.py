@@ -399,6 +399,59 @@ def fetch_youtube_video_metadata(
     )
 
 
+def search_official_youtube_candidates(
+    query: str,
+    *,
+    tour: str,
+    limit: int = 8,
+    searcher: Callable[[str], dict] | None = None,
+) -> list[OfficialVideoCandidate]:
+    """Search YouTube, retaining only videos from a verified official channel.
+
+    This is a mirror finder, not a generic web search: the channel id is
+    checked before a result can enter the point pipeline. ``yt-dlp`` is used
+    only for metadata, so the Action remains independent of a browser session.
+    """
+    expected_channel = OFFICIAL_YOUTUBE_CHANNEL_IDS.get(tour.upper(), "")
+    if not expected_channel:
+        return []
+    if searcher is None:
+        try:
+            from yt_dlp import YoutubeDL
+        except ImportError as exc:  # pragma: no cover - deployment guard
+            raise VideoPipelineError("yt-dlp is required for YouTube mirror search") from exc
+
+        def searcher(url: str) -> dict:
+            with YoutubeDL(
+                {"quiet": True, "no_warnings": True, "extract_flat": True, "noplaylist": True}
+            ) as downloader:
+                return downloader.extract_info(url, download=False)
+
+    try:
+        result = searcher(f"ytsearch{max(1, min(limit, 20))}:{query}") or {}
+    except Exception as exc:
+        raise VideoPipelineError(f"Official YouTube mirror search failed: {exc}") from exc
+    candidates: list[OfficialVideoCandidate] = []
+    for item in result.get("entries") or []:
+        if not isinstance(item, dict):
+            continue
+        channel_id = str(item.get("channel_id") or item.get("uploader_id") or "")
+        if channel_id != expected_channel:
+            continue
+        video_id = str(item.get("id") or "").strip()
+        title = str(item.get("title") or "").strip()
+        if not video_id or not title:
+            continue
+        candidates.append(
+            OfficialVideoCandidate(
+                title=title,
+                url=f"https://www.youtube.com/watch?v={video_id}",
+                tour=tour.upper(),
+            )
+        )
+    return candidates
+
+
 def fetch_tennistv_video_metadata(
     candidate: OfficialVideoCandidate,
     *,

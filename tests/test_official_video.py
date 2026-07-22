@@ -20,6 +20,7 @@ from tennislive.video.official import (
     parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
     render_wta_video,
+    search_official_youtube_candidates,
     select_wta_video_candidate,
 )
 from tennislive.video.pipeline import VideoPipelineError
@@ -39,6 +40,36 @@ def test_wta_video_candidates_are_deduplicated_and_cleaned():
         "Hot shot: Zheng Qinwen forehand",
     ]
     assert candidates[0].url == "https://www.wtatennis.com/videos/42/champions-reel"
+
+
+def test_search_official_youtube_candidates_keeps_only_verified_channel():
+    calls = []
+
+    def searcher(query):
+        calls.append(query)
+        return {
+            "entries": [
+                {
+                    "id": "official-1",
+                    "title": "Hot Shot: Sonego leaves everyone stunned",
+                    "channel_id": ATP_YOUTUBE_CHANNEL_ID,
+                },
+                {
+                    "id": "random-1",
+                    "title": "Hot Shot: copied clip",
+                    "channel_id": "not-official",
+                },
+            ]
+        }
+
+    candidates = search_official_youtube_candidates(
+        "Sonego leaves everyone stunned", tour="ATP", searcher=searcher
+    )
+
+    assert calls == ["ytsearch8:Sonego leaves everyone stunned"]
+    assert [candidate.url for candidate in candidates] == [
+        "https://www.youtube.com/watch?v=official-1"
+    ]
 
 
 def test_tennistv_hot_shot_cards_keep_match_metadata_and_drop_montages():

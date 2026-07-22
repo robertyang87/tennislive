@@ -41,14 +41,14 @@ from .official import (
     parse_official_youtube_feed,
     parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
+    search_official_youtube_candidates,
 )
 from .pipeline import SubtitleCue, VideoPipelineError, render_srt
 
 BEIJING = ZoneInfo("Asia/Shanghai")
 MIN_POINT_SECONDS = 6.0
 MAX_POINT_SECONDS = 120.0
-MIN_SOURCE_WIDTH = 1280
-MIN_SOURCE_HEIGHT = 720
+# Resolution is recorded for observability, not used as a hard publish gate.
 MIN_OUTPUT_FPS = 23.0
 OUTPUT_WIDTH = 1080
 OUTPUT_HEIGHT = 1920
@@ -309,7 +309,7 @@ def official_best_signal(title: str, description: str = "") -> tuple[int, str] |
 
     Tier 3 is an explicit daily-best label, tier 2 is a match-best label, and
     tier 1 is an official single ``Hot Shot``. The latter is publishable when
-    it clears the same date, match-linkage, duration, HD, and full-source
+    it clears the same date, match-linkage, duration, and full-source
     gates, but its manifest is marked as a hot-shot signal rather than a best
     of day claim.
     """
@@ -327,9 +327,8 @@ def official_best_signal(title: str, description: str = "") -> tuple[int, str] |
 
 
 def _is_hd_source(width: int, height: int) -> bool:
-    """Treat landscape and portrait HD sources equivalently."""
-    short_side, long_side = sorted((width, height))
-    return short_side >= MIN_SOURCE_HEIGHT and long_side >= MIN_SOURCE_WIDTH
+    """Legacy helper retained for callers; resolution is no longer a gate."""
+    return width >= 0 and height >= 0
 
 
 def _parse_source_time(value: str) -> datetime | None:
@@ -443,8 +442,6 @@ def select_daily_point(
         duration = metadata.duration_ms / 1000
         if not MIN_POINT_SECONDS <= duration <= MAX_POINT_SECONDS:
             continue
-        if not _is_hd_source(metadata.source_width, metadata.source_height):
-            continue
         if not _published_near_yesterday(metadata.published_at, digest):
             continue
         haystack = _clean(
@@ -463,6 +460,12 @@ def select_daily_point(
         consensus_score, consensus_signals = consensus_evidence
         named_players = sum(token in haystack for token in _player_tokens(match))
         china = any(p.country == "CHN" for p in [*match.home, *match.away])
+        # Prefer a clearer rendition when several official mirrors describe
+        # the same point, without rejecting a lower-resolution source.
+        resolution_bonus = min(
+            60,
+            (metadata.source_width * metadata.source_height) // 50_000,
+        )
         score = (
             consensus_rank * 1000
             + named_players * 35
@@ -471,6 +474,7 @@ def select_daily_point(
             + match.search_heat
             + (30 if china else 0)
             + (18 if "rally" in haystack else 10)
+            + resolution_bonus
         )
         ranked.append(
             (
@@ -506,6 +510,7 @@ def _unique_consensus_pick(
         key=lambda item: (
             item.consensus_rank,
             item.consensus_score,
+            item.editorial_score,
         ),
         reverse=True,
     )
@@ -514,9 +519,11 @@ def _unique_consensus_pick(
     if len(ordered) > 1 and (
         ordered[0].consensus_rank,
         ordered[0].consensus_score,
+        ordered[0].editorial_score,
     ) == (
         ordered[1].consensus_rank,
         ordered[1].consensus_score,
+        ordered[1].editorial_score,
     ):
         return None
     return ordered[0]
@@ -581,7 +588,7 @@ def discover_tennistv_point(
     response.raise_for_status()
     entries = parse_tennistv_hot_shot_entries(str(response.text))
     matches = yesterday_matches(digest)
-    shortlist: list[OfficialVideoCandidate] = []
+    shortlist: list = []
     for entry in entries[:80]:
         text = _clean(f"{entry.candidate.title} {entry.description} {entry.city}")
         if entry.year and str(digest.today.year) != entry.year:
@@ -592,16 +599,37 @@ def discover_tennistv_point(
             for match in matches
         ):
             continue
-        shortlist.append(entry.candidate)
+        shortlist.append(entry)
         if len(shortlist) >= 8:
             break
     metadata_items: list[OfficialVideoMetadata] = []
-    for candidate in shortlist:
+    for entry in shortlist:
         try:
-            metadata_items.append(metadata_fetcher(candidate, get=get, timeout=timeout))
+            metadata_items.append(metadata_fetcher(entry.candidate, get=get, timeout=timeout))
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
             continue
-    return select_daily_point(digest, metadata_items)
+    direct = select_daily_point(digest, metadata_items)
+    if direct is not None:
+        return direct
+
+    # Tennis TV cards are the best ATP discovery source, but many cards are
+    # freemium. Search the exact card title on the verified ATP YouTube
+    # channel as a public mirror, never on arbitrary channels.
+    mirror_items: list[OfficialVideoMetadata] = []
+    for entry in shortlist:
+        query = f'"{entry.candidate.title}" {entry.description}'.strip()
+        try:
+            mirrors = search_official_youtube_candidates(query, tour="ATP", limit=6)
+        except (VideoPipelineError, ValueError, TypeError):
+            continue
+        for candidate in mirrors:
+            if official_best_signal(candidate.title) is None:
+                continue
+            try:
+                mirror_items.append(fetch_youtube_video_metadata(candidate))
+            except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+                continue
+    return select_daily_point(digest, mirror_items)
 
 
 def _discover_official_youtube_point(
