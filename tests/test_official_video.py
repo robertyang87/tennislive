@@ -12,9 +12,12 @@ from tennislive.video.official import (
     _montage_starts,
     _source_cues,
     fetch_youtube_video_metadata,
+    fetch_tennistv_video_metadata,
     fetch_wta_video_metadata,
     parse_official_youtube_feed,
     parse_official_youtube_feed_entries,
+    parse_tennistv_hot_shot_candidates,
+    parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
     render_wta_video,
     select_wta_video_candidate,
@@ -36,6 +39,26 @@ def test_wta_video_candidates_are_deduplicated_and_cleaned():
         "Hot shot: Zheng Qinwen forehand",
     ]
     assert candidates[0].url == "https://www.wtatennis.com/videos/42/champions-reel"
+
+
+def test_tennistv_hot_shot_cards_keep_match_metadata_and_drop_montages():
+    page = r'''
+    <article data-slider-props='{ "title": "Borges leaves his opponent applauding",
+      "videoUrl": "/videos/12/mallorca-2026-qf-borges-hot-shot", "videoId": "12",
+      "mediaId": "0_entry", "description": "Nuno Borges produces a winner in the Mallorca quarter-final.",
+      "videoType": "hotshots", "metadataCity": "Mallorca", "metadataYear": "2026",
+      "metadataRound": "QF", "metadataSeries": "250", "matchType": "singles",
+      "durationSecs": "28", "entitlement": "free", "references": "ATP_MATCH:8994_2026_MS004" }'></article>
+    <article data-slider-props='{ "title": "Mallorca 2026 Hot Shot Countdown",
+      "videoUrl": "/videos/13/countdown", "videoId": "13", "mediaId": "0_count",
+      "description": "Top ten shots", "videoType": "features", "tags": "video-type:features" }'></article>
+    '''
+    entries = parse_tennistv_hot_shot_entries(page)
+    assert len(entries) == 1
+    assert entries[0].candidate.url.endswith("/videos/12/mallorca-2026-qf-borges-hot-shot")
+    assert entries[0].duration_ms == 28_000
+    assert entries[0].references == ("ATP_MATCH:8994_2026_MS004",)
+    assert parse_tennistv_hot_shot_candidates(page) == [entries[0].candidate]
 
 
 def test_official_youtube_feed_verifies_channel_identity():
@@ -156,6 +179,48 @@ def test_official_youtube_metadata_selects_best_progressive_hd_format():
     assert metadata.duration_ms == 24500
     assert (metadata.source_width, metadata.source_height) == (1280, 720)
     assert metadata.published_at.endswith("+00:00")
+
+
+def test_tennistv_metadata_uses_entitlement_token_without_browser_state():
+    candidate = OfficialVideoCandidate(
+        "Borges leaves his opponent applauding",
+        "https://www.tennistv.com/videos/4526866/mallorca-2026-qf-nuno-borges-hot-shot",
+        tour="ATP",
+    )
+
+    class Response:
+        def __init__(self, text="", payload=None):
+            self.text = text
+            self._payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self._payload
+
+    def get(url, **kwargs):
+        if url == candidate.url:
+            return Response(
+                text='''
+                <div data-entry-id="0_p5swvkf4"></div>
+                <span itemprop="description" content="Nuno Borges produces a winner."></span>
+                <span itemprop="thumbnailUrl" content="https://img.example/frame.jpg?width=1920&amp;height=1080"></span>
+                <span itemprop="duration" content="PT28S"></span>
+                <span itemprop="uploadDate" content="2026-07-21T10:00:00Z"></span>
+                '''
+            )
+        assert "entitlementcheck" in url
+        assert kwargs["headers"]["account"] == "atpmedia"
+        assert kwargs["headers"]["Authorization"] == "Bearer jwt"
+        return Response(payload={"access_token": "stream-token"})
+
+    metadata = fetch_tennistv_video_metadata(candidate, get=get, jwt_token="jwt")
+    assert metadata.duration_ms == 28_000
+    assert metadata.source_width == 1920
+    assert metadata.source_height == 1080
+    assert "entryId/0_p5swvkf4" in metadata.playback_url
+    assert "access_token=stream-token" in metadata.playback_url
 
 
 def test_official_youtube_metadata_rejects_video_from_another_channel():
