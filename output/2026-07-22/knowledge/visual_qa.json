@@ -18,57 +18,90 @@
     ],
     "max_card_bytes": 950000
   },
-  "photo_uses": 2,
+  "photo_uses": 4,
   "photo_sources": [
-    "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
-    "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg"
+    "https://www.olympics.com/en/news/tennis-golden-slam-steffi-graf-1988-olympics-gold",
+    "https://commons.wikimedia.org/wiki/File:Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
+    "https://commons.wikimedia.org/wiki/File:Steffi_Graf_(Wimbledon_2009).jpg",
+    "https://www.tennismagazin.de/news/steffi-graf-golden-slam-seoul-olympia-1988/"
   ],
   "resolved_visuals": [
     {
-      "page": "today",
-      "file": "output/2026-07-22/knowledge/visuals/today-b6700f8e0b02.jpg",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg",
-      "credit": "Photocapy",
-      "license": "cc by-sa 2.0",
+      "page": "cover",
+      "file": "output/2026-07-22/knowledge/visuals/cover-0a51a2074703.jpg",
+      "source_url": "https://www.olympics.com/en/news/tennis-golden-slam-steffi-graf-1988-olympics-gold",
+      "credit": "Olympics.com",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 960,
+      "height": 1442
+    },
+    {
+      "page": "story",
+      "file": "output/2026-07-22/knowledge/visuals/story-a82cc265b5f3.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
+      "credit": "Jack de Nijs for Anefo",
+      "license": "cc by-sa 3.0 nl",
       "width": 1920,
-      "height": 1508
+      "height": 1910
+    },
+    {
+      "page": "explainer",
+      "file": "output/2026-07-22/knowledge/visuals/explainer-17ff1adca0f5.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Steffi_Graf_(Wimbledon_2009).jpg",
+      "credit": "Chris Eason from London",
+      "license": "cc by 2.0",
+      "width": 1920,
+      "height": 1275
+    },
+    {
+      "page": "today",
+      "file": "output/2026-07-22/knowledge/visuals/today-116aee512a1e.jpg",
+      "source_url": "https://www.tennismagazin.de/news/steffi-graf-golden-slam-seoul-olympia-1988/",
+      "credit": "tennis MAGAZIN",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1024,
+      "height": 683
     }
   ],
   "pages": [
     {
       "kind": "knowledge",
       "visual": "verified-photo",
-      "text_chars": 211,
-      "longest_text_block": 65,
+      "text_chars": 182,
+      "longest_text_block": 62,
       "photo_count": 1,
       "photo_sources": [
-        "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)"
+        "https://www.olympics.com/en/news/tennis-golden-slam-steffi-graf-1988-olympics-gold"
       ]
     },
     {
       "kind": "story",
       "visual": "narrative-timeline",
-      "text_chars": 270,
+      "text_chars": 325,
       "longest_text_block": 51,
-      "photo_count": 0,
-      "photo_sources": []
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg"
+      ]
     },
     {
       "kind": "explainer",
       "visual": "trivia-explainer",
-      "text_chars": 215,
-      "longest_text_block": 49,
-      "photo_count": 0,
-      "photo_sources": []
+      "text_chars": 276,
+      "longest_text_block": 66,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Steffi_Graf_(Wimbledon_2009).jpg"
+      ]
     },
     {
       "kind": "today",
       "visual": "history-timeline",
-      "text_chars": 265,
-      "longest_text_block": 49,
+      "text_chars": 291,
+      "longest_text_block": 64,
       "photo_count": 1,
       "photo_sources": [
-        "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg"
+        "https://www.tennismagazin.de/news/steffi-graf-golden-slam-seoul-olympia-1988/"
       ]
     }
   ],
@@ -77,25 +110,25 @@
       "file": "card_00_knowledge.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 316940
+      "bytes": 367617
     },
     {
       "file": "card_01_story.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 274816
+      "bytes": 309232
     },
     {
       "file": "card_02_explainer.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 235668
+      "bytes": 296821
     },
     {
       "file": "card_03_today.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 287311
+      "bytes": 312847
     }
   ],
   "errors": [],

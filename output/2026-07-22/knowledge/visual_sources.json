@@ -3,59 +3,183 @@
   "status": "pass",
   "story_slug": "golden-slam",
   "fetch_enabled": true,
-  "policy": "官方页面用于核对；仅下载许可明确且相关性达标的 Commons/Openverse 图片；否则生成事实图解",
-  "selected_count": 1,
+  "strict": true,
+  "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、授权、分辨率与唯一性；不足则换题",
+  "selected_count": 4,
+  "required_pages": [
+    "cover",
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [],
+  "input_domains": [
+    "commons.wikimedia.org",
+    "itftennis.com",
+    "olympics.com",
+    "tennismagazin.de",
+    "usopen.org"
+  ],
+  "providers_queried": [
+    "curated-editorial",
+    "official-media",
+    "wikimedia-commons",
+    "openverse",
+    "bing-web-image"
+  ],
+  "selected_providers": [
+    "editorial-archive",
+    "official-editorial",
+    "wikimedia-commons"
+  ],
+  "errors": [],
   "attempts": [
     {
       "provider": "official-page",
-      "page_url": "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
-      "image_url": "",
-      "status": "reference-only",
-      "reason": "未发现明确再利用许可，不直接下载发布"
+      "page_url": "https://www.usopen.org/en_US/news/articles/2018-08-20/2018-08-20_50_moments_that_mattered_steffi_graf_wins_calendaryear_grand_slam.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
     },
     {
       "provider": "official-page",
-      "page_url": "https://en.wikipedia.org/wiki/Rod_Laver",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Tennis_%27great%27%2C_Rod_Laver_%28cropped%29.jpg",
-      "status": "reference-only",
-      "reason": "未发现明确再利用许可，不直接下载发布"
+      "page_url": "https://www.usopen.org/en_US/visit/grand_slam_alltime_champions.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.usopen.org/en_US/visit/year_by_year.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
+      "source_url": "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
+      "image_url": "https://www.itftennis.com/assets/images/site-logo.jpg",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "olympic tennis event | la 2028 | itf all you need to know about the olympic tennis event at la 2028, including latest news, player entries, event regulations, eligibility rules and much more https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
+      "image_text": " https://www.itftennis.com/assets/images/site-logo.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
+      "source_url": "https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
+      "image_url": "https://media.itftennis.com/assetbank-itf/servlet/display?file=22137ab7ed200b66987dfe18.jpg",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "&#39;nervous&#39; at past olympics, djokovic primed for golden slam charge | itf novak djokovic may be playing it cool, but he is fully aware of the hand of history which is increasingly upon his shoulder at tokyo 2020 https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
+      "image_text": " https://media.itftennis.com/assetbank-itf/servlet/display?file=22137ab7ed200b66987dfe18.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "page": "cover",
+      "status": "rejected",
+      "cached_file": "trivia-golden-slam.jpg",
+      "title": "File:Seoul women's tennis results.jpg",
+      "subject": "Steffi Graf",
+      "required_years": [
+        "1988"
+      ],
+      "required_event_terms": [
+        "seoul",
+        "olympic"
+      ],
+      "person_required": true,
+      "subject_match": false,
+      "year_match": false,
+      "event_match": true,
+      "person_match": false,
+      "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "provider": "official-editorial",
+      "source_url": "https://www.olympics.com/en/news/tennis-golden-slam-steffi-graf-1988-olympics-gold",
+      "image_url": "https://img.olympics.com/images/image/private/t_s_w960/f_auto/primary/vhe08w1mvtsdgzaumrl9",
+      "credit": "Olympics.com",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "Steffi Graf 1988 seoul tennis",
+      "relevance": 99,
+      "sha256": "0a51a20747031c004b012565d150b405d0bc150386e052e66b53ee8079325ef4",
+      "focus": "50% 22%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "cover-0a51a2074703.jpg"
     },
     {
       "page": "story",
-      "status": "generated-visual",
-      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-      "query": "golden-slam 1969 tennis",
+      "status": "selected",
       "required_event_terms": [],
-      "providers": [
-        "wikimedia-commons",
-        "openverse"
-      ]
+      "match_level": "subject-archive",
+      "provider": "wikimedia-commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg/1920px-Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
+      "credit": "Jack de Nijs for Anefo",
+      "license": "cc by-sa 3.0 nl",
+      "query": "Rod Laver 1969 grand slam tennis",
+      "relevance": 6,
+      "sha256": "a82cc265b5f31c1f5ef7e1ae5ebb9af734560623621f5a5860621859b62157ba",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": false,
+      "event_match": false,
+      "person_required": true,
+      "cached_file": "story-a82cc265b5f3.jpg"
     },
     {
       "page": "explainer",
-      "status": "generated-visual",
-      "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-      "query": "golden-slam 荣誉体系 网球冷知识 tennis",
+      "status": "selected",
       "required_event_terms": [],
-      "providers": [
-        "wikimedia-commons",
-        "openverse"
-      ]
+      "match_level": "subject-archive",
+      "provider": "wikimedia-commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Steffi_Graf_(Wimbledon_2009).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Steffi_Graf_%28Wimbledon_2009%29.jpg/1920px-Steffi_Graf_%28Wimbledon_2009%29.jpg",
+      "credit": "Chris Eason from London",
+      "license": "cc by 2.0",
+      "query": "Steffi Graf 1988 grand slam tennis",
+      "relevance": 6,
+      "sha256": "17ff1adca0f559159c7b0795326bb5bdaf769cad43ecc9652742697e1c0721fe",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": false,
+      "event_match": false,
+      "person_required": true,
+      "cached_file": "explainer-17ff1adca0f5.jpg"
     },
     {
       "page": "today",
       "status": "selected",
       "required_event_terms": [],
-      "provider": "wikimedia-commons",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Seoul_women%27s_tennis_results.jpg/1920px-Seoul_women%27s_tennis_results.jpg",
-      "credit": "Photocapy",
-      "license": "cc by-sa 2.0",
-      "query": "golden-slam 1988 tennis",
-      "relevance": 11,
-      "sha256": "b6700f8e0b025807544b66ca88c9d5cb226bbe47ff9ecbedac4e8d8edb285136",
-      "focus": "50% 38%",
-      "cached_file": "today-b6700f8e0b02.jpg"
+      "match_level": "exact-event",
+      "provider": "editorial-archive",
+      "source_url": "https://www.tennismagazin.de/news/steffi-graf-golden-slam-seoul-olympia-1988/",
+      "image_url": "https://www.tennismagazin.de/content/uploads/2018/09/graff-1024x683.jpg",
+      "credit": "tennis MAGAZIN",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "Steffi Graf 1988 seoul tennis",
+      "relevance": 99,
+      "sha256": "116aee512a1e2ad52dbc50370450043354cb065aeaa57a8f10509b392ea31dec",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "today-116aee512a1e.jpg"
     }
-  ]
+  ],
+  "rejected_candidates": []
 }
