@@ -446,8 +446,11 @@ def cmd_yesterday_point(args) -> int:
                     "project": "yesterday-point",
                     "published_for": d.isoformat(),
                     "reason": (
-                        "没有同时满足昨日赛事、官方当日最佳标签、完整回合"
-                        "和 720p 门槛的视频"
+                        "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
+                        "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
+                        "官方单分标签、完整回合和 720p 门槛的视频。"
+                        "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
+                        "Action 不会读取浏览器登录态。"
                     ),
                 },
                 ensure_ascii=False,
