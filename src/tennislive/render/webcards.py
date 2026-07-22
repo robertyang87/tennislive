@@ -522,8 +522,9 @@ html.light .chip-green { color:#fff; }
   font-family:'Barlow Condensed','TL Sans SC'; font-size:24px; font-weight:600;
   letter-spacing:.26em; text-transform:uppercase; }
 .knowledge-photo { position:relative; height:390px; margin-top:18px; overflow:hidden;
-  border:1px solid var(--panel-border); border-radius:8px; background:var(--panel-strong); }
-.knowledge-photo.compact { height:340px; margin-top:14px; }
+  flex:0 0 auto; border:1px solid var(--panel-border); border-radius:8px;
+  background:var(--panel-strong); }
+.knowledge-photo.compact { height:480px; margin-top:14px; }
 .knowledge-photo .kn-back { position:absolute; inset:0; background-size:cover;
   background-position:center; filter:blur(22px) brightness(.58); transform:scale(1.12); }
 .knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
@@ -582,7 +583,7 @@ html.light .chip-green { color:#fff; }
 .knowledge-story-visual .year { fill:var(--ivory); font:700 35px 'Barlow Condensed'; }
 .knowledge-story-visual .label { fill:var(--reason); font:18px 'TL Sans SC'; }
 .knowledge-timeline { margin-top:34px; border-top:2px solid var(--coral); }
-.knowledge-moment { display:grid; grid-template-columns:82px 1fr; gap:24px;
+.knowledge-moment { display:grid; grid-template-columns:96px 1fr; gap:24px;
   min-height:174px; padding:28px 0; align-items:center; border-bottom:1px solid var(--divider); }
 .knowledge-moment i { font-family:'Barlow Condensed'; font-size:52px; font-weight:700;
   font-style:normal; color:var(--neon); }
@@ -596,19 +597,28 @@ html.light .chip-green { color:#fff; }
   font-family:'TL Serif SC','TL Sans SC'; color:var(--ivory);
   font-size:36px; font-weight:900; line-height:1.44; }
 .has-page-photo .knowledge-timeline { margin-top:16px; }
-.has-page-photo .knowledge-moment { min-height:124px; padding:15px 0; }
-.has-page-photo .knowledge-moment b { font-size:36px; }
-.has-page-photo .knowledge-moment p { margin-top:7px; font-size:27px; line-height:1.4; }
-.has-page-photo .knowledge-verdict { margin-top:20px; padding:20px 24px; }
+.has-page-photo .knowledge-moment { min-height:120px; padding:10px 0; }
+.has-page-photo .knowledge-moment b { font-size:35px; }
+.has-page-photo .knowledge-moment p { margin-top:6px; font-size:27px; line-height:1.38; }
+.has-page-photo .knowledge-verdict { margin-top:14px; padding:16px 22px; font-size:33px; line-height:1.36; }
+.semantic-marker { min-width:84px; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:7px; color:var(--neon); }
+.semantic-marker svg { width:46px; height:46px; fill:none; stroke:currentColor;
+  stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+.semantic-marker small { color:var(--reason); font-family:'TL Sans SC'; font-size:18px;
+  font-weight:700; line-height:1; white-space:nowrap; letter-spacing:0; }
+.semantic-marker.mini { min-width:auto; flex-direction:row; gap:6px; }
+.semantic-marker.mini svg { width:27px; height:27px; }
+.semantic-marker.mini small { color:var(--neon); font-size:15px; }
 .official-flow { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
 .official-step { height:292px; padding:19px 21px; overflow:hidden; border-radius:8px;
   border:1px solid var(--panel-border); background:rgba(255,255,255,.035); }
-.official-step header { display:flex; align-items:baseline; gap:11px; }
+.official-step header { display:flex; align-items:center; gap:11px; }
 .official-step header i { color:var(--neon); font-family:'Barlow Condensed';
   font-size:34px; font-weight:700; font-style:normal; }
 .official-step header b { font-family:'TL Display SC','TL Sans SC'; font-size:28px;
   font-weight:400; line-height:1.15; }
-.official-step header span { margin-left:auto; color:var(--fade); font-size:14px; }
+.official-step header > .official-code { margin-left:auto; color:var(--fade); font-size:14px; }
 .official-visual { position:relative; height:198px; margin-top:12px;
   border-top:1px solid var(--divider); }
 .official-visual svg { width:100%; height:172px; }
@@ -629,11 +639,16 @@ html.light .chip-green { color:#fff; }
 .knowledge-fact-grid { display:grid; grid-template-columns:1fr; gap:0; margin-top:40px;
   border-top:2px solid var(--coral); }
 .knowledge-fact-card { min-height:238px; padding:34px 28px; display:grid;
-  grid-template-columns:110px 1fr; gap:32px; align-items:center;
+  grid-template-columns:118px 1fr; gap:32px; align-items:center;
   border-bottom:1px solid var(--divider); background:transparent; }
 .knowledge-fact-card i { color:var(--sky); font-family:'Barlow Condensed';
   font-size:72px; font-weight:700; font-style:normal; }
 .knowledge-fact-card p { margin:0; color:var(--pagetext); font-size:32px; line-height:1.5; }
+.has-page-photo .knowledge-fact-grid { margin-top:14px; }
+.has-page-photo .knowledge-fact-card { min-height:154px; padding:16px 24px;
+  grid-template-columns:120px 1fr; gap:22px; }
+.knowledge-fact-card .semantic-marker { color:var(--sky); }
+.has-page-photo .knowledge-fact-card p { font-size:29px; line-height:1.4; }
 .player-pillars { display:grid; grid-template-columns:repeat(3,1fr); margin-top:42px;
   border-top:2px solid var(--coral); border-bottom:1px solid var(--divider); }
 .player-pillar { min-height:550px; padding:50px 28px 38px; border-right:1px solid var(--divider); }
@@ -655,7 +670,7 @@ html.light .chip-green { color:#fff; }
   font-size:54px; font-weight:700; font-style:normal; line-height:1.05; }
 .event-profile span { display:block; margin-top:18px; color:var(--reason); font-size:19px; }
 .event-notes { margin-top:34px; border-top:1px solid var(--divider); }
-.event-note { display:grid; grid-template-columns:70px 1fr; gap:24px; min-height:170px;
+.event-note { display:grid; grid-template-columns:96px 1fr; gap:24px; min-height:170px;
   padding:27px 0; align-items:center; border-bottom:1px solid var(--divider); }
 .event-note i { color:var(--sky); font-family:'Barlow Condensed'; font-size:48px;
   font-weight:700; font-style:normal; }
@@ -663,9 +678,13 @@ html.light .chip-green { color:#fff; }
 .has-page-photo .event-profile { margin-top:24px; }
 .has-page-photo .event-profile article { min-height:170px; padding:26px 24px; }
 .has-page-photo .event-profile em { font-size:43px; }
-.has-page-photo .event-notes { margin-top:20px; display:grid; grid-template-columns:1fr 1fr; }
-.has-page-photo .event-note { min-height:160px; padding:20px 18px; grid-template-columns:54px 1fr; }
-.has-page-photo .event-note:nth-child(3) { display:none; }
+.has-page-photo .event-notes { margin-top:20px; display:grid;
+  grid-template-columns:repeat(3,1fr); }
+.has-page-photo .event-note { min-height:238px; padding:20px 18px; display:flex;
+  flex-direction:column; align-items:flex-start; gap:13px; border-right:1px solid var(--divider); }
+.has-page-photo .event-note:last-child { border-right:0; }
+.has-page-photo .event-note .semantic-marker { min-width:0; flex-direction:row; }
+.has-page-photo .event-note .semantic-marker svg { width:38px; height:38px; }
 .has-page-photo .event-note p { font-size:27px; line-height:1.4; }
 .explainer-mark { height:115px; margin-top:34px; border-top:2px solid var(--coral);
   border-bottom:1px solid var(--divider); }
@@ -700,11 +719,12 @@ html.light .chip-green { color:#fff; }
 .has-page-photo .knowledge-years { margin-top:16px; }
 .has-page-photo .knowledge-year,
 .has-page-photo .knowledge-years.count-2 .knowledge-year {
-  min-height:132px; padding:8px 0 16px;
+  min-height:116px; padding:6px 0 12px;
 }
-.has-page-photo .knowledge-year b { font-size:38px; }
-.has-page-photo .knowledge-year p { margin-top:7px; font-size:27px; line-height:1.4; }
-.has-page-photo .knowledge-question { margin-top:16px; padding:22px 25px; }
+.has-page-photo .knowledge-year b { font-size:36px; }
+.has-page-photo .knowledge-year p { margin-top:5px; font-size:27px; line-height:1.38; }
+.has-page-photo .knowledge-question { margin-top:12px; padding:18px 24px; }
+.has-page-photo .knowledge-question strong { margin-top:9px; font-size:36px; line-height:1.34; }
 
 /* ---------- 外媒赛后室 ---------- */
 .media-page h1 { font-size:72px; }
@@ -1533,10 +1553,12 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         story_items = moment_items + ([fact_item] if fact_item else [])
     rows = "".join(
         '<li>'
-        f'<i class="story-index">{index:02d}</i>'
-        f'<div class="story-copy"><strong>{html.escape(title)}</strong>'
+        + _semantic_marker_for_text(
+            f"{title} {detail}", index, story_kind=story.kind
+        )
+        + f'<div class="story-copy"><strong>{html.escape(title)}</strong>'
         f'<p>{html.escape(detail)}</p></div></li>'
-        for index, (title, detail) in enumerate(story_items[:3], 1)
+        for index, (title, detail) in enumerate(story_items[:3])
     )
     kicker = {
         "player": "Player Spotlight · 球员特写",
@@ -1583,6 +1605,11 @@ def _card_excerpt(text: str, limit: int) -> str:
     else:
         result = clean[:limit].rstrip("，；：、 ")
     return result if result.endswith(("。", "！", "？")) else result + "。"
+
+
+def _card_excerpt_html(text: str, limit: int) -> str:
+    escaped = html.escape(_card_excerpt(text, limit))
+    return re.sub(r"(?<=\d)-(?=\d)", "&#8209;", escaped)
 
 
 def _timeline_visual(years: list[str], *, css_class: str) -> str:
@@ -1667,6 +1694,140 @@ def _visual_value(visual: object | None, key: str, default: Any) -> Any:
     return getattr(visual, key, default)
 
 
+_SEMANTIC_ICON_PATHS: dict[str, str] = {
+    "activity": '<path d="M3 12h4l2-5 4 10 2-5h6"/>',
+    "calendar": (
+        '<path d="M8 2v4M16 2v4M3 10h18"/>'
+        '<path d="M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2Z"/>'
+    ),
+    "camera": (
+        '<path d="M14.5 4 16 7h4a2 2 0 0 1 2 2v10H2V9a2 2 0 0 1 2-2h4l1.5-3h5Z"/>'
+        '<circle cx="12" cy="13" r="3"/>'
+    ),
+    "circle-check": (
+        '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'
+    ),
+    "history": (
+        '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>'
+        '<path d="M3 3v5h5M12 7v5l3 2"/>'
+    ),
+    "landmark": (
+        '<path d="m3 10 9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>'
+    ),
+    "layers": (
+        '<path d="m12 2 9 5-9 5-9-5 9-5Z"/>'
+        '<path d="m3 12 9 5 9-5M3 17l9 5 9-5"/>'
+    ),
+    "medal": (
+        '<circle cx="12" cy="15" r="5"/><path d="m9 10-3-8h4l2 4 2-4h4l-3 8"/>'
+    ),
+    "route": (
+        '<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/>'
+        '<path d="M8 19h3a3 3 0 0 0 3-3V8a3 3 0 0 1 3-3"/>'
+    ),
+    "scan": (
+        '<path d="M3 7V3h4M17 3h4v4M21 17v4h-4M7 21H3v-4"/>'
+        '<circle cx="12" cy="12" r="3"/>'
+    ),
+    "timer": (
+        '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>'
+    ),
+    "trophy": (
+        '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/>'
+        '<path d="M5 6H3v2a4 4 0 0 0 4 4M19 6h2v2a4 4 0 0 1-4 4"/>'
+    ),
+    "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+}
+
+
+def _semantic_marker(
+    icon: str,
+    label: str,
+    *,
+    marker_kind: str = "concept",
+    mini: bool = False,
+) -> str:
+    """Render an offline semantic marker; year labels must stay four digits."""
+    if marker_kind == "year" and not re.fullmatch(r"(?:18|19|20)\d{2}", label):
+        raise ValueError(f"年份标记必须使用四位年份：{label}")
+    try:
+        paths = _SEMANTIC_ICON_PATHS[icon]
+    except KeyError as exc:
+        raise ValueError(f"未知的故事语义图标：{icon}") from exc
+    classes = "semantic-marker mini" if mini else "semantic-marker"
+    return (
+        f'<span class="{classes}" data-marker-kind="{html.escape(marker_kind, quote=True)}">'
+        f'<svg viewBox="0 0 24 24" aria-hidden="true">{paths}</svg>'
+        f'<small>{html.escape(label)}</small></span>'
+    )
+
+
+def _semantic_marker_for_text(
+    text: str,
+    index: int,
+    *,
+    story_kind: str = "trivia",
+    role: str = "",
+) -> str:
+    """Choose a future-proof marker from the meaning of each story beat."""
+    year = re.search(r"(?<!\d)(?:18|19|20)\d{2}(?!\d)", text)
+    role_markers = {
+        "origin": ("history", "缘起"),
+        "history": ("history", "历史"),
+        "person": ("user", "人物"),
+        "venue": ("landmark", "现场"),
+        "turning_point": ("route", "转折"),
+        "trophy": ("trophy", "冠军"),
+        "medal": ("medal", "金牌"),
+        "surface": ("layers", "场地"),
+        "cycle": ("timer", "周期"),
+        "rule": ("circle-check", "规则"),
+        "technology": ("scan", "科技"),
+        "legacy": ("circle-check", "影响"),
+        "today": ("circle-check", "今天"),
+    }
+    if role:
+        try:
+            icon, label = role_markers[role]
+        except KeyError as exc:
+            raise ValueError(f"未知的故事事实角色：{role}") from exc
+        return _semantic_marker(
+            icon,
+            year.group(0) if year else label,
+            marker_kind="year" if year else "concept",
+        )
+    rules = (
+        (("相机", "影像", "轨迹", "电子", "系统", "技术"), "scan", "科技"),
+        (("规则", "判罚", "司线", "界内", "界外"), "circle-check", "判定"),
+        (("奥运",), "medal", "奥运"),
+        (("金牌",), "medal", "金牌"),
+        (("红土", "草地", "硬地", "场地", "材质"), "layers", "场地"),
+        (("四年", "小时", "分钟", "三天", "赛历", "周期"), "timer", "时间"),
+        (("冠军", "夺冠", "捧杯", "满贯"), "trophy", "冠军"),
+        (("球场", "城市", "现场", "中心球场"), "landmark", "现场"),
+        (("决赛", "比赛", "对手", "赛点", "回合"), "activity", "赛场"),
+        (("出生", "起源", "开始", "创办", "首次"), "history", "起点"),
+        (("球员", "人物", "少年", "少女"), "user", "人物"),
+    )
+    for keywords, icon, label in rules:
+        if any(keyword in text for keyword in keywords):
+            return _semantic_marker(
+                icon,
+                year.group(0) if year else label,
+                marker_kind="year" if year else "concept",
+            )
+    if year:
+        return _semantic_marker("calendar", year.group(0), marker_kind="year")
+    kind_defaults = {
+        "player": (("user", "起点"), ("route", "转折"), ("trophy", "高光")),
+        "tournament": (("landmark", "起源"), ("history", "传统"), ("trophy", "冠军")),
+        "trivia": (("history", "缘起"), ("route", "转折"), ("circle-check", "今天")),
+    }
+    defaults = kind_defaults.get(story_kind, kind_defaults["trivia"])
+    icon, label = defaults[min(index, len(defaults) - 1)]
+    return _semantic_marker(icon, label)
+
+
 def _knowledge_photo(
     story: TournamentStory,
     caption: str,
@@ -1692,6 +1853,7 @@ def _knowledge_photo(
         pass
     portrait_class = " portrait" if portrait else ""
     compact_class = " compact" if compact else ""
+    layout_attr = ' data-photo-layout="inner-hero"' if compact else ""
     sub = f"<small>{html.escape(subline)}</small>" if subline else ""
     # Keep player faces above the caption gradient. Do not zoom portraits: the
     # old scale transform was the reason heads were clipped in exported cards.
@@ -1706,7 +1868,7 @@ def _knowledge_photo(
         else ""
     )
     return (
-        f'<div class="knowledge-photo{portrait_class}{compact_class}"{photo_source}>'
+        f'<div class="knowledge-photo{portrait_class}{compact_class}"{layout_attr}{photo_source}>'
         f'<i class="kn-back" style="background-image:url(\'{uri}\')"></i>'
         f'<img src="{uri}" alt="" style="object-position:{html.escape(focus, quote=True)}">'
         '<div class="knowledge-photo-copy">'
@@ -1739,14 +1901,20 @@ def _knowledge_cover_body(
         "china-tennis": "中国网球的二十年，从哪一冠开始",
     }
     hook = hooks.get(story.slug, story.title)
-    if story.kind == "player":
-        born = re.search(r"\b(19|20)\d{2}\b", story.founded)
+    if story.hero_marker:
+        if story.hero_marker.isdigit() and not re.fullmatch(
+            r"(?:18|19|20)\d{2}", story.hero_marker
+        ):
+            raise ValueError(f"封面年份必须使用四位年份：{story.hero_marker}")
+        year = story.hero_marker
+    elif story.kind == "player":
+        born = re.search(r"(?<!\d)(?:19|20)\d{2}(?!\d)", story.founded)
         year = born.group(0) if born else "PLAYER"
     else:
         # The cover year belongs to the headline claim.  A supporting timeline
         # may begin earlier (for example Laver 1969 before Graf 1988), so using
         # its first row can put the wrong year beside the cover subject.
-        hero_year = re.search(r"\b(?:18|19|20)\d{2}\b", story.hero_fact)
+        hero_year = re.search(r"(?<!\d)(?:18|19|20)\d{2}(?!\d)", story.hero_fact)
         year = (
             hero_year.group(0)
             if hero_year
@@ -1792,7 +1960,7 @@ def _knowledge_timeline_body(
 ) -> str:
     title_overrides = {
         "hawkeye": "那一夜，发生了什么？",
-        "golden-slam": "两代人，把极限又推远一步",
+        "golden-slam": "从1969到1988，格拉芙多拿了哪一冠",
         "surfaces": "场地一换，比赛就变了",
         "big-three": "三个人，怎样接管一个时代",
         "china-tennis": "从李娜到郑钦文，二十年三次破门",
@@ -1808,29 +1976,52 @@ def _knowledge_timeline_body(
         default_title = f"{story.title}，来路比结论更有意思"
     title = title_overrides.get(story.slug, default_title)
     items: list[tuple[str, str]] = []
-    if story.moments:
-        items.append((story.moments[0].headline, story.moments[0].detail))
-    if len(story.facts) > 1:
-        middle_labels = {
-            "player": "技术标签不是一天长成的",
-            "tournament": "赛事传统在这里定型",
-            "trivia": "把这件事放回历史",
-        }
-        items.append((middle_labels.get(story.kind, "历史继续往前"), story.facts[1]))
-    if len(story.moments) > 1:
-        items.append((story.moments[1].headline, story.moments[1].detail))
+    if story.slug == "golden-slam":
+        items = [
+            (
+                "1969：拉沃尔同年拿齐四大满贯",
+                "同一年赢下四大满贯；这是公开赛时代男子至今唯一一次。",
+            ),
+            (
+                "四大满贯之外，还要等奥运会",
+                "奥运网球四年一次，巅峰赛季必须恰好与奥运年重合。",
+            ),
+            (
+                "1988：格拉芙把金牌也带走",
+                "四大满贯之后，她在汉城击败萨巴蒂尼，把奥运金牌也装进同一年。",
+            ),
+        ]
+    else:
+        if story.moments:
+            items.append((story.moments[0].headline, story.moments[0].detail))
+        if len(story.facts) > 1:
+            middle_labels = {
+                "player": "技术标签不是一天长成的",
+                "tournament": "赛事传统在这里定型",
+                "trivia": "这个变化为什么留到了今天",
+            }
+            items.append((middle_labels.get(story.kind, "历史继续往前"), story.facts[1]))
+        if len(story.moments) > 1:
+            items.append((story.moments[1].headline, story.moments[1].detail))
     if not items:
         items = [("关键事实", fact) for fact in story.facts[:3]]
     rows = "".join(
         '<div class="knowledge-moment">'
-        f'<i>{index:02d}</i><div><b>{html.escape(headline)}</b>'
+        + _semantic_marker_for_text(
+            f"{headline} {detail}", index, story_kind=story.kind
+        )
+        + f'<div><b>{html.escape(headline)}</b>'
         f'<p>{html.escape(_card_excerpt(detail, 50))}</p></div></div>'
-        for index, (headline, detail) in enumerate(items[:3], 1)
+        for index, (headline, detail) in enumerate(items[:3])
     )
     verdict = (
         "问题不只是一个球看错，而是关键分曾经无处申诉。"
         if story.slug == "hawkeye"
-        else story.hero_fact
+        else (
+            "拉沃尔同年拿齐四大满贯；格拉芙在1988年又把奥运金牌放进同一个赛季。"
+            if story.slug == "golden-slam"
+            else story.hero_fact
+        )
     )
     visual_years = [moment.date[:4] for moment in story.moments[:3]]
     if story.founded:
@@ -1838,9 +2029,14 @@ def _knowledge_timeline_body(
     has_photo = visual is not None
     if has_photo:
         first = story.moments[0] if story.moments else None
+        photo_caption = (
+            "同一年拿齐四大满贯"
+            if story.slug == "golden-slam"
+            else first.headline if first else story.venue
+        )
         media = _knowledge_photo(
             story,
-            first.headline if first else story.venue,
+            photo_caption,
             f"{first.date[:4]} · {first.player}" if first else story.location,
             visual=visual,
             compact=True,
@@ -1877,7 +2073,9 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
         + _masthead(date_label)
         + _titleband("Sony / Hawk-Eye Official Workflow", "鹰眼不看回放，它重建轨迹")
         + '<div class="official-flow">'
-        + '<article class="official-step"><header><i>01</i><b>每台相机先找球心</b><span>2D VISION</span></header>'
+        + '<article class="official-step"><header>'
+        + _semantic_marker("camera", "取像", mini=True)
+        + '<b>每台相机先找球心</b><span class="official-code">2D VISION</span></header>'
         + '<div class="official-visual"><svg viewBox="0 0 420 172">'
         + '<rect x="16" y="17" width="168" height="112" fill="#0F4B3D" stroke="#78D3DC" stroke-width="2"/>'
         + '<rect x="236" y="17" width="168" height="112" fill="#0F4B3D" stroke="#78D3DC" stroke-width="2"/>'
@@ -1885,20 +2083,26 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
         + '<text x="61" y="154" fill="#A9B9B0" font-size="17">CAMERA A</text>'
         + '<text x="281" y="154" fill="#A9B9B0" font-size="17">CAMERA B</text></svg>'
         + '<p>同一颗球，在不同画面里的位置不同</p></div></article>'
-        + '<article class="official-step"><header><i>02</i><b>视线交会，算出空间位置</b><span>3D</span></header>'
+        + '<article class="official-step"><header>'
+        + _semantic_marker("scan", "定位", mini=True)
+        + '<b>视线交会，算出空间位置</b><span class="official-code">3D</span></header>'
         + '<div class="official-visual"><svg viewBox="0 0 420 172">'
         + '<circle cx="42" cy="39" r="12" fill="#FF765F"/><circle cx="42" cy="137" r="12" fill="#FF765F"/>'
         + '<line x1="54" y1="39" x2="292" y2="88" stroke="#78D3DC" stroke-width="3"/>'
         + '<line x1="54" y1="137" x2="292" y2="88" stroke="#78D3DC" stroke-width="3"/>'
         + '<circle cx="292" cy="88" r="15" fill="#D3FF12"/><text x="320" y="96" fill="#78D3DC" font-size="20">X / Y / Z</text></svg>'
         + '<p>两台以上相机交叉定位</p></div></article>'
-        + '<article class="official-step"><header><i>03</i><b>连续帧连成3D轨迹</b><span>TIME</span></header>'
+        + '<article class="official-step"><header>'
+        + _semantic_marker("route", "轨迹", mini=True)
+        + '<b>连续帧连成3D轨迹</b><span class="official-code">TIME</span></header>'
         + '<div class="official-visual"><svg viewBox="0 0 420 172">'
         + '<path d="M35 135 Q190 8 382 138" fill="none" stroke="#78D3DC" stroke-width="4"/>'
         + '<g fill="#D3FF12"><circle cx="43" cy="129" r="9"/><circle cx="112" cy="70" r="9"/>'
         + '<circle cx="193" cy="43" r="9"/><circle cx="282" cy="65" r="9"/><circle cx="372" cy="130" r="9"/></g></svg>'
         + '<p>球心位置随时间连接，得到完整路径</p></div></article>'
-        + '<article class="official-step"><header><i>04</i><b>计算弹跳点，再与边线比对</b><span>CALL</span></header>'
+        + '<article class="official-step"><header>'
+        + _semantic_marker("circle-check", "判定", mini=True)
+        + '<b>计算弹跳点，再与边线比对</b><span class="official-code">CALL</span></header>'
         + '<div class="official-visual"><svg viewBox="0 0 420 172">'
         + '<rect x="62" y="73" width="298" height="22" fill="#F7F3E8"/>'
         + '<ellipse cx="257" cy="68" rx="42" ry="28" fill="#D3FF12" stroke="#0C362B" stroke-width="4"/>'
@@ -1921,19 +2125,33 @@ def _knowledge_fact_body(
     visual: object | None = None,
 ) -> str:
     facts = story.facts[:3]
+    if story.slug == "golden-slam":
+        facts = (
+            "四大满贯横跨硬地、红土和草地，整季状态不能掉线。",
+            "奥运网球四年一次，巅峰期还必须恰好撞上奥运年。",
+            "五项冠军必须全部发生在同一个自然年，1988年的格拉芙至今唯一。",
+        )
     lead = "" if visual is not None else _explainer_mark()
     if story.kind == "player":
         cards = []
-        for index, fact in enumerate(facts, 1):
+        for index, fact in enumerate(facts):
             age = re.search(r"(\d{1,2})\s*岁", fact)
-            marker = age.group(1) if age else f"{index:02d}"
+            role = story.fact_roles[index] if index < len(story.fact_roles) else ""
+            marker = (
+                f'<span class="meaningful-stat"><em>{html.escape(age.group(1))}</em>'
+                '<small>岁</small></span>'
+                if age
+                else _semantic_marker_for_text(
+                    fact, index, story_kind=story.kind, role=role
+                )
+            )
             cards.append(
                 '<article class="player-pillar">'
-                f'<em>{html.escape(marker)}</em><small>AGE / MOMENT</small>'
+                f'{marker}'
                 f'<p>{html.escape(_card_excerpt(fact, 38))}</p></article>'
             )
         content = lead + '<div class="player-pillars">' + "".join(cards) + "</div>"
-        title = f"三次转折，看见{story.title}的来路"
+        title = f"{story.title}，从起点到被看见"
     elif story.kind == "tournament":
         profile = (
             '<div class="event-profile">'
@@ -1943,27 +2161,40 @@ def _knowledge_fact_body(
         )
         notes = "".join(
             '<div class="event-note">'
-            f'<i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 48))}</p></div>'
-            for index, fact in enumerate(facts, 1)
+            + _semantic_marker_for_text(
+                fact,
+                index,
+                story_kind=story.kind,
+                role=story.fact_roles[index] if index < len(story.fact_roles) else "",
+            )
+            + f'<p>{_card_excerpt_html(fact, 42)}</p></div>'
+            for index, fact in enumerate(facts)
         )
         content = lead + profile + f'<div class="event-notes">{notes}</div>'
-        title = f"走进{story.title}，先认这三个坐标"
+        title = f"{story.title}，冠军与传统如何写成"
     else:
         cards = "".join(
-            f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 54))}</p></article>'
-            for index, fact in enumerate(facts, 1)
+            '<article class="knowledge-fact-card">'
+            + _semantic_marker_for_text(
+                fact,
+                index,
+                story_kind=story.kind,
+                role=story.fact_roles[index] if index < len(story.fact_roles) else "",
+            )
+            + f'<p>{html.escape(_card_excerpt(fact, 40))}</p></article>'
+            for index, fact in enumerate(facts)
         )
         content = lead + f'<div class="knowledge-fact-grid">{cards}</div>'
         trivia_titles = {
             "scoring-history": "四个数字，藏着几百年争论",
             "yellow-ball": "从白到黄，电视改变了网球",
             "longest-match": "比分之外，身体经历了什么",
-            "golden-slam": "五座冠军，卡在三道窄门",
+            "golden-slam": "金满贯难在哪？五项冠军必须挤进同一年",
             "surfaces": "材质一变，弹跳与战术全变",
             "big-three": "三个名字，三条统治曲线",
             "china-tennis": "二十年，中国网球三次破门",
         }
-        title = trivia_titles.get(story.slug, f"拆开来看，{story.title}难在哪")
+        title = trivia_titles.get(story.slug, f"{story.title}，真正难在哪里")
     has_photo = visual is not None
     page_class = " has-page-photo" if has_photo else ""
     media = (
@@ -2011,7 +2242,7 @@ def _knowledge_today_body(
         question = "四大满贯中，只剩法网仍保留人工司线。红土球印，足够可靠吗？"
     else:
         today_titles = {
-            "golden-slam": "1988之后，为什么再没人做到",
+            "golden-slam": "1988之后，为什么没人复制这条夺冠路线",
             "surfaces": "今天看球，先看脚下这块地",
             "big-three": "时代散场，纪录仍在追人",
             "china-tennis": "从第一冠到下一代，故事没停",
@@ -2026,14 +2257,28 @@ def _knowledge_today_body(
         else:
             default_today_title = f"{story.title}，今天留下了什么"
         title = today_titles.get(story.slug, default_today_title)
-        rows = tuple(
-            (
-                moment.date[:4],
-                moment.headline,
-                moment.detail,
+        if story.slug == "golden-slam":
+            rows = (
+                (
+                    "1969",
+                    "拉沃尔同年拿齐四大满贯",
+                    "美网决赛击败罗切，成为公开赛时代至今唯一同年拿齐四大满贯的男子球员。",
+                ),
+                (
+                    "1988",
+                    "格拉芙再加一枚奥运金牌",
+                    "四大满贯之后，她又赢下汉城奥运会，五座冠军全部装进同一年。",
+                ),
             )
-            for moment in story.moments[:3]
-        )
+        else:
+            rows = tuple(
+                (
+                    moment.date[:4],
+                    moment.headline,
+                    moment.detail,
+                )
+                for moment in story.moments[:3]
+            )
         eyebrow_labels = {
             "player": "这一代球迷的记忆",
             "tournament": "下一站仍在继续",
@@ -2049,9 +2294,14 @@ def _knowledge_today_body(
     has_photo = visual is not None
     if has_photo:
         last = story.moments[-1] if story.moments else None
+        photo_caption = (
+            "四大满贯之后，又拿奥运金牌"
+            if story.slug == "golden-slam"
+            else last.headline if last else story.hero_fact
+        )
         media = _knowledge_photo(
             story,
-            last.headline if last else story.hero_fact,
+            photo_caption,
             f"{last.date[:4]} · {last.player}" if last else story.location,
             visual=visual,
             compact=True,
@@ -2214,6 +2464,53 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                         timeout=15000,
                     )
                     page.evaluate("window.scrollTo(0, 0)")
+                    layout = page.evaluate(
+                        """() => {
+                          const poster = document.querySelector('.poster.knowledge-page:not(.cover)');
+                          if (!poster) return null;
+                          const footer = poster.querySelector(':scope > .footer');
+                          const footerTop = footer ? footer.getBoundingClientRect().top : 1440;
+                          const flow = Array.from(poster.children).filter((node) => {
+                            if (node === footer) return false;
+                            const style = getComputedStyle(node);
+                            return style.position !== 'absolute' && style.display !== 'none';
+                          });
+                          const maxBottom = Math.max(
+                            poster.getBoundingClientRect().top,
+                            ...flow.map((node) => node.getBoundingClientRect().bottom),
+                          );
+                          const photo = poster.querySelector('[data-photo-layout="inner-hero"]');
+                          const overflow = Array.from(poster.querySelectorAll(
+                            '.official-step,.knowledge-moment,.knowledge-fact-card,' +
+                            '.event-note,.knowledge-question'
+                          )).filter((node) => node.scrollHeight > node.clientHeight + 2)
+                            .map((node) => node.className);
+                          return {
+                            photoHeight: photo ? photo.getBoundingClientRect().height : 0,
+                            footerTop,
+                            maxBottom,
+                            posterScrollHeight: poster.scrollHeight,
+                            documentScrollHeight: document.documentElement.scrollHeight,
+                            overflow,
+                          };
+                        }"""
+                    )
+                    if layout:
+                        if layout["photoHeight"] and layout["photoHeight"] < 475:
+                            raise RuntimeError(
+                                f"{kind} 页内图实际高度仅 {layout['photoHeight']:.0f}px"
+                            )
+                        if layout["maxBottom"] > layout["footerTop"] - 12:
+                            raise RuntimeError(
+                                f"{kind} 页正文与页脚重叠："
+                                f"content={layout['maxBottom']:.0f}, footer={layout['footerTop']:.0f}"
+                            )
+                        if layout["posterScrollHeight"] > H + 2 or layout["documentScrollHeight"] > H + 2:
+                            raise RuntimeError(f"{kind} 页内容超出 {H}px 画布")
+                        if layout["overflow"]:
+                            raise RuntimeError(
+                                f"{kind} 页文本块溢出：{', '.join(layout['overflow'])}"
+                            )
                     # Full-page capture always starts at document coordinates 0,0.
                     # Fixed clips have shown intermittent viewport offsets on CI.
                     shot = page.screenshot(type="png", full_page=True)

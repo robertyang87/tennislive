@@ -1,3 +1,4 @@
+import re
 from datetime import date
 from pathlib import Path
 
@@ -1263,11 +1264,124 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
     hawkeye = next(story for story in STORIES if story.slug == "hawkeye")
     post = knowledge_copy(hawkeye, sample_digest)
     assert "🧠 先猜" not in post and "🎾 答案" not in post
-    assert "① 2004" in post and "② 2006" in post
+    assert "2004｜" in post and "2006｜" in post
+    assert not any(marker in post for marker in ("①", "②", "③", "④"))
     assert "2D 视觉处理与 3D 三角测量" in post
     assert "回放动画数秒内生成" not in post
     assert "四大满贯只剩法网保留人工司线" in post
     assert "今天单独讲一个网球知识点" not in post
+
+
+def test_all_knowledge_stories_use_semantic_markers_without_ordinals(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    image = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(image)
+    forbidden = ("三道窄门", "三次转折", "三个坐标", "把这件事放回历史")
+    for source in STORIES:
+        story = replace(
+            source,
+            image=image,
+            image_source_url=f"https://example.com/{source.slug}",
+            image_credit="Example archive",
+        )
+        bodies = knowledge_deck_bodies(
+            story,
+            "07.22 · 周三",
+            question="这段历史里，你最想记住哪个瞬间？",
+            year=2026,
+        )
+        combined = "\n".join(body for _kind, body in bodies)
+        assert 'class="semantic-marker' in combined, story.slug
+        assert not re.search(r"<(?:i|small)[^>]*>\s*0[1-9]\s*</", combined), story.slug
+        assert not any(marker in combined for marker in ("①", "②", "③", "④")), story.slug
+        assert not any(phrase in combined for phrase in forbidden), story.slug
+        for marker in re.findall(
+            r'data-marker-kind="year"[^>]*>.*?<small>([^<]+)</small>',
+            combined,
+            flags=re.DOTALL,
+        ):
+            assert re.fullmatch(r"(?:18|19|20)\d{2}", marker), (story.slug, marker)
+        assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass", story.slug
+
+
+def test_semantic_year_marker_keeps_full_year_next_to_chinese_text():
+    from tennislive.render.webcards import _semantic_marker_for_text
+
+    marker = _semantic_marker_for_text("1988年的格拉芙夺得奥运金牌", 0)
+
+    assert 'data-marker-kind="year"' in marker
+    assert "<small>1988</small>" in marker
+    assert "<small>88</small>" not in marker
+
+
+def test_cover_rejects_abbreviated_year_marker(tmp_path):
+    from dataclasses import replace
+
+    import pytest
+    from PIL import Image
+
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    image = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(image)
+    story = replace(
+        next(story for story in STORIES if story.slug == "golden-slam"),
+        image=image,
+        hero_marker="88",
+    )
+
+    with pytest.raises(ValueError, match="四位年份"):
+        knowledge_deck_bodies(
+            story,
+            "07.22 · 周三",
+            question="哪一冠最难？",
+            year=2026,
+        )
+
+
+def test_all_knowledge_copy_is_plain_mobile_first_and_not_numbered():
+    from tennislive.render.knowledge import (
+        _validate_copy_for_publish,
+        knowledge_copy,
+    )
+    from tennislive.render.tournament_story import STORIES
+
+    digest = Digest(today=date(2026, 7, 22))
+    for story in STORIES:
+        copy = knowledge_copy(story, digest)
+        _validate_copy_for_publish(copy)
+        assert not any(marker in copy for marker in ("①", "②", "③", "④")), story.slug
+        assert "💬" in copy, story.slug
+        assert len([part for part in copy.split("\n\n") if part.strip()]) >= 6, story.slug
+
+
+def test_knowledge_story_openings_vary_by_date_and_story_kind():
+    from datetime import timedelta
+
+    from tennislive.render.knowledge import _story_opening
+    from tennislive.render.tournament_story import STORIES
+
+    representatives = {
+        kind: next(story for story in STORIES if story.kind == kind)
+        for kind in ("player", "tournament", "trivia")
+    }
+    for kind, story in representatives.items():
+        labels = {
+            _story_opening(
+                story,
+                Digest(today=date(2026, 7, 22) + timedelta(days=offset)),
+            )[0]
+            for offset in range(14)
+        }
+        assert len(labels) >= 3, kind
 
 
 def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatch, tmp_path):

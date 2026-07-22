@@ -29,6 +29,22 @@ def test_event_anchor_parser_covers_majors_and_olympics():
     )
 
 
+def test_golden_slam_curated_inner_photos_match_exact_events():
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research.visual_sources import (
+        _CURATED_VISUALS,
+        _briefs,
+        _candidate_matches,
+    )
+
+    story = next(item for item in STORIES if item.slug == "golden-slam")
+    briefs = _briefs(story)
+    for page in ("story", "explainer", "today"):
+        candidate = _CURATED_VISUALS[(story.slug, page)][0]
+        subject, year, event, person = _candidate_matches(candidate, briefs[page])
+        assert subject and year and event and person, page
+
+
 def test_resolved_visual_manifest_is_json_serializable(tmp_path, monkeypatch):
     import json
 
@@ -85,3 +101,57 @@ def test_resolved_visual_manifest_is_json_serializable(tmp_path, monkeypatch):
         item for item in manifest["attempts"] if item.get("status") == "selected"
     ]
     assert all("cached_file" in item and "path" not in item for item in selected_attempts)
+
+
+def test_strict_visual_mode_rejects_subject_archive_photos(tmp_path, monkeypatch):
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research import visual_sources
+
+    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "on")
+    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "on")
+    monkeypatch.setattr(visual_sources, "_official_references", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources,
+        "_cover_audit",
+        lambda _story: {"page": "cover", "status": "selected"},
+    )
+    archive = {
+        "provider": "wikimedia-commons",
+        "source_url": "https://example.com/archive",
+        "image_url": "https://example.com/archive.jpg",
+        "credit": "Example Photographer",
+        "license": "CC BY-SA 4.0",
+        "width": 1200,
+        "height": 800,
+        "relevance": 9,
+        "search_text": "correct player, wrong year and tournament",
+        "image_text": "correct player portrait",
+    }
+    monkeypatch.setattr(
+        visual_sources,
+        "_commons_candidates",
+        lambda *_args: [dict(archive)],
+    )
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources,
+        "_candidate_matches",
+        lambda *_args: (True, False, False, True),
+    )
+
+    def unexpected_download(*_args):
+        raise AssertionError("strict mode must not download subject-archive candidates")
+
+    monkeypatch.setattr(visual_sources, "_download", unexpected_download)
+    story = next(item for item in STORIES if item.slug == "umag")
+
+    selected, manifest = visual_sources.resolve_story_visuals(story, tmp_path)
+
+    assert selected == {}
+    assert manifest["status"] == "fail"
+    assert set(manifest["missing_pages"]) == {"story", "explainer", "today"}
+    assert all(
+        attempt.get("match_level") != "subject-archive"
+        for attempt in manifest["attempts"]
+    )

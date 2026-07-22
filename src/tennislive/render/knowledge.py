@@ -10,6 +10,7 @@ import html
 import hashlib
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 
@@ -83,21 +84,81 @@ def _caption_items(story: TournamentStory) -> list[str]:
             short_headline = moment.headline.split("·", 1)[0].rstrip("，；：。 ")
             item = f"{year}｜{moment.player}：{short_headline}。"
         items.append(item)
-    for fact in story.facts:
-        if len(items) >= 3:
-            break
+    candidates: list[tuple[int, int, str, str]] = []
+    role_priority = {"technology": 0, "surface": 0, "cycle": 0, "rule": 1}
+    for index, fact in enumerate(story.facts):
         if any(year in fact for year in years):
             continue
-        if fact not in items:
-            first_sentence = fact.split("。", 1)[0].strip()
-            clauses: list[str] = []
-            for clause in first_sentence.split("，"):
-                candidate = "，".join([*clauses, clause])
-                if clauses and len(candidate) > 28:
-                    break
-                clauses.append(clause)
-            items.append(f"再记一个｜{'，'.join(clauses)}")
+        role = story.fact_roles[index] if index < len(story.fact_roles) else ""
+        first_sentence = fact.split("。", 1)[0].strip()
+        clauses = [part.strip() for part in re.split(r"[，；：]", first_sentence) if part.strip()]
+        compact: list[str] = []
+        for clause in clauses:
+            candidate = "，".join([*compact, clause])
+            if len(candidate) > 48:
+                break
+            compact.append(clause)
+        brief = "，".join(compact)
+        if brief:
+            candidates.append(
+                (role_priority.get(role, 2), len(brief), _fact_caption_label(fact, role), brief)
+            )
+    if len(items) < 3 and candidates:
+        _priority, _length, label, brief = min(candidates)
+        items.append(f"{label}｜{brief}。")
     return items[:3]
+
+
+def _fact_caption_label(fact: str, role: str = "") -> str:
+    role_labels = {
+        "technology": "原理",
+        "surface": "场地",
+        "cycle": "时间",
+        "rule": "规则",
+        "history": "背景",
+        "trophy": "纪录",
+        "legacy": "影响",
+    }
+    if role in role_labels:
+        return role_labels[role]
+    if any(word in fact for word in ("相机", "系统", "技术", "轨迹", "原理")):
+        return "原理"
+    if any(word in fact for word in ("冠军", "纪录", "第一", "唯一")):
+        return "纪录"
+    if any(word in fact for word in ("红土", "草地", "硬地", "场地")):
+        return "场地"
+    if any(word in fact for word in ("规则", "判罚", "司线")):
+        return "规则"
+    return "背景"
+
+
+def _mobile_wrap(text: str) -> str:
+    """Add one natural line break to dense openings without dropping words."""
+    if len(text) <= 54 or "。" not in text:
+        return text
+    return text.replace("。", "。\n", 1)
+
+
+def _plain_language_line(story: TournamentStory) -> str:
+    return {
+        "hawkeye": "说白了，电子司线就是由系统实时判定界内或界外，不必等球员挑战。",
+    }.get(story.slug, "")
+
+
+def _caption_icon(item: str, index: int) -> str:
+    """Use meaning, rather than sequence numbers, to guide mobile readers."""
+    icon_rules = (
+        (("规则", "判罚", "司线", "鹰眼", "电子", "系统", "技术"), "🎯"),
+        (("金牌", "奥运"), "🥇"),
+        (("冠军", "夺冠", "捧杯", "满贯"), "🏆"),
+        (("红土", "草地", "硬地", "场地"), "🎾"),
+        (("小时", "分钟", "三天", "四年"), "⏱️"),
+        (("球场", "城市", "赛事", "公开赛"), "🏟️"),
+    )
+    for keywords, icon in icon_rules:
+        if any(keyword in item for keyword in keywords):
+            return icon
+    return ("🎬", "⚡", "🔎")[min(index, 2)]
 
 
 _FORBIDDEN_COPY_BOILERPLATE = (
@@ -106,7 +167,20 @@ _FORBIDDEN_COPY_BOILERPLATE = (
     "🎾 答案",
     "记住这3点",
     "我为什么想讲它",
+    "三道窄门",
+    "三次转折",
+    "三个坐标",
+    "把这件事放回历史",
+    "①",
+    "②",
+    "③",
 )
+
+_PLAIN_LANGUAGE_RULES = {
+    "年度全满贯": ("同一年", "四大满贯"),
+    "金满贯": ("四大满贯", "奥运"),
+    "电子司线": ("系统", "判定"),
+}
 
 
 def _copy_mode(story: TournamentStory, digest: Digest) -> int:
@@ -115,39 +189,40 @@ def _copy_mode(story: TournamentStory, digest: Digest) -> int:
 
 
 def _story_opening(story: TournamentStory, digest: Digest) -> tuple[str, str, str]:
-    """Rotate human openings without asking a canned quiz question."""
+    """Rotate evidence-backed openings that fit the story category."""
     mode = _copy_mode(story, digest)
     first = story.moments[0] if story.moments else None
+    last = story.moments[-1] if story.moments else None
     year = first.date[:4] if first else story.founded.replace("始于 ", "")
-    openings = (
-        (
-            "🎬 把时间拨回那一刻",
-            f"{year}年，{first.player if first else story.title}迎来了{first.headline if first else '关键一章'}。"
-            f"{first.detail if first else story.hero_fact}",
-            "历史不是背景板，它就在这一分之后拐了弯。",
-        ),
-        (
-            "⚡ 先看这个反差",
-            f"有些纪录靠十几年慢慢累积，{story.title}却把难度压缩进一次机会里。",
-            story.hero_fact,
-        ),
-        (
-            "👤 先记住这个人",
-            f"那一年，{first.player if first else story.title}"
-            f"{('只有' + first.age) if first and first.age else '站到了故事中央'}。",
-            first.detail if first else story.hero_fact,
-        ),
-        (
-            "🔎 比结果更有意思的事",
-            f"比分会被下一轮覆盖，但{story.title}留下的那条线，后来一直延伸到今天。",
-            story.hero_fact,
-        ),
-        (
-            "🕰️ 今天回看，仍然离谱",
-            f"把时间拉回{year}年，这件事当时已经够难；放到今天看，它反而更难复制。",
-            story.hero_fact,
-        ),
-    )
+    first_person = first.player if first else story.title
+    first_event = first.headline if first else story.title
+    first_detail = first.detail if first else story.hero_fact
+    last_year = last.date[:4] if last else year
+    last_event = last.headline if last else story.hero_fact
+    if story.kind == "player":
+        openings = (
+            (f"🎬 {year}，故事从这里起拍", f"{first_person}迎来{first_event}。{first_detail}", story.hero_fact),
+            ("👤 成名照之外，还有来路", f"先记住{first_person}在{year}年的这一站：{first_event}。", first_detail),
+            ("⚡ 生涯里值得停下的一场", first_detail, f"再回看{last_year}年的{last_event}，轨迹已经清楚。"),
+            ("🔎 一条生涯线怎样长成", f"{first_event}不是孤立的一晚。{first_detail}", story.hero_fact),
+            ("🕰️ 从第一步看到今天", f"故事起于{year}年的{first_event}，后来走到{last_year}年的{last_event}。", story.hero_fact),
+        )
+    elif story.kind == "tournament":
+        openings = (
+            (f"🏟️ 先把坐标放在{story.location}", f"{year}年，{first_person}写下{first_event}。{first_detail}", story.hero_fact),
+            ("🏆 冠军簿里最值得停的一页", f"翻到{year}年，名字是{first_person}，故事是{first_event}。", first_detail),
+            ("🎬 一座球场怎样留下记忆", first_detail, f"到{last_year}年的{last_event}，这项传统有了新的主角。"),
+            ("⚡ 年份会过去，传统会留下", f"{first_event}发生在{year}年。{first_detail}", story.hero_fact),
+            ("🔎 看懂赛事，不只看签表", f"先从{first_person}和{first_event}讲起。{first_detail}", story.hero_fact),
+        )
+    else:
+        openings = (
+            (f"🎬 把时间拨回{year}年", f"{first_person}迎来{first_event}。{first_detail}", story.hero_fact),
+            ("⚡ 真正有趣的，在结果之外", first_detail, story.hero_fact),
+            ("🎬 镜头先对准这一刻", f"{year}年的{first_event}，把一条知识变成了真实瞬间。", first_detail),
+            ("🔎 一条规则或纪录的来路", f"故事从{year}年的{first_event}开始。{first_detail}", story.hero_fact),
+            ("🕰️ 当年的一刻，今天的回响", f"从{year}年的{first_event}到{last_year}年的{last_event}，中间不是一句纪录能讲完的。", story.hero_fact),
+        )
     return openings[mode]
 
 
@@ -209,19 +284,24 @@ def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
         return _golden_slam_copy(story, digest)
     title = knowledge_title(story, digest)
     items = _caption_items(story)
-    moment_icons = ("①", "②", "③")
     moments = "\n\n".join(
-        f"{moment_icons[index]} {item}" for index, item in enumerate(items)
+        f"{_caption_icon(item, index)} {item}" for index, item in enumerate(items)
     )
     question = _knowledge_question(story)
     opening_label, opener, bridge = _story_opening(story, digest)
-    timeline_labels = ("🎾 三个镜头", "📍 把它放回历史", "🧩 这条线怎么走到今天")
-    timeline_label = timeline_labels[_copy_mode(story, digest) % len(timeline_labels)]
+    plain_line = _plain_language_line(story)
+    plain_block = f"{plain_line}\n\n" if plain_line else ""
+    timeline_label = {
+        "player": "🎾 生涯轨迹",
+        "tournament": "🏟️ 球场、冠军与传统",
+        "trivia": "🧭 这段历史如何走到今天",
+    }.get(story.kind, "🧭 故事的来路")
     return (
         f"{title}\n\n"
         f"{opening_label}\n"
-        f"{opener}\n\n"
+        f"{_mobile_wrap(opener)}\n\n"
         f"{bridge}\n\n"
+        f"{plain_block}"
         f"{timeline_label}\n"
         f"{moments}\n\n"
         f"💬 {question}\n\n"
@@ -235,6 +315,12 @@ def _validate_copy_for_publish(copy: str) -> None:
     repeated = [phrase for phrase in _FORBIDDEN_COPY_BOILERPLATE if phrase in copy]
     if repeated:
         raise ValueError("知识帖文案仍含固定模板话术：" + "、".join(repeated))
+    for term, explanation in _PLAIN_LANGUAGE_RULES.items():
+        if term in copy and not all(word in copy for word in explanation):
+            raise ValueError(
+                f"知识帖首次使用专业词“{term}”时，必须同时解释："
+                + "、".join(explanation)
+            )
     if "…" in copy or "..." in copy:
         raise ValueError("知识帖文案不得用省略号掩盖截断内容")
     lines = copy.strip().splitlines()

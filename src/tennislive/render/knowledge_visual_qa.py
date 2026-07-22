@@ -21,6 +21,12 @@ MAX_CARD_BYTES = 950_000
 MIN_SOURCE_WIDTH = 900
 MIN_SOURCE_HEIGHT = 540
 FORBIDDEN_PRODUCTION_LABELS = ("程序生成", "自动生成", "AI生成", "AI 生成")
+FORBIDDEN_TEMPLATE_LABELS = (
+    "三道窄门",
+    "三次转折",
+    "三个坐标",
+    "把这件事放回历史",
+)
 
 
 class _VisibleText(HTMLParser):
@@ -182,6 +188,31 @@ def evaluate_knowledge_visuals(
         )
         if forbidden:
             errors.append(f"{kind} 页含面向内部的生产描述：{forbidden}")
+        canned = next(
+            (label for label in FORBIDDEN_TEMPLATE_LABELS if label in visible_text),
+            "",
+        )
+        if canned:
+            errors.append(f"{kind} 页含固定叙事套话：{canned}")
+        if re.search(r"<(?:i|small)[^>]*>\s*0[1-9]\s*</", body):
+            errors.append(f"{kind} 页仍使用无语义顺序编号")
+        if any(marker in visible_text for marker in ("①", "②", "③", "④")):
+            errors.append(f"{kind} 页仍使用带圈顺序编号")
+        year_markers = re.findall(
+            r'data-marker-kind="year"[^>]*>.*?<small>([^<]+)</small>',
+            body,
+            flags=re.DOTALL,
+        )
+        invalid_year = next(
+            (
+                marker
+                for marker in year_markers
+                if not re.fullmatch(r"(?:18|19|20)\d{2}", unescape(marker).strip())
+            ),
+            "",
+        )
+        if invalid_year:
+            errors.append(f"{kind} 页年份标记必须使用四位年份：{invalid_year}")
         if not visual:
             errors.append(f"{kind} 页没有声明视觉主体")
         if page_photo_count > 1:
@@ -242,6 +273,9 @@ def evaluate_knowledge_visuals(
             "rule_explainer": "topic-specific diagram required",
             "player_crop": "head-safe object position",
             "production_labels": "internal generation labels are forbidden",
+            "story_ordinals": "semantic icons replace ordinal markers",
+            "year_markers": "calendar years must use four digits",
+            "canned_story_labels": "fixed teaching-style labels are forbidden",
             "max_text_block_chars": MAX_TEXT_BLOCK_CHARS,
             "max_card_text_chars": MAX_CARD_TEXT_CHARS,
             "card_size": list(CARD_SIZE),

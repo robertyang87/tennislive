@@ -45,6 +45,45 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
             "image_text": "steffi graf 1988 seoul olympic gold medal tennis champion",
         },
     ),
+    ("golden-slam", "story"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": (
+                "https://www.lavanguardia.com/deportes/tenis/20190908/"
+                "47220597858/historias-del-us-open-rod-laver-us-open-grand-slam.html"
+            ),
+            "image_url": (
+                "https://www.lavanguardia.com/files/original/uploads/2019/09/07/"
+                "5fa53698b51d8.jpeg"
+            ),
+            "credit": "La Vanguardia archive",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 3000,
+            "height": 1726,
+            "relevance": 100,
+            "search_text": "rod laver 1969 us open forest hills grand slam champion",
+            "image_text": "rod laver lifts 1969 us open trophy at forest hills",
+        },
+    ),
+    ("golden-slam", "explainer"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": "https://time.com/4026998/grand-slam-winners/",
+            "image_url": (
+                "https://gcp-na-images.contentstack.com/v3/assets/"
+                "bltea6093859af6183b/bltdf817390a4baa91e/"
+                "698862c23c1639329f459a2e/150909-grand-slam-winners-09.jpg"
+                "?branch=production"
+            ),
+            "credit": "TIME archive",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 2560,
+            "height": 1710,
+            "relevance": 100,
+            "search_text": "steffi graf 1988 us open final grand slam sabatini",
+            "image_text": "steffi graf 1988 us open final against gabriela sabatini",
+        },
+    ),
     ("golden-slam", "today"): (
         {
             "provider": "editorial-archive",
@@ -668,7 +707,12 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             )
             row = (candidate, matches, "exact-event" if year_match and event_match and anchor_match else "subject-archive")
             (exact_candidates if row[2] == "exact-event" else archive_candidates).append(row)
-        for candidate, matches, match_level in (*exact_candidates, *archive_candidates):
+        eligible_candidates = (
+            exact_candidates
+            if strict
+            else [*exact_candidates, *archive_candidates]
+        )
+        for candidate, matches, match_level in eligible_candidates:
             subject_match, year_match, event_match, person_match = matches
             downloaded = _download(candidate, page, query, folder, session)
             if downloaded and downloaded.sha256 in used_hashes:

@@ -114,7 +114,7 @@ jobs:
 
       - name: 安装 tennislive
         if: steps.guard.outputs.skip != 'true'
-        run: pip install -q -e ".[webrender]"
+        run: pip install -q -e ".[webrender,dev]"
 
       - name: 缓存 Chromium（HTML 卡片渲染）
         if: steps.guard.outputs.skip != 'true'
@@ -131,6 +131,10 @@ jobs:
         if: steps.guard.outputs.skip != 'true'
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
+      - name: 校验网球故事全局生成规则
+        if: steps.guard.outputs.skip != 'true'
+        run: pytest -q tests/test_render.py -k "knowledge or semantic or abbreviated_year"
+
       - name: 生成每日内容包
         if: steps.guard.outputs.skip != 'true'
         id: gen
@@ -140,6 +144,8 @@ jobs:
           # 计算实际输出目录（北京时间日期）
           OUT_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print('output/' + parse_date_arg('$DATE_ARG').isoformat())")
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # 同日重跑必须重新生成知识包，不能复用仓库里上一次的旧图片与质检结果。
+          rm -rf "$OUT_DIR/knowledge"
           set +e
           TENNISLIVE_AI_EDITORIAL=off tennislive digest --date "$DATE_ARG" --outdir output 2>&1 | tee "$OUT_DIR.digest.log"
           CODE=${PIPESTATUS[0]}
@@ -183,6 +189,10 @@ jobs:
           jq -e '.sources | type == "array"' "$OUT_DIR/source_manifest.json" >/dev/null
           jq -e '.claims | type == "array"' "$OUT_DIR/fact_ledger.json" >/dev/null
 
+          test -d "$OUT_DIR/knowledge" || {
+            echo "::error::$OUT_DIR/knowledge 不存在，本次知识帖未生成"
+            exit 1
+          }
           if [ -d "$OUT_DIR/knowledge" ]; then
             for name in story evidence visual_sources visual_qa; do
               FILE="$OUT_DIR/knowledge/$name.json"
