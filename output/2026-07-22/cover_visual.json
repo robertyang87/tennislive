@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "selected",
+  "match_id": "401-2026:179402",
+  "policy": "仅接受与头条球员姓名精确匹配的赛场人物照片；Commons 与 Openverse 交叉补充；不生成 AI 图片",
+  "fetch_enabled": true,
+  "providers_queried": [
+    "wikimedia-commons"
+  ],
+  "attempts": [
+    {
+      "player": "Yuan Yue",
+      "provider": "wikimedia-commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yuan_Yue_(2023_US_Open)_02.jpg",
+      "subject_match": true,
+      "person_match": true,
+      "relevance": 6,
+      "status": "selected",
+      "credit": "Hameltion",
+      "license": "cc by-sa 4.0",
+      "cached_file": "daily-cover-94c36cab232d.jpg"
+    }
+  ],
+  "player": "Yuan Yue",
+  "provider": "wikimedia-commons",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Yuan_Yue_(2023_US_Open)_02.jpg",
+  "credit": "Hameltion",
+  "license": "cc by-sa 4.0"
+}
