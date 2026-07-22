@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "golden-slam",
+  "standards": {
+    "photo_count_max": 4,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires a photo or a topic-specific infographic",
+    "non_cover_visual": "distinct licensed photo or structured infographic",
+    "rule_explainer": "topic-specific diagram required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 2,
+  "photo_sources": [
+    "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+    "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg"
+  ],
+  "resolved_visuals": [
+    {
+      "page": "today",
+      "file": "output/2026-07-22/knowledge/visuals/today-b6700f8e0b02.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg",
+      "credit": "Photocapy",
+      "license": "cc by-sa 2.0",
+      "width": 1920,
+      "height": 1508
+    }
+  ],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 211,
+      "longest_text_block": 65,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://en.wikipedia.org/wiki/Grand_Slam_(tennis)"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 270,
+      "longest_text_block": 51,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "explainer",
+      "visual": "trivia-explainer",
+      "text_chars": 215,
+      "longest_text_block": 49,
+      "photo_count": 0,
+      "photo_sources": []
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 265,
+      "longest_text_block": 49,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Seoul_women%27s_tennis_results.jpg"
+      ]
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 316940
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 274816
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 235668
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 287311
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}
