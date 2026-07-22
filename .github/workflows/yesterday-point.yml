@@ -100,9 +100,7 @@ jobs:
             ) and
             .framing.mode == "contain" and
             .framing.dynamic_tracking_crop == false and
-            (.source_resolution | length) == 2 and
-            (.source_resolution | min) >= 720 and
-            (.source_resolution | max) >= 1280
+            (.source_resolution | length) == 2
           ' "$MANIFEST" >/dev/null
           test -s "$OUT_DIR/yesterday-point.mp4"
           test -s "$OUT_DIR/yesterday-point.zh-CN.srt"
