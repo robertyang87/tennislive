@@ -1743,7 +1743,15 @@ def _knowledge_cover_body(
         born = re.search(r"\b(19|20)\d{2}\b", story.founded)
         year = born.group(0) if born else "PLAYER"
     else:
-        year = story.moments[0].date[:4] if story.moments else "STORY"
+        # The cover year belongs to the headline claim.  A supporting timeline
+        # may begin earlier (for example Laver 1969 before Graf 1988), so using
+        # its first row can put the wrong year beside the cover subject.
+        hero_year = re.search(r"\b(?:18|19|20)\d{2}\b", story.hero_fact)
+        year = (
+            hero_year.group(0)
+            if hero_year
+            else story.moments[0].date[:4] if story.moments else "STORY"
+        )
     promise = (
         "那一夜之后，人的眼睛不再拥有最后一句话。"
         if story.slug == "hawkeye"

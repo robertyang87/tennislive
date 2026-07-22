@@ -1285,6 +1285,17 @@ def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatc
     assert any("封面" in error for error in report["errors"])
 
 
+def test_golden_slam_cover_uses_graf_1988_as_headline_year():
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import _knowledge_cover_body
+
+    story = next(story for story in STORIES if story.slug == "golden-slam")
+    body = _knowledge_cover_body(story, "7.22 · 周三")
+
+    assert "<b>1988</b>" in body
+    assert "<b>1969</b>" not in body
+
+
 def test_knowledge_copy_rotates_structure_and_bans_quiz_boilerplate(sample_digest):
     from dataclasses import replace
     from datetime import timedelta
