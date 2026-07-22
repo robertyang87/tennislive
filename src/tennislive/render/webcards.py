@@ -63,6 +63,19 @@ logger = logging.getLogger(__name__)
 W, H = 1080, 1440
 ASSETS = Path(__file__).resolve().parents[3] / "assets"
 
+_LOCAL_PLAYER_COVER_FRAMING = {
+    # Per-photo editorial crop: keep the athlete large while preserving head,
+    # racket/trophy, and enough court context for a 3:4 poster.
+    "jannik-sinner.jpg": ("50% 78%", "auto 180%"),
+    "carlos-alcaraz.jpg": ("36% 44%", "cover"),
+    "zheng-qinwen.jpg": ("32% 52%", "auto 125%"),
+    "aryna-sabalenka.jpg": ("50% 30%", "cover"),
+    "iga-swiatek.jpg": ("50% 30%", "cover"),
+    "coco-gauff.jpg": ("50% 30%", "cover"),
+    "novak-djokovic.jpg": ("50% 26%", "cover"),
+    "stefanos-tsitsipas.jpg": ("50% 28%", "cover"),
+}
+
 # ---------- 资源内嵌（自包含 HTML，避免 file:// 子资源限制） ----------
 
 
@@ -219,6 +232,7 @@ html.light .poster.tonight-page::before { opacity:.52; }
 .date { margin-left:auto; font-family:'Barlow Condensed','TL Sans SC',sans-serif; font-weight:600; font-size:30px; letter-spacing:2px; color:var(--fade); }
 
 .titleband { flex:none; margin:20px 0 16px; padding-left:18px; border-left:6px solid var(--section-accent); }
+.titleband.compact h1 { font-size:64px; line-height:1.1; }
 .poster:not(.cover)>.save-badge { position:absolute; top:126px; right:64px; padding:7px 13px;
   border:1px solid var(--section-accent); border-radius:5px;
   color:var(--section-accent); font-size:19px; font-weight:700; line-height:1.2; }
@@ -314,38 +328,38 @@ html.light .chip-green { color:#fff; }
 /* ---------- 封面 ---------- */
 .cover { overflow:hidden; color:#F7F3EA; }
 .cover::before { content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:linear-gradient(180deg,rgba(1,13,11,.5) 0%,rgba(1,13,11,.08) 31%,rgba(1,13,11,.38) 58%,rgba(1,13,11,.96) 100%),
-    linear-gradient(90deg,rgba(1,13,11,.9) 0%,rgba(1,13,11,.7) 54%,rgba(1,13,11,.08) 100%); }
+  background:linear-gradient(180deg,rgba(1,13,11,.08) 0%,rgba(1,13,11,0) 50%,rgba(1,13,11,.04) 76%,rgba(1,13,11,.2) 100%),
+    linear-gradient(90deg,rgba(1,13,11,.18) 0%,rgba(1,13,11,.06) 52%,rgba(1,13,11,0) 100%); }
 .cover::after { content:""; position:absolute; left:0; right:0; top:0; height:12px; z-index:5;
   background:linear-gradient(90deg,var(--neon) 0 42%,var(--coral) 42% 72%,var(--sky) 72%); }
-.cover-bg { position:absolute; inset:0; z-index:0; background-size:cover; background-position:center; }
-.cover-subject { position:absolute; z-index:0; right:-30px; top:42px; width:61%; height:78%;
-  background-position:right center; background-repeat:no-repeat; background-size:contain;
-  filter:saturate(.9) contrast(1.04); }
-.cover.has-subject .cover-copy { width:690px; }
-.cover.has-subject .focus { max-width:690px; font-size:64px; }
-.cover.has-subject .secondary { max-width:650px; }
+.cover-bg { position:absolute; inset:0; z-index:0;
+  background-size:var(--cover-size,cover); background-position:var(--cover-focus,center);
+  background-repeat:no-repeat; background-color:#061D17;
+  filter:saturate(1.08) contrast(1.02) brightness(1.08); }
 .cover .masthead,.cover .footer { position:relative; z-index:3; }
 .cover .brand { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:42px; font-weight:400; letter-spacing:0; }
 .cover .date { color:#D6E3DD; }
-.cover-copy { position:relative; z-index:2; width:850px; }
-.cover-date { display:flex; align-items:flex-end; gap:22px; margin-top:50px; }
-.cover-date b { font-family:'Barlow Condensed'; font-weight:700; font-size:130px; line-height:.82; color:var(--neon); }
+.cover-copy { position:relative; z-index:2; width:940px; padding:4px 22px 20px 0;
+  background:linear-gradient(90deg,rgba(2,20,16,.22),rgba(2,20,16,0) 72%); }
+.cover-date { display:flex; align-items:flex-end; gap:18px; margin-top:34px; }
+.cover-date b { font-family:'Barlow Condensed'; font-weight:700; font-size:82px; line-height:.86; color:var(--neon); }
 .cover-date span { display:flex; flex-direction:column; gap:8px; padding-bottom:4px; }
 .cover-date i { font-style:normal; font-size:40px; font-weight:700; color:#fff; line-height:1; }
 .cover-date small { font-family:'Barlow Condensed'; font-size:22px; color:#B9C8C1; letter-spacing:3px; line-height:1; }
-.edition { display:inline-block; margin-top:34px; padding:8px 14px; border:1px solid rgba(214,255,0,.7);
+.edition { display:inline-block; margin-top:26px; padding:8px 14px; border:1px solid rgba(214,255,0,.7);
   color:var(--neon); font-family:'Barlow Condensed'; font-size:24px; font-weight:600; letter-spacing:4px; line-height:1.2; }
 .cover .focus-label { font-family:'Barlow Condensed'; font-weight:600; font-size:23px;
   letter-spacing:.34em; color:#E4C96E; text-transform:uppercase; margin-top:24px; }
-.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:66px; font-weight:400;
-  line-height:1.1; letter-spacing:0; margin-top:12px; color:#fff; max-width:900px;
-  text-shadow:0 6px 24px rgba(0,0,0,.55); display:-webkit-box; -webkit-line-clamp:2;
-  -webkit-box-orient:vertical; overflow:hidden; }
+.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:88px; font-weight:400;
+  line-height:1.04; letter-spacing:0; margin-top:12px; color:#fff; max-width:930px;
+  text-shadow:0 7px 28px rgba(0,0,0,.7); }
+.cover.compact-headline .focus { font-size:72px; line-height:1.07; max-width:940px; }
 .cover .secondary { margin-top:22px; padding-left:18px; border-left:6px solid var(--coral);
   color:#E6EEEA; font-size:28px; font-weight:700; line-height:1.45; max-width:820px;
   text-shadow:0 3px 14px rgba(0,0,0,.7); }
-.cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px; }
+.cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px;
+  padding:18px 20px; border-radius:8px; background:rgba(2,20,16,.3);
+  backdrop-filter:blur(5px); }
 .cover-highlights { display:grid; grid-template-columns:1fr 1fr; gap:24px;
   padding:18px 0 20px; border-top:1px solid rgba(255,255,255,.42);
   border-bottom:1px solid rgba(255,255,255,.32); }
@@ -357,15 +371,16 @@ html.light .chip-green { color:#fff; }
 .cover-highlight small .ui-icon { width:19px; height:19px; }
 .cover-highlight:first-child small { color:var(--coral); }
 .cover-highlight b { display:block; margin-top:9px; font-family:'TL Display SC','TL Sans SC',sans-serif;
-  font-size:37px; font-weight:400; color:#fff; line-height:1.12;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  font-size:37px; font-weight:400; color:#fff; line-height:1.12; }
+.cover-highlight.compact b { font-size:30px; line-height:1.18; }
 .cover-highlight span { display:block; margin-top:8px; color:#C6D2CC; font-size:20px;
-  line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  line-height:1.3; }
 .cover .chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
 .cover .chips span { background:rgba(4,26,21,.72); border:1px solid rgba(255,255,255,.32);
   color:#F6F7F2; font-size:21px; font-weight:700; padding:9px 14px; border-radius:5px;
   box-shadow:0 5px 18px rgba(0,0,0,.24); line-height:1.2; }
 .cover .footer { margin-top:0; color:#C2CEC8; }
+.cover-photo-credit { margin-top:10px; color:#AEBDB6; font-size:14px; line-height:1.3; }
 
 /* ---------- 今晚焦点 ---------- */
 .tonight-page h1 { font-size:62px; }
@@ -524,10 +539,29 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo.compact .knowledge-photo-copy small { font-size:20px; }
 .knowledge-photo.compact .knowledge-photo-copy strong { max-width:820px; font-size:38px; }
 .knowledge-cover .knowledge-photo { height:560px; }
+.knowledge-cover { isolation:isolate; --cover-focus:50% 28%; }
+.knowledge-cover::before {
+  background:linear-gradient(180deg,rgba(1,13,11,.08) 0%,rgba(1,13,11,0) 50%,rgba(1,13,11,.04) 76%,rgba(1,13,11,.2) 100%),
+    linear-gradient(90deg,rgba(1,13,11,.18) 0%,rgba(1,13,11,.06) 64%,rgba(1,13,11,0) 100%);
+}
+.knowledge-cover>.knowledge-cover-bg { position:absolute; inset:0; z-index:0;
+  background-size:cover; background-position:var(--knowledge-cover-focus,50% 28%);
+  filter:saturate(1.08) contrast(1.02) brightness(1.08); }
+.knowledge-cover .masthead,.knowledge-cover .knowledge-cover-copy,
+.knowledge-cover .knowledge-hook,.knowledge-cover .photo-credit,.knowledge-cover .footer {
+  position:relative; z-index:3;
+}
+.knowledge-cover .knowledge-cover-copy { width:950px; margin-top:54px; padding:4px 18px 18px 0;
+  background:linear-gradient(90deg,rgba(2,20,16,.2),rgba(2,20,16,0) 74%); }
+.knowledge-cover .knowledge-kicker { margin-top:0; color:var(--neon); text-shadow:0 3px 14px rgba(0,0,0,.7); }
+.knowledge-cover h1 { margin-top:16px; max-width:950px; color:#fff; font-size:86px;
+  line-height:1.03; text-shadow:0 8px 30px rgba(0,0,0,.78); }
 .knowledge-cover .knowledge-hook { margin-top:36px; padding:30px 30px;
   border:1px solid rgba(120,211,220,.26); border-left:7px solid var(--coral);
   border-radius:8px; background:rgba(10,55,44,.88);
   display:grid; grid-template-columns:145px 1fr; gap:32px; align-items:center; }
+.knowledge-cover .knowledge-hook { margin-top:auto; margin-bottom:14px;
+  background:rgba(3,28,22,.32); backdrop-filter:blur(5px); }
 .knowledge-hook b { font-family:'Barlow Condensed'; font-size:65px; color:var(--neon); line-height:1; }
 .knowledge-hook p { color:var(--pagetext); font-family:'TL Serif SC','TL Sans SC';
   font-size:31px; font-weight:900; line-height:1.62; }
@@ -767,8 +801,9 @@ def _masthead(date_label: str) -> str:
 
 
 def _titleband(kicker: str, title: str) -> str:
+    compact = " compact" if len(title) >= 16 else ""
     return (
-        f'<div class="titleband"><div class="kicker">{kicker}</div>'
+        f'<div class="titleband{compact}"><div class="kicker">{kicker}</div>'
         f"<h1>{title}</h1></div>"
     )
 
@@ -951,7 +986,11 @@ def _seclabel(text: str) -> str:
 
 
 def cover_body(
-    digest: Digest, headline: str, secondary: str, date_label: str
+    digest: Digest,
+    headline: str,
+    secondary: str,
+    date_label: str,
+    cover_visual: object | None = None,
 ) -> str:
     d = digest.today
     weekday = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"][d.weekday()]
@@ -977,20 +1016,37 @@ def cover_body(
     if focus_events:
         chips.append(f"今晚焦点 {len(focus_events)} 项赛事")
     chips_html = "".join(f"<span>{c}</span>" for c in chips)
-    background_uri = _asset_image_uri(ASSETS / "covers" / "tennis-night-court.png")
+    subject = direct_story_for_match(lead, prefer_player=True) if lead else None
+    cover_path = Path(_visual_value(cover_visual, "path", "")) if cover_visual else None
+    cover_credit = str(_visual_value(cover_visual, "credit", "")).strip()
+    cover_license = str(_visual_value(cover_visual, "license", "")).strip()
+    cover_source = str(_visual_value(cover_visual, "source_url", "")).strip()
+    cover_focus = str(_visual_value(cover_visual, "focus", "50% 24%"))
+    cover_size = "cover"
+    if cover_path is None or not cover_path.is_file():
+        if subject is not None and subject.kind == "player" and subject.image.exists():
+            cover_path = subject.image
+            cover_credit = subject.image_credit
+            cover_source = subject.image_source_url
+            cover_license = "署名来源见资料页"
+            cover_focus, cover_size = _LOCAL_PLAYER_COVER_FRAMING.get(
+                subject.image.name, ("50% 24%", "cover")
+            )
+        else:
+            cover_path = ASSETS / "covers" / "tennis-night-court.png"
+            cover_focus = "center"
+    background_uri = _asset_image_uri(cover_path)
     background = (
-        f'<div class="cover-bg" style="background-image:url(\'{background_uri}\')"></div>'
+        f'<div class="cover-bg" style="background-image:url(\'{background_uri}\');'
+        f'--cover-focus:{html.escape(cover_focus, quote=True)};'
+        f'--cover-size:{html.escape(cover_size, quote=True)}"></div>'
         if background_uri else ""
     )
-    subject = direct_story_for_match(lead, prefer_player=True) if lead else None
-    subject_uri = (
-        _asset_image_uri(subject.image)
-        if subject is not None and subject.kind == "player" and subject.image.exists()
-        else None
-    )
-    subject_html = (
-        f'<div class="cover-subject" style="background-image:url(\'{subject_uri}\')"></div>'
-        if subject_uri else ""
+    credit_parts = [part for part in (cover_credit, cover_license) if part]
+    cover_credit_html = (
+        f'<div class="cover-photo-credit" data-photo-source="{html.escape(cover_source, quote=True)}">'
+        f'摄影/图源：{html.escape(" · ".join(credit_parts))}</div>'
+        if credit_parts else ""
     )
     secondary_html = (
         f'<div class="secondary">{html.escape(secondary)}</div>' if secondary else ""
@@ -1037,8 +1093,9 @@ def cover_body(
             ) if part
         )
         icon = "flame" if "必看" in label else "star" if "亮点" in label else "eye"
+        compact = " compact" if len(value) > 20 else ""
         return (
-            '<article class="cover-highlight">'
+            f'<article class="cover-highlight{compact}">'
             f'<small>{_icon_html(icon)}{html.escape(label)}</small><b>{html.escape(value)}</b>'
             f'<span>{html.escape(meta)}</span></article>'
         )
@@ -1079,9 +1136,8 @@ def cover_body(
     )
     lead_label = "Overnight Lead · 昨夜头条" if lead else "Today's Lead · 今日头条"
     return (
-        f'<div class="poster cover{" has-subject" if subject_uri else ""}">'
+        f'<div class="poster cover{" compact-headline" if len(headline) > 20 else ""}">'
         + background
-        + subject_html
         + _masthead(date_label)
         + '<div class="cover-copy">'
         + f'<div class="cover-date"><b>{d.month:02d}.{d.day:02d}</b><span>'
@@ -1092,7 +1148,9 @@ def cover_body(
         + secondary_html
         + '</div><div class="cover-lower">'
         + highlights_html
-        + f'<div class="chips">{chips_html}</div></div>'
+        + f'<div class="chips">{chips_html}</div>'
+        + cover_credit_html
+        + '</div>'
         + _FOOTER
         + "</div>"
     )
@@ -1551,6 +1609,45 @@ def _timeline_visual(years: list[str], *, css_class: str) -> str:
     )
 
 
+def _hawkeye_story_visual() -> str:
+    return (
+        '<div class="knowledge-story-visual" aria-label="挑战回放改变判罚流程示意图">'
+        '<svg viewBox="0 0 950 180">'
+        '<rect x="36" y="34" width="190" height="112" rx="8" fill="#0F4B3D" stroke="#78D3DC" stroke-width="3"/>'
+        '<circle cx="131" cy="90" r="23" fill="#D3FF12"/>'
+        '<text x="131" y="169" text-anchor="middle" fill="#A9B9B0" font-size="18">争议落点</text>'
+        '<path d="M250 90 H405" stroke="#FF765F" stroke-width="6"/>'
+        '<polygon points="405,90 380,76 380,104" fill="#FF765F"/>'
+        '<rect x="430" y="23" width="210" height="134" rx="8" fill="#082C22" stroke="#78D3DC" stroke-width="3"/>'
+        '<path d="M470 120 Q535 40 603 119" fill="none" stroke="#78D3DC" stroke-width="5"/>'
+        '<ellipse cx="568" cy="111" rx="25" ry="14" fill="#D3FF12"/>'
+        '<text x="535" y="169" text-anchor="middle" fill="#A9B9B0" font-size="18">多机位重建</text>'
+        '<path d="M662 90 H775" stroke="#FF765F" stroke-width="6"/>'
+        '<polygon points="775,90 750,76 750,104" fill="#FF765F"/>'
+        '<rect x="797" y="43" width="120" height="95" rx="8" fill="#D3FF12"/>'
+        '<text x="857" y="101" text-anchor="middle" fill="#073126" font-size="35" font-weight="800">IN</text>'
+        '<text x="857" y="169" text-anchor="middle" fill="#A9B9B0" font-size="18">现场复核</text>'
+        '</svg></div>'
+    )
+
+
+def _hawkeye_today_visual() -> str:
+    return (
+        '<div class="today-visual" aria-label="司线判罚到实时电子司线演进图">'
+        '<svg viewBox="0 0 950 180">'
+        '<line x1="100" y1="88" x2="850" y2="88"/>'
+        '<circle cx="120" cy="88" r="18"/><circle cx="475" cy="88" r="18"/>'
+        '<circle cx="830" cy="88" r="18"/>'
+        '<text x="120" y="48" text-anchor="middle">人眼判线</text>'
+        '<text x="475" y="48" text-anchor="middle">球员挑战</text>'
+        '<text x="830" y="48" text-anchor="middle">实时电子司线</text>'
+        '<text x="120" y="145" text-anchor="middle" fill="#A9B9B0" font-size="20">LINE JUDGE</text>'
+        '<text x="475" y="145" text-anchor="middle" fill="#A9B9B0" font-size="20">REVIEW</text>'
+        '<text x="830" y="145" text-anchor="middle" fill="#A9B9B0" font-size="20">LIVE ELC</text>'
+        '</svg></div>'
+    )
+
+
 def _explainer_mark() -> str:
     return (
         '<div class="explainer-mark" aria-label="三节点视觉导览"><svg viewBox="0 0 950 110">'
@@ -1596,7 +1693,10 @@ def _knowledge_photo(
     sub = f"<small>{html.escape(subline)}</small>" if subline else ""
     # Keep player faces above the caption gradient. Do not zoom portraits: the
     # old scale transform was the reason heads were clipped in exported cards.
-    default_focus = "50% 24%" if story.kind == "player" else "50% 42%"
+    person_led = story.kind == "player" or story.slug in {
+        "golden-slam", "big-three", "china-tennis",
+    }
+    default_focus = "50% 24%" if person_led else "50% 42%"
     focus = str(_visual_value(visual, "focus", default_focus))
     photo_source = (
         f' data-photo-source="{html.escape(image_source, quote=True)}"'
@@ -1643,12 +1743,22 @@ def _knowledge_cover_body(story: TournamentStory, date_label: str) -> str:
         if story.slug == "hawkeye"
         else story.hero_fact
     )
+    uri = _asset_image_uri(story.image)
+    if not uri:
+        raise FileNotFoundError(story.image)
+    person_led = story.kind == "player" or story.slug in {
+        "golden-slam", "big-three", "china-tennis",
+    }
+    focus = "50% 22%" if person_led else "50% 38%"
+    hook_html = html.escape(hook).replace("，", "，<br>", 1)
     return (
-        '<div class="poster knowledge-page knowledge-cover" data-visual="verified-photo">'
+        '<div class="poster cover knowledge-page knowledge-cover" data-visual="verified-photo">'
+        + f'<div class="knowledge-cover-bg" data-photo-source="{html.escape(story.image_source_url, quote=True)}" '
+        + f'style="background-image:url(\'{uri}\');--knowledge-cover-focus:{focus}"></div>'
         + _masthead(date_label)
+        + '<div class="knowledge-cover-copy">'
         + '<div class="knowledge-kicker">Tennis Story · 网球有故事</div>'
-        + f'<h1>{html.escape(hook)}</h1>'
-        + _knowledge_photo(story, story.venue, story.location.replace("网球冷知识", "网球有故事"))
+        + f'<h1>{hook_html}</h1></div>'
         + '<div class="knowledge-hook">'
         + f'<b>{html.escape(year)}</b><p>{html.escape(_card_excerpt(promise, 62))}</p></div>'
         + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
@@ -1663,12 +1773,33 @@ def _knowledge_timeline_body(
     date_label: str,
     visual: object | None = None,
 ) -> str:
-    title = "那一夜，发生了什么？" if story.slug == "hawkeye" else "故事，从这里开始"
+    title_overrides = {
+        "hawkeye": "那一夜，发生了什么？",
+        "golden-slam": "两代人，把极限又推远一步",
+        "surfaces": "场地一换，比赛就变了",
+        "big-three": "三个人，怎样接管一个时代",
+        "china-tennis": "从李娜到郑钦文，二十年三次破门",
+        "scoring-history": "15、30、40，是怎么留下来的",
+        "yellow-ball": "一场电视实验，改变了球的颜色",
+        "longest-match": "三天十一小时，比赛怎么撑下来的",
+    }
+    if story.kind == "player":
+        default_title = f"{story.title}，从哪一场被记住"
+    elif story.kind == "tournament":
+        default_title = f"{story.title}的冠军谱系"
+    else:
+        default_title = f"{story.title}，来路比结论更有意思"
+    title = title_overrides.get(story.slug, default_title)
     items: list[tuple[str, str]] = []
     if story.moments:
         items.append((story.moments[0].headline, story.moments[0].detail))
     if len(story.facts) > 1:
-        items.append(("后来发生了什么", story.facts[1]))
+        middle_labels = {
+            "player": "技术标签不是一天长成的",
+            "tournament": "赛事传统在这里定型",
+            "trivia": "把这件事放回历史",
+        }
+        items.append((middle_labels.get(story.kind, "历史继续往前"), story.facts[1]))
     if len(story.moments) > 1:
         items.append((story.moments[1].headline, story.moments[1].detail))
     if not items:
@@ -1698,7 +1829,11 @@ def _knowledge_timeline_body(
             compact=True,
         )
     else:
-        media = _timeline_visual(visual_years, css_class="knowledge-story-visual")
+        media = (
+            _hawkeye_story_visual()
+            if story.slug == "hawkeye"
+            else _timeline_visual(visual_years, css_class="knowledge-story-visual")
+        )
     page_class = " has-page-photo" if has_photo else ""
     visual_credit = _knowledge_visual_credit(visual)
     credit = (
@@ -1723,7 +1858,7 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
     return (
         '<div class="poster knowledge-page" data-visual="rule-diagram">'
         + _masthead(date_label)
-        + _titleband("Sony / Hawk-Eye Official Workflow", "鹰眼不是“看回放”，而是在重建一颗球")
+        + _titleband("Sony / Hawk-Eye Official Workflow", "鹰眼不看回放，它重建轨迹")
         + '<div class="official-flow">'
         + '<article class="official-step"><header><i>01</i><b>每台相机先找球心</b><span>2D VISION</span></header>'
         + '<div class="official-visual"><svg viewBox="0 0 420 172">'
@@ -1781,7 +1916,7 @@ def _knowledge_fact_body(
                 f'<p>{html.escape(_card_excerpt(fact, 38))}</p></article>'
             )
         content = lead + '<div class="player-pillars">' + "".join(cards) + "</div>"
-        title = f"三个年龄，看懂{story.title}"
+        title = f"三次转折，看见{story.title}的来路"
     elif story.kind == "tournament":
         profile = (
             '<div class="event-profile">'
@@ -1795,14 +1930,23 @@ def _knowledge_fact_body(
             for index, fact in enumerate(facts, 1)
         )
         content = lead + profile + f'<div class="event-notes">{notes}</div>'
-        title = f"一张图，读懂{story.title}"
+        title = f"走进{story.title}，先认这三个坐标"
     else:
         cards = "".join(
             f'<article class="knowledge-fact-card"><i>{index:02d}</i><p>{html.escape(_card_excerpt(fact, 54))}</p></article>'
             for index, fact in enumerate(facts, 1)
         )
         content = lead + f'<div class="knowledge-fact-grid">{cards}</div>'
-        title = f"三个细节，看懂{story.title}"
+        trivia_titles = {
+            "scoring-history": "四个数字，藏着几百年争论",
+            "yellow-ball": "从白到黄，电视改变了网球",
+            "longest-match": "比分之外，身体经历了什么",
+            "golden-slam": "五座冠军，卡在三道窄门",
+            "surfaces": "材质一变，弹跳与战术全变",
+            "big-three": "三个名字，三条统治曲线",
+            "china-tennis": "二十年，中国网球三次破门",
+        }
+        title = trivia_titles.get(story.slug, f"拆开来看，{story.title}难在哪")
     has_photo = visual is not None
     page_class = " has-page-photo" if has_photo else ""
     media = (
@@ -1849,7 +1993,22 @@ def _knowledge_today_body(
         eyebrow = f"{year} · 最后的例外"
         question = "四大满贯中，只剩法网仍保留人工司线。红土球印，足够可靠吗？"
     else:
-        title = "为什么今天还值得聊？"
+        today_titles = {
+            "golden-slam": "1988之后，为什么再没人做到",
+            "surfaces": "今天看球，先看脚下这块地",
+            "big-three": "时代散场，纪录仍在追人",
+            "china-tennis": "从第一冠到下一代，故事没停",
+            "scoring-history": "数字没变，比赛已经变了",
+            "yellow-ball": "今天每颗黄球，都来自那次选择",
+            "longest-match": "规则改了，那样的比赛不会重演",
+        }
+        if story.kind == "player":
+            default_today_title = f"今天再看{story.title}，该看什么"
+        elif story.kind == "tournament":
+            default_today_title = f"这项赛事，怎样走到今天"
+        else:
+            default_today_title = f"{story.title}，今天留下了什么"
+        title = today_titles.get(story.slug, default_today_title)
         rows = tuple(
             (
                 moment.date[:4],
@@ -1858,7 +2017,12 @@ def _knowledge_today_body(
             )
             for moment in story.moments[:3]
         )
-        eyebrow = f"{year} · 今天的回响"
+        eyebrow_labels = {
+            "player": "这一代球迷的记忆",
+            "tournament": "下一站仍在继续",
+            "trivia": "把问题留到今天",
+        }
+        eyebrow = f"{year} · {eyebrow_labels.get(story.kind, '今天的回响')}"
     years = "".join(
         '<div class="knowledge-year">'
         f'<time>{html.escape(row_year)}</time><div><b>{html.escape(headline)}</b>'
@@ -1876,7 +2040,11 @@ def _knowledge_today_body(
             compact=True,
         )
     else:
-        media = _timeline_visual([row[0] for row in rows], css_class="today-visual")
+        media = (
+            _hawkeye_today_visual()
+            if story.slug == "hawkeye"
+            else _timeline_visual([row[0] for row in rows], css_class="today-visual")
+        )
     page_class = " has-page-photo" if has_photo else ""
     visual_credit = _knowledge_visual_credit(visual)
     credit = f"资料：{story.source_label}"
@@ -2045,14 +2213,22 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
     return out
 
 
-def generate_deck(digest: Digest, date_label: str, theme: str = "dark"):
+def generate_deck(
+    digest: Digest,
+    date_label: str,
+    theme: str = "dark",
+    *,
+    cover_visual: object | None = None,
+):
     """整组晨报卡（与 cards.generate_cards 的选卡逻辑一致），返回 [(kind, Image)]."""
     from .titles import cover_highlights
 
     pages: list[tuple[str, str]] = []
     # V1 唯一封面：不再输出"钩子页 + 设计封面"双封面
     headline, secondary = cover_highlights(digest)
-    pages.append(("cover", cover_body(digest, headline, secondary, date_label)))
+    pages.append(("cover", cover_body(
+        digest, headline, secondary, date_label, cover_visual=cover_visual,
+    )))
 
     lead = daily_lead_match(digest)
     lead_id = lead.match_id if lead is not None else None
@@ -2126,6 +2302,7 @@ def generate_match_deck(
     date_label: str,
     kind: str,
     theme: str = "dark",
+    cover_visual: object | None = None,
 ):
     """单场热点/赛前统一卡组，复用晨报同一套HTML视觉组件。"""
     from .story import result_insight
@@ -2138,7 +2315,9 @@ def generate_match_deck(
     )
     secondary = result_insight(match) if is_result else preview_angle(match, today)
     pages: list[tuple[str, str]] = [
-        ("cover", cover_body(digest, headline, secondary, date_label)),
+        ("cover", cover_body(
+            digest, headline, secondary, date_label, cover_visual=cover_visual,
+        )),
     ]
     if is_result:
         pages.extend(

@@ -897,8 +897,14 @@ def _trivia_story(
     # 未入库时仅在场馆库存图与主题贴合时兜底（image_keys 为空 = 宁缺毋滥，
     # 图缺失则该故事暂不参选），署名永远跟随实际所用图片
     dedicated = TRIVIA_ASSETS / f"trivia-{slug}.jpg"
+    image_source_url = source_url
     if dedicated.exists() or not image_keys:
         image, credit = dedicated, image_credit
+        try:
+            credits = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))
+            image_source_url = str((credits.get(dedicated.name) or {}).get("page") or source_url)
+        except (OSError, ValueError):
+            pass
     else:
         image, credit = _stock_image(*image_keys)
     return TournamentStory(
@@ -916,7 +922,7 @@ def _trivia_story(
         image=image,
         image_credit=credit,
         source_url=source_url,
-        image_source_url=source_url,
+        image_source_url=image_source_url,
         kind="trivia",
         source_label=source_label,
         evidence_urls=evidence_urls,
@@ -1247,7 +1253,7 @@ STORIES = STORIES + (
             "'大满贯'一词借自桥牌术语，1933 年被记者首次用于网球——"
             "从此成为这项运动的最高标准。",
             "年度全满贯史上仅 5 人：巴奇、康诺利、拉沃尔（两次）、"
-            "考特与格拉芙——公开赛时代的男子无人完成。",
+            "考特与格拉芙；公开赛时代男子只有拉沃尔在 1969 年完成。",
             "把标准放宽到'生涯金满贯'，男子也只有阿加西、纳达尔、"
             "德约科维奇三人集齐。",
         ),
@@ -1261,7 +1267,7 @@ STORIES = STORIES + (
                     "美网决赛胜罗切封王，公开赛时代唯一的年度全满贯——"
                     "墨尔本的中央球场后来以他命名。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Rod_Laver",
+                source_url="https://www.usopen.org/en_US/visit/grand_slam_alltime_champions.html",
             ),
             ChampionMoment(
                 date="1988-10-01",
@@ -1272,13 +1278,24 @@ STORIES = STORIES + (
                     "汉城奥运决赛击败萨巴蒂尼，把四大满贯与奥运金牌装进同一年——"
                     "19 岁的赛季，前无古人，至今无来者。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+                source_url="https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
             ),
         ),
         image_keys=("usopen",),
-        source_label="ITF / 奥运官方史料",
+        source_label="US Open / ITF / 奥运官方档案",
         image_credit="Photocapy / Wikimedia Commons · CC BY-SA 2.0",
-        source_url="https://en.wikipedia.org/wiki/Grand_Slam_(tennis)",
+        source_url=(
+            "https://www.usopen.org/en_US/news/articles/2018-08-20/"
+            "2018-08-20_50_moments_that_mattered_steffi_graf_wins_"
+            "calendaryear_grand_slam.html"
+        ),
+        evidence_urls=(
+            "https://www.usopen.org/en_US/visit/grand_slam_alltime_champions.html",
+            "https://www.usopen.org/en_US/visit/year_by_year.html",
+            "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
+            "https://www.itftennis.com/en/news-and-media/articles/"
+            "nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
+        ),
     ),
     _trivia_story(
         slug="surfaces",
@@ -1440,8 +1457,8 @@ def _load_state() -> dict[str, str]:
         return {}
 
 
-def _recently_used(slug: str, today: date) -> bool:
-    last_str = _load_state().get(slug)
+def _recently_used(slug: str, today: date, state: dict[str, str] | None = None) -> bool:
+    last_str = (state if state is not None else _load_state()).get(slug)
     if not last_str:
         return False
     try:
@@ -1587,6 +1604,17 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     同级候选按前一天比赛的热度分排序（决赛/爆冷/伤退优先），
     全部处于冷却期时，重讲距上次最久的一条，而不是留白。
     """
+    candidates = tournament_story_candidates(digest)
+    return candidates[0] if candidates else None
+
+
+def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
+    """Return stories in editorial order so rendering can skip weak visual packages.
+
+    Selection and production are deliberately separate: the hottest subject is
+    tried first, but a story without a complete, precisely matched visual set
+    must not block a lower-ranked story that can be published well.
+    """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
     winners = {
@@ -1599,9 +1627,10 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
 
     # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡
     today_iso = digest.today.isoformat()
+    pinned: list[TournamentStory] = []
     for story in STORIES:
         if state.get(story.slug) == today_iso and story.image.exists():
-            return story
+            pinned.append(story)
 
     fresh: list[tuple[int, float, int, TournamentStory]] = []
     cooling: list[tuple[str, int, float, int, TournamentStory]] = []
@@ -1631,16 +1660,18 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
                 continue
             score = 2
             heat = _alias_heat(aliases, tournament_heat)
-        if _recently_used(story.slug, digest.today):
+        if _recently_used(story.slug, digest.today, state):
             cooling.append((state.get(story.slug, ""), -score, -heat, order, story))
         else:
             fresh.append((-score, -heat, order, story))
-    if fresh:
-        return min(fresh)[-1]
-    if cooling:
-        # ISO 日期字符串最小 = 距上次讲述最久
-        return min(cooling)[-1]
-    return None
+    ordered_fresh = [item[-1] for item in sorted(fresh)]
+    # ISO 日期字符串最小 = 距上次讲述最久；仍保留新闻分作为次级排序。
+    ordered_cooling = [item[-1] for item in sorted(cooling)]
+    ordered: list[TournamentStory] = []
+    for story in [*pinned, *ordered_fresh, *ordered_cooling]:
+        if story not in ordered:
+            ordered.append(story)
+    return ordered
 
 
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"

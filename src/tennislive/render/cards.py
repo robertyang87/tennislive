@@ -11,6 +11,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import re
@@ -1063,11 +1064,34 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         from .webcards import generate_deck
 
         theme = os.environ.get("TENNISLIVE_THEME", "dark")
-        images = generate_deck(digest, date_label, theme)
+        cover_visual = None
+        visual_cache = outdir.parent / ".cover-visual-cache"
+        if os.environ.get("TENNISLIVE_COVER_VISUAL_FETCH", "off").lower() in {
+            "1", "on", "true",
+        }:
+            from ..research.visual_sources import resolve_match_cover_visual
+            from .titles import daily_lead_match
+
+            lead = daily_lead_match(digest)
+            if lead is not None:
+                cover_visual, cover_report = resolve_match_cover_visual(
+                    lead, visual_cache
+                )
+                (outdir.parent / "cover_visual.json").write_text(
+                    json.dumps(cover_report, ensure_ascii=False, indent=2),
+                    encoding="utf-8",
+                )
+        images = generate_deck(
+            digest, date_label, theme, cover_visual=cover_visual,
+        )
         paths: list[Path] = []
         for i, (kind, img) in enumerate(images):
             p = save_social_image(img, outdir / f"card_{i:02d}_{kind}")
             paths.append(p)
+        if visual_cache.exists():
+            import shutil
+
+            shutil.rmtree(visual_cache, ignore_errors=True)
         logger.info("生成 %d 张晨报卡片（HTML 渲染）到 %s", len(paths), outdir)
         return paths
     except Exception as e:  # noqa: BLE001

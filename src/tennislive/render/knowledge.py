@@ -7,6 +7,7 @@ keeps the slower historical context as a separate shareable post.
 from __future__ import annotations
 
 import html
+import hashlib
 import json
 import os
 import shutil
@@ -17,7 +18,10 @@ from ..research.visual_sources import resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
 from .knowledge_visual_qa import evaluate_knowledge_visuals
-from .tournament_story import TournamentStory, pick_tournament_story
+from .tournament_story import (
+    TournamentStory,
+    tournament_story_candidates,
+)
 from .webcards import _screenshot_pages, knowledge_deck_bodies
 from .xiaohongshu import xhs_title_len
 
@@ -93,6 +97,79 @@ def _caption_items(story: TournamentStory) -> list[str]:
     return items[:3]
 
 
+_FORBIDDEN_COPY_BOILERPLATE = (
+    "先别往下滑",
+    "🧠 先猜",
+    "🎾 答案",
+    "记住这3点",
+    "我为什么想讲它",
+)
+
+
+def _copy_mode(story: TournamentStory, digest: Digest) -> int:
+    seed = f"{digest.today.isoformat()}:{story.slug}".encode("utf-8")
+    return hashlib.sha256(seed).digest()[0] % 5
+
+
+def _story_opening(story: TournamentStory, digest: Digest) -> tuple[str, str, str]:
+    """Rotate human openings without asking a canned quiz question."""
+    mode = _copy_mode(story, digest)
+    first = story.moments[0] if story.moments else None
+    year = first.date[:4] if first else story.founded.replace("始于 ", "")
+    openings = (
+        (
+            "🎬 把时间拨回那一刻",
+            f"{year}年，{first.player if first else story.title}迎来了{first.headline if first else '关键一章'}。"
+            f"{first.detail if first else story.hero_fact}",
+            "历史不是背景板，它就在这一分之后拐了弯。",
+        ),
+        (
+            "⚡ 先看这个反差",
+            f"有些纪录靠十几年慢慢累积，{story.title}却把难度压缩进一次机会里。",
+            story.hero_fact,
+        ),
+        (
+            "👤 先记住这个人",
+            f"那一年，{first.player if first else story.title}"
+            f"{('只有' + first.age) if first and first.age else '站到了故事中央'}。",
+            first.detail if first else story.hero_fact,
+        ),
+        (
+            "🔎 比结果更有意思的事",
+            f"比分会被下一轮覆盖，但{story.title}留下的那条线，后来一直延伸到今天。",
+            story.hero_fact,
+        ),
+        (
+            "🕰️ 今天回看，仍然离谱",
+            f"把时间拉回{year}年，这件事当时已经够难；放到今天看，它反而更难复制。",
+            story.hero_fact,
+        ),
+    )
+    return openings[mode]
+
+
+def _golden_slam_copy(story: TournamentStory, digest: Digest) -> str:
+    title = knowledge_title(story, digest)
+    question = _knowledge_question(story)
+    return (
+        f"{title}\n\n"
+        "1988年，格拉芙先后赢下澳网、法网、温网和美网。\n"
+        "抵达汉城时，19岁的她只差最后一扇门。\n\n"
+        "决赛对面还是萨巴蒂尼。\n"
+        "几周前的美网决赛，两人刚打满三盘；这一次，格拉芙用两个6比3结束比赛。\n\n"
+        "真正夸张的，不只是五项冠军都拿到了。\n\n"
+        "四大满贯横跨硬地、红土和草地；\n"
+        "奥运会却四年才来一次。\n"
+        "状态、身体和赛历必须在同一年严丝合缝地对上。\n\n"
+        "拉沃尔1969年完成公开赛时代男子唯一一次年度全满贯；\n"
+        "格拉芙又往前走了一步。直到今天，年度金满贯仍只有她一人。\n\n"
+        f"💬 {question}\n\n"
+        "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
+        f"资料｜{story.source_label}\n\n"
+        "#网球 #格拉芙 #金满贯 #网球历史 #网球时差"
+    )
+
+
 def _knowledge_question(story: TournamentStory) -> str:
     trivia_questions = {
         "scoring-history": "你第一次学网球记分时，最难理解的是哪一项？",
@@ -118,54 +195,43 @@ def knowledge_pinned_comment(story: TournamentStory) -> str:
     if story.slug == "hawkeye":
         reply = "我更看重判罚标准一致：红土有球印，但人工找印和解释球印仍可能出错。"
     elif story.kind == "player":
-        reply = "我先不设标准答案，想看看大家记住的是同一场，还是不同的瞬间。"
+        reply = "有人记住冠军，有人记住输掉以后重新站起来的那一场。你是哪一种？"
     else:
-        reply = "我先把答案留给评论区：说一场、一个人或一个瞬间都算。"
+        reply = "说一场、一个人或一个瞬间都可以，我更想听你自己的看球记忆。"
     return f"{question}\n\n{reply}"
 
 
 def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
+    if story.slug == "golden-slam":
+        return _golden_slam_copy(story, digest)
     title = knowledge_title(story, digest)
     items = _caption_items(story)
-    number_icons = ("1️⃣", "2️⃣", "3️⃣")
-    bullets = "\n".join(
-        f"{number_icons[index]} {item}" for index, item in enumerate(items)
-    )
-    why = {
-        "player": "再看他的关键分，你会看到比分背后的来路。",
-        "trivia": "它不是一道考题，而是让你下次看球时多懂一层。",
-    }.get(
-        story.kind,
-        "再看到中央球场，你也会认出赛程背后的历史。",
+    moment_icons = ("①", "②", "③")
+    moments = "\n\n".join(
+        f"{moment_icons[index]} {item}" for index, item in enumerate(items)
     )
     question = _knowledge_question(story)
-    if story.kind == "trivia":
-        opener = f"先别往下滑，猜一下：{story.title.rstrip('？?')}？"
-        opening_label = "🧠 先猜"
-        answer_label = "🎾 答案"
-    elif story.kind == "player":
-        opener = f"先别急着看下一场：{story.title}为什么会走到今天？"
-        opening_label = "👀 先认识他"
-        answer_label = "🎾 故事从这里开始"
-    else:
-        opener = f"赛程表没告诉你的事：{story.title}为什么值得记住？"
-        opening_label = "👀 赛程之外"
-        answer_label = "🎾 先记一句"
+    opening_label, opener, bridge = _story_opening(story, digest)
+    timeline_labels = ("🎾 三个镜头", "📍 把它放回历史", "🧩 这条线怎么走到今天")
+    timeline_label = timeline_labels[_copy_mode(story, digest) % len(timeline_labels)]
     return (
         f"{title}\n\n"
         f"{opening_label}\n"
         f"{opener}\n\n"
-        f"{answer_label}\n"
-        f"{story.hero_fact}\n\n"
-        "📍 记住这3点\n"
-        f"{bullets}\n\n"
-        "💡 我为什么想讲它\n"
-        f"{why}\n\n"
+        f"{bridge}\n\n"
+        f"{timeline_label}\n"
+        f"{moments}\n\n"
         f"💬 {question}\n\n"
-        "关注 @网球时差｜把网球故事讲得好懂一点。\n\n"
+        "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
         f"资料｜{story.source_label}\n\n"
         "#网球 #网球知识 #网球时差 #网球科普 #网球故事"
     )
+
+
+def _validate_copy_for_publish(copy: str) -> None:
+    repeated = [phrase for phrase in _FORBIDDEN_COPY_BOILERPLATE if phrase in copy]
+    if repeated:
+        raise ValueError("知识帖文案仍含固定模板话术：" + "、".join(repeated))
 
 
 def knowledge_push_html(
@@ -294,10 +360,10 @@ def generate_knowledge_package(
     theme: str = "dark",
     story: TournamentStory | None = None,
 ) -> TournamentStory | None:
-    story = story or pick_tournament_story(digest)
-    if story is None:
+    candidates = [story] if story is not None else tournament_story_candidates(digest)
+    candidates = [candidate for candidate in candidates if candidate is not None]
+    if not candidates:
         return None
-    _validate_story_for_publish(story, digest)
     outdir = Path(outdir)
     cards_dir = outdir / "cards"
     cards_dir.mkdir(parents=True, exist_ok=True)
@@ -310,7 +376,45 @@ def generate_knowledge_package(
         if old.is_file():
             old.unlink()
 
-    page_visuals, visual_sources = resolve_story_visuals(story, visuals_dir)
+    rejected_candidates: list[dict] = []
+    selected_story: TournamentStory | None = None
+    page_visuals = {}
+    visual_sources: dict = {}
+    max_attempts = max(1, int(os.environ.get("TENNISLIVE_VISUAL_CANDIDATES", "6")))
+    for candidate in candidates[:max_attempts]:
+        _validate_story_for_publish(candidate, digest)
+        for old in visuals_dir.iterdir():
+            if old.is_file():
+                old.unlink()
+        candidate_visuals, candidate_report = resolve_story_visuals(candidate, visuals_dir)
+        if candidate_report.get("status") == "pass":
+            selected_story = candidate
+            page_visuals = candidate_visuals
+            visual_sources = candidate_report
+            break
+        rejected_candidates.append(
+            {
+                "story_slug": candidate.slug,
+                "title": candidate.title,
+                "errors": candidate_report.get("errors", []),
+                "missing_pages": candidate_report.get("missing_pages", []),
+            }
+        )
+    if selected_story is None:
+        failure = {
+            "schema_version": 1,
+            "status": "fail",
+            "policy": "精确人物/年份/赛事/地点/授权素材不足时自动换题；候选耗尽则停止发布",
+            "rejected_candidates": rejected_candidates,
+            "errors": ["候选故事均未通过素材生产性预检"],
+            "attempts": [],
+        }
+        (outdir / "visual_sources.json").write_text(
+            json.dumps(failure, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        raise ValueError("知识帖素材预检失败：候选故事均没有完整高质量图片包")
+    story = selected_story
+    visual_sources["rejected_candidates"] = rejected_candidates
     (outdir / "visual_sources.json").write_text(
         json.dumps(visual_sources, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -363,6 +467,7 @@ def generate_knowledge_package(
     shutil.rmtree(visuals_dir, ignore_errors=True)
 
     xhs_text = knowledge_copy(story, digest)
+    _validate_copy_for_publish(xhs_text)
     pinned_comment = knowledge_pinned_comment(story)
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
     (outdir / "pinned_comment.txt").write_text(pinned_comment, encoding="utf-8")

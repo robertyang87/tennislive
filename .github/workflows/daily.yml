@@ -72,8 +72,14 @@ jobs:
       TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'off' }}
       # 从官方巡回赛视频页选择与当日球员相关的片段，生成中文竖版视频。
       TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
-      # 知识帖配图：官方页用于核验，Commons/Openverse 仅下载授权与相关性达标素材。
+      # 知识帖配图：官方媒体、Commons、Openverse 多源检索，全部保留来源与机构署名。
       TENNISLIVE_VISUAL_FETCH: ${{ vars.TENNISLIVE_VISUAL_FETCH || 'on' }}
+      # 严格生产门槛：人物、年份、赛事/地点、清晰度与来源缺一项即自动换题。
+      TENNISLIVE_VISUAL_STRICT: ${{ vars.TENNISLIVE_VISUAL_STRICT || 'on' }}
+      # 最多按新闻价值顺序尝试 6 个题材，避免单一题材素材不足拖垮整期。
+      TENNISLIVE_VISUAL_CANDIDATES: ${{ vars.TENNISLIVE_VISUAL_CANDIDATES || '6' }}
+      # 日报/热点封面：只抓取头条球员本人赛场照；失败时保留本地已核验人物资产。
+      TENNISLIVE_COVER_VISUAL_FETCH: ${{ vars.TENNISLIVE_COVER_VISUAL_FETCH || 'on' }}
     steps:
       - uses: actions/checkout@v4
 

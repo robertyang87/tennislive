@@ -97,7 +97,6 @@ def test_wechat_title_length(sample_digest):
 
 
 def test_xhs_post(sample_digest):
-    from tennislive.render.titles import pick_headline_auto
     from tennislive.render.xiaohongshu import xhs_title_len
 
     post = to_post(sample_digest)
@@ -106,7 +105,7 @@ def test_xhs_post(sample_digest):
     d = sample_digest.today
     assert f"{d.month}.{d.day}今日球局｜" in title
     hook = title.split("｜", 1)[1]
-    assert pick_headline_auto(sample_digest).startswith(hook.rstrip("…"))
+    assert hook and "…" not in hook
     assert xhs_title_len(title) <= 20  # 平台口径：半角记 0.5
     assert "#网球" in post
     body = post.split("\n", 2)[2]
@@ -127,6 +126,7 @@ def test_xhs_post(sample_digest):
     assert "ATP 250" not in post and "WTA 250" not in post
     assert "一场球看细一点" not in post
     assert "7:30" not in post
+    assert "…" not in post and "..." not in post
 
 
 def test_xhs_preview_replaces_long_player_name_before_shortening(sample_digest, monkeypatch):
@@ -911,10 +911,11 @@ def test_decorated_title_date_emoji_and_budget():
     assert decorate_title(digest, "袁悦今日出战").startswith("🔥")
     assert decorate_title(digest, "每日赛程赛果速览").startswith("🎾")
 
-    # 超预算的钩子被裁剪并加省略号，总长仍在预算内
+    # 超预算的钩子改写成完整短句，不发布半句话或省略号。
     long_hook = "这是一个非常非常长的钩子标题肯定放不下二十个字"
     trimmed = decorate_title(digest, long_hook)
-    assert trimmed.endswith("…") and xhs_title_len(trimmed) <= 20
+    assert "…" not in trimmed and "..." not in trimmed
+    assert xhs_title_len(trimmed) <= 20
 
 
 def test_story_pick_is_idempotent_within_same_day(tmp_path, monkeypatch):
@@ -1026,8 +1027,8 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     copy = (tmp_path / "knowledge" / "copy.html").read_text("utf-8")
     pinned = (tmp_path / "knowledge" / "pinned_comment.txt").read_text("utf-8")
     assert xhs.startswith("📖")
-    assert "👀 赛程之外" in xhs
-    assert "📍 记住这3点" in xhs
+    assert any(label in xhs for label in ("🎬", "⚡", "👤", "🔎", "🕰️"))
+    assert "先猜" not in xhs and "记住这3点" not in xhs
     assert "💬 " in xhs
     assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
@@ -1038,7 +1039,7 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert 'referrerpolicy="no-referrer"' in push
     assert "/knowledge/copy.html" in push
     assert "分别复制标题 / 正文 / 置顶评论" in push
-    assert "记住这3点" in push
+    assert "记住这3点" not in push
     assert pinned in copy
     story_data = __import__("json").loads(
         (tmp_path / "knowledge" / "story.json").read_text("utf-8")
@@ -1084,10 +1085,12 @@ def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_p
     import re
 
     assert sum(
-        len(re.findall(r'class="knowledge-photo(?:\s|\")', body))
+        len(re.findall(r'data-photo-source="[^"]+"', body))
         for _kind, body in bodies
     ) == 1
-    assert "object-position:50% 24%" in bodies[0][1]
+    assert 'class="knowledge-cover-bg"' in bodies[0][1]
+    assert "--knowledge-cover-focus:50% 22%" in bodies[0][1]
+    assert 'class="knowledge-photo' not in bodies[0][1]
     assert 'data-visual="narrative-timeline"' in bodies[1][1]
     assert 'data-visual="player-explainer"' in bodies[2][1]
     assert 'data-visual="history-timeline"' in bodies[3][1]
@@ -1259,12 +1262,92 @@ def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
 
     hawkeye = next(story for story in STORIES if story.slug == "hawkeye")
     post = knowledge_copy(hawkeye, sample_digest)
-    assert "🧠 先猜" in post
-    assert "1️⃣ 2004" in post and "2️⃣ 2006" in post
+    assert "🧠 先猜" not in post and "🎾 答案" not in post
+    assert "① 2004" in post and "② 2006" in post
     assert "2D 视觉处理与 3D 三角测量" in post
     assert "回放动画数秒内生成" not in post
     assert "四大满贯只剩法网保留人工司线" in post
     assert "今天单独讲一个网球知识点" not in post
+
+
+def test_golden_slam_weak_scoreboard_cover_is_rejected_in_strict_mode(monkeypatch, tmp_path):
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research.visual_sources import resolve_story_visuals
+
+    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "on")
+    story = next(story for story in STORIES if story.slug == "golden-slam")
+
+    visuals, report = resolve_story_visuals(story, tmp_path / "visuals")
+
+    assert not visuals
+    assert report["status"] == "fail"
+    assert report["providers_queried"] == []  # cover-first rejection avoids wasted requests
+    assert any("封面" in error for error in report["errors"])
+
+
+def test_knowledge_copy_rotates_structure_and_bans_quiz_boilerplate(sample_digest):
+    from dataclasses import replace
+    from datetime import timedelta
+
+    from tennislive.render.knowledge import knowledge_copy
+    from tennislive.render.tournament_story import STORIES
+
+    story = next(story for story in STORIES if story.slug == "hawkeye")
+    copies = {
+        knowledge_copy(story, replace(sample_digest, today=sample_digest.today + timedelta(days=day)))
+        for day in range(7)
+    }
+    combined = "\n".join(copies)
+
+    assert len(copies) >= 3
+    assert all(phrase not in combined for phrase in ("先别往下滑", "🧠 先猜", "🎾 答案", "记住这3点"))
+
+
+def test_knowledge_generation_switches_topic_after_visual_preflight_failure(
+    tmp_path, sample_digest, monkeypatch
+):
+    from dataclasses import replace
+    import json
+
+    from PIL import Image
+
+    from tennislive.render import knowledge
+    from tennislive.render.tournament_story import STORIES
+
+    cover = tmp_path / "cover.jpg"
+    Image.new("RGB", (1200, 800), "white").save(cover)
+    rejected = replace(next(s for s in STORIES if s.slug == "golden-slam"), image=cover)
+    selected = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
+    monkeypatch.setattr(
+        knowledge,
+        "tournament_story_candidates",
+        lambda _digest: [rejected, selected],
+    )
+
+    def fake_resolve(story, _folder):
+        if story.slug == rejected.slug:
+            return {}, {
+                "status": "fail",
+                "errors": ["封面人物不匹配"],
+                "missing_pages": ["story", "explainer", "today"],
+                "attempts": [],
+            }
+        return {}, {"status": "pass", "attempts": [], "errors": []}
+
+    monkeypatch.setattr(knowledge, "resolve_story_visuals", fake_resolve)
+    monkeypatch.setattr(
+        knowledge,
+        "_screenshot_pages",
+        lambda pages, _theme: [
+            (kind, Image.new("RGB", (1080, 1440), "black")) for kind, _body in pages
+        ],
+    )
+
+    result = knowledge.generate_knowledge_package(sample_digest, tmp_path / "knowledge")
+    sources = json.loads((tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8"))
+
+    assert result.slug == selected.slug
+    assert sources["rejected_candidates"][0]["story_slug"] == rejected.slug
 
 
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
@@ -1282,6 +1365,88 @@ def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
     assert "China Focus · 中国焦点" in body
     assert "Tonight · 今晚必看" in body
     assert body.count('class="cover-highlight"') == 2
+
+
+def test_cover_uses_verified_athlete_photo_as_full_bleed_background(
+    sample_digest, tmp_path
+):
+    from PIL import Image
+
+    from tennislive.render.webcards import cover_body
+
+    photo = tmp_path / "athlete.jpg"
+    Image.new("RGB", (1600, 1200), "white").save(photo)
+    body = cover_body(
+        sample_digest,
+        "辛纳逆转晋级",
+        "把比赛拖进自己的节奏",
+        "7.16 · 周四",
+        cover_visual={
+            "path": photo,
+            "source_url": "https://example.com/athlete",
+            "credit": "Verified Photographer",
+            "license": "CC BY 4.0",
+            "focus": "62% 24%",
+        },
+    )
+
+    assert 'class="cover-bg"' in body
+    assert "--cover-focus:62% 24%" in body
+    assert 'data-photo-source="https://example.com/athlete"' in body
+    assert "cover-subject" not in body
+
+
+def test_daily_cover_visual_requires_exact_player_match(monkeypatch, tmp_path):
+    from PIL import Image
+
+    from tennislive.research import visual_sources
+
+    match = make_match(home_name="Jannik Sinner", away_name="Novak Djokovic")
+    cached = tmp_path / "resolved.jpg"
+    Image.new("RGB", (1400, 1000), "white").save(cached)
+
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(
+        visual_sources,
+        "_commons_candidates",
+        lambda _query, _session: [
+            {
+                "provider": "wikimedia-commons",
+                "source_url": "https://example.com/sinner",
+                "image_url": "https://example.com/sinner.jpg",
+                "credit": "Photographer",
+                "license": "cc-by",
+                "width": 1400,
+                "height": 1000,
+                "relevance": 12,
+                "search_text": "jannik sinner tennis player serving in a match",
+            }
+        ],
+    )
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources,
+        "_download",
+        lambda candidate, page, query, folder, session: visual_sources.ResolvedVisual(
+            page=page,
+            path=cached,
+            provider=candidate["provider"],
+            source_url=candidate["source_url"],
+            image_url=candidate["image_url"],
+            credit=candidate["credit"],
+            license=candidate["license"],
+            query=query,
+            relevance=candidate["relevance"],
+            sha256="abc",
+        ),
+    )
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert visual is not None and visual.subject_match
+    assert report["status"] == "selected"
+    assert report["player"] == "Jannik Sinner"
+    assert report["policy"].endswith("不生成 AI 图片")
 
 
 def test_tonight_reason_uses_editorial_label(sample_digest):
