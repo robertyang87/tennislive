@@ -14,10 +14,11 @@
   ],
   "missing_pages": [],
   "input_domains": [
-    "commons.wikimedia.org",
     "itftennis.com",
+    "lavanguardia.com",
     "olympics.com",
     "tennismagazin.de",
+    "time.com",
     "usopen.org"
   ],
   "providers_queried": [
@@ -30,7 +31,7 @@
   "selected_providers": [
     "editorial-archive",
     "official-editorial",
-    "wikimedia-commons"
+    "verified-editorial"
   ],
   "errors": [],
   "attempts": [
@@ -51,6 +52,20 @@
       "page_url": "https://www.usopen.org/en_US/visit/year_by_year.html",
       "status": "error",
       "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
+      "source_url": "https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
+      "image_url": "https://www.itftennis.com/assets/images/site-logo.jpg",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "u.s. open 1969 tennis tournament | itf the u.s. open tournament 1969 took place from 29 aug 1969 to 09 sep 1969. click here to get the latest information and view the results. https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
+      "image_text": " https://www.itftennis.com/assets/images/site-logo.jpg",
+      "width": 0,
+      "height": 0
     },
     {
       "provider": "official-media",
@@ -124,41 +139,41 @@
       "page": "story",
       "status": "selected",
       "required_event_terms": [],
-      "match_level": "subject-archive",
-      "provider": "wikimedia-commons",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg/1920px-Rod_Laver_signing_autographs_Dutch_Championships_1962.jpg",
-      "credit": "Jack de Nijs for Anefo",
-      "license": "cc by-sa 3.0 nl",
+      "match_level": "exact-event",
+      "provider": "verified-editorial",
+      "source_url": "https://www.lavanguardia.com/deportes/tenis/20190908/47220597858/historias-del-us-open-rod-laver-us-open-grand-slam.html",
+      "image_url": "https://www.lavanguardia.com/files/original/uploads/2019/09/07/5fa53698b51d8.jpeg",
+      "credit": "La Vanguardia archive",
+      "license": "公开网页图片 · 非商业资讯引用",
       "query": "Rod Laver 1969 grand slam tennis",
-      "relevance": 6,
-      "sha256": "a82cc265b5f31c1f5ef7e1ae5ebb9af734560623621f5a5860621859b62157ba",
+      "relevance": 100,
+      "sha256": "432d784986ad8b7678e55ea525f8756a5711024a02c1824d86654d4c0af4b8be",
       "focus": "50% 24%",
       "subject_match": true,
-      "year_match": false,
-      "event_match": false,
+      "year_match": true,
+      "event_match": true,
       "person_required": true,
-      "cached_file": "story-a82cc265b5f3.jpg"
+      "cached_file": "story-432d784986ad.jpeg"
     },
     {
       "page": "explainer",
       "status": "selected",
       "required_event_terms": [],
-      "match_level": "subject-archive",
-      "provider": "wikimedia-commons",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Steffi_Graf_(Wimbledon_2009).jpg",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Steffi_Graf_%28Wimbledon_2009%29.jpg/1920px-Steffi_Graf_%28Wimbledon_2009%29.jpg",
-      "credit": "Chris Eason from London",
-      "license": "cc by 2.0",
+      "match_level": "exact-event",
+      "provider": "verified-editorial",
+      "source_url": "https://time.com/4026998/grand-slam-winners/",
+      "image_url": "https://gcp-na-images.contentstack.com/v3/assets/bltea6093859af6183b/bltdf817390a4baa91e/698862c23c1639329f459a2e/150909-grand-slam-winners-09.jpg?branch=production",
+      "credit": "TIME archive",
+      "license": "公开网页图片 · 非商业资讯引用",
       "query": "Steffi Graf 1988 grand slam tennis",
-      "relevance": 6,
-      "sha256": "17ff1adca0f559159c7b0795326bb5bdaf769cad43ecc9652742697e1c0721fe",
+      "relevance": 100,
+      "sha256": "e0ad35f47ab734c8e6246a8dff2837bdee7ae39649c5c3a138f7658df687a742",
       "focus": "50% 24%",
       "subject_match": true,
-      "year_match": false,
-      "event_match": false,
+      "year_match": true,
+      "event_match": true,
       "person_required": true,
-      "cached_file": "explainer-17ff1adca0f5.jpg"
+      "cached_file": "explainer-e0ad35f47ab7.jpg"
     },
     {
       "page": "today",
