@@ -11,6 +11,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -1059,35 +1060,73 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     fonts = _Fonts()
     date_label = _date_label(digest.today)
 
-    # 优先整组 HTML/Chromium 精细排版；浏览器不可用时回退 Pillow 版全组
+    # 优先整组 HTML/Chromium 精细排版。生产环境启用严格封面后，封面
+    # 选择和最终卡片是一项原子操作：任一步失败都不能退回到另一张图。
+    cover_fetch_enabled = os.environ.get(
+        "TENNISLIVE_COVER_VISUAL_FETCH", "off"
+    ).lower() in {"1", "on", "true"}
+    strict_cover = os.environ.get(
+        "TENNISLIVE_COVER_VISUAL_STRICT", "off"
+    ).lower() in {"1", "on", "true"}
+    cover_report_path = outdir.parent / "cover_visual.json"
+    cover_report: dict | None = None
+    cover_visual = None
     try:
         from .webcards import generate_deck
 
         theme = os.environ.get("TENNISLIVE_THEME", "dark")
-        cover_visual = None
         visual_cache = outdir.parent / ".cover-visual-cache"
-        if os.environ.get("TENNISLIVE_COVER_VISUAL_FETCH", "off").lower() in {
-            "1", "on", "true",
-        }:
+        if strict_cover and not cover_fetch_enabled:
+            raise RuntimeError("严格封面模式要求启用头条比赛图片核验")
+        if cover_fetch_enabled:
             from ..research.visual_sources import resolve_match_cover_visual
             from .titles import daily_lead_match
 
             lead = daily_lead_match(digest)
+            if lead is None and strict_cover:
+                raise RuntimeError("严格封面模式缺少可绑定的头条比赛")
             if lead is not None:
-                cover_visual, cover_report = resolve_match_cover_visual(
-                    lead, visual_cache
-                )
-                (outdir.parent / "cover_visual.json").write_text(
+                cover_visual, cover_report = resolve_match_cover_visual(lead, visual_cache)
+                cover_report_path.write_text(
                     json.dumps(cover_report, ensure_ascii=False, indent=2),
                     encoding="utf-8",
                 )
+                if strict_cover and cover_visual is None:
+                    raise RuntimeError("严格封面模式未找到通过核验的头条比赛图片")
         images = generate_deck(
             digest, date_label, theme, cover_visual=cover_visual,
         )
         paths: list[Path] = []
+        cover_path: Path | None = None
         for i, (kind, img) in enumerate(images):
             p = save_social_image(img, outdir / f"card_{i:02d}_{kind}")
             paths.append(p)
+            if kind == "cover":
+                cover_path = p
+
+        if strict_cover:
+            if cover_visual is None or cover_report is None:
+                raise RuntimeError("严格封面模式缺少已核验封面及其报告")
+            if cover_path is None or cover_path.name != "card_00_cover.jpg":
+                raise RuntimeError("严格封面模式未生成唯一的 card_00_cover.jpg")
+            source_path = Path(cover_visual.path)
+            if not source_path.is_file():
+                raise RuntimeError("严格封面模式的已核验原图在渲染后不可用")
+            source_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest()
+            card_sha256 = hashlib.sha256(cover_path.read_bytes()).hexdigest()
+            cover_report["selected_asset_sha256"] = source_sha256
+            cover_report["render_binding"] = {
+                "status": "bound",
+                "renderer": "html-chromium",
+                "match_id": cover_report.get("match_id", ""),
+                "selected_asset_sha256": source_sha256,
+                "card_file": f"cards/{cover_path.name}",
+                "card_sha256": card_sha256,
+            }
+            cover_report_path.write_text(
+                json.dumps(cover_report, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
         if visual_cache.exists():
             import shutil
 
@@ -1095,6 +1134,21 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
         logger.info("生成 %d 张晨报卡片（HTML 渲染）到 %s", len(paths), outdir)
         return paths
     except Exception as e:  # noqa: BLE001
+        if strict_cover:
+            if cover_report is not None:
+                cover_report["render_binding"] = {
+                    "status": "render_failed",
+                    "renderer": "html-chromium",
+                    "match_id": cover_report.get("match_id", ""),
+                    "error": str(e),
+                }
+                cover_report_path.write_text(
+                    json.dumps(cover_report, ensure_ascii=False, indent=2),
+                    encoding="utf-8",
+                )
+            raise RuntimeError(
+                f"严格封面模式下 HTML 卡片渲染失败: {e}"
+            ) from e
         logger.warning("HTML 渲染不可用，回退 Pillow 版卡片: %s", e)
 
     images: list[tuple[str, Image.Image]] = []

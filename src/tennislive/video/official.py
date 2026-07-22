@@ -8,6 +8,7 @@ import os
 import re
 import shutil
 import subprocess
+import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -28,6 +29,27 @@ from .pipeline import (
 WTA_VIDEO_HUB = "https://www.wtatennis.com/videos/"
 WTA_ACCOUNT = "6041795521001"
 WTA_PLAYER = "te01Hqw71"
+ATP_YOUTUBE_CHANNEL_ID = "UCY_5h5zaSwN7Or4kIJDYNXA"
+OFFICIAL_YOUTUBE_CHANNEL_IDS = {
+    "ATP": ATP_YOUTUBE_CHANNEL_ID,
+    "AO": "UCeTKJSW1NTAkf27nNmjWt5A",
+    "RG": "UCF3K1Jf8hjFW8qliei8fQ3A",
+    "WIMBLEDON": "UCNa8NxMgSm7m4Ii9d4QGk1Q",
+    "USOPEN": "UCXbboag48Qlr78zzz6SkzkQ",
+}
+
+
+def official_youtube_uploads_feed(channel_id: str) -> str:
+    """Use the uploads playlist feed, whose root retains the full channel id."""
+    playlist_id = "UU" + channel_id[2:] if channel_id.startswith("UC") else channel_id
+    return f"https://www.youtube.com/feeds/videos.xml?playlist_id={playlist_id}"
+
+
+OFFICIAL_YOUTUBE_FEEDS = {
+    tour: official_youtube_uploads_feed(channel_id)
+    for tour, channel_id in OFFICIAL_YOUTUBE_CHANNEL_IDS.items()
+}
+ATP_YOUTUBE_FEED = OFFICIAL_YOUTUBE_FEEDS["ATP"]
 _ANCHOR = re.compile(
     r'<a[^>]+href="(?P<path>/videos/\d+/[^"?#]+)"[^>]*>'
     r"(?P<body>[\s\S]{0,1800}?)</a>",
@@ -37,6 +59,10 @@ _TAG = re.compile(r"<[^>]+>")
 _BC_GUID = re.compile(r'"(?:bcGuid|mediaId)":"(?P<guid>\d{8,})"')
 _DESCRIPTION = re.compile(r'"description":"(?P<value>(?:\\.|[^"])*)"')
 _THUMBNAIL = re.compile(r'"thumbnailUrl":"(?P<value>(?:\\.|[^"])*)"')
+_DATE_PUBLISHED = re.compile(
+    r'"(?:datePublished|publishedAt|publishDate)":"(?P<value>[^"\\]+)"',
+    re.IGNORECASE,
+)
 _POLICY_KEY = re.compile(r"BCpk[A-Za-z0-9_-]{20,}")
 _ORDINALS = {
     "first": 1,
@@ -63,6 +89,17 @@ class OfficialVideoCandidate:
 
 
 @dataclass(frozen=True)
+class OfficialYouTubeFeedEntry:
+    """Structured metadata exposed by a verified official YouTube feed."""
+
+    candidate: OfficialVideoCandidate
+    video_id: str
+    published_at: str
+    description: str
+    thumbnail_url: str
+
+
+@dataclass(frozen=True)
 class OfficialVideoMetadata:
     candidate: OfficialVideoCandidate
     description: str
@@ -70,6 +107,10 @@ class OfficialVideoMetadata:
     playback_url: str
     duration_ms: int
     fallback_url: str = ""
+    published_at: str = ""
+    source_width: int = 0
+    source_height: int = 0
+    source_bitrate: int = 0
 
 
 def _response_text(response: object) -> str:
@@ -98,6 +139,161 @@ def parse_wta_video_candidates(page: str) -> list[OfficialVideoCandidate]:
             )
         )
     return found
+
+
+def parse_official_youtube_feed_entries(
+    page: str,
+    *,
+    channel_id: str,
+    tour: str,
+) -> list[OfficialYouTubeFeedEntry]:
+    """Parse a verified channel feed, retaining metadata needed by visual QA."""
+    try:
+        root = ET.fromstring(page)
+    except ET.ParseError as exc:
+        raise VideoPipelineError("Official YouTube feed is not valid XML") from exc
+    namespaces = {
+        "atom": "http://www.w3.org/2005/Atom",
+        "yt": "http://www.youtube.com/xml/schemas/2015",
+        "media": "http://search.yahoo.com/mrss/",
+    }
+    actual_channel = (root.findtext("yt:channelId", namespaces=namespaces) or "").strip()
+    channel_identities = {actual_channel}
+    if actual_channel and not actual_channel.startswith("UC"):
+        # YouTube currently omits the leading ``UC`` in this feed-level field,
+        # while the canonical channel URL and video metadata retain it.
+        channel_identities.add("UC" + actual_channel)
+    channel_identities.update(
+        str(link.get("href") or "").rstrip("/").rsplit("/", 1)[-1]
+        for link in root.findall("atom:link", namespaces)
+        if str(link.get("rel") or "") == "alternate"
+    )
+    if channel_id not in channel_identities:
+        raise VideoPipelineError("Official YouTube feed channel identity mismatch")
+    entries: list[OfficialYouTubeFeedEntry] = []
+    for entry in root.findall("atom:entry", namespaces):
+        video_id = (entry.findtext("yt:videoId", namespaces=namespaces) or "").strip()
+        title = (entry.findtext("atom:title", namespaces=namespaces) or "").strip()
+        if not video_id or not title:
+            continue
+        candidate = OfficialVideoCandidate(
+            title=title,
+            url=f"https://www.youtube.com/watch?v={video_id}",
+            tour=tour,
+        )
+        entries.append(
+            OfficialYouTubeFeedEntry(
+                candidate=candidate,
+                video_id=video_id,
+                published_at=(
+                    entry.findtext("atom:published", namespaces=namespaces) or ""
+                ).strip(),
+                description=(
+                    entry.findtext(
+                        "media:group/media:description", namespaces=namespaces
+                    )
+                    or ""
+                ).strip(),
+                # Official HD uploads expose this deterministic highest-resolution
+                # thumbnail endpoint. A missing maxres image is allowed to fail the
+                # normal download/quality gate rather than falling back to a blurrier
+                # social thumbnail.
+                thumbnail_url=(
+                    f"https://i.ytimg.com/vi/{video_id}/maxresdefault.jpg"
+                ),
+            )
+        )
+    return entries
+
+
+def parse_official_youtube_feed(
+    page: str,
+    *,
+    channel_id: str,
+    tour: str,
+) -> list[OfficialVideoCandidate]:
+    """Parse an official channel feed and reject a mismatched channel identity."""
+    return [
+        entry.candidate
+        for entry in parse_official_youtube_feed_entries(
+            page,
+            channel_id=channel_id,
+            tour=tour,
+        )
+    ]
+
+
+def fetch_youtube_video_metadata(
+    candidate: OfficialVideoCandidate,
+    *,
+    info_fetcher: Callable[[str], dict] | None = None,
+) -> OfficialVideoMetadata:
+    """Resolve one official-channel video to a progressive HD playback URL."""
+    if info_fetcher is None:
+        try:
+            from yt_dlp import YoutubeDL
+        except ImportError as exc:  # pragma: no cover - deployment guard
+            raise VideoPipelineError("yt-dlp is required for official YouTube video") from exc
+
+        def info_fetcher(url: str) -> dict:
+            with YoutubeDL(
+                {
+                    "quiet": True,
+                    "no_warnings": True,
+                    "noplaylist": True,
+                    "skip_download": True,
+                }
+            ) as downloader:
+                return downloader.extract_info(url, download=False)
+
+    try:
+        info = info_fetcher(candidate.url)
+    except Exception as exc:
+        raise VideoPipelineError(f"Official YouTube metadata failed: {exc}") from exc
+    expected_channel = OFFICIAL_YOUTUBE_CHANNEL_IDS.get(candidate.tour.upper(), "")
+    if expected_channel and str(info.get("channel_id") or "") != expected_channel:
+        raise VideoPipelineError("Official YouTube video channel identity mismatch")
+    formats = [
+        item
+        for item in info.get("formats", [])
+        if str(item.get("url", "")).startswith("https://")
+        and item.get("vcodec") not in (None, "none")
+        and item.get("acodec") not in (None, "none")
+    ]
+    progressive = max(
+        formats,
+        key=lambda item: (
+            int(item.get("width") or 0) * int(item.get("height") or 0),
+            float(item.get("tbr") or 0),
+        ),
+        default={},
+    )
+    playback_url = str(progressive.get("url") or "")
+    if not playback_url:
+        raise VideoPipelineError("Official YouTube video has no progressive playback URL")
+    timestamp = info.get("timestamp")
+    if timestamp:
+        published_at = datetime.fromtimestamp(
+            float(timestamp), tz=timezone.utc
+        ).isoformat()
+    else:
+        upload_date = str(info.get("upload_date") or "")
+        published_at = (
+            f"{upload_date[:4]}-{upload_date[4:6]}-{upload_date[6:8]}T00:00:00+00:00"
+            if re.fullmatch(r"\d{8}", upload_date)
+            else ""
+        )
+    return OfficialVideoMetadata(
+        candidate=candidate,
+        description=str(info.get("description") or ""),
+        thumbnail_url=str(info.get("thumbnail") or ""),
+        playback_url=playback_url,
+        duration_ms=round(float(info.get("duration") or 0) * 1000),
+        published_at=published_at,
+        source_width=int(progressive.get("width") or 0),
+        source_height=int(progressive.get("height") or 0),
+        source_bitrate=round(float(progressive.get("tbr") or 0) * 1000),
+    )
 
 
 def _digest_name_tokens(digest: Digest) -> set[str]:
@@ -177,6 +373,7 @@ def fetch_wta_video_metadata(
         raise VideoPipelineError("WTA page does not expose a Brightcove video id")
     description_match = _DESCRIPTION.search(page)
     thumbnail_match = _THUMBNAIL.search(page)
+    published_match = _DATE_PUBLISHED.search(page)
 
     player_url = (
         f"https://players.brightcove.net/{WTA_ACCOUNT}/"
@@ -206,11 +403,15 @@ def fetch_wta_video_metadata(
         )
         and str(source.get("src", "")).startswith("https://")
     ]
-    progressive = min(
+    progressive_source = max(
         progressive_sources,
-        key=lambda source: int(source.get("avg_bitrate") or source.get("size") or 10**12),
+        key=lambda source: (
+            int(source.get("width") or 0) * int(source.get("height") or 0),
+            int(source.get("avg_bitrate") or 0),
+        ),
         default={},
-    ).get("src", "")
+    )
+    progressive = progressive_source.get("src", "")
     hls = next(
         (
             source.get("src", "")
@@ -238,6 +439,14 @@ def fetch_wta_video_metadata(
         playback_url=playback_url,
         duration_ms=int(playback.get("duration") or 0),
         fallback_url=str(progressive if hls else ""),
+        published_at=str(
+            playback.get("published_at")
+            or playback.get("created_at")
+            or (published_match.group("value") if published_match else "")
+        ),
+        source_width=int(progressive_source.get("width") or 0),
+        source_height=int(progressive_source.get("height") or 0),
+        source_bitrate=int(progressive_source.get("avg_bitrate") or 0),
     )
 
 

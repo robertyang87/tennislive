@@ -815,6 +815,37 @@ def test_cover_title_and_post_share_one_headliner():
     assert "辛纳" in re.search(r'class="focus">(.*?)</div>', body).group(1)
 
 
+def test_cover_headline_breaks_after_balanced_punctuation_and_keeps_last_two_glyphs():
+    from tennislive.render.webcards import _cover_headline_html
+
+    rendered = _cover_headline_html("时隔16个月，西西帕斯再夺冠")
+
+    assert rendered.count('class="headline-line"') == 2
+    assert re.sub(r"<[^>]+>", "", rendered) == "时隔16个月，西西帕斯再夺冠"
+    assert "，</span></span><span class=\"headline-line\">西西帕斯" in rendered
+    assert '<span class="headline-keep headline-tail">夺冠</span>' in rendered
+
+
+def test_cover_headline_without_punctuation_still_prevents_a_one_character_tail():
+    from tennislive.render.webcards import _cover_headline_html
+
+    rendered = _cover_headline_html("这一场胜利让所有人重新记住郑钦文")
+
+    assert rendered.count('class="headline-line"') == 1
+    assert '<span class="headline-keep headline-tail">钦文</span>' in rendered
+
+
+def test_cover_headline_keeps_brackets_and_closing_punctuation_with_text_and_escapes_html():
+    from tennislive.render.webcards import _cover_headline_html
+
+    rendered = _cover_headline_html("这一场（决赛）谁能赢？<")
+
+    assert '<span class="headline-keep">（决</span>' in rendered
+    assert '<span class="headline-keep">赛）</span>' in rendered
+    assert "&lt;" in rendered
+    assert "<script" not in rendered
+
+
 def test_cover_applies_china_weight_instead_of_input_order():
     import re
 
@@ -960,7 +991,8 @@ def test_player_story_card_uses_spotlight_branding(tmp_path):
     body = webcards.tournament_story_body(replace(story, image=fake_img), "07.18 星期六")
 
     assert "球员特写" in body and "赛事档案" not in body
-    assert story.source_label in body
+    assert story.source_label not in body
+    assert story.source_url.startswith("https://")
 
 
 def test_story_card_uses_spacious_single_flow(tmp_path):
@@ -1035,7 +1067,7 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert "💬 " in xhs
     assert "今天单独讲一个网球知识点" not in xhs
     assert story.hero_fact in xhs
-    assert story.source_label in xhs
+    assert story.source_label not in xhs
     assert all(f"/knowledge/cards/{card_name}" in push for card_name in card_names)
     assert push.count("<img ") == 4
     assert "第1张未显示？点此打开原图" in push
@@ -1098,6 +1130,58 @@ def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_p
     assert 'data-visual="player-explainer"' in bodies[2][1]
     assert 'data-visual="history-timeline"' in bodies[3][1]
     assert evaluate_knowledge_visuals(story, bodies)["status"] == "pass"
+
+
+def test_public_cards_and_copy_hide_source_credits_but_evidence_keeps_urls(sample_digest):
+    from tennislive.render.knowledge import _knowledge_evidence, knowledge_copy
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import cover_body, knowledge_deck_bodies
+
+    story = next(item for item in STORIES if item.slug == "golden-slam")
+    cover = cover_body(
+        sample_digest,
+        "时隔16个月，西西帕斯再夺冠",
+        "把这一夜留在记忆里",
+        "07.16 · 周四",
+        cover_visual={
+            "path": story.image,
+            "credit": "Example Photographer",
+            "license": "非商业资料引用",
+            "source_url": "https://example.com/photo",
+        },
+    )
+    deck = knowledge_deck_bodies(
+        story,
+        "07.16 · 周四",
+        question="金满贯和世界第一，你觉得哪个更难？",
+        year=2026,
+    )
+    public_outputs = [
+        cover,
+        *(body for _kind, body in deck),
+        knowledge_copy(story, sample_digest),
+        to_markdown(sample_digest),
+        to_html(sample_digest),
+        to_post(sample_digest),
+    ]
+    forbidden = (
+        "摄影/图源",
+        "图源：",
+        "来源：",
+        "资料｜",
+        "资料：",
+        "资料核对",
+        "非商业资料引用",
+        "官方资料 ↗",
+        "赛事官方历史",
+    )
+
+    assert all(
+        marker not in output for output in public_outputs for marker in forbidden
+    )
+    evidence = _knowledge_evidence(story, sample_digest)
+    assert evidence["sources"]
+    assert all(url.startswith("https://") for url in evidence["sources"])
 
 
 def test_visual_qa_rejects_internal_generation_labels(tmp_path):
@@ -1519,7 +1603,9 @@ def test_cover_uses_verified_athlete_photo_as_full_bleed_background(
 
     assert 'class="cover-bg"' in body
     assert "--cover-focus:62% 24%" in body
-    assert 'data-photo-source="https://example.com/athlete"' in body
+    assert 'data-photo-source="https://example.com/athlete"' not in body
+    assert "Verified Photographer" not in body
+    assert "CC BY 4.0" not in body
     assert "cover-subject" not in body
 
 
@@ -1546,11 +1632,29 @@ def test_daily_cover_visual_requires_exact_player_match(monkeypatch, tmp_path):
                 "width": 1400,
                 "height": 1000,
                 "relevance": 12,
-                "search_text": "jannik sinner tennis player serving in a match",
+                "search_text": (
+                    "jannik sinner serves during the wimbledon 2026 match "
+                    "against novak djokovic"
+                ),
+                "image_text": "jannik sinner serves during the match",
             }
         ],
     )
     monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources,
+        "assess_cover_image",
+        lambda _path: {
+            "status": "pass",
+            "score": 35,
+            "quality_score": 15,
+            "crop_score": 20,
+            "hard_failures": [],
+            "focus": "62% 24%",
+            "prominent_faces": 1,
+        },
+    )
     monkeypatch.setattr(
         visual_sources,
         "_download",
@@ -1572,8 +1676,9 @@ def test_daily_cover_visual_requires_exact_player_match(monkeypatch, tmp_path):
 
     assert visual is not None and visual.subject_match
     assert report["status"] == "selected"
-    assert report["player"] == "Jannik Sinner"
-    assert report["policy"].endswith("不生成 AI 图片")
+    assert report["selected_player"] == "Jannik Sinner"
+    assert report["scene"] == "match_action"
+    assert report["quality_score"] >= 72
 
 
 def test_tonight_reason_uses_editorial_label(sample_digest):

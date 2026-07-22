@@ -108,10 +108,7 @@ def to_markdown(digest: Digest) -> str:
                 f"- **{fmt_schedule_time(m)}｜{group.name_zh}**："
                 f"{side_display(m.home)} vs {side_display(m.away)}"
             )
-            source = ""
-            if m.editorial_url and m.editorial_source:
-                source = f"（[{m.editorial_source}原文]({m.editorial_url})）"
-            lines.append(f"  推荐理由：{schedule_insight(m)}{source}")
+            lines.append(f"  推荐理由：{schedule_insight(m)}")
         lines.append("")
 
     focus = select_focus_match(digest)
@@ -123,10 +120,8 @@ def to_markdown(digest: Digest) -> str:
         for label, left, right in comparison.rows:
             lines.append(f"- {label}：{left} vs {right}")
         lines.extend(["", f"**一句判断：**{comparison.verdict}"])
-        if comparison.source_label:
-            source = comparison.source_label
-            duration = f"｜{comparison.duration_label}" if comparison.duration_label else ""
-            lines.extend([f"数据：{source}{duration}", ""])
+        if comparison.duration_label:
+            lines.extend([f"比赛用时：{comparison.duration_label}", ""])
         else:
             lines.append("")
 
@@ -146,19 +141,18 @@ def to_markdown(digest: Digest) -> str:
         for moment in story.moments:
             date = moment.date.replace("-", ".")
             lines.append(
-                f"- **[{date}｜{moment.player}｜{moment.age}]({moment.source_url})**："
+                f"- **{date}｜{moment.player}｜{moment.age}**："
                 f"{moment.headline}。{moment.detail}"
             )
         lines.append("")
         lines.extend(f"- {fact}" for fact in story.facts)
-        lines.extend(["", f"[赛事官方历史资料]({story.source_url})"])
         lines.append("")
 
     lines.extend(
         [
             "---",
             "",
-            "*时间均为北京时间；完整原始数据保留在 digest.json。数据来自公开比分接口，以赛事官方为准。*",
+            "*时间均为北京时间。*",
             "",
         ]
     )
@@ -216,19 +210,10 @@ def _section(title: str) -> str:
 def _item(
     main: str,
     insight: str = "",
-    *,
-    source_name: str = "",
-    source_url: str = "",
 ) -> str:
-    source = ""
-    if source_name and source_url.startswith("https://"):
-        source = (
-            f' <a href="{_esc(source_url)}" style="color:#0b6b49;text-decoration:none;">'
-            f'来源：{_esc(source_name)} ↗</a>'
-        )
     extra = (
-        f'<span style="{_S["insight"]}">{_esc(insight)}{source}</span>'
-        if insight or source else ""
+        f'<span style="{_S["insight"]}">{_esc(insight)}</span>'
+        if insight else ""
     )
     return f'<div style="{_S["item"]}">{main}{extra}</div>'
 
@@ -279,14 +264,7 @@ def to_html(digest: Digest) -> str:
                 f'{_esc(group.name_zh)}</strong><br/>'
                 f'{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
             )
-            parts.append(
-                _item(
-                    main,
-                    schedule_insight(m),
-                    source_name=m.editorial_source or "",
-                    source_url=m.editorial_url or "",
-                )
-            )
+            parts.append(_item(main, schedule_insight(m)))
 
     focus = select_focus_match(digest)
     if has_detailed_stats(focus):
@@ -303,12 +281,10 @@ def to_html(digest: Digest) -> str:
             f'<tr><th></th><th>{_esc(comparison.left_name)}</th><th>{_esc(comparison.right_name)}</th></tr>'
             f"{rows}</table>"
         )
-        if comparison.source_label:
-            source = comparison.source_label
-            duration = f"｜{comparison.duration_label}" if comparison.duration_label else ""
+        if comparison.duration_label:
             table += (
                 '<p style="margin:8px 0 0;text-align:right;font-size:12px;color:#778179;">'
-                f"数据：{_esc(source + duration)}</p>"
+                f"比赛用时：{_esc(comparison.duration_label)}</p>"
             )
         parts.append(_item(table, comparison.verdict))
 
@@ -322,24 +298,19 @@ def to_html(digest: Digest) -> str:
             f'<strong>{_esc(moment.date.replace("-", "."))}｜'
             f'{_esc(moment.player)}｜{_esc(moment.age)}</strong><br/>'
             f'{_esc(moment.headline)}<br/>'
-            f'<span style="color:#66756d;">{_esc(moment.detail)}</span><br/>'
-            f'<a href="{_esc(moment.source_url)}" style="color:#0b6b49;'
-            'text-decoration:none;font-size:12px;">官方资料 ↗</a></div>'
+            f'<span style="color:#66756d;">{_esc(moment.detail)}</span></div>'
             for moment in story.moments
         )
         parts.append(
             _item(
                 f"<strong>{_esc(story.title)}</strong>｜{_esc(story.level)}｜{_esc(story.surface)}<br/>"
                 f"{_esc(story.founded)} · {_esc(story.location)}<br/><br/>"
-                f"{moments}{facts}<br/>"
-                f'<a href="{_esc(story.source_url)}" style="color:#0b6b49;'
-                'text-decoration:none;font-size:12px;">赛事官方历史 ↗</a>',
+                f"{moments}{facts}",
                 story.hero_fact,
             )
         )
 
     parts.append(
-        f'<p style="{_S["footer"]}">时间均为北京时间；完整原始数据保留在 digest.json。'
-        "数据来自公开比分接口，以赛事官方为准。</p>"
+        f'<p style="{_S["footer"]}">时间均为北京时间。</p>'
     )
     return _emoji_flags_to_img("\n".join(parts))

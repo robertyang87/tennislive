@@ -144,6 +144,87 @@ def _icon_html(name: str, *, alt: str = "") -> str:
     return f'<img class="ui-icon" src="{uri}" alt="{html.escape(alt)}"/>'
 
 
+_HEADLINE_BREAK_AFTER = frozenset("，；：！？｜")
+_HEADLINE_CLOSING = frozenset("，。！？；：、）】》〉」』”’…")
+_HEADLINE_OPENING = frozenset("（【《〈「『“‘")
+
+
+def _headline_display_width(text: str) -> float:
+    """Approximate display width well enough to choose a balanced punctuation break."""
+    width = 0.0
+    for char in text:
+        if char.isspace():
+            width += 0.3
+        elif char.isascii() and (char.isalnum() or char in "-+/&"):
+            width += 0.56
+        elif char in _HEADLINE_BREAK_AFTER or char in _HEADLINE_CLOSING:
+            width += 0.55
+        else:
+            width += 1.0
+    return width
+
+
+def _balanced_headline_lines(headline: str) -> list[str]:
+    """Prefer a balanced break after Chinese punctuation on long cover titles."""
+    explicit = [line.strip() for line in headline.splitlines() if line.strip()]
+    if len(explicit) > 1:
+        return explicit
+    text = explicit[0] if explicit else ""
+    total = _headline_display_width(text)
+    if total < 12:
+        return [text]
+    candidates: list[tuple[float, int]] = []
+    for index, char in enumerate(text[:-1], start=1):
+        if char not in _HEADLINE_BREAK_AFTER:
+            continue
+        left = _headline_display_width(text[:index])
+        right = _headline_display_width(text[index:])
+        if min(left, right) < 4:
+            continue
+        candidates.append((abs(left - right), index))
+    if not candidates:
+        return [text]
+    _, split_at = min(candidates)
+    return [text[:split_at].strip(), text[split_at:].strip()]
+
+
+def _headline_line_html(line: str) -> str:
+    """Keep punctuation with its neighbor and keep the final two glyphs together."""
+    units: list[str] = []
+    index = 0
+    while index < len(line):
+        char = line[index]
+        if char in _HEADLINE_CLOSING and units:
+            units[-1] += char
+        elif char in _HEADLINE_OPENING and index + 1 < len(line):
+            units.append(char + line[index + 1])
+            index += 1
+        else:
+            units.append(char)
+        index += 1
+    if not units:
+        return ""
+    tail_start = max(0, len(units) - 2)
+    rendered: list[str] = []
+    for unit in units[:tail_start]:
+        escaped = html.escape(unit)
+        if len(unit) > 1 or any(char in _HEADLINE_CLOSING for char in unit):
+            rendered.append(f'<span class="headline-keep">{escaped}</span>')
+        else:
+            rendered.append(escaped)
+    tail = html.escape("".join(units[tail_start:]))
+    rendered.append(f'<span class="headline-keep headline-tail">{tail}</span>')
+    return "".join(rendered)
+
+
+def _cover_headline_html(headline: str) -> str:
+    """Render a safe, punctuation-aware cover headline without orphan glyphs."""
+    return "".join(
+        f'<span class="headline-line">{_headline_line_html(line)}</span>'
+        for line in _balanced_headline_lines(headline)
+    )
+
+
 # ---------- 页面骨架 ----------
 
 _COURT_SVG = """<svg class="court" viewBox="0 0 1080 1060" preserveAspectRatio="none">
@@ -352,7 +433,10 @@ html.light .chip-green { color:#fff; }
   letter-spacing:.34em; color:#E4C96E; text-transform:uppercase; margin-top:24px; }
 .cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:88px; font-weight:400;
   line-height:1.04; letter-spacing:0; margin-top:12px; color:#fff; max-width:930px;
-  text-shadow:0 7px 28px rgba(0,0,0,.7); }
+  text-shadow:0 7px 28px rgba(0,0,0,.7); line-break:strict; word-break:normal;
+  overflow-wrap:normal; }
+.cover .focus .headline-line { display:block; }
+.cover .focus .headline-keep { white-space:nowrap; }
 .cover.compact-headline .focus { font-size:72px; line-height:1.07; max-width:940px; }
 .cover .secondary { margin-top:22px; padding-left:18px; border-left:6px solid var(--coral);
   color:#E6EEEA; font-size:28px; font-weight:700; line-height:1.45; max-width:820px;
@@ -1038,17 +1122,11 @@ def cover_body(
     chips_html = "".join(f"<span>{c}</span>" for c in chips)
     subject = direct_story_for_match(lead, prefer_player=True) if lead else None
     cover_path = Path(_visual_value(cover_visual, "path", "")) if cover_visual else None
-    cover_credit = str(_visual_value(cover_visual, "credit", "")).strip()
-    cover_license = str(_visual_value(cover_visual, "license", "")).strip()
-    cover_source = str(_visual_value(cover_visual, "source_url", "")).strip()
     cover_focus = str(_visual_value(cover_visual, "focus", "50% 24%"))
     cover_size = "cover"
     if cover_path is None or not cover_path.is_file():
         if subject is not None and subject.kind == "player" and subject.image.exists():
             cover_path = subject.image
-            cover_credit = subject.image_credit
-            cover_source = subject.image_source_url
-            cover_license = "署名来源见资料页"
             cover_focus, cover_size = _LOCAL_PLAYER_COVER_FRAMING.get(
                 subject.image.name, ("50% 24%", "cover")
             )
@@ -1061,12 +1139,6 @@ def cover_body(
         f'--cover-focus:{html.escape(cover_focus, quote=True)};'
         f'--cover-size:{html.escape(cover_size, quote=True)}"></div>'
         if background_uri else ""
-    )
-    credit_parts = [part for part in (cover_credit, cover_license) if part]
-    cover_credit_html = (
-        f'<div class="cover-photo-credit" data-photo-source="{html.escape(cover_source, quote=True)}">'
-        f'摄影/图源：{html.escape(" · ".join(credit_parts))}</div>'
-        if credit_parts else ""
     )
     secondary_html = (
         f'<div class="secondary">{html.escape(secondary)}</div>' if secondary else ""
@@ -1164,12 +1236,11 @@ def cover_body(
         + f'<i>{weekday}</i><small>{weekday_en} · BEIJING TIME</small></span></div>'
         + '<div class="edition">DAILY MATCH BRIEF · 每日网球速递</div>'
         + f'<div class="focus-label">{lead_label}</div>'
-        + f'<div class="focus">{html.escape(headline)}</div>'
+        + f'<div class="focus">{_cover_headline_html(headline)}</div>'
         + secondary_html
         + '</div><div class="cover-lower">'
         + highlights_html
         + f'<div class="chips">{chips_html}</div>'
-        + cover_credit_html
         + '</div>'
         + _FOOTER
         + "</div>"
@@ -1298,7 +1369,6 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     venue = venue_asset_for_match(matches[0])
     page_style = ""
     location = ""
-    credit = ""
     if venue is not None:
         uri = _asset_image_uri(venue.image)
         if uri:
@@ -1307,7 +1377,6 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
                 f"--page-bg-pos:{html.escape(venue.focal_point)}"
             )
             location = venue.location
-            credit = f'<div class="venue-credit">{html.escape(venue.credit_label)}</div>'
     first = matches[0].tournament
     location = location or " · ".join(filter(None, (first.city, first.country)))
     levels = list(dict.fromkeys(event_group.compact_level for event_group in event_groups))
@@ -1328,7 +1397,6 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
         + _titleband("Tonight's Focus · 今晚焦点", group.name_zh)
         + f'<div class="event-meta">{meta}</div><div class="event-spacer"></div>'
         + "".join(cards)
-        + credit
         + _FOOTER
         + "</div>"
     )
@@ -1338,9 +1406,6 @@ def media_body(m: Match, date_label: str, today) -> str:
     brief = brief_for_match(m, today)
     if brief is None:
         raise ValueError("match has no reviewed media brief")
-    sources = " · ".join(
-        f"{source.name}（{source.published_at}）" for source in brief.sources
-    )
     highlights = brief.highlights or (("多源", "交叉核验"), ("1场", "继续追踪"), ("原创", "中文摘要"))
     stats = "".join(
         f'<article class="media-stat"><strong>{html.escape(value)}</strong>'
@@ -1357,10 +1422,7 @@ def media_body(m: Match, date_label: str, today) -> str:
     if story is not None:
         uri = _asset_image_uri(story.image)
         if uri:
-            photo = (
-                f'<img src="{uri}" alt="">'
-                f'<div class="media-visual-credit">图源：{html.escape(story.image_credit)}</div>'
-            )
+            photo = f'<img src="{uri}" alt="">'
     return (
         '<div class="poster media-page">'
         + _masthead(date_label)
@@ -1372,7 +1434,6 @@ def media_body(m: Match, date_label: str, today) -> str:
         + f'<div class="media-stats">{stats}</div>'
         + f'<div class="media-grid">{cards}</div>'
         + f'<div class="media-verdict"><b>我的判断</b>{html.escape(brief.takeaway)}</div>'
-        + f'<div class="media-sources">资料：{html.escape(sources)} · 原文链接见证据包</div>'
         + _FOOTER
         + "</div>"
     )
@@ -1389,13 +1450,6 @@ def focus_body(m: Match, date_label: str) -> str:
             f'<span class="{left_cls}">{html.escape(left)}</span>'
             f'<span class="{right_cls}">{html.escape(right)}</span></div>'
         )
-    source_html = ""
-    if comparison.source_label:
-        source = comparison.source_label
-        duration = f" · {comparison.duration_label}" if comparison.duration_label else ""
-        source_html = (
-            f'<div class="stats-source">数据来源：{html.escape(source + duration)}</div>'
-        )
     return (
         '<div class="poster focus-page">'
         + _masthead(date_label)
@@ -1408,7 +1462,6 @@ def focus_body(m: Match, date_label: str) -> str:
         + f'<span>{html.escape(comparison.left_name)}</span>'
         + f'<span>{html.escape(comparison.right_name)}</span></div>'
         + f'<div class="compare-grid">{"".join(rows)}</div>'
-        + source_html
         + f'<div class="verdict"><b>一句判断</b>{html.escape(comparison.verdict)}</div>'
         + _FOOTER
         + "</div>"
@@ -1466,11 +1519,6 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
             ]
         match_card = _sched_card(m, with_reason=False)
     reason = " · ".join(hotspot_reasons(m)[:3])
-    source_html = ""
-    if context is not None:
-        source_html = (
-            f'<div class="stats-source">背景来源：{html.escape(context.source_label)}</div>'
-        )
     facts_html = "".join(
         f'<article class="fact"><b>{html.escape(value)}</b>'
         f'<span>{html.escape(label)}</span></article>'
@@ -1485,7 +1533,6 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         + '<article class="insight-hero">'
         + f'<small>{html.escape(reason)}</small><strong>{html.escape(insight)}</strong></article>'
         + f'<div class="fact-grid">{facts_html}</div>'
-        + source_html
         + _FOOTER
         + "</div>"
     )
@@ -1585,8 +1632,6 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
         + "</div></div>"
         + f'<div class="story-hero">{html.escape(story.hero_fact)}</div>'
         + f'<ol class="story-list">{rows}</ol>'
-        + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
-        + f'图源：{html.escape(story.image_credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -1876,15 +1921,6 @@ def _knowledge_photo(
     )
 
 
-def _knowledge_visual_credit(visual: object | None) -> str:
-    if visual is None:
-        return ""
-    credit = str(_visual_value(visual, "credit", "")).strip()
-    license_name = str(_visual_value(visual, "license", "")).strip()
-    parts = [part for part in (credit, license_name) if part]
-    return " · ".join(parts)
-
-
 def _knowledge_cover_body(
     story: TournamentStory,
     date_label: str,
@@ -1927,7 +1963,6 @@ def _knowledge_cover_body(
     )
     image_path = Path(_visual_value(visual, "path", story.image))
     image_source = str(_visual_value(visual, "source_url", story.image_source_url)).strip()
-    image_credit = _knowledge_visual_credit(visual) or story.image_credit
     uri = _asset_image_uri(image_path)
     if not uri:
         raise FileNotFoundError(image_path)
@@ -1946,8 +1981,6 @@ def _knowledge_cover_body(
         + f'<h1>{hook_html}</h1></div>'
         + '<div class="knowledge-hook">'
         + f'<b>{html.escape(year)}</b><p>{html.escape(_card_excerpt(promise, 62))}</p></div>'
-        + f'<div class="photo-credit">资料：{html.escape(story.source_label)} · '
-        + f'图源：{html.escape(image_credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -2048,12 +2081,6 @@ def _knowledge_timeline_body(
             else _timeline_visual(visual_years, css_class="knowledge-story-visual")
         )
     page_class = " has-page-photo" if has_photo else ""
-    visual_credit = _knowledge_visual_credit(visual)
-    credit = (
-        f'<div class="photo-credit">图源：{html.escape(visual_credit)}</div>'
-        if visual_credit
-        else ""
-    )
     return (
         f'<div class="poster knowledge-page{page_class}" data-visual="narrative-timeline">'
         + _masthead(date_label)
@@ -2061,7 +2088,6 @@ def _knowledge_timeline_body(
         + media
         + f'<div class="knowledge-timeline">{rows}</div>'
         + f'<div class="knowledge-verdict">{html.escape(_card_excerpt(verdict, 60))}</div>'
-        + credit
         + _FOOTER
         + "</div>"
     )
@@ -2113,7 +2139,6 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
         + '<div><b>&lt;2mm</b><span>Sony公布的系统误差</span></div></div>'
         + '<div class="official-summary"><b>一句看懂：</b>先在每幅画面找到球，'
         + '再用多个角度算出它在三维空间的位置。</div>'
-        + '<div class="photo-credit">原理依据：Sony / Hawk-Eye 官方技术说明</div>'
         + _FOOTER
         + "</div>"
     )
@@ -2208,17 +2233,12 @@ def _knowledge_fact_body(
         if visual is not None
         else ""
     )
-    visual_credit = _knowledge_visual_credit(visual)
-    credit = f"资料：{story.source_label}"
-    if visual_credit:
-        credit += f" · 图源：{visual_credit}"
     return (
         f'<div class="poster knowledge-page{page_class}" data-visual="{html.escape(story.kind)}-explainer">'
         + _masthead(date_label)
         + _titleband("Visual Explainer · 图解", title)
         + media
         + content
-        + f'<div class="photo-credit">{html.escape(credit)}</div>'
         + _FOOTER
         + "</div>"
     )
@@ -2313,10 +2333,6 @@ def _knowledge_today_body(
             else _timeline_visual([row[0] for row in rows], css_class="today-visual")
         )
     page_class = " has-page-photo" if has_photo else ""
-    visual_credit = _knowledge_visual_credit(visual)
-    credit = f"资料：{story.source_label}"
-    if visual_credit:
-        credit += f" · 图源：{visual_credit}"
     return (
         f'<div class="poster knowledge-page{page_class}" data-visual="history-timeline">'
         + _masthead(date_label)
@@ -2325,7 +2341,6 @@ def _knowledge_today_body(
         + f'<div class="knowledge-years count-{len(rows)}">{years}</div>'
         + '<div class="knowledge-question">'
         + f'<small>{html.escape(eyebrow)}</small><strong>{html.escape(question)}</strong></div>'
-        + f'<div class="photo-credit">{html.escape(credit)}</div>'
         + _FOOTER
         + "</div>"
     )

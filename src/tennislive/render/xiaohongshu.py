@@ -545,10 +545,8 @@ def _focus_block(digest: Digest) -> list[str]:
         metrics,
         f"判断：{comparison.verdict}",
     ]
-    if comparison.source_label:
-        source = comparison.source_label
-        duration = f"｜{comparison.duration_label}" if comparison.duration_label else ""
-        lines.append(f"数据：{source}{duration}")
+    if comparison.duration_label:
+        lines.append(f"比赛用时：{comparison.duration_label}")
     return lines
 
 

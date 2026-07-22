@@ -411,6 +411,56 @@ def cmd_digest(args) -> int:
     return 0
 
 
+def cmd_yesterday_point(args) -> int:
+    """Generate the independent, source-audited yesterday-point package."""
+    from .render.terminal import console
+    from .video.daily_point import generate_yesterday_point
+
+    d = parse_date_arg(args.date)
+    output_dir = Path(args.outdir) / d.isoformat() / "yesterday-point"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        digest = build_digest(d, prefer=args.source)
+        video = generate_yesterday_point(digest, output_dir)
+    except Exception as exc:  # noqa: BLE001
+        (output_dir / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "status": "failed",
+                    "project": "yesterday-point",
+                    "published_for": d.isoformat(),
+                    "error": str(exc),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        console.print(f"[red]昨日好球生成失败：{exc}[/red]")
+        return 1
+    if video is None:
+        (output_dir / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "status": "skipped",
+                    "project": "yesterday-point",
+                    "published_for": d.isoformat(),
+                    "reason": (
+                        "没有同时满足昨日赛事、官方当日最佳标签、完整回合"
+                        "和 720p 门槛的视频"
+                    ),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        console.print("[yellow]昨日好球跳过：本期没有可验证的官方完整回合[/yellow]")
+        return 0
+    console.print(f"[green]昨日好球已生成：{video}[/green]")
+    return 0
+
+
 # ---------- 闪发（即时战报） ----------
 
 def cmd_flash(args) -> int:
@@ -928,6 +978,11 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--no-cards", action="store_true", help="不生成卡片图")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
 
+    sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
+    sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先赛果数据源")
+
     sp = sub.add_parser("video", help="中文化本地且已授权的视频素材")
     sp.add_argument("--video", required=True, help="本地视频文件；不接受 URL")
     sp.add_argument("--subtitles", required=True, help="本地原文 SRT 字幕")
@@ -983,6 +1038,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_content(args)
     if args.command == "digest":
         return cmd_digest(args)
+    if args.command == "point":
+        return cmd_yesterday_point(args)
     if args.command == "video":
         return cmd_video(args)
     if args.command == "publish":

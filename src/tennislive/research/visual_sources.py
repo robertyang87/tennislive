@@ -9,27 +9,59 @@ import os
 import re
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, replace
+from datetime import datetime, timedelta, timezone
+from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qsl, unquote, urlencode, urljoin, urlparse, urlunparse
+from zoneinfo import ZoneInfo
 
 import requests
 from PIL import Image
 
 from ..models import Match
 from ..render.tournament_story import TournamentStory
+from ..video.official import (
+    ATP_YOUTUBE_CHANNEL_ID,
+    ATP_YOUTUBE_FEED,
+    parse_official_youtube_feed_entries,
+)
+from ..video.pipeline import VideoPipelineError
+from .visual_quality import assess_cover_image, classify_cover_scene
 
 
 _UA = "tennislive/1.0 visual-research (github.com/robertyang87/tennislive)"
 _LICENSES = {"cc0", "pdm", "by", "by-sa", "cc-by", "cc-by-sa"}
 _PAGES = ("story", "explainer", "today")
 _NEGATIVE_PERSON_TERMS = {
-    "scoreboard", "results", "draw", "bracket", "stadium", "arena",
-    "court", "ball", "logo", "poster", "ticket", "building", "map",
+    "scoreboard", "results", "bracket", "stadium", "arena",
+    "ball", "logo", "poster", "ticket", "building", "map",
 }
 _WATERMARK_LIBRARY_TERMS = {
     "gettyimages", "getty images", "alamy", "shutterstock", "dreamstime",
     "depositphotos", "istockphoto", "123rf",
 }
+_BEIJING = ZoneInfo("Asia/Shanghai")
+_ATP_MATCH_VIDEO_TERMS = (
+    "highlights",
+    "hot shot",
+    "shot of the day",
+    "point of the day",
+    "point of the match",
+    "rally of the day",
+    "rally of the match",
+    "best point",
+    "match point",
+)
+_ATP_NON_MATCH_VIDEO_TERMS = (
+    "interview",
+    "press conference",
+    "practice",
+    "training",
+    "top 10",
+    "best of",
+    "podcast",
+    "preview",
+)
 _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     ("golden-slam", "cover"): (
         {
@@ -809,7 +841,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     }
 
 
-def resolve_match_cover_visual(
+def _legacy_resolve_match_cover_visual(
     match: Match,
     folder: Path,
 ) -> tuple[ResolvedVisual | None, dict]:
@@ -925,3 +957,978 @@ def resolve_match_cover_visual(
                 )
                 return visual, report
     return None, report
+
+
+def _daily_cover_players(match: Match) -> list:
+    """Rank only participants from the lead match, keeping the China angle."""
+    winners = list(match.winner_players() or [])
+    players = list(match.home + match.away)
+    players.sort(
+        key=lambda player: (
+            player.country == "CHN",
+            player in winners,
+            player.seed is not None,
+            -(player.rank or 9999),
+        ),
+        reverse=True,
+    )
+    return players[:3]
+
+
+def _daily_cover_queries(match: Match, player_name: str) -> tuple[str, ...]:
+    event = match.tournament.name
+    year = str(match.start_utc.year) if match.start_utc is not None else ""
+    opponents = " ".join(
+        player.name for player in match.home + match.away if player.name != player_name
+    )
+    return tuple(
+        dict.fromkeys(
+            (
+                " ".join(
+                    filter(
+                        None,
+                        (player_name, opponents, event, year, "tennis match photo"),
+                    )
+                ),
+                " ".join(
+                    filter(
+                        None,
+                        (
+                            player_name,
+                            opponents,
+                            event,
+                            "tennis forehand backhand serving in action",
+                        ),
+                    )
+                ),
+            )
+        )
+    )
+
+
+def _daily_cover_text(candidate: dict) -> str:
+    return " ".join(
+        str(candidate.get(key, ""))
+        for key in (
+            "search_text",
+            "image_text",
+            "title",
+            "alt",
+            "caption",
+            "source_title",
+            "source_description",
+            "source_url",
+            "image_url",
+        )
+    ).lower()
+
+
+def _daily_cover_visual_descriptor(candidate: dict) -> str:
+    """Text that describes pixels, excluding URLs and broad article context."""
+    return " ".join(
+        str(candidate.get(key, ""))
+        for key in ("image_text", "alt", "caption", "title", "source_title")
+    ).lower()
+
+
+def _identity_words(value: str) -> tuple[str, ...]:
+    return tuple(re.findall(r"[a-z0-9]+", value.casefold()))
+
+
+def _contains_identity_phrase(text: str, words: tuple[str, ...]) -> bool:
+    if not words:
+        return False
+    normalized = " ".join(_identity_words(text))
+    phrase = " ".join(words)
+    return bool(re.search(rf"(?<![a-z0-9]){re.escape(phrase)}(?![a-z0-9])", normalized))
+
+
+def _player_name_matches(
+    name: str,
+    text: str,
+    *,
+    surname_aliases: tuple[str, ...] | None = None,
+) -> bool:
+    """Match a full name or an explicit surname at token boundaries.
+
+    A shared given name is never sufficient evidence.  Callers that know the
+    full match field can pass only aliases unique to that participant.
+    """
+    words = _identity_words(name)
+    if not words:
+        return False
+    if _contains_identity_phrase(text, words):
+        return True
+    aliases = surname_aliases if surname_aliases is not None else (words[-1],)
+    return any(
+        len(alias) >= 3 and _contains_identity_phrase(text, (alias,))
+        for alias in aliases
+    )
+
+
+def _player_identity_aliases(player, participants: list) -> tuple[str, ...]:
+    """Return surname/display-surname aliases unique within this match."""
+    words = _identity_words(player.name)
+    if not words:
+        return ()
+    aliases = [words[-1]]
+    # Official Asian-tour copy commonly uses family-name-first display while
+    # normalized feeds may store the same player as given-name first.
+    if str(player.country or "").upper() in {"CHN", "HKG", "TPE", "JPN", "KOR"}:
+        aliases.append(words[0])
+    other_words = {
+        token
+        for other in participants
+        if other is not player
+        for token in _identity_words(other.name)
+    }
+    return tuple(dict.fromkeys(alias for alias in aliases if alias not in other_words))
+
+
+def _player_identity_matches(player, text: str, participants: list) -> bool:
+    return _player_name_matches(
+        player.name,
+        text,
+        surname_aliases=_player_identity_aliases(player, participants),
+    )
+
+
+def _daily_event_terms(name: str, city: str = "") -> tuple[str, ...]:
+    normalized = " ".join(re.sub(r"[^a-z0-9]+", " ", name.casefold()).split())
+    aliases: list[str] = []
+    compact = normalized.replace(" ", "")
+    if "usopen" in compact:
+        aliases.extend(("us open", "flushing meadows"))
+    if "frenchopen" in compact or "rolandgarros" in compact:
+        aliases.extend(("french open", "roland garros"))
+    if "australianopen" in compact:
+        aliases.extend(("australian open", "melbourne"))
+    if "wimbledon" in compact:
+        aliases.append("wimbledon")
+    if "olympic" in compact:
+        aliases.extend(("olympic", "olympics"))
+    aliases.extend(sorted(_tokens(city), key=len, reverse=True))
+    aliases.extend(sorted(_tokens(name), key=len, reverse=True))
+    return tuple(dict.fromkeys(term for term in aliases if term))
+
+
+def _exact_match_context(match: Match, candidate: dict) -> dict:
+    text = _daily_cover_text(candidate)
+    participants = [*match.home, *match.away]
+    side_names = []
+    for side in (match.home, match.away):
+        side_names.append(
+            any(_player_identity_matches(player, text, participants) for player in side)
+        )
+    event_terms = _daily_event_terms(
+        match.tournament.name,
+        match.tournament.city or "",
+    )
+    event_match = bool(event_terms) and any(term in text for term in event_terms)
+    year = str(match.start_utc.year) if match.start_utc is not None else ""
+    year_match = bool(year and year in text)
+    both_sides_match = all(side_names)
+    # A repeated rivalry or annual tournament is not enough to identify one
+    # match.  Daily covers must prove both participants, the event and the
+    # current edition; otherwise an attractive archive photo can silently
+    # replace the match named by the headline.
+    exact_match = both_sides_match and event_match and year_match
+    return {
+        "exact_match": exact_match,
+        "both_sides_match": both_sides_match,
+        "event_match": event_match,
+        "year_match": year_match,
+    }
+
+
+def _daily_cover_metadata_score(
+    match: Match,
+    candidate: dict,
+    scene: dict,
+) -> tuple[int, bool, bool]:
+    context = _exact_match_context(match, candidate)
+    event_match = context["event_match"]
+    year_match = context["year_match"]
+    scene_points = {
+        "match_action": 25,
+        "on_court_reaction": 23,
+        "solo_trophy": 20,
+    }.get(scene["scene"], 0)
+    provider_points = {
+        "official-atp-youtube": 6,
+        "official-match-media": 5,
+        "wikimedia-commons": 4,
+        "bing-web-image": 3,
+        "openverse": 2,
+    }.get(str(candidate.get("provider", "")), 1)
+    score = 25 + scene_points + provider_points
+    if context["exact_match"]:
+        score += 15
+    if event_match:
+        score += 10
+    if year_match:
+        score += 5
+    score += min(5, max(0, int(candidate.get("relevance", 0))))
+    return score, event_match, year_match
+
+
+def _parse_official_feed_time(value: str) -> datetime | None:
+    raw = value.strip()
+    if not raw:
+        return None
+    try:
+        if raw.endswith("Z"):
+            raw = raw[:-1] + "+00:00"
+        parsed = datetime.fromisoformat(raw)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed
+
+
+def _atp_feed_date_matches(match: Match, published_at: str) -> bool:
+    """Accept official uploads from the Beijing match day or following day."""
+    if match.start_utc is None:
+        return False
+    published = _parse_official_feed_time(published_at)
+    if published is None:
+        return False
+    started = match.start_utc
+    if started.tzinfo is None:
+        started = started.replace(tzinfo=timezone.utc)
+    match_date = started.astimezone(_BEIJING).date()
+    published_date = published.astimezone(_BEIJING).date()
+    return published_date in {match_date, match_date + timedelta(days=1)}
+
+
+def _atp_event_matches(match: Match, text: str) -> bool:
+    """Require a meaningful tournament or host-city anchor in official text."""
+    normalized = " ".join(re.sub(r"[^a-z0-9]+", " ", text.casefold()).split())
+    anchors = _daily_event_terms(
+        match.tournament.name,
+        match.tournament.city or "",
+    )
+    return bool(anchors and any(anchor in normalized for anchor in anchors))
+
+
+def _atp_official_cover_candidates(
+    match: Match,
+    session: requests.Session,
+) -> list[dict]:
+    """Discover fresh exact-match images from ATP's verified YouTube feed.
+
+    The RSS publication timestamp proves the current edition; title and
+    description must independently name both sides and the event. The image is
+    still evaluated later by the common scene, pixel-quality and 3:4 crop gate.
+    """
+    if getattr(match.tour, "value", str(match.tour)).upper() != "ATP":
+        return []
+    try:
+        response = session.get(ATP_YOUTUBE_FEED, timeout=12)
+        response.raise_for_status()
+        entries = parse_official_youtube_feed_entries(
+            str(response.text),
+            channel_id=ATP_YOUTUBE_CHANNEL_ID,
+            tour="ATP",
+        )
+    except (requests.RequestException, VideoPipelineError, TypeError, ValueError):
+        return []
+
+    selected: list[dict] = []
+    participants = [*match.home, *match.away]
+    player_query = " ".join(player.name for player in match.home + match.away)
+    for entry in entries:
+        source_text = " ".join(
+            (
+                entry.candidate.title,
+                entry.description,
+                entry.published_at,
+                entry.candidate.url,
+            )
+        ).lower()
+        if not any(term in source_text for term in _ATP_MATCH_VIDEO_TERMS):
+            continue
+        if any(term in source_text for term in _ATP_NON_MATCH_VIDEO_TERMS):
+            continue
+        if not all(
+            any(_player_identity_matches(player, source_text, participants) for player in side)
+            for side in (match.home, match.away)
+        ):
+            continue
+        if not _atp_event_matches(match, source_text):
+            continue
+        if not _atp_feed_date_matches(match, entry.published_at):
+            continue
+        candidate = {
+            "provider": "official-atp-youtube",
+            "source_url": entry.candidate.url,
+            "image_url": entry.thumbnail_url,
+            "credit": "ATP Tour",
+            "license": "official public match media",
+            "width": 1280,
+            "height": 720,
+            "relevance": _relevance(
+                f"{player_query} {match.tournament.name}", source_text
+            ),
+            "search_text": source_text,
+            # Preserve only supplied metadata. Pixel QA below must prove that
+            # the thumbnail actually contains a prominent athlete.
+            "image_text": entry.candidate.title.lower(),
+            "source_title": entry.candidate.title,
+            "source_description": entry.description,
+            "published_at": entry.published_at,
+            "official_channel_id": ATP_YOUTUBE_CHANNEL_ID,
+        }
+        # Keep the same exact-match contract used by every other provider.
+        if _exact_match_context(match, candidate)["exact_match"]:
+            selected.append(candidate)
+    return selected
+
+
+def _apply_official_maxres_resolution_profile(candidate: dict, audit: dict) -> dict:
+    """Recognize YouTube's fixed 1280x720 maxres asset without skipping QA.
+
+    YouTube's highest thumbnail endpoint is capped at 1280x720. Exact ATP feed
+    candidates may use that documented profile, while sharpness, contrast,
+    information, face count and 3:4 crop safety remain hard requirements.
+    """
+    if (
+        candidate.get("provider") != "official-atp-youtube"
+        or candidate.get("official_channel_id") != ATP_YOUTUBE_CHANNEL_ID
+        or not re.fullmatch(
+            r"https://i\.ytimg\.com/vi/[A-Za-z0-9_-]+/maxresdefault\.jpg",
+            str(candidate.get("image_url", "")),
+        )
+    ):
+        return audit
+    width = int(audit.get("width", 0))
+    height = int(audit.get("height", 0))
+    short_side, long_side = sorted((width, height))
+    if short_side < 720 or long_side < 1280:
+        return audit
+    failures = list(audit.get("hard_failures", []))
+    if "resolution-below-900x1200" not in failures:
+        return audit
+    failures.remove("resolution-below-900x1200")
+    updated = dict(audit)
+    updated["hard_failures"] = failures
+    updated["status"] = "pass" if not failures else "fail"
+    updated["resolution_profile"] = "official-youtube-maxres-1280x720"
+    return updated
+
+
+_OFFICIAL_TOUR_MEDIA_DOMAINS = (
+    "wtatennis.com",
+    "atptour.com",
+)
+
+
+class _SocialMetadataParser(HTMLParser):
+    """Collect social-card metadata without an extra HTML dependency."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.meta: dict[str, str] = {}
+        self.image_src = ""
+        self.title_parts: list[str] = []
+        self._in_title = False
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        values = {str(key).lower(): str(value or "") for key, value in attrs}
+        tag = tag.lower()
+        if tag == "title":
+            self._in_title = True
+        elif tag == "meta":
+            key = (values.get("property") or values.get("name") or "").lower()
+            content = values.get("content", "").strip()
+            if key and content and key not in self.meta:
+                self.meta[key] = content
+        elif tag == "link":
+            rel = {part.lower() for part in values.get("rel", "").split()}
+            if "image_src" in rel and not self.image_src:
+                self.image_src = values.get("href", "").strip()
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "title":
+            self._in_title = False
+
+    def handle_data(self, data: str) -> None:
+        if self._in_title and data.strip():
+            self.title_parts.append(data.strip())
+
+    @property
+    def title(self) -> str:
+        return " ".join(self.title_parts).strip()
+
+
+class _WtaVideoHubParser(HTMLParser):
+    """Collect WTA video article links and their visible labels."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.links: list[tuple[str, str]] = []
+        self._href = ""
+        self._text: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        if tag.lower() != "a":
+            return
+        values = {str(key).lower(): str(value or "") for key, value in attrs}
+        href = values.get("href", "").strip()
+        if re.search(r"(?:^|/)videos/\d+/", href, re.I):
+            self._href = href
+            self._text = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "a" and self._href:
+            self.links.append((self._href, " ".join(self._text).strip()))
+            self._href = ""
+            self._text = []
+
+    def handle_data(self, data: str) -> None:
+        if self._href and data.strip():
+            self._text.append(data.strip())
+
+
+def _is_official_tour_media_url(url: str) -> bool:
+    hostname = (urlparse(url).hostname or "").casefold()
+    return any(
+        hostname == domain or hostname.endswith(f".{domain}")
+        for domain in _OFFICIAL_TOUR_MEDIA_DOMAINS
+    )
+
+
+def _high_resolution_official_image_url(url: str) -> str:
+    """Upgrade social-card thumbnails while restoring their original ratio."""
+    parsed = urlparse(html.unescape(url))
+    hostname = (parsed.hostname or "").casefold()
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    if hostname == "photoresources.wtatennis.com":
+        try:
+            current_width = int(query.get("width", "0") or 0)
+        except ValueError:
+            current_width = 0
+        query["width"] = str(max(2000, current_width))
+        # WTA OG metadata normally requests a forced 1200x630 social crop.
+        # Width-only requests expose the full source aspect ratio instead.
+        query.pop("height", None)
+    elif hostname.endswith("atptour.com") and "width" in query:
+        try:
+            current_width = int(query.get("width", "0") or 0)
+        except ValueError:
+            current_width = 0
+        query["width"] = str(max(2000, current_width))
+        query.pop("height", None)
+    return urlunparse(parsed._replace(query=urlencode(query)))
+
+
+def _wta_video_hub_candidates(
+    match: Match,
+    session: requests.Session,
+) -> list[dict]:
+    """Discover exact-match WTA video pages before opening article metadata.
+
+    The public hub is the primary source. WTA's official video sitemap is a
+    freshness fallback because newly published highlights can reach the
+    sitemap several hours before a cached hub page. Both sources only discover
+    article URLs; the article's own metadata remains the acceptance proof.
+    """
+    discovered: list[tuple[str, str]] = []
+    for hub_url in (
+        "https://www.wtatennis.com/videos",
+        "https://www.wtatennis.com/videos/highlights",
+    ):
+        try:
+            response = session.get(hub_url, timeout=15)
+            response.raise_for_status()
+        except requests.RequestException:
+            continue
+        parser = _WtaVideoHubParser()
+        try:
+            parser.feed(response.text)
+        except (TypeError, ValueError):
+            continue
+        discovered.extend(
+            (urljoin(str(response.url or hub_url), href), label)
+            for href, label in parser.links
+        )
+
+    sitemap_url = "https://www.wtatennis.com/sitemap/videos.xml"
+    try:
+        response = session.get(sitemap_url, timeout=20)
+        response.raise_for_status()
+        for value in re.findall(r"<loc>\s*([^<]+?/videos/\d+/[^<]+)\s*</loc>", response.text, re.I):
+            discovered.append((html.unescape(value.strip()), ""))
+    except requests.RequestException:
+        pass
+
+    candidates: list[dict] = []
+    participants = [*match.home, *match.away]
+    seen: set[str] = set()
+    for source_url, label in discovered:
+        source_url = source_url.strip()
+        if source_url in seen or not _is_official_tour_media_url(source_url):
+            continue
+        seen.add(source_url)
+        discovery_text = " ".join((label, unquote(urlparse(source_url).path))).lower()
+        side_matches = [
+            any(
+                _player_identity_matches(player, discovery_text, participants)
+                for player in side
+            )
+            for side in (match.home, match.away)
+        ]
+        if not all(side_matches):
+            continue
+        candidates.append(
+            {
+                "provider": "wta-video-hub",
+                "source_url": source_url,
+                "image_url": "",
+                "credit": "wtatennis.com",
+                "license": "WTA 官方公开页面图片 · 资讯引用",
+                "width": 0,
+                "height": 0,
+                "relevance": _relevance(
+                    " ".join(player.name for player in match.home + match.away),
+                    discovery_text,
+                ),
+                "search_text": discovery_text,
+                "image_text": discovery_text,
+                "discovered_via": "wta-video-hub",
+            }
+        )
+    return candidates
+
+
+def _expand_official_source_candidate(
+    match: Match,
+    candidate: dict,
+    session: requests.Session,
+) -> dict | None:
+    """Expand an exact WTA/ATP result into its high-resolution OG image.
+
+    Only the source page's own head metadata may establish the match. Generic
+    tournament and scores pages therefore cannot borrow the players from the
+    search query and masquerade as an exact-match photograph.
+    """
+    source_url = str(candidate.get("source_url", "")).strip()
+    if not source_url.startswith("https://") or not _is_official_tour_media_url(source_url):
+        return None
+    try:
+        response = session.get(source_url, timeout=12)
+        response.raise_for_status()
+    except requests.RequestException:
+        return None
+    final_url = str(response.url or source_url)
+    if not _is_official_tour_media_url(final_url):
+        return None
+
+    parser = _SocialMetadataParser()
+    try:
+        parser.feed(response.text)
+    except (TypeError, ValueError):
+        return None
+    meta = parser.meta
+    image_url = next(
+        (
+            meta.get(key, "").strip()
+            for key in (
+                "og:image:secure_url",
+                "og:image",
+                "twitter:image",
+                "twitter:image:src",
+            )
+            if meta.get(key, "").strip()
+        ),
+        parser.image_src,
+    )
+    if not image_url:
+        return None
+    title = meta.get("og:title") or meta.get("twitter:title") or parser.title
+    description = (
+        meta.get("og:description")
+        or meta.get("twitter:description")
+        or meta.get("description")
+        or ""
+    )
+    image_alt = meta.get("og:image:alt") or meta.get("twitter:image:alt") or ""
+    # Deliberately omit candidate.search_text: it may include the search query,
+    # while only the official page itself can prove this is the same match.
+    # The dated official media path is useful edition evidence. WTA highlight
+    # titles often name both players and the event but omit the calendar year.
+    source_text = " ".join(
+        (title, description, image_alt, final_url, html.unescape(image_url))
+    ).lower()
+    def meta_int(key: str) -> int:
+        match_value = re.search(r"\d+", meta.get(key, ""))
+        return int(match_value.group()) if match_value else 0
+
+    expanded = {
+        **candidate,
+        "provider": "official-match-media",
+        "source_url": final_url,
+        "image_url": _high_resolution_official_image_url(
+            urljoin(final_url, html.unescape(image_url))
+        ),
+        "credit": (urlparse(final_url).hostname or "Official tour media").removeprefix("www."),
+        "license": "官方公开页面图片 · 资讯引用",
+        "width": meta_int("og:image:width"),
+        "height": meta_int("og:image:height"),
+        "relevance": _relevance(
+            f"{' '.join(player.name for player in match.home + match.away)} "
+            f"{match.tournament.name}",
+            source_text,
+        ),
+        "search_text": source_text,
+        "image_text": " ".join((image_alt, title, image_url)).lower(),
+        "source_title": title,
+        "source_description": description,
+        "expanded_from_provider": candidate.get("provider", ""),
+    }
+    if not _exact_match_context(match, expanded)["exact_match"]:
+        return None
+    return expanded
+
+
+def _daily_editorial_candidates(
+    match: Match,
+    player_name: str,
+    session: requests.Session,
+) -> list[dict]:
+    """Extract exact-player social images from match-linked editorial pages."""
+    urls = [match.editorial_url, *match.schedule_source_urls]
+    candidates: list[dict] = []
+    for url in dict.fromkeys(str(item or "").strip() for item in urls):
+        if not url.startswith("https://") or "news.google." in url:
+            continue
+        try:
+            response = session.get(url, timeout=10)
+            response.raise_for_status()
+        except requests.RequestException:
+            continue
+        image_match = re.search(
+            r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+            response.text,
+            re.I,
+        ) or re.search(
+            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+            response.text,
+            re.I,
+        )
+        if not image_match:
+            continue
+        title_match = re.search(r"<title[^>]*>(.*?)</title>", response.text, re.I | re.S)
+        description_match = re.search(
+            r'<meta[^>]+(?:property|name)=["\'](?:og:description|description)["\'][^>]+content=["\']([^"\']+)',
+            response.text,
+            re.I,
+        )
+        alt_match = re.search(
+            r'<meta[^>]+property=["\']og:image:alt["\'][^>]+content=["\']([^"\']+)',
+            response.text,
+            re.I,
+        )
+        title = re.sub(r"<[^>]+>", " ", title_match.group(1) if title_match else "")
+        description = re.sub(
+            r"<[^>]+>", " ", description_match.group(1) if description_match else ""
+        )
+        alt = re.sub(r"<[^>]+>", " ", alt_match.group(1) if alt_match else "")
+        text = " ".join((title, description, alt, url)).lower()
+        if not all(token in text for token in _tokens(player_name)):
+            continue
+        domain = urlparse(url).netloc.removeprefix("www.")
+        candidates.append(
+            {
+                "provider": "official-match-media",
+                "source_url": url,
+                "image_url": _high_resolution_official_image_url(
+                    urljoin(url, html.unescape(image_match.group(1)))
+                ),
+                "credit": domain,
+                "license": "公开网页图片 · 资讯引用",
+                "width": 0,
+                "height": 0,
+                "relevance": _relevance(f"{player_name} {match.tournament.name}", text),
+                "search_text": text,
+                "image_text": " ".join((player_name, alt, title)).lower(),
+            }
+        )
+    return candidates
+
+
+def resolve_match_cover_visual(
+    match: Match,
+    folder: Path,
+) -> tuple[ResolvedVisual | None, dict]:
+    """Select the strongest action-led image from the headline match."""
+    enabled = os.environ.get("TENNISLIVE_COVER_VISUAL_FETCH", "off").lower() in {
+        "1",
+        "on",
+        "true",
+    }
+    strict = os.environ.get("TENNISLIVE_COVER_VISUAL_STRICT", "on").lower() in {
+        "1",
+        "on",
+        "true",
+    }
+    minimum_score = int(os.environ.get("TENNISLIVE_COVER_VISUAL_MIN_SCORE", "72"))
+    max_downloads = int(os.environ.get("TENNISLIVE_COVER_VISUAL_DOWNLOADS", "10"))
+    folder.mkdir(parents=True, exist_ok=True)
+    players = _daily_cover_players(match)
+    attempts: list[dict] = []
+    report = {
+        "schema_version": 2,
+        "status": "unavailable",
+        "match_id": match.match_id,
+        "match_players": [player.name for player in match.home + match.away],
+        "candidate_players": [player.name for player in players],
+        "china_priority": True,
+        "policy": (
+            "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；"
+            "比赛动作、场内情绪和单人举杯优先，至少须有像素验证的突出人物；"
+            "赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优"
+        ),
+        "fetch_enabled": enabled,
+        "strict": strict,
+        "minimum_score": minimum_score,
+        "providers_queried": [],
+        "attempts": attempts,
+    }
+    if not enabled:
+        report["status"] = "disabled"
+        return None, report
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": _UA})
+    provider_loaders = (
+        ("wikimedia-commons", _commons_candidates),
+        ("openverse", _openverse_candidates),
+        ("bing-web-image", _bing_candidates),
+    )
+    pool: list[tuple[object, str, dict]] = []
+    atp_official_enabled = os.environ.get(
+        "TENNISLIVE_COVER_ATP_OFFICIAL", "off"
+    ).lower() in {"1", "on", "true"}
+    atp_official = (
+        _atp_official_cover_candidates(match, session)
+        if atp_official_enabled
+        else []
+    )
+    report["atp_official_enabled"] = atp_official_enabled
+    report["atp_official_candidates"] = len(atp_official)
+    if atp_official_enabled:
+        report["providers_queried"].append("official-atp-youtube")
+    if atp_official and players:
+        official_query = _daily_cover_queries(match, players[0].name)[0]
+        pool.extend((players[0], official_query, item) for item in atp_official)
+    wta_official_enabled = os.environ.get(
+        "TENNISLIVE_COVER_WTA_OFFICIAL", "off"
+    ).lower() in {"1", "on", "true"}
+    wta_hub_candidates = (
+        _wta_video_hub_candidates(match, session)
+        if wta_official_enabled
+        else []
+    )
+    report["wta_official_enabled"] = wta_official_enabled
+    if wta_official_enabled:
+        report["providers_queried"].append("wta-video-hub")
+    if wta_hub_candidates:
+        hub_query = " ".join(player.name for player in match.home + match.away)
+        pool.extend((players[0], hub_query, item) for item in wta_hub_candidates)
+    report["wta_video_hub_candidates"] = len(wta_hub_candidates)
+    search_jobs: list[tuple[object, str, str, object]] = []
+    for player in players:
+        queries = _daily_cover_queries(match, player.name)
+        direct = _daily_editorial_candidates(match, player.name, session)
+        if direct and "official-match-media" not in report["providers_queried"]:
+            report["providers_queried"].append("official-match-media")
+        pool.extend((player, queries[0], item) for item in direct)
+        for query in queries:
+            for provider, loader in provider_loaders:
+                if provider not in report["providers_queried"]:
+                    report["providers_queried"].append(provider)
+                search_jobs.append((player, query, provider, loader))
+
+    def fetch_job(job):
+        player, query, provider, loader = job
+        worker_session = requests.Session()
+        worker_session.headers.update({"User-Agent": _UA})
+        return player, query, provider, loader(query, worker_session)
+
+    with ThreadPoolExecutor(max_workers=min(8, len(search_jobs) or 1)) as executor:
+        for player, query, provider, items in executor.map(fetch_job, search_jobs):
+            for item in items:
+                item = dict(item)
+                item["provider"] = provider
+                pool.append((player, query, item))
+
+    expanded_urls: set[str] = set()
+    expanded_count = 0
+    for player, query, candidate in list(pool):
+        source_url = str(candidate.get("source_url", "")).strip()
+        if source_url in expanded_urls or not _is_official_tour_media_url(source_url):
+            continue
+        expanded_urls.add(source_url)
+        expanded = _expand_official_source_candidate(match, candidate, session)
+        if expanded is None:
+            continue
+        pool.append((player, query, expanded))
+        expanded_count += 1
+    if expanded_count:
+        report["providers_queried"].append("official-match-media")
+    report["official_pages_checked"] = len(expanded_urls)
+    report["official_pages_expanded"] = expanded_count
+
+    candidates: list[tuple[object, str, dict, dict, int, bool, bool]] = []
+    participants = [*match.home, *match.away]
+    seen: set[str] = set()
+    for player, query, candidate in pool:
+        identity = str(candidate.get("image_url") or candidate.get("source_url") or "")
+        if not identity or identity in seen:
+            continue
+        seen.add(identity)
+        candidate_text = _daily_cover_text(candidate)
+        subject_match = _player_identity_matches(player, candidate_text, participants)
+        negative_visual = any(
+            term in _daily_cover_visual_descriptor(candidate)
+            for term in _NEGATIVE_PERSON_TERMS
+        )
+        person_match = subject_match and not negative_visual
+        context = _exact_match_context(match, candidate)
+        scene = classify_cover_scene(_daily_cover_visual_descriptor(candidate))
+        metadata_score, event_match, year_match = _daily_cover_metadata_score(
+            match, candidate, scene
+        )
+        china_bonus = 6 if player.country == "CHN" else 0
+        metadata_score += china_bonus
+        record = {
+            "player": player.name,
+            "provider": candidate.get("provider", ""),
+            "source_url": candidate.get("source_url", ""),
+            "subject_match": subject_match,
+            "person_match": person_match,
+            "both_sides_match": context["both_sides_match"],
+            "exact_match": context["exact_match"],
+            "event_match": event_match,
+            "year_match": year_match,
+            "scene": scene["scene"],
+            "china_priority_bonus": china_bonus,
+            "scene_evidence": {
+                "motion": scene["motion_terms"],
+                "reaction": scene["reaction_terms"],
+                "trophy": scene["trophy_terms"],
+                "rejected": scene["rejected_terms"],
+            },
+            "metadata_score": metadata_score,
+        }
+        hard_failures: list[str] = []
+        if not (subject_match and person_match):
+            hard_failures.append("headline-match-player-mismatch")
+        if not context["exact_match"]:
+            hard_failures.append("not-the-exact-headline-match")
+        if scene["scene"] == "static_or_group":
+            hard_failures.append("static-or-group-photo")
+        if any(term in _daily_cover_text(candidate) for term in _WATERMARK_LIBRARY_TERMS):
+            hard_failures.append("watermarked-stock-library")
+        if hard_failures:
+            record.update(status="rejected", hard_failures=hard_failures)
+            attempts.append(record)
+            continue
+        candidates.append(
+            (player, query, candidate, record, metadata_score, event_match, year_match)
+        )
+
+    candidates.sort(
+        key=lambda item: (
+            item[4],
+            min(int(item[2].get("width", 0)), int(item[2].get("height", 0))),
+            int(item[2].get("width", 0)) * int(item[2].get("height", 0)),
+        ),
+        reverse=True,
+    )
+    qualified: list[tuple[float, ResolvedVisual, dict]] = []
+    for player, query, candidate, record, metadata_score, event_match, year_match in candidates[:max_downloads]:
+        downloaded = _download(candidate, "daily-cover", query, folder, session)
+        if downloaded is None:
+            record.update(
+                status="rejected",
+                hard_failures=["download-failed-or-resolution-below-900x540"],
+            )
+            attempts.append(record)
+            continue
+        audit = _apply_official_maxres_resolution_profile(
+            candidate,
+            assess_cover_image(downloaded.path),
+        )
+        total_score = round(metadata_score + float(audit.get("score", 0)), 1)
+        failures = list(audit.get("hard_failures", []))
+        prominent_faces = int(audit.get("prominent_faces", 0) or 0)
+        if prominent_faces < 1 and "no-prominent-face" not in failures:
+            failures.append("no-prominent-face")
+        if record["scene"] == "unknown" and prominent_faces:
+            # Pixel evidence proves a person is prominent; it does not claim
+            # an action that the source metadata never described.
+            record["scene"] = "prominent_person"
+            record["scene_evidence"]["pixel"] = [
+                f"{prominent_faces} prominent face(s)",
+                *[str(value) for value in audit.get("face_detectors", [])],
+            ]
+        if total_score < minimum_score:
+            failures.append(f"quality-score-below-{minimum_score}")
+        record.update(
+            {
+                "status": "qualified" if not failures else "rejected",
+                "quality": audit,
+                "quality_score": total_score,
+                "hard_failures": failures,
+                "cached_file": downloaded.path.name,
+            }
+        )
+        attempts.append(record)
+        if failures:
+            downloaded.path.unlink(missing_ok=True)
+            continue
+        visual = replace(
+            downloaded,
+            focus=str(audit.get("focus", "50% 28%")),
+            subject_match=True,
+            year_match=year_match,
+            event_match=event_match,
+            person_required=True,
+        )
+        qualified.append((total_score, visual, record))
+
+    if not qualified:
+        report["errors"] = [
+            "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ]
+        return None, report
+
+    qualified.sort(key=lambda item: item[0], reverse=True)
+    selected_score, selected, selected_record = qualified[0]
+    selected_record["status"] = "selected"
+    for _score, visual, record in qualified[1:]:
+        record["status"] = "rejected"
+        record["reason"] = "quality-score-lower-than-selected"
+        visual.path.unlink(missing_ok=True)
+    report.update(
+        {
+            "status": "selected",
+            "selected_player": selected_record["player"],
+            "exact_match": selected_record["exact_match"],
+            "both_sides_match": selected_record["both_sides_match"],
+            "scene": selected_record["scene"],
+            "quality_score": selected_score,
+            "quality": selected_record["quality"],
+            "event_match": selected.event_match,
+            "year_match": selected.year_match,
+            "provider": selected.provider,
+            "source_url": selected.source_url,
+            "credit": selected.credit,
+            "license": selected.license,
+            "focus": selected.focus,
+        }
+    )
+    return selected, report
