@@ -526,7 +526,7 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo.compact { height:340px; margin-top:14px; }
 .knowledge-photo .kn-back { position:absolute; inset:0; background-size:cover;
   background-position:center; filter:blur(22px) brightness(.58); transform:scale(1.12); }
-.knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+.knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
   object-position:center; }
 .knowledge-photo.portrait img { object-fit:contain; }
 .knowledge-photo::after { content:""; position:absolute; inset:0;

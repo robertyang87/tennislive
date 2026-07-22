@@ -30,6 +30,36 @@ _WATERMARK_LIBRARY_TERMS = {
     "gettyimages", "getty images", "alamy", "shutterstock", "dreamstime",
     "depositphotos", "istockphoto", "123rf",
 }
+_CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
+    ("golden-slam", "cover"): (
+        {
+            "provider": "official-editorial",
+            "source_url": "https://www.olympics.com/en/news/tennis-golden-slam-steffi-graf-1988-olympics-gold",
+            "image_url": "https://img.olympics.com/images/image/private/t_s_w960/f_auto/primary/vhe08w1mvtsdgzaumrl9",
+            "credit": "Olympics.com",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 960,
+            "height": 1440,
+            "relevance": 99,
+            "search_text": "steffi graf 1988 seoul olympic gold medal tennis champion",
+            "image_text": "steffi graf 1988 seoul olympic gold medal tennis champion",
+        },
+    ),
+    ("golden-slam", "today"): (
+        {
+            "provider": "editorial-archive",
+            "source_url": "https://www.tennismagazin.de/news/steffi-graf-golden-slam-seoul-olympia-1988/",
+            "image_url": "https://www.tennismagazin.de/content/uploads/2018/09/graff-1024x683.jpg",
+            "credit": "tennis MAGAZIN",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 1024,
+            "height": 683,
+            "relevance": 99,
+            "search_text": "steffi graf 1988 seoul olympic final medal tennis",
+            "image_text": "steffi graf 1988 seoul olympic final medal tennis",
+        },
+    ),
+}
 _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...], bool]]] = {
     # page: (person/subject, exact years, event/location anchors, person required)
     "hawkeye": {
@@ -559,34 +589,47 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             candidate["relevance"] = _relevance(query, candidate.get("search_text", ""))
             official_candidates.append(candidate)
         variants = _query_variants(briefs[page], query)
-        fetches = []
-        with ThreadPoolExecutor(max_workers=min(10, len(variants) * 3)) as pool:
-            for variant in variants:
-                fetches.extend(
-                    (
-                        ("wikimedia-commons", pool.submit(_commons_candidates, variant, session)),
-                        ("openverse", pool.submit(_openverse_candidates, variant, session)),
-                        ("bing-web-image", pool.submit(_bing_candidates, variant, session)),
-                    )
-                )
         fetched: dict[str, list[dict]] = {
             "wikimedia-commons": [],
             "openverse": [],
             "bing-web-image": [],
         }
-        for provider, future in fetches:
-            try:
-                fetched[provider].extend(future.result())
-            except Exception:  # noqa: BLE001 - one media index must not stop the fallback chain
-                continue
+        curated = list(_CURATED_VISUALS.get((story.slug, page), ()))
+        if not curated:
+            fetches = []
+            with ThreadPoolExecutor(max_workers=min(10, len(variants) * 3)) as pool:
+                for variant in variants:
+                    fetches.extend(
+                        (
+                            ("wikimedia-commons", pool.submit(_commons_candidates, variant, session)),
+                            ("openverse", pool.submit(_openverse_candidates, variant, session)),
+                            ("bing-web-image", pool.submit(_bing_candidates, variant, session)),
+                        )
+                    )
+            for provider, future in fetches:
+                try:
+                    fetched[provider].extend(future.result())
+                except Exception:  # noqa: BLE001 - one media index must not stop the fallback chain
+                    continue
         providers = (
+            ("curated-editorial", curated),
             ("official-media", official_candidates),
             ("wikimedia-commons", fetched["wikimedia-commons"]),
             ("openverse", fetched["openverse"]),
             ("bing-web-image", fetched["bing-web-image"]),
         )
         candidates = [candidate for _provider, items in providers for candidate in items]
-        candidates.sort(key=lambda item: (item["relevance"], item.get("width", 0)), reverse=True)
+        def _layout_score(item: dict) -> int:
+            width = int(item.get("width") or 0)
+            height = int(item.get("height") or 0)
+            if not width or not height:
+                return 0
+            return int(height >= width) if page == "cover" else int(width >= height)
+
+        candidates.sort(
+            key=lambda item: (_layout_score(item), item["relevance"], item.get("width", 0)),
+            reverse=True,
+        )
         chosen = None
         exact_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
         archive_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
@@ -714,7 +757,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         "providers_queried": (
             []
             if story.diagram_type or not enabled
-            else ["official-media", "wikimedia-commons", "openverse", "bing-web-image"]
+            else ["curated-editorial", "official-media", "wikimedia-commons", "openverse", "bing-web-image"]
         ),
         "selected_providers": sorted({visual.provider for visual in selected.values()}),
         "errors": errors,
