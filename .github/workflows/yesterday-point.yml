@@ -34,6 +34,10 @@ jobs:
     env:
       TENNISLIVE_YESTERDAY_POINT: "on"
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # Optional official Tennis TV entitlement token. The workflow never
+      # reads browser cookies; without this token it falls back to public ATP,
+      # WTA and Grand Slam mirrors and records a clean skip if none is usable.
+      TENNISTV_JWT: ${{ secrets.TENNISTV_JWT }}
     steps:
       - uses: actions/checkout@v4
 

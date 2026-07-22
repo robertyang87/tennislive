@@ -27,6 +27,7 @@ from .pipeline import (
 )
 
 WTA_VIDEO_HUB = "https://www.wtatennis.com/videos/"
+TENNISTV_HOT_SHOTS_HUB = "https://www.tennistv.com/library/hot-shots"
 WTA_ACCOUNT = "6041795521001"
 WTA_PLAYER = "te01Hqw71"
 ATP_YOUTUBE_CHANNEL_ID = "UCY_5h5zaSwN7Or4kIJDYNXA"
@@ -100,6 +101,32 @@ class OfficialYouTubeFeedEntry:
 
 
 @dataclass(frozen=True)
+class TennisTVHotShotEntry:
+    """A Hot Shot card published by Tennis TV's public library.
+
+    Tennis TV exposes editorial metadata publicly, while the playback token is
+    issued by its entitlement service. Keeping this record separate from a
+    downloadable ``OfficialVideoMetadata`` lets Actions use the public card as
+    a discovery/heat signal without pretending that a locked stream is a file.
+    """
+
+    candidate: OfficialVideoCandidate
+    video_id: str
+    entry_id: str
+    description: str
+    thumbnail_url: str
+    published_at: str
+    duration_ms: int
+    city: str
+    year: str
+    round_name: str
+    series: str
+    match_type: str
+    entitlement: str
+    references: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class OfficialVideoMetadata:
     candidate: OfficialVideoCandidate
     description: str
@@ -139,6 +166,81 @@ def parse_wta_video_candidates(page: str) -> list[OfficialVideoCandidate]:
             )
         )
     return found
+
+
+_TENNISTV_CARD = re.compile(
+    r"data-slider-props=(?:'(?P<single>[\s\S]*?)'|\"(?P<double>[\s\S]*?)\")",
+    re.IGNORECASE,
+)
+
+
+def parse_tennistv_hot_shot_entries(page: str) -> list[TennisTVHotShotEntry]:
+    """Parse Tennis TV's public Hot Shots library without executing its UI.
+
+    The page carries one JSON object per card. We only keep single-match
+    ``videoType=hotshots`` cards and discard countdowns/features, because the
+    latter are montages and cannot be published as yesterday's one-point clip.
+    """
+    entries: list[TennisTVHotShotEntry] = []
+    seen: set[str] = set()
+    for match in _TENNISTV_CARD.finditer(page):
+        raw = match.group("single") or match.group("double") or ""
+        try:
+            props = json.loads(html.unescape(raw))
+        except (TypeError, ValueError, json.JSONDecodeError):
+            continue
+        video_url = str(props.get("videoUrl") or "").strip()
+        video_id = str(props.get("videoId") or "").strip()
+        entry_id = str(props.get("mediaId") or "").strip()
+        if not video_url or not video_id or not entry_id:
+            continue
+        video_type = str(props.get("videoType") or "").casefold()
+        tags = str(props.get("tags") or "").casefold()
+        if video_type != "hotshots" and "video-type:hotshots" not in tags:
+            continue
+        title = html.unescape(str(props.get("title") or "")).strip()
+        description = html.unescape(str(props.get("description") or "")).strip()
+        if not title or not description or video_id in seen:
+            continue
+        haystack = _TAG.sub(" ", f"{title} {description}").casefold()
+        if any(term in haystack for term in ("countdown", "top 10", "top 20", "season so far", "best shots in")):
+            continue
+        seen.add(video_id)
+        references = tuple(
+            item.strip()
+            for item in str(props.get("references") or "").split(",")
+            if item.strip()
+        )
+        entries.append(
+            TennisTVHotShotEntry(
+                candidate=OfficialVideoCandidate(
+                    title=title,
+                    url="https://www.tennistv.com" + video_url
+                    if video_url.startswith("/")
+                    else video_url,
+                    tour="ATP",
+                ),
+                video_id=video_id,
+                entry_id=entry_id,
+                description=description,
+                thumbnail_url=str(props.get("onDemandUrl") or "").strip(),
+                published_at="",
+                duration_ms=round(float(props.get("durationSecs") or 0) * 1000),
+                city=html.unescape(str(props.get("metadataCity") or "")).strip(),
+                year=str(props.get("metadataYear") or "").strip(),
+                round_name=str(props.get("metadataRound") or "").strip(),
+                series=str(props.get("metadataSeries") or "").strip(),
+                match_type=str(props.get("matchType") or "").strip(),
+                entitlement=str(props.get("entitlement") or "").strip(),
+                references=references,
+            )
+        )
+    return entries
+
+
+def parse_tennistv_hot_shot_candidates(page: str) -> list[OfficialVideoCandidate]:
+    """Compatibility helper returning the candidates in page order."""
+    return [entry.candidate for entry in parse_tennistv_hot_shot_entries(page)]
 
 
 def parse_official_youtube_feed_entries(
@@ -293,6 +395,82 @@ def fetch_youtube_video_metadata(
         source_width=int(progressive.get("width") or 0),
         source_height=int(progressive.get("height") or 0),
         source_bitrate=round(float(progressive.get("tbr") or 0) * 1000),
+    )
+
+
+def fetch_tennistv_video_metadata(
+    candidate: OfficialVideoCandidate,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 30,
+    jwt_token: str | None = None,
+) -> OfficialVideoMetadata:
+    """Resolve a Tennis TV card through its documented entitlement endpoint.
+
+    GitHub Actions must not reuse a browser cookie. If the public entitlement
+    service does not return a playback token, this function fails explicitly;
+    the caller can then try an ATP/WTA public mirror or write a skipped
+    manifest. A token may be supplied as the opt-in ``TENNISTV_JWT`` secret.
+    """
+    headers = {"User-Agent": "tennislive/0.1", "account": "atpmedia"}
+    token = jwt_token or os.getenv("TENNISTV_JWT", "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    page_response = get(candidate.url, headers=headers, timeout=timeout)
+    page = html.unescape(_response_text(page_response))
+    entry_match = re.search(r'data-entry-id="(?P<entry>[^" ]+)"', page)
+    if not entry_match:
+        raise VideoPipelineError("Tennis TV page does not expose a media entry id")
+    entry_id = entry_match.group("entry")
+
+    def _itemprop(name: str) -> str:
+        match = re.search(
+            rf'<span[^>]+itemprop="{re.escape(name)}"[^>]+content="([^"]*)"',
+            page,
+            re.IGNORECASE,
+        )
+        return html.unescape(match.group(1)).strip() if match else ""
+
+    entitlement_response = get(
+        f"https://api.tennistv.com/entitlementcheck/v1/videoentitlements/{entry_id}",
+        headers=headers,
+        timeout=timeout,
+    )
+    entitlement_response.raise_for_status()
+    entitlement = entitlement_response.json()
+    access_token = str(entitlement.get("access_token") or "").strip()
+    if not access_token:
+        raise VideoPipelineError(
+            "Tennis TV entitlement did not return a playback token; no browser login is used"
+        )
+    # StreamAMG's public player accepts this HLS manifest URL with the token.
+    playback_url = (
+        "https://open.http.mp.streamamg.com/p/atpmedia/sp/atpmedia00/"
+        f"playManifest/entryId/{entry_id}/format/applehttp/protocol/https/a.m3u8"
+        f"?access_token={access_token}"
+    )
+    duration = _itemprop("duration")
+    duration_ms = 0
+    match = re.fullmatch(r"PT(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?", duration)
+    if match:
+        duration_ms = round(
+            (int(match.group(1) or 0) * 60 + float(match.group(2) or 0)) * 1000
+        )
+    published_at = _itemprop("uploadDate")
+    if published_at and published_at.endswith("Z"):
+        published_at = published_at[:-1] + "+00:00"
+    thumbnail_url = _itemprop("thumbnailUrl")
+    width_match = re.search(r"[?&]width=(\d+)", thumbnail_url)
+    height_match = re.search(r"[?&]height=(\d+)", thumbnail_url)
+    return OfficialVideoMetadata(
+        candidate=candidate,
+        description=_itemprop("description"),
+        thumbnail_url=thumbnail_url,
+        playback_url=playback_url,
+        duration_ms=duration_ms,
+        published_at=published_at,
+        source_width=int(width_match.group(1)) if width_match else 1920,
+        source_height=int(height_match.group(1)) if height_match else 1080,
     )
 
 

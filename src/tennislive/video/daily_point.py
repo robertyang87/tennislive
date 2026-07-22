@@ -31,12 +31,15 @@ from .official import (
     ATP_YOUTUBE_FEED,
     OFFICIAL_YOUTUBE_CHANNEL_IDS,
     OFFICIAL_YOUTUBE_FEEDS,
+    TENNISTV_HOT_SHOTS_HUB,
     WTA_VIDEO_HUB,
     OfficialVideoCandidate,
     OfficialVideoMetadata,
     fetch_youtube_video_metadata,
+    fetch_tennistv_video_metadata,
     fetch_wta_video_metadata,
     parse_official_youtube_feed,
+    parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
 )
 from .pipeline import SubtitleCue, VideoPipelineError, render_srt
@@ -553,6 +556,53 @@ def discover_wta_point(
     return select_daily_point(digest, metadata_items)
 
 
+def discover_tennistv_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 30,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_tennistv_video_metadata,
+) -> PointSelection | None:
+    """Use Tennis TV's public Hot Shots library as the ATP discovery layer.
+
+    The library is intentionally queried before YouTube: its cards carry the
+    exact match references, round and editorial description. Playback is then
+    resolved through Tennis TV's entitlement endpoint, never through a local
+    browser cookie. If the card is freemium and no token is available, the
+    resolver records a clean miss and the normal ATP official feed remains the
+    next fallback.
+    """
+    response = get(
+        TENNISTV_HOT_SHOTS_HUB,
+        headers={"User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"},
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    entries = parse_tennistv_hot_shot_entries(str(response.text))
+    matches = yesterday_matches(digest)
+    shortlist: list[OfficialVideoCandidate] = []
+    for entry in entries[:80]:
+        text = _clean(f"{entry.candidate.title} {entry.description} {entry.city}")
+        if entry.year and str(digest.today.year) != entry.year:
+            continue
+        if not any(
+            any(_match_player_matches(player, text, [*match.home, *match.away]) for player in [*match.home, *match.away])
+            and (_event_matches(match, text) or _clean(entry.city) in _clean(match.tournament.city or ""))
+            for match in matches
+        ):
+            continue
+        shortlist.append(entry.candidate)
+        if len(shortlist) >= 8:
+            break
+    metadata_items: list[OfficialVideoMetadata] = []
+    for candidate in shortlist:
+        try:
+            metadata_items.append(metadata_fetcher(candidate, get=get, timeout=timeout))
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+            continue
+    return select_daily_point(digest, metadata_items)
+
+
 def _discover_official_youtube_point(
     digest: Digest,
     *,
@@ -645,7 +695,7 @@ def discover_slam_point(
 def discover_official_point(digest: Digest) -> PointSelection | None:
     """Query independent official feeds and keep the single strongest consensus pick."""
     selections: list[PointSelection] = []
-    for resolver in (discover_wta_point, discover_atp_point):
+    for resolver in (discover_tennistv_point, discover_wta_point, discover_atp_point):
         try:
             selection = resolver(digest)
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
