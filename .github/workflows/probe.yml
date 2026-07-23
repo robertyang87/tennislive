@@ -7,9 +7,6 @@ on:
     paths:
       - ".github/workflows/probe.yml"
 
-permissions:
-  contents: write
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -32,32 +29,6 @@ jobs:
       - name: 探测 RapidAPI 网球数据源（临时）
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
-
-      - name: 探测 Wikimedia Commons 图片元数据（临时）
-        shell: bash
-        run: python tools/probe_commons_metadata.py
-
-      - name: 探测官方报道页 og:image（临时）
-        shell: bash
-        run: python tools/probe_og_images.py
-
-      - name: 下载候选照片供人工核验（临时）
-        shell: bash
-        run: python tools/probe_download_images.py
-
-      - name: 提交候选照片（临时）
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/_probe_images
-          if git diff --cached --quiet; then
-            echo "没有新照片，跳过提交"
-          else
-            git commit -m "chore: commit downloaded candidate photos for manual review (temporary)"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
-          fi
 
       - name: 生成无图片探测包
         shell: bash
