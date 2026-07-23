@@ -22,36 +22,63 @@ def _no_story_match(**overrides):
     return make_match(**defaults)
 
 
-def test_preview_angle_cites_real_trend_radar_news_over_mechanical_facts():
-    """双方的话题性：自动趋势雷达命中的官方报道优先于机械排名/种子推导."""
-    match = _no_story_match(match_id="topical-news")
+def test_preview_angle_ignores_tournament_wide_news_not_about_this_match():
+    """双方的话题性不能来自"挂错比赛"的通稿式条目.
+
+    生产环境曾实际出现：apply_trend_signals() 把同一批 Tennis.com 赛程列表
+    条目（'Kempen / Panova vs Zaar / Zimmermann · Quarterfinal · WTA Hamburg'）
+    无差别地挂到当天汉堡站的每一场比赛上，包括跟这批标题完全无关的对阵。
+    这类条目对单场比赛只贡献很低的热度分（未命中具体球员），不该被当成
+    "这场有真实话题度"的证据——话题性判断必须看热度分而不是标题是否存在。
+    """
+    match = _no_story_match(match_id="topical-tournament-wide")
     match.trend_signals = [
         {
             "kind": "official-news",
+            "source": "Tennis.com",
+            "title": "Kempen / Panova vs Zaar / Zimmermann · Quarterfinal · WTA Hamburg",
+            "url": "https://www.tennis.com/example",
+            "published_at": "2026-07-23T06:00:00+00:00",
+            "traffic": "",
+        }
+    ]
+    match.media_heat = 2  # 未命中具体球员时的真实相关性权重（见 apply_trend_signals）
+
+    angle = preview_angle(match, date(2026, 7, 23))
+
+    assert "Kempen" not in angle and "Zaar" not in angle
+    assert "话题度" not in angle  # 热度不够，应落回机械看点而非话题性声明
+
+
+def test_preview_angle_cites_topicality_from_heat_score_not_raw_headline():
+    """双方的话题性：真正命中球员、热度分明显走高时才给话题性提示，且不引用原始外文标题.
+
+    不直接拼接外部标题：标题长度不可控、可能不含中文标点，会被正文渲染层
+    按标点/空格截断成读不完的碎片（同样在生产环境实际出现过）。
+    """
+    hot = _no_story_match(match_id="topical-hot-media")
+    hot.media_heat = 24
+    hot.trend_signals = [
+        {
+            "kind": "official-news",
             "source": "ATP官方",
-            "title": "Bergs building on his breakout season",
+            "title": "This exact headline text must never appear verbatim in the output",
             "url": "https://www.atptour.com/example",
             "published_at": "2026-07-22T12:00:00+00:00",
             "traffic": "",
         }
     ]
 
-    angle = preview_angle(match, date(2026, 7, 23))
-
-    assert "ATP官方" in angle and "Bergs building on his breakout season" in angle
-
-
-def test_preview_angle_falls_back_to_search_heat_then_mechanical_facts():
-    """没有官方新闻但搜索热度明显走高时，仍要点出话题性，而不是直接上机械分档."""
-    hot = _no_story_match(match_id="topical-search")
-    hot.search_heat = 24
-
     cold = _no_story_match(match_id="topical-cold")
     cold.search_heat = 0
 
-    assert "搜索热度" in preview_angle(hot, date(2026, 7, 23))
-    assert "搜索热度" not in preview_angle(cold, date(2026, 7, 23))
-    assert preview_angle(cold, date(2026, 7, 23))  # 仍然兜底到机械看点，不为空
+    hot_angle = preview_angle(hot, date(2026, 7, 23))
+    assert "话题度" in hot_angle
+    assert "This exact headline text" not in hot_angle  # 绝不逐字引用外部标题
+
+    cold_angle = preview_angle(cold, date(2026, 7, 23))
+    assert "话题度" not in cold_angle
+    assert cold_angle  # 仍然兜底到机械看点，不为空
 
 
 def test_preview_angle_uses_account_continuity_before_mechanical_facts(tmp_path, monkeypatch):

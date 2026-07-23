@@ -43,27 +43,24 @@ def _player_preview(slug: str, today: date | None) -> str | None:
     return choices[today.toordinal() % len(choices)]
 
 
-def _topicality_angle(match: Match) -> str | None:
-    """A grounded 'this match already has real buzz' note from the automated
-    trend radar (ATP/WTA/major-event news feeds plus search-trend signals).
+_TOPICALITY_HEAT_THRESHOLD = 20
 
-    Unlike brief_for_match, these signals are not human-reviewed, so the line
-    stays limited to citing the real, sourced headline rather than passing
-    editorial judgment on it.
+
+def _topicality_angle(match: Match) -> str | None:
+    """A grounded 'this match already has real buzz' note based on the trend
+    radar's per-match heat score, not the raw headline text.
+
+    Two reasons to stay at the score level: (1) apply_trend_signals() attaches
+    the same tournament-wide news batch to every match at that event — a
+    signal being present does not mean its headline is actually about these
+    two players, only the aggregated heat score already discounts tournament-
+    only hits versus player-specific ones; (2) an external headline is
+    arbitrary length and language, and quoting it verbatim can be mangled by
+    the render layer's punctuation-based truncation.
     """
-    signals = [s for s in (match.trend_signals or []) if isinstance(s, dict)]
-    news = next(
-        (
-            s
-            for s in signals
-            if s.get("kind") == "official-news" and s.get("title") and s.get("source")
-        ),
-        None,
-    )
-    if news:
-        return f"{news['source']}近期报道《{news['title']}》，这场已经带着真实话题度。"
-    if (match.search_heat or 0) >= 20:
-        return "搜索热度正在走高，这场吸引的不只是赛程爱好者。"
+    heat = max(match.media_heat or 0, match.search_heat or 0)
+    if heat >= _TOPICALITY_HEAT_THRESHOLD:
+        return "这场已经带着真实话题度，官方与搜索热度都在往上走。"
     return None
 
 
