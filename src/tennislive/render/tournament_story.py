@@ -367,9 +367,12 @@ STORIES = (
         ),
         venue="2024 巴黎奥运女单金牌得主",
         image=PLAYER_ASSETS / "zheng-qinwen.jpg",
-        image_credit="Hameltion / Wikimedia Commons · CC BY-SA 4.0",
+        image_credit="Paul Crock/AFP via WTA",
         source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
-        image_source_url="https://commons.wikimedia.org/wiki/Category:Zheng_Qinwen",
+        image_source_url=(
+            "https://www.wtatennis.com/news/3866289/"
+            "zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis"
+        ),
         kind="player",
         source_label="WTA / 奥运官方档案",
         evidence_urls=("https://en.wikipedia.org/wiki/Zheng_Qinwen",),

@@ -33,20 +33,20 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 下载郑钦文封面裁剪候选图（临时）
+      - name: 替换郑钦文封面图（临时）
         shell: bash
         run: python tools/probe_cover_swap.py
 
-      - name: 提交候选封面图（临时）
+      - name: 提交新封面图（临时）
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/_probe_cover.jpg
+          git add assets/players/zheng-qinwen.jpg
           if git diff --cached --quiet; then
             echo "没有新照片，跳过提交"
           else
-            git commit -m "chore: commit candidate cropped cover photo for review (temporary)"
+            git commit -m "content: swap zheng-qinwen cover to a real 2024 AO quarterfinal photo"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi

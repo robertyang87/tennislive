@@ -1,6 +1,7 @@
-"""Temporary diagnostic: fetch the cropped variant of the current
-zheng-qinwen cover photo so it can be viewed before deciding whether to
-replace the uncropped asset (which has a bystander prominent in frame)."""
+"""Temporary: fetch the real, already-verified 2024 Australian Open
+quarterfinal photo of Zheng Qinwen and overwrite the committed cover asset
+with it (the previous cover had a bystander prominent in frame; its Commons
+"cropped" variant turned out to be a rotated, unusable close-up)."""
 
 from __future__ import annotations
 
@@ -8,19 +9,19 @@ import sys
 import urllib.request
 
 URL = (
-    "https://upload.wikimedia.org/wikipedia/commons/0/0d/"
-    "Zheng_Qinwen_%282024_US_Open%29_01_%28cropped%29.jpg"
+    "https://photoresources.wtatennis.com/wta/photo/2024/01/24/"
+    "77cc89de-5003-44c6-a221-c3db1b6a04af/Zheng-QF-Paul-Crock-AFP.jpg"
 )
+DEST = "assets/players/zheng-qinwen.jpg"
 
 
 def main() -> int:
     req = urllib.request.Request(URL, headers={"User-Agent": "tennislive-probe/1.0"})
     with urllib.request.urlopen(req, timeout=20) as resp:
         data = resp.read()
-    dest = "tools/_probe_cover.jpg"
-    with open(dest, "wb") as f:
+    with open(DEST, "wb") as f:
         f.write(data)
-    print(f"downloaded {len(data)} bytes -> {dest}")
+    print(f"downloaded {len(data)} bytes -> {DEST}")
     return 0
 
 
