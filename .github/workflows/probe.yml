@@ -34,6 +34,10 @@ jobs:
         shell: bash
         run: python tools/probe_commons_metadata.py
 
+      - name: 探测官方报道页 og:image（临时）
+        shell: bash
+        run: python tools/probe_og_images.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
