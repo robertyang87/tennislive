@@ -314,13 +314,27 @@ def run_checks(
     fatal.extend(xhs_fatal)
     warn.extend(xhs_warn)
 
-    # 译名覆盖率（信息性）
-    names = {
-        p.name
-        for m in digest.results + digest.schedule
+    # ATP/WTA 前 300 中文名优先；缺失只进入告警，不能拖住时效性发布。
+    singles_players = [
+        p
+        for m in digest.results + digest.live + digest.schedule
         for p in m.home + m.away
         if m.is_singles
-    }
+    ]
+    top_300_untranslated = sorted(
+        {
+            player.name
+            for player in singles_players
+            if player.rank is not None
+            and 1 <= player.rank <= 300
+            and player_zh(player.name) == player.name
+        }
+    )
+    if top_300_untranslated:
+        warn.append(
+            "前300球员中文名待异步补充: " + "、".join(top_300_untranslated)
+        )
+    names = {player.name for player in singles_players}
     untranslated = [n for n in names if player_zh(n) == n]
     if names:
         ratio = len(untranslated) / len(names)
