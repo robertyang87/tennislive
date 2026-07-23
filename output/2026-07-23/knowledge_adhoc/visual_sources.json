@@ -13,10 +13,9 @@
   ],
   "missing_pages": [],
   "input_domains": [
-    "ausopen.com",
-    "commons.wikimedia.org",
     "en.wikipedia.org",
     "olympics.com",
+    "sports.yahoo.com",
     "wtatennis.com"
   ],
   "providers_queried": [
@@ -68,8 +67,7 @@
     }
   ],
   "selected_providers": [
-    "official-media",
-    "verified-event-archive"
+    "official-media"
   ],
   "excluded_source_urls": [],
   "errors": [],
@@ -126,7 +124,7 @@
       "page": "cover",
       "status": "selected",
       "cached_file": "zheng-qinwen.jpg",
-      "title": "File:Zheng Qinwen (2024 US Open) 01.jpg",
+      "title": "Zheng Qinwen celebrating on the clay after winning the 2024 Paris Olympics gold medal",
       "subject": "qinwen zheng",
       "required_years": [
         "2024"
@@ -137,7 +135,7 @@
       "year_match": true,
       "event_match": true,
       "person_match": true,
-      "visual_impact_match": false,
+      "visual_impact_match": true,
       "reason": ""
     },
     {
@@ -208,20 +206,20 @@
           "candidate_count": 3
         }
       ],
-      "provider": "verified-event-archive",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
-      "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Qinwen_Zheng_-_2024_Olympics.jpg",
-      "credit": "Kuberzog / Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
+      "provider": "official-media",
+      "source_url": "https://www.wtatennis.com/news/4074958/zheng-holds-off-vekic-in-olympic-gold-medal-final",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/08/03/13c7b92f-6767-4ed3-9a14-a78cd46642b9/GettyImages-2165120786.jpg",
+      "credit": "Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
       "query": "qinwen zheng 2024 olympic tennis",
       "relevance": 100,
-      "sha256": "ff75b65b3b90ec1a9b2603a2128d65e69e2cccef8b957144685a67e303e3292d",
+      "sha256": "0815358ef29798096dd944504c877b02eb667bde45f482d9d87c23c10cfe2f62",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "explainer-ff75b65b3b90.jpg"
+      "cached_file": "explainer-0815358ef297.jpg"
     },
     {
       "page": "today",
@@ -252,27 +250,27 @@
         }
       ],
       "provider": "official-media",
-      "source_url": "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
-      "image_url": "https://ausopen.com/sites/default/files/202408/4/zheng-qinwen-gold-paris-2024-olympics.jpg",
-      "credit": "Australian Open (ausopen.com)",
+      "source_url": "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html",
+      "image_url": "https://s.yimg.com/ny/api/res/1.2/Gef3DdfgjCxkbdARWhTF0g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/ap.org/af74ba83d3fbb019753043d716cc1282",
+      "credit": "AP Photo via Yahoo Sports",
       "license": "官方媒体供图 · 非商业资讯引用",
       "query": "qinwen zheng 2024 olympic tennis",
       "relevance": 100,
-      "sha256": "e8875cef07781afafaf1139df6cf927e3c7490321956504fc832160af119341b",
+      "sha256": "6fb16e8e4533ae0b610b716370e5e31a970b7dd2df0ac386494c2729ac67328b",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "today-e8875cef0778.jpg"
+      "cached_file": "today-6fb16e8e4533.jpg"
     }
   ],
   "selection_evidence": {
     "kind": "player",
     "candidate_slug": "zheng-qinwen",
-    "result_count": 79,
-    "live_count": 7,
-    "schedule_count": 16,
+    "result_count": 87,
+    "live_count": 0,
+    "schedule_count": 3,
     "selection_basis": "current player or tournament relevance, match news value, and recency",
     "candidate_rank": 1,
     "candidate_count": 1,
