@@ -1151,9 +1151,9 @@ def _daily_cover_metadata_score(
     event_match = context["event_match"]
     year_match = context["year_match"]
     scene_points = {
-        "match_action": 25,
-        "on_court_reaction": 23,
-        "solo_trophy": 20,
+        "on_court_reaction": 34,
+        "solo_trophy": 32,
+        "match_action": 24,
     }.get(scene["scene"], 0)
     provider_points = {
         "official-atp-youtube": 6,
