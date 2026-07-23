@@ -829,6 +829,8 @@ def generate_knowledge_package(
                         or last_rejected.get("provider_runs", []),
                         "missing_pages": manifest.get("missing_pages")
                         or last_rejected.get("missing_pages", []),
+                        "attempts": manifest.get("attempts")
+                        or last_rejected.get("attempts", []),
                         "visual_qa": visual_qa,
                     }
                 )
