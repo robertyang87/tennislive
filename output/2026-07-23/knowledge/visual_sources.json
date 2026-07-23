@@ -1,10 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "pass",
   "story_slug": "longest-match",
   "fetch_enabled": true,
   "strict": true,
-  "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、授权、分辨率与唯一性；不足则换题",
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
   "selected_count": 3,
   "required_pages": [
     "explainer",
@@ -71,6 +71,7 @@
     "verified-editorial",
     "verified-event-archive"
   ],
+  "excluded_source_urls": [],
   "errors": [],
   "attempts": [
     {
@@ -256,132 +257,128 @@
     "viral_prior": 10.0,
     "topic_score": 10.0,
     "live_relevance_score": 0.0,
-    "trend_signal_count": 14,
+    "trend_signal_count": 187,
     "candidate_rank": 4,
     "candidate_count": 8,
     "visual_preflight_rejections": 3,
-    "visual_preflight_status": "pass"
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 2
   },
   "rejected_candidates": [
     {
-      "story_slug": "surfaces",
-      "title": "红土、草地、硬地",
-      "errors": [
-        "事实输入源少于 2 个独立域名",
-        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
-      ],
-      "missing_pages": [
-        "cover",
-        "explainer",
-        "story",
-        "today"
-      ],
-      "input_domains": [
-        "en.wikipedia.org"
-      ],
-      "providers_queried": [],
-      "provider_runs": [],
-      "attempts": [
-        {
-          "page": "cover",
-          "status": "rejected",
-          "cached_file": "trivia-surfaces.jpg",
-          "title": "File:Clay Crew - water for center court (3593807294).jpg",
-          "subject": "center court",
-          "required_years": [],
-          "required_event_terms": [
-            "clay"
-          ],
-          "person_required": false,
-          "subject_match": true,
-          "year_match": true,
-          "event_match": true,
-          "person_match": true,
-          "visual_impact_match": false,
-          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
-        }
-      ]
-    },
-    {
       "story_slug": "china-tennis",
       "title": "中国网球这二十年",
+      "stage": "visual-preflight",
       "errors": [
-        "事实输入源少于 2 个独立域名",
-        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
       ],
-      "missing_pages": [
-        "cover",
-        "explainer",
-        "story",
-        "today"
-      ],
-      "input_domains": [
-        "en.wikipedia.org"
-      ],
-      "providers_queried": [],
-      "provider_runs": [],
+      "excluded_source_urls": [],
       "attempts": [
         {
-          "page": "cover",
-          "status": "rejected",
-          "cached_file": "trivia-china-tennis.jpg",
-          "title": "File:Li Na 2012.jpg",
-          "subject": "Li Na",
-          "required_years": [
-            "2011"
-          ],
-          "required_event_terms": [
-            "roland garros",
-            "french open"
-          ],
-          "person_required": true,
-          "subject_match": false,
-          "year_match": false,
-          "event_match": false,
-          "person_match": false,
-          "visual_impact_match": false,
-          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
         }
       ]
     },
     {
       "story_slug": "big-three",
       "title": "三巨头的数字",
+      "stage": "visual-preflight",
       "errors": [
-        "事实输入源少于 2 个独立域名",
-        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
       ],
-      "missing_pages": [
-        "cover",
-        "explainer",
-        "story",
-        "today"
-      ],
-      "input_domains": [
-        "en.wikipedia.org"
-      ],
-      "providers_queried": [],
-      "provider_runs": [],
+      "excluded_source_urls": [],
       "attempts": [
         {
-          "page": "cover",
-          "status": "rejected",
-          "cached_file": "trivia-big-three.jpg",
-          "title": "File:Rafael Nadal & Roger Federer (18265453743).jpg",
-          "subject": "Federer Nadal Djokovic",
-          "required_years": [],
-          "required_event_terms": [
-            "tennis"
-          ],
-          "person_required": true,
-          "subject_match": false,
-          "year_match": true,
-          "event_match": false,
-          "person_match": false,
-          "visual_impact_match": false,
-          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
+        }
+      ]
+    },
+    {
+      "story_slug": "surfaces",
+      "title": "红土、草地、硬地",
+      "stage": "visual-preflight",
+      "errors": [
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
+      ],
+      "excluded_source_urls": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [],
+          "visual_qa": {}
         }
       ]
     }
-  ]
+  ],
+  "recovery": {
+    "status": "recovered",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
 }
