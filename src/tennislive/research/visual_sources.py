@@ -1649,6 +1649,11 @@ def _daily_cover_metadata_score(
     return score, event_match, year_match
 
 
+def _cover_face_priority_bonus(prominent_faces: int) -> int:
+    """Prefer an expressive match-time face over a merely detectable body."""
+    return 18 if prominent_faces >= 1 else 0
+
+
 def _parse_official_feed_time(value: str) -> datetime | None:
     raw = value.strip()
     if not raw:
@@ -2177,8 +2182,9 @@ def resolve_match_cover_visual(
         "china_priority": True,
         "policy": (
             "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；"
-            "比赛动作、场内情绪和单人举杯优先，至少须有像素验证的突出人物；"
-            "赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优"
+            "当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；"
+            "训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；"
+            "多源候选全部评分后择优"
         ),
         "fetch_enabled": enabled,
         "strict": strict,
@@ -2369,10 +2375,14 @@ def resolve_match_cover_visual(
             candidate,
             assess_cover_image(downloaded.path),
         )
-        total_score = round(metadata_score + float(audit.get("score", 0)), 1)
         failures = list(audit.get("hard_failures", []))
         prominent_faces = int(audit.get("prominent_faces", 0) or 0)
         prominent_bodies = int(audit.get("prominent_bodies", 0) or 0)
+        face_priority_bonus = _cover_face_priority_bonus(prominent_faces)
+        total_score = round(
+            metadata_score + float(audit.get("score", 0)) + face_priority_bonus,
+            1,
+        )
         if prominent_faces < 1 and "no-prominent-face" not in failures:
             failures.append("no-prominent-face")
         official_body_override = (
@@ -2415,6 +2425,7 @@ def resolve_match_cover_visual(
                 "status": "qualified" if not failures else "rejected",
                 "quality": audit,
                 "quality_score": total_score,
+                "face_priority_bonus": face_priority_bonus,
                 "hard_failures": failures,
                 "cached_file": downloaded.path.name,
             }

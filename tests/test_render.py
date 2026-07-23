@@ -1860,7 +1860,7 @@ def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
         "07.16 · 周四",
     )
 
-    assert "Overnight Lead · 昨夜头条" in body
+    assert "MATCH POINT · 今日头条" in body
     assert "郑钦文" in body  # 同级比赛由固定 +35 中国相关性决定头条
     assert "China Focus · 中国焦点" in body
     assert "Tonight · 今晚必看" in body
@@ -1898,7 +1898,7 @@ def test_cover_uses_verified_athlete_photo_as_full_bleed_background(
     assert "cover-subject" not in body
 
 
-def test_cover_moves_copy_opposite_the_detected_face_and_out_of_upper_face_zone(
+def test_cover_moves_compact_copy_opposite_the_detected_face(
     sample_digest, tmp_path
 ):
     from PIL import Image
@@ -1923,15 +1923,17 @@ def test_cover_moves_copy_opposite_the_detected_face_and_out_of_upper_face_zone(
         cover_visual={"path": photo, "focus": "31% 60%"},
     )
 
-    assert "cover-text-left cover-copy-lower" in person_right
+    assert "cover-text-left" in person_right
     assert 'data-cover-text-side="left"' in person_right
     assert 'data-cover-focus-x="68.0"' in person_right
-    assert "cover-text-right cover-copy-upper" in person_left
+    assert "cover-text-right" in person_left
     assert 'data-cover-text-side="right"' in person_left
     assert person_right.index('class="cover-secondary"') > person_right.index(
         'class="cover-lower"'
     )
     assert 'class="cover-date"' not in person_right
+    assert 'class="focus-label"' not in person_right
+    assert "MATCH POINT · 今日头条" in person_right
 
 
 def test_cover_focus_fallback_still_uses_a_deterministic_safe_layout(
@@ -1951,7 +1953,7 @@ def test_cover_focus_fallback_still_uses_a_deterministic_safe_layout(
         cover_visual={"path": photo, "focus": "center"},
     )
 
-    assert "cover-text-left cover-copy-lower" in body
+    assert "cover-text-left" in body
     assert 'data-cover-focus-x="50.0"' in body
     assert 'data-cover-focus-y="28.0"' in body
 

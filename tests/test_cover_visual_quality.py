@@ -19,6 +19,22 @@ def test_scene_classifier_rejects_prematch_group_even_when_player_is_named():
     assert result["rejected_terms"]
 
 
+def test_scene_classifier_rejects_training_and_warmup_photos():
+    from tennislive.research.visual_quality import classify_cover_scene
+
+    training = classify_cover_scene(
+        "Qinwen Zheng hits a forehand during a training session"
+    )
+    warmup = classify_cover_scene(
+        "Qinwen Zheng serving on the practice court during warm-up"
+    )
+
+    assert training["scene"] == "static_or_group"
+    assert warmup["scene"] == "static_or_group"
+    assert "training" in training["rejected_terms"]
+    assert "practice" in warmup["rejected_terms"]
+
+
 def test_scene_classifier_accepts_match_action_and_on_court_reaction():
     from tennislive.research.visual_quality import classify_cover_scene
 
@@ -31,6 +47,14 @@ def test_scene_classifier_accepts_match_action_and_on_court_reaction():
     assert action["scene"] == "match_action"
     assert reaction["scene"] == "on_court_reaction"
     assert official_title["scene"] == "on_court_reaction"
+
+
+def test_daily_cover_gives_a_strong_priority_bonus_to_a_detected_face():
+    from tennislive.research.visual_sources import _cover_face_priority_bonus
+
+    assert _cover_face_priority_bonus(0) == 0
+    assert _cover_face_priority_bonus(1) == 18
+    assert _cover_face_priority_bonus(2) == 18
 
 
 def test_web_image_source_filter_blocks_unsafe_domains_and_terms():

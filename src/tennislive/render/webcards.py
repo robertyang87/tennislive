@@ -225,7 +225,7 @@ def _cover_headline_html(headline: str) -> str:
     )
 
 
-def _cover_text_layout(focus: str) -> tuple[str, str, float, float]:
+def _cover_text_layout(focus: str) -> tuple[str, float, float]:
     """Place cover copy away from the detected athlete focus point.
 
     The visual QA stage emits a percentage focus derived from the largest face
@@ -242,11 +242,11 @@ def _cover_text_layout(focus: str) -> tuple[str, str, float, float]:
     else:
         focus_x, focus_y = 50.0, 28.0
 
-    # Put copy on the opposite side. A central subject still receives a narrow
-    # side column; the vertical rule below keeps the face itself unobstructed.
+    # Put a compact copy column on the opposite side. The visual selector gives
+    # clear match-time faces a strong preference, so the title can stay high
+    # and concise instead of being pushed into the lower information area.
     text_side = "left" if focus_x >= 50.0 else "right"
-    vertical_zone = "lower" if focus_y <= 46.0 else "upper"
-    return text_side, vertical_zone, focus_x, focus_y
+    return text_side, focus_x, focus_y
 
 
 # ---------- 页面骨架 ----------
@@ -444,28 +444,26 @@ html.light .chip-green { color:#fff; }
 .cover .masthead,.cover .footer { position:relative; z-index:3; }
 .cover .brand { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:42px; font-weight:400; letter-spacing:0; }
 .cover .date { color:#D6E3DD; }
-.cover-copy { position:relative; z-index:2; width:650px; margin-top:54px;
-  padding:18px 24px 24px; border-radius:6px;
-  background:linear-gradient(90deg,rgba(2,20,16,.27),rgba(2,20,16,.08) 72%,rgba(2,20,16,0)); }
+.cover-copy { position:relative; z-index:2; width:590px; margin-top:22px;
+  padding:12px 18px 18px; border-radius:6px;
+  background:linear-gradient(90deg,rgba(2,20,16,.15),rgba(2,20,16,.04) 72%,rgba(2,20,16,0)); }
 .cover.cover-text-left .cover-copy { align-self:flex-start; }
 .cover.cover-text-right .cover-copy { align-self:flex-end;
-  background:linear-gradient(270deg,rgba(2,20,16,.27),rgba(2,20,16,.08) 72%,rgba(2,20,16,0)); }
-.cover.cover-copy-lower .cover-copy { margin-top:300px; }
-.edition { display:inline-block; padding:8px 14px; border:1px solid rgba(214,255,0,.7);
-  color:var(--neon); font-family:'Barlow Condensed'; font-size:24px; font-weight:600; letter-spacing:4px; line-height:1.2; }
-.cover .focus-label { font-family:'Barlow Condensed'; font-weight:600; font-size:23px;
-  letter-spacing:.3em; color:#E4C96E; text-transform:uppercase; margin-top:20px; }
-.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:72px; font-weight:400;
-  line-height:1.06; letter-spacing:0; margin-top:12px; color:#fff; max-width:610px;
+  background:linear-gradient(270deg,rgba(2,20,16,.15),rgba(2,20,16,.04) 72%,rgba(2,20,16,0)); }
+.edition { display:inline-block; color:var(--neon); font-family:'Barlow Condensed';
+  font-size:23px; font-weight:600; letter-spacing:4px; line-height:1.2;
+  text-shadow:0 3px 14px rgba(0,0,0,.75); }
+.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:68px; font-weight:400;
+  line-height:1.06; letter-spacing:0; margin-top:10px; color:#fff; max-width:550px;
   text-shadow:0 7px 28px rgba(0,0,0,.7); line-break:strict; word-break:normal;
   overflow-wrap:normal; }
 .cover .focus .headline-line { display:block; }
 .cover .focus .headline-keep { white-space:nowrap; }
-.cover.compact-headline .focus { font-size:62px; line-height:1.08; max-width:610px; }
-.cover.extra-compact-headline .focus { font-size:55px; line-height:1.1; }
+.cover.compact-headline .focus { font-size:58px; line-height:1.08; max-width:550px; }
+.cover.extra-compact-headline .focus { font-size:51px; line-height:1.1; }
 .cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px;
-  padding:18px 20px; border-radius:8px; background:rgba(2,20,16,.3);
-  backdrop-filter:blur(5px); }
+  padding:18px 20px; border-radius:8px; background:rgba(2,20,16,.22);
+  backdrop-filter:blur(3px); }
 .cover-secondary { margin-bottom:16px; padding-left:14px; border-left:5px solid var(--coral);
   color:#F0F4F1; font-size:25px; font-weight:700; line-height:1.35; max-width:850px;
   text-shadow:0 3px 14px rgba(0,0,0,.7); }
@@ -484,10 +482,6 @@ html.light .chip-green { color:#fff; }
 .cover-highlight.compact b { font-size:30px; line-height:1.18; }
 .cover-highlight span { display:block; margin-top:8px; color:#C6D2CC; font-size:20px;
   line-height:1.3; }
-.cover .chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:17px; }
-.cover .chips span { background:rgba(4,26,21,.72); border:1px solid rgba(255,255,255,.32);
-  color:#F6F7F2; font-size:21px; font-weight:700; padding:9px 14px; border-radius:5px;
-  box-shadow:0 5px 18px rgba(0,0,0,.24); line-height:1.2; }
 .cover .footer { margin-top:0; color:#C2CEC8; }
 .cover-photo-credit { margin-top:10px; color:#AEBDB6; font-size:14px; line-height:1.3; }
 
@@ -1217,26 +1211,15 @@ def cover_body(
     date_label: str,
     cover_visual: object | None = None,
 ) -> str:
-    d = digest.today
-    weekday = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"][d.weekday()]
-    chips = []
-    if digest.results:
-        chips.append(f"赛果复盘 {len(digest.results)} 场")
-    if digest.schedule:
-        chips.append(f"后续赛程 {len(digest.schedule)} 场")
     overnight = top_results(
         [match for match in digest.results if match.is_singles],
         2,
         cn_boost=True,
     )
     lead = daily_lead_match(digest)
-    focus_events = tonight_event_focus(digest.schedule)
     # The cover may tease a lone confirmed fixture; event pages stay stricter
     # and require 2-5 matches so they remain useful schedule boards.
     focus_matches = editorial_tonight_focus(digest.schedule)
-    if focus_events:
-        chips.append(f"今晚焦点 {len(focus_events)} 项赛事")
-    chips_html = "".join(f"<span>{c}</span>" for c in chips)
     subject = direct_story_for_match(lead, prefer_player=True) if lead else None
     cover_path = Path(_visual_value(cover_visual, "path", "")) if cover_visual else None
     cover_focus = str(_visual_value(cover_visual, "focus", "50% 24%"))
@@ -1250,7 +1233,7 @@ def cover_body(
         else:
             cover_path = ASSETS / "covers" / "tennis-night-court.png"
             cover_focus = "center"
-    text_side, vertical_zone, focus_x, focus_y = _cover_text_layout(cover_focus)
+    text_side, focus_x, focus_y = _cover_text_layout(cover_focus)
     background_uri = _asset_image_uri(cover_path)
     background = (
         f'<div class="cover-bg" style="background-image:url(\'{background_uri}\');'
@@ -1345,7 +1328,6 @@ def cover_body(
         f'<div class="cover-highlights">{highlights_html}</div>'
         if highlights_html else ""
     )
-    lead_label = "Overnight Lead · 昨夜头条" if lead else "Today's Lead · 今日头条"
     headline_width = _headline_display_width(headline)
     headline_class = (
         " extra-compact-headline"
@@ -1355,19 +1337,17 @@ def cover_body(
         else ""
     )
     return (
-        f'<div class="poster cover cover-text-{text_side} cover-copy-{vertical_zone}'
-        f'{headline_class}" data-cover-text-side="{text_side}" '
+        f'<div class="poster cover cover-text-{text_side}{headline_class}" '
+        f'data-cover-text-side="{text_side}" '
         f'data-cover-focus-x="{focus_x:.1f}" data-cover-focus-y="{focus_y:.1f}">'
         + background
         + _masthead(date_label)
         + '<div class="cover-copy">'
-        + f'<div class="edition">DAILY MATCH BRIEF · {weekday}网球速递</div>'
-        + f'<div class="focus-label">{lead_label}</div>'
+        + '<div class="edition">MATCH POINT · 今日头条</div>'
         + f'<div class="focus">{_cover_headline_html(headline)}</div>'
         + '</div><div class="cover-lower">'
         + secondary_html
         + highlights_html
-        + f'<div class="chips">{chips_html}</div>'
         + '</div>'
         + _FOOTER
         + "</div>"

@@ -74,6 +74,15 @@ TROPHY_TERMS = (
 # These scenes are related to tennis, but they make weak daily-news covers.
 # They are hard failures even when the athlete name is correct.
 STATIC_OR_GROUP_TERMS = (
+    "practice",
+    "practice court",
+    "practice session",
+    "training",
+    "training court",
+    "training session",
+    "warm up",
+    "warmup",
+    "warming up",
     "pre-match photo",
     "pre match photo",
     "prematch photo",
