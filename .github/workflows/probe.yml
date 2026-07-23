@@ -34,6 +34,10 @@ jobs:
         shell: bash
         run: python tools/probe_citations.py
 
+      - name: 查找 2012 澳网决赛 Commons 配图（临时）
+        shell: bash
+        run: python tools/probe_ao2012_wiki_images.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
