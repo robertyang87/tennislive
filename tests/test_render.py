@@ -130,6 +130,48 @@ def test_xhs_post(sample_digest):
     assert "…" not in post and "..." not in post
 
 
+def test_quarterfinal_schedule_insight_differs_by_matchup():
+    """同一赛事同轮次的多场比赛不能复用同一句"分水岭"套话.
+
+    生产环境曾出现过：一晚 4 场基茨比厄尔公开赛男单八强赛，"今晚焦点"卡片
+    里 4 场的看点文案逐字相同，因为四分之一决赛此前是固定文案、不看排名/
+    种子差异。
+    """
+    from tennislive.render.story import schedule_insight
+
+    close = make_match(
+        home_name="Mariano Navone", away_name="Quentin Halys",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals",
+    )
+    close.home[0].rank, close.home[0].seed = 47, None
+    close.away[0].rank, close.away[0].seed = 83, None
+
+    lopsided = make_match(
+        home_name="Alexander Bublik", away_name="Alex Molcan",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals", match_id="qf2",
+    )
+    lopsided.home[0].rank, lopsided.home[0].seed = 11, 1
+    lopsided.away[0].rank, lopsided.away[0].seed = 81, None
+
+    seeded_only = make_match(
+        home_name="Yannick Hanfmann", away_name="Sebastian Baez",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals", match_id="qf3",
+    )
+    seeded_only.home[0].rank = seeded_only.away[0].rank = None
+    seeded_only.home[0].seed, seeded_only.away[0].seed = None, 5
+
+    lines = {
+        schedule_insight(close),
+        schedule_insight(lopsided),
+        schedule_insight(seeded_only),
+    }
+    assert len(lines) == 3  # 三场不同签况必须产出三句不同的看点
+    assert all("四强席位" in line or "抢七" in line or "话语权" in line for line in lines)
+
+
 def test_neutral_compact_opinion_rotates_by_day():
     """无中国球员的压缩兜底文案必须按日轮换，否则会撞上7天防重复 FATAL 闸门。
 

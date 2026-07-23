@@ -12,6 +12,11 @@ def test_player_full_name():
     assert player_zh("Qinwen Zheng") == "郑钦文"
 
 
+def test_player_three_token_espn_format():
+    """ESPN 把她的名字拆成三段（姓 Ye + 名 Qiu/Yu 各一段），曾无法命中译名表."""
+    assert player_zh("Ye Qiu Yu") == "叶秋语"
+
+
 def test_player_abbreviated():
     assert player_zh("J. Sinner") == "辛纳"
     assert player_zh("Sinner J.") == "辛纳"

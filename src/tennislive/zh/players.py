@@ -227,6 +227,9 @@ PLAYER_ZH: dict[str, str] = {
     "Xinyu Jiang": "蒋欣玗",
     "Qianhui Tang": "汤千慧",
     "Feng Shuo": "冯硕",
+    # ESPN 数据源把她的名字拆成三段（姓 Ye + 名 Qiu/Yu 各占一段），
+    # 与本文件"名 姓"两段式惯例不同，需按源字符串原样收录才能命中。
+    "Ye Qiu Yu": "叶秋语",
     "Hanyu Guo": "郭涵煜",
     "Yifan Xu": "徐一璠",
     "Yexin Ma": "马烨欣",
