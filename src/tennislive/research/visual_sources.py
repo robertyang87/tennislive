@@ -407,7 +407,14 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
     try:
         response = session.get(
             "https://www.bing.com/images/search",
-            params={"q": query, "form": "HDRSC2", "first": 1},
+            params={
+                "q": f'"{query}" tennis',
+                "form": "HDRSC2",
+                "first": 1,
+                "safeSearch": "Strict",
+                "adlt": "strict",
+                "qft": "+filterui:photo-photo",
+            },
             timeout=15,
         )
         response.raise_for_status()
@@ -429,6 +436,8 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
             continue
         domain = urlparse(source_url).netloc.removeprefix("www.")
         text = " ".join((title, source_url, image_url)).lower()
+        if _unsafe_web_image_source(domain, text):
+            continue
         candidates.append(
             {
                 "provider": "bing-web-image",
@@ -444,6 +453,37 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
             }
         )
     return candidates
+
+
+_UNSAFE_WEB_IMAGE_DOMAIN_PARTS = (
+    "porn",
+    "sex.",
+    "xxx",
+    "xhamster",
+    "redtube",
+    "eporner",
+    "fap",
+    "onlyfans",
+)
+
+_UNSAFE_WEB_IMAGE_TERMS = (
+    " nude ",
+    " naked ",
+    " sex ",
+    " porn ",
+    " pussy ",
+    " fuck",
+    " blowjob",
+    " doggystyle",
+)
+
+
+def _unsafe_web_image_source(domain: str, text: str) -> bool:
+    normalized_domain = domain.casefold()
+    normalized_text = f" {text.casefold()} "
+    return any(part in normalized_domain for part in _UNSAFE_WEB_IMAGE_DOMAIN_PARTS) or any(
+        term in normalized_text for term in _UNSAFE_WEB_IMAGE_TERMS
+    )
 
 
 def _flickr_candidates(query: str, session: requests.Session) -> list[dict]:
@@ -1948,8 +1988,27 @@ def resolve_match_cover_visual(
         total_score = round(metadata_score + float(audit.get("score", 0)), 1)
         failures = list(audit.get("hard_failures", []))
         prominent_faces = int(audit.get("prominent_faces", 0) or 0)
+        prominent_bodies = int(audit.get("prominent_bodies", 0) or 0)
         if prominent_faces < 1 and "no-prominent-face" not in failures:
             failures.append("no-prominent-face")
+        official_body_override = (
+            candidate.get("provider") == "official-match-media"
+            and record["exact_match"]
+            and record["both_sides_match"]
+            and event_match
+            and year_match
+            and record["scene"] in {"match_action", "on_court_reaction", "solo_trophy"}
+            and prominent_bodies >= 1
+        )
+        if official_body_override and "no-prominent-face" in failures:
+            failures.remove("no-prominent-face")
+            record["person_evidence"] = {
+                "mode": "official-exact-match-body",
+                "prominent_bodies": prominent_bodies,
+                "detectors": [
+                    str(value) for value in audit.get("body_detectors", [])
+                ],
+            }
         if record["scene"] == "unknown" and prominent_faces:
             # Pixel evidence proves a person is prominent; it does not claim
             # an action that the source metadata never described.
@@ -2004,6 +2063,7 @@ def resolve_match_cover_visual(
                 "exact_match": selected_record["exact_match"],
                 "both_sides_match": selected_record["both_sides_match"],
                 "scene": selected_record["scene"],
+                "person_evidence": selected_record.get("person_evidence", {}),
                 "quality_score": selected_score,
                 "quality": selected_record["quality"],
                 "event_match": selected.event_match,
@@ -2036,6 +2096,7 @@ def resolve_match_cover_visual(
             "exact_match": selected_record["exact_match"],
             "both_sides_match": selected_record["both_sides_match"],
             "scene": selected_record["scene"],
+            "person_evidence": selected_record.get("person_evidence", {}),
             "quality_score": selected_score,
             "quality": selected_record["quality"],
             "event_match": selected.event_match,

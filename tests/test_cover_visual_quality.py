@@ -24,9 +24,24 @@ def test_scene_classifier_accepts_match_action_and_on_court_reaction():
 
     action = classify_cover_scene("Yuan Yue hits a forehand during the match")
     reaction = classify_cover_scene("Yuan Yue celebrates after winning on court")
+    official_title = classify_cover_scene(
+        "Sherif triumphs in Hamburg marathon vs Waltert"
+    )
 
     assert action["scene"] == "match_action"
     assert reaction["scene"] == "on_court_reaction"
+    assert official_title["scene"] == "on_court_reaction"
+
+
+def test_web_image_source_filter_blocks_unsafe_domains_and_terms():
+    from tennislive.research.visual_sources import _unsafe_web_image_source
+
+    assert _unsafe_web_image_source("example-porn.invalid", "tennis result")
+    assert _unsafe_web_image_source("images.example", "player nude gallery")
+    assert not _unsafe_web_image_source(
+        "photoresources.wtatennis.com",
+        "Mayar Sherif celebrates after winning in Hamburg",
+    )
 
 
 def test_daily_cover_keeps_chinese_opponent_as_valid_priority():
@@ -679,6 +694,94 @@ def test_official_video_page_is_not_promoted_to_action_and_no_face_is_rejected(
     )
     assert attempted["scene"] == "unknown"
     assert "no-prominent-face" in attempted["hard_failures"]
+
+
+def test_exact_official_reaction_can_use_body_evidence_when_face_is_profile(
+    monkeypatch, tmp_path
+):
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Simona Waltert",
+        away_name="Mayar Sherif",
+        tournament="Hamburg Open",
+    )
+    candidate = {
+        "provider": "official-match-media",
+        "source_url": "https://www.wtatennis.com/videos/4540910/sherif-waltert-hamburg",
+        "image_url": "https://photoresources.wtatennis.com/wta/photo/2026/07/22/Sherif-R1-W.jpg",
+        "credit": "wtatennis.com",
+        "license": "official",
+        "width": 3938,
+        "height": 2485,
+        "relevance": 10,
+        "search_text": (
+            "Sherif triumphs in Hamburg marathon vs Waltert 2026 "
+            "Simona Waltert Mayar Sherif Hamburg Open"
+        ),
+        "image_text": (
+            "Sherif triumphs in Hamburg marathon vs Waltert 2026 "
+            "Simona Waltert Mayar Sherif Hamburg Open"
+        ),
+        "source_title": "Sherif triumphs in Hamburg marathon vs Waltert",
+    }
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(
+        visual_sources, "_daily_editorial_candidates", lambda *_args: [candidate]
+    )
+    monkeypatch.setattr(visual_sources, "_atp_official_cover_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources, "_expand_official_source_candidate", lambda *_args: None
+    )
+
+    def fake_download(item, page, query, folder, _session):
+        path = folder / "sherif-reaction.jpg"
+        Image.effect_noise((1600, 1200), 32).convert("RGB").save(path)
+        return visual_sources.ResolvedVisual(
+            page=page,
+            path=path,
+            provider=item["provider"],
+            source_url=item["source_url"],
+            image_url=item["image_url"],
+            credit=item["credit"],
+            license=item["license"],
+            query=query,
+            relevance=item["relevance"],
+            sha256="official-profile-reaction",
+        )
+
+    monkeypatch.setattr(visual_sources, "_download", fake_download)
+    monkeypatch.setattr(
+        visual_sources,
+        "assess_cover_image",
+        lambda _path: {
+            "status": "fail",
+            "score": 28.6,
+            "quality_score": 14.1,
+            "crop_score": 14.5,
+            "hard_failures": ["no-prominent-face"],
+            "prominent_faces": 0,
+            "face_detectors": [],
+            "prominent_bodies": 1,
+            "body_detectors": ["upper-body"],
+            "focus": "53% 30%",
+        },
+    )
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert visual is not None, report["attempts"]
+    assert report["provider"] == "official-match-media"
+    assert report["scene"] == "on_court_reaction"
+    assert report["person_evidence"]["mode"] == "official-exact-match-body"
+    selected = next(
+        item for item in report["attempts"] if item["status"] == "selected"
+    )
+    assert selected["hard_failures"] == []
 
 
 def test_generic_official_tournament_page_cannot_borrow_search_query_players():

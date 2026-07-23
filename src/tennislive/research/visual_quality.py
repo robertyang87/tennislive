@@ -37,6 +37,10 @@ MOTION_TERMS = (
 )
 
 REACTION_TERMS = (
+    "triumphs",
+    "triumphant",
+    "victorious",
+    "victory",
     "celebrates",
     "celebrating",
     "celebration",
@@ -216,6 +220,7 @@ def assess_cover_image(path: Path) -> dict:
     saturation = float(hsv[:, :, 1].mean())
 
     detections: list[tuple[int, int, int, int, str]] = []
+    body_detections: list[tuple[int, int, int, int, str]] = []
     cv2_data = getattr(cv2, "data", None)
     cascade_dir = getattr(cv2_data, "haarcascades", "")
     if cascade_dir:
@@ -229,6 +234,7 @@ def assess_cover_image(path: Path) -> dict:
         for filename, label in (
             ("haarcascade_frontalface_default.xml", "frontal-default"),
             ("haarcascade_frontalface_alt2.xml", "frontal-alt2"),
+            ("haarcascade_profileface.xml", "profile"),
         ):
             cascade = cv2.CascadeClassifier(str(Path(cascade_dir) / filename))
             if cascade.empty():
@@ -240,6 +246,26 @@ def assess_cover_image(path: Path) -> dict:
                 minSize=minimum,
             )
             detections.extend((*map(int, box), label) for box in found)
+        # A fist pump or shout often turns the athlete's face away from the
+        # camera. Upper/full-body cascades provide deterministic person
+        # evidence for exact official match photographs in that case.
+        for filename, label in (
+            ("haarcascade_upperbody.xml", "upper-body"),
+            ("haarcascade_fullbody.xml", "full-body"),
+        ):
+            cascade = cv2.CascadeClassifier(str(Path(cascade_dir) / filename))
+            if cascade.empty():
+                continue
+            found = cascade.detectMultiScale(
+                gray,
+                scaleFactor=1.05,
+                minNeighbors=3,
+                minSize=(
+                    max(52, preview.shape[1] // 12),
+                    max(52, preview.shape[0] // 12),
+                ),
+            )
+            body_detections.extend((*map(int, box), label) for box in found)
     faces: list[tuple[int, int, int, int]] = []
     face_detectors: list[str] = []
     preview_area = preview.shape[0] * preview.shape[1]
@@ -263,10 +289,40 @@ def assess_cover_image(path: Path) -> dict:
         face_detectors.append(detector)
     faces.sort(key=lambda box: box[2] * box[3], reverse=True)
 
+    bodies: list[tuple[int, int, int, int]] = []
+    body_detectors: list[str] = []
+    for x, y, body_width, body_height, detector in sorted(
+        body_detections,
+        key=lambda item: item[2] * item[3],
+        reverse=True,
+    ):
+        area_ratio = body_width * body_height / preview_area
+        aspect_ratio = body_width / max(1, body_height)
+        if area_ratio < 0.025 or area_ratio > 0.55 or not 0.35 <= aspect_ratio <= 1.85:
+            continue
+        scaled_box = (
+            int(x / scale),
+            int(y / scale),
+            int(body_width / scale),
+            int(body_height / scale),
+        )
+        if any(_overlap_ratio(scaled_box, existing) >= 0.60 for existing in bodies):
+            continue
+        bodies.append(scaled_box)
+        body_detectors.append(detector)
+    bodies.sort(key=lambda box: box[2] * box[3], reverse=True)
+
     if faces:
         x, y, face_width, face_height = faces[0]
         center_x = x + face_width / 2
         center_y = y + face_height / 2
+    elif bodies:
+        x, y, body_width, body_height = min(
+            bodies,
+            key=lambda box: abs((box[0] + box[2] / 2) / width - 0.58),
+        )
+        center_x = x + body_width / 2
+        center_y = y + body_height * 0.36
     else:
         center_x = width * 0.64
         center_y = height * 0.32
@@ -345,6 +401,8 @@ def assess_cover_image(path: Path) -> dict:
         "saturation": round(saturation, 1),
         "prominent_faces": len(faces),
         "face_detectors": sorted(set(face_detectors)),
+        "prominent_bodies": len(bodies),
+        "body_detectors": sorted(set(body_detectors)),
         "crop": [left, top, right, bottom],
         "crop_retention": round(crop_retention, 3),
         "face_safe": face_safe,
