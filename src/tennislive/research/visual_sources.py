@@ -138,26 +138,21 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     ),
     ("zheng-qinwen", "explainer"): (
         {
-            "provider": "official-media",
-            "source_url": (
-                "https://www.wtatennis.com/news/4074958/"
-                "zheng-holds-off-vekic-in-olympic-gold-medal-final"
-            ),
+            "provider": "verified-event-archive",
+            "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
             "image_url": (
-                "https://photoresources.wtatennis.com/wta/photo/2024/08/03/"
-                "13c7b92f-6767-4ed3-9a14-a78cd46642b9/GettyImages-2165120786.jpg"
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/"
+                "Qinwen_Zheng_-_2024_Olympics.jpg/1600px-Qinwen_Zheng_-_2024_Olympics.jpg"
             ),
-            "credit": "Getty Images via WTA",
-            "license": "官方媒体供图 · 非商业资讯引用",
-            "width": 2000,
-            "height": 1333,
+            "credit": "Kuberzog / Wikimedia Commons",
+            "license": "CC BY-SA 4.0",
+            "width": 1600,
+            "height": 1200,
             "relevance": 100,
-            "search_text": (
-                "zheng qinwen paris 2024 olympic gold medal final clay court match"
-            ),
+            "search_text": "zheng qinwen paris 2024 olympics clay court match backhand",
             "image_text": (
-                "zheng qinwen in action on the clay court during the paris 2024 "
-                "olympic gold medal final"
+                "zheng qinwen hitting a backhand on the clay court during her "
+                "paris 2024 olympics tennis match"
             ),
         },
     ),
