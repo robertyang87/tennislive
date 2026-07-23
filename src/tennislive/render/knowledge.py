@@ -490,12 +490,13 @@ def _knowledge_evidence(story: TournamentStory, digest: Digest) -> dict:
     }
 
 
-def generate_knowledge_package(
+def _generate_knowledge_candidate(
     digest: Digest,
     outdir: str | Path,
     *,
     theme: str = "dark",
     story: TournamentStory | None = None,
+    excluded_source_urls: set[str] | None = None,
 ) -> TournamentStory | None:
     candidates = [story] if story is not None else tournament_story_candidates(digest)
     candidates = [candidate for candidate in candidates if candidate is not None]
@@ -523,7 +524,17 @@ def generate_knowledge_package(
         for old in visuals_dir.iterdir():
             if old.is_file():
                 old.unlink()
-        candidate_visuals, candidate_report = resolve_story_visuals(candidate, visuals_dir)
+        if excluded_source_urls:
+            candidate_visuals, candidate_report = resolve_story_visuals(
+                candidate,
+                visuals_dir,
+                excluded_source_urls=excluded_source_urls,
+            )
+        else:
+            candidate_visuals, candidate_report = resolve_story_visuals(
+                candidate,
+                visuals_dir,
+            )
         if candidate_report.get("status") == "pass":
             selected_story = candidate
             page_visuals = candidate_visuals
@@ -665,3 +676,235 @@ def generate_knowledge_package(
         encoding="utf-8",
     )
     return story
+
+
+def _knowledge_failure_stage(message: str) -> str:
+    if "事实校验" in message:
+        return "fact-validation"
+    if "素材预检" in message:
+        return "visual-preflight"
+    if "视觉校验" in message:
+        return "pre-render-qa"
+    if "渲染校验" in message:
+        return "post-render-qa"
+    if "文案" in message or "标题" in message:
+        return "copy-validation"
+    return "candidate-generation"
+
+
+def _selected_visual_sources(manifest: dict) -> set[str]:
+    return {
+        str(item["source_url"])
+        for item in manifest.get("attempts", [])
+        if item.get("status") == "selected" and item.get("source_url")
+    }
+
+
+def generate_knowledge_package(
+    digest: Digest,
+    outdir: str | Path,
+    *,
+    theme: str = "dark",
+    story: TournamentStory | None = None,
+) -> TournamentStory | None:
+    """Generate a publishable package through source retry and topic fallback."""
+    candidates = [story] if story is not None else tournament_story_candidates(digest)
+    candidates = [candidate for candidate in candidates if candidate is not None]
+    if not candidates:
+        return None
+
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    max_candidates = max(
+        1,
+        min(
+            len(candidates),
+            int(os.environ.get("TENNISLIVE_VISUAL_CANDIDATES", "8")),
+        ),
+    )
+    attempts_per_topic = max(
+        1,
+        min(
+            4,
+            int(os.environ.get("TENNISLIVE_VISUAL_RETRIES_PER_TOPIC", "2")),
+        ),
+    )
+    rejected_candidates: list[dict] = []
+    publish_files = (
+        "copy.html",
+        "evidence.json",
+        "pinned_comment.txt",
+        "push.html",
+        "story.json",
+        "visual_qa.json",
+        "visual_sources.json",
+        "wechat_title.txt",
+        "xiaohongshu.txt",
+    )
+
+    for candidate_rank, candidate in enumerate(
+        candidates[:max_candidates],
+        start=1,
+    ):
+        failed_attempts: list[dict] = []
+        excluded_source_urls: set[str] = set()
+        for attempt_index in range(1, attempts_per_topic + 1):
+            for filename in publish_files:
+                (outdir / filename).unlink(missing_ok=True)
+            try:
+                selected = _generate_knowledge_candidate(
+                    digest,
+                    outdir,
+                    theme=theme,
+                    story=candidate,
+                    excluded_source_urls=excluded_source_urls,
+                )
+            except Exception as exc:  # noqa: BLE001 - fallback is the contract
+                manifest: dict = {}
+                manifest_path = outdir / "visual_sources.json"
+                if manifest_path.is_file():
+                    try:
+                        manifest = json.loads(manifest_path.read_text("utf-8"))
+                    except (OSError, ValueError):
+                        manifest = {}
+                visual_qa: dict = {}
+                visual_qa_path = outdir / "visual_qa.json"
+                if visual_qa_path.is_file():
+                    try:
+                        visual_qa = json.loads(visual_qa_path.read_text("utf-8"))
+                    except (OSError, ValueError):
+                        visual_qa = {}
+                newly_excluded = _selected_visual_sources(manifest)
+                excluded_source_urls.update(newly_excluded)
+                stage = _knowledge_failure_stage(str(exc))
+                failed_attempts.append(
+                    {
+                        "attempt": attempt_index,
+                        "stage": stage,
+                        "error": f"{type(exc).__name__}: {exc}",
+                        "excluded_after_attempt": sorted(excluded_source_urls),
+                        "newly_excluded": sorted(newly_excluded),
+                        "input_domains": manifest.get("input_domains", []),
+                        "providers_queried": manifest.get(
+                            "providers_queried", []
+                        ),
+                        "provider_runs": manifest.get("provider_runs", []),
+                        "missing_pages": manifest.get("missing_pages", []),
+                        "visual_qa": visual_qa,
+                    }
+                )
+                # Facts and deterministic copy cannot improve by downloading
+                # the same topic again. Move directly to the next topic.
+                if stage in {"fact-validation", "copy-validation"}:
+                    break
+                continue
+
+            if selected is None:
+                failed_attempts.append(
+                    {
+                        "attempt": attempt_index,
+                        "stage": "empty-candidate",
+                        "error": "候选主题未生成任何内容",
+                    }
+                )
+                continue
+
+            manifest_path = outdir / "visual_sources.json"
+            manifest = json.loads(manifest_path.read_text("utf-8"))
+            selection_evidence = manifest.get("selection_evidence", {})
+            selection_evidence.update(
+                {
+                    "candidate_rank": candidate_rank,
+                    "candidate_count": len(candidates),
+                    "visual_preflight_rejections": len(rejected_candidates),
+                    "same_topic_attempt": attempt_index,
+                    "same_topic_attempt_limit": attempts_per_topic,
+                }
+            )
+            manifest.update(
+                {
+                    "schema_version": max(
+                        2,
+                        int(manifest.get("schema_version", 1)),
+                    ),
+                    "policy": (
+                        "事实先交叉核验；图片失败时排除失败来源并同题重试，"
+                        "仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。"
+                    ),
+                    "selection_evidence": selection_evidence,
+                    "rejected_candidates": rejected_candidates,
+                    "recovery": {
+                        "status": (
+                            "recovered"
+                            if failed_attempts or rejected_candidates
+                            else "not-needed"
+                        ),
+                        "same_topic_attempt": attempt_index,
+                        "excluded_source_urls": sorted(excluded_source_urls),
+                        "failed_attempts": failed_attempts,
+                    },
+                }
+            )
+            manifest_path.write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            story_path = outdir / "story.json"
+            story_payload = json.loads(story_path.read_text("utf-8"))
+            story_payload["selection_evidence"] = selection_evidence
+            story_payload["recovery"] = manifest["recovery"]
+            story_path.write_text(
+                json.dumps(story_payload, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            return selected
+
+        rejected_candidates.append(
+            {
+                "story_slug": candidate.slug,
+                "title": candidate.title,
+                "stage": (
+                    failed_attempts[-1]["stage"]
+                    if failed_attempts
+                    else "unknown"
+                ),
+                "errors": [
+                    attempt.get("error", "")
+                    for attempt in failed_attempts
+                    if attempt.get("error")
+                ],
+                "excluded_source_urls": sorted(excluded_source_urls),
+                "attempts": failed_attempts,
+            }
+        )
+
+    for filename in publish_files:
+        (outdir / filename).unlink(missing_ok=True)
+    cards_dir = outdir / "cards"
+    if cards_dir.is_dir():
+        for card in cards_dir.glob("card_*.*"):
+            card.unlink(missing_ok=True)
+    failure = {
+        "schema_version": 2,
+        "status": "fail",
+        "policy": (
+            "事实校验失败则换题；图片或渲染失败先排除来源并同题重试，"
+            "再切换主题；全部候选耗尽后由后续定时班次重新抓取。"
+        ),
+        "candidate_limit": max_candidates,
+        "same_topic_attempt_limit": attempts_per_topic,
+        "rejected_candidates": rejected_candidates,
+        "errors": ["本轮所有候选均未通过完整生产与质量门禁"],
+        "attempts": [
+            attempt
+            for candidate in rejected_candidates
+            for attempt in candidate.get("attempts", [])
+        ],
+    }
+    (outdir / "visual_sources.json").write_text(
+        json.dumps(failure, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    raise ValueError(
+        "知识帖自动恢复已耗尽本轮候选：等待后续班次重新抓取事实与图片"
+    )

@@ -54,7 +54,8 @@ concurrency:
 jobs:
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Allow the recovery chain to retry media providers and switch topics.
+    timeout-minutes: 45
     env:
       # 发布相关 Secrets（未配置则对应步骤自动跳过）
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -88,8 +89,10 @@ jobs:
       TENNISLIVE_VISUAL_FETCH: ${{ vars.TENNISLIVE_VISUAL_FETCH || 'on' }}
       # 严格生产门槛：人物、年份、赛事/地点、清晰度与来源缺一项即自动换题。
       TENNISLIVE_VISUAL_STRICT: ${{ vars.TENNISLIVE_VISUAL_STRICT || 'on' }}
-      # 最多按新闻价值顺序尝试 6 个题材，避免单一题材素材不足拖垮整期。
-      TENNISLIVE_VISUAL_CANDIDATES: ${{ vars.TENNISLIVE_VISUAL_CANDIDATES || '6' }}
+      # 同题先换源换图，再按新闻价值切题；候选池覆盖热点与已核验常青题材。
+      TENNISLIVE_VISUAL_CANDIDATES: ${{ vars.TENNISLIVE_VISUAL_CANDIDATES || '8' }}
+      TENNISLIVE_VISUAL_RETRIES_PER_TOPIC: ${{ vars.TENNISLIVE_VISUAL_RETRIES_PER_TOPIC || '2' }}
+      TENNISLIVE_VISUAL_EXPANDED_SOURCES: ${{ vars.TENNISLIVE_VISUAL_EXPANDED_SOURCES || 'on' }}
       # 日报/热点封面：只抓取头条球员本人赛场照；失败时保留本地已核验人物资产。
       TENNISLIVE_COVER_VISUAL_FETCH: ${{ vars.TENNISLIVE_COVER_VISUAL_FETCH || 'on' }}
       TENNISLIVE_COVER_ATP_OFFICIAL: ${{ vars.TENNISLIVE_COVER_ATP_OFFICIAL || 'on' }}
@@ -303,9 +306,21 @@ jobs:
               KNOWLEDGE_READY=false
             fi
             if [ -s "$OUT_DIR/knowledge/visual_sources.json" ] && \
-               ! jq -e '.status == "pass" and (.attempts | type == "array")' \
+               ! jq -e '
+                 .status == "pass"
+                 and (.attempts | type == "array")
+                 and ((.input_domains // []) | unique | length >= 2)
+                 and ((.providers_queried // []) | unique | length >= 2)
+                 and (.selected_count >= 3)
+               ' \
                  "$OUT_DIR/knowledge/visual_sources.json" >/dev/null; then
-              echo "::warning file=$OUT_DIR/knowledge/visual_sources.json::知识帖素材来源清单无效"
+              echo "::warning file=$OUT_DIR/knowledge/visual_sources.json::知识帖事实域名、图片通道或完整配图数量不足"
+              KNOWLEDGE_READY=false
+            fi
+            if [ -s "$OUT_DIR/knowledge/evidence.json" ] && \
+               ! jq -e '((.sources // []) | unique | length >= 2)' \
+                 "$OUT_DIR/knowledge/evidence.json" >/dev/null; then
+              echo "::warning file=$OUT_DIR/knowledge/evidence.json::知识帖交叉核验来源少于 2 个"
               KNOWLEDGE_READY=false
             fi
             CARD_COUNT="$(find "$OUT_DIR/knowledge/cards" -maxdepth 1 -type f -name 'card_*.jpg' 2>/dev/null | wc -l)"
