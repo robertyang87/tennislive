@@ -30,9 +30,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 查找 WTA 半决赛报道中的照片地址（临时）
+      - name: 查找 AP 通稿半决赛照片地址（临时）
         shell: bash
-        run: python tools/probe_wta_sf_photo.py
+        run: python tools/probe_ap_photo.py
 
       - name: 生成无图片探测包
         shell: bash
