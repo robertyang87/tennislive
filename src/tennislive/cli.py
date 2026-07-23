@@ -130,7 +130,15 @@ def cmd_knowledge_adhoc(args) -> int:
         return 1
 
     outdir = Path(args.outdir)
-    generated = generate_knowledge_package(digest, outdir, theme=args.theme, story=story)
+    try:
+        generated = generate_knowledge_package(digest, outdir, theme=args.theme, story=story)
+    except Exception as e:  # noqa: BLE001 - surface the real reason before failing
+        console.print(f"[red]知识帖生成失败：{e}[/red]")
+        detail_path = outdir / "visual_sources.json"
+        if detail_path.is_file():
+            console.print(f"[yellow]失败详情（{detail_path}）：[/yellow]")
+            console.print(detail_path.read_text("utf-8"))
+        return 2
     if generated is None:
         console.print(f"[red]知识帖生成失败：{outdir}[/red]")
         return 2

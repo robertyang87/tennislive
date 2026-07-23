@@ -300,6 +300,45 @@ def test_knowledge_adhoc_generates_into_its_own_directory(tmp_path, monkeypatch)
     assert (outdir / "cards").is_dir()
 
 
+def test_knowledge_adhoc_surfaces_failure_detail_instead_of_a_bare_traceback(
+    tmp_path, monkeypatch, capsys
+):
+    """generate_knowledge_package 耗尽候选时会先把失败原因写进
+    visual_sources.json 再抛异常——cmd_knowledge_adhoc 必须捕获并把这份
+    详情打印出来，而不是让调用方只看到一个裸的 traceback（这是从一次
+    真实的 workflow 失败里发现的：只有 ValueError 消息，看不到具体哪个
+    环节、哪个来源失败了）。"""
+    from tennislive.digest import Digest
+    from tennislive.render.tournament_story import find_story_by_slug
+
+    today = date(2026, 7, 20)
+    digest = Digest(today=today, source="test")
+    story = find_story_by_slug("hawkeye")
+    assert story is not None
+
+    monkeypatch.setattr(cli, "build_digest", lambda *args, **kwargs: digest)
+
+    def _boom(digest, outdir, *, theme, story):
+        Path(outdir).mkdir(parents=True, exist_ok=True)
+        (Path(outdir) / "visual_sources.json").write_text(
+            '{"status": "fail", "errors": ["配图来源全部被拒绝"]}',
+            encoding="utf-8",
+        )
+        raise ValueError("知识帖自动恢复已耗尽本轮候选：等待后续班次重新抓取事实与图片")
+
+    monkeypatch.setattr(
+        "tennislive.render.knowledge.generate_knowledge_package", _boom
+    )
+
+    outdir = tmp_path / "knowledge_adhoc"
+    result = cli.main(
+        ["knowledge-adhoc", "--slug", "hawkeye", "--outdir", str(outdir)]
+    )
+    assert result == 2
+    captured = capsys.readouterr()
+    assert "配图来源全部被拒绝" in captured.out
+
+
 def test_publish_content_includes_all_cards_and_review_fields(tmp_path, monkeypatch):
     import json
 
