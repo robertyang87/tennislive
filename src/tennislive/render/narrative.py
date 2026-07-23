@@ -8,6 +8,7 @@ from ..models import Match
 from ..research.media import brief_for_match
 from ..zh import player_zh
 from .common import match_round_display
+from .context import historical_context
 from .story import is_chinese_player, schedule_insight
 from .tournament_story import direct_story_for_match
 
@@ -42,8 +43,41 @@ def _player_preview(slug: str, today: date | None) -> str | None:
     return choices[today.toordinal() % len(choices)]
 
 
+def _topicality_angle(match: Match) -> str | None:
+    """A grounded 'this match already has real buzz' note from the automated
+    trend radar (ATP/WTA/major-event news feeds plus search-trend signals).
+
+    Unlike brief_for_match, these signals are not human-reviewed, so the line
+    stays limited to citing the real, sourced headline rather than passing
+    editorial judgment on it.
+    """
+    signals = [s for s in (match.trend_signals or []) if isinstance(s, dict)]
+    news = next(
+        (
+            s
+            for s in signals
+            if s.get("kind") == "official-news" and s.get("title") and s.get("source")
+        ),
+        None,
+    )
+    if news:
+        return f"{news['source']}近期报道《{news['title']}》，这场已经带着真实话题度。"
+    if (match.search_heat or 0) >= 20:
+        return "搜索热度正在走高，这场吸引的不只是赛程爱好者。"
+    return None
+
+
 def preview_angle(match: Match, today: date | None = None) -> str:
-    """Explain why a match matters without treating ranking as the story."""
+    """Explain why a match matters, weighing media opinion, both sides'
+    topicality, and historical relevance before falling back to mechanical
+    rank/seed facts.
+
+    Priority: reviewed media consensus > curated editorial note > a tracked
+    player's own story > Chinese-player schedule facts > tournament story >
+    account continuity (this player's last appearance in our own coverage) >
+    automated trend-radar topicality (real, sourced buzz, not yet reviewed) >
+    mechanical schedule_insight as the final, always-available fallback.
+    """
     media = brief_for_match(match, today) if today is not None else None
     if media is not None:
         return media.consensus
@@ -65,7 +99,13 @@ def preview_angle(match: Match, today: date | None = None) -> str:
 
     if story is not None:
         return f"{story.title}又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心。"
-    return schedule_insight(match)
+
+    if today is not None:
+        historical = historical_context(match, today)
+        if historical is not None and historical.summary:
+            return historical.summary
+
+    return _topicality_angle(match) or schedule_insight(match)
 
 
 def editor_takeaway(match: Match, today: date | None = None) -> str:
