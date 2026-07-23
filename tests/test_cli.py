@@ -246,6 +246,60 @@ def test_digest_cli_fatal_returns_two_without_advancing_state(tmp_path, monkeypa
     assert state_calls == []
 
 
+def test_knowledge_adhoc_rejects_unknown_slug_without_touching_network(tmp_path, monkeypatch):
+    """未知 slug 必须在联网抓取赛程之前就报错退出——知识帖只能从人工核验
+    过的选题池里选，不支持凭空生成，所以这里不该给 build_digest 兜底。"""
+
+    def _boom(*args, **kwargs):
+        raise AssertionError("不应该在 slug 校验失败后还去抓取赛程数据")
+
+    monkeypatch.setattr(cli, "build_digest", _boom)
+    outdir = tmp_path / "knowledge_adhoc"
+    result = cli.main(
+        [
+            "knowledge-adhoc",
+            "--slug",
+            "does-not-exist",
+            "--outdir",
+            str(outdir),
+        ]
+    )
+    assert result == 2
+    assert not outdir.exists()
+
+
+def test_knowledge_adhoc_generates_into_its_own_directory(tmp_path, monkeypatch):
+    from tennislive.digest import Digest
+    from tennislive.render.tournament_story import find_story_by_slug
+
+    today = date(2026, 7, 20)
+    digest = Digest(today=today, source="test")
+    story = find_story_by_slug("hawkeye")
+    assert story is not None
+
+    monkeypatch.setattr(cli, "build_digest", lambda *args, **kwargs: digest)
+    marked: list[str] = []
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_story_used",
+        lambda slug, when: marked.append(slug),
+    )
+
+    outdir = tmp_path / "knowledge_adhoc"
+    result = cli.main(
+        [
+            "knowledge-adhoc",
+            "--slug",
+            "hawkeye",
+            "--outdir",
+            str(outdir),
+        ]
+    )
+    assert result == 0
+    assert marked == ["hawkeye"]
+    assert (outdir / "story.json").exists()
+    assert (outdir / "cards").is_dir()
+
+
 def test_publish_content_includes_all_cards_and_review_fields(tmp_path, monkeypatch):
     import json
 

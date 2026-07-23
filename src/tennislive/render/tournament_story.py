@@ -1493,6 +1493,12 @@ def _recently_used(slug: str, today: date, state: dict[str, str] | None = None) 
     return (today - last).days < COOLDOWN_DAYS
 
 
+def find_story_by_slug(slug: str) -> TournamentStory | None:
+    """Look up a curated story by its exact slug, for ad-hoc/manual generation
+    outside the normal editorial-relevance ranking."""
+    return next((story for story in STORIES if story.slug == slug), None)
+
+
 def mark_story_used(slug: str, today: date) -> None:
     """记录故事已使用（由 CLI 在生成成功后调用，data/ 随 workflow 提交）."""
     state = _load_state()
