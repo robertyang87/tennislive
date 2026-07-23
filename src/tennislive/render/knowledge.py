@@ -808,6 +808,12 @@ def generate_knowledge_package(
                 newly_excluded = _selected_visual_sources(manifest)
                 excluded_source_urls.update(newly_excluded)
                 stage = _knowledge_failure_stage(str(exc))
+                # The visual-preflight failure path nests the real
+                # diagnostics (input_domains/providers_queried/etc.) inside
+                # rejected_candidates[-1], not at the manifest's top level --
+                # fall back to that so a real cause survives instead of
+                # always reading as empty.
+                last_rejected = (manifest.get("rejected_candidates") or [{}])[-1]
                 failed_attempts.append(
                     {
                         "attempt": attempt_index,
@@ -815,12 +821,14 @@ def generate_knowledge_package(
                         "error": f"{type(exc).__name__}: {exc}",
                         "excluded_after_attempt": sorted(excluded_source_urls),
                         "newly_excluded": sorted(newly_excluded),
-                        "input_domains": manifest.get("input_domains", []),
-                        "providers_queried": manifest.get(
-                            "providers_queried", []
-                        ),
-                        "provider_runs": manifest.get("provider_runs", []),
-                        "missing_pages": manifest.get("missing_pages", []),
+                        "input_domains": manifest.get("input_domains")
+                        or last_rejected.get("input_domains", []),
+                        "providers_queried": manifest.get("providers_queried")
+                        or last_rejected.get("providers_queried", []),
+                        "provider_runs": manifest.get("provider_runs")
+                        or last_rejected.get("provider_runs", []),
+                        "missing_pages": manifest.get("missing_pages")
+                        or last_rejected.get("missing_pages", []),
                         "visual_qa": visual_qa,
                     }
                 )
