@@ -14,6 +14,7 @@ jobs:
     env:
       SPORTRADAR_API_KEY: ${{ secrets.SPORTRADAR_API_KEY }}
       SPORTRADAR_ACCESS_LEVEL: ${{ vars.SPORTRADAR_ACCESS_LEVEL || 'trial' }}
+      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +25,10 @@ jobs:
 
       - name: 安装 tennislive
         run: pip install -q -e .
+
+      - name: 探测 RapidAPI 网球数据源（临时）
+        shell: bash
+        run: python tools/probe_rapidapi_tennis.py
 
       - name: 生成无图片探测包
         shell: bash
