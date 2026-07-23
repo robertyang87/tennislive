@@ -358,7 +358,7 @@ jobs:
                 "headline_eligible=" + ((.headline_eligible // false)|tostring),
                 "headline_players=" + ((.headline_players // [])|join(",")),
                 "providers=" + ((.providers_queried // [])|join(",")),
-                "errors=" + ((.errors // [])|join(" | ")), 
+                "errors=" + ((.errors // [])|join(" | ")),
                 "fallback_reason=" + (.fallback_reason // "")' \
                 "$OUT_DIR/cover_visual.json"
               jq -r '.attempts[]? | "attempt provider=" + (.provider // "") +
