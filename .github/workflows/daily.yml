@@ -84,6 +84,9 @@ jobs:
       TENNISLIVE_COVER_VISUAL_FETCH: ${{ vars.TENNISLIVE_COVER_VISUAL_FETCH || 'on' }}
       TENNISLIVE_COVER_ATP_OFFICIAL: ${{ vars.TENNISLIVE_COVER_ATP_OFFICIAL || 'on' }}
       TENNISLIVE_COVER_WTA_OFFICIAL: ${{ vars.TENNISLIVE_COVER_WTA_OFFICIAL || 'on' }}
+      # Flickr public feed as an additional discovery source; exact-match and
+      # person/emotion/quality gates remain mandatory before publishing.
+      TENNISLIVE_COVER_FLICKR: ${{ vars.TENNISLIVE_COVER_FLICKR || 'on' }}
       # 日报封面必须通过动作/情绪场景、清晰度和 3:4 安全裁切门禁。
       TENNISLIVE_COVER_VISUAL_STRICT: ${{ vars.TENNISLIVE_COVER_VISUAL_STRICT || 'on' }}
       TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '72' }}
