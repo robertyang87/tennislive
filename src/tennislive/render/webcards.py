@@ -1577,7 +1577,7 @@ def focus_body(m: Match, date_label: str) -> str:
 
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
-    from .focus import focus_comparison
+    from .focus import focus_comparison, has_detailed_stats
     from .hotspot import hotspot_reasons
     from .story import result_insight, trajectory_arc
     from .context import historical_context
@@ -1606,23 +1606,23 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
             if arc
             else ""
         )
-        comparison = focus_comparison(m)
-        compare_head = "专业技术统计" if comparison.source_label else "比赛结构"
-        rows_html = "".join(
-            f'<div class="compare-row"><b>{html.escape(label)}</b>'
-            f'<span class="{"winner" if comparison.left_won else ""}">'
-            f'{html.escape(left)}</span>'
-            f'<span class="{"" if comparison.left_won else "winner"}">'
-            f'{html.escape(right)}</span></div>'
-            for label, left, right in comparison.rows
-        )
-        extra_html = (
-            arc_html
-            + f'<div class="compare-head"><span>{html.escape(compare_head)}</span>'
-            + f'<span>{html.escape(comparison.left_name)}</span>'
-            + f'<span>{html.escape(comparison.right_name)}</span></div>'
-            + f'<div class="compare-grid">{rows_html}</div>'
-        )
+        extra_html = arc_html
+        if has_detailed_stats(m):
+            comparison = focus_comparison(m)
+            rows_html = "".join(
+                f'<div class="compare-row"><b>{html.escape(label)}</b>'
+                f'<span class="{"winner" if comparison.left_won else ""}">'
+                f'{html.escape(left)}</span>'
+                f'<span class="{"" if comparison.left_won else "winner"}">'
+                f'{html.escape(right)}</span></div>'
+                for label, left, right in comparison.rows
+            )
+            extra_html += (
+                f'<div class="compare-head"><span>专业技术统计</span>'
+                + f'<span>{html.escape(comparison.left_name)}</span>'
+                + f'<span>{html.escape(comparison.right_name)}</span></div>'
+                + f'<div class="compare-grid">{rows_html}</div>'
+            )
         surface = surface_zh(m.tournament.surface or tournament_surface(m.tournament.name))
         event_suffix = f"·{surface}" if surface else ""
     else:
