@@ -379,6 +379,7 @@ html.light .tour-level { color:#fff; }
 .chip-green { background:var(--neon); color:#0B2018; }
 html.light .chip-green { color:#fff; }
 .chip-red { background:var(--flash); }
+.chip-gold { background:var(--gold); color:#241D0A; }
 .chip-sm { font-size:20px; padding:3px 12px 4px; }
 
 .set-index { display:grid; grid-template-columns:1fr repeat(var(--sets), 88px);
@@ -565,13 +566,17 @@ html.light .chip-green { color:#fff; }
 .verdict { margin-top:12px; padding:15px 22px; border-left:7px solid var(--gold);
   background:rgba(247,243,232,.1); font-size:25px; line-height:1.42; }
 .verdict b { color:var(--gold); margin-right:12px; }
+.verdict-quote { margin-top:16px; padding:30px 32px; border-left:none;
+  border-radius:10px; background:linear-gradient(135deg, rgba(213,180,77,.2), rgba(213,180,77,.06));
+  font-family:'TL Serif SC','TL Sans SC',serif; font-size:36px; line-height:1.52; }
+.verdict-quote b { display:block; font-family:'Barlow Condensed'; font-size:22px;
+  font-weight:600; letter-spacing:.3em; text-transform:uppercase; margin-bottom:14px; }
 
 .insight-hero { margin-top:18px; padding:28px 30px 30px;
   background:var(--panel-strong); border:1px solid var(--panel-border);
   border-left:7px solid var(--section-accent); border-radius:8px;
   box-shadow:var(--cardshadow); }
-.insight-hero small { display:block; font-family:'Barlow Condensed'; font-size:24px;
-  font-weight:600; letter-spacing:.28em; color:var(--section-accent); text-transform:uppercase; }
+.insight-hero .tag-row { display:flex; flex-wrap:wrap; gap:10px; }
 .insight-hero strong { display:block; margin-top:14px; font-family:'TL Serif SC','TL Sans SC',serif;
   font-size:44px; line-height:1.48; color:var(--pagetext); }
 .fact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; }
@@ -1575,6 +1580,14 @@ def focus_body(m: Match, date_label: str) -> str:
     )
 
 
+def _tag_chip_class(tag: str) -> str:
+    if tag == "中国球员":
+        return "chip-green"
+    if tag == "爆冷":
+        return "chip-red"
+    return "chip-gold"
+
+
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
     from .focus import focus_comparison, has_detailed_stats
@@ -1647,7 +1660,10 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
                 (match_round_display(m) or "待定", "比赛轮次"),
             ]
         match_card = _sched_card(m, with_reason=False)
-    reason = " · ".join(hotspot_reasons(m)[:3])
+    tags_html = "".join(
+        f'<b class="chip chip-sm {_tag_chip_class(tag)}">{html.escape(tag)}</b>'
+        for tag in hotspot_reasons(m)[:3]
+    )
     facts_html = "".join(
         f'<article class="fact"><b>{html.escape(value)}</b>'
         f'<span>{html.escape(label)}</span></article>'
@@ -1656,7 +1672,7 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     if facts_html:
         facts_html = f'<div class="fact-grid">{facts_html}</div>'
     verdict_html = (
-        f'<div class="verdict"><b>编辑锐评</b>{html.escape(verdict)}</div>'
+        f'<div class="verdict verdict-quote"><b>编辑锐评</b>{html.escape(verdict)}</div>'
         if verdict
         else ""
     )
@@ -1667,7 +1683,7 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         + f'<div class="event"><i></i><span>{html.escape(group.compact_title)}{html.escape(event_suffix)}</span><i></i></div>'
         + match_card
         + '<article class="insight-hero">'
-        + f'<small>{html.escape(reason)}</small><strong>{html.escape(insight)}</strong></article>'
+        + f'<div class="tag-row">{tags_html}</div><strong>{html.escape(insight)}</strong></article>'
         + facts_html
         + extra_html
         + verdict_html
