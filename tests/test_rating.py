@@ -412,6 +412,39 @@ def test_lead_story_prefers_star_or_chinese_player_for_the_cover():
     assert selected.match.match_id == "star-result"
 
 
+def test_lead_story_uses_official_heat_before_ranking_among_headliners():
+    ranking_only = make_match(
+        home_name="Carlos Alcaraz",
+        away_name="Another Player",
+        tournament="Hamburg Open",
+        round_name="Semifinals",
+        match_id="ranking-only",
+    )
+    ranking_only.tournament.level = "ATP500"
+    ranking_only.home[0].rank = 2
+    ranking_only.away[0].seed = None
+    hot = make_match(
+        home_name="Alexander Bublik",
+        away_name="Another Player",
+        tournament="Kitzbuhel Open",
+        round_name="Round 2",
+        match_id="official-hot",
+    )
+    hot.tournament.level = "ATP250"
+    hot.home[0].rank = 11
+    hot.away[0].seed = None
+    hot.media_heat = 20
+    hot.trend_signals = [
+        {"kind": "official-news", "source": "ATP Tour", "title": "Official match report"}
+    ]
+
+    selected = select_lead_story(Digest(today=date(2026, 7, 23), results=[ranking_only, hot]))
+
+    assert selected is not None
+    assert selected.match.match_id == "official-hot"
+    assert any("ATP Tour" in reason for reason in selected.reasons)
+
+
 def test_lead_story_keeps_major_final_above_routine_chinese_result():
     chinese = make_match(
         home_name="Qinwen Zheng",
