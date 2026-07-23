@@ -1071,6 +1071,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     cover_report_path = outdir.parent / "cover_visual.json"
     cover_report: dict | None = None
     cover_visual = None
+    cover_fallback_reason: str | None = None
     try:
         from .webcards import generate_deck
 
@@ -1084,7 +1085,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
 
             lead = daily_lead_match(digest)
             if lead is None and strict_cover:
-                raise RuntimeError("严格封面模式缺少可绑定的头条比赛")
+                cover_fallback_reason = "no-bindable-headline-match"
             if lead is not None:
                 cover_visual, cover_report = resolve_match_cover_visual(lead, visual_cache)
                 cover_report_path.write_text(
@@ -1092,7 +1093,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
                     encoding="utf-8",
                 )
                 if strict_cover and cover_visual is None:
-                    raise RuntimeError("严格封面模式未找到通过核验的头条比赛图片")
+                    cover_fallback_reason = ";".join(
+                        str(item) for item in (cover_report or {}).get("errors", [])
+                    ) or "no-qualified-headline-match-photo"
         images = generate_deck(
             digest, date_label, theme, cover_visual=cover_visual,
         )
@@ -1105,11 +1108,30 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
                 cover_path = p
 
         if strict_cover:
-            if cover_visual is None or cover_report is None:
-                raise RuntimeError("严格封面模式缺少已核验封面及其报告")
+            if cover_report is None:
+                cover_report = {
+                    "schema_version": 2,
+                    "status": "fallback",
+                    "match_id": "",
+                    "match_players": [],
+                    "fallback_reason": cover_fallback_reason or "no-cover-report",
+                    "quality_score": 0,
+                    "quality": {"status": "fallback", "hard_failures": []},
+                }
+            if cover_visual is None:
+                cover_report.update(
+                    status="fallback",
+                    fallback_reason=cover_fallback_reason or "no-qualified-headline-match-photo",
+                    quality_score=0,
+                    quality={"status": "fallback", "hard_failures": []},
+                )
             if cover_path is None or cover_path.name != "card_00_cover.jpg":
                 raise RuntimeError("严格封面模式未生成唯一的 card_00_cover.jpg")
-            source_path = Path(cover_visual.path)
+            source_path = Path(
+                cover_visual.path
+                if cover_visual is not None
+                else ASSETS / "covers" / "tennis-night-court.png"
+            )
             if not source_path.is_file():
                 raise RuntimeError("严格封面模式的已核验原图在渲染后不可用")
             source_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest()
