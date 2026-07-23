@@ -208,6 +208,7 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
     if not lines or not lines[0].strip():
         return ["小红书标题为空"], []
 
+    from .render.hashtags import MAX_HASHTAGS, hashtag_count
     from .render.xiaohongshu import xhs_title_len
 
     xhs_title = lines[0].strip()
@@ -216,6 +217,11 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
         fatal.append(f"小红书标题超长: {title_len:g} > {XHS_TITLE_LIMIT}")
 
     body = _xhs_body(lines)
+    tag_count = hashtag_count(post)
+    if tag_count > MAX_HASHTAGS:
+        fatal.append(
+            f"小红书话题标签超过{MAX_HASHTAGS}个: {tag_count}"
+        )
     daily = _is_daily_post(digest, post, xhs_title)
     if not any(label in xhs_title for label in _date_labels(digest)):
         fatal.append("小红书标题缺少当日日期")

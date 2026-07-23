@@ -18,6 +18,7 @@ from .common import (
     side_display,
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
+from .hashtags import limit_hashtags
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
     editorial_tonight_focus,
@@ -209,7 +210,7 @@ def _tags(matches: list[Match]) -> list[str]:
                 add(player_zh(player.name))
         group = group_by_tournament([match])[0]
         add(group.name_zh)
-    return tags[:8]
+    return tags[:5]
 
 
 @dataclass(frozen=True)
@@ -708,13 +709,13 @@ def _tighten_post_plan(plan: XhsPostPlan) -> XhsPostPlan:
 
 def plan_post(digest: Digest) -> tuple[XhsPostPlan, str]:
     plan = build_post_plan(digest)
-    post = "\n".join(render_post_plan(plan))
+    post = limit_hashtags("\n".join(render_post_plan(plan)))
     if _post_body_len(post) > MAX_BODY:
         plan = build_post_plan(digest, compact=True)
-        post = "\n".join(render_post_plan(plan))
+        post = limit_hashtags("\n".join(render_post_plan(plan)))
     if _post_body_len(post) > MAX_BODY:
         plan = _tighten_post_plan(plan)
-        post = "\n".join(render_post_plan(plan))
+        post = limit_hashtags("\n".join(render_post_plan(plan)))
     if "…" in post or "..." in post:
         raise ValueError("小红书成品含截断省略号，拒绝发布")
     return plan, post

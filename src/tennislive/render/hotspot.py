@@ -257,7 +257,7 @@ def _tags(match: Match) -> list[str]:
     for tag in tags:
         if tag not in output:
             output.append(tag)
-    return output[:8]
+    return output[:5]
 
 
 def _trend_context(match: Match) -> str:
