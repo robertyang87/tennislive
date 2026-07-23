@@ -30,9 +30,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 查找三巨头知识帖候选照片地址（临时）
+      - name: 查找三巨头知识帖候选照片地址二（临时）
         shell: bash
-        run: python tools/probe_big_three_photos.py
+        run: python tools/probe_big_three_photos2.py
 
       - name: 生成无图片探测包
         shell: bash
