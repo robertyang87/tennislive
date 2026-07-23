@@ -258,125 +258,16 @@
     "topic_score": 10.0,
     "live_relevance_score": 0.0,
     "trend_signal_count": 187,
-    "candidate_rank": 4,
+    "candidate_rank": 1,
     "candidate_count": 8,
-    "visual_preflight_rejections": 3,
+    "visual_preflight_rejections": 0,
     "visual_preflight_status": "pass",
     "same_topic_attempt": 1,
     "same_topic_attempt_limit": 2
   },
-  "rejected_candidates": [
-    {
-      "story_slug": "china-tennis",
-      "title": "中国网球这二十年",
-      "stage": "visual-preflight",
-      "errors": [
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
-      ],
-      "excluded_source_urls": [],
-      "attempts": [
-        {
-          "attempt": 1,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 2,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        }
-      ]
-    },
-    {
-      "story_slug": "big-three",
-      "title": "三巨头的数字",
-      "stage": "visual-preflight",
-      "errors": [
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
-      ],
-      "excluded_source_urls": [],
-      "attempts": [
-        {
-          "attempt": 1,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 2,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        }
-      ]
-    },
-    {
-      "story_slug": "surfaces",
-      "title": "红土、草地、硬地",
-      "stage": "visual-preflight",
-      "errors": [
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
-      ],
-      "excluded_source_urls": [],
-      "attempts": [
-        {
-          "attempt": 1,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 2,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [],
-          "providers_queried": [],
-          "provider_runs": [],
-          "missing_pages": [],
-          "visual_qa": {}
-        }
-      ]
-    }
-  ],
+  "rejected_candidates": [],
   "recovery": {
-    "status": "recovered",
+    "status": "not-needed",
     "same_topic_attempt": 1,
     "excluded_source_urls": [],
     "failed_attempts": []
