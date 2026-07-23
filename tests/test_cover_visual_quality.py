@@ -778,6 +778,9 @@ def test_exact_official_reaction_can_use_body_evidence_when_face_is_profile(
     assert report["provider"] == "official-match-media"
     assert report["scene"] == "on_court_reaction"
     assert report["person_evidence"]["mode"] == "official-exact-match-body"
+    assert report["quality"]["status"] == "pass"
+    assert report["quality"]["hard_failures"] == []
+    assert report["quality"]["waived_failures"] == ["no-prominent-face"]
     selected = next(
         item for item in report["attempts"] if item["status"] == "selected"
     )

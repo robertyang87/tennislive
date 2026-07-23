@@ -438,6 +438,11 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
         text = " ".join((title, source_url, image_url)).lower()
         if _unsafe_web_image_source(domain, text):
             continue
+        relevance = _relevance(query, text)
+        # A usable player photograph should match at least two meaningful
+        # query tokens (normally the player's given name and surname).
+        if relevance < 6:
+            continue
         candidates.append(
             {
                 "provider": "bing-web-image",
@@ -447,7 +452,7 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
                 "license": "公开网页图片 · 非商业资讯引用",
                 "width": int(item.get("ow") or 0),
                 "height": int(item.get("oh") or 0),
-                "relevance": _relevance(query, text),
+                "relevance": relevance,
                 "search_text": text,
                 "image_text": text,
             }
@@ -2002,6 +2007,13 @@ def resolve_match_cover_visual(
         )
         if official_body_override and "no-prominent-face" in failures:
             failures.remove("no-prominent-face")
+            audit = {
+                **audit,
+                "status": "pass" if not failures else "fail",
+                "hard_failures": list(failures),
+                "waived_failures": ["no-prominent-face"],
+                "person_override": "official-exact-match-body",
+            }
             record["person_evidence"] = {
                 "mode": "official-exact-match-body",
                 "prominent_bodies": prominent_bodies,
