@@ -13,9 +13,9 @@ import sys
 import urllib.request
 
 URLS = [
-    "https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
-    "https://www.olympics.com/en/news/zheng-qinwen-wins-gold-paris-2024-tennis-women-singles",
-    "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
+    "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+    "https://www.wtatennis.com/news/3866289/zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis",
+    "https://ausopen.com/articles/news/comeback-queen-zheng-storms-semifinals",
 ]
 
 
