@@ -41,12 +41,15 @@ _PLAYER_LOOKUP: dict[str, str] | None = None
 
 @lru_cache(maxsize=1)
 def _ranked_player_names() -> dict[str, str]:
-    """Load the reviewed ATP/WTA top-300 snapshot shipped with the package."""
-    path = Path(__file__).with_name("player_names_top300.json")
-    try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return {}
+    """Load the ATP/WTA top-500 snapshot shipped with the package."""
+    payload = {}
+    for filename in ("player_names_top500.json", "player_names_top300.json"):
+        path = Path(__file__).with_name(filename)
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        break
     ranked: dict[str, str] = {}
     for tour in ("ATP", "WTA"):
         for entry in payload.get("tours", {}).get(tour, []):
@@ -62,7 +65,7 @@ def _player_lookup() -> dict[str, str]:
     if _PLAYER_LOOKUP is None:
         _PLAYER_LOOKUP = {_normalize_name(k): v for k, v in PLAYER_ZH.items()}
         # The ranked snapshot carries the latest source-backed overrides. It is
-        # authoritative for current top-300 players; the legacy table remains
+        # authoritative for current top-500 players; the legacy table remains
         # the fallback for players outside the snapshot.
         _PLAYER_LOOKUP.update(_ranked_player_names())
     return _PLAYER_LOOKUP
@@ -97,7 +100,7 @@ def player_zh(name: str) -> str:
 
     # Feeds sometimes add a middle/given name or use a spelling variant while
     # preserving the surname. Only accept a surname match when it maps to one
-    # unique Chinese display name across the complete top-300 snapshot.
+    # unique Chinese display name across the complete top-500 snapshot.
     if len(words) >= 2:
         surname = words[-1]
         matches = {

@@ -79,11 +79,11 @@ def test_xhs_rejects_more_than_five_hashtags():
     assert any("话题标签超过5个" in item for item in fatal)
 
 
-def test_publish_qa_warns_but_does_not_block_an_untranslated_top_300_player(monkeypatch):
+def test_publish_qa_warns_but_does_not_block_an_untranslated_top_500_player(monkeypatch):
     from tennislive import qa
 
     digest = _digest()
-    digest.results[0].home[0].rank = 200
+    digest.results[0].home[0].rank = 400
     untranslated = digest.results[0].home[0].name
     original = qa.player_zh
     monkeypatch.setattr(
@@ -98,8 +98,8 @@ def test_publish_qa_warns_but_does_not_block_an_untranslated_top_300_player(monk
         _post(_spacious_body()),
     )
 
-    assert not any("前300球员中文名" in item for item in fatal)
-    assert any("前300球员中文名待异步补充" in item for item in warn)
+    assert not any("前500球员中文名" in item for item in fatal)
+    assert any("前500球员中文名待异步补充" in item for item in warn)
 
 
 def test_xhs_daily_title_requires_current_date_and_platform_length():
