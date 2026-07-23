@@ -130,6 +130,32 @@ def test_xhs_post(sample_digest):
     assert "…" not in post and "..." not in post
 
 
+def test_neutral_compact_opinion_rotates_by_day():
+    """无中国球员的压缩兜底文案必须按日轮换，否则会撞上7天防重复 FATAL 闸门。
+
+    生产环境曾因这句话固定不变，连续多天对同一场无中国球员的比赛
+    生成完全相同的兜底文案，被 history_dedupe 判定为复用长句而阻断发布。
+    """
+    from datetime import date
+
+    from tennislive.render.xiaohongshu import _opinion
+
+    tonight = [sample_digest_match_without_chinese_player()]
+    seen = {
+        _opinion(None, tonight, compact=True, today=date(2026, 7, day))
+        for day in range(21, 28)
+    }
+    assert len(seen) > 1  # 一周之内不能全是同一句
+
+
+def sample_digest_match_without_chinese_player():
+    return make_match(
+        home_name="Tamara Korpatsch", home_country="GER",
+        away_name="Julia Stusek", away_country="AUT",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+    )
+
+
 def test_xhs_preview_replaces_long_player_name_before_shortening(sample_digest, monkeypatch):
     from tennislive.render import xiaohongshu
 

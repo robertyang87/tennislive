@@ -424,6 +424,15 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
     return XhsSection(f"🌙 今晚焦点｜{len(matches)}场", tuple(lines)), matches
 
 
+# 无中国球员、需要压缩正文时的兜底钩子；必须轮换，否则同一句话反复
+# 出现，会撞上小红书近7期文案查重的 FATAL 闸门（曾在生产环境实际触发）。
+_NEUTRAL_COMPACT_OPINIONS = (
+    "我会先看这场：与其盯排名，不如看谁先把节奏压到对方身上。",
+    "我会先看这场：发球局能不能稳住，比排名差距更能说明问题。",
+    "我会先看这场：谁先适应场地节奏，谁就先掌握主动权。",
+)
+
+
 def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) -> str:
     if lead is not None and lead.status.is_final:
         from .context import historical_context
@@ -448,7 +457,8 @@ def _opinion(lead: Match | None, tonight: list[Match], *, compact: bool, today) 
                 "把比赛拖进熟悉的节奏。"
             )
         if compact:
-            return "我会先看这场：与其盯排名，不如看谁先把节奏压到对方身上。"
+            variants = _NEUTRAL_COMPACT_OPINIONS
+            return variants[today.toordinal() % len(variants)]
         return (
             f"我会先看{_matchup(choice)}。\n"
             "比起赛前排名，更值得盯的是谁先把自己的节奏压到对方身上。"
