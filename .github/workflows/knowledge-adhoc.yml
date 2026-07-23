@@ -1,0 +1,136 @@
+name: knowledge-adhoc
+
+# 手动触发：按指定 slug 单独生成一篇知识帖，不占用当天常规知识帖
+# （daily.yml 里 output/<date>/knowledge/）的位置，写到独立目录
+# output/<date>/knowledge_adhoc/。只能从预先写好、事实核验过的选题池
+# 里选 slug（见 src/tennislive/render/tournament_story.py 的 STORIES）——
+# 知识帖要求可核实的事实与已授权配图，不支持凭空生成全新话题；全新
+# 话题需要先补充一条新的 TournamentStory 条目（含真实来源与配图）。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "选题 slug（如 hawkeye / big-three / umag）"
+        required: true
+      date:
+        description: "基准日期（YYYY-MM-DD，北京时间；留空=今天）"
+        required: false
+        default: ""
+      push:
+        description: "是否通过 PushPlus 推送到微信"
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  knowledge-adhoc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+      TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+      TENNISLIVE_VISUAL_FETCH: ${{ vars.TENNISLIVE_VISUAL_FETCH || 'on' }}
+      TENNISLIVE_VISUAL_STRICT: ${{ vars.TENNISLIVE_VISUAL_STRICT || 'on' }}
+      TENNISLIVE_VISUAL_CANDIDATES: ${{ vars.TENNISLIVE_VISUAL_CANDIDATES || '8' }}
+      TENNISLIVE_VISUAL_RETRIES_PER_TOPIC: ${{ vars.TENNISLIVE_VISUAL_RETRIES_PER_TOPIC || '2' }}
+      TENNISLIVE_VISUAL_EXPANDED_SOURCES: ${{ vars.TENNISLIVE_VISUAL_EXPANDED_SOURCES || 'on' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装中文字体（卡片图需要）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 安装 tennislive
+        run: pip install -q -e ".[webrender,visualqa]"
+
+      - name: 缓存 Chromium（HTML 卡片渲染）
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: 安装 Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: 生成知识帖
+        id: gen
+        run: |
+          DATE_ARG="${{ github.event.inputs.date }}"
+          if [ -z "$DATE_ARG" ]; then DATE_ARG="today"; fi
+          OUT_DATE=$(python -c "from tennislive.timeutil import parse_date_arg; print(parse_date_arg('$DATE_ARG').isoformat())")
+          OUT_DIR="output/$OUT_DATE/knowledge_adhoc"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          rm -rf "$OUT_DIR"
+          tennislive knowledge-adhoc \
+            --slug "${{ github.event.inputs.slug }}" \
+            --date "$DATE_ARG" \
+            --outdir "$OUT_DIR"
+
+      - name: 校验知识帖完整性
+        run: |
+          OUT_DIR="${{ steps.gen.outputs.outdir }}"
+          for name in story evidence visual_sources visual_qa; do
+            FILE="$OUT_DIR/$name.json"
+            test -s "$FILE" || {
+              echo "::error file=$FILE::知识帖缺少 $name.json"
+              exit 1
+            }
+          done
+          jq -e '.status == "pass" and (.errors | length == 0)' \
+            "$OUT_DIR/visual_qa.json" >/dev/null || {
+            echo "::error file=$OUT_DIR/visual_qa.json::知识帖视觉质检未通过"
+            cat "$OUT_DIR/visual_qa.json"
+            exit 1
+          }
+          jq -e '((.sources // []) | unique | length >= 2)' \
+            "$OUT_DIR/evidence.json" >/dev/null || {
+            echo "::error file=$OUT_DIR/evidence.json::知识帖交叉核验来源少于 2 个"
+            exit 1
+          }
+          CARD_COUNT="$(find "$OUT_DIR/cards" -maxdepth 1 -type f -name 'card_*.jpg' 2>/dev/null | wc -l)"
+          test "$CARD_COUNT" -eq 4 || {
+            echo "::error::知识帖未完整生成 4 张卡片（实际 $CARD_COUNT）"
+            exit 1
+          }
+
+      - name: 上传失败诊断
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-adhoc-failure-${{ github.run_number }}
+          path: ${{ steps.gen.outputs.outdir }}*
+
+      - name: 提交内容到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ steps.gen.outputs.outdir }}" data/story_state.json
+          if git diff --cached --quiet; then
+            echo "没有新内容，跳过提交"
+          else
+            git commit -m "content: 知识帖(ad-hoc) ${{ github.event.inputs.slug }}"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi
+
+      - name: 上传内容包 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-adhoc-${{ github.run_number }}
+          path: ${{ steps.gen.outputs.outdir }}
+
+      - name: PushPlus 推送到微信
+        if: github.event.inputs.push != 'false' && env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"

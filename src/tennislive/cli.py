@@ -104,6 +104,42 @@ def cmd_today(args) -> int:
 
 # ---------- 内容生成 ----------
 
+def cmd_knowledge_adhoc(args) -> int:
+    """按指定 slug 单独生成一篇知识帖，不占用当天常规知识帖的位置。
+
+    只能从预先写好、事实核验过的选题池里按 slug 选取——知识帖要求
+    可核实的事实与已授权配图，不支持凭空生成全新话题。
+    """
+    from .render.knowledge import generate_knowledge_package
+    from .render.terminal import console
+    from .render.tournament_story import find_story_by_slug, mark_story_used
+
+    story = find_story_by_slug(args.slug)
+    if story is None:
+        console.print(f"[red]未找到 slug 为 “{args.slug}” 的选题。[/red]")
+        return 2
+    if not story.image.exists():
+        console.print(f"[red]选题 “{args.slug}” 缺少配图素材：{story.image}[/red]")
+        return 2
+
+    d = parse_date_arg(args.date)
+    try:
+        digest: Digest = build_digest(d, prefer=args.source)
+    except SourceError as e:
+        console.print(f"[red]抓取失败：{e}[/red]")
+        return 1
+
+    outdir = Path(args.outdir)
+    generated = generate_knowledge_package(digest, outdir, theme=args.theme, story=story)
+    if generated is None:
+        console.print(f"[red]知识帖生成失败：{outdir}[/red]")
+        return 2
+
+    mark_story_used(generated.slug, digest.today)
+    console.print(f"[green]知识帖已生成：{outdir}（slug={generated.slug}）[/green]")
+    return 0
+
+
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
@@ -991,6 +1027,18 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--no-cards", action="store_true", help="不生成卡片图")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
 
+    sp = sub.add_parser(
+        "knowledge-adhoc",
+        help="按指定 slug 单独生成一篇知识帖（不占用当天常规知识帖位置）",
+    )
+    sp.add_argument("--slug", required=True, help="选题池里的 slug（见 tournament_story.py 的 STORIES）")
+    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output/knowledge_adhoc", help="输出目录")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
+    sp.add_argument(
+        "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
+    )
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1051,6 +1099,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_content(args)
     if args.command == "digest":
         return cmd_digest(args)
+    if args.command == "knowledge-adhoc":
+        return cmd_knowledge_adhoc(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
