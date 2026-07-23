@@ -7,9 +7,6 @@ on:
     paths:
       - ".github/workflows/probe.yml"
 
-permissions:
-  contents: write
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -32,10 +29,6 @@ jobs:
       - name: 探测 RapidAPI 网球数据源（临时）
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
-
-      - name: 测试 Wikimedia 原图直链是否比缩略图更稳定（临时）
-        shell: bash
-        run: python tools/probe_wikimedia_original.py
 
       - name: 生成无图片探测包
         shell: bash
