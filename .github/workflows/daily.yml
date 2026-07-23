@@ -227,6 +227,7 @@ jobs:
               .status == "selected"
               and .match_id == $expected_match_id
               and .headline_eligible == true
+              and .headline_hot == true
               and (.selected_player as $player | .match_players | index($player) != null)
               and .exact_match == true
               and .both_sides_match == true
@@ -239,6 +240,7 @@ jobs:
               .status == "fallback"
               and .fallback_person == true
               and .headline_eligible == true
+              and .headline_hot == true
               and (.fallback_reason | length > 0)
               and (.quality.status | IN("pass", "fallback"))
               and (.quality.hard_failures | length == 0)
@@ -358,6 +360,7 @@ jobs:
               jq -r '"status=" + (.status // "unknown"),
                 "match_id=" + (.match_id // ""),
                 "headline_eligible=" + ((.headline_eligible // false)|tostring),
+                "headline_hot=" + ((.headline_hot // false)|tostring),
                 "headline_players=" + ((.headline_players // [])|join(",")),
                 "providers=" + ((.providers_queried // [])|join(",")),
                 "errors=" + ((.errors // [])|join(" | ")),
