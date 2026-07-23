@@ -58,9 +58,25 @@ if __name__ == "__main__":
     league = sys.argv[3] if len(sys.argv) > 3 else "wta"
 
     base = f"https://site.api.espn.com/apis/site/v2/sports/tennis/{league}"
-    probe("ESPN summary?event=comp_id", f"{base}/summary", {"event": comp_id})
-    probe("ESPN summary?event=event_id", f"{base}/summary", {"event": event_id})
+    # Round 1's error body was:
+    #   ".../leagues/wta/events/401-2026/competitions/401-2026/status"
+    # i.e. it substituted event_id into BOTH the event and competition slots —
+    # confirming a real summary route shaped .../events/{event}/competitions/{comp}
+    # exists, just needs the competition identified separately.
     probe(
-        "SofaScore statistics/comp_id",
-        f"https://api.sofascore.com/api/v1/event/{comp_id}/statistics",
+        "ESPN summary?event=event_id&competition=comp_id",
+        f"{base}/summary",
+        {"event": event_id, "competition": comp_id},
+    )
+    probe(
+        "ESPN summary path event/competition",
+        f"{base}/summary/{event_id}/competitions/{comp_id}",
+    )
+    probe(
+        "ESPN core API events/competitions (undocumented, public mirror)",
+        f"https://sports.core.api.espn.com/v2/sports/tennis/leagues/{league}/events/{event_id}/competitions/{comp_id}",
+    )
+    probe(
+        "ESPN core API .../competitions/{comp}/competitors (stats often nested here)",
+        f"https://sports.core.api.espn.com/v2/sports/tennis/leagues/{league}/events/{event_id}/competitions/{comp_id}/competitors",
     )
