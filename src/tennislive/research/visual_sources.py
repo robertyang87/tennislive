@@ -105,6 +105,80 @@ _ATP_NON_MATCH_VIDEO_TERMS = (
     "preview",
 )
 _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
+    # 郑钦文：Commons/Openverse/必应等在线检索能找到她本人的真实照片，但都
+    # 缺少能通过"精确事件"校验的元数据（无法在图片说明里核实到具体赛事/年
+    # 份），逐一人工核实来源后手动收录——WTA 官方文章配图（Getty/AFP 供图）
+    # 用于 2024 澳网这条线，奥运这条线用 Wikimedia CC 照片 + 澳网官网转载的
+    # 夺金瞬间照。
+    ("zheng-qinwen", "story"): (
+        {
+            "provider": "official-media",
+            "source_url": (
+                "https://www.wtatennis.com/news/3867402/"
+                "zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open"
+            ),
+            "image_url": (
+                "https://photoresources.wtatennis.com/wta/photo/2024/01/25/"
+                "d736e04f-1a05-4b19-a78d-ab63210eee27/Zheng-SF-Cameron-Spencer.jpg"
+            ),
+            "credit": "Cameron Spencer/Getty Images via WTA",
+            "license": "官方媒体供图 · 非商业资讯引用",
+            "width": 3981,
+            "height": 2654,
+            "relevance": 100,
+            "search_text": (
+                "zheng qinwen 2024 australian open semifinal melbourne serve action"
+            ),
+            "image_text": (
+                "zheng qinwen serves in action during her 2024 australian open "
+                "semifinal victory in melbourne, on the way to her first grand "
+                "slam final"
+            ),
+        },
+    ),
+    ("zheng-qinwen", "explainer"): (
+        {
+            "provider": "verified-event-archive",
+            "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
+            "image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/c/cf/"
+                "Qinwen_Zheng_-_2024_Olympics.jpg"
+            ),
+            "credit": "Kuberzog / Wikimedia Commons",
+            "license": "CC BY-SA 4.0",
+            "width": 4608,
+            "height": 3456,
+            "relevance": 100,
+            "search_text": "zheng qinwen paris 2024 olympics clay court match backhand",
+            "image_text": (
+                "zheng qinwen hitting a backhand on the clay court during her "
+                "paris 2024 olympics tennis match"
+            ),
+        },
+    ),
+    ("zheng-qinwen", "today"): (
+        {
+            "provider": "official-media",
+            "source_url": (
+                "https://ausopen.com/articles/news/"
+                "rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+            ),
+            "image_url": (
+                "https://ausopen.com/sites/default/files/202408/4/"
+                "zheng-qinwen-gold-paris-2024-olympics.jpg"
+            ),
+            "credit": "Australian Open (ausopen.com)",
+            "license": "官方媒体供图 · 非商业资讯引用",
+            "width": 1080,
+            "height": 810,
+            "relevance": 100,
+            "search_text": "zheng qinwen paris 2024 olympics gold medal celebration clay court",
+            "image_text": (
+                "zheng qinwen collapsing on the clay court in celebration after "
+                "winning the paris 2024 olympics gold medal"
+            ),
+        },
+    ),
     ("longest-match", "story"): (
         {
             "provider": "verified-event-archive",
