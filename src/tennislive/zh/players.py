@@ -166,7 +166,7 @@ PLAYER_ZH: dict[str, str] = {
     "Fajing Sun": "孙发京",
     # ===== WTA =====
     "Aryna Sabalenka": "萨巴伦卡",
-    "Iga Swiatek": "斯维亚特克",
+    "Iga Swiatek": "斯瓦泰克",
     "Elena Rybakina": "莱巴金娜",
     "Coco Gauff": "高芙",
     "Jessica Pegula": "佩古拉",
