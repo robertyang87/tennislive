@@ -1849,6 +1849,7 @@ def resolve_match_cover_visual(
         reverse=True,
     )
     qualified: list[tuple[float, ResolvedVisual, dict]] = []
+    degraded: list[tuple[float, ResolvedVisual, dict]] = []
     for player, query, candidate, record, metadata_score, event_match, year_match in candidates[:max_downloads]:
         downloaded = _download(candidate, "daily-cover", query, folder, session)
         if downloaded is None:
@@ -1888,7 +1889,10 @@ def resolve_match_cover_visual(
         )
         attempts.append(record)
         if failures:
-            downloaded.path.unlink(missing_ok=True)
+            if failures == [f"quality-score-below-{minimum_score}"]:
+                degraded.append((total_score, downloaded, record))
+            else:
+                downloaded.path.unlink(missing_ok=True)
             continue
         visual = replace(
             downloaded,
@@ -1900,6 +1904,30 @@ def resolve_match_cover_visual(
         )
         qualified.append((total_score, visual, record))
 
+    if not qualified and degraded:
+        degraded.sort(key=lambda item: item[0], reverse=True)
+        selected_score, selected, selected_record = degraded[0]
+        selected_record["status"] = "selected"
+        report.update(
+            {
+                "status": "fallback",
+                "fallback_reason": f"quality-score-below-{minimum_score}",
+                "selected_player": selected_record["player"],
+                "exact_match": selected_record["exact_match"],
+                "both_sides_match": selected_record["both_sides_match"],
+                "scene": selected_record["scene"],
+                "quality_score": selected_score,
+                "quality": selected_record["quality"],
+                "event_match": selected.event_match,
+                "year_match": selected.year_match,
+                "provider": selected.provider,
+                "source_url": selected.source_url,
+                "credit": selected.credit,
+                "license": selected.license,
+                "focus": selected.focus,
+            }
+        )
+        return selected, report
     if not qualified:
         report["errors"] = [
             "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"

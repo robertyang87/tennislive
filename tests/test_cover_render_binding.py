@@ -78,6 +78,36 @@ def test_strict_cover_report_binds_verified_asset_to_final_card(
     assert binding["card_sha256"] == hashlib.sha256(paths[0].read_bytes()).hexdigest()
 
 
+def test_strict_cover_uses_truthful_branded_fallback_when_no_photo(
+    tmp_path, sample_digest, monkeypatch
+):
+    from tennislive.render import cards, webcards
+    from tennislive.research import visual_sources
+
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_STRICT", "on")
+
+    def unavailable(_match, _folder):
+        return None, {"status": "unavailable", "errors": ["no-qualified-photo"]}
+
+    monkeypatch.setattr(visual_sources, "resolve_match_cover_visual", unavailable)
+    monkeypatch.setattr(
+        webcards,
+        "generate_deck",
+        lambda *_args, **_kwargs: [
+            ("cover", Image.effect_noise((1080, 1440), 32).convert("RGB"))
+        ],
+    )
+
+    paths = cards.generate_cards(sample_digest, tmp_path / "cards")
+
+    assert paths[0].name == "card_00_cover.jpg"
+    report = json.loads((tmp_path / "cover_visual.json").read_text("utf-8"))
+    assert report["status"] == "fallback"
+    assert report["fallback_reason"] == "no-qualified-photo"
+    assert report["render_binding"]["status"] == "bound"
+
+
 def test_daily_workflow_never_swallows_digest_failure_and_checks_card_binding():
     workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
 
