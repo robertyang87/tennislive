@@ -33,9 +33,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 列出 AusOpen 文章页中的候选照片地址（临时）
+      - name: 测试 Wikimedia 原图直链是否比缩略图更稳定（临时）
         shell: bash
-        run: python tools/probe_ausopen_gallery.py
+        run: python tools/probe_wikimedia_original.py
 
       - name: 生成无图片探测包
         shell: bash
