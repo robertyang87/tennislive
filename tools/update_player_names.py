@@ -30,6 +30,7 @@ ATP_PDF = "https://www.protennislive.com/posting/ramr/singles_entry_numerical.pd
 WTA_PDF = "https://wtafiles.wtatennis.com/pdf/rankings/Singles_Numeric.pdf"
 OUTPUT = SRC / "tennislive" / "zh" / "player_names_top300.json"
 OVERRIDES = ROOT / "data" / "player_name_overrides.json"
+REVIEW_QUEUE = ROOT / "data" / "player_name_review_queue.json"
 _CJK_RE = re.compile(r"[\u3400-\u9fff]")
 
 
@@ -250,6 +251,34 @@ def validate_snapshot(snapshot: dict) -> None:
                 )
 
 
+def build_review_queue(snapshot: dict) -> dict:
+    """List provisional translations for asynchronous editorial review."""
+    entries: list[dict] = []
+    for tour in ("ATP", "WTA"):
+        for entry in snapshot.get("tours", {}).get(tour, []):
+            if entry.get("translation_source") != "machine-transliteration":
+                continue
+            entries.append(
+                {
+                    "tour": tour,
+                    "rank": entry["rank"],
+                    "name_en": entry["name_en"],
+                    "current_name_zh": entry["name_zh"],
+                    "status": "待国内媒体译名复核",
+                }
+            )
+    return {
+        "schema_version": 1,
+        "ranking_date": snapshot.get("ranking_date", "unknown"),
+        "blocking": False,
+        "policy": (
+            "暂定音译不阻断日报；新华社、央视或国内赛事官方出现稳定译名后，"
+            "写入 player_name_overrides.json 并从队列移除"
+        ),
+        "entries": entries,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -285,7 +314,12 @@ def main() -> int:
         json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    REVIEW_QUEUE.write_text(
+        json.dumps(build_review_queue(snapshot), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     print(f"wrote {OUTPUT}: ATP 300/300, WTA 300/300")
+    print(f"review queue: {len(build_review_queue(snapshot)['entries'])} provisional names")
     return 0
 
 
