@@ -370,8 +370,9 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
                 "final_2008,_Federer_serves_for_3rd_set.jpg"
             ),
             "image_url": (
-                "https://upload.wikimedia.org/wikipedia/commons/0/0d/"
+                "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
                 "Wimbledon_Men%27s_final_2008%2C_Federer_serves_for_3rd_set.jpg"
+                "?width=2048"
             ),
             "credit": "David Underdown / Wikimedia Commons",
             "license": "CC BY-SA 3.0",
