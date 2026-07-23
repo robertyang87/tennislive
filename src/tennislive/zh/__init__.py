@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import json
+from functools import lru_cache
+from pathlib import Path
+
 from .countries import country_flag, country_zh
 from .players import PLAYER_ZH
 from .terms import (
@@ -35,10 +39,30 @@ def _normalize_name(name: str) -> str:
 _PLAYER_LOOKUP: dict[str, str] | None = None
 
 
+@lru_cache(maxsize=1)
+def _ranked_player_names() -> dict[str, str]:
+    """Load the reviewed ATP/WTA top-300 snapshot shipped with the package."""
+    path = Path(__file__).with_name("player_names_top300.json")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    ranked: dict[str, str] = {}
+    for tour in ("ATP", "WTA"):
+        for entry in payload.get("tours", {}).get(tour, []):
+            name = str(entry.get("name_en", "")).strip()
+            zh = str(entry.get("name_zh", "")).strip()
+            if name and zh:
+                ranked[_normalize_name(name)] = zh
+    return ranked
+
+
 def _player_lookup() -> dict[str, str]:
     global _PLAYER_LOOKUP
     if _PLAYER_LOOKUP is None:
-        _PLAYER_LOOKUP = {_normalize_name(k): v for k, v in PLAYER_ZH.items()}
+        _PLAYER_LOOKUP = _ranked_player_names()
+        # Hand-reviewed media forms always override generated snapshot entries.
+        _PLAYER_LOOKUP.update({_normalize_name(k): v for k, v in PLAYER_ZH.items()})
     return _PLAYER_LOOKUP
 
 
@@ -68,6 +92,19 @@ def player_zh(name: str) -> str:
         hit = lookup.get(f"{words[0]} {words[-1]}")
         if hit:
             return hit
+
+    # Feeds sometimes add a middle/given name or use a spelling variant while
+    # preserving the surname. Only accept a surname match when it maps to one
+    # unique Chinese display name across the complete top-300 snapshot.
+    if len(words) >= 2:
+        surname = words[-1]
+        matches = {
+            value
+            for key, value in lookup.items()
+            if key.split()[-1:] == [surname]
+        }
+        if len(matches) == 1:
+            return next(iter(matches))
 
     # 缩写形式："J. Sinner" 或 "Sinner J."
     cleaned = name.replace(",", " ").strip()

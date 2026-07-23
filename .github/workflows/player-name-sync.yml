@@ -1,0 +1,43 @@
+name: player-name-sync
+
+on:
+  schedule:
+    - cron: "23 12 * * 1" # 周一 20:23 北京时间，等待两站官方周榜稳定
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: 安装同步依赖
+        run: pip install -q -e ".[dev]"
+      - name: 同步 ATP/WTA 前 300 中文名
+        run: python tools/update_player_names.py
+      - name: 校验 600/600 覆盖率与译名入口
+        run: |
+          python tools/update_player_names.py --check
+          pytest -q tests/test_player_names.py
+      - name: 提交更新
+        shell: bash
+        run: |
+          if git diff --quiet -- src/tennislive/zh/player_names_top300.json; then
+            echo "排名与译名快照无变化"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/tennislive/zh/player_names_top300.json
+          git commit -m "data: sync top-300 Chinese player names [skip ci]"
+          git pull --rebase origin main
+          git push origin HEAD:main

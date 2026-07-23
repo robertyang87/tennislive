@@ -29,5 +29,9 @@ tennislive = "tennislive.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"tennislive.zh" = ["player_names_top300.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
