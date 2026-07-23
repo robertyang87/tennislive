@@ -42,6 +42,7 @@ jobs:
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           INPUT_DATE: ${{ inputs.date }}
           INPUT_SCOPE: ${{ inputs.scope }}
+          # Fresh GitHub Pages assets can take several minutes to propagate.
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
