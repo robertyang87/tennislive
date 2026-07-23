@@ -76,6 +76,25 @@ def is_headline_match(match: Match) -> bool:
     """Return whether a match contains at least one approved headliner."""
     return any(is_headline_player(player) for player in match.home + match.away)
 
+
+def has_editorial_heat(match: Match) -> bool:
+    """Return whether a match has source-backed heat beyond ranking.
+
+    Trend signals are populated from ATP/WTA and major-event news feeds plus
+    search-trend feeds. A reviewed editorial brief is also valid evidence.
+    """
+    if match.editorial_url or match.editorial_note:
+        return True
+    return bool(
+        match.media_heat
+        or match.search_heat
+        or any(
+            str(signal.get("kind", "")) == "official-news"
+            for signal in match.trend_signals
+            if isinstance(signal, dict)
+        )
+    )
+
 TOUR_FOCUS_LEVELS = {
     "GS",
     "Finals",
@@ -175,6 +194,16 @@ def _evidence_points(match: Match) -> tuple[int, str | None]:
         if any(token.lower() in source.lower() for token in official_tokens):
             return 20, f"有{source}原文支撑"
         return 15, f"有{source}来源链接"
+    official_sources = {
+        str(signal.get("source", "")).strip()
+        for signal in match.trend_signals
+        if isinstance(signal, dict)
+        and str(signal.get("kind", "")) == "official-news"
+        and str(signal.get("source", "")).strip()
+    }
+    if official_sources:
+        labels = " / ".join(sorted(official_sources)[:2])
+        return 18, f"有{labels}官方报道线索"
     if match.stats is not None and match.stats.source_url:
         return 14, f"有{match.stats.source}技术统计"
     if match.editorial_note and match.editorial_source:
@@ -264,12 +293,24 @@ def select_lead_story(digest: Digest) -> LeadStorySelection | None:
     # rejects a non-headliner match before any push occurs.
     preferred_candidates = next(
         (
-            [match for match in pool if is_headline_match(match)]
+            [match for match in pool if is_headline_match(match) and has_editorial_heat(match)]
             for pool in pools
-            if any(is_headline_match(match) for match in pool)
+            if any(
+                is_headline_match(match) and has_editorial_heat(match)
+                for match in pool
+            )
         ),
         None,
     )
+    if preferred_candidates is None:
+        preferred_candidates = next(
+            (
+                [match for match in pool if is_headline_match(match)]
+                for pool in pools
+                if any(is_headline_match(match) for match in pool)
+            ),
+            None,
+        )
     candidates = preferred_candidates or next((pool for pool in pools if pool), [])
     if not candidates:
         return None
