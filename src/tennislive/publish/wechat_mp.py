@@ -28,10 +28,23 @@ import requests
 logger = logging.getLogger(__name__)
 
 API = "https://api.weixin.qq.com/cgi-bin"
+WECHAT_TITLE_LIMIT = 64
 
 
 class WeChatError(RuntimeError):
     pass
+
+
+def validate_wechat_title(title: str) -> str:
+    """Validate a WeChat article/newspic title without silently truncating it."""
+    cleaned = title.strip()
+    if not cleaned:
+        raise WeChatError("公众号标题不能为空")
+    if len(cleaned) > WECHAT_TITLE_LIMIT:
+        raise WeChatError(
+            f"公众号标题超长: {len(cleaned)} > {WECHAT_TITLE_LIMIT}"
+        )
+    return cleaned
 
 
 def _explain(errcode: int, errmsg: str) -> str:
@@ -149,7 +162,7 @@ class WeChatPublisher:
     ) -> str:
         """新建草稿，返回草稿 media_id."""
         article = {
-            "title": title[:64],
+            "title": validate_wechat_title(title),
             "author": (author or os.environ.get("WECHAT_AUTHOR", ""))[:8],
             "digest": digest[:120],
             "content": html_content,
@@ -183,7 +196,7 @@ class WeChatPublisher:
         """
         article = {
             "article_type": "newspic",
-            "title": title[:64],
+            "title": validate_wechat_title(title),
             "content": content[:1000],
             "need_open_comment": 1,
             "only_fans_can_comment": 0,

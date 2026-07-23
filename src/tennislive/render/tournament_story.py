@@ -1133,18 +1133,18 @@ STORIES = STORIES + (
         title="11 小时 5 分钟",
         subtitle="网球冷知识 · 纪录篇",
         identity="一场打了三天的网球赛",
-        chips=("冷知识", "纪录之最", "70-68"),
+        chips=("网球有故事", "温网纪录", "70-68"),
         hero=(
-            "2010 年温网首轮，伊斯内尔与马胡把决胜盘打到 70-68——"
-            "11 小时 5 分钟、跨越三天，连记分牌都死机了。"
+            "2010 年温网首轮，伊斯内尔与马胡在 18 号球场打了三天："
+            "决胜盘 70-68，全场 11 小时 5 分钟。"
         ),
         facts=(
-            "两人合计轰出 216 记 ACE（伊斯内尔 113、马胡 103），"
-            "单场 ACE 纪录至今无人接近。",
-            "决胜盘打到 47-47 时，电子记分牌因超出程序设定直接黑屏；"
-            "18 号球场如今立着这场比赛的纪念牌。",
-            "它直接催生了规则改革——四大满贯自 2022 年起统一"
-            "决胜盘 6-6 打 10 分抢十，'无限决胜盘'成为历史。",
+            "五盘总比分是 6-4、3-6、6-7(7)、7-6(3)、70-68；"
+            "全场共 183 局，光是决胜盘就打了 8 小时 11 分钟。",
+            "决胜盘来到 50-50 时，电子记分牌已经撑不住；"
+            "第二晚因天黑暂停时是 59-59，比赛计时刚好走到 10 小时。",
+            "伊斯内尔全场发出 113 记 ACE。如今四大满贯若在决胜盘打到 6-6，"
+            "统一改打 10 分抢十，必须领先两分才能结束。",
         ),
         moments=(
             ChampionMoment(
@@ -1153,13 +1153,10 @@ STORIES = STORIES + (
                 age="第 3 天",
                 headline="70-68，终于结束",
                 detail=(
-                    "第三个比赛日，伊斯内尔在决胜盘第 138 局完成致胜破发——"
-                    "赛后两位主角与主裁一起在记分牌前合影。"
+                    "马胡在 68-69、30-30 发球；伊斯内尔先用正手穿越拿到第五个赛点，"
+                    "再以反手直线穿越结束了这场三日长跑。"
                 ),
-                source_url=(
-                    "https://en.wikipedia.org/wiki/Isner%E2%80%93Mahut_match_"
-                    "at_the_2010_Wimbledon_Championships"
-                ),
+                source_url="https://www.wimbledon.com/en_GB/about/history/2010s",
             ),
             ChampionMoment(
                 date="2022-03-16",
@@ -1167,19 +1164,31 @@ STORIES = STORIES + (
                 age="2022 年",
                 headline="决胜盘规则统一",
                 detail=(
-                    "大满贯委员会宣布四项赛事决胜盘 6-6 一律改打 10 分抢十——"
-                    "马拉松式对决就此封存进历史。"
+                    "大满贯委员会宣布统一决胜盘规则：6-6 后打 10 分抢十，"
+                    "率先拿到 10 分且领先两分的一方获胜。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/Tiebreaker",
+                source_url=(
+                    "https://www.usopen.org/en_US/news/articles/2022-03-16/"
+                    "us_open_to_join_all_grand_slams_in_playing_"
+                    "10point_final_set_tiebreak.html"
+                ),
             ),
         ),
-        image_keys=("usopen",),
-        source_label="温网官方史料",
-        image_credit="Pahcal123 / Wikimedia Commons · CC BY-SA 4.0",
-        source_url=(
-            "https://en.wikipedia.org/wiki/Isner%E2%80%93Mahut_match_"
-            "at_the_2010_Wimbledon_Championships"
+        image_keys=(),
+        source_label="温网 / ITF / 大满贯官方档案",
+        image_credit="BPI / Panoramic via Tennis Majors",
+        source_url="https://www.wimbledon.com/en_GB/about/history/2010s",
+        evidence_urls=(
+            "https://www.wimbledon.com/en_GB/about/history/2010s",
+            "https://www.itftennis.com/media/8242/"
+            "2022-wimbledon-day-1-mens-match-notes.pdf",
+            "https://www.usopen.org/en_US/news/articles/2022-03-16/"
+            "us_open_to_join_all_grand_slams_in_playing_"
+            "10point_final_set_tiebreak.html",
         ),
+        diagram_type="marathon",
+        hero_marker="2010",
+        fact_roles=("record", "history", "rule"),
     ),
     _trivia_story(
         slug="hawkeye",
@@ -1572,6 +1581,166 @@ def _match_drama(m) -> float:
 DRAMA_THRESHOLD = 1.0
 
 
+_TRIVIA_TOPIC_TERMS: dict[str, tuple[str, ...]] = {
+    "scoring-history": (
+        "15-30-40",
+        "deuce",
+        "scoring system",
+        "计分",
+        "平分",
+    ),
+    "yellow-ball": ("yellow ball", "white ball", "ball colour", "黄球", "白球"),
+    "longest-match": (
+        "isner",
+        "mahut",
+        "longest match",
+        "marathon match",
+        "70-68",
+        "five-set",
+        "五盘",
+        "长盘",
+        "马拉松",
+    ),
+    "hawkeye": (
+        "hawk-eye",
+        "hawkeye",
+        "electronic line calling",
+        "line call",
+        "challenge system",
+        "鹰眼",
+        "电子司线",
+        "误判",
+    ),
+    "golden-slam": (
+        "golden slam",
+        "olympic",
+        "steffi graf",
+        "gold medal",
+        "金满贯",
+        "奥运",
+        "格拉芙",
+    ),
+    "surfaces": (
+        "clay court",
+        "grass court",
+        "hard court",
+        "red clay",
+        "红土",
+        "草地",
+        "硬地",
+    ),
+    "big-three": (
+        "federer",
+        "nadal",
+        "djokovic",
+        "费德勒",
+        "纳达尔",
+        "德约科维奇",
+    ),
+    "china-tennis": (
+        "zheng qinwen",
+        "li na",
+        "wang xinyu",
+        "yuan yue",
+        "zhang zhizhen",
+        "郑钦文",
+        "李娜",
+        "王欣瑜",
+        "袁悦",
+        "张之臻",
+    ),
+}
+
+# 没有可靠实时信号时，优先选择普通读者一眼能理解、天然有悬念的主题。
+_TRIVIA_VIRAL_PRIOR: dict[str, float] = {
+    "longest-match": 10.0,
+    "golden-slam": 9.0,
+    "big-three": 8.0,
+    "china-tennis": 7.0,
+    "hawkeye": 6.0,
+    "scoring-history": 5.0,
+    "surfaces": 4.0,
+    "yellow-ball": 3.0,
+}
+
+
+def _trivia_topic_score(story: TournamentStory, digest: Digest) -> float:
+    """Rank evergreen knowledge by live relevance, then natural shareability."""
+    score = _TRIVIA_VIRAL_PRIOR.get(story.slug, 0.0)
+    terms = tuple(_norm(term) for term in _TRIVIA_TOPIC_TERMS.get(story.slug, ()))
+    best_live_signal = 0.0
+    for match in digest.results + digest.live + digest.schedule:
+        signals = [item for item in match.trend_signals if isinstance(item, dict)]
+        signal_text = " ".join(
+            str(value)
+            for signal in signals
+            for value in signal.values()
+            if isinstance(value, (str, int, float))
+        )
+        players = [*match.home, *match.away]
+        context = _norm(
+            " ".join(
+                [
+                    match.tournament.name,
+                    *(player.name for player in players),
+                    signal_text,
+                ]
+            )
+        )
+        heat = min(70.0, float(match.media_heat + match.search_heat))
+        source_bonus = min(12.0, len(signals) * 3.0)
+        hits = sum(1 for term in terms if term and term in context)
+        live_signal = 0.0
+        if hits:
+            live_signal = 36.0 + heat + source_bonus + min(12.0, hits * 3.0)
+
+        countries = {str(player.country or "").upper() for player in players}
+        if story.slug == "china-tennis" and "CHN" in countries:
+            live_signal = max(live_signal, 42.0 + heat + source_bonus)
+        if story.slug == "longest-match":
+            long_set = any(max(item.home, item.away) > 7 for item in (match.sets or []))
+            if len(match.sets or []) >= 5 or long_set:
+                live_signal = max(live_signal, 38.0 + heat + source_bonus)
+
+        best_live_signal = max(best_live_signal, live_signal)
+    return score + best_live_signal
+
+
+def story_selection_evidence(story: TournamentStory, digest: Digest) -> dict:
+    """Explain the deterministic editorial signals used by GitHub Actions."""
+    evidence = {
+        "kind": story.kind,
+        "candidate_slug": story.slug,
+        "result_count": len(digest.results),
+        "live_count": len(digest.live),
+        "schedule_count": len(digest.schedule),
+    }
+    if story.kind != "trivia":
+        evidence["selection_basis"] = (
+            "current player or tournament relevance, match news value, and recency"
+        )
+        return evidence
+
+    prior = _TRIVIA_VIRAL_PRIOR.get(story.slug, 0.0)
+    topic_score = _trivia_topic_score(story, digest)
+    evidence.update(
+        {
+            "selection_basis": (
+                "live media/search signals first; intrinsic curiosity and "
+                "shareability provide the no-signal fallback"
+            ),
+            "viral_prior": prior,
+            "topic_score": topic_score,
+            "live_relevance_score": max(0.0, topic_score - prior),
+            "trend_signal_count": sum(
+                len(match.trend_signals)
+                for match in digest.results + digest.live + digest.schedule
+            ),
+        }
+    )
+    return evidence
+
+
 def _result_heat(
     digest: Digest,
 ) -> tuple[dict[str, float], dict[str, float], set[str]]:
@@ -1670,7 +1839,7 @@ def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
                 score = 1
             else:
                 score = 0
-            heat = 0.0
+            heat = _trivia_topic_score(story, digest)
         else:
             if not _matched(aliases, tournaments):
                 continue

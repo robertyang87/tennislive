@@ -46,6 +46,10 @@ jobs:
         run: |
           DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
           SCOPE="${INPUT_SCOPE:-main}"
+          if [ "${{ github.event_name }}" = "push" ] && \
+             echo "${{ github.event.head_commit.message }}" | grep -q '\[push-knowledge\]'; then
+            SCOPE="knowledge"
+          fi
           if [ "$SCOPE" = "knowledge" ]; then
             OUT_DIR="output/${DATE}/knowledge"
           else

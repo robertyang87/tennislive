@@ -92,10 +92,16 @@ def evaluate_knowledge_visuals(
         for source in _photo_sources(body)
     ]
     resolved_visuals: list[dict] = []
+    enforce_page_photos = bool(page_visuals)
 
-    if photo_uses > MAX_PHOTO_USES:
+    if enforce_page_photos and photo_uses != MAX_PHOTO_USES:
+        errors.append(
+            f"四页必须各使用一张真实主题图片，当前共 {photo_uses} 张，"
+            f"标准为 {MAX_PHOTO_USES} 张"
+        )
+    elif photo_uses > MAX_PHOTO_USES:
         errors.append(f"四页共使用 {photo_uses} 张照片，标准上限为 {MAX_PHOTO_USES} 张")
-    if photo_uses < 1:
+    elif photo_uses < 1:
         errors.append("封面必须至少使用一张经过核验的主题图片")
     if len(set(all_photo_sources)) != len(all_photo_sources):
         errors.append("同一套卡片重复使用了相同来源的照片")
@@ -219,7 +225,9 @@ def evaluate_knowledge_visuals(
             errors.append(f"{kind} 页最多使用一张主题照片")
         if page_photo_count and len(page_photo_sources) != page_photo_count:
             errors.append(f"{kind} 页照片缺少可审计的来源链接")
-        if kind == "knowledge" and page_photo_count != 1:
+        if enforce_page_photos and page_photo_count != 1:
+            errors.append(f"{kind} 页必须且只能使用一张强相关主题照片")
+        elif kind == "knowledge" and page_photo_count != 1:
             errors.append("封面必须且只能使用一张主题照片")
         pages.append(
             {
@@ -268,9 +276,9 @@ def evaluate_knowledge_visuals(
         "standards": {
             "photo_count_max": MAX_PHOTO_USES,
             "photo_source_uniqueness": "same photo/source may appear only once",
-            "page_visual": "every page requires a photo or a topic-specific infographic",
-            "non_cover_visual": "distinct licensed photo or structured infographic",
-            "rule_explainer": "topic-specific diagram required",
+            "page_visual": "every page requires one distinct verified photo",
+            "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+            "rule_explainer": "topic-specific diagram plus verified photo required",
             "player_crop": "head-safe object position",
             "production_labels": "internal generation labels are forbidden",
             "story_ordinals": "semantic icons replace ordinal markers",

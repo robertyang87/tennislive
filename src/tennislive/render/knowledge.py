@@ -21,6 +21,7 @@ from .pushmsg import to_copy_page
 from .knowledge_visual_qa import evaluate_knowledge_visuals
 from .tournament_story import (
     TournamentStory,
+    story_selection_evidence,
     tournament_story_candidates,
 )
 from .webcards import _screenshot_pages, knowledge_deck_bodies
@@ -71,6 +72,16 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
     if xhs_title_len(prefix + hook) > 20:
         hook = story.title
     return prefix + hook
+
+
+def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
+    """Use a distinct, fully preserved title for WeChat image posts."""
+    title = (
+        f"{digest.today.month}.{digest.today.day}网球有故事｜{story.title}"
+    )
+    if len(title) > 64:
+        raise ValueError(f"公众号图片消息标题超长: {len(title)} > 64")
+    return title
 
 
 def _caption_items(story: TournamentStory) -> list[str]:
@@ -247,6 +258,28 @@ def _golden_slam_copy(story: TournamentStory, digest: Digest) -> str:
     )
 
 
+def _longest_match_copy(story: TournamentStory, digest: Digest) -> str:
+    title = knowledge_title(story, digest)
+    question = _knowledge_question(story)
+    return (
+        f"{title}\n\n"
+        "2010年温网首轮，伊斯内尔和马胡只是走上18号球场，"
+        "谁也没想到，下场已经是三天以后。\n\n"
+        "前四盘打完，两人仍分不出高下。\n"
+        "当时决胜盘没有抢七，只能一直打到有人领先两局。\n\n"
+        "于是比分从20比20爬到40比40，再到50比50。\n"
+        "现场记分牌一度撑不住，比赛却还在继续。\n\n"
+        "最终，伊斯内尔在决胜盘第138局完成破发：70比68。\n"
+        "整场耗时11小时5分钟、打了183局，两人合计轰出216记ACE。\n\n"
+        "这场球后来成了规则改革最有力的理由之一。\n"
+        "如今四大满贯决胜盘打到6比6，会用10分抢十收尾。"
+        "那种不知道终点在哪的长盘大战，已经留在历史里。\n\n"
+        f"💬 {question}\n\n"
+        "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
+        "#网球 #温网 #伊斯内尔 #马胡 #网球纪录 #网球时差"
+    )
+
+
 def _knowledge_question(story: TournamentStory) -> str:
     trivia_questions = {
         "scoring-history": "你第一次学网球记分时，最难理解的是哪一项？",
@@ -281,6 +314,8 @@ def knowledge_pinned_comment(story: TournamentStory) -> str:
 def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
     if story.slug == "golden-slam":
         return _golden_slam_copy(story, digest)
+    if story.slug == "longest-match":
+        return _longest_match_copy(story, digest)
     title = knowledge_title(story, digest)
     items = _caption_items(story)
     moments = "\n\n".join(
@@ -500,6 +535,12 @@ def generate_knowledge_package(
                 "title": candidate.title,
                 "errors": candidate_report.get("errors", []),
                 "missing_pages": candidate_report.get("missing_pages", []),
+                "input_domains": candidate_report.get("input_domains", []),
+                "providers_queried": candidate_report.get(
+                    "providers_queried", []
+                ),
+                "provider_runs": candidate_report.get("provider_runs", []),
+                "attempts": candidate_report.get("attempts", []),
             }
         )
     if selected_story is None:
@@ -516,6 +557,16 @@ def generate_knowledge_package(
         )
         raise ValueError("知识帖素材预检失败：候选故事均没有完整高质量图片包")
     story = selected_story
+    selection_evidence = story_selection_evidence(story, digest)
+    selection_evidence.update(
+        {
+            "candidate_rank": candidates.index(story) + 1,
+            "candidate_count": len(candidates),
+            "visual_preflight_rejections": len(rejected_candidates),
+            "visual_preflight_status": "pass",
+        }
+    )
+    visual_sources["selection_evidence"] = selection_evidence
     visual_sources["rejected_candidates"] = rejected_candidates
     (outdir / "visual_sources.json").write_text(
         json.dumps(visual_sources, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -574,7 +625,7 @@ def generate_knowledge_package(
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
     (outdir / "pinned_comment.txt").write_text(pinned_comment, encoding="utf-8")
     (outdir / "wechat_title.txt").write_text(
-        f"每日网球知识：{story.title}", encoding="utf-8"
+        knowledge_wechat_title(story, digest), encoding="utf-8"
     )
     (outdir / "copy.html").write_text(
         to_copy_page(xhs_text, pinned_comment=pinned_comment), encoding="utf-8"
@@ -602,6 +653,7 @@ def generate_knowledge_package(
                 "visual_qa": "visual_qa.json",
                 "visual_sources": "visual_sources.json",
                 "resolved_visual_count": len(page_visuals),
+                "selection_evidence": selection_evidence,
             },
             ensure_ascii=False,
             indent=2,
