@@ -51,6 +51,10 @@ jobs:
             git push origin "${{ github.ref_name }}"
           fi
 
+      - name: 探测非 Wikimedia 的奥运决赛配图（临时）
+        shell: bash
+        run: python tools/probe_og_images.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
