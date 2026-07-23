@@ -46,6 +46,17 @@ REACTION_TERMS = (
     "after winning",
     "wins the match",
     "match win",
+    "disappointed",
+    "disappointment",
+    "frustrated",
+    "frustration",
+    "dejected",
+    "in tears",
+    "tears of joy",
+    "crying",
+    "falls to knees",
+    "on her knees",
+    "on his knees",
 )
 
 TROPHY_TERMS = (
@@ -109,12 +120,14 @@ def classify_cover_scene(text: str) -> dict:
     trophy = hits(TROPHY_TERMS)
     if rejected:
         scene = "static_or_group"
-    elif motion:
-        scene = "match_action"
-    elif reaction:
-        scene = "on_court_reaction"
     elif trophy:
         scene = "solo_trophy"
+    elif reaction:
+        # Emotional aftermath is more shareable than a generic action frame;
+        # keep it ahead of motion when metadata contains both descriptions.
+        scene = "on_court_reaction"
+    elif motion:
+        scene = "match_action"
     else:
         scene = "unknown"
     return {
