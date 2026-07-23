@@ -332,6 +332,111 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
             "image_text": "steffi graf 1988 seoul olympic final medal tennis",
         },
     ),
+    # 三巨头很少同框出现在同一张真实照片里——多轮检索到的"三人合影"候选
+    # 要么是错配的旧照（如 2013 法网默哀仪式被张冠李戴成 2022 Laver Cup），
+    # 要么只有两人在场（2022 Laver Cup 费纳同框照没有德约）。cover 页改用
+    # NPR 三格拼版报道图（三张真实特写并排，非合成摆拍），story/explainer/
+    # today 三页各自锚定一场独立赛事，每页只需一人真实入镜即可核实。
+    ("big-three", "cover"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic",
+            "image_url": (
+                "https://media.npr.org/assets/img/2022/09/22/"
+                "copy-of-composites_wide-44c1798792c6e052aa486f6921450f371c212c5b.jpg"
+                "?s=1400&c=85&f=jpeg"
+            ),
+            "credit": "NPR",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 1400,
+            "height": 787,
+            "relevance": 100,
+            "search_text": (
+                "roger federer rafael nadal novak djokovic 2022 laver cup "
+                "reunion tennis"
+            ),
+            "image_text": (
+                "three side-by-side close-up reaction portraits of roger "
+                "federer, rafael nadal and novak djokovic marking their "
+                "2022 laver cup tennis reunion"
+            ),
+        },
+    ),
+    ("big-three", "story"): (
+        {
+            "provider": "verified-event-archive",
+            "source_url": (
+                "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_"
+                "final_2008,_Federer_serves_for_3rd_set.jpg"
+            ),
+            "image_url": (
+                "https://upload.wikimedia.org/wikipedia/commons/0/0d/"
+                "Wimbledon_Men%27s_final_2008%2C_Federer_serves_for_3rd_set.jpg"
+            ),
+            "credit": "David Underdown / Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "width": 2048,
+            "height": 1448,
+            "relevance": 100,
+            "search_text": (
+                "roger federer rafael nadal 2008 wimbledon final centre court"
+            ),
+            "image_text": (
+                "roger federer serving on centre court against rafael nadal "
+                "during the 2008 wimbledon final, widely regarded as the "
+                "greatest match ever played"
+            ),
+        },
+    ),
+    ("big-three", "explainer"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": (
+                "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-"
+                "nadal-australian-open-2012/"
+            ),
+            "image_url": (
+                "https://www.perfect-tennis.com/wp-content/uploads/2020/04/"
+                "Djokovic.jpg"
+            ),
+            "credit": "Perfect Tennis",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 1400,
+            "height": 900,
+            "relevance": 100,
+            "search_text": (
+                "novak djokovic 2012 australian open final champion melbourne"
+            ),
+            "image_text": (
+                "novak djokovic celebrates winning the 2012 australian open "
+                "hard court final match in melbourne, the longest grand slam "
+                "final ever played at 5 hours 53 minutes"
+            ),
+        },
+    ),
+    ("big-three", "today"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": (
+                "https://www.rappler.com/sports/tears-flow-fans-salute-"
+                "retiring-rafael-nadal-after-davis-cup-defeat-2024/"
+            ),
+            "image_url": (
+                "https://www.rappler.com/tachyon/2024/11/"
+                "reuters-rafael-nadal-tribute-november-20-2024-scaled.jpg"
+            ),
+            "credit": "Reuters via Rappler",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 2560,
+            "height": 1767,
+            "relevance": 100,
+            "search_text": "rafael nadal retirement farewell davis cup 2024 tennis",
+            "image_text": (
+                "rafael nadal waves farewell to fans during his emotional "
+                "retirement ceremony at the 2024 davis cup finals in malaga"
+            ),
+        },
+    ),
 }
 _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...], bool]]] = {
     # page: (person/subject, exact years, event/location anchors, person required)
@@ -382,8 +487,8 @@ _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...],
     "big-three": {
         "cover": ("Federer Nadal Djokovic", (), ("tennis",), True),
         "story": ("Federer Nadal", ("2008",), ("wimbledon",), True),
-        "explainer": ("Djokovic Nadal", ("2012",), ("australian open", "melbourne"), True),
-        "today": ("Federer Nadal Djokovic", (), ("grand slam", "tennis"), True),
+        "explainer": ("Djokovic", ("2012",), ("australian open", "melbourne"), True),
+        "today": ("Rafael Nadal", (), ("grand slam", "tennis"), True),
     },
     "china-tennis": {
         "cover": ("Li Na", ("2011",), ("roland garros", "french open"), True),
