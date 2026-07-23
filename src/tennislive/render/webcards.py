@@ -2475,11 +2475,17 @@ def _knowledge_fact_body(
         title = trivia_titles.get(story.slug, f"{story.title}，真正难在哪里")
     has_photo = visual is not None
     page_class = " has-page-photo" if has_photo else ""
+    explainer_photo_caption = {
+        "big-three": ("德约科维奇夺冠瞬间", "2012 · 澳网决赛"),
+    }
+    caption, subline = explainer_photo_caption.get(
+        story.slug, (story.venue, story.location)
+    )
     media = (
         _knowledge_photo(
             story,
-            story.venue,
-            story.location,
+            caption,
+            subline,
             visual=visual,
             compact=True,
         )
@@ -2573,13 +2579,21 @@ def _knowledge_today_body(
             else (
                 "18号球场留下了这块纪念牌"
                 if story.slug == "longest-match"
-                else last.headline if last else story.hero_fact
+                else (
+                    "纳达尔的告别时刻"
+                    if story.slug == "big-three"
+                    else last.headline if last else story.hero_fact
+                )
             )
         )
         photo_meta = (
             "2010 · 温网18号球场"
             if story.slug == "longest-match"
-            else f"{last.date[:4]} · {last.player}" if last else story.location
+            else (
+                "2024 · 戴维斯杯退役仪式"
+                if story.slug == "big-three"
+                else f"{last.date[:4]} · {last.player}" if last else story.location
+            )
         )
         media = _knowledge_photo(
             story,
