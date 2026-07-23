@@ -7,8 +7,10 @@ from datetime import date
 from ..models import Match
 from ..research.media import brief_for_match
 from ..zh import player_zh
+from ..zh.terms import round_zh
 from .common import match_round_display
 from .context import historical_context
+from .rating import went_to_deciding_set
 from .story import is_chinese_player, schedule_insight
 from .tournament_story import direct_story_for_match
 
@@ -106,13 +108,47 @@ def preview_angle(match: Match, today: date | None = None) -> str:
 
 
 def editor_takeaway(match: Match, today: date | None = None) -> str:
+    """Priority: reviewed media takeaway > a tracked player's own storyline >
+    a grounded, match-specific line derived from real facts (round stakes,
+    tiebreak count, decider) -- never a boilerplate sentence that could be
+    pasted onto any match."""
     media = brief_for_match(match, today) if today is not None else None
     if media is not None and media.takeaway:
         return media.takeaway
     story = direct_story_for_match(match, prefer_player=True)
     if story is not None and story.kind == "player":
         return f"我更想继续追踪的，是{story.title}如何把今天接进自己的生涯时间线。"
-    return "我更在意比赛留下的变化，而不是只把最终比分再念一遍。"
+    return _grounded_takeaway(match)
+
+
+def _grounded_takeaway(match: Match) -> str:
+    winners = match.winner_players() or []
+    losers = match.loser_players() or []
+    if not winners or not losers:
+        return "这场比赛的看点，留到下一场用数据说话。"
+    winner_name = player_zh(winners[0].name)
+    loser_name = player_zh(losers[0].name)
+
+    r = round_zh(match.round_name) or ""
+    stakes = {
+        "决赛": "冠军奖杯",
+        "半决赛": "决赛门票",
+        "四分之一决赛": "四强席位",
+        "八分之一决赛": "八强门票",
+    }.get(r)
+    if stakes:
+        return f"{winner_name}把{stakes}的悬念留到了下一场；{loser_name}这个赛季，还得找别的地方把状态找回来。"
+
+    tiebreaks = sum(
+        1
+        for s in match.sets
+        if s.home_tiebreak is not None or s.away_tiebreak is not None
+    )
+    if tiebreaks >= 2:
+        return f"两盘抢七都被{winner_name}拿下，这份关键分的稳定性，比比分更值得记一笔。"
+    if went_to_deciding_set(match):
+        return f"顶住决胜盘的是{winner_name}；{loser_name}最遗憾的，是没能把领先优势保持到最后一分。"
+    return f"{winner_name}这场赢得干脆，下一轮才是真正检验状态的时候。"
 
 
 def apply_knowledge_angles(digest) -> int:
