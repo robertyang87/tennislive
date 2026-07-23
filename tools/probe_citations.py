@@ -12,8 +12,8 @@ import urllib.request
 CITATION_URLS = [
     "https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
     "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
-    "https://www.atptour.com/en/news/atp-no-1-club-docuseries-part-4-big-3-feature",
     "https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/",
+    "https://www.tntsports.co.uk/tennis/big-three-rivalry-head-to-head-rafael-nadal-novak-djokovic-roger-federer-grand-slam_sto20044253/story.shtml",
 ]
 
 TITLE = "File:Wimbledon Men's final 2008, Federer serves for 3rd set.jpg"
