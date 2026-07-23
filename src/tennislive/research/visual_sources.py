@@ -1838,7 +1838,6 @@ def resolve_match_cover_visual(
                 and subject_match
                 and person_match
                 and event_match
-                and year_match
                 and scene["scene"] != "static_or_group"
             )
             if not fallback_eligible:
