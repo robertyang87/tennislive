@@ -107,20 +107,26 @@ def cmd_today(args) -> int:
 def cmd_knowledge_adhoc(args) -> int:
     """按指定 slug 单独生成一篇知识帖，不占用当天常规知识帖的位置。
 
-    只能从预先写好、事实核验过的选题池里按 slug 选取——知识帖要求
-    可核实的事实与已授权配图，不支持凭空生成全新话题。
+    可指定 slug 从预先写好、事实核验过的选题池里精确选取；留空 --slug
+    则复用常规每日流程同一套自动选题逻辑
+    （tournament_story.tournament_story_candidates）——按当日真实赛事/
+    球员热度、时效性与冷却期排序候选，逐个尝试配图，配图不达标的候选
+    自动跳过换下一个，直到找到能完整发布的选题为止，无需人工挑 slug。
+    知识帖要求可核实的事实与已授权配图，不支持凭空生成全新话题。
     """
     from .render.knowledge import generate_knowledge_package
     from .render.terminal import console
     from .render.tournament_story import find_story_by_slug, mark_story_used
 
-    story = find_story_by_slug(args.slug)
-    if story is None:
-        console.print(f"[red]未找到 slug 为 “{args.slug}” 的选题。[/red]")
-        return 2
-    if not story.image.exists():
-        console.print(f"[red]选题 “{args.slug}” 缺少配图素材：{story.image}[/red]")
-        return 2
+    story = None
+    if args.slug:
+        story = find_story_by_slug(args.slug)
+        if story is None:
+            console.print(f"[red]未找到 slug 为 “{args.slug}” 的选题。[/red]")
+            return 2
+        if not story.image.exists():
+            console.print(f"[red]选题 “{args.slug}” 缺少配图素材：{story.image}[/red]")
+            return 2
 
     d = parse_date_arg(args.date)
     try:
@@ -140,7 +146,8 @@ def cmd_knowledge_adhoc(args) -> int:
             console.print(detail_path.read_text("utf-8"))
         return 2
     if generated is None:
-        console.print(f"[red]知识帖生成失败：{outdir}[/red]")
+        reason = f"{outdir}" if args.slug else "没有找到时效匹配、配图达标的候选选题（已按热度试遍候选池）"
+        console.print(f"[red]知识帖生成失败：{reason}[/red]")
         return 2
 
     mark_story_used(generated.slug, digest.today)
@@ -1039,7 +1046,11 @@ def build_parser() -> argparse.ArgumentParser:
         "knowledge-adhoc",
         help="按指定 slug 单独生成一篇知识帖（不占用当天常规知识帖位置）",
     )
-    sp.add_argument("--slug", required=True, help="选题池里的 slug（见 tournament_story.py 的 STORIES）")
+    sp.add_argument(
+        "--slug",
+        default="",
+        help="选题池里的 slug（见 tournament_story.py 的 STORIES）；留空则按当日热度/时效自动选题并在配图不达标时自动换下一个候选",
+    )
     sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output/knowledge_adhoc", help="输出目录")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
