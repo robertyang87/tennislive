@@ -385,6 +385,33 @@ def test_lead_story_explains_china_headliner_stage_and_official_evidence():
     assert "有WTA原文支撑" in selected.reasons
 
 
+def test_lead_story_prefers_star_or_chinese_player_for_the_cover():
+    routine = make_match(
+        home_name="Routine Player",
+        away_name="Another Player",
+        tournament="Hamburg Open",
+        match_id="routine-result",
+    )
+    routine.tournament.level = "ATP250"
+    routine.home[0].seed = routine.away[0].seed = None
+    routine.home[0].rank = routine.away[0].rank = 80
+    star = make_match(
+        home_name="Alexander Bublik",
+        away_name="Another Player",
+        tournament="Kitzbuhel Open",
+        round_name="Round 2",
+        match_id="star-result",
+    )
+    star.tournament.level = "ATP250"
+    star.away[0].seed = None
+    star.home[0].rank = 11
+
+    selected = select_lead_story(Digest(today=date(2026, 7, 23), results=[routine, star]))
+
+    assert selected is not None
+    assert selected.match.match_id == "star-result"
+
+
 def test_lead_story_keeps_major_final_above_routine_chinese_result():
     chinese = make_match(
         home_name="Qinwen Zheng",

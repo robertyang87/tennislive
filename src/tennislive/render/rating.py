@@ -54,6 +54,28 @@ HEADLINER_NAMES = {
     "Stan Wawrinka",
 }
 
+
+def is_headline_player(player) -> bool:
+    """Return whether a player is eligible for the daily visual headline.
+
+    A headliner is either a named star, a Chinese player, or a consistently
+    top-30/top-eight seed player when an upstream feed omits the name mapping.
+    This keeps the rule deterministic and avoids putting an anonymous routine
+    first-round match on the cover.
+    """
+    if getattr(player, "country", None) == "CHN":
+        return True
+    if getattr(player, "name", None) in HEADLINER_NAMES:
+        return True
+    rank = getattr(player, "rank", None)
+    seed = getattr(player, "seed", None)
+    return (rank is not None and rank <= 30) or (seed is not None and seed <= 8)
+
+
+def is_headline_match(match: Match) -> bool:
+    """Return whether a match contains at least one approved headliner."""
+    return any(is_headline_player(player) for player in match.home + match.away)
+
 TOUR_FOCUS_LEVELS = {
     "GS",
     "Finals",
@@ -236,7 +258,19 @@ def select_lead_story(digest: Digest) -> LeadStorySelection | None:
             if is_tour_focus_match(match)
         ],
     )
-    candidates = next((pool for pool in pools if pool), [])
+    # Keep the existing results -> live -> schedule editorial order, but first
+    # search each pool for a star/Chinese-player match. The fallback pool is
+    # retained for diagnostics and older callers; production cover validation
+    # rejects a non-headliner match before any push occurs.
+    preferred_candidates = next(
+        (
+            [match for match in pool if is_headline_match(match)]
+            for pool in pools
+            if any(is_headline_match(match) for match in pool)
+        ),
+        None,
+    )
+    candidates = preferred_candidates or next((pool for pool in pools if pool), [])
     if not candidates:
         return None
 
