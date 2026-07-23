@@ -343,11 +343,41 @@ jobs:
           tennislive publish wechat --dir "${{ steps.gen.outputs.outdir }}" \
             --style "$WECHAT_STYLE" $EXTRA
 
+      - name: 生成可迭代质检失败日志
+        if: failure() && steps.guard.outputs.skip != 'true'
+        run: |
+          OUT_DIR="${{ steps.gen.outputs.outdir }}"
+          LOG="$OUT_DIR/quality_failure.log"
+          {
+            echo "run_id=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "edition=$(basename "$OUT_DIR")"
+            if [ -s "$OUT_DIR/cover_visual.json" ]; then
+              jq -r '"status=" + (.status // "unknown"),
+                "match_id=" + (.match_id // ""),
+                "headline_eligible=" + ((.headline_eligible // false)|tostring),
+                "headline_players=" + ((.headline_players // [])|join(",")),
+                "providers=" + ((.providers_queried // [])|join(",")),
+                "errors=" + ((.errors // [])|join(" | ")), 
+                "fallback_reason=" + (.fallback_reason // "")' \
+                "$OUT_DIR/cover_visual.json"
+              jq -r '.attempts[]? | "attempt provider=" + (.provider // "") +
+                " status=" + (.status // "") + " player=" + (.player // "") +
+                " hard_failures=" + ((.hard_failures // [])|join(",")) +
+                " source=" + (.source_url // "")' \
+                "$OUT_DIR/cover_visual.json"
+            else
+              echo "cover_visual_report=missing"
+            fi
+          } > "$LOG"
+          cat "$LOG"
+
       - name: 上传日报失败诊断包
         if: failure() && steps.guard.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: digest-failure-final-${{ github.run_number }}
+          retention-days: 30
           path: |
             ${{ steps.gen.outputs.outdir }}*
             output/*.digest.log
