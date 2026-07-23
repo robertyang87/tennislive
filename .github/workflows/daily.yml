@@ -231,8 +231,10 @@ jobs:
               and (.selected_asset_sha256 | test("^[0-9a-f]{64}$"))
               ) or (
               .status == "fallback"
+              and .fallback_person == true
               and (.fallback_reason | length > 0)
-              and (.quality.status == "fallback")
+              and (.quality.status | IN("pass", "fallback"))
+              and (.quality.hard_failures | length == 0)
               )
             )
             and .render_binding.status == "bound"
