@@ -2576,3 +2576,17 @@ def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exis
     assert "compare-grid" in html_out and "compare-row" in html_out
     assert "专业技术统计" in html_out
     assert "一发得分率" in html_out and "ACE" in html_out
+
+
+def test_editor_takeaway_fallback_names_the_actual_players_not_boilerplate():
+    """没有权威媒体锐评、也没有追踪中的球员故事时，兜底的"编辑锐评"必须是
+    针对这场比赛的具体判断（点名真实球员/轮次），不能是套在哪场比赛都
+    通用的空话——那本质上和凑数的技术统计表是同一种问题。"""
+    from tennislive.render.narrative import editor_takeaway
+
+    match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
+    takeaway = editor_takeaway(match, date(2026, 7, 23))
+
+    assert "我更在意比赛留下的变化" not in takeaway
+    assert "辛纳" in takeaway or "德约科维奇" in takeaway  # 点名真实球员之一
+    assert takeaway.strip()
