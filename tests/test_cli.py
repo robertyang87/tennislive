@@ -300,6 +300,41 @@ def test_knowledge_adhoc_generates_into_its_own_directory(tmp_path, monkeypatch)
     assert (outdir / "cards").is_dir()
 
 
+def test_knowledge_adhoc_auto_selects_when_slug_omitted(tmp_path, monkeypatch):
+    """留空 --slug 时必须复用常规每日流程的自动选题逻辑：不做 slug 校验，
+    直接把 story=None 交给 generate_knowledge_package，由它内部调用
+    tournament_story_candidates 按当日热度/时效排序、逐个候选试配图。"""
+    from tennislive.digest import Digest
+    from tennislive.render.tournament_story import find_story_by_slug
+
+    today = date(2026, 7, 20)
+    digest = Digest(today=today, source="test")
+    monkeypatch.setattr(cli, "build_digest", lambda *args, **kwargs: digest)
+
+    captured_story = object()  # sentinel distinct from None to prove it was overwritten
+
+    def _fake_generate(digest, outdir, *, theme, story):
+        nonlocal captured_story
+        captured_story = story
+        Path(outdir).mkdir(parents=True, exist_ok=True)
+        return find_story_by_slug("hawkeye")
+
+    monkeypatch.setattr(
+        "tennislive.render.knowledge.generate_knowledge_package", _fake_generate
+    )
+    marked: list[str] = []
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_story_used",
+        lambda slug, when: marked.append(slug),
+    )
+
+    outdir = tmp_path / "knowledge_adhoc"
+    result = cli.main(["knowledge-adhoc", "--outdir", str(outdir)])
+    assert result == 0
+    assert captured_story is None
+    assert marked == ["hawkeye"]
+
+
 def test_knowledge_adhoc_surfaces_failure_detail_instead_of_a_bare_traceback(
     tmp_path, monkeypatch, capsys
 ):

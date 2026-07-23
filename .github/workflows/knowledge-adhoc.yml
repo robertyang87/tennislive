@@ -6,12 +6,18 @@ name: knowledge-adhoc
 # 里选 slug（见 src/tennislive/render/tournament_story.py 的 STORIES）——
 # 知识帖要求可核实的事实与已授权配图，不支持凭空生成全新话题；全新
 # 话题需要先补充一条新的 TournamentStory 条目（含真实来源与配图）。
+#
+# slug 留空 = 自动选题：复用常规每日流程同一套排序逻辑
+# （tournament_story_candidates），按当日真实赛事/球员热度与时效性排序
+# 候选，逐个尝试配图，配图不达标就自动换下一个候选，直到成功或候选
+# 耗尽——不需要人工挑一个 slug 再试错。
 on:
   workflow_dispatch:
     inputs:
       slug:
-        description: "选题 slug（如 hawkeye / big-three / umag）"
-        required: true
+        description: "选题 slug（如 hawkeye / big-three / umag）；留空=自动按热度/时效选题并自动跳过配图不达标的候选"
+        required: false
+        default: ""
       date:
         description: "基准日期（YYYY-MM-DD，北京时间；留空=今天）"
         required: false
@@ -113,11 +119,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          GENERATED_SLUG="$(jq -r '.slug' "${{ steps.gen.outputs.outdir }}/story.json")"
           git add "${{ steps.gen.outputs.outdir }}" data/story_state.json
           if git diff --cached --quiet; then
             echo "没有新内容，跳过提交"
           else
-            git commit -m "content: 知识帖(ad-hoc) ${{ github.event.inputs.slug }}"
+            git commit -m "content: 知识帖(ad-hoc) $GENERATED_SLUG"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
