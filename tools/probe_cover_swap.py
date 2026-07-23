@@ -1,7 +1,9 @@
-"""Temporary: fetch the real, already-verified 2024 Australian Open
-quarterfinal photo of Zheng Qinwen and overwrite the committed cover asset
-with it (the previous cover had a bystander prominent in frame; its Commons
-"cropped" variant turned out to be a rotated, unusable close-up)."""
+"""Temporary: fetch Zheng Qinwen's most iconic real photo -- collapsing on
+the clay in celebration right after winning 2024 Paris Olympics gold -- and
+use it as the committed cover asset too (the same photo already backs the
+"today" page of the knowledge post; reusing it as the cover teaser is an
+accepted tradeoff since no second distinct high-res Olympics photo of her
+could be verified this session)."""
 
 from __future__ import annotations
 
@@ -9,8 +11,8 @@ import sys
 import urllib.request
 
 URL = (
-    "https://photoresources.wtatennis.com/wta/photo/2024/01/24/"
-    "77cc89de-5003-44c6-a221-c3db1b6a04af/Zheng-QF-Paul-Crock-AFP.jpg"
+    "https://ausopen.com/sites/default/files/202408/4/"
+    "zheng-qinwen-gold-paris-2024-olympics.jpg"
 )
 DEST = "assets/players/zheng-qinwen.jpg"
 

@@ -46,7 +46,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "没有新照片，跳过提交"
           else
-            git commit -m "content: swap zheng-qinwen cover to a real 2024 AO quarterfinal photo"
+            git commit -m "content: swap zheng-qinwen cover to her iconic 2024 Olympics gold-medal photo"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
