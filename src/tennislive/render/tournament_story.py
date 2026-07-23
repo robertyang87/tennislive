@@ -345,7 +345,10 @@ STORIES = (
                     "首次闯入大满贯决赛，虽不敌萨巴伦卡，但让中国球迷"
                     "在李娜之后再次等到了大满贯决赛日的五星红旗。"
                 ),
-                source_url="https://en.wikipedia.org/wiki/2024_Australian_Open_%E2%80%93_Women%27s_singles",
+                source_url=(
+                    "https://www.wtatennis.com/news/3868599/"
+                    "sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title"
+                ),
             ),
             ChampionMoment(
                 date="2024-08-03",
@@ -357,18 +360,19 @@ STORIES = (
                     "亚洲球员的首枚奥运网球单打金牌。"
                 ),
                 source_url=(
-                    "https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_"
-                    "%E2%80%93_Women%27s_singles"
+                    "https://www.olympics.com/en/news/"
+                    "zheng-qinwen-wins-gold-paris-2024-tennis-women-singles"
                 ),
             ),
         ),
         venue="2024 巴黎奥运女单金牌得主",
         image=PLAYER_ASSETS / "zheng-qinwen.jpg",
         image_credit="Hameltion / Wikimedia Commons · CC BY-SA 4.0",
-        source_url="https://en.wikipedia.org/wiki/Zheng_Qinwen",
+        source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
         image_source_url="https://commons.wikimedia.org/wiki/Category:Zheng_Qinwen",
         kind="player",
         source_label="WTA / 奥运官方档案",
+        evidence_urls=("https://en.wikipedia.org/wiki/Zheng_Qinwen",),
     ),
     TournamentStory(
         slug="sinner",
