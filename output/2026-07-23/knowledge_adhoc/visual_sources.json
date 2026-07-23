@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "status": "pass",
-  "story_slug": "longest-match",
+  "story_slug": "zheng-qinwen",
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
@@ -13,11 +13,11 @@
   ],
   "missing_pages": [],
   "input_domains": [
+    "ausopen.com",
     "commons.wikimedia.org",
-    "itftennis.com",
-    "sportsboom.com",
-    "usopen.org",
-    "wimbledon.com"
+    "en.wikipedia.org",
+    "olympics.com",
+    "wtatennis.com"
   ],
   "providers_queried": [
     "curated-editorial",
@@ -27,48 +27,48 @@
     {
       "page": "story",
       "provider": "curated-editorial",
-      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 australian open tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "story",
       "provider": "official-story-pages",
-      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 australian open tennis",
       "status": "ok",
-      "candidate_count": 1
+      "candidate_count": 3
     },
     {
       "page": "explainer",
       "provider": "curated-editorial",
-      "query": "scoreboard 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 olympic tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "explainer",
       "provider": "official-story-pages",
-      "query": "scoreboard 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 olympic tennis",
       "status": "ok",
-      "candidate_count": 1
+      "candidate_count": 3
     },
     {
       "page": "today",
       "provider": "curated-editorial",
-      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 olympic tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "official-story-pages",
-      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "query": "qinwen zheng 2024 olympic tennis",
       "status": "ok",
-      "candidate_count": 1
+      "candidate_count": 3
     }
   ],
   "selected_providers": [
-    "verified-editorial",
+    "official-media",
     "verified-event-archive"
   ],
   "excluded_source_urls": [],
@@ -76,89 +76,112 @@
   "attempts": [
     {
       "provider": "official-media",
-      "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-      "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-      "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
-      "credit": "wimbledon.com",
+      "page_url": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "source_url": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "image_url": "https://photoresources.wtatennis.com/photo-resources/2025/05/06/837e6f32-a9b9-42e2-b3a8-057f37846755/Home-Share_1200x630.png?width=2000",
+      "credit": "wtatennis.com",
       "license": "官方媒体 · 非商业资讯引用",
       "status": "candidate",
       "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
-      "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
+      "search_text": "qinwen zheng | player stats & more – wta official get the latest player stats on qinwen zheng including her videos, highlights, and more at the official women https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "image_text": " https://photoresources.wtatennis.com/photo-resources/2025/05/06/837e6f32-a9b9-42e2-b3a8-057f37846755/home-share_1200x630.png?width=2000",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://en.wikipedia.org/wiki/Zheng_Qinwen",
+      "source_url": "https://en.wikipedia.org/wiki/Zheng_Qinwen",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Zheng_Qinwen_%282024_US_Open%29_01_%28cropped%29.jpg/960px-Zheng_Qinwen_%282024_US_Open%29_01_%28cropped%29.jpg",
+      "credit": "en.wikipedia.org",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "zheng qinwen - wikipedia  https://en.wikipedia.org/wiki/zheng_qinwen",
+      "image_text": " https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/zheng_qinwen_%282024_us_open%29_01_%28cropped%29.jpg/960px-zheng_qinwen_%282024_us_open%29_01_%28cropped%29.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "source_url": "https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/01/27/9325c21f-5f79-4097-afc6-d9356a02dd39/Sabalenka-trophy-Darrian-Traynor.jpg?width=2000",
+      "credit": "wtatennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "sabalenka overpowers zheng qinwen to defend australian open title aryna sabalenka claimed the second grand slam title of her career with a successful defense of her australian open crown, defeating zheng qinwen in the final in straight sets. https://www.wtatennis.com/news/3868599/sabalenka-overpowers-zheng-qinwen-to-defend-australian-open-title",
+      "image_text": " https://photoresources.wtatennis.com/wta/photo/2024/01/27/9325c21f-5f79-4097-afc6-d9356a02dd39/sabalenka-trophy-darrian-traynor.jpg?width=2000",
       "width": 0,
       "height": 0
     },
     {
       "provider": "official-page",
-      "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "page_url": "https://www.olympics.com/en/news/zheng-qinwen-wins-gold-paris-2024-tennis-women-singles",
       "status": "error",
-      "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
-    },
-    {
-      "provider": "official-page",
-      "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
-      "status": "error",
-      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+      "reason": "HTTPSConnectionPool(host='www.olympics.com', port=443): Read timed out. (read timeout=7)"
     },
     {
       "page": "cover",
       "status": "selected",
-      "cached_file": "trivia-longest-match.jpg",
-      "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
-      "subject": "John Isner Nicolas Mahut",
+      "cached_file": "zheng-qinwen.jpg",
+      "title": "File:Zheng Qinwen (2024 US Open) 01.jpg",
+      "subject": "qinwen zheng",
       "required_years": [
-        "2010"
+        "2024"
       ],
-      "required_event_terms": [
-        "wimbledon",
-        "court 18"
-      ],
+      "required_event_terms": [],
       "person_required": true,
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_match": true,
-      "visual_impact_match": true,
+      "visual_impact_match": false,
       "reason": ""
     },
     {
       "page": "story",
       "status": "selected",
-      "required_event_terms": [],
+      "required_event_terms": [
+        "australian open",
+        "melbourne"
+      ],
       "match_level": "exact-event",
       "rejection_counts": {
-        "subject-or-person-mismatch": 1
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
       },
       "source_runs": [
         {
           "page": "story",
           "provider": "curated-editorial",
-          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 australian open tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "story",
           "provider": "official-story-pages",
-          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 australian open tennis",
           "status": "ok",
-          "candidate_count": 1
+          "candidate_count": 3
         }
       ],
-      "provider": "verified-event-archive",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
-      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Isner-Mahut_match_WIM2010.jpg?width=1600",
-      "credit": "Voo de Mar / Wikimedia Commons",
-      "license": "CC BY-SA 2.0",
-      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "provider": "official-media",
+      "source_url": "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+      "image_url": "https://photoresources.wtatennis.com/wta/photo/2024/01/25/d736e04f-1a05-4b19-a78d-ab63210eee27/Zheng-SF-Cameron-Spencer.jpg",
+      "credit": "Cameron Spencer/Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "query": "qinwen zheng 2024 australian open tennis",
       "relevance": 100,
-      "sha256": "613202d034ddf978d7cd4c604be2b15aadc658bf08535d26a6f41f7022c96c0a",
+      "sha256": "360a21b7349cef6bde2383ae9c9014d4450638514ec3e039fcb5861fcbb44b2d",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "story-613202d034dd.jpg"
+      "cached_file": "story-360a21b7349c.jpg"
     },
     {
       "page": "explainer",
@@ -166,96 +189,97 @@
       "required_event_terms": [],
       "match_level": "exact-event",
       "rejection_counts": {
-        "subject-or-person-mismatch": 1
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
       },
       "source_runs": [
         {
           "page": "explainer",
           "provider": "curated-editorial",
-          "query": "scoreboard 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 olympic tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "explainer",
           "provider": "official-story-pages",
-          "query": "scoreboard 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 olympic tennis",
           "status": "ok",
-          "candidate_count": 1
+          "candidate_count": 3
         }
       ],
-      "provider": "verified-editorial",
-      "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-      "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
-      "credit": "SportsBoom / Getty Images",
-      "license": "Public editorial archive",
-      "query": "scoreboard 2010 wimbledon tennis",
+      "provider": "verified-event-archive",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Qinwen_Zheng_-_2024_Olympics.jpg",
+      "credit": "Kuberzog / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "query": "qinwen zheng 2024 olympic tennis",
       "relevance": 100,
-      "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
-      "focus": "50% 16%",
+      "sha256": "ff75b65b3b90ec1a9b2603a2128d65e69e2cccef8b957144685a67e303e3292d",
+      "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
-      "person_required": false,
-      "cached_file": "explainer-3e982f848689.jpg"
+      "person_required": true,
+      "cached_file": "explainer-ff75b65b3b90.jpg"
     },
     {
       "page": "today",
       "status": "selected",
-      "required_event_terms": [],
+      "required_event_terms": [
+        "olympic",
+        "paris 2024"
+      ],
       "match_level": "exact-event",
       "rejection_counts": {
-        "subject-or-person-mismatch": 1
+        "subject-or-person-mismatch": 2,
+        "low-visual-impact-metadata": 1
       },
       "source_runs": [
         {
           "page": "today",
           "provider": "curated-editorial",
-          "query": "Court 18 plaque 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 olympic tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "today",
           "provider": "official-story-pages",
-          "query": "Court 18 plaque 2010 wimbledon tennis",
+          "query": "qinwen zheng 2024 olympic tennis",
           "status": "ok",
-          "candidate_count": 1
+          "candidate_count": 3
         }
       ],
-      "provider": "verified-event-archive",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg",
-      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg?width=1800",
-      "credit": "Edwardx / Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "provider": "official-media",
+      "source_url": "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
+      "image_url": "https://ausopen.com/sites/default/files/202408/4/zheng-qinwen-gold-paris-2024-olympics.jpg",
+      "credit": "Australian Open (ausopen.com)",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "query": "qinwen zheng 2024 olympic tennis",
       "relevance": 100,
-      "sha256": "70499aa76b866757ec1b9878a5c29153ed7a808528e4000dc7161ef1dc865521",
-      "focus": "50% 38%",
+      "sha256": "e8875cef07781afafaf1139df6cf927e3c7490321956504fc832160af119341b",
+      "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
-      "person_required": false,
-      "cached_file": "today-70499aa76b86.jpg"
+      "person_required": true,
+      "cached_file": "today-e8875cef0778.jpg"
     }
   ],
   "selection_evidence": {
-    "kind": "trivia",
-    "candidate_slug": "longest-match",
+    "kind": "player",
+    "candidate_slug": "zheng-qinwen",
     "result_count": 79,
-    "live_count": 5,
-    "schedule_count": 18,
-    "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
-    "viral_prior": 10.0,
-    "topic_score": 10.0,
-    "live_relevance_score": 0.0,
-    "trend_signal_count": 0,
+    "live_count": 7,
+    "schedule_count": 16,
+    "selection_basis": "current player or tournament relevance, match news value, and recency",
     "candidate_rank": 1,
     "candidate_count": 1,
     "visual_preflight_rejections": 0,
     "visual_preflight_status": "pass",
     "same_topic_attempt": 1,
-    "same_topic_attempt_limit": 2
+    "same_topic_attempt_limit": 4
   },
   "rejected_candidates": [],
   "recovery": {
