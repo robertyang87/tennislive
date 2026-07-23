@@ -2517,69 +2517,37 @@ def test_cover_facts_trace_back_to_match_evidence():
     }
 
 
-def test_result_facts_never_restate_the_scoreboard_above_them():
-    """日报第二页（'这场意味着什么'）的三个数据块不能是凑数式重复.
+def test_trajectory_arc_differentiates_cruise_comeback_and_seesaw():
+    """'比赛走势'必须按盘与盘之间谁赢谁输区分，而不是同一句话覆盖所有比赛."""
+    from tennislive.render.story import trajectory_arc
 
-    生产环境曾实际出现：三块数据分别是"WTA250"（赛事级别）/"女单·第二轮"
-    （比赛轮次）/"6-0 3-6 6-3"（完整盘分）——三者在同一张卡片的头条 chip
-    和比分表里已经完整可见，纯属填充空间，被用户直接指出"凑数之嫌"。
-    """
-    from tennislive.render.common import group_by_tournament
-    from tennislive.render.webcards import _result_facts
+    cruise = make_match(match_id="cruise", sets=((6, 4), (6, 3)), tiebreaks=())
+    assert trajectory_arc(cruise) == "直落2盘，全程没有让对手看到机会"
 
-    straight_sets = make_match(sets=((6, 4), (6, 3)), tiebreaks=())
-    group = group_by_tournament([straight_sets])[0]
-    facts = _result_facts(straight_sets, group)
-
-    assert len(facts) == 3
-    labels = {label for _value, label in facts}
-    assert labels.isdisjoint({"比赛轮次", "完整盘分"})  # 不复述场次/比分
-    assert ("草地", "场地") in facts  # Wimbledon 是草地赛事，真实新信息
-    assert ("直落两盘", "鏖战成色") in facts
-    assert ("19局", "总局数") in facts  # 6+4+6+3=19
-
-
-def test_drama_tag_differentiates_upset_and_deciding_set_matches():
-    """'鏖战成色'必须按比赛实际走向区分，而不是同一句话覆盖所有比赛."""
-    from tennislive.render.webcards import _drama_tag
-
-    upset = make_match(match_id="upset", winner=1)
-    upset.home[0].seed, upset.home[0].rank = 1, 5
-    upset.away[0].seed, upset.away[0].rank = None, 90
-    value, label = _drama_tag(upset)
-    assert label == "爆冷指数" and "85位" in value
-
-    decider = make_match(
-        match_id="decider",
-        sets=((6, 4), (4, 6), (7, 6)),
-        tiebreaks=(None, None, (10, 8)),
+    comeback = make_match(
+        match_id="comeback", sets=((4, 6), (6, 3), (6, 4)), tiebreaks=()
     )
-    value, label = _drama_tag(decider)
-    assert label == "鏖战成色" and "抢七" in value
+    assert trajectory_arc(comeback) == "先丢一盘，随后连扳2盘完成逆转"
 
-    super_tb_decider = make_match(
-        match_id="super-tb-decider",
-        sets=((6, 4), (4, 6), (1, 0)),
-        tiebreaks=(None, None, (10, 8)),
+    seesaw = make_match(
+        match_id="seesaw", sets=((6, 4), (4, 6), (6, 4)), tiebreaks=()
     )
-    value, label = _drama_tag(super_tb_decider)
-    assert label == "鏖战成色" and "抢十" in value
-
-    straight = make_match(match_id="straight", sets=((6, 4), (6, 3)), tiebreaks=())
-    value, label = _drama_tag(straight)
-    assert (value, label) == ("直落两盘", "鏖战成色")
+    assert trajectory_arc(seesaw) == "比赛几度易手，胜负直到最后关键分才见分晓"
 
 
-def test_insight_body_result_page_adds_editorial_verdict_without_context():
-    """没有人工策展背景故事时，第二页仍要有独立于机械看点之外的编辑锐评，
-    并且不再让三个数据块和上方卡片重复，填补此前的大片空白。"""
+def test_insight_body_result_page_uses_real_comparison_not_filler_tiles():
+    """第二页不再是三宫格凑数：技术对比表（真实盘分/局数/抢七）+ 走势 +
+    编辑锐评，取代此前和上方卡片逐字重复的赛事级别/轮次/比分三个数据块。"""
     from datetime import date
 
     from tennislive.render.webcards import insight_body
 
-    match = make_match(sets=((6, 4), (6, 3)), tiebreaks=())
+    match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
     html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
 
     assert "编辑锐评" in html_out
-    assert html_out.count("赛事级别") <= 1  # 不再是三块凑数里的常客
+    assert "比赛走势" in html_out  # 走势句块已渲染
+    assert "compare-grid" in html_out and "compare-row" in html_out  # 真实技术对比表
+    assert "草地" in html_out  # Wimbledon 场地信息，卡片上此前不曾出现
+    assert "完整盘分" not in html_out and "比赛轮次" not in html_out  # 旧的凑数标签已移除
     assert "完整盘分" not in html_out

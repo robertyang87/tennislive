@@ -116,6 +116,27 @@ def result_insight(match: Match) -> str:
     return "这场结果值得继续关注后续走势"
 
 
+def trajectory_arc(match: Match) -> str:
+    """One sentence on the shape of the match: cruise, comeback, or seesaw.
+
+    Built only from which sets the eventual winner actually took — distinct
+    from result_insight()'s "what kind of win was this" framing, this is
+    purely about set-by-set momentum, so the two are meant to sit side by
+    side without repeating each other.
+    """
+    decided = [s for s in match.sets if s.home != s.away]
+    if len(decided) < 2 or match.winner not in (0, 1):
+        return ""
+    winner_is_home = match.winner == 0
+    pattern = [(s.home > s.away) == winner_is_home for s in decided]
+    n = len(pattern)
+    if all(pattern):
+        return f"直落{n}盘，全程没有让对手看到机会"
+    if not pattern[0] and all(pattern[1:]):
+        return f"先丢一盘，随后连扳{n - 1}盘完成逆转"
+    return "比赛几度易手，胜负直到最后关键分才见分晓"
+
+
 def schedule_insight(match: Match) -> str:
     """Write a compact hook from verifiable identity, stage, and surface facts."""
     if match.editorial_note:
