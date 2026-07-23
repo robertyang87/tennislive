@@ -25,6 +25,10 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
+      - name: 探测 ATP/WTA 官方数据可达性（临时）
+        shell: bash
+        run: python tools/probe_atp_official.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
