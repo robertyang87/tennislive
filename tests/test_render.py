@@ -172,6 +172,32 @@ def test_quarterfinal_schedule_insight_differs_by_matchup():
     assert all("四强席位" in line or "抢七" in line or "话语权" in line for line in lines)
 
 
+def test_quarterfinal_insight_survives_render_layer_truncation_intact():
+    """长文案被正文渲染层按标点截断时，剩下的分句不能读起来断在半句.
+
+    生产环境曾实际出现：'卡利尼娜占着25位排名优势，可四强席位近在眼前时，
+    压力比排名更说明问题。' 在 xiaohongshu 正文渲染时被截到 34 字上限，
+    砍掉了整个收尾分句，只留下不成句的'……可四强席位近在眼前时'。
+    现在的模板把第一个分句写成独立完整的句子，被截断也不会读不完。
+    """
+    from tennislive.render.story import schedule_insight
+    from tennislive.render.xiaohongshu import _short
+
+    match = make_match(
+        home_name="Tamara Korpatsch", away_name="Anhelina Kalinina",
+        home_country="GER", away_country="UKR",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals",
+    )
+    match.home[0].seed = match.away[0].seed = None
+    match.home[0].rank, match.away[0].rank = 81, 56  # 差 25 位，命中 12<=gap<35 分支
+
+    insight = schedule_insight(match)
+    for limit in (28, 34):  # 34 = 正文非压缩上限；28 = 压缩模式上限
+        truncated = _short(insight, limit)
+        assert not truncated.endswith(("可", "但", "时", "而"))  # 不留悬空连接词
+
+
 def test_neutral_compact_opinion_rotates_by_day():
     """无中国球员的压缩兜底文案必须按日轮换，否则会撞上7天防重复 FATAL 闸门。
 

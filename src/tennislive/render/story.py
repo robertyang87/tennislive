@@ -184,16 +184,19 @@ def schedule_insight(match: Match) -> str:
             gap = abs(ranks[0] - ranks[1])
             favorite = home_player if ranks[0] < ranks[1] else away_player
             favorite_name = player_zh(favorite.name)
+            # 下方三句刻意把第一个分句写成独立完整的句子：正文渲染层会
+            # 按标点截断长文案，球员姓名（尤其未译名的长拼写）会让总长
+            # 超出上限；前半句独立成句，被截断也不会留下读不完的残句。
             if gap >= 35:
-                return f"排名差{gap}位，但打到这一轮，{stakes}不会白送给纸面优势的一方。"
+                return f"排名差{gap}位不算保险，{stakes}这一轮谁都想抢。"
             if gap >= 12:
-                return f"{favorite_name}占着{gap}位排名优势，可{stakes}近在眼前时，压力比排名更说明问题。"
+                return f"{favorite_name}占{gap}位排名优势，但{stakes}最考验心态。"
             return f"排名只差{gap}位，{stakes}谁都想要；这种分差走到抢七不奇怪。"
         seeded = next(
             (player for player in (home_player, away_player) if player.seed), None
         )
         if seeded is not None:
-            return f"{player_zh(seeded.name)}带着{seeded.seed}号种子的身份，这一轮要保住的不只是晋级，还有{stakes}的份量。"
+            return f"{stakes}谁都想拿，{player_zh(seeded.name)}带着{seeded.seed}号种子出战也得先扛住压力。"
         return f"{stakes}就在眼前，两人都清楚这一轮没有“下次再拼”的余地。"
     if stakes:
         # 缺少排名/种子数据时的机械兜底，仍按赛事阶段区分文案
