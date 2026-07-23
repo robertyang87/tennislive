@@ -1,7 +1,11 @@
 """Temporary diagnostic: verify RAPIDAPI_KEY works against the "Tennis API -
-ATP WTA ITF" (Matchstat) product using its real path-param URL shape
-(confirmed via the RapidAPI console: getH2HFixtures takes /{type}/{player1}/
-{player2} as PATH params, with numeric player IDs, not names)."""
+ATP WTA ITF" (Matchstat) product using its real URL shape, confirmed via the
+RapidAPI console's auto-generated code snippet:
+
+  GET /tennis/v2/{type}/fixtures/h2h/{player1}/{player2}
+
+(the console sidebar's "getH2HFixtures" label is just a display name, not the
+literal path -- it does NOT match a "/getH2HFixtures" route at all)."""
 
 from __future__ import annotations
 
@@ -21,7 +25,11 @@ def get(path: str, max_bytes: int = 4000) -> None:
     print(f"\n===== GET {path} =====")
     req = urllib.request.Request(
         url,
-        headers={"X-RapidAPI-Key": KEY, "X-RapidAPI-Host": HOST},
+        headers={
+            "Content-Type": "application/json",
+            "x-rapidapi-key": KEY,
+            "x-rapidapi-host": HOST,
+        },
     )
     try:
         with urllib.request.urlopen(req, timeout=20) as resp:
@@ -36,8 +44,7 @@ def get(path: str, max_bytes: int = 4000) -> None:
             pass
     except Exception as exc:  # noqa: BLE001
         print(f"error: {exc!r}")
-    # BASIC plan has a tight per-second rate limit -- space calls out.
-    time.sleep(2)
+    time.sleep(2)  # BASIC plan has a tight per-second rate limit
 
 
 def main() -> int:
@@ -45,20 +52,16 @@ def main() -> int:
         print("RAPIDAPI_KEY is empty -- secret not wired to this job")
         return 1
 
-    # Confirmed real shape from the RapidAPI console's Params tab:
-    # path params type/player1/player2 (numeric ids), default example values.
-    get("/getH2HFixtures/atp/5136/47566")
+    # Confirmed real endpoint + example ids from the RapidAPI console.
+    get("/tennis/v2/atp/fixtures/h2h/5136/47566")
+    get("/tennis/v2/wta/fixtures/h2h/5136/47566")
 
-    # "atp" was just the console's prefilled example -- check whether "wta"
-    # (and "itf", per the product name "Tennis API - ATP WTA ITF") also work,
-    # rather than assuming.
-    get("/getDateFixtures/wta/2026-07-22")
-    get("/getDateFixtures/itf/2026-07-22")
-
-    # Same path-param pattern guessed for sibling endpoints in the same
-    # "Fixtures" group seen in the console sidebar.
-    get("/getPlayerFixtures/atp/5136")
-    get("/getDateFixtures/atp/2026-07-22")
+    # Same confirmed prefix pattern, guessed sibling resources by analogy
+    # (tournamentFixtures/playerFixtures/dateFixtures seen in the sidebar).
+    get("/tennis/v2/atp/fixtures/player/5136")
+    get("/tennis/v2/atp/fixtures/date/2026-07-22")
+    get("/tennis/v2/atp/rankings")
+    get("/tennis/v2/atp/players/5136")
 
     return 0
 
