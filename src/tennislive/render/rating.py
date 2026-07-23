@@ -287,18 +287,14 @@ def select_lead_story(digest: Digest) -> LeadStorySelection | None:
             if is_tour_focus_match(match)
         ],
     )
-    # Keep the existing results -> live -> schedule editorial order, but first
-    # search each pool for a star/Chinese-player match. The fallback pool is
-    # retained for diagnostics and older callers; production cover validation
-    # rejects a non-headliner match before any push occurs.
+    # Keep the results -> live -> schedule editorial order and first select a
+    # source-backed hot match. Star/Chinese identity is only a fallback/tie
+    # signal: an ordinary player who owns yesterday's story can lead the cover.
     preferred_candidates = next(
         (
-            [match for match in pool if is_headline_match(match) and has_editorial_heat(match)]
+            [match for match in pool if has_editorial_heat(match)]
             for pool in pools
-            if any(
-                is_headline_match(match) and has_editorial_heat(match)
-                for match in pool
-            )
+            if any(has_editorial_heat(match) for match in pool)
         ),
         None,
     )

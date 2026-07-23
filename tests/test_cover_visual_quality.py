@@ -203,11 +203,12 @@ def test_daily_workflow_hard_gates_exact_cover_before_commit_and_pushplus():
     gate = workflow.index('and .exact_match == true')
     both_sides = workflow.index('and .both_sides_match == true')
     current_match = workflow.index('and .match_id == $expected_match_id')
+    hot_signal = workflow.index('and .headline_hot == true')
     commit = workflow.index('- name: 提交内容到仓库')
     pushplus = workflow.index('- name: PushPlus 推送到微信')
 
     assert workflow.index('rm -f "$OUT_DIR/cover_visual.json"') < gate
-    assert max(gate, both_sides, current_match) < commit < pushplus
+    assert max(gate, both_sides, current_match, hot_signal) < commit < pushplus
 
 
 def test_pixel_quality_rejects_blank_photo(tmp_path):
