@@ -17,7 +17,7 @@
     "Julia Stusek"
   ],
   "china_priority": true,
-  "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；比赛动作、场内情绪和单人举杯优先，至少须有像素验证的突出人物；赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
+  "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
   "fetch_enabled": true,
   "strict": true,
   "minimum_score": 72,
@@ -467,7 +467,8 @@
         "face_safe": true,
         "focus": "62% 18%"
       },
-      "quality_score": 98.4,
+      "quality_score": 116.4,
+      "face_priority_bonus": 18,
       "hard_failures": [],
       "cached_file": "daily-cover-4b5cbf4a284d.jpg"
     }
@@ -484,7 +485,7 @@
   "both_sides_match": true,
   "scene": "prominent_person",
   "person_evidence": {},
-  "quality_score": 98.4,
+  "quality_score": 116.4,
   "quality": {
     "status": "pass",
     "score": 33.4,
@@ -532,6 +533,6 @@
     "match_id": "1002-2026:179359",
     "selected_asset_sha256": "4b5cbf4a284d79f08cc37b889052f9d3e7e56614ec71bb493ad105a58ada2ef0",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "ed15e1d78ba2635f915b1704e0f10c3f9b6af99065b3208aa306969d37ec0efe"
+    "card_sha256": "09916e902c66026d0884422ce2f605b7c1c734eb7493995ed88c85adca1aeda0"
   }
 }
