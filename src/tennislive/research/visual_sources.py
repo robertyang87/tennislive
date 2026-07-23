@@ -19,6 +19,7 @@ import requests
 from PIL import Image
 
 from ..models import Match
+from ..render.rating import is_headline_match, is_headline_player
 from ..render.tournament_story import TournamentStory
 from ..video.official import (
     ATP_YOUTUBE_CHANNEL_ID,
@@ -1684,6 +1685,10 @@ def resolve_match_cover_visual(
         "match_id": match.match_id,
         "match_players": [player.name for player in match.home + match.away],
         "candidate_players": [player.name for player in players],
+        "headline_eligible": is_headline_match(match),
+        "headline_players": [
+            player.name for player in match.home + match.away if is_headline_player(player)
+        ],
         "china_priority": True,
         "policy": (
             "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；"
@@ -1698,6 +1703,13 @@ def resolve_match_cover_visual(
     }
     if not enabled:
         report["status"] = "disabled"
+        return None, report
+
+    if not report["headline_eligible"]:
+        report["status"] = "unavailable"
+        report["errors"] = [
+            "头条比赛不含明星或中国球员，禁止使用普通球员照片作为封面"
+        ]
         return None, report
 
     session = requests.Session()
@@ -1838,6 +1850,7 @@ def resolve_match_cover_visual(
                 and subject_match
                 and person_match
                 and event_match
+                and year_match
                 and scene["scene"] != "static_or_group"
             )
             if not fallback_eligible:

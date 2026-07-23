@@ -223,6 +223,7 @@ jobs:
               (
               .status == "selected"
               and .match_id == $expected_match_id
+              and .headline_eligible == true
               and (.selected_player as $player | .match_players | index($player) != null)
               and .exact_match == true
               and .both_sides_match == true
@@ -234,6 +235,7 @@ jobs:
               ) or (
               .status == "fallback"
               and .fallback_person == true
+              and .headline_eligible == true
               and (.fallback_reason | length > 0)
               and (.quality.status | IN("pass", "fallback"))
               and (.quality.hard_failures | length == 0)
