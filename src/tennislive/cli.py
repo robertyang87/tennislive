@@ -223,7 +223,10 @@ def cmd_digest(args) -> int:
             console.print(f"[yellow]卡片图生成失败（跳过）：{e}[/yellow]")
 
     video_paths: list[Path] = []
-    if card_paths:
+    daily_video_enabled = (
+        os.environ.get("TENNISLIVE_DAILY_VIDEO", "off").casefold() == "on"
+    )
+    if daily_video_enabled and card_paths:
         try:
             from .render.video_digest import generate_digest_video
 
@@ -236,16 +239,19 @@ def cmd_digest(args) -> int:
         except Exception as e:  # noqa: BLE001
             console.print(f"[yellow]竖版视频生成失败（跳过）：{e}[/yellow]")
 
-    try:
-        from .video.official import generate_official_video
+    if daily_video_enabled:
+        try:
+            from .video.official import generate_official_video
 
-        official_video = generate_official_video(digest, outdir / "video")
-        if official_video:
-            video_paths.append(official_video)
-            digest.source_status["官方视频雷达"] = "正常 · 已生成中文竖版片段"
-    except Exception as e:  # noqa: BLE001
-        digest.source_status["官方视频雷达"] = f"降级 · {e}"
-        console.print(f"[yellow]官方视频生成失败（跳过）：{e}[/yellow]")
+            official_video = generate_official_video(digest, outdir / "video")
+            if official_video:
+                video_paths.append(official_video)
+                digest.source_status["官方视频雷达"] = "正常 · 已生成中文竖版片段"
+        except Exception as e:  # noqa: BLE001
+            digest.source_status["官方视频雷达"] = f"降级 · {e}"
+            console.print(f"[yellow]官方视频生成失败（跳过）：{e}[/yellow]")
+    else:
+        digest.source_status["日报视频"] = "关闭 · 日报仅生成图片与文案"
 
     # 标题：自动选用 + 候选留档
     from .render.titles import (

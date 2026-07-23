@@ -56,3 +56,15 @@ def test_wait_for_images_blocks_incomplete_push(monkeypatch):
             attempts=2,
             delay=0,
         )
+
+
+def test_wait_for_images_honors_post_cache_settle_window(monkeypatch):
+    ready = Mock(ok=True, headers={"Content-Type": "image/jpeg"})
+    monkeypatch.setattr(requests, "get", Mock(return_value=ready))
+    sleep = Mock()
+    monkeypatch.setattr("tennislive.publish.pushplus.time.sleep", sleep)
+    monkeypatch.setenv("TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS", "20")
+
+    wait_for_images('<img src="https://cdn.example/card.jpg">')
+
+    sleep.assert_called_once_with(20.0)

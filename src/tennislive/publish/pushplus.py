@@ -70,6 +70,22 @@ def wait_for_images(
             if not ready:
                 unavailable.append(url)
         if not unavailable:
+            # The GitHub runner can see a freshly cached jsDelivr asset a few
+            # seconds before PushPlus/WeChat's fetch nodes do. Give the
+            # immutable revision a short propagation window before posting.
+            settle_seconds = min(
+                30.0,
+                max(
+                    0.0,
+                    float(
+                        os.environ.get(
+                            "TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS", "0"
+                        )
+                    ),
+                ),
+            )
+            if settle_seconds:
+                time.sleep(settle_seconds)
             return
         pending = unavailable
         if attempt + 1 < max(1, attempts):
