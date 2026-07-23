@@ -164,8 +164,8 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
         {
             "provider": "official-media",
             "source_url": (
-                "https://ausopen.com/articles/news/"
-                "rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+                "https://www.olympics.com/en/news/"
+                "zheng-qinwen-wins-gold-paris-2024-tennis-women-singles"
             ),
             "image_url": (
                 "https://ausopen.com/sites/default/files/202408/4/"
