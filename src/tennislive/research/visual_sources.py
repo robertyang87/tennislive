@@ -960,8 +960,14 @@ def _cover_audit(story: TournamentStory) -> dict:
     }
 
 
-def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[str, ResolvedVisual], dict]:
+def resolve_story_visuals(
+    story: TournamentStory,
+    folder: Path,
+    *,
+    excluded_source_urls: set[str] | None = None,
+) -> tuple[dict[str, ResolvedVisual], dict]:
     """Try multiple sources, keep exact licensed images, and audit every fallback."""
+    excluded_source_urls = set(excluded_source_urls or ())
     enabled = os.environ.get("TENNISLIVE_VISUAL_FETCH", "off").lower() in {"1", "on", "true"}
     strict = os.environ.get("TENNISLIVE_VISUAL_STRICT", "off").lower() in {"1", "on", "true"}
     folder.mkdir(parents=True, exist_ok=True)
@@ -1003,6 +1009,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             "primary_domains": primary_domains,
             "providers_queried": [],
             "selected_providers": [],
+            "excluded_source_urls": sorted(excluded_source_urls),
             "errors": preflight_errors,
             "attempts": [cover_audit],
         }
@@ -1014,7 +1021,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     provider_runs: list[dict] = []
     selected: dict[str, ResolvedVisual] = {}
     anchors_by_page = _page_anchors(story)
-    used_sources = {story.image_source_url}
+    used_sources = {story.image_source_url, *excluded_source_urls}
     used_hashes: set[str] = set()
     if story.image.is_file():
         used_hashes.add(hashlib.sha256(story.image.read_bytes()).hexdigest())
@@ -1066,7 +1073,10 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                 "candidate_count": len(official_candidates),
             }
         )
-        if not curated:
+        # Curated assets are the fastest first choice. Once QA rejects one,
+        # query the full provider pool so the retry has genuinely new inputs
+        # instead of selecting the same image again.
+        if not curated or excluded_source_urls:
             expanded_sources = os.environ.get(
                 "TENNISLIVE_VISUAL_EXPANDED_SOURCES", "on"
             ).lower() in {"1", "on", "true"}
@@ -1301,6 +1311,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         ),
         "provider_runs": provider_runs,
         "selected_providers": sorted({visual.provider for visual in selected.values()}),
+        "excluded_source_urls": sorted(excluded_source_urls),
         "errors": errors,
         "attempts": attempts,
     }

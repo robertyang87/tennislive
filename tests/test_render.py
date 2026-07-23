@@ -1702,6 +1702,130 @@ def test_knowledge_generation_switches_topic_after_visual_preflight_failure(
     assert sources["rejected_candidates"][0]["story_slug"] == rejected.slug
 
 
+def test_knowledge_generation_retries_same_topic_with_failed_sources_excluded(
+    tmp_path, sample_digest, monkeypatch
+):
+    from dataclasses import replace
+    import json
+
+    from PIL import Image
+
+    from tennislive.render import knowledge
+    from tennislive.render.tournament_story import STORIES
+
+    cover = tmp_path / "cover.jpg"
+    Image.new("RGB", (1200, 800), "white").save(cover)
+    selected = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
+    monkeypatch.setattr(
+        knowledge,
+        "tournament_story_candidates",
+        lambda _digest: [selected],
+    )
+    monkeypatch.setenv("TENNISLIVE_VISUAL_RETRIES_PER_TOPIC", "2")
+    resolver_calls = []
+
+    def fake_resolve(_story, _folder, *, excluded_source_urls=None):
+        excluded = set(excluded_source_urls or ())
+        resolver_calls.append(excluded)
+        source = (
+            "https://media.example/good.jpg"
+            if excluded
+            else "https://media.example/bad.jpg"
+        )
+        return {}, {
+            "schema_version": 1,
+            "status": "pass",
+            "attempts": [{"status": "selected", "source_url": source}],
+            "errors": [],
+        }
+
+    qa_results = iter(
+        [
+            {"status": "fail", "errors": ["image mismatch"]},
+            {"status": "pass", "errors": []},
+            {"status": "pass", "errors": [], "rendered_cards": []},
+        ]
+    )
+    monkeypatch.setattr(knowledge, "resolve_story_visuals", fake_resolve)
+    monkeypatch.setattr(
+        knowledge,
+        "evaluate_knowledge_visuals",
+        lambda *_args, **_kwargs: next(qa_results),
+    )
+    monkeypatch.setattr(
+        knowledge,
+        "_screenshot_pages",
+        lambda pages, _theme: [
+            (kind, Image.new("RGB", (1080, 1440), "black"))
+            for kind, _body in pages
+        ],
+    )
+
+    result = knowledge.generate_knowledge_package(
+        sample_digest,
+        tmp_path / "knowledge",
+    )
+    sources = json.loads(
+        (tmp_path / "knowledge" / "visual_sources.json").read_text("utf-8")
+    )
+
+    assert result.slug == selected.slug
+    assert resolver_calls == [
+        set(),
+        {"https://media.example/bad.jpg"},
+    ]
+    assert sources["recovery"]["status"] == "recovered"
+    assert sources["selection_evidence"]["same_topic_attempt"] == 2
+
+
+def test_knowledge_generation_exhaustion_keeps_diagnostics_not_stale_publish_files(
+    tmp_path, sample_digest, monkeypatch
+):
+    from dataclasses import replace
+    import json
+
+    from PIL import Image
+    import pytest
+
+    from tennislive.render import knowledge
+    from tennislive.render.tournament_story import STORIES
+
+    cover = tmp_path / "cover.jpg"
+    Image.new("RGB", (1200, 800), "white").save(cover)
+    candidate = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
+    outdir = tmp_path / "knowledge"
+    outdir.mkdir()
+    (outdir / "push.html").write_text("stale", "utf-8")
+    monkeypatch.setattr(
+        knowledge,
+        "tournament_story_candidates",
+        lambda _digest: [candidate],
+    )
+    monkeypatch.setenv("TENNISLIVE_VISUAL_RETRIES_PER_TOPIC", "2")
+    monkeypatch.setattr(
+        knowledge,
+        "resolve_story_visuals",
+        lambda *_args, **_kwargs: (
+            {},
+            {
+                "status": "fail",
+                "errors": ["no exact image"],
+                "missing_pages": ["story"],
+                "attempts": [],
+            },
+        ),
+    )
+
+    with pytest.raises(ValueError, match="自动恢复已耗尽"):
+        knowledge.generate_knowledge_package(sample_digest, outdir)
+
+    failure = json.loads((outdir / "visual_sources.json").read_text("utf-8"))
+    assert failure["status"] == "fail"
+    assert failure["same_topic_attempt_limit"] == 2
+    assert len(failure["attempts"]) == 2
+    assert not (outdir / "push.html").exists()
+
+
 def test_cover_promotes_overnight_lead_and_multiple_highlights(sample_digest):
     from tennislive.render import webcards
 
