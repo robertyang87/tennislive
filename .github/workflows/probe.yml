@@ -30,9 +30,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 检查三巨头候选照片尺寸变体（临时）
+      - name: 查找 2019 温网决赛照片（临时）
         shell: bash
-        run: python tools/probe_big_three_sizes.py
+        run: python tools/probe_2019wimbledon.py
 
       - name: 生成无图片探测包
         shell: bash
