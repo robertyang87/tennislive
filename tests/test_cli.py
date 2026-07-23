@@ -119,7 +119,7 @@ def test_publish_flash_pins_committed_card_revision(tmp_path, monkeypatch):
     )
     monkeypatch.setattr(
         "tennislive.publish.pushplus.push",
-        lambda title, content: sent.append((title, content)),
+        lambda title, content, **kwargs: sent.append((title, content)),
     )
 
     args = SimpleNamespace(manifest=str(manifest))
@@ -273,7 +273,7 @@ def test_publish_content_includes_all_cards_and_review_fields(tmp_path, monkeypa
     monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc123")
     monkeypatch.setattr(
         "tennislive.publish.pushplus.push",
-        lambda title, content: sent.append((title, content)),
+        lambda title, content, **kwargs: sent.append((title, content)),
     )
 
     assert cli.cmd_publish_flash(SimpleNamespace(manifest=str(manifest))) == 0
@@ -295,7 +295,7 @@ def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
     sent = []
     monkeypatch.setattr(
         "tennislive.publish.pushplus.push",
-        lambda title, content: sent.append((title, content)),
+        lambda title, content, **kwargs: sent.append((title, content)),
     )
 
     assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(package))) == 0

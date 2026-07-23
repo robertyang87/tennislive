@@ -840,7 +840,7 @@ def cmd_publish_pushplus(args) -> int:
     html = re.sub(r"\{\{IMAGE:[^}]+\}\}", "", html)
     html = pin_asset_revision(html, os.environ.get("TENNISLIVE_ASSET_REV", ""))
     try:
-        push(title, html)
+        push(title, html, asset_dir=d)
     except PushPlusError as e:
         console.print(f"[red]{e}[/red]")
         return 1
@@ -895,7 +895,11 @@ def cmd_publish_flash(args) -> int:
         )
         prefix = "⏰" if item.get("kind") == "preview" else "⚡"
         try:
-            push(f"{prefix}{title}", image_html + text_html + review)
+            push(
+                f"{prefix}{title}",
+                image_html + text_html + review,
+                asset_dir=Path.cwd(),
+            )
             sent += 1
         except PushPlusError as exc:
             console.print(f"[red]{exc}[/red]")

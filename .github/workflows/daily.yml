@@ -56,6 +56,9 @@ jobs:
     env:
       # 发布相关 Secrets（未配置则对应步骤自动跳过）
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # 可选：PushPlus 开发设置中的 secretKey。配置后图片会先上传
+      # 到 PushPlus 原生图床，避免微信端拦截第三方图片外链。
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
       WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
       WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
       WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}

@@ -5,7 +5,12 @@ from unittest.mock import Mock
 import pytest
 import requests
 
-from tennislive.publish.pushplus import PushPlusError, image_sources, wait_for_images
+from tennislive.publish.pushplus import (
+    PushPlusError,
+    image_sources,
+    prepare_image_delivery,
+    wait_for_images,
+)
 
 
 def test_image_sources_keeps_unique_remote_images_in_order():
@@ -68,3 +73,55 @@ def test_wait_for_images_honors_post_cache_settle_window(monkeypatch):
     wait_for_images('<img src="https://cdn.example/card.jpg">')
 
     sleep.assert_called_once_with(20.0)
+
+
+def test_prepare_image_delivery_uses_github_pages_fallback(tmp_path, monkeypatch):
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc123")
+
+    rendered, provider = prepare_image_delivery(
+        '<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+        'tennislive@abc123/output/2026-07-23/cards/cover.jpg">',
+        asset_dir=tmp_path,
+        token="token",
+    )
+
+    assert provider == "github-pages"
+    assert (
+        "https://robertyang87.github.io/tennislive/output/2026-07-23/"
+        "cards/cover.jpg?v=abc123"
+    ) in rendered
+    assert "cdn.jsdelivr.net" not in rendered
+
+
+def test_prepare_image_delivery_uploads_every_card_to_pushplus(
+    tmp_path, monkeypatch
+):
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._access_key",
+        Mock(return_value="access"),
+    )
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._upload_credentials",
+        Mock(return_value=("https://upload.example/", "upload-token")),
+    )
+    upload = Mock(return_value="https://pic.pushplus.plus/1/cover.jpg@p")
+    monkeypatch.setattr("tennislive.publish.pushplus._upload_image", upload)
+
+    rendered, provider = prepare_image_delivery(
+        '<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+        'tennislive@abc123/output/2026-07-23/cards/cover.jpg">',
+        asset_dir=tmp_path,
+        token="token",
+    )
+
+    assert provider == "pushplus"
+    assert "https://pic.pushplus.plus/1/cover.jpg@p" in rendered
+    upload.assert_called_once()
