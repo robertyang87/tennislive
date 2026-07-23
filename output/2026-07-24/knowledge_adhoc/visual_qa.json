@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "zheng-qinwen",
+  "standards": {
+    "photo_count_max": 4,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires one distinct verified photo",
+    "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+    "rule_explainer": "topic-specific diagram plus verified photo required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "story_ordinals": "semantic icons replace ordinal markers",
+    "year_markers": "calendar years must use four digits",
+    "canned_story_labels": "fixed teaching-style labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 4,
+  "photo_sources": [
+    "https://www.wtatennis.com/news/3866289/zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis",
+    "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+    "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
+    "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+  ],
+  "resolved_visuals": [
+    {
+      "page": "story",
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/story-360a21b7349c.jpg",
+      "source_url": "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
+      "credit": "Cameron Spencer/Getty Images via WTA",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "width": 3981,
+      "height": 2654
+    },
+    {
+      "page": "explainer",
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/explainer-ff75b65b3b90.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
+      "credit": "Kuberzog / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "width": 4608,
+      "height": 3456
+    },
+    {
+      "page": "today",
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/today-e8875cef0778.jpg",
+      "source_url": "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
+      "credit": "Australian Open (ausopen.com)",
+      "license": "官方媒体供图 · 非商业资讯引用",
+      "width": 1080,
+      "height": 810
+    }
+  ],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 106,
+      "longest_text_block": 50,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.wtatennis.com/news/3866289/zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 301,
+      "longest_text_block": 50,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open"
+      ]
+    },
+    {
+      "kind": "explainer",
+      "visual": "player-explainer",
+      "text_chars": 183,
+      "longest_text_block": 35,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg"
+      ]
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 240,
+      "longest_text_block": 46,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+      ]
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 371572
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 337576
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 338956
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 304661
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}
