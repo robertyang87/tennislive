@@ -614,6 +614,7 @@ html.light .chip-green { color:#fff; }
 .knowledge-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
   object-position:center; }
 .knowledge-photo.portrait img { object-fit:contain; }
+.knowledge-photo.wide-cover img { object-fit:cover; }
 .knowledge-photo::after { content:""; position:absolute; inset:0;
   background:linear-gradient(180deg,transparent 38%,rgba(2,21,16,.94)); }
 .knowledge-photo-copy { position:absolute; z-index:2; left:28px; right:28px; bottom:24px; }
@@ -720,6 +721,101 @@ html.light .chip-green { color:#fff; }
   border-radius:8px; background:rgba(10,55,44,.88); color:var(--ivory);
   font-size:20px; line-height:1.42; }
 .official-summary b { color:#E85545; }
+.marathon-story-visual { margin-top:16px; padding:19px 28px 20px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
+  background:rgba(5,42,33,.56); }
+.marathon-story-head { display:grid; grid-template-columns:1fr auto; align-items:end;
+  gap:24px; }
+.marathon-story-head span { display:block; color:var(--sky); font-size:21px;
+  font-weight:700; }
+.marathon-story-head strong { display:block; margin-top:5px; color:var(--ivory);
+  font-family:'Barlow Condensed'; font-size:70px; line-height:.95; }
+.marathon-story-head b { color:var(--neon); font-family:'TL Display SC','TL Sans SC';
+  font-size:33px; font-weight:400; }
+.marathon-days { display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+  margin-top:17px; }
+.marathon-day { position:relative; min-height:112px; padding:15px 18px 13px;
+  border:1px solid var(--panel-border); border-top:5px solid var(--sky);
+  border-radius:7px; background:rgba(255,255,255,.035); }
+.marathon-day:nth-child(2) { border-top-color:var(--coral); }
+.marathon-day:nth-child(3) { border-top-color:var(--neon); }
+.marathon-day time { display:block; color:var(--reason); font-family:'Barlow Condensed';
+  font-size:22px; }
+.marathon-day strong { display:block; margin-top:9px; color:var(--pagetext);
+  font-family:'TL Display SC','TL Sans SC'; font-size:29px; font-weight:400;
+  line-height:1.18; }
+.marathon-day small { display:block; margin-top:7px; color:var(--reason);
+  font-size:17px; line-height:1.25; }
+.marathon-rule { margin-top:20px; display:grid; grid-template-columns:1fr 90px 1fr;
+  align-items:center; gap:18px; }
+.marathon-rule-block { min-height:150px; padding:24px 26px; border-radius:8px;
+  border:1px solid var(--panel-border); background:rgba(255,255,255,.035); }
+.marathon-rule-block small { display:block; color:var(--sky); font-size:18px;
+  font-weight:700; }
+.marathon-rule-block strong { display:block; margin-top:12px; color:var(--ivory);
+  font-family:'Barlow Condensed'; font-size:52px; line-height:1; }
+.marathon-rule-block p { margin-top:10px; color:var(--reason); font-size:22px;
+  line-height:1.35; }
+.marathon-rule-arrow { color:var(--neon); font-size:55px; text-align:center; }
+.marathon-scoreline { margin-top:25px; padding:24px 26px 27px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
+  background:rgba(5,42,33,.52); }
+.marathon-scoreline header { display:flex; align-items:baseline; justify-content:space-between; }
+.marathon-scoreline header span { color:var(--sky); font-size:20px; font-weight:700; }
+.marathon-scoreline header b { color:var(--reason); font-size:20px; }
+.marathon-sets { display:grid; grid-template-columns:repeat(5,1fr); margin-top:17px; }
+.marathon-set { min-height:104px; padding:15px 10px; text-align:center;
+  border-right:1px solid var(--divider); }
+.marathon-set:last-child { border-right:0; background:rgba(211,255,18,.06); }
+.marathon-set small { display:block; color:var(--reason); font-size:16px; }
+.marathon-set strong { display:block; margin-top:9px; color:var(--ivory);
+  font-family:'Barlow Condensed'; font-size:43px; line-height:1; }
+.marathon-set:last-child strong { color:var(--neon); font-size:49px; }
+.marathon-records { display:grid; grid-template-columns:repeat(3,1fr); margin-top:25px;
+  border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); }
+.marathon-record { min-height:180px; padding:27px 22px; text-align:center;
+  border-right:1px solid var(--divider); }
+.marathon-record:last-child { border-right:0; }
+.marathon-record strong { display:block; color:var(--neon);
+  font-family:'Barlow Condensed'; font-size:61px; line-height:1; }
+.marathon-record b { display:block; margin-top:11px; color:var(--pagetext);
+  font-size:24px; }
+.marathon-record span { display:block; margin-top:7px; color:var(--reason);
+  font-size:18px; line-height:1.3; }
+.marathon-summary { margin-top:26px; padding:23px 25px;
+  border-left:7px solid var(--coral); border-radius:8px;
+  background:rgba(10,55,44,.88); color:var(--ivory);
+  font-family:'TL Serif SC','TL Sans SC'; font-size:30px; font-weight:900;
+  line-height:1.42; }
+.marathon-event-photo { position:relative; height:480px; margin-top:14px;
+  overflow:hidden; border:1px solid var(--panel-border); border-radius:8px;
+  background-size:cover; background-position:var(--marathon-focus,50% 42%); }
+.marathon-event-photo::after { content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 34%,rgba(2,21,16,.9)); }
+.marathon-event-photo div { position:absolute; z-index:1; left:28px; right:28px;
+  bottom:22px; }
+.marathon-event-photo small { display:block; color:var(--sky); font-size:19px;
+  font-weight:700; }
+.marathon-event-photo strong { display:block; margin-top:7px; color:#fff;
+  font-family:'TL Display SC','TL Sans SC'; font-size:37px; font-weight:400; }
+.marathon-event-photo + .marathon-scoreline { margin-top:14px; padding-top:18px; padding-bottom:18px; }
+.marathon-event-photo + .marathon-scoreline .marathon-set { min-height:90px; padding-top:11px; padding-bottom:11px; }
+.marathon-event-photo ~ .marathon-records { margin-top:18px; }
+.marathon-event-photo ~ .marathon-records .marathon-record { min-height:150px; padding-top:20px; padding-bottom:18px; }
+.marathon-event-photo ~ .marathon-summary { margin-top:18px; padding-top:18px; padding-bottom:18px; }
+.marathon-today-visual { margin-top:38px; padding:34px 32px;
+  border-top:2px solid var(--coral); border-bottom:1px solid var(--divider);
+  background:rgba(5,42,33,.5); }
+.marathon-era { display:grid; grid-template-columns:150px 1fr; gap:26px;
+  align-items:center; min-height:172px; }
+.marathon-era + .marathon-era { margin-top:16px; padding-top:20px;
+  border-top:1px solid var(--divider); }
+.marathon-era time { color:var(--neon); font-family:'Barlow Condensed';
+  font-size:57px; font-weight:700; line-height:1; }
+.marathon-era b { display:block; color:var(--pagetext);
+  font-family:'TL Display SC','TL Sans SC'; font-size:32px; font-weight:400; }
+.marathon-era p { margin-top:8px; color:var(--reason); font-size:23px;
+  line-height:1.4; }
 .knowledge-fact-grid { display:grid; grid-template-columns:1fr; gap:0; margin-top:40px;
   border-top:2px solid var(--coral); }
 .knowledge-fact-card { min-height:238px; padding:34px 28px; display:grid;
@@ -1705,6 +1801,35 @@ def _hawkeye_story_visual() -> str:
     )
 
 
+def _longest_match_story_visual() -> str:
+    return (
+        '<div class="marathon-story-visual" aria-label="2010年温网最长比赛三日进程图">'
+        '<div class="marathon-story-head"><div><span>比赛总时长</span>'
+        '<strong>11:05</strong></div><b>一场首轮，跨过三个比赛日</b></div>'
+        '<div class="marathon-days">'
+        '<article class="marathon-day"><time>6月22日</time>'
+        '<strong>两盘战平</strong><small>决胜盘 4-4，因天黑暂停</small></article>'
+        '<article class="marathon-day"><time>6月23日</time>'
+        '<strong>整日没有胜负</strong><small>决胜盘一路打到 59-59</small></article>'
+        '<article class="marathon-day"><time>6月24日</time>'
+        '<strong>第138局才破发</strong><small>伊斯内尔以 70-68 结束比赛</small></article>'
+        '</div></div>'
+    )
+
+
+def _longest_match_today_visual() -> str:
+    return (
+        '<div class="marathon-today-visual" aria-label="大满贯决胜盘规则变化图">'
+        '<div class="marathon-era"><time>2010</time><div>'
+        '<b>6-6之后继续打，直到领先两局</b>'
+        '<p>没有抢七，决胜盘最终被推到 70-68。</p></div></div>'
+        '<div class="marathon-era"><time>2022</time><div>'
+        '<b>四大满贯统一为10分抢十</b>'
+        '<p>决胜盘到 6-6，先得10分且领先两分者获胜。</p></div></div>'
+        '</div>'
+    )
+
+
 def _hawkeye_today_visual() -> str:
     return (
         '<div class="today-visual" aria-label="司线判罚到实时电子司线演进图">'
@@ -1880,6 +2005,7 @@ def _knowledge_photo(
     *,
     visual: object | None = None,
     compact: bool = False,
+    extra_class: str = "",
 ) -> str:
     image_path = Path(_visual_value(visual, "path", story.image))
     image_source = str(
@@ -1889,15 +2015,19 @@ def _knowledge_photo(
     if not uri:
         raise FileNotFoundError(image_path)
     portrait = False
+    wide_cover = False
     try:
         from PIL import Image as _Image
 
         with _Image.open(image_path) as image:
             portrait = image.height > image.width
+            wide_cover = image.width / max(1, image.height) >= 1.95
     except OSError:
         pass
     portrait_class = " portrait" if portrait else ""
+    wide_class = " wide-cover" if wide_cover else ""
     compact_class = " compact" if compact else ""
+    extra = f" {html.escape(extra_class, quote=True)}" if extra_class else ""
     layout_attr = ' data-photo-layout="inner-hero"' if compact else ""
     sub = f"<small>{html.escape(subline)}</small>" if subline else ""
     # Keep player faces above the caption gradient. Do not zoom portraits: the
@@ -1913,8 +2043,10 @@ def _knowledge_photo(
         else ""
     )
     return (
-        f'<div class="knowledge-photo{portrait_class}{compact_class}"{layout_attr}{photo_source}>'
-        f'<i class="kn-back" style="background-image:url(\'{uri}\')"></i>'
+        f'<div class="knowledge-photo{portrait_class}{wide_class}{compact_class}{extra}"'
+        f'{layout_attr}{photo_source}>'
+        f'<i class="kn-back" style="background-image:url(\'{uri}\');'
+        f'background-position:{html.escape(focus, quote=True)}"></i>'
         f'<img src="{uri}" alt="" style="object-position:{html.escape(focus, quote=True)}">'
         '<div class="knowledge-photo-copy">'
         f'{sub}<strong>{html.escape(caption)}</strong></div></div>'
@@ -1968,8 +2100,14 @@ def _knowledge_cover_body(
         raise FileNotFoundError(image_path)
     person_led = story.kind == "player" or story.slug in {
         "golden-slam", "big-three", "china-tennis",
+        "longest-match",
     }
-    focus = str(_visual_value(visual, "focus", "50% 22%" if person_led else "50% 38%"))
+    default_focus = (
+        "82% 24%"
+        if story.slug == "longest-match"
+        else "50% 22%" if person_led else "50% 38%"
+    )
+    focus = str(_visual_value(visual, "focus", default_focus))
     hook_html = html.escape(hook).replace("，", "，<br>", 1)
     return (
         '<div class="poster cover knowledge-page knowledge-cover" data-visual="verified-photo">'
@@ -2078,7 +2216,13 @@ def _knowledge_timeline_body(
         media = (
             _hawkeye_story_visual()
             if story.slug == "hawkeye"
-            else _timeline_visual(visual_years, css_class="knowledge-story-visual")
+            else (
+                _longest_match_story_visual()
+                if story.slug == "longest-match"
+                else _timeline_visual(
+                    visual_years, css_class="knowledge-story-visual"
+                )
+            )
         )
     page_class = " has-page-photo" if has_photo else ""
     return (
@@ -2139,6 +2283,57 @@ def _hawkeye_official_flow_body(date_label: str) -> str:
         + '<div><b>&lt;2mm</b><span>Sony公布的系统误差</span></div></div>'
         + '<div class="official-summary"><b>一句看懂：</b>先在每幅画面找到球，'
         + '再用多个角度算出它在三维空间的位置。</div>'
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _longest_match_record_body(
+    date_label: str,
+    story: TournamentStory | None = None,
+    visual: object | None = None,
+) -> str:
+    photo = ""
+    if story is not None and visual is not None:
+        photo = _knowledge_photo(
+            story,
+            "决胜盘138局，记分牌最终定格70-68",
+            "2010 · 温网18号球场",
+            visual=visual,
+            compact=True,
+            extra_class="marathon-event-photo",
+        )
+    return (
+        '<div class="poster knowledge-page" data-visual="rule-diagram">'
+        + _masthead(date_label)
+        + _titleband("Match Anatomy · 比赛解剖", "为什么这场球能打到70-68")
+        + photo
+        + (
+            ""
+            if photo
+            else '<div class="marathon-rule"><article class="marathon-rule-block">'
+            '<small>2010年温网决胜盘</small><strong>6-6 → 继续</strong>'
+            '<p>当时没有抢七，必须领先两局才能结束。</p></article>'
+            '<div class="marathon-rule-arrow">→</div>'
+            '<article class="marathon-rule-block"><small>比分被不断推高</small>'
+            '<strong>70-68</strong><p>第五盘单独打了138局。</p></article></div>'
+        )
+        + '<div class="marathon-scoreline"><header><span>五盘完整比分</span>'
+        + '<b>伊斯内尔 3-2 马胡</b></header><div class="marathon-sets">'
+        + '<div class="marathon-set"><small>第一盘</small><strong>6-4</strong></div>'
+        + '<div class="marathon-set"><small>第二盘</small><strong>3-6</strong></div>'
+        + '<div class="marathon-set"><small>第三盘</small><strong>6-7</strong></div>'
+        + '<div class="marathon-set"><small>第四盘</small><strong>7-6</strong></div>'
+        + '<div class="marathon-set"><small>决胜盘</small><strong>70-68</strong></div>'
+        + '</div></div>'
+        + '<div class="marathon-records">'
+        + '<article class="marathon-record"><strong>11:05</strong><b>总时长</b>'
+        + '<span>跨越三个比赛日</span></article>'
+        + '<article class="marathon-record"><strong>183</strong><b>总局数</b>'
+        + '<span>其中决胜盘138局</span></article>'
+        + '<article class="marathon-record"><strong>216</strong><b>ACE总数</b>'
+        + '<span>伊斯内尔113，马胡103</span></article></div>'
+        + '<div class="marathon-summary">不是双方不肯结束，而是旧规则没有给决胜盘设置出口。</div>'
         + _FOOTER
         + "</div>"
     )
@@ -2317,12 +2512,21 @@ def _knowledge_today_body(
         photo_caption = (
             "四大满贯之后，又拿奥运金牌"
             if story.slug == "golden-slam"
-            else last.headline if last else story.hero_fact
+            else (
+                "18号球场留下了这块纪念牌"
+                if story.slug == "longest-match"
+                else last.headline if last else story.hero_fact
+            )
+        )
+        photo_meta = (
+            "2010 · 温网18号球场"
+            if story.slug == "longest-match"
+            else f"{last.date[:4]} · {last.player}" if last else story.location
         )
         media = _knowledge_photo(
             story,
             photo_caption,
-            f"{last.date[:4]} · {last.player}" if last else story.location,
+            photo_meta,
             visual=visual,
             compact=True,
         )
@@ -2330,9 +2534,27 @@ def _knowledge_today_body(
         media = (
             _hawkeye_today_visual()
             if story.slug == "hawkeye"
-            else _timeline_visual([row[0] for row in rows], css_class="today-visual")
+            else (
+                _longest_match_today_visual()
+                if story.slug == "longest-match"
+                else _timeline_visual(
+                    [row[0] for row in rows], css_class="today-visual"
+                )
+            )
         )
     page_class = " has-page-photo" if has_photo else ""
+    if story.slug == "longest-match" and not has_photo:
+        return (
+            '<div class="poster knowledge-page" data-visual="history-timeline">'
+            + _masthead(date_label)
+            + _titleband("Then & Now · 从过去到今天", title)
+            + media
+            + '<div class="knowledge-question">'
+            + f'<small>{html.escape(eyebrow)}</small>'
+            + f'<strong>{html.escape(question)}</strong></div>'
+            + _FOOTER
+            + "</div>"
+        )
     return (
         f'<div class="poster knowledge-page{page_class}" data-visual="history-timeline">'
         + _masthead(date_label)
@@ -2356,10 +2578,20 @@ def knowledge_deck_bodies(
 ) -> list[tuple[str, str]]:
     """Return a four-page, evidence-backed story deck for social publishing."""
     page_visuals = page_visuals or {}
-    diagram_builders = {"trajectory": _hawkeye_official_flow_body}
+    diagram_builders = {
+        "trajectory": _hawkeye_official_flow_body,
+        "marathon": _longest_match_record_body,
+    }
     if story.diagram_type:
         try:
-            explainer = diagram_builders[story.diagram_type](date_label)
+            if story.diagram_type == "marathon":
+                explainer = _longest_match_record_body(
+                    date_label,
+                    story,
+                    page_visuals.get("explainer"),
+                )
+            else:
+                explainer = diagram_builders[story.diagram_type](date_label)
         except KeyError as exc:
             raise ValueError(f"未实现的规则示意图类型：{story.diagram_type}") from exc
     else:

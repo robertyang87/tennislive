@@ -41,6 +41,47 @@ _WATERMARK_LIBRARY_TERMS = {
     "gettyimages", "getty images", "alamy", "shutterstock", "dreamstime",
     "depositphotos", "istockphoto", "123rf",
 }
+_VISUAL_IMPACT_TERMS = {
+    "cover": (
+        "action", "playing", "match", "serve", "forehand", "backhand",
+        "celebrat", "reaction", "emotion", "champion", "trophy", "medal",
+        "final", "ceremony", "scoreboard",
+    ),
+    "story": (
+        "action", "playing", "match", "court", "serve", "forehand",
+        "backhand", "celebrat", "reaction", "final", "ceremony",
+        "scoreboard", "trophy", "medal",
+    ),
+    "explainer": (
+        "scoreboard", "camera", "system", "technology", "equipment",
+        "ball", "court", "surface", "clay", "grass", "hard court",
+        "match", "action", "diagram", "track", "sensor",
+    ),
+    "today": (
+        "plaque", "memorial", "court", "stadium", "venue", "trophy",
+        "medal", "anniversary", "legacy", "ceremony", "champion",
+        "match", "action", "celebrat",
+    ),
+}
+_VISUAL_REQUIRED_TOKENS: dict[tuple[str, str], tuple[str, ...]] = {
+    # When a page headline is built around a visible score or object, merely
+    # matching the event is insufficient. The candidate metadata must state
+    # the same visual evidence.
+    ("longest-match", "explainer"): ("70", "68", "scoreboard"),
+    ("longest-match", "today"): ("plaque",),
+}
+_OFFICIAL_TENNIS_MEDIA_DOMAINS = (
+    "atptour.com",
+    "wtatennis.com",
+    "wimbledon.com",
+    "rolandgarros.com",
+    "ausopen.com",
+    "usopen.org",
+    "itftennis.com",
+    "olympics.com",
+    "daviscup.com",
+    "billiejeankingcup.com",
+)
 _BEIJING = ZoneInfo("Asia/Shanghai")
 _ATP_MATCH_VIDEO_TERMS = (
     "highlights",
@@ -64,6 +105,81 @@ _ATP_NON_MATCH_VIDEO_TERMS = (
     "preview",
 )
 _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
+    ("longest-match", "story"): (
+        {
+            "provider": "verified-event-archive",
+            "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
+            "image_url": (
+                "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
+                "Isner-Mahut_match_WIM2010.jpg?width=1600"
+            ),
+            "credit": "Voo de Mar / Wikimedia Commons",
+            "license": "CC BY-SA 2.0",
+            "width": 943,
+            "height": 707,
+            "relevance": 100,
+            "search_text": (
+                "john isner nicolas mahut 2010 wimbledon court 18 match"
+            ),
+            "image_text": (
+                "john isner nicolas mahut playing during 2010 wimbledon match"
+            ),
+        },
+    ),
+    ("longest-match", "explainer"): (
+        {
+            "provider": "verified-editorial",
+            "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
+            "image_url": (
+                "https://assets.sportsboom.com/"
+                "John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_"
+                "chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg"
+            ),
+            "credit": "SportsBoom / Getty Images",
+            "license": "Public editorial archive",
+            "width": 2736,
+            "height": 1696,
+            "relevance": 100,
+            "focus": "50% 16%",
+            "search_text": (
+                "john isner nicolas mahut 2010 wimbledon court 18 final "
+                "70-68 scoreboard match ceremony"
+            ),
+            "image_text": (
+                "john isner and nicolas mahut beside the court 18 scoreboard "
+                "showing the final set score 70-68 after the 2010 match"
+            ),
+        },
+    ),
+    ("longest-match", "today"): (
+        {
+            "provider": "verified-event-archive",
+            "source_url": (
+                "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_"
+                "Court_No._18_to_commemorate_the_longest_match_in_tennis_"
+                "history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg"
+            ),
+            "image_url": (
+                "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
+                "Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_"
+                "match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_"
+                "on_22-24_June_2010.jpg?width=1800"
+            ),
+            "credit": "Edwardx / Wikimedia Commons",
+            "license": "CC BY-SA 4.0",
+            "width": 1800,
+            "height": 1350,
+            "relevance": 100,
+            "search_text": (
+                "court 18 plaque john isner nicolas mahut 2010 wimbledon "
+                "longest match"
+            ),
+            "image_text": (
+                "court 18 commemorative plaque for john isner nicolas mahut "
+                "2010 wimbledon longest match"
+            ),
+        },
+    ),
     ("golden-slam", "cover"): (
         {
             "provider": "official-editorial",
@@ -145,6 +261,32 @@ _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...],
         "story": ("Rod Laver", ("1969",), ("grand slam", "us open"), True),
         "explainer": ("Steffi Graf", ("1988",), ("grand slam",), True),
         "today": ("Steffi Graf", ("1988",), ("seoul", "olympic"), True),
+    },
+    "longest-match": {
+        "cover": (
+            "John Isner Nicolas Mahut",
+            ("2010",),
+            ("wimbledon", "court 18"),
+            True,
+        ),
+        "story": (
+            "John Isner Nicolas Mahut",
+            ("2010",),
+            ("wimbledon", "court 18"),
+            True,
+        ),
+        "explainer": (
+            "scoreboard",
+            ("2010",),
+            ("wimbledon", "court 18"),
+            False,
+        ),
+        "today": (
+            "Court 18 plaque",
+            ("2010",),
+            ("wimbledon", "court 18"),
+            False,
+        ),
     },
     "surfaces": {
         "cover": ("center court", (), ("clay",), False),
@@ -279,8 +421,48 @@ def _candidate_matches(
     year_match = not years or any(year in text for year in years)
     event_match = not event_terms or any(term in text for term in event_terms)
     negative_visual = any(term in image_text for term in _NEGATIVE_PERSON_TERMS)
-    person_match = not person_required or (subject_match and not negative_visual)
+    human_scene = any(
+        term in image_text
+        for term in (
+            "playing", "player", "champion", "celebrat", "ceremony",
+            "reaction", "portrait", "interview", "serve", "forehand",
+            "backhand", "medal", "trophy",
+        )
+    )
+    # A scoreboard or court in the caption does not make an iconic player
+    # photograph generic when the named athletes and a human scene are explicit.
+    person_match = not person_required or (
+        subject_match and (not negative_visual or human_scene)
+    )
     return subject_match, year_match, event_match, person_match
+
+
+def _visual_impact_match(candidate: dict, page: str) -> bool:
+    """Require metadata that describes a publishable scene, not just a subject."""
+    text = " ".join(
+        (
+            str(candidate.get("search_text", "")),
+            str(candidate.get("image_text", "")),
+            str(candidate.get("source_url", "")),
+            str(candidate.get("image_url", "")),
+        )
+    ).lower()
+    return any(term in text for term in _VISUAL_IMPACT_TERMS[page])
+
+
+def _visual_claim_match(story: TournamentStory, page: str, candidate: dict) -> bool:
+    required = _VISUAL_REQUIRED_TOKENS.get((story.slug, page), ())
+    if not required:
+        return True
+    text = " ".join(
+        (
+            str(candidate.get("search_text", "")),
+            str(candidate.get("image_text", "")),
+            str(candidate.get("source_url", "")),
+            str(candidate.get("image_url", "")),
+        )
+    ).lower()
+    return all(token.lower() in text for token in required)
 
 
 def _official_references(story: TournamentStory, session: requests.Session) -> list[dict]:
@@ -312,7 +494,13 @@ def _official_references(story: TournamentStory, session: requests.Session) -> l
                 response.text,
                 re.I,
             )
-            image_url = match.group(1) if match else ""
+            image_url = (
+                _high_resolution_official_image_url(
+                    urljoin(url, html.unescape(match.group(1)))
+                )
+                if match
+                else ""
+            )
             title = re.sub(r"<[^>]+>", " ", title_match.group(1) if title_match else "")
             description = re.sub(
                 r"<[^>]+>", " ", description_match.group(1) if description_match else ""
@@ -458,6 +646,100 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
             }
         )
     return candidates
+
+
+def _duckduckgo_candidates(query: str, session: requests.Session) -> list[dict]:
+    """Query DuckDuckGo Images without credentials.
+
+    The endpoint is intentionally a backup: a missing token, rate limit, or
+    response-shape change returns an empty list and is recorded by the caller.
+    Exact subject/year/event gates still decide whether a result is usable.
+    """
+    try:
+        token_response = session.get(
+            "https://duckduckgo.com/",
+            params={"q": query},
+            timeout=12,
+        )
+        token_response.raise_for_status()
+        token_match = re.search(
+            r"(?:vqd=|vqd['\"]?\s*[:=]\s*['\"])([\d-]+)",
+            token_response.text,
+        )
+        if not token_match:
+            return []
+        response = session.get(
+            "https://duckduckgo.com/i.js",
+            params={
+                "l": "wt-wt",
+                "o": "json",
+                "q": query,
+                "vqd": token_match.group(1),
+                "f": "type:photo",
+                "p": "1",
+            },
+            headers={
+                "User-Agent": _UA,
+                "Referer": token_response.url,
+            },
+            timeout=15,
+        )
+        response.raise_for_status()
+        results = response.json().get("results", [])
+    except (requests.RequestException, ValueError):
+        return []
+    candidates: list[dict] = []
+    for item in results[:16]:
+        image_url = str(item.get("image") or "").strip()
+        source_url = str(item.get("url") or "").strip()
+        title = str(item.get("title") or "").strip()
+        if not image_url.startswith("http") or not source_url.startswith("https://"):
+            continue
+        domain = urlparse(source_url).netloc.removeprefix("www.")
+        text = " ".join((title, source_url, image_url)).lower()
+        if _unsafe_web_image_source(domain, text):
+            continue
+        relevance = _relevance(query, text)
+        if relevance < 6:
+            continue
+        candidates.append(
+            {
+                "provider": "duckduckgo-web-image",
+                "source_url": source_url,
+                "image_url": image_url,
+                "credit": domain or "Public web source",
+                "license": "public web image · editorial reference",
+                "width": int(item.get("width") or 0),
+                "height": int(item.get("height") or 0),
+                "relevance": relevance,
+                "search_text": text,
+                "image_text": text,
+            }
+        )
+    return candidates
+
+
+def _official_archive_candidates(query: str, session: requests.Session) -> list[dict]:
+    """Discover images only from official tennis and major-event domains."""
+    site_query = " OR ".join(f"site:{domain}" for domain in _OFFICIAL_TENNIS_MEDIA_DOMAINS)
+    pool = [
+        *_bing_candidates(f"{query} ({site_query})", session),
+        *_duckduckgo_candidates(f"{query} ({site_query})", session),
+    ]
+    official: list[dict] = []
+    for candidate in pool:
+        domain = urlparse(str(candidate.get("source_url", ""))).netloc.removeprefix("www.")
+        if not any(
+            domain == allowed or domain.endswith(f".{allowed}")
+            for allowed in _OFFICIAL_TENNIS_MEDIA_DOMAINS
+        ):
+            continue
+        item = dict(candidate)
+        item["provider"] = "official-tennis-archive"
+        item["credit"] = domain
+        item["license"] = "official tennis media · editorial reference"
+        official.append(item)
+    return official
 
 
 _UNSAFE_WEB_IMAGE_DOMAIN_PARTS = (
@@ -646,12 +928,18 @@ def _cover_audit(story: TournamentStory) -> dict:
         title = str((credits.get(story.image.name) or {}).get("title") or title)
     except (OSError, ValueError):
         pass
-    candidate = {"search_text": " ".join((title, story.image_credit, story.image_source_url)).lower()}
+    candidate = {
+        "search_text": " ".join(
+            (title, story.image_credit, story.image_source_url)
+        ).lower(),
+        "image_text": title.lower(),
+    }
     subject_match, year_match, event_match, person_match = _candidate_matches(candidate, brief)
+    impact_match = _visual_impact_match(candidate, "cover")
     subject, years, event_terms, person_required = brief
     passed = bool(story.image.is_file() and story.image_source_url.startswith("https://"))
     if story.slug in _VISUAL_BRIEFS:
-        passed = passed and subject_match and year_match and event_match
+        passed = passed and subject_match and year_match and event_match and impact_match
     if person_required:
         passed = passed and person_match and year_match and event_match
     return {
@@ -667,6 +955,7 @@ def _cover_audit(story: TournamentStory) -> dict:
         "year_match": year_match,
         "event_match": event_match,
         "person_match": person_match,
+        "visual_impact_match": impact_match,
         "reason": "" if passed else "封面未同时满足人物、年份、事件/地点和授权来源要求",
     }
 
@@ -677,10 +966,9 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     strict = os.environ.get("TENNISLIVE_VISUAL_STRICT", "off").lower() in {"1", "on", "true"}
     folder.mkdir(parents=True, exist_ok=True)
     cover_audit = _cover_audit(story)
-    # Rule stories use three distinct, topic-specific deterministic diagrams
-    # around one verified cover photo. They do not need weakly matched filler
-    # photos merely to increase the photo count.
-    required_pages = set() if story.diagram_type else set(_PAGES)
+    # Every page needs a distinct real visual. Topic-specific diagrams remain
+    # explanatory layers, but never substitute for missing event imagery.
+    required_pages = set(_PAGES)
     if cover_audit["status"] != "selected":
         required_pages.add("cover")
     fact_domains = sorted(
@@ -723,6 +1011,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
     official_references = _official_references(story, session) if enabled else []
     attempts = [dict(reference) for reference in official_references]
     attempts.append(cover_audit)
+    provider_runs: list[dict] = []
     selected: dict[str, ResolvedVisual] = {}
     anchors_by_page = _page_anchors(story)
     used_sources = {story.image_source_url}
@@ -734,7 +1023,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         required_anchors = anchors_by_page.get(page, ())
         if page == "cover" and cover_audit["status"] == "selected":
             continue
-        if story.diagram_type and page != "cover":
+        if story.diagram_type and page != "cover" and page not in required_pages:
             attempts.append(
                 {
                     "page": page,
@@ -757,34 +1046,88 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             candidate["relevance"] = _relevance(query, candidate.get("search_text", ""))
             official_candidates.append(candidate)
         variants = _query_variants(briefs[page], query)
-        fetched: dict[str, list[dict]] = {
-            "wikimedia-commons": [],
-            "openverse": [],
-            "bing-web-image": [],
-        }
+        fetched: dict[str, list[dict]] = {}
         curated = list(_CURATED_VISUALS.get((story.slug, page), ()))
+        provider_runs.append(
+            {
+                "page": page,
+                "provider": "curated-editorial",
+                "query": query,
+                "status": "ok" if curated else "empty",
+                "candidate_count": len(curated),
+            }
+        )
+        provider_runs.append(
+            {
+                "page": page,
+                "provider": "official-story-pages",
+                "query": query,
+                "status": "ok" if official_candidates else "empty",
+                "candidate_count": len(official_candidates),
+            }
+        )
         if not curated:
+            expanded_sources = os.environ.get(
+                "TENNISLIVE_VISUAL_EXPANDED_SOURCES", "on"
+            ).lower() in {"1", "on", "true"}
+            provider_loaders = [
+                ("wikimedia-commons", _commons_candidates),
+                ("openverse", _openverse_candidates),
+                ("bing-web-image", _bing_candidates),
+            ]
+            if expanded_sources:
+                provider_loaders.extend(
+                    [
+                        ("official-tennis-archive", _official_archive_candidates),
+                        ("flickr-public", _flickr_candidates),
+                        ("duckduckgo-web-image", _duckduckgo_candidates),
+                    ]
+                )
+            fetched = {name: [] for name, _loader in provider_loaders}
             fetches = []
-            with ThreadPoolExecutor(max_workers=min(10, len(variants) * 3)) as pool:
+            with ThreadPoolExecutor(
+                max_workers=min(12, len(variants) * len(provider_loaders))
+            ) as pool:
                 for variant in variants:
-                    fetches.extend(
-                        (
-                            ("wikimedia-commons", pool.submit(_commons_candidates, variant, session)),
-                            ("openverse", pool.submit(_openverse_candidates, variant, session)),
-                            ("bing-web-image", pool.submit(_bing_candidates, variant, session)),
+                    for provider, loader in provider_loaders:
+                        worker_session = requests.Session()
+                        worker_session.headers.update({"User-Agent": _UA})
+                        fetches.append(
+                            (
+                                provider,
+                                variant,
+                                pool.submit(loader, variant, worker_session),
+                            )
                         )
-                    )
-            for provider, future in fetches:
+            for provider, variant, future in fetches:
                 try:
-                    fetched[provider].extend(future.result())
-                except Exception:  # noqa: BLE001 - one media index must not stop the fallback chain
+                    items = future.result()
+                    fetched[provider].extend(items)
+                    provider_runs.append(
+                        {
+                            "page": page,
+                            "provider": provider,
+                            "query": variant,
+                            "status": "ok" if items else "empty",
+                            "candidate_count": len(items),
+                        }
+                    )
+                except Exception as exc:  # noqa: BLE001 - one media index must not stop the fallback chain
+                    provider_runs.append(
+                        {
+                            "page": page,
+                            "provider": provider,
+                            "query": variant,
+                            "status": "error",
+                            "candidate_count": 0,
+                            "error": f"{type(exc).__name__}: {str(exc)[:180]}",
+                        }
+                    )
                     continue
         providers = (
             ("curated-editorial", curated),
             ("official-media", official_candidates),
-            ("wikimedia-commons", fetched["wikimedia-commons"]),
-            ("openverse", fetched["openverse"]),
-            ("bing-web-image", fetched["bing-web-image"]),
+            *tuple(fetched.items()),
         )
         candidates = [candidate for _provider, items in providers for candidate in items]
         def _layout_score(item: dict) -> int:
@@ -802,12 +1145,22 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         exact_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
         archive_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
         seen_candidates: set[tuple[str, str]] = set()
+        rejection_counts: dict[str, int] = {}
+
+        def reject(reason: str) -> None:
+            rejection_counts[reason] = rejection_counts.get(reason, 0) + 1
+
         for candidate in candidates:
             key = (str(candidate.get("source_url", "")), str(candidate.get("image_url", "")))
             if key in seen_candidates:
+                reject("duplicate-candidate")
                 continue
             seen_candidates.add(key)
-            if candidate["source_url"] in used_sources or candidate["relevance"] < 3:
+            if candidate["source_url"] in used_sources:
+                reject("source-already-used")
+                continue
+            if candidate["relevance"] < 3:
+                reject("metadata-relevance-below-3")
                 continue
             candidate_text = " ".join(
                 (
@@ -817,20 +1170,19 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                 )
             ).lower()
             if any(term in candidate_text for term in _WATERMARK_LIBRARY_TERMS):
+                reject("watermarked-stock-library")
                 continue
             matches = _candidate_matches(candidate, briefs[page])
             subject_match, year_match, event_match, person_match = matches
             if not (subject_match and person_match):
+                reject("subject-or-person-mismatch")
                 continue
-            if page == "cover" and briefs[page][3]:
-                image_text = str(candidate.get("image_text", "")).lower()
-                scene_terms = (
-                    "serve", "forehand", "backhand", "playing", "match", "court",
-                    "final", "champion", "trophy", "medal", "olympic", "slam",
-                    "interview", "press conference", "celebrat",
-                )
-                if not any(term in image_text for term in scene_terms):
-                    continue
+            if strict and not _visual_impact_match(candidate, page):
+                reject("low-visual-impact-metadata")
+                continue
+            if strict and not _visual_claim_match(story, page, candidate):
+                reject("visible-claim-mismatch")
+                continue
             anchor_match = not required_anchors or any(
                 anchor in candidate.get("search_text", "") for anchor in required_anchors
             )
@@ -841,18 +1193,23 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
             if strict
             else [*exact_candidates, *archive_candidates]
         )
+        if strict and archive_candidates:
+            rejection_counts["subject-archive-rejected-in-strict-mode"] = len(
+                archive_candidates
+            )
         for candidate, matches, match_level in eligible_candidates:
             subject_match, year_match, event_match, person_match = matches
             downloaded = _download(candidate, page, query, folder, session)
             if downloaded and downloaded.sha256 in used_hashes:
                 downloaded.path.unlink(missing_ok=True)
+                reject("duplicate-downloaded-image")
                 continue
             if downloaded:
-                focus = (
+                focus = str(candidate.get("focus") or (
                     "50% 22%"
                     if page == "cover" and briefs[page][3]
                     else "50% 24%" if briefs[page][3] else "50% 38%"
-                )
+                ))
                 chosen = replace(
                     downloaded,
                     focus=focus,
@@ -863,6 +1220,7 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                 )
                 candidate["match_level"] = match_level
                 break
+            reject("download-or-resolution-failed")
         if chosen:
             selected[page] = chosen
             used_sources.add(chosen.source_url)
@@ -876,6 +1234,10 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                     "status": "selected",
                     "required_event_terms": list(required_anchors),
                     "match_level": candidate.get("match_level", "exact-event"),
+                    "rejection_counts": rejection_counts,
+                    "source_runs": [
+                        run for run in provider_runs if run.get("page") == page
+                    ],
                     **selected_record,
                 }
             )
@@ -888,6 +1250,13 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
                     "query": query,
                     "required_event_terms": list(required_anchors),
                     "providers": [name for name, _items in providers],
+                    "candidate_count": len(candidates),
+                    "exact_candidate_count": len(exact_candidates),
+                    "archive_candidate_count": len(archive_candidates),
+                    "rejection_counts": rejection_counts,
+                    "source_runs": [
+                        run for run in provider_runs if run.get("page") == page
+                    ],
                 }
             )
     missing_pages = sorted(required_pages - set(selected))
@@ -927,11 +1296,10 @@ def resolve_story_visuals(story: TournamentStory, folder: Path) -> tuple[dict[st
         "required_pages": sorted(required_pages),
         "missing_pages": missing_pages,
         "input_domains": input_domains,
-        "providers_queried": (
-            []
-            if story.diagram_type or not enabled
-            else ["curated-editorial", "official-media", "wikimedia-commons", "openverse", "bing-web-image"]
+        "providers_queried": sorted(
+            {run["provider"] for run in provider_runs}
         ),
+        "provider_runs": provider_runs,
         "selected_providers": sorted({visual.provider for visual in selected.values()}),
         "errors": errors,
         "attempts": attempts,

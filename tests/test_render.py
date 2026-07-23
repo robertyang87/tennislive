@@ -366,6 +366,62 @@ def test_story_slot_never_empty(tmp_path, monkeypatch):
     assert again is not None and again.slug == first.slug
 
 
+def test_trivia_candidates_follow_live_topic_then_viral_prior(tmp_path, monkeypatch):
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    match = make_match(
+        tournament="Some Unknown Cup",
+        home_name="Player One",
+        away_name="Player Two",
+    )
+
+    evergreen = tournament_story.tournament_story_candidates(
+        Digest(today=date(2026, 7, 23), results=[match])
+    )
+    assert next(story for story in evergreen if story.kind == "trivia").slug == "longest-match"
+
+    match.media_heat = 30
+    match.search_heat = 25
+    match.trend_signals = [
+        {
+            "kind": "official-news",
+            "source": "Wimbledon",
+            "title": "Electronic line calling and Hawk-Eye explained",
+        },
+        {
+            "kind": "search-trend",
+            "source": "Google Trends",
+            "title": "Hawk-Eye tennis",
+        },
+    ]
+    topical = tournament_story.tournament_story_candidates(
+        Digest(today=date(2026, 7, 23), results=[match])
+    )
+    assert next(story for story in topical if story.kind == "trivia").slug == "hawkeye"
+
+
+def test_trivia_topic_score_recognises_chinese_player_without_text_signal():
+    from tennislive.render import tournament_story
+
+    match = make_match(
+        tournament="Some Unknown Cup",
+        home_name="Zheng Qinwen",
+        away_name="Player Two",
+    )
+    match.home[0].country = "CHN"
+    match.search_heat = 20
+    digest = Digest(today=date(2026, 7, 23), results=[match])
+    china = next(story for story in tournament_story.STORIES if story.slug == "china-tennis")
+    longest = next(
+        story for story in tournament_story.STORIES if story.slug == "longest-match"
+    )
+
+    assert tournament_story._trivia_topic_score(
+        china, digest
+    ) > tournament_story._trivia_topic_score(longest, digest)
+
+
 def test_wishlist_records_uncovered_hot_winners(tmp_path, monkeypatch):
     """昨日热门胜者不在故事库时记入扩库清单；库内球员不重复记."""
     import json
@@ -1317,6 +1373,50 @@ def test_hawkeye_knowledge_deck_uses_official_process_and_current_scope(tmp_path
     assert "技术没有替比赛做决定" not in combined
 
 
+def test_longest_match_deck_uses_event_specific_visuals_and_large_facts(tmp_path):
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    fake_img = tmp_path / "isner-mahut.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(
+        next(s for s in STORIES if s.slug == "longest-match"),
+        image=fake_img,
+        image_source_url="https://www.wimbledon.com/en_GB/about/history/2010s",
+        image_credit="Wimbledon archive",
+        diagram_type="marathon",
+    )
+
+    pages = knowledge_deck_bodies(
+        story,
+        "07.23 · 周四",
+        question="如果没有抢十，你愿意再看一场11小时的比赛吗？",
+        year=2026,
+    )
+    combined = "\n".join(body for _kind, body in pages)
+
+    assert [kind for kind, _body in pages] == [
+        "knowledge",
+        "story",
+        "explainer",
+        "today",
+    ]
+    assert 'class="marathon-story-visual"' in pages[1][1]
+    assert 'class="marathon-scoreline"' in pages[2][1]
+    assert 'class="marathon-records"' in pages[2][1]
+    assert 'class="marathon-today-visual"' in pages[3][1]
+    assert "6月22日" in combined and "6月24日" in combined
+    assert "11:05" in combined and "183" in combined and "216" in combined
+    assert "70-68" in combined and "2022" in combined and "10分抢十" in combined
+    assert not re.search(r"<(?:i|small)[^>]*>\s*0[1-9]\s*</", combined)
+    assert evaluate_knowledge_visuals(story, pages)["status"] == "pass"
+
+
 def test_hawkeye_publish_validation_rejects_stale_scope(sample_digest):
     from dataclasses import replace
 
@@ -1333,6 +1433,47 @@ def test_hawkeye_publish_validation_rejects_stale_scope(sample_digest):
 
     with pytest.raises(ValueError, match="事实校验失败"):
         _validate_story_for_publish(stale, sample_digest)
+
+
+def test_longest_match_story_uses_official_cross_checked_facts():
+    from urllib.parse import urlparse
+
+    from tennislive.render.tournament_story import STORIES
+
+    story = next(s for s in STORIES if s.slug == "longest-match")
+    evidence_domains = {urlparse(url).netloc for url in story.evidence_urls}
+    all_sources = (
+        story.source_url,
+        *story.evidence_urls,
+        *(moment.source_url for moment in story.moments),
+    )
+    facts = "\n".join(story.facts)
+
+    assert story.diagram_type == "marathon"
+    assert story.hero_marker == "2010"
+    assert evidence_domains == {
+        "www.wimbledon.com",
+        "www.itftennis.com",
+        "www.usopen.org",
+    }
+    assert all("wikipedia.org" not in url for url in all_sources)
+    assert "50-50" in facts and "47-47" not in facts
+    assert "183 局" in facts and "8 小时 11 分钟" in facts
+    assert "113 记 ACE" in facts
+    assert "直接催生" not in facts
+    assert "领先两分" in facts
+
+
+def test_story_selection_evidence_records_viral_and_live_signals(sample_digest):
+    from tennislive.render.tournament_story import STORIES, story_selection_evidence
+
+    story = next(s for s in STORIES if s.slug == "longest-match")
+    evidence = story_selection_evidence(story, sample_digest)
+
+    assert evidence["viral_prior"] == 10.0
+    assert evidence["topic_score"] >= evidence["viral_prior"]
+    assert evidence["live_relevance_score"] >= 0
+    assert "selection_basis" in evidence
 
 
 def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
