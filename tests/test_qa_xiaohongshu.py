@@ -71,6 +71,14 @@ def test_xhs_daily_post_passes_core_publishability_rules():
     assert not any("留白" in item for item in warn)
 
 
+def test_xhs_rejects_more_than_five_hashtags():
+    body = _spacious_body() + "\n\n#温网"
+
+    fatal, _ = check_xhs_post(_digest(), _post(body))
+
+    assert any("话题标签超过5个" in item for item in fatal)
+
+
 def test_xhs_daily_title_requires_current_date_and_platform_length():
     digest = _digest()
 

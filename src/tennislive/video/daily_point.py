@@ -25,6 +25,7 @@ import requests
 
 from ..digest import Digest
 from ..models import Match
+from ..render.hashtags import hashtag_count, limit_hashtags
 from ..zh import player_zh, tournament_zh
 from .official import (
     ATP_YOUTUBE_CHANNEL_ID,
@@ -1028,7 +1029,7 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
         "如果只能重看一次，你会盯最后一拍，还是前面的铺垫？"
         "#网球 #网球名场面 #精彩回合 #网球时差"
     )
-    copy = title + "\n\n" + body
+    copy = limit_hashtags(title + "\n\n" + body)
     validate_point_copy(copy)
     return copy
 
@@ -1082,8 +1083,8 @@ def validate_point_copy(copy: str) -> None:
     public_citation_markers = ("来源：", "图源：", "摄影/图源", "非商业资料引用")
     if any(marker in body for marker in public_citation_markers):
         raise VideoPipelineError("昨日好球正文不得显示资料或图片来源")
-    if not 3 <= body.count("#") <= 6:
-        raise VideoPipelineError("昨日好球正文缺少话题标签")
+    if not 3 <= hashtag_count(body) <= 5:
+        raise VideoPipelineError("昨日好球正文话题标签应保持 3 至 5 个")
 
 
 def render_daily_point(

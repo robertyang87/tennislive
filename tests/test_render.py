@@ -1655,6 +1655,30 @@ def test_knowledge_copy_rotates_structure_and_bans_quiz_boilerplate(sample_diges
     assert all(phrase not in combined for phrase in ("先别往下滑", "🧠 先猜", "🎾 答案", "记住这3点"))
 
 
+def test_knowledge_special_copy_uses_xhs_emoji_rhythm_and_at_most_five_tags(
+    sample_digest,
+):
+    from tennislive.render.hashtags import hashtag_count
+    from tennislive.render.knowledge import (
+        _KNOWLEDGE_EMOJI_MARKERS,
+        _validate_copy_for_publish,
+        knowledge_copy,
+    )
+    from tennislive.render.tournament_story import STORIES
+
+    for slug in ("golden-slam", "longest-match"):
+        story = next(story for story in STORIES if story.slug == slug)
+        copy = knowledge_copy(story, sample_digest)
+        _validate_copy_for_publish(copy)
+        body = "\n".join(copy.splitlines()[1:])
+        markers = {
+            marker for marker in _KNOWLEDGE_EMOJI_MARKERS if marker in body
+        }
+
+        assert 3 <= len(markers) <= 8
+        assert hashtag_count(copy) <= 5
+
+
 def test_knowledge_generation_switches_topic_after_visual_preflight_failure(
     tmp_path, sample_digest, monkeypatch
 ):
@@ -1872,6 +1896,64 @@ def test_cover_uses_verified_athlete_photo_as_full_bleed_background(
     assert "Verified Photographer" not in body
     assert "CC BY 4.0" not in body
     assert "cover-subject" not in body
+
+
+def test_cover_moves_copy_opposite_the_detected_face_and_out_of_upper_face_zone(
+    sample_digest, tmp_path
+):
+    from PIL import Image
+
+    from tennislive.render.webcards import cover_body
+
+    photo = tmp_path / "athlete.jpg"
+    Image.new("RGB", (1600, 1200), "white").save(photo)
+
+    person_right = cover_body(
+        sample_digest,
+        "这场逆转为什么值得记住",
+        "副标题不再堆在人物脸部附近",
+        "7.16 · 周四",
+        cover_visual={"path": photo, "focus": "68% 24%"},
+    )
+    person_left = cover_body(
+        sample_digest,
+        "这场逆转为什么值得记住",
+        "副标题不再堆在人物脸部附近",
+        "7.16 · 周四",
+        cover_visual={"path": photo, "focus": "31% 60%"},
+    )
+
+    assert "cover-text-left cover-copy-lower" in person_right
+    assert 'data-cover-text-side="left"' in person_right
+    assert 'data-cover-focus-x="68.0"' in person_right
+    assert "cover-text-right cover-copy-upper" in person_left
+    assert 'data-cover-text-side="right"' in person_left
+    assert person_right.index('class="cover-secondary"') > person_right.index(
+        'class="cover-lower"'
+    )
+    assert 'class="cover-date"' not in person_right
+
+
+def test_cover_focus_fallback_still_uses_a_deterministic_safe_layout(
+    sample_digest, tmp_path
+):
+    from PIL import Image
+
+    from tennislive.render.webcards import cover_body
+
+    photo = tmp_path / "athlete.jpg"
+    Image.new("RGB", (1600, 1200), "white").save(photo)
+    body = cover_body(
+        sample_digest,
+        "今日头条",
+        "",
+        "7.16 · 周四",
+        cover_visual={"path": photo, "focus": "center"},
+    )
+
+    assert "cover-text-left cover-copy-lower" in body
+    assert 'data-cover-focus-x="50.0"' in body
+    assert 'data-cover-focus-y="28.0"' in body
 
 
 def test_daily_cover_visual_requires_exact_player_match(monkeypatch, tmp_path):

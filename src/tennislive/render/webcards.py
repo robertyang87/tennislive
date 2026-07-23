@@ -225,6 +225,30 @@ def _cover_headline_html(headline: str) -> str:
     )
 
 
+def _cover_text_layout(focus: str) -> tuple[str, str, float, float]:
+    """Place cover copy away from the detected athlete focus point.
+
+    The visual QA stage emits a percentage focus derived from the largest face
+    (or upper body when the face is turned away). This renderer only needs that
+    stable, JSON-safe signal, so the same rule works in headless GitHub Actions.
+    """
+    match = re.search(
+        r"([0-9]+(?:\.[0-9]+)?)%\s+([0-9]+(?:\.[0-9]+)?)%",
+        focus,
+    )
+    if match:
+        focus_x = max(0.0, min(100.0, float(match.group(1))))
+        focus_y = max(0.0, min(100.0, float(match.group(2))))
+    else:
+        focus_x, focus_y = 50.0, 28.0
+
+    # Put copy on the opposite side. A central subject still receives a narrow
+    # side column; the vertical rule below keeps the face itself unobstructed.
+    text_side = "left" if focus_x >= 50.0 else "right"
+    vertical_zone = "lower" if focus_y <= 46.0 else "upper"
+    return text_side, vertical_zone, focus_x, focus_y
+
+
 # ---------- 页面骨架 ----------
 
 _COURT_SVG = """<svg class="court" viewBox="0 0 1080 1060" preserveAspectRatio="none">
@@ -420,30 +444,31 @@ html.light .chip-green { color:#fff; }
 .cover .masthead,.cover .footer { position:relative; z-index:3; }
 .cover .brand { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:42px; font-weight:400; letter-spacing:0; }
 .cover .date { color:#D6E3DD; }
-.cover-copy { position:relative; z-index:2; width:940px; padding:4px 22px 20px 0;
-  background:linear-gradient(90deg,rgba(2,20,16,.22),rgba(2,20,16,0) 72%); }
-.cover-date { display:flex; align-items:flex-end; gap:18px; margin-top:34px; }
-.cover-date b { font-family:'Barlow Condensed'; font-weight:700; font-size:82px; line-height:.86; color:var(--neon); }
-.cover-date span { display:flex; flex-direction:column; gap:8px; padding-bottom:4px; }
-.cover-date i { font-style:normal; font-size:40px; font-weight:700; color:#fff; line-height:1; }
-.cover-date small { font-family:'Barlow Condensed'; font-size:22px; color:#B9C8C1; letter-spacing:3px; line-height:1; }
-.edition { display:inline-block; margin-top:26px; padding:8px 14px; border:1px solid rgba(214,255,0,.7);
+.cover-copy { position:relative; z-index:2; width:650px; margin-top:54px;
+  padding:18px 24px 24px; border-radius:6px;
+  background:linear-gradient(90deg,rgba(2,20,16,.27),rgba(2,20,16,.08) 72%,rgba(2,20,16,0)); }
+.cover.cover-text-left .cover-copy { align-self:flex-start; }
+.cover.cover-text-right .cover-copy { align-self:flex-end;
+  background:linear-gradient(270deg,rgba(2,20,16,.27),rgba(2,20,16,.08) 72%,rgba(2,20,16,0)); }
+.cover.cover-copy-lower .cover-copy { margin-top:300px; }
+.edition { display:inline-block; padding:8px 14px; border:1px solid rgba(214,255,0,.7);
   color:var(--neon); font-family:'Barlow Condensed'; font-size:24px; font-weight:600; letter-spacing:4px; line-height:1.2; }
 .cover .focus-label { font-family:'Barlow Condensed'; font-weight:600; font-size:23px;
-  letter-spacing:.34em; color:#E4C96E; text-transform:uppercase; margin-top:24px; }
-.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:88px; font-weight:400;
-  line-height:1.04; letter-spacing:0; margin-top:12px; color:#fff; max-width:930px;
+  letter-spacing:.3em; color:#E4C96E; text-transform:uppercase; margin-top:20px; }
+.cover .focus { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:72px; font-weight:400;
+  line-height:1.06; letter-spacing:0; margin-top:12px; color:#fff; max-width:610px;
   text-shadow:0 7px 28px rgba(0,0,0,.7); line-break:strict; word-break:normal;
   overflow-wrap:normal; }
 .cover .focus .headline-line { display:block; }
 .cover .focus .headline-keep { white-space:nowrap; }
-.cover.compact-headline .focus { font-size:72px; line-height:1.07; max-width:940px; }
-.cover .secondary { margin-top:22px; padding-left:18px; border-left:6px solid var(--coral);
-  color:#E6EEEA; font-size:28px; font-weight:700; line-height:1.45; max-width:820px;
-  text-shadow:0 3px 14px rgba(0,0,0,.7); }
+.cover.compact-headline .focus { font-size:62px; line-height:1.08; max-width:610px; }
+.cover.extra-compact-headline .focus { font-size:55px; line-height:1.1; }
 .cover-lower { position:relative; z-index:3; width:900px; margin-top:auto; margin-bottom:20px;
   padding:18px 20px; border-radius:8px; background:rgba(2,20,16,.3);
   backdrop-filter:blur(5px); }
+.cover-secondary { margin-bottom:16px; padding-left:14px; border-left:5px solid var(--coral);
+  color:#F0F4F1; font-size:25px; font-weight:700; line-height:1.35; max-width:850px;
+  text-shadow:0 3px 14px rgba(0,0,0,.7); }
 .cover-highlights { display:grid; grid-template-columns:1fr 1fr; gap:24px;
   padding:18px 0 20px; border-top:1px solid rgba(255,255,255,.42);
   border-bottom:1px solid rgba(255,255,255,.32); }
@@ -1194,10 +1219,6 @@ def cover_body(
 ) -> str:
     d = digest.today
     weekday = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"][d.weekday()]
-    weekday_en = [
-        "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY",
-        "FRIDAY", "SATURDAY", "SUNDAY",
-    ][d.weekday()]
     chips = []
     if digest.results:
         chips.append(f"赛果复盘 {len(digest.results)} 场")
@@ -1229,6 +1250,7 @@ def cover_body(
         else:
             cover_path = ASSETS / "covers" / "tennis-night-court.png"
             cover_focus = "center"
+    text_side, vertical_zone, focus_x, focus_y = _cover_text_layout(cover_focus)
     background_uri = _asset_image_uri(cover_path)
     background = (
         f'<div class="cover-bg" style="background-image:url(\'{background_uri}\');'
@@ -1237,7 +1259,8 @@ def cover_body(
         if background_uri else ""
     )
     secondary_html = (
-        f'<div class="secondary">{html.escape(secondary)}</div>' if secondary else ""
+        f'<div class="cover-secondary">{html.escape(secondary)}</div>'
+        if secondary else ""
     )
     def cover_highlight(label: str, match: Match) -> str:
         group = group_by_tournament([match])[0]
@@ -1323,18 +1346,26 @@ def cover_body(
         if highlights_html else ""
     )
     lead_label = "Overnight Lead · 昨夜头条" if lead else "Today's Lead · 今日头条"
+    headline_width = _headline_display_width(headline)
+    headline_class = (
+        " extra-compact-headline"
+        if headline_width > 22
+        else " compact-headline"
+        if headline_width > 16
+        else ""
+    )
     return (
-        f'<div class="poster cover{" compact-headline" if len(headline) > 20 else ""}">'
+        f'<div class="poster cover cover-text-{text_side} cover-copy-{vertical_zone}'
+        f'{headline_class}" data-cover-text-side="{text_side}" '
+        f'data-cover-focus-x="{focus_x:.1f}" data-cover-focus-y="{focus_y:.1f}">'
         + background
         + _masthead(date_label)
         + '<div class="cover-copy">'
-        + f'<div class="cover-date"><b>{d.month:02d}.{d.day:02d}</b><span>'
-        + f'<i>{weekday}</i><small>{weekday_en} · BEIJING TIME</small></span></div>'
-        + '<div class="edition">DAILY MATCH BRIEF · 每日网球速递</div>'
+        + f'<div class="edition">DAILY MATCH BRIEF · {weekday}网球速递</div>'
         + f'<div class="focus-label">{lead_label}</div>'
         + f'<div class="focus">{_cover_headline_html(headline)}</div>'
-        + secondary_html
         + '</div><div class="cover-lower">'
+        + secondary_html
         + highlights_html
         + f'<div class="chips">{chips_html}</div>'
         + '</div>'

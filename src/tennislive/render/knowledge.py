@@ -18,6 +18,7 @@ from ..digest import Digest
 from ..research.visual_sources import resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
+from .hashtags import hashtag_count, limit_hashtags
 from .knowledge_visual_qa import evaluate_knowledge_visuals
 from .tournament_story import (
     TournamentStory,
@@ -193,6 +194,27 @@ _PLAIN_LANGUAGE_RULES = {
     "电子司线": ("系统", "判定"),
 }
 
+_KNOWLEDGE_EMOJI_MARKERS = (
+    "🎬",
+    "🏆",
+    "⚔️",
+    "🧩",
+    "📚",
+    "⏱️",
+    "📟",
+    "📜",
+    "👤",
+    "⚡",
+    "🔎",
+    "🕰️",
+    "🏟️",
+    "🎾",
+    "🧭",
+    "🎯",
+    "🥇",
+    "💬",
+)
+
 
 def _copy_mode(story: TournamentStory, digest: Digest) -> int:
     seed = f"{digest.today.isoformat()}:{story.slug}".encode("utf-8")
@@ -242,15 +264,15 @@ def _golden_slam_copy(story: TournamentStory, digest: Digest) -> str:
     question = _knowledge_question(story)
     return (
         f"{title}\n\n"
-        "1988年，格拉芙先后赢下澳网、法网、温网和美网。\n"
+        "🏆 1988年，格拉芙先后赢下澳网、法网、温网和美网。\n"
         "抵达汉城时，19岁的她只差最后一扇门。\n\n"
-        "决赛对面还是萨巴蒂尼。\n"
+        "⚔️ 决赛对面还是萨巴蒂尼。\n"
         "几周前的美网决赛，两人刚打满三盘；这一次，格拉芙用两个6比3结束比赛。\n\n"
-        "真正夸张的，不只是五项冠军都拿到了。\n\n"
+        "🧩 真正夸张的，不只是五项冠军都拿到了。\n\n"
         "四大满贯横跨硬地、红土和草地；\n"
         "奥运会却四年才来一次。\n"
         "状态、身体和赛历必须在同一年严丝合缝地对上。\n\n"
-        "拉沃尔1969年完成公开赛时代男子唯一一次年度全满贯；\n"
+        "📚 拉沃尔1969年完成公开赛时代男子唯一一次年度全满贯；\n"
         "格拉芙又往前走了一步。直到今天，年度金满贯仍只有她一人。\n\n"
         f"💬 {question}\n\n"
         "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
@@ -263,20 +285,20 @@ def _longest_match_copy(story: TournamentStory, digest: Digest) -> str:
     question = _knowledge_question(story)
     return (
         f"{title}\n\n"
-        "2010年温网首轮，伊斯内尔和马胡只是走上18号球场，"
+        "🎬 2010年温网首轮，伊斯内尔和马胡只是走上18号球场，"
         "谁也没想到，下场已经是三天以后。\n\n"
-        "前四盘打完，两人仍分不出高下。\n"
+        "⏱️ 前四盘打完，两人仍分不出高下。\n"
         "当时决胜盘没有抢七，只能一直打到有人领先两局。\n\n"
-        "于是比分从20比20爬到40比40，再到50比50。\n"
+        "📟 于是比分从20比20爬到40比40，再到50比50。\n"
         "现场记分牌一度撑不住，比赛却还在继续。\n\n"
         "最终，伊斯内尔在决胜盘第138局完成破发：70比68。\n"
         "整场耗时11小时5分钟、打了183局，两人合计轰出216记ACE。\n\n"
-        "这场球后来成了规则改革最有力的理由之一。\n"
+        "📜 这场球后来成了规则改革最有力的理由之一。\n"
         "如今四大满贯决胜盘打到6比6，会用10分抢十收尾。"
         "那种不知道终点在哪的长盘大战，已经留在历史里。\n\n"
         f"💬 {question}\n\n"
         "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
-        "#网球 #温网 #伊斯内尔 #马胡 #网球纪录 #网球时差"
+        "#网球 #温网 #伊斯内尔 #马胡 #网球时差"
     )
 
 
@@ -348,6 +370,15 @@ def _validate_copy_for_publish(copy: str) -> None:
     repeated = [phrase for phrase in _FORBIDDEN_COPY_BOILERPLATE if phrase in copy]
     if repeated:
         raise ValueError("知识帖文案仍含固定模板话术：" + "、".join(repeated))
+    body = "\n".join(copy.splitlines()[1:])
+    emoji_markers = {
+        marker for marker in _KNOWLEDGE_EMOJI_MARKERS if marker in body
+    }
+    if not 3 <= len(emoji_markers) <= 8:
+        raise ValueError(
+            "知识帖正文应使用 3 至 8 个不同功能的 emoji 导航，"
+            "用于场景、转折、知识点和互动，而不是堆砌装饰"
+        )
     for term, explanation in _PLAIN_LANGUAGE_RULES.items():
         if term in copy and not all(word in copy for word in explanation):
             raise ValueError(
@@ -367,9 +398,9 @@ def _validate_copy_for_publish(copy: str) -> None:
         raise ValueError("知识帖正文必须使用适合手机阅读的短段落")
     if "💬" not in copy:
         raise ValueError("知识帖正文缺少可评论的具体问题")
-    hashtags = [token for token in copy.split() if token.startswith("#")]
-    if not 3 <= len(hashtags) <= 8:
-        raise ValueError("知识帖话题标签应保持 3 至 8 个")
+    hashtags = hashtag_count(copy)
+    if not 3 <= hashtags <= 5:
+        raise ValueError("知识帖话题标签应保持 3 至 5 个")
 
 
 def knowledge_push_html(
@@ -630,7 +661,7 @@ def _generate_knowledge_candidate(
     # Raw downloads are only a render cache and would otherwise bloat Git daily.
     shutil.rmtree(visuals_dir, ignore_errors=True)
 
-    xhs_text = knowledge_copy(story, digest)
+    xhs_text = limit_hashtags(knowledge_copy(story, digest))
     _validate_copy_for_publish(xhs_text)
     pinned_comment = knowledge_pinned_comment(story)
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
