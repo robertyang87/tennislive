@@ -33,7 +33,7 @@ def test_official_media_form_and_feed_aliases_are_resolved():
     assert player_zh("Learner Tien") == "勒纳·钱"
     assert player_zh("Felix Auger-Aliassime") == "阿利亚西姆"
     assert player_zh("Brandon Nakashima") == "中岛布兰登"
-    assert player_zh("Iga Swiatek") == "斯维亚特克"
+    assert player_zh("Iga Swiatek") == "斯瓦泰克"
     assert player_zh("Ann Li") == "李吉妮"
     assert player_zh("Joanna Garland") == "葛蓝乔安娜"
     assert player_zh("Sara Sorribes Tormo") == "索里贝斯·托莫"
