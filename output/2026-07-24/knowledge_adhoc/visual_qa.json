@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "pass",
-  "story_slug": "zheng-qinwen",
+  "story_slug": "big-three",
   "standards": {
     "photo_count_max": 4,
     "photo_source_uniqueness": "same photo/source may appear only once",
@@ -23,79 +23,88 @@
   },
   "photo_uses": 4,
   "photo_sources": [
-    "https://www.wtatennis.com/news/3866289/zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis",
-    "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
-    "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
-    "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+    "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic",
+    "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_final_2008,_Federer_serves_for_3rd_set.jpg",
+    "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-nadal-australian-open-2012/",
+    "https://www.rappler.com/sports/tears-flow-fans-salute-retiring-rafael-nadal-after-davis-cup-defeat-2024/"
   ],
   "resolved_visuals": [
     {
+      "page": "cover",
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/cover-41e22ea16f4d.jpg",
+      "source_url": "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic",
+      "credit": "NPR",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1400,
+      "height": 787
+    },
+    {
       "page": "story",
-      "file": "output/2026-07-24/knowledge_adhoc/visuals/story-360a21b7349c.jpg",
-      "source_url": "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open",
-      "credit": "Cameron Spencer/Getty Images via WTA",
-      "license": "官方媒体供图 · 非商业资讯引用",
-      "width": 3981,
-      "height": 2654
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/story-01591e1b042e.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_final_2008,_Federer_serves_for_3rd_set.jpg",
+      "credit": "David Underdown / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "width": 2048,
+      "height": 1448
     },
     {
       "page": "explainer",
-      "file": "output/2026-07-24/knowledge_adhoc/visuals/explainer-ff75b65b3b90.jpg",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
-      "credit": "Kuberzog / Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "width": 4608,
-      "height": 3456
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/explainer-9501de1de97e.jpg",
+      "source_url": "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-nadal-australian-open-2012/",
+      "credit": "Perfect Tennis",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1400,
+      "height": 900
     },
     {
       "page": "today",
-      "file": "output/2026-07-24/knowledge_adhoc/visuals/today-e8875cef0778.jpg",
-      "source_url": "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china",
-      "credit": "Australian Open (ausopen.com)",
-      "license": "官方媒体供图 · 非商业资讯引用",
-      "width": 1080,
-      "height": 810
+      "file": "output/2026-07-24/knowledge_adhoc/visuals/today-ee5045a6f4a5.jpg",
+      "source_url": "https://www.rappler.com/sports/tears-flow-fans-salute-retiring-rafael-nadal-after-davis-cup-defeat-2024/",
+      "credit": "Reuters via Rappler",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 2560,
+      "height": 1767
     }
   ],
   "pages": [
     {
       "kind": "knowledge",
       "visual": "verified-photo",
-      "text_chars": 106,
-      "longest_text_block": 50,
+      "text_chars": 125,
+      "longest_text_block": 59,
       "photo_count": 1,
       "photo_sources": [
-        "https://www.wtatennis.com/news/3866289/zheng-qinwen-defeats-kalinskaya-in-three-sets-to-make-australian-open-semis"
+        "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic"
       ]
     },
     {
       "kind": "story",
       "visual": "narrative-timeline",
-      "text_chars": 301,
-      "longest_text_block": 50,
+      "text_chars": 316,
+      "longest_text_block": 59,
       "photo_count": 1,
       "photo_sources": [
-        "https://www.wtatennis.com/news/3867402/zheng-qinwen-bests-yastremska-makes-first-slam-final-at-australian-open"
+        "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_final_2008,_Federer_serves_for_3rd_set.jpg"
       ]
     },
     {
       "kind": "explainer",
-      "visual": "player-explainer",
-      "text_chars": 183,
-      "longest_text_block": 35,
+      "visual": "trivia-explainer",
+      "text_chars": 194,
+      "longest_text_block": 41,
       "photo_count": 1,
       "photo_sources": [
-        "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg"
+        "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-nadal-australian-open-2012/"
       ]
     },
     {
       "kind": "today",
       "visual": "history-timeline",
-      "text_chars": 240,
-      "longest_text_block": 46,
+      "text_chars": 267,
+      "longest_text_block": 45,
       "photo_count": 1,
       "photo_sources": [
-        "https://ausopen.com/articles/news/rebounding-ao-final-zheng-qinwen-wins-olympic-gold-china"
+        "https://www.rappler.com/sports/tears-flow-fans-salute-retiring-rafael-nadal-after-davis-cup-defeat-2024/"
       ]
     }
   ],
@@ -104,25 +113,25 @@
       "file": "card_00_knowledge.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 371572
+      "bytes": 343521
     },
     {
       "file": "card_01_story.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 337576
+      "bytes": 450288
     },
     {
       "file": "card_02_explainer.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 338956
+      "bytes": 285132
     },
     {
       "file": "card_03_today.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 304661
+      "bytes": 262093
     }
   ],
   "errors": [],
