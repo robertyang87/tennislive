@@ -7,9 +7,6 @@ on:
     paths:
       - ".github/workflows/probe.yml"
 
-permissions:
-  contents: write
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -32,23 +29,6 @@ jobs:
       - name: 探测 RapidAPI 网球数据源（临时）
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
-
-      - name: 下载纳达尔退役仪式照片供人工核验（临时）
-        shell: bash
-        run: python tools/probe_nadal_verify.py
-
-      - name: 提交候选照片（临时）
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/_probe_nadal_retirement.jpg
-          if git diff --cached --quiet; then
-            echo "没有候选照片，跳过提交"
-          else
-            git commit -m "chore: 临时提交候选照片供人工核验"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
-          fi
 
       - name: 生成无图片探测包
         shell: bash

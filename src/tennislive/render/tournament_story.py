@@ -1405,8 +1405,8 @@ STORIES = STORIES + (
                     "9-7 拿下决胜盘，终结费德勒温网五连冠。"
                 ),
                 source_url=(
-                    "https://en.wikipedia.org/wiki/2008_Wimbledon_Championships_"
-                    "%E2%80%93_Men%27s_singles_final"
+                    "https://www.espn.com/tennis/story/_/id/23977542/"
+                    "roger-federer-rafael-nadal-epic-2008-wimbledon-final"
                 ),
             ),
             ChampionMoment(
@@ -1419,15 +1419,36 @@ STORIES = STORIES + (
                     "主办方搬来了椅子——这项纪录保持至今。"
                 ),
                 source_url=(
-                    "https://en.wikipedia.org/wiki/2012_Australian_Open_"
-                    "%E2%80%93_Men%27s_singles_final"
+                    "https://www.espn.com/tennis/aus12/story/_/id/7515950/"
+                    "2012-australian-open-novak-djokovic-outlasts-rafael-nadal-"
+                    "longest-grand-slam-final"
+                ),
+            ),
+            ChampionMoment(
+                date="2019-07-14",
+                player="德约科维奇 vs 费德勒",
+                age="温网决赛",
+                headline="温网首个决胜盘抢七",
+                detail=(
+                    "7-6(5) 1-6 7-6(4) 4-6 13-12(3)，费德勒决胜盘 8-7 曾手握"
+                    "两个冠军点未能兑现，德约科维奇最终在温网历史上第一个"
+                    "决胜盘抢七中胜出。"
+                ),
+                source_url=(
+                    "https://www.forbes.com/sites/adamzagoria/2019/07/14/"
+                    "wimbledon-novak-djokovics-championship-win-over-roger-"
+                    "federer-by-the-numbers/"
                 ),
             ),
         ),
         image_keys=("cincinnati",),
         source_label="ATP / 大满贯官方史料",
         image_credit="Tatiana (Moscow) / Wikimedia Commons · CC BY-SA 2.0",
-        source_url="https://en.wikipedia.org/wiki/Big_Three_(tennis)",
+        source_url=(
+            "https://www.espn.com/tennis/story/_/id/29190340/"
+            "novak-djokovic-prediction-breaking-roger-federer-grand-slam-"
+            "title-record-point"
+        ),
     ),
     _trivia_story(
         slug="china-tennis",
