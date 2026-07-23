@@ -70,6 +70,10 @@ tennislive content                  # 自动选题并生成完整待发布内容
 
 1. 在 [pushplus.plus](https://www.pushplus.plus) 微信扫码注册，复制 token
 2. 仓库 Settings → Secrets and variables → Actions → 新建 Secret：`PUSHPLUS_TOKEN`
+3. 为保证微信稳定显示卡片图，在 PushPlus「开发设置」启用开放接口并设置
+   `secretKey`，再新建 GitHub Secret：`PUSHPLUS_SECRET_KEY`。配置后 Action
+   会把每张成图先上传至 PushPlus 原生图片 CDN；未配置时使用带版本戳的
+   GitHub Pages 图片地址。
 
 推送里的复制按钮由 GitHub Pages 承载；仓库需在 Settings → Pages 中选择 `main` 分支根目录发布。
 
