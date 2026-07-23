@@ -33,9 +33,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 查找剩余两张照片地址（临时）
+      - name: 查找 Forbes 回顾文章的照片（临时）
         shell: bash
-        run: python tools/probe_final_two.py
+        run: python tools/probe_forbes_retrospectives.py
 
       - name: 生成无图片探测包
         shell: bash
