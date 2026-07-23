@@ -34,8 +34,9 @@ from .common import (
     match_round_display,
 )
 from .focus import focus_comparison, has_detailed_stats
-from .narrative import preview_angle
+from .narrative import editor_takeaway, preview_angle
 from .rating import (
+    deciding_set_tiebreak,
     editorial_tonight_focus,
     find_upset,
     is_tour_focus_match,
@@ -43,6 +44,7 @@ from .rating import (
     match_score,
     tonight_event_focus,
     top_results,
+    went_to_deciding_set,
 )
 from .story import (
     chinese_side_won,
@@ -1575,6 +1577,42 @@ def focus_body(m: Match, date_label: str) -> str:
     )
 
 
+def _drama_tag(m: Match) -> tuple[str, str]:
+    """One fact describing what made the match itself notable.
+
+    Deliberately distinct from the level/round/scoreline already shown in the
+    match card and event line above it — restating those was the exact
+    complaint against this page (real production output had all three fact
+    tiles duplicate information already visible one screen-inch higher).
+    """
+    if is_upset(m):
+        winners, losers = m.winner_players() or [], m.loser_players() or []
+        w_rank = winners[0].rank if winners else None
+        l_rank = losers[0].rank if losers else None
+        if w_rank and l_rank:
+            return (f"排名差{abs(w_rank - l_rank)}位", "爆冷指数")
+        return ("非种子淘汰种子", "爆冷指数")
+    how = deciding_set_tiebreak(m)
+    if how:
+        return (f"决胜盘{how}", "鏖战成色")
+    if went_to_deciding_set(m):
+        return ("鏖战决胜盘", "鏖战成色")
+    return ("直落两盘", "鏖战成色")
+
+
+def _result_facts(m: Match, group) -> list[tuple[str, str]]:
+    """Three facts for the result-insight fallback page, none of them a
+    restatement of the level/round/scoreline already on the card above."""
+    surface = surface_zh(m.tournament.surface or tournament_surface(m.tournament.name))
+    games = sum(s.home + s.away for s in m.sets)
+    facts = [(surface, "场地")] if surface else []
+    facts.append(_drama_tag(m))
+    facts.append((f"{games}局", "总局数"))
+    while len(facts) < 3:  # 极少数缺失场地数据的赛事：兜底不留空格
+        facts.append((group.compact_level, "赛事级别"))
+    return facts[:3]
+
+
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
     from .hotspot import hotspot_reasons
@@ -1588,24 +1626,18 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
             kicker = "Career Context · 人物背景"
             title = "把今天放回生涯里"
             insight = context.summary
-            facts = list(context.facts) or [
-                (group.compact_level, "赛事级别"),
-                (match_round_display(m) or "完赛", "比赛轮次"),
-                (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
-            ]
+            facts = list(context.facts) or _result_facts(m, group)
         else:
             kicker = "Why It Matters · 一句看懂"
             title = "这场意味着什么"
             insight = result_insight(m)
-            facts = [
-                (group.compact_level, "赛事级别"),
-                (match_round_display(m) or "完赛", "比赛轮次"),
-                (m.score_display(from_winner=True) or "已完赛", "完整盘分"),
-            ]
+            facts = _result_facts(m, group)
         match_card = _result_card(
             m, hero=True, show_tournament=False, tag_upset=False
         )
+        verdict = editor_takeaway(m, today)
     else:
+        verdict = ""
         if context is not None:
             kicker = "Player Context · 人物背景"
             title = "今晚看这条故事"
@@ -1631,6 +1663,11 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         f'<span>{html.escape(label)}</span></article>'
         for value, label in facts
     )
+    verdict_html = (
+        f'<div class="verdict"><b>编辑锐评</b>{html.escape(verdict)}</div>'
+        if verdict
+        else ""
+    )
     return (
         '<div class="poster insight-page">'
         + _masthead(date_label)
@@ -1640,6 +1677,7 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         + '<article class="insight-hero">'
         + f'<small>{html.escape(reason)}</small><strong>{html.escape(insight)}</strong></article>'
         + f'<div class="fact-grid">{facts_html}</div>'
+        + verdict_html
         + _FOOTER
         + "</div>"
     )
