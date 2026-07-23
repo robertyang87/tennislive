@@ -30,6 +30,10 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
+      - name: 查找 2025 法网纳达尔告别仪式三人同框照片（临时）
+        shell: bash
+        run: python tools/probe_rg2025_ceremony.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
