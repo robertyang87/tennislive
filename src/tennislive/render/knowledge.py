@@ -15,7 +15,7 @@ import shutil
 from pathlib import Path
 
 from ..digest import Digest
-from ..research.visual_sources import resolve_story_visuals
+from ..research.visual_sources import curated_source_urls, resolve_story_visuals
 from ..timeutil import WEEKDAY_ZH
 from .pushmsg import to_copy_page
 from .hashtags import hashtag_count, limit_hashtags
@@ -723,12 +723,20 @@ def _knowledge_failure_stage(message: str) -> str:
     return "candidate-generation"
 
 
-def _selected_visual_sources(manifest: dict) -> set[str]:
-    return {
+def _selected_visual_sources(slug: str, manifest: dict) -> set[str]:
+    """Source URLs to exclude on the next retry.
+
+    Curated picks are deliberately excluded from this set: they have no
+    alternative candidate to diversify toward, so excluding one just
+    strands that page with zero options on the retry that follows an
+    unrelated page's failure.
+    """
+    selected = {
         str(item["source_url"])
         for item in manifest.get("attempts", [])
         if item.get("status") == "selected" and item.get("source_url")
     }
+    return selected - curated_source_urls(slug)
 
 
 def generate_knowledge_package(
@@ -805,7 +813,7 @@ def generate_knowledge_package(
                         visual_qa = json.loads(visual_qa_path.read_text("utf-8"))
                     except (OSError, ValueError):
                         visual_qa = {}
-                newly_excluded = _selected_visual_sources(manifest)
+                newly_excluded = _selected_visual_sources(candidate.slug, manifest)
                 excluded_source_urls.update(newly_excluded)
                 stage = _knowledge_failure_stage(str(exc))
                 # The visual-preflight failure path nests the real

@@ -1039,6 +1039,22 @@ def _cover_audit(story: TournamentStory) -> dict:
     }
 
 
+def curated_source_urls(slug: str) -> set[str]:
+    """Source URLs of hand-picked curated visuals for a story slug.
+
+    A retry that fails for an unrelated reason must not exclude these --
+    there is no alternative candidate to "diversify" toward, so excluding
+    a curated pick just strands that page with zero options on the next
+    attempt.
+    """
+    return {
+        str(candidate.get("source_url", ""))
+        for (candidate_slug, _page), candidates in _CURATED_VISUALS.items()
+        if candidate_slug == slug
+        for candidate in candidates
+    }
+
+
 def resolve_story_visuals(
     story: TournamentStory,
     folder: Path,
