@@ -5,8 +5,16 @@ on:
     inputs:
       date:
         description: Content date (YYYY-MM-DD)
+        required: false
+        default: ""
+      scope:
+        description: Existing package to push
         required: true
-        default: "2026-07-21"
+        type: choice
+        options:
+          - main
+          - knowledge
+        default: main
   push:
     branches: [main]
     paths:
@@ -17,8 +25,8 @@ permissions:
   contents: read
 
 jobs:
-  push-knowledge:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[push-knowledge]')
+  push-existing:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[pushplus]') || contains(github.event.head_commit.message, '[push-knowledge]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,13 +36,21 @@ jobs:
           cache: pip
       - name: Install package
         run: pip install -q -e .
-      - name: Push existing knowledge package
+      - name: Push existing package
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           INPUT_DATE: ${{ inputs.date }}
+          INPUT_SCOPE: ${{ inputs.scope }}
+          TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
         run: |
           DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
-          OUT_DIR="output/${DATE}/knowledge"
+          SCOPE="${INPUT_SCOPE:-main}"
+          if [ "$SCOPE" = "knowledge" ]; then
+            OUT_DIR="output/${DATE}/knowledge"
+          else
+            OUT_DIR="output/${DATE}"
+          fi
           test -s "${OUT_DIR}/push.html"
           test -s "${OUT_DIR}/xiaohongshu.txt"
           test -n "${PUSHPLUS_TOKEN}"
