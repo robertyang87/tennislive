@@ -173,12 +173,35 @@ def schedule_insight(match: Match) -> str:
 
     if r == "决赛":
         return f"{event}只剩最后一问：{home}和{away}，谁能把这一周换成奖杯？"
-    if r == "半决赛":
-        return "离决赛只差一场，纸面身份不再是答案，只会变成必须兑现的压力。"
-    if r == "四分之一决赛":
-        return "八强是签表真正的分水岭：这场赢下来的不只是四强席位，还有争冠声量。"
-    if r == "八分之一决赛":
-        return "八强门票摆在眼前，比赛也从热身阶段切进真正的淘汰压力。"
+
+    # 淘汰赛阶段（决赛除外）：同一赛事常常一次出现好几场同轮次比赛
+    # （比如四强/八强战一晚打完），必须按具体排名/种子差异区分文案，
+    # 否则同一张卡片里会出现好几场比赛复用同一句"分水岭"套话。
+    stakes = {"半决赛": "决赛门票", "四分之一决赛": "四强席位", "八分之一决赛": "八强门票"}.get(r)
+    if stakes and home_player and away_player:
+        ranks = [home_player.rank, away_player.rank]
+        if all(rank is not None for rank in ranks):
+            gap = abs(ranks[0] - ranks[1])
+            favorite = home_player if ranks[0] < ranks[1] else away_player
+            favorite_name = player_zh(favorite.name)
+            if gap >= 35:
+                return f"排名差{gap}位，但打到这一轮，{stakes}不会白送给纸面优势的一方。"
+            if gap >= 12:
+                return f"{favorite_name}占着{gap}位排名优势，可{stakes}近在眼前时，压力比排名更说明问题。"
+            return f"排名只差{gap}位，{stakes}谁都想要；这种分差走到抢七不奇怪。"
+        seeded = next(
+            (player for player in (home_player, away_player) if player.seed), None
+        )
+        if seeded is not None:
+            return f"{player_zh(seeded.name)}带着{seeded.seed}号种子的身份，这一轮要保住的不只是晋级，还有{stakes}的份量。"
+        return f"{stakes}就在眼前，两人都清楚这一轮没有“下次再拼”的余地。"
+    if stakes:
+        # 缺少排名/种子数据时的机械兜底，仍按赛事阶段区分文案
+        return {
+            "决赛门票": "离决赛只差一场，纸面身份不再是答案，只会变成必须兑现的压力。",
+            "四强席位": "八强是签表真正的分水岭：这场赢下来的不只是四强席位，还有争冠声量。",
+            "八强门票": "八强门票摆在眼前，比赛也从热身阶段切进真正的淘汰压力。",
+        }[stakes]
 
     if home_player and away_player:
         ranks = [home_player.rank, away_player.rank]
