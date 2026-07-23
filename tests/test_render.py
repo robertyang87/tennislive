@@ -2535,19 +2535,44 @@ def test_trajectory_arc_differentiates_cruise_comeback_and_seesaw():
     assert trajectory_arc(seesaw) == "比赛几度易手，胜负直到最后关键分才见分晓"
 
 
-def test_insight_body_result_page_uses_real_comparison_not_filler_tiles():
-    """第二页不再是三宫格凑数：技术对比表（真实盘分/局数/抢七）+ 走势 +
-    编辑锐评，取代此前和上方卡片逐字重复的赛事级别/轮次/比分三个数据块。"""
+def test_insight_body_result_page_has_no_stats_falls_back_to_arc_and_verdict():
+    """没有官方技术统计时，第二页只展示走势+编辑锐评，不能伪造一张
+    盘数/局数/抢七的"技术对比表"充数——那本质只是比分的换算，不是
+    真正的技战术数据（发球/破发/制胜分等），伪装成数据对比会误导读者。"""
     from datetime import date
 
     from tennislive.render.webcards import insight_body
 
     match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
+    assert match.stats is None
     html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
 
     assert "编辑锐评" in html_out
     assert "比赛走势" in html_out  # 走势句块已渲染
-    assert "compare-grid" in html_out and "compare-row" in html_out  # 真实技术对比表
+    assert "compare-grid" not in html_out and "compare-row" not in html_out
     assert "草地" in html_out  # Wimbledon 场地信息，卡片上此前不曾出现
     assert "完整盘分" not in html_out and "比赛轮次" not in html_out  # 旧的凑数标签已移除
-    assert "完整盘分" not in html_out
+
+
+def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exists():
+    """只有当官方/授权数据源提供了真实技战术统计（发球%、ACE、破发、制胜分等）
+    时，第二页才展示"专业技术统计"表格——这时表格标题和内容都必须是真数据。"""
+    from datetime import date
+
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.webcards import insight_body
+
+    match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
+    match.stats = MatchStats(
+        source="ESPN",
+        first_serve_won_pct=StatPair(home=72, away=64),
+        aces=StatPair(home=12, away=6),
+        break_points_won=StatPair(home=4, away=2),
+    )
+    html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
+
+    assert "编辑锐评" in html_out
+    assert "比赛走势" in html_out
+    assert "compare-grid" in html_out and "compare-row" in html_out
+    assert "专业技术统计" in html_out
+    assert "一发得分率" in html_out and "ACE" in html_out
