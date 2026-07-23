@@ -10,13 +10,13 @@ import urllib.request
 
 OUT = pathlib.Path("tools/_probe_images")
 TARGETS = {
-    "wta-ao2024-sf-cameron-spencer.jpg": (
-        "https://photoresources.wtatennis.com/wta/photo/2024/01/25/"
-        "d736e04f-1a05-4b19-a78d-ab63210eee27/Zheng-SF-Cameron-Spencer.jpg"
+    "ausopen-gold-raw.jpg": (
+        "https://ausopen.com/sites/default/files/202408/4/"
+        "zheng-qinwen-gold-paris-2024-olympics.jpg"
     ),
-    "wta-ao2024-qf-paul-crock.jpg": (
-        "https://photoresources.wtatennis.com/wta/photo/2024/01/24/"
-        "77cc89de-5003-44c6-a221-c3db1b6a04af/Zheng-QF-Paul-Crock-AFP.jpg"
+    "ausopen-gold-large.jpg": (
+        "https://ausopen.com/sites/default/files/styles/large/public/"
+        "202408/4/zheng-qinwen-gold-paris-2024-olympics.jpg"
     ),
 }
 
