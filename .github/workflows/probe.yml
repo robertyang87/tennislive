@@ -30,9 +30,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 查找 Big Three 维基页面配图（临时）
+      - name: 查找纳达尔退役仪式配图（临时）
         shell: bash
-        run: python tools/probe_bigthree_wiki_images.py
+        run: python tools/probe_nadal_retirement.py
 
       - name: 生成无图片探测包
         shell: bash
