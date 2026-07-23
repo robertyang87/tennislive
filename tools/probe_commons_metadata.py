@@ -68,8 +68,33 @@ def fetch(title: str) -> None:
         print(f"error: {exc!r}")
 
 
+def search(query: str) -> None:
+    params = {
+        "action": "query",
+        "generator": "search",
+        "gsrsearch": query,
+        "gsrnamespace": 6,
+        "gsrlimit": "20",
+        "format": "json",
+    }
+    url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+    print(f"\n===== search: {query} =====")
+    req = urllib.request.Request(url, headers={"User-Agent": "tennislive-probe/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.load(resp)
+            pages = data.get("query", {}).get("pages", {})
+            for page in pages.values():
+                print("-", page.get("title"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"error: {exc!r}")
+
+
 def main() -> int:
     list_category("Category:Zheng Qinwen")
+    search("Zheng Qinwen 2024 Olympics")
+    search("Zheng Qinwen Australian Open")
+    search("Zheng Qinwen Roland Garros")
     for title in TITLES:
         fetch(title)
     return 0
