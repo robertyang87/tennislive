@@ -168,24 +168,21 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     ),
     ("zheng-qinwen", "today"): (
         {
-            "provider": "official-media",
-            "source_url": (
-                "https://www.olympics.com/en/news/"
-                "zheng-qinwen-wins-gold-paris-2024-tennis-women-singles"
-            ),
+            "provider": "verified-event-archive",
+            "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
             "image_url": (
-                "https://ausopen.com/sites/default/files/202408/4/"
-                "zheng-qinwen-gold-paris-2024-olympics.jpg"
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/"
+                "Qinwen_Zheng_-_2024_Olympics.jpg/1600px-Qinwen_Zheng_-_2024_Olympics.jpg"
             ),
-            "credit": "Australian Open (ausopen.com)",
-            "license": "官方媒体供图 · 非商业资讯引用",
-            "width": 1080,
-            "height": 810,
+            "credit": "Kuberzog / Wikimedia Commons",
+            "license": "CC BY-SA 4.0",
+            "width": 1600,
+            "height": 1200,
             "relevance": 100,
-            "search_text": "zheng qinwen paris 2024 olympics gold medal celebration clay court",
+            "search_text": "zheng qinwen paris 2024 olympics clay court match backhand",
             "image_text": (
-                "zheng qinwen collapsing on the clay court in celebration after "
-                "winning the paris 2024 olympics gold medal"
+                "zheng qinwen hitting a backhand on the clay court during her "
+                "paris 2024 olympics tennis match"
             ),
         },
     ),
