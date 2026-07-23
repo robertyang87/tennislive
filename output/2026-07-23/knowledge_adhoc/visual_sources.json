@@ -89,18 +89,10 @@
       "height": 0
     },
     {
-      "provider": "official-media",
+      "provider": "official-page",
       "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-      "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-      "image_url": "",
-      "credit": "itftennis.com",
-      "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
-      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-      "image_text": " ",
-      "width": 0,
-      "height": 0
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
     },
     {
       "provider": "official-page",
@@ -250,9 +242,9 @@
   "selection_evidence": {
     "kind": "trivia",
     "candidate_slug": "longest-match",
-    "result_count": 76,
-    "live_count": 3,
-    "schedule_count": 21,
+    "result_count": 79,
+    "live_count": 5,
+    "schedule_count": 18,
     "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
     "viral_prior": 10.0,
     "topic_score": 10.0,
