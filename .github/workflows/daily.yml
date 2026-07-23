@@ -347,6 +347,8 @@ jobs:
         if: failure() && steps.guard.outputs.skip != 'true'
         run: |
           OUT_DIR="${{ steps.gen.outputs.outdir }}"
+          if [ -z "$OUT_DIR" ]; then OUT_DIR="output/failure-${GITHUB_RUN_ID}"; fi
+          mkdir -p "$OUT_DIR"
           LOG="$OUT_DIR/quality_failure.log"
           {
             echo "run_id=${{ github.run_id }}"
