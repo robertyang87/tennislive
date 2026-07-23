@@ -333,32 +333,35 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
         },
     ),
     # 三巨头很少同框出现在同一张真实照片里——多轮检索到的"三人合影"候选
-    # 要么是错配的旧照（如 2013 法网默哀仪式被张冠李戴成 2022 Laver Cup），
-    # 要么只有两人在场（2022 Laver Cup 费纳同框照没有德约）。cover 页改用
-    # NPR 三格拼版报道图（三张真实特写并排，非合成摆拍），story/explainer/
-    # today 三页各自锚定一场独立赛事，每页只需一人真实入镜即可核实。
+    # 大多是错配的旧照（如 2013 法网默哀仪式被张冠李戴成 2022 Laver Cup、
+    # 2022 Laver Cup 费纳同框照没有德约）。2025 年法网纳达尔退役致敬仪式
+    # 上穆雷、费德勒、纳达尔、德约科维奇并肩同框的 AP 通讯社原图解决了
+    # 这个问题——四人都清晰入镜，裁剪时对焦右侧即可让费纳德三人满框。
+    # story/explainer/today 三页各自锚定一场独立赛事，每页只需一人真实
+    # 入镜即可核实。
     ("big-three", "cover"): (
         {
-            "provider": "verified-editorial",
-            "source_url": "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic",
+            "provider": "official-media",
+            "source_url": "https://sports.yahoo.com/article/french-open-roger-federer-novak-180837132.html",
             "image_url": (
-                "https://media.npr.org/assets/img/2022/09/22/"
-                "copy-of-composites_wide-44c1798792c6e052aa486f6921450f371c212c5b.jpg"
-                "?s=1400&c=85&f=jpeg"
+                "https://s.yimg.com/ny/api/res/1.2/u0o1TsoeOJBfQQu9D2a2Jg--/"
+                "YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/"
+                "https://media.zenfs.com/en/ap.org/6fdd29b6c4652e81e4168562a0653db9"
             ),
-            "credit": "NPR",
-            "license": "公开网页图片 · 非商业资讯引用",
-            "width": 1400,
-            "height": 787,
+            "credit": "AP Photo via Yahoo Sports",
+            "license": "官方媒体供图 · 非商业资讯引用",
+            "width": 1200,
+            "height": 800,
             "relevance": 100,
+            "focus": "72% 22%",
             "search_text": (
-                "roger federer rafael nadal novak djokovic 2022 laver cup "
-                "reunion tennis"
+                "roger federer rafael nadal novak djokovic andy murray "
+                "2025 roland garros farewell ceremony tennis"
             ),
             "image_text": (
-                "three side-by-side close-up reaction portraits of roger "
-                "federer, rafael nadal and novak djokovic marking their "
-                "2022 laver cup tennis reunion"
+                "andy murray, roger federer, rafael nadal and novak "
+                "djokovic standing arm in arm on the roland garros clay "
+                "court during nadal's 2025 farewell ceremony"
             ),
         },
     ),
