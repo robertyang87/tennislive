@@ -33,6 +33,20 @@ jobs:
           echo "===== 数据源与赛事覆盖 ====="
           cat "$REPORT"
 
+      - name: 临时探测：ESPN/SofaScore 是否有逐场技术统计端点
+        shell: bash
+        run: |
+          MATCH_ID=$(python3 -c "
+          import json
+          d = json.load(open('$(find probe-output -name digest.json -print -quit)'))
+          finished = [m for m in d.get('results', []) if m.get('status') == 'finished']
+          print((finished[0]['match_id']) if finished else '')
+          ")
+          echo "sample match_id=$MATCH_ID"
+          EVENT_ID="${MATCH_ID%%:*}"
+          COMP_ID="${MATCH_ID##*:}"
+          python3 tools/probe_stats_endpoints.py "$EVENT_ID" "$COMP_ID" wta || true
+
       - name: 上传探测报告
         uses: actions/upload-artifact@v4
         with:
