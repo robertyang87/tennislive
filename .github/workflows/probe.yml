@@ -33,9 +33,9 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 列出 WTA 文章页中的候选照片地址（临时）
+      - name: 列出 AusOpen 文章页中的候选照片地址（临时）
         shell: bash
-        run: python tools/probe_wta_gallery.py
+        run: python tools/probe_ausopen_gallery.py
 
       - name: 生成无图片探测包
         shell: bash
