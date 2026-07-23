@@ -41,6 +41,10 @@ _WATERMARK_LIBRARY_TERMS = {
     "gettyimages", "getty images", "alamy", "shutterstock", "dreamstime",
     "depositphotos", "istockphoto", "123rf",
 }
+_WATERMARK_LIBRARY_HOSTS = (
+    "gettyimages.com", "alamy.com", "shutterstock.com", "dreamstime.com",
+    "depositphotos.com", "istockphoto.com", "123rf.com",
+)
 _VISUAL_IMPACT_TERMS = {
     "cover": (
         "action", "playing", "match", "serve", "forehand", "backhand",
@@ -1269,7 +1273,20 @@ def resolve_story_visuals(
                     str(candidate.get("image_text", "")),
                 )
             ).lower()
-            if any(term in candidate_text for term in _WATERMARK_LIBRARY_TERMS):
+            # Only reject a direct hotlink to a stock-photo library's own
+            # domain (its preview thumbnails carry a visible watermark).
+            # A wire-service filename (e.g. "GettyImages-123.jpg") retained
+            # by a legitimate outlet's own CDN is not the same thing -- the
+            # outlet licensed and republished a clean copy.
+            candidate_hosts = (
+                urlparse(str(candidate.get("source_url", ""))).hostname or "",
+                urlparse(str(candidate.get("image_url", ""))).hostname or "",
+            )
+            if any(
+                lib in host
+                for host in candidate_hosts
+                for lib in _WATERMARK_LIBRARY_HOSTS
+            ):
                 reject("watermarked-stock-library")
                 continue
             matches = _candidate_matches(candidate, briefs[page])
