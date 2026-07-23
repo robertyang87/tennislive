@@ -168,21 +168,25 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     ),
     ("zheng-qinwen", "today"): (
         {
-            "provider": "verified-event-archive",
-            "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
+            "provider": "official-media",
+            "source_url": "https://sports.yahoo.com/no-1-iga-swiatek-loses-120600551.html",
             "image_url": (
-                "https://upload.wikimedia.org/wikipedia/commons/"
-                "c/cf/Qinwen_Zheng_-_2024_Olympics.jpg"
+                "https://s.yimg.com/ny/api/res/1.2/Gef3DdfgjCxkbdARWhTF0g--/"
+                "YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/"
+                "https://media.zenfs.com/en/ap.org/af74ba83d3fbb019753043d716cc1282"
             ),
-            "credit": "Kuberzog / Wikimedia Commons",
-            "license": "CC BY-SA 4.0",
-            "width": 4608,
-            "height": 3456,
+            "credit": "AP Photo via Yahoo Sports",
+            "license": "官方媒体供图 · 非商业资讯引用",
+            "width": 1200,
+            "height": 800,
             "relevance": 100,
-            "search_text": "zheng qinwen paris 2024 olympics clay court match backhand",
+            "search_text": (
+                "zheng qinwen paris 2024 olympics semifinal swiatek celebration clay court"
+            ),
             "image_text": (
-                "zheng qinwen hitting a backhand on the clay court during her "
-                "paris 2024 olympics tennis match"
+                "zheng qinwen lying on the clay court screaming in celebration "
+                "after upsetting iga swiatek in the paris 2024 olympics semifinal, "
+                "with the olympic rings and paris signage visible behind her"
             ),
         },
     ),
