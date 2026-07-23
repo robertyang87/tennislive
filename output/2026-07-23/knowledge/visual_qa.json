@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "longest-match",
+  "standards": {
+    "photo_count_max": 4,
+    "photo_source_uniqueness": "same photo/source may appear only once",
+    "page_visual": "every page requires one distinct verified photo",
+    "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
+    "rule_explainer": "topic-specific diagram plus verified photo required",
+    "player_crop": "head-safe object position",
+    "production_labels": "internal generation labels are forbidden",
+    "story_ordinals": "semantic icons replace ordinal markers",
+    "year_markers": "calendar years must use four digits",
+    "canned_story_labels": "fixed teaching-style labels are forbidden",
+    "max_text_block_chars": 82,
+    "max_card_text_chars": 520,
+    "card_size": [
+      1080,
+      1440
+    ],
+    "max_card_bytes": 950000
+  },
+  "photo_uses": 4,
+  "photo_sources": [
+    "https://www.tennismajors.com/others-news/the-record-breaking-wimbledon-marathon-of-2010-742245.html",
+    "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
+    "https://www.sportsboom.com/tennis/longest-tennis-match/",
+    "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg"
+  ],
+  "resolved_visuals": [
+    {
+      "page": "story",
+      "file": "output\\2026-07-23\\knowledge\\visuals\\story-613202d034dd.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
+      "credit": "Voo de Mar / Wikimedia Commons",
+      "license": "CC BY-SA 2.0",
+      "width": 943,
+      "height": 707
+    },
+    {
+      "page": "explainer",
+      "file": "output\\2026-07-23\\knowledge\\visuals\\explainer-3e982f848689.jpg",
+      "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
+      "credit": "SportsBoom / Getty Images",
+      "license": "Public editorial archive",
+      "width": 2736,
+      "height": 1696
+    },
+    {
+      "page": "today",
+      "file": "output\\2026-07-23\\knowledge\\visuals\\today-70499aa76b86.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg",
+      "credit": "Edwardx / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "width": 1920,
+      "height": 1440
+    }
+  ],
+  "pages": [
+    {
+      "kind": "knowledge",
+      "visual": "verified-photo",
+      "text_chars": 119,
+      "longest_text_block": 55,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.tennismajors.com/others-news/the-record-breaking-wimbledon-marathon-of-2010-742245.html"
+      ]
+    },
+    {
+      "kind": "story",
+      "visual": "narrative-timeline",
+      "text_chars": 306,
+      "longest_text_block": 55,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg"
+      ]
+    },
+    {
+      "kind": "explainer",
+      "visual": "rule-diagram",
+      "text_chars": 222,
+      "longest_text_block": 25,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://www.sportsboom.com/tennis/longest-tennis-match/"
+      ]
+    },
+    {
+      "kind": "today",
+      "visual": "history-timeline",
+      "text_chars": 213,
+      "longest_text_block": 37,
+      "photo_count": 1,
+      "photo_sources": [
+        "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg"
+      ]
+    }
+  ],
+  "rendered_cards": [
+    {
+      "file": "card_00_knowledge.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 336199
+    },
+    {
+      "file": "card_01_story.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 338856
+    },
+    {
+      "file": "card_02_explainer.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 304629
+    },
+    {
+      "file": "card_03_today.jpg",
+      "width": 1080,
+      "height": 1440,
+      "bytes": 352930
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "story_slug": "longest-match",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、授权、分辨率与唯一性；不足则换题",
+  "selected_count": 3,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [],
+  "input_domains": [
+    "commons.wikimedia.org",
+    "itftennis.com",
+    "sportsboom.com",
+    "usopen.org",
+    "wimbledon.com"
+  ],
+  "providers_queried": [
+    "curated-editorial",
+    "official-story-pages"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "scoreboard 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "scoreboard 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 1
+    }
+  ],
+  "selected_providers": [
+    "verified-editorial",
+    "verified-event-archive"
+  ],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-media",
+      "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
+      "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
+      "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
+      "credit": "wimbledon.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
+      "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "image_url": "",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "trivia-longest-match.jpg",
+      "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
+      "subject": "John Isner Nicolas Mahut",
+      "required_years": [
+        "2010"
+      ],
+      "required_event_terms": [
+        "wimbledon",
+        "court 18"
+      ],
+      "person_required": true,
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": true,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 1
+      },
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        }
+      ],
+      "provider": "verified-event-archive",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
+      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Isner-Mahut_match_WIM2010.jpg?width=1600",
+      "credit": "Voo de Mar / Wikimedia Commons",
+      "license": "CC BY-SA 2.0",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
+      "relevance": 100,
+      "sha256": "613202d034ddf978d7cd4c604be2b15aadc658bf08535d26a6f41f7022c96c0a",
+      "focus": "50% 24%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": true,
+      "cached_file": "story-613202d034dd.jpg"
+    },
+    {
+      "page": "explainer",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 1
+      },
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "scoreboard 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "scoreboard 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        }
+      ],
+      "provider": "verified-editorial",
+      "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
+      "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
+      "credit": "SportsBoom / Getty Images",
+      "license": "Public editorial archive",
+      "query": "scoreboard 2010 wimbledon tennis",
+      "relevance": 100,
+      "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
+      "focus": "50% 16%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "explainer-3e982f848689.jpg"
+    },
+    {
+      "page": "today",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 1
+      },
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "Court 18 plaque 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "Court 18 plaque 2010 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 1
+        }
+      ],
+      "provider": "verified-event-archive",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg",
+      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg?width=1800",
+      "credit": "Edwardx / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
+      "relevance": 100,
+      "sha256": "70499aa76b866757ec1b9878a5c29153ed7a808528e4000dc7161ef1dc865521",
+      "focus": "50% 38%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "today-70499aa76b86.jpg"
+    }
+  ],
+  "selection_evidence": {
+    "kind": "trivia",
+    "candidate_slug": "longest-match",
+    "result_count": 59,
+    "live_count": 0,
+    "schedule_count": 35,
+    "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
+    "viral_prior": 10.0,
+    "topic_score": 10.0,
+    "live_relevance_score": 0.0,
+    "trend_signal_count": 14,
+    "candidate_rank": 4,
+    "candidate_count": 8,
+    "visual_preflight_rejections": 3,
+    "visual_preflight_status": "pass"
+  },
+  "rejected_candidates": [
+    {
+      "story_slug": "surfaces",
+      "title": "红土、草地、硬地",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "cover",
+        "explainer",
+        "story",
+        "today"
+      ],
+      "input_domains": [
+        "en.wikipedia.org"
+      ],
+      "providers_queried": [],
+      "provider_runs": [],
+      "attempts": [
+        {
+          "page": "cover",
+          "status": "rejected",
+          "cached_file": "trivia-surfaces.jpg",
+          "title": "File:Clay Crew - water for center court (3593807294).jpg",
+          "subject": "center court",
+          "required_years": [],
+          "required_event_terms": [
+            "clay"
+          ],
+          "person_required": false,
+          "subject_match": true,
+          "year_match": true,
+          "event_match": true,
+          "person_match": true,
+          "visual_impact_match": false,
+          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+        }
+      ]
+    },
+    {
+      "story_slug": "china-tennis",
+      "title": "中国网球这二十年",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "cover",
+        "explainer",
+        "story",
+        "today"
+      ],
+      "input_domains": [
+        "en.wikipedia.org"
+      ],
+      "providers_queried": [],
+      "provider_runs": [],
+      "attempts": [
+        {
+          "page": "cover",
+          "status": "rejected",
+          "cached_file": "trivia-china-tennis.jpg",
+          "title": "File:Li Na 2012.jpg",
+          "subject": "Li Na",
+          "required_years": [
+            "2011"
+          ],
+          "required_event_terms": [
+            "roland garros",
+            "french open"
+          ],
+          "person_required": true,
+          "subject_match": false,
+          "year_match": false,
+          "event_match": false,
+          "person_match": false,
+          "visual_impact_match": false,
+          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+        }
+      ]
+    },
+    {
+      "story_slug": "big-three",
+      "title": "三巨头的数字",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "cover",
+        "explainer",
+        "story",
+        "today"
+      ],
+      "input_domains": [
+        "en.wikipedia.org"
+      ],
+      "providers_queried": [],
+      "provider_runs": [],
+      "attempts": [
+        {
+          "page": "cover",
+          "status": "rejected",
+          "cached_file": "trivia-big-three.jpg",
+          "title": "File:Rafael Nadal & Roger Federer (18265453743).jpg",
+          "subject": "Federer Nadal Djokovic",
+          "required_years": [],
+          "required_event_terms": [
+            "tennis"
+          ],
+          "person_required": true,
+          "subject_match": false,
+          "year_match": true,
+          "event_match": false,
+          "person_match": false,
+          "visual_impact_match": false,
+          "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
+        }
+      ]
+    }
+  ]
+}
