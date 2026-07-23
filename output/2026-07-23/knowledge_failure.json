@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "policy": "精确人物/年份/赛事/地点/授权素材不足时自动换题；候选耗尽则停止发布",
+  "rejected_candidates": [
+    {
+      "story_slug": "surfaces",
+      "title": "红土、草地、硬地",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "explainer",
+        "story",
+        "today"
+      ]
+    },
+    {
+      "story_slug": "big-three",
+      "title": "三巨头的数字",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "cover",
+        "explainer",
+        "story",
+        "today"
+      ]
+    },
+    {
+      "story_slug": "china-tennis",
+      "title": "中国网球这二十年",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "cover",
+        "explainer",
+        "story",
+        "today"
+      ]
+    },
+    {
+      "story_slug": "scoring-history",
+      "title": "15、30、40 的秘密",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "explainer",
+        "story",
+        "today"
+      ]
+    },
+    {
+      "story_slug": "longest-match",
+      "title": "11 小时 5 分钟",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "explainer",
+        "story",
+        "today"
+      ]
+    },
+    {
+      "story_slug": "yellow-ball",
+      "title": "网球为什么是黄色的",
+      "errors": [
+        "事实输入源少于 2 个独立域名",
+        "事实输入缺少赛事、巡回赛、协会或档案馆的一手来源"
+      ],
+      "missing_pages": [
+        "explainer",
+        "story",
+        "today"
+      ]
+    }
+  ],
+  "errors": [
+    "候选故事均未通过素材生产性预检"
+  ],
+  "attempts": []
+}
