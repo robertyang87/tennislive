@@ -30,6 +30,10 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
+      - name: 探测 Wikimedia Commons 图片元数据（临时）
+        shell: bash
+        run: python tools/probe_commons_metadata.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
