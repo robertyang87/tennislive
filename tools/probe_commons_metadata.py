@@ -13,8 +13,9 @@ import urllib.request
 
 TITLES = [
     "File:Qinwen Zheng - 2024 Olympics.jpg",
-    "File:Zheng Qinwen (2024 US Open) 01 (cropped).jpg",
-    "File:Zheng Qinwen (2023 US Open) 01 (cropped).jpg",
+    "File:Zheng Qinwen Olympics 2024 (cropped).jpg",
+    "File:2024 Summer Olympics - 29 July (tennis).jpg",
+    "File:Zheng Qinwen press conference.png",
 ]
 
 
@@ -91,10 +92,8 @@ def search(query: str) -> None:
 
 
 def main() -> int:
-    list_category("Category:Zheng Qinwen")
-    search("Zheng Qinwen 2024 Olympics")
-    search("Zheng Qinwen Australian Open")
-    search("Zheng Qinwen Roland Garros")
+    search("Zheng Qinwen gold medal Vekic")
+    search("Zheng Qinwen final Paris tennis")
     for title in TITLES:
         fetch(title)
     return 0
