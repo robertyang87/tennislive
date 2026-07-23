@@ -212,8 +212,8 @@ def prepare_image_delivery(
 def wait_for_images(
     html_content: str,
     *,
-    attempts: int = 6,
-    delay: float = 3.0,
+    attempts: int | None = None,
+    delay: float | None = None,
     timeout: int = 15,
 ) -> None:
     """Wait until every remote image is fetchable before PushPlus snapshots it."""
@@ -221,7 +221,36 @@ def wait_for_images(
     if not pending:
         return
 
-    for attempt in range(max(1, attempts)):
+    attempt_count = max(
+        1,
+        min(
+            30,
+            attempts
+            if attempts is not None
+            else int(
+                os.environ.get(
+                    "TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS",
+                    "20",
+                )
+            ),
+        ),
+    )
+    retry_delay = max(
+        0.0,
+        min(
+            60.0,
+            delay
+            if delay is not None
+            else float(
+                os.environ.get(
+                    "TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS",
+                    "15",
+                )
+            ),
+        ),
+    )
+
+    for attempt in range(attempt_count):
         unavailable: list[str] = []
         for url in pending:
             try:
@@ -252,8 +281,14 @@ def wait_for_images(
                 time.sleep(settle_seconds)
             return
         pending = unavailable
-        if attempt + 1 < max(1, attempts):
-            time.sleep(max(0.0, delay))
+        if attempt + 1 < attempt_count:
+            logger.warning(
+                "PushPlus images are not ready yet (%d remaining, attempt %d/%d)",
+                len(pending),
+                attempt + 1,
+                attempt_count,
+            )
+            time.sleep(retry_delay)
 
     raise PushPlusError(
         f"图片尚未同步到 CDN，已取消本次推送（{len(pending)} 张不可访问）"

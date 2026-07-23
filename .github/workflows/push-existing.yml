@@ -43,6 +43,8 @@ jobs:
           INPUT_DATE: ${{ inputs.date }}
           INPUT_SCOPE: ${{ inputs.scope }}
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
+          TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
+          TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
         run: |
           DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
           SCOPE="${INPUT_SCOPE:-main}"

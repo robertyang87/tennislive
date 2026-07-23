@@ -82,6 +82,8 @@ jobs:
       TENNISLIVE_OFFICIAL_VIDEO: 'off'
       # Runner 探测成功后仍给 PushPlus/微信抓图节点留出 CDN 同步时间。
       TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
+      TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
+      TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
       # 知识帖配图：官方媒体、Commons、Openverse 多源检索，全部保留来源与机构署名。
       TENNISLIVE_VISUAL_FETCH: ${{ vars.TENNISLIVE_VISUAL_FETCH || 'on' }}
       # 严格生产门槛：人物、年份、赛事/地点、清晰度与来源缺一项即自动换题。

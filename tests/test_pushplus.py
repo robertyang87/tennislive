@@ -75,6 +75,22 @@ def test_wait_for_images_honors_post_cache_settle_window(monkeypatch):
     sleep.assert_called_once_with(20.0)
 
 
+def test_wait_for_images_uses_automatic_action_retry_window(monkeypatch):
+    unavailable = Mock(ok=False, headers={})
+    ready = Mock(ok=True, headers={"Content-Type": "image/jpeg"})
+    get = Mock(side_effect=[unavailable, ready])
+    monkeypatch.setattr(requests, "get", get)
+    sleep = Mock()
+    monkeypatch.setattr("tennislive.publish.pushplus.time.sleep", sleep)
+    monkeypatch.setenv("TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS", "20")
+    monkeypatch.setenv("TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS", "15")
+
+    wait_for_images('<img src="https://cdn.example/card.jpg">')
+
+    assert get.call_count == 2
+    sleep.assert_called_once_with(15.0)
+
+
 def test_prepare_image_delivery_uses_github_pages_fallback(tmp_path, monkeypatch):
     cards = tmp_path / "cards"
     cards.mkdir()
