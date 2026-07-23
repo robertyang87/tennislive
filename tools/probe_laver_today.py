@@ -14,8 +14,8 @@ import urllib.request
 from PIL import Image
 
 URLS = [
-    "https://www.olympics.com/en/news/roger-federer-tennis-last-match-nadal-live",
-    "https://www.tennis.com/news/articles/laver-cup-rewind-roger-federer-plays-his-last-match-alongside-rafael-nadal",
+    "https://www.si.com/tennis/2022/09/28/federer-explains-story-behind-the-memorable-photo-of-him-nadal-at-laver-cup",
+    "https://www.essentiallysports.com/atp-tennis-news-inject-this-photograph-in-my-veins-tennis-world-gets-emotionally-overwhelmed-as-roger-federer-rafael-nadal-novak-djokovic-and-andy-murray-get-together-for-one-last-dance-at-laver/",
 ]
 
 OG_IMAGE_PATTERN = re.compile(
