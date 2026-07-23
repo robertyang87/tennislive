@@ -60,9 +60,11 @@ def _ranked_player_names() -> dict[str, str]:
 def _player_lookup() -> dict[str, str]:
     global _PLAYER_LOOKUP
     if _PLAYER_LOOKUP is None:
-        _PLAYER_LOOKUP = _ranked_player_names()
-        # Hand-reviewed media forms always override generated snapshot entries.
-        _PLAYER_LOOKUP.update({_normalize_name(k): v for k, v in PLAYER_ZH.items()})
+        _PLAYER_LOOKUP = {_normalize_name(k): v for k, v in PLAYER_ZH.items()}
+        # The ranked snapshot carries the latest source-backed overrides. It is
+        # authoritative for current top-300 players; the legacy table remains
+        # the fallback for players outside the snapshot.
+        _PLAYER_LOOKUP.update(_ranked_player_names())
     return _PLAYER_LOOKUP
 
 

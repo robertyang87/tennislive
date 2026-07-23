@@ -30,6 +30,13 @@ def test_top_300_snapshot_has_600_chinese_first_display_names():
 
 
 def test_official_media_form_and_feed_aliases_are_resolved():
+    assert player_zh("Learner Tien") == "勒纳·钱"
+    assert player_zh("Felix Auger-Aliassime") == "阿利亚西姆"
+    assert player_zh("Brandon Nakashima") == "中岛布兰登"
+    assert player_zh("Iga Swiatek") == "斯维亚特克"
+    assert player_zh("Ann Li") == "李吉妮"
+    assert player_zh("Joanna Garland") == "葛蓝乔安娜"
+    assert player_zh("Sara Sorribes Tormo") == "索里贝斯·托莫"
     assert player_zh("Tamara Korpatsch") == "科尔帕奇"
     assert player_zh("Chak Lam Coleman Wong") == "黄泽林"
     assert player_zh("Aleksandr Shevchenko") == "舍甫琴科"
@@ -72,3 +79,20 @@ def test_snapshot_validator_rejects_an_english_primary_name():
 
     with pytest.raises(ValueError, match="non-Chinese"):
         validate_snapshot(payload)
+
+
+def test_review_queue_is_non_blocking_and_only_contains_provisional_names():
+    from tools.update_player_names import build_review_queue
+
+    payload = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    queue = build_review_queue(payload)
+    expected = {
+        entry["name_en"]
+        for tour in ("ATP", "WTA")
+        for entry in payload["tours"][tour]
+        if entry["translation_source"] == "machine-transliteration"
+    }
+
+    assert queue["blocking"] is False
+    assert {entry["name_en"] for entry in queue["entries"]} == expected
+    assert "Learner Tien" not in expected
