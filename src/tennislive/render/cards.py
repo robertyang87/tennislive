@@ -1115,6 +1115,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
                     "match_id": "",
                     "match_players": [],
                     "fallback_reason": cover_fallback_reason or "no-cover-report",
+                    "fallback_person": False,
                     "quality_score": 0,
                     "quality": {"status": "fallback", "hard_failures": []},
                 }
@@ -1122,6 +1123,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
                 cover_report.update(
                     status="fallback",
                     fallback_reason=cover_fallback_reason or "no-qualified-headline-match-photo",
+                    fallback_person=False,
                     quality_score=0,
                     quality={"status": "fallback", "hard_failures": []},
                 )

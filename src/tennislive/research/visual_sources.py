@@ -1833,9 +1833,19 @@ def resolve_match_cover_visual(
         if any(term in _daily_cover_text(candidate) for term in _WATERMARK_LIBRARY_TERMS):
             hard_failures.append("watermarked-stock-library")
         if hard_failures:
-            record.update(status="rejected", hard_failures=hard_failures)
-            attempts.append(record)
-            continue
+            fallback_eligible = (
+                hard_failures == ["not-the-exact-headline-match"]
+                and subject_match
+                and person_match
+                and event_match
+                and year_match
+                and scene["scene"] != "static_or_group"
+            )
+            if not fallback_eligible:
+                record.update(status="rejected", hard_failures=hard_failures)
+                attempts.append(record)
+                continue
+            record["fallback_eligible"] = True
         candidates.append(
             (player, query, candidate, record, metadata_score, event_match, year_match)
         )
@@ -1888,6 +1898,11 @@ def resolve_match_cover_visual(
             }
         )
         attempts.append(record)
+        if record.get("fallback_eligible") and (
+            not failures or failures == [f"quality-score-below-{minimum_score}"]
+        ):
+            degraded.append((total_score, downloaded, record))
+            continue
         if failures:
             if failures == [f"quality-score-below-{minimum_score}"]:
                 degraded.append((total_score, downloaded, record))
@@ -1912,6 +1927,7 @@ def resolve_match_cover_visual(
             {
                 "status": "fallback",
                 "fallback_reason": f"quality-score-below-{minimum_score}",
+                "fallback_person": True,
                 "selected_player": selected_record["player"],
                 "exact_match": selected_record["exact_match"],
                 "both_sides_match": selected_record["both_sides_match"],
