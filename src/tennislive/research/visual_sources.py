@@ -141,13 +141,13 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
             "provider": "verified-event-archive",
             "source_url": "https://commons.wikimedia.org/wiki/File:Qinwen_Zheng_-_2024_Olympics.jpg",
             "image_url": (
-                "https://upload.wikimedia.org/wikipedia/commons/c/cf/"
-                "Qinwen_Zheng_-_2024_Olympics.jpg"
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/"
+                "Qinwen_Zheng_-_2024_Olympics.jpg/1600px-Qinwen_Zheng_-_2024_Olympics.jpg"
             ),
             "credit": "Kuberzog / Wikimedia Commons",
             "license": "CC BY-SA 4.0",
-            "width": 4608,
-            "height": 3456,
+            "width": 1600,
+            "height": 1200,
             "relevance": 100,
             "search_text": "zheng qinwen paris 2024 olympics clay court match backhand",
             "image_text": (
