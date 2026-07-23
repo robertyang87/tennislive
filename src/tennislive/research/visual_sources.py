@@ -446,6 +446,57 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
     return candidates
 
 
+def _flickr_candidates(query: str, session: requests.Session) -> list[dict]:
+    """Read Flickr's public feed without requiring an API key.
+
+    This is only a supplementary discovery channel; exact player/event/year
+    and pixel checks still happen in ``resolve_match_cover_visual``.
+    """
+    tags = ",".join(re.findall(r"[a-z0-9]+", query.casefold())[:8])
+    if not tags:
+        return []
+    try:
+        response = session.get(
+            "https://www.flickr.com/services/feeds/photos_public.gne",
+            params={
+                "tags": tags,
+                "tagmode": "all",
+                "format": "json",
+                "nojsoncallback": "1",
+            },
+            timeout=12,
+        )
+        response.raise_for_status()
+        items = response.json().get("items", [])
+    except (requests.RequestException, ValueError):
+        return []
+    candidates: list[dict] = []
+    for item in items[:12]:
+        media = item.get("media") or {}
+        image_url = str(media.get("m") or "").strip()
+        source_url = str(item.get("link") or "").strip()
+        if not image_url.startswith("http") or not source_url.startswith("https://"):
+            continue
+        description = re.sub(r"<[^>]+>", " ", str(item.get("description", "")))
+        title = str(item.get("title", ""))
+        text = " ".join((title, description, source_url, image_url)).lower()
+        candidates.append(
+            {
+                "provider": "flickr-public",
+                "source_url": source_url,
+                "image_url": image_url,
+                "credit": str(item.get("author", "Flickr public feed")),
+                "license": "public Flickr feed · editorial reference",
+                "width": 0,
+                "height": 0,
+                "relevance": _relevance(query, text),
+                "search_text": text,
+                "image_text": " ".join((title, description)).lower(),
+            }
+        )
+    return candidates
+
+
 def _query_variants(
     brief: tuple[str, tuple[str, ...], tuple[str, ...], bool],
     exact_query: str,
@@ -1161,6 +1212,7 @@ def _daily_cover_metadata_score(
         "wikimedia-commons": 4,
         "bing-web-image": 3,
         "openverse": 2,
+        "flickr-public": 1,
     }.get(str(candidate.get("provider", "")), 1)
     score = 25 + scene_points + provider_points
     if context["exact_match"]:
@@ -1600,6 +1652,12 @@ def _daily_editorial_candidates(
 ) -> list[dict]:
     """Extract exact-player social images from match-linked editorial pages."""
     urls = [match.editorial_url, *match.schedule_source_urls]
+    urls.extend(
+        str(signal.get("url", "")).strip()
+        for signal in match.trend_signals
+        if isinstance(signal, dict)
+        and str(signal.get("kind", "")) == "official-news"
+    )
     candidates: list[dict] = []
     for url in dict.fromkeys(str(item or "").strip() for item in urls):
         if not url.startswith("https://") or "news.google." in url:
@@ -1719,6 +1777,12 @@ def resolve_match_cover_visual(
         ("openverse", _openverse_candidates),
         ("bing-web-image", _bing_candidates),
     )
+    flickr_enabled = os.environ.get("TENNISLIVE_COVER_FLICKR", "off").lower() in {
+        "1", "on", "true"
+    }
+    report["flickr_enabled"] = flickr_enabled
+    if flickr_enabled:
+        provider_loaders = (*provider_loaders, ("flickr-public", _flickr_candidates))
     pool: list[tuple[object, str, dict]] = []
     atp_official_enabled = os.environ.get(
         "TENNISLIVE_COVER_ATP_OFFICIAL", "off"
