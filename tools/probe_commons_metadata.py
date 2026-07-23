@@ -18,6 +18,27 @@ TITLES = [
 ]
 
 
+def list_category(category: str) -> None:
+    params = {
+        "action": "query",
+        "list": "categorymembers",
+        "cmtitle": category,
+        "cmtype": "file",
+        "cmlimit": "200",
+        "format": "json",
+    }
+    url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+    print(f"\n===== category members: {category} =====")
+    req = urllib.request.Request(url, headers={"User-Agent": "tennislive-probe/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.load(resp)
+            for member in data.get("query", {}).get("categorymembers", []):
+                print("-", member.get("title"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"error: {exc!r}")
+
+
 def fetch(title: str) -> None:
     params = {
         "action": "query",
@@ -48,6 +69,7 @@ def fetch(title: str) -> None:
 
 
 def main() -> int:
+    list_category("Category:Zheng Qinwen")
     for title in TITLES:
         fetch(title)
     return 0
