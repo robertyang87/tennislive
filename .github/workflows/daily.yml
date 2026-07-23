@@ -47,6 +47,8 @@ concurrency:
   group: daily-digest
   cancel-in-progress: false
 
+# A commit explicitly marked [pushplus] may replay the current day's package.
+
 jobs:
   digest:
     runs-on: ubuntu-latest
