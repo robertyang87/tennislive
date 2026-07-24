@@ -6,6 +6,7 @@ from tennislive.video.official import (
     ATP_YOUTUBE_CHANNEL_ID,
     OFFICIAL_YOUTUBE_CHANNEL_IDS,
     OFFICIAL_YOUTUBE_FEEDS,
+    TENNISTV_YOUTUBE_CHANNEL_ID,
     OfficialVideoCandidate,
     OfficialVideoMetadata,
     _curated_chinese_cues,
@@ -70,6 +71,51 @@ def test_search_official_youtube_candidates_keeps_only_verified_channel():
     assert [candidate.url for candidate in candidates] == [
         "https://www.youtube.com/watch?v=official-1"
     ]
+
+
+def test_search_official_youtube_candidates_also_trusts_tennistv_channel_for_atp():
+    def searcher(_query):
+        return {
+            "entries": [
+                {
+                    "id": "tennistv-1",
+                    "title": "Hot Shot: Fritz somehow gets this back",
+                    "channel_id": TENNISTV_YOUTUBE_CHANNEL_ID,
+                },
+                {
+                    "id": "random-1",
+                    "title": "Hot Shot: reposted clip",
+                    "channel_id": "not-official",
+                },
+            ]
+        }
+
+    candidates = search_official_youtube_candidates(
+        "Fritz somehow gets this back", tour="ATP", searcher=searcher
+    )
+
+    assert [candidate.url for candidate in candidates] == [
+        "https://www.youtube.com/watch?v=tennistv-1"
+    ]
+
+
+def test_search_official_youtube_candidates_does_not_extend_tennistv_trust_to_wta():
+    def searcher(_query):
+        return {
+            "entries": [
+                {
+                    "id": "tennistv-1",
+                    "title": "Hot Shot: not actually a WTA upload",
+                    "channel_id": TENNISTV_YOUTUBE_CHANNEL_ID,
+                }
+            ]
+        }
+
+    candidates = search_official_youtube_candidates(
+        "irrelevant", tour="WTA", searcher=searcher
+    )
+
+    assert candidates == []
 
 
 def test_tennistv_hot_shot_cards_keep_match_metadata_and_drop_montages():

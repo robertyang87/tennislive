@@ -34,6 +34,8 @@ from .official import (
     OFFICIAL_YOUTUBE_CHANNEL_IDS,
     OFFICIAL_YOUTUBE_FEEDS,
     TENNISTV_HOT_SHOTS_HUB,
+    TENNISTV_YOUTUBE_CHANNEL_ID,
+    TENNISTV_YOUTUBE_FEED,
     WTA_VIDEO_HUB,
     OfficialVideoCandidate,
     OfficialVideoMetadata,
@@ -716,6 +718,31 @@ def discover_atp_point(
     )
 
 
+def discover_tennistv_youtube_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve Tennis TV's own public YouTube uploads.
+
+    This is a second, independent free ATP path: youtube.com/tennistv
+    publicly mirrors a selection of Hot Shots and highlights from the same
+    ATP Media library that requires a paid entitlement on tennistv.com
+    itself. No login, no JWT.
+    """
+    return _discover_official_youtube_point(
+        digest,
+        tour="ATP",
+        feed_url=TENNISTV_YOUTUBE_FEED,
+        channel_id=TENNISTV_YOUTUBE_CHANNEL_ID,
+        get=get,
+        timeout=timeout,
+        metadata_fetcher=metadata_fetcher,
+    )
+
+
 def discover_wta_youtube_point(
     digest: Digest,
     *,
@@ -747,10 +774,18 @@ def discover_youtube_search_point(
     result by a few hours. This bounded search is the catch-up path: it never
     searches arbitrary creators, and the normal date/match/full-source gates
     still decide whether a result is publishable.
+
+    This is ATP's main free path (Tennis TV's full catalog needs a paid
+    entitlement this project doesn't hold; WTA has its own always-public
+    video hub and leans on this less), so it covers a full day's singles
+    across both tours and tries the label phrasings separately -- biasing
+    the query text toward one exact phrase like "hot shot" can bury a
+    "Point of the Day" upload in YouTube's ranking even though the
+    acceptance gate (``official_best_signal``) already takes both.
     """
     metadata_items: list[OfficialVideoMetadata] = []
     seen: set[str] = set()
-    for match in yesterday_matches(digest)[:10]:
+    for match in yesterday_matches(digest)[:25]:
         tour = match.tour.value
         event_text = _clean(f"{match.tournament.name} {match.tournament.city or ''}")
         for slam_code, aliases in _SLAM_EVENT_ALIASES.items():
@@ -758,19 +793,21 @@ def discover_youtube_search_point(
                 tour = slam_code
                 break
         names = [player.name for player in [*match.home, *match.away]]
-        query = f'"{names[0]}" "{names[1]}" {match.tournament.name} hot shot'
-        try:
-            candidates = searcher(query, tour=tour, limit=6)
-        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
-            continue
-        for candidate in candidates:
-            if candidate.url in seen or official_best_signal(candidate.title) is None:
-                continue
-            seen.add(candidate.url)
+        base = f'"{names[0]}" "{names[1]}" {match.tournament.name}'
+        for label in ("hot shot", "point of the day"):
+            query = f"{base} {label}"
             try:
-                metadata_items.append(metadata_fetcher(candidate))
+                candidates = searcher(query, tour=tour, limit=8)
             except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
                 continue
+            for candidate in candidates:
+                if candidate.url in seen or official_best_signal(candidate.title) is None:
+                    continue
+                seen.add(candidate.url)
+                try:
+                    metadata_items.append(metadata_fetcher(candidate))
+                except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+                    continue
     return select_daily_point(digest, metadata_items)
 
 
@@ -812,6 +849,7 @@ def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection
         discover_wta_point,
         discover_wta_youtube_point,
         discover_atp_point,
+        discover_tennistv_youtube_point,
         discover_youtube_search_point,
     ):
         try:
