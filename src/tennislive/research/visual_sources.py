@@ -336,35 +336,12 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     # 大多是错配的旧照（如 2013 法网默哀仪式被张冠李戴成 2022 Laver Cup、
     # 2022 Laver Cup 费纳同框照没有德约）。2025 年法网纳达尔退役致敬仪式
     # 上穆雷、费德勒、纳达尔、德约科维奇并肩同框的 AP 通讯社原图解决了
-    # 这个问题——四人都清晰入镜，裁剪时对焦右侧即可让费纳德三人满框。
+    # 这个问题。封面裁剪要求人物主图使用固定的头部安全焦点（不能自定义
+    # 横向偏移），所以直接把这张 AP 原图（4064x2709）预裁剪成
+    # assets/trivia/trivia-big-three.jpg（费纳德三人满框、穆雷基本裁
+    # 出），作为常规的本地专属图使用，不再需要 cover 的联网检索条目。
     # story/explainer/today 三页各自锚定一场独立赛事，每页只需一人真实
     # 入镜即可核实。
-    ("big-three", "cover"): (
-        {
-            "provider": "official-media",
-            "source_url": "https://sports.yahoo.com/article/french-open-roger-federer-novak-180837132.html",
-            "image_url": (
-                "https://s.yimg.com/ny/api/res/1.2/u0o1TsoeOJBfQQu9D2a2Jg--/"
-                "YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/"
-                "https://media.zenfs.com/en/ap.org/6fdd29b6c4652e81e4168562a0653db9"
-            ),
-            "credit": "AP Photo via Yahoo Sports",
-            "license": "官方媒体供图 · 非商业资讯引用",
-            "width": 1200,
-            "height": 800,
-            "relevance": 100,
-            "focus": "72% 22%",
-            "search_text": (
-                "roger federer rafael nadal novak djokovic andy murray "
-                "2025 roland garros farewell ceremony tennis"
-            ),
-            "image_text": (
-                "andy murray, roger federer, rafael nadal and novak "
-                "djokovic standing arm in arm on the roland garros clay "
-                "court during nadal's 2025 farewell ceremony"
-            ),
-        },
-    ),
     ("big-three", "story"): (
         {
             "provider": "verified-event-archive",

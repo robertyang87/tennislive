@@ -1444,7 +1444,7 @@ STORIES = STORIES + (
         ),
         image_keys=("cincinnati",),
         source_label="ATP / 大满贯官方史料",
-        image_credit="Tatiana (Moscow) / Wikimedia Commons · CC BY-SA 2.0",
+        image_credit="AP Photo via Yahoo Sports",
         source_url=(
             "https://www.espn.com/tennis/story/_/id/29190340/"
             "novak-djokovic-prediction-breaking-roger-federer-grand-slam-"
