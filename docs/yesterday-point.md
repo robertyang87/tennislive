@@ -53,3 +53,19 @@ TENNISLIVE_YESTERDAY_POINT=on tennislive point --date today --outdir output
 - `manifest.json`
 
 某巡回赛当天没有满足全部门槛的视频时，只有该巡回赛的清单是 `status=skipped`，不影响另一方；两边都没有时顶层清单也是 `status=skipped`。抓取、渲染或质量校验异常会生成顶层 `status=failed` 并使 Action 失败。
+
+## ATP 命中率：已知限制与排查记录
+
+ATP 的命中率长期低于 WTA，排查过程中确认过两类互相独立的原因，记录下来避免重复排查：
+
+1. **部分日子官方确实没剪出合格素材**：多次用 `workflow_dispatch` 实测（如 Estoril、Kitzbühel 等 250 级赛事），ATP Tour YouTube、Tennis TV YouTube 频道、WTA/大满贯官方频道都查询过，当天确实没有同时满足昨日赛事、官方单分标签、完整回合和日期匹配的视频——这是内容侧的真实缺口，不是代码 bug。
+2. **Tennis TV 网页端的 Hot Shots 需要登录**：官方支持文档确认免费注册账号即可看 Hot Shots／daily highlights（无需 Premium，Premium 只锁完整回放和直播），但要求登录态，不是完全匿名公开。`fetch_tennistv_video_metadata()` 支持通过 `TENNISTV_JWT` 传一个 Bearer token 给官方 entitlement 接口，Action 本身从不读浏览器 cookie。
+
+**是否值得手动配置 `TENNISTV_JWT` 长期使用：排查结论是不值得，已放弃。** 用免费账号登录后，从浏览器控制台抓到两类 token 验证过：
+
+- Tennis TV 自己的 SSO（Keycloak）access token：生命周期只有 5 分钟（`iat`→`exp` 固定 300 秒），无法作为长期 GitHub secret 存放——定时 Action 相隔数小时运行一次，token 早已过期。
+- entitlement 接口签发的 StreamAMG 播放 token：同样 5 分钟，且只对单个 `entryId` 有效。
+
+两次抓到的 token 都证明登录后确实能换到合法的 entitlement／播放凭证，间接印证匿名请求在部分素材上确实会被登录墙挡住（而不是素材不存在）。但要让 Action 无人值守长期用，唯一可行的做法是存一个长效的 refresh token；而这类现代 SPA（Keycloak silent-SSO 模式）通常刻意不把 refresh token 放进 localStorage 等 JS 可读的地方，只留在内存里配合静默 iframe 续期——这是网站有意的安全设计，不是遗漏。继续深挖等于是在扒登录机制而非正常使用账号，这条路线到此为止不再推进。
+
+`TENNISTV_JWT` 机制保留在代码里，作为手动一次性场景的开关（跑 `workflow_dispatch` 前临时贴一个新鲜 token），但不构成定时任务的解法。ATP 覆盖率继续依赖上面列出的免费官方源与四班次自动重试，命中率低于 WTA 是已知且接受的限制。
