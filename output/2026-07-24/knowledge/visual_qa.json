@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "pass",
-  "story_slug": "longest-match",
+  "story_slug": "big-three",
   "standards": {
     "photo_count_max": 4,
     "photo_source_uniqueness": "same photo/source may appear only once",
@@ -23,79 +23,79 @@
   },
   "photo_uses": 4,
   "photo_sources": [
-    "https://www.tennismajors.com/others-news/the-record-breaking-wimbledon-marathon-of-2010-742245.html",
-    "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
-    "https://www.sportsboom.com/tennis/longest-tennis-match/",
-    "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg"
+    "https://www.si.com/tennis/2017/07/16/roger-federer-beats-marin-cilic-wimbledon-grand-slam-title",
+    "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008",
+    "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012",
+    "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html"
   ],
   "resolved_visuals": [
     {
       "page": "story",
-      "file": "output/2026-07-24/knowledge/visuals/story-613202d034dd.jpg",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
-      "credit": "Voo de Mar / Wikimedia Commons",
-      "license": "CC BY-SA 2.0",
-      "width": 943,
-      "height": 707
+      "file": "output/2026-07-24/knowledge/visuals/story-654041ab0260.jpg",
+      "source_url": "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008",
+      "credit": "Tennis365",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1024,
+      "height": 600
     },
     {
       "page": "explainer",
-      "file": "output/2026-07-24/knowledge/visuals/explainer-3e982f848689.jpg",
-      "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-      "credit": "SportsBoom / Getty Images",
-      "license": "Public editorial archive",
-      "width": 2736,
-      "height": 1696
+      "file": "output/2026-07-24/knowledge/visuals/explainer-17446fe89cef.jpg",
+      "source_url": "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012",
+      "credit": "Sports Illustrated",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1440,
+      "height": 810
     },
     {
       "page": "today",
-      "file": "output/2026-07-24/knowledge/visuals/today-70499aa76b86.jpg",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg",
-      "credit": "Edwardx / Wikimedia Commons",
-      "license": "CC BY-SA 4.0",
-      "width": 1920,
-      "height": 1440
+      "file": "output/2026-07-24/knowledge/visuals/today-c13f81a2b7b1.jpg",
+      "source_url": "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html",
+      "credit": "AP Photo via Yahoo Sports",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "width": 1200,
+      "height": 800
     }
   ],
   "pages": [
     {
       "kind": "knowledge",
       "visual": "verified-photo",
-      "text_chars": 119,
-      "longest_text_block": 55,
+      "text_chars": 125,
+      "longest_text_block": 59,
       "photo_count": 1,
       "photo_sources": [
-        "https://www.tennismajors.com/others-news/the-record-breaking-wimbledon-marathon-of-2010-742245.html"
+        "https://www.si.com/tennis/2017/07/16/roger-federer-beats-marin-cilic-wimbledon-grand-slam-title"
       ]
     },
     {
       "kind": "story",
       "visual": "narrative-timeline",
-      "text_chars": 306,
-      "longest_text_block": 55,
+      "text_chars": 315,
+      "longest_text_block": 59,
       "photo_count": 1,
       "photo_sources": [
-        "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg"
+        "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008"
       ]
     },
     {
       "kind": "explainer",
-      "visual": "rule-diagram",
-      "text_chars": 222,
-      "longest_text_block": 25,
+      "visual": "trivia-explainer",
+      "text_chars": 209,
+      "longest_text_block": 40,
       "photo_count": 1,
       "photo_sources": [
-        "https://www.sportsboom.com/tennis/longest-tennis-match/"
+        "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012"
       ]
     },
     {
       "kind": "today",
       "visual": "history-timeline",
-      "text_chars": 213,
-      "longest_text_block": 37,
+      "text_chars": 287,
+      "longest_text_block": 46,
       "photo_count": 1,
       "photo_sources": [
-        "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg"
+        "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html"
       ]
     }
   ],
@@ -104,25 +104,25 @@
       "file": "card_00_knowledge.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 336038
+      "bytes": 410210
     },
     {
       "file": "card_01_story.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 337691
+      "bytes": 397010
     },
     {
       "file": "card_02_explainer.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 303519
+      "bytes": 262240
     },
     {
       "file": "card_03_today.jpg",
       "width": 1080,
       "height": 1440,
-      "bytes": 352806
+      "bytes": 327658
     }
   ],
   "errors": [],
