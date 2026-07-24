@@ -13,11 +13,11 @@
   ],
   "missing_pages": [],
   "input_domains": [
-    "commons.wikimedia.org",
     "espn.com",
     "forbes.com",
-    "perfect-tennis.com",
-    "rappler.com"
+    "si.com",
+    "sports.yahoo.com",
+    "tennis365.com"
   ],
   "providers_queried": [
     "curated-editorial",
@@ -41,35 +41,34 @@
     {
       "page": "explainer",
       "provider": "curated-editorial",
-      "query": "Djokovic 2012 australian open tennis",
+      "query": "Djokovic Nadal 2012 australian open tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "explainer",
       "provider": "official-story-pages",
-      "query": "Djokovic 2012 australian open tennis",
+      "query": "Djokovic Nadal 2012 australian open tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "curated-editorial",
-      "query": "Rafael Nadal grand slam tennis",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "official-story-pages",
-      "query": "Rafael Nadal grand slam tennis",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     }
   ],
   "selected_providers": [
-    "verified-editorial",
-    "verified-event-archive"
+    "verified-editorial"
   ],
   "excluded_source_urls": [],
   "errors": [],
@@ -134,7 +133,7 @@
       "page": "cover",
       "status": "selected",
       "cached_file": "trivia-big-three.jpg",
-      "title": "Andy Murray, Roger Federer, Rafael Nadal and Novak Djokovic embrace at Nadal's 2025 Roland Garros farewell ceremony (tennis)",
+      "title": "Composite of three on-court trophy moments: Roger Federer kissing the Wimbledon trophy after his 8th title (2017), Rafael Nadal biting the Roland Garros trophy after his 14th title (2022), and Novak Djokovic holding the Australian Open trophy at the podium after the 2012 final",
       "subject": "Federer Nadal Djokovic",
       "required_years": [],
       "required_event_terms": [
@@ -172,20 +171,20 @@
           "candidate_count": 1
         }
       ],
-      "provider": "verified-event-archive",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_final_2008,_Federer_serves_for_3rd_set.jpg",
-      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wimbledon_Men%27s_final_2008%2C_Federer_serves_for_3rd_set.jpg?width=2048",
-      "credit": "David Underdown / Wikimedia Commons",
-      "license": "CC BY-SA 3.0",
+      "provider": "verified-editorial",
+      "source_url": "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008",
+      "image_url": "https://d2me2qg8dfiw8u.cloudfront.net/content/uploads/2022/04/06115036/Roger-Federer-and-Rafael-Nadal-at-Wimbledon-2008.jpg",
+      "credit": "Tennis365",
+      "license": "公开网页图片 · 非商业资讯引用",
       "query": "Federer Nadal 2008 wimbledon tennis",
       "relevance": 100,
-      "sha256": "01591e1b042e07011de854c72c0ffc9efc1947961b32f36a9544379f44698ca2",
+      "sha256": "654041ab02605394c390d357c7b3eba3e12c5819bfe5c03dd04b1324d864778e",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "story-01591e1b042e.jpg"
+      "cached_file": "story-654041ab0260.jpg"
     },
     {
       "page": "explainer",
@@ -199,32 +198,32 @@
         {
           "page": "explainer",
           "provider": "curated-editorial",
-          "query": "Djokovic 2012 australian open tennis",
+          "query": "Djokovic Nadal 2012 australian open tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "explainer",
           "provider": "official-story-pages",
-          "query": "Djokovic 2012 australian open tennis",
+          "query": "Djokovic Nadal 2012 australian open tennis",
           "status": "ok",
           "candidate_count": 1
         }
       ],
       "provider": "verified-editorial",
-      "source_url": "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-nadal-australian-open-2012/",
-      "image_url": "https://www.perfect-tennis.com/wp-content/uploads/2020/04/Djokovic.jpg",
-      "credit": "Perfect Tennis",
+      "source_url": "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012",
+      "image_url": "https://www.si.com/.image/c_fill,w_1440,ar_1440:810,f_auto,q_auto,g_auto/MTY4MjYyNDk4OTcyODA0MjYx/novak-djokovic.jpg",
+      "credit": "Sports Illustrated",
       "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Djokovic 2012 australian open tennis",
+      "query": "Djokovic Nadal 2012 australian open tennis",
       "relevance": 100,
-      "sha256": "9501de1de97ee01953627949ae846760aeaa0771400267543991ad2d0b21b424",
+      "sha256": "17446fe89cef4dda25154ff8ec0942d64b16c96f9c8734e0958d0230b7c74990",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "explainer-9501de1de97e.jpg"
+      "cached_file": "explainer-17446fe89cef.jpg"
     },
     {
       "page": "today",
@@ -238,32 +237,32 @@
         {
           "page": "today",
           "provider": "curated-editorial",
-          "query": "Rafael Nadal grand slam tennis",
+          "query": "Djokovic Federer 2019 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "today",
           "provider": "official-story-pages",
-          "query": "Rafael Nadal grand slam tennis",
+          "query": "Djokovic Federer 2019 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         }
       ],
       "provider": "verified-editorial",
-      "source_url": "https://www.rappler.com/sports/tears-flow-fans-salute-retiring-rafael-nadal-after-davis-cup-defeat-2024/",
-      "image_url": "https://www.rappler.com/tachyon/2024/11/reuters-rafael-nadal-tribute-november-20-2024-scaled.jpg",
-      "credit": "Reuters via Rappler",
+      "source_url": "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html",
+      "image_url": "https://s.yimg.com/ny/api/res/1.2/2Zrq0kWiND9DcYp_0DBtXg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://s.yimg.com/os/creatr-uploaded-images/2019-07/18f46b90-a665-11e9-acb6-cf3e566b4877",
+      "credit": "AP Photo via Yahoo Sports",
       "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Rafael Nadal grand slam tennis",
+      "query": "Djokovic Federer 2019 wimbledon tennis",
       "relevance": 100,
-      "sha256": "ee5045a6f4a54edb06162bd136112e4a54da04693dc4b374d626af3df12e8b43",
+      "sha256": "c13f81a2b7b1af1a48e516b75fa8e2548ee769ab855cedef191cb28b64ed43e4",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "today-ee5045a6f4a5.jpg"
+      "cached_file": "today-c13f81a2b7b1.jpg"
     }
   ],
   "selection_evidence": {
