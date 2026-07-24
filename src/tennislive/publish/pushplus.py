@@ -30,24 +30,48 @@ class PushPlusError(RuntimeError):
     pass
 
 
-class _ImageSourceParser(HTMLParser):
+class _AssetSourceParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
-        self.sources: list[str] = []
+        self.image_sources: list[str] = []
+        self.link_sources: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag.lower() != "img":
+        tag = tag.lower()
+        value = dict(attrs).get("src" if tag == "img" else "href")
+        if tag not in {"img", "a"} or not value:
             return
-        src = dict(attrs).get("src")
-        if src and src.startswith(("https://", "http://")):
-            self.sources.append(src)
+        if not value.startswith(("https://", "http://")):
+            return
+        (self.image_sources if tag == "img" else self.link_sources).append(value)
 
 
 def image_sources(html_content: str) -> list[str]:
     """Return unique remote image URLs in their message order."""
-    parser = _ImageSourceParser()
+    parser = _AssetSourceParser()
     parser.feed(html_content)
-    return list(dict.fromkeys(parser.sources))
+    return list(dict.fromkeys(parser.image_sources))
+
+
+def jsdelivr_link_sources(html_content: str) -> list[str]:
+    """Return unique <a href> targets hosted on the jsDelivr GitHub CDN.
+
+    These are the only links a push message can reference that may have been
+    committed moments earlier in the same CI run (e.g. the Hot Shots video
+    link) -- everything else on the jsDelivr GitHub CDN is either an image
+    (already covered by ``image_sources``) or a link to unrelated, older
+    content. GitHub Pages links (the copy page) are intentionally excluded:
+    Pages deploys lag much further behind a push than jsDelivr's origin
+    pull, and blocking the whole notification on that would trade one
+    failure mode for a much slower one.
+    """
+    parser = _AssetSourceParser()
+    parser.feed(html_content)
+    return list(
+        dict.fromkeys(
+            url for url in parser.link_sources if "cdn.jsdelivr.net" in url
+        )
+    )
 
 
 def _response_json(response: requests.Response, action: str) -> dict:
@@ -216,8 +240,15 @@ def wait_for_images(
     delay: float | None = None,
     timeout: int = 15,
 ) -> None:
-    """Wait until every remote image is fetchable before PushPlus snapshots it."""
-    pending = image_sources(html_content)
+    """Wait until every remote image and freshly-pushed CDN link is fetchable.
+
+    Images must additionally report an ``image/*`` content type; jsDelivr
+    links (e.g. a Hot Shots video the same CI run just committed) only need
+    to resolve, since their content type varies by asset.
+    """
+    pending: list[tuple[str, bool]] = [
+        (url, True) for url in image_sources(html_content)
+    ] + [(url, False) for url in jsdelivr_link_sources(html_content)]
     if not pending:
         return
 
@@ -251,17 +282,19 @@ def wait_for_images(
     )
 
     for attempt in range(attempt_count):
-        unavailable: list[str] = []
-        for url in pending:
+        unavailable: list[tuple[str, bool]] = []
+        for url, is_image in pending:
             try:
                 response = requests.get(url, stream=True, timeout=timeout)
                 content_type = response.headers.get("Content-Type", "").lower()
-                ready = response.ok and content_type.startswith("image/")
+                ready = response.ok and (
+                    content_type.startswith("image/") if is_image else True
+                )
                 response.close()
             except requests.RequestException:
                 ready = False
             if not ready:
-                unavailable.append(url)
+                unavailable.append((url, is_image))
         if not unavailable:
             # The GitHub runner can see a freshly cached jsDelivr asset a few
             # seconds before PushPlus/WeChat's fetch nodes do. Give the
@@ -283,7 +316,7 @@ def wait_for_images(
         pending = unavailable
         if attempt + 1 < attempt_count:
             logger.warning(
-                "PushPlus images are not ready yet (%d remaining, attempt %d/%d)",
+                "PushPlus assets are not ready yet (%d remaining, attempt %d/%d)",
                 len(pending),
                 attempt + 1,
                 attempt_count,
@@ -291,7 +324,7 @@ def wait_for_images(
             time.sleep(retry_delay)
 
     raise PushPlusError(
-        f"图片尚未同步到 CDN，已取消本次推送（{len(pending)} 张不可访问）"
+        f"图片或视频尚未同步到 CDN，已取消本次推送（{len(pending)} 项不可访问）"
     )
 
 

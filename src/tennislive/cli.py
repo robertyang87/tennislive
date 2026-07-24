@@ -469,7 +469,12 @@ def cmd_digest(args) -> int:
 
 
 def cmd_yesterday_point(args) -> int:
-    """Generate the independent, source-audited yesterday-point package."""
+    """Generate the independent, source-audited yesterday-point package(s).
+
+    ATP and WTA are discovered and published independently under
+    ``atp/`` and ``wta/`` subdirectories; either tour can pass or skip on
+    its own.
+    """
     from .render.terminal import console
     from .video.daily_point import generate_yesterday_point
 
@@ -478,7 +483,7 @@ def cmd_yesterday_point(args) -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     try:
         digest = build_digest(d, prefer=args.source)
-        video = generate_yesterday_point(digest, output_dir)
+        videos = generate_yesterday_point(digest, output_dir)
     except Exception as exc:  # noqa: BLE001
         (output_dir / "manifest.json").write_text(
             json.dumps(
@@ -495,29 +500,52 @@ def cmd_yesterday_point(args) -> int:
         )
         console.print(f"[red]昨日好球生成失败：{exc}[/red]")
         return 1
-    if video is None:
-        (output_dir / "manifest.json").write_text(
+
+    skip_reason = (
+        "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
+        "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
+        "官方单分标签、完整回合和日期匹配的视频。"
+        "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
+        "Action 不会读取浏览器登录态。"
+    )
+    tour_status: dict[str, str] = {}
+    for tour in ("ATP", "WTA"):
+        if tour in videos:
+            tour_status[tour] = "pass"
+            console.print(f"[green]{tour} 昨日好球已生成：{videos[tour]}[/green]")
+            continue
+        tour_dir = output_dir / tour.lower()
+        tour_dir.mkdir(parents=True, exist_ok=True)
+        (tour_dir / "manifest.json").write_text(
             json.dumps(
                 {
                     "status": "skipped",
                     "project": "yesterday-point",
+                    "tour": tour,
                     "published_for": d.isoformat(),
-                    "reason": (
-                        "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
-                        "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
-                        "官方单分标签、完整回合和日期匹配的视频。"
-                        "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
-                        "Action 不会读取浏览器登录态。"
-                    ),
+                    "reason": skip_reason,
                 },
                 ensure_ascii=False,
                 indent=2,
             ),
             encoding="utf-8",
         )
-        console.print("[yellow]昨日好球跳过：本期没有可验证的官方完整回合[/yellow]")
-        return 0
-    console.print(f"[green]昨日好球已生成：{video}[/green]")
+        tour_status[tour] = "skipped"
+        console.print(f"[yellow]{tour} 昨日好球跳过：本期没有可验证的官方完整回合[/yellow]")
+
+    (output_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "status": "pass" if videos else "skipped",
+                "project": "yesterday-point",
+                "published_for": d.isoformat(),
+                "tours": tour_status,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return 0
 
 
