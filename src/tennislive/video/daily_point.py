@@ -45,7 +45,7 @@ from .official import (
     parse_wta_video_candidates,
     search_official_youtube_candidates,
 )
-from .pipeline import SubtitleCue, VideoPipelineError, render_ass, render_srt
+from .pipeline import AssOverlay, SubtitleCue, VideoPipelineError, render_ass, render_srt
 
 BEIJING = ZoneInfo("Asia/Shanghai")
 MIN_POINT_SECONDS = 6.0
@@ -58,6 +58,18 @@ OUTPUT_WIDTH = 1080
 OUTPUT_HEIGHT = 1440
 CAPTION_FONT_SIZE = 56
 CAPTION_MARGIN_V = 175
+# Same corner-mark placement as the card images (render/cards.py): brand icon
+# + name top-left, "@handle" bottom-right.
+BRAND_TEXT = "网球时差"
+BRAND_ICON_PATH = Path(__file__).resolve().parents[3] / "assets" / "logo" / "tennis-clock-icon.png"
+BRAND_ICON_SIZE = 64
+BRAND_ICON_MARGIN = 40
+BRAND_TOP_FONT_SIZE = 34
+BRAND_TOP_MARGIN_L = BRAND_ICON_MARGIN + BRAND_ICON_SIZE + 12
+BRAND_TOP_MARGIN_V = 44
+BRAND_BOTTOM_FONT_SIZE = 30
+BRAND_BOTTOM_MARGIN_R = BRAND_ICON_MARGIN
+BRAND_BOTTOM_MARGIN_V = BRAND_ICON_MARGIN
 
 _OFFICIAL_BEST_RE = re.compile(
     r"\b(?P<kind>point|play|shot|rally)\s+of\s+(?:the\s+)?"
@@ -935,9 +947,11 @@ def build_point_ffmpeg_command(
     """Build a full-frame vertical render; there is intentionally no crop tracker.
 
     ``subtitle_path`` is an ``.ass`` file with an explicit PlayRes (see
-    ``render_ass``) so the burned-in caption renders at the size and margins
-    it was authored for, instead of ffmpeg guessing an authoring resolution
-    for a bare SRT and silently rescaling FontSize by several times.
+    ``render_ass``) so the burned-in caption and brand watermark text render
+    at the size and position they were authored for, instead of ffmpeg
+    guessing an authoring resolution for a bare SRT and silently rescaling
+    FontSize by several times. The brand icon is composited separately since
+    it is a raster image, not text.
     """
     subtitle = _escape_filter_path(subtitle_path)
     filters = (
@@ -947,7 +961,9 @@ def build_point_ffmpeg_command(
         "eq=brightness=-0.22:saturation=0.82[bg2];"
         f"[fg]scale={OUTPUT_WIDTH}:{OUTPUT_HEIGHT}:force_original_aspect_ratio=decrease[fg2];"
         "[bg2][fg2]overlay=(W-w)/2:(H-h)/2[full];"
-        f"[full]subtitles=filename='{subtitle}'[outv]"
+        f"[1:v]scale={BRAND_ICON_SIZE}:{BRAND_ICON_SIZE}[icon];"
+        f"[full][icon]overlay={BRAND_ICON_MARGIN}:{BRAND_ICON_MARGIN}[marked];"
+        f"[marked]subtitles=filename='{subtitle}'[outv]"
     )
     return [
         ffmpeg_bin,
@@ -963,6 +979,8 @@ def build_point_ffmpeg_command(
         "5",
         "-i",
         selection.metadata.playback_url,
+        "-i",
+        str(BRAND_ICON_PATH),
         "-filter_complex",
         filters,
         "-map",
@@ -1166,6 +1184,22 @@ def render_daily_point(
             play_res_y=OUTPUT_HEIGHT,
             font_size=CAPTION_FONT_SIZE,
             margin_v=CAPTION_MARGIN_V,
+            overlays=(
+                AssOverlay(
+                    BRAND_TEXT,
+                    alignment=7,
+                    font_size=BRAND_TOP_FONT_SIZE,
+                    margin_l=BRAND_TOP_MARGIN_L,
+                    margin_v=BRAND_TOP_MARGIN_V,
+                ),
+                AssOverlay(
+                    f"@{BRAND_TEXT}",
+                    alignment=3,
+                    font_size=BRAND_BOTTOM_FONT_SIZE,
+                    margin_r=BRAND_BOTTOM_MARGIN_R,
+                    margin_v=BRAND_BOTTOM_MARGIN_V,
+                ),
+            ),
         ),
         encoding="utf-8",
     )

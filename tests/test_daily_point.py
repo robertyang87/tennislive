@@ -418,6 +418,8 @@ def test_ffmpeg_keeps_full_16_by_9_foreground_without_tracking_crop(
     assert "sendcmd" not in filters
     assert "cropdetect" not in filters
     assert "-ss" not in command
+    assert command.count("-i") == 2
+    assert str(daily_point_module.BRAND_ICON_PATH) in command
     assert "-t" not in command
 
 
