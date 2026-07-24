@@ -35,14 +35,14 @@ jobs:
 
       - name: 抓取候选照片核验（临时）
         shell: bash
-        run: python tools/probe_cover_verify1.py
+        run: python tools/probe_cover_verify2.py
 
       - name: 提交候选照片（临时）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           shopt -s nullglob
-          files=(tools/_probecover_*.jpg)
+          files=(tools/_probecover2_*.jpg)
           if [ ${#files[@]} -eq 0 ]; then
             echo "没有候选照片，跳过提交"
           else
