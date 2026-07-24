@@ -1,6 +1,5 @@
-"""Scrape og:image from candidate articles for 2012 AO / 2019 Wimbledon
-'both players together' photos, then download each found image for
-visual verification."""
+"""Scrape og:image from more 2012 Australian Open candidate articles,
+looking for a clean (non-annotated) both-players-together photo."""
 
 from __future__ import annotations
 
@@ -16,15 +15,12 @@ HEADERS = {
 }
 
 ARTICLES = {
-    "wimbledon2019_yahoo_reacts": "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html",
-    "wimbledon2019_pbs": "https://www.pbs.org/newshour/world/djokovic-edges-federer-in-5-sets-for-5th-wimbledon-trophy",
-    "wimbledon2019_atp": "https://www.atptour.com/en/news/djokovic-federer-wimbledon-2019-final-match-analysis",
-    "wimbledon2019_foxnews": "https://www.foxnews.com/sports/novak-djokovic-beats-roger-federerin-epic-five-set-match-to-win-wimbledon-mens-title",
-    "ao2012_sportsrush_water": "https://thesportsrush.com/tennis-news-villain-novak-djokovic-wins-hearts-rare-photo-of-serb-offering-rafael-nadal-water-bottle-after-epic-australian-open-2012-final-goes-viral/",
-    "ao2012_cbsnews": "https://www.cbsnews.com/news/djokovic-wears-down-nadal-at-aussie-open/",
-    "ao2012_espn": "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
-    "ao2012_nytennismag": "https://newyorktennismagazine.com/article/djokovic-claims-2012-australian-open-title-after-six-hour-win-over-nadal/",
-    "ao2012_yahoo_detail": "https://au.sports.yahoo.com/aus-open-fans-notice-stunning-detail-rafa-nadals-post-match-act-014150880.html",
+    "ao2012_sportskeeda_chair": "https://www.sportskeeda.com/tennis/news-even-let-rafael-nadal-get-chair-first-olive-branch-extended-fans-recall-novak-djokovic-s-classy-gesture-6-hour-australian-open-final",
+    "ao2012_sportskeeda_badass": "https://www.sportskeeda.com/tennis/news-top-tier-badass-moment-tennis-fan-recall-novak-djokovic-rafael-nadal-s-struggle-stand-6-hour-australian-open-final",
+    "ao2012_sportskeeda_destroy": "https://www.sportskeeda.com/tennis/news-defeat-destroy-me-rafael-nadal-opens-heartbreaking-australian-open-2012-final-loss-novak-djokovic-okay",
+    "ao2012_washingtonpost": "https://www.washingtonpost.com/sports/tennis/australian-open-djokovic-outlasts-nadal-in-longest-grand-slam-singles-final-ever/2012/01/29/gIQAYDHgaQ_story.html",
+    "ao2012_wikipedia": "https://en.wikipedia.org/wiki/2012_Australian_Open_%E2%80%93_Men%27s_singles_final",
+    "ao2012_foxnews": "https://www.foxnews.com/sports/novak-djokovic-tops-rafa-nadal-in-straight-sets-to-win-australian-open-mens-title",
 }
 
 OG_IMAGE_RE = re.compile(
@@ -63,7 +59,7 @@ def main() -> int:
         img_bytes = fetch(img_url)
         if img_bytes is None:
             continue
-        dest = f"tools/_probe3_{key}.jpg"
+        dest = f"tools/_probe4_{key}.jpg"
         with open(dest, "wb") as f:
             f.write(img_bytes)
         print(f"  saved -> {dest} ({len(img_bytes)} bytes)")
