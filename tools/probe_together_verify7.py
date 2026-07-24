@@ -15,9 +15,9 @@ HEADERS = {
 }
 
 ARTICLES = {
-    "ao2012_tenniscom_moment6": "https://www.tennis.com/news/articles/moment-6-1-37-a-m-djokovic-topples-nadal-grandiose-grunt-filled-australian-open",
-    "ao2012_tennismajors_otd": "https://www.tennismajors.com/australian-open-news/january-30-2012-the-day-novak-djokovic-beat-rafael-nadal-in-the-longest-australian-open-final-317708.html",
-    "ao2012_cbsnews_gallery": "https://www.cbsnews.com/pictures/2012-australian-open/",
+    "ao2012_bleacherreport": "https://bleacherreport.com/articles/1042561-nadal-vs-djokovic-score-and-highlights-from-australian-open-2012-mens-final",
+    "ao2012_cbsnews_gallery2": "https://www.cbsnews.com/pictures/2012-australian-open/",
+    "ao2012_fox13memphis": "https://www.fox13memphis.com/photos-novak-djokovic-through-the-years/collection_49c33f99-e1e8-53ff-a1e3-bfcd5bccebfb.html",
 }
 
 OG_IMAGE_RE = re.compile(
@@ -30,10 +30,10 @@ OG_IMAGE_RE2 = re.compile(
 )
 
 
-def fetch(url: str) -> bytes | None:
+def fetch(url: str, timeout: int = 25) -> bytes | None:
     try:
         req = urllib.request.Request(url, headers=HEADERS)
-        with urllib.request.urlopen(req, timeout=20) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read()
     except Exception as exc:  # noqa: BLE001
         print(f"  FAILED fetch {url}: {exc}")
@@ -56,7 +56,7 @@ def main() -> int:
         img_bytes = fetch(img_url)
         if img_bytes is None:
             continue
-        dest = f"tools/_probe6_{key}.jpg"
+        dest = f"tools/_probe7_{key}.jpg"
         with open(dest, "wb") as f:
             f.write(img_bytes)
         print(f"  saved -> {dest} ({len(img_bytes)} bytes)")
