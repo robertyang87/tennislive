@@ -8,6 +8,7 @@ import requests
 from tennislive.publish.pushplus import (
     PushPlusError,
     image_sources,
+    jsdelivr_link_sources,
     prepare_image_delivery,
     wait_for_images,
 )
@@ -25,6 +26,66 @@ def test_image_sources_keeps_unique_remote_images_in_order():
         "https://cdn.example/a.png",
         "https://cdn.example/b.jpg",
     ]
+
+
+def test_jsdelivr_link_sources_finds_video_link_but_not_pages_link():
+    html = (
+        '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
+        'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>'
+        '<a href="https://robertyang87.github.io/tennislive/output/'
+        '2026-07-24/yesterday-point/copy.html">复制</a>'
+    )
+
+    assert jsdelivr_link_sources(html) == [
+        "https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/"
+        "output/2026-07-24/yesterday-point/yesterday-point.mp4"
+    ]
+
+
+def test_wait_for_images_retries_until_hot_shots_video_link_is_ready(monkeypatch):
+    unavailable = Mock(ok=False, headers={})
+    ready = Mock(ok=True, headers={"Content-Type": "video/mp4"})
+    get = Mock(side_effect=[unavailable, ready])
+    monkeypatch.setattr(requests, "get", get)
+    monkeypatch.setattr("tennislive.publish.pushplus.time.sleep", Mock())
+
+    wait_for_images(
+        '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
+        'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>',
+        attempts=2,
+        delay=0,
+    )
+
+    assert get.call_count == 2
+
+
+def test_wait_for_images_never_checks_github_pages_links(monkeypatch):
+    get = Mock(side_effect=AssertionError("should not fetch a Pages link"))
+    monkeypatch.setattr(requests, "get", get)
+
+    wait_for_images(
+        '<a href="https://robertyang87.github.io/tennislive/output/'
+        '2026-07-24/yesterday-point/copy.html">复制</a>'
+    )
+
+    get.assert_not_called()
+
+
+def test_wait_for_images_blocks_push_when_video_link_never_resolves(monkeypatch):
+    monkeypatch.setattr(
+        requests,
+        "get",
+        Mock(side_effect=requests.ConnectionError("not ready")),
+    )
+    monkeypatch.setattr("tennislive.publish.pushplus.time.sleep", Mock())
+
+    with pytest.raises(PushPlusError, match="取消本次推送"):
+        wait_for_images(
+            '<a href="https://cdn.jsdelivr.net/gh/robertyang87/tennislive@main/'
+            'output/2026-07-24/yesterday-point/yesterday-point.mp4">打开</a>',
+            attempts=2,
+            delay=0,
+        )
 
 
 def test_wait_for_images_retries_until_cdn_image_is_ready(monkeypatch):
