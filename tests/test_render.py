@@ -1248,6 +1248,62 @@ def test_knowledge_package_is_standalone_post(tmp_path, sample_digest, monkeypat
     assert not (tmp_path / "knowledge" / "visuals").exists()
 
 
+def test_knowledge_adhoc_push_links_point_at_its_own_output_dir(
+    tmp_path, sample_digest, monkeypatch
+):
+    """An ad-hoc post's push.html must reference its own cards/copy page.
+
+    A hardcoded "knowledge" segment here would silently point every
+    knowledge-adhoc push at whatever story the same-day daily digest wrote
+    to output/<date>/knowledge/ instead of the story actually being pushed.
+    """
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render import knowledge
+    from tennislive.render.tournament_story import STORIES
+
+    fake_img = tmp_path / "story.jpg"
+    Image.new("RGB", (1200, 800), "white").save(fake_img)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=fake_img)
+    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "off")
+    monkeypatch.setenv("TENNISLIVE_VISUAL_STRICT", "off")
+    monkeypatch.setattr(
+        knowledge,
+        "_screenshot_pages",
+        lambda pages, _theme: [
+            (kind, Image.new("RGB", (1080, 1440), "black"))
+            for kind, _body in pages
+        ],
+    )
+
+    # A same-day daily digest post already sitting in the sibling
+    # "knowledge" directory, with the same card filenames but different
+    # (wrong, if ever referenced by the adhoc push) content.
+    sibling = tmp_path / "knowledge" / "cards"
+    sibling.mkdir(parents=True)
+    for card_name in (
+        "card_00_knowledge.jpg",
+        "card_01_story.jpg",
+        "card_02_explainer.jpg",
+        "card_03_today.jpg",
+    ):
+        Image.new("RGB", (1080, 1440), "red").save(sibling / card_name)
+
+    knowledge.generate_knowledge_package(
+        sample_digest,
+        tmp_path / "knowledge_adhoc",
+        story=story,
+    )
+
+    push = (tmp_path / "knowledge_adhoc" / "push.html").read_text("utf-8")
+    assert "/knowledge_adhoc/cards/card_00_knowledge.jpg" in push
+    assert "/knowledge_adhoc/copy.html" in push
+    assert "/knowledge/cards/" not in push
+    assert "/knowledge/copy.html" not in push
+
+
 def test_knowledge_deck_uses_one_verified_photo_and_structured_inner_pages(tmp_path):
     from dataclasses import replace
 
