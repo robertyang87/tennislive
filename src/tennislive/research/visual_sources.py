@@ -400,22 +400,30 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
         {
             "provider": "verified-editorial",
             "source_url": (
-                "https://www.rappler.com/sports/tears-flow-fans-salute-"
-                "retiring-rafael-nadal-after-davis-cup-defeat-2024/"
+                "https://sports.yahoo.com/the-world-sports-reacts-to-epic-"
+                "djokovic-federer-wimbledon-final-185101781.html"
             ),
             "image_url": (
-                "https://www.rappler.com/tachyon/2024/11/"
-                "reuters-rafael-nadal-tribute-november-20-2024-scaled.jpg"
+                "https://s.yimg.com/ny/api/res/1.2/"
+                "2Zrq0kWiND9DcYp_0DBtXg--/"
+                "YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/"
+                "https://s.yimg.com/os/creatr-uploaded-images/2019-07/"
+                "18f46b90-a665-11e9-acb6-cf3e566b4877"
             ),
-            "credit": "Reuters via Rappler",
+            "credit": "AP Photo via Yahoo Sports",
             "license": "公开网页图片 · 非商业资讯引用",
-            "width": 2560,
-            "height": 1767,
+            "width": 1200,
+            "height": 800,
             "relevance": 100,
-            "search_text": "rafael nadal retirement farewell davis cup 2024 tennis",
+            "search_text": (
+                "novak djokovic roger federer 2019 wimbledon final trophy "
+                "ceremony together"
+            ),
             "image_text": (
-                "rafael nadal waves farewell to fans during his emotional "
-                "retirement ceremony at the 2024 davis cup finals in malaga"
+                "novak djokovic and roger federer standing face to face at "
+                "the net on centre court, djokovic holding the wimbledon "
+                "trophy and federer holding the runner-up plate, after the "
+                "2019 wimbledon final presentation ceremony"
             ),
         },
     ),
@@ -470,7 +478,7 @@ _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...],
         "cover": ("Federer Nadal Djokovic", (), ("tennis",), True),
         "story": ("Federer Nadal", ("2008",), ("wimbledon",), True),
         "explainer": ("Djokovic", ("2012",), ("australian open", "melbourne"), True),
-        "today": ("Rafael Nadal", (), ("grand slam", "tennis"), True),
+        "today": ("Djokovic Federer", ("2019",), ("wimbledon",), True),
     },
     "china-tennis": {
         "cover": ("Li Na", ("2011",), ("roland garros", "french open"), True),
