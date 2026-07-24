@@ -340,32 +340,33 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
     # 横向偏移），所以直接把这张 AP 原图（4064x2709）预裁剪成
     # assets/trivia/trivia-big-three.jpg（费纳德三人满框、穆雷基本裁
     # 出），作为常规的本地专属图使用，不再需要 cover 的联网检索条目。
-    # story/explainer/today 三页各自锚定一场独立赛事，每页只需一人真实
-    # 入镜即可核实。
+    # story/explainer/today 三页分别对应三场经典对决，均使用双方在颁奖
+    # 礼上的合影（正面、两人同框），而非单人击球/庆祝的动作照。
     ("big-three", "story"): (
         {
-            "provider": "verified-event-archive",
+            "provider": "verified-editorial",
             "source_url": (
-                "https://commons.wikimedia.org/wiki/File:Wimbledon_Men%27s_"
-                "final_2008,_Federer_serves_for_3rd_set.jpg"
+                "https://www.tennis365.com/tennis-news/t365-recalls-roger-"
+                "federer-rafael-nadal-wimbledon-trilogy-2008"
             ),
             "image_url": (
-                "https://commons.wikimedia.org/wiki/Special:Redirect/file/"
-                "Wimbledon_Men%27s_final_2008%2C_Federer_serves_for_3rd_set.jpg"
-                "?width=2048"
+                "https://d2me2qg8dfiw8u.cloudfront.net/content/uploads/2022/"
+                "04/06115036/Roger-Federer-and-Rafael-Nadal-at-Wimbledon-"
+                "2008.jpg"
             ),
-            "credit": "David Underdown / Wikimedia Commons",
-            "license": "CC BY-SA 3.0",
-            "width": 2048,
-            "height": 1448,
+            "credit": "Tennis365",
+            "license": "公开网页图片 · 非商业资讯引用",
+            "width": 1024,
+            "height": 600,
             "relevance": 100,
             "search_text": (
-                "roger federer rafael nadal 2008 wimbledon final centre court"
+                "roger federer rafael nadal 2008 wimbledon final trophy "
+                "ceremony together"
             ),
             "image_text": (
-                "roger federer serving on centre court against rafael nadal "
-                "during the 2008 wimbledon final, widely regarded as the "
-                "greatest match ever played"
+                "roger federer and rafael nadal standing together on centre "
+                "court holding their trophies at the 2008 wimbledon final "
+                "presentation ceremony"
             ),
         },
     ),
