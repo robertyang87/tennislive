@@ -2224,12 +2224,18 @@ def _knowledge_timeline_body(
         if story.moments:
             items.append((story.moments[0].headline, story.moments[0].detail))
         if len(story.facts) > 1:
+            trivia_middle_labels = {
+                "big-three": "18 年，没人能挤进来",
+            }
             middle_labels = {
                 "player": "技术标签不是一天长成的",
                 "tournament": "赛事传统在这里定型",
                 "trivia": "这个变化为什么留到了今天",
             }
-            items.append((middle_labels.get(story.kind, "历史继续往前"), story.facts[1]))
+            label = trivia_middle_labels.get(story.slug) or middle_labels.get(
+                story.kind, "历史继续往前"
+            )
+            items.append((label, story.facts[1]))
         if len(story.moments) > 1:
             items.append((story.moments[1].headline, story.moments[1].detail))
     if not items:
