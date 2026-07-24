@@ -667,7 +667,6 @@ def test_official_video_page_is_not_promoted_to_action_and_no_face_is_rejected(
     monkeypatch.setattr(
         visual_sources, "_daily_editorial_candidates", lambda *_args: [candidate]
     )
-    monkeypatch.setattr(visual_sources, "_atp_official_cover_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
@@ -753,7 +752,6 @@ def test_exact_official_reaction_can_use_body_evidence_when_face_is_profile(
     monkeypatch.setattr(
         visual_sources, "_daily_editorial_candidates", lambda *_args: [candidate]
     )
-    monkeypatch.setattr(visual_sources, "_atp_official_cover_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
@@ -897,7 +895,13 @@ def test_atp_official_feed_cover_requires_both_players_event_and_fresh_date():
     assert _exact_match_context(match, candidates[0])["exact_match"]
 
 
-def test_atp_official_feed_cover_still_runs_common_visual_gate(monkeypatch, tmp_path):
+def test_atp_official_youtube_thumbnail_never_used_for_cover(monkeypatch, tmp_path):
+    """2026-07-24 生产事故复现：ATP 官方 YouTube 视频缩略图（maxresdefault.jpg）
+    经常是宣传拼接图，真实比赛照片只占一部分，其余是赛事VI条纹/文字；封面裁切
+    只保证检测到的人脸不被切掉，不校验裁切框其余区域是否仍是同一张真实照片，
+    导致当天封面卡片露出了拼接图案，被误认成广告。封面场景因此彻底不再从这个
+    来源取图——即使 _atp_official_cover_candidates 会返回一张完美评分的候选，
+    也不能进入封面候选池。"""
     from tennislive.research import visual_sources
 
     match = make_match(
@@ -932,48 +936,10 @@ def test_atp_official_feed_cover_still_runs_common_visual_gate(monkeypatch, tmp_
     monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_args: [])
 
-    def fake_download(item, page, query, folder, _session):
-        path = folder / "atp-maxres.jpg"
-        Image.effect_noise((1280, 960), 32).convert("RGB").save(path)
-        return visual_sources.ResolvedVisual(
-            page=page,
-            path=path,
-            provider=item["provider"],
-            source_url=item["source_url"],
-            image_url=item["image_url"],
-            credit=item["credit"],
-            license=item["license"],
-            query=query,
-            relevance=item["relevance"],
-            sha256="atp-maxres",
-        )
-
-    audits = []
-
-    def fake_audit(path):
-        audits.append(path)
-        return {
-            "status": "pass",
-            "score": 30,
-            "quality_score": 13,
-            "crop_score": 17,
-            "hard_failures": [],
-            "prominent_faces": 1,
-            "face_detectors": ["test-fixture"],
-            "focus": "62% 27%",
-        }
-
-    monkeypatch.setattr(visual_sources, "_download", fake_download)
-    monkeypatch.setattr(visual_sources, "assess_cover_image", fake_audit)
-
     visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
 
-    assert visual is not None
-    assert visual.provider == "official-atp-youtube"
-    assert audits == [visual.path]
-    assert report["exact_match"]
-    assert report["scene"] == "prominent_person"
-    assert "official-atp-youtube" in report["providers_queried"]
+    assert visual is None
+    assert "official-atp-youtube" not in report["providers_queried"]
 
 
 def test_atp_maxres_profile_only_adjusts_fixed_resolution_failure():

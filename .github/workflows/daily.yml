@@ -95,7 +95,6 @@ jobs:
       TENNISLIVE_VISUAL_EXPANDED_SOURCES: ${{ vars.TENNISLIVE_VISUAL_EXPANDED_SOURCES || 'on' }}
       # 日报/热点封面：只抓取头条球员本人赛场照；失败时保留本地已核验人物资产。
       TENNISLIVE_COVER_VISUAL_FETCH: ${{ vars.TENNISLIVE_COVER_VISUAL_FETCH || 'on' }}
-      TENNISLIVE_COVER_ATP_OFFICIAL: ${{ vars.TENNISLIVE_COVER_ATP_OFFICIAL || 'on' }}
       TENNISLIVE_COVER_WTA_OFFICIAL: ${{ vars.TENNISLIVE_COVER_WTA_OFFICIAL || 'on' }}
       # Flickr public feed as an additional discovery source; exact-match and
       # person/emotion/quality gates remain mandatory before publishing.
