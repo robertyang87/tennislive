@@ -15,12 +15,9 @@ HEADERS = {
 }
 
 ARTICLES = {
-    "ao2012_sportskeeda_chair": "https://www.sportskeeda.com/tennis/news-even-let-rafael-nadal-get-chair-first-olive-branch-extended-fans-recall-novak-djokovic-s-classy-gesture-6-hour-australian-open-final",
-    "ao2012_sportskeeda_badass": "https://www.sportskeeda.com/tennis/news-top-tier-badass-moment-tennis-fan-recall-novak-djokovic-rafael-nadal-s-struggle-stand-6-hour-australian-open-final",
-    "ao2012_sportskeeda_destroy": "https://www.sportskeeda.com/tennis/news-defeat-destroy-me-rafael-nadal-opens-heartbreaking-australian-open-2012-final-loss-novak-djokovic-okay",
-    "ao2012_washingtonpost": "https://www.washingtonpost.com/sports/tennis/australian-open-djokovic-outlasts-nadal-in-longest-grand-slam-singles-final-ever/2012/01/29/gIQAYDHgaQ_story.html",
-    "ao2012_wikipedia": "https://en.wikipedia.org/wiki/2012_Australian_Open_%E2%80%93_Men%27s_singles_final",
-    "ao2012_foxnews": "https://www.foxnews.com/sports/novak-djokovic-tops-rafa-nadal-in-straight-sets-to-win-australian-open-mens-title",
+    "ao2012_tenniscom_20for20": "https://www.tennis.com/news/articles/20-for-20-no-12-djokovic-d-nadal-2012-australian-open",
+    "ao2012_tennisworldusa_legends": "https://www.tennisworldusa.org/tennis/news/Novak_Djokovic/152085/novak-djokovic-vs-rafael-nadal-historic-final-turns-13-when-legends-collided/",
+    "ao2012_tennisworldusa_unbelievable": "https://www.tennisworldusa.org/tennis/news/Rafael_Nadal/108894/novak-djokovic-the-2012-ao-final-against-rafael-nadal-was-unbelievable-and-historic/",
 }
 
 OG_IMAGE_RE = re.compile(
@@ -59,7 +56,7 @@ def main() -> int:
         img_bytes = fetch(img_url)
         if img_bytes is None:
             continue
-        dest = f"tools/_probe4_{key}.jpg"
+        dest = f"tools/_probe5_{key}.jpg"
         with open(dest, "wb") as f:
             f.write(img_bytes)
         print(f"  saved -> {dest} ({len(img_bytes)} bytes)")
