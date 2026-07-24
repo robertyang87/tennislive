@@ -97,6 +97,21 @@ _MATCH_MARKERS = (
 # A tennis scoreline (6-4, 7-6(3), 10-8 …) is an unambiguous match-report tell.
 _SCORELINE = re.compile(r"(?<!\d)\d{1,2}[-–]\d{1,2}(?:\(\d+\))?(?!\d)")
 
+# Recurring show / section / live-nav titles that ride the news feed but aren't
+# a story (ESPN's "Tennis Courtcast" podcast, live blogs, how-to-watch pages).
+_NOISE_TITLE_MARKERS = (
+    "courtcast",
+    "podcast",
+    "watch live",
+    "how to watch",
+    "live blog",
+    "live stream",
+    "as it happened",
+    "order of play",
+    "live scores",
+    "live updates",
+)
+
 
 def _norm(text: str) -> str:
     return "".join(
@@ -173,10 +188,13 @@ def offcourt_flash_candidates(
         if str(signal.get("kind") or "") != "official-news":
             continue
         title = str(signal.get("title") or "").strip()
-        # Site-nav / section titles ("Sky Sports | ... | Watch Live Sport",
-        # "ESPN | Tennis Courtcast") come through as feed-level titles, not
-        # real headlines. A pipe is the reliable tell; drop them.
+        # Site-nav / section titles ("Sky Sports | ... | Watch Live Sport")
+        # come through as feed-level titles, not real headlines. A pipe is the
+        # reliable tell; drop them, plus recurring show / live-nav titles.
         if not title or " | " in title or len(title) < 12:
+            continue
+        low = _norm(title)
+        if any(marker in low for marker in _NOISE_TITLE_MARKERS):
             continue
         if not is_offcourt_news(title):
             continue

@@ -85,6 +85,13 @@ def test_offcourt_candidates_filter_match_sensitive_and_dedupe():
             "url": "u5",
             "published_at": "2026-07-24T11:00:00+00:00",
         },
+        {  # recurring show/section title -> dropped as noise
+            "kind": "official-news",
+            "source": "ESPN",
+            "title": "Tennis Courtcast",
+            "url": "u6",
+            "published_at": "2026-07-24T11:30:00+00:00",
+        },
     ]
 
     candidates = offcourt_flash_candidates(signals, now=NOW, max_age_hours=48)
