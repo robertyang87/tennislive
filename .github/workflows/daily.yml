@@ -31,7 +31,7 @@ on:
         required: false
         default: ""
       push_scope:
-        description: "推送范围（生成内容不受影响）"
+        description: "推送范围（生成内容不受影响）。手动重跑默认 none，避免误重推；定时班次不受影响照常推送。"
         required: false
         type: choice
         options:
@@ -39,7 +39,7 @@ on:
           - knowledge-only
           - main-only
           - none
-        default: all
+        default: none
 
 permissions:
   contents: write
@@ -444,3 +444,17 @@ jobs:
           path: |
             ${{ steps.gen.outputs.outdir }}*
             output/*.digest.log
+
+      - name: 运行失败时推送告警到微信
+        # 无人值守时，任何一步失败都主动通知，而不是只留一封 GitHub 邮件。
+        if: failure() && env.PUSHPLUS_TOKEN != ''
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BODY="$(jq -nc --arg u "$RUN_URL" \
+            '{title:"⚠️ 网球日报生成失败",
+              content:("daily-tennis-digest 本次运行失败，当天可能缺内容。请查看：<a href=\"" + $u + "\">运行日志</a>"),
+              template:"html"}')"
+          curl -s -m 20 -X POST https://www.pushplus.plus/send \
+            -H "Content-Type: application/json" \
+            -d "$(jq -nc --argjson b "$BODY" --arg t "$PUSHPLUS_TOKEN" '$b + {token:$t}')" \
+            || true

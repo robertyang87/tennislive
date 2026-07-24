@@ -116,7 +116,11 @@ def cmd_knowledge_adhoc(args) -> int:
     """
     from .render.knowledge import generate_knowledge_package
     from .render.terminal import console
-    from .render.tournament_story import find_story_by_slug, mark_story_used
+    from .render.tournament_story import (
+        find_story_by_slug,
+        mark_adhoc_knowledge_published,
+        mark_story_used,
+    )
 
     story = None
     if args.slug:
@@ -151,6 +155,10 @@ def cmd_knowledge_adhoc(args) -> int:
         return 2
 
     mark_story_used(generated.slug, digest.today)
+    # A deliberate/hotspot ad-hoc post claims today's knowledge slot so the
+    # daily digest won't auto-select a second, unrelated knowledge post on top
+    # of it. Ad-hoc itself never checks this marker — a hotspot can always ship.
+    mark_adhoc_knowledge_published(digest.today)
     console.print(f"[green]知识帖已生成：{outdir}（slug={generated.slug}）[/green]")
     return 0
 
@@ -248,7 +256,15 @@ def cmd_digest(args) -> int:
 
     # 卡片图
     knowledge_story = None
-    if not args.no_cards:
+    from .render.tournament_story import adhoc_knowledge_published_on
+
+    if not args.no_cards and adhoc_knowledge_published_on(digest.today):
+        # 当天已由手动/热点 ad-hoc 流程发布知识帖：日报不再自动补第二篇，
+        # 避免同日重复推送。热点 ad-hoc 不受此限制，仍可随时发。
+        console.print(
+            "[yellow]今日已由 ad-hoc 流程发布知识帖，日报跳过自动知识帖（避免同日重复）[/yellow]"
+        )
+    elif not args.no_cards:
         try:
             from .render.knowledge import generate_knowledge_package
 

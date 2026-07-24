@@ -283,6 +283,10 @@ def test_knowledge_adhoc_generates_into_its_own_directory(tmp_path, monkeypatch)
         "tennislive.render.tournament_story.mark_story_used",
         lambda slug, when: marked.append(slug),
     )
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_adhoc_knowledge_published",
+        lambda when: None,
+    )
 
     outdir = tmp_path / "knowledge_adhoc"
     result = cli.main(
@@ -326,6 +330,10 @@ def test_knowledge_adhoc_auto_selects_when_slug_omitted(tmp_path, monkeypatch):
     monkeypatch.setattr(
         "tennislive.render.tournament_story.mark_story_used",
         lambda slug, when: marked.append(slug),
+    )
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_adhoc_knowledge_published",
+        lambda when: None,
     )
 
     outdir = tmp_path / "knowledge_adhoc"

@@ -86,6 +86,7 @@ jobs:
 
       - name: 推送小红书待发布包到微信
         if: steps.generate.outputs.has_new == 'true' && env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true  # 单次推送抖动不应让整轮内容雷达失败
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish content --manifest .content-publish.json

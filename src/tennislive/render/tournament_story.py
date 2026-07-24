@@ -1537,6 +1537,38 @@ def mark_story_used(slug: str, today: date) -> None:
     )
 
 
+# Reserved (non-slug) marker keys in story_state.json. The leading/trailing
+# underscores keep them out of the slug namespace so slug lookups
+# (`state.get(story.slug)`) never collide with them.
+ADHOC_KNOWLEDGE_KEY = "__knowledge_adhoc_date__"
+
+
+def mark_adhoc_knowledge_published(today: date) -> None:
+    """Record that the manual / hotspot ad-hoc flow published a knowledge post today.
+
+    The daily digest auto-selects and pushes its own knowledge post; the
+    manual ad-hoc flow is a second, independent producer. Without a shared
+    signal both can land the same day, so a deliberate ad-hoc post gets
+    shadowed by an auto-selected one (the owner's "怎么又推了一条" surprise).
+
+    Only the ad-hoc flow WRITES this marker, and only the daily flow READS it
+    (see ``adhoc_knowledge_published_on``): the daily auto-knowledge steps down
+    when an ad-hoc post already covered today, while a hotspot ad-hoc post can
+    always go out regardless of what the daily flow did.
+    """
+    state = _load_state()
+    state[ADHOC_KNOWLEDGE_KEY] = today.isoformat()
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+
+
+def adhoc_knowledge_published_on(today: date) -> bool:
+    """True if the ad-hoc flow already published a knowledge post on ``today``."""
+    return _load_state().get(ADHOC_KNOWLEDGE_KEY) == today.isoformat()
+
+
 def _norm(text: str) -> str:
     """去音符 + casefold，与 ESPN 无音符英文名对得上（Świątek → swiatek）."""
     return "".join(
