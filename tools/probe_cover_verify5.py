@@ -1,7 +1,6 @@
-"""User prefers a photo with JUST the three (Federer/Nadal/Djokovic),
-no Murray. Try the ATP Tour's own "Big 3" feature article, which is
-specifically branded content about these three and likely has a
-genuine 3-person photo as its header image."""
+"""Laver Cup's own official gallery reportedly has a photo titled
+"The Big 3 discuss tactics" featuring ONLY Federer, Nadal, Djokovic
+(no Murray) -- fetch this gallery page's images."""
 
 from __future__ import annotations
 
@@ -17,7 +16,7 @@ HEADERS = {
 }
 
 ARTICLES = {
-    "atp_big3_feature": "https://www.atptour.com/en/news/atp-no-1-club-docuseries-part-4-big-3-feature",
+    "lavercup_gallery": "https://lavercup.com/photos/2022/09/24/hello-goodbye-gallery",
 }
 
 OG_IMAGE_RE = re.compile(
@@ -25,6 +24,7 @@ OG_IMAGE_RE = re.compile(
     re.IGNORECASE,
 )
 IMG_TAG_RE = re.compile(r'<img[^>]+src=["\']([^"\']+)["\']', re.IGNORECASE)
+DATA_SRC_RE = re.compile(r'data-src=["\']([^"\']+)["\']', re.IGNORECASE)
 
 
 def fetch(url: str, timeout: int = 40) -> bytes | None:
@@ -48,11 +48,14 @@ def main() -> int:
         og = OG_IMAGE_RE.search(html)
         if og:
             candidates.append(("og", og.group(1)))
-        for i, u in enumerate(IMG_TAG_RE.findall(html)[:15]):
+        for i, u in enumerate(IMG_TAG_RE.findall(html)[:20]):
             candidates.append((f"img{i}", u))
+        for i, u in enumerate(DATA_SRC_RE.findall(html)[:20]):
+            candidates.append((f"datasrc{i}", u))
         seen = set()
+        saved = 0
         for tag, url in candidates:
-            if url in seen or "logo" in url.lower():
+            if not url.startswith("http") or url in seen or "logo" in url.lower():
                 continue
             seen.add(url)
             print(f"  [{tag}] {url}")
@@ -60,10 +63,13 @@ def main() -> int:
             if data is None or len(data) < 8000:
                 print("    too small/failed, skipping")
                 continue
-            dest = f"tools/_probecover4_{key}_{tag}.jpg"
+            dest = f"tools/_probecover5_{key}_{tag}.jpg"
             with open(dest, "wb") as f:
                 f.write(data)
             print(f"    saved -> {dest} ({len(data)} bytes)")
+            saved += 1
+            if saved >= 15:
+                break
     return 0
 
 
