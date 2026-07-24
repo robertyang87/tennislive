@@ -43,6 +43,9 @@ jobs:
       # reads browser cookies; without this token it falls back to public ATP,
       # WTA and Grand Slam mirrors and records a clean skip if none is usable.
       TENNISTV_JWT: ${{ secrets.TENNISTV_JWT }}
+      # Preferred unattended option: exchange the Keycloak refresh token for
+      # a fresh access token at the start of each Tennis TV lookup.
+      TENNISTV_REFRESH_TOKEN: ${{ secrets.TENNISTV_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
