@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import logging
 import os
 import re
 import shutil
@@ -23,6 +24,8 @@ from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
 import requests
+
+logger = logging.getLogger(__name__)
 
 from ..digest import Digest
 from ..models import Match
@@ -619,7 +622,17 @@ def discover_tennistv_point(
         )
         response.raise_for_status()
         entries = parse_tennistv_hot_shot_api_entries(response.json())
-    except (VideoPipelineError, requests.RequestException, ValueError, TypeError, AttributeError):
+    except (
+        VideoPipelineError,
+        requests.RequestException,
+        ValueError,
+        TypeError,
+        AttributeError,
+    ) as exc:
+        logger.warning(
+            "Tennis TV Hot Shots content API failed; using library page fallback: %s",
+            exc,
+        )
         entries = []
     if not entries:
         response = get(
@@ -644,6 +657,13 @@ def discover_tennistv_point(
         shortlist.append(entry)
         if len(shortlist) >= 8:
             break
+    logger.info(
+        "Tennis TV Hot Shots discovery: entries=%d matching_cards=%d refresh_secret=%s jwt_secret=%s",
+        len(entries),
+        len(shortlist),
+        "configured" if os.getenv("TENNISTV_REFRESH_TOKEN", "").strip() else "missing",
+        "configured" if os.getenv("TENNISTV_JWT", "").strip() else "missing",
+    )
     metadata_items: list[OfficialVideoMetadata] = []
     for entry in shortlist:
         try:
@@ -657,7 +677,17 @@ def discover_tennistv_point(
                     duration_ms=metadata.duration_ms or entry.duration_ms,
                 )
             )
-        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
+        except (
+            VideoPipelineError,
+            requests.RequestException,
+            ValueError,
+            TypeError,
+        ) as exc:
+            logger.warning(
+                "Tennis TV playback resolution failed for %s: %s",
+                entry.candidate.url,
+                exc,
+            )
             continue
     direct = select_daily_point(digest, metadata_items)
     if direct is not None:
