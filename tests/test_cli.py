@@ -428,3 +428,41 @@ def test_publish_pushplus_uses_xiaohongshu_title(tmp_path, monkeypatch):
 
     assert cli.cmd_publish_pushplus(SimpleNamespace(dir=str(package))) == 0
     assert sent == [("🏆7.21｜谢里夫这冠有点意外", "<div>待发稿</div>")]
+
+
+def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
+    tmp_path, monkeypatch
+):
+    import json
+
+    output_dir = tmp_path / "output" / "2026-07-16" / "yesterday-point"
+    atp_dir = output_dir / "atp"
+    atp_dir.mkdir(parents=True)
+    (atp_dir / "manifest.json").write_text(
+        json.dumps({"status": "pass"}), encoding="utf-8"
+    )
+
+    seen_skip_tours = {}
+
+    def fake_generate(_digest, out_dir, *, skip_tours=frozenset()):
+        seen_skip_tours["value"] = skip_tours
+        wta_dir = out_dir / "wta"
+        wta_dir.mkdir(parents=True, exist_ok=True)
+        video = wta_dir / "yesterday-point.mp4"
+        video.write_bytes(b"video")
+        return {"WTA": video}
+
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.generate_yesterday_point", fake_generate
+    )
+    monkeypatch.setattr(cli, "build_digest", lambda _d, prefer=None: object())
+
+    args = SimpleNamespace(
+        date="2026-07-16", outdir=str(tmp_path / "output"), source=None
+    )
+    assert cli.cmd_yesterday_point(args) == 0
+
+    assert seen_skip_tours["value"] == frozenset({"ATP"})
+    manifest = json.loads((output_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["tours"] == {"ATP": "pass", "WTA": "pass"}
+    assert manifest["fresh_tours"] == ["WTA"]
