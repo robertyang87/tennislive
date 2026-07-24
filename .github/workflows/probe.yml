@@ -47,9 +47,13 @@ jobs:
             echo "没有候选照片，跳过提交"
           else
             git add "${files[@]}"
-            git commit -m "chore: 临时提交候选照片供人工核验"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
+            if git diff --cached --quiet; then
+              echo "候选照片与仓库一致，跳过提交"
+            else
+              git commit -m "chore: 临时提交候选照片供人工核验"
+              git pull --rebase origin "${{ github.ref_name }}"
+              git push origin "${{ github.ref_name }}"
+            fi
           fi
 
       - name: 生成无图片探测包
