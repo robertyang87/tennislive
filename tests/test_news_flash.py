@@ -11,6 +11,13 @@ NOW = datetime(2026, 7, 24, 12, 0, tzinfo=timezone.utc)
 
 def test_match_reports_are_not_offcourt():
     # Result verbs and scorelines -> match news (belongs in the daily digest).
+    # These first two are real headlines the live radar initially misrouted.
+    assert is_match_report(
+        "Bublik returns to Kitzbühel final, sets big-serving clash with Halys"
+    )
+    assert is_match_report(
+        "Rublev earns most dominant win of 2026, Darderi cruises to Estoril QFs"
+    )
     assert is_match_report("Alcaraz beats Sinner 6-4 7-6(3) to reach the final")
     assert is_match_report("18岁小将爆冷淘汰头号种子，晋级四强")
     assert is_match_report("Swiatek saves 2 match points to advance to the semifinal")
@@ -21,8 +28,10 @@ def test_offcourt_news_is_detected():
     # Retirements, rules, governance, tech, honours, personnel -> off-court.
     assert is_offcourt_news("ATP to use electronic line calling at all tour events")
     assert is_offcourt_news("Roger Federer announces retirement from tennis")
+    assert is_offcourt_news("Federer visits new Rafa Nadal Museum in Mallorca")
     assert is_offcourt_news("网球名人堂公布本年度入选名单")
-    assert is_offcourt_news("大满贯统一决胜盘抢十规则")
+    # A rule headline that happens to contain a lone score is still off-court.
+    assert is_offcourt_news("Grand Slams adopt a final-set tiebreak at 6-6")
 
 
 def test_offcourt_candidates_filter_match_sensitive_and_dedupe():
@@ -68,6 +77,13 @@ def test_offcourt_candidates_filter_match_sensitive_and_dedupe():
             "title": "WTA unveils new season calendar",
             "url": "u4",
             "published_at": "2026-07-01T00:00:00+00:00",
+        },
+        {  # site-nav / section title (pipes) -> dropped as noise
+            "kind": "official-news",
+            "source": "Sky Sports",
+            "title": "Sky Sports | Sports News, Transfers, Scores | Watch Live Sport",
+            "url": "u5",
+            "published_at": "2026-07-24T11:00:00+00:00",
         },
     ]
 
