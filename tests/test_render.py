@@ -2492,6 +2492,21 @@ def test_focus_comparison_keeps_score_fallback_without_stats():
     assert comparison.source_label is None
 
 
+def test_focus_comparison_omits_incomplete_winners_error_pair():
+    match = make_match()
+    match.stats = MatchStats(
+        source="partial-test",
+        total_points_won=StatPair(80, 74),
+        winners=StatPair(31, 27),
+        unforced_errors=None,
+    )
+
+    comparison = focus_comparison(match)
+
+    assert ("总得分", "80", "74") in comparison.rows
+    assert not any(label == "制胜分 / 非受迫" for label, _left, _right in comparison.rows)
+
+
 def test_focus_comparison_supports_five_set_grand_slam_match():
     match = make_match(
         sets=((6, 4), (3, 6), (7, 6), (4, 6), (6, 3)),

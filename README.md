@@ -88,7 +88,8 @@ Secrets：
 | `WECHAT_APPID` | 公众号 AppID |
 | `WECHAT_APPSECRET` | 公众号 AppSecret |
 | `WECHAT_API_PROXY` | （见下方 IP 白名单说明）固定出口 IP 的 HTTP 代理，如 `http://user:pass@1.2.3.4:8080` |
-| `SPORTRADAR_API_KEY` | Sportradar Tennis API key，用于焦点赛专业技术统计；未配置时自动使用比分结构复盘 |
+| `ATP_PROTENNISLIVE_TOKEN` | ATP ProTennisLive Bearer JWT（需 Tournament Claims）；用于 ATP 焦点赛官方逐场技术统计 |
+| `SPORTRADAR_API_KEY` | Sportradar Tennis API key，作为 ATP/WTA 焦点赛技术统计备用源 |
 
 Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ `draft`（自动存草稿箱，后台一键群发）/ `publish`（直接发布，慎用）；`SPORTRADAR_ACCESS_LEVEL` = API 套餐级别，试用账号默认为 `trial`；`TENNISLIVE_VISUAL_FETCH` = `on`（默认，多源检索授权图片）/ `off`（完全使用本地图片与程序生成信息图）。
 
