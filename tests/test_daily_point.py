@@ -519,7 +519,11 @@ def test_xiaohongshu_copy_is_scannable_multiline_post(sample_digest):
     title, body = copy.split("\n\n")
     lines = [line for line in body.splitlines() if line.strip()]
 
-    assert title == "🎾7.16｜郑钦文这一分，全场公认最佳"
+    # Short, no date or player name; rank 3 may claim the day's best.
+    assert title.startswith("🎾")
+    assert len(title) <= 12
+    assert "最佳" in title
+    assert "｜" not in title  # no date/matchup packed into the title
     # Short: a hook line, one context line, the tags -- not a dense block.
     assert 2 <= len(lines) <= 4
     assert len(body) <= 240
@@ -530,9 +534,9 @@ def test_xiaohongshu_copy_is_scannable_multiline_post(sample_digest):
     validate_point_copy(copy)
 
 
-def test_xiaohongshu_copy_grounds_hook_in_official_shot_description(sample_digest):
-    # When the official text names the shot, the hook features it verbatim
-    # rather than a generic line.
+def test_xiaohongshu_copy_grounds_title_and_hook_in_official_shot(sample_digest):
+    # When the official text names the shot, the short title leads with it and
+    # the hook features it as 制胜分 -- not a generic line.
     base = _selection(sample_digest)
     meta = replace(
         base.metadata,
@@ -542,7 +546,8 @@ def test_xiaohongshu_copy_grounds_hook_in_official_shot_description(sample_diges
         ),
     )
     copy = point_xiaohongshu_copy(replace(base, metadata=meta), date(2026, 7, 24))
-    body = copy.split("\n\n")[1]
+    title, body = copy.split("\n\n")
+    assert title.startswith("🎾单手反拍，")
     assert "单手反拍" in body
     assert "制胜分" in body
 
