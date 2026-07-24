@@ -596,7 +596,11 @@ def fetch_tennistv_video_metadata(
     the caller can then try an ATP/WTA public mirror or write a skipped
     manifest. A token may be supplied as the opt-in ``TENNISTV_JWT`` secret.
     """
-    headers = {"User-Agent": "tennislive/0.1", "account": "atpmedia"}
+    page_headers = {"User-Agent": "tennislive/0.1"}
+    entitlement_headers = {
+        "User-Agent": page_headers["User-Agent"],
+        "account": "atpmedia",
+    }
     explicit_jwt = jwt_token is not None
     refresh = (
         refresh_token
@@ -630,8 +634,10 @@ def fetch_tennistv_video_metadata(
                 "Tennis TV refresh did not return an access token"
             )
     if token:
-        headers["Authorization"] = f"Bearer {token}"
-    page_response = get(candidate.url, headers=headers, timeout=timeout)
+        entitlement_headers["Authorization"] = f"Bearer {token}"
+    # The page is public. Sending its Keycloak bearer token to the web origin
+    # makes the CDN reject an otherwise valid request with HTTP 401.
+    page_response = get(candidate.url, headers=page_headers, timeout=timeout)
     page = html.unescape(_response_text(page_response))
     entry_match = re.search(r'data-entry-id="(?P<entry>[^" ]+)"', page)
     if not entry_match:
@@ -648,7 +654,7 @@ def fetch_tennistv_video_metadata(
 
     entitlement_response = get(
         f"https://api.tennistv.com/entitlementcheck/v1/videoentitlements/{entry_id}",
-        headers=headers,
+        headers=entitlement_headers,
         timeout=timeout,
     )
     entitlement_response.raise_for_status()
@@ -664,7 +670,7 @@ def fetch_tennistv_video_metadata(
     playback_response = get(
         f"{TENNISTV_PLAYBACK_API}/{entry_id}",
         headers={
-            "User-Agent": headers["User-Agent"],
+            "User-Agent": page_headers["User-Agent"],
             "x-api-key": TENNISTV_PLAYBACK_API_KEY,
             "Authorization": f"Bearer {access_token}",
         },
