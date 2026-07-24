@@ -514,19 +514,22 @@ def test_quality_gate_rejects_truncated_or_low_frame_rate(sample_digest):
         )
 
 
-def test_xiaohongshu_copy_is_one_plain_mobile_paragraph(sample_digest):
+def test_xiaohongshu_copy_is_scannable_multiline_post(sample_digest):
     copy = point_xiaohongshu_copy(_selection(sample_digest), date(2026, 7, 16))
     title, body = copy.split("\n\n")
+    lines = [line for line in body.splitlines() if line.strip()]
 
     assert title == "🎾7.16｜郑钦文这一分，全场公认最佳"
-    assert "\n" not in body
-    assert len(body) <= 280
+    # Body is several short lines with breathing room, not one dense block.
+    assert 3 <= len(lines) <= 6
+    assert len(body) <= 360
     assert body.count("？") == 1
     assert "完整回合" in body
-    assert "全场比分" in body
-    assert "当日最佳" in body
+    assert "赛果" in body
+    # Rank 3 is the one tier that may claim the whole day agreed.
+    assert "公认最佳" in body
     assert "来源：" not in body
-    assert "先猜" not in body
+    assert lines[-1].startswith("#")
     validate_point_copy(copy)
 
 
@@ -566,9 +569,16 @@ def test_burned_in_caption_varies_by_clip_but_is_stable_per_clip(sample_digest):
         assert "赛果" in line
 
 
-def test_copy_validator_rejects_three_body_paragraphs():
-    with pytest.raises(VideoPipelineError, match="只有一段"):
+def test_copy_validator_rejects_extra_body_blocks():
+    with pytest.raises(VideoPipelineError, match="标题加一个正文块"):
         validate_point_copy("标题\n\n第一段。\n\n第二段？#网球 #好球 #网球时差")
+
+
+def test_copy_validator_rejects_single_line_body():
+    with pytest.raises(VideoPipelineError, match="3 至 6 行"):
+        validate_point_copy(
+            "标题\n\n完整回合，赛果 2-0，你会重看吗？#网球 #好球 #网球时差"
+        )
 
 
 def test_copy_validator_rejects_public_source_credit():

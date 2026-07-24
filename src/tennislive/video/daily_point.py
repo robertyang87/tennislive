@@ -1166,44 +1166,42 @@ def validate_rendered_point(
 
 
 def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
-    """One mobile-screen paragraph: hook, plain recap, and one question."""
+    """A scannable Xiaohongshu post: a titled hook plus short emoji-led beats.
+
+    Real Xiaohongshu copy gets skimmed on a phone, so the body is a few short
+    lines with breathing room instead of one dense block: an opening punch,
+    the matchup, why the whole rally is worth it (with the score), and one
+    comment-bait question, then the tags. The tier honesty rule still holds --
+    only a rank-3 clip may claim the whole day agreed it was best; a rank-1
+    Hot Shot stays out of that claim.
+    """
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
     score = selection.match.score_display(from_winner=True)
-    # Titles name the featured player and lead with the strongest honest hook
-    # for that tier: rank 3 is the one clip that can truthfully claim "the
-    # whole day agreed this was best"; rank 1 (a Hot Shot, not a best-of-day
-    # claim) still gets a punchy title, just without borrowing rank 3's claim.
+    tournament = (
+        tournament_zh(selection.match.tournament.name)
+        or selection.match.tournament.name
+    )
     title_hook = {
         3: "这一分，全场公认最佳",
         2: "这一分，直接封神",
         1: "这一拍，全场看傻",
     }[selection.consensus_rank]
     title = f"🎾{published_for.month}.{published_for.day}｜{featured}{title_hook}"
-    source_title = _clean(selection.metadata.candidate.title)
-    if selection.consensus_rank == 3:
-        hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
-    elif selection.consensus_rank == 2:
-        hook = "这场比赛里最值得回放的一分，不是只看最后一拍就够了。"
-    elif selection.consensus_rank == 1:
-        hook = "这一拍被官方直接盖章「神仙球」，还没看到最后，观众已经开始喊了。"
-    elif "rally" in source_title:
-        hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
-    elif "shot" in source_title:
-        hook = "只看最后一拍会漏掉一半精彩：这球拿下了当日最佳。"
-    elif "play" in source_title:
-        hook = "昨天比赛那么多，回放按钮最后留给了这一分。"
-    else:
-        hook = "如果昨天只补一段比赛录像，就补这段当日最佳。"
-    body = (
-        f"{hook}主角是{featured}，对面是{opponent}；"
-        f"这段{tournament_zh(selection.match.tournament.name) or selection.match.tournament.name}"
-        f"短片保留了完整回合，全场比分是{winner} {score}。"
-        "从起手看到收尾，节奏怎样变化、最后一拍怎样落地，都不用靠脑补。"
-        "如果只能重看一次，你会盯最后一拍，还是前面的铺垫？"
-        "#网球 #网球名场面 #精彩回合 #网球时差"
-    )
-    copy = limit_hashtags(title + "\n\n" + body)
+    opener = {
+        3: "👀 一整天的好球都翻过了，最后公认最佳落在这一分。",
+        2: "👀 整场比赛最舍不得快进的一分，最后一拍只是收尾。",
+        1: "👀 官方直接盖章「神仙球」，球还没落地，看台先炸了。",
+    }[selection.consensus_rank]
+    body_lines = [
+        opener,
+        f"🎾 {tournament} · {featured} vs {opponent}，完整回合一秒没剪。",
+        f"🔥 从起手的铺垫看到最后一拍落地，快进就亏了——赛果 {winner} {score}。",
+        "💬 只能重看一次，你会盯死最后一拍，还是回看前面怎么一步步做局？",
+        "#网球 #网球名场面 #精彩回合 #网球时差",
+    ]
+    body = limit_hashtags("\n".join(body_lines))
+    copy = title + "\n\n" + body
     validate_point_copy(copy)
     return copy
 
@@ -1239,8 +1237,8 @@ def point_push_html(digest: Digest, copy: str, *, tour_dir: str = "") -> str:
         f'<a href="{html.escape(video_url, quote=True)}" style="display:block;background:#102d23;'
         'color:#fff;text-align:center;text-decoration:none;font-weight:700;padding:14px 16px;'
         'border-radius:6px;margin:0 0 16px;">打开 / 下载竖屏成片</a>'
-        f'<div style="font-size:15px;line-height:1.85;color:#25342e;margin-bottom:16px;">'
-        f'{html.escape(body)}</div>'
+        f'<div style="font-size:15px;line-height:1.85;color:#25342e;margin-bottom:16px;'
+        f'white-space:pre-line;">{html.escape(body)}</div>'
         f'<a href="{html.escape(copy_url, quote=True)}" style="display:block;background:#ff2442;'
         'color:#fff;text-align:center;text-decoration:none;font-weight:700;padding:13px 16px;'
         'border-radius:6px;">分别复制标题 / 正文</a>'
@@ -1250,18 +1248,24 @@ def point_push_html(digest: Digest, copy: str, *, tour_dir: str = "") -> str:
 
 def validate_point_copy(copy: str) -> None:
     parts = [part.strip() for part in copy.split("\n\n") if part.strip()]
-    if len(parts) != 2 or "\n" in parts[1]:
-        raise VideoPipelineError("昨日好球正文必须只有一段")
+    if len(parts) != 2:
+        raise VideoPipelineError("昨日好球必须是标题加一个正文块")
     body = parts[1]
-    if len(body) > 280:
-        raise VideoPipelineError("昨日好球正文超过手机一屏长度")
-    if body.count("？") != 1 or not any(word in body for word in ("比分", "赛果")):
-        raise VideoPipelineError("昨日好球正文必须含比分上下文和一个评论问题")
     public_citation_markers = ("来源：", "图源：", "摄影/图源", "非商业资料引用")
     if any(marker in body for marker in public_citation_markers):
         raise VideoPipelineError("昨日好球正文不得显示资料或图片来源")
+    if body.count("？") != 1 or not any(word in body for word in ("比分", "赛果")):
+        raise VideoPipelineError("昨日好球正文必须含比分上下文和一个评论问题")
     if not 3 <= hashtag_count(body) <= 5:
         raise VideoPipelineError("昨日好球正文话题标签应保持 3 至 5 个")
+    # Xiaohongshu copy is skimmed, so keep it to a few short lines with
+    # breathing room rather than one dense block -- but still inside one phone
+    # screen. The blank line between title and body already split it off above.
+    lines = [line for line in body.splitlines() if line.strip()]
+    if not 3 <= len(lines) <= 6:
+        raise VideoPipelineError("昨日好球正文应为 3 至 6 行短句，便于手机阅读")
+    if len(body) > 360:
+        raise VideoPipelineError("昨日好球正文超过手机一屏长度")
 
 
 def render_daily_point(
