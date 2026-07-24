@@ -34,6 +34,8 @@ from .official import (
     OFFICIAL_YOUTUBE_CHANNEL_IDS,
     OFFICIAL_YOUTUBE_FEEDS,
     TENNISTV_HOT_SHOTS_HUB,
+    TENNISTV_YOUTUBE_CHANNEL_ID,
+    TENNISTV_YOUTUBE_FEED,
     WTA_VIDEO_HUB,
     OfficialVideoCandidate,
     OfficialVideoMetadata,
@@ -716,6 +718,31 @@ def discover_atp_point(
     )
 
 
+def discover_tennistv_youtube_point(
+    digest: Digest,
+    *,
+    get: Callable[..., object] = requests.get,
+    timeout: int = 25,
+    metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+) -> PointSelection | None:
+    """Resolve Tennis TV's own public YouTube uploads.
+
+    This is a second, independent free ATP path: youtube.com/tennistv
+    publicly mirrors a selection of Hot Shots and highlights from the same
+    ATP Media library that requires a paid entitlement on tennistv.com
+    itself. No login, no JWT.
+    """
+    return _discover_official_youtube_point(
+        digest,
+        tour="ATP",
+        feed_url=TENNISTV_YOUTUBE_FEED,
+        channel_id=TENNISTV_YOUTUBE_CHANNEL_ID,
+        get=get,
+        timeout=timeout,
+        metadata_fetcher=metadata_fetcher,
+    )
+
+
 def discover_wta_youtube_point(
     digest: Digest,
     *,
@@ -822,6 +849,7 @@ def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection
         discover_wta_point,
         discover_wta_youtube_point,
         discover_atp_point,
+        discover_tennistv_youtube_point,
         discover_youtube_search_point,
     ):
         try:

@@ -31,6 +31,14 @@ TENNISTV_HOT_SHOTS_HUB = "https://www.tennistv.com/library/hot-shots"
 WTA_ACCOUNT = "6041795521001"
 WTA_PLAYER = "te01Hqw71"
 ATP_YOUTUBE_CHANNEL_ID = "UCY_5h5zaSwN7Or4kIJDYNXA"
+# Tennis TV's own YouTube channel (youtube.com/tennistv) is distinct from the
+# paywalled tennistv.com app: it publicly mirrors a selection of match
+# highlights and Hot Shots with no login or entitlement required. Verified
+# against multiple independent third-party YouTube analytics listings
+# (vidiq, noxinfluencer) plus the channel's own /videos and /community URLs,
+# since tennistv.com and youtube.com both block direct automated fetches
+# here (Cloudflare / bot detection) that would otherwise confirm it in-repo.
+TENNISTV_YOUTUBE_CHANNEL_ID = "UCbcxFkd6B9xUU54InHv4Tig"
 OFFICIAL_YOUTUBE_CHANNEL_IDS = {
     "ATP": ATP_YOUTUBE_CHANNEL_ID,
     "WTA": "UCaBIVVpHjq6j3tSyxwTE-8Q",
@@ -52,6 +60,7 @@ OFFICIAL_YOUTUBE_FEEDS = {
     for tour, channel_id in OFFICIAL_YOUTUBE_CHANNEL_IDS.items()
 }
 ATP_YOUTUBE_FEED = OFFICIAL_YOUTUBE_FEEDS["ATP"]
+TENNISTV_YOUTUBE_FEED = official_youtube_uploads_feed(TENNISTV_YOUTUBE_CHANNEL_ID)
 _ANCHOR = re.compile(
     r'<a[^>]+href="(?P<path>/videos/\d+/[^"?#]+)"[^>]*>'
     r"(?P<body>[\s\S]{0,1800}?)</a>",
@@ -412,9 +421,15 @@ def search_official_youtube_candidates(
     checked before a result can enter the point pipeline. ``yt-dlp`` is used
     only for metadata, so the Action remains independent of a browser session.
     """
-    expected_channel = OFFICIAL_YOUTUBE_CHANNEL_IDS.get(tour.upper(), "")
-    if not expected_channel:
+    primary_channel = OFFICIAL_YOUTUBE_CHANNEL_IDS.get(tour.upper(), "")
+    if not primary_channel:
         return []
+    expected_channels = {primary_channel}
+    if tour.upper() == "ATP":
+        # Tennis TV's own channel is a second verified ATP source (see the
+        # TENNISTV_YOUTUBE_CHANNEL_ID comment): a search hit there is just as
+        # trustworthy as one on the ATP Tour channel itself.
+        expected_channels.add(TENNISTV_YOUTUBE_CHANNEL_ID)
     if searcher is None:
         try:
             from yt_dlp import YoutubeDL
@@ -436,7 +451,7 @@ def search_official_youtube_candidates(
         if not isinstance(item, dict):
             continue
         channel_id = str(item.get("channel_id") or item.get("uploader_id") or "")
-        if channel_id != expected_channel:
+        if channel_id not in expected_channels:
             continue
         video_id = str(item.get("id") or "").strip()
         title = str(item.get("title") or "").strip()

@@ -12,6 +12,7 @@ from tennislive.video.daily_point import (
     build_point_ffmpeg_command,
     discover_atp_point,
     discover_slam_point,
+    discover_tennistv_youtube_point,
     discover_wta_point,
     discover_youtube_search_point,
     generate_yesterday_point,
@@ -27,7 +28,7 @@ from tennislive.video.daily_point import (
 )
 from tennislive.video import daily_point as daily_point_module
 from tennislive.video.official import OfficialVideoCandidate, OfficialVideoMetadata
-from tennislive.video.official import ATP_YOUTUBE_CHANNEL_ID
+from tennislive.video.official import ATP_YOUTUBE_CHANNEL_ID, TENNISTV_YOUTUBE_CHANNEL_ID
 from tennislive.video.pipeline import VideoPipelineError
 
 
@@ -326,6 +327,32 @@ def test_atp_discovery_uses_verified_official_channel_feed(sample_digest):
 
     assert selection is not None
     assert selection.metadata.candidate.tour == "ATP"
+
+
+def test_tennistv_youtube_discovery_uses_its_own_verified_channel_feed(sample_digest):
+    feed_id = TENNISTV_YOUTUBE_CHANNEL_ID[2:]
+    page = f'''<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:yt="http://www.youtube.com/xml/schemas/2015">
+      <yt:channelId>{feed_id}</yt:channelId>
+      <entry><yt:videoId>xyz789</yt:videoId>
+        <title>Hot Shot: Jannik Sinner vs Novak Djokovic at Wimbledon</title></entry>
+    </feed>'''
+
+    selection = discover_tennistv_youtube_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _Response(page),
+        metadata_fetcher=lambda candidate: replace(
+            _metadata(),
+            candidate=candidate,
+            description=(
+                "Official Hot Shot by Jannik Sinner against Novak Djokovic at Wimbledon."
+            ),
+        ),
+    )
+
+    assert selection is not None
+    assert selection.metadata.candidate.tour == "ATP"
+    assert selection.metadata.candidate.url.endswith("xyz789")
 
 
 def test_grand_slam_discovery_requires_current_event_and_match_context(sample_digest):
