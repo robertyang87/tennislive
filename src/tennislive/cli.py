@@ -163,6 +163,56 @@ def cmd_knowledge_adhoc(args) -> int:
     return 0
 
 
+def cmd_flash_card(args) -> int:
+    """生成一张"单图快讯卡"（及时新闻 → 一张图即时输出），并附小红书文案。
+
+    快讯卡不套四卡知识帖模板、不需要外部球员照，因此能当天快速产出。事实
+    由调用方提供（本命令不编造）。涉及敏感社会/政治/法律/医疗话题的新闻，
+    默认拦截并提示转人工复核，除非显式 --force。
+    """
+    from .render.flashcard import generate_flash_card
+    from .render.sensitivity import sensitive_category
+    from .render.terminal import console
+
+    category = sensitive_category(args.headline, args.quote)
+    if category and not args.force:
+        console.print(
+            f"[yellow]该快讯命中敏感类别（{category}），默认转人工复核，未生成。"
+            f"确认无误可加 --force 强制生成。[/yellow]"
+        )
+        return 3
+
+    d = parse_date_arg(args.date)
+    outdir = Path(args.outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    try:
+        card_path = generate_flash_card(
+            args.headline,
+            quote=args.quote,
+            source_label=args.source_label,
+            date_label=f"{d.month}.{d.day}",
+            out_path=outdir / "flash-card.jpg",
+            theme=args.theme,
+        )
+    except Exception as e:  # noqa: BLE001 - surface the real reason
+        console.print(f"[red]快讯卡渲染失败：{e}[/red]")
+        return 2
+
+    question = args.question or "你怎么看这件事？评论区聊聊。"
+    copy = (
+        f"{args.headline}\n\n"
+        f"{args.quote}\n\n"
+        f"💬 {question}\n\n"
+        "关注 @网球时差｜第一时间把网球场内外的故事讲给你听。\n\n"
+        "#网球 #网球快讯 #网球时差"
+    )
+    (outdir / "flash_copy.txt").write_text(copy, encoding="utf-8")
+    if category:
+        console.print(f"[yellow]注意：该快讯属敏感类别（{category}），已按 --force 生成。[/yellow]")
+    console.print(f"[green]快讯卡已生成：{card_path}（文案：{outdir / 'flash_copy.txt'}）[/green]")
+    return 0
+
+
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
@@ -1128,6 +1178,30 @@ def build_parser() -> argparse.ArgumentParser:
         "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
     )
 
+    sp = sub.add_parser(
+        "flash-card",
+        help="单图快讯卡：一条及时网球新闻 → 一张品牌图 + 小红书文案（敏感话题默认转人工）",
+    )
+    sp.add_argument("--headline", required=True, help="新闻钩子标题")
+    sp.add_argument("--quote", required=True, help="核心事实或当事人金句（由调用方核实）")
+    sp.add_argument(
+        "--source-label",
+        dest="source_label",
+        default="资料：网球时差整理",
+        help="底部小字来源署名",
+    )
+    sp.add_argument("--question", default="", help="结尾互动问题（留空用默认）")
+    sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output/flash_card", help="输出目录")
+    sp.add_argument(
+        "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
+    )
+    sp.add_argument(
+        "--force",
+        action="store_true",
+        help="敏感话题默认拦截转人工；确认无误后加此项强制生成",
+    )
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1190,6 +1264,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_digest(args)
     if args.command == "knowledge-adhoc":
         return cmd_knowledge_adhoc(args)
+    if args.command == "flash-card":
+        return cmd_flash_card(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
