@@ -60,6 +60,10 @@ _VISUAL_IMPACT_TERMS = {
         "scoreboard", "camera", "system", "technology", "equipment",
         "ball", "court", "surface", "clay", "grass", "hard court",
         "match", "action", "diagram", "track", "sensor",
+        # Trivia stories about a player/era (golden-slam, china-tennis,
+        # big-three) use the explainer slot for a champion moment, not
+        # just equipment/technology -- accept that framing too.
+        "trophy", "ceremony", "champion", "celebrat", "final",
     ),
     "today": (
         "plaque", "memorial", "court", "stadium", "venue", "trophy",
