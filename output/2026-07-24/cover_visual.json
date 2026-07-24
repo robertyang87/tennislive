@@ -1,20 +1,20 @@
 {
   "schema_version": 2,
   "status": "selected",
-  "match_id": "400-2026:178833",
+  "match_id": "1002-2026:179365",
   "match_players": [
-    "Alejandro Tabilo",
-    "Tiago Torres"
+    "Elina Avanesyan",
+    "Yulia Putintseva"
   ],
   "candidate_players": [
-    "Tiago Torres",
-    "Alejandro Tabilo"
+    "Elina Avanesyan",
+    "Yulia Putintseva"
   ],
   "headline_hot": true,
   "headline_eligible": true,
   "headline_players": [
-    "Alejandro Tabilo",
-    "Tiago Torres"
+    "Elina Avanesyan",
+    "Yulia Putintseva"
   ],
   "china_priority": true,
   "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
@@ -27,13 +27,140 @@
     "openverse",
     "bing-web-image",
     "flickr-public",
-    "official-atp-youtube"
+    "official-match-media"
   ],
   "attempts": [
     {
-      "player": "Tiago Torres",
-      "provider": "official-atp-youtube",
-      "source_url": "https://www.youtube.com/watch?v=C50I4hW7gSo",
+      "player": "Elina Avanesyan",
+      "provider": "wta-video-hub",
+      "source_url": "https://www.wtatennis.com/videos/4543055/avanesyan-outlasts-putintseva-in-hamburg-makes-armenian-history",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": true,
+      "exact_match": false,
+      "event_match": true,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 41,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Yulia Putintseva",
+      "provider": "bing-web-image",
+      "source_url": "https://modelwhispers.com/yulia-prokofyeva/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Yulia Putintseva",
+      "provider": "bing-web-image",
+      "source_url": "https://www.alamy.com/stock-photo/yulia-putintseva.html",
+      "subject_match": true,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "on_court_reaction",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [
+          "celebrates"
+        ],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 67,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match",
+        "watermarked-stock-library"
+      ]
+    },
+    {
+      "player": "Yulia Putintseva",
+      "provider": "bing-web-image",
+      "source_url": "https://celebmafia.com/yulia-rose-photoshoot-july-2019-2191893/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Yulia Putintseva",
+      "provider": "bing-web-image",
+      "source_url": "https://modelwhispers.com/yulia-nova/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Elina Avanesyan",
+      "provider": "official-match-media",
+      "source_url": "https://www.wtatennis.com/videos/4543055/avanesyan-outlasts-putintseva-in-hamburg-makes-armenian-history",
       "subject_match": true,
       "person_match": true,
       "both_sides_match": true,
@@ -48,109 +175,107 @@
         "trophy": [],
         "rejected": [],
         "pixel": [
-          "2 prominent face(s)",
+          "1 prominent face(s)",
           "frontal-default"
         ]
       },
-      "metadata_score": 66,
+      "metadata_score": 65,
       "status": "selected",
       "quality": {
         "status": "pass",
-        "score": 31.6,
-        "quality_score": 13.8,
-        "crop_score": 17.8,
+        "score": 30.7,
+        "quality_score": 15.0,
+        "crop_score": 15.7,
         "hard_failures": [],
-        "width": 1280,
-        "height": 720,
-        "sharpness": 830.3,
-        "tonal_range": 192.0,
-        "mean_luma": 116.8,
-        "black_ratio": 0.053,
-        "white_ratio": 0.0025,
-        "entropy": 7.57,
-        "edge_ratio": 0.061,
-        "saturation": 145.2,
-        "prominent_faces": 2,
+        "width": 3885,
+        "height": 2519,
+        "sharpness": 484.9,
+        "tonal_range": 176.0,
+        "mean_luma": 69.9,
+        "black_ratio": 0.0093,
+        "white_ratio": 0.0083,
+        "entropy": 6.38,
+        "edge_ratio": 0.0234,
+        "saturation": 113.2,
+        "prominent_faces": 1,
         "face_detectors": [
           "frontal-default"
         ],
         "prominent_bodies": 0,
         "body_detectors": [],
         "crop": [
-          631,
+          619,
           0,
-          1171,
-          720
+          2508,
+          2519
         ],
-        "crop_retention": 0.422,
+        "crop_retention": 0.486,
         "face_safe": true,
-        "focus": "74% 38%",
-        "resolution_profile": "official-youtube-maxres-1280x720"
+        "focus": "44% 22%"
       },
-      "quality_score": 115.6,
+      "quality_score": 113.7,
       "face_priority_bonus": 18,
       "hard_failures": [],
-      "cached_file": "daily-cover-dbe7ebdf52c7.jpg"
+      "cached_file": "daily-cover-750570366a66.jpg"
     }
   ],
   "flickr_enabled": true,
   "wta_official_enabled": true,
-  "wta_video_hub_candidates": 0,
-  "official_pages_checked": 0,
-  "official_pages_expanded": 0,
-  "selected_player": "Tiago Torres",
+  "wta_video_hub_candidates": 1,
+  "official_pages_checked": 1,
+  "official_pages_expanded": 1,
+  "selected_player": "Elina Avanesyan",
   "exact_match": true,
   "both_sides_match": true,
   "scene": "prominent_person",
   "person_evidence": {},
-  "quality_score": 115.6,
+  "quality_score": 113.7,
   "quality": {
     "status": "pass",
-    "score": 31.6,
-    "quality_score": 13.8,
-    "crop_score": 17.8,
+    "score": 30.7,
+    "quality_score": 15.0,
+    "crop_score": 15.7,
     "hard_failures": [],
-    "width": 1280,
-    "height": 720,
-    "sharpness": 830.3,
-    "tonal_range": 192.0,
-    "mean_luma": 116.8,
-    "black_ratio": 0.053,
-    "white_ratio": 0.0025,
-    "entropy": 7.57,
-    "edge_ratio": 0.061,
-    "saturation": 145.2,
-    "prominent_faces": 2,
+    "width": 3885,
+    "height": 2519,
+    "sharpness": 484.9,
+    "tonal_range": 176.0,
+    "mean_luma": 69.9,
+    "black_ratio": 0.0093,
+    "white_ratio": 0.0083,
+    "entropy": 6.38,
+    "edge_ratio": 0.0234,
+    "saturation": 113.2,
+    "prominent_faces": 1,
     "face_detectors": [
       "frontal-default"
     ],
     "prominent_bodies": 0,
     "body_detectors": [],
     "crop": [
-      631,
+      619,
       0,
-      1171,
-      720
+      2508,
+      2519
     ],
-    "crop_retention": 0.422,
+    "crop_retention": 0.486,
     "face_safe": true,
-    "focus": "74% 38%",
-    "resolution_profile": "official-youtube-maxres-1280x720"
+    "focus": "44% 22%"
   },
   "event_match": true,
   "year_match": true,
-  "provider": "official-atp-youtube",
-  "source_url": "https://www.youtube.com/watch?v=C50I4hW7gSo",
-  "credit": "ATP Tour",
-  "license": "official public match media",
-  "focus": "74% 38%",
-  "selected_asset_sha256": "dbe7ebdf52c7b9a4255f6bb79b64b19237afff762df7f60f3229a3c50dfb668d",
+  "provider": "official-match-media",
+  "source_url": "https://www.wtatennis.com/videos/4543055/avanesyan-outlasts-putintseva-in-hamburg-makes-armenian-history",
+  "credit": "wtatennis.com",
+  "license": "官方公开页面图片 · 资讯引用",
+  "focus": "44% 22%",
+  "selected_asset_sha256": "750570366a6633407c5cbc40ec27782f176d66044d641ba15f957168bf91bc2b",
   "render_binding": {
     "status": "bound",
     "renderer": "html-chromium",
-    "match_id": "400-2026:178833",
-    "selected_asset_sha256": "dbe7ebdf52c7b9a4255f6bb79b64b19237afff762df7f60f3229a3c50dfb668d",
+    "match_id": "1002-2026:179365",
+    "selected_asset_sha256": "750570366a6633407c5cbc40ec27782f176d66044d641ba15f957168bf91bc2b",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "eef4dc9fc288e808b8f5a2bf387dded90f2a087a48c9044569f66cf2571d33a4"
+    "card_sha256": "893b7d0090eb2870bc39281dc525ce8a35494f73ef8aff5bb366f9accd7fc1df"
   }
 }
