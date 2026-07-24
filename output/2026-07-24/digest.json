@@ -5551,8 +5551,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 2,
-          "away": 4,
+          "home": 4,
+          "away": 5,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -5655,8 +5655,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 3,
-          "away": 3,
+          "home": 5,
+          "away": 4,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -5767,8 +5767,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 0,
-          "away": 2,
+          "home": 2,
+          "away": 4,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -5848,8 +5848,14 @@
       "start_utc": "2026-07-24 14:30:00+00:00",
       "sets": [
         {
-          "home": 5,
+          "home": 6,
           "away": 4,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 1,
+          "away": 0,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -5857,7 +5863,7 @@
       "winner": null,
       "note": null,
       "court": "Court Cascais",
-      "status_detail": "1st Set",
+      "status_detail": "2nd Set",
       "stats": null,
       "editorial_note": null,
       "editorial_source": null,
@@ -5946,8 +5952,8 @@
       "start_utc": "2026-07-24 15:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 0,
+          "home": 2,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -6011,8 +6017,8 @@
       "start_utc": "2026-07-24 15:05:00+00:00",
       "sets": [
         {
-          "home": 0,
-          "away": 0,
+          "home": 1,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -6030,6 +6036,87 @@
       ],
       "time_observations": {
         "espn": "2026-07-24T15:05:00+00:00"
+      },
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "525-2026:179523",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Palermo Ladies Open",
+        "tour": "WTA",
+        "level": "WTA125",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "525-2026"
+      },
+      "home": [
+        {
+          "name": "Estelle Cascino",
+          "country": "FRA",
+          "seed": 1,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3841.png",
+          "player_id": "3841"
+        },
+        {
+          "name": "Sofya Lansere",
+          "country": "RUS",
+          "seed": 1,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3401.png",
+          "player_id": "3401"
+        }
+      ],
+      "away": [
+        {
+          "name": "Rasheeda McAdoo",
+          "country": "USA",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4552.png",
+          "player_id": "4552"
+        },
+        {
+          "name": "Adrienn Nagy",
+          "country": "HUN",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5292.png",
+          "player_id": "5292"
+        }
+      ],
+      "status": "live",
+      "round_name": "Semifinal",
+      "discipline": "Women's Doubles",
+      "start_utc": "2026-07-24 15:10:00+00:00",
+      "sets": [
+        {
+          "home": 2,
+          "away": 0,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": null,
+      "note": null,
+      "court": "Campo 6",
+      "status_detail": "1st Set",
+      "stats": null,
+      "editorial_note": null,
+      "editorial_source": null,
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": "2026-07-24T15:10:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -6102,80 +6189,6 @@
       "trend_signals": []
     },
     {
-      "match_id": "525-2026:179523",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Palermo Ladies Open",
-        "tour": "WTA",
-        "level": "WTA125",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "525-2026"
-      },
-      "home": [
-        {
-          "name": "Estelle Cascino",
-          "country": "FRA",
-          "seed": 1,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3841.png",
-          "player_id": "3841"
-        },
-        {
-          "name": "Sofya Lansere",
-          "country": "RUS",
-          "seed": 1,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3401.png",
-          "player_id": "3401"
-        }
-      ],
-      "away": [
-        {
-          "name": "Rasheeda McAdoo",
-          "country": "USA",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4552.png",
-          "player_id": "4552"
-        },
-        {
-          "name": "Adrienn Nagy",
-          "country": "HUN",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5292.png",
-          "player_id": "5292"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Semifinal",
-      "discipline": "Women's Doubles",
-      "start_utc": "2026-07-24 15:10:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Campo 6",
-      "status_detail": "Fri, July 24th at 11:10 AM EDT",
-      "stats": null,
-      "editorial_note": "Estelle Cascino / 兰塞尔与Rasheeda McAdoo / Adrienn Nagy只差这一场，就能把默契换成决赛席位。",
-      "editorial_source": "赛程背景",
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": "2026-07-24T15:10:00+00:00"
-      },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
       "match_id": "401-2026:179400",
       "tour": "WTA",
       "tournament": {
@@ -6210,12 +6223,12 @@
       "status": "scheduled",
       "round_name": "Quarterfinal",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-24 15:20:00+00:00",
+      "start_utc": "2026-07-24 15:30:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "Livesport Arena",
-      "status_detail": "Fri, July 24th at 11:20 AM EDT",
+      "status_detail": "Fri, July 24th at 11:30 AM EDT",
       "stats": null,
       "editorial_note": "法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线",
       "editorial_source": "WTA 官方报道",
@@ -6225,7 +6238,7 @@
         "WTA 官方 OOP"
       ],
       "time_observations": {
-        "espn": "2026-07-24T15:20:00+00:00"
+        "espn": "2026-07-24T15:30:00+00:00"
       },
       "schedule_time_status": "official-order-estimate",
       "schedule_note": "WTA 官方 OOP：Followed by",
@@ -8787,6 +8800,54 @@
     {
       "kind": "search-trend",
       "source": "Google Trends US",
+      "title": "taylor swift",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "rosenborg vs man united",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "bordeaux fire",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "connor read ice detention",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "tour de france live",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "taylor swift",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
       "title": "connor read ice detention",
       "url": "https://trends.google.com/trending/rss?geo=US",
       "published_at": "2026-07-24T14:50:00+00:00",
@@ -8834,9 +8895,9 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "primo",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "source": "Google Trends US",
+      "title": "ford bronco engine fire recall",
+      "url": "https://trends.google.com/trending/rss?geo=US",
       "published_at": "2026-07-24T14:20:00+00:00",
       "traffic": ""
     },
@@ -8853,6 +8914,14 @@
       "source": "Google Trends GB",
       "title": "mark van bommel",
       "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T14:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "primo",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T14:20:00+00:00",
       "traffic": ""
     },
@@ -8882,17 +8951,17 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "麥長青",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T14:10:00+00:00",
+      "source": "Google Trends US",
+      "title": "jason sudeikis",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-24T14:00:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "jason sudeikis",
-      "url": "https://trends.google.com/trending/rss?geo=US",
+      "source": "Google Trends GB",
+      "title": "m5 traffic",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
       "published_at": "2026-07-24T14:00:00+00:00",
       "traffic": ""
     },
@@ -8906,9 +8975,9 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "m5 traffic",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "source": "Google Trends HK",
+      "title": "黎耀祥",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
       "published_at": "2026-07-24T14:00:00+00:00",
       "traffic": ""
     },
@@ -8930,49 +8999,9 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "voucher",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T13:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "tej lalvani vitamins business deal",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T13:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "cole hauser",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T13:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends US",
       "title": "russian fighter jets",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-24T13:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "luke bracey",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-24T13:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "rika hiraki",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
       "published_at": "2026-07-24T13:30:00+00:00",
       "traffic": ""
     },
@@ -8982,14 +9011,6 @@
       "title": "黃澤鋒",
       "url": "https://trends.google.com/trending/rss?geo=HK",
       "published_at": "2026-07-24T13:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "tracee ellis ross",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-24T13:20:00+00:00",
       "traffic": ""
     },
     {
@@ -9108,14 +9129,6 @@
       "kind": "search-trend",
       "source": "Google Trends AU",
       "title": "tyson fury",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-24T11:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "playstation 5",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T11:50:00+00:00",
       "traffic": ""
