@@ -1207,6 +1207,9 @@ _COPY_FALLBACK_HOOKS = {
     1: ("这一拍被官方剪成了神仙球", "标准神仙球，官方单独收录", "官方给这一拍单开了特写"),
 }
 _COPY_TAGS = "#网球 #网球名场面 #精彩回合 #网球时差"
+# Column label shown in the title, parallel to 今日球局 / 网球有故事 on the other
+# columns. Kept in Chinese to match the project's no-English-in-public-copy rule.
+_COLUMN_LABEL = "昨日好球"
 
 
 def _official_shot_noun(metadata: OfficialVideoMetadata) -> str | None:
@@ -1241,16 +1244,17 @@ def _official_match_hook(metadata: OfficialVideoMetadata) -> str | None:
 
 
 def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
-    """A short Xiaohongshu post: a shot-led title, one grounded hook, context.
+    """A short Xiaohongshu post: a titled column line, one grounded hook, context.
 
-    The title is short and leads with the actual shot when the official text
-    names one ("单手反拍，直接封神"), with no date or player name; it falls back to
-    a short tiered line otherwise. The body's first line is the 引爆点, likewise
-    grounded in the official description (the shot as 制胜分, a fast win, a
-    comeback) or a tiered fallback. A per-clip seed varies the punch, lead-in
-    and any fallback so consecutive clips never read as one fixed script.
+    The title follows the house style shared with the daily digest and the
+    knowledge post -- emoji, date, column name, then a short highlight after the
+    ｜ divider (``🎾7.24 昨日好球｜单手反拍，一拍封神``). The highlight leads with the
+    actual shot when the official text names one and falls back to a short
+    tiered line otherwise -- no player name (it's in the body context line). The
+    body's first line is the 引爆点, likewise grounded in the official description
+    (the shot as 制胜分, a fast win, a comeback) or a tiered fallback. A per-clip
+    seed varies the punch, lead-in and any fallback so clips never read alike.
     """
-    _ = published_for  # date lives in the push card header, not the title now
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
     score = selection.match.score_display(from_winner=True)
@@ -1263,9 +1267,10 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     shot = _official_shot_noun(selection.metadata)
     if shot:
         punch = _pick_caption_template(_TITLE_PUNCH[rank], seed + ":punch")
-        title = f"🎾{shot}，{punch}"
+        highlight = f"{shot}，{punch}"
     else:
-        title = "🎾" + _pick_caption_template(_TITLE_FALLBACK[rank], seed + ":titlefb")
+        highlight = _pick_caption_template(_TITLE_FALLBACK[rank], seed + ":titlefb")
+    title = f"🎾{published_for.month}.{published_for.day} {_COLUMN_LABEL}｜{highlight}"
     if shot:
         core = (
             f"一记{shot}制胜分"
