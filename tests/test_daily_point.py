@@ -520,16 +520,31 @@ def test_xiaohongshu_copy_is_scannable_multiline_post(sample_digest):
     lines = [line for line in body.splitlines() if line.strip()]
 
     assert title == "🎾7.16｜郑钦文这一分，全场公认最佳"
-    # Body is several short lines with breathing room, not one dense block.
-    assert 3 <= len(lines) <= 6
-    assert len(body) <= 360
-    assert body.count("？") == 1
+    # Short: a hook line, one context line, the tags -- not a dense block.
+    assert 2 <= len(lines) <= 4
+    assert len(body) <= 240
+    assert body.count("？") <= 1
     assert "赛果" in body
-    # Rank 3 is the one tier that may claim the day's best.
-    assert "当日最佳" in body
     assert "来源：" not in body
     assert lines[-1].startswith("#")
     validate_point_copy(copy)
+
+
+def test_xiaohongshu_copy_grounds_hook_in_official_shot_description(sample_digest):
+    # When the official text names the shot, the hook features it verbatim
+    # rather than a generic line.
+    base = _selection(sample_digest)
+    meta = replace(
+        base.metadata,
+        candidate=replace(
+            base.metadata.candidate,
+            title="Hot Shot: Carreno Busta hits a one-handed backhand winner",
+        ),
+    )
+    copy = point_xiaohongshu_copy(replace(base, metadata=meta), date(2026, 7, 24))
+    body = copy.split("\n\n")[1]
+    assert "单手反拍" in body
+    assert "制胜分" in body
 
 
 def test_xiaohongshu_copy_varies_by_clip_not_one_fixed_script(sample_digest):
@@ -593,10 +608,8 @@ def test_copy_validator_rejects_extra_body_blocks():
 
 
 def test_copy_validator_rejects_single_line_body():
-    with pytest.raises(VideoPipelineError, match="3 至 6 行"):
-        validate_point_copy(
-            "标题\n\n完整回合，赛果 2-0，你会重看吗？#网球 #好球 #网球时差"
-        )
+    with pytest.raises(VideoPipelineError, match="2 至 4 行"):
+        validate_point_copy("标题\n\n赛果 2-0，就这一分。 #网球 #好球 #网球时差")
 
 
 def test_copy_validator_rejects_public_source_credit():

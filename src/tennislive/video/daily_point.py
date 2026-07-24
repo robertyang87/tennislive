@@ -1165,62 +1165,82 @@ def validate_rendered_point(
         raise VideoPipelineError("昨日好球质量门禁未通过：" + "；".join(errors))
 
 
-# Copy beats rotate through pools the same way captions do: a per-clip seed
-# picks one line from each pool, so different clips read differently instead of
-# repeating one fixed script, while the same clip always renders the same. The
-# opener pools are keyed by tier because only a rank-3 clip may claim the whole
-# day agreed it was best; a rank-1 Hot Shot uses the localized 「神仙球」 and never
-# borrows that claim. Only the question beat carries a ？ (the validator enforces
-# exactly one), and the score beat always names 赛果 for the required context.
 _COPY_TITLE_HOOKS = {
     3: "这一分，全场公认最佳",
     2: "这一分，直接封神",
     1: "这一拍，全场看傻",
 }
-_COPY_OPENERS = {
-    3: (
-        "👀 一整天的球刷下来，当日最佳落在了这一分。",
-        "👀 昨天那么多回合，最后当日最佳给了它。",
-        "👀 当日最佳有它的道理，看完这一分就懂。",
-    ),
-    2: (
-        "👀 这场比赛最想倒回去重看的，就是这一分。",
-        "👀 整场高光压在这一分上，单拎出来也不亏。",
-        "👀 一场打下来，最舍不得快进的是这一分。",
-    ),
-    1: (
-        "👀 这一拍被官方单独剪了出来，神仙球实锤。",
-        "👀 官方给这一拍单开了特写，神仙球没得说。",
-        "👀 好到被单独拎出来的一拍，标准的神仙球。",
-    ),
+# The body's first line is the 引爆点 -- kept short and, wherever the official
+# text names something concrete (the shot, a fast win, a comeback), grounded in
+# that instead of a generic script. Shot descriptors map to a Chinese phrase;
+# "winner"/"unreturnable" upgrade it to 制胜分. Order matters: the most specific
+# descriptor wins.
+_SHOT_HOOK_PATTERNS: tuple[tuple[str, str], ...] = (
+    (r"one[- ]hand(?:ed)? backhand|single[- ]hand(?:ed)? backhand", "单手反拍"),
+    (r"\bbackhand\b", "反拍"),
+    (r"\bforehand\b", "正手"),
+    (r"passing (?:shot|winner)|\bpasses\b", "穿越球"),
+    (r"\blob\b|lobbed", "高吊过顶"),
+    (r"drop[- ]?shot", "放小球"),
+    (r"tweener|between[- ]the[- ]legs|through the legs", "胯下击球"),
+    (r"around the (?:net|post)|behind the back", "神仙操作"),
+    (r"half[- ]?volley", "半截击"),
+    (r"\bvolley(?:s|ed)?\b", "网前截击"),
+    (r"\bsmash(?:es)?\b|overhead", "高压扣杀"),
+    (r"\bace(?:s)?\b", "ACE 直接得分"),
+)
+_WINNER_RE = re.compile(r"\bwinner\b|\bunreturnable\b|\bclean\b", re.IGNORECASE)
+# Lead-ins vary the punch per clip without touching the grounded fact itself.
+_COPY_LEADINS = ("全场高能：", "名场面：", "划重点：", "这一下必看：", "高光时刻：")
+# When the official text says nothing concrete, fall back to a short tiered line
+# (still varied per clip). Only rank 3 may claim the day's best; rank 1 uses the
+# localized 「神仙球」 and never borrows that claim.
+_COPY_FALLBACK_HOOKS = {
+    3: ("官方选出的当日最佳就是这一分", "一整天的好球里，最佳落在这一分", "当日最佳，说的就是它"),
+    2: ("全场最值得回放的就是这一分", "这一分是整场比赛的高光", "一场打下来最想重看这一分"),
+    1: ("这一拍被官方剪成了神仙球", "标准神仙球，官方单独收录", "官方给这一拍单开了特写"),
 }
-_COPY_MATCHUP_TEMPLATES = (
-    "🎾 {tournament}，{featured} 对 {opponent}，整段一刀没剪。",
-    "🎾 {featured} vs {opponent}，{tournament}，完整回合都留着。",
-    "🎾 {tournament} · {featured} 打 {opponent}，从头到尾没删。",
-)
-_COPY_SCORE_TEMPLATES = (
-    "🔥 别急着快进，前面的铺垫才是关键——赛果 {winner} {score}。",
-    "🔥 从第一拍看起才有味道，最后一击只是收尾——赛果 {winner} {score}。",
-    "🔥 好球的节奏都藏在过程里，值得慢慢看——赛果 {winner} {score}。",
-)
-_COPY_QUESTION_TEMPLATES = (
-    "💬 你觉得赢在最后一拍，还是前面的铺垫？",
-    "💬 换你在场上，这一分会怎么打？",
-    "💬 最后那几拍，你数得清几个来回吗？",
-    "💬 这一分最漂亮的是哪一下？",
-)
 _COPY_TAGS = "#网球 #网球名场面 #精彩回合 #网球时差"
 
 
-def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
-    """A scannable Xiaohongshu post: a titled hook plus short emoji-led beats.
+def _official_shot_hook(metadata: OfficialVideoMetadata) -> str | None:
+    """Name the actual shot if the official title/description spells it out."""
+    low = _clean(f"{metadata.candidate.title} {metadata.description}").casefold()
+    for pattern, shot in _SHOT_HOOK_PATTERNS:
+        if re.search(pattern, low):
+            if "ACE" in shot:
+                return f"一记{shot}"
+            if _WINNER_RE.search(low):
+                return f"一记{shot}制胜分"
+            return f"一记{shot}"
+    return None
 
-    Real Xiaohongshu copy gets skimmed on a phone, so the body is a few short
-    lines with breathing room instead of one dense block: an opening punch,
-    the matchup, why the whole rally is worth it (with the score), and one
-    comment-bait question, then the tags. Each beat is drawn from a pool by a
-    per-clip seed so consecutive clips don't repeat one fixed script.
+
+def _official_match_hook(metadata: OfficialVideoMetadata) -> str | None:
+    """Pull the strongest match-level angle the official description states."""
+    low = _clean(metadata.description).casefold()
+    minutes = re.search(r"\b(?:just |in )(\d{1,3}) minutes?\b", low)
+    if minutes:
+        return f"{minutes.group(1)} 分钟速战速决"
+    if re.search(r"saved? .{0,25}match point|match point[s]? down", low):
+        return "挽救赛点惊险过关"
+    if re.search(r"from a set down|came from .{0,20}down|fought back|rallied from", low):
+        return "先丢一盘完成逆转"
+    if re.search(r"straight[- ]sets|raced? past|cruis|dominat|breez", low):
+        return "直落两盘轻松过关"
+    if re.search(r"maiden .{0,20}title|first .{0,20}title|career-first", low):
+        return "拿下生涯里程碑一冠"
+    return None
+
+
+def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
+    """A short Xiaohongshu post: a punchy title, one grounded hook line, context.
+
+    The title carries the punch; the body's first line is the 引爆点, grounded in
+    the official description (the actual shot, a fast win, a comeback) whenever
+    the text names one, and only falls back to a short tiered line when it does
+    not. A per-clip seed varies the lead-in and any fallback so consecutive
+    clips never read as one fixed script. Kept to a few short lines on purpose.
     """
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
@@ -1234,17 +1254,15 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
         f"🎾{published_for.month}.{published_for.day}｜{featured}{_COPY_TITLE_HOOKS[rank]}"
     )
     seed = f"{selection.match.match_id}:{selection.published_at}"
-    opener = _pick_caption_template(_COPY_OPENERS[rank], seed + ":open")
-    matchup = _pick_caption_template(_COPY_MATCHUP_TEMPLATES, seed + ":match").format(
-        tournament=tournament, featured=featured, opponent=opponent
+    core = (
+        _official_shot_hook(selection.metadata)
+        or _official_match_hook(selection.metadata)
+        or _pick_caption_template(_COPY_FALLBACK_HOOKS[rank], seed + ":hook")
     )
-    score_line = _pick_caption_template(_COPY_SCORE_TEMPLATES, seed + ":score").format(
-        winner=winner, score=score
-    )
-    question = _pick_caption_template(_COPY_QUESTION_TEMPLATES, seed + ":q")
-    body = limit_hashtags(
-        "\n".join([opener, matchup, score_line, question, _COPY_TAGS])
-    )
+    lead = _pick_caption_template(_COPY_LEADINS, seed + ":lead")
+    hook = f"{lead}{core}。"
+    context = f"{featured} vs {opponent}｜{tournament}，赛果 {winner} {score}。"
+    body = limit_hashtags("\n".join([hook, context, _COPY_TAGS]))
     copy = title + "\n\n" + body
     validate_point_copy(copy)
     return copy
@@ -1298,17 +1316,19 @@ def validate_point_copy(copy: str) -> None:
     public_citation_markers = ("来源：", "图源：", "摄影/图源", "非商业资料引用")
     if any(marker in body for marker in public_citation_markers):
         raise VideoPipelineError("昨日好球正文不得显示资料或图片来源")
-    if body.count("？") != 1 or not any(word in body for word in ("比分", "赛果")):
-        raise VideoPipelineError("昨日好球正文必须含比分上下文和一个评论问题")
+    if not any(word in body for word in ("比分", "赛果")):
+        raise VideoPipelineError("昨日好球正文必须含比分上下文")
+    if body.count("？") > 1:
+        raise VideoPipelineError("昨日好球正文最多一个评论问题")
     if not 3 <= hashtag_count(body) <= 5:
         raise VideoPipelineError("昨日好球正文话题标签应保持 3 至 5 个")
-    # Xiaohongshu copy is skimmed, so keep it to a few short lines with
-    # breathing room rather than one dense block -- but still inside one phone
-    # screen. The blank line between title and body already split it off above.
+    # Keep it short: a punchy hook, one context line, the tags -- a few short
+    # lines inside one phone screen, not a dense block. The blank line between
+    # title and body already split it off above.
     lines = [line for line in body.splitlines() if line.strip()]
-    if not 3 <= len(lines) <= 6:
-        raise VideoPipelineError("昨日好球正文应为 3 至 6 行短句，便于手机阅读")
-    if len(body) > 360:
+    if not 2 <= len(lines) <= 4:
+        raise VideoPipelineError("昨日好球正文应为 2 至 4 行短句，便于手机阅读")
+    if len(body) > 240:
         raise VideoPipelineError("昨日好球正文超过手机一屏长度")
 
 
