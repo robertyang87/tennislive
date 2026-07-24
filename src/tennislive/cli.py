@@ -234,6 +234,85 @@ def cmd_flash_card(args) -> int:
     return 0
 
 
+def cmd_flash_radar(args) -> int:
+    """自动扫描场外网球新闻，筛出可发候选进待发队列。
+
+    比赛新闻（有比分/击败/晋级/夺冠等）留给日报，不在此重复；场外新闻再过
+    敏感度闸门，敏感话题转人工。候选只携带新闻源已有的真实字段（标题、来源、
+    链接、时间），时间/地点/人物/事件的细化由人工用 flash-card 补全后再发。
+    """
+    import dataclasses as _dc
+    import html as _html
+
+    from .render.terminal import console
+    from .research.news_flash import offcourt_flash_candidates
+    from .research.trends import fetch_trend_signals
+
+    d = parse_date_arg(args.date)
+    signals, status = fetch_trend_signals()
+    signal_dicts = [_dc.asdict(s) for s in signals]
+    candidates = offcourt_flash_candidates(signal_dicts, limit=args.max)
+
+    outdir = Path(args.outdir) / d.isoformat() / "flash_radar"
+    outdir.mkdir(parents=True, exist_ok=True)
+    _dump_json(
+        {
+            "date": d.isoformat(),
+            "source_status": status,
+            "count": len(candidates),
+            "candidates": candidates,
+        },
+        outdir / "flash_radar_queue.json",
+    )
+
+    if not candidates:
+        console.print("[yellow]本次没有可发的场外新闻候选[/yellow]")
+        return 0
+
+    items = "".join(
+        f'<div style="margin:0 0 12px;">'
+        f'<a href="{_html.escape(c["url"], quote=True)}" '
+        'style="color:#087747;font-weight:600;text-decoration:none;">'
+        f'{_html.escape(c["title"])}</a>'
+        f'<div style="color:#7a8580;font-size:12px;">{_html.escape(c["source"])}</div>'
+        "</div>"
+        for c in candidates
+    )
+    push_html = (
+        '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:10px;">'
+        f'<div style="font-weight:800;font-size:17px;margin:0 0 12px;">'
+        f"场外网球快讯候选 · {d.month}.{d.day}（{len(candidates)} 条）</div>"
+        f"{items}"
+        '<div style="color:#7a8580;font-size:12px;margin-top:10px;">'
+        "挑一条用 tennislive flash-card 补全时间/地点/人物/事件后成稿。</div></div>"
+    )
+    (outdir / "flash_radar_push.html").write_text(push_html, encoding="utf-8")
+
+    if not args.no_cards:
+        from .render.flashcard import generate_flash_card
+
+        for index, c in enumerate(candidates[: args.draft_cards]):
+            try:
+                generate_flash_card(
+                    c["title"],
+                    source_label=(
+                        f'资料：{c["source"]} · 网球时差整理'
+                        if c["source"]
+                        else "资料：网球时差整理"
+                    ),
+                    date_label=f"{d.month}.{d.day}",
+                    out_path=outdir / f"draft_{index:02d}.jpg",
+                    theme=args.theme,
+                )
+            except Exception as e:  # noqa: BLE001
+                console.print(f"[yellow]草稿卡渲染失败（跳过）：{e}[/yellow]")
+
+    console.print(
+        f"[green]场外快讯候选已生成：{outdir}（{len(candidates)} 条待人工成稿）[/green]"
+    )
+    return 0
+
+
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
@@ -1227,6 +1306,25 @@ def build_parser() -> argparse.ArgumentParser:
         help="敏感话题默认拦截转人工；确认无误后加此项强制生成",
     )
 
+    sp = sub.add_parser(
+        "flash-radar",
+        help="自动扫描场外网球新闻，筛出可发候选进待发队列（比赛新闻归日报，敏感转人工）",
+    )
+    sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出根目录（默认 output/）")
+    sp.add_argument("--max", type=int, default=8, help="候选上限（默认 8）")
+    sp.add_argument(
+        "--draft-cards",
+        dest="draft_cards",
+        type=int,
+        default=3,
+        help="渲染前 N 条草稿卡供预览（默认 3）",
+    )
+    sp.add_argument("--no-cards", action="store_true", help="只出候选清单，不渲染草稿卡")
+    sp.add_argument(
+        "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
+    )
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1291,6 +1389,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_knowledge_adhoc(args)
     if args.command == "flash-card":
         return cmd_flash_card(args)
+    if args.command == "flash-radar":
+        return cmd_flash_radar(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
