@@ -1,0 +1,71 @@
+{
+  "status": "pass",
+  "generated_at": "2026-07-24T10:01:52.102633+00:00",
+  "project": "yesterday-point",
+  "tour": "ATP",
+  "published_for": "2026-07-24",
+  "match_date": "2026-07-23",
+  "source": {
+    "title": "Estoril 2026 R2 Carreno Busta Hot Shot",
+    "url": "https://www.tennistv.com/videos/4542582/estoril-2026-r2-carreno-busta-hot-shot",
+    "tour": "ATP"
+  },
+  "source_label": "Tennis TV / ATP Media",
+  "source_published_at": "2026-07-23T12:52:30+00:00",
+  "source_duration_ms": 39000,
+  "source_resolution": [
+    1920,
+    1080
+  ],
+  "match": {
+    "id": "400-2026:178835",
+    "players": [
+      "范阿舍",
+      "卡雷尼奥·布斯塔"
+    ],
+    "tournament": "Millennium Estoril Open",
+    "round": "Round 2",
+    "score": "6-3 4-6 6-2"
+  },
+  "selection_score": 1160,
+  "consensus": {
+    "verified": true,
+    "rank": 1,
+    "basis": "official-hot-shot",
+    "score": 72,
+    "signals": [
+      {
+        "kind": "official-hot-shot",
+        "scope": "hot-shot",
+        "source": "Tennis TV / ATP Media",
+        "title": "Estoril 2026 R2 Carreno Busta Hot Shot",
+        "url": "https://www.tennistv.com/videos/4542582/estoril-2026-r2-carreno-busta-hot-shot",
+        "independent": false
+      }
+    ],
+    "evidence": "官方 Hot Shots 单分视频；热度信号优先于‘最佳’断言"
+  },
+  "complete_rally": {
+    "verified": true,
+    "evidence": "官方标题或说明明确标注当日/全场最佳回合，成片保留源视频从 0 秒到结尾",
+    "source_window_ms": [
+      0,
+      39000
+    ],
+    "montage": false
+  },
+  "framing": {
+    "canvas": "3:4",
+    "foreground": "full-source-frame",
+    "mode": "contain",
+    "dynamic_tracking_crop": false,
+    "reason": "没有逐帧高置信度追踪证据，完整 16:9 主体优先"
+  },
+  "outputs": {
+    "video": "yesterday-point.mp4",
+    "subtitles": "yesterday-point.zh-CN.srt",
+    "copy": "xiaohongshu.txt",
+    "copy_page": "copy.html",
+    "pushplus": "push.html"
+  }
+}
