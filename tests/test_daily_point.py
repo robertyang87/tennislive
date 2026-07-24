@@ -667,10 +667,56 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     assert manifest["source"]["url"].startswith("https://www.wtatennis.com/")
     assert manifest["consensus"]["score"] >= 100
     assert manifest["consensus"]["signals"][0]["kind"] == "official-best-designation"
+    # The copy's grounding is recorded so any shot claim is auditable against
+    # the raw official text rather than taken on trust.
+    assert manifest["source_description"] == selection.metadata.description
+    assert manifest["copy_grounding"]["basis"] in {
+        "official-shot",
+        "official-match",
+        "fallback",
+    }
     for public_name in ("xiaohongshu.txt", "copy.html", "push.html"):
         public = (tour_dir / public_name).read_text(encoding="utf-8")
         assert selection.metadata.candidate.url not in public
         assert selection.source_label not in public
+
+
+def test_manifest_records_shot_grounding_for_audit(sample_digest, tmp_path, monkeypatch):
+    base = _selection(sample_digest)
+    # Mirror the real Estoril case: the stored title is a generic slug and the
+    # shot is named only in the description field.
+    meta = replace(
+        base.metadata,
+        candidate=replace(
+            base.metadata.candidate, title="Estoril 2026 R2 Carreno Busta Hot Shot"
+        ),
+        description="Carreno Busta hits a stunning one-handed backhand winner down the line.",
+    )
+    selection = replace(base, metadata=meta)
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: {"WTA": selection},
+    )
+
+    def fake_render(_selection, output_dir):
+        output = output_dir / "yesterday-point.mp4"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"video")
+        (output_dir / "yesterday-point.zh-CN.srt").write_text("x", encoding="utf-8")
+        return output
+
+    monkeypatch.setattr("tennislive.video.daily_point.render_daily_point", fake_render)
+
+    generate_yesterday_point(sample_digest, tmp_path)
+    manifest = json.loads(
+        (tmp_path / "wta" / "manifest.json").read_text(encoding="utf-8")
+    )
+    grounding = manifest["copy_grounding"]
+    assert grounding["basis"] == "official-shot"
+    assert grounding["shot"] == "单手反拍"
+    assert grounding["shot_as_winner"] is True
+    assert "one-handed backhand" in manifest["source_description"].lower()
 
 
 def test_generate_publishes_atp_and_wta_independently(sample_digest, monkeypatch, tmp_path):

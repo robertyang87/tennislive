@@ -1446,6 +1446,10 @@ def _generate_tour_point(
     (tour_dir / "push.html").write_text(
         point_push_html(digest, copy, tour_dir=tour.lower()), encoding="utf-8"
     )
+    # Record exactly what the copy grounded on, so a shot claim ("单手反拍") is
+    # auditable against the raw official text rather than taken on trust.
+    copy_shot = _official_shot_noun(selection.metadata)
+    copy_match = None if copy_shot else _official_match_hook(selection.metadata)
     manifest = {
         "status": "pass",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -1454,6 +1458,21 @@ def _generate_tour_point(
         "published_for": digest.today.isoformat(),
         "match_date": digest.yesterday.isoformat(),
         "source": asdict(selection.metadata.candidate),
+        "source_description": selection.metadata.description,
+        "copy_grounding": {
+            "basis": (
+                "official-shot"
+                if copy_shot
+                else "official-match"
+                if copy_match
+                else "fallback"
+            ),
+            "shot": copy_shot or "",
+            "shot_as_winner": bool(copy_shot)
+            and copy_shot != "ACE"
+            and _official_is_winner(selection.metadata),
+            "match_angle": copy_match or "",
+        },
         "source_label": selection.source_label,
         "source_published_at": selection.published_at,
         "source_duration_ms": selection.metadata.duration_ms,
