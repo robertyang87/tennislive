@@ -33,18 +33,20 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 抓取 og:image 并下载候选照片核验（临时）
+      - name: 抓取候选照片核验（临时）
         shell: bash
-        run: python tools/probe_together_verify7.py
+        run: python tools/probe_together_verify8.py
 
       - name: 提交候选照片（临时）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/_probe7_*.jpg
-          if git diff --cached --quiet; then
+          shopt -s nullglob
+          files=(tools/_probe8_*.jpg)
+          if [ ${#files[@]} -eq 0 ]; then
             echo "没有候选照片，跳过提交"
           else
+            git add "${files[@]}"
             git commit -m "chore: 临时提交候选照片供人工核验"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
