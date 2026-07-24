@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "status": "pass",
-  "story_slug": "big-three",
+  "story_slug": "longest-match",
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
@@ -13,11 +13,11 @@
   ],
   "missing_pages": [],
   "input_domains": [
-    "espn.com",
-    "forbes.com",
-    "si.com",
-    "sports.yahoo.com",
-    "tennis365.com"
+    "commons.wikimedia.org",
+    "itftennis.com",
+    "sportsboom.com",
+    "usopen.org",
+    "wimbledon.com"
   ],
   "providers_queried": [
     "curated-editorial",
@@ -27,117 +27,99 @@
     {
       "page": "story",
       "provider": "curated-editorial",
-      "query": "Federer Nadal 2008 wimbledon tennis",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "story",
       "provider": "official-story-pages",
-      "query": "Federer Nadal 2008 wimbledon tennis",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "explainer",
       "provider": "curated-editorial",
-      "query": "Djokovic Nadal 2012 australian open tennis",
+      "query": "scoreboard 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "explainer",
       "provider": "official-story-pages",
-      "query": "Djokovic Nadal 2012 australian open tennis",
+      "query": "scoreboard 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "curated-editorial",
-      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     },
     {
       "page": "today",
       "provider": "official-story-pages",
-      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
       "status": "ok",
       "candidate_count": 1
     }
   ],
   "selected_providers": [
-    "verified-editorial"
+    "verified-editorial",
+    "verified-event-archive"
   ],
   "excluded_source_urls": [],
   "errors": [],
   "attempts": [
     {
       "provider": "official-media",
-      "page_url": "https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
-      "source_url": "https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
-      "image_url": "",
-      "credit": "espn.com",
-      "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
-      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "  https://www.espn.com/tennis/story/_/id/29190340/novak-djokovic-prediction-breaking-roger-federer-grand-slam-title-record-point",
-      "image_text": " ",
-      "width": 0,
-      "height": 0
-    },
-    {
-      "provider": "official-media",
-      "page_url": "https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
-      "source_url": "https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
-      "image_url": "",
-      "credit": "espn.com",
-      "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
-      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "  https://www.espn.com/tennis/story/_/id/23977542/roger-federer-rafael-nadal-epic-2008-wimbledon-final",
-      "image_text": " ",
-      "width": 0,
-      "height": 0
-    },
-    {
-      "provider": "official-media",
-      "page_url": "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
-      "source_url": "https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
-      "image_url": "",
-      "credit": "espn.com",
-      "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
-      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "  https://www.espn.com/tennis/aus12/story/_/id/7515950/2012-australian-open-novak-djokovic-outlasts-rafael-nadal-longest-grand-slam-final",
-      "image_text": " ",
-      "width": 0,
-      "height": 0
-    },
-    {
-      "provider": "official-media",
-      "page_url": "https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/",
-      "source_url": "https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/",
-      "image_url": "https://imageio.forbes.com/specials-images/dam/imageserve/b65f9e6451bb47419994e84c6900655f/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
-      "credit": "forbes.com",
+      "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
+      "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
+      "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
+      "credit": "wimbledon.com",
       "license": "官方媒体 · 非商业资讯引用",
       "status": "candidate",
       "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "wimbledon: novak djokovic&#x27;s championship win over roger federer by the numbers novak djokovic prevailed over roger federer in an epic fifth-set tiebreak in the wimbledon final. djokovic now has 16 grand slam titles and five wimbledons as he gains ground on federer and rafael nadal in the all-time chase. https://www.forbes.com/sites/adamzagoria/2019/07/14/wimbledon-novak-djokovics-championship-win-over-roger-federer-by-the-numbers/",
-      "image_text": " https://imageio.forbes.com/specials-images/dam/imageserve/b65f9e6451bb47419994e84c6900655f/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
+      "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
+      "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
       "width": 0,
       "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "image_url": "",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+      "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
+      "status": "error",
+      "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
     },
     {
       "page": "cover",
       "status": "selected",
-      "cached_file": "trivia-big-three.jpg",
-      "title": "Composite of three on-court trophy moments: Roger Federer kissing the Wimbledon trophy after his 8th title (2017), Rafael Nadal biting the Roland Garros trophy after his 14th title (2022), and Novak Djokovic holding the Australian Open trophy at the podium after the 2012 final",
-      "subject": "Federer Nadal Djokovic",
-      "required_years": [],
+      "cached_file": "trivia-longest-match.jpg",
+      "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
+      "subject": "John Isner Nicolas Mahut",
+      "required_years": [
+        "2010"
+      ],
       "required_event_terms": [
-        "tennis"
+        "wimbledon",
+        "court 18"
       ],
       "person_required": true,
       "subject_match": true,
@@ -159,32 +141,32 @@
         {
           "page": "story",
           "provider": "curated-editorial",
-          "query": "Federer Nadal 2008 wimbledon tennis",
+          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "story",
           "provider": "official-story-pages",
-          "query": "Federer Nadal 2008 wimbledon tennis",
+          "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         }
       ],
-      "provider": "verified-editorial",
-      "source_url": "https://www.tennis365.com/tennis-news/t365-recalls-roger-federer-rafael-nadal-wimbledon-trilogy-2008",
-      "image_url": "https://d2me2qg8dfiw8u.cloudfront.net/content/uploads/2022/04/06115036/Roger-Federer-and-Rafael-Nadal-at-Wimbledon-2008.jpg",
-      "credit": "Tennis365",
-      "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Federer Nadal 2008 wimbledon tennis",
+      "provider": "verified-event-archive",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Isner-Mahut_match_WIM2010.jpg",
+      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Isner-Mahut_match_WIM2010.jpg?width=1600",
+      "credit": "Voo de Mar / Wikimedia Commons",
+      "license": "CC BY-SA 2.0",
+      "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
       "relevance": 100,
-      "sha256": "654041ab02605394c390d357c7b3eba3e12c5819bfe5c03dd04b1324d864778e",
+      "sha256": "613202d034ddf978d7cd4c604be2b15aadc658bf08535d26a6f41f7022c96c0a",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "story-654041ab0260.jpg"
+      "cached_file": "story-613202d034dd.jpg"
     },
     {
       "page": "explainer",
@@ -198,32 +180,32 @@
         {
           "page": "explainer",
           "provider": "curated-editorial",
-          "query": "Djokovic Nadal 2012 australian open tennis",
+          "query": "scoreboard 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "explainer",
           "provider": "official-story-pages",
-          "query": "Djokovic Nadal 2012 australian open tennis",
+          "query": "scoreboard 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         }
       ],
       "provider": "verified-editorial",
-      "source_url": "https://www.si.com/tennis/2012/01/29/29-0australian-open-2012",
-      "image_url": "https://www.si.com/.image/c_fill,w_1440,ar_1440:810,f_auto,q_auto,g_auto/MTY4MjYyNDk4OTcyODA0MjYx/novak-djokovic.jpg",
-      "credit": "Sports Illustrated",
-      "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Djokovic Nadal 2012 australian open tennis",
+      "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
+      "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
+      "credit": "SportsBoom / Getty Images",
+      "license": "Public editorial archive",
+      "query": "scoreboard 2010 wimbledon tennis",
       "relevance": 100,
-      "sha256": "17446fe89cef4dda25154ff8ec0942d64b16c96f9c8734e0958d0230b7c74990",
-      "focus": "50% 24%",
+      "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
+      "focus": "50% 16%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
-      "person_required": true,
-      "cached_file": "explainer-17446fe89cef.jpg"
+      "person_required": false,
+      "cached_file": "explainer-3e982f848689.jpg"
     },
     {
       "page": "today",
@@ -237,990 +219,55 @@
         {
           "page": "today",
           "provider": "curated-editorial",
-          "query": "Djokovic Federer 2019 wimbledon tennis",
+          "query": "Court 18 plaque 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         },
         {
           "page": "today",
           "provider": "official-story-pages",
-          "query": "Djokovic Federer 2019 wimbledon tennis",
+          "query": "Court 18 plaque 2010 wimbledon tennis",
           "status": "ok",
           "candidate_count": 1
         }
       ],
-      "provider": "verified-editorial",
-      "source_url": "https://sports.yahoo.com/the-world-sports-reacts-to-epic-djokovic-federer-wimbledon-final-185101781.html",
-      "image_url": "https://s.yimg.com/ny/api/res/1.2/2Zrq0kWiND9DcYp_0DBtXg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://s.yimg.com/os/creatr-uploaded-images/2019-07/18f46b90-a665-11e9-acb6-cf3e566b4877",
-      "credit": "AP Photo via Yahoo Sports",
-      "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Djokovic Federer 2019 wimbledon tennis",
+      "provider": "verified-event-archive",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg",
+      "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Plaque_on_Wimbledon_Court_No._18_to_commemorate_the_longest_match_in_tennis_history_between_John_Isner_and_Nicolas_Mahut_on_22-24_June_2010.jpg?width=1800",
+      "credit": "Edwardx / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "query": "Court 18 plaque 2010 wimbledon tennis",
       "relevance": 100,
-      "sha256": "c13f81a2b7b1af1a48e516b75fa8e2548ee769ab855cedef191cb28b64ed43e4",
-      "focus": "50% 24%",
+      "sha256": "70499aa76b866757ec1b9878a5c29153ed7a808528e4000dc7161ef1dc865521",
+      "focus": "50% 38%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
-      "person_required": true,
-      "cached_file": "today-c13f81a2b7b1.jpg"
+      "person_required": false,
+      "cached_file": "today-70499aa76b86.jpg"
     }
   ],
   "selection_evidence": {
     "kind": "trivia",
-    "candidate_slug": "big-three",
+    "candidate_slug": "longest-match",
     "result_count": 49,
-    "live_count": 0,
-    "schedule_count": 22,
+    "live_count": 4,
+    "schedule_count": 18,
     "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
-    "viral_prior": 8.0,
-    "topic_score": 8.0,
+    "viral_prior": 10.0,
+    "topic_score": 10.0,
     "live_relevance_score": 0.0,
-    "trend_signal_count": 124,
-    "candidate_rank": 2,
+    "trend_signal_count": 111,
+    "candidate_rank": 1,
     "candidate_count": 8,
-    "visual_preflight_rejections": 1,
+    "visual_preflight_rejections": 0,
     "visual_preflight_status": "pass",
     "same_topic_attempt": 1,
     "same_topic_attempt_limit": 4
   },
-  "rejected_candidates": [
-    {
-      "story_slug": "longest-match",
-      "title": "11 小时 5 分钟",
-      "stage": "visual-preflight",
-      "errors": [
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
-      ],
-      "excluded_source_urls": [],
-      "attempts": [
-        {
-          "attempt": 1,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [
-            "itftennis.com",
-            "sportsboom.com",
-            "usopen.org",
-            "wimbledon.com"
-          ],
-          "providers_queried": [
-            "curated-editorial",
-            "official-story-pages"
-          ],
-          "provider_runs": [
-            {
-              "page": "story",
-              "provider": "curated-editorial",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "story",
-              "provider": "official-story-pages",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "curated-editorial",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "official-story-pages",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "curated-editorial",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "official-story-pages",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            }
-          ],
-          "missing_pages": [
-            "story",
-            "today"
-          ],
-          "attempts": [
-            {
-              "provider": "official-media",
-              "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
-              "credit": "wimbledon.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "candidate",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
-              "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-media",
-              "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-page",
-              "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
-              "status": "error",
-              "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
-            },
-            {
-              "page": "cover",
-              "status": "selected",
-              "cached_file": "trivia-longest-match.jpg",
-              "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
-              "subject": "John Isner Nicolas Mahut",
-              "required_years": [
-                "2010"
-              ],
-              "required_event_terms": [
-                "wimbledon",
-                "court 18"
-              ],
-              "person_required": true,
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_match": true,
-              "visual_impact_match": true,
-              "reason": ""
-            },
-            {
-              "page": "story",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "story",
-                  "provider": "curated-editorial",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "story",
-                  "provider": "official-story-pages",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            },
-            {
-              "page": "explainer",
-              "status": "selected",
-              "required_event_terms": [],
-              "match_level": "exact-event",
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1
-              },
-              "source_runs": [
-                {
-                  "page": "explainer",
-                  "provider": "curated-editorial",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "explainer",
-                  "provider": "official-story-pages",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ],
-              "provider": "verified-editorial",
-              "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-              "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
-              "credit": "SportsBoom / Getty Images",
-              "license": "Public editorial archive",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "relevance": 100,
-              "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
-              "focus": "50% 16%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-3e982f848689.jpg"
-            },
-            {
-              "page": "today",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "today",
-                  "provider": "curated-editorial",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "today",
-                  "provider": "official-story-pages",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            }
-          ],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 2,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [
-            "itftennis.com",
-            "sportsboom.com",
-            "usopen.org",
-            "wimbledon.com"
-          ],
-          "providers_queried": [
-            "curated-editorial",
-            "official-story-pages"
-          ],
-          "provider_runs": [
-            {
-              "page": "story",
-              "provider": "curated-editorial",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "story",
-              "provider": "official-story-pages",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "curated-editorial",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "official-story-pages",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "curated-editorial",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "official-story-pages",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            }
-          ],
-          "missing_pages": [
-            "story",
-            "today"
-          ],
-          "attempts": [
-            {
-              "provider": "official-media",
-              "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
-              "credit": "wimbledon.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "candidate",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
-              "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-media",
-              "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-page",
-              "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
-              "status": "error",
-              "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
-            },
-            {
-              "page": "cover",
-              "status": "selected",
-              "cached_file": "trivia-longest-match.jpg",
-              "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
-              "subject": "John Isner Nicolas Mahut",
-              "required_years": [
-                "2010"
-              ],
-              "required_event_terms": [
-                "wimbledon",
-                "court 18"
-              ],
-              "person_required": true,
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_match": true,
-              "visual_impact_match": true,
-              "reason": ""
-            },
-            {
-              "page": "story",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "story",
-                  "provider": "curated-editorial",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "story",
-                  "provider": "official-story-pages",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            },
-            {
-              "page": "explainer",
-              "status": "selected",
-              "required_event_terms": [],
-              "match_level": "exact-event",
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1
-              },
-              "source_runs": [
-                {
-                  "page": "explainer",
-                  "provider": "curated-editorial",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "explainer",
-                  "provider": "official-story-pages",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ],
-              "provider": "verified-editorial",
-              "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-              "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
-              "credit": "SportsBoom / Getty Images",
-              "license": "Public editorial archive",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "relevance": 100,
-              "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
-              "focus": "50% 16%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-3e982f848689.jpg"
-            },
-            {
-              "page": "today",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "today",
-                  "provider": "curated-editorial",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "today",
-                  "provider": "official-story-pages",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            }
-          ],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 3,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [
-            "itftennis.com",
-            "sportsboom.com",
-            "usopen.org",
-            "wimbledon.com"
-          ],
-          "providers_queried": [
-            "curated-editorial",
-            "official-story-pages"
-          ],
-          "provider_runs": [
-            {
-              "page": "story",
-              "provider": "curated-editorial",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "story",
-              "provider": "official-story-pages",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "curated-editorial",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "official-story-pages",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "curated-editorial",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "official-story-pages",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            }
-          ],
-          "missing_pages": [
-            "story",
-            "today"
-          ],
-          "attempts": [
-            {
-              "provider": "official-media",
-              "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
-              "credit": "wimbledon.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "candidate",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
-              "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-media",
-              "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-page",
-              "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
-              "status": "error",
-              "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
-            },
-            {
-              "page": "cover",
-              "status": "selected",
-              "cached_file": "trivia-longest-match.jpg",
-              "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
-              "subject": "John Isner Nicolas Mahut",
-              "required_years": [
-                "2010"
-              ],
-              "required_event_terms": [
-                "wimbledon",
-                "court 18"
-              ],
-              "person_required": true,
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_match": true,
-              "visual_impact_match": true,
-              "reason": ""
-            },
-            {
-              "page": "story",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "story",
-                  "provider": "curated-editorial",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "story",
-                  "provider": "official-story-pages",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            },
-            {
-              "page": "explainer",
-              "status": "selected",
-              "required_event_terms": [],
-              "match_level": "exact-event",
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1
-              },
-              "source_runs": [
-                {
-                  "page": "explainer",
-                  "provider": "curated-editorial",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "explainer",
-                  "provider": "official-story-pages",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ],
-              "provider": "verified-editorial",
-              "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-              "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
-              "credit": "SportsBoom / Getty Images",
-              "license": "Public editorial archive",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "relevance": 100,
-              "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
-              "focus": "50% 16%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-3e982f848689.jpg"
-            },
-            {
-              "page": "today",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "today",
-                  "provider": "curated-editorial",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "today",
-                  "provider": "official-story-pages",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            }
-          ],
-          "visual_qa": {}
-        },
-        {
-          "attempt": 4,
-          "stage": "visual-preflight",
-          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [],
-          "newly_excluded": [],
-          "input_domains": [
-            "itftennis.com",
-            "sportsboom.com",
-            "usopen.org",
-            "wimbledon.com"
-          ],
-          "providers_queried": [
-            "curated-editorial",
-            "official-story-pages"
-          ],
-          "provider_runs": [
-            {
-              "page": "story",
-              "provider": "curated-editorial",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "story",
-              "provider": "official-story-pages",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "curated-editorial",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "explainer",
-              "provider": "official-story-pages",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "curated-editorial",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            },
-            {
-              "page": "today",
-              "provider": "official-story-pages",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 1
-            }
-          ],
-          "missing_pages": [
-            "story",
-            "today"
-          ],
-          "attempts": [
-            {
-              "provider": "official-media",
-              "page_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "source_url": "https://www.wimbledon.com/en_GB/about/history/2010s",
-              "image_url": "https://content.wimbledon.com/is/image/AELTC/440473:16by9-Large",
-              "credit": "wimbledon.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "candidate",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "history 2010s - the championships, wimbledon  https://www.wimbledon.com/en_gb/about/history/2010s",
-              "image_text": "history 2010s https://content.wimbledon.com/is/image/aeltc/440473:16by9-large",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-media",
-              "page_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "source_url": "https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-              "search_text": "  https://www.itftennis.com/media/8242/2022-wimbledon-day-1-mens-match-notes.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
-            },
-            {
-              "provider": "official-page",
-              "page_url": "https://www.usopen.org/en_US/news/articles/2022-03-16/us_open_to_join_all_grand_slams_in_playing_10point_final_set_tiebreak.html",
-              "status": "error",
-              "reason": "HTTPSConnectionPool(host='www.usopen.org', port=443): Read timed out. (read timeout=7)"
-            },
-            {
-              "page": "cover",
-              "status": "selected",
-              "cached_file": "trivia-longest-match.jpg",
-              "title": "Nicolas Mahut and John Isner beside the 70-68 scoreboard after the 2010 Wimbledon longest match ceremony",
-              "subject": "John Isner Nicolas Mahut",
-              "required_years": [
-                "2010"
-              ],
-              "required_event_terms": [
-                "wimbledon",
-                "court 18"
-              ],
-              "person_required": true,
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_match": true,
-              "visual_impact_match": true,
-              "reason": ""
-            },
-            {
-              "page": "story",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "story",
-                  "provider": "curated-editorial",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "story",
-                  "provider": "official-story-pages",
-                  "query": "John Isner Nicolas Mahut 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            },
-            {
-              "page": "explainer",
-              "status": "selected",
-              "required_event_terms": [],
-              "match_level": "exact-event",
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1
-              },
-              "source_runs": [
-                {
-                  "page": "explainer",
-                  "provider": "curated-editorial",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "explainer",
-                  "provider": "official-story-pages",
-                  "query": "scoreboard 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ],
-              "provider": "verified-editorial",
-              "source_url": "https://www.sportsboom.com/tennis/longest-tennis-match/",
-              "image_url": "https://assets.sportsboom.com/John_Isner_of_the_US_L_France_s_Nicolas_Mahut_2nd_L_and_chair_umpire_Mohamed_Lahyani_2nd_R_273d481e89.jpg",
-              "credit": "SportsBoom / Getty Images",
-              "license": "Public editorial archive",
-              "query": "scoreboard 2010 wimbledon tennis",
-              "relevance": 100,
-              "sha256": "3e982f848689cda45012f378d8a89d20565064b2af01cfc634a49050693920bb",
-              "focus": "50% 16%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-3e982f848689.jpg"
-            },
-            {
-              "page": "today",
-              "status": "generated-visual",
-              "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
-              "query": "Court 18 plaque 2010 wimbledon tennis",
-              "required_event_terms": [],
-              "providers": [
-                "curated-editorial",
-                "official-media"
-              ],
-              "candidate_count": 2,
-              "exact_candidate_count": 1,
-              "archive_candidate_count": 0,
-              "rejection_counts": {
-                "subject-or-person-mismatch": 1,
-                "download-or-resolution-failed": 1
-              },
-              "source_runs": [
-                {
-                  "page": "today",
-                  "provider": "curated-editorial",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                },
-                {
-                  "page": "today",
-                  "provider": "official-story-pages",
-                  "query": "Court 18 plaque 2010 wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 1
-                }
-              ]
-            }
-          ],
-          "visual_qa": {}
-        }
-      ]
-    }
-  ],
+  "rejected_candidates": [],
   "recovery": {
-    "status": "recovered",
+    "status": "not-needed",
     "same_topic_attempt": 1,
     "excluded_source_urls": [],
     "failed_attempts": []
