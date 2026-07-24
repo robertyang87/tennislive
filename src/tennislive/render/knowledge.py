@@ -88,7 +88,7 @@ def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
 def _caption_items(story: TournamentStory) -> list[str]:
     items: list[str] = []
     years: set[str] = set()
-    for moment in story.moments[:2]:
+    for moment in story.moments[:3]:
         year = moment.date.split("-", 1)[0]
         years.add(year)
         item = f"{year}｜{moment.player}：{moment.headline.rstrip('。')}"
