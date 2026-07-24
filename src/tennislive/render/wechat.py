@@ -108,7 +108,7 @@ def to_markdown(digest: Digest) -> str:
                 f"- **{fmt_schedule_time(m)}｜{group.name_zh}**："
                 f"{side_display(m.home)} vs {side_display(m.away)}"
             )
-            lines.append(f"  推荐理由：{schedule_insight(m)}")
+            lines.append(f"  推荐理由：{schedule_insight(m, digest.today)}")
         lines.append("")
 
     focus = select_focus_match(digest)
@@ -264,7 +264,7 @@ def to_html(digest: Digest) -> str:
                 f'{_esc(group.name_zh)}</strong><br/>'
                 f'{_esc(side_display(m.home))} vs {_esc(side_display(m.away))}'
             )
-            parts.append(_item(main, schedule_insight(m)))
+            parts.append(_item(main, schedule_insight(m, digest.today)))
 
     focus = select_focus_match(digest)
     if has_detailed_stats(focus):

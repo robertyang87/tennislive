@@ -100,7 +100,7 @@ def enrich_schedule_editorial(digest: Digest) -> None:
     for scheduled in digest.schedule:
         if scheduled.editorial_note:
             continue
-        scheduled.editorial_note = schedule_insight(scheduled)
+        scheduled.editorial_note = schedule_insight(scheduled, digest.today)
         scheduled.editorial_source = (
             "实时排名与赛程"
             if any(player.rank is not None for player in scheduled.home + scheduled.away)

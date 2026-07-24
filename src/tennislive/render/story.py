@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from datetime import date
+
 from ..digest import Digest
 from ..models import Match
 from ..zh import player_zh, surface_zh
@@ -137,7 +139,22 @@ def trajectory_arc(match: Match) -> str:
     return "比赛几度易手，胜负直到最后关键分才见分晓"
 
 
-def schedule_insight(match: Match) -> str:
+def _rotate_insight(variants: tuple[str, ...], today: date | None) -> str:
+    """Pick among equivalent phrasings of the same fact.
+
+    A match that is still awaiting its official slot can get picked for
+    "tonight's focus" on consecutive editions with an unchanged rank gap and
+    round; without rotation the mechanical templates below would emit the
+    same sentence verbatim and trip the Xiaohongshu near-history dedupe
+    FATAL gate (this happened in production: the 2026-07-24 edition failed
+    to generate because of a byte-identical carry-over line).
+    """
+    if today is None:
+        return variants[0]
+    return variants[today.toordinal() % len(variants)]
+
+
+def schedule_insight(match: Match, today: date | None = None) -> str:
     """Write a compact hook from verifiable identity, stage, and surface facts."""
     if match.editorial_note:
         return match.editorial_note
@@ -209,10 +226,31 @@ def schedule_insight(match: Match) -> str:
             # 按标点截断长文案，球员姓名（尤其未译名的长拼写）会让总长
             # 超出上限；前半句独立成句，被截断也不会留下读不完的残句。
             if gap >= 35:
-                return f"排名差{gap}位不算保险，{stakes}这一轮谁都想抢。"
+                return _rotate_insight(
+                    (
+                        f"排名差{gap}位不算保险，{stakes}这一轮谁都想抢。",
+                        f"纸面差着{gap}位排名，但{stakes}从来不按纸面走。",
+                        f"{gap}位排名差摆在那里，{stakes}这一轮照样谁都不让。",
+                    ),
+                    today,
+                )
             if gap >= 12:
-                return f"{favorite_name}占{gap}位排名优势，但{stakes}最考验心态。"
-            return f"排名只差{gap}位，{stakes}谁都想要；这种分差走到抢七不奇怪。"
+                return _rotate_insight(
+                    (
+                        f"{favorite_name}占{gap}位排名优势，但{stakes}最考验心态。",
+                        f"{favorite_name}排名领先{gap}位，可{stakes}拼的从来不是纸面。",
+                        f"{gap}位排名差让{favorite_name}占先，但{stakes}还得靠现场兑现。",
+                    ),
+                    today,
+                )
+            return _rotate_insight(
+                (
+                    f"排名只差{gap}位，{stakes}谁都想要；这种分差走到抢七不奇怪。",
+                    f"{gap}位的排名差距几乎可以忽略，{stakes}这一场大概率要磨到抢七。",
+                    f"分差只有{gap}位，{stakes}没有谁占着明显便宜。",
+                ),
+                today,
+            )
         seeded = next(
             (player for player in (home_player, away_player) if player.seed), None
         )
@@ -220,12 +258,25 @@ def schedule_insight(match: Match) -> str:
             return f"{stakes}谁都想拿，{player_zh(seeded.name)}带着{seeded.seed}号种子出战也得先扛住压力。"
         return f"{stakes}就在眼前，两人都清楚这一轮没有“下次再拼”的余地。"
     if stakes:
-        # 缺少排名/种子数据时的机械兜底，仍按赛事阶段区分文案
-        return {
-            "决赛门票": "离决赛只差一场，纸面身份不再是答案，只会变成必须兑现的压力。",
-            "四强席位": "八强是签表真正的分水岭：这场赢下来的不只是四强席位，还有争冠声量。",
-            "八强门票": "八强门票摆在眼前，比赛也从热身阶段切进真正的淘汰压力。",
-        }[stakes]
+        # 缺少排名/种子数据时的机械兜底，仍按赛事阶段区分文案；每个阶段保留
+        # 多种措辞并按日期轮换，避免连续多天缺数据的比赛撞上同一句话。
+        return _rotate_insight(
+            {
+                "决赛门票": (
+                    "离决赛只差一场，纸面身份不再是答案，只会变成必须兑现的压力。",
+                    "决赛门票就在眼前，谁都没有回头路可言。",
+                ),
+                "四强席位": (
+                    "八强是签表真正的分水岭：这场赢下来的不只是四强席位，还有争冠声量。",
+                    "四强席位悬而未决，这一轮赢下来的分量比排名更重。",
+                ),
+                "八强门票": (
+                    "八强门票摆在眼前，比赛也从热身阶段切进真正的淘汰压力。",
+                    "八强门票近在咫尺，签表的真正较量从这一轮才算开始。",
+                ),
+            }[stakes],
+            today,
+        )
 
     if home_player and away_player:
         ranks = [home_player.rank, away_player.rank]
@@ -234,10 +285,28 @@ def schedule_insight(match: Match) -> str:
             favorite = home_player if ranks[0] < ranks[1] else away_player
             favorite_name = player_zh(favorite.name)
             if gap >= 35:
-                return f"排名差{gap}位，{favorite_name}背着纸面优势；越像“该赢”的球，越怕慢热。"
+                return _rotate_insight(
+                    (
+                        f"排名差{gap}位，{favorite_name}背着纸面优势；越像“该赢”的球，越怕慢热。",
+                        f"{favorite_name}握着{gap}位排名优势，可首轮最容易栽在“该赢”两个字上。",
+                    ),
+                    today,
+                )
             if gap >= 12:
-                return f"{favorite_name}占着{gap}位排名优势，但首轮没有存款：优势得现场兑现。"
-            return f"排名只差{gap}位，这不是谁压着谁打的签；第一轮就有五五开的火药味。"
+                return _rotate_insight(
+                    (
+                        f"{favorite_name}占着{gap}位排名优势，但首轮没有存款：优势得现场兑现。",
+                        f"排名差{gap}位让{favorite_name}成为热门，但首轮照样得从零开始。",
+                    ),
+                    today,
+                )
+            return _rotate_insight(
+                (
+                    f"排名只差{gap}位，这不是谁压着谁打的签；第一轮就有五五开的火药味。",
+                    f"{gap}位的排名差距很难说明问题，第一轮大概率是场势均力敌的较量。",
+                ),
+                today,
+            )
 
         seeded = next(
             (player for player in (home_player, away_player) if player.seed), None
