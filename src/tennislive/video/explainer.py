@@ -10,8 +10,10 @@ The video follows a fixed three-beat structure the audience can follow:
     2. 技术原理  — how it actually works,
     3. 当今现状  — where it stands today.
 
-Each beat is one 9:16 vertical slide (section chip + title + the narration
-text on screen) read aloud by a Chinese TTS voice. Nothing here fabricates
+Each beat is one 3:4 brand card (section chip + title + the narration text on
+screen), centred on a 9:16 video canvas with brand bands, read aloud by a
+Chinese TTS voice. The card keeps the brand 3:4 ratio; only the video is 9:16.
+Nothing here fabricates
 footage of real people or events: the visuals are typographic slides, and the
 narration is assembled from the story's already-verified facts — it is
 re-voiced evidence, not invented commentary.
@@ -26,8 +28,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 
-# Native 9:16 vertical (Douyin / Reels / Shorts).
-W, H = 1080, 1920
+# The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
+# (1080x1920) with that 3:4 card centered on brand-colour bands.
+W, H = 1080, 1440  # slide / image (3:4, unchanged)
+VIDEO_W, VIDEO_H = 1080, 1920  # video canvas (9:16)
+_BAND_COLOR = "0x061c14"  # brand deep green for the top/bottom bands
 
 
 class ExplainerVideoError(RuntimeError):
@@ -107,8 +112,8 @@ def explainer_script(story) -> list[ExplainerSegment]:
 def _slide_html(
     index: int, segment: ExplainerSegment, date_label: str, *, theme: str = "dark"
 ) -> str:
-    """Self-contained 9:16 slide document (own shell, so it isn't tied to the
-    3:4 card renderer). Fonts come from the bundled CJK face."""
+    """Self-contained 3:4 brand card document (its own shell). Fonts come from
+    the bundled CJK face. The 3:4 card is later centred on a 9:16 video canvas."""
     from ..render.webcards import _font_css
 
     number = ("①", "②", "③", "④", "⑤")[index] if index < 5 else f"{index + 1}"
@@ -118,22 +123,22 @@ def _slide_html(
 html,body{{width:{W}px;height:{H}px;}}
 body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 .slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;display:flex;
- flex-direction:column;padding:78px 76px 60px;color:#f4fbf7;
- background:radial-gradient(125% 62% at 50% 6%,#155a41 0%,#0b3a2a 46%,#061c14 100%);}}
+ flex-direction:column;padding:62px 70px 48px;color:#f4fbf7;
+ background:radial-gradient(125% 72% at 50% 6%,#155a41 0%,#0b3a2a 46%,#061c14 100%);}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
-.ring{{position:absolute;top:-160px;right:-160px;width:520px;height:520px;
- border-radius:50%;border:56px solid rgba(55,226,154,.10);}}
-.head{{display:flex;align-items:center;justify-content:space-between;margin-top:14px;}}
-.brand{{font-size:40px;font-weight:800;letter-spacing:2px;}}
-.date{{font-size:32px;color:#9fb4aa;font-weight:700;}}
+.ring{{position:absolute;top:-150px;right:-150px;width:480px;height:480px;
+ border-radius:50%;border:50px solid rgba(55,226,154,.10);}}
+.head{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}}
+.brand{{font-size:36px;font-weight:800;letter-spacing:2px;}}
+.date{{font-size:30px;color:#9fb4aa;font-weight:700;}}
 .stage{{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;
- justify-content:center;gap:52px;}}
-.chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:34px;
- font-weight:800;letter-spacing:3px;padding:14px 30px;border-radius:999px;}}
-.title{{font-size:82px;line-height:1.22;font-weight:800;}}
-.body{{font-size:50px;line-height:1.66;font-weight:500;color:#e7f3ec;}}
-.foot{{font-size:30px;color:#8fa89d;font-weight:700;letter-spacing:2px;text-align:right;}}
+ justify-content:center;gap:36px;}}
+.chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:30px;
+ font-weight:800;letter-spacing:3px;padding:12px 26px;border-radius:999px;}}
+.title{{font-size:66px;line-height:1.22;font-weight:800;}}
+.body{{font-size:44px;line-height:1.6;font-weight:500;color:#e7f3ec;}}
+.foot{{font-size:28px;color:#8fa89d;font-weight:700;letter-spacing:2px;text-align:right;}}
 </style></head><body>
 <div class="slide"><div class="bar"></div><div class="ring"></div>
 <div class="head"><div class="brand">网球时差 · 网球有故事</div>
@@ -155,7 +160,7 @@ def render_explainer_slides(
     *,
     theme: str = "dark",
 ) -> list[Path]:
-    """Render one native 9:16 slide per beat via a headless Chromium page."""
+    """Render one 3:4 brand card (image) per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
 
     from ..render.webcards import _chromium_executable
@@ -277,9 +282,12 @@ def assemble_explainer_video(
     n = len(slides)
     filters = []
     for i in range(n):
+        # Keep each 3:4 slide untouched; centre it on a 9:16 canvas with brand
+        # bands top and bottom (the image stays 3:4, the video is 9:16).
         filters.append(
-            f"[{2 * i}:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
-            f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p[v{i}]"
+            f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
+            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"setsar=1,fps=30,format=yuv420p[v{i}]"
         )
     concat_inputs = "".join(f"[v{i}][{2 * i + 1}:a]" for i in range(n))
     filters.append(f"{concat_inputs}concat=n={n}:v=1:a=1[outv][outa]")
