@@ -1,0 +1,93 @@
+name: explainer-video
+
+# 生成一条 AI 旁白知识解说视频（前因后果 / 技术原理 / 当今现状）。
+# 面向抽象、拿不到合格真实照片的知识点（如鹰眼/计分制）：解说词由该选题
+# 已核验的事实改写而成，画面是文字卡与示意图，不伪造真实赛场影像。
+# 手动触发，成片提交回仓库，不自动推送。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "知识选题 slug（默认 hawkeye）"
+        required: false
+        default: "hawkeye"
+      voice:
+        description: "edge-tts 中文语音"
+        required: false
+        default: "zh-CN-YunxiNeural"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: explainer-video
+  cancel-in-progress: false
+
+jobs:
+  explainer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装中文字体（幻灯需要）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 安装 tennislive + edge-tts
+        run: |
+          pip install -q -e ".[webrender]"
+          pip install -q edge-tts
+
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: 安装 Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: 安装 ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: 生成解说视频
+        id: gen
+        run: |
+          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+          SLUG="${{ github.event.inputs.slug }}"
+          if [ -z "$SLUG" ]; then SLUG="hawkeye"; fi
+          OUT_DIR="output/$OUT_DATE/explainer/$SLUG"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          tennislive explainer --slug "$SLUG" \
+            --voice "${{ github.event.inputs.voice }}" \
+            --outdir "$OUT_DIR"
+          ls -la "$OUT_DIR"
+          # 视频体积可观，仅保留成片与幻灯，丢弃中间音频。
+          rm -f "$OUT_DIR"/voice_*.mp3
+
+      - name: 上传成片 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: explainer-${{ github.run_number }}
+          path: ${{ steps.gen.outputs.outdir }}
+          retention-days: 14
+
+      - name: 提交成片到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/
+          if git diff --cached --quiet; then
+            echo "没有新成片"
+          else
+            git commit -m "content: 知识解说视频 $(basename '${{ steps.gen.outputs.outdir }}')"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi
