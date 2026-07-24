@@ -1165,17 +1165,10 @@ def validate_rendered_point(
         raise VideoPipelineError("昨日好球质量门禁未通过：" + "；".join(errors))
 
 
-_COPY_TITLE_HOOKS = {
-    3: "这一分，全场公认最佳",
-    2: "这一分，直接封神",
-    1: "这一拍，全场看傻",
-}
-# The body's first line is the 引爆点 -- kept short and, wherever the official
-# text names something concrete (the shot, a fast win, a comeback), grounded in
-# that instead of a generic script. Shot descriptors map to a Chinese phrase;
-# "winner"/"unreturnable" upgrade it to 制胜分. Order matters: the most specific
-# descriptor wins.
-_SHOT_HOOK_PATTERNS: tuple[tuple[str, str], ...] = (
+# Shot descriptors map to a short Chinese noun. Order matters: the most specific
+# descriptor wins. The noun leads the (short, no-date, no-name) title and, when
+# the point is a winner, becomes 制胜分 in the body hook.
+_SHOT_NOUN_PATTERNS: tuple[tuple[str, str], ...] = (
     (r"one[- ]hand(?:ed)? backhand|single[- ]hand(?:ed)? backhand", "单手反拍"),
     (r"\bbackhand\b", "反拍"),
     (r"\bforehand\b", "正手"),
@@ -1187,33 +1180,50 @@ _SHOT_HOOK_PATTERNS: tuple[tuple[str, str], ...] = (
     (r"half[- ]?volley", "半截击"),
     (r"\bvolley(?:s|ed)?\b", "网前截击"),
     (r"\bsmash(?:es)?\b|overhead", "高压扣杀"),
-    (r"\bace(?:s)?\b", "ACE 直接得分"),
+    (r"\bace(?:s)?\b", "ACE"),
 )
 _WINNER_RE = re.compile(r"\bwinner\b|\bunreturnable\b|\bclean\b", re.IGNORECASE)
-# Lead-ins vary the punch per clip without touching the grounded fact itself.
+# Short title punches, shot-led ("单手反拍，直接封神"). Kept confident but not
+# clickbait. Only rank 3 may assert the day's best; rank 1 never borrows it.
+_TITLE_PUNCH = {
+    3: ("今日最佳", "当日最佳一拍", "今日封神"),
+    2: ("封神一分", "全场最佳", "封神了"),
+    1: ("直接封神", "一拍封神", "太顶了"),
+}
+# When the official text names no shot, the title falls back to a short tiered
+# line (still varied per clip).
+_TITLE_FALLBACK = {
+    3: ("今日最佳名场面", "当日最佳这一拍"),
+    2: ("全场最佳一分", "封神一分"),
+    1: ("神仙球名场面", "神仙球预警"),
+}
+# Lead-ins vary the body hook's punch per clip without touching the grounded fact.
 _COPY_LEADINS = ("全场高能：", "名场面：", "划重点：", "这一下必看：", "高光时刻：")
-# When the official text says nothing concrete, fall back to a short tiered line
-# (still varied per clip). Only rank 3 may claim the day's best; rank 1 uses the
-# localized 「神仙球」 and never borrows that claim.
+# Body-hook fallback when the official text says nothing concrete (still varied
+# per clip). Only rank 3 may claim the day's best; rank 1 uses 「神仙球」.
 _COPY_FALLBACK_HOOKS = {
     3: ("官方选出的当日最佳就是这一分", "一整天的好球里，最佳落在这一分", "当日最佳，说的就是它"),
     2: ("全场最值得回放的就是这一分", "这一分是整场比赛的高光", "一场打下来最想重看这一分"),
     1: ("这一拍被官方剪成了神仙球", "标准神仙球，官方单独收录", "官方给这一拍单开了特写"),
 }
 _COPY_TAGS = "#网球 #网球名场面 #精彩回合 #网球时差"
+# Column label shown in the title, parallel to 今日球局 / 网球有故事 on the other
+# columns. Kept in Chinese to match the project's no-English-in-public-copy rule.
+_COLUMN_LABEL = "昨日好球"
 
 
-def _official_shot_hook(metadata: OfficialVideoMetadata) -> str | None:
-    """Name the actual shot if the official title/description spells it out."""
+def _official_shot_noun(metadata: OfficialVideoMetadata) -> str | None:
+    """Return the shot's short Chinese noun if the official text names it."""
     low = _clean(f"{metadata.candidate.title} {metadata.description}").casefold()
-    for pattern, shot in _SHOT_HOOK_PATTERNS:
+    for pattern, noun in _SHOT_NOUN_PATTERNS:
         if re.search(pattern, low):
-            if "ACE" in shot:
-                return f"一记{shot}"
-            if _WINNER_RE.search(low):
-                return f"一记{shot}制胜分"
-            return f"一记{shot}"
+            return noun
     return None
+
+
+def _official_is_winner(metadata: OfficialVideoMetadata) -> bool:
+    low = _clean(f"{metadata.candidate.title} {metadata.description}").casefold()
+    return bool(_WINNER_RE.search(low))
 
 
 def _official_match_hook(metadata: OfficialVideoMetadata) -> str | None:
@@ -1234,13 +1244,16 @@ def _official_match_hook(metadata: OfficialVideoMetadata) -> str | None:
 
 
 def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
-    """A short Xiaohongshu post: a punchy title, one grounded hook line, context.
+    """A short Xiaohongshu post: a titled column line, one grounded hook, context.
 
-    The title carries the punch; the body's first line is the 引爆点, grounded in
-    the official description (the actual shot, a fast win, a comeback) whenever
-    the text names one, and only falls back to a short tiered line when it does
-    not. A per-clip seed varies the lead-in and any fallback so consecutive
-    clips never read as one fixed script. Kept to a few short lines on purpose.
+    The title follows the house style shared with the daily digest and the
+    knowledge post -- emoji, date, column name, then a short highlight after the
+    ｜ divider (``🎾7.24 昨日好球｜单手反拍，一拍封神``). The highlight leads with the
+    actual shot when the official text names one and falls back to a short
+    tiered line otherwise -- no player name (it's in the body context line). The
+    body's first line is the 引爆点, likewise grounded in the official description
+    (the shot as 制胜分, a fast win, a comeback) or a tiered fallback. A per-clip
+    seed varies the punch, lead-in and any fallback so clips never read alike.
     """
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
@@ -1250,15 +1263,24 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
         or selection.match.tournament.name
     )
     rank = selection.consensus_rank
-    title = (
-        f"🎾{published_for.month}.{published_for.day}｜{featured}{_COPY_TITLE_HOOKS[rank]}"
-    )
     seed = f"{selection.match.match_id}:{selection.published_at}"
-    core = (
-        _official_shot_hook(selection.metadata)
-        or _official_match_hook(selection.metadata)
-        or _pick_caption_template(_COPY_FALLBACK_HOOKS[rank], seed + ":hook")
-    )
+    shot = _official_shot_noun(selection.metadata)
+    if shot:
+        punch = _pick_caption_template(_TITLE_PUNCH[rank], seed + ":punch")
+        highlight = f"{shot}，{punch}"
+    else:
+        highlight = _pick_caption_template(_TITLE_FALLBACK[rank], seed + ":titlefb")
+    title = f"🎾{published_for.month}.{published_for.day} {_COLUMN_LABEL}｜{highlight}"
+    if shot:
+        core = (
+            f"一记{shot}制胜分"
+            if shot != "ACE" and _official_is_winner(selection.metadata)
+            else f"一记{shot}"
+        )
+    else:
+        core = _official_match_hook(selection.metadata) or _pick_caption_template(
+            _COPY_FALLBACK_HOOKS[rank], seed + ":hook"
+        )
     lead = _pick_caption_template(_COPY_LEADINS, seed + ":lead")
     hook = f"{lead}{core}。"
     context = f"{featured} vs {opponent}｜{tournament}，赛果 {winner} {score}。"
