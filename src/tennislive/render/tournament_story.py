@@ -1382,7 +1382,6 @@ STORIES = STORIES + (
         subtitle="网球冷知识 · 时代篇",
         identity="费德勒 · 纳达尔 · 德约科维奇",
         chips=("冷知识", "时代档案", "66 座大满贯"),
-        hero_marker="2025",
         hero=(
             "66 座大满贯、连续 18 年的年终第一——'三巨头'统治男子网坛"
             "二十年，这样的时代此前没有过，此后大概率也不会再有。"
@@ -1444,7 +1443,7 @@ STORIES = STORIES + (
         ),
         image_keys=("cincinnati",),
         source_label="ATP / 大满贯官方史料",
-        image_credit="AP Photo via Yahoo Sports",
+        image_credit="Getty Images / Imagn via Sports Illustrated",
         source_url=(
             "https://www.espn.com/tennis/story/_/id/29190340/"
             "novak-djokovic-prediction-breaking-roger-federer-grand-slam-"

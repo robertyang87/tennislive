@@ -423,7 +423,10 @@ def cmd_digest(args) -> int:
 
     fatal, warns = run_checks(digest, title, xhs, cover_copy=cover_copy)
     if not dedupe.passed:
-        fatal.append(f"小红书近7期重复度过高: {dedupe.reason}")
+        # 文案查重是风格性提醒，不是事实错误：赛果的时效性与准确性优先，
+        # 不能让某一句"看点"复用挡住当天比分、赛程和公众号推送（曾在生产
+        # 环境实际触发过整包被 FATAL 阻断、当天日报完全没有推送的事故）。
+        warns.append(f"小红书近7期重复度过高: {dedupe.reason}")
     (outdir / "qa.txt").write_text(
         "\n".join(["[FATAL] " + f for f in fatal] + ["[WARN] " + w for w in warns])
         or "OK",
