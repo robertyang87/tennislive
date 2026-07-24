@@ -1257,6 +1257,27 @@ def test_decorated_title_date_emoji_and_budget():
     assert xhs_title_len(trimmed) <= 20
 
 
+def test_over_budget_lead_stays_content_specific_not_generic():
+    """A normal '球员 晋级 赛事 轮次' lead must compress to its own story,
+    never fall back to a generic hook that repeats verbatim every day."""
+    from tennislive.render.xiaohongshu import decorate_title, xhs_title_len
+
+    digest = Digest(today=date(2026, 7, 24))
+    generic = ("今日焦点已锁定", "焦点", "昨夜最值回看", "今晚值得一看")
+
+    a = decorate_title(digest, "斯尼古尔晋级布拉格公开赛女单半决赛", category="今日球局")
+    b = decorate_title(digest, "罗曼·安德烈斯·布鲁查加掀翻博尔热斯", category="今日球局")
+
+    assert "斯尼古尔" in a and "半决赛" in a  # semifinal round preserved…
+    assert "晋级决赛" not in a  # …and not mislabeled as reaching the final
+    assert "布鲁查加" in b
+    for title in (a, b):
+        assert xhs_title_len(title) <= 20
+        assert not any(g in title for g in generic)
+    # Two different leads must yield two different titles (day-over-day variety).
+    assert a != b
+
+
 def test_story_pick_is_idempotent_within_same_day(tmp_path, monkeypatch):
     """同日重跑不换卡：当天已定的故事在重新生成时被直接复用."""
     from dataclasses import replace
