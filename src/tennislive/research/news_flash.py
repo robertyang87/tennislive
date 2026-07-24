@@ -36,25 +36,41 @@ _MATCH_MARKERS = (
     "ousts",
     "knocks out",
     "outlasts",
+    "outguns",
     "edges",
+    "eases",
+    "storms",
     "rallies past",
     "battles past",
     "routs",
     "dispatches",
+    "topples",
+    "stuns",
     "survives",
     "upset",
     "saves match point",
     "match points",
-    "reaches the final",
+    " win ",
+    " wins ",
+    " won ",
+    "final",
+    "finals",
+    "reaches",
     "into the final",
-    "reaches the semifinal",
     "semifinal",
     "semi-final",
     "quarterfinal",
     "quarter-final",
-    "advances to",
-    "wins the title",
-    "clinches the title",
+    "qfs",
+    "advances",
+    "cruises",
+    "seals",
+    "books",
+    "sets up",
+    "clash with",
+    "to face",
+    "to meet",
+    "clinches",
     "lifts the",
     # Chinese result verbs
     "击败",
@@ -95,9 +111,19 @@ def is_match_report(*parts: str) -> bool:
     text = _norm(" ".join(part for part in parts if part))
     if not text:
         return False
-    if _SCORELINE.search(text):
+    # "final set" is a rule/format phrase, not a match final — drop it before
+    # matching so a rule-change headline isn't misread as a match report.
+    neutered = text.replace("final set", " ").replace("final-set", " ")
+    has_marker = any(marker in neutered for marker in _MATCH_MARKERS)
+    scorelines = _SCORELINE.findall(neutered)
+    # Two set scores ("6-4 7-6") is unambiguously a match report; a single
+    # lone score ("6-6", "10-8") often appears in rule/format news, so it only
+    # counts alongside a result verb.
+    if len(scorelines) >= 2:
         return True
-    return any(marker in text for marker in _MATCH_MARKERS)
+    if scorelines and has_marker:
+        return True
+    return has_marker
 
 
 def is_offcourt_news(*parts: str) -> bool:
@@ -147,7 +173,12 @@ def offcourt_flash_candidates(
         if str(signal.get("kind") or "") != "official-news":
             continue
         title = str(signal.get("title") or "").strip()
-        if not title or not is_offcourt_news(title):
+        # Site-nav / section titles ("Sky Sports | ... | Watch Live Sport",
+        # "ESPN | Tennis Courtcast") come through as feed-level titles, not
+        # real headlines. A pipe is the reliable tell; drop them.
+        if not title or " | " in title or len(title) < 12:
+            continue
+        if not is_offcourt_news(title):
             continue
         if sensitive_category(title):
             continue
