@@ -74,6 +74,9 @@ jobs:
       # 授权赛后技术统计（未配置时自动降级为比分结构复盘）
       SPORTRADAR_API_KEY: ${{ secrets.SPORTRADAR_API_KEY }}
       SPORTRADAR_ACCESS_LEVEL: ${{ vars.SPORTRADAR_ACCESS_LEVEL || 'trial' }}
+      # ATP ProTennisLive organisation API Bearer JWT（需 Tournament Claims）。
+      # WTA 官方逐场统计为公开 JSON，不需要 Secret。
+      ATP_PROTENNISLIVE_TOKEN: ${{ secrets.ATP_PROTENNISLIVE_TOKEN }}
       # 无需额外 AI key：GitHub Models 只改写已有证据，不检索或编造新闻。
       GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL || 'openai/gpt-4.1' }}

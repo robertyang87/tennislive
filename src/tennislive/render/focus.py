@@ -114,15 +114,14 @@ def _pair_rows(match: Match) -> list[tuple[str, str, str]]:
             )
         )
 
-    if stats.winners is not None or stats.unforced_errors is not None:
+    # Winners and unforced errors must be a complete pair from one provider.
+    if stats.winners is not None and stats.unforced_errors is not None:
         winners, errors = stats.winners, stats.unforced_errors
         rows.append(
             (
                 "制胜分 / 非受迫",
-                f"{_int(winners.home) if winners else '—'} / "
-                f"{_int(errors.home) if errors else '—'}",
-                f"{_int(winners.away) if winners else '—'} / "
-                f"{_int(errors.away) if errors else '—'}",
+                f"{_int(winners.home)} / {_int(errors.home)}",
+                f"{_int(winners.away)} / {_int(errors.away)}",
             )
         )
     return rows

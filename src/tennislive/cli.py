@@ -184,22 +184,20 @@ def cmd_digest(args) -> int:
         f"命中 {trend_result.matched_matches} 场比赛"
     )
 
-    # 只通过已配置的数据许可 API 补充专业统计。没有 API key 时保留基础
-    # 比分页，不在 GitHub Actions 中抓取 ATP/WTA/TDI 官网页面。
+    # 焦点复盘依次尝试巡回赛官方逐场接口和已配置的授权备用源。
+    # 所有结构化统计均不可用时，渲染层才回退到盘分/局分结构复盘。
     from .render.focus import select_focus_match
-    from .sources.sportradar import SportradarOfficialStats
+    from .sources.official_stats import fetch_match_stats_with_fallback
 
     focus_match = select_focus_match(digest)
-    licensed_stats = SportradarOfficialStats.from_env()
-    if focus_match and licensed_stats:
-        try:
-            focus_match.stats = licensed_stats.fetch_match_stats(focus_match)
-            digest.source_status["Sportradar 技术统计"] = "正常 · 1 场授权统计"
-        except SourceError as e:
-            digest.source_status["Sportradar 技术统计"] = f"降级 · {e}"
-    elif focus_match:
-        digest.source_status["专业技术统计"] = (
-            "未配置 · 设置 SPORTRADAR_API_KEY 后启用授权赛后统计"
+    if focus_match:
+        stats_result = fetch_match_stats_with_fallback(focus_match)
+        focus_match.stats = stats_result.stats
+        digest.source_status.update(stats_result.source_status)
+        digest.source_status["焦点复盘数据"] = (
+            f"正常 · {focus_match.stats.source}"
+            if focus_match.stats is not None
+            else "降级 · 所有逐场统计源均未命中，使用比分结构复盘"
         )
 
     # 人工核验的权威媒体摘要优先；未覆盖的比赛使用当前排名、赛事阶段
