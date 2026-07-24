@@ -11,6 +11,62 @@ from tennislive.render.cards import MARGIN, W, _flash_headline_lines, _Fonts
 from conftest import make_match
 
 
+def test_flash_card_cli_blocks_sensitive_topic_without_rendering(tmp_path, monkeypatch):
+    """A sensitive headline is routed to human review — nothing is rendered."""
+    calls: list[str] = []
+    monkeypatch.setattr(
+        "tennislive.render.flashcard.generate_flash_card",
+        lambda *a, **k: calls.append("render") or Path("x"),
+    )
+    outdir = tmp_path / "fc"
+    result = cli.main(
+        [
+            "flash-card",
+            "--headline",
+            "WTA gender testing 新规引发争议",
+            "--quote",
+            "多名球员公开质疑",
+            "--outdir",
+            str(outdir),
+        ]
+    )
+    assert result == 3
+    assert calls == []
+    assert not (outdir / "flash_copy.txt").exists()
+
+
+def test_flash_card_cli_generates_card_and_copy_for_light_news(tmp_path, monkeypatch):
+    """Light sporting news renders a card and writes a copy file."""
+    rendered: dict = {}
+
+    def fake_render(headline, *, quote, source_label, date_label, out_path, theme):
+        rendered.update(headline=headline, out_path=Path(out_path))
+        Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+        Path(out_path).write_bytes(b"jpg")
+        return Path(out_path)
+
+    monkeypatch.setattr(
+        "tennislive.render.flashcard.generate_flash_card", fake_render
+    )
+    outdir = tmp_path / "fc"
+    result = cli.main(
+        [
+            "flash-card",
+            "--headline",
+            "18岁小将爆冷淘汰头号种子",
+            "--quote",
+            "全场起立鼓掌整整两分钟。",
+            "--outdir",
+            str(outdir),
+        ]
+    )
+    assert result == 0
+    assert rendered["headline"] == "18岁小将爆冷淘汰头号种子"
+    copy = (outdir / "flash_copy.txt").read_text("utf-8")
+    assert copy.startswith("18岁小将爆冷淘汰头号种子")
+    assert "💬" in copy and "#网球" in copy
+
+
 def test_flash_headline_wrap_balances_long_chinese_title(monkeypatch):
     regular_font = Path("assets/fonts/NotoSansSC-Regular-sub.ttf").resolve()
     bold_font = Path("assets/fonts/NotoSansSC-Bold-sub.ttf").resolve()
