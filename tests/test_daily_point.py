@@ -13,6 +13,7 @@ from tennislive.video.daily_point import (
     discover_atp_point,
     discover_slam_point,
     discover_wta_point,
+    discover_youtube_search_point,
     generate_yesterday_point,
     is_explicit_single_point,
     point_xiaohongshu_copy,
@@ -500,6 +501,23 @@ def test_xiaohongshu_copy_is_one_plain_mobile_paragraph(sample_digest):
     assert "来源：" not in body
     assert "先猜" not in body
     validate_point_copy(copy)
+
+
+def test_youtube_search_tries_multiple_label_phrasings_per_match(sample_digest):
+    calls = []
+
+    def fake_searcher(query, *, tour, limit):
+        calls.append((query, tour, limit))
+        return []
+
+    discover_youtube_search_point(sample_digest, searcher=fake_searcher)
+
+    # Two yesterday singles (one ATP, one WTA) x two label phrasings each.
+    assert len(calls) == 4
+    assert all(limit == 8 for _, _, limit in calls)
+    queries = [q for q, _tour, _limit in calls]
+    assert sum("hot shot" in q for q in queries) == 2
+    assert sum("point of the day" in q for q in queries) == 2
 
 
 def test_burned_in_caption_varies_by_clip_but_is_stable_per_clip(sample_digest):
