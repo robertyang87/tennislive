@@ -1081,13 +1081,95 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
             raise RuntimeError("严格封面模式要求启用头条比赛图片核验")
         if cover_fetch_enabled:
             from ..research.visual_sources import resolve_match_cover_visual
+            from .rating import lead_story_candidates
             from .titles import daily_lead_match
 
             lead = daily_lead_match(digest)
             if lead is None and strict_cover:
                 cover_fallback_reason = "no-bindable-headline-match"
             if lead is not None:
-                cover_visual, cover_report = resolve_match_cover_visual(lead, visual_cache)
+                candidates = lead_story_candidates(digest)
+                attempt_limit = max(
+                    1,
+                    int(os.environ.get("TENNISLIVE_COVER_HEADLINE_ATTEMPTS", "4")),
+                )
+                candidate_matches = [
+                    selection.match for selection in candidates[:attempt_limit]
+                ]
+                if not candidate_matches:
+                    candidate_matches = [lead]
+
+                # Each resolver already fans out across image providers. Running
+                # headline candidates concurrently keeps the self-heal bounded
+                # by the slowest source timeout instead of multiplying it.
+                from concurrent.futures import ThreadPoolExecutor
+
+                def resolve_candidate(item):
+                    index, match = item
+                    return (
+                        index,
+                        match,
+                        *resolve_match_cover_visual(
+                            match,
+                            visual_cache / f"headline-{index:02d}",
+                        ),
+                    )
+
+                with ThreadPoolExecutor(
+                    max_workers=min(4, len(candidate_matches))
+                ) as executor:
+                    resolved = list(
+                        executor.map(resolve_candidate, enumerate(candidate_matches))
+                    )
+
+                reselection_attempts = [
+                    {
+                        "match_id": match.match_id,
+                        "status": report.get("status", "unavailable"),
+                        "errors": report.get("errors", []),
+                        "providers_queried": report.get("providers_queried", []),
+                    }
+                    for _index, match, visual, report in resolved
+                    if visual is None
+                ]
+                selected = next(
+                    (
+                        (index, match, visual, report)
+                        for index, match, visual, report in resolved
+                        if visual is not None
+                    ),
+                    None,
+                )
+                if selected is not None:
+                    index, selected_match, cover_visual, cover_report = selected
+                    digest.lead_match_id = selected_match.match_id
+                    cover_report["headline_selection"] = {
+                        "status": "primary" if index == 0 else "reselected",
+                        "primary_match_id": lead.match_id,
+                        "selected_match_id": selected_match.match_id,
+                        "attempted": len(resolved),
+                        "failed_candidates": reselection_attempts,
+                    }
+                else:
+                    cover_report = resolved[0][3] if resolved else None
+                    first_errors = (
+                        [str(item) for item in cover_report.get("errors", [])]
+                        if cover_report is not None
+                        else []
+                    )
+                    cover_fallback_reason = (
+                        ";".join(first_errors)
+                        if len(resolved) == 1 and first_errors
+                        else "no-qualified-photo-across-hot-headlines"
+                    )
+                    if cover_report is not None:
+                        cover_report["headline_selection"] = {
+                            "status": "exhausted",
+                            "primary_match_id": lead.match_id,
+                            "selected_match_id": "",
+                            "attempted": len(resolved),
+                            "failed_candidates": reselection_attempts,
+                        }
                 cover_report_path.write_text(
                     json.dumps(cover_report, ensure_ascii=False, indent=2),
                     encoding="utf-8",
@@ -1111,7 +1193,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
             if cover_report is None:
                 cover_report = {
                     "schema_version": 2,
-                    "status": "fallback",
+                    "status": "branded_fallback",
                     "match_id": "",
                     "match_players": [],
                     "fallback_reason": cover_fallback_reason or "no-cover-report",
@@ -1121,7 +1203,7 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
                 }
             if cover_visual is None:
                 cover_report.update(
-                    status="fallback",
+                    status="branded_fallback",
                     fallback_reason=cover_fallback_reason or "no-qualified-headline-match-photo",
                     fallback_person=False,
                     quality_score=0,

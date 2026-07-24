@@ -319,6 +319,60 @@ def select_lead_story(digest: Digest) -> LeadStorySelection | None:
     return LeadStorySelection(match=match, breakdown=breakdown, reasons=reasons)
 
 
+def lead_story_candidates(digest: Digest) -> list[LeadStorySelection]:
+    """Return auditable fallback headlines in editorial order.
+
+    The regular lead remains first. Remaining candidates are completed singles
+    before live and upcoming singles, and only source-backed hot matches are
+    eligible for an automatic visual fallback. This prevents a routine fixture
+    with an easy-to-find photo from replacing the actual news of the day.
+    """
+    primary = select_lead_story(digest)
+    ordered: list[LeadStorySelection] = []
+    seen: set[str] = set()
+
+    def add(match: Match) -> None:
+        if match.match_id in seen or not has_editorial_heat(match):
+            return
+        breakdown, reasons = lead_story_breakdown(match)
+        ordered.append(
+            LeadStorySelection(
+                match=match,
+                breakdown=breakdown,
+                reasons=reasons,
+            )
+        )
+        seen.add(match.match_id)
+
+    if primary is not None:
+        add(primary.match)
+
+    pools = (
+        [
+            match for match in digest.results
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+        [
+            match for match in digest.live
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+        [
+            match for match in digest.schedule
+            if match.is_singles and is_tour_focus_match(match)
+        ],
+    )
+    for pool in pools:
+        scored: list[tuple[int, int, Match]] = []
+        for index, match in enumerate(pool):
+            if match.match_id in seen or not has_editorial_heat(match):
+                continue
+            breakdown, _ = lead_story_breakdown(match)
+            scored.append((breakdown.total, -index, match))
+        for _score, _index, match in sorted(scored, reverse=True):
+            add(match)
+    return ordered
+
+
 def is_upset(m: Match) -> bool:
     """冷门（从严）：种子落马，或 Top30 被排名低 30+ 位的选手掀翻.
 

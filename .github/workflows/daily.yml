@@ -105,6 +105,9 @@ jobs:
       # 日报封面必须通过动作/情绪场景、清晰度和 3:4 安全裁切门禁。
       TENNISLIVE_COVER_VISUAL_STRICT: ${{ vars.TENNISLIVE_COVER_VISUAL_STRICT || 'on' }}
       TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '72' }}
+      # 首选头条无当场合格图时，并行尝试同日下一条高热度单打；
+      # 一旦切换，封面、复盘、文案和事实包全部绑定到同一场。
+      TENNISLIVE_COVER_HEADLINE_ATTEMPTS: ${{ vars.TENNISLIVE_COVER_HEADLINE_ATTEMPTS || '4' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -267,6 +270,16 @@ jobs:
               and (.fallback_reason | length > 0)
               and (.quality.status | IN("pass", "fallback"))
               and (.quality.hard_failures | length == 0)
+              ) or (
+              .status == "branded_fallback"
+              and .fallback_person == false
+              and .headline_hot == true
+              and .headline_selection.status == "exhausted"
+              and (.headline_selection.attempted >= 1)
+              and (.fallback_reason | length > 0)
+              and (.quality.status == "fallback")
+              and (.quality.hard_failures | length == 0)
+              and (.selected_asset_sha256 | test("^[0-9a-f]{64}$"))
               )
             )
             and .render_binding.status == "bound"
