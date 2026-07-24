@@ -15,6 +15,11 @@ on:
         description: "发布日期（YYYY-MM-DD，北京时间；留空=今天）"
         required: false
         default: ""
+      force:
+        description: "仅验证：忽略仓库内已有成片，重新生成但不提交、不推送"
+        required: false
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -72,6 +77,11 @@ jobs:
           if [ -z "$DATE_ARG" ]; then DATE_ARG="today"; fi
           DATE_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print(parse_date_arg('$DATE_ARG').isoformat())")
           OUT_DIR="output/$DATE_DIR/yesterday-point"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] \
+             && [ "${{ github.event.inputs.force }}" = "true" ]; then
+            rm -rf "$OUT_DIR"
+            echo "::notice::强制验证模式：使用干净目录重新发现视频；不会提交或 PushPlus 推送"
+          fi
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           # 不清空 OUT_DIR：已提交的 atp/wta 内容要留在工作区，
           # 这样 CLI 才能识别出哪个巡回赛这次该跳过、哪个还要继续找。
@@ -142,7 +152,7 @@ jobs:
 
       - name: 提交通过门禁的成片
         id: commit
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && github.event.inputs.force != 'true'
         run: |
           echo "ready=false" >> "$GITHUB_OUTPUT"
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
