@@ -140,6 +140,71 @@ def render_srt(cues: Sequence[SubtitleCue]) -> str:
     return "\n\n".join(blocks) + "\n"
 
 
+def _format_ass_timestamp(value_ms: int) -> str:
+    hours, remainder = divmod(value_ms, 3_600_000)
+    minutes, remainder = divmod(remainder, 60_000)
+    seconds, centiseconds = divmod(remainder, 1_000)
+    return f"{hours:d}:{minutes:02d}:{seconds:02d}.{centiseconds // 10:02d}"
+
+
+def render_ass(
+    cues: Sequence[SubtitleCue],
+    *,
+    play_res_x: int,
+    play_res_y: int,
+    font_name: str = "Noto Sans CJK SC",
+    font_size: int = 56,
+    primary_colour: str = "&H00FFFFFF",
+    outline_colour: str = "&H00101010",
+    bold: bool = True,
+    outline: float = 3,
+    shadow: float = 1,
+    alignment: int = 2,
+    margin_l: int = 60,
+    margin_r: int = 60,
+    margin_v: int = 235,
+) -> str:
+    """Render burned-in captions with an explicit PlayRes.
+
+    Feeding ffmpeg's ``subtitles`` filter a plain SRT lets it guess the
+    authoring resolution, which does not reliably match the actual output
+    frame and silently scales FontSize by several times -- oversized,
+    wrapped, mispositioned text. An explicit ``[Script Info]`` PlayRes make
+    the requested FontSize/margins apply as specified; ``WrapStyle: 0``
+    keeps the normal smart line-break so a rare long name wraps cleanly
+    instead of overflowing past the frame edges.
+    """
+    header = (
+        "[Script Info]\n"
+        "ScriptType: v4.00+\n"
+        f"PlayResX: {play_res_x}\n"
+        f"PlayResY: {play_res_y}\n"
+        "WrapStyle: 0\n"
+        "ScaledBorderAndShadow: yes\n"
+        "\n"
+        "[V4+ Styles]\n"
+        "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, "
+        "OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
+        "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
+        "Alignment, MarginL, MarginR, MarginV, Encoding\n"
+        f"Style: Caption,{font_name},{font_size},{primary_colour},"
+        f"&H000000FF,{outline_colour},&H00000000,{-1 if bold else 0},0,0,0,"
+        f"100,100,0,0,1,{outline},{shadow},{alignment},{margin_l},{margin_r},"
+        f"{margin_v},1\n"
+        "\n"
+        "[Events]\n"
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, "
+        "Effect, Text\n"
+    )
+    lines = [
+        f"Dialogue: 0,{_format_ass_timestamp(cue.start_ms)},"
+        f"{_format_ass_timestamp(cue.end_ms)},Caption,,0,0,0,,"
+        + cue.text.replace("\n", "\\N")
+        for cue in cues
+    ]
+    return header + "\n".join(lines) + "\n"
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:

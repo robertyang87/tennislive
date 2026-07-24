@@ -3,6 +3,8 @@
 公开栏目名为「这一分，值回放」；内部任务名保留 `yesterday-point`。`tennislive point` 与日报、网球故事分开运行，输出到
 `output/YYYY-MM-DD/yesterday-point/`。GitHub Action 在北京时间 09:23 执行，给赛事官方留出上传赛后视频的时间。
 
+ATP、WTA 各自独立选片、独立发布：互不挤占对方的名额，也不会因为另一方有更强的候选就被跳过。当天只有一方有满足硬门槛的视频时，只发布这一方；两边都有时各自成片、各自推送，分别位于 `yesterday-point/atp/` 与 `yesterday-point/wta/` 子目录，各自的 `manifest.json`、质量门禁与 PushPlus 推送完全独立。
+
 ## 选片硬门槛
 
 - 比赛必须能由开赛时间证明属于北京时间昨日，且是已完赛单打。
@@ -17,9 +19,9 @@
 
 ## 竖屏与文字
 
-成片为 1080×1920。原始 16:9 主体使用 `contain` 完整置于画布中央，留白区域由同帧柔化背景填充。系统没有逐帧、全覆盖、高置信度追踪证据时，不启用动态裁切。
+成片为 1080×1440（3:4），与本项目卡片图同一画布比例，方便和图文卡混排发布。原始 16:9 主体使用 `contain` 完整置于画布中央，留白区域由同帧柔化背景填充。系统没有逐帧、全覆盖、高置信度追踪证据时，不启用动态裁切——静态裁切可能把回合发生的那一刻直接裁出画面，比例再合适也不做。
 
-字幕包含对阵、赛事轮次和全场比分。成片和发布文案不展示来源署名，来源与“最佳回合”证据只保留在内部 `manifest.json`。配套小红书文案只有一个正文段落：一句钩子、2–3 句白话看点、一个评论问题，连同 3–5 个标签控制在手机一屏内。
+字幕包含对阵、赛事轮次（中文轮次名）和全场比分，烧录时使用显式 PlayRes 的 `.ass` 字幕（而非交给 ffmpeg 猜测未声明分辨率的纯 SRT），避免字号被隐式放大、错位或异常换行。成片和发布文案不展示来源署名，来源与“最佳回合”证据只保留在内部 `manifest.json`；Hot Shots 层级的公开文案统一使用中文「神仙球」，不直接暴露 Tennis TV / ATP Media 等信源名称。配套小红书文案只有一个正文段落：一句钩子、2–3 句白话看点、一个评论问题，连同 3–5 个标签控制在手机一屏内。
 
 ## 运行
 
@@ -31,13 +33,14 @@ TENNISLIVE_YESTERDAY_POINT=on tennislive point --date today --outdir output
 
 `Hot Shot` 不再因为没有写 `of the Day` 就自动丢弃。来自 Tennis TV / ATP Media 或巡回赛官方账号的单分短片，只要满足昨日日期、赛事与双方球员唯一关联、6–120 秒、至少 720p、完整保留源视频，就可作为“Hot Shots”发布。它的内部等级为 1，低于“当日最佳”(3) 和“全场最佳”(2)，公开文案不会把它误写成“公认最佳”。集锦、倒计时、Top 10、采访和多分拼接仍然跳过。
 
-产物包括：
+顶层 `output/YYYY-MM-DD/yesterday-point/manifest.json` 汇总当天两个巡回赛的状态（`{"ATP": "pass"|"skipped", "WTA": "pass"|"skipped"}`）。每个通过门槛的巡回赛在自己的子目录（`atp/` 或 `wta/`）下各自产出：
 
 - `yesterday-point.mp4`
 - `yesterday-point.zh-CN.srt`
+- `yesterday-point.ass`（烧录用字幕，含显式 PlayRes）
 - `xiaohongshu.txt`
 - `copy.html`
 - `push.html`
 - `manifest.json`
 
-没有满足全部门槛的视频时，任务会生成 `status=skipped` 的清单并正常结束；抓取、渲染或质量校验异常会生成 `status=failed` 并使 Action 失败。
+某巡回赛当天没有满足全部门槛的视频时，只有该巡回赛的清单是 `status=skipped`，不影响另一方；两边都没有时顶层清单也是 `status=skipped`。抓取、渲染或质量校验异常会生成顶层 `status=failed` 并使 Action 失败。

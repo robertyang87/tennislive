@@ -77,43 +77,55 @@ jobs:
           test -s "$MANIFEST"
           STATUS=$(jq -r '.status' "$MANIFEST")
           if [ "$STATUS" = "skipped" ]; then
-            echo "::notice::$(jq -r '.reason' "$MANIFEST")"
+            echo "::notice::ATP 与 WTA 当日均无可验证的官方完整回合"
             exit 0
           fi
           test "$STATUS" = "pass"
-          jq -e '
-            .complete_rally.verified == true and
-            .complete_rally.montage == false and
-            .complete_rally.source_window_ms[0] == 0 and
-            .consensus.verified == true and
-            (
-              (.consensus.rank == 3 and
-               .consensus.score == 100 and
-               .consensus.basis == "official-daily-best" and
-               any(.consensus.signals[];
-                   .kind == "official-best-designation" and .scope == "day")) or
-              (.consensus.rank == 1 and
-               .consensus.score == 72 and
-               .consensus.basis == "official-hot-shot" and
-               any(.consensus.signals[];
-                   .kind == "official-hot-shot" and .scope == "hot-shot"))
-            ) and
-            .framing.mode == "contain" and
-            .framing.dynamic_tracking_crop == false and
-            (.source_resolution | length) == 2
-          ' "$MANIFEST" >/dev/null
-          test -s "$OUT_DIR/yesterday-point.mp4"
-          test -s "$OUT_DIR/yesterday-point.zh-CN.srt"
-          test -s "$OUT_DIR/xiaohongshu.txt"
-          test -s "$OUT_DIR/copy.html"
-          test -s "$OUT_DIR/push.html"
-          test "$(grep -c '^$' "$OUT_DIR/xiaohongshu.txt")" -eq 1
-          ! grep -Eq '来源：|图源：|摄影/图源|非商业资料引用' \
-            "$OUT_DIR/xiaohongshu.txt" "$OUT_DIR/copy.html" \
-            "$OUT_DIR/push.html" "$OUT_DIR/yesterday-point.zh-CN.srt"
-          ffprobe -v error -select_streams v:0 \
-            -show_entries stream=width,height \
-            -of csv=s=x:p=0 "$OUT_DIR/yesterday-point.mp4" | grep -qx '1080x1920'
+          for TOUR in atp wta; do
+            TOUR_UPPER=$(echo "$TOUR" | tr '[:lower:]' '[:upper:]')
+            TOUR_STATUS=$(jq -r --arg t "$TOUR_UPPER" '.tours[$t] // "skipped"' "$MANIFEST")
+            if [ "$TOUR_STATUS" != "pass" ]; then
+              echo "::notice::$TOUR_UPPER 当日无可验证的官方完整回合，跳过该巡回赛门禁"
+              continue
+            fi
+            TDIR="$OUT_DIR/$TOUR"
+            TMANIFEST="$TDIR/manifest.json"
+            test -s "$TMANIFEST"
+            jq -e '
+              .status == "pass" and
+              .complete_rally.verified == true and
+              .complete_rally.montage == false and
+              .complete_rally.source_window_ms[0] == 0 and
+              .consensus.verified == true and
+              (
+                (.consensus.rank == 3 and
+                 .consensus.score == 100 and
+                 .consensus.basis == "official-daily-best" and
+                 any(.consensus.signals[];
+                     .kind == "official-best-designation" and .scope == "day")) or
+                (.consensus.rank == 1 and
+                 .consensus.score == 72 and
+                 .consensus.basis == "official-hot-shot" and
+                 any(.consensus.signals[];
+                     .kind == "official-hot-shot" and .scope == "hot-shot"))
+              ) and
+              .framing.mode == "contain" and
+              .framing.dynamic_tracking_crop == false and
+              (.source_resolution | length) == 2
+            ' "$TMANIFEST" >/dev/null
+            test -s "$TDIR/yesterday-point.mp4"
+            test -s "$TDIR/yesterday-point.zh-CN.srt"
+            test -s "$TDIR/xiaohongshu.txt"
+            test -s "$TDIR/copy.html"
+            test -s "$TDIR/push.html"
+            test "$(grep -c '^$' "$TDIR/xiaohongshu.txt")" -eq 1
+            ! grep -Eq '来源：|图源：|摄影/图源|非商业资料引用' \
+              "$TDIR/xiaohongshu.txt" "$TDIR/copy.html" \
+              "$TDIR/push.html" "$TDIR/yesterday-point.zh-CN.srt"
+            ffprobe -v error -select_streams v:0 \
+              -show_entries stream=width,height \
+              -of csv=s=x:p=0 "$TDIR/yesterday-point.mp4" | grep -qx '1080x1440'
+          done
 
       - name: 上传独立内容包
         uses: actions/upload-artifact@v4
@@ -143,14 +155,18 @@ jobs:
           git push origin "${{ github.ref_name }}"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
-      - name: PushPlus 推送昨日 Hot Shots / 最佳回合
+      - name: PushPlus 推送昨日 Hot Shots / 最佳回合（ATP、WTA 分别推送）
         if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''
         continue-on-error: true
         run: |
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
-          if [ "$(jq -r '.status' "$OUT_DIR/manifest.json")" != "pass" ]; then
-            echo "没有经官方 Hot Shots / 最佳回合标签验证的完整回合，跳过推送"
-            exit 0
-          fi
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          tennislive publish pushplus --dir "$OUT_DIR"
+          for TOUR in atp wta; do
+            TDIR="$OUT_DIR/$TOUR"
+            if [ -s "$TDIR/manifest.json" ] && [ "$(jq -r '.status' "$TDIR/manifest.json")" = "pass" ]; then
+              tennislive publish pushplus --dir "$TDIR" \
+                || echo "::warning::$TOUR PushPlus 推送失败"
+            else
+              echo "$TOUR 没有经官方 Hot Shots / 最佳回合标签验证的完整回合，跳过推送"
+            fi
+          done

@@ -7,6 +7,7 @@ it never guesses rally boundaries or follows a player with an unverified crop.
 
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 import os
@@ -26,7 +27,7 @@ import requests
 from ..digest import Digest
 from ..models import Match
 from ..render.hashtags import hashtag_count, limit_hashtags
-from ..zh import player_zh, tournament_zh
+from ..zh import player_zh, round_zh, tournament_zh
 from .official import (
     ATP_YOUTUBE_CHANNEL_ID,
     ATP_YOUTUBE_FEED,
@@ -44,15 +45,19 @@ from .official import (
     parse_wta_video_candidates,
     search_official_youtube_candidates,
 )
-from .pipeline import SubtitleCue, VideoPipelineError, render_srt
+from .pipeline import SubtitleCue, VideoPipelineError, render_ass, render_srt
 
 BEIJING = ZoneInfo("Asia/Shanghai")
 MIN_POINT_SECONDS = 6.0
 MAX_POINT_SECONDS = 120.0
 # Resolution is recorded for observability, not used as a hard publish gate.
 MIN_OUTPUT_FPS = 23.0
+# 3:4 portrait, matching the project's card-image canvas so a Hot Shots video
+# sits in the same aspect ratio as the rest of a mixed-media Xiaohongshu post.
 OUTPUT_WIDTH = 1080
-OUTPUT_HEIGHT = 1920
+OUTPUT_HEIGHT = 1440
+CAPTION_FONT_SIZE = 56
+CAPTION_MARGIN_V = 175
 
 _OFFICIAL_BEST_RE = re.compile(
     r"\b(?P<kind>point|play|shot|rally)\s+of\s+(?:the\s+)?"
@@ -780,8 +785,15 @@ def discover_slam_point(
     )
 
 
-def discover_official_point(digest: Digest) -> PointSelection | None:
-    """Query independent official feeds and keep the single strongest consensus pick."""
+def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection]:
+    """Query independent official feeds and keep one consensus pick per tour.
+
+    ATP and WTA are published independently: a strong WTA Hot Shot does not
+    crowd out an equally valid ATP one (or vice versa). A major's channel can
+    surface either tour, so selections are bucketed by the matched player's
+    actual tour, not by source. A tour with no verified clip that day is
+    simply absent from the returned mapping.
+    """
     selections: list[PointSelection] = []
     for resolver in (
         discover_tennistv_point,
@@ -803,7 +815,15 @@ def discover_official_point(digest: Digest) -> PointSelection | None:
             continue
         if selection is not None:
             selections.append(selection)
-    return _unique_consensus_pick(selections)
+    by_tour: dict[str, list[PointSelection]] = {"ATP": [], "WTA": []}
+    for selection in selections:
+        by_tour[selection.match.tour.value].append(selection)
+    picks: dict[str, PointSelection] = {}
+    for tour, candidates in by_tour.items():
+        pick = _unique_consensus_pick(candidates)
+        if pick is not None:
+            picks[tour] = pick
+    return picks
 
 
 def _match_names(match: Match) -> tuple[str, str]:
@@ -851,14 +871,43 @@ def _player_tokens_for_name(name: str) -> set[str]:
     return tokens
 
 
+_CAPTION_LINE1_TEMPLATES = (
+    "这一分，值回放｜{winner} vs {loser}",
+    "这一拍，值得再看一次｜{winner} vs {loser}",
+    "别划走，这一分很值｜{winner} vs {loser}",
+    "这一分，值得暂停｜{winner} vs {loser}",
+    "回放按钮留给这一分｜{winner} vs {loser}",
+)
+_CAPTION_LINE2_TEMPLATES = (
+    "{tournament} · {round_name}｜赛果 {winner} {score}",
+    "{tournament} {round_name}｜全场比分 {winner} {score}",
+    "{round_name} · {tournament}｜赛果 {winner} {score}",
+)
+
+
+def _pick_caption_template(templates: tuple[str, ...], seed: str) -> str:
+    """Deterministic per-clip choice: same clip always renders the same way,
+
+    different matches/days land on different phrasing without an
+    unreproducible random draw.
+    """
+    index = int(hashlib.sha256(seed.encode("utf-8")).hexdigest(), 16) % len(templates)
+    return templates[index]
+
+
 def _context_text(selection: PointSelection) -> tuple[str, str]:
     match = selection.match
     winner, loser = _winner_loser(match)
     tournament = tournament_zh(match.tournament.name) or match.tournament.name
-    round_name = match.round_name or "正赛"
-    line1 = f"这一分，值回放｜{winner} vs {loser}"
+    round_name = round_zh(match.round_name) or match.round_name or "正赛"
     score = match.score_display(from_winner=True)
-    line2 = f"{tournament} · {round_name}｜赛果 {winner} {score}"
+    seed = f"{match.match_id}:{selection.published_at}"
+    line1 = _pick_caption_template(_CAPTION_LINE1_TEMPLATES, seed + ":line1").format(
+        winner=winner, loser=loser
+    )
+    line2 = _pick_caption_template(_CAPTION_LINE2_TEMPLATES, seed + ":line2").format(
+        tournament=tournament, round_name=round_name, winner=winner, score=score
+    )
     return line1, line2
 
 
@@ -883,22 +932,22 @@ def build_point_ffmpeg_command(
     *,
     ffmpeg_bin: str = "ffmpeg",
 ) -> list[str]:
-    """Build a full-frame vertical render; there is intentionally no crop tracker."""
+    """Build a full-frame vertical render; there is intentionally no crop tracker.
+
+    ``subtitle_path`` is an ``.ass`` file with an explicit PlayRes (see
+    ``render_ass``) so the burned-in caption renders at the size and margins
+    it was authored for, instead of ffmpeg guessing an authoring resolution
+    for a bare SRT and silently rescaling FontSize by several times.
+    """
     subtitle = _escape_filter_path(subtitle_path)
-    subtitle_filter = (
-        f"subtitles=filename='{subtitle}':force_style='"
-        "FontName=Noto Sans CJK SC,FontSize=19,Bold=-1,"
-        "PrimaryColour=&H00FFFFFF,OutlineColour=&H00101010,"
-        "BorderStyle=1,BackColour=&H00000000,Outline=1.7,Shadow=0.5,"
-        "MarginV=235,Alignment=2'"
-    )
     filters = (
         "[0:v]split=2[bg][fg];"
-        "[bg]scale=1080:1920:force_original_aspect_ratio=increase,"
-        "crop=1080:1920,gblur=sigma=32,eq=brightness=-0.22:saturation=0.82[bg2];"
-        "[fg]scale=1080:1920:force_original_aspect_ratio=decrease[fg2];"
+        f"[bg]scale={OUTPUT_WIDTH}:{OUTPUT_HEIGHT}:force_original_aspect_ratio=increase,"
+        f"crop={OUTPUT_WIDTH}:{OUTPUT_HEIGHT},gblur=sigma=32,"
+        "eq=brightness=-0.22:saturation=0.82[bg2];"
+        f"[fg]scale={OUTPUT_WIDTH}:{OUTPUT_HEIGHT}:force_original_aspect_ratio=decrease[fg2];"
         "[bg2][fg2]overlay=(W-w)/2:(H-h)/2[full];"
-        f"[full]{subtitle_filter}[outv]"
+        f"[full]subtitles=filename='{subtitle}'[outv]"
     )
     return [
         ffmpeg_bin,
@@ -1004,7 +1053,7 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
     score = selection.match.score_display(from_winner=True)
-    category = "Hot Shots" if selection.consensus_rank == 1 else "这一分，值回放"
+    category = "神仙球" if selection.consensus_rank == 1 else "这一分，值回放"
     title = f"🎾{published_for.month}.{published_for.day}｜{category}"
     source_title = _clean(selection.metadata.candidate.title)
     if selection.consensus_rank == 3:
@@ -1012,7 +1061,7 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     elif selection.consensus_rank == 2:
         hook = "这场比赛里最值得回放的一分，不是只看最后一拍就够了。"
     elif selection.consensus_rank == 1:
-        hook = "Tennis TV 的 Hot Shot：还没看到最后，观众已经开始喊了。"
+        hook = "这一拍被官方直接盖章「神仙球」，还没看到最后，观众已经开始喊了。"
     elif "rally" in source_title:
         hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
     elif "shot" in source_title:
@@ -1034,24 +1083,27 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     return copy
 
 
-def point_push_html(digest: Digest, copy: str) -> str:
-    """Build a phone-friendly PushPlus package without public source credits."""
+def point_push_html(digest: Digest, copy: str, *, tour_dir: str = "") -> str:
+    """Build a phone-friendly PushPlus package without public source credits.
+
+    ``tour_dir`` is the ``atp``/``wta`` subfolder a per-tour package renders
+    into; empty keeps the legacy single-package layout.
+    """
     lines = copy.strip().splitlines()
     title = lines[0].strip() if lines else "昨日好球"
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
     body = "\n".join(lines[body_start:]).strip()
     repository = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    subpath = f"yesterday-point/{tour_dir}" if tour_dir else "yesterday-point"
     video_url = (
         f"https://cdn.jsdelivr.net/gh/{repository}@main/output/"
-        f"{digest.today.isoformat()}/yesterday-point/yesterday-point.mp4"
+        f"{digest.today.isoformat()}/{subpath}/yesterday-point.mp4"
     )
     owner, _, repo_name = repository.partition("/")
     pages_root = os.environ.get(
         "TENNISLIVE_PAGES_URL", f"https://{owner}.github.io/{repo_name}"
     ).rstrip("/")
-    copy_url = (
-        f"{pages_root}/output/{digest.today.isoformat()}/yesterday-point/copy.html"
-    )
+    copy_url = f"{pages_root}/output/{digest.today.isoformat()}/{subpath}/copy.html"
     return (
         '<div style="background:#f6f7f4;color:#17251f;padding:12px 10px;">'
         '<div style="max-width:680px;margin:0 auto;background:#fff;border-top:5px solid #ff2442;'
@@ -1102,13 +1154,25 @@ def render_daily_point(
         raise VideoPipelineError(f"ffprobe executable not found: {ffprobe_bin}")
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    cues = _caption_cues(selection)
     subtitle_path = output_dir / "yesterday-point.zh-CN.srt"
+    caption_path = output_dir / "yesterday-point.ass"
     output_path = output_dir / "yesterday-point.mp4"
-    subtitle_path.write_text(render_srt(_caption_cues(selection)), encoding="utf-8")
+    subtitle_path.write_text(render_srt(cues), encoding="utf-8")
+    caption_path.write_text(
+        render_ass(
+            cues,
+            play_res_x=OUTPUT_WIDTH,
+            play_res_y=OUTPUT_HEIGHT,
+            font_size=CAPTION_FONT_SIZE,
+            margin_v=CAPTION_MARGIN_V,
+        ),
+        encoding="utf-8",
+    )
     command = build_point_ffmpeg_command(
         selection,
         output_path,
-        subtitle_path,
+        caption_path,
         ffmpeg_bin=ffmpeg_bin,
     )
     try:
@@ -1138,27 +1202,24 @@ def render_daily_point(
     return output_path
 
 
-def generate_yesterday_point(digest: Digest, output_dir: Path) -> Path | None:
-    """GitHub Actions entry point; missing a verified clip is a clean skip."""
-    if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
-        return None
-    selection = discover_official_point(digest)
-    if selection is None:
-        return None
-    output_dir = Path(output_dir).resolve()
-    output = render_daily_point(selection, output_dir)
+def _generate_tour_point(
+    tour: str, selection: PointSelection, digest: Digest, tour_dir: Path
+) -> Path:
+    """Render one tour's package (video, copy, manifest) into its own subdir."""
+    output = render_daily_point(selection, tour_dir)
     copy = point_xiaohongshu_copy(selection, digest.today)
-    (output_dir / "xiaohongshu.txt").write_text(copy, encoding="utf-8")
+    (tour_dir / "xiaohongshu.txt").write_text(copy, encoding="utf-8")
     from ..render.pushmsg import to_copy_page
 
-    (output_dir / "copy.html").write_text(to_copy_page(copy), encoding="utf-8")
-    (output_dir / "push.html").write_text(
-        point_push_html(digest, copy), encoding="utf-8"
+    (tour_dir / "copy.html").write_text(to_copy_page(copy), encoding="utf-8")
+    (tour_dir / "push.html").write_text(
+        point_push_html(digest, copy, tour_dir=tour.lower()), encoding="utf-8"
     )
     manifest = {
         "status": "pass",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "project": "yesterday-point",
+        "tour": tour,
         "published_for": digest.today.isoformat(),
         "match_date": digest.yesterday.isoformat(),
         "source": asdict(selection.metadata.candidate),
@@ -1198,7 +1259,7 @@ def generate_yesterday_point(digest: Digest, output_dir: Path) -> Path | None:
             "montage": False,
         },
         "framing": {
-            "canvas": "9:16",
+            "canvas": "3:4",
             "foreground": "full-source-frame",
             "mode": "contain",
             "dynamic_tracking_crop": False,
@@ -1212,7 +1273,25 @@ def generate_yesterday_point(digest: Digest, output_dir: Path) -> Path | None:
             "pushplus": "push.html",
         },
     }
-    (output_dir / "manifest.json").write_text(
+    (tour_dir / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return output
+
+
+def generate_yesterday_point(digest: Digest, output_dir: Path) -> dict[str, Path]:
+    """GitHub Actions entry point.
+
+    Publishes one ATP and one WTA package independently under
+    ``output_dir/atp`` and ``output_dir/wta``; a tour with no verified clip
+    that day is a clean skip for that tour only, not the other.
+    """
+    if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
+        return {}
+    output_dir = Path(output_dir).resolve()
+    picks = discover_official_points_by_tour(digest)
+    outputs: dict[str, Path] = {}
+    for tour, selection in picks.items():
+        tour_dir = output_dir / tour.lower()
+        outputs[tour] = _generate_tour_point(tour, selection, digest, tour_dir)
+    return outputs
