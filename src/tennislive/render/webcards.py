@@ -2266,7 +2266,11 @@ def _knowledge_timeline_body(
         media = _knowledge_photo(
             story,
             photo_caption,
-            f"{first.date[:4]} · {first.player}" if first else story.location,
+            (
+                f"{first.date[:4]} · {first.age} · {first.player}"
+                if first and story.slug == "big-three"
+                else f"{first.date[:4]} · {first.player}" if first else story.location
+            ),
             visual=visual,
             compact=True,
         )
@@ -2477,7 +2481,8 @@ def _knowledge_fact_body(
     page_class = " has-page-photo" if has_photo else ""
     if story.slug == "big-three" and len(story.moments) > 1:
         mid = story.moments[1]
-        caption, subline = mid.headline, f"{mid.date[:4]} · {mid.player}"
+        caption = mid.headline
+        subline = f"{mid.date[:4]} · {mid.age} · {mid.player}"
     else:
         caption, subline = story.venue, story.location
     media = (
@@ -2584,7 +2589,11 @@ def _knowledge_today_body(
         photo_meta = (
             "2010 · 温网18号球场"
             if story.slug == "longest-match"
-            else f"{last.date[:4]} · {last.player}" if last else story.location
+            else (
+                f"{last.date[:4]} · {last.age} · {last.player}"
+                if last and story.slug == "big-three"
+                else f"{last.date[:4]} · {last.player}" if last else story.location
+            )
         )
         media = _knowledge_photo(
             story,
