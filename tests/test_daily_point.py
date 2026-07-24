@@ -24,6 +24,7 @@ from tennislive.video.daily_point import (
     validate_rendered_point,
     yesterday_matches,
 )
+from tennislive.video import daily_point as daily_point_module
 from tennislive.video.official import OfficialVideoCandidate, OfficialVideoMetadata
 from tennislive.video.official import ATP_YOUTUBE_CHANNEL_ID
 from tennislive.video.pipeline import VideoPipelineError
@@ -409,7 +410,7 @@ def test_ffmpeg_keeps_full_16_by_9_foreground_without_tracking_crop(
     )
     filters = command[command.index("-filter_complex") + 1]
 
-    assert "[fg]scale=1080:1920:force_original_aspect_ratio=decrease" in filters
+    assert "[fg]scale=1080:1440:force_original_aspect_ratio=decrease" in filters
     assert "overlay=(W-w)/2:(H-h)/2" in filters
     assert "subtitles=filename=" in filters
     assert "drawtext" not in filters
@@ -417,6 +418,8 @@ def test_ffmpeg_keeps_full_16_by_9_foreground_without_tracking_crop(
     assert "sendcmd" not in filters
     assert "cropdetect" not in filters
     assert "-ss" not in command
+    assert command.count("-i") == 2
+    assert str(daily_point_module.BRAND_ICON_PATH) in command
     assert "-t" not in command
 
 
@@ -435,12 +438,12 @@ def test_render_writes_context_subtitles_and_passes_quality_gate(
         selection,
         tmp_path,
         runner=runner,
-        prober=lambda _: VideoProbe(1080, 1920, 28.0, 30.0, "h264", 250_000),
+        prober=lambda _: VideoProbe(1080, 1440, 28.0, 30.0, "h264", 250_000),
     )
 
     assert output.name == "yesterday-point.mp4"
     subtitle = (tmp_path / "yesterday-point.zh-CN.srt").read_text(encoding="utf-8")
-    assert "这一分，值回放" in subtitle
+    assert " vs " in subtitle
     assert "赛果" in subtitle
     assert not (tmp_path / "source-overlay.txt").exists()
     assert calls[0][1]["timeout"] == 300
@@ -463,7 +466,7 @@ def test_render_retries_progressive_source_after_hls_failure(
         selection,
         tmp_path,
         runner=runner,
-        prober=lambda _: VideoProbe(1080, 1920, 28.0, 30.0, "h264", 250_000),
+        prober=lambda _: VideoProbe(1080, 1440, 28.0, 30.0, "h264", 250_000),
     )
 
     assert selection.metadata.playback_url in calls[0]
@@ -475,11 +478,11 @@ def test_quality_gate_rejects_truncated_or_low_frame_rate(sample_digest):
 
     with pytest.raises(VideoPipelineError, match="未完整保留"):
         validate_rendered_point(
-            selection, VideoProbe(1080, 1920, 19.0, 30.0, "h264", 300_000)
+            selection, VideoProbe(1080, 1440, 19.0, 30.0, "h264", 300_000)
         )
     with pytest.raises(VideoPipelineError, match="帧率过低"):
         validate_rendered_point(
-            selection, VideoProbe(1080, 1920, 28.0, 20.0, "h264", 300_000)
+            selection, VideoProbe(1080, 1440, 28.0, 20.0, "h264", 300_000)
         )
 
 
@@ -497,6 +500,25 @@ def test_xiaohongshu_copy_is_one_plain_mobile_paragraph(sample_digest):
     assert "来源：" not in body
     assert "先猜" not in body
     validate_point_copy(copy)
+
+
+def test_burned_in_caption_varies_by_clip_but_is_stable_per_clip(sample_digest):
+    selection = _selection(sample_digest)
+    other = replace(
+        selection,
+        published_at="2026-01-01T00:00:00Z",
+    )
+
+    first_a, second_a = daily_point_module._context_text(selection)
+    first_b, second_b = daily_point_module._context_text(selection)
+    first_other, second_other = daily_point_module._context_text(other)
+
+    assert (first_a, second_a) == (first_b, second_b)
+    assert (first_a, second_a) != (first_other, second_other)
+    for line in (first_a, first_other):
+        assert " vs " in line
+    for line in (second_a, second_other):
+        assert "赛果" in line
 
 
 def test_copy_validator_rejects_three_body_paragraphs():
@@ -529,8 +551,8 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     selection = _selection(sample_digest)
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
-        "tennislive.video.daily_point.discover_official_point",
-        lambda _digest: selection,
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: {"WTA": selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -546,13 +568,75 @@ def test_package_keeps_consensus_sources_only_in_manifest(
         "tennislive.video.daily_point.render_daily_point", fake_render
     )
 
-    generate_yesterday_point(sample_digest, tmp_path)
+    outputs = generate_yesterday_point(sample_digest, tmp_path)
 
-    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert set(outputs) == {"WTA"}
+    tour_dir = tmp_path / "wta"
+    manifest = json.loads((tour_dir / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["source"]["url"].startswith("https://www.wtatennis.com/")
     assert manifest["consensus"]["score"] >= 100
     assert manifest["consensus"]["signals"][0]["kind"] == "official-best-designation"
     for public_name in ("xiaohongshu.txt", "copy.html", "push.html"):
-        public = (tmp_path / public_name).read_text(encoding="utf-8")
+        public = (tour_dir / public_name).read_text(encoding="utf-8")
         assert selection.metadata.candidate.url not in public
         assert selection.source_label not in public
+
+
+def test_generate_publishes_atp_and_wta_independently(sample_digest, monkeypatch, tmp_path):
+    wta_selection = _selection(sample_digest)
+    atp_selection = replace(
+        wta_selection,
+        match=replace(sample_digest.results[0]),
+    )
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+    )
+
+    def fake_render(_selection, output_dir):
+        output = output_dir / "yesterday-point.mp4"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"video")
+        (output_dir / "yesterday-point.zh-CN.srt").write_text(
+            "昨日好球", encoding="utf-8"
+        )
+        return output
+
+    monkeypatch.setattr("tennislive.video.daily_point.render_daily_point", fake_render)
+
+    outputs = generate_yesterday_point(sample_digest, tmp_path)
+
+    assert set(outputs) == {"ATP", "WTA"}
+    for tour_dir_name in ("atp", "wta"):
+        tour_dir = tmp_path / tour_dir_name
+        assert (tour_dir / "yesterday-point.mp4").exists()
+        manifest = json.loads((tour_dir / "manifest.json").read_text(encoding="utf-8"))
+        assert manifest["status"] == "pass"
+        push_html = (tour_dir / "push.html").read_text(encoding="utf-8")
+        assert f"/yesterday-point/{tour_dir_name}/yesterday-point.mp4" in push_html
+
+
+def test_generate_skips_only_the_tour_with_no_qualifying_clip(
+    sample_digest, monkeypatch, tmp_path
+):
+    wta_selection = _selection(sample_digest)
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: {"WTA": wta_selection},
+    )
+
+    def fake_render(_selection, output_dir):
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output = output_dir / "yesterday-point.mp4"
+        output.write_bytes(b"video")
+        (output_dir / "yesterday-point.zh-CN.srt").write_text("x", encoding="utf-8")
+        return output
+
+    monkeypatch.setattr("tennislive.video.daily_point.render_daily_point", fake_render)
+
+    outputs = generate_yesterday_point(sample_digest, tmp_path)
+
+    assert set(outputs) == {"WTA"}
+    assert not (tmp_path / "atp").exists()
