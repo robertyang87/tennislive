@@ -640,3 +640,53 @@ def test_generate_skips_only_the_tour_with_no_qualifying_clip(
 
     assert set(outputs) == {"WTA"}
     assert not (tmp_path / "atp").exists()
+
+
+def test_generate_does_not_redo_a_tour_already_marked_done(
+    sample_digest, monkeypatch, tmp_path
+):
+    atp_selection = replace(
+        _selection(sample_digest), match=replace(sample_digest.results[0])
+    )
+    wta_selection = _selection(sample_digest)
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+    )
+    rendered = []
+
+    def fake_render(_selection, output_dir):
+        rendered.append(output_dir.name)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output = output_dir / "yesterday-point.mp4"
+        output.write_bytes(b"video")
+        (output_dir / "yesterday-point.zh-CN.srt").write_text("x", encoding="utf-8")
+        return output
+
+    monkeypatch.setattr("tennislive.video.daily_point.render_daily_point", fake_render)
+
+    outputs = generate_yesterday_point(
+        sample_digest, tmp_path, skip_tours=frozenset({"ATP"})
+    )
+
+    assert set(outputs) == {"WTA"}
+    assert rendered == ["wta"]
+
+
+def test_generate_skips_discovery_when_every_tour_already_done(
+    sample_digest, monkeypatch, tmp_path
+):
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest: (_ for _ in ()).throw(
+            AssertionError("should not query sources when both tours are already done")
+        ),
+    )
+
+    outputs = generate_yesterday_point(
+        sample_digest, tmp_path, skip_tours=frozenset({"ATP", "WTA"})
+    )
+
+    assert outputs == {}

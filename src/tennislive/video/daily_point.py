@@ -57,9 +57,9 @@ MIN_OUTPUT_FPS = 23.0
 OUTPUT_WIDTH = 1080
 OUTPUT_HEIGHT = 1440
 CAPTION_FONT_SIZE = 56
-CAPTION_MARGIN_V = 175
+CAPTION_MARGIN_V = 300
 # Same corner-mark placement as the card images (render/cards.py): brand icon
-# + name top-left, "@handle" bottom-right.
+# + name top-left, "@handle · TENNIS JETLAG" bottom-right.
 BRAND_TEXT = "网球时差"
 BRAND_ICON_PATH = Path(__file__).resolve().parents[3] / "assets" / "logo" / "tennis-clock-icon.png"
 BRAND_ICON_SIZE = 64
@@ -67,7 +67,7 @@ BRAND_ICON_MARGIN = 40
 BRAND_TOP_FONT_SIZE = 34
 BRAND_TOP_MARGIN_L = BRAND_ICON_MARGIN + BRAND_ICON_SIZE + 12
 BRAND_TOP_MARGIN_V = 44
-BRAND_BOTTOM_FONT_SIZE = 30
+BRAND_BOTTOM_FONT_SIZE = 26
 BRAND_BOTTOM_MARGIN_R = BRAND_ICON_MARGIN
 BRAND_BOTTOM_MARGIN_V = BRAND_ICON_MARGIN
 
@@ -1193,7 +1193,7 @@ def render_daily_point(
                     margin_v=BRAND_TOP_MARGIN_V,
                 ),
                 AssOverlay(
-                    f"@{BRAND_TEXT}",
+                    f"@{BRAND_TEXT} · TENNIS JETLAG",
                     alignment=3,
                     font_size=BRAND_BOTTOM_FONT_SIZE,
                     margin_r=BRAND_BOTTOM_MARGIN_R,
@@ -1313,19 +1313,33 @@ def _generate_tour_point(
     return output
 
 
-def generate_yesterday_point(digest: Digest, output_dir: Path) -> dict[str, Path]:
+def generate_yesterday_point(
+    digest: Digest,
+    output_dir: Path,
+    *,
+    skip_tours: frozenset[str] = frozenset(),
+) -> dict[str, Path]:
     """GitHub Actions entry point.
 
     Publishes one ATP and one WTA package independently under
     ``output_dir/atp`` and ``output_dir/wta``; a tour with no verified clip
     that day is a clean skip for that tour only, not the other.
+
+    ``skip_tours`` lets a caller re-run this later the same day without
+    redoing (or re-pushing) a tour that already succeeded -- the point of
+    the retry cadence is to keep trying only the tour that is still
+    missing, since official channels don't all upload at the same time.
     """
     if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
         return {}
     output_dir = Path(output_dir).resolve()
+    if skip_tours >= {"ATP", "WTA"}:
+        return {}
     picks = discover_official_points_by_tour(digest)
     outputs: dict[str, Path] = {}
     for tour, selection in picks.items():
+        if tour in skip_tours:
+            continue
         tour_dir = output_dir / tour.lower()
         outputs[tour] = _generate_tour_point(tour, selection, digest, tour_dir)
     return outputs

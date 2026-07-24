@@ -2,8 +2,13 @@ name: yesterday-tennis-point
 
 on:
   schedule:
-    # 给官方赛后视频留出上架时间：北京时间每天 09:23。
-    - cron: "23 1 * * *"
+    # ATP、WTA 官方视频上架时间不同步，四班次独立重试：一方先有素材先推送，
+    # 另一方留到下一班次继续找，互不等待。已经成功的巡回赛后续班次会被跳过，
+    # 不重复生成也不重复推送（见 cmd_yesterday_point 的 skip_tours 逻辑）。
+    - cron: "0 22 * * *"    # 北京时间 06:00（首班）
+    - cron: "0 0 * * *"     # 北京时间 08:00（重试）
+    - cron: "0 2 * * *"     # 北京时间 10:00（重试）
+    - cron: "0 4 * * *"     # 北京时间 12:00（末班）
   workflow_dispatch:
     inputs:
       date:
@@ -67,7 +72,8 @@ jobs:
           DATE_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print(parse_date_arg('$DATE_ARG').isoformat())")
           OUT_DIR="output/$DATE_DIR/yesterday-point"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
-          rm -rf "$OUT_DIR"
+          # 不清空 OUT_DIR：已提交的 atp/wta 内容要留在工作区，
+          # 这样 CLI 才能识别出哪个巡回赛这次该跳过、哪个还要继续找。
           tennislive point --date "$DATE_ARG" --outdir output
 
       - name: 严格质量门禁
@@ -155,18 +161,20 @@ jobs:
           git push origin "${{ github.ref_name }}"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
-      - name: PushPlus 推送昨日 Hot Shots / 最佳回合（ATP、WTA 分别推送）
+      - name: PushPlus 推送昨日 Hot Shots / 最佳回合（只推本次新完成的巡回赛）
         if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''
         continue-on-error: true
         run: |
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          for TOUR in atp wta; do
-            TDIR="$OUT_DIR/$TOUR"
-            if [ -s "$TDIR/manifest.json" ] && [ "$(jq -r '.status' "$TDIR/manifest.json")" = "pass" ]; then
-              tennislive publish pushplus --dir "$TDIR" \
-                || echo "::warning::$TOUR PushPlus 推送失败"
-            else
-              echo "$TOUR 没有经官方 Hot Shots / 最佳回合标签验证的完整回合，跳过推送"
-            fi
+          # 只推 fresh_tours：之前班次已经推送过的巡回赛即使仍是 pass 也不会
+          # 再进这个列表，避免同一份内容重复推送到微信。
+          FRESH=$(jq -r '.fresh_tours[]? // empty' "$OUT_DIR/manifest.json" | tr '[:upper:]' '[:lower:]')
+          if [ -z "$FRESH" ]; then
+            echo "本次没有新完成的巡回赛，跳过推送"
+            exit 0
+          fi
+          for TOUR in $FRESH; do
+            tennislive publish pushplus --dir "$OUT_DIR/$TOUR" \
+              || echo "::warning::$TOUR PushPlus 推送失败"
           done
