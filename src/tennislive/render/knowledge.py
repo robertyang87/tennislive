@@ -409,9 +409,19 @@ def knowledge_push_html(
     *,
     card_names: list[str],
     xhs_text: str,
+    output_dir_name: str = "knowledge",
 ) -> str:
+    """Build the WeChat push HTML.
+
+    ``output_dir_name`` must match the actual leaf directory the caller
+    passed to ``generate_knowledge_package`` (``"knowledge"`` for the daily
+    auto-selected post, ``"knowledge_adhoc"`` for ad-hoc runs). A hardcoded
+    ``"knowledge"`` here would silently point every ad-hoc push at whichever
+    story the same-day daily digest happened to generate instead of the
+    story actually being pushed.
+    """
     d = digest.today
-    copy_url = f"{_PAGES}/output/{d.isoformat()}/knowledge/copy.html"
+    copy_url = f"{_PAGES}/output/{d.isoformat()}/{output_dir_name}/copy.html"
     lines = xhs_text.strip().splitlines()
     title = html.escape(lines[0] if lines else knowledge_title(story, digest))
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
@@ -425,7 +435,7 @@ def knowledge_push_html(
         )
     images = []
     for index, card_name in enumerate(card_names, 1):
-        card_url = f"{_CDN}/output/{d.isoformat()}/knowledge/cards/{card_name}"
+        card_url = f"{_CDN}/output/{d.isoformat()}/{output_dir_name}/cards/{card_name}"
         images.append(
             f'<img src="{card_url}" data-src="{card_url}" width="100%" '
             f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
@@ -678,6 +688,7 @@ def _generate_knowledge_candidate(
             story,
             card_names=[path.name for path in card_paths],
             xhs_text=xhs_text,
+            output_dir_name=outdir.name,
         ),
         encoding="utf-8",
     )
