@@ -1391,8 +1391,8 @@ STORIES = STORIES + (
             "三人合计 66 座大满贯，约占同期大满贯总数的八成。",
             "年终第一连续 18 年被三巨头与穆雷包揽，"
             "直到 2022 年阿尔卡拉斯打破。",
-            "德约与纳达尔交手 60 次（德约 31-29 领先），"
-            "是公开赛时代男子对决次数之最。",
+            "德约与纳达尔互为最熟悉的对手，60 次交手创下"
+            "男子对决之最（德约 31-29）。",
         ),
         moments=(
             ChampionMoment(
@@ -1448,6 +1448,7 @@ STORIES = STORIES + (
             "novak-djokovic-prediction-breaking-roger-federer-grand-slam-"
             "title-record-point"
         ),
+        fact_roles=("", "turning_point", ""),
     ),
     _trivia_story(
         slug="china-tennis",
