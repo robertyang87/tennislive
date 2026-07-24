@@ -1313,19 +1313,33 @@ def _generate_tour_point(
     return output
 
 
-def generate_yesterday_point(digest: Digest, output_dir: Path) -> dict[str, Path]:
+def generate_yesterday_point(
+    digest: Digest,
+    output_dir: Path,
+    *,
+    skip_tours: frozenset[str] = frozenset(),
+) -> dict[str, Path]:
     """GitHub Actions entry point.
 
     Publishes one ATP and one WTA package independently under
     ``output_dir/atp`` and ``output_dir/wta``; a tour with no verified clip
     that day is a clean skip for that tour only, not the other.
+
+    ``skip_tours`` lets a caller re-run this later the same day without
+    redoing (or re-pushing) a tour that already succeeded -- the point of
+    the retry cadence is to keep trying only the tour that is still
+    missing, since official channels don't all upload at the same time.
     """
     if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
         return {}
     output_dir = Path(output_dir).resolve()
+    if skip_tours >= {"ATP", "WTA"}:
+        return {}
     picks = discover_official_points_by_tour(digest)
     outputs: dict[str, Path] = {}
     for tour, selection in picks.items():
+        if tour in skip_tours:
+            continue
         tour_dir = output_dir / tour.lower()
         outputs[tour] = _generate_tour_point(tour, selection, digest, tour_dir)
     return outputs

@@ -473,7 +473,11 @@ def cmd_yesterday_point(args) -> int:
 
     ATP and WTA are discovered and published independently under
     ``atp/`` and ``wta/`` subdirectories; either tour can pass or skip on
-    its own.
+    its own. A tour that already passed in an earlier run today (e.g. an
+    earlier retry pass) is left untouched and not re-pushed -- only a tour
+    still missing its clip is retried. This is what lets the workflow run
+    several times a day and have whichever tour's video shows up first get
+    pushed immediately, while the other keeps retrying independently.
     """
     from .render.terminal import console
     from .video.daily_point import generate_yesterday_point
@@ -481,9 +485,23 @@ def cmd_yesterday_point(args) -> int:
     d = parse_date_arg(args.date)
     output_dir = Path(args.outdir) / d.isoformat() / "yesterday-point"
     output_dir.mkdir(parents=True, exist_ok=True)
+    already_done: set[str] = set()
+    for tour in ("ATP", "WTA"):
+        manifest_path = output_dir / tour.lower() / "manifest.json"
+        if not manifest_path.is_file():
+            continue
+        try:
+            existing = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            existing = {}
+        if existing.get("status") == "pass":
+            already_done.add(tour)
+
     try:
         digest = build_digest(d, prefer=args.source)
-        videos = generate_yesterday_point(digest, output_dir)
+        videos = generate_yesterday_point(
+            digest, output_dir, skip_tours=frozenset(already_done)
+        )
     except Exception as exc:  # noqa: BLE001
         (output_dir / "manifest.json").write_text(
             json.dumps(
@@ -506,10 +524,14 @@ def cmd_yesterday_point(args) -> int:
         "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
         "官方单分标签、完整回合和日期匹配的视频。"
         "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
-        "Action 不会读取浏览器登录态。"
+        "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
     )
     tour_status: dict[str, str] = {}
     for tour in ("ATP", "WTA"):
+        if tour in already_done:
+            tour_status[tour] = "pass"
+            console.print(f"[green]{tour} 昨日好球此前已生成，本次不重复生成/推送[/green]")
+            continue
         if tour in videos:
             tour_status[tour] = "pass"
             console.print(f"[green]{tour} 昨日好球已生成：{videos[tour]}[/green]")
@@ -536,10 +558,11 @@ def cmd_yesterday_point(args) -> int:
     (output_dir / "manifest.json").write_text(
         json.dumps(
             {
-                "status": "pass" if videos else "skipped",
+                "status": "pass" if (videos or already_done) else "skipped",
                 "project": "yesterday-point",
                 "published_for": d.isoformat(),
                 "tours": tour_status,
+                "fresh_tours": sorted(videos),
             },
             ensure_ascii=False,
             indent=2,

@@ -1,9 +1,18 @@
 # 「这一分，值回放」自动项目
 
 公开栏目名为「这一分，值回放」；内部任务名保留 `yesterday-point`。`tennislive point` 与日报、网球故事分开运行，输出到
-`output/YYYY-MM-DD/yesterday-point/`。GitHub Action 在北京时间 09:23 执行，给赛事官方留出上传赛后视频的时间。
+`output/YYYY-MM-DD/yesterday-point/`。
 
 ATP、WTA 各自独立选片、独立发布：互不挤占对方的名额，也不会因为另一方有更强的候选就被跳过。当天只有一方有满足硬门槛的视频时，只发布这一方；两边都有时各自成片、各自推送，分别位于 `yesterday-point/atp/` 与 `yesterday-point/wta/` 子目录，各自的 `manifest.json`、质量门禁与 PushPlus 推送完全独立。
+
+### 独立重试：谁先有素材先推谁
+
+两个巡回赛官方视频的上架时间并不同步，因此 GitHub Action 北京时间一天跑四班（09:23／12:23／15:23／19:23），给还没上架素材的一方持续重试的机会：
+
+- 每一班次先检查 `atp/`、`wta/` 各自现有的 `manifest.json`；已经是 `status=pass` 的巡回赛本班次直接跳过——不重新抓取、不重新渲染、更不会重新推送同一条内容。
+- 只有仍缺素材（`skipped`）的巡回赛会在本班次继续查询官方源；一旦找到合格视频就立即生成并推送，不等另一方。
+- 顶层 `manifest.json` 的 `fresh_tours` 字段记录本班次真正新完成的巡回赛，PushPlus 只推送这个列表——这是避免同一条内容被重复推送到微信的关键。
+- 到 19:23 末班仍未凑齐的一方，当天维持 `skipped`，不会无限重试下去。
 
 ## 选片硬门槛
 
