@@ -152,26 +152,30 @@ def test_wait_for_images_uses_automatic_action_retry_window(monkeypatch):
     sleep.assert_called_once_with(15.0)
 
 
-def test_prepare_image_delivery_uses_github_pages_fallback(tmp_path, monkeypatch):
+def test_prepare_image_delivery_uses_jsdelivr_fallback(tmp_path, monkeypatch):
     cards = tmp_path / "cards"
     cards.mkdir()
     (cards / "cover.jpg").write_bytes(b"image")
     monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
-    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc123")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
 
     rendered, provider = prepare_image_delivery(
         '<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
-        'tennislive@abc123/output/2026-07-23/cards/cover.jpg">',
+        'tennislive@main/output/2026-07-23/cards/cover.jpg">',
         asset_dir=tmp_path,
         token="token",
     )
 
-    assert provider == "github-pages"
+    assert provider == "jsdelivr"
+    # Pinned to the exact commit (not "@main") so the URL path itself is a
+    # distinct resource per version -- avoids caches that key off the path
+    # only and ignore query strings.
     assert (
-        "https://robertyang87.github.io/tennislive/output/2026-07-23/"
-        "cards/cover.jpg?v=abc123"
+        "https://cdn.jsdelivr.net/gh/robertyang87/tennislive@abc1234/"
+        "output/2026-07-23/cards/cover.jpg"
     ) in rendered
-    assert "cdn.jsdelivr.net" not in rendered
+    assert "@main/" not in rendered
+    assert "github.io" not in rendered
 
 
 def test_prepare_image_delivery_uploads_every_card_to_pushplus(
