@@ -280,6 +280,26 @@ def _golden_slam_copy(story: TournamentStory, digest: Digest) -> str:
     )
 
 
+def _big_three_copy(story: TournamentStory, digest: Digest) -> str:
+    return (
+        "三个人，重新画出了网球时代\n\n"
+        "⏳ 66座大满贯，18年年终第一，被三个人和一位挑战者瓜分殆尽——\n"
+        "这不是夸张，是网球公开赛时代最真实的战绩。\n\n"
+        "🏆 费德勒20冠、纳达尔22冠、德约科维奇24冠，三人合计66座大满贯，同期八成冠军都在他们手里。\n\n"
+        "🔒 年终第一连续18年被他们三人和穆雷垄断，直到2022年阿尔卡拉斯才把门撬开。\n\n"
+        "🌧️ 2008年温网，两度因雨中断，天几乎黑透，纳达尔9-7逆转拿下决胜盘，"
+        "终结费德勒的温网五连冠——很多人心里的“史上最伟大一战”。\n\n"
+        "⏱️ 2012年澳网决赛，两人打到5小时53分钟，颁奖礼上双双累到站不住，主办方现场搬来了椅子。\n\n"
+        "💔 2019年温网，费德勒决胜盘手握2个冠军点，最后还是没能兑现。"
+        "德约13-12逆转夺冠，创下温网历史首个决胜盘抢七。\n\n"
+        "🕰️ 三个人几乎同时出现，又几乎同时把网球这项运动重新定义了一遍。"
+        "这样的时代，此前没有过，大概率也不会再有。\n\n"
+        "💬 三巨头时代，你最先站谁？评论区聊聊。\n\n"
+        "关注 @网球时差｜把比分背后的来路讲给你听。\n\n"
+        "#网球 #费德勒 #纳达尔 #德约科维奇 #三巨头"
+    )
+
+
 def _longest_match_copy(story: TournamentStory, digest: Digest) -> str:
     title = knowledge_title(story, digest)
     question = _knowledge_question(story)
@@ -338,6 +358,8 @@ def knowledge_copy(story: TournamentStory, digest: Digest) -> str:
         return _golden_slam_copy(story, digest)
     if story.slug == "longest-match":
         return _longest_match_copy(story, digest)
+    if story.slug == "big-three":
+        return _big_three_copy(story, digest)
     title = knowledge_title(story, digest)
     items = _caption_items(story)
     moments = "\n\n".join(
