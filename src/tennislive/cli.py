@@ -174,7 +174,9 @@ def cmd_flash_card(args) -> int:
     from .render.sensitivity import sensitive_category
     from .render.terminal import console
 
-    category = sensitive_category(args.headline, args.quote)
+    category = sensitive_category(
+        args.headline, args.event, args.punch, args.who
+    )
     if category and not args.force:
         console.print(
             f"[yellow]该快讯命中敏感类别（{category}），默认转人工复核，未生成。"
@@ -188,7 +190,11 @@ def cmd_flash_card(args) -> int:
     try:
         card_path = generate_flash_card(
             args.headline,
-            quote=args.quote,
+            event=args.event,
+            when=args.when,
+            where=args.where,
+            who=args.who,
+            punch=args.punch,
             source_label=args.source_label,
             date_label=f"{d.month}.{d.day}",
             out_path=outdir / "flash-card.jpg",
@@ -198,13 +204,28 @@ def cmd_flash_card(args) -> int:
         console.print(f"[red]快讯卡渲染失败：{e}[/red]")
         return 2
 
+    meta = "｜".join(
+        part
+        for part in (
+            f"🗓 {args.when}" if args.when else "",
+            f"📍 {args.where}" if args.where else "",
+            f"👤 {args.who}" if args.who else "",
+        )
+        if part
+    )
     question = args.question or "你怎么看这件事？评论区聊聊。"
-    copy = (
-        f"{args.headline}\n\n"
-        f"{args.quote}\n\n"
-        f"💬 {question}\n\n"
-        "关注 @网球时差｜第一时间把网球场内外的故事讲给你听。\n\n"
-        "#网球 #网球快讯 #网球时差"
+    copy = "\n\n".join(
+        part
+        for part in (
+            args.headline,
+            meta,
+            args.event,
+            args.punch,
+            f"💬 {question}",
+            "关注 @网球时差｜第一时间把网球场内外的故事讲给你听。",
+            "#网球 #网球快讯 #网球时差",
+        )
+        if part
     )
     (outdir / "flash_copy.txt").write_text(copy, encoding="utf-8")
     if category:
@@ -1183,7 +1204,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="单图快讯卡：一条及时网球新闻 → 一张品牌图 + 小红书文案（敏感话题默认转人工）",
     )
     sp.add_argument("--headline", required=True, help="新闻钩子标题")
-    sp.add_argument("--quote", required=True, help="核心事实或当事人金句（由调用方核实）")
+    sp.add_argument("--event", required=True, help="具体事件：到底发生了什么（由调用方核实）")
+    sp.add_argument("--when", default="", help="时间（如 2010 温网 / 昨夜）")
+    sp.add_argument("--where", default="", help="地点（如 温布尔登 18 号球场）")
+    sp.add_argument("--who", default="", help="人物（如 伊斯内尔 vs 马胡）")
+    sp.add_argument("--punch", default="", help="引爆金句/一句话钩子（可选）")
     sp.add_argument(
         "--source-label",
         dest="source_label",

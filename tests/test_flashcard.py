@@ -26,19 +26,39 @@ def test_sensitivity_gate_matches_across_combined_parts():
     assert is_sensitive_topic("赛场乌龙", "背后是跨性别参赛资格争议")
 
 
-def test_flash_card_body_carries_and_escapes_all_text():
+def test_flash_card_body_carries_structured_fields_and_escapes_text():
     body = flash_card_body(
         "18岁小将爆冷，淘汰头号种子",
-        quote="全场起立鼓掌，他说：这不是<终点>",
+        event="决胜盘抢七 10-8，他救回 3 个赛点后完成逆转 <绝杀>。",
+        when="昨夜",
+        where="辛辛那提 中央球场",
+        who="小将 vs 头号种子",
+        punch="全场起立鼓掌整整两分钟。",
         source_label="资料：ATP 官方赛报",
         date_label="7.24 · 周五",
     )
     assert "18岁小将爆冷" in body
-    assert "淘汰头号种子" in body
+    # Structured meta strip is present with labels and values.
+    for token in ("时间", "昨夜", "地点", "辛辛那提 中央球场", "人物", "决胜盘抢七 10-8"):
+        assert token in body
+    assert "全场起立鼓掌整整两分钟。" in body
     # User-supplied text must be HTML-escaped (no raw angle brackets injected).
-    assert "&lt;终点&gt;" in body
-    assert "<终点>" not in body
+    assert "&lt;绝杀&gt;" in body
+    assert "<绝杀>" not in body
     assert "网球快讯" in body
     assert "资料：ATP 官方赛报" in body
     # It is a cover-class poster (skips the deck overflow gate) and self-framed.
     assert 'class="poster cover knowledge-page"' in body
+
+
+def test_flash_card_body_omits_blank_meta_cells():
+    body = flash_card_body(
+        "纪录诞生",
+        event="一场超长对决刷新历史。",
+        when="2010",
+        source_label="资料：官方",
+        date_label="7.24",
+    )
+    assert "时间" in body and "2010" in body
+    # Blank where/who must not render empty labels.
+    assert "地点" not in body and "人物" not in body
