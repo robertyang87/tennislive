@@ -48,12 +48,19 @@ def test_offcourt_candidates_filter_match_sensitive_and_dedupe():
             "url": "u3",
             "published_at": "2026-07-24T09:30:00+00:00",
         },
-        {  # duplicate of u2 -> collapsed
+        {  # general search-trend (non-tennis) -> excluded outright
             "kind": "search-trend",
-            "source": "Google",
-            "title": "ATP announces electronic line calling across all events",
+            "source": "Google Trends GB",
+            "title": "taylor swift",
             "url": "u2b",
             "published_at": "2026-07-24T10:00:00+00:00",
+        },
+        {  # duplicate off-court headline -> collapsed
+            "kind": "official-news",
+            "source": "WTA",
+            "title": "ATP announces electronic line calling across all events",
+            "url": "u2c",
+            "published_at": "2026-07-24T10:30:00+00:00",
         },
         {  # stale -> excluded on freshness
             "kind": "official-news",

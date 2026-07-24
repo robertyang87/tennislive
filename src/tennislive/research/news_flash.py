@@ -140,6 +140,12 @@ def offcourt_flash_candidates(
     for signal in signals:
         if not isinstance(signal, dict):
             continue
+        # Only the official-news feed is reliably tennis (tour/slam RSS + a
+        # "tennis" news query). The search-trend feed is general trending
+        # searches (a footballer, a pop star), never usable as a tennis flash
+        # card, so it is excluded outright.
+        if str(signal.get("kind") or "") != "official-news":
+            continue
         title = str(signal.get("title") or "").strip()
         if not title or not is_offcourt_news(title):
             continue
