@@ -480,6 +480,54 @@ def test_all_story_fact_roles_are_valid_marker_roles():
             )
 
 
+def test_knowledge_card_facts_never_hard_truncate_mid_clause():
+    """Card copy must break on a clause boundary, never slice a clause in half.
+
+    A mid-clause slice silently drops the fact's tail — often the punch-line
+    number — and fakes a full stop that evades the copy validator. This guards
+    every STORY so an over-budget fact can't quietly ship a chopped card; the
+    fix for a failure is to tighten the fact, not to widen the card.
+    """
+    from tennislive.render import webcards
+    from tennislive.render.tournament_story import STORIES
+
+    marks = webcards._CLAUSE_MARKS
+
+    def hard_cut(text: str, limit: int) -> bool:
+        clean = " ".join(text.split())
+        if len(clean) <= limit:
+            return False
+        window = clean[: limit + 1]
+        cut = max(window.rfind(mark) for mark in marks)
+        if cut >= max(16, limit // 2):
+            return False
+        return not [
+            pos
+            for mark in marks
+            if 0 <= (pos := clean.find(mark, limit)) <= limit + 16
+        ]
+
+    # Per-page card limits (see webcards._knowledge_* body builders).
+    fact_limit = {"player": 38, "tournament": 42, "trivia": 40}
+    offenders: list[str] = []
+    for story in STORIES:
+        # golden-slam swaps in its own explainer facts, so its raw facts
+        # never reach a card — exclude them from the fact check.
+        if story.slug != "golden-slam":
+            limit = fact_limit.get(story.kind, 40)
+            for index, fact in enumerate(story.facts):
+                if hard_cut(fact, limit):
+                    offenders.append(f"{story.slug} fact[{index}]@{limit}")
+        if hard_cut(story.hero_fact, 62):
+            offenders.append(f"{story.slug} hero_fact@62")
+        for index, moment in enumerate(story.moments):
+            if index < 2 and hard_cut(moment.detail, 50):
+                offenders.append(f"{story.slug} moment[{index}].detail@50")
+            if index == len(story.moments) - 1 and hard_cut(moment.detail, 48):
+                offenders.append(f"{story.slug} moment[{index}].detail@48")
+    assert offenders == [], f"card copy hard-truncates mid-clause: {offenders}"
+
+
 def test_adhoc_knowledge_marker_gates_daily_but_never_adhoc(tmp_path, monkeypatch):
     """Ad-hoc marks today's knowledge slot; the daily flow reads it, ad-hoc doesn't."""
     from tennislive.render import tournament_story
