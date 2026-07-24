@@ -12,6 +12,7 @@ from __future__ import annotations
 import logging
 import mimetypes
 import os
+import re
 import time
 from html.parser import HTMLParser
 from pathlib import Path
@@ -160,6 +161,18 @@ def _upload_image(
 
 
 def _pages_image_url(source: str, revision: str) -> str | None:
+    """Build a jsDelivr GitHub CDN URL pinned to an exact commit.
+
+    Previously this pointed at GitHub Pages with the commit as a ``?v=``
+    query string for cache-busting. The output path is date-based, so the
+    same path is reused (with different content) by every ad-hoc run on a
+    given day -- and WeChat's own image cache keys off the URL path, not
+    the query string, so it kept serving whatever bitmap it first fetched
+    for that path and ignored later ``?v=`` updates. Pinning the commit
+    into the URL *path* (jsDelivr's ``@<sha>/`` syntax) makes each version
+    a genuinely distinct resource, which any path-based cache handles
+    correctly.
+    """
     parsed = urlparse(source)
     marker = "/output/"
     if marker not in parsed.path:
@@ -169,11 +182,8 @@ def _pages_image_url(source: str, revision: str) -> str | None:
     owner_repo = repository.split("/", 1)
     if len(owner_repo) != 2:
         return None
-    owner, repo = owner_repo
-    return (
-        f"https://{owner}.github.io/{repo}/{output_path}"
-        f"?v={revision or 'main'}"
-    )
+    pinned_revision = revision if re.fullmatch(r"[0-9a-fA-F]{7,40}", revision or "") else "main"
+    return f"https://cdn.jsdelivr.net/gh/{repository}@{pinned_revision}/{output_path}"
 
 
 def prepare_image_delivery(
@@ -183,7 +193,8 @@ def prepare_image_delivery(
     token: str,
     timeout: int = 30,
 ) -> tuple[str, str]:
-    """Use PushPlus' image CDN when configured, otherwise GitHub Pages."""
+    """Use PushPlus' image CDN when configured, otherwise a commit-pinned
+    jsDelivr URL (see ``_pages_image_url`` for why it's commit-pinned)."""
     sources = image_sources(html_content)
     if not sources:
         return html_content, "none"
@@ -230,7 +241,7 @@ def prepare_image_delivery(
         )
     for source, replacement in replacements.items():
         html_content = html_content.replace(source, replacement)
-    return html_content, "github-pages"
+    return html_content, "jsdelivr"
 
 
 def wait_for_images(
