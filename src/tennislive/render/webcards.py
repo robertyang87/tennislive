@@ -1791,18 +1791,42 @@ def tournament_story_body(story: TournamentStory, date_label: str) -> str:
     )
 
 
+_CLAUSE_MARKS = ("。", "！", "？", "；", "：", "，")
+
+
 def _card_excerpt(text: str, limit: int) -> str:
-    """Keep card copy spacious without cutting a fact mid-clause when possible."""
+    """Trim card copy to a whole clause — never mid-clause, never a fake stop.
+
+    A hard slice at ``limit`` that appends "。" produces a sentence that LOOKS
+    complete but silently drops its tail clause (often the punch line / the
+    number), and evades the copy validator's ellipsis rule. So:
+
+    1. prefer the latest clause break at or after ``limit // 2`` within budget;
+    2. otherwise reach a little PAST ``limit`` to the next clause break so the
+       card still shows a complete clause (bounded, to keep cards punchy);
+    3. only when no break is reachable at all does it fall back to a plain cut.
+    """
     clean = " ".join(text.split())
     if len(clean) <= limit:
         return clean
     window = clean[: limit + 1]
-    stops = [window.rfind(mark) for mark in ("。", "！", "？", "；", "：", "，")]
-    cut = max(stops)
+    cut = max(window.rfind(mark) for mark in _CLAUSE_MARKS)
     if cut >= max(16, limit // 2):
         result = window[: cut + 1].rstrip("，；：、 ")
     else:
-        result = clean[:limit].rstrip("，；：、 ")
+        # No clean break within budget: extend to the next clause boundary
+        # rather than slicing a clause in half. Cap the overrun so a comma-less
+        # run still truncates instead of dumping the whole string on the card.
+        forward_cap = limit + 16
+        forward = [
+            pos
+            for mark in _CLAUSE_MARKS
+            if 0 <= (pos := clean.find(mark, limit)) <= forward_cap
+        ]
+        if forward:
+            result = clean[: min(forward) + 1].rstrip("，；：、 ")
+        else:
+            result = clean[:limit].rstrip("，；：、 ")
     return result if result.endswith(("。", "！", "？")) else result + "。"
 
 
