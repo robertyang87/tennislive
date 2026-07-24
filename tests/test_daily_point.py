@@ -524,13 +524,31 @@ def test_xiaohongshu_copy_is_scannable_multiline_post(sample_digest):
     assert 3 <= len(lines) <= 6
     assert len(body) <= 360
     assert body.count("？") == 1
-    assert "完整回合" in body
     assert "赛果" in body
-    # Rank 3 is the one tier that may claim the whole day agreed.
-    assert "公认最佳" in body
+    # Rank 3 is the one tier that may claim the day's best.
+    assert "当日最佳" in body
     assert "来源：" not in body
     assert lines[-1].startswith("#")
     validate_point_copy(copy)
+
+
+def test_xiaohongshu_copy_varies_by_clip_not_one_fixed_script(sample_digest):
+    base = _selection(sample_digest)
+    # Different clips (distinct match id + publish time) should land on
+    # different phrasings, so the feed doesn't repeat one canned script.
+    variants = {
+        point_xiaohongshu_copy(
+            replace(base, published_at=f"2026-07-1{i}T0{i}:00:00Z"),
+            date(2026, 7, 16),
+        ).split("\n\n")[1]
+        for i in range(1, 8)
+    }
+    assert len(variants) >= 3
+    # Same clip is still stable across calls.
+    again = _selection(sample_digest)
+    assert point_xiaohongshu_copy(base, date(2026, 7, 16)) == point_xiaohongshu_copy(
+        again, date(2026, 7, 16)
+    )
 
 
 def test_youtube_search_tries_multiple_label_phrasings_per_match(sample_digest):

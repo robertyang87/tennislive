@@ -1165,15 +1165,62 @@ def validate_rendered_point(
         raise VideoPipelineError("昨日好球质量门禁未通过：" + "；".join(errors))
 
 
+# Copy beats rotate through pools the same way captions do: a per-clip seed
+# picks one line from each pool, so different clips read differently instead of
+# repeating one fixed script, while the same clip always renders the same. The
+# opener pools are keyed by tier because only a rank-3 clip may claim the whole
+# day agreed it was best; a rank-1 Hot Shot uses the localized 「神仙球」 and never
+# borrows that claim. Only the question beat carries a ？ (the validator enforces
+# exactly one), and the score beat always names 赛果 for the required context.
+_COPY_TITLE_HOOKS = {
+    3: "这一分，全场公认最佳",
+    2: "这一分，直接封神",
+    1: "这一拍，全场看傻",
+}
+_COPY_OPENERS = {
+    3: (
+        "👀 一整天的球刷下来，当日最佳落在了这一分。",
+        "👀 昨天那么多回合，最后当日最佳给了它。",
+        "👀 当日最佳有它的道理，看完这一分就懂。",
+    ),
+    2: (
+        "👀 这场比赛最想倒回去重看的，就是这一分。",
+        "👀 整场高光压在这一分上，单拎出来也不亏。",
+        "👀 一场打下来，最舍不得快进的是这一分。",
+    ),
+    1: (
+        "👀 这一拍被官方单独剪了出来，神仙球实锤。",
+        "👀 官方给这一拍单开了特写，神仙球没得说。",
+        "👀 好到被单独拎出来的一拍，标准的神仙球。",
+    ),
+}
+_COPY_MATCHUP_TEMPLATES = (
+    "🎾 {tournament}，{featured} 对 {opponent}，整段一刀没剪。",
+    "🎾 {featured} vs {opponent}，{tournament}，完整回合都留着。",
+    "🎾 {tournament} · {featured} 打 {opponent}，从头到尾没删。",
+)
+_COPY_SCORE_TEMPLATES = (
+    "🔥 别急着快进，前面的铺垫才是关键——赛果 {winner} {score}。",
+    "🔥 从第一拍看起才有味道，最后一击只是收尾——赛果 {winner} {score}。",
+    "🔥 好球的节奏都藏在过程里，值得慢慢看——赛果 {winner} {score}。",
+)
+_COPY_QUESTION_TEMPLATES = (
+    "💬 你觉得赢在最后一拍，还是前面的铺垫？",
+    "💬 换你在场上，这一分会怎么打？",
+    "💬 最后那几拍，你数得清几个来回吗？",
+    "💬 这一分最漂亮的是哪一下？",
+)
+_COPY_TAGS = "#网球 #网球名场面 #精彩回合 #网球时差"
+
+
 def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> str:
     """A scannable Xiaohongshu post: a titled hook plus short emoji-led beats.
 
     Real Xiaohongshu copy gets skimmed on a phone, so the body is a few short
     lines with breathing room instead of one dense block: an opening punch,
     the matchup, why the whole rally is worth it (with the score), and one
-    comment-bait question, then the tags. The tier honesty rule still holds --
-    only a rank-3 clip may claim the whole day agreed it was best; a rank-1
-    Hot Shot stays out of that claim.
+    comment-bait question, then the tags. Each beat is drawn from a pool by a
+    per-clip seed so consecutive clips don't repeat one fixed script.
     """
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
@@ -1182,25 +1229,22 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
         tournament_zh(selection.match.tournament.name)
         or selection.match.tournament.name
     )
-    title_hook = {
-        3: "这一分，全场公认最佳",
-        2: "这一分，直接封神",
-        1: "这一拍，全场看傻",
-    }[selection.consensus_rank]
-    title = f"🎾{published_for.month}.{published_for.day}｜{featured}{title_hook}"
-    opener = {
-        3: "👀 一整天的好球都翻过了，最后公认最佳落在这一分。",
-        2: "👀 整场比赛最舍不得快进的一分，最后一拍只是收尾。",
-        1: "👀 官方直接盖章「神仙球」，球还没落地，看台先炸了。",
-    }[selection.consensus_rank]
-    body_lines = [
-        opener,
-        f"🎾 {tournament} · {featured} vs {opponent}，完整回合一秒没剪。",
-        f"🔥 从起手的铺垫看到最后一拍落地，快进就亏了——赛果 {winner} {score}。",
-        "💬 只能重看一次，你会盯死最后一拍，还是回看前面怎么一步步做局？",
-        "#网球 #网球名场面 #精彩回合 #网球时差",
-    ]
-    body = limit_hashtags("\n".join(body_lines))
+    rank = selection.consensus_rank
+    title = (
+        f"🎾{published_for.month}.{published_for.day}｜{featured}{_COPY_TITLE_HOOKS[rank]}"
+    )
+    seed = f"{selection.match.match_id}:{selection.published_at}"
+    opener = _pick_caption_template(_COPY_OPENERS[rank], seed + ":open")
+    matchup = _pick_caption_template(_COPY_MATCHUP_TEMPLATES, seed + ":match").format(
+        tournament=tournament, featured=featured, opponent=opponent
+    )
+    score_line = _pick_caption_template(_COPY_SCORE_TEMPLATES, seed + ":score").format(
+        winner=winner, score=score
+    )
+    question = _pick_caption_template(_COPY_QUESTION_TEMPLATES, seed + ":q")
+    body = limit_hashtags(
+        "\n".join([opener, matchup, score_line, question, _COPY_TAGS])
+    )
     copy = title + "\n\n" + body
     validate_point_copy(copy)
     return copy
