@@ -22,13 +22,28 @@ URL = (
 DEST = "tools/_probecoverfinal_towerbridge.jpg"
 
 
+URLS = [
+    URL,
+    URL.replace("?ssl=1", ""),
+    "https://i1.wp.com/rafaelnadalfans.com/wp-content/uploads/2022/09/"
+    "Nadal-Murray-Djokovic-Federer-2022-Gala-Dinner-Laver-Cup-3.jpg?ssl=1",
+]
+
+
 def main() -> int:
-    req = urllib.request.Request(URL, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=40) as resp:
-        data = resp.read()
-    with open(DEST, "wb") as f:
-        f.write(data)
-    print(f"{URL} -> {DEST} ({len(data)} bytes)")
+    for url in URLS:
+        try:
+            req = urllib.request.Request(url, headers=HEADERS)
+            with urllib.request.urlopen(req, timeout=40) as resp:
+                data = resp.read()
+        except Exception as exc:  # noqa: BLE001
+            print(f"FAILED {url}: {exc}")
+            continue
+        with open(DEST, "wb") as f:
+            f.write(data)
+        print(f"{url} -> {DEST} ({len(data)} bytes)")
+        return 0
+    print("all candidates failed")
     return 0
 
 
