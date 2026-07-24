@@ -94,7 +94,7 @@ def preview_angle(match: Match, today: date | None = None) -> str:
         None,
     )
     if chinese is not None:
-        return schedule_insight(match)
+        return schedule_insight(match, today)
 
     if story is not None:
         return f"{story.title}又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心。"
@@ -104,7 +104,7 @@ def preview_angle(match: Match, today: date | None = None) -> str:
         if historical is not None and historical.summary:
             return historical.summary
 
-    return _topicality_angle(match) or schedule_insight(match)
+    return _topicality_angle(match) or schedule_insight(match, today)
 
 
 def editor_takeaway(match: Match, today: date | None = None) -> str:

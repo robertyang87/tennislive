@@ -100,6 +100,37 @@ def test_previous_score_is_not_used_as_schedule_background():
     assert "6" not in scheduled.editorial_note
 
 
+def test_schedule_insight_rotates_when_unplayed_fixture_persists_across_days():
+    """生产事故复现（2026-07-24 日报未推送）：布拉格站女单八强布兹科娃 vs
+    瓦伦托娃因官方赛程一直未定，连续两天都被选进"今晚焦点"，排名差（42）
+    和轮次（四强席位）完全没变。enrich_schedule_editorial 之前不区分日期，
+    两天生成的 editorial_note 逐字相同，撞上小红书近7期查重 FATAL 闸门，
+    导致当天日报整包生成失败、没有推送到微信。"""
+    scheduled = make_match(
+        home_name="Marie Bouzkova",
+        away_name="Nikola Bartunkova",
+        status=MatchStatus.SCHEDULED,
+        winner=None,
+        sets=(),
+        tiebreaks=(),
+        round_name="Quarterfinals",
+    )
+    scheduled.home[0].seed = scheduled.away[0].seed = None
+    scheduled.home[0].rank, scheduled.away[0].rank = 41, 83  # 差 42 位，命中 gap>=35 分支
+
+    day1 = Digest(today=date(2026, 7, 23), schedule=[scheduled])
+    enrich_schedule_editorial(day1)
+    note_23 = scheduled.editorial_note
+
+    scheduled.editorial_note = None  # 模拟次日重新生成，未命中已发布缓存
+    day2 = Digest(today=date(2026, 7, 24), schedule=[scheduled])
+    enrich_schedule_editorial(day2)
+    note_24 = scheduled.editorial_note
+
+    assert note_23 != note_24
+    assert "四强席位" in note_23 and "四强席位" in note_24
+
+
 def test_schedule_fallback_explains_current_stakes_without_technique_cliches():
     scheduled = make_match(
         home_name="Qinwen Zheng",

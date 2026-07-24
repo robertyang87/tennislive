@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>💥7.24今日球局｜爆冷：托雷斯掀翻塔比洛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>备选标题 2</span><button type="button" data-copy="alt0">复制</button></div>
+      <textarea id="alt0" class="alt" readonly>🔥7.24今日球局｜布勃利克对埃切维里</textarea>
+    </section>
+    <section>
+      <div class="label"><span>备选标题 3</span><button type="button" data-copy="alt1">复制</button></div>
+      <textarea id="alt1" class="alt" readonly>💥7.24今日球局｜塔拉鲁迪掀翻巴尔通科娃</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>昨夜最值得回看的，不是所有比赛。
+
+🎾 昨夜最值回看
+
+爆冷：托雷斯掀翻塔比洛。
+非种子球员击败3号种子，冷门成色十足。
+
+🌙 今晚焦点｜3场
+
+⏰ 20:00｜基茨比厄尔公开赛·男单半决赛
+🇰🇿 布勃利克 vs 🇦🇷 埃切维里
+看点｜布勃利克占20位排名优势，但决赛门票最考验心态。
+
+⏰ 预计 18:30*｜布拉格公开赛·女单四分之一决赛
+🇨🇿 布兹科娃 vs 🇨🇿 瓦伦托娃
+看点｜排名差42位不算保险，四强席位这一轮谁都想抢。
+
+⏰ 23:00｜汉堡站·女单四分之一决赛
+🇩🇪 科尔帕奇 vs 🇺🇦 卡利尼娜
+看点｜7月23日。
+
+📢 昨日竞猜
+
+昨晚竞猜开奖：埃切维里拿下——猜对的评论区扣 1！
+
+📝 我先站｜我会先看🇰🇿 布勃利克 vs 🇦🇷 埃切维里。
+
+💬 你站🇰🇿 布勃利克还是🇦🇷 埃切维里？评论区押一个名字👇
+
+关注 @网球时差｜明早一起对答案。
+
+#网球 #网球时差 #托雷斯 #埃斯托利尔公开赛 #ATP</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你站🇰🇿 布勃利克还是🇦🇷 埃切维里？评论区押一个名字👇
+
+我先写：别急着追比分，先把自己的发球局守住。明早回来对照赛果。</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

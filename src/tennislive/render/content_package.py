@@ -138,7 +138,7 @@ def generate_content_package(
     cover_copy = (
         cover_highlights(digest)
         if pick.kind == "result"
-        else (headline, schedule_insight(pick.match))
+        else (headline, schedule_insight(pick.match, today))
     )
     fatal, warns = run_checks(
         digest, headline, post, cover_copy=cover_copy
