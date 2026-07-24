@@ -26,6 +26,10 @@ class Digest:
     # 封面素材门禁可能把首选头条切换为同日下一条高热度比赛。该字段让
     # 封面、复盘页、文案与 cover_facts 始终消费同一个最终头条。
     lead_match_id: str | None = None
+    # 全局趋势/新闻雷达信号池（官方媒体标题、搜索趋势），不一定绑定到当日
+    # 某场比赛。让"相关新闻本身就是热点"也能驱动候选池选题，而不仅是当日
+    # 赛程里的比赛。每条是 research.trends.TrendSignal 的 dict 形式。
+    trend_signals: list[dict] = field(default_factory=list)
 
     @property
     def yesterday(self) -> date:

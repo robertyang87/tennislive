@@ -1769,6 +1769,28 @@ def _trivia_topic_score(story: TournamentStory, digest: Digest) -> float:
                 live_signal = max(live_signal, 38.0 + heat + source_bonus)
 
         best_live_signal = max(best_live_signal, live_signal)
+
+    # 相关新闻本身也是热点：命中选题关键词的官方/媒体新闻，即使没有绑定到
+    # 当日任何一场比赛，也应把该选题顶上来（例如某球员退役公告、某项纪录被
+    # 打破、某条规则改革见报）。全局信号池由 cmd_digest 从趋势雷达写入。
+    news_pool = getattr(digest, "trend_signals", None) or []
+    news_signal = 0.0
+    for signal in news_pool:
+        if not isinstance(signal, dict):
+            continue
+        text = _norm(
+            " ".join(
+                str(value)
+                for value in signal.values()
+                if isinstance(value, (str, int, float))
+            )
+        )
+        hits = sum(1 for term in terms if term and term in text)
+        if not hits:
+            continue
+        base = 34.0 if str(signal.get("kind", "")) == "official-news" else 30.0
+        news_signal = max(news_signal, base + min(12.0, hits * 4.0))
+    best_live_signal = max(best_live_signal, news_signal)
     return score + best_live_signal
 
 

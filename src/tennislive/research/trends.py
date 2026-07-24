@@ -13,7 +13,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from urllib.parse import quote_plus
@@ -90,6 +90,10 @@ class TrendRadarResult:
     signals: int
     matched_matches: int
     source_status: dict[str, str]
+    # Every fetched signal (news + search-trend) as a dict, whether or not it
+    # matched a scheduled match — the global pool downstream selection reads so
+    # untethered tennis news can still surface a candidate topic.
+    all_signals: list[dict] = field(default_factory=list)
 
 
 def _norm(value: str) -> str:
@@ -370,4 +374,5 @@ def apply_trend_signals(
         signals=len(signals),
         matched_matches=matched,
         source_status=status,
+        all_signals=[asdict(item) for item in signals],
     )

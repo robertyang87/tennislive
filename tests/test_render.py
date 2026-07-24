@@ -460,6 +460,72 @@ def test_story_slot_never_empty(tmp_path, monkeypatch):
     assert again is not None and again.slug == first.slug
 
 
+def test_relevant_news_alone_surfaces_a_candidate_topic(tmp_path, monkeypatch):
+    """News untethered to any scheduled match still lifts its knowledge topic.
+
+    '相关新闻本身也是热点': a rule/record/retirement headline in the global
+    trend pool should raise its topic above the bare viral prior even on a day
+    with no matching match on the schedule, and outrank a higher-prior
+    evergreen that has no news behind it.
+    """
+    from tennislive.render import tournament_story
+    from tennislive.render.tournament_story import (
+        _TRIVIA_VIRAL_PRIOR,
+        _trivia_topic_score,
+        find_story_by_slug,
+        tournament_story_candidates,
+    )
+
+    monkeypatch.setattr(
+        tournament_story, "STATE_PATH", tmp_path / "story_state.json"
+    )
+    hawkeye = find_story_by_slug("hawkeye")
+    prior = _TRIVIA_VIRAL_PRIOR["hawkeye"]
+
+    quiet = Digest(today=date(2026, 7, 24))
+    assert _trivia_topic_score(hawkeye, quiet) == prior  # no news, no matches
+
+    news_day = Digest(
+        today=date(2026, 7, 24),
+        trend_signals=[
+            {
+                "kind": "official-news",
+                "source": "ATP Tour",
+                "title": (
+                    "Electronic line calling replaces line judges "
+                    "at every tour event"
+                ),
+            }
+        ],
+    )
+    assert _trivia_topic_score(hawkeye, news_day) > prior
+    # Even though longest-match (prior 10) outranks hawkeye on a quiet day,
+    # the news-hot topic wins when news backs it and nothing backs the rest.
+    trivia = [s for s in tournament_story_candidates(news_day) if s.kind == "trivia"]
+    assert trivia and trivia[0].slug == "hawkeye"
+
+
+def test_trend_radar_exposes_full_signal_pool_including_unmatched_news():
+    """apply_trend_signals returns every fetched signal, matched or not."""
+    from tennislive.research.trends import TrendSignal, apply_trend_signals
+
+    unmatched = TrendSignal(
+        kind="official-news",
+        source="WTA",
+        title="Some off-court tennis headline",
+        url="https://wtatennis.com/news/x",
+        published_at="2026-07-24T00:00:00+00:00",
+    )
+
+    result = apply_trend_signals([], signals=[unmatched])
+
+    assert result.signals == 1
+    assert result.matched_matches == 0
+    assert [s["title"] for s in result.all_signals] == [
+        "Some off-court tennis headline"
+    ]
+
+
 def test_all_story_fact_roles_are_valid_marker_roles():
     """Every story's declared fact role must resolve to a real marker.
 

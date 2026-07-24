@@ -186,6 +186,8 @@ def cmd_digest(args) -> int:
     trend_result = apply_trend_signals(
         digest.results + digest.live + digest.schedule
     )
+    # 保留完整信号池，供候选池选题使用：未绑定到当日比赛的相关新闻也是热点。
+    digest.trend_signals = list(trend_result.all_signals)
     trend_state = "正常" if trend_result.signals else "降级"
     digest.source_status["实时选题雷达"] = (
         f"{trend_state} · {trend_result.signals} 条信号，"
