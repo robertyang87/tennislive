@@ -338,6 +338,7 @@ def test_tennistv_metadata_uses_entitlement_token_without_browser_state():
 
     def get(url, **kwargs):
         if url == candidate.url:
+            assert "Authorization" not in kwargs["headers"]
             return Response(
                 text='''
                 <div data-entry-id="0_p5swvkf4"></div>
