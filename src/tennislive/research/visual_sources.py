@@ -2422,21 +2422,11 @@ def resolve_match_cover_visual(
     if flickr_enabled:
         provider_loaders = (*provider_loaders, ("flickr-public", _flickr_candidates))
     pool: list[tuple[object, str, dict]] = []
-    atp_official_enabled = os.environ.get(
-        "TENNISLIVE_COVER_ATP_OFFICIAL", "off"
-    ).lower() in {"1", "on", "true"}
-    atp_official = (
-        _atp_official_cover_candidates(match, session)
-        if atp_official_enabled
-        else []
-    )
-    report["atp_official_enabled"] = atp_official_enabled
-    report["atp_official_candidates"] = len(atp_official)
-    if atp_official_enabled:
-        report["providers_queried"].append("official-atp-youtube")
-    if atp_official and players:
-        official_query = _daily_cover_queries(match, players[0].name)[0]
-        pool.extend((players[0], official_query, item) for item in atp_official)
+    # ATP 官方 YouTube 视频缩略图（maxresdefault.jpg）经常是宣传拼接图（真实
+    # 比赛照片只占一部分，其余是赛事VI条纹/文字），而封面裁切只保证检测到的
+    # 人脸不被切掉，不校验裁切框其余区域是否仍是同一张真实照片——2026-07-24
+    # 生产环境实际出现过封面裁切框跨进拼接图案区域的情况。封面场景不再使用
+    # 这个来源；_atp_official_cover_candidates 本身保留，供其它场景复用。
     wta_official_enabled = os.environ.get(
         "TENNISLIVE_COVER_WTA_OFFICIAL", "off"
     ).lower() in {"1", "on", "true"}
