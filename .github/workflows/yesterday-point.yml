@@ -39,13 +39,6 @@ jobs:
     env:
       TENNISLIVE_YESTERDAY_POINT: "on"
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-      # Optional official Tennis TV entitlement token. The workflow never
-      # reads browser cookies; without this token it falls back to public ATP,
-      # WTA and Grand Slam mirrors and records a clean skip if none is usable.
-      TENNISTV_JWT: ${{ secrets.TENNISTV_JWT }}
-      # Preferred unattended option: exchange the Keycloak refresh token for
-      # a fresh access token at the start of each Tennis TV lookup.
-      TENNISTV_REFRESH_TOKEN: ${{ secrets.TENNISTV_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +62,11 @@ jobs:
 
       - name: 生成独立视频包
         id: generate
+        env:
+          # Scope credentials to generation only. Tests and quality gates must
+          # never inherit live Tennis TV credentials.
+          TENNISTV_JWT: ${{ secrets.TENNISTV_JWT }}
+          TENNISTV_REFRESH_TOKEN: ${{ secrets.TENNISTV_REFRESH_TOKEN }}
         run: |
           DATE_ARG="${{ github.event.inputs.date }}"
           if [ -z "$DATE_ARG" ]; then DATE_ARG="today"; fi

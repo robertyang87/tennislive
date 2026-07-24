@@ -368,6 +368,57 @@ def test_tennistv_metadata_uses_entitlement_token_without_browser_state():
     assert metadata.playback_url == "https://video.example/master.m3u8"
 
 
+def test_explicit_tennistv_jwt_ignores_ci_refresh_secret(monkeypatch):
+    candidate = OfficialVideoCandidate(
+        "Mallorca 2026 QF Nuno Borges Hot Shot",
+        "https://www.tennistv.com/videos/4526866/mallorca-hot-shot",
+        tour="ATP",
+    )
+    monkeypatch.setenv("TENNISTV_REFRESH_TOKEN", "ci-refresh-secret")
+
+    class Response:
+        def __init__(self, text="", payload=None):
+            self.text = text
+            self._payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self._payload
+
+    def post(*args, **kwargs):
+        raise AssertionError("explicit JWT must not exchange the CI refresh secret")
+
+    def get(url, **kwargs):
+        if url == candidate.url:
+            return Response(
+                text='''
+                <div data-entry-id="0_p5swvkf4"></div>
+                <span itemprop="duration" content="T28S"></span>
+                <span itemprop="uploadDate" content="2026-07-23T10:00:00Z"></span>
+                '''
+            )
+        if "entitlementcheck" in url:
+            assert kwargs["headers"]["Authorization"] == "Bearer explicit-jwt"
+            return Response(payload={"access_token": "stream-token"})
+        return Response(
+            payload={
+                "media": {"hls": "https://video.example/master.m3u8"},
+                "duration": "28",
+            }
+        )
+
+    metadata = fetch_tennistv_video_metadata(
+        candidate,
+        get=get,
+        post=post,
+        jwt_token="explicit-jwt",
+    )
+
+    assert metadata.playback_url == "https://video.example/master.m3u8"
+
+
 def test_tennistv_metadata_accepts_current_legacy_duration_shape():
     candidate = OfficialVideoCandidate(
         "Mallorca 2026 QF Nuno Borges Hot Shot",

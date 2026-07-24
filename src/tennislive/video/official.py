@@ -597,12 +597,21 @@ def fetch_tennistv_video_metadata(
     manifest. A token may be supplied as the opt-in ``TENNISTV_JWT`` secret.
     """
     headers = {"User-Agent": "tennislive/0.1", "account": "atpmedia"}
+    explicit_jwt = jwt_token is not None
     refresh = (
         refresh_token
         if refresh_token is not None
-        else os.getenv("TENNISTV_REFRESH_TOKEN", "").strip()
+        else (
+            ""
+            if explicit_jwt
+            else os.getenv("TENNISTV_REFRESH_TOKEN", "").strip()
+        )
     )
-    token = jwt_token or os.getenv("TENNISTV_JWT", "").strip()
+    token = (
+        str(jwt_token).strip()
+        if explicit_jwt
+        else os.getenv("TENNISTV_JWT", "").strip()
+    )
     if refresh:
         refresh_response = post(
             TENNISTV_TOKEN_ENDPOINT,
