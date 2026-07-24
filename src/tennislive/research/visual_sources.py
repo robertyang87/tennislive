@@ -2489,6 +2489,20 @@ def resolve_match_cover_visual(
     report["official_pages_checked"] = len(expanded_urls)
     report["official_pages_expanded"] = expanded_count
 
+    # 兜底：其它来源全部查询后仍然一张候选都没有时，才把 ATP 官方 YouTube
+    # 缩略图当最后一道来源接入。这类缩略图常是宣传拼接图（真实比赛照片只占
+    # 一部分，其余是赛事VI条纹/文字，2026-07-24 生产环境因此露过馅），但对
+    # 通讯社/官方图库都没有覆盖的小站比赛，它有时是唯一还能证明"这就是这
+    # 两位球员这场比赛"的素材——完全不用的话，这类比赛当天会彻底没有封面，
+    # 拖垮整份日报的证据闸门。只在真的没有其它候选时才冒拼接图的风险，其
+    # 余日子（绝大多数）完全不受影响。
+    if not pool and players:
+        atp_official = _atp_official_cover_candidates(match, session)
+        if atp_official:
+            report["providers_queried"].append("official-atp-youtube")
+            official_query = _daily_cover_queries(match, players[0].name)[0]
+            pool.extend((players[0], official_query, item) for item in atp_official)
+
     candidates: list[tuple[object, str, dict, dict, int, bool, bool]] = []
     participants = [*match.home, *match.away]
     seen: set[str] = set()
