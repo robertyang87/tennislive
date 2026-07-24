@@ -28,6 +28,18 @@ from .pipeline import (
 
 WTA_VIDEO_HUB = "https://www.wtatennis.com/videos/"
 TENNISTV_HOT_SHOTS_HUB = "https://www.tennistv.com/library/hot-shots"
+TENNISTV_HOT_SHOTS_API = (
+    "https://api.tennistv.com/content/atpmedia/video/EN/"
+)
+TENNISTV_PLAYBACK_API = "https://api.playback.streamamg.com/v1/entry"
+# This public browser-player key identifies the client. The short-lived
+# entitlement token still controls access to each media entry.
+TENNISTV_PLAYBACK_API_KEY = "c5Oe6Cr857oLlsCFY8Bm3djiu4Cw8zo6ckD2ucI7"
+TENNISTV_TOKEN_ENDPOINT = (
+    "https://sso.tennistv.com/auth/realms/tennistv/"
+    "protocol/openid-connect/token"
+)
+TENNISTV_CLIENT_ID = "tennis-tv-web"
 WTA_ACCOUNT = "6041795521001"
 WTA_PLAYER = "te01Hqw71"
 ATP_YOUTUBE_CHANNEL_ID = "UCY_5h5zaSwN7Or4kIJDYNXA"
@@ -242,6 +254,107 @@ def parse_tennistv_hot_shot_entries(page: str) -> list[TennisTVHotShotEntry]:
                 series=str(props.get("metadataSeries") or "").strip(),
                 match_type=str(props.get("matchType") or "").strip(),
                 entitlement=str(props.get("entitlement") or "").strip(),
+                references=references,
+            )
+        )
+    return entries
+
+
+def parse_tennistv_hot_shot_api_entries(
+    payload: object,
+) -> list[TennisTVHotShotEntry]:
+    """Parse Tennis TV's public content API used by the Hot Shots grid.
+
+    Unlike the rendered library page, this endpoint includes the official
+    publication time and can return more than the first visible page. Playback
+    entitlement remains a separate step.
+    """
+    if not isinstance(payload, dict):
+        return []
+    content = payload.get("content")
+    if not isinstance(content, list):
+        return []
+
+    entries: list[TennisTVHotShotEntry] = []
+    seen: set[str] = set()
+    for item in content:
+        if not isinstance(item, dict) or str(item.get("type") or "").casefold() != "video":
+            continue
+        video_id = str(item.get("id") or "").strip()
+        entry_id = str(item.get("mediaId") or "").strip()
+        title = html.unescape(str(item.get("title") or "")).strip()
+        description = html.unescape(str(item.get("description") or "")).strip()
+        if not video_id or not entry_id or not title or not description or video_id in seen:
+            continue
+
+        tag_labels = {
+            str(tag.get("label") or "").strip().casefold()
+            for tag in item.get("tags") or []
+            if isinstance(tag, dict)
+        }
+        if "video-type:hotshots" not in tag_labels:
+            continue
+        haystack = f"{title} {description}".casefold()
+        if any(
+            term in haystack
+            for term in (
+                "countdown",
+                "top 10",
+                "top 20",
+                "season so far",
+                "best shots in",
+            )
+        ):
+            continue
+
+        def _tag_value(prefix: str) -> str:
+            marker = prefix.casefold() + ":"
+            return next(
+                (label[len(marker) :] for label in tag_labels if label.startswith(marker)),
+                "",
+            )
+
+        metadata = item.get("metadata")
+        if not isinstance(metadata, dict):
+            metadata = {}
+        thumbnail = item.get("thumbnail")
+        if not isinstance(thumbnail, dict):
+            thumbnail = {}
+        references = tuple(
+            f"{ref.get('type')}:{ref.get('sid')}"
+            for ref in item.get("references") or []
+            if isinstance(ref, dict) and ref.get("type") and ref.get("sid")
+        )
+        slug = str(item.get("titleUrlSegment") or "").strip()
+        video_url = f"https://www.tennistv.com/videos/{video_id}"
+        if slug:
+            video_url += f"/{slug}"
+        seen.add(video_id)
+        entries.append(
+            TennisTVHotShotEntry(
+                candidate=OfficialVideoCandidate(
+                    title=title,
+                    url=video_url,
+                    tour="ATP",
+                ),
+                video_id=video_id,
+                entry_id=entry_id,
+                description=description,
+                thumbnail_url=str(
+                    thumbnail.get("onDemandUrl")
+                    or thumbnail.get("imageUrl")
+                    or ""
+                ).strip(),
+                published_at=str(item.get("date") or "").strip(),
+                duration_ms=round(float(item.get("duration") or 0) * 1000),
+                city=html.unescape(str(metadata.get("city") or "")).strip(),
+                year=_tag_value("year"),
+                round_name=html.unescape(
+                    str(metadata.get("round") or metadata.get("roundShort") or "")
+                ).strip(),
+                series=_tag_value("series"),
+                match_type=_tag_value("match-type"),
+                entitlement=_tag_value("entitlement"),
                 references=references,
             )
         )
@@ -471,8 +584,10 @@ def fetch_tennistv_video_metadata(
     candidate: OfficialVideoCandidate,
     *,
     get: Callable[..., object] = requests.get,
+    post: Callable[..., object] = requests.post,
     timeout: int = 30,
     jwt_token: str | None = None,
+    refresh_token: str | None = None,
 ) -> OfficialVideoMetadata:
     """Resolve a Tennis TV card through its documented entitlement endpoint.
 
@@ -482,7 +597,29 @@ def fetch_tennistv_video_metadata(
     manifest. A token may be supplied as the opt-in ``TENNISTV_JWT`` secret.
     """
     headers = {"User-Agent": "tennislive/0.1", "account": "atpmedia"}
+    refresh = (
+        refresh_token
+        if refresh_token is not None
+        else os.getenv("TENNISTV_REFRESH_TOKEN", "").strip()
+    )
     token = jwt_token or os.getenv("TENNISTV_JWT", "").strip()
+    if refresh:
+        refresh_response = post(
+            TENNISTV_TOKEN_ENDPOINT,
+            data={
+                "client_id": TENNISTV_CLIENT_ID,
+                "grant_type": "refresh_token",
+                "refresh_token": refresh,
+            },
+            timeout=timeout,
+        )
+        refresh_response.raise_for_status()
+        refreshed = refresh_response.json()
+        token = str(refreshed.get("access_token") or "").strip()
+        if not token:
+            raise VideoPipelineError(
+                "Tennis TV refresh did not return an access token"
+            )
     if token:
         headers["Authorization"] = f"Bearer {token}"
     page_response = get(candidate.url, headers=headers, timeout=timeout)
@@ -512,15 +649,32 @@ def fetch_tennistv_video_metadata(
         raise VideoPipelineError(
             "Tennis TV entitlement did not return a playback token; no browser login is used"
         )
-    # StreamAMG's public player accepts this HLS manifest URL with the token.
-    playback_url = (
-        "https://open.http.mp.streamamg.com/p/atpmedia/sp/atpmedia00/"
-        f"playManifest/entryId/{entry_id}/format/applehttp/protocol/https/a.m3u8"
-        f"?access_token={access_token}"
+    # Tennis TV's current browser player resolves the entitled entry through
+    # StreamAMG's playback API. The former Kaltura-style manifest now returns
+    # 404 even when entitlement succeeds.
+    playback_response = get(
+        f"{TENNISTV_PLAYBACK_API}/{entry_id}",
+        headers={
+            "User-Agent": headers["User-Agent"],
+            "x-api-key": TENNISTV_PLAYBACK_API_KEY,
+            "Authorization": f"Bearer {access_token}",
+        },
+        timeout=timeout,
     )
+    playback_response.raise_for_status()
+    playback = playback_response.json()
+    media = playback.get("media") if isinstance(playback, dict) else {}
+    playback_url = (
+        str(media.get("hls") or "").strip() if isinstance(media, dict) else ""
+    )
+    if not playback_url.startswith("https://"):
+        raise VideoPipelineError(
+            "Tennis TV playback API did not return an HLS manifest"
+        )
     duration = _itemprop("duration")
     duration_ms = 0
-    match = re.fullmatch(r"PT(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?", duration)
+    # Tennis TV currently emits both ISO-8601 ``PT28S`` and legacy ``T28S``.
+    match = re.fullmatch(r"P?T(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?", duration)
     if match:
         duration_ms = round(
             (int(match.group(1) or 0) * 60 + float(match.group(2) or 0)) * 1000
@@ -536,7 +690,8 @@ def fetch_tennistv_video_metadata(
         description=_itemprop("description"),
         thumbnail_url=thumbnail_url,
         playback_url=playback_url,
-        duration_ms=duration_ms,
+        duration_ms=duration_ms
+        or round(float(playback.get("duration") or 0) * 1000),
         published_at=published_at,
         source_width=int(width_match.group(1)) if width_match else 1920,
         source_height=int(height_match.group(1)) if height_match else 1080,

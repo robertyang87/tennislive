@@ -14,7 +14,7 @@ import os
 import re
 import shutil
 import subprocess
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import date, datetime, timezone
 from fractions import Fraction
 from pathlib import Path
@@ -33,6 +33,7 @@ from .official import (
     ATP_YOUTUBE_FEED,
     OFFICIAL_YOUTUBE_CHANNEL_IDS,
     OFFICIAL_YOUTUBE_FEEDS,
+    TENNISTV_HOT_SHOTS_API,
     TENNISTV_HOT_SHOTS_HUB,
     TENNISTV_YOUTUBE_CHANNEL_ID,
     TENNISTV_YOUTUBE_FEED,
@@ -43,6 +44,7 @@ from .official import (
     fetch_tennistv_video_metadata,
     fetch_wta_video_metadata,
     parse_official_youtube_feed,
+    parse_tennistv_hot_shot_api_entries,
     parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
     search_official_youtube_candidates,
@@ -600,13 +602,33 @@ def discover_tennistv_point(
     resolver records a clean miss and the normal ATP official feed remains the
     next fallback.
     """
-    response = get(
-        TENNISTV_HOT_SHOTS_HUB,
-        headers={"User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"},
-        timeout=timeout,
-    )
-    response.raise_for_status()
-    entries = parse_tennistv_hot_shot_entries(str(response.text))
+    headers = {
+        "User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"
+    }
+    entries = []
+    try:
+        response = get(
+            TENNISTV_HOT_SHOTS_API,
+            params={
+                "offset": 0,
+                "limit": 80,
+                "tagNames": "video-type:hotshots",
+            },
+            headers=headers,
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        entries = parse_tennistv_hot_shot_api_entries(response.json())
+    except (VideoPipelineError, requests.RequestException, ValueError, TypeError, AttributeError):
+        entries = []
+    if not entries:
+        response = get(
+            TENNISTV_HOT_SHOTS_HUB,
+            headers=headers,
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        entries = parse_tennistv_hot_shot_entries(str(response.text))
     matches = yesterday_matches(digest)
     shortlist: list = []
     for entry in entries[:80]:
@@ -625,7 +647,16 @@ def discover_tennistv_point(
     metadata_items: list[OfficialVideoMetadata] = []
     for entry in shortlist:
         try:
-            metadata_items.append(metadata_fetcher(entry.candidate, get=get, timeout=timeout))
+            metadata = metadata_fetcher(entry.candidate, get=get, timeout=timeout)
+            metadata_items.append(
+                replace(
+                    metadata,
+                    description=metadata.description or entry.description,
+                    thumbnail_url=metadata.thumbnail_url or entry.thumbnail_url,
+                    published_at=metadata.published_at or entry.published_at,
+                    duration_ms=metadata.duration_ms or entry.duration_ms,
+                )
+            )
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
             continue
     direct = select_daily_point(digest, metadata_items)

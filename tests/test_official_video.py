@@ -17,6 +17,7 @@ from tennislive.video.official import (
     fetch_wta_video_metadata,
     parse_official_youtube_feed,
     parse_official_youtube_feed_entries,
+    parse_tennistv_hot_shot_api_entries,
     parse_tennistv_hot_shot_candidates,
     parse_tennistv_hot_shot_entries,
     parse_wta_video_candidates,
@@ -136,6 +137,64 @@ def test_tennistv_hot_shot_cards_keep_match_metadata_and_drop_montages():
     assert entries[0].duration_ms == 28_000
     assert entries[0].references == ("ATP_MATCH:8994_2026_MS004",)
     assert parse_tennistv_hot_shot_candidates(page) == [entries[0].candidate]
+
+
+def test_tennistv_hot_shot_api_keeps_publication_and_entitlement_metadata():
+    entries = parse_tennistv_hot_shot_api_entries(
+        {
+            "content": [
+                {
+                    "id": 4542582,
+                    "type": "video",
+                    "title": "Estoril 2026 R2 Carreno Busta Hot Shot",
+                    "description": "A one-handed backhand winner in Estoril.",
+                    "date": "2026-07-23T12:52:00Z",
+                    "mediaId": "0_8xmxcesy",
+                    "duration": 39,
+                    "titleUrlSegment": "estoril-2026-r2-carreno-busta-hot-shot",
+                    "tags": [
+                        {"label": "entitlement:freemium"},
+                        {"label": "video-type:hotshots"},
+                        {"label": "match-type:singles"},
+                        {"label": "series:250"},
+                        {"label": "year:2026"},
+                    ],
+                    "references": [
+                        {"type": "ATP_PLAYER", "sid": "CD85"},
+                        {"type": "ATP_MATCH", "sid": "7290_2026_MS009"},
+                    ],
+                    "thumbnail": {
+                        "onDemandUrl": "https://img.example/carreno-busta.jpg"
+                    },
+                    "metadata": {"city": "Estoril", "round": "R2"},
+                },
+                {
+                    "id": 99,
+                    "type": "video",
+                    "title": "Estoril 2026 Hot Shot Countdown",
+                    "description": "A compilation.",
+                    "mediaId": "0_montage",
+                    "duration": 400,
+                    "tags": [{"label": "video-type:hotshots"}],
+                },
+            ]
+        }
+    )
+
+    assert len(entries) == 1
+    entry = entries[0]
+    assert entry.published_at == "2026-07-23T12:52:00Z"
+    assert entry.duration_ms == 39_000
+    assert entry.entitlement == "freemium"
+    assert entry.series == "250"
+    assert entry.match_type == "singles"
+    assert entry.references == (
+        "ATP_PLAYER:CD85",
+        "ATP_MATCH:7290_2026_MS009",
+    )
+    assert entry.candidate.url.endswith(
+        "/4542582/estoril-2026-r2-carreno-busta-hot-shot"
+    )
 
 
 def test_official_youtube_feed_verifies_channel_identity():
@@ -288,17 +347,124 @@ def test_tennistv_metadata_uses_entitlement_token_without_browser_state():
                 <span itemprop="uploadDate" content="2026-07-21T10:00:00Z"></span>
                 '''
             )
-        assert "entitlementcheck" in url
-        assert kwargs["headers"]["account"] == "atpmedia"
-        assert kwargs["headers"]["Authorization"] == "Bearer jwt"
-        return Response(payload={"access_token": "stream-token"})
+        if "entitlementcheck" in url:
+            assert kwargs["headers"]["account"] == "atpmedia"
+            assert kwargs["headers"]["Authorization"] == "Bearer jwt"
+            return Response(payload={"access_token": "stream-token"})
+        assert "api.playback.streamamg.com/v1/entry/0_p5swvkf4" in url
+        assert kwargs["headers"]["Authorization"] == "Bearer stream-token"
+        assert kwargs["headers"]["x-api-key"]
+        return Response(
+            payload={
+                "media": {"hls": "https://video.example/master.m3u8"},
+                "duration": "28",
+            }
+        )
 
     metadata = fetch_tennistv_video_metadata(candidate, get=get, jwt_token="jwt")
     assert metadata.duration_ms == 28_000
     assert metadata.source_width == 1920
     assert metadata.source_height == 1080
-    assert "entryId/0_p5swvkf4" in metadata.playback_url
-    assert "access_token=stream-token" in metadata.playback_url
+    assert metadata.playback_url == "https://video.example/master.m3u8"
+
+
+def test_tennistv_metadata_accepts_current_legacy_duration_shape():
+    candidate = OfficialVideoCandidate(
+        "Mallorca 2026 QF Nuno Borges Hot Shot",
+        "https://www.tennistv.com/videos/4526866/mallorca-hot-shot",
+        tour="ATP",
+    )
+
+    class Response:
+        def __init__(self, text="", payload=None):
+            self.text = text
+            self._payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self._payload
+
+    def get(url, **kwargs):
+        if url == candidate.url:
+            return Response(
+                text='''
+                <div data-entry-id="0_p5swvkf4"></div>
+                <span itemprop="duration" content="T28S"></span>
+                <span itemprop="uploadDate" content="2026-07-23T10:00:00Z"></span>
+                '''
+            )
+        if "entitlementcheck" in url:
+            return Response(payload={"access_token": "stream-token"})
+        return Response(
+            payload={
+                "media": {"hls": "https://video.example/master.m3u8"},
+                "duration": "28",
+            }
+        )
+
+    metadata = fetch_tennistv_video_metadata(candidate, get=get)
+
+    assert metadata.duration_ms == 28_000
+
+
+def test_tennistv_metadata_refreshes_access_token_for_unattended_action():
+    candidate = OfficialVideoCandidate(
+        "Estoril 2026 R2 Carreno Busta Hot Shot",
+        "https://www.tennistv.com/videos/4542582/estoril-hot-shot",
+        tour="ATP",
+    )
+
+    class Response:
+        def __init__(self, text="", payload=None):
+            self.text = text
+            self._payload = payload
+
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return self._payload
+
+    def post(url, **kwargs):
+        assert url.endswith("/protocol/openid-connect/token")
+        assert kwargs["data"] == {
+            "client_id": "tennis-tv-web",
+            "grant_type": "refresh_token",
+            "refresh_token": "refresh-secret",
+        }
+        return Response(payload={"access_token": "fresh-jwt"})
+
+    def get(url, **kwargs):
+        if url == candidate.url:
+            return Response(
+                text='''
+                <div data-entry-id="0_8xmxcesy"></div>
+                <span itemprop="duration" content="T39S"></span>
+                <span itemprop="uploadDate" content="2026-07-23T12:52:00Z"></span>
+                '''
+            )
+        if "entitlementcheck" in url:
+            assert kwargs["headers"]["Authorization"] == "Bearer fresh-jwt"
+            return Response(payload={"access_token": "entry-token"})
+        assert kwargs["headers"]["Authorization"] == "Bearer entry-token"
+        return Response(
+            payload={
+                "media": {"hls": "https://video.example/estoril.m3u8"},
+                "duration": "39",
+            }
+        )
+
+    metadata = fetch_tennistv_video_metadata(
+        candidate,
+        get=get,
+        post=post,
+        refresh_token="refresh-secret",
+    )
+
+    assert metadata.playback_url == "https://video.example/estoril.m3u8"
+    assert metadata.duration_ms == 39_000
 
 
 def test_official_youtube_metadata_rejects_video_from_another_channel():
