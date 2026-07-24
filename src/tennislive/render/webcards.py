@@ -2012,6 +2012,7 @@ def _semantic_marker_for_text(
         "rule": ("circle-check", "规则"),
         "technology": ("scan", "科技"),
         "legacy": ("circle-check", "影响"),
+        "record": ("trophy", "纪录"),
         "today": ("circle-check", "今天"),
     }
     if role:

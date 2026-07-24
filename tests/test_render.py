@@ -460,6 +460,49 @@ def test_story_slot_never_empty(tmp_path, monkeypatch):
     assert again is not None and again.slug == first.slug
 
 
+def test_all_story_fact_roles_are_valid_marker_roles():
+    """Every story's declared fact role must resolve to a real marker.
+
+    A typo like ``fact_roles=("record", ...)`` where ``record`` isn't a known
+    role would raise ``ValueError`` the moment that page renders. This guards
+    the whole STORIES table so a bad role can never ship again.
+    """
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import _semantic_marker_for_text
+
+    for story in STORIES:
+        for index, role in enumerate(story.fact_roles):
+            if not role:
+                continue
+            # Must not raise for any real story beat text.
+            _semantic_marker_for_text(
+                "示例事实文本", index, story_kind=story.kind, role=role
+            )
+
+
+def test_adhoc_knowledge_marker_gates_daily_but_never_adhoc(tmp_path, monkeypatch):
+    """Ad-hoc marks today's knowledge slot; the daily flow reads it, ad-hoc doesn't."""
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(
+        tournament_story, "STATE_PATH", tmp_path / "story_state.json"
+    )
+    today = date(2026, 7, 24)
+
+    assert tournament_story.adhoc_knowledge_published_on(today) is False
+
+    # A regular cooldown mark must not be mistaken for an ad-hoc publish.
+    tournament_story.mark_story_used("big-three", today)
+    assert tournament_story.adhoc_knowledge_published_on(today) is False
+
+    tournament_story.mark_adhoc_knowledge_published(today)
+    assert tournament_story.adhoc_knowledge_published_on(today) is True
+    # Only today is claimed; a different day is still open.
+    assert tournament_story.adhoc_knowledge_published_on(date(2026, 7, 25)) is False
+    # The reserved marker coexists with the slug cooldown, not clobbering it.
+    assert tournament_story._load_state().get("big-three") == today.isoformat()
+
+
 def test_trivia_candidates_follow_live_topic_then_viral_prior(tmp_path, monkeypatch):
     from tennislive.render import tournament_story
 
