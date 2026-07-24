@@ -30,6 +30,10 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
+      - name: 查找三场决赛双方合影照片（临时）
+        shell: bash
+        run: python tools/probe_together_photos.py
+
       - name: 生成无图片探测包
         shell: bash
         run: |
