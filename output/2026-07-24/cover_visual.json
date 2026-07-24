@@ -1,20 +1,20 @@
 {
   "schema_version": 2,
   "status": "selected",
-  "match_id": "400-2026:178833",
+  "match_id": "401-2026:179405",
   "match_players": [
-    "Alejandro Tabilo",
-    "Tiago Torres"
+    "Lanlana Tararudee",
+    "Daria Snigur"
   ],
   "candidate_players": [
-    "Tiago Torres",
-    "Alejandro Tabilo"
+    "Daria Snigur",
+    "Lanlana Tararudee"
   ],
   "headline_hot": true,
   "headline_eligible": true,
   "headline_players": [
-    "Alejandro Tabilo",
-    "Tiago Torres"
+    "Lanlana Tararudee",
+    "Daria Snigur"
   ],
   "china_priority": true,
   "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
@@ -27,13 +27,112 @@
     "openverse",
     "bing-web-image",
     "flickr-public",
-    "official-atp-youtube"
+    "official-match-media"
   ],
   "attempts": [
     {
-      "player": "Tiago Torres",
-      "provider": "official-atp-youtube",
-      "source_url": "https://www.youtube.com/watch?v=C50I4hW7gSo",
+      "player": "Daria Snigur",
+      "provider": "wta-video-hub",
+      "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": true,
+      "exact_match": false,
+      "event_match": true,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 41,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Daria Snigur",
+      "provider": "bing-web-image",
+      "source_url": "https://watch.plex.tv/show/daria",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Daria Snigur",
+      "provider": "bing-web-image",
+      "source_url": "https://www.pinterest.com/pin/16114511141260786/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Daria Snigur",
+      "provider": "bing-web-image",
+      "source_url": "https://www.instagram.com/imdariamorgendorffer/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Daria Snigur",
+      "provider": "official-match-media",
+      "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
       "subject_match": true,
       "person_match": true,
       "both_sides_match": true,
@@ -48,106 +147,104 @@
         "trophy": [],
         "rejected": [],
         "pixel": [
-          "2 prominent face(s)",
+          "1 prominent face(s)",
           "frontal-default"
         ]
       },
-      "metadata_score": 66,
+      "metadata_score": 65,
       "status": "selected",
       "quality": {
         "status": "pass",
-        "score": 31.6,
+        "score": 30.1,
         "quality_score": 13.8,
-        "crop_score": 17.8,
+        "crop_score": 16.3,
         "hard_failures": [],
-        "width": 1280,
-        "height": 720,
-        "sharpness": 830.3,
-        "tonal_range": 192.0,
-        "mean_luma": 116.8,
-        "black_ratio": 0.053,
-        "white_ratio": 0.0025,
-        "entropy": 7.57,
-        "edge_ratio": 0.061,
-        "saturation": 145.2,
-        "prominent_faces": 2,
+        "width": 4768,
+        "height": 3368,
+        "sharpness": 121.2,
+        "tonal_range": 154.0,
+        "mean_luma": 214.6,
+        "black_ratio": 0.0026,
+        "white_ratio": 0.2581,
+        "entropy": 6.57,
+        "edge_ratio": 0.0187,
+        "saturation": 37.0,
+        "prominent_faces": 1,
         "face_detectors": [
           "frontal-default"
         ],
         "prominent_bodies": 0,
         "body_detectors": [],
         "crop": [
-          631,
+          556,
           0,
-          1171,
-          720
+          3082,
+          3368
         ],
-        "crop_retention": 0.422,
+        "crop_retention": 0.53,
         "face_safe": true,
-        "focus": "74% 38%",
-        "resolution_profile": "official-youtube-maxres-1280x720"
+        "focus": "42% 35%"
       },
-      "quality_score": 115.6,
+      "quality_score": 113.1,
       "face_priority_bonus": 18,
       "hard_failures": [],
-      "cached_file": "daily-cover-dbe7ebdf52c7.jpg"
+      "cached_file": "daily-cover-bfd955d9891b.jpg"
     }
   ],
   "flickr_enabled": true,
   "wta_official_enabled": true,
-  "wta_video_hub_candidates": 0,
-  "official_pages_checked": 0,
-  "official_pages_expanded": 0,
-  "selected_player": "Tiago Torres",
+  "wta_video_hub_candidates": 1,
+  "official_pages_checked": 1,
+  "official_pages_expanded": 1,
+  "selected_player": "Daria Snigur",
   "exact_match": true,
   "both_sides_match": true,
   "scene": "prominent_person",
   "person_evidence": {},
-  "quality_score": 115.6,
+  "quality_score": 113.1,
   "quality": {
     "status": "pass",
-    "score": 31.6,
+    "score": 30.1,
     "quality_score": 13.8,
-    "crop_score": 17.8,
+    "crop_score": 16.3,
     "hard_failures": [],
-    "width": 1280,
-    "height": 720,
-    "sharpness": 830.3,
-    "tonal_range": 192.0,
-    "mean_luma": 116.8,
-    "black_ratio": 0.053,
-    "white_ratio": 0.0025,
-    "entropy": 7.57,
-    "edge_ratio": 0.061,
-    "saturation": 145.2,
-    "prominent_faces": 2,
+    "width": 4768,
+    "height": 3368,
+    "sharpness": 121.2,
+    "tonal_range": 154.0,
+    "mean_luma": 214.6,
+    "black_ratio": 0.0026,
+    "white_ratio": 0.2581,
+    "entropy": 6.57,
+    "edge_ratio": 0.0187,
+    "saturation": 37.0,
+    "prominent_faces": 1,
     "face_detectors": [
       "frontal-default"
     ],
     "prominent_bodies": 0,
     "body_detectors": [],
     "crop": [
-      631,
+      556,
       0,
-      1171,
-      720
+      3082,
+      3368
     ],
-    "crop_retention": 0.422,
+    "crop_retention": 0.53,
     "face_safe": true,
-    "focus": "74% 38%",
-    "resolution_profile": "official-youtube-maxres-1280x720"
+    "focus": "42% 35%"
   },
   "event_match": true,
   "year_match": true,
-  "provider": "official-atp-youtube",
-  "source_url": "https://www.youtube.com/watch?v=C50I4hW7gSo",
-  "credit": "ATP Tour",
-  "license": "official public match media",
-  "focus": "74% 38%",
+  "provider": "official-match-media",
+  "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
+  "credit": "wtatennis.com",
+  "license": "官方公开页面图片 · 资讯引用",
+  "focus": "42% 35%",
   "headline_selection": {
     "status": "reselected",
     "primary_match_id": "304-2026:178886",
-    "selected_match_id": "400-2026:178833",
+    "selected_match_id": "401-2026:179405",
     "attempted": 4,
     "failed_candidates": [
       {
@@ -165,7 +262,7 @@
         ]
       },
       {
-        "match_id": "400-2026:178820",
+        "match_id": "401-2026:179406",
         "status": "unavailable",
         "errors": [
           "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
@@ -175,18 +272,19 @@
           "wikimedia-commons",
           "openverse",
           "bing-web-image",
-          "flickr-public"
+          "flickr-public",
+          "official-match-media"
         ]
       }
     ]
   },
-  "selected_asset_sha256": "dbe7ebdf52c7b9a4255f6bb79b64b19237afff762df7f60f3229a3c50dfb668d",
+  "selected_asset_sha256": "bfd955d9891b56542472a77838c47c64ae365d1ef2146ede6496e79630b39b41",
   "render_binding": {
     "status": "bound",
     "renderer": "html-chromium",
-    "match_id": "400-2026:178833",
-    "selected_asset_sha256": "dbe7ebdf52c7b9a4255f6bb79b64b19237afff762df7f60f3229a3c50dfb668d",
+    "match_id": "401-2026:179405",
+    "selected_asset_sha256": "bfd955d9891b56542472a77838c47c64ae365d1ef2146ede6496e79630b39b41",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "dbac6e180301e415b0500280a469cd4f6a2bdd4013099566c81cf37d108c366c"
+    "card_sha256": "0ea81bb54c7b4a26f26ae3d54b295217fc40041a8f2cee396752f85af43d08d0"
   }
 }
