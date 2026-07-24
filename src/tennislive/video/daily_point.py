@@ -1109,8 +1109,16 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     featured, opponent = _featured_and_opponent(selection)
     winner, _loser = _winner_loser(selection.match)
     score = selection.match.score_display(from_winner=True)
-    category = "神仙球" if selection.consensus_rank == 1 else "这一分，值回放"
-    title = f"🎾{published_for.month}.{published_for.day}｜{category}"
+    # Titles name the featured player and lead with the strongest honest hook
+    # for that tier: rank 3 is the one clip that can truthfully claim "the
+    # whole day agreed this was best"; rank 1 (a Hot Shot, not a best-of-day
+    # claim) still gets a punchy title, just without borrowing rank 3's claim.
+    title_hook = {
+        3: "这一分，全场公认最佳",
+        2: "这一分，直接封神",
+        1: "这一拍，全场看傻",
+    }[selection.consensus_rank]
+    title = f"🎾{published_for.month}.{published_for.day}｜{featured}{title_hook}"
     source_title = _clean(selection.metadata.candidate.title)
     if selection.consensus_rank == 3:
         hook = "昨天最舍不得快进的一段拉锯，被选成了当日最佳。"
