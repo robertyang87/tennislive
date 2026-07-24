@@ -518,7 +518,7 @@ def test_xiaohongshu_copy_is_one_plain_mobile_paragraph(sample_digest):
     copy = point_xiaohongshu_copy(_selection(sample_digest), date(2026, 7, 16))
     title, body = copy.split("\n\n")
 
-    assert title == "🎾7.16｜这一分，值回放"
+    assert title == "🎾7.16｜郑钦文这一分，全场公认最佳"
     assert "\n" not in body
     assert len(body) <= 280
     assert body.count("？") == 1
