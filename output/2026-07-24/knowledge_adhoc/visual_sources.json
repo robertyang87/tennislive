@@ -5,9 +5,8 @@
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
-  "selected_count": 4,
+  "selected_count": 3,
   "required_pages": [
-    "cover",
     "explainer",
     "story",
     "today"
@@ -17,7 +16,6 @@
     "commons.wikimedia.org",
     "espn.com",
     "forbes.com",
-    "npr.org",
     "perfect-tennis.com",
     "rappler.com"
   ],
@@ -26,20 +24,6 @@
     "official-story-pages"
   ],
   "provider_runs": [
-    {
-      "page": "cover",
-      "provider": "curated-editorial",
-      "query": "Federer Nadal Djokovic tennis tennis",
-      "status": "ok",
-      "candidate_count": 1
-    },
-    {
-      "page": "cover",
-      "provider": "official-story-pages",
-      "query": "Federer Nadal Djokovic tennis tennis",
-      "status": "ok",
-      "candidate_count": 1
-    },
     {
       "page": "story",
       "provider": "curated-editorial",
@@ -148,60 +132,21 @@
     },
     {
       "page": "cover",
-      "status": "rejected",
+      "status": "selected",
       "cached_file": "trivia-big-three.jpg",
-      "title": "File:Rafael Nadal & Roger Federer (18265453743).jpg",
+      "title": "Andy Murray, Roger Federer, Rafael Nadal and Novak Djokovic embrace at Nadal's 2025 Roland Garros farewell ceremony (tennis)",
       "subject": "Federer Nadal Djokovic",
       "required_years": [],
       "required_event_terms": [
         "tennis"
       ],
       "person_required": true,
-      "subject_match": false,
-      "year_match": true,
-      "event_match": false,
-      "person_match": false,
-      "visual_impact_match": false,
-      "reason": "封面未同时满足人物、年份、事件/地点和授权来源要求"
-    },
-    {
-      "page": "cover",
-      "status": "selected",
-      "required_event_terms": [],
-      "match_level": "exact-event",
-      "rejection_counts": {
-        "subject-or-person-mismatch": 1
-      },
-      "source_runs": [
-        {
-          "page": "cover",
-          "provider": "curated-editorial",
-          "query": "Federer Nadal Djokovic tennis tennis",
-          "status": "ok",
-          "candidate_count": 1
-        },
-        {
-          "page": "cover",
-          "provider": "official-story-pages",
-          "query": "Federer Nadal Djokovic tennis tennis",
-          "status": "ok",
-          "candidate_count": 1
-        }
-      ],
-      "provider": "verified-editorial",
-      "source_url": "https://www.npr.org/2022/09/22/1124272575/laver-cup-federer-nadal-djokovic",
-      "image_url": "https://media.npr.org/assets/img/2022/09/22/copy-of-composites_wide-44c1798792c6e052aa486f6921450f371c212c5b.jpg?s=1400&c=85&f=jpeg",
-      "credit": "NPR",
-      "license": "公开网页图片 · 非商业资讯引用",
-      "query": "Federer Nadal Djokovic tennis tennis",
-      "relevance": 100,
-      "sha256": "41e22ea16f4dc639cddea86774bf7756ffe90f35ce41a71689011f84c196e0e5",
-      "focus": "50% 22%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
-      "person_required": true,
-      "cached_file": "cover-41e22ea16f4d.jpg"
+      "person_match": true,
+      "visual_impact_match": true,
+      "reason": ""
     },
     {
       "page": "story",
@@ -324,9 +269,9 @@
   "selection_evidence": {
     "kind": "trivia",
     "candidate_slug": "big-three",
-    "result_count": 47,
-    "live_count": 2,
-    "schedule_count": 24,
+    "result_count": 49,
+    "live_count": 0,
+    "schedule_count": 22,
     "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
     "viral_prior": 8.0,
     "topic_score": 8.0,
