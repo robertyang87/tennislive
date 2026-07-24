@@ -78,6 +78,81 @@ def test_strict_cover_report_binds_verified_asset_to_final_card(
     assert binding["card_sha256"] == hashlib.sha256(paths[0].read_bytes()).hexdigest()
 
 
+def test_strict_cover_reselects_one_coherent_hot_headline(
+    tmp_path, sample_digest, monkeypatch
+):
+    from tennislive.render import cards, rating, webcards
+    from tennislive.research import visual_sources
+
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_STRICT", "on")
+    from tennislive.render.titles import daily_lead_match
+
+    primary = daily_lead_match(sample_digest)
+    assert primary is not None
+    alternate = next(
+        match for match in sample_digest.results if match.match_id != primary.match_id
+    )
+    monkeypatch.setattr(
+        rating,
+        "lead_story_candidates",
+        lambda _digest: [
+            SimpleNamespace(match=primary),
+            SimpleNamespace(match=alternate),
+        ],
+    )
+
+    def resolve(match, folder):
+        if match.match_id == primary.match_id:
+            return None, {
+                "status": "unavailable",
+                "match_id": match.match_id,
+                "errors": ["no-qualified-photo"],
+                "providers_queried": ["official-match-media"],
+            }
+        visual, report = _selected_cover(match, folder)
+        report.update(
+            headline_hot=True,
+            headline_eligible=True,
+            quality={
+                "status": "pass",
+                "hard_failures": [],
+            },
+            quality_score=90,
+        )
+        return visual, report
+
+    monkeypatch.setattr(visual_sources, "resolve_match_cover_visual", resolve)
+    monkeypatch.setattr(
+        webcards,
+        "generate_deck",
+        lambda digest, *_args, **_kwargs: [
+            (
+                "cover",
+                Image.effect_noise((1080, 1440), 32).convert("RGB"),
+            )
+        ],
+    )
+
+    paths = cards.generate_cards(sample_digest, tmp_path / "cards")
+
+    assert paths[0].name == "card_00_cover.jpg"
+    assert sample_digest.lead_match_id == alternate.match_id
+    report = json.loads((tmp_path / "cover_visual.json").read_text("utf-8"))
+    assert report["match_id"] == alternate.match_id
+    assert report["headline_selection"]["status"] == "reselected"
+    assert report["headline_selection"]["primary_match_id"] == primary.match_id
+    assert report["headline_selection"]["selected_match_id"] == alternate.match_id
+    assert report["headline_selection"]["failed_candidates"] == [
+        {
+            "match_id": primary.match_id,
+            "status": "unavailable",
+            "errors": ["no-qualified-photo"],
+            "providers_queried": ["official-match-media"],
+        }
+    ]
+
+
 def test_strict_cover_uses_truthful_branded_fallback_when_no_photo(
     tmp_path, sample_digest, monkeypatch
 ):
@@ -103,7 +178,7 @@ def test_strict_cover_uses_truthful_branded_fallback_when_no_photo(
 
     assert paths[0].name == "card_00_cover.jpg"
     report = json.loads((tmp_path / "cover_visual.json").read_text("utf-8"))
-    assert report["status"] == "fallback"
+    assert report["status"] == "branded_fallback"
     assert report["fallback_reason"] == "no-qualified-photo"
     assert report["render_binding"]["status"] == "bound"
 

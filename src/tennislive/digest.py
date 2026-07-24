@@ -23,6 +23,9 @@ class Digest:
     source: str = ""
     source_status: dict[str, str] = field(default_factory=dict)
     rankings: object = None                              # sources.rankings.Rankings（可选）
+    # 封面素材门禁可能把首选头条切换为同日下一条高热度比赛。该字段让
+    # 封面、复盘页、文案与 cover_facts 始终消费同一个最终头条。
+    lead_match_id: str | None = None
 
     @property
     def yesterday(self) -> date:

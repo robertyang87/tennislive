@@ -267,6 +267,17 @@ def _tonight_headline(digest: Digest) -> str | None:
 
 def daily_lead_match(digest: Digest):
     """唯一头条入口，选择逻辑与可解释分项统一由 rating 管理。"""
+    if digest.lead_match_id:
+        selected = next(
+            (
+                match
+                for match in digest.results + digest.live + digest.schedule
+                if match.match_id == digest.lead_match_id
+            ),
+            None,
+        )
+        if selected is not None:
+            return selected
     selection = select_lead_story(digest)
     return selection.match if selection is not None else None
 
