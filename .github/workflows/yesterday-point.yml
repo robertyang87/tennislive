@@ -144,7 +144,7 @@ jobs:
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
       - name: PushPlus 推送昨日 Hot Shots / 最佳回合
-        if: (github.event_name == 'push' || steps.commit.outputs.ready == 'true') && env.PUSHPLUS_TOKEN != ''
+        if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''
         continue-on-error: true
         run: |
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
