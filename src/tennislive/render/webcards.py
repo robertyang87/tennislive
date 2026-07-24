@@ -2476,7 +2476,7 @@ def _knowledge_fact_body(
     has_photo = visual is not None
     page_class = " has-page-photo" if has_photo else ""
     explainer_photo_caption = {
-        "big-three": ("德约科维奇夺冠瞬间", "2012 · 澳网决赛"),
+        "big-three": ("德约手捧奖杯，纳达尔就在身后", "2012 · 澳网颁奖仪式"),
     }
     caption, subline = explainer_photo_caption.get(
         story.slug, (story.venue, story.location)

@@ -374,25 +374,28 @@ _CURATED_VISUALS: dict[tuple[str, str], tuple[dict, ...]] = {
         {
             "provider": "verified-editorial",
             "source_url": (
-                "https://www.perfect-tennis.com/novak-djokovic-vs-rafael-"
-                "nadal-australian-open-2012/"
+                "https://www.si.com/tennis/2012/01/29/"
+                "29-0australian-open-2012"
             ),
             "image_url": (
-                "https://www.perfect-tennis.com/wp-content/uploads/2020/04/"
-                "Djokovic.jpg"
+                "https://www.si.com/.image/c_fill,w_1440,ar_1440:810,"
+                "f_auto,q_auto,g_auto/MTY4MjYyNDk4OTcyODA0MjYx/"
+                "novak-djokovic.jpg"
             ),
-            "credit": "Perfect Tennis",
+            "credit": "Sports Illustrated",
             "license": "公开网页图片 · 非商业资讯引用",
-            "width": 1400,
-            "height": 900,
+            "width": 1440,
+            "height": 810,
             "relevance": 100,
             "search_text": (
-                "novak djokovic 2012 australian open final champion melbourne"
+                "novak djokovic rafael nadal 2012 australian open trophy "
+                "presentation ceremony together"
             ),
             "image_text": (
-                "novak djokovic celebrates winning the 2012 australian open "
-                "hard court final match in melbourne, the longest grand slam "
-                "final ever played at 5 hours 53 minutes"
+                "novak djokovic holds the norman brookes challenge cup "
+                "and speaks at the microphone during the 2012 australian "
+                "open trophy presentation ceremony, with runner-up rafael "
+                "nadal standing behind him"
             ),
         },
     ),
@@ -477,7 +480,7 @@ _VISUAL_BRIEFS: dict[str, dict[str, tuple[str, tuple[str, ...], tuple[str, ...],
     "big-three": {
         "cover": ("Federer Nadal Djokovic", (), ("tennis",), True),
         "story": ("Federer Nadal", ("2008",), ("wimbledon",), True),
-        "explainer": ("Djokovic", ("2012",), ("australian open", "melbourne"), True),
+        "explainer": ("Djokovic Nadal", ("2012",), ("australian open",), True),
         "today": ("Djokovic Federer", ("2019",), ("wimbledon",), True),
     },
     "china-tennis": {
