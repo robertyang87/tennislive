@@ -1481,7 +1481,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 4,
+      "media_heat": 12,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -1498,6 +1498,14 @@
           "title": "Sports News, Transfers, Scores | Watch Live Sport",
           "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNaE1leE9wWlg5S0tCSjkycjhDR0pGUHVYeHczRTRUX1JkWDNLOGdkVldFWW9BY2Nad3FDdVJocmRyZVBOcjJmcDRzSXhsUVJ6ekNDamJqSUJpcmQtdVFINGo4dFhpNlZvZVpGMzk2UG5fUDNKczB3cXRGUGJIQ244anJaQQ?oc=5",
           "published_at": "2026-07-24T10:25:06+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "WTA Tennis",
+          "title": "Back-to-back champion Sabalenka tops 2026 US Open entry list",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNRldVX2NXLVZLeWpCWXhjUnpUYzdpYW4tUmZrRldOOTNnZ1h3Q0tNb2VZRWJOQkFBbFBocjFDeG51LUZUTXZ4c3MtVENBenZqZ1FoajlqLW9UMm00YVdYQlVnSnozcXhSTERyX3NuQy1fWlpqZmtFWkZxazVsSFZTMXU1ci1RaU9ERTMzbTFlZ3AxWE9Ja2daNjllWDRGVUtrOENid2VXclE?oc=5",
+          "published_at": "2026-07-22T04:52:49+00:00",
           "traffic": ""
         }
       ]
@@ -4991,7 +4999,49 @@
       "note": null,
       "court": "Livesport Arena",
       "status_detail": "Final",
-      "stats": null,
+      "stats": {
+        "source": "WTA 官方逐场技术统计",
+        "source_url": "https://api.wtatennis.com/tennis/tournaments/1082/2026/matches/LS004/stats",
+        "total_points_won": {
+          "home": 102.0,
+          "away": 89.0
+        },
+        "service_points_won": {
+          "home": 58.0,
+          "away": 48.0
+        },
+        "first_serve_in_pct": {
+          "home": 69,
+          "away": 72
+        },
+        "first_serve_won_pct": {
+          "home": 69,
+          "away": 59
+        },
+        "second_serve_won_pct": {
+          "home": 35,
+          "away": 35
+        },
+        "aces": {
+          "home": 4.0,
+          "away": 0.0
+        },
+        "double_faults": {
+          "home": 6.0,
+          "away": 3.0
+        },
+        "break_points_won": {
+          "home": 6.0,
+          "away": 5.0
+        },
+        "break_points_chances": {
+          "home": 11.0,
+          "away": 11.0
+        },
+        "winners": null,
+        "unforced_errors": null,
+        "duration_minutes": 164
+      },
       "editorial_note": null,
       "editorial_source": null,
       "editorial_url": null,
@@ -5761,7 +5811,7 @@
           "away_tiebreak": null
         },
         {
-          "home": 3,
+          "home": 6,
           "away": 5,
           "home_tiebreak": null,
           "away_tiebreak": null
@@ -5848,8 +5898,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 1,
-          "away": 2,
+          "home": 2,
+          "away": 3,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -5946,8 +5996,8 @@
       "start_utc": "2026-07-24 15:05:00+00:00",
       "sets": [
         {
-          "home": 4,
-          "away": 1,
+          "home": 5,
+          "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -6011,8 +6061,8 @@
       "start_utc": "2026-07-24 15:05:00+00:00",
       "sets": [
         {
-          "home": 2,
-          "away": 3,
+          "home": 4,
+          "away": 4,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -6092,8 +6142,14 @@
       "start_utc": "2026-07-24 15:10:00+00:00",
       "sets": [
         {
-          "home": 4,
+          "home": 6,
           "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 1,
+          "away": 0,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -6101,7 +6157,7 @@
       "winner": null,
       "note": null,
       "court": "Campo 6",
-      "status_detail": "1st Set",
+      "status_detail": "2nd Set",
       "stats": null,
       "editorial_note": null,
       "editorial_source": null,
@@ -6118,6 +6174,88 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
+    },
+    {
+      "match_id": "401-2026:179400",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Livesport Prague Open",
+        "tour": "WTA",
+        "level": "WTA250",
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "401-2026"
+      },
+      "home": [
+        {
+          "name": "Dominika Salkova",
+          "country": "CZE",
+          "seed": null,
+          "rank": 127,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7436.png",
+          "player_id": "7436"
+        }
+      ],
+      "away": [
+        {
+          "name": "Barbora Krejcikova",
+          "country": "CZE",
+          "seed": 2,
+          "rank": 26,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2042.png",
+          "player_id": "2042"
+        }
+      ],
+      "status": "live",
+      "round_name": "Quarterfinal",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-24 15:40:00+00:00",
+      "sets": [
+        {
+          "home": 0,
+          "away": 0,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": null,
+      "note": null,
+      "court": "Livesport Arena",
+      "status_detail": "1st Set",
+      "stats": null,
+      "editorial_note": null,
+      "editorial_source": null,
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": "2026-07-24T15:40:00+00:00"
+      },
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 4,
+      "search_heat": 0,
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Sky Sports",
+          "title": "Sports News, Transfers, Scores | Watch Live Sport",
+          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRExPQzlHNTI1OWctWEtiUTVkdTBFanZnUUVvdkd4a2dYLS1vTkNRTFo4SVdsbTNOT3NZZ1pDRWlVSXNqVVFkczVVYUxCSE5ObURTM1gwQktzTW15N2VaalJfWFlJTmRUYnBPLUJ4cWRBbXlCS182NWlvY3R2LVFJZVNEbTdTQU9xSVV2cFo4aS0?oc=5",
+          "published_at": "2026-07-24T12:42:23+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Sky Sports",
+          "title": "Sports News, Transfers, Scores | Watch Live Sport",
+          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNaE1leE9wWlg5S0tCSjkycjhDR0pGUHVYeHczRTRUX1JkWDNLOGdkVldFWW9BY2Nad3FDdVJocmRyZVBOcjJmcDRzSXhsUVJ6ekNDamJqSUJpcmQtdVFINGo4dFhpNlZvZVpGMzk2UG5fUDNKczB3cXRGUGJIQ244anJaQQ?oc=5",
+          "published_at": "2026-07-24T10:25:06+00:00",
+          "traffic": ""
+        }
+      ]
     }
   ],
   "schedule": [
@@ -6181,84 +6319,6 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    },
-    {
-      "match_id": "401-2026:179400",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Livesport Prague Open",
-        "tour": "WTA",
-        "level": "WTA250",
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "401-2026"
-      },
-      "home": [
-        {
-          "name": "Dominika Salkova",
-          "country": "CZE",
-          "seed": null,
-          "rank": 127,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/7436.png",
-          "player_id": "7436"
-        }
-      ],
-      "away": [
-        {
-          "name": "Barbora Krejcikova",
-          "country": "CZE",
-          "seed": 2,
-          "rank": 26,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2042.png",
-          "player_id": "2042"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Quarterfinal",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-24 15:40:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Livesport Arena",
-      "status_detail": "Fri, July 24th at 11:40 AM EDT",
-      "stats": null,
-      "editorial_note": "法网与温网冠军都写在履历里；首轮真正看的是变化与手感能否上线",
-      "editorial_source": "WTA 官方报道",
-      "editorial_url": "https://www.wtatennis.com/news/4057719/krejcikova-overcomes-paolini-in-three-sets-for-wimbledon-crown",
-      "data_sources": [
-        "espn",
-        "WTA 官方 OOP"
-      ],
-      "time_observations": {
-        "espn": "2026-07-24T15:40:00+00:00"
-      },
-      "schedule_time_status": "official-order-estimate",
-      "schedule_note": "WTA 官方 OOP：Followed by",
-      "schedule_source_urls": [
-        "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
-      ],
-      "media_heat": 4,
-      "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Sky Sports",
-          "title": "Sports News, Transfers, Scores | Watch Live Sport",
-          "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRExPQzlHNTI1OWctWEtiUTVkdTBFanZnUUVvdkd4a2dYLS1vTkNRTFo4SVdsbTNOT3NZZ1pDRWlVSXNqVVFkczVVYUxCSE5ObURTM1gwQktzTW15N2VaalJfWFlJTmRUYnBPLUJ4cWRBbXlCS182NWlvY3R2LVFJZVNEbTdTQU9xSVV2cFo4aS0?oc=5",
-          "published_at": "2026-07-24T12:42:23+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Sky Sports",
-          "title": "Sports News, Transfers, Scores | Watch Live Sport",
-          "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNaE1leE9wWlg5S0tCSjkycjhDR0pGUHVYeHczRTRUX1JkWDNLOGdkVldFWW9BY2Nad3FDdVJocmRyZVBOcjJmcDRzSXhsUVJ6ekNDamJqSUJpcmQtdVFINGo4dFhpNlZvZVpGMzk2UG5fUDNKczB3cXRGUGJIQ244anJaQQ?oc=5",
-          "published_at": "2026-07-24T10:25:06+00:00",
-          "traffic": ""
-        }
-      ]
     },
     {
       "match_id": "400-2026:178814",
@@ -6467,14 +6527,13 @@
     "espn": "正常 · 32 场",
     "sofascore": "失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）",
     "WTA 官方 OOP · MSC Hamburg Ladies Open": "正常 · 精确 0 场 / 场序 0 场 / 待下一版 1 场",
-    "WTA 官方 OOP · Livesport Prague Open": "正常 · 精确 0 场 / 场序 1 场 / 待下一版 0 场",
     "ATP 官方 OOP · Millennium Estoril Open": "正常 · 精确 0 场 / 场序 0 场 / 待下一版 1 场",
-    "实时选题雷达": "正常 · 55 条信号，命中 36 场比赛",
+    "实时选题雷达": "正常 · 56 条信号，命中 36 场比赛",
     "Sportradar 技术统计": "未配置 · 缺少 SPORTRADAR_API_KEY",
-    "WTA 官方技术统计": "降级 · WTA official API HTTP 401",
-    "焦点复盘数据": "降级 · 所有逐场统计源均未命中，使用比分结构复盘",
+    "WTA 官方技术统计": "正常 · 已命中焦点比赛逐场统计",
+    "焦点复盘数据": "正常 · WTA 官方逐场技术统计",
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
-    "球员与赛事知识库": "正常 · 1 场接入历史背景",
+    "球员与赛事知识库": "本期焦点暂无直接命中的审核档案",
     "GitHub Models 数据编辑": "关闭",
     "日报视频": "关闭 · 日报仅生成图片与文案"
   },
@@ -8888,9 +8947,41 @@
   "trend_signals": [
     {
       "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "曼聯",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-24T15:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "lebron",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-24T15:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "hit song",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-24T15:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
       "source": "Google Trends US",
       "title": "rosenborg vs man united",
       "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-24T15:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "rosenborg vs man united",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T15:10:00+00:00",
       "traffic": ""
     },
@@ -8920,17 +9011,25 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "rosenborg vs man united",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-24T15:10:00+00:00",
+      "source": "Google Trends US",
+      "title": "taylor swift",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-24T15:00:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends US",
+      "source": "Google Trends HK",
+      "title": "man utd",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-24T15:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
       "title": "taylor swift",
-      "url": "https://trends.google.com/trending/rss?geo=US",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T15:00:00+00:00",
       "traffic": ""
     },
@@ -8968,14 +9067,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "taylor swift",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-24T15:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends US",
       "title": "connor read ice detention",
       "url": "https://trends.google.com/trending/rss?geo=US",
@@ -9000,16 +9091,16 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "bournemouth fc",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "source": "Google Trends US",
+      "title": "ticketmaster",
+      "url": "https://trends.google.com/trending/rss?geo=US",
       "published_at": "2026-07-24T14:30:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends GB",
-      "title": "afc bournemouth",
+      "title": "bournemouth fc",
       "url": "https://trends.google.com/trending/rss?geo=GB",
       "published_at": "2026-07-24T14:30:00+00:00",
       "traffic": ""
@@ -9104,14 +9195,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "brian doerksen passing",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-24T13:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends HK",
       "title": "黃澤鋒",
       "url": "https://trends.google.com/trending/rss?geo=HK",
@@ -9124,6 +9207,14 @@
       "title": "medicare",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T13:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "皇崗口岸",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-24T13:00:00+00:00",
       "traffic": ""
     },
     {
@@ -9168,30 +9259,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "weather tomorrow",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T12:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "皇岗口岸",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T12:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "cuaca besok",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T12:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends AU",
       "title": "commonwealth games 2026 medal tally",
       "url": "https://trends.google.com/trending/rss?geo=AU",
@@ -9220,14 +9287,6 @@
       "title": "Tennis Courtcast",
       "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE52UktvUzk2RHd1WEF5RlJNa2g4ai1oaXpRYmdLY0k5SE5aME5fMWhKZGhIWFZmWGFQMFVkc1l5MFUyV0doTEZHSTk4d3g4TDMwSU1PRi1rMHg2RFJMMExUVG5KVzJJRjRZ?oc=5",
       "published_at": "2026-07-24T12:13:15+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "alpe d'huez",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-24T12:10:00+00:00",
       "traffic": ""
     },
     {
@@ -9284,6 +9343,14 @@
       "title": "Women’s Tennis Singles News | Updates & Player Highlights - WTA Official",
       "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB6dUdScTZNN1JxdmJVUXdLLWZOeUdqOGREX0dfczlBLUw2QjQ4bjJuU0dlaUNtcWluQ0llbldFb2dPd1pNSFZkQ3NPb0hrVXM?oc=5",
       "published_at": "2026-07-22T06:28:30+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "WTA Tennis",
+      "title": "Back-to-back champion Sabalenka tops 2026 US Open entry list",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNRldVX2NXLVZLeWpCWXhjUnpUYzdpYW4tUmZrRldOOTNnZ1h3Q0tNb2VZRWJOQkFBbFBocjFDeG51LUZUTXZ4c3MtVENBenZqZ1FoajlqLW9UMm00YVdYQlVnSnozcXhSTERyX3NuQy1fWlpqZmtFWkZxazVsSFZTMXU1ci1RaU9ERTMzbTFlZ3AxWE9Ja2daNjllWDRGVUtrOENid2VXclE?oc=5",
+      "published_at": "2026-07-22T04:52:49+00:00",
       "traffic": ""
     },
     {
