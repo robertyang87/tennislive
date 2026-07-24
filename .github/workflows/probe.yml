@@ -33,15 +33,15 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 下载 2019温网/2012澳网候选照片核验（临时）
+      - name: 抓取 og:image 并下载候选照片核验（临时）
         shell: bash
-        run: python tools/probe_together_verify2.py
+        run: python tools/probe_together_verify3.py
 
       - name: 提交候选照片（临时）
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/_probe_2019_nbc.jpg tools/_probe_2012_tennismajors.jpg tools/_probe_2012_cbsnews.jpg
+          git add tools/_probe3_*.jpg
           if git diff --cached --quiet; then
             echo "没有候选照片，跳过提交"
           else
