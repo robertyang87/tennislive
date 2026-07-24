@@ -895,13 +895,15 @@ def test_atp_official_feed_cover_requires_both_players_event_and_fresh_date():
     assert _exact_match_context(match, candidates[0])["exact_match"]
 
 
-def test_atp_official_youtube_thumbnail_never_used_for_cover(monkeypatch, tmp_path):
+def test_atp_official_youtube_not_queried_when_another_source_has_any_candidate(
+    monkeypatch, tmp_path
+):
     """2026-07-24 生产事故复现：ATP 官方 YouTube 视频缩略图（maxresdefault.jpg）
     经常是宣传拼接图，真实比赛照片只占一部分，其余是赛事VI条纹/文字；封面裁切
     只保证检测到的人脸不被切掉，不校验裁切框其余区域是否仍是同一张真实照片，
-    导致当天封面卡片露出了拼接图案，被误认成广告。封面场景因此彻底不再从这个
-    来源取图——即使 _atp_official_cover_candidates 会返回一张完美评分的候选，
-    也不能进入封面候选池。"""
+    导致当天封面卡片露出了拼接图案，被误认成广告。只要还有其它来源的候选，
+    封面就不应该冒这个拼接图风险——_atp_official_cover_candidates 甚至不应
+    该被调用。"""
     from tennislive.research import visual_sources
 
     match = make_match(
@@ -910,23 +912,124 @@ def test_atp_official_youtube_thumbnail_never_used_for_cover(monkeypatch, tmp_pa
         tournament="Hamburg Open",
         start_utc=datetime(2026, 7, 21, 12, 0, tzinfo=timezone.utc),
     )
+    other_candidate = {
+        "provider": "official-match-media",
+        "source_url": "https://www.atptour.com/en/news/sinner-djokovic-hamburg-2026",
+        "image_url": "https://photoresources.atptour.com/photo/2026/07/21/sinner.jpg",
+        "credit": "ATP Tour",
+        "license": "official",
+        "width": 2000,
+        "height": 1500,
+        "relevance": 10,
+        "search_text": (
+            "Jannik Sinner faces Novak Djokovic at Hamburg Open 2026"
+        ),
+        "image_text": "Jannik Sinner faces Novak Djokovic at Hamburg Open 2026",
+    }
+    fetch_calls = []
+
+    def tracked_atp_official(*args):
+        fetch_calls.append(args)
+        return [
+            {
+                "provider": "official-atp-youtube",
+                "source_url": "https://www.youtube.com/watch?v=exact",
+                "image_url": "https://i.ytimg.com/vi/exact/maxresdefault.jpg",
+                "credit": "ATP Tour",
+                "license": "official public match media",
+                "width": 1280,
+                "height": 720,
+                "relevance": 20,
+                "search_text": "match highlights sinner vs djokovic hamburg",
+                "image_text": "match highlights sinner vs djokovic",
+            }
+        ]
+
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(visual_sources, "_atp_official_cover_candidates", tracked_atp_official)
+    monkeypatch.setattr(
+        visual_sources, "_daily_editorial_candidates", lambda *_args: [other_candidate]
+    )
+    monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources, "_expand_official_source_candidate", lambda *_args: None
+    )
+
+    def fake_download(item, page, query, folder, _session):
+        path = folder / "atp-media.jpg"
+        Image.effect_noise((1600, 1200), 32).convert("RGB").save(path)
+        return visual_sources.ResolvedVisual(
+            page=page,
+            path=path,
+            provider=item["provider"],
+            source_url=item["source_url"],
+            image_url=item["image_url"],
+            credit=item["credit"],
+            license=item["license"],
+            query=query,
+            relevance=item["relevance"],
+            sha256="atp-media",
+        )
+
+    monkeypatch.setattr(visual_sources, "_download", fake_download)
+    monkeypatch.setattr(
+        visual_sources,
+        "assess_cover_image",
+        lambda _path: {
+            "status": "pass",
+            "score": 30,
+            "quality_score": 13,
+            "crop_score": 17,
+            "hard_failures": [],
+            "prominent_faces": 1,
+            "face_detectors": ["test-fixture"],
+            "focus": "50% 30%",
+        },
+    )
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert fetch_calls == []
+    assert "official-atp-youtube" not in report["providers_queried"]
+    assert visual is not None
+    assert visual.provider == "official-match-media"
+
+
+def test_atp_official_youtube_used_as_last_resort_when_no_other_cover_exists(
+    monkeypatch, tmp_path
+):
+    """2026-07-24 生产回归复现：把 ATP YouTube 缩略图整体从封面来源移除后，
+    通讯社/官方图库都没有覆盖的小站比赛（Tabilo vs Torres 当天正是如此）
+    彻底没有封面候选，'校验证据包完整性' 门禁失败，整份日报生成中断。只有
+    在其它来源全部查询后仍然一张候选都没有时，才允许退回 ATP YouTube 缩略
+    图，保证这类比赛至少还有封面可用，不至于拖垮整份日报。"""
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Alejandro Tabilo",
+        away_name="Tiago Torres",
+        tournament="Kitzbuhel Open",
+        start_utc=datetime(2026, 7, 23, 18, 0, tzinfo=timezone.utc),
+    )
     candidate = {
         "provider": "official-atp-youtube",
-        "source_url": "https://www.youtube.com/watch?v=exact",
-        "image_url": "https://i.ytimg.com/vi/exact/maxresdefault.jpg",
+        "source_url": "https://www.youtube.com/watch?v=C50I4hW7gSo",
+        "image_url": "https://i.ytimg.com/vi/C50I4hW7gSo/maxresdefault.jpg",
         "credit": "ATP Tour",
         "license": "official public match media",
         "width": 1280,
         "height": 720,
         "relevance": 20,
         "search_text": (
-            "match highlights jannik sinner vs novak djokovic hamburg open "
-            "2026-07-21t20:15:00+00:00"
+            "match highlights alejandro tabilo vs tiago torres kitzbuhel open "
+            "2026-07-23t18:00:00+00:00"
         ),
-        "image_text": "match highlights sinner vs djokovic",
+        "image_text": "match highlights tabilo vs torres",
     }
     monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
-    monkeypatch.setenv("TENNISLIVE_COVER_ATP_OFFICIAL", "on")
     monkeypatch.setattr(
         visual_sources, "_atp_official_cover_candidates", lambda *_args: [candidate]
     )
@@ -936,10 +1039,43 @@ def test_atp_official_youtube_thumbnail_never_used_for_cover(monkeypatch, tmp_pa
     monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_args: [])
 
+    def fake_download(item, page, query, folder, _session):
+        path = folder / "atp-maxres.jpg"
+        Image.effect_noise((1280, 960), 32).convert("RGB").save(path)
+        return visual_sources.ResolvedVisual(
+            page=page,
+            path=path,
+            provider=item["provider"],
+            source_url=item["source_url"],
+            image_url=item["image_url"],
+            credit=item["credit"],
+            license=item["license"],
+            query=query,
+            relevance=item["relevance"],
+            sha256="atp-maxres",
+        )
+
+    monkeypatch.setattr(visual_sources, "_download", fake_download)
+    monkeypatch.setattr(
+        visual_sources,
+        "assess_cover_image",
+        lambda _path: {
+            "status": "pass",
+            "score": 30,
+            "quality_score": 13,
+            "crop_score": 17,
+            "hard_failures": [],
+            "prominent_faces": 1,
+            "face_detectors": ["test-fixture"],
+            "focus": "62% 27%",
+        },
+    )
+
     visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
 
-    assert visual is None
-    assert "official-atp-youtube" not in report["providers_queried"]
+    assert visual is not None
+    assert visual.provider == "official-atp-youtube"
+    assert "official-atp-youtube" in report["providers_queried"]
 
 
 def test_atp_maxres_profile_only_adjusts_fixed_resolution_failure():
