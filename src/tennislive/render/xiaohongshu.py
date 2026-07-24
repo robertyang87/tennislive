@@ -108,6 +108,86 @@ def _latin_short_name(value: str) -> str:
     return words[-1] if len(words) > 1 else value
 
 
+# Ordered longest-first so a specific phrase wins over its substring.
+_RESULT_VERBS = (
+    "逆转夺冠",
+    "爆冷夺冠",
+    "逆转晋级",
+    "爆冷晋级",
+    "力克晋级",
+    "横扫晋级",
+    "夺冠",
+    "问鼎",
+    "捧杯",
+    "登顶",
+    "掀翻",
+    "横扫",
+    "力克",
+    "逆转",
+    "爆冷",
+    "晋级",
+    "击败",
+)
+
+# Longest / most-specific first: "半决赛" and "四分之一决赛" both contain "决赛",
+# so they must be tested before it or a semifinal would be mislabelled a final.
+_ROUND_TOKENS = (
+    "四分之一决赛",
+    "半决赛",
+    "决赛",
+    "四强",
+    "八强",
+    "16 强",
+    "16强",
+    "32 强",
+    "32强",
+    "正赛",
+    "首轮",
+    "次轮",
+    "第二轮",
+    "第三轮",
+    "第四轮",
+)
+
+
+def _short_person(name: str) -> str:
+    """Trim a transliterated name to its most recognisable segment (surname)."""
+    name = name.strip("，。、：|｜· ")
+    if "·" in name:
+        return name.split("·")[-1].strip()
+    return name
+
+
+def _round_token(text: str) -> str:
+    for token in _ROUND_TOKENS:
+        if token in text:
+            return token.replace(" ", "")
+    return ""
+
+
+def _subject_action_hooks(cleaned: str) -> list[str]:
+    """Compress '球员 动作 (赛事) 轮次' headlines into short, content-specific hooks.
+
+    Most daily leads read like '斯尼古尔晋级布拉格公开赛女单半决赛'. Squeezing
+    them to '斯尼古尔晋级半决赛' keeps the actual subject + result inside the
+    tiny XHS title budget, instead of falling back to a generic hook that
+    repeats verbatim every day.
+    """
+    for verb in _RESULT_VERBS:
+        head, sep, tail = cleaned.partition(verb)
+        if not sep:
+            continue
+        subject = _short_person(head)
+        if not subject:
+            continue
+        display = "爆冷" if verb in ("掀翻", "爆冷") else verb
+        rnd = _round_token(tail)
+        forms = [subject + display + rnd, subject + display, subject + rnd, subject]
+        # De-duplicate while preserving the most-informative-first order.
+        return list(dict.fromkeys(form for form in forms if form))
+    return []
+
+
 def _compact_title_hook(hook: str, budget: float) -> str:
     """Fit a complete hook into XHS's title budget without an ellipsis."""
     cleaned = " ".join(hook.strip().split()).strip("，。、：|｜")
@@ -131,6 +211,10 @@ def _compact_title_hook(hook: str, budget: float) -> str:
         left = _latin_short_name(matchup.group(1).strip())
         right = _latin_short_name(matchup.group(2).strip())
         candidates.extend((f"{left}对{right}", f"{left}vs{right}"))
+
+    # Prefer a content-specific "球员+动作+轮次" hook over the raw clauses so the
+    # title varies by the day's actual story instead of a generic fallback.
+    candidates.extend(_subject_action_hooks(cleaned))
 
     clauses = [part.strip() for part in re.split(r"[，,；;：:]", cleaned) if part.strip()]
     if len(clauses) >= 2:
