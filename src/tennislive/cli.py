@@ -313,6 +313,36 @@ def cmd_flash_radar(args) -> int:
     return 0
 
 
+def cmd_explainer(args) -> int:
+    """为一个知识选题生成 AI 旁白解说视频（前因后果 / 技术原理 / 当今现状）。
+
+    适合抽象、拿不到合格真实照片的知识点（如鹰眼/计分制）。解说词由该选题
+    已核验的事实改写而成，画面为文字卡与示意图，不伪造真实赛场影像。
+    """
+    from .render.terminal import console
+    from .render.tournament_story import find_story_by_slug
+    from .video.explainer import ExplainerVideoError, generate_explainer_video
+
+    story = find_story_by_slug(args.slug)
+    if story is None:
+        console.print(f"[red]未找到 slug 为 “{args.slug}” 的选题。[/red]")
+        return 2
+    d = parse_date_arg(args.date)
+    try:
+        out = generate_explainer_video(
+            story,
+            args.outdir,
+            date_label=f"{d.month}.{d.day}",
+            theme=args.theme,
+            voice=args.voice,
+        )
+    except ExplainerVideoError as e:
+        console.print(f"[red]解说视频生成失败：{e}[/red]")
+        return 2
+    console.print(f"[green]解说视频已生成：{out}[/green]")
+    return 0
+
+
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
@@ -1325,6 +1355,20 @@ def build_parser() -> argparse.ArgumentParser:
         "--theme", choices=["dark", "light"], default="dark", help="卡片主题（默认 dark）"
     )
 
+    sp = sub.add_parser(
+        "explainer",
+        help="AI 旁白解说视频（前因后果/技术原理/现状），适合抽象、难配图的知识点",
+    )
+    sp.add_argument("--slug", required=True, help="知识选题 slug（见 STORIES）")
+    sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output/explainer", help="输出目录")
+    sp.add_argument(
+        "--theme", choices=["dark", "light"], default="dark", help="幻灯主题（默认 dark）"
+    )
+    sp.add_argument(
+        "--voice", default="zh-CN-YunxiNeural", help="edge-tts 中文语音（默认云希）"
+    )
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1391,6 +1435,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_card(args)
     if args.command == "flash-radar":
         return cmd_flash_radar(args)
+    if args.command == "explainer":
+        return cmd_explainer(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
