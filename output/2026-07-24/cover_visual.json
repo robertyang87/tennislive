@@ -1,20 +1,20 @@
 {
   "schema_version": 2,
-  "status": "selected",
-  "match_id": "401-2026:179405",
+  "status": "branded_fallback",
+  "match_id": "401-2026:179404",
   "match_players": [
-    "Lanlana Tararudee",
-    "Daria Snigur"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "candidate_players": [
-    "Daria Snigur",
-    "Lanlana Tararudee"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "headline_hot": true,
   "headline_eligible": true,
   "headline_players": [
-    "Lanlana Tararudee",
-    "Daria Snigur"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "china_priority": true,
   "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
@@ -26,19 +26,18 @@
     "wikimedia-commons",
     "openverse",
     "bing-web-image",
-    "flickr-public",
-    "official-match-media"
+    "flickr-public"
   ],
   "attempts": [
     {
-      "player": "Daria Snigur",
-      "provider": "wta-video-hub",
-      "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
-      "subject_match": true,
-      "person_match": true,
-      "both_sides_match": true,
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://discourse.axelerant.com/customization/sara-haines-baby-born-photos-boy-caleb-third-child/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
       "exact_match": false,
-      "event_match": true,
+      "event_match": false,
       "year_match": false,
       "scene": "unknown",
       "china_priority_bonus": 0,
@@ -48,130 +47,92 @@
         "trophy": [],
         "rejected": []
       },
-      "metadata_score": 41,
+      "metadata_score": 33,
       "status": "rejected",
       "hard_failures": [
+        "headline-match-player-mismatch",
         "not-the-exact-headline-match"
       ]
     },
     {
-      "player": "Daria Snigur",
-      "provider": "official-match-media",
-      "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
-      "subject_match": true,
-      "person_match": true,
-      "both_sides_match": true,
-      "exact_match": true,
-      "event_match": true,
-      "year_match": true,
-      "scene": "prominent_person",
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://discourse.axelerant.com/customization/sara-haines-baby-born-photos-boy-caleb-third-child/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
       "china_priority_bonus": 0,
       "scene_evidence": {
         "motion": [],
         "reaction": [],
         "trophy": [],
-        "rejected": [],
-        "pixel": [
-          "1 prominent face(s)",
-          "frontal-default"
-        ]
+        "rejected": []
       },
-      "metadata_score": 65,
-      "status": "selected",
-      "quality": {
-        "status": "pass",
-        "score": 30.1,
-        "quality_score": 13.8,
-        "crop_score": 16.3,
-        "hard_failures": [],
-        "width": 4768,
-        "height": 3368,
-        "sharpness": 121.2,
-        "tonal_range": 154.0,
-        "mean_luma": 214.6,
-        "black_ratio": 0.0026,
-        "white_ratio": 0.2581,
-        "entropy": 6.57,
-        "edge_ratio": 0.0187,
-        "saturation": 37.0,
-        "prominent_faces": 1,
-        "face_detectors": [
-          "frontal-default"
-        ],
-        "prominent_bodies": 0,
-        "body_detectors": [],
-        "crop": [
-          556,
-          0,
-          3082,
-          3368
-        ],
-        "crop_retention": 0.53,
-        "face_safe": true,
-        "focus": "42% 35%"
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://celebritate.com/celebrity/sara-jay/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
       },
-      "quality_score": 113.1,
-      "face_priority_bonus": 18,
-      "hard_failures": [],
-      "cached_file": "daily-cover-bfd955d9891b.jpg"
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
     }
   ],
   "flickr_enabled": true,
   "wta_official_enabled": true,
-  "wta_video_hub_candidates": 1,
-  "official_pages_checked": 1,
-  "official_pages_expanded": 1,
-  "selected_player": "Daria Snigur",
-  "exact_match": true,
-  "both_sides_match": true,
-  "scene": "prominent_person",
-  "person_evidence": {},
-  "quality_score": 113.1,
-  "quality": {
-    "status": "pass",
-    "score": 30.1,
-    "quality_score": 13.8,
-    "crop_score": 16.3,
-    "hard_failures": [],
-    "width": 4768,
-    "height": 3368,
-    "sharpness": 121.2,
-    "tonal_range": 154.0,
-    "mean_luma": 214.6,
-    "black_ratio": 0.0026,
-    "white_ratio": 0.2581,
-    "entropy": 6.57,
-    "edge_ratio": 0.0187,
-    "saturation": 37.0,
-    "prominent_faces": 1,
-    "face_detectors": [
-      "frontal-default"
-    ],
-    "prominent_bodies": 0,
-    "body_detectors": [],
-    "crop": [
-      556,
-      0,
-      3082,
-      3368
-    ],
-    "crop_retention": 0.53,
-    "face_safe": true,
-    "focus": "42% 35%"
-  },
-  "event_match": true,
-  "year_match": true,
-  "provider": "official-match-media",
-  "source_url": "https://www.wtatennis.com/videos/4545115/snigur-races-past-tararudee-in-68-minute-prague-quarterfinal",
-  "credit": "wtatennis.com",
-  "license": "官方公开页面图片 · 资讯引用",
-  "focus": "42% 35%",
+  "wta_video_hub_candidates": 0,
+  "official_pages_checked": 0,
+  "official_pages_expanded": 0,
+  "errors": [
+    "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+  ],
   "headline_selection": {
-    "status": "reselected",
-    "primary_match_id": "400-2026:178822",
-    "selected_match_id": "401-2026:179405",
+    "status": "exhausted",
+    "primary_match_id": "401-2026:179404",
+    "selected_match_id": "",
     "attempted": 4,
     "failed_candidates": [
+      {
+        "match_id": "401-2026:179404",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
       {
         "match_id": "400-2026:178822",
         "status": "unavailable",
@@ -187,7 +148,7 @@
         ]
       },
       {
-        "match_id": "401-2026:179406",
+        "match_id": "304-2026:178887",
         "status": "unavailable",
         "errors": [
           "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
@@ -197,19 +158,39 @@
           "wikimedia-commons",
           "openverse",
           "bing-web-image",
-          "flickr-public",
-          "official-match-media"
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "304-2026:178880",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
         ]
       }
     ]
   },
-  "selected_asset_sha256": "bfd955d9891b56542472a77838c47c64ae365d1ef2146ede6496e79630b39b41",
+  "fallback_reason": "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片",
+  "fallback_person": false,
+  "quality_score": 0,
+  "quality": {
+    "status": "fallback",
+    "hard_failures": []
+  },
+  "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
   "render_binding": {
     "status": "bound",
     "renderer": "html-chromium",
-    "match_id": "401-2026:179405",
-    "selected_asset_sha256": "bfd955d9891b56542472a77838c47c64ae365d1ef2146ede6496e79630b39b41",
+    "match_id": "401-2026:179404",
+    "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "9d38f94280a0952670f4b1459961266090ab733eac1468af7536e448d5571396"
+    "card_sha256": "f561c63f1385462db5bf789de4c7235be33f3b13703e34259cada018ff94a6e3"
   }
 }
