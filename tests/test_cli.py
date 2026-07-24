@@ -74,6 +74,54 @@ def test_flash_card_cli_generates_card_and_copy_for_light_news(tmp_path, monkeyp
     assert "💬" in copy and "#网球" in copy
 
 
+def test_flash_radar_queues_only_offcourt_nonsensitive_news(tmp_path, monkeypatch):
+    """The radar keeps off-court, non-sensitive news; match/sensitive drop out."""
+    import json as _json
+
+    from tennislive.research.trends import TrendSignal
+
+    signals = [
+        TrendSignal(
+            kind="official-news",
+            source="ATP",
+            title="Sinner beats Alcaraz 7-5 6-4 in Cincinnati final",
+            url="u1",
+            published_at="2026-07-24T08:00:00+00:00",
+        ),
+        TrendSignal(
+            kind="official-news",
+            source="ATP",
+            title="ATP announces electronic line calling across all events",
+            url="u2",
+            published_at="2026-07-24T09:00:00+00:00",
+        ),
+        TrendSignal(
+            kind="official-news",
+            source="ITIA",
+            title="Player suspended after positive doping test",
+            url="u3",
+            published_at="2026-07-24T09:30:00+00:00",
+        ),
+    ]
+    monkeypatch.setattr(
+        "tennislive.research.trends.fetch_trend_signals",
+        lambda *a, **k: (signals, {"radar": "ok"}),
+    )
+    monkeypatch.setattr(timeutil, "beijing_today", lambda: date(2026, 7, 24))
+
+    result = cli.main(
+        ["flash-radar", "--outdir", str(tmp_path), "--no-cards"]
+    )
+    assert result == 0
+
+    radar_dir = tmp_path / "2026-07-24" / "flash_radar"
+    queue = _json.loads((radar_dir / "flash_radar_queue.json").read_text("utf-8"))
+    assert [c["url"] for c in queue["candidates"]] == ["u2"]
+    push = (radar_dir / "flash_radar_push.html").read_text("utf-8")
+    assert "electronic line calling" in push
+    assert "Sinner beats" not in push  # match news never enters the flash queue
+
+
 def test_flash_headline_wrap_balances_long_chinese_title(monkeypatch):
     regular_font = Path("assets/fonts/NotoSansSC-Regular-sub.ttf").resolve()
     bold_font = Path("assets/fonts/NotoSansSC-Bold-sub.ttf").resolve()

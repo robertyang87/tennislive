@@ -1,0 +1,85 @@
+name: news-radar
+
+# 场外网球新闻雷达：每天扫描两次，自动把"非比赛"的场外新闻（退役复出、
+# 规则赛制、人事组织、装备科技、荣誉名人堂、场外趣闻）筛成快讯卡候选，
+# 推到微信供人工挑选。比赛新闻归日报，不在此重复；敏感话题不入队、转人工。
+# 候选只用新闻源已有的真实字段成草稿；时间/地点/人物/事件由人工补全后再发。
+on:
+  schedule:
+    - cron: "13 1 * * *"    # 09:13 北京时间
+    - cron: "13 13 * * *"   # 21:13 北京时间
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装中文字体（草稿卡需要）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 安装 tennislive
+        run: pip install -q -e ".[webrender]"
+
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: 安装 Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: 扫描场外新闻并生成候选队列
+        id: radar
+        run: |
+          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+          echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          tennislive flash-radar --outdir output
+
+      - name: 提交候选队列到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/
+          if git diff --cached --quiet; then
+            echo "没有新的场外候选"
+          else
+            git commit -m "content: 场外快讯候选 ${{ steps.radar.outputs.date }}"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi
+
+      - name: 推送候选清单到微信（供人工挑选成稿）
+        if: env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          FILE="output/${{ steps.radar.outputs.date }}/flash_radar/flash_radar_push.html"
+          if [ ! -s "$FILE" ]; then
+            echo "本次无场外候选，跳过推送"
+            exit 0
+          fi
+          BODY="$(jq -nc \
+            --arg t "$PUSHPLUS_TOKEN" \
+            --arg title "场外网球快讯候选 · ${{ steps.radar.outputs.date }}" \
+            --rawfile c "$FILE" \
+            '{token:$t,title:$title,content:$c,template:"html"}')"
+          curl -s -m 20 -X POST https://www.pushplus.plus/send \
+            -H "Content-Type: application/json" -d "$BODY" || true

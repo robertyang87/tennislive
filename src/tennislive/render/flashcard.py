@@ -41,7 +41,7 @@ def _meta_cell(label: str, value: str) -> str:
 def flash_card_body(
     headline: str,
     *,
-    event: str,
+    event: str = "",
     when: str = "",
     where: str = "",
     who: str = "",
@@ -102,12 +102,14 @@ def flash_card_body(
             f'align-items:stretch;">{joined}</div>'
         )
 
-    event_style = (
-        "padding:30px 34px;background:rgba(6,28,20,.5);"
-        "border-left:8px solid #37e29a;border-radius:16px;color:#eaf5ef;"
-        "font-size:38px;line-height:1.5;font-weight:600;"
-    )
-    event_block = f'<div style="{event_style}">{html.escape(event)}</div>'
+    event_block = ""
+    if event:
+        event_style = (
+            "padding:30px 34px;background:rgba(6,28,20,.5);"
+            "border-left:8px solid #37e29a;border-radius:16px;color:#eaf5ef;"
+            "font-size:38px;line-height:1.5;font-weight:600;"
+        )
+        event_block = f'<div style="{event_style}">{html.escape(event)}</div>'
 
     punch_block = ""
     if punch:
@@ -138,7 +140,7 @@ def flash_card_body(
 def generate_flash_card(
     headline: str,
     *,
-    event: str,
+    event: str = "",
     when: str = "",
     where: str = "",
     who: str = "",
