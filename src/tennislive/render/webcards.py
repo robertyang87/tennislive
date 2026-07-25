@@ -1209,6 +1209,18 @@ def _seclabel(text: str) -> str:
 # ---------- 各卡页面 ----------
 
 
+def _trophy_or_advance(round_name: str) -> str:
+    """"捧杯" only for the final itself; every other win is "过关".
+
+    An earlier guard tested round_name.endswith("决赛") with "半" excluded,
+    which reads as "the final, but not the semifinal" and misses that
+    四分之一决赛 and 八分之一决赛 also end in 决赛 without containing 半.
+    That put "范阿舍 捧杯｜ATP250·男单·四分之一决赛" on the 2026-07-25 cover --
+    a trophy claim for a quarterfinal win.
+    """
+    return "捧杯" if round_name == "决赛" else "过关"
+
+
 def cover_body(
     digest: Digest,
     headline: str,
@@ -1262,14 +1274,14 @@ def cover_body(
                 ]
                 name = " / ".join(player_zh(player.name) for player in chinese)
                 if chinese_side_won(match):
-                    action = "捧杯" if round_name.endswith("决赛") and "半" not in round_name else "过关"
+                    action = _trophy_or_advance(round_name)
                 else:
                     action = f"止步{round_name}"
                 value = f"{name} {action}"
             else:
                 winners = match.winner_players() or match.home
                 name = " / ".join(player_zh(player.name) for player in winners)
-                action = "捧杯" if round_name.endswith("决赛") and "半" not in round_name else "过关"
+                action = _trophy_or_advance(round_name)
                 value = f"{name} {action}"
         else:
             if "中国焦点" in label and is_chinese_involved(match):
