@@ -119,7 +119,66 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 1,
-  "editorial_source_urls": 4,
+  "editorial_source_urls": 3,
+  "source_registry": {
+    "as_of": "run-start",
+    "proven": [
+      "official-match-media"
+    ],
+    "barren": [],
+    "channels": {
+      "bing-web-image": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "flickr-public": {
+        "runs": 3,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "official-atp-youtube": {
+        "runs": 2,
+        "candidates": 0,
+        "selections": 1,
+        "errors": 0,
+        "last_selected": "2026-07-23"
+      },
+      "official-match-media": {
+        "runs": 3,
+        "candidates": 4,
+        "selections": 3,
+        "errors": 0,
+        "last_selected": "2026-07-25"
+      },
+      "openverse": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "wikimedia-commons": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "wta-video-hub": {
+        "runs": 4,
+        "candidates": 3,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      }
+    }
+  },
+  "widened_by_registry": false,
   "provider_results": {
     "wikimedia-commons": {
       "candidates": 0,
