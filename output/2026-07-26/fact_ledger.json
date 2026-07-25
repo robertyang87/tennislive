@@ -131,10 +131,10 @@
     {
       "match_id": "400-2026:178812",
       "kind": "schedule-verification",
-      "claim": "ATP 官方 OOP：Not Before 19:00",
+      "claim": "ATP 官方 OOP：Not Before 19:00；聚合源时间与官方时间不一致，已以官方为准",
       "status": "official-exact",
       "observations": {
-        "espn": "2026-07-25T18:00:00+00:00",
+        "espn": "2026-07-25T18:30:00+00:00",
         "ATP 官方 OOP": "2026-07-25T18:00:00+00:00"
       },
       "sources": [
@@ -224,10 +224,10 @@
     {
       "match_id": "400-2026:178850",
       "kind": "schedule-verification",
-      "claim": "unpublished",
-      "status": "unpublished",
+      "claim": "single-source",
+      "status": "single-source",
       "observations": {
-        "espn": null
+        "espn": "2026-07-26T14:00:00+00:00"
       },
       "sources": [
         "espn"
