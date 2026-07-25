@@ -345,6 +345,19 @@ jobs:
             exit 1
           }
 
+          # 品牌底图是最后兜底，不是可接受的常态：真人赛场照才是目标。退回时
+          # 把每个图片源各自返回了几张、报了什么错打出来，否则这一步算"成功"，
+          # 封面没有真人照这件事就被静默掉了（2026-07-25 连续两版如此）。
+          if [ "$(jq -r '.status' "$COVER_REPORT")" = "branded_fallback" ]; then
+            echo "::warning file=$COVER_REPORT::封面退回品牌底图，本期没有可用的真人赛场照"
+            jq -r '"可用官方报道链接数=" + ((.editorial_source_urls // 0)|tostring)' "$COVER_REPORT"
+            jq -r '(.provider_results // {}) | to_entries[] |
+              "  图片源 " + .key + ": 候选 " + (.value.candidates|tostring) +
+              " / 查询 " + (.value.queries|tostring) +
+              (if (.value.errors|length) > 0 then " | 错误: " + (.value.errors|join("; ")) else "" end)' \
+              "$COVER_REPORT"
+          fi
+
           KNOWLEDGE_READY=true
           if [ ! -d "$OUT_DIR/knowledge" ]; then
             KNOWLEDGE_READY=false

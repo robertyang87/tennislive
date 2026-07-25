@@ -1081,3 +1081,103 @@ def test_atp_maxres_profile_only_adjusts_fixed_resolution_failure():
     assert adjusted["hard_failures"] == ["too-dark"]
     assert adjusted["status"] == "fail"
     assert audit["hard_failures"] == ["resolution-below-900x1200", "too-dark"]
+
+
+def test_cover_report_records_why_each_image_source_came_back_empty(
+    monkeypatch, tmp_path
+):
+    """封面退回品牌底图时要能看出该修哪个图片源（2026-07-25 生产事故）.
+
+    当天四个头条候选全部 attempts=0、只能用品牌底图，但报告里只有一句"没有找到
+    合格照片"：检索器各自吞掉网络异常并返回空列表，于是"这个源本来就没有这位
+    球员的照片"和"这个源今天调不通"完全无法区分。
+    """
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Luca Van Assche",
+        away_name="Andrey Rublev",
+        tournament="Estoril Open",
+    )
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_a: [])
+    # 一个源真的没有这位球员的照片，另一个源今天调不通。
+    monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_a: [])
+
+    def broken_bing(*_args):
+        raise RuntimeError("HTTP 403 blocked")
+
+    monkeypatch.setattr(visual_sources, "_bing_candidates", broken_bing)
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert visual is None
+    stats = report["provider_results"]
+    assert stats["wikimedia-commons"]["candidates"] == 0
+    assert stats["wikimedia-commons"]["errors"] == []
+    assert stats["bing-web-image"]["candidates"] == 0
+    assert any("403" in err for err in stats["bing-web-image"]["errors"])
+    # 官方媒体图依赖比赛已关联的链接，链接数要能看到。
+    assert report["editorial_source_urls"] == 0
+
+
+def test_official_recap_search_supplies_a_real_match_photo(monkeypatch, tmp_path):
+    """图库覆盖不到的场次，去巡回赛官方的赛后报道里取当场照片.
+
+    2026-07-25 一场 ATP250 四分之一决赛让所有图片源都返回 0 张候选，封面只能
+    用品牌底图。官方一定会写这场的赛后报道，那篇文章的头图就是当场比赛照。
+    发现走的是趋势雷达已在用的 Google News 官方域名索引，只抓它指向的那一篇，
+    不批量爬官网；照片仍要通过页面自身元数据同时证明双方球员的既有门禁。
+    """
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Andrey Rublev",
+        away_name="Luca Van Assche",
+        tournament="Estoril Open",
+    )
+    rss = (
+        b'<?xml version="1.0"?><rss><channel>'
+        b"<item><link>https://www.atptour.com/en/news/van-assche-estoril-2026-qf</link></item>"
+        b"<item><link>https://example.invalid/not-official</link></item>"
+        b"</channel></rss>"
+    )
+    fetched: list[str] = []
+
+    class _Session:
+        def get(self, url, **_kwargs):
+            fetched.append(url)
+            return SimpleNamespace(
+                content=rss, url=url, text="", raise_for_status=lambda: None
+            )
+
+    expanded_for: list[str] = []
+
+    def fake_expand(_match, candidate, _session):
+        expanded_for.append(candidate["source_url"])
+        return {
+            "source_url": candidate["source_url"],
+            "image_url": "https://photoresources.atptour.com/vanassche.jpg",
+            "credit": "ATP Tour",
+            "license": "official",
+            "width": 2000,
+            "height": 1333,
+            "relevance": 20,
+            "search_text": "Van Assche stuns Rublev at Estoril Open 2026",
+            "image_text": "Van Assche stuns Rublev at Estoril Open 2026",
+        }
+
+    monkeypatch.setattr(
+        visual_sources, "_expand_official_source_candidate", fake_expand
+    )
+
+    found = visual_sources._official_recap_candidates(match, _Session())
+
+    # 只应展开官方域名那一条，非官方域名直接丢弃。
+    assert expanded_for == ["https://www.atptour.com/en/news/van-assche-estoril-2026-qf"]
+    assert len(found) == 1
+    assert found[0]["provider"] == "official-recap-search"
+    # 检索必须限定在该巡回赛的官方新闻域名内。
+    assert "site%3Aatptour.com" in fetched[0]
