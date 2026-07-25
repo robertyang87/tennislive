@@ -273,6 +273,13 @@ def _slide_html(
     number = circled[index] if index < len(circled) else f"{index + 1}"
     css = _font_css()
 
+    icon_path = _REPO / "assets" / "logo" / "tennis-clock-icon.png"
+    brand_icon = (
+        f'<img class="brand-icon" src="{_data_uri(icon_path)}" alt="">'
+        if icon_path.is_file()
+        else ""
+    )
+
     image_path = _REPO / segment.image if segment.image else None
     has_photo = bool(image_path and image_path.is_file())
     if has_photo:
@@ -318,6 +325,9 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 .head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
  align-items:center;justify-content:space-between;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
+.brandwrap{{display:flex;align-items:center;gap:14px;}}
+.brand-icon{{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-size:36px;font-weight:800;letter-spacing:2px;}}
 .date{{font-size:30px;color:#d7e6dd;font-weight:700;}}
 .foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
@@ -339,7 +349,7 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 .point i{{color:#c6f65a;font-style:normal;flex:none;line-height:1.38;}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
-<div class="head"><div class="brand">网球时差 · 网球有故事</div>
+<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div>
 <div class="date">{html.escape(date_label)}</div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
 <div class="title">{html.escape(segment.title)}</div>{points_html}</div>
