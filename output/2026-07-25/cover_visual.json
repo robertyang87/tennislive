@@ -119,6 +119,29 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 1,
+  "editorial_source_urls": 3,
+  "provider_results": {
+    "wikimedia-commons": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    },
+    "openverse": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    },
+    "bing-web-image": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    },
+    "flickr-public": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    }
+  },
   "official_pages_checked": 1,
   "official_pages_expanded": 1,
   "selected_player": "Daria Snigur",
@@ -167,26 +190,11 @@
   "license": "官方公开页面图片 · 资讯引用",
   "focus": "42% 35%",
   "headline_selection": {
-    "status": "reselected",
-    "primary_match_id": "401-2026:179404",
+    "status": "primary",
+    "primary_match_id": "401-2026:179405",
     "selected_match_id": "401-2026:179405",
     "attempted": 4,
     "failed_candidates": [
-      {
-        "match_id": "401-2026:179404",
-        "status": "unavailable",
-        "errors": [
-          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
-        ],
-        "providers_queried": [
-          "wta-video-hub",
-          "wikimedia-commons",
-          "openverse",
-          "bing-web-image",
-          "flickr-public",
-          "official-match-media"
-        ]
-      },
       {
         "match_id": "401-2026:179406",
         "status": "unavailable",
@@ -211,6 +219,6 @@
     "match_id": "401-2026:179405",
     "selected_asset_sha256": "bfd955d9891b56542472a77838c47c64ae365d1ef2146ede6496e79630b39b41",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "bb700bc75b837f1e11af519dad4bd8baf20f70ef281ba72cdca6dc9616819475"
+    "card_sha256": "da5acd962dcfcefbcaa93901eabef158f2b1416831ca007ee4f47de46f67dd64"
   }
 }
