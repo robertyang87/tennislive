@@ -285,7 +285,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "它很快就流行开来。直到今天，ITF 认可的比赛用球颜色仍然只有两种："
             "白色，和黄色。",
             "assets/explainer/yellow-ball/optic_yellow.jpg",
-            "Yann Caradec · CC BY-SA 2.0 · Wikimedia Commons · Roland Garros 2011 官方用球",
+            "Steven Pisano · CC BY 2.0 · Wikimedia Commons · 2013 US Open 球童手持新球",
             (
                 "1972 年 ITF 正式引入黄色用球",
                 "这种荧光色叫 optic yellow",
