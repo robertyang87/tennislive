@@ -215,17 +215,17 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "why",
             "红土的底气",
-            "红土上，那一声还归人来喊",
+            "主裁下椅，蹲下来看那个印子",
             "法网敢这么坚持，底气就在脚下这片红土。球砸下去会留下一个印子，"
             "主裁可以走下裁判椅，蹲到线边看那个球印，再用眼睛给出最后一声判罚。"
             "别的场地上，球过了就没了；只有红土会把证据留在地上。"
             "那你觉得，法网还能坚持多久？什么时候也会换成电子司线？"
             "评论区聊聊。",
-            "assets/explainer/hawkeye/roland_garros.jpg",
-            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 Roland Garros",
+            "assets/explainer/hawkeye/ball_mark.jpg",
+            "用户提供",
             (
-                "红土场上，判罚仍由人眼给出",
-                "球在红土会留印，落点可当场复核",
+                "球砸在红土上，会留下一个印子",
+                "主裁走下裁判椅，蹲到线边验印",
                 "这就是法网敢坚持人工的底气",
             ),
             "",
@@ -292,9 +292,26 @@ def _slide_html(
     image_path = _REPO / segment.image if segment.image else None
     has_photo = bool(image_path and image_path.is_file())
     if has_photo:
+        # A wide frame cropped to this 3:4 card loses its edges — and on a
+        # photo of two people either side of a ball mark, the edges are the
+        # subject. Letterbox those instead of cropping them away.
+        try:
+            from PIL import Image as _Image
+
+            with _Image.open(image_path) as probe:
+                wide = probe.width / max(probe.height, 1) >= 1.2
+        except Exception:  # noqa: BLE001
+            wide = False
+        fit = (
+            "background-size:contain;background-repeat:no-repeat;"
+            "background-position:center 34%;"
+            if wide
+            else "background-size:cover;background-position:center;"
+        )
+        backdrop = ' class="hero diagram"' if wide else ' class="hero"'
         hero = (
-            f'<div class="hero" style="background-image:url(\'{_data_uri(image_path)}\');'
-            'background-size:cover;background-position:center;"></div>'
+            f'<div{backdrop} style="background-image:url(\'{_data_uri(image_path)}\');'
+            f'{fit}"></div>'
             '<div class="scrim"></div>'
         )
     else:

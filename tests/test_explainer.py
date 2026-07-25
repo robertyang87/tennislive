@@ -109,7 +109,10 @@ def test_photo_beats_embed_a_real_file_and_carry_no_burned_in_credit():
     for seg in photo_beats:
         assert (_REPO / seg.image).is_file(), f"{seg.image} 不存在"
         doc = _slide_html(0, seg, "7.25")
-        assert "data:image" in doc and "background-size:cover" in doc
+        # cover for portrait frames; contain for wide ones, whose edges
+        # carry the subject and must not be cropped away.
+        assert "data:image" in doc
+        assert "background-size:cover" in doc or "background-size:contain" in doc
         # Provenance is kept in the data for records, never painted on the frame.
         assert seg.credit
         assert seg.credit not in doc
