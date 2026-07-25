@@ -186,11 +186,6 @@ def _slide_html(
             f'<div class="diagram-wrap">{_HAWKEYE_DIAGRAM}</div>'
             '<div class="scrim"></div>'
         )
-    credit = (
-        f'<div class="credit">{html.escape(segment.credit)}</div>'
-        if segment.credit
-        else ""
-    )
     note_html = (
         f'<div class="note">{html.escape(segment.note)}</div>'
         if segment.note
@@ -216,8 +211,7 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 .brand{{font-size:36px;font-weight:800;letter-spacing:2px;}}
 .date{{font-size:30px;color:#d7e6dd;font-weight:700;}}
 .foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
- display:flex;align-items:center;justify-content:space-between;}}
-.credit{{font-size:24px;color:#cbdad2;text-shadow:0 2px 10px rgba(0,0,0,.7);}}
+ display:flex;align-items:center;justify-content:flex-end;}}
 .tag{{font-size:26px;color:#9fb4aa;font-weight:700;letter-spacing:2px;
  text-shadow:0 2px 10px rgba(0,0,0,.7);}}
 .copy{{position:absolute;left:70px;right:70px;bottom:120px;z-index:5;
@@ -236,8 +230,7 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 <div class="date">{html.escape(date_label)}</div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
 <div class="title">{html.escape(segment.title)}</div>{note_html}</div>
-<div class="foot"><div class="credit">{html.escape(segment.credit)}</div>
-<div class="tag">@网球时差 · TENNIS JETLAG</div></div>
+<div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
 
 
