@@ -30,14 +30,17 @@ OUT = Path("tools/broll")
 # directly under the tournament — which is why three passes walking from
 # "Category:French Open" found nothing recent and were misread as "no photos".
 ROOTS = {
-    "rg_year": ("Category:French Open by year", 2),
-    "uso_year": ("Category:US Open (tennis) by year", 2),
-    "ashe": ("Category:Arthur Ashe Stadium", 1),
+    # "as of 2026 only Roland-Garros still keeps human line judges" is only
+    # convincing over a frame from this year's tournament, so take 2026 first
+    # and fall back through recent years.
+    "rg2026": ("Category:2026 French Open", 3),
+    "rg2025": ("Category:2025 French Open", 3),
+    "rg2024": ("Category:2024 French Open", 3),
 }
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
 MIN_W, MIN_H = 1200, 800
-PER_ROOT = 14
+PER_ROOT = 16
 MAX_CATEGORIES = 120  # keep a deep walk from turning into a full crawl
 
 
