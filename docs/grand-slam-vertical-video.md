@@ -74,22 +74,21 @@
 适用平台与地域期限、是否允许下载/改编/再发布、必须展示的署名；再把对应镜头（尤其澳网占位）
 替换进片子。
 
-## 四·五、待办：开放网络后要抓的图（新会话执行）
+## 四·五、中央球场名片（已完成，Commons CC 授权图）
 
-当前会话网络受限、无法抓图。开放 `commons.wikimedia.org` / `upload.wikimedia.org` /
-`api.openverse.org` 并**新开会话**后，按下列清单抓取并落地（只用明确 CC BY / BY-SA(非
-ND) / CC0 / 公有领域，逐图记录作者·许可·来源 URL，署名写进 `发布文案.txt`）：
+放开网络后，已从 Wikimedia Commons 抓取四座中央球场图（license 逐图核验），为每个大满贯
+新增一张「球场名片」镜头（球场图 + 球场名 + 座位数），并把第3镜「澳网」格换成真正的
+罗德·拉沃球场：
 
-| 用途 | 目标（Commons 分类/关键词） | 落点 |
-|---|---|---|
-| 第3镜「澳网」格 + 澳网球场名片 | Rod Laver Arena（外景/全景，最好夜景） | `assets/venues/` + `data/grand_slam_video.json` s03 cells[0] |
-| 法网球场名片 | Court Philippe-Chatrier（外景/全景） | 每站中央球场名片镜头 |
-| 温网球场名片 | Centre Court, Wimbledon（外景/全景） | 同上 |
-| 美网球场名片 | Arthur Ashe Stadium（外景/全景，现有为场内） | 同上 |
+| 球场 | 文件 | 许可 | 座位数 |
+|---|---|---|---|
+| 罗德·拉沃球场（澳网） | `assets/venues/ao-rod-laver-arena.jpg` | CC0（Jono52795） | 约 14,820 |
+| 菲利普·夏蒂埃球场（法网） | `assets/venues/rg-philippe-chatrier.jpg` | CC BY-SA 4.0（MFonzatti） | 约 15,225 |
+| 中央球场（温网） | `assets/venues/wimbledon-centre-court.jpg` | CC BY-SA 4.0（GATORFAN2525） | 约 14,979 |
+| 阿瑟·阿什球场（美网） | `assets/venues/usopen-arthur-ashe-exterior.jpg` | CC0（D. Benjamin Miller） | 约 23,771（全球最大） |
 
-落地后：为每个大满贯新增一张「中央球场名片」镜头（外景全景 + 球场名 + 座位数，
-座位数已在分区卡就位：AO 14,820 / RG 15,225 / 温网 14,979 / 美网 23,771），并把第3镜
-澳网格换成真正的 Rod Laver Arena 图。渲染 `python tools/build_grand_slam_short.py --overwrite`。
+CC0 无需署名；CC BY-SA 两张的署名已进 `发布文案.txt`。AO/美网为外景，法网/温网为中央球场
+全景（Commons 未找到合适自由许可的外景，用了场内全景）。
 
 ## 五、渲染
 

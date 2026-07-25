@@ -38,7 +38,7 @@
       "accent": "#f2b32a",
       "section": {"en": "The Grand Slams", "zh": "网坛最高殿堂", "surface": "巅峰之战", "color": "#f2b32a"},
       "cells": [
-        {"label": "澳网", "color": "#2f7de1", "placeholder": true, "note": "插入澳网 · 罗德·拉沃球场授权画面"},
+        {"image": "assets/venues/ao-rod-laver-arena.jpg", "label": "澳网", "color": "#2f7de1", "focal": [0.5, 0.5]},
         {"image": "assets/explainer/hawkeye/roland_garros_wide.jpg", "label": "法网", "color": "#c96a34", "focal": [0.5, 0.42], "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons"},
         {"image": "assets/players/jannik-sinner.jpg", "label": "温网", "color": "#2f9448", "focal": [0.42, 0.6], "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons"},
         {"image": "assets/venues/usopen-arthur-ashe-stadium.jpg", "label": "美网", "color": "#1f6fb2", "focal": [0.5, 0.42], "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons"}
@@ -66,9 +66,24 @@
       "type": "section",
       "index": 1,
       "accent": "#2f7de1",
-      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛", "surface": "硬地 · 墨尔本", "color": "#2f7de1", "word": "MELBOURNE", "court": "中央球场 · 罗德·拉沃球场", "seats": "可容纳约 14,820 人"},
+      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛", "surface": "硬地 · 墨尔本", "color": "#2f7de1", "word": "MELBOURNE"},
       "vo": "首先，盛夏的墨尔本。",
       "caption": "澳网"
+    },
+    {
+      "id": "s05b_ao_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 1,
+      "accent": "#2f7de1",
+      "image": "assets/venues/ao-rod-laver-arena.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
+      "court": "罗德·拉沃球场",
+      "seats": "可容纳约 14,820 人",
+      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛"},
+      "vo": "",
+      "caption": ""
     },
     {
       "id": "s06_ao",
@@ -91,9 +106,24 @@
       "type": "section",
       "index": 2,
       "accent": "#c96a34",
-      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛", "surface": "红土 · 巴黎", "color": "#c96a34", "word": "PARIS", "court": "中央球场 · 菲利普·夏蒂埃球场", "seats": "可容纳约 15,225 人"},
+      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛", "surface": "红土 · 巴黎", "color": "#c96a34", "word": "PARIS"},
       "vo": "接着，来到巴黎的红土。",
       "caption": "法网"
+    },
+    {
+      "id": "s07b_rg_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 2,
+      "accent": "#c96a34",
+      "image": "assets/venues/rg-philippe-chatrier.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "图：MFonzatti · CC BY-SA 4.0 · Wikimedia Commons",
+      "court": "菲利普·夏蒂埃球场",
+      "seats": "可容纳约 15,225 人",
+      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛"},
+      "vo": "",
+      "caption": ""
     },
     {
       "id": "s08_rg",
@@ -114,9 +144,24 @@
       "type": "section",
       "index": 3,
       "accent": "#2f9448",
-      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛", "surface": "草地 · 伦敦", "color": "#2f9448", "word": "LONDON", "court": "中央球场 · Centre Court", "seats": "可容纳约 14,979 人"},
+      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛", "surface": "草地 · 伦敦", "color": "#2f9448", "word": "LONDON"},
       "vo": "然后，是伦敦的草地。",
       "caption": "温网"
+    },
+    {
+      "id": "s09b_wim_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 3,
+      "accent": "#2f9448",
+      "image": "assets/venues/wimbledon-centre-court.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "图：GATORFAN2525 · CC BY-SA 4.0 · Wikimedia Commons",
+      "court": "中央球场 · Centre Court",
+      "seats": "可容纳约 14,979 人",
+      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛"},
+      "vo": "",
+      "caption": ""
     },
     {
       "id": "s10_wim",
@@ -137,9 +182,24 @@
       "type": "section",
       "index": 4,
       "accent": "#1f6fb2",
-      "section": {"en": "US Open", "zh": "美国网球公开赛", "surface": "硬地 · 纽约", "color": "#1f6fb2", "word": "NEW YORK", "court": "中央球场 · 阿瑟·阿什球场", "seats": "可容纳约 23,771 人 · 全球最大"},
+      "section": {"en": "US Open", "zh": "美国网球公开赛", "surface": "硬地 · 纽约", "color": "#1f6fb2", "word": "NEW YORK"},
       "vo": "最后，纽约的不夜城。",
       "caption": "美网"
+    },
+    {
+      "id": "s11b_uso_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 4,
+      "accent": "#1f6fb2",
+      "image": "assets/venues/usopen-arthur-ashe-exterior.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
+      "court": "阿瑟·阿什球场",
+      "seats": "可容纳约 23,771 人 · 全球最大",
+      "section": {"en": "US Open", "zh": "美国网球公开赛"},
+      "vo": "",
+      "caption": ""
     },
     {
       "id": "s12_uso",
