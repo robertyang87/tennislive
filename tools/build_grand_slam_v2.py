@@ -223,6 +223,7 @@ def main():
     scenes = spec["scenes"]
 
     # 1) 配音先行：合成 + 词级时间戳 + 真实时长 → 每镜画面时长
+    scenes = [s for s in scenes if not s.get("skip")]
     plan = []
     for i, sc in enumerate(scenes):
         vo = sc.get("vo", "").strip()
