@@ -58,14 +58,24 @@ def adur(path: Path) -> float:
     return float(out.stdout.strip())
 
 
-def group_lines(words, punct_gaps):
-    """把词级时间戳聚成字幕行：标点/停顿断行，行长 6–16 字。"""
-    lines, cur, chars = [], [], 0
+_PUNCT = "。？！；，、——…："
+
+
+def group_lines(words, vo_text):
+    """把词级时间戳聚成字幕行：优先在原文标点处断行，长行 18 字强拆。"""
+    plain = vo_text or ""
+    lines, cur, chars, pos = [], [], 0, 0
     for i, (st, du, tx) in enumerate(words):
         cur.append((st, du, tx))
         chars += len(tx)
+        idx = plain.find(tx, pos)
+        if idx >= 0:
+            pos = idx + len(tx)
+        nxt = plain[pos] if pos < len(plain) else "。"
+        at_punct = nxt in _PUNCT
         nxt_gap = (words[i + 1][0] - (st + du)) if i + 1 < len(words) else 9.9
-        if chars >= 16 or (chars >= 6 and nxt_gap > 0.28) or i == len(words) - 1:
+        if (at_punct and chars >= 5) or chars >= 18 or nxt_gap > 0.55 \
+                or i == len(words) - 1:
             text = "".join(w[2] for w in cur)
             lines.append((cur[0][0], cur[-1][0] + cur[-1][1], text))
             cur, chars = [], 0
@@ -120,7 +130,8 @@ def main():
             mp3 = TMP / f"vo_{i:02d}.mp3"
             words = synth(vo, mp3)
             d = adur(mp3) + GAP
-            plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=mp3, words=words, dur=d))
+            plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=mp3, words=words,
+                             dur=d, vo=vo))
             print(f"  [{sc['id']}] 配音 {d - GAP:.2f}s + 间隙 → 画面 {d:.2f}s，{len(words)} 词")
         else:
             plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=None, words=[], dur=NOVO_DUR))
@@ -149,7 +160,7 @@ Format: Layer, Start, End, Style, Text
 """
     lines_out = []
     for p, st0 in zip(plan, starts):
-        for (a, b, text) in group_lines(p["words"], None):
+        for (a, b, text) in group_lines(p["words"], p.get("vo", "")):
             lines_out.append(
                 f"Dialogue: 0,{fmt_ass_t(st0 + a)},{fmt_ass_t(st0 + b + 0.15)},Sub,"
                 f"{highlight(ass_escape(text))}")
