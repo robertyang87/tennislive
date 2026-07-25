@@ -363,18 +363,18 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "whose",
             "谁的赛程",
             "更长的赛事，到底给谁看",
-            "西西帕斯说得更直接：大师赛变成了一种拖沓，质量明显下降，"
-            "球员得不到该有的恢复和训练时间。顶尖球员的赛季跨越十一个月；"
-            "蒙特利尔之后紧接着辛辛那提，再往后就是美网。"
+            "球员那边说得更直接。世界前列的弗里茨对 ESPN 说："
+            "我一整年只有一周休息，太离谱了。顶尖球员的赛季跨越十一个月；"
+            "蒙特利尔之后紧接着辛辛那提，再往后就是美网，中间几乎不停。"
             "加拿大网协说，正在和 ATP 商谈调整。而画面里这一满场人，"
             "就是蒙特利尔的中心球场。所以问题也就摆在这儿了："
             "一个更长的大师赛，到底是给谁看的？",
             "assets/explainer/masters-format/crowd.jpg",
-            "CC BY-SA 2.0 · Wikimedia Commons · 蒙特利尔中心球场，2009 年",
+            "CC BY-SA 2.0 · Wikimedia Commons · 蒙特利尔中心球场",
             (
-                "西西帕斯：变成拖沓，质量下降",
+                "弗里茨：我一年只有一周休息",
                 "顶尖球员赛季跨越 11 个月",
-                "图为蒙特利尔中心球场（2009）",
+                "蒙特利尔之后紧接辛辛那提、美网",
             ),
             "",
             "更长的大师赛，到底是给谁看的？",
@@ -897,43 +897,43 @@ _CAPTIONS: dict[str, dict] = {
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
     "hawkeye": {
-        "topic": "鹰眼的来历",
+        "topic": "鹰眼的来历：源于一次误判",
         "question": "球压没压线，到底谁说了算？",
         "narration": "球压没压线，到底谁说了算？这件事，网球用了一百年才交出去。",
         "image": "assets/explainer/hawkeye/us_open_court.jpg",
     },
     "yellow-ball": {
-        "topic": "网球改色史",
+        "topic": "网球改色史：源于彩色电视",
         "question": "网球为什么是黄色的？",
         "narration": "网球为什么是黄色的？而且它变成黄色，还不到六十年。",
         "image": "assets/explainer/yellow-ball/optic_yellow.jpg",
     },
     "longest-match": {
-        "topic": "史上最长的比赛",
+        "topic": "史上最长的比赛：源于第五盘没有抢七",
         "question": "一场网球，最长能打多久？",
         "narration": "一场网球最长能打多久？答案是十一小时五分钟，分三天打完。",
         "image": "assets/explainer/longest-match/scoreboard.jpg",
     },
     "wimbledon-whites": {
-        "topic": "温网的白衣规矩",
+        "topic": "温网的白衣规矩：成文于 1963 年",
         "question": "温网为什么只准穿白？",
         "narration": "温网为什么只准穿白？这条规矩，一直管到内衣。",
         "image": "assets/explainer/wimbledon-whites/headtotoe.jpg",
     },
     "rufus": {
-        "topic": "温网的赶鸟员",
+        "topic": "温网的赶鸟员：源于中央球场的鸽子",
         "question": "温网为什么雇了一只鹰？",
         "narration": "温网有一名员工是一只鹰。它为什么在那儿上班？",
         "image": "assets/explainer/rufus/patrol.jpg",
     },
     "queue": {
-        "topic": "温网的排队文化",
+        "topic": "温网的排队文化：源于当天发售的门票",
         "question": "温网的票为什么要排一晚？",
         "narration": "温网的票，为什么要在草地上排一晚？",
         "image": "assets/explainer/queue/queue.jpg",
     },
     "masters-format": {
-        "topic": "大师赛的退赛潮",
+        "topic": "大师赛的退赛潮：源于赛期从一周变十二天",
         "question": "大师赛为什么变成两周？",
         "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
         "image": "assets/explainer/masters-format/sinner.jpg",
