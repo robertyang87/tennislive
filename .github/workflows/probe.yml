@@ -29,7 +29,10 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 抓取候选（官方媒体源 + Commons/Flickr/Openverse）
+      - name: 按 Commons 分类抓取（2004 美网 / 小威 / 卡普里亚蒂）
+        run: python tools/commons_category_grab.py
+
+      - name: 全文检索补充抓取
         run: python tools/probe_explainer_broll.py
 
       - name: 提交候选图供人工目检
