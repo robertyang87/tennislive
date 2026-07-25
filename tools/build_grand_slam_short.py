@@ -332,9 +332,20 @@ def render_placeholder(meta, scene, W, H):
     return img
 
 
+def resolve_img(path, key):
+    """若 assets/local/<key>.<ext> 存在则优先用本地自备图（不入库）；否则用规格里的图。"""
+    if key:
+        for ext in ("jpg", "jpeg", "png", "webp"):
+            cand = ROOT / "assets" / "local" / f"{key}.{ext}"
+            if cand.exists():
+                return str(cand)
+    return path
+
+
 def paste_rounded_photo(base, path, x, y, w, h, focal=(0.5, 0.5), radius=22,
-                        border=None, bw=0):
-    src = Image.open(ROOT / path).convert("RGB")
+                        border=None, bw=0, key=None):
+    p = Path(resolve_img(path, key))
+    src = Image.open(p if p.is_absolute() else ROOT / p).convert("RGB")
     card = rounded(fit_cover(src, w, h, focal), radius)
     rgba = base.convert("RGBA")
     rgba.paste(card, (x, y), card)
@@ -422,7 +433,7 @@ def render_grid4(meta, scene, W, H):
         else:
             img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
                                       tuple(c.get("focal", [0.5, 0.4])), radius=18,
-                                      border=col, bw=4)
+                                      border=col, bw=4, key=c.get("local_key"))
         d = ImageDraw.Draw(img, "RGBA")
         lab = c["label"]
         ft = F_BOLD(40)
@@ -449,7 +460,7 @@ def render_courtcard(meta, scene, W, H):
     cw, ch = W - 120, int(H * 0.46)
     img = paste_rounded_photo(img, scene["image"], cx, cy, cw, ch,
                               tuple(scene.get("focal", [0.5, 0.5])), radius=28,
-                              border=accent, bw=5)
+                              border=accent, bw=5, key=scene.get("local_key"))
     d = ImageDraw.Draw(img, "RGBA")
     court, seats = scene.get("court", ""), scene.get("seats", "")
     yb = cy + ch + 56
