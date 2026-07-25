@@ -30,7 +30,9 @@ from .story import (
     chinese_side_won,
     is_chinese_player,
     result_insight,
+    schedule_insight,
 )
+from ..zh.terms import round_zh
 
 MAX_BODY = 520
 BASE_TAGS = ["#网球", "#网球时差"]
@@ -628,8 +630,6 @@ _DEFAULT_STAGE_ANGLES = (
 
 
 def _stage_angle(match: Match, today, index: int) -> str:
-    from ..zh.terms import round_zh
-
     # match_round_display() 里带着"男单/女单"，拿它当键永远命中不了轮次
     choices = _STAGE_ANGLES.get(round_zh(match.round_name) or "", _DEFAULT_STAGE_ANGLES)
     seed = (today.toordinal() + index) if today is not None else index
@@ -660,8 +660,6 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
         # schedule_insight 通常是为单行写的，最后再退到固定的赛段看点。
         shortened = _short_complete(angle, limit)
         if not shortened:
-            from .story import schedule_insight
-
             shortened = _short_complete(schedule_insight(match, digest.today), limit)
         if not shortened:
             shortened = _stage_angle(match, digest.today, index)
