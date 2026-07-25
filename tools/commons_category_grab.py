@@ -52,9 +52,23 @@ def _session() -> requests.Session:
 
 
 def _api(session: requests.Session, **params) -> dict:
+    """Query the API, returning {} instead of raising on a bad response.
+
+    One malformed reply (an HTML error page, a throttle notice) must not take
+    down a whole gathering run, so callers get an empty result and move on.
+    """
     params.setdefault("format", "json")
     params.setdefault("action", "query")
-    return session.get(API, params=params, timeout=30).json()
+    for attempt in range(3):
+        try:
+            resp = session.post(API, data=params, timeout=30)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as exc:  # noqa: BLE001
+            if attempt == 2:
+                print(f"  !! api {params.get('list') or params.get('prop')}: {exc}")
+                return {}
+    return {}
 
 
 def _find_categories(session: requests.Session, seed: str) -> list[str]:
@@ -79,8 +93,8 @@ def _category_files(session: requests.Session, category: str) -> list[str]:
 
 def _file_info(session: requests.Session, titles: list[str]) -> list[dict]:
     out: list[dict] = []
-    for i in range(0, len(titles), 20):
-        chunk = titles[i : i + 20]
+    for i in range(0, len(titles), 10):
+        chunk = titles[i : i + 10]
         data = _api(
             session,
             titles="|".join(chunk),
