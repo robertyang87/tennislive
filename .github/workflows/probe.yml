@@ -29,8 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 定向抓取解说视频 B-roll 候选
-        run: python tools/probe_explainer_broll.py
+      - name: 按 Commons 分类抓取候选（法网中心球场 / 美网）
+        run: python tools/commons_category_grab.py
 
       - name: 提交候选图供人工目检
         run: |
@@ -40,7 +40,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "没有新候选"
           else
-            git commit -m "probe: us open match + chatrier candidates"
+            git commit -m "probe: commons category candidates"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
