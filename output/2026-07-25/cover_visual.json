@@ -119,7 +119,7 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 1,
-  "editorial_source_urls": 3,
+  "editorial_source_urls": 4,
   "source_registry": {
     "as_of": "run-start",
     "proven": [
@@ -256,6 +256,21 @@
     "failed_candidates": [
       {
         "match_id": "401-2026:179406",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public",
+          "official-match-media"
+        ]
+      },
+      {
+        "match_id": "401-2026:179400",
         "status": "unavailable",
         "errors": [
           "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"

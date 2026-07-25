@@ -37,8 +37,8 @@
       "page": "cover",
       "provider": "official-story-pages",
       "query": "Steffi Graf 1988 seoul tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 3
     },
     {
       "page": "story",
@@ -51,8 +51,8 @@
       "page": "story",
       "provider": "official-story-pages",
       "query": "Rod Laver 1969 grand slam tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 3
     },
     {
       "page": "explainer",
@@ -65,8 +65,8 @@
       "page": "explainer",
       "provider": "official-story-pages",
       "query": "Steffi Graf 1988 grand slam tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 3
     },
     {
       "page": "today",
@@ -79,8 +79,8 @@
       "page": "today",
       "provider": "official-story-pages",
       "query": "Steffi Graf 1988 seoul tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 3
     }
   ],
   "selected_providers": [
@@ -113,13 +113,13 @@
       "provider": "official-media",
       "page_url": "https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
       "source_url": "https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
-      "image_url": "",
+      "image_url": "https://www.itftennis.com/assets/images/site-logo.jpg",
       "credit": "itftennis.com",
       "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
+      "status": "candidate",
       "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "u.s. open 1969 tennis tournament | itf  https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
-      "image_text": " ",
+      "search_text": "u.s. open 1969 tennis tournament | itf the u.s. open tournament 1969 took place from 29 aug 1969 to 09 sep 1969. click here to get the latest information and view the results. https://www.itftennis.com/en/tournament/us-open/usa/1969/m-sl-usa-01a-1969/champions/",
+      "image_text": " https://www.itftennis.com/assets/images/site-logo.jpg",
       "width": 0,
       "height": 0
     },
@@ -127,13 +127,13 @@
       "provider": "official-media",
       "page_url": "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
       "source_url": "https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
-      "image_url": "",
+      "image_url": "https://www.itftennis.com/assets/images/site-logo.jpg",
       "credit": "itftennis.com",
       "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
+      "status": "candidate",
       "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "olympic tennis event | la 2028 | itf  https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
-      "image_text": " ",
+      "search_text": "olympic tennis event | la 2028 | itf all you need to know about the olympic tennis event at la 2028, including latest news, player entries, event regulations, eligibility rules and much more https://www.itftennis.com/en/events/olympics-la-2028/statistics/",
+      "image_text": " https://www.itftennis.com/assets/images/site-logo.jpg",
       "width": 0,
       "height": 0
     },
@@ -141,13 +141,13 @@
       "provider": "official-media",
       "page_url": "https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
       "source_url": "https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
-      "image_url": "",
+      "image_url": "https://media.itftennis.com/assetbank-itf/servlet/display?file=22137ab7ed200b66987dfe18.jpg",
       "credit": "itftennis.com",
       "license": "官方媒体 · 非商业资讯引用",
-      "status": "reference-only",
+      "status": "candidate",
       "reason": "官方页面用于事实与事件核验；图片保留机构署名",
-      "search_text": "&#39;nervous&#39; at past olympics, djokovic primed for golden slam charge | itf  https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
-      "image_text": " ",
+      "search_text": "&#39;nervous&#39; at past olympics, djokovic primed for golden slam charge | itf novak djokovic may be playing it cool, but he is fully aware of the hand of history which is increasingly upon his shoulder at tokyo 2020 https://www.itftennis.com/en/news-and-media/articles/nervous-at-past-olympics-djokovic-primed-for-golden-slam-charge/",
+      "image_text": " https://media.itftennis.com/assetbank-itf/servlet/display?file=22137ab7ed200b66987dfe18.jpg",
       "width": 0,
       "height": 0
     },
@@ -177,7 +177,9 @@
       "status": "selected",
       "required_event_terms": [],
       "match_level": "exact-event",
-      "rejection_counts": {},
+      "rejection_counts": {
+        "metadata-relevance-below-3": 3
+      },
       "source_runs": [
         {
           "page": "cover",
@@ -190,8 +192,8 @@
           "page": "cover",
           "provider": "official-story-pages",
           "query": "Steffi Graf 1988 seoul tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 3
         }
       ],
       "provider": "official-editorial",
@@ -214,7 +216,10 @@
       "status": "selected",
       "required_event_terms": [],
       "match_level": "exact-event",
-      "rejection_counts": {},
+      "rejection_counts": {
+        "subject-or-person-mismatch": 2,
+        "metadata-relevance-below-3": 1
+      },
       "source_runs": [
         {
           "page": "story",
@@ -227,8 +232,8 @@
           "page": "story",
           "provider": "official-story-pages",
           "query": "Rod Laver 1969 grand slam tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 3
         }
       ],
       "provider": "verified-editorial",
@@ -238,20 +243,23 @@
       "license": "公开网页图片 · 非商业资讯引用",
       "query": "Rod Laver 1969 grand slam tennis",
       "relevance": 100,
-      "sha256": "d69c1b65d75a6f7f30e1dd8c2befb2fec6894ae0b376e887115629bcdbb8a253",
+      "sha256": "432d784986ad8b7678e55ea525f8756a5711024a02c1824d86654d4c0af4b8be",
       "focus": "50% 24%",
       "subject_match": true,
       "year_match": true,
       "event_match": true,
       "person_required": true,
-      "cached_file": "story-d69c1b65d75a.jpeg"
+      "cached_file": "story-432d784986ad.jpeg"
     },
     {
       "page": "explainer",
       "status": "selected",
       "required_event_terms": [],
       "match_level": "exact-event",
-      "rejection_counts": {},
+      "rejection_counts": {
+        "subject-or-person-mismatch": 1,
+        "metadata-relevance-below-3": 2
+      },
       "source_runs": [
         {
           "page": "explainer",
@@ -264,8 +272,8 @@
           "page": "explainer",
           "provider": "official-story-pages",
           "query": "Steffi Graf 1988 grand slam tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 3
         }
       ],
       "provider": "verified-editorial",
@@ -288,7 +296,9 @@
       "status": "selected",
       "required_event_terms": [],
       "match_level": "exact-event",
-      "rejection_counts": {},
+      "rejection_counts": {
+        "metadata-relevance-below-3": 3
+      },
       "source_runs": [
         {
           "page": "today",
@@ -301,8 +311,8 @@
           "page": "today",
           "provider": "official-story-pages",
           "query": "Steffi Graf 1988 seoul tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 3
         }
       ],
       "provider": "editorial-archive",
@@ -324,14 +334,14 @@
   "selection_evidence": {
     "kind": "trivia",
     "candidate_slug": "golden-slam",
-    "result_count": 37,
-    "live_count": 1,
-    "schedule_count": 8,
+    "result_count": 39,
+    "live_count": 2,
+    "schedule_count": 7,
     "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
     "viral_prior": 9.0,
     "topic_score": 9.0,
     "live_relevance_score": 0.0,
-    "trend_signal_count": 85,
+    "trend_signal_count": 102,
     "candidate_rank": 1,
     "candidate_count": 9,
     "visual_preflight_rejections": 0,
