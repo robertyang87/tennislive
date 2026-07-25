@@ -326,8 +326,73 @@ def render_placeholder(meta, scene, W, H):
     return img
 
 
+def paste_rounded_photo(base, path, x, y, w, h, focal=(0.5, 0.5), radius=22,
+                        border=None, bw=0):
+    src = Image.open(ROOT / path).convert("RGB")
+    card = rounded(fit_cover(src, w, h, focal), radius)
+    rgba = base.convert("RGBA")
+    rgba.paste(card, (x, y), card)
+    out = rgba.convert("RGB")
+    if border and bw:
+        ImageDraw.Draw(out).rounded_rectangle([x, y, x + w, y + h], radius=radius,
+                                              outline=border, width=bw)
+    return out
+
+
+def render_triptych(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    card_x, card_y = 60, int(H * 0.24)
+    card_w, card_h = W - 120, int(H * 0.52)
+    panels = scene["panels"]
+    gap = 14
+    pw = (card_w - gap * (len(panels) - 1)) // len(panels)
+    for i, p in enumerate(panels):
+        px = card_x + i * (pw + gap)
+        col = hex2rgb(p["color"])
+        img = paste_rounded_photo(img, p["image"], px, card_y, pw, card_h,
+                                  tuple(p.get("focal", [0.5, 0.5])), radius=18,
+                                  border=col, bw=4)
+        d = ImageDraw.Draw(img, "RGBA")
+        ft = F_BOLD(40)
+        lab = p["label"]
+        lw = ft.getlength(lab) + 44
+        lx = px + pw / 2 - lw / 2
+        ly = card_y + card_h - 70
+        d.rounded_rectangle([lx, ly, lx + lw, ly + 54], radius=27, fill=col)
+        center(d, px + pw / 2, ly + 6, lab, ft, (8, 10, 14))
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
+def render_collage(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    card_x, card_y = 60, int(H * 0.215)
+    card_w, card_h = W - 120, int(H * 0.55)
+    cells = scene["cells"]
+    cols, rows, gap = 3, 2, 12
+    cw = (card_w - gap * (cols - 1)) // cols
+    ch = (card_h - gap * (rows - 1)) // rows
+    for i, c in enumerate(cells[:cols * rows]):
+        r, cc = divmod(i, cols)
+        img = paste_rounded_photo(img, c["image"], card_x + cc * (cw + gap),
+                                  card_y + r * (ch + gap), cw, ch,
+                                  tuple(c.get("focal", [0.5, 0.4])), radius=16,
+                                  border=accent, bw=3)
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
 RENDERERS = {"title": render_title, "section": render_section,
-             "photo": render_photo, "placeholder": render_placeholder}
+             "photo": render_photo, "placeholder": render_placeholder,
+             "triptych": render_triptych, "collage": render_collage}
 
 
 def srt_time(t):
@@ -352,11 +417,18 @@ def write_srt(scenes, path):
 
 def write_description(scenes, meta, path):
     """发布文案：标题候选 + 简介 + 话题 + 图片致谢（CC 许可需署名，放这里）。"""
-    credits = []
-    for sc in scenes:
-        c = (sc.get("credit") or "").strip()
-        if c:
+    seen, credits = set(), []
+    def add(c):
+        c = (c or "").strip()
+        if c and c not in seen:
+            seen.add(c)
             credits.append(f"· {c}")
+    for sc in scenes:
+        add(sc.get("credit"))
+        for p in sc.get("panels", []):
+            add(p.get("credit"))
+        for cell in sc.get("cells", []):
+            add(cell.get("credit"))
     lines = [
         "【标题候选】",
         "网球四大满贯，一个视频看懂它们的性格",
