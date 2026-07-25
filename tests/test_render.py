@@ -198,6 +198,119 @@ def test_quarterfinal_insight_survives_render_layer_truncation_intact():
         assert not truncated.endswith(("可", "但", "时", "而"))  # 不留悬空连接词
 
 
+def test_short_never_exceeds_its_limit():
+    """`_short` 的字数上限是硬约束，没有可切的标点时也不能原样放行.
+
+    生产环境实际印出过 40 字的看点行：基茨比厄尔决赛导语 49 字，第一个逗号
+    在 37 字处、已经超过 34 字预算，旧实现走到最后一行 `return cleaned`
+    把 49 字整句返回，字数上限形同虚设，只留下一条"手机端过长行"的质检警告。
+    """
+    from tennislive.render.xiaohongshu import _short
+
+    long_final = (
+        "基茨比厄尔公开赛只剩最后一问：布勃利克（世界第11）和阿利斯（世界第83），"
+        "谁能把这一周换成奖杯？"
+    )
+    for limit in (28, 34, 40, 52):
+        assert len(_short(long_final, limit)) <= limit
+
+
+def test_short_complete_rejects_fragments_that_lose_their_point():
+    """截出来的片段必须能独立读完，读不完就返回空串交给上层兜底。"""
+    from tennislive.render.xiaohongshu import _short_complete
+
+    # 账号连载回忆：以日期开头，第一个逗号前只有"7月24日"
+    memory = (
+        "7月24日，柏格斯还在汉堡欧洲公开赛写下“连丢两盘后连追三局翻盘晋级”。"
+        "今天再遇见这条线，故事已经走到下一章。"
+    )
+    assert _short_complete(memory, 34) == ""  # 不能印出光秃秃的"看点｜7月24日"
+
+    # 决赛导语：冒号许下的"谁能把这一周换成奖杯"被截掉后，只剩两个人名
+    final_preview = (
+        "基茨比厄尔公开赛只剩最后一问：布勃利克（世界第11）和阿利斯（世界第83），"
+        "谁能把这一周换成奖杯？"
+    )
+    assert _short_complete(final_preview, 34) == ""
+
+    # 状语从句开头，主句被截掉
+    assert _short_complete("结束16个月冠军等待后，他接下来要证明这不是一座孤立的奖杯", 28) == ""
+
+    # 能完整读完的就要留下
+    assert _short_complete("决赛门票谁都想拿，邦达尔带着4号种子出战也得先扛住压力。", 34) == (
+        "决赛门票谁都想拿，邦达尔带着4号种子出战也得先扛住压力"
+    )
+
+
+def test_stage_angle_keys_on_the_round_not_the_display_string():
+    """兜底看点按轮次取词：match_round_display() 带着"男单/女单"，当键永远落空。"""
+    from datetime import date
+
+    from tennislive.render.xiaohongshu import _STAGE_ANGLES, _stage_angle
+
+    final = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Final", discipline="Men's Singles",
+    )
+    assert _stage_angle(final, date(2026, 7, 25), 0) in _STAGE_ANGLES["决赛"]
+
+    semi = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Semifinals", discipline="Women's Singles",
+    )
+    assert _stage_angle(semi, date(2026, 7, 25), 0) in _STAGE_ANGLES["半决赛"]
+
+
+def test_tonight_angle_always_reads_as_a_finished_sentence():
+    """今晚焦点的看点行只有一行预算：宁可换一句说得完的，也不印半句。"""
+    from tennislive.render.xiaohongshu import _tonight_section
+
+    match = make_match(
+        home_name="Alexander Bublik", away_name="Filip Misolic",
+        home_country="KAZ", away_country="AUT",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        tournament="Generali Open Kitzbuhel", round_name="Final",
+    )
+    match.home[0].seed = match.away[0].seed = None
+    match.home[0].rank, match.away[0].rank = 11, 83
+    digest = Digest(today=date(2026, 7, 25), schedule=[match])
+
+    for compact in (True, False):
+        section, _ = _tonight_section(digest, compact=compact)
+        assert section is not None
+        angle_lines = [line for line in section.lines if line.startswith("看点｜")]
+        assert angle_lines
+        for line in angle_lines:
+            assert len(line) <= (28 if compact else 34) + len("看点｜。")
+            assert line.endswith(("。", "！", "？"))
+            assert not line.endswith(("：。", "和。", "的。", "后。"))
+            assert re.search(r"[一-鿿]", line.removeprefix("看点｜"))
+
+
+def test_player_preview_names_its_subject_in_the_first_clause():
+    """按标点截断后只会剩开头，所以第一个分句必须点出说的是谁.
+
+    生产环境印出过"看点｜法网与温网冠军都写在履历里"——同一行上有两位球员，
+    读者无法判断这份履历属于谁。
+    """
+    from tennislive.render.narrative import _PLAYER_PREVIEWS, _PLAYER_PREVIEW_VARIANTS
+    from tennislive.render.xiaohongshu import _short_complete
+
+    subjects = {
+        "yuan-yue": "袁悦",
+        "gao-xinyu": "高馨钰",
+        "barbora-krejcikova": "克雷吉茨科娃",
+        "tsitsipas": "西西帕斯",
+    }
+    for slug, name in subjects.items():
+        texts = [_PLAYER_PREVIEWS[slug], *_PLAYER_PREVIEW_VARIANTS.get(slug, ())]
+        for text in texts:
+            head = _short_complete(text, 28)
+            assert head, f"{slug} 的文案在 28 字上限下截不出完整句子: {text}"
+            # 同一行上有两位球员，代词也不够——必须留下名字
+            assert name in head, f"{slug} 截断后主语丢失: {head}"
+
+
 def test_neutral_compact_opinion_rotates_by_day():
     """无中国球员的压缩兜底文案必须按日轮换，否则会撞上7天防重复 FATAL 闸门。
 
