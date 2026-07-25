@@ -165,8 +165,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "但四大满贯里还有一个例外，就是法网。截至 2026 年，只有它仍然保留"
             "人工司线，没有采用实时电子司线。所以在罗兰加洛斯的红土场边，"
             "你依然能看到那一排穿着制服、守在线后的司线员。",
-            "assets/explainer/hawkeye/roland_garros_wide.jpg",
-            "sk4t · CC BY-SA 2.0 · Wikimedia Commons · 2006 Roland Garros",
+            "assets/explainer/hawkeye/chatrier.jpg",
+            "Nawal · CC BY 2.0 · Wikimedia Commons · Court Philippe Chatrier",
             (
                 "四大满贯中，仅法网保留人工司线",
                 "红土场边仍站着成排司线员",
