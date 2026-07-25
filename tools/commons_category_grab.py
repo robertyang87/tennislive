@@ -25,20 +25,30 @@ from PIL import Image
 API = "https://commons.wikimedia.org/w/api.php"
 OUT = Path("tools/broll")
 MIN_W, MIN_H = 1000, 700
-PER_SEED = 10
+PER_SEED = 12
 
-# slot -> category seed terms (most specific first)
+# slot -> category seed terms. Recent years first: the deck should look like
+# tennis as it is now, so candidates are ranked newest-first (see main()).
 SEEDS: dict[str, list[str]] = {
-    "chatrier": [
-        "Court Philippe Chatrier",
-        "Stade Roland Garros",
-    ],
     "us_open_match": [
-        "2004 US Open (tennis)",
-        "Serena Williams",
-        "Arthur Ashe Stadium",
-        "US Open (tennis)",
-        "USTA Billie Jean King National Tennis Center",
+        "2025 US Open (tennis)",
+        "2024 US Open (tennis)",
+        "2023 US Open (tennis)",
+    ],
+    "chatrier": [
+        "2025 French Open",
+        "2024 French Open",
+        "2023 French Open",
+        "Court Philippe Chatrier",
+    ],
+    "rg_recent": [
+        "2025 French Open",
+        "2024 French Open",
+        "2023 French Open",
+    ],
+    "wimbledon_recent": [
+        "2025 Wimbledon Championships",
+        "2024 Wimbledon Championships",
     ],
 }
 
@@ -136,6 +146,19 @@ def _file_info(session: requests.Session, titles: list[str]) -> list[dict]:
     return out
 
 
+def _year(info: dict) -> int:
+    """Best-effort shooting year; unknown sorts oldest so it never wins."""
+    for token in (info.get("date") or "").replace("-", " ").split():
+        if len(token) == 4 and token.isdigit():
+            year = int(token)
+            if 1970 < year < 2100:
+                return year
+    for token in (info.get("category") or "").split():
+        if len(token) == 4 and token.isdigit():
+            return int(token)
+    return 0
+
+
 def main() -> None:
     session = _session()
     slots = sys.argv[1:] or list(SEEDS)
@@ -143,52 +166,57 @@ def main() -> None:
     for slot in slots:
         slot_dir = OUT / slot
         slot_dir.mkdir(parents=True, exist_ok=True)
-        kept: list[dict] = []
-        seen: set[str] = set()
         rejects: dict[str, int] = {}
+        pool: list[dict] = []
+        seen: set[str] = set()
+
         for seed in SEEDS[slot]:
             for category in _find_categories(session, seed):
-                try:
-                    titles = _category_files(session, category)
-                except Exception as exc:  # noqa: BLE001
-                    print(f"[{slot}] {category}: {exc}")
-                    continue
+                titles = _category_files(session, category)
                 if not titles:
                     continue
                 print(f"[{slot}] {category}: {len(titles)} files")
                 for info in _file_info(session, titles):
-                    if len(kept) >= PER_SEED:
-                        break
                     if info["url"] in seen:
                         continue
                     seen.add(info["url"])
                     lic = (info["license"] or "").lower()
-                    if not any(lic.startswith(f) or f in lic for f in FREE):
+                    if not any(f in lic for f in FREE):
                         rejects["licence"] = rejects.get("licence", 0) + 1
                         continue
                     if info["width"] < MIN_W or info["height"] < MIN_H:
                         rejects["size"] = rejects.get("size", 0) + 1
                         continue
-                    try:
-                        resp = session.get(info["url"], timeout=30)
-                        resp.raise_for_status()
-                        img = Image.open(io.BytesIO(resp.content)).convert("RGB")
-                    except Exception:  # noqa: BLE001
-                        continue
-                    if img.width < MIN_W or img.height < MIN_H:
-                        continue
-                    name = f"{slot}_{len(kept):02d}.jpg"
-                    img.save(slot_dir / name, quality=88)
-                    info["file"] = f"broll/{slot}/{name}"
                     info["category"] = category
-                    info["size"] = [img.width, img.height]
-                    kept.append(info)
-                if len(kept) >= PER_SEED:
-                    break
+                    pool.append(info)
+
+        # Newest first — the point of this pass is current-looking footage.
+        pool.sort(key=_year, reverse=True)
+
+        kept: list[dict] = []
+        for info in pool:
             if len(kept) >= PER_SEED:
                 break
+            try:
+                resp = session.get(info["url"], timeout=30)
+                resp.raise_for_status()
+                img = Image.open(io.BytesIO(resp.content)).convert("RGB")
+            except Exception:  # noqa: BLE001
+                rejects["download"] = rejects.get("download", 0) + 1
+                continue
+            if img.width < MIN_W or img.height < MIN_H:
+                rejects["size"] = rejects.get("size", 0) + 1
+                continue
+            name = f"{slot}_{len(kept):02d}_{_year(info)}.jpg"
+            img.save(slot_dir / name, quality=88)
+            info["file"] = f"broll/{slot}/{name}"
+            info["year"] = _year(info)
+            info["size"] = [img.width, img.height]
+            kept.append(info)
+
         manifest[slot] = kept
-        print(f"[{slot}] kept {len(kept)}; dropped {rejects or 'none'}")
+        years = sorted({k["year"] for k in kept}, reverse=True)
+        print(f"[{slot}] kept {len(kept)} years={years}; dropped {rejects or 'none'}")
 
     path = OUT / "categories.json"
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), "utf-8")
