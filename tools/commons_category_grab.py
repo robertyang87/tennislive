@@ -30,16 +30,19 @@ PER_SEED = 12
 # slot -> category seed terms. Recent years first: the deck should look like
 # tennis as it is now, so candidates are ranked newest-first (see main()).
 SEEDS: dict[str, list[str]] = {
+    # Beat 1 wants a real, wide US Open frame to carry the text — the venue is
+    # where it happened, and a photograph has the impact a diagram never will.
+    "ashe": [
+        "Arthur Ashe Stadium",
+        "USTA Billie Jean King National Tennis Center",
+        "US Open (tennis)",
+    ],
     # Roland-Garros still fields line judges, so a recent frame is both newer
-    # and still true — unlike Wimbledon, where a recent frame would contradict
-    # the beat about the years when people still stood on the lines.
+    # and still true.
     "rg_recent": [
         "2025 Roland Garros",
         "2024 Roland Garros",
         "2023 Roland Garros",
-    ],
-    "chatrier_recent": [
-        "Court Philippe Chatrier",
     ],
 }
 
