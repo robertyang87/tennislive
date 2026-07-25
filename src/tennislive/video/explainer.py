@@ -6,17 +6,24 @@ licensable, high-relevance photo of "electronic line calling", so the strict
 photo deck can't publish them. A short narrated video fits them: it explains
 rather than illustrates.
 
-The video follows a fixed three-beat structure the audience can follow:
-    1. 前因后果  — the background / what triggered it,
-    2. 技术原理  — how it actually works,
-    3. 当今现状  — where it stands today.
+The video walks an arc the audience can follow — background, how it works,
+where it stands today — in as many beats as the story needs; more beats means
+more pictures, which is what carries an explainer.
 
 Each beat is one 3:4 brand card whose HERO is a real, verified, licensed photo
 (or, where no fitting photo exists, an original labelled schematic — clearly a
-diagram, never fabricated footage). A short caption sits over the image; the
-full explanation is spoken by a Chinese TTS voice. The 3:4 card is centred on a
-9:16 video canvas with brand bands. Narration is re-voiced verified facts, not
-invented commentary.
+diagram, never fabricated footage). Over the image sit a short title and 2-3
+distilled key lines; the full explanation is spoken by a Chinese TTS voice, so
+the slide is the skeleton and the narration is the flesh.
+
+Two rules the photos must hold to:
+  - the hero must match what its beat claims (a Wimbledon grass frame cannot
+    illustrate "only Roland-Garros still keeps human line judges"), and
+  - which tournament a frame shows comes from the source's own description and
+    categories, never from our reading of the pixels.
+
+The 3:4 card is centred on a 9:16 video canvas with brand bands. Provenance is
+recorded in assets/explainer/<slug>/credits.json, not painted on the frame.
 """
 
 from __future__ import annotations
@@ -50,8 +57,11 @@ class ExplainerSegment:
     title: str  # short on-screen caption
     narration: str  # full spoken text (TTS only)
     image: str = ""  # repo-relative photo path; "" -> schematic diagram
-    credit: str = ""  # small on-image source line
-    note: str = ""  # optional one-line fact strip under the title
+    credit: str = ""  # provenance for records; never painted on the frame
+    # 2-3 distilled key lines shown on-screen. The narration says it in full;
+    # these give the eye the skeleton (dates, numbers, the verdict) so the
+    # viewer can follow with the sound off or read along with it.
+    points: tuple[str, ...] = ()
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -94,8 +104,27 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "官方公开道歉。这成了回放技术上马的最后一根稻草。仅仅两年后，"
             "鹰眼挑战制正式走进大满贯。",
             "assets/explainer/hawkeye/cause.jpg",
-            "图：Steven Pisano · CC BY 2.0",
-            "",
+            "Steven Pisano · CC BY 2.0",
+            (
+                "2004 美网 1/4 决赛，多个关键球肉眼误判",
+                "当值主裁被撤换 · 官方公开道歉",
+                "两年后，鹰眼挑战制走进大满贯",
+            ),
+        ),
+        (
+            "human",
+            "百年人工",
+            "在电子眼之前，线是人用眼睛守的",
+            "在鹰眼出现以前，一条线是否被压到，全靠站在线后的这些人。他们弯着腰、"
+            "盯着脚下那条白线，一站就是一整场；这套人工司线的做法，在网球场上"
+            "沿用了上百年。可人眼有极限——球速越来越快，误判也就越来越难避免。",
+            "assets/explainer/hawkeye/line_judges.jpg",
+            "Clavecin · 公有领域 · Wikimedia Commons · 2006 Wimbledon",
+            (
+                "司线员弯腰盯线，一站一整场",
+                "人工司线在网球沿用上百年",
+                "球速越来越快，人眼开始跟不上",
+            ),
         ),
         (
             "mechanism",
@@ -108,19 +137,55 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "数据证明，肉眼真的会看错。",
             "",  # no licensable real photo of the tech -> original schematic
             "示意图 · 网球时差绘制",
-            "",
+            (
+                "8–12 台高速摄像机，最高 340fps",
+                "2D 视觉处理 + 3D 三角测量算落点",
+                "系统误差小于 2 毫米",
+            ),
         ),
         (
             "today",
             "当今现状",
-            "司线员正在退场，只剩法网还坚持",
-            "如今，电子司线正在取代人工。截至 2026 年，四大满贯里只有法网仍保留"
-            "人工司线；澳网、美网和温网都已完成转换，ATP 更宣布全部巡回赛全面"
-            "启用电子司线。唯独红土上的法网，仍让人眼来喊那最后一声——"
-            "球印是它坚持人工的底气。",
+            "站了上百年的司线员，正在退场",
+            "如今，电子司线正在取代人工。截至 2026 年，澳网、美网和温网都已"
+            "完成转换；ATP 更宣布全部巡回赛全面启用电子司线。画面里这片草地上，"
+            "已经没有司线员站在线后了——那些站了上百年的身影，正在退出网球舞台。",
             "assets/explainer/hawkeye/today.jpg",
-            "图：wimbledon.com",
-            "澳网 · 美网 · 温网 已转电子司线 ｜ 法网 仍保留人工司线",
+            "wimbledon.com",
+            (
+                "澳网 · 美网 · 温网 已完成转换",
+                "ATP 全部巡回赛启用电子司线",
+                "线后不再站人，全部交给摄像机",
+            ),
+        ),
+        (
+            "exception",
+            "法网例外",
+            "只剩法网，还站着一排人",
+            "但四大满贯里还有一个例外，就是法网。截至 2026 年，只有它仍然保留"
+            "人工司线，没有采用实时电子司线。所以在罗兰加洛斯的红土场边，"
+            "你依然能看到那一排穿着制服、守在线后的司线员。",
+            "assets/explainer/hawkeye/roland_garros_wide.jpg",
+            "sk4t · CC BY-SA 2.0 · Wikimedia Commons · 2006 Roland Garros",
+            (
+                "四大满贯中，仅法网保留人工司线",
+                "红土场边仍站着成排司线员",
+            ),
+        ),
+        (
+            "why",
+            "红土的底气",
+            "因为球，会在土上留下印子",
+            "法网敢这么坚持，底气就在脚下这片红土。球砸下去会留下一个印子，"
+            "主裁可以走下裁判椅，蹲到线边看那个球印，再用眼睛给出最后一声判罚。"
+            "别的场地上，球过了就没了；只有红土会把证据留在地上。",
+            "assets/explainer/hawkeye/roland_garros.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 Roland Garros",
+            (
+                "红土会留下球印，落点看得见",
+                "主裁下椅验印，人眼喊最后一声",
+                "别的场地球过无痕，红土留证据",
+            ),
         ),
     ),
 }
@@ -169,7 +234,8 @@ def _slide_html(
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
-    number = ("①", "②", "③", "④", "⑤")[index] if index < 5 else f"{index + 1}"
+    circled = ("①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨")
+    number = circled[index] if index < len(circled) else f"{index + 1}"
     css = _font_css()
 
     image_path = _REPO / segment.image if segment.image else None
@@ -186,9 +252,14 @@ def _slide_html(
             f'<div class="diagram-wrap">{_HAWKEYE_DIAGRAM}</div>'
             '<div class="scrim"></div>'
         )
-    note_html = (
-        f'<div class="note">{html.escape(segment.note)}</div>'
-        if segment.note
+    points_html = (
+        '<div class="points">'
+        + "".join(
+            f'<div class="point"><i>▪</i><span>{html.escape(p)}</span></div>'
+            for p in segment.points
+        )
+        + "</div>"
+        if segment.points
         else ""
     )
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
@@ -218,18 +289,21 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
  display:flex;flex-direction:column;gap:28px;}}
 .chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
  font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
-.title{{font-size:78px;line-height:1.2;font-weight:800;
+.title{{font-size:70px;line-height:1.2;font-weight:800;
  text-shadow:0 4px 24px rgba(0,0,0,.75);}}
-.note{{align-self:flex-start;max-width:100%;font-size:32px;font-weight:700;
- color:#f4fbf7;background:rgba(6,28,20,.62);border-left:7px solid #c6f65a;
- padding:14px 22px;border-radius:10px;line-height:1.35;
+.points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
+ background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
+ padding:24px 28px;border-radius:12px;}}
+.point{{display:flex;gap:16px;align-items:flex-start;font-size:34px;
+ font-weight:700;line-height:1.38;color:#f4fbf7;
  text-shadow:0 2px 8px rgba(0,0,0,.55);}}
+.point i{{color:#c6f65a;font-style:normal;flex:none;line-height:1.38;}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
 <div class="head"><div class="brand">网球时差 · 网球有故事</div>
 <div class="date">{html.escape(date_label)}</div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div>{note_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{points_html}</div>
 <div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
 

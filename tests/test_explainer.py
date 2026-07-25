@@ -11,30 +11,57 @@ from tennislive.video.explainer import (
 )
 
 
-def test_hawkeye_script_has_three_grounded_beats():
+def test_hawkeye_beats_are_grounded_in_verified_facts():
     story = find_story_by_slug("hawkeye")
     segments = explainer_script(story)
 
-    assert [s.kind for s in segments] == ["cause", "mechanism", "today"]
-    assert [s.label for s in segments] == ["前因后果", "技术原理", "当今现状"]
+    assert [s.kind for s in segments] == [
+        "cause",
+        "human",
+        "mechanism",
+        "today",
+        "exception",
+        "why",
+    ]
     joined = " ".join(s.narration for s in segments)
     # Each beat must trace to the story's verified facts, not invented claims.
     assert "2004" in joined and "误判" in joined  # cause
+    assert "司线" in joined  # human
     assert "三角测量" in joined and "毫米" in joined  # mechanism
-    assert "法网" in joined and "电子司线" in joined  # today
+    assert "电子司线" in joined  # today
+    assert "法网" in joined  # exception
+    assert "红土" in joined and "球印" in joined  # why
 
 
-def test_generic_script_uses_story_moments_and_facts_verbatim():
-    story = find_story_by_slug("longest-match")  # has no hand-authored script
-    segments = explainer_script(story)
+def test_每屏都有提炼要点配合旁白():
+    # 画面不能只有大标题：要点是给眼睛看的骨架，旁白是给耳朵的全文。
+    for story_slug in ("hawkeye",):
+        for seg in explainer_script(find_story_by_slug(story_slug)):
+            assert 2 <= len(seg.points) <= 3, f"{seg.kind} 要点数量不对"
+            assert all(p.strip() for p in seg.points)
+            # 要点是提炼，不是把旁白整句搬上去。
+            assert all(len(p) <= 24 for p in seg.points), f"{seg.kind} 要点太长"
+            doc = _slide_html(0, seg, "7.25")
+            for point in seg.points:
+                assert point in doc
 
-    assert len(segments) == 3
-    # mechanism / today are the story's verified facts verbatim — nothing added.
-    assert segments[1].narration == story.facts[0]
-    assert segments[2].narration == story.facts[-1]
-    # cause is assembled from the first moment (headline + detail), no invention.
-    assert story.moments[0].headline in segments[0].narration
-    assert story.moments[0].detail in segments[0].narration
+
+def test_法网那屏不能配温网的草地():
+    """The exception beat is about Roland-Garros; a grass frame would lie.
+
+    This is the concrete mistake that shipped once: the beat said "only the
+    French Open still keeps human line judges" over a Wimbledon Centre Court
+    photo. Each beat's hero must match what the beat claims.
+    """
+    segments = explainer_script(find_story_by_slug("hawkeye"))
+    beats = {s.kind: s for s in segments}
+
+    exception = beats["exception"]
+    assert "roland_garros" in exception.image
+    assert "today.jpg" not in exception.image  # never the Wimbledon frame
+    # ...and the Wimbledon frame stays on the beat it actually illustrates:
+    # the three Slams that already converted.
+    assert "today.jpg" in beats["today"].image
 
 
 def test_card_stays_3x4_while_video_canvas_is_9x16():
@@ -50,23 +77,24 @@ def test_card_stays_3x4_while_video_canvas_is_9x16():
     assert "width:1080px;height:1440px" in doc  # the card is 3:4
 
 
-def test_hawkeye_beats_are_image_first_not_text():
-    story = find_story_by_slug("hawkeye")
-    segments = explainer_script(story)
-    # cause & today carry a real verified photo; mechanism uses the schematic.
-    assert segments[0].image and (_REPO / segments[0].image).is_file()
-    assert segments[2].image and (_REPO / segments[2].image).is_file()
-    assert segments[1].image == ""  # mechanism -> diagram
-    # The photo beats embed the real image (image-first), not just text.
-    cause_doc = _slide_html(0, segments[0], "7.25")
-    assert "data:image" in cause_doc and "background-size:cover" in cause_doc
-    mech_doc = _slide_html(1, segments[1], "7.25")
-    assert "<svg" in mech_doc
+def test_photo_beats_embed_a_real_file_and_carry_no_burned_in_credit():
+    segments = explainer_script(find_story_by_slug("hawkeye"))
+    photo_beats = [s for s in segments if s.image]
+    assert len(photo_beats) >= 3  # image-first: most beats carry a real photo
+    for seg in photo_beats:
+        assert (_REPO / seg.image).is_file(), f"{seg.image} 不存在"
+        doc = _slide_html(0, seg, "7.25")
+        assert "data:image" in doc and "background-size:cover" in doc
+        # Provenance is kept in the data for records, never painted on the frame.
+        assert seg.credit
+        assert seg.credit not in doc
 
 
-def test_every_story_has_a_renderable_three_beat_script():
+def test_every_story_has_a_renderable_script():
     # No story should crash the script builder (durable guard for auto use).
     for story in STORIES:
         segments = explainer_script(story)
-        assert len(segments) == 3
+        assert len(segments) >= 3
         assert all(s.narration.strip() for s in segments)
+        # Never a text-only beat: a real photo, or the schematic.
+        assert all(s.image or s.kind == "mechanism" for s in segments)
