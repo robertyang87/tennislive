@@ -142,7 +142,8 @@ def render_chrome(scene, brand="网球时差"):
 def scene_cuts(sc):
     """镜头的 EDL：cuts 列表优先，broll/broll_start 兼容为单切。"""
     if sc.get("cuts"):
-        return [(c["src"], float(c.get("start", 0)), float(c["dur"]))
+        return [(c["src"], float(c.get("start", 0)),
+                 float(c["dur"]) if c.get("dur") else None)
                 for c in sc["cuts"]]
     if sc.get("broll"):
         return [(sc["broll"], float(sc.get("broll_start", 0)), None)]
