@@ -104,7 +104,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "官方公开道歉。这成了回放技术上马的最后一根稻草。仅仅两年后，"
             "鹰眼挑战制正式走进大满贯。",
             "assets/explainer/hawkeye/us_open.jpg",
-            "White House 官方摄影 · 公有领域 · 2025 US Open",
+            "CC BY 2.0 · Wikimedia Commons · 2014 US Open 主裁",
             (
                 "2004 美网：多个关键球被肉眼误判",
                 "当值主裁被撤换 · 官方公开道歉",
@@ -121,7 +121,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "assets/explainer/hawkeye/line_judges.jpg",
             "Clavecin · 公有领域 · Wikimedia Commons · 2006 Wimbledon",
             (
-                "司线员弯腰盯线，一站一整场",
+                "2006 温网：司线员弯腰盯线一整场",
                 "人工司线在网球沿用上百年",
                 "球速越来越快，人眼开始跟不上",
             ),
@@ -175,16 +175,16 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "why",
             "红土的底气",
-            "因为球，会在土上留下印子",
+            "红土上，那一声还归人来喊",
             "法网敢这么坚持，底气就在脚下这片红土。球砸下去会留下一个印子，"
             "主裁可以走下裁判椅，蹲到线边看那个球印，再用眼睛给出最后一声判罚。"
             "别的场地上，球过了就没了；只有红土会把证据留在地上。",
             "assets/explainer/hawkeye/roland_garros.jpg",
             "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 Roland Garros",
             (
-                "红土会留下球印，落点看得见",
-                "主裁下椅验印，人眼喊最后一声",
-                "别的场地球过无痕，红土留证据",
+                "红土场上，判罚仍由人眼给出",
+                "球在红土会留印，落点可当场复核",
+                "这就是法网敢坚持人工的底气",
             ),
         ),
     ),
