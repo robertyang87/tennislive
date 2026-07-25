@@ -16,9 +16,13 @@ import requests
 from PIL import Image
 
 API = "https://commons.wikimedia.org/w/api.php"
-OUT = Path("tools/broll/named")
+OUT = Path("tools/broll/named2")
 
 FILES = [
+    # Roland-Garros, players awaiting a decision — very likely the mark being read
+    'File:Flickr - Carine06 - "How many umpires does it take to...".jpg',
+    "File:Court Philippe Chatrier 001.jpg",
+    "File:Tennis Racquets and Balls on a Clay Court.jpg",
     # 2026 Roland-Garros — the line judges' own chair, i.e. the post still exists
     "File:Line judges' chair at the 2026 Roland Garros.jpg",
     "File:Umpire's chair at the 2026 Roland Garros (1).jpg",

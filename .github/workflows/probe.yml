@@ -29,8 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 翻分类找红土球印（不靠关键词）
-        run: python tools/hunt_ballmark_wide.py
+      - name: 下载法网球印入围候选
+        run: python tools/grab_named.py
 
       - name: 提交候选供人工目检
         run: |
