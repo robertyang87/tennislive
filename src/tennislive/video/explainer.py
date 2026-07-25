@@ -311,7 +311,7 @@ def _slide_html(
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 html,body{{width:{W}px;height:{H}px;}}
-body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
+body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:#f4fbf7;
  background:#061c14;}}
 .hero{{position:absolute;inset:0;}}
@@ -328,17 +328,21 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
-.brand{{font-size:36px;font-weight:800;letter-spacing:2px;}}
-.date{{font-size:30px;color:#d7e6dd;font-weight:700;}}
+.brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:38px;font-weight:400;letter-spacing:1px;}}
+.date{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
+ font-size:32px;color:#d7e6dd;font-weight:600;letter-spacing:2px;}}
 .foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
  display:flex;align-items:center;justify-content:flex-end;}}
-.tag{{font-size:26px;color:#9fb4aa;font-weight:700;letter-spacing:2px;
+.tag{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
+ font-size:28px;color:#9fb4aa;font-weight:600;letter-spacing:2px;
  text-shadow:0 2px 10px rgba(0,0,0,.7);}}
 .copy{{position:absolute;left:70px;right:70px;bottom:120px;z-index:5;
  display:flex;flex-direction:column;gap:28px;}}
 .chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
  font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
-.title{{font-size:{title_px}px;line-height:1.2;font-weight:800;
+.title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
  background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
