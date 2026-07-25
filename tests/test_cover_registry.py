@@ -122,6 +122,28 @@ def test_retired_channel_never_counts_as_proven(tmp_path):
     assert proven_channels(path) == ()
 
 
+def test_same_day_rerun_does_not_count_as_fresh_evidence(tmp_path):
+    """改完文案同日重出一版，不该让这几个源看起来又被证伪了一次。
+
+    barren 判定靠的是"连着多少期没货"，一天之内跑三遍并不构成三期证据。
+    """
+    path = tmp_path / "registry.json"
+    for _ in range(3):
+        record_cover_run(_report(candidates=0), today=date(2026, 7, 25), path=path)
+
+    records = load_registry(path)
+    assert records["wikimedia-commons"].runs == 1
+    assert records["wikimedia-commons"].measured_runs == 1
+    assert records["official-match-media"].selections == 1
+    assert barren_channels(path) == ()
+
+    # 同日重跑换了头条比赛，那是一次新的中选，要记上
+    record_cover_run(
+        _report(candidates=0, match_id="m2"), today=date(2026, 7, 25), path=path
+    )
+    assert load_registry(path)["official-match-media"].selections == 2
+
+
 def test_disabled_run_is_not_recorded(tmp_path):
     """封面抓取被关掉的那一期不该在台账里留下"这个源今天没货"的假证据。"""
     path = tmp_path / "registry.json"

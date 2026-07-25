@@ -178,8 +178,13 @@ def record_cover_run(
     selected = str(report.get("provider", "")).strip()
     match_id = str(report.get("match_id", ""))
 
+    # 台账按"期"记账，不按"运行次数"。同一天重跑（改完文案重出一版）不该
+    # 让这几个源看起来又被证伪了一次——barren 判定靠的是连着多少期没货，
+    # 一天之内跑三遍并不构成三期证据。
     for name, run in _channels_in_report(report).items():
         record = records.get(name) or ChannelRecord(channel=name, first_seen=stamp)
+        if record.last_run == stamp:
+            continue
         record.runs += 1
         record.last_run = stamp
         if run.measured:
@@ -194,13 +199,15 @@ def record_cover_run(
 
     if selected:
         record = records.get(selected) or ChannelRecord(channel=selected, first_seen=stamp)
-        # 中选的渠道有可能没进 providers_queried（比如从官方页扩展出来的候选）
-        if selected not in records:
-            record.runs += 1
-            record.last_run = stamp
-        record.selections += 1
-        record.last_selected = stamp
-        record.last_selected_match = match_id
+        already = record.last_selected == stamp and record.last_selected_match == match_id
+        if not already:
+            # 中选的渠道可能没进 providers_queried（比如从官方页扩展出来的候选）
+            if record.last_run != stamp:
+                record.runs += 1
+                record.last_run = stamp
+            record.selections += 1
+            record.last_selected = stamp
+            record.last_selected_match = match_id
         records[selected] = record
 
     try:
