@@ -265,7 +265,12 @@ Style: Sub,Noto Sans CJK SC,62,&HFFFFFF&,&H000000&,&H66000000&,1,4,2,2,60,60,470
 Format: Layer, Start, End, Style, Text
 """
     lines_out = []
+    CARD_TYPES = {"title", "grid", "triptych", "collage", "section"}
     for p, st0 in zip(plan, starts):
+        sc = scenes[p["idx"]]
+        # 静态信息卡自带文字层级，不烧跟读字幕；字幕只上视频/大图镜头
+        if not scene_cuts(sc) and sc.get("type") in CARD_TYPES:
+            continue
         for (a, b, text) in group_lines(p["words"], p.get("vo", "")):
             lines_out.append(
                 f"Dialogue: 0,{fmt_ass_t(st0 + a)},{fmt_ass_t(st0 + b + 0.15)},Sub,"
