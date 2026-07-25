@@ -82,7 +82,7 @@ def test_法网那屏不能配温网的草地():
     beats = {s.kind: s for s in segments}
 
     exception = beats["exception"]
-    assert "chatrier" in exception.image  # Court Philippe Chatrier
+    assert "rg2026" in exception.image  # this year's Roland-Garros
     assert "today.jpg" not in exception.image  # never the Wimbledon frame
     # ...and the Wimbledon frame stays on the beat it actually illustrates:
     # the three Slams that already converted.
