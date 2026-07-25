@@ -115,27 +115,47 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: git pull --ff-only origin "${{ github.ref_name }}"
 
-      - name: 幂等检查（备份班次：当日内容已存在则跳过）
+      - name: 幂等检查（备份班次：内容已生成且已推送则跳过；仅生成未推送则补推）
         id: guard
         run: |
+          # 只服务于 schedule 触发：workflow_dispatch 支持自定义 date，交给
+          # 下面"生成每日内容包"用 parse_date_arg 处理；schedule 永远是当天，
+          # 这里不需要（此时也还没装 tennislive）依赖 python 就能算对。
           TODAY=$(TZ=Asia/Shanghai date +%F)
-          QA_FILE="output/$TODAY/qa.txt"
-          if [ "${{ github.event_name }}" = "schedule" ] \
-             && [ -f "output/$TODAY/digest.json" ] \
+          OUT_DIR="output/$TODAY"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          QA_FILE="$OUT_DIR/qa.txt"
+          PUSHED_MARKER="$OUT_DIR/.pushplus_sent"
+          CONTENT_READY=false
+          if [ -f "$OUT_DIR/digest.json" ] \
              && [ -f "$QA_FILE" ] \
              && ! grep -q '^\[FATAL\]' "$QA_FILE"; then
-            if [ -s "output/$TODAY/knowledge/push.html" ]; then
-              echo "今日日报与知识帖均已生成，本次幂等结束"
+            CONTENT_READY=true
+          fi
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$CONTENT_READY" = "true" ]; then
+            if [ ! -f "$PUSHED_MARKER" ]; then
+              # 内容已就绪，但从没有一次运行真正跑到 PushPlus（很可能是无关的
+              # push 触发生成的，那类运行按设计不推送）。不重新生成，直接用
+              # 已有内容补推，避免"生成过"被误当成"已经推送过"。
+              echo "内容已生成但尚未真正推送，跳过重新生成，直接用现有内容补推"
               echo "skip=true" >> "$GITHUB_OUTPUT"
               echo "knowledge_retry=false" >> "$GITHUB_OUTPUT"
+              echo "push_pending=true" >> "$GITHUB_OUTPUT"
+            elif [ -s "$OUT_DIR/knowledge/push.html" ]; then
+              echo "今日日报与知识帖均已生成且已推送，本次幂等结束"
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              echo "knowledge_retry=false" >> "$GITHUB_OUTPUT"
+              echo "push_pending=false" >> "$GITHUB_OUTPUT"
             else
-              echo "日报已完成但知识帖缺失，本班次继续换源补产知识帖"
+              echo "日报已推送但知识帖缺失，本班次继续换源补产知识帖"
               echo "skip=false" >> "$GITHUB_OUTPUT"
               echo "knowledge_retry=true" >> "$GITHUB_OUTPUT"
+              echo "push_pending=false" >> "$GITHUB_OUTPUT"
             fi
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
             echo "knowledge_retry=false" >> "$GITHUB_OUTPUT"
+            echo "push_pending=false" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/setup-python@v5
@@ -180,6 +200,9 @@ jobs:
           # 计算实际输出目录（北京时间日期）
           OUT_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print('output/' + parse_date_arg('$DATE_ARG').isoformat())")
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # 内容一旦重新生成就不再是标记里对应的那份；旧推送标记必须清掉，
+          # 否则备份班次会把"上一版内容推送过"误当成"这一版也推送过"而跳过。
+          rm -f "$OUT_DIR/.pushplus_sent"
           # 同日重跑必须重新生成知识包，不能复用仓库里上一次的旧图片与质检结果。
           rm -rf "$OUT_DIR/knowledge"
           # 封面报告同样不可复用；选择器异常或当日没有合格图片时，旧报告
@@ -377,30 +400,51 @@ jobs:
           path: ${{ steps.gen.outputs.outdir }}
 
       - name: PushPlus 推送到微信（配置了 PUSHPLUS_TOKEN 才执行）
-        if: (github.event_name != 'push' || contains(github.event.head_commit.message, '[pushplus]')) && github.event.inputs.push_scope != 'knowledge-only' && github.event.inputs.push_scope != 'none' && steps.guard.outputs.skip != 'true' && steps.guard.outputs.knowledge_retry != 'true' && env.PUSHPLUS_TOKEN != ''
+        id: pushplus_main
+        if: (github.event_name != 'push' || contains(github.event.head_commit.message, '[pushplus]')) && github.event.inputs.push_scope != 'knowledge-only' && github.event.inputs.push_scope != 'none' && (steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true') && steps.guard.outputs.knowledge_retry != 'true' && env.PUSHPLUS_TOKEN != ''
         continue-on-error: true  # 推送失败不影响内容生成与入库
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"
+          tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir || steps.guard.outputs.outdir }}"
+
+      - name: 记录赛果日报已推送标记（内容已生成未推送时的补推场景需要）
+        # steps.<id>.outcome 是 continue-on-error 生效前的真实结果，不会被
+        # 上一步的 continue-on-error 掩盖成假的"success"。
+        if: steps.pushplus_main.outcome == 'success'
+        continue-on-error: true  # 标记提交失败不该让"已经推送成功"被误报成任务失败
+        run: |
+          OUT_DIR="${{ steps.gen.outputs.outdir || steps.guard.outputs.outdir }}"
+          touch "$OUT_DIR/.pushplus_sent"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUT_DIR/.pushplus_sent"
+          if git diff --cached --quiet; then
+            echo "推送标记已存在，无需重复提交"
+          else
+            git commit -m "chore: mark $(basename "$OUT_DIR") as pushed"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi
 
       - name: PushPlus 单独推送每日网球知识
-        if: (github.event_name != 'push' || contains(github.event.head_commit.message, '[pushplus]')) && github.event.inputs.push_scope != 'main-only' && github.event.inputs.push_scope != 'none' && steps.guard.outputs.skip != 'true' && env.PUSHPLUS_TOKEN != ''
+        if: (github.event_name != 'push' || contains(github.event.head_commit.message, '[pushplus]')) && github.event.inputs.push_scope != 'main-only' && github.event.inputs.push_scope != 'none' && (steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true') && env.PUSHPLUS_TOKEN != ''
         continue-on-error: true
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
-          if [ -s "${{ steps.gen.outputs.outdir }}/knowledge/push.html" ]; then
-            tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}/knowledge"
+          OUT_DIR="${{ steps.gen.outputs.outdir || steps.guard.outputs.outdir }}"
+          if [ -s "$OUT_DIR/knowledge/push.html" ]; then
+            tennislive publish pushplus --dir "$OUT_DIR/knowledge"
           else
             echo "本期无独立知识包，跳过"
           fi
 
       - name: 公众号存草稿/发布（WECHAT_MODE=draft 或 publish 才执行）
-        if: github.event_name != 'push' && github.event.inputs.push_scope != 'knowledge-only' && github.event.inputs.push_scope != 'none' && steps.guard.outputs.skip != 'true' && env.WECHAT_APPID != '' && env.WECHAT_MODE != 'off'
+        if: github.event_name != 'push' && github.event.inputs.push_scope != 'knowledge-only' && github.event.inputs.push_scope != 'none' && (steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true') && env.WECHAT_APPID != '' && env.WECHAT_MODE != 'off'
         continue-on-error: true
         run: |
           EXTRA=""
           if [ "$WECHAT_MODE" = "publish" ]; then EXTRA="--publish"; fi
-          tennislive publish wechat --dir "${{ steps.gen.outputs.outdir }}" \
+          tennislive publish wechat --dir "${{ steps.gen.outputs.outdir || steps.guard.outputs.outdir }}" \
             --style "$WECHAT_STYLE" $EXTRA
 
       - name: 生成可迭代质检失败日志
