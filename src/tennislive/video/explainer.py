@@ -121,10 +121,8 @@ _MISCALL_DIAGRAM = """
     <text x="0" y="13" text-anchor="middle" fill="#ff5a6a"
           font-size="37" font-weight="800">判罚：OUT</text>
   </g>
-  <text x="450" y="602" text-anchor="middle" fill="#e7f3ec"
-        font-size="29" font-weight="700">2004 美网 1/4 决赛 · 小威 vs 卡普里亚蒂</text>
-  <text x="450" y="640" text-anchor="middle" fill="#9fb4aa"
-        font-size="22">示意图 · 网球时差绘制（该场无可授权实拍照片）</text>
+  <text x="450" y="614" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="700">2004 美网 1/4 决赛 · 小威 vs 卡普里亚蒂</text>
 </svg>
 """
 
