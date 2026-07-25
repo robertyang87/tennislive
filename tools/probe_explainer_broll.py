@@ -27,23 +27,20 @@ from tennislive.research.visual_sources import (
 )
 
 BEATS = {
-    "cause": [
-        "tennis chair umpire",
-        "tennis line judge",
-        "tennis hawkeye challenge crowd",
-        "us open tennis challenge review",
-    ],
     "mechanism": [
-        "hawkeye tennis",
-        "hawkeye ball tracking tennis",
-        "tennis hawkeye replay screen",
-        "tennis challenge review in out screen",
+        "tennis player challenge call",
+        "tennis hawkeye challenge point",
+        "tennis review screen stadium",
+        "tennis umpire overrule",
+        "tennis ball mark clay",
+        "tennis serve speed radar",
     ],
     "today": [
-        "electronic line calling tennis",
-        "tennis line call screen stadium",
-        "wimbledon electronic line calling",
-        "tennis auto line calling court",
+        "tennis line judge chair empty",
+        "tennis stadium big screen",
+        "wimbledon centre court roof",
+        "tennis hard court line",
+        "us open night session court",
     ],
 }
 
