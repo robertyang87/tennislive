@@ -1,6 +1,7 @@
 name: probe-data-sources
 
-# 手动触发：在 GitHub Actions 出口网络中检查比分聚合源与授权统计配置。
+# 手动触发：在 GitHub Actions 出口网络中递归下钻 Commons 分类树，
+# 为解说视频寻找可授权、且时间地点人物对得上的实拍。
 on:
   workflow_dispatch: {}
   push:
