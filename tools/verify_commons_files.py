@@ -21,7 +21,8 @@ API = "https://commons.wikimedia.org/w/api.php"
 
 FILES = [
     "File:Leonardo Mayer (8334068684).jpg",
-    "File:Neon Leo (8333007927).jpg",
+    "File:Line judges.JPG",
+    "File:ND DN 2006FO.jpg",
 ]
 
 
