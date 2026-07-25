@@ -27,35 +27,21 @@ from tennislive.research.visual_sources import (
 # Each slot names the beat that needs a picture, then the queries that would
 # surface that exact subject. Queries are ordered most-specific first.
 SLOTS: dict[str, list[str]] = {
-    # 百年人工司线员——站在线后的人
-    "line_judge": [
-        "tennis line judge",
-        "tennis line umpire",
-        "wimbledon line judge",
-        "tennis linesman court",
-        "tennis official line call",
+    # ① 前因后果：2004 美网那场误判，最好是比赛画面（阿瑟·阿什球场）
+    "us_open_match": [
+        "Serena Williams 2004 US Open",
+        "Jennifer Capriati US Open",
+        "US Open tennis Arthur Ashe Stadium match",
+        "2004 US Open tennis",
+        "US Open tennis match night",
     ],
-    # 鹰眼挑战：大屏回放 / 球员示意挑战
-    "challenge": [
-        "hawk-eye tennis",
-        "tennis hawkeye system",
-        "tennis challenge screen",
-        "tennis stadium screen replay",
-        "tennis scoreboard screen court",
-    ],
-    # 红土：球印留在土上，这是法网坚持人工的底气
-    "clay": [
-        "roland garros clay court",
-        "french open clay court",
-        "tennis clay court line",
-        "clay court tennis match",
-        "philippe chatrier court",
-    ],
-    # 主裁 / 裁判椅
-    "chair_umpire": [
-        "tennis chair umpire",
-        "tennis umpire chair court",
-        "tennis umpire calling",
+    # ⑤ 法网例外：菲利普·夏蒂埃中心球场全景
+    "chatrier": [
+        "Court Philippe Chatrier",
+        "Philippe Chatrier Roland Garros",
+        "Roland Garros centre court",
+        "Roland Garros stadium panorama",
+        "Roland Garros court overview",
     ],
 }
 
