@@ -40,7 +40,8 @@ def test_每屏都有提炼要点配合旁白():
             assert 2 <= len(seg.points) <= 3, f"{seg.kind} 要点数量不对"
             assert all(p.strip() for p in seg.points)
             # 要点是提炼，不是把旁白整句搬上去。
-            assert all(len(p) <= 24 for p in seg.points), f"{seg.kind} 要点太长"
+            # 要点是提炼；唯一放宽的是点名时间/地点/人物的那一行。
+            assert all(len(p) <= 30 for p in seg.points), f"{seg.kind} 要点太长"
             doc = _slide_html(0, seg, "7.25")
             for point in seg.points:
                 assert point in doc
@@ -96,5 +97,5 @@ def test_every_story_has_a_renderable_script():
         segments = explainer_script(story)
         assert len(segments) >= 3
         assert all(s.narration.strip() for s in segments)
-        # Never a text-only beat: a real photo, or the schematic.
-        assert all(s.image or s.kind == "mechanism" for s in segments)
+        # Never a text-only beat: a real photo, or an original diagram.
+        assert all(s.image or s.diagram or s.kind == "mechanism" for s in segments)

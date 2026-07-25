@@ -56,12 +56,17 @@ class ExplainerSegment:
     label: str  # 前因后果 / 技术原理 / 当今现状
     title: str  # short on-screen caption
     narration: str  # full spoken text (TTS only)
-    image: str = ""  # repo-relative photo path; "" -> schematic diagram
+    image: str = ""  # repo-relative photo path; "" -> use `diagram`
     credit: str = ""  # provenance for records; never painted on the frame
     # 2-3 distilled key lines shown on-screen. The narration says it in full;
     # these give the eye the skeleton (dates, numbers, the verdict) so the
     # viewer can follow with the sound off or read along with it.
     points: tuple[str, ...] = ()
+    # Original SVG used when no photo can honestly carry the beat. Drawing
+    # our own is the only truthful option for a moment nobody holds a
+    # licensable frame of: it states the date, place and players outright
+    # and imitates no real footage.
+    diagram: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -93,6 +98,37 @@ _HAWKEYE_DIAGRAM = """
 </svg>
 """
 
+# The 2004 US Open quarter-final has no freely-licensed photograph (Commons
+# categories and file search, Openverse, the Wikipedia articles' own image
+# lists, official media and Flickr all come back empty). Rather than run a
+# near-miss frame under it, beat 1 draws the incident itself: a ball down
+# inside the line, called out.
+_MISCALL_DIAGRAM = """
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <rect x="90" y="60" width="720" height="320" rx="10" fill="rgba(55,226,154,.07)"
+        stroke="rgba(55,226,154,.4)" stroke-width="3"/>
+  <line x1="90" y1="380" x2="810" y2="380" stroke="#ffffff" stroke-width="12"/>
+  <text x="112" y="106" fill="#9fb4aa" font-size="26" font-weight="700">界内</text>
+  <text x="112" y="432" fill="#9fb4aa" font-size="26" font-weight="700">界外</text>
+  <path d="M250 120 Q360 230 430 330" fill="none" stroke="#ffe08a"
+        stroke-width="4" stroke-dasharray="4 10" opacity=".85"/>
+  <circle cx="438" cy="344" r="26" fill="#c6f65a" stroke="#ffffff" stroke-width="4"/>
+  <line x1="472" y1="344" x2="556" y2="344" stroke="#c6f65a" stroke-width="3"/>
+  <text x="568" y="355" fill="#c6f65a" font-size="29" font-weight="800">球压线 · 界内</text>
+  <g transform="translate(450,486)">
+    <rect x="-150" y="-40" width="300" height="76" rx="38"
+          fill="rgba(255,90,106,.16)" stroke="#ff5a6a" stroke-width="4"/>
+    <text x="0" y="13" text-anchor="middle" fill="#ff5a6a"
+          font-size="37" font-weight="800">判罚：OUT</text>
+  </g>
+  <text x="450" y="602" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="700">2004 美网 1/4 决赛 · 小威 vs 卡普里亚蒂</text>
+  <text x="450" y="640" text-anchor="middle" fill="#9fb4aa"
+        font-size="22">示意图 · 网球时差绘制（该场无可授权实拍照片）</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -103,13 +139,14 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "小威廉姆斯遭遇多个关键球的肉眼误判被淘汰出局；赛后当值主裁被撤换、"
             "官方公开道歉。这成了回放技术上马的最后一根稻草。仅仅两年后，"
             "鹰眼挑战制正式走进大满贯。",
-            "assets/explainer/hawkeye/us_open.jpg",
-            "Boss Tweed · CC BY 2.0 · Wikimedia Commons · 2013 US Open",
+            "",  # no licensable frame of this match exists -> original diagram
+            "示意图 · 网球时差绘制",
             (
-                "2004 美网：多个关键球被肉眼误判",
-                "当值主裁被撤换 · 官方公开道歉",
-                "两年后，鹰眼挑战制走进大满贯",
+                "2004 美网 1/4 决赛 · 小威 vs 卡普里亚蒂",
+                "多个关键球压线，却被判出界",
+                "主裁被撤换 · 两年后鹰眼进大满贯",
             ),
+            _MISCALL_DIAGRAM,
         ),
         (
             "human",
@@ -142,6 +179,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
                 "2D 视觉处理 + 3D 三角测量算落点",
                 "系统误差小于 2 毫米",
             ),
+            _HAWKEYE_DIAGRAM,
         ),
         (
             "today",
@@ -249,7 +287,7 @@ def _slide_html(
     else:
         hero = (
             '<div class="hero diagram"></div>'
-            f'<div class="diagram-wrap">{_HAWKEYE_DIAGRAM}</div>'
+            f'<div class="diagram-wrap">{segment.diagram or _HAWKEYE_DIAGRAM}</div>'
             '<div class="scrim"></div>'
         )
     points_html = (
