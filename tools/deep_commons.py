@@ -26,16 +26,13 @@ PETSCAN = "https://petscan.wmcloud.org/"
 OUT = Path("tools/broll")
 
 # root -> how deep to walk
+# Commons keeps the per-year tournaments under a "... by year" container, not
+# directly under the tournament — which is why three passes walking from
+# "Category:French Open" found nothing recent and were misread as "no photos".
 ROOTS = {
-    # The claim is "as of 2026 only Roland-Garros still keeps human line
-    # judges", so the frame proving it has to be from 2026 — a 2012 photo
-    # invites the obvious "surely they've changed since". Walk this year's
-    # tournament first and deepest.
-    "rg2026": ("Category:2026 French Open", 3),
-    "rg2025": ("Category:2025 French Open", 3),
-    "rg": ("Category:French Open", 2),
-    "us_open": ("Category:US Open (tennis)", 2),
-    "ashe": ("Category:Arthur Ashe Stadium", 2),
+    "rg_year": ("Category:French Open by year", 2),
+    "uso_year": ("Category:US Open (tennis) by year", 2),
+    "ashe": ("Category:Arthur Ashe Stadium", 1),
 }
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
