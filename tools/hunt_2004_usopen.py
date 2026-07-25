@@ -11,6 +11,7 @@ CC-licensed Flickr sweep. It downloads nothing and picks nothing.
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import requests
@@ -40,16 +41,31 @@ FLICKR_QUERIES = [
 
 
 def _api(session: requests.Session, **params):
+    """Query Commons politely.
+
+    The first sweep hammered the API and every search came back 429, which
+    reads exactly like "no such photo exists" — the most dangerous kind of
+    wrong answer here. Space the calls out and back off hard on 429 so an
+    empty result means empty, not throttled.
+    """
     params.setdefault("format", "json")
     params.setdefault("action", "query")
-    for _ in range(3):
+    params.setdefault("maxlag", 5)
+    last = None
+    for attempt in range(6):
         try:
+            time.sleep(0.6)
             r = session.get(API, params=params, timeout=30)
+            if r.status_code == 429:
+                time.sleep(4 * (attempt + 1))
+                last = "429 throttled"
+                continue
             r.raise_for_status()
             return r.json()
         except Exception as exc:  # noqa: BLE001
             last = exc
-    print(f"  !! {last}")
+            time.sleep(2 * (attempt + 1))
+    print(f"  !! gave up: {last}")
     return {}
 
 
@@ -98,7 +114,25 @@ def main() -> None:
     report: dict = {}
     uploaders: set[str] = set()
 
+    # The parent category for a player is often near-empty; the photographs sit
+    # in per-year / per-event subcategories, so walk one level down first.
+    expanded: list[str] = []
     for category in CATEGORIES:
+        expanded.append(category)
+        data = _api(session, list="categorymembers", cmtitle=category,
+                    cmtype="subcat", cmlimit="max")
+        subs = [m["title"] for m in data.get("query", {}).get("categorymembers", [])]
+        interesting = [
+            c for c in subs
+            if any(k in c.lower() for k in ("2003", "2004", "2005", "us open", "usopen"))
+        ]
+        if subs:
+            print(f"\n--- {category}: {len(subs)} subcats, {len(interesting)} relevant")
+            for c in interesting:
+                print(f"      -> {c}")
+        expanded += interesting
+
+    for category in expanded:
         titles, cont = [], {}
         while True:
             data = _api(
