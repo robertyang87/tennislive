@@ -120,7 +120,12 @@ jobs:
           BRANCH="${{ github.ref_name }}"
           MSG="content: 知识解说视频 $(basename "$OUTDIR")"
           git commit -m "$MSG"
-          for attempt in 1 2 3 4 5; do
+          # Backoff has to outlast a whole batch, not one collision. With
+          # five tries three seconds apart, a run regenerating alongside six
+          # siblings burned every attempt in fifteen seconds and gave up
+          # while the others were still pushing. Jitter so the losers of a
+          # collision do not line up and collide again.
+          for attempt in $(seq 1 10); do
             if git push origin "HEAD:$BRANCH"; then
               exit 0
             fi
@@ -131,9 +136,9 @@ jobs:
             git checkout rendered -- "$OUTDIR"
             git add "$OUTDIR"
             git diff --cached --quiet || git commit -m "$MSG"
-            sleep $((attempt * 3))
+            sleep $((attempt * 5 + RANDOM % 10))
           done
-          echo "::error::连续 5 次推送失败，成片仍在 artifact 里"
+          echo "::error::连续 10 次推送失败，成片仍在 artifact 里"
           exit 1
 
       - name: PushPlus 推送到微信
