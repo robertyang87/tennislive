@@ -57,6 +57,9 @@ from .pipeline import AssOverlay, SubtitleCue, VideoPipelineError, render_ass, r
 BEIJING = ZoneInfo("Asia/Shanghai")
 MIN_POINT_SECONDS = 6.0
 MAX_POINT_SECONDS = 120.0
+# An official match-highlights recap runs longer than a single point but is
+# still a tight, publishable vertical clip below three minutes.
+MAX_HIGHLIGHTS_SECONDS = 180.0
 # Resolution is recorded for observability, not used as a hard publish gate.
 MIN_OUTPUT_FPS = 23.0
 # 3:4 portrait, matching the project's card-image canvas so a Hot Shots video
@@ -84,6 +87,11 @@ _OFFICIAL_BEST_RE = re.compile(
     r"\b(?P<kind>point|play|shot|rally)\s+of\s+(?:the\s+)?"
     r"(?P<scope>day|match)\b"
 )
+# ``_clean`` folds a ``#HotShot`` hashtag into a spaceless ``hotshot`` token,
+# so the space between the words must be optional; the plural covers WTA's
+# ``Hot Shots`` phrasing on single-point uploads.
+_HOT_SHOT_RE = re.compile(r"\bhot\s*shots?\b")
+_HIGHLIGHTS_RE = re.compile(r"\bhighlights?\b")
 _NON_POINT_TERMS = (
     "highlights",
     "champions reel",
@@ -97,6 +105,12 @@ _NON_POINT_TERMS = (
     "countdown",
     "season so far",
     "montage",
+)
+# ``highlights`` only disqualifies the explicit single-point tiers; a plain
+# official match-highlights recap is its own, lower category. Everything else
+# (montages, reels, interviews) still disqualifies both categories.
+_NON_HIGHLIGHTS_TERMS = tuple(
+    term for term in _NON_POINT_TERMS if term != "highlights"
 )
 _OFFICIAL_HOSTS = {
     "www.wtatennis.com": "WTA 官方视频",
@@ -142,6 +156,10 @@ class PointSelection:
     consensus_score: int
     consensus_signals: tuple[dict, ...]
     complete_point_evidence: str
+    # ``point`` is an explicit single-point clip (daily/match best or a Hot
+    # Shot); ``highlights`` is an official match recap accepted only when no
+    # explicit point qualifies. Copy and manifests must keep the distinction.
+    category: str = "point"
 
 
 @dataclass(frozen=True)
@@ -328,17 +346,33 @@ def is_explicit_single_point(title: str, description: str = "") -> bool:
     # one auditable point clip.
     if re.search(r"\b\d+\s+shot\s+rally\b", text):
         return False
-    return bool(_OFFICIAL_BEST_RE.search(text) or re.search(r"\bhot\s+shot\b", text))
+    return bool(_OFFICIAL_BEST_RE.search(text) or _HOT_SHOT_RE.search(text))
+
+
+def is_official_highlights(title: str) -> bool:
+    """Accept an official match-highlights recap as its own, lower category.
+
+    The explicit single-point gate stays strict. This secondary category only
+    admits a title that literally says ``highlights`` and none of the montage
+    or non-match terms, so a champions reel, top-10 countdown or interview
+    still fails. The 6-180s duration window is enforced at selection time.
+    """
+    text = _clean(title)
+    if any(term in text for term in _NON_HIGHLIGHTS_TERMS):
+        return False
+    return bool(_HIGHLIGHTS_RE.search(text))
 
 
 def official_best_signal(title: str, description: str = "") -> tuple[int, str] | None:
-    """Return the editorial tier for a point clip.
+    """Return the editorial tier for an official clip.
 
     Tier 3 is an explicit daily-best label, tier 2 is a match-best label, and
-    tier 1 is an official single ``Hot Shot``. The latter is publishable when
-    it clears the same date, match-linkage, duration, and full-source
-    gates, but its manifest is marked as a hot-shot signal rather than a best
-    of day claim.
+    tier 1 is an official single ``Hot Shot``. Each is publishable when it
+    clears the same date, match-linkage, duration, and full-source gates, but
+    the manifest keeps the tier so copy never upgrades a lower signal into a
+    best-of-day claim. Tier 0 is an official match-highlights recap -- not a
+    point clip at all -- accepted only when no explicit point qualifies and
+    always published with neutral highlights wording.
     """
     text = _clean(f"{title} {description}")
     scopes = {match.group("scope") for match in _OFFICIAL_BEST_RE.finditer(text)}
@@ -346,10 +380,12 @@ def official_best_signal(title: str, description: str = "") -> tuple[int, str] |
         return 3, "official-daily-best"
     if "match" in scopes:
         return 2, "official-match-best"
-    if re.search(r"\bhot\s+shot\b", text) and not any(
+    if _HOT_SHOT_RE.search(text) and not any(
         term in text for term in _NON_POINT_TERMS
     ):
         return 1, "official-hot-shot"
+    if is_official_highlights(title):
+        return 0, "official-highlights"
     return None
 
 
@@ -414,6 +450,8 @@ def _consensus_evidence(
             "official-best-designation"
             if consensus_rank > 1
             else "official-hot-shot"
+            if consensus_rank == 1
+            else "official-highlights"
         ),
         "scope": (
             "day"
@@ -421,6 +459,8 @@ def _consensus_evidence(
             else "match"
             if consensus_rank == 2
             else "hot-shot"
+            if consensus_rank == 1
+            else "highlights"
         ),
         "source": source_label,
         "title": metadata.candidate.title,
@@ -428,18 +468,19 @@ def _consensus_evidence(
         "independent": False,
     }
     # Match/news/search heat describes the event or players, not this exact
-    # rally. A formal daily-best label is the strongest signal; Tennis TV / an
-    # official tour's single Hot Shot is a lower, but still publishable, heat
-    # signal. The manifest keeps the distinction so copy never calls it
-    # "全日最佳" by accident.
+    # rally. A formal daily-best label is the strongest signal; a match-best
+    # label and Tennis TV / an official tour's single Hot Shot are lower, but
+    # still publishable, signals; an official highlights recap is the lowest
+    # tier and never claims a best point. The manifest keeps the distinction
+    # so copy never calls a lower tier "全日最佳" by accident.
     if consensus_rank == 3:
         return 100, (official_signal,)
     if consensus_rank == 2:
-        # A match-best label is useful context, but it is not a daily heat
-        # signal on its own. Keep the existing corroboration gate here.
-        return None
+        return 85, (official_signal,)
     if consensus_rank == 1:
         return 72, (official_signal,)
+    if consensus_rank == 0:
+        return 40, (official_signal,)
     return None
 
 
@@ -456,18 +497,28 @@ def select_daily_point(
         )
         if not source_label:
             continue
-        if not is_explicit_single_point(
+        if is_explicit_single_point(
             metadata.candidate.title, metadata.description
         ):
+            category = "point"
+            consensus = official_best_signal(
+                metadata.candidate.title, metadata.description
+            )
+        elif is_official_highlights(metadata.candidate.title):
+            # Official recap fallback: it never outranks an explicit point
+            # (rank 0 sorts below every point tier) and its copy stays neutral.
+            category = "highlights"
+            consensus = (0, "official-highlights")
+        else:
             continue
-        consensus = official_best_signal(
-            metadata.candidate.title, metadata.description
-        )
         if consensus is None:
             continue
         consensus_rank, consensus_basis = consensus
         duration = metadata.duration_ms / 1000
-        if not MIN_POINT_SECONDS <= duration <= MAX_POINT_SECONDS:
+        max_seconds = (
+            MAX_HIGHLIGHTS_SECONDS if category == "highlights" else MAX_POINT_SECONDS
+        )
+        if not MIN_POINT_SECONDS <= duration <= max_seconds:
             continue
         if not _published_near_yesterday(metadata.published_at, digest):
             continue
@@ -518,9 +569,17 @@ def select_daily_point(
                     consensus_score=consensus_score,
                     consensus_signals=consensus_signals,
                     complete_point_evidence=(
-                        "官方标题或说明明确标注当日/全场最佳回合，"
-                        "成片保留源视频从 0 秒到结尾"
+                        (
+                            "官方标题或说明明确标注当日/全场最佳回合，"
+                            "成片保留源视频从 0 秒到结尾"
+                        )
+                        if category == "point"
+                        else (
+                            "官方比赛集锦完整收录，"
+                            "成片保留源视频从 0 秒到结尾"
+                        )
                     ),
+                    category=category,
                 ),
             )
         )
@@ -531,29 +590,31 @@ def select_daily_point(
 def _unique_consensus_pick(
     selections: Iterable[PointSelection],
 ) -> PointSelection | None:
-    """Return one auditable consensus leader; an exact tie is a clean skip."""
-    ordered = sorted(
-        selections,
-        key=lambda item: (
+    """Return one auditable consensus leader, deterministically.
+
+    Rank, consensus score and editorial score decide first. An exact tie used
+    to skip the whole day even though every tied clip was individually
+    publishable; it now falls back to a deterministic tie-break -- newest
+    ``published_at`` first, then the candidate URL's sha1 -- so the same
+    inputs always produce the same single pick, in any iteration order.
+    """
+
+    def _key(item: PointSelection) -> tuple:
+        published = _parse_source_time(item.published_at)
+        timestamp = published.timestamp() if published is not None else float("-inf")
+        url_sha1 = hashlib.sha1(
+            item.metadata.candidate.url.encode("utf-8")
+        ).hexdigest()
+        return (
             item.consensus_rank,
             item.consensus_score,
             item.editorial_score,
-        ),
-        reverse=True,
-    )
-    if not ordered:
-        return None
-    if len(ordered) > 1 and (
-        ordered[0].consensus_rank,
-        ordered[0].consensus_score,
-        ordered[0].editorial_score,
-    ) == (
-        ordered[1].consensus_rank,
-        ordered[1].consensus_score,
-        ordered[1].editorial_score,
-    ):
-        return None
-    return ordered[0]
+            timestamp,
+            url_sha1,
+        )
+
+    ordered = sorted(selections, key=_key, reverse=True)
+    return ordered[0] if ordered else None
 
 
 def discover_wta_point(
@@ -650,9 +711,20 @@ def discover_tennistv_point(
         text = _clean(f"{entry.candidate.title} {entry.description} {entry.city}")
         if entry.year and str(digest.today.year) != entry.year:
             continue
+        # An unknown card city is recorded as unknown: it neither corroborates
+        # the event (an empty string is a substring of everything, which used
+        # to wave every card through) nor vetoes the card -- the event check
+        # and the player hit still decide.
+        entry_city = _clean(entry.city).strip()
         if not any(
             any(_match_player_matches(player, text, [*match.home, *match.away]) for player in [*match.home, *match.away])
-            and (_event_matches(match, text) or _clean(entry.city) in _clean(match.tournament.city or ""))
+            and (
+                _event_matches(match, text)
+                or (
+                    bool(entry_city)
+                    and entry_city in _clean(match.tournament.city or "")
+                )
+            )
             for match in matches
         ):
             continue
@@ -897,7 +969,11 @@ def discover_slam_point(
     )
 
 
-def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection]:
+def discover_official_points_by_tour(
+    digest: Digest,
+    *,
+    diagnostics: dict | None = None,
+) -> dict[str, PointSelection]:
     """Query independent official feeds and keep one consensus pick per tour.
 
     ATP and WTA are published independently: a strong WTA Hot Shot does not
@@ -905,8 +981,34 @@ def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection
     surface either tour, so selections are bucketed by the matched player's
     actual tour, not by source. A tour with no verified clip that day is
     simply absent from the returned mapping.
+
+    ``diagnostics`` (when given) receives a ``resolver_attempts`` list that
+    records every resolver's outcome -- including the exceptions this loop
+    would otherwise swallow -- so a skip run can persist why each source
+    produced nothing instead of leaving that only in expiring CI logs.
     """
     selections: list[PointSelection] = []
+    attempts: list[dict] = []
+
+    def _attempt(name: str, call: Callable[[], PointSelection | None]) -> None:
+        record: dict = {"resolver": name}
+        try:
+            selection = call()
+        except (VideoPipelineError, requests.RequestException, ValueError, TypeError) as exc:
+            record["status"] = "error"
+            record["error"] = f"{type(exc).__name__}: {exc}"
+        else:
+            if selection is None:
+                record["status"] = "empty"
+            else:
+                record["status"] = "candidate"
+                record["tour"] = selection.match.tour.value
+                record["category"] = selection.category
+                record["title"] = selection.metadata.candidate.title
+                record["url"] = selection.metadata.candidate.url
+                selections.append(selection)
+        attempts.append(record)
+
     for resolver in (
         discover_tennistv_point,
         discover_wta_point,
@@ -915,19 +1017,14 @@ def discover_official_points_by_tour(digest: Digest) -> dict[str, PointSelection
         discover_tennistv_youtube_point,
         discover_youtube_search_point,
     ):
-        try:
-            selection = resolver(digest)
-        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
-            continue
-        if selection is not None:
-            selections.append(selection)
+        _attempt(resolver.__name__, lambda resolver=resolver: resolver(digest))
     for tour in _SLAM_EVENT_ALIASES:
-        try:
-            selection = discover_slam_point(digest, tour)
-        except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
-            continue
-        if selection is not None:
-            selections.append(selection)
+        _attempt(
+            f"discover_slam_point:{tour}",
+            lambda tour=tour: discover_slam_point(digest, tour),
+        )
+    if diagnostics is not None:
+        diagnostics["resolver_attempts"] = attempts
     by_tour: dict[str, list[PointSelection]] = {"ATP": [], "WTA": []}
     for selection in selections:
         by_tour[selection.match.tour.value].append(selection)
@@ -991,6 +1088,13 @@ _CAPTION_LINE1_TEMPLATES = (
     "这一分，值得暂停｜{winner} vs {loser}",
     "回放按钮留给这一分｜{winner} vs {loser}",
 )
+# A highlights recap is not one point, so its burned-in caption never claims
+# "这一分" -- it stays on the neutral 官方集锦 register.
+_CAPTION_LINE1_HIGHLIGHTS_TEMPLATES = (
+    "官方集锦，完整回放｜{winner} vs {loser}",
+    "这场值得再看一遍｜{winner} vs {loser}",
+    "官方集锦看这场｜{winner} vs {loser}",
+)
 _CAPTION_LINE2_TEMPLATES = (
     "{tournament} · {round_name}｜赛果 {winner} {score}",
     "{tournament} {round_name}｜全场比分 {winner} {score}",
@@ -1015,7 +1119,12 @@ def _context_text(selection: PointSelection) -> tuple[str, str]:
     round_name = round_zh(match.round_name) or match.round_name or "正赛"
     score = match.score_display(from_winner=True)
     seed = f"{match.match_id}:{selection.published_at}"
-    line1 = _pick_caption_template(_CAPTION_LINE1_TEMPLATES, seed + ":line1").format(
+    line1_templates = (
+        _CAPTION_LINE1_HIGHLIGHTS_TEMPLATES
+        if selection.category == "highlights"
+        else _CAPTION_LINE1_TEMPLATES
+    )
+    line1 = _pick_caption_template(line1_templates, seed + ":line1").format(
         winner=winner, loser=loser
     )
     line2 = _pick_caption_template(_CAPTION_LINE2_TEMPLATES, seed + ":line2").format(
@@ -1152,7 +1261,10 @@ def validate_rendered_point(
     errors: list[str] = []
     source_seconds = selection.metadata.duration_ms / 1000
     if (probe.width, probe.height) != (OUTPUT_WIDTH, OUTPUT_HEIGHT):
-        errors.append(f"画布应为 1080x1920，实际 {probe.width}x{probe.height}")
+        errors.append(
+            f"画布应为 {OUTPUT_WIDTH}x{OUTPUT_HEIGHT}，"
+            f"实际 {probe.width}x{probe.height}"
+        )
     if abs(probe.duration_seconds - source_seconds) > 0.9:
         errors.append(
             f"成片时长 {probe.duration_seconds:.2f}s 未完整保留源片 {source_seconds:.2f}s"
@@ -1186,11 +1298,13 @@ _SHOT_NOUN_PATTERNS: tuple[tuple[str, str], ...] = (
 )
 _WINNER_RE = re.compile(r"\bwinner\b|\bunreturnable\b|\bclean\b", re.IGNORECASE)
 # Short title punches, shot-led ("单手反拍，直接封神"). Kept confident but not
-# clickbait. Only rank 3 may assert the day's best; rank 1 never borrows it.
+# clickbait. Only rank 3 may assert the day's best; lower tiers never borrow
+# it, and the rank-0 highlights recap only ever uses the neutral 官方集锦 register.
 _TITLE_PUNCH = {
     3: ("今日最佳", "当日最佳一拍", "今日封神"),
     2: ("封神一分", "全场最佳", "封神了"),
     1: ("直接封神", "一拍封神", "太顶了"),
+    0: ("官方集锦高光", "官方集锦收录"),
 }
 # When the official text names no shot, the title falls back to a short tiered
 # line (still varied per clip).
@@ -1198,15 +1312,18 @@ _TITLE_FALLBACK = {
     3: ("今日最佳名场面", "当日最佳这一拍"),
     2: ("全场最佳一分", "封神一分"),
     1: ("神仙球名场面", "神仙球预警"),
+    0: ("官方集锦回顾", "官方集锦精选"),
 }
 # Lead-ins vary the body hook's punch per clip without touching the grounded fact.
 _COPY_LEADINS = ("全场高能：", "名场面：", "划重点：", "这一下必看：", "高光时刻：")
 # Body-hook fallback when the official text says nothing concrete (still varied
-# per clip). Only rank 3 may claim the day's best; rank 1 uses 「神仙球」.
+# per clip). Only rank 3 may claim the day's best; rank 1 uses 「神仙球」 and the
+# rank-0 highlights recap stays on 官方集锦 without any best-point claim.
 _COPY_FALLBACK_HOOKS = {
     3: ("官方选出的当日最佳就是这一分", "一整天的好球里，最佳落在这一分", "当日最佳，说的就是它"),
     2: ("全场最值得回放的就是这一分", "这一分是整场比赛的高光", "一场打下来最想重看这一分"),
     1: ("这一拍被官方剪成了神仙球", "标准神仙球，官方单独收录", "官方给这一拍单开了特写"),
+    0: ("官方集锦收录了这场的高光", "这场的官方集锦值得完整看一遍", "官方把这场的高光剪成了集锦"),
 }
 _COPY_TAGS = "#网球 #网球名场面 #精彩回合 #网球时差"
 # Column label shown in the title, parallel to 今日球局 / 网球有故事 on the other
@@ -1266,7 +1383,14 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     )
     rank = selection.consensus_rank
     seed = f"{selection.match.match_id}:{selection.published_at}"
-    shot = _official_shot_noun(selection.metadata)
+    # A shot noun in a highlights recap's text describes one moment of many,
+    # not the whole clip, so the highlights category never leads with a shot
+    # claim -- its copy stays on the neutral 官方集锦 register.
+    shot = (
+        _official_shot_noun(selection.metadata)
+        if selection.category == "point"
+        else None
+    )
     if shot:
         punch = _pick_caption_template(_TITLE_PUNCH[rank], seed + ":punch")
         highlight = f"{shot}，{punch}"
@@ -1292,11 +1416,15 @@ def point_xiaohongshu_copy(selection: PointSelection, published_for: date) -> st
     return copy
 
 
-def point_push_html(digest: Digest, copy: str, *, tour_dir: str = "") -> str:
+def point_push_html(
+    digest: Digest, copy: str, *, tour_dir: str = "", category: str = "point"
+) -> str:
     """Build a phone-friendly PushPlus package without public source credits.
 
     ``tour_dir`` is the ``atp``/``wta`` subfolder a per-tour package renders
-    into; empty keeps the legacy single-package layout.
+    into; empty keeps the legacy single-package layout. ``category`` keeps the
+    kicker honest: a highlights recap is announced as 官方集锦, never as one
+    replay-worthy point.
     """
     lines = copy.strip().splitlines()
     title = lines[0].strip() if lines else "昨日好球"
@@ -1313,11 +1441,12 @@ def point_push_html(digest: Digest, copy: str, *, tour_dir: str = "") -> str:
         "TENNISLIVE_PAGES_URL", f"https://{owner}.github.io/{repo_name}"
     ).rstrip("/")
     copy_url = f"{pages_root}/output/{digest.today.isoformat()}/{subpath}/copy.html"
+    kicker = "官方集锦，完整回放" if category == "highlights" else "这一分，值得回放"
     return (
         '<div style="background:#f6f7f4;color:#17251f;padding:12px 10px;">'
         '<div style="max-width:680px;margin:0 auto;background:#fff;border-top:5px solid #ff2442;'
         'padding:18px 16px 22px;">'
-        '<div style="font-size:12px;font-weight:700;color:#087747;">这一分，值得回放</div>'
+        f'<div style="font-size:12px;font-weight:700;color:#087747;">{kicker}</div>'
         f'<div style="font-size:22px;line-height:1.4;font-weight:800;margin:8px 0 14px;">'
         f'{html.escape(title)}</div>'
         f'<a href="{html.escape(video_url, quote=True)}" style="display:block;background:#102d23;'
@@ -1446,17 +1575,25 @@ def _generate_tour_point(
 
     (tour_dir / "copy.html").write_text(to_copy_page(copy), encoding="utf-8")
     (tour_dir / "push.html").write_text(
-        point_push_html(digest, copy, tour_dir=tour.lower()), encoding="utf-8"
+        point_push_html(
+            digest, copy, tour_dir=tour.lower(), category=selection.category
+        ),
+        encoding="utf-8",
     )
     # Record exactly what the copy grounded on, so a shot claim ("单手反拍") is
     # auditable against the raw official text rather than taken on trust.
-    copy_shot = _official_shot_noun(selection.metadata)
+    copy_shot = (
+        _official_shot_noun(selection.metadata)
+        if selection.category == "point"
+        else None
+    )
     copy_match = None if copy_shot else _official_match_hook(selection.metadata)
     manifest = {
         "status": "pass",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "project": "yesterday-point",
         "tour": tour,
+        "category": selection.category,
         "published_for": digest.today.isoformat(),
         "match_date": digest.yesterday.isoformat(),
         "source": asdict(selection.metadata.candidate),
@@ -1502,6 +1639,8 @@ def _generate_tour_point(
                 else "官方全场最佳标签"
                 if selection.consensus_rank == 2
                 else "官方 Hot Shots 单分视频；热度信号优先于‘最佳’断言"
+                if selection.consensus_rank == 1
+                else "官方比赛集锦；中性措辞，不作单分最佳断言"
             ),
         },
         "complete_rally": {
@@ -1536,6 +1675,7 @@ def generate_yesterday_point(
     output_dir: Path,
     *,
     skip_tours: frozenset[str] = frozenset(),
+    diagnostics: dict | None = None,
 ) -> dict[str, Path]:
     """GitHub Actions entry point.
 
@@ -1547,13 +1687,25 @@ def generate_yesterday_point(
     redoing (or re-pushing) a tour that already succeeded -- the point of
     the retry cadence is to keep trying only the tour that is still
     missing, since official channels don't all upload at the same time.
+
+    ``diagnostics`` (when given) records whether the feature switch was on
+    (``enabled``) and each resolver's outcome (``resolver_attempts``), so a
+    skip manifest can state the true reason -- "开关未开启" is not the same
+    story as "queried every source and found nothing".
     """
-    if os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() != "on":
+    if diagnostics is None:
+        diagnostics = {}
+    enabled = (
+        os.environ.get("TENNISLIVE_YESTERDAY_POINT", "off").casefold() == "on"
+    )
+    diagnostics["enabled"] = enabled
+    if not enabled:
         return {}
     output_dir = Path(output_dir).resolve()
     if skip_tours >= {"ATP", "WTA"}:
+        diagnostics["resolver_attempts"] = []
         return {}
-    picks = discover_official_points_by_tour(digest)
+    picks = discover_official_points_by_tour(digest, diagnostics=diagnostics)
     outputs: dict[str, Path] = {}
     for tour, selection in picks.items():
         if tour in skip_tours:

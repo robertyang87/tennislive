@@ -11,12 +11,15 @@ from tennislive.video.daily_point import (
     VideoProbe,
     build_point_ffmpeg_command,
     discover_atp_point,
+    discover_official_points_by_tour,
     discover_slam_point,
+    discover_tennistv_point,
     discover_tennistv_youtube_point,
     discover_wta_point,
     discover_youtube_search_point,
     generate_yesterday_point,
     is_explicit_single_point,
+    is_official_highlights,
     point_xiaohongshu_copy,
     point_push_html,
     official_best_signal,
@@ -27,7 +30,11 @@ from tennislive.video.daily_point import (
     yesterday_matches,
 )
 from tennislive.video import daily_point as daily_point_module
-from tennislive.video.official import OfficialVideoCandidate, OfficialVideoMetadata
+from tennislive.video.official import (
+    OfficialVideoCandidate,
+    OfficialVideoMetadata,
+    TennisTVHotShotEntry,
+)
 from tennislive.video.official import ATP_YOUTUBE_CHANNEL_ID, TENNISTV_YOUTUBE_CHANNEL_ID
 from tennislive.video.pipeline import VideoPipelineError
 
@@ -93,6 +100,35 @@ def test_single_point_gate_rejects_highlight_montages_and_interviews():
     assert not is_explicit_single_point("Post-match interview")
 
 
+def test_hot_shot_gate_matches_hashtag_and_plural_spellings():
+    # WTA tags shorts with #HotShot; _clean folds the hashtag into a
+    # spaceless token, which the old \bhot\s+shot\b regex could never match.
+    assert is_explicit_single_point("#HotShot: Zheng Qinwen flying forehand")
+    assert is_explicit_single_point("Hot Shots: Zheng Qinwen at the net")
+    assert is_explicit_single_point("hotshot: Zheng Qinwen lob")
+    assert official_best_signal("#HotShot: Zheng Qinwen flying forehand") == (
+        1,
+        "official-hot-shot",
+    )
+    assert official_best_signal("Hot Shots: Zheng Qinwen at the net") == (
+        1,
+        "official-hot-shot",
+    )
+    assert official_best_signal("hotshot: Zheng Qinwen lob") == (
+        1,
+        "official-hot-shot",
+    )
+
+
+def test_highlights_gate_accepts_recaps_but_not_montages():
+    assert is_official_highlights("Match Highlights: Zheng vs Sabalenka")
+    assert is_official_highlights("Zheng v Sabalenka | Highlight | Wimbledon")
+    assert not is_official_highlights("Top 10 highlights of the season")
+    assert not is_official_highlights("Champions Reel highlights")
+    assert not is_official_highlights("Post-match interview")
+    assert not is_official_highlights("Hot Shot: Zheng Qinwen forehand")
+
+
 def test_consensus_gate_ranks_daily_match_and_hot_shot_labels():
     assert official_best_signal("Point of the day: Zheng Qinwen") == (
         3,
@@ -109,6 +145,10 @@ def test_consensus_gate_ranks_daily_match_and_hot_shot_labels():
     assert official_best_signal("Hot Shot: Zheng Qinwen forehand") == (
         1,
         "official-hot-shot",
+    )
+    assert official_best_signal("Match Highlights: Zheng vs Sabalenka") == (
+        0,
+        "official-highlights",
     )
     assert official_best_signal("Best point: Zheng Qinwen forehand") is None
 
@@ -158,38 +198,104 @@ def test_selection_accepts_official_hot_shot_without_best_designation(sample_dig
     assert selected is not None
     assert selected.consensus_basis == "official-hot-shot"
     assert selected.consensus_rank == 1
+    assert selected.category == "point"
 
 
-def test_match_best_is_not_publishable_without_clip_specific_corroboration(
-    sample_digest,
-):
+def _highlights_metadata(duration_ms=150_000):
+    return _metadata(
+        title="Match Highlights: Zheng Qinwen vs Aryna Sabalenka | Wimbledon",
+        description="Zheng Qinwen beats Aryna Sabalenka in the Wimbledon semifinals.",
+        duration_ms=duration_ms,
+    )
+
+
+def test_official_highlights_recap_is_accepted_as_lower_category(sample_digest):
+    selection = select_daily_point(sample_digest, [_highlights_metadata()])
+
+    assert selection is not None
+    assert selection.category == "highlights"
+    assert selection.consensus_rank == 0
+    assert selection.consensus_basis == "official-highlights"
+    assert selection.consensus_score == 40
+    assert selection.consensus_signals[0]["kind"] == "official-highlights"
+    assert selection.consensus_signals[0]["scope"] == "highlights"
+    assert "官方比赛集锦" in selection.complete_point_evidence
+    assert "0 秒到结尾" in selection.complete_point_evidence
+
+
+def test_highlights_duration_window_is_wider_but_still_bounded(sample_digest):
+    # A recap may run up to 180s while a single point stays capped at 120s.
+    assert select_daily_point(sample_digest, [_highlights_metadata(181_000)]) is None
+    assert select_daily_point(sample_digest, [_metadata(duration_ms=150_000)]) is None
+    assert (
+        select_daily_point(sample_digest, [_highlights_metadata(150_000)]) is not None
+    )
+
+
+def test_explicit_point_always_outranks_a_highlights_recap(sample_digest):
+    selection = select_daily_point(
+        sample_digest, [_highlights_metadata(90_000), _metadata()]
+    )
+
+    assert selection is not None
+    assert selection.category == "point"
+    assert selection.consensus_rank == 3
+
+
+def test_highlights_copy_caption_and_push_use_neutral_wording(sample_digest):
+    selection = select_daily_point(sample_digest, [_highlights_metadata()])
+    assert selection is not None
+
+    copy = point_xiaohongshu_copy(selection, date(2026, 7, 16))
+    title, _body = copy.split("\n\n")
+    assert title.startswith("🎾7.16 昨日好球｜")
+    assert "官方集锦" in title
+    for banned in ("最佳", "封神", "这一分", "神仙球"):
+        assert banned not in copy
+    validate_point_copy(copy)
+
+    line1, _line2 = daily_point_module._context_text(selection)
+    assert "这一分" not in line1
+
+    push = point_push_html(sample_digest, copy, category="highlights")
+    assert "官方集锦，完整回放" in push
+    assert "这一分，值得回放" not in push
+
+
+def test_match_best_label_is_publishable_with_its_own_evidence(sample_digest):
+    # rank-2 (Point/Rally of the Match) used to be permanently excluded by a
+    # double gate (code + workflow jq) even though it is an official editorial
+    # designation; it now publishes with its corroborating fields kept.
     match_best = _metadata(
         title="Rally of the match: Qinwen Zheng vs Aryna Sabalenka",
         description="Official rally of the match.",
     )
 
-    assert select_daily_point(sample_digest, [match_best]) is None
+    selection = select_daily_point(sample_digest, [match_best])
 
-    supported_match = replace(
-        sample_digest.results[1],
-        media_heat=14,
-        trend_signals=[
-            {
-                "kind": "official-news",
-                "source": "Reuters",
-                "title": "Zheng and Sabalenka light up the semifinal",
-                "url": "https://reuters.example/tennis/zheng-sabalenka",
-                "published_at": "2026-07-15T16:00:00+00:00",
-            }
-        ],
+    assert selection is not None
+    assert selection.consensus_rank == 2
+    assert selection.consensus_basis == "official-match-best"
+    assert selection.consensus_score == 85
+    assert selection.consensus_signals[0]["kind"] == "official-best-designation"
+    assert selection.consensus_signals[0]["scope"] == "match"
+
+
+def test_daily_best_still_outranks_match_best_and_hot_shot(sample_digest):
+    daily = _metadata()
+    match_best = _metadata(
+        title="Rally of the match: Qinwen Zheng vs Aryna Sabalenka",
+        description="Official rally of the match.",
     )
-    supported_digest = replace(
-        sample_digest,
-        results=[sample_digest.results[0], supported_match],
+    hot_shot = _metadata(
+        title="Hot Shot: Qinwen Zheng forehand at Wimbledon",
+        description="Qinwen Zheng against Aryna Sabalenka.",
     )
 
-    # General match/player coverage is not evidence about this exact rally.
-    assert select_daily_point(supported_digest, [match_best]) is None
+    selection = select_daily_point(sample_digest, [hot_shot, match_best, daily])
+
+    assert selection is not None
+    assert selection.consensus_rank == 3
 
 
 def test_selection_accepts_verified_atp_official_channel_candidate(sample_digest):
@@ -355,6 +461,73 @@ def test_tennistv_youtube_discovery_uses_its_own_verified_channel_feed(sample_di
     assert selection.metadata.candidate.url.endswith("xyz789")
 
 
+def _hot_shot_entry(title, *, url, city=""):
+    return TennisTVHotShotEntry(
+        candidate=OfficialVideoCandidate(title, url, tour="ATP"),
+        video_id="v1",
+        entry_id="e1",
+        description="",
+        thumbnail_url="",
+        published_at="2026-07-15T14:00:00Z",
+        duration_ms=20_000,
+        city=city,
+        year="",
+        round_name="",
+        series="",
+        match_type="",
+        entitlement="",
+        references=(),
+    )
+
+
+def test_tennistv_unknown_city_does_not_bypass_the_event_check(
+    sample_digest, monkeypatch
+):
+    # An empty card city used to corroborate every match ("" is a substring
+    # of everything); an unknown city must stay neutral -- the event check
+    # and the player hit still decide.
+    no_event = _hot_shot_entry(
+        "Hot Shot: Jannik Sinner stuns Novak Djokovic",
+        url="https://www.tennistv.com/videos/hot-shot-1",
+    )
+    with_event = _hot_shot_entry(
+        "Hot Shot: Jannik Sinner stuns Novak Djokovic at Wimbledon",
+        url="https://www.tennistv.com/videos/hot-shot-2",
+    )
+    monkeypatch.setattr(
+        daily_point_module,
+        "parse_tennistv_hot_shot_api_entries",
+        lambda _payload: [no_event, with_event],
+    )
+
+    class _ApiResponse:
+        def raise_for_status(self):
+            return None
+
+        def json(self):
+            return {}
+
+    fetched = []
+
+    def fetcher(candidate, **kwargs):
+        fetched.append(candidate.title)
+        return replace(
+            _metadata(),
+            candidate=candidate,
+            description="Jannik Sinner against Novak Djokovic at Wimbledon.",
+        )
+
+    selection = discover_tennistv_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _ApiResponse(),
+        metadata_fetcher=fetcher,
+    )
+
+    assert fetched == ["Hot Shot: Jannik Sinner stuns Novak Djokovic at Wimbledon"]
+    assert selection is not None
+    assert selection.match.match_id == "m1"
+
+
 def test_grand_slam_discovery_requires_current_event_and_match_context(sample_digest):
     from tennislive.video.official import OFFICIAL_YOUTUBE_CHANNEL_IDS
 
@@ -407,24 +580,38 @@ def test_selection_accepts_portrait_hd_official_source(sample_digest):
     assert selection is not None
 
 
-def test_equal_consensus_leaders_are_skipped_instead_of_guessed(sample_digest):
-    wta = _metadata(
-        title="Point of the day: Qinwen Zheng",
-        description="Official point of the day.",
-    )
-    atp = replace(
-        _metadata(
-            title="Point of the day: Jannik Sinner",
-            description="Official point of the day.",
-        ),
-        candidate=OfficialVideoCandidate(
-            "Point of the day: Jannik Sinner",
-            "https://www.youtube.com/watch?v=verified-atp",
-            tour="ATP",
+def test_equal_consensus_leaders_resolve_to_one_deterministic_pick(sample_digest):
+    # A full tie used to skip the whole day even though both clips were
+    # individually publishable; it now resolves deterministically
+    # (published_at desc, then candidate-URL sha1) in any input order.
+    base = _metadata()
+    mirror = replace(
+        base,
+        candidate=replace(
+            base.candidate,
+            url="https://www.wtatennis.com/videos/456/point-of-the-day-zheng",
         ),
     )
 
-    assert select_daily_point(sample_digest, [wta, atp]) is None
+    first = select_daily_point(sample_digest, [base, mirror])
+    second = select_daily_point(sample_digest, [mirror, base])
+
+    assert first is not None
+    assert first == second
+    assert first.metadata.candidate.url in {
+        base.candidate.url,
+        mirror.candidate.url,
+    }
+
+
+def test_tie_break_prefers_the_newest_published_clip(sample_digest):
+    older = _metadata(published_at="2026-07-15T10:00:00Z")
+    newer = _metadata(published_at="2026-07-15T18:00:00Z")
+
+    selection = select_daily_point(sample_digest, [older, newer])
+
+    assert selection is not None
+    assert selection.published_at == "2026-07-15T18:00:00Z"
 
 
 def test_ffmpeg_keeps_full_16_by_9_foreground_without_tracking_crop(
@@ -511,6 +698,18 @@ def test_quality_gate_rejects_truncated_or_low_frame_rate(sample_digest):
     with pytest.raises(VideoPipelineError, match="帧率过低"):
         validate_rendered_point(
             selection, VideoProbe(1080, 1440, 28.0, 20.0, "h264", 300_000)
+        )
+
+
+def test_quality_gate_canvas_error_reports_the_real_output_constants(sample_digest):
+    # The message must quote OUTPUT_WIDTH x OUTPUT_HEIGHT (1080x1440), not a
+    # stale hard-coded 1080x1920.
+    selection = _selection(sample_digest)
+    expected = f"{daily_point_module.OUTPUT_WIDTH}x{daily_point_module.OUTPUT_HEIGHT}"
+
+    with pytest.raises(VideoPipelineError, match=expected):
+        validate_rendered_point(
+            selection, VideoProbe(1080, 1920, 28.0, 30.0, "h264", 300_000)
         )
 
 
@@ -643,7 +842,7 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": selection},
+        lambda _digest, **_kwargs: {"WTA": selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -665,6 +864,7 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     tour_dir = tmp_path / "wta"
     manifest = json.loads((tour_dir / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["source"]["url"].startswith("https://www.wtatennis.com/")
+    assert manifest["category"] == "point"
     assert manifest["consensus"]["score"] >= 100
     assert manifest["consensus"]["signals"][0]["kind"] == "official-best-designation"
     # The copy's grounding is recorded so any shot claim is auditable against
@@ -696,7 +896,7 @@ def test_manifest_records_shot_grounding_for_audit(sample_digest, tmp_path, monk
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": selection},
+        lambda _digest, **_kwargs: {"WTA": selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -719,6 +919,102 @@ def test_manifest_records_shot_grounding_for_audit(sample_digest, tmp_path, monk
     assert "one-handed backhand" in manifest["source_description"].lower()
 
 
+def test_highlights_package_manifest_marks_category_and_neutral_push(
+    sample_digest, tmp_path, monkeypatch
+):
+    selection = select_daily_point(sample_digest, [_highlights_metadata()])
+    assert selection is not None
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        lambda _digest, **_kwargs: {"WTA": selection},
+    )
+
+    def fake_render(_selection, output_dir):
+        output = output_dir / "yesterday-point.mp4"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"video")
+        (output_dir / "yesterday-point.zh-CN.srt").write_text("x", encoding="utf-8")
+        return output
+
+    monkeypatch.setattr("tennislive.video.daily_point.render_daily_point", fake_render)
+
+    generate_yesterday_point(sample_digest, tmp_path)
+
+    tour_dir = tmp_path / "wta"
+    manifest = json.loads((tour_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["category"] == "highlights"
+    assert manifest["consensus"]["rank"] == 0
+    assert manifest["consensus"]["score"] == 40
+    assert manifest["consensus"]["basis"] == "official-highlights"
+    assert manifest["consensus"]["signals"][0]["kind"] == "official-highlights"
+    assert "官方比赛集锦" in manifest["consensus"]["evidence"]
+    # A recap never grounds copy in one shot claim.
+    assert manifest["copy_grounding"]["basis"] in {"official-match", "fallback"}
+    assert manifest["copy_grounding"]["shot"] == ""
+    push_html = (tour_dir / "push.html").read_text(encoding="utf-8")
+    assert "官方集锦，完整回放" in push_html
+    assert "这一分，值得回放" not in push_html
+    xiaohongshu = (tour_dir / "xiaohongshu.txt").read_text(encoding="utf-8")
+    assert "官方集锦" in xiaohongshu
+    assert "最佳" not in xiaohongshu
+
+
+def test_discovery_records_per_resolver_attempts_and_failures(
+    sample_digest, monkeypatch
+):
+    # The resolver loop keeps swallowing exceptions so one broken feed cannot
+    # sink the others, but each swallowed failure must land in diagnostics so
+    # a skip run can persist why every source produced nothing.
+    def broken(_digest, **_kwargs):
+        raise VideoPipelineError("hub down")
+
+    for name in (
+        "discover_tennistv_point",
+        "discover_wta_point",
+        "discover_wta_youtube_point",
+        "discover_atp_point",
+        "discover_tennistv_youtube_point",
+        "discover_youtube_search_point",
+    ):
+        monkeypatch.setattr(daily_point_module, name, broken)
+    monkeypatch.setattr(
+        daily_point_module, "discover_slam_point", lambda _digest, _tour: None
+    )
+
+    diagnostics = {}
+    picks = discover_official_points_by_tour(sample_digest, diagnostics=diagnostics)
+
+    assert picks == {}
+    attempts = diagnostics["resolver_attempts"]
+    assert len(attempts) == 10
+    errors = [item for item in attempts if item["status"] == "error"]
+    assert len(errors) == 6
+    assert all("hub down" in item["error"] for item in errors)
+    empty = [item for item in attempts if item["status"] == "empty"]
+    assert {item["resolver"] for item in empty} == {
+        "discover_slam_point:AO",
+        "discover_slam_point:RG",
+        "discover_slam_point:WIMBLEDON",
+        "discover_slam_point:USOPEN",
+    }
+
+
+def test_generate_records_switch_state_for_honest_skip_reason(
+    sample_digest, tmp_path, monkeypatch
+):
+    monkeypatch.delenv("TENNISLIVE_YESTERDAY_POINT", raising=False)
+    diagnostics = {}
+
+    outputs = generate_yesterday_point(
+        sample_digest, tmp_path, diagnostics=diagnostics
+    )
+
+    assert outputs == {}
+    assert diagnostics["enabled"] is False
+    assert "resolver_attempts" not in diagnostics
+
+
 def test_generate_publishes_atp_and_wta_independently(sample_digest, monkeypatch, tmp_path):
     wta_selection = _selection(sample_digest)
     atp_selection = replace(
@@ -728,7 +1024,7 @@ def test_generate_publishes_atp_and_wta_independently(sample_digest, monkeypatch
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+        lambda _digest, **_kwargs: {"ATP": atp_selection, "WTA": wta_selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -761,7 +1057,7 @@ def test_generate_skips_only_the_tour_with_no_qualifying_clip(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": wta_selection},
+        lambda _digest, **_kwargs: {"WTA": wta_selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -789,7 +1085,7 @@ def test_generate_does_not_redo_a_tour_already_marked_done(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+        lambda _digest, **_kwargs: {"ATP": atp_selection, "WTA": wta_selection},
     )
     rendered = []
 
@@ -817,7 +1113,7 @@ def test_generate_skips_discovery_when_every_tour_already_done(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: (_ for _ in ()).throw(
+        lambda _digest, **_kwargs: (_ for _ in ()).throw(
             AssertionError("should not query sources when both tours are already done")
         ),
     )

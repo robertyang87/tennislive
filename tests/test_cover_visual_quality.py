@@ -1123,6 +1123,209 @@ def test_cover_report_records_why_each_image_source_came_back_empty(
     assert report["editorial_source_urls"] == 0
 
 
+def test_google_news_article_link_decodes_to_publisher_url_offline():
+    """news.google.com/rss/articles/<id> 已改为 JS 中转页，302 拿不到出版方地址。
+
+    <id> 是 base64url 的 protobuf：旧式 ID 直接内嵌目标 URL，无需完整解析，
+    取出其中的 https 子串即可；新式 ID 的载荷是 AU_yqL 前缀的内部 token，
+    本地解不出时返回空串，交给调用方回退官方新闻列表页。
+    """
+    from tennislive.research.visual_sources import _decode_google_news_article_url
+
+    # 旧式 ID 离线样例（真实编码格式：\x08\x13\x22 + varint 长度 + URL）
+    decodable = (
+        "https://news.google.com/rss/articles/"
+        "CBMiWGh0dHBzOi8vd3d3Lnd0YXRlbm5pcy5jb20vbmV3cy80MzQxMjY4L3NoZXJpZi1zdG9y"
+        "bXMtcGFzdC13YWx0ZXJ0LXRvLXJlYWNoLWhhbWJ1cmctZmluYWzSAQA?oc=5"
+    )
+    assert _decode_google_news_article_url(decodable) == (
+        "https://www.wtatennis.com/news/4341268/"
+        "sherif-storms-past-waltert-to-reach-hamburg-final"
+    )
+
+    # 新式 ID（2026-07-25 真实 RSS 抓取样例）：载荷是 AU_yqL 内部 token，
+    # 本地无法还原目标地址，必须返回空串触发回退。
+    undecodable = (
+        "https://news.google.com/rss/articles/"
+        "CBMitwFBVV95cUxPaVhfY3hWNk1UTUlXZ3pCV0lnUmNiSTR0am9ZVTJjM1VaenVBMHdBczQx"
+        "MHpKOGtUWWNIaENmeDZvWm00d01kQ2JoeE9ULTFPSlFTejFVZGJXQ3Y0VlktZ2JZYW5icDd1"
+        "ODZaQ1B3Um5hSEswVVNXaE5RR1M5a3RVUTRVN2oxa2dEejdJRWNQQm9LYVNDN3NVeXZkNWR5"
+        "TXAxVC1pclRfYzNSU3BpM2wzbmFxY2Nuazg?oc=5"
+    )
+    assert _decode_google_news_article_url(undecodable) == ""
+    # 非 Google News 域名不做解码
+    assert _decode_google_news_article_url("https://www.wtatennis.com/news/1/x") == ""
+
+
+def test_official_recap_falls_back_to_wta_news_listing_when_decode_fails(monkeypatch):
+    """Google News 全是解不出的 JS 中转链接时，直抓官方列表页按姓氏匹配。
+
+    同时覆盖 hostname 为 None 的畸形链接（旧代码 ``in ... or ""`` 括号优先级
+    错误会在这里 TypeError 崩溃）。
+    """
+    from tennislive.models import Tour
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Simona Waltert",
+        away_name="Mayar Sherif",
+        tournament="Hamburg Open",
+        tour=Tour.WTA,
+    )
+    undecodable = (
+        "https://news.google.com/rss/articles/"
+        "CBMitwFBVV95cUxPaVhfY3hWNk1UTUlXZ3pCV0lnUmNiSTR0am9ZVTJjM1VaenVBMHdBczQx"
+        "MHpKOGtUWWNIaENmeDZvWm00d01kQ2JoeE9ULTFPSlFTejFVZGJXQ3Y0VlktZ2JZYW5icDd1"
+        "ODZaQ1B3Um5hSEswVVNXaE5RR1M5a3RVUTRVN2oxa2dEejdJRWNQQm9LYVNDN3NVeXZkNWR5"
+        "TXAxVC1pclRfYzNSU3BpM2wzbmFxY2Nuazg?oc=5"
+    )
+    rss = (
+        '<?xml version="1.0"?><rss><channel>'
+        f"<item><link>{undecodable}</link></item>"
+        "<item><link>https:///articles/broken-host</link></item>"
+        "</channel></rss>"
+    ).encode()
+    listing = (
+        '<a href="/news/4341268/sherif-storms-past-waltert-to-reach-hamburg-final">'
+        "Read</a>"
+        '<a href="/news/9999999/unrelated-players-report">Read</a>'
+    )
+    fetched: list[str] = []
+
+    class _Session:
+        def get(self, url, **_kwargs):
+            fetched.append(url)
+            if "news.google.com" in url:
+                return SimpleNamespace(
+                    content=rss, url=url, text="", raise_for_status=lambda: None
+                )
+            assert url == "https://www.wtatennis.com/news"
+            return SimpleNamespace(
+                content=b"", url=url, text=listing, raise_for_status=lambda: None
+            )
+
+    expanded_for: list[str] = []
+
+    def fake_expand(_match, candidate, _session):
+        expanded_for.append(candidate["source_url"])
+        return {
+            **candidate,
+            "image_url": "https://photoresources.wtatennis.com/wta/photo/x.jpg",
+        }
+
+    monkeypatch.setattr(
+        visual_sources, "_expand_official_source_candidate", fake_expand
+    )
+
+    found = visual_sources._official_recap_candidates(match, _Session())
+
+    assert expanded_for == [
+        "https://www.wtatennis.com/news/4341268/"
+        "sherif-storms-past-waltert-to-reach-hamburg-final"
+    ]
+    assert len(found) == 1
+    assert found[0]["provider"] == "official-recap-search"
+    assert "https://www.wtatennis.com/news" in fetched
+
+
+def test_recap_search_runs_immediately_when_candidate_pool_is_empty(
+    monkeypatch, tmp_path
+):
+    """候选池为空就立即启用 recap 检索，不再等台账攒满 barren 阈值。
+
+    2026-07-25 实测：明知全部图库 0 候选，仍因台账只有 1 期记录而跳过 recap，
+    封面落到品牌底图。
+    """
+    from tennislive.research import cover_registry, visual_sources
+
+    match = make_match(
+        home_name="Luca Van Assche",
+        away_name="Andrey Rublev",
+        tournament="Estoril Open",
+    )
+    # 有已关联官方链接、台账也不认为图库枯竭——旧逻辑下 recap 不会启动
+    match.editorial_url = "https://www.atptour.com/en/news/estoril-preview"
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(
+        cover_registry, "should_widen_search", lambda *_args, **_kwargs: False
+    )
+    monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_a: [])
+    recap_calls: list[int] = []
+
+    def tracked_recap(*_args):
+        recap_calls.append(1)
+        return []
+
+    monkeypatch.setattr(visual_sources, "_official_recap_candidates", tracked_recap)
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert visual is None
+    assert recap_calls == [1]
+    assert report["official_recap_candidates"] == 0
+    assert report["widened_by_registry"] is False
+    assert report["editorial_source_urls"] == 1
+
+
+def test_official_tour_media_1280x720_passes_resolution_profile():
+    """WTA/photoresources 与大满贯官方 1280x720 头图不再被 900x1200 底线枪毙。"""
+    from tennislive.research.visual_sources import (
+        _apply_official_maxres_resolution_profile,
+    )
+
+    candidate = {
+        "provider": "official-match-media",
+        "source_url": "https://www.wtatennis.com/news/1/sherif-recap",
+        "image_url": (
+            "https://photoresources.wtatennis.com/wta/photo/2026/07/25/x.jpg"
+            "?width=2000"
+        ),
+    }
+    audit = {
+        "status": "fail",
+        "width": 1280,
+        "height": 720,
+        "hard_failures": ["resolution-below-900x1200"],
+    }
+
+    adjusted = _apply_official_maxres_resolution_profile(candidate, dict(audit))
+
+    assert adjusted["resolution_profile"] == "official-tour-media-1280x720"
+    assert adjusted["hard_failures"] == []
+    assert adjusted["status"] == "pass"
+
+    # 非官方域名不享受豁免
+    generic = {
+        "provider": "bing-web-image",
+        "source_url": "https://example.com/photo",
+        "image_url": "https://cdn.example.com/photo.jpg",
+    }
+    untouched = dict(audit)
+    assert (
+        _apply_official_maxres_resolution_profile(generic, untouched) is untouched
+    )
+
+
+def test_cover_visual_minimum_score_default_aligned_with_reality(
+    monkeypatch, tmp_path
+):
+    """名义门槛 72 与实际入选分数 65~71 脱节：默认值对齐现实取 65。"""
+    from tennislive.research import visual_sources
+
+    monkeypatch.delenv("TENNISLIVE_COVER_VISUAL_MIN_SCORE", raising=False)
+    monkeypatch.delenv("TENNISLIVE_COVER_VISUAL_FETCH", raising=False)
+
+    _visual, report = visual_sources.resolve_match_cover_visual(
+        make_match(), tmp_path
+    )
+
+    assert report["minimum_score"] == 65
+
+
 def test_official_recap_search_supplies_a_real_match_photo(monkeypatch, tmp_path):
     """图库覆盖不到的场次，去巡回赛官方的赛后报道里取当场照片.
 

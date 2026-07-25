@@ -90,3 +90,42 @@ jobs:
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish content --manifest .content-publish.json
+
+      - name: 空产摘要（运行成功但没有新内容时写明原因）
+        # 空产不是失败，但也不能静默：把"为什么没有产出"留在运行摘要里，
+        # 否则诊断只存在于会过期的日志正文，"内容静默消失"无从追查。
+        if: success() && steps.generate.outputs.has_new != 'true'
+        run: |
+          {
+            echo "## 内容雷达空产"
+            echo ""
+            echo "- 本次运行成功，但没有生成新的待发布内容包。"
+            if [ -f .content-publish.json ]; then
+              echo "- manifest 已写出但条目为 0。"
+            else
+              echo "- 未写出 manifest：本轮没有达到规则的完赛热点/赛前焦点，或候选都已发过（每日限额与去重）。"
+            fi
+            echo "- 选题判定明细见『自动选题并生成完整内容包』步骤日志。"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 运行失败时告警（PushPlus + 运行摘要）
+        # 无人值守时，任何一步失败都主动通知，而不是只留一封 GitHub 邮件。
+        if: failure()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## ⚠️ 内容雷达运行失败"
+            echo ""
+            echo "- content-radar 本次运行失败，本轮完赛热点/赛前焦点可能缺产。"
+            echo "- 运行日志：$RUN_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PUSHPLUS_TOKEN" ]; then
+            BODY="$(jq -nc --arg u "$RUN_URL" \
+              '{title:"⚠️ 内容雷达运行失败",
+                content:("content-radar 本次运行失败，本轮完赛热点/赛前焦点可能缺产。请查看：<a href=\"" + $u + "\">运行日志</a>"),
+                template:"html"}')"
+            curl -s -m 20 -X POST https://www.pushplus.plus/send \
+              -H "Content-Type: application/json" \
+              -d "$(jq -nc --argjson b "$BODY" --arg t "$PUSHPLUS_TOKEN" '$b + {token:$t}')" \
+              || true
+          fi

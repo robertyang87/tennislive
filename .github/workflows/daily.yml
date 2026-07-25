@@ -85,9 +85,11 @@ jobs:
       GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL || 'openai/gpt-4.1' }}
       TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'off' }}
-      # 日报只生成图片和文案；昨日好球使用独立工作流，不受此开关影响。
-      TENNISLIVE_DAILY_VIDEO: 'off'
-      TENNISLIVE_OFFICIAL_VIDEO: 'off'
+      # 日报视频与官方集锦视频：默认 on；需要关闭时在仓库 Variables 里
+      # 设为 off，不再硬编码字面量（2026-07-24 起视频消失就是被写死 off）。
+      # 昨日好球使用独立工作流，不受这两个开关影响。
+      TENNISLIVE_DAILY_VIDEO: ${{ vars.TENNISLIVE_DAILY_VIDEO || 'on' }}
+      TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
       # Runner 探测成功后仍给 PushPlus/微信抓图节点留出 CDN 同步时间。
       TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
       TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
@@ -108,7 +110,7 @@ jobs:
       TENNISLIVE_COVER_FLICKR: ${{ vars.TENNISLIVE_COVER_FLICKR || 'on' }}
       # 日报封面必须通过动作/情绪场景、清晰度和 3:4 安全裁切门禁。
       TENNISLIVE_COVER_VISUAL_STRICT: ${{ vars.TENNISLIVE_COVER_VISUAL_STRICT || 'on' }}
-      TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '72' }}
+      TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '65' }}
       # 首选头条无当场合格图时，并行尝试同日下一条高热度单打；
       # 一旦切换，封面、复盘、文案和事实包全部绑定到同一场。
       TENNISLIVE_COVER_HEADLINE_ATTEMPTS: ${{ vars.TENNISLIVE_COVER_HEADLINE_ATTEMPTS || '4' }}
@@ -289,7 +291,7 @@ jobs:
           }
           jq -e \
             --arg expected_match_id "$EXPECTED_MATCH_ID" \
-            --argjson minimum "${TENNISLIVE_COVER_VISUAL_MIN_SCORE:-72}" '
+            --argjson minimum "${TENNISLIVE_COVER_VISUAL_MIN_SCORE:-65}" '
             (
               (
               .status == "selected"
