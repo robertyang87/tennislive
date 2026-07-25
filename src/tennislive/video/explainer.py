@@ -243,6 +243,98 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # Facts checked against en.wikipedia "Isner-Mahut match at the 2010
+    # Wimbledon Championships" and against the plaque itself, which the All
+    # England Club engraved with the score, the dates and the duration. Note
+    # the story's own fact file said the scoreboard gave out at 50-50; the
+    # article is more precise — the courtside board froze at 47-47 and went
+    # dark, and it was the website's scoreboard that was reset at 50-50.
+    "longest-match": (
+        (
+            "draw",
+            "首轮抽签",
+            "一场被排在 18 号场的首轮球",
+            "2010 年温网首轮，23 号种子伊斯内尔，对上从资格赛打进正赛的马胡。"
+            "这种签通常没人会多看一眼，比赛也就被排在了 18 号场——一片外场。"
+            "6 月 22 日傍晚 6 点 13 分开球时，没人知道它会打三天。"
+            "画面里这一幕，已经是第二天夜里：屋顶上站满了人，全世界都挤过来了。",
+            "assets/explainer/longest-match/court18.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2010 温网 18 号场，比赛第二天夜里",
+            (
+                "2010 温网首轮，排在 18 号场",
+                "23 号种子伊斯内尔 对 资格赛选手马胡",
+                "图为第二天夜里，屋顶已站满人",
+            ),
+        ),
+        (
+            "rule",
+            "没有抢七",
+            "第五盘，必须净胜两局才算完",
+            "问题出在当年的规则上。2010 年，除了美网，大满贯的第五盘都不打抢七："
+            "打到 6 比 6 之后不会有抢七来收尾，两个人得一直打下去，直到某一方"
+            "净胜两局。第一天天黑，第五盘还没开始就被迫中断；第二天下午两点零五分"
+            "接着打，一局一局，谁也破不了谁的发球局。",
+            "assets/explainer/longest-match/day2.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2010 温网次日，马胡准备发球",
+            (
+                "2010 年第五盘不打抢七",
+                "6-6 之后必须净胜两局",
+                "第一天天黑中断，第二天接着打",
+            ),
+        ),
+        (
+            "board",
+            "记分牌罢工",
+            "程序只写到 47 比 47",
+            "打到后来，先撑不住的是记分牌。场边那块电子记分牌停在 47 比 47，"
+            "然后直接黑屏——IBM 的工程师说，程序只编到 47 比 47。官网的在线记分牌"
+            "多撑了一会儿，到 50 比 50 时被重置。画面里这块牌子在 16 号场，"
+            "显示的是隔壁 18 号场的比分：第五盘，51 比 50。那天一直打到 59 比 59，"
+            "天又黑了，再停。",
+            "assets/explainer/longest-match/scoreboard.jpg",
+            "CC BY 2.0 · Wikimedia Commons · 2010 温网 16 号场记分牌，第五盘 51-50",
+            (
+                "场边记分牌停在 47-47 后黑屏",
+                "IBM：程序只编到 47-47",
+                "第二天打到 59-59 天黑再停",
+            ),
+        ),
+        (
+            "final",
+            "11 小时 5 分钟",
+            "70 比 68，纸都快写不下了",
+            "第三天下午四点四十七分，伊斯内尔终于以 70 比 68 拿下第五盘。全场"
+            "打了 183 局，总时长 11 小时 5 分钟；光第五盘就打了 8 小时 11 分钟——"
+            "比在那之前最长的一整场比赛还要长。伊斯内尔发出 113 记 ACE，马胡 103 记，"
+            "两个人都改写了纪录。画面里是这场球的官方记分卡，一共写满了七页。",
+            "assets/explainer/longest-match/scorecard.jpg",
+            "Public domain · Wikimedia Commons · 该场官方记分卡（七页）",
+            (
+                "183 局，总时长 11 小时 5 分钟",
+                "光第五盘就打了 8 小时 11 分钟",
+                "ACE：伊斯内尔 113，马胡 103",
+            ),
+        ),
+        (
+            "rules",
+            "纪录封存",
+            "规则改了，它不可能再被打破",
+            "温网后来在 18 号场的墙上立了一块牌子，把日期、比分和时长都刻了上去。"
+            "而规则也改了：2019 年温网开始，第五盘 12 比 12 打抢七；2022 年起，"
+            "四大满贯统一改成决胜盘 6 比 6 打十分抢十。也就是说，从规则上讲，"
+            "这场 11 小时 5 分钟不可能再被超过了。那你觉得，这样的比赛，"
+            "以后还会不会再有？",
+            "assets/explainer/longest-match/plaque.jpg",
+            "Jonotennis · CC BY-SA 3.0 · Wikimedia Commons · 18 号场纪念牌",
+            (
+                "温网在 18 号场立牌纪念",
+                "2019 年起第五盘 12-12 打抢七",
+                "2022 年四大满贯统一十分抢十",
+            ),
+            "",
+            "这样的比赛，以后还会有吗？",
+        ),
+    ),
     "yellow-ball": (
         (
             "white",
@@ -341,6 +433,13 @@ _CAPTIONS: dict[str, dict] = {
             "现在四大满贯里，只剩一个地方还没交。"
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "longest-match": {
+        "hook": (
+            "2010 年温网首轮，一片外场，两个没什么人关注的名字。\n"
+            "他们在那里打了三天，11 小时 5 分钟——记分牌先撑不住了。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "网球纪录", "网球冷知识"),
     },
     "yellow-ball": {
         "hook": (
@@ -741,7 +840,7 @@ def explainer_xiaohongshu(
     hook = caption.get("hook") or ""
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
     return (
-        f"🎾{date_label}｜{story.title}\n\n"
+        f"🎾{date_label} 网球有故事｜{story.title}\n\n"
         + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)
         + "\n\n💬 留个答案\n"

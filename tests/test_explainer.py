@@ -283,3 +283,21 @@ def test_文案的开场和标签属于它自己的选题():
             assert set(tags) != set(other_text.rsplit("\n\n", 1)[-1].split()), (
                 f"{slug} 和 {other} 的标签完全一样"
             )
+
+
+def test_文案标题带上品牌语且不超小红书上限():
+    """The headline is 日期 + 网球有故事 + 选题, and it has to fit.
+
+    Xiaohongshu truncates titles past 20 (full-width counts 1, half-width
+    0.5), and a truncated headline loses the topic — the part that makes
+    someone tap. Check every deck, not just the short ones.
+    """
+    from tennislive.render.xiaohongshu import xhs_title_len
+    from tennislive.video.explainer import explainer_xiaohongshu
+
+    for slug in _SCRIPTED:
+        story = find_story_by_slug(slug)
+        head = explainer_xiaohongshu(story, explainer_script(story), "7.26").splitlines()[0]
+        assert head.startswith("🎾7.26 网球有故事｜"), f"{slug} 标题格式不对：{head}"
+        assert story.title in head
+        assert xhs_title_len(head) <= 20, f"{slug} 标题 {xhs_title_len(head)} 字，超小红书上限"
