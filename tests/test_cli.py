@@ -563,8 +563,19 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
 
     seen_skip_tours = {}
 
-    def fake_generate(_digest, out_dir, *, skip_tours=frozenset()):
+    def fake_generate(_digest, out_dir, *, skip_tours=frozenset(), report=None):
         seen_skip_tours["value"] = skip_tours
+        if report is not None:
+            report.append(
+                {
+                    "source": "STUB",
+                    "fetched": 0,
+                    "matched": 0,
+                    "picked": False,
+                    "note": "",
+                    "error": "",
+                }
+            )
         wta_dir = out_dir / "wta"
         wta_dir.mkdir(parents=True, exist_ok=True)
         video = wta_dir / "yesterday-point.mp4"
@@ -585,3 +596,14 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
     manifest = json.loads((output_dir / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["tours"] == {"ATP": "pass", "WTA": "pass"}
     assert manifest["fresh_tours"] == ["WTA"]
+    # The per-source discovery ledger rides along in the top-level manifest.
+    assert manifest["discovery"] == [
+        {
+            "source": "STUB",
+            "fetched": 0,
+            "matched": 0,
+            "picked": False,
+            "note": "",
+            "error": "",
+        }
+    ]

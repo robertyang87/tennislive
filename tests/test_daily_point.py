@@ -643,7 +643,7 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": selection},
+        lambda _digest, **_kw: {"WTA": selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -696,7 +696,7 @@ def test_manifest_records_shot_grounding_for_audit(sample_digest, tmp_path, monk
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": selection},
+        lambda _digest, **_kw: {"WTA": selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -728,7 +728,7 @@ def test_generate_publishes_atp_and_wta_independently(sample_digest, monkeypatch
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+        lambda _digest, **_kw: {"ATP": atp_selection, "WTA": wta_selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -761,7 +761,7 @@ def test_generate_skips_only_the_tour_with_no_qualifying_clip(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"WTA": wta_selection},
+        lambda _digest, **_kw: {"WTA": wta_selection},
     )
 
     def fake_render(_selection, output_dir):
@@ -789,7 +789,7 @@ def test_generate_does_not_redo_a_tour_already_marked_done(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: {"ATP": atp_selection, "WTA": wta_selection},
+        lambda _digest, **_kw: {"ATP": atp_selection, "WTA": wta_selection},
     )
     rendered = []
 
@@ -817,7 +817,7 @@ def test_generate_skips_discovery_when_every_tour_already_done(
     monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
     monkeypatch.setattr(
         "tennislive.video.daily_point.discover_official_points_by_tour",
-        lambda _digest: (_ for _ in ()).throw(
+        lambda _digest, **_kw: (_ for _ in ()).throw(
             AssertionError("should not query sources when both tours are already done")
         ),
     )
@@ -827,3 +827,121 @@ def test_generate_skips_discovery_when_every_tour_already_done(
     )
 
     assert outputs == {}
+
+
+def test_discovery_ledger_records_no_match_gap(sample_digest):
+    # A source that fetched a labelled clip but nothing named a yesterday
+    # player must leave an auditable "0 matched" line, not a silent skip.
+    page = (
+        '<a href="/videos/9/point-of-the-day">'
+        "Point of the day: Somebody Nobody Watch Now</a>"
+    )
+    report: list[dict] = []
+
+    selection = discover_wta_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _Response(page),
+        metadata_fetcher=lambda candidate, **kwargs: _metadata(),
+        report=report,
+    )
+
+    assert selection is None
+    assert len(report) == 1
+    entry = report[0]
+    assert entry["source"] == "WTA 官方视频（官网）"
+    assert entry["fetched"] == 1
+    assert entry["matched"] == 0
+    assert entry["picked"] is False
+    assert "0 条命中" in entry["note"]
+    assert entry["error"] == ""
+
+
+def test_discovery_ledger_records_a_picked_line(sample_digest):
+    page = (
+        '<a href="/videos/123/point-of-the-day-zheng">'
+        "Point of the day: Qinwen Zheng Watch Now</a>"
+    )
+    report: list[dict] = []
+
+    selection = discover_wta_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _Response(page),
+        metadata_fetcher=lambda candidate, **kwargs: replace(
+            _metadata(),
+            candidate=candidate,
+            description=(
+                "Qinwen Zheng and Aryna Sabalenka produce the official "
+                "point of the day at Wimbledon."
+            ),
+        ),
+        report=report,
+    )
+
+    assert selection is not None
+    assert report[0]["source"] == "WTA 官方视频（官网）"
+    assert report[0]["matched"] == 1
+    assert report[0]["picked"] is True
+
+
+def test_discovery_ledger_records_errors_and_gaps(sample_digest, monkeypatch):
+    import tennislive.video.daily_point as dp
+
+    def boom(_digest, report=None):
+        raise dp.VideoPipelineError("feed HTTP 500")
+
+    def empty(_digest, report=None):
+        dp._record_source(report, "STUB", fetched=5, matched=0, picked=False)
+        return None
+
+    monkeypatch.setattr(dp, "discover_tennistv_point", boom)
+    for name in (
+        "discover_wta_point",
+        "discover_wta_youtube_point",
+        "discover_atp_point",
+        "discover_tennistv_youtube_point",
+        "discover_youtube_search_point",
+    ):
+        monkeypatch.setattr(dp, name, empty)
+    monkeypatch.setattr(
+        dp, "discover_slam_point", lambda _digest, _tour, report=None: None
+    )
+
+    report: list[dict] = []
+    picks = dp.discover_official_points_by_tour(sample_digest, report)
+
+    assert picks == {}
+    errored = [item for item in report if item["error"]]
+    assert errored and errored[0]["source"] == dp._SRC_TENNISTV
+    assert "feed HTTP 500" in errored[0]["error"]
+    # The five non-raising stubs each left a "0 matched" gap line.
+    gaps = [item for item in report if not item["error"] and item["matched"] == 0]
+    assert len(gaps) == 5
+
+
+def test_generate_threads_discovery_report(sample_digest, tmp_path, monkeypatch):
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+
+    def fake_discover(_digest, report=None):
+        assert report is not None
+        report.append(
+            {
+                "source": "STUB",
+                "fetched": 0,
+                "matched": 0,
+                "picked": False,
+                "note": "源未返回候选（可能是当日无内容或抓取/解析异常）",
+                "error": "",
+            }
+        )
+        return {}
+
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        fake_discover,
+    )
+
+    report: list[dict] = []
+    outputs = generate_yesterday_point(sample_digest, tmp_path, report=report)
+
+    assert outputs == {}
+    assert report and report[0]["source"] == "STUB"

@@ -722,10 +722,14 @@ def cmd_yesterday_point(args) -> int:
         if existing.get("status") == "pass":
             already_done.add(tour)
 
+    discovery_report: list[dict] = []
     try:
         digest = build_digest(d, prefer=args.source)
         videos = generate_yesterday_point(
-            digest, output_dir, skip_tours=frozenset(already_done)
+            digest,
+            output_dir,
+            skip_tours=frozenset(already_done),
+            report=discovery_report,
         )
     except Exception as exc:  # noqa: BLE001
         (output_dir / "manifest.json").write_text(
@@ -788,12 +792,22 @@ def cmd_yesterday_point(args) -> int:
                 "published_for": d.isoformat(),
                 "tours": tour_status,
                 "fresh_tours": sorted(videos),
+                # Per-source discovery ledger: when a tour skips, this says
+                # which official source found how many clips and where the gap
+                # was, so a no-material day is auditably distinct from a broken
+                # source (empty by design when every tour was already done).
+                "discovery": discovery_report,
             },
             ensure_ascii=False,
             indent=2,
         ),
         encoding="utf-8",
     )
+    if discovery_report and not videos and not already_done:
+        for item in discovery_report:
+            console.print(
+                f"[dim]· {item['source']}：{item['note']}[/dim]"
+            )
     return 0
 
 
