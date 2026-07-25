@@ -87,6 +87,28 @@ jobs:
           # 这样 CLI 才能识别出哪个巡回赛这次该跳过、哪个还要继续找。
           tennislive point --date "$DATE_ARG" --outdir output
 
+      - name: 昨日好球发现记账（来源诊断）
+        # 全跳过的日子不提交空包，带 discovery 台账的顶层 manifest 只落在
+        # 工作区/artifact 里；这一步把它升到 Actions 摘要，让「为什么没推」
+        # 一眼可见，并把 ATP 主通道的根因（命中卡片却缺 JWT）单独升为 warning。
+        if: always() && steps.generate.conclusion == 'success'
+        env:
+          TENNISTV_JWT: ${{ secrets.TENNISTV_JWT }}
+        run: |
+          MANIFEST="${{ steps.generate.outputs.outdir }}/manifest.json"
+          [ -s "$MANIFEST" ] || exit 0
+          jq -r '.discovery // [] | .[] |
+            "· \(.source): 抓取\(.fetched)/命中\(.matched)/" +
+            (if .error != "" then "报错 \(.error)"
+             elif .picked then "选中"
+             else "未选中——\(.note)" end)' "$MANIFEST" \
+            | while IFS= read -r line; do echo "::notice::$line"; done
+          if [ -z "${TENNISTV_JWT}" ] && jq -e '.discovery // [] | any(
+                .source == "Tennis TV Hot Shots" and .matched > 0 and (.picked | not))' \
+                "$MANIFEST" >/dev/null; then
+            echo "::warning::Tennis TV 命中了昨日比赛的 Hot Shots，但缺 TENNISTV_JWT，无法解析可播放源；配置该 Secret 可打通 ATP 主通道"
+          fi
+
       - name: 严格质量门禁
         run: |
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
