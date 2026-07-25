@@ -41,6 +41,26 @@ def test_结尾要留一个问题给评论区():
     assert "电子司线" in closer.narration  # 旁白也要问出口，不能只在画面上
 
 
+def test_推送里的图必须是绝对地址否则微信收到空图():
+    """The publisher only counts images whose src is already absolute.
+
+    A repo-relative src is skipped silently: the message still sends, the log
+    says the image channel was "none", and the push lands with nothing WeChat
+    can resolve. That shipped once.
+    """
+    from pathlib import Path as _Path
+
+    from tennislive.publish.pushplus import image_sources
+    from tennislive.video.explainer import explainer_push_html
+
+    segments = explainer_script(find_story_by_slug("hawkeye"))
+    body = explainer_push_html(segments, _Path("output/2026-07-25/explainer/hawkeye"))
+    found = image_sources(body)
+    assert len(found) == len(segments), "推送里的图没有被识别为可投递图片"
+    assert all(u.startswith("https://cdn.jsdelivr.net/") for u in found)
+    assert all("@main/" in u for u in found)  # so pin_asset_revision can pin it
+
+
 def test_每屏都有提炼要点配合旁白():
     # 画面不能只有大标题：要点是给眼睛看的骨架，旁白是给耳朵的全文。
     for story_slug in ("hawkeye",):

@@ -31,6 +31,7 @@ from __future__ import annotations
 import base64
 import html
 import mimetypes
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -44,6 +45,7 @@ VIDEO_W, VIDEO_H = 1080, 1920  # video canvas (9:16)
 _BAND_COLOR = "0x061c14"
 
 _REPO = Path(__file__).resolve().parents[3]
+_REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 
 
 class ExplainerVideoError(RuntimeError):
@@ -567,12 +569,16 @@ def explainer_push_html(
 
     A phone push cannot play the MP4 inline, so it carries the slides in order
     — which is the whole story anyway — plus a link to the file in the repo.
-    Image sources stay repo-relative under ``output/`` so the publisher can pin
-    them to the exact commit on the CDN.
+
+    Sources are absolute jsDelivr URLs on ``@main``: the publisher only counts
+    images whose ``src`` is already absolute, so a repo-relative path is
+    silently skipped and the message goes out with nothing WeChat can resolve.
+    ``pin_asset_revision`` then rewrites ``@main`` to the exact commit.
     """
     rel = outdir.as_posix()
     if "output/" in rel:
         rel = rel[rel.index("output/") :]
+    base = f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}"
     blocks = []
     for index, segment in enumerate(segments):
         points = "".join(
@@ -586,16 +592,14 @@ def explainer_push_html(
         )
         blocks.append(
             f'<div style="margin:0 0 26px;">'
-            f'<img src="{rel}/slide_{index:02d}.png" '
+            f'<img src="{base}/slide_{index:02d}.png" '
             f'style="width:100%;border-radius:12px;display:block;">'
             f'<p style="font-weight:700;font-size:17px;margin:12px 0 6px;">'
             f"{index + 1}. {html.escape(segment.title)}</p>"
             f'<ul style="margin:0;padding-left:20px;color:#444;font-size:15px;">'
             f"{points}</ul>{ask}</div>"
         )
-    video_url = (
-        f"https://github.com/robertyang87/tennislive/raw/main/{rel}/{video_name}"
-    )
+    video_url = f"https://github.com/{_REPOSITORY}/raw/main/{rel}/{video_name}"
     return (
         '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;'
         'line-height:1.6;">'
