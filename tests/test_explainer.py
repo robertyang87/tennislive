@@ -1,4 +1,5 @@
 import html
+import re
 
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
@@ -347,3 +348,25 @@ def test_每屏标题不能把自己的标签再说一遍():
             if "：" in line and line[:1].isdigit() is False and "️⃣" in line:
                 head = line.split("：", 1)[0].split(" ", 1)[-1]
                 assert line.count(f"{head}：") == 1, f"{slug} 文案里标签重复：{line}"
+
+
+def test_配音把比分读成几比几而不是几杠几():
+    """"5-1" is a score, and edge-tts read the hyphen out loud: 五杠一.
+
+    Fixed at synthesis rather than in each script, so the slides keep the
+    compact "6-2 5-7 6-3" and only the audio changes. Year ranges have to
+    survive the same pass — "2016-2026 共十届" is not a score.
+    """
+    from tennislive.video.explainer import speakable
+
+    assert speakable("辛纳 6-3、6-2、5-1 领先") == "辛纳 6 比 3、6 比 2、5 比 1 领先"
+    assert speakable("70-68 拿下第五盘") == "70 比 68 拿下第五盘"
+    assert speakable("2016-2026 共十届，2020 年停办") == "2016-2026 共十届，2020 年停办"
+
+    # No deck may reach the voice with a bare score hyphen still in it.
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            spoken = speakable(seg.narration)
+            assert not re.search(r"(?<!\d)\d{1,3}\s*[-–—−]\s*\d{1,3}(?!\d)", spoken), (
+                f"{slug}/{seg.kind} 旁白里还有会被读成「杠」的比分：{spoken[:60]}"
+            )

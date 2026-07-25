@@ -32,6 +32,7 @@ import base64
 import html
 import mimetypes
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -920,11 +921,12 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "newest",
             "新科冠军",
             "21 岁，第一次进决赛就赢了",
-            "先说最新的那一个。2026 年温网女单决赛，二十一岁的诺斯科娃 6-2、5-7、6-3 击败"
-            "同胞穆霍娃，拿下职业生涯第一个大满贯冠军——这也是她第一次打进大满贯决赛。"
-            "第三轮对科斯蒂亚，她救过一个赛点。二十一岁二百三十六天，她是 2011 年"
-            "科维托娃之后最年轻的温网女单冠军。画面里就是那天傍晚，她捧着维纳斯玫瑰露水盘"
-            "站在俱乐部阳台上，底下站满了人。",
+            "先说最新的这一个。2026 年温网女单决赛，场上两个捷克人，谁赢都是捷克赢。"
+            "最后是二十一岁的诺斯科娃 6-2、5-7、6-3 拿下穆霍娃，捧走她职业生涯的"
+            "第一个大满贯——而这也是她第一次打进大满贯决赛。第一次进决赛就赢，"
+            "本来就不常见；更不常见的是，第三轮她已经被人拿到过赛点，差一分就该收拾行李了。"
+            "二十一岁二百三十六天，2011 年科维托娃之后最年轻的温网女单冠军。"
+            "画面里是那天傍晚，她端着维纳斯玫瑰露水盘站上俱乐部阳台，底下站满了人。",
             "assets/explainer/ten-champions/noskova.jpg",
             "AELTC/Thomas Lovelock · wimbledon.com 官方图 · 2026 温网女单决赛后",
             (
@@ -936,68 +938,73 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "women",
             "十届十冠",
-            "往前数十年，每年都是新名字",
-            "但真正少见的不是她的年龄，是往前数。2016 小威、2017 穆古鲁扎、2018 科贝尔、"
-            "2019 哈勒普、2021 巴蒂、2022 莱巴金娜、2023 万卓索娃、2024 克雷吉茨科娃、"
-            "2025 斯瓦泰克，加上今年的诺斯科娃——十届温网，十个不同的人，没有一个卫冕成功。"
-            "今年的卫冕冠军斯瓦泰克，第三轮就输给了菲律宾人埃亚拉。画面里是 2024 年那届的"
-            "女单签表板，一百二十八个名字挤在左边，一路淘汰到最右边只剩一个：克雷吉茨科娃。",
-            "assets/explainer/ten-champions/draw2024.jpg",
-            "UKinUSA · CC BY-SA 2.0 · Wikimedia Commons · 2024 温网女单签表板",
+            "这块底座上，十年刻了十个名字",
+            "但真正稀奇的不是她的年龄。画面里这块底座，是维纳斯玫瑰露水盘的盘座，"
+            "历届女单冠军的名字就刻在上面。镜头拍到的这一段，从上往下依次是："
+            "2016 小威、2017 穆古鲁扎、2018 科贝尔、2019 哈勒普、2021 巴蒂、"
+            "2022 莱巴金娜、2023 万卓索娃、2024 克雷吉茨科娃、2025 斯瓦泰克。"
+            "最下面那一行，师傅正拿着刻刀往上刻：2026，诺斯科娃。十届温网，十个名字，"
+            "一个都没重复过。那今年的卫冕冠军斯瓦泰克呢？第三轮，被菲律宾人埃亚拉送回家了。",
+            "assets/explainer/ten-champions/plinth.jpg",
+            "AELTC/Charlie Raymond Kent · wimbledon.com 官方图 · 2026 年为奖盘盘座刻名",
             (
-                "2016-2026 共十届，2020 年停办",
-                "十个不同的冠军，没有一个卫冕成功",
+                "盘座刻的是历届女单冠军名字",
+                "2016 到 2026，十行十个人",
                 "今年卫冕冠军斯瓦泰克止步第三轮",
             ),
         ),
         (
             "men",
             "男单五冠",
-            "同样这十届，名单只要五个人写得下",
-            "同样这十届，男单的名单短得多：穆雷一次、费德勒一次、德约科维奇四次、"
-            "阿尔卡拉斯两次、辛纳两次——十届，五个人。画面里是今年的辛纳，决赛四盘"
-            "击败兹维列夫，成功卫冕。顺带一提，男单上一次有人卫冕是 2022 年的德约科维奇；"
-            "女单上一次有人卫冕，得回到 2016 年的小威，也就是这十届的第一届。",
+            "同样这十届，五个人就写完了",
+            "同样这十届，男单那边的名单短得有点尴尬：穆雷一次、费德勒一次、"
+            "德约科维奇四次、阿尔卡拉斯两次、辛纳两次。十届，五个人，写完还有富余。"
+            "画面里就是今年的辛纳，决赛四盘拿下兹维列夫，背靠背卫冕。"
+            "顺手做个对照：男单上一次有人卫冕，是四年前 2022 年的德约科维奇；"
+            "女单上一次有人卫冕，得一路退回 2016 年的小威——正好是我们数的这十届的第一届。"
+            "换句话说，女单的卫冕这一栏，已经空了整整十年。",
             "assets/explainer/ten-champions/sinner.jpg",
-            "Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons · 2026 温网男单决赛后",
+            "AELTC/Joel Marklund · wimbledon.com 官方图 · 2026 温网男单决赛后",
             (
                 "德约 4 冠、阿尔卡拉斯 2 冠、辛纳 2 冠",
                 "穆雷、费德勒各 1 冠",
-                "女单上一次卫冕成功，是 2016 年的小威",
+                "女单已经十年没人卫冕成功",
             ),
         ),
         (
             "chart",
             "两张名单",
-            "并排放在一起，差别是这样的",
-            "把两张名单并排放在一起，差别就不用解释了。左边十行，十个名字；右边同样十行，"
-            "却只分成五块，其中一块占了四行。还有一个数字容易被忽略：捷克一个国家就占了"
-            "女单这十席里的三席——万卓索娃、克雷吉茨科娃、诺斯科娃。今年的决赛干脆是两个"
-            "捷克人打的，这在公开赛年代只发生过很少几次。",
+            "并排一放，差别不用解释",
+            "把两张名单并排一放，就不用解释了。左边十行，十个名字；右边同样十行，"
+            "却只堆成五块——其中一块自己占了四行，那是德约科维奇。"
+            "还有个数字容易被忽略：捷克一个国家，包下了女单这十席里的三席，"
+            "万卓索娃、克雷吉茨科娃、诺斯科娃。今年的决赛干脆是捷克内战，"
+            "两个人打完，奖盘连国境都没出。",
             "",
             "示意图 · 网球时差绘制",
             (
                 "女单：十行，十个不同的人",
-                "男单：同样十行，只分成五块",
-                "捷克独占女单三席，今年还是捷克内战",
+                "男单：同样十行，只堆成五块",
+                "捷克独占女单三席，今年还是内战",
             ),
             _TEN_CHAMPIONS_DIAGRAM,
         ),
         (
             "verdict",
             "两只奖杯",
-            "同一组数字，两种说法",
-            "画面里这两件东西，就是她们和他们争的：上面那只盘子是女单的维纳斯玫瑰露水盘，"
-            "下面那只杯子是男单的挑战杯。同样十届，一只递到过十个人手里，一只只递给过五个。"
-            "同一组数字，你能听到两种完全相反的说法：一边说女子网坛百花齐放，谁都有机会；"
-            "另一边说这叫群龙无首，没有能扛旗的人。男单也一样，有人看到的是王朝，"
-            "有人看到的是垄断。那你更愿意看哪一种？评论区说说。",
-            "assets/explainer/ten-champions/trophies.jpg",
-            "Benjamí Villoslada i Gil · CC BY-SA 2.0 · Wikimedia Commons · 温网男女单打奖杯",
+            "一个人抱两年，一群人轮一遍",
+            "画面里是今年这两位冠军在冠军晚宴上的合影。辛纳手里那只是男单挑战杯，"
+            "他连着抱了两年；诺斯科娃手里那只是维纳斯玫瑰露水盘，她是十年里"
+            "第十个端起它的人。同一片草地，同样十届，一边像王朝更替，一边像轮流坐庄。"
+            "同一组数字，你能听到两种完全相反的说法：有人说女单这叫百花齐放，谁都有机会；"
+            "也有人说这叫群龙无首，没人扛旗。男单那边同理，你可以叫它统治力，"
+            "也可以叫它垄断。所以问题就摆在这儿了——你更爱看哪一种？评论区聊聊。",
+            "assets/explainer/ten-champions/champions.jpg",
+            "AELTC/Andrew Baker · wimbledon.com 官方图 · 2026 冠军晚宴（官方合成合影）",
             (
-                "同样十届：女单 10 人，男单 5 人",
+                "辛纳连抱两年，诺斯科娃是第十人",
                 "一种说法叫百花齐放，一种叫群龙无首",
-                "男单同理：有人看到王朝，有人看到垄断",
+                "换成男单：这叫统治力，还是垄断？",
             ),
             "",
             "你更爱看群雄逐鹿，还是王朝统治？",
@@ -1063,8 +1070,8 @@ _CAPTIONS: dict[str, dict] = {
     },
     "ten-champions": {
         "hook": (
-            "同样十届温网，女单出了十个冠军，男单只有五个。\n"
-            "有人管这叫百花齐放，有人管这叫群龙无首——说的是同一组数字。"
+            "维纳斯玫瑰露水盘的盘座上，十年刻了十个名字，一个都没重复。\n"
+            "同样这十届，男单只有五个人在轮着抱杯——这算好事还是坏事？"
         ),
         "tags": ("网球", "网球时差", "温网", "诺斯科娃", "女子网球"),
     },
@@ -1120,7 +1127,7 @@ _OPENINGS: dict[str, dict] = {
     "ten-champions": {
         "topic": "温网的十年：女单十个冠军，男单五个",
         "question": "女单十冠，男单五冠？",
-        "narration": "同样十届温网，女单十冠，男单五冠。差别是怎么来的？",
+        "narration": "同样十届温网，女单十冠，男单五冠。这差别是怎么来的？",
         "image": "assets/explainer/ten-champions/noskova.jpg",
     },
 }
@@ -1398,6 +1405,23 @@ def render_explainer_slides(
     return paths
 
 
+def speakable(text: str) -> str:
+    """Rewrite a narration so the TTS voice says scores the way people do.
+
+    Written as "5-1", edge-tts reads the hyphen out loud — "五杠一" — which
+    is wrong for every tennis score we have ever narrated. Scores are spoken
+    "5 比 1", so convert them before synthesis rather than spelling them out
+    by hand in each deck: the slides keep the compact "6-2 5-7 6-3" that
+    reads well on screen, and only the audio changes.
+
+    Year ranges must survive ("2016-2026 共十届" is not a score), so both
+    sides are capped at three digits and the match must not sit inside a
+    longer run of digits. A genuine "1-2 天" range would be mis-read, but no
+    deck has one; scores are what this text is full of.
+    """
+    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
+
+
 def synthesize_narration(
     segments: Sequence[ExplainerSegment],
     outdir: Path,
@@ -1421,7 +1445,7 @@ def synthesize_narration(
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
         try:
-            asyncio.run(_one(seg.narration, path))
+            asyncio.run(_one(speakable(seg.narration), path))
         except Exception as exc:  # noqa: BLE001
             raise ExplainerVideoError(f"TTS 合成失败（第 {index + 1} 段）: {exc}") from exc
         if not path.is_file() or path.stat().st_size == 0:
