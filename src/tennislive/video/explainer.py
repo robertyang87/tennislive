@@ -243,6 +243,99 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # Every fact traces to en.wikipedia "Rufus the Hawk". Note what the
+    # pictures are and are not: the first three are Rufus himself (two
+    # uploaded by Avian Environmental, who actually operate him, one from
+    # the 2012 Olympics), while beat 4 shows the same operator's bird at
+    # Westminster Abbey — a Harris hawk on the same job, not necessarily
+    # this bird, so the beat says so on screen rather than implying it.
+    "rufus": (
+        (
+            "badge",
+            "一只鹰",
+            "工牌上写着「赶鸟员」",
+            "温布尔登有一名员工，工牌上的职位是三个词：Bird Scarer，赶鸟员。"
+            "它叫 Rufus，一只哈里斯鹰，2008 年第一次来上班的时候，才 18 周大。"
+            "它接的是上一任的班——上一只鹰叫 Hamish。全英俱乐部说它是"
+            "「温网大家庭的重要一员」；它有自己的推特，也有自己的工牌。",
+            "assets/explainer/rufus/badge.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 温网现场",
+            (
+                "工牌职位：Bird Scarer 赶鸟员",
+                "2008 年首次上岗，当时 18 周大",
+                "接的是上一只鹰 Hamish 的班",
+            ),
+        ),
+        (
+            "patrol",
+            "它的工作",
+            "四十二英亩，全归它管",
+            "它的活儿说起来简单：把鸽子赶走。鸽子最爱停的地方，是中央球场的屋顶。"
+            "整个园区四十二英亩，Rufus 全年巡场，赛期这两周每天到岗。"
+            "画面里是清晨还没开门的温网，它站在栏杆上，把整片园子看了一遍。"
+            "但它并不抓鸽子——它全部的工作，只是让鸽子知道：这片天空有天敌。",
+            "assets/explainer/rufus/patrol.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 清晨的温网园区",
+            (
+                "42 英亩园区，全年巡场",
+                "鸽子最爱停中央球场屋顶",
+                "它不抓鸽子，只让鸽子知道有天敌",
+            ),
+        ),
+        (
+            "stolen",
+            "失踪三天",
+            "2012 年，它被人偷走了",
+            "2012 年 6 月 28 日，Rufus 在车后座被人偷走。它平时戴着无线电发射器，"
+            "本来可以追踪——但发射器晚上会取下来，被偷的那一刻，谁也找不到它。"
+            "这件事引发了全球关注，媒体称它是「世界上最出名的鸟」。三天后，"
+            "它在温布尔登公地被发现，交给了防止虐待动物协会：身体没事，"
+            "只有一条腿有点酸。那年夏天，它照常上班——在伦敦奥运会。",
+            "assets/explainer/rufus/olympics.jpg",
+            "Catherine Wright · CC BY-SA 2.0 · Wikimedia Commons · 2012 伦敦奥运会期间",
+            (
+                "2012.6.28 从车后座被偷走",
+                "发射器夜里取下，当时追不到",
+                "三天后在温布尔登公地找回",
+            ),
+        ),
+        (
+            "elsewhere",
+            "不止温网",
+            "教堂、医院、机场都请过它",
+            "温网只是它的一份工作。威斯敏斯特教堂、医院、机场、垃圾填埋场，"
+            "都请过它去赶鸟。画面里是同一家公司在威斯敏斯特一带的赶鸟作业。"
+            "不过它也不是全无敌手——2013 年有报道说，它被戴兜帽的人吓到过，"
+            "还被一群乌鸦赶跑过。",
+            "assets/explainer/rufus/abbey.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 威斯敏斯特一带赶鸟作业",
+            (
+                "教堂、医院、机场、垃圾场都请过",
+                "图为同一公司在威斯敏斯特的作业",
+                "2013 年它被一群乌鸦赶跑过",
+            ),
+        ),
+        (
+            "successor",
+            "谁来接班",
+            "接班人没生成，无人机来了",
+            "从 2008 年上岗算起，Rufus 已经干了快二十年。2025 年，驯鹰师想给它"
+            "找个伴——一只叫 Pamela 的母鹰，指望生出个接班人；结果 Pamela 对它"
+            "有攻击性，两只鹰没能走到一起。2026 年，驯鹰师说出了另一个担心："
+            "这份工作，迟早会被无人机取代。全英俱乐部的回应是：没有换掉它的打算。"
+            "画面里这一只，同样是这家公司在伦敦市区放飞的猛禽。"
+            "那你觉得呢——赶鸽子这件事，该交给鹰，还是交给无人机？",
+            "assets/explainer/rufus/city.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 伦敦市区赶鸟作业",
+            (
+                "2025 年配对母鹰 Pamela 未成",
+                "全英俱乐部：没有换掉它的打算",
+                "图为同一公司放飞的猛禽",
+            ),
+            "",
+            "赶鸽子该交给鹰，还是交给无人机？",
+        ),
+    ),
     # Dress-code details are quoted from the Championships' own clothing
     # guidelines as summarised on en.wikipedia "Wimbledon Championships":
     # first enforced 1963, no solid mass of colouring, trims no wider than
@@ -523,6 +616,13 @@ _CAPTIONS: dict[str, dict] = {
             "现在四大满贯里，只剩一个地方还没交。"
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "rufus": {
+        "hook": (
+            "温网有一名员工，工牌上的职位写着「赶鸟员」。\n"
+            "它是一只鹰。2012 年，它还被人偷走过三天。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "猛禽", "网球冷知识"),
     },
     "wimbledon-whites": {
         "hook": (

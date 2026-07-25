@@ -1136,6 +1136,54 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="rufus",
+        title="温网雇了一只鹰",
+        subtitle="网球冷知识 · 园区篇",
+        identity="工牌职位：赶鸟员",
+        chips=("冷知识", "温网园区", "2008 上岗"),
+        hero=(
+            "温网有一名员工是哈里斯鹰，工牌上的职位写着 Bird Scarer；"
+            "2012 年它被人从车里偷走，三天后在温布尔登公地找回。"
+        ),
+        facts=(
+            "Rufus 生于 2008 年，同年 18 周大时首次在温网上岗，"
+            "接替上一只鹰 Hamish；它有推特账号，也有自己的温网工牌，"
+            "职位写作 Bird Scarer。",
+            "全英俱乐部雇它全年巡视 42 英亩园区，赛期每日到岗；"
+            "鸽子尤其爱停在中央球场屋顶。它也在 2012 年伦敦奥运会期间每天工作。",
+            "2012 年 6 月 28 日它从车后座被偷，引发全球关注，"
+            "三天后在温布尔登公地被找到并交给 RSPCA，仅一条腿略有酸痛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2012-06-28",
+                player="Rufus",
+                age="2012 年",
+                headline="被偷走三天",
+                detail=(
+                    "从车后座被偷；它的无线电发射器夜间会取下，因此无法追踪。"
+                    "三天后在温布尔登公地被发现，身体健康。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+            ChampionMoment(
+                date="2026-01-01",
+                player="全英俱乐部",
+                age="2026 年",
+                headline="无人机会取代它吗",
+                detail=(
+                    "驯鹰师担心这份工作终将被无人机取代；"
+                    "全英俱乐部表示没有替换它的打算。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="AvianEnvironmental / Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+    ),
+    _trivia_story(
         slug="wimbledon-whites",
         title="温网为什么只准穿白",
         subtitle="网球冷知识 · 规矩篇",
