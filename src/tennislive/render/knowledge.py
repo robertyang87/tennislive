@@ -425,6 +425,65 @@ def _validate_copy_for_publish(copy: str) -> None:
         raise ValueError("知识帖话题标签应保持 3 至 5 个")
 
 
+def knowledge_push_html_from_parts(
+    *,
+    date,
+    image_urls: list[str],
+    xhs_text: str,
+    copy_url: str,
+    badge: str = "小红书知识帖",
+    extra_action: tuple[str, str] | None = None,
+) -> str:
+    """The push body itself, given the pieces.
+
+    Split out so the explainer video can send the same layout instead of
+    growing its own — the badge, the per-image "didn't load?" fallback, the
+    copy page button and the long-press hint are the parts that make a push
+    usable on a phone, and they were worth having in one place.
+    """
+    lines = xhs_text.strip().splitlines()
+    title = html.escape(lines[0] if lines else "")
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    paragraphs = []
+    for paragraph in body.split("\n\n"):
+        safe = "<br/>".join(html.escape(line) for line in paragraph.splitlines())
+        paragraphs.append(
+            '<div style="font-size:15px;line-height:1.85;margin:0 0 13px;">'
+            f"{safe}</div>"
+        )
+    images = []
+    for index, card_url in enumerate(image_urls, 1):
+        images.append(
+            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
+            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
+            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
+            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
+            'style="color:#087747;font-size:13px;text-decoration:none;">'
+            f'第{index}张未显示？点此打开原图</a></div>'
+        )
+    action = ""
+    if extra_action:
+        href, label = extra_action
+        action = (
+            f'<a href="{href}" style="display:block;background-color:#102d23;'
+            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
+            f'{html.escape(label)}</a>'
+        )
+    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
+<div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
+  <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">{badge} · {date.month}.{date.day}</div>
+  <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
+  {''.join(images)}
+  {''.join(paragraphs)}
+  <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
+  {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
+  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
+</div>
+</div>"""
+
+
 def knowledge_push_html(
     digest: Digest,
     story: TournamentStory,
@@ -443,40 +502,13 @@ def knowledge_push_html(
     story actually being pushed.
     """
     d = digest.today
-    copy_url = f"{_PAGES}/output/{d.isoformat()}/{output_dir_name}/copy.html"
-    lines = xhs_text.strip().splitlines()
-    title = html.escape(lines[0] if lines else knowledge_title(story, digest))
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
-    paragraphs = []
-    for paragraph in body.split("\n\n"):
-        safe = "<br/>".join(html.escape(line) for line in paragraph.splitlines())
-        paragraphs.append(
-            '<div style="font-size:15px;line-height:1.85;margin:0 0 13px;">'
-            f"{safe}</div>"
-        )
-    images = []
-    for index, card_name in enumerate(card_names, 1):
-        card_url = f"{_CDN}/output/{d.isoformat()}/{output_dir_name}/cards/{card_name}"
-        images.append(
-            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
-            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
-            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
-            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
-            'style="color:#087747;font-size:13px;text-decoration:none;">'
-            f'第{index}张未显示？点此打开原图</a></div>'
-        )
-    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
-<div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
-  <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">小红书知识帖 · {d.month}.{d.day}</div>
-  <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
-  {''.join(images)}
-  {''.join(paragraphs)}
-  <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
-  <a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
-  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
-</div>
-</div>"""
+    base = f"output/{d.isoformat()}/{output_dir_name}"
+    return knowledge_push_html_from_parts(
+        date=d,
+        image_urls=[f"{_CDN}/{base}/cards/{name}" for name in card_names],
+        xhs_text=xhs_text or knowledge_title(story, digest),
+        copy_url=f"{_PAGES}/{base}/copy.html",
+    )
 
 
 def _validate_story_for_publish(story: TournamentStory, digest: Digest) -> None:

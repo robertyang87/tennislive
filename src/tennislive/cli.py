@@ -348,16 +348,19 @@ def cmd_explainer(args) -> int:
         explainer_xiaohongshu,
     )
 
+    from .render.pushmsg import to_copy_page
+
     outdir = Path(args.outdir)
     segments = explainer_script(story)
+    xhs_text = explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}")
+    (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
+    (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
     (outdir / "push.html").write_text(
-        explainer_push_html(segments, outdir), encoding="utf-8"
+        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
+        encoding="utf-8",
     )
     (outdir / "wechat_title.txt").write_text(
         f"{story.title}｜{segments[0].title}", encoding="utf-8"
-    )
-    (outdir / "xiaohongshu.txt").write_text(
-        explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}"), encoding="utf-8"
     )
     console.print(f"[green]解说视频已生成：{out}[/green]")
     return 0
