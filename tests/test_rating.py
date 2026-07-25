@@ -535,3 +535,53 @@ def test_rankings_parse_and_map():
     lookup = rank_map(Rankings(atp=entries))
     assert lookup["jannik sinner"] == 1
     assert lookup["zhang zhizhen"] == 2  # 反转词序也能命中
+
+
+def test_headline_stats_targets_cover_the_headline_even_without_editorial_heat():
+    """头条页技术统计取数必须覆盖到真正被渲染的那场（2026-07-25 生产事故）.
+
+    当天统计只为 select_focus_match() 取了数（WTA 布兹科娃那场），而头条页
+    渲染的是另一套逻辑选出的 ATP 卢布列夫那场，于是头条页整页没有技术对比、
+    退化成纯文字描述。
+
+    这里刻意不给任何热度信号：lead_story_candidates() 会用 has_editorial_heat
+    过滤掉无热度比赛而返回空列表，但头条依然存在（封面阶段也正因如此保留了
+    `or [lead]` 兜底）。取数目标必须仍然包含头条，否则冷清的日子会重演同一个
+    退化。
+    """
+    from tennislive.render.focus import headline_stats_targets
+    from tennislive.render.titles import daily_lead_match
+
+    upset = make_match(
+        home_name="Andrey Rublev",
+        away_name="Luca Van Assche",
+        tournament="Estoril Open",
+        winner=1,
+        sets=((6, 3), (3, 6), (4, 6)),
+        tiebreaks=(),
+        match_id="atp-lead",
+    )
+    upset.home[0].rank, upset.away[0].rank = 14, 78
+    upset.home[0].seed = 1
+    routine = make_match(
+        home_name="Marie Bouzkova",
+        away_name="Tereza Valentova",
+        tour=Tour.WTA,
+        tournament="Prague Open",
+        winner=0,
+        sets=((6, 4), (6, 4)),
+        tiebreaks=(),
+        match_id="wta-other",
+    )
+    digest = Digest(today=date(2026, 7, 25), results=[upset, routine])
+
+    from tennislive.render.rating import lead_story_candidates
+
+    lead = daily_lead_match(digest)
+    targets = headline_stats_targets(digest)
+
+    assert lead is not None
+    assert not lead_story_candidates(digest), "本用例要覆盖候选池为空的冷清日"
+    assert lead.match_id in {match.match_id for match in targets}
+    # 未完赛/双打没有逐场统计可取，不该进取数列表。
+    assert all(m.status.is_final and m.is_singles for m in targets)
