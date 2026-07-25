@@ -83,3 +83,49 @@ jobs:
             '{token:$t,title:$title,content:$c,template:"html"}')"
           curl -s -m 20 -X POST https://www.pushplus.plus/send \
             -H "Content-Type: application/json" -d "$BODY" || true
+
+      - name: 空产摘要（运行成功但没有场外候选时写明原因）
+        # 空产不是失败，但也不能静默：把候选数和各信号源状态留在运行摘要里，
+        # 否则诊断只存在于会过期的日志正文，"候选静默消失"无从追查。
+        if: success()
+        run: |
+          RADAR_DIR="output/${{ steps.radar.outputs.date }}/flash_radar"
+          if [ -s "$RADAR_DIR/flash_radar_push.html" ]; then
+            echo "有候选产出，无需空产摘要"
+            exit 0
+          fi
+          {
+            echo "## 场外新闻雷达空产"
+            echo ""
+            echo "- 本次运行成功，但没有可发的场外新闻候选。"
+            QUEUE="$RADAR_DIR/flash_radar_queue.json"
+            if [ -s "$QUEUE" ]; then
+              jq -r '"- 候选数：" + (.count|tostring)' "$QUEUE"
+              jq -r '(.source_status // {}) | to_entries[] |
+                "- 信号源 " + .key + "：" + (.value|tostring)' "$QUEUE"
+            else
+              echo "- 连候选队列文件都没有写出，请检查『扫描场外新闻并生成候选队列』步骤日志。"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 运行失败时告警（PushPlus + 运行摘要）
+        # 无人值守时，任何一步失败都主动通知，而不是只留一封 GitHub 邮件。
+        if: failure()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## ⚠️ 场外新闻雷达运行失败"
+            echo ""
+            echo "- news-radar 本次运行失败，本班次场外快讯候选可能缺产。"
+            echo "- 运行日志：$RUN_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PUSHPLUS_TOKEN" ]; then
+            BODY="$(jq -nc --arg u "$RUN_URL" \
+              '{title:"⚠️ 场外新闻雷达运行失败",
+                content:("news-radar 本次运行失败，本班次场外快讯候选可能缺产。请查看：<a href=\"" + $u + "\">运行日志</a>"),
+                template:"html"}')"
+            curl -s -m 20 -X POST https://www.pushplus.plus/send \
+              -H "Content-Type: application/json" \
+              -d "$(jq -nc --argjson b "$BODY" --arg t "$PUSHPLUS_TOKEN" '$b + {token:$t}')" \
+              || true
+          fi

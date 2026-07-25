@@ -726,6 +726,8 @@ def cmd_yesterday_point(args) -> int:
     several times a day and have whichever tour's video shows up first get
     pushed immediately, while the other keeps retrying independently.
     """
+    from datetime import datetime, timezone
+
     from .render.terminal import console
     from .video.daily_point import generate_yesterday_point
 
@@ -744,10 +746,14 @@ def cmd_yesterday_point(args) -> int:
         if existing.get("status") == "pass":
             already_done.add(tour)
 
+    diagnostics: dict = {}
     try:
         digest = build_digest(d, prefer=args.source)
         videos = generate_yesterday_point(
-            digest, output_dir, skip_tours=frozenset(already_done)
+            digest,
+            output_dir,
+            skip_tours=frozenset(already_done),
+            diagnostics=diagnostics,
         )
     except Exception as exc:  # noqa: BLE001
         (output_dir / "manifest.json").write_text(
@@ -766,13 +772,22 @@ def cmd_yesterday_point(args) -> int:
         console.print(f"[red]昨日好球生成失败：{exc}[/red]")
         return 1
 
-    skip_reason = (
-        "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
-        "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
-        "官方单分标签、完整回合和日期匹配的视频。"
-        "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
-        "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
-    )
+    # The reason must state what actually happened: with the switch off no
+    # source was ever queried, and claiming "已查询各源" would be a false
+    # audit trail.
+    if diagnostics.get("enabled") is False:
+        skip_reason = (
+            "TENNISLIVE_YESTERDAY_POINT 开关未开启，本期未查询任何官方视频源；"
+            "在工作流或环境变量中设为 on 后才会开始检索。"
+        )
+    else:
+        skip_reason = (
+            "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
+            "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
+            "官方单分或集锦标签、完整回合和日期匹配的视频。"
+            "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
+            "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
+        )
     tour_status: dict[str, str] = {}
     for tour in ("ATP", "WTA"):
         if tour in already_done:
@@ -793,6 +808,26 @@ def cmd_yesterday_point(args) -> int:
                     "tour": tour,
                     "published_for": d.isoformat(),
                     "reason": skip_reason,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        # skip 也要把诊断落盘：每路 resolver 试了什么、为什么失败。这份
+        # skip.json 会被工作流提交回仓库，避免"视频静默消失"只能翻已过期
+        # 的 Actions 日志。
+        (tour_dir / "skip.json").write_text(
+            json.dumps(
+                {
+                    "status": "skipped",
+                    "generated_at": datetime.now(timezone.utc).isoformat(),
+                    "project": "yesterday-point",
+                    "tour": tour,
+                    "published_for": d.isoformat(),
+                    "switch_enabled": diagnostics.get("enabled"),
+                    "reason": skip_reason,
+                    "resolver_attempts": diagnostics.get("resolver_attempts", []),
                 },
                 ensure_ascii=False,
                 indent=2,
