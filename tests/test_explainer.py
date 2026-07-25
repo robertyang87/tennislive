@@ -32,6 +32,15 @@ def test_hawkeye_beats_are_grounded_in_verified_facts():
     assert "红土" in joined and "球印" in joined  # why
 
 
+def test_结尾要留一个问题给评论区():
+    """A short explainer earns its reach in the comments, so it ends by asking."""
+    segments = explainer_script(find_story_by_slug("hawkeye"))
+    closer = segments[-1]
+    assert closer.question, "末屏缺少互动提问"
+    assert closer.question in _slide_html(0, closer, "7.25")
+    assert "电子司线" in closer.narration  # 旁白也要问出口，不能只在画面上
+
+
 def test_每屏都有提炼要点配合旁白():
     # 画面不能只有大标题：要点是给眼睛看的骨架，旁白是给耳朵的全文。
     for story_slug in ("hawkeye",):

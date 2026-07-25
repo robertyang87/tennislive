@@ -67,6 +67,9 @@ class ExplainerSegment:
     # licensable frame of: it states the date, place and players outright
     # and imitates no real footage.
     diagram: str = ""
+    # A closing question on the final beat: a short explainer earns its
+    # reach in the comments, so end by asking rather than concluding.
+    question: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -213,7 +216,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "红土上，那一声还归人来喊",
             "法网敢这么坚持，底气就在脚下这片红土。球砸下去会留下一个印子，"
             "主裁可以走下裁判椅，蹲到线边看那个球印，再用眼睛给出最后一声判罚。"
-            "别的场地上，球过了就没了；只有红土会把证据留在地上。",
+            "别的场地上，球过了就没了；只有红土会把证据留在地上。"
+            "那你觉得，法网还能坚持多久？什么时候也会换成电子司线？"
+            "评论区聊聊。",
             "assets/explainer/hawkeye/roland_garros.jpg",
             "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 Roland Garros",
             (
@@ -221,6 +226,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
                 "球在红土会留印，落点可当场复核",
                 "这就是法网敢坚持人工的底气",
             ),
+            "",
+            "你觉得法网什么时候会改用电子司线？",
         ),
     ),
 }
@@ -298,6 +305,11 @@ def _slide_html(
     # off its own length rather than letting it wrap.
     usable_px = W - 140
     title_px = min(62, int(usable_px / max(len(segment.title), 1)))
+    question_html = (
+        f'<div class="ask">{html.escape(segment.question)}</div>'
+        if segment.question
+        else ""
+    )
     points_html = (
         '<div class="points">'
         + "".join(
@@ -351,12 +363,15 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  font-weight:700;line-height:1.38;color:#f4fbf7;
  text-shadow:0 2px 8px rgba(0,0,0,.55);}}
 .point i{{color:#c6f65a;font-style:normal;flex:none;line-height:1.38;}}
+.ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
+ text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div>
 <div class="date">{html.escape(date_label)}</div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div>{points_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}</div>
 <div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
 
