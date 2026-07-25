@@ -1136,6 +1136,55 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="masters-format",
+        title="大师赛为什么变两周",
+        subtitle="网球观察 · 赛程篇",
+        identity="扩容之后的退赛潮",
+        chips=("赛程争议", "9 站中 7 站", "56→96"),
+        hero=(
+            "九站大师赛已有七站从一周改为十二天；2026 年蒙特利尔站开赛前一周，"
+            "辛纳与德约科维奇双双退赛。"
+        ),
+        facts=(
+            "九站 ATP 大师赛中已有七站改为十二天赛期，"
+            "仅巴黎大师赛与蒙特卡洛大师赛仍保持一周；顶尖球员赛季跨越 11 个月。",
+            "2025 年起，加拿大站与辛辛那提站将正赛签表由 56 人扩至 96 人，"
+            "赛期相应延长至 12 天。",
+            "2026 年蒙特利尔站赛前，辛纳与德约科维奇退赛，此前阿尔卡拉斯已退赛；"
+            "赛事总监瓦莱丽·泰特罗表示尊重球员决定，"
+            "但指出临时退赛日益频繁已成为项目层面的问题。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24",
+                player="辛纳 / 德约科维奇",
+                age="2026 年",
+                headline="双双退出蒙特利尔",
+                detail=(
+                    "加拿大网球协会宣布两人退出 8 月 1 日开赛的大师赛；"
+                    "辛纳称与团队权衡后决定把健康放在第一位。"
+                ),
+                source_url=(
+                    "https://www.nbcsports.com/tennis/news/"
+                    "top-ranked-sinner-24-time-grand-slam-champ-djokovic-"
+                    "withdraw-from-the-national-bank-open"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-01-01",
+                player="ATP",
+                age="2025 年",
+                headline="签表扩容至 96 人",
+                detail="加拿大站与辛辛那提站正赛签表由 56 人扩至 96 人，赛期延长至 12 天。",
+                source_url="https://en.wikipedia.org/wiki/2025_National_Bank_Open",
+            ),
+        ),
+        image_keys=(),
+        source_label="BBC / NBC Sports / 加拿大网协",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000",
+    ),
+    _trivia_story(
         slug="queue",
         title="温网的队要排一晚上",
         subtitle="网球冷知识 · 观赛篇",

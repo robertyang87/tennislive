@@ -149,6 +149,50 @@ _MISCALL_DIAGRAM = """
 """
 
 
+# The subject of this beat is a calendar, not a place — no photograph shows
+# "seven of nine events grew to twelve days". Draw it instead, and label it.
+_MASTERS_FORMAT_DIAGRAM = """
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <text x="70" y="58" fill="#9fb4aa" font-size="27" font-weight="700">赛期</text>
+  <text x="70" y="118" fill="#e7f3ec" font-size="30" font-weight="700">过去</text>
+  <rect x="200" y="92" width="182" height="38" rx="6" fill="rgba(55,226,154,.35)"
+        stroke="#37e29a" stroke-width="3"/>
+  <text x="398" y="120" fill="#37e29a" font-size="29" font-weight="800">7 天</text>
+  <text x="70" y="196" fill="#e7f3ec" font-size="30" font-weight="700">现在</text>
+  <rect x="200" y="170" width="312" height="38" rx="6" fill="rgba(198,246,90,.30)"
+        stroke="#c6f65a" stroke-width="3"/>
+  <text x="528" y="198" fill="#c6f65a" font-size="29" font-weight="800">12 天</text>
+
+  <line x1="70" y1="250" x2="830" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <text x="70" y="308" fill="#9fb4aa" font-size="27" font-weight="700">正赛签表</text>
+  <text x="248" y="312" fill="#e7f3ec" font-size="44" font-weight="800">56</text>
+  <text x="320" y="312" fill="#9fb4aa" font-size="36" font-weight="700">&#8594;</text>
+  <text x="378" y="312" fill="#c6f65a" font-size="44" font-weight="800">96</text>
+  <text x="452" y="312" fill="#9fb4aa" font-size="25" font-weight="700">人（2025 起）</text>
+
+  <line x1="70" y1="352" x2="830" y2="352" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <text x="70" y="412" fill="#9fb4aa" font-size="27" font-weight="700">九站大师赛</text>
+  <g>
+    <rect x="70"  y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="156" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="242" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="328" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="414" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="500" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="586" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="672" y="446" width="72" height="52" rx="7" fill="none" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
+    <rect x="758" y="446" width="72" height="52" rx="7" fill="none" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
+  </g>
+  <text x="70"  y="540" fill="#c6f65a" font-size="26" font-weight="800">7 站已改 12 天</text>
+  <text x="600" y="540" fill="#9fb4aa" font-size="26" font-weight="700">2 站仍一周</text>
+  <text x="450" y="614" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="700">仍为一周的是：巴黎 · 蒙特卡洛</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -243,6 +287,94 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # A live story, so every claim is pinned to a source: the 12-day format and
+    # the two week-long holdouts from BBC Sport; the 2025 draw expansion from
+    # 56 to 96 at Canada and Cincinnati; Sinner's and Tetreault's words as
+    # quoted by NBC Sports / Tennis Canada's announcement; Tsitsipas via BBC.
+    "masters-format": (
+        (
+            "before",
+            "老规矩",
+            "大师赛原本一周就打完",
+            "大师赛是四大满贯之下最高的一级。它原本的样子很简单：一周之内打完。"
+            "但现在，九站大师赛里已经有七站改成了十二天——只剩巴黎和蒙特卡洛，"
+            "还保持着一周的老规矩。画面里就是巴黎大师赛的球场。",
+            "assets/explainer/masters-format/paris.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2024 巴黎大师赛 · Accor Arena",
+            (
+                "大师赛是四大满贯之下最高一级",
+                "9 站里已有 7 站改成 12 天",
+                "只剩巴黎、蒙特卡洛还是一周",
+            ),
+        ),
+        (
+            "expand",
+            "扩容",
+            "签表从 56 人扩到 96 人",
+            "2025 年，加拿大站和辛辛那提站把正赛签表从五十六人扩到九十六人，"
+            "赛期也随之拉长到十二天。理由不难理解：更多的比赛日，"
+            "意味着更多的门票和更多的转播时段。但对球员来说，"
+            "一个原本一周结束的赛事，现在要占掉将近两周。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2025 年加拿大、辛辛那提扩容",
+                "正赛签表从 56 人扩到 96 人",
+                "赛期随之拉长到 12 天",
+            ),
+            _MASTERS_FORMAT_DIAGRAM,
+        ),
+        (
+            "withdraw",
+            "退赛",
+            "世界第一，赛前一周退赛",
+            "2026 年八月的蒙特利尔站，世界第一辛纳退赛了。他给出的说法是："
+            "和团队反复权衡之后做了这个艰难的决定；错过这么重要的比赛从来都不容易，"
+            "但他们相信，把健康放在第一位是对的。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2025 法网 辛纳",
+            (
+                "2026 年 8 月蒙特利尔站",
+                "世界第一辛纳赛前一周退赛",
+                "辛纳：把健康放在第一位",
+            ),
+        ),
+        (
+            "organiser",
+            "赛事方",
+            "赛事方：这已经不是个案",
+            "同一天，德约科维奇也退了赛；在他们之前，阿尔卡拉斯已经退了。"
+            "赛事总监瓦莱丽·泰特罗的回应是：我们尊重球员的决定，也理解在这样密集的"
+            "赛程下，健康必须是第一位的。但她同时指出，这类临时退赛近年越来越频繁，"
+            "已经不是某一站的问题——大师赛是巡回赛的旗舰，球迷理应看到最好的球员出场。",
+            "assets/explainer/masters-format/djokovic.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2026 澳网首轮 德约科维奇",
+            (
+                "德约同日退赛，此前阿尔卡拉斯已退",
+                "赛事总监：尊重球员，但这是行业问题",
+                "大师赛是旗舰，球迷理应看到最好的",
+            ),
+        ),
+        (
+            "whose",
+            "谁的赛程",
+            "更长的赛事，到底给谁看",
+            "西西帕斯说得更直接：大师赛变成了一种拖沓，质量明显下降，"
+            "球员得不到该有的恢复和训练时间。顶尖球员的赛季跨越十一个月；"
+            "蒙特利尔之后紧接着辛辛那提，再往后就是美网。"
+            "加拿大网协说，正在和 ATP 商谈调整。问题也就摆在这儿了："
+            "一个更长的大师赛，到底是给谁看的？",
+            "assets/explainer/masters-format/tsitsipas.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2024 巴塞尔室内赛 西西帕斯",
+            (
+                "西西帕斯：变成拖沓，质量下降",
+                "顶尖球员赛季跨越 11 个月",
+                "加拿大网协：正在与 ATP 商谈",
+            ),
+            "",
+            "更长的大师赛，到底是给谁看的？",
+        ),
+    ),
     # Facts from en.wikipedia "Wimbledon Championships": Wimbledon and the
     # French Open are the only Slams where a same-day queue still reaches the
     # show courts, cards numbered from 2003, one queue from 2008 with ~500
@@ -709,6 +841,13 @@ _CAPTIONS: dict[str, dict] = {
             "现在四大满贯里，只剩一个地方还没交。"
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "masters-format": {
+        "hook": (
+            "世界第一辛纳、德约科维奇同一天退出蒙特利尔大师赛。\n"
+            "赛事方这次没忍住——问题出在赛程，还是出在球员？"
+        ),
+        "tags": ("网球", "网球时差", "ATP", "大师赛", "辛纳"),
     },
     "queue": {
         "hook": (
