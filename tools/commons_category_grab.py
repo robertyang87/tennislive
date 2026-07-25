@@ -46,7 +46,12 @@ SEEDS: dict[str, list[str]] = {
     "wimbledon_recent": [
         "2025 Wimbledon Championships",
         "2024 Wimbledon Championships",
-        "2023 Wimbledon Championships",
+    ],
+    # The one frame still missing: a ball mark on clay / an umpire reading it.
+    "ball_mark": [
+        "Tennis ball marks",
+        "Clay tennis courts",
+        "Tennis umpires",
     ],
 }
 
@@ -71,7 +76,7 @@ def _api(session: requests.Session, **params) -> dict:
     params.setdefault("action", "query")
     for attempt in range(3):
         try:
-            resp = session.post(API, data=params, timeout=30)
+            resp = session.get(API, params=params, timeout=30)
             resp.raise_for_status()
             return resp.json()
         except Exception as exc:  # noqa: BLE001
