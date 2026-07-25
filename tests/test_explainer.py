@@ -1,3 +1,5 @@
+import html
+
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
     H,
@@ -72,6 +74,34 @@ def test_推送里的图必须是绝对地址否则微信收到空图():
     # ...and it uses the knowledge post's layout, not a second one.
     assert "第1张未显示？点此打开原图" in body
     assert "分别复制标题 / 正文 / 置顶评论" in body
+
+
+def test_文案本身要在推送里能长按复制():
+    """The copy button points at a Pages URL, which can 404 mid-deploy.
+
+    When it does, the push carries a caption nobody can lift off the phone —
+    which is the whole point of sending it. So the text itself has to travel
+    inside the message, not only behind a link.
+    """
+    import datetime as _dt
+    from pathlib import Path as _Path
+
+    from tennislive.video.explainer import explainer_push_html, explainer_xiaohongshu
+
+    story = find_story_by_slug("hawkeye")
+    segments = explainer_script(story)
+    xhs = explainer_xiaohongshu(story, segments, "7.25")
+    body = explainer_push_html(
+        segments,
+        _Path("output/2026-07-25/explainer/hawkeye"),
+        date=_dt.date(2026, 7, 25),
+        xhs_text=xhs,
+    )
+    assert "长按" in body, "推送里没有告诉用户怎么复制"
+    # every non-empty line of the caption must actually be in the message
+    for line in (ln.strip() for ln in xhs.splitlines()):
+        if line:
+            assert html.escape(line) in body, f"文案这行没进推送：{line}"
     assert "图片长按保存" in body
     assert "▶ 打开 9:16 成片" in body
 
