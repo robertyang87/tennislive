@@ -167,11 +167,26 @@
   "license": "官方公开页面图片 · 资讯引用",
   "focus": "42% 35%",
   "headline_selection": {
-    "status": "primary",
-    "primary_match_id": "401-2026:179405",
+    "status": "reselected",
+    "primary_match_id": "401-2026:179404",
     "selected_match_id": "401-2026:179405",
     "attempted": 4,
     "failed_candidates": [
+      {
+        "match_id": "401-2026:179404",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public",
+          "official-match-media"
+        ]
+      },
       {
         "match_id": "401-2026:179406",
         "status": "unavailable",
