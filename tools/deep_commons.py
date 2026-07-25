@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 import time
 from pathlib import Path
 
@@ -94,11 +95,16 @@ def _plain(raw) -> str:
 
 
 def _year(text: str) -> int:
-    for token in str(text).replace("-", " ").replace("/", " ").split():
-        if len(token) == 4 and token.isdigit():
-            y = int(token)
-            if 1970 < y < 2100:
-                return y
+    """First plausible four-digit year in `text`.
+
+    Splitting on whitespace missed every category, because "Category:2024
+    French Open" tokenises to "Category:2024" — not a bare number — so all 38
+    editions of each tournament were discarded as undated.
+    """
+    for match in re.findall(r"(?<!\d)(19|20)(\d{2})(?!\d)", str(text)):
+        y = int(match[0] + match[1])
+        if 1970 < y < 2100:
+            return y
     return 0
 
 
