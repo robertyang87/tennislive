@@ -891,6 +891,71 @@ _CAPTIONS: dict[str, dict] = {
 }
 
 
+# The first seconds decide whether anyone stays, and a deck that opens on
+# beat one makes the viewer work out the subject for themselves. Every deck
+# now opens on the question it answers, said out loud and set large.
+_OPENINGS: dict[str, dict] = {
+    "hawkeye": {
+        "question": "球压没压线，到底谁说了算？",
+        "narration": "球压没压线，到底谁说了算？这件事，网球用了一百年才交出去。",
+        "image": "assets/explainer/hawkeye/us_open_court.jpg",
+    },
+    "yellow-ball": {
+        "question": "网球为什么是黄色的？",
+        "narration": "网球为什么是黄色的？而且它变成黄色，还不到六十年。",
+        "image": "assets/explainer/yellow-ball/optic_yellow.jpg",
+    },
+    "longest-match": {
+        "question": "一场网球，最长能打多久？",
+        "narration": "一场网球最长能打多久？答案是十一小时五分钟，分三天打完。",
+        "image": "assets/explainer/longest-match/scoreboard.jpg",
+    },
+    "wimbledon-whites": {
+        "question": "温网为什么只准穿白？",
+        "narration": "温网为什么只准穿白？这条规矩，一直管到内衣。",
+        "image": "assets/explainer/wimbledon-whites/headtotoe.jpg",
+    },
+    "rufus": {
+        "question": "温网为什么雇了一只鹰？",
+        "narration": "温网有一名员工是一只鹰。它为什么在那儿上班？",
+        "image": "assets/explainer/rufus/patrol.jpg",
+    },
+    "queue": {
+        "question": "温网的票为什么要排一晚？",
+        "narration": "温网的票，为什么要在草地上排一晚？",
+        "image": "assets/explainer/queue/queue.jpg",
+    },
+    "masters-format": {
+        "question": "大师赛为什么变成两周？",
+        "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
+        "image": "assets/explainer/masters-format/sinner.jpg",
+    },
+}
+
+
+def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
+    """The cover card: the question, said out loud, before any explaining."""
+    spec = _OPENINGS.get(story.slug) or {}
+    question = spec.get("question") or f"{story.title}？"
+    image = spec.get("image") or (beats[0].image if beats else "")
+    credit = ""
+    for beat in beats:
+        if beat.image == image:
+            credit = beat.credit
+            break
+    return ExplainerSegment(
+        kind="cover",
+        label="",
+        title=question,
+        narration=spec.get("narration") or question,
+        image=image,
+        credit=credit,
+        points=(),
+        diagram="",
+        question="",
+    )
+
+
 def explainer_script(story) -> list[ExplainerSegment]:
     """Return the three-beat script for a story, each beat with a hero visual.
 
@@ -901,7 +966,8 @@ def explainer_script(story) -> list[ExplainerSegment]:
     """
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
-        return [ExplainerSegment(*row) for row in scripted]
+        beats = [ExplainerSegment(*row) for row in scripted]
+        return [_opening_segment(story, beats), *beats]
 
     moments = list(getattr(story, "moments", ()) or ())
     facts = list(getattr(story, "facts", ()) or ())
@@ -932,8 +998,12 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
+    cover = segment.kind == "cover"
     circled = ("①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨")
-    number = circled[index] if index < len(circled) else f"{index + 1}"
+    # The cover is not a beat, so it carries no number and the beats after it
+    # still count from one.
+    beat_no = index if cover else index - 1
+    number = circled[beat_no] if 0 <= beat_no < len(circled) else f"{beat_no + 1}"
     css = _font_css()
 
     icon_path = _REPO / "assets" / "logo" / "tennis-clock-icon.png"
@@ -964,13 +1034,18 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
             wide = pw / ph >= 1.2 or max(W / pw, H / ph) > 1.6
         except Exception:  # noqa: BLE001
             wide = False
+        # Letterboxing protects a beat's evidence from being cropped. The cover
+        # card carries no evidence — the picture is atmosphere behind the
+        # question — and bands there just make the opening look empty, so the
+        # cover always fills.
+        letterbox = wide and not cover
         fit = (
             "background-size:contain;background-repeat:no-repeat;"
             "background-position:center 34%;"
-            if wide
+            if letterbox
             else "background-size:cover;background-position:center;"
         )
-        backdrop = ' class="hero diagram"' if wide else ' class="hero"'
+        backdrop = ' class="hero diagram"' if letterbox else ' class="hero"'
         hero = (
             f'<div{backdrop} style="background-image:url(\'{_data_uri(image_path)}\');'
             f'{fit}"></div>'
@@ -985,12 +1060,24 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
     # One line, always: CJK glyphs run about one em wide, so size the headline
     # off its own length rather than letting it wrap.
     usable_px = W - 140
-    title_px = min(62, int(usable_px / max(len(segment.title), 1)))
+    if cover:
+        # The question is the whole point of this card, so let it be big and
+        # let it wrap; two lines of 9 characters beats one line of tiny text.
+        title_px = min(96, int(usable_px * 2 / max(len(segment.title), 1)))
+    else:
+        title_px = min(62, int(usable_px / max(len(segment.title), 1)))
     question_html = (
         f'<div class="ask">{html.escape(segment.question)}</div>'
         if segment.question
         else ""
     )
+    cover_cls = " cover" if cover else ""
+    chip_html = (
+        '<span class="kicker">网球有故事</span>'
+        if cover
+        else f'<span class="chip">{number} {html.escape(segment.label)}</span>'
+    )
+    tail_html = '<div class="tail">↓ 五屏讲清楚</div>' if cover else ""
     points_html = (
         '<div class="points">'
         + "".join(
@@ -1035,6 +1122,15 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
+.cover .title{{white-space:normal;line-height:1.24;font-weight:400;
+ text-shadow:0 6px 30px rgba(0,0,0,.85);}}
+.cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
+.cover .scrim{{background:linear-gradient(180deg,
+ rgba(6,28,20,.72) 0%,rgba(6,28,20,.62) 40%,rgba(6,28,20,.78) 100%);}}
+.kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
+ font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
+.tail{{align-self:flex-start;font-size:34px;font-weight:700;color:#dff3e8;
+ text-shadow:0 3px 14px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
  background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
  padding:24px 28px;border-radius:12px;}}
@@ -1046,10 +1142,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
-<div class="slide">{hero}<div class="bar"></div>
+<div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div></div>
-<div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}</div>
+<div class="copy">{chip_html}
+<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}{tail_html}</div>
 <div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
 
@@ -1270,8 +1366,11 @@ def explainer_xiaohongshu(
     # Circled numerals rather than plain digits: the slides are numbered the
     # same way, so the caption reads as the same object.
     circled = ("1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣")
+    # The cover is the question, not a section — the caption already opens
+    # with it, so numbering starts at the first real beat.
+    beats = [seg for seg in segments if seg.kind != "cover"]
     sections = []
-    for index, segment in enumerate(segments):
+    for index, segment in enumerate(beats):
         marker = circled[index] if index < len(circled) else f"{index + 1}."
         bullets = "\n".join(f"· {point}" for point in segment.points)
         sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
