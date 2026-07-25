@@ -1,22 +1,18 @@
 """生成《网球四大满贯》竖屏科普样片（1080×1920）。
 
-按 data/grand_slam_video.json 的分镜规格，用 Pillow 合成每个镜头的画面，
-再用 ffmpeg 加轻微的 Ken Burns 运动、淡入淡出并拼接成片。所有静态画面均来自
-仓库内“可复用授权”图片并在片中署名；标注为占位的镜头输出一张醒目的占位卡，
-提示在获得授权后由官方集锦替换——脚本本身没有下载器，不会抓取任何受版权保护的视频。
+按 data/grand_slam_video.json 的分镜规格，用 Pillow 合成每个镜头（电影感「灯光球场」
+背景 + 亮色大标题 + 赛事分区 + 底部描边字幕），再用 ffmpeg 加轻微 Ken Burns、
+淡入淡出并拼接成片。
+
+版权：静态画面只用仓库内可复用授权图（CC / 公有领域），片中**不烧录署名**，署名改由
+`发布文案.txt` 的致谢承载（CC 许可要求署名，公有领域/CC0 除外）；需要官方比赛画面的
+镜头输出醒目占位卡，由你在拿到授权后填入。脚本没有下载器，不抓取任何受版权保护的视频。
 
 用法：
     pip install Pillow imageio-ffmpeg
-    python tools/build_grand_slam_short.py \
-        --spec data/grand_slam_video.json \
-        --outdir output/grand-slam-vertical
+    python tools/build_grand_slam_short.py --overwrite
 
-可选：
-    --voiceover path.mp3   叠加自备/授权配音音轨（不改动分镜时长）
-    --tts                  尝试用 edge-tts 生成中文配音（需可访问微软语音服务）
-    --overwrite            覆盖已存在的输出
-
-输出：grand-slam.mp4、captions.srt、narration.txt、cover.png、storyboard.png。
+可选：--voiceover a.mp3（自备/授权配音）、--tts（edge-tts，需可访问语音服务）、--overwrite
 """
 
 from __future__ import annotations
@@ -33,15 +29,10 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 FONTS = ROOT / "assets" / "fonts"
 
-# ---- 视觉主题（对齐参考视频的暗色网格 + 亮黄标题风格，但为原创配色/排版）----
-BG_TOP = (11, 15, 22)
-BG_BOTTOM = (5, 7, 11)
-GRID = (30, 46, 66)
-YELLOW = (247, 191, 36)
-YELLOW_SHADOW = (120, 22, 14)
+YELLOW = (245, 190, 40)
+YELLOW_SHADOW = (110, 20, 10)
 WHITE = (245, 247, 250)
-MUTED = (150, 162, 176)
-CAPTION_BG = (0, 0, 0)
+MUTED = (155, 167, 182)
 
 
 def _ffmpeg() -> str:
@@ -52,7 +43,7 @@ def _ffmpeg() -> str:
         import imageio_ffmpeg
 
         return imageio_ffmpeg.get_ffmpeg_exe()
-    except Exception as exc:  # pragma: no cover - 环境缺失时给出清晰指引
+    except Exception as exc:  # pragma: no cover
         sys.exit(f"找不到 ffmpeg，请 `pip install imageio-ffmpeg`（{exc}）")
 
 
@@ -60,7 +51,7 @@ def font(name: str, size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(str(FONTS / name), size)
 
 
-def F_BLACK(sz):  # 标题：思源黑体 Black
+def F_BLACK(sz):
     return font("NotoSerifSC-Black-sub.ttf", sz)
 
 
@@ -76,47 +67,90 @@ def F_LATIN(sz):
     return font("BarlowCondensed-Bold.ttf", sz)
 
 
-def gradient_bg(w: int, h: int) -> Image.Image:
-    base = Image.new("RGB", (w, h), BG_TOP)
-    top = Image.new("RGB", (w, 1), BG_TOP)
-    grad = Image.new("L", (1, h))
+def hex2rgb(s: str):
+    s = s.lstrip("#")
+    return tuple(int(s[i:i + 2], 16) for i in (0, 2, 4))
+
+
+# ---------------------------------------------------------------------------
+# 电影感背景：深色渐变 + 球场聚光 + 透视球场线 + 暗角
+# ---------------------------------------------------------------------------
+def cinematic_bg(w: int, h: int, accent=(245, 190, 40)) -> Image.Image:
+    top, mid, bot = (6, 8, 13), (14, 19, 28), (4, 6, 10)
+    col = Image.new("RGB", (1, h))
+    cpx = col.load()
     for y in range(h):
-        grad.putpixel((0, y), int(255 * y / h))
-    bottom = Image.new("RGB", (w, h), BG_BOTTOM)
-    base = Image.composite(bottom, base, grad.resize((w, h)))
-    draw = ImageDraw.Draw(base)
-    step = 84
-    for x in range(0, w + step, step):
-        draw.line([(x, 0), (x, h)], fill=GRID, width=1)
-    for y in range(0, h + step, step):
-        draw.line([(0, y), (w, y)], fill=GRID, width=1)
+        t = y / h
+        if t < 0.5:
+            f, a, b_ = t / 0.5, top, mid
+        else:
+            f, a, b_ = (t - 0.5) / 0.5, mid, bot
+        cpx[0, y] = tuple(int(a[k] + (b_[k] - a[k]) * f) for k in range(3))
+    base = col.resize((w, h))
+
+    # 上方聚光晕（用 accent 淡淡上色）
+    glow = Image.new("L", (w, h), 0)
+    gd = ImageDraw.Draw(glow)
+    cx, cy, rad = w // 2, int(h * 0.30), int(w * 0.72)
+    gd.ellipse([cx - rad, cy - rad, cx + rad, cy + rad], fill=90)
+    glow = glow.filter(ImageFilter.GaussianBlur(160))
+    tint = Image.new("RGB", (w, h), tuple(min(255, int(c * 0.9 + 30)) for c in accent))
+    base = Image.composite(Image.blend(base, tint, 0.5), base, glow)
+
+    # 透视球场线（低透明度，营造“站在场上”）
+    ov = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    od = ImageDraw.Draw(ov)
+    lc = (*accent, 46)
+    yb, yf = int(h * 0.92), int(h * 0.60)
+    bl, br = int(w * 0.06), int(w * 0.94)
+    fl, fr = int(w * 0.40), int(w * 0.60)
+    od.line([(bl, yb), (fl, yf)], fill=lc, width=3)   # 左边线
+    od.line([(br, yb), (fr, yf)], fill=lc, width=3)   # 右边线
+    od.line([(bl, yb), (br, yb)], fill=lc, width=3)   # 底线
+    ys = int(yf + (yb - yf) * 0.45)                    # 发球线
+    sl = bl + (fl - bl) * 0.45
+    sr = br + (fr - br) * 0.45
+    od.line([(sl, ys), (sr, ys)], fill=lc, width=2)
+    od.line([((bl + br) / 2, yb), ((fl + fr) / 2, yf)], fill=(*accent, 30), width=2)  # 中线
+    base = Image.alpha_composite(base.convert("RGBA"), ov).convert("RGB")
+
+    # 暗角
+    vig = Image.new("L", (w, h), 0)
+    vd = ImageDraw.Draw(vig)
+    vd.ellipse([-int(w * 0.35), -int(h * 0.18), int(w * 1.35), int(h * 1.18)], fill=255)
+    vig = vig.filter(ImageFilter.GaussianBlur(220))
+    dark = Image.new("RGB", (w, h), (0, 0, 0))
+    base = Image.composite(base, dark, vig)
     return base
 
 
-def fit_cover(img: Image.Image, box_w: int, box_h: int, focal=(0.5, 0.5)) -> Image.Image:
-    """等比裁剪填满目标框，按焦点定位。"""
+def fit_cover(img, box_w, box_h, focal=(0.5, 0.5)):
     src_w, src_h = img.size
     scale = max(box_w / src_w, box_h / src_h)
-    new_w, new_h = int(src_w * scale + 0.5), int(src_h * scale + 0.5)
-    img = img.resize((new_w, new_h), Image.LANCZOS)
-    fx, fy = focal
-    left = int((new_w - box_w) * fx)
-    top = int((new_h - box_h) * fy)
-    left = max(0, min(left, new_w - box_w))
-    top = max(0, min(top, new_h - box_h))
+    nw, nh = int(src_w * scale + 0.5), int(src_h * scale + 0.5)
+    img = img.resize((nw, nh), Image.LANCZOS)
+    left = max(0, min(int((nw - box_w) * focal[0]), nw - box_w))
+    top = max(0, min(int((nh - box_h) * focal[1]), nh - box_h))
     return img.crop((left, top, left + box_w, top + box_h))
 
 
-def wrap_cjk(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
+def rounded(img: Image.Image, radius: int) -> Image.Image:
+    mask = Image.new("L", img.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, img.width, img.height], radius, fill=255)
+    out = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    out.paste(img, (0, 0), mask)
+    return out
+
+
+def wrap_cjk(text, fnt, max_w):
     lines, cur = [], ""
     for ch in text:
         if ch == "\n":
             lines.append(cur)
             cur = ""
             continue
-        trial = cur + ch
-        if fnt.getlength(trial) <= max_w or not cur:
-            cur = trial
+        if fnt.getlength(cur + ch) <= max_w or not cur:
+            cur += ch
         else:
             lines.append(cur)
             cur = ch
@@ -125,215 +159,178 @@ def wrap_cjk(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
     return lines
 
 
-def draw_center_text(draw, cx, y, text, fnt, fill, shadow=None, shadow_off=(6, 7)):
-    w = fnt.getlength(text)
-    x = cx - w / 2
+def center(draw, cx, y, text, fnt, fill, shadow=None, off=(6, 7)):
+    x = cx - fnt.getlength(text) / 2
     if shadow:
-        draw.text((x + shadow_off[0], y + shadow_off[1]), text, font=fnt, fill=shadow)
+        draw.text((x + off[0], y + off[1]), text, font=fnt, fill=shadow)
     draw.text((x, y), text, font=fnt, fill=fill)
-    bbox = fnt.getbbox(text)
-    return bbox[3] - bbox[1]
 
 
-def outline_text(draw, xy, text, fnt, fill=WHITE, outline=(0, 0, 0), width=4):
+def outline(draw, xy, text, fnt, fill=WHITE, oc=(0, 0, 0), width=5):
     x, y = xy
     for dx in range(-width, width + 1):
         for dy in range(-width, width + 1):
             if dx * dx + dy * dy <= width * width:
-                draw.text((x + dx, y + dy), text, font=fnt, fill=outline)
+                draw.text((x + dx, y + dy), text, font=fnt, fill=oc)
     draw.text((x, y), text, font=fnt, fill=fill)
 
 
-def brand_mark(img: Image.Image, brand: str):
+def brand_mark(img, brand):
     d = ImageDraw.Draw(img)
-    W = img.width
     f = F_BOLD(34)
     pad = 44
-    # 左上角品牌条
     d.rounded_rectangle([pad, pad, pad + 26 + f.getlength(brand) + 40, pad + 64],
                         radius=14, fill=(0, 0, 0), outline=YELLOW, width=2)
     d.ellipse([pad + 16, pad + 22, pad + 36, pad + 42], fill=YELLOW)
     d.text((pad + 48, pad + 12), brand, font=f, fill=WHITE)
 
 
-def progress_dots(img: Image.Image, active: int):
-    """底部四个进度点，标示当前是第几站（1..4）。"""
+def progress_dots(img, active):
     if not active:
         return
     d = ImageDraw.Draw(img)
     W = img.width
-    n = 4
-    gap = 46
-    r = 9
-    total = (n - 1) * gap
-    x0 = W / 2 - total / 2
+    gap, r = 46, 9
+    x0 = W / 2 - (3 * gap) / 2
     y = img.height - 150
-    for i in range(n):
+    for i in range(4):
         cx = x0 + i * gap
         on = (i + 1) == active
-        d.ellipse([cx - r, y - r, cx + r, y + r],
-                  fill=YELLOW if on else (60, 68, 80))
+        if on:
+            d.ellipse([cx - r - 3, y - r - 3, cx + r + 3, y + r + 3], fill=(0, 0, 0))
+        d.ellipse([cx - r, y - r, cx + r, y + r], fill=YELLOW if on else (70, 78, 92))
 
 
-def section_header(img: Image.Image, section: dict):
+def section_header(img, section):
     d = ImageDraw.Draw(img)
     W = img.width
-    color = tuple(int(section["color"].lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
+    color = hex2rgb(section["color"])
     y = 150
-    en = section.get("en", "")
-    zh = section.get("zh", "")
+    center(d, W / 2, y, section.get("en", ""), F_LATIN(60), YELLOW)
+    center(d, W / 2, y + 74, section.get("zh", ""), F_BOLD(46), WHITE)
     surface = section.get("surface", "")
-    fe = F_LATIN(60)
-    draw_center_text(d, W / 2, y, en, fe, YELLOW)
-    fz = F_BOLD(46)
-    draw_center_text(d, W / 2, y + 74, zh, fz, WHITE)
-    # 场地/城市小标签
     if surface:
         ft = F_BOLD(32)
         tw = ft.getlength(surface) + 56
         bx0 = W / 2 - tw / 2
         by0 = y + 150
         d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 52], radius=26, fill=color)
-        draw_center_text(d, W / 2, by0 + 8, surface, ft, (10, 12, 16))
+        center(d, W / 2, by0 + 8, surface, ft, (8, 10, 14))
 
 
-def caption_band(img: Image.Image, caption: str):
+def caption_band(img, caption):
     if not caption:
         return
     d = ImageDraw.Draw(img, "RGBA")
     W, H = img.size
-    fnt = F_BOLD(58)
-    lines = wrap_cjk(caption, fnt, W - 160)
-    line_h = 78
-    block_h = line_h * len(lines)
-    y0 = H - 300 - block_h
+    fnt = F_BOLD(60)
+    lines = wrap_cjk(caption, fnt, W - 150)
+    lh = 82
+    y0 = H - 300 - lh * len(lines)
     for i, ln in enumerate(lines):
-        y = y0 + i * line_h
-        w = fnt.getlength(ln)
-        x = W / 2 - w / 2
-        outline_text(d, (x, y), ln, fnt, fill=WHITE, outline=(0, 0, 0), width=5)
+        x = W / 2 - fnt.getlength(ln) / 2
+        outline(d, (x, y0 + i * lh), ln, fnt, fill=WHITE, oc=(0, 0, 0), width=6)
 
 
-def render_title(spec_meta, scene, W, H) -> Image.Image:
-    img = gradient_bg(W, H)
+def render_title(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
     d = ImageDraw.Draw(img)
     big = scene.get("big", [])
     fnt = F_BLACK(180)
-    total_h = len(big) * 210
-    y = H / 2 - total_h / 2 - 120
+    y = H / 2 - len(big) * 105 - 130
     for line in big:
-        draw_center_text(d, W / 2, y, line, fnt, YELLOW, shadow=YELLOW_SHADOW, shadow_off=(8, 10))
+        center(d, W / 2, y, line, fnt, YELLOW, shadow=YELLOW_SHADOW, off=(8, 10))
         y += 210
-    sub = scene.get("sub", "")
-    if sub:
-        fs = F_BOLD(52)
-        draw_center_text(d, W / 2, y + 30, sub, fs, WHITE)
-    brand_mark(img, spec_meta["brand"])
+    if scene.get("sub"):
+        center(d, W / 2, y + 24, scene["sub"], F_BOLD(50), WHITE)
+    brand_mark(img, meta["brand"])
     return img
 
 
-def render_section(spec_meta, scene, W, H) -> Image.Image:
-    img = gradient_bg(W, H)
-    d = ImageDraw.Draw(img)
-    idx = scene.get("index", 0)
-    big = F_BLACK(320)
-    draw_center_text(d, W / 2, H / 2 - 320, str(idx), big, YELLOW,
-                     shadow=YELLOW_SHADOW, shadow_off=(10, 12))
-    sec = scene["section"]
-    fe = F_LATIN(72)
-    draw_center_text(d, W / 2, H / 2 + 120, sec["en"], fe, WHITE)
-    fz = F_BOLD(56)
-    draw_center_text(d, W / 2, H / 2 + 210, sec["zh"], fz, YELLOW)
-    ft = F_BOLD(38)
-    draw_center_text(d, W / 2, H / 2 + 310, sec.get("surface", ""), ft, MUTED)
-    brand_mark(img, spec_meta["brand"])
-    progress_dots(img, idx)
-    return img
-
-
-def _photo_layer(scene, W, H) -> Image.Image:
-    img = gradient_bg(W, H)
-    src = Image.open(ROOT / scene["image"]).convert("RGB")
-    focal = scene.get("focal", [0.5, 0.5])
-    box_h = int(H * 0.62)
-    box_y = int(H * 0.20)
-    photo = fit_cover(src, W, box_h, focal)
-    img.paste(photo, (0, box_y))
-    # 顶部/底部渐隐，便于压字
+def render_section(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
     d = ImageDraw.Draw(img, "RGBA")
-    for i in range(box_y, box_y + 160):
-        a = int(255 * (1 - (i - box_y) / 160))
-        d.line([(0, i), (W, i)], fill=(8, 11, 16, a))
-    for i in range(box_y + box_h - 220, box_y + box_h):
-        a = int(255 * ((i - (box_y + box_h - 220)) / 220))
-        d.line([(0, i), (W, i)], fill=(6, 8, 12, a))
-    return img
-
-
-def render_photo(spec_meta, scene, W, H) -> Image.Image:
-    img = _photo_layer(scene, W, H)
-    d = ImageDraw.Draw(img)
-    section_header(img, scene["section"])
-    caption_band(img, scene.get("caption", ""))
-    # 授权署名（小字，左下）
-    credit = scene.get("credit", "")
-    if credit:
-        fc = F_REG(24)
-        d.text((44, H - 92), credit, font=fc, fill=(150, 160, 172))
-    # 若该镜头还需叠加官方集锦，右下角给出提示（与左下署名分居两侧，互不遮挡）
-    slot = scene.get("slot")
-    if slot:
-        fnt = F_BOLD(26)
-        tag = "示意图 · 可替换 / 叠加官方集锦"
-        tw = fnt.getlength(tag) + 40
-        ty = H - 100
-        d.rounded_rectangle([W - 44 - tw, ty, W - 44, ty + 46], radius=10,
-                            fill=(0, 0, 0), outline=YELLOW, width=2)
-        d.text((W - 44 - tw + 20, ty + 8), tag, font=fnt, fill=YELLOW)
-    brand_mark(img, spec_meta["brand"])
+    sec = scene["section"]
+    # 背景大写城市水印
+    word = sec.get("word", "")
+    if word:
+        fw = F_LATIN(220)
+        center(d, W / 2, H / 2 - 250, word, fw, (*accent, 40))
+    # 主标题
+    center(d, W / 2, H / 2 - 40, sec["en"], F_LATIN(120), YELLOW,
+           shadow=YELLOW_SHADOW, off=(6, 8))
+    center(d, W / 2, H / 2 + 120, sec["zh"], F_BOLD(58), WHITE)
+    # 场地条
+    surf = sec.get("surface", "")
+    ft = F_BOLD(38)
+    tw = ft.getlength(surf) + 64
+    bx0 = W / 2 - tw / 2
+    by0 = H / 2 + 214
+    d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 60], radius=30, fill=accent)
+    center(d, W / 2, by0 + 9, surf, ft, (8, 10, 14))
+    brand_mark(img, meta["brand"])
     progress_dots(img, scene.get("index", 0))
     return img
 
 
-def render_placeholder(spec_meta, scene, W, H) -> Image.Image:
-    img = gradient_bg(W, H)
+def render_photo(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    # 照片卡：圆角 + accent 发光边，浮在背景上
+    card_w, card_h = W - 120, int(H * 0.52)
+    card_x, card_y = 60, int(H * 0.24)
+    src = Image.open(ROOT / scene["image"]).convert("RGB")
+    photo = fit_cover(src, card_w, card_h, scene.get("focal", [0.5, 0.5]))
+    card = rounded(photo, 32)
+    # 发光
+    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    gd.rounded_rectangle([card_x - 6, card_y - 6, card_x + card_w + 6, card_y + card_h + 6],
+                         radius=38, outline=(*accent, 180), width=6)
+    glow = glow.filter(ImageFilter.GaussianBlur(10))
+    img = Image.alpha_composite(img.convert("RGBA"), glow)
+    img.paste(card, (card_x, card_y), card)
+    img = img.convert("RGB")
+    # 卡内上下压暗，便于分区标题/字幕
+    d = ImageDraw.Draw(img, "RGBA")
+    for i in range(90):
+        a = int(150 * (1 - i / 90))
+        d.line([(card_x, card_y + i), (card_x + card_w, card_y + i)], fill=(6, 8, 12, a))
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
+def render_placeholder(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
     d = ImageDraw.Draw(img)
     section_header(img, scene["section"])
     slot = scene["slot"]
-    # 居中占位框
     bx0, by0, bx1, by1 = 90, int(H * 0.34), W - 90, int(H * 0.70)
-    d.rounded_rectangle([bx0, by0, bx1, by1], radius=28, outline=YELLOW, width=4)
-    for gx in range(bx0 + 20, bx1, 60):  # 斜纹表示待填充
-        d.line([(gx, by0 + 4), (max(bx0 + 4, gx - (by1 - by0)), by1 - 4)],
-               fill=(38, 46, 60), width=2)
-    play_c = ((bx0 + bx1) / 2, (by0 + by1) / 2 - 60)
-    d.ellipse([play_c[0] - 70, play_c[1] - 70, play_c[0] + 70, play_c[1] + 70],
-              outline=YELLOW, width=5)
-    d.polygon([(play_c[0] - 24, play_c[1] - 34), (play_c[0] - 24, play_c[1] + 34),
-               (play_c[0] + 40, play_c[1])], fill=YELLOW)
-    f1 = F_BOLD(48)
-    draw_center_text(d, W / 2, play_c[1] + 90, "插入官方授权集锦", f1, YELLOW)
-    f2 = F_REG(34)
-    for i, ln in enumerate(wrap_cjk(slot["desc"], f2, bx1 - bx0 - 80)):
-        draw_center_text(d, W / 2, play_c[1] + 160 + i * 46, ln, f2, WHITE)
-    f3 = F_REG(30)
-    draw_center_text(d, W / 2, by1 - 60, f"素材来源：{slot['source']} · 约 {slot['secs']} 秒",
-                     f3, MUTED)
+    d.rounded_rectangle([bx0, by0, bx1, by1], radius=28, outline=accent, width=4)
+    cx, cy = (bx0 + bx1) / 2, (by0 + by1) / 2 - 60
+    d.ellipse([cx - 70, cy - 70, cx + 70, cy + 70], outline=accent, width=5)
+    d.polygon([(cx - 24, cy - 34), (cx - 24, cy + 34), (cx + 40, cy)], fill=accent)
+    center(d, W / 2, cy + 92, "插入官方授权集锦", F_BOLD(48), accent)
+    for i, ln in enumerate(wrap_cjk(slot["desc"], F_REG(34), bx1 - bx0 - 80)):
+        center(d, W / 2, cy + 162 + i * 46, ln, F_REG(34), WHITE)
+    center(d, W / 2, by1 - 58, f"素材：{slot['source']} · 约 {slot['secs']} 秒", F_REG(30), MUTED)
     caption_band(img, scene.get("caption", ""))
-    brand_mark(img, spec_meta["brand"])
+    brand_mark(img, meta["brand"])
     progress_dots(img, scene.get("index", 0))
     return img
 
 
-RENDERERS = {
-    "title": render_title,
-    "section": render_section,
-    "photo": render_photo,
-    "placeholder": render_placeholder,
-}
+RENDERERS = {"title": render_title, "section": render_section,
+             "photo": render_photo, "placeholder": render_placeholder}
 
 
-def srt_time(t: float) -> str:
+def srt_time(t):
     h = int(t // 3600)
     m = int((t % 3600) // 60)
     s = int(t % 60)
@@ -341,24 +338,48 @@ def srt_time(t: float) -> str:
     return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 
 
-def write_srt(scenes, path: Path):
-    lines, t = [], 0.0
-    idx = 1
+def write_srt(scenes, path):
+    out, t, idx = [], 0.0, 1
     for sc in scenes:
         vo = sc.get("vo", "").strip()
         dur = float(sc["dur"])
         if vo:
-            lines.append(str(idx))
-            lines.append(f"{srt_time(t)} --> {srt_time(t + dur)}")
-            lines.append(vo)
-            lines.append("")
+            out += [str(idx), f"{srt_time(t)} --> {srt_time(t + dur)}", vo, ""]
             idx += 1
         t += dur
+    path.write_text("\n".join(out), encoding="utf-8")
+
+
+def write_description(scenes, meta, path):
+    """发布文案：标题候选 + 简介 + 话题 + 图片致谢（CC 许可需署名，放这里）。"""
+    credits = []
+    for sc in scenes:
+        c = (sc.get("credit") or "").strip()
+        if c:
+            credits.append(f"· {c}")
+    lines = [
+        "【标题候选】",
+        "网球四大满贯，一个视频看懂它们的性格",
+        "四大满贯，网球人一生想征服的四座球场",
+        "硬地·红土·草地，四大满贯到底有什么不同？",
+        "",
+        "【简介】",
+        "澳网的热烈、法网的坚韧、温网的优雅、美网的疯狂——"
+        "四片战场，四种荣耀。关注@" + meta["brand"] + "，一起看懂每一场巅峰对决。",
+        "",
+        "【话题】",
+        "#网球 #四大满贯 #澳网 #法网 #温网 #美网 #网球科普 #网球时差",
+        "",
+        "【画面素材致谢（CC 许可要求署名，故放在简介）】",
+    ]
+    lines += credits if credits else ["·（若全部替换为自有/授权素材，可删除本段）"]
+    lines += [
+        "· 公有领域/CC0 素材无需署名；官方集锦请按你取得的授权标注。",
+    ]
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def try_tts(scenes, meta, outdir: Path, ff: str) -> Path | None:
-    """尽力用 edge-tts 合成中文配音；网络不可用时返回 None。"""
+def try_tts(scenes, meta, outdir, ff):
     try:
         import asyncio
         import ssl
@@ -369,51 +390,45 @@ def try_tts(scenes, meta, outdir: Path, ff: str) -> Path | None:
         ca = "/root/.ccr/ca-bundle.crt"
         if Path(ca).exists():
             ec._SSL_CTX = ssl.create_default_context(cafile=ca)
-
         voice = meta.get("voice", "zh-CN-YunjianNeural")
         rate = meta.get("voice_rate", "+8%")
+        tdir = outdir / "_tts"
+        tdir.mkdir(exist_ok=True)
         clips = []
 
         async def synth(text, dst):
             await edge_tts.Communicate(text, voice, rate=rate).save(str(dst))
 
-        tdir = outdir / "_tts"
-        tdir.mkdir(exist_ok=True)
         for i, sc in enumerate(scenes):
             vo = sc.get("vo", "").strip()
-            dst = tdir / f"vo_{i:02d}.mp3"
+            raw = tdir / f"vo_{i:02d}.mp3"
             if vo:
-                asyncio.run(synth(vo, dst))
-            else:  # 无台词镜头填静音，保持与画面对齐
-                subprocess.run([ff, "-y", "-f", "lavfi", "-i",
-                                f"anullsrc=r=24000:cl=mono", "-t", "0.6",
-                                str(dst)], check=True, capture_output=True)
-            # 垫到镜头时长，确保音画同步
-            padded = tdir / f"pad_{i:02d}.mp3"
-            subprocess.run([ff, "-y", "-i", str(dst), "-af",
-                            f"apad=whole_dur={float(sc['dur'])}", "-t",
-                            str(float(sc["dur"])), str(padded)],
-                           check=True, capture_output=True)
-            clips.append(padded)
-        listf = tdir / "list.txt"
-        listf.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
+                asyncio.run(synth(vo, raw))
+            else:
+                subprocess.run([ff, "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                                "-t", "0.5", str(raw)], check=True, capture_output=True)
+            pad = tdir / f"pad_{i:02d}.mp3"
+            subprocess.run([ff, "-y", "-i", str(raw), "-af",
+                            f"apad=whole_dur={float(sc['dur'])}", "-t", str(float(sc["dur"])),
+                            str(pad)], check=True, capture_output=True)
+            clips.append(pad)
+        lst = tdir / "list.txt"
+        lst.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
         out = outdir / "voiceover.mp3"
-        subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(listf),
-                        "-c", "copy", str(out)], check=True, capture_output=True,
-                       cwd=str(tdir))
+        subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
+                        str(out)], check=True, capture_output=True, cwd=str(tdir))
         return out
     except Exception as exc:
-        print(f"  · TTS 不可用，跳过自动配音（{type(exc).__name__}）。"
-              f"请用 captions.srt / narration.txt 自行配音。")
+        print(f"  · TTS 不可用，跳过自动配音（{type(exc).__name__}）。用 captions.srt / narration.txt 自行配音。")
         return None
 
 
-def storyboard_sheet(frame_paths, path: Path, cols=4):
-    thumbs = [Image.open(p).resize((270, 480)) for p in frame_paths]
+def storyboard_sheet(frames, path, cols=4):
+    thumbs = [Image.open(p).resize((270, 480)) for p in frames]
     rows = (len(thumbs) + cols - 1) // cols
     pad = 12
-    sheet = Image.new("RGB", (cols * 270 + (cols + 1) * pad,
-                              rows * 480 + (rows + 1) * pad), (18, 20, 26))
+    sheet = Image.new("RGB", (cols * 270 + (cols + 1) * pad, rows * 480 + (rows + 1) * pad),
+                      (16, 18, 24))
     for i, th in enumerate(thumbs):
         r, c = divmod(i, cols)
         sheet.paste(th, (pad + c * (270 + pad), pad + r * (480 + pad)))
@@ -439,8 +454,7 @@ def main():
     final = outdir / "grand-slam.mp4"
     if final.exists() and not args.overwrite:
         sys.exit(f"{final} 已存在，加 --overwrite 覆盖。")
-    frames_dir = outdir / "frames"
-    clips_dir = outdir / "_clips"
+    frames_dir, clips_dir = outdir / "frames", outdir / "_clips"
     for d in (outdir, frames_dir, clips_dir):
         d.mkdir(parents=True, exist_ok=True)
 
@@ -451,35 +465,27 @@ def main():
         fp = frames_dir / f"{sc['id']}.png"
         img.save(fp)
         frame_paths.append(fp)
-
         dur = float(sc["dur"])
-        clip = clips_dir / f"{i:02d}.mp4"
         nframes = int(dur * FPS)
-        # 轻微 Ken Burns（整帧缓慢放大 5%）+ 淡入淡出
+        clip = clips_dir / f"{i:02d}.mp4"
         vf = (
             f"scale={W}:{H},zoompan=z='min(zoom+0.00045,1.05)':"
-            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-            f"d={nframes}:s={W}x{H}:fps={FPS},"
-            f"fade=t=in:st=0:d=0.3,fade=t=out:st={dur-0.3:.2f}:d=0.3,"
-            f"format=yuv420p"
+            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={nframes}:s={W}x{H}:fps={FPS},"
+            f"fade=t=in:st=0:d=0.3,fade=t=out:st={dur-0.3:.2f}:d=0.3,format=yuv420p"
         )
-        subprocess.run([ff, "-y", "-loop", "1", "-i", str(fp), "-t", f"{dur}",
-                        "-r", str(FPS), "-vf", vf, "-c:v", "libx264",
-                        "-pix_fmt", "yuv420p", str(clip)],
+        subprocess.run([ff, "-y", "-loop", "1", "-i", str(fp), "-t", f"{dur}", "-r", str(FPS),
+                        "-vf", vf, "-c:v", "libx264", "-pix_fmt", "yuv420p", str(clip)],
                        check=True, capture_output=True)
         clip_paths.append(clip)
         print(f"  [{i+1:2d}/{len(scenes)}] {sc['id']} ({dur:.0f}s)")
 
-    listf = clips_dir / "concat.txt"
-    listf.write_text("".join(f"file '{c.name}'\n" for c in clip_paths), encoding="utf-8")
+    lst = clips_dir / "concat.txt"
+    lst.write_text("".join(f"file '{c.name}'\n" for c in clip_paths), encoding="utf-8")
     silent = outdir / "_silent.mp4"
-    subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(listf),
-                    "-c", "copy", str(silent)], check=True, capture_output=True,
-                   cwd=str(clips_dir))
+    subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
+                    str(silent)], check=True, capture_output=True, cwd=str(clips_dir))
 
     total = sum(float(s["dur"]) for s in scenes)
-
-    # 配音音轨
     audio = None
     if args.voiceover:
         audio = ROOT / args.voiceover
@@ -487,33 +493,29 @@ def main():
         audio = try_tts(scenes, meta, outdir, ff)
 
     if audio and Path(audio).exists():
-        subprocess.run([ff, "-y", "-i", str(silent), "-i", str(audio),
-                        "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-                        "-shortest", str(final)], check=True, capture_output=True)
-    else:  # 无配音：写入静音轨，方便平台上传
-        subprocess.run([ff, "-y", "-i", str(silent), "-f", "lavfi", "-i",
-                        f"anullsrc=r=44100:cl=stereo", "-c:v", "copy",
-                        "-c:a", "aac", "-t", f"{total:.2f}", "-shortest",
+        subprocess.run([ff, "-y", "-i", str(silent), "-i", str(audio), "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "192k", "-shortest", str(final)],
+                       check=True, capture_output=True)
+    else:
+        subprocess.run([ff, "-y", "-i", str(silent), "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
+                        "-c:v", "copy", "-c:a", "aac", "-t", f"{total:.2f}", "-shortest",
                         str(final)], check=True, capture_output=True)
 
-    # 附属产物
     write_srt(scenes, outdir / "captions.srt")
     (outdir / "narration.txt").write_text(
         "\n".join(s["vo"].strip() for s in scenes if s.get("vo")), encoding="utf-8")
+    write_description(scenes, meta, outdir / "发布文案.txt")
     shutil.copy(frame_paths[0], outdir / "cover.png")
     storyboard_sheet(frame_paths, outdir / "storyboard.png")
 
-    # 清理中间产物
     shutil.rmtree(clips_dir, ignore_errors=True)
     silent.unlink(missing_ok=True)
     shutil.rmtree(outdir / "_tts", ignore_errors=True)
 
-    size_mb = final.stat().st_size / 1e6
-    print(f"\n完成：{final}  ({total:.0f}s, {size_mb:.1f} MB)")
-    print(f"  分镜连拍：{outdir/'storyboard.png'}")
-    print(f"  字幕：{outdir/'captions.srt'}  文案：{outdir/'narration.txt'}")
+    print(f"\n完成：{final}  ({total:.0f}s, {final.stat().st_size/1e6:.1f} MB)")
+    print(f"  分镜连拍：{outdir/'storyboard.png'} · 字幕：{outdir/'captions.srt'} · 发布文案：{outdir/'发布文案.txt'}")
     if not (audio and Path(audio).exists()):
-        print("  · 当前为静音样片：用剪映/CapCut 的文本朗读或人声，按 captions.srt 配音即可。")
+        print("  · 当前为静音样片：用剪映/CapCut 文本朗读或人声，按 captions.srt 配音即可。")
 
 
 if __name__ == "__main__":
