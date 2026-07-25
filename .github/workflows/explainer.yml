@@ -94,7 +94,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/
+          OUTDIR="${{ steps.gen.outputs.outdir }}"
+          git add "$OUTDIR"
           if git diff --cached --quiet; then
             echo "没有新成片"
             exit 0
@@ -109,8 +110,15 @@ jobs:
           # Generated output has exactly one correct resolution — the copy
           # this run just rendered — so replay it onto whatever main is now
           # instead of merging. Retry because main can move again mid-push.
+          #
+          # Replay only THIS topic's directory. Replaying all of output/ put
+          # back every other topic as it stood at this run's checkout, so a
+          # batch of eight runs spent the evening reverting each other: a
+          # deck would render correctly, land, and then be overwritten by
+          # the next run's stale copy of it. The published cards flickered
+          # between the old and new brand mark for half an hour.
           BRANCH="${{ github.ref_name }}"
-          MSG="content: 知识解说视频 $(basename '${{ steps.gen.outputs.outdir }}')"
+          MSG="content: 知识解说视频 $(basename "$OUTDIR")"
           git commit -m "$MSG"
           for attempt in 1 2 3 4 5; do
             if git push origin "HEAD:$BRANCH"; then
@@ -120,8 +128,8 @@ jobs:
             git fetch origin "$BRANCH"
             git branch -f rendered HEAD
             git reset --hard "origin/$BRANCH"
-            git checkout rendered -- output/
-            git add output/
+            git checkout rendered -- "$OUTDIR"
+            git add "$OUTDIR"
             git diff --cached --quiet || git commit -m "$MSG"
             sleep $((attempt * 3))
           done
