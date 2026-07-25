@@ -2553,9 +2553,18 @@ def resolve_match_cover_visual(
     report["editorial_source_urls"] = editorial_urls
 
     # 图库对低关注度场次几乎没有覆盖，但巡回赛官方一定会写这场的赛后报道，
-    # 那篇文章的头图就是当场比赛的真实照片。只在这条比赛没有已关联官方链接
-    # 时才去检索，避免重复取数。
-    if not editorial_urls and players:
+    # 那篇文章的头图就是当场比赛的真实照片。
+    #
+    # 原本只在这条比赛没有已关联官方链接时才检索，省一次取数。可只要那几个
+    # 图库连着几期都是"0 候选、0 报错"，省下的这次请求换来的就是又一张品牌
+    # 底图——渠道台账正是为了记住这件事：查过、没错、就是没有。
+    from .cover_registry import registry_summary, should_widen_search
+
+    stock_channels = tuple(provider for provider, _loader in provider_loaders)
+    widen = should_widen_search(stock_channels)
+    report["source_registry"] = registry_summary()
+    report["widened_by_registry"] = widen
+    if players and (not editorial_urls or widen):
         recap = _official_recap_candidates(match, session)
         report["official_recap_candidates"] = len(recap)
         if recap:
