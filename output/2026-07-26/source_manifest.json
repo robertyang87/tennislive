@@ -94,13 +94,6 @@
       "usage": "选题热度判断；不直接作为比赛事实"
     },
     {
-      "id": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOQ0ZsU0lXUC1ySzJzSVdYcnBFQ1VSREQyUlV3M2ljV2FSVkZ5OW1lSmN4eEM2UXFaWmUzRVp1eFp2bE9oUzFtRDdGWkdEbGlaNk9HNngxeDZtemcxZFFjcDVjR2FCenNIMUZvRUxYNUc2YVVDRDRWVzg0ZHkwWDFReWRTcUFNVC1qNzZrRWhVblE?oc=5",
-      "name": "Sky Sports",
-      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOQ0ZsU0lXUC1ySzJzSVdYcnBFQ1VSREQyUlV3M2ljV2FSVkZ5OW1lSmN4eEM2UXFaWmUzRVp1eFp2bE9oUzFtRDdGWkdEbGlaNk9HNngxeDZtemcxZFFjcDVjR2FCenNIMUZvRUxYNUc2YVVDRDRWVzg0ZHkwWDFReWRTcUFNVC1qNzZrRWhVblE?oc=5",
-      "kind": "official-news",
-      "usage": "选题热度判断；不直接作为比赛事实"
-    },
-    {
       "id": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNLXRoRlBTb2Fud3lDRUVqU2FlWFVjZ3QtWFp1Q1BHWnkyUlVFc3JWSWRuRk1iLVMxZkVBemFkWG90Zm5VckZEcDBCNDVBdkstU3B3SkV1elYwSlp6R3pGakhVelU0dTFpcnItRXQ0YmROYUpPVXAwc0VNT0drOWQ5STUwUQ?oc=5",
       "name": "Sky Sports",
       "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNLXRoRlBTb2Fud3lDRUVqU2FlWFVjZ3QtWFp1Q1BHWnkyUlVFc3JWSWRuRk1iLVMxZkVBemFkWG90Zm5VckZEcDBCNDVBdkstU3B3SkV1elYwSlp6R3pGakhVelU0dTFpcnItRXQ0YmROYUpPVXAwc0VNT0drOWQ5STUwUQ?oc=5",
@@ -122,16 +115,23 @@
       "usage": "选题热度判断；不直接作为比赛事实"
     },
     {
-      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
-      "name": "WTA 官方 OOP",
-      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
-      "kind": "official-order-of-play",
-      "usage": "核验比赛日期、场序与开赛时间性质"
+      "id": "https://trends.google.com/trending/rss?geo=US",
+      "name": "Google Trends US",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "kind": "search-trend",
+      "usage": "选题热度判断；不直接作为比赛事实"
     },
     {
       "id": "https://www.protennislive.com/posting/2026/7290/op.pdf",
       "name": "ATP 官方 OOP",
       "url": "https://www.protennislive.com/posting/2026/7290/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
       "kind": "official-order-of-play",
       "usage": "核验比赛日期、场序与开赛时间性质"
     },
