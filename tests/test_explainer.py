@@ -57,7 +57,7 @@ def test_没有实拍的时刻不拿近似照片顶替():
     opener = segments[0]
     # The opener's photo is the line judges it describes — a real frame whose
     # own date and place match what we say about it.
-    assert "line_judges" in opener.image
+    assert "us_open_court" in opener.image
     assert "2004" in opener.narration  # the incident is told, not depicted
     assert any("2004" in p for p in opener.points)
 

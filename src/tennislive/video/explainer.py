@@ -72,27 +72,40 @@ class ExplainerSegment:
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
 # diagram (cameras triangulating the ball), not fabricated footage.
 _HAWKEYE_DIAGRAM = """
-<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
-  <rect x="270" y="150" width="360" height="360" rx="8" fill="rgba(55,226,154,.06)"
-        stroke="#37e29a" stroke-width="4"/>
-  <line x1="270" y1="330" x2="630" y2="330" stroke="#37e29a" stroke-width="5"/>
-  <line x1="270" y1="240" x2="630" y2="240" stroke="#37e29a" stroke-width="2" opacity=".5"/>
-  <line x1="270" y1="420" x2="630" y2="420" stroke="#37e29a" stroke-width="2" opacity=".5"/>
-  <line x1="450" y1="240" x2="450" y2="420" stroke="#37e29a" stroke-width="2" opacity=".5"/>
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <!-- Court drawn to the real 78x36 ft proportions: doubles lines, singles
+       lines, service boxes, centre marks and the net across the middle, so it
+       reads as a tennis court rather than a plain rectangle. -->
+  <rect x="90" y="150" width="720" height="332" rx="4"
+        fill="rgba(55,226,154,.07)" stroke="#37e29a" stroke-width="4"/>
+  <line x1="90" y1="191" x2="810" y2="191" stroke="#37e29a" stroke-width="3"/>
+  <line x1="90" y1="441" x2="810" y2="441" stroke="#37e29a" stroke-width="3"/>
+  <line x1="256" y1="191" x2="256" y2="441" stroke="#37e29a" stroke-width="3"/>
+  <line x1="644" y1="191" x2="644" y2="441" stroke="#37e29a" stroke-width="3"/>
+  <line x1="256" y1="316" x2="644" y2="316" stroke="#37e29a" stroke-width="3"/>
+  <line x1="90" y1="308" x2="90" y2="324" stroke="#37e29a" stroke-width="4"/>
+  <line x1="810" y1="308" x2="810" y2="324" stroke="#37e29a" stroke-width="4"/>
+  <line x1="450" y1="132" x2="450" y2="500" stroke="#dff3e8" stroke-width="6"/>
+  <g stroke="#dff3e8" stroke-width="3" opacity=".75">
+    <line x1="450" y1="150" x2="450" y2="482" stroke-dasharray="3 9"/>
+  </g>
+  <circle cx="450" cy="132" r="7" fill="#dff3e8"/>
+  <circle cx="450" cy="500" r="7" fill="#dff3e8"/>
+  <!-- cameras ringing the court, triangulating one bounce -->
   <g fill="#9fb4aa">
-    <circle cx="150" cy="120" r="13"/><circle cx="450" cy="80" r="13"/>
-    <circle cx="750" cy="120" r="13"/><circle cx="820" cy="330" r="13"/>
-    <circle cx="750" cy="545" r="13"/><circle cx="450" cy="590" r="13"/>
-    <circle cx="150" cy="545" r="13"/><circle cx="80" cy="330" r="13"/>
+    <circle cx="150" cy="86" r="12"/><circle cx="450" cy="62" r="12"/>
+    <circle cx="750" cy="86" r="12"/><circle cx="846" cy="316" r="12"/>
+    <circle cx="750" cy="548" r="12"/><circle cx="450" cy="572" r="12"/>
+    <circle cx="150" cy="548" r="12"/><circle cx="54" cy="316" r="12"/>
   </g>
-  <g stroke="#c6f65a" stroke-width="2" stroke-dasharray="5 7" opacity=".8">
-    <line x1="150" y1="120" x2="470" y2="270"/><line x1="450" y1="80" x2="470" y2="270"/>
-    <line x1="750" y1="120" x2="470" y2="270"/><line x1="820" y1="330" x2="470" y2="270"/>
-    <line x1="150" y1="545" x2="470" y2="270"/><line x1="80" y1="330" x2="470" y2="270"/>
+  <g stroke="#c6f65a" stroke-width="2" stroke-dasharray="5 7" opacity=".75">
+    <line x1="150" y1="86" x2="690" y2="420"/><line x1="450" y1="62" x2="690" y2="420"/>
+    <line x1="750" y1="86" x2="690" y2="420"/><line x1="846" y1="316" x2="690" y2="420"/>
+    <line x1="150" y1="548" x2="690" y2="420"/><line x1="54" y1="316" x2="690" y2="420"/>
   </g>
-  <path d="M300 470 Q430 150 620 250" fill="none" stroke="#ffe08a"
+  <path d="M300 250 Q520 300 676 408" fill="none" stroke="#ffe08a"
         stroke-width="3" stroke-dasharray="3 8"/>
-  <circle cx="470" cy="270" r="13" fill="#c6f65a" stroke="#fff" stroke-width="3"/>
+  <circle cx="690" cy="420" r="13" fill="#c6f65a" stroke="#fff" stroke-width="3"/>
   <text x="450" y="628" text-anchor="middle" fill="#e7f3ec"
         font-size="30" font-weight="700">8–12 台摄像机 · 三角测量落点</text>
 </svg>
@@ -132,15 +145,15 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "human",
             "人眼时代",
-            "一条线归谁喊，曾经全靠这双眼",
+            "这条线，最后归谁喊",
             "在鹰眼出现以前，一条线是否被压到，全靠站在线后的这些人。他们弯着腰、"
             "盯着脚下那条白线，一站就是一整场；这套人工司线的做法，在网球场上"
             "沿用了上百年。可人眼有极限。2004 年美网四分之一决赛，小威廉姆斯"
             "遭遇多个关键球的误判被淘汰出局——她一记落在界内的回球，被主裁改判"
             "出界；赛后当值主裁被撤换、官方公开道歉。那成了回放技术上马的"
             "最后一根稻草，仅仅两年后，鹰眼挑战制正式走进大满贯。",
-            "assets/explainer/hawkeye/line_judges.jpg",
-            "Clavecin · 公有领域 · Wikimedia Commons · 2006 Wimbledon",
+            "assets/explainer/hawkeye/us_open_court.jpg",
+            "Beyond My Ken · CC BY-SA 4.0 · Wikimedia Commons · 2021 US Open",
             (
                 "人工司线在网球沿用上百年",
                 "2004 美网：小威压线球被改判出界",
