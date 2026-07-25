@@ -366,14 +366,15 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "西西帕斯说得更直接：大师赛变成了一种拖沓，质量明显下降，"
             "球员得不到该有的恢复和训练时间。顶尖球员的赛季跨越十一个月；"
             "蒙特利尔之后紧接着辛辛那提，再往后就是美网。"
-            "加拿大网协说，正在和 ATP 商谈调整。问题也就摆在这儿了："
+            "加拿大网协说，正在和 ATP 商谈调整。而画面里这一满场人，"
+            "就是蒙特利尔的中心球场。所以问题也就摆在这儿了："
             "一个更长的大师赛，到底是给谁看的？",
-            "assets/explainer/masters-format/tsitsipas.jpg",
-            "CC BY-SA 4.0 · Wikimedia Commons · 2024 巴塞尔室内赛 西西帕斯",
+            "assets/explainer/masters-format/crowd.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 蒙特利尔中心球场，2009 年",
             (
                 "西西帕斯：变成拖沓，质量下降",
                 "顶尖球员赛季跨越 11 个月",
-                "加拿大网协：正在与 ATP 商谈",
+                "图为蒙特利尔中心球场（2009）",
             ),
             "",
             "更长的大师赛，到底是给谁看的？",
@@ -896,36 +897,43 @@ _CAPTIONS: dict[str, dict] = {
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
     "hawkeye": {
+        "topic": "鹰眼的来历",
         "question": "球压没压线，到底谁说了算？",
         "narration": "球压没压线，到底谁说了算？这件事，网球用了一百年才交出去。",
         "image": "assets/explainer/hawkeye/us_open_court.jpg",
     },
     "yellow-ball": {
+        "topic": "网球改色史",
         "question": "网球为什么是黄色的？",
         "narration": "网球为什么是黄色的？而且它变成黄色，还不到六十年。",
         "image": "assets/explainer/yellow-ball/optic_yellow.jpg",
     },
     "longest-match": {
+        "topic": "史上最长的比赛",
         "question": "一场网球，最长能打多久？",
         "narration": "一场网球最长能打多久？答案是十一小时五分钟，分三天打完。",
         "image": "assets/explainer/longest-match/scoreboard.jpg",
     },
     "wimbledon-whites": {
+        "topic": "温网的白衣规矩",
         "question": "温网为什么只准穿白？",
         "narration": "温网为什么只准穿白？这条规矩，一直管到内衣。",
         "image": "assets/explainer/wimbledon-whites/headtotoe.jpg",
     },
     "rufus": {
+        "topic": "温网的赶鸟员",
         "question": "温网为什么雇了一只鹰？",
         "narration": "温网有一名员工是一只鹰。它为什么在那儿上班？",
         "image": "assets/explainer/rufus/patrol.jpg",
     },
     "queue": {
+        "topic": "温网的排队文化",
         "question": "温网的票为什么要排一晚？",
         "narration": "温网的票，为什么要在草地上排一晚？",
         "image": "assets/explainer/queue/queue.jpg",
     },
     "masters-format": {
+        "topic": "大师赛的退赛潮",
         "question": "大师赛为什么变成两周？",
         "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
         "image": "assets/explainer/masters-format/sinner.jpg",
@@ -994,7 +1002,9 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
-def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -> str:
+def _slide_html(
+    index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = ""
+) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
@@ -1072,12 +1082,13 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
         else ""
     )
     cover_cls = " cover" if cover else ""
+    topic_html = f'<span class="topic">{html.escape(topic)}</span>' if topic else ""
     chip_html = (
         '<span class="kicker">网球有故事</span>'
         if cover
         else f'<span class="chip">{number} {html.escape(segment.label)}</span>'
     )
-    tail_html = '<div class="tail">↓ 五屏讲清楚</div>' if cover else ""
+    tail_html = ""
     points_html = (
         '<div class="points">'
         + "".join(
@@ -1106,6 +1117,9 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
+.brandlines{{display:flex;flex-direction:column;gap:2px;}}
+.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#9fb4aa;letter-spacing:1px;}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
@@ -1143,10 +1157,9 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
-<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div></div>
+<div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · 网球有故事</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
 <div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}{tail_html}</div>
-<div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
 
 
@@ -1155,6 +1168,7 @@ def render_explainer_slides(
     outdir: Path,
     *,
     theme: str = "dark",
+    topic: str = "",
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -1177,7 +1191,9 @@ def render_explainer_slides(
                     viewport={"width": W, "height": H}, device_scale_factor=2
                 )
                 try:
-                    page.set_content(_slide_html(index, seg, theme=theme))
+                    page.set_content(
+                        _slide_html(index, seg, theme=theme, topic=topic)
+                    )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )
@@ -1309,7 +1325,9 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(segments, outdir, theme=theme)
+    slides = render_explainer_slides(
+        segments, outdir, theme=theme, topic=(_OPENINGS.get(story.slug) or {}).get("topic", "")
+    )
     audios = synthesize_narration(segments, outdir, voice=voice)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
 
