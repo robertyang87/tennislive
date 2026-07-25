@@ -1674,14 +1674,18 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         verdict = editor_takeaway(m, today)
         facts = []
 
+        # "比赛走势"是没有逐场技术统计时的文字降级说法（"直落2盘，全程没有
+        # 让对手看到机会"）。官方统计到手之后还留着它，等于用一句概括去挤真正
+        # 的数字——2026-07-25 的成品正是被它挤到把第四行从中间切开。有数据就
+        # 只放技术对比，没数据才退回这句话。
+        detailed = has_detailed_stats(m)
         arc = trajectory_arc(m)
-        arc_html = (
+        extra_html = (
             f'<div class="verdict"><b>比赛走势</b>{html.escape(arc)}</div>'
-            if arc
+            if arc and not detailed
             else ""
         )
-        extra_html = arc_html
-        if has_detailed_stats(m):
+        if detailed:
             comparison = focus_comparison(m)
             # data-rank 让渲染后的自适应收行按重要性丢弃：版面不够时先丢
             # "一发成功率"这类补充项，而不是碰巧排在最后的"破发兑现"。
