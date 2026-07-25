@@ -248,9 +248,15 @@ def should_widen_search(
 
 
 def registry_summary(path: Path = REGISTRY_PATH) -> dict:
-    """Compact view for the run log and the cover report."""
+    """Compact view for the run log and the cover report.
+
+    Read at the moment it is called. The resolver calls it before searching, so
+    the snapshot in `cover_visual.json` is the history the widen decision was
+    made on -- it does not include the run that report describes.
+    """
     records = load_registry(path)
     return {
+        "as_of": "run-start",
         "proven": list(proven_channels(path)),
         "barren": list(barren_channels(path)),
         "channels": {
