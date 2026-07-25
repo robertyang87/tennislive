@@ -193,6 +193,85 @@ _MASTERS_FORMAT_DIAGRAM = """
 """
 
 
+# The whole argument of the "ten women's champions, five men's" deck is two
+# lists side by side, and no photograph can hold two lists. Drawing it is not
+# a fallback here — it *is* the evidence: ten rows of ten names against ten
+# rows that collapse into five blocks. Every name is the champion the year's
+# own Wikipedia article names (2016-2026; 2020 was cancelled, so ten).
+_TEN_CHAMPIONS_DIAGRAM = """
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
+  <text x="70"  y="66" fill="#9fb4aa" font-size="26" font-weight="700">年份</text>
+  <text x="196" y="66" fill="#c6f65a" font-size="27" font-weight="800">女单冠军</text>
+  <text x="560" y="66" fill="#37e29a" font-size="27" font-weight="800">男单冠军</text>
+  <line x1="70" y1="86" x2="830" y2="86" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <g fill="rgba(231,243,236,.04)">
+    <rect x="60" y="104" width="780" height="46"/>
+    <rect x="60" y="196" width="780" height="46"/>
+    <rect x="60" y="288" width="780" height="46"/>
+    <rect x="60" y="380" width="780" height="46"/>
+    <rect x="60" y="472" width="780" height="46"/>
+  </g>
+
+  <g fill="#9fb4aa" font-size="25" font-weight="700">
+    <text x="70" y="136">2016</text>
+    <text x="70" y="182">2017</text>
+    <text x="70" y="228">2018</text>
+    <text x="70" y="274">2019</text>
+    <text x="70" y="320">2021</text>
+    <text x="70" y="366">2022</text>
+    <text x="70" y="412">2023</text>
+    <text x="70" y="458">2024</text>
+    <text x="70" y="504">2025</text>
+    <text x="70" y="550">2026</text>
+  </g>
+
+  <g fill="#c6f65a">
+    <circle cx="178" cy="129" r="5"/><circle cx="178" cy="175" r="5"/>
+    <circle cx="178" cy="221" r="5"/><circle cx="178" cy="267" r="5"/>
+    <circle cx="178" cy="313" r="5"/><circle cx="178" cy="359" r="5"/>
+    <circle cx="178" cy="405" r="5"/><circle cx="178" cy="451" r="5"/>
+    <circle cx="178" cy="497" r="5"/><circle cx="178" cy="543" r="5"/>
+  </g>
+  <g fill="#e7f3ec" font-size="27" font-weight="700">
+    <text x="198" y="138">小威</text>
+    <text x="198" y="184">穆古鲁扎</text>
+    <text x="198" y="230">科贝尔</text>
+    <text x="198" y="276">哈勒普</text>
+    <text x="198" y="322">巴蒂</text>
+    <text x="198" y="368">莱巴金娜</text>
+    <text x="198" y="414">万卓索娃</text>
+    <text x="198" y="460">克雷吉茨科娃</text>
+    <text x="198" y="506">斯瓦泰克</text>
+    <text x="198" y="552">诺斯科娃</text>
+  </g>
+
+  <!-- One box per man, spanning the years he held it: four boxes for
+       Djokovic's four, two apiece for Alcaraz and Sinner. -->
+  <g fill="rgba(55,226,154,.16)" stroke="#37e29a" stroke-width="3">
+    <rect x="540" y="108" width="290" height="38" rx="7"/>
+    <rect x="540" y="154" width="290" height="38" rx="7"/>
+    <rect x="540" y="200" width="290" height="176" rx="7"/>
+    <rect x="540" y="384" width="290" height="84" rx="7"/>
+    <rect x="540" y="476" width="290" height="84" rx="7"/>
+  </g>
+  <g fill="#e7f3ec" font-size="27" font-weight="700" text-anchor="middle">
+    <text x="685" y="136">穆雷</text>
+    <text x="685" y="182">费德勒</text>
+    <text x="685" y="297">德约科维奇 ×4</text>
+    <text x="685" y="435">阿尔卡拉斯 ×2</text>
+    <text x="685" y="527">辛纳 ×2</text>
+  </g>
+
+  <line x1="70" y1="584" x2="830" y2="584" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+  <text x="198" y="634" fill="#c6f65a" font-size="33" font-weight="800">女单 10 个人</text>
+  <text x="560" y="634" fill="#37e29a" font-size="33" font-weight="800">男单 5 个人</text>
+  <text x="450" y="682" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">2016-2026 共十届，2020 年停办</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -831,6 +910,99 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你看到的是黄，还是绿？",
         ),
     ),
+    # Champions verified one edition at a time from each year's own English
+    # Wikipedia article (2016-2026, 2020 cancelled). Women: S. Williams,
+    # Muguruza, Kerber, Halep, Barty, Rybakina, Vondroušová, Krejčíková,
+    # Świątek, Nosková — ten. Men: Murray, Federer, Djokovic x4, Alcaraz x2,
+    # Sinner x2 — five.
+    "ten-champions": (
+        (
+            "newest",
+            "新科冠军",
+            "21 岁，第一次进决赛就赢了",
+            "先说最新的那一个。2026 年温网女单决赛，二十一岁的诺斯科娃 6-2、5-7、6-3 击败"
+            "同胞穆霍娃，拿下职业生涯第一个大满贯冠军——这也是她第一次打进大满贯决赛。"
+            "第三轮对科斯蒂亚，她救过一个赛点。二十一岁二百三十六天，她是 2011 年"
+            "科维托娃之后最年轻的温网女单冠军。画面里就是那天傍晚，她捧着维纳斯玫瑰露水盘"
+            "站在俱乐部阳台上，底下站满了人。",
+            "assets/explainer/ten-champions/noskova.jpg",
+            "AELTC/Thomas Lovelock · wimbledon.com 官方图 · 2026 温网女单决赛后",
+            (
+                "2026 温网决赛 6-2 5-7 6-3 胜穆霍娃",
+                "首进大满贯决赛即夺冠，第三轮救过赛点",
+                "21 岁 236 天，2011 年后最年轻",
+            ),
+        ),
+        (
+            "women",
+            "十届十冠",
+            "往前数十年，每年都是新名字",
+            "但真正少见的不是她的年龄，是往前数。2016 小威、2017 穆古鲁扎、2018 科贝尔、"
+            "2019 哈勒普、2021 巴蒂、2022 莱巴金娜、2023 万卓索娃、2024 克雷吉茨科娃、"
+            "2025 斯瓦泰克，加上今年的诺斯科娃——十届温网，十个不同的人，没有一个卫冕成功。"
+            "今年的卫冕冠军斯瓦泰克，第三轮就输给了菲律宾人埃亚拉。画面里是 2024 年那届的"
+            "女单签表板，一百二十八个名字挤在左边，一路淘汰到最右边只剩一个：克雷吉茨科娃。",
+            "assets/explainer/ten-champions/draw2024.jpg",
+            "UKinUSA · CC BY-SA 2.0 · Wikimedia Commons · 2024 温网女单签表板",
+            (
+                "2016-2026 共十届，2020 年停办",
+                "十个不同的冠军，没有一个卫冕成功",
+                "今年卫冕冠军斯瓦泰克止步第三轮",
+            ),
+        ),
+        (
+            "men",
+            "男单五冠",
+            "同样这十届，名单只要五个人写得下",
+            "同样这十届，男单的名单短得多：穆雷一次、费德勒一次、德约科维奇四次、"
+            "阿尔卡拉斯两次、辛纳两次——十届，五个人。画面里是今年的辛纳，决赛四盘"
+            "击败兹维列夫，成功卫冕。顺带一提，男单上一次有人卫冕是 2022 年的德约科维奇；"
+            "女单上一次有人卫冕，得回到 2016 年的小威，也就是这十届的第一届。",
+            "assets/explainer/ten-champions/sinner.jpg",
+            "Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons · 2026 温网男单决赛后",
+            (
+                "德约 4 冠、阿尔卡拉斯 2 冠、辛纳 2 冠",
+                "穆雷、费德勒各 1 冠",
+                "女单上一次卫冕成功，是 2016 年的小威",
+            ),
+        ),
+        (
+            "chart",
+            "两张名单",
+            "并排放在一起，差别是这样的",
+            "把两张名单并排放在一起，差别就不用解释了。左边十行，十个名字；右边同样十行，"
+            "却只分成五块，其中一块占了四行。还有一个数字容易被忽略：捷克一个国家就占了"
+            "女单这十席里的三席——万卓索娃、克雷吉茨科娃、诺斯科娃。今年的决赛干脆是两个"
+            "捷克人打的，这在公开赛年代只发生过很少几次。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "女单：十行，十个不同的人",
+                "男单：同样十行，只分成五块",
+                "捷克独占女单三席，今年还是捷克内战",
+            ),
+            _TEN_CHAMPIONS_DIAGRAM,
+        ),
+        (
+            "verdict",
+            "两只奖杯",
+            "同一组数字，两种说法",
+            "画面里这两件东西，就是她们和他们争的：上面那只盘子是女单的维纳斯玫瑰露水盘，"
+            "下面那只杯子是男单的挑战杯。同样十届，一只递到过十个人手里，一只只递给过五个。"
+            "同一组数字，你能听到两种完全相反的说法：一边说女子网坛百花齐放，谁都有机会；"
+            "另一边说这叫群龙无首，没有能扛旗的人。男单也一样，有人看到的是王朝，"
+            "有人看到的是垄断。那你更愿意看哪一种？评论区说说。",
+            "assets/explainer/ten-champions/trophies.jpg",
+            "Benjamí Villoslada i Gil · CC BY-SA 2.0 · Wikimedia Commons · 温网男女单打奖杯",
+            (
+                "同样十届：女单 10 人，男单 5 人",
+                "一种说法叫百花齐放，一种叫群龙无首",
+                "男单同理：有人看到王朝，有人看到垄断",
+            ),
+            "",
+            "你更爱看群雄逐鹿，还是王朝统治？",
+        ),
+    ),
 }
 
 
@@ -889,6 +1061,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "网球冷知识", "温网", "网球历史"),
     },
+    "ten-champions": {
+        "hook": (
+            "同样十届温网，女单出了十个冠军，男单只有五个。\n"
+            "有人管这叫百花齐放，有人管这叫群龙无首——说的是同一组数字。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "诺斯科娃", "女子网球"),
+    },
 }
 
 
@@ -937,6 +1116,12 @@ _OPENINGS: dict[str, dict] = {
         "question": "大师赛为什么变成两周？",
         "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
         "image": "assets/explainer/masters-format/sinner.jpg",
+    },
+    "ten-champions": {
+        "topic": "温网的十年：女单十个冠军，男单五个",
+        "question": "女单十冠，男单五冠？",
+        "narration": "同样十届温网，女单十冠，男单五冠。差别是怎么来的？",
+        "image": "assets/explainer/ten-champions/noskova.jpg",
     },
 }
 
