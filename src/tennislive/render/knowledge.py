@@ -646,6 +646,10 @@ def _generate_knowledge_candidate(
                 "title": candidate.title,
                 "errors": candidate_report.get("errors", []),
                 "missing_pages": candidate_report.get("missing_pages", []),
+                "degraded_pages": candidate_report.get("degraded_pages", []),
+                "failed_curated_source_urls": candidate_report.get(
+                    "failed_curated_source_urls", []
+                ),
                 "input_domains": candidate_report.get("input_domains", []),
                 "providers_queried": candidate_report.get(
                     "providers_queried", []
@@ -658,7 +662,7 @@ def _generate_knowledge_candidate(
         failure = {
             "schema_version": 1,
             "status": "fail",
-            "policy": "精确人物/年份/赛事/地点/授权素材不足时自动换题；候选耗尽则停止发布",
+            "policy": "精确人物/年份/赛事/地点素材不足时自动换题；候选耗尽则停止发布；授权信息仅记录不做过滤",
             "rejected_candidates": rejected_candidates,
             "errors": ["候选故事均未通过素材生产性预检"],
             "attempts": [],
@@ -796,17 +800,36 @@ def _knowledge_failure_stage(message: str) -> str:
 def _selected_visual_sources(slug: str, manifest: dict) -> set[str]:
     """Source URLs to exclude on the next retry.
 
-    Curated picks are deliberately excluded from this set: they have no
-    alternative candidate to diversify toward, so excluding one just
-    strands that page with zero options on the retry that follows an
+    Curated picks that were *selected* are deliberately excluded from this
+    set: they have no alternative candidate to diversify toward, so excluding
+    one just strands that page with zero options on the retry that follows an
     unrelated page's failure.
+
+    Curated picks that *failed download or verification* are the opposite
+    case: the entry is static data and will fail the same way on every retry
+    (2026-07-25 实测同题 4 次重试逐字节相同)。resolve_story_visuals 把它们记
+    在 failed_curated_source_urls 里；计入排除集后，下一轮会跳过它们并直接
+    放开网络检索。
     """
     selected = {
         str(item["source_url"])
         for item in manifest.get("attempts", [])
         if item.get("status") == "selected" and item.get("source_url")
     }
-    return selected - curated_source_urls(slug)
+    failed_curated = {
+        str(url)
+        for url in manifest.get("failed_curated_source_urls", []) or []
+        if url
+    }
+    for rejected in manifest.get("rejected_candidates", []) or []:
+        if not isinstance(rejected, dict) or rejected.get("story_slug") != slug:
+            continue
+        failed_curated.update(
+            str(url)
+            for url in rejected.get("failed_curated_source_urls", []) or []
+            if url
+        )
+    return (selected - curated_source_urls(slug)) | failed_curated
 
 
 def generate_knowledge_package(

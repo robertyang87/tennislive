@@ -93,11 +93,19 @@ def evaluate_knowledge_visuals(
     ]
     resolved_visuals: list[dict] = []
     enforce_page_photos = bool(page_visuals)
+    # 缺图内页走示意图/时间线降级（resolve_story_visuals 只在封面缺图时弃
+    # 题），照片数按"有配图的页面"计：封面永远要有，内页以解析结果为准。
+    photo_pages = {"knowledge"} | {
+        page
+        for page in ("story", "explainer", "today")
+        if page in (page_visuals or {})
+    }
+    expected_photo_uses = len(photo_pages)
 
-    if enforce_page_photos and photo_uses != MAX_PHOTO_USES:
+    if enforce_page_photos and photo_uses != expected_photo_uses:
         errors.append(
-            f"四页必须各使用一张真实主题图片，当前共 {photo_uses} 张，"
-            f"标准为 {MAX_PHOTO_USES} 张"
+            f"有配图的页面必须各使用一张真实主题图片，当前共 {photo_uses} 张，"
+            f"标准为 {expected_photo_uses} 张"
         )
     elif photo_uses > MAX_PHOTO_USES:
         errors.append(f"四页共使用 {photo_uses} 张照片，标准上限为 {MAX_PHOTO_USES} 张")
@@ -109,8 +117,10 @@ def evaluate_knowledge_visuals(
         errors.append(f"主图不存在：{story.image}")
     if not story.image_source_url.startswith("https://"):
         errors.append("主图必须有 HTTPS 来源页")
+    # 授权/署名只记录不拦截：缺失记 unknown 并给出信息性提示，
+    # 发布前的权利判断由人工检验环节负责。
     if not story.image_credit.strip():
-        errors.append("主图必须有作者与授权说明")
+        warnings.append("主图缺少作者/授权说明，记录为 unknown（仅提示，不作为失败条件）")
     if story.image.is_file():
         try:
             with Image.open(story.image) as source:
@@ -131,8 +141,13 @@ def evaluate_knowledge_visuals(
             errors.append(f"未知的页面配图槽位：{page}")
         if not source_url.startswith("https://"):
             errors.append(f"{page} 页配图缺少 HTTPS 来源页")
-        if not credit or not license_name:
-            errors.append(f"{page} 页配图缺少作者或授权信息")
+        # 授权/署名只记录不拦截：缺失记 unknown / unverified 并给出信息性提示。
+        if not credit:
+            warnings.append(f"{page} 页配图缺少作者署名，记录为 unknown（仅提示）")
+            credit = "unknown"
+        if not license_name:
+            warnings.append(f"{page} 页配图缺少许可信息，记录为 unverified（仅提示）")
+            license_name = "unverified"
         if not path.is_file():
             errors.append(f"{page} 页配图不存在：{path}")
             continue
@@ -225,8 +240,11 @@ def evaluate_knowledge_visuals(
             errors.append(f"{kind} 页最多使用一张主题照片")
         if page_photo_count and len(page_photo_sources) != page_photo_count:
             errors.append(f"{kind} 页照片缺少可审计的来源链接")
-        if enforce_page_photos and page_photo_count != 1:
-            errors.append(f"{kind} 页必须且只能使用一张强相关主题照片")
+        if enforce_page_photos:
+            if kind in photo_pages and page_photo_count != 1:
+                errors.append(f"{kind} 页必须且只能使用一张强相关主题照片")
+            if kind not in photo_pages and page_photo_count:
+                errors.append(f"{kind} 页已降级为示意图/时间线，不应再使用照片")
         elif kind == "knowledge" and page_photo_count != 1:
             errors.append("封面必须且只能使用一张主题照片")
         pages.append(
@@ -274,6 +292,11 @@ def evaluate_knowledge_visuals(
         "status": "pass" if not errors else "fail",
         "story_slug": story.slug,
         "standards": {
+            "license_policy": (
+                "record-only: credit/license are logged (unknown/unverified when "
+                "missing) and never a fail condition; pre-publish rights review "
+                "is a human step"
+            ),
             "photo_count_max": MAX_PHOTO_USES,
             "photo_source_uniqueness": "same photo/source may appear only once",
             "page_visual": "every page requires one distinct verified photo",

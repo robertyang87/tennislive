@@ -1,7 +1,13 @@
-"""Multi-source, license-aware visual discovery for knowledge cards."""
+"""Multi-source visual discovery for knowledge cards.
+
+授权信息（许可名 / 作者 / 来源 URL）全程记录进 manifest 与 credits，但绝不作为
+检索闸门：候选只按精准匹配（人物 / 年份 / 赛事地点）与画质评选。发布前的
+权利判断由人工检验环节负责。
+"""
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import html
 import json
@@ -40,7 +46,8 @@ from .visual_quality import assess_cover_image, classify_cover_scene
 
 
 _UA = "tennislive/1.0 visual-research (github.com/robertyang87/tennislive)"
-_LICENSES = {"cc0", "pdm", "by", "by-sa", "cc-by", "cc-by-sa"}
+# 许可字段缺失/无法核验时记录用的占位值：授权只记录，不参与筛选。
+_LICENSE_UNVERIFIED = "unverified"
 _PAGES = ("story", "explainer", "today")
 _NEGATIVE_PERSON_TERMS = {
     "scoreboard", "results", "bracket", "stadium", "arena",
@@ -711,8 +718,14 @@ def _official_references(story: TournamentStory, session: requests.Session) -> l
                     "image_url": image_url,
                     "credit": domain,
                     "license": "官方媒体 · 非商业资讯引用",
+                    # reference-only 仅表示页面没有暴露 og:image（拿不到图），
+                    # 绝不是授权降级：抓到图的官方页面一律作为正常候选参与评分。
                     "status": "candidate" if image_url else "reference-only",
-                    "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+                    "reason": (
+                        "官方页面图片作为正常候选参与评分；机构署名照记"
+                        if image_url
+                        else "官方页面未暴露 og:image，仅用于事实与事件核验"
+                    ),
                     "search_text": " ".join((title, description, url)).lower(),
                     "image_text": " ".join((alt, image_url)).lower(),
                     "width": 0,
@@ -751,9 +764,12 @@ def _commons_candidates(query: str, session: requests.Session) -> list[dict]:
     for page in response.json().get("query", {}).get("pages", []):
         info = (page.get("imageinfo") or [{}])[0]
         meta = info.get("extmetadata") or {}
-        license_code = (meta.get("LicenseShortName") or {}).get("value", "").lower()
-        if not any(code in license_code for code in ("cc", "public domain")):
-            continue
+        # 授权只记录不过滤：许可字段照 Commons 元数据原样入档，缺失记
+        # unverified。候选去留只由精准匹配与画质决定。
+        license_code = (
+            (meta.get("LicenseShortName") or {}).get("value", "").lower()
+            or _LICENSE_UNVERIFIED
+        )
         text = " ".join(
             (
                 page.get("title", ""),
@@ -788,11 +804,14 @@ def _bing_candidates(query: str, session: requests.Session) -> list[dict]:
     media-library APIs.  Every result retains its source page and is subjected
     to the same person/year/event relevance checks as the other providers.
     """
+    # ``site:`` 这类检索运算符被整句引号包住会退化成短语文本，实测恒 0 结果。
+    # 带运算符的检索串必须裸传，不加引号也不追加 "tennis" 后缀。
+    phrase = query if "site:" in query else f'"{query}" tennis'
     try:
         response = session.get(
             "https://www.bing.com/images/search",
             params={
-                "q": f'"{query}" tennis',
+                "q": phrase,
                 "form": "HDRSC2",
                 "first": 1,
                 "safeSearch": "Strict",
@@ -969,13 +988,30 @@ def _unsafe_web_image_source(domain: str, text: str) -> bool:
     )
 
 
+_FLICKR_TAG_STOPWORDS = frozenset(
+    {
+        "tennis", "match", "photo", "player", "open", "tour", "atp", "wta",
+        "action", "serving", "forehand", "backhand", "in",
+    }
+)
+
+
 def _flickr_candidates(query: str, session: requests.Session) -> list[dict]:
     """Read Flickr's public feed without requiring an API key.
 
     This is only a supplementary discovery channel; exact player/event/year
     and pixel checks still happen in ``resolve_match_cover_visual``.
+
+    公共 feed 对 tags 做全 AND 匹配：把前 8 个 token（含年份和 "photo" 这类
+    通用词）全塞进去，实测连续 3 期 0 候选。只保留查询开头的 1-2 个球员姓名
+    token，并用 ``tagmode=any``，把召回交给后面的精确校验去收紧。
     """
-    tags = ",".join(re.findall(r"[a-z0-9]+", query.casefold())[:8])
+    tokens = [
+        token
+        for token in re.findall(r"[a-z0-9]+", query.casefold())
+        if token not in _FLICKR_TAG_STOPWORDS and not token.isdigit()
+    ]
+    tags = ",".join(tokens[:2])
     if not tags:
         return []
     try:
@@ -983,7 +1019,7 @@ def _flickr_candidates(query: str, session: requests.Session) -> list[dict]:
             "https://www.flickr.com/services/feeds/photos_public.gne",
             params={
                 "tags": tags,
-                "tagmode": "all",
+                "tagmode": "any",
                 "format": "json",
                 "nojsoncallback": "1",
             },
@@ -1047,9 +1083,9 @@ def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
         return []
     candidates: list[dict] = []
     for item in response.json().get("results", []):
-        license_code = str(item.get("license", "")).lower()
-        if license_code not in _LICENSES:
-            continue
+        # 授权只记录不过滤：license 字段照 Openverse 返回原样入档，空值记
+        # unverified；不再用许可允许清单淘汰候选。
+        license_code = str(item.get("license", "")).lower() or _LICENSE_UNVERIFIED
         tags = item.get("tags") or []
         tag_text = " ".join(
             str(tag.get("name", "")) if isinstance(tag, dict) else str(tag)
@@ -1078,9 +1114,11 @@ def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
 def _download(candidate: dict, page: str, query: str, folder: Path, session: requests.Session) -> ResolvedVisual | None:
     url = candidate.get("image_url", "")
     source_url = str(candidate.get("source_url", "")).strip()
-    credit = re.sub(r"<[^>]+>", "", str(candidate.get("credit", ""))).strip()
-    license_name = str(candidate.get("license", "")).strip()
-    if not url or not source_url.startswith("https://") or not credit or not license_name:
+    # 缺作者/许可不拒绝：记录为 unknown / unverified，权利判断交给发布前的
+    # 人工检验环节。HTTPS 来源页仍是硬要求——它是精准校验与去重的锚点。
+    credit = re.sub(r"<[^>]+>", "", str(candidate.get("credit", ""))).strip() or "unknown"
+    license_name = str(candidate.get("license", "")).strip() or _LICENSE_UNVERIFIED
+    if not url or not source_url.startswith("https://"):
         return None
     try:
         response = session.get(url, timeout=18)
@@ -1152,8 +1190,26 @@ def _cover_audit(story: TournamentStory) -> dict:
         "event_match": event_match,
         "person_match": person_match,
         "visual_impact_match": impact_match,
-        "reason": "" if passed else "封面未同时满足人物、年份、事件/地点和授权来源要求",
+        "reason": "" if passed else "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求",
     }
+
+
+def _curated_image_request_url(image_url: str, declared_width: int) -> str:
+    """Cap a curated Commons ``Special:Redirect`` width at the source's width.
+
+    MediaWiki 拒绝放大：原图只有 943px 时请求 ``width=1600`` 返回的是错误页
+    而不是图片，下载环节必败且每次重试逐字节相同。请求宽度取
+    ``min(1600, 条目声明宽度)``，重定向才总能成立。
+    """
+    parsed = urlparse(image_url)
+    if "Special:Redirect/file/" not in parsed.path:
+        return image_url
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    if "width" not in query:
+        return image_url
+    width = min(1600, declared_width) if declared_width > 0 else 1600
+    query["width"] = str(width)
+    return urlunparse(parsed._replace(query=urlencode(query)))
 
 
 def curated_source_urls(slug: str) -> set[str]:
@@ -1178,7 +1234,11 @@ def resolve_story_visuals(
     *,
     excluded_source_urls: set[str] | None = None,
 ) -> tuple[dict[str, ResolvedVisual], dict]:
-    """Try multiple sources, keep exact licensed images, and audit every fallback."""
+    """Try multiple sources, keep exact-event images, and audit every fallback.
+
+    授权状态只记录（credit/license 写进 manifest，缺失记 unknown/unverified），
+    不作为取舍条件；精准（人物/年份/赛事地点）、分辨率与唯一性仍是硬闸门。
+    """
     excluded_source_urls = set(excluded_source_urls or ())
     enabled = os.environ.get("TENNISLIVE_VISUAL_FETCH", "off").lower() in {"1", "on", "true"}
     strict = os.environ.get("TENNISLIVE_VISUAL_STRICT", "off").lower() in {"1", "on", "true"}
@@ -1217,6 +1277,8 @@ def resolve_story_visuals(
             "selected_count": 0,
             "required_pages": sorted(required_pages),
             "missing_pages": sorted(required_pages),
+            "degraded_pages": [],
+            "failed_curated_source_urls": [],
             "input_domains": fact_domains,
             "primary_domains": primary_domains,
             "providers_queried": [],
@@ -1238,6 +1300,9 @@ def resolve_story_visuals(
     if story.image.is_file():
         used_hashes.add(hashlib.sha256(story.image.read_bytes()).hexdigest())
     briefs = _briefs(story)
+    # curated 候选下载失败/被拒后要计入排除集：这些条目是静态数据，同样的
+    # 校验下一轮还会以同样的方式失败，重试只有拿到真正新的候选才有意义。
+    failed_curated_urls: set[str] = set()
     for page, query in _queries(story).items():
         required_anchors = anchors_by_page.get(page, ())
         if page == "cover" and cover_audit["status"] == "selected":
@@ -1265,8 +1330,14 @@ def resolve_story_visuals(
             candidate["relevance"] = _relevance(query, candidate.get("search_text", ""))
             official_candidates.append(candidate)
         variants = _query_variants(briefs[page], query)
-        fetched: dict[str, list[dict]] = {}
-        curated = list(_CURATED_VISUALS.get((story.slug, page), ()))
+        curated = [dict(item) for item in _CURATED_VISUALS.get((story.slug, page), ())]
+        for item in curated:
+            item["image_url"] = _curated_image_request_url(
+                str(item.get("image_url", "")), int(item.get("width") or 0)
+            )
+        curated_urls = {
+            str(item.get("source_url", "")) for item in curated if item.get("source_url")
+        }
         provider_runs.append(
             {
                 "page": page,
@@ -1285,10 +1356,8 @@ def resolve_story_visuals(
                 "candidate_count": len(official_candidates),
             }
         )
-        # Curated assets are the fastest first choice. Once QA rejects one,
-        # query the full provider pool so the retry has genuinely new inputs
-        # instead of selecting the same image again.
-        if not curated or excluded_source_urls:
+
+        def _fetch_network_candidates() -> dict[str, list[dict]]:
             expanded_sources = os.environ.get(
                 "TENNISLIVE_VISUAL_EXPANDED_SOURCES", "on"
             ).lower() in {"1", "on", "true"}
@@ -1305,7 +1374,7 @@ def resolve_story_visuals(
                         ("duckduckgo-web-image", _duckduckgo_candidates),
                     ]
                 )
-            fetched = {name: [] for name, _loader in provider_loaders}
+            found = {name: [] for name, _loader in provider_loaders}
             fetches = []
             with ThreadPoolExecutor(
                 max_workers=min(12, len(variants) * len(provider_loaders))
@@ -1324,7 +1393,7 @@ def resolve_story_visuals(
             for provider, variant, future in fetches:
                 try:
                     items = future.result()
-                    fetched[provider].extend(items)
+                    found[provider].extend(items)
                     provider_runs.append(
                         {
                             "page": page,
@@ -1346,116 +1415,157 @@ def resolve_story_visuals(
                         }
                     )
                     continue
+            return found
+
+        # Curated assets are the fastest first choice. Once QA rejects one,
+        # query the full provider pool so the retry has genuinely new inputs
+        # instead of selecting the same image again.
+        network_searched = not curated or bool(excluded_source_urls)
+        fetched: dict[str, list[dict]] = (
+            _fetch_network_candidates() if network_searched else {}
+        )
+        chosen = None
+        chosen_candidate: dict = {}
+        seen_candidates: set[tuple[str, str]] = set()
+        rejection_counts: dict[str, int] = {}
+        page_failed_curated: set[str] = set()
+        candidate_total = 0
+        exact_total = 0
+        archive_total = 0
+
+        def reject(reason: str, candidate: dict | None = None) -> None:
+            rejection_counts[reason] = rejection_counts.get(reason, 0) + 1
+            if candidate is not None:
+                source_url = str(candidate.get("source_url", ""))
+                if source_url in curated_urls:
+                    page_failed_curated.add(source_url)
+
+        def _evaluate(candidates: list[dict]) -> None:
+            nonlocal chosen, chosen_candidate
+            nonlocal candidate_total, exact_total, archive_total
+
+            def _layout_score(item: dict) -> int:
+                width = int(item.get("width") or 0)
+                height = int(item.get("height") or 0)
+                if not width or not height:
+                    return 0
+                return int(height >= width) if page == "cover" else int(width >= height)
+
+            candidates.sort(
+                key=lambda item: (_layout_score(item), item["relevance"], item.get("width", 0)),
+                reverse=True,
+            )
+            candidate_total += len(candidates)
+            exact_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
+            archive_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
+            for candidate in candidates:
+                key = (str(candidate.get("source_url", "")), str(candidate.get("image_url", "")))
+                if key in seen_candidates:
+                    reject("duplicate-candidate")
+                    continue
+                seen_candidates.add(key)
+                if candidate["source_url"] in used_sources:
+                    reject("source-already-used")
+                    continue
+                if candidate["relevance"] < 3:
+                    reject("metadata-relevance-below-3", candidate)
+                    continue
+                # Only reject a direct hotlink to a stock-photo library's own
+                # domain (its preview thumbnails carry a visible watermark).
+                # A wire-service filename (e.g. "GettyImages-123.jpg") retained
+                # by a legitimate outlet's own CDN is not the same thing -- the
+                # outlet licensed and republished a clean copy.
+                candidate_hosts = (
+                    urlparse(str(candidate.get("source_url", ""))).hostname or "",
+                    urlparse(str(candidate.get("image_url", ""))).hostname or "",
+                )
+                if any(
+                    lib in host
+                    for host in candidate_hosts
+                    for lib in _WATERMARK_LIBRARY_HOSTS
+                ):
+                    reject("watermarked-stock-library", candidate)
+                    continue
+                matches = _candidate_matches(candidate, briefs[page])
+                subject_match, year_match, event_match, person_match = matches
+                if not (subject_match and person_match):
+                    reject("subject-or-person-mismatch", candidate)
+                    continue
+                if strict and not _visual_impact_match(candidate, page):
+                    reject("low-visual-impact-metadata", candidate)
+                    continue
+                if strict and not _visual_claim_match(story, page, candidate):
+                    reject("visible-claim-mismatch", candidate)
+                    continue
+                anchor_match = not required_anchors or any(
+                    anchor in candidate.get("search_text", "") for anchor in required_anchors
+                )
+                row = (candidate, matches, "exact-event" if year_match and event_match and anchor_match else "subject-archive")
+                (exact_candidates if row[2] == "exact-event" else archive_candidates).append(row)
+            exact_total += len(exact_candidates)
+            archive_total += len(archive_candidates)
+            eligible_candidates = (
+                exact_candidates
+                if strict
+                else [*exact_candidates, *archive_candidates]
+            )
+            if strict and archive_candidates:
+                rejection_counts["subject-archive-rejected-in-strict-mode"] = (
+                    rejection_counts.get("subject-archive-rejected-in-strict-mode", 0)
+                    + len(archive_candidates)
+                )
+                for candidate, _matches, _level in archive_candidates:
+                    if str(candidate.get("source_url", "")) in curated_urls:
+                        page_failed_curated.add(str(candidate["source_url"]))
+            for candidate, matches, match_level in eligible_candidates:
+                subject_match, year_match, event_match, person_match = matches
+                downloaded = _download(candidate, page, query, folder, session)
+                if downloaded and downloaded.sha256 in used_hashes:
+                    downloaded.path.unlink(missing_ok=True)
+                    reject("duplicate-downloaded-image", candidate)
+                    continue
+                if downloaded:
+                    focus = str(candidate.get("focus") or (
+                        "50% 22%"
+                        if page == "cover" and briefs[page][3]
+                        else "50% 24%" if briefs[page][3] else "50% 38%"
+                    ))
+                    chosen = replace(
+                        downloaded,
+                        focus=focus,
+                        subject_match=subject_match,
+                        year_match=year_match,
+                        event_match=event_match,
+                        person_required=briefs[page][3],
+                    )
+                    candidate["match_level"] = match_level
+                    chosen_candidate = candidate
+                    return
+                reject("download-or-resolution-failed", candidate)
+
         providers = (
             ("curated-editorial", curated),
             ("official-media", official_candidates),
             *tuple(fetched.items()),
         )
-        candidates = [candidate for _provider, items in providers for candidate in items]
-        def _layout_score(item: dict) -> int:
-            width = int(item.get("width") or 0)
-            height = int(item.get("height") or 0)
-            if not width or not height:
-                return 0
-            return int(height >= width) if page == "cover" else int(width >= height)
-
-        candidates.sort(
-            key=lambda item: (_layout_score(item), item["relevance"], item.get("width", 0)),
-            reverse=True,
-        )
-        chosen = None
-        exact_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
-        archive_candidates: list[tuple[dict, tuple[bool, bool, bool, bool], str]] = []
-        seen_candidates: set[tuple[str, str]] = set()
-        rejection_counts: dict[str, int] = {}
-
-        def reject(reason: str) -> None:
-            rejection_counts[reason] = rejection_counts.get(reason, 0) + 1
-
-        for candidate in candidates:
-            key = (str(candidate.get("source_url", "")), str(candidate.get("image_url", "")))
-            if key in seen_candidates:
-                reject("duplicate-candidate")
-                continue
-            seen_candidates.add(key)
-            if candidate["source_url"] in used_sources:
-                reject("source-already-used")
-                continue
-            if candidate["relevance"] < 3:
-                reject("metadata-relevance-below-3")
-                continue
-            candidate_text = " ".join(
-                (
-                    str(candidate.get("source_url", "")),
-                    str(candidate.get("image_url", "")),
-                    str(candidate.get("image_text", "")),
-                )
-            ).lower()
-            # Only reject a direct hotlink to a stock-photo library's own
-            # domain (its preview thumbnails carry a visible watermark).
-            # A wire-service filename (e.g. "GettyImages-123.jpg") retained
-            # by a legitimate outlet's own CDN is not the same thing -- the
-            # outlet licensed and republished a clean copy.
-            candidate_hosts = (
-                urlparse(str(candidate.get("source_url", ""))).hostname or "",
-                urlparse(str(candidate.get("image_url", ""))).hostname or "",
+        _evaluate([candidate for _provider, items in providers for candidate in items])
+        if chosen is None and curated and not network_searched:
+            # curated 候选全部下载失败/被拒：这些静态条目下一轮还会同样失败，
+            # 其 source_url 计入本轮排除集，并立即放开网络检索，避免"同题重试
+            # 逐字节重复同一张失败图"的死循环。
+            failed_curated_urls.update(page_failed_curated)
+            network_searched = True
+            fetched = _fetch_network_candidates()
+            providers = (
+                ("curated-editorial", curated),
+                ("official-media", official_candidates),
+                *tuple(fetched.items()),
             )
-            if any(
-                lib in host
-                for host in candidate_hosts
-                for lib in _WATERMARK_LIBRARY_HOSTS
-            ):
-                reject("watermarked-stock-library")
-                continue
-            matches = _candidate_matches(candidate, briefs[page])
-            subject_match, year_match, event_match, person_match = matches
-            if not (subject_match and person_match):
-                reject("subject-or-person-mismatch")
-                continue
-            if strict and not _visual_impact_match(candidate, page):
-                reject("low-visual-impact-metadata")
-                continue
-            if strict and not _visual_claim_match(story, page, candidate):
-                reject("visible-claim-mismatch")
-                continue
-            anchor_match = not required_anchors or any(
-                anchor in candidate.get("search_text", "") for anchor in required_anchors
+            _evaluate(
+                [candidate for _provider, items in fetched.items() for candidate in items]
             )
-            row = (candidate, matches, "exact-event" if year_match and event_match and anchor_match else "subject-archive")
-            (exact_candidates if row[2] == "exact-event" else archive_candidates).append(row)
-        eligible_candidates = (
-            exact_candidates
-            if strict
-            else [*exact_candidates, *archive_candidates]
-        )
-        if strict and archive_candidates:
-            rejection_counts["subject-archive-rejected-in-strict-mode"] = len(
-                archive_candidates
-            )
-        for candidate, matches, match_level in eligible_candidates:
-            subject_match, year_match, event_match, person_match = matches
-            downloaded = _download(candidate, page, query, folder, session)
-            if downloaded and downloaded.sha256 in used_hashes:
-                downloaded.path.unlink(missing_ok=True)
-                reject("duplicate-downloaded-image")
-                continue
-            if downloaded:
-                focus = str(candidate.get("focus") or (
-                    "50% 22%"
-                    if page == "cover" and briefs[page][3]
-                    else "50% 24%" if briefs[page][3] else "50% 38%"
-                ))
-                chosen = replace(
-                    downloaded,
-                    focus=focus,
-                    subject_match=subject_match,
-                    year_match=year_match,
-                    event_match=event_match,
-                    person_required=briefs[page][3],
-                )
-                candidate["match_level"] = match_level
-                break
-            reject("download-or-resolution-failed")
+        if page_failed_curated:
+            failed_curated_urls.update(page_failed_curated)
         if chosen:
             selected[page] = chosen
             used_sources.add(chosen.source_url)
@@ -1468,7 +1578,7 @@ def resolve_story_visuals(
                     "page": page,
                     "status": "selected",
                     "required_event_terms": list(required_anchors),
-                    "match_level": candidate.get("match_level", "exact-event"),
+                    "match_level": chosen_candidate.get("match_level", "exact-event"),
                     "rejection_counts": rejection_counts,
                     "source_runs": [
                         run for run in provider_runs if run.get("page") == page
@@ -1481,14 +1591,15 @@ def resolve_story_visuals(
                 {
                     "page": page,
                     "status": "generated-visual",
-                    "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+                    "reason": "多源检索后无相关性和分辨率同时达标的照片",
                     "query": query,
                     "required_event_terms": list(required_anchors),
                     "providers": [name for name, _items in providers],
-                    "candidate_count": len(candidates),
-                    "exact_candidate_count": len(exact_candidates),
-                    "archive_candidate_count": len(archive_candidates),
+                    "candidate_count": candidate_total,
+                    "exact_candidate_count": exact_total,
+                    "archive_candidate_count": archive_total,
                     "rejection_counts": rejection_counts,
+                    "failed_curated_source_urls": sorted(page_failed_curated),
                     "source_runs": [
                         run for run in provider_runs if run.get("page") == page
                     ],
@@ -1497,12 +1608,14 @@ def resolve_story_visuals(
     missing_pages = sorted(required_pages - set(selected))
     status = "pass"
     errors: list[str] = []
+    degraded_pages: list[str] = []
     if strict and missing_pages:
         if "cover" in missing_pages:
             errors.append("封面缺少通过人物与场景核验的照片")
-        inner_missing = [page for page in missing_pages if page != "cover"]
-        if inner_missing:
-            errors.append("缺少通过精确核验的页面照片：" + "、".join(inner_missing))
+        # 内页缺图不再整题作废：该页降级为示意图/时间线（现有渲染路径本来就
+        # 会在没有配图时渲染 rule-diagram / narrative-timeline），只有封面
+        # 失败才弃题。
+        degraded_pages = [page for page in missing_pages if page != "cover"]
     input_urls = [
         story.source_url,
         *story.evidence_urls,
@@ -1526,10 +1639,12 @@ def resolve_story_visuals(
         "story_slug": story.slug,
         "fetch_enabled": enabled,
         "strict": strict,
-        "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、授权、分辨率与唯一性；不足则换题",
+        "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、分辨率与唯一性；授权信息仅记录（缺失记 unknown/unverified）不做过滤；封面缺图弃题，内页缺图降级为示意图",
         "selected_count": len(selected),
         "required_pages": sorted(required_pages),
         "missing_pages": missing_pages,
+        "degraded_pages": degraded_pages,
+        "failed_curated_source_urls": sorted(failed_curated_urls),
         "input_domains": input_domains,
         "providers_queried": sorted(
             {run["provider"] for run in provider_runs}
@@ -1993,21 +2108,54 @@ def _atp_official_cover_candidates(
     return selected
 
 
-def _apply_official_maxres_resolution_profile(candidate: dict, audit: dict) -> dict:
-    """Recognize YouTube's fixed 1280x720 maxres asset without skipping QA.
+_OFFICIAL_RESOLUTION_PROFILE_DOMAINS = (
+    # WTA 官方图库与两巡回赛/四大满贯官网的文章头图常以 1280x720 发布：
+    # 真实、当届、可署名的现场照，不该被面向图库横图的 900x1200 底线枪毙。
+    "photoresources.wtatennis.com",
+    "wtatennis.com",
+    "atptour.com",
+    "wimbledon.com",
+    "rolandgarros.com",
+    "ausopen.com",
+    "usopen.org",
+)
 
-    YouTube's highest thumbnail endpoint is capped at 1280x720. Exact ATP feed
-    candidates may use that documented profile, while sharpness, contrast,
-    information, face count and 3:4 crop safety remain hard requirements.
-    """
+
+def _official_resolution_profile(candidate: dict) -> str:
+    """Name the fixed official resolution profile a candidate qualifies for."""
     if (
-        candidate.get("provider") != "official-atp-youtube"
-        or candidate.get("official_channel_id") != ATP_YOUTUBE_CHANNEL_ID
-        or not re.fullmatch(
+        candidate.get("provider") == "official-atp-youtube"
+        and candidate.get("official_channel_id") == ATP_YOUTUBE_CHANNEL_ID
+        and re.fullmatch(
             r"https://i\.ytimg\.com/vi/[A-Za-z0-9_-]+/maxresdefault\.jpg",
             str(candidate.get("image_url", "")),
         )
     ):
+        return "official-youtube-maxres-1280x720"
+    hosts = tuple(
+        (urlparse(str(candidate.get(key, ""))).hostname or "").casefold()
+        for key in ("image_url", "source_url")
+    )
+    if any(
+        host == domain or host.endswith(f".{domain}")
+        for host in hosts
+        for domain in _OFFICIAL_RESOLUTION_PROFILE_DOMAINS
+    ):
+        return "official-tour-media-1280x720"
+    return ""
+
+
+def _apply_official_maxres_resolution_profile(candidate: dict, audit: dict) -> dict:
+    """Recognize fixed official 1280x720 assets without skipping QA.
+
+    YouTube's highest thumbnail endpoint is capped at 1280x720, and WTA
+    photoresources / tour and Grand Slam newsroom OG images publish at the
+    same profile. Exact official candidates may use that documented profile,
+    while sharpness, contrast, information, face count and 3:4 crop safety
+    remain hard requirements.
+    """
+    profile = _official_resolution_profile(candidate)
+    if not profile:
         return audit
     width = int(audit.get("width", 0))
     height = int(audit.get("height", 0))
@@ -2021,7 +2169,7 @@ def _apply_official_maxres_resolution_profile(candidate: dict, audit: dict) -> d
     updated = dict(audit)
     updated["hard_failures"] = failures
     updated["status"] = "pass" if not failures else "fail"
-    updated["resolution_profile"] = "official-youtube-maxres-1280x720"
+    updated["resolution_profile"] = profile
     return updated
 
 
@@ -2304,6 +2452,85 @@ _RECAP_NEWS_RSS = (
 )
 
 
+def _decode_google_news_article_url(link: str) -> str:
+    """Extract the publisher URL from a Google News RSS article link.
+
+    ``news.google.com/rss/articles/<id>`` 已不再 302 跳转到出版方，而是返回
+    一个 JS 中转页；``<id>`` 是 base64url 的 protobuf，旧式 ID 直接内嵌目标
+    URL。这里不完整解析 protobuf——URL 是其中唯一以 ``https://`` 开头的可打印
+    子串，正则即可取出。新式 ID 的载荷是 ``AU_yqL`` 前缀的内部 token，剥掉
+    前缀再按 base64 解一层；仍解不出说明本地无法还原（需要调 Google 内部
+    接口），返回空串交给调用方回退到官方新闻列表页。
+    """
+    parsed = urlparse(link)
+    hostname = (parsed.hostname or "").casefold()
+    if hostname != "news.google.com" and not hostname.endswith(".news.google.com"):
+        return ""
+    id_match = re.search(r"/articles/([A-Za-z0-9_-]+)", parsed.path)
+    if not id_match:
+        return ""
+
+    def first_https_url(raw: bytes) -> str:
+        for found in re.findall(rb"https?://[!-~]+", raw):
+            url = found.decode("ascii", "ignore")
+            if url.startswith("https://"):
+                return url
+        return ""
+
+    def b64(data: bytes | str) -> bytes:
+        if isinstance(data, str):
+            data = data.encode("ascii")
+        return base64.urlsafe_b64decode(data + b"=" * (-len(data) % 4))
+
+    try:
+        decoded = b64(id_match.group(1))
+    except ValueError:
+        return ""
+    url = first_https_url(decoded)
+    if url:
+        return url
+    for token in re.findall(rb"AU_yqL([A-Za-z0-9_-]+)", decoded):
+        try:
+            url = first_https_url(b64(token))
+        except ValueError:
+            continue
+        if url:
+            return url
+    return ""
+
+
+def _wta_news_listing_urls(match: Match, session: requests.Session) -> list[str]:
+    """Fallback discovery: read the WTA newsroom listing and match surnames.
+
+    Google News 的 RSS 链接解不出出版方地址（或索引本身不可用）时，唯一还在
+    供图的官方赛后报道仍能从 wtatennis.com/news 列表页拿到——按参赛双方姓氏
+    过滤文章链接，文章自身元数据仍是后续接受与否的唯一凭据。
+    """
+    if match.tour is None or match.tour.value != "WTA":
+        return []
+    try:
+        response = session.get("https://www.wtatennis.com/news", timeout=15)
+        response.raise_for_status()
+    except requests.RequestException:
+        return []
+    surnames = [
+        re.findall(r"[^\W\d_]{2,}", player.name)[-1].casefold()
+        for player in (*match.home, *match.away)
+        if re.findall(r"[^\W\d_]{2,}", player.name)
+    ]
+    urls: list[str] = []
+    for href in re.findall(
+        r'href=["\']([^"\']*/news/\d+/[^"\']+)["\']', response.text, re.I
+    ):
+        url = urljoin("https://www.wtatennis.com/", html.unescape(href.strip()))
+        if not _is_official_tour_media_url(url):
+            continue
+        path_text = unquote(urlparse(url).path).casefold()
+        if any(surname in path_text for surname in surnames):
+            urls.append(url)
+    return list(dict.fromkeys(urls))
+
+
 def _recap_search_query(match: Match) -> str:
     """Scope a news query to the tour's official newsroom plus both surnames."""
     site = (
@@ -2341,6 +2568,7 @@ def _official_recap_candidates(
     article cannot supply the photo.
     """
     query = _recap_search_query(match)
+    root = None
     try:
         response = session.get(
             _RECAP_NEWS_RSS.format(query=quote_plus(query)), timeout=12
@@ -2348,24 +2576,32 @@ def _official_recap_candidates(
         response.raise_for_status()
         root = ElementTree.fromstring(response.content)
     except (requests.RequestException, ElementTree.ParseError):
-        return []
+        root = None
+
+    urls: list[str] = []
+    if root is not None:
+        for item in root.findall(".//item")[:8]:
+            link = (item.findtext("link") or "").strip()
+            if not link.startswith("https://"):
+                continue
+            url = link
+            # 括号修复：hostname 可能是 None，先落到空串再做包含判断。
+            if "news.google." in (urlparse(link).hostname or ""):
+                # RSS 链接现在指向 JS 中转页而非 302，跟随跳转拿不到出版方
+                # 地址；从链接自身解码目标 URL，解不出的条目直接跳过。
+                url = _decode_google_news_article_url(link)
+                if not url:
+                    continue
+            if not url.startswith("https://") or not _is_official_tour_media_url(url):
+                continue
+            urls.append(url)
+    if not urls:
+        # Google News 索引不可用或全部解码失败：直抓官方新闻列表页按姓氏匹配。
+        urls = _wta_news_listing_urls(match, session)
 
     candidates: list[dict] = []
     seen: set[str] = set()
-    for item in root.findall(".//item")[:8]:
-        link = (item.findtext("link") or "").strip()
-        if not link.startswith("https://"):
-            continue
-        url = link
-        if "news.google." in urlparse(link).hostname or "":
-            # RSS links are Google redirects; resolve to the publisher's own URL.
-            try:
-                resolved = session.get(link, timeout=12, allow_redirects=True)
-                url = str(resolved.url or "")
-            except requests.RequestException:
-                continue
-        if not url.startswith("https://") or not _is_official_tour_media_url(url):
-            continue
+    for url in urls[:8]:
         if url in seen:
             continue
         seen.add(url)
@@ -2465,7 +2701,9 @@ def resolve_match_cover_visual(
         "on",
         "true",
     }
-    minimum_score = int(os.environ.get("TENNISLIVE_COVER_VISUAL_MIN_SCORE", "72"))
+    # 名义门槛 72 与现实脱节：历史上实际入选封面的分数集中在 65~71，72 只会
+    # 把本可用的当场真图挡在门外、退回品牌底图。默认对齐现实取 65。
+    minimum_score = int(os.environ.get("TENNISLIVE_COVER_VISUAL_MIN_SCORE", "65"))
     max_downloads = int(os.environ.get("TENNISLIVE_COVER_VISUAL_DOWNLOADS", "10"))
     folder.mkdir(parents=True, exist_ok=True)
     players = _daily_cover_players(match)
@@ -2552,25 +2790,12 @@ def resolve_match_cover_visual(
     )
     report["editorial_source_urls"] = editorial_urls
 
-    # 图库对低关注度场次几乎没有覆盖，但巡回赛官方一定会写这场的赛后报道，
-    # 那篇文章的头图就是当场比赛的真实照片。
-    #
-    # 原本只在这条比赛没有已关联官方链接时才检索，省一次取数。可只要那几个
-    # 图库连着几期都是"0 候选、0 报错"，省下的这次请求换来的就是又一张品牌
-    # 底图——渠道台账正是为了记住这件事：查过、没错、就是没有。
     from .cover_registry import registry_summary, should_widen_search
 
     stock_channels = tuple(provider for provider, _loader in provider_loaders)
     widen = should_widen_search(stock_channels)
     report["source_registry"] = registry_summary()
     report["widened_by_registry"] = widen
-    if players and (not editorial_urls or widen):
-        recap = _official_recap_candidates(match, session)
-        report["official_recap_candidates"] = len(recap)
-        if recap:
-            report["providers_queried"].append("official-recap-search")
-            recap_query = _recap_search_query(match)
-            pool.extend((players[0], recap_query, item) for item in recap)
 
     for player in players:
         queries = _daily_cover_queries(match, player.name)
@@ -2615,6 +2840,20 @@ def resolve_match_cover_visual(
                 item["provider"] = provider
                 pool.append((player, query, item))
     report["provider_results"] = provider_results
+
+    # 图库对低关注度场次几乎没有覆盖，但巡回赛官方一定会写这场的赛后报道，
+    # 那篇文章的头图就是当场比赛的真实照片。
+    #
+    # 原本只在"没有已关联官方链接"或台账判定图库 barren 时才检索。可台账要
+    # 连续空 3 期才放开，明知本轮候选池已经是空的仍跳过 recap、落到品牌底
+    # 图。现在候选池为空就立即启用 recap 检索；台账记录本身保留。
+    if players and (not editorial_urls or widen or not pool):
+        recap = _official_recap_candidates(match, session)
+        report["official_recap_candidates"] = len(recap)
+        if recap:
+            report["providers_queried"].append("official-recap-search")
+            recap_query = _recap_search_query(match)
+            pool.extend((players[0], recap_query, item) for item in recap)
 
     expanded_urls: set[str] = set()
     expanded_count = 0

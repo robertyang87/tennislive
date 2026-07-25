@@ -99,21 +99,38 @@ def cinematic_bg(w: int, h: int, accent=(245, 190, 40)) -> Image.Image:
     tint = Image.new("RGB", (w, h), tuple(min(255, int(c * 0.9 + 30)) for c in accent))
     base = Image.composite(Image.blend(base, tint, 0.5), base, glow)
 
-    # 透视球场线（低透明度，营造“站在场上”）
+    # 透视半场线（真实规格投影：站在底线后看向球网）
+    # 半场纵深 11.885m（底线→网），发球线距网 6.40m；双打宽 10.97m、单打 8.23m。
     ov = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     od = ImageDraw.Draw(ov)
     lc = (*accent, 46)
-    yb, yf = int(h * 0.92), int(h * 0.60)
-    bl, br = int(w * 0.06), int(w * 0.94)
-    fl, fr = int(w * 0.40), int(w * 0.60)
-    od.line([(bl, yb), (fl, yf)], fill=lc, width=3)   # 左边线
-    od.line([(br, yb), (fr, yf)], fill=lc, width=3)   # 右边线
-    od.line([(bl, yb), (br, yb)], fill=lc, width=3)   # 底线
-    ys = int(yf + (yb - yf) * 0.45)                    # 发球线
-    sl = bl + (fl - bl) * 0.45
-    sr = br + (fr - br) * 0.45
-    od.line([(sl, ys), (sr, ys)], fill=lc, width=2)
-    od.line([((bl + br) / 2, yb), ((fl + fr) / 2, yf)], fill=(*accent, 30), width=2)  # 中线
+    lc2 = (*accent, 34)
+    DEPTH, SVC_FROM_NET, CAM = 11.885, 6.40, 6.0   # 米；CAM=视点在底线后方距离
+    yb, yf = h * 0.94, h * 0.58                      # 底线 / 网 的屏幕高度
+    half_near = w * 0.46                             # 底线处双打半宽（屏幕）
+
+    def proj(z):
+        """底线起纵深 z 米 → (屏幕y, 宽度缩放)。针孔模型：尺度 ∝ 1/(CAM+z)。"""
+        t = (z * (CAM + DEPTH)) / (DEPTH * (CAM + z))
+        return yb + (yf - yb) * t, CAM / (CAM + z)
+
+    def xpos(frac_half_width, z):
+        _, s = proj(z)
+        return w / 2 + frac_half_width * half_near * s
+
+    z_svc = DEPTH - SVC_FROM_NET                     # 底线→发球线 5.485m
+    y_base, _ = proj(0.0)
+    y_svc, _ = proj(z_svc)
+    y_net, _ = proj(DEPTH)
+    SGL = 8.23 / 10.97                               # 单打线相对双打半宽
+    for frac in (-1.0, -SGL, SGL, 1.0):              # 双打+单打边线
+        od.line([(xpos(frac, 0), y_base), (xpos(frac, DEPTH), y_net)],
+                fill=lc if abs(frac) == 1.0 else lc2, width=3)
+    od.line([(xpos(-1, 0), y_base), (xpos(1, 0), y_base)], fill=lc, width=4)      # 底线
+    od.line([(xpos(-SGL, z_svc), y_svc), (xpos(SGL, z_svc), y_svc)], fill=lc2, width=2)  # 发球线
+    od.line([(xpos(-1, DEPTH), y_net), (xpos(1, DEPTH), y_net)], fill=lc, width=2)       # 网
+    od.line([(w / 2, y_svc), (w / 2, y_net)], fill=lc2, width=2)   # 中央发球线：仅发球线→网
+    od.line([(w / 2, y_base - 14), (w / 2, y_base)], fill=lc, width=3)  # 底线中点标记
     base = Image.alpha_composite(base.convert("RGBA"), ov).convert("RGB")
 
     # 暗角
@@ -168,6 +185,15 @@ def center(draw, cx, y, text, fnt, fill, shadow=None, off=(6, 7)):
     draw.text((x, y), text, font=fnt, fill=fill)
 
 
+def pill(draw, cx, cy, text, fnt, bg, fg, pad_x=28, height=None):
+    """圆角药丸：文字以 anchor=mm 精确对中（修复中文视觉偏下）。"""
+    h = height or int(fnt.size * 1.7)
+    w = fnt.getlength(text) + pad_x * 2
+    x0, y0 = cx - w / 2, cy - h / 2
+    draw.rounded_rectangle([x0, y0, x0 + w, y0 + h], radius=h // 2, fill=bg)
+    draw.text((cx, cy - fnt.size * 0.04), text, font=fnt, fill=fg, anchor="mm")
+
+
 def outline(draw, xy, text, fnt, fill=WHITE, oc=(0, 0, 0), width=5):
     x, y = xy
     for dx in range(-width, width + 1):
@@ -177,14 +203,32 @@ def outline(draw, xy, text, fnt, fill=WHITE, oc=(0, 0, 0), width=5):
     draw.text((x, y), text, font=fnt, fill=fill)
 
 
+_BRAND_ICON = None
+
+
+def _brand_icon():
+    global _BRAND_ICON
+    if _BRAND_ICON is None:
+        p = ROOT / "assets" / "logo" / "brand" / "icon.png"
+        _BRAND_ICON = Image.open(p).convert("RGBA") if p.exists() else False
+    return _BRAND_ICON
+
+
 def brand_mark(img, brand):
+    """品牌标：网球时差 logo 图标 + 文字，无外框。"""
     d = ImageDraw.Draw(img)
-    f = F_BOLD(34)
-    pad = 44
-    d.rounded_rectangle([pad, pad, pad + 26 + f.getlength(brand) + 40, pad + 64],
-                        radius=14, fill=(0, 0, 0), outline=YELLOW, width=2)
-    d.ellipse([pad + 16, pad + 22, pad + 36, pad + 42], fill=YELLOW)
-    d.text((pad + 48, pad + 12), brand, font=f, fill=WHITE)
+    f = F_BOLD(36)
+    pad = 48
+    ic = _brand_icon()
+    if ic:
+        sz = 60
+        lg = ic.resize((sz, sz), Image.LANCZOS)
+        img.paste(lg, (pad, pad), lg)
+        d.text((pad + sz + 16, pad + sz / 2), brand, font=f, fill=WHITE, anchor="lm")
+    else:
+        cy = pad + 20
+        d.ellipse([pad, cy - 10, pad + 20, cy + 10], fill=YELLOW)
+        d.text((pad + 34, cy), brand, font=f, fill=WHITE, anchor="lm")
 
 
 def progress_dots(img, active):
@@ -210,14 +254,6 @@ def section_header(img, section):
     y = 150
     center(d, W / 2, y, section.get("en", ""), F_LATIN(60), YELLOW)
     center(d, W / 2, y + 74, section.get("zh", ""), F_BOLD(46), WHITE)
-    surface = section.get("surface", "")
-    if surface:
-        ft = F_BOLD(32)
-        tw = ft.getlength(surface) + 56
-        bx0 = W / 2 - tw / 2
-        by0 = y + 150
-        d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 52], radius=26, fill=color)
-        center(d, W / 2, by0 + 8, surface, ft, (8, 10, 14))
 
 
 def caption_band(img, caption):
@@ -292,13 +328,13 @@ def render_photo(meta, scene, W, H):
     src = Image.open(ROOT / scene["image"]).convert("RGB")
     photo = fit_cover(src, card_w, card_h, scene.get("focal", [0.5, 0.5]))
     card = rounded(photo, 32)
-    # 发光
-    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    gd = ImageDraw.Draw(glow)
-    gd.rounded_rectangle([card_x - 6, card_y - 6, card_x + card_w + 6, card_y + card_h + 6],
-                         radius=38, outline=(*accent, 180), width=6)
-    glow = glow.filter(ImageFilter.GaussianBlur(10))
-    img = Image.alpha_composite(img.convert("RGBA"), glow)
+    # 柔和投影（无描边框）
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow)
+    sd.rounded_rectangle([card_x - 4, card_y + 14, card_x + card_w + 4, card_y + card_h + 26],
+                         radius=36, fill=(0, 0, 0, 170))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(28))
+    img = Image.alpha_composite(img.convert("RGBA"), shadow)
     img.paste(card, (card_x, card_y), card)
     img = img.convert("RGB")
     # 卡内上下压暗，便于分区标题/字幕
@@ -370,16 +406,7 @@ def render_triptych(meta, scene, W, H):
         px = card_x + i * (pw + gap)
         col = hex2rgb(p["color"])
         img = paste_rounded_photo(img, p["image"], px, card_y, pw, card_h,
-                                  tuple(p.get("focal", [0.5, 0.5])), radius=18,
-                                  border=col, bw=4)
-        d = ImageDraw.Draw(img, "RGBA")
-        ft = F_BOLD(40)
-        lab = p["label"]
-        lw = ft.getlength(lab) + 44
-        lx = px + pw / 2 - lw / 2
-        ly = card_y + card_h - 70
-        d.rounded_rectangle([lx, ly, lx + lw, ly + 54], radius=27, fill=col)
-        center(d, px + pw / 2, ly + 6, lab, ft, (8, 10, 14))
+                                  tuple(p.get("focal", [0.5, 0.5])), radius=18)
     section_header(img, scene["section"])
     caption_band(img, scene.get("caption", ""))
     brand_mark(img, meta["brand"])
@@ -400,8 +427,7 @@ def render_collage(meta, scene, W, H):
         r, cc = divmod(i, cols)
         img = paste_rounded_photo(img, c["image"], card_x + cc * (cw + gap),
                                   card_y + r * (ch + gap), cw, ch,
-                                  tuple(c.get("focal", [0.5, 0.4])), radius=16,
-                                  border=accent, bw=3)
+                                  tuple(c.get("focal", [0.5, 0.4])), radius=16)
     section_header(img, scene["section"])
     caption_band(img, scene.get("caption", ""))
     brand_mark(img, meta["brand"])
@@ -435,15 +461,7 @@ def render_grid4(meta, scene, W, H):
         else:
             img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
                                       tuple(c.get("focal", [0.5, 0.4])), radius=18,
-                                      border=col, bw=4, key=c.get("local_key"))
-        d = ImageDraw.Draw(img, "RGBA")
-        lab = c["label"]
-        ft = F_BOLD(40)
-        lw = ft.getlength(lab) + 44
-        lx = x + cw / 2 - lw / 2
-        ly = y + ch - 66
-        d.rounded_rectangle([lx, ly, lx + lw, ly + 54], radius=27, fill=col)
-        center(d, x + cw / 2, ly + 6, lab, ft, (8, 10, 14))
+                                      key=c.get("local_key"))
     section_header(img, scene["section"])
     caption_band(img, scene.get("caption", ""))
     brand_mark(img, meta["brand"])
@@ -462,18 +480,15 @@ def render_courtcard(meta, scene, W, H):
     cw, ch = W - 120, int(H * 0.46)
     img = paste_rounded_photo(img, scene["image"], cx, cy, cw, ch,
                               tuple(scene.get("focal", [0.5, 0.5])), radius=28,
-                              border=accent, bw=5, key=scene.get("local_key"))
+                              key=scene.get("local_key"))
     d = ImageDraw.Draw(img, "RGBA")
     court, seats = scene.get("court", ""), scene.get("seats", "")
     yb = cy + ch + 56
     if court:
         center(d, W / 2, yb, court, F_BOLD(56), WHITE)
     if seats:
-        fs = F_BOLD(56)
-        tw = fs.getlength(seats) + 72
-        bx0, by0 = W / 2 - tw / 2, yb + 84
-        d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 84], radius=42, fill=accent)
-        center(d, W / 2, by0 + 12, seats, fs, (8, 10, 14))
+        pill(d, W / 2, yb + 126, seats, F_BOLD(56), accent, (8, 10, 14),
+             pad_x=36, height=84)
     credit = scene.get("credit", "")
     if credit:
         d.text((44, H - 92), credit, font=F_REG(24), fill=(150, 160, 172))
@@ -482,7 +497,39 @@ def render_courtcard(meta, scene, W, H):
     return img
 
 
+def render_logogrid(meta, scene, W, H):
+    """四大满贯官方 logo 2x2：白色圆角卡托底，深色电影背景。"""
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    card_x, card_y = 90, int(H * 0.24)
+    card_w, card_h = W - 180, int(H * 0.50)
+    gap = 26
+    cw = (card_w - gap) // 2
+    ch = (card_h - gap) // 2
+    rgba = img.convert("RGBA")
+    for i, c in enumerate(scene["cells"][:4]):
+        r, cc = divmod(i, 2)
+        x = card_x + cc * (cw + gap)
+        y = card_y + r * (ch + gap)
+        card = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+        cd = ImageDraw.Draw(card)
+        cd.rounded_rectangle([0, 0, cw, ch], radius=30, fill=(255, 255, 255, 246))
+        logo = Image.open(ROOT / c["logo"]).convert("RGBA")
+        box = int(min(cw, ch) * 0.72)
+        s = min(box / logo.width, box / logo.height)
+        logo = logo.resize((int(logo.width * s), int(logo.height * s)), Image.LANCZOS)
+        card.paste(logo, ((cw - logo.width) // 2, (ch - logo.height) // 2), logo)
+        rgba.paste(card, (x, y), card)
+    img = rgba.convert("RGB")
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
 RENDERERS = {"title": render_title, "section": render_section,
+             "logogrid": render_logogrid,
              "photo": render_photo, "placeholder": render_placeholder,
              "triptych": render_triptych, "collage": render_collage,
              "grid": render_grid4, "courtcard": render_courtcard}
