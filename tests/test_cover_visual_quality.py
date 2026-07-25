@@ -998,14 +998,14 @@ def test_atp_official_youtube_not_queried_when_another_source_has_any_candidate(
     assert visual.provider == "official-match-media"
 
 
-def test_atp_official_youtube_used_as_last_resort_when_no_other_cover_exists(
+def test_atp_official_youtube_never_used_even_when_no_other_cover_exists(
     monkeypatch, tmp_path
 ):
-    """2026-07-24 生产回归复现：把 ATP YouTube 缩略图整体从封面来源移除后，
-    通讯社/官方图库都没有覆盖的小站比赛（Tabilo vs Torres 当天正是如此）
-    彻底没有封面候选，'校验证据包完整性' 门禁失败，整份日报生成中断。只有
-    在其它来源全部查询后仍然一张候选都没有时，才允许退回 ATP YouTube 缩略
-    图，保证这类比赛至少还有封面可用，不至于拖垮整份日报。"""
+    """2026-07-25 生产事故复现：其它来源全空时曾把 ATP YouTube 缩略图当最后
+    兜底，结果封面又出现拼接的赛事VI条纹与大字——这类 maxresdefault.jpg 几乎
+    都是宣传拼接图，而像素质检只保证人脸不被裁掉，管不住裁切框里混进来的图案
+    文字。空池的正确兜底是 cards.py 的 branded_fallback（本地已核验人物照 /
+    品牌封面），画面干净，优先级必须高于带文字的缩略图。"""
     from tennislive.research import visual_sources
 
     match = make_match(
@@ -1029,9 +1029,15 @@ def test_atp_official_youtube_used_as_last_resort_when_no_other_cover_exists(
         ),
         "image_text": "match highlights tabilo vs torres",
     }
+    fetch_calls = []
+
+    def tracked_atp_official(*args):
+        fetch_calls.append(args)
+        return [candidate]
+
     monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
     monkeypatch.setattr(
-        visual_sources, "_atp_official_cover_candidates", lambda *_args: [candidate]
+        visual_sources, "_atp_official_cover_candidates", tracked_atp_official
     )
     monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_args: [])
@@ -1039,43 +1045,16 @@ def test_atp_official_youtube_used_as_last_resort_when_no_other_cover_exists(
     monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
     monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_args: [])
 
-    def fake_download(item, page, query, folder, _session):
-        path = folder / "atp-maxres.jpg"
-        Image.effect_noise((1280, 960), 32).convert("RGB").save(path)
-        return visual_sources.ResolvedVisual(
-            page=page,
-            path=path,
-            provider=item["provider"],
-            source_url=item["source_url"],
-            image_url=item["image_url"],
-            credit=item["credit"],
-            license=item["license"],
-            query=query,
-            relevance=item["relevance"],
-            sha256="atp-maxres",
-        )
+    def unexpected_download(*_args):
+        raise AssertionError("YouTube 缩略图不得进入封面下载环节")
 
-    monkeypatch.setattr(visual_sources, "_download", fake_download)
-    monkeypatch.setattr(
-        visual_sources,
-        "assess_cover_image",
-        lambda _path: {
-            "status": "pass",
-            "score": 30,
-            "quality_score": 13,
-            "crop_score": 17,
-            "hard_failures": [],
-            "prominent_faces": 1,
-            "face_detectors": ["test-fixture"],
-            "focus": "62% 27%",
-        },
-    )
+    monkeypatch.setattr(visual_sources, "_download", unexpected_download)
 
     visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
 
-    assert visual is not None
-    assert visual.provider == "official-atp-youtube"
-    assert "official-atp-youtube" in report["providers_queried"]
+    assert visual is None
+    assert fetch_calls == []
+    assert "official-atp-youtube" not in report["providers_queried"]
 
 
 def test_atp_maxres_profile_only_adjusts_fixed_resolution_failure():

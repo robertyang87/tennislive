@@ -131,6 +131,7 @@ TOURNAMENT_ZH: dict[str, str] = {
     "mallorca championships": "马略卡锦标赛",
     "marrakech": "马拉喀什大奖赛",
     "marseille": "马赛站",
+    "memphis classic": "孟菲斯精英赛",
     "merida": "梅里达公开赛",
     "merida open": "梅里达公开赛",
     "metz": "梅斯站",
@@ -355,6 +356,9 @@ TOURNAMENT_LEVEL: dict[str, str] = {
     "mallorca championships": "250",
     "marrakech": "250",
     "marseille": "250",
+    # 2026 年重回巡回赛日程的 WTA 250（孟菲斯 Leftwich Tennis Center）。
+    # 用全名而不是 "memphis" 做键：历史上孟菲斯办过 ATP 站，宽泛的键会误伤。
+    "memphis classic": "W250",
     "merida": "W500",
     "merida open": "W500",
     "mexican open": "500",

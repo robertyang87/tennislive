@@ -173,6 +173,40 @@ def _stats_verdict(match: Match) -> str | None:
     return "；".join(fragments[:3]) + duration + "。"
 
 
+def headline_stats_targets(digest: Digest, budget: int = 4) -> list[Match]:
+    """Matches whose official per-match stats the headline page may need.
+
+    The lead card renders a technical comparison only when its match carries
+    stats, and degrades to prose otherwise. Prose is meant to be the no-data
+    fallback, not the default -- but stats used to be fetched solely for
+    select_focus_match(), which picks by its own rules and is frequently a
+    different match than the headline (on 2026-07-25 stats landed on a WTA
+    match while the headline page was an ATP one, leaving that page with no
+    comparison at all).
+
+    Returns the current headline plus the fallback headline candidates the
+    cover stage may reselect into, so whichever one is finally rendered has
+    its data ready. The headline is included even when it carries no
+    editorial heat -- lead_story_candidates() filters those out, and on a
+    quiet day it can come back empty while a headline still exists, which is
+    exactly why the cover stage keeps its own `or [lead]` fallback.
+    """
+    from .rating import lead_story_candidates
+    from .titles import daily_lead_match
+
+    ordered: list[Match] = []
+    seen: set[str] = set()
+    lead = daily_lead_match(digest)
+    for match in [lead, *(item.match for item in lead_story_candidates(digest)[:budget])]:
+        if match is None or match.match_id in seen:
+            continue
+        seen.add(match.match_id)
+        # 只有已完赛单打才有逐场技术统计可取。
+        if match.status.is_final and match.is_singles:
+            ordered.append(match)
+    return ordered
+
+
 def select_focus_match(digest: Digest) -> Match | None:
     singles = [
         m for m in digest.results

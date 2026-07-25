@@ -390,6 +390,32 @@ def cmd_digest(args) -> int:
             else "降级 · 所有逐场统计源均未命中，使用比分结构复盘"
         )
 
+    # 头条页（card_01_lead）只在 match.stats 存在时才画技术对比表，否则退化
+    # 成纯文字复盘——而文字复盘只该是"真的没有数据"时的兜底。上面这次取数是
+    # 按 select_focus_match() 选的，和头条经常不是同一场，所以头条自己也要取。
+    from .render.focus import headline_stats_targets
+
+    headline_budget = max(
+        1, int(os.environ.get("TENNISLIVE_COVER_HEADLINE_ATTEMPTS", "4") or 4)
+    )
+    headline_stats_hits = 0
+    for candidate in headline_stats_targets(digest, headline_budget):
+        if candidate.stats is not None:
+            headline_stats_hits += 1
+            continue
+        try:
+            candidate.stats = fetch_match_stats_with_fallback(candidate).stats
+        except Exception as e:  # noqa: BLE001 - 统计是增强项，绝不阻断出片
+            digest.source_status["头条技术统计"] = f"降级 · {e}"
+            continue
+        if candidate.stats is not None:
+            headline_stats_hits += 1
+    digest.source_status["头条技术统计"] = (
+        f"正常 · {headline_stats_hits} 场头条候选已接入逐场统计"
+        if headline_stats_hits
+        else "降级 · 头条候选无逐场统计，头条页使用比分结构复盘"
+    )
+
     # 人工核验的权威媒体摘要优先；未覆盖的比赛使用当前排名、赛事阶段
     # 与晋级目标生成背景看点，不复述上一轮比分或泛化技战术套话。
     from .render.authority import apply_curated_editorial, enrich_schedule_editorial
