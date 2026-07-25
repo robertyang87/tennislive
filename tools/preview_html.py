@@ -18,24 +18,13 @@ checking is usually the bottom of a very long page.
 from __future__ import annotations
 
 import argparse
-import glob
 import sys
 from pathlib import Path
 
 # The sandbox ships Chromium under a versioned directory that Playwright's own
-# lookup misses, so point it at the binary rather than letting it guess.
-_SEARCH = (
-    "/opt/pw-browsers/chromium-*/chrome-linux/chrome",
-    "/opt/pw-browsers/chromium/chrome-linux/chrome",
-)
-
-
-def _chromium() -> str | None:
-    for pattern in _SEARCH:
-        found = sorted(glob.glob(pattern))
-        if found:
-            return found[-1]
-    return None
+# lookup misses. The renderer already had to solve this, so borrow its answer
+# rather than keeping a second copy that can drift.
+from tennislive.render.webcards import _chromium_executable
 
 
 def main() -> int:
@@ -53,7 +42,7 @@ def main() -> int:
 
     from playwright.sync_api import sync_playwright
 
-    exe = _chromium()
+    exe = _chromium_executable()
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=exe, args=["--no-sandbox"])
         page = browser.new_page(

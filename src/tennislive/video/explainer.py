@@ -238,6 +238,117 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你觉得法网什么时候会改用电子司线？",
         ),
     ),
+    # Same five-beat shape as hawkeye — the old way, the force that broke it,
+    # the rule change, the holdout, and a question worth arguing about. Facts
+    # come from the story's own verified set plus en.wikipedia "Tennis ball":
+    # white until 1972, ITF yellow in 1972 for television, Wimbledon white
+    # until 1986, "optic yellow", and the poll where most people said green.
+    "yellow-ball": (
+        (
+            "white",
+            "白球时代",
+            "一百年里，网球一直是白的",
+            "打开电视看网球，那颗荧光黄的球，你早就习惯了。但它变成黄色，其实还"
+            "不到六十年。1972 年以前，比赛用球一直是白的，偶尔也用黑球——"
+            "从现代网球在草地上诞生算起，白球陪着这项运动走了将近一百年。"
+            "画面里这些人，打的就是那个年代的白球。",
+            "assets/explainer/yellow-ball/white_era.jpg",
+            "CC0 · Wikimedia Commons · Slazenger 白色网球（vintage）",
+            (
+                "1972 年以前，比赛用球是白色",
+                "偶尔也用黑球，规则只认这两色",
+                "白球陪网球走了近一百年",
+            ),
+        ),
+        (
+            "tv",
+            "电视时代",
+            "问题不在场上，在屏幕上",
+            "让白球退场的，不是球员，是电视。彩色电视普及之后，转播里冒出一个"
+            "尴尬的问题：白球在屏幕上太难追踪，观众盯着看，常常跟丢那颗球。"
+            "研究给出了结论——换成荧光色，会明显更好认。于是一颗球的颜色，"
+            "第一次由镜头而不是球场说了算。",
+            "assets/explainer/yellow-ball/broadcast.jpg",
+            "AndrewHenkelman · CC BY-SA 4.0 · Wikimedia Commons · 2020 US Open",
+            (
+                "彩色电视普及，白球在屏幕上难追踪",
+                "研究结论：荧光色更容易被看见",
+                "推动改色的是转播，不是球员",
+            ),
+        ),
+        (
+            "switch",
+            "正式改色",
+            "1972 年，黄色写进规则",
+            "1972 年，国际网联正式引入黄色比赛用球，理由写得很直白：电视上"
+            "更容易看清。这种荧光色有个专门的名字，叫 optic yellow，光学黄。"
+            "它很快就流行开来。直到今天，ITF 认可的比赛用球颜色仍然只有两种："
+            "白色，和黄色。",
+            "assets/explainer/yellow-ball/optic_yellow.jpg",
+            "Yann Caradec · CC BY-SA 2.0 · Wikimedia Commons · Roland Garros 2011 官方用球",
+            (
+                "1972 年 ITF 正式引入黄色用球",
+                "这种荧光色叫 optic yellow",
+                "至今 ITF 只认白、黄两种颜色",
+            ),
+        ),
+        (
+            "exception",
+            "温网例外",
+            "温网又多用了十四年白球",
+            "但有一个地方没跟着改，就是温布尔登。国际网联改色之后，温网继续用"
+            "白球，一直用到 1986 年才换成黄色——整整多用了十四年，是四大满贯里"
+            "最后一个松口的。这片草地上的规矩，总是最后才变。",
+            "assets/explainer/yellow-ball/wimbledon.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 1986 Wimbledon",
+            (
+                "ITF 改色后，温网继续用白球",
+                "一直用到 1986 年才换成黄球",
+                "四大满贯里最后一个松口的",
+            ),
+        ),
+        (
+            "color",
+            "一场争论",
+            "它到底是黄的，还是绿的",
+            "最后留个问题给你。这颗球叫黄球，可它真的是黄的吗？有一次流传很广的"
+            "投票里，说它是黄色的人不到一半，反而是略过半数的人投了绿色。"
+            "同一颗球，有人看到黄，有人看到绿。那你呢，你看到的是黄还是绿？"
+            "评论区说说。",
+            "assets/explainer/yellow-ball/yellow_or_green.jpg",
+            "Bertoka · CC0 · Wikimedia Commons · 上传者自述为 “green tennis ball”",
+            (
+                "官方叫它黄球，争议却没停过",
+                "投票里选黄色的不到一半",
+                "过半数的人选了绿色",
+            ),
+            "",
+            "你看到的是黄，还是绿？",
+        ),
+    ),
+}
+
+
+# The caption's opening hook and its hashtags belong to the topic, not to the
+# function. They used to be literals inside the caption builder, written for
+# Hawk-Eye — so the moment a second deck existed, the yellow-ball post opened
+# with a line about line calls and tagged itself #鹰眼 #电子司线 #法网.
+_DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识")
+_CAPTIONS: dict[str, dict] = {
+    "hawkeye": {
+        "hook": (
+            "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
+            "现在四大满贯里，只剩一个地方还没交。"
+        ),
+        "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "yellow-ball": {
+        "hook": (
+            "网球是黄色的，这件事其实还不到六十年。\n"
+            "在那之前，它白了将近一百年——把它改成黄色的不是球员，是电视。"
+        ),
+        "tags": ("网球", "网球时差", "网球冷知识", "温网", "网球历史"),
+    },
 }
 
 
@@ -278,9 +389,7 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
-def _slide_html(
-    index: int, segment: ExplainerSegment, date_label: str, *, theme: str = "dark"
-) -> str:
+def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
@@ -298,14 +407,22 @@ def _slide_html(
     image_path = _REPO / segment.image if segment.image else None
     has_photo = bool(image_path and image_path.is_file())
     if has_photo:
+        # Two reasons to letterbox rather than fill the card.
+        #
         # A wide frame cropped to this 3:4 card loses its edges — and on a
         # photo of two people either side of a ball mark, the edges are the
         # subject. Letterbox those instead of cropping them away.
+        #
+        # A small frame is the other case: filling the card means scaling it
+        # up, and the vintage white balls are only 947px wide, so covering
+        # would blow them up 1.8x (3.6x at the 2x device scale) into mush.
+        # A sharp letterboxed photo beats a soft full-bleed one.
         try:
             from PIL import Image as _Image
 
             with _Image.open(image_path) as probe:
-                wide = probe.width / max(probe.height, 1) >= 1.2
+                pw, ph = probe.width, max(probe.height, 1)
+            wide = pw / ph >= 1.2 or max(W / pw, H / ph) > 1.6
         except Exception:  # noqa: BLE001
             wide = False
         fit = (
@@ -360,15 +477,13 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
 .head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
- align-items:center;justify-content:space-between;
+ align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;letter-spacing:1px;}}
-.date{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
- font-size:32px;color:#d7e6dd;font-weight:600;letter-spacing:2px;}}
 .foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
  display:flex;align-items:center;justify-content:flex-end;}}
 .tag{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
@@ -393,8 +508,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
-<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div>
-<div class="date">{html.escape(date_label)}</div></div>
+<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
 <div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}</div>
 <div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
@@ -403,7 +517,6 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 
 def render_explainer_slides(
     segments: Sequence[ExplainerSegment],
-    date_label: str,
     outdir: Path,
     *,
     theme: str = "dark",
@@ -429,7 +542,7 @@ def render_explainer_slides(
                     viewport={"width": W, "height": H}, device_scale_factor=2
                 )
                 try:
-                    page.set_content(_slide_html(index, seg, date_label, theme=theme))
+                    page.set_content(_slide_html(index, seg, theme=theme))
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )
@@ -554,7 +667,6 @@ def generate_explainer_video(
     story,
     outdir: str | Path,
     *,
-    date_label: str,
     theme: str = "dark",
     voice: str = "zh-CN-YunxiNeural",
 ) -> Path:
@@ -562,7 +674,7 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(segments, date_label, outdir, theme=theme)
+    slides = render_explainer_slides(segments, outdir, theme=theme)
     audios = synthesize_narration(segments, outdir, voice=voice)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
 
@@ -625,14 +737,12 @@ def explainer_xiaohongshu(
         bullets = "\n".join(f"· {point}" for point in segment.points)
         sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
 
-    tags = " ".join(
-        f"#{tag}"
-        for tag in ("网球", "网球时差", "鹰眼", "电子司线", "法网", "网球冷知识")
-    )
+    caption = _CAPTIONS.get(story.slug) or {}
+    hook = caption.get("hook") or ""
+    tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
     return (
         f"🎾{date_label}｜{story.title}\n\n"
-        "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
-        "现在四大满贯里，只剩一个地方还没交。\n\n"
+        + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)
         + "\n\n💬 留个答案\n"
         f"{question}\n\n"
