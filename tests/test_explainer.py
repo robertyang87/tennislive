@@ -18,9 +18,14 @@ from tennislive.video.explainer import (
 _SCRIPTED = tuple(_SCRIPTS)
 
 
+def _beats(slug):
+    """The content beats, without the opening question card."""
+    return [s for s in explainer_script(find_story_by_slug(slug)) if s.kind != "cover"]
+
+
 def test_hawkeye_beats_are_grounded_in_verified_facts():
     story = find_story_by_slug("hawkeye")
-    segments = explainer_script(story)
+    segments = _beats("hawkeye")
 
     assert [s.kind for s in segments] == [
         "human",
@@ -133,7 +138,7 @@ def test_知识卡右上角不写日期():
 def test_每屏都有提炼要点配合旁白():
     # 画面不能只有大标题：要点是给眼睛看的骨架，旁白是给耳朵的全文。
     for story_slug in _SCRIPTED:
-        for seg in explainer_script(find_story_by_slug(story_slug)):
+        for seg in _beats(story_slug):
             assert 2 <= len(seg.points) <= 3, f"{seg.kind} 要点数量不对"
             assert all(p.strip() for p in seg.points)
             # 要点是提炼，不是把旁白整句搬上去。
@@ -151,8 +156,7 @@ def test_没有实拍的时刻不拿近似照片顶替():
     incident is carried by narration and on-screen text, never by a picture
     standing in for a match it isn't.
     """
-    segments = explainer_script(find_story_by_slug("hawkeye"))
-    opener = segments[0]
+    opener = _beats("hawkeye")[0]
     # The opener's photo is the line judges it describes — a real frame whose
     # own date and place match what we say about it.
     assert "us_open_court" in opener.image
@@ -167,8 +171,7 @@ def test_法网那屏不能配温网的草地():
     French Open still keeps human line judges" over a Wimbledon Centre Court
     photo. Each beat's hero must match what the beat claims.
     """
-    segments = explainer_script(find_story_by_slug("hawkeye"))
-    beats = {s.kind: s for s in segments}
+    beats = {s.kind: s for s in _beats("hawkeye")}
 
     exception = beats["exception"]
     assert "rg2026" in exception.image  # this year's Roland-Garros
@@ -184,7 +187,7 @@ def test_card_stays_3x4_while_video_canvas_is_9x16():
     assert (VIDEO_W, VIDEO_H) == (1080, 1920)  # video 9:16
     # No image -> the schematic diagram is the hero (never a text-only slide).
     seg = ExplainerSegment("mechanism", "技术原理", "起<点>", "旁白仅配音")
-    doc = _slide_html(0, seg)
+    doc = _slide_html(1, seg)  # index 1 = first beat; index 0 is the cover
     assert "① 技术原理" in doc
     assert "起&lt;点&gt;" in doc and "<点>" not in doc
     assert "<svg" in doc and "三角测量" in doc  # original schematic, not text-only
@@ -192,7 +195,7 @@ def test_card_stays_3x4_while_video_canvas_is_9x16():
 
 
 def test_photo_beats_embed_a_real_file_and_carry_no_burned_in_credit():
-    segments = [s for slug in _SCRIPTED for s in explainer_script(find_story_by_slug(slug))]
+    segments = [s for slug in _SCRIPTED for s in _beats(slug)]
     photo_beats = [s for s in segments if s.image]
     assert len(photo_beats) >= 3  # image-first: most beats carry a real photo
     for seg in photo_beats:
@@ -247,7 +250,7 @@ def test_黄球那条的画面要对得上它讲的年份和地点():
     place or era illustrated by a frame from another. Pin the two that carry
     the argument.
     """
-    beats = {s.kind: s for s in explainer_script(find_story_by_slug("yellow-ball"))}
+    beats = {s.kind: s for s in _beats("yellow-ball")}
     assert [*beats] == ["white", "tv", "switch", "exception", "color"]
     assert "white_era" in beats["white"].image  # actual white balls, not a yellow one
     assert "wimbledon" in beats["exception"].image
@@ -301,3 +304,27 @@ def test_文案标题带上品牌语且不超小红书上限():
         assert head.startswith("🎾7.26 网球有故事｜"), f"{slug} 标题格式不对：{head}"
         assert story.title in head
         assert xhs_title_len(head) <= 20, f"{slug} 标题 {xhs_title_len(head)} 字，超小红书上限"
+
+
+def test_每条片子都以问题开场():
+    """Nobody watches past three seconds if they cannot tell what this is about.
+
+    Opening on beat one made the viewer work the subject out for themselves.
+    Every deck now leads with the question it answers - on screen, in the
+    narration, and without a beat number, because it is not a beat.
+    """
+    for slug in _SCRIPTED:
+        segments = explainer_script(find_story_by_slug(slug))
+        cover = segments[0]
+        assert cover.kind == "cover", f"{slug} 第一屏不是开场问题卡"
+        assert cover.title.endswith("？"), f"{slug} 开场没有问出一个问题：{cover.title}"
+        assert len(cover.title) <= 16, f"{slug} 开场问题太长：{cover.title}"
+        assert cover.title[:6] in cover.narration or "？" in cover.narration
+        assert not cover.points  # the cover states the question, nothing else
+
+        doc = _slide_html(0, cover)
+        assert cover.title in doc
+        assert "① " not in doc  # the cover carries no beat number
+        assert "网球有故事" in doc
+        # ...and the first real beat still starts the count at one.
+        assert "① " in _slide_html(1, segments[1])
