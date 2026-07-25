@@ -287,6 +287,10 @@ def _slide_html(
             f'<div class="diagram-wrap">{segment.diagram or _HAWKEYE_DIAGRAM}</div>'
             '<div class="scrim"></div>'
         )
+    # One line, always: CJK glyphs run about one em wide, so size the headline
+    # off its own length rather than letting it wrap.
+    usable_px = W - 140
+    title_px = min(62, int(usable_px / max(len(segment.title), 1)))
     points_html = (
         '<div class="points">'
         + "".join(
@@ -324,8 +328,8 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
  display:flex;flex-direction:column;gap:28px;}}
 .chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
  font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
-.title{{font-size:70px;line-height:1.2;font-weight:800;
- text-shadow:0 4px 24px rgba(0,0,0,.75);}}
+.title{{font-size:{title_px}px;line-height:1.2;font-weight:800;
+ white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
  background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
  padding:24px 28px;border-radius:12px;}}
