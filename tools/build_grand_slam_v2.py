@@ -114,8 +114,14 @@ def render_chrome(scene, brand="网球时差"):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     f_brand = ImageFont.truetype(cjk, 36)
-    d.ellipse([48, 58, 68, 78], fill=(245, 190, 40))
-    d.text((82, 68), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
+    lg_path = ROOT / "assets" / "logo" / "brand" / "icon.png"
+    if lg_path.exists():
+        lg = Image.open(lg_path).convert("RGBA").resize((62, 62), Image.LANCZOS)
+        img.paste(lg, (44, 40), lg)
+        d.text((118, 71), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
+    else:
+        d.ellipse([48, 58, 68, 78], fill=(245, 190, 40))
+        d.text((82, 68), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
     sec = scene.get("section") or {}
     en, zh = sec.get("en", ""), sec.get("zh", "")
     label_y = 170

@@ -203,14 +203,32 @@ def outline(draw, xy, text, fnt, fill=WHITE, oc=(0, 0, 0), width=5):
     draw.text((x, y), text, font=fnt, fill=fill)
 
 
+_BRAND_ICON = None
+
+
+def _brand_icon():
+    global _BRAND_ICON
+    if _BRAND_ICON is None:
+        p = ROOT / "assets" / "logo" / "brand" / "icon.png"
+        _BRAND_ICON = Image.open(p).convert("RGBA") if p.exists() else False
+    return _BRAND_ICON
+
+
 def brand_mark(img, brand):
-    """统一 logo 形态：品牌黄圆点 + 文字，无外框。"""
+    """品牌标：网球时差 logo 图标 + 文字，无外框。"""
     d = ImageDraw.Draw(img)
     f = F_BOLD(36)
     pad = 48
-    cy = pad + 20
-    d.ellipse([pad, cy - 10, pad + 20, cy + 10], fill=YELLOW)
-    d.text((pad + 34, cy), brand, font=f, fill=WHITE, anchor="lm")
+    ic = _brand_icon()
+    if ic:
+        sz = 60
+        lg = ic.resize((sz, sz), Image.LANCZOS)
+        img.paste(lg, (pad, pad), lg)
+        d.text((pad + sz + 16, pad + sz / 2), brand, font=f, fill=WHITE, anchor="lm")
+    else:
+        cy = pad + 20
+        d.ellipse([pad, cy - 10, pad + 20, cy + 10], fill=YELLOW)
+        d.text((pad + 34, cy), brand, font=f, fill=WHITE, anchor="lm")
 
 
 def progress_dots(img, active):
