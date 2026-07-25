@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "status": "selected",
+  "status": "branded_fallback",
   "match_id": "400-2026:178822",
   "match_players": [
     "Andrey Rublev",
@@ -26,136 +26,67 @@
     "wikimedia-commons",
     "openverse",
     "bing-web-image",
-    "flickr-public",
-    "official-atp-youtube"
+    "flickr-public"
   ],
-  "attempts": [
-    {
-      "player": "Luca Van Assche",
-      "provider": "official-atp-youtube",
-      "source_url": "https://www.youtube.com/watch?v=kYJ041IPGuE",
-      "subject_match": true,
-      "person_match": true,
-      "both_sides_match": true,
-      "exact_match": true,
-      "event_match": true,
-      "year_match": true,
-      "scene": "prominent_person",
-      "china_priority_bonus": 0,
-      "scene_evidence": {
-        "motion": [],
-        "reaction": [],
-        "trophy": [],
-        "rejected": [],
-        "pixel": [
-          "1 prominent face(s)",
-          "frontal-default"
-        ]
-      },
-      "metadata_score": 66,
-      "status": "selected",
-      "quality": {
-        "status": "pass",
-        "score": 28.6,
-        "quality_score": 13.8,
-        "crop_score": 14.8,
-        "hard_failures": [],
-        "width": 1280,
-        "height": 720,
-        "sharpness": 1424.9,
-        "tonal_range": 190.0,
-        "mean_luma": 112.6,
-        "black_ratio": 0.0439,
-        "white_ratio": 0.0147,
-        "entropy": 7.44,
-        "edge_ratio": 0.0653,
-        "saturation": 126.1,
-        "prominent_faces": 1,
-        "face_detectors": [
-          "frontal-default"
-        ],
-        "prominent_bodies": 1,
-        "body_detectors": [
-          "upper-body"
-        ],
-        "crop": [
-          0,
-          0,
-          540,
-          720
-        ],
-        "crop_retention": 0.422,
-        "face_safe": true,
-        "focus": "24% 27%",
-        "resolution_profile": "official-youtube-maxres-1280x720"
-      },
-      "quality_score": 112.6,
-      "face_priority_bonus": 18,
-      "hard_failures": [],
-      "cached_file": "daily-cover-50fc0f1d1d5e.jpg"
-    }
-  ],
+  "attempts": [],
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 0,
   "official_pages_checked": 0,
   "official_pages_expanded": 0,
-  "selected_player": "Luca Van Assche",
-  "exact_match": true,
-  "both_sides_match": true,
-  "scene": "prominent_person",
-  "person_evidence": {},
-  "quality_score": 112.6,
-  "quality": {
-    "status": "pass",
-    "score": 28.6,
-    "quality_score": 13.8,
-    "crop_score": 14.8,
-    "hard_failures": [],
-    "width": 1280,
-    "height": 720,
-    "sharpness": 1424.9,
-    "tonal_range": 190.0,
-    "mean_luma": 112.6,
-    "black_ratio": 0.0439,
-    "white_ratio": 0.0147,
-    "entropy": 7.44,
-    "edge_ratio": 0.0653,
-    "saturation": 126.1,
-    "prominent_faces": 1,
-    "face_detectors": [
-      "frontal-default"
-    ],
-    "prominent_bodies": 1,
-    "body_detectors": [
-      "upper-body"
-    ],
-    "crop": [
-      0,
-      0,
-      540,
-      720
-    ],
-    "crop_retention": 0.422,
-    "face_safe": true,
-    "focus": "24% 27%",
-    "resolution_profile": "official-youtube-maxres-1280x720"
-  },
-  "event_match": true,
-  "year_match": true,
-  "provider": "official-atp-youtube",
-  "source_url": "https://www.youtube.com/watch?v=kYJ041IPGuE",
-  "credit": "ATP Tour",
-  "license": "official public match media",
-  "focus": "24% 27%",
+  "errors": [
+    "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+  ],
   "headline_selection": {
-    "status": "primary",
+    "status": "exhausted",
     "primary_match_id": "400-2026:178822",
-    "selected_match_id": "400-2026:178822",
+    "selected_match_id": "",
     "attempted": 4,
     "failed_candidates": [
       {
+        "match_id": "400-2026:178822",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "400-2026:178816",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
         "match_id": "400-2026:178818",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "400-2026:178820",
         "status": "unavailable",
         "errors": [
           "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
@@ -170,13 +101,20 @@
       }
     ]
   },
-  "selected_asset_sha256": "50fc0f1d1d5e7679d2eb41a4bc13ac2869b61490fe0f27d821e85162541508a5",
+  "fallback_reason": "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片",
+  "fallback_person": false,
+  "quality_score": 0,
+  "quality": {
+    "status": "fallback",
+    "hard_failures": []
+  },
+  "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
   "render_binding": {
     "status": "bound",
     "renderer": "html-chromium",
     "match_id": "400-2026:178822",
-    "selected_asset_sha256": "50fc0f1d1d5e7679d2eb41a4bc13ac2869b61490fe0f27d821e85162541508a5",
+    "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "9b7de036556c65b649765e9240f19f667e7d4b4ae9b686382893defea8ea2561"
+    "card_sha256": "7bae0f2e8f42cd370cc9854fa47ec99dbffbb2ad891fc947bbb7f6c89319b9c5"
   }
 }

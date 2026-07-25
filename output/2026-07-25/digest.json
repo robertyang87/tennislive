@@ -3835,7 +3835,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -3893,7 +3893,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -3951,7 +3951,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4009,7 +4009,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4067,7 +4067,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4125,7 +4125,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4183,7 +4183,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4241,7 +4241,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4299,7 +4299,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4357,7 +4357,7 @@
       "tournament": {
         "name": "The Memphis Classic",
         "tour": "WTA",
-        "level": null,
+        "level": "WTA250",
         "surface": null,
         "city": null,
         "country": null,
@@ -4421,6 +4421,7 @@
     "Sportradar 技术统计": "未配置 · 缺少 SPORTRADAR_API_KEY",
     "WTA 官方技术统计": "正常 · 已命中焦点比赛逐场统计",
     "焦点复盘数据": "正常 · WTA 官方逐场技术统计",
+    "头条技术统计": "降级 · 头条候选无逐场统计，头条页使用比分结构复盘",
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
     "球员与赛事知识库": "正常 · 1 场接入历史背景",
     "GitHub Models 数据编辑": "关闭",
@@ -6832,8 +6833,72 @@
       }
     ]
   },
-  "lead_match_id": "400-2026:178822",
+  "lead_match_id": null,
   "trend_signals": [
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "america",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "rafael devers",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "tim tszyu vs errol spence jr",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T03:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "club america",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "america fc",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "vix",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "northern lights",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "aroldis chapman",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T03:00:00+00:00",
+      "traffic": ""
+    },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
@@ -6861,16 +6926,8 @@
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "red sox score",
+      "title": "matt olson",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "vfl ladder",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T02:30:00+00:00",
       "traffic": ""
     },
@@ -6885,49 +6942,17 @@
     {
       "kind": "search-trend",
       "source": "Google Trends AU",
-      "title": "aflw",
+      "title": "vfl ladder",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T02:30:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "club tijuana vs león",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "emma watson",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "atlante - américa",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "jason derulo",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "kazuma okamoto",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:10:00+00:00",
+      "source": "Google Trends AU",
+      "title": "aflw",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T02:30:00+00:00",
       "traffic": ""
     },
     {
@@ -6944,22 +6969,6 @@
       "title": "carlton vs gold coast",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T02:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "orioles",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T02:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "rick moranis",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T01:50:00+00:00",
       "traffic": ""
     },
     {
@@ -6987,6 +6996,14 @@
       "traffic": ""
     },
     {
+      "kind": "official-news",
+      "source": "ATP Tour",
+      "title": "Sinner, Djokovic withdraw from Montreal",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE8teVZnZWFpNDFQS1JXekRYZHZ1d2kySlJkWlFjaFlNMUpoVVRMSVE3bjI0Szd1RXBPa2IzdEVNUHdMU28tM1BUR2F6OU1ObUhfUUstTWZhQWNKeVZRd3FBc2h4OENidGpfZmhRUHlWQkNZeUU0OWEwckNNbzk?oc=5",
+      "published_at": "2026-07-25T01:18:45+00:00",
+      "traffic": ""
+    },
+    {
       "kind": "search-trend",
       "source": "Google Trends GB",
       "title": "colo colo",
@@ -7000,6 +7017,14 @@
       "title": "earthquake",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T01:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "8 號風球",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T01:00:00+00:00",
       "traffic": ""
     },
     {
@@ -7032,14 +7057,6 @@
       "title": "neil crompton",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-24T23:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "mets vs dodgers",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-24T23:30:00+00:00",
       "traffic": ""
     },
     {
@@ -7163,14 +7180,6 @@
       "traffic": ""
     },
     {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "mutv",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T16:00:00+00:00",
-      "traffic": ""
-    },
-    {
       "kind": "official-news",
       "source": "ATP Tour",
       "title": "Rublev earns most dominant win of 2026, Darderi cruises to Estoril QFs",
@@ -7224,14 +7233,6 @@
       "title": "Back-to-back champion Sabalenka tops 2026 US Open entry list",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNRldVX2NXLVZLeWpCWXhjUnpUYzdpYW4tUmZrRldOOTNnZ1h3Q0tNb2VZRWJOQkFBbFBocjFDeG51LUZUTXZ4c3MtVENBenZqZ1FoajlqLW9UMm00YVdYQlVnSnozcXhSTERyX3NuQy1fWlpqZmtFWkZxazVsSFZTMXU1ci1RaU9ERTMzbTFlZ3AxWE9Ja2daNjllWDRGVUtrOENid2VXclE?oc=5",
       "published_at": "2026-07-22T04:52:49+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "US Open Tennis",
-      "title": "Who is playing the 2026 US Open? Sabalenka, Alcaraz, Sinner, Pegula & more",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOR05EZjRzbFRRRV9jS1laN3p3NF9PWlMydXFUVlB1MnpsbzJ4UG5BSzk3QkhfN1M4VWhHWl9wcUN2SUFvU0pMcTRtUUVBa1BYUDhuQldTVHhHY1JYZWlmUzNMaXJNWEItSnV5ZEhmVHhYSkV1dEl0dmhqWGtSVTk3M050allaMmp6VlBhaTl4dmlXWG4zMjhNUHBCc0g3Z2tZTmprVjBmQVJiX2FsVGFtMlRJalc3OVVtOHE3cExZaklVaHZKMFHSAcsBQVVfeXFMTWt6UlBra0tWdmlzNVhPMzE4bVhrTHlhVDVCaTIwazRkTGhwNUNNVlYwZ0VMQUdUODBKQ0x5Z1g3aTRiOGNzNjA5MDcweThNcVcxWUpUdG16bWNyV0h3UG9maUx6VFhDd1JGMkVzdXFwSTJWU0FSQ0hSNDdidWR3N3ZlNnVmWjNESWFpZFdIVENvT1dETXlNUTNkaFN0R2hMSDBvbURQWE5sQkU5SnBEajBIa0RPY0pGc3piUFBlZllQUmk0NndnaXBONzQ?oc=5",
-      "published_at": "2026-07-22T03:32:20+00:00",
       "traffic": ""
     }
   ]
