@@ -559,3 +559,47 @@ def generate_explainer_video(
     slides = render_explainer_slides(segments, date_label, outdir, theme=theme)
     audios = synthesize_narration(segments, outdir, voice=voice)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
+
+def explainer_push_html(
+    segments: Sequence[ExplainerSegment], outdir: Path, video_name: str = "explainer.mp4"
+) -> str:
+    """Build the WeChat push body for a finished explainer.
+
+    A phone push cannot play the MP4 inline, so it carries the slides in order
+    — which is the whole story anyway — plus a link to the file in the repo.
+    Image sources stay repo-relative under ``output/`` so the publisher can pin
+    them to the exact commit on the CDN.
+    """
+    rel = outdir.as_posix()
+    if "output/" in rel:
+        rel = rel[rel.index("output/") :]
+    blocks = []
+    for index, segment in enumerate(segments):
+        points = "".join(
+            f'<li style="margin:4px 0;">{html.escape(p)}</li>' for p in segment.points
+        )
+        ask = (
+            f'<p style="color:#2f8f5b;font-weight:700;margin:10px 0 0;">'
+            f"{html.escape(segment.question)}</p>"
+            if segment.question
+            else ""
+        )
+        blocks.append(
+            f'<div style="margin:0 0 26px;">'
+            f'<img src="{rel}/slide_{index:02d}.png" '
+            f'style="width:100%;border-radius:12px;display:block;">'
+            f'<p style="font-weight:700;font-size:17px;margin:12px 0 6px;">'
+            f"{index + 1}. {html.escape(segment.title)}</p>"
+            f'<ul style="margin:0;padding-left:20px;color:#444;font-size:15px;">'
+            f"{points}</ul>{ask}</div>"
+        )
+    video_url = (
+        f"https://github.com/robertyang87/tennislive/raw/main/{rel}/{video_name}"
+    )
+    return (
+        '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;'
+        'line-height:1.6;">'
+        + "".join(blocks)
+        + f'<p style="margin-top:18px;"><a href="{video_url}">▶ 打开 9:16 成片</a></p>'
+        + "</div>"
+    )
