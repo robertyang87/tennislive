@@ -51,6 +51,7 @@ class ExplainerSegment:
     narration: str  # full spoken text (TTS only)
     image: str = ""  # repo-relative photo path; "" -> schematic diagram
     credit: str = ""  # small on-image source line
+    note: str = ""  # optional one-line fact strip under the title
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -94,6 +95,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "鹰眼挑战制正式走进大满贯。",
             "assets/explainer/hawkeye/cause.jpg",
             "图：Steven Pisano · CC BY 2.0",
+            "",
         ),
         (
             "mechanism",
@@ -106,16 +108,19 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "数据证明，肉眼真的会看错。",
             "",  # no licensable real photo of the tech -> original schematic
             "示意图 · 网球时差绘制",
+            "",
         ),
         (
             "today",
             "当今现状",
-            "站了上百年的司线员，正在退场",
+            "司线员正在退场，只剩法网还坚持",
             "如今，电子司线正在取代人工。截至 2026 年，四大满贯里只有法网仍保留"
-            "人工司线，澳网、美网和温网都已完成转换；ATP 更宣布全部巡回赛全面"
-            "启用电子司线。站了上百年的司线员，正在退出网球舞台。",
+            "人工司线；澳网、美网和温网都已完成转换，ATP 更宣布全部巡回赛全面"
+            "启用电子司线。唯独红土上的法网，仍让人眼来喊那最后一声——"
+            "球印是它坚持人工的底气。",
             "assets/explainer/hawkeye/today.jpg",
             "图：wimbledon.com",
+            "澳网 · 美网 · 温网 已转电子司线 ｜ 法网 仍保留人工司线",
         ),
     ),
 }
@@ -186,6 +191,11 @@ def _slide_html(
         if segment.credit
         else ""
     )
+    note_html = (
+        f'<div class="note">{html.escape(segment.note)}</div>'
+        if segment.note
+        else ""
+    )
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 html,body{{width:{W}px;height:{H}px;}}
@@ -216,12 +226,16 @@ body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
  font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
 .title{{font-size:78px;line-height:1.2;font-weight:800;
  text-shadow:0 4px 24px rgba(0,0,0,.75);}}
+.note{{align-self:flex-start;max-width:100%;font-size:32px;font-weight:700;
+ color:#f4fbf7;background:rgba(6,28,20,.62);border-left:7px solid #c6f65a;
+ padding:14px 22px;border-radius:10px;line-height:1.35;
+ text-shadow:0 2px 8px rgba(0,0,0,.55);}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
 <div class="head"><div class="brand">网球时差 · 网球有故事</div>
 <div class="date">{html.escape(date_label)}</div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div></div>
+<div class="title">{html.escape(segment.title)}</div>{note_html}</div>
 <div class="foot"><div class="credit">{html.escape(segment.credit)}</div>
 <div class="tag">@网球时差 · TENNIS JETLAG</div></div>
 </div></body></html>"""
