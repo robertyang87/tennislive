@@ -28,26 +28,15 @@ from tennislive.research.visual_sources import (
 # Each slot names the beat that needs a picture, then the queries that would
 # surface that exact subject. Queries are ordered most-specific first.
 SLOTS: dict[str, list[str]] = {
-    # ① 谁来判：主裁椅 / 司线 / 阿瑟·阿什球场比赛全景
-    "us_open_court": [
-        "US Open tennis Arthur Ashe Stadium night session",
-        "US Open tennis chair umpire",
-        "US Open tennis court overview",
-        "US Open tennis electronic line calling",
-        "US Open tennis match centre court",
+    "serena_2004": [
+        "Serena Williams 2004 US Open",
+        "Serena Williams US Open quarterfinal",
+        "Serena Williams 2004",
     ],
-    # ⑥ 红土球印：法网坚持人工的实证
-    "ball_mark": [
-        "roland garros umpire ball mark clay",
-        "tennis clay court ball mark",
-        "clay court umpire checking mark",
-        "tennis umpire climbs down chair clay",
-    ],
-    # ⑤⑥ 近年法网
-    "rg_recent": [
-        "Roland Garros 2024 court",
-        "Roland Garros 2023 line judge",
-        "French Open 2024 clay court",
+    "capriati": [
+        "Jennifer Capriati US Open",
+        "Jennifer Capriati 2004",
+        "Jennifer Capriati tennis",
     ],
 }
 
@@ -63,7 +52,7 @@ PROVIDERS = (
 
 OUT = Path("tools/broll")
 # Full-bleed hero on a 1080x1440 card -> reject anything that would look mushy.
-MIN_W, MIN_H = 900, 600
+MIN_W, MIN_H = 800, 560
 PER_SLOT = 12
 
 

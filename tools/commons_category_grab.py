@@ -24,43 +24,21 @@ from PIL import Image
 
 API = "https://commons.wikimedia.org/w/api.php"
 OUT = Path("tools/broll")
-MIN_W, MIN_H = 1000, 700
+MIN_W, MIN_H = 800, 600
 PER_SEED = 12
 
 # slot -> category seed terms. Recent years first: the deck should look like
 # tennis as it is now, so candidates are ranked newest-first (see main()).
 SEEDS: dict[str, list[str]] = {
-    # Beat 1 is about who gets the final word on a call, so the frame has to
-    # show officiating — a chair umpire, officials, or the court in play —
-    # not a player portrait.
-    "us_open_court": [
-        "Arthur Ashe Stadium",
-        "2025 US Open (tennis)",
-        "2024 US Open (tennis)",
-        "USTA Billie Jean King National Tennis Center",
+    # The match beat 1 is actually about: 2004 US Open QF, Williams v Capriati,
+    # where the chair umpire's calls were overruled-worthy and she was stood down.
+    "serena_2004": [
+        "2004 US Open (tennis)",
+        "Serena Williams in 2004",
+        "Serena Williams",
     ],
-    "chair_umpire": [
-        "Tennis chair umpires",
-        "Tennis umpires",
-        "Tennis officials",
-    ],
-    # Commons files these under "<year> Roland Garros", not "French Open" —
-    # the earlier "2025 French Open" seeds matched nothing.
-    "rg_recent": [
-        "2025 Roland Garros",
-        "2024 Roland Garros",
-        "2023 Roland Garros",
-        "2022 Roland Garros",
-    ],
-    "wimbledon_recent": [
-        "2025 Wimbledon Championships",
-        "2024 Wimbledon Championships",
-    ],
-    # The one frame still missing: a ball mark on clay / an umpire reading it.
-    "ball_mark": [
-        "Tennis ball marks",
-        "Clay tennis courts",
-        "Tennis umpires",
+    "capriati": [
+        "Jennifer Capriati",
     ],
 }
 
