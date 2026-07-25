@@ -243,6 +243,99 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # Facts from en.wikipedia "Wimbledon Championships": Wimbledon and the
+    # French Open are the only Slams where a same-day queue still reaches the
+    # show courts, cards numbered from 2003, one queue from 2008 with ~500
+    # seats per show court, overnight camping permitted with loos and water
+    # laid on, colour-coded wristbands handed out at dawn, returned tickets
+    # resold at 2:30pm for charity, and the millionth card on 28 June 2010.
+    "queue": (
+        (
+            "why",
+            "唯二两站",
+            "当天排队，也能坐进中央球场",
+            "四大满贯里，只有温网和法网，你可以早上手里没票，晚上坐进主球场。"
+            "代价写在门口：排一晚上队。这条队伍甚至有自己的专名，就叫 The Queue，"
+            "大写的 Q。画面是 2011 年温网第二天的队伍——草地上那条白线，"
+            "就是队伍要走的路线。",
+            "assets/explainer/queue/queue.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2011 温网第二日的队伍",
+            (
+                "只有温网和法网能当天排队进主场",
+                "这条队有专名：The Queue",
+                "图为 2011 年温网第二天",
+            ),
+        ),
+        (
+            "card",
+            "编号卡",
+            "一张卡，一个号码",
+            "排上队，你会拿到一张排队卡，上面印着编号——从 2003 年起就开始编了。"
+            "2008 年之后合并成一条队，三块主球场每天各留大约五百个座位。"
+            "想中途离队上个厕所？得先跟旁边的人或者引导员说好你的位置。"
+            "画面里是同一个人 2011 年的全套：两张排队卡、腕带，还有票——"
+            "场外票二十镑，一号球场七十四镑，中央球场一百镑。",
+            "assets/explainer/queue/cards.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2011 温网排队卡与门票",
+            (
+                "排队卡自 2003 年起编号",
+                "2008 年起单一队列，每场约 500 座",
+                "图为 2011 年的排队卡与门票",
+            ),
+        ),
+        (
+            "overnight",
+            "睡在草地上",
+            "想进主球场，先睡一晚",
+            "想坐进主球场，通常得在草地上睡一晚。全英俱乐部不但允许，"
+            "还给排队的人备了厕所和饮水。维基百科上有一句写得很妙："
+            "这种通宵露宿，按法律算是游荡；但在温网，它本身就是体验的一部分。"
+            "画面里这三位，正排在 2012 年的队伍里。",
+            "assets/explainer/queue/fans.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 温网第二日的队伍",
+            (
+                "主球场的票通常要排通宵",
+                "俱乐部备好厕所和饮水",
+                "法律上算游荡，这里算体验",
+            ),
+        ),
+        (
+            "dawn",
+            "天亮之后",
+            "腕带按球场分颜色",
+            "天一亮，队伍开始朝场地挪动。引导员沿着队伍走，发腕带——按球场分颜色。"
+            "到了售票处，拿腕带加上钱，才换成真正的门票。"
+            "如果你只想进园区看外场，那不必过夜，当天来排就够了。"
+            "画面里是队伍最后一段要走过的那座天桥。",
+            "assets/explainer/queue/bridge.jpg",
+            "Clavecin · Public domain · Wikimedia Commons · 温网排队末段的天桥",
+            (
+                "引导员按球场发彩色腕带",
+                "腕带加票款在售票处换门票",
+                "只看外场不必过夜",
+            ),
+        ),
+        (
+            "million",
+            "一百万张",
+            "第一百万张排队卡",
+            "2010 年 6 月 28 日下午两点四十，第一百万张编号排队卡发了出去，"
+            "拿到它的是来自南非的 Rose Stanley。排完队还有纪念贴纸——"
+            "晴天一款，雨天一款；画面里这张是 1994 年的，上面写着"
+            "「我在温网排过队」。另外，提前离场的人退回来的票，"
+            "下午两点半会重新发售，钱全部捐给慈善。八强打完，主球场的排队就结束了。"
+            "那你呢——为一张票在草地上睡一晚，你愿意吗？",
+            "assets/explainer/queue/sticker.jpg",
+            "Amanda Slater · CC BY-SA 4.0 · Wikimedia Commons · 1994 年温网排队纪念贴纸",
+            (
+                "2010.6.28 发出第 100 万张排队卡",
+                "退票下午 2:30 再售，钱捐慈善",
+                "图为 1994 年的排队纪念贴纸",
+            ),
+            "",
+            "为一张票在草地上睡一晚，你愿意吗？",
+        ),
+    ),
     # Every fact traces to en.wikipedia "Rufus the Hawk". Note what the
     # pictures are and are not: the first three are Rufus himself (two
     # uploaded by Avian Environmental, who actually operate him, one from
@@ -616,6 +709,13 @@ _CAPTIONS: dict[str, dict] = {
             "现在四大满贯里，只剩一个地方还没交。"
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "queue": {
+        "hook": (
+            "四大满贯里只有温网和法网，当天排队还能坐进中央球场。\n"
+            "代价是：在草地上睡一晚。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "排队", "网球冷知识"),
     },
     "rufus": {
         "hook": (
