@@ -1018,7 +1018,7 @@ def _shell(body: str, theme: str) -> str:
 
 
 def _masthead(date_label: str) -> str:
-    icon_uri = _asset_image_uri(ASSETS / "logo" / "tennis-clock-icon.png")
+    icon_uri = _asset_image_uri(ASSETS / "logo" / "brand" / "icon.png")
     icon = (
         f'<img class="brand-icon" src="{icon_uri}" alt="">'
         if icon_uri

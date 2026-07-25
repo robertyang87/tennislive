@@ -68,7 +68,9 @@ CAPTION_MARGIN_V = 300
 # Same corner-mark placement as the card images (render/cards.py): brand icon
 # + name top-left, "@handle · TENNIS JETLAG" bottom-right.
 BRAND_TEXT = "网球时差"
-BRAND_ICON_PATH = Path(__file__).resolve().parents[3] / "assets" / "logo" / "tennis-clock-icon.png"
+BRAND_ICON_PATH = (
+    Path(__file__).resolve().parents[3] / "assets" / "logo" / "brand" / "icon.png"
+)
 BRAND_ICON_SIZE = 64
 BRAND_ICON_MARGIN = 40
 BRAND_TOP_FONT_SIZE = 34
