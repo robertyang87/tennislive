@@ -7,9 +7,6 @@ on:
     paths:
       - ".github/workflows/probe.yml"
 
-permissions:
-  contents: write
-
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -29,20 +26,20 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 核验并下载入围候选（小威@美网 / Mariana Alves 主裁）
-        run: python tools/grab_shortlist.py
+      - name: 探测 RapidAPI 网球数据源（临时）
+        shell: bash
+        run: python tools/probe_rapidapi_tennis.py
 
-      - name: 提交入围候选供人工目检
+      - name: 生成无图片探测包
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/broll
-          if git diff --cached --quiet; then
-            echo "没有新候选"
-          else
-            git commit -m "probe: shortlist for the 2004 beat"
-            for i in 1 2 3 4 5; do
-              git pull --rebase origin "${{ github.ref_name }}" && \
-              git push origin "${{ github.ref_name }}" && break || sleep $((i*5))
-            done
-          fi
+          tennislive digest --date today --outdir probe-output --no-cards
+          REPORT=$(find probe-output -name coverage.txt -print -quit)
+          echo "===== 数据源与赛事覆盖 ====="
+          cat "$REPORT"
+
+      - name: 上传探测报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-probe-${{ github.run_number }}
+          path: probe-output/**/coverage.txt

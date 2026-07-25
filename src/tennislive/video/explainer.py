@@ -104,7 +104,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "官方公开道歉。这成了回放技术上马的最后一根稻草。仅仅两年后，"
             "鹰眼挑战制正式走进大满贯。",
             "assets/explainer/hawkeye/us_open.jpg",
-            "CC BY 2.0 · Wikimedia Commons · 2014 US Open 主裁",
+            "Boss Tweed · CC BY 2.0 · Wikimedia Commons · 2013 US Open",
             (
                 "2004 美网：多个关键球被肉眼误判",
                 "当值主裁被撤换 · 官方公开道歉",
