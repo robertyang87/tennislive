@@ -118,9 +118,27 @@ def render_chrome(scene, brand="网球时差"):
     d.text((82, 68), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
     sec = scene.get("section") or {}
     en, zh = sec.get("en", ""), sec.get("zh", "")
+    label_y = 170
+    logo = scene.get("logo")
+    if logo and (ROOT / logo).exists():
+        lg = Image.open(ROOT / logo)
+        lw = 340
+        lg = lg.resize((lw, int(lg.height * lw / lg.width)), Image.LANCZOS)
+        lx, ly = (W - lw) // 2, 210
+        if lg.mode == "RGBA":
+            img.paste(lg, (lx, ly), lg)
+        else:  # 白底 logo 垫白色圆角卡
+            pad = 24
+            card = Image.new("RGBA", (lw + pad * 2, lg.height + pad * 2), (0, 0, 0, 0))
+            cd = ImageDraw.Draw(card)
+            cd.rounded_rectangle([0, 0, card.width, card.height], radius=28,
+                                 fill=(255, 255, 255, 235))
+            card.paste(lg.convert("RGB"), (pad, pad))
+            img.paste(card, (lx - pad, ly - pad), card)
+        label_y = ly + lg.height + 90
     if en or zh:
         label = f"{en} · {zh}" if en and zh else (en or zh)
-        _outline_text(d, (W / 2, 170), label, ImageFont.truetype(cjk, 44),
+        _outline_text(d, (W / 2, label_y), label, ImageFont.truetype(cjk, 44),
                       (245, 190, 40), w=4)
     big = scene.get("big_chrome", "")
     if big:
@@ -159,12 +177,23 @@ def build_broll_video(cuts, total, chrome, dst):
     parts = []
     for i, (src, start, dur) in enumerate(cuts):
         d_i = dur if dur else fill
-        cmd += ["-ss", f"{start:.2f}", "-t", f"{d_i:.3f}", "-i",
-                str(ROOT / src if not str(src).startswith("/") else src)]
-        parts.append(
-            f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
-            f"crop={W}:{H},fps={FPS},settb=AVTB,setpts=PTS-STARTPTS,"
-            f"eq=brightness=-0.04:saturation=1.05[v{i}]")
+        path = str(ROOT / src if not str(src).startswith("/") else src)
+        if str(src).lower().endswith((".jpg", ".jpeg", ".png")):
+            # 照片切片：loop 成片段，轻推近做运动
+            nf = int(round(d_i * FPS))
+            cmd += ["-loop", "1", "-t", f"{d_i:.3f}", "-i", path]
+            parts.append(
+                f"[{i}:v]scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase,"
+                f"crop={W * 2}:{H * 2},zoompan=z='1+0.07*on/{nf}':"
+                f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={nf}:s={W}x{H}:fps={FPS},"
+                f"settb=AVTB,setpts=PTS-STARTPTS,"
+                f"eq=brightness=-0.04:saturation=1.05[v{i}]")
+        else:
+            cmd += ["-ss", f"{start:.2f}", "-t", f"{d_i:.3f}", "-i", path]
+            parts.append(
+                f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H},fps={FPS},settb=AVTB,setpts=PTS-STARTPTS,"
+                f"eq=brightness=-0.04:saturation=1.05[v{i}]")
     n = len(cuts)
     cmd += ["-i", str(chrome)]
     fc = ";".join(parts) + ";" + "".join(f"[v{i}]" for i in range(n)) + \
@@ -194,11 +223,31 @@ def build_scene_ambient(cuts, total, dst):
         return None
     lst = dst.parent / f"{dst.stem}_amb.txt"
     lst.write_text("".join(f"file '{s.name}'\n" for s in segs), "utf-8")
+    fade = (f"apad=whole_dur={total:.3f},atrim=0:{total:.3f},"
+            f"afade=t=in:d=0.6,afade=t=out:st={max(0, total - 0.8):.3f}:d=0.8")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                    "-i", str(lst), "-af", f"apad=whole_dur={total:.3f}",
+                    "-i", str(lst), "-af", fade,
                     "-t", f"{total:.3f}", str(dst)],
                    check=True, cwd=str(dst.parent))
     return dst
+
+
+BED_SRC = "assets/local/broll/wim2026_montage_0-120s.mp4"
+
+
+def build_bed_ambient(k, total, dst):
+    """无素材镜头的低音量氛围床：从官方蒙太奇轮换取段，带淡入淡出。"""
+    src = ROOT / BED_SRC
+    if not src.exists():
+        return None
+    offset = 40 + (k * 13) % 55
+    fade = (f"apad=whole_dur={total:.3f},atrim=0:{total:.3f},"
+            f"afade=t=in:d=0.6,afade=t=out:st={max(0, total - 0.8):.3f}:d=0.8")
+    r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(offset),
+                        "-t", f"{total:.3f}", "-i", str(src), "-vn",
+                        "-ac", "1", "-ar", "48000", "-af", fade, str(dst)],
+                       capture_output=True)
+    return dst if r.returncode == 0 and dst.exists() else None
 
 
 def motion_filter(idx, nframes):
@@ -290,6 +339,10 @@ Format: Layer, Start, End, Style, Text
             chrome = render_chrome(sc)
             build_broll_video(cuts, c, chrome, clip)
             p["ambient"] = build_scene_ambient(cuts, p["dur"], TMP / f"amb_{k:02d}.wav")
+            p["amb_vol"] = 0.55
+            if p["ambient"] is None:  # 纯照片切片无原声 → 垫氛围床
+                p["ambient"] = build_bed_ambient(k, p["dur"], TMP / f"bed_{k:02d}.wav")
+                p["amb_vol"] = 0.3
             kind = f"b-roll×{len(cuts)}"
         else:
             subprocess.run(
@@ -297,6 +350,9 @@ Format: Layer, Start, End, Style, Text
                  "-t", f"{c:.3f}", "-vf", motion_filter(k, nf),
                  "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
                  str(clip)], check=True)
+            # 静帧镜头也垫氛围床，声音永不硬断
+            p["ambient"] = build_bed_ambient(k, p["dur"], TMP / f"bed_{k:02d}.wav")
+            p["amb_vol"] = 0.28
             kind = "静帧"
         clips.append(clip)
         print(f"  片段 {k + 1}/{len(plan)} {p['id']} {c:.2f}s [{kind}]")
@@ -312,7 +368,7 @@ Format: Layer, Start, End, Style, Text
                   f"aresample=48000,pan=mono|c0=c0,asplit=2[vo1][vo2];"
                   f"[0:a]aresample=48000[amb0];"
                   f"[amb0][vo1]sidechaincompress=threshold=0.015:ratio=12:"
-                  f"attack=30:release=600[duck];[duck]volume=0.55[db];"
+                  f"attack=30:release=600[duck];[duck]volume={p.get('amb_vol', 0.55)}[db];"
                   f"[db][vo2]amix=inputs=2:duration=first:normalize=0")
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(amb),
                             "-i", str(vo_p), "-filter_complex", fc,
