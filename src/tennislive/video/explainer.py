@@ -603,3 +603,37 @@ def explainer_push_html(
         + f'<p style="margin-top:18px;"><a href="{video_url}">▶ 打开 9:16 成片</a></p>'
         + "</div>"
     )
+
+
+def explainer_xiaohongshu(
+    story, segments: Sequence[ExplainerSegment], date_label: str
+) -> str:
+    """Write the Xiaohongshu caption for a finished explainer.
+
+    Follows the daily post's shape — emoji headline, hook, the beats as
+    sections, then the question and the sign-off — so a viewer who follows the
+    account reads the same voice whichever format they land on. Every line
+    comes from the beats themselves; nothing is invented for the caption.
+    """
+    closer = segments[-1]
+    question = closer.question or "你怎么看？"
+
+    sections = []
+    for index, segment in enumerate(segments, start=1):
+        bullets = "\n".join(f"· {point}" for point in segment.points)
+        sections.append(f"{index}｜{segment.label}：{segment.title}\n{bullets}")
+
+    tags = " ".join(
+        f"#{tag}"
+        for tag in ("网球", "网球时差", "鹰眼", "电子司线", "法网", "网球冷知识")
+    )
+    return (
+        f"🎾{date_label}｜{story.title}\n\n"
+        "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
+        "现在四大满贯里，只剩一个地方还没交。\n\n"
+        + "\n\n".join(sections)
+        + "\n\n💬 留个答案\n"
+        f"{question}\n\n"
+        "这里是 @网球时差｜网球有故事。\n\n"
+        f"{tags}"
+    )
