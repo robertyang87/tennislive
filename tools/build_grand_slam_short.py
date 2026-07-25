@@ -396,9 +396,42 @@ def render_collage(meta, scene, W, H):
     return img
 
 
+def render_grid4(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    card_x, card_y = 60, int(H * 0.215)
+    card_w, card_h = W - 120, int(H * 0.55)
+    cells = scene["cells"]
+    gap = 14
+    cw = (card_w - gap) // 2
+    ch = (card_h - gap) // 2
+    for i, c in enumerate(cells[:4]):
+        r, cc = divmod(i, 2)
+        x = card_x + cc * (cw + gap)
+        y = card_y + r * (ch + gap)
+        col = hex2rgb(c.get("color", "#f2b32a"))
+        img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
+                                  tuple(c.get("focal", [0.5, 0.4])), radius=18,
+                                  border=col, bw=4)
+        d = ImageDraw.Draw(img, "RGBA")
+        lab = c["label"]
+        ft = F_BOLD(40)
+        lw = ft.getlength(lab) + 44
+        lx = x + cw / 2 - lw / 2
+        ly = y + ch - 66
+        d.rounded_rectangle([lx, ly, lx + lw, ly + 54], radius=27, fill=col)
+        center(d, x + cw / 2, ly + 6, lab, ft, (8, 10, 14))
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
 RENDERERS = {"title": render_title, "section": render_section,
              "photo": render_photo, "placeholder": render_placeholder,
-             "triptych": render_triptych, "collage": render_collage}
+             "triptych": render_triptych, "collage": render_collage,
+             "grid": render_grid4}
 
 
 def srt_time(t):
