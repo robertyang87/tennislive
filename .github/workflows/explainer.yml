@@ -92,11 +92,36 @@ jobs:
           git add output/
           if git diff --cached --quiet; then
             echo "没有新成片"
-          else
-            git commit -m "content: 知识解说视频 $(basename '${{ steps.gen.outputs.outdir }}')"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
+            exit 0
           fi
+          # `git pull --rebase` used to sit here, and it cannot rebase a run
+          # whose output landed while this one was rendering: the conflicting
+          # files are mp4 and png, git refuses to merge binaries, and the job
+          # dies after doing all the work. Five regenerations were lost that
+          # way before anyone noticed, because the run that dies leaves the
+          # previous output in place and the repo still looks populated.
+          #
+          # Generated output has exactly one correct resolution — the copy
+          # this run just rendered — so replay it onto whatever main is now
+          # instead of merging. Retry because main can move again mid-push.
+          BRANCH="${{ github.ref_name }}"
+          MSG="content: 知识解说视频 $(basename '${{ steps.gen.outputs.outdir }}')"
+          git commit -m "$MSG"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本次成片重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            git checkout rendered -- output/
+            git add output/
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 3))
+          done
+          echo "::error::连续 5 次推送失败，成片仍在 artifact 里"
+          exit 1
 
       - name: PushPlus 推送到微信
         if: github.event.inputs.push == 'true' && env.PUSHPLUS_TOKEN != ''
