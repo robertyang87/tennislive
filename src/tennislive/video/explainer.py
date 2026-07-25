@@ -1212,7 +1212,7 @@ def _slide_html(
     number = circled[beat_no] if 0 <= beat_no < len(circled) else f"{beat_no + 1}"
     css = _font_css()
 
-    icon_path = _REPO / "assets" / "logo" / "tennis-clock-icon.png"
+    icon_path = _REPO / "assets" / "logo" / "brand" / "icon.png"
     brand_icon = (
         f'<img class="brand-icon" src="{_data_uri(icon_path)}" alt="">'
         if icon_path.is_file()

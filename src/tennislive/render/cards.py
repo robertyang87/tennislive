@@ -261,7 +261,7 @@ def _draw_ball(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color=None, 
 @lru_cache(maxsize=8)
 def _brand_icon(size: int) -> Image.Image | None:
     """Load the transparent brand mark used in every page masthead."""
-    path = ASSETS / "logo" / "tennis-clock-icon.png"
+    path = ASSETS / "logo" / "brand" / "icon.png"
     try:
         icon = Image.open(path).convert("RGBA")
     except OSError:
