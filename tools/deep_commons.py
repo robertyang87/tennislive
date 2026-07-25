@@ -27,15 +27,21 @@ OUT = Path("tools/broll")
 
 # root -> how deep to walk
 ROOTS = {
+    # The claim is "as of 2026 only Roland-Garros still keeps human line
+    # judges", so the frame proving it has to be from 2026 — a 2012 photo
+    # invites the obvious "surely they've changed since". Walk this year's
+    # tournament first and deepest.
+    "rg2026": ("Category:2026 French Open", 3),
+    "rg2025": ("Category:2025 French Open", 3),
+    "rg": ("Category:French Open", 2),
     "us_open": ("Category:US Open (tennis)", 2),
     "ashe": ("Category:Arthur Ashe Stadium", 2),
-    "rg": ("Category:French Open", 2),
 }
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
 MIN_W, MIN_H = 1200, 800
 PER_ROOT = 14
-MAX_CATEGORIES = 90  # keep a deep walk from turning into a full crawl
+MAX_CATEGORIES = 120  # keep a deep walk from turning into a full crawl
 
 
 def _api(**params):
