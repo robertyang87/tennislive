@@ -4036,8 +4036,8 @@
           "away_tiebreak": null
         },
         {
-          "home": 4,
-          "away": 3,
+          "home": 5,
+          "away": 4,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -4116,7 +4116,7 @@
           "away_tiebreak": 7
         },
         {
-          "home": 3,
+          "home": 4,
           "away": 2,
           "home_tiebreak": null,
           "away_tiebreak": null
@@ -4237,7 +4237,7 @@
         },
         {
           "home": 0,
-          "away": 0,
+          "away": 1,
           "home_tiebreak": null,
           "away_tiebreak": null
         }
@@ -4287,9 +4287,7 @@
           "traffic": ""
         }
       ]
-    }
-  ],
-  "schedule": [
+    },
     {
       "match_id": "525-2026:179519",
       "tour": "WTA",
@@ -4338,18 +4336,25 @@
           "player_id": "3034"
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Final",
       "discipline": "Women's Doubles",
       "start_utc": "2026-07-25 15:05:00+00:00",
-      "sets": [],
+      "sets": [
+        {
+          "home": 1,
+          "away": 0,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Centrale",
-      "status_detail": "Sat, July 25th at 11:05 AM EDT",
+      "status_detail": "1st Set",
       "stats": null,
-      "editorial_note": "Rasheeda McAdoo / Adrienn Nagy与吉洪诺娃 / 齐丹舍克只差这一场，就能把默契换成冠军。",
-      "editorial_source": "实时排名与赛程",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
         "espn"
@@ -4363,7 +4368,9 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    },
+    }
+  ],
+  "schedule": [
     {
       "match_id": "1002-2026:179375",
       "tour": "WTA",
@@ -7111,22 +7118,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "axel sola",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T14:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "bolton vs everton",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T14:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends HK",
       "title": "早餐",
       "url": "https://trends.google.com/trending/rss?geo=HK",
@@ -7138,6 +7129,22 @@
       "source": "Google Trends HK",
       "title": "林淑敏",
       "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T14:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "axel sola",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T14:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "bolton vs everton",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T14:10:00+00:00",
       "traffic": ""
     },
@@ -7312,6 +7319,14 @@
     {
       "kind": "official-news",
       "source": "Tennis.com",
+      "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
       "title": "Alexander Bublik vs Quentin Halys · Final · ATP Kitzbuhel",
       "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNQWM3RjZEbFFhQklJNExoVUtlRi1SNnAxUTliRVhTaUFtdUZLSzVwMUNxZ2tiQXBka2l2U0g4N1g0RDRrdlBFVXB6OENXdXd3Sk8yd3RyYmNJMXZlbW96M1h5TE5MenFQWGpFbUNTaGduQVZUZW1oT1JOR0dNdmUyLXdLUnFoNzlFc3d3ZWZ5NlU?oc=5",
       "published_at": "2026-07-25T05:00:10+00:00",
@@ -7322,14 +7337,6 @@
       "source": "Tennis.com",
       "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
-      "published_at": "2026-07-25T05:00:10+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
       "published_at": "2026-07-25T05:00:10+00:00",
       "traffic": ""
     },
