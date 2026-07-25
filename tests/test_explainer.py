@@ -16,7 +16,6 @@ def test_hawkeye_beats_are_grounded_in_verified_facts():
     segments = explainer_script(story)
 
     assert [s.kind for s in segments] == [
-        "cause",
         "human",
         "mechanism",
         "today",
@@ -25,7 +24,7 @@ def test_hawkeye_beats_are_grounded_in_verified_facts():
     ]
     joined = " ".join(s.narration for s in segments)
     # Each beat must trace to the story's verified facts, not invented claims.
-    assert "2004" in joined and "误判" in joined  # cause
+    assert "2004" in joined and "误判" in joined  # the incident
     assert "司线" in joined  # human
     assert "三角测量" in joined and "毫米" in joined  # mechanism
     assert "电子司线" in joined  # today
@@ -45,6 +44,22 @@ def test_每屏都有提炼要点配合旁白():
             doc = _slide_html(0, seg, "7.25")
             for point in seg.points:
                 assert point in doc
+
+
+def test_没有实拍的时刻不拿近似照片顶替():
+    """2004's quarter-final has no licensable frame, so no beat claims to show it.
+
+    Every photograph in the deck depicts what its own beat is about; the 2004
+    incident is carried by narration and on-screen text, never by a picture
+    standing in for a match it isn't.
+    """
+    segments = explainer_script(find_story_by_slug("hawkeye"))
+    opener = segments[0]
+    # The opener's photo is the line judges it describes — a real frame whose
+    # own date and place match what we say about it.
+    assert "line_judges" in opener.image
+    assert "2004" in opener.narration  # the incident is told, not depicted
+    assert any("2004" in p for p in opener.points)
 
 
 def test_法网那屏不能配温网的草地():
