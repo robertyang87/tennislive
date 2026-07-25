@@ -102,6 +102,12 @@ def test_文案本身要在推送里能长按复制():
     for line in (ln.strip() for ln in xhs.splitlines()):
         if line:
             assert html.escape(line) in body, f"文案这行没进推送：{line}"
+    # ...and the body exactly once. Rendering a pretty copy plus a copyable
+    # copy sent the whole caption twice, which reads as a bug on the phone.
+    # (The title is exempt — it is also the headline and every image's alt.)
+    for line in (ln.strip() for ln in xhs.splitlines()[1:]):
+        if len(line) > 8 and not line.startswith("#"):
+            assert body.count(html.escape(line)) == 1, f"文案这行重复出现：{line}"
     assert "图片长按保存" in body
     assert "▶ 打开 9:16 成片" in body
 

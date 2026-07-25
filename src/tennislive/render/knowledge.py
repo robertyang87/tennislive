@@ -445,13 +445,18 @@ def knowledge_push_html_from_parts(
     title = html.escape(lines[0] if lines else "")
     body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
     body = "\n".join(lines[body_start:]).strip()
-    paragraphs = []
-    for paragraph in body.split("\n\n"):
-        safe = "<br/>".join(html.escape(line) for line in paragraph.splitlines())
-        paragraphs.append(
-            '<div style="font-size:15px;line-height:1.85;margin:0 0 13px;">'
-            f"{safe}</div>"
-        )
+    # One block, not paragraph divs: the body has to be readable *and* liftable
+    # in a single long-press. Splitting it into elements made copying a drag-
+    # across-the-whole-screen job, and pairing pretty paragraphs with a second
+    # copyable copy of the same text just sent everything twice. pre-wrap keeps
+    # the blank lines between beats, so it reads the same and selects as one.
+    body_block = (
+        '<div style="color:#7a8580;font-size:12px;margin:0 0 8px;">'
+        "👇 正文全文如下，长按整段即可复制</div>"
+        '<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;'
+        'word-break:break-word;margin:0 0 4px;">'
+        f"{html.escape(body)}</div>"
+    )
     images = []
     for index, card_url in enumerate(image_urls, 1):
         images.append(
@@ -462,18 +467,6 @@ def knowledge_push_html_from_parts(
             'style="color:#087747;font-size:13px;text-decoration:none;">'
             f'第{index}张未显示？点此打开原图</a></div>'
         )
-    # The copy page lives on Pages, which can 404 while a deploy catches up —
-    # and a push whose text cannot be copied is useless on a phone. Carry the
-    # caption itself as one long-press-selectable block so copying never
-    # depends on another page loading.
-    copy_block = (
-        '<div style="color:#7a8580;font-size:12px;margin:0 0 6px;">'
-        "👇 长按下面整段，可直接复制全文</div>"
-        '<div style="background-color:#f6f7f4;border:1px solid #e6ebe8;'
-        "border-radius:6px;padding:12px;font-size:14px;line-height:1.9;"
-        'white-space:pre-wrap;word-break:break-word;margin:0 0 14px;">'
-        f"{html.escape(xhs_text.strip())}</div>"
-    )
     action = ""
     if extra_action:
         href, label = extra_action
@@ -488,9 +481,8 @@ def knowledge_push_html_from_parts(
   <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">{badge} · {date.month}.{date.day}</div>
   <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
   {''.join(images)}
-  {''.join(paragraphs)}
+  {body_block}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
-  {copy_block}
   {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
   <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
 </div>
