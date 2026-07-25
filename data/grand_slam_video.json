@@ -22,7 +22,9 @@
    ],
    "sub": "每一个网球人，都想征服的地方",
    "vo": "有四座球场，能让世界第一也紧张到手心出汗。它们，就是网球的四大满贯。",
-   "caption": "每个球员，一生的梦想"
+   "caption": "每个球员，一生的梦想",
+   "broll": "assets/local/broll/wim2026_montage_0-120s.mp4",
+   "broll_start": 0
   },
   {
    "id": "s02_title",
@@ -50,44 +52,44 @@
    },
    "cells": [
     {
-     "image": "assets/venues/ao-rod-laver-arena.jpg",
+     "image": "assets/slam2026/ao-hero-rla-night.jpg",
      "label": "澳网",
      "color": "#2f7de1",
      "focal": [
       0.5,
-      0.5
+      0.55
      ],
-     "local_key": "ao"
+     "credit": "图：Tennis Australia · ausopen.com"
     },
     {
-     "image": "assets/explainer/hawkeye/roland_garros_wide.jpg",
+     "image": "assets/slam2026/rg-hero-chatrier.jpg",
      "label": "法网",
      "color": "#c96a34",
      "focal": [
       0.5,
-      0.42
+      0.5
      ],
-     "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons"
+     "credit": "图：Pierre Froger/FFT · rolandgarros.com"
     },
     {
-     "image": "assets/players/jannik-sinner.jpg",
+     "image": "assets/slam2026/wim-hero-centre-court.jpg",
      "label": "温网",
      "color": "#2f9448",
      "focal": [
-      0.42,
-      0.6
+      0.5,
+      0.72
      ],
-     "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons"
+     "credit": "图：AELTC · wimbledon.com"
     },
     {
-     "image": "assets/venues/usopen-arthur-ashe-stadium.jpg",
+     "image": "assets/slam2026/uso-hero-ashe.jpg",
      "label": "美网",
      "color": "#1f6fb2",
      "focal": [
       0.5,
-      0.42
+      0.28
      ],
-     "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons"
+     "credit": "图：USTA · usopen.org"
     }
    ],
    "vo": "澳网、法网、温网、美网——奖金最高、积分最高、历史最久。拿下其中一座，就足以载入史册。",
@@ -106,34 +108,34 @@
    },
    "panels": [
     {
-     "image": "assets/players/novak-djokovic.jpg",
+     "image": "assets/slam2026/rg-clay-embrace-top.jpg",
      "label": "红土",
      "color": "#c96a34",
      "focal": [
       0.5,
-      0.42
+      0.5
      ],
-     "credit": "图：Kuberzog · CC BY 4.0 · Wikimedia Commons"
+     "credit": "图：Amélie Laurin/FFT · rolandgarros.com"
     },
     {
-     "image": "assets/players/carlos-alcaraz.jpg",
+     "image": "assets/slam2026/wim-grass-champ-point.jpg",
      "label": "草地",
      "color": "#2f9448",
      "focal": [
-      0.42,
-      0.32
+      0.5,
+      0.45
      ],
-     "credit": "图：12121343A · CC BY-SA 4.0 · Wikimedia Commons"
+     "credit": "图：AELTC · wimbledon.com"
     },
     {
-     "image": "assets/players/coco-gauff.jpg",
+     "image": "assets/slam2026/ao-action-blue-day.jpg",
      "label": "硬地",
      "color": "#2f7de1",
      "focal": [
-      0.5,
-      0.35
+      0.45,
+      0.4
      ],
-     "credit": "图：Hameltion · CC BY-SA 4.0 · Wikimedia Commons"
+     "credit": "图：Getty Images · ausopen.com"
     }
    ],
    "vo": "更残酷的是，四座殿堂横跨三种场地：红土最慢，草地最快，硬地居中。想集齐四座，你得先学会三种打法。",
@@ -161,13 +163,12 @@
    "type": "courtcard",
    "index": 1,
    "accent": "#2f7de1",
-   "image": "assets/venues/ao-rod-laver-arena.jpg",
+   "image": "assets/slam2026/ao-hero-rla-night.jpg",
    "focal": [
     0.5,
     0.55
    ],
-   "credit": "",
-   "local_key": "ao",
+   "credit": "图：Tennis Australia · ausopen.com",
    "court": "罗德·拉沃球场",
    "seats": "可容纳约 14,820 人",
    "section": {
@@ -183,12 +184,12 @@
    "type": "photo",
    "index": 1,
    "accent": "#2f7de1",
-   "image": "assets/venues/ao-court-interior.jpg",
+   "image": "assets/slam2026/ao-night-alcaraz-demon.jpg",
    "focal": [
     0.5,
-    0.5
+    0.4
    ],
-   "credit": "图：Gracchus250 · CC BY-SA 4.0 · Wikimedia Commons",
+   "credit": "图：Kelly Defina/Getty · ausopen.com",
    "section": {
     "en": "Australian Open",
     "zh": "澳大利亚网球公开赛",
@@ -196,7 +197,9 @@
     "color": "#2f7de1"
    },
    "vo": "一月的墨尔本正值盛夏，场内温度能超过 40 度，网球的极端高温规则因它而生。蓝色硬地，通宵夜场，球迷叫它——快乐的大满贯。",
-   "caption": "40°C 的快乐大满贯"
+   "caption": "40°C 的快乐大满贯",
+   "broll": "assets/local/broll/ao2026_mens_final_alcaraz_djokovic.mp4",
+   "broll_start": 62
   },
   {
    "id": "s07_rg_head",
@@ -220,13 +223,12 @@
    "type": "courtcard",
    "index": 2,
    "accent": "#c96a34",
-   "image": "assets/venues/rg-philippe-chatrier.jpg",
+   "image": "assets/slam2026/rg-hero-chatrier.jpg",
    "focal": [
-    0.32,
-    0.4
+    0.5,
+    0.5
    ],
-   "credit": "图：Poudou99 · CC BY 3.0 · Wikimedia Commons",
-   "local_key": "rg",
+   "credit": "图：Pierre Froger/FFT · rolandgarros.com",
    "court": "菲利普·夏蒂埃球场",
    "seats": "可容纳约 15,225 人",
    "section": {
@@ -242,12 +244,12 @@
    "type": "photo",
    "index": 2,
    "accent": "#c96a34",
-   "image": "assets/explainer/hawkeye/roland_garros.jpg",
+   "image": "assets/slam2026/rg-action-dusk-slide.jpg",
    "focal": [
     0.5,
     0.45
    ],
-   "credit": "图：Carine06 · CC BY-SA 2.0 · Wikimedia Commons",
+   "credit": "图：André Ferreira/FFT · rolandgarros.com",
    "section": {
     "en": "Roland-Garros",
     "zh": "法国网球公开赛",
@@ -255,7 +257,9 @@
     "color": "#c96a34"
    },
    "vo": "红土把球速拖慢、把回合拉长，这里是体能与意志的地狱。纳达尔在这里十四次捧杯——同一个人，同一片红土，网球史上再无第二例。",
-   "caption": "纳达尔 14 冠的红土地狱"
+   "caption": "纳达尔 14 冠的红土地狱",
+   "broll": "assets/local/broll/tiktok_mensik_brilliance.mp4",
+   "broll_start": 0
   },
   {
    "id": "s09_wim_head",
@@ -279,13 +283,12 @@
    "type": "courtcard",
    "index": 3,
    "accent": "#2f9448",
-   "image": "assets/venues/wimbledon-centre-court.jpg",
+   "image": "assets/slam2026/wim-hero-centre-court.jpg",
    "focal": [
     0.5,
-    0.45
+    0.5
    ],
-   "credit": "图：Arne Müseler · CC BY-SA 2.0 · Wikimedia Commons",
-   "local_key": "wim",
+   "credit": "图：AELTC · wimbledon.com",
    "court": "中央球场 · Centre Court",
    "seats": "可容纳约 14,979 人",
    "section": {
@@ -301,12 +304,12 @@
    "type": "photo",
    "index": 3,
    "accent": "#2f9448",
-   "image": "assets/explainer/hawkeye/line_judges.jpg",
+   "image": "assets/slam2026/wim-sinner-doors.jpg",
    "focal": [
     0.5,
-    0.5
+    0.45
    ],
-   "credit": "",
+   "credit": "图：AELTC · wimbledon.com",
    "section": {
     "en": "Wimbledon",
     "zh": "温布尔登网球锦标赛",
@@ -314,7 +317,9 @@
     "color": "#2f9448"
    },
    "vo": "1877 年诞生的温布尔登，是这项运动最古老的殿堂。全白着装是铁律，草地球速最快，胜负常在电光石火之间。",
-   "caption": "1877 · 最古老的殿堂"
+   "caption": "1877 · 最古老的殿堂",
+   "broll": "assets/local/broll/wim2026_montage_0-120s.mp4",
+   "broll_start": 34
   },
   {
    "id": "s11_uso_head",
@@ -338,13 +343,12 @@
    "type": "courtcard",
    "index": 4,
    "accent": "#1f6fb2",
-   "image": "assets/venues/usopen-arthur-ashe-exterior.jpg",
+   "image": "assets/slam2026/uso-hero-ashe.jpg",
    "focal": [
     0.5,
     0.5
    ],
-   "credit": "",
-   "local_key": "uso",
+   "credit": "图：USTA · usopen.org",
    "court": "阿瑟·阿什球场",
    "seats": "可容纳约 23,771 人 · 全球最大",
    "section": {
@@ -360,12 +364,12 @@
    "type": "photo",
    "index": 4,
    "accent": "#1f6fb2",
-   "image": "assets/venues/usopen-arthur-ashe-stadium.jpg",
+   "image": "assets/slam2026/uso-champions-2025.jpg",
    "focal": [
     0.5,
-    0.4
+    0.35
    ],
-   "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons",
+   "credit": "图：USTA · usopen.org",
    "section": {
     "en": "US Open",
     "zh": "美国网球公开赛",
