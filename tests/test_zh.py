@@ -55,6 +55,23 @@ def test_tournament_level_by_tour():
     assert tournament_level("Palermo", "WTA") == "WTA125"
 
 
+def test_memphis_classic_is_a_recognized_wta_250():
+    """未映射级别的赛事会被整站静默丢出日报（2026-07-25 生产事故）.
+
+    "The Memphis Classic" 当天有 10 场正赛首轮（含王曦雨），但 ESPN 不提供级别，
+    本地映射表又没有这个键，级别解析成 None 后 is_tour_focus_match() 直接判否，
+    整站连同中国球员的比赛一起从赛程预告里消失，只在 coverage.txt 留下一行
+    "待识别赛事"。这是 2026 年重回巡回赛日程的 WTA 250。
+    """
+    from tennislive.render.rating import TOUR_FOCUS_LEVELS
+
+    assert tournament_level("The Memphis Classic", "WTA") == "WTA250"
+    assert tournament_level("The Memphis Classic", "WTA") in TOUR_FOCUS_LEVELS
+    assert tournament_zh("The Memphis Classic") == "孟菲斯精英赛"
+    # 键用全名而不是 "memphis"：历史上孟菲斯办过 ATP 站，宽泛的键会误伤。
+    assert tournament_level("Memphis Open", "ATP") is None
+
+
 def test_tournament_surface_official_fallbacks():
     assert tournament_surface("Livesport Prague Open") == "Hard"
     assert tournament_surface("MSC Hamburg Ladies Open") == "Clay"
