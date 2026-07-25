@@ -22,6 +22,8 @@ dev = ["pytest>=7.0"]
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
 video = ["yt-dlp>=2026.7.4"]
+# 竖屏科普样片渲染（Pillow 合成 + 便携版 ffmpeg）
+shortvideo = ["Pillow>=10.0", "imageio-ffmpeg>=0.5"]
 
 [project.scripts]
 tennislive = "tennislive.cli:main"
