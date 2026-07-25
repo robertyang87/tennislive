@@ -1136,6 +1136,251 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="ten-champions",
+        title="十届温网十个女冠军",
+        subtitle="网球观察 · 格局篇",
+        identity="同样十届，男单只有五人",
+        chips=("女单 10 人", "男单 5 人", "无人卫冕"),
+        hero=(
+            "2016 至 2026 年共十届温网（2020 年停办），女单出了十个不同的冠军、"
+            "无人卫冕；男单同期只有五个人分走十座冠军。"
+        ),
+        facts=(
+            "女单十届出了十个不同的冠军：小威、穆古鲁扎、科贝尔、哈勒普、巴蒂，"
+            "以及莱巴金娜、万卓索娃、克雷吉茨科娃、斯瓦泰克、诺斯科娃；"
+            "上一次有人卫冕温网女单，正是这十届的第一届、2016 年的小威。",
+            "男单同期只有五人：德约科维奇 4 冠（2018、2019、2021、2022），"
+            "阿尔卡拉斯 2 冠（2023、2024），辛纳 2 冠（2025、2026），"
+            "穆雷与费德勒各 1 冠。",
+            "捷克球员占了女单这十席中的三席（万卓索娃、克雷吉茨科娃、诺斯科娃）；"
+            "2026 年决赛为捷克内战，捷克成为公开赛年代第六个由两名本国女将会师"
+            "大满贯单打决赛的国家。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-11",
+                player="诺斯科娃",
+                age="21 岁 236 天",
+                headline="首进大满贯决赛即夺冠",
+                detail=(
+                    "6-2、5-7、6-3 击败同胞穆霍娃夺得温网女单冠军，"
+                    "第三轮曾救下一个赛点；为 2011 年科维托娃之后最年轻的温网女单冠军。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Women%27s_singles"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-07-12",
+                player="辛纳",
+                age="2026 年",
+                headline="男单卫冕，十届只有五人",
+                detail=(
+                    "6-7(7-9)、7-6(7-2)、6-3、6-4 击败兹维列夫成功卫冕；"
+                    "在此之前上一位卫冕温网男单的是 2022 年的德约科维奇。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Men%27s_singles"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="各届温网维基百科条目",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
+    ),
+    _trivia_story(
+        slug="masters-format",
+        title="大师赛为什么变两周",
+        subtitle="网球观察 · 赛程篇",
+        identity="扩容之后的退赛潮",
+        chips=("赛程争议", "9 站中 7 站", "56→96"),
+        hero=(
+            "九站大师赛已有七站从一周改为十二天；2026 年蒙特利尔站开赛前一周，"
+            "辛纳与德约科维奇双双退赛。"
+        ),
+        facts=(
+            "九站 ATP 大师赛中已有七站改为十二天赛期，"
+            "仅巴黎大师赛与蒙特卡洛大师赛仍保持一周；顶尖球员赛季跨越 11 个月。",
+            "2025 年起，加拿大站与辛辛那提站将正赛签表由 56 人扩至 96 人，"
+            "赛期相应延长至 12 天。",
+            "2026 年蒙特利尔站赛前，辛纳与德约科维奇退赛，此前阿尔卡拉斯已退赛；"
+            "赛事总监瓦莱丽·泰特罗表示尊重球员决定，"
+            "但指出临时退赛日益频繁已成为项目层面的问题。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24",
+                player="辛纳 / 德约科维奇",
+                age="2026 年",
+                headline="双双退出蒙特利尔",
+                detail=(
+                    "加拿大网球协会宣布两人退出 8 月 1 日开赛的大师赛；"
+                    "辛纳称与团队权衡后决定把健康放在第一位。"
+                ),
+                source_url=(
+                    "https://www.nbcsports.com/tennis/news/"
+                    "top-ranked-sinner-24-time-grand-slam-champ-djokovic-"
+                    "withdraw-from-the-national-bank-open"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-01-01",
+                player="ATP",
+                age="2025 年",
+                headline="签表扩容至 96 人",
+                detail="加拿大站与辛辛那提站正赛签表由 56 人扩至 96 人，赛期延长至 12 天。",
+                source_url="https://en.wikipedia.org/wiki/2025_National_Bank_Open",
+            ),
+        ),
+        image_keys=(),
+        source_label="BBC / NBC Sports / 加拿大网协",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000",
+    ),
+    _trivia_story(
+        slug="queue",
+        title="温网的队要排一晚上",
+        subtitle="网球冷知识 · 观赛篇",
+        identity="一条有专名的队：The Queue",
+        chips=("冷知识", "温网传统", "2003 编号"),
+        hero=(
+            "四大满贯里只有温网和法网，当天排队还能坐进主球场；"
+            "代价是在草地上睡一晚。"
+        ),
+        facts=(
+            "温网与法网是仅有的两项大满贯，无票观众可当天排队买到三块主球场的座位；"
+            "排队卡自 2003 年起编号，2008 年起合并为单一队列，每块主球场约留 500 个座位。",
+            "全英俱乐部允许通宵排队并为露宿者提供厕所与饮水；"
+            "清晨队伍向场地移动时，引导员沿队发放按球场分色的腕带，"
+            "凭腕带与票款在售票处换取门票。",
+            "提前离场者退回的门票于下午 2:30 重新发售，所得捐予慈善；"
+            "主球场的排队在八强赛结束后停止。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2010-06-28",
+                player="Rose Stanley",
+                age="2010 年",
+                headline="第一百万张排队卡",
+                detail=(
+                    "2010 年温网第七个比赛日下午 2 点 40，"
+                    "第 100 万张编号排队卡发给了来自南非的 Rose Stanley。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2003-01-01",
+                player="全英俱乐部",
+                age="2003 年",
+                headline="排队卡开始编号",
+                detail="排队卡自此按顺序编号；2008 年起合并为单一队列。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="Carine06 / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+    ),
+    _trivia_story(
+        slug="rufus",
+        title="温网雇了一只鹰",
+        subtitle="网球冷知识 · 园区篇",
+        identity="工牌职位：赶鸟员",
+        chips=("冷知识", "温网园区", "2008 上岗"),
+        hero=(
+            "温网有一名员工是哈里斯鹰，工牌上的职位写着 Bird Scarer；"
+            "2012 年它被人从车里偷走，三天后在温布尔登公地找回。"
+        ),
+        facts=(
+            "Rufus 生于 2008 年，同年 18 周大时首次在温网上岗，"
+            "接替上一只鹰 Hamish；它有推特账号，也有自己的温网工牌，"
+            "职位写作 Bird Scarer。",
+            "全英俱乐部雇它全年巡视 42 英亩园区，赛期每日到岗；"
+            "鸽子尤其爱停在中央球场屋顶。它也在 2012 年伦敦奥运会期间每天工作。",
+            "2012 年 6 月 28 日它从车后座被偷，引发全球关注，"
+            "三天后在温布尔登公地被找到并交给 RSPCA，仅一条腿略有酸痛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2012-06-28",
+                player="Rufus",
+                age="2012 年",
+                headline="被偷走三天",
+                detail=(
+                    "从车后座被偷；它的无线电发射器夜间会取下，因此无法追踪。"
+                    "三天后在温布尔登公地被发现，身体健康。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+            ChampionMoment(
+                date="2026-01-01",
+                player="全英俱乐部",
+                age="2026 年",
+                headline="无人机会取代它吗",
+                detail=(
+                    "驯鹰师担心这份工作终将被无人机取代；"
+                    "全英俱乐部表示没有替换它的打算。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="AvianEnvironmental / Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+    ),
+    _trivia_story(
+        slug="wimbledon-whites",
+        title="温网为什么只准穿白",
+        subtitle="网球冷知识 · 规矩篇",
+        identity="一条管到内衣的着装规定",
+        chips=("冷知识", "温网传统", "1963 成文"),
+        hero=(
+            "白衣打网球比规则本身老得多；温网 1963 年把它写成规定，"
+            "此后严到彩边不得超过 1 厘米。"
+        ),
+        facts=(
+            "温网要求参赛者穿全白或近乎全白的服装，"
+            "这条着装规定于 1963 年首次成文执行。",
+            "细则严到：不得有整块色彩，彩色滚边不得超过 1 厘米，"
+            "上衣或裙子的后背必须全白；短裤、帽子、发带、袜子与鞋面也须以白为主。",
+            "2023 年起，女子选手首次获准穿非白色内衣——"
+            "规则写明为“纯色、中/深色打底短裤，长度不超过其短裤或裙子”。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1963-01-01",
+                player="全英俱乐部",
+                age="1963 年",
+                headline="着装规定首次成文",
+                detail="温网把沿用已久的白衣传统写成规则，要求全白或近乎全白。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2023-07-03",
+                player="温布尔登",
+                age="2023 年",
+                headline="内衣松口",
+                detail=(
+                    "女子选手首次获准穿中/深色打底短裤，长度不超过短裤或裙子；"
+                    "推动修改的是球员对生理期的顾虑。"
+                ),
+                source_url=(
+                    "https://www.nytimes.com/athletic/4634722/2023/07/02/"
+                    "wimbledon-period-all-white-dress-code/"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="温网官方规则 / 维基百科",
+        image_credit="Wikimedia Commons",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+    ),
+    _trivia_story(
         slug="longest-match",
         title="11 小时 5 分钟",
         subtitle="网球冷知识 · 纪录篇",

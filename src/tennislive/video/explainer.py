@@ -32,6 +32,7 @@ import base64
 import html
 import mimetypes
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -149,6 +150,129 @@ _MISCALL_DIAGRAM = """
 """
 
 
+# The subject of this beat is a calendar, not a place — no photograph shows
+# "seven of nine events grew to twelve days". Draw it instead, and label it.
+_MASTERS_FORMAT_DIAGRAM = """
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <text x="70" y="58" fill="#9fb4aa" font-size="27" font-weight="700">赛期</text>
+  <text x="70" y="118" fill="#e7f3ec" font-size="30" font-weight="700">过去</text>
+  <rect x="200" y="92" width="182" height="38" rx="6" fill="rgba(55,226,154,.35)"
+        stroke="#37e29a" stroke-width="3"/>
+  <text x="398" y="120" fill="#37e29a" font-size="29" font-weight="800">7 天</text>
+  <text x="70" y="196" fill="#e7f3ec" font-size="30" font-weight="700">现在</text>
+  <rect x="200" y="170" width="312" height="38" rx="6" fill="rgba(198,246,90,.30)"
+        stroke="#c6f65a" stroke-width="3"/>
+  <text x="528" y="198" fill="#c6f65a" font-size="29" font-weight="800">12 天</text>
+
+  <line x1="70" y1="250" x2="830" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <text x="70" y="308" fill="#9fb4aa" font-size="27" font-weight="700">正赛签表</text>
+  <text x="248" y="312" fill="#e7f3ec" font-size="44" font-weight="800">56</text>
+  <text x="320" y="312" fill="#9fb4aa" font-size="36" font-weight="700">&#8594;</text>
+  <text x="378" y="312" fill="#c6f65a" font-size="44" font-weight="800">96</text>
+  <text x="452" y="312" fill="#9fb4aa" font-size="25" font-weight="700">人（2025 起）</text>
+
+  <line x1="70" y1="352" x2="830" y2="352" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <text x="70" y="412" fill="#9fb4aa" font-size="27" font-weight="700">九站大师赛</text>
+  <g>
+    <rect x="70"  y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="156" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="242" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="328" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="414" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="500" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="586" y="446" width="72" height="52" rx="7" fill="rgba(198,246,90,.32)" stroke="#c6f65a" stroke-width="3"/>
+    <rect x="672" y="446" width="72" height="52" rx="7" fill="none" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
+    <rect x="758" y="446" width="72" height="52" rx="7" fill="none" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
+  </g>
+  <text x="70"  y="540" fill="#c6f65a" font-size="26" font-weight="800">7 站已改 12 天</text>
+  <text x="600" y="540" fill="#9fb4aa" font-size="26" font-weight="700">2 站仍一周</text>
+  <text x="450" y="614" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="700">仍为一周的是：巴黎 · 蒙特卡洛</text>
+</svg>
+"""
+
+
+# The whole argument of the "ten women's champions, five men's" deck is two
+# lists side by side, and no photograph can hold two lists. Drawing it is not
+# a fallback here — it *is* the evidence: ten rows of ten names against ten
+# rows that collapse into five blocks. Every name is the champion the year's
+# own Wikipedia article names (2016-2026; 2020 was cancelled, so ten).
+_TEN_CHAMPIONS_DIAGRAM = """
+<svg viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg">
+  <text x="70"  y="66" fill="#9fb4aa" font-size="26" font-weight="700">年份</text>
+  <text x="196" y="66" fill="#c6f65a" font-size="27" font-weight="800">女单冠军</text>
+  <text x="560" y="66" fill="#37e29a" font-size="27" font-weight="800">男单冠军</text>
+  <line x1="70" y1="86" x2="830" y2="86" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <g fill="rgba(231,243,236,.04)">
+    <rect x="60" y="104" width="780" height="46"/>
+    <rect x="60" y="196" width="780" height="46"/>
+    <rect x="60" y="288" width="780" height="46"/>
+    <rect x="60" y="380" width="780" height="46"/>
+    <rect x="60" y="472" width="780" height="46"/>
+  </g>
+
+  <g fill="#9fb4aa" font-size="25" font-weight="700">
+    <text x="70" y="136">2016</text>
+    <text x="70" y="182">2017</text>
+    <text x="70" y="228">2018</text>
+    <text x="70" y="274">2019</text>
+    <text x="70" y="320">2021</text>
+    <text x="70" y="366">2022</text>
+    <text x="70" y="412">2023</text>
+    <text x="70" y="458">2024</text>
+    <text x="70" y="504">2025</text>
+    <text x="70" y="550">2026</text>
+  </g>
+
+  <g fill="#c6f65a">
+    <circle cx="178" cy="129" r="5"/><circle cx="178" cy="175" r="5"/>
+    <circle cx="178" cy="221" r="5"/><circle cx="178" cy="267" r="5"/>
+    <circle cx="178" cy="313" r="5"/><circle cx="178" cy="359" r="5"/>
+    <circle cx="178" cy="405" r="5"/><circle cx="178" cy="451" r="5"/>
+    <circle cx="178" cy="497" r="5"/><circle cx="178" cy="543" r="5"/>
+  </g>
+  <g fill="#e7f3ec" font-size="27" font-weight="700">
+    <text x="198" y="138">小威</text>
+    <text x="198" y="184">穆古鲁扎</text>
+    <text x="198" y="230">科贝尔</text>
+    <text x="198" y="276">哈勒普</text>
+    <text x="198" y="322">巴蒂</text>
+    <text x="198" y="368">莱巴金娜</text>
+    <text x="198" y="414">万卓索娃</text>
+    <text x="198" y="460">克雷吉茨科娃</text>
+    <text x="198" y="506">斯瓦泰克</text>
+    <text x="198" y="552">诺斯科娃</text>
+  </g>
+
+  <!-- One box per man, spanning the years he held it: four boxes for
+       Djokovic's four, two apiece for Alcaraz and Sinner. -->
+  <g fill="rgba(55,226,154,.16)" stroke="#37e29a" stroke-width="3">
+    <rect x="540" y="108" width="290" height="38" rx="7"/>
+    <rect x="540" y="154" width="290" height="38" rx="7"/>
+    <rect x="540" y="200" width="290" height="176" rx="7"/>
+    <rect x="540" y="384" width="290" height="84" rx="7"/>
+    <rect x="540" y="476" width="290" height="84" rx="7"/>
+  </g>
+  <g fill="#e7f3ec" font-size="27" font-weight="700" text-anchor="middle">
+    <text x="685" y="136">穆雷</text>
+    <text x="685" y="182">费德勒</text>
+    <text x="685" y="297">德约科维奇 ×4</text>
+    <text x="685" y="435">阿尔卡拉斯 ×2</text>
+    <text x="685" y="527">辛纳 ×2</text>
+  </g>
+
+  <line x1="70" y1="584" x2="830" y2="584" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+  <text x="198" y="634" fill="#c6f65a" font-size="33" font-weight="800">女单 10 个人</text>
+  <text x="560" y="634" fill="#37e29a" font-size="33" font-weight="800">男单 5 个人</text>
+  <text x="450" y="682" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">2016-2026 共十届，2020 年停办</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -243,6 +367,379 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # A live story, so every claim is pinned to a source: the 12-day format and
+    # the two week-long holdouts from BBC Sport; the 2025 draw expansion from
+    # 56 to 96 at Canada and Cincinnati; Sinner's and Tetreault's words as
+    # quoted by NBC Sports / Tennis Canada's announcement; Tsitsipas via BBC.
+    "masters-format": (
+        (
+            "before",
+            "老规矩",
+            "大师赛原本一周就打完",
+            "大师赛是四大满贯之下最高的一级。它原本的样子很简单：一周之内打完。"
+            "但现在，九站大师赛里已经有七站改成了十二天——只剩巴黎和蒙特卡洛，"
+            "还保持着一周的老规矩。画面里就是巴黎大师赛的球场。",
+            "assets/explainer/masters-format/paris.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2024 巴黎大师赛 · Accor Arena",
+            (
+                "大师赛是四大满贯之下最高一级",
+                "9 站里已有 7 站改成 12 天",
+                "只剩巴黎、蒙特卡洛还是一周",
+            ),
+        ),
+        (
+            "expand",
+            "扩容",
+            "签表从 56 人扩到 96 人",
+            "2025 年，加拿大站和辛辛那提站把正赛签表从五十六人扩到九十六人，"
+            "赛期也随之拉长到十二天。理由不难理解：更多的比赛日，"
+            "意味着更多的门票和更多的转播时段。但对球员来说，"
+            "一个原本一周结束的赛事，现在要占掉将近两周。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2025 年加拿大、辛辛那提扩容",
+                "正赛签表从 56 人扩到 96 人",
+                "赛期随之拉长到 12 天",
+            ),
+            _MASTERS_FORMAT_DIAGRAM,
+        ),
+        (
+            "withdraw",
+            "身体先垮",
+            "5-1 领先，然后他抽筋了",
+            "先把时间拨回两个月前。2026 年法网第二轮，辛纳 6-3、6-2、5-1 领先，"
+            "离赢下比赛只差一局。然后他抽筋了。接连丢掉十五分，场边麦克风录到"
+            "他说自己头晕、没力气；最后被世界第五十六位的塞伦多洛连扳三盘淘汰，"
+            "三十连胜就此终止。画面里就是那天的他。两个月后，蒙特利尔赛前一周，"
+            "他退赛了，理由是把健康放在第一位。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "rolandgarros.com 官方图 · 2026 法网第二轮 辛纳",
+            (
+                "2026 法网次轮，5-1 领先时抽筋",
+                "连丢 15 分，30 连胜终结",
+                "两个月后，他退出了蒙特利尔",
+            ),
+        ),
+        (
+            "organiser",
+            "赛事方",
+            "临时退赛，已经不是个案",
+            "同一天，德约科维奇也退了赛；在他们之前，阿尔卡拉斯已经退了。"
+            "画面里是三周前的他——温网中央球场，四分之一决赛刚刚打完，"
+            "五盘，五个多小时。赛事总监瓦莱丽·泰特罗的回应是：我们尊重球员的决定，"
+            "也理解在这样密集的赛程下，健康必须是第一位的。但她同时指出，"
+            "这类临时退赛近年越来越频繁，已经不是某一站的问题——"
+            "大师赛是巡回赛的旗舰，球迷理应看到最好的球员出场。",
+            "assets/explainer/masters-format/djokovic.jpg",
+            "AELTC / Jon Super · wimbledon.com 官方图 · 2026 温网 1/4 决赛",
+            (
+                "德约同日退赛，此前阿尔卡拉斯已退",
+                "图为三周前温网 1/4 决赛，打满五盘",
+                "赛事总监：临时退赛已成行业问题",
+            ),
+        ),
+        (
+            "whose",
+            "谁的赛程",
+            "更长的赛事，到底给谁看",
+            "球员那边说得更直接。世界前列的弗里茨对 ESPN 说："
+            "我一整年只有一周休息，太离谱了。顶尖球员的赛季跨越十一个月；"
+            "蒙特利尔之后紧接着辛辛那提，再往后就是美网，中间几乎不停。"
+            "加拿大网协说，正在和 ATP 商谈调整。而画面里这一满场人，"
+            "就是蒙特利尔的中心球场。所以问题也就摆在这儿了："
+            "一个更长的大师赛，到底是给谁看的？",
+            "assets/explainer/masters-format/crowd.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 蒙特利尔中心球场",
+            (
+                "弗里茨：我一年只有一周休息",
+                "顶尖球员赛季跨越 11 个月",
+                "蒙特利尔之后紧接辛辛那提、美网",
+            ),
+            "",
+            "更长的大师赛，到底是给谁看的？",
+        ),
+    ),
+    # Facts from en.wikipedia "Wimbledon Championships": Wimbledon and the
+    # French Open are the only Slams where a same-day queue still reaches the
+    # show courts, cards numbered from 2003, one queue from 2008 with ~500
+    # seats per show court, overnight camping permitted with loos and water
+    # laid on, colour-coded wristbands handed out at dawn, returned tickets
+    # resold at 2:30pm for charity, and the millionth card on 28 June 2010.
+    "queue": (
+        (
+            "why",
+            "唯二两站",
+            "当天排队，也能坐进中央球场",
+            "四大满贯里，只有温网和法网，你可以早上手里没票，晚上坐进主球场。"
+            "代价写在门口：排一晚上队。这条队伍甚至有自己的专名，就叫 The Queue，"
+            "大写的 Q。画面是 2011 年温网第二天的队伍——草地上那条白线，"
+            "就是队伍要走的路线。",
+            "assets/explainer/queue/queue.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2011 温网第二日的队伍",
+            (
+                "只有温网和法网能当天排队进主场",
+                "这条队有专名：The Queue",
+                "图为 2011 年温网第二天",
+            ),
+        ),
+        (
+            "card",
+            "编号卡",
+            "一张卡，一个号码",
+            "排上队，你会拿到一张排队卡，上面印着编号——从 2003 年起就开始编了。"
+            "2008 年之后合并成一条队，三块主球场每天各留大约五百个座位。"
+            "想中途离队上个厕所？得先跟旁边的人或者引导员说好你的位置。"
+            "画面里是同一个人 2011 年的全套：两张排队卡、腕带，还有票——"
+            "场外票二十镑，一号球场七十四镑，中央球场一百镑。",
+            "assets/explainer/queue/cards.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2011 温网排队卡与门票",
+            (
+                "排队卡自 2003 年起编号",
+                "2008 年起单一队列，每场约 500 座",
+                "图为 2011 年的排队卡与门票",
+            ),
+        ),
+        (
+            "overnight",
+            "睡在草地上",
+            "想进主球场，先睡一晚",
+            "想坐进主球场，通常得在草地上睡一晚。全英俱乐部不但允许，"
+            "还给排队的人备了厕所和饮水。维基百科上有一句写得很妙："
+            "这种通宵露宿，按法律算是游荡；但在温网，它本身就是体验的一部分。"
+            "画面里这三位，正排在 2012 年的队伍里。",
+            "assets/explainer/queue/fans.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2012 温网第二日的队伍",
+            (
+                "主球场的票通常要排通宵",
+                "俱乐部备好厕所和饮水",
+                "法律上算游荡，这里算体验",
+            ),
+        ),
+        (
+            "dawn",
+            "天亮之后",
+            "腕带按球场分颜色",
+            "天一亮，队伍开始朝场地挪动。引导员沿着队伍走，发腕带——按球场分颜色。"
+            "到了售票处，拿腕带加上钱，才换成真正的门票。"
+            "如果你只想进园区看外场，那不必过夜，当天来排就够了。"
+            "画面里是队伍最后一段要走过的那座天桥。",
+            "assets/explainer/queue/bridge.jpg",
+            "Clavecin · Public domain · Wikimedia Commons · 温网排队末段的天桥",
+            (
+                "引导员按球场发彩色腕带",
+                "腕带加票款在售票处换门票",
+                "只看外场不必过夜",
+            ),
+        ),
+        (
+            "million",
+            "一百万张",
+            "这张卡，编到了一百万号",
+            "2010 年 6 月 28 日下午两点四十，第一百万张编号排队卡发了出去，"
+            "拿到它的是来自南非的 Rose Stanley。排完队还有纪念贴纸——"
+            "晴天一款，雨天一款；画面里这张是 1994 年的，上面写着"
+            "「我在温网排过队」。另外，提前离场的人退回来的票，"
+            "下午两点半会重新发售，钱全部捐给慈善。八强打完，主球场的排队就结束了。"
+            "那你呢——为一张票在草地上睡一晚，你愿意吗？",
+            "assets/explainer/queue/sticker.jpg",
+            "Amanda Slater · CC BY-SA 4.0 · Wikimedia Commons · 1994 年温网排队纪念贴纸",
+            (
+                "2010.6.28 发出第 100 万张排队卡",
+                "退票下午 2:30 再售，钱捐慈善",
+                "图为 1994 年的排队纪念贴纸",
+            ),
+            "",
+            "为一张票在草地上睡一晚，你愿意吗？",
+        ),
+    ),
+    # Every fact traces to en.wikipedia "Rufus the Hawk". Note what the
+    # pictures are and are not: the first three are Rufus himself (two
+    # uploaded by Avian Environmental, who actually operate him, one from
+    # the 2012 Olympics), while beat 4 shows the same operator's bird at
+    # Westminster Abbey — a Harris hawk on the same job, not necessarily
+    # this bird, so the beat says so on screen rather than implying it.
+    "rufus": (
+        (
+            "badge",
+            "一只鹰",
+            "工牌上写着「赶鸟员」",
+            "温布尔登有一名员工，工牌上的职位是三个词：Bird Scarer，赶鸟员。"
+            "它叫 Rufus，一只哈里斯鹰，2008 年第一次来上班的时候，才 18 周大。"
+            "它接的是上一任的班——上一只鹰叫 Hamish。全英俱乐部说它是"
+            "「温网大家庭的重要一员」；它有自己的推特，也有自己的工牌。",
+            "assets/explainer/rufus/badge.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 温网现场",
+            (
+                "工牌职位：Bird Scarer 赶鸟员",
+                "2008 年首次上岗，当时 18 周大",
+                "接的是上一只鹰 Hamish 的班",
+            ),
+        ),
+        (
+            "patrol",
+            "它的工作",
+            "四十二英亩，全归它管",
+            "它的活儿说起来简单：把鸽子赶走。鸽子最爱停的地方，是中央球场的屋顶。"
+            "整个园区四十二英亩，Rufus 全年巡场，赛期这两周每天到岗。"
+            "画面里是清晨还没开门的温网，它站在栏杆上，把整片园子看了一遍。"
+            "但它并不抓鸽子——它全部的工作，只是让鸽子知道：这片天空有天敌。",
+            "assets/explainer/rufus/patrol.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 清晨的温网园区",
+            (
+                "42 英亩园区，全年巡场",
+                "鸽子最爱停中央球场屋顶",
+                "它不抓鸽子，只让鸽子知道有天敌",
+            ),
+        ),
+        (
+            "stolen",
+            "失踪三天",
+            "2012 年，它被人偷走了",
+            "2012 年 6 月 28 日，Rufus 在车后座被人偷走。它平时戴着无线电发射器，"
+            "本来可以追踪——但发射器晚上会取下来，被偷的那一刻，谁也找不到它。"
+            "这件事引发了全球关注，媒体称它是「世界上最出名的鸟」。三天后，"
+            "它在温布尔登公地被发现，交给了防止虐待动物协会：身体没事，"
+            "只有一条腿有点酸。那年夏天，它照常上班——在伦敦奥运会。",
+            "assets/explainer/rufus/olympics.jpg",
+            "Catherine Wright · CC BY-SA 2.0 · Wikimedia Commons · 2012 伦敦奥运会期间",
+            (
+                "2012.6.28 从车后座被偷走",
+                "发射器夜里取下，当时追不到",
+                "三天后在温布尔登公地找回",
+            ),
+        ),
+        (
+            "elsewhere",
+            "不止温网",
+            "教堂、医院、机场都请过它",
+            "温网只是它的一份工作。威斯敏斯特教堂、医院、机场、垃圾填埋场，"
+            "都请过它去赶鸟。画面里是同一家公司在威斯敏斯特一带的赶鸟作业。"
+            "不过它也不是全无敌手——2013 年有报道说，它被戴兜帽的人吓到过，"
+            "还被一群乌鸦赶跑过。",
+            "assets/explainer/rufus/abbey.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 威斯敏斯特一带赶鸟作业",
+            (
+                "教堂、医院、机场、垃圾场都请过",
+                "图为同一公司在威斯敏斯特的作业",
+                "2013 年它被一群乌鸦赶跑过",
+            ),
+        ),
+        (
+            "successor",
+            "谁来接班",
+            "接班人没生成，无人机来了",
+            "从 2008 年上岗算起，Rufus 已经干了快二十年。2025 年，驯鹰师想给它"
+            "找个伴——一只叫 Pamela 的母鹰，指望生出个接班人；结果 Pamela 对它"
+            "有攻击性，两只鹰没能走到一起。2026 年，驯鹰师说出了另一个担心："
+            "这份工作，迟早会被无人机取代。全英俱乐部的回应是：没有换掉它的打算。"
+            "画面里这一只，同样是这家公司在伦敦市区放飞的猛禽。"
+            "那你觉得呢——赶鸽子这件事，该交给鹰，还是交给无人机？",
+            "assets/explainer/rufus/city.jpg",
+            "AvianEnvironmental · CC BY-SA 4.0 · Wikimedia Commons · 伦敦市区赶鸟作业",
+            (
+                "2025 年配对母鹰 Pamela 未成",
+                "全英俱乐部：没有换掉它的打算",
+                "图为同一公司放飞的猛禽",
+            ),
+            "",
+            "赶鸽子该交给鹰，还是交给无人机？",
+        ),
+    ),
+    # Dress-code details are quoted from the Championships' own clothing
+    # guidelines as summarised on en.wikipedia "Wimbledon Championships":
+    # first enforced 1963, no solid mass of colouring, trims no wider than
+    # 1cm, backs entirely white, and from 2023 women may wear mid/dark
+    # undershorts no longer than their shorts or skirt. The reason for that
+    # last change — period anxiety — is the framing of the NYT/Athletic piece
+    # the article cites, not our inference.
+    "wimbledon-whites": (
+        (
+            "before",
+            "白衣时代",
+            "白衣比规则老得多",
+            "你在温网看到的那一片白，不是审美，是规定。但穿白衣打球这件事，"
+            "比规定老得多。画面里是 1920 年代的球场——那时候还没有谁强制，"
+            "大家本来就穿白的。温网做的，是把这个习惯在 1963 年正式写成了"
+            "规则：参赛者必须穿全白，或者近乎全白。",
+            "assets/explainer/wimbledon-whites/historic.jpg",
+            "Public domain · State Library of NSW · 1920 年代网球场",
+            (
+                "图为 1920 年代的网球场",
+                "那时白衣是习惯，不是规定",
+                "温网 1963 年把它写成规则",
+            ),
+        ),
+        (
+            "rule",
+            "写成规则",
+            "1963 年立的规矩，至今没松",
+            "从 1963 年那份着装规定起，这条规矩就没有松过。画面里是 2023 年的"
+            "温网男单决赛，阿尔卡拉斯对德约科维奇——决赛场上，两个人从头到脚，"
+            "还是白的。",
+            "assets/explainer/wimbledon-whites/final2023.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2023 温网男单决赛",
+            (
+                "1963 年首次成文执行",
+                "图为 2023 年温网男单决赛",
+                "决赛场上依然全身白",
+            ),
+        ),
+        (
+            "howstrict",
+            "严到毫米",
+            "彩边不能超过一厘米",
+            "严到什么程度？细则写得非常细：不得有整块色彩；彩色滚边不得超过一厘米；"
+            "上衣或裙子的后背，必须完全是白的。短裤、帽子、发带、袜子，"
+            "连鞋面都要以白色为主。画面里是 2026 年温网的莱巴金娜，你可以照着条文一条条对："
+            "遮阳帽白的，护腕白的，球裙白的，球鞋白的；领口那道深色细边，"
+            "就是「不得超过一厘米」的那一道。整幅画面里唯一一处深色，"
+            "是裙摆下面露出的那截打底短裤——那是 2023 年才松开的口子，最后一屏我们细说。",
+            "assets/explainer/wimbledon-whites/headtotoe.jpg",
+            "danielcooper850 · CC BY-SA 4.0 · Wikimedia Commons · 2026 温网 莱巴金娜",
+            (
+                "彩色滚边不得超过 1 厘米",
+                "上衣或裙子的后背必须全白",
+                "帽子、发带、袜子、鞋面都要以白为主",
+            ),
+        ),
+        (
+            "hidden",
+            "看不见的地方",
+            "这条规矩管到内衣",
+            "它还管到看不见的地方——内衣也必须是白的。对女子选手来说，"
+            "这就不只是麻烦了。生理期那几天，穿一身全白站上球场，"
+            "是实打实的心理负担；而很长一段时间里，这件事没有人拿到台面上讲。"
+            "画面里是 2022 年的莱巴金娜——那一年她在这片草地上夺冠；"
+            "而这条规矩松口，还要再等一年。",
+            "assets/explainer/wimbledon-whites/closeup2022.jpg",
+            "Peter Menzel · CC BY-SA 2.0 · Wikimedia Commons · 2022 温网 莱巴金娜",
+            (
+                "规则一度要求内衣也是白色",
+                "生理期上场是实打实的负担",
+                "图为 2022 年温网冠军莱巴金娜",
+            ),
+        ),
+        (
+            "relax",
+            "松了一道口子",
+            "2023 年，只让了这一处",
+            "2023 年，温网松了一道口子：女子选手终于可以穿非白色的内搭，"
+            "规则写得很具体——纯色、中深色的打底短裤，长度不能超过外面的"
+            "短裤或裙子。这是这条规矩立起来之后，第一次为看不见的地方让步。"
+            "除此之外，一切照旧，整个园区还是一片白。那你觉得，"
+            "这条百年白衣规矩，还该留着吗？",
+            "assets/explainer/wimbledon-whites/grounds.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2022 温网园区",
+            (
+                "2023 年起可穿中/深色打底短裤",
+                "长度不得超过短裤或裙子",
+                "其余规定一概照旧",
+            ),
+            "",
+            "这条百年白衣规矩，还该留着吗？",
+        ),
+    ),
     # Facts checked against en.wikipedia "Isner-Mahut match at the 2010
     # Wimbledon Championships" and against the plaque itself, which the All
     # England Club engraved with the score, the dates and the duration. Note
@@ -418,6 +915,105 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你看到的是黄，还是绿？",
         ),
     ),
+    # Champions verified one edition at a time from each year's own English
+    # Wikipedia article (2016-2026, 2020 cancelled). Women: S. Williams,
+    # Muguruza, Kerber, Halep, Barty, Rybakina, Vondroušová, Krejčíková,
+    # Świątek, Nosková — ten. Men: Murray, Federer, Djokovic x4, Alcaraz x2,
+    # Sinner x2 — five.
+    "ten-champions": (
+        (
+            "newest",
+            "新科冠军",
+            "21 岁，第一次进决赛就赢了",
+            "先说最新的这一个。2026 年温网女单决赛，场上两个捷克人，谁赢都是捷克赢。"
+            "最后是二十一岁的诺斯科娃 6-2、5-7、6-3 拿下穆霍娃，捧走她职业生涯的"
+            "第一个大满贯——而这也是她第一次打进大满贯决赛。第一次进决赛就赢，"
+            "本来就不常见；更不常见的是，第三轮她已经被人拿到过赛点，差一分就该收拾行李了。"
+            "二十一岁二百三十六天，2011 年科维托娃之后最年轻的温网女单冠军。"
+            "画面里是那天傍晚，她端着维纳斯玫瑰露水盘站上俱乐部阳台，底下站满了人。",
+            "assets/explainer/ten-champions/noskova.jpg",
+            "AELTC/Thomas Lovelock · wimbledon.com 官方图 · 2026 温网女单决赛后",
+            (
+                "2026 温网决赛 6-2 5-7 6-3 胜穆霍娃",
+                "首进大满贯决赛即夺冠，第三轮救过赛点",
+                "21 岁 236 天，2011 年后最年轻",
+            ),
+        ),
+        (
+            "women",
+            "十届十冠",
+            "这块底座上，十年刻了十个名字",
+            "但真正稀奇的不是她的年龄。画面里这块底座，是维纳斯玫瑰露水盘的盘座，"
+            "历届女单冠军的名字就刻在上面。镜头拍到的这一段，从上往下依次是："
+            "2016 小威、2017 穆古鲁扎、2018 科贝尔、2019 哈勒普、2021 巴蒂、"
+            "2022 莱巴金娜、2023 万卓索娃、2024 克雷吉茨科娃、2025 斯瓦泰克。"
+            "最下面那一行，师傅正拿着刻刀往上刻：2026，诺斯科娃。十届温网，十个名字，"
+            "一个都没重复过。那今年的卫冕冠军斯瓦泰克呢？第三轮，被菲律宾人埃亚拉送回家了。",
+            "assets/explainer/ten-champions/plinth.jpg",
+            "AELTC/Charlie Raymond Kent · wimbledon.com 官方图 · 2026 年为奖盘盘座刻名",
+            (
+                "盘座刻的是历届女单冠军名字",
+                "2016 到 2026，十行十个人",
+                "今年卫冕冠军斯瓦泰克止步第三轮",
+            ),
+        ),
+        (
+            "men",
+            "男单五冠",
+            "同样这十届，五个人就写完了",
+            "同样这十届，男单那边的名单短得有点尴尬：穆雷一次、费德勒一次、"
+            "德约科维奇四次、阿尔卡拉斯两次、辛纳两次。十届，五个人，写完还有富余。"
+            "画面里就是今年的辛纳，决赛四盘拿下兹维列夫，背靠背卫冕。"
+            "顺手做个对照：男单上一次有人卫冕，是四年前 2022 年的德约科维奇；"
+            "女单上一次有人卫冕，得一路退回 2016 年的小威——正好是我们数的这十届的第一届。"
+            "换句话说，女单的卫冕这一栏，已经空了整整十年。",
+            "assets/explainer/ten-champions/sinner.jpg",
+            "AELTC/Joel Marklund · wimbledon.com 官方图 · 2026 温网男单决赛后",
+            (
+                "德约 4 冠、阿尔卡拉斯 2 冠、辛纳 2 冠",
+                "穆雷、费德勒各 1 冠",
+                "女单已经十年没人卫冕成功",
+            ),
+        ),
+        (
+            "chart",
+            "两张名单",
+            "并排一放，差别不用解释",
+            "把两张名单并排一放，就不用解释了。左边十行，十个名字；右边同样十行，"
+            "却只堆成五块——其中一块自己占了四行，那是德约科维奇。"
+            "还有个数字容易被忽略：捷克一个国家，包下了女单这十席里的三席，"
+            "万卓索娃、克雷吉茨科娃、诺斯科娃。今年的决赛干脆是捷克内战，"
+            "两个人打完，奖盘连国境都没出。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "女单：十行，十个不同的人",
+                "男单：同样十行，只堆成五块",
+                "捷克独占女单三席，今年还是内战",
+            ),
+            _TEN_CHAMPIONS_DIAGRAM,
+        ),
+        (
+            "verdict",
+            "两只奖杯",
+            "一个人抱两年，一群人轮一遍",
+            "画面里是今年这两位冠军在冠军晚宴上的合影。辛纳手里那只是男单挑战杯，"
+            "他连着抱了两年；诺斯科娃手里那只是维纳斯玫瑰露水盘，她是十年里"
+            "第十个端起它的人。同一片草地，同样十届，一边像王朝更替，一边像轮流坐庄。"
+            "同一组数字，你能听到两种完全相反的说法：有人说女单这叫百花齐放，谁都有机会；"
+            "也有人说这叫群龙无首，没人扛旗。男单那边同理，你可以叫它统治力，"
+            "也可以叫它垄断。所以问题就摆在这儿了——你更爱看哪一种？评论区聊聊。",
+            "assets/explainer/ten-champions/champions.jpg",
+            "AELTC/Andrew Baker · wimbledon.com 官方图 · 2026 冠军晚宴（官方合成合影）",
+            (
+                "辛纳连抱两年，诺斯科娃是第十人",
+                "一种说法叫百花齐放，一种叫群龙无首",
+                "换成男单：这叫统治力，还是垄断？",
+            ),
+            "",
+            "你更爱看群雄逐鹿，还是王朝统治？",
+        ),
+    ),
 }
 
 
@@ -434,6 +1030,34 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
     },
+    "masters-format": {
+        "hook": (
+            "世界第一辛纳、德约科维奇同一天退出蒙特利尔大师赛。\n"
+            "赛事方这次没忍住——问题出在赛程，还是出在球员？"
+        ),
+        "tags": ("网球", "网球时差", "ATP", "大师赛", "辛纳"),
+    },
+    "queue": {
+        "hook": (
+            "四大满贯里只有温网和法网，当天排队还能坐进中央球场。\n"
+            "代价是：在草地上睡一晚。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "排队", "网球冷知识"),
+    },
+    "rufus": {
+        "hook": (
+            "温网有一名员工，工牌上的职位写着「赶鸟员」。\n"
+            "它是一只鹰。2012 年，它还被人偷走过三天。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "猛禽", "网球冷知识"),
+    },
+    "wimbledon-whites": {
+        "hook": (
+            "温网所有人都穿白，这条规矩管到什么程度？内衣也得是白的。\n"
+            "直到 2023 年，才松了一道口子。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "网球规则", "网球冷知识"),
+    },
     "longest-match": {
         "hook": (
             "2010 年温网首轮，一片外场，两个没什么人关注的名字。\n"
@@ -448,7 +1072,92 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "网球冷知识", "温网", "网球历史"),
     },
+    "ten-champions": {
+        "hook": (
+            "维纳斯玫瑰露水盘的盘座上，十年刻了十个名字，一个都没重复。\n"
+            "同样这十届，男单只有五个人在轮着抱杯——这算好事还是坏事？"
+        ),
+        "tags": ("网球", "网球时差", "温网", "诺斯科娃", "女子网球"),
+    },
 }
+
+
+# The first seconds decide whether anyone stays, and a deck that opens on
+# beat one makes the viewer work out the subject for themselves. Every deck
+# now opens on the question it answers, said out loud and set large.
+_OPENINGS: dict[str, dict] = {
+    "hawkeye": {
+        "topic": "鹰眼的来历：源于一次误判",
+        "question": "球压没压线，到底谁说了算？",
+        "narration": "球压没压线，到底谁说了算？这件事，网球用了一百年才交出去。",
+        "image": "assets/explainer/hawkeye/us_open_court.jpg",
+    },
+    "yellow-ball": {
+        "topic": "网球改色史：源于彩色电视",
+        "question": "网球为什么是黄色的？",
+        "narration": "网球为什么是黄色的？而且它变成黄色，还不到六十年。",
+        "image": "assets/explainer/yellow-ball/optic_yellow.jpg",
+    },
+    "longest-match": {
+        "topic": "史上最长的比赛：源于第五盘没有抢七",
+        "question": "一场网球，最长能打多久？",
+        "narration": "一场网球最长能打多久？答案是十一小时五分钟，分三天打完。",
+        "image": "assets/explainer/longest-match/scoreboard.jpg",
+    },
+    "wimbledon-whites": {
+        "topic": "温网的白衣规矩：成文于 1963 年",
+        "question": "温网为什么只准穿白？",
+        "narration": "温网为什么只准穿白？这条规矩，一直管到内衣。",
+        "image": "assets/explainer/wimbledon-whites/headtotoe.jpg",
+    },
+    "rufus": {
+        "topic": "温网的赶鸟员：源于中央球场的鸽子",
+        "question": "温网为什么雇了一只鹰？",
+        "narration": "温网有一名员工是一只鹰。它为什么在那儿上班？",
+        "image": "assets/explainer/rufus/patrol.jpg",
+    },
+    "queue": {
+        "topic": "温网的排队文化：源于当天发售的门票",
+        "question": "温网的票为什么要排一晚？",
+        "narration": "温网的票，为什么要在草地上排一晚？",
+        "image": "assets/explainer/queue/queue.jpg",
+    },
+    "masters-format": {
+        "topic": "大师赛的退赛潮：源于赛期从一周变十二天",
+        "question": "大师赛为什么变成两周？",
+        "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
+        "image": "assets/explainer/masters-format/sinner.jpg",
+    },
+    "ten-champions": {
+        "topic": "温网的十年：女单十个冠军，男单五个",
+        "question": "女单十冠，男单五冠？",
+        "narration": "同样十届温网，女单十冠，男单五冠。这差别是怎么来的？",
+        "image": "assets/explainer/ten-champions/noskova.jpg",
+    },
+}
+
+
+def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
+    """The cover card: the question, said out loud, before any explaining."""
+    spec = _OPENINGS.get(story.slug) or {}
+    question = spec.get("question") or f"{story.title}？"
+    image = spec.get("image") or (beats[0].image if beats else "")
+    credit = ""
+    for beat in beats:
+        if beat.image == image:
+            credit = beat.credit
+            break
+    return ExplainerSegment(
+        kind="cover",
+        label="",
+        title=question,
+        narration=spec.get("narration") or question,
+        image=image,
+        credit=credit,
+        points=(),
+        diagram="",
+        question="",
+    )
 
 
 def explainer_script(story) -> list[ExplainerSegment]:
@@ -461,7 +1170,8 @@ def explainer_script(story) -> list[ExplainerSegment]:
     """
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
-        return [ExplainerSegment(*row) for row in scripted]
+        beats = [ExplainerSegment(*row) for row in scripted]
+        return [_opening_segment(story, beats), *beats]
 
     moments = list(getattr(story, "moments", ()) or ())
     facts = list(getattr(story, "facts", ()) or ())
@@ -488,12 +1198,18 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
-def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -> str:
+def _slide_html(
+    index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = ""
+) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
+    cover = segment.kind == "cover"
     circled = ("①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨")
-    number = circled[index] if index < len(circled) else f"{index + 1}"
+    # The cover is not a beat, so it carries no number and the beats after it
+    # still count from one.
+    beat_no = index if cover else index - 1
+    number = circled[beat_no] if 0 <= beat_no < len(circled) else f"{beat_no + 1}"
     css = _font_css()
 
     icon_path = _REPO / "assets" / "logo" / "tennis-clock-icon.png"
@@ -524,13 +1240,18 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
             wide = pw / ph >= 1.2 or max(W / pw, H / ph) > 1.6
         except Exception:  # noqa: BLE001
             wide = False
+        # Letterboxing protects a beat's evidence from being cropped. The cover
+        # card carries no evidence — the picture is atmosphere behind the
+        # question — and bands there just make the opening look empty, so the
+        # cover always fills.
+        letterbox = wide and not cover
         fit = (
             "background-size:contain;background-repeat:no-repeat;"
             "background-position:center 34%;"
-            if wide
+            if letterbox
             else "background-size:cover;background-position:center;"
         )
-        backdrop = ' class="hero diagram"' if wide else ' class="hero"'
+        backdrop = ' class="hero diagram"' if letterbox else ' class="hero"'
         hero = (
             f'<div{backdrop} style="background-image:url(\'{_data_uri(image_path)}\');'
             f'{fit}"></div>'
@@ -545,12 +1266,25 @@ def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -
     # One line, always: CJK glyphs run about one em wide, so size the headline
     # off its own length rather than letting it wrap.
     usable_px = W - 140
-    title_px = min(62, int(usable_px / max(len(segment.title), 1)))
+    if cover:
+        # The question is the whole point of this card, so let it be big and
+        # let it wrap; two lines of 9 characters beats one line of tiny text.
+        title_px = min(96, int(usable_px * 2 / max(len(segment.title), 1)))
+    else:
+        title_px = min(62, int(usable_px / max(len(segment.title), 1)))
     question_html = (
         f'<div class="ask">{html.escape(segment.question)}</div>'
         if segment.question
         else ""
     )
+    cover_cls = " cover" if cover else ""
+    topic_html = f'<span class="topic">{html.escape(topic)}</span>' if topic else ""
+    chip_html = (
+        '<span class="kicker">网球有故事</span>'
+        if cover
+        else f'<span class="chip">{number} {html.escape(segment.label)}</span>'
+    )
+    tail_html = ""
     points_html = (
         '<div class="points">'
         + "".join(
@@ -579,6 +1313,9 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
+.brandlines{{display:flex;flex-direction:column;gap:2px;}}
+.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#9fb4aa;letter-spacing:1px;}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
@@ -595,6 +1332,15 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
+.cover .title{{white-space:normal;line-height:1.24;font-weight:400;
+ text-shadow:0 6px 30px rgba(0,0,0,.85);}}
+.cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
+.cover .scrim{{background:linear-gradient(180deg,
+ rgba(6,28,20,.72) 0%,rgba(6,28,20,.62) 40%,rgba(6,28,20,.78) 100%);}}
+.kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
+ font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
+.tail{{align-self:flex-start;font-size:34px;font-weight:700;color:#dff3e8;
+ text-shadow:0 3px 14px rgba(0,0,0,.75);}}
 .points{{align-self:stretch;display:flex;flex-direction:column;gap:16px;
  background:rgba(6,28,20,.66);border-left:7px solid #c6f65a;
  padding:24px 28px;border-radius:12px;}}
@@ -606,11 +1352,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
-<div class="slide">{hero}<div class="bar"></div>
-<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div></div>
-<div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}</div>
-<div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
+<div class="slide{cover_cls}">{hero}<div class="bar"></div>
+<div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · 网球有故事</span>{topic_html}</div></div></div>
+<div class="copy">{chip_html}
+<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
@@ -619,6 +1364,7 @@ def render_explainer_slides(
     outdir: Path,
     *,
     theme: str = "dark",
+    topic: str = "",
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -641,7 +1387,9 @@ def render_explainer_slides(
                     viewport={"width": W, "height": H}, device_scale_factor=2
                 )
                 try:
-                    page.set_content(_slide_html(index, seg, theme=theme))
+                    page.set_content(
+                        _slide_html(index, seg, theme=theme, topic=topic)
+                    )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )
@@ -659,6 +1407,23 @@ def render_explainer_slides(
         finally:
             browser.close()
     return paths
+
+
+def speakable(text: str) -> str:
+    """Rewrite a narration so the TTS voice says scores the way people do.
+
+    Written as "5-1", edge-tts reads the hyphen out loud — "五杠一" — which
+    is wrong for every tennis score we have ever narrated. Scores are spoken
+    "5 比 1", so convert them before synthesis rather than spelling them out
+    by hand in each deck: the slides keep the compact "6-2 5-7 6-3" that
+    reads well on screen, and only the audio changes.
+
+    Year ranges must survive ("2016-2026 共十届" is not a score), so both
+    sides are capped at three digits and the match must not sit inside a
+    longer run of digits. A genuine "1-2 天" range would be mis-read, but no
+    deck has one; scores are what this text is full of.
+    """
+    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
 
 
 def synthesize_narration(
@@ -684,7 +1449,7 @@ def synthesize_narration(
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
         try:
-            asyncio.run(_one(seg.narration, path))
+            asyncio.run(_one(speakable(seg.narration), path))
         except Exception as exc:  # noqa: BLE001
             raise ExplainerVideoError(f"TTS 合成失败（第 {index + 1} 段）: {exc}") from exc
         if not path.is_file() or path.stat().st_size == 0:
@@ -773,7 +1538,9 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(segments, outdir, theme=theme)
+    slides = render_explainer_slides(
+        segments, outdir, theme=theme, topic=(_OPENINGS.get(story.slug) or {}).get("topic", "")
+    )
     audios = synthesize_narration(segments, outdir, voice=voice)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
 
@@ -830,8 +1597,11 @@ def explainer_xiaohongshu(
     # Circled numerals rather than plain digits: the slides are numbered the
     # same way, so the caption reads as the same object.
     circled = ("1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣")
+    # The cover is the question, not a section — the caption already opens
+    # with it, so numbering starts at the first real beat.
+    beats = [seg for seg in segments if seg.kind != "cover"]
     sections = []
-    for index, segment in enumerate(segments):
+    for index, segment in enumerate(beats):
         marker = circled[index] if index < len(circled) else f"{index + 1}."
         bullets = "\n".join(f"· {point}" for point in segment.points)
         sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
