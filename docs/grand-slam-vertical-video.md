@@ -82,7 +82,7 @@
 
 | 球场 | 文件 | 许可 | 座位数 |
 |---|---|---|---|
-| 罗德·拉沃球场（澳网·2023 外景） | `assets/venues/ao-rod-laver-arena.jpg` | CC BY-SA 2.0（Philip Mallis） | 约 14,820 |
+| 罗德·拉沃球场（澳网·夜景外景，带球场铭牌，已核验） | `assets/venues/ao-rod-laver-arena.jpg` | CC0（Jono52795） | 约 14,820 |
 | 菲利普·夏蒂埃球场（法网·2024 外景） | `assets/venues/rg-philippe-chatrier.jpg` | CC BY-SA 4.0（MFonzatti） | 约 15,225 |
 | 中央球场（温网·2023 航拍外景） | `assets/venues/wimbledon-centre-court.jpg` | CC BY-SA 2.0（Arne Müseler） | 约 14,979 |
 | 阿瑟·阿什球场（美网·外景） | `assets/venues/usopen-arthur-ashe-exterior.jpg` | CC0（D. Benjamin Miller） | 约 23,771（全球最大） |
