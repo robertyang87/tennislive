@@ -2839,3 +2839,18 @@ def test_editor_takeaway_fallback_names_the_actual_players_not_boilerplate():
     assert "我更在意比赛留下的变化" not in takeaway
     assert "辛纳" in takeaway or "德约科维奇" in takeaway  # 点名真实球员之一
     assert takeaway.strip()
+
+
+def test_only_the_final_is_described_as_lifting_the_trophy():
+    """封面"昨夜亮点"把四分之一决赛写成了"捧杯"（2026-07-25 生产事故）.
+
+    卡片渲染层原来的判据是 round_name.endswith("决赛") and "半" not in round_name，
+    只排除了"半决赛"，但"四分之一决赛""八分之一决赛"同样以"决赛"结尾且不含"半"，
+    于是范阿舍赢下四分之一决赛被写成"范阿舍 捧杯｜ATP250·男单·四分之一决赛"。
+    小红书那一侧一直用的是精确相等比较，这里对齐过来。
+    """
+    from tennislive.render.webcards import _trophy_or_advance
+
+    assert _trophy_or_advance("决赛") == "捧杯"
+    for not_a_final in ("半决赛", "四分之一决赛", "八分之一决赛", "第一轮", "本轮"):
+        assert _trophy_or_advance(not_a_final) == "过关", not_a_final
