@@ -53,12 +53,27 @@ def test_推送里的图必须是绝对地址否则微信收到空图():
     from tennislive.publish.pushplus import image_sources
     from tennislive.video.explainer import explainer_push_html
 
-    segments = explainer_script(find_story_by_slug("hawkeye"))
-    body = explainer_push_html(segments, _Path("output/2026-07-25/explainer/hawkeye"))
+    import datetime as _dt
+
+    story = find_story_by_slug("hawkeye")
+    segments = explainer_script(story)
+    from tennislive.video.explainer import explainer_xiaohongshu
+
+    body = explainer_push_html(
+        segments,
+        _Path("output/2026-07-25/explainer/hawkeye"),
+        date=_dt.date(2026, 7, 25),
+        xhs_text=explainer_xiaohongshu(story, segments, "7.25"),
+    )
     found = image_sources(body)
     assert len(found) == len(segments), "推送里的图没有被识别为可投递图片"
     assert all(u.startswith("https://cdn.jsdelivr.net/") for u in found)
     assert all("@main/" in u for u in found)  # so pin_asset_revision can pin it
+    # ...and it uses the knowledge post's layout, not a second one.
+    assert "第1张未显示？点此打开原图" in body
+    assert "分别复制标题 / 正文 / 置顶评论" in body
+    assert "图片长按保存" in body
+    assert "▶ 打开 9:16 成片" in body
 
 
 def test_每屏都有提炼要点配合旁白():
