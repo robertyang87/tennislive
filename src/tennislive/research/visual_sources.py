@@ -1,4 +1,9 @@
-"""Multi-source, license-aware visual discovery for knowledge cards."""
+"""Multi-source visual discovery for knowledge cards.
+
+授权信息（许可名 / 作者 / 来源 URL）全程记录进 manifest 与 credits，但绝不作为
+检索闸门：候选只按精准匹配（人物 / 年份 / 赛事地点）与画质评选。发布前的
+权利判断由人工检验环节负责。
+"""
 
 from __future__ import annotations
 
@@ -41,7 +46,8 @@ from .visual_quality import assess_cover_image, classify_cover_scene
 
 
 _UA = "tennislive/1.0 visual-research (github.com/robertyang87/tennislive)"
-_LICENSES = {"cc0", "pdm", "by", "by-sa", "cc-by", "cc-by-sa"}
+# 许可字段缺失/无法核验时记录用的占位值：授权只记录，不参与筛选。
+_LICENSE_UNVERIFIED = "unverified"
 _PAGES = ("story", "explainer", "today")
 _NEGATIVE_PERSON_TERMS = {
     "scoreboard", "results", "bracket", "stadium", "arena",
@@ -712,8 +718,14 @@ def _official_references(story: TournamentStory, session: requests.Session) -> l
                     "image_url": image_url,
                     "credit": domain,
                     "license": "官方媒体 · 非商业资讯引用",
+                    # reference-only 仅表示页面没有暴露 og:image（拿不到图），
+                    # 绝不是授权降级：抓到图的官方页面一律作为正常候选参与评分。
                     "status": "candidate" if image_url else "reference-only",
-                    "reason": "官方页面用于事实与事件核验；图片保留机构署名",
+                    "reason": (
+                        "官方页面图片作为正常候选参与评分；机构署名照记"
+                        if image_url
+                        else "官方页面未暴露 og:image，仅用于事实与事件核验"
+                    ),
                     "search_text": " ".join((title, description, url)).lower(),
                     "image_text": " ".join((alt, image_url)).lower(),
                     "width": 0,
@@ -752,9 +764,12 @@ def _commons_candidates(query: str, session: requests.Session) -> list[dict]:
     for page in response.json().get("query", {}).get("pages", []):
         info = (page.get("imageinfo") or [{}])[0]
         meta = info.get("extmetadata") or {}
-        license_code = (meta.get("LicenseShortName") or {}).get("value", "").lower()
-        if not any(code in license_code for code in ("cc", "public domain")):
-            continue
+        # 授权只记录不过滤：许可字段照 Commons 元数据原样入档，缺失记
+        # unverified。候选去留只由精准匹配与画质决定。
+        license_code = (
+            (meta.get("LicenseShortName") or {}).get("value", "").lower()
+            or _LICENSE_UNVERIFIED
+        )
         text = " ".join(
             (
                 page.get("title", ""),
@@ -1068,9 +1083,9 @@ def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
         return []
     candidates: list[dict] = []
     for item in response.json().get("results", []):
-        license_code = str(item.get("license", "")).lower()
-        if license_code not in _LICENSES:
-            continue
+        # 授权只记录不过滤：license 字段照 Openverse 返回原样入档，空值记
+        # unverified；不再用许可允许清单淘汰候选。
+        license_code = str(item.get("license", "")).lower() or _LICENSE_UNVERIFIED
         tags = item.get("tags") or []
         tag_text = " ".join(
             str(tag.get("name", "")) if isinstance(tag, dict) else str(tag)
@@ -1099,9 +1114,11 @@ def _openverse_candidates(query: str, session: requests.Session) -> list[dict]:
 def _download(candidate: dict, page: str, query: str, folder: Path, session: requests.Session) -> ResolvedVisual | None:
     url = candidate.get("image_url", "")
     source_url = str(candidate.get("source_url", "")).strip()
-    credit = re.sub(r"<[^>]+>", "", str(candidate.get("credit", ""))).strip()
-    license_name = str(candidate.get("license", "")).strip()
-    if not url or not source_url.startswith("https://") or not credit or not license_name:
+    # 缺作者/许可不拒绝：记录为 unknown / unverified，权利判断交给发布前的
+    # 人工检验环节。HTTPS 来源页仍是硬要求——它是精准校验与去重的锚点。
+    credit = re.sub(r"<[^>]+>", "", str(candidate.get("credit", ""))).strip() or "unknown"
+    license_name = str(candidate.get("license", "")).strip() or _LICENSE_UNVERIFIED
+    if not url or not source_url.startswith("https://"):
         return None
     try:
         response = session.get(url, timeout=18)
@@ -1173,7 +1190,7 @@ def _cover_audit(story: TournamentStory) -> dict:
         "event_match": event_match,
         "person_match": person_match,
         "visual_impact_match": impact_match,
-        "reason": "" if passed else "封面未同时满足人物、年份、事件/地点和授权来源要求",
+        "reason": "" if passed else "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求",
     }
 
 
@@ -1217,7 +1234,11 @@ def resolve_story_visuals(
     *,
     excluded_source_urls: set[str] | None = None,
 ) -> tuple[dict[str, ResolvedVisual], dict]:
-    """Try multiple sources, keep exact licensed images, and audit every fallback."""
+    """Try multiple sources, keep exact-event images, and audit every fallback.
+
+    授权状态只记录（credit/license 写进 manifest，缺失记 unknown/unverified），
+    不作为取舍条件；精准（人物/年份/赛事地点）、分辨率与唯一性仍是硬闸门。
+    """
     excluded_source_urls = set(excluded_source_urls or ())
     enabled = os.environ.get("TENNISLIVE_VISUAL_FETCH", "off").lower() in {"1", "on", "true"}
     strict = os.environ.get("TENNISLIVE_VISUAL_STRICT", "off").lower() in {"1", "on", "true"}
@@ -1570,7 +1591,7 @@ def resolve_story_visuals(
                 {
                     "page": page,
                     "status": "generated-visual",
-                    "reason": "多源检索后无授权、分辨率和相关性同时达标的照片",
+                    "reason": "多源检索后无相关性和分辨率同时达标的照片",
                     "query": query,
                     "required_event_terms": list(required_anchors),
                     "providers": [name for name, _items in providers],
@@ -1618,7 +1639,7 @@ def resolve_story_visuals(
         "story_slug": story.slug,
         "fetch_enabled": enabled,
         "strict": strict,
-        "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、授权、分辨率与唯一性；封面缺图弃题，内页缺图降级为示意图",
+        "policy": "官方页面核对事件；Commons/Openverse 多源检索；逐页同时校验人物、年份、赛事/地点、分辨率与唯一性；授权信息仅记录（缺失记 unknown/unverified）不做过滤；封面缺图弃题，内页缺图降级为示意图",
         "selected_count": len(selected),
         "required_pages": sorted(required_pages),
         "missing_pages": missing_pages,

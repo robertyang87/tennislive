@@ -455,6 +455,243 @@ def test_named_players_remain_valid_when_iconic_photo_mentions_scoreboard():
     )
 
 
+def test_commons_keeps_non_cc_and_unlicensed_candidates_and_records_license():
+    """授权只记录不过滤：非 CC/未知许可的 Commons 候选照样入池。"""
+    from types import SimpleNamespace
+
+    from tennislive.research import visual_sources
+
+    payload = {
+        "query": {
+            "pages": [
+                {
+                    "title": "File:Editorial only.jpg",
+                    "imageinfo": [
+                        {
+                            "descriptionurl": (
+                                "https://commons.wikimedia.org/wiki/File:Editorial_only.jpg"
+                            ),
+                            "thumburl": "https://upload.wikimedia.org/editorial.jpg",
+                            "thumbwidth": 1600,
+                            "thumbheight": 1000,
+                            "extmetadata": {
+                                "LicenseShortName": {"value": "Editorial use only"},
+                                "ImageDescription": {"value": "player 2026 wimbledon"},
+                            },
+                        }
+                    ],
+                },
+                {
+                    "title": "File:No license.jpg",
+                    "imageinfo": [
+                        {
+                            "descriptionurl": (
+                                "https://commons.wikimedia.org/wiki/File:No_license.jpg"
+                            ),
+                            "thumburl": "https://upload.wikimedia.org/nolicense.jpg",
+                            "thumbwidth": 1600,
+                            "thumbheight": 1000,
+                            "extmetadata": {},
+                        }
+                    ],
+                },
+            ]
+        }
+    }
+
+    class _Session:
+        def get(self, _url, params=None, timeout=None):
+            return SimpleNamespace(raise_for_status=lambda: None, json=lambda: payload)
+
+    candidates = visual_sources._commons_candidates("player 2026 wimbledon", _Session())
+
+    assert [item["license"] for item in candidates] == [
+        "editorial use only",
+        "unverified",
+    ]
+
+
+def test_openverse_keeps_unknown_license_candidates_and_records_license():
+    """Openverse 不再按许可允许清单淘汰候选；空许可记 unverified。"""
+    from types import SimpleNamespace
+
+    from tennislive.research import visual_sources
+
+    payload = {
+        "results": [
+            {
+                "title": "player 2026 wimbledon",
+                "license": "nc-nd",
+                "url": "https://o.example/a.jpg",
+                "foreign_landing_url": "https://o.example/a",
+                "width": 1600,
+                "height": 1000,
+                "tags": [],
+                "creator": "Someone",
+            },
+            {
+                "title": "player 2026 wimbledon",
+                "license": "",
+                "url": "https://o.example/b.jpg",
+                "foreign_landing_url": "https://o.example/b",
+                "width": 1600,
+                "height": 1000,
+                "tags": [],
+                "creator": "Someone",
+            },
+        ]
+    }
+
+    class _Session:
+        def get(self, _url, params=None, timeout=None):
+            return SimpleNamespace(raise_for_status=lambda: None, json=lambda: payload)
+
+    candidates = visual_sources._openverse_candidates("player 2026 wimbledon", _Session())
+
+    assert [item["license"] for item in candidates] == ["nc-nd", "unverified"]
+
+
+def test_download_defaults_missing_credit_and_license_instead_of_rejecting(tmp_path):
+    """缺作者/许可不再拒绝下载：记录为 unknown / unverified。"""
+    import io
+    from types import SimpleNamespace
+
+    from PIL import Image
+
+    from tennislive.research import visual_sources
+
+    buffer = io.BytesIO()
+    Image.new("RGB", (1200, 800), "white").save(buffer, format="JPEG")
+    payload = buffer.getvalue()
+
+    class _Session:
+        def get(self, _url, timeout=None):
+            return SimpleNamespace(raise_for_status=lambda: None, content=payload)
+
+    candidate = {
+        "provider": "bing-web-image",
+        "source_url": "https://example.com/photo-page",
+        "image_url": "https://cdn.example.com/photo.jpg",
+        "credit": "",
+        "license": "",
+        "relevance": 9,
+    }
+
+    visual = visual_sources._download(candidate, "story", "query", tmp_path, _Session())
+
+    assert visual is not None
+    assert visual.credit == "unknown"
+    assert visual.license == "unverified"
+
+
+def test_official_page_with_image_is_a_scored_candidate_not_reference_only():
+    """官方页面抓到图就是正常候选；reference-only 只剩'页面没有图'一种含义。"""
+    from types import SimpleNamespace
+
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research import visual_sources
+
+    html_with_image = (
+        "<html><head><title>Official recap</title>"
+        '<meta property="og:image" content="https://www.example.org/photo.jpg"/>'
+        "</head></html>"
+    )
+    html_without_image = "<html><head><title>No image</title></head></html>"
+
+    class _Session:
+        def __init__(self, text):
+            self._text = text
+
+        def get(self, _url, timeout=None):
+            return SimpleNamespace(raise_for_status=lambda: None, text=self._text)
+
+    story = next(item for item in STORIES if item.slug == "umag")
+
+    with_image = visual_sources._official_references(story, _Session(html_with_image))
+    without_image = visual_sources._official_references(
+        story, _Session(html_without_image)
+    )
+
+    assert with_image and all(ref["status"] == "candidate" for ref in with_image)
+    assert all(ref["image_url"].startswith("https://") for ref in with_image)
+    assert without_image and all(
+        ref["status"] == "reference-only" for ref in without_image
+    )
+
+
+def test_unknown_license_candidate_is_selected_and_recorded_unverified(
+    tmp_path, monkeypatch
+):
+    """端到端：许可未知的精准候选可入选，manifest 记 unverified/unknown。"""
+    import io
+    from types import SimpleNamespace
+
+    from PIL import Image
+
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research import visual_sources
+
+    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "on")
+    monkeypatch.delenv("TENNISLIVE_VISUAL_STRICT", raising=False)
+    monkeypatch.setattr(visual_sources, "_official_references", lambda *_args: [])
+
+    class _Session:
+        def __init__(self):
+            self.headers = {}
+
+        def get(self, url, timeout=None, **_kwargs):
+            digest = abs(hash(url))
+            color = (digest % 255, (digest // 255) % 255, (digest // 65025) % 255)
+            buffer = io.BytesIO()
+            Image.new("RGB", (1200, 800), color).save(buffer, format="JPEG")
+            return SimpleNamespace(
+                raise_for_status=lambda: None, content=buffer.getvalue()
+            )
+
+    monkeypatch.setattr(visual_sources.requests, "Session", _Session)
+    monkeypatch.setattr(
+        visual_sources,
+        "_commons_candidates",
+        lambda query, _session: [
+            {
+                "provider": "wikimedia-commons",
+                "source_url": f"https://example.com/{abs(hash(query))}",
+                "image_url": f"https://example.com/{abs(hash(query))}.jpg",
+                "credit": "",
+                "license": "",
+                "width": 1200,
+                "height": 800,
+                "relevance": 9,
+                "search_text": query.lower(),
+            }
+        ],
+    )
+    for name in (
+        "_openverse_candidates",
+        "_bing_candidates",
+        "_official_archive_candidates",
+        "_flickr_candidates",
+        "_duckduckgo_candidates",
+    ):
+        monkeypatch.setattr(visual_sources, name, lambda *_args: [])
+
+    story = next(item for item in STORIES if item.slug == "umag")
+    selected, manifest = visual_sources.resolve_story_visuals(story, tmp_path)
+
+    assert set(selected) == {"story", "explainer", "today"}
+    assert all(visual.credit == "unknown" for visual in selected.values())
+    assert all(visual.license == "unverified" for visual in selected.values())
+    selected_attempts = [
+        item
+        for item in manifest["attempts"]
+        if item.get("status") == "selected"
+        and item.get("page") in {"story", "explainer", "today"}
+    ]
+    assert selected_attempts
+    assert all(item["license"] == "unverified" for item in selected_attempts)
+    assert all(item["credit"] == "unknown" for item in selected_attempts)
+
+
 def test_numeric_explainer_requires_visible_score_metadata():
     from tennislive.render.tournament_story import STORIES
     from tennislive.research import visual_sources
