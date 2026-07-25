@@ -270,6 +270,12 @@ def render_section(meta, scene, W, H):
     by0 = H / 2 + 214
     d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 60], radius=30, fill=accent)
     center(d, W / 2, by0 + 9, surf, ft, (8, 10, 14))
+    court = sec.get("court", "")
+    seats = sec.get("seats", "")
+    if court:
+        center(d, W / 2, by0 + 96, court, F_BOLD(42), WHITE)
+    if seats:
+        center(d, W / 2, by0 + 156, seats, F_BOLD(44), accent)
     brand_mark(img, meta["brand"])
     progress_dots(img, scene.get("index", 0))
     return img
