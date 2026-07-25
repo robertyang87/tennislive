@@ -1136,6 +1136,51 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="queue",
+        title="温网的队要排一晚上",
+        subtitle="网球冷知识 · 观赛篇",
+        identity="一条有专名的队：The Queue",
+        chips=("冷知识", "温网传统", "2003 编号"),
+        hero=(
+            "四大满贯里只有温网和法网，当天排队还能坐进主球场；"
+            "代价是在草地上睡一晚。"
+        ),
+        facts=(
+            "温网与法网是仅有的两项大满贯，无票观众可当天排队买到三块主球场的座位；"
+            "排队卡自 2003 年起编号，2008 年起合并为单一队列，每块主球场约留 500 个座位。",
+            "全英俱乐部允许通宵排队并为露宿者提供厕所与饮水；"
+            "清晨队伍向场地移动时，引导员沿队发放按球场分色的腕带，"
+            "凭腕带与票款在售票处换取门票。",
+            "提前离场者退回的门票于下午 2:30 重新发售，所得捐予慈善；"
+            "主球场的排队在八强赛结束后停止。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2010-06-28",
+                player="Rose Stanley",
+                age="2010 年",
+                headline="第一百万张排队卡",
+                detail=(
+                    "2010 年温网第七个比赛日下午 2 点 40，"
+                    "第 100 万张编号排队卡发给了来自南非的 Rose Stanley。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2003-01-01",
+                player="全英俱乐部",
+                age="2003 年",
+                headline="排队卡开始编号",
+                detail="排队卡自此按顺序编号；2008 年起合并为单一队列。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="Carine06 / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+    ),
+    _trivia_story(
         slug="rufus",
         title="温网雇了一只鹰",
         subtitle="网球冷知识 · 园区篇",
