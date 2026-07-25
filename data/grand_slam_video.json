@@ -34,14 +34,17 @@
     {
       "id": "s03_stage",
       "dur": 15.0,
-      "type": "photo",
+      "type": "grid",
       "accent": "#f2b32a",
-      "image": "assets/explainer/hawkeye/roland_garros_wide.jpg",
-      "focal": [0.5, 0.42],
-      "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons",
       "section": {"en": "The Grand Slams", "zh": "网坛最高殿堂", "surface": "巅峰之战", "color": "#f2b32a"},
+      "cells": [
+        {"image": "assets/players/iga-swiatek.jpg", "label": "澳网", "color": "#2f7de1", "focal": [0.5, 0.45], "credit": "图：QWisps · CC BY-SA 4.0 · Wikimedia Commons"},
+        {"image": "assets/explainer/hawkeye/roland_garros_wide.jpg", "label": "法网", "color": "#c96a34", "focal": [0.5, 0.42], "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons"},
+        {"image": "assets/players/jannik-sinner.jpg", "label": "温网", "color": "#2f9448", "focal": [0.42, 0.6], "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons"},
+        {"image": "assets/venues/usopen-arthur-ashe-stadium.jpg", "label": "美网", "color": "#1f6fb2", "focal": [0.5, 0.42], "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons"}
+      ],
       "vo": "澳网、法网、温网、美网，是网坛级别最高、历史最悠久的四项赛事，也是每个赛季最耀眼的舞台。",
-      "caption": "网坛 · 最高殿堂"
+      "caption": "四大满贯 · 巅峰同框"
     },
     {
       "id": "s04_surfaces",
