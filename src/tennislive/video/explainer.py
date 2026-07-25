@@ -243,6 +243,96 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # come from the story's own verified set plus en.wikipedia "Tennis ball":
     # white until 1972, ITF yellow in 1972 for television, Wimbledon white
     # until 1986, "optic yellow", and the poll where most people said green.
+    # Dress-code details are quoted from the Championships' own clothing
+    # guidelines as summarised on en.wikipedia "Wimbledon Championships":
+    # first enforced 1963, no solid mass of colouring, trims no wider than
+    # 1cm, backs entirely white, and from 2023 women may wear mid/dark
+    # undershorts no longer than their shorts or skirt. The reason for that
+    # last change — period anxiety — is the framing of the NYT/Athletic piece
+    # the article cites, not our inference.
+    "wimbledon-whites": (
+        (
+            "before",
+            "白衣时代",
+            "白衣比规则老得多",
+            "你在温网看到的那一片白，不是审美，是规定。但穿白衣打球这件事，"
+            "比规定老得多。画面里是 1920 年代的球场——那时候还没有谁强制，"
+            "大家本来就穿白的。温网做的，是把这个习惯在 1963 年正式写成了"
+            "规则：参赛者必须穿全白，或者近乎全白。",
+            "assets/explainer/wimbledon-whites/historic.jpg",
+            "Public domain · State Library of NSW · 1920 年代网球场",
+            (
+                "图为 1920 年代的网球场",
+                "那时白衣是习惯，不是规定",
+                "温网 1963 年把它写成规则",
+            ),
+        ),
+        (
+            "rule",
+            "写成规则",
+            "1963 年立的规矩，至今没松",
+            "从 1963 年那份着装规定起，这条规矩就没有松过。画面里是 2023 年的"
+            "温网男单决赛，阿尔卡拉斯对德约科维奇——决赛场上，两个人从头到脚，"
+            "还是白的。",
+            "assets/explainer/wimbledon-whites/final2023.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2023 温网男单决赛",
+            (
+                "1963 年首次成文执行",
+                "图为 2023 年温网男单决赛",
+                "决赛场上依然全身白",
+            ),
+        ),
+        (
+            "howstrict",
+            "严到毫米",
+            "彩边不能超过一厘米",
+            "严到什么程度？细则写着：不得有整块色彩；彩色滚边不得超过一厘米；"
+            "上衣或裙子的后背，必须完全是白的。短裤、帽子、发带、袜子，"
+            "连鞋面都要以白色为主。画面里是 2023 年温网四强的冯德罗索娃——"
+            "遮阳帽、球裙、袜子、球鞋，全白；鞋上那一点绿，就是规则允许的极限。",
+            "assets/explainer/wimbledon-whites/headtotoe.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2023 温网四强 冯德罗索娃",
+            (
+                "彩色滚边不得超过 1 厘米",
+                "上衣或裙子的后背必须全白",
+                "帽子、发带、袜子、鞋面都要以白为主",
+            ),
+        ),
+        (
+            "hidden",
+            "看不见的地方",
+            "这条规矩管到内衣",
+            "它还管到看不见的地方——内衣也必须是白的。对女子选手来说，"
+            "这不只是麻烦。生理期那几天，穿一身白站上球场，是实打实的心理负担；"
+            "很长一段时间里，这件事没有人拿到台面上讲。",
+            "assets/explainer/wimbledon-whites/women2023.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2023 温网女单四强",
+            (
+                "规则一度要求内衣也是白色",
+                "生理期上场是实打实的负担",
+                "图为 2023 年温网女单四强",
+            ),
+        ),
+        (
+            "relax",
+            "松了一道口子",
+            "2023 年，只让了这一处",
+            "2023 年，温网松了一道口子：女子选手终于可以穿非白色的内搭，"
+            "规则写得很具体——纯色、中深色的打底短裤，长度不能超过外面的"
+            "短裤或裙子。这是这条规矩立起来之后，第一次为看不见的地方让步。"
+            "除此之外，一切照旧，整个园区还是一片白。那你觉得，"
+            "这条百年白衣规矩，还该留着吗？",
+            "assets/explainer/wimbledon-whites/grounds.jpg",
+            "CC BY-SA 4.0 · Wikimedia Commons · 2022 温网园区",
+            (
+                "2023 年起可穿中/深色打底短裤",
+                "长度不得超过短裤或裙子",
+                "其余规定一概照旧",
+            ),
+            "",
+            "这条百年白衣规矩，还该留着吗？",
+        ),
+    ),
     # Facts checked against en.wikipedia "Isner-Mahut match at the 2010
     # Wimbledon Championships" and against the plaque itself, which the All
     # England Club engraved with the score, the dates and the duration. Note
@@ -433,6 +523,13 @@ _CAPTIONS: dict[str, dict] = {
             "现在四大满贯里，只剩一个地方还没交。"
         ),
         "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "wimbledon-whites": {
+        "hook": (
+            "温网所有人都穿白，这条规矩管到什么程度？内衣也得是白的。\n"
+            "直到 2023 年，才松了一道口子。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "网球规则", "网球冷知识"),
     },
     "longest-match": {
         "hook": (

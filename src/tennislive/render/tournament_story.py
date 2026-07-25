@@ -1136,6 +1136,53 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="wimbledon-whites",
+        title="温网为什么只准穿白",
+        subtitle="网球冷知识 · 规矩篇",
+        identity="一条管到内衣的着装规定",
+        chips=("冷知识", "温网传统", "1963 成文"),
+        hero=(
+            "白衣打网球比规则本身老得多；温网 1963 年把它写成规定，"
+            "此后严到彩边不得超过 1 厘米。"
+        ),
+        facts=(
+            "温网要求参赛者穿全白或近乎全白的服装，"
+            "这条着装规定于 1963 年首次成文执行。",
+            "细则严到：不得有整块色彩，彩色滚边不得超过 1 厘米，"
+            "上衣或裙子的后背必须全白；短裤、帽子、发带、袜子与鞋面也须以白为主。",
+            "2023 年起，女子选手首次获准穿非白色内衣——"
+            "规则写明为“纯色、中/深色打底短裤，长度不超过其短裤或裙子”。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1963-01-01",
+                player="全英俱乐部",
+                age="1963 年",
+                headline="着装规定首次成文",
+                detail="温网把沿用已久的白衣传统写成规则，要求全白或近乎全白。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2023-07-03",
+                player="温布尔登",
+                age="2023 年",
+                headline="内衣松口",
+                detail=(
+                    "女子选手首次获准穿中/深色打底短裤，长度不超过短裤或裙子；"
+                    "推动修改的是球员对生理期的顾虑。"
+                ),
+                source_url=(
+                    "https://www.nytimes.com/athletic/4634722/2023/07/02/"
+                    "wimbledon-period-all-white-dress-code/"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="温网官方规则 / 维基百科",
+        image_credit="Wikimedia Commons",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+    ),
+    _trivia_story(
         slug="longest-match",
         title="11 小时 5 分钟",
         subtitle="网球冷知识 · 纪录篇",
