@@ -35,9 +35,15 @@ OUT = Path("tools/broll")
 # editions it actually holds and walk the newest ones.
 YEAR_CONTAINERS = {
     "rg": "Category:French Open by year",
-    "uso": "Category:US Open (tennis) by year",
 }
-NEWEST_EDITIONS = 3
+# Beat 5 says clay keeps the ball's mark; these categories are where a frame
+# of an actual mark, or an umpire reading one, would live.
+EXTRA_ROOTS = {
+    "ballmark": ("Category:Tennis ball marks", 2),
+    "clay": ("Category:Clay tennis courts", 1),
+    "umpire_clay": ("Category:Tennis umpires", 1),
+}
+NEWEST_EDITIONS = 4
 ROOTS: dict[str, tuple[str, int]] = {}
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
@@ -192,6 +198,7 @@ def _discover_roots() -> dict[str, tuple[str, int]]:
             print(f"    {year}  {cat}")
         for year, cat in dated[:NEWEST_EDITIONS]:
             roots[f"{prefix}{year}"] = (cat, 2)
+    roots.update(EXTRA_ROOTS)
     return roots
 
 
