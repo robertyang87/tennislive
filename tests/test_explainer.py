@@ -328,3 +328,22 @@ def test_每条片子都以问题开场():
         assert "网球有故事" in doc
         # ...and the first real beat still starts the count at one.
         assert "① " in _slide_html(1, segments[1])
+
+
+def test_每屏标题不能把自己的标签再说一遍():
+    """The caption prints "标签：标题", so a title starting with its own label
+    reads as a stutter: "4️⃣ 赛事方：赛事方：这已经不是个案". That shipped once.
+    """
+    from tennislive.video.explainer import explainer_xiaohongshu
+
+    for slug in _SCRIPTED:
+        story = find_story_by_slug(slug)
+        for seg in _beats(slug):
+            assert seg.label not in seg.title, (
+                f"{slug}/{seg.kind} 标题里重复了标签「{seg.label}」：{seg.title}"
+            )
+        caption = explainer_xiaohongshu(story, explainer_script(story), "7.26")
+        for line in caption.splitlines():
+            if "：" in line and line[:1].isdigit() is False and "️⃣" in line:
+                head = line.split("：", 1)[0].split(" ", 1)[-1]
+                assert line.count(f"{head}：") == 1, f"{slug} 文案里标签重复：{line}"
