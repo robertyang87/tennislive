@@ -438,10 +438,41 @@ def render_grid4(meta, scene, W, H):
     return img
 
 
+def render_courtcard(meta, scene, W, H):
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    d = ImageDraw.Draw(img, "RGBA")
+    sec = scene.get("section", {})
+    center(d, W / 2, 140, sec.get("en", ""), F_LATIN(58), YELLOW)
+    center(d, W / 2, 214, sec.get("zh", ""), F_BOLD(42), WHITE)
+    cx, cy = 60, int(H * 0.21)
+    cw, ch = W - 120, int(H * 0.46)
+    img = paste_rounded_photo(img, scene["image"], cx, cy, cw, ch,
+                              tuple(scene.get("focal", [0.5, 0.5])), radius=28,
+                              border=accent, bw=5)
+    d = ImageDraw.Draw(img, "RGBA")
+    court, seats = scene.get("court", ""), scene.get("seats", "")
+    yb = cy + ch + 56
+    if court:
+        center(d, W / 2, yb, court, F_BOLD(56), WHITE)
+    if seats:
+        fs = F_BOLD(56)
+        tw = fs.getlength(seats) + 72
+        bx0, by0 = W / 2 - tw / 2, yb + 84
+        d.rounded_rectangle([bx0, by0, bx0 + tw, by0 + 84], radius=42, fill=accent)
+        center(d, W / 2, by0 + 12, seats, fs, (8, 10, 14))
+    credit = scene.get("credit", "")
+    if credit:
+        d.text((44, H - 92), credit, font=F_REG(24), fill=(150, 160, 172))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
 RENDERERS = {"title": render_title, "section": render_section,
              "photo": render_photo, "placeholder": render_placeholder,
              "triptych": render_triptych, "collage": render_collage,
-             "grid": render_grid4}
+             "grid": render_grid4, "courtcard": render_courtcard}
 
 
 def srt_time(t):
