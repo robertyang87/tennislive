@@ -1136,6 +1136,62 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="ten-champions",
+        title="十届温网十个女冠军",
+        subtitle="网球观察 · 格局篇",
+        identity="同样十届，男单只有五人",
+        chips=("女单 10 人", "男单 5 人", "无人卫冕"),
+        hero=(
+            "2016 至 2026 年共十届温网（2020 年停办），女单出了十个不同的冠军、"
+            "无人卫冕；男单同期只有五个人分走十座冠军。"
+        ),
+        facts=(
+            "女单十届出了十个不同的冠军：小威、穆古鲁扎、科贝尔、哈勒普、巴蒂，"
+            "以及莱巴金娜、万卓索娃、克雷吉茨科娃、斯瓦泰克、诺斯科娃；"
+            "上一次有人卫冕温网女单，正是这十届的第一届、2016 年的小威。",
+            "男单同期只有五人：德约科维奇 4 冠（2018、2019、2021、2022），"
+            "阿尔卡拉斯 2 冠（2023、2024），辛纳 2 冠（2025、2026），"
+            "穆雷与费德勒各 1 冠。",
+            "捷克球员占了女单这十席中的三席（万卓索娃、克雷吉茨科娃、诺斯科娃）；"
+            "2026 年决赛为捷克内战，捷克成为公开赛年代第六个由两名本国女将会师"
+            "大满贯单打决赛的国家。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-11",
+                player="诺斯科娃",
+                age="21 岁 236 天",
+                headline="首进大满贯决赛即夺冠",
+                detail=(
+                    "6-2、5-7、6-3 击败同胞穆霍娃夺得温网女单冠军，"
+                    "第三轮曾救下一个赛点；为 2011 年科维托娃之后最年轻的温网女单冠军。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Women%27s_singles"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-07-12",
+                player="辛纳",
+                age="2026 年",
+                headline="男单卫冕，十届只有五人",
+                detail=(
+                    "6-7(7-9)、7-6(7-2)、6-3、6-4 击败兹维列夫成功卫冕；"
+                    "在此之前上一位卫冕温网男单的是 2022 年的德约科维奇。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Men%27s_singles"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="各届温网维基百科条目",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
