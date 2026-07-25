@@ -1785,6 +1785,48 @@ def test_knowledge_deck_accepts_three_distinct_licensed_page_photos(tmp_path):
     assert len(report["resolved_visuals"]) == 3
 
 
+def test_knowledge_deck_missing_inner_visual_degrades_page_not_topic(tmp_path):
+    """strict 缺页降级：内页没图时该页走示意图/时间线，只有封面缺图才弃题。"""
+    from dataclasses import replace
+
+    from PIL import Image
+
+    from tennislive.render.knowledge_visual_qa import evaluate_knowledge_visuals
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.render.webcards import knowledge_deck_bodies
+
+    cover = tmp_path / "cover.jpg"
+    Image.new("RGB", (1200, 800), "white").save(cover)
+    story = replace(next(s for s in STORIES if s.slug == "umag"), image=cover)
+    page_visuals = {}
+    for index, page in enumerate(("story", "explainer"), 1):
+        path = tmp_path / f"{page}.jpg"
+        Image.new("RGB", (1200, 800), (index * 40, 90, 120)).save(path)
+        page_visuals[page] = {
+            "path": path,
+            "source_url": f"https://example.com/{page}",
+            "credit": f"Photographer {index}",
+            "license": "CC BY-SA 4.0",
+            "focus": "50% 30%",
+        }
+
+    bodies = knowledge_deck_bodies(
+        story,
+        "07.25 · 周六",
+        question="你最想见证谁的第一冠？",
+        year=2026,
+        page_visuals=page_visuals,
+    )
+    report = evaluate_knowledge_visuals(story, bodies, page_visuals=page_visuals)
+
+    assert report["status"] == "pass", report["errors"]
+    # 封面 + 两张内页；缺图的 today 页降级为时间线而不是整题作废
+    assert report["photo_uses"] == 3
+    today = next(page for page in report["pages"] if page["kind"] == "today")
+    assert today["photo_count"] == 0
+    assert today["visual"] == "history-timeline"
+
+
 def test_hawkeye_knowledge_deck_uses_official_process_and_current_scope(tmp_path):
     from dataclasses import replace
 

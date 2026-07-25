@@ -93,11 +93,19 @@ def evaluate_knowledge_visuals(
     ]
     resolved_visuals: list[dict] = []
     enforce_page_photos = bool(page_visuals)
+    # 缺图内页走示意图/时间线降级（resolve_story_visuals 只在封面缺图时弃
+    # 题），照片数按"有配图的页面"计：封面永远要有，内页以解析结果为准。
+    photo_pages = {"knowledge"} | {
+        page
+        for page in ("story", "explainer", "today")
+        if page in (page_visuals or {})
+    }
+    expected_photo_uses = len(photo_pages)
 
-    if enforce_page_photos and photo_uses != MAX_PHOTO_USES:
+    if enforce_page_photos and photo_uses != expected_photo_uses:
         errors.append(
-            f"四页必须各使用一张真实主题图片，当前共 {photo_uses} 张，"
-            f"标准为 {MAX_PHOTO_USES} 张"
+            f"有配图的页面必须各使用一张真实主题图片，当前共 {photo_uses} 张，"
+            f"标准为 {expected_photo_uses} 张"
         )
     elif photo_uses > MAX_PHOTO_USES:
         errors.append(f"四页共使用 {photo_uses} 张照片，标准上限为 {MAX_PHOTO_USES} 张")
@@ -225,8 +233,11 @@ def evaluate_knowledge_visuals(
             errors.append(f"{kind} 页最多使用一张主题照片")
         if page_photo_count and len(page_photo_sources) != page_photo_count:
             errors.append(f"{kind} 页照片缺少可审计的来源链接")
-        if enforce_page_photos and page_photo_count != 1:
-            errors.append(f"{kind} 页必须且只能使用一张强相关主题照片")
+        if enforce_page_photos:
+            if kind in photo_pages and page_photo_count != 1:
+                errors.append(f"{kind} 页必须且只能使用一张强相关主题照片")
+            if kind not in photo_pages and page_photo_count:
+                errors.append(f"{kind} 页已降级为示意图/时间线，不应再使用照片")
         elif kind == "knowledge" and page_photo_count != 1:
             errors.append("封面必须且只能使用一张主题照片")
         pages.append(

@@ -155,12 +155,162 @@ def test_strict_visual_mode_rejects_subject_archive_photos(tmp_path, monkeypatch
     selected, manifest = visual_sources.resolve_story_visuals(story, tmp_path)
 
     assert selected == {}
-    assert manifest["status"] == "fail"
+    # 内页缺图不再整题作废：这些页降级为示意图/时间线，题目保留。
+    assert manifest["status"] == "pass"
     assert set(manifest["missing_pages"]) == {"story", "explainer", "today"}
+    assert set(manifest["degraded_pages"]) == {"story", "explainer", "today"}
     assert all(
         attempt.get("match_level") != "subject-archive"
         for attempt in manifest["attempts"]
     )
+
+
+def test_bing_visual_search_passes_site_operator_query_bare_without_quotes():
+    from types import SimpleNamespace
+
+    from tennislive.research import visual_sources
+
+    captured: list[str] = []
+
+    class _Session:
+        def get(self, _url, params=None, timeout=None):
+            captured.append(params["q"])
+            return SimpleNamespace(text="", raise_for_status=lambda: None)
+
+    site_query = "player photo (site:wtatennis.com OR site:wimbledon.com)"
+    visual_sources._bing_candidates(site_query, _Session())
+    visual_sources._bing_candidates("plain player query", _Session())
+
+    # site: 运算符串被引号包住会退化成短语文本，实测恒 0 结果——必须裸传。
+    assert captured[0] == site_query
+    assert captured[1] == '"plain player query" tennis'
+
+
+def test_curated_special_redirect_width_capped_at_declared_width():
+    from tennislive.research.visual_sources import (
+        _CURATED_VISUALS,
+        _curated_image_request_url,
+    )
+
+    story_entry = _CURATED_VISUALS[("longest-match", "story")][0]
+    today_entry = _CURATED_VISUALS[("longest-match", "today")][0]
+
+    # MediaWiki 拒绝放大：请求宽度取 min(1600, 条目声明宽度)。
+    assert _curated_image_request_url(
+        story_entry["image_url"], story_entry["width"]
+    ).endswith("width=943")
+    assert _curated_image_request_url(
+        today_entry["image_url"], today_entry["width"]
+    ).endswith("width=1600")
+    plain = "https://assets.example.com/photo.jpg?width=1600"
+    assert _curated_image_request_url(plain, 900) == plain
+
+
+def test_curated_download_failure_opens_network_search_and_records_exclusion(
+    tmp_path, monkeypatch
+):
+    """curated 图下载必败时不再逐字节重复：立即放开网络检索并记入排除集。"""
+    from PIL import Image
+
+    from tennislive.render.tournament_story import STORIES
+    from tennislive.research import visual_sources
+
+    monkeypatch.setenv("TENNISLIVE_VISUAL_FETCH", "on")
+    monkeypatch.delenv("TENNISLIVE_VISUAL_STRICT", raising=False)
+    monkeypatch.setattr(visual_sources, "_official_references", lambda *_args: [])
+    monkeypatch.setattr(
+        visual_sources,
+        "_cover_audit",
+        lambda _story: {"page": "cover", "status": "selected"},
+    )
+    network_text = (
+        "john isner nicolas mahut playing beside court 18 plaque final "
+        "scoreboard showing 70-68 during 2010 wimbledon match"
+    )
+    monkeypatch.setattr(
+        visual_sources,
+        "_commons_candidates",
+        lambda query, _session: [
+            {
+                "provider": "wikimedia-commons",
+                "source_url": f"https://example.com/net/{abs(hash(query))}",
+                "image_url": "https://example.com/net.jpg",
+                "credit": "Example Photographer",
+                "license": "CC BY-SA 4.0",
+                "width": 1200,
+                "height": 800,
+                "relevance": 30,
+                "search_text": network_text,
+                "image_text": network_text,
+            }
+        ],
+    )
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_bing_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_official_archive_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_flickr_candidates", lambda *_args: [])
+    monkeypatch.setattr(visual_sources, "_duckduckgo_candidates", lambda *_args: [])
+    curated_urls = visual_sources.curated_source_urls("longest-match")
+
+    def fake_download(candidate, page, query, folder, _session):
+        if candidate["source_url"] in curated_urls:
+            return None  # MediaWiki 拒绝放大等下载失败
+        path = folder / f"{page}.jpg"
+        Image.new("RGB", (1200, 800), "white").save(path)
+        return visual_sources.ResolvedVisual(
+            page=page,
+            path=path,
+            provider=candidate["provider"],
+            source_url=candidate["source_url"],
+            image_url=candidate["image_url"],
+            credit=candidate["credit"],
+            license=candidate["license"],
+            query=query,
+            relevance=candidate["relevance"],
+            sha256=page * 16,
+        )
+
+    monkeypatch.setattr(visual_sources, "_download", fake_download)
+    story = next(item for item in STORIES if item.slug == "longest-match")
+
+    selected, manifest = visual_sources.resolve_story_visuals(story, tmp_path)
+
+    assert set(selected) == {"story", "explainer", "today"}
+    assert all(
+        visual.provider == "wikimedia-commons" for visual in selected.values()
+    )
+    failed = set(manifest["failed_curated_source_urls"])
+    assert failed and failed <= curated_urls
+    # curated 存在且无排除集时本来不联网；curated 失败后必须已经放开网络检索
+    assert any(
+        run["provider"] == "wikimedia-commons" and run["page"] == "story"
+        for run in manifest["provider_runs"]
+    )
+
+
+def test_flickr_visual_feed_uses_any_tagmode_and_player_name_tokens_only():
+    from types import SimpleNamespace
+
+    from tennislive.research import visual_sources
+
+    captured: dict = {}
+
+    class _Session:
+        def get(self, _url, params=None, timeout=None):
+            captured.update(params)
+            return SimpleNamespace(
+                raise_for_status=lambda: None,
+                json=lambda: {"items": []},
+            )
+
+    visual_sources._flickr_candidates(
+        "Mayar Sherif Anna Bondar Hamburg Open 2026 tennis match photo",
+        _Session(),
+    )
+
+    # 公共 feed 全 AND 匹配 8 个 token 实测恒 0：只留球员姓名 token 且 tagmode=any
+    assert captured["tagmode"] == "any"
+    assert captured["tags"] == "mayar,sherif"
 
 
 def test_official_archive_candidates_keep_only_official_tennis_domains(monkeypatch):

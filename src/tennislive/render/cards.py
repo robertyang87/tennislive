@@ -126,13 +126,18 @@ def _find_font(bold: bool = False) -> tuple[str, int]:
     env = os.environ.get("TENNISLIVE_FONT_BOLD" if bold else "TENNISLIVE_FONT")
     if env and Path(env).exists():
         return env, 0
+    # 无环境变量时按"系统完整 CJK 字体 → 仓库自带 NotoSansSC 子集"排序。
+    # assets/fonts/ 里还有 Latin-only 的 BarlowCondensed（字母序排在 Noto
+    # 之前），早前的 "*" 泛匹配会把它当成默认正文字体，中文全部渲染成
+    # 豆腐块（2026-07-25 实测）——Latin-only 字体绝不能排在 CJK 字体前面。
+    candidates = list(_BOLD_CANDIDATES if bold else _FONT_CANDIDATES)
     project_fonts = Path(__file__).resolve().parents[3] / "assets" / "fonts"
     if project_fonts.is_dir():
-        pattern = "*Bold*" if bold else "*"
+        pattern = "NotoSansSC-Bold*" if bold else "NotoSansSC-Regular*"
         for f in sorted(project_fonts.glob(pattern)):
             if f.suffix.lower() in (".ttf", ".otf", ".ttc"):
-                return str(f), 0
-    for path, idx in (_BOLD_CANDIDATES if bold else _FONT_CANDIDATES):
+                candidates.append((str(f), 0))
+    for path, idx in candidates:
         if Path(path).exists():
             return path, idx
     if bold:

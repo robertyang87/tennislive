@@ -2,13 +2,16 @@ name: yesterday-tennis-point
 
 on:
   schedule:
-    # ATP、WTA 官方视频上架时间不同步，四班次独立重试：一方先有素材先推送，
+    # ATP、WTA 官方视频上架时间不同步，六班次独立重试：一方先有素材先推送，
     # 另一方留到下一班次继续找，互不等待。已经成功的巡回赛后续班次会被跳过，
     # 不重复生成也不重复推送（见 cmd_yesterday_point 的 skip_tours 逻辑）。
+    # 16:00 / 21:00 两班接欧美下午、晚间才上架的官方剪辑。
     - cron: "0 22 * * *"    # 北京时间 06:00（首班）
     - cron: "0 0 * * *"     # 北京时间 08:00（重试）
     - cron: "0 2 * * *"     # 北京时间 10:00（重试）
-    - cron: "0 4 * * *"     # 北京时间 12:00（末班）
+    - cron: "0 4 * * *"     # 北京时间 12:00（重试）
+    - cron: "0 8 * * *"     # 北京时间 16:00（重试）
+    - cron: "0 13 * * *"    # 北京时间 21:00（末班）
   workflow_dispatch:
     inputs:
       date:
@@ -120,11 +123,21 @@ jobs:
                  .consensus.basis == "official-daily-best" and
                  any(.consensus.signals[];
                      .kind == "official-best-designation" and .scope == "day")) or
+                (.consensus.rank == 2 and
+                 .consensus.score == 85 and
+                 .consensus.basis == "official-match-best" and
+                 any(.consensus.signals[];
+                     .kind == "official-best-designation" and .scope == "match")) or
                 (.consensus.rank == 1 and
                  .consensus.score == 72 and
                  .consensus.basis == "official-hot-shot" and
                  any(.consensus.signals[];
-                     .kind == "official-hot-shot" and .scope == "hot-shot"))
+                     .kind == "official-hot-shot" and .scope == "hot-shot")) or
+                (.consensus.rank == 0 and
+                 .consensus.score == 40 and
+                 .consensus.basis == "official-highlights" and
+                 any(.consensus.signals[];
+                     .kind == "official-highlights" and .scope == "highlights"))
               ) and
               .framing.mode == "contain" and
               .framing.dynamic_tracking_crop == false and
@@ -150,27 +163,32 @@ jobs:
           name: yesterday-point-${{ github.run_number }}
           path: ${{ steps.generate.outputs.outdir }}
 
-      - name: 提交通过门禁的成片
+      - name: 提交成片或 skip 诊断
         id: commit
         if: github.event_name != 'push' && github.event.inputs.force != 'true'
         run: |
           echo "ready=false" >> "$GITHUB_OUTPUT"
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
-          if [ "$(jq -r '.status' "$OUT_DIR/manifest.json")" != "pass" ]; then
-            echo "没有满足门槛的完整回合，不提交空包"
-            exit 0
-          fi
+          STATUS=$(jq -r '.status' "$OUT_DIR/manifest.json")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # skip 也提交：skip.json 记录了每路 resolver 的尝试与失败原因，
+          # 落进仓库才不会随 Actions 日志过期而消失。只有 pass 才触发推送。
           git add "$OUT_DIR"
           if git diff --cached --quiet; then
             echo "内容与仓库一致，不重复提交或推送"
             exit 0
           fi
-          git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
+          if [ "$STATUS" = "pass" ]; then
+            git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
+          else
+            git commit -m "chore: 昨日好球 skip 诊断 $(basename "$(dirname "$OUT_DIR")")"
+          fi
           git pull --rebase origin "${{ github.ref_name }}"
           git push origin "${{ github.ref_name }}"
-          echo "ready=true" >> "$GITHUB_OUTPUT"
+          if [ "$STATUS" = "pass" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: PushPlus 推送昨日 Hot Shots / 最佳回合（只推本次新完成的巡回赛）
         if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''
