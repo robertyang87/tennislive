@@ -600,6 +600,31 @@ def _sched(name, tour, mid, start, home="Player One", away="Player Two"):
     return m
 
 
+def test_not_yet_started_event_is_dropped_for_every_section_not_just_tonight():
+    """整站未开打的下周签表必须在 digest 层剔除，不能只挡"今晚焦点".
+
+    2026-07-25 第一版护栏只加在 tonight_focus()，孟菲斯精英赛（7 月 27 日才
+    开赛）仍从中国球员专区漏进了成品：小红书正文写"🇨🇳 王曦雨待官方排期出战"，
+    封面"中国焦点"位更是直接写成"王曦雨 今日出战"——她两天后才打。所以判据要
+    放在数据层，让今晚焦点、中国球员专区、封面、公众号赛程共用同一份数据。
+    """
+    from tennislive.digest import drop_not_yet_started_events
+
+    when = datetime(2026, 7, 25, 11, 0, tzinfo=timezone.utc)
+    playing_today = _sched("Livesport Prague Open", Tour.WTA, "prg-sf", when)
+    next_week = [
+        _sched(
+            "The Memphis Classic", Tour.WTA, f"mem-{i}", None,
+            home="Wang Xiyu", away="Catherine McNally",
+        )
+        for i in range(10)
+    ]
+
+    kept = drop_not_yet_started_events([playing_today] + next_week)
+
+    assert [m.match_id for m in kept] == ["prg-sf"]
+
+
 def test_undated_match_from_a_tournament_that_has_not_started_is_not_tonight():
     """比分源会提前把下周签表当成今天的赛程返回（2026-07-25 生产事故）.
 

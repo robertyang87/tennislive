@@ -44,6 +44,34 @@ def _is_qualifying(m: Match) -> bool:
     return bool(m.round_name and "qualif" in m.round_name.lower())
 
 
+def _event_key(m: Match) -> str:
+    return " ".join((m.tournament.name or "").casefold().split())
+
+
+def drop_not_yet_started_events(upcoming: list[Match]) -> list[Match]:
+    """Remove fixtures from tournaments that are not actually playing today.
+
+    Score sources sometimes publish a full first-round draw days early, with
+    no start time on any of it. On 2026-07-25 that produced ten Memphis
+    Classic singles fixtures for an event whose main draw began on 27 July --
+    and they reached print, with the cover announcing a Chinese player was
+    "playing today" two days before her match.
+
+    A missing start time on its own is normal and stays: an event underway
+    often has fixtures whose exact time the officials have not posted yet.
+    The signal that an event is not today at all is that *none* of its
+    fixtures carry a confirmed time. Filtering here rather than in any one
+    renderer keeps every downstream section -- tonight's focus, the Chinese
+    player rail, the cover, the WeChat schedule -- working off the same set.
+    """
+    dated_events = {_event_key(m) for m in upcoming if m.start_utc is not None}
+    return [
+        m
+        for m in upcoming
+        if m.start_utc is not None or _event_key(m) in dated_events
+    ]
+
+
 def build_digest(
     today: date, prefer: str | None = None, include_qualifying: bool = False
 ) -> Digest:
@@ -77,7 +105,7 @@ def build_digest(
         today=today,
         results=deduped,
         live=today_data.live(),
-        schedule=today_data.upcoming(),
+        schedule=drop_not_yet_started_events(today_data.upcoming()),
         source=today_data.source or yesterday_data.source or "",
         source_status={
             name: status
