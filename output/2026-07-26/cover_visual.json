@@ -1,0 +1,255 @@
+{
+  "schema_version": 2,
+  "status": "branded_fallback",
+  "match_id": "304-2026:178885",
+  "match_players": [
+    "Alexander Bublik",
+    "Quentin Halys"
+  ],
+  "candidate_players": [
+    "Quentin Halys",
+    "Alexander Bublik"
+  ],
+  "headline_hot": true,
+  "headline_eligible": true,
+  "headline_players": [
+    "Alexander Bublik",
+    "Quentin Halys"
+  ],
+  "china_priority": true,
+  "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
+  "fetch_enabled": true,
+  "strict": true,
+  "minimum_score": 72,
+  "providers_queried": [
+    "wta-video-hub",
+    "wikimedia-commons",
+    "openverse",
+    "bing-web-image",
+    "flickr-public"
+  ],
+  "attempts": [
+    {
+      "player": "Alexander Bublik",
+      "provider": "bing-web-image",
+      "source_url": "https://www.alamy.com/stock-photo-alexander-the-great-king-of-macedonia-356-bc-136323-bc-full-length-48724436.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match",
+        "watermarked-stock-library"
+      ]
+    },
+    {
+      "player": "Alexander Bublik",
+      "provider": "bing-web-image",
+      "source_url": "https://www.thefamousbirthdays.com/people/alexander-the-great",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    }
+  ],
+  "flickr_enabled": true,
+  "wta_official_enabled": true,
+  "wta_video_hub_candidates": 0,
+  "editorial_source_urls": 2,
+  "source_registry": {
+    "as_of": "run-start",
+    "proven": [
+      "official-match-media"
+    ],
+    "barren": [],
+    "channels": {
+      "bing-web-image": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "flickr-public": {
+        "runs": 3,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "official-atp-youtube": {
+        "runs": 2,
+        "candidates": 0,
+        "selections": 1,
+        "errors": 0,
+        "last_selected": "2026-07-23"
+      },
+      "official-match-media": {
+        "runs": 3,
+        "candidates": 4,
+        "selections": 3,
+        "errors": 0,
+        "last_selected": "2026-07-25"
+      },
+      "openverse": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "wikimedia-commons": {
+        "runs": 4,
+        "candidates": 0,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      },
+      "wta-video-hub": {
+        "runs": 4,
+        "candidates": 3,
+        "selections": 0,
+        "errors": 0,
+        "last_selected": ""
+      }
+    }
+  },
+  "widened_by_registry": false,
+  "provider_results": {
+    "wikimedia-commons": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    },
+    "openverse": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    },
+    "bing-web-image": {
+      "candidates": 2,
+      "queries": 4,
+      "errors": []
+    },
+    "flickr-public": {
+      "candidates": 0,
+      "queries": 4,
+      "errors": []
+    }
+  },
+  "official_pages_checked": 0,
+  "official_pages_expanded": 0,
+  "errors": [
+    "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+  ],
+  "headline_selection": {
+    "status": "exhausted",
+    "primary_match_id": "304-2026:178885",
+    "selected_match_id": "",
+    "attempted": 4,
+    "failed_candidates": [
+      {
+        "match_id": "304-2026:178885",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "401-2026:179417",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public",
+          "official-match-media"
+        ]
+      },
+      {
+        "match_id": "401-2026:179415",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "400-2026:178818",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      }
+    ]
+  },
+  "fallback_reason": "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片",
+  "fallback_person": false,
+  "quality_score": 0,
+  "quality": {
+    "status": "fallback",
+    "hard_failures": []
+  },
+  "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
+  "render_binding": {
+    "status": "bound",
+    "renderer": "html-chromium",
+    "match_id": "304-2026:178885",
+    "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
+    "card_file": "cards/card_00_cover.jpg",
+    "card_sha256": "aa19c8594db94955fb57f2e83c82a2f0a1444e9a2e453bae6f131ae00aa377b7"
+  }
+}
