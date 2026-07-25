@@ -20,7 +20,7 @@
   "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
   "fetch_enabled": true,
   "strict": true,
-  "minimum_score": 72,
+  "minimum_score": 65,
   "providers_queried": [
     "wta-video-hub",
     "wikimedia-commons",
@@ -51,6 +51,706 @@
       "metadata_score": 41,
       "status": "rejected",
       "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/204787062@N03/55411222663/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55410550284/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55408218569/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55405863968/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55403451054/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/168502374@N04/55401963639/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 36,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55401285980/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55398724121/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/199820658@N05/55395457466/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 36,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55391164737/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55390192100/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/183761676@N05/55388837643/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 36,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/202283617@N02/55412655813/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Tamara Korpatsch",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/199820658@N05/55386721563/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365290065/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365069639/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365290270/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365031403/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365069539/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55364883066/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365030908/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55363939332/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55364883141/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55363939152/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365290400/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365289805/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 29,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55365290305/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 26,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Mayar Sherif",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/nissenilsson/55364882346/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 26,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
         "not-the-exact-headline-match"
       ]
     },
@@ -196,7 +896,7 @@
       "errors": []
     },
     "flickr-public": {
-      "candidates": 0,
+      "candidates": 48,
       "queries": 4,
       "errors": []
     }
@@ -306,6 +1006,6 @@
     "match_id": "1002-2026:179375",
     "selected_asset_sha256": "4fba5574ccf5e85251e7c725ea5c12b9a56c258d61771cc4cf86a585e2827fb6",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "848d3d7a4428e7ee2a1e475f0977da9338085a13e5ab9318399913f3ebb6c2ab"
+    "card_sha256": "0153f959d027f54de3d36c701fa3c0fbe0d413b5469678d2a7e4f1cbf8bfe85d"
   }
 }
