@@ -1,20 +1,20 @@
 {
   "schema_version": 2,
-  "status": "branded_fallback",
-  "match_id": "304-2026:178885",
+  "status": "selected",
+  "match_id": "401-2026:179404",
   "match_players": [
-    "Alexander Bublik",
-    "Quentin Halys"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "candidate_players": [
-    "Quentin Halys",
-    "Alexander Bublik"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "headline_hot": true,
   "headline_eligible": true,
   "headline_players": [
-    "Alexander Bublik",
-    "Quentin Halys"
+    "Lilli Tagger",
+    "Sara Bejlek"
   ],
   "china_priority": true,
   "policy": "只接受能同时证明双方球员与当届赛事的头条比赛现场图；中国球员优先；当场比赛中的清晰正脸、庆祝或情绪瞬间优先，至少须有像素验证的突出人物；训练、热身、赛前合照、摆拍、发布会和多人颁奖照直接淘汰；多源候选全部评分后择优",
@@ -26,13 +26,479 @@
     "wikimedia-commons",
     "openverse",
     "bing-web-image",
-    "flickr-public"
+    "flickr-public",
+    "official-match-media"
   ],
-  "attempts": [],
+  "attempts": [
+    {
+      "player": "Lilli Tagger",
+      "provider": "wta-video-hub",
+      "source_url": "https://www.wtatennis.com/videos/4546130/tagger-avenges-previous-weeks-loss-to-bejlek-to-make-prague-semifinals",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": true,
+      "exact_match": false,
+      "event_match": true,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 41,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Lilli Tagger",
+      "provider": "wta-video-hub",
+      "source_url": "https://www.wtatennis.com/videos/4536584/bejlek-tops-tagger-in-athens-into-first-quarterfinal-since-abu-dhabi-title",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": true,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Lilli Tagger",
+      "provider": "bing-web-image",
+      "source_url": "https://www.tripadvisor.de/Hotel_Review-g47769-d1829808-Reviews-Moreau_Lake_State_Park_Campground-Gansevoort_New_York.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 38,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Lilli Tagger",
+      "provider": "bing-web-image",
+      "source_url": "https://saratogatodaynewspaper.com/moreau-lake-state-park-announces-monthly-hiking-series/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 38,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://discourse.axelerant.com/customization/sara-haines-baby-born-photos-boy-caleb-third-child/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://discourse.axelerant.com/customization/sara-haines-baby-born-photos-boy-caleb-third-child/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://www.shutterstock.com/image-vector/bright-card-beautiful-name-sara-poppy-248938375",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match",
+        "watermarked-stock-library"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://celebmafia.com/sara-carbonero-elle-eco-awards-2023-photocall-in-madrid-06-07-2023-3714316/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "static_or_group",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": [
+          "photocall"
+        ]
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match",
+        "static-or-group-photo"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://docs.cholonautas.edu.pe/en/sara-turner-actress-age-height-biography-weight-wikipedia-photos.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://docs.cholonautas.edu.pe/en/sara-turner-actress-age-height-biography-weight-wikipedia-photos.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://salary.udlvirtual.edu.pe/view/sara-haines-height-and-weight.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 38,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://celebritate.com/celebrity/sara-jay/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://www.hellorayo.co.uk/greatest-hits/surrey-east-hampshire/news/sara-sharif-new-photos-released-as-police-appeal-for-information",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://www.shutterstock.com/search/sara-name-image",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match",
+        "watermarked-stock-library"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://www.famousbollywood.com/sara-ali-khan-hot-photos/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 33,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Sara Bejlek",
+      "provider": "bing-web-image",
+      "source_url": "https://www.divinity.es/actualidad/20260421/iker-casillas-reaparece-premios-laureus-muerte-goyi-madre-sara-carbonero_18_018939981.html",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 38,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Lilli Tagger",
+      "provider": "official-match-media",
+      "source_url": "https://www.wtatennis.com/videos/4546130/tagger-avenges-previous-weeks-loss-to-bejlek-to-make-prague-semifinals",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": true,
+      "exact_match": true,
+      "event_match": true,
+      "year_match": true,
+      "scene": "prominent_person",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": [],
+        "pixel": [
+          "1 prominent face(s)",
+          "frontal-default"
+        ]
+      },
+      "metadata_score": 65,
+      "status": "selected",
+      "quality": {
+        "status": "pass",
+        "score": 33.0,
+        "quality_score": 14.1,
+        "crop_score": 18.9,
+        "hard_failures": [],
+        "width": 1500,
+        "height": 1000,
+        "sharpness": 521.6,
+        "tonal_range": 137.0,
+        "mean_luma": 95.6,
+        "black_ratio": 0.0046,
+        "white_ratio": 0.0014,
+        "entropy": 5.95,
+        "edge_ratio": 0.0262,
+        "saturation": 155.1,
+        "prominent_faces": 1,
+        "face_detectors": [
+          "frontal-default"
+        ],
+        "prominent_bodies": 0,
+        "body_detectors": [],
+        "crop": [
+          431,
+          0,
+          1181,
+          1000
+        ],
+        "crop_retention": 0.5,
+        "face_safe": true,
+        "focus": "58% 17%"
+      },
+      "quality_score": 116.0,
+      "face_priority_bonus": 18,
+      "hard_failures": [],
+      "cached_file": "daily-cover-02f19e69331a.jpg"
+    }
+  ],
   "flickr_enabled": true,
   "wta_official_enabled": true,
-  "wta_video_hub_candidates": 0,
-  "editorial_source_urls": 1,
+  "wta_video_hub_candidates": 2,
+  "editorial_source_urls": 4,
   "source_registry": {
     "as_of": "run-start",
     "proven": [
@@ -104,7 +570,7 @@
       "errors": []
     },
     "bing-web-image": {
-      "candidates": 0,
+      "candidates": 14,
       "queries": 4,
       "errors": []
     },
@@ -114,15 +580,57 @@
       "errors": []
     }
   },
-  "official_pages_checked": 0,
-  "official_pages_expanded": 0,
-  "errors": [
-    "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
-  ],
+  "official_pages_checked": 2,
+  "official_pages_expanded": 1,
+  "selected_player": "Lilli Tagger",
+  "exact_match": true,
+  "both_sides_match": true,
+  "scene": "prominent_person",
+  "person_evidence": {},
+  "quality_score": 116.0,
+  "quality": {
+    "status": "pass",
+    "score": 33.0,
+    "quality_score": 14.1,
+    "crop_score": 18.9,
+    "hard_failures": [],
+    "width": 1500,
+    "height": 1000,
+    "sharpness": 521.6,
+    "tonal_range": 137.0,
+    "mean_luma": 95.6,
+    "black_ratio": 0.0046,
+    "white_ratio": 0.0014,
+    "entropy": 5.95,
+    "edge_ratio": 0.0262,
+    "saturation": 155.1,
+    "prominent_faces": 1,
+    "face_detectors": [
+      "frontal-default"
+    ],
+    "prominent_bodies": 0,
+    "body_detectors": [],
+    "crop": [
+      431,
+      0,
+      1181,
+      1000
+    ],
+    "crop_retention": 0.5,
+    "face_safe": true,
+    "focus": "58% 17%"
+  },
+  "event_match": true,
+  "year_match": true,
+  "provider": "official-match-media",
+  "source_url": "https://www.wtatennis.com/videos/4546130/tagger-avenges-previous-weeks-loss-to-bejlek-to-make-prague-semifinals",
+  "credit": "wtatennis.com",
+  "license": "官方公开页面图片 · 资讯引用",
+  "focus": "58% 17%",
   "headline_selection": {
-    "status": "exhausted",
+    "status": "reselected",
     "primary_match_id": "304-2026:178885",
-    "selected_match_id": "",
+    "selected_match_id": "401-2026:179404",
     "attempted": 4,
     "failed_candidates": [
       {
@@ -166,37 +674,16 @@
           "bing-web-image",
           "flickr-public"
         ]
-      },
-      {
-        "match_id": "400-2026:178818",
-        "status": "unavailable",
-        "errors": [
-          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
-        ],
-        "providers_queried": [
-          "wta-video-hub",
-          "wikimedia-commons",
-          "openverse",
-          "bing-web-image",
-          "flickr-public"
-        ]
       }
     ]
   },
-  "fallback_reason": "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片",
-  "fallback_person": false,
-  "quality_score": 0,
-  "quality": {
-    "status": "fallback",
-    "hard_failures": []
-  },
-  "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
+  "selected_asset_sha256": "02f19e69331a2269800b8494b846d237e6a73f971e20df4d56bdf76414cf80b2",
   "render_binding": {
     "status": "bound",
     "renderer": "html-chromium",
-    "match_id": "304-2026:178885",
-    "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
+    "match_id": "401-2026:179404",
+    "selected_asset_sha256": "02f19e69331a2269800b8494b846d237e6a73f971e20df4d56bdf76414cf80b2",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "0fda209a8562b8bc59e5644f424bd738e0bf14c68c1261171ac66bca4cb2ec41"
+    "card_sha256": "15f53da35dd77895fb357e5f5372fa492f298e8e7c100b2e5007c1144150ebec"
   }
 }
