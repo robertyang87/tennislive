@@ -662,7 +662,7 @@ def _generate_knowledge_candidate(
         failure = {
             "schema_version": 1,
             "status": "fail",
-            "policy": "精确人物/年份/赛事/地点/授权素材不足时自动换题；候选耗尽则停止发布",
+            "policy": "精确人物/年份/赛事/地点素材不足时自动换题；候选耗尽则停止发布；授权信息仅记录不做过滤",
             "rejected_candidates": rejected_candidates,
             "errors": ["候选故事均未通过素材生产性预检"],
             "attempts": [],
