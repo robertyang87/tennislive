@@ -236,9 +236,6 @@ def section_header(img, section):
     y = 150
     center(d, W / 2, y, section.get("en", ""), F_LATIN(60), YELLOW)
     center(d, W / 2, y + 74, section.get("zh", ""), F_BOLD(46), WHITE)
-    surface = section.get("surface", "")
-    if surface:
-        pill(d, W / 2, y + 176, surface, F_BOLD(32), color, (8, 10, 14), height=52)
 
 
 def caption_band(img, caption):
@@ -392,9 +389,6 @@ def render_triptych(meta, scene, W, H):
         col = hex2rgb(p["color"])
         img = paste_rounded_photo(img, p["image"], px, card_y, pw, card_h,
                                   tuple(p.get("focal", [0.5, 0.5])), radius=18)
-        d = ImageDraw.Draw(img, "RGBA")
-        pill(d, px + pw / 2, card_y + card_h - 43, p["label"], F_BOLD(40),
-             col, (8, 10, 14), pad_x=22, height=54)
     section_header(img, scene["section"])
     caption_band(img, scene.get("caption", ""))
     brand_mark(img, meta["brand"])
@@ -450,9 +444,6 @@ def render_grid4(meta, scene, W, H):
             img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
                                       tuple(c.get("focal", [0.5, 0.4])), radius=18,
                                       key=c.get("local_key"))
-        d = ImageDraw.Draw(img, "RGBA")
-        pill(d, x + cw / 2, y + ch - 39, c["label"], F_BOLD(40),
-             col, (8, 10, 14), pad_x=22, height=54)
     section_header(img, scene["section"])
     caption_band(img, scene.get("caption", ""))
     brand_mark(img, meta["brand"])
