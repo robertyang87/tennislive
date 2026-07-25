@@ -410,9 +410,19 @@ def render_grid4(meta, scene, W, H):
         x = card_x + cc * (cw + gap)
         y = card_y + r * (ch + gap)
         col = hex2rgb(c.get("color", "#f2b32a"))
-        img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
-                                  tuple(c.get("focal", [0.5, 0.4])), radius=18,
-                                  border=col, bw=4)
+        if c.get("placeholder") or not c.get("image"):
+            d0 = ImageDraw.Draw(img, "RGBA")
+            d0.rounded_rectangle([x, y, x + cw, y + ch], radius=18,
+                                 fill=(18, 22, 30), outline=col, width=4)
+            note = c.get("note", "插入授权画面")
+            fn = F_BOLD(34)
+            lines = wrap_cjk(note, fn, cw - 70)
+            for j, ln in enumerate(lines):
+                center(d0, x + cw / 2, y + ch / 2 - 40 + j * 44, ln, fn, col)
+        else:
+            img = paste_rounded_photo(img, c["image"], x, y, cw, ch,
+                                      tuple(c.get("focal", [0.5, 0.4])), radius=18,
+                                      border=col, bw=4)
         d = ImageDraw.Draw(img, "RGBA")
         lab = c["label"]
         ft = F_BOLD(40)
