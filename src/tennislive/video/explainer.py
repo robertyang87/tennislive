@@ -1314,8 +1314,13 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
 .brandlines{{display:flex;flex-direction:column;gap:2px;}}
+/* Muted grey worked while every cover sat under a heavy wash. With the
+   photo showing through it disappeared into a bright sky or a stand full
+   of green seats, so lift it and give it its own shadow — still quieter
+   than the brand line above, but legible on any frame. */
 .topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
- color:#9fb4aa;letter-spacing:1px;}}
+ color:#dcefe4;letter-spacing:1px;
+ text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8);}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
@@ -1333,10 +1338,21 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
 .cover .title{{white-space:normal;line-height:1.24;font-weight:400;
- text-shadow:0 6px 30px rgba(0,0,0,.85);}}
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
+ 0 0 60px rgba(6,28,20,.7);}}
 .cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
-.cover .scrim{{background:linear-gradient(180deg,
- rgba(6,28,20,.72) 0%,rgba(6,28,20,.62) 40%,rgba(6,28,20,.78) 100%);}}
+/* The cover used to sit under a flat 62-78% wash, which made every deck
+   open on the same dark green rectangle with a photo faintly behind it —
+   the one frame that has to stop a thumb was the least visible. Darken
+   only where words actually are: a band at the top for the brand line, a
+   soft ellipse behind the centred question, and a foot for the video's
+   lower edge. Everything between stays near the photo's own exposure. */
+.cover .scrim{{background:
+ linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
+  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
+  rgba(6,28,20,.58) 100%),
+ radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,
+  rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%);}}
 .kicker{{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
  font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px;}}
 .tail{{align-self:flex-start;font-size:34px;font-weight:700;color:#dff3e8;
