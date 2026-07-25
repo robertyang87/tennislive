@@ -19,68 +19,59 @@ import requests
 from PIL import Image
 
 from tennislive.research.visual_sources import (
-    _bing_candidates,
     _commons_candidates,
-    _duckduckgo_candidates,
     _flickr_candidates,
-    _official_archive_candidates,
     _openverse_candidates,
 )
 
 # Each slot names the beat that needs a picture, then the queries that would
 # surface that exact subject. Queries are ordered most-specific first.
 SLOTS: dict[str, list[str]] = {
-    # 法网例外：红土 + 人工司线 + 球印，这是整条视频最关键的一张
-    "roland_garros": [
-        "roland garros clay court match",
-        "french open philippe chatrier court",
-        "roland garros line judge",
-        "french open clay court player",
-        "roland garros stadium clay",
-    ],
-    # 红土球印特写——法网坚持人工的“底气”
-    "ball_mark": [
-        "tennis ball mark clay court",
-        "clay court ball mark umpire check",
-        "tennis clay court line ball print",
-        "tennis umpire inspecting clay mark",
-    ],
-    # 百年人工司线员
+    # 百年人工司线员——站在线后的人
     "line_judge": [
-        "tennis line judge court",
-        "wimbledon line judge uniform",
-        "tennis lineswoman official",
-        "tennis line umpire standing court",
+        "tennis line judge",
+        "tennis line umpire",
+        "wimbledon line judge",
+        "tennis linesman court",
+        "tennis official line call",
     ],
-    # 挑战回放大屏
+    # 鹰眼挑战：大屏回放 / 球员示意挑战
     "challenge": [
-        "tennis hawkeye challenge screen stadium",
-        "tennis stadium big screen replay",
-        "tennis player challenge call crowd",
-        "tennis review screen court",
+        "hawk-eye tennis",
+        "tennis hawkeye system",
+        "tennis challenge screen",
+        "tennis stadium screen replay",
+        "tennis scoreboard screen court",
     ],
-    # 电子司线 / 硬地空无司线员
-    "electronic": [
-        "us open court electronic line calling",
-        "australian open court camera",
-        "tennis hard court line camera",
-        "us open night session court",
+    # 红土：球印留在土上，这是法网坚持人工的底气
+    "clay": [
+        "roland garros clay court",
+        "french open clay court",
+        "tennis clay court line",
+        "clay court tennis match",
+        "philippe chatrier court",
+    ],
+    # 主裁 / 裁判椅
+    "chair_umpire": [
+        "tennis chair umpire",
+        "tennis umpire chair court",
+        "tennis umpire calling",
     ],
 }
 
+# 只走可授权来源。上一轮 Bing/DuckDuckGo 返回的是 Roland 电子琴、
+# 库存素材与 1924 年的《Judge》杂志——既不贴题也无法确认授权，
+# 公开发布的素材一律不从这类来源取。
 PROVIDERS = (
     _commons_candidates,
     _openverse_candidates,
     _flickr_candidates,
-    _official_archive_candidates,
-    _bing_candidates,
-    _duckduckgo_candidates,
 )
 
 OUT = Path("tools/broll")
 # Full-bleed hero on a 1080x1440 card -> reject anything that would look mushy.
 MIN_W, MIN_H = 900, 600
-PER_SLOT = 10
+PER_SLOT = 12
 
 
 def _download(url: str, session: requests.Session):
