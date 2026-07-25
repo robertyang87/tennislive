@@ -98,8 +98,17 @@ def fmt_ass_t(sec):
     return f"{h}:{m:02d}:{s:05.2f}"
 
 
+def _outline_text(d, xy, text, font, fill, oc=(0, 0, 0), w=5, anchor="mm"):
+    x, y = xy
+    for dx in range(-w, w + 1):
+        for dy in range(-w, w + 1):
+            if dx * dx + dy * dy <= w * w:
+                d.text((x + dx, y + dy), text, font=font, fill=oc, anchor=anchor)
+    d.text((x, y), text, font=font, fill=fill, anchor=anchor)
+
+
 def render_chrome(scene, brand="网球时差"):
-    """b-roll 镜头的透明浮层：品牌点标 + 底部说明，风格与静帧一致。"""
+    """b-roll 镜头的透明浮层：品牌点标 + 赛事名 + 底部说明（+可选开场大字）。"""
     from PIL import Image, ImageDraw, ImageFont
     cjk = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -107,30 +116,88 @@ def render_chrome(scene, brand="网球时差"):
     f_brand = ImageFont.truetype(cjk, 36)
     d.ellipse([48, 58, 68, 78], fill=(245, 190, 40))
     d.text((82, 68), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
+    sec = scene.get("section") or {}
+    en, zh = sec.get("en", ""), sec.get("zh", "")
+    if en or zh:
+        label = f"{en} · {zh}" if en and zh else (en or zh)
+        _outline_text(d, (W / 2, 170), label, ImageFont.truetype(cjk, 44),
+                      (245, 190, 40), w=4)
+    big = scene.get("big_chrome", "")
+    if big:
+        _outline_text(d, (W / 2, int(H * 0.36)), big,
+                      ImageFont.truetype(cjk, 170), (255, 255, 255), w=8)
+        sub = scene.get("big_chrome_sub", "")
+        if sub:
+            _outline_text(d, (W / 2, int(H * 0.36) + 140), sub,
+                          ImageFont.truetype(cjk, 52), (245, 190, 40), w=5)
     cap = scene.get("caption", "")
     if cap:
-        f_cap = ImageFont.truetype(cjk, 58)
-        cx, cy = W / 2, H - 330
-        for dx in range(-5, 6):
-            for dy in range(-5, 6):
-                if dx * dx + dy * dy <= 25:
-                    d.text((cx + dx, cy + dy), cap, font=f_cap,
-                           fill=(0, 0, 0), anchor="mm")
-        d.text((cx, cy), cap, font=f_cap, fill=(255, 255, 255), anchor="mm")
+        _outline_text(d, (W / 2, H - 330), cap, ImageFont.truetype(cjk, 58),
+                      (255, 255, 255), w=5)
     out = TMP / f"chrome_{scene['id']}.png"
     img.save(out)
     return out
 
 
-def broll_clip_cmd(src, start, length, chrome, dst):
-    """官方视频片段 → 9:16 全出血、静音、轻压暗，叠加透明浮层。"""
-    vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
-          f"crop={W}:{H},fps={FPS},eq=brightness=-0.04:saturation=1.05[bg];"
-          f"[bg][1:v]overlay=0:0,format=yuv420p")
-    return ["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{length:.3f}",
-            "-i", str(src), "-i", str(chrome), "-filter_complex", vf,
-            "-an", "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
-            "-crf", "17", str(dst)]
+def scene_cuts(sc):
+    """镜头的 EDL：cuts 列表优先，broll/broll_start 兼容为单切。"""
+    if sc.get("cuts"):
+        return [(c["src"], float(c.get("start", 0)), float(c["dur"]))
+                for c in sc["cuts"]]
+    if sc.get("broll"):
+        return [(sc["broll"], float(sc.get("broll_start", 0)), None)]
+    return None
+
+
+def build_broll_video(cuts, total, chrome, dst):
+    """多切 EDL → 9:16 全出血硬切拼接，最后叠透明浮层。None 时长的切自动补满。"""
+    fixed = sum(c[2] for c in cuts if c[2])
+    flex = [i for i, c in enumerate(cuts) if not c[2]]
+    fill = max(0.8, (total - fixed) / len(flex)) if flex else 0
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    parts = []
+    for i, (src, start, dur) in enumerate(cuts):
+        d_i = dur if dur else fill
+        cmd += ["-ss", f"{start:.2f}", "-t", f"{d_i:.3f}", "-i",
+                str(ROOT / src if not str(src).startswith("/") else src)]
+        parts.append(
+            f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+            f"crop={W}:{H},fps={FPS},settb=AVTB,setpts=PTS-STARTPTS,"
+            f"eq=brightness=-0.04:saturation=1.05[v{i}]")
+    n = len(cuts)
+    cmd += ["-i", str(chrome)]
+    fc = ";".join(parts) + ";" + "".join(f"[v{i}]" for i in range(n)) + \
+        f"concat=n={n}:v=1[cat];[cat]trim=0:{total:.3f},setpts=PTS-STARTPTS[ct];" + \
+        f"[ct][{n}:v]overlay=0:0,format=yuv420p"
+    cmd += ["-filter_complex", fc, "-an", "-r", str(FPS),
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "17", str(dst)]
+    subprocess.run(cmd, check=True)
+
+
+def build_scene_ambient(cuts, total, dst):
+    """从各切片抽原声拼成环境音轨（声浪/音乐），失败返回 None。"""
+    segs = []
+    fixed = sum(c[2] for c in cuts if c[2])
+    flex = [i for i, c in enumerate(cuts) if not c[2]]
+    fill = max(0.8, (total - fixed) / len(flex)) if flex else 0
+    for i, (src, start, dur) in enumerate(cuts):
+        d_i = dur if dur else fill
+        seg = dst.parent / f"{dst.stem}_amb{i}.wav"
+        r = subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{d_i:.3f}",
+             "-i", str(ROOT / src if not str(src).startswith("/") else src),
+             "-vn", "-ac", "1", "-ar", "48000", str(seg)], capture_output=True)
+        if r.returncode == 0 and seg.exists() and seg.stat().st_size > 1000:
+            segs.append(seg)
+    if not segs:
+        return None
+    lst = dst.parent / f"{dst.stem}_amb.txt"
+    lst.write_text("".join(f"file '{s.name}'\n" for s in segs), "utf-8")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-af", f"apad=whole_dur={total:.3f}",
+                    "-t", f"{total:.3f}", str(dst)],
+                   check=True, cwd=str(dst.parent))
+    return dst
 
 
 def motion_filter(idx, nframes):
@@ -161,16 +228,18 @@ def main():
         frame = SRC / "frames" / f"{sc['id']}.png"
         if not frame.exists():
             sys.exit(f"缺帧：{frame}")
+        hold = float(sc.get("hold", 0))   # 声浪呼吸口：解说结束后画面+现场声继续
         if vo:
             mp3 = TMP / f"vo_{i:02d}.mp3"
             words = synth(vo, mp3)
-            d = adur(mp3) + GAP
+            d = adur(mp3) + GAP + hold
             plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=mp3, words=words,
                              dur=d, vo=vo))
-            print(f"  [{sc['id']}] 配音 {d - GAP:.2f}s + 间隙 → 画面 {d:.2f}s，{len(words)} 词")
+            print(f"  [{sc['id']}] 配音 {d - GAP - hold:.2f}s + 间隙{'+呼吸' if hold else ''} → 画面 {d:.2f}s，{len(words)} 词")
         else:
-            plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=None, words=[], dur=NOVO_DUR))
-            print(f"  [{sc['id']}] 无配音 → 画面 {NOVO_DUR}s")
+            plan.append(dict(idx=i, id=sc["id"], frame=frame, mp3=None, words=[],
+                             dur=NOVO_DUR + hold))
+            print(f"  [{sc['id']}] 无配音 → 画面 {NOVO_DUR + hold}s")
 
     starts, acc = [], 0.0
     for p in plan:
@@ -209,12 +278,12 @@ Format: Layer, Start, End, Style, Text
         nf = int(round(c * FPS))
         clip = TMP / f"c_{k:02d}.mp4"
         sc = scenes[p["idx"]]
-        broll = sc.get("broll")
-        if broll and (ROOT / broll).exists():
+        cuts = scene_cuts(sc)
+        if cuts:
             chrome = render_chrome(sc)
-            subprocess.run(broll_clip_cmd(ROOT / broll, float(sc.get("broll_start", 0)),
-                                          c, chrome, clip), check=True)
-            kind = "b-roll"
+            build_broll_video(cuts, c, chrome, clip)
+            p["ambient"] = build_scene_ambient(cuts, p["dur"], TMP / f"amb_{k:02d}.wav")
+            kind = f"b-roll×{len(cuts)}"
         else:
             subprocess.run(
                 ["ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", str(p["frame"]),
@@ -225,30 +294,32 @@ Format: Layer, Start, End, Style, Text
         clips.append(clip)
         print(f"  片段 {k + 1}/{len(plan)} {p['id']} {c:.2f}s [{kind}]")
 
-    # 4) 声轨拼装：配音 + 间隙/静音，整体 loudnorm
-    concat_parts = []
-    for p in plan:
-        if p["mp3"]:
-            concat_parts.append((p["mp3"], p["dur"]))
-        else:
-            concat_parts.append((None, p["dur"]))
-    filter_a, inputs_a, idx = [], [], 0
-    for src, d in concat_parts:
-        if src:
-            inputs_a += ["-i", str(src)]
-            filter_a.append(f"[{idx}:a]apad,atrim=0:{d:.3f}[a{idx}]")
-            idx += 1
-        else:
-            filter_a.append(
-                f"anullsrc=r=48000:cl=mono,atrim=0:{d:.3f}[a{len(inputs_a) // 2 + 900}]")
-    # 简化：静音段用 lavfi 单独生成文件再 concat，避免复杂 filtergraph
+    # 4) 声轨拼装：解说为主，现场声浪 sidechain 闪避垫底，整体 loudnorm
     seg_files = []
-    for j, (src, d) in enumerate(concat_parts):
+    for j, p in enumerate(plan):
+        d = p["dur"]
         seg = TMP / f"a_{j:02d}.wav"
-        if src:
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src),
+        vo_p, amb = p["mp3"], p.get("ambient")
+        if vo_p and amb:
+            fc = (f"[1:a]apad=whole_dur={d:.3f},atrim=0:{d:.3f},"
+                  f"aresample=48000,pan=mono|c0=c0[v];"
+                  f"[0:a]aresample=48000[a0];"
+                  f"[a0][v]sidechaincompress=threshold=0.015:ratio=12:"
+                  f"attack=30:release=600[duck];[duck]volume=0.55[db];"
+                  f"[db][v]amix=inputs=2:duration=first:normalize=0")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(amb),
+                            "-i", str(vo_p), "-filter_complex", fc,
+                            "-t", f"{d:.3f}", "-ar", "48000", "-ac", "1",
+                            str(seg)], check=True)
+        elif vo_p:
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vo_p),
                             "-af", f"apad=whole_dur={d:.3f}", "-t", f"{d:.3f}",
                             "-ar", "48000", "-ac", "1", str(seg)], check=True)
+        elif amb:
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(amb),
+                            "-af", f"volume=0.7,apad=whole_dur={d:.3f}",
+                            "-t", f"{d:.3f}", "-ar", "48000", "-ac", "1",
+                            str(seg)], check=True)
         else:
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
                             "-i", "anullsrc=r=48000:cl=mono", "-t", f"{d:.3f}",
