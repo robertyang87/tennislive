@@ -462,6 +462,18 @@ def knowledge_push_html_from_parts(
             'style="color:#087747;font-size:13px;text-decoration:none;">'
             f'第{index}张未显示？点此打开原图</a></div>'
         )
+    # The copy page lives on Pages, which can 404 while a deploy catches up —
+    # and a push whose text cannot be copied is useless on a phone. Carry the
+    # caption itself as one long-press-selectable block so copying never
+    # depends on another page loading.
+    copy_block = (
+        '<div style="color:#7a8580;font-size:12px;margin:0 0 6px;">'
+        "👇 长按下面整段，可直接复制全文</div>"
+        '<div style="background-color:#f6f7f4;border:1px solid #e6ebe8;'
+        "border-radius:6px;padding:12px;font-size:14px;line-height:1.9;"
+        'white-space:pre-wrap;word-break:break-word;margin:0 0 14px;">'
+        f"{html.escape(xhs_text.strip())}</div>"
+    )
     action = ""
     if extra_action:
         href, label = extra_action
@@ -478,6 +490,7 @@ def knowledge_push_html_from_parts(
   {''.join(images)}
   {''.join(paragraphs)}
   <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
+  {copy_block}
   {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
   <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
 </div>
