@@ -326,6 +326,16 @@ html.light .poster:not(.cover)::before { opacity:.16; }
 }
 html.light .poster.tonight-page::before { opacity:.52; }
 
+/* 今晚焦点用场馆实景做底，而实景顶部是天空——阴天的布拉格是一片亮云，
+   页眉的白字、浅蓝小标题和右上角日期就直接糊在上面看不清了（2026-07-25
+   成品）；同一版汉堡站因为天空偏暗反而没事。整体遮罩不能再压，压了场馆
+   就看不见了，所以给页眉单独垫一层向下渐隐的暗底：只覆盖有字的那一段，
+   与照片本身的明暗无关，换成任何一张场馆图都成立。 */
+.poster.tonight-page::after { content:""; position:absolute; left:0; right:0; top:0;
+  height:300px; z-index:0; pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,16,20,.82) 0%,rgba(2,16,20,.58) 48%,rgba(2,16,20,0) 100%); }
+html.light .poster.tonight-page::after { opacity:.35; }
+
 .masthead { display:flex; flex:none; align-items:center; gap:16px; }
 .brand-icon { width:54px; height:54px; object-fit:contain; flex:none; }
 .ball { width:44px; height:44px; border-radius:50%; background:var(--neon); position:relative; overflow:hidden; flex:none; }
@@ -1209,11 +1219,13 @@ def _seclabel(text: str) -> str:
 # ---------- 各卡页面 ----------
 
 
-# 竖版卡片放得下 4 行技术对比；第 5 行起会把"编辑锐评"顶出画面，2026-07-25
-# 的成品就在第四行中间被裁断。与其压行高换空间——数字缩小反而更难读——不如
-# 按"最能说明胜负"的顺序取前 4 项：总得分给出总体差距，破发兑现和 ACE/双误
-# 是决定走势的具体动作，一发得分率是发球局质量的核心指标。其余项目仍完整保留
-# 在 digest.json 和公众号版里，卡片只做取舍不做删改。
+# 卡片版面按"最能说明胜负"的顺序取技术对比：总得分给出总体差距，破发兑现和
+# ACE/双误是决定走势的具体动作，一发得分率是发球局质量的核心指标。其余项目仍
+# 完整保留在 digest.json 和公众号版里，卡片只做取舍不做删改。
+#
+# 这里的 4 只是上限，不是保证：2026-07-25 的成品即使砍到 4 行，第四行仍在
+# 中间被裁断——正文上方的头条句多折了一行，版面预算就不够了。真正决定放得下
+# 几行的是渲染后的实测高度，见 _screenshot_pages 里的自适应收行。
 _CARD_STAT_PRIORITY = (
     "总得分",
     "破发兑现",
@@ -1226,6 +1238,11 @@ _CARD_STAT_PRIORITY = (
 _CARD_STAT_LIMIT = 4
 
 
+def _stat_rank(label: str) -> int:
+    priority = {name: index for index, name in enumerate(_CARD_STAT_PRIORITY)}
+    return priority.get(label, len(_CARD_STAT_PRIORITY))
+
+
 def card_stat_rows(
     rows: tuple[tuple[str, str, str], ...] | list[tuple[str, str, str]],
     limit: int = _CARD_STAT_LIMIT,
@@ -1234,10 +1251,9 @@ def card_stat_rows(
     rows = list(rows)
     if len(rows) <= limit:
         return rows
-    priority = {label: index for index, label in enumerate(_CARD_STAT_PRIORITY)}
     ranked = sorted(
         range(len(rows)),
-        key=lambda index: (priority.get(rows[index][0], len(priority)), index),
+        key=lambda index: (_stat_rank(rows[index][0]), index),
     )
     return [rows[index] for index in sorted(ranked[:limit])]
 
@@ -1658,17 +1674,24 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         verdict = editor_takeaway(m, today)
         facts = []
 
+        # "比赛走势"是没有逐场技术统计时的文字降级说法（"直落2盘，全程没有
+        # 让对手看到机会"）。官方统计到手之后还留着它，等于用一句概括去挤真正
+        # 的数字——2026-07-25 的成品正是被它挤到把第四行从中间切开。有数据就
+        # 只放技术对比，没数据才退回这句话。
+        detailed = has_detailed_stats(m)
         arc = trajectory_arc(m)
-        arc_html = (
+        extra_html = (
             f'<div class="verdict"><b>比赛走势</b>{html.escape(arc)}</div>'
-            if arc
+            if arc and not detailed
             else ""
         )
-        extra_html = arc_html
-        if has_detailed_stats(m):
+        if detailed:
             comparison = focus_comparison(m)
+            # data-rank 让渲染后的自适应收行按重要性丢弃：版面不够时先丢
+            # "一发成功率"这类补充项，而不是碰巧排在最后的"破发兑现"。
             rows_html = "".join(
-                f'<div class="compare-row"><b>{html.escape(label)}</b>'
+                f'<div class="compare-row" data-rank="{_stat_rank(label)}">'
+                f'<b>{html.escape(label)}</b>'
                 f'<span class="{"winner" if comparison.left_won else ""}">'
                 f'{html.escape(left)}</span>'
                 f'<span class="{"" if comparison.left_won else "winner"}">'
@@ -2826,6 +2849,58 @@ def _chromium_executable() -> str | None:
     return None
 
 
+# 技术对比放得下几行，取决于它上方的头条句折了几行——那是文本，长度不固定，
+# 在 Python 侧算不准。2026-07-25 的成品就是这样：行数已经砍到上限 4，第四行
+# 仍在中间被裁断，而 .frame 的 overflow:hidden 把这件事悄悄吃掉了。
+#
+# 所以改成渲染后按实测收行：量出正文底边与页脚的距离，不够就丢一行，直到放得下。
+# 丢的是 data-rank 最大的那行（最次要的补充项），不是碰巧排在最后的那行。
+# 收到只剩一行时整块撤掉——一行对比说明不了胜负，不如把版面还给"编辑锐评"。
+_SHED_STAT_ROWS_JS = """() => {
+  const poster = document.querySelector('.poster:not(.cover)');
+  if (!poster) return {dropped: 0, overflow: 0};
+  const footer = poster.querySelector(':scope > .footer');
+  const limit = (footer ? footer.getBoundingClientRect().top : poster.getBoundingClientRect().bottom) - 12;
+  const contentBottom = () => {
+    const flow = Array.from(poster.children).filter((node) => {
+      if (node === footer) return false;
+      const style = getComputedStyle(node);
+      return style.position !== 'absolute' && style.display !== 'none';
+    });
+    return Math.max(
+      poster.getBoundingClientRect().top,
+      ...flow.map((node) => node.getBoundingClientRect().bottom),
+    );
+  };
+  let dropped = 0;
+  const grid = poster.querySelector('.compare-grid');
+  if (grid) {
+    const leastImportant = () => {
+      const rows = Array.from(grid.querySelectorAll('.compare-row'));
+      if (!rows.length) return null;
+      return rows.reduce((worst, row) =>
+        Number(row.dataset.rank || 99) >= Number(worst.dataset.rank || 99) ? row : worst
+      );
+    };
+    while (contentBottom() > limit) {
+      const rows = grid.querySelectorAll('.compare-row');
+      if (rows.length <= 2) break;
+      const row = leastImportant();
+      if (!row) break;
+      row.remove();
+      dropped += 1;
+    }
+    if (contentBottom() > limit) {
+      const head = grid.previousElementSibling;
+      if (head && head.classList.contains('compare-head')) head.remove();
+      dropped += grid.querySelectorAll('.compare-row').length;
+      grid.remove();
+    }
+  }
+  return {dropped: dropped, overflow: Math.max(0, Math.round(contentBottom() - limit))};
+}"""
+
+
 def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
     """一次浏览器会话渲染多页，返回 [(kind, PIL.Image)]（2x 超采样）."""
     import io
@@ -2859,6 +2934,19 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                         timeout=15000,
                     )
                     page.evaluate("window.scrollTo(0, 0)")
+                    shed = page.evaluate(_SHED_STAT_ROWS_JS) or {}
+                    if shed.get("dropped"):
+                        logger.info(
+                            "%s 页版面不足，收掉 %d 行技术对比", kind, shed["dropped"]
+                        )
+                    # 收完行仍然溢出说明是别处撑高了版面。.frame 的
+                    # overflow:hidden 会把它悄悄裁掉，所以这里必须留下痕迹。
+                    if shed.get("overflow"):
+                        logger.warning(
+                            "%s 页正文仍超出页脚 %dpx，成品会被裁切",
+                            kind,
+                            shed["overflow"],
+                        )
                     layout = page.evaluate(
                         """() => {
                           const poster = document.querySelector('.poster.knowledge-page:not(.cover)');
