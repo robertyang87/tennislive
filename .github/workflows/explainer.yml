@@ -23,8 +23,13 @@ on:
 permissions:
   contents: write
 
+# Per topic, not per workflow. A single group meant that dispatching a batch
+# of slugs kept only the first and the last: GitHub holds one run pending per
+# group and cancels the rest. Different topics touch different output
+# directories, so they have no reason to queue behind each other — and two
+# runs landing at once is now handled by the push step's replay-and-retry.
 concurrency:
-  group: explainer-video
+  group: explainer-video-${{ github.event.inputs.slug || 'hawkeye' }}
   cancel-in-progress: false
 
 jobs:
