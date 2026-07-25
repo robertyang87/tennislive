@@ -98,6 +98,41 @@ def fmt_ass_t(sec):
     return f"{h}:{m:02d}:{s:05.2f}"
 
 
+def render_chrome(scene, brand="网球时差"):
+    """b-roll 镜头的透明浮层：品牌点标 + 底部说明，风格与静帧一致。"""
+    from PIL import Image, ImageDraw, ImageFont
+    cjk = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    f_brand = ImageFont.truetype(cjk, 36)
+    d.ellipse([48, 58, 68, 78], fill=(245, 190, 40))
+    d.text((82, 68), brand, font=f_brand, fill=(255, 255, 255), anchor="lm")
+    cap = scene.get("caption", "")
+    if cap:
+        f_cap = ImageFont.truetype(cjk, 58)
+        cx, cy = W / 2, H - 330
+        for dx in range(-5, 6):
+            for dy in range(-5, 6):
+                if dx * dx + dy * dy <= 25:
+                    d.text((cx + dx, cy + dy), cap, font=f_cap,
+                           fill=(0, 0, 0), anchor="mm")
+        d.text((cx, cy), cap, font=f_cap, fill=(255, 255, 255), anchor="mm")
+    out = TMP / f"chrome_{scene['id']}.png"
+    img.save(out)
+    return out
+
+
+def broll_clip_cmd(src, start, length, chrome, dst):
+    """官方视频片段 → 9:16 全出血、静音、轻压暗，叠加透明浮层。"""
+    vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+          f"crop={W}:{H},fps={FPS},eq=brightness=-0.04:saturation=1.05[bg];"
+          f"[bg][1:v]overlay=0:0,format=yuv420p")
+    return ["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{length:.3f}",
+            "-i", str(src), "-i", str(chrome), "-filter_complex", vf,
+            "-an", "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast",
+            "-crf", "17", str(dst)]
+
+
 def motion_filter(idx, nframes):
     """三种运镜轮换；输入先放大 2x 抑制 zoompan 抖动。"""
     base = f"scale={W*2}:{H*2},zoompan="
@@ -173,13 +208,22 @@ Format: Layer, Start, End, Style, Text
         c = p["dur"] + (XFADE if k < len(plan) - 1 else 0)
         nf = int(round(c * FPS))
         clip = TMP / f"c_{k:02d}.mp4"
-        subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", str(p["frame"]),
-             "-t", f"{c:.3f}", "-vf", motion_filter(k, nf),
-             "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
-             str(clip)], check=True)
+        sc = scenes[p["idx"]]
+        broll = sc.get("broll")
+        if broll and (ROOT / broll).exists():
+            chrome = render_chrome(sc)
+            subprocess.run(broll_clip_cmd(ROOT / broll, float(sc.get("broll_start", 0)),
+                                          c, chrome, clip), check=True)
+            kind = "b-roll"
+        else:
+            subprocess.run(
+                ["ffmpeg", "-v", "error", "-y", "-loop", "1", "-i", str(p["frame"]),
+                 "-t", f"{c:.3f}", "-vf", motion_filter(k, nf),
+                 "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
+                 str(clip)], check=True)
+            kind = "静帧"
         clips.append(clip)
-        print(f"  片段 {k + 1}/{len(plan)} {p['id']} {c:.2f}s")
+        print(f"  片段 {k + 1}/{len(plan)} {p['id']} {c:.2f}s [{kind}]")
 
     # 4) 声轨拼装：配音 + 间隙/静音，整体 loudnorm
     concat_parts = []
