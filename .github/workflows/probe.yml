@@ -31,3 +31,21 @@ jobs:
 
       - name: 新渠道检索（互联网档案馆 / Wikidata / 结构化 depicts / 多语维基）
         run: python tools/hunt_channels_round2.py
+
+      - name: 抓取近年法网照片（换掉 2007/2012 的旧图）
+        run: python tools/commons_category_grab.py
+
+      - name: 提交候选供人工目检
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/broll
+          if git diff --cached --quiet; then
+            echo "没有新候选"
+          else
+            git commit -m "probe: recent Roland-Garros candidates"
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin "${{ github.ref_name }}" && \
+              git push origin "${{ github.ref_name }}" && break || sleep $((i*5))
+            done
+          fi

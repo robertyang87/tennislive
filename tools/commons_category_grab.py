@@ -30,15 +30,16 @@ PER_SEED = 12
 # slot -> category seed terms. Recent years first: the deck should look like
 # tennis as it is now, so candidates are ranked newest-first (see main()).
 SEEDS: dict[str, list[str]] = {
-    # The match beat 1 is actually about: 2004 US Open QF, Williams v Capriati,
-    # where the chair umpire's calls were overruled-worthy and she was stood down.
-    "serena_2004": [
-        "2004 US Open (tennis)",
-        "Serena Williams in 2004",
-        "Serena Williams",
+    # Roland-Garros still fields line judges, so a recent frame is both newer
+    # and still true — unlike Wimbledon, where a recent frame would contradict
+    # the beat about the years when people still stood on the lines.
+    "rg_recent": [
+        "2025 Roland Garros",
+        "2024 Roland Garros",
+        "2023 Roland Garros",
     ],
-    "capriati": [
-        "Jennifer Capriati",
+    "chatrier_recent": [
+        "Court Philippe Chatrier",
     ],
 }
 
