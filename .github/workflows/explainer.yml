@@ -15,6 +15,10 @@ on:
         description: "edge-tts 中文语音"
         required: false
         default: "zh-CN-YunxiNeural"
+      push:
+        description: "生成后推送到微信（true/false）"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -29,6 +33,8 @@ jobs:
     timeout-minutes: 25
     env:
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -91,3 +97,9 @@ jobs:
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
           fi
+
+      - name: PushPlus 推送到微信
+        if: github.event.inputs.push == 'true' && env.PUSHPLUS_TOKEN != ''
+        run: |
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"

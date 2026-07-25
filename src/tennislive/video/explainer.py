@@ -31,6 +31,7 @@ from __future__ import annotations
 import base64
 import html
 import mimetypes
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -44,6 +45,11 @@ VIDEO_W, VIDEO_H = 1080, 1920  # video canvas (9:16)
 _BAND_COLOR = "0x061c14"
 
 _REPO = Path(__file__).resolve().parents[3]
+_REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+_PAGES_URL = os.environ.get(
+    "TENNISLIVE_PAGES_URL",
+    "https://{}.github.io/{}".format(*_REPOSITORY.split("/", 1)),
+).rstrip("/")
 
 
 class ExplainerVideoError(RuntimeError):
@@ -232,6 +238,216 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你觉得法网什么时候会改用电子司线？",
         ),
     ),
+    # Same five-beat shape as hawkeye — the old way, the force that broke it,
+    # the rule change, the holdout, and a question worth arguing about. Facts
+    # come from the story's own verified set plus en.wikipedia "Tennis ball":
+    # white until 1972, ITF yellow in 1972 for television, Wimbledon white
+    # until 1986, "optic yellow", and the poll where most people said green.
+    # Facts checked against en.wikipedia "Isner-Mahut match at the 2010
+    # Wimbledon Championships" and against the plaque itself, which the All
+    # England Club engraved with the score, the dates and the duration. Note
+    # the story's own fact file said the scoreboard gave out at 50-50; the
+    # article is more precise — the courtside board froze at 47-47 and went
+    # dark, and it was the website's scoreboard that was reset at 50-50.
+    "longest-match": (
+        (
+            "draw",
+            "首轮抽签",
+            "一场被排在 18 号场的首轮球",
+            "2010 年温网首轮，23 号种子伊斯内尔，对上从资格赛打进正赛的马胡。"
+            "这种签通常没人会多看一眼，比赛也就被排在了 18 号场——一片外场。"
+            "6 月 22 日傍晚 6 点 13 分开球时，没人知道它会打三天。"
+            "画面里这一幕，已经是第二天夜里：屋顶上站满了人，全世界都挤过来了。",
+            "assets/explainer/longest-match/court18.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2010 温网 18 号场，比赛第二天夜里",
+            (
+                "2010 温网首轮，排在 18 号场",
+                "23 号种子伊斯内尔 对 资格赛选手马胡",
+                "图为第二天夜里，屋顶已站满人",
+            ),
+        ),
+        (
+            "rule",
+            "没有抢七",
+            "第五盘，必须净胜两局才算完",
+            "问题出在当年的规则上。2010 年，除了美网，大满贯的第五盘都不打抢七："
+            "打到 6 比 6 之后不会有抢七来收尾，两个人得一直打下去，直到某一方"
+            "净胜两局。第一天天黑，第五盘还没开始就被迫中断；第二天下午两点零五分"
+            "接着打，一局一局，谁也破不了谁的发球局。",
+            "assets/explainer/longest-match/day2.jpg",
+            "CC BY-SA 2.0 · Wikimedia Commons · 2010 温网次日，马胡准备发球",
+            (
+                "2010 年第五盘不打抢七",
+                "6-6 之后必须净胜两局",
+                "第一天天黑中断，第二天接着打",
+            ),
+        ),
+        (
+            "board",
+            "记分牌罢工",
+            "程序只写到 47 比 47",
+            "打到后来，先撑不住的是记分牌。场边那块电子记分牌停在 47 比 47，"
+            "然后直接黑屏——IBM 的工程师说，程序只编到 47 比 47。官网的在线记分牌"
+            "多撑了一会儿，到 50 比 50 时被重置。画面里这块牌子在 16 号场，"
+            "显示的是隔壁 18 号场的比分：第五盘，51 比 50。那天一直打到 59 比 59，"
+            "天又黑了，再停。",
+            "assets/explainer/longest-match/scoreboard.jpg",
+            "CC BY 2.0 · Wikimedia Commons · 2010 温网 16 号场记分牌，第五盘 51-50",
+            (
+                "场边记分牌停在 47-47 后黑屏",
+                "IBM：程序只编到 47-47",
+                "第二天打到 59-59 天黑再停",
+            ),
+        ),
+        (
+            "final",
+            "11 小时 5 分钟",
+            "70 比 68，纸都快写不下了",
+            "第三天下午四点四十七分，伊斯内尔终于以 70 比 68 拿下第五盘。全场"
+            "打了 183 局，总时长 11 小时 5 分钟；光第五盘就打了 8 小时 11 分钟——"
+            "比在那之前最长的一整场比赛还要长。伊斯内尔发出 113 记 ACE，马胡 103 记，"
+            "两个人都改写了纪录。画面里是这场球的官方记分卡，一共写满了七页。",
+            "assets/explainer/longest-match/scorecard.jpg",
+            "Public domain · Wikimedia Commons · 该场官方记分卡（七页）",
+            (
+                "183 局，总时长 11 小时 5 分钟",
+                "光第五盘就打了 8 小时 11 分钟",
+                "ACE：伊斯内尔 113，马胡 103",
+            ),
+        ),
+        (
+            "rules",
+            "纪录封存",
+            "规则改了，它不可能再被打破",
+            "温网后来在 18 号场的墙上立了一块牌子，把日期、比分和时长都刻了上去。"
+            "而规则也改了：2019 年温网开始，第五盘 12 比 12 打抢七；2022 年起，"
+            "四大满贯统一改成决胜盘 6 比 6 打十分抢十。也就是说，从规则上讲，"
+            "这场 11 小时 5 分钟不可能再被超过了。那你觉得，这样的比赛，"
+            "以后还会不会再有？",
+            "assets/explainer/longest-match/plaque.jpg",
+            "Jonotennis · CC BY-SA 3.0 · Wikimedia Commons · 18 号场纪念牌",
+            (
+                "温网在 18 号场立牌纪念",
+                "2019 年起第五盘 12-12 打抢七",
+                "2022 年四大满贯统一十分抢十",
+            ),
+            "",
+            "这样的比赛，以后还会有吗？",
+        ),
+    ),
+    "yellow-ball": (
+        (
+            "white",
+            "白球时代",
+            "一百年里，网球一直是白的",
+            "打开电视看网球，那颗荧光黄的球，你早就习惯了。但它变成黄色，其实还"
+            "不到六十年。1972 年以前，比赛用球一直是白的，偶尔也用黑球——"
+            "从现代网球在草地上诞生算起，白球陪着这项运动走了将近一百年。"
+            "画面里这些人，打的就是那个年代的白球。",
+            "assets/explainer/yellow-ball/white_era.jpg",
+            "CC0 · Wikimedia Commons · Slazenger 白色网球（vintage）",
+            (
+                "1972 年以前，比赛用球是白色",
+                "偶尔也用黑球，规则只认这两色",
+                "白球陪网球走了近一百年",
+            ),
+        ),
+        (
+            "tv",
+            "电视时代",
+            "问题不在场上，在屏幕上",
+            "让白球退场的，不是球员，是电视。彩色电视普及之后，转播里冒出一个"
+            "尴尬的问题：白球在屏幕上太难追踪，观众盯着看，常常跟丢那颗球。"
+            "研究给出了结论——换成荧光色，会明显更好认。于是一颗球的颜色，"
+            "第一次由镜头而不是球场说了算。",
+            "assets/explainer/yellow-ball/broadcast.jpg",
+            "AndrewHenkelman · CC BY-SA 4.0 · Wikimedia Commons · 2020 US Open",
+            (
+                "彩色电视普及，白球在屏幕上难追踪",
+                "研究结论：荧光色更容易被看见",
+                "推动改色的是转播，不是球员",
+            ),
+        ),
+        (
+            "switch",
+            "正式改色",
+            "1972 年，黄色写进规则",
+            "1972 年，国际网联正式引入黄色比赛用球，理由写得很直白：电视上"
+            "更容易看清。这种荧光色有个专门的名字，叫 optic yellow，光学黄。"
+            "它很快就流行开来。直到今天，ITF 认可的比赛用球颜色仍然只有两种："
+            "白色，和黄色。",
+            "assets/explainer/yellow-ball/optic_yellow.jpg",
+            "Steven Pisano · CC BY 2.0 · Wikimedia Commons · 2013 US Open 球童手持新球",
+            (
+                "1972 年 ITF 正式引入黄色用球",
+                "这种荧光色叫 optic yellow",
+                "至今 ITF 只认白、黄两种颜色",
+            ),
+        ),
+        (
+            "exception",
+            "温网例外",
+            "温网又多用了十四年白球",
+            "但有一个地方没跟着改，就是温布尔登。国际网联改色之后，温网继续用"
+            "白球，一直用到 1986 年才换成黄色——整整多用了十四年，是四大满贯里"
+            "最后一个松口的。这片草地上的规矩，总是最后才变。",
+            "assets/explainer/yellow-ball/wimbledon.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 1986 Wimbledon",
+            (
+                "ITF 改色后，温网继续用白球",
+                "一直用到 1986 年才换成黄球",
+                "四大满贯里最后一个松口的",
+            ),
+        ),
+        (
+            "color",
+            "一场争论",
+            "它到底是黄的，还是绿的",
+            "最后留个问题给你。这颗球叫黄球，可它真的是黄的吗？有一次流传很广的"
+            "投票里，说它是黄色的人不到一半，反而是略过半数的人投了绿色。"
+            "同一颗球，有人看到黄，有人看到绿。那你呢，你看到的是黄还是绿？"
+            "评论区说说。",
+            "assets/explainer/yellow-ball/yellow_or_green.jpg",
+            "Bertoka · CC0 · Wikimedia Commons · 上传者自述为 “green tennis ball”",
+            (
+                "官方叫它黄球，争议却没停过",
+                "投票里选黄色的不到一半",
+                "过半数的人选了绿色",
+            ),
+            "",
+            "你看到的是黄，还是绿？",
+        ),
+    ),
+}
+
+
+# The caption's opening hook and its hashtags belong to the topic, not to the
+# function. They used to be literals inside the caption builder, written for
+# Hawk-Eye — so the moment a second deck existed, the yellow-ball post opened
+# with a line about line calls and tagged itself #鹰眼 #电子司线 #法网.
+_DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识")
+_CAPTIONS: dict[str, dict] = {
+    "hawkeye": {
+        "hook": (
+            "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
+            "现在四大满贯里，只剩一个地方还没交。"
+        ),
+        "tags": ("网球", "网球时差", "鹰眼", "电子司线", "网球冷知识"),
+    },
+    "longest-match": {
+        "hook": (
+            "2010 年温网首轮，一片外场，两个没什么人关注的名字。\n"
+            "他们在那里打了三天，11 小时 5 分钟——记分牌先撑不住了。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "网球纪录", "网球冷知识"),
+    },
+    "yellow-ball": {
+        "hook": (
+            "网球是黄色的，这件事其实还不到六十年。\n"
+            "在那之前，它白了将近一百年——把它改成黄色的不是球员，是电视。"
+        ),
+        "tags": ("网球", "网球时差", "网球冷知识", "温网", "网球历史"),
+    },
 }
 
 
@@ -272,9 +488,7 @@ def _data_uri(path: Path) -> str:
     return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
-def _slide_html(
-    index: int, segment: ExplainerSegment, date_label: str, *, theme: str = "dark"
-) -> str:
+def _slide_html(index: int, segment: ExplainerSegment, *, theme: str = "dark") -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
@@ -292,14 +506,22 @@ def _slide_html(
     image_path = _REPO / segment.image if segment.image else None
     has_photo = bool(image_path and image_path.is_file())
     if has_photo:
+        # Two reasons to letterbox rather than fill the card.
+        #
         # A wide frame cropped to this 3:4 card loses its edges — and on a
         # photo of two people either side of a ball mark, the edges are the
         # subject. Letterbox those instead of cropping them away.
+        #
+        # A small frame is the other case: filling the card means scaling it
+        # up, and the vintage white balls are only 947px wide, so covering
+        # would blow them up 1.8x (3.6x at the 2x device scale) into mush.
+        # A sharp letterboxed photo beats a soft full-bleed one.
         try:
             from PIL import Image as _Image
 
             with _Image.open(image_path) as probe:
-                wide = probe.width / max(probe.height, 1) >= 1.2
+                pw, ph = probe.width, max(probe.height, 1)
+            wide = pw / ph >= 1.2 or max(W / pw, H / ph) > 1.6
         except Exception:  # noqa: BLE001
             wide = False
         fit = (
@@ -354,15 +576,13 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
 .head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
- align-items:center;justify-content:space-between;
+ align-items:center;
  text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brandwrap{{display:flex;align-items:center;gap:14px;}}
 .brand-icon{{width:52px;height:52px;object-fit:contain;
  filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
 .brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;letter-spacing:1px;}}
-.date{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
- font-size:32px;color:#d7e6dd;font-weight:600;letter-spacing:2px;}}
 .foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
  display:flex;align-items:center;justify-content:flex-end;}}
 .tag{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
@@ -387,8 +607,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
 <div class="slide">{hero}<div class="bar"></div>
-<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div>
-<div class="date">{html.escape(date_label)}</div></div>
+<div class="head"><div class="brandwrap">{brand_icon}<span class="brand">网球时差 · 网球有故事</span></div></div>
 <div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
 <div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}</div>
 <div class="foot"><div class="tag">@网球时差 · TENNIS JETLAG</div></div>
@@ -397,7 +616,6 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 
 def render_explainer_slides(
     segments: Sequence[ExplainerSegment],
-    date_label: str,
     outdir: Path,
     *,
     theme: str = "dark",
@@ -423,7 +641,7 @@ def render_explainer_slides(
                     viewport={"width": W, "height": H}, device_scale_factor=2
                 )
                 try:
-                    page.set_content(_slide_html(index, seg, date_label, theme=theme))
+                    page.set_content(_slide_html(index, seg, theme=theme))
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )
@@ -548,7 +766,6 @@ def generate_explainer_video(
     story,
     outdir: str | Path,
     *,
-    date_label: str,
     theme: str = "dark",
     voice: str = "zh-CN-YunxiNeural",
 ) -> Path:
@@ -556,6 +773,78 @@ def generate_explainer_video(
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
-    slides = render_explainer_slides(segments, date_label, outdir, theme=theme)
+    slides = render_explainer_slides(segments, outdir, theme=theme)
     audios = synthesize_narration(segments, outdir, voice=voice)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
+
+def explainer_push_html(
+    segments: Sequence[ExplainerSegment],
+    outdir: Path,
+    *,
+    date,
+    xhs_text: str,
+    video_name: str = "explainer.mp4",
+) -> str:
+    """Build the WeChat push using the knowledge post's own template.
+
+    The explainer had a bespoke body that dropped everything the knowledge
+    push had learned to carry: the 小红书 badge, the per-image "didn't load?
+    open the original" fallback, the copy-title/body/comment page, the
+    long-press hint. Reuse that template so both formats arrive looking like
+    the same publication, and append the link to the finished video, which is
+    the one thing a knowledge post does not have.
+    """
+    from ..render.knowledge import knowledge_push_html_from_parts
+
+    slides = [f"slide_{i:02d}.png" for i in range(len(segments))]
+    rel = outdir.as_posix()
+    if "output/" in rel:
+        rel = rel[rel.index("output/") :]
+    video_url = f"https://github.com/{_REPOSITORY}/raw/main/{rel}/{video_name}"
+    return knowledge_push_html_from_parts(
+        date=date,
+        image_urls=[
+            f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{name}"
+            for name in slides
+        ],
+        xhs_text=xhs_text,
+        copy_url=f"{_PAGES_URL}/{rel}/copy.html",
+        badge="知识解说视频",
+        extra_action=(video_url, "▶ 打开 9:16 成片"),
+    )
+
+
+def explainer_xiaohongshu(
+    story, segments: Sequence[ExplainerSegment], date_label: str
+) -> str:
+    """Write the Xiaohongshu caption for a finished explainer.
+
+    Follows the daily post's shape — emoji headline, hook, the beats as
+    sections, then the question and the sign-off — so a viewer who follows the
+    account reads the same voice whichever format they land on. Every line
+    comes from the beats themselves; nothing is invented for the caption.
+    """
+    closer = segments[-1]
+    question = closer.question or "你怎么看？"
+
+    # Circled numerals rather than plain digits: the slides are numbered the
+    # same way, so the caption reads as the same object.
+    circled = ("1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣")
+    sections = []
+    for index, segment in enumerate(segments):
+        marker = circled[index] if index < len(circled) else f"{index + 1}."
+        bullets = "\n".join(f"· {point}" for point in segment.points)
+        sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
+
+    caption = _CAPTIONS.get(story.slug) or {}
+    hook = caption.get("hook") or ""
+    tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
+    return (
+        f"🎾{date_label} 网球有故事｜{story.title}\n\n"
+        + (f"{hook}\n\n" if hook else "")
+        + "\n\n".join(sections)
+        + "\n\n💬 留个答案\n"
+        f"{question}\n\n"
+        "这里是 @网球时差｜网球有故事。\n\n"
+        f"{tags}"
+    )

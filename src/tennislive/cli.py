@@ -332,13 +332,35 @@ def cmd_explainer(args) -> int:
         out = generate_explainer_video(
             story,
             args.outdir,
-            date_label=f"{d.month}.{d.day}",
             theme=args.theme,
             voice=args.voice,
         )
     except ExplainerVideoError as e:
         console.print(f"[red]解说视频生成失败：{e}[/red]")
         return 2
+
+    # Leave a push body beside the video so `publish pushplus` can send the
+    # slides to WeChat; the MP4 itself cannot play inline in a push.
+    from .video.explainer import (
+        explainer_push_html,
+        explainer_script,
+        explainer_xiaohongshu,
+    )
+
+    from .render.pushmsg import to_copy_page
+
+    outdir = Path(args.outdir)
+    segments = explainer_script(story)
+    xhs_text = explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}")
+    (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
+    (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
+    (outdir / "push.html").write_text(
+        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
+        encoding="utf-8",
+    )
+    (outdir / "wechat_title.txt").write_text(
+        f"{story.title}｜{segments[0].title}", encoding="utf-8"
+    )
     console.print(f"[green]解说视频已生成：{out}[/green]")
     return 0
 
