@@ -1209,6 +1209,39 @@ def _seclabel(text: str) -> str:
 # ---------- 各卡页面 ----------
 
 
+# 竖版卡片放得下 4 行技术对比；第 5 行起会把"编辑锐评"顶出画面，2026-07-25
+# 的成品就在第四行中间被裁断。与其压行高换空间——数字缩小反而更难读——不如
+# 按"最能说明胜负"的顺序取前 4 项：总得分给出总体差距，破发兑现和 ACE/双误
+# 是决定走势的具体动作，一发得分率是发球局质量的核心指标。其余项目仍完整保留
+# 在 digest.json 和公众号版里，卡片只做取舍不做删改。
+_CARD_STAT_PRIORITY = (
+    "总得分",
+    "破发兑现",
+    "ACE / 双误",
+    "一发得分率",
+    "制胜分 / 非受迫",
+    "二发得分率",
+    "一发成功率",
+)
+_CARD_STAT_LIMIT = 4
+
+
+def card_stat_rows(
+    rows: tuple[tuple[str, str, str], ...] | list[tuple[str, str, str]],
+    limit: int = _CARD_STAT_LIMIT,
+) -> list[tuple[str, str, str]]:
+    """Pick the rows that fit the card, keeping their original reading order."""
+    rows = list(rows)
+    if len(rows) <= limit:
+        return rows
+    priority = {label: index for index, label in enumerate(_CARD_STAT_PRIORITY)}
+    ranked = sorted(
+        range(len(rows)),
+        key=lambda index: (priority.get(rows[index][0], len(priority)), index),
+    )
+    return [rows[index] for index in sorted(ranked[:limit])]
+
+
 def _trophy_or_advance(round_name: str) -> str:
     """"捧杯" only for the final itself; every other win is "过关".
 
@@ -1640,7 +1673,7 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
                 f'{html.escape(left)}</span>'
                 f'<span class="{"" if comparison.left_won else "winner"}">'
                 f'{html.escape(right)}</span></div>'
-                for label, left, right in comparison.rows
+                for label, left, right in card_stat_rows(comparison.rows)
             )
             extra_html += (
                 f'<div class="compare-head"><span>专业技术统计</span>'

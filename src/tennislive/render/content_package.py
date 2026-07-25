@@ -82,6 +82,14 @@ def _render_cards(
                 json.dumps(cover_report, ensure_ascii=False, indent=2),
                 encoding="utf-8",
             )
+            # 把这一期每个渠道的产出折进跨期台账：哪些真取到过现场图、哪些
+            # 查了几期都是空手。下一期据此决定要不要直接扩到更宽的渠道。
+            try:
+                from ..research.cover_registry import record_cover_run
+
+                record_cover_run(cover_report, today=today)
+            except Exception as exc:  # noqa: BLE001 - 记账失败不该拖垮出片
+                logger.warning("封面渠道台账更新失败：%s", exc)
 
         rendered = generate_match_deck(
             pick.match,

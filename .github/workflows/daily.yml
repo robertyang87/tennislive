@@ -356,6 +356,14 @@ jobs:
               " / 查询 " + (.value.queries|tostring) +
               (if (.value.errors|length) > 0 then " | 错误: " + (.value.errors|join("; ")) else "" end)' \
               "$COVER_REPORT"
+            # 跨期台账：哪些渠道真取到过封面、哪些查了多期一张都没有。
+            # 单期的 0 候选可能只是这场比赛冷门，连着几期都是 0 才是没覆盖。
+            jq -r '(.source_registry // {}) |
+              def names($k): (.[$k] // []) | if length == 0 then "无" else join(", ") end;
+              "  已验证渠道: " + names("proven") + "\n" +
+              "  连续空手渠道: " + names("barren")' "$COVER_REPORT"
+            jq -r 'if (.widened_by_registry // false)
+              then "  已按台账扩展到官方赛报检索" else "" end' "$COVER_REPORT"
           fi
 
           KNOWLEDGE_READY=true
