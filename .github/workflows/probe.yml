@@ -29,5 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 穷举 2004 美网 / 小威 / 卡普里亚蒂 的全部可用图片
+      - name: 穷举 Commons（含子分类，带限流退避）
         run: python tools/hunt_2004_usopen.py
+
+      - name: 跨源检索（Openverse / 维基条目 / 官方媒体 / Flickr）
+        run: python tools/multi_source_hunt.py
