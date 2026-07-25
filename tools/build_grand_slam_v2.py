@@ -303,11 +303,11 @@ Format: Layer, Start, End, Style, Text
         vo_p, amb = p["mp3"], p.get("ambient")
         if vo_p and amb:
             fc = (f"[1:a]apad=whole_dur={d:.3f},atrim=0:{d:.3f},"
-                  f"aresample=48000,pan=mono|c0=c0[v];"
-                  f"[0:a]aresample=48000[a0];"
-                  f"[a0][v]sidechaincompress=threshold=0.015:ratio=12:"
+                  f"aresample=48000,pan=mono|c0=c0,asplit=2[vo1][vo2];"
+                  f"[0:a]aresample=48000[amb0];"
+                  f"[amb0][vo1]sidechaincompress=threshold=0.015:ratio=12:"
                   f"attack=30:release=600[duck];[duck]volume=0.55[db];"
-                  f"[db][v]amix=inputs=2:duration=first:normalize=0")
+                  f"[db][vo2]amix=inputs=2:duration=first:normalize=0")
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(amb),
                             "-i", str(vo_p), "-filter_complex", fc,
                             "-t", f"{d:.3f}", "-ar", "48000", "-ac", "1",
