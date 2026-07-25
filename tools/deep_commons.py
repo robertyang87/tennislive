@@ -29,14 +29,15 @@ OUT = Path("tools/broll")
 # Commons keeps the per-year tournaments under a "... by year" container, not
 # directly under the tournament — which is why three passes walking from
 # "Category:French Open" found nothing recent and were misread as "no photos".
-ROOTS = {
-    # "as of 2026 only Roland-Garros still keeps human line judges" is only
-    # convincing over a frame from this year's tournament, so take 2026 first
-    # and fall back through recent years.
-    "rg2026": ("Category:2026 French Open", 3),
-    "rg2025": ("Category:2025 French Open", 3),
-    "rg2024": ("Category:2024 French Open", 3),
+# Guessing year-category names has now failed four times ("2025 French Open",
+# "2025 Roland Garros", "2026 French Open"...). Ask the by-year container which
+# editions it actually holds and walk the newest ones.
+YEAR_CONTAINERS = {
+    "rg": "Category:French Open by year",
+    "uso": "Category:US Open (tennis) by year",
 }
+NEWEST_EDITIONS = 3
+ROOTS: dict[str, tuple[str, int]] = {}
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
 MIN_W, MIN_H = 1200, 800
@@ -171,9 +172,26 @@ def _petscan(category: str, depth: int) -> list[str]:
         return []
 
 
+def _discover_roots() -> dict[str, tuple[str, int]]:
+    """Name the newest editions from the by-year container itself."""
+    roots: dict[str, tuple[str, int]] = {}
+    for prefix, container in YEAR_CONTAINERS.items():
+        editions = _members(container, "subcat")
+        dated = sorted(
+            ((_year(c), c) for c in editions if _year(c)),
+            reverse=True,
+        )
+        print(f"\n##### {container}: {len(editions)} editions; newest:")
+        for year, cat in dated[:6]:
+            print(f"    {year}  {cat}")
+        for year, cat in dated[:NEWEST_EDITIONS]:
+            roots[f"{prefix}{year}"] = (cat, 2)
+    return roots
+
+
 def main() -> None:
     manifest: dict = {}
-    for slot, (root, depth) in ROOTS.items():
+    for slot, (root, depth) in _discover_roots().items():
         titles, cats = _walk(root, depth)
         print(f"\n===== {slot}: walked {len(cats)} categories, {len(titles)} files")
         for c in cats[:40]:
