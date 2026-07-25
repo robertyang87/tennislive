@@ -35,20 +35,18 @@ SEEDS: dict[str, list[str]] = {
         "2024 US Open (tennis)",
         "2023 US Open (tennis)",
     ],
-    "chatrier": [
-        "2025 French Open",
-        "2024 French Open",
-        "2023 French Open",
-        "Court Philippe Chatrier",
-    ],
+    # Commons files these under "<year> Roland Garros", not "French Open" —
+    # the earlier "2025 French Open" seeds matched nothing.
     "rg_recent": [
-        "2025 French Open",
-        "2024 French Open",
-        "2023 French Open",
+        "2025 Roland Garros",
+        "2024 Roland Garros",
+        "2023 Roland Garros",
+        "2022 Roland Garros",
     ],
     "wimbledon_recent": [
         "2025 Wimbledon Championships",
         "2024 Wimbledon Championships",
+        "2023 Wimbledon Championships",
     ],
 }
 
