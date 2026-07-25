@@ -184,7 +184,7 @@ def build_broll_video(cuts, total, chrome, dst):
             cmd += ["-loop", "1", "-t", f"{d_i:.3f}", "-i", path]
             parts.append(
                 f"[{i}:v]scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase,"
-                f"crop={W * 2}:{H * 2},zoompan=z='1+0.07*on/{nf}':"
+                f"crop={W * 2}:{H * 2},setsar=1,zoompan=z='1+0.07*on/{nf}':"
                 f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={nf}:s={W}x{H}:fps={FPS},"
                 f"settb=AVTB,setpts=PTS-STARTPTS,"
                 f"eq=brightness=-0.04:saturation=1.05[v{i}]")
@@ -192,7 +192,7 @@ def build_broll_video(cuts, total, chrome, dst):
             cmd += ["-ss", f"{start:.2f}", "-t", f"{d_i:.3f}", "-i", path]
             parts.append(
                 f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
-                f"crop={W}:{H},fps={FPS},settb=AVTB,setpts=PTS-STARTPTS,"
+                f"crop={W}:{H},setsar=1,fps={FPS},settb=AVTB,setpts=PTS-STARTPTS,"
                 f"eq=brightness=-0.04:saturation=1.05[v{i}]")
     n = len(cuts)
     cmd += ["-i", str(chrome)]
