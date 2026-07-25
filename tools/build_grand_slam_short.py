@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -542,48 +543,83 @@ def write_description(scenes, meta, path):
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def _audio_dur(ff, path):
+    r = subprocess.run([ff, "-i", str(path)], capture_output=True, text=True)
+    m = re.search(r"Duration:\s*(\d+):(\d+):(\d+\.\d+)", r.stderr)
+    return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3)) if m else 0.0
+
+
+def _synth_edge(text, dst, voice, rate):
+    import asyncio
+    import ssl
+
+    import edge_tts
+    import edge_tts.communicate as ec
+    ca = "/root/.ccr/ca-bundle.crt"
+    if Path(ca).exists():
+        ec._SSL_CTX = ssl.create_default_context(cafile=ca)
+    asyncio.run(edge_tts.Communicate(text, voice, rate=rate).save(str(dst)))
+
+
+def _synth_gtts(text, dst):
+    from gtts import gTTS
+    gTTS(text, lang="zh-CN").save(str(dst))
+
+
 def try_tts(scenes, meta, outdir, ff):
-    try:
-        import asyncio
-        import ssl
-
-        import edge_tts
-        import edge_tts.communicate as ec
-
-        ca = "/root/.ccr/ca-bundle.crt"
-        if Path(ca).exists():
-            ec._SSL_CTX = ssl.create_default_context(cafile=ca)
-        voice = meta.get("voice", "zh-CN-YunjianNeural")
-        rate = meta.get("voice_rate", "+8%")
-        tdir = outdir / "_tts"
-        tdir.mkdir(exist_ok=True)
-        clips = []
-
-        async def synth(text, dst):
-            await edge_tts.Communicate(text, voice, rate=rate).save(str(dst))
-
-        for i, sc in enumerate(scenes):
-            vo = sc.get("vo", "").strip()
-            raw = tdir / f"vo_{i:02d}.mp3"
-            if vo:
-                asyncio.run(synth(vo, raw))
-            else:
-                subprocess.run([ff, "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
-                                "-t", "0.5", str(raw)], check=True, capture_output=True)
-            pad = tdir / f"pad_{i:02d}.mp3"
-            subprocess.run([ff, "-y", "-i", str(raw), "-af",
-                            f"apad=whole_dur={float(sc['dur'])}", "-t", str(float(sc["dur"])),
-                            str(pad)], check=True, capture_output=True)
-            clips.append(pad)
-        lst = tdir / "list.txt"
-        lst.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
-        out = outdir / "voiceover.mp3"
-        subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
-                        str(out)], check=True, capture_output=True, cwd=str(tdir))
-        return out
-    except Exception as exc:
-        print(f"  · TTS 不可用，跳过自动配音（{type(exc).__name__}）。用 captions.srt / narration.txt 自行配音。")
+    """生成中文配音（原创解说文案）。优先 edge-tts（音质更好），不可用时回退 gTTS。
+    每句按镜头时长对齐：过长则加速，过短则补静音，保证音画同步。"""
+    voice = meta.get("voice", "zh-CN-YunjianNeural")
+    rate = meta.get("voice_rate", "+8%")
+    tdir = outdir / "_tts"
+    tdir.mkdir(exist_ok=True)
+    probe = next((s["vo"] for s in scenes if s.get("vo", "").strip()), "测试")
+    engine = None
+    for name, fn in (("edge", lambda: _synth_edge(probe, tdir / "probe.mp3", voice, rate)),
+                     ("gtts", lambda: _synth_gtts(probe, tdir / "probe.mp3"))):
+        try:
+            fn()
+            engine = name
+            break
+        except Exception as exc:
+            print(f"  · {name} 配音不可用（{type(exc).__name__}）")
+    if not engine:
+        print("  · 无可用 TTS，输出静音；用 captions.srt / narration.txt 自行配音。")
         return None
+    print(f"  · 配音引擎：{engine}")
+
+    def silence(dst, dur):
+        subprocess.run([ff, "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                        "-t", f"{dur:.3f}", str(dst)], check=True, capture_output=True)
+
+    clips = []
+    for i, sc in enumerate(scenes):
+        vo = sc.get("vo", "").strip()
+        dur = float(sc["dur"])
+        raw = tdir / f"v{i:02d}.mp3"
+        if vo:
+            try:
+                _synth_edge(vo, raw, voice, rate) if engine == "edge" else _synth_gtts(vo, raw)
+            except Exception:
+                silence(raw, 0.4)
+        else:
+            silence(raw, 0.4)
+        ad = _audio_dur(ff, raw)
+        af = []
+        if ad > dur > 0:
+            af.append(f"atempo={min(ad / dur, 1.8):.3f}")
+        af.append("apad")
+        fit = tdir / f"f{i:02d}.mp3"
+        subprocess.run([ff, "-y", "-i", str(raw), "-af", ",".join(af), "-t", f"{dur:.3f}",
+                        "-ar", "44100", str(fit)], check=True, capture_output=True)
+        clips.append(fit)
+    lst = tdir / "list.txt"
+    lst.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
+    out = outdir / "voiceover.mp3"
+    subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
+                    "-c:a", "libmp3lame", "-b:a", "192k", str(out)],
+                   check=True, capture_output=True, cwd=str(tdir))
+    return out
 
 
 def storyboard_sheet(frames, path, cols=4):
