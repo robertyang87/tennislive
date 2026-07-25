@@ -12,7 +12,16 @@ from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import parse_qsl, unquote, urlencode, urljoin, urlparse, urlunparse
+from urllib.parse import (
+    parse_qsl,
+    quote_plus,
+    unquote,
+    urlencode,
+    urljoin,
+    urlparse,
+    urlunparse,
+)
+from xml.etree import ElementTree
 from zoneinfo import ZoneInfo
 
 import requests
@@ -2290,6 +2299,85 @@ def _expand_official_source_candidate(
     return expanded
 
 
+_RECAP_NEWS_RSS = (
+    "https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
+)
+
+
+def _recap_search_query(match: Match) -> str:
+    """Scope a news query to the tour's official newsroom plus both surnames."""
+    site = (
+        "site:wtatennis.com/news"
+        if match.tour is not None and match.tour.value == "WTA"
+        else "site:atptour.com/en/news"
+    )
+    surnames = [
+        re.findall(r"[^\W\d_]{2,}", player.name)[-1]
+        for player in (match.home[:1] + match.away[:1])
+        if re.findall(r"[^\W\d_]{2,}", player.name)
+    ]
+    return " ".join([site, *(f'"{name}"' for name in surnames)])
+
+
+def _official_recap_candidates(
+    match: Match,
+    session: requests.Session,
+) -> list[dict]:
+    """Find the tour's own recap of this match and take its match photograph.
+
+    Low-profile fixtures have no stock-library coverage at all: on
+    2026-07-25 every image provider returned zero candidates for an ATP 250
+    quarterfinal, so the cover fell back to a branded court graphic. The one
+    place a genuine photograph of that match reliably exists is the tour's
+    own write-up of it.
+
+    _daily_editorial_candidates only reads links already attached to the
+    match, and a fixture nobody flagged carries none -- hence this lookup.
+    Discovery goes through the same Google News official-domain index the
+    trend radar already uses, and only the single article it points at is
+    fetched; the project deliberately does not crawl the tour sites in bulk.
+    Every hit still passes _expand_official_source_candidate, which accepts a
+    page only when its own metadata names both players, so an unrelated
+    article cannot supply the photo.
+    """
+    query = _recap_search_query(match)
+    try:
+        response = session.get(
+            _RECAP_NEWS_RSS.format(query=quote_plus(query)), timeout=12
+        )
+        response.raise_for_status()
+        root = ElementTree.fromstring(response.content)
+    except (requests.RequestException, ElementTree.ParseError):
+        return []
+
+    candidates: list[dict] = []
+    seen: set[str] = set()
+    for item in root.findall(".//item")[:8]:
+        link = (item.findtext("link") or "").strip()
+        if not link.startswith("https://"):
+            continue
+        url = link
+        if "news.google." in urlparse(link).hostname or "":
+            # RSS links are Google redirects; resolve to the publisher's own URL.
+            try:
+                resolved = session.get(link, timeout=12, allow_redirects=True)
+                url = str(resolved.url or "")
+            except requests.RequestException:
+                continue
+        if not url.startswith("https://") or not _is_official_tour_media_url(url):
+            continue
+        if url in seen:
+            continue
+        seen.add(url)
+        expanded = _expand_official_source_candidate(
+            match, {"source_url": url, "provider": "official-recap-search"}, session
+        )
+        if expanded is not None:
+            expanded["provider"] = "official-recap-search"
+            candidates.append(expanded)
+    return candidates
+
+
 def _daily_editorial_candidates(
     match: Match,
     player_name: str,
@@ -2463,6 +2551,18 @@ def resolve_match_cover_visual(
         }
     )
     report["editorial_source_urls"] = editorial_urls
+
+    # 图库对低关注度场次几乎没有覆盖，但巡回赛官方一定会写这场的赛后报道，
+    # 那篇文章的头图就是当场比赛的真实照片。只在这条比赛没有已关联官方链接
+    # 时才去检索，避免重复取数。
+    if not editorial_urls and players:
+        recap = _official_recap_candidates(match, session)
+        report["official_recap_candidates"] = len(recap)
+        if recap:
+            report["providers_queried"].append("official-recap-search")
+            recap_query = _recap_search_query(match)
+            pool.extend((players[0], recap_query, item) for item in recap)
+
     for player in players:
         queries = _daily_cover_queries(match, player.name)
         direct = _daily_editorial_candidates(match, player.name, session)
