@@ -39,17 +39,16 @@ YEAR_CONTAINERS = {
 # Beat 5 says clay keeps the ball's mark; these categories are where a frame
 # of an actual mark, or an umpire reading one, would live.
 EXTRA_ROOTS = {
-    "ballmark": ("Category:Tennis ball marks", 2),
+    "ballmark": ("Category:Tennis ball marks", 1),
     "clay": ("Category:Clay tennis courts", 1),
-    "umpire_clay": ("Category:Tennis umpires", 1),
 }
-NEWEST_EDITIONS = 4
+NEWEST_EDITIONS = 2
 ROOTS: dict[str, tuple[str, int]] = {}
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
 MIN_W, MIN_H = 1200, 800
 PER_ROOT = 16
-MAX_CATEGORIES = 120  # keep a deep walk from turning into a full crawl
+MAX_CATEGORIES = 40  # keep a deep walk from turning into a full crawl
 
 
 def _api(**params):
@@ -58,7 +57,7 @@ def _api(**params):
     last = None
     for attempt in range(5):
         try:
-            time.sleep(0.5)
+            time.sleep(0.2)
             r = requests.get(
                 API,
                 params=params,
@@ -206,6 +205,9 @@ def main() -> None:
     manifest: dict = {}
     for slot, (root, depth) in _discover_roots().items():
         titles, cats = _walk(root, depth)
+        # Describing thousands of files is what pushed the job past its
+        # timeout; a couple of hundred is plenty to choose from.
+        titles = titles[:240]
         print(f"\n===== {slot}: walked {len(cats)} categories, {len(titles)} files")
         for c in cats[:40]:
             print(f"    {c}")
