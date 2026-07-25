@@ -2854,3 +2854,33 @@ def test_only_the_final_is_described_as_lifting_the_trophy():
     assert _trophy_or_advance("决赛") == "捧杯"
     for not_a_final in ("半决赛", "四分之一决赛", "八分之一决赛", "第一轮", "本轮"):
         assert _trophy_or_advance(not_a_final) == "过关", not_a_final
+
+
+def test_lead_card_stats_table_fits_without_clipping():
+    """头条页技术表被卡片底部截断（2026-07-25 成品）.
+
+    当天官方统计给出 6 行，卡片只放得下 4 行，第四行被裁在一半、"编辑锐评"
+    也被顶出画面。取舍按"最能说明胜负"排序，但保持原有阅读顺序；完整数据仍
+    保留在 digest.json 与公众号版里。
+    """
+    from tennislive.render.webcards import _CARD_STAT_LIMIT, card_stat_rows
+
+    full = [
+        ("总得分", "43", "63"),
+        ("一发成功率", "57%", "62%"),
+        ("一发得分率", "50%", "77%"),
+        ("二发得分率", "39%", "43%"),
+        ("ACE / 双误", "2 / 3", "4 / 1"),
+        ("破发兑现", "1/5", "4/8"),
+    ]
+
+    picked = card_stat_rows(full)
+
+    assert len(picked) == _CARD_STAT_LIMIT
+    assert [row[0] for row in picked] == ["总得分", "一发得分率", "ACE / 双误", "破发兑现"]
+    # 入选行必须保持原表的先后顺序，不能被优先级打乱读起来跳跃。
+    assert [row[0] for row in picked] == [
+        row[0] for row in full if row in picked
+    ]
+    # 行数本来就不超上限时原样呈现，不做任何删减。
+    assert card_stat_rows(full[:3]) == full[:3]
