@@ -618,10 +618,14 @@ def explainer_xiaohongshu(
     closer = segments[-1]
     question = closer.question or "你怎么看？"
 
+    # Circled numerals rather than plain digits: the slides are numbered the
+    # same way, so the caption reads as the same object.
+    circled = ("1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣")
     sections = []
-    for index, segment in enumerate(segments, start=1):
+    for index, segment in enumerate(segments):
+        marker = circled[index] if index < len(circled) else f"{index + 1}."
         bullets = "\n".join(f"· {point}" for point in segment.points)
-        sections.append(f"{index}｜{segment.label}：{segment.title}\n{bullets}")
+        sections.append(f"{marker} {segment.label}：{segment.title}\n{bullets}")
 
     tags = " ".join(
         f"#{tag}"
