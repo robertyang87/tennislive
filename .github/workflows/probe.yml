@@ -29,11 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 摸清分类真实命名（别再猜）
-        run: python tools/discover_categories.py
-
-      - name: 抓取候选（阿瑟·阿什全景 / 近年法网）
-        run: python tools/commons_category_grab.py
+      - name: 递归下钻分类树（美网 / 阿瑟·阿什 / 法网）
+        run: python tools/deep_commons.py
 
       - name: 提交候选供人工目检
         run: |
