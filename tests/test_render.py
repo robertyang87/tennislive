@@ -2918,7 +2918,12 @@ def test_insight_body_result_page_has_no_stats_falls_back_to_arc_and_verdict():
 
 def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exists():
     """只有当官方/授权数据源提供了真实技战术统计（发球%、ACE、破发、制胜分等）
-    时，第二页才展示"专业技术统计"表格——这时表格标题和内容都必须是真数据。"""
+    时，第二页才展示"专业技术统计"表格——这时表格标题和内容都必须是真数据。
+
+    有了真数据，"比赛走势"那句文字概括就要让位：它本来就是没有统计时的降级
+    说法（"直落2盘，全程没有让对手看到机会"），和下面的数字讲的是同一件事。
+    2026-07-25 的成品正是被它挤到把技术对比表第四行从中间切开。
+    """
     from datetime import date
 
     from tennislive.models import MatchStats, StatPair
@@ -2934,10 +2939,37 @@ def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exis
     html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
 
     assert "编辑锐评" in html_out
-    assert "比赛走势" in html_out
+    assert "比赛走势" not in html_out  # 有数据就不再退回文字概括
     assert "compare-grid" in html_out and "compare-row" in html_out
     assert "专业技术统计" in html_out
     assert "一发得分率" in html_out and "ACE" in html_out
+
+
+def test_stats_table_and_arc_never_appear_together():
+    """同一张卡上不能既放技术对比又放"比赛走势"：两者说的是同一件事，
+    并排放只会互相挤版面，把真正的数字挤出画面。"""
+    from datetime import date
+
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.webcards import insight_body
+
+    def render(with_stats: bool) -> str:
+        match = make_match(
+            sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8))
+        )
+        if with_stats:
+            match.stats = MatchStats(
+                source="WTA",
+                first_serve_won_pct=StatPair(home=72, away=64),
+                aces=StatPair(home=12, away=6),
+                break_points_won=StatPair(home=4, away=2),
+            )
+        return insight_body(match, "7.23", "result", date(2026, 7, 23))
+
+    for with_stats in (True, False):
+        html_out = render(with_stats)
+        assert ("比赛走势" in html_out) is not ("compare-grid" in html_out)
+        assert "编辑锐评" in html_out  # 无论哪条路径，锐评都必须留在卡上
 
 
 def test_editor_takeaway_fallback_names_the_actual_players_not_boilerplate():
