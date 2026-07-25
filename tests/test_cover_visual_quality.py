@@ -1081,3 +1081,43 @@ def test_atp_maxres_profile_only_adjusts_fixed_resolution_failure():
     assert adjusted["hard_failures"] == ["too-dark"]
     assert adjusted["status"] == "fail"
     assert audit["hard_failures"] == ["resolution-below-900x1200", "too-dark"]
+
+
+def test_cover_report_records_why_each_image_source_came_back_empty(
+    monkeypatch, tmp_path
+):
+    """封面退回品牌底图时要能看出该修哪个图片源（2026-07-25 生产事故）.
+
+    当天四个头条候选全部 attempts=0、只能用品牌底图，但报告里只有一句"没有找到
+    合格照片"：检索器各自吞掉网络异常并返回空列表，于是"这个源本来就没有这位
+    球员的照片"和"这个源今天调不通"完全无法区分。
+    """
+    from tennislive.research import visual_sources
+
+    match = make_match(
+        home_name="Luca Van Assche",
+        away_name="Andrey Rublev",
+        tournament="Estoril Open",
+    )
+    monkeypatch.setenv("TENNISLIVE_COVER_VISUAL_FETCH", "on")
+    monkeypatch.setattr(visual_sources, "_wta_video_hub_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_daily_editorial_candidates", lambda *_a: [])
+    # 一个源真的没有这位球员的照片，另一个源今天调不通。
+    monkeypatch.setattr(visual_sources, "_commons_candidates", lambda *_a: [])
+    monkeypatch.setattr(visual_sources, "_openverse_candidates", lambda *_a: [])
+
+    def broken_bing(*_args):
+        raise RuntimeError("HTTP 403 blocked")
+
+    monkeypatch.setattr(visual_sources, "_bing_candidates", broken_bing)
+
+    visual, report = visual_sources.resolve_match_cover_visual(match, tmp_path)
+
+    assert visual is None
+    stats = report["provider_results"]
+    assert stats["wikimedia-commons"]["candidates"] == 0
+    assert stats["wikimedia-commons"]["errors"] == []
+    assert stats["bing-web-image"]["candidates"] == 0
+    assert any("403" in err for err in stats["bing-web-image"]["errors"])
+    # 官方媒体图依赖比赛已关联的链接，链接数要能看到。
+    assert report["editorial_source_urls"] == 0

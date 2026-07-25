@@ -2447,6 +2447,22 @@ def resolve_match_cover_visual(
         pool.extend((players[0], hub_query, item) for item in wta_hub_candidates)
     report["wta_video_hub_candidates"] = len(wta_hub_candidates)
     search_jobs: list[tuple[object, str, str, object]] = []
+    # 官方媒体图只能从比赛已关联的链接里抠 og:image，没有链接就一张都取不到。
+    # 报告里记下可用链接数，否则"这场没有官方报道"会被误读成"官方源挂了"。
+    editorial_urls = len(
+        {
+            str(url or "").strip()
+            for url in [match.editorial_url, *match.schedule_source_urls]
+            + [
+                str(signal.get("url", ""))
+                for signal in match.trend_signals
+                if isinstance(signal, dict)
+                and str(signal.get("kind", "")) == "official-news"
+            ]
+            if str(url or "").strip().startswith("https://")
+        }
+    )
+    report["editorial_source_urls"] = editorial_urls
     for player in players:
         queries = _daily_cover_queries(match, player.name)
         direct = _daily_editorial_candidates(match, player.name, session)
@@ -2463,14 +2479,33 @@ def resolve_match_cover_visual(
         player, query, provider, loader = job
         worker_session = requests.Session()
         worker_session.headers.update({"User-Agent": _UA})
-        return player, query, provider, loader(query, worker_session)
+        # 图片检索器各自吞掉网络异常并返回空列表，于是"这个源本来就没有这位
+        # 球员的照片"和"这个源今天调不通"在报告里长得一样。2026-07-25 四个头条
+        # 候选全部 attempts=0、只能退回品牌底图，却无从判断该修哪个源。
+        try:
+            return player, query, provider, loader(query, worker_session), None
+        except Exception as exc:  # noqa: BLE001 - 单个源失败不该中断整轮检索
+            return player, query, provider, [], f"{type(exc).__name__}: {exc}"
 
+    # 每个源各自记账：返回了多少候选、报了什么错，直接写进 cover_visual.json。
+    provider_results: dict[str, dict] = {
+        provider: {"candidates": 0, "queries": 0, "errors": []}
+        for provider, _loader in provider_loaders
+    }
     with ThreadPoolExecutor(max_workers=min(8, len(search_jobs) or 1)) as executor:
-        for player, query, provider, items in executor.map(fetch_job, search_jobs):
+        for player, query, provider, items, error in executor.map(fetch_job, search_jobs):
+            stat = provider_results.setdefault(
+                provider, {"candidates": 0, "queries": 0, "errors": []}
+            )
+            stat["queries"] += 1
+            if error and error not in stat["errors"]:
+                stat["errors"].append(error)
             for item in items:
+                stat["candidates"] += 1
                 item = dict(item)
                 item["provider"] = provider
                 pool.append((player, query, item))
+    report["provider_results"] = provider_results
 
     expanded_urls: set[str] = set()
     expanded_count = 0
