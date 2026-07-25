@@ -342,7 +342,11 @@ def cmd_explainer(args) -> int:
 
     # Leave a push body beside the video so `publish pushplus` can send the
     # slides to WeChat; the MP4 itself cannot play inline in a push.
-    from .video.explainer import explainer_push_html, explainer_script
+    from .video.explainer import (
+        explainer_push_html,
+        explainer_script,
+        explainer_xiaohongshu,
+    )
 
     outdir = Path(args.outdir)
     segments = explainer_script(story)
@@ -351,6 +355,9 @@ def cmd_explainer(args) -> int:
     )
     (outdir / "wechat_title.txt").write_text(
         f"{story.title}｜{segments[0].title}", encoding="utf-8"
+    )
+    (outdir / "xiaohongshu.txt").write_text(
+        explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}"), encoding="utf-8"
     )
     console.print(f"[green]解说视频已生成：{out}[/green]")
     return 0
