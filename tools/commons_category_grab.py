@@ -35,8 +35,10 @@ SEEDS: dict[str, list[str]] = {
     ],
     "us_open_match": [
         "2004 US Open (tennis)",
+        "Serena Williams",
         "Arthur Ashe Stadium",
-        "US Open (tennis) 2005",
+        "US Open (tennis)",
+        "USTA Billie Jean King National Tennis Center",
     ],
 }
 
@@ -143,6 +145,7 @@ def main() -> None:
         slot_dir.mkdir(parents=True, exist_ok=True)
         kept: list[dict] = []
         seen: set[str] = set()
+        rejects: dict[str, int] = {}
         for seed in SEEDS[slot]:
             for category in _find_categories(session, seed):
                 try:
@@ -161,8 +164,10 @@ def main() -> None:
                     seen.add(info["url"])
                     lic = (info["license"] or "").lower()
                     if not any(lic.startswith(f) or f in lic for f in FREE):
+                        rejects["licence"] = rejects.get("licence", 0) + 1
                         continue
                     if info["width"] < MIN_W or info["height"] < MIN_H:
+                        rejects["size"] = rejects.get("size", 0) + 1
                         continue
                     try:
                         resp = session.get(info["url"], timeout=30)
@@ -183,7 +188,7 @@ def main() -> None:
             if len(kept) >= PER_SEED:
                 break
         manifest[slot] = kept
-        print(f"[{slot}] kept {len(kept)}")
+        print(f"[{slot}] kept {len(kept)}; dropped {rejects or 'none'}")
 
     path = OUT / "categories.json"
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), "utf-8")
