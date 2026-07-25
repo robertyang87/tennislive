@@ -8,7 +8,7 @@
     "title": "网球四大满贯",
     "voice": "zh-CN-YunjianNeural",
     "voice_rate": "+8%",
-    "note": "解说文案为原创科普文字，未复制任何参考视频或第三方文案，且刻意不使用统计数字。配图为精选的可复用授权图（球员实拍 + 场馆，多为红土/草地/硬地实景），片中不烧录署名，署名统一放进发布文案（CC 许可要求署名，公有领域/CC0 除外）。脚本无下载器，不抓取任何受版权保护的视频。如需换成官方比赛画面，按发布文案与 docs 的授权流程替换即可。"
+    "note": "介绍赛事本身（球场、场地、氛围），不聚焦球员；不提金满贯；解说为原创科普文字，刻意不使用统计数字。配图为精选的可复用授权场馆/球场实拍（CC/CC0/公有领域），片中不烧录出处，署名进发布文案；CC0 与公有领域无需署名。脚本无下载器，不从 YouTube 等抓取任何受版权保护的视频；官方比赛画面请按 docs 的授权流程自行取得后替换占位镜头。"
   },
   "scenes": [
     {
@@ -36,12 +36,12 @@
       "dur": 15.0,
       "type": "photo",
       "accent": "#f2b32a",
-      "image": "assets/players/jannik-sinner.jpg",
-      "focal": [0.42, 0.62],
-      "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons",
+      "image": "assets/venues/cincinnati-lindner-tennis-center.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
       "section": {"en": "The Grand Slams", "zh": "网坛最高殿堂", "surface": "巅峰之战", "color": "#f2b32a"},
-      "vo": "这里是网坛最高的舞台，最耀眼的灯光。一座奖杯，就足以定义一个球员的伟大；而把它们全部集齐，是无数人穷尽一生去追逐的梦。",
-      "caption": "一座奖杯 · 定义伟大"
+      "vo": "澳网、法网、温网、美网，是网坛级别最高、历史最悠久的四项赛事，也是每个赛季最耀眼的舞台。",
+      "caption": "网坛 · 最高殿堂"
     },
     {
       "id": "s04_surfaces",
@@ -50,11 +50,11 @@
       "accent": "#f2b32a",
       "section": {"en": "Three Surfaces", "zh": "三种场地", "surface": "红土 · 草地 · 硬地", "color": "#f2b32a"},
       "panels": [
-        {"image": "assets/players/stefanos-tsitsipas.jpg", "label": "红土", "color": "#c96a34", "focal": [0.5, 0.4], "credit": "图：si.robi · CC BY-SA 2.0 · Wikimedia Commons"},
-        {"image": "assets/players/carlos-alcaraz.jpg", "label": "草地", "color": "#2f9448", "focal": [0.42, 0.35], "credit": "图：12121343A · CC BY-SA 4.0 · Wikimedia Commons"},
-        {"image": "assets/players/coco-gauff.jpg", "label": "硬地", "color": "#2f7de1", "focal": [0.5, 0.4], "credit": "图：Hameltion · CC BY-SA 4.0 · Wikimedia Commons"}
+        {"image": "assets/trivia/trivia-surfaces.jpg", "label": "红土", "color": "#c96a34", "focal": [0.5, 0.5], "credit": "图：JC · CC BY-SA 2.0 · Wikimedia Commons"},
+        {"image": "assets/explainer/hawkeye/line_judges.jpg", "label": "草地", "color": "#2f9448", "focal": [0.5, 0.5], "credit": ""},
+        {"image": "assets/venues/washington-fitzgerald-tennis-center.jpg", "label": "硬地", "color": "#2f7de1", "focal": [0.5, 0.5], "credit": ""}
       ],
-      "vo": "硬地、红土、草地。四大满贯，是这颗星球上唯一要在三种截然不同的场地上分出胜负的顶级赛事。每一种场地，都是一种全新的打法，一种全新的性格。",
+      "vo": "更特别的是，它们要在三种截然不同的场地上决出胜负——红土、草地、硬地。每一种场地，都是一种全新的节奏，一种全新的战术。",
       "caption": "三种场地 · 三种战争"
     },
     {
@@ -70,14 +70,16 @@
     {
       "id": "s06_ao",
       "dur": 17.0,
-      "type": "photo",
+      "type": "placeholder",
       "index": 1,
       "accent": "#2f7de1",
-      "image": "assets/players/iga-swiatek.jpg",
-      "focal": [0.5, 0.5],
-      "credit": "图：QWisps · CC BY-SA 4.0 · Wikimedia Commons",
       "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛", "surface": "硬地 · 墨尔本", "color": "#2f7de1"},
-      "vo": "新赛季的揭幕大满贯，在灼热的阳光下拉开序幕。蓝色的球场，极限的高温，球员们拼到最后一刻。于是它有了一个温暖的名字——快乐的大满贯。",
+      "slot": {
+        "desc": "澳网官方赛事画面：罗德·拉沃球场、蓝色硬地、开合顶棚、盛夏氛围",
+        "secs": 17,
+        "source": "Australian Open / Tennis Australia 官方授权"
+      },
+      "vo": "新赛季的揭幕大满贯，在灼热的阳光下拉开序幕。蓝色的硬地，极限的高温，让这里既残酷又热烈，人们叫它——快乐的大满贯。",
       "caption": "快乐大满贯 · 盛夏墨尔本"
     },
     {
@@ -92,16 +94,16 @@
     },
     {
       "id": "s08_rg",
-      "dur": 18.0,
+      "dur": 17.0,
       "type": "photo",
       "index": 2,
       "accent": "#c96a34",
-      "image": "assets/players/novak-djokovic.jpg",
-      "focal": [0.5, 0.45],
-      "credit": "图：Kuberzog · CC BY 4.0 · Wikimedia Commons",
+      "image": "assets/explainer/hawkeye/roland_garros_wide.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons",
       "section": {"en": "Roland-Garros", "zh": "法国网球公开赛", "surface": "红土 · 巴黎", "color": "#c96a34"},
-      "vo": "这是最考验耐心与意志的战场。泥土拖慢了球速，也把回合无限拉长。你必须一分一分地去磨，去熬，直到对手崩溃的那一刻。红土之上，只属于真正的斗士。",
-      "caption": "红土之上 · 只属于斗士"
+      "vo": "这是最考验耐心与意志的战场。红土拖慢了球速，把回合无限拉长，胜利往往属于坚持到最后的那一个。",
+      "caption": "红土 · 耐力的战场"
     },
     {
       "id": "s09_wim_head",
@@ -115,16 +117,16 @@
     },
     {
       "id": "s10_wim",
-      "dur": 18.0,
+      "dur": 17.0,
       "type": "photo",
       "index": 3,
       "accent": "#2f9448",
-      "image": "assets/players/carlos-alcaraz.jpg",
-      "focal": [0.42, 0.3],
-      "credit": "图：12121343A · CC BY-SA 4.0 · Wikimedia Commons",
+      "image": "assets/explainer/hawkeye/line_judges.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
       "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛", "surface": "草地 · 伦敦", "color": "#2f9448"},
-      "vo": "这里是网球最古老、也最神圣的殿堂。纯白的着装，翠绿的草坪，处处都写着传统与优雅。草地上球速最快，擅长发球上网的人如鱼得水。能在这里捧起奖杯，是至高无上的荣耀。",
-      "caption": "最古老 · 最神圣的殿堂"
+      "vo": "这里是网球最古老、也最传统的殿堂。纯白的着装，翠绿的草坪，处处都写着优雅。草地球速最快，胜负常在电光石火之间。",
+      "caption": "最古老 · 最传统"
     },
     {
       "id": "s11_uso_head",
@@ -138,7 +140,7 @@
     },
     {
       "id": "s12_uso",
-      "dur": 18.0,
+      "dur": 17.0,
       "type": "photo",
       "index": 4,
       "accent": "#1f6fb2",
@@ -146,38 +148,21 @@
       "focal": [0.5, 0.4],
       "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons",
       "section": {"en": "US Open", "zh": "美国网球公开赛", "surface": "硬地 · 纽约", "color": "#1f6fb2"},
-      "vo": "赛季收官的大满贯，也是最喧闹、最热血的一站。灯火通明的夜场，山呼海啸的呐喊，每一分都像一场表演。在这里，巨星和观众一起，把网球彻底点燃。",
+      "vo": "赛季收官的大满贯，也是最喧闹、最热闹的一站。灯火通明的夜场，山呼海啸的呐喊，把网球变成一场盛大的狂欢。",
       "caption": "不夜之城 · 点燃全场"
     },
     {
-      "id": "s13_legends",
-      "dur": 14.0,
-      "type": "collage",
-      "accent": "#f2b32a",
-      "section": {"en": "Legends Are Made Here", "zh": "传奇在此诞生", "surface": "群星闪耀", "color": "#f2b32a"},
-      "cells": [
-        {"image": "assets/players/novak-djokovic.jpg", "focal": [0.5, 0.45], "credit": "图：Kuberzog · CC BY 4.0 · Wikimedia Commons"},
-        {"image": "assets/players/jannik-sinner.jpg", "focal": [0.42, 0.62], "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons"},
-        {"image": "assets/players/stefanos-tsitsipas.jpg", "focal": [0.5, 0.35], "credit": "图：si.robi · CC BY-SA 2.0 · Wikimedia Commons"},
-        {"image": "assets/players/iga-swiatek.jpg", "focal": [0.5, 0.45], "credit": "图：QWisps · CC BY-SA 4.0 · Wikimedia Commons"},
-        {"image": "assets/players/aryna-sabalenka.jpg", "focal": [0.5, 0.28], "credit": "图：Rick Munroe · CC BY-SA 4.0 · Wikimedia Commons"},
-        {"image": "assets/players/coco-gauff.jpg", "focal": [0.5, 0.35], "credit": "图：Hameltion · CC BY-SA 4.0 · Wikimedia Commons"}
-      ],
-      "vo": "四座奖杯，四段传奇。多少伟大的名字，就是在这四片场地上，被永远地刻进历史。",
-      "caption": "传奇 · 在此诞生"
-    },
-    {
-      "id": "s14_golden",
-      "dur": 14.0,
+      "id": "s13_recap",
+      "dur": 9.0,
       "type": "title",
       "accent": "#f2b32a",
-      "big": ["全满贯", "金满贯"],
-      "sub": "网球世界 · 无法复制的传说",
-      "vo": "如果能在同一年把四座冠军全部收入囊中，那是网球世界最极致的荣耀；若再添上一枚奥运金牌，便是几乎无法复制的传说。",
-      "caption": "四冠加冕，才是真正的传奇"
+      "big": ["一年四站", "横跨全球"],
+      "sub": "四大满贯 · 贯穿整个赛季",
+      "vo": "从南半球的盛夏，到北半球的深秋，四大满贯轮番登场，串起整个网球赛季。",
+      "caption": "一年四站 · 横跨全球"
     },
     {
-      "id": "s15_outro",
+      "id": "s14_outro",
       "dur": 7.0,
       "type": "title",
       "accent": "#f2b32a",
