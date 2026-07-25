@@ -29,8 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 按 Commons 分类抓取候选（法网中心球场 / 美网）
-        run: python tools/commons_category_grab.py
+      - name: 抓取候选（官方媒体源 + Commons/Flickr/Openverse）
+        run: python tools/probe_explainer_broll.py
 
       - name: 提交候选图供人工目检
         run: |

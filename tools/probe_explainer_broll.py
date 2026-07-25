@@ -21,27 +21,33 @@ from PIL import Image
 from tennislive.research.visual_sources import (
     _commons_candidates,
     _flickr_candidates,
+    _official_archive_candidates,
     _openverse_candidates,
 )
 
 # Each slot names the beat that needs a picture, then the queries that would
 # surface that exact subject. Queries are ordered most-specific first.
 SLOTS: dict[str, list[str]] = {
-    # ① 前因后果：2004 美网那场误判，最好是比赛画面（阿瑟·阿什球场）
-    "us_open_match": [
-        "Serena Williams 2004 US Open",
-        "Jennifer Capriati US Open",
-        "US Open tennis Arthur Ashe Stadium match",
-        "2004 US Open tennis",
-        "US Open tennis match night",
+    # ① 谁来判：主裁椅 / 司线 / 阿瑟·阿什球场比赛全景
+    "us_open_court": [
+        "US Open tennis Arthur Ashe Stadium night session",
+        "US Open tennis chair umpire",
+        "US Open tennis court overview",
+        "US Open tennis electronic line calling",
+        "US Open tennis match centre court",
     ],
-    # ⑤ 法网例外：菲利普·夏蒂埃中心球场全景
-    "chatrier": [
-        "Court Philippe Chatrier",
-        "Philippe Chatrier Roland Garros",
-        "Roland Garros centre court",
-        "Roland Garros stadium panorama",
-        "Roland Garros court overview",
+    # ⑥ 红土球印：法网坚持人工的实证
+    "ball_mark": [
+        "roland garros umpire ball mark clay",
+        "tennis clay court ball mark",
+        "clay court umpire checking mark",
+        "tennis umpire climbs down chair clay",
+    ],
+    # ⑤⑥ 近年法网
+    "rg_recent": [
+        "Roland Garros 2024 court",
+        "Roland Garros 2023 line judge",
+        "French Open 2024 clay court",
     ],
 }
 
@@ -52,6 +58,7 @@ PROVIDERS = (
     _commons_candidates,
     _openverse_candidates,
     _flickr_candidates,
+    _official_archive_candidates,
 )
 
 OUT = Path("tools/broll")
