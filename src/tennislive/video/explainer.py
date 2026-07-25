@@ -1,27 +1,29 @@
-"""AI-narrated knowledge explainer video — for topics photos can't carry.
+"""AI-narrated knowledge explainer video — image-first, for topics photos can't
+easily carry.
 
-Some knowledge topics are abstract (how Hawk-Eye works, why the scoring is
-15/30/40): there is no licensable, high-relevance photo of "electronic line
-calling", so the strict photo deck can't publish them. A short narrated video
-fits them far better — it explains rather than illustrates.
+Some knowledge topics are abstract (how Hawk-Eye works): there is no
+licensable, high-relevance photo of "electronic line calling", so the strict
+photo deck can't publish them. A short narrated video fits them: it explains
+rather than illustrates.
 
 The video follows a fixed three-beat structure the audience can follow:
     1. 前因后果  — the background / what triggered it,
     2. 技术原理  — how it actually works,
     3. 当今现状  — where it stands today.
 
-Each beat is one 3:4 brand card (section chip + title + the narration text on
-screen), centred on a 9:16 video canvas with brand bands, read aloud by a
-Chinese TTS voice. The card keeps the brand 3:4 ratio; only the video is 9:16.
-Nothing here fabricates
-footage of real people or events: the visuals are typographic slides, and the
-narration is assembled from the story's already-verified facts — it is
-re-voiced evidence, not invented commentary.
+Each beat is one 3:4 brand card whose HERO is a real, verified, licensed photo
+(or, where no fitting photo exists, an original labelled schematic — clearly a
+diagram, never fabricated footage). A short caption sits over the image; the
+full explanation is spoken by a Chinese TTS voice. The 3:4 card is centred on a
+9:16 video canvas with brand bands. Narration is re-voiced verified facts, not
+invented commentary.
 """
 
 from __future__ import annotations
 
+import base64
 import html
+import mimetypes
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -29,10 +31,12 @@ from pathlib import Path
 from typing import Callable, Sequence
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
-# (1080x1920) with that 3:4 card centered on brand-colour bands.
-W, H = 1080, 1440  # slide / image (3:4, unchanged)
+# (1080x1920) with that 3:4 card centred on brand-colour bands.
+W, H = 1080, 1440  # slide / image (3:4)
 VIDEO_W, VIDEO_H = 1080, 1920  # video canvas (9:16)
-_BAND_COLOR = "0x061c14"  # brand deep green for the top/bottom bands
+_BAND_COLOR = "0x061c14"
+
+_REPO = Path(__file__).resolve().parents[3]
 
 
 class ExplainerVideoError(RuntimeError):
@@ -43,14 +47,42 @@ class ExplainerVideoError(RuntimeError):
 class ExplainerSegment:
     kind: str  # cause / mechanism / today
     label: str  # 前因后果 / 技术原理 / 当今现状
-    title: str
-    narration: str
+    title: str  # short on-screen caption
+    narration: str  # full spoken text (TTS only)
+    image: str = ""  # repo-relative photo path; "" -> schematic diagram
+    credit: str = ""  # small on-image source line
 
 
-# Hand-structured, fact-grounded scripts. Every clause traces to the story's
-# verified facts/moments (see tournament_story.STORIES); the module only
-# arranges them into the three beats, it does not add claims.
-_SCRIPTS: dict[str, tuple[tuple[str, str, str, str], ...]] = {
+# Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
+# diagram (cameras triangulating the ball), not fabricated footage.
+_HAWKEYE_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <rect x="270" y="150" width="360" height="360" rx="8" fill="rgba(55,226,154,.06)"
+        stroke="#37e29a" stroke-width="4"/>
+  <line x1="270" y1="330" x2="630" y2="330" stroke="#37e29a" stroke-width="5"/>
+  <line x1="270" y1="240" x2="630" y2="240" stroke="#37e29a" stroke-width="2" opacity=".5"/>
+  <line x1="270" y1="420" x2="630" y2="420" stroke="#37e29a" stroke-width="2" opacity=".5"/>
+  <line x1="450" y1="240" x2="450" y2="420" stroke="#37e29a" stroke-width="2" opacity=".5"/>
+  <g fill="#9fb4aa">
+    <circle cx="150" cy="120" r="13"/><circle cx="450" cy="80" r="13"/>
+    <circle cx="750" cy="120" r="13"/><circle cx="820" cy="330" r="13"/>
+    <circle cx="750" cy="545" r="13"/><circle cx="450" cy="590" r="13"/>
+    <circle cx="150" cy="545" r="13"/><circle cx="80" cy="330" r="13"/>
+  </g>
+  <g stroke="#c6f65a" stroke-width="2" stroke-dasharray="5 7" opacity=".8">
+    <line x1="150" y1="120" x2="470" y2="270"/><line x1="450" y1="80" x2="470" y2="270"/>
+    <line x1="750" y1="120" x2="470" y2="270"/><line x1="820" y1="330" x2="470" y2="270"/>
+    <line x1="150" y1="545" x2="470" y2="270"/><line x1="80" y1="330" x2="470" y2="270"/>
+  </g>
+  <path d="M300 470 Q430 150 620 250" fill="none" stroke="#ffe08a"
+        stroke-width="3" stroke-dasharray="3 8"/>
+  <circle cx="470" cy="270" r="13" fill="#c6f65a" stroke="#fff" stroke-width="3"/>
+  <text x="450" y="628" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="700">8–12 台摄像机 · 三角测量落点</text>
+</svg>
+"""
+
+_SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
             "cause",
@@ -60,6 +92,8 @@ _SCRIPTS: dict[str, tuple[tuple[str, str, str, str], ...]] = {
             "小威廉姆斯遭遇多个关键球的肉眼误判被淘汰出局；赛后当值主裁被撤换、"
             "官方公开道歉。这成了回放技术上马的最后一根稻草。仅仅两年后，"
             "鹰眼挑战制正式走进大满贯。",
+            "assets/explainer/hawkeye/cause.jpg",
+            "图：Steven Pisano · CC BY 2.0",
         ),
         (
             "mechanism",
@@ -70,6 +104,8 @@ _SCRIPTS: dict[str, tuple[tuple[str, str, str, str], ...]] = {
             "系统误差小于两毫米。球员申请复核后，系统会根据多个机位的数据，"
             "生成球飞行轨迹与落点的三维可视化。首年挑战成功率只有三成左右——"
             "数据证明，肉眼真的会看错。",
+            "",  # no licensable real photo of the tech -> original schematic
+            "示意图 · 网球时差绘制",
         ),
         (
             "today",
@@ -78,16 +114,20 @@ _SCRIPTS: dict[str, tuple[tuple[str, str, str, str], ...]] = {
             "如今，电子司线正在取代人工。截至 2026 年，四大满贯里只有法网仍保留"
             "人工司线，澳网、美网和温网都已完成转换；ATP 更宣布全部巡回赛全面"
             "启用电子司线。站了上百年的司线员，正在退出网球舞台。",
+            "assets/explainer/hawkeye/today.jpg",
+            "图：wimbledon.com",
         ),
     ),
 }
 
 
 def explainer_script(story) -> list[ExplainerSegment]:
-    """Return the three-beat script for a story.
+    """Return the three-beat script for a story, each beat with a hero visual.
 
-    A hand-authored, fact-grounded script is used when available; otherwise the
-    beats are derived from the story's own moments/facts so nothing is invented.
+    Hand-authored, fact-grounded scripts (with curated photos) are used when
+    available; otherwise beats are derived from the story's own moments/facts
+    and use the story's verified cover asset as the hero image so no beat is
+    ever text-only.
     """
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
@@ -95,62 +135,96 @@ def explainer_script(story) -> list[ExplainerSegment]:
 
     moments = list(getattr(story, "moments", ()) or ())
     facts = list(getattr(story, "facts", ()) or ())
+    cover = str(getattr(story, "image", "") or "")
+    credit = f"图：{getattr(story, 'image_credit', '') or '官方媒体供图'}"
     cause = (
-        f"{moments[0].headline}。{moments[0].detail}"
-        if moments
-        else story.hero_fact
+        f"{moments[0].headline}。{moments[0].detail}" if moments else story.hero_fact
     )
-    mechanism = facts[0] if facts else story.hero_fact
-    today = facts[-1] if facts else story.hero_fact
     return [
-        ExplainerSegment("cause", "前因后果", "故事的起点", cause),
-        ExplainerSegment("mechanism", "技术原理", "它到底怎么回事", mechanism),
-        ExplainerSegment("today", "当今现状", "走到了今天", today),
+        ExplainerSegment("cause", "前因后果", "故事的起点", cause, cover, credit),
+        ExplainerSegment(
+            "mechanism", "技术原理", "它到底怎么回事",
+            facts[0] if facts else story.hero_fact, cover, credit,
+        ),
+        ExplainerSegment(
+            "today", "当今现状", "走到了今天",
+            facts[-1] if facts else story.hero_fact, cover, credit,
+        ),
     ]
+
+
+def _data_uri(path: Path) -> str:
+    mime = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode()
 
 
 def _slide_html(
     index: int, segment: ExplainerSegment, date_label: str, *, theme: str = "dark"
 ) -> str:
-    """Self-contained 3:4 brand card document (its own shell). Fonts come from
-    the bundled CJK face. The 3:4 card is later centred on a 9:16 video canvas."""
+    """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
 
     number = ("①", "②", "③", "④", "⑤")[index] if index < 5 else f"{index + 1}"
     css = _font_css()
+
+    image_path = _REPO / segment.image if segment.image else None
+    has_photo = bool(image_path and image_path.is_file())
+    if has_photo:
+        hero = (
+            f'<div class="hero" style="background-image:url(\'{_data_uri(image_path)}\');'
+            'background-size:cover;background-position:center;"></div>'
+            '<div class="scrim"></div>'
+        )
+    else:
+        hero = (
+            '<div class="hero diagram"></div>'
+            f'<div class="diagram-wrap">{_HAWKEYE_DIAGRAM}</div>'
+            '<div class="scrim"></div>'
+        )
+    credit = (
+        f'<div class="credit">{html.escape(segment.credit)}</div>'
+        if segment.credit
+        else ""
+    )
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{css}
 *{{margin:0;padding:0;box-sizing:border-box;}}
 html,body{{width:{W}px;height:{H}px;}}
 body{{font-family:'TL Sans SC','TL Display SC','Noto Sans SC',sans-serif;}}
-.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;display:flex;
- flex-direction:column;padding:62px 70px 48px;color:#f4fbf7;
- background:radial-gradient(125% 72% at 50% 6%,#155a41 0%,#0b3a2a 46%,#061c14 100%);}}
-.bar{{position:absolute;top:0;left:0;right:0;height:12px;
+.slide{{position:relative;width:{W}px;height:{H}px;overflow:hidden;color:#f4fbf7;
+ background:#061c14;}}
+.hero{{position:absolute;inset:0;}}
+.hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,#155a41 0%,#0b3a2a 55%,#061c14 100%);}}
+.diagram-wrap{{position:absolute;left:0;right:0;top:250px;display:flex;justify-content:center;}}
+.diagram-wrap svg{{width:760px;height:auto;}}
+.scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
+ rgba(6,28,20,.55) 0%,rgba(6,28,20,.10) 34%,rgba(6,28,20,.20) 60%,rgba(6,28,20,.94) 100%);}}
+.bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
-.ring{{position:absolute;top:-150px;right:-150px;width:480px;height:480px;
- border-radius:50%;border:50px solid rgba(55,226,154,.10);}}
-.head{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}}
+.head{{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
+ align-items:center;justify-content:space-between;
+ text-shadow:0 2px 12px rgba(0,0,0,.6);}}
 .brand{{font-size:36px;font-weight:800;letter-spacing:2px;}}
-.date{{font-size:30px;color:#9fb4aa;font-weight:700;}}
-.stage{{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;
- justify-content:center;gap:36px;}}
-.chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:30px;
- font-weight:800;letter-spacing:3px;padding:12px 26px;border-radius:999px;}}
-.title{{font-size:66px;line-height:1.22;font-weight:800;}}
-.body{{font-size:44px;line-height:1.6;font-weight:500;color:#e7f3ec;}}
-.foot{{font-size:28px;color:#8fa89d;font-weight:700;letter-spacing:2px;text-align:right;}}
+.date{{font-size:30px;color:#d7e6dd;font-weight:700;}}
+.foot{{position:absolute;bottom:44px;left:70px;right:70px;z-index:5;
+ display:flex;align-items:center;justify-content:space-between;}}
+.credit{{font-size:24px;color:#cbdad2;text-shadow:0 2px 10px rgba(0,0,0,.7);}}
+.tag{{font-size:26px;color:#9fb4aa;font-weight:700;letter-spacing:2px;
+ text-shadow:0 2px 10px rgba(0,0,0,.7);}}
+.copy{{position:absolute;left:70px;right:70px;bottom:120px;z-index:5;
+ display:flex;flex-direction:column;gap:28px;}}
+.chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
+ font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
+.title{{font-size:78px;line-height:1.2;font-weight:800;
+ text-shadow:0 4px 24px rgba(0,0,0,.75);}}
 </style></head><body>
-<div class="slide"><div class="bar"></div><div class="ring"></div>
+<div class="slide">{hero}<div class="bar"></div>
 <div class="head"><div class="brand">网球时差 · 网球有故事</div>
 <div class="date">{html.escape(date_label)}</div></div>
-<div class="stage">
-<span class="chip">{number} {html.escape(segment.label)}</span>
-<div class="title">{html.escape(segment.title)}</div>
-<div class="body">{html.escape(segment.narration)}</div>
-</div>
-<div class="foot">@网球时差 · TENNIS JETLAG</div>
-</div>
-</body></html>"""
+<div class="copy"><span class="chip">{number} {html.escape(segment.label)}</span>
+<div class="title">{html.escape(segment.title)}</div></div>
+<div class="foot"><div class="credit">{html.escape(segment.credit)}</div>
+<div class="tag">@网球时差 · TENNIS JETLAG</div></div>
+</div></body></html>"""
 
 
 def render_explainer_slides(
@@ -160,7 +234,7 @@ def render_explainer_slides(
     *,
     theme: str = "dark",
 ) -> list[Path]:
-    """Render one 3:4 brand card (image) per beat via a headless Chromium page."""
+    """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
 
     from ..render.webcards import _chromium_executable
@@ -185,10 +259,14 @@ def render_explainer_slides(
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )
+                    page.wait_for_function(
+                        "Array.from(document.images).every(i => i.complete)",
+                        timeout=15000,
+                    )
                     out = outdir / f"slide_{index:02d}.png"
-                    page.screenshot(path=str(out), clip={
-                        "x": 0, "y": 0, "width": W, "height": H
-                    })
+                    page.screenshot(
+                        path=str(out), clip={"x": 0, "y": 0, "width": W, "height": H}
+                    )
                     paths.append(out)
                 finally:
                     page.close()
@@ -209,9 +287,7 @@ def synthesize_narration(
 
         import edge_tts
     except ImportError as exc:  # pragma: no cover - dependency guard
-        raise ExplainerVideoError(
-            "缺少 edge-tts，请安装后再生成解说视频"
-        ) from exc
+        raise ExplainerVideoError("缺少 edge-tts，请安装后再生成解说视频") from exc
 
     outdir.mkdir(parents=True, exist_ok=True)
     paths: list[Path] = []
@@ -223,7 +299,7 @@ def synthesize_narration(
         path = outdir / f"voice_{index:02d}.mp3"
         try:
             asyncio.run(_one(seg.narration, path))
-        except Exception as exc:  # noqa: BLE001 - surface TTS failure clearly
+        except Exception as exc:  # noqa: BLE001
             raise ExplainerVideoError(f"TTS 合成失败（第 {index + 1} 段）: {exc}") from exc
         if not path.is_file() or path.stat().st_size == 0:
             raise ExplainerVideoError(f"TTS 未生成音频（第 {index + 1} 段）")
@@ -234,18 +310,10 @@ def synthesize_narration(
 def _audio_seconds(path: Path, ffprobe_bin: str, runner: Callable[..., object]) -> float:
     result = runner(
         [
-            ffprobe_bin,
-            "-v",
-            "error",
-            "-show_entries",
-            "format=duration",
-            "-of",
-            "default=noprint_wrappers=1:nokey=1",
-            str(path),
+            ffprobe_bin, "-v", "error", "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1", str(path),
         ],
-        check=True,
-        capture_output=True,
-        text=True,
+        check=True, capture_output=True, text=True,
     )
     try:
         return max(0.8, float(result.stdout.strip()))
@@ -262,7 +330,7 @@ def assemble_explainer_video(
     ffprobe_bin: str = "ffprobe",
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
-    """Mux each slide over its narration and concatenate into one 9:16 MP4."""
+    """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat."""
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
     if shutil.which(ffmpeg_bin) is None:
@@ -282,8 +350,6 @@ def assemble_explainer_video(
     n = len(slides)
     filters = []
     for i in range(n):
-        # Keep each 3:4 slide untouched; centre it on a 9:16 canvas with brand
-        # bands top and bottom (the image stays 3:4, the video is 9:16).
         filters.append(
             f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
             f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
@@ -294,25 +360,11 @@ def assemble_explainer_video(
 
     command.extend(
         [
-            "-filter_complex",
-            ";".join(filters),
-            "-map",
-            "[outv]",
-            "-map",
-            "[outa]",
-            "-c:v",
-            "libx264",
-            "-preset",
-            "medium",
-            "-crf",
-            "22",
-            "-c:a",
-            "aac",
-            "-b:a",
-            "160k",
-            "-movflags",
-            "+faststart",
-            str(output),
+            "-filter_complex", ";".join(filters),
+            "-map", "[outv]", "-map", "[outa]",
+            "-c:v", "libx264", "-preset", "medium", "-crf", "22",
+            "-c:a", "aac", "-b:a", "160k",
+            "-movflags", "+faststart", str(output),
         ]
     )
     try:
@@ -332,7 +384,7 @@ def generate_explainer_video(
     theme: str = "dark",
     voice: str = "zh-CN-YunxiNeural",
 ) -> Path:
-    """End-to-end: three-beat script -> 9:16 slides -> narration -> MP4."""
+    """End-to-end: three-beat script -> image-first slides -> narration -> MP4."""
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
