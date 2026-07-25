@@ -16,3 +16,7 @@ probe-out/
 # 本地自备图片（仅本地渲染用，绝不提交/上传）
 assets/local/*
 !assets/local/README.md
+
+# 页面预览截图：看完即弃，别混进 output/
+*.preview.png
+*.preview.tail.png

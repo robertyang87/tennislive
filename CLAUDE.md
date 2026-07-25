@@ -32,5 +32,17 @@
 ## 验证
 
 - 每张图**必须亲眼看过**再用（`Read` 打开），元数据对不上或画面不符一律不用
+- **要发出去的整页也一样**：推送正文、复制页这类 HTML，渲染成图看一眼再发，别只跑字符串断言
 - 本地沙箱取不到外网图片和 TTS，这类验证走 GitHub Actions
 - 规则要落成测试，别只写在文档里 —— 见 `tests/test_explainer.py`
+
+断言全绿不等于页面对。给推送加"可复制文案"时，`'长按下面整段' in body`、`'#网球时差' in body` 全过，人却没看过整页 —— 实际是同一份文案在推送里印了两遍，正文一遍、灰底复制块又一遍。截图一眼就看出来了。
+
+本地渲染 HTML 不需要外网（图片会裂，无所谓，看的是排版）：
+
+```python
+pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+                   args=["--no-sandbox"])
+```
+
+沙箱里 `PLAYWRIGHT_BROWSERS_PATH` 指向的默认路径带版本号，和 playwright 自己找的对不上，得显式给 `executable_path`。
