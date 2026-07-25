@@ -2323,10 +2323,10 @@
           "away_tiebreak": 1
         },
         {
-          "home": 0,
-          "away": 0,
-          "home_tiebreak": null,
-          "away_tiebreak": null
+          "home": 6,
+          "away": 6,
+          "home_tiebreak": 0,
+          "away_tiebreak": 2
         }
       ],
       "winner": null,
@@ -2907,11 +2907,11 @@
   ],
   "source": "espn",
   "source_status": {
-    "espn": "正常 · 131 场",
+    "espn": "正常 · 134 场",
     "sofascore": "失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）",
     "WTA 官方 OOP · Livesport Prague Open": "正常 · 精确 1 场 / 场序 0 场 / 待下一版 0 场",
     "WTA 官方 OOP · MSC Hamburg Ladies Open": "正常 · 精确 1 场 / 场序 0 场 / 待下一版 0 场",
-    "实时选题雷达": "正常 · 64 条信号，命中 22 场比赛",
+    "实时选题雷达": "正常 · 62 条信号，命中 22 场比赛",
     "Sportradar 技术统计": "未配置 · 缺少 SPORTRADAR_API_KEY",
     "WTA 官方技术统计": "正常 · 已命中焦点比赛逐场统计",
     "焦点复盘数据": "正常 · WTA 官方逐场技术统计",
@@ -2919,7 +2919,7 @@
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
     "球员与赛事知识库": "本期焦点暂无直接命中的审核档案",
     "GitHub Models 数据编辑": "关闭",
-    "日报视频": "关闭 · 日报仅生成图片与文案"
+    "官方视频雷达": "正常 · 已生成中文竖版片段"
   },
   "rankings": {
     "atp": [
@@ -5330,6 +5330,222 @@
   "lead_match_id": "1002-2026:179375",
   "trend_signals": [
     {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "steven mcbee",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T21:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "julio iglesias",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T21:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "ndiaye liverpool",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T21:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "christian bale",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T21:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "savannah bananas",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T21:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "medal tally commonwealth games",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T21:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "santos vs chapecoense",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T21:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "liverpool vs sunderland",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "amy's soup can recall",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "méxico",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "liverpool vs sunderland",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "날씨",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "berlin",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T21:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "koivun golfer",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "santos vs chapecoense",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "sonny gray",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "boyacá chicó - atlético nacional",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "damien hardwick afl 2026",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "tour de france 2026",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "nelly",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "andy lee boxer",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "van duijvenbode",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "musafir cafe",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T20:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "united states department of war",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T20:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "petracca",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T20:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "scottie scheffler",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T20:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "tony bellew",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T20:40:00+00:00",
+      "traffic": ""
+    },
+    {
       "kind": "official-news",
       "source": "Reuters",
       "title": "WTA roundup: Anna Bondar goes overtime, reaches Hamburg final",
@@ -5339,56 +5555,8 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "pink",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "cate blanchett",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "simon zachenhuber",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "red sox vs blue jays",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "pdc order of merit",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends AU",
       "title": "cairns news",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T20:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "lotto results",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T20:30:00+00:00",
       "traffic": ""
@@ -5403,162 +5571,10 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "moses itauma",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "middlesbrough f.c.",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "william ellard",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends AU",
       "title": "sam williamson",
       "url": "https://trends.google.com/trending/rss?geo=AU",
       "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "standard vs juventus",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "god of war laufey game",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T20:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "mike vrabel",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T20:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "filip nowacki",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "charles manson",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T20:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "jackson koivun",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T20:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "mackenzie scott",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "noah maclauchlan golf",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "porto vs aston villa",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T19:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "tigers",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "us junior amateur 2026",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "padres vs marlins",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "diamondbacks vs nationals",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "star wars: starfighter",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "san pedro - xelajú mc",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T19:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "suburb",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T18:50:00+00:00",
       "traffic": ""
     },
     {
@@ -5603,22 +5619,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "steve erceg",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T15:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "rizvan kuniev",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T15:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends HK",
       "title": "鍾雪瑩",
       "url": "https://trends.google.com/trending/rss?geo=HK",
@@ -5639,22 +5639,6 @@
       "title": "林淑敏",
       "url": "https://trends.google.com/trending/rss?geo=HK",
       "published_at": "2026-07-25T14:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "ESPN",
-      "title": "2026 Odlum Brown VanOpen Tennis Live Scores",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQeVlYVV9VQ1ptS2NoZy11WnNwY0ZnVnlEWjQxVllkTnk3Smp1NW5RUGdqRjBxMTVROFBacTFrOWhRb2xkTDJ3aHlLa3AzN3M1YmJBamNJdDhiWkZ0NExvUnFQYVJOZUxpWGFZblhmcjRLSGZRd0NVM0xMdThSSWgwcEN1bG9DWUp0WkFoTG05OA?oc=5",
-      "published_at": "2026-07-25T13:56:50+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "rthk",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-25T13:50:00+00:00",
       "traffic": ""
     },
     {
@@ -5711,6 +5695,14 @@
       "title": "weather tomorrow",
       "url": "https://trends.google.com/trending/rss?geo=HK",
       "published_at": "2026-07-25T12:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "tvb",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T12:00:00+00:00",
       "traffic": ""
     },
     {
@@ -5783,14 +5775,6 @@
       "title": "Sinner, Djokovic withdraw from Montreal",
       "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE8teVZnZWFpNDFQS1JXekRYZHZ1d2kySlJkWlFjaFlNMUpoVVRMSVE3bjI0Szd1RXBPa2IzdEVNUHdMU28tM1BUR2F6OU1ObUhfUUstTWZhQWNKeVZRd3FBc2h4OENidGpfZmhRUHlWQkNZeUU0OWEwckNNbzk?oc=5",
       "published_at": "2026-07-25T01:46:57+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "ESPN",
-      "title": "Jannik Sinner, Novak Djokovic withdraw from Montreal Masters event",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQY2ZzWlB2MFFMdXc0ZXZubTZySG9DZFFiMTdhaXdaUG1pUThIdm9YTVNBZV90d3hPMFZpTXJwc0x1cEZLWjNIcENVTEsybEhLMVI0YjJlTkFWM3E3N1AxWlRfOHozdjJQblhWU01tdjFsajJQNUtvZE00T1BsV1MtSG9fRUlKdHJKSGoxSWxJak5VSHZkbzBtNFJpTGQ3Nm1HYzZnS0djelF2NDBzcVFweHBtVEZFVlVYLTA5YjBZT0ZNVFVyTnJUd1NlZk5xN25hb0pB?oc=5",
-      "published_at": "2026-07-24T21:17:00+00:00",
       "traffic": ""
     },
     {
