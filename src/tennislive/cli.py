@@ -332,7 +332,6 @@ def cmd_explainer(args) -> int:
         out = generate_explainer_video(
             story,
             args.outdir,
-            date_label=f"{d.month}.{d.day}",
             theme=args.theme,
             voice=args.voice,
         )
