@@ -598,9 +598,17 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 3,
+      "media_heat": 13,
       "search_heat": 0,
       "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
         {
           "kind": "official-news",
           "source": "ATP Tour",
@@ -829,7 +837,49 @@
       "note": null,
       "court": "Livesport Arena",
       "status_detail": "Final",
-      "stats": null,
+      "stats": {
+        "source": "WTA 官方逐场技术统计",
+        "source_url": "https://api.wtatennis.com/tennis/tournaments/1082/2026/matches/LS005/stats",
+        "total_points_won": {
+          "home": 43.0,
+          "away": 63.0
+        },
+        "service_points_won": {
+          "home": 25.0,
+          "away": 32.0
+        },
+        "first_serve_in_pct": {
+          "home": 57,
+          "away": 62
+        },
+        "first_serve_won_pct": {
+          "home": 50,
+          "away": 77
+        },
+        "second_serve_won_pct": {
+          "home": 38,
+          "away": 42
+        },
+        "aces": {
+          "home": 3.0,
+          "away": 0.0
+        },
+        "double_faults": {
+          "home": 1.0,
+          "away": 2.0
+        },
+        "break_points_won": {
+          "home": 1.0,
+          "away": 6.0
+        },
+        "break_points_chances": {
+          "home": 3.0,
+          "away": 12.0
+        },
+        "winners": null,
+        "unforced_errors": null,
+        "duration_minutes": 69
+      },
       "editorial_note": null,
       "editorial_source": null,
       "editorial_url": null,
@@ -842,9 +892,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "1002-2026:179355",
@@ -913,9 +988,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 6,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "401-2026:179436",
@@ -1006,9 +1106,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 6,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "1002-2026:179391",
@@ -1093,9 +1218,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "304-2026:178886",
@@ -1283,9 +1433,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "400-2026:178820",
@@ -1456,9 +1631,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "1002-2026:179378",
@@ -1543,9 +1743,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "304-2026:178887",
@@ -1886,7 +2111,49 @@
       "note": null,
       "court": "Livesport Arena",
       "status_detail": "Final",
-      "stats": null,
+      "stats": {
+        "source": "WTA 官方逐场技术统计",
+        "source_url": "https://api.wtatennis.com/tennis/tournaments/1082/2026/matches/LS006/stats",
+        "total_points_won": {
+          "home": 69.0,
+          "away": 59.0
+        },
+        "service_points_won": {
+          "home": 37.0,
+          "away": 32.0
+        },
+        "first_serve_in_pct": {
+          "home": 67,
+          "away": 64
+        },
+        "first_serve_won_pct": {
+          "home": 63,
+          "away": 46
+        },
+        "second_serve_won_pct": {
+          "home": 48,
+          "away": 57
+        },
+        "aces": {
+          "home": 1.0,
+          "away": 0.0
+        },
+        "double_faults": {
+          "home": 3.0,
+          "away": 1.0
+        },
+        "break_points_won": {
+          "home": 5.0,
+          "away": 2.0
+        },
+        "break_points_chances": {
+          "home": 10.0,
+          "away": 10.0
+        },
+        "winners": null,
+        "unforced_errors": null,
+        "duration_minutes": 98
+      },
       "editorial_note": null,
       "editorial_source": null,
       "editorial_url": null,
@@ -1899,9 +2166,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "304-2026:178893",
@@ -2174,7 +2466,49 @@
       "note": null,
       "court": "Center Court",
       "status_detail": "Final",
-      "stats": null,
+      "stats": {
+        "source": "WTA 官方逐场技术统计",
+        "source_url": "https://api.wtatennis.com/tennis/tournaments/2042/2026/matches/LS007/stats",
+        "total_points_won": {
+          "home": 75.0,
+          "away": 65.0
+        },
+        "service_points_won": {
+          "home": 38.0,
+          "away": 33.0
+        },
+        "first_serve_in_pct": {
+          "home": 61,
+          "away": 83
+        },
+        "first_serve_won_pct": {
+          "home": 60,
+          "away": 53
+        },
+        "second_serve_won_pct": {
+          "home": 44,
+          "away": 17
+        },
+        "aces": {
+          "home": 2.0,
+          "away": 0.0
+        },
+        "double_faults": {
+          "home": 3.0,
+          "away": 4.0
+        },
+        "break_points_won": {
+          "home": 6.0,
+          "away": 5.0
+        },
+        "break_points_chances": {
+          "home": 11.0,
+          "away": 10.0
+        },
+        "winners": null,
+        "unforced_errors": null,
+        "duration_minutes": 117
+      },
       "editorial_note": null,
       "editorial_source": null,
       "editorial_url": null,
@@ -2187,9 +2521,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "525-2026:179500",
@@ -2428,9 +2787,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 20,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "525-2026:179530",
@@ -3036,9 +3420,18 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 5,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     }
   ],
   "live": [],
@@ -3187,9 +3580,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "401-2026:179434",
@@ -3261,15 +3679,31 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 3,
+      "media_heat": 26,
       "search_heat": 0,
       "trend_signals": [
         {
           "kind": "official-news",
-          "source": "WTA Tennis",
-          "title": "Back-to-back champion Sabalenka tops 2026 US Open entry list",
-          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNRldVX2NXLVZLeWpCWXhjUnpUYzdpYW4tUmZrRldOOTNnZ1h3Q0tNb2VZRWJOQkFBbFBocjFDeG51LUZUTXZ4c3MtVENBenZqZ1FoajlqLW9UMm00YVdYQlVnSnozcXhSTERyX3NuQy1fWlpqZmtFWkZxazVsSFZTMXU1ci1RaU9ERTMzbTFlZ3AxWE9Ja2daNjllWDRGVUtrOENid2VXclE?oc=5",
-          "published_at": "2026-07-22T04:52:49+00:00",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
           "traffic": ""
         }
       ]
@@ -3344,9 +3778,34 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "304-2026:178885",
@@ -3468,9 +3927,34 @@
       "schedule_source_urls": [
         "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
       ],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "1002-2026:179376",
@@ -3530,9 +4014,34 @@
       "schedule_source_urls": [
         "https://wtafiles.wtatennis.com/pdf/draws/2026/2042/OP.pdf"
       ],
-      "media_heat": 0,
+      "media_heat": 6,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "401-2026:179415",
@@ -3591,9 +4100,34 @@
       "schedule_source_urls": [
         "https://wtafiles.wtatennis.com/pdf/draws/2026/1082/OP.pdf"
       ],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "1002-2026:179375",
@@ -3652,9 +4186,34 @@
       "schedule_source_urls": [
         "https://wtafiles.wtatennis.com/pdf/draws/2026/2042/OP.pdf"
       ],
-      "media_heat": 0,
+      "media_heat": 26,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     },
     {
       "match_id": "400-2026:178852",
@@ -3825,9 +4384,18 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 0,
+      "media_heat": 5,
       "search_heat": 0,
-      "trend_signals": []
+      "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+          "published_at": "2026-07-25T05:00:10+00:00",
+          "traffic": ""
+        }
+      ]
     }
   ],
   "source": "espn",
@@ -3837,11 +4405,11 @@
     "ATP 官方 OOP · Generali Open": "正常 · 精确 1 场 / 场序 0 场 / 待下一版 0 场",
     "WTA 官方 OOP · Livesport Prague Open": "正常 · 精确 1 场 / 场序 1 场 / 待下一版 0 场",
     "WTA 官方 OOP · MSC Hamburg Ladies Open": "正常 · 精确 1 场 / 场序 1 场 / 待下一版 0 场",
-    "实时选题雷达": "正常 · 49 条信号，命中 13 场比赛",
+    "实时选题雷达": "正常 · 61 条信号，命中 31 场比赛",
     "Sportradar 技术统计": "未配置 · 缺少 SPORTRADAR_API_KEY",
     "WTA 官方技术统计": "正常 · 已命中焦点比赛逐场统计",
     "焦点复盘数据": "正常 · WTA 官方逐场技术统计",
-    "头条技术统计": "降级 · 头条候选无逐场统计，头条页使用比分结构复盘",
+    "头条技术统计": "正常 · 4 场头条候选已接入逐场统计",
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
     "球员与赛事知识库": "正常 · 1 场接入历史背景",
     "GitHub Models 数据编辑": "关闭",
@@ -6253,22 +6821,398 @@
       }
     ]
   },
-  "lead_match_id": null,
+  "lead_match_id": "401-2026:179405",
   "trend_signals": [
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "colman domingo",
+      "title": "poker",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:50:00+00:00",
+      "published_at": "2026-07-25T07:40:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "utah lake fireworks",
+      "title": "magomed zaynukov",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:50:00+00:00",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "today wordle answers",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "graham norton",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "naga munchetty",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "chester races",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "cold front australia",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T07:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Lea Ma vs Katie Swan · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdWt4VVlnZmc5WldBQ0w0RG5vRnUyZGU5d3lwdTBocVB4bWxqdHVnRk9DZDlMeGN2Q0UzMzVyTEo2MWUwaTFpeVVJNHh5anJZXzd1OW1qamtiWXRid1pXM3lWUzl4RmRhamFYd0FlYzZKNWJlT2pCV1EyVlNLX0NZcHlQcjg0WlRkbmtMWWVB?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Shuai Zhang vs Gabriela Knutson · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPNzBFTHJoODVYTHZJX1RwM0U1ZDJEM0lCeTFCR01DZnFfeGF2SVpEa2EzcE9Kc2Z2WFR5M0NPNTY5T2xCX0ZpSEJJNXpvWWliamJFXzl6Zk1rSDVtb3YxTF9rT1cwc3hIZzNJYWJ2QjFNaDBzeWJVSlFVVnU4b05RNmptTEdDU1psTVBzQTgwRnY0aTdsTFE?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Julieta Pareja vs Polina Iatcenko · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNNmlOSGg2NTF5dzM4WklWdGU4WGo5VlN4ODgteGFTdHphbldyaTRfYjFkXzJSbG10Q3MzQWFVOUJnNXZjSmVUeUlIME5ZRWNVWmdhcVY1T2h1Z00wS1JjUnhPY2ZTZHRLeTIxeXZvd1IxSU91emlYdjJOaGJ5NzRndUJIWVIteVdNM3dqdUtnQlJ6MjhZeDNYbQ?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Polina Kudermetova vs Mei Yamaguchi · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNZ3Rqel9CRmg3NG50NzRycmVBOVREUHQwUl8zMGNNTW1aSkVFcXNtQklfNUhNZVVKdVJkN3RGdWh1Y21kTEJKQUF1UVFpVWhUdUxrTTRoNGxLWXlwWXYxX1U4bUlRN2lVSFJKRWdBNk1waWNUbWdjOU5MNlptVnhtNmZsV0RhOTRNVkpoVnMyd1VlNDdlc1QzMldlVTNqXzFG?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Kamilla Rakhimova vs Heather Watson · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNMzFkSml4U3RiTk9BcW1GZlJBSGlPOGk4NDNXZE55MzVQdHp2ak9EXy1BLV83WFpFaDVqWFVMcWZmcjJvWThvNmNvaXlNVlViY3lGN2RIQmpwbVQzaGdhNHVXdU1JNUg0SWFxWXFhWjF1d29CRVgtaEduVVhhc0ZkNUZjSERDa2RTRHQxc0ZsRng1SnB5V010Ympn?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Clervie Ngounoue vs Varvara Lepchenko · Round 2 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZlZlUEZVYWt5bHJEeXl3ZVY2N09nVzZDUTU4ZlVSSGNhZVRqWU03eG0zZmZUUjVTbmRKYzRtTGdweWRqQzJocmpfSHpReUNZcklKUkNWQXRSYmoyUWxXOVAtUTJSUjdXWTBLNjVzMFhUSWdMdDljTjI0a2RXbHhabkV2eU9kSktwRXNXMjdxeHBaRkZyQmlqeEdHblY?oc=5",
+      "published_at": "2026-07-25T07:36:57+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "raphael le guen",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "richard plugge",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "cathay pacific",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T07:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "張家朗",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T07:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "航班取消",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T07:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "jon bernthal",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "well",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "global combat air programme",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "thurrock council reform uk resignations",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "國泰航空",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "hk airport",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "jack gunston",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "ed husic",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "陳卓賢",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-25T06:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "hawks vs essendon",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "mitch lewis",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "glen powell",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T06:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Reuters",
+      "title": "Organisers raise concerns over late pullouts after Sinner, Djokovic skip Montreal event",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQMUpxWDA2WThPWVBqd3NfcVFfRmd5SGhTME5leWVGRHJNeDJ1SzZQZXVJUFVSNXpDbWtIdFFQbkQ2ZXp2M0xvYjJCNGVRMV9JdU0zWHVhUnVwLXhQTnNYRHZORG1BdVRCLVRvQk1ZeFJVb0lCc00xdDRlZ3d3X3haeXlaWlVfM0c3TmotZnFLMmlCb0pWbGl4MzlyZ3VZRUVaU1RINDF0cUxrNFhTOENOdFNMZTVFNHhiWFRMVW5SMlhROFctYmRXVzNB?oc=5",
+      "published_at": "2026-07-25T06:23:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "musafir cafe",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T06:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "bulldogs vs warriors",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "pension",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "diana, princess of wales",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T06:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "bogdan guskov",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T05:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "christian mccaffrey",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T05:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "hawaii hurricane fausto",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T05:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "gws giants vs sydney",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T05:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "simone biles",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-25T05:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "new god of war",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T05:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "trump 4th term",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T05:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Chan / Kato vs Havlíčková / Samson · Semifinal · WTA Prague",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOVmZzSmdfWXFwR1hJRjlyQVlvWnZOamo4RW5UMHc0RlNHQ3B6N3lRUjdTNFVCZklDM1B6QTVrNUVjbWRZZzRIZVpIZEZXYVdPZmpQc2NkdU5acWhWRmlZdmFYNFBNY3UxRXBsZkZZTVlMdEhUZW5WcGtralpMQWdmd2Y5ckJEdnNXNTlvVEVscGhKcGlieWg2SzBBWVBONWVFdk1iQ0QyTS1pemR6ckVsR2xWRkw?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Jakupović / Radišić vs Kulambayeva / Semenistaja · Semifinal · WTA Hamburg",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPR2NkMGVQb1FrZWZ2UUI3VU9oNnEzaVkyNm44VlptZWhwanZ0eGVFNUVHelA0YXpucXZ0XzF2TVU5b1RNSjlTemwyRDBUYzg5QU5VYVFoVnFmUTZkNHI0Z19SMEU1SW5kQXJDVGZhemxLRzR3Vi03bTZ5bGNxMV9FbUVNdGNiRnRqMjY2TjRBSHhfbjRzRzhmeHdhRE9jWmR0TVNMU2VBODg1cUxvcFc0SlFRRUI?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Kempen / Panova vs Dețiuc / Khromacheva · Semifinal · WTA Hamburg",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMEdsRXF4Si1tVld0ZlFJdHZNVU5nWDJwZTVERS0zRkR0UkxGZG5mOEJieEUtWHBQc2NvN1d5VDJUc2ZwVE9FRlczUHk5enVxSmIwTUotSWVqaXZDTWV5cmJEZERGVFVqTXVYMFNYem5pTmZtay1xR2pSOU1FeFBhSGx0RWN5VzdqSEtWMHJaMXhFenNMTzJDV2NZVGdtWDBMRVRGay02djI?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Mayar Sherif vs Tamara Korpatsch · Semifinal · WTA Hamburg",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNOGdnby1FRk44OUJiSU9WdHNrcVotdDdsbnFPV1NRSHBPQ2hrYV9lRVp2THFhT1ZVRlNiX1ZtRnZjNDVscFhXSzVXYXhFejc2U2lidXdFMTNETUc5TldaeG4wcXU4YjNVR0FRZ3RhUzFMVXM3Z05nV0habE1uUVVPVzE4aW5rX0NLY3JtMzJB?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Tereza Valentova vs Daria Snigur · Semifinal · WTA Prague",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQa3IxaDV6YlZHZmVheW9SNGpSMVVSb2xzRmppUWc4WUtfWGJhYTF0SEJlRnZ4elBSZjJ5UnowbGNVaDlreVd4TjM3dmR6VHNRRUlZU1pJeVlSdmRMVTVIRklZLUk3azEzU1BidGlDRW5QX2JuSERVOGoycVc5UVZ5NjNGRFFrbzNJS3pWcmV3X2dpQUowM1l2TXVUMTlfYU5h?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Lilli Tagger vs Barbora Krejčíková · Semifinal · WTA Prague",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPYmdrdnd2OFNCa1dsZjJ5M2pFTmdXaTBsUGpCYlBhX2YzbldSa0twSVhUOG1xQ1YyZC1LUlNpTjRMVFlXcXRHWHBtUll1Qmw4d1FoSFlHZHJwbDhNcFpTbFk4cDBrdlAyTUMzYnZwUHhlTXd5dHN6Z3I5aEFzUHB5MEFQNk1vUWFjal9tdXdyQkhyN2VUamdQdDJ0alIxZi1oT2c?oc=5",
+      "published_at": "2026-07-25T05:00:10+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "hunter biden",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-25T04:50:00+00:00",
       "traffic": ""
     },
     {
@@ -6280,179 +7224,11 @@
       "traffic": ""
     },
     {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "today wordle answers",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "trump",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "sl-w vs pakw",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "trump 2028",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "ios",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "mega millions numbers",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "sony playstation network outage",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "florence pugh",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "nic newman",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "broncos vs cowboys",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "spacex starship flight 13 launch",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "ben and casey affleck mother",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "america",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "rafael devers",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "tszyu vs spence",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T03:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "club america",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "america fc",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-25T03:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "stephen fulton jr liam wilson cancelled",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-25T02:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "monkey",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T02:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "celeste rivas hernandez",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T01:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "vanguard",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T01:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "王嘉爾",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-25T01:30:00+00:00",
+      "kind": "official-news",
+      "source": "ATP Tour",
+      "title": "Sinner, Djokovic withdraw from Montreal",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE8teVZnZWFpNDFQS1JXekRYZHZ1d2kySlJkWlFjaFlNMUpoVVRMSVE3bjI0Szd1RXBPa2IzdEVNUHdMU28tM1BUR2F6OU1ObUhfUUstTWZhQWNKeVZRd3FBc2h4OENidGpfZmhRUHlWQkNZeUU0OWEwckNNbzk?oc=5",
+      "published_at": "2026-07-25T01:46:57+00:00",
       "traffic": ""
     },
     {
@@ -6465,14 +7241,6 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "colo colo",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T01:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends HK",
       "title": "三號強風信號",
       "url": "https://trends.google.com/trending/rss?geo=HK",
@@ -6481,74 +7249,10 @@
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "black",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-25T00:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "luton stabbing",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T23:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "madre",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T23:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "naira",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T23:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "primo",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T23:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "euromillions lottery results",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-24T23:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
       "source": "Google Trends HK",
       "title": "天气",
       "url": "https://trends.google.com/trending/rss?geo=HK",
       "published_at": "2026-07-24T22:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "weather",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T22:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "張敬軒",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T21:40:00+00:00",
       "traffic": ""
     },
     {
@@ -6565,30 +7269,6 @@
       "title": "Sinner, Djokovic withdraw from US Open tune-up in Montreal",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPeHVUTVRfV3ZLUzhyZkljM0g2SE9TWXpPenFVZGs5ZFRjVXpJSEZrZngzV1Voc09oRE5MSi1fZGNSbFlxdjJmUjZySVFLaDJrRDJveFU2NW1jQ2tFU04tSFdya1RDNjdEci1aY3N2N0YzV1cyWTV1NU9PVVdGSlU4U1FoVkFQalp6ekg1cy1tdkVYcVlMdk9TejRkVFRycFdQ?oc=5",
       "published_at": "2026-07-24T19:29:43+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "twitch",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T19:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "蘇丹紅",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T18:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "老高",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-24T16:20:00+00:00",
       "traffic": ""
     },
     {
@@ -6620,7 +7300,7 @@
       "source": "WTA Tennis",
       "title": "Washington DC 411: Dates, draws, schedule, prize money and more",
       "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQQkxtMUpvWDhHc0lmUE4tLVBqNnZEU285cXNmeE5QTEh6eVNLczRkazJrN1FKZ3RwNlNBVk9CUm1Cb2RIaEMxdkhIU3pvRlJoUEllYm9MOTZmLXhQODNCU2pEY2V1WFkwUVpKalFJR09ESzZ5YnNJZXg0cTNlUG0xXzBINW00TzRjaHdUaEdXNHp1MzR0cjJHb1hOMGNwUXljT2FXNFNsZEdoZXl6UnFPSGR6UnRkelNMX19JbGt3?oc=5",
-      "published_at": "2026-07-23T15:45:20+00:00",
+      "published_at": "2026-07-23T15:43:49+00:00",
       "traffic": ""
     },
     {
@@ -6629,22 +7309,6 @@
       "title": "Why Estoril is such a ‘special place’: The story behind Portugal’s showpiece",
       "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1EeF9US2ppUllISlJMQU9ocGZPVFhhRW4zRl9ZY18zUmNHbE9QSGQ2UVczZUJsV1FORGxRMGJGZnVkeXc2dlBNOENoZnVuMWFKTWd2TVhwVERnbUx6MnBha3FOQ0hmSmpkSjRuazZtQW5RMDQ?oc=5",
       "published_at": "2026-07-23T08:08:30+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "WTA Tennis",
-      "title": "Women’s Tennis Singles News | Updates & Player Highlights - WTA Official",
-      "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB6dUdScTZNN1JxdmJVUXdLLWZOeUdqOGREX0dfczlBLUw2QjQ4bjJuU0dlaUNtcWluQ0llbldFb2dPd1pNSFZkQ3NPb0hrVXM?oc=5",
-      "published_at": "2026-07-22T06:28:30+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "WTA Tennis",
-      "title": "Back-to-back champion Sabalenka tops 2026 US Open entry list",
-      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNRldVX2NXLVZLeWpCWXhjUnpUYzdpYW4tUmZrRldOOTNnZ1h3Q0tNb2VZRWJOQkFBbFBocjFDeG51LUZUTXZ4c3MtVENBenZqZ1FoajlqLW9UMm00YVdYQlVnSnozcXhSTERyX3NuQy1fWlpqZmtFWkZxazVsSFZTMXU1ci1RaU9ERTMzbTFlZ3AxWE9Ja2daNjllWDRGVUtrOENid2VXclE?oc=5",
-      "published_at": "2026-07-22T04:52:49+00:00",
       "traffic": ""
     }
   ]
