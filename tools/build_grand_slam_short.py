@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -566,6 +567,23 @@ def _synth_gtts(text, dst):
     gTTS(text, lang="zh-CN").save(str(dst))
 
 
+def _piper_model():
+    """离线神经语音模型路径：env PIPER_MODEL 或 assets/local/piper/*.onnx。"""
+    envp = os.environ.get("PIPER_MODEL")
+    if envp and Path(envp).exists():
+        return envp
+    d = ROOT / "assets" / "local" / "piper"
+    if d.exists():
+        for f in sorted(d.glob("*.onnx")):
+            return str(f)
+    return None
+
+
+def _synth_piper(text, dst, model):
+    subprocess.run(["piper", "-m", model, "-f", str(dst)], input=text, text=True,
+                   check=True, capture_output=True)
+
+
 def try_tts(scenes, meta, outdir, ff):
     """生成中文配音（原创解说文案）。优先 edge-tts（音质更好），不可用时回退 gTTS。
     每句按镜头时长对齐：过长则加速，过短则补静音，保证音画同步。"""
@@ -574,12 +592,16 @@ def try_tts(scenes, meta, outdir, ff):
     tdir = outdir / "_tts"
     tdir.mkdir(exist_ok=True)
     probe = next((s["vo"] for s in scenes if s.get("vo", "").strip()), "测试")
-    engine = None
-    for name, fn in (("edge", lambda: _synth_edge(probe, tdir / "probe.mp3", voice, rate)),
-                     ("gtts", lambda: _synth_gtts(probe, tdir / "probe.mp3"))):
+    piper_model = _piper_model()
+    candidates = [("edge", ".mp3", lambda t, d: _synth_edge(t, d, voice, rate))]
+    if piper_model:  # 离线神经语音，音质远好于 gTTS
+        candidates.append(("piper", ".wav", lambda t, d: _synth_piper(t, d, piper_model)))
+    candidates.append(("gtts", ".mp3", lambda t, d: _synth_gtts(t, d)))
+    engine = ext = synth = None
+    for name, e, fn in candidates:
         try:
-            fn()
-            engine = name
+            fn(probe, tdir / ("probe" + e))
+            engine, ext, synth = name, e, fn
             break
         except Exception as exc:
             print(f"  · {name} 配音不可用（{type(exc).__name__}）")
@@ -596,10 +618,10 @@ def try_tts(scenes, meta, outdir, ff):
     for i, sc in enumerate(scenes):
         vo = sc.get("vo", "").strip()
         dur = float(sc["dur"])
-        raw = tdir / f"v{i:02d}.mp3"
+        raw = tdir / f"v{i:02d}{ext}"
         if vo:
             try:
-                _synth_edge(vo, raw, voice, rate) if engine == "edge" else _synth_gtts(vo, raw)
+                synth(vo, raw)
             except Exception:
                 silence(raw, 0.4)
         else:
