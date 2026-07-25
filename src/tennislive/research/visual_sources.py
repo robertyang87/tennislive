@@ -2489,19 +2489,16 @@ def resolve_match_cover_visual(
     report["official_pages_checked"] = len(expanded_urls)
     report["official_pages_expanded"] = expanded_count
 
-    # 兜底：其它来源全部查询后仍然一张候选都没有时，才把 ATP 官方 YouTube
-    # 缩略图当最后一道来源接入。这类缩略图常是宣传拼接图（真实比赛照片只占
-    # 一部分，其余是赛事VI条纹/文字，2026-07-24 生产环境因此露过馅），但对
-    # 通讯社/官方图库都没有覆盖的小站比赛，它有时是唯一还能证明"这就是这
-    # 两位球员这场比赛"的素材——完全不用的话，这类比赛当天会彻底没有封面，
-    # 拖垮整份日报的证据闸门。只在真的没有其它候选时才冒拼接图的风险，其
-    # 余日子（绝大多数）完全不受影响。
-    if not pool and players:
-        atp_official = _atp_official_cover_candidates(match, session)
-        if atp_official:
-            report["providers_queried"].append("official-atp-youtube")
-            official_query = _daily_cover_queries(match, players[0].name)[0]
-            pool.extend((players[0], official_query, item) for item in atp_official)
+    # 封面永远不使用 ATP 官方 YouTube 视频缩略图（maxresdefault.jpg）：这类
+    # 缩略图几乎都是宣传拼接图——真实比赛照片只占一部分，其余是赛事VI条纹、
+    # 徽标和"HIGHLIGHTS"之类的大字。像素级质检只判断人脸有没有被裁掉，不校验
+    # 裁切框其余区域是否仍属于同一张真实照片，于是拼接的图案文字会跟着进最终
+    # 封面（2026-07-24 与 07-25 两次生产事故都是这么来的）。
+    #
+    # 曾经短暂把它当"其它来源全空时的最后兜底"，但那是错的：真正的空池兜底是
+    # cards.py 的 branded_fallback（本地已核验人物照 / 品牌封面），画面干净且
+    # 不会误导，优先级必须高于带文字的拼接缩略图。_atp_official_cover_candidates
+    # 保留给非封面场景（如昨日好球的视频线索）使用。
 
     candidates: list[tuple[object, str, dict, dict, int, bool, bool]] = []
     participants = [*match.home, *match.away]

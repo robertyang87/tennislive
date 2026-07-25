@@ -280,6 +280,44 @@ def check_xhs_post(digest: Digest, post: str) -> tuple[list[str], list[str]]:
     return list(dict.fromkeys(fatal)), list(dict.fromkeys(warn))
 
 
+def _unmapped_tournament_warnings(digest: Digest) -> list[str]:
+    """Flag tournaments whose level never resolved, so they are not silently lost.
+
+    A tournament with no level code fails is_tour_focus_match() and drops out
+    of the digest entirely -- indistinguishable, in the output, from one that
+    resolved to a level we deliberately skip. Naming them (and calling out any
+    Chinese player caught in the gap) turns a blind spot into a visible signal.
+    """
+    from .render.common import is_chinese_involved
+    from .zh.tournaments import tournament_level
+
+    grouped: dict[str, list] = {}
+    for match in digest.results + digest.live + digest.schedule:
+        name = (match.tournament.name or "").strip()
+        if not name or match.tournament.level:
+            continue
+        if tournament_level(name, match.tour.value if match.tour else None):
+            continue  # 抓取时没带上，但映射表认得，重算即可命中
+        grouped.setdefault(name, []).append(match)
+
+    warnings: list[str] = []
+    for name, matches in sorted(grouped.items(), key=lambda kv: -len(kv[1])):
+        chinese = [m for m in matches if is_chinese_involved(m)]
+        detail = f"赛事级别未映射，整站 {len(matches)} 场未收录: {name}"
+        if chinese:
+            names = "、".join(
+                dict.fromkeys(
+                    player_zh(p.name)
+                    for m in chinese
+                    for p in m.home + m.away
+                    if (p.country or "").upper() in {"CHN", "CN"}
+                )
+            )
+            detail += f"（含中国球员 {names}）" if names else "（含中国球员）"
+        warnings.append(detail)
+    return warnings
+
+
 def run_checks(
     digest: Digest,
     title: str,
@@ -304,6 +342,13 @@ def run_checks(
     ]
     if bad_names:
         fatal.append(f"存在空球员名 {len(bad_names)} 个")
+
+    # 级别未映射的赛事会被 is_tour_focus_match() 整站排除，而"没查到级别"和
+    # "查到了但级别太低、按规则不收录"在输出里长得一模一样：coverage.txt 只有
+    # 一行"待识别赛事"。孟菲斯精英赛（WTA250，含王曦雨）当天就是这样整站消失
+    # 的。所以这里把未映射的赛事显式告警；有中国球员时格外点名，因为中国球员
+    # 优先是硬规则，漏掉一场的代价远高于多一条告警。
+    warn.extend(_unmapped_tournament_warnings(digest))
 
     # 标题与文案长度
     if not title.strip():

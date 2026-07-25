@@ -513,6 +513,10 @@ def tonight_event_focus(
     return [row[3] for row in sorted(pages, key=lambda row: row[:3])]
 
 
+def _tonight_event_key(match: Match) -> str:
+    return " ".join((match.tournament.name or "").casefold().split())
+
+
 def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[Match]:
     """今晚焦点：优先中国/名将，同时覆盖最多四项赛事."""
     singles = [
@@ -521,6 +525,20 @@ def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[
         if m.is_singles
         and not m.status.is_final
         and is_tour_focus_match(m)
+    ]
+
+    # 没有开赛时间的比赛（"待官方排期"）只有在同赛事当天还有确定时间的比赛时
+    # 才算今晚的：那种情况是赛事正在进行、官方只是还没挂钟点。若整项赛事今天
+    # 一场确定时间的比赛都没有，说明它根本还没开打——比分源有时会提前把下周的
+    # 签表当成今天的赛程返回（2026-07-25 孟菲斯精英赛就返回了 10 场无时间的
+    # 女单首轮，实际 7 月 27 日才开赛），放进来会挤掉当天真正要打的比赛。
+    dated_events = {
+        _tonight_event_key(m) for m in singles if m.start_utc is not None
+    }
+    singles = [
+        m
+        for m in singles
+        if m.start_utc is not None or _tonight_event_key(m) in dated_events
     ]
 
     def known(match: Match) -> bool:
@@ -540,8 +558,7 @@ def tonight_focus(matches: list[Match], min_n: int = 3, max_n: int = 5) -> list[
     if target < min_n:
         target = len(ranked)
 
-    def event_key(match: Match) -> str:
-        return " ".join(match.tournament.name.casefold().split())
+    event_key = _tonight_event_key
 
     selected: list[Match] = []
     selected_ids: set[str] = set()
