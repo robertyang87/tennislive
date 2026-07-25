@@ -479,7 +479,39 @@ def render_courtcard(meta, scene, W, H):
     return img
 
 
+def render_logogrid(meta, scene, W, H):
+    """四大满贯官方 logo 2x2：白色圆角卡托底，深色电影背景。"""
+    accent = hex2rgb(scene.get("accent", "#f2b32a"))
+    img = cinematic_bg(W, H, accent)
+    card_x, card_y = 90, int(H * 0.24)
+    card_w, card_h = W - 180, int(H * 0.50)
+    gap = 26
+    cw = (card_w - gap) // 2
+    ch = (card_h - gap) // 2
+    rgba = img.convert("RGBA")
+    for i, c in enumerate(scene["cells"][:4]):
+        r, cc = divmod(i, 2)
+        x = card_x + cc * (cw + gap)
+        y = card_y + r * (ch + gap)
+        card = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+        cd = ImageDraw.Draw(card)
+        cd.rounded_rectangle([0, 0, cw, ch], radius=30, fill=(255, 255, 255, 246))
+        logo = Image.open(ROOT / c["logo"]).convert("RGBA")
+        box = int(min(cw, ch) * 0.72)
+        s = min(box / logo.width, box / logo.height)
+        logo = logo.resize((int(logo.width * s), int(logo.height * s)), Image.LANCZOS)
+        card.paste(logo, ((cw - logo.width) // 2, (ch - logo.height) // 2), logo)
+        rgba.paste(card, (x, y), card)
+    img = rgba.convert("RGB")
+    section_header(img, scene["section"])
+    caption_band(img, scene.get("caption", ""))
+    brand_mark(img, meta["brand"])
+    progress_dots(img, scene.get("index", 0))
+    return img
+
+
 RENDERERS = {"title": render_title, "section": render_section,
+             "logogrid": render_logogrid,
              "photo": render_photo, "placeholder": render_placeholder,
              "triptych": render_triptych, "collage": render_collage,
              "grid": render_grid4, "courtcard": render_courtcard}
