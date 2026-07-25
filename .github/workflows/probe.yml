@@ -29,8 +29,8 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
-      - name: 扩大范围检索 2026 法网 + 红土球印
-        run: python tools/hunt_rg2026_ballmark.py
+      - name: 下载入围的 2026 法网候选
+        run: python tools/grab_named.py
 
       - name: 提交候选供人工目检
         run: |
