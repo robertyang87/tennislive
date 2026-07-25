@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "brand": "网球时差",
+    "handle": "@网球时差",
+    "title": "网球四大满贯",
+    "voice": "zh-CN-YunjianNeural",
+    "voice_rate": "+8%",
+    "note": "介绍赛事本身（球场、场地、氛围），不聚焦球员；不提金满贯；解说为原创科普文字，刻意不使用统计数字。配图为精选的可复用授权场馆/球场实拍（CC/CC0/公有领域），片中不烧录出处，署名进发布文案；CC0 与公有领域无需署名。脚本无下载器，不从 YouTube 等抓取任何受版权保护的视频；官方比赛画面请按 docs 的授权流程自行取得后替换占位镜头。"
+  },
+  "scenes": [
+    {
+      "id": "s01_hook",
+      "dur": 7.0,
+      "type": "title",
+      "accent": "#f2b32a",
+      "big": ["四座球场", "一生梦想"],
+      "sub": "每一个网球人，都想征服的地方",
+      "vo": "有四座球场，是每一个网球运动员，一生都梦想征服的地方。",
+      "caption": "每个球员，一生的梦想"
+    },
+    {
+      "id": "s02_title",
+      "dur": 6.0,
+      "type": "title",
+      "accent": "#f2b32a",
+      "big": ["网球", "四大满贯"],
+      "sub": "THE FOUR GRAND SLAMS",
+      "vo": "它们，就是网球的四大满贯——四片战场，四种荣耀。",
+      "caption": "四片战场 · 四种荣耀"
+    },
+    {
+      "id": "s03_stage",
+      "dur": 15.0,
+      "type": "grid",
+      "accent": "#f2b32a",
+      "section": {"en": "The Grand Slams", "zh": "网坛最高殿堂", "surface": "巅峰之战", "color": "#f2b32a"},
+      "cells": [
+        {"image": "assets/venues/ao-rod-laver-arena.jpg", "label": "澳网", "color": "#2f7de1", "focal": [0.5, 0.5], "local_key": "ao"},
+        {"image": "assets/explainer/hawkeye/roland_garros_wide.jpg", "label": "法网", "color": "#c96a34", "focal": [0.5, 0.42], "credit": "图：sk4t · CC BY-SA 2.0 · Wikimedia Commons"},
+        {"image": "assets/players/jannik-sinner.jpg", "label": "温网", "color": "#2f9448", "focal": [0.42, 0.6], "credit": "图：Daniel Cooper · CC BY-SA 4.0 · Wikimedia Commons"},
+        {"image": "assets/venues/usopen-arthur-ashe-stadium.jpg", "label": "美网", "color": "#1f6fb2", "focal": [0.5, 0.42], "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons"}
+      ],
+      "vo": "澳网、法网、温网、美网，是网坛级别最高、历史最悠久的四项赛事，也是每个赛季最耀眼的舞台。",
+      "caption": "四大满贯 · 巅峰同框"
+    },
+    {
+      "id": "s04_surfaces",
+      "dur": 14.0,
+      "type": "triptych",
+      "accent": "#f2b32a",
+      "section": {"en": "Three Surfaces", "zh": "三种场地", "surface": "红土 · 草地 · 硬地", "color": "#f2b32a"},
+      "panels": [
+        {"image": "assets/players/novak-djokovic.jpg", "label": "红土", "color": "#c96a34", "focal": [0.5, 0.42], "credit": "图：Kuberzog · CC BY 4.0 · Wikimedia Commons"},
+        {"image": "assets/players/carlos-alcaraz.jpg", "label": "草地", "color": "#2f9448", "focal": [0.42, 0.32], "credit": "图：12121343A · CC BY-SA 4.0 · Wikimedia Commons"},
+        {"image": "assets/players/coco-gauff.jpg", "label": "硬地", "color": "#2f7de1", "focal": [0.5, 0.35], "credit": "图：Hameltion · CC BY-SA 4.0 · Wikimedia Commons"}
+      ],
+      "vo": "更特别的是，它们要在三种截然不同的场地上决出胜负——红土、草地、硬地。每一种场地，都是一种全新的节奏，一种全新的战术。",
+      "caption": "三种场地 · 三种战争"
+    },
+    {
+      "id": "s05_ao_head",
+      "dur": 5.0,
+      "type": "section",
+      "index": 1,
+      "accent": "#2f7de1",
+      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛", "surface": "硬地 · 墨尔本", "color": "#2f7de1", "word": "MELBOURNE"},
+      "vo": "首先，盛夏的墨尔本。",
+      "caption": "澳网"
+    },
+    {
+      "id": "s05b_ao_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 1,
+      "accent": "#2f7de1",
+      "image": "assets/venues/ao-rod-laver-arena.jpg",
+      "focal": [0.5, 0.55],
+      "credit": "",
+      "local_key": "ao",
+      "court": "罗德·拉沃球场",
+      "seats": "可容纳约 14,820 人",
+      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛"},
+      "vo": "",
+      "caption": ""
+    },
+    {
+      "id": "s06_ao",
+      "dur": 17.0,
+      "type": "photo",
+      "index": 1,
+      "accent": "#2f7de1",
+      "image": "assets/venues/ao-court-interior.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "图：Gracchus250 · CC BY-SA 4.0 · Wikimedia Commons",
+      "section": {"en": "Australian Open", "zh": "澳大利亚网球公开赛", "surface": "硬地 · 墨尔本", "color": "#2f7de1"},
+      "vo": "新赛季的揭幕大满贯，在灼热的阳光下拉开序幕。蓝色的硬地，极限的高温，让这里既残酷又热烈，人们叫它——快乐的大满贯。",
+      "caption": "快乐大满贯 · 盛夏墨尔本"
+    },
+    {
+      "id": "s07_rg_head",
+      "dur": 5.0,
+      "type": "section",
+      "index": 2,
+      "accent": "#c96a34",
+      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛", "surface": "红土 · 巴黎", "color": "#c96a34", "word": "PARIS"},
+      "vo": "接着，来到巴黎的红土。",
+      "caption": "法网"
+    },
+    {
+      "id": "s07b_rg_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 2,
+      "accent": "#c96a34",
+      "image": "assets/venues/rg-philippe-chatrier.jpg",
+      "focal": [0.32, 0.4],
+      "credit": "图：Poudou99 · CC BY 3.0 · Wikimedia Commons",
+      "local_key": "rg",
+      "court": "菲利普·夏蒂埃球场",
+      "seats": "可容纳约 15,225 人",
+      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛"},
+      "vo": "",
+      "caption": ""
+    },
+    {
+      "id": "s08_rg",
+      "dur": 17.0,
+      "type": "photo",
+      "index": 2,
+      "accent": "#c96a34",
+      "image": "assets/explainer/hawkeye/roland_garros.jpg",
+      "focal": [0.5, 0.45],
+      "credit": "图：Carine06 · CC BY-SA 2.0 · Wikimedia Commons",
+      "section": {"en": "Roland-Garros", "zh": "法国网球公开赛", "surface": "红土 · 巴黎", "color": "#c96a34"},
+      "vo": "这是最考验耐心与意志的战场。红土拖慢了球速，把回合无限拉长，胜利往往属于坚持到最后的那一个。",
+      "caption": "红土 · 耐力的战场"
+    },
+    {
+      "id": "s09_wim_head",
+      "dur": 5.0,
+      "type": "section",
+      "index": 3,
+      "accent": "#2f9448",
+      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛", "surface": "草地 · 伦敦", "color": "#2f9448", "word": "LONDON"},
+      "vo": "然后，是伦敦的草地。",
+      "caption": "温网"
+    },
+    {
+      "id": "s09b_wim_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 3,
+      "accent": "#2f9448",
+      "image": "assets/venues/wimbledon-centre-court.jpg",
+      "focal": [0.5, 0.45],
+      "credit": "图：Arne Müseler · CC BY-SA 2.0 · Wikimedia Commons",
+      "local_key": "wim",
+      "court": "中央球场 · Centre Court",
+      "seats": "可容纳约 14,979 人",
+      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛"},
+      "vo": "",
+      "caption": ""
+    },
+    {
+      "id": "s10_wim",
+      "dur": 17.0,
+      "type": "photo",
+      "index": 3,
+      "accent": "#2f9448",
+      "image": "assets/explainer/hawkeye/line_judges.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
+      "section": {"en": "Wimbledon", "zh": "温布尔登网球锦标赛", "surface": "草地 · 伦敦", "color": "#2f9448"},
+      "vo": "这里是网球最古老、也最传统的殿堂。纯白的着装，翠绿的草坪，处处都写着优雅。草地球速最快，胜负常在电光石火之间。",
+      "caption": "最古老 · 最传统"
+    },
+    {
+      "id": "s11_uso_head",
+      "dur": 5.0,
+      "type": "section",
+      "index": 4,
+      "accent": "#1f6fb2",
+      "section": {"en": "US Open", "zh": "美国网球公开赛", "surface": "硬地 · 纽约", "color": "#1f6fb2", "word": "NEW YORK"},
+      "vo": "最后，纽约的不夜城。",
+      "caption": "美网"
+    },
+    {
+      "id": "s11b_uso_court",
+      "dur": 6.0,
+      "type": "courtcard",
+      "index": 4,
+      "accent": "#1f6fb2",
+      "image": "assets/venues/usopen-arthur-ashe-exterior.jpg",
+      "focal": [0.5, 0.5],
+      "credit": "",
+      "local_key": "uso",
+      "court": "阿瑟·阿什球场",
+      "seats": "可容纳约 23,771 人 · 全球最大",
+      "section": {"en": "US Open", "zh": "美国网球公开赛"},
+      "vo": "",
+      "caption": ""
+    },
+    {
+      "id": "s12_uso",
+      "dur": 17.0,
+      "type": "photo",
+      "index": 4,
+      "accent": "#1f6fb2",
+      "image": "assets/venues/usopen-arthur-ashe-stadium.jpg",
+      "focal": [0.5, 0.4],
+      "credit": "图：manalahmadkhan · CC BY 2.0 · Wikimedia Commons",
+      "section": {"en": "US Open", "zh": "美国网球公开赛", "surface": "硬地 · 纽约", "color": "#1f6fb2"},
+      "vo": "赛季收官的大满贯，也是最喧闹、最热闹的一站。灯火通明的夜场，山呼海啸的呐喊，把网球变成一场盛大的狂欢。",
+      "caption": "不夜之城 · 点燃全场"
+    },
+    {
+      "id": "s13_recap",
+      "dur": 9.0,
+      "type": "title",
+      "accent": "#f2b32a",
+      "big": ["一年四站", "横跨全球"],
+      "sub": "四大满贯 · 贯穿整个赛季",
+      "vo": "从南半球的盛夏，到北半球的深秋，四大满贯轮番登场，串起整个网球赛季。",
+      "caption": "一年四站 · 横跨全球"
+    },
+    {
+      "id": "s14_outro",
+      "dur": 7.0,
+      "type": "title",
+      "accent": "#f2b32a",
+      "big": ["你最爱", "哪一座"],
+      "sub": "关注 · 网球时差",
+      "vo": "四大满贯，网球世界的巅峰。你，最爱哪一座？关注网球时差，一起看懂每一场巅峰对决。",
+      "caption": "你最爱哪一座？"
+    }
+  ]
+}
