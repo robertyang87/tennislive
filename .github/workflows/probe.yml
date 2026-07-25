@@ -25,6 +25,9 @@ jobs:
       - name: 安装 tennislive
         run: pip install -q -e .
 
+      - name: 核验候选照片的 Commons 元数据（赛事/年份/授权）
+        run: python tools/verify_commons_files.py
+
       - name: 定向抓取解说视频 B-roll 候选
         run: python tools/probe_explainer_broll.py
 
