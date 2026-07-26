@@ -1601,11 +1601,24 @@ def speakable(text: str) -> str:
     return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
 
 
+# Delivery, not just words. The default voice read the scripts correctly and
+# flatly — too slow to hold a thumb, and even-toned in a way that made every
+# beat sound like the last. Yunjian is the one Chinese voice Microsoft tags
+# "Passion" (it is their sports-commentary read), and a positive rate is what
+# stops a knowledge clip from feeling like a briefing. Both stay parameters so
+# a deck can be re-voiced without touching a script.
+DEFAULT_VOICE = "zh-CN-YunjianNeural"
+DEFAULT_RATE = "+14%"
+DEFAULT_PITCH = "+0Hz"
+
+
 def synthesize_narration(
     segments: Sequence[ExplainerSegment],
     outdir: Path,
     *,
-    voice: str = "zh-CN-YunxiNeural",
+    voice: str = DEFAULT_VOICE,
+    rate: str = DEFAULT_RATE,
+    pitch: str = DEFAULT_PITCH,
 ) -> list[Path]:
     """Synthesize one narration audio file per beat with edge-tts (online)."""
     try:
@@ -1619,7 +1632,7 @@ def synthesize_narration(
     paths: list[Path] = []
 
     async def _one(text: str, path: Path) -> None:
-        await edge_tts.Communicate(text, voice).save(str(path))
+        await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(str(path))
 
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
@@ -1707,7 +1720,9 @@ def generate_explainer_video(
     outdir: str | Path,
     *,
     theme: str = "dark",
-    voice: str = "zh-CN-YunxiNeural",
+    voice: str = DEFAULT_VOICE,
+    rate: str = DEFAULT_RATE,
+    pitch: str = DEFAULT_PITCH,
 ) -> Path:
     """End-to-end: three-beat script -> image-first slides -> narration -> MP4."""
     outdir = Path(outdir)
@@ -1716,7 +1731,7 @@ def generate_explainer_video(
     slides = render_explainer_slides(
         segments, outdir, theme=theme, topic=(_OPENINGS.get(story.slug) or {}).get("topic", "")
     )
-    audios = synthesize_narration(segments, outdir, voice=voice)
+    audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
 
 def explainer_push_html(
