@@ -65,6 +65,7 @@ _THEMES_DARK = dict(
         PANEL_LINE=(34, 84, 68),
         DECO=(22, 62, 50),
         ACCENT=(204, 255, 0),        # 标题/高亮文字
+        SOFT_ACCENT=(204, 255, 0),   # 赛果/焦点两页收敛后的强调色
         BALL=(204, 255, 0),          # 网球图形
         OUTLINE=(204, 255, 0),       # 高亮面板描边
         WHITE=(245, 248, 246),       # 主文字
@@ -94,6 +95,7 @@ _THEMES = {
         PANEL_LINE=(224, 216, 198),
         DECO=(235, 228, 210),
         ACCENT=(13, 96, 60),         # 浅底上用深绿做强调字
+        SOFT_ACCENT=(13, 96, 60),
         BALL=(198, 246, 0),
         OUTLINE=(168, 208, 40),
         WHITE=(30, 42, 37),          # 主文字改为深色
@@ -121,9 +123,13 @@ _THEMES = {
         BG_BOTTOM=(42, 100, 80),      # --ground1 #2A6450
         PANEL=(26, 66, 52),           # --panel 压在中间调底色上的等效实色
         PANEL_HI=(28, 70, 56),        # --panel-strong 同上
+        # 赛果速递 / 焦点复盘两页收敛成金，与 webcards 的"柔和内容色"一致；
+        # 其余卡（封面、今晚焦点）仍用 ACCENT，改动范围和 HTML 那边一样。
+        SOFT_ACCENT=(213, 180, 77),   # --gold #D5B44D
     ),
 }
 BTN_TEXT = (10, 26, 20)
+SOFT_ACCENT = (204, 255, 0)
 
 
 def set_theme(name: str) -> None:
@@ -563,7 +569,8 @@ def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
 
 
 def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "昨夜焦点", "OVERNIGHT RESULTS")
+    img, draw, y = _page(fonts, date_label, "昨夜焦点", "OVERNIGHT RESULTS",
+                         accent=SOFT_ACCENT)
     lead, gap = _spread(len(matches))
     y += lead
     for m in matches:
@@ -779,7 +786,8 @@ def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Im
 
     背景为透视球场线稿；全部比赛同属一个赛事时显示赛事横幅（徽章+名称）。
     """
-    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD", deco="court-faint")
+    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD",
+                         accent=SOFT_ACCENT, deco="court-faint")
 
     # 全部比赛同属一个赛事（如大满贯日）→ 顶部赛事横幅，卡内不再重复赛事名
     names = {m.tournament.name for m in matches}
