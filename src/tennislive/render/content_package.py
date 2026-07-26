@@ -67,7 +67,7 @@ def _render_cards(
     try:
         from .webcards import daily_card_theme, generate_match_deck
 
-        # 热点卡与晨报卡是同一套视觉组件，配色跟着日报走（paper），
+        # 热点卡与晨报卡是同一套视觉组件，配色跟着日报走（daily），
         # 不再读共享的 TENNISLIVE_THEME——那个变量归知识贴/科普片。
         theme = daily_card_theme()
 
