@@ -1,7 +1,7 @@
-"""日报卡改版：主题色不动，只把底色提淡两档 + 重做布局。
+"""日报卡改版：主题色不动，只把底色提淡 + 重做布局。
 
 改版要求：保持「网球时差」原有的深绿主题（--neon 荧光黄绿 / --coral 珊瑚 /
---sky 青 / --gold 金 / --ivory）一个色都不动，只把近黑的底色提淡两档来解决
+--sky 青 / --gold 金 / --ivory）一个色都不动，只把近黑的底色提淡来解决
 "视觉过重"；布局那一层重做——大留白、间距、行高、照片遮罩，外加去掉顶部
 彩虹条。
 
@@ -27,8 +27,8 @@ import pytest
 from tennislive.render import cards
 from tennislive.render.webcards import _CSS, _shell, daily_card_theme
 
-# 提淡两档后的底色（:root 是 #061D17 → #0B3B2C）
-GROUND0, GROUND1 = (0x15, 0x33, 0x28), (0x1E, 0x52, 0x41)
+# 提淡后的底色（:root 是 #061D17 → #0B3B2C）
+GROUND0, GROUND1 = (0x1E, 0x42, 0x34), (0x2A, 0x64, 0x50)
 
 # CSS 里那段布局重做的起点，测试靠它把"新增规则"和原有规则分开
 _DAILY_MARKER = "daily 的布局重做"
@@ -105,7 +105,7 @@ def test_daily_overrides_only_the_four_background_surfaces():
     assert overridden == {"--ground0", "--ground1", "--panel", "--panel-strong"}, (
         f"html.daily 覆盖了额外的 token：{sorted(overridden)}"
     )
-    assert "--ground0:#153328" in block and "--ground1:#1E5241" in block
+    assert "--ground0:#1E4234" in block and "--ground1:#2A6450" in block
 
     root_ground0, root_ground1 = (0x06, 0x1D, 0x17), (0x0B, 0x3B, 0x2C)
     assert _luma(GROUND0) > _luma(root_ground0)

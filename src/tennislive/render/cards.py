@@ -1,7 +1,7 @@
 """晨报卡片图生成（Pillow）：小红书 3:4 竖版（1080x1440）.
 
 视觉体系（小红书审美）：
-- 默认 daily 主题：品牌深绿底提淡两档 + 荧光黄绿/珊瑚/金强调色不变；
+- 默认 daily 主题：品牌深绿底提淡 + 荧光黄绿/珊瑚/金强调色不变；
   与 webcards.py 的 html.daily 同一套色值（Chromium 挂了才走这条路，
   两边必须一致）。dark 留给知识贴/科普片，light 是旧的奶油风主题。
 - 每场比赛一个圆角面板（中国球员场次用强调色描边高亮）
@@ -54,7 +54,7 @@ BRAND = "网球时差"
 COLUMN = "网球晨报"
 
 # 主题：dark=品牌深绿（知识贴/科普片），light=小红书奶油风，
-# daily=日报卡（同一套主题色，底色提淡两档，默认）。
+# daily=日报卡（同一套主题色，底色提淡，默认）。
 # 下面这批 key 三个主题都必须给值：set_theme 走 globals().update，
 # 少给一个，切过一次就留在上一个主题的值上。
 _THEMES_DARK = dict(
@@ -117,10 +117,10 @@ _THEMES = {
     # dark 的原值——主题色不许动。Chromium 挂掉时会退到这条 Pillow 路径。
     "daily": dict(
         _THEMES_DARK,
-        BG_TOP=(21, 51, 40),          # --ground0 #153328
-        BG_BOTTOM=(30, 82, 65),       # --ground1 #1E5241
-        PANEL=(26, 62, 49),           # --panel
-        PANEL_HI=(33, 74, 59),        # --panel-strong
+        BG_TOP=(30, 66, 52),          # --ground0 #1E4234
+        BG_BOTTOM=(42, 100, 80),      # --ground1 #2A6450
+        PANEL=(26, 66, 52),           # --panel 压在中间调底色上的等效实色
+        PANEL_HI=(28, 70, 56),        # --panel-strong 同上
     ),
 }
 BTN_TEXT = (10, 26, 20)

@@ -293,14 +293,14 @@ html.light {
 /* ---------- daily：日报卡专用（封面/赛果/焦点/今晚） ----------
    主题色一个不动，和「网球有故事」知识贴/科普片完全一致：
    --neon #D6FF00、--coral #FF7657、--sky #76D7EA、--gold #D5B44D、--ivory。
-   只把近黑的底色提淡两档：#061D17→#0B3B2C 变成 #153328→#1E5241。
+   只把近黑的底色提淡：#061D17→#0B3B2C 变成 #1E4234→#2A6450。
    这解决的是"视觉过重"，不是换主题——换成中性沙底试过，方向错了。
 
    面板跟着底色一起提亮并降低不透明度：底色变亮而面板不动的话，深色面板
    压在亮底上反而更像"一块一块"的，比原来还重。 */
 html.daily {
-  --ground0:#153328; --ground1:#1E5241;
-  --panel:rgba(14,44,35,.74); --panel-strong:rgba(17,53,42,.86);
+  --ground0:#1E4234; --ground1:#2A6450;
+  --panel:rgba(22,58,46,.70); --panel-strong:rgba(26,68,54,.84);
 }
 body {
   width:@W@px; height:@H@px; overflow:hidden; position:relative;
