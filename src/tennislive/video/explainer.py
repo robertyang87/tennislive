@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import base64
 import html
+import json
 import mimetypes
 import os
 import re
@@ -2331,6 +2332,21 @@ def generate_explainer_video(
         column=explainer_column(story.slug)
     )
     audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
+    # Which voice actually spoke is otherwise unrecoverable from the output:
+    # the per-beat mp3s are deleted to keep the repo small, and nobody can
+    # read a voice name off an mp4. That gap already cost three decks — the
+    # workflow passed a stale --voice on every dispatch, so changing the
+    # default in code changed nothing, and the only way anyone found out was
+    # by reading a run log days later. Write it down beside the film instead,
+    # so checking is a matter of opening the artifact, not trusting a chain
+    # of inference about what the arguments must have been.
+    (outdir / "narration.json").write_text(
+        json.dumps(
+            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios)},
+            ensure_ascii=False, indent=2,
+        ) + "\n",
+        encoding="utf-8",
+    )
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
 
 def explainer_push_html(
