@@ -1,0 +1,83 @@
+{
+  "edition": "2026-07-27",
+  "policy": "只发布原创摘要；媒体正文、摄影与视频不进入仓库。",
+  "sources": [
+    {
+      "id": "https://www.espn.com/tennis/scoreboard/_/date/20260726",
+      "name": "espn",
+      "url": "https://www.espn.com/tennis/scoreboard/_/date/20260726",
+      "kind": "score-data",
+      "usage": "赛程、赛果、轮次与排名快照"
+    },
+    {
+      "id": "data-context:espn",
+      "name": "espn",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "data-context:实时排名与赛程",
+      "name": "实时排名与赛程",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9Tc3N0VFViRzFwaDBWRnF5WHpvclZoSHRQTW1nR0ZKaWxwbVAyWF95OWRjd1c1emJRM0FCa1pJMVZHUHBHaFdsUnBvd1g3d3dONVFWTWY3QXhHOU9hVmdWbEdnZXIxQlZwTG9la3p0NUNwcEg4QnVoMkI5cWRydw?oc=5",
+      "name": "ATP Tour",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9Tc3N0VFViRzFwaDBWRnF5WHpvclZoSHRQTW1nR0ZKaWxwbVAyWF95OWRjd1c1emJRM0FCa1pJMVZHUHBHaFdsUnBvd1g3d3dONVFWTWY3QXhHOU9hVmdWbEdnZXIxQlZwTG9la3p0NUNwcEg4QnVoMkI5cWRydw?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9UTmNyVWxNS2JabVlkZ25TRGFwNDJNaW5KbnhPYVlYX0dYbUhTMzJ3UUNOS2s0ZDBjVjdlTDNUUnpCcWNSWXg1RFB3TnVQZXJpYU9lZXFxTHRSUWQzSVJfdjBheUVRbFpQa1lnVTlZUUZQS3lVUnV4WTNnTQ?oc=5",
+      "name": "ATP Tour",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9UTmNyVWxNS2JabVlkZ25TRGFwNDJNaW5KbnhPYVlYX0dYbUhTMzJ3UUNOS2s0ZDBjVjdlTDNUUnpCcWNSWXg1RFB3TnVQZXJpYU9lZXFxTHRSUWQzSVJfdjBheUVRbFpQa1lnVTlZUUZQS3lVUnV4WTNnTQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOMll6akREajR0cHZtSEpaMU1uVDlfNkJCWW5tdVcySWtERjA5bmRNcFpKTms0cHRibFVTVm5RakJZRGNTcVZfZzFJZ0d4ckFvS2FJNDZ6Z1JWLWJmVGJVWC1wdk1qVUhpX0NDblJ3QWMtWHJkcXVCbWM5Mnl6aTgzTEpNMy1Lbkk0R01nQnNR?oc=5",
+      "name": "Sky Sports",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOMll6akREajR0cHZtSEpaMU1uVDlfNkJCWW5tdVcySWtERjA5bmRNcFpKTms0cHRibFVTVm5RakJZRGNTcVZfZzFJZ0d4ckFvS2FJNDZ6Z1JWLWJmVGJVWC1wdk1qVUhpX0NDblJ3QWMtWHJkcXVCbWM5Mnl6aTgzTEpNMy1Lbkk0R01nQnNR?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUTZxWWV3dFB5Ul9mRjNoSGpJaEt3N19lREtMRFYyaGtuMm51aEdnMEdaLVlTZjZKMDY5ZTQ5aXZ1LWtKd0lHWl9MdzcxdmZiNmFwcFVmU2wtMkp0VjMzWDFOemxxeHpLT2cwd0hSVktDQmZaY3hYMm9NRmJZM3VMb1dibkJJZmJoSl9zbHAzLXdpb1dEMlhBcEQxV204dW4zdkZ2czgwVjZjUHFaek5uYUl1dTFKbFhw?oc=5",
+      "name": "Tennis.com",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPUTZxWWV3dFB5Ul9mRjNoSGpJaEt3N19lREtMRFYyaGtuMm51aEdnMEdaLVlTZjZKMDY5ZTQ5aXZ1LWtKd0lHWl9MdzcxdmZiNmFwcFVmU2wtMkp0VjMzWDFOemxxeHpLT2cwd0hSVktDQmZaY3hYMm9NRmJZM3VMb1dibkJJZmJoSl9zbHAzLXdpb1dEMlhBcEQxV204dW4zdkZ2czgwVjZjUHFaek5uYUl1dTFKbFhw?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMmRsUkF6QnZ0WDFHZFplY2d4Z0dDRHdJYUNkVWxreG1jLThTSlNOR0oyX19SY1d0S0l5N1dydHd1M2dfeHRoX3VSdy1vTkNiZENjRnRIMV9JZFZudlRpbG1ZNENCZVJFLUdpR0RmazVaRTNVVGJ0X0daMklSYnV5SU1QVUVGUzZVTzg2Q01B?oc=5",
+      "name": "Tennis.com",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMmRsUkF6QnZ0WDFHZFplY2d4Z0dDRHdJYUNkVWxreG1jLThTSlNOR0oyX19SY1d0S0l5N1dydHd1M2dfeHRoX3VSdy1vTkNiZENjRnRIMV9JZFZudlRpbG1ZNENCZVJFLUdpR0RmazVaRTNVVGJ0X0daMklSYnV5SU1QVUVGUzZVTzg2Q01B?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOd194cW50dHBndURKRm9UeURNUl9WLUMyMHJLUVJtaERmT0RYZDFWczNGajk4YjNYNmZ0cEZGNXBLd1JhWTlrWENBUGFfdGhYdkIwT0ZkSnZJQmdaSjFyWXJGM3VKLW96NWhSZkdQNUJrY3g1OWxEdDVaQzBIakR2QjhBQ3M5dnFJMFZkdDNR?oc=5",
+      "name": "ATP Tour",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOd194cW50dHBndURKRm9UeURNUl9WLUMyMHJLUVJtaERmT0RYZDFWczNGajk4YjNYNmZ0cEZGNXBLd1JhWTlrWENBUGFfdGhYdkIwT0ZkSnZJQmdaSjFyWXJGM3VKLW96NWhSZkdQNUJrY3g1OWxEdDVaQzBIakR2QjhBQ3M5dnFJMFZkdDNR?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://www.protennislive.com/posting/2026/7290/op.pdf",
+      "name": "ATP 官方 OOP",
+      "url": "https://www.protennislive.com/posting/2026/7290/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1131/OP.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    }
+  ]
+}
