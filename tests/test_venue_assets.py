@@ -137,3 +137,114 @@ def test_fetch_tool_registers_every_credited_asset():
     credited = set(json.loads(CREDITS.read_text(encoding="utf-8")))
     orphans = sorted(credited - registered)
     assert not orphans, f"这些图有 credits 但没在 VENUES 里登记，会被冲掉：{orphans}"
+
+
+def _fetch_tool():
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "fetch_venues.py"
+    spec = importlib.util.spec_from_file_location("fetch_venues", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_credits_point_at_the_file_currently_pinned_in_venues():
+    """credits 记的 Commons 文件名，必须就是 VENUES 里钉的那一张。
+
+    换图时最容易漏这一步：旧 credits 字段是齐全的，只是指向上一张图，
+    于是不会被 load_venue_assets() 丢弃，而是照常生效并印错署名和许可。
+    缺出处只是不显示，错出处是把别人的作品记到另一个人名下。
+    加拿大站和法网这次换图就各踩了一次。
+    """
+    import json
+
+    from tennislive.render.venue_assets import ASSETS, CREDITS
+
+    module = _fetch_tool()
+    credits = json.loads(CREDITS.read_text(encoding="utf-8"))
+
+    mismatched = []
+    for out_name, pinned_title, _term in module.VENUES:
+        if not pinned_title or not (ASSETS / out_name).is_file():
+            continue
+        recorded = (credits.get(out_name) or {}).get("title")
+        if not recorded:
+            continue
+        if module._norm_title(recorded) != module._norm_title(pinned_title):
+            mismatched.append(f"{out_name}: credits={recorded} 但 VENUES 钉的是 {pinned_title}")
+    assert not mismatched, "credits 指向了别的文件：\n" + "\n".join(mismatched)
+
+
+def test_backfill_credits_rewrites_a_stale_entry_not_just_a_missing_one():
+    """backfill 要能改掉过期的出处，不只是补空的。
+
+    原来只判断"字段是否齐全"，换图之后旧记录字段齐全、内容全错，直接跳过。
+    """
+    import json
+
+    module = _fetch_tool()
+    calls = []
+
+    def fake_imageinfo(titles):
+        calls.append(titles[0])
+        return [{
+            "title": titles[0], "license": "CC BY-SA 4.0",
+            "artist": "New Author", "page": "https://commons.wikimedia.org/wiki/x",
+        }]
+
+    module.imageinfo = fake_imageinfo
+
+    import tempfile
+    from pathlib import Path
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "a.jpg").write_bytes(b"x")
+        (out / "credits.json").write_text(json.dumps({
+            "a.jpg": {
+                "title": "File:Old One.jpg", "license": "CC BY 3.0",
+                "artist": "Old Author", "page": "https://example.invalid/old",
+            }
+        }), encoding="utf-8")
+
+        failed = module.backfill_credits(out, [("a.jpg", "File:New One.jpg", None)])
+
+        assert not failed, failed
+        assert calls == ["File:New One.jpg"]
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written["a.jpg"]["title"] == "File:New One.jpg"
+        assert written["a.jpg"]["artist"] == "New Author"
+
+
+def test_backfill_credits_leaves_a_matching_entry_alone():
+    """名字对得上就别动它——每跑一次都重查 API 是白白撞限流。"""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    calls = []
+
+    def fake_imageinfo(titles):
+        calls.append(titles[0])
+        return []
+
+    module.imageinfo = fake_imageinfo
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "a.jpg").write_bytes(b"x")
+        entry = {
+            "title": "File:Same_One.jpg", "license": "CC BY-SA 4.0",
+            "artist": "A", "page": "https://commons.wikimedia.org/wiki/x",
+        }
+        (out / "credits.json").write_text(json.dumps({"a.jpg": entry}), encoding="utf-8")
+
+        # 下划线 / 空格差异不算换图
+        failed = module.backfill_credits(out, [("a.jpg", "File:Same One.jpg", None)])
+
+        assert not failed and calls == []
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written["a.jpg"] == entry

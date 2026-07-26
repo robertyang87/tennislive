@@ -67,8 +67,10 @@ VENUES = [
     ("ao-rod-laver-arena.jpg", "File:RodLaverArenanight2013.jpg", None),
     ("ao-court-interior.jpg",
      "File:Rod Laver Arena Melbourne Park Australian Open 2023 first round.jpg", None),
-    ("rg-philippe-chatrier.jpg",
-     "File:Court Philippe Chatrier 2024 vue extérieure.jpg", None),
+    # 法网：原来钉的 "vue extérieure" 那张，画面主体是场外一尊举拍的雕像，
+    # 夏蒂埃球场只在背后露一角——当背景图时雕像成了焦点，不像主球场。
+    # 换成球场内景：红土、看台，以及"LA VICTOIRE APPARTIENT AU PLUS OPINIÂTRE"。
+    ("rg-philippe-chatrier.jpg", "File:Court Philippe Chatrier 2024.jpg", None),
     ("wimbledon-centre-court.jpg",
      "File:2023 09 09 arne mueseler 14 40 13 00734-Verbessert-RR (53284505824).jpg", None),
     ("usopen-arthur-ashe-exterior.jpg", "File:Arthur Ashe Stadium, July 7, 2018.jpg", None),
@@ -343,6 +345,11 @@ def fetch_set(
     return failed
 
 
+def _norm_title(title: str) -> str:
+    """Commons 文件名比较：下划线/空格等价，首字母大小写不敏感。"""
+    return " ".join(str(title).replace("_", " ").split()).casefold()
+
+
 def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
     """给"图已在盘上、credits 却缺失"的条目补出处。
 
@@ -350,6 +357,12 @@ def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
     （429），实际操作里常常出现"手动/分批把图弄下来了，但 credits 没跟上"。
     credits 缺字段的条目会被 load_venue_assets() **静默丢弃**，图明明在却
     不生效，很难发现。这里只查 API（不碰限流严重的图片 CDN），把缺的补齐。
+
+    换图时同样要管：把某一站换成另一张 Commons 文件后，旧的 credits 仍然
+    齐全，只是**指向上一张图**——署名和许可全错，而且不像"缺失"那样会被
+    丢弃，它会照常生效并印错出处。缺出处只是不显示，错出处是把别人的作品
+    记到另一个人名下。所以记录的 title 和 VENUES 里钉的文件名对不上时，
+    按钉的那个重取。
     """
     credits_path = out_dir / "credits.json"
     try:
@@ -361,11 +374,20 @@ def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
     for out_name, pinned_title, _term in wanted:
         if not (out_dir / out_name).exists():
             continue
-        if all((credits.get(out_name) or {}).get(k) for k in required):
+        recorded = credits.get(out_name) or {}
+        complete = all(recorded.get(k) for k in required)
+        stale = bool(
+            pinned_title
+            and recorded.get("title")
+            and _norm_title(recorded["title"]) != _norm_title(pinned_title)
+        )
+        if complete and not stale:
             continue
         if not pinned_title:
             failed.append(f"{out_name}: 图在但没有 credits，且没有固定的 Commons 文件名")
             continue
+        if stale:
+            print(f"STALE  {out_name}: credits 记的还是 {recorded['title']}，按 {pinned_title} 重取")
         try:
             cand = next(iter(imageinfo([pinned_title])), None)
             if not cand:
