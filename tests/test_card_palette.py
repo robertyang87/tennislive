@@ -1,9 +1,15 @@
 """日报卡改版：主题色不动，只把底色提淡两档 + 重做布局。
 
 改版要求：保持「网球时差」原有的深绿主题（--neon 荧光黄绿 / --coral 珊瑚 /
---sky 青 / --gold 金 / --ivory），把近黑的底色提淡，解决"视觉过重"；
-再重做四类卡的布局——大留白、细线代替色块高亮、一屏只点亮比分与决胜数据、
-去掉顶部彩虹条。
+--sky 青 / --gold 金 / --ivory）一个色都不动，只把近黑的底色提淡两档来解决
+"视觉过重"；布局那一层重做——大留白、间距、行高、照片遮罩，外加去掉顶部
+彩虹条。
+
+注意：原始需求里还有"细线代替色块高亮""一屏只点亮比分与决胜数据"两条，
+它们都要改颜色（把实心徽章改描边、把胜方整列的荧光黄绿数字改成白字），
+和"不要换主题色"直接冲突，所以**没有实现**。技术统计的决胜行仍然会带上
+`key` class（_key_stat_label 决定是哪一行），留作以后要做时的挂点，但当前
+没有任何 CSS 用它上色。
 
 两条必须钉死的边界：
 1. 「网球有故事」知识贴与科普视频仍走 :root 的近黑深绿，改版不能碰它们。
@@ -88,18 +94,39 @@ def test_theme_colours_are_untouched():
     assert "--gold:#D5B44D" in root
 
 
-def test_daily_only_lifts_the_ground_and_it_really_is_lighter():
-    """只动底色，而且必须确实比 :root 亮——否则"提淡"就没发生。"""
+def test_daily_overrides_only_the_four_background_surfaces():
+    """html.daily 只准覆盖背景面，别的 token 一个都不许碰。
+
+    "把背景搞淡"要的就是 ground/panel 这四个。上一版顺手改了 --divider
+    （荧光黄绿细线变成象牙色）、--fade、--panel-muted，等于换了主题。
+    """
     block = _daily_block()
+    overridden = set(re.findall(r"(--[a-z0-9-]+):", block))
+    assert overridden == {"--ground0", "--ground1", "--panel", "--panel-strong"}, (
+        f"html.daily 覆盖了额外的 token：{sorted(overridden)}"
+    )
     assert "--ground0:#153328" in block and "--ground1:#1E5241" in block
-    # 面板要跟着底色一起提亮：底色变亮而面板不动，深色面板压在亮底上
-    # 反而更像"一块一块"的，比原来还重。
-    assert "--panel:rgba(14,44,35,.74)" in block
-    assert "--panel-strong:rgba(17,53,42,.86)" in block
 
     root_ground0, root_ground1 = (0x06, 0x1D, 0x17), (0x0B, 0x3B, 0x2C)
     assert _luma(GROUND0) > _luma(root_ground0)
     assert _luma(GROUND1) > _luma(root_ground1)
+
+
+def test_layout_section_contains_no_colour_rules_at_all():
+    """布局段只准改几何：留白、间距、行高、照片遮罩浓度。
+
+    这是"不要换主题色"最直接的护栏。上一版在这一段里把实心徽章改成描边、
+    把胜方整列的荧光黄绿数字改成白字、把 .china-marker 从金色改成黄绿——
+    每一条单独看都像"布局"，加起来就是换了主题。
+    """
+    tail = _daily_tail()
+    offenders = [
+        line.strip()
+        for line in tail.splitlines()
+        if re.search(r"(^|[;{\s])color:|background(-color)?:|border-color:"
+                     r"|box-shadow:\s*inset", line)
+    ]
+    assert not offenders, "布局段里出现了颜色规则：\n" + "\n".join(offenders)
 
 
 def test_top_rainbow_bar_is_dropped_only_for_the_daily_cards():
@@ -132,26 +159,12 @@ def test_every_new_rule_is_scoped_to_daily():
             assert part.startswith("html.daily"), f"规则泄漏到全局：{part}"
 
 
-def test_layout_replaces_block_highlights_with_hairlines():
-    """细线代替色块高亮；一屏只点亮比分与决胜数据。"""
-    tail = _daily_tail()
-    # 外层面板去底去阴影（原来是"圆角面板里再嵌一层胜方底色块"）
-    assert "html.daily .card { background:transparent; border:0;" in tail
-    assert "html.daily .compare-grid { background:transparent; border:0;" in tail
-    # 胜方整列的色块高亮拿掉，改成名字一侧一道细线
-    assert "html.daily .compare-row .winner { background:transparent; }" in tail
-    assert "html.daily .side.won { background:transparent;" in tail
-    # 只有决胜那一行是亮的，其余数字回到正文色
-    assert "html.daily .compare-row:not(.key) .winner { color:var(--pagetext); }" in tail
-    assert "html.daily .compare-row.key .winner { color:var(--neon); }" in tail
-
-
 def test_layout_reworks_all_four_card_types():
     """四类卡都要动到：封面 / 赛果 / 焦点 / 今晚。"""
     tail = _daily_tail()
     assert "html.daily .cover-copy" in tail, "封面没重做"
-    assert "html.daily .card {" in tail, "赛果/焦点的面板没重做"
-    assert "html.daily .compare-grid" in tail, "焦点技术统计没重做"
+    assert "html.daily .card {" in tail, "赛果/焦点的卡间距没重做"
+    assert "html.daily .compare-row { height:66px; }" in tail, "技术统计行高没放宽"
     assert "html.daily .tonight-page .pick" in tail, "今晚焦点没重做"
     # 大留白
     assert "html.daily .poster { padding:44px 72px 26px; }" in tail
@@ -171,30 +184,25 @@ def test_legacy_themes_still_carry_every_key_daily_added(theme):
 
 def test_pillow_fallback_matches_the_html_palette():
     """Chromium 挂了才走 Pillow，两边必须是同一套色值。"""
-    daily = cards._THEMES["daily"]
-    assert daily["BG_TOP"] == GROUND0
-    assert daily["BG_BOTTOM"] == GROUND1
-    # 主题色沿用 dark，不是另起一套
-    assert daily["ACCENT"] == (214, 255, 0)      # --neon #D6FF00
-    assert daily["RED"] == (255, 118, 87)        # --coral #FF7657
-    assert daily["WHITE"] == (247, 243, 232)     # --ivory #F7F3E8
+    daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
+    changed = {k for k in daily if daily[k] != dark.get(k)}
+    assert changed == {"BG_TOP", "BG_BOTTOM", "PANEL", "PANEL_HI"}, (
+        f"Pillow 兜底改了额外的色值：{sorted(changed)}"
+    )
+    assert daily["BG_TOP"] == GROUND0 and daily["BG_BOTTOM"] == GROUND1
     # 底色确实比 dark 亮
-    assert _luma(daily["BG_TOP"]) > _luma(cards._THEMES["dark"]["BG_TOP"])
-    assert _luma(daily["BG_BOTTOM"]) > _luma(cards._THEMES["dark"]["BG_BOTTOM"])
+    assert _luma(daily["BG_TOP"]) > _luma(dark["BG_TOP"])
+    assert _luma(daily["BG_BOTTOM"]) > _luma(dark["BG_BOTTOM"])
 
 
-def test_pillow_fallback_white_card_constants_follow_the_theme():
-    """赛果卡的胜方底色/比分/头条药丸曾经写死在 _THEMES 外面。
-
-    那七个常量注释着"主题无关"，于是底色一换主题它们纹丝不动，整页对不上。
-    daily 下它们必须是深色卡面 + 荧光黄绿比分，而不是留在浅色白卡那一套。
-    """
-    daily = cards._THEMES["daily"]
-    assert _luma(daily["CARD_BG"]) < _luma(cards._THEMES["dark"]["CARD_BG"])
-    assert daily["WIN_GREEN"] == daily["ACCENT"]
-    assert daily["CHIP_GREEN"] == daily["ACCENT"]
-    # 卡面文字必须够亮，深色卡面上不能沿用白卡的深色字
-    assert _luma(daily["CARD_TEXT"]) > 200
+def test_pillow_fallback_keeps_every_theme_colour_identical_to_dark():
+    """主题色在 Pillow 侧也必须逐个等于 dark 的原值。"""
+    daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
+    for key in ("ACCENT", "BALL", "OUTLINE", "WHITE", "GREY", "SCORE_GREY",
+                "RED", "FOOT", "STAR_PILL", "STAR_PILL_HOT", "BTN_TEXT",
+                "CARD_BG", "CARD_TEXT", "CARD_GREY", "CARD_LINE",
+                "WIN_BAND", "WIN_GREEN", "CHIP_GREEN", "PANEL_LINE", "DECO"):
+        assert daily[key] == dark[key], f"{key} 被改了：{dark[key]} -> {daily[key]}"
 
 
 def test_key_stat_row_is_the_decisive_one():

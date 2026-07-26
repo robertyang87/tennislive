@@ -301,12 +301,6 @@ html.light {
 html.daily {
   --ground0:#153328; --ground1:#1E5241;
   --panel:rgba(14,44,35,.74); --panel-strong:rgba(17,53,42,.86);
-  --panel-border:rgba(214,255,0,.16); --panel-soft:rgba(214,255,0,.09);
-  --panel-muted:#A6B8AF;
-  --divider:rgba(247,243,232,.16);
-  --courtline:rgba(255,255,255,.04);
-  --cardshadow:none;
-  --fade:#8FA79B;
 }
 body {
   width:@W@px; height:@H@px; overflow:hidden; position:relative;
@@ -1024,98 +1018,52 @@ html.light .cta-btn { color:#F2F7EF; }
 
 /* ---------- daily 的布局重做 ----------
    只在 html.daily 下生效，知识贴/科普片仍走 :root，一个像素都不动。
-   主题色不变，动的是"重量"：底色提淡两档之后，原来那套"面板套面板 +
-   整列色块高亮"就显得更堵了，所以这里把层级压平——留白、细线、
-   一屏只点亮比分与决胜数据。 */
+
+   这一段**只改几何**：留白、间距、行高、照片遮罩浓度。
+   主题色一个都不碰——不改 --divider/--fade/--panel-muted，不把实心徽章
+   改成描边，不把胜方整列的荧光黄绿数字改成白字，不动 .china-marker 的金色。
+   （上一版这些全改了，等于换了主题。）
+   token 块里也只覆盖 --ground0/--ground1/--panel/--panel-strong 四个面，
+   因为"把背景搞淡"要的就是这四个。 */
 
 /* 顶部彩虹条：日报卡去掉（知识贴保留自己的那条） */
 html.daily body::before, html.daily .cover::after { display:none; }
 
-/* 大留白：页边距放宽，内页那层深色球场底图压到几乎看不见 */
+/* 大留白：页边距放宽，栏目头和正文之间给出呼吸 */
 html.daily .poster { padding:44px 72px 26px; }
 html.daily .poster:not(.cover) .footer { left:72px; right:72px; }
 html.daily .poster:not(.cover)>.save-badge { right:72px; top:132px; }
-html.daily .poster:not(.cover)::before { opacity:.34; }
-html.daily .titleband { margin:24px 0 20px; border-left-width:4px; }
+html.daily .titleband { margin:24px 0 20px; }
 html.daily .event { margin:-2px 0 26px; }
 
-/* 层级压平：外层面板去掉底和阴影，只留一条上缘细线。
-   原来是"圆角面板里再嵌一层胜方底色块"，两层背景叠在一起最占视觉重量。 */
-html.daily .card { background:transparent; border:0;
-  border-top:1px solid var(--divider); border-radius:0; box-shadow:none;
-  backdrop-filter:none; padding:14px 4px 16px; margin-bottom:6px; }
-html.daily .card.hero { background:transparent;
-  border-top:2px solid var(--section-accent); padding:20px 4px 22px; }
-html.daily .compare-grid { background:transparent; border:0;
-  border-top:1px solid var(--divider); border-radius:0; box-shadow:none;
-  backdrop-filter:none; }
-html.daily .compare-row b { padding-left:0; }
+/* 卡与卡之间拉开，行高放宽——原来 6 行技术统计挤在一起，没有主次 */
+html.daily .card { padding:16px 34px 18px; margin-bottom:14px; }
+html.daily .card.hero { padding:22px 36px 24px; }
+html.daily .compare-head { margin-top:26px; }
 html.daily .compare-row { height:66px; }
-html.daily .compare-head { margin-top:26px; padding:0; }
+html.daily .side { height:70px; }
+html.daily .hero .side { height:104px; }
+html.daily .verdict { margin-top:20px; padding:18px 24px; }
+html.daily .insight-hero { padding:30px 32px 32px; }
+html.daily .fact { min-height:158px; }
 
-/* 一屏只点亮比分与决胜数据：
-   胜方整列的色块高亮拿掉，改成名字一侧的一道细线；技术统计里唯一点亮的
-   是决胜那一行（见 _key_stat_label），其余数字全部回到正文色。 */
-html.daily .side.won { background:transparent;
-  box-shadow:inset 3px 0 0 var(--section-accent); }
-html.daily .compare-row .winner { background:transparent; }
-html.daily .compare-row:not(.key) .winner { color:var(--pagetext); }
-html.daily .compare-row.key { background:var(--panel-soft); }
-html.daily .compare-row.key b { color:var(--pagetext); }
-html.daily .compare-row.key .winner { color:var(--neon); }
-
-/* 实心徽章 → 描边徽章：一屏上原本有 5-6 块实心色，抢比分的注意力 */
-html.daily .tour-level, html.daily .chip, html.daily .rating {
-  background:transparent; color:var(--section-accent);
-  box-shadow:inset 0 0 0 1px var(--section-accent); }
-html.daily .chip-green { color:var(--neon); box-shadow:inset 0 0 0 1px var(--neon); }
-html.daily .chip-red { color:var(--coral); box-shadow:inset 0 0 0 1px var(--coral); }
-html.daily .chip-gold { color:var(--gold); box-shadow:inset 0 0 0 1px var(--gold); }
-html.daily .rating .ui-icon { filter:none; opacity:.8; }
-
-/* 判断/锐评块：去底，只留一条强调色竖线 */
-html.daily .verdict { background:transparent; margin-top:20px;
-  border-left:3px solid var(--section-accent); }
-html.daily .verdict-quote { background:transparent;
-  border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); }
-html.daily .insight-hero { background:transparent; border:0;
-  border-left:3px solid var(--section-accent); box-shadow:none;
-  border-radius:0; padding:22px 0 22px 26px; }
-html.daily .fact { background:transparent; border:0;
-  border-top:1px solid var(--divider); border-radius:0; box-shadow:none;
-  min-height:126px; }
-html.daily .stats-source { color:var(--fade); }
-
-/* 封面：标题区放宽、上移，底部那一栏加一层暗底并去掉多余的下边框线，
-   让照片中段完全空出来。（7.23 那版左上角还堆着日期／DAILY MATCH BRIEF／
-   OVERNIGHT LEAD 三层小标签，现在 cover_body 只出一层 MATCH POINT，
-   这里不再重复处理。） */
-html.daily .cover .edition { font-size:21px; letter-spacing:5px; }
+/* 封面：标题区放宽上移，底部一栏与页脚拉开，让照片中段空出来 */
 html.daily .cover-copy { width:640px; margin-top:30px; padding:14px 20px 20px; }
 html.daily .cover .focus { margin-top:14px; }
-html.daily .cover-lower { margin-bottom:26px; padding:22px 24px;
-  background:rgba(2,20,16,.34); }
+html.daily .cover-lower { margin-bottom:26px; padding:22px 24px; }
 html.daily .cover-secondary { margin-bottom:20px; }
-html.daily .cover-highlights { padding:20px 0 4px;
-  border-bottom:0; border-top:1px solid rgba(255,255,255,.28); }
+html.daily .cover-highlights { padding:20px 0 6px; }
 
-/* 今晚焦点：原来是场馆实景铺满，再压四块等宽等高的半透明面板——照片被盖掉
-   一半，面板也没读出层次，两边都不讨好。照片留在上半屏当氛围，比赛行落到
-   实底上用细线分隔。 */
+/* 今晚焦点：原来场馆实景被四块等宽等高的半透明面板盖掉一半，照片和面板
+   两边都不讨好。把面板往下挪、彼此拉开，照片留在上半屏当氛围。
+   这里动的是遮罩浓度和间距，面板本身的配色不变。 */
 html.daily .poster.tonight-page::before { opacity:.62; }
 html.daily .poster.tonight-page::after { height:340px; }
 html.daily .tonight-page .event-spacer { height:150px; }
 html.daily .tonight-page.count-1 .event-spacer { height:230px; }
 html.daily .tonight-page.count-2 .event-spacer { height:170px; }
 html.daily .tonight-page.count-3 .event-spacer { height:70px; }
-html.daily .tonight-page .pick { background:linear-gradient(90deg,
-    rgba(8,30,24,.90), rgba(8,30,24,.72));
-  box-shadow:none; border:0; border-left:3px solid var(--section-accent);
-  border-radius:0; margin-bottom:10px; }
-html.daily .pick .reason b { background:transparent; color:var(--coral);
-  box-shadow:inset 0 0 0 1px var(--coral); }
-html.daily .china-marker { border-color:var(--neon); color:var(--neon); }
-html.daily .venue-credit, html.daily .cover-photo-credit { color:var(--fade); }
+html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
 """
 
 

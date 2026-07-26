@@ -57,8 +57,7 @@ COLUMN = "网球晨报"
 # daily=日报卡（同一套主题色，底色提淡两档，默认）。
 # 下面这批 key 三个主题都必须给值：set_theme 走 globals().update，
 # 少给一个，切过一次就留在上一个主题的值上。
-_THEMES = {
-    "dark": dict(
+_THEMES_DARK = dict(
         BG_TOP=(14, 44, 36),
         BG_BOTTOM=(7, 23, 18),
         PANEL=(20, 58, 47),
@@ -83,7 +82,10 @@ _THEMES = {
         WIN_BAND=(216, 238, 210),
         WIN_GREEN=(13, 96, 53),
         CHIP_GREEN=(11, 77, 47),
-    ),
+)
+
+_THEMES = {
+    "dark": _THEMES_DARK,
     "light": dict(
         BG_TOP=(250, 247, 239),
         BG_BOTTOM=(241, 235, 222),
@@ -110,34 +112,15 @@ _THEMES = {
         WIN_GREEN=(13, 96, 53),
         CHIP_GREEN=(11, 77, 47),
     ),
-    # daily：与 webcards.py 的 html.daily 同一套色值。
-    # 主题色（荧光黄绿/珊瑚/金）全部沿用 dark，只把近黑底色提淡两档；
-    # Chromium 挂掉时会退到这条 Pillow 路径，两边必须一致。
+    # daily：与 webcards.py 的 html.daily 同一套。
+    # 只提淡底色那几个面（BG_TOP/BG_BOTTOM/PANEL/PANEL_HI），其余一律照抄
+    # dark 的原值——主题色不许动。Chromium 挂掉时会退到这条 Pillow 路径。
     "daily": dict(
+        _THEMES_DARK,
         BG_TOP=(21, 51, 40),          # --ground0 #153328
         BG_BOTTOM=(30, 82, 65),       # --ground1 #1E5241
-        PANEL=(26, 62, 49),
-        PANEL_HI=(33, 74, 59),
-        PANEL_LINE=(46, 96, 76),
-        DECO=(30, 68, 54),
-        ACCENT=(214, 255, 0),         # --neon，主题色不变
-        BALL=(214, 255, 0),
-        OUTLINE=(214, 255, 0),
-        WHITE=(247, 243, 232),        # --ivory
-        GREY=(166, 184, 175),
-        SCORE_GREY=(190, 205, 198),
-        RED=(255, 118, 87),           # --coral
-        FOOT=(143, 167, 155),
-        STAR_PILL=(38, 92, 74),
-        STAR_PILL_HOT=(176, 122, 20),
-        BTN_TEXT=(10, 26, 20),
-        CARD_BG=(26, 62, 49),
-        CARD_TEXT=(247, 243, 232),
-        CARD_GREY=(166, 184, 175),
-        CARD_LINE=(46, 96, 76),
-        WIN_BAND=(33, 74, 59),
-        WIN_GREEN=(214, 255, 0),
-        CHIP_GREEN=(214, 255, 0),
+        PANEL=(26, 62, 49),           # --panel
+        PANEL_HI=(33, 74, 59),        # --panel-strong
     ),
 }
 BTN_TEXT = (10, 26, 20)
