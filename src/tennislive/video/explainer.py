@@ -1935,8 +1935,19 @@ def speakable(text: str) -> str:
     sides are capped at three digits and the match must not sit inside a
     longer run of digits. A genuine "1-2 天" range would be mis-read, but no
     deck has one; scores are what this text is full of.
+
+    The other fix is a heteronym. 挑 in 挑球 is tiāo, first tone, "to pick
+    one out"; the voice reads it tiǎo, third tone, which is the 挑战 sense —
+    to provoke. There is no way to hand edge-tts a pronunciation, so the
+    audio gets a synonym instead: 选 means the same thing here and has only
+    one reading. The slides keep 挑球, which is the word people write.
+
+    The guard list is what stops 挑战 (challenge, and the Gentlemen's
+    trophy) from turning into 选战; those really are tiǎo and are already
+    read correctly.
     """
-    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
+    text = re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
+    return re.sub(r"挑(?![战衅拨逗剔眉])", "选", text)
 
 
 # Delivery, not just words. The old read was correct and flat — too slow to
