@@ -3740,3 +3740,37 @@ def test_headline_name_protection_prefers_the_longest_match():
 
     assert "克雷吉茨科娃" in out
     assert '>克雷<' not in out
+
+
+def test_every_cover_headline_line_fits_the_measured_one_line_width():
+    """拆出来的每一行都必须真的放得下，否则浏览器接手、在汉字之间乱断。
+
+    阈值原来写死 12，是按老页边距（64px）调的；改版把 daily 的页边距放宽到
+    72px，框窄成 550px，一行只放得下 10.0。于是 11.55 的
+    "爆冷：阿利斯掀翻布勃利克"被判为"放得下"、直接交给 CSS，裂成了
+    "爆冷：阿利斯掀 / 翻布勃利克"（7.26 封面）。
+    """
+    from tennislive.render.webcards import (
+        _HEADLINE_ONE_LINE_WIDTH,
+        _balanced_headline_lines,
+        _headline_display_width,
+    )
+
+    cases = [
+        ("爆冷：阿利斯掀翻布勃利克", ("阿利斯", "布勃利克")),
+        ("爆冷：塔格尔掀翻克雷吉茨科娃", ("塔格尔", "克雷吉茨科娃")),
+        ("谢里夫退赛，科尔帕奇晋级女单决赛", ("谢里夫", "科尔帕奇")),
+        ("郑钦文力克斯瓦泰克闯进八强", ("郑钦文", "斯瓦泰克")),
+    ]
+    too_wide = []
+    for headline, names in cases:
+        for line in _balanced_headline_lines(headline, names):
+            width = _headline_display_width(line)
+            if width > _HEADLINE_ONE_LINE_WIDTH:
+                too_wide.append(f"{headline} -> {line!r} 宽 {width:.2f}")
+    assert not too_wide, "这些行放不下，会被浏览器乱断：\n" + "\n".join(too_wide)
+
+    # 放得下的短标题不该被拆
+    assert _balanced_headline_lines("阿利斯掀翻布勃利克", ("阿利斯", "布勃利克")) == [
+        "阿利斯掀翻布勃利克"
+    ]
