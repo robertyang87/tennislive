@@ -387,6 +387,61 @@ _BALL_CHANGE_DIAGRAM = """
 """
 
 
+# The whole argument of the shot-clock deck is *when the twenty-five seconds
+# start*, and that is invisible: no photograph distinguishes a clock that
+# began at the umpire's call from one that began the instant the point ended.
+# Two axes, same length, different starting gun.
+_SHOT_CLOCK_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">25 秒没变，变的是从哪一秒开始数</text>
+
+  <!-- 2018-2025: the clock is started by the chair umpire, after the call -->
+  <text x="70" y="112" fill="#e7f3ec" font-size="27" font-weight="800">2018 起</text>
+  <circle cx="150" cy="168" r="11" fill="#9fb4aa"/>
+  <text x="150" y="146" text-anchor="middle" fill="#9fb4aa"
+        font-size="22" font-weight="700">一分结束</text>
+  <line x1="150" y1="168" x2="300" y2="168" stroke="#9fb4aa" stroke-width="4"
+        stroke-dasharray="7 7"/>
+  <text x="225" y="204" text-anchor="middle" fill="#9fb4aa"
+        font-size="21" font-weight="700">掌声 · 主裁报分</text>
+  <circle cx="300" cy="168" r="11" fill="#37e29a"/>
+  <rect x="300" y="150" width="470" height="36" rx="8"
+        fill="rgba(55,226,154,.28)" stroke="#37e29a" stroke-width="3"/>
+  <text x="535" y="176" text-anchor="middle" fill="#37e29a"
+        font-size="26" font-weight="800">25 秒</text>
+  <text x="790" y="176" fill="#9fb4aa" font-size="22" font-weight="700">发球</text>
+
+  <line x1="70" y1="250" x2="830" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <!-- 2026 ATP: automatic, and it starts at the point, not at the call -->
+  <text x="70" y="308" fill="#e7f3ec" font-size="27" font-weight="800">2026 · ATP</text>
+  <circle cx="150" cy="364" r="11" fill="#c6f65a"/>
+  <text x="150" y="342" text-anchor="middle" fill="#c6f65a"
+        font-size="22" font-weight="700">一分结束</text>
+  <rect x="150" y="346" width="470" height="36" rx="8"
+        fill="rgba(198,246,90,.28)" stroke="#c6f65a" stroke-width="3"/>
+  <text x="385" y="372" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">25 秒</text>
+  <text x="640" y="372" fill="#9fb4aa" font-size="22" font-weight="700">发球</text>
+  <text x="150" y="416" fill="#9fb4aa" font-size="21" font-weight="700">全自动起算，不等报分</text>
+
+  <path d="M300 214 L300 330" stroke="#ff5a6a" stroke-width="3" stroke-dasharray="7 7"/>
+  <path d="M150 214 L150 330" stroke="#ff5a6a" stroke-width="3" stroke-dasharray="7 7"/>
+  <text x="225" y="452" text-anchor="middle" fill="#ff5a6a"
+        font-size="25" font-weight="800">少掉的就是这一段</text>
+
+  <line x1="70" y1="490" x2="830" y2="490" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+  <text x="70" y="548" fill="#9fb4aa" font-size="24" font-weight="700">超时罚则</text>
+  <text x="240" y="548" fill="#e7f3ec" font-size="25" font-weight="800">第一次警告</text>
+  <text x="440" y="548" fill="#9fb4aa" font-size="30" font-weight="700">&#8594;</text>
+  <text x="490" y="548" fill="#ff5a6a" font-size="25" font-weight="800">之后每次罚掉一个一发</text>
+  <text x="450" y="604" text-anchor="middle" fill="#e7f3ec"
+        font-size="24" font-weight="700">大满贯此前是 20 秒，2018 年起统一为 25 秒</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -1316,6 +1371,103 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "他们挑的是球，还是那几秒钟？",
         ),
     ),
+    # The numbers here are all on the record: 20 seconds at the Slams and 25
+    # on tour before 2018, the 2018 US Open as the first Slam main draw with a
+    # clock, warning-then-loss-of-first-serve as the penalty, and the 2026 ATP
+    # switch to a timer that starts itself. Alcaraz is quoted from his own
+    # post-match words at Queen's and at Miami; no photograph of either
+    # argument is available, so beat four is the empty chair and the words are
+    # spoken rather than staged.
+    "shot-clock": (
+        (
+            "human",
+            "从前",
+            "计时的是一个人，不是一块钟",
+            "先说件很多人不知道的事：发球计时这条规则，早就存在，只是以前没有钟。"
+            "大满贯写的是二十秒，巡回赛写的是二十五秒——同一项运动，两套标准。"
+            "而到底有没有超时，全靠裁判椅上这个人心里数。他觉得你磨蹭，就报一次超时；"
+            "他觉得这一分打得太苦，就多给你几秒。松紧全在人，观众和球员都看不见那根线在哪儿。",
+            "assets/explainer/shot-clock/umpire.jpg",
+            "AELTC/Ben Solomon · wimbledon.com 官方图 · 2026 温网，主裁艾莉森·休斯",
+            (
+                "大满贯 20 秒，巡回赛 25 秒",
+                "没有钟，全靠主裁心里数",
+                "松紧在人，那根线没人看得见",
+            ),
+        ),
+        (
+            "debut",
+            "2018 年",
+            "钟被搬上了球场",
+            "转折点是二〇一八年的美网。它成为第一个在正赛用上二十五秒计时器的大满贯——"
+            "此前只在二〇一七年美网的资格赛里试过。同一年，四大满贯把二十秒改成二十五秒，"
+            "和巡回赛并成一套。所以「二十五」这个数字并不是算出来的，"
+            "它只是把两套标准里更宽的那一套留了下来。从这一天起，那根线第一次挂在了记分牌上，"
+            "所有人都看得见。",
+            "assets/explainer/shot-clock/usopen2018.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 2018 美网 17 号球场，锦织圭对马特雷尔",
+            (
+                "2018 美网：首个正赛用计时器的大满贯",
+                "同年大满贯由 20 秒改为 25 秒",
+                "25 不是算出来的，是两套标准并轨",
+            ),
+        ),
+        (
+            "rule",
+            "怎么算",
+            "关键从来不是 25，是从哪一秒开始",
+            "规则的原文其实很短：计时器由主裁在报分之后启动，球员必须在归零前开始发球动作。"
+            "注意这个顺序——先是一分打完，然后是掌声，然后主裁报分，这时候钟才开始走。"
+            "掌声越长，球员能喘的越久。至于罚则，第一次只是警告，此后每一次，"
+            "都要罚掉一个一发——直接从二发开始。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "计时器在主裁报分之后启动",
+                "掌声那几秒不算在 25 秒里",
+                "首次警告，之后每次罚掉一个一发",
+            ),
+            _SHOT_CLOCK_DIAGRAM,
+        ),
+        (
+            "auto",
+            "2026 年",
+            "钟自己开始走了",
+            "然后是今年。ATP 把计时改成全自动：一分打完，钟几乎立刻开始走，"
+            "不再等主裁报分，主裁那点裁量权也就没了。数字还是二十五，能用的时间却短了一截。"
+            "阿尔卡拉斯在女王杯输给德拉珀之后说：「他跟我说有个新规则，钟不停，"
+            "一分打完钟就开始走。」他又说：「我感觉分与分之间根本没时间恢复，全程都在赶。」"
+            "在迈阿密对戈芬那场，他因为超时被罚，当场对主裁说：这一分我是在网前结束的，"
+            "根本不可能赶上。辛纳同样在迈阿密找主裁理论过这件事。"
+            "画面里这把椅子还在原地，只是那二十五秒已经不归它管了。",
+            "assets/explainer/shot-clock/chair.jpg",
+            "Like tears in rain · CC BY-SA 4.0 · Wikimedia Commons · 2026 罗兰加洛斯的裁判椅",
+            (
+                "2026 年 ATP 改为全自动，一分结束即起算",
+                "阿尔卡拉斯：钟不停，我全程都在赶",
+                "数字还是 25，能用的时间短了一截",
+            ),
+        ),
+        (
+            "closer",
+            "所以",
+            "同样是 25 秒，两种活法",
+            "把两头放在一起看就很清楚：二〇一八年，钟是被人按下的，掌声、报分、球员走回底线，"
+            "这些都在二十五秒之外；二〇二六年，钟是自己走的，上面那些全被算了进去。"
+            "支持的人说，比赛节奏终于稳定了，观众不用再等谁擦第三遍汗；"
+            "反对的人说，一分打得越苦、越精彩，越会被罚——这等于在惩罚好球。"
+            "两边都有道理，分歧其实只在一处——",
+            "assets/explainer/shot-clock/serve.jpg",
+            "AELTC/Edward Whitaker · wimbledon.com 官方图 · 2026 温网中央球场，萨巴伦卡发球",
+            (
+                "2018：人按下钟，掌声不算在内",
+                "2026：钟自己走，什么都算在内",
+                "越苦越精彩的一分，越容易被罚",
+            ),
+            "",
+            "这 25 秒，该从哪一秒开始算？",
+        ),
+    ),
 }
 
 
@@ -1395,6 +1547,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "网球规则", "网球冷知识", "发球"),
     },
+    "shot-clock": {
+        "hook": (
+            "发球只有 25 秒，这条规矩你大概知道。\n"
+            "但今年它悄悄变了一处：钟不再等主裁报分，一分打完就自己开始走。"
+        ),
+        "tags": ("网球", "网球时差", "网球规则", "阿尔卡拉斯", "ATP"),
+    },
 }
 
 
@@ -1461,6 +1620,12 @@ _OPENINGS: dict[str, dict] = {
         "question": "发球前，他们在挑什么？",
         "narration": "球童递上来三四个球，球员只留两个。那两眼，到底在挑什么？",
         "image": "assets/explainer/ball-pick/threeballs.jpg",
+    },
+    "shot-clock": {
+        "topic": "发球 25 秒：一条改了两次的规则",
+        "question": "发球的 25 秒，谁在计时？",
+        "narration": "发球的二十五秒，到底是谁在计时？这条规矩你大概知道，但那块钟今年换了主人。",
+        "image": "assets/explainer/shot-clock/umpire.jpg",
     },
 }
 
