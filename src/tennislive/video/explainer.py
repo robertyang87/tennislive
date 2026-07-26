@@ -2268,6 +2268,16 @@ def _audio_seconds(path: Path, ffprobe_bin: str, runner: Callable[..., object]) 
         raise ExplainerVideoError(f"无法读取音频时长: {path}") from exc
 
 
+# The film used to open on the first syllable and cut on the last. Both ends
+# read as a mistake — the cover has no time to be seen before someone starts
+# talking, and the closing question is gone before it can be read. So hold a
+# beat at each end. The tail is longer than the head on purpose: the last card
+# ends on a question the viewer is meant to answer in the comments, and reading
+# it takes longer than settling into a picture does.
+LEAD_SILENCE = 0.6
+TAIL_SILENCE = 1.5
+
+
 def assemble_explainer_video(
     slides: Sequence[Path],
     audios: Sequence[Path],
@@ -2275,6 +2285,8 @@ def assemble_explainer_video(
     *,
     ffmpeg_bin: str = "ffmpeg",
     ffprobe_bin: str = "ffprobe",
+    lead_silence: float = LEAD_SILENCE,
+    tail_silence: float = TAIL_SILENCE,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat."""
@@ -2286,15 +2298,20 @@ def assemble_explainer_video(
     output = Path(output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
 
+    n = len(slides)
+    # Padding lands on the two outer beats only. A one-beat film is both, so
+    # it takes the head and the tail on the same audio stream.
+    head = [lead_silence if i == 0 else 0.0 for i in range(n)]
+    tail = [tail_silence if i == n - 1 else 0.0 for i in range(n)]
+
     command = [ffmpeg_bin, "-hide_banner", "-loglevel", "error", "-y"]
-    for slide, audio in zip(slides, audios):
-        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner)
+    for i, (slide, audio) in enumerate(zip(slides, audios)):
+        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
         command.extend(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
         command.extend(["-i", str(Path(audio).resolve())])
 
-    n = len(slides)
     filters = []
     for i in range(n):
         filters.append(
@@ -2302,7 +2319,19 @@ def assemble_explainer_video(
             f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30,format=yuv420p[v{i}]"
         )
-    concat_inputs = "".join(f"[v{i}][{2 * i + 1}:a]" for i in range(n))
+        # Silence the audio rather than the picture: adelay pushes the speech
+        # later, apad hangs quiet on the end. The still stays on screen for the
+        # whole padded length because its -t above already includes it.
+        steps = []
+        if head[i]:
+            steps.append(f"adelay={round(head[i] * 1000)}:all=1")
+        if tail[i]:
+            steps.append(f"apad=pad_dur={tail[i]:.3f}")
+        filters.append(
+            f"[{2 * i + 1}:a]{','.join(steps)}[a{i}]" if steps
+            else f"[{2 * i + 1}:a]anull[a{i}]"
+        )
+    concat_inputs = "".join(f"[v{i}][a{i}]" for i in range(n))
     filters.append(f"{concat_inputs}concat=n={n}:v=1:a=1[outv][outa]")
 
     command.extend(

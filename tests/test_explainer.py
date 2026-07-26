@@ -493,3 +493,75 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
         find_story_by_slug("zheng-eala"), tmp_path, voice="zh-CN-YunxiNeural")
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == "zh-CN-YunxiNeural"  # 覆盖了也照实记
+
+
+def test_片头片尾各留一段静音(tmp_path, monkeypatch):
+    """开头第一个字就响、最后一个字一落就黑，两头都像出了故障。
+
+    封面来不及被看清就有人开口说话；结尾那句「你第一次记住郑钦文，是哪一场？」
+    是留给评论区的，字还没读完片子就没了。所以两端各按一拍——**片尾比片头长**，
+    因为读一个问题比看清一张照片花的时间多。
+
+    静音加在**声音**上（adelay 把语音往后推、apad 在末尾挂一段安静），画面靠
+    每张图自己的 -t 撑满整段；如果只延长画面不延长声音，concat 会按较短的那条
+    对齐，静音等于没加。
+    """
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "10.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slides = [tmp_path / f"s{i}.png" for i in range(3)]
+    audios = [tmp_path / f"a{i}.mp3" for i in range(3)]
+    for p in slides + audios:
+        p.write_bytes(b"x")
+
+    E.assemble_explainer_video(slides, audios, tmp_path / "out.mp4", runner=runner)
+    cmd = calls[-1]
+    durations = [cmd[i + 1] for i, tok in enumerate(cmd) if tok == "-t"]
+    assert durations == ["10.600", "10.000", "11.500"], durations
+
+    graph = cmd[cmd.index("-filter_complex") + 1]
+    assert "adelay=600:all=1" in graph  # 只有第一段被往后推
+    assert graph.count("adelay") == 1
+    assert "apad=pad_dur=1.500" in graph  # 只有最后一段挂了静音
+    assert graph.count("apad") == 1
+    # 中间那段没有静音，但仍然要有自己的标签，否则 concat 接不上。
+    assert "[3:a]anull[a1]" in graph
+    assert "[v0][a0][v1][a1][v2][a2]concat=n=3" in graph
+
+
+def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch):
+    """一屏的片子既是开头也是结尾，两段静音落在同一条声音上。"""
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "4.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slide, audio = tmp_path / "s.png", tmp_path / "a.mp3"
+    slide.write_bytes(b"x")
+    audio.write_bytes(b"x")
+
+    E.assemble_explainer_video([slide], [audio], tmp_path / "one.mp4", runner=runner)
+    cmd = calls[-1]
+    assert cmd[cmd.index("-t") + 1] == "6.100"  # 4 + 0.6 + 1.5
+    graph = cmd[cmd.index("-filter_complex") + 1]
+    assert "adelay=600:all=1,apad=pad_dur=1.500" in graph
