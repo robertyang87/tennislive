@@ -323,6 +323,70 @@ _ROOF_DIAGRAM = """
 """
 
 
+# The whole point of the ball-change beat is that 7 and 9 are different
+# numbers and the missing two games happened before the match started. A
+# photograph of balls cannot say that; three rows of game boxes can, with the
+# warm-up drawn as part of the first row.
+_BALL_CHANGE_DIAGRAM = """
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="42" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">一场比赛里，球什么时候换</text>
+
+  <!-- first set of balls: the warm-up is drawn inside the row, because that
+       is exactly where the two "missing" games went -->
+  <rect x="70" y="96" width="118" height="58" rx="9" fill="none"
+        stroke="#9fb4aa" stroke-width="3" stroke-dasharray="7 7"/>
+  <text x="129" y="133" text-anchor="middle" fill="#9fb4aa"
+        font-size="25" font-weight="700">热身</text>
+  <g fill="rgba(55,226,154,.30)" stroke="#37e29a" stroke-width="3">
+    <rect x="202" y="96" width="52" height="58" rx="8"/>
+    <rect x="260" y="96" width="52" height="58" rx="8"/>
+    <rect x="318" y="96" width="52" height="58" rx="8"/>
+    <rect x="376" y="96" width="52" height="58" rx="8"/>
+    <rect x="434" y="96" width="52" height="58" rx="8"/>
+    <rect x="492" y="96" width="52" height="58" rx="8"/>
+    <rect x="550" y="96" width="52" height="58" rx="8"/>
+  </g>
+  <text x="628" y="133" fill="#e7f3ec" font-size="30" font-weight="800">7 局</text>
+  <text x="716" y="133" fill="#c6f65a" font-size="29" font-weight="800">→ 换球</text>
+
+  <!-- second and third sets: nine clean games each -->
+  <g fill="rgba(198,246,90,.28)" stroke="#c6f65a" stroke-width="3">
+    <rect x="70"  y="266" width="52" height="58" rx="8"/>
+    <rect x="128" y="266" width="52" height="58" rx="8"/>
+    <rect x="186" y="266" width="52" height="58" rx="8"/>
+    <rect x="244" y="266" width="52" height="58" rx="8"/>
+    <rect x="302" y="266" width="52" height="58" rx="8"/>
+    <rect x="360" y="266" width="52" height="58" rx="8"/>
+    <rect x="418" y="266" width="52" height="58" rx="8"/>
+    <rect x="476" y="266" width="52" height="58" rx="8"/>
+    <rect x="534" y="266" width="52" height="58" rx="8"/>
+  </g>
+  <text x="612" y="303" fill="#e7f3ec" font-size="30" font-weight="800">9 局</text>
+  <text x="700" y="303" fill="#c6f65a" font-size="29" font-weight="800">→ 换球</text>
+
+  <g fill="rgba(198,246,90,.28)" stroke="#c6f65a" stroke-width="3">
+    <rect x="70"  y="392" width="52" height="58" rx="8"/>
+    <rect x="128" y="392" width="52" height="58" rx="8"/>
+    <rect x="186" y="392" width="52" height="58" rx="8"/>
+    <rect x="244" y="392" width="52" height="58" rx="8"/>
+    <rect x="302" y="392" width="52" height="58" rx="8"/>
+    <rect x="360" y="392" width="52" height="58" rx="8"/>
+    <rect x="418" y="392" width="52" height="58" rx="8"/>
+    <rect x="476" y="392" width="52" height="58" rx="8"/>
+    <rect x="534" y="392" width="52" height="58" rx="8"/>
+  </g>
+  <text x="612" y="429" fill="#e7f3ec" font-size="30" font-weight="800">9 局</text>
+  <text x="700" y="429" fill="#c6f65a" font-size="29" font-weight="800">→ 换球</text>
+
+  <text x="70" y="192" fill="#9fb4aa" font-size="23" font-weight="700">第一批球从热身就开始磨</text>
+  <text x="70" y="500" fill="#9fb4aa" font-size="23" font-weight="700">之后每一批都是净打九局</text>
+  <text x="450" y="572" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">首次 7 局，此后每 9 局</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -1160,6 +1224,95 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "「关屋顶」是谁说了算？",
         ),
     ),
+    # Everything here that is a rule or a reason comes from the WTA's own
+    # "Tennis explained" page, which states the seven/nine split, says the
+    # difference is the warm-up, and says outright what players are looking
+    # for when they inspect balls. The second-serve habit is not in that
+    # source, so it is voiced as what players do rather than as a rule.
+    "ball-pick": (
+        (
+            "ritual",
+            "一个动作",
+            "递上来三个，只留两个",
+            "每个发球局你都见过这一幕：球童把三四个球递过来，球员低头看两眼，扔回去一两个，"
+            "手里只留两个。快得没人解说，主播也不提。但这可能是整项运动里重复次数最多的一个选择——"
+            "一场五盘大战，它会发生一两百次。问题是，那两眼到底在看什么？"
+            "答案一点都不高级：看毛。",
+            "assets/explainer/ball-pick/threeballs.jpg",
+            "Steven Pisano · CC BY 2.0 · Wikimedia Commons · 2014 美网，球童手中的三个球",
+            (
+                "球童递三四个，球员只留两个",
+                "一场五盘球会重复一两百次",
+                "看的是球面那层毛",
+            ),
+        ),
+        (
+            "felt",
+            "挑什么",
+            "挑那颗最不毛的",
+            "画面里这一片，就是网球表面放大之后的样子：羊毛、尼龙和棉混纺出来的一层毛毡。"
+            "球每被击中一次，这层毛就被抽松一点、支棱起来一点，空气阻力随之变大，球也就更慢。"
+            "所以 WTA 官方的解释非常直接——球员发球前挑球，找的就是空气动力学上最占便宜的那一颗，"
+            "换成人话，就是毛最少、最光的那颗，用来发一发。至于二发，不少人反而会留一颗毛多的，"
+            "慢一点、转得住，容错更高。",
+            "assets/explainer/ball-pick/felt.jpg",
+            "Horia Varlan · CC BY 2.0 · Wikimedia Commons · 网球毛毡微距，打过之后被抽松的纤维",
+            (
+                "毛毡是羊毛、尼龙、棉混纺",
+                "毛越蓬，阻力越大，球越慢",
+                "一发挑最光的；二发常反过来",
+            ),
+        ),
+        (
+            "rule",
+            "换球节奏",
+            "先 7 局，之后每 9 局",
+            "场上之所以一直有新旧之分，是因为球在被定期更换。规则写得很清楚：第一次换球在第七局之后，"
+            "此后每九局换一次。你在转播里听见主裁喊一声「新球」，就是这个节点。"
+            "两个数字不一样，很多人第一次听都以为是记错了——不是记错，它们本来就不一样。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "第一次：打满 7 局后换",
+                "之后：每 9 局换一次",
+                "主裁会喊「新球」提示",
+            ),
+            _BALL_CHANGE_DIAGRAM,
+        ),
+        (
+            "warmup",
+            "为什么是 7",
+            "少掉的那两局，在热身里",
+            "少掉的那两局，早在比赛开始之前就被打完了——赛前热身用的，正是开赛这一批球。"
+            "所以它们上场时已经不算全新，只够撑七局；后面每一批都是干干净净地净打九局。"
+            "至于为什么非换不可，官方给的理由一点也不浪漫：再打下去，球就太蓬、太慢了。",
+            "assets/explainer/ball-pick/cans.jpg",
+            "KeepActive Australia · CC BY-SA 4.0 · Wikimedia Commons · 成箱的澳网官方用球压力罐",
+            (
+                "热身用的就是开赛这一批球",
+                "所以第一批只能撑 7 局",
+                "官方理由：再打就太蓬太慢",
+            ),
+        ),
+        (
+            "time",
+            "还有第二样东西",
+            "挑球的那几秒，也是他的",
+            "把球切开是这样的：里面一颗充了压的橡胶壳，外面粘着那层毛毡。球内的气压比外面高出将近一个大气压，"
+            "从封罐那天起就在往外漏。所以严格说，这项运动里没有真正的新球，只有更新一点的球。"
+            "而球员在挑的那几秒里，其实还顺手拿到了另一样东西：喘一口气、把上一分忘掉、把下一分想清楚的时间。"
+            "规则允许他挑，也就等于允许他慢下来。所以问题来了——",
+            "assets/explainer/ball-pick/interior.jpg",
+            "Cmglee · CC BY-SA 4.0 · Wikimedia Commons · 网球剖面：充压橡胶壳外粘毛毡",
+            (
+                "内压比外界高出将近一个大气压",
+                "从封罐起就在漏气，没有真正的新球",
+                "挑球的几秒，也是喘息的几秒",
+            ),
+            "",
+            "他们挑的是球，还是那几秒钟？",
+        ),
+    ),
 }
 
 
@@ -1232,6 +1385,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "温网", "诺斯科娃", "女子网球"),
     },
+    "ball-pick": {
+        "hook": (
+            "球童递上来三四个球，球员只留两个——那两眼在看什么？\n"
+            "答案是毛。而换球的两个数字更怪：先打 7 局，之后每 9 局。"
+        ),
+        "tags": ("网球", "网球时差", "网球规则", "网球冷知识", "发球"),
+    },
 }
 
 
@@ -1292,6 +1452,12 @@ _OPENINGS: dict[str, dict] = {
         "question": "女单十冠，男单五冠？",
         "narration": "同样十届温网，女单十冠，男单五冠。这差别是怎么来的？",
         "image": "assets/explainer/ten-champions/noskova.jpg",
+    },
+    "ball-pick": {
+        "topic": "挑球：每个发球局都在发生的选择",
+        "question": "发球前，他们在挑什么？",
+        "narration": "球童递上来三四个球，球员只留两个。那两眼，到底在挑什么？",
+        "image": "assets/explainer/ball-pick/threeballs.jpg",
     },
 }
 
