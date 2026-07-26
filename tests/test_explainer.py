@@ -569,3 +569,39 @@ def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch)
     assert cmd[cmd.index("-t") + 1] == "6.100"  # 4 + 0.6 + 1.5
     graph = cmd[cmd.index("-filter_complex") + 1]
     assert "adelay=600:all=1,apad=pad_dur=1.500" in graph
+
+
+def test_同一天可以并存多条片子():
+    """一天不止一条「开赛之前」——两条前瞻不能互相覆盖。
+
+    这条测试盯的是工作流，不是 Python：成片路径、并发分组、提交范围三处只要有一处
+    丢掉 slug，同一天的第二条片子就会把第一条盖掉。三处都是事故换来的：
+
+    - 分组名写死一个常量 → GitHub 每组只留一个 pending，一口气发七条只活下来两条
+    - 提交时重放整棵 `output/` → 八条片子整晚互相退回到各自开跑时的样子
+    - 同一个 slug 连发两版 → 两个 run 一起跑，先落库的旧版赢，commit message 还一模一样
+    """
+    from pathlib import Path
+
+    yml = (_REPO / ".github" / "workflows" / "explainer.yml").read_text(encoding="utf-8")
+
+    # 成片路径按 slug 分目录：两条片子各写各的，天然不打架。
+    assert 'OUT_DIR="output/$OUT_DATE/explainer/$SLUG"' in yml
+
+    # 并发分组必须带 slug，否则不同选题会互相取消。
+    assert "group: explainer-video-${{ github.event.inputs.slug" in yml
+    # 同一个 slug 反过来要取消旧的：一条片子只有一个"最新"。
+    assert "cancel-in-progress: true" in yml
+
+    # 提交与重放只碰本次的 outdir，绝不整棵 output/ 重放。
+    assert 'git add "$OUTDIR"' in yml
+    assert 'git checkout rendered -- "$OUTDIR"' in yml
+    assert "git checkout rendered -- output/" not in yml
+
+    # 并且「开赛之前」这个栏目此刻确实挂着不止一条片子——不是理论上支持而已。
+    from tennislive.video.explainer import explainer_column
+
+    previews = [s for s in _SCRIPTED if explainer_column(s) == "开赛之前"]
+    assert len(previews) >= 2, f"开赛之前只有 {previews}，多场并存没有真的被用起来"
+    assert len(set(previews)) == len(previews)
+    assert Path("assets/explainer").is_dir()
