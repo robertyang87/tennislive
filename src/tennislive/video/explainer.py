@@ -513,61 +513,57 @@ _ZHENG_EALA_DIAGRAM = """
 # happened at the same tournament, one round apart.
 _VENUS_STREAK_DIAGRAM = """
 <svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
-  <text x="52" y="40" fill="#e7f3ec" font-size="36" font-weight="800">那场胜利之后</text>
-  <text x="848" y="40" text-anchor="end" fill="#e0938f"
-        font-size="36" font-weight="800">十一连败</text>
-  <text x="52" y="80" fill="#9fb4aa" font-size="22" font-weight="700">
-    条的长度＝这一场里她拿到的局数占比，竖虚线是一半
-  </text>
+  <text x="52" y="42" fill="#e7f3ec" font-size="36" font-weight="800">那场胜利之后，十一连败</text>
+  <text x="52" y="78" fill="#7f958a" font-size="21" font-weight="700">条长＝这一场她拿到的局数占比</text>
 
-  <text x="556" y="104" text-anchor="middle" fill="#9fb4aa"
+  <text x="556" y="106" text-anchor="middle" fill="#8fa39a"
         font-size="20" font-weight="700">一半</text>
-  <line x1="556" y1="114" x2="556" y2="478" stroke="rgba(199,216,208,.62)"
-        stroke-width="3" stroke-dasharray="7 7"/>
+  <line x1="556" y1="116" x2="556" y2="478" stroke="rgba(143,163,154,.55)"
+        stroke-width="2" stroke-dasharray="7 7"/>
 
   <g font-size="23" font-weight="700">
-    <rect x="40" y="120" width="820" height="46" rx="12"
-          fill="rgba(168,207,125,.13)" stroke="#a8cf7d" stroke-width="2"/>
-    <text x="60" y="151" fill="#e7f3ec">2025.7.22 华盛顿首轮</text>
-    <rect x="366" y="128" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="128" width="253" height="30" rx="13" fill="#a8cf7d"/>
-    <text x="848" y="151" text-anchor="end" fill="#a8cf7d" font-size="25">6-3 6-4</text>
+    <rect x="40" y="120" width="820" height="48" rx="12"
+          fill="rgba(168,207,125,.12)" stroke="rgba(168,207,125,.75)" stroke-width="2"/>
+    <text x="60" y="152" fill="#e7f3ec">2025.7.22 华盛顿首轮</text>
+    <rect x="366" y="129" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="129" width="253" height="30" rx="15" fill="#a8cf7d"/>
+    <text x="848" y="152" text-anchor="end" fill="#a8cf7d" font-size="25">6-3 6-4</text>
 
-    <text x="60" y="211" fill="#cfe0d8">7.23 华盛顿次轮 · 弗雷赫</text>
-    <rect x="366" y="188" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="188" width="100" height="30" rx="13" fill="#e0938f"/>
-    <text x="848" y="211" text-anchor="end" fill="#e0938f">2-6 2-6</text>
+    <text x="60" y="212" fill="#cbdbd3">7.23 华盛顿次轮 · 弗雷赫</text>
+    <rect x="366" y="189" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="189" width="100" height="30" rx="15" fill="rgba(231,243,236,.38)"/>
+    <text x="848" y="212" text-anchor="end" fill="#9fb4aa">2-6 2-6</text>
 
-    <text x="60" y="271" fill="#cfe0d8">8 月 辛辛那提 · 布萨斯</text>
-    <rect x="366" y="248" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="248" width="160" height="30" rx="13" fill="#e0938f"/>
-    <text x="848" y="271" text-anchor="end" fill="#e0938f">4-6 4-6</text>
+    <text x="60" y="272" fill="#cbdbd3">8 月 辛辛那提 · 布萨斯</text>
+    <rect x="366" y="249" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="249" width="160" height="30" rx="15" fill="rgba(231,243,236,.38)"/>
+    <text x="848" y="272" text-anchor="end" fill="#9fb4aa">4-6 4-6</text>
 
-    <text x="60" y="331" fill="#cfe0d8">8 月 美网 · 穆霍娃</text>
-    <rect x="366" y="308" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="308" width="167" height="30" rx="13" fill="#e0938f"/>
-    <text x="848" y="331" text-anchor="end" fill="#e0938f">3-6 6-2 1-6</text>
+    <text x="60" y="332" fill="#cbdbd3">8 月 美网 · 穆霍娃</text>
+    <rect x="366" y="309" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="309" width="167" height="30" rx="15" fill="rgba(231,243,236,.38)"/>
+    <text x="848" y="332" text-anchor="end" fill="#9fb4aa">3-6 6-2 1-6</text>
 
-    <text x="60" y="391" fill="#cfe0d8">2026.1 奥克兰 · 利内特</text>
-    <rect x="366" y="368" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="368" width="171" height="30" rx="13" fill="#e0938f"/>
-    <text x="848" y="391" text-anchor="end" fill="#e0938f">4-6 6-4 2-6</text>
+    <text x="60" y="392" fill="#cbdbd3">2026.1 奥克兰 · 利内特</text>
+    <rect x="366" y="369" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="369" width="171" height="30" rx="15" fill="rgba(231,243,236,.38)"/>
+    <text x="848" y="392" text-anchor="end" fill="#9fb4aa">4-6 6-4 2-6</text>
 
-    <text x="60" y="451" fill="#cfe0d8">3 月 印第安维尔斯 · 帕里</text>
-    <rect x="366" y="428" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
-    <rect x="366" y="428" width="152" height="30" rx="13" fill="#e0938f"/>
-    <text x="848" y="451" text-anchor="end" fill="#e0938f">3-6 7-6 1-6</text>
+    <text x="60" y="452" fill="#cbdbd3">3 月 印第安维尔斯 · 帕里</text>
+    <rect x="366" y="429" width="380" height="30" rx="15" fill="rgba(231,243,236,.10)"/>
+    <rect x="366" y="429" width="152" height="30" rx="15" fill="rgba(231,243,236,.38)"/>
+    <text x="848" y="452" text-anchor="end" fill="#9fb4aa">3-6 7-6 1-6</text>
   </g>
 
-  <text x="60" y="508" fill="#9fb4aa" font-size="23" font-weight="700">
+  <text x="60" y="510" fill="#7f958a" font-size="22" font-weight="700">
     另有霍巴特、澳网、奥斯汀、迈阿密、洪堡，均首轮出局
   </text>
 
-  <rect x="40" y="540" width="820" height="76" rx="12"
-        fill="none" stroke="#e7f3ec" stroke-width="3" stroke-dasharray="10 8"/>
-  <text x="60" y="576" fill="#e7f3ec" font-size="28" font-weight="800">2026.7.27 华盛顿首轮</text>
-  <text x="60" y="606" fill="#9fb4aa" font-size="22" font-weight="700">又是这一站</text>
-  <text x="836" y="592" text-anchor="end" fill="#e7f3ec" font-size="44" font-weight="800">？</text>
+  <rect x="40" y="542" width="820" height="76" rx="12"
+        fill="none" stroke="rgba(231,243,236,.55)" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="60" y="578" fill="#e7f3ec" font-size="28" font-weight="800">2026.7.27 华盛顿首轮</text>
+  <text x="60" y="608" fill="#8fa39a" font-size="21" font-weight="700">又是这一站</text>
+  <text x="836" y="594" text-anchor="end" fill="#e7f3ec" font-size="44" font-weight="800">？</text>
 </svg>
 """
 
