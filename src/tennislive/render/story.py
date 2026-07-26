@@ -93,6 +93,16 @@ def result_insight(match: Match) -> str:
     loser_seed = losers[0].seed if losers else None
     tiebreaks = _tiebreak_count(match)
 
+    # 退赛/不战而胜的比分不能按常规读：6-1 2-0 退赛里那个 2-0 是被中断的一盘，
+    # 不是拿下的一盘，照常统计就落进"直落两盘拿下，关键分处理更加稳定"——
+    # 头版印着"谢里夫退赛"，下面一行却说人家直落两盘（trajectory_arc 已经为
+    # 同一个 6-1 2-0 挡过一次，这条路径当时漏了）。
+    if match.status in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        if match.status is MatchStatus.WALKOVER:
+            return "对手赛前退出，不战而胜进入下一轮"
+        played = "首盘" if len(match.sets) <= 1 else f"第{len(match.sets)}盘"
+        return f"对手{played}中途退赛，比赛没能打完"
+
     if is_upset(match):
         if len(sets) >= 3 and tiebreaks >= 3 and loser_seed:
             return f"三盘全部进入抢七，硬仗掀翻{loser_seed}号种子"
