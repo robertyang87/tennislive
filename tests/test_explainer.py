@@ -370,3 +370,26 @@ def test_配音把比分读成几比几而不是几杠几():
             assert not re.search(r"(?<!\d)\d{1,3}\s*[-–—−]\s*\d{1,3}(?!\d)", spoken), (
                 f"{slug}/{seg.kind} 旁白里还有会被读成「杠」的比分：{spoken[:60]}"
             )
+
+
+def test_配音把挑球的挑读成一声():
+    """挑球 is tiāo — to pick one out. The voice read it tiǎo, as in 挑战.
+
+    edge-tts takes no pronunciation hints, so the spoken copy swaps in 选,
+    which means the same thing and has one reading. On-screen text keeps 挑.
+    挑战 is genuinely tiǎo and must survive untouched — including the
+    Gentlemen's 挑战杯, which would otherwise become 选战杯.
+    """
+    from tennislive.video.explainer import speakable
+
+    assert speakable("球员发球前挑球，挑那颗最不毛的") == "球员发球前选球，选那颗最不毛的"
+    assert speakable("鹰眼挑战制") == "鹰眼挑战制"
+    assert speakable("辛纳手里那只是男单挑战杯") == "辛纳手里那只是男单挑战杯"
+
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            spoken = speakable(seg.narration)
+            for hit in re.finditer(r"挑(.?)", spoken):
+                assert hit.group(1) in "战衅拨逗剔眉", (
+                    f"{slug}/{seg.kind} 旁白里还有会被读成三声的「挑」：{spoken[:60]}"
+                )
