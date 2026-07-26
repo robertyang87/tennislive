@@ -1706,6 +1706,18 @@ _CAPTIONS: dict[str, dict] = {
 }
 
 
+# Most decks are knowledge explainers and run under 网球有故事. A match
+# preview is a different promise — it goes out before play and expires when
+# the match starts — so it carries its own column name. The label follows the
+# deck, not the renderer, which is why it lives here beside the topic line.
+DEFAULT_COLUMN = "网球有故事"
+
+
+def explainer_column(slug: str) -> str:
+    """The column a deck is published under."""
+    return (_OPENINGS.get(slug) or {}).get("column") or DEFAULT_COLUMN
+
+
 # The first seconds decide whether anyone stays, and a deck that opens on
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
@@ -1778,11 +1790,16 @@ _OPENINGS: dict[str, dict] = {
         "image": "assets/explainer/shot-clock/umpire.jpg",
     },
     "zheng-eala": {
+        "column": "开赛之前",
         "topic": "郑钦文 对 伊拉：华盛顿站首轮前瞻",
         "question": "三年后再见，谁更需要这一场？",
         "narration": "郑钦文华盛顿站首轮的对手，三年前输给过她。这一场，谁更需要它？",
-        "image": "assets/players/zheng-qinwen.jpg",
-        "credit": "官方媒体供图 · ausopen.com · 2024 巴黎奥运会，郑钦文夺得女单金牌",
+        # The cover leads with the most recent frame of her that exists in a
+        # reachable source (March 2025). The two older photos in the deck stay
+        # where they are because their dates are the point: the Olympic gold
+        # beat needs the gold, and the "three years ago" beat needs 2023.
+        "image": "assets/explainer/zheng-eala/zheng_2025.jpg",
+        "credit": "Vbrunophotog · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 3 月迈阿密站，郑钦文",
     },
 }
 
@@ -1852,7 +1869,8 @@ def _data_uri(path: Path) -> str:
 
 
 def _slide_html(
-    index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = ""
+    index: int, segment: ExplainerSegment, *, theme: str = "dark", topic: str = "",
+    column: str = DEFAULT_COLUMN,
 ) -> str:
     """Image-first 3:4 brand card: real photo (or schematic) hero + short caption."""
     from ..render.webcards import _font_css
@@ -1933,7 +1951,7 @@ def _slide_html(
     cover_cls = " cover" if cover else ""
     topic_html = f'<span class="topic">{html.escape(topic)}</span>' if topic else ""
     chip_html = (
-        '<span class="kicker">网球有故事</span>'
+        f'<span class="kicker">{html.escape(column)}</span>'
         if cover
         else f'<span class="chip">{number} {html.escape(segment.label)}</span>'
     )
@@ -2022,7 +2040,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
 </style></head><body>
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
-<div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · 网球有故事</span>{topic_html}</div></div></div>
+<div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
 <div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
@@ -2034,6 +2052,7 @@ def render_explainer_slides(
     *,
     theme: str = "dark",
     topic: str = "",
+    column: str = DEFAULT_COLUMN,
 ) -> list[Path]:
     """Render one image-first 3:4 card per beat via a headless Chromium page."""
     from playwright.sync_api import sync_playwright
@@ -2057,7 +2076,8 @@ def render_explainer_slides(
                 )
                 try:
                     page.set_content(
-                        _slide_html(index, seg, theme=theme, topic=topic)
+                        _slide_html(index, seg, theme=theme, topic=topic,
+                                    column=column)
                     )
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
@@ -2235,7 +2255,9 @@ def generate_explainer_video(
     outdir.mkdir(parents=True, exist_ok=True)
     segments = explainer_script(story)
     slides = render_explainer_slides(
-        segments, outdir, theme=theme, topic=(_OPENINGS.get(story.slug) or {}).get("topic", "")
+        segments, outdir, theme=theme,
+        topic=(_OPENINGS.get(story.slug) or {}).get("topic", ""),
+        column=explainer_column(story.slug)
     )
     audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
     return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
@@ -2288,6 +2310,7 @@ def explainer_xiaohongshu(
     comes from the beats themselves; nothing is invented for the caption.
     """
     closer = segments[-1]
+    column = explainer_column(story.slug)
     question = closer.question or "你怎么看？"
 
     # Circled numerals rather than plain digits: the slides are numbered the
@@ -2306,11 +2329,11 @@ def explainer_xiaohongshu(
     hook = caption.get("hook") or ""
     tags = " ".join(f"#{tag}" for tag in caption.get("tags") or _DEFAULT_TAGS)
     return (
-        f"🎾{date_label} 网球有故事｜{story.title}\n\n"
+        f"🎾{date_label} {column}｜{story.title}\n\n"
         + (f"{hook}\n\n" if hook else "")
         + "\n\n".join(sections)
         + "\n\n💬 留个答案\n"
         f"{question}\n\n"
-        "这里是 @网球时差｜网球有故事。\n\n"
+        f"这里是 @网球时差｜{column}。\n\n"
         f"{tags}"
     )
