@@ -248,3 +248,83 @@ def test_backfill_credits_leaves_a_matching_entry_alone():
         assert not failed and calls == []
         written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
         assert written["a.jpg"] == entry
+
+
+def test_official_media_credits_survive_a_fetch_rebuild():
+    """官方媒体来源的图，credits 不能被 fetch_set() 冲掉。
+
+    fetch_set() 每次都从零重建 credits.json，只留 VENUES 里认得的条目。
+    埃斯托里尔的中央球场来自赛事官网、不在 Commons，如果只把文件放进
+    assets/ 而不在 OFFICIAL_VENUES 登记，跑一次 CI 出处就没了——和 umag
+    当初丢 credits 是同一个坑。
+    """
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    assert module.OFFICIAL_VENUES, "OFFICIAL_VENUES 空了？"
+    name, credit = next(iter(module.OFFICIAL_VENUES.items()))
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / name).write_bytes(b"x")
+        # 盘上那份出处是错的，重建时要以 OFFICIAL_VENUES 为准
+        (out / "credits.json").write_text(
+            json.dumps({name: {"title": "旧的", "license": "?",
+                               "artist": "?", "page": "?"}}), encoding="utf-8")
+
+        failed = module.fetch_set(out, [(name, None, None)], min_width=100)
+
+        assert not failed, failed
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written[name] == credit
+
+
+def test_official_media_records_source_url_and_marks_licence_unverified():
+    """授权不做检索闸门，但来源必须留痕。
+
+    CLAUDE.md：许可名、作者、来源 URL 全程记录（缺失记 unknown / unverified），
+    发布前的权利判断由人工检验环节负责。所以官方媒体这一档不许把 license
+    编成一个看起来已核实的名字。
+    """
+    module = _fetch_tool()
+    for name, credit in module.OFFICIAL_VENUES.items():
+        assert credit["page"].startswith("http"), f"{name} 没记来源 URL"
+        assert credit["artist"], f"{name} 没记来源方"
+        assert "unverified" in credit["license"], (
+            f"{name} 的 license 写成了 {credit['license']!r}——官方媒体这一档"
+            "没有经过权利核实，不能写成已核实的样子"
+        )
+
+
+def test_backfill_drops_credits_for_images_no_longer_on_disk():
+    """图删掉之后，它的 credits 也要清掉。
+
+    换站名（estoril-coast → estoril-centre-court）后旧条目会指着一个不存在的
+    文件。它不印错什么，但会破坏"每个 credits 条目都在 VENUES 里登记"这条
+    不变量，下次真有图漏登记时反而看不出来。
+    """
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    module.imageinfo = lambda titles: []
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "here.jpg").write_bytes(b"x")
+        entry = {"title": "File:Here.jpg", "license": "CC0", "artist": "A",
+                 "page": "https://commons.wikimedia.org/wiki/File:Here.jpg"}
+        (out / "credits.json").write_text(json.dumps({
+            "here.jpg": entry,
+            "gone.jpg": {"title": "File:Gone.jpg", "license": "CC0",
+                         "artist": "B", "page": "https://example.invalid/gone"},
+        }), encoding="utf-8")
+
+        module.backfill_credits(out, [("here.jpg", "File:Here.jpg", None)])
+
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert set(written) == {"here.jpg"}
+        assert written["here.jpg"] == entry
