@@ -1601,14 +1601,15 @@ def speakable(text: str) -> str:
     return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
 
 
-# Delivery, not just words. The default voice read the scripts correctly and
-# flatly — too slow to hold a thumb, and even-toned in a way that made every
-# beat sound like the last. Yunjian is the one Chinese voice Microsoft tags
-# "Passion" (it is their sports-commentary read), and a positive rate is what
-# stops a knowledge clip from feeling like a briefing. Both stay parameters so
-# a deck can be re-voiced without touching a script.
+# Delivery, not just words. The old read was correct and flat — too slow to
+# hold a thumb, and even-toned in a way that made every beat sound like the
+# last. Yunjian is the one Chinese voice Microsoft tags "Passion" (their
+# sports-commentary read); +22% is the pace it was chosen at, by ear, from
+# five clips of the same paragraph — see tools/voice_sample.py, which exists
+# because nobody can hear a parameter. Both stay parameters so a deck can be
+# re-voiced without touching a script.
 DEFAULT_VOICE = "zh-CN-YunjianNeural"
-DEFAULT_RATE = "+14%"
+DEFAULT_RATE = "+22%"
 DEFAULT_PITCH = "+0Hz"
 
 
