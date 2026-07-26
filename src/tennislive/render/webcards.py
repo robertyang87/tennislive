@@ -166,6 +166,15 @@ def _headline_display_width(text: str) -> float:
     return width
 
 
+# 封面标题一行能放多宽（单位与 _headline_display_width 相同，1 = 一个汉字）。
+# 实测出来的：daily 主题下 .cover .focus 的框宽 550px，10.0 正好一行、10.55 就折。
+# 原来写死 12，是按老页边距（64px）调的；改版把 daily 的页边距放宽到 72px，
+# 框窄了，12 就再也不成立——于是 11.55 的标题被判为"放得下"、直接交给浏览器，
+# 而浏览器在汉字之间任意断行，"爆冷：阿利斯掀翻布勃利克"就裂成了
+# "爆冷：阿利斯掀 / 翻布勃利克"。改动页边距时这个数要跟着重新量。
+_HEADLINE_ONE_LINE_WIDTH = 10.0
+
+
 def _balanced_headline_lines(headline: str, protect: tuple[str, ...] = ()) -> list[str]:
     """Prefer a balanced break after Chinese punctuation on long cover titles.
 
@@ -179,7 +188,7 @@ def _balanced_headline_lines(headline: str, protect: tuple[str, ...] = ()) -> li
         return explicit
     text = explicit[0] if explicit else ""
     total = _headline_display_width(text)
-    if total < 12:
+    if total <= _HEADLINE_ONE_LINE_WIDTH:
         return [text]
     breakpoints = {
         index
