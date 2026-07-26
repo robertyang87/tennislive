@@ -37,6 +37,16 @@
 
 配套两条：**先查运行记录再下结论**（`actions_list` 里 cancelled / failure 一目了然，比猜快得多）；**检查工具要把不合格的也列出来**，只在成功时出声的检查，没法证明它真的看过。
 
+解说片这条线上现成的三个（都写成脚本了，别每次现搓）：
+
+- `tools/check_explainer_landed.py` —— 这一版落库了没有。查文案 + 采一条色带比画面。
+  **不指定文件**，整个 outdir 的文本一起找并报出命中在哪个文件——踩过：封面那句只在
+  `wechat_title.txt` 里，拿去 `xiaohongshu.txt` 找就会误报「尚未落地」。
+  另：**逐字节比对 PNG 太严**，CI 和沙箱编码差几千字节，内容一样也报红。
+- `tools/check_explainer_voice.py` —— 这条片子到底是谁配的音。读成片旁边的
+  `narration.json`（`generate_explainer_video` 落的），不靠「工作流传了什么参数」推。
+- `tools/render_explainer_local.py` —— 本地渲六屏出来**亲眼看**，`--jpeg` 顺手压小图。
+
 ## 并行的生成任务：只碰自己那一块
 
 同一个 workflow 并行跑多个选题时，两处会互相拆台，都踩过：
