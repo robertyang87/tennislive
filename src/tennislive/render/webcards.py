@@ -504,6 +504,9 @@ html.light .chip-green { color:#fff; }
   margin-left:78px; /* 种子槽26+间距8+国旗36+间距8：与中文名左对齐 */ }
 .hero .en { font-size:23px; margin-top:4px; margin-left:96px; }
 .note { font-style:normal; font-size:22px; color:var(--panel-muted); }
+/* 退赛标记：细线描边，和一屏上其他徽章同一套语言；不引入新色值 */
+.note.retired { margin-left:10px; padding:1px 8px; border-radius:4px; font-size:19px;
+  letter-spacing:1px; box-shadow:inset 0 0 0 1px currentColor; }
 /* 每盘独立强调：赢下该盘的一方数字深绿加粗，输的一方浅灰 */
 .set { font-family:'Barlow Condensed'; font-size:42px;
   text-align:center; font-variant-numeric:tabular-nums; line-height:1; }
@@ -1258,6 +1261,22 @@ def _names_html(players) -> tuple[str, str]:
     return '<i class="slash">/</i>'.join(zh_parts), " / ".join(en_parts)
 
 
+def _retirement_note(m: Match, side: int) -> str:
+    """退赛/不战而胜时，给**退出的那一方**的比分行加个标记。
+
+    网球记分惯例是把 "ret." 写在比分后面，标记的是"这串比分没打完"。谁退的
+    就标在谁那一行，读者一眼能对上人。
+    """
+    from ..models import MatchStatus
+
+    if m.status not in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
+    if m.winner not in (0, 1) or side == m.winner:
+        return ""
+    label = "退赛" if m.status is MatchStatus.RETIRED else "退出"
+    return f'<i class="note retired">{label}</i>'
+
+
 def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     players = m.home if side == 0 else m.away
     won = m.winner == side
@@ -1290,6 +1309,14 @@ def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     note = ""
     if with_sets and not m.sets and side == (m.winner or 0) and m.note:
         note = f'<i class="note">{html.escape(str(m.note)[:12])}</i>'
+    elif with_sets:
+        # 退赛的比分不能就这么摆着：6-1 2-0 看起来像一场没打完的比分，读者无从
+        # 知道那个 2-0 是被中断的一盘（7.26 赛果卡上的科尔帕奇/谢里夫）。按网球
+        # 记分惯例，标记跟着**退出的那一方**走，而且贴在比分行上——它限定的是
+        # 这串比分，不是这场比赛的性质，所以不进页眉的徽章区。
+        # 不战而胜连比分都没有，两行光秃秃更需要这个标记（上面那支只在数据源
+        # 自带 m.note 时才出声，缺了就什么都不显示）。
+        note = _retirement_note(m, side)
     cls = "side"
     cls += " won" if (won and with_sets) else (" lost" if (with_sets and m.winner is not None) else "")
     if not with_sets or not n_sets:

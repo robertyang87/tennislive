@@ -3774,3 +3774,71 @@ def test_every_cover_headline_line_fits_the_measured_one_line_width():
     assert _balanced_headline_lines("阿利斯掀翻布勃利克", ("阿利斯", "布勃利克")) == [
         "阿利斯掀翻布勃利克"
     ]
+
+
+def test_score_row_marks_the_side_that_retired():
+    """退赛的比分要在**退出那一方**的行上标出来。
+
+    6-1 2-0 就这么摆着，看起来像一串没打完的比分，读者无从知道那个 2-0 是
+    被中断的一盘（7.26 赛果卡上的科尔帕奇/谢里夫）。按网球记分惯例，标记
+    跟着退赛的人走、贴在比分行上——它限定的是这串比分。
+    """
+    from tennislive.render.webcards import _side_html
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    winner_row = _side_html(retired, 0, 2)
+    loser_row = _side_html(retired, 1, 2)
+
+    assert "退赛" in loser_row
+    assert "退赛" not in winner_row, "标记跑到赢家那一行了"
+
+    # 不战而胜连比分都没有，两行光秃秃更需要这个标记
+    walkover = make_match(
+        sets=(), tiebreaks=(), status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert "退出" in _side_html(walkover, 1, 0)
+    assert "退出" not in _side_html(walkover, 0, 0)
+
+    # 正常完赛不加任何标记
+    normal = make_match(
+        sets=((6, 4), (6, 3)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert "退赛" not in _side_html(normal, 1, 2)
+    assert "退出" not in _side_html(normal, 1, 2)
+
+    # 赛程卡不带比分，也就不该出现比分限定语
+    assert "退赛" not in _side_html(retired, 1, 0, with_sets=False)
+
+
+def test_pillow_fallback_uses_the_same_retirement_rule():
+    """Pillow 兜底和 HTML 渲染器不能各说各话。
+
+    generate_cards() 优先走 webcards，cards.py 只在 Chromium 挂掉时顶上；
+    两边对"谁退的"判断不一致的话，同一场比赛会因为渲染路径不同而标在不同行。
+    """
+    from tennislive.render.cards import _retirement_label
+    from tennislive.render.webcards import _retirement_note
+
+    for status, expected in (
+        (MatchStatus.RETIRED, "退赛"),
+        (MatchStatus.WALKOVER, "退出"),
+        (MatchStatus.FINISHED, ""),
+    ):
+        match = make_match(
+            sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+            status=status, winner=0,
+        )
+        for side in (0, 1):
+            label = _retirement_label(match, side)
+            in_html = expected and expected in _retirement_note(match, side)
+            assert bool(label) == bool(in_html), (
+                f"{status} side={side}: Pillow={label!r} 与 HTML 不一致"
+            )
+            if side == 1:
+                assert label == expected
+            else:
+                assert label == ""

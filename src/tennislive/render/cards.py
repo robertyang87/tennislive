@@ -24,7 +24,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from ..digest import Digest
-from ..models import Match
+from ..models import Match, MatchStatus
 from ..timeutil import WEEKDAY_ZH, fmt_time_beijing
 from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
@@ -658,10 +658,22 @@ def _name_line(
         name = players[0].name.split()[-1]
     name = _fit(draw, name, font, int(max_name_w))
     draw.text((x, cy - font.size // 2 - 3), name, font=font, fill=color)
+    right = x + draw.textlength(name, font=font)
     if rank_txt:
-        nw = draw.textlength(name, font=font)
-        draw.text((x + nw + 8, cy - meta_font.size // 2), rank_txt,
+        draw.text((right + 8, cy - meta_font.size // 2), rank_txt,
                   font=meta_font, fill=CARD_GREY)
+        right += 8 + draw.textlength(rank_txt, font=meta_font)
+    # 调用方要在名字后面接着画退赛标记，得知道这一行画到哪儿为止
+    return right
+
+
+def _retirement_label(m: Match, side: int) -> str:
+    """退赛/不战而胜时，退出那一方的标记文字（与 webcards._retirement_note 同规则）。"""
+    if m.status not in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
+    if m.winner not in (0, 1) or side == m.winner:
+        return ""
+    return "退赛" if m.status is MatchStatus.RETIRED else "退出"
 
 
 def _hero_story(m: Match) -> str:
@@ -737,11 +749,25 @@ def _match_card(
             draw, score_right, cy, pairs, score_font, sup_font,
             WIN_GREEN if won else CARD_GREY, col_w,
         )
-        _name_line(
+        name_right = _name_line(
             img, draw, fonts, x0 + pad, cy, score_right - len(pairs) * col_w - 14,
             players, CARD_TEXT if won else CARD_GREY,
             name_fonts, flag_h, meta_font,
         )
+        # 退赛标记跟着退出的那一方走，贴在他的比分行上（与 webcards 一致）。
+        # 6-1 2-0 里那个 2-0 是被中断的一盘，不标出来就像一串没打完的比分。
+        label = _retirement_label(m, side)
+        if label:
+            lw = draw.textlength(label, font=meta_font)
+            lx = min(
+                (name_right or x0 + pad) + 14,
+                score_right - len(pairs) * col_w - 14 - lw,
+            )
+            draw.rounded_rectangle(
+                [lx - 8, cy - 19, lx + lw + 8, cy + 19],
+                radius=5, outline=CARD_GREY, width=2,
+            )
+            draw.text((lx, cy), label, font=meta_font, fill=CARD_GREY, anchor="lm")
     if not m.sets and m.note:
         draw.text((x1 - pad - 220, y + top_h + 24), _strip(m.note)[:12],
                   font=fonts.body, fill=CARD_GREY)
