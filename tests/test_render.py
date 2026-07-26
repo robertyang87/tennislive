@@ -70,11 +70,18 @@ def test_scoreboard_tournament_level_is_compact_and_precedes_name():
         wta500, hero=False, show_tournament=True, tag_upset=False
     )
 
-    assert '<b class="tour-level">ATP250</b>' in atp_card
-    assert '<b class="tour-level">WTA1000</b>' in wta_card
-    assert '<b class="tour-level">WTA500</b>' in wta500_card
-    assert '<b class="tour-level">大满贯</b>' in slam_card
+    # 巡回赛部分现在是官方 logo（内联 SVG、无底色），级别留成文字。
+    # 见 test_tour_badge_uses_the_official_logo_without_a_background。
+    for card in (atp_card, wta_card, wta500_card, slam_card):
+        assert '<b class="tour-level has-logo">' in card
+        assert "<svg" in card
+    assert "<i>250</i>" in atp_card
+    assert "<i>1000</i>" in wta_card
+    assert "<i>500</i>" in wta500_card
+    assert "<i>大满贯</i>" in slam_card
     assert "ATP 250" not in atp_card
+    # 级别数字不能连着巡回赛名一起印，那是旧的纯文字药丸
+    assert "ATP250" not in atp_card and "WTA1000" not in wta_card
 
 
 def test_wechat_markdown(sample_digest):
@@ -2822,9 +2829,10 @@ def test_tonight_card_separates_bilingual_player_lines(sample_digest):
 
     assert '<span class="en">Carlos Alcaraz</span>' in body
     assert "class=\"names\"" in body
-    assert '<b class="event-level">大满贯</b>' in body
+    # 今晚页的巡回赛标记同样换成官方 logo；场地仍是实心小药丸
+    assert '<b class="tour-level has-logo">' in body and "<i>大满贯</i>" in body
     assert '<b class="event-surface">草地</b>' in body
-    assert body.index("温布尔登") < body.index('class="event-level"')
+    assert body.index("温布尔登") < body.index('class="tour-level has-logo"')
 
 
 def test_coverage_report_lists_tour_level(sample_digest):
@@ -3265,3 +3273,79 @@ def test_focus_falls_back_rather_than_leaving_the_page_empty(tmp_path, monkeypat
 
     picked = select_focus_match(Digest(today=date(2026, 7, 25), results=[only]))
     assert picked is not None and picked.match_id == "focus-only"
+
+
+def test_tour_badge_uses_the_official_logo_without_a_background():
+    """巡回赛标记改用官方 logo，且不要底色。
+
+    原来是"WTA1000"整个塞进一个实心色块。logo 只表示巡回赛，级别数字必须
+    留成文字——否则 1000/500/250 这条信息就没了。
+    """
+    from tennislive.render.common import group_by_tournament
+    from tennislive.render.webcards import _tour_badge
+
+    wta = group_by_tournament([
+        make_match(tour=Tour.WTA, discipline="Women's Singles", tournament="Montreal")
+    ])[0]
+    wta.level = "1000"
+    badge = _tour_badge(wta)
+
+    assert "<svg" in badge and "currentColor" in badge, "没有内联官方 logo"
+    assert "has-logo" in badge
+    assert "<i>1000</i>" in badge, "级别数字丢了"
+    assert "WTA1000" not in badge, "还在印纯文字标记"
+
+
+def test_tour_badge_keeps_non_numeric_levels_readable():
+    """大满贯/年终总决赛这类级别不是数字，也得跟在 logo 后面。"""
+    from tennislive.render.common import group_by_tournament
+    from tennislive.render.webcards import _tour_badge
+
+    group = group_by_tournament([make_match(tour=Tour.ATP)])[0]
+    group.level = "GS"
+    badge = _tour_badge(group)
+    assert "<svg" in badge and "<i>大满贯</i>" in badge
+
+
+def test_tour_badge_falls_back_to_text_when_the_logo_file_is_missing(
+    tmp_path, monkeypatch
+):
+    """logo 文件缺失时退回纯文字，不能开天窗。
+
+    这两个 svg 是 tools/fetch_tour_logos.py 从 Commons 抓下来的，属于外部
+    资产；一旦没跟着仓库走，卡片上不能出现一块空白。
+    """
+    from tennislive.render import webcards
+    from tennislive.render.common import group_by_tournament
+
+    monkeypatch.setattr(webcards, "ASSETS", tmp_path)
+    webcards._tour_logo_svg.cache_clear()
+    try:
+        group = group_by_tournament([make_match(tour=Tour.ATP)])[0]
+        group.level = "250"
+        badge = webcards._tour_badge(group)
+        assert "<svg" not in badge
+        assert "ATP250" in badge
+        assert "has-logo" not in badge
+    finally:
+        webcards._tour_logo_svg.cache_clear()
+
+
+def test_tour_logo_assets_carry_their_provenance():
+    """外部资产一律记出处：许可名、作者、来源 URL 缺一不可。"""
+    import json
+    from pathlib import Path
+
+    from tennislive.render.webcards import ASSETS
+
+    tours = Path(ASSETS) / "logo" / "tours"
+    credits = json.loads((tours / "credits.json").read_text(encoding="utf-8"))
+    for slug in ("atp.svg", "wta.svg"):
+        assert (tours / slug).is_file(), f"缺少 {slug}"
+        row = credits[slug]
+        for field in ("title", "license", "artist", "page"):
+            assert row.get(field), f"{slug} 的 {field} 没记"
+        # 品牌色必须已换成 currentColor，否则深绿底上是看不见的深蓝/深紫
+        svg = (tours / slug).read_text(encoding="utf-8")
+        assert "currentColor" in svg
+        assert "#04014f" not in svg.lower() and "#2d0046" not in svg.lower()

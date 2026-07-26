@@ -391,6 +391,18 @@ h1 { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:82px; font-w
   color:#082018; font-family:'Barlow Condensed'; font-size:19px; font-weight:700;
   line-height:1; letter-spacing:.04em; }
 html.light .tour-level { color:#fff; }
+/* 官方 logo 版：不要底色，logo 与级别数字同色、同基线 */
+.tour-level.has-logo { display:inline-flex; align-items:center; gap:7px;
+  padding:0; border-radius:0; background:none; color:var(--section-accent); }
+.tour-level.has-logo svg { height:19px; width:auto; display:block; }
+.tour-level.has-logo i { font-style:normal; font-family:'Barlow Condensed';
+  font-size:21px; font-weight:700; line-height:1; letter-spacing:.04em; }
+.hero .tour-level.has-logo svg { height:22px; }
+.hero .tour-level.has-logo i { font-size:24px; }
+html.light .tour-level.has-logo { color:var(--section-accent); }
+.event-meta .tour-level.has-logo { color:var(--section-accent); }
+.event-meta .tour-level.has-logo svg { height:22px; }
+.event-meta .tour-level.has-logo i { font-size:24px; }
 .tour-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .htime { font-family:'Barlow Condensed'; font-weight:600; font-size:30px; color:var(--gold); letter-spacing:1px; }
 .rating { font-size:20px; font-weight:700; color:#082018; background:var(--section-accent);
@@ -1213,8 +1225,8 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     if show_tournament:
         g = group_by_tournament([m])[0]
         tour_txt = (
-            f'<b class="tour-level">{html.escape(g.compact_level)}</b>'
-            f'<span class="tour-name">{html.escape(g.name_zh)}</span>'
+            _tour_badge(g)
+            + f'<span class="tour-name">{html.escape(g.name_zh)}</span>'
         )
     chip_html = ""
     if hero:
@@ -1251,10 +1263,7 @@ def _sched_card(
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
     tour_txt = html.escape(g.name_zh) if show_tournament else ""
-    level_badge = html.escape(g.compact_level)
-    level_html = (
-        f'<b class="tour-level">{level_badge}</b>' if show_tournament else ""
-    )
+    level_html = _tour_badge(g) if show_tournament else ""
     t = fmt_schedule_time(m)
     right = f'<span class="htime">{t}</span>'
     reason = ""
@@ -1315,6 +1324,39 @@ _CARD_STAT_PRIORITY = (
     "一发成功率",
 )
 _CARD_STAT_LIMIT = 4
+
+
+@lru_cache(maxsize=4)
+def _tour_logo_svg(tour: str) -> str:
+    """ATP / WTA 官方 logo，内联返回（取不到就回空串）。
+
+    必须内联而不是 <img>：<img> 里的 SVG 是独立文档，拿不到外面的
+    currentColor，深绿底上就会是原本的深蓝/深紫，等于看不见。
+    见 tools/fetch_tour_logos.py。
+    """
+    path = ASSETS / "logo" / "tours" / f"{tour.lower()}.svg"
+    try:
+        return path.read_text(encoding="utf-8").strip()
+    except OSError:
+        logger.warning("缺少巡回赛 logo：%s，退回纯文字标记", path.name)
+        return ""
+
+
+def _tour_badge(group) -> str:
+    """巡回赛标记：官方 logo + 级别文字，没有底色。
+
+    原来是"WTA1000"整个塞进一个实心色块。logo 只表示巡回赛，级别
+    （1000/500/250、大满贯、年终总决赛）必须留成文字，否则这条信息就没了。
+    logo 文件缺失时整段退回原来的纯文字，不会开天窗。
+    """
+    level = group.compact_level
+    tour = group.tour.value
+    logo = _tour_logo_svg(tour)
+    if not logo:
+        return f'<b class="tour-level">{html.escape(level)}</b>'
+    suffix = level[len(tour):] if level.startswith(tour) else level
+    text = f"<i>{html.escape(suffix)}</i>" if suffix else ""
+    return f'<b class="tour-level has-logo">{logo}{text}</b>'
 
 
 def _stat_rank(label: str) -> int:
@@ -1649,9 +1691,16 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     level_label = " / ".join(levels)
     surface = first.surface or tournament_surface(first.name)
     surface_label = surface_zh(surface) or "场地待核"
+    # 巡回赛标记用官方 logo（无底色）；一页混着多个级别时退回纯文字，
+    # 因为那时 logo 配哪个级别都不对。
+    level_html = (
+        _tour_badge(event_groups[0])
+        if len(levels) == 1
+        else f'<b class="event-level">{html.escape(level_label)}</b>'
+    )
     meta = "".join(
         (
-            f'<b class="event-level">{html.escape(level_label)}</b>',
+            level_html,
             f'<b class="event-surface">{html.escape(surface_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
             '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
