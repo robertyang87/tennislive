@@ -1452,7 +1452,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument(
         "--voice", default=None, help="edge-tts 中文语音（默认云健，语气偏解说）"
     )
-    sp.add_argument("--rate", default=None, help="语速，如 +14%%（默认 +14%%）")
+    sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
