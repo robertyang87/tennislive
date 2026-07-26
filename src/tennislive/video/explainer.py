@@ -449,40 +449,58 @@ _SHOT_CLOCK_DIAGRAM = """
 # that carries both is drawn.
 _ZHENG_EALA_DIAGRAM = """
 <svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="42" text-anchor="middle" fill="#9fb4aa"
-        font-size="27" font-weight="700">三年之间，两条线换了位置</text>
+  <text x="450" y="40" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">三年里，两条线换了位置</text>
 
-  <text x="96" y="126" fill="#e7f3ec" font-size="28" font-weight="800">伊拉</text>
-  <rect x="210" y="96" width="376" height="42" rx="8"
-        fill="rgba(198,246,90,.30)" stroke="#c6f65a" stroke-width="3"/>
-  <text x="398" y="126" text-anchor="middle" fill="#c6f65a"
-        font-size="27" font-weight="800">世界第 28 · 生涯新高</text>
-  <text x="606" y="126" fill="#9fb4aa" font-size="22" font-weight="700">菲律宾史上最高</text>
+  <line x1="286" y1="76" x2="338" y2="76" stroke="#ff5a6a" stroke-width="7"/>
+  <text x="348" y="85" fill="#ff5a6a" font-size="25" font-weight="800">郑钦文</text>
+  <line x1="486" y1="76" x2="538" y2="76" stroke="#c6f65a" stroke-width="7"/>
+  <text x="548" y="85" fill="#c6f65a" font-size="25" font-weight="800">伊拉</text>
 
-  <text x="96" y="212" fill="#e7f3ec" font-size="28" font-weight="800">郑钦文</text>
-  <rect x="210" y="182" width="204" height="42" rx="8"
-        fill="rgba(255,90,106,.20)" stroke="#ff5a6a" stroke-width="3"/>
-  <text x="312" y="212" text-anchor="middle" fill="#ff5a6a"
-        font-size="27" font-weight="800">跌出前 100</text>
-  <text x="434" y="212" fill="#9fb4aa" font-size="22" font-weight="700">本站外卡 · 最高曾是世界第 4</text>
-
-  <line x1="70" y1="262" x2="830" y2="262" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
-  <text x="70" y="312" fill="#9fb4aa" font-size="24" font-weight="700">中间这三年</text>
-
-  <line x1="120" y1="360" x2="120" y2="560" stroke="#9fb4aa" stroke-width="3"/>
-  <g fill="#9fb4aa" font-size="22" font-weight="700">
-    <circle cx="120" cy="382" r="9" fill="#c6f65a"/>
-    <text x="152" y="390" fill="#e7f3ec" font-size="24" font-weight="800">2025 温网后</text>
-    <text x="340" y="390">右肘手术，缺席美网</text>
-    <circle cx="120" cy="442" r="9" fill="#c6f65a"/>
-    <text x="152" y="450" fill="#e7f3ec" font-size="24" font-weight="800">2026 年 2 月</text>
-    <text x="340" y="450">多哈复出，此前缺席澳网</text>
-    <circle cx="120" cy="502" r="9" fill="#ff5a6a"/>
-    <text x="152" y="510" fill="#e7f3ec" font-size="24" font-weight="800">今年法网 · 温网</text>
-    <text x="340" y="510">均止步首轮</text>
+  <g stroke="rgba(159,180,170,.20)" stroke-width="2">
+    <line x1="150" y1="150" x2="810" y2="150"/>
+    <line x1="150" y1="252" x2="810" y2="252"/>
+    <line x1="150" y1="386" x2="810" y2="386"/>
   </g>
-  <text x="450" y="606" text-anchor="middle" fill="#e7f3ec"
-        font-size="24" font-weight="700">这是两人第二次交手，也是巡回赛上的第一次</text>
+  <g fill="#9fb4aa" font-size="21" font-weight="700" text-anchor="end">
+    <text x="138" y="157">第 4</text>
+    <text x="138" y="259">第 28</text>
+    <text x="138" y="393">第 100</text>
+  </g>
+
+  <line x1="150" y1="470" x2="810" y2="470" stroke="rgba(159,180,170,.45)" stroke-width="3"/>
+  <g fill="#9fb4aa" font-size="22" font-weight="700" text-anchor="middle">
+    <text x="200" y="504">2023</text>
+    <text x="400" y="504">2024</text>
+    <text x="600" y="504">2025</text>
+    <text x="782" y="504">现在</text>
+  </g>
+
+  <path d="M200 440 L612 424" fill="none" stroke="#c6f65a" stroke-width="5"
+        stroke-dasharray="9 9" opacity=".5"/>
+  <path d="M612 424 L782 252" fill="none" stroke="#c6f65a" stroke-width="8"/>
+  <circle cx="612" cy="424" r="9" fill="#c6f65a"/>
+  <circle cx="782" cy="252" r="14" fill="#c6f65a" stroke="#061c14" stroke-width="4"/>
+  <text x="602" y="452" text-anchor="end" fill="#9fb4aa"
+        font-size="21" font-weight="700">2025 年 3 月 · 第 140</text>
+  <text x="762" y="232" text-anchor="end" fill="#c6f65a"
+        font-size="27" font-weight="800">第 28 · 生涯新高</text>
+
+  <path d="M200 214 L678 150" fill="none" stroke="#ff5a6a" stroke-width="8"/>
+  <path d="M678 150 L782 400" fill="none" stroke="#ff5a6a" stroke-width="8"/>
+  <circle cx="200" cy="214" r="9" fill="#ff5a6a"/>
+  <circle cx="678" cy="150" r="14" fill="#ff5a6a" stroke="#061c14" stroke-width="4"/>
+  <circle cx="782" cy="400" r="14" fill="#ff5a6a" stroke="#061c14" stroke-width="4"/>
+  <text x="214" y="250" fill="#9fb4aa" font-size="21" font-weight="700">2023 年底 · 第 15</text>
+  <text x="678" y="126" text-anchor="middle" fill="#ff5a6a"
+        font-size="27" font-weight="800">生涯最高 第 4</text>
+  <text x="782" y="438" text-anchor="middle" fill="#ff5a6a"
+        font-size="27" font-weight="800">跌出前 100</text>
+
+  <text x="450" y="572" text-anchor="middle" fill="#e7f3ec"
+        font-size="25" font-weight="800">7 月 27 日这一场，是两人第二次交手</text>
+  <text x="450" y="612" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">示意图 · 图上四个标注点为公开排名</text>
 </svg>
 """
 
