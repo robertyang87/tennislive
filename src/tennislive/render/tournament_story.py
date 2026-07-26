@@ -1392,6 +1392,49 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Alexandra_Eala",
     ),
     _trivia_story(
+        slug="venus-potapova",
+        title="维纳斯首轮VS波塔波娃",
+        subtitle="赛事前瞻 · WTA 500",
+        identity="46 岁重返华盛顿站",
+        chips=("WTA 500", "首轮", "首次交手"),
+        hero=(
+            "维纳斯·威廉姆斯以外卡身份重返华盛顿站，首轮对阵波塔波娃；"
+            "一年前正是在这一站，45 岁的她赢下 2004 年之后 WTA 巡回赛最年长的单打胜利。"
+        ),
+        facts=(
+            "2025 年 7 月华盛顿站，维纳斯 6-3、6-4 战胜斯特恩斯，成为自 2004 年温网"
+            "纳芙拉蒂洛娃（47 岁）之后赢下 WTA 巡回赛单打的最年长球员；"
+            "那也是她自 2023 年 8 月辛辛那提以来的首场单打胜利。",
+            "维纳斯 1980 年 6 月生，7 座大满贯女单冠军（温网 5 次、美网 2 次）、"
+            "4 枚奥运金牌，2002 年 2 月登上世界第一；2026 赛季至今尚无巡回赛单打胜绩。",
+            "波塔波娃 2001 年 3 月生，2026 赛季起代表奥地利出战；"
+            "2026 年马德里站以幸运落败者身份进入正赛并打进四强，"
+            "为 1990 年分级制度确立以来首位打进 WTA 1000 四强的幸运落败者。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2025-07",
+                player="维纳斯·威廉姆斯",
+                age="45 岁",
+                headline="华盛顿站 6-3、6-4 胜斯特恩斯",
+                detail="2004 年温网纳芙拉蒂洛娃之后，WTA 巡回赛最年长的单打胜者。",
+                source_url="https://en.wikipedia.org/wiki/Venus_Williams",
+            ),
+            ChampionMoment(
+                date="2026-04",
+                player="波塔波娃",
+                age="25 岁",
+                headline="马德里站幸运落败者打进四强",
+                detail="资格赛末轮出局后递补进正赛，先后战胜里巴金娜与普利斯科娃。",
+                source_url="https://en.wikipedia.org/wiki/Anastasia_Potapova",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / WTA 官方赛会信息",
+        image_credit="Hameltion · CC BY-SA 4.0 · Wikimedia Commons",
+        source_url="https://en.wikipedia.org/wiki/Venus_Williams",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
