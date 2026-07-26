@@ -463,3 +463,33 @@ def test_栏目是登记过的并且赛前片子写清了日期():
         assert re.search(r"\d{1,2}\s*月\s*\d{1,2}\s*日", blob), (
             f"{slug} 在易逝栏目「{name}」里，却没写出比赛日期"
         )
+
+
+def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
+    """成片自己要说得出它是谁配的音。
+
+    每段旁白的 mp3 生成完就被工作流删掉（体积），mp4 里也读不出语音名——于是
+    「这条是不是云健配的」只能靠推理：工作流传没传 --voice、代码默认是什么。
+    那条推理链断过一次：工作流写死了一个旧的 --voice 每次都传，代码里换默认值
+    等于没换，三条片子用被替换掉的声音发了出去，几天后翻运行日志才发现。
+
+    所以把它写在成片旁边。查的时候打开 narration.json 就行，不用再推。
+    """
+    import json
+
+    from tennislive.video import explainer as E
+
+    monkeypatch.setattr(E, "render_explainer_slides", lambda *a, **k: [])
+    monkeypatch.setattr(E, "synthesize_narration", lambda *a, **k: ["a.mp3", "b.mp3"])
+    monkeypatch.setattr(E, "assemble_explainer_video", lambda *a, **k: tmp_path / "x.mp4")
+
+    E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
+    meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
+    assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
+    assert meta["rate"] == E.DEFAULT_RATE == "+22%"
+    assert meta["segments"] == 2
+
+    E.generate_explainer_video(
+        find_story_by_slug("zheng-eala"), tmp_path, voice="zh-CN-YunxiNeural")
+    meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
+    assert meta["voice"] == "zh-CN-YunxiNeural"  # 覆盖了也照实记
