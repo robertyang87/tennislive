@@ -1714,8 +1714,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "她又做了一次子宫肌瘤手术，那个病拖了很多年——她说：肌瘤影响了我的职业生涯，"
             "很多时候我根本没有足够的体力去打一场真正想打的比赛。"
             "但那天她还说了第二句：说到底就是爱吧，你要是足够爱它，你就会去付出。我太爱它了。",
-            "assets/explainer/venus-potapova/venus_celebrate.jpg",
-            "图片社图，来源未标注具体场次 · 2025 年 7 月华盛顿站",
+            "assets/explainer/venus-potapova/venus_head_down.jpg",
+            "图片社图 via The National Herald · 2026 年 1 月澳网首轮",
             (
                 "「我得回来上保险，我天天跑医院」",
                 "2011 年确诊干燥综合征，至今 15 年",
