@@ -45,6 +45,7 @@ from .rating import (
     tonight_event_focus,
     top_results,
 )
+from .textfit import _short, _short_complete
 from .story import (
     chinese_side_won,
     is_chinese_player,
@@ -1076,6 +1077,15 @@ html.daily .tonight-page.count-1 .event-spacer { height:230px; }
 html.daily .tonight-page.count-2 .event-spacer { height:170px; }
 html.daily .tonight-page.count-3 .event-spacer { height:70px; }
 html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
+
+/* ---------- daily 的"一屏只点亮比分与决胜数据" ----------
+   这一段是**唯一**准许改颜色的地方，而且只在技术统计表内部生效。
+   原来胜方整列七个数字全是荧光黄绿，一屏下来到处在亮，比分反而不突出。
+   现在只有决胜那一行（_key_stat_label 选出，通常是破发兑现）保持荧光黄绿，
+   其余胜方数字回到 --ivory。用的都是既有主题色，没有引入新色值：
+   比分、徽章、栏目色一律不动。 */
+html.daily .compare-row:not(.key) .winner { color:var(--ivory); }
+html.daily .compare-row.key { background:var(--panel-soft); }
 """
 
 
@@ -1253,11 +1263,18 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     )
 
 
+# 今晚焦点卡"看点"行的字数预算。同页比赛少时是单行 nowrap，三场及以上
+# 才放开成两行（见 .pick .reason 与 .tonight-page.count-3 .pick .reason）。
+REASON_LIMIT_ONE_LINE = 36
+REASON_LIMIT_TWO_LINES = 74
+
+
 def _sched_card(
     m: Match,
     *,
     with_reason: bool = False,
     show_tournament: bool = True,
+    reason_limit: int = REASON_LIMIT_ONE_LINE,
 ) -> str:
     """赛程卡：时间、对阵，以及可核验的推荐理由."""
     g = group_by_tournament([m])[0]
@@ -1280,9 +1297,14 @@ def _sched_card(
             f'<span class="rating">{_icon_html(label_icon)}'
             f'<span>{html.escape(label)}</span></span>' + right
         )
+        # 看点这一行只有一到两行的位置，交给 CSS 的 line-clamp 去截会从词
+        # 中间切开、还会留下半个引号（"…后来她把'让萨巴伦卡这个姓被记…"）。
+        # 先在服务端裁到一句说得完的话，和小红书正文用同一套规则。
+        angle = preview_angle(m)
+        fitted = _short_complete(angle, reason_limit) or _short(angle, reason_limit)
         reason = (
             f'<div class="reason"><b>{_icon_html("eye")}<span>看点</span></b>'
-            f'{html.escape(preview_angle(m))}</div>'
+            f'{html.escape(fitted)}</div>'
         )
         card_class += " pick"
     chinese = (
@@ -1671,6 +1693,11 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
                 match,
                 with_reason=True,
                 show_tournament=False,
+                # 三场及以上时 .reason 放开成两行，预算跟着放宽
+                reason_limit=(
+                    REASON_LIMIT_TWO_LINES if len(matches) >= 3
+                    else REASON_LIMIT_ONE_LINE
+                ),
             )
         )
 

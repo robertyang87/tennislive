@@ -5,11 +5,11 @@
 "视觉过重"；布局那一层重做——大留白、间距、行高、照片遮罩，外加去掉顶部
 彩虹条。
 
-注意：原始需求里还有"细线代替色块高亮""一屏只点亮比分与决胜数据"两条，
-它们都要改颜色（把实心徽章改描边、把胜方整列的荧光黄绿数字改成白字），
-和"不要换主题色"直接冲突，所以**没有实现**。技术统计的决胜行仍然会带上
-`key` class（_key_stat_label 决定是哪一行），留作以后要做时的挂点，但当前
-没有任何 CSS 用它上色。
+"一屏只点亮比分与决胜数据"后来单独做了：技术统计表里只有决胜那一行
+（_key_stat_label 选出）保持荧光黄绿，其余胜方数字回到 --ivory。它是**唯一**
+准许改颜色的段落，用的也全是既有主题色，比分/徽章/栏目色一概不动。
+"细线代替色块高亮"仍未做——那要把实心徽章整批改成描边，改动面太大且与
+"主题基本不变"相抵。
 
 两条必须钉死的边界：
 1. 「网球有故事」知识贴与科普视频仍走 :root 的近黑深绿，改版不能碰它们。
@@ -32,6 +32,7 @@ GROUND0, GROUND1 = (0x1E, 0x42, 0x34), (0x2A, 0x64, 0x50)
 
 # CSS 里那段布局重做的起点，测试靠它把"新增规则"和原有规则分开
 _DAILY_MARKER = "daily 的布局重做"
+_HIGHLIGHT_MARKER = 'daily 的"一屏只点亮比分与决胜数据"'
 
 
 def _daily_tail() -> str:
@@ -119,14 +120,38 @@ def test_layout_section_contains_no_colour_rules_at_all():
     把胜方整列的荧光黄绿数字改成白字、把 .china-marker 从金色改成黄绿——
     每一条单独看都像"布局"，加起来就是换了主题。
     """
-    tail = _daily_tail()
+    # "只点亮决胜数据"是唯一准许改颜色的段落，单独校验、不混进布局段
+    layout = _daily_tail().split(_HIGHLIGHT_MARKER, 1)[0]
     offenders = [
         line.strip()
-        for line in tail.splitlines()
+        for line in layout.splitlines()
         if re.search(r"(^|[;{\s])color:|background(-color)?:|border-color:"
                      r"|box-shadow:\s*inset", line)
     ]
     assert not offenders, "布局段里出现了颜色规则：\n" + "\n".join(offenders)
+
+
+def test_only_the_decisive_stat_row_stays_lit():
+    """一屏只点亮比分与决胜数据。
+
+    原来胜方整列七个数字全是荧光黄绿，一屏下来到处在亮，比分反而不突出。
+    现在只有 _key_stat_label 选中的那一行保持荧光黄绿，其余回到 --ivory。
+    用的是既有主题色，没有引入新色值。
+    """
+    assert _HIGHLIGHT_MARKER in _CSS
+    tail = _CSS.split(_HIGHLIGHT_MARKER, 1)[1]
+    assert "html.daily .compare-row:not(.key) .winner { color:var(--ivory); }" in tail
+    assert "html.daily .compare-row.key { background:var(--panel-soft); }" in tail
+
+    # 这一段只准碰技术统计表，不许动比分/徽章/栏目色
+    selectors = [
+        line.split("{", 1)[0].strip()
+        for line in tail.splitlines()
+        if "{" in line and not line.strip().startswith(("/*", "*"))
+    ]
+    assert selectors
+    for selector in selectors:
+        assert "compare-row" in selector, f"越界改了技术统计表以外的东西：{selector}"
 
 
 def test_top_rainbow_bar_is_dropped_only_for_the_daily_cards():

@@ -6,7 +6,7 @@ import logging
 from dataclasses import dataclass
 
 from ..digest import Digest
-from ..models import Match
+from ..models import Match, MatchStatus
 from ..zh import player_zh
 from .common import is_chinese_involved
 from .editorial_memory import recent_focus_ids
@@ -136,6 +136,33 @@ def has_detailed_stats(match: Match | None) -> bool:
     return bool(match is not None and _pair_rows(match))
 
 
+# 总得分差到多少还算"胶着"。超过这个数说"只差"就是把碾压说成焦灼。
+_TIGHT_POINT_GAP = 6
+# 打满这么久才配叫"熬过"
+_GRIND_MINUTES = 150
+
+
+def format_duration(minutes: int) -> str:
+    """把分钟数写成中文时长；不足一小时不写"0小时"。
+
+    原来固定 f"{m//60}小时{m%60:02d}分"，45 分钟的比赛印成"0小时45分"。
+    """
+    hours, rest = divmod(int(minutes), 60)
+    return f"{hours}小时{rest:02d}分" if hours else f"{rest}分"
+
+
+def _duration_fragment(match: Match) -> str:
+    """时长后缀。退赛不写——那场根本没打完，"熬过"无从谈起。"""
+    stats = match.stats
+    minutes = stats.duration_minutes if stats else None
+    if not minutes:
+        return ""
+    if match.status in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return f"，比赛进行到{format_duration(minutes)}对手退出"
+    verb = "最终熬过" if minutes >= _GRIND_MINUTES else "全场耗时"
+    return f"，{verb}{format_duration(minutes)}"
+
+
 def _stats_verdict(match: Match) -> str | None:
     stats = match.stats
     if stats is None:
@@ -145,8 +172,22 @@ def _stats_verdict(match: Match) -> str | None:
     fragments: list[str] = []
 
     if stats.total_points_won is not None:
-        gap = abs(stats.total_points_won.home - stats.total_points_won.away)
-        fragments.append(f"全场总得分只差{_int(gap)}分")
+        won = (
+            stats.total_points_won.home if winner == 0
+            else stats.total_points_won.away
+        )
+        lost = (
+            stats.total_points_won.away if winner == 0
+            else stats.total_points_won.home
+        )
+        gap = int(round(won - lost))
+        # "只差N分"原来是无条件拼上去的，不看差多少：37 比 17 也印成
+        # "全场总得分只差20分"（2026-07-26 线上成品）。20 分在一场比赛里
+        # 是碾压，不是胶着。
+        if abs(gap) <= _TIGHT_POINT_GAP:
+            fragments.append(f"全场总得分只差{_int(abs(gap))}分")
+        elif gap > 0:
+            fragments.append(f"{winner_name}总得分多拿{_int(gap)}分")
     if stats.unforced_errors is not None:
         win_errors = (
             stats.unforced_errors.home if winner == 0 else stats.unforced_errors.away
@@ -156,7 +197,9 @@ def _stats_verdict(match: Match) -> str | None:
         )
         gap = lose_errors - win_errors
         if gap > 0:
-            fragments.append(f"{winner_name}将非受迫失误少犯{_int(gap)}次")
+            # 上一句可能已经点过名了，别在一句话里把同一个人名说两遍
+            subject = "" if fragments and winner_name in fragments[0] else winner_name
+            fragments.append(f"{subject}非受迫失误少犯{_int(gap)}次")
     if stats.break_points_won is not None and stats.break_points_chances is not None:
         won = stats.break_points_won.home if winner == 0 else stats.break_points_won.away
         chances = (
@@ -168,13 +211,7 @@ def _stats_verdict(match: Match) -> str | None:
 
     if not fragments:
         return result_insight(match)
-    duration = (
-        f"，最终熬过{stats.duration_minutes // 60}小时"
-        f"{stats.duration_minutes % 60:02d}分"
-        if stats.duration_minutes
-        else ""
-    )
-    return "；".join(fragments[:3]) + duration + "。"
+    return "；".join(fragments[:3]) + _duration_fragment(match) + "。"
 
 
 def headline_stats_targets(digest: Digest, budget: int = 4) -> list[Match]:
@@ -274,9 +311,7 @@ def focus_comparison(match: Match) -> FocusComparison:
     stats = match.stats
     duration_label = None
     if stats and stats.duration_minutes:
-        duration_label = (
-            f"{stats.duration_minutes // 60}小时{stats.duration_minutes % 60:02d}分"
-        )
+        duration_label = format_duration(stats.duration_minutes)
     return FocusComparison(
         match=match,
         left_name=left_name,
