@@ -1728,16 +1728,55 @@ _CAPTIONS: dict[str, dict] = {
 }
 
 
-# Most decks are knowledge explainers and run under 网球有故事. A match
-# preview is a different promise — it goes out before play and expires when
-# the match starts — so it carries its own column name. The label follows the
-# deck, not the renderer, which is why it lives here beside the topic line.
+@dataclass(frozen=True)
+class Column:
+    """A named strand of the account, printed on every card it produces.
+
+    A column is a promise, not a decoration: the reader who sees 网球有故事
+    expects something that will still be true next year, and the one who sees
+    开赛之前 expects a match that has not started yet. Mixing them costs the
+    label its meaning — a preview published under 网球有故事 is stale the
+    moment play begins, and nothing on the card would have said so.
+    """
+
+    name: str
+    promise: str
+    # Does the piece expire? Evergreen columns can be re-shared any time;
+    # a perishable one is only true until the match starts, so its copy has
+    # to say when that is.
+    perishable: bool
+
+
+COLUMNS: dict[str, Column] = {
+    "网球有故事": Column(
+        name="网球有故事",
+        promise="一个人人见过、没人讲得清的网球现象，讲清它的来历和现在。",
+        perishable=False,
+    ),
+    "开赛之前": Column(
+        name="开赛之前",
+        promise="一场还没开打的比赛，把两边这几年的来路摆在一起；不猜比分。",
+        perishable=True,
+    ),
+}
+
 DEFAULT_COLUMN = "网球有故事"
 
 
 def explainer_column(slug: str) -> str:
     """The column a deck is published under."""
     return (_OPENINGS.get(slug) or {}).get("column") or DEFAULT_COLUMN
+
+
+def column_of(slug: str) -> Column:
+    """The column record behind a deck. Raises on a name nobody registered."""
+    name = explainer_column(slug)
+    try:
+        return COLUMNS[name]
+    except KeyError:  # a typo here would silently invent a third column
+        raise KeyError(
+            f"{slug} 声明的栏目「{name}」没有登记在 COLUMNS 里"
+        ) from None
 
 
 # The first seconds decide whether anyone stays, and a deck that opens on

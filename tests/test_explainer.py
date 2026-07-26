@@ -438,3 +438,28 @@ def test_标题不靠代词指人():
                     f"{slug}/{seg.kind} 片中有 {len(cast)} 个人，"
                     f"标题却用「{hit.group()}」指代：{seg.title}"
                 )
+
+
+def test_栏目是登记过的并且赛前片子写清了日期():
+    """栏目名不是装饰，是对读者的承诺，所以它必须是登记过的那几个之一。
+
+    「开赛之前」和「网球有故事」并行，两者的保质期完全不同：知识片明年再翻出来
+    也还成立，赛前片在开球那一刻就过期了。所以易逝栏目多一条硬要求——**片子里
+    必须写出比赛日期**，读者一眼能判断这条还算不算数。没有日期的赛前片，过期之后
+    看起来和没过期一模一样。
+    """
+    from tennislive.video.explainer import COLUMNS, column_of, explainer_column
+
+    for slug in _SCRIPTED:
+        name = explainer_column(slug)
+        assert name in COLUMNS, f"{slug} 用了没登记的栏目「{name}」"
+        col = column_of(slug)
+        if not col.perishable:
+            continue
+        blob = " ".join(
+            f"{s.title} {s.narration} {' '.join(s.points)}"
+            for s in explainer_script(find_story_by_slug(slug))
+        )
+        assert re.search(r"\d{1,2}\s*月\s*\d{1,2}\s*日", blob), (
+            f"{slug} 在易逝栏目「{name}」里，却没写出比赛日期"
+        )
