@@ -277,33 +277,57 @@ def test_legacy_themes_still_carry_every_key_daily_added(theme):
 
 
 def test_pillow_fallback_matches_the_html_palette():
-    """Chromium 挂了才走 Pillow，两边必须是同一套色值。
+    """Chromium 挂了才走 Pillow，两边必须长得一样。
 
-    SOFT_ACCENT 是第五个：赛果速递 / 焦点复盘两页的强调色从荧光黄绿收敛成
-    金（见 webcards 的"柔和内容色"段）。它只喂给这两页的 _page()，其余卡
-    仍用 ACCENT——改动范围和 HTML 那边一一对应。
+    daily 相对 dark 只准差这三类，每一类都对应 HTML 那边一处明确的改动：
+      底色四个面   —— 提淡；
+      SOFT_ACCENT  —— 赛果/焦点两页收敛成金；
+      CARD_* 那一组 —— 比赛卡从白卡改成深色面板（见下一条测试）。
     """
     daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
     changed = {k for k in daily if daily[k] != dark.get(k)}
     assert changed == {
         "BG_TOP", "BG_BOTTOM", "PANEL", "PANEL_HI", "SOFT_ACCENT",
+        "CARD_BG", "CARD_TEXT", "CARD_GREY", "CARD_LINE",
+        "WIN_BAND", "WIN_GREEN", "CHIP_GREEN",
     }, f"Pillow 兜底改了额外的色值：{sorted(changed)}"
     # 收敛成的那支金必须就是主题里的 --gold，不能另起一支
     assert daily["SOFT_ACCENT"] == (0xD5, 0xB4, 0x4D)
     assert "--gold:#D5B44D" in re.search(r":root \{(.*?)\}", _CSS, re.S).group(1)
+
     assert daily["BG_TOP"] == GROUND0 and daily["BG_BOTTOM"] == GROUND1
     # 底色确实比 dark 亮
     assert _luma(daily["BG_TOP"]) > _luma(dark["BG_TOP"])
     assert _luma(daily["BG_BOTTOM"]) > _luma(dark["BG_BOTTOM"])
 
 
+def test_pillow_match_cards_are_dark_panels_like_the_html_ones():
+    """比赛卡必须是压在深绿底上的深色面板，不能是白卡。
+
+    HTML 画的是半透明深色面板，Pillow 这边原来照抄 dark 的一套白卡值——
+    同一份日报走哪条渲染路径长得完全不一样。Chromium 一挂，发出去的卡是
+    白底黑字，和当期封面、视频、推送正文全对不上。
+    """
+    daily = cards._THEMES["daily"]
+    page = _luma(daily["BG_TOP"])
+
+    # 面板比页面底色亮一点点即可，绝不能是白的
+    assert _luma(daily["CARD_BG"]) < page + 30, "比赛卡还是白卡"
+    assert _luma(daily["WIN_BAND"]) < page + 40, "胜方行底纹太亮"
+    # 面板变深了，卡里的字就必须变亮，否则读不出来
+    assert _luma(daily["CARD_TEXT"]) > 200, "深面板上的主文字还是深色"
+    assert _luma(daily["WIN_GREEN"]) > 200, "深面板上的胜方比分还是深色"
+    assert _luma(daily["CARD_TEXT"]) > _luma(daily["CARD_GREY"]) > _luma(daily["CARD_BG"])
+
+
 def test_pillow_fallback_keeps_every_theme_colour_identical_to_dark():
     """主题色在 Pillow 侧也必须逐个等于 dark 的原值。"""
     daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
+    # CARD_* 那一组是**版面**不是主题色（白卡 → 深色面板），单独有测试管；
+    # 这里管的是强调色，一个都不许动。
     for key in ("ACCENT", "BALL", "OUTLINE", "WHITE", "GREY", "SCORE_GREY",
                 "RED", "FOOT", "STAR_PILL", "STAR_PILL_HOT", "BTN_TEXT",
-                "CARD_BG", "CARD_TEXT", "CARD_GREY", "CARD_LINE",
-                "WIN_BAND", "WIN_GREEN", "CHIP_GREEN", "PANEL_LINE", "DECO"):
+                "PANEL_LINE", "DECO"):
         assert daily[key] == dark[key], f"{key} 被改了：{dark[key]} -> {daily[key]}"
 
 
