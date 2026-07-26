@@ -400,3 +400,41 @@ def test_配音把挑球的挑读成一声():
                 assert hit.group(1) in "战衅拨逗剔眉", (
                     f"{slug}/{seg.kind} 旁白里还有会被读成三声的「挑」：{spoken[:60]}"
                 )
+
+
+# 每个元组是同一个人的几种叫法。分组是必需的：「德约」和「德约科维奇」不是两个人，
+# 按字符串去重会把单人片子误判成多人片子。名单不全没关系——漏掉一个人只会少管一条
+# 片子，不会误伤；发现新面孔就往里加。
+_ROSTER = (
+    ("郑钦文", "钦文"), ("伊埃拉",), ("德约科维奇", "德约"), ("辛纳",),
+    ("阿尔卡拉斯",), ("小威", "威廉姆斯"), ("斯瓦泰克",), ("纳达尔",), ("费德勒",),
+    ("朱琳",), ("李娜",), ("塞伦多洛",), ("兹维列夫",), ("梅德韦杰夫",), ("穆雷",),
+    ("大坂",), ("高芙",), ("萨巴伦卡",), ("克雷吉茨科娃",),
+)
+
+
+def test_标题不靠代词指人():
+    """两个人同框时，「她」没有安全的指代。
+
+    封面写过「三年前她赢了这个人」——画面上站着郑钦文，文字里的「她」却要读者
+    自己判断是谁赢了谁；两边都是女球员，两种读法都通。标题是最容易被单独截图
+    转发的一屏，脱离上下文之后歧义只会更大，所以片子里但凡出现两个人，标题里的
+    单数第三人称就必须和名字同时出现。旁白不受这条约束——那里有前后句消歧。
+
+    两处豁免，都是真的不会指错：
+    - 只讲一个人（或一个人都不点名）的片子，「他」只能落在那一个人身上；
+    - 「他们」是泛指——「发球前，他们在挑什么？」问的是所有球员。
+    """
+    for slug in _SCRIPTED:
+        segments = explainer_script(find_story_by_slug(slug))
+        blob = " ".join(f"{s.title} {s.narration}" for s in segments)
+        cast = [p for p in _ROSTER if any(alias in blob for alias in p)]
+        if len(cast) < 2:
+            continue
+        aliases = [a for p in cast for a in p]
+        for seg in segments:
+            for hit in re.finditer(r"[她他](?!们)", seg.title):
+                assert any(a in seg.title for a in aliases), (
+                    f"{slug}/{seg.kind} 片中有 {len(cast)} 个人，"
+                    f"标题却用「{hit.group()}」指代：{seg.title}"
+                )
