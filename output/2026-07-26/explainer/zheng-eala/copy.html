@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾7.26 网球有故事｜郑钦文首轮对伊拉</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>郑钦文华盛顿站首轮，对手是这三年上升最快的人之一。
+三年前的亚运会半决赛她赢了；三年后，两个人的排名换了位置。
+
+1️⃣ 对手：21 岁，菲律宾史上最高排名
+· 21 岁；2022 美网青少年冠军
+· 2025 迈阿密外卡闯四强，连胜三位大满贯冠军
+· 现世界第 28，菲律宾史上最高
+
+2️⃣ 这一边：亚洲第一块网球单打奥运金牌
+· 2024 巴黎奥运女单金牌，亚洲第一人
+· 生涯最高世界第 4（2025 年 6 月）
+· 继李娜之后中国第二位女单前五
+
+3️⃣ 三年前：她们打过一次，在亚运会半决赛
+· 杭州亚运会半决赛：郑钦文 6-1 6-7(5) 6-3
+· 那届伊拉拿铜牌，郑钦文拿金牌
+· 第二次交手，巡回赛上的第一次
+
+4️⃣ 这三年：同一站赛事，她三年前也来过
+· 2025 温网后右肘手术，缺席美网
+· 2026 年 2 月多哈复出，缺席澳网
+· 今年法网、温网均首轮出局，本站靠外卡
+
+5️⃣ 这一场：一场首轮，两种意义
+· 伊拉：北美硬地开局，目标是坐稳新高
+· 郑钦文：重建的一站，对手是上升最快的人
+· WTA 500 华盛顿站首轮，7 月 27 日
+
+💬 留个答案
+三年之后再见，这一场谁更需要它？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #郑钦文 #WTA #美网前哨</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly></textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
