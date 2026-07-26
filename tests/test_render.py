@@ -3705,3 +3705,38 @@ def test_grounded_takeaway_says_the_winner_took_the_stake_not_deferred_it():
         round_name="Semifinal", winner=0,
     )
     assert "拿下决赛门票" in _grounded_takeaway(semi)
+
+
+def test_cover_headline_never_breaks_a_player_name_across_lines():
+    """长译名不许被换行劈成两截。
+
+    中文没有词间空格，浏览器可以在任意两个汉字之间断开。原来的均衡换行只认
+    标点："爆冷：塔格尔掀翻克雷吉茨科娃"整句只有一个"："可断，左边才 3 个字、
+    过不了均衡门槛，于是整句交给 CSS——7.26 的封面就印成了
+    "爆冷：塔格尔掀翻克雷 / 吉茨科娃"，姓氏断成两截。
+    """
+    from tennislive.render.webcards import (
+        _balanced_headline_lines,
+        _cover_headline_html,
+    )
+
+    names = ("塔格尔", "克雷吉茨科娃")
+    headline = "爆冷：塔格尔掀翻克雷吉茨科娃"
+
+    assert _balanced_headline_lines(headline, names) == ["爆冷：塔格尔掀翻", "克雷吉茨科娃"]
+    # 没有名字可依据时行为不变（仍然只认标点）
+    assert _balanced_headline_lines(headline) == [headline]
+
+    # 万一某一行仍然过宽，名字本身也要是一个 nowrap 单元
+    html_out = _cover_headline_html("塔格尔掀翻克雷吉茨科娃夺冠", names)
+    assert '<span class="headline-keep">克雷吉茨科娃</span>' in html_out
+
+
+def test_headline_name_protection_prefers_the_longest_match():
+    """"克雷"不能抢在"克雷吉茨科娃"前面命中，否则名字照样断开。"""
+    from tennislive.render.webcards import _headline_line_html
+
+    out = _headline_line_html("掀翻克雷吉茨科娃", ("克雷", "克雷吉茨科娃"))
+
+    assert "克雷吉茨科娃" in out
+    assert '>克雷<' not in out
