@@ -229,14 +229,18 @@ def _grounded_takeaway(match: Match) -> str:
     loser_name = player_zh(losers[0].name)
 
     r = round_zh(match.round_name) or ""
+    # 赢下一场比赛是**兑现**了这一轮的赌注，不是把它推给下一场。原来写的是
+    # "{winner}把{stakes}的悬念留到了下一场"，方向整个反了；决赛尤其离谱——
+    # 决赛本身就是最后一场，没有"下一场"。7.26 的头条卡上印着阿利斯夺冠，
+    # 下面一行却说他"把冠军奖杯的悬念留到了下一场"。
     stakes = {
-        "决赛": "冠军奖杯",
+        "决赛": "冠军",
         "半决赛": "决赛门票",
         "四分之一决赛": "四强席位",
         "八分之一决赛": "八强门票",
     }.get(r)
     if stakes:
-        return f"{winner_name}把{stakes}的悬念留到了下一场；{loser_name}这个赛季，还得找别的地方把状态找回来。"
+        return f"{winner_name}拿下{stakes}；{loser_name}这个赛季，还得找别的地方把状态找回来。"
 
     tiebreaks = sum(
         1
