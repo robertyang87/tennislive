@@ -80,27 +80,36 @@ def test_flash_radar_queues_only_offcourt_nonsensitive_news(tmp_path, monkeypatc
 
     from tennislive.research.trends import TrendSignal
 
+    # 时间戳跟着真实时钟走。原来写死在 2026-07-24，而 offcourt_flash_candidates
+    # 的新鲜度闸门（48 小时）用的是 datetime.now()——测试只 monkeypatch 了
+    # beijing_today，管不到它。所以现实时间一过 07-26 09:00Z，三条信号全部过期，
+    # 候选恒为空，这条测试从此永远红。写成"相对现在"就跟日期无关了。
+    fresh = datetime.now(timezone.utc) - timedelta(hours=2)
+
+    def stamp(offset_minutes: int) -> str:
+        return (fresh + timedelta(minutes=offset_minutes)).isoformat()
+
     signals = [
         TrendSignal(
             kind="official-news",
             source="ATP",
             title="Sinner beats Alcaraz 7-5 6-4 in Cincinnati final",
             url="u1",
-            published_at="2026-07-24T08:00:00+00:00",
+            published_at=stamp(0),
         ),
         TrendSignal(
             kind="official-news",
             source="ATP",
             title="ATP announces electronic line calling across all events",
             url="u2",
-            published_at="2026-07-24T09:00:00+00:00",
+            published_at=stamp(60),
         ),
         TrendSignal(
             kind="official-news",
             source="ITIA",
             title="Player suspended after positive doping test",
             url="u3",
-            published_at="2026-07-24T09:30:00+00:00",
+            published_at=stamp(90),
         ),
     ]
     monkeypatch.setattr(

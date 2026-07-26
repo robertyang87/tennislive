@@ -50,7 +50,12 @@ VENUES = [
     ("iasi-palace-of-culture.jpg", "File:2020 04 17 Iași Palatul Culturii.jpg", None),
     ("verona-arena.jpg", "File:Verona Arena (Arena di Verona).jpg", None),
     # 主球场／主场馆（优先用这一类）
-    ("washington-fitzgerald-tennis-center.jpg", "File:FitzGerald Tennis Center.jpg", None),
+    # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
+    # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
+    # 换成 2023 年 DC Open 的中央球场满场照：场地上印着 WASHINGTON D.C.，
+    # 自己就把身份说清楚了。
+    ("washington-fitzgerald-tennis-center.jpg",
+     "File:Karatsev–Tiafoe in stadium at the 2023 DC Open 01.jpg", None),
     # 加拿大站：原来钉的 File:RogersCup2011-2.jpg 名字里带赛事，画面却是场外
     # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
     # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央
