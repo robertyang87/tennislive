@@ -31,3 +31,300 @@ def test_venue_asset_does_not_match_generic_open_name():
     )
 
     assert venue_asset_for_match(match) is None
+
+
+def test_every_manifest_entry_actually_loads():
+    """manifest 里登记的每一条都必须真的加载出来。
+
+    load_venue_assets() 对"文件不在"和"credits 缺字段"是**静默丢弃**的——
+    澳网/法网/温网三张主球场图连同 credits 早就在仓库里，只因为没登记进
+    manifest 就一直没人发现；反过来，登记了但文件掉了同样不会有任何动静。
+    这条测试把不合格的逐条列出来，不让它继续沉默。
+    """
+    import json
+
+    from tennislive.render.venue_assets import ASSETS, CREDITS, MANIFEST
+    from tennislive.render.venue_assets import load_venue_assets
+
+    rows = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    credits = json.loads(CREDITS.read_text(encoding="utf-8"))
+    loaded = {asset.slug for asset in load_venue_assets()}
+
+    problems = []
+    for row in rows:
+        slug, image = row.get("slug"), row.get("image") or ""
+        if slug in loaded:
+            continue
+        reasons = []
+        if not (ASSETS / image).is_file():
+            reasons.append("图片文件不在")
+        missing = [k for k in ("artist", "license", "page")
+                   if not (credits.get(image) or {}).get(k)]
+        if missing:
+            reasons.append(f"credits 缺 {missing}")
+        if not [a for a in row.get("tournament_aliases", ()) if len(a) >= 4]:
+            reasons.append("没有长度 >=4 的别名")
+        problems.append(f"{slug} ({image}): {'; '.join(reasons) or '原因不明'}")
+
+    assert not problems, "manifest 条目没能加载：\n" + "\n".join(problems)
+
+
+def test_aliases_match_the_real_tournament_names():
+    """别名要对着**赛事名**写——真实数据里 city/country 恒为 None。
+
+    匹配用的 subject 是 _norm("赛事名 城市 国家")，而抓下来的赛程里
+    city/country 一直是空的，所以按城市写别名永远命不中：维罗纳那站叫
+    "ATV Bancomat Tennis Open"，写 "verona" 没有任何作用；Båstad 那站叫
+    "Nordea Open" 同理。
+    """
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    # (赛事名, 期望命中的 slug) —— 全部取自真实 digest 里出现过的写法
+    cases = [
+        ("Palermo Ladies Open", "palermo"),
+        ("Enka Open", "istanbul"),
+        ("Unicredit Iasi Open", "iasi"),
+        ("ATV Bancomat Tennis Open", "verona"),
+        ("EFG Swiss Open Gstaad", "gstaad"),
+        ("Nordea Open", "bastad"),
+        ("Australian Open", "australian-open"),
+        ("Roland Garros", "roland-garros"),
+        ("French Open", "roland-garros"),
+        ("Wimbledon", "wimbledon"),
+        ("The Championships, Wimbledon", "wimbledon"),
+    ]
+    from tennislive.render.venue_assets import load_venue_assets
+
+    available = {asset.slug for asset in load_venue_assets()}
+
+    misses = []
+    for name, expected in cases:
+        if expected not in available:
+            continue  # 该站的图还没入库，另有测试盯着
+        match = Match(
+            match_id="x", tour=Tour.ATP,
+            # city/country 留空，复刻真实数据的样子
+            tournament=Tournament(name=name, tour=Tour.ATP),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32",
+            discipline="Men's Singles", start_utc=None, sets=[], winner=None,
+        )
+        got = venue_asset_for_match(match)
+        if got is None or got.slug != expected:
+            misses.append(f"{name} -> {got.slug if got else None}（应为 {expected}）")
+    assert not misses, "别名没命中：\n" + "\n".join(misses)
+
+
+def test_fetch_tool_registers_every_credited_asset():
+    """credits.json 里的每个文件都要在 fetch_venues.VENUES 里登记。
+
+    fetch_set() 会按 VENUES 重建 credits.json，没登记的条目每跑一次 CI 就被
+    冲掉一次——umag 的图正在 manifest 里生效，credits 一丢它就整条消失。
+    """
+    import importlib.util
+    import json
+    from pathlib import Path
+
+    from tennislive.render.venue_assets import CREDITS
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "fetch_venues.py"
+    spec = importlib.util.spec_from_file_location("fetch_venues", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    registered = {name for name, _pinned, _term in module.VENUES}
+    credited = set(json.loads(CREDITS.read_text(encoding="utf-8")))
+    orphans = sorted(credited - registered)
+    assert not orphans, f"这些图有 credits 但没在 VENUES 里登记，会被冲掉：{orphans}"
+
+
+def _fetch_tool():
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "fetch_venues.py"
+    spec = importlib.util.spec_from_file_location("fetch_venues", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_credits_point_at_the_file_currently_pinned_in_venues():
+    """credits 记的 Commons 文件名，必须就是 VENUES 里钉的那一张。
+
+    换图时最容易漏这一步：旧 credits 字段是齐全的，只是指向上一张图，
+    于是不会被 load_venue_assets() 丢弃，而是照常生效并印错署名和许可。
+    缺出处只是不显示，错出处是把别人的作品记到另一个人名下。
+    加拿大站和法网这次换图就各踩了一次。
+    """
+    import json
+
+    from tennislive.render.venue_assets import ASSETS, CREDITS
+
+    module = _fetch_tool()
+    credits = json.loads(CREDITS.read_text(encoding="utf-8"))
+
+    mismatched = []
+    for out_name, pinned_title, _term in module.VENUES:
+        if not pinned_title or not (ASSETS / out_name).is_file():
+            continue
+        recorded = (credits.get(out_name) or {}).get("title")
+        if not recorded:
+            continue
+        if module._norm_title(recorded) != module._norm_title(pinned_title):
+            mismatched.append(f"{out_name}: credits={recorded} 但 VENUES 钉的是 {pinned_title}")
+    assert not mismatched, "credits 指向了别的文件：\n" + "\n".join(mismatched)
+
+
+def test_backfill_credits_rewrites_a_stale_entry_not_just_a_missing_one():
+    """backfill 要能改掉过期的出处，不只是补空的。
+
+    原来只判断"字段是否齐全"，换图之后旧记录字段齐全、内容全错，直接跳过。
+    """
+    import json
+
+    module = _fetch_tool()
+    calls = []
+
+    def fake_imageinfo(titles):
+        calls.append(titles[0])
+        return [{
+            "title": titles[0], "license": "CC BY-SA 4.0",
+            "artist": "New Author", "page": "https://commons.wikimedia.org/wiki/x",
+        }]
+
+    module.imageinfo = fake_imageinfo
+
+    import tempfile
+    from pathlib import Path
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "a.jpg").write_bytes(b"x")
+        (out / "credits.json").write_text(json.dumps({
+            "a.jpg": {
+                "title": "File:Old One.jpg", "license": "CC BY 3.0",
+                "artist": "Old Author", "page": "https://example.invalid/old",
+            }
+        }), encoding="utf-8")
+
+        failed = module.backfill_credits(out, [("a.jpg", "File:New One.jpg", None)])
+
+        assert not failed, failed
+        assert calls == ["File:New One.jpg"]
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written["a.jpg"]["title"] == "File:New One.jpg"
+        assert written["a.jpg"]["artist"] == "New Author"
+
+
+def test_backfill_credits_leaves_a_matching_entry_alone():
+    """名字对得上就别动它——每跑一次都重查 API 是白白撞限流。"""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    calls = []
+
+    def fake_imageinfo(titles):
+        calls.append(titles[0])
+        return []
+
+    module.imageinfo = fake_imageinfo
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "a.jpg").write_bytes(b"x")
+        entry = {
+            "title": "File:Same_One.jpg", "license": "CC BY-SA 4.0",
+            "artist": "A", "page": "https://commons.wikimedia.org/wiki/x",
+        }
+        (out / "credits.json").write_text(json.dumps({"a.jpg": entry}), encoding="utf-8")
+
+        # 下划线 / 空格差异不算换图
+        failed = module.backfill_credits(out, [("a.jpg", "File:Same One.jpg", None)])
+
+        assert not failed and calls == []
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written["a.jpg"] == entry
+
+
+def test_official_media_credits_survive_a_fetch_rebuild():
+    """官方媒体来源的图，credits 不能被 fetch_set() 冲掉。
+
+    fetch_set() 每次都从零重建 credits.json，只留 VENUES 里认得的条目。
+    埃斯托里尔的中央球场来自赛事官网、不在 Commons，如果只把文件放进
+    assets/ 而不在 OFFICIAL_VENUES 登记，跑一次 CI 出处就没了——和 umag
+    当初丢 credits 是同一个坑。
+    """
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    assert module.OFFICIAL_VENUES, "OFFICIAL_VENUES 空了？"
+    name, credit = next(iter(module.OFFICIAL_VENUES.items()))
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / name).write_bytes(b"x")
+        # 盘上那份出处是错的，重建时要以 OFFICIAL_VENUES 为准
+        (out / "credits.json").write_text(
+            json.dumps({name: {"title": "旧的", "license": "?",
+                               "artist": "?", "page": "?"}}), encoding="utf-8")
+
+        failed = module.fetch_set(out, [(name, None, None)], min_width=100)
+
+        assert not failed, failed
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert written[name] == credit
+
+
+def test_official_media_records_source_url_and_marks_licence_unverified():
+    """授权不做检索闸门，但来源必须留痕。
+
+    CLAUDE.md：许可名、作者、来源 URL 全程记录（缺失记 unknown / unverified），
+    发布前的权利判断由人工检验环节负责。所以官方媒体这一档不许把 license
+    编成一个看起来已核实的名字。
+    """
+    module = _fetch_tool()
+    for name, credit in module.OFFICIAL_VENUES.items():
+        assert credit["page"].startswith("http"), f"{name} 没记来源 URL"
+        assert credit["artist"], f"{name} 没记来源方"
+        assert "unverified" in credit["license"], (
+            f"{name} 的 license 写成了 {credit['license']!r}——官方媒体这一档"
+            "没有经过权利核实，不能写成已核实的样子"
+        )
+
+
+def test_backfill_drops_credits_for_images_no_longer_on_disk():
+    """图删掉之后，它的 credits 也要清掉。
+
+    换站名（estoril-coast → estoril-centre-court）后旧条目会指着一个不存在的
+    文件。它不印错什么，但会破坏"每个 credits 条目都在 VENUES 里登记"这条
+    不变量，下次真有图漏登记时反而看不出来。
+    """
+    import json
+    import tempfile
+    from pathlib import Path
+
+    module = _fetch_tool()
+    module.imageinfo = lambda titles: []
+
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "here.jpg").write_bytes(b"x")
+        entry = {"title": "File:Here.jpg", "license": "CC0", "artist": "A",
+                 "page": "https://commons.wikimedia.org/wiki/File:Here.jpg"}
+        (out / "credits.json").write_text(json.dumps({
+            "here.jpg": entry,
+            "gone.jpg": {"title": "File:Gone.jpg", "license": "CC0",
+                         "artist": "B", "page": "https://example.invalid/gone"},
+        }), encoding="utf-8")
+
+        module.backfill_credits(out, [("here.jpg", "File:Here.jpg", None)])
+
+        written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
+        assert set(written) == {"here.jpg"}
+        assert written["here.jpg"] == entry

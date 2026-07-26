@@ -15,6 +15,7 @@ from __future__ import annotations
 import base64
 import html
 import logging
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -44,6 +45,7 @@ from .rating import (
     tonight_event_focus,
     top_results,
 )
+from .textfit import _short, _short_complete
 from .story import (
     chinese_side_won,
     is_chinese_player,
@@ -115,6 +117,15 @@ def _font_css() -> str:
                 f"@font-face{{font-family:'{family}';font-weight:{weight};"
                 f"src:url(data:font/ttf;base64,{b}) format('truetype');}}"
             )
+    # 赛果速递 / 焦点复盘的比分数字（见 CSS 里"柔和内容色"那一段）。
+    # woff2、拉丁子集，两个字重加起来 37KB。
+    for weight in (500, 600):
+        b = _b64(ASSETS / "fonts" / f"Montserrat-latin-{weight}.woff2")
+        if b:
+            css.append(
+                f"@font-face{{font-family:'TL Numeral';font-weight:{weight};"
+                f"src:url(data:font/woff2;base64,{b}) format('woff2');}}"
+            )
     display_font = _b64(ASSETS / "fonts" / "SmileySans-Oblique.woff2")
     if display_font:
         css.append(
@@ -164,19 +175,44 @@ def _headline_display_width(text: str) -> float:
     return width
 
 
-def _balanced_headline_lines(headline: str) -> list[str]:
-    """Prefer a balanced break after Chinese punctuation on long cover titles."""
+# 封面标题一行能放多宽（单位与 _headline_display_width 相同，1 = 一个汉字）。
+# 实测出来的：daily 主题下 .cover .focus 的框宽 550px，10.0 正好一行、10.55 就折。
+# 原来写死 12，是按老页边距（64px）调的；改版把 daily 的页边距放宽到 72px，
+# 框窄了，12 就再也不成立——于是 11.55 的标题被判为"放得下"、直接交给浏览器，
+# 而浏览器在汉字之间任意断行，"爆冷：阿利斯掀翻布勃利克"就裂成了
+# "爆冷：阿利斯掀 / 翻布勃利克"。改动页边距时这个数要跟着重新量。
+_HEADLINE_ONE_LINE_WIDTH = 10.0
+
+
+def _balanced_headline_lines(headline: str, protect: tuple[str, ...] = ()) -> list[str]:
+    """Prefer a balanced break after Chinese punctuation on long cover titles.
+
+    ``protect`` 里的球员译名前面也算一个可断点。只认标点的话，"爆冷：塔格尔
+    掀翻克雷吉茨科娃"整句只有一个"："可断，左边才 3 个字、过不了均衡门槛，
+    于是整句交给浏览器换行——它会在任意两个汉字之间断开，姓氏就劈成了
+    "…掀翻克雷 / 吉茨科娃"（7.26 封面）。名字前面断一刀，两行都完整。
+    """
     explicit = [line.strip() for line in headline.splitlines() if line.strip()]
     if len(explicit) > 1:
         return explicit
     text = explicit[0] if explicit else ""
     total = _headline_display_width(text)
-    if total < 12:
+    if total <= _HEADLINE_ONE_LINE_WIDTH:
         return [text]
-    candidates: list[tuple[float, int]] = []
-    for index, char in enumerate(text[:-1], start=1):
-        if char not in _HEADLINE_BREAK_AFTER:
+    breakpoints = {
+        index
+        for index, char in enumerate(text[:-1], start=1)
+        if char in _HEADLINE_BREAK_AFTER
+    }
+    for name in protect:
+        if len(name) < 2:
             continue
+        start = text.find(name)
+        while start > 0:
+            breakpoints.add(start)
+            start = text.find(name, start + 1)
+    candidates: list[tuple[float, int]] = []
+    for index in breakpoints:
         left = _headline_display_width(text[:index])
         right = _headline_display_width(text[index:])
         if min(left, right) < 4:
@@ -188,11 +224,24 @@ def _balanced_headline_lines(headline: str) -> list[str]:
     return [text[:split_at].strip(), text[split_at:].strip()]
 
 
-def _headline_line_html(line: str) -> str:
-    """Keep punctuation with its neighbor and keep the final two glyphs together."""
+def _headline_line_html(line: str, protect: tuple[str, ...] = ()) -> str:
+    """Keep punctuation with its neighbor and keep the final two glyphs together.
+
+    ``protect`` 是不许从中间断开的整词（球员译名）。中文没有词间空格，浏览器
+    可以在任意两个汉字之间换行，于是长译名会被劈开：7.26 的封面印着
+    "爆冷：塔格尔掀翻克雷 / 吉茨科娃"——姓氏断成两截。把整个名字包成一个
+    nowrap 单元，换行就只会发生在名字前后。
+    """
     units: list[str] = []
     index = 0
+    # 长的先匹配，避免"克雷"抢在"克雷吉茨科娃"前面命中
+    names = tuple(sorted({n for n in protect if len(n) > 1}, key=len, reverse=True))
     while index < len(line):
+        name = next((n for n in names if line.startswith(n, index)), None)
+        if name is not None:
+            units.append(name)
+            index += len(name)
+            continue
         char = line[index]
         if char in _HEADLINE_CLOSING and units:
             units[-1] += char
@@ -217,11 +266,22 @@ def _headline_line_html(line: str) -> str:
     return "".join(rendered)
 
 
-def _cover_headline_html(headline: str) -> str:
+def _cover_headline_html(headline: str, protect: tuple[str, ...] = ()) -> str:
     """Render a safe, punctuation-aware cover headline without orphan glyphs."""
     return "".join(
-        f'<span class="headline-line">{_headline_line_html(line)}</span>'
-        for line in _balanced_headline_lines(headline)
+        f'<span class="headline-line">{_headline_line_html(line, protect)}</span>'
+        for line in _balanced_headline_lines(headline, protect)
+    )
+
+
+def _headline_protected_names(match) -> tuple[str, ...]:
+    """标题里出现的球员译名——它们不许被换行从中间劈开。"""
+    if match is None:
+        return ()
+    return tuple(
+        player_zh(player.name)
+        for player in (*match.home, *match.away)
+        if player is not None and player.name
     )
 
 
@@ -288,6 +348,18 @@ html.light {
   --reason:#4D6157;
   --cardshadow:0 10px 26px rgba(90,80,50,.16);
   --pagetext:#1E3328;
+}
+/* ---------- daily：日报卡专用（封面/赛果/焦点/今晚） ----------
+   主题色一个不动，和「网球有故事」知识贴/科普片完全一致：
+   --neon #D6FF00、--coral #FF7657、--sky #76D7EA、--gold #D5B44D、--ivory。
+   只把近黑的底色提淡：#061D17→#0B3B2C 变成 #1E4234→#2A6450。
+   这解决的是"视觉过重"，不是换主题——换成中性沙底试过，方向错了。
+
+   面板跟着底色一起提亮并降低不透明度：底色变亮而面板不动的话，深色面板
+   压在亮底上反而更像"一块一块"的，比原来还重。 */
+html.daily {
+  --ground0:#1E4234; --ground1:#2A6450;
+  --panel:rgba(22,58,46,.70); --panel-strong:rgba(26,68,54,.84);
 }
 body {
   width:@W@px; height:@H@px; overflow:hidden; position:relative;
@@ -378,6 +450,18 @@ h1 { font-family:'TL Display SC','TL Sans SC',sans-serif; font-size:82px; font-w
   color:#082018; font-family:'Barlow Condensed'; font-size:19px; font-weight:700;
   line-height:1; letter-spacing:.04em; }
 html.light .tour-level { color:#fff; }
+/* 官方 logo 版：不要底色，logo 与级别数字同色、同基线 */
+.tour-level.has-logo { display:inline-flex; align-items:center; gap:7px;
+  padding:0; border-radius:0; background:none; color:var(--section-accent); }
+.tour-level.has-logo svg { height:19px; width:auto; display:block; }
+.tour-level.has-logo i { font-style:normal; font-family:'Barlow Condensed';
+  font-size:21px; font-weight:700; line-height:1; letter-spacing:.04em; }
+.hero .tour-level.has-logo svg { height:22px; }
+.hero .tour-level.has-logo i { font-size:24px; }
+html.light .tour-level.has-logo { color:var(--section-accent); }
+.event-meta .tour-level.has-logo { color:var(--section-accent); }
+.event-meta .tour-level.has-logo svg { height:22px; }
+.event-meta .tour-level.has-logo i { font-size:24px; }
 .tour-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .htime { font-family:'Barlow Condensed'; font-weight:600; font-size:30px; color:var(--gold); letter-spacing:1px; }
 .rating { font-size:20px; font-weight:700; color:#082018; background:var(--section-accent);
@@ -429,6 +513,9 @@ html.light .chip-green { color:#fff; }
   margin-left:78px; /* 种子槽26+间距8+国旗36+间距8：与中文名左对齐 */ }
 .hero .en { font-size:23px; margin-top:4px; margin-left:96px; }
 .note { font-style:normal; font-size:22px; color:var(--panel-muted); }
+/* 退赛标记：细线描边，和一屏上其他徽章同一套语言；不引入新色值 */
+.note.retired { margin-left:10px; padding:1px 8px; border-radius:4px; font-size:19px;
+  letter-spacing:1px; box-shadow:inset 0 0 0 1px currentColor; }
 /* 每盘独立强调：赢下该盘的一方数字深绿加粗，输的一方浅灰 */
 .set { font-family:'Barlow Condensed'; font-size:42px;
   text-align:center; font-variant-numeric:tabular-nums; line-height:1; }
@@ -1002,17 +1089,189 @@ html.light .cta-btn { color:#F2F7EF; }
 .rrow .pts { font-family:'Barlow Condensed'; font-weight:500; font-size:24px; color:var(--panel-muted); line-height:1; }
 .rrow .mv { font-family:'Barlow Condensed'; font-weight:600; font-size:26px; width:72px; text-align:right; line-height:1; }
 .mv.up { color:var(--score-win); } .mv.down { color:var(--flash); } .mv.flat { color:var(--panel-muted); }
+
+/* ---------- daily 的布局重做 ----------
+   只在 html.daily 下生效，知识贴/科普片仍走 :root，一个像素都不动。
+
+   这一段**只改几何**：留白、间距、行高、照片遮罩浓度。
+   主题色一个都不碰——不改 --divider/--fade/--panel-muted，不把实心徽章
+   改成描边，不把胜方整列的荧光黄绿数字改成白字，不动 .china-marker 的金色。
+   （上一版这些全改了，等于换了主题。）
+   token 块里也只覆盖 --ground0/--ground1/--panel/--panel-strong 四个面，
+   因为"把背景搞淡"要的就是这四个。 */
+
+/* 顶部彩虹条：日报卡去掉（知识贴保留自己的那条） */
+html.daily body::before, html.daily .cover::after { display:none; }
+
+/* 大留白：页边距放宽，栏目头和正文之间给出呼吸 */
+html.daily .poster { padding:44px 72px 26px; }
+html.daily .poster:not(.cover) .footer { left:72px; right:72px; }
+html.daily .poster:not(.cover)>.save-badge { right:72px; top:132px; }
+html.daily .titleband { margin:24px 0 20px; }
+html.daily .event { margin:-2px 0 26px; }
+
+/* 卡与卡之间拉开，行高放宽——原来 6 行技术统计挤在一起，没有主次 */
+html.daily .card { padding:16px 34px 18px; margin-bottom:14px; }
+html.daily .card.hero { padding:22px 36px 24px; }
+html.daily .compare-head { margin-top:26px; }
+html.daily .compare-row { height:66px; }
+html.daily .side { height:70px; }
+html.daily .hero .side { height:104px; }
+html.daily .verdict { margin-top:20px; padding:18px 24px; }
+html.daily .insight-hero { padding:30px 32px 32px; }
+html.daily .fact { min-height:158px; }
+
+/* 封面：标题区放宽上移，底部一栏与页脚拉开，让照片中段空出来 */
+html.daily .cover-copy { width:640px; margin-top:30px; padding:14px 20px 20px; }
+html.daily .cover .focus { margin-top:14px; }
+html.daily .cover-lower { margin-bottom:26px; padding:22px 24px; }
+html.daily .cover-secondary { margin-bottom:20px; }
+html.daily .cover-highlights { padding:20px 0 6px; }
+
+/* 今晚焦点：地标照片是这一页的主角，得给它一条固定的展示带。
+   原来 .event-spacer 按场次数写死高度（count-1 230px / count-2 170px …），
+   两场时卡片停在中上部、下面 500 多 px 全是照片——照片不是构图的一部分，
+   只是"剩下的地方"，看着像没排完；五场时反过来，最后一张卡被裁掉半截
+   （实测溢出 176px）。
+   改成弹性 spacer：卡片一律沉底，照片稳定占住中段，场次多时 spacer 自己
+   压扁，不用再为每个 count 写一条规则。遮罩跟着重做——中段最通透（地标
+   要看得见），上下两头压暗（页眉和卡片要读得出来），与照片本身的明暗无关，
+   换任何一张场馆图都成立。 */
+html.daily .poster.tonight-page::before {
+  opacity:1;
+  background:
+    linear-gradient(180deg,
+      rgba(2,16,20,.20) 0%,
+      rgba(2,16,20,.14) 26%,
+      rgba(2,20,18,.30) 46%,
+      rgba(2,20,18,.72) 66%,
+      rgba(2,20,18,.90) 100%),
+    var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
+}
+html.daily .poster.tonight-page::after { height:340px; }
+/* 页脚是 position:absolute 贴在 bottom 上的，不占流内高度；卡片一沉底就
+   直接压到它身上，所以要把这条带子从内容区里让出来。 */
+html.daily .poster.tonight-page { padding-bottom:76px; }
+html.daily .tonight-page .event-spacer,
+html.daily .tonight-page.count-1 .event-spacer,
+html.daily .tonight-page.count-2 .event-spacer,
+html.daily .tonight-page.count-3 .event-spacer { flex:1 1 0; height:auto; min-height:0; }
+html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
+/* 五场是这一页的上限，弹性 spacer 已经压到 0 仍差一点，把卡距再收一档 */
+html.daily .tonight-page.count-5 .pick { margin-bottom:9px; padding:10px 26px 12px; }
+
+/* ---------- daily 的"一屏只点亮比分与决胜数据" ----------
+   这一段是**唯一**准许改颜色的地方，而且只在技术统计表内部生效。
+   原来胜方整列七个数字全是荧光黄绿，一屏下来到处在亮，比分反而不突出。
+   现在只有决胜那一行（_key_stat_label 选出，通常是破发兑现）保持荧光黄绿，
+   其余胜方数字回到 --ivory。用的都是既有主题色，没有引入新色值：
+   比分、徽章、栏目色一律不动。 */
+html.daily .compare-row:not(.key) .winner { color:var(--ivory); }
+html.daily .compare-row.key { background:var(--panel-soft); }
+
+/* ---------- daily 的描边徽章 ----------
+   细线代替色块高亮。一屏上原本有 6 处实心色块——今日头条 / 中国军团
+   （--neon）、爆冷（--flash）、重点·必看·悬念·有看头（--section-accent）、
+   硬地（--section-accent）、看点（--coral）——它们和比分抢注意力。
+   这里只换"填充 vs 描边"：原来是深字压在彩块上，改成彩色字 + 1px 同色
+   描边。用的仍是同一支主题色，没有引入任何新色值。 */
+html.daily .chip { background:transparent; box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .chip-green { background:transparent; color:var(--neon); }
+html.daily .chip-red { background:transparent; color:var(--flash); }
+html.daily .chip-gold { background:transparent; color:var(--gold); }
+html.daily .rating { background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .rating .ui-icon { filter:none; opacity:.85; }
+html.daily .event-meta b { background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .pick .reason b { background:transparent; color:var(--coral);
+  box-shadow:inset 0 0 0 1px currentColor; }
+
+/* ---------- daily 的柔和内容色（只作用于赛果速递与焦点复盘） ----------
+   这两页最跳的是荧光黄绿 #D6FF00：栏目大标题、每一位胜者的比分数字、决胜
+   那一行的高亮，全是同一支高饱和色，一屏下来到处在喊。改成温网那一路的
+   收敛配色——深绿底 + 象牙白数字 + 唯一一支金色强调。
+
+   底色、面板、页面主题都不动，动的是这两页"内容"用哪支色：
+   - 比分数字回到 --ivory，靠字重和胜方底纹区分，不靠颜色喊；
+   - 强调色统一收敛到 --gold（焦点复盘本来就是金，赛果速递从荧光黄绿跟过来），
+     一页只留一支强调色；
+   - 分隔线与面板描边的荧光黄绿底改成中性象牙白，去掉那层黄绿雾；
+   - 决胜那一行仍然要点亮，只是从荧光黄绿换成金——试过完全中性的版本
+     （更"苹果"），那一行就和其余行分不出来了，"一屏只点亮决胜数据"这条
+     设计意图直接失效。
+
+   --soft-alert 是这里唯一的新色值：爆冷标记需要一支暖色，而 --flash #F15A3A
+   在收敛下来的这两页上是全屏最扎眼的东西。取暗酒红，同一个色相往下压。
+   作用域限定在这两页，知识贴与其余卡片不受影响。 */
+html.daily .results-page, html.daily .focus-page {
+  --section-accent:var(--gold);
+  --score-win:var(--ivory);
+  --divider:rgba(247,243,232,.14);
+  --panel-border:rgba(247,243,232,.14);
+  --panel-soft:rgba(213,180,77,.13);
+  --soft-alert:#C0705C;
+}
+html.daily .results-page .chip-red, html.daily .focus-page .chip-red {
+  color:var(--soft-alert); }
+html.daily .results-page .chip-green, html.daily .focus-page .chip-green {
+  color:var(--gold); }
+html.daily .focus-page .compare-row.key .winner { color:var(--gold); }
+
+/* 金只出现在栏目大标题上。收敛成一支强调色之后，它反而被用得太多——大标题、
+   四个巡回赛 logo、徽章描边、种子号全是满强度的金，整页数下来比原来的荧光
+   黄绿还密。行内这些配件本来就是次要信息，退成中性。 */
+html.daily .results-page .tour-level, html.daily .focus-page .tour-level,
+html.daily .results-page .tour, html.daily .focus-page .tour {
+  color:var(--panel-muted); }
+html.daily .results-page .tour-level svg, html.daily .focus-page .tour-level svg {
+  opacity:.55; }
+html.daily .results-page .seed, html.daily .focus-page .seed { color:var(--fade); }
+html.daily .results-page .chip-gold, html.daily .focus-page .chip-gold {
+  color:var(--panel-muted); }
+
+/* 比分与技术统计的数字换成几何无衬线。Barlow Condensed 是紧缩的运动感字型，
+   和这两页收敛后的调子不搭。
+   温网的品牌字是 Gotham（Tobias Frere-Jones / Hoefler&Co）——商用授权、不能
+   内嵌，而且它是**几何无衬线**。所以往那个方向靠只能用开源近似字：Montserrat
+   是公认最接近的一支，同样的几何骨架、大字怀、平顶的 7。
+   两个字重保住胜负两行的轻重对比——中间试过一版 Newsreader 衬线，单看好看，
+   但方向错了，温网不是衬线。 */
+html.daily .results-page .set, html.daily .focus-page .set,
+html.daily .focus-page .compare-row span {
+  font-family:'TL Numeral',sans-serif; font-size:42px; letter-spacing:-.5px; }
+html.daily .results-page .set.sw, html.daily .focus-page .set.sw { font-weight:600; }
+html.daily .results-page .set.sl, html.daily .focus-page .set.sl { font-weight:500; }
+html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-size:58px; }
+html.daily .focus-page .compare-row span { font-size:34px; font-weight:500; }
 """
 
 
+def daily_card_theme() -> str:
+    """日报卡的配色，与共享的 TENNISLIVE_THEME 解耦。
+
+    TENNISLIVE_THEME 是 daily / knowledge-adhoc / explainer / flash /
+    news-radar 五个 workflow 共用的一个变量，且都显式写成 'dark'。日报卡
+    改版不能顺手把「网球有故事」知识贴也一起改了——日报卡只把底色提淡两档，
+    知识贴/科普片得留在原来的近黑深绿上。所以日报卡走自己的开关，默认
+    daily；真要回滚设 TENNISLIVE_CARD_PALETTE=dark 即可。
+    """
+    return os.environ.get("TENNISLIVE_CARD_PALETTE", "daily")
+
+
 def _shell(body: str, theme: str) -> str:
+    # theme 有三档：dark（:root，知识贴/科普片在用）、light（旧的奶油风）、
+    # daily（日报卡：同一套主题色，底色提淡两档 + 重做布局）。
+    # daily 不是 light 的别名——它继承 :root 再覆盖底色，且只有它去掉彩虹条。
     light = "true" if theme == "light" else "false"
+    daily = "true" if theme == "daily" else "false"
     css = _CSS.replace("@W@", str(W)).replace("@H@", str(H))
     inner_bg = _asset_image_uri(ASSETS / "covers" / "tennis-night-court.png") or ""
     return (
         f'<!DOCTYPE html><html><head><meta charset="utf-8"><style>{_font_css()}\n{css}'
         f"</style></head><body style=\"--inner-bg:url('{inner_bg}')\">{_COURT_SVG}{body}"
-        f"<script>document.documentElement.classList.toggle('light', {light});</script>"
+        f"<script>document.documentElement.classList.toggle('light', {light});"
+        f"document.documentElement.classList.toggle('daily', {daily});</script>"
         "</body></html>"
     )
 
@@ -1069,6 +1328,22 @@ def _names_html(players) -> tuple[str, str]:
     return '<i class="slash">/</i>'.join(zh_parts), " / ".join(en_parts)
 
 
+def _retirement_note(m: Match, side: int) -> str:
+    """退赛/不战而胜时，给**退出的那一方**的比分行加个标记。
+
+    网球记分惯例是把 "ret." 写在比分后面，标记的是"这串比分没打完"。谁退的
+    就标在谁那一行，读者一眼能对上人。
+    """
+    from ..models import MatchStatus
+
+    if m.status not in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
+    if m.winner not in (0, 1) or side == m.winner:
+        return ""
+    label = "退赛" if m.status is MatchStatus.RETIRED else "退出"
+    return f'<i class="note retired">{label}</i>'
+
+
 def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     players = m.home if side == 0 else m.away
     won = m.winner == side
@@ -1101,6 +1376,14 @@ def _side_html(m: Match, side: int, n_sets: int, with_sets: bool = True) -> str:
     note = ""
     if with_sets and not m.sets and side == (m.winner or 0) and m.note:
         note = f'<i class="note">{html.escape(str(m.note)[:12])}</i>'
+    elif with_sets:
+        # 退赛的比分不能就这么摆着：6-1 2-0 看起来像一场没打完的比分，读者无从
+        # 知道那个 2-0 是被中断的一盘（7.26 赛果卡上的科尔帕奇/谢里夫）。按网球
+        # 记分惯例，标记跟着**退出的那一方**走，而且贴在比分行上——它限定的是
+        # 这串比分，不是这场比赛的性质，所以不进页眉的徽章区。
+        # 不战而胜连比分都没有，两行光秃秃更需要这个标记（上面那支只在数据源
+        # 自带 m.note 时才出声，缺了就什么都不显示）。
+        note = _retirement_note(m, side)
     cls = "side"
     cls += " won" if (won and with_sets) else (" lost" if (with_sets and m.winner is not None) else "")
     if not with_sets or not n_sets:
@@ -1134,8 +1417,8 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     if show_tournament:
         g = group_by_tournament([m])[0]
         tour_txt = (
-            f'<b class="tour-level">{html.escape(g.compact_level)}</b>'
-            f'<span class="tour-name">{html.escape(g.name_zh)}</span>'
+            _tour_badge(g)
+            + f'<span class="tour-name">{html.escape(g.name_zh)}</span>'
         )
     chip_html = ""
     if hero:
@@ -1162,20 +1445,29 @@ def _result_card(m: Match, *, hero: bool, show_tournament: bool, tag_upset: bool
     )
 
 
+# 今晚焦点卡"看点"行的字数预算。同页比赛少时是单行 nowrap，三场及以上
+# 才放开成两行（见 .pick .reason 与 .tonight-page.count-3 .pick .reason）。
+REASON_LIMIT_ONE_LINE = 36
+REASON_LIMIT_TWO_LINES = 74
+
+
 def _sched_card(
     m: Match,
     *,
     with_reason: bool = False,
     show_tournament: bool = True,
+    reason_limit: int = REASON_LIMIT_ONE_LINE,
+    used_angles: set[str] | None = None,
 ) -> str:
-    """赛程卡：时间、对阵，以及可核验的推荐理由."""
+    """赛程卡：时间、对阵，以及可核验的推荐理由.
+
+    ``used_angles`` 由调用方跨卡片传进来并就地累加：赛事故事那一档是赛事级
+    的，同一页每张卡都会拿到同一句话（五场的今晚焦点页上重复过三遍）。
+    """
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
     tour_txt = html.escape(g.name_zh) if show_tournament else ""
-    level_badge = html.escape(g.compact_level)
-    level_html = (
-        f'<b class="tour-level">{level_badge}</b>' if show_tournament else ""
-    )
+    level_html = _tour_badge(g) if show_tournament else ""
     t = fmt_schedule_time(m)
     right = f'<span class="htime">{t}</span>'
     reason = ""
@@ -1192,9 +1484,16 @@ def _sched_card(
             f'<span class="rating">{_icon_html(label_icon)}'
             f'<span>{html.escape(label)}</span></span>' + right
         )
+        # 看点这一行只有一到两行的位置，交给 CSS 的 line-clamp 去截会从词
+        # 中间切开、还会留下半个引号（"…后来她把'让萨巴伦卡这个姓被记…"）。
+        # 先在服务端裁到一句说得完的话，和小红书正文用同一套规则。
+        angle = preview_angle(m, used=used_angles or ())
+        if used_angles is not None:
+            used_angles.add(angle)
+        fitted = _short_complete(angle, reason_limit) or _short(angle, reason_limit)
         reason = (
             f'<div class="reason"><b>{_icon_html("eye")}<span>看点</span></b>'
-            f'{html.escape(preview_angle(m))}</div>'
+            f'{html.escape(fitted)}</div>'
         )
         card_class += " pick"
     chinese = (
@@ -1238,9 +1537,56 @@ _CARD_STAT_PRIORITY = (
 _CARD_STAT_LIMIT = 4
 
 
+@lru_cache(maxsize=4)
+def _tour_logo_svg(tour: str) -> str:
+    """ATP / WTA 官方 logo，内联返回（取不到就回空串）。
+
+    必须内联而不是 <img>：<img> 里的 SVG 是独立文档，拿不到外面的
+    currentColor，深绿底上就会是原本的深蓝/深紫，等于看不见。
+    见 tools/fetch_tour_logos.py。
+    """
+    path = ASSETS / "logo" / "tours" / f"{tour.lower()}.svg"
+    try:
+        return path.read_text(encoding="utf-8").strip()
+    except OSError:
+        logger.warning("缺少巡回赛 logo：%s，退回纯文字标记", path.name)
+        return ""
+
+
+def _tour_badge(group) -> str:
+    """巡回赛标记：官方 logo + 级别文字，没有底色。
+
+    原来是"WTA1000"整个塞进一个实心色块。logo 只表示巡回赛，级别
+    （1000/500/250、大满贯、年终总决赛）必须留成文字，否则这条信息就没了。
+    logo 文件缺失时整段退回原来的纯文字，不会开天窗。
+    """
+    level = group.compact_level
+    tour = group.tour.value
+    logo = _tour_logo_svg(tour)
+    if not logo:
+        return f'<b class="tour-level">{html.escape(level)}</b>'
+    suffix = level[len(tour):] if level.startswith(tour) else level
+    text = f"<i>{html.escape(suffix)}</i>" if suffix else ""
+    return f'<b class="tour-level has-logo">{logo}{text}</b>'
+
+
 def _stat_rank(label: str) -> int:
     priority = {name: index for index, name in enumerate(_CARD_STAT_PRIORITY)}
     return priority.get(label, len(_CARD_STAT_PRIORITY))
+
+
+# 一屏只点亮"决胜数据"这一行。破发兑现是网球里最直接的胜负手，有就用它；
+# 没有（比如只拿到发球数据）才退到优先级最高的那一行。返回 None 表示这组
+# 数据里没有值得单独点亮的——那就整屏只有比分是亮的。
+_KEY_STAT_PREFERRED = "破发兑现"
+
+
+def _key_stat_label(labels: list[str] | tuple[str, ...]) -> str | None:
+    if not labels:
+        return None
+    if _KEY_STAT_PREFERRED in labels:
+        return _KEY_STAT_PREFERRED
+    return min(labels, key=lambda label: (_stat_rank(label), list(labels).index(label)))
 
 
 def card_stat_rows(
@@ -1410,7 +1756,8 @@ def cover_body(
         + _masthead(date_label)
         + '<div class="cover-copy">'
         + '<div class="edition">MATCH POINT · 今日头条</div>'
-        + f'<div class="focus">{_cover_headline_html(headline)}</div>'
+        + f'<div class="focus">'
+          f'{_cover_headline_html(headline, _headline_protected_names(lead))}</div>'
         + '</div><div class="cover-lower">'
         + secondary_html
         + highlights_html
@@ -1518,6 +1865,7 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     # venue credit or footer.
     show_courts = len(courts) > 1 and len(matches) <= 4
     last_court = None
+    used_angles: set[str] = set()
     for match in sorted(
         matches,
         key=lambda m: (
@@ -1536,6 +1884,12 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
                 match,
                 with_reason=True,
                 show_tournament=False,
+                # 三场及以上时 .reason 放开成两行，预算跟着放宽
+                reason_limit=(
+                    REASON_LIMIT_TWO_LINES if len(matches) >= 3
+                    else REASON_LIMIT_ONE_LINE
+                ),
+                used_angles=used_angles,
             )
         )
 
@@ -1556,9 +1910,16 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     level_label = " / ".join(levels)
     surface = first.surface or tournament_surface(first.name)
     surface_label = surface_zh(surface) or "场地待核"
+    # 巡回赛标记用官方 logo（无底色）；一页混着多个级别时退回纯文字，
+    # 因为那时 logo 配哪个级别都不对。
+    level_html = (
+        _tour_badge(event_groups[0])
+        if len(levels) == 1
+        else f'<b class="event-level">{html.escape(level_label)}</b>'
+    )
     meta = "".join(
         (
-            f'<b class="event-level">{html.escape(level_label)}</b>',
+            level_html,
             f'<b class="event-surface">{html.escape(surface_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
             '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
@@ -1614,12 +1975,14 @@ def media_body(m: Match, date_label: str, today) -> str:
 
 def focus_body(m: Match, date_label: str) -> str:
     comparison = focus_comparison(m)
+    key_label = _key_stat_label([label for label, _l, _r in comparison.rows])
     rows = []
     for label, left, right in comparison.rows:
         left_cls = "winner" if comparison.left_won else ""
         right_cls = "" if comparison.left_won else "winner"
+        key_cls = " key" if label == key_label else ""
         rows.append(
-            f'<div class="compare-row"><b>{html.escape(label)}</b>'
+            f'<div class="compare-row{key_cls}"><b>{html.escape(label)}</b>'
             f'<span class="{left_cls}">{html.escape(left)}</span>'
             f'<span class="{right_cls}">{html.escape(right)}</span></div>'
         )
@@ -1649,9 +2012,21 @@ def _tag_chip_class(tag: str) -> str:
     return "chip-gold"
 
 
+# 这一页的标题必须跟着 context 的来源走。原来固定印"把今天放回生涯里"，
+# 但那句是为球员生涯档案写的（那条 summary 里字面就有"把今天放回整段生涯
+# 里看"）；套到"我们三天前写过他"的账号续写上就成了硬吹——2026-07-26 线上
+# 那张正是这样：一条同赛事、隔三天的续写，顶着"CAREER CONTEXT · 人物背景"。
+_CONTEXT_HEADINGS = {
+    "profile": ("Career Context · 生涯坐标", "把今天放回生涯里"),
+    "player_story": ("Player Story · 人物故事", "这个人是谁"),
+    "event_story": ("Event Story · 赛事背景", "这站赛事的来历"),
+    "memory": ("Storyline · 故事线", "这条线走到哪了"),
+    "media": ("Post-Match Read · 赛后解读", "外界怎么看这场"),
+}
+
+
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
-    from .focus import focus_comparison, has_detailed_stats
     from .hotspot import hotspot_reasons
     from .story import result_insight, trajectory_arc
     from .context import historical_context
@@ -1661,8 +2036,9 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     extra_html = ""
     if kind == "result":
         if context is not None:
-            kicker = "Career Context · 人物背景"
-            title = "把今天放回生涯里"
+            kicker, title = _CONTEXT_HEADINGS.get(
+                context.kind, _CONTEXT_HEADINGS["media"]
+            )
             insight = context.summary
         else:
             kicker = "Why It Matters · 一句看懂"
@@ -1674,36 +2050,18 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         verdict = editor_takeaway(m, today)
         facts = []
 
-        # "比赛走势"是没有逐场技术统计时的文字降级说法（"直落2盘，全程没有
-        # 让对手看到机会"）。官方统计到手之后还留着它，等于用一句概括去挤真正
-        # 的数字——2026-07-25 的成品正是被它挤到把第四行从中间切开。有数据就
-        # 只放技术对比，没数据才退回这句话。
-        detailed = has_detailed_stats(m)
+        # 技术统计表归"焦点复盘"页独占，这一页不再重复一份。
+        # 两条链路上焦点页都必然存在：日报 generate_deck 的出页条件与这里的
+        # has_detailed_stats 相同，单场 generate_match_deck 则无条件出
+        # breakdown 页。以前两页各带一份，7.26 那天只是碰巧被渲染后的溢出
+        # 收行逻辑整块撤掉才没露馅。
+        # 腾出版面后，"比赛走势"这句概括就能一直留着了。
         arc = trajectory_arc(m)
         extra_html = (
             f'<div class="verdict"><b>比赛走势</b>{html.escape(arc)}</div>'
-            if arc and not detailed
+            if arc
             else ""
         )
-        if detailed:
-            comparison = focus_comparison(m)
-            # data-rank 让渲染后的自适应收行按重要性丢弃：版面不够时先丢
-            # "一发成功率"这类补充项，而不是碰巧排在最后的"破发兑现"。
-            rows_html = "".join(
-                f'<div class="compare-row" data-rank="{_stat_rank(label)}">'
-                f'<b>{html.escape(label)}</b>'
-                f'<span class="{"winner" if comparison.left_won else ""}">'
-                f'{html.escape(left)}</span>'
-                f'<span class="{"" if comparison.left_won else "winner"}">'
-                f'{html.escape(right)}</span></div>'
-                for label, left, right in card_stat_rows(comparison.rows)
-            )
-            extra_html += (
-                f'<div class="compare-head"><span>专业技术统计</span>'
-                + f'<span>{html.escape(comparison.left_name)}</span>'
-                + f'<span>{html.escape(comparison.right_name)}</span></div>'
-                + f'<div class="compare-grid">{rows_html}</div>'
-            )
         surface = surface_zh(m.tournament.surface or tournament_surface(m.tournament.name))
         event_suffix = f"·{surface}" if surface else ""
     else:
@@ -3013,12 +3371,15 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
 def generate_deck(
     digest: Digest,
     date_label: str,
-    theme: str = "dark",
+    theme: str | None = None,
     *,
     cover_visual: object | None = None,
 ):
     """整组晨报卡（与 cards.generate_cards 的选卡逻辑一致），返回 [(kind, Image)]."""
     from .titles import cover_highlights
+
+    if theme is None:
+        theme = daily_card_theme()
 
     pages: list[tuple[str, str]] = []
     # V1 唯一封面：不再输出"钩子页 + 设计封面"双封面
@@ -3029,19 +3390,23 @@ def generate_deck(
 
     lead = daily_lead_match(digest)
     lead_id = lead.match_id if lead is not None else None
-    if lead is not None:
-        lead_kind = "result" if lead.status.is_final else "preview"
-        pages.append(("lead", insight_body(lead, date_label, lead_kind, digest.today)))
 
     if lead is not None and brief_for_match(lead, digest.today) is not None:
         pages.append(("media", media_body(lead, date_label, digest.today)))
 
-    if lead is not None and lead.status.is_final and has_detailed_stats(lead):
+    has_focus_page = (
+        lead is not None and lead.status.is_final and has_detailed_stats(lead)
+    )
+    if has_focus_page:
         pages.append(("focus", focus_body(lead, date_label)))
 
+    # 头条那一页（insight_body，标题随上下文变成"这个人是谁 / 这站赛事的来历"…）
+    # 撤掉了。它原本是头条比赛在卡组里唯一的落点——speedy 页刻意把头条排除在外，
+    # 所以撤页之后必须把它放回赛果速递，否则整份日报除了封面就再也看不到这场。
+    # 焦点复盘已经完整讲过它的那天例外，不重复。
     singles = [
         m for m in digest.results
-        if m.is_singles and m.match_id != lead_id
+        if m.is_singles and (m.match_id != lead_id or not has_focus_page)
     ]
     if singles:
         # 速递页按比赛本身分量排序（中国场次不加权放大，出现时打标签即可）
@@ -3075,7 +3440,6 @@ def generate_deck(
     protected = sum(
         kind in {
             "cover",
-            "lead",
             "media",
             "focus",
             "scoreboard",
@@ -3098,11 +3462,14 @@ def generate_match_deck(
     today,
     date_label: str,
     kind: str,
-    theme: str = "dark",
+    theme: str | None = None,
     cover_visual: object | None = None,
 ):
     """单场热点/赛前统一卡组，复用晨报同一套HTML视觉组件。"""
     from .story import result_insight
+
+    if theme is None:
+        theme = daily_card_theme()
 
     is_result = kind == "result"
     digest = Digest(

@@ -1,8 +1,10 @@
 """晨报卡片图生成（Pillow）：小红书 3:4 竖版（1080x1440）.
 
 视觉体系（小红书审美）：
-- 深绿渐变背景 + 右上装饰弧线，品牌网球荧光黄做强调色
-- 每场比赛一个圆角面板（中国球员场次用荧光黄描边高亮）
+- 默认 daily 主题：品牌深绿底提淡 + 荧光黄绿/珊瑚/金强调色不变；
+  与 webcards.py 的 html.daily 同一套色值（Chromium 挂了才走这条路，
+  两边必须一致）。dark 留给知识贴/科普片，light 是旧的奶油风主题。
+- 每场比赛一个圆角面板（中国球员场次用强调色描边高亮）
 - 栏目头中英混排（大黄字 + 英文小字），日期用 "7.16 · 周四"
 - 内容少时自动垂直居中，不留大面积空白
 
@@ -22,7 +24,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from ..digest import Digest
-from ..models import Match
+from ..models import Match, MatchStatus
 from ..timeutil import WEEKDAY_ZH, fmt_time_beijing
 from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
@@ -51,10 +53,11 @@ ASSETS = Path(__file__).resolve().parents[3] / "assets"
 BRAND = "网球时差"
 COLUMN = "网球晨报"
 
-# 主题：dark=品牌深绿（默认），light=小红书奶油风
-# BTN_TEXT 固定深色（荧光按钮上的字两种主题都要深）
-_THEMES = {
-    "dark": dict(
+# 主题：dark=品牌深绿（知识贴/科普片），light=小红书奶油风，
+# daily=日报卡（同一套主题色，底色提淡，默认）。
+# 下面这批 key 三个主题都必须给值：set_theme 走 globals().update，
+# 少给一个，切过一次就留在上一个主题的值上。
+_THEMES_DARK = dict(
         BG_TOP=(14, 44, 36),
         BG_BOTTOM=(7, 23, 18),
         PANEL=(20, 58, 47),
@@ -62,6 +65,7 @@ _THEMES = {
         PANEL_LINE=(34, 84, 68),
         DECO=(22, 62, 50),
         ACCENT=(204, 255, 0),        # 标题/高亮文字
+        SOFT_ACCENT=(204, 255, 0),   # 赛果/焦点两页收敛后的强调色
         BALL=(204, 255, 0),          # 网球图形
         OUTLINE=(204, 255, 0),       # 高亮面板描边
         WHITE=(245, 248, 246),       # 主文字
@@ -71,7 +75,18 @@ _THEMES = {
         FOOT=(110, 128, 120),
         STAR_PILL=(38, 92, 74),
         STAR_PILL_HOT=(176, 122, 20),
-    ),
+        BTN_TEXT=(10, 26, 20),
+        CARD_BG=(250, 251, 249),
+        CARD_TEXT=(18, 32, 25),
+        CARD_GREY=(128, 139, 132),
+        CARD_LINE=(227, 232, 228),
+        WIN_BAND=(216, 238, 210),
+        WIN_GREEN=(13, 96, 53),
+        CHIP_GREEN=(11, 77, 47),
+)
+
+_THEMES = {
+    "dark": _THEMES_DARK,
     "light": dict(
         BG_TOP=(250, 247, 239),
         BG_BOTTOM=(241, 235, 222),
@@ -80,6 +95,7 @@ _THEMES = {
         PANEL_LINE=(224, 216, 198),
         DECO=(235, 228, 210),
         ACCENT=(13, 96, 60),         # 浅底上用深绿做强调字
+        SOFT_ACCENT=(13, 96, 60),
         BALL=(198, 246, 0),
         OUTLINE=(168, 208, 40),
         WHITE=(30, 42, 37),          # 主文字改为深色
@@ -89,13 +105,46 @@ _THEMES = {
         FOOT=(160, 168, 160),
         STAR_PILL=(120, 158, 60),
         STAR_PILL_HOT=(214, 154, 26),
+        BTN_TEXT=(10, 26, 20),
+        CARD_BG=(250, 251, 249),
+        CARD_TEXT=(18, 32, 25),
+        CARD_GREY=(128, 139, 132),
+        CARD_LINE=(227, 232, 228),
+        WIN_BAND=(216, 238, 210),
+        WIN_GREEN=(13, 96, 53),
+        CHIP_GREEN=(11, 77, 47),
+    ),
+    # daily：与 webcards.py 的 html.daily 同一套。
+    # 只提淡底色那几个面（BG_TOP/BG_BOTTOM/PANEL/PANEL_HI），其余一律照抄
+    # dark 的原值——主题色不许动。Chromium 挂掉时会退到这条 Pillow 路径。
+    "daily": dict(
+        _THEMES_DARK,
+        BG_TOP=(30, 66, 52),          # --ground0 #1E4234
+        BG_BOTTOM=(42, 100, 80),      # --ground1 #2A6450
+        PANEL=(26, 66, 52),           # --panel 压在中间调底色上的等效实色
+        PANEL_HI=(28, 70, 56),        # --panel-strong 同上
+        # 赛果速递 / 焦点复盘两页收敛成金，与 webcards 的"柔和内容色"一致；
+        # 其余卡（封面、今晚焦点）仍用 ACCENT，改动范围和 HTML 那边一样。
+        SOFT_ACCENT=(213, 180, 77),   # --gold #D5B44D
+        # 比赛卡的版面：HTML 画的是压在深绿底上的半透明深色面板，这里原来照抄
+        # dark 的一套白卡值，于是同一份日报走哪条渲染路径长得完全不一样——
+        # Chromium 一挂，发出去的卡是白底黑字，和当期封面、视频、推送正文全对不上。
+        # 下面这组是 html.daily 各处的等效实色（半透明面板压在中间调底色上算出来的）。
+        CARD_BG=(26, 66, 52),         # --panel 压在 ground 上
+        CARD_TEXT=(247, 243, 232),    # --ivory
+        CARD_GREY=(168, 185, 177),    # --panel-muted
+        CARD_LINE=(48, 84, 70),       # --divider 的中性版
+        WIN_BAND=(50, 83, 56),        # 胜方行底纹，实测取自 HTML 成品
+        WIN_GREEN=(247, 243, 232),    # 胜方比分：收敛后是象牙白，不是荧光黄绿
+        CHIP_GREEN=(213, 180, 77),    # 描边徽章跟着 --gold
     ),
 }
 BTN_TEXT = (10, 26, 20)
+SOFT_ACCENT = (204, 255, 0)
 
 
 def set_theme(name: str) -> None:
-    """切换配色主题（dark/light），直接更新模块级颜色常量."""
+    """切换配色主题（dark/light/daily），直接更新模块级颜色常量."""
     globals().update(_THEMES.get(name, _THEMES["dark"]))
 
 
@@ -531,7 +580,8 @@ def _cover(fonts: _Fonts, digest: Digest, headline: str) -> Image.Image:
 
 
 def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.Image:
-    img, draw, y = _page(fonts, date_label, "昨夜焦点", "OVERNIGHT RESULTS")
+    img, draw, y = _page(fonts, date_label, "昨夜焦点", "OVERNIGHT RESULTS",
+                         accent=SOFT_ACCENT)
     lead, gap = _spread(len(matches))
     y += lead
     for m in matches:
@@ -554,7 +604,9 @@ def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.I
 # 胜者以色带+加粗强调；卡内三层结构（元信息条 / 球员行 / 比分列）。
 # 叠加 card-xiaohongshu 的层级要求：当日最重磅一场放大为头条卡。
 
-# 白卡配色（主题无关，深浅背景下都保持官方板的对比度）
+# 白卡配色的默认值（import 期先有值，set_theme 会按主题覆盖）。
+# 这七个常量曾经写着"主题无关"、不进 _THEMES，于是底色一换主题它们纹丝不动，
+# 赛果卡的胜方底色/比分/"今日头条"药丸和整页对不上。
 CARD_BG = (250, 251, 249)
 CARD_TEXT = (18, 32, 25)
 CARD_GREY = (128, 139, 132)
@@ -624,10 +676,22 @@ def _name_line(
         name = players[0].name.split()[-1]
     name = _fit(draw, name, font, int(max_name_w))
     draw.text((x, cy - font.size // 2 - 3), name, font=font, fill=color)
+    right = x + draw.textlength(name, font=font)
     if rank_txt:
-        nw = draw.textlength(name, font=font)
-        draw.text((x + nw + 8, cy - meta_font.size // 2), rank_txt,
+        draw.text((right + 8, cy - meta_font.size // 2), rank_txt,
                   font=meta_font, fill=CARD_GREY)
+        right += 8 + draw.textlength(rank_txt, font=meta_font)
+    # 调用方要在名字后面接着画退赛标记，得知道这一行画到哪儿为止
+    return right
+
+
+def _retirement_label(m: Match, side: int) -> str:
+    """退赛/不战而胜时，退出那一方的标记文字（与 webcards._retirement_note 同规则）。"""
+    if m.status not in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
+    if m.winner not in (0, 1) or side == m.winner:
+        return ""
+    return "退赛" if m.status is MatchStatus.RETIRED else "退出"
 
 
 def _hero_story(m: Match) -> str:
@@ -659,10 +723,14 @@ def _match_card(
     lx = x0 + pad
     ty = y + (26 if chip else 16)
     if chip:
+        # 描边徽章：与 webcards.py 的 html.daily 一致，实心色块会和比分抢注意力
         fill = RED if chip == "爆冷" else CHIP_GREEN
         tw = draw.textlength(chip, font=fonts.label)
-        draw.rounded_rectangle([lx, y + 18, lx + tw + 36, y + 18 + 44], radius=22, fill=fill)
-        draw.text((lx + 18, y + 18 + 6), chip, font=fonts.label, fill=(255, 255, 255))
+        draw.rounded_rectangle(
+            [lx, y + 18, lx + tw + 36, y + 18 + 44], radius=22,
+            outline=fill, width=2,
+        )
+        draw.text((lx + 18, y + 18 + 6), chip, font=fonts.label, fill=fill)
         lx += tw + 36 + 16
     left = match_round_display(m) or ""
     if left:
@@ -670,8 +738,10 @@ def _match_card(
         lx += draw.textlength(left, font=meta_font) + 16
     if tag_upset and not chip:
         tw = draw.textlength("爆冷", font=fonts.cell_seed)
-        draw.rounded_rectangle([lx, y + 10, lx + tw + 22, y + 44], radius=8, fill=RED)
-        draw.text((lx + 11, y + 13), "爆冷", font=fonts.cell_seed, fill=(255, 255, 255))
+        draw.rounded_rectangle(
+            [lx, y + 10, lx + tw + 22, y + 44], radius=8, outline=RED, width=2,
+        )
+        draw.text((lx + 11, y + 13), "爆冷", font=fonts.cell_seed, fill=RED)
     if show_tournament:
         g = group_by_tournament([m])[0]
         right = _fit(draw, g.compact_title, meta_font, int((x1 - x0) * 0.42))
@@ -697,11 +767,25 @@ def _match_card(
             draw, score_right, cy, pairs, score_font, sup_font,
             WIN_GREEN if won else CARD_GREY, col_w,
         )
-        _name_line(
+        name_right = _name_line(
             img, draw, fonts, x0 + pad, cy, score_right - len(pairs) * col_w - 14,
             players, CARD_TEXT if won else CARD_GREY,
             name_fonts, flag_h, meta_font,
         )
+        # 退赛标记跟着退出的那一方走，贴在他的比分行上（与 webcards 一致）。
+        # 6-1 2-0 里那个 2-0 是被中断的一盘，不标出来就像一串没打完的比分。
+        label = _retirement_label(m, side)
+        if label:
+            lw = draw.textlength(label, font=meta_font)
+            lx = min(
+                (name_right or x0 + pad) + 14,
+                score_right - len(pairs) * col_w - 14 - lw,
+            )
+            draw.rounded_rectangle(
+                [lx - 8, cy - 19, lx + lw + 8, cy + 19],
+                radius=5, outline=CARD_GREY, width=2,
+            )
+            draw.text((lx, cy), label, font=meta_font, fill=CARD_GREY, anchor="lm")
     if not m.sets and m.note:
         draw.text((x1 - pad - 220, y + top_h + 24), _strip(m.note)[:12],
                   font=fonts.body, fill=CARD_GREY)
@@ -713,7 +797,8 @@ def _card_scoreboard(fonts: _Fonts, date_label: str, matches: list[Match]) -> Im
 
     背景为透视球场线稿；全部比赛同属一个赛事时显示赛事横幅（徽章+名称）。
     """
-    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD", deco="court-faint")
+    img, draw, y = _page(fonts, date_label, "赛果速递", "SCOREBOARD",
+                         accent=SOFT_ACCENT, deco="court-faint")
 
     # 全部比赛同属一个赛事（如大满贯日）→ 顶部赛事横幅，卡内不再重复赛事名
     names = {m.tournament.name for m in matches}
@@ -1053,7 +1138,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     """生成晨报 5 卡，返回文件路径列表（内容不足时自动省略）."""
     from .titles import pick_headline_auto
 
-    set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
+    from .webcards import daily_card_theme
+
+    set_theme(daily_card_theme())
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     for old in outdir.glob("card_*.*"):
@@ -1078,9 +1165,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     cover_visual = None
     cover_fallback_reason: str | None = None
     try:
-        from .webcards import generate_deck
+        from .webcards import daily_card_theme, generate_deck
 
-        theme = os.environ.get("TENNISLIVE_THEME", "dark")
+        theme = daily_card_theme()
         visual_cache = outdir.parent / ".cover-visual-cache"
         if strict_cover and not cover_fetch_enabled:
             raise RuntimeError("严格封面模式要求启用头条比赛图片核验")

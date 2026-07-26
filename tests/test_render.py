@@ -70,11 +70,18 @@ def test_scoreboard_tournament_level_is_compact_and_precedes_name():
         wta500, hero=False, show_tournament=True, tag_upset=False
     )
 
-    assert '<b class="tour-level">ATP250</b>' in atp_card
-    assert '<b class="tour-level">WTA1000</b>' in wta_card
-    assert '<b class="tour-level">WTA500</b>' in wta500_card
-    assert '<b class="tour-level">大满贯</b>' in slam_card
+    # 巡回赛部分现在是官方 logo（内联 SVG、无底色），级别留成文字。
+    # 见 test_tour_badge_uses_the_official_logo_without_a_background。
+    for card in (atp_card, wta_card, wta500_card, slam_card):
+        assert '<b class="tour-level has-logo">' in card
+        assert "<svg" in card
+    assert "<i>250</i>" in atp_card
+    assert "<i>1000</i>" in wta_card
+    assert "<i>500</i>" in wta500_card
+    assert "<i>大满贯</i>" in slam_card
     assert "ATP 250" not in atp_card
+    # 级别数字不能连着巡回赛名一起印，那是旧的纯文字药丸
+    assert "ATP250" not in atp_card and "WTA1000" not in wta_card
 
 
 def test_wechat_markdown(sample_digest):
@@ -427,7 +434,8 @@ def test_cards_generation(tmp_path, sample_digest):
     from tennislive.render.cards import generate_cards
 
     paths = generate_cards(sample_digest, tmp_path / "cards")
-    assert len(paths) >= 3  # 封面 + 赛果页 + 赛程页
+    # 头条那一页（insight_body）已经撤掉，这份 fixture 剩封面 + 赛果页
+    assert len(paths) >= 2
     for p in paths:
         assert Path(p).stat().st_size > 10_000  # 是实际渲染的图片而非空文件
     names = [p.name for p in paths]
@@ -938,10 +946,11 @@ def test_daily_deck_keeps_result_pages_before_optional_pages(sample_digest, monk
 
     pages = webcards.generate_deck(digest, "07.20 · 周一")
     kinds = [kind for kind, _body in pages]
-    assert len(kinds) == 7
+    assert len(kinds) == 6
     assert kinds.count("cover") == 1
-    assert kinds[1] == "lead"
-    assert "focus" in kinds
+    # 头条那一页撤掉之后，封面之后直接进焦点复盘
+    assert "lead" not in kinds
+    assert kinds[1] == "focus"
     assert "scoreboard" in kinds and "results2" in kinds
 
 
@@ -965,11 +974,15 @@ def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
 
     pages = webcards.generate_deck(sample_digest, "07.16 · 周四")
     kinds = [kind for kind, _body in pages]
-    assert kinds[:2] == ["cover", "lead"]
+    assert "lead" not in kinds, "头条那一页已经撤掉了"
     assert "story" not in kinds
 
+    # 撤页之后，头条比赛必须落回赛果速递——否则整份日报除了封面就再也看不到
+    # 这场（speedy 页原本是刻意把它排除在外的）
     lead = daily_lead_match(sample_digest)
-    assert lead is not None and lead.match_id not in scoreboard_match_ids
+    assert lead is not None
+    assert "focus" not in kinds
+    assert lead.match_id in scoreboard_match_ids
 
 
 def test_profile_pack_has_ready_to_use_assets(tmp_path):
@@ -2822,9 +2835,10 @@ def test_tonight_card_separates_bilingual_player_lines(sample_digest):
 
     assert '<span class="en">Carlos Alcaraz</span>' in body
     assert "class=\"names\"" in body
-    assert '<b class="event-level">大满贯</b>' in body
+    # 今晚页的巡回赛标记同样换成官方 logo；场地仍是实心小药丸
+    assert '<b class="tour-level has-logo">' in body and "<i>大满贯</i>" in body
     assert '<b class="event-surface">草地</b>' in body
-    assert body.index("温布尔登") < body.index('class="event-level"')
+    assert body.index("温布尔登") < body.index('class="tour-level has-logo"')
 
 
 def test_coverage_report_lists_tour_level(sample_digest):
@@ -3006,18 +3020,17 @@ def test_insight_body_result_page_has_no_stats_falls_back_to_arc_and_verdict():
     assert "完整盘分" not in html_out and "比赛轮次" not in html_out  # 旧的凑数标签已移除
 
 
-def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exists():
-    """只有当官方/授权数据源提供了真实技战术统计（发球%、ACE、破发、制胜分等）
-    时，第二页才展示"专业技术统计"表格——这时表格标题和内容都必须是真数据。
+def test_stats_table_lives_on_the_focus_page_with_real_licensed_data():
+    """"专业技术统计"表只在有官方/授权真实数据时出现，且只出现在焦点复盘页。
 
-    有了真数据，"比赛走势"那句文字概括就要让位：它本来就是没有统计时的降级
-    说法（"直落2盘，全程没有让对手看到机会"），和下面的数字讲的是同一件事。
-    2026-07-25 的成品正是被它挤到把技术对比表第四行从中间切开。
+    原来头条页和焦点页各带一份，两张卡会印出一模一样的表；2026-07-25 那次
+    还被"比赛走势"那句文字概括挤到把表格第四行从中间切开。现在分工固定：
+    数字归焦点页，文字概括归头条页，两页不再抢同一块版面。
     """
     from datetime import date
 
     from tennislive.models import MatchStats, StatPair
-    from tennislive.render.webcards import insight_body
+    from tennislive.render.webcards import focus_body, insight_body
 
     match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
     match.stats = MatchStats(
@@ -3026,18 +3039,22 @@ def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exis
         aces=StatPair(home=12, away=6),
         break_points_won=StatPair(home=4, away=2),
     )
-    html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
+    focus = focus_body(match, "7.23")
+    assert "compare-grid" in focus and "compare-row" in focus
+    assert "专业技术统计" in focus
+    assert "一发得分率" in focus and "ACE" in focus
 
-    assert "编辑锐评" in html_out
-    assert "比赛走势" not in html_out  # 有数据就不再退回文字概括
-    assert "compare-grid" in html_out and "compare-row" in html_out
-    assert "专业技术统计" in html_out
-    assert "一发得分率" in html_out and "ACE" in html_out
+    lead = insight_body(match, "7.23", "result", date(2026, 7, 23))
+    assert "compare-grid" not in lead
+    assert "编辑锐评" in lead
 
 
-def test_stats_table_and_arc_never_appear_together():
-    """同一张卡上不能既放技术对比又放"比赛走势"：两者说的是同一件事，
-    并排放只会互相挤版面，把真正的数字挤出画面。"""
+def test_lead_page_keeps_the_prose_arc_now_that_the_table_moved_out():
+    """表格搬走之后，"比赛走势"这句概括就能一直留在头条页了。
+
+    它以前只在没有统计数据时才出现——那是为了不和表格抢版面。现在两者不在
+    同一页，条件可以去掉，有无统计都印。
+    """
     from datetime import date
 
     from tennislive.models import MatchStats, StatPair
@@ -3058,7 +3075,8 @@ def test_stats_table_and_arc_never_appear_together():
 
     for with_stats in (True, False):
         html_out = render(with_stats)
-        assert ("比赛走势" in html_out) is not ("compare-grid" in html_out)
+        assert "比赛走势" in html_out
+        assert "compare-grid" not in html_out
         assert "编辑锐评" in html_out  # 无论哪条路径，锐评都必须留在卡上
 
 
@@ -3119,3 +3137,751 @@ def test_lead_card_stats_table_fits_without_clipping():
     ]
     # 行数本来就不超上限时原样呈现，不做任何删减。
     assert card_stat_rows(full[:3]) == full[:3]
+
+
+def test_final_preview_keeps_its_numbers_instead_of_falling_back_to_boilerplate():
+    """决赛看点必须带本场信息，不能跌回"任何一场决赛都能印"的赛段套话。
+
+    旧链路：preview_angle 给回 59 字的账号连载回忆、schedule_insight 给回
+    44 字的决赛导语，两条都截不出完整句子（导语写的是"{赛事}只剩最后一问：…"，
+    冒号前读不完整），于是 `_stage_angle` 兜底印出"最后一场定归属，谁先扛住
+    谁捧杯"——一个人名、一个数字都不剩，连着几天的决赛长得一模一样。
+    """
+    from datetime import date
+
+    from tennislive.render.story import schedule_insight
+    from tennislive.render.xiaohongshu import (
+        _STAGE_ANGLES,
+        _data_angle,
+        _short_complete,
+    )
+
+    final = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Final", discipline="Women's Singles",
+        home_name="Tamara Korpatsch", away_name="Mayar Sherif",
+        home_country="GER", away_country="EGY",
+    )
+    today = date(2026, 7, 26)
+
+    for limit in (28, 34):  # 34 = 正文非压缩上限；28 = 压缩模式上限
+        chosen = (
+            _short_complete(schedule_insight(final, today), limit)
+            or _data_angle(final, limit)
+        )
+        assert chosen, f"limit={limit} 时连数据看点都没取到"
+        assert len(chosen) <= limit
+        assert chosen not in _STAGE_ANGLES["决赛"], "又跌回赛段套话了"
+        # 必须挂得住本场的具体信息：人名或排名数字
+        assert "科尔帕奇" in chosen or "谢里夫" in chosen or "汉堡" in chosen
+
+
+def test_data_angle_always_carries_a_fact_and_fits_the_budget():
+    """按预算现写的数据看点：装得下、且一定带人名或数字。"""
+    from tennislive.render.xiaohongshu import _data_angle
+
+    ranked = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Semifinals", home_name="Marie Bouzkova",
+        away_name="Ekaterina Alexandrova", home_country="CZE", away_country="RUS",
+    )
+    ranked.home[0].rank, ranked.away[0].rank = 44, 20
+    ranked.home[0].seed = ranked.away[0].seed = None
+
+    for limit in (28, 34):
+        line = _data_angle(ranked, limit)
+        assert line and len(line) <= limit
+        assert "布兹科娃" in line or "亚历山德罗娃" in line
+
+    # 预算给到装不下任何一句时返回空串，交给上层兜底而不是印半句
+    assert _data_angle(ranked, 6) == ""
+
+
+def test_pinned_comment_hook_is_built_from_the_match_not_a_constant():
+    """置顶评论的"我先写"必须按当日焦点比赛生成。
+
+    旧实现是一句写死的常量（"别急着追比分，先把自己的发球局守住。"），
+    连着五天一字不变。
+    """
+    from tennislive.render.xiaohongshu import _pinned_comment, _pinned_followup
+
+    final = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Final", home_name="Tamara Korpatsch",
+        away_name="Mayar Sherif", home_country="GER", away_country="EGY",
+    )
+    quarter = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals", home_name="Qinwen Zheng",
+        away_name="Iga Swiatek", home_country="CHN", away_country="POL",
+    )
+
+    assert "别急着追比分" not in _pinned_followup(final)
+    assert "捧杯" in _pinned_followup(final) and "科尔帕奇" in _pinned_followup(final)
+    assert "郑钦文" in _pinned_followup(quarter)
+    # 不同的焦点比赛必须给出不同的钩子
+    assert _pinned_followup(final) != _pinned_followup(quarter)
+
+    pinned = _pinned_comment("你站谁？", has_upcoming=True, focus=quarter)
+    assert "你站谁？" in pinned and "郑钦文" in pinned
+
+
+def test_focus_match_is_not_reused_on_consecutive_days(tmp_path, monkeypatch):
+    """焦点复盘要跨期去重：2026-07-24 与 07-25 曾选出同一场，技术统计逐字相同。
+
+    收尾晚的场次次日仍留在 digest.results 里，而 select_focus_match() 只取
+    分数最大值——昨天最高分的今天照样最高分。editorial_memory 原来只记头条，
+    焦点由 select_focus_match 自己挑、经常和头条不是同一场，没人拦得住它。
+    """
+    from tennislive.render import editorial_memory
+    from tennislive.render.focus import select_focus_match
+
+    monkeypatch.setattr(
+        editorial_memory, "STATE_PATH", tmp_path / "editorial_memory.json"
+    )
+
+    top = make_match(
+        match_id="focus-top", home_name="Tamara Korpatsch",
+        away_name="Mayar Sherif", home_country="GER", away_country="EGY",
+        tour=Tour.WTA, discipline="Women's Singles",
+        sets=((6, 1), (6, 2)), tiebreaks=(None, None),
+    )
+    runner_up = make_match(
+        match_id="focus-second", home_name="Elena Rybakina",
+        away_name="Jessica Pegula", home_country="KAZ", away_country="USA",
+        tour=Tour.WTA, discipline="Women's Singles",
+        sets=((6, 4), (6, 4)), tiebreaks=(None, None),
+    )
+    results = [top, runner_up]
+
+    day_one = select_focus_match(Digest(today=date(2026, 7, 24), results=results))
+    editorial_memory.record_daily_focus(day_one, date(2026, 7, 24))
+
+    day_two = select_focus_match(Digest(today=date(2026, 7, 25), results=results))
+    assert day_two is not None
+    assert day_two.match_id != day_one.match_id, "连着两期选到了同一场"
+
+    # 同一天重跑生成不能换人：当天自己刚记下的那条不算"最近用过"
+    editorial_memory.record_daily_focus(day_two, date(2026, 7, 25))
+    again = select_focus_match(Digest(today=date(2026, 7, 25), results=results))
+    assert again.match_id == day_two.match_id
+
+
+def test_focus_falls_back_rather_than_leaving_the_page_empty(tmp_path, monkeypatch):
+    """候选全被上一期用光时宁可重复，也不能返回 None 让焦点页整页消失。"""
+    from tennislive.render import editorial_memory
+    from tennislive.render.focus import select_focus_match
+
+    monkeypatch.setattr(
+        editorial_memory, "STATE_PATH", tmp_path / "editorial_memory.json"
+    )
+    only = make_match(
+        match_id="focus-only", tour=Tour.WTA,
+        discipline="Women's Singles", sets=((6, 3), (6, 3)), tiebreaks=(None, None),
+    )
+    editorial_memory.record_daily_focus(only, date(2026, 7, 24))
+
+    picked = select_focus_match(Digest(today=date(2026, 7, 25), results=[only]))
+    assert picked is not None and picked.match_id == "focus-only"
+
+
+def test_tour_badge_uses_the_official_logo_without_a_background():
+    """巡回赛标记改用官方 logo，且不要底色。
+
+    原来是"WTA1000"整个塞进一个实心色块。logo 只表示巡回赛，级别数字必须
+    留成文字——否则 1000/500/250 这条信息就没了。
+    """
+    from tennislive.render.common import group_by_tournament
+    from tennislive.render.webcards import _tour_badge
+
+    wta = group_by_tournament([
+        make_match(tour=Tour.WTA, discipline="Women's Singles", tournament="Montreal")
+    ])[0]
+    wta.level = "1000"
+    badge = _tour_badge(wta)
+
+    assert "<svg" in badge and "currentColor" in badge, "没有内联官方 logo"
+    assert "has-logo" in badge
+    assert "<i>1000</i>" in badge, "级别数字丢了"
+    assert "WTA1000" not in badge, "还在印纯文字标记"
+
+
+def test_tour_badge_keeps_non_numeric_levels_readable():
+    """大满贯/年终总决赛这类级别不是数字，也得跟在 logo 后面。"""
+    from tennislive.render.common import group_by_tournament
+    from tennislive.render.webcards import _tour_badge
+
+    group = group_by_tournament([make_match(tour=Tour.ATP)])[0]
+    group.level = "GS"
+    badge = _tour_badge(group)
+    assert "<svg" in badge and "<i>大满贯</i>" in badge
+
+
+def test_tour_badge_falls_back_to_text_when_the_logo_file_is_missing(
+    tmp_path, monkeypatch
+):
+    """logo 文件缺失时退回纯文字，不能开天窗。
+
+    这两个 svg 是 tools/fetch_tour_logos.py 从 Commons 抓下来的，属于外部
+    资产；一旦没跟着仓库走，卡片上不能出现一块空白。
+    """
+    from tennislive.render import webcards
+    from tennislive.render.common import group_by_tournament
+
+    monkeypatch.setattr(webcards, "ASSETS", tmp_path)
+    webcards._tour_logo_svg.cache_clear()
+    try:
+        group = group_by_tournament([make_match(tour=Tour.ATP)])[0]
+        group.level = "250"
+        badge = webcards._tour_badge(group)
+        assert "<svg" not in badge
+        assert "ATP250" in badge
+        assert "has-logo" not in badge
+    finally:
+        webcards._tour_logo_svg.cache_clear()
+
+
+def test_tour_logo_assets_carry_their_provenance():
+    """外部资产一律记出处：许可名、作者、来源 URL 缺一不可。"""
+    import json
+    from pathlib import Path
+
+    from tennislive.render.webcards import ASSETS
+
+    tours = Path(ASSETS) / "logo" / "tours"
+    credits = json.loads((tours / "credits.json").read_text(encoding="utf-8"))
+    for slug in ("atp.svg", "wta.svg"):
+        assert (tours / slug).is_file(), f"缺少 {slug}"
+        row = credits[slug]
+        for field in ("title", "license", "artist", "page"):
+            assert row.get(field), f"{slug} 的 {field} 没记"
+        # 品牌色必须已换成 currentColor，否则深绿底上是看不见的深蓝/深紫
+        svg = (tours / slug).read_text(encoding="utf-8")
+        assert "currentColor" in svg
+        assert "#04014f" not in svg.lower() and "#2d0046" not in svg.lower()
+
+
+def test_trajectory_arc_stays_silent_on_a_retirement():
+    """退赛没有"走势"：6-1 2-0 退赛里那个 2-0 是被中断的一盘，不是拿下的一盘。
+
+    照常统计会印成"直落2盘，全程没有让对手看到机会"——对一场只打了 45 分钟、
+    对手伤退的比赛，这话完全不成立。
+    """
+    from tennislive.render.story import trajectory_arc
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    assert trajectory_arc(retired) == ""
+
+    walkover = make_match(
+        sets=((6, 1), (6, 0)), tiebreaks=(None, None),
+        status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert trajectory_arc(walkover) == ""
+
+    # 正常完赛仍然照旧
+    normal = make_match(
+        sets=((6, 1), (6, 2)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert "直落2盘" in trajectory_arc(normal)
+
+
+def test_lead_page_heading_follows_the_context_source():
+    """第二页的标题必须跟着 context 的来源走，不能一句写死套五种材料。
+
+    原来固定印"把今天放回生涯里"/"CAREER CONTEXT · 人物背景"。那句是为球员
+    生涯档案写的（那条 summary 里字面就有"把今天放回整段生涯里看"），套到
+    "我们三天前写过他"的账号续写上就是硬吹——2026-07-26 线上那张正是如此。
+    """
+    from tennislive.render.webcards import _CONTEXT_HEADINGS
+
+    assert _CONTEXT_HEADINGS["profile"][1] == "把今天放回生涯里"
+    # 其余四种来源都不许再自称"生涯"
+    for source in ("player_story", "event_story", "memory", "media"):
+        kicker, title = _CONTEXT_HEADINGS[source]
+        assert "生涯" not in title, f"{source} 仍在说生涯：{title}"
+        assert "Career" not in kicker, f"{source} 的 kicker 仍是 Career：{kicker}"
+    # 五种来源两两不同，翻下来不会重名
+    assert len({t for _k, t in _CONTEXT_HEADINGS.values()}) == len(_CONTEXT_HEADINGS)
+
+
+def test_lead_page_does_not_repeat_the_focus_page_stats_table():
+    """技术统计表归"焦点复盘"页独占，头条页不再重复一份。
+
+    以前两页各带一份；7.26 那天只是碰巧被渲染后的溢出收行逻辑整块撤掉才
+    没露馅，版面宽裕的那天两张卡会印出一模一样的表。
+    """
+    from datetime import date
+
+    from tennislive.render.webcards import focus_body, insight_body
+
+    m = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None))
+    lead = insight_body(m, "7.26 · 周日", "result", date(2026, 7, 26))
+    focus = focus_body(m, "7.26 · 周日")
+
+    assert "compare-grid" not in lead
+    assert "compare-grid" in focus
+
+
+def test_duration_is_not_written_as_zero_hours():
+    """45 分钟的比赛不能印成"0小时45分"。"""
+    from tennislive.render.focus import format_duration
+
+    assert format_duration(45) == "45分"
+    assert format_duration(59) == "59分"
+    assert format_duration(95) == "1小时35分"
+    assert format_duration(200) == "3小时20分"
+
+
+def test_stats_verdict_does_not_call_a_blowout_a_close_match():
+    """"全场总得分只差N分"原来无条件拼上去，不看差多少。
+
+    2026-07-26 线上成品：37 比 17 印成"全场总得分只差20分"。20 分在一场
+    比赛里是碾压，不是胶着。
+    """
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    def verdict(won, lost, **kw):
+        match = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None), winner=0)
+        for key, value in kw.items():
+            setattr(match, key, value)
+        match.stats = MatchStats(source="WTA", total_points_won=StatPair(won, lost))
+        return _stats_verdict(match)
+
+    assert "只差" not in verdict(37, 17)          # 20 分差 = 碾压
+    assert "多拿20分" in verdict(37, 17)
+    assert "只差3分" in verdict(97, 94)           # 3 分差 = 真胶着
+    assert "多拿" not in verdict(97, 94)
+
+
+def test_stats_verdict_does_not_say_survived_a_grind_on_a_retirement():
+    """退赛不能说"熬过"——那场根本没打完。"""
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    def verdict(status, minutes):
+        match = make_match(
+            sets=((6, 1), (2, 0)), tiebreaks=(None, None), winner=0, status=status,
+        )
+        match.stats = MatchStats(
+            source="WTA", total_points_won=StatPair(37, 17),
+            duration_minutes=minutes,
+        )
+        return _stats_verdict(match)
+
+    retired = verdict(MatchStatus.RETIRED, 45)
+    assert "熬过" not in retired
+    assert "0小时" not in retired
+    assert "45分" in retired and "退出" in retired
+
+    # 真打满的长盘才配叫"熬过"
+    assert "最终熬过" in verdict(MatchStatus.FINISHED, 190)
+    assert "全场耗时" in verdict(MatchStatus.FINISHED, 92)
+
+
+def test_stats_verdict_does_not_repeat_the_winner_name():
+    """一句话里同一个人名不要说两遍。"""
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    match = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None), winner=0)
+    match.stats = MatchStats(
+        source="WTA",
+        total_points_won=StatPair(37, 17),
+        unforced_errors=StatPair(9, 18),
+    )
+    from tennislive.zh import player_zh
+
+    verdict = _stats_verdict(match)
+    name = player_zh(match.home[0].name)
+    assert verdict.count(name) == 1, verdict
+
+
+def test_tonight_reason_is_trimmed_server_side_not_by_css():
+    """今晚焦点卡的"看点"要在服务端裁成完整句。
+
+    交给 CSS 的 line-clamp / text-overflow 去截，会从词中间切开并留下半个
+    引号（"…后来她把'让萨巴伦卡这个姓被记…"）。
+    """
+    from tennislive.render.webcards import (
+        REASON_LIMIT_ONE_LINE,
+        REASON_LIMIT_TWO_LINES,
+        _sched_card,
+    )
+
+    match = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        home_name="Aryna Sabalenka", away_name="Coco Gauff",
+        home_country="BLR", away_country="USA",
+        discipline="Women's Singles", round_name="Quarterfinals",
+    )
+    body = _sched_card(match, with_reason=True)
+    reason = re.search(r"<span>看点</span></b>([^<]*)</div>", body).group(1)
+
+    assert reason and len(reason) <= REASON_LIMIT_ONE_LINE
+    assert "…" not in reason and "..." not in reason
+    # 三场及以上放开成两行，预算跟着放宽
+    assert REASON_LIMIT_TWO_LINES > REASON_LIMIT_ONE_LINE
+    wide = _sched_card(match, with_reason=True, reason_limit=REASON_LIMIT_TWO_LINES)
+    wide_reason = re.search(r"<span>看点</span></b>([^<]*)</div>", wide).group(1)
+    assert len(wide_reason) <= REASON_LIMIT_TWO_LINES
+    assert len(wide_reason) >= len(reason)
+
+
+def test_result_insight_does_not_call_a_retirement_a_straight_sets_win():
+    """退赛不能读成"直落两盘拿下"。
+
+    6-1 2-0 退赛里那个 2-0 是被中断的一盘，不是拿下的一盘。result_insight
+    只数"比分不相等的盘"，于是数出 2 盘、落进"直落两盘拿下，关键分处理更加
+    稳定"——封面头条印着"谢里夫退赛"，下面一行却夸对手直落两盘（2026-07-26
+    样张）。trajectory_arc 早就为同一个比分挡过一次，这条路径当时漏了。
+    """
+    from tennislive.render.story import result_insight
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    line = result_insight(retired)
+    assert "直落" not in line, line
+    assert "退赛" in line
+
+    walkover = make_match(
+        sets=(), tiebreaks=(), status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert "不战而胜" in result_insight(walkover)
+
+    # 正常完赛不受影响
+    normal = make_match(
+        sets=((6, 1), (6, 4)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert result_insight(normal) == "直落两盘拿下，关键分处理更加稳定"
+
+
+def test_tonight_page_anchors_cards_to_the_bottom_at_every_match_count():
+    """今晚焦点页不留空档：卡片沉底，地标照片稳定占住中段。
+
+    原来 .event-spacer 按场次数写死高度，两场时卡片停在中上部、下面 500 多
+    px 全是照片（照片不是构图的一部分，只是"剩下的地方"）；五场时反过来，
+    最后一张卡被裁掉半截。改成弹性 spacer 之后两头都不该再出现。
+    """
+    from tennislive.render.webcards import _CSS
+
+    daily = _CSS.split("html.daily {", 1)[1]
+    # 只看 daily 覆盖段自己的规则：基础样式里那几条按 count 写死的高度还在，
+    # 但被 html.daily 前缀的选择器盖掉了（多一个类型选择器，优先级更高）。
+    spacer_rules = [
+        line.strip() for line in daily.splitlines()
+        if ".event-spacer" in line and line.lstrip().startswith("html.daily")
+    ]
+    assert spacer_rules, "找不到 .event-spacer 的 daily 规则"
+    # 这几条串成一条选择器列表，弹性声明写在最后一行
+    assert "flex:1 1 0" in "\n".join(spacer_rules), (
+        "spacer 还在按 count 写死高度：\n" + "\n".join(spacer_rules)
+    )
+    assert not [r for r in spacer_rules if re.search(r"height:\d+px", r)], (
+        "daily 段里还有写死的 spacer 高度：\n" + "\n".join(spacer_rules)
+    )
+    # 页脚是 absolute 的，不占流内高度；卡片沉底后必须给它让出一条带子
+    assert "html.daily .poster.tonight-page { padding-bottom:" in daily
+
+
+def test_tonight_page_never_repeats_the_same_reason_line():
+    """一页上的看点必须逐场不同。
+
+    赛事故事那一档是赛事级的，同一站每场都会拿到同一句；五场页上曾一字不差
+    地重复三遍。tonight_body 现在跨卡片累积 used_angles。
+    """
+    import re
+
+    from tennislive.render.webcards import tonight_body
+
+    matches = [
+        make_match(
+            match_id=f"tn-{i}", tournament="Toronto",
+            home_name=home, away_name=away,
+            home_country="FRA", away_country="BEL",
+            status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+            round_name="Quarterfinals",
+        )
+        for i, (home, away) in enumerate([
+            ("Constant Lestienne", "Zizou Bergs"),
+            ("Alexei Popyrin", "Marton Fucsovics"),
+            ("Arthur Fils", "Ugo Humbert"),
+            ("Alexander Bublik", "Tallon Griekspoor"),
+        ])
+    ]
+    html_out = tonight_body(matches, "7.26 · 周日")
+    reasons = re.findall(r'<div class="reason">.*?</span></b>(.*?)</div>', html_out)
+
+    assert len(reasons) == len(matches), reasons
+    assert len(set(reasons)) == len(reasons), f"看点重复了：{reasons}"
+
+
+def test_short_complete_rejects_a_fragment_ending_in_a_closed_parenthetical():
+    """以闭合括注收尾同样是半句话。
+
+    原来只查括号配不配平。"……斯尼古尔（世界第54）和塔格尔（世界第74）"
+    括号是配平的，却在括注上停住——括注是修饰语，被它修饰的成分正要拿去
+    做主语，谓语被砍掉了。7.26 的布拉格站和汉堡站两张今晚焦点卡都这么印了
+    （textfit 顶头的注释早把这一形状列为反例，只是当时只查了配平）。
+    """
+    from tennislive.render.textfit import _short_complete
+
+    final = "布拉格公开赛今天决出冠军。斯尼古尔（世界第54）和塔格尔（世界第74），谁把这一周换成奖杯？"
+    picked = _short_complete(final, 36)
+
+    assert not picked.endswith("）"), picked
+    # 退到删掉排名括注的版本，钩子还在
+    assert picked == "布拉格公开赛今天决出冠军。斯尼古尔和塔格尔，谁把这一周换成奖杯"
+
+    # 没被截断的整句以括注收尾则不受影响
+    assert _short_complete("他今天赢了（首胜）", 40) == "他今天赢了（首胜）"
+
+
+def test_short_complete_never_cuts_a_chinese_sentence_down_to_a_foreign_name():
+    """中文原句裁出一段纯外文，那不是话，是名字。
+
+    按空格拼前缀这一招是给以空格分词的文本准备的；中文句子里唯一带空格的
+    通常是外文人名，于是它从人名中间停下来，还因为全是拉丁字母、末字不在
+    悬空表里而被判成"完整"——"Magali Kempen / Alexandra"就这么当看点印在
+    了 7.26 汉堡站的女双决赛卡上。
+    """
+    from tennislive.render.textfit import _short_complete
+
+    doubles = ("冠军只差这一场双打决赛。Magali Kempen / Alexandra Panova"
+               "与雅库波维奇 / Nina Radisic，看谁的默契先上线。")
+    picked = _short_complete(doubles, 36)
+
+    assert picked == "冠军只差这一场双打决赛"
+
+    # 本来就是外文的句子仍然按空格裁，不受影响
+    assert _short_complete("Alpha Beta Gamma Delta Epsilon Zeta", 20) == "Alpha Beta Gamma"
+
+
+def test_doubles_schedule_insight_leads_with_a_clause_that_stands_alone():
+    """双打那句不能把四个人名放句首。
+
+    36 字的看点行连名字都装不下，裁下来就是半个人名。和决赛那句是同一个
+    毛病：第一个分句必须能单独读完。
+    """
+    from tennislive.render.story import schedule_insight
+    from tennislive.render.textfit import _short_complete
+
+    doubles = make_match(
+        home_name="Magali Kempen", away_name="Dalila Jakupovic",
+        discipline="Women's Doubles", round_name="Final",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+    )
+    line = schedule_insight(doubles)
+    head = line.split("。")[0]
+
+    assert len(head) <= 20, f"第一个分句太长，裁不出来：{head}"
+    assert "冠军" in head
+    fitted = _short_complete(line, 36)
+    assert fitted and not fitted.strip().endswith("/"), fitted
+
+
+def test_grounded_takeaway_says_the_winner_took_the_stake_not_deferred_it():
+    """赢下一场比赛是**兑现**了这一轮的赌注，不是把它推给下一场。
+
+    原文是"{winner}把{stakes}的悬念留到了下一场"，方向整个反了；决赛尤其
+    离谱——决赛本身就是最后一场，没有"下一场"。7.26 的头条卡上印着阿利斯
+    夺冠（基茨比厄尔决赛 6-4 7-6），下面一行却说他"把冠军奖杯的悬念留到了
+    下一场"。
+    """
+    from tennislive.render.narrative import _grounded_takeaway
+
+    final = make_match(
+        sets=((6, 4), (7, 6)), tiebreaks=(None, (8, 6)),
+        round_name="Final", winner=0,
+    )
+    line = _grounded_takeaway(final)
+
+    assert "留到了下一场" not in line, line
+    assert "拿下冠军" in line
+
+    semi = make_match(
+        sets=((6, 4), (6, 3)), tiebreaks=(None, None),
+        round_name="Semifinal", winner=0,
+    )
+    assert "拿下决赛门票" in _grounded_takeaway(semi)
+
+
+def test_cover_headline_never_breaks_a_player_name_across_lines():
+    """长译名不许被换行劈成两截。
+
+    中文没有词间空格，浏览器可以在任意两个汉字之间断开。原来的均衡换行只认
+    标点："爆冷：塔格尔掀翻克雷吉茨科娃"整句只有一个"："可断，左边才 3 个字、
+    过不了均衡门槛，于是整句交给 CSS——7.26 的封面就印成了
+    "爆冷：塔格尔掀翻克雷 / 吉茨科娃"，姓氏断成两截。
+    """
+    from tennislive.render.webcards import (
+        _balanced_headline_lines,
+        _cover_headline_html,
+    )
+
+    names = ("塔格尔", "克雷吉茨科娃")
+    headline = "爆冷：塔格尔掀翻克雷吉茨科娃"
+
+    assert _balanced_headline_lines(headline, names) == ["爆冷：塔格尔掀翻", "克雷吉茨科娃"]
+    # 没有名字可依据时行为不变（仍然只认标点）
+    assert _balanced_headline_lines(headline) == [headline]
+
+    # 万一某一行仍然过宽，名字本身也要是一个 nowrap 单元
+    html_out = _cover_headline_html("塔格尔掀翻克雷吉茨科娃夺冠", names)
+    assert '<span class="headline-keep">克雷吉茨科娃</span>' in html_out
+
+
+def test_headline_name_protection_prefers_the_longest_match():
+    """"克雷"不能抢在"克雷吉茨科娃"前面命中，否则名字照样断开。"""
+    from tennislive.render.webcards import _headline_line_html
+
+    out = _headline_line_html("掀翻克雷吉茨科娃", ("克雷", "克雷吉茨科娃"))
+
+    assert "克雷吉茨科娃" in out
+    assert '>克雷<' not in out
+
+
+def test_every_cover_headline_line_fits_the_measured_one_line_width():
+    """拆出来的每一行都必须真的放得下，否则浏览器接手、在汉字之间乱断。
+
+    阈值原来写死 12，是按老页边距（64px）调的；改版把 daily 的页边距放宽到
+    72px，框窄成 550px，一行只放得下 10.0。于是 11.55 的
+    "爆冷：阿利斯掀翻布勃利克"被判为"放得下"、直接交给 CSS，裂成了
+    "爆冷：阿利斯掀 / 翻布勃利克"（7.26 封面）。
+    """
+    from tennislive.render.webcards import (
+        _HEADLINE_ONE_LINE_WIDTH,
+        _balanced_headline_lines,
+        _headline_display_width,
+    )
+
+    cases = [
+        ("爆冷：阿利斯掀翻布勃利克", ("阿利斯", "布勃利克")),
+        ("爆冷：塔格尔掀翻克雷吉茨科娃", ("塔格尔", "克雷吉茨科娃")),
+        ("谢里夫退赛，科尔帕奇晋级女单决赛", ("谢里夫", "科尔帕奇")),
+        ("郑钦文力克斯瓦泰克闯进八强", ("郑钦文", "斯瓦泰克")),
+    ]
+    too_wide = []
+    for headline, names in cases:
+        for line in _balanced_headline_lines(headline, names):
+            width = _headline_display_width(line)
+            if width > _HEADLINE_ONE_LINE_WIDTH:
+                too_wide.append(f"{headline} -> {line!r} 宽 {width:.2f}")
+    assert not too_wide, "这些行放不下，会被浏览器乱断：\n" + "\n".join(too_wide)
+
+    # 放得下的短标题不该被拆
+    assert _balanced_headline_lines("阿利斯掀翻布勃利克", ("阿利斯", "布勃利克")) == [
+        "阿利斯掀翻布勃利克"
+    ]
+
+
+def test_score_row_marks_the_side_that_retired():
+    """退赛的比分要在**退出那一方**的行上标出来。
+
+    6-1 2-0 就这么摆着，看起来像一串没打完的比分，读者无从知道那个 2-0 是
+    被中断的一盘（7.26 赛果卡上的科尔帕奇/谢里夫）。按网球记分惯例，标记
+    跟着退赛的人走、贴在比分行上——它限定的是这串比分。
+    """
+    from tennislive.render.webcards import _side_html
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    winner_row = _side_html(retired, 0, 2)
+    loser_row = _side_html(retired, 1, 2)
+
+    assert "退赛" in loser_row
+    assert "退赛" not in winner_row, "标记跑到赢家那一行了"
+
+    # 不战而胜连比分都没有，两行光秃秃更需要这个标记
+    walkover = make_match(
+        sets=(), tiebreaks=(), status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert "退出" in _side_html(walkover, 1, 0)
+    assert "退出" not in _side_html(walkover, 0, 0)
+
+    # 正常完赛不加任何标记
+    normal = make_match(
+        sets=((6, 4), (6, 3)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert "退赛" not in _side_html(normal, 1, 2)
+    assert "退出" not in _side_html(normal, 1, 2)
+
+    # 赛程卡不带比分，也就不该出现比分限定语
+    assert "退赛" not in _side_html(retired, 1, 0, with_sets=False)
+
+
+def test_pillow_fallback_uses_the_same_retirement_rule():
+    """Pillow 兜底和 HTML 渲染器不能各说各话。
+
+    generate_cards() 优先走 webcards，cards.py 只在 Chromium 挂掉时顶上；
+    两边对"谁退的"判断不一致的话，同一场比赛会因为渲染路径不同而标在不同行。
+    """
+    from tennislive.render.cards import _retirement_label
+    from tennislive.render.webcards import _retirement_note
+
+    for status, expected in (
+        (MatchStatus.RETIRED, "退赛"),
+        (MatchStatus.WALKOVER, "退出"),
+        (MatchStatus.FINISHED, ""),
+    ):
+        match = make_match(
+            sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+            status=status, winner=0,
+        )
+        for side in (0, 1):
+            label = _retirement_label(match, side)
+            in_html = expected and expected in _retirement_note(match, side)
+            assert bool(label) == bool(in_html), (
+                f"{status} side={side}: Pillow={label!r} 与 HTML 不一致"
+            )
+            if side == 1:
+                assert label == expected
+            else:
+                assert label == ""
+
+
+def test_headline_match_still_appears_when_the_focus_page_carries_it(
+    sample_digest, monkeypatch
+):
+    """有焦点复盘那天，头条比赛不该在赛果速递里再出现一遍。
+
+    撤掉头条页之后，头条比赛要落回赛果速递，否则整份日报除了封面就再也看不
+    到这场。但焦点复盘已经把它讲完整了的那天，速递里再排一次就是重复。
+    """
+    from copy import deepcopy
+
+    from tennislive.render import webcards
+    from tennislive.render.titles import daily_lead_match
+
+    digest = deepcopy(sample_digest)
+    lead = daily_lead_match(digest)
+    assert lead is not None
+    lead.stats = MatchStats(
+        source="licensed-test",
+        total_points_won=StatPair(80, 70),
+    )
+
+    seen: list[str] = []
+    original = webcards.scoreboard_body
+
+    def capture(matches, *args, **kwargs):
+        seen.extend(m.match_id for m in matches)
+        return original(matches, *args, **kwargs)
+
+    monkeypatch.setattr(webcards, "scoreboard_body", capture)
+    monkeypatch.setattr(webcards, "_screenshot_pages", lambda pages, _t: pages)
+
+    kinds = [kind for kind, _body in webcards.generate_deck(digest, "07.16 · 周四")]
+
+    assert "focus" in kinds
+    assert lead.match_id not in seen, "焦点复盘讲过了，速递里不该重复"

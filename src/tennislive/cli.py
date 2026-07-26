@@ -699,9 +699,14 @@ def cmd_digest(args) -> int:
         from .render.xiaohongshu import record_quiz
 
         record_quiz()
-        from .render.editorial_memory import record_daily_lead
+        from .render.editorial_memory import record_daily_focus, record_daily_lead
 
         record_daily_lead(digest)
+        # 焦点复盘和头条经常不是同一场，两份都要记，否则焦点没人拦得住它
+        # 连着两天挑中同一场比赛。
+        from .render.focus import select_focus_match
+
+        record_daily_focus(select_focus_match(digest), digest.today)
     except Exception as e:  # noqa: BLE001
         logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
 
