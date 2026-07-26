@@ -41,6 +41,13 @@ _CUT_PUNCT = "。！？；;，,"
 _KEEP_TAIL_PUNCT = "？！"
 
 
+_CJK_RE = re.compile(r"[一-鿿]")
+
+
+def _has_cjk(text: str) -> bool:
+    return bool(_CJK_RE.search(text))
+
+
 def _is_complete_thought(piece: str, *, truncated: bool) -> bool:
     """Can this fragment be read on its own without the text we cut away?"""
     if not truncated:
@@ -52,6 +59,12 @@ def _is_complete_thought(piece: str, *, truncated: bool) -> bool:
         return False
     for opener, closer in _BRACKET_PAIRS:
         if piece.count(opener) != piece.count(closer):
+            return False
+        # 括号配平还不够：以一个**闭合**的括注收尾同样是半句话。括注是修饰语，
+        # 被它修饰的那个成分正要拿去做主语/宾语，谓语却被砍掉了——
+        # "……斯尼古尔（世界第54）和塔格尔（世界第74）"就这样印上了 7.26 的
+        # 布拉格站和汉堡站（顶头的注释早就把这一形状列为反例，只是当时只查了配平）。
+        if piece.endswith(closer):
             return False
     if piece.count(_QUOTE_MARKS[0]) != piece.count(_QUOTE_MARKS[1]):
         return False
@@ -114,8 +127,13 @@ def _short_complete(text: str, limit: int) -> str:
             if len(candidate) > limit:
                 break
             built = candidate
-        if built and _is_complete_thought(built, truncated=True):
-            return built
+        # 按空格拼前缀这一招是给以空格分词的文本准备的。中文句子里唯一带空格的
+        # 通常是外文人名，于是它会从人名中间停下来，还因为全是拉丁字母、末字不在
+        # 悬空表里而被判成"完整"——"Magali Kempen / Alexandra"就这么当看点印了
+        # 出去。中文原句裁出一段纯外文，那不是话，是名字。
+        if built and (_has_cjk(built) or not _has_cjk(cleaned)):
+            if _is_complete_thought(built, truncated=True):
+                return built
     return ""
 
 

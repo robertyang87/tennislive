@@ -3615,3 +3615,67 @@ def test_tonight_page_never_repeats_the_same_reason_line():
 
     assert len(reasons) == len(matches), reasons
     assert len(set(reasons)) == len(reasons), f"看点重复了：{reasons}"
+
+
+def test_short_complete_rejects_a_fragment_ending_in_a_closed_parenthetical():
+    """以闭合括注收尾同样是半句话。
+
+    原来只查括号配不配平。"……斯尼古尔（世界第54）和塔格尔（世界第74）"
+    括号是配平的，却在括注上停住——括注是修饰语，被它修饰的成分正要拿去
+    做主语，谓语被砍掉了。7.26 的布拉格站和汉堡站两张今晚焦点卡都这么印了
+    （textfit 顶头的注释早把这一形状列为反例，只是当时只查了配平）。
+    """
+    from tennislive.render.textfit import _short_complete
+
+    final = "布拉格公开赛今天决出冠军。斯尼古尔（世界第54）和塔格尔（世界第74），谁把这一周换成奖杯？"
+    picked = _short_complete(final, 36)
+
+    assert not picked.endswith("）"), picked
+    # 退到删掉排名括注的版本，钩子还在
+    assert picked == "布拉格公开赛今天决出冠军。斯尼古尔和塔格尔，谁把这一周换成奖杯"
+
+    # 没被截断的整句以括注收尾则不受影响
+    assert _short_complete("他今天赢了（首胜）", 40) == "他今天赢了（首胜）"
+
+
+def test_short_complete_never_cuts_a_chinese_sentence_down_to_a_foreign_name():
+    """中文原句裁出一段纯外文，那不是话，是名字。
+
+    按空格拼前缀这一招是给以空格分词的文本准备的；中文句子里唯一带空格的
+    通常是外文人名，于是它从人名中间停下来，还因为全是拉丁字母、末字不在
+    悬空表里而被判成"完整"——"Magali Kempen / Alexandra"就这么当看点印在
+    了 7.26 汉堡站的女双决赛卡上。
+    """
+    from tennislive.render.textfit import _short_complete
+
+    doubles = ("冠军只差这一场双打决赛。Magali Kempen / Alexandra Panova"
+               "与雅库波维奇 / Nina Radisic，看谁的默契先上线。")
+    picked = _short_complete(doubles, 36)
+
+    assert picked == "冠军只差这一场双打决赛"
+
+    # 本来就是外文的句子仍然按空格裁，不受影响
+    assert _short_complete("Alpha Beta Gamma Delta Epsilon Zeta", 20) == "Alpha Beta Gamma"
+
+
+def test_doubles_schedule_insight_leads_with_a_clause_that_stands_alone():
+    """双打那句不能把四个人名放句首。
+
+    36 字的看点行连名字都装不下，裁下来就是半个人名。和决赛那句是同一个
+    毛病：第一个分句必须能单独读完。
+    """
+    from tennislive.render.story import schedule_insight
+    from tennislive.render.textfit import _short_complete
+
+    doubles = make_match(
+        home_name="Magali Kempen", away_name="Dalila Jakupovic",
+        discipline="Women's Doubles", round_name="Final",
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+    )
+    line = schedule_insight(doubles)
+    head = line.split("。")[0]
+
+    assert len(head) <= 20, f"第一个分句太长，裁不出来：{head}"
+    assert "冠军" in head
+    fitted = _short_complete(line, 36)
+    assert fitted and not fitted.strip().endswith("/"), fitted

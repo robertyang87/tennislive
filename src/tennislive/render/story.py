@@ -203,9 +203,12 @@ def schedule_insight(match: Match, today: date | None = None) -> str:
     if match.is_doubles:
         sides = " / ".join(player_zh(p.name) for p in match.home[:2])
         opponents = " / ".join(player_zh(p.name) for p in match.away[:2])
+        # 第一个分句必须能单独成句：四个人名放句首，36 字的看点行连名字都装不下，
+        # 裁下来就是"Magali Kempen / Alexandra"——半个人名当看点印出去
+        # （2026-07-26 汉堡站女双决赛的成品）。和决赛那句是同一个毛病。
         if target == "下一轮席位":
-            return f"双打最怕默契还没上线：{sides}与{opponents}，首轮就得把组合感打出来。"
-        return f"{sides}与{opponents}只差这一场，就能把默契换成{target}。"
+            return f"双打首轮先看默契。{sides}与{opponents}，组合感能不能马上打出来。"
+        return f"{target}只差这一场双打决赛。{sides}与{opponents}，看谁的默契先上线。"
 
     cn = chinese_players(match)
     if cn:
