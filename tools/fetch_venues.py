@@ -32,7 +32,10 @@ VENUES = [
     ("athens-parthenon.jpg", "File:Parthenon Athens.jpg", None),
     ("kitzbuhel-panorama.jpg", "File:Kitzbuehel Panorama.jpg", None),
     ("prague-castle-panorama.jpg", "File:Prague castle panorama.jpg", None),
-    ("estoril-coast.jpg", "File:Estoril - panoramio.jpg", None),
+    # 埃斯托里尔原来是 File:Estoril - panoramio.jpg，一段海岸步道加铁轨，既不是
+    # 地标也不是球场，整页铺开像个火车站。Commons 上也没有中央球场——卡西诺那张
+    # 建筑只占中间一条，上下全是天空和草坪。改用赛事官方媒体，见 OFFICIAL_VENUES。
+    ("estoril-centre-court.jpg", None, None),
     # 汉堡：原来是一片屋顶远景，既不是地标也不是球场。罗森布洛姆中央球场那几张
     # 都不能用——"Centre Court Am Rothenbaum"那张画面是场外纪念品帐篷，顶棚那张
     # 只见钢索不见球场，球场全景是 2200×590 的宽幅（cover 到 3:4 只剩中间 20%，
@@ -81,6 +84,23 @@ VENUES = [
      "File:2023 09 09 arne mueseler 14 40 13 00734-Verbessert-RR (53284505824).jpg", None),
     ("usopen-arthur-ashe-exterior.jpg", "File:Arthur Ashe Stadium, July 7, 2018.jpg", None),
 ]
+
+# 赛事官方媒体来源的场馆图。有些站 Commons 上根本没有能用的主球场照片，官网
+# 的媒体库里却有——埃斯托里尔就是这样。这类图不在 Commons，抓取脚本不去重取，
+# 只负责**保住出处**：fetch_set() 会按 VENUES 重建 credits.json，不在这里登记
+# 就每跑一次 CI 冲掉一次。
+#
+# 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
+# unverified，发布前的权利判断由人工检验环节负责。
+OFFICIAL_VENUES = {
+    "estoril-centre-court.jpg": {
+        "title": "Millennium Estoril Open · estadio2",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Millennium Estoril Open",
+        "page": "https://estoril-open-media.s3.amazonaws.com/images/"
+                "605e1eb638ec06001c0f674b-estadio2.jpeg",
+    },
+}
 
 # 球员图：按 Commons 人物分类自动挑选（分类内都是本人照片，比全文检索准）
 PLAYERS = [
@@ -324,9 +344,20 @@ def fetch_set(
         dest = out_dir / out_name
         # 已入库的图不再重选：避免署名与图片错位，也少打 API（限流敏感）
         if dest.exists():
-            if out_name in old_credits:
-                credits[out_name] = old_credits[out_name]
+            # 官方媒体来源的出处以 OFFICIAL_VENUES 为准，不看盘上那份旧的
+            credit = OFFICIAL_VENUES.get(out_name) or old_credits.get(out_name)
+            if credit:
+                credits[out_name] = credit
             print(f"KEEP {out_name}")
+            continue
+        if out_name in OFFICIAL_VENUES:
+            # 官方媒体不是 Commons，这里没有可自动重取的路径；说清楚再往下走，
+            # 别让它掉进 pick_by_search(None) 报一个看不懂的错。
+            failed.append(
+                f"{out_name}: 官方媒体来源的图不在盘上，需要人工从 "
+                f"{OFFICIAL_VENUES[out_name]['page']} 重新取"
+            )
+            print(f"MISS {out_name}: 官方媒体来源，脚本不自动重取")
             continue
         try:
             if pinned_title:
@@ -369,6 +400,11 @@ def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
     丢弃，它会照常生效并印错出处。缺出处只是不显示，错出处是把别人的作品
     记到另一个人名下。所以记录的 title 和 VENUES 里钉的文件名对不上时，
     按钉的那个重取。
+
+    图被删掉时也要管：换站名（estoril-coast → estoril-centre-court）之后旧条目
+    还留在 credits.json 里，指着一个盘上已经没有的文件。它不会印错什么，但
+    "每个 credits 条目都在 VENUES 里登记"这条不变量会被它破坏，于是下次真的
+    有图漏登记时反而看不出来。一并清掉。
     """
     credits_path = out_dir / "credits.json"
     try:
@@ -377,8 +413,17 @@ def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
         credits = {}
     required = ("title", "license", "artist", "page")
     failed = []
+    for gone in [name for name in credits if not (out_dir / name).exists()]:
+        print(f"DROP   {gone}: 图已不在盘上，清掉它的 credits")
+        credits.pop(gone)
     for out_name, pinned_title, _term in wanted:
         if not (out_dir / out_name).exists():
+            continue
+        if out_name in OFFICIAL_VENUES:
+            # 官方媒体：出处就写在 OFFICIAL_VENUES 里，不查 API
+            if credits.get(out_name) != OFFICIAL_VENUES[out_name]:
+                credits[out_name] = dict(OFFICIAL_VENUES[out_name])
+                print(f"CREDIT {out_name} <- 赛事官方媒体（{OFFICIAL_VENUES[out_name]['artist']}）")
             continue
         recorded = credits.get(out_name) or {}
         complete = all(recorded.get(k) for k in required)
