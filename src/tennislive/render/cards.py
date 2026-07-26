@@ -1,8 +1,10 @@
 """晨报卡片图生成（Pillow）：小红书 3:4 竖版（1080x1440）.
 
 视觉体系（小红书审美）：
-- 深绿渐变背景 + 右上装饰弧线，品牌网球荧光黄做强调色
-- 每场比赛一个圆角面板（中国球员场次用荧光黄描边高亮）
+- 默认 paper 主题：暖沙中性底 + 赤陶红单一强调色，绿只剩 logo 球身；
+  与 webcards.py 的 html.paper 同一套色值（Chromium 挂了才走这条路，
+  两边必须一致）。dark/light 是旧主题，留给 flash 卡等其他调用方。
+- 每场比赛一个圆角面板（中国球员场次用强调色描边高亮）
 - 栏目头中英混排（大黄字 + 英文小字），日期用 "7.16 · 周四"
 - 内容少时自动垂直居中，不留大面积空白
 
@@ -51,8 +53,10 @@ ASSETS = Path(__file__).resolve().parents[3] / "assets"
 BRAND = "网球时差"
 COLUMN = "网球晨报"
 
-# 主题：dark=品牌深绿（默认），light=小红书奶油风
-# BTN_TEXT 固定深色（荧光按钮上的字两种主题都要深）
+# 主题：dark=品牌深绿，light=小红书奶油风，paper=日报卡暖沙纸底（默认）
+# BTN_TEXT 是按钮上的字色：深绿/奶油底上的荧光按钮要深字，paper 的
+# 赤陶红按钮要浅字，所以它跟着主题走（set_theme 会 globals().update，
+# 三个主题都必须给值，否则切过一次就留在上一个主题的值上）。
 _THEMES = {
     "dark": dict(
         BG_TOP=(14, 44, 36),
@@ -71,6 +75,14 @@ _THEMES = {
         FOOT=(110, 128, 120),
         STAR_PILL=(38, 92, 74),
         STAR_PILL_HOT=(176, 122, 20),
+        BTN_TEXT=(10, 26, 20),
+        CARD_BG=(250, 251, 249),
+        CARD_TEXT=(18, 32, 25),
+        CARD_GREY=(128, 139, 132),
+        CARD_LINE=(227, 232, 228),
+        WIN_BAND=(216, 238, 210),
+        WIN_GREEN=(13, 96, 53),
+        CHIP_GREEN=(11, 77, 47),
     ),
     "light": dict(
         BG_TOP=(250, 247, 239),
@@ -89,13 +101,51 @@ _THEMES = {
         FOOT=(160, 168, 160),
         STAR_PILL=(120, 158, 60),
         STAR_PILL_HOT=(214, 154, 26),
+        BTN_TEXT=(10, 26, 20),
+        CARD_BG=(250, 251, 249),
+        CARD_TEXT=(18, 32, 25),
+        CARD_GREY=(128, 139, 132),
+        CARD_LINE=(227, 232, 228),
+        WIN_BAND=(216, 238, 210),
+        WIN_GREEN=(13, 96, 53),
+        CHIP_GREEN=(11, 77, 47),
+    ),
+    # paper：与 webcards.py 的 html.paper 同一套色值（A2 暖沙浅底）。
+    # Chromium 挂掉时会退到这条 Pillow 路径，两边配色必须一致，否则
+    # 一次渲染失败就发出深绿+荧光黄绿的卡，与当期其余内容对不上。
+    # 绿只剩 BALL（logo 球身），不再做任何高亮。
+    "paper": dict(
+        BG_TOP=(242, 237, 226),
+        BG_BOTTOM=(233, 226, 210),
+        PANEL=(252, 250, 244),
+        PANEL_HI=(250, 246, 236),
+        PANEL_LINE=(229, 214, 169),   # --divider 的金色细线
+        DECO=(226, 218, 200),
+        ACCENT=(194, 72, 43),         # --coral 同色相加深版
+        BALL=(195, 220, 74),          # 品牌球身：整屏唯一的绿
+        OUTLINE=(194, 72, 43),
+        WHITE=(30, 51, 40),           # --pagetext
+        GREY=(125, 140, 132),
+        SCORE_GREY=(100, 116, 107),
+        RED=(194, 72, 43),
+        FOOT=(149, 153, 143),
+        STAR_PILL=(229, 214, 169),
+        STAR_PILL_HOT=(213, 180, 77),
+        BTN_TEXT=(250, 246, 236),     # 赤陶红按钮上用浅字
+        CARD_BG=(252, 250, 244),
+        CARD_TEXT=(30, 51, 40),
+        CARD_GREY=(125, 140, 132),
+        CARD_LINE=(229, 214, 169),
+        WIN_BAND=(248, 238, 230),
+        WIN_GREEN=(194, 72, 43),
+        CHIP_GREEN=(194, 72, 43),
     ),
 }
 BTN_TEXT = (10, 26, 20)
 
 
 def set_theme(name: str) -> None:
-    """切换配色主题（dark/light），直接更新模块级颜色常量."""
+    """切换配色主题（dark/light/paper），直接更新模块级颜色常量."""
     globals().update(_THEMES.get(name, _THEMES["dark"]))
 
 
@@ -554,7 +604,9 @@ def _card_focus(fonts: _Fonts, date_label: str, matches: list[Match]) -> Image.I
 # 胜者以色带+加粗强调；卡内三层结构（元信息条 / 球员行 / 比分列）。
 # 叠加 card-xiaohongshu 的层级要求：当日最重磅一场放大为头条卡。
 
-# 白卡配色（主题无关，深浅背景下都保持官方板的对比度）
+# 白卡配色的默认值（import 期先有值，set_theme 会按主题覆盖）。
+# 这七个常量曾经写着"主题无关"、不进 _THEMES，结果 paper 主题下赛果卡的
+# 胜方底色、比分和"今日头条"药丸仍然是绿的——底色都换成暖沙了，绿块还在。
 CARD_BG = (250, 251, 249)
 CARD_TEXT = (18, 32, 25)
 CARD_GREY = (128, 139, 132)
@@ -1053,7 +1105,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     """生成晨报 5 卡，返回文件路径列表（内容不足时自动省略）."""
     from .titles import pick_headline_auto
 
-    set_theme(os.environ.get("TENNISLIVE_THEME", "dark"))
+    from .webcards import daily_card_theme
+
+    set_theme(daily_card_theme())
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     for old in outdir.glob("card_*.*"):
@@ -1078,9 +1132,9 @@ def generate_cards(digest: Digest, outdir: str | Path) -> list[Path]:
     cover_visual = None
     cover_fallback_reason: str | None = None
     try:
-        from .webcards import generate_deck
+        from .webcards import daily_card_theme, generate_deck
 
-        theme = os.environ.get("TENNISLIVE_THEME", "dark")
+        theme = daily_card_theme()
         visual_cache = outdir.parent / ".cover-visual-cache"
         if strict_cover and not cover_fetch_enabled:
             raise RuntimeError("严格封面模式要求启用头条比赛图片核验")

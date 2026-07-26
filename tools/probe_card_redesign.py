@@ -8,12 +8,19 @@
 输出到 --out 目录；渲染效果须人工亲眼核对后再决定是否落地 cards.py。
 """
 import argparse
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-CJK_B = "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"
-CJK_R = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from tennislive.render.cards import _find_font  # noqa: E402
+
+# 字体走生产同一套解析（系统 Noto CJK → 仓库自带 NotoSansSC 子集），
+# 原来写死的 /usr/share/fonts/opentype/... 在没装 fonts-noto-cjk 的机器上
+# 直接 OSError，看不到样张。
+CJK_B, _B_IDX = _find_font(bold=True)
+CJK_R, _R_IDX = _find_font(bold=False)
 
 W, H = 1080, 1440
 ROWS = [("总得分", "17", "37"), ("一发成功率", "64%", "44%"),
@@ -23,11 +30,11 @@ KEY_ROW = "破发点"  # 唯一点亮的决胜数据
 
 
 def fb(s):
-    return ImageFont.truetype(CJK_B, s)
+    return ImageFont.truetype(CJK_B, s, index=_B_IDX)
 
 
 def fr(s):
-    return ImageFont.truetype(CJK_R, s)
+    return ImageFont.truetype(CJK_R, s, index=_R_IDX)
 
 
 def draw_card(t):
@@ -105,6 +112,26 @@ CHARCOAL = dict(bg=(22, 24, 28), ink=(238, 238, 234), sub=(138, 144, 150),
                 line=(46, 50, 56), accent=(216, 180, 112), panel=(32, 35, 40),
                 winbg=(30, 33, 39), flagA=(210, 210, 206), flagB=(96, 100, 106))
 
+# —— 与「网球有故事」知识贴对齐的两版 ——
+# 知识贴的色板在 render/webcards.py 的 CSS 变量里：:root 是深绿底
+# （--ground0 #061D17 → --ground1 #0B3B2C），html.light 是暖沙底
+# （#F2EDE2 → #E9E2D2）。两套共用同一批强调色：--coral #FF7657、
+# --gold #D5B44D、--ivory #F7F3E8。日报卡要"中性底 + 弱化绿"，所以
+# 底色不能照抄深绿，但**强调色可以完全共用**——这就是一致性的落点。
+#
+# SAND：直接用 html.light 的 ground/pagetext/reason/fade/divider，
+#   accent 取 --coral 的同色相深色版（#C2482B，色相 11° 对 13°），
+#   因为纯 #FF7657 压在沙底上只有 2.2:1，数字会发飘。
+# COAL：中性暖炭底，accent 用**一模一样的 --coral #FF7657**（对比度
+#   6.8:1），跨栏目共用同一个色值。
+# 金色（#D5B44D）两版都只走细线，绝不做文字——它在沙底上只有 1.7:1。
+SAND = dict(bg=(242, 237, 226), ink=(30, 51, 40), sub=(77, 97, 87),
+            line=(229, 214, 169), accent=(194, 72, 43), panel=(231, 223, 206),
+            winbg=(237, 231, 219), flagA=(30, 51, 40), flagB=(149, 153, 143))
+COAL = dict(bg=(24, 26, 25), ink=(247, 243, 232), sub=(154, 168, 159),
+            line=(58, 56, 44), accent=(255, 118, 87), panel=(34, 37, 35),
+            winbg=(31, 34, 32), flagA=(247, 243, 232), flagB=(110, 118, 112))
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -112,9 +139,10 @@ def main():
     args = ap.parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    draw_card(IVORY).save(out / "focus_ivory.png")
-    draw_card(CHARCOAL).save(out / "focus_charcoal.png")
-    print(f"渲染完成 → {out}/focus_ivory.png, focus_charcoal.png")
+    for name, theme in (("ivory", IVORY), ("charcoal", CHARCOAL),
+                        ("sand", SAND), ("coal", COAL)):
+        draw_card(theme).save(out / f"focus_{name}.png")
+    print(f"渲染完成 → {out}/focus_{{ivory,charcoal,sand,coal}}.png")
 
 
 if __name__ == "__main__":

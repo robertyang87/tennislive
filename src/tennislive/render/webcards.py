@@ -15,6 +15,7 @@ from __future__ import annotations
 import base64
 import html
 import logging
+import os
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -288,6 +289,29 @@ html.light {
   --reason:#4D6157;
   --cardshadow:0 10px 26px rgba(90,80,50,.16);
   --pagetext:#1E3328;
+}
+/* ---------- paper：日报卡专用（封面/赛果/焦点/今晚） ----------
+   与「网球有故事」知识贴共用同一支强调色。知识贴走 :root 深绿底 +
+   --coral #FF7657；日报卡要中性底，纯 #FF7657 压在沙底上只有 2.2:1，
+   比分会发飘，所以取同色相加深版 #C2482B（色相 11°对13°，对比度 4.3:1）。
+   金色 #D5B44D 只做细线：它在沙底上是 1.7:1，做文字必糊。
+   绿从高亮色降为墨色（--neon → 墨绿 #1E3328），只剩 logo 球身是绿的。
+   底色与 pagetext/reason/fade/divider 直接取知识贴 html.light 的同名值。 */
+html.paper {
+  --ground0:#F2EDE2; --ground1:#E9E2D2;
+  --ivory:#FDFCF8; --fade:#95998F;
+  --gold:#D5B44D; --gold-soft:rgba(213,180,77,.30);
+  --flash:#C2482B;
+  --neon:#1E3328; --sky:#4D6157; --coral:#C2482B;
+  --panel:rgba(255,253,248,.55); --panel-strong:rgba(255,253,248,.78);
+  --panel-border:rgba(213,180,77,.34); --panel-text:#1E3328;
+  --panel-muted:#7D8C84; --panel-soft:rgba(194,72,43,.07);
+  --divider:rgba(213,180,77,.42); --score-win:#C2482B;
+  --reason:#4D6157;
+  --courtline:rgba(30,51,40,.028);
+  --cardshadow:none;
+  --pagetext:#1E3328;
+  --section-accent:#C2482B;
 }
 body {
   width:@W@px; height:@H@px; overflow:hidden; position:relative;
@@ -1002,17 +1026,124 @@ html.light .cta-btn { color:#F2F7EF; }
 .rrow .pts { font-family:'Barlow Condensed'; font-weight:500; font-size:24px; color:var(--panel-muted); line-height:1; }
 .rrow .mv { font-family:'Barlow Condensed'; font-weight:600; font-size:26px; width:72px; text-align:right; line-height:1; }
 .mv.up { color:var(--score-win); } .mv.down { color:var(--flash); } .mv.flat { color:var(--panel-muted); }
+
+/* ---------- paper 的结构性收敛 ----------
+   只在 html.paper 下生效，知识贴/科普片仍走 :root，一个像素都不动。 */
+
+/* 顶部彩虹条：日报卡去掉，知识贴保留自己的那条 */
+html.paper body::before, html.paper .cover::after { display:none; }
+
+/* 一屏一个强调色：各栏目不再各占一色（原来 neon/coral/sky/gold 四色轮转，
+   一套卡翻下来就是一条彩虹） */
+html.paper .results-page, html.paper .china-page, html.paper .tonight-page,
+html.paper .focus-page, html.paper .story-page, html.paper .rankings-page,
+html.paper .insight-page, html.paper .discussion-page, html.paper .media-page {
+  --section-accent:#C2482B; }
+
+/* 大留白：内页那层深色球场底图压到几乎看不见 */
+html.paper .poster:not(.cover)::before { opacity:.05; }
+html.paper .poster.tonight-page::before { opacity:.32; }
+html.paper .poster.tonight-page::after { opacity:.10; }
+html.paper .poster { padding:44px 72px 26px; }
+html.paper .poster:not(.cover) .footer { left:72px; right:72px; }
+html.paper .poster:not(.cover)>.save-badge { right:72px; }
+
+/* 细线代替色块：面板去底去阴影，只留一条上缘线 */
+html.paper .card { background:transparent; border:0;
+  border-top:1px solid var(--divider); border-radius:0; box-shadow:none;
+  backdrop-filter:none; padding:10px 8px 12px; }
+html.paper .card.hero { background:transparent; border-top:2px solid var(--section-accent);
+  padding:16px 8px 18px; }
+html.paper .compare-grid { background:transparent; border:0;
+  border-top:1px solid var(--divider); border-radius:0; box-shadow:none;
+  backdrop-filter:none; }
+html.paper .compare-row b { padding-left:0; }
+html.paper .compare-head { padding:0; }
+
+/* 一屏只点亮比分与决胜数据：
+   胜方整列的色块高亮拿掉，只留数字本身的颜色；技术统计里唯一点亮的是
+   决胜那一行（见 _key_stat_label），其余全部中性。 */
+html.paper .side.won { background:transparent; box-shadow:inset 3px 0 0 var(--section-accent); }
+html.paper .compare-row .winner { background:transparent; }
+html.paper .compare-row:not(.key) .winner { color:var(--pagetext); }
+html.paper .compare-row.key { background:var(--panel-soft); }
+html.paper .compare-row.key b { color:var(--pagetext); }
+html.paper .compare-row.key .winner { color:var(--section-accent); }
+
+/* 实心徽章 → 描边徽章 */
+html.paper .tour-level, html.paper .chip, html.paper .rating {
+  background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px var(--section-accent); }
+html.paper .chip-green, html.paper .chip-gold, html.paper .chip-red {
+  color:var(--section-accent); }
+html.paper .rating .ui-icon { filter:none; opacity:.75; }
+
+/* 标题回到墨色：82px 的大标题若也用强调色，一屏就不止"点亮比分"了 */
+html.paper h1 { color:var(--pagetext); text-shadow:none; }
+html.paper .titleband { border-left-width:4px; }
+html.paper .verdict { background:transparent; border-left:3px solid var(--section-accent); }
+html.paper .verdict b { color:var(--section-accent); }
+html.paper .verdict-quote { background:transparent;
+  border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); }
+html.paper .htime, html.paper .seed, html.paper .set-index i { color:var(--section-accent); }
+html.paper .stats-source { color:var(--fade); }
+html.paper .insight-hero { background:transparent; border:0;
+  border-left:3px solid var(--section-accent); box-shadow:none; border-radius:0; }
+html.paper .fact { background:transparent; border:0;
+  border-top:1px solid var(--divider); border-radius:0; box-shadow:none; }
+
+/* 封面是整张深色实拍照，跟纸底无关：强调色必须换回知识贴原色 #FF7657
+   （深底上 6.8:1）。用沙底那支加深版 #C2482B 的话，kicker 就是暗红压在
+   暗照片上，实测直接看不见。 */
+html.paper .cover { --section-accent:#FF7657; --coral:#FF7657;
+  --neon:#D6FF00; --sky:#76D7EA; --pagetext:#F7F3EA; --fade:#C2CEC8; }
+
+/* 今晚焦点原本是"场馆实景铺满 + 白字"，纸底下白字会整片消失。
+   实景降为极淡的单色底纹（彩色实景压到 16% 仍是一片浑浊的灰绿，看着像
+   印糊了），文字全部回到墨色。 */
+html.paper .poster.tonight-page::before { opacity:.12; filter:grayscale(1) contrast(.88); }
+html.paper .tonight-page .event-meta { color:var(--pagetext); }
+html.paper .tonight-page .event-meta span { text-shadow:none; }
+html.paper .tonight-page .event-meta i { color:var(--fade); }
+html.paper .tonight-page .event-meta b { background:transparent;
+  color:var(--section-accent); box-shadow:inset 0 0 0 1px var(--section-accent); }
+html.paper .court-label { color:var(--reason); }
+html.paper .tonight-page .pick { background:transparent; box-shadow:none;
+  backdrop-filter:none; border:0; border-top:1px solid var(--divider);
+  border-left:3px solid var(--section-accent); }
+html.paper .pick .reason b { background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px var(--section-accent); }
+html.paper .china-marker { border-color:var(--section-accent); color:var(--section-accent); }
+html.paper .venue-credit, html.paper .cover-photo-credit { color:var(--fade); }
+html.paper .edition { color:var(--section-accent); }
 """
 
 
+def daily_card_theme() -> str:
+    """日报卡的配色，与共享的 TENNISLIVE_THEME 解耦。
+
+    TENNISLIVE_THEME 是 daily / knowledge-adhoc / explainer / flash /
+    news-radar 五个 workflow 共用的一个变量，且都显式写成 'dark'。日报卡
+    改版不能顺手把「网球有故事」知识贴也一起改了——它正是这次要对齐的
+    参照物。所以日报卡走自己的开关，默认 paper；真要回滚设
+    TENNISLIVE_CARD_PALETTE=dark 即可。
+    """
+    return os.environ.get("TENNISLIVE_CARD_PALETTE", "paper")
+
+
 def _shell(body: str, theme: str) -> str:
+    # theme 有三档：dark（:root，知识贴/科普片在用）、light（旧的奶油风）、
+    # paper（日报卡的暖沙纸底）。paper 不是 light 的别名——它自带一整套
+    # token，且只有它去掉顶部彩虹条。
     light = "true" if theme == "light" else "false"
+    paper = "true" if theme == "paper" else "false"
     css = _CSS.replace("@W@", str(W)).replace("@H@", str(H))
     inner_bg = _asset_image_uri(ASSETS / "covers" / "tennis-night-court.png") or ""
     return (
         f'<!DOCTYPE html><html><head><meta charset="utf-8"><style>{_font_css()}\n{css}'
         f"</style></head><body style=\"--inner-bg:url('{inner_bg}')\">{_COURT_SVG}{body}"
-        f"<script>document.documentElement.classList.toggle('light', {light});</script>"
+        f"<script>document.documentElement.classList.toggle('light', {light});"
+        f"document.documentElement.classList.toggle('paper', {paper});</script>"
         "</body></html>"
     )
 
@@ -1241,6 +1372,20 @@ _CARD_STAT_LIMIT = 4
 def _stat_rank(label: str) -> int:
     priority = {name: index for index, name in enumerate(_CARD_STAT_PRIORITY)}
     return priority.get(label, len(_CARD_STAT_PRIORITY))
+
+
+# 一屏只点亮"决胜数据"这一行。破发兑现是网球里最直接的胜负手，有就用它；
+# 没有（比如只拿到发球数据）才退到优先级最高的那一行。返回 None 表示这组
+# 数据里没有值得单独点亮的——那就整屏只有比分是亮的。
+_KEY_STAT_PREFERRED = "破发兑现"
+
+
+def _key_stat_label(labels: list[str] | tuple[str, ...]) -> str | None:
+    if not labels:
+        return None
+    if _KEY_STAT_PREFERRED in labels:
+        return _KEY_STAT_PREFERRED
+    return min(labels, key=lambda label: (_stat_rank(label), list(labels).index(label)))
 
 
 def card_stat_rows(
@@ -1614,12 +1759,14 @@ def media_body(m: Match, date_label: str, today) -> str:
 
 def focus_body(m: Match, date_label: str) -> str:
     comparison = focus_comparison(m)
+    key_label = _key_stat_label([label for label, _l, _r in comparison.rows])
     rows = []
     for label, left, right in comparison.rows:
         left_cls = "winner" if comparison.left_won else ""
         right_cls = "" if comparison.left_won else "winner"
+        key_cls = " key" if label == key_label else ""
         rows.append(
-            f'<div class="compare-row"><b>{html.escape(label)}</b>'
+            f'<div class="compare-row{key_cls}"><b>{html.escape(label)}</b>'
             f'<span class="{left_cls}">{html.escape(left)}</span>'
             f'<span class="{right_cls}">{html.escape(right)}</span></div>'
         )
@@ -1689,14 +1836,17 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
             comparison = focus_comparison(m)
             # data-rank 让渲染后的自适应收行按重要性丢弃：版面不够时先丢
             # "一发成功率"这类补充项，而不是碰巧排在最后的"破发兑现"。
+            shown = card_stat_rows(comparison.rows)
+            key_label = _key_stat_label([label for label, _l, _r in shown])
             rows_html = "".join(
-                f'<div class="compare-row" data-rank="{_stat_rank(label)}">'
+                f'<div class="compare-row{" key" if label == key_label else ""}"'
+                f' data-rank="{_stat_rank(label)}">'
                 f'<b>{html.escape(label)}</b>'
                 f'<span class="{"winner" if comparison.left_won else ""}">'
                 f'{html.escape(left)}</span>'
                 f'<span class="{"" if comparison.left_won else "winner"}">'
                 f'{html.escape(right)}</span></div>'
-                for label, left, right in card_stat_rows(comparison.rows)
+                for label, left, right in shown
             )
             extra_html += (
                 f'<div class="compare-head"><span>专业技术统计</span>'
@@ -3013,12 +3163,15 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
 def generate_deck(
     digest: Digest,
     date_label: str,
-    theme: str = "dark",
+    theme: str | None = None,
     *,
     cover_visual: object | None = None,
 ):
     """整组晨报卡（与 cards.generate_cards 的选卡逻辑一致），返回 [(kind, Image)]."""
     from .titles import cover_highlights
+
+    if theme is None:
+        theme = daily_card_theme()
 
     pages: list[tuple[str, str]] = []
     # V1 唯一封面：不再输出"钩子页 + 设计封面"双封面
@@ -3098,11 +3251,14 @@ def generate_match_deck(
     today,
     date_label: str,
     kind: str,
-    theme: str = "dark",
+    theme: str | None = None,
     cover_visual: object | None = None,
 ):
     """单场热点/赛前统一卡组，复用晨报同一套HTML视觉组件。"""
     from .story import result_insight
+
+    if theme is None:
+        theme = daily_card_theme()
 
     is_result = kind == "result"
     digest = Digest(

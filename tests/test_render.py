@@ -3119,3 +3119,149 @@ def test_lead_card_stats_table_fits_without_clipping():
     ]
     # 行数本来就不超上限时原样呈现，不做任何删减。
     assert card_stat_rows(full[:3]) == full[:3]
+
+
+def test_final_preview_keeps_its_numbers_instead_of_falling_back_to_boilerplate():
+    """决赛看点必须带本场信息，不能跌回"任何一场决赛都能印"的赛段套话。
+
+    旧链路：preview_angle 给回 59 字的账号连载回忆、schedule_insight 给回
+    44 字的决赛导语，两条都截不出完整句子（导语写的是"{赛事}只剩最后一问：…"，
+    冒号前读不完整），于是 `_stage_angle` 兜底印出"最后一场定归属，谁先扛住
+    谁捧杯"——一个人名、一个数字都不剩，连着几天的决赛长得一模一样。
+    """
+    from datetime import date
+
+    from tennislive.render.story import schedule_insight
+    from tennislive.render.xiaohongshu import (
+        _STAGE_ANGLES,
+        _data_angle,
+        _short_complete,
+    )
+
+    final = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Final", discipline="Women's Singles",
+        home_name="Tamara Korpatsch", away_name="Mayar Sherif",
+        home_country="GER", away_country="EGY",
+    )
+    today = date(2026, 7, 26)
+
+    for limit in (28, 34):  # 34 = 正文非压缩上限；28 = 压缩模式上限
+        chosen = (
+            _short_complete(schedule_insight(final, today), limit)
+            or _data_angle(final, limit)
+        )
+        assert chosen, f"limit={limit} 时连数据看点都没取到"
+        assert len(chosen) <= limit
+        assert chosen not in _STAGE_ANGLES["决赛"], "又跌回赛段套话了"
+        # 必须挂得住本场的具体信息：人名或排名数字
+        assert "科尔帕奇" in chosen or "谢里夫" in chosen or "汉堡" in chosen
+
+
+def test_data_angle_always_carries_a_fact_and_fits_the_budget():
+    """按预算现写的数据看点：装得下、且一定带人名或数字。"""
+    from tennislive.render.xiaohongshu import _data_angle
+
+    ranked = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Semifinals", home_name="Marie Bouzkova",
+        away_name="Ekaterina Alexandrova", home_country="CZE", away_country="RUS",
+    )
+    ranked.home[0].rank, ranked.away[0].rank = 44, 20
+    ranked.home[0].seed = ranked.away[0].seed = None
+
+    for limit in (28, 34):
+        line = _data_angle(ranked, limit)
+        assert line and len(line) <= limit
+        assert "布兹科娃" in line or "亚历山德罗娃" in line
+
+    # 预算给到装不下任何一句时返回空串，交给上层兜底而不是印半句
+    assert _data_angle(ranked, 6) == ""
+
+
+def test_pinned_comment_hook_is_built_from_the_match_not_a_constant():
+    """置顶评论的"我先写"必须按当日焦点比赛生成。
+
+    旧实现是一句写死的常量（"别急着追比分，先把自己的发球局守住。"），
+    连着五天一字不变。
+    """
+    from tennislive.render.xiaohongshu import _pinned_comment, _pinned_followup
+
+    final = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Final", home_name="Tamara Korpatsch",
+        away_name="Mayar Sherif", home_country="GER", away_country="EGY",
+    )
+    quarter = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        round_name="Quarterfinals", home_name="Qinwen Zheng",
+        away_name="Iga Swiatek", home_country="CHN", away_country="POL",
+    )
+
+    assert "别急着追比分" not in _pinned_followup(final)
+    assert "捧杯" in _pinned_followup(final) and "科尔帕奇" in _pinned_followup(final)
+    assert "郑钦文" in _pinned_followup(quarter)
+    # 不同的焦点比赛必须给出不同的钩子
+    assert _pinned_followup(final) != _pinned_followup(quarter)
+
+    pinned = _pinned_comment("你站谁？", has_upcoming=True, focus=quarter)
+    assert "你站谁？" in pinned and "郑钦文" in pinned
+
+
+def test_focus_match_is_not_reused_on_consecutive_days(tmp_path, monkeypatch):
+    """焦点复盘要跨期去重：2026-07-24 与 07-25 曾选出同一场，技术统计逐字相同。
+
+    收尾晚的场次次日仍留在 digest.results 里，而 select_focus_match() 只取
+    分数最大值——昨天最高分的今天照样最高分。editorial_memory 原来只记头条，
+    焦点由 select_focus_match 自己挑、经常和头条不是同一场，没人拦得住它。
+    """
+    from tennislive.render import editorial_memory
+    from tennislive.render.focus import select_focus_match
+
+    monkeypatch.setattr(
+        editorial_memory, "STATE_PATH", tmp_path / "editorial_memory.json"
+    )
+
+    top = make_match(
+        match_id="focus-top", home_name="Tamara Korpatsch",
+        away_name="Mayar Sherif", home_country="GER", away_country="EGY",
+        tour=Tour.WTA, discipline="Women's Singles",
+        sets=((6, 1), (6, 2)), tiebreaks=(None, None),
+    )
+    runner_up = make_match(
+        match_id="focus-second", home_name="Elena Rybakina",
+        away_name="Jessica Pegula", home_country="KAZ", away_country="USA",
+        tour=Tour.WTA, discipline="Women's Singles",
+        sets=((6, 4), (6, 4)), tiebreaks=(None, None),
+    )
+    results = [top, runner_up]
+
+    day_one = select_focus_match(Digest(today=date(2026, 7, 24), results=results))
+    editorial_memory.record_daily_focus(day_one, date(2026, 7, 24))
+
+    day_two = select_focus_match(Digest(today=date(2026, 7, 25), results=results))
+    assert day_two is not None
+    assert day_two.match_id != day_one.match_id, "连着两期选到了同一场"
+
+    # 同一天重跑生成不能换人：当天自己刚记下的那条不算"最近用过"
+    editorial_memory.record_daily_focus(day_two, date(2026, 7, 25))
+    again = select_focus_match(Digest(today=date(2026, 7, 25), results=results))
+    assert again.match_id == day_two.match_id
+
+
+def test_focus_falls_back_rather_than_leaving_the_page_empty(tmp_path, monkeypatch):
+    """候选全被上一期用光时宁可重复，也不能返回 None 让焦点页整页消失。"""
+    from tennislive.render import editorial_memory
+    from tennislive.render.focus import select_focus_match
+
+    monkeypatch.setattr(
+        editorial_memory, "STATE_PATH", tmp_path / "editorial_memory.json"
+    )
+    only = make_match(
+        match_id="focus-only", tour=Tour.WTA,
+        discipline="Women's Singles", sets=((6, 3), (6, 3)), tiebreaks=(None, None),
+    )
+    editorial_memory.record_daily_focus(only, date(2026, 7, 24))
+
+    picked = select_focus_match(Digest(today=date(2026, 7, 25), results=[only]))
+    assert picked is not None and picked.match_id == "focus-only"

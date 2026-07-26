@@ -2,14 +2,18 @@
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 
 from ..digest import Digest
 from ..models import Match
 from ..zh import player_zh
 from .common import is_chinese_involved
+from .editorial_memory import recent_focus_ids
 from .rating import is_tour_focus_match, is_upset, match_score
 from .story import result_insight
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -207,6 +211,25 @@ def headline_stats_targets(digest: Digest, budget: int = 4) -> list[Match]:
     return ordered
 
 
+def _focus_score(match: Match) -> int:
+    level = match.tournament.level or ""
+    tour_level = level in {
+        "GS", "M1000", "W1000", "ATP500", "WTA500", "ATP250", "WTA250"
+    }
+    return (
+        match_score(match, cn_boost=False)
+        + (85 if is_chinese_involved(match) else 0)
+        + (45 if tour_level else 0)
+        + (35 if is_upset(match) else 0)
+        + sum(
+            1
+            for s in match.sets
+            if s.home_tiebreak is not None or s.away_tiebreak is not None
+        )
+        * 8
+    )
+
+
 def select_focus_match(digest: Digest) -> Match | None:
     singles = [
         m for m in digest.results
@@ -215,25 +238,21 @@ def select_focus_match(digest: Digest) -> Match | None:
     if not singles:
         return None
 
-    def score(match: Match) -> int:
-        level = match.tournament.level or ""
-        tour_level = level in {
-            "GS", "M1000", "W1000", "ATP500", "WTA500", "ATP250", "WTA250"
-        }
-        return (
-            match_score(match, cn_boost=False)
-            + (85 if is_chinese_involved(match) else 0)
-            + (45 if tour_level else 0)
-            + (35 if is_upset(match) else 0)
-            + sum(
-                1
-                for s in match.sets
-                if s.home_tiebreak is not None or s.away_tiebreak is not None
-            )
-            * 8
+    # 跨期去重：收尾晚的场次次日仍留在 digest.results 里，而这里只取分数
+    # 最大值——昨天最高分的今天照样最高分。2026-07-24 与 07-25 就这样选出
+    # 同一场，两期焦点复盘的技术统计逐字相同。editorial_memory 原本只记头条，
+    # 焦点由 select_focus_match 自己挑、经常和头条不是同一场，没有任何地方
+    # 拦得住它，所以那边补了一份焦点台账。
+    used = recent_focus_ids(digest.today, days=1)
+    fresh = [m for m in singles if m.match_id not in used]
+    if not fresh:
+        # 候选全被上一期用光时宁可重复，也不能让焦点页整页消失；但要留下
+        # 痕迹，否则"去重没生效"和"本来就只有这一场"看起来一模一样。
+        logger.info(
+            "焦点复盘候选 %d 场全部在最近一期用过，本期只能重复", len(singles)
         )
-
-    return max(singles, key=score)
+        fresh = singles
+    return max(fresh, key=_focus_score)
 
 
 def focus_comparison(match: Match) -> FocusComparison:
