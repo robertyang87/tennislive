@@ -512,51 +512,50 @@ _ZHENG_EALA_DIAGRAM = """
 # facts that matter side by side — her last win and the start of the streak
 # happened at the same tournament, one round apart.
 _VENUS_STREAK_DIAGRAM = """
-<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
-        font-size="30" font-weight="800">上一场胜利，就在这一站</text>
+<svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
+  <text x="60" y="42" fill="#e7f3ec" font-size="38" font-weight="800">那场胜利之后</text>
+  <text x="840" y="42" text-anchor="end" fill="#e0938f"
+        font-size="38" font-weight="800">十一连败</text>
 
-  <line x1="150" y1="250" x2="800" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="3"/>
+  <rect x="52" y="72" width="796" height="86" rx="14"
+        fill="rgba(168,207,125,.14)" stroke="#a8cf7d" stroke-width="3"/>
+  <circle cx="92" cy="115" r="13" fill="#a8cf7d"/>
+  <text x="124" y="108" fill="#e7f3ec" font-size="31" font-weight="800">2025.7.22 华盛顿首轮</text>
+  <text x="124" y="144" fill="#a8cf7d" font-size="26" font-weight="700">45 岁，2004 年之后最年长的胜者</text>
+  <text x="828" y="128" text-anchor="end" fill="#a8cf7d"
+        font-size="34" font-weight="800">6-3 6-4</text>
 
-  <circle cx="188" cy="250" r="16" fill="#a8cf7d" stroke="#061c14" stroke-width="4"/>
-  <text x="188" y="196" text-anchor="middle" fill="#a8cf7d"
-        font-size="25" font-weight="800">2025 年 7 月</text>
-  <text x="188" y="164" text-anchor="middle" fill="#9fb4aa"
-        font-size="20" font-weight="700">华盛顿站首轮</text>
-  <text x="188" y="300" text-anchor="middle" fill="#e7f3ec"
-        font-size="26" font-weight="800">6-3 6-4 胜斯特恩斯</text>
-  <text x="188" y="332" text-anchor="middle" fill="#9fb4aa"
-        font-size="20" font-weight="700">45 岁 · 2004 年之后最年长</text>
+  <g font-size="29" font-weight="700">
+    <circle cx="92" cy="205" r="9" fill="#e0938f"/>
+    <text x="124" y="215" fill="#cfe0d8">2025.7.23 华盛顿次轮 · 弗雷赫</text>
+    <text x="828" y="215" text-anchor="end" fill="#e0938f">2-6 2-6</text>
 
-  <g stroke="#e0938f" stroke-width="6" opacity=".85">
-    <line x1="270" y1="234" x2="270" y2="266"/>
-    <line x1="313" y1="234" x2="313" y2="266"/>
-    <line x1="356" y1="234" x2="356" y2="266"/>
-    <line x1="399" y1="234" x2="399" y2="266"/>
-    <line x1="442" y1="234" x2="442" y2="266"/>
-    <line x1="485" y1="234" x2="485" y2="266"/>
-    <line x1="528" y1="234" x2="528" y2="266"/>
-    <line x1="571" y1="234" x2="571" y2="266"/>
-    <line x1="614" y1="234" x2="614" y2="266"/>
-    <line x1="657" y1="234" x2="657" y2="266"/>
-    <line x1="700" y1="234" x2="700" y2="266"/>
+    <circle cx="92" cy="263" r="9" fill="#e0938f"/>
+    <text x="124" y="273" fill="#cfe0d8">2025.8 辛辛那提首轮 · 布萨斯</text>
+    <text x="828" y="273" text-anchor="end" fill="#e0938f">4-6 4-6</text>
+
+    <circle cx="92" cy="321" r="9" fill="#e0938f"/>
+    <text x="124" y="331" fill="#cfe0d8">2025.8 美网首轮 · 穆霍娃</text>
+    <text x="828" y="331" text-anchor="end" fill="#e0938f">3-6 6-2 1-6</text>
+
+    <circle cx="92" cy="379" r="9" fill="#e0938f"/>
+    <text x="124" y="389" fill="#cfe0d8">2026.1 奥克兰首轮 · 利内特</text>
+    <text x="828" y="389" text-anchor="end" fill="#e0938f">4-6 6-4 2-6</text>
+
+    <circle cx="92" cy="437" r="9" fill="#e0938f"/>
+    <text x="124" y="447" fill="#cfe0d8">2026.3 印第安维尔斯首轮 · 帕里</text>
+    <text x="828" y="447" text-anchor="end" fill="#e0938f">3-6 7-6 1-6</text>
   </g>
-  <text x="485" y="196" text-anchor="middle" fill="#e0938f"
-        font-size="26" font-weight="800">十一连败</text>
 
-  <circle cx="772" cy="250" r="16" fill="none" stroke="#e7f3ec"
-          stroke-width="5" stroke-dasharray="7 7"/>
-  <text x="772" y="196" text-anchor="middle" fill="#e7f3ec"
-        font-size="25" font-weight="800">7 月 27 日</text>
-  <text x="772" y="164" text-anchor="middle" fill="#9fb4aa"
-        font-size="20" font-weight="700">又是这一站</text>
+  <text x="124" y="505" fill="#9fb4aa" font-size="26" font-weight="700">
+    另有霍巴特、澳网、奥斯汀、迈阿密、洪堡，均首轮出局
+  </text>
 
-  <text x="450" y="440" text-anchor="middle" fill="#e7f3ec"
-        font-size="26" font-weight="800">连败是从去年这一站的第二轮开始的</text>
-  <text x="450" y="486" text-anchor="middle" fill="#9fb4aa"
-        font-size="22" font-weight="700">同一块场地，给过她纪录，也给过她第一场败仗</text>
-  <text x="450" y="576" text-anchor="middle" fill="#9fb4aa"
-        font-size="20" font-weight="700">十一场败仗按公开赛果计，含 2025 赛季末三场</text>
+  <rect x="52" y="540" width="796" height="82" rx="14"
+        fill="none" stroke="#e7f3ec" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="124" y="578" fill="#e7f3ec" font-size="31" font-weight="800">2026.7.27 华盛顿首轮</text>
+  <text x="124" y="610" fill="#9fb4aa" font-size="25" font-weight="700">又是这一站</text>
+  <text x="828" y="595" text-anchor="end" fill="#e7f3ec" font-size="46" font-weight="800">？</text>
 </svg>
 """
 
@@ -1747,11 +1746,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "streak",
             "这一年",
             "上一场胜利，就在这一站",
-            "但那场胜利之后的事情，是另一条线。二〇二五年华盛顿第二轮，维纳斯二比六、二比六"
-            "输给弗雷赫；接着是辛辛那提首轮、美网首轮。二〇二六年，从奥克兰、霍巴特、澳网、"
-            "奥斯汀、印第安维尔斯一路打下来，全部止步首轮。到今年六月的洪堡站为止，"
-            "她的单打连败已经来到十一场，起点正是去年这一站的第二轮。"
-            "换句话说，同一块场地给过她一项纪录，也给了她这轮连败的第一场。",
+            "但那场胜利之后的事情，是另一条线。第二天，还是华盛顿，第二轮，"
+            "维纳斯二比六、二比六输给弗雷赫。八月的辛辛那提首轮，四比六、四比六负于布萨斯·马内罗；"
+            "紧接着美网首轮，三比六、六比二、一比六负于穆霍娃。进入二〇二六年，一月的奥克兰，"
+            "四比六、六比四、二比六负于利内特；三月的印第安维尔斯，三比六、七比六、一比六负于帕里。"
+            "中间还有霍巴特、澳网、奥斯汀、迈阿密和六月的洪堡，全部止步首轮。"
+            "到今年六月为止，她的单打连败已经来到十一场，起点正是去年这一站的第二轮——"
+            "同一块场地给过她一项纪录，也给了她这轮连败的第一场。",
             "",
             "网球时差绘制",
             (
@@ -2246,8 +2247,12 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  background:#061c14;}}
 .hero{{position:absolute;inset:0;}}
 .hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,#155a41 0%,#0b3a2a 55%,#061c14 100%);}}
-.diagram-wrap{{position:absolute;left:0;right:0;top:250px;display:flex;justify-content:center;}}
-.diagram-wrap svg{{width:760px;height:auto;}}
+/* 760px on a 1080 card left the drawing at 70% width, and a 20px label inside
+   a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
+   not on a phone held at arm's length. Fill the card instead, and start
+   higher so the extra height still clears the caption block. */
+.diagram-wrap{{position:absolute;left:0;right:0;top:210px;display:flex;justify-content:center;}}
+.diagram-wrap svg{{width:920px;height:auto;}}
 .scrim{{position:absolute;inset:0;background:linear-gradient(180deg,
  rgba(6,28,20,.55) 0%,rgba(6,28,20,.10) 34%,rgba(6,28,20,.20) 60%,rgba(6,28,20,.94) 100%);}}
 .bar{{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
