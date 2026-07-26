@@ -1290,11 +1290,11 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "一个动作",
             "递上来三个，只留两个",
             "每个发球局你都见过这一幕：球童把三四个球递过来，球员低头看两眼，扔回去一两个，"
-            "手里只留两个。快得没人解说，主播也不提。但这可能是整项运动里重复次数最多的一个选择——"
-            "一场五盘大战，它会发生一两百次。问题是，那两眼到底在看什么？"
-            "答案一点都不高级：看毛。",
-            "assets/explainer/ball-pick/threeballs.jpg",
-            "Steven Pisano · CC BY 2.0 · Wikimedia Commons · 2014 美网，球童手中的三个球",
+            "手里只留两个。画面里这两个人，就是这笔交易的双方。快得没人解说，主播也不提，"
+            "但这可能是整项运动里重复次数最多的一个选择——一场五盘大战，它会发生一两百次。"
+            "问题是，那两眼到底在看什么？答案一点都不高级：看毛。",
+            "assets/explainer/ball-pick/djokovic_ballboy.jpg",
+            "AELTC/Charlie Raymond Kent · wimbledon.com 官方图 · 2026 温网，德约科维奇与一名球童",
             (
                 "球童递三四个，球员只留两个",
                 "一场五盘球会重复一两百次",
@@ -1619,7 +1619,8 @@ _OPENINGS: dict[str, dict] = {
         "topic": "挑球：每个发球局都在发生的选择",
         "question": "发球前，他们在挑什么？",
         "narration": "球童递上来三四个球，球员只留两个。那两眼，到底在挑什么？",
-        "image": "assets/explainer/ball-pick/threeballs.jpg",
+        "image": "assets/explainer/ball-pick/djokovic_serve.jpg",
+        "credit": "AELTC/Felix Diemer · wimbledon.com 官方图 · 2026 温网 1/4 决赛，德约科维奇发球",
     },
     "shot-clock": {
         "topic": "发球 25 秒：一条改了两次的规则",
@@ -1635,7 +1636,10 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     spec = _OPENINGS.get(story.slug) or {}
     question = spec.get("question") or f"{story.title}？"
     image = spec.get("image") or (beats[0].image if beats else "")
-    credit = ""
+    # Usually the cover reuses a beat's photo and can borrow its credit line.
+    # When it has one of its own, the opening has to carry the provenance
+    # itself — an uncredited frame is one nobody can check later.
+    credit = spec.get("credit", "")
     for beat in beats:
         if beat.image == image:
             credit = beat.credit
