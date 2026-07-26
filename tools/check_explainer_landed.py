@@ -47,7 +47,7 @@ def _outdir_date() -> str:
 TEXT_SUFFIXES = (".txt", ".html", ".json", ".md")
 # 取哪一条横带：上下各留出一截，避开页眉和底部文字块。
 BAND = (0.05, 0.55, 0.95, 0.80)
-TOLERANCE = 6.0
+TOLERANCE = 0.02  # 网格距离，不是色差
 
 
 def _git(ref: str, rel: str) -> bytes:
@@ -61,11 +61,19 @@ def _ls(ref: str, d: str) -> list[str]:
     return [line.strip() for line in out.splitlines() if line.strip()]
 
 
-def _band(im) -> tuple[float, ...]:
-    from PIL import ImageStat
-    w, h = im.size
-    box = (int(w*BAND[0]), int(h*BAND[1]), int(w*BAND[2]), int(h*BAND[3]))
-    return tuple(round(v, 1) for v in ImageStat.Stat(im.crop(box).convert("RGB")).mean)
+def _grid(im, n: int = 32) -> list[float]:
+    """把整屏降成 n×n 的灰度网格。
+
+    原来这里取的是某一条横带的平均色。那个判据两次给出假绿：连败那一屏从
+    文字表格换成条形图、又换了配色，整屏平均亮度几乎没变，判据看不出差别，
+    照样报「已落地」。平均值对版式不敏感——降成网格再比才看得见谁在哪儿。
+    """
+    g = im.convert("L").resize((n, n))
+    return [v / 255 for v in g.tobytes()]
+
+
+def _dist(a: list[float], b: list[float]) -> float:
+    return (sum((x - y) ** 2 for x, y in zip(a, b)) / len(a)) ** 0.5
 
 
 def main() -> int:
@@ -76,6 +84,8 @@ def main() -> int:
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--slide", type=int, help="要比对画面的那一屏序号，如 5")
     ap.add_argument("--against", help="本地渲染的同一屏 PNG，作为参照")
+    ap.add_argument("--not-this", dest="not_this",
+                    help="上一版的同一屏 PNG。给了它，判据必须先证明分得清新旧")
     args = ap.parse_args()
 
     outdir = f"output/{args.date}/explainer/{args.slug}"
@@ -98,11 +108,23 @@ def main() -> int:
         raw = _git(args.ref, f"{outdir}/slide_{args.slide:02d}.png")
         if not raw:
             print(f"  slide_{args.slide:02d}.png 还没落库"); return 2
-        want, got = _band(Image.open(args.against)), _band(Image.open(io.BytesIO(raw)))
-        delta = max(abs(a - b) for a, b in zip(want, got))
-        print(f"  第 {args.slide} 屏色带 本地{want} 仓库{got} 偏差 {delta:.1f} "
-              f"（阈值 {TOLERANCE}）")
-        bad += delta >= TOLERANCE
+        repo = _grid(Image.open(io.BytesIO(raw)))
+        new = _grid(Image.open(args.against))
+        d_new = _dist(repo, new)
+        if args.not_this:
+            # 判据必须先证明自己分得清新旧。分不清就报错——一个连两版都区分不了
+            # 的检查，报绿说明不了任何事情。这一条是两次假绿换来的。
+            old = _grid(Image.open(args.not_this))
+            d_old, spread = _dist(repo, old), _dist(new, old)
+            print(f"  第 {args.slide} 屏 与新版距离 {d_new:.4f} · 与旧版距离 {d_old:.4f}"
+                  f" · 新旧本身相差 {spread:.4f}")
+            if spread < 0.010:
+                print("  ★ 新旧两版本身几乎一样，这个判据分不出来，不作数"); bad += 1
+            elif d_new >= d_old or d_new > spread * 0.4:
+                print("  ★ 仓库里更像旧版"); bad += 1
+        else:
+            print(f"  第 {args.slide} 屏 与本地渲染距离 {d_new:.4f}（阈值 {TOLERANCE}）")
+            bad += d_new >= TOLERANCE
 
     print("已落地" if not bad else f"有 {bad} 项对不上")
     return 0 if not bad else 2
