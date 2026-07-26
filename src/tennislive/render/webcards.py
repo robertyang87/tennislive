@@ -118,9 +118,9 @@ def _font_css() -> str:
                 f"src:url(data:font/ttf;base64,{b}) format('truetype');}}"
             )
     # 赛果速递 / 焦点复盘的比分数字（见 CSS 里"柔和内容色"那一段）。
-    # woff2、拉丁子集，三个字重加起来 70KB 上下。
-    for weight in (400, 500, 600):
-        b = _b64(ASSETS / "fonts" / f"Newsreader-latin-{weight}.woff2")
+    # woff2、拉丁子集，两个字重加起来 37KB。
+    for weight in (500, 600):
+        b = _b64(ASSETS / "fonts" / f"Montserrat-latin-{weight}.woff2")
         if b:
             css.append(
                 f"@font-face{{font-family:'TL Numeral';font-weight:{weight};"
@@ -1230,19 +1230,20 @@ html.daily .results-page .seed, html.daily .focus-page .seed { color:var(--fade)
 html.daily .results-page .chip-gold, html.daily .focus-page .chip-gold {
   color:var(--panel-muted); }
 
-/* 比分与技术统计的数字换成正文衬线。Barlow Condensed 是紧缩的运动感字型，
-   和这两页收敛后的调子不搭；衬线更像"记分牌"。
-   三个字重是为了保住胜负两行的轻重对比——单字重的展示衬线（试过 Instrument
-   Serif）好看，但胜方和败方一样粗，一眼看不出谁赢。 */
+/* 比分与技术统计的数字换成几何无衬线。Barlow Condensed 是紧缩的运动感字型，
+   和这两页收敛后的调子不搭。
+   温网的品牌字是 Gotham（Tobias Frere-Jones / Hoefler&Co）——商用授权、不能
+   内嵌，而且它是**几何无衬线**。所以往那个方向靠只能用开源近似字：Montserrat
+   是公认最接近的一支，同样的几何骨架、大字怀、平顶的 7。
+   两个字重保住胜负两行的轻重对比——中间试过一版 Newsreader 衬线，单看好看，
+   但方向错了，温网不是衬线。 */
 html.daily .results-page .set, html.daily .focus-page .set,
 html.daily .focus-page .compare-row span {
-  font-family:'TL Numeral',serif; font-size:48px; letter-spacing:0; }
+  font-family:'TL Numeral',sans-serif; font-size:42px; letter-spacing:-.5px; }
 html.daily .results-page .set.sw, html.daily .focus-page .set.sw { font-weight:600; }
-html.daily .results-page .set.sl, html.daily .focus-page .set.sl { font-weight:400; }
-html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-size:66px; }
-html.daily .focus-page .compare-row span { font-size:38px; font-weight:500; }
-html.daily .results-page .set sup, html.daily .focus-page .set sup {
-  font-family:'Barlow Condensed'; font-weight:600; }
+html.daily .results-page .set.sl, html.daily .focus-page .set.sl { font-weight:500; }
+html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-size:58px; }
+html.daily .focus-page .compare-row span { font-size:34px; font-weight:500; }
 """
 
 

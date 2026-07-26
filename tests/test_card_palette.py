@@ -423,28 +423,33 @@ def test_gold_is_spent_on_the_section_title_not_on_every_row():
     assert "color:var(--panel-muted); }" in tail
 
 
-def test_score_numerals_use_the_bundled_serif_with_a_winner_loser_contrast():
-    """比分数字换成正文衬线，且胜负两行必须有轻重对比。
+def test_score_numerals_use_a_geometric_sans_with_a_winner_loser_contrast():
+    """比分数字用几何无衬线，且胜负两行必须有轻重对比。
 
-    单字重的展示衬线（试过 Instrument Serif）好看，但胜方和败方一样粗，
-    一眼看不出谁赢——所以要三个字重，.sw 比 .sl 重。
+    温网的品牌字是 Gotham——商用授权不能内嵌，而且是几何无衬线。所以既不能
+    直接用，风格上也不是衬线那一路（中间试过一版 Newsreader 衬线，方向错了）。
+    Montserrat 是公认最接近 Gotham 的开源替代。
+    单字重不行：胜方和败方一样粗，一眼看不出谁赢。
     """
     from pathlib import Path
 
     tail = _CSS.split(_SOFT_MARKER, 1)[1]
-    assert "font-family:'TL Numeral',serif;" in tail
+    assert "font-family:'TL Numeral',sans-serif;" in tail
     assert "html.daily .results-page .set.sw" in tail and "font-weight:600;" in tail
-    assert "html.daily .results-page .set.sl" in tail and "font-weight:400;" in tail
+    assert "html.daily .results-page .set.sl" in tail and "font-weight:500;" in tail
 
     fonts = Path(__file__).resolve().parents[1] / "assets" / "fonts"
-    for weight in (400, 500, 600):
-        path = fonts / f"Newsreader-latin-{weight}.woff2"
+    for weight in (500, 600):
+        path = fonts / f"Montserrat-latin-{weight}.woff2"
         assert path.is_file(), f"字体文件没入库：{path.name}"
         # 拉丁子集，别把整套 CJK 塞进每张卡的 base64 里
         assert path.stat().st_size < 60_000, f"{path.name} 太大了，应该是拉丁子集"
+    assert not list(fonts.glob("Newsreader*")), "换掉的衬线字体没删干净"
 
     attribution = (fonts / "ATTRIBUTION.md").read_text(encoding="utf-8")
-    assert "Newsreader" in attribution and "Open Font License" in attribution
+    assert "Montserrat" in attribution and "Open Font License" in attribution
+    # 出处里要写清楚"为什么不是温网那支字本身"，别让下一个人再试一遍
+    assert "Gotham" in attribution
 
 
 def test_numeral_font_is_embedded_and_only_used_by_the_two_result_cards():
@@ -452,7 +457,7 @@ def test_numeral_font_is_embedded_and_only_used_by_the_two_result_cards():
     from tennislive.render.webcards import _font_css
 
     css = _font_css()
-    for weight in (400, 500, 600):
+    for weight in (500, 600):
         assert f"font-family:'TL Numeral';font-weight:{weight}" in css
     assert "data:font/woff2;base64," in css
 
@@ -464,4 +469,4 @@ def test_numeral_font_is_embedded_and_only_used_by_the_two_result_cards():
     # 引用它的那条规则，选择器必须在上一行或本行限定在这两页里
     block = _CSS.split(_SOFT_MARKER, 1)[1]
     assert "TL Numeral" in block, "TL Numeral 用在了柔和段之外"
-    assert _CSS.count("TL Numeral',serif") == 1
+    assert _CSS.count("TL Numeral',sans-serif") == 1
