@@ -452,12 +452,12 @@ _ZHENG_EALA_DIAGRAM = """
   <text x="450" y="40" text-anchor="middle" fill="#e7f3ec"
         font-size="30" font-weight="800">三年里，两条线换了位置</text>
 
-  <line x1="286" y1="76" x2="338" y2="76" stroke="#ff5a6a" stroke-width="7"/>
-  <text x="348" y="85" fill="#ff5a6a" font-size="25" font-weight="800">郑钦文</text>
-  <line x1="486" y1="76" x2="538" y2="76" stroke="#c6f65a" stroke-width="7"/>
-  <text x="548" y="85" fill="#c6f65a" font-size="25" font-weight="800">伊拉</text>
+  <line x1="286" y1="76" x2="338" y2="76" stroke="#e0938f" stroke-width="7"/>
+  <text x="348" y="85" fill="#e7f3ec" font-size="25" font-weight="800">郑钦文</text>
+  <line x1="496" y1="76" x2="548" y2="76" stroke="#a8cf7d" stroke-width="7"/>
+  <text x="558" y="85" fill="#e7f3ec" font-size="25" font-weight="800">伊埃拉</text>
 
-  <g stroke="rgba(159,180,170,.20)" stroke-width="2">
+  <g stroke="rgba(159,180,170,.18)" stroke-width="2">
     <line x1="150" y1="150" x2="810" y2="150"/>
     <line x1="150" y1="252" x2="810" y2="252"/>
     <line x1="150" y1="386" x2="810" y2="386"/>
@@ -468,7 +468,7 @@ _ZHENG_EALA_DIAGRAM = """
     <text x="138" y="393">第 100</text>
   </g>
 
-  <line x1="150" y1="470" x2="810" y2="470" stroke="rgba(159,180,170,.45)" stroke-width="3"/>
+  <line x1="150" y1="470" x2="810" y2="470" stroke="rgba(159,180,170,.40)" stroke-width="3"/>
   <g fill="#9fb4aa" font-size="22" font-weight="700" text-anchor="middle">
     <text x="200" y="504">2023</text>
     <text x="400" y="504">2024</text>
@@ -476,31 +476,31 @@ _ZHENG_EALA_DIAGRAM = """
     <text x="782" y="504">现在</text>
   </g>
 
-  <path d="M200 440 L612 424" fill="none" stroke="#c6f65a" stroke-width="5"
-        stroke-dasharray="9 9" opacity=".5"/>
-  <path d="M612 424 L782 252" fill="none" stroke="#c6f65a" stroke-width="8"/>
-  <circle cx="612" cy="424" r="9" fill="#c6f65a"/>
-  <circle cx="782" cy="252" r="14" fill="#c6f65a" stroke="#061c14" stroke-width="4"/>
+  <path d="M200 440 L612 424" fill="none" stroke="#a8cf7d" stroke-width="5"
+        stroke-dasharray="9 9" opacity=".45"/>
+  <path d="M612 424 L782 252" fill="none" stroke="#a8cf7d" stroke-width="8"/>
+  <circle cx="612" cy="424" r="9" fill="#a8cf7d"/>
+  <circle cx="782" cy="252" r="14" fill="#a8cf7d" stroke="#061c14" stroke-width="4"/>
   <text x="602" y="452" text-anchor="end" fill="#9fb4aa"
         font-size="21" font-weight="700">2025 年 3 月 · 第 140</text>
-  <text x="762" y="232" text-anchor="end" fill="#c6f65a"
+  <text x="762" y="232" text-anchor="end" fill="#e7f3ec"
         font-size="27" font-weight="800">第 28 · 生涯新高</text>
 
-  <path d="M200 214 L678 150" fill="none" stroke="#ff5a6a" stroke-width="8"/>
-  <path d="M678 150 L782 400" fill="none" stroke="#ff5a6a" stroke-width="8"/>
-  <circle cx="200" cy="214" r="9" fill="#ff5a6a"/>
-  <circle cx="678" cy="150" r="14" fill="#ff5a6a" stroke="#061c14" stroke-width="4"/>
-  <circle cx="782" cy="400" r="14" fill="#ff5a6a" stroke="#061c14" stroke-width="4"/>
+  <path d="M200 214 L678 150" fill="none" stroke="#e0938f" stroke-width="8"/>
+  <path d="M678 150 L782 400" fill="none" stroke="#e0938f" stroke-width="8"/>
+  <circle cx="200" cy="214" r="9" fill="#e0938f"/>
+  <circle cx="678" cy="150" r="14" fill="#e0938f" stroke="#061c14" stroke-width="4"/>
+  <circle cx="782" cy="400" r="14" fill="#e0938f" stroke="#061c14" stroke-width="4"/>
   <text x="214" y="250" fill="#9fb4aa" font-size="21" font-weight="700">2023 年底 · 第 15</text>
-  <text x="678" y="126" text-anchor="middle" fill="#ff5a6a"
+  <text x="678" y="126" text-anchor="middle" fill="#e7f3ec"
         font-size="27" font-weight="800">生涯最高 第 4</text>
-  <text x="782" y="438" text-anchor="middle" fill="#ff5a6a"
+  <text x="782" y="438" text-anchor="middle" fill="#e7f3ec"
         font-size="27" font-weight="800">跌出前 100</text>
 
   <text x="450" y="572" text-anchor="middle" fill="#e7f3ec"
         font-size="25" font-weight="800">7 月 27 日这一场，是两人第二次交手</text>
   <text x="450" y="612" text-anchor="middle" fill="#9fb4aa"
-        font-size="20" font-weight="700">示意图 · 图上四个标注点为公开排名</text>
+        font-size="20" font-weight="700">图上四个标注点均为公开排名</text>
 </svg>
 """
 
@@ -1539,15 +1539,15 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "rival",
             "对手",
-            "21 岁，菲律宾史上最高排名",
-            "先看对面站的是谁。亚历山德拉·伊拉，二〇〇五年五月生，二十一岁，菲律宾人。"
+            "那年输给她的人，现在世界第 28",
+            "先看对面站的是谁。亚历山德拉·伊埃拉，二〇〇五年五月生，二十一岁，菲律宾人。"
             "二〇二二年她拿下美网青少年女单冠军，是菲律宾第一个青少年大满贯冠军。"
             "真正让世界记住她的是二〇二五年的迈阿密：一张外卡，连胜奥斯塔片科、基斯和斯瓦泰克闯进四强，"
             "成为第一个打进 WTA1000 四强的菲律宾人。而就在这个月的温网，她在中央球场第三轮"
             "再一次击败斯瓦泰克，第一次打进大满贯第二周。七月十三日，她升到生涯新高世界第二十八位，"
             "这是菲律宾球员在 WTA 历史上的最高排名。",
             "assets/explainer/zheng-eala/eala.jpg",
-            "AELTC/Florian Eisele · wimbledon.com 官方图 · 2026 温网第三轮，伊拉对斯瓦泰克",
+            "AELTC/Florian Eisele · wimbledon.com 官方图 · 2026 温网第三轮，伊埃拉对斯瓦泰克",
             (
                 "21 岁；2022 美网青少年冠军",
                 "2025 迈阿密外卡闯四强，连胜三位大满贯冠军",
@@ -1574,30 +1574,30 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "before",
             "三年前",
-            "她们打过一次，在亚运会半决赛",
+            "上一次见面，她拿走了金牌",
             "很多人不知道，这其实不是两人第一次见面。二〇二三年九月的杭州亚运会，女单半决赛，"
-            "郑钦文六比一、六比七、六比三赢下伊拉。那场之后，伊拉拿了铜牌；郑钦文一路打到决赛，"
+            "郑钦文六比一、六比七、六比三赢下伊埃拉。那场之后，伊埃拉拿了铜牌；郑钦文一路打到决赛，"
             "战胜同胞朱琳拿下金牌。画面就是那一届的赛后——她和朱琳一起举起国旗，"
             "背景上写着「第十九届亚运会 杭州」。",
             "assets/explainer/zheng-eala/asiad.jpg",
             "新闻图片 · 2023 年 9 月杭州亚运会，郑钦文（右）与朱琳赛后合影",
             (
                 "杭州亚运会半决赛：郑钦文 6-1 6-7(5) 6-3",
-                "伊拉拿铜牌，郑钦文决赛胜朱琳夺金",
+                "伊埃拉拿铜牌，郑钦文决赛胜朱琳夺金",
                 "第二次交手，巡回赛上的第一次",
             ),
         ),
         (
             "now",
             "这三年",
-            "她走的是另一条路",
-            "三年过去，两条线换了位置。伊拉现在是世界第二十八，生涯新高；"
+            "一条线往上，一条线往下",
+            "三年过去，两条线换了位置。伊埃拉现在是世界第二十八，生涯新高；"
             "郑钦文这三年经历的是另一条路：二〇二五年温网之后，她因为右肘长期疼痛接受了手术，"
             "缺席那年的美网，也错过了二〇二六年赛季的第一个月，包括澳网。二月她在多哈复出，赢了两场；"
             "但今年的法网和温网，她都止步首轮。排名从世界第四一路掉到一百开外，"
             "这一站要靠外卡才能进正赛。",
             "",
-            "示意图 · 网球时差绘制",
+            "网球时差绘制",
             (
                 "2025 温网后右肘手术，缺席美网",
                 "2026 年 2 月多哈复出，缺席澳网",
@@ -1610,7 +1610,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "这一场",
             "一场首轮，两种意义",
 
-            "所以这场首轮，对两个人的意思完全不一样。对伊拉，这是北美硬地赛季的第一场，"
+            "所以这场首轮，对两个人的意思完全不一样。对伊埃拉，这是北美硬地赛季的第一场，"
             "往前看是美网，她要做的是把生涯新高的位置坐稳。对郑钦文，这是重建的一站，"
             "对手偏偏是这三年里上升最快的那个人。华盛顿这一站是 WTA 五百级，"
             "首轮就把她们放在了一起。比分我们不猜，只把一句话留在这儿——"
@@ -1618,7 +1618,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "assets/explainer/zheng-eala/zheng_2025_wide.jpg",
             "Vbrunophotog · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 3 月迈阿密站，郑钦文",
             (
-                "伊拉：北美硬地开局，目标是坐稳新高",
+                "伊埃拉：北美硬地开局，目标是坐稳新高",
                 "郑钦文：重建的一站，7 月 27 日首轮",
                 "祝钦文好运，期待早日重回巅峰",
             ),
@@ -1714,8 +1714,8 @@ _CAPTIONS: dict[str, dict] = {
     },
     "zheng-eala": {
         "hook": (
-            "郑钦文华盛顿站首轮，对手是这三年上升最快的人之一。\n"
-            "三年前的亚运会半决赛她赢了；三年后，两个人的排名换了位置。"
+            "三年前的亚运会半决赛，郑钦文赢了她，然后拿走金牌。\n"
+            "三年后再见：对手是生涯新高世界第 28，她自己要靠外卡才能进正赛。"
         ),
         "tags": ("网球", "网球时差", "郑钦文", "WTA", "美网前哨"),
     },
@@ -1807,9 +1807,9 @@ _OPENINGS: dict[str, dict] = {
     },
     "zheng-eala": {
         "column": "开赛之前",
-        "topic": "郑钦文 VS 伊拉：华盛顿站首轮前瞻",
-        "question": "三年后再见，谁更需要这一场？",
-        "narration": "郑钦文华盛顿站首轮的对手，三年前输给过她。这一场，谁更需要它？",
+        "topic": "郑钦文 VS 伊埃拉：华盛顿站首轮前瞻",
+        "question": "三年前她赢了这个人，现在呢？",
+        "narration": "三年前的亚运会半决赛，郑钦文赢了这个人，然后拿走金牌。三年后再见，谁更需要这一场？",
         # The cover leads with the most recent frame of her that exists in a
         # reachable source (March 2025). The two older photos in the deck stay
         # where they are because their dates are the point: the Olympic gold
