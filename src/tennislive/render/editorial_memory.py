@@ -15,6 +15,12 @@ from ..zh import player_zh
 STATE_PATH = Path(__file__).resolve().parents[3] / "data" / "editorial_memory.json"
 MAX_EVENTS_PER_PLAYER = 12
 
+# 焦点复盘的跨期台账。文件本身是「球员名 -> 事件列表」，这个保留键不会和
+# 任何 _key(球员名) 撞上（球员名不会以下划线开头），所以复用同一个文件、
+# 同一套读写，不必再多一份状态。
+FOCUS_KEY = "__focus__"
+MAX_FOCUS_HISTORY = 14
+
 
 @dataclass(frozen=True)
 class MemoryContext:
@@ -80,6 +86,49 @@ def recent_context(match, today: date) -> MemoryContext | None:
         "今天再遇见这条线，故事已经走到下一章。"
     )
     return MemoryContext(summary=summary)
+
+
+def recent_focus_ids(today: date, *, days: int = 1) -> set[str]:
+    """最近 days 天登过焦点复盘的 match_id。
+
+    只记头条是不够的：焦点复盘由 select_focus_match() 按自己的规则挑，
+    经常和头条不是同一场，于是没有任何地方拦得住它连着两天挑中同一场
+    （2026-07-24 与 07-25 就选出了同一场，两天的技术统计一字不差）。
+    """
+    if days <= 0:
+        return set()
+    rows = _load().get(FOCUS_KEY, [])
+    used: set[str] = set()
+    for item in rows:
+        match_id = str(item.get("match_id") or "")
+        if not match_id:
+            continue
+        try:
+            published = date.fromisoformat(str(item.get("date")))
+        except ValueError:
+            continue
+        # 只看**更早**的期数。把当天自己刚记下的那条也算进来的话，同一天
+        # 重跑一次生成就会避开自己上一次的选择，两次跑出不同的焦点页。
+        if 1 <= (today - published).days <= days:
+            used.add(match_id)
+    return used
+
+
+def record_daily_focus(match, today: date) -> None:
+    """记下这一期焦点复盘用了哪一场，供后面几期避开。"""
+    if match is None:
+        return
+    memory = _load()
+    rows = [
+        row for row in memory.get(FOCUS_KEY, [])
+        if row.get("match_id") != match.match_id
+    ]
+    rows.append({"date": today.isoformat(), "match_id": match.match_id})
+    memory[FOCUS_KEY] = rows[-MAX_FOCUS_HISTORY:]
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(
+        json.dumps(memory, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
 
 def record_daily_lead(digest: Digest) -> None:

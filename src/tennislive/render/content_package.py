@@ -64,9 +64,12 @@ def _render_cards(
     cards_dir = outdir / "cards"
     cards_dir.mkdir(parents=True, exist_ok=True)
     date_label = f"{today.month}.{today.day} · {WEEKDAY_ZH[today.weekday()]}"
-    theme = os.environ.get("TENNISLIVE_THEME", "dark")
     try:
-        from .webcards import generate_match_deck
+        from .webcards import daily_card_theme, generate_match_deck
+
+        # 热点卡与晨报卡是同一套视觉组件，配色跟着日报走（paper），
+        # 不再读共享的 TENNISLIVE_THEME——那个变量归知识贴/科普片。
+        theme = daily_card_theme()
 
         cover_visual = None
         visual_cache = outdir / ".cover-visual-cache"
