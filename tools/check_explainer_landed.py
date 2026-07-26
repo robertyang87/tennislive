@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+"""这一版成片到底落库了没有——查产物本身，不查信号。
+
+判断一次 Actions 生成有没有真的落地，间接信号全部骗过人：
+
+- **提交信息**：每次生成的 commit message 一字不差，grep 到了什么也说明不了。
+- **文件路径变了**：一个在改动之前开跑、改动之后才落库的 run 也会让路径变化，
+  它推上去的是旧内容，检查却报绿。
+- **逐字节比对**：太严。CI 和沙箱的 PNG 编码有时差几千字节（7586726 / 7586670），
+  内容一模一样也报红，于是判据永远不会绿，看起来和「还没落地」一样。
+
+所以这里做两件事，都直接看产物：
+
+1. **文案**：给定的句子在不在 —— 而且**不指定文件**，整个目录里的文本一起找，
+   并报出它在哪个文件里命中。踩过这个坑：封面那句只出现在 `wechat_title.txt`，
+   我拿它去 `xiaohongshu.txt` 里找，报了「尚未落地」，其实早就落好了。
+2. **画面**：取某一屏的一条横带算平均色，和本地渲染的同一条带比。编码差异不影响
+   平均色，换没换图一比就知道（换过图的偏差在 45～70，同图在 0.1 以内）。
+
+用法：
+    # 只查文案
+    python tools/check_explainer_landed.py zheng-eala --says 钦文还在打 祝钦文好运
+    # 连画面一起查（先在本地渲一份做参照）
+    python tools/check_explainer_landed.py zheng-eala --says 祝钦文好运 \
+        --slide 5 --against /tmp/ze/slide_05.png
+
+退出码 0＝全部对上；2＝有对不上的。缺什么、差多少都打印出来。
+"""
+
+from __future__ import annotations
+
+import argparse
+import io
+import subprocess
+import sys
+from datetime import date
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+TEXT_SUFFIXES = (".txt", ".html", ".json", ".md")
+# 取哪一条横带：上下各留出一截，避开页眉和底部文字块。
+BAND = (0.05, 0.55, 0.95, 0.80)
+TOLERANCE = 6.0
+
+
+def _git(ref: str, rel: str) -> bytes:
+    return subprocess.run(["git", "-C", str(REPO), "show", f"{ref}:{rel}"],
+                          capture_output=True).stdout
+
+
+def _ls(ref: str, d: str) -> list[str]:
+    out = subprocess.run(["git", "-C", str(REPO), "ls-tree", "--name-only", f"{ref}:{d}"],
+                         capture_output=True).stdout.decode()
+    return [line.strip() for line in out.splitlines() if line.strip()]
+
+
+def _band(im) -> tuple[float, ...]:
+    from PIL import ImageStat
+    w, h = im.size
+    box = (int(w*BAND[0]), int(h*BAND[1]), int(w*BAND[2]), int(h*BAND[3]))
+    return tuple(round(v, 1) for v in ImageStat.Stat(im.crop(box).convert("RGB")).mean)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("slug")
+    ap.add_argument("--says", nargs="*", default=[], help="必须出现在产物里的句子")
+    ap.add_argument("--date", default=date.today().isoformat())
+    ap.add_argument("--ref", default="origin/main")
+    ap.add_argument("--slide", type=int, help="要比对画面的那一屏序号，如 5")
+    ap.add_argument("--against", help="本地渲染的同一屏 PNG，作为参照")
+    args = ap.parse_args()
+
+    outdir = f"output/{args.date}/explainer/{args.slug}"
+    names = _ls(args.ref, outdir)
+    if not names:
+        print(f"{outdir} 在 {args.ref} 上还不存在")
+        return 2
+
+    # 把目录里所有文本读成一份，记住每句话是在哪个文件里命中的。
+    texts = {n: _git(args.ref, f"{outdir}/{n}").decode("utf-8", "replace")
+             for n in names if n.endswith(TEXT_SUFFIXES)}
+    bad = 0
+    for phrase in args.says:
+        where = [n for n, t in texts.items() if phrase in t]
+        print(f"  「{phrase}」 → {'／'.join(where) if where else '★ 一个文件都没有'}")
+        bad += not where
+
+    if args.slide is not None and args.against:
+        from PIL import Image
+        raw = _git(args.ref, f"{outdir}/slide_{args.slide:02d}.png")
+        if not raw:
+            print(f"  slide_{args.slide:02d}.png 还没落库"); return 2
+        want, got = _band(Image.open(args.against)), _band(Image.open(io.BytesIO(raw)))
+        delta = max(abs(a - b) for a, b in zip(want, got))
+        print(f"  第 {args.slide} 屏色带 本地{want} 仓库{got} 偏差 {delta:.1f} "
+              f"（阈值 {TOLERANCE}）")
+        bad += delta >= TOLERANCE
+
+    print("已落地" if not bad else f"有 {bad} 项对不上")
+    return 0 if not bad else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
