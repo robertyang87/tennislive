@@ -36,6 +36,7 @@ import os
 import re
 import shutil
 import subprocess
+import dataclasses
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
@@ -1759,7 +1760,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "对面这位叫阿纳斯塔西娅·波塔波娃，二〇〇一年三月生，二十五岁，"
             "从二〇二六赛季起代表奥地利出战。她今年做成过一件此前没人做成的事："
             "四月的马德里站，她在资格赛末轮输了球，本来该收拾东西回家，正赛开始前半小时"
-            "接到电话递补进签表；然后她一路赢下去，先后战胜世界第二里巴金娜和普利斯科娃，"
+            "接到电话递补进签表；然后她一路赢下去，先后战胜世界第二莱巴金娜和普利斯科娃，"
             "打进四强——这是一九九〇年分级制度确立以来，第一个打进 WTA 一千级四强的幸运落败者。"
             "她的生涯最高排名是世界第二十一。",
             "assets/explainer/venus-potapova/potapova_madrid.jpg",
@@ -1767,7 +1768,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             (
                 "25 岁，2026 赛季起代表奥地利出战",
                 "马德里幸运落败者闯四强，1990 年来首例",
-                "四强路上淘汰世界第二里巴金娜",
+                "四强路上淘汰世界第二莱巴金娜",
             ),
         ),
         (
@@ -2092,6 +2093,33 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     )
 
 
+def _ask_it_out_loud(closer: ExplainerSegment) -> ExplainerSegment:
+    """收尾那个问题，画面上写了，嘴上也要问出来。
+
+    十三条片子里有十条只把问题印在末屏，旁白讲完就停——**听着的人根本不知道
+    被问了什么**。而这个问题是这类短片换评论区的唯一抓手，只给眼睛不给耳朵，
+    等于白留。所以在这里统一补上，而不是指望每写一条都记得手动加一遍。
+
+    已经在旁白里问过的（去掉问号后能在旁白里找到）就不重复。
+    """
+    q = (closer.question or "").strip()
+    if not q:
+        return closer
+    tail = closer.narration[-40:]
+    # 只看结尾这一段有没有问号。用「问题原句是否出现在旁白里」当判据不够：
+    # 好几条片子的旁白早就问过意思一样、措辞不同的话（「你觉得法网什么时候也会
+    # 换成电子司线？评论区聊聊。」），逐字比对匹配不上，补一遍就变成连问两遍。
+    if "？" in tail or "?" in tail:
+        return closer
+    # 有几条旁白是特意停在破折号上等着这一问的（「所以问题来了——」），
+    # 那里再补一个句号会多出一个孤零零的点。
+    joiner = "" if closer.narration.rstrip().endswith(("——", "—", "：")) else "。"
+    body = closer.narration.rstrip()
+    if joiner == "。" and body.endswith(("。", "！", "…")):
+        joiner = ""
+    return dataclasses.replace(closer, narration=f"{body}{joiner}{q}")
+
+
 def explainer_script(story) -> list[ExplainerSegment]:
     """Return the three-beat script for a story, each beat with a hero visual.
 
@@ -2103,6 +2131,7 @@ def explainer_script(story) -> list[ExplainerSegment]:
     scripted = _SCRIPTS.get(story.slug)
     if scripted:
         beats = [ExplainerSegment(*row) for row in scripted]
+        beats[-1] = _ask_it_out_loud(beats[-1])
         return [_opening_segment(story, beats), *beats]
 
     moments = list(getattr(story, "moments", ()) or ())
