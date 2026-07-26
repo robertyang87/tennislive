@@ -3418,3 +3418,109 @@ def test_lead_page_does_not_repeat_the_focus_page_stats_table():
 
     assert "compare-grid" not in lead
     assert "compare-grid" in focus
+
+
+def test_duration_is_not_written_as_zero_hours():
+    """45 分钟的比赛不能印成"0小时45分"。"""
+    from tennislive.render.focus import format_duration
+
+    assert format_duration(45) == "45分"
+    assert format_duration(59) == "59分"
+    assert format_duration(95) == "1小时35分"
+    assert format_duration(200) == "3小时20分"
+
+
+def test_stats_verdict_does_not_call_a_blowout_a_close_match():
+    """"全场总得分只差N分"原来无条件拼上去，不看差多少。
+
+    2026-07-26 线上成品：37 比 17 印成"全场总得分只差20分"。20 分在一场
+    比赛里是碾压，不是胶着。
+    """
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    def verdict(won, lost, **kw):
+        match = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None), winner=0)
+        for key, value in kw.items():
+            setattr(match, key, value)
+        match.stats = MatchStats(source="WTA", total_points_won=StatPair(won, lost))
+        return _stats_verdict(match)
+
+    assert "只差" not in verdict(37, 17)          # 20 分差 = 碾压
+    assert "多拿20分" in verdict(37, 17)
+    assert "只差3分" in verdict(97, 94)           # 3 分差 = 真胶着
+    assert "多拿" not in verdict(97, 94)
+
+
+def test_stats_verdict_does_not_say_survived_a_grind_on_a_retirement():
+    """退赛不能说"熬过"——那场根本没打完。"""
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    def verdict(status, minutes):
+        match = make_match(
+            sets=((6, 1), (2, 0)), tiebreaks=(None, None), winner=0, status=status,
+        )
+        match.stats = MatchStats(
+            source="WTA", total_points_won=StatPair(37, 17),
+            duration_minutes=minutes,
+        )
+        return _stats_verdict(match)
+
+    retired = verdict(MatchStatus.RETIRED, 45)
+    assert "熬过" not in retired
+    assert "0小时" not in retired
+    assert "45分" in retired and "退出" in retired
+
+    # 真打满的长盘才配叫"熬过"
+    assert "最终熬过" in verdict(MatchStatus.FINISHED, 190)
+    assert "全场耗时" in verdict(MatchStatus.FINISHED, 92)
+
+
+def test_stats_verdict_does_not_repeat_the_winner_name():
+    """一句话里同一个人名不要说两遍。"""
+    from tennislive.models import MatchStats, StatPair
+    from tennislive.render.focus import _stats_verdict
+
+    match = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None), winner=0)
+    match.stats = MatchStats(
+        source="WTA",
+        total_points_won=StatPair(37, 17),
+        unforced_errors=StatPair(9, 18),
+    )
+    from tennislive.zh import player_zh
+
+    verdict = _stats_verdict(match)
+    name = player_zh(match.home[0].name)
+    assert verdict.count(name) == 1, verdict
+
+
+def test_tonight_reason_is_trimmed_server_side_not_by_css():
+    """今晚焦点卡的"看点"要在服务端裁成完整句。
+
+    交给 CSS 的 line-clamp / text-overflow 去截，会从词中间切开并留下半个
+    引号（"…后来她把'让萨巴伦卡这个姓被记…"）。
+    """
+    from tennislive.render.webcards import (
+        REASON_LIMIT_ONE_LINE,
+        REASON_LIMIT_TWO_LINES,
+        _sched_card,
+    )
+
+    match = make_match(
+        status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+        home_name="Aryna Sabalenka", away_name="Coco Gauff",
+        home_country="BLR", away_country="USA",
+        discipline="Women's Singles", round_name="Quarterfinals",
+    )
+    body = _sched_card(match, with_reason=True)
+    reason = re.search(r"<span>看点</span></b>([^<]*)</div>", body).group(1)
+
+    assert reason and len(reason) <= REASON_LIMIT_ONE_LINE
+    assert "…" not in reason and "..." not in reason
+    # 三场及以上放开成两行，预算跟着放宽
+    assert REASON_LIMIT_TWO_LINES > REASON_LIMIT_ONE_LINE
+    wide = _sched_card(match, with_reason=True, reason_limit=REASON_LIMIT_TWO_LINES)
+    wide_reason = re.search(r"<span>看点</span></b>([^<]*)</div>", wide).group(1)
+    assert len(wide_reason) <= REASON_LIMIT_TWO_LINES
+    assert len(wide_reason) >= len(reason)
