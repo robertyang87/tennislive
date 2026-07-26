@@ -605,3 +605,16 @@ def test_同一天可以并存多条片子():
     assert len(previews) >= 2, f"开赛之前只有 {previews}，多场并存没有真的被用起来"
     assert len(set(previews)) == len(previews)
     assert Path("assets/explainer").is_dir()
+
+
+def test_大标题里不能有冒号():
+    """小红书文案把每一屏排成「小标：大标」，标题里再带冒号就成了一行两个。
+
+    「答案：维纳斯说：我回来是为了上保险」——念不通，看着也像排版出错。改成逗号即可，
+    引号里的原话一个字不动。
+    """
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            assert "：" not in seg.title and ":" not in seg.title, (
+                f"{slug}/{seg.kind} 大标题里有冒号：{seg.title}"
+            )
