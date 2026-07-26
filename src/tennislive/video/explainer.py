@@ -449,44 +449,42 @@ _SHOT_CLOCK_DIAGRAM = """
 # that carries both is drawn.
 _ZHENG_EALA_DIAGRAM = """
 <svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="40" text-anchor="middle" fill="#9fb4aa"
-        font-size="27" font-weight="700">三年前那场半决赛，和三年后的位置</text>
+  <text x="450" y="42" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">三年之间，两条线换了位置</text>
 
-  <!-- the one match they have played -->
-  <rect x="70" y="72" width="760" height="112" rx="12"
-        fill="rgba(55,226,154,.10)" stroke="rgba(55,226,154,.45)" stroke-width="3"/>
-  <text x="96" y="112" fill="#9fb4aa" font-size="23" font-weight="700">2023 年 9 月 · 杭州亚运会 女单半决赛</text>
-  <text x="96" y="158" fill="#e7f3ec" font-size="31" font-weight="800">郑钦文</text>
-  <text x="232" y="158" fill="#c6f65a" font-size="31" font-weight="800">6-1  6-7(5)  6-3</text>
-  <text x="486" y="158" fill="#e7f3ec" font-size="31" font-weight="800">伊拉</text>
-  <text x="600" y="158" fill="#9fb4aa" font-size="23" font-weight="700">郑钦文夺金 · 伊拉铜牌</text>
-
-  <!-- where each of them stands now -->
-  <text x="70" y="248" fill="#9fb4aa" font-size="24" font-weight="700">现在</text>
-  <line x1="70" y1="266" x2="830" y2="266" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
-
-  <text x="96" y="330" fill="#e7f3ec" font-size="28" font-weight="800">伊拉</text>
-  <rect x="200" y="300" width="360" height="40" rx="8"
+  <text x="96" y="126" fill="#e7f3ec" font-size="28" font-weight="800">伊拉</text>
+  <rect x="210" y="96" width="376" height="42" rx="8"
         fill="rgba(198,246,90,.30)" stroke="#c6f65a" stroke-width="3"/>
-  <text x="380" y="329" text-anchor="middle" fill="#c6f65a"
+  <text x="398" y="126" text-anchor="middle" fill="#c6f65a"
         font-size="27" font-weight="800">世界第 28 · 生涯新高</text>
-  <text x="580" y="329" fill="#9fb4aa" font-size="22" font-weight="700">菲律宾史上最高</text>
+  <text x="606" y="126" fill="#9fb4aa" font-size="22" font-weight="700">菲律宾史上最高</text>
 
-  <text x="96" y="424" fill="#e7f3ec" font-size="28" font-weight="800">郑钦文</text>
-  <rect x="200" y="394" width="200" height="40" rx="8"
+  <text x="96" y="212" fill="#e7f3ec" font-size="28" font-weight="800">郑钦文</text>
+  <rect x="210" y="182" width="204" height="42" rx="8"
         fill="rgba(255,90,106,.20)" stroke="#ff5a6a" stroke-width="3"/>
-  <text x="300" y="423" text-anchor="middle" fill="#ff5a6a"
+  <text x="312" y="212" text-anchor="middle" fill="#ff5a6a"
         font-size="27" font-weight="800">跌出前 100</text>
-  <text x="420" y="423" fill="#9fb4aa" font-size="22" font-weight="700">本站外卡参赛 · 生涯最高曾是世界第 4</text>
+  <text x="434" y="212" fill="#9fb4aa" font-size="22" font-weight="700">本站外卡 · 最高曾是世界第 4</text>
 
-  <path d="M470 352 L470 384" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
-  <text x="450" y="500" text-anchor="middle" fill="#e7f3ec"
-        font-size="26" font-weight="800">三年之间，两条线换了位置</text>
-  <text x="450" y="556" text-anchor="middle" fill="#9fb4aa"
-        font-size="23" font-weight="700">这是两人第二次交手，也是 WTA 巡回赛上的第一次</text>
+  <line x1="70" y1="262" x2="830" y2="262" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+  <text x="70" y="312" fill="#9fb4aa" font-size="24" font-weight="700">中间这三年</text>
+
+  <line x1="120" y1="360" x2="120" y2="560" stroke="#9fb4aa" stroke-width="3"/>
+  <g fill="#9fb4aa" font-size="22" font-weight="700">
+    <circle cx="120" cy="382" r="9" fill="#c6f65a"/>
+    <text x="152" y="390" fill="#e7f3ec" font-size="24" font-weight="800">2025 温网后</text>
+    <text x="340" y="390">右肘手术，缺席美网</text>
+    <circle cx="120" cy="442" r="9" fill="#c6f65a"/>
+    <text x="152" y="450" fill="#e7f3ec" font-size="24" font-weight="800">2026 年 2 月</text>
+    <text x="340" y="450">多哈复出，此前缺席澳网</text>
+    <circle cx="120" cy="502" r="9" fill="#ff5a6a"/>
+    <text x="152" y="510" fill="#e7f3ec" font-size="24" font-weight="800">今年法网 · 温网</text>
+    <text x="340" y="510">均止步首轮</text>
+  </g>
+  <text x="450" y="606" text-anchor="middle" fill="#e7f3ec"
+        font-size="24" font-weight="700">这是两人第二次交手，也是巡回赛上的第一次</text>
 </svg>
 """
-
 
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
@@ -1560,35 +1558,34 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "三年前",
             "她们打过一次，在亚运会半决赛",
             "很多人不知道，这其实不是两人第一次见面。二〇二三年九月的杭州亚运会，女单半决赛，"
-            "郑钦文六比一、六比七、六比三赢下伊拉。那场之后，伊拉拿了铜牌，郑钦文一路拿到金牌。"
-            "三年过去，两条线换了位置：伊拉现在是世界第二十八，生涯新高；"
-            "郑钦文排名跌出前一百，这一站是拿外卡进的正赛。这一场，"
-            "是她们的第二次交手，也是在 WTA 巡回赛上的第一次。",
-            "",
-            "示意图 · 网球时差绘制",
+            "郑钦文六比一、六比七、六比三赢下伊拉。那场之后，伊拉拿了铜牌；郑钦文一路打到决赛，"
+            "战胜同胞朱琳拿下金牌。画面就是那一届的赛后——她和朱琳一起举起国旗，"
+            "背景上写着「第十九届亚运会 杭州」。",
+            "assets/explainer/zheng-eala/asiad.jpg",
+            "新闻图片 · 2023 年 9 月杭州亚运会，郑钦文（右）与朱琳赛后合影",
             (
                 "杭州亚运会半决赛：郑钦文 6-1 6-7(5) 6-3",
-                "那届伊拉拿铜牌，郑钦文拿金牌",
+                "伊拉拿铜牌，郑钦文决赛胜朱琳夺金",
                 "第二次交手，巡回赛上的第一次",
             ),
-            _ZHENG_EALA_DIAGRAM,
         ),
         (
             "now",
             "这三年",
-            "同一站赛事，她三年前也来过",
-            "画面里是二〇二三年的郑钦文，就在华盛顿这一站。三年后她再来，身份完全不同了。"
-            "二〇二五年温网之后，她因为右肘长期疼痛接受了手术，缺席了那年的美网，"
-            "也错过了二〇二六年赛季的第一个月，包括澳网。二月她在多哈复出，赢了两场；"
+            "她这三年，走的是另一条路",
+            "三年过去，两条线换了位置。伊拉现在是世界第二十八，生涯新高；"
+            "郑钦文这三年经历的是另一条路：二〇二五年温网之后，她因为右肘长期疼痛接受了手术，"
+            "缺席那年的美网，也错过了二〇二六年赛季的第一个月，包括澳网。二月她在多哈复出，赢了两场；"
             "但今年的法网和温网，她都止步首轮。排名从世界第四一路掉到一百开外，"
             "这一站要靠外卡才能进正赛。",
-            "assets/explainer/zheng-eala/zheng_dc.jpg",
-            "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2023 年华盛顿站的郑钦文",
+            "",
+            "示意图 · 网球时差绘制",
             (
                 "2025 温网后右肘手术，缺席美网",
                 "2026 年 2 月多哈复出，缺席澳网",
                 "今年法网、温网均首轮出局，本站靠外卡",
             ),
+            _ZHENG_EALA_DIAGRAM,
         ),
         (
             "stake",
