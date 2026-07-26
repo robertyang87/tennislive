@@ -166,8 +166,14 @@ def _headline_display_width(text: str) -> float:
     return width
 
 
-def _balanced_headline_lines(headline: str) -> list[str]:
-    """Prefer a balanced break after Chinese punctuation on long cover titles."""
+def _balanced_headline_lines(headline: str, protect: tuple[str, ...] = ()) -> list[str]:
+    """Prefer a balanced break after Chinese punctuation on long cover titles.
+
+    ``protect`` 里的球员译名前面也算一个可断点。只认标点的话，"爆冷：塔格尔
+    掀翻克雷吉茨科娃"整句只有一个"："可断，左边才 3 个字、过不了均衡门槛，
+    于是整句交给浏览器换行——它会在任意两个汉字之间断开，姓氏就劈成了
+    "…掀翻克雷 / 吉茨科娃"（7.26 封面）。名字前面断一刀，两行都完整。
+    """
     explicit = [line.strip() for line in headline.splitlines() if line.strip()]
     if len(explicit) > 1:
         return explicit
@@ -175,10 +181,20 @@ def _balanced_headline_lines(headline: str) -> list[str]:
     total = _headline_display_width(text)
     if total < 12:
         return [text]
-    candidates: list[tuple[float, int]] = []
-    for index, char in enumerate(text[:-1], start=1):
-        if char not in _HEADLINE_BREAK_AFTER:
+    breakpoints = {
+        index
+        for index, char in enumerate(text[:-1], start=1)
+        if char in _HEADLINE_BREAK_AFTER
+    }
+    for name in protect:
+        if len(name) < 2:
             continue
+        start = text.find(name)
+        while start > 0:
+            breakpoints.add(start)
+            start = text.find(name, start + 1)
+    candidates: list[tuple[float, int]] = []
+    for index in breakpoints:
         left = _headline_display_width(text[:index])
         right = _headline_display_width(text[index:])
         if min(left, right) < 4:
@@ -190,11 +206,24 @@ def _balanced_headline_lines(headline: str) -> list[str]:
     return [text[:split_at].strip(), text[split_at:].strip()]
 
 
-def _headline_line_html(line: str) -> str:
-    """Keep punctuation with its neighbor and keep the final two glyphs together."""
+def _headline_line_html(line: str, protect: tuple[str, ...] = ()) -> str:
+    """Keep punctuation with its neighbor and keep the final two glyphs together.
+
+    ``protect`` 是不许从中间断开的整词（球员译名）。中文没有词间空格，浏览器
+    可以在任意两个汉字之间换行，于是长译名会被劈开：7.26 的封面印着
+    "爆冷：塔格尔掀翻克雷 / 吉茨科娃"——姓氏断成两截。把整个名字包成一个
+    nowrap 单元，换行就只会发生在名字前后。
+    """
     units: list[str] = []
     index = 0
+    # 长的先匹配，避免"克雷"抢在"克雷吉茨科娃"前面命中
+    names = tuple(sorted({n for n in protect if len(n) > 1}, key=len, reverse=True))
     while index < len(line):
+        name = next((n for n in names if line.startswith(n, index)), None)
+        if name is not None:
+            units.append(name)
+            index += len(name)
+            continue
         char = line[index]
         if char in _HEADLINE_CLOSING and units:
             units[-1] += char
@@ -219,11 +248,22 @@ def _headline_line_html(line: str) -> str:
     return "".join(rendered)
 
 
-def _cover_headline_html(headline: str) -> str:
+def _cover_headline_html(headline: str, protect: tuple[str, ...] = ()) -> str:
     """Render a safe, punctuation-aware cover headline without orphan glyphs."""
     return "".join(
-        f'<span class="headline-line">{_headline_line_html(line)}</span>'
-        for line in _balanced_headline_lines(headline)
+        f'<span class="headline-line">{_headline_line_html(line, protect)}</span>'
+        for line in _balanced_headline_lines(headline, protect)
+    )
+
+
+def _headline_protected_names(match) -> tuple[str, ...]:
+    """标题里出现的球员译名——它们不许被换行从中间劈开。"""
+    if match is None:
+        return ()
+    return tuple(
+        player_zh(player.name)
+        for player in (*match.home, *match.away)
+        if player is not None and player.name
     )
 
 
@@ -1613,7 +1653,8 @@ def cover_body(
         + _masthead(date_label)
         + '<div class="cover-copy">'
         + '<div class="edition">MATCH POINT · 今日头条</div>'
-        + f'<div class="focus">{_cover_headline_html(headline)}</div>'
+        + f'<div class="focus">'
+          f'{_cover_headline_html(headline, _headline_protected_names(lead))}</div>'
         + '</div><div class="cover-lower">'
         + secondary_html
         + highlights_html
