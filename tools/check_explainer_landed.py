@@ -33,10 +33,17 @@ import argparse
 import io
 import subprocess
 import sys
-from datetime import date
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+
+# 产物目录用的是工作流里的 `TZ=Asia/Shanghai date +%F`，不是本机日期。
+# 沙箱跑在 UTC，所以每天 16:00 UTC 之后两者差一天——查 2026-07-26 查了半天
+# 「产物还没落库」，其实它安安静静躺在 2026-07-27 里。空结果先自证是真空。
+def _outdir_date() -> str:
+    return datetime.now(timezone(timedelta(hours=8))).date().isoformat()
+
 TEXT_SUFFIXES = (".txt", ".html", ".json", ".md")
 # 取哪一条横带：上下各留出一截，避开页眉和底部文字块。
 BAND = (0.05, 0.55, 0.95, 0.80)
@@ -65,7 +72,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("slug")
     ap.add_argument("--says", nargs="*", default=[], help="必须出现在产物里的句子")
-    ap.add_argument("--date", default=date.today().isoformat())
+    ap.add_argument("--date", default=_outdir_date())
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--slide", type=int, help="要比对画面的那一屏序号，如 5")
     ap.add_argument("--against", help="本地渲染的同一屏 PNG，作为参照")
