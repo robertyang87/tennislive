@@ -61,14 +61,17 @@ def _ls(ref: str, d: str) -> list[str]:
     return [line.strip() for line in out.splitlines() if line.strip()]
 
 
-def _grid(im, n: int = 32) -> list[float]:
-    """把整屏降成 n×n 的灰度网格。
+def _grid(im, n: int = 48) -> list[float]:
+    """把整屏降成 n×n 的 RGB 网格。
 
     原来这里取的是某一条横带的平均色。那个判据两次给出假绿：连败那一屏从
     文字表格换成条形图、又换了配色，整屏平均亮度几乎没变，判据看不出差别，
     照样报「已落地」。平均值对版式不敏感——降成网格再比才看得见谁在哪儿。
+
+    按 RGB 存，不转灰度。转灰度又栽了一次：连败图那两版差别主要在颜色（莎粉
+    换成中性白），而这两个颜色压在深绿底上**亮度几乎相同**，灰度网格读不出换色。
     """
-    g = im.convert("L").resize((n, n))
+    g = im.convert("RGB").resize((n, n))
     return [v / 255 for v in g.tobytes()]
 
 
@@ -118,10 +121,15 @@ def main() -> int:
             d_old, spread = _dist(repo, old), _dist(new, old)
             print(f"  第 {args.slide} 屏 与新版距离 {d_new:.4f} · 与旧版距离 {d_old:.4f}"
                   f" · 新旧本身相差 {spread:.4f}")
-            if spread < 0.010:
+            # 只做排序，不设绝对阈值。CI 与沙箱渲染同一版的差距（字体微调、
+            # 抗锯齿）本身就有 0.02 上下，和"换了配色"的差距一个量级——拿绝对
+            # 阈值卡会把已经落地的新版判成没落地，这个红报过一次。
+            if spread < 0.008:
                 print("  ★ 新旧两版本身几乎一样，这个判据分不出来，不作数"); bad += 1
-            elif d_new >= d_old or d_new > spread * 0.4:
-                print("  ★ 仓库里更像旧版"); bad += 1
+            elif d_new >= d_old * 0.85:
+                print("  ★ 仓库里更像旧版，或两者分不清"); bad += 1
+            else:
+                print("  ✓ 仓库更接近新版（这一步只排序；最终以亲眼看为准）")
         else:
             print(f"  第 {args.slide} 屏 与本地渲染距离 {d_new:.4f}（阈值 {TOLERANCE}）")
             bad += d_new >= TOLERANCE
