@@ -1136,6 +1136,61 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="roof",
+        title="温网屋顶谁说了算",
+        subtitle="网球观察 · 规则篇",
+        identity="「光线不足」没有写时间",
+        chips=("规则争议", "19:40 对 20:30", "2009 装成"),
+        hero=(
+            "中央球场屋顶只在下雨或光线不足时关闭；2025 年 20:30 关，"
+            "2026 年 19:40 关，德约科维奇当场质问执行标准。"
+        ),
+        facts=(
+            "中央球场可开合屋顶装成于 2009 年，规则只允许两种情形关闭：降雨，或光线不足；"
+            "关闭后可开灯续赛，直至当地议会规定的 23:00 宵禁。",
+            "2026 年温网第四轮，辛纳与望月慎太郎在第二盘 4-4 时意见相反："
+            "辛纳要求关顶，望月希望续打，官方选择关闭；辛纳随后以 7-0 拿下该盘抢七，"
+            "全场 6-3、7-6(0)、6-3 获胜。",
+            "两天后的四分之一决赛，赛事主管于 19:40、第三盘开始前通知关顶，"
+            "德约科维奇当场质疑执行不一；该场耗时 5 小时 15 分，为温网史上最长的四分之一决赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-07",
+                player="德约科维奇",
+                age="19:40",
+                headline="「我们是户外赛事」",
+                detail=(
+                    "第三盘开始前被通知关顶，他回应称前几日到 20:30 都未关，"
+                    "当时完全可以在户外再打一盘。"
+                ),
+                source_url=(
+                    "https://www.foxnews.com/sports/"
+                    "novak-djokovic-heated-argument-wimbledon-roof-quarterfinal-win"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-07-07",
+                player="迪米特洛夫",
+                age="20:30",
+                headline="领先两盘后退赛",
+                detail=(
+                    "第二盘后因光线关顶、中断约 10 分钟；复赛后第三盘他胸肌撕裂退赛。"
+                    "其教练德尔加多向 BBC 表示，转入室内并非受伤原因。"
+                ),
+                source_url=(
+                    "https://www.tennis365.com/tennis-news/"
+                    "grigor-dimitrov-wimbledon-injury-coach-roof-closure-jannik-sinner-"
+                    "andy-murray-criticism"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="温网官方规则 / Fox Sports / BBC / ATP",
+        image_credit="Carine06 / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://en.wikipedia.org/wiki/Centre_Court",
+    ),
+    _trivia_story(
         slug="ten-champions",
         title="十届温网十个女冠军",
         subtitle="网球观察 · 格局篇",
