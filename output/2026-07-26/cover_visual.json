@@ -382,6 +382,31 @@
     {
       "player": "Alexander Bublik",
       "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/jp4712/55419676936/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 36,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Alexander Bublik",
+      "provider": "flickr-public",
       "source_url": "https://www.flickr.com/photos/eybusman/55419854394/",
       "subject_match": false,
       "person_match": false,
@@ -473,31 +498,6 @@
         "rejected": []
       },
       "metadata_score": 31,
-      "status": "rejected",
-      "hard_failures": [
-        "headline-match-player-mismatch",
-        "not-the-exact-headline-match"
-      ]
-    },
-    {
-      "player": "Alexander Bublik",
-      "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/selmerorselnec/55417650072/",
-      "subject_match": false,
-      "person_match": false,
-      "both_sides_match": false,
-      "exact_match": false,
-      "event_match": false,
-      "year_match": false,
-      "scene": "unknown",
-      "china_priority_bonus": 0,
-      "scene_evidence": {
-        "motion": [],
-        "reaction": [],
-        "trophy": [],
-        "rejected": []
-      },
-      "metadata_score": 29,
       "status": "rejected",
       "hard_failures": [
         "headline-match-player-mismatch",
@@ -632,32 +632,7 @@
     {
       "player": "Alexander Bublik",
       "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/jp4712/55419676936/",
-      "subject_match": false,
-      "person_match": false,
-      "both_sides_match": false,
-      "exact_match": false,
-      "event_match": false,
-      "year_match": true,
-      "scene": "unknown",
-      "china_priority_bonus": 0,
-      "scene_evidence": {
-        "motion": [],
-        "reaction": [],
-        "trophy": [],
-        "rejected": []
-      },
-      "metadata_score": 31,
-      "status": "rejected",
-      "hard_failures": [
-        "headline-match-player-mismatch",
-        "not-the-exact-headline-match"
-      ]
-    },
-    {
-      "player": "Alexander Bublik",
-      "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/londonbuses1/55416927707/",
+      "source_url": "https://www.flickr.com/photos/londonbuses1/55418067304/",
       "subject_match": false,
       "person_match": false,
       "both_sides_match": false,
@@ -682,7 +657,7 @@
     {
       "player": "Alexander Bublik",
       "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/londonbuses1/55418067304/",
+      "source_url": "https://www.flickr.com/photos/londonbuses1/55418017758/",
       "subject_match": false,
       "person_match": false,
       "both_sides_match": false,
@@ -708,7 +683,7 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 0,
-  "editorial_source_urls": 3,
+  "editorial_source_urls": 2,
   "source_registry": {
     "as_of": "run-start",
     "proven": [
@@ -830,6 +805,20 @@
         ]
       },
       {
+        "match_id": "400-2026:178816",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
         "match_id": "401-2026:179417",
         "status": "unavailable",
         "errors": [
@@ -842,20 +831,6 @@
           "bing-web-image",
           "flickr-public",
           "official-match-media"
-        ]
-      },
-      {
-        "match_id": "1002-2026:179376",
-        "status": "unavailable",
-        "errors": [
-          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
-        ],
-        "providers_queried": [
-          "wta-video-hub",
-          "wikimedia-commons",
-          "openverse",
-          "bing-web-image",
-          "flickr-public"
         ]
       }
     ]
