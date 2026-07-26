@@ -38,6 +38,7 @@ GROUND0, GROUND1 = (0x1E, 0x42, 0x34), (0x2A, 0x64, 0x50)
 _DAILY_MARKER = "daily 的布局重做"
 _HIGHLIGHT_MARKER = 'daily 的"一屏只点亮比分与决胜数据"'
 _BADGE_MARKER = "daily 的描边徽章"
+_SOFT_MARKER = "daily 的柔和内容色"
 
 
 def _daily_tail() -> str:
@@ -198,7 +199,7 @@ def test_badges_are_outlined_not_filled_blocks():
     一屏上原本有 6 处实心色块（今日头条 / 中国军团 / 爆冷 / 重点 / 硬地 /
     看点），和比分抢注意力。只换填充与描边，不引入新色值。
     """
-    tail = _CSS.split(_BADGE_MARKER, 1)[1]
+    tail = _CSS.split(_BADGE_MARKER, 1)[1].split(_SOFT_MARKER, 1)[0]
     for rule in (
         "html.daily .chip { background:transparent;",
         "html.daily .rating { background:transparent;",
@@ -276,12 +277,20 @@ def test_legacy_themes_still_carry_every_key_daily_added(theme):
 
 
 def test_pillow_fallback_matches_the_html_palette():
-    """Chromium 挂了才走 Pillow，两边必须是同一套色值。"""
+    """Chromium 挂了才走 Pillow，两边必须是同一套色值。
+
+    SOFT_ACCENT 是第五个：赛果速递 / 焦点复盘两页的强调色从荧光黄绿收敛成
+    金（见 webcards 的"柔和内容色"段）。它只喂给这两页的 _page()，其余卡
+    仍用 ACCENT——改动范围和 HTML 那边一一对应。
+    """
     daily, dark = cards._THEMES["daily"], cards._THEMES["dark"]
     changed = {k for k in daily if daily[k] != dark.get(k)}
-    assert changed == {"BG_TOP", "BG_BOTTOM", "PANEL", "PANEL_HI"}, (
-        f"Pillow 兜底改了额外的色值：{sorted(changed)}"
-    )
+    assert changed == {
+        "BG_TOP", "BG_BOTTOM", "PANEL", "PANEL_HI", "SOFT_ACCENT",
+    }, f"Pillow 兜底改了额外的色值：{sorted(changed)}"
+    # 收敛成的那支金必须就是主题里的 --gold，不能另起一支
+    assert daily["SOFT_ACCENT"] == (0xD5, 0xB4, 0x4D)
+    assert "--gold:#D5B44D" in re.search(r":root \{(.*?)\}", _CSS, re.S).group(1)
     assert daily["BG_TOP"] == GROUND0 and daily["BG_BOTTOM"] == GROUND1
     # 底色确实比 dark 亮
     assert _luma(daily["BG_TOP"]) > _luma(dark["BG_TOP"])
@@ -306,3 +315,93 @@ def test_key_stat_row_is_the_decisive_one():
     # 没有破发兑现时退到 _CARD_STAT_PRIORITY 里最靠前的
     assert _key_stat_label(["一发成功率", "总得分", "二发得分率"]) == "总得分"
     assert _key_stat_label([]) is None
+
+
+def test_soft_section_only_calms_the_two_result_cards():
+    """柔和内容色只准作用在赛果速递和焦点复盘上。
+
+    这两页原来最跳的是荧光黄绿 #D6FF00（栏目大标题 + 每一位胜者的比分数字
+    + 决胜行高亮），改成温网那一路：象牙白数字 + 单支金色强调。
+    但它不能顺手把封面、今晚焦点、知识贴一起改了。
+    """
+    assert _SOFT_MARKER in _CSS, "柔和内容色段落的标记注释被改掉了"
+    tail = _CSS.split(_SOFT_MARKER, 1)[1]
+
+    selectors = [
+        line.split("{", 1)[0].strip()
+        for line in tail.splitlines()
+        if "{" in line and not line.strip().startswith(("/*", "*"))
+    ]
+    assert selectors, "柔和段是空的"
+    for selector in selectors:
+        for part in selector.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            assert part.startswith("html.daily"), f"规则泄漏到全局：{part}"
+            assert ".results-page" in part or ".focus-page" in part, (
+                f"柔和内容色越界改了这两页以外的卡：{part}"
+            )
+
+    # 数字回到象牙白，强调色收敛成金
+    assert "--score-win:var(--ivory);" in tail
+    assert "--section-accent:var(--gold);" in tail
+    # 决胜那一行仍然要点亮（完全中性的话它就和其余行分不出来了）
+    assert "html.daily .focus-page .compare-row.key .winner { color:var(--gold); }" in tail
+
+
+def test_soft_section_introduces_exactly_one_new_colour_and_it_is_calmer():
+    """这一段唯一准许的新色值是爆冷用的暗酒红，而且必须比 --flash 更收敛。
+
+    其余都得引用既有主题色。新增一支是因为 --flash #F15A3A 在收敛下来的
+    这两页上是全屏最扎眼的东西；但它必须是"同色相往下压"，不能是又一支高
+    饱和色，否则等于换了个颜色继续喊。
+    """
+    import colorsys
+
+    # 标记本身就写在段落头部的注释里，split 之后还落在注释中间；那段注释会
+    # 引用 #D6FF00 / #F15A3A 说明"从哪儿改过来的"，先跳到注释结束再看规则。
+    tail = _CSS.split(_SOFT_MARKER, 1)[1].split("*/", 1)[1]
+    tail = re.sub(r"/\*.*?\*/", "", tail, flags=re.S)
+    hexes = set(re.findall(r"#[0-9A-Fa-f]{6}\b", tail))
+    assert hexes == {"#C0705C"}, f"柔和段引入了预期之外的色值：{sorted(hexes)}"
+
+    def hsv(value: str) -> tuple[float, float, float]:
+        red, green, blue = (int(value[i:i + 2], 16) / 255 for i in (1, 3, 5))
+        return colorsys.rgb_to_hsv(red, green, blue)
+
+    soft_h, soft_s, _ = hsv("#C0705C")
+    flash_h, flash_s, _ = hsv("#F15A3A")   # :root 的 --flash
+    assert soft_s < flash_s, "新色比 --flash 还艳，等于换个颜色继续喊"
+    assert abs(soft_h - flash_h) < 0.06, "新色偏离了原来的色相，不是'压下来'而是换色"
+
+
+def test_soft_section_leaves_the_root_score_colour_alone():
+    """:root 的 --score-win 仍然是荧光黄绿——柔和只发生在这两页的作用域里。"""
+    root = re.search(r":root \{(.*?)\}", _CSS, re.S).group(1)
+    assert "--score-win:#D6FF00" in root
+
+
+@pytest.mark.parametrize("theme", ["dark", "light", "daily"])
+def test_every_theme_defines_soft_accent(theme):
+    """三个主题都得给 SOFT_ACCENT 赋值。
+
+    set_theme 走 globals().update：少给一个 key，切过一次主题之后它就停在
+    上一个主题的值上，之后每张卡都带着别人的颜色。
+    """
+    assert "SOFT_ACCENT" in cards._THEMES[theme]
+
+
+def test_only_the_two_result_cards_use_the_soft_accent_in_pillow():
+    """Pillow 侧也只有赛果速递和焦点复盘收敛，封面/今晚焦点不动。"""
+    import inspect
+
+    for builder, should in (
+        (cards._card_scoreboard, True),
+        (cards._card_focus, True),
+        (cards._card_tonight, False),
+    ):
+        source = inspect.getsource(builder)
+        assert ("SOFT_ACCENT" in source) is should, (
+            f"{builder.__name__} 用不用 SOFT_ACCENT 和预期不符"
+        )

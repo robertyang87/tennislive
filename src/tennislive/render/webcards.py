@@ -1177,6 +1177,37 @@ html.daily .event-meta b { background:transparent; color:var(--section-accent);
   box-shadow:inset 0 0 0 1px currentColor; }
 html.daily .pick .reason b { background:transparent; color:var(--coral);
   box-shadow:inset 0 0 0 1px currentColor; }
+
+/* ---------- daily 的柔和内容色（只作用于赛果速递与焦点复盘） ----------
+   这两页最跳的是荧光黄绿 #D6FF00：栏目大标题、每一位胜者的比分数字、决胜
+   那一行的高亮，全是同一支高饱和色，一屏下来到处在喊。改成温网那一路的
+   收敛配色——深绿底 + 象牙白数字 + 唯一一支金色强调。
+
+   底色、面板、页面主题都不动，动的是这两页"内容"用哪支色：
+   - 比分数字回到 --ivory，靠字重和胜方底纹区分，不靠颜色喊；
+   - 强调色统一收敛到 --gold（焦点复盘本来就是金，赛果速递从荧光黄绿跟过来），
+     一页只留一支强调色；
+   - 分隔线与面板描边的荧光黄绿底改成中性象牙白，去掉那层黄绿雾；
+   - 决胜那一行仍然要点亮，只是从荧光黄绿换成金——试过完全中性的版本
+     （更"苹果"），那一行就和其余行分不出来了，"一屏只点亮决胜数据"这条
+     设计意图直接失效。
+
+   --soft-alert 是这里唯一的新色值：爆冷标记需要一支暖色，而 --flash #F15A3A
+   在收敛下来的这两页上是全屏最扎眼的东西。取暗酒红，同一个色相往下压。
+   作用域限定在这两页，知识贴与其余卡片不受影响。 */
+html.daily .results-page, html.daily .focus-page {
+  --section-accent:var(--gold);
+  --score-win:var(--ivory);
+  --divider:rgba(247,243,232,.14);
+  --panel-border:rgba(247,243,232,.14);
+  --panel-soft:rgba(213,180,77,.13);
+  --soft-alert:#C0705C;
+}
+html.daily .results-page .chip-red, html.daily .focus-page .chip-red {
+  color:var(--soft-alert); }
+html.daily .results-page .chip-green, html.daily .focus-page .chip-green {
+  color:var(--gold); }
+html.daily .focus-page .compare-row.key .winner { color:var(--gold); }
 """
 
 
@@ -3323,19 +3354,23 @@ def generate_deck(
 
     lead = daily_lead_match(digest)
     lead_id = lead.match_id if lead is not None else None
-    if lead is not None:
-        lead_kind = "result" if lead.status.is_final else "preview"
-        pages.append(("lead", insight_body(lead, date_label, lead_kind, digest.today)))
 
     if lead is not None and brief_for_match(lead, digest.today) is not None:
         pages.append(("media", media_body(lead, date_label, digest.today)))
 
-    if lead is not None and lead.status.is_final and has_detailed_stats(lead):
+    has_focus_page = (
+        lead is not None and lead.status.is_final and has_detailed_stats(lead)
+    )
+    if has_focus_page:
         pages.append(("focus", focus_body(lead, date_label)))
 
+    # 头条那一页（insight_body，标题随上下文变成"这个人是谁 / 这站赛事的来历"…）
+    # 撤掉了。它原本是头条比赛在卡组里唯一的落点——speedy 页刻意把头条排除在外，
+    # 所以撤页之后必须把它放回赛果速递，否则整份日报除了封面就再也看不到这场。
+    # 焦点复盘已经完整讲过它的那天例外，不重复。
     singles = [
         m for m in digest.results
-        if m.is_singles and m.match_id != lead_id
+        if m.is_singles and (m.match_id != lead_id or not has_focus_page)
     ]
     if singles:
         # 速递页按比赛本身分量排序（中国场次不加权放大，出现时打标签即可）
@@ -3369,7 +3404,6 @@ def generate_deck(
     protected = sum(
         kind in {
             "cover",
-            "lead",
             "media",
             "focus",
             "scoreboard",

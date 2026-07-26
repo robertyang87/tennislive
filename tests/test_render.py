@@ -434,7 +434,8 @@ def test_cards_generation(tmp_path, sample_digest):
     from tennislive.render.cards import generate_cards
 
     paths = generate_cards(sample_digest, tmp_path / "cards")
-    assert len(paths) >= 3  # 封面 + 赛果页 + 赛程页
+    # 头条那一页（insight_body）已经撤掉，这份 fixture 剩封面 + 赛果页
+    assert len(paths) >= 2
     for p in paths:
         assert Path(p).stat().st_size > 10_000  # 是实际渲染的图片而非空文件
     names = [p.name for p in paths]
@@ -945,10 +946,11 @@ def test_daily_deck_keeps_result_pages_before_optional_pages(sample_digest, monk
 
     pages = webcards.generate_deck(digest, "07.20 · 周一")
     kinds = [kind for kind, _body in pages]
-    assert len(kinds) == 7
+    assert len(kinds) == 6
     assert kinds.count("cover") == 1
-    assert kinds[1] == "lead"
-    assert "focus" in kinds
+    # 头条那一页撤掉之后，封面之后直接进焦点复盘
+    assert "lead" not in kinds
+    assert kinds[1] == "focus"
     assert "scoreboard" in kinds and "results2" in kinds
 
 
@@ -972,11 +974,15 @@ def test_daily_deck_skips_unrelated_story_and_excludes_lead_from_scoreboard(
 
     pages = webcards.generate_deck(sample_digest, "07.16 · 周四")
     kinds = [kind for kind, _body in pages]
-    assert kinds[:2] == ["cover", "lead"]
+    assert "lead" not in kinds, "头条那一页已经撤掉了"
     assert "story" not in kinds
 
+    # 撤页之后，头条比赛必须落回赛果速递——否则整份日报除了封面就再也看不到
+    # 这场（speedy 页原本是刻意把它排除在外的）
     lead = daily_lead_match(sample_digest)
-    assert lead is not None and lead.match_id not in scoreboard_match_ids
+    assert lead is not None
+    assert "focus" not in kinds
+    assert lead.match_id in scoreboard_match_ids
 
 
 def test_profile_pack_has_ready_to_use_assets(tmp_path):
@@ -3842,3 +3848,40 @@ def test_pillow_fallback_uses_the_same_retirement_rule():
                 assert label == expected
             else:
                 assert label == ""
+
+
+def test_headline_match_still_appears_when_the_focus_page_carries_it(
+    sample_digest, monkeypatch
+):
+    """有焦点复盘那天，头条比赛不该在赛果速递里再出现一遍。
+
+    撤掉头条页之后，头条比赛要落回赛果速递，否则整份日报除了封面就再也看不
+    到这场。但焦点复盘已经把它讲完整了的那天，速递里再排一次就是重复。
+    """
+    from copy import deepcopy
+
+    from tennislive.render import webcards
+    from tennislive.render.titles import daily_lead_match
+
+    digest = deepcopy(sample_digest)
+    lead = daily_lead_match(digest)
+    assert lead is not None
+    lead.stats = MatchStats(
+        source="licensed-test",
+        total_points_won=StatPair(80, 70),
+    )
+
+    seen: list[str] = []
+    original = webcards.scoreboard_body
+
+    def capture(matches, *args, **kwargs):
+        seen.extend(m.match_id for m in matches)
+        return original(matches, *args, **kwargs)
+
+    monkeypatch.setattr(webcards, "scoreboard_body", capture)
+    monkeypatch.setattr(webcards, "_screenshot_pages", lambda pages, _t: pages)
+
+    kinds = [kind for kind, _body in webcards.generate_deck(digest, "07.16 · 周四")]
+
+    assert "focus" in kinds
+    assert lead.match_id not in seen, "焦点复盘讲过了，速递里不该重复"
