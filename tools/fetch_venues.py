@@ -33,7 +33,13 @@ VENUES = [
     ("kitzbuhel-panorama.jpg", "File:Kitzbuehel Panorama.jpg", None),
     ("prague-castle-panorama.jpg", "File:Prague castle panorama.jpg", None),
     ("estoril-coast.jpg", "File:Estoril - panoramio.jpg", None),
-    ("hamburg-skyline.jpg", "File:Hamburg city skyline.jpg", None),
+    # 汉堡：原来是一片屋顶远景，既不是地标也不是球场。罗森布洛姆中央球场那几张
+    # 都不能用——"Centre Court Am Rothenbaum"那张画面是场外纪念品帐篷，顶棚那张
+    # 只见钢索不见球场，球场全景是 2200×590 的宽幅（cover 到 3:4 只剩中间 20%，
+    # 页眉整个糊掉）。改用易北爱乐音乐厅这个地标；注意 File:Elbphilharmonie
+    # Hamburg.jpg 拍于施工期、满屏塔吊，要的是建成后的这张。
+    ("hamburg-skyline.jpg",
+     "File:Elbphilharmonie with Kaiserkai promenade viewed from HafenCity.jpg", None),
     ("palermo-teatro-massimo.jpg",
      "File:Teatro Massimo Vittorio Emanuele (Palermo).jpg", None),
     ("istanbul-historical-peninsula.jpg",
