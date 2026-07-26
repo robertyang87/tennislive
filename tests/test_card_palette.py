@@ -8,8 +8,12 @@
 "一屏只点亮比分与决胜数据"后来单独做了：技术统计表里只有决胜那一行
 （_key_stat_label 选出）保持荧光黄绿，其余胜方数字回到 --ivory。它是**唯一**
 准许改颜色的段落，用的也全是既有主题色，比分/徽章/栏目色一概不动。
-"细线代替色块高亮"仍未做——那要把实心徽章整批改成描边，改动面太大且与
-"主题基本不变"相抵。
+"细线代替色块高亮"也做了：实心徽章（今日头条 / 中国军团 / 爆冷 / 重点 /
+硬地 / 看点）改成彩色字 + 1px 同色描边，只换填充与描边，颜色仍是同一支
+主题色。Pillow 兜底同步改成描边。
+
+改颜色的段落一共两节——"只点亮决胜数据"和"描边徽章"，各自有测试圈定
+边界；布局段仍然一条颜色规则都不许有。
 
 两条必须钉死的边界：
 1. 「网球有故事」知识贴与科普视频仍走 :root 的近黑深绿，改版不能碰它们。
@@ -33,6 +37,7 @@ GROUND0, GROUND1 = (0x1E, 0x42, 0x34), (0x2A, 0x64, 0x50)
 # CSS 里那段布局重做的起点，测试靠它把"新增规则"和原有规则分开
 _DAILY_MARKER = "daily 的布局重做"
 _HIGHLIGHT_MARKER = 'daily 的"一屏只点亮比分与决胜数据"'
+_BADGE_MARKER = "daily 的描边徽章"
 
 
 def _daily_tail() -> str:
@@ -138,8 +143,8 @@ def test_only_the_decisive_stat_row_stays_lit():
     现在只有 _key_stat_label 选中的那一行保持荧光黄绿，其余回到 --ivory。
     用的是既有主题色，没有引入新色值。
     """
-    assert _HIGHLIGHT_MARKER in _CSS
-    tail = _CSS.split(_HIGHLIGHT_MARKER, 1)[1]
+    assert _HIGHLIGHT_MARKER in _CSS and _BADGE_MARKER in _CSS
+    tail = _CSS.split(_HIGHLIGHT_MARKER, 1)[1].split(_BADGE_MARKER, 1)[0]
     assert "html.daily .compare-row:not(.key) .winner { color:var(--ivory); }" in tail
     assert "html.daily .compare-row.key { background:var(--panel-soft); }" in tail
 
@@ -152,6 +157,36 @@ def test_only_the_decisive_stat_row_stays_lit():
     assert selectors
     for selector in selectors:
         assert "compare-row" in selector, f"越界改了技术统计表以外的东西：{selector}"
+
+
+def test_badges_are_outlined_not_filled_blocks():
+    """细线代替色块高亮：实心徽章改描边，颜色仍是同一支主题色。
+
+    一屏上原本有 6 处实心色块（今日头条 / 中国军团 / 爆冷 / 重点 / 硬地 /
+    看点），和比分抢注意力。只换填充与描边，不引入新色值。
+    """
+    tail = _CSS.split(_BADGE_MARKER, 1)[1]
+    for rule in (
+        "html.daily .chip { background:transparent;",
+        "html.daily .rating { background:transparent;",
+        "html.daily .event-meta b { background:transparent;",
+        "html.daily .pick .reason b { background:transparent;",
+    ):
+        assert rule in tail, f"没改成描边：{rule}"
+
+    # 颜色只准引用既有主题色变量，不许出现写死的色值
+    literals = re.findall(r"#[0-9A-Fa-f]{3,8}\b|rgba?\(", tail)
+    assert not literals, f"描边段里出现了写死的色值：{literals}"
+
+
+def test_pillow_fallback_draws_outlined_badges_too():
+    """Chromium 挂了走 Pillow，徽章也得是描边，不能两边不一样。"""
+    import inspect
+
+    source = inspect.getsource(cards._match_card)
+    assert "outline=fill, width=2" in source
+    assert "outline=RED, width=2" in source
+    assert "fill=(255, 255, 255)" not in source, "还在往实心块上写白字"
 
 
 def test_top_rainbow_bar_is_dropped_only_for_the_daily_cards():

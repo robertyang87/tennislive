@@ -693,10 +693,14 @@ def _match_card(
     lx = x0 + pad
     ty = y + (26 if chip else 16)
     if chip:
+        # 描边徽章：与 webcards.py 的 html.daily 一致，实心色块会和比分抢注意力
         fill = RED if chip == "爆冷" else CHIP_GREEN
         tw = draw.textlength(chip, font=fonts.label)
-        draw.rounded_rectangle([lx, y + 18, lx + tw + 36, y + 18 + 44], radius=22, fill=fill)
-        draw.text((lx + 18, y + 18 + 6), chip, font=fonts.label, fill=(255, 255, 255))
+        draw.rounded_rectangle(
+            [lx, y + 18, lx + tw + 36, y + 18 + 44], radius=22,
+            outline=fill, width=2,
+        )
+        draw.text((lx + 18, y + 18 + 6), chip, font=fonts.label, fill=fill)
         lx += tw + 36 + 16
     left = match_round_display(m) or ""
     if left:
@@ -704,8 +708,10 @@ def _match_card(
         lx += draw.textlength(left, font=meta_font) + 16
     if tag_upset and not chip:
         tw = draw.textlength("爆冷", font=fonts.cell_seed)
-        draw.rounded_rectangle([lx, y + 10, lx + tw + 22, y + 44], radius=8, fill=RED)
-        draw.text((lx + 11, y + 13), "爆冷", font=fonts.cell_seed, fill=(255, 255, 255))
+        draw.rounded_rectangle(
+            [lx, y + 10, lx + tw + 22, y + 44], radius=8, outline=RED, width=2,
+        )
+        draw.text((lx + 11, y + 13), "爆冷", font=fonts.cell_seed, fill=RED)
     if show_tournament:
         g = group_by_tournament([m])[0]
         right = _fit(draw, g.compact_title, meta_font, int((x1 - x0) * 0.42))

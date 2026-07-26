@@ -1086,6 +1086,24 @@ html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
    比分、徽章、栏目色一律不动。 */
 html.daily .compare-row:not(.key) .winner { color:var(--ivory); }
 html.daily .compare-row.key { background:var(--panel-soft); }
+
+/* ---------- daily 的描边徽章 ----------
+   细线代替色块高亮。一屏上原本有 6 处实心色块——今日头条 / 中国军团
+   （--neon）、爆冷（--flash）、重点·必看·悬念·有看头（--section-accent）、
+   硬地（--section-accent）、看点（--coral）——它们和比分抢注意力。
+   这里只换"填充 vs 描边"：原来是深字压在彩块上，改成彩色字 + 1px 同色
+   描边。用的仍是同一支主题色，没有引入任何新色值。 */
+html.daily .chip { background:transparent; box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .chip-green { background:transparent; color:var(--neon); }
+html.daily .chip-red { background:transparent; color:var(--flash); }
+html.daily .chip-gold { background:transparent; color:var(--gold); }
+html.daily .rating { background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .rating .ui-icon { filter:none; opacity:.85; }
+html.daily .event-meta b { background:transparent; color:var(--section-accent);
+  box-shadow:inset 0 0 0 1px currentColor; }
+html.daily .pick .reason b { background:transparent; color:var(--coral);
+  box-shadow:inset 0 0 0 1px currentColor; }
 """
 
 
