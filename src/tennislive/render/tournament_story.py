@@ -1247,6 +1247,53 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
     ),
     _trivia_story(
+        slug="ball-pick",
+        title="发球前为什么要挑球",
+        subtitle="网球观察 · 规则篇",
+        identity="挑的是毛，也是时间",
+        chips=("场上仪式", "7 局 / 9 局", "毛毡"),
+        hero=(
+            "球员发球前从球童手里挑球，找的是毛最少、阻力最小的一颗；"
+            "比赛用球第一次换在 7 局后，此后每 9 局一次，差的两局在赛前热身里。"
+        ),
+        facts=(
+            "WTA 官方说明：球员发球前查看数颗球，是在找空气动力学上最好、也就是毛起得最少的那一颗，"
+            "以求把发球的优势拉到最大。",
+            "换球节奏为「先七局、之后每九局」；两个数字之所以不同，"
+            "是因为开赛这一批球在赛前热身时就已经用过，上场时并非全新。",
+            "网球由充压橡胶壳外粘一层羊毛、尼龙与棉的混纺毛毡构成，"
+            "内部气压比外界高约 80 千帕；毛毡被击打后逐渐松散，球随之变蓬、变慢。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="",
+                player="WTA 官方",
+                age="规则",
+                headline="先 7 局，之后每 9 局",
+                detail=(
+                    "主裁喊「新球」即为换球节点；差的两局计入赛前热身，"
+                    "换球的目的是避免用过蓬、过慢的球比赛。"
+                ),
+                source_url="https://www.wtatennis.com/news/3043764/tennis-explained-learn-the-game",
+            ),
+            ChampionMoment(
+                date="",
+                player="ITF",
+                age="球体规格",
+                headline="充压橡胶壳外粘毛毡",
+                detail=(
+                    "直径 6.54–6.86 厘米、质量 56.0–59.4 克；内部气压比外界高约 80 千帕，"
+                    "封罐后即持续外漏。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Tennis_ball",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方规则说明 / ITF 球体规格",
+        image_credit="Steven Pisano / Wikimedia Commons · CC BY 2.0",
+        source_url="https://www.wtatennis.com/news/3043764/tennis-explained-learn-the-game",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
