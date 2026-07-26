@@ -513,49 +513,61 @@ _ZHENG_EALA_DIAGRAM = """
 # happened at the same tournament, one round apart.
 _VENUS_STREAK_DIAGRAM = """
 <svg viewBox="0 0 900 660" xmlns="http://www.w3.org/2000/svg">
-  <text x="60" y="42" fill="#e7f3ec" font-size="38" font-weight="800">那场胜利之后</text>
-  <text x="840" y="42" text-anchor="end" fill="#e0938f"
-        font-size="38" font-weight="800">十一连败</text>
+  <text x="52" y="40" fill="#e7f3ec" font-size="36" font-weight="800">那场胜利之后</text>
+  <text x="848" y="40" text-anchor="end" fill="#e0938f"
+        font-size="36" font-weight="800">十一连败</text>
+  <text x="52" y="80" fill="#9fb4aa" font-size="22" font-weight="700">
+    条的长度＝这一场里她拿到的局数占比，竖虚线是一半
+  </text>
 
-  <rect x="52" y="72" width="796" height="86" rx="14"
-        fill="rgba(168,207,125,.14)" stroke="#a8cf7d" stroke-width="3"/>
-  <circle cx="92" cy="115" r="13" fill="#a8cf7d"/>
-  <text x="124" y="108" fill="#e7f3ec" font-size="31" font-weight="800">2025.7.22 华盛顿首轮</text>
-  <text x="124" y="144" fill="#a8cf7d" font-size="26" font-weight="700">45 岁，2004 年之后最年长的胜者</text>
-  <text x="828" y="128" text-anchor="end" fill="#a8cf7d"
-        font-size="34" font-weight="800">6-3 6-4</text>
+  <text x="556" y="104" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">一半</text>
+  <line x1="556" y1="114" x2="556" y2="478" stroke="rgba(199,216,208,.62)"
+        stroke-width="3" stroke-dasharray="7 7"/>
 
-  <g font-size="29" font-weight="700">
-    <circle cx="92" cy="205" r="9" fill="#e0938f"/>
-    <text x="124" y="215" fill="#cfe0d8">2025.7.23 华盛顿次轮 · 弗雷赫</text>
-    <text x="828" y="215" text-anchor="end" fill="#e0938f">2-6 2-6</text>
+  <g font-size="23" font-weight="700">
+    <rect x="40" y="120" width="820" height="46" rx="12"
+          fill="rgba(168,207,125,.13)" stroke="#a8cf7d" stroke-width="2"/>
+    <text x="60" y="151" fill="#e7f3ec">2025.7.22 华盛顿首轮</text>
+    <rect x="366" y="128" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="128" width="253" height="30" rx="13" fill="#a8cf7d"/>
+    <text x="848" y="151" text-anchor="end" fill="#a8cf7d" font-size="25">6-3 6-4</text>
 
-    <circle cx="92" cy="263" r="9" fill="#e0938f"/>
-    <text x="124" y="273" fill="#cfe0d8">2025.8 辛辛那提首轮 · 布萨斯</text>
-    <text x="828" y="273" text-anchor="end" fill="#e0938f">4-6 4-6</text>
+    <text x="60" y="211" fill="#cfe0d8">7.23 华盛顿次轮 · 弗雷赫</text>
+    <rect x="366" y="188" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="188" width="100" height="30" rx="13" fill="#e0938f"/>
+    <text x="848" y="211" text-anchor="end" fill="#e0938f">2-6 2-6</text>
 
-    <circle cx="92" cy="321" r="9" fill="#e0938f"/>
-    <text x="124" y="331" fill="#cfe0d8">2025.8 美网首轮 · 穆霍娃</text>
-    <text x="828" y="331" text-anchor="end" fill="#e0938f">3-6 6-2 1-6</text>
+    <text x="60" y="271" fill="#cfe0d8">8 月 辛辛那提 · 布萨斯</text>
+    <rect x="366" y="248" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="248" width="160" height="30" rx="13" fill="#e0938f"/>
+    <text x="848" y="271" text-anchor="end" fill="#e0938f">4-6 4-6</text>
 
-    <circle cx="92" cy="379" r="9" fill="#e0938f"/>
-    <text x="124" y="389" fill="#cfe0d8">2026.1 奥克兰首轮 · 利内特</text>
-    <text x="828" y="389" text-anchor="end" fill="#e0938f">4-6 6-4 2-6</text>
+    <text x="60" y="331" fill="#cfe0d8">8 月 美网 · 穆霍娃</text>
+    <rect x="366" y="308" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="308" width="167" height="30" rx="13" fill="#e0938f"/>
+    <text x="848" y="331" text-anchor="end" fill="#e0938f">3-6 6-2 1-6</text>
 
-    <circle cx="92" cy="437" r="9" fill="#e0938f"/>
-    <text x="124" y="447" fill="#cfe0d8">2026.3 印第安维尔斯首轮 · 帕里</text>
-    <text x="828" y="447" text-anchor="end" fill="#e0938f">3-6 7-6 1-6</text>
+    <text x="60" y="391" fill="#cfe0d8">2026.1 奥克兰 · 利内特</text>
+    <rect x="366" y="368" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="368" width="171" height="30" rx="13" fill="#e0938f"/>
+    <text x="848" y="391" text-anchor="end" fill="#e0938f">4-6 6-4 2-6</text>
+
+    <text x="60" y="451" fill="#cfe0d8">3 月 印第安维尔斯 · 帕里</text>
+    <rect x="366" y="428" width="380" height="30" rx="13" fill="rgba(159,180,170,.16)"/>
+    <rect x="366" y="428" width="152" height="30" rx="13" fill="#e0938f"/>
+    <text x="848" y="451" text-anchor="end" fill="#e0938f">3-6 7-6 1-6</text>
   </g>
 
-  <text x="124" y="505" fill="#9fb4aa" font-size="26" font-weight="700">
+  <text x="60" y="508" fill="#9fb4aa" font-size="23" font-weight="700">
     另有霍巴特、澳网、奥斯汀、迈阿密、洪堡，均首轮出局
   </text>
 
-  <rect x="52" y="540" width="796" height="82" rx="14"
+  <rect x="40" y="540" width="820" height="76" rx="12"
         fill="none" stroke="#e7f3ec" stroke-width="3" stroke-dasharray="10 8"/>
-  <text x="124" y="578" fill="#e7f3ec" font-size="31" font-weight="800">2026.7.27 华盛顿首轮</text>
-  <text x="124" y="610" fill="#9fb4aa" font-size="25" font-weight="700">又是这一站</text>
-  <text x="828" y="595" text-anchor="end" fill="#e7f3ec" font-size="46" font-weight="800">？</text>
+  <text x="60" y="576" fill="#e7f3ec" font-size="28" font-weight="800">2026.7.27 华盛顿首轮</text>
+  <text x="60" y="606" fill="#9fb4aa" font-size="22" font-weight="700">又是这一站</text>
+  <text x="836" y="592" text-anchor="end" fill="#e7f3ec" font-size="44" font-weight="800">？</text>
 </svg>
 """
 
