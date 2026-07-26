@@ -405,3 +405,63 @@ def test_only_the_two_result_cards_use_the_soft_accent_in_pillow():
         assert ("SOFT_ACCENT" in source) is should, (
             f"{builder.__name__} 用不用 SOFT_ACCENT 和预期不符"
         )
+
+
+def test_gold_is_spent_on_the_section_title_not_on_every_row():
+    """收敛成一支强调色之后，它反而被用得太多。
+
+    大标题、四个巡回赛 logo、徽章描边、种子号全是满强度的金，整页数下来比
+    原来的荧光黄绿还密。行内这些配件是次要信息，必须退成中性。
+    """
+    tail = _CSS.split(_SOFT_MARKER, 1)[1]
+    for rule in (
+        "html.daily .results-page .seed, html.daily .focus-page .seed { color:var(--fade); }",
+    ):
+        assert rule in tail, f"缺少收敛规则：{rule}"
+    # 巡回赛 logo / 赛事名退成 --panel-muted
+    assert "html.daily .results-page .tour-level" in tail
+    assert "color:var(--panel-muted); }" in tail
+
+
+def test_score_numerals_use_the_bundled_serif_with_a_winner_loser_contrast():
+    """比分数字换成正文衬线，且胜负两行必须有轻重对比。
+
+    单字重的展示衬线（试过 Instrument Serif）好看，但胜方和败方一样粗，
+    一眼看不出谁赢——所以要三个字重，.sw 比 .sl 重。
+    """
+    from pathlib import Path
+
+    tail = _CSS.split(_SOFT_MARKER, 1)[1]
+    assert "font-family:'TL Numeral',serif;" in tail
+    assert "html.daily .results-page .set.sw" in tail and "font-weight:600;" in tail
+    assert "html.daily .results-page .set.sl" in tail and "font-weight:400;" in tail
+
+    fonts = Path(__file__).resolve().parents[1] / "assets" / "fonts"
+    for weight in (400, 500, 600):
+        path = fonts / f"Newsreader-latin-{weight}.woff2"
+        assert path.is_file(), f"字体文件没入库：{path.name}"
+        # 拉丁子集，别把整套 CJK 塞进每张卡的 base64 里
+        assert path.stat().st_size < 60_000, f"{path.name} 太大了，应该是拉丁子集"
+
+    attribution = (fonts / "ATTRIBUTION.md").read_text(encoding="utf-8")
+    assert "Newsreader" in attribution and "Open Font License" in attribution
+
+
+def test_numeral_font_is_embedded_and_only_used_by_the_two_result_cards():
+    """字体要真的内联进 HTML（CI 里没有系统字体可依赖），且只有这两页在用。"""
+    from tennislive.render.webcards import _font_css
+
+    css = _font_css()
+    for weight in (400, 500, 600):
+        assert f"font-family:'TL Numeral';font-weight:{weight}" in css
+    assert "data:font/woff2;base64," in css
+
+    users = [
+        line for line in _CSS.splitlines()
+        if "TL Numeral" in line and not line.strip().startswith(("/*", "*"))
+    ]
+    assert users, "没有任何规则在用 TL Numeral"
+    # 引用它的那条规则，选择器必须在上一行或本行限定在这两页里
+    block = _CSS.split(_SOFT_MARKER, 1)[1]
+    assert "TL Numeral" in block, "TL Numeral 用在了柔和段之外"
+    assert _CSS.count("TL Numeral',serif") == 1
