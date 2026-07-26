@@ -1810,12 +1810,16 @@ _OPENINGS: dict[str, dict] = {
         "topic": "郑钦文 VS 伊埃拉：华盛顿站首轮前瞻",
         "question": "三年前她赢了这个人，现在呢？",
         "narration": "三年前的亚运会半决赛，郑钦文赢了这个人，然后拿走金牌。三年后再见，谁更需要这一场？",
-        # The cover leads with the most recent frame of her that exists in a
-        # reachable source (March 2025). The two older photos in the deck stay
-        # where they are because their dates are the point: the Olympic gold
-        # beat needs the gold, and the "three years ago" beat needs 2023.
-        "image": "assets/explainer/zheng-eala/zheng_2025.jpg",
-        "credit": "Vbrunophotog · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 3 月迈阿密站，郑钦文",
+        # The cover frame comes from the account owner, who states it is
+        # recent. Hard court, which is what this preview is about — a clay
+        # frame on a Washington cover would be the same surface mismatch that
+        # once put Wimbledon grass on a Roland-Garros screen. No date is
+        # burned into the slide because none is documented: the file carries
+        # only container EXIF, no capture time and no author. The two older
+        # photos in the deck stay where they are because their dates are the
+        # point — the Olympic beat needs the gold, "three years ago" needs 2023.
+        "image": "assets/explainer/zheng-eala/zheng_serve.jpg",
+        "credit": "账号所有者提供 · 摄影师与出处未标注（unknown / unverified）· 郑钦文，硬地发球",
     },
 }
 
