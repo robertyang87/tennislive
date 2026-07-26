@@ -442,6 +442,52 @@ _SHOT_CLOCK_DIAGRAM = """
 """
 
 
+# A preview, not an explainer, so the argument is a comparison across three
+# years: two ranking lines that swap places, hung on the one match these two
+# have already played. Nobody holds a photograph of a ranking, and the Asian
+# Games semi-final is not in any reachable free archive either, so the beat
+# that carries both is drawn.
+_ZHENG_EALA_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">三年前那场半决赛，和三年后的位置</text>
+
+  <!-- the one match they have played -->
+  <rect x="70" y="72" width="760" height="112" rx="12"
+        fill="rgba(55,226,154,.10)" stroke="rgba(55,226,154,.45)" stroke-width="3"/>
+  <text x="96" y="112" fill="#9fb4aa" font-size="23" font-weight="700">2023 年 9 月 · 杭州亚运会 女单半决赛</text>
+  <text x="96" y="158" fill="#e7f3ec" font-size="31" font-weight="800">郑钦文</text>
+  <text x="232" y="158" fill="#c6f65a" font-size="31" font-weight="800">6-1  6-7(5)  6-3</text>
+  <text x="486" y="158" fill="#e7f3ec" font-size="31" font-weight="800">伊拉</text>
+  <text x="600" y="158" fill="#9fb4aa" font-size="23" font-weight="700">郑钦文夺金 · 伊拉铜牌</text>
+
+  <!-- where each of them stands now -->
+  <text x="70" y="248" fill="#9fb4aa" font-size="24" font-weight="700">现在</text>
+  <line x1="70" y1="266" x2="830" y2="266" stroke="rgba(159,180,170,.35)" stroke-width="2"/>
+
+  <text x="96" y="330" fill="#e7f3ec" font-size="28" font-weight="800">伊拉</text>
+  <rect x="200" y="300" width="360" height="40" rx="8"
+        fill="rgba(198,246,90,.30)" stroke="#c6f65a" stroke-width="3"/>
+  <text x="380" y="329" text-anchor="middle" fill="#c6f65a"
+        font-size="27" font-weight="800">世界第 28 · 生涯新高</text>
+  <text x="580" y="329" fill="#9fb4aa" font-size="22" font-weight="700">菲律宾史上最高</text>
+
+  <text x="96" y="424" fill="#e7f3ec" font-size="28" font-weight="800">郑钦文</text>
+  <rect x="200" y="394" width="200" height="40" rx="8"
+        fill="rgba(255,90,106,.20)" stroke="#ff5a6a" stroke-width="3"/>
+  <text x="300" y="423" text-anchor="middle" fill="#ff5a6a"
+        font-size="27" font-weight="800">跌出前 100</text>
+  <text x="420" y="423" fill="#9fb4aa" font-size="22" font-weight="700">本站外卡参赛 · 生涯最高曾是世界第 4</text>
+
+  <path d="M470 352 L470 384" stroke="#9fb4aa" stroke-width="3" stroke-dasharray="6 6"/>
+  <text x="450" y="500" text-anchor="middle" fill="#e7f3ec"
+        font-size="26" font-weight="800">三年之间，两条线换了位置</text>
+  <text x="450" y="556" text-anchor="middle" fill="#9fb4aa"
+        font-size="23" font-weight="700">这是两人第二次交手，也是 WTA 巡回赛上的第一次</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -1468,6 +1514,102 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "这 25 秒，该从哪一秒开始算？",
         ),
     ),
+    # A match preview, so everything here has to be true at the moment it goes
+    # out and nothing may guess at the result. Both players' numbers come from
+    # their own Wikipedia articles rather than from the wires — the wires had
+    # Eala at 20 (she turned 21 in May) and disagreed with each other about
+    # where Zheng's ranking sits.
+    "zheng-eala": (
+        (
+            "rival",
+            "对手",
+            "21 岁，菲律宾史上最高排名",
+            "先看对面站的是谁。亚历山德拉·伊拉，二〇〇五年五月生，二十一岁，菲律宾人。"
+            "二〇二二年她拿下美网青少年女单冠军，是菲律宾第一个青少年大满贯冠军。"
+            "真正让世界记住她的是二〇二五年的迈阿密：一张外卡，连胜奥斯塔片科、基斯和斯瓦泰克闯进四强，"
+            "成为第一个打进 WTA1000 四强的菲律宾人。而就在这个月的温网，她在中央球场第三轮"
+            "再一次击败斯瓦泰克，第一次打进大满贯第二周。七月十三日，她升到生涯新高世界第二十八位，"
+            "这是菲律宾球员在 WTA 历史上的最高排名。",
+            "assets/explainer/zheng-eala/eala.jpg",
+            "AELTC/Florian Eisele · wimbledon.com 官方图 · 2026 温网第三轮，伊拉对斯瓦泰克",
+            (
+                "21 岁；2022 美网青少年冠军",
+                "2025 迈阿密外卡闯四强，连胜三位大满贯冠军",
+                "现世界第 28，菲律宾史上最高",
+            ),
+        ),
+        (
+            "champion",
+            "这一边",
+            "亚洲第一块网球单打奥运金牌",
+            "另一边这位，不用多介绍。二〇二四年巴黎，郑钦文拿下女单金牌，"
+            "成为亚洲第一位赢得奥运网球单打金牌的球员。她的生涯最高排名是世界第四，"
+            "二〇二五年六月达到——继李娜之后，中国第二位进入女单前五的球员。"
+            "在那之前，她还拿过二〇二四年澳网亚军和同年年终总决赛亚军。"
+            "画面里这一张，就是她赢下金牌那一刻躺在红土上的样子。",
+            "assets/players/zheng-qinwen.jpg",
+            "官方媒体供图 · ausopen.com · 2024 巴黎奥运会，郑钦文夺得女单金牌",
+            (
+                "2024 巴黎奥运女单金牌，亚洲第一人",
+                "生涯最高世界第 4（2025 年 6 月）",
+                "继李娜之后中国第二位女单前五",
+            ),
+        ),
+        (
+            "before",
+            "三年前",
+            "她们打过一次，在亚运会半决赛",
+            "很多人不知道，这其实不是两人第一次见面。二〇二三年九月的杭州亚运会，女单半决赛，"
+            "郑钦文六比一、六比七、六比三赢下伊拉。那场之后，伊拉拿了铜牌，郑钦文一路拿到金牌。"
+            "三年过去，两条线换了位置：伊拉现在是世界第二十八，生涯新高；"
+            "郑钦文排名跌出前一百，这一站是拿外卡进的正赛。这一场，"
+            "是她们的第二次交手，也是在 WTA 巡回赛上的第一次。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "杭州亚运会半决赛：郑钦文 6-1 6-7(5) 6-3",
+                "那届伊拉拿铜牌，郑钦文拿金牌",
+                "第二次交手，巡回赛上的第一次",
+            ),
+            _ZHENG_EALA_DIAGRAM,
+        ),
+        (
+            "now",
+            "这三年",
+            "同一站赛事，她三年前也来过",
+            "画面里是二〇二三年的郑钦文，就在华盛顿这一站。三年后她再来，身份完全不同了。"
+            "二〇二五年温网之后，她因为右肘长期疼痛接受了手术，缺席了那年的美网，"
+            "也错过了二〇二六年赛季的第一个月，包括澳网。二月她在多哈复出，赢了两场；"
+            "但今年的法网和温网，她都止步首轮。排名从世界第四一路掉到一百开外，"
+            "这一站要靠外卡才能进正赛。",
+            "assets/explainer/zheng-eala/zheng_dc.jpg",
+            "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2023 年华盛顿站的郑钦文",
+            (
+                "2025 温网后右肘手术，缺席美网",
+                "2026 年 2 月多哈复出，缺席澳网",
+                "今年法网、温网均首轮出局，本站靠外卡",
+            ),
+        ),
+        (
+            "stake",
+            "这一场",
+            "一场首轮，两种意义",
+
+            "所以这场首轮，对两个人的意思完全不一样。对伊拉，这是北美硬地赛季的第一场，"
+            "往前看是美网，她要做的是把生涯新高的位置坐稳。对郑钦文，这是重建的一站，"
+            "对手偏偏是这三年里上升最快的那个人。华盛顿这一站是 WTA 五百级，"
+            "首轮就把她们放在了一起。比分我们不猜，但有一件事是确定的——",
+            "assets/explainer/zheng-eala/eala_net.jpg",
+            "AELTC/Ben Solomon · wimbledon.com 官方图 · 2026 温网，伊拉扑向网前",
+            (
+                "伊拉：北美硬地开局，目标是坐稳新高",
+                "郑钦文：重建的一站，对手是上升最快的人",
+                "WTA 500 华盛顿站首轮，7 月 27 日",
+            ),
+            "",
+            "三年之后再见，这一场谁更需要它？",
+        ),
+    ),
 }
 
 
@@ -1554,6 +1696,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "网球规则", "阿尔卡拉斯", "ATP"),
     },
+    "zheng-eala": {
+        "hook": (
+            "郑钦文华盛顿站首轮，对手是这三年上升最快的人之一。\n"
+            "三年前的亚运会半决赛她赢了；三年后，两个人的排名换了位置。"
+        ),
+        "tags": ("网球", "网球时差", "郑钦文", "WTA", "美网前哨"),
+    },
 }
 
 
@@ -1627,6 +1776,13 @@ _OPENINGS: dict[str, dict] = {
         "question": "发球的 25 秒，谁在计时？",
         "narration": "发球的二十五秒，到底是谁在计时？这条规矩你大概知道，但那块钟今年换了主人。",
         "image": "assets/explainer/shot-clock/umpire.jpg",
+    },
+    "zheng-eala": {
+        "topic": "郑钦文 对 伊拉：华盛顿站首轮前瞻",
+        "question": "三年后再见，谁更需要这一场？",
+        "narration": "郑钦文华盛顿站首轮的对手，三年前输给过她。这一场，谁更需要它？",
+        "image": "assets/players/zheng-qinwen.jpg",
+        "credit": "官方媒体供图 · ausopen.com · 2024 巴黎奥运会，郑钦文夺得女单金牌",
     },
 }
 
