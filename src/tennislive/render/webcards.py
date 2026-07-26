@@ -1793,9 +1793,21 @@ def _tag_chip_class(tag: str) -> str:
     return "chip-gold"
 
 
+# 这一页的标题必须跟着 context 的来源走。原来固定印"把今天放回生涯里"，
+# 但那句是为球员生涯档案写的（那条 summary 里字面就有"把今天放回整段生涯
+# 里看"）；套到"我们三天前写过他"的账号续写上就成了硬吹——2026-07-26 线上
+# 那张正是这样：一条同赛事、隔三天的续写，顶着"CAREER CONTEXT · 人物背景"。
+_CONTEXT_HEADINGS = {
+    "profile": ("Career Context · 生涯坐标", "把今天放回生涯里"),
+    "player_story": ("Player Story · 人物故事", "这个人是谁"),
+    "event_story": ("Event Story · 赛事背景", "这站赛事的来历"),
+    "memory": ("Storyline · 故事线", "这条线走到哪了"),
+    "media": ("Post-Match Read · 赛后解读", "外界怎么看这场"),
+}
+
+
 def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     """单场内容解释页：只使用可验证的比分和赛程事实。"""
-    from .focus import focus_comparison, has_detailed_stats
     from .hotspot import hotspot_reasons
     from .story import result_insight, trajectory_arc
     from .context import historical_context
@@ -1805,8 +1817,9 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
     extra_html = ""
     if kind == "result":
         if context is not None:
-            kicker = "Career Context · 人物背景"
-            title = "把今天放回生涯里"
+            kicker, title = _CONTEXT_HEADINGS.get(
+                context.kind, _CONTEXT_HEADINGS["media"]
+            )
             insight = context.summary
         else:
             kicker = "Why It Matters · 一句看懂"
@@ -1818,39 +1831,18 @@ def insight_body(m: Match, date_label: str, kind: str, today=None) -> str:
         verdict = editor_takeaway(m, today)
         facts = []
 
-        # "比赛走势"是没有逐场技术统计时的文字降级说法（"直落2盘，全程没有
-        # 让对手看到机会"）。官方统计到手之后还留着它，等于用一句概括去挤真正
-        # 的数字——2026-07-25 的成品正是被它挤到把第四行从中间切开。有数据就
-        # 只放技术对比，没数据才退回这句话。
-        detailed = has_detailed_stats(m)
+        # 技术统计表归"焦点复盘"页独占，这一页不再重复一份。
+        # 两条链路上焦点页都必然存在：日报 generate_deck 的出页条件与这里的
+        # has_detailed_stats 相同，单场 generate_match_deck 则无条件出
+        # breakdown 页。以前两页各带一份，7.26 那天只是碰巧被渲染后的溢出
+        # 收行逻辑整块撤掉才没露馅。
+        # 腾出版面后，"比赛走势"这句概括就能一直留着了。
         arc = trajectory_arc(m)
         extra_html = (
             f'<div class="verdict"><b>比赛走势</b>{html.escape(arc)}</div>'
-            if arc and not detailed
+            if arc
             else ""
         )
-        if detailed:
-            comparison = focus_comparison(m)
-            # data-rank 让渲染后的自适应收行按重要性丢弃：版面不够时先丢
-            # "一发成功率"这类补充项，而不是碰巧排在最后的"破发兑现"。
-            shown = card_stat_rows(comparison.rows)
-            key_label = _key_stat_label([label for label, _l, _r in shown])
-            rows_html = "".join(
-                f'<div class="compare-row{" key" if label == key_label else ""}"'
-                f' data-rank="{_stat_rank(label)}">'
-                f'<b>{html.escape(label)}</b>'
-                f'<span class="{"winner" if comparison.left_won else ""}">'
-                f'{html.escape(left)}</span>'
-                f'<span class="{"" if comparison.left_won else "winner"}">'
-                f'{html.escape(right)}</span></div>'
-                for label, left, right in shown
-            )
-            extra_html += (
-                f'<div class="compare-head"><span>专业技术统计</span>'
-                + f'<span>{html.escape(comparison.left_name)}</span>'
-                + f'<span>{html.escape(comparison.right_name)}</span></div>'
-                + f'<div class="compare-grid">{rows_html}</div>'
-            )
         surface = surface_zh(m.tournament.surface or tournament_surface(m.tournament.name))
         event_suffix = f"·{surface}" if surface else ""
     else:

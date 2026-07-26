@@ -3014,18 +3014,17 @@ def test_insight_body_result_page_has_no_stats_falls_back_to_arc_and_verdict():
     assert "完整盘分" not in html_out and "比赛轮次" not in html_out  # 旧的凑数标签已移除
 
 
-def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exists():
-    """只有当官方/授权数据源提供了真实技战术统计（发球%、ACE、破发、制胜分等）
-    时，第二页才展示"专业技术统计"表格——这时表格标题和内容都必须是真数据。
+def test_stats_table_lives_on_the_focus_page_with_real_licensed_data():
+    """"专业技术统计"表只在有官方/授权真实数据时出现，且只出现在焦点复盘页。
 
-    有了真数据，"比赛走势"那句文字概括就要让位：它本来就是没有统计时的降级
-    说法（"直落2盘，全程没有让对手看到机会"），和下面的数字讲的是同一件事。
-    2026-07-25 的成品正是被它挤到把技术对比表第四行从中间切开。
+    原来头条页和焦点页各带一份，两张卡会印出一模一样的表；2026-07-25 那次
+    还被"比赛走势"那句文字概括挤到把表格第四行从中间切开。现在分工固定：
+    数字归焦点页，文字概括归头条页，两页不再抢同一块版面。
     """
     from datetime import date
 
     from tennislive.models import MatchStats, StatPair
-    from tennislive.render.webcards import insight_body
+    from tennislive.render.webcards import focus_body, insight_body
 
     match = make_match(sets=((6, 4), (4, 6), (7, 6)), tiebreaks=(None, None, (10, 8)))
     match.stats = MatchStats(
@@ -3034,18 +3033,22 @@ def test_insight_body_result_page_shows_real_stats_table_when_licensed_data_exis
         aces=StatPair(home=12, away=6),
         break_points_won=StatPair(home=4, away=2),
     )
-    html_out = insight_body(match, "7.23", "result", date(2026, 7, 23))
+    focus = focus_body(match, "7.23")
+    assert "compare-grid" in focus and "compare-row" in focus
+    assert "专业技术统计" in focus
+    assert "一发得分率" in focus and "ACE" in focus
 
-    assert "编辑锐评" in html_out
-    assert "比赛走势" not in html_out  # 有数据就不再退回文字概括
-    assert "compare-grid" in html_out and "compare-row" in html_out
-    assert "专业技术统计" in html_out
-    assert "一发得分率" in html_out and "ACE" in html_out
+    lead = insight_body(match, "7.23", "result", date(2026, 7, 23))
+    assert "compare-grid" not in lead
+    assert "编辑锐评" in lead
 
 
-def test_stats_table_and_arc_never_appear_together():
-    """同一张卡上不能既放技术对比又放"比赛走势"：两者说的是同一件事，
-    并排放只会互相挤版面，把真正的数字挤出画面。"""
+def test_lead_page_keeps_the_prose_arc_now_that_the_table_moved_out():
+    """表格搬走之后，"比赛走势"这句概括就能一直留在头条页了。
+
+    它以前只在没有统计数据时才出现——那是为了不和表格抢版面。现在两者不在
+    同一页，条件可以去掉，有无统计都印。
+    """
     from datetime import date
 
     from tennislive.models import MatchStats, StatPair
@@ -3066,7 +3069,8 @@ def test_stats_table_and_arc_never_appear_together():
 
     for with_stats in (True, False):
         html_out = render(with_stats)
-        assert ("比赛走势" in html_out) is not ("compare-grid" in html_out)
+        assert "比赛走势" in html_out
+        assert "compare-grid" not in html_out
         assert "编辑锐评" in html_out  # 无论哪条路径，锐评都必须留在卡上
 
 
@@ -3349,3 +3353,68 @@ def test_tour_logo_assets_carry_their_provenance():
         svg = (tours / slug).read_text(encoding="utf-8")
         assert "currentColor" in svg
         assert "#04014f" not in svg.lower() and "#2d0046" not in svg.lower()
+
+
+def test_trajectory_arc_stays_silent_on_a_retirement():
+    """退赛没有"走势"：6-1 2-0 退赛里那个 2-0 是被中断的一盘，不是拿下的一盘。
+
+    照常统计会印成"直落2盘，全程没有让对手看到机会"——对一场只打了 45 分钟、
+    对手伤退的比赛，这话完全不成立。
+    """
+    from tennislive.render.story import trajectory_arc
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    assert trajectory_arc(retired) == ""
+
+    walkover = make_match(
+        sets=((6, 1), (6, 0)), tiebreaks=(None, None),
+        status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert trajectory_arc(walkover) == ""
+
+    # 正常完赛仍然照旧
+    normal = make_match(
+        sets=((6, 1), (6, 2)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert "直落2盘" in trajectory_arc(normal)
+
+
+def test_lead_page_heading_follows_the_context_source():
+    """第二页的标题必须跟着 context 的来源走，不能一句写死套五种材料。
+
+    原来固定印"把今天放回生涯里"/"CAREER CONTEXT · 人物背景"。那句是为球员
+    生涯档案写的（那条 summary 里字面就有"把今天放回整段生涯里看"），套到
+    "我们三天前写过他"的账号续写上就是硬吹——2026-07-26 线上那张正是如此。
+    """
+    from tennislive.render.webcards import _CONTEXT_HEADINGS
+
+    assert _CONTEXT_HEADINGS["profile"][1] == "把今天放回生涯里"
+    # 其余四种来源都不许再自称"生涯"
+    for source in ("player_story", "event_story", "memory", "media"):
+        kicker, title = _CONTEXT_HEADINGS[source]
+        assert "生涯" not in title, f"{source} 仍在说生涯：{title}"
+        assert "Career" not in kicker, f"{source} 的 kicker 仍是 Career：{kicker}"
+    # 五种来源两两不同，翻下来不会重名
+    assert len({t for _k, t in _CONTEXT_HEADINGS.values()}) == len(_CONTEXT_HEADINGS)
+
+
+def test_lead_page_does_not_repeat_the_focus_page_stats_table():
+    """技术统计表归"焦点复盘"页独占，头条页不再重复一份。
+
+    以前两页各带一份；7.26 那天只是碰巧被渲染后的溢出收行逻辑整块撤掉才
+    没露馅，版面宽裕的那天两张卡会印出一模一样的表。
+    """
+    from datetime import date
+
+    from tennislive.render.webcards import focus_body, insight_body
+
+    m = make_match(sets=((6, 1), (6, 2)), tiebreaks=(None, None))
+    lead = insight_body(m, "7.26 · 周日", "result", date(2026, 7, 26))
+    focus = focus_body(m, "7.26 · 周日")
+
+    assert "compare-grid" not in lead
+    assert "compare-grid" in focus
