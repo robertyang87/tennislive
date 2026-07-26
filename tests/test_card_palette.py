@@ -118,6 +118,9 @@ def test_daily_overrides_only_the_four_background_surfaces():
     assert _luma(GROUND1) > _luma(root_ground1)
 
 
+_SCRIM_TINT_CEILING = 40
+
+
 def test_layout_section_contains_no_colour_rules_at_all():
     """布局段只准改几何：留白、间距、行高、照片遮罩浓度。
 
@@ -130,10 +133,40 @@ def test_layout_section_contains_no_colour_rules_at_all():
     offenders = [
         line.strip()
         for line in layout.splitlines()
-        if re.search(r"(^|[;{\s])color:|background(-color)?:|border-color:"
+        if re.search(r"(^|[;{\s])color:|background-color:|border-color:"
                      r"|box-shadow:\s*inset", line)
     ]
     assert not offenders, "布局段里出现了颜色规则：\n" + "\n".join(offenders)
+
+
+def test_layout_section_backgrounds_are_neutral_photo_scrims_only():
+    """布局段里唯一准许出现的 background 是照片遮罩，而且必须是"压暗"。
+
+    遮罩浓度本来就归布局管（文档里写着），可它只能用 background 的多层
+    渐变来写。所以这条不禁 background，改成验它到底是什么：
+    只准出现近黑的 rgba 和 var(--page-bg)/var(--inner-bg)，一旦掺进主题色
+    token 或任何色值字面量，那就不是压暗而是给整页上色了——那属于换主题。
+    """
+    layout = _daily_tail().split(_HIGHLIGHT_MARKER, 1)[0]
+    # 从 background: 一路取到分号，渐变是跨行写的
+    declarations = re.findall(r"background:(.*?);", layout, re.S)
+    assert declarations, "布局段里没有 background —— 照片遮罩是不是被挪走了？"
+
+    for decl in declarations:
+        flat = " ".join(decl.split())
+        for token in ("--neon", "--coral", "--sky", "--gold", "--ivory",
+                      "--score-win", "--section-accent", "--flash",
+                      "--ground0", "--ground1", "--panel"):
+            assert token not in flat, f"遮罩里引用了主题色 {token}：{flat}"
+        assert "#" not in flat, f"遮罩里出现了色值字面量：{flat}"
+        used_vars = set(re.findall(r"var\((--[a-z0-9-]+)", flat))
+        assert used_vars <= {"--page-bg", "--page-bg-pos", "--inner-bg"}, (
+            f"遮罩引用了照片以外的变量：{sorted(used_vars)}"
+        )
+        for r, g, b in re.findall(r"rgba\((\d+),\s*(\d+),\s*(\d+)", flat):
+            assert max(int(r), int(g), int(b)) <= _SCRIM_TINT_CEILING, (
+                f"遮罩的 rgba({r},{g},{b}) 不是近黑，等于给整页上色：{flat}"
+            )
 
 
 def test_only_the_decisive_stat_row_stays_lit():

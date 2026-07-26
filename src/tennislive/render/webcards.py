@@ -1067,16 +1067,37 @@ html.daily .cover-lower { margin-bottom:26px; padding:22px 24px; }
 html.daily .cover-secondary { margin-bottom:20px; }
 html.daily .cover-highlights { padding:20px 0 6px; }
 
-/* 今晚焦点：原来场馆实景被四块等宽等高的半透明面板盖掉一半，照片和面板
-   两边都不讨好。把面板往下挪、彼此拉开，照片留在上半屏当氛围。
-   这里动的是遮罩浓度和间距，面板本身的配色不变。 */
-html.daily .poster.tonight-page::before { opacity:.62; }
+/* 今晚焦点：地标照片是这一页的主角，得给它一条固定的展示带。
+   原来 .event-spacer 按场次数写死高度（count-1 230px / count-2 170px …），
+   两场时卡片停在中上部、下面 500 多 px 全是照片——照片不是构图的一部分，
+   只是"剩下的地方"，看着像没排完；五场时反过来，最后一张卡被裁掉半截
+   （实测溢出 176px）。
+   改成弹性 spacer：卡片一律沉底，照片稳定占住中段，场次多时 spacer 自己
+   压扁，不用再为每个 count 写一条规则。遮罩跟着重做——中段最通透（地标
+   要看得见），上下两头压暗（页眉和卡片要读得出来），与照片本身的明暗无关，
+   换任何一张场馆图都成立。 */
+html.daily .poster.tonight-page::before {
+  opacity:1;
+  background:
+    linear-gradient(180deg,
+      rgba(2,16,20,.20) 0%,
+      rgba(2,16,20,.14) 26%,
+      rgba(2,20,18,.30) 46%,
+      rgba(2,20,18,.72) 66%,
+      rgba(2,20,18,.90) 100%),
+    var(--page-bg,var(--inner-bg)) var(--page-bg-pos,center 42%)/cover no-repeat;
+}
 html.daily .poster.tonight-page::after { height:340px; }
-html.daily .tonight-page .event-spacer { height:150px; }
-html.daily .tonight-page.count-1 .event-spacer { height:230px; }
-html.daily .tonight-page.count-2 .event-spacer { height:170px; }
-html.daily .tonight-page.count-3 .event-spacer { height:70px; }
+/* 页脚是 position:absolute 贴在 bottom 上的，不占流内高度；卡片一沉底就
+   直接压到它身上，所以要把这条带子从内容区里让出来。 */
+html.daily .poster.tonight-page { padding-bottom:76px; }
+html.daily .tonight-page .event-spacer,
+html.daily .tonight-page.count-1 .event-spacer,
+html.daily .tonight-page.count-2 .event-spacer,
+html.daily .tonight-page.count-3 .event-spacer { flex:1 1 0; height:auto; min-height:0; }
 html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
+/* 五场是这一页的上限，弹性 spacer 已经压到 0 仍差一点，把卡距再收一档 */
+html.daily .tonight-page.count-5 .pick { margin-bottom:9px; padding:10px 26px 12px; }
 
 /* ---------- daily 的"一屏只点亮比分与决胜数据" ----------
    这一段是**唯一**准许改颜色的地方，而且只在技术统计表内部生效。
@@ -1293,8 +1314,13 @@ def _sched_card(
     with_reason: bool = False,
     show_tournament: bool = True,
     reason_limit: int = REASON_LIMIT_ONE_LINE,
+    used_angles: set[str] | None = None,
 ) -> str:
-    """赛程卡：时间、对阵，以及可核验的推荐理由."""
+    """赛程卡：时间、对阵，以及可核验的推荐理由.
+
+    ``used_angles`` 由调用方跨卡片传进来并就地累加：赛事故事那一档是赛事级
+    的，同一页每张卡都会拿到同一句话（五场的今晚焦点页上重复过三遍）。
+    """
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
     tour_txt = html.escape(g.name_zh) if show_tournament else ""
@@ -1318,7 +1344,9 @@ def _sched_card(
         # 看点这一行只有一到两行的位置，交给 CSS 的 line-clamp 去截会从词
         # 中间切开、还会留下半个引号（"…后来她把'让萨巴伦卡这个姓被记…"）。
         # 先在服务端裁到一句说得完的话，和小红书正文用同一套规则。
-        angle = preview_angle(m)
+        angle = preview_angle(m, used=used_angles or ())
+        if used_angles is not None:
+            used_angles.add(angle)
         fitted = _short_complete(angle, reason_limit) or _short(angle, reason_limit)
         reason = (
             f'<div class="reason"><b>{_icon_html("eye")}<span>看点</span></b>'
@@ -1693,6 +1721,7 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
     # venue credit or footer.
     show_courts = len(courts) > 1 and len(matches) <= 4
     last_court = None
+    used_angles: set[str] = set()
     for match in sorted(
         matches,
         key=lambda m: (
@@ -1716,6 +1745,7 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
                     REASON_LIMIT_TWO_LINES if len(matches) >= 3
                     else REASON_LIMIT_ONE_LINE
                 ),
+                used_angles=used_angles,
             )
         )
 

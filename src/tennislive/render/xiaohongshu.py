@@ -19,6 +19,7 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .hashtags import limit_hashtags
+from .narrative import data_angle as _data_angle
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
     editorial_tonight_focus,
@@ -498,48 +499,6 @@ _DEFAULT_STAGE_ANGLES = (
     "悬念在发球局能不能稳住",
     "谁先适应场地节奏，谁就先掌握主动",
 )
-
-
-def _data_angle(match: Match, limit: int) -> str:
-    """一行装得下的数据看点：短、带数字、只用这场比赛真有的字段。
-
-    preview_angle 与 schedule_insight 写得比这一行的预算长得多（决赛那句
-    44 字、账号连载那句 59 字），一旦都截不出完整句子，看点就跌回赛段套话
-    ——"最后一场定归属，谁先扛住谁捧杯"这种任何一场决赛都能印的话。
-    这里按排名 → 种子 → 中国球员 → 纯对阵逐级降，每一级都先量长度，
-    装不下就换下一级，保证落到套话之前还有一句带信息的。
-    """
-    stage = round_zh(match.round_name) or ""
-    home = match.home[0] if match.home else None
-    away = match.away[0] if match.away else None
-    if home is None or away is None:
-        return ""
-    home_name, away_name = player_zh(home.name), player_zh(away.name)
-    prefix = f"{stage}：" if stage else ""
-
-    candidates: list[str] = []
-    if home.rank is not None and away.rank is not None:
-        candidates.append(
-            f"{prefix}世界第{home.rank}的{home_name}对上第{away.rank}的{away_name}。"
-        )
-        candidates.append(f"{prefix}{home_name}第{home.rank}，{away_name}第{away.rank}。")
-    if home.seed is not None and away.seed is not None:
-        candidates.append(
-            f"{prefix}{home.seed}号种子{home_name}对{away.seed}号种子{away_name}。"
-        )
-    chinese = [p for p in match.home + match.away if is_chinese_player(p)]
-    if chinese:
-        name = player_zh(chinese[0].name)
-        opponent = away if chinese[0] is home else home
-        if opponent.rank is not None:
-            candidates.append(f"{name}打{stage or '这一轮'}，对手世界第{opponent.rank}。")
-        candidates.append(f"{name}的{stage or '这一轮'}，今晚这场先看她。")
-    candidates.append(f"{prefix}{home_name}对{away_name}。")
-
-    for line in candidates:
-        if len(line) <= limit:
-            return line
-    return ""
 
 
 def _stage_angle(match: Match, today, index: int) -> str:

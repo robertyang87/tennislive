@@ -28,15 +28,50 @@ MAX_EDGE = 1920
 
 # (输出文件名, Commons 文件名或 None, 检索词/分类名)
 VENUES = [
+    # 城市地标（该站没有可用的球场照时用）
     ("athens-parthenon.jpg", "File:Parthenon Athens.jpg", None),
     ("kitzbuhel-panorama.jpg", "File:Kitzbuehel Panorama.jpg", None),
     ("prague-castle-panorama.jpg", "File:Prague castle panorama.jpg", None),
     ("estoril-coast.jpg", "File:Estoril - panoramio.jpg", None),
     ("hamburg-skyline.jpg", "File:Hamburg city skyline.jpg", None),
+    ("palermo-teatro-massimo.jpg",
+     "File:Teatro Massimo Vittorio Emanuele (Palermo).jpg", None),
+    ("istanbul-historical-peninsula.jpg",
+     "File:Historical peninsula and modern skyline of Istanbul.jpg", None),
+    ("iasi-palace-of-culture.jpg", "File:2020 04 17 Iași Palatul Culturii.jpg", None),
+    ("verona-arena.jpg", "File:Verona Arena (Arena di Verona).jpg", None),
+    # 主球场／主场馆（优先用这一类）
     ("washington-fitzgerald-tennis-center.jpg", "File:FitzGerald Tennis Center.jpg", None),
-    ("canada-national-bank-open-stadium.jpg", "File:RogersCup2011-2.jpg", None),
+    # 加拿大站：原来钉的 File:RogersCup2011-2.jpg 名字里带赛事，画面却是场外
+    # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
+    # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央
+    # 球场俯瞰，场地上就印着 TORONTO。
+    ("canada-national-bank-open-stadium.jpg",
+     "File:Rexall Centre York University Toronto.JPG", None),
     ("cincinnati-lindner-tennis-center.jpg", "File:Lindner Family Tennis Center 2025.jpg", None),
     ("usopen-arthur-ashe-stadium.jpg", None, "Arthur Ashe Stadium"),
+    # Gstaad：搜索里名字带赛事的那张（EFG Swiss Open Gstaad-ATP 250）其实是
+    # 球员特写，中间还压着摄影师水印，既不是场馆也不能用——名字对题不等于
+    # 内容对题。Commons 上也没有 Roy Emerson Arena 的照片，Category:Gstaad
+    # 的 136 张几乎全是雪景（这里是滑雪胜地）。而瑞士公开赛是七月红土——
+    # 拿雪景当七月比赛的背景，季节整个错了，和"温网草地配法网司线"是同一类错。
+    # 所以取夏季的萨嫩兰谷地：季节对得上，chalet + 阿尔卑斯谷地也就是格施塔德
+    # 本身的样子。
+    ("gstaad-panorama.jpg", "File:July in Gstaad.jpg", None),
+    ("bastad-tennis-stadium.jpg", "File:Båstad Tennis Stadium.jpg", None),
+    # 下面这批原本只躺在 assets/ 与 credits.json 里、不在本列表中。fetch_set()
+    # 会按本列表重建 credits.json，所以漏登记的条目每跑一次 CI 就被冲掉一次
+    # ——umag 的图还在 manifest 里生效，credits 一丢它就整条消失。补登记。
+    ("umag-goran-ivanisevic-stadium.jpg",
+     "File:Teniski stadion 'Goran Ivanišević', Umag.jpg", None),
+    ("ao-rod-laver-arena.jpg", "File:RodLaverArenanight2013.jpg", None),
+    ("ao-court-interior.jpg",
+     "File:Rod Laver Arena Melbourne Park Australian Open 2023 first round.jpg", None),
+    ("rg-philippe-chatrier.jpg",
+     "File:Court Philippe Chatrier 2024 vue extérieure.jpg", None),
+    ("wimbledon-centre-court.jpg",
+     "File:2023 09 09 arne mueseler 14 40 13 00734-Verbessert-RR (53284505824).jpg", None),
+    ("usopen-arthur-ashe-exterior.jpg", "File:Arthur Ashe Stadium, July 7, 2018.jpg", None),
 ]
 
 # 球员图：按 Commons 人物分类自动挑选（分类内都是本人照片，比全文检索准）
@@ -308,8 +343,47 @@ def fetch_set(
     return failed
 
 
+def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
+    """给"图已在盘上、credits 却缺失"的条目补出处。
+
+    fetch_set() 只在自己下载成功的那一刻写 credits；图片 CDN 限流严重
+    （429），实际操作里常常出现"手动/分批把图弄下来了，但 credits 没跟上"。
+    credits 缺字段的条目会被 load_venue_assets() **静默丢弃**，图明明在却
+    不生效，很难发现。这里只查 API（不碰限流严重的图片 CDN），把缺的补齐。
+    """
+    credits_path = out_dir / "credits.json"
+    try:
+        credits = json.loads(credits_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        credits = {}
+    required = ("title", "license", "artist", "page")
+    failed = []
+    for out_name, pinned_title, _term in wanted:
+        if not (out_dir / out_name).exists():
+            continue
+        if all((credits.get(out_name) or {}).get(k) for k in required):
+            continue
+        if not pinned_title:
+            failed.append(f"{out_name}: 图在但没有 credits，且没有固定的 Commons 文件名")
+            continue
+        try:
+            cand = next(iter(imageinfo([pinned_title])), None)
+            if not cand:
+                raise RuntimeError(f"Commons 查不到 {pinned_title}")
+            credits[out_name] = {k: cand[k] for k in required}
+            print(f"CREDIT {out_name} <- {cand['title']} [{cand['license']}] by {cand['artist']}")
+        except Exception as exc:  # noqa: BLE001
+            failed.append(f"{out_name}: 补出处失败: {exc}")
+    credits_path.write_text(
+        json.dumps(credits, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return failed
+
+
 def main() -> int:
     failed = fetch_set(ROOT / "assets" / "venues", VENUES, min_width=1600)
+    failed += backfill_credits(ROOT / "assets" / "venues", VENUES)
     failed += fetch_set(
         ROOT / "assets" / "players", PLAYERS, min_width=1000, prefer_portrait=True
     )

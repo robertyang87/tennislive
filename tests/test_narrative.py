@@ -98,3 +98,63 @@ def test_preview_angle_uses_account_continuity_before_mechanical_facts(tmp_path,
     angle = preview_angle(upcoming, date(2026, 7, 23))
 
     assert "7月20日" in angle and "下一章" in angle
+
+
+def test_preview_angle_skips_an_angle_already_used_on_the_same_page():
+    """同一页上不许把同一句看点印两遍。
+
+    赛事故事那一档是**赛事级**的——同一站的每场比赛都会拿到
+    "…又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心"这一句。
+    五场的今晚焦点页上曾一字不差地重复三遍（2026-07-26 样张）。
+    """
+    first = _no_story_match(match_id="dup-1")
+    second = _no_story_match(
+        match_id="dup-2", home_name="Alexei Popyrin", away_name="Marton Fucsovics",
+        home_country="AUS", away_country="HUN",
+    )
+
+    used: set[str] = set()
+    a = preview_angle(first, date(2026, 7, 23), used=used)
+    used.add(a)
+    b = preview_angle(second, date(2026, 7, 23), used=used)
+
+    assert a and b
+    assert a != b, f"两场拿到同一句看点：{a}"
+
+
+def test_preview_angle_falls_back_to_a_per_match_line_not_a_per_round_one():
+    """兜底句也得逐场不同。
+
+    schedule_insight 是按**轮次**写的，同一轮的两场会拿到同一句
+    "四强席位就在眼前，两人都清楚这一轮没有'下次再拼'的余地"。所以收尾
+    要落到 data_angle——那一句取的是双方排名/种子/名字，逐场不同。
+    """
+    from tennislive.render.narrative import data_angle
+
+    one = _no_story_match(match_id="rr-1")
+    two = _no_story_match(
+        match_id="rr-2", home_name="Alexei Popyrin", away_name="Marton Fucsovics",
+        home_country="AUS", away_country="HUN",
+    )
+    # 把前面所有档位都占掉，逼它走到收尾
+    used = {
+        preview_angle(one, date(2026, 7, 23)),
+        preview_angle(two, date(2026, 7, 23)),
+    }
+    angle = preview_angle(two, date(2026, 7, 23), used=used)
+
+    assert angle not in used, f"收尾仍然重复：{angle}"
+    assert angle == data_angle(two, 80)
+    assert "波皮林" in angle or "Popyrin" in angle
+
+
+def test_data_angle_is_importable_from_both_narrative_and_xiaohongshu():
+    """data_angle 从 xiaohongshu 搬到了 narrative，两边必须是同一个函数。
+
+    narrative 不能反过来 import xiaohongshu（后者依赖前者），所以只能搬家。
+    推送正文那条老调用路径不许因此断掉。
+    """
+    from tennislive.render import xiaohongshu
+    from tennislive.render.narrative import data_angle
+
+    assert xiaohongshu._data_angle is data_angle

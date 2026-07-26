@@ -3524,3 +3524,94 @@ def test_tonight_reason_is_trimmed_server_side_not_by_css():
     wide_reason = re.search(r"<span>看点</span></b>([^<]*)</div>", wide).group(1)
     assert len(wide_reason) <= REASON_LIMIT_TWO_LINES
     assert len(wide_reason) >= len(reason)
+
+
+def test_result_insight_does_not_call_a_retirement_a_straight_sets_win():
+    """退赛不能读成"直落两盘拿下"。
+
+    6-1 2-0 退赛里那个 2-0 是被中断的一盘，不是拿下的一盘。result_insight
+    只数"比分不相等的盘"，于是数出 2 盘、落进"直落两盘拿下，关键分处理更加
+    稳定"——封面头条印着"谢里夫退赛"，下面一行却夸对手直落两盘（2026-07-26
+    样张）。trajectory_arc 早就为同一个比分挡过一次，这条路径当时漏了。
+    """
+    from tennislive.render.story import result_insight
+
+    retired = make_match(
+        sets=((6, 1), (2, 0)), tiebreaks=(None, None),
+        status=MatchStatus.RETIRED, winner=0,
+    )
+    line = result_insight(retired)
+    assert "直落" not in line, line
+    assert "退赛" in line
+
+    walkover = make_match(
+        sets=(), tiebreaks=(), status=MatchStatus.WALKOVER, winner=0,
+    )
+    assert "不战而胜" in result_insight(walkover)
+
+    # 正常完赛不受影响
+    normal = make_match(
+        sets=((6, 1), (6, 4)), tiebreaks=(None, None),
+        status=MatchStatus.FINISHED, winner=0,
+    )
+    assert result_insight(normal) == "直落两盘拿下，关键分处理更加稳定"
+
+
+def test_tonight_page_anchors_cards_to_the_bottom_at_every_match_count():
+    """今晚焦点页不留空档：卡片沉底，地标照片稳定占住中段。
+
+    原来 .event-spacer 按场次数写死高度，两场时卡片停在中上部、下面 500 多
+    px 全是照片（照片不是构图的一部分，只是"剩下的地方"）；五场时反过来，
+    最后一张卡被裁掉半截。改成弹性 spacer 之后两头都不该再出现。
+    """
+    from tennislive.render.webcards import _CSS
+
+    daily = _CSS.split("html.daily {", 1)[1]
+    # 只看 daily 覆盖段自己的规则：基础样式里那几条按 count 写死的高度还在，
+    # 但被 html.daily 前缀的选择器盖掉了（多一个类型选择器，优先级更高）。
+    spacer_rules = [
+        line.strip() for line in daily.splitlines()
+        if ".event-spacer" in line and line.lstrip().startswith("html.daily")
+    ]
+    assert spacer_rules, "找不到 .event-spacer 的 daily 规则"
+    # 这几条串成一条选择器列表，弹性声明写在最后一行
+    assert "flex:1 1 0" in "\n".join(spacer_rules), (
+        "spacer 还在按 count 写死高度：\n" + "\n".join(spacer_rules)
+    )
+    assert not [r for r in spacer_rules if re.search(r"height:\d+px", r)], (
+        "daily 段里还有写死的 spacer 高度：\n" + "\n".join(spacer_rules)
+    )
+    # 页脚是 absolute 的，不占流内高度；卡片沉底后必须给它让出一条带子
+    assert "html.daily .poster.tonight-page { padding-bottom:" in daily
+
+
+def test_tonight_page_never_repeats_the_same_reason_line():
+    """一页上的看点必须逐场不同。
+
+    赛事故事那一档是赛事级的，同一站每场都会拿到同一句；五场页上曾一字不差
+    地重复三遍。tonight_body 现在跨卡片累积 used_angles。
+    """
+    import re
+
+    from tennislive.render.webcards import tonight_body
+
+    matches = [
+        make_match(
+            match_id=f"tn-{i}", tournament="Toronto",
+            home_name=home, away_name=away,
+            home_country="FRA", away_country="BEL",
+            status=MatchStatus.SCHEDULED, winner=None, sets=(), tiebreaks=(),
+            round_name="Quarterfinals",
+        )
+        for i, (home, away) in enumerate([
+            ("Constant Lestienne", "Zizou Bergs"),
+            ("Alexei Popyrin", "Marton Fucsovics"),
+            ("Arthur Fils", "Ugo Humbert"),
+            ("Alexander Bublik", "Tallon Griekspoor"),
+        ])
+    ]
+    html_out = tonight_body(matches, "7.26 · 周日")
+    reasons = re.findall(r'<div class="reason">.*?</span></b>(.*?)</div>', html_out)
+
+    assert len(reasons) == len(matches), reasons
+    assert len(set(reasons)) == len(reasons), f"看点重复了：{reasons}"
