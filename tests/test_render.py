@@ -3679,3 +3679,29 @@ def test_doubles_schedule_insight_leads_with_a_clause_that_stands_alone():
     assert "冠军" in head
     fitted = _short_complete(line, 36)
     assert fitted and not fitted.strip().endswith("/"), fitted
+
+
+def test_grounded_takeaway_says_the_winner_took_the_stake_not_deferred_it():
+    """赢下一场比赛是**兑现**了这一轮的赌注，不是把它推给下一场。
+
+    原文是"{winner}把{stakes}的悬念留到了下一场"，方向整个反了；决赛尤其
+    离谱——决赛本身就是最后一场，没有"下一场"。7.26 的头条卡上印着阿利斯
+    夺冠（基茨比厄尔决赛 6-4 7-6），下面一行却说他"把冠军奖杯的悬念留到了
+    下一场"。
+    """
+    from tennislive.render.narrative import _grounded_takeaway
+
+    final = make_match(
+        sets=((6, 4), (7, 6)), tiebreaks=(None, (8, 6)),
+        round_name="Final", winner=0,
+    )
+    line = _grounded_takeaway(final)
+
+    assert "留到了下一场" not in line, line
+    assert "拿下冠军" in line
+
+    semi = make_match(
+        sets=((6, 4), (6, 3)), tiebreaks=(None, None),
+        round_name="Semifinal", winner=0,
+    )
+    assert "拿下决赛门票" in _grounded_takeaway(semi)
