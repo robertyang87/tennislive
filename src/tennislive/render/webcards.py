@@ -117,6 +117,15 @@ def _font_css() -> str:
                 f"@font-face{{font-family:'{family}';font-weight:{weight};"
                 f"src:url(data:font/ttf;base64,{b}) format('truetype');}}"
             )
+    # 赛果速递 / 焦点复盘的比分数字（见 CSS 里"柔和内容色"那一段）。
+    # woff2、拉丁子集，三个字重加起来 70KB 上下。
+    for weight in (400, 500, 600):
+        b = _b64(ASSETS / "fonts" / f"Newsreader-latin-{weight}.woff2")
+        if b:
+            css.append(
+                f"@font-face{{font-family:'TL Numeral';font-weight:{weight};"
+                f"src:url(data:font/woff2;base64,{b}) format('woff2');}}"
+            )
     display_font = _b64(ASSETS / "fonts" / "SmileySans-Oblique.woff2")
     if display_font:
         css.append(
@@ -1208,6 +1217,32 @@ html.daily .results-page .chip-red, html.daily .focus-page .chip-red {
 html.daily .results-page .chip-green, html.daily .focus-page .chip-green {
   color:var(--gold); }
 html.daily .focus-page .compare-row.key .winner { color:var(--gold); }
+
+/* 金只出现在栏目大标题上。收敛成一支强调色之后，它反而被用得太多——大标题、
+   四个巡回赛 logo、徽章描边、种子号全是满强度的金，整页数下来比原来的荧光
+   黄绿还密。行内这些配件本来就是次要信息，退成中性。 */
+html.daily .results-page .tour-level, html.daily .focus-page .tour-level,
+html.daily .results-page .tour, html.daily .focus-page .tour {
+  color:var(--panel-muted); }
+html.daily .results-page .tour-level svg, html.daily .focus-page .tour-level svg {
+  opacity:.55; }
+html.daily .results-page .seed, html.daily .focus-page .seed { color:var(--fade); }
+html.daily .results-page .chip-gold, html.daily .focus-page .chip-gold {
+  color:var(--panel-muted); }
+
+/* 比分与技术统计的数字换成正文衬线。Barlow Condensed 是紧缩的运动感字型，
+   和这两页收敛后的调子不搭；衬线更像"记分牌"。
+   三个字重是为了保住胜负两行的轻重对比——单字重的展示衬线（试过 Instrument
+   Serif）好看，但胜方和败方一样粗，一眼看不出谁赢。 */
+html.daily .results-page .set, html.daily .focus-page .set,
+html.daily .focus-page .compare-row span {
+  font-family:'TL Numeral',serif; font-size:48px; letter-spacing:0; }
+html.daily .results-page .set.sw, html.daily .focus-page .set.sw { font-weight:600; }
+html.daily .results-page .set.sl, html.daily .focus-page .set.sl { font-weight:400; }
+html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-size:66px; }
+html.daily .focus-page .compare-row span { font-size:38px; font-weight:500; }
+html.daily .results-page .set sup, html.daily .focus-page .set sup {
+  font-family:'Barlow Condensed'; font-weight:600; }
 """
 
 
