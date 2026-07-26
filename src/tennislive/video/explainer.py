@@ -507,6 +507,59 @@ _ZHENG_EALA_DIAGRAM = """
 </svg>
 """
 
+# A losing streak is the one thing in this deck no photograph can hold: it is
+# not a moment, it is the absence of moments. Drawing it also puts the two
+# facts that matter side by side — her last win and the start of the streak
+# happened at the same tournament, one round apart.
+_VENUS_STREAK_DIAGRAM = """
+<svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">上一场胜利，就在这一站</text>
+
+  <line x1="150" y1="250" x2="800" y2="250" stroke="rgba(159,180,170,.35)" stroke-width="3"/>
+
+  <circle cx="188" cy="250" r="16" fill="#a8cf7d" stroke="#061c14" stroke-width="4"/>
+  <text x="188" y="196" text-anchor="middle" fill="#a8cf7d"
+        font-size="25" font-weight="800">2025 年 7 月</text>
+  <text x="188" y="164" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">华盛顿站首轮</text>
+  <text x="188" y="300" text-anchor="middle" fill="#e7f3ec"
+        font-size="26" font-weight="800">6-3 6-4 胜斯特恩斯</text>
+  <text x="188" y="332" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">45 岁 · 2004 年之后最年长</text>
+
+  <g stroke="#e0938f" stroke-width="6" opacity=".85">
+    <line x1="270" y1="234" x2="270" y2="266"/>
+    <line x1="313" y1="234" x2="313" y2="266"/>
+    <line x1="356" y1="234" x2="356" y2="266"/>
+    <line x1="399" y1="234" x2="399" y2="266"/>
+    <line x1="442" y1="234" x2="442" y2="266"/>
+    <line x1="485" y1="234" x2="485" y2="266"/>
+    <line x1="528" y1="234" x2="528" y2="266"/>
+    <line x1="571" y1="234" x2="571" y2="266"/>
+    <line x1="614" y1="234" x2="614" y2="266"/>
+    <line x1="657" y1="234" x2="657" y2="266"/>
+    <line x1="700" y1="234" x2="700" y2="266"/>
+  </g>
+  <text x="485" y="196" text-anchor="middle" fill="#e0938f"
+        font-size="26" font-weight="800">十一连败</text>
+
+  <circle cx="772" cy="250" r="16" fill="none" stroke="#e7f3ec"
+          stroke-width="5" stroke-dasharray="7 7"/>
+  <text x="772" y="196" text-anchor="middle" fill="#e7f3ec"
+        font-size="25" font-weight="800">7 月 27 日</text>
+  <text x="772" y="164" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">又是这一站</text>
+
+  <text x="450" y="440" text-anchor="middle" fill="#e7f3ec"
+        font-size="26" font-weight="800">连败是从去年这一站的第二轮开始的</text>
+  <text x="450" y="486" text-anchor="middle" fill="#9fb4aa"
+        font-size="22" font-weight="700">同一块场地，给过她纪录，也给过她第一场败仗</text>
+  <text x="450" y="576" text-anchor="middle" fill="#9fb4aa"
+        font-size="20" font-weight="700">十一场败仗按公开赛果计，含 2025 赛季末三场</text>
+</svg>
+"""
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -1632,6 +1685,98 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你第一次记住郑钦文，是哪一场？",
         ),
     ),
+    "venus-potapova": (
+        (
+            "record",
+            "去年",
+            "45 岁那天，维纳斯赢了一场",
+            "先说去年的这一站。二〇二五年七月二十二日，华盛顿站首轮，四十五岁的"
+            "维纳斯·威廉姆斯六比三、六比四击败佩顿·斯特恩斯——对手比她小二十二岁。"
+            "那是她阔别单打十六个月之后的第一场比赛，发出九记 Ace；也是她自二〇二三年八月"
+            "辛辛那提以来的第一场胜利。上一个比她更年长还能赢下 WTA 巡回赛单打的人，"
+            "是二〇〇四年温网首轮的纳芙拉蒂洛娃，那年四十七岁。",
+            "assets/explainer/venus-potapova/venus_forehand.jpg",
+            "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站赛前训练",
+            (
+                "2025.7.22 华盛顿首轮 6-3 6-4 胜斯特恩斯",
+                "阔别单打 16 个月，那场发了 9 记 Ace",
+                "2004 年纳芙拉蒂洛娃之后最年长的胜者",
+            ),
+        ),
+        (
+            "resume",
+            "底子",
+            "7 座大满贯，4 块奥运金牌",
+            "对不太看网球的人说一句维纳斯是谁。七座大满贯女单冠军，温网五次、美网两次；"
+            "四枚奥运金牌，其中一枚是二〇〇〇年悉尼的单打金牌。二〇〇二年二月，她登上世界第一。"
+            "她一九八〇年六月出生，今年四十六岁——今天球网对面的波塔波娃出生那一年，"
+            "维纳斯已经拿过两座温网冠军了。",
+            "assets/explainer/venus-potapova/venus_portrait.jpg",
+            "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站",
+            (
+                "7 座大满贯女单冠军：温网 5 次、美网 2 次",
+                "4 枚奥运金牌，含 2000 年悉尼单打金牌",
+                "2002 年 2 月登上世界第一",
+            ),
+        ),
+        (
+            "streak",
+            "这一年",
+            "上一场胜利，就在这一站",
+            "但那场胜利之后的事情，是另一条线。二〇二五年华盛顿第二轮，维纳斯二比六、二比六"
+            "输给弗雷赫；接着是辛辛那提首轮、美网首轮。二〇二六年，从奥克兰、霍巴特、澳网、"
+            "奥斯汀、印第安维尔斯一路打下来，全部止步首轮。到今年六月的洪堡站为止，"
+            "她的单打连败已经来到十一场，起点正是去年这一站的第二轮。"
+            "换句话说，同一块场地给过她一项纪录，也给了她这轮连败的第一场。",
+            "",
+            "网球时差绘制",
+            (
+                "11 连败，起点是去年本站的第二轮",
+                "2026 年至今尚无巡回赛单打胜绩",
+                "世界第 469，本站靠外卡进正赛",
+            ),
+            _VENUS_STREAK_DIAGRAM,
+        ),
+        (
+            "rival",
+            "对面",
+            "本来进不了正赛的人，打进了四强",
+            "对面这位叫阿纳斯塔西娅·波塔波娃，二〇〇一年三月生，二十五岁，"
+            "从二〇二六赛季起代表奥地利出战。她今年做成过一件此前没人做成的事："
+            "四月的马德里站，她在资格赛末轮输了球，本来该收拾东西回家，正赛开始前半小时"
+            "接到电话递补进签表；然后她一路赢下去，先后战胜世界第二里巴金娜和普利斯科娃，"
+            "打进四强——这是一九九〇年分级制度确立以来，第一个打进 WTA 一千级四强的幸运落败者。"
+            "她的生涯最高排名是世界第二十一。",
+            "assets/explainer/venus-potapova/potapova.jpg",
+            "lucian nuta · CC BY-SA 2.0 · Wikimedia Commons · 2025 年 2 月特兰西瓦尼亚公开赛",
+            (
+                "25 岁，2026 赛季起代表奥地利出战",
+                "2026 马德里幸运落败者闯四强，WTA 1000 首例",
+                # 画面是 2025 年 2 月的室内紫色球场，这一屏讲的却是 2026 年的
+                # 马德里红土。不写清楚，观众会把这张当成马德里那一场——正是
+                # 「讲法网配温网草地」那类错误。自由图源里她没有 2026 年的照片。
+                "生涯最高世界第 21；画面摄于 2025 年 2 月",
+            ),
+        ),
+        (
+            "stake",
+            "这一场",
+            "网球不欠维纳斯什么，她还是来了",
+            "所以七月二十七日这一场，是两个人的第一次交手。一个二十五岁，正在把去年那点运气"
+            "变成实力；一个四十六岁，七座大满贯、四块奥运金牌，早就不需要再证明什么，"
+            "却仍然要在首轮从一张外卡开始。同一天的同一站，郑钦文也拿着外卡打首轮——"
+            "这一轮的球场上，站着好几个本来不该在这儿的人。比分我们不猜。",
+            "assets/explainer/venus-potapova/venus_press.jpg",
+            "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站赛前发布会",
+            (
+                "7 月 27 日首轮，两人第一次交手",
+                "维纳斯 46 岁靠外卡，波塔波娃 25 岁正在上升",
+                "同一天同一站，郑钦文也是外卡",
+            ),
+            "",
+            "如果是你，46 岁还会站上场吗？",
+        ),
+    ),
 }
 
 
@@ -1725,6 +1870,14 @@ _CAPTIONS: dict[str, dict] = {
             "排名会掉，人还在场上。"
         ),
         "tags": ("网球", "网球时差", "郑钦文", "伊埃拉", "WTA"),
+    },
+    "venus-potapova": {
+        "hook": (
+            "去年这一站，45 岁的维纳斯赢了一场，那是 2004 年之后 WTA 最年长的单打胜利。\n"
+            "也是从那一站的下一轮开始，她连输了 11 场。\n"
+            "今年她 46 岁，又回到同一块场地，手里又是一张外卡。"
+        ),
+        "tags": ("网球", "网球时差", "维纳斯威廉姆斯", "WTA", "华盛顿站"),
     },
 }
 
@@ -1882,6 +2035,20 @@ _OPENINGS: dict[str, dict] = {
         # "three years ago" beat needs 2023.
         "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
         "credit": "账号所有者提供 · 摄影师与出处未标注（unknown / unverified）· 郑钦文",
+    },
+    "venus-potapova": {
+        "column": "开赛之前",
+        "topic": "维纳斯 VS 波塔波娃：华盛顿站首轮前瞻",
+        "question": "46 岁了，维纳斯为什么还在打？",
+        "narration": "去年的这一站，四十五岁的维纳斯赢下一场单打，创下二〇〇四年之后的最年长纪录。"
+        "一年之后她回来了，四十六岁，世界第四百六十九，手里又是一张外卡。"
+        "四十六岁了，维纳斯为什么还在打？",
+        # The whole deck is about her coming back to this one tournament, so
+        # every Venus frame in it comes from the same shoot — 2025-07-20, the
+        # week she made the record. The source calls them practice and press,
+        # never match play, and no screen says otherwise.
+        "image": "assets/explainer/venus-potapova/venus_serve.jpg",
+        "credit": "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站赛前训练",
     },
 }
 
