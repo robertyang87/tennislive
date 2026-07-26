@@ -1294,6 +1294,63 @@ STORIES = STORIES + (
         source_url="https://www.wtatennis.com/news/3043764/tennis-explained-learn-the-game",
     ),
     _trivia_story(
+        slug="shot-clock",
+        title="发球 25 秒是怎么来的",
+        subtitle="网球观察 · 规则篇",
+        identity="2018 年上墙，2026 年自动",
+        chips=("20 秒 → 25 秒", "2018 美网", "2026 全自动"),
+        hero=(
+            "2018 年美网成为首个在正赛使用 25 秒发球计时器的大满贯，"
+            "大满贯同期由 20 秒改为 25 秒；2026 年 ATP 改为自动计时，一分结束即起算。"
+        ),
+        facts=(
+            "2018 年之前，大满贯的分间时限为 20 秒、巡回赛为 25 秒，没有可视计时器，"
+            "是否超时由主裁判断；2018 年四大满贯统一改为 25 秒并引入计时器。",
+            "2018 年美网是首个在正赛使用 25 秒计时器的大满贯，此前仅在 2017 年美网资格赛试行；"
+            "计时器由主裁在报分之后启动，掌声不计入其中。",
+            "超时罚则为首次警告，此后每次罚掉一个一发；2026 年 ATP 改为自动计时，"
+            "一分结束后几乎立刻起算、不再等报分，阿尔卡拉斯与辛纳均公开提出异议。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2018-08-27",
+                player="美网",
+                age="2018 年",
+                headline="首个用上计时器的大满贯正赛",
+                detail=(
+                    "25 秒计时器在 2018 年美网正赛启用，此前于 2017 年美网资格赛试行；"
+                    "同年四大满贯将分间时限由 20 秒统一为 25 秒。"
+                ),
+                source_url=(
+                    "https://www.guinnessworldrecords.com/world-records/"
+                    "544272-first-grand-slam-to-adopt-a-shot-clock-for-the-main-draws"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-06",
+                player="阿尔卡拉斯",
+                age="女王杯",
+                headline="「钟不停，我全程都在赶」",
+                detail=(
+                    "负于德拉珀后他表示：主裁告知有新规则，一分结束后计时立即开始；"
+                    "他称分与分之间没有恢复时间。此前在迈阿密对戈芬一场，"
+                    "他因超时被罚，当场称在网前结束一分时根本无法赶上。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13156552/"
+                    "carlos-alcaraz-plans-atp-talks-over-new-shot-clock-rule-after-defeat-at-queens-club"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="Guinness World Records / LTA 裁判手册 / Sky Sports",
+        image_credit="AELTC/Ben Solomon · wimbledon.com 官方图",
+        source_url=(
+            "https://www.lta.org.uk/494f0e/siteassets/lta-officials/my-resources/"
+            "role-specific-resources/serve-shot-clock-procedures-2023.pdf"
+        ),
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
