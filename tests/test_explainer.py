@@ -413,7 +413,7 @@ _ROSTER = (
     ("纳达尔",), ("费德勒",), ("朱琳",), ("李娜",), ("塞伦多洛",), ("兹维列夫",),
     ("梅德韦杰夫",), ("穆雷",), ("大坂",), ("高芙",), ("萨巴伦卡",),
     ("克雷吉茨科娃",), ("纳芙拉蒂洛娃",), ("斯特恩斯",), ("弗雷赫",),
-    ("里巴金娜",), ("普利斯科娃",),
+    ("莱巴金娜",), ("普利斯科娃",),
 )
 
 
@@ -618,3 +618,26 @@ def test_大标题里不能有冒号():
             assert "：" not in seg.title and ":" not in seg.title, (
                 f"{slug}/{seg.kind} 大标题里有冒号：{seg.title}"
             )
+
+
+def test_收尾那个问题一定要念出来():
+    """问题只印在末屏、旁白不问，等于没留。
+
+    十三条片子里有十条是这样：画面上写着「你更爱看群雄逐鹿，还是王朝统治？」，
+    旁白讲完最后一句就停了——**只看视频的人根本不知道被问了什么**，而这一问是
+    这类短片换评论区的唯一抓手。现在由 `_ask_it_out_loud` 统一补，靠"结尾有没有
+    问号"判断，不靠逐字比对：好几条旁白早就问过意思一样、措辞不同的话，逐字比
+    对匹配不上，补一遍就成了连问两遍。
+    """
+    from tennislive.video.explainer import speakable
+
+    for slug in _SCRIPTED:
+        closer = explainer_script(find_story_by_slug(slug))[-1]
+        assert closer.question, f"{slug} 末屏没有互动提问"
+        spoken = speakable(closer.narration)
+        assert "？" in spoken[-40:], f"{slug} 旁白结尾没有问出来：…{spoken[-30:]}"
+        # 也不能把同一个问题问两遍。不查问号个数——鹰眼那条的旁白本来就连着
+        # 抛了两问（「法网还能坚持多久？什么时候也会换成电子司线？」），那是写稿
+        # 时的选择，不是重复。查的是末屏那一问有没有被补进去两次。
+        core = closer.question.rstrip("？?")
+        assert spoken.count(core) <= 1, f"{slug} 同一个问题问了两遍：{core}"

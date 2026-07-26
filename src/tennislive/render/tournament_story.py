@@ -1425,7 +1425,7 @@ STORIES = STORIES + (
                 player="波塔波娃",
                 age="25 岁",
                 headline="马德里站幸运落败者打进四强",
-                detail="资格赛末轮出局后递补进正赛，先后战胜里巴金娜与普利斯科娃。",
+                detail="资格赛末轮出局后递补进正赛，先后战胜莱巴金娜与普利斯科娃。",
                 source_url="https://en.wikipedia.org/wiki/Anastasia_Potapova",
             ),
         ),
