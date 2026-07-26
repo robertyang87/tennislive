@@ -273,6 +273,56 @@ _TEN_CHAMPIONS_DIAGRAM = """
 """
 
 
+# Two closures, both for "insufficient light", both in the first week of July,
+# fifty minutes apart on the clock. No photograph can hold two timestamps side
+# by side, so the argument is drawn: one axis, two markers, and the rule's own
+# wording underneath. Only times confirmed on the record are plotted — the
+# Sinner closure has no published clock time, so it is named in the narration
+# instead of guessed at here.
+_ROOF_DIAGRAM = """
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="40" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">同样是「光线不足」，关顶时间差了 50 分钟</text>
+
+  <line x1="90" y1="330" x2="810" y2="330" stroke="#9fb4aa" stroke-width="4"/>
+  <g fill="#9fb4aa" font-size="24" font-weight="700" text-anchor="middle">
+    <text x="90"  y="380">19:00</text>
+    <text x="450" y="380">20:00</text>
+    <text x="810" y="380">21:00</text>
+  </g>
+  <g stroke="#9fb4aa" stroke-width="3">
+    <line x1="90" y1="316" x2="90" y2="344"/>
+    <line x1="450" y1="316" x2="450" y2="344"/>
+    <line x1="810" y1="316" x2="810" y2="344"/>
+  </g>
+
+  <!-- 2026-07-07, Djokovic v Auger-Aliassime: 19:40, before the third set -->
+  <line x1="330" y1="168" x2="330" y2="330" stroke="#c6f65a" stroke-width="5"/>
+  <circle cx="330" cy="330" r="13" fill="#c6f65a"/>
+  <text x="330" y="152" text-anchor="middle" fill="#c6f65a"
+        font-size="40" font-weight="800">19:40</text>
+  <text x="330" y="110" text-anchor="middle" fill="#e7f3ec"
+        font-size="25" font-weight="700">2026 · 德约 对 阿利亚西姆</text>
+  <text x="330" y="204" text-anchor="middle" fill="#9fb4aa"
+        font-size="23" font-weight="700">1/4 决赛，第三盘开始前</text>
+
+  <!-- 2025-07-07, Dimitrov v Sinner: 20:30, after the second set -->
+  <line x1="630" y1="330" x2="630" y2="470" stroke="#37e29a" stroke-width="5"/>
+  <circle cx="630" cy="330" r="13" fill="#37e29a"/>
+  <text x="630" y="516" text-anchor="middle" fill="#37e29a"
+        font-size="40" font-weight="800">20:30</text>
+  <text x="630" y="552" text-anchor="middle" fill="#e7f3ec"
+        font-size="25" font-weight="700">2025 · 迪米特洛夫 对 辛纳</text>
+  <text x="630" y="586" text-anchor="middle" fill="#9fb4aa"
+        font-size="23" font-weight="700">第四轮，第二盘打完</text>
+
+  <path d="M330 264 L630 264" stroke="#e7f3ec" stroke-width="3" stroke-dasharray="8 8"/>
+  <text x="480" y="252" text-anchor="middle" fill="#e7f3ec"
+        font-size="27" font-weight="800">相差 50 分钟</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "hawkeye": (
         (
@@ -1014,6 +1064,101 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你更爱看群雄逐鹿，还是王朝统治？",
         ),
     ),
+    # Every clock time here is on the record: 19:40 is Djokovic's own words on
+    # camera, 20:30 is how the 2025 closure was reported. The Sinner closure
+    # has no published time, so it is placed by the score instead of guessed.
+    # The Dimitrov beat states the sequence and then states that his coach
+    # denied the link — the honest version is also the more interesting one.
+    "roof": (
+        (
+            "rule",
+            "两种情形",
+            "只有下雨和天黑，才能把它关上",
+            "中央球场 2009 年装上了这块可开合的屋顶。规则写得很短：只有两种情况可以关，"
+            "下雨，或者光线不足。关上之后灯就能开，比赛可以一直打到当地议会规定的宵禁——"
+            "晚上十一点。听起来一点都不含糊。问题出在第二条：光线不足，几点算不足？"
+            "谁来判断？规则没说。",
+            "assets/explainer/roof/roof2009.jpg",
+            "Delfort · CC BY-SA 3.0 · Wikimedia Commons · 2009 年新装成的中央球场屋顶",
+            (
+                "2009 年装上，可开合",
+                "只有下雨或光线不足才能关",
+                "关上后可打到 23:00 议会宵禁",
+            ),
+        ),
+        (
+            "sinner",
+            "两个人两种意见",
+            "一个想关，一个想接着打",
+            "2026 年温网第四轮，辛纳对上从资格赛打进来的望月慎太郎，世界第一百五十一位。"
+            "打到第二盘 4 比 4，辛纳想关顶；望月正在打自己职业生涯最大的一场球，想接着打下去。"
+            "两个人意见完全相反，官方站在了世界第一那边。而就在那之前一局，"
+            "辛纳 4 比 3 领先发球，刚被回破。屋顶合上、灯亮起来之后，他把这一盘的抢七"
+            "打成了 7 比 0，最后 6-3、7-6、6-3 过关，全场两小时二十五分。",
+            "assets/explainer/roof/closing.jpg",
+            "Carine06 · CC BY-SA 2.0 · Wikimedia Commons · 中央球场屋顶合拢过程（2012 年）",
+            (
+                "第二盘 4-4，辛纳想关，望月想打",
+                "官方关顶；此前一局辛纳刚被回破",
+                "复赛后抢七 7-0，全场 6-3 7-6 6-3",
+            ),
+        ),
+        (
+            "djokovic",
+            "七点四十",
+            "「我们是户外赛事」",
+            "两天后，同一块场地，德约科维奇对阿利亚西姆的四分之一决赛。第三盘开始前，"
+            "赛事主管走到场边通知他：屋顶要关了。当时是晚上七点四十。德约当场把话顶了回去——"
+            "「前几天你们到八点半都不肯关，现在倒要关了？还不到八点半，现在才七点四十。"
+            "我们完全可以在户外再打一整盘。我们是户外赛事。」他接着说："
+            "「你们那么以自己的规则自豪，却一条都没在守。你们根本不知道规则是什么。」"
+            "这场球打了五小时十五分，是温网历史上最长的四分之一决赛。他赢了。",
+            "assets/explainer/roof/djokovic.jpg",
+            "AELTC/Jon Super · wimbledon.com 官方图 · 2026 温网 1/4 决赛，德约胜阿利亚西姆",
+            (
+                "第三盘前通知关顶，时间 19:40",
+                "德约：我们完全可以再打一整盘",
+                "全场 5 小时 15 分，温网最长 1/4 决赛",
+            ),
+        ),
+        (
+            "clock",
+            "差了五十分钟",
+            "同一条规则，两个不一样的答案",
+            "把两次关顶放到同一根时间轴上，就能看出德约在气什么。2025 年那次，"
+            "屋顶是晚上八点半关的；2026 年这次，七点四十。两次都发生在七月第一周的伦敦，"
+            "日落时间几乎一样，理由也都是同一条「光线不足」——中间差了整整五十分钟。"
+            "规则本身没有错，它只是把「几点算天黑」留给了人来判断。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2025：20:30 关顶",
+                "2026：19:40 关顶",
+                "同一条规则，同一周，差 50 分钟",
+            ),
+            _ROOF_DIAGRAM,
+        ),
+        (
+            "cost",
+            "代价",
+            "一年前，它改变过一场球",
+            "这件事真正被人记住，是因为 2025 年。那一届第四轮，迪米特洛夫 6-3、7-5 领先辛纳两盘，"
+            "第二盘打完，因为光线不足关顶，中断了大约十分钟。复赛之后，第三盘他 1 比 2 落后、"
+            "自己发球，去够一个很低的反手截击，落地就捂住了胸口——胸肌撕裂，退赛。"
+            "那是他连续第五届大满贯退赛。穆雷公开质疑过那次关顶；"
+            "但迪米特洛夫自己的教练德尔加多对 BBC 说得很清楚：转到室内，不是他受伤的原因。"
+            "所以真正的问题不是屋顶有没有害人，而是——「天黑」这两个字，到底该由谁说了算？",
+            "assets/explainer/roof/centre.jpg",
+            "Peter Menzel · CC BY-SA 2.0 · Wikimedia Commons · 2022 温网中央球场（屋顶敞开）",
+            (
+                "2025 年迪米特洛夫两盘领先，关顶中断 10 分钟",
+                "复赛后胸肌撕裂退赛，连续第五届大满贯退赛",
+                "教练德尔加多：转室内不是受伤原因",
+            ),
+            "",
+            "「天黑」该由谁说了算？",
+        ),
+    ),
 }
 
 
@@ -1072,6 +1217,13 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "网球冷知识", "温网", "网球历史"),
     },
+    "roof": {
+        "hook": (
+            "温网中央球场的屋顶，规则只写了两种情况可以关：下雨，或者光线不足。\n"
+            "2025 年八点半关，2026 年七点四十关——同一周的伦敦，差了五十分钟。"
+        ),
+        "tags": ("网球", "网球时差", "温网", "德约科维奇", "网球规则"),
+    },
     "ten-champions": {
         "hook": (
             "维纳斯玫瑰露水盘的盘座上，十年刻了十个名字，一个都没重复。\n"
@@ -1127,6 +1279,12 @@ _OPENINGS: dict[str, dict] = {
         "question": "大师赛为什么变成两周？",
         "narration": "大师赛为什么变成了两周？而顶尖球员，正在一个接一个退赛。",
         "image": "assets/explainer/masters-format/sinner.jpg",
+    },
+    "roof": {
+        "topic": "温网屋顶的争议：源于「光线不足」没有时间",
+        "question": "温网的屋顶，谁说了算？",
+        "narration": "温网的屋顶，到底谁说了算？规则只写了两种情况可以关。",
+        "image": "assets/explainer/roof/closing.jpg",
     },
     "ten-champions": {
         "topic": "温网的十年：女单十个冠军，男单五个",
