@@ -1,0 +1,79 @@
+{
+  "status": "pass",
+  "generated_at": "2026-07-26T23:01:50.722285+00:00",
+  "project": "yesterday-point",
+  "tour": "ATP",
+  "category": "point",
+  "published_for": "2026-07-27",
+  "match_date": "2026-07-26",
+  "source": {
+    "title": "Estoril 2016 SF Van Assche Hot Shot",
+    "url": "https://www.tennistv.com/videos/4546621/estoril-2016-sf-van-assche-hot-shot",
+    "tour": "ATP"
+  },
+  "source_description": "Luca Van Assche catches Hugo Gaston by surprise with an outstanding passing shot - Check it out here on Tennis TV!",
+  "copy_grounding": {
+    "basis": "official-shot",
+    "shot": "穿越球",
+    "shot_as_winner": false,
+    "match_angle": ""
+  },
+  "source_label": "Tennis TV / ATP Media",
+  "source_published_at": "2026-07-25T17:09:42+00:00",
+  "source_duration_ms": 36000,
+  "source_resolution": [
+    1920,
+    1080
+  ],
+  "match": {
+    "id": "400-2026:178814",
+    "players": [
+      "范阿舍",
+      "加斯东"
+    ],
+    "tournament": "Millennium Estoril Open",
+    "round": "Semifinal",
+    "score": "6-4 7-5"
+  },
+  "selection_score": 1285,
+  "consensus": {
+    "verified": true,
+    "rank": 1,
+    "basis": "official-hot-shot",
+    "score": 72,
+    "signals": [
+      {
+        "kind": "official-hot-shot",
+        "scope": "hot-shot",
+        "source": "Tennis TV / ATP Media",
+        "title": "Estoril 2016 SF Van Assche Hot Shot",
+        "url": "https://www.tennistv.com/videos/4546621/estoril-2016-sf-van-assche-hot-shot",
+        "independent": false
+      }
+    ],
+    "evidence": "官方 Hot Shots 单分视频；热度信号优先于‘最佳’断言"
+  },
+  "complete_rally": {
+    "verified": true,
+    "evidence": "官方标题或说明明确标注当日/全场最佳回合，成片保留源视频从 0 秒到结尾",
+    "source_window_ms": [
+      0,
+      36000
+    ],
+    "montage": false
+  },
+  "framing": {
+    "canvas": "3:4",
+    "foreground": "full-source-frame",
+    "mode": "contain",
+    "dynamic_tracking_crop": false,
+    "reason": "没有逐帧高置信度追踪证据，完整 16:9 主体优先"
+  },
+  "outputs": {
+    "video": "yesterday-point.mp4",
+    "subtitles": "yesterday-point.zh-CN.srt",
+    "copy": "xiaohongshu.txt",
+    "copy_page": "copy.html",
+    "pushplus": "push.html"
+  }
+}
