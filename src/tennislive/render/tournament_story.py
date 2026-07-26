@@ -1352,7 +1352,7 @@ STORIES = STORIES + (
     ),
     _trivia_story(
         slug="zheng-eala",
-        title="郑钦文首轮对伊拉",
+        title="郑钦文首轮VS伊拉",
         subtitle="赛事前瞻 · WTA 500",
         identity="三年前的亚运会半决赛之后",
         chips=("WTA 500", "首轮", "第二次交手"),

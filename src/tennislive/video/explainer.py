@@ -1789,7 +1789,7 @@ _OPENINGS: dict[str, dict] = {
     },
     "zheng-eala": {
         "column": "开赛之前",
-        "topic": "郑钦文 对 伊拉：华盛顿站首轮前瞻",
+        "topic": "郑钦文 VS 伊拉：华盛顿站首轮前瞻",
         "question": "三年后再见，谁更需要这一场？",
         "narration": "郑钦文华盛顿站首轮的对手，三年前输给过她。这一场，谁更需要它？",
         # The cover leads with the most recent frame of her that exists in a
