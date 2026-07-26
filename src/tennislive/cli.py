@@ -333,7 +333,8 @@ def cmd_explainer(args) -> int:
             story,
             args.outdir,
             theme=args.theme,
-            voice=args.voice,
+            **{k: v for k, v in (("voice", args.voice), ("rate", args.rate),
+                                 ("pitch", args.pitch)) if v},
         )
     except ExplainerVideoError as e:
         console.print(f"[red]解说视频生成失败：{e}[/red]")
@@ -1449,8 +1450,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--theme", choices=["dark", "light"], default="dark", help="幻灯主题（默认 dark）"
     )
     sp.add_argument(
-        "--voice", default="zh-CN-YunxiNeural", help="edge-tts 中文语音（默认云希）"
+        "--voice", default=None, help="edge-tts 中文语音（默认云健，语气偏解说）"
     )
+    sp.add_argument("--rate", default=None, help="语速，如 +14%%（默认 +14%%）")
+    sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")

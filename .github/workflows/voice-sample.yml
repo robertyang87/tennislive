@@ -1,0 +1,59 @@
+name: voice-sample
+
+# Reads one paragraph in every candidate voice and commits the clips, because
+# "does this sound mechanical" cannot be answered from a parameter and the
+# sandbox cannot reach the TTS service. Small files, deliberately in-repo so
+# they can be listened to without hunting through artifacts.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: voice-sample
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装 edge-tts + ffmpeg
+        run: |
+          pip install -q edge-tts
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 合成语音样本
+        run: python tools/voice_sample.py output/voice-samples
+
+      - name: 提交样本到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/voice-samples
+          if git diff --cached --quiet; then
+            echo "样本没有变化"
+            exit 0
+          fi
+          git commit -m "chore: 语音样本（供试听选嗓）"
+          for attempt in 1 2 3 4 5; do
+            git push origin "HEAD:${{ github.ref_name }}" && exit 0
+            git fetch origin "${{ github.ref_name }}"
+            git branch -f rendered HEAD
+            git reset --hard "origin/${{ github.ref_name }}"
+            git checkout rendered -- output/voice-samples
+            git add output/voice-samples
+            git diff --cached --quiet || git commit -m "chore: 语音样本（供试听选嗓）"
+            sleep $((attempt * 4))
+          done
+          echo "::error::推送样本失败"
+          exit 1
