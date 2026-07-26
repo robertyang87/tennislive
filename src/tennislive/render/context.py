@@ -13,6 +13,10 @@ from .tournament_story import STORIES, story_matches_match
 
 @dataclass(frozen=True)
 class HistoricalContext:
+    # summary 有五种来源，跨度从"整段生涯"到"我们三天前写过他"差得极远。
+    # 卡片标题必须按这个字段分支，否则一句写死的"把今天放回生涯里"会盖在
+    # 一条同赛事、三天前的续写上（2026-07-26 线上成品就是这样）。
+    kind: str
     summary: str
     facts: tuple[tuple[str, str], ...]
     source_label: str
@@ -39,6 +43,7 @@ def _profile_context(match, profile: dict) -> HistoricalContext:
     if winner is not None and winner.rank is not None:
         facts.append((f"第{winner.rank}位", "当日排名快照"))
     return HistoricalContext(
+        kind="profile",
         summary=summary,
         facts=tuple(facts[:3]),
         source_label="ATP Tour 球员档案",
@@ -65,6 +70,9 @@ def _story_context(match) -> HistoricalContext | None:
             (story.founded, "赛事历史"),
         )
     return HistoricalContext(
+        # 人物故事和赛事故事共用这个构造函数，但一个讲人、一个讲赛事，
+        # 卡片标题不能混用。
+        kind="player_story" if story.kind == "player" else "event_story",
         summary=story.hero_fact,
         facts=facts,
         source_label=story.source_label,
@@ -83,6 +91,7 @@ def historical_context(match, today: date | None = None) -> HistoricalContext | 
         return None
     if context is None:
         context = HistoricalContext(
+            kind="memory" if memory is not None else "media",
             summary=memory.summary if memory is not None else media.takeaway,
             facts=(),
             source_label=(memory.source_label if memory is not None else media.source_label),
@@ -93,6 +102,7 @@ def historical_context(match, today: date | None = None) -> HistoricalContext | 
         if not continuity:
             return context
         return HistoricalContext(
+            kind=context.kind,
             summary=context.summary,
             facts=context.facts,
             source_label=context.source_label,
@@ -100,6 +110,7 @@ def historical_context(match, today: date | None = None) -> HistoricalContext | 
             continuity=continuity,
         )
     return HistoricalContext(
+        kind=context.kind,
         summary=context.summary,
         facts=context.facts,
         source_label=context.source_label,

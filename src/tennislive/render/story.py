@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from ..digest import Digest
-from ..models import Match
+from ..models import Match, MatchStatus
 from ..zh import player_zh, surface_zh
 from ..zh.terms import round_zh
 from ..zh.tournaments import tournament_surface
@@ -126,6 +126,10 @@ def trajectory_arc(match: Match) -> str:
     purely about set-by-set momentum, so the two are meant to sit side by
     side without repeating each other.
     """
+    # 退赛/不战而胜没有"走势"可言：6-1 2-0 退赛里那个 2-0 是被中断的一盘，
+    # 不是拿下的一盘，照常统计就会印成"直落2盘，全程没有让对手看到机会"。
+    if match.status in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
     decided = [s for s in match.sets if s.home != s.away]
     if len(decided) < 2 or match.winner not in (0, 1):
         return ""
