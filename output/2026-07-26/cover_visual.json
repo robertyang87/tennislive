@@ -354,6 +354,56 @@
       ]
     },
     {
+      "player": "Lilli Tagger",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/crumblindown/55166973636/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Lilli Tagger",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/crumblindown/55167220674/",
+      "subject_match": false,
+      "person_match": false,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": true,
+      "scene": "unknown",
+      "china_priority_bonus": 0,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 31,
+      "status": "rejected",
+      "hard_failures": [
+        "headline-match-player-mismatch",
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
       "player": "Barbora Krejcikova",
       "provider": "flickr-public",
       "source_url": "https://www.flickr.com/photos/roberthlavaty/55310446994/",
@@ -743,7 +793,7 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 1,
-  "editorial_source_urls": 0,
+  "editorial_source_urls": 4,
   "source_registry": {
     "as_of": "run-start",
     "proven": [
@@ -825,7 +875,6 @@
       "errors": []
     }
   },
-  "official_recap_candidates": 0,
   "official_pages_checked": 1,
   "official_pages_expanded": 1,
   "selected_player": "Lilli Tagger",
@@ -875,12 +924,40 @@
   "focus": "34% 20%",
   "headline_selection": {
     "status": "reselected",
-    "primary_match_id": "401-2026:179414",
+    "primary_match_id": "304-2026:178885",
     "selected_match_id": "401-2026:179415",
-    "attempted": 2,
+    "attempted": 4,
     "failed_candidates": [
       {
+        "match_id": "304-2026:178885",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
         "match_id": "401-2026:179414",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
+        "match_id": "400-2026:178812",
         "status": "unavailable",
         "errors": [
           "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
