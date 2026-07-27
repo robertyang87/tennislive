@@ -314,16 +314,23 @@ def test_denied_ids_are_all_recorded_as_verified():
 
     不许凭印象拉黑——名单和证据必须一一对上。
 
-    **三种理由都算数**，因为它们是三回事：
+    **四种理由都算数**，因为它们是四回事：
       press    人根本不在场上（发布厅、媒体混合区）
       ceremony 人在场上，但是**独自对着观众讲**，不是接受采访
                （判据是话筒：落地支架麦＝致辞，手持话筒＝有人在问）
       other    在场上、也是采访，但**受访的不是球员**——
                tennistv 那条 `Albert II, Prince of Monaco special interview`
                画面里是摩纳哥亲王站在蒙特卡洛红土边上。
-    用户要的只有「球员赛后直接在场上接受采访」，三种都不是。
+      degraded 是场上采访，画面也是官方转播信号，但**被二次加工毁掉了**：
+               缩成小窗套装饰边框、竖屏放大后左右补虚化侧栏、烧录字幕、画中画。
+               这一档是后来才有的——「肯定要用官方的直播的视频，清晰度和角度
+               根本达不到要求」。**它和上面三种不一样：内容合格，画面不合格。**
+               台标和轻微裁切不算，那两样裁完还是转播画质，记在源的 `picture` 里照收。
+    用户要的只有「球员赛后直接在场上接受采访、且画面是能用的转播信号」，四种都不是。
 
     **`oncourt` 绝不能出现在拉黑名单上**——那说明看过是场上采访却还是剔了。
+    （`degraded` 之所以单列而不并进 `oncourt`，就是为了守住这一条：
+    画面不合格要说成画面不合格，不能借 `oncourt` 的名义悄悄剔掉。）
     """
     from tools.collect_oncourt_interviews import ROOT, load_sources
 
@@ -331,8 +338,54 @@ def test_denied_ids_are_all_recorded_as_verified():
         seen = json.load(fh)["verdicts"]
     for vid in load_sources()["deny_ids"]:
         assert vid in seen, f"{vid} 被拉黑却没有看图记录"
-        assert seen[vid]["verdict"] in ("press", "ceremony", "other"), \
+        assert seen[vid]["verdict"] in ("press", "ceremony", "other", "degraded"), \
             f"{vid} 的判定是 {seen[vid]['verdict']}，不该在拉黑名单上"
+
+
+def test_every_source_declares_where_its_picture_comes_from():
+    """每个源都要声明 `provenance`，而且必须是那三档之一。
+
+    **这条测试是从一次口误里长出来的。** Edimator 那 158 条我一直说成「现场拍摄者」，
+    还据此打算把它整个删掉；直到把自动帧拼成联络表看了一眼——温网那条带着**转播下方
+    字幕条**，上海那条右上角是 **prime 台标**，加拿大那条**切到了采访者**（反打机位，
+    看台上拍不出来）。它是搬运官方转播信号，不是自己拍的。
+
+    同一批看下来，11 个 rehost 源**没有一个**是自己拍的。所以字段的意义不在于
+    区分「官方 / 非官方」——那是 `unofficial` 管的事——而在于**逼着每个源在进库之前
+    回答「这段画面是谁拍的」**，答不上来就不能进。
+
+    判据只认画面里的转播要素：官方话筒旗、转播图形包（比分条 / 下方字幕条 /
+    LED 上的 MATCH WINNER / 角落台标）、反打机位。频道名字看着像不像官方不作数。
+    """
+    cfg = load_sources()
+    ok = {"official", "broadcaster", "rehost"}
+    for src in cfg["sources"]:
+        assert src.get("provenance") in ok, \
+            f"{src['name']} 没声明画面出处（provenance），或者写了 {src.get('provenance')!r}"
+        # rehost 是搬运官方信号，不是自拍——两个标记必须一致，
+        # 免得哪天又把「非官方频道」和「自己拍的」混为一谈
+        if src["provenance"] == "rehost":
+            assert src.get("unofficial"), f"{src['name']} 标了 rehost 却没标 unofficial"
+        else:
+            assert not src.get("unofficial"), \
+                f"{src['name']} 标了 {src['provenance']} 却又标 unofficial"
+
+
+def test_store_sources_are_all_declared_in_the_registry():
+    """库里出现过的每个来源，注册表里都要有——**摘掉一个源要连着它的条目一起摘。**
+
+    起因：安特卫普、Sportiva Arena、Karendoms Tandem 三个源这一轮被判不合格，
+    从注册表里摘掉了。但注册表和库是两份文件，只改一份的话，库里那 14 条会
+    继续被推送、被统计成覆盖率，而报表上再也看不到它们来自哪个源——
+    **看着像已经清干净了。**
+    """
+    from tools.collect_oncourt_interviews import ROOT
+
+    with (ROOT / "data" / "oncourt_interviews.json").open(encoding="utf-8") as fh:
+        items = json.load(fh)["items"]
+    known = {s["name"] for s in load_sources()["sources"]}
+    stray = {it["source"] for it in items.values()} - known
+    assert not stray, f"库里这些来源已经不在注册表里，条目却还留着：{sorted(stray)}"
 
 
 def test_ceremony_speech_and_ceremony_interview_are_split_by_the_microphone():

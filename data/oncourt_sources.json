@@ -40,7 +40,8 @@
       "tier": "tour-wide",
       "scan_depth": 250,
       "verified": true,
-      "note": "**它不发场上采访，只发颁奖礼致辞** —— 深扫 700 条，on-court / post-match interview 一条都没有（两条疑似是 on-court emergency、on Court Differences 的误匹配）。发的是『球员 Championship/Finalist Speech | 年份 赛事』，2026 赛季已覆盖 32 项赛事，小站（Kitzbuhel、Gstaad、Bastad、Prague）只有它有。所以：要致辞它是主源，要场上采访它贡献 0，留在注册表里是为了 --include-ceremony 时用。"
+      "note": "**它不发场上采访，只发颁奖礼致辞** —— 深扫 700 条，on-court / post-match interview 一条都没有（两条疑似是 on-court emergency、on Court Differences 的误匹配）。发的是『球员 Championship/Finalist Speech | 年份 赛事』，2026 赛季已覆盖 32 项赛事，小站（Kitzbuhel、Gstaad、Bastad、Prague）只有它有。所以：要致辞它是主源，要场上采访它贡献 0，留在注册表里是为了 --include-ceremony 时用。",
+      "provenance": "broadcaster"
     },
     {
       "name": "Rome / Internazionali BNL d'Italia",
@@ -48,7 +49,8 @@
       "tier": "masters",
       "scan_depth": 800,
       "verified": true,
-      "note": "最规范的一家：每一轮都单发『球员 On-Court Interview | 轮次 | Rome 年份』，决赛另有『Trophy & Speech』。想按轮次建语料库从这里入手。注意颁奖礼中途会转意大利语。"
+      "note": "最规范的一家：每一轮都单发『球员 On-Court Interview | 轮次 | Rome 年份』，决赛另有『Trophy & Speech』。想按轮次建语料库从这里入手。注意颁奖礼中途会转意大利语。",
+      "provenance": "official"
     },
     {
       "name": "Wimbledon",
@@ -56,7 +58,8 @@
       "tier": "slam",
       "scan_depth": 14000,
       "verified": true,
-      "note": "全英文。除颁奖礼外独有 Champion's Dinner Speech（有讲稿、语速慢），是最接近标准英语演讲的一类。"
+      "note": "全英文。除颁奖礼外独有 Champion's Dinner Speech（有讲稿、语速慢），是最接近标准英语演讲的一类。",
+      "provenance": "official"
     },
     {
       "name": "Roland-Garros",
@@ -64,7 +67,8 @@
       "tier": "slam",
       "scan_depth": 6000,
       "verified": true,
-      "note": "颁奖礼是 18–23 分钟完整版（Men's/Women's singles final post-match ceremony），法英混说。"
+      "note": "颁奖礼是 18–23 分钟完整版（Men's/Women's singles final post-match ceremony），法英混说。",
+      "provenance": "official"
     },
     {
       "name": "Australian Open",
@@ -72,7 +76,8 @@
       "tier": "slam",
       "scan_depth": 14000,
       "verified": false,
-      "note": "全英文，主持人常是 Jim Courier。scan_depth 特意调大：赛事在 1 月，其他月份扫近 100 条会全部落空——踩过这个假阴性。"
+      "note": "全英文，主持人常是 Jim Courier。scan_depth 特意调大：赛事在 1 月，其他月份扫近 100 条会全部落空——踩过这个假阴性。",
+      "provenance": "official"
     },
     {
       "name": "US Open",
@@ -80,7 +85,8 @@
       "tier": "slam",
       "scan_depth": 14000,
       "verified": false,
-      "note": "全英文，有完整 trophy ceremony。频道句柄按搜索结果填，还没实扫过。"
+      "note": "全英文，有完整 trophy ceremony。频道句柄按搜索结果填，还没实扫过。",
+      "provenance": "official"
     },
     {
       "name": "Indian Wells / BNP Paribas Open",
@@ -88,7 +94,8 @@
       "tier": "masters",
       "scan_depth": 500,
       "verified": true,
-      "note": "实扫命中发布会；场上采访/致辞条目未单独确认。"
+      "note": "实扫命中发布会；场上采访/致辞条目未单独确认。",
+      "provenance": "official"
     },
     {
       "name": "Madrid / Mutua Madrid Open",
@@ -96,7 +103,8 @@
       "tier": "masters",
       "scan_depth": 500,
       "verified": true,
-      "note": "英西双语并发，挑英文那条。"
+      "note": "英西双语并发，挑英文那条。",
+      "provenance": "official"
     },
     {
       "name": "Cincinnati Open",
@@ -104,7 +112,8 @@
       "tier": "masters",
       "scan_depth": 500,
       "verified": true,
-      "note": "全英文。"
+      "note": "全英文。",
+      "provenance": "official"
     },
     {
       "name": "Shanghai / Rolex Shanghai Masters",
@@ -112,7 +121,8 @@
       "tier": "masters",
       "scan_depth": 500,
       "verified": true,
-      "note": "另有专门的 Interviews & Press Conferences 播放列表。"
+      "note": "另有专门的 Interviews & Press Conferences 播放列表。",
+      "provenance": "official"
     },
     {
       "name": "Rolex Paris Masters",
@@ -120,7 +130,8 @@
       "tier": "masters",
       "scan_depth": 800,
       "verified": true,
-      "note": "实扫近 40 条里 10 条含采访。"
+      "note": "实扫近 40 条里 10 条含采访。",
+      "provenance": "official"
     },
     {
       "name": "Washington / Mubadala DC Open",
@@ -128,7 +139,8 @@
       "tier": "atp500",
       "scan_depth": 500,
       "verified": true,
-      "note": "以发布会为主：2025 年深扫 276 条，19 条相关里 18 条是 Post Match Press Conference（媒体间），只有 1 条 Post Match Interview。所以场上那一类主要还是等 Tennis Channel 在决赛后发致辞。收进来是为了捞那少数几条。"
+      "note": "以发布会为主：2025 年深扫 276 条，19 条相关里 18 条是 Post Match Press Conference（媒体间），只有 1 条 Post Match Interview。所以场上那一类主要还是等 Tennis Channel 在决赛后发致辞。收进来是为了捞那少数几条。",
+      "provenance": "official"
     },
     {
       "name": "ATP Tour",
@@ -136,7 +148,8 @@
       "tier": "central",
       "scan_depth": 800,
       "verified": true,
-      "note": "**深扫 800 条，场上采访 0。** 以集锦、hot shots、企划片为主。ATP 中央渠道不产出场上采访——这一类在赛事方和转播方手里。"
+      "note": "**深扫 800 条，场上采访 0。** 以集锦、hot shots、企划片为主。ATP 中央渠道不产出场上采访——这一类在赛事方和转播方手里。",
+      "provenance": "official"
     },
     {
       "name": "Tennis TV",
@@ -144,7 +157,8 @@
       "tier": "central",
       "scan_depth": 800,
       "verified": true,
-      "note": "**深扫 800 条，场上采访 0。** 不是取样太浅——它发的是集锦和『球员 Reacts To/After …』，而那批里 10 分 06 秒的 Madrid 那条是发布会、3 分 34 秒的 Rome 那条才像场上，标题分不出，全归待定档。ATP 官方流媒体但不产出场上采访。"
+      "note": "**深扫 800 条，场上采访 0。** 不是取样太浅——它发的是集锦和『球员 Reacts To/After …』，而那批里 10 分 06 秒的 Madrid 那条是发布会、3 分 34 秒的 Rome 那条才像场上，标题分不出，全归待定档。ATP 官方流媒体但不产出场上采访。",
+      "provenance": "official"
     },
     {
       "name": "WTA",
@@ -152,7 +166,8 @@
       "tier": "central",
       "scan_depth": 800,
       "verified": true,
-      "note": "**深扫 800 条，场上采访 0**（宽口径只命中 1 条发布会）。WTA 中央渠道同样不产出场上采访。"
+      "note": "**深扫 800 条，场上采访 0**（宽口径只命中 1 条发布会）。WTA 中央渠道同样不产出场上采访。",
+      "provenance": "official"
     },
     {
       "name": "United Cup",
@@ -160,7 +175,8 @@
       "tier": "team",
       "scan_depth": 800,
       "verified": true,
-      "note": "场上采访最多的单一来源：实扫 300 条命中 56 条。团体赛每场（单打/双打）都发『球员 On-Court Interview | United Cup 年份 轮次』，1–3 分钟。全英文（赛事在澳洲）。"
+      "note": "场上采访最多的单一来源：实扫 300 条命中 56 条。团体赛每场（单打/双打）都发『球员 On-Court Interview | United Cup 年份 轮次』，1–3 分钟。全英文（赛事在澳洲）。",
+      "provenance": "official"
     },
     {
       "name": "Dubai Duty Free Tennis Championships",
@@ -168,7 +184,8 @@
       "tier": "atp500",
       "scan_depth": 800,
       "verified": true,
-      "note": "实扫 300 条命中 45 条。逐轮发『Post-Match Interview: 球员 after R2/QF/SF of 年份 Dubai…』，1–2 分钟，格式极规整。证明 500 级别赛事也可以有稳定的场上采访——不是只有大满贯才有。"
+      "note": "实扫 300 条命中 45 条。逐轮发『Post-Match Interview: 球员 after R2/QF/SF of 年份 Dubai…』，1–2 分钟，格式极规整。证明 500 级别赛事也可以有稳定的场上采访——不是只有大满贯才有。",
+      "provenance": "official"
     },
     {
       "name": "Laver Cup",
@@ -176,7 +193,8 @@
       "tier": "team",
       "scan_depth": 800,
       "verified": true,
-      "note": "实扫 300 条命中 26 条。每场比赛都发『球员 On-Court Interview | Laver Cup 年份 Match N』，含双打。全英文。"
+      "note": "实扫 300 条命中 26 条。每场比赛都发『球员 On-Court Interview | Laver Cup 年份 Match N』，含双打。全英文。",
+      "provenance": "official"
     },
     {
       "name": "Davis Cup / World Tennis",
@@ -184,7 +202,8 @@
       "tier": "team",
       "scan_depth": 800,
       "verified": true,
-      "note": "实扫 300 条命中 12 条。写作『On-court Interview | 西班牙 v 德国 | 2025 Davis Cup』或『球员 post-match interview | 国家 v 国家』。较短，55 秒–2 分钟。"
+      "note": "实扫 300 条命中 12 条。写作『On-court Interview | 西班牙 v 德国 | 2025 Davis Cup』或『球员 post-match interview | 国家 v 国家』。较短，55 秒–2 分钟。",
+      "provenance": "official"
     },
     {
       "name": "Eurosport Tennis",
@@ -192,7 +211,8 @@
       "tier": "broadcaster",
       "scan_depth": 1200,
       "verified": true,
-      "note": "**单一最大来源：实扫 300 条命中 78 条。** 转播方而非赛事方——这整个类别一开始被我漏掉了。写作『On-Court Interview: 形容词 球员 reacts…』，2–5 分钟，比赛事方自己发的更长（保留了主持人完整提问）。覆盖它转播的赛事（大满贯为主）。同系还有 TNT Sports and Eurosport Tennis，内容重叠。"
+      "note": "**单一最大来源：实扫 300 条命中 78 条。** 转播方而非赛事方——这整个类别一开始被我漏掉了。写作『On-Court Interview: 形容词 球员 reacts…』，2–5 分钟，比赛事方自己发的更长（保留了主持人完整提问）。覆盖它转播的赛事（大满贯为主）。同系还有 TNT Sports and Eurosport Tennis，内容重叠。",
+      "provenance": "broadcaster"
     },
     {
       "name": "Tennis TV 站 (库页 + 各赛事页)",
@@ -201,7 +221,8 @@
       "tier": "atp-site",
       "scan_depth": 20,
       "verified": true,
-      "note": "**库页只给 20 条最新，按赛事的页面才是完整的**——这是找了很久才发现的，也是推翻「七个大师赛官方不发场上采访」那个结论的东西。库页 /library/interviews 所有赛事共享 20 个名额；赛事页 /tournaments/{id}_{年}/{slug} 给那一届的全部。实测：迈阿密 45、马德里 44、辛辛那提 42、印第安维尔斯 42、蒙特卡洛 41、罗马 41、巴黎 41、加拿大 40、上海 40、华盛顿 25——而这些赛事在库页和它们自己的 YouTube 频道上都是 0–1 条。URL 必须用 {id}_{年}/{slug}，光写 slug 只对往年有效（citi-open-2025 通、citi-open-2026 404）。ID 没有公开索引（索引页是 JS 渲染的），所以维护在这里，逗号分隔。每年换季时把年份加一。内容不在付费墙后：实测 entitlement 全是 free / freemium，premium 一条没有。\n**赛事 ID 是 ATP 官方赛事 ID**（atptour.com 的 `/tournaments/<slug>/<id>/` 里那个数字），slug 写什么都行，服务端只认 ID。没有索引页（JS 渲染），所以是 300–570 / 700–760 逐个探出来的：无效 ID 返回约 69 KB、0 个 videoId，有效的 800 KB+、130 个，判据很干净。340 个 ID 里 43 个有内容，其中 24 个有采访。\n**之前只挂了九个大师赛加华盛顿，一个 ATP 500 都没有**——鹿特丹、哈雷、女王杯、东京、巴塞尔、维也纳、慕尼黑、巴塞罗那、达拉斯、多哈这些当时全是 0%，缺的不是内容而是我不知道 URL 怎么拼。\n探到有页面但**没有采访**的（别再重探）：奥克兰、格斯塔德、巴斯塔德、基茨比厄尔、斯图加特、香港、布里斯班、梅斯、马拉喀什、蒙彼利埃、斯德哥尔摩、乌马格、斯海尔托亨博斯、马赛、德尔雷比奇、布宜诺斯艾利斯、休斯顿。\n\n**赛事页 URL 里的数字是 ATP 官方赛事 ID**，不是 tennistv 自己的编号——这条是暴力探出来的：拿 300–570 / 700–760 逐个试 `/tournaments/{id}_2025/x`，**slug 会被忽略，只有 ID 起作用**。判据很干净：无效 ID 返回约 69KB、0 个 videoId，有效的 800KB+、130 个。340 个 ID 里 43 个有内容。\n这一轮补进 14 个 ATP 500（慕尼黑、达拉斯、汉堡、迪拜、女王杯、鹿特丹、巴塞罗那、维也纳、里约、东京、哈雷、巴塞尔、多哈、北京），各约 24–40 条——**它们此前在覆盖率表上全是 0%**，不是赛事方不发，是我不知道 URL 怎么拼。"
+      "note": "**库页只给 20 条最新，按赛事的页面才是完整的**——这是找了很久才发现的，也是推翻「七个大师赛官方不发场上采访」那个结论的东西。库页 /library/interviews 所有赛事共享 20 个名额；赛事页 /tournaments/{id}_{年}/{slug} 给那一届的全部。实测：迈阿密 45、马德里 44、辛辛那提 42、印第安维尔斯 42、蒙特卡洛 41、罗马 41、巴黎 41、加拿大 40、上海 40、华盛顿 25——而这些赛事在库页和它们自己的 YouTube 频道上都是 0–1 条。URL 必须用 {id}_{年}/{slug}，光写 slug 只对往年有效（citi-open-2025 通、citi-open-2026 404）。ID 没有公开索引（索引页是 JS 渲染的），所以维护在这里，逗号分隔。每年换季时把年份加一。内容不在付费墙后：实测 entitlement 全是 free / freemium，premium 一条没有。\n**赛事 ID 是 ATP 官方赛事 ID**（atptour.com 的 `/tournaments/<slug>/<id>/` 里那个数字），slug 写什么都行，服务端只认 ID。没有索引页（JS 渲染），所以是 300–570 / 700–760 逐个探出来的：无效 ID 返回约 69 KB、0 个 videoId，有效的 800 KB+、130 个，判据很干净。340 个 ID 里 43 个有内容，其中 24 个有采访。\n**之前只挂了九个大师赛加华盛顿，一个 ATP 500 都没有**——鹿特丹、哈雷、女王杯、东京、巴塞尔、维也纳、慕尼黑、巴塞罗那、达拉斯、多哈这些当时全是 0%，缺的不是内容而是我不知道 URL 怎么拼。\n探到有页面但**没有采访**的（别再重探）：奥克兰、格斯塔德、巴斯塔德、基茨比厄尔、斯图加特、香港、布里斯班、梅斯、马拉喀什、蒙彼利埃、斯德哥尔摩、乌马格、斯海尔托亨博斯、马赛、德尔雷比奇、布宜诺斯艾利斯、休斯顿。\n\n**赛事页 URL 里的数字是 ATP 官方赛事 ID**，不是 tennistv 自己的编号——这条是暴力探出来的：拿 300–570 / 700–760 逐个试 `/tournaments/{id}_2025/x`，**slug 会被忽略，只有 ID 起作用**。判据很干净：无效 ID 返回约 69KB、0 个 videoId，有效的 800KB+、130 个。340 个 ID 里 43 个有内容。\n这一轮补进 14 个 ATP 500（慕尼黑、达拉斯、汉堡、迪拜、女王杯、鹿特丹、巴塞罗那、维也纳、里约、东京、哈雷、巴塞尔、多哈、北京），各约 24–40 条——**它们此前在覆盖率表上全是 0%**，不是赛事方不发，是我不知道 URL 怎么拼。",
+      "provenance": "official"
     },
     {
       "name": "TNT Sports",
@@ -210,7 +231,8 @@
       "scan_depth": 1200,
       "require_tennis": true,
       "verified": true,
-      "note": "实扫 500 条命中 44 条，格式与 Eurosport 同系（『On-Court Interview: 形容词 球员 …』，3–5 分钟），内容重叠但不完全一样。综合体育频道，已开 require_tennis。"
+      "note": "实扫 500 条命中 44 条，格式与 Eurosport 同系（『On-Court Interview: 形容词 球员 …』，3–5 分钟），内容重叠但不完全一样。综合体育频道，已开 require_tennis。",
+      "provenance": "broadcaster"
     },
     {
       "name": "Wide World of Sports (Nine)",
@@ -219,7 +241,8 @@
       "scan_depth": 500,
       "require_tennis": true,
       "verified": true,
-      "note": "澳网转播方（澳洲九号台）。实扫 500 条只命中 2 条（`球员 … post match interview | AO 2026`），量小但对得上。综合体育频道，已开 require_tennis。"
+      "note": "澳网转播方（澳洲九号台）。实扫 500 条只命中 2 条（`球员 … post match interview | AO 2026`），量小但对得上。综合体育频道，已开 require_tennis。",
+      "provenance": "broadcaster"
     },
     {
       "name": "Amazon Prime Video Sport",
@@ -228,7 +251,8 @@
       "scan_depth": 500,
       "require_tennis": true,
       "verified": true,
-      "note": "**这家就是 require_tennis 的由来**：深扫 500 条命中 25 条 post-match interview，**全是 UEFA 欧冠足球**，一条网球都没有。保留在注册表里是为了万一它转播网球时能捞到，网球闸会把足球全挡掉。"
+      "note": "**这家就是 require_tennis 的由来**：深扫 500 条命中 25 条 post-match interview，**全是 UEFA 欧冠足球**，一条网球都没有。保留在注册表里是为了万一它转播网球时能捞到，网球闸会把足球全挡掉。",
+      "provenance": "broadcaster"
     },
     {
       "name": "Hopman Cup",
@@ -236,7 +260,8 @@
       "tier": "team",
       "scan_depth": 800,
       "verified": true,
-      "note": "实扫 300 条命中 59 条——团体赛每场（含混双）都发『球员/队伍 on-court interview (轮次) | Mastercard Hopman Cup 年份』，1–4 分钟。赛事本身停办过又重办，所以内容偏 2019 年，但量大且全英文（在珀斯办）。"
+      "note": "实扫 300 条命中 59 条——团体赛每场（含混双）都发『球员/队伍 on-court interview (轮次) | Mastercard Hopman Cup 年份』，1–4 分钟。赛事本身停办过又重办，所以内容偏 2019 年，但量大且全英文（在珀斯办）。",
+      "provenance": "official"
     },
     {
       "name": "Fédération Française de Tennis",
@@ -245,7 +270,8 @@
       "scan_depth": 400,
       "require_tennis": true,
       "verified": true,
-      "note": "法国网协。实扫 400 条命中 2 条（法网正赛/资格赛的场上采访，3–5 分钟）。量小但英文，且是别处没有的球员（Diane Parry、Moïse Kouame 这类）。"
+      "note": "法国网协。实扫 400 条命中 2 条（法网正赛/资格赛的场上采访，3–5 分钟）。量小但英文，且是别处没有的球员（Diane Parry、Moïse Kouame 这类）。",
+      "provenance": "official"
     },
     {
       "name": "USTA",
@@ -254,7 +280,8 @@
       "scan_depth": 400,
       "require_tennis": true,
       "verified": true,
-      "note": "美国网协。实扫 400 条命中 1 条（Taylor Fritz 2024 戴维斯杯）。量很小，收着备用。"
+      "note": "美国网协。实扫 400 条命中 1 条（Taylor Fritz 2024 戴维斯杯）。量很小，收着备用。",
+      "provenance": "official"
     },
     {
       "name": "ICONIC CHANNEL TENNIS",
@@ -263,7 +290,10 @@
       "unofficial": true,
       "scan_depth": 400,
       "verified": true,
-      "note": "搬运号。实扫 400 条命中 21 条场上采访，其中 14 条补的是官方缺口——**含武汉、北京**，正是中国球员主场那一段。命名格式 `球员/ON COURT INTERVIEW/赛事 年份`，全大写。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
+      "note": "搬运号。实扫 400 条命中 21 条场上采访，其中 14 条补的是官方缺口——**含武汉、北京**，正是中国球员主场那一段。命名格式 `球员/ON COURT INTERVIEW/赛事 年份`，全大写。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。",
+      "provenance": "rehost",
+      "picture": "watermark",
+      "picture_note": "满幅转播画面，右上角烧了自己的台标"
     },
     {
       "name": "Tennis x Tennis",
@@ -272,7 +302,10 @@
       "unofficial": true,
       "scan_depth": 400,
       "verified": true,
-      "note": "搬运号。实扫 147 条命中 37 条，其中 14 条补缺口（马德里、迈阿密）。命名 `球员 Post-Match Interview vs 对手 | 赛事 年份`——注意它把对手写在 vs 后面，正好被 _BEATEN 判据正确处理。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
+      "note": "搬运号。实扫 147 条命中 37 条，其中 14 条补缺口（马德里、迈阿密）。命名 `球员 Post-Match Interview vs 对手 | 赛事 年份`——注意它把对手写在 vs 后面，正好被 _BEATEN 判据正确处理。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。",
+      "provenance": "rehost",
+      "picture": "watermark",
+      "picture_note": "满幅转播画面，顶部中央烧了 TENNISXTENNIS"
     },
     {
       "name": "Queenlenka",
@@ -281,7 +314,10 @@
       "unofficial": true,
       "scan_depth": 200,
       "verified": true,
-      "note": "搬运号，专做萨巴伦卡。量很小（31 条里 2 条），但补的是迈阿密。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
+      "note": "搬运号，专做萨巴伦卡。量很小（31 条里 2 条），但补的是迈阿密。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。",
+      "provenance": "rehost",
+      "picture": "zoom",
+      "picture_note": "轻微放大裁切，左右边缘发虚；主体和转播图形都完整"
     },
     {
       "name": "dotdotennisTV",
@@ -290,7 +326,8 @@
       "unofficial": true,
       "scan_depth": 200,
       "verified": true,
-      "note": "搬运号。106 条里 3 条场上采访，补多哈、鹿特丹。有张之臻相关条目。"
+      "note": "搬运号。106 条里 3 条场上采访，补多哈、鹿特丹。有张之臻相关条目。",
+      "provenance": "rehost"
     },
     {
       "name": "Tennistion",
@@ -299,7 +336,8 @@
       "unofficial": true,
       "scan_depth": 200,
       "verified": true,
-      "note": "搬运号。40 条里 3 条，补 WTA Finals。"
+      "note": "搬运号。40 条里 3 条，补 WTA Finals。",
+      "provenance": "rehost"
     },
     {
       "name": "ElenaRybakinaHD",
@@ -308,7 +346,8 @@
       "unofficial": true,
       "scan_depth": 200,
       "verified": true,
-      "note": "搬运号。莱巴金娜专号，量极小（8 条里 3 条）但补迈阿密、印第安维尔斯。"
+      "note": "搬运号。莱巴金娜专号，量极小（8 条里 3 条）但补迈阿密、印第安维尔斯。",
+      "provenance": "rehost"
     },
     {
       "name": "Team Swiatek",
@@ -317,7 +356,8 @@
       "unofficial": true,
       "scan_depth": 200,
       "verified": true,
-      "note": "搬运号。斯瓦泰克专号，11 条里 2 条，**补武汉和辛辛那提**——辛辛那提此前无任何来源。"
+      "note": "搬运号。斯瓦泰克专号，11 条里 2 条，**补武汉和辛辛那提**——辛辛那提此前无任何来源。",
+      "provenance": "rehost"
     },
     {
       "name": "Stefan P.",
@@ -326,7 +366,8 @@
       "unofficial": true,
       "scan_depth": 400,
       "verified": true,
-      "note": "搬运号。400 条里 6 条场上采访，**6 条全补缺口**（迈阿密、印第安维尔斯），命中率最高的一个。"
+      "note": "搬运号。400 条里 6 条场上采访，**6 条全补缺口**（迈阿密、印第安维尔斯），命中率最高的一个。",
+      "provenance": "rehost"
     },
     {
       "name": "WTA 官网视频 (wtatennis.com)",
@@ -335,7 +376,8 @@
       "tier": "wta-site",
       "scan_depth": 20,
       "verified": true,
-      "note": "WTA 那边对应 tennistv.com 的东西，但量小得多：四个视频分区去重后只有 3 条，翻页参数无效。补的是别处拿不到的 WTA 250/500（Athens、Berlin）。slug 自带赛事/轮次/球员，比标题可靠。Brightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），所以只能走页面。"
+      "note": "WTA 那边对应 tennistv.com 的东西，但量小得多：四个视频分区去重后只有 3 条，翻页参数无效。补的是别处拿不到的 WTA 250/500（Athens、Berlin）。slug 自带赛事/轮次/球员，比标题可靠。Brightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），所以只能走页面。",
+      "provenance": "official"
     },
     {
       "name": "Tennis Interviews",
@@ -345,7 +387,8 @@
       "assume_oncourt": true,
       "scan_depth": 400,
       "verified": true,
-      "note": "**靠「用赛果反查」才找到的，通用查询永远找不到它**——它的标题是『球员 轮次 赛事 年份』（如 `Lilli Tagger Champion Prague 2026`），完全不含 on-court / interview 字样，标题正则一条都收不到。所以打 assume_oncourt 按源判。234 条，覆盖的正好是官方缺口：马德里 31、迈阿密 17、印第安维尔斯 9、Berlin 10、Athens 6、Prague 4、Bad Homburg 4，还有 `Qinwen Zheng R32 Athens 2026`。缩略图确认是场上（球衣未换、场上麦、球筐），右上角 Tennis Channel 水印说明是转录，故归 unofficial。"
+      "note": "**靠「用赛果反查」才找到的，通用查询永远找不到它**——它的标题是『球员 轮次 赛事 年份』（如 `Lilli Tagger Champion Prague 2026`），完全不含 on-court / interview 字样，标题正则一条都收不到。所以打 assume_oncourt 按源判。234 条，覆盖的正好是官方缺口：马德里 31、迈阿密 17、印第安维尔斯 9、Berlin 10、Athens 6、Prague 4、Bad Homburg 4，还有 `Qinwen Zheng R32 Athens 2026`。缩略图确认是场上（球衣未换、场上麦、球筐），右上角 Tennis Channel 水印说明是转录，故归 unofficial。",
+      "provenance": "rehost"
     },
     {
       "name": "Hamburg European Open",
@@ -353,7 +396,8 @@
       "tier": "atp500",
       "scan_depth": 400,
       "verified": true,
-      "note": "**靠「用赛果反查」找到的赛事官方频道**——之前按句柄猜找不到。391 条里 28 条场上采访，格式 `HEO2021 /// ATP SF /// ON-COURT INTERVIEW with 球员`，ATP 与 WTA 两站都发。"
+      "note": "**靠「用赛果反查」找到的赛事官方频道**——之前按句柄猜找不到。391 条里 28 条场上采访，格式 `HEO2021 /// ATP SF /// ON-COURT INTERVIEW with 球员`，ATP 与 WTA 两站都发。",
+      "provenance": "official"
     },
     {
       "name": "Edimator",
@@ -362,7 +406,8 @@
       "scan_depth": 400,
       "verified": true,
       "unofficial": true,
-      "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。"
+      "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。",
+      "provenance": "rehost"
     },
     {
       "name": "Dribble Drive Diaries",
@@ -371,7 +416,8 @@
       "scan_depth": 250,
       "verified": true,
       "unofficial": true,
-      "note": "以 Alex Eala 为主的搬运号，写法 `Full Interview after Win vs X | Event Year`。满画幅原始转播画面，没有画中画和水印。抽 6 条看视频自动帧：4 条在场上（WTA TOUR 手持麦、看台、记分条），2 条是发布会——但它**自己在标题里写 Press Conference**，被 exclude 挡住，不用额外规则。补的是印第安维尔斯和迈阿密的缺口，那两站官方和其他搬运号都很薄。"
+      "note": "以 Alex Eala 为主的搬运号，写法 `Full Interview after Win vs X | Event Year`。满画幅原始转播画面，没有画中画和水印。抽 6 条看视频自动帧：4 条在场上（WTA TOUR 手持麦、看台、记分条），2 条是发布会——但它**自己在标题里写 Press Conference**，被 exclude 挡住，不用额外规则。补的是印第安维尔斯和迈阿密的缺口，那两站官方和其他搬运号都很薄。",
+      "provenance": "rehost"
     },
     {
       "name": "Nordea Open",
@@ -379,35 +425,8 @@
       "tier": "atp250",
       "scan_depth": 300,
       "verified": true,
-      "note": "巴斯塔德 ATP 250 的**官方赛事频道**。300 条里 27 条带 interview，72–138 秒；抽 8 条看视频自动帧，全在红土场上，字幕条写着 `DEFEATED S. OFNER 6-4 6-4` 自证。\n**踩过一次**：一开始打 assume_oncourt，把 300 条全拉进来了——其中大半是 16–35 秒的 `Hot shot` 好球集锦和赛前预告。改用 allow_by_source 只放标题带 interview 的那 27 条。"
-    },
-    {
-      "name": "Karendoms Tandem",
-      "url": "https://www.youtube.com/channel/UCVflJ2-Zcn_J8wxCfUDgcdQ/videos",
-      "tier": "unofficial",
-      "scan_depth": 250,
-      "verified": true,
-      "unofficial": true,
-      "degraded": "picture-in-picture",
-      "note": "Iga Swiatek 粉丝号。**画面被加了画中画小窗和字幕条**，原来因为这个拒过；既然后续要裁高光，画面瑕疵不再是否决理由，改为收下并标 degraded。发布会与场上混着，靠标题正则和 exclude 分。"
-    },
-    {
-      "name": "Sportiva Arena",
-      "url": "https://www.youtube.com/channel/UCQ2qpWnxoBsaPCaO7CXoJjA/videos",
-      "tier": "unofficial",
-      "scan_depth": 250,
-      "verified": true,
-      "unofficial": true,
-      "degraded": "border+watermark",
-      "note": "二次上传，**加装饰边框和 @sportivaArena 水印，画面被缩进边框里**。内容是真的场上采访（看得见 WTA Tour 手持麦和 MATCH WINNER 记分条）。同上：裁剪用途下画面瑕疵不否决，标 degraded 交人工判断。"
-    },
-    {
-      "name": "European Open Antwerp",
-      "url": "https://www.youtube.com/channel/UCmxFKPdF0Z3hwArsv1v7WLA/videos",
-      "tier": "atp250",
-      "scan_depth": 300,
-      "verified": true,
-      "note": "安特卫普 ATP 250 官方频道。13 条含 interview，`Stan Wawrinka | Post match interview` 这种写法 50–60 秒，全局模式直接收得到，不用白名单。"
+      "note": "巴斯塔德 ATP 250 的**官方赛事频道**。300 条里 27 条带 interview，72–138 秒；抽 8 条看视频自动帧，全在红土场上，字幕条写着 `DEFEATED S. OFNER 6-4 6-4` 自证。\n**踩过一次**：一开始打 assume_oncourt，把 300 条全拉进来了——其中大半是 16–35 秒的 `Hot shot` 好球集锦和赛前预告。改用 allow_by_source 只放标题带 interview 的那 27 条。",
+      "provenance": "official"
     },
     {
       "name": "Delray Beach Open",
@@ -415,7 +434,8 @@
       "tier": "atp250",
       "scan_depth": 300,
       "verified": true,
-      "note": "德尔雷比奇 ATP 250 官方频道。量小（7 条含 interview），靠全局模式收。"
+      "note": "德尔雷比奇 ATP 250 官方频道。量小（7 条含 interview），靠全局模式收。",
+      "provenance": "official"
     },
     {
       "name": "Stockholm Open",
@@ -423,7 +443,8 @@
       "tier": "atp250",
       "scan_depth": 300,
       "verified": true,
-      "note": "斯德哥尔摩 ATP 250 官方频道。量小，且大半是瑞典语（vinnarintervju）。"
+      "note": "斯德哥尔摩 ATP 250 官方频道。量小，且大半是瑞典语（vinnarintervju）。",
+      "provenance": "official"
     },
     {
       "name": "Stan Sport",
@@ -432,7 +453,8 @@
       "scan_depth": 1500,
       "verified": true,
       "require_tennis": true,
-      "note": "澳洲持权转播商，收的是它的**温网播放列表**而不是频道——频道 798 条里网球被 AFL / NRL 淹掉，播放列表是过滤好的 88 条。\n**量很小（4 条）但正是温网缺的早轮**（`Wimbledon First/Second Round Interview`）。\n**它的法网播放列表 247 条里 0 条采访**——这条对照说明了转播商这条路的上限：他们上传的是集锦，不是采访。"
+      "note": "澳洲持权转播商，收的是它的**温网播放列表**而不是频道——频道 798 条里网球被 AFL / NRL 淹掉，播放列表是过滤好的 88 条。\n**量很小（4 条）但正是温网缺的早轮**（`Wimbledon First/Second Round Interview`）。\n**它的法网播放列表 247 条里 0 条采访**——这条对照说明了转播商这条路的上限：他们上传的是集锦，不是采访。",
+      "provenance": "broadcaster"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -524,6 +546,7 @@
     "1VPHJq8isq0",
     "1sldLDs78x8",
     "1spYe5QuIT4",
+    "2Y08fJ-Pt_U",
     "37WRGhAZrBQ",
     "3MINOSK1BMI",
     "3O_D9trpe5s",
@@ -534,6 +557,8 @@
     "4EehtQwk4LE",
     "4dFeOlOfKWo",
     "4rIOa76H0l4",
+    "4sqC6dMSMqs",
+    "5HXQGwqKeFg",
     "5Y9vhDNxfQY",
     "64CtF036sho",
     "6dC3xhmYv3E",
@@ -544,13 +569,17 @@
     "AFxQQLJ7fNY",
     "AHlfX2rYylg",
     "AOrmtC0BEKM",
+    "AiZRzbeCW9I",
     "CdO8i1vOrnQ",
+    "Ci-kKK11ufw",
     "CtRwovU-hNM",
     "DCX_zdB6erw",
     "Dmr2AvBxt2g",
     "F2DH_041AlY",
     "FQ_LP2bg9cM",
     "FjPf3YmmeoQ",
+    "GBeccDMtI4U",
+    "GNx25BoxziM",
     "GS8fDBFcX8M",
     "GgPRfDC8i1E",
     "HA40Xq3sHHE",
@@ -594,8 +623,10 @@
     "U0irhE5Pp4M",
     "U5HIToTF2Os",
     "UU30Hl0nmFI",
+    "UvGupjUlS0s",
     "WFBgVrHqXDU",
     "WYCcBTDO9_0",
+    "XwFh1FjEUVk",
     "YSK6AUnVgOw",
     "YdVTOKEit44",
     "Z65cWKjZaoQ",
@@ -605,9 +636,12 @@
     "_CyPRPhQtXY",
     "aD0MJCtCb_Q",
     "b9m1zaUTmTI",
+    "bWVYKR_l4a0",
+    "c3Hfa2TXvc0",
     "ckO1IFaPiRA",
     "d0ReAqoyIYc",
     "e5RK2fwbBpQ",
+    "e5z5dLR9K9g",
     "g_OxuWHc3Ss",
     "gkjnyMX4VmA",
     "h_zo8sLgOI8",
@@ -641,30 +675,35 @@
     "qoqvzT8Hbp0",
     "r6khJIMRBPo",
     "rhKHumsnDkU",
+    "s4Ie5XJBInY",
     "s76J1OPTNqA",
     "sqIlAxYWTA8",
     "tSc5_4jZyCA",
     "tennistv:4241018",
     "tennistv:4248248",
     "tuFRrYHeaT8",
+    "uyqxJNyazq8",
     "vCSbhC-sK7M",
     "vc9_56rBBqY",
     "vuI3UvrVcgs",
+    "wBJu_kDRWmg",
     "x7DxjTzBwtk",
     "xM0Y9YgheV0",
     "yWI1G4YN4PE",
     "ywwKe24KD-s",
     "z8KALsvWA84",
     "zMTGlAtDhoM",
+    "zVePtA_lgQ8",
     "zdJlZEOn_rk"
   ],
-  "_rejected_note": "查过但**决定不收**的频道，记下来免得下次重查：\n· ANTI GOSU EATING CLUB —— 片子本身是真场上采访（WTA Tour 话筒、球场，而且正好能补巴德洪堡和郑钦文的缺口），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney \"Sweaty\" Kessler`。**这一条不是画面瑕疵问题，是频道性质问题**——推送会把人导到那个频道去，`degraded` 那套放宽不适用于它。\n· QualityShot Tennis —— **不是场上画面**：庆祝定格照配音，中间插球机广告，没有可裁的画面。而且能匹配的 6 条里有一半是 Media Day，不是赛后。\n· The Tennis Tribe —— 25–30 分钟播客式长访谈，不是场上。\n· LTA —— 主要是发布会（14 条），场上的只有 3 条温网双打。\n· Palermo Ladies Open —— 官方赛事频道，但 61 条里只有 2 条 intervista，而且采访的是赛事副主席和记者，不是球员。\n· Croatia Open Umag —— 官方频道，但 6 条 interview 全是阿加西/费雷罗/佩内塔这类传奇人物的专访，不是赛后场上。\n· Almaty Open（哈萨克网协）—— 4 条都是比莉·简·金杯的，团体赛，本来就不在口径内。\n· Chengdu Open —— 只有 2017 年的 3 条。\n\n以下是按 2026 赛历对 46 站零/薄覆盖逐站搜索之后拒掉的（2026-07-27）：\n· The Leisurely Life（香港站唯一候选）—— 3 条全是**发布会**：保诚香港背景板、长桌、花、台式麦。\n· vamosbybota（香港站）—— 3 条也全是发布会，还被裁成竖屏加 VAMOS 台标。\n· BMW Championship / Golf Prime Spot —— **高尔夫**，撞的是「BMW Open」这个名字。\n· WorldSBK —— **摩托车赛**，撞的是 `Champion Interview`。\n· The Green Table —— **斯诺克**，那条 `2025 Wuhan open Final` 是斯诺克武汉公开赛。\n· CGTN Sports Scene / Celebrity & Sports Insider —— 资讯剪辑与标题党，不是场上采访。\n· Tanika Molvi / Lakwatsera Lhine / Ronny Leber / Qatar Vignettes —— 个人号，各 1–2 条陈年内容。\n**同名撞车是这一轮最大的噪音来源**：BMW Open（网球）撞 BMW Championship（高尔夫）、Wuhan Open（网球）撞武汉斯诺克公开赛。按赛事名搜索必须带 tennis 限定或事后过滤。",
-  "_degraded_note": "`degraded` 字段记的是**画面有瑕疵但内容对题**的源。起因是一句话：「虽然需要完整的 on court interview，但后续可以裁剪高光的时刻」——既然要裁，水印 / 画中画 / 边框就不再是否决理由，只有「根本不是场上采访」和「频道性质有问题」才是。但**瑕疵要记下来**，裁之前人得知道这条素材是什么成色。",
+  "_rejected_note": "查过但**决定不收**的频道，记下来免得下次重查：\n· ANTI GOSU EATING CLUB —— 片子本身是真场上采访（WTA Tour 话筒、球场，而且正好能补巴德洪堡和郑钦文的缺口），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney \"Sweaty\" Kessler`。**这一条不是画面瑕疵问题，是频道性质问题**——推送会把人导到那个频道去，`degraded` 那套放宽不适用于它。\n· QualityShot Tennis —— **不是场上画面**：庆祝定格照配音，中间插球机广告，没有可裁的画面。而且能匹配的 6 条里有一半是 Media Day，不是赛后。\n· The Tennis Tribe —— 25–30 分钟播客式长访谈，不是场上。\n· LTA —— 主要是发布会（14 条），场上的只有 3 条温网双打。\n· Palermo Ladies Open —— 官方赛事频道，但 61 条里只有 2 条 intervista，而且采访的是赛事副主席和记者，不是球员。\n· Croatia Open Umag —— 官方频道，但 6 条 interview 全是阿加西/费雷罗/佩内塔这类传奇人物的专访，不是赛后场上。\n· Almaty Open（哈萨克网协）—— 4 条都是比莉·简·金杯的，团体赛，本来就不在口径内。\n· Chengdu Open —— 只有 2017 年的 3 条。\n\n以下是按 2026 赛历对 46 站零/薄覆盖逐站搜索之后拒掉的（2026-07-27）：\n· The Leisurely Life（香港站唯一候选）—— 3 条全是**发布会**：保诚香港背景板、长桌、花、台式麦。\n· vamosbybota（香港站）—— 3 条也全是发布会，还被裁成竖屏加 VAMOS 台标。\n· BMW Championship / Golf Prime Spot —— **高尔夫**，撞的是「BMW Open」这个名字。\n· WorldSBK —— **摩托车赛**，撞的是 `Champion Interview`。\n· The Green Table —— **斯诺克**，那条 `2025 Wuhan open Final` 是斯诺克武汉公开赛。\n· CGTN Sports Scene / Celebrity & Sports Insider —— 资讯剪辑与标题党，不是场上采访。\n· Tanika Molvi / Lakwatsera Lhine / Ronny Leber / Qatar Vignettes —— 个人号，各 1–2 条陈年内容。\n**同名撞车是这一轮最大的噪音来源**：BMW Open（网球）撞 BMW Championship（高尔夫）、Wuhan Open（网球）撞武汉斯诺克公开赛。按赛事名搜索必须带 tennis 限定或事后过滤。\n\n按「必须是官方转播/记录画面，且清晰度角度过得去」这条补查之后又拒掉的（2026-07-27）：\n· European Open Antwerp —— **官方赛事频道，但五条 post match interview 全在赞助商拼贴\n  背景板前**（PSA / Emirates / ATP 250 / Port of Antwerp，2019 年那两条背景板上直接印着\n  「EUROPEAN OPEN ANTWERP 13-20 OCTOBER 2019」）。官方 ≠ 场上，这是这一轮唯一一个\n  栽在「官方」两个字上的源。\n· Sportiva Arena —— 转播画面缩成小窗，外面套红橙装饰边框和 ONE FILIPINO TV 横幅，\n  @sportivaArena 水印铺满整屏，可用画幅不到一半。三条里还有一条是柏林站颁奖礼。\n· Karendoms Tandem —— 六条全是竖屏放大后左右用镜像/虚化侧栏补满，另加烧录字幕和\n  角落画中画；其中一条（东京十六强）根本不在场上，是室内暗背景。\n这三个的判据不一样，要分清：**安特卫普是「不是场上」，另两个是「画面被二次加工毁掉」。**\n",
   "_allow_note": "`allow_by_source`：**这个源上**标题长这样就算场上采访。\n官方赛事频道的标题往往极简——`Filip Misolic Interview - Nordea Open 2025`，只有一个光秃秃的 interview。加进全局 `patterns_oncourt` 会把发布会、播客、专访一起灌进来；但在巴斯塔德自己的频道里，27 条带 interview 的抽 8 条看帧全在红土场上，那就是安全的。\n**和 assume_oncourt 的区别**：后者整个频道照单全收，Nordea 那样 300 条里混着 16 秒 Hot shot 的会被灌爆（实测多收 273 条）。白名单只放标题对得上的那部分。\n白名单**不豁免 exclude 和 deny_ids**。",
   "allow_by_source": {
     "Nordea Open": [
       "\\binterview\\b"
     ]
   },
-  "_broadcaster_note": "**「找持权转播商，他们直播里有场上采访」这条路已经查透了，结论是行不通。**\n思路本身对——直播信号里确实有。但他们**不把采访上传到 YouTube**，上传的是集锦。\n\n两轮实测（2026-07-27）：\n① 频道 /videos 深扫 14 家、约 16000 条 → 网球场上采访 **5 条**（Stan Sport 4、Sky Sports 1）。\n② 改用**播放列表**入口重查（这是转播商的正确入口——综合频道的 /videos 会被本地热门项目淹掉）：ESPN 18 个网球列表、SuperSport 4、TSN 2、Sky 4，逐个扫完，含 `interview` 字样的一共 31 条，而且**绝大多数不是场上采访**——ESPN 那几条是演播室长访谈（532 秒 Alcaraz、1015 秒 Djokovic + McEnroe）、甚至有一条 23 秒是「德约拒绝接受场上采访」；Sky 那两条 600–871 秒是颁奖礼全程；SuperSport 命中的是标题里带 interview 的 highlights。\n\n**最硬的一条对照**：ESPN 的 `2026 Wimbledon`（197 条）、`2025 Wimbledon`（241 条）、`2026 Australian Open`（125 条）三个列表，**含 interview 的是 0**。那正是温网早轮缺口该在的地方。\n\n唯一收下的是 Stan Sport 的温网列表（4 条，`Wimbledon First/Second Round Interview`），它的法网列表 247 条里 0 条采访——同一家转播商，两个大满贯，一个 4 条一个 0 条，说明这不是政策而是随手。"
+  "_broadcaster_note": "**「找持权转播商，他们直播里有场上采访」这条路已经查透了，结论是行不通。**\n思路本身对——直播信号里确实有。但他们**不把采访上传到 YouTube**，上传的是集锦。\n\n两轮实测（2026-07-27）：\n① 频道 /videos 深扫 14 家、约 16000 条 → 网球场上采访 **5 条**（Stan Sport 4、Sky Sports 1）。\n② 改用**播放列表**入口重查（这是转播商的正确入口——综合频道的 /videos 会被本地热门项目淹掉）：ESPN 18 个网球列表、SuperSport 4、TSN 2、Sky 4，逐个扫完，含 `interview` 字样的一共 31 条，而且**绝大多数不是场上采访**——ESPN 那几条是演播室长访谈（532 秒 Alcaraz、1015 秒 Djokovic + McEnroe）、甚至有一条 23 秒是「德约拒绝接受场上采访」；Sky 那两条 600–871 秒是颁奖礼全程；SuperSport 命中的是标题里带 interview 的 highlights。\n\n**最硬的一条对照**：ESPN 的 `2026 Wimbledon`（197 条）、`2025 Wimbledon`（241 条）、`2026 Australian Open`（125 条）三个列表，**含 interview 的是 0**。那正是温网早轮缺口该在的地方。\n\n唯一收下的是 Stan Sport 的温网列表（4 条，`Wimbledon First/Second Round Interview`），它的法网列表 247 条里 0 条采访——同一家转播商，两个大满贯，一个 4 条一个 0 条，说明这不是政策而是随手。",
+  "_provenance_note": "`provenance` 记的是**这段画面是谁拍的**，三档：\n  official     赛事方 / 巡回赛 / 联合会自有频道\n  broadcaster  持权转播商自有频道\n  rehost       二次上传官方转播信号——画面仍然来自转播，不是自己拍的\n\n**加这个字段是因为我把 rehost 说成了「现场拍摄者」，说了不止一次。**\nEdimator 那 158 条我一直当成观众自己拍的，直到把自动帧拼出来看：温网那条布云朝克特带着**转播下方字幕条**（`BU YUNCHAOKETE bt. H. DELLIEN 6-4 6-0`，温网紫绿图形包）；上海那条右上角是 **prime 台标**（上海站持权方）；加拿大和温网各有一条**切到了采访者**——反打机位，观众席上拍不出来。另外十条挨个看过：ATP 500 / Masters 1000 / WTA TOUR 的话筒旗、场内机位、满幅 16:9。**它是搬运，不是自拍。**\n\n所以判 rehost 的判据是画面里的转播要素，不是频道名字看着像不像官方：\n  · 官方话筒旗（赛事标 / ATP 500 / WTA TOUR）\n  · 转播图形包（比分条、下方字幕条、LED 上的 MATCH WINNER、右上角台标）\n  · 反打机位——能切到采访者，就说明不止一台机器\n**同一批看下来，11 个 rehost 源没有一个是自己拍的。**「粉丝号 = 手机拍的」这个假设从头到尾就没成立过。\n\n**这个字段不是授权判断。** 仓库既有做法不变：授权不做检索闸门，来源全程记录，权利判断留给发布前的人工环节。",
+  "_picture_note": "`picture` 记的是**画面成色**，只在不是 clean 时写出来：\n  watermark  满幅转播画面，但烧了上传者自己的台标\n  zoom       轻微放大裁切，边缘发虚，主体和转播图形还在\n\n起因是一句话：「虽然需要完整的 on court interview，但后续可以裁剪高光的时刻」——既然要裁，台标和轻微裁切就不是否决理由，但**裁之前人得知道这条素材是什么成色**。\n\n**但有个下限，这一轮划出来了。** 后来又补了一条要求：「肯定要用官方的直播的视频，或者是记录的视频，清晰度和角度根本达不到要求」。按这条重看一遍，两个源出局——不是因为有台标，是因为**转播画面本身被二次加工毁掉了**：Sportiva Arena 把画面缩成小窗套装饰边框，可用画幅不到一半；Karendoms Tandem 把竖屏放大后左右用镜像侧栏补满。\n分界线是：**台标、轻微裁切 → 记下来照收；缩窗、补边、画中画、烧录字幕 → 不收。**前者裁出来还是转播画质，后者裁不出来。"
 }
