@@ -13,10 +13,20 @@
 和 `post-match interview`（温网场上那 3 分钟）只差一个词，**必须先判
 ceremony 再判 oncourt**，否则颁奖礼会被当成场上采访收进来。
 
-**为什么不是一个赛事一个频道**：ATP/WTA 各有六十来站，250 级别的赛事大多
-没有自己的 YouTube 频道。实扫发现 Tennis Channel 一家就覆盖了全巡回赛的
-冠军/亚军致辞（近 250 条里命中 16 项赛事，Kitzbuhel、Gstaad、Bastad、
-Prague、Athens 这些小站只有它有），所以它是主源，各赛事自己的频道是补充。
+**源分三类，只盯赛事官方会漏掉一大半**（这条是被打回来一次才补上的）：
+
+- **转播方**：Eurosport Tennis 一家 78 条，比任何赛事方都多，而且更长
+  （2–5 分钟，保留了主持人完整提问）
+- **团体赛**：United Cup 56、Laver Cup 26、Davis Cup 12，每场都发
+- **赛事方**：四大满贯、罗马、巴黎，以及 Dubai Duty Free（ATP 500，逐轮 45 条）
+
+**找新源不要猜频道句柄，用搜索反推**——我猜错过四个（蒙特卡洛、迈阿密、
+加拿大、Queen's），而一轮搜索找出了四个根本没想到的源：
+
+    yt-dlp "ytsearch12:on-court interview tennis 2026" \
+      --flat-playlist --print "%(channel)s ||| %(title)s"
+
+按频道汇总一看，谁在发一目了然。
 
 **空结果要自证是真空**（吃过三次亏，见 CLAUDE.md）。这里把三种"看起来一样"
 的空结果分开报，绝不混为一谈：
@@ -245,6 +255,18 @@ def main() -> int:
 
         report.append((src["name"], status, len(rows), n_oncourt, n_skipped, fresh))
 
+    # **先落库，再打印。** 顺序反过来吃过亏：报告有几十行，下游一个
+    # `| head -30` 就会把进程 SIGPIPE 掉，报告看着跑完了，产物根本没写。
+    # 查产物不查信号——那次就是被完整的报告骗了。
+    wrote = False
+    if not args.dry_run and any_fetched:
+        known.update(new_items)
+        STORE.parent.mkdir(parents=True, exist_ok=True)
+        with STORE.open("w", encoding="utf-8") as fh:
+            json.dump({"items": known}, fh, ensure_ascii=False, indent=2, sort_keys=True)
+            fh.write("\n")
+        wrote = True
+
     # 报告：成功的和失败的都列出来。只在成功时出声的检查，没法证明它真的看过。
     print(f"收的类型：{'、'.join(sorted(keep))}\n")
     print(f"{'源':<34} {'状态':<20} {'取到':>5} {'场上':>5} {'跳过':>5} {'新增':>5}")
@@ -303,14 +325,8 @@ def main() -> int:
 
     if args.dry_run:
         print("\n--dry-run：没有写入。")
-        return 0
-
-    known.update(new_items)
-    STORE.parent.mkdir(parents=True, exist_ok=True)
-    with STORE.open("w", encoding="utf-8") as fh:
-        json.dump({"items": known}, fh, ensure_ascii=False, indent=2, sort_keys=True)
-        fh.write("\n")
-    print(f"\n已写入 {STORE.relative_to(ROOT)}（共 {len(known)} 条）。")
+    elif wrote:
+        print(f"\n已写入 {STORE.relative_to(ROOT)}（共 {len(known)} 条）。")
     return 0
 
 
