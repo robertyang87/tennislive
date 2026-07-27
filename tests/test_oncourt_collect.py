@@ -254,3 +254,24 @@ def test_discovery_dedup_recognises_the_same_channel_in_both_url_forms():
     assert not already_known("Some Random Fan Channel",
                              "https://www.youtube.com/channel/UCzzz",
                              known_urls, known_names)
+
+
+def test_tennistv_duration_guard_separates_press_conferences():
+    """tennistv 的 videoType=interviews 里混着发布会，靠时长切开。
+
+    实测混进来的 12 条全在 7–23 分钟，而且多是两人同台
+    （`Sinner & Lehecka React To Miami Final` 23:11）——场上不会让两个人
+    一起站着答，那只可能是媒体间。场上采访实测 40 秒–4 分钟。
+
+    界划在 6 分钟：550 条里 535 条在 1–4 分钟，4–6 分钟只有 2 条，
+    所以这个界既能滤掉发布会，又不会误伤真条目。
+    """
+    from tools.collect_oncourt_interviews import TENNISTV_MAX_SECS
+
+    assert 240 <= TENNISTV_MAX_SECS <= 420, "界要落在场上采访上限和发布会下限之间"
+    # 真实条目的时长，都该在界内
+    for secs in (39, 92, 127, 208, 235):
+        assert secs < TENNISTV_MAX_SECS
+    # 真实的发布会时长，都该被挡掉
+    for secs in (473, 588, 626, 1391):
+        assert secs >= TENNISTV_MAX_SECS

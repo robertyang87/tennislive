@@ -97,6 +97,12 @@ FIELD_SEP = " ||| "
 # 重建基线或新增源时加 --full 才走深的那套。
 DAILY_DEPTH = 60
 
+# tennistv 的 `videoType=interviews` 里混着发布会，用时长切开：
+# 场上采访 40 秒–4 分钟，发布会 6 分钟起。这个界是从 Tennis TV 那批
+# `Reacts To…` 上量出来的（Madrid 10:06 是发布会、Rome 3:34 是场上），
+# 实测混进来的 12 条全在 7–23 分钟，界划在 6 分钟不会误伤。
+TENNISTV_MAX_SECS = 360
+
 
 def load_sources() -> dict:
     with SOURCES.open(encoding="utf-8") as fh:
@@ -176,21 +182,37 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     **`videoType` 比标题可靠得多**——标题是编辑体（"Merida Elated to Win First
     ATP Tour Title"），看不出格式；videoType 直接说了。
 
-    只给 20 条最新且翻页参数无效（page/offset/p 都返回同一批），
-    所以按周跑正好——一个赛事周产出的采访远少于 20 条。
+    **库页只给 20 条最新，按赛事的页面才是完整的**——这是找了很久才发现的：
+
+        /library/interviews              20 条最新，所有赛事共享名额
+        /tournaments/422_2025/cincinnati 那一届的全部，42 条
+
+    差别有多大：辛辛那提在库页里常年 0–1 条，赛事页有 42 条。之前断言
+    「七个大师赛官方不发场上采访」就是因为只看了库页和 YouTube 频道，
+    没想到 tennistv 按赛事另有一套完整的页。实测各届都有 40+：
+    迈阿密 45、马德里 44、辛辛那提 42、印第安维尔斯 42、蒙特卡洛 41、
+    罗马 41、巴黎 41、加拿大 40、上海 40、华盛顿 25。
+
+    赛事页的 URL 必须用 `{id}_{年}/{slug}` 形式，光写 slug 只对往年有效
+    （`citi-open-2025` 通，`citi-open-2026` 404）。ID 没有公开索引页
+    （索引是 JS 渲染的），所以维护在注册表的 url 字段里，逗号分隔。
     """
-    try:
-        proc = subprocess.run(
-            ["curl", "-sS", "--max-time", "40", "-H", "User-Agent: Mozilla/5.0", url],
-            capture_output=True, text=True, timeout=60,
-        )
-    except subprocess.TimeoutExpired:
-        return [], "error: 超时"
-    raw = proc.stdout
+    urls = [u.strip() for u in url.split(",") if u.strip()]
+    raw = ""
+    for u in urls:
+        try:
+            proc = subprocess.run(
+                ["curl", "-sS", "--max-time", "40", "-H", "User-Agent: Mozilla/5.0", u],
+                capture_output=True, text=True, timeout=60,
+            )
+        except subprocess.TimeoutExpired:
+            continue
+        raw += proc.stdout
     if not raw:
-        return [], f"error: 空响应 {(proc.stderr or '')[:40]}"
+        return [], "error: 全部页面都没取到"
 
     rows = []
+    seen_ids: set[str] = set()
     for blob in re.findall(r'\{[^{}]*"title"\s*:\s*"[^"]{4,120}"[^{}]*\}', raw):
         try:
             o = json.loads(blob)
@@ -199,9 +221,20 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
         if o.get("videoType") != "interviews" or not o.get("metadataRound"):
             # preview（赛前）和没有轮次的特写不是赛后采访。
             continue
+        secs_chk = int(o.get("durationMins") or 0) * 60 + int(o.get("durationSecs") or 0)
+        if secs_chk >= TENNISTV_MAX_SECS:
+            # `videoType=interviews` 里混着发布会。判据是时长：场上采访
+            # 40 秒–4 分钟，发布会 6 分钟起。实测混进来的 12 条全在 7–23 分钟，
+            # 而且多是两人同台（`Sinner & Lehecka React To Miami Final` 23:11），
+            # 那只可能是媒体间——场上不会让两个人一起站着答。
+            continue
+        vid = str(o.get("videoId"))
+        if vid in seen_ids:
+            continue
+        seen_ids.add(vid)
         secs = int(o.get("durationMins") or 0) * 60 + int(o.get("durationSecs") or 0)
         rows.append({
-            "id": f"tennistv:{o.get('videoId')}",
+            "id": f"tennistv:{vid}",
             "title": html.unescape(o.get("title", "")),
             "duration_s": secs or None,
             "channel": "Tennis TV (tennistv.com)",

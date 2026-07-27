@@ -191,13 +191,13 @@
       "note": "**单一最大来源：实扫 300 条命中 78 条。** 转播方而非赛事方——这整个类别一开始被我漏掉了。写作『On-Court Interview: 形容词 球员 reacts…』，2–5 分钟，比赛事方自己发的更长（保留了主持人完整提问）。覆盖它转播的赛事（大满贯为主）。同系还有 TNT Sports and Eurosport Tennis，内容重叠。"
     },
     {
-      "name": "Tennis TV 媒体库 (tennistv.com)",
-      "url": "https://www.tennistv.com/library/interviews",
+      "name": "Tennis TV 站 (库页 + 各赛事页)",
+      "url": "https://www.tennistv.com/library/interviews,https://www.tennistv.com/tournaments/418_2026/washington,https://www.tennistv.com/tournaments/418_2025/washington,https://www.tennistv.com/tournaments/422_2026/cincinnati,https://www.tennistv.com/tournaments/422_2025/cincinnati,https://www.tennistv.com/tournaments/421_2026/canada,https://www.tennistv.com/tournaments/421_2025/canada,https://www.tennistv.com/tournaments/404_2026/indian-wells,https://www.tennistv.com/tournaments/404_2025/indian-wells,https://www.tennistv.com/tournaments/403_2026/miami,https://www.tennistv.com/tournaments/403_2025/miami,https://www.tennistv.com/tournaments/410_2026/monte-carlo,https://www.tennistv.com/tournaments/410_2025/monte-carlo,https://www.tennistv.com/tournaments/1536_2026/madrid,https://www.tennistv.com/tournaments/1536_2025/madrid,https://www.tennistv.com/tournaments/416_2026/rome,https://www.tennistv.com/tournaments/416_2025/rome,https://www.tennistv.com/tournaments/5014_2026/shanghai,https://www.tennistv.com/tournaments/5014_2025/shanghai,https://www.tennistv.com/tournaments/352_2026/paris,https://www.tennistv.com/tournaments/352_2025/paris",
       "fetch": "tennistv",
       "tier": "atp-site",
       "scan_depth": 20,
       "verified": true,
-      "note": "**唯一系统覆盖 ATP 250 场上采访的来源，而且不在付费墙后**：实测 20 条里 16 条 entitlement=free、4 条 freemium（注册即可），premium 一条都没有。逐轮发（R1/QF/SF/Final），0:56–3:27。已下载缩略图亲眼确认是场边（球衣未换、场边广告牌、看台背景），不是媒体间。注意与 Tennis TV 的 YouTube 频道区分：那边深扫 800 条是 0 条场上采访，东西全在站上。只给 20 条最新且翻页无效，按周跑正好。"
+      "note": "**库页只给 20 条最新，按赛事的页面才是完整的**——这是找了很久才发现的，也是推翻「七个大师赛官方不发场上采访」那个结论的东西。库页 /library/interviews 所有赛事共享 20 个名额；赛事页 /tournaments/{id}_{年}/{slug} 给那一届的全部。实测：迈阿密 45、马德里 44、辛辛那提 42、印第安维尔斯 42、蒙特卡洛 41、罗马 41、巴黎 41、加拿大 40、上海 40、华盛顿 25——而这些赛事在库页和它们自己的 YouTube 频道上都是 0–1 条。URL 必须用 {id}_{年}/{slug}，光写 slug 只对往年有效（citi-open-2025 通、citi-open-2026 404）。ID 没有公开索引（索引页是 JS 渲染的），所以维护在这里，逗号分隔。每年换季时把年份加一。内容不在付费墙后：实测 entitlement 全是 free / freemium，premium 一条没有。"
     },
     {
       "name": "TNT Sports",
