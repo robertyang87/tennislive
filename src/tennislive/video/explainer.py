@@ -54,10 +54,11 @@ CARD_H = VIDEO_W * 4 // 3           # 3:4 的卡在 1080 宽下有多高
 # 卡片顶上那行「网球时差 · 开球之前」钻进了 app 顶部的返回键/状态栏里——
 # 上下各 240px 的对称留白就是躲开两头 UI 的，动它得不偿失。
 CARD_TOP = (VIDEO_H - CARD_H) // 2  # = 240
-# 卡上的文字块（小标 / 大标题 / 要点 / 末屏那一问）离卡片下沿留这么多。原来是
-# 120px，抬到 300px 是为了在**卡片内部**腾出一条给字幕——字幕必须待在 3:4 画面里，
-# 掉到画布下边条里就会被 app 底部的文案区和 home 指示条盖住。
-CARD_COPY_BOTTOM = 300
+# 卡上的文字块（小标 / 大标题 / 要点 / 末屏那一问）离卡片下沿留这么多。
+# 原来 120px；为了在卡片内部腾一条给字幕先抬到 300px，**抬过头了**——整摞字被推高，
+# 要点块压在人物胸口和球拍上，字幕底下却空出 132px 卡片 + 240px 黑边。
+# 230px 是渲三档比出来的：文字整体下移 50px，画面主体让出来，字幕下面仍留 78px。
+CARD_COPY_BOTTOM = 230
 
 _REPO = Path(__file__).resolve().parents[3]
 _REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
@@ -2927,7 +2928,8 @@ _ASS_MARGIN_H = 150
 #
 # 上锚（Alignment=8，MarginV 从顶边算）：一行两行都从同一条线往下长，不会跳。
 _ASS_ALIGN = 8
-_ASS_MARGIN_V = CARD_TOP + CARD_H - 190
+# 减 156 而不是更小：这样**两行的兜底情况**（1524+78×2=1680）也正好还在卡内。
+_ASS_MARGIN_V = CARD_TOP + CARD_H - 156
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
 _ASS_HEADER = f"""[Script Info]
 ScriptType: v4.00+
