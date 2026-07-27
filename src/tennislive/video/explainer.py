@@ -2944,7 +2944,13 @@ def _filter_path(path: Path) -> str:
 # because nobody can hear a parameter. Both stay parameters so a deck can be
 # re-voiced without touching a script.
 DEFAULT_VOICE = "zh-CN-YunjianNeural"
-DEFAULT_RATE = "+22%"
+# +14% 起步，+22% 用了一批，现在 +28%。往上调是编辑决定，不是调参：三个平台的
+# 平均播放时长是 13–21 秒，快一点等于同样的注意力里多装一句话。再往上会开始
+# 吃字（云健在 +35% 上的爆破音会糊），所以停在这儿。
+#
+# 改这个数会连带改片长：`tests/test_explainer_budget.py` 里的字数预算是拿成片
+# 反推出来的「字/秒」，换了语速就得重新量，别按比例推。
+DEFAULT_RATE = "+28%"
 DEFAULT_PITCH = "+0Hz"
 
 

@@ -35,7 +35,7 @@ def _outdir_date() -> str:
     return datetime.now(timezone(timedelta(hours=8))).date().isoformat()
 
 WANT_VOICE = "zh-CN-YunjianNeural"  # 云健
-WANT_RATE = "+22%"
+WANT_RATE = "+28%"
 
 
 def _read(slug: str, args) -> dict | None:

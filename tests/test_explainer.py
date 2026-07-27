@@ -491,7 +491,7 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
-    assert meta["rate"] == E.DEFAULT_RATE == "+22%"
+    assert meta["rate"] == E.DEFAULT_RATE == "+28%"
     assert meta["segments"] == 2
 
     E.generate_explainer_video(
