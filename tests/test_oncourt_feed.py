@@ -296,3 +296,27 @@ def test_pick_drops_non_tour_by_default(pats):
     got = {r["id"] for r in pick(items, pats)}
     assert got == {"t", "u"}, "拉沃尔杯该滤掉，United Cup 该留下"
     assert {r["id"] for r in pick(items, pats, include_team=True)} == {"t", "u", "l"}
+
+
+@pytest.mark.parametrize("verb", [
+    "overcomes", "overcame", "outlasts", "stuns", "upsets", "dispatches",
+    "topples", "halts", "ends",
+])
+def test_second_batch_beaten_verbs(verb, pats):
+    """败方词表是逐条从真实误收补出来的，别凭空精简。
+
+    第二批的起因：`Musetti overcomes Bu in Monte Carlo` —— 布云朝克特是输的
+    那个，这是 Musetti 赢球后的采访。第一批词表里没有 `overcomes`，
+    它就被当成「布云朝克特赢球后的采访」推出去了。
+    """
+    hit = cn_hit(f"Somebody wins after {verb} Qinwen Zheng at the Open", pats)
+    assert hit and hit[1] is False, verb
+
+
+def test_surname_hits_that_are_real_interviewees(pats):
+    """tennistv 的标题只写姓，这几条是真的中国球员受访者，不能误杀。"""
+    for t in ["Wu pays tribute to Monfils after victory",
+              "Shang comes though in epic contest!",
+              "Home hero Bu progresses into second round"]:
+        hit = cn_hit(t, pats)
+        assert hit and hit[1] is True, t

@@ -179,9 +179,13 @@ def is_doubles(item: dict) -> bool:
 #    win against Sijia Wei 💪`
 # 韦思佳确实在标题里，但这是 Paolini 赢球后的采访，正好相反。
 # 要的是「中国球员赢球后」，所以这类必须剔掉。
+# 词表是逐条从真实误收里补出来的，别凭空精简。
+# `overcomes` 是第二批补的：`Musetti overcomes Bu in Monte Carlo` —— 布云朝克特
+# 是输的那个，这是 Musetti 赢球后的采访，方向正好相反。
 _BEATEN = re.compile(
-    r"\b(?:against|beating|beat|defeat(?:s|ing|ed)?|over|past|vs\.?|versus|"
-    r"knocks?\s+out|ousts?|sees?\s+off|edges?|downs?)\s*$", re.I)
+    r"\b(?:against|beating|beat(?:s|en)?|defeat(?:s|ing|ed)?|over|past|vs\.?|versus|"
+    r"knocks?\s+out|ousts?|sees?\s+off|edges?|downs?|overcomes?|overcame|"
+    r"outlasts?|dispatch(?:es|ed)?|stuns?|upsets?|topples?|halts?|ends?)\s*$", re.I)
 
 
 def cn_hit(title: str, rules) -> tuple[dict, bool] | None:
