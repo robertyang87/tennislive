@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每天两轮：北京 05:00 与 11:00 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2025 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2230 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -573,6 +573,209 @@ Petra Marcinko Champion Rabat 2026   WTA TOUR 手持话筒，有人在问       
 有人在问＝采访。两者都在场上，但用户要的是「接受采访」，致辞明确排除。
 12 条已剔，判定记的是 `ceremony` 而不是 `press`——人在场上，
 只是没在接受采访，和发布厅是两回事。
+
+### WTA 侧：500/1000 有，但完整度全看搬运号
+
+被问「WTA 500 和 1000 里有完整的场上采访么？至少中心球场应该有」。查下来
+**有，但很不完整，而且赛事之间落差极大**。关键轮次（决赛/半决赛/八强）实测：
+
+| 赛事 | 女子条数 | 决赛 | 半决 | 八强 |
+| --- | --- | --- | --- | --- |
+| 多哈 1000 | 9 | 2 | 3 | 3 |
+| 迪拜 1000 | 30 | 2 | 8 | 4 |
+| 马德里 1000 | 28 | 3 | 4 | 2 |
+| 罗马 1000 | 19 | 1 | 3 | 4 |
+| 迈阿密 1000 | 20 | 1 | 2 | 2 |
+| **印第安维尔斯 1000** | 20 | 2 | **0** | **0** |
+| 斯图加特 500 | 24 | 1 | 1 | 6 |
+| 柏林 500 | 11 | 1 | 2 | 4 |
+| 查尔斯顿 500 | 6 | 1 | 2 | 2 |
+| 阿布扎比 500 | 8 | 1 | 1 | 0 |
+| 林茨 500 | 7 | 1 | 0 | 1 |
+| 女王杯 500 | 3 | 2 | 0 | 0 |
+| **巴德洪堡 500** | 4 | **0** | **0** | **0** |
+
+结构性原因和 250 那条是同一个：**WTA 官网没有 tennistv 那套按赛事的视频页**。
+实测 `wtatennis.com/tournaments/{id}/{slug}` 打得开（26 万字节），
+但**一条 `/videos/` 链接都没有**；`/videos/interviews` 全站只有 3 条，且全 404。
+对比 ATP：`tennistv.com/tournaments/{id}_{year}/{slug}` 每个赛事挂 40–45 条。
+
+所以 WTA 侧的覆盖**全靠搬运号**（`Tennis Interviews`、`Tennis x Tennis`、
+`ICONIC CHANNEL TENNIS`），它们跟着热门球员走，不逐场搬——这就是为什么
+罗马 8/8、印第安维尔斯只有决赛那 2 条。**这一层没法靠采集能力补，
+只能靠多挂几个搬运号。**
+
+### 结果词：搬运号写 Winner，不写 Final
+
+查上面那张表时发现的一个**真 bug**：搬运号写
+`Elena Rybakina Winner Porsche GP '26`，而轮次解析只认 `final`——
+**冠军那条采访，最该推的一条，一直没被算进关键场次**。
+十三个 WTA 赛事里只有一个能认出决赛。
+
+补了三个结果词，但每个都带前缀排除，反例全是从库里逐条挑出来的：
+
+```
+Defending champion Sinner up and running in Shanghai    刚开赛，不是决赛
+Former champion Evans stuns Musetti                     描述对手
+Sonay Kartal beats Grand-Slam Winner                    描述对手
+2022 finalist Ruud advances in Miami                    描述对手
+Cerundolo conquers last year's finalist Jarry           描述对手
+Bergs stuns former finalist Rublev                      描述对手
+```
+
+最要命的是 `Championship`：**迪拜赛事全名就叫 `Dubai Duty Free Tennis
+Championships`**——库里 126 条含 champion 的有 116 条是它，
+`\bchampions?\b` 不加 `(?!ship)` 就全成决赛了。
+
+顺带把 `R32/R64/R128` 标成 `早轮`——签表大小不写在标题里，
+换算不出第几轮（R32 在 128 签是第三轮、64 签是第二轮），所以给个诚实的粗标签。
+
+效果：判不出轮次 468 → **339**，关键轮次 454 → **480**，推送口径 467 → **493**。
+测试是**全量校验不抽样**——库里每一条含结果词的标题都过一遍，
+描述对手的写法一条都不许被判成决赛。
+
+### 补 WTA 缺口：Edimator，以及它带出来的两个轮次 bug
+
+上一节测出 WTA 500/1000 覆盖不全之后去找搬运号，找到 **Edimator**：
+321 条里 155 条是 `Player interview after Nth round win at YYYY Event`
+这种固定写法，轮次 / 赛事 / 年份全在标题里。抽 12 条调视频自动帧，
+**12/12 都在场上**（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦，
+有几条画面里还带 `Beat Nao Hibino 2-6 7-6 6-2` 这种字幕条自证）。
+
+**不能开 `assume_oncourt`**：另外 157 条是致辞、好球集锦、西语采访，
+还混着**一条田径和一条足球**。所以给全局加了第三条标题模式
+`\binterview\s*(?:\([^)]*\)\s*)?after\b`——拿库里 2025 条全量试过，
+额外命中 0 条、不扰动现有分类，四条真实发布会标题也都不中。
+
+放宽入口就得在出口补门闩，于是 `exclude` 加了 `press conference` 和
+`\bpress\b(?!ure)`。搬运号用 `Press` 当发布会标记——
+`Alex Eala Press R32 Win vs Linette Miami '26` 画面是迈阿密背景板加台麦，
+库里这样的 3 条已剔。`(?!ure)` 不能省，库里有 `Staying Calm Under Pressure`。
+
+收进来 159 条，同时**炸出两个一直存在的轮次 bug**：
+
+| bug | 症状 | 影响 |
+| --- | --- | --- |
+| `final round qualifying` 里有 final | 温网**资格赛末轮**被判成温网**决赛** | 9 条 |
+| 只认 `second round`，不认 `2nd round` | 序数写法整个认不出 | 84 条里漏 69 条 |
+
+资格赛现在排在 `_ROUNDS` **最前面**先拦下来，单列 `资格赛` 标签（不进关键轮次）；
+序数 `1st/2nd/3rd/4th` 一并补上。
+
+效果（女子，关键轮次）：
+
+| 赛事 | 加之前 | 加之后 |
+| --- | --- | --- |
+| 女王杯 500 | 3 条 / 决 2 半 0 八 0 | **8 条 / 决 2 半 1 八 3** |
+| 加拿大 1000 | 统计里没有 | **11 条 / 决 0 半 2 八 2** |
+| 伊斯特本 500 | 1 条 / 全 0 | 2 条 / 半 1 |
+
+Edimator 偏草地赛季和加拿大站，**印第安维尔斯和巴德洪堡的缺口它补不上**——
+那两个还得再找源。
+
+### 扩大搜索：十个候选里只有两个能用，其余的问题各不相同
+
+十组查询词批量搜、按频道出现频次排、滤掉已登记的，得到 13 个候选。
+逐个看画面之后**只收了 2 个**。不能用的都记在注册表的 `_rejected_note` 里，
+免得下次重查——**「查过了不合格」和「没查过」在注册表上长得一模一样**：
+
+| 频道 | 为什么不收 |
+| --- | --- |
+| ANTI GOSU EATING CLUB | 片子本身是真场上采访（WTA Tour 话筒、球场），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney "Sweaty" Kessler`。**推送会把人导到那个频道，不收** |
+| QualityShot Tennis | 不是场上画面——庆祝定格照配音，中间插球机广告 |
+| Karendoms Tandem | 画中画叠加加字幕条，单球员粉丝号，发布会与场上混着 |
+| Sportiva Arena | 二次上传，加装饰边框和 `@sportivaArena` 水印，画面被缩进边框里 |
+| The Tennis Tribe | 25–30 分钟的播客式长访谈，不是场上 |
+| LTA | 主要是发布会（14 条），场上的只有 3 条温网双打 |
+
+**Dribble Drive Diaries** 收了：以 Alex Eala 为主，满画幅原始转播画面，
+没有画中画和水印。抽 6 条看帧，4 条在场上、2 条是发布会——但它**自己在标题里
+写 `Press Conference`**，被上一节新加的 exclude 直接挡住，不用额外规则。
+补的是印第安维尔斯和迈阿密。
+
+**顺带的收获：中国球员条目 13 → 17。** Edimator 标题里直接带中文名
+（`Yunchaokete Bu 布云朝克特`、`Xiyu Wang 王曦雨`、`Zhang Shuai 张帅`、
+`Zhizhen Zhang 张之臻`），这四条是别处一条都没有的。
+
+### 「250 级别没有自己的赛事频道」是错的——是我没逐个探
+
+这条结论写进文档之后，**赛果反查一轮就把它推翻了**：拿巴斯塔德那几场没采访的
+比赛去搜，撞见 `Nordea Open` 官方频道，27 条 `Player - Round - Winner interview`，
+72–138 秒，抽 8 条看帧全在红土场上，字幕条写着 `DEFEATED S. OFNER 6-4 6-4` 自证。
+
+所以把 60+ 个 250/500 赛事逐个探了一遍官方频道。结果是**有，但极不均匀**：
+
+| 有量 | 没量 |
+| --- | --- |
+| Nordea Open 27、安特卫普 5、德尔雷比奇 2 | Croatia Open Umag（6 条全是阿加西/费雷罗这类传奇专访）、阿拉木图（4 条都是比莉·简·金杯）、成都（只有 2017 年 3 条）、斯德哥尔摩（瑞典语为主）、Palermo（2 条采访的是赛事副主席） |
+
+**教训不是「250 有频道」，是「没逐个探就别下结论」**——这和「空结果先自证是真空」
+是同一条，只不过这次的空结果是我自己没去查。
+
+### assume_oncourt 会灌爆，allow_by_source 才是对的
+
+给 Nordea 打 `assume_oncourt` 的后果：**300 条全进来了**，其中大半是 16–35 秒的
+`Hot shot` 好球集锦和赛前预告，多收 273 条。
+
+问题在于官方赛事频道的标题**极简**——`Filip Misolic Interview - Nordea Open 2025`，
+只有一个光秃秃的 `interview`，全局模式够不着；但把 `\binterview\b` 加进全局，
+发布会、播客、专访会一起灌进来。
+
+所以加了第三种机制 `allow_by_source`：**这个源上**标题长这样就算场上采访。
+不豁免 `exclude` 和 `deny_ids`，两道出口闸照旧。三者的分工：
+
+| 机制 | 用在什么源 |
+| --- | --- |
+| 全局 `patterns_oncourt` | 标题写 on-court / post-match / interview after 的 |
+| `allow_by_source` | 标题极简的官方赛事频道，逐源验过才加 |
+| `assume_oncourt` | 整个频道**只发**场上采访的（`Tennis Interviews`） |
+
+顺带修一个刚引入的 bug：`winner interview` 是**体裁标签**不是轮次。
+巴斯塔德写 `Andrea Pellegrino winner interview at Nordea Open 2026`（赢家采访），
+搬运号写 `Elena Rybakina Winner Porsche GP '26`（冠军）——**同一个词，
+隔一个 interview 就换了意思**，后视否定分开。
+
+### 画面有瑕疵但内容对题的，收下并标 degraded
+
+判据松了一档，起因是一句话：「虽然需要完整的 on court interview，
+但后续可以裁剪高光的时刻」。既然要裁，**水印 / 画中画 / 边框就不再是否决理由**，
+只有「根本不是场上采访」和「频道性质有问题」才是。
+
+所以上一轮因画面拒掉的两个改收了，并在注册表里标 `degraded`——
+裁之前人得知道这条素材是什么成色：
+
+| 源 | degraded |
+| --- | --- |
+| Karendoms Tandem | `picture-in-picture`，加了画中画小窗和字幕条 |
+| Sportiva Arena | `border+watermark`，画面被缩进装饰边框，带 @sportivaArena 水印 |
+
+**但 ANTI GOSU EATING CLUB 仍然不收**，而且理由不受这次放宽影响：它的片子确实是
+真场上采访（还正好能补巴德洪堡和郑钦文的缺口），但 41 条里 16 条是
+「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成
+`McCartney "Sweaty" Kessler`。**那是频道性质问题，不是画面瑕疵问题**——
+推送会把人导到那个频道去。
+
+### 按赛历逐站对账——之前的覆盖率统计，分母是错的
+
+一直用手搓的赛事清单统计覆盖率。问题是**漏掉的赛事在报表上根本不出现**，
+看着一片绿，其实半张日历没查过。把完整赛历落成 `data/tour_calendar_2026.json`
+（106 站，含 ATP/WTA 各级别与团体年终），再用 `tools/oncourt_coverage.py` 对账，
+缺口才看得见。
+
+对账要过三关，每一关都是踩出来的：
+
+| 关 | 不做会怎样 |
+| --- | --- |
+| **标题 + URL 一起匹配** | tennistv 的 42 条辛辛那提标题里一个 `Cincinnati` 都没有，赛事名只在 `/tournaments/422_2025/cincinnati` |
+| **正则容忍连字符下划线** | `indian wells`（空格）匹配不上 slug 里的 `indian-wells`，一次漏 85 条（印第安维尔斯 60 + 巴黎 25） |
+| **按源归属（`srcs`）** | 汉堡官方频道写 `HEO2021 /// ATP QF ///`、迪拜写 `Post-Match Interview: Roger Federer`——标题里一个赛事名都没有，但**频道本身就说明了赛事** |
+
+三关做完，归不到赛事的条目从 423 → **237**（占库 11%），
+其中 118 条霍普曼杯是 2026 日历上本来就没有的赛事（已被联合杯取代），
+78 条 Eurosport / TNT 是标题里真的没有赛事名的转播条目——**都是可解释的残余**。
+
+**孤儿报表还能反推赛历的缺口**：埃斯托里尔、基茨比厄尔、乌马格、安特卫普
+四站是这么撞出来的——库里有条目却归不到任何赛事，说明赛历漏了它们。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 
