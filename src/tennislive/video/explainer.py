@@ -1686,7 +1686,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "但那一年他升到了生涯最高的世界第四，这也是亚洲男子球员在 ATP 排名上的最高位置。"
             "生涯十二个单打冠军，画面里就是二〇一四年的他。",
             "assets/explainer/shang-nishikori/nishi_2014.jpg",
-            "usopen.org 官方图 / SI 转载 · 2014 年美网男单决赛，锦织圭",
+            "Tennis.jp 现场报道 · 2014 年美网男单决赛第二盘，亚瑟·阿什球场",
             (
                 "2014 美网决赛，亚洲男子至今唯一一次",
                 "半决赛击败当时的世界第一德约科维奇",
@@ -1697,16 +1697,20 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "farewell",
             "告别",
             "锦织圭说，今年打完就退役",
-            "二〇二六年四月，锦织圭宣布这是他的最后一个赛季。三十六岁，"
-            "髋、腕、背、肩、膝，能伤的地方几乎伤了个遍——去年他自己形容是勉强撑着。"
-            "现在他的世界排名在四百开外，这一站要靠一张外卡才能进正赛。"
-            "他说过一句话：我其实还想继续打。",
+            # 「排名四百开外」原来就写在这儿，站得住但太软。换成那两个数字本身：
+            # 十一年前世界第四，现在世界第四百六十四——**对比是事实自己给的**，
+            # 不用加一个形容词。挑战赛那一句同理：前世界第四的最后一年在挑战赛
+            # 打球，比「多处伤」更让人愣一下，而且可核。
+            "二〇二六年四月三十日，锦织圭宣布这是他的最后一个赛季。三十六岁，"
+            "世界第四百六十四——十一年前，他排到过世界第四。今年他多数时间在挑战赛打球，"
+            "宣布退役前两周，刚在萨凡纳的挑战赛第二轮出局。这一站要靠一张外卡才能进正赛。"
+            "他自己说：我其实还想继续打。",
             "assets/explainer/shang-nishikori/nishi_now.jpg",
             "图片社图 · 2025 年，锦织圭",
             (
-                "2026 年 4 月宣布，赛季结束后退役",
-                "36 岁，髋腕背肩膝多处伤，排名 400 开外",
-                "本站靠外卡进正赛",
+                "2026 年 4 月宣布，这是最后一季",
+                "曾经的世界第 4，现在世界第 464",
+                "今年多在挑战赛，本站靠外卡",
             ),
         ),
         (
@@ -2568,6 +2572,83 @@ _SUB_SOFT_BREAK = "，、：,"
 _SUB_TRIM = "。，、：；,… "
 
 
+_DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
+          "五": "5", "六": "6", "七": "7", "八": "8", "九": "9"}
+_NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
+# 数字后面跟着这些字，说明它是在数东西，屏幕上写成阿拉伯数字更好读。
+_NUM_UNITS = "年月日岁个位局盘场记座枚块届轮周"
+_STRUCTURED = set("十百千")
+
+
+def _num_value(run: str) -> str | None:
+    """把「三十六」「四百六十九」这类读成数字。读不出来返回 None。"""
+    total = part = 0
+    seen = False
+    for ch in run:
+        if ch in _DIGIT:
+            part = int(_DIGIT[ch]); seen = True
+        elif ch == "两":
+            part = 2; seen = True
+        elif ch in ("十", "百", "千"):
+            scale = {"十": 10, "百": 100, "千": 1000}[ch]
+            total += (part or 1) * scale
+            part = 0; seen = True
+        else:
+            return None
+    return str(total + part) if seen else None
+
+
+def arabic_numerals(text: str) -> str:
+    """屏幕上的数字用阿拉伯数字——但只在它真的是个数字的时候。
+
+    旁白里写「二〇二六」「六比四」是**给合成器定读法**的，那份不能动；
+    这一步只改**显示出来的那一份**，所以放在切完行、算完时间轴之后。
+
+    分寸都是怕改错才留的：
+
+    - 「唯一一次」里连着两个「一」，按数字读就成了「唯 11 次」。所以裸的
+      「一」「两」一律不碰，多字的串也必须含十/百/千或是四位年份才认
+    - 「第二盘」「第三轮」「第一次」这类序数保持中文——「第 2 盘」读着别扭；
+      但「世界第四」要写成「世界第 4」，那是个排名
+    - 「七十万英镑」在「万」处收住，不然会变成 700000
+    """
+    def year(m: re.Match) -> str:
+        return "".join(_DIGIT[c] for c in m.group(1))
+
+    # 四位年份：一九八九、二〇二四。它们不含十/百/千，只能靠「后面跟着年」认出来。
+    text = re.sub(rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)", year, text)
+    # 比分照数字写：六比四 → 6比4。
+    text = re.sub(
+        rf"([{''.join(_NUM_CHARS)}]+)比([{''.join(_NUM_CHARS)}]+)",
+        lambda m: f"{_num_value(m.group(1)) or m.group(1)}比"
+                  f"{_num_value(m.group(2)) or m.group(2)}",
+        text,
+    )
+
+    def one(m: re.Match) -> str:
+        run, nxt = m.group(1), m.group(2) or ""
+        before = text[m.start() - 1] if m.start() else ""
+        value = _num_value(run)
+        if value is None:
+            return m.group(0)
+        if before == "第" and len(run) == 1:
+            return m.group(0)          # 第一次 / 第二盘 / 第三轮，序数留中文
+        if set(run) & _STRUCTURED:
+            return value + nxt         # 十九、三十六、四百六十九
+        if run in ("一", "两"):
+            return m.group(0)          # 一场首轮、两盘，都不是在数数
+        if nxt and nxt in _NUM_UNITS:
+            return value + nxt         # 二月、五个、九记、七座
+        return m.group(0)
+
+    text = re.sub(rf"([{''.join(_NUM_CHARS)}]+)(.?)", one, text)
+    # 排名是数字：世界第四 → 世界第 4。
+    return re.sub(
+        rf"(世界第)([{''.join(_NUM_CHARS)}]+)",
+        lambda m: m.group(1) + (_num_value(m.group(2)) or m.group(2)), text,
+    )
+
+
 def _sub_width(text: str) -> float:
     """一行有多宽。汉字算 1 格，西文和数字窄一半——「ATP」占的位置不到三个字。"""
     return sum(0.5 if ord(ch) < 0x2E80 else 1.0 for ch in text)
@@ -2667,7 +2748,10 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
 
     out = []
     for a, b in lines:
-        shown = text[a:b].strip(_SUB_TRIM)
+        # 阿拉伯数字只换**显示的那一份**：位置 (a, b) 仍然指向原文，时间轴是拿
+        # 原文的字位去对 WordBoundary 的，换完再算就对不上了。数字比汉字窄，
+        # 换完只会更短，不会顶出边。
+        shown = arabic_numerals(text[a:b].strip(_SUB_TRIM))
         if shown:
             out.append((a, b, shown))
     return out
@@ -2746,7 +2830,7 @@ def _ass_stamp(seconds: float) -> str:
 # 真实像素，不用猜滤镜按什么缩放。
 _ASS_FONT = "Noto Sans CJK SC"
 _ASS_SIZE = 52
-_ASS_MARGIN_V = 62
+_ASS_MARGIN_V = 30
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
 _ASS_HEADER = f"""[Script Info]
 ScriptType: v4.00+
@@ -2818,11 +2902,18 @@ def synthesize_narration(
     async def _one(text: str, path: Path) -> list[dict]:
         marks: list[dict] = []
         with path.open("wb") as fh:
-            stream = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).stream()
+            # boundary="WordBoundary" 必须显式要。edge-tts 的默认值是
+            # **SentenceBoundary**，服务端就只发整句的时刻——我只收
+            # WordBoundary，于是 words.json 每条都是 []。空列表和「这个声音
+            # 不报边界」长得一模一样，字幕悄悄退回按字数分，看不出哪儿不对。
+            # 两种都收下：真拿不到词级的时候，句级也比按字数猜准。
+            stream = edge_tts.Communicate(
+                text, voice, rate=rate, pitch=pitch, boundary="WordBoundary"
+            ).stream()
             async for chunk in stream:
                 if chunk.get("type") == "audio" and chunk.get("data"):
                     fh.write(chunk["data"])
-                elif chunk.get("type") == "WordBoundary":
+                elif chunk.get("type") in ("WordBoundary", "SentenceBoundary"):
                     marks.append({
                         "offset": chunk.get("offset", 0),
                         "duration": chunk.get("duration", 0),

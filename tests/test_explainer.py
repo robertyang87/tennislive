@@ -744,7 +744,7 @@ def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
     # 亲眼看见才发现的，滤镜链本身一点问题都没有。
     assert f"PlayResX: {E.VIDEO_W}" in first and f"PlayResY: {E.VIDEO_H}" in first
     assert "Alignment" not in first.split("[Events]")[1]  # 样式只在 Style 行里定义
-    assert ",2,48,48,62,1" in first, "贴底居中 + 下边距 62"
+    assert f",2,48,48,{E._ASS_MARGIN_V},1" in first, "贴底居中"
 
     band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2   # 上下黑边各多高
     assert band == 240
@@ -812,3 +812,79 @@ def test_末屏那一问不能是封面那一问的回声():
             f"{slug} 末屏那一问和封面重了（{ratio:.0%}）："
             f"封面「{segs[0].title}」／末屏「{closer}」"
         )
+
+
+def test_字幕里的数字用阿拉伯数字():
+    """屏幕上「19 岁」比「十九岁」好读，但只在它真的是个数字的时候。
+
+    旁白里写「二〇二六」「六比四」是给合成器定读法用的，那份不能动——所以
+    换算只作用在**显示的那一份**上，而且要挑得住这些坑：
+
+    - 「唯一一次」里连着两个「一」，按数字读就成了「唯 11 次」
+    - 「一场首轮」「两盘」不是在数数
+    - 「第二盘」「第三轮」「第一次」是序数，中文更顺；「世界第四」是排名，要写成数字
+    - 「七十万英镑」得在「万」处收住，不然变成 700000
+    """
+    from tennislive.video.explainer import arabic_numerals as A
+
+    assert A("二〇一四年美网") == "2014年美网"
+    assert A("一九八九年十二月生") == "1989年12月生"
+    assert A("六比四击败锦织圭") == "6比4击败锦织圭"
+    assert A("三十六岁") == "36岁"
+    assert A("七十万英镑") == "70万英镑"
+    assert A("世界第四百六十九") == "世界第469"
+    assert A("生涯最高的世界第四") == "生涯最高的世界第4"
+    assert A("二十八局里赢到十二局") == "28局里赢到12局"
+
+    # 不能碰的
+    assert A("唯一一次打进大满贯单打决赛") == "唯一一次打进大满贯单打决赛"
+    assert A("一场首轮，装着一代人的交接") == "一场首轮，装着一代人的交接"
+    assert A("两盘，都是六比四") == "两盘，都是6比4"
+    assert A("第二盘他化解了两个破发点") == "第二盘他化解了两个破发点"
+    assert A("那是他第一次遇上") == "那是他第一次遇上"
+
+
+def test_字幕贴在最下面():
+    """字幕待在下边条的底部，离画面越远越好——它是补给耳朵的，不该抢眼睛。"""
+    from tennislive.video import explainer as E
+
+    band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2
+    assert E._ASS_MARGIN_V < band / 4, "字幕离底边太远，贴回去"
+    assert E._ASS_MARGIN_V >= 24, "再低就要贴到屏幕边缘了"
+    assert E._ASS_MARGIN_V + E._ASS_SIZE * 2 * 1.25 < band, "两行会顶到画面上"
+
+
+def test_合成时要明确问服务端要词级时间轴(monkeypatch, tmp_path):
+    """edge-tts 的 boundary 默认是 SentenceBoundary，不显式要就拿不到词级时刻。
+
+    第一版只收 WordBoundary，而默认配置下服务端根本不发这种事件——
+    `voice_XX.words.json` 每条都是 `[]`，字幕悄悄退回按字数等比分配。
+    **空列表和「这个声音不报边界」长得一模一样**，产物看起来完全正常。
+    """
+    import json
+
+    from tennislive.video import explainer as E
+
+    seen = {}
+
+    class FakeCommunicate:
+        def __init__(self, text, voice, **kw):
+            seen.update(kw)
+
+        def stream(self):
+            async def gen():
+                yield {"type": "audio", "data": b"\x00" * 64}
+                yield {"type": "SentenceBoundary", "offset": 0,
+                       "duration": 1_000_000, "text": "先说对面站的是谁"}
+            return gen()
+
+    fake = type("M", (), {"Communicate": FakeCommunicate})
+    monkeypatch.setitem(__import__("sys").modules, "edge_tts", fake)
+
+    segs = E.explainer_script(find_story_by_slug("zheng-eala"))[:1]
+    E.synthesize_narration(segs, tmp_path)
+
+    assert seen.get("boundary") == "WordBoundary", seen
+    # 句级事件也要收下：拿不到词级时，它仍然比按字数猜准。
+    marks = json.loads((tmp_path / "voice_00.words.json").read_text(encoding="utf-8"))
+    assert marks and marks[0]["text"] == "先说对面站的是谁", marks
