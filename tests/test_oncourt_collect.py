@@ -310,9 +310,15 @@ def test_title_rules_cannot_split_press_from_oncourt():
 
 
 def test_denied_ids_are_all_recorded_as_verified():
-    """拉黑名单上的每一条，都得在判定文件里有一条「看过、是发布会」的记录。
+    """拉黑名单上的每一条，都得在判定文件里有一条看过画面的记录。
 
     不许凭印象拉黑——名单和证据必须一一对上。
+
+    **两种理由都算数**，因为它们是两回事：
+      press    人根本不在场上（发布厅、媒体混合区）
+      ceremony 人在场上，但是**独自对着观众讲**，不是接受采访
+               （判据是话筒：落地支架麦＝致辞，手持话筒＝有人在问）
+    用户要的只有「赛后直接在场上接受采访」，两种都不是。
     """
     from tools.collect_oncourt_interviews import ROOT, load_sources
 
@@ -320,7 +326,32 @@ def test_denied_ids_are_all_recorded_as_verified():
         seen = json.load(fh)["verdicts"]
     for vid in load_sources()["deny_ids"]:
         assert vid in seen, f"{vid} 被拉黑却没有看图记录"
-        assert seen[vid]["verdict"] == "press", f"{vid} 的判定不是 press"
+        assert seen[vid]["verdict"] in ("press", "ceremony"), \
+            f"{vid} 的判定是 {seen[vid]['verdict']}，不该在拉黑名单上"
+
+
+def test_ceremony_speech_and_ceremony_interview_are_split_by_the_microphone():
+    """同一批 `Champion/Finalist` 标题里，致辞和采访各占一半。
+
+    18 条看下来 12 条是致辞、6 条是采访，**标题上完全看不出来**：
+
+        Lilli Tagger Champion Prague 2026   落地支架麦，捧着奖杯独自讲  → 致辞
+        Petra Marcinko Champion Rabat 2026  WTA TOUR 手持话筒，有人在问 → 采访
+
+    所以判据落在**话筒**上，不落在标题上——又一次只能按 id。
+    """
+    from tools.collect_oncourt_interviews import ROOT, load_sources
+
+    ids = set(load_sources()["deny_ids"])
+    with (ROOT / "data" / "oncourt_verify.json").open(encoding="utf-8") as fh:
+        seen = json.load(fh)["verdicts"]
+
+    assert "TgvGNvqYuYk" in ids, "布拉格冠军那条是支架麦致辞"
+    assert seen["TgvGNvqYuYk"]["verdict"] == "ceremony"
+    for interview in ("XGGF3Cq4pQg", "BY7GOFzxWOU", "hHaklqxZmKY"):
+        if interview in seen:                      # 只查记录在案的
+            assert seen[interview]["verdict"] == "oncourt"
+            assert interview not in ids
 
 
 def test_wta_dead_page_is_not_collected():
