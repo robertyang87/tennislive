@@ -87,7 +87,32 @@
 `Luciano Darderi On-Court Interview | Quarterfinal`（0:39）。
 **想批量建语料库，从罗马开始最省事**——一条正则就能把场上、发布会、颁奖礼分干净。
 
-### 小赛事没有自己的频道，但 Tennis Channel 全收了
+### 只要"场上接受采访"的话，来源比想象中窄得多
+
+先把最重要的一条摆前面。实扫全部 15 个源，**纯场上采访只有 82 条，
+且集中在六家**：
+
+| 源 | 场上采访条数 |
+| --- | --- |
+| 温网 | 20 |
+| 法网 | 18 |
+| 罗马 | 12 |
+| 美网 | 11 |
+| 巴黎大师赛 | 10 |
+| 澳网 | 10 |
+| 华盛顿 | 1 |
+
+也就是**四大满贯 + 罗马 + 巴黎大师赛**，其余赛事基本为零。
+
+**关键更正**：Tennis Channel 覆盖 32 项赛事的那个结论只对**致辞**成立。
+深扫它 700 条，`on-court interview` / `post-match interview` **一条都没有**
+（两条疑似命中是 `on-court emergency`、`on Court Differences` 的误匹配）。
+它发的全是 `Championship Speech` / `Finalist Speech`。
+
+所以：**小赛事（Kitzbuhel、Gstaad、Bastad、Prague）有冠军致辞，但没有场上采访。**
+这是源头的限制，不是工具没找到——"所有巡回赛赛事都有场上采访"在源头上做不到。
+
+### 小赛事没有自己的频道，但 Tennis Channel 收了致辞
 
 这是覆盖"所有巡回赛赛事"的关键。ATP / WTA 各有六十来站，**250 级别的赛事大多
 没有自己的 YouTube 频道**——一开始按"一个赛事一个频道"去建注册表是走不通的。
@@ -152,15 +177,31 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 
 | 文件 | 作用 |
 | --- | --- |
-| `data/oncourt_sources.json` | 14 个源的注册表，逐源可配扫描深度与说明 |
-| `tools/collect_oncourt_interviews.py` | 扫描、按两档正则分类、增量并库 |
+| `data/oncourt_sources.json` | 15 个源的注册表，逐源可配扫描深度与说明 |
+| `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
 | `data/oncourt_interviews.json` | 累积产物 |
+
+**默认只收"赛后直接在场上接受采访"这一类。** 按类型分三档：
+
+| 类型 | 是什么 | 默认 |
+| --- | --- | --- |
+| `oncourt` | 主持人拿麦上场问、球员站着答，40 秒–4 分钟 | ✅ 收 |
+| `ceremony` | 颁奖礼致辞、冠军演讲、晚宴致辞——也在场上，但是"讲"不是"接受采访" | ❌ `--include-ceremony` |
+| `maybe` | 各赛事自己的叫法，既分不出场上/媒体间，也分不出采访/致辞 | ❌ `--include-maybe` |
 
 ```bash
 python tools/collect_oncourt_interviews.py --dry-run              # 看看有什么，不落库
 python tools/collect_oncourt_interviews.py --only "Tennis Channel" # 只扫某个源
+python tools/collect_oncourt_interviews.py --include-ceremony      # 连致辞一起收
 ```
+
+**被跳过的会按类型汇总打印**——不列的话，"这周只有 3 条"看着像没比赛，
+其实是二十条致辞被默默筛掉了。
+
+有个顺序陷阱：`post-match ceremony`（法网 18–23 分钟的完整颁奖礼）和
+`post-match interview`（温网场上那 3 分钟）只差一个词，**必须先判 ceremony
+再判 oncourt**，否则颁奖礼会被当成场上采访收进来。测试里钉住了。
 
 脚本把三种"看起来一样"的空结果**分开报**，这是踩出来的：
 

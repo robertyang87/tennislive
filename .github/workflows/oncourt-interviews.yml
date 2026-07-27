@@ -1,11 +1,12 @@
 name: oncourt-interviews
 
-# 场上赛后采访 / 冠军致辞的持续采集。每周一次，把新出现的视频并进
+# 场上赛后采访的持续采集。每周一次，把新出现的视频并进
 # data/oncourt_interviews.json，供英语学习选材用。
 #
-# 只收「场上」那一类：赢球后还在场上对着观众讲的、决赛后颁奖礼上讲的。
-# 媒体间的新闻发布会不在此列——那类有 ASAP Sports 的人工文字稿，
-# 来源和用法都不同，见 docs/post-match-interview-sources.md。
+# 只收一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
+# 颁奖礼致辞、冠军演讲也在场上，但那是「讲」不是「接受采访」，默认不收；
+# 媒体间的新闻发布会永远不收（另有 ASAP Sports 的人工文字稿，
+# 见 docs/post-match-interview-sources.md）。
 #
 # 为什么跑在 Actions 而不是本地：沙箱下 YouTube 会对连续请求返 429，
 # 退避到 240 秒都拿不到；Actions 的出口没这个问题。

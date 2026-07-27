@@ -1,8 +1,12 @@
-"""场上采访采集器的标题归档规则。
+"""场上采访采集器的标题归类规则。
 
-规则全部来自实扫到的真实标题，别改成想当然的写法：各家赛事叫法差得很远，
-上海写 `Reacts After`，马德里写西语 `Entrevista con`，印第安维尔斯只发
-`Champion's Press Conference`（那是发布会，不该收）。
+要的只有一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
+颁奖礼致辞、冠军演讲是"讲"不是"接受采访"，媒体间发布会更是另一回事——
+两者都必须归到别的类去，不能混进 oncourt。
+
+标题全部取自实扫结果，别改成想当然的写法：各家赛事叫法差得很远，
+上海写 `Reacts After`，马德里写西语 `Entrevista con`，
+印第安维尔斯和华盛顿只发 `Press Conference`。
 """
 
 from __future__ import annotations
@@ -18,24 +22,32 @@ def rules():
 
 
 def tag(title, rules):
-    return classify(title, *rules)
+    return classify(title, rules)
 
 
-# 真实标题，扫 Tennis Channel / 罗马 / 四大满贯时抓到的
-CONFIDENT = [
+# 唯一要收的一类：场上接受采访
+ONCOURT = [
+    "Jannik Sinner On-Court Interview | Final | Rome 2026",
+    "Luciano Darderi On-Court Interview | Quarterfinal | Rome 2026",
+    "Carlos Alcaraz On-Court Interview | Australian Open 2026 Final",
+    "Elena Rybakina On-Court Interview | Australian Open 2026 Final",
+    "Jannik Sinner reacts to retaining his Championship | Final Post-Match Interview | Wimbledon 2026",
+    "Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open",
+    "Oda's brilliant interview after winning Wheelchair Singles | Post-match Interview | Wimbledon 2026",
+]
+
+# 是赛后在场上讲，但是"致辞"不是"接受采访"——默认不收
+CEREMONY = [
     "Quentin Halys Championship Speech | 2026 Kitzbuhel",
     "Maria Sakkari Finalist Speech | 2026 Athens",
     "Madison Keys champion speech | 2026 Eastbourne",          # 小写也要认
-    "Jannik Sinner On-Court Interview | Final | Rome 2026",
-    "Luciano Darderi On-Court Interview | Quarterfinal | Rome 2026",
     "Jannik Sinner Trophy & Speech | Rome 2026",
     "Men's Singles Trophy Ceremony | Carlos Alcaraz v Novak Djokovic | Australian Open 2026",
-    "Jannik Sinner reacts to retaining his Championship | Final Post-Match Interview | Wimbledon 2026",
     '"Mum left a couple of times!" | Jannik Sinner Champion\'s Dinner Speech | Wimbledon 2026',
     "Men's singles final post-match ceremony | Roland-Garros 2026",
 ]
 
-# 确实是赛后讲话，但标题分不出在场上还是媒体间——要单独一档，不能混进 confident
+# 确实是赛后球员讲话，但标题既分不出场上/媒体间，也分不出采访/致辞
 MAYBE = [
     "Valentin Vacherot Reacts After Becoming The Shanghai Champion | Rolex Shanghai Masters 2025",
     "Holger Rune Reacts To Victory Over Baez | Rolex Shanghai Masters 2025",
@@ -56,14 +68,20 @@ MISSES = [
     "'A great achievement' | Jannik Sinner | Champion's Press Conference | BNP Paribas Open",
     "Iga Swiatek | Quarterfinals Press Conference | 2025 Cincinnati Open",
     "Press conference with Jannik Sinner // #MMOPEN 2026",
+    "Frances Tiafoe | Post Match Press Conference | 2025 Mubadala Citi DC Open",
     "Andrey Rublev vs Tommy Paul Highlights | Rolex Shanghai Masters 2023",
     "Inside The Tour | 2025 Internazionali BNL d'Italia",
 ]
 
 
-@pytest.mark.parametrize("title", CONFIDENT)
-def test_confident(title, rules):
-    assert tag(title, rules) == "confident", title
+@pytest.mark.parametrize("title", ONCOURT)
+def test_oncourt(title, rules):
+    assert tag(title, rules) == "oncourt", title
+
+
+@pytest.mark.parametrize("title", CEREMONY)
+def test_ceremony_is_not_oncourt(title, rules):
+    assert tag(title, rules) == "ceremony", title
 
 
 @pytest.mark.parametrize("title", MAYBE)
@@ -81,14 +99,24 @@ def test_press_conference_not_collected(title, rules):
     assert tag(title, rules) is None, title
 
 
+def test_post_match_ceremony_beats_post_match_interview(rules):
+    """`post-match ceremony` 和 `post-match interview` 只差一个词，顺序不能反。
+
+    法网的 `Men's singles final post-match ceremony` 是 18–23 分钟的完整颁奖礼；
+    温网的 `Final Post-Match Interview` 才是场上那 3 分钟。判 ceremony 必须
+    先于判 oncourt，否则颁奖礼会被当成场上采访收进来。
+    """
+    assert tag("Men's singles final post-match ceremony | Roland-Garros 2026", rules) == "ceremony"
+    assert tag("Final Post-Match Interview | Wimbledon 2026", rules) == "oncourt"
+
+
 def test_podcast_reaction_never_reaches_exclude(rules):
-    """『reacts to』后面跟的不是一场球时，前瞻就该拦下，轮不到 exclude。
+    """`reacts to` 后面跟的不是一场球时，前瞻就该拦下，轮不到 exclude。
 
     这条是从一次真实误报里来的：`Henry Patten Reacts to the ATP's
     Controversial Doubles Proposal | The Big T Podcast` 一度被收进结果。
     收紧前瞻（要求近处出现 champion/final/win/victory 这类词）之后，
-    它在第一道就被挡住，返回 None 而不是 excluded——**两道都要有，
-    但顺序决定了它落在哪一档**，这里把顺序钉住。
+    它在第一道就被挡住，返回 None 而不是 excluded。
     """
     title = ("Henry Patten Reacts to the ATP's Controversial Doubles Proposal "
              "| The Big T Podcast")
@@ -96,13 +124,13 @@ def test_podcast_reaction_never_reaches_exclude(rules):
 
 
 def test_victory_and_possessive_forms(rules):
-    """两个正则边界 bug 的回归：\\b 卡在词中间会静默漏掉整类标题。
+    r"""两个正则边界 bug 的回归：\b 卡在词中间会静默漏掉整类标题。
 
-    - `victor\\b` 匹配不上 `Victory`（词还没结束），上海那批全漏
+    - `victor\b` 匹配不上 `Victory`（词还没结束），上海那批全漏
     - `champions?'?` 要求 s 在 ' 之前，而实际写法是 `Champion's`
     """
     assert tag("Holger Rune Reacts To Victory Over Baez | Shanghai 2025", rules) == "maybe"
-    assert tag("Jannik Sinner Champion's Dinner Speech | Wimbledon 2026", rules) == "confident"
+    assert tag("Jannik Sinner Champion's Dinner Speech | Wimbledon 2026", rules) == "ceremony"
 
 
 def test_sources_registry_is_sane():
@@ -117,9 +145,8 @@ def test_sources_registry_is_sane():
         assert src.get("scan_depth", 150) >= 100, src["name"]
 
 
-def test_tennis_channel_is_present_and_deep():
-    """小赛事只有 Tennis Channel 有，它掉了等于整个 250 级别断供。"""
+def test_rome_is_present_and_deep():
+    """罗马是唯一每一轮都单发场上采访的赛事，它掉了就没有分轮次的语料了。"""
     cfg = load_sources()
-    tc = [s for s in cfg["sources"] if "Tennis Channel" in s["name"]]
-    assert tc, "Tennis Channel 是唯一覆盖 250 级别小站的源，不能从注册表里去掉"
-    assert tc[0]["scan_depth"] >= 200
+    rome = [s for s in cfg["sources"] if "Rome" in s["name"]]
+    assert rome, "罗马每一轮都发 On-Court Interview，是场上语料的主力，不能去掉"

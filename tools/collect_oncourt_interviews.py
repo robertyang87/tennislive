@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
-"""把巡回赛的**场上**赛后采访与冠军致辞持续收进 data/oncourt_interviews.json。
+"""把巡回赛的**场上赛后采访**持续收进 data/oncourt_interviews.json。
 
-只收场上那一类：赢球后还在场上对着观众讲的（on-court interview）、决赛后的
-颁奖礼致辞（championship / finalist speech、trophy ceremony）。媒体间的新闻
-发布会不在此列——那类有 ASAP Sports 的人工文字稿，来源和用法都不同，
-见 docs/post-match-interview-sources.md。
+**只收一类：赛后直接在场上接受采访**——主持人拿麦上场问两三个问题、
+球员站着答，通常 40 秒到 4 分钟。其余两类默认不收：
+
+- **颁奖礼致辞 / 冠军演讲**（`Championship Speech`、`Trophy Ceremony`）：
+  也在场上，但是"讲"不是"接受采访"。要的话加 `--include-ceremony`。
+- **媒体间发布会**（`Press Conference`）：完全不同的素材，另有 ASAP Sports
+  的人工文字稿，见 docs/post-match-interview-sources.md。永远不收。
+
+判类型有个顺序陷阱：`post-match ceremony`（法网 18–23 分钟的完整颁奖礼）
+和 `post-match interview`（温网场上那 3 分钟）只差一个词，**必须先判
+ceremony 再判 oncourt**，否则颁奖礼会被当成场上采访收进来。
 
 **为什么不是一个赛事一个频道**：ATP/WTA 各有六十来站，250 级别的赛事大多
 没有自己的 YouTube 频道。实扫发现 Tennis Channel 一家就覆盖了全巡回赛的
@@ -31,6 +38,12 @@ Prague、Athens 这些小站只有它有），所以它是主源，各赛事自�
 
     # 只扫某几个源（按名字子串匹配）
     python tools/collect_oncourt_interviews.py --only "Tennis Channel" Rome
+
+    # 连颁奖礼致辞一起收
+    python tools/collect_oncourt_interviews.py --include-ceremony
+
+被跳过的会按类型汇总打印出来 —— 不列的话，"这周只有 3 条"看着像没比赛，
+其实是二十条致辞被默默筛掉了。
 
 退出码 0＝跑完（哪怕有源失败）；2＝所有源都没取到东西，说明是环境问题
 （限流 / 断网）而不是"这周没有比赛"。
@@ -63,29 +76,39 @@ def load_sources() -> dict:
         return json.load(fh)
 
 
-def compile_rules(cfg: dict) -> tuple[list, list, list]:
-    return (
-        [re.compile(p, re.I) for p in cfg["patterns"]],
-        [re.compile(p, re.I) for p in cfg.get("patterns_maybe", [])],
-        [re.compile(p, re.I) for p in cfg.get("exclude", [])],
-    )
+def compile_rules(cfg: dict) -> dict[str, list]:
+    return {
+        "oncourt": [re.compile(p, re.I) for p in cfg["patterns_oncourt"]],
+        "ceremony": [re.compile(p, re.I) for p in cfg.get("patterns_ceremony", [])],
+        "maybe": [re.compile(p, re.I) for p in cfg.get("patterns_maybe", [])],
+        "exclude": [re.compile(p, re.I) for p in cfg.get("exclude", [])],
+    }
 
 
-def classify(title: str, patterns, maybes, excludes) -> str | None:
-    """一条标题归到哪一档：confident / maybe / excluded / None（压根没命中）。
+def classify(title: str, rules: dict[str, list]) -> str | None:
+    """一条标题是哪一类：oncourt / ceremony / maybe / excluded / None。
 
-    confident 的标题自己说明了场合（on-court / trophy / speech）；
-    maybe 是各赛事自己的叫法（上海的 `Reacts After`、马德里的西语
-    `Entrevista con`），能确定是赛后讲话但分不出在场上还是媒体间；
-    excluded 是命中了模式却不是赛后讲话的（播客、赛前预热）。
+    - `oncourt`：**赛后直接在场上接受采访** —— 主持人拿麦上场问、球员站着答。
+      这是默认唯一收的一类。
+    - `ceremony`：颁奖礼致辞、冠军演讲、晚宴致辞。是"讲"不是"接受采访"，
+      默认不收。
+    - `maybe`：各赛事自己的叫法（上海 `Reacts After`、马德里西语
+      `Entrevista con`），既分不出场上还是媒体间，也分不出采访还是致辞。
+    - `excluded`：命中了模式却不是赛后讲话的（播客、赛前预热）。
+
+    顺序有讲究：ceremony 先于 oncourt 判。罗马的 `Trophy & Speech` 和温网的
+    `Final Post-Match Interview` 都可能同时沾到两边的词，先判 ceremony
+    才不会把颁奖礼误收成场上采访。
     """
-    if any(p.search(title) for p in patterns):
-        hit = "confident"
-    elif any(p.search(title) for p in maybes):
+    if any(p.search(title) for p in rules["ceremony"]):
+        hit = "ceremony"
+    elif any(p.search(title) for p in rules["oncourt"]):
+        hit = "oncourt"
+    elif any(p.search(title) for p in rules["maybe"]):
         hit = "maybe"
     else:
         return None
-    if any(p.search(title) for p in excludes):
+    if any(p.search(title) for p in rules["exclude"]):
         return "excluded"
     return hit
 
@@ -159,10 +182,19 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="只打印，不写 data/oncourt_interviews.json")
     ap.add_argument("--only", nargs="*", default=None, help="只扫名字含这些子串的源")
+    ap.add_argument("--include-ceremony", action="store_true",
+                    help="连颁奖礼致辞、冠军演讲一起收（默认只收场上接受采访那一类）")
+    ap.add_argument("--include-maybe", action="store_true",
+                    help="连分不出场合的也收（上海 Reacts After、马德里西语那批）")
     args = ap.parse_args()
 
     cfg = load_sources()
-    patterns, maybes, excludes = compile_rules(cfg)
+    rules = compile_rules(cfg)
+    keep = {"oncourt"}
+    if args.include_ceremony:
+        keep.add("ceremony")
+    if args.include_maybe:
+        keep.add("maybe")
     sources = cfg["sources"]
     if args.only:
         needles = [s.lower() for s in args.only]
@@ -176,6 +208,7 @@ def main() -> int:
     new_items: dict[str, dict] = {}
     report: list[tuple[str, str, int, int, int, int]] = []
     dropped: list[tuple[str, str]] = []
+    skipped: list[tuple[str, str, str]] = []
     any_fetched = False
 
     for src in sources:
@@ -183,19 +216,22 @@ def main() -> int:
         if rows:
             any_fetched = True
 
-        fresh = n_conf = n_maybe = 0
+        fresh = n_oncourt = n_skipped = 0
         for r in rows:
-            conf = classify(r["title"], patterns, maybes, excludes)
-            if conf is None:
+            kind = classify(r["title"], rules)
+            if kind is None:
                 continue
-            if conf == "excluded":
+            if kind == "excluded":
                 # 被挡掉的也要报出来——只报通过的，没法证明筛子是对的。
                 dropped.append((src["name"], r["title"]))
                 continue
-            if conf == "confident":
-                n_conf += 1
-            else:
-                n_maybe += 1
+            if kind not in keep:
+                # 是赛后讲话，但不是要的那一类（致辞 / 分不出场合）。
+                n_skipped += 1
+                skipped.append((src["name"], kind, r["title"]))
+                continue
+            if kind == "oncourt":
+                n_oncourt += 1
             if r["id"] in known or r["id"] in new_items:
                 continue
             new_items[r["id"]] = {
@@ -203,17 +239,18 @@ def main() -> int:
                 "url": f"https://www.youtube.com/watch?v={r['id']}",
                 "source": src["name"],
                 "tier": src.get("tier", ""),
-                "confidence": conf,
+                "kind": kind,
             }
             fresh += 1
 
-        report.append((src["name"], status, len(rows), n_conf, n_maybe, fresh))
+        report.append((src["name"], status, len(rows), n_oncourt, n_skipped, fresh))
 
     # 报告：成功的和失败的都列出来。只在成功时出声的检查，没法证明它真的看过。
-    print(f"{'源':<34} {'状态':<20} {'取到':>5} {'确定':>5} {'待定':>5} {'新增':>5}")
+    print(f"收的类型：{'、'.join(sorted(keep))}\n")
+    print(f"{'源':<34} {'状态':<20} {'取到':>5} {'场上':>5} {'跳过':>5} {'新增':>5}")
     print("-" * 82)
-    for name, status, got, conf, maybe, fresh in report:
-        print(f"{name:<34} {status:<20} {got:>5} {conf:>5} {maybe:>5} {fresh:>5}")
+    for name, status, got, oncourt, skip, fresh in report:
+        print(f"{name:<34} {status:<20} {got:>5} {oncourt:>5} {skip:>5} {fresh:>5}")
 
     bad = [r for r in report if r[1] != "ok"]
     if bad:
@@ -230,18 +267,26 @@ def main() -> int:
         for name, _s, got, *_ in empty:
             print(f"  - {name}：扫了 {got} 条")
 
-    n_maybe_total = sum(1 for v in new_items.values() if v["confidence"] == "maybe")
-    print(f"\n新增 {len(new_items)} 条（确定 {len(new_items) - n_maybe_total}，"
-          f"待定 {n_maybe_total}），已知 {len(known)} 条。")
-    for it in list(new_items.values())[:15]:
+    print(f"\n新增 {len(new_items)} 条，已知 {len(known)} 条。")
+    for it in list(new_items.values())[:20]:
         mins = f"{it['duration_s'] // 60}:{it['duration_s'] % 60:02d}" if it["duration_s"] else "?"
-        mark = "?" if it["confidence"] == "maybe" else " "
+        mark = "?" if it["kind"] == "maybe" else " "
         print(f" {mark}[{it['source']}] {mins:>6}  {it['title']}")
-    if len(new_items) > 15:
-        print(f"  …… 另有 {len(new_items) - 15} 条")
-    if n_maybe_total:
-        print(f"\n带 ? 的 {n_maybe_total} 条是**待定**：标题能确定是赛后球员讲话，"
-              "但分不出在场上还是媒体间，人工看一眼再归类。")
+    if len(new_items) > 20:
+        print(f"  …… 另有 {len(new_items) - 20} 条")
+
+    # 跳过的按类型汇总。不列出来的话，"这周只有 3 条"看着像没比赛，
+    # 其实是二十条致辞被默默筛掉了。
+    if skipped:
+        by_kind: dict[str, int] = {}
+        for _src, kind, _title in skipped:
+            by_kind[kind] = by_kind.get(kind, 0) + 1
+        desc = {"ceremony": "颁奖礼致辞 / 冠军演讲（是『讲』不是『接受采访』）",
+                "maybe": "分不出场合（上海 Reacts After、马德里西语那批）"}
+        print(f"\n按类型跳过 {len(skipped)} 条：")
+        for kind, n in sorted(by_kind.items()):
+            flag = "--include-ceremony" if kind == "ceremony" else "--include-maybe"
+            print(f"  - {kind} {n} 条：{desc.get(kind, '')}　要的话加 {flag}")
 
     if dropped:
         print(f"\n命中了模式但被 exclude 挡掉的 {len(dropped)} 条"

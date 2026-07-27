@@ -1,15 +1,18 @@
 {
-  "_note": "场上赛后采访（on-court interview）与冠军致辞（trophy / championship speech）的视频来源。不含媒体间发布会——那是另一类，见 docs/post-match-interview-sources.md。verified 字段记的是 2026-07-27 用 yt-dlp --flat-playlist 实际扫到过内容；false 表示还没自证。",
-  "_patterns_note": "分两档。confident 档的标题自己就说明了场合（on-court / trophy / speech），拿来就能用。maybe 档是各家赛事自己的叫法，能确定是赛后球员讲话，但**标题分不出是在场上还是在媒体间**——上海写作『X Reacts After…』，马德里写作西语『Entrevista con…, campeón』。这一档要人工看一眼再归类，别直接混进 confident 里。",
-  "patterns": [
+  "_note": "赛后**在场上接受采访**的视频来源。默认只收这一类；颁奖礼致辞另归 ceremony 档默认不收，媒体间发布会永远不收（另有 ASAP Sports 的人工文字稿，见 docs/post-match-interview-sources.md）。verified 字段记的是 2026-07-27 用 yt-dlp --flat-playlist 实际扫到过内容；false 表示还没自证。",
+  "_patterns_note": "按**类型**分，不是按置信度分。oncourt＝赛后直接在场上接受采访（主持人拿麦问、球员答），这是默认唯一收的一类。ceremony＝颁奖礼致辞、冠军演讲、晚宴致辞——是『讲』不是『接受采访』，默认不收，加 --include-ceremony 才收。maybe＝各赛事自己的叫法（上海 Reacts After、马德里西语 Entrevista con），能确定是赛后球员讲话但分不出场上还是媒体间，也分不出是采访还是致辞，人工看。",
+  "patterns_oncourt": [
+    "on[\\s-]?court\\s+interview",
+    "post[\\s-]?match\\s+interview"
+  ],
+  "patterns_ceremony": [
     "champion(?:ship)?\\s+speech",
     "finalist\\s+speech",
     "winner'?s?\\s+speech",
-    "on[\\s-]?court\\s+interview",
+    "champion'?s?\\s+dinner\\s+speech",
     "trophy\\s*(?:&|and)?\\s*speech",
     "trophy\\s+(?:ceremony|presentation)",
-    "post[\\s-]?match\\s+(?:interview|ceremony)",
-    "champion'?s?\\s+dinner\\s+speech"
+    "post[\\s-]?match\\s+ceremony"
   ],
   "patterns_maybe": [
     "reacts?\\s+(?:after|to)\\b(?=.*\\b(?:champion|final|semi|quarter|win|won|victor|defeat|beat|comeback|title|round|retirement|match|epic)\\w*)",
@@ -33,7 +36,7 @@
       "tier": "tour-wide",
       "scan_depth": 250,
       "verified": true,
-      "note": "覆盖面最广的一个：近 250 条里命中 16 项赛事，ATP+WTA、250 级到大满贯都有。命名统一为『球员 Championship/Finalist Speech | 年份 赛事』。小赛事（Kitzbuhel、Gstaad、Bastad、Prague、Athens、Bad Homburg、Strasbourg）自己没有频道，只在这里能拿到。"
+      "note": "**它不发场上采访，只发颁奖礼致辞** —— 深扫 700 条，on-court / post-match interview 一条都没有（两条疑似是 on-court emergency、on Court Differences 的误匹配）。发的是『球员 Championship/Finalist Speech | 年份 赛事』，2026 赛季已覆盖 32 项赛事，小站（Kitzbuhel、Gstaad、Bastad、Prague）只有它有。所以：要致辞它是主源，要场上采访它贡献 0，留在注册表里是为了 --include-ceremony 时用。"
     },
     {
       "name": "Rome / Internazionali BNL d'Italia",
