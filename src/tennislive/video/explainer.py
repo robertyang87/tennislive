@@ -2658,8 +2658,14 @@ def arabic_numerals(text: str) -> str:
 
 
 def _sub_width(text: str) -> float:
-    """一行有多宽。汉字算 1 格，西文和数字窄一半——「ATP」占的位置不到三个字。"""
-    return sum(0.5 if ord(ch) < 0x2E80 else 1.0 for ch in text)
+    """一行有多宽，单位是「一个汉字」。
+
+    西文和数字窄一些，但**没有窄一半**：同字号下步进量出来是 0.59 个汉字，
+    而数字还被单独放大到 78/68，所以实际是 0.68。原来按 0.5 算，「2026年4月30日」
+    这种一行就会比估计的宽出小半个字。
+    """
+    latin = _ASS_LATIN_ADVANCE * _ASS_NUM_SIZE / _ASS_SIZE
+    return sum(latin if ord(ch) < 0x2E80 else 1.0 for ch in text)
 
 
 # 在这些字**之后**断开，读起来是顺的；在这些字**之前**断开也是顺的。
@@ -2735,9 +2741,14 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         clauses.append((start, len(text)))
 
     # 2) 超宽的子句自己再断，断在像词语边界的地方。
+    #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字之后的。汉字数字
+    #    大多换完更窄，但「一百」两格换成「100」是 2.03 格——正好把一行顶出边。
+    def shown_width(a: int, b: int) -> float:
+        return _sub_width(arabic_numerals(text[a:b].strip(_SUB_TRIM)))
+
     pieces: list[tuple[int, int]] = []
     for a, b in clauses:
-        while _sub_width(text[a:b].strip(_SUB_TRIM)) > _SUB_MAX:
+        while shown_width(a, b) > _SUB_MAX:
             cut = a + _best_break(text[a:b])
             if cut <= a:
                 break
@@ -2749,7 +2760,7 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     # 3) 拼行：能装下就接着装，装不下另起一行。
     lines: list[tuple[int, int]] = []
     for a, b in pieces:
-        if lines and _sub_width(text[lines[-1][0]:b].strip(_SUB_TRIM)) <= _SUB_MAX:
+        if lines and shown_width(lines[-1][0], b) <= _SUB_MAX:
             lines[-1] = (lines[-1][0], b)
         else:
             lines.append((a, b))
@@ -2860,6 +2871,22 @@ _ASS_FONT = "Noto Sans CJK SC"
 # test_一行字幕待在左右两条边栏之间。
 _ASS_CJK_RATIO = 1.46
 _ASS_SIZE = 68                      # → 一个汉字约 46.6px，占屏宽 4.3%
+# 数字和西文**单独放大**。同一个字号下，思源黑体的西文比汉字矮一截：量出来
+# 数字的墨高只有汉字的 0.83（52 : 63），并排放着就像换了一种字体——其实是同一个
+# 字体文件（拿成片里的「6」和 NotoSansCJK-Bold 逐像素比对过，一模一样，
+# 和 DejaVu 的完全不同）。差的不是字体，是西文本来就画得小。
+# 78/68 让数字墨高到汉字的 0.95，看着才是一家的。
+_ASS_NUM_SIZE = 78
+# 一个数字实际占多少个汉字宽（同字号下量的步进：40.1 / 68.0）。
+_ASS_LATIN_ADVANCE = 0.59
+_ASS_RUN = re.compile(r"[0-9A-Za-z]+")
+
+
+def _ass_text(shown: str) -> str:
+    """给数字和西文套上放大标记。汉字那份不动。"""
+    return _ASS_RUN.sub(
+        lambda m: f"{{\\fs{_ASS_NUM_SIZE}}}{m.group(0)}{{\\fs{_ASS_SIZE}}}", shown
+    )
 # 左右各留这么多：右边那一列是 app 的点赞/评论/分享按钮，字幕横过去就被盖住。
 _ASS_MARGIN_H = 150
 # 字幕贴在**下边条的顶部**（紧挨卡片下沿），不是画布最底下。
@@ -2892,7 +2919,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path) -> Path:
     lines = [
         f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
-        f"{shown.replace(chr(10), ' ')}"
+        f"{_ass_text(shown.replace(chr(10), ' '))}"
         for start, end, shown in cues
     ]
     path.write_text(_ASS_HEADER + "\n".join(lines) + "\n", encoding="utf-8")
