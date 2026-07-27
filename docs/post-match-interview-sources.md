@@ -574,6 +574,66 @@ Petra Marcinko Champion Rabat 2026   WTA TOUR 手持话筒，有人在问       
 12 条已剔，判定记的是 `ceremony` 而不是 `press`——人在场上，
 只是没在接受采访，和发布厅是两回事。
 
+### WTA 侧：500/1000 有，但完整度全看搬运号
+
+被问「WTA 500 和 1000 里有完整的场上采访么？至少中心球场应该有」。查下来
+**有，但很不完整，而且赛事之间落差极大**。关键轮次（决赛/半决赛/八强）实测：
+
+| 赛事 | 女子条数 | 决赛 | 半决 | 八强 |
+| --- | --- | --- | --- | --- |
+| 多哈 1000 | 9 | 2 | 3 | 3 |
+| 迪拜 1000 | 30 | 2 | 8 | 4 |
+| 马德里 1000 | 28 | 3 | 4 | 2 |
+| 罗马 1000 | 19 | 1 | 3 | 4 |
+| 迈阿密 1000 | 20 | 1 | 2 | 2 |
+| **印第安维尔斯 1000** | 20 | 2 | **0** | **0** |
+| 斯图加特 500 | 24 | 1 | 1 | 6 |
+| 柏林 500 | 11 | 1 | 2 | 4 |
+| 查尔斯顿 500 | 6 | 1 | 2 | 2 |
+| 阿布扎比 500 | 8 | 1 | 1 | 0 |
+| 林茨 500 | 7 | 1 | 0 | 1 |
+| 女王杯 500 | 3 | 2 | 0 | 0 |
+| **巴德洪堡 500** | 4 | **0** | **0** | **0** |
+
+结构性原因和 250 那条是同一个：**WTA 官网没有 tennistv 那套按赛事的视频页**。
+实测 `wtatennis.com/tournaments/{id}/{slug}` 打得开（26 万字节），
+但**一条 `/videos/` 链接都没有**；`/videos/interviews` 全站只有 3 条，且全 404。
+对比 ATP：`tennistv.com/tournaments/{id}_{year}/{slug}` 每个赛事挂 40–45 条。
+
+所以 WTA 侧的覆盖**全靠搬运号**（`Tennis Interviews`、`Tennis x Tennis`、
+`ICONIC CHANNEL TENNIS`），它们跟着热门球员走，不逐场搬——这就是为什么
+罗马 8/8、印第安维尔斯只有决赛那 2 条。**这一层没法靠采集能力补，
+只能靠多挂几个搬运号。**
+
+### 结果词：搬运号写 Winner，不写 Final
+
+查上面那张表时发现的一个**真 bug**：搬运号写
+`Elena Rybakina Winner Porsche GP '26`，而轮次解析只认 `final`——
+**冠军那条采访，最该推的一条，一直没被算进关键场次**。
+十三个 WTA 赛事里只有一个能认出决赛。
+
+补了三个结果词，但每个都带前缀排除，反例全是从库里逐条挑出来的：
+
+```
+Defending champion Sinner up and running in Shanghai    刚开赛，不是决赛
+Former champion Evans stuns Musetti                     描述对手
+Sonay Kartal beats Grand-Slam Winner                    描述对手
+2022 finalist Ruud advances in Miami                    描述对手
+Cerundolo conquers last year's finalist Jarry           描述对手
+Bergs stuns former finalist Rublev                      描述对手
+```
+
+最要命的是 `Championship`：**迪拜赛事全名就叫 `Dubai Duty Free Tennis
+Championships`**——库里 126 条含 champion 的有 116 条是它，
+`\bchampions?\b` 不加 `(?!ship)` 就全成决赛了。
+
+顺带把 `R32/R64/R128` 标成 `早轮`——签表大小不写在标题里，
+换算不出第几轮（R32 在 128 签是第三轮、64 签是第二轮），所以给个诚实的粗标签。
+
+效果：判不出轮次 468 → **339**，关键轮次 454 → **480**，推送口径 467 → **493**。
+测试是**全量校验不抽样**——库里每一条含结果词的标题都过一遍，
+描述对手的写法一条都不许被判成决赛。
+
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 
 抽 59 条实探：55 条能取到，2 条已删，2 条拿不准（YouTube 要求登录验证）。

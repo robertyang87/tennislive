@@ -74,6 +74,32 @@ _ROUNDS: list[tuple[str, str]] = [
     (r"\bthird\s+round\b|\bround\s*3\b|\bR3\b", "第三轮"),
     (r"\bsecond\s+round\b|\bround\s*2\b|\bR2\b", "第二轮"),
     (r"\bfirst\s+round\b|\bround\s*1\b|\bR1\b", "第一轮"),
+    # R32 / R64 / R128：签表大小不写在标题里，**无法换算成第几轮**——
+    # R32 在 128 签是第三轮、64 签是第二轮、32 签是第一轮。所以给一个
+    # 诚实的粗标签，别硬猜。反正都不是关键轮次，精确到第几轮也没用，
+    # 但标上之后缺口报告里就不会再算成「判不出轮次」。
+    (r"\bR32\b|\bR64\b|\bR128\b|\bround\s*of\s*(?:32|64|128)\b", "早轮"),
+    # ——以下是「结果词」，必须排在所有明确轮次之后——
+    #
+    # 搬运号写的是 `Elena Rybakina Winner Porsche GP '26`，不写 Final。
+    # 不认这几个词的代价极大：**冠军那条采访是最该推的一条**，
+    # 实测 WTA 500/1000 的决赛条目几乎全靠它们才认得出来。
+    #
+    # 但这几个词也大量出现在**描述对手**的句子里，逐条从库里挑出来的反例：
+    #   `Defending champion Sinner up and running in Shanghai`   刚开赛
+    #   `Former champion Evans stuns Musetti`                    描述对手
+    #   `How he beat a Grand Slam Champion | … | First Round …`  描述对手
+    #   `Sonay Kartal beats Grand-Slam Winner | On-Court …`      描述对手
+    #   `2022 finalist Ruud advances in Miami`                   描述对手
+    #   `Cerundolo conquers last year's finalist Jarry`          描述对手
+    #   `Bergs stuns former finalist Rublev`                     描述对手
+    # 所以每个词都带前缀排除。`Championship(s)` 更要挡住——迪拜赛事全名就叫
+    # `Dubai Duty Free Tennis Championships`，库里 126 条含 champion 的
+    # 有 116 条是它，不挡就全成决赛了。
+    (r"(?<!slam )(?<!Slam )\bwinners?\b", "决赛"),
+    (r"(?<!defending )(?<!Defending )(?<!former )(?<!Former )(?<!slam )(?<!Slam )"
+     r"(?<!a )(?<!A )\bchampions?\b(?!ship)", "决赛"),
+    (r"(?<![0-9] )(?<!former )(?<!Former )(?<!'s )\bfinalists?\b", "决赛"),
 ]
 _ROUND_RE = [(re.compile(p, re.I), name) for p, name in _ROUNDS]
 
