@@ -1032,3 +1032,34 @@ def test_不要在片子里交代自己的规矩():
                 if word in (text or ""):
                     bad.append(f"{slug}/{where}：「{word}」出现在「{text[:30]}…」")
     assert not bad, "片子里在交代自己的规矩：\n  " + "\n  ".join(bad)
+
+
+def test_旁白不解说画面():
+    """旁白不说「画面里是什么」。
+
+    片子里图和话是两条腿：**画负责一眼看懂，话负责讲清楚**。旁白一开口描述画面，
+    就等于把观众已经看见的东西再念一遍——占掉的是本该讲事实的时间，而看得见的人
+    不需要，听不见画面的人（比如通勤时只听声音）也拿不到有用信息。
+
+    改法不是删句子，是**把指画面的那半句去掉、把事实留住**：
+    「画面里是 2026 年温网的莱巴金娜，你可以照着条文一条条对」→
+    「2026 年温网的莱巴金娜，可以照着条文一条条对」。二十九句都是这么改的。
+
+    卡上的要点不在这条管辖内：那儿的「图为 2022 年温网冠军莱巴金娜」是在**把年份
+    写到画面上**，是另一条规矩要求的（旧照片必须标年份）。
+    """
+    import re
+
+    from tennislive.video import explainer as E
+
+    pointing = re.compile(r"画面(里|上|中|就是)|镜头(里|中)|图为|这张图|图片里|上图|下图")
+    bad = []
+    for slug in E._SCRIPTS:
+        for seg in E.explainer_script(find_story_by_slug(slug)):
+            for field, text in (("旁白", seg.narration), ("标题", seg.title),
+                                ("末屏问", seg.question or "")):
+                m = pointing.search(text or "")
+                if m:
+                    bad.append(f"{slug}/{seg.kind} 的{field}在解说画面："
+                               f"「{m.group(0)}」→ {text[:36]}…")
+    assert not bad, "旁白在解说画面：\n  " + "\n  ".join(bad)
