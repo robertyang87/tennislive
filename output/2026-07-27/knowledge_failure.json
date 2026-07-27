@@ -5,24 +5,25 @@
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
-  "selected_count": 1,
+  "selected_count": 0,
   "required_pages": [
     "explainer",
     "story",
     "today"
   ],
   "missing_pages": [
+    "explainer",
     "story",
     "today"
   ],
   "degraded_pages": [
+    "explainer",
     "story",
     "today"
   ],
   "failed_curated_source_urls": [],
   "input_domains": [
     "en.wikipedia.org",
-    "fosters.com",
     "nbcsports.com"
   ],
   "providers_queried": [
@@ -54,8 +55,8 @@
       "page": "story",
       "provider": "wikimedia-commons",
       "query": "masters-format 2026 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 6
     },
     {
       "page": "story",
@@ -68,8 +69,8 @@
       "page": "story",
       "provider": "bing-web-image",
       "query": "masters-format 2026 tennis",
-      "status": "ok",
-      "candidate_count": 2
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "story",
@@ -110,8 +111,8 @@
       "page": "story",
       "provider": "bing-web-image",
       "query": "masters-format tennis",
-      "status": "ok",
-      "candidate_count": 1
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "story",
@@ -194,8 +195,8 @@
       "page": "explainer",
       "provider": "wikimedia-commons",
       "query": "masters-format 2025 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 4
     },
     {
       "page": "explainer",
@@ -208,8 +209,8 @@
       "page": "explainer",
       "provider": "bing-web-image",
       "query": "masters-format 2025 tennis",
-      "status": "ok",
-      "candidate_count": 6
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "explainer",
@@ -250,8 +251,8 @@
       "page": "explainer",
       "provider": "bing-web-image",
       "query": "masters-format tennis",
-      "status": "ok",
-      "candidate_count": 1
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "explainer",
@@ -292,8 +293,8 @@
       "page": "today",
       "provider": "wikimedia-commons",
       "query": "masters-format 2025 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 4
     },
     {
       "page": "today",
@@ -306,8 +307,8 @@
       "page": "today",
       "provider": "bing-web-image",
       "query": "masters-format 2025 tennis",
-      "status": "ok",
-      "candidate_count": 6
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "today",
@@ -348,8 +349,8 @@
       "page": "today",
       "provider": "bing-web-image",
       "query": "masters-format tennis",
-      "status": "ok",
-      "candidate_count": 1
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "today",
@@ -373,9 +374,7 @@
       "candidate_count": 0
     }
   ],
-  "selected_providers": [
-    "bing-web-image"
-  ],
+  "selected_providers": [],
   "excluded_source_urls": [],
   "errors": [],
   "attempts": [
@@ -455,14 +454,13 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 42,
+      "candidate_count": 45,
       "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
         "subject-or-person-mismatch": 15,
-        "metadata-relevance-below-3": 16,
-        "low-visual-impact-metadata": 1,
-        "duplicate-candidate": 10
+        "metadata-relevance-below-3": 19,
+        "duplicate-candidate": 11
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -484,8 +482,8 @@
           "page": "story",
           "provider": "wikimedia-commons",
           "query": "masters-format 2026 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 6
         },
         {
           "page": "story",
@@ -498,8 +496,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "masters-format 2026 tennis",
-          "status": "ok",
-          "candidate_count": 2
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -540,8 +538,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "masters-format tennis",
-          "status": "ok",
-          "candidate_count": 1
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -568,14 +566,29 @@
     },
     {
       "page": "explainer",
-      "status": "selected",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "masters-format 2025 9 站中 7 站 网球观察 tennis",
       "required_event_terms": [],
-      "match_level": "exact-event",
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 55,
+      "exact_candidate_count": 0,
+      "archive_candidate_count": 0,
       "rejection_counts": {
-        "subject-or-person-mismatch": 18,
-        "metadata-relevance-below-3": 19,
-        "duplicate-candidate": 20
+        "subject-or-person-mismatch": 14,
+        "metadata-relevance-below-3": 20,
+        "duplicate-candidate": 21
       },
+      "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "explainer",
@@ -637,8 +650,8 @@
           "page": "explainer",
           "provider": "wikimedia-commons",
           "query": "masters-format 2025 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 4
         },
         {
           "page": "explainer",
@@ -651,8 +664,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "masters-format 2025 tennis",
-          "status": "ok",
-          "candidate_count": 6
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -693,8 +706,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "masters-format tennis",
-          "status": "ok",
-          "candidate_count": 1
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -717,21 +730,7 @@
           "status": "empty",
           "candidate_count": 0
         }
-      ],
-      "provider": "bing-web-image",
-      "source_url": "https://www.fosters.com/story/sports/golf/majors/masters/2025/04/08/masters-2025-champions-dinner-picture/83000399007/",
-      "image_url": "https://www.fosters.com/gcdn/authoring/authoring-images/2025/04/09/SGLF/83000976007-masters-champions-dinner.jpeg?crop=4095,2304,x0,y396&width=3200&height=1801&format=pjpg&auto=webp",
-      "credit": "fosters.com",
-      "license": "公开网页图片 · 非商业资讯引用",
-      "query": "masters-format 2025 9 站中 7 站 网球观察 tennis",
-      "relevance": 11,
-      "sha256": "77a9f9afb5cfb3bb039f2ebead92e34b77b54c6899c48595d17590881934637b",
-      "focus": "50% 38%",
-      "subject_match": true,
-      "year_match": true,
-      "event_match": true,
-      "person_required": false,
-      "cached_file": "explainer-77a9f9afb5cf.jpeg"
+      ]
     },
     {
       "page": "today",
@@ -749,14 +748,13 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 46,
+      "candidate_count": 43,
       "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
-        "subject-or-person-mismatch": 18,
-        "metadata-relevance-below-3": 18,
-        "source-already-used": 1,
-        "duplicate-candidate": 9
+        "subject-or-person-mismatch": 14,
+        "metadata-relevance-below-3": 21,
+        "duplicate-candidate": 8
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -778,8 +776,8 @@
           "page": "today",
           "provider": "wikimedia-commons",
           "query": "masters-format 2025 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 4
         },
         {
           "page": "today",
@@ -792,8 +790,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "masters-format 2025 tennis",
-          "status": "ok",
-          "candidate_count": 6
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -834,8 +832,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "masters-format tennis",
-          "status": "ok",
-          "candidate_count": 1
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -866,12 +864,12 @@
     "candidate_slug": "masters-format",
     "result_count": 12,
     "live_count": 0,
-    "schedule_count": 63,
+    "schedule_count": 65,
     "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
     "viral_prior": 0.0,
     "topic_score": 0.0,
     "live_relevance_score": 0.0,
-    "trend_signal_count": 81,
+    "trend_signal_count": 71,
     "candidate_rank": 1,
     "candidate_count": 15,
     "visual_preflight_rejections": 0,
