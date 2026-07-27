@@ -350,6 +350,8 @@ def main() -> int:
                 "source": src["name"],
                 "tier": src.get("tier", ""),
                 "kind": kind,
+                # 搬运号的条目要一路带着标记，别在下游混进官方源里。
+                **({"unofficial": True} if src.get("unofficial") else {}),
             }
             fresh += 1
 

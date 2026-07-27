@@ -251,6 +251,33 @@
       "require_tennis": true,
       "verified": true,
       "note": "美国网协。实扫 400 条命中 1 条（Taylor Fritz 2024 戴维斯杯）。量很小，收着备用。"
+    },
+    {
+      "name": "ICONIC CHANNEL TENNIS",
+      "url": "https://www.youtube.com/channel/UCWM8jH6Cm70wLDUApuck5XQ/videos",
+      "tier": "unofficial",
+      "unofficial": true,
+      "scan_depth": 400,
+      "verified": true,
+      "note": "搬运号。实扫 400 条命中 21 条场上采访，其中 14 条补的是官方缺口——**含武汉、北京**，正是中国球员主场那一段。命名格式 `球员/ON COURT INTERVIEW/赛事 年份`，全大写。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
+    },
+    {
+      "name": "Tennis x Tennis",
+      "url": "https://www.youtube.com/channel/UCFXu40ltRqBvGmmEgAoI9mw/videos",
+      "tier": "unofficial",
+      "unofficial": true,
+      "scan_depth": 400,
+      "verified": true,
+      "note": "搬运号。实扫 147 条命中 37 条，其中 14 条补缺口（马德里、迈阿密）。命名 `球员 Post-Match Interview vs 对手 | 赛事 年份`——注意它把对手写在 vs 后面，正好被 _BEATEN 判据正确处理。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
+    },
+    {
+      "name": "Queenlenka",
+      "url": "https://www.youtube.com/channel/UCFm1OG08SDThlIAo9AAhBrg/videos",
+      "tier": "unofficial",
+      "unofficial": true,
+      "scan_depth": 200,
+      "verified": true,
+      "note": "搬运号，专做萨巴伦卡。量很小（31 条里 2 条），但补的是迈阿密。 **不开 require_tennis**：这道闸是给综合体育频道（Amazon 那种混着足球的）用的，而这里是网球专频。实测开了会误伤——搬运号写『Miami』『Dubai』『Italian Open』而不是注册表里的『Miami Open』『Dubai Duty Free』『Rome』，一律被挡掉。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -330,5 +357,6 @@
     "\\brome\\b",
     "next gen"
   ],
-  "_depth_note": "**取样深度是这套东西里最容易出错的一处，栽过两次。** 频道按时间倒序返回，赛事集中在一年里某几周，深度不够就一条都扫不到，看起来和『这家不发采访』一模一样。第一次栽在澳网（1 月的赛事，7 月扫 100 条全空）；第二次是全局性的——美网深度 300 只得 11 条，加到 600 得 53 条；法网 200→700 是 18→89 条。**新增源时宁可给大**，多扫几百条的代价远小于漏掉一整届赛事。"
+  "_depth_note": "**取样深度是这套东西里最容易出错的一处，栽过两次。** 频道按时间倒序返回，赛事集中在一年里某几周，深度不够就一条都扫不到，看起来和『这家不发采访』一模一样。第一次栽在澳网（1 月的赛事，7 月扫 100 条全空）；第二次是全局性的——美网深度 300 只得 11 条，加到 600 得 53 条；法网 200→700 是 18→89 条。**新增源时宁可给大**，多扫几百条的代价远小于漏掉一整届赛事。",
+  "_unofficial_note": "打了 unofficial 的是**粉丝搬运号**，不是官方渠道。收它们是因为官方在这几处确实没有：亚洲赛季（北京/武汉/郑州/宁波/广州/香港）和七个大师赛（印第安维尔斯/迈阿密/马德里/辛辛那提/上海/蒙特卡洛/加拿大）都不发场上采访切片——这些赛事连自己的 YouTube 频道都没有，而中国球员的主场比赛全在亚洲赛季。按仓库既有做法：授权不做检索闸门，来源全程记录，权利判断留给发布前的人工环节。这类源会在库里带 unofficial 标记、推送时单列一区。已知风险：搬运号会删档、元数据不规范、可能重复搬同一条。 注意这三个都是**网球专频**，所以不开 require_tennis——那道闸只对混着别的项目的综合频道有意义。"
 }

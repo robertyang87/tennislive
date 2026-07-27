@@ -148,13 +148,17 @@ def pick(items: dict, pats, only_cn: bool = False) -> list[dict]:
         out.append({**it, "round_zh": rnd, "cn_player": cn, "cn_beaten": beaten})
     # 中国球员优先，其次决赛 > 半决赛 > 四分之一
     order = {"决赛": 0, "半决赛": 1, "四分之一决赛": 2}
-    out.sort(key=lambda x: (not x["cn_player"], order.get(x["round_zh"], 9)))
+    out.sort(key=lambda x: (bool(x.get("unofficial")), not x["cn_player"],
+                            order.get(x["round_zh"], 9)))
     return out
 
 
 def render_html(rows: list[dict]) -> str:
-    cn = [r for r in rows if r["cn_player"]]
-    key = [r for r in rows if not r["cn_player"]]
+    # 官方 / 搬运分开列。搬运号补的是官方确实没有的那几处（亚洲赛季、
+    # 七个大师赛），但来源不规范、可能删档，所以要让人一眼看出是哪一类。
+    cn = [r for r in rows if r["cn_player"] and not r.get("unofficial")]
+    key = [r for r in rows if not r["cn_player"] and not r.get("unofficial")]
+    unof = [r for r in rows if r.get("unofficial")]
     parts = ["<div style='font-family:-apple-system,BlinkMacSystemFont,sans-serif;"
              "font-size:15px;line-height:1.7;color:#1a1a1a'>"]
 
@@ -178,6 +182,13 @@ def render_html(rows: list[dict]) -> str:
 
     block("🇨🇳 中国球员", cn)
     block("🎾 关键场次", key)
+    if unof:
+        block("📎 非官方搬运（亚洲赛季 / 大师赛补漏）", unof)
+        parts.append(
+            "<p style='font-size:12px;color:#8a8a8a;margin:4px 0 0'>"
+            "上面这一区来自粉丝搬运号，不是赛事官方发布。收它们是因为亚洲赛季"
+            "（北京 / 武汉等）和七个大师赛的场上采访官方确实不发切片。"
+            "可能删档、元数据不规范，转发前请自行核对。</p>")
     if not rows:
         parts.append("<p style='color:#8a8a8a'>这一轮没有新的关键场次或中国球员场上采访。</p>")
     parts.append("</div>")
