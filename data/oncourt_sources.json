@@ -666,5 +666,5 @@
       "\\binterview\\b"
     ]
   },
-  "_broadcaster_note": "**转播商这条路走过了，结论是：他们上传集锦，不上传采访。**\n思路本身对——直播里确实有赛后场上采访。但落到 YouTube 上：\n  Stan Sport 温网列表 88 条 → 采访 4 条\n  Stan Sport 法网列表 247 条 → 采访 **0** 条\n  ESPN 深扫 2500 条 → 网球场上采访 **0** 条\n**入口要用播放列表不是频道**——综合体育频道的 /videos 会被本地热门项目淹掉，Stan Sport 那 4 条在 798 条频道流里几乎找不到，在 88 条的温网列表里一眼就见。"
+  "_broadcaster_note": "**「找持权转播商，他们直播里有场上采访」这条路已经查透了，结论是行不通。**\n思路本身对——直播信号里确实有。但他们**不把采访上传到 YouTube**，上传的是集锦。\n\n两轮实测（2026-07-27）：\n① 频道 /videos 深扫 14 家、约 16000 条 → 网球场上采访 **5 条**（Stan Sport 4、Sky Sports 1）。\n② 改用**播放列表**入口重查（这是转播商的正确入口——综合频道的 /videos 会被本地热门项目淹掉）：ESPN 18 个网球列表、SuperSport 4、TSN 2、Sky 4，逐个扫完，含 `interview` 字样的一共 31 条，而且**绝大多数不是场上采访**——ESPN 那几条是演播室长访谈（532 秒 Alcaraz、1015 秒 Djokovic + McEnroe）、甚至有一条 23 秒是「德约拒绝接受场上采访」；Sky 那两条 600–871 秒是颁奖礼全程；SuperSport 命中的是标题里带 interview 的 highlights。\n\n**最硬的一条对照**：ESPN 的 `2026 Wimbledon`（197 条）、`2025 Wimbledon`（241 条）、`2026 Australian Open`（125 条）三个列表，**含 interview 的是 0**。那正是温网早轮缺口该在的地方。\n\n唯一收下的是 Stan Sport 的温网列表（4 条，`Wimbledon First/Second Round Interview`），它的法网列表 247 条里 0 条采访——同一家转播商，两个大满贯，一个 4 条一个 0 条，说明这不是政策而是随手。"
 }
