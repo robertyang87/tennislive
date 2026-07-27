@@ -31,6 +31,19 @@ sys.path.insert(0, str(ROOT))
 
 from tools.oncourt_coverage import haystack, load, side  # noqa: E402
 
+# **只算单打正赛**。分母是单打签表，分子里混进双打/轮椅/青少年就是虚高——
+# 澳网那 835 条新增里有 213 条是双打（`Kostyuk/Ruse On-Court Interview`
+# 这种斜杠配对），不滤掉的话「100%」是假的。
+# 双打识别用 feed.is_doubles（斜杠配对 + 带限定词的 doubles，
+# 光秃秃的 "doubles" 不认——那会误伤单打球员在谈双打的条目）。
+_NOT_SINGLES = re.compile(r"wheelchair|quad\b|\bjunior|\bboys'?\b|\bgirls'?\b"
+                          r"|legends|invitational|exhibition", re.I)
+
+
+def is_main_singles(item: dict) -> bool:
+    """这条算不算单打正赛。双打、轮椅、青少年、传奇表演赛都不算。"""
+    return not feed.is_doubles(item) and not _NOT_SINGLES.search(item.get("title", ""))
+
 _spec = importlib.util.spec_from_file_location("feed", ROOT / "tools" / "oncourt_feed.py")
 feed = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(feed)
@@ -65,6 +78,8 @@ def coverage(items: dict, events: list) -> list[dict]:
         hits = []
         for it in items.values():
             if it.get("source") not in own and not rx.search(haystack(it)):
+                continue
+            if not is_main_singles(it):
                 continue
             s = side(it)
             if ev["tour"] != "both" and s is not None and s != ev["tour"]:

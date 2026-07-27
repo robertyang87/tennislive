@@ -472,3 +472,33 @@ def test_winner_interview_is_a_genre_label_not_a_round():
     # 冠军那一档不受影响
     assert parse_round({"title": "Elena Rybakina Winner Porsche GP '26"}) == "决赛"
     assert parse_round({"title": "Jessica Pegula Winner Charleston '26"}) == "决赛"
+
+
+def test_match_coverage_counts_singles_only():
+    """场次覆盖率**只算单打正赛**——分母是单打签表，分子混进双打就是虚高。
+
+    被用户抓到的：澳网深扫新增的 835 条里有 213 条是双打
+    （`Kostyuk/Ruse On-Court Interview | Australian Open 2023 Second Round`
+    这种斜杠配对），当时报的「100%」是假的。滤掉之后澳网女单 99%、
+    美网 85%/84%——**都掉了 6–7 个点**。
+
+    轮椅、青少年、传奇表演赛同理：都不在单打正赛签表里。
+    """
+    from tools.oncourt_match_coverage import is_main_singles
+
+    for title in [
+        "Kostyuk/Ruse On-Court Interview | Australian Open 2023 Second Round",
+        "Neal Skupski and Desirae Krawczyk Post-Match Interview | Wimbledon 2022",
+        "Men's Doubles Final On-Court Interview | Australian Open 2026",
+        "Oda's brilliant interview after winning Wheelchair Singles | Wimbledon 2026",
+        "Boys' Singles Final Post-match Interview | Wimbledon 2025",
+        "Legends Invitational On-Court Interview | Wimbledon 2024",
+    ]:
+        assert not is_main_singles({"title": title}), title
+
+    for title in [
+        "Carlos Alcaraz On-Court Interview | Australian Open 2026 Final",
+        '"I need a crash course in doubles" | Emma Raducanu | Third round On-court Interview',
+        "Jannik Sinner | First round On-court Interview | Wimbledon 2026",
+    ]:
+        assert is_main_singles({"title": title}), title
