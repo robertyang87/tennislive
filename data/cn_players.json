@@ -1,0 +1,31 @@
+{
+  "_note": "中国大陆球员名单，用于从场上采访标题里认出「有中国球员的场次」。名字取自 src/tennislive/zh/players.py（译名唯一出处，别在这里另写译名）。标题里的写法两种都有——『Qinwen Zheng』和『Zheng Qinwen』——所以匹配时两种顺序都要试。",
+  "_excluded_note": "以下几位会被姓氏/拼音特征误判为中国大陆球员，明确排除：谢淑薇（Su-Wei Hsieh，中华台北）、Ann Li（美国）、Lulu Sun（新西兰）。排除项写在这里而不是靠代码猜，是为了下次有人加名单时能看见理由。",
+  "excluded": ["Su-Wei Hsieh", "Ann Li", "Lulu Sun", "Fang-Hsien Wu"],
+  "players": [
+    { "en": "Qinwen Zheng", "zh": "郑钦文", "tour": "WTA" },
+    { "en": "Xinyu Wang", "zh": "王欣瑜", "tour": "WTA" },
+    { "en": "Shuai Zhang", "zh": "张帅", "tour": "WTA" },
+    { "en": "Xiyu Wang", "zh": "王曦雨", "tour": "WTA" },
+    { "en": "Yue Yuan", "zh": "袁悦", "tour": "WTA" },
+    { "en": "Lin Zhu", "zh": "朱琳", "tour": "WTA" },
+    { "en": "Yafan Wang", "zh": "王雅繁", "tour": "WTA" },
+    { "en": "Sijia Wei", "zh": "韦思佳", "tour": "WTA" },
+    { "en": "Xinyu Gao", "zh": "高馨妤", "tour": "WTA" },
+    { "en": "Saisai Zheng", "zh": "郑赛赛", "tour": "WTA" },
+    { "en": "Xinyun Han", "zh": "韩馨蕴", "tour": "WTA" },
+    { "en": "Zhaoxuan Yang", "zh": "杨钊煊", "tour": "WTA" },
+    { "en": "Hanyu Guo", "zh": "郭涵煜", "tour": "WTA" },
+    { "en": "Yifan Xu", "zh": "徐一璠", "tour": "WTA" },
+    { "en": "Yexin Ma", "zh": "马烨欣", "tour": "WTA" },
+    { "en": "Xinran Sun", "zh": "孙心然", "tour": "WTA" },
+    { "en": "Ye Qiu Yu", "zh": "叶秋语", "tour": "WTA" },
+    { "en": "Zhizhen Zhang", "zh": "张之臻", "tour": "ATP" },
+    { "en": "Juncheng Shang", "zh": "商竣程", "tour": "ATP" },
+    { "en": "Yunchaokete Bu", "zh": "布云朝克特", "tour": "ATP" },
+    { "en": "Yibing Wu", "zh": "吴易昺", "tour": "ATP" },
+    { "en": "Yi Zhou", "zh": "周意", "tour": "ATP" },
+    { "en": "Fajing Sun", "zh": "孙发京", "tour": "ATP" },
+    { "en": "Feng Shuo", "zh": "冯硕", "tour": "ATP" }
+  ]
+}

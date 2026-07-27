@@ -12,7 +12,9 @@ name: oncourt-interviews
 # 退避到 240 秒都拿不到；Actions 的出口没这个问题。
 on:
   schedule:
-    - cron: "20 21 * * 1"   # 每周二 05:20 北京时间（周一赛事收官之后）
+    # **每天**跑，不是每周。「赢球后的采访」等一周就没意义了——
+    # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
+    - cron: "20 21 * * *"   # 每天 05:20 北京时间（前一天赛事收官之后）
   workflow_dispatch:
     inputs:
       only:
@@ -47,18 +49,33 @@ jobs:
           python tools/collect_oncourt_interviews.py ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
             | tee /tmp/oncourt.log
 
+      - name: 筛出关键场次与中国球员，推到微信
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: |
+          # 采集是全量的（八百多条），推送只推两类：关键场次（决赛/半决赛/
+          # 四分之一）和中国球员**赢球后**的。已推过的记在
+          # data/oncourt_feed_sent.json 里，不会重复打扰。
+          if [ -z "$PUSHPLUS_TOKEN" ]; then
+            echo "::notice::没有 PUSHPLUS_TOKEN，只生成清单不推送"
+            python tools/oncourt_feed.py --dry-run | tee -a /tmp/oncourt.log
+          else
+            pip install -q -e . 2>&1 | tail -1
+            python tools/oncourt_feed.py --push | tee -a /tmp/oncourt.log
+          fi
+
       - name: 提交新增条目
         run: |
           # 只碰这一个文件。并行的生成任务互相覆盖过整棵 output/，
           # 这里从一开始就把范围钉死。
-          if git diff --quiet -- data/oncourt_interviews.json; then
+          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json; then
             echo "没有新增，不提交。"
             exit 0
           fi
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/oncourt_interviews.json
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"
           for i in 1 2 3 4; do
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
