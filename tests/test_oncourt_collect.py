@@ -314,11 +314,16 @@ def test_denied_ids_are_all_recorded_as_verified():
 
     不许凭印象拉黑——名单和证据必须一一对上。
 
-    **两种理由都算数**，因为它们是两回事：
+    **三种理由都算数**，因为它们是三回事：
       press    人根本不在场上（发布厅、媒体混合区）
       ceremony 人在场上，但是**独自对着观众讲**，不是接受采访
                （判据是话筒：落地支架麦＝致辞，手持话筒＝有人在问）
-    用户要的只有「赛后直接在场上接受采访」，两种都不是。
+      other    在场上、也是采访，但**受访的不是球员**——
+               tennistv 那条 `Albert II, Prince of Monaco special interview`
+               画面里是摩纳哥亲王站在蒙特卡洛红土边上。
+    用户要的只有「球员赛后直接在场上接受采访」，三种都不是。
+
+    **`oncourt` 绝不能出现在拉黑名单上**——那说明看过是场上采访却还是剔了。
     """
     from tools.collect_oncourt_interviews import ROOT, load_sources
 
@@ -326,7 +331,7 @@ def test_denied_ids_are_all_recorded_as_verified():
         seen = json.load(fh)["verdicts"]
     for vid in load_sources()["deny_ids"]:
         assert vid in seen, f"{vid} 被拉黑却没有看图记录"
-        assert seen[vid]["verdict"] in ("press", "ceremony"), \
+        assert seen[vid]["verdict"] in ("press", "ceremony", "other"), \
             f"{vid} 的判定是 {seen[vid]['verdict']}，不该在拉黑名单上"
 
 
