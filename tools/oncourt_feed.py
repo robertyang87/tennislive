@@ -67,13 +67,19 @@ SENT = ROOT / "data" / "oncourt_feed_sent.json"
 # 轮次写法，按"越具体越先匹配"排。半决赛必须排在决赛前面——
 # `Semi-Finals` 里含 `Final`，顺序反了半决赛会被判成决赛。
 _ROUNDS: list[tuple[str, str]] = [
+    # **资格赛必须排在最前面。** `final round qualifying` 里有 final，
+    # 不先拦下来就会被判成决赛——实测 9 条温网资格赛末轮全被判成了温网决赛。
+    # 资格赛不是关键轮次，也不该混进正赛的轮次统计里。
+    (r"\bqualif\w*", "资格赛"),
     (r"\bsemi[\s-]?finals?\b|\bSF\b", "半决赛"),
     (r"\bquarter[\s-]?finals?\b|\bQF\b", "四分之一决赛"),
     (r"\bfinals?\b", "决赛"),
-    (r"\bround\s*(?:of\s*)?16\b|\bR16\b|\bfourth\s+round\b|\bround\s*4\b", "十六强"),
-    (r"\bthird\s+round\b|\bround\s*3\b|\bR3\b", "第三轮"),
-    (r"\bsecond\s+round\b|\bround\s*2\b|\bR2\b", "第二轮"),
-    (r"\bfirst\s+round\b|\bround\s*1\b|\bR1\b", "第一轮"),
+    # 序数写法 `4th round` 是 Edimator 那种源的标准写法，
+    # 只认 `fourth round` 会漏掉一大片——实测 84 条非资格赛条目里漏了 69 条。
+    (r"\bround\s*(?:of\s*)?16\b|\bR16\b|\b(?:fourth|4th)\s+round\b|\bround\s*4\b", "十六强"),
+    (r"\b(?:third|3rd)\s+round\b|\bround\s*3\b|\bR3\b", "第三轮"),
+    (r"\b(?:second|2nd)\s+round\b|\bround\s*2\b|\bR2\b", "第二轮"),
+    (r"\b(?:first|1st)\s+round\b|\bround\s*1\b|\bR1\b", "第一轮"),
     # R32 / R64 / R128：签表大小不写在标题里，**无法换算成第几轮**——
     # R32 在 128 签是第三轮、64 签是第二轮、32 签是第一轮。所以给一个
     # 诚实的粗标签，别硬猜。反正都不是关键轮次，精确到第几轮也没用，

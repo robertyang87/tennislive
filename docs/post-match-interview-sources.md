@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每天两轮：北京 05:00 与 11:00 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2025 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2181 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -633,6 +633,45 @@ Championships`**——库里 126 条含 champion 的有 116 条是它，
 效果：判不出轮次 468 → **339**，关键轮次 454 → **480**，推送口径 467 → **493**。
 测试是**全量校验不抽样**——库里每一条含结果词的标题都过一遍，
 描述对手的写法一条都不许被判成决赛。
+
+### 补 WTA 缺口：Edimator，以及它带出来的两个轮次 bug
+
+上一节测出 WTA 500/1000 覆盖不全之后去找搬运号，找到 **Edimator**：
+321 条里 155 条是 `Player interview after Nth round win at YYYY Event`
+这种固定写法，轮次 / 赛事 / 年份全在标题里。抽 12 条调视频自动帧，
+**12/12 都在场上**（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦，
+有几条画面里还带 `Beat Nao Hibino 2-6 7-6 6-2` 这种字幕条自证）。
+
+**不能开 `assume_oncourt`**：另外 157 条是致辞、好球集锦、西语采访，
+还混着**一条田径和一条足球**。所以给全局加了第三条标题模式
+`\binterview\s*(?:\([^)]*\)\s*)?after\b`——拿库里 2025 条全量试过，
+额外命中 0 条、不扰动现有分类，四条真实发布会标题也都不中。
+
+放宽入口就得在出口补门闩，于是 `exclude` 加了 `press conference` 和
+`\bpress\b(?!ure)`。搬运号用 `Press` 当发布会标记——
+`Alex Eala Press R32 Win vs Linette Miami '26` 画面是迈阿密背景板加台麦，
+库里这样的 3 条已剔。`(?!ure)` 不能省，库里有 `Staying Calm Under Pressure`。
+
+收进来 159 条，同时**炸出两个一直存在的轮次 bug**：
+
+| bug | 症状 | 影响 |
+| --- | --- | --- |
+| `final round qualifying` 里有 final | 温网**资格赛末轮**被判成温网**决赛** | 9 条 |
+| 只认 `second round`，不认 `2nd round` | 序数写法整个认不出 | 84 条里漏 69 条 |
+
+资格赛现在排在 `_ROUNDS` **最前面**先拦下来，单列 `资格赛` 标签（不进关键轮次）；
+序数 `1st/2nd/3rd/4th` 一并补上。
+
+效果（女子，关键轮次）：
+
+| 赛事 | 加之前 | 加之后 |
+| --- | --- | --- |
+| 女王杯 500 | 3 条 / 决 2 半 0 八 0 | **8 条 / 决 2 半 1 八 3** |
+| 加拿大 1000 | 统计里没有 | **11 条 / 决 0 半 2 八 2** |
+| 伊斯特本 500 | 1 条 / 全 0 | 2 条 / 半 1 |
+
+Edimator 偏草地赛季和加拿大站，**印第安维尔斯和巴德洪堡的缺口它补不上**——
+那两个还得再找源。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 

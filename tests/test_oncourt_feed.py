@@ -413,3 +413,44 @@ def test_every_real_outcome_word_title_in_the_store_is_judged_correctly():
     wrong = [v["title"] for v in items.values()
              if descr.search(v["title"]) and parse_round(v) == "决赛"]
     assert wrong == [], f"描述对手却被判成决赛：{wrong}"
+
+
+def test_qualifying_final_is_not_the_tournament_final():
+    """`final round qualifying` 里有 final，但那是**资格赛末轮**，不是决赛。
+
+    实测 9 条温网资格赛全被判成了温网决赛——`\\bfinals?\\b` 一视同仁。
+    所以资格赛排在 `_ROUNDS` 最前面，先拦下来。
+    """
+    from tools.oncourt_feed import KEY_ROUNDS, parse_round
+
+    for title in [
+        "Bianca Andreescu interview after final round qualifying at 2026 Wimbledon",
+        "UPSET! Oliver Tarvet (719) interview after final round qualifying win at 2025 Wimbledon",
+        "Darja Semeņistaja interview after 2nd round qualifying win at 2026 Wimbledon",
+        "Dan Evans interview after 2nd round qualifying loss at 2026 Wimbledon",
+    ]:
+        assert parse_round({"title": title}) == "资格赛", title
+    assert "资格赛" not in KEY_ROUNDS, "资格赛不能进推送口径"
+
+    # 正赛的决赛不受影响
+    assert parse_round({"title": "Carlos Alcaraz On-Court Interview | Australian Open 2026 Final"}) \
+        == "决赛"
+
+
+def test_ordinal_round_forms_are_recognised():
+    """`2nd round` 和 `second round` 是同一件事，两种都得认。
+
+    Edimator 那种源全写序数——只认英文单词的话，84 条非资格赛条目里
+    **漏 69 条**，全部落到「判不出轮次」。
+    """
+    from tools.oncourt_feed import parse_round
+
+    for title, expect in [
+        ("Alex Eala interview after 2nd round win at 2026 Wimbledon", "第二轮"),
+        ("Tyra Caterina Grant interview after 1st round win at 2026 Wimbledon", "第一轮"),
+        ("Alexander Bublik interview after 3rd round win at 2026 Wimbledon", "第三轮"),
+        ("Jan-Lennard Struff interview after 4th round win at 2026 Wimbledon", "十六强"),
+        # 英文单词写法照旧
+        ("Emma Raducanu | Second round On-court Interview | Wimbledon 2026", "第二轮"),
+    ]:
+        assert parse_round({"title": title}) == expect, title

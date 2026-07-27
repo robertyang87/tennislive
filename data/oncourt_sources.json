@@ -1,9 +1,10 @@
 {
   "_note": "赛后**在场上接受采访**的视频来源。默认只收这一类；颁奖礼致辞另归 ceremony 档默认不收，媒体间发布会永远不收（另有 ASAP Sports 的人工文字稿，见 docs/post-match-interview-sources.md）。verified 字段记的是 2026-07-27 用 yt-dlp --flat-playlist 实际扫到过内容；false 表示还没自证。",
-  "_patterns_note": "按**类型**分，不是按置信度分。oncourt＝赛后直接在场上接受采访（主持人拿麦问、球员答），这是默认唯一收的一类。ceremony＝颁奖礼致辞、冠军演讲、晚宴致辞——是『讲』不是『接受采访』，默认不收，加 --include-ceremony 才收。maybe＝各赛事自己的叫法（上海 Reacts After、马德里西语 Entrevista con），能确定是赛后球员讲话但分不出场上还是媒体间，也分不出是采访还是致辞，人工看。",
+  "_patterns_note": "按**类型**分，不是按置信度分。oncourt＝赛后直接在场上接受采访（主持人拿麦问、球员答），这是默认唯一收的一类。ceremony＝颁奖礼致辞、冠军演讲、晚宴致辞——是『讲』不是『接受采访』，默认不收，加 --include-ceremony 才收。maybe＝各赛事自己的叫法（上海 Reacts After、马德里西语 Entrevista con），能确定是赛后球员讲话但分不出场上还是媒体间，也分不出是采访还是致辞，人工看。 第三条 `interview after` 是为 Edimator 那种写法加的——它写 `Alex Eala interview after 2nd round win at 2026 Wimbledon`，既不含 on-court 也不含 post-match，前两条一条都收不到。拿库里 2025 条全量试过：额外命中 0 条，不扰动现有分类；四条真实发布会标题也都不中。",
   "patterns_oncourt": [
     "on[\\s-]?court\\s+interview",
-    "post[\\s-]?match\\s+interview"
+    "post[\\s-]?match\\s+interview",
+    "\\binterview\\s*(?:\\([^)]*\\)\\s*)?after\\b"
   ],
   "patterns_ceremony": [
     "champion(?:ship)?\\s+speech",
@@ -21,13 +22,15 @@
     "is\\s+crowned\\s+champion",
     "discurso\\b"
   ],
-  "_exclude_note": "命中了模式但明显不是赛后讲话的，在这里挡掉。踩过：『Henry Patten Reacts to the ATP's Controversial Doubles Proposal | The Big T Podcast』—— reacts to 后面跟的是一项提案，不是一场球。",
+  "_exclude_note": "命中了模式但明显不是赛后讲话的，在这里挡掉。踩过：『Henry Patten Reacts to the ATP's Controversial Doubles Proposal | The Big T Podcast』—— reacts to 后面跟的是一项提案，不是一场球。 `press` 两条是加 `interview after` 之后补的门闩：新模式放宽了入口，发布会就得在出口挡住。`(?!ure)` 不能省，库里有 `Staying Calm Under Pressure`。",
   "exclude": [
     "\\bpodcast\\b",
     "\\bproposal\\b",
     "\\bpreview\\b",
     "\\bdraw\\s+ceremony\\b",
-    "\\bpre[\\s-]?tournament\\b"
+    "\\bpre[\\s-]?tournament\\b",
+    "\\bpress\\s+conference\\b",
+    "\\bpress\\b(?!ure)"
   ],
   "sources": [
     {
@@ -350,6 +353,15 @@
       "scan_depth": 400,
       "verified": true,
       "note": "**靠「用赛果反查」找到的赛事官方频道**——之前按句柄猜找不到。391 条里 28 条场上采访，格式 `HEO2021 /// ATP SF /// ON-COURT INTERVIEW with 球员`，ATP 与 WTA 两站都发。"
+    },
+    {
+      "name": "Edimator",
+      "url": "https://www.youtube.com/channel/UCu-Yzoz5etpzJdv_GD2hfjg/videos",
+      "tier": "unofficial",
+      "scan_depth": 400,
+      "verified": true,
+      "unofficial": true,
+      "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -448,6 +460,7 @@
     "3rELpwPYBxY",
     "4-eULI5yvP0",
     "405Jjo9b8BQ",
+    "4EehtQwk4LE",
     "4dFeOlOfKWo",
     "4rIOa76H0l4",
     "5Y9vhDNxfQY",
@@ -485,6 +498,7 @@
     "MGY60kAYly0",
     "MOg33nZ-1UM",
     "Mnbax5if5I4",
+    "MxRXgVgPoS8",
     "NAHsLUnTFv0",
     "NRxhS4d08Ng",
     "NlyUlX4ilm4",
@@ -501,6 +515,7 @@
     "RkOzuh7jnic",
     "S7cFKz9PLbE",
     "S8PM-aYWTDA",
+    "Sw0APcGeIGk",
     "SxnPju-tjmo",
     "T8Nzoii_0tc",
     "TgvGNvqYuYk",
