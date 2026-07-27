@@ -519,3 +519,28 @@ def test_source_owned_events_catch_titles_without_the_event_name():
     # 大满贯拆成了男单 / 女单两个赛事，同一个频道挂在两边——
     # 一届大满贯是两个 128 签、男女各 127 场，分母不拆会把覆盖率算高一倍。
     assert owned.get("Wimbledon") == {"温布尔登网球锦标赛（男单）", "温布尔登网球锦标赛（女单）"}
+
+
+def test_broadcaster_round_interview_form(rules):
+    """转播商写「赛事 + 轮次 + Interview」，不写 on-court / post-match。
+
+    Stan Sport（澳洲持权方）写 `Wimbledon First Round Interview 🎙️`——
+    前三条模式一条都不认，88 条取到 **0 条**。
+
+    加这条之前拿库里 4241 条全量试过：额外命中 0，不扰动现有分类；
+    `Quarterfinals Press Conference` 这类发布会也不会被它收进来
+    （它要求 `round interview` 连在一起，或 `quarter-final interview`）。
+    """
+    for title in [
+        "Stan Wawrinka tears up during farewell 🥹 | Wimbledon First Round Interview 🎙️",
+        "Grigor Dimitrov on last year's return 🥹 | Wimbledon Second Round Interview",
+        "Jannik Sinner Reveals Golf Skills 🏌️| Wimbledon Second Round Interview 🎙️",
+    ]:
+        assert tag(title, rules) == "oncourt", title
+
+    # 发布会不能被顺进来
+    for title in [
+        "Iga Swiatek | Quarterfinals Press Conference | 2025 Cincinnati Open",
+        "Frances Tiafoe | Post Match Press Conference | 2025 Mubadala Citi DC Open",
+    ]:
+        assert tag(title, rules) is None, title
