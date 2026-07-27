@@ -46,6 +46,11 @@ from typing import Callable, Sequence
 W, H = 1080, 1440  # slide / image (3:4)
 VIDEO_W, VIDEO_H = 1080, 1920  # video canvas (9:16)
 _BAND_COLOR = "0x061c14"
+# 卡片在 9:16 画布上的位置。原来是上下居中（黑边各 240px），字幕只能挤在最底下，
+# 而那正是小红书/抖音盖住文案和按钮的地方。把卡片抬高，下边条从 240 变成 384：
+# 字幕贴在这条宽边的顶部，底部 240px 留给 app 的界面，画面一个像素也没被压。
+CARD_H = VIDEO_W * 4 // 3           # 3:4 的卡在 1080 宽下有多高
+CARD_TOP = 88                       # 上边条：留一点给状态栏，但不必对称
 
 _REPO = Path(__file__).resolve().parents[3]
 _REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
@@ -2840,15 +2845,25 @@ def _ass_stamp(seconds: float) -> str:
 # 用的是 libass 默认的 384×288 画布，再拉到 1080×1920，字号 52 落到画面上就成了
 # 三百多像素——第一帧烧出来，四个字盖住了整张卡。ASS 自己写 PlayRes，字号就是
 # 真实像素，不用猜滤镜按什么缩放。
+#
+# WrapStyle 用 0（自动折行）而不是 2（不折行）。切行那一步已经把每行卡在 18 格
+# 以内，正常不会超宽；但万一漏过一条，不折行就是**左右直接切掉**，折行只是往下
+# 长一行——而字幕是上锚的，多长一行仍然离底边 240px。坏的方式要选能兜住的那种。
 _ASS_FONT = "Noto Sans CJK SC"
 _ASS_SIZE = 52
-_ASS_MARGIN_V = 30
+# 字幕贴在**下边条的顶部**（紧挨卡片下沿），不是画布最底下。
+# 量过一版真成片：MarginV=30 时字幕像素落在 y 1849–1882，离底边只有 38px——
+# 小红书/抖音的底部文案区和 home 指示条正好压在那儿，静音刷的人一个字看不到。
+# 这里改成上锚（Alignment=8，MarginV 从**顶边**算），一行两行都从同一个位置往下长，
+# 底部那 240px 完全空出来给 app 的界面。
+_ASS_ALIGN = 8
+_ASS_MARGIN_V = CARD_TOP + CARD_H + 22
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
 _ASS_HEADER = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {VIDEO_W}
 PlayResY: {VIDEO_H}
-WrapStyle: 2
+WrapStyle: 0
 ScaledBorderAndShadow: yes
 
 [V4+ Styles]
@@ -2856,7 +2871,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
 BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
-1,0,0,0,100,100,0,0,1,3,0,2,48,48,{_ASS_MARGIN_V},1
+1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},48,48,{_ASS_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -3012,7 +3027,7 @@ def assemble_explainer_video(
     for i in range(n):
         chain = (
             f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
-            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:{CARD_TOP}:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
         )
         # 字幕。静音刷是默认状态——旁白里的引语、数字、来龙去脉，静音的人一个字
