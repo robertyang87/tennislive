@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每天两轮：北京 05:00 与 11:00 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2181 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2187 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -672,6 +672,30 @@ Championships`**——库里 126 条含 champion 的有 116 条是它，
 
 Edimator 偏草地赛季和加拿大站，**印第安维尔斯和巴德洪堡的缺口它补不上**——
 那两个还得再找源。
+
+### 扩大搜索：十个候选里只有两个能用，其余的问题各不相同
+
+十组查询词批量搜、按频道出现频次排、滤掉已登记的，得到 13 个候选。
+逐个看画面之后**只收了 2 个**。不能用的都记在注册表的 `_rejected_note` 里，
+免得下次重查——**「查过了不合格」和「没查过」在注册表上长得一模一样**：
+
+| 频道 | 为什么不收 |
+| --- | --- |
+| ANTI GOSU EATING CLUB | 片子本身是真场上采访（WTA Tour 话筒、球场），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney "Sweaty" Kessler`。**推送会把人导到那个频道，不收** |
+| QualityShot Tennis | 不是场上画面——庆祝定格照配音，中间插球机广告 |
+| Karendoms Tandem | 画中画叠加加字幕条，单球员粉丝号，发布会与场上混着 |
+| Sportiva Arena | 二次上传，加装饰边框和 `@sportivaArena` 水印，画面被缩进边框里 |
+| The Tennis Tribe | 25–30 分钟的播客式长访谈，不是场上 |
+| LTA | 主要是发布会（14 条），场上的只有 3 条温网双打 |
+
+**Dribble Drive Diaries** 收了：以 Alex Eala 为主，满画幅原始转播画面，
+没有画中画和水印。抽 6 条看帧，4 条在场上、2 条是发布会——但它**自己在标题里
+写 `Press Conference`**，被上一节新加的 exclude 直接挡住，不用额外规则。
+补的是印第安维尔斯和迈阿密。
+
+**顺带的收获：中国球员条目 13 → 17。** Edimator 标题里直接带中文名
+（`Yunchaokete Bu 布云朝克特`、`Xiyu Wang 王曦雨`、`Zhang Shuai 张帅`、
+`Zhizhen Zhang 张之臻`），这四条是别处一条都没有的。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 

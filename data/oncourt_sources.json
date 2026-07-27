@@ -362,6 +362,15 @@
       "verified": true,
       "unofficial": true,
       "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。"
+    },
+    {
+      "name": "Dribble Drive Diaries",
+      "url": "https://www.youtube.com/channel/UCWBo0HwR5GMbWUvt91D-sfQ/videos",
+      "tier": "unofficial",
+      "scan_depth": 250,
+      "verified": true,
+      "unofficial": true,
+      "note": "以 Alex Eala 为主的搬运号，写法 `Full Interview after Win vs X | Event Year`。满画幅原始转播画面，没有画中画和水印。抽 6 条看视频自动帧：4 条在场上（WTA TOUR 手持麦、看台、记分条），2 条是发布会——但它**自己在标题里写 Press Conference**，被 exclude 挡住，不用额外规则。补的是印第安维尔斯和迈阿密的缺口，那两站官方和其他搬运号都很薄。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -584,5 +593,6 @@
     "z8KALsvWA84",
     "zMTGlAtDhoM",
     "zdJlZEOn_rk"
-  ]
+  ],
+  "_rejected_note": "查过但**决定不收**的频道，记下来免得下次重查：\n· ANTI GOSU EATING CLUB —— 片子本身是真场上采访（WTA Tour 话筒、球场），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney \"Sweaty\" Kessler`。推送会把人导到那个频道，不收。\n· QualityShot Tennis —— 不是场上画面，是庆祝定格照配音，中间插球机广告。\n· Karendoms Tandem —— 画中画叠加加字幕条，单球员粉丝号，且发布会与场上混着。\n· Sportiva Arena —— 二次上传，加装饰边框和 @sportivaArena 水印，画面被缩进边框里。\n· The Tennis Tribe —— 25–30 分钟的播客式长访谈，不是场上。\n· LTA —— 主要是发布会（14 条），场上的只有 3 条温网双打。"
 }
