@@ -196,7 +196,11 @@ def test_sources_registry_is_sane():
 def test_tennistv_site_source_is_present_and_not_the_youtube_channel():
     """tennistv.com 的库和 Tennis TV 的 YouTube 频道是两回事，别搞混。
 
-    YouTube 频道深扫 800 条是 **0 条**场上采访；站上的库逐轮都有
+    ~~YouTube 频道深扫 800 条是 0 条场上采访~~ ——**这句话作废了**：
+    实测 Tennis TV 频道有 3000+ 条，800 根本没扫到底，那个「0」是扫深不够
+    造出来的（见 `test_scan_depth_reaches_the_bottom_of_every_channel`）。
+    现在扫深已提到 5000。留着这条测试是为了另一件事：**两个源不能合并**。
+    站上的库逐轮都有
     （R1/QF/SF/Final，0:56–3:27），而且 16/20 免费、4/20 freemium，
     premium 一条都没有。它是唯一系统覆盖 ATP 250 场上采访的来源。
     """
@@ -714,3 +718,49 @@ def test_unknown_gender_never_counts_toward_a_single_tour_draw():
     assert row["covered"] <= 3, f"辛辛那提 WTA 覆盖 {row['covered']} 场，男子条目又混进来了"
     # 被丢掉的数量要报出来——只报命中的，没法证明它真的看过全部
     assert "unknown" in row
+
+
+def test_scan_depth_reaches_the_bottom_of_every_channel():
+    """注册的 `scan_depth` 不能小于这个频道实测的条数——**否则采集器走不到底**。
+
+    **这条是 `scan_depth` 骗过我之后加的。** WTA 官方频道注册的是 800，看着不小；
+    全量扫下来 13791 条，而分类器判为场上采访的 86 条**全部排在第 800 名之后**——
+    按注册深度一条都拿不到。而报表上它只显示「这个源贡献 0 条」，
+    看着像「WTA 不发场上采访」。
+
+    **不够深的时候采集器不报错，它只是没走到那里。** 这是「空结果 ≠ 不存在」
+    里最隐蔽的一种：没有异常、没有告警、数字看着就是真的。
+
+    顺着查下来 14 个源不够深，合计漏 350 条：Tennis TV 800→5000、
+    印第安维尔斯 500→2600、Tennis Channel 250→5000……**其中 Tennis Channel
+    那条最要命**——我曾据 700 条深扫断言它「一条场上采访都没有」，
+    而它的真实体量是 3000+，那个结论根本不作数。
+
+    `measured` 是 2026-07-27 用 `tools/check_scan_depth.py` 实测的条数；
+    探到 3000 就停，所以记 3000 的是**下界**不是真值，注册深度给了余量。
+    """
+    for src in load_sources()["sources"]:
+        m = src.get("measured")
+        if m is None or src.get("depth_exempt"):
+            continue
+        assert src.get("scan_depth", 150) >= m, (
+            f"{src['name']} 实测 {m} 条，scan_depth 只有 {src.get('scan_depth', 150)}"
+            f"——后面那截扫不到")
+
+
+def test_depth_exempt_sources_say_why():
+    """扫深故意低于实测条数的，必须写明理由——**不许默默留个浅的**。
+
+    只有一个：WTA 官方频道。它实测 13791 条，深处 86 条命中分类器，
+    但逐批看帧全是发布会（2020 罗马那 28 条：长桌、BNL 背景板、台式麦）
+    和演播室专访（2016 新加坡年终、2016 亚洲赛季：黑底、赛事 logo 角标、领夹麦），
+    真在场上的只有 2–3 条。为这个把扫深开到 14000 不划算。
+
+    **豁免要写清楚是「查过了，那里没有」，不是「没查」。** 两者在报表上
+    长得一模一样，只有这段字能分开。
+    """
+    cfg = load_sources()
+    exempt = [s for s in cfg["sources"] if s.get("depth_exempt")]
+    for s in exempt:
+        assert len(s["depth_exempt"]) > 30, f"{s['name']} 的豁免理由太短，说不清查过什么"
+        assert s.get("measured"), f"{s['name']} 声称豁免却没有实测数"
