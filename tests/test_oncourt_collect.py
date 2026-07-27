@@ -420,3 +420,92 @@ def test_store_matches_every_rule_and_every_verdict():
                if v["verdict"] == "oncourt" and vid not in items
                and not any(p.search(v.get("title", "")) for p in deny.get(v.get("source", ""), ()))]
     assert missing == [], f"看图确认在场上、却被剔出库的：{missing}"
+
+
+def test_allow_by_source_is_scoped_to_its_own_source():
+    """按源的白名单：官方赛事频道标题太简，全局模式够不着。
+
+    巴斯塔德写 `Filip Misolic Interview - Nordea Open 2025`——只有一个光秃秃的
+    `interview`。加进全局 `patterns_oncourt` 会把发布会、播客、专访一起灌进来。
+
+    **和 assume_oncourt 的区别是踩出来的**：一开始给 Nordea 打了
+    assume_oncourt，300 条全进来了，其中大半是 16–35 秒的 `Hot shot` 好球集锦。
+    白名单只放标题对得上的那 27 条。
+    """
+    from tools.collect_oncourt_interviews import compile_allow, load_sources
+
+    cfg = load_sources()
+    allow = compile_allow(cfg)
+    assert "Nordea Open" in allow
+    assert allow.get("Wimbledon") is None, "白名单不能外溢到别的源"
+
+    rx = allow["Nordea Open"]
+    assert any(p.search("Filip Misolic Interview - Nordea Open 2025") for p in rx)
+    # 好球集锦不带 interview，白名单碰不到它
+    assert not any(p.search("Luciano Darderi - Hot shot - Nordea Open 2026") for p in rx)
+
+    # 打了白名单的源不该同时打 assume_oncourt——那样白名单就没意义了
+    for src in cfg["sources"]:
+        if src["name"] in allow:
+            assert not src.get("assume_oncourt"), f"{src['name']} 白名单与整包收不能并存"
+
+
+def test_calendar_covers_every_tier_and_patterns_compile():
+    """赛历本身要能用：正则编得过、日期成对、级别齐。
+
+    这张表是覆盖率对账的**分母**——之前用我手搓的清单，
+    漏掉的赛事在报表上根本不出现，看着一片绿其实半张日历没查过。
+    """
+    import re as _re
+
+    from tools.collect_oncourt_interviews import ROOT
+
+    with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
+        events = json.load(fh)["events"]
+    assert len(events) >= 100
+    tiers = {e["tier"] for e in events}
+    for t in ("大满贯", "ATP1000", "WTA1000", "ATP500", "WTA500", "ATP250", "WTA250"):
+        assert t in tiers, f"赛历缺 {t} 这一档"
+    for e in events:
+        _re.compile(e["pat"])                       # 编不过就炸在这
+        assert e["tour"] in ("atp", "wta", "both"), e["zh"]
+        assert _re.fullmatch(r"\d\d-\d\d", e["start"]), e["zh"]
+
+
+def test_slug_patterns_tolerate_hyphens_and_underscores():
+    """赛事名在 URL 里是 `indian-wells`、`/paris_round-1-`，不是空格。
+
+    实测这一条漏了 85 条：60 条印第安维尔斯 + 25 条巴黎全被判成
+    「不属于任何赛事」，因为正则写的是 `indian wells`（空格）。
+    """
+    import re as _re
+
+    from tools.collect_oncourt_interviews import ROOT
+
+    with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
+        events = {e["zh"] + e["tour"]: e for e in json.load(fh)["events"]}
+
+    iw = _re.compile(events["印第安维尔斯大师赛atp"]["pat"], _re.I)
+    assert iw.search("https://www.tennistv.com/videos/1/indian-wells-2025-r2-griekspoor-interview")
+    assert iw.search("ARYNA SABALENKA/ON COURT INTERVIEW/INDIAN WELLS OPEN 2025")
+
+    par = _re.compile(events["巴黎大师赛atp"]["pat"], _re.I)
+    assert par.search("/videos/10/paris_round-1-post-match-interview-dimitrov")
+    assert par.search("Novak Djokovic on-court interview Final | Rolex Paris Masters 2023")
+
+
+def test_source_owned_events_catch_titles_without_the_event_name():
+    """`srcs`：频道本身就说明了赛事，标题写不写无所谓。
+
+    汉堡官方频道写 `HEO2021 /// ATP QF /// ON-COURT INTERVIEW with …`，
+    迪拜写 `Post-Match Interview: Roger Federer`——标题里一个赛事名都没有。
+    只按标题匹配，这两个源的 129 条全成孤儿。
+    """
+    from tools.collect_oncourt_interviews import ROOT
+
+    with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
+        events = json.load(fh)["events"]
+    owned = {s: e["zh"] for e in events for s in e.get("srcs", ())}
+    assert owned.get("Hamburg European Open") == "汉堡公开赛"
+    assert owned.get("Wimbledon") == "温布尔登网球锦标赛"
+    assert owned.get("Nordea Open") == "博斯塔德公开赛"

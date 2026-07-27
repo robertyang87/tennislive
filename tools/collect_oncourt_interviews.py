@@ -119,6 +119,25 @@ def compile_rules(cfg: dict) -> dict[str, list]:
     }
 
 
+def compile_allow(cfg: dict) -> dict[str, list]:
+    """每个源自己的**白名单**：这个源上，标题长这样就算场上采访。
+
+    为什么需要它，而不是把写法加进全局 `patterns_oncourt`：
+    官方赛事频道的标题往往**极简**，`Filip Misolic Interview - Nordea Open 2025`
+    ——只有一个光秃秃的 `interview`。把 `\\binterview\\b` 加进全局，
+    发布会、播客、专访会一起灌进来；但在巴斯塔德自己的频道里，
+    27 条带 interview 的条目抽 8 条看帧全在红土场上，那就是安全的。
+
+    **和 assume_oncourt 的区别**：assume_oncourt 是整个频道照单全收，
+    Nordea 那样 300 条里混着 16 秒 Hot shot 的频道会被灌爆（实测多收 273 条）。
+    白名单只放标题对得上的那部分。
+
+    白名单**不豁免 exclude 和 deny_ids**——两道出口闸照旧。
+    """
+    return {name: [re.compile(p, re.I) for p in pats]
+            for name, pats in cfg.get("allow_by_source", {}).items()}
+
+
 def compile_deny(cfg: dict) -> dict[str, list]:
     """每个源自己的标题黑名单。**现在是空的，而且应该保持空的。**
 
@@ -410,6 +429,7 @@ def main() -> int:
 
     cfg = load_sources()
     rules = compile_rules(cfg)
+    allow = compile_allow(cfg)
     deny = compile_deny(cfg)
     deny_ids = set(cfg.get("deny_ids", []))
     keep = {"oncourt"}
@@ -451,6 +471,9 @@ def main() -> int:
             # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
             # 全是官方缺口。这类源按源判，不按标题判。
             if r["id"].startswith(("tennistv:", "wta:")) or src.get("assume_oncourt"):
+                kind = "oncourt"
+            elif any(p.search(r["title"]) for p in allow.get(src["name"], ())):
+                # 按源的白名单：官方赛事频道标题太简，全局模式够不着。
                 kind = "oncourt"
             else:
                 kind = classify(r["title"], rules)

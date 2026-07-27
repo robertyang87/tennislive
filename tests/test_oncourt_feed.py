@@ -320,3 +320,155 @@ def test_surname_hits_that_are_real_interviewees(pats):
               "Home hero Bu progresses into second round"]:
         hit = cn_hit(t, pats)
         assert hit and hit[1] is True, t
+
+
+def test_outcome_words_count_as_the_final():
+    """搬运号写 `Winner` / `Champion` / `Finalist`，不写 `Final`。
+
+    不认这几个词的代价极大——**冠军那条采访是最该推的一条**。实测 WTA
+    500/1000 的决赛条目几乎全靠它们才认得出来：改之前十三个赛事里
+    只有一个能认出决赛，改之后十二个都能。
+    """
+    from tools.oncourt_feed import parse_round
+
+    for title in [
+        "Elena Rybakina Winner Porsche GP '26",
+        "Jessica Pegula Winner Charleston '26",
+        "Linda Noskova Winner Berlin 2026",
+        "Karolina Muchova Winner Qatar '26",
+        "Jannik Sinner Champion Wimbledon 2026",
+        "Petra Marcinko Champion Rabat 2026",
+        "The new Wimbledon Champion | Jannik Sinner | Final On-Court Interview | Wimbledon 2025",
+        "Victoria Mboko Finalist Qatar '26",
+        "Emma Raducanu Finalist London '26",
+        '"Today is still a good day" | Beaten Finalist Jasmine Paolini | On-court Interview',
+    ]:
+        assert parse_round({"title": title}) == "决赛", title
+
+
+def test_outcome_words_describing_the_opponent_are_not_the_final():
+    r"""同样几个词也大量用来**描述对手**，那不是轮次。
+
+    反例逐条从库里挑出来的，不是编的：`Defending champion Sinner up and
+    running in Shanghai` 是他刚开赛那场。
+
+    还有一条更要命的：迪拜赛事全名就叫 `Dubai Duty Free Tennis
+    Championships`——库里 126 条含 champion 的有 116 条是它，
+    `\bchampions?\b` 不加 `(?!ship)` 就全成决赛了。
+    """
+    from tools.oncourt_feed import parse_round
+
+    for title, expect in [
+        ("Defending champion Sinner up and running in Shanghai", None),
+        ("Former champion Evans stuns Musetti", None),
+        ("Sonay Kartal beats Grand-Slam Winner | On-Court Interview", None),
+        ("2022 finalist Ruud advances in Miami", None),
+        ("Cerundolo conquers last year's finalist Jarry", None),
+        ("Bergs stuns former finalist Rublev", None),
+        # 赛事全名里的 Championships，一条都不能当决赛
+        ("Andrey Rublev - Post-Match Interview - R2 2021 Dubai Duty Free Tennis Championships",
+         "第二轮"),
+        ("Alexei Popyrin | Post-Match Interview | R1 | 2025 Dubai Duty Free Tennis Championships",
+         "第一轮"),
+        ("Anna Kalinskaya – Semifinals Post-Match Interview – 2024 Dubai Duty Free Tennis "
+         "Championships", "半决赛"),
+        # 明确轮次要压过结果词：这条写着 First Round
+        ("How he beat a Grand Slam Champion | Benjamin Bonzi | First Round On-Court Interview",
+         "第一轮"),
+    ]:
+        assert parse_round({"title": title}) == expect, title
+
+
+def test_r32_r64_are_labelled_but_deliberately_imprecise():
+    """R32 / R64 / R128 **换算不出第几轮**，因为签表大小不写在标题里。
+
+    R32 在 128 签是第三轮、64 签是第二轮、32 签是第一轮。所以给一个粗标签
+    `早轮`，别硬猜。反正都不是关键轮次，但标上之后缺口报告里就不会再算成
+    「判不出轮次」——库里这样的有 88 条。
+    """
+    from tools.oncourt_feed import KEY_ROUNDS, parse_round
+
+    for title in ["Lilli Tagger R32 Linz '26", "Coco Gauff R64 Rome '26",
+                  "Barbora Krejcikova R128 Rome '26"]:
+        assert parse_round({"title": title}) == "早轮", title
+    assert "早轮" not in KEY_ROUNDS, "早轮不是关键轮次，不能进推送口径"
+
+
+def test_every_real_outcome_word_title_in_the_store_is_judged_correctly():
+    """**全量校验，不抽样。** 库里每一条含结果词的标题都过一遍。
+
+    这条规则是从「标题正则栽过两次」之后写的，所以不再拿几个样本了事：
+    描述对手的写法必须一条都不被判成决赛。
+    """
+    import json
+    import re
+
+    from tools.oncourt_feed import STORE, parse_round
+
+    with STORE.open(encoding="utf-8") as fh:
+        items = json.load(fh)["items"]
+    descr = re.compile(r"defending champion|former champion|former finalist"
+                       r"|grand.slam (?:champion|winner)|\d{4} finalist"
+                       r"|last year's finalist", re.I)
+    wrong = [v["title"] for v in items.values()
+             if descr.search(v["title"]) and parse_round(v) == "决赛"]
+    assert wrong == [], f"描述对手却被判成决赛：{wrong}"
+
+
+def test_qualifying_final_is_not_the_tournament_final():
+    """`final round qualifying` 里有 final，但那是**资格赛末轮**，不是决赛。
+
+    实测 9 条温网资格赛全被判成了温网决赛——`\\bfinals?\\b` 一视同仁。
+    所以资格赛排在 `_ROUNDS` 最前面，先拦下来。
+    """
+    from tools.oncourt_feed import KEY_ROUNDS, parse_round
+
+    for title in [
+        "Bianca Andreescu interview after final round qualifying at 2026 Wimbledon",
+        "UPSET! Oliver Tarvet (719) interview after final round qualifying win at 2025 Wimbledon",
+        "Darja Semeņistaja interview after 2nd round qualifying win at 2026 Wimbledon",
+        "Dan Evans interview after 2nd round qualifying loss at 2026 Wimbledon",
+    ]:
+        assert parse_round({"title": title}) == "资格赛", title
+    assert "资格赛" not in KEY_ROUNDS, "资格赛不能进推送口径"
+
+    # 正赛的决赛不受影响
+    assert parse_round({"title": "Carlos Alcaraz On-Court Interview | Australian Open 2026 Final"}) \
+        == "决赛"
+
+
+def test_ordinal_round_forms_are_recognised():
+    """`2nd round` 和 `second round` 是同一件事，两种都得认。
+
+    Edimator 那种源全写序数——只认英文单词的话，84 条非资格赛条目里
+    **漏 69 条**，全部落到「判不出轮次」。
+    """
+    from tools.oncourt_feed import parse_round
+
+    for title, expect in [
+        ("Alex Eala interview after 2nd round win at 2026 Wimbledon", "第二轮"),
+        ("Tyra Caterina Grant interview after 1st round win at 2026 Wimbledon", "第一轮"),
+        ("Alexander Bublik interview after 3rd round win at 2026 Wimbledon", "第三轮"),
+        ("Jan-Lennard Struff interview after 4th round win at 2026 Wimbledon", "十六强"),
+        # 英文单词写法照旧
+        ("Emma Raducanu | Second round On-court Interview | Wimbledon 2026", "第二轮"),
+    ]:
+        assert parse_round({"title": title}) == expect, title
+
+
+def test_winner_interview_is_a_genre_label_not_a_round():
+    """`winner interview` 是**体裁标签**，不是「决赛」。
+
+    巴斯塔德官方频道写 `Andrea Pellegrino winner interview at Nordea Open 2026`
+    ——意思是「赢家采访」。而搬运号写 `Elena Rybakina Winner Porsche GP '26`
+    才是「冠军」。**同一个词，隔一个 interview 就换了意思。**
+    """
+    from tools.oncourt_feed import parse_round
+
+    assert parse_round({"title": "Andrea Pellegrino winner interview at Nordea Open 2026"}) is None
+    assert parse_round({"title": "Nuno Borges winner interview - R32 - Nordea Open 2026"}) == "早轮"
+    assert parse_round({"title": "Andrey Rublev - R16 - Winner interview - Nordea Open 2026"}) \
+        == "十六强"
+    # 冠军那一档不受影响
+    assert parse_round({"title": "Elena Rybakina Winner Porsche GP '26"}) == "决赛"
+    assert parse_round({"title": "Jessica Pegula Winner Charleston '26"}) == "决赛"
