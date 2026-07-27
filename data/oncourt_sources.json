@@ -53,7 +53,7 @@
       "name": "Wimbledon",
       "url": "https://www.youtube.com/@Wimbledon/videos",
       "tier": "slam",
-      "scan_depth": 1800,
+      "scan_depth": 6000,
       "verified": true,
       "note": "全英文。除颁奖礼外独有 Champion's Dinner Speech（有讲稿、语速慢），是最接近标准英语演讲的一类。"
     },
@@ -61,7 +61,7 @@
       "name": "Roland-Garros",
       "url": "https://www.youtube.com/@rolandgarros/videos",
       "tier": "slam",
-      "scan_depth": 1800,
+      "scan_depth": 6000,
       "verified": true,
       "note": "颁奖礼是 18–23 分钟完整版（Men's/Women's singles final post-match ceremony），法英混说。"
     },
@@ -69,7 +69,7 @@
       "name": "Australian Open",
       "url": "https://www.youtube.com/@australianopen/videos",
       "tier": "slam",
-      "scan_depth": 1800,
+      "scan_depth": 6000,
       "verified": false,
       "note": "全英文，主持人常是 Jim Courier。scan_depth 特意调大：赛事在 1 月，其他月份扫近 100 条会全部落空——踩过这个假阴性。"
     },
@@ -77,7 +77,7 @@
       "name": "US Open",
       "url": "https://www.youtube.com/@usopen/videos",
       "tier": "slam",
-      "scan_depth": 1800,
+      "scan_depth": 6000,
       "verified": false,
       "note": "全英文，有完整 trophy ceremony。频道句柄按搜索结果填，还没实扫过。"
     },
@@ -502,7 +502,7 @@
     "\\brome\\b",
     "next gen"
   ],
-  "_depth_note": "**取样深度栽过三次，每次都是同一个误判：把『我扫得不够深』当成『这家不发采访』。**频道按时间倒序返回，赛事集中在一年里某几周，深度不够就一条都扫不到。三次的数字：澳网 100→400（0→10 条）；美网 300→600（11→53）；再到 1200（→129）。温网 700→1500 是 75→154，法网 89→162，澳网 74→144——**几乎每次加深都翻倍**。Eurosport 是唯一探到底的（频道共 972 条，扫满得 92 条）。结论：**建基线时给到频道总量**，别猜；日常增量另有 DAILY_DEPTH=60，两者互不影响。",
+  "_depth_note": "**取样深度栽过三次，每次都是同一个误判：把『我扫得不够深』当成『这家不发采访』。**频道按时间倒序返回，赛事集中在一年里某几周，深度不够就一条都扫不到。三次的数字：澳网 100→400（0→10 条）；美网 300→600（11→53）；再到 1200（→129）。温网 700→1500 是 75→154，法网 89→162，澳网 74→144——**几乎每次加深都翻倍**。Eurosport 是唯一探到底的（频道共 972 条，扫满得 92 条）。结论：**建基线时给到频道总量**，别猜；日常增量另有 DAILY_DEPTH=60，两者互不影响。 大满贯频道 2026-07-27 从 1800 提到 6000：温网扫到 4500 **仍然触底**，而且命中 216 条场上采访写法，库里当时只有 160——**触底就说明还有**，「扫到的数等于 --playlist-end」是唯一可靠的判据。法网相反：全频道 4428 条已经到头，162 条命中里逐条看过、剔掉 105 条发布会，那边挖到底了。",
   "_unofficial_note": "打了 unofficial 的是**粉丝搬运号**，不是官方渠道。收它们是因为官方在这几处确实没有：亚洲赛季（北京/武汉/郑州/宁波/广州/香港）和七个大师赛（印第安维尔斯/迈阿密/马德里/辛辛那提/上海/蒙特卡洛/加拿大）都不发场上采访切片——这些赛事连自己的 YouTube 频道都没有，而中国球员的主场比赛全在亚洲赛季。按仓库既有做法：授权不做检索闸门，来源全程记录，权利判断留给发布前的人工环节。这类源会在库里带 unofficial 标记、推送时单列一区。已知风险：搬运号会删档、元数据不规范、可能重复搬同一条。 注意这三个都是**网球专频**，所以不开 require_tennis——那道闸只对混着别的项目的综合频道有意义。",
   "_deny_ids_note": "**按 id 拉黑，因为标题分不出来——两次写正则两次都错。**\n法网和巴黎大师赛（同属法网协会 FFT）把新闻发布会也写成 post-match interview。第一版按年份切法网（2024 一律当发布会），61 条里错杀 4 条：施瓦茨曼和蒂姆的告别、辛纳二轮、瓦林卡一轮，画面里都在场上。第二版按「标题不写 on-court」切巴黎，25 条里错杀 7 条——那里有三条一字不差都叫 `Jannik Sinner post-match interview | Rolex Paris Masters`，两条在场上、一条在背景板前。\n所以这份名单上的每一条都逐条看过视频自动帧（YouTube 在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，是视频里的真实画面，上传者改不了）。工具 tools/verify_oncourt_sample.py，判定逐条记在 data/oncourt_verify.json，测试查名单与判定一一对应。\n**往后新增只能同样逐条看过再加**，别再试图从标题里找规律。\n第三批（搬运号 Tennis Interviews 的 Champion/Finalist）：18 条看下来 12 条是颁奖礼致辞。判据是**话筒**——落地支架麦＝独自对着观众讲＝致辞；手持话筒（WTA TOUR 或转播方标）＝有人在问＝采访。用户要的是「接受采访」，致辞明确排除。同一批标题里两种都有（Kalinina/Marcinko/Mboko 拿的是手持麦，是真采访），所以还是只能按 id。",
   "deny_ids": [

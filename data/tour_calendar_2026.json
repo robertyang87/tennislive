@@ -2,14 +2,14 @@
   "_note": "2026 赛季 ATP / WTA 赛历。`pat` 是用来把库里的条目认到赛事上的正则，**按标题 + page_url 一起匹配**——tennistv 的条目赛事名只在 URL 里。同名不同巡回的（迪拜、华盛顿、印第安维尔斯……）按 tour 字段分开记，因为 ATP 和 WTA 那一站的采访来源常常完全不同。",
   "events": [
     {
-      "zh": "澳大利亚网球公开赛",
+      "zh": "澳大利亚网球公开赛（男单）",
       "en": "Australian Open",
       "loc": "墨尔本",
       "tier": "大满贯",
       "start": "01-18",
       "end": "02-01",
       "pat": "australian open|\\bAO\\s*20\\d\\d|\\bAusOpen",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Australian Open"
       ],
@@ -17,14 +17,29 @@
       "matches": 127
     },
     {
-      "zh": "法国网球公开赛",
+      "zh": "澳大利亚网球公开赛（女单）",
+      "en": "Australian Open",
+      "loc": "墨尔本",
+      "tier": "大满贯",
+      "start": "01-18",
+      "end": "02-01",
+      "pat": "australian open|\\bAO\\s*20\\d\\d|\\bAusOpen",
+      "tour": "wta",
+      "srcs": [
+        "Australian Open"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "法国网球公开赛（男单）",
       "en": "Roland-Garros",
       "loc": "巴黎",
       "tier": "大满贯",
       "start": "05-24",
       "end": "06-07",
       "pat": "roland[\\s-]?garros|french open",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Roland-Garros",
         "Fédération Française de Tennis"
@@ -33,14 +48,30 @@
       "matches": 127
     },
     {
-      "zh": "温布尔登网球锦标赛",
+      "zh": "法国网球公开赛（女单）",
+      "en": "Roland-Garros",
+      "loc": "巴黎",
+      "tier": "大满贯",
+      "start": "05-24",
+      "end": "06-07",
+      "pat": "roland[\\s-]?garros|french open",
+      "tour": "wta",
+      "srcs": [
+        "Roland-Garros",
+        "Fédération Française de Tennis"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "温布尔登网球锦标赛（男单）",
       "en": "Wimbledon",
       "loc": "伦敦",
       "tier": "大满贯",
       "start": "06-29",
       "end": "07-12",
       "pat": "wimbledon",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Wimbledon"
       ],
@@ -48,14 +79,44 @@
       "matches": 127
     },
     {
-      "zh": "美国网球公开赛",
+      "zh": "温布尔登网球锦标赛（女单）",
+      "en": "Wimbledon",
+      "loc": "伦敦",
+      "tier": "大满贯",
+      "start": "06-29",
+      "end": "07-12",
+      "pat": "wimbledon",
+      "tour": "wta",
+      "srcs": [
+        "Wimbledon"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "美国网球公开赛（男单）",
       "en": "US Open",
       "loc": "纽约",
       "tier": "大满贯",
       "start": "08-31",
       "end": "09-13",
       "pat": "\\bus open\\b|usopen",
-      "tour": "both",
+      "tour": "atp",
+      "srcs": [
+        "US Open"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "美国网球公开赛（女单）",
+      "en": "US Open",
+      "loc": "纽约",
+      "tier": "大满贯",
+      "start": "08-31",
+      "end": "09-13",
+      "pat": "\\bus open\\b|usopen",
+      "tour": "wta",
       "srcs": [
         "US Open"
       ],
@@ -1313,5 +1374,6 @@
   ],
   "_srcs_note": "`srcs`：**这个源的条目一律归到这一站**，不看标题。起因是 423 条孤儿里一大半是这种——汉堡频道写 `HEO2021 /// ATP QF ///`，迪拜写 `Post-Match Interview: Roger Federer`，罗马写 `#IBI23`，标题里根本没有赛事名，但**频道本身就说明了赛事**。同名不同巡回的（迪拜、华盛顿、印第安维尔斯）只挂在 ATP 那一侧，因为那几个赛事频道发的是男子内容。",
   "_extra_note": "用户给的赛历是「代表性赛事」，不是全量。以下几站是**对账时从库里撞出来的**——库里有条目却归不到任何赛事，反过来说明赛历漏了它们：埃斯托里尔、基茨比厄尔、乌马格、安特卫普。**这就是孤儿报表的用处**：它不只是清理噪音，还能反推赛历的缺口。",
-  "_draw_note": "`draw` 是单打正赛签表大小，`matches` = draw − 1 是该赛事单打总场次。**这是「场次覆盖率」的分母**——之前只算「关键轮次占理论 8」，那个分母是 8，回答不了「这个赛事一共打了多少场、其中多少场有采访」。签表按级别给默认值，蒙特卡洛/巴黎(56)、华盛顿/巴塞罗那(48)、中网(64)、多哈/武汉(56) 这些例外单列。ATP250 多数是 28 签。"
+  "_draw_note": "`draw` 是单打正赛签表大小，`matches` = draw − 1 是该赛事单打总场次。**这是「场次覆盖率」的分母**——之前只算「关键轮次占理论 8」，那个分母是 8，回答不了「这个赛事一共打了多少场、其中多少场有采访」。签表按级别给默认值，蒙特卡洛/巴黎(56)、华盛顿/巴塞罗那(48)、中网(64)、多哈/武汉(56) 这些例外单列。ATP250 多数是 28 签。",
+  "_slam_note": "**大满贯必须按男女拆成两个赛事**。一届大满贯是两个 128 签、男女各 127 场、合计 254 场。原来记成 `tour: both` + `matches: 127`，男女条目都往同一个分母里算——**覆盖率直接算高一倍**，美网「91%」实际是 46%。1000/500/250 里同名不同巡回的（迪拜、华盛顿、印第安维尔斯……）本来就是分开两条，只有大满贯漏了这一刀。"
 }
