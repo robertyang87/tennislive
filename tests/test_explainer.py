@@ -658,3 +658,150 @@ def test_旁白里不能留下markdown记号():
                 )
             for p in seg.points:
                 assert not re.search(r"[*`_#]", p), f"{slug}/{seg.kind} 要点里有记号：{p}"
+
+
+def test_字幕补上耳朵那一份():
+    """卡上放得下的只有两三条短句，旁白里装着的是全部。
+
+    静音刷是默认状态。没有字幕，静音的人拿到的就只有那几条短句——引语、数字、
+    来龙去脉全丢了，而那才是这条片子的内容。所以字幕不是装饰，是补上耳朵那一份。
+
+    这里盯三件事：切出来的行不会长到顶边、字幕文本和**听到的**一致（比分照着
+    念的样子写）、行与行在原文里首尾相接不丢字。
+    """
+    from tennislive.video import explainer as E
+
+    text = "二〇二四年九月，成都公开赛首轮，当时十九岁的商竣程6-4、6-4击败锦织圭。"
+    lines = E.subtitle_lines(E.readable(text))
+    assert lines, "一句话都没切出来"
+    for _, _, shown in lines:
+        assert len(shown) <= E._SUB_MAX, f"这行顶到边了：{shown}"
+    # 比分要和耳朵对上：屏幕上是 6-4，念出来和字幕里都是「6 比 4」。
+    assert any("6 比 4" in shown for _, _, shown in lines), lines
+    # 相邻两行在原文里首尾相接——中间掉字的话，时间轴也会跟着错位。
+    for (_, end, _), (start, _, _) in zip(lines, lines[1:]):
+        assert start == end
+
+
+def test_没有词边界也要有字幕(tmp_path):
+    """拿不到 WordBoundary 就按字数分——不完美，但绝不能整条片子没字幕。"""
+    import pytest
+
+    from tennislive.video import explainer as E
+
+    text = "他说过一句话：我其实还想继续打。三十六岁，能伤的地方几乎伤了个遍。"
+    cues = E.subtitle_cues(text, 10.0, boundaries=(), offset=0.6)
+    assert len(cues) >= 2
+    assert cues[0][0] == pytest.approx(0.6)          # 片头静音推过
+    assert cues[-1][1] == pytest.approx(10.6)        # 收在音频末尾
+    for (s1, e1, _), (s2, _, _) in zip(cues, cues[1:]):
+        assert s1 < e1 and e1 <= s2 + 1e-6, (s1, e1, s2)
+
+    # 有词边界时按它对齐，不再按字数猜。
+    marks = [{"offset": 0, "duration": 5_000_000, "text": "他说过一句话"},
+             {"offset": 60_000_000, "duration": 5_000_000, "text": "三十六岁"}]
+    aligned = E.subtitle_cues(text, 10.0, boundaries=marks)
+    assert aligned[1][0] == pytest.approx(6.0), aligned
+
+
+def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
+    """3:4 的卡居中在 9:16 上，上下各空 240px——字幕丢进下边条，画面一个像素不动。
+
+    盯住样式里的两个数：Alignment=2（贴底居中）和 MarginV，两者加上字号必须
+    留在 240px 的黑边内。字压到照片上，等于把「图不好看就加字」那条错误
+    重犯一遍。
+    """
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "8.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slides = [tmp_path / f"s{i}.png" for i in range(2)]
+    audios = [tmp_path / f"a{i}.mp3" for i in range(2)]
+    for p in slides + audios:
+        p.write_bytes(b"x")
+
+    E.assemble_explainer_video(
+        slides, audios, tmp_path / "out.mp4", runner=runner,
+        captions=["这一站他要靠一张外卡才能进正赛。", "一场首轮，装着一代人的交接。"],
+    )
+    graph = calls[-1][calls[-1].index("-filter_complex") + 1]
+    assert graph.count("subtitles=") == 2, graph
+    assert "Alignment=2" in graph and "MarginV=62" in graph
+
+    band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2   # 上下黑边各多高
+    assert band == 240
+    assert 62 + 52 * 2 * 1.25 < band, "两行字幕会顶出黑边压到画面上"
+
+    # 字幕文件真的写出来了，而且第一段被片头静音推过。
+    first = (tmp_path / "sub_00.srt").read_text(encoding="utf-8")
+    assert first.startswith("1\n00:00:00,600 --> "), first[:60]
+    assert "外卡" in first
+
+
+def test_没有旁白的那一段不挂字幕(tmp_path, monkeypatch):
+    """空旁白挂个空字幕文件，ffmpeg 会当成错误——干脆不挂。"""
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "3.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slide, audio = tmp_path / "s.png", tmp_path / "a.mp3"
+    slide.write_bytes(b"x")
+    audio.write_bytes(b"x")
+
+    E.assemble_explainer_video([slide], [audio], tmp_path / "one.mp4",
+                               runner=runner, captions=["   "])
+    graph = calls[-1][calls[-1].index("-filter_complex") + 1]
+    assert "subtitles=" not in graph
+
+
+def test_末屏那一问不能是封面那一问的回声():
+    """一头一尾问同一个问题，等于白留一屏。
+
+    踩过两次：商竣程那条封面问「锦织圭的最后一年，谁来接？」，末屏又问
+    「锦织圭之后，亚洲男网谁来接？」；屋顶那条封面问「温网的屋顶，谁说了算？」，
+    末屏还问「关屋顶是谁说了算？」。末屏那一问是换评论区的唯一抓手，
+    它要开一扇新门，不是把封面的话再说一遍。
+
+    判据用字集重合度，不逐字比对——两句话措辞不同、问的是同一件事，
+    正是这条要拦的情形。
+    """
+    from tennislive.video import explainer as E
+
+    drop = set("的了是在有和与也都就还你我他她它们这那什么吗呢啊，。？！、：；—…「」《》")
+
+    def chars(text: str) -> set[str]:
+        return {c for c in text if c not in drop and not c.isspace()}
+
+    for slug in E._SCRIPTS:
+        segs = E.explainer_script(find_story_by_slug(slug))
+        closer = (segs[-1].question or "").strip()
+        if not closer:
+            continue
+        cover = chars(f"{segs[0].title}{segs[0].question or ''}")
+        tail = chars(closer)
+        shared = cover & tail
+        ratio = len(shared) / len(cover | tail)
+        assert ratio < 0.5, (
+            f"{slug} 末屏那一问和封面重了（{ratio:.0%}）："
+            f"封面「{segs[0].title}」／末屏「{closer}」"
+        )

@@ -1372,7 +1372,10 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "自己发球，去够一个很低的反手截击，落地就捂住了胸口——胸肌撕裂，退赛。"
             "那是他连续第五届大满贯退赛。穆雷公开质疑过那次关顶；"
             "但迪米特洛夫自己的教练德尔加多对 BBC 说得很清楚：转到室内，不是他受伤的原因。"
-            "所以真正的问题从来不是屋顶有没有害人，而是——「关屋顶」，到底是谁说了算？",
+            # 收尾停在破折号上，那一问由 _ask_it_out_loud 统一接上去。
+            # 原来这里自己问完了「「关屋顶」到底是谁说了算？」，可封面问的就是
+            # 「温网的屋顶，谁说了算？」——一头一尾同一个问题，末屏那一问白留。
+            "所以真正的问题从来不是屋顶有没有害人，而是——",
             "assets/explainer/roof/roof2009.jpg",
             "Delfort · CC BY-SA 3.0 · Wikimedia Commons · 中央球场与其上方的屋顶结构",
             (
@@ -1381,7 +1384,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
                 "教练德尔加多：转室内不是受伤原因",
             ),
             "",
-            "「关屋顶」是谁说了算？",
+            "打到一半关顶，对场上两个人公平吗？",
         ),
     ),
     # Everything here that is a rule or a reason comes from the WTA's own
@@ -1675,7 +1678,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "shang-nishikori": (
         (
             "peak",
-            "那一边",
+            "最高处",
             "亚洲男子唯一的一次大满贯决赛",
             "先说对面站的是谁。锦织圭，一九八九年十二月生，日本人。二〇一四年美网，"
             "他半决赛击败当时的世界第一德约科维奇，闯进决赛——那是公开赛年代至今，"
@@ -1739,14 +1742,18 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         ),
         (
             "gap",
-            "这一边",
-            "商竣程也是刚回来，停了五个月",
+            "缺席",
+            "商竣程刚从五个月的空白里出来",
             "但商竣程这一年并不好过。他生涯最高排名是二〇二四年十月的世界第四十七，"
             "现在掉到了两百多位。今年二月的迪拜站，他一比六、三比六输给梅德韦杰夫，"
             "那之后就没再出现在巡回赛的赛场上——到今天为止，整整五个月。"
             "换句话说，这一场对两个人都是回来：一个是最后一次回来，一个是伤停之后第一次回来。",
-            "assets/explainer/shang-nishikori/shang_shanghai.jpg",
-            "CGTN · 2025 年 10 月上海大师赛，商竣程",
+            # 这一屏讲「五个月没出现」，配的就该是他**最后一次出现**的那一场。
+            # 原来用的是 2025 年 10 月上海站的一张——对得上人，对不上这一屏的事，
+            # 而且是全套里最没劲的一张（背光、动作不明确）。迪拜官方图库这张
+            # 自己点明赛事（背景是赛事广告板），球和拍都在画面里。
+            "assets/explainer/shang-nishikori/shang_dubai_2026.jpg",
+            "迪拜站官方图库 · 2026 年 2 月迪拜首轮，商竣程——他至今最后一场比赛",
             (
                 "生涯最高世界第 47（2024 年 10 月）",
                 "2 月迪拜之后停赛，本站是五个月来首战",
@@ -1769,7 +1776,10 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
                 "一个在告别，一个刚回来",
             ),
             "",
-            "锦织圭之后，亚洲男网谁来接？",
+            # 封面已经问过「锦织圭的最后一年，谁来接？」。末屏再问一遍同一句，
+            # 等于把换评论区的唯一抓手浪费掉——收尾这一问要开一扇新门，
+            # 而且要接得回第 ① 屏那个唯一：亚洲男子只打进过一次大满贯决赛。
+            "亚洲男子的下一次大满贯决赛，还要等多久？",
         ),
     ),
     "venus-potapova": (
@@ -2536,8 +2546,218 @@ def speakable(text: str) -> str:
     trophy) from turning into 选战; those really are tiǎo and are already
     read correctly.
     """
-    text = re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
-    return re.sub(r"挑(?![战衅拨逗剔眉])", "选", text)
+    return re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
+
+
+def readable(text: str) -> str:
+    """旁白照着念出来的样子——给字幕用，不给 TTS 用。
+
+    字幕要和耳朵里听到的对上，所以比分同样写成「6 比 4」。但 `speakable` 里那处
+    挑→选是**给合成器纠音**的，屏幕上必须还是「挑球」。两者只差这一个字，
+    字数一样，所以按字位算出来的时间轴对两边都成立。
+    """
+    return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
+
+
+# 一行字幕的长度。18 字 × 52px 约 936px，在 1080 宽里两边各留 72px；
+# 再长就顶到边，再短又会把一句话拆得七零八落。
+_SUB_MAX = 18
+_SUB_SOFT = 11
+_SUB_HARD_BREAK = "。！？；…"
+_SUB_SOFT_BREAK = "，、：,"
+_SUB_TRIM = "。，、：；,… "
+
+
+def _sub_width(text: str) -> float:
+    """一行有多宽。汉字算 1 格，西文和数字窄一半——「ATP」占的位置不到三个字。"""
+    return sum(0.5 if ord(ch) < 0x2E80 else 1.0 for ch in text)
+
+
+# 在这些字**之后**断开，读起来是顺的；在这些字**之前**断开也是顺的。
+# 这两串是拿来兜底的：一句话里一个标点都没有、又长到必须切的时候，
+# 靠它们找一个像词语边界的地方，别把「打进」「单打」「大满贯」从中间劈开。
+# 和、与不在里面：一行以连词收尾，等于把话吊在半空。
+_SUB_AFTER = "的了着过们是在有到后前上下里外位家员者岁军"
+_SUB_BEFORE = "但而又也都就还所因然现那这其第把被让给从对向为以并却更最"
+# 有边界可断时，允许把行切得短一些（6 格）；纯属数字数切的，还是要够满。
+_SUB_MIN_AT_BOUNDARY = 6
+
+
+def _break_bonus(text: str, i: int) -> int:
+    """在 i 处断开像不像一个词语边界。-1＝绝对不能断。"""
+    before, after = text[i - 1], text[i]
+    if before.isspace() or after.isspace():
+        return 2  # 空格两边总是安全的：「赢得 ATP／单打冠军」
+    if before.isalnum() and ord(before) < 0x2E80 \
+            and after.isalnum() and ord(after) < 0x2E80:
+        return -1  # 西文／数字串中间不能断，「ATP」不该变成「AT／P」
+    return int(before in _SUB_AFTER) + int(after in _SUB_BEFORE)
+
+
+def _best_break(text: str) -> int:
+    """一句没有标点的长句该在哪儿断。返回断点字位。
+
+    先看有没有像词语边界的地方（哪怕切出来的上一行短一点），没有才退回
+    「装满为止」。反过来做过一版——先装满、边界只加一点分——切出来的是
+    「代表亚洲国家的男子球员唯一一次打进大／满贯单打决赛」。
+    """
+    best, best_score = 0, -1e9
+    for i in range(1, len(text)):
+        width = _sub_width(text[:i])
+        if width > _SUB_MAX:
+            break
+        bonus = _break_bonus(text, i)
+        if bonus <= 0 and width < _SUB_SOFT:
+            continue
+        if width < _SUB_MIN_AT_BOUNDARY:
+            continue
+        score = bonus * 100 + i
+        if score > best_score:
+            best, best_score = i, score
+    return best or min(len(text) - 1, _SUB_MAX)
+
+
+def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
+    """把一段旁白切成一行行字幕，并记下每行在原文里的起止字位。
+
+    先按标点切成子句，再把子句拼成不超宽的行——**断点优先落在标点上**。
+    早先的版本是数满 18 个字就一刀切下去，切出来的是「代表亚洲国家打／进大满贯」
+    「赢得 ATP 单／打冠军」：字数是对的，词被劈成了两半，读起来磕一下。
+
+    字位要留着：时间轴是按「念到第几个字」算出来的，切完就丢掉位置的话，
+    只能按行数平均分时间，长句短句都占一样久，字幕就会和声音脱开。
+    """
+    # 1) 按标点切子句，标点跟在自己那一句后面。破折号占两个字，整体留在上一行——
+    #    「他自己形／容是勉强撑着」就是从这儿来的：把「——」当成普通字符跳过，
+    #    这一句里就一个可断的地方都没有了。
+    clauses: list[tuple[int, int]] = []
+    start = i = 0
+    while i < len(text):
+        if text[i:i + 2] == "——":
+            i += 2
+            clauses.append((start, i))
+            start = i
+            continue
+        if text[i] in _SUB_HARD_BREAK or text[i] in _SUB_SOFT_BREAK:
+            clauses.append((start, i + 1))
+            start = i + 1
+        i += 1
+    if start < len(text):
+        clauses.append((start, len(text)))
+
+    # 2) 超宽的子句自己再断，断在像词语边界的地方。
+    pieces: list[tuple[int, int]] = []
+    for a, b in clauses:
+        while _sub_width(text[a:b].strip(_SUB_TRIM)) > _SUB_MAX:
+            cut = a + _best_break(text[a:b])
+            if cut <= a:
+                break
+            pieces.append((a, cut))
+            a = cut
+        if a < b:
+            pieces.append((a, b))
+
+    # 3) 拼行：能装下就接着装，装不下另起一行。
+    lines: list[tuple[int, int]] = []
+    for a, b in pieces:
+        if lines and _sub_width(text[lines[-1][0]:b].strip(_SUB_TRIM)) <= _SUB_MAX:
+            lines[-1] = (lines[-1][0], b)
+        else:
+            lines.append((a, b))
+
+    out = []
+    for a, b in lines:
+        shown = text[a:b].strip(_SUB_TRIM)
+        if shown:
+            out.append((a, b, shown))
+    return out
+
+
+def _boundary_marks(boundaries: Sequence[dict]) -> list[tuple[int, float]]:
+    """WordBoundary 事件 → [(念到第几个非空白字, 那一刻的秒数)]。
+
+    edge-tts 的 offset 以 100 纳秒为单位，且已经把 rate 算进去了，所以直接可用。
+    事件里的 text 不含标点，累加长度得到的是「去掉空白之后的字位」。
+    """
+    marks: list[tuple[int, float]] = []
+    idx = 0
+    for b in boundaries:
+        marks.append((idx, float(b.get("offset", 0)) / 1e7))
+        idx += len(re.sub(r"\s", "", str(b.get("text") or "")))
+    return marks
+
+
+def subtitle_cues(
+    text: str,
+    duration: float,
+    *,
+    boundaries: Sequence[dict] = (),
+    offset: float = 0.0,
+) -> list[tuple[float, float, str]]:
+    """一段旁白的字幕时间轴：[(起, 止, 这一行)]。
+
+    有 WordBoundary 就按它对齐——那是合成器自己报的时刻，最准。拿不到（有些
+    声音不发这个事件）就按字数等比分配：不完美，但比没有字幕好得多，而且绝不会
+    因为拿不到时间轴就整条片子没字幕。
+
+    `offset` 是片头那段静音——画面从 0 开始，语音要到 0.6 秒才响，字幕跟着推。
+    """
+    lines = subtitle_lines(text)
+    if not lines:
+        return []
+    marks = _boundary_marks(boundaries)
+    stripped = [len(re.sub(r"\s", "", text[:i])) for i in range(len(text) + 1)]
+    total = stripped[-1] or 1
+
+    def at(char_index: int) -> float:
+        want = stripped[char_index]
+        if not marks:
+            return duration * want / total
+        seconds = marks[0][1]
+        for idx, sec in marks:
+            if idx > want:
+                break
+            seconds = sec
+        return min(seconds, duration)
+
+    cues = []
+    for n, (a, b, shown) in enumerate(lines):
+        start = at(a)
+        end = at(lines[n + 1][0]) if n + 1 < len(lines) else duration
+        cues.append((offset + start, offset + max(end, start + 0.4), shown))
+    return cues
+
+
+def _srt_stamp(seconds: float) -> str:
+    ms = max(0, int(round(seconds * 1000)))
+    h, ms = divmod(ms, 3_600_000)
+    m, ms = divmod(ms, 60_000)
+    s, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+
+def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path) -> Path:
+    blocks = [
+        f"{n + 1}\n{_srt_stamp(start)} --> {_srt_stamp(end)}\n{shown}\n"
+        for n, (start, end, shown) in enumerate(cues)
+    ]
+    path.write_text("\n".join(blocks), encoding="utf-8")
+    return path
+
+
+# 字幕落在下边条里，一个像素都不压画面：3:4 的卡居中在 9:16 画布上，上下各空
+# 240px。MarginV=62、字号 52，两行也只占到 190px 左右，正好待在黑边里。
+# 描边留着——万一将来换成不留边的版式，字压在照片上也还读得出来。
+_SUB_STYLE = (
+    "FontName=Noto Sans CJK SC,FontSize=52,Bold=1,"
+    "PrimaryColour=&H00ecf3e7,OutlineColour=&H00141e18,BorderStyle=1,"
+    "Outline=3,Shadow=0,Alignment=2,MarginL=48,MarginR=48,MarginV=62"
+)
+
+
+def _filter_path(path: Path) -> str:
+    """filter_complex 里的文件名要转义，冒号和反斜杠会被当成参数分隔符。"""
+    return str(path).replace("\\", "\\\\").replace(":", r"\:").replace("'", r"\'")
 
 
 # Delivery, not just words. The old read was correct and flat — too slow to
@@ -2571,17 +2791,35 @@ def synthesize_narration(
     outdir.mkdir(parents=True, exist_ok=True)
     paths: list[Path] = []
 
-    async def _one(text: str, path: Path) -> None:
-        await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(str(path))
+    # 走 stream() 而不是 save()，为的是顺手接住 WordBoundary——合成器自己报的
+    # 「第几个字念到第几毫秒」。字幕的时间轴就是从这儿来的；save() 把它扔了。
+    async def _one(text: str, path: Path) -> list[dict]:
+        marks: list[dict] = []
+        with path.open("wb") as fh:
+            stream = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).stream()
+            async for chunk in stream:
+                if chunk.get("type") == "audio" and chunk.get("data"):
+                    fh.write(chunk["data"])
+                elif chunk.get("type") == "WordBoundary":
+                    marks.append({
+                        "offset": chunk.get("offset", 0),
+                        "duration": chunk.get("duration", 0),
+                        "text": chunk.get("text", ""),
+                    })
+        return marks
 
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
         try:
-            asyncio.run(_one(speakable(seg.narration), path))
+            marks = asyncio.run(_one(speakable(seg.narration), path))
         except Exception as exc:  # noqa: BLE001
             raise ExplainerVideoError(f"TTS 合成失败（第 {index + 1} 段）: {exc}") from exc
         if not path.is_file() or path.stat().st_size == 0:
             raise ExplainerVideoError(f"TTS 未生成音频（第 {index + 1} 段）")
+        # 空列表也照写：字幕那边靠它区分「这个声音不报边界」和「还没合成过」。
+        path.with_suffix(".words.json").write_text(
+            json.dumps(marks, ensure_ascii=False), encoding="utf-8"
+        )
         paths.append(path)
     return paths
 
@@ -2615,6 +2853,7 @@ def assemble_explainer_video(
     audios: Sequence[Path],
     output: Path,
     *,
+    captions: Sequence[str] | None = None,
     ffmpeg_bin: str = "ffmpeg",
     ffprobe_bin: str = "ffprobe",
     lead_silence: float = LEAD_SILENCE,
@@ -2646,11 +2885,30 @@ def assemble_explainer_video(
 
     filters = []
     for i in range(n):
-        filters.append(
+        chain = (
             f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
             f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
-            f"setsar=1,fps=30,format=yuv420p[v{i}]"
+            f"setsar=1,fps=30"
         )
+        # 字幕。静音刷是默认状态——旁白里的引语、数字、来龙去脉，静音的人一个字
+        # 都拿不到，而卡上只放得下两三条短句。字幕烧进下边条（3:4 的卡居中在 9:16
+        # 上，上下各空 240px），补的是耳朵那一份，不跟画面抢地方。
+        if captions and i < len(captions) and captions[i].strip():
+            words = Path(audios[i]).with_suffix(".words.json")
+            try:
+                marks = json.loads(words.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                marks = []
+            cues = subtitle_cues(
+                readable(captions[i]),
+                _audio_seconds(Path(audios[i]), ffprobe_bin, runner),
+                boundaries=marks,
+                offset=head[i],
+            )
+            if cues:
+                srt = write_subtitles(cues, output.parent / f"sub_{i:02d}.srt")
+                chain += f",subtitles='{_filter_path(srt)}':force_style='{_SUB_STYLE}'"
+        filters.append(f"{chain},format=yuv420p[v{i}]")
         # Silence the audio rather than the picture: adelay pushes the speech
         # later, apad hangs quiet on the end. The still stays on screen for the
         # whole padded length because its -t above already includes it.
@@ -2713,12 +2971,16 @@ def generate_explainer_video(
     # of inference about what the arguments must have been.
     (outdir / "narration.json").write_text(
         json.dumps(
-            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios)},
+            {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
+             "subtitles": True},
             ensure_ascii=False, indent=2,
         ) + "\n",
         encoding="utf-8",
     )
-    return assemble_explainer_video(slides, audios, outdir / "explainer.mp4")
+    return assemble_explainer_video(
+        slides, audios, outdir / "explainer.mp4",
+        captions=[seg.narration for seg in segments],
+    )
 
 def explainer_push_html(
     segments: Sequence[ExplainerSegment],
