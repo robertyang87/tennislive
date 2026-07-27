@@ -103,6 +103,31 @@ def thumb_url(item: dict) -> str | None:
     return m.group(0) if m else None
 
 
+def fetch_frames(item: dict) -> tuple[dict, list[bytes], str]:
+    """从视频里取三帧，**绕开上传的封面**。
+
+    这是为「缩略图是文字引语卡」那批准备的。Eurosport、TNT、温网、Nine 的封面
+    是纯文字引语卡，画面信息为零——看图这条路对它们整个失效，第一轮 14 条
+    unknown 里 11 条栽在这上面。
+
+    但 YouTube 除了上传的封面，还会自己在 25% / 50% / 75% 处各截一帧存成
+    `hq1.jpg` / `hq2.jpg` / `hq3.jpg`。**那是视频里的真实画面**，
+    上传者改不了。三帧一起看，发布会和场上一眼就分得开。
+
+    tennistv / WTA 的站内条目没有这套自动帧，只能退回海报。
+    """
+    if item["id"].startswith(("tennistv:", "wta:")):
+        _, blob, why = fetch_thumb(item)
+        return item, ([blob] if blob else []), ("poster-only" if blob else why)
+    out = []
+    for n in ("hq1.jpg", "hq2.jpg", "hq3.jpg"):
+        try:
+            out.append(_get(f"https://i.ytimg.com/vi/{item['id']}/{n}"))
+        except Exception:                                      # noqa: BLE001
+            pass
+    return item, out, ("ok" if out else "no-auto-frames")
+
+
 def fetch_thumb(item: dict) -> tuple[dict, bytes | None, str]:
     url = thumb_url(item)
     if not url:
@@ -176,6 +201,56 @@ def contact_sheets(rows: list[tuple[dict, bytes]], outdir: Path, tag: str) -> li
                       f"{idx:>3}  {short_src(item.get('source', '?'))}  {dur}",
                       font=font, fill=(231, 243, 236))
         path = outdir / f"sheet-{tag}-{page + 1:02d}.jpg"
+        sheet.save(path, quality=88)
+        made.append(path)
+    return made
+
+
+def frame_sheets(rows: list[tuple[dict, list[bytes]]], outdir: Path) -> list[Path]:
+    """一行一条片子，横着排它的三帧。
+
+    **一定要三帧一起看**，不是挑一帧。发布会的片头常常先切一段比赛集锦，
+    只看第一帧会判成场上；场上采访结尾又常摇到看台，只看最后一帧会判不出人。
+    三帧里有两帧对得上，才算数。
+    """
+    from io import BytesIO
+
+    from PIL import Image, ImageDraw, ImageFont
+
+    try:
+        font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 19)
+    except OSError:
+        font = ImageFont.load_default()
+
+    outdir.mkdir(parents=True, exist_ok=True)
+    cw, ch, lab_h, per = 470, 264, 30, 5
+    made = []
+    for page in range((len(rows) + per - 1) // per):
+        chunk = rows[page * per:(page + 1) * per]
+        sheet = Image.new("RGB", (cw * 3, per * (ch + lab_h)), (18, 20, 19))
+        draw = ImageDraw.Draw(sheet)
+        for i, (item, blobs) in enumerate(chunk):
+            y = i * (ch + lab_h)
+            draw.rectangle([0, y, cw * 3, y + lab_h], fill=(28, 32, 30))
+            draw.text((8, y + 6),
+                      f"{page * per + i + 1:>2}  {short_src(item.get('source', '?')):5s} "
+                      f"{item.get('title', '')[:86]}", font=font, fill=(231, 243, 236))
+            for j in range(3):
+                x = j * cw
+                if j >= len(blobs):
+                    draw.rectangle([x, y + lab_h, x + cw, y + lab_h + ch], fill=(40, 40, 40))
+                    continue
+                try:
+                    im = Image.open(BytesIO(blobs[j])).convert("RGB")
+                    if abs(im.width / im.height - 4 / 3) < 0.02:   # hq* 上下带黑边
+                        band = im.height * 3 // 8
+                        im = im.crop((0, (im.height - band * 2) // 2,
+                                      im.width, im.height - (im.height - band * 2) // 2))
+                    sheet.paste(im.resize((cw, ch), Image.LANCZOS), (x, y + lab_h))
+                except Exception:                              # noqa: BLE001
+                    draw.rectangle([x, y + lab_h, x + cw, y + lab_h + ch], fill=(60, 20, 20))
+        path = outdir / f"frames-{page + 1:02d}.jpg"
         sheet.save(path, quality=88)
         made.append(path)
     return made
@@ -257,6 +332,8 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=20260727)
     ap.add_argument("--source", help="只验这个来源（子串匹配）")
     ap.add_argument("--sheets", action="store_true", help="拼联络表")
+    ap.add_argument("--recheck-unknown", action="store_true",
+                    help="把判定里所有 unknown 的调视频自动帧重看（引语卡那批靠这个）")
     ap.add_argument("--reach", action="store_true", help="探可达性")
     ap.add_argument("--report", action="store_true", help="汇总已有判定")
     ap.add_argument("--outdir", default="/tmp/oncourt-verify")
@@ -266,9 +343,33 @@ def main() -> int:
     if args.report:
         return report(items)
 
-    picked = sample(items, args.per_source, args.seed, args.source)
     outdir = Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
+
+    if args.recheck_unknown:
+        with VERDICTS.open(encoding="utf-8") as fh:
+            data = json.load(fh)
+        # 判定文件里存了标题和来源，所以**已经清出库的条目也能复看**——
+        # 恰恰是被剔掉的那些最该复看，万一剔错了得看得见。
+        todo = [items.get(vid) or {"id": vid, "source": v.get("source", "?"),
+                                   "title": v.get("title", ""), "duration_s": None}
+                for vid, v in data["verdicts"].items() if v["verdict"] == "unknown"]
+        todo.sort(key=lambda x: (x["source"], x["title"]))
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            got = list(pool.map(fetch_frames, todo))
+        rows = [(it, blobs) for it, blobs, _ in got]
+        for p in frame_sheets(rows, outdir):
+            print("  ", p)
+        for it, blobs, why in got:
+            if len(blobs) < 3:
+                print(f"  帧不全（{len(blobs)}/3，{why}）{short_src(it['source'])} "
+                      f"{it.get('title', '')[:60]}")
+        print(f"\n复看 {len(todo)} 条 unknown，行号对应判定顺序：")
+        for i, it in enumerate(todo, 1):
+            print(f"  {i:>2}  {it['id']}  {it.get('title', '')[:66]}")
+        return 0
+
+    picked = sample(items, args.per_source, args.seed, args.source)
 
     if args.sheets:
         with ThreadPoolExecutor(max_workers=8) as pool:

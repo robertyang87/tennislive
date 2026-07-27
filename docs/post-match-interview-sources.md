@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2075 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2086 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -434,52 +434,75 @@ python tools/collect_oncourt_interviews.py --include-ceremony      # 连致辞�
 **跑在 Actions 不跑本地**：沙箱下 YouTube 对连续请求返 429，退避到 240 秒都拿不到；
 Actions 的出口没这个问题。
 
-### 标题正则分不出发布会，只有画面能分
+### 标题正则分不出发布会，只有画面能分——两次写正则两次都错
 
-**这是这条线上最贵的一个教训。** 库涨到两千多条时，把握全建立在标题正则和
-时长代理上，只亲眼看过四张缩略图。抽样一验，一次就抓出两批系统性混入。
+**这是这条线上最贵的一个教训，而且我在同一个坑里栽了两次。**
 
-验证方式是**看图**：按来源分层抽样，把缩略图拼成带编号的联络表，一张图看十六条。
-判据是画面本身——球场 + 手持话筒 = 场上；背景板 + 长桌 + 矿泉水 = 发布会；
-一圈手机怼着 = 媒体混合区。工具是 `tools/verify_oncourt_sample.py`。
+库涨到两千多条时，把握全建立在标题正则和时长代理上，只亲眼看过四张缩略图。
+一验就抓出系统性混入：法网和巴黎大师赛（同属法网协会 FFT）把**新闻发布会**
+也写成 `post-match interview`，跟真正的场上采访一个词。
 
-第一轮 92 条（每源抽 4 条）的结果：
+两次想从标题里找规律，两次都错：
 
-| 判定 | 条数 | 说明 |
+| 版本 | 规律 | 结果 |
 | --- | --- | --- |
-| 场上 | 69 | 画面里能看见球场和话筒 |
-| 发布会 / 媒体区 | 8 | 全部集中在两个源，见下 |
-| 不是采访 | 1 | 场上求婚（搬运号 Queenlenka） |
-| 看不出来 | 14 | 缩略图是文字引语卡，画面信息为零 |
+| 第一版 | 法网 2024 的 post-match 一律是发布会 | 61 条里**错杀 4 条** |
+| 第二版 | 巴黎标题不写 on-court 的一律剔 | 25 条里**错杀 7 条** |
 
-**两批混入都出自法网协会（FFT）办的赛事**，这不是巧合——罗兰加洛斯和
-巴黎大师赛是同一套编辑规范：
+第二版的反例最要命——巴黎有三条标题**一字不差**：
 
-- **罗兰加洛斯**：抽 32 条 `post-match interview`，**2024 那批 18 条里 16 条画面是
-  新闻发布厅**（BNP Paribas 背景板、长桌、绿话筒、矿泉水）；而 **2025 那批 10 条里
-  8 条真在场上**（红土、看台、手持长杆麦）。同一个词在同一个频道里隔一年意思就反了。
-  2026 起法网自己改了写法，明写 `on-court Interview`。已剔 61 条
-- **巴黎大师赛**：它自己的图卡上就分 `POST-MATCH ITW` 和 `ON-COURT ITW` **两种标签**
-  ——一个频道同时用两个词，说明这两个词在它那儿不是一回事。写 POST-MATCH 的那张
-  背景是背景板加长杆麦，另一条大图上是一圈手机怼着的混合区。已剔 25 条，只留标题
-  明写 on-court 的 6 条
+```
+IOLtTF-PzZ8  Jannik Sinner post-match interview | Rolex Paris Masters  → 在场上
+bWTTWu_uA_I  Jannik Sinner post-match interview | Rolex Paris Masters  → 在场上
+p8z5dEVgXck  Jannik Sinner post-match interview | Rolex Paris Masters  → 媒体背景板前
+```
 
-规则落在 `data/oncourt_sources.json` 的 `deny_by_source`（**按源**，不进全局
-`exclude`——这是单个频道的编辑习惯，不是通用规律），测试钉在
-`tests/test_oncourt_collect.py`，并且有一条测试查「库里不许留下被规则判掉的条目」——
-加了规则却不清库，等于规则只管未来不管现在。
+所以现在**一条正则都不留**，法网 61 条、巴黎 31 条全部逐条看过画面，
+结论按 id 记进 `data/oncourt_sources.json` 的 `deny_ids`（共 75 条），
+逐条证据记在 `data/oncourt_verify.json`，测试查两者一一对应、且库存与之一致。
 
-**还没解决的**：
+### 怎么"看画面"：用视频自动帧，别看封面
 
-- 法网 2025 那批里估计还剩十来条发布会（样本里 10 条中 2 条，都是决赛，法网自己的
-  图上印着 `POST-MATCH PRESS CONFERENCE`，但标题一字不差还是 post-match interview）。
-  按年切不掉，只能逐条看图
-- **引语卡挡住了画面**：Eurosport、TNT Sports、温网、Nine 这几家的缩略图是纯文字
-  引语卡，看图这条路对它们无效。14 条 unknown 里 11 条是这个原因。它们的标题倒是
-  明写 `On-Court Interview`（Eurosport 92 条里 81 条、TNT 44 条里 44 条），
-  但那正是法网也写的那个词
-- **小图会看错**：Nine 那条 Zverev 在联络表里像发布会，调 `maxresdefault` 复看，
-  看得见 AO 蓝话筒和看台，其实在场上。判不准的一律调大图再看
+封面是上传者自己传的，可以是任何东西。Eurosport、TNT Sports、温网、Nine
+的封面全是纯文字引语卡，画面信息为零——第一轮 14 条判不出来的，11 条栽在这。
+
+**YouTube 除了封面，还会自己在 25% / 50% / 75% 处各截一帧**，存成
+`hq1.jpg` / `hq2.jpg` / `hq3.jpg`。那是视频里的真实画面，上传者改不了：
+
+```bash
+python tools/verify_oncourt_sample.py --per-source 4 --sheets      # 按来源抽样看封面
+python tools/verify_oncourt_sample.py --recheck-unknown            # 封面看不出来的调自动帧
+python tools/verify_oncourt_sample.py --per-source 2 --reach       # 逐条探可达性
+python tools/verify_oncourt_sample.py --report                     # 汇总每源置信度
+```
+
+判据是画面本身：
+
+| 看到什么 | 判定 |
+| --- | --- |
+| 球场地面、场边广告牌、身后看台、手持话筒 | 场上 |
+| BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 | 新闻发布厅 |
+| ATP Masters 1000 背景板、一圈手机怼着 | 媒体混合区 |
+
+**三帧要一起看**，别挑一帧：发布会片头常先切一段比赛集锦，只看第一帧会判成
+场上；场上采访结尾常摇到看台，只看最后一帧判不出人。
+
+那 14 条判不出来的，全部调自动帧验完——**14/14 都在场上**。
+引语卡挡住的是我，不是内容有问题。举几个自己证明自己的：
+
+- Osaka 那条画面里带着字幕条 `NAOMI OSAKA JPN DEFEATED C. GARCIA 6-3 3-6 6-3`
+- Rybakina 那条带 `THROUGH TO SEMIFINALS`
+- 德约那条三帧全是场上主持人，法网标话筒 + 红土 + Emirates 广告牌 + `2:51` 比赛计时
+
+还有一条反向教训：**小图会看错**。Nine 那条 Zverev 在联络表里像发布会，
+调 `maxresdefault` 复看，看得见 AO 蓝话筒和看台，其实在场上。判不准就调大图。
+
+累计逐条看过 **178 条**，其中 101 条确认在场上、76 条是发布会 / 媒体区、
+1 条不是采访（场上求婚）。
+
+**还没解决的**：法网 2025 那批里估计还剩十来条发布会——样本里 10 条中 2 条，
+都是决赛，法网自己的图上印着 `POST-MATCH PRESS CONFERENCE`，标题却一字不差
+还是 post-match interview。这批没有逐条看过，是当前最大的一块残余不确定。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 

@@ -279,63 +279,48 @@ def test_tennistv_duration_guard_separates_press_conferences():
         assert secs >= TENNISTV_MAX_SECS
 
 
-def test_roland_garros_2024_post_match_is_the_press_room():
-    """法网频道把**发布会**也写成 post-match interview，只有画面能分。
+def test_title_rules_cannot_split_press_from_oncourt():
+    """**两次想从标题里找规律，两次都错。** 这条测试就是钉住别再试第三次。
 
-    抽 32 条法网 `post-match interview` 看缩略图：2024 那批 18 条里 16 条
-    画面是新闻发布厅（BNP Paribas 背景板、长桌、绿话筒、矿泉水），
-    2025 那批 10 条里 8 条真在场上（手持杆麦、看台、红土）。
-    同一个词在同一个频道里隔一年意思就反了，所以按源按年记。
+    法网和巴黎大师赛（同属法网协会 FFT）把新闻发布会也写成
+    `post-match interview`，跟真正的场上采访一个词。
 
-    2026 起法网自己改了写法，明写 `on-court Interview`（23 条），
-    这条规则往后碰不到真条目。
+    第一版按年份切法网——2024 的 post-match 一律当发布会。61 条里错杀 4 条：
+
+        Schwartzman Q2 / Thiem Q1     两场告别，人在场上，身边站着纳达尔
+        Sinner Round 2 / Wawrinka R1  主持人手持话筒、看台、红土
+
+    第二版按「标题不写 on-court」切巴黎，25 条里错杀 7 条。最要命的是这三条：
+
+        IOLtTF-PzZ8  Jannik Sinner post-match interview | Rolex Paris Masters → 场上
+        bWTTWu_uA_I  Jannik Sinner post-match interview | Rolex Paris Masters → 场上
+        p8z5dEVgXck  Jannik Sinner post-match interview | Rolex Paris Masters → 背景板
+
+    标题一字不差，画面两回事。所以现在**一条正则都不留**，全部按 id。
     """
     from tools.collect_oncourt_interviews import compile_deny, load_sources
 
-    deny = compile_deny(load_sources())
-    rg = deny["Roland-Garros"]
-    assert rg, "法网必须有单源黑名单"
+    cfg = load_sources()
+    assert compile_deny(cfg) == {}, "不许再用标题正则分发布会——两次都被证明是错的"
 
-    def denied(title):
-        return any(p.search(title) for p in rg)
-
-    # 看图确认过是发布会的
-    for title in [
-        "Sabalenka Round 1 post-match interview | Roland-Garros 2024",
-        "Djokovic Round 2 post-match interview | Roland-Garros 2024",
-        "Swiatek Semi-final post-match interview | Roland-Garros 2024",
-        "Garcia Round 1 post-match interview | Roland-Garros 2024",
-        "Thiem Q1 post-match interview | Roland-Garros 2024",
-    ]:
-        assert denied(title), title
-
-    # 看图确认过真在场上的，一条都不能被这条规则碰到
-    for title in [
-        "Sinner Round 2 on-court interview | Roland-Garros 2024",
-        "Alcaraz Quarter-final on-court interview | Roland-Garros 2024",
-        "Hugo Gaston | Round 1 on-court Interview | Roland-Garros 2026",
-        "Mirra Andreeva | Semi-final on-court Interview | Roland-Garros 2026",
-        "Monfils Round 1 post-match interview | Roland-Garros 2025",
-        "Boisson Round 4 post-match interview | Roland-Garros 2025",
-    ]:
-        assert not denied(title), title
-
-    # 黑名单是**按源**的，不能外溢到别家同样写法的标题上
-    for title in [
-        "Ugo Humbert Round 2 post-match interview | Rolex Paris Masters 2024",
-        "Novak Djokovic | Gentlemen's Singles Final Post-Match Interview | Wimbledon 2024",
-    ]:
-        assert not denied(title), title
+    ids = set(cfg["deny_ids"])
+    assert "p8z5dEVgXck" in ids
+    for oncourt in ("IOLtTF-PzZ8", "bWTTWu_uA_I"):
+        assert oncourt not in ids, f"{oncourt} 看过帧确认在场上"
 
 
-def test_deny_list_only_applies_to_its_own_source():
-    """黑名单挂在源名下，别的源取不到——防止哪天顺手写进全局 exclude。"""
-    from tools.collect_oncourt_interviews import compile_deny, load_sources
+def test_denied_ids_are_all_recorded_as_verified():
+    """拉黑名单上的每一条，都得在判定文件里有一条「看过、是发布会」的记录。
 
-    deny = compile_deny(load_sources())
-    assert "Roland-Garros" in deny
-    assert deny.get("Wimbledon") is None
-    assert deny.get("US Open") is None
+    不许凭印象拉黑——名单和证据必须一一对上。
+    """
+    from tools.collect_oncourt_interviews import ROOT, load_sources
+
+    with (ROOT / "data" / "oncourt_verify.json").open(encoding="utf-8") as fh:
+        seen = json.load(fh)["verdicts"]
+    for vid in load_sources()["deny_ids"]:
+        assert vid in seen, f"{vid} 被拉黑却没有看图记录"
+        assert seen[vid]["verdict"] == "press", f"{vid} 的判定不是 press"
 
 
 def test_wta_dead_page_is_not_collected():
@@ -370,48 +355,37 @@ def test_wta_dead_page_is_not_collected():
     assert calls["url"].endswith("/videos/1/berlin-post-match-interview-sf-x")
 
 
-def test_paris_masters_post_match_is_the_media_zone():
-    """巴黎大师赛自己的图卡上就分两种标签，所以标题也得按两种收。
+def test_store_matches_every_rule_and_every_verdict():
+    """规则、判定、库存三者要对得上。
 
-    抽 16 条看图：写 `ON-COURT ITW` 的（德约决赛、鲁内三轮、迪米特洛夫决赛）
-    画面在场上；写 `POST-MATCH ITW` / `POST-MATCH INTERVIEW` 的，
-    卡佐背后是背景板加长杆麦，辛纳那条是一圈手机怼着的媒体混合区。
-    一个频道同时用两种标签，说明这两个词在它那儿不是一回事。
-
-    和罗兰加洛斯是同一个毛病——两个赛事都归法网协会（FFT）办。
+    分三条查，因为三种不一致的形状不一样：
+    加了规则没清库＝规则只管未来不管现在；拉黑了却还在库里＝白拉；
+    **看图确认在场上的却不在库里＝误剔**——最后这条是踩出来的，
+    巴黎那版正则一次误剔了七条真场上的。
     """
-    from tools.collect_oncourt_interviews import compile_deny, load_sources
+    from tools.collect_oncourt_interviews import (
+        ROOT,
+        STORE,
+        compile_deny,
+        load_sources,
+    )
 
-    deny = compile_deny(load_sources())
-    par = deny["Rolex Paris Masters"]
-
-    def denied(title):
-        return any(p.search(title) for p in par)
-
-    for title in [
-        "Ugo Humbert Round 2 post-match interview | Rolex Paris Masters 2024",
-        "Carlos Alcaraz Round 2 post-match interview | Rolex Paris Masters",
-        "Alexander Zverev final post-match interview | Rolex Paris Masters 2024",
-        "Arthur Cazaux post-match interview | Rolex Paris Masters",
-    ]:
-        assert denied(title), title
-
-    for title in [
-        "Novak Djokovic on-court interview Final | Rolex Paris Masters 2023",
-        "Holger Rune on-court interview Round 3 | Rolex Paris Masters 2023",
-        "Jannik Sinner quarter-finals on-court interview | Rolex Paris Masters",
-        "Alexander Zverev's quarter-finals on-court interview | Rolex Paris Masters",
-    ]:
-        assert not denied(title), title
-
-
-def test_store_has_no_denied_titles_left():
-    """规则和库要一致——加了规则却没清库，等于规则只管未来不管现在。"""
-    from tools.collect_oncourt_interviews import STORE, compile_deny, load_sources
-
-    deny = compile_deny(load_sources())
+    cfg = load_sources()
+    deny = compile_deny(cfg)
     with STORE.open(encoding="utf-8") as fh:
         items = json.load(fh)["items"]
-    left = [v["title"] for v in items.values()
-            if any(p.search(v["title"]) for p in deny.get(v.get("source", ""), ()))]
-    assert left == [], f"库里还留着 {len(left)} 条被规则判为发布会的：{left[:3]}"
+    with (ROOT / "data" / "oncourt_verify.json").open(encoding="utf-8") as fh:
+        seen = json.load(fh)["verdicts"]
+
+    by_title = [v["title"] for v in items.values()
+                if any(p.search(v["title"]) for p in deny.get(v.get("source", ""), ()))]
+    assert by_title == [], f"库里还留着 {len(by_title)} 条被规则判为发布会的：{by_title[:3]}"
+
+    by_id = [vid for vid in cfg["deny_ids"] if vid in items]
+    assert by_id == [], f"拉黑名单上的 {by_id} 还在库里"
+
+    # 判定为发布会的，才允许不在库里；判定为场上的必须在
+    missing = [vid for vid, v in seen.items()
+               if v["verdict"] == "oncourt" and vid not in items
+               and not any(p.search(v.get("title", "")) for p in deny.get(v.get("source", ""), ()))]
+    assert missing == [], f"看图确认在场上、却被剔出库的：{missing}"

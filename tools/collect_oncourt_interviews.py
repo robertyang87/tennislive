@@ -120,13 +120,15 @@ def compile_rules(cfg: dict) -> dict[str, list]:
 
 
 def compile_deny(cfg: dict) -> dict[str, list]:
-    """每个源自己的黑名单：这些标题看着像场上采访，实际是发布会。
+    """每个源自己的标题黑名单。**现在是空的，而且应该保持空的。**
 
-    为什么不放进全局 `exclude`：这是**单个频道的编辑习惯**，不是通用规律。
-    罗兰加洛斯 2024 那批一律写 `X Round N post-match interview |
-    Roland-Garros 2024`，画面里却是新闻发布厅（BNP Paribas 背景板、长桌、
-    矿泉水）；同样写法的 2025 那批反而**真的在场上**（手持话筒、看台、红土）。
-    同一个词在同一个频道里，隔一年意思就反了——只能按源按年记。
+    留着这个口子只是为了以后真出现「标题层面能干净切开」的源。但法网和巴黎
+    大师赛这两个源已经证明了：**同一个频道里同一个词，可以指两件事**。
+
+      - 法网按年份切（2024 的 post-match 一律当发布会），61 条错杀 4 条
+      - 巴黎按「不写 on-court 就剔」切，25 条错杀 7 条
+
+    分不出来就逐条看画面，记进 `deny_ids`。别再往这里加正则。
     """
     return {name: [re.compile(p, re.I) for p in pats]
             for name, pats in cfg.get("deny_by_source", {}).items()}
@@ -409,6 +411,7 @@ def main() -> int:
     cfg = load_sources()
     rules = compile_rules(cfg)
     deny = compile_deny(cfg)
+    deny_ids = set(cfg.get("deny_ids", []))
     keep = {"oncourt"}
     if args.include_ceremony:
         keep.add("ceremony")
@@ -462,6 +465,13 @@ def main() -> int:
             # 标题正则永远分不出来——只有画面能分。这里放的是看图确认过的形状。
             if any(p.search(r["title"]) for p in deny.get(src["name"], ())):
                 dropped.append((src["name"], f"[发布会] {r['title']}"))
+                continue
+            # 逐条拉黑。标题连**同一个源内部**都分不出来的时候，只剩这条路：
+            # 巴黎大师赛有三条一字不差都叫 `Jannik Sinner post-match interview`，
+            # 两条在场上、一条在媒体背景板前。写正则必错——我写过一版，
+            # 25 条一起剔，其中 7 条是真场上的。
+            if r["id"] in deny_ids:
+                dropped.append((src["name"], f"[发布会·逐条确认] {r['title']}"))
                 continue
             if kind == "excluded":
                 # 被挡掉的也要报出来——只报通过的，没法证明筛子是对的。
