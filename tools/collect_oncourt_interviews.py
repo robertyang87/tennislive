@@ -37,14 +37,24 @@ ceremony 再判 oncourt**，否则颁奖礼会被当成场上采访收进来。
 
 还有一种更隐蔽的：**取样窗口太浅造成的假阴性**。澳网在 1 月，七月里扫近
 100 条会一条都搜不到，看着就像"澳网不发采访"。所以 scan_depth 逐源可配，
-澳网那条特意调到 400。
+建基线时给到 600–800。
+
+**但那是建基线用的，日常跑不该再刷历史。** 两种模式分开：
+
+    日常（默认）  每源 60 条    27 个源约 1 分钟   —— 新内容永远在最前面
+    --full        注册表 600–800   十几分钟      —— 重建基线 / 新增源时才用
+
+60 条足够覆盖一天的更新：即使大满贯期间，单个频道一天也发不到 60 条。
 
 用法：
-    # 扫一遍，只打印不落库
+    # 日常增量（工作流每天跑的就是这个）
+    python tools/collect_oncourt_interviews.py
+
+    # 看看会收什么，不落库
     python tools/collect_oncourt_interviews.py --dry-run
 
-    # 扫一遍并把新条目并进 data/oncourt_interviews.json
-    python tools/collect_oncourt_interviews.py
+    # 重建基线 / 新增源后补历史
+    python tools/collect_oncourt_interviews.py --full
 
     # 只扫某几个源（按名字子串匹配）
     python tools/collect_oncourt_interviews.py --only "Tennis Channel" Rome
@@ -80,6 +90,12 @@ TIMEOUT = 300
 BACKOFF = [0, 20, 45, 90]
 
 FIELD_SEP = " ||| "
+
+# 日常模式的扫描深度。注册表里的 scan_depth（600–800）是**建基线**用的，
+# 每天拿它重刷一遍整个历史既慢又没意义——新内容永远在最前面。
+# 60 条足够覆盖一天的更新：即使大满贯期间，单个频道一天也发不到 60 条。
+# 重建基线或新增源时加 --full 才走深的那套。
+DAILY_DEPTH = 60
 
 
 def load_sources() -> dict:
@@ -261,6 +277,11 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="只打印，不写 data/oncourt_interviews.json")
     ap.add_argument("--only", nargs="*", default=None, help="只扫名字含这些子串的源")
+    ap.add_argument("--full", action="store_true",
+                    help="用注册表里的 scan_depth（600–800）重扫全部历史。"
+                         "只在重建基线或新增源时用——日常跑不需要。")
+    ap.add_argument("--daily-depth", type=int, default=DAILY_DEPTH,
+                    help=f"日常模式每源扫多少条（默认 {DAILY_DEPTH}）")
     ap.add_argument("--include-ceremony", action="store_true",
                     help="连颁奖礼致辞、冠军演讲一起收（默认只收场上接受采访那一类）")
     ap.add_argument("--include-maybe", action="store_true",
@@ -292,7 +313,9 @@ def main() -> int:
 
     for src in sources:
         fetch = scan_tennistv if src.get("fetch") == "tennistv" else scan
-        rows, status = fetch(src["url"], src.get("scan_depth", 150))
+        depth = src.get("scan_depth", 150) if args.full else min(
+            args.daily_depth, src.get("scan_depth", 150))
+        rows, status = fetch(src["url"], depth)
         if rows:
             any_fetched = True
 
@@ -345,7 +368,8 @@ def main() -> int:
         wrote = True
 
     # 报告：成功的和失败的都列出来。只在成功时出声的检查，没法证明它真的看过。
-    print(f"收的类型：{'、'.join(sorted(keep))}\n")
+    mode = "全量（重扫历史）" if args.full else f"日常（每源 {args.daily_depth} 条）"
+    print(f"模式：{mode}　收的类型：{'、'.join(sorted(keep))}\n")
     print(f"{'源':<34} {'状态':<20} {'取到':>5} {'场上':>5} {'跳过':>5} {'新增':>5}")
     print("-" * 82)
     for name, status, got, oncourt, skip, fresh in report:

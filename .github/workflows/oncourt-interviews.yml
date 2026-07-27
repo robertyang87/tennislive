@@ -21,6 +21,11 @@ on:
         description: "只扫名字含这些子串的源（空格分隔，留空＝全部）"
         required: false
         default: ""
+      full:
+        description: "重扫全部历史（每源 600–800 条，十几分钟）。日常不需要"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -46,7 +51,11 @@ jobs:
 
       - name: 采集
         run: |
-          python tools/collect_oncourt_interviews.py ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
+          # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
+          # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
+          python tools/collect_oncourt_interviews.py \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
+            ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
             | tee /tmp/oncourt.log
 
       - name: 筛出关键场次与中国球员，推到微信

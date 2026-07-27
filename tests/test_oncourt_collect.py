@@ -213,3 +213,22 @@ def test_rome_is_present_and_deep():
     cfg = load_sources()
     rome = [s for s in cfg["sources"] if "Rome" in s["name"]]
     assert rome, "罗马每一轮都发 On-Court Interview，是场上语料的主力，不能去掉"
+
+
+def test_daily_depth_is_much_shallower_than_baseline_depths():
+    """日常跑和建基线是两件事，深度不能混用。
+
+    注册表里的 scan_depth 是 600–800，那是**建基线**时为了不漏掉整届赛事
+    才要的（美网 300 只得 11 条，600 得 53 条）。但每天拿它重刷一遍历史
+    既慢又没意义——新内容永远在频道最前面。
+
+    这里钉住两件事：日常深度显著小于任何一个基线深度；且它没小到会漏掉
+    一天的更新（大满贯期间单个频道一天也发不到 60 条）。
+    """
+    from tools.collect_oncourt_interviews import DAILY_DEPTH
+
+    cfg = load_sources()
+    depths = [s.get("scan_depth", 150) for s in cfg["sources"]
+              if s.get("fetch") != "tennistv"]
+    assert DAILY_DEPTH < min(depths), "日常深度应比所有基线深度都小"
+    assert DAILY_DEPTH >= 40, "太小会漏掉赛事高峰期一天的更新"
