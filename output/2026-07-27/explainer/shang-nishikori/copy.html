@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾7.27 开赛之前｜商竣程首轮VS锦织圭</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>锦织圭宣布了：2026 年打完就退役。
+他是公开赛年代唯一一个代表亚洲国家打进大满贯男单决赛的球员——2014 年美网。
+7 月 27 日华盛顿首轮，对面站着 21 岁的商竣程；两年前在成都，是他把锦织圭淘汰的。
+
+1️⃣ 那一边：亚洲男子唯一的一次大满贯决赛
+· 2014 美网决赛，亚洲男子至今唯一一次
+· 半决赛击败当时的世界第一德约科维奇
+· 生涯最高世界第 4，12 个 ATP 冠军
+
+2️⃣ 告别：锦织圭说，今年打完就退役
+· 2026 年 4 月宣布，赛季结束后退役
+· 36 岁，髋腕背肩膝多处伤，排名 400 开外
+· 本站靠外卡进正赛
+
+3️⃣ 上一次：19 岁那年，商竣程赢了他
+· 2024.9 成都首轮 6-4 6-4 胜锦织圭
+· 发球胜赛局连救两个破发点
+· 两人此前唯一一次交手
+
+4️⃣ 那一周：商竣程把那座冠军也拿走了
+· 决赛 7-6(4) 6-1 胜头号种子穆塞蒂
+· 公开赛年代第二位 ATP 夺冠的中国男子
+· 继吴易昺 2023 年达拉斯之后
+
+5️⃣ 这一边：商竣程也是刚回来，停了五个月
+· 生涯最高世界第 47（2024 年 10 月）
+· 2 月迪拜之后停赛，本站是五个月来首战
+· 现排名两百开外
+
+6️⃣ 这一场：一场首轮，装着一代人的交接
+· 7 月 27 日首轮，两人第二次交手
+· 一个在告别，一个刚回来
+
+💬 留个答案
+锦织圭之后，亚洲男网谁来接？
+
+这里是 @网球时差｜开赛之前。
+
+#网球 #网球时差 #商竣程 #锦织圭 #ATP</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly></textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
