@@ -2728,31 +2728,53 @@ def subtitle_cues(
     return cues
 
 
-def _srt_stamp(seconds: float) -> str:
-    ms = max(0, int(round(seconds * 1000)))
-    h, ms = divmod(ms, 3_600_000)
-    m, ms = divmod(ms, 60_000)
-    s, ms = divmod(ms, 1000)
-    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
-
-
-def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path) -> Path:
-    blocks = [
-        f"{n + 1}\n{_srt_stamp(start)} --> {_srt_stamp(end)}\n{shown}\n"
-        for n, (start, end, shown) in enumerate(cues)
-    ]
-    path.write_text("\n".join(blocks), encoding="utf-8")
-    return path
+def _ass_stamp(seconds: float) -> str:
+    cs = max(0, int(round(seconds * 100)))
+    h, cs = divmod(cs, 360_000)
+    m, cs = divmod(cs, 6_000)
+    s, cs = divmod(cs, 100)
+    return f"{h:d}:{m:02d}:{s:02d}.{cs:02d}"
 
 
 # 字幕落在下边条里，一个像素都不压画面：3:4 的卡居中在 9:16 画布上，上下各空
 # 240px。MarginV=62、字号 52，两行也只占到 190px 左右，正好待在黑边里。
 # 描边留着——万一将来换成不留边的版式，字压在照片上也还读得出来。
-_SUB_STYLE = (
-    "FontName=Noto Sans CJK SC,FontSize=52,Bold=1,"
-    "PrimaryColour=&H00ecf3e7,OutlineColour=&H00141e18,BorderStyle=1,"
-    "Outline=3,Shadow=0,Alignment=2,MarginL=48,MarginR=48,MarginV=62"
-)
+#
+# 写成 ASS 而不是 SRT，是因为**字号得有个参照系**。ffmpeg 把 SRT 转成 ASS 时
+# 用的是 libass 默认的 384×288 画布，再拉到 1080×1920，字号 52 落到画面上就成了
+# 三百多像素——第一帧烧出来，四个字盖住了整张卡。ASS 自己写 PlayRes，字号就是
+# 真实像素，不用猜滤镜按什么缩放。
+_ASS_FONT = "Noto Sans CJK SC"
+_ASS_SIZE = 52
+_ASS_MARGIN_V = 62
+# ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
+_ASS_HEADER = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {VIDEO_W}
+PlayResY: {VIDEO_H}
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, \
+BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
+BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
+1,0,0,0,100,100,0,0,1,3,0,2,48,48,{_ASS_MARGIN_V},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+
+
+def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path) -> Path:
+    lines = [
+        f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
+        f"{shown.replace(chr(10), ' ')}"
+        for start, end, shown in cues
+    ]
+    path.write_text(_ASS_HEADER + "\n".join(lines) + "\n", encoding="utf-8")
+    return path
 
 
 def _filter_path(path: Path) -> str:
@@ -2906,8 +2928,8 @@ def assemble_explainer_video(
                 offset=head[i],
             )
             if cues:
-                srt = write_subtitles(cues, output.parent / f"sub_{i:02d}.srt")
-                chain += f",subtitles='{_filter_path(srt)}':force_style='{_SUB_STYLE}'"
+                ass = write_subtitles(cues, output.parent / f"sub_{i:02d}.ass")
+                chain += f",subtitles='{_filter_path(ass)}'"
         filters.append(f"{chain},format=yuv420p[v{i}]")
         # Silence the audio rather than the picture: adelay pushes the speech
         # later, apad hangs quiet on the end. The still stays on screen for the

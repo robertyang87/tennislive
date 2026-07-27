@@ -736,15 +736,22 @@ def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
     )
     graph = calls[-1][calls[-1].index("-filter_complex") + 1]
     assert graph.count("subtitles=") == 2, graph
-    assert "Alignment=2" in graph and "MarginV=62" in graph
+
+    first = (tmp_path / "sub_00.ass").read_text(encoding="utf-8")
+    # 字号得有个参照系。写成 SRT 时 ffmpeg 按 libass 默认的 384×288 画布转换，
+    # 再拉到 1080×1920——字号 52 落到画面上成了三百多像素，四个字盖住整张卡。
+    # 所以 PlayRes 必须就是真实画布，字号才等于真实像素。这一条是烧出第一帧
+    # 亲眼看见才发现的，滤镜链本身一点问题都没有。
+    assert f"PlayResX: {E.VIDEO_W}" in first and f"PlayResY: {E.VIDEO_H}" in first
+    assert "Alignment" not in first.split("[Events]")[1]  # 样式只在 Style 行里定义
+    assert ",2,48,48,62,1" in first, "贴底居中 + 下边距 62"
 
     band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2   # 上下黑边各多高
     assert band == 240
-    assert 62 + 52 * 2 * 1.25 < band, "两行字幕会顶出黑边压到画面上"
+    assert E._ASS_MARGIN_V + E._ASS_SIZE * 2 * 1.25 < band, "两行字幕会顶出黑边压到画面上"
 
-    # 字幕文件真的写出来了，而且第一段被片头静音推过。
-    first = (tmp_path / "sub_00.srt").read_text(encoding="utf-8")
-    assert first.startswith("1\n00:00:00,600 --> "), first[:60]
+    # 第一段被片头静音推过。
+    assert "Dialogue: 0,0:00:00.60," in first, first[-300:]
     assert "外卡" in first
 
 
