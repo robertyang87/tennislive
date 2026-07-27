@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2086 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2037 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -457,8 +457,8 @@ bWTTWu_uA_I  Jannik Sinner post-match interview | Rolex Paris Masters  → 在�
 p8z5dEVgXck  Jannik Sinner post-match interview | Rolex Paris Masters  → 媒体背景板前
 ```
 
-所以现在**一条正则都不留**，法网 61 条、巴黎 31 条全部逐条看过画面，
-结论按 id 记进 `data/oncourt_sources.json` 的 `deny_ids`（共 75 条），
+所以现在**一条正则都不留**，法网 160 条、巴黎 31 条全部逐条看过画面，
+结论按 id 记进 `data/oncourt_sources.json` 的 `deny_ids`（共 124 条），
 逐条证据记在 `data/oncourt_verify.json`，测试查两者一一对应、且库存与之一致。
 
 ### 怎么"看画面"：用视频自动帧，别看封面
@@ -497,12 +497,38 @@ python tools/verify_oncourt_sample.py --report                     # 汇总每�
 还有一条反向教训：**小图会看错**。Nine 那条 Zverev 在联络表里像发布会，
 调 `maxresdefault` 复看，看得见 AO 蓝话筒和看台，其实在场上。判不准就调大图。
 
-累计逐条看过 **178 条**，其中 101 条确认在场上、76 条是发布会 / 媒体区、
-1 条不是采访（场上求婚）。
+累计逐条看过 **277 条**，其中 151 条确认在场上、125 条是发布会 / 媒体区、
+1 条不是采访（场上求婚）。**法网这个源已经逐条看完**——库里剩的 56 条每一条都亲眼过过。
 
-**还没解决的**：法网 2025 那批里估计还剩十来条发布会——样本里 10 条中 2 条，
-都是决赛，法网自己的图上印着 `POST-MATCH PRESS CONFERENCE`，标题却一字不差
-还是 post-match interview。这批没有逐条看过，是当前最大的一块残余不确定。
+法网看完这一遍又推翻了一个结论。此前靠缩略图判断「2025 那批大多在场上」，
+调自动帧一看**正好相反**：99 条里 49 条是发布会。**封面画的是场上的动作照，
+片子里是发布厅**——又一次同样的教训。
+
+看下来法网的两套场景在画面上其实分得很干净：
+
+| | 场上 | 新闻发布厅 |
+| --- | --- | --- |
+| 背景 | 深色 BNP 背景板 / 红土 / 看台 | 白底 BNP Paribas 重复标背景板 |
+| 话筒 | 红色手持 | 绿色台麦 |
+| 其他 | 站着，画面常带 `ADVANCES TO…` 字幕条 | 长桌 + 绿瓶矿泉水，坐着 |
+
+两条 2026 决赛的短片是唯一需要多想一步的：白底背景板前站着答，
+67 秒和 91 秒，而同年 23 条真 on-court **全部 ≥138 秒**、标题一律写
+`| … on-court Interview |`。三个信号（标题格式、时长、背景板）一致，判为媒体区。
+
+顺带剔掉了一条中国球员的：`Zheng Quarter-final post-match interview |
+Roland-Garros 2025` 是发布会。中国球员条目 14 → 13。
+
+### 华盛顿：赛事页已经开了，但还只有赛前预告
+
+`tennistv.com/tournaments/418_2026/washington` **7 月 27 日当天实测是活的**
+（89 KB），但只挂着一条 `washington-2026-musetti-preview-interview`——赛前预告，
+不是赛后采访。合理：当天才开赛，还没有比赛打完。
+
+对照 2025 那一届的同一个页面（954 KB），逐轮都有：
+`washington-2025-final-de-minaur-interview`、`washington-2025-sf-de-minaur-interview`、
+`washington-2025-sf-davidovich-fokina-interview`……**所以这条路是通的，只是要等**。
+按上一届的形态，本周内应该会逐轮填上。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 
