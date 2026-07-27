@@ -194,9 +194,18 @@ def is_tour_event(item: dict) -> bool:
 #   `Why she'll play doubles with Andy | Emma Raducanu | Second round …`
 # 真双打的写法是 `Zhu/Zhang`、`Collins/Harrison` 这种斜杠配对（库里 102 条），
 # 或者 `Wheelchair Doubles` / `Men's Doubles` 这种带限定词的。
+# 第三种写法是 `X and Y`（`Neal Skupski and Desirae Krawczyk Post-Match
+# Interview`）。**必须限定在标题开头**，否则会误杀单打——库里 35 条含
+# `X and Y` 的里面有这么一条：
+#   `"I'll sit on a beach with Federer and Nadal" | Novak Djokovic On-Court Interview`
+# 那是德约的单打采访，引语里提了两个人。开头那一条限制把它放过去。
+# 代价：`Glory for Krawietz and Puetz` 这种以别的词开头的真双打抓不到，
+# 宁可漏也别误杀。
 _DOUBLES = [
     re.compile(r"\b[A-Z][\w'\u00C0-\u024F-]+\s*/\s*[A-Z][\w'\u00C0-\u024F-]+"),
     re.compile(r"\b(?:men'?s|women'?s|ladies'?|mixed|wheelchair|quad)\s+doubles\b", re.I),
+    re.compile(r"^[A-Z][\w'\u00C0-\u024F-]+(?:\s+[A-Z][\w'\u00C0-\u024F-]+)?\s+and\s+"
+               r"[A-Z][\w'\u00C0-\u024F-]+(?:\s+[A-Z][\w'\u00C0-\u024F-]+)?\s"),
 ]
 
 
