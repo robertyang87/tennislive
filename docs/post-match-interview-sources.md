@@ -98,10 +98,13 @@
 
 | 类别 | 代表 | 实扫场上采访条数 |
 | --- | --- | --- |
-| **转播方** | Eurosport 78、TNT Sports 44、Nine 2 | **124** |
-| **团体赛** | United Cup 56、Laver Cup 26、Davis Cup 12 | **94** |
-| **赛事方** | Dubai 45、温网 20、法网 18、罗马 12、美网 11、巴黎 10、澳网 10、华盛顿 1 | **127** |
+| **赛事方** | Dubai 89、法网 89、温网 75、澳网 74、美网 53、罗马 34、巴黎 31、印第安维尔斯 1、华盛顿 1 | **447** |
+| **团体赛** | United Cup 84、Hopman Cup 79、Laver Cup 42、Davis Cup 14 | **219** |
+| **转播方** | Eurosport 81、TNT Sports 44、Nine 2 | **127** |
 | **ATP 官网库** | tennistv.com/library/interviews | **16** |
+| **各国网协** | FFT 2、USTA 1 | **3** |
+
+**合计 812 条**（2026-07-27 实测）。
 
 **转播方这一整个类别，第一版完全没想到，而它现在是最大的一类。**
 Eurosport 78 条、TNT Sports 44 条（同系，格式一样但内容不完全重叠），
@@ -243,6 +246,33 @@ Rafael Jodar | Madrid 2026` 是 **10 分 06 秒**（发布会），
 
 所以这一类内容在**赛事方和转播方**手里，不在 ATP / WTA 中央渠道。
 
+### X（推特）与 Instagram：一个能取单条不能列表，一个完全取不到
+
+两个都实测过，结论不一样，别一概而论：
+
+| | 单条 | 列时间线 |
+| --- | --- | --- |
+| **X / Twitter** | ✅ 能取（yt-dlp `twitter` 提取器） | ❌ `Unsupported URL` |
+| **Instagram** | ❌ `Instagram API is not granting access` | ❌ `instagram:user` 已标记 broken |
+
+**X**：拿真实推文 `x.com/atptour/status/1054755723463270401` 测，
+成功解析出 uploader。但 `x.com/atptour`、`/atptour/media`、`/i/user/atptour`
+三种写法全部 `Unsupported URL`——**没法枚举，就没法做成采集源**，
+除非你已经知道每一条的 URL。
+
+**Instagram**：连单条都要 cookies。`instagram:user` 提取器在当前版本
+（2026.07.04）已被 yt-dlp 自己标记为 broken。
+
+**而且这两个平台对英语学习是降级的**，就算能取也不该优先：
+
+- 内容是**剪过的短片**（Reels 15–60 秒），场上采访本来就只有 1–3 分钟，
+  再剪就只剩一两句
+- 竖版裁切，主持人常被裁出画面
+- **没有自动字幕**——YouTube 那套 `--write-auto-sub` 在这里没有对应物
+
+同样的素材在 YouTube 上是完整的、免费的、带自动字幕的。
+所以这两个平台记为"查过、不用"，不进注册表。
+
 ### 国内平台（央视 / 腾讯 / 优酷 / 咪咕 / 爱奇艺）：有版权，但拿不到这一类
 
 2026 赛季的中国区版权是分散的：
@@ -338,7 +368,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
-| `data/oncourt_interviews.json` | 累积产物 |
+| `data/oncourt_interviews.json` | 累积产物，当前 812 条 |
 
 **默认只收"赛后直接在场上接受采访"这一类。** 按类型分三档：
 
