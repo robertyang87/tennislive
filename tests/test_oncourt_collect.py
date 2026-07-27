@@ -181,9 +181,10 @@ def test_sources_registry_is_sane():
         assert src["url"].startswith("https://"), src["name"]
         assert src["name"] not in seen, f"源名重复：{src['name']}"
         seen.add(src["name"])
-        if src.get("fetch") == "tennistv":
-            # tennistv.com 的库页固定给 20 条最新且翻页参数无效，
-            # scan_depth 对它没有意义，不适用下面的深度下限。
+        if src.get("fetch"):
+            # 站点类抓取器（tennistv.com / wtatennis.com）不是按频道翻页的，
+            # 页面固定给最新的十几二十条，scan_depth 对它们没有意义，
+            # 不适用下面的深度下限。
             continue
         # 赛期集中在一年里某几周的赛事，取样太浅会假阴性——澳网在 1 月，
         # 七月里扫近 100 条一条都搜不到，看着就像"澳网不发采访"。
@@ -228,7 +229,28 @@ def test_daily_depth_is_much_shallower_than_baseline_depths():
     from tools.collect_oncourt_interviews import DAILY_DEPTH
 
     cfg = load_sources()
-    depths = [s.get("scan_depth", 150) for s in cfg["sources"]
-              if s.get("fetch") != "tennistv"]
+    # 只比 YouTube 频道源。站点类抓取器的 scan_depth 是个占位值，
+    # 拿它算 min 会把下限拉到 20，断言就永远不成立。
+    depths = [s.get("scan_depth", 150) for s in cfg["sources"] if not s.get("fetch")]
     assert DAILY_DEPTH < min(depths), "日常深度应比所有基线深度都小"
     assert DAILY_DEPTH >= 40, "太小会漏掉赛事高峰期一天的更新"
+
+
+def test_discovery_dedup_recognises_the_same_channel_in_both_url_forms():
+    """注册表里同一频道有 @句柄 和 /channel/ID 两种写法，去重要认得出。
+
+    踩过：搜索返回「US Open Tennis Championships」+ /channel/UCXbboag…，
+    注册表写的是「US Open」+ @usopen——URL 不同、名字也不同，
+    结果每周都把这个已收录的源当成「新发现」重复报一遍。
+    """
+    from tools.discover_oncourt_sources import already_known, registry_channels
+
+    known_urls, known_names = registry_channels()
+    assert already_known("US Open Tennis Championships",
+                         "https://www.youtube.com/channel/UCXbboag48Qlr78zzz6SkzkQ",
+                         known_urls, known_names)
+    assert already_known("Eurosport Tennis", "https://whatever", known_urls, known_names)
+    # 真没收录的不能被误判成已知
+    assert not already_known("Some Random Fan Channel",
+                             "https://www.youtube.com/channel/UCzzz",
+                             known_urls, known_names)

@@ -58,6 +58,19 @@ jobs:
             ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
             | tee /tmp/oncourt.log
 
+      - name: 发现新来源（每周一次）
+        # 注册表里最有价值的几个源全是手搜出来的（Eurosport 78 条、
+        # United Cup 84、Hopman Cup 118），它们不在任何官方清单上。
+        # 新的还会不断冒出来，搬运号尤其如此，所以把发现本身自动化。
+        # 只在周一跑：搜索有配额，每天跑没必要——新源不会天天出现。
+        if: github.event.schedule == null || github.event.schedule != ''
+        run: |
+          if [ "$(date -u +%u)" = "1" ] || [ -n "${{ github.event.inputs.only }}" ]; then
+            python tools/discover_oncourt_sources.py --min 2 | tee -a /tmp/oncourt.log || true
+          else
+            echo "非周一，跳过来源发现。"
+          fi
+
       - name: 比对赛果，算出「赢了但没采访」的缺口
         run: |
           # 采集保证不了每场都有采访（源头就不是每场都发），所以把缺口

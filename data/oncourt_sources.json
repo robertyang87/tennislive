@@ -323,6 +323,15 @@
       "scan_depth": 400,
       "verified": true,
       "note": "搬运号。400 条里 6 条场上采访，**6 条全补缺口**（迈阿密、印第安维尔斯），命中率最高的一个。"
+    },
+    {
+      "name": "WTA 官网视频 (wtatennis.com)",
+      "url": "https://www.wtatennis.com/videos/interviews",
+      "fetch": "wta",
+      "tier": "wta-site",
+      "scan_depth": 20,
+      "verified": true,
+      "note": "WTA 那边对应 tennistv.com 的东西，但量小得多：四个视频分区去重后只有 3 条，翻页参数无效。补的是别处拿不到的 WTA 250/500（Athens、Berlin）。slug 自带赛事/轮次/球员，比标题可靠。Brightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），所以只能走页面。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",

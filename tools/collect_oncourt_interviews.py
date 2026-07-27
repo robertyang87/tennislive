@@ -215,6 +215,60 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     return rows, "ok"
 
 
+def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
+    """wtatennis.com 的视频页——WTA 那边对应 tennistv.com 的东西。
+
+    它是 ATP 那套 CMS 的姊妹站（都是 Pulselive），但**结构不一样**：
+    tennistv 把条目以 JSON 内嵌在 HTML 里，WTA 只留站内链接，
+    详情靠 JS 拉。好在 slug 本身信息就够：
+
+        /videos/4539195/athens-post-match-interview-final-barbora-krejcikova-english
+        /videos/4523019/berlin-post-match-interview-sf-jessica-pegula
+                        └赛事┘ └──类型──┘ └轮次┘ └───球员───┘ └语言┘
+
+    量很小——四个视频分区加起来去重后只有 3 条，`page` / `pageSize` 参数
+    都无效。但它补的是别处拿不到的 WTA 250/500（Athens、Berlin），
+    而且按天跑能滚动收到新的。
+
+    **Brightcove 那条路走不通**：WTA 的视频托管在 Brightcove（account
+    6041795521001），播放器 config 里能拿到 policy key，但目录搜索接口返回
+    `ACCESS_DENIED` —— 那是 WTA 设的访问策略，只允许按 ID 播放单条，
+    不允许列目录。不绕。
+    """
+    slugs: dict[str, str] = {}
+    for page in ("videos", "videos/interviews", "videos/press-conferences"):
+        try:
+            proc = subprocess.run(
+                ["curl", "-sS", "--max-time", "30", "-H", "User-Agent: Mozilla/5.0",
+                 f"https://www.wtatennis.com/{page}"],
+                capture_output=True, text=True, timeout=50)
+        except subprocess.TimeoutExpired:
+            continue
+        for vid, slug in re.findall(r"/videos/(\d+)/([a-z0-9\-]{6,})", proc.stdout):
+            if re.search(r"post-match|on-court", slug):
+                slugs[vid] = slug
+    if not slugs:
+        return [], "no-entries"
+
+    rows = []
+    for vid, slug in slugs.items():
+        m = re.match(r"([a-z\-]+?)-(?:post-match|on-court)-interview-"
+                     r"(final|sf|qf|r\d+|semi\w*|quarter\w*)?-?(.*)", slug)
+        event = (m.group(1).replace("-", " ").title() if m else "")
+        rnd = (m.group(2) or "") if m else ""
+        who = (m.group(3) or "").replace("-english", "").replace("-", " ").title() if m else ""
+        rows.append({
+            "id": f"wta:{vid}",
+            # slug 拼回可读标题：轮次和赛事都塞进去，下游的轮次解析才认得出
+            "title": f"{who} Post-Match Interview | {rnd.upper()} | {event}".replace("|  |", "|"),
+            "duration_s": None,
+            "channel": "WTA (wtatennis.com)",
+            "page_url": f"https://www.wtatennis.com/videos/{vid}/{slug}",
+            "round": rnd,
+        })
+    return rows, "ok"
+
+
 def scan(url: str, depth: int) -> tuple[list[dict], str]:
     """扫一个频道。返回 (条目列表, 状态)。
 
@@ -312,7 +366,7 @@ def main() -> int:
     any_fetched = False
 
     for src in sources:
-        fetch = scan_tennistv if src.get("fetch") == "tennistv" else scan
+        fetch = {"tennistv": scan_tennistv, "wta": scan_wta}.get(src.get("fetch"), scan)
         depth = src.get("scan_depth", 150) if args.full else min(
             args.daily_depth, src.get("scan_depth", 150))
         rows, status = fetch(src["url"], depth)
