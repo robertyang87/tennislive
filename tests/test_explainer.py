@@ -972,3 +972,38 @@ def test_数字和汉字看起来是一家的():
 
     # 放大之后更宽了，行宽模型要跟着——按 0.5 估会宽出小半个字。
     assert E._sub_width("2026") > 2.5
+
+
+def test_成片链接和图片走同一条_CDN():
+    """一封推送里两条路，慢的那条是没走 CDN 的那条。
+
+    视频链接原来指向 `github.com/<repo>/raw/main/…`，它 302 跳到
+    raw.githubusercontent.com——那台机器国内既没有节点也没有 CDN，点开要等很久。
+    同一封信里的图片一直是好的，因为图片走 jsDelivr（Cloudflare 边缘）。
+
+    写成 `@main` 还有第二层用处：`pin_asset_revision` 只认 jsDelivr 的 `@main`，
+    换过去之后视频会和图片**一起**被钉到本次 commit 上。钉住的链接 jsDelivr 给的是
+    immutable + 一年 TTL；而且成片被下一次生成覆盖之后，老推送里的链接仍然指向
+    当初那一版。
+    """
+    import datetime
+    from pathlib import Path as _Path
+
+    from tennislive.render.pushmsg import pin_asset_revision
+    from tennislive.video import explainer as E
+
+    outdir = _Path("output/2026-07-27/explainer/shang-nishikori")
+    segs = E.explainer_script(find_story_by_slug("shang-nishikori"))
+    html = E.explainer_push_html(
+        segs, outdir, date=datetime.date(2026, 7, 27), xhs_text="测试文案")
+
+    assert "/raw/main/" not in html, "视频还在走 raw.githubusercontent"
+    urls = [u for u in html.replace("'", '"').split('"') if u.endswith("explainer.mp4")]
+    assert urls, "推送里没有成片链接"
+    assert urls[0].startswith(f"https://cdn.jsdelivr.net/gh/{E._REPOSITORY}@main/"), urls[0]
+
+    rev = "37853825db235e7290df16fe890d00d556327d94"
+    pinned = pin_asset_revision(html, rev)
+    assert f"@{rev}/{outdir.as_posix()}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
+    assert f"@{rev}/{outdir.as_posix()}/slide_00.png" in pinned, "图片没被钉住"
+    assert "@main/" not in pinned

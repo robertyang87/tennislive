@@ -3205,7 +3205,17 @@ def explainer_push_html(
     rel = outdir.as_posix()
     if "output/" in rel:
         rel = rel[rel.index("output/") :]
-    video_url = f"https://github.com/{_REPOSITORY}/raw/main/{rel}/{video_name}"
+    # 视频和图片走同一条路。原来这里写的是 github.com/<repo>/raw/main/…，它 302
+    # 跳到 raw.githubusercontent.com——那台机器国内既没有节点也没有 CDN，点开要等很久；
+    # 而同一封推送里的图片一直是好的，因为图片走的是 jsDelivr（Cloudflare 边缘）。
+    # 一封信里两条路，慢的那条是没走 CDN 的那条。
+    #
+    # 成片 7 MB 上下，在 jsDelivr 单文件 20 MB 的限制内，Content-Type 也确实是
+    # video/mp4（试过）。写成 @main 是为了让 pin_asset_revision 顺手把它和图片
+    # 一起钉到本次 commit 上：钉住之后 jsDelivr 给的是 max-age=31536000, immutable，
+    # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
+    # 指向新片子。
+    video_url = f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{video_name}"
     return knowledge_push_html_from_parts(
         date=date,
         image_urls=[
