@@ -62,6 +62,7 @@ ceremony 再判 oncourt**，否则颁奖礼会被当成场上采访收进来。
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 import subprocess
@@ -128,6 +129,59 @@ def load_store() -> dict:
         return {"items": {}}
     with STORE.open(encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
+    """tennistv.com 的媒体库——不是 YouTube，得单独抓。
+
+    这是唯一系统性覆盖 **ATP 250** 场上采访的来源，而且**不在付费墙后面**：
+    实测 20 条里 16 条 `entitlement:free`、4 条 `freemium`（注册即可），
+    premium 一条都没有。Tennis TV 的 YouTube 频道深扫 800 条是 0 条场上采访，
+    东西全在站上，两者别搞混。
+
+    页面是服务端渲染，条目以 JSON 内嵌在 HTML 里，字段齐全：
+    `videoType`（interviews / preview）、`metadataRound`（R1/QF/SF/Final）、
+    `durationMins`+`durationSecs`、`entitlement`、`metadataSeries`（250/500…）。
+    **`videoType` 比标题可靠得多**——标题是编辑体（"Merida Elated to Win First
+    ATP Tour Title"），看不出格式；videoType 直接说了。
+
+    只给 20 条最新且翻页参数无效（page/offset/p 都返回同一批），
+    所以按周跑正好——一个赛事周产出的采访远少于 20 条。
+    """
+    try:
+        proc = subprocess.run(
+            ["curl", "-sS", "--max-time", "40", "-H", "User-Agent: Mozilla/5.0", url],
+            capture_output=True, text=True, timeout=60,
+        )
+    except subprocess.TimeoutExpired:
+        return [], "error: 超时"
+    raw = proc.stdout
+    if not raw:
+        return [], f"error: 空响应 {(proc.stderr or '')[:40]}"
+
+    rows = []
+    for blob in re.findall(r'\{[^{}]*"title"\s*:\s*"[^"]{4,120}"[^{}]*\}', raw):
+        try:
+            o = json.loads(blob)
+        except ValueError:
+            continue
+        if o.get("videoType") != "interviews" or not o.get("metadataRound"):
+            # preview（赛前）和没有轮次的特写不是赛后采访。
+            continue
+        secs = int(o.get("durationMins") or 0) * 60 + int(o.get("durationSecs") or 0)
+        rows.append({
+            "id": f"tennistv:{o.get('videoId')}",
+            "title": html.unescape(o.get("title", "")),
+            "duration_s": secs or None,
+            "channel": "Tennis TV (tennistv.com)",
+            "page_url": "https://www.tennistv.com" + (o.get("videoUrl") or ""),
+            "round": o.get("metadataRound"),
+            "series": o.get("metadataSeries") or "",
+            "entitlement": o.get("entitlement") or "",
+        })
+    if not rows:
+        return [], "no-entries"
+    return rows, "ok"
 
 
 def scan(url: str, depth: int) -> tuple[list[dict], str]:
@@ -222,13 +276,16 @@ def main() -> int:
     any_fetched = False
 
     for src in sources:
-        rows, status = scan(src["url"], src.get("scan_depth", 150))
+        fetch = scan_tennistv if src.get("fetch") == "tennistv" else scan
+        rows, status = fetch(src["url"], src.get("scan_depth", 150))
         if rows:
             any_fetched = True
 
         fresh = n_oncourt = n_skipped = 0
         for r in rows:
-            kind = classify(r["title"], rules)
+            # tennistv 的 videoType=interviews + 有轮次，已经等价于场上采访，
+            # 不能再拿标题正则去筛——它的标题是编辑体，一条都匹配不上。
+            kind = "oncourt" if r["id"].startswith("tennistv:") else classify(r["title"], rules)
             if kind is None:
                 continue
             if kind == "excluded":
@@ -246,7 +303,7 @@ def main() -> int:
                 continue
             new_items[r["id"]] = {
                 **r,
-                "url": f"https://www.youtube.com/watch?v={r['id']}",
+                "url": r.pop("page_url", None) or f"https://www.youtube.com/watch?v={r['id']}",
                 "source": src["name"],
                 "tier": src.get("tier", ""),
                 "kind": kind,

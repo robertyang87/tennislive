@@ -123,6 +123,38 @@
 > 按频道汇总，谁在发一目了然。我猜句柄猜错过四个（蒙特卡洛、迈阿密、
 > 加拿大、Queen's），而搜索一轮就找出了四个我根本没想到的源。
 
+### Tennis TV 要分两个东西：YouTube 频道没有，**站上的库有，而且免费**
+
+这是最容易搞混的一处，也是 ATP 250 那块空白的答案。
+
+| | 场上采访 |
+| --- | --- |
+| YouTube [@tennistv](https://www.youtube.com/@tennistv) | 深扫 800 条 → **0** |
+| 站上 [tennistv.com/library/interviews](https://www.tennistv.com/library/interviews) | 20 条里 **16 条**，逐轮 |
+
+**而且不在付费墙后面。** 页面内嵌 JSON 里有 `entitlement` 字段，实测：
+
+| entitlement | 条数 |
+| --- | --- |
+| `free` | 16 |
+| `freemium`（注册即可） | 4 |
+| `premium` | **0** |
+
+内容是 Estoril、Bastad、Kitzbuhel、Gstaad 这些 **ATP 250**，逐轮发
+（`metadataRound` 为 R1/QF/SF/Final），时长 0:56–3:27。
+
+**怎么确认真是场边而不是媒体间**：标题是编辑体（`Merida Elated to Win First
+ATP Tour Title`）看不出格式，所以下载缩略图**亲眼看**——Darderi 八强那条，
+球衣未换、还在出汗、身后是 Estoril 看台和场边广告牌；Van Assche 决赛那条，
+手持场上麦、身后是穿西装的赛事官员。媒体间是坐着、桌前、logo 背景板，
+一眼能分。
+
+采集时**不用标题正则**，直接认 `videoType == "interviews"` 且有
+`metadataRound`——字段比标题可靠。
+
+一个限制：只给 20 条最新，`page` / `offset` / `p` 参数都返回同一批。
+但按周跑正好，一个赛事周产出的采访远少于 20 条。
+
 ### ATP / WTA 的中央渠道确实不产出场上采访（深扫 800 条验证）
 
 这三家一开始按 150 深度扫是 0，为排除"取样太浅"的可能，**各深扫到 800 条**，
@@ -234,7 +266,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 
 | 文件 | 作用 |
 | --- | --- |
-| `data/oncourt_sources.json` | 15 个源的注册表，逐源可配扫描深度与说明 |
+| `data/oncourt_sources.json` | 21 个源的注册表，逐源可配扫描深度与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
 | `data/oncourt_interviews.json` | 累积产物 |

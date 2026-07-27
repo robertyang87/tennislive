@@ -137,12 +137,34 @@ def test_sources_registry_is_sane():
     cfg = load_sources()
     seen = set()
     for src in cfg["sources"]:
-        assert src["url"].startswith("https://www.youtube.com/"), src["name"]
+        assert src["url"].startswith("https://"), src["name"]
         assert src["name"] not in seen, f"源名重复：{src['name']}"
         seen.add(src["name"])
+        if src.get("fetch") == "tennistv":
+            # tennistv.com 的库页固定给 20 条最新且翻页参数无效，
+            # scan_depth 对它没有意义，不适用下面的深度下限。
+            continue
         # 赛期集中在一年里某几周的赛事，取样太浅会假阴性——澳网在 1 月，
         # 七月里扫近 100 条一条都搜不到，看着就像"澳网不发采访"。
         assert src.get("scan_depth", 150) >= 100, src["name"]
+
+
+def test_tennistv_site_source_is_present_and_not_the_youtube_channel():
+    """tennistv.com 的库和 Tennis TV 的 YouTube 频道是两回事，别搞混。
+
+    YouTube 频道深扫 800 条是 **0 条**场上采访；站上的库逐轮都有
+    （R1/QF/SF/Final，0:56–3:27），而且 16/20 免费、4/20 freemium，
+    premium 一条都没有。它是唯一系统覆盖 ATP 250 场上采访的来源。
+    """
+    cfg = load_sources()
+    site = [s for s in cfg["sources"] if s.get("fetch") == "tennistv"]
+    assert site, "tennistv.com 媒体库是 ATP 250 场上采访的唯一来源，不能去掉"
+    assert site[0]["url"].startswith("https://www.tennistv.com/")
+
+    yt = [s for s in cfg["sources"]
+          if s["name"] == "Tennis TV" and "youtube.com" in s["url"]]
+    assert yt, "Tennis TV 的 YouTube 频道要单独留着，记录它 0 条的结论"
+    assert yt[0]["url"] != site[0]["url"]
 
 
 def test_rome_is_present_and_deep():
