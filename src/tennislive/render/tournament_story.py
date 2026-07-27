@@ -1392,6 +1392,49 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Alexandra_Eala",
     ),
     _trivia_story(
+        slug="shang-nishikori",
+        title="商竣程首轮VS锦织圭",
+        subtitle="赛事前瞻 · ATP 500",
+        identity="锦织圭退役赛季的华盛顿首轮",
+        chips=("ATP 500", "首轮", "第二次交手"),
+        hero=(
+            "锦织圭以外卡身份出战华盛顿站，首轮对阵商竣程；"
+            "锦织圭已宣布 2026 赛季结束后退役，两人上一次交手是 2024 年成都公开赛首轮，"
+            "19 岁的商竣程 6-4、6-4 取胜并最终夺冠。"
+        ),
+        facts=(
+            "锦织圭 1989 年 12 月生，生涯最高世界第 4，12 个 ATP 单打冠军；"
+            "2014 年美网打进决赛，是公开赛年代唯一一位代表亚洲国家打进大满贯男单决赛的球员。",
+            "2026 年 4 月，锦织圭宣布将在赛季结束后退役；髋、腕、背、肩、膝多处伤病长期困扰，"
+            "现世界排名四百开外，本站靠外卡进入正赛。",
+            "商竣程 2005 年 2 月生，生涯最高世界第 47（2024 年 10 月）；"
+            "2024 年成都公开赛夺冠，成为公开赛年代第二位赢得 ATP 单打冠军的中国男子球员，"
+            "2026 年 2 月迪拜站后因伤停赛，本站是他五个月来的首场比赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2014-09",
+                player="锦织圭",
+                age="24 岁",
+                headline="美网决赛，亚洲男子唯一一次",
+                detail="半决赛击败德约科维奇后闯入决赛，最终负于西里奇；这是公开赛年代代表亚洲国家的男子球员唯一一次打进大满贯单打决赛。",
+                source_url="https://en.wikipedia.org/wiki/Kei_Nishikori",
+            ),
+            ChampionMoment(
+                date="2024-09",
+                player="商竣程",
+                age="19 岁",
+                headline="成都首轮 6-4、6-4 胜锦织圭",
+                detail="那一周他一路夺冠，成为公开赛年代第二位拿到 ATP 单打冠军的中国男子球员。",
+                source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / ATP 官方赛会信息",
+        image_credit="CGTN / ATP 官方赛会图",
+        source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+    ),
+    _trivia_story(
         slug="venus-potapova",
         title="维纳斯首轮VS波塔波娃",
         subtitle="赛事前瞻 · WTA 500",

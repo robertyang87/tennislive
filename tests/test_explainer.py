@@ -413,7 +413,8 @@ _ROSTER = (
     ("纳达尔",), ("费德勒",), ("朱琳",), ("李娜",), ("塞伦多洛",), ("兹维列夫",),
     ("梅德韦杰夫",), ("穆雷",), ("大坂",), ("高芙",), ("萨巴伦卡",),
     ("克雷吉茨科娃",), ("纳芙拉蒂洛娃",), ("斯特恩斯",), ("弗雷赫",),
-    ("莱巴金娜",), ("普利斯科娃",),
+    ("莱巴金娜",), ("普利斯科娃",), ("商竣程",), ("锦织圭",),
+    ("穆塞蒂",), ("吴易昺",), ("梅德韦杰夫",),
 )
 
 
@@ -641,3 +642,19 @@ def test_收尾那个问题一定要念出来():
         # 时的选择，不是重复。查的是末屏那一问有没有被补进去两次。
         core = closer.question.rstrip("？?")
         assert spoken.count(core) <= 1, f"{slug} 同一个问题问了两遍：{core}"
+
+
+def test_旁白里不能留下markdown记号():
+    """写稿时顺手打的 `**加粗**`，配音会一个字一个字念出来。
+
+    这些标记只对写稿的人有意义，对 edge-tts 没有——它不会跳过星号。画面文字
+    同理，卡片是纯文本渲染，星号会原样印上去。
+    """
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            for field, text in (("旁白", seg.narration), ("标题", seg.title)):
+                assert not re.search(r"[*`_#]", text), (
+                    f"{slug}/{seg.kind} 的{field}里有 markdown 记号：{text[:40]}"
+                )
+            for p in seg.points:
+                assert not re.search(r"[*`_#]", p), f"{slug}/{seg.kind} 要点里有记号：{p}"
