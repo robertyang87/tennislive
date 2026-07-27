@@ -248,3 +248,51 @@ def test_pick_drops_doubles_by_default(pats):
     }
     assert {r["id"] for r in pick(items, pats)} == {"s"}
     assert {r["id"] for r in pick(items, pats, include_doubles=True)} == {"s", "d"}
+
+
+# 不属于 ATP / WTA 巡回赛的赛事，一律不推
+NON_TOUR = [
+    "Roger Federer on-court interview (Final) | Mastercard Hopman Cup 2019",
+    "Taylor Fritz On-Court Interview | Laver Cup 2025 Match 12",
+    '"My level goes up in the Davis Cup" | On-court Interview | Spain v Germany | 2025 Davis Cup',
+    "Anna Danilina | On-court Interview | 2023 Billie Jean King Cup",
+]
+
+# United Cup 属巡回赛，不能连它一起砍
+UNITED_CUP = [
+    "Zhizhen Zhang On-Court Interview | United Cup 2026 Group B",
+    "Xinyu Gao's On-Court Interview | United Cup 2025 Group E",
+    "Hubert Hurkacz On-Court Interview | United Cup 2026 Final",
+]
+
+
+@pytest.mark.parametrize("title", NON_TOUR)
+def test_non_tour_events_filtered(title):
+    from tools.oncourt_feed import is_tour_event
+    assert not is_tour_event({"title": title}), title
+
+
+@pytest.mark.parametrize("title", UNITED_CUP)
+def test_united_cup_is_a_tour_event(title):
+    """United Cup 是 ATP 与 WTA 官方联办、计双方排名积分、在两边日历上。
+
+    它形式上是团体赛，容易被连坐砍掉，但它属巡回赛。而且它是中国球员
+    场上采访的重要来源——库里 6 条中国球员条目有 2 条出自这里
+    （张之臻、高馨妤），砍掉会让本就稀少的中国球员再少三分之一。
+    """
+    from tools.oncourt_feed import is_tour_event
+    assert is_tour_event({"title": title}), title
+
+
+def test_pick_drops_non_tour_by_default(pats):
+    items = {
+        "t": {"id": "t", "title": "Jannik Sinner On-Court Interview | Final | Rome 2026",
+              "url": "u", "source": "x"},
+        "u": {"id": "u", "title": "Hurkacz On-Court Interview | United Cup 2026 Final",
+              "url": "u", "source": "x"},
+        "l": {"id": "l", "title": "Taylor Fritz On-Court Interview | Laver Cup 2025 Final",
+              "url": "u", "source": "x"},
+    }
+    got = {r["id"] for r in pick(items, pats)}
+    assert got == {"t", "u"}, "拉沃尔杯该滤掉，United Cup 该留下"
+    assert {r["id"] for r in pick(items, pats, include_team=True)} == {"t", "u", "l"}

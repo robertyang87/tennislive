@@ -8,7 +8,13 @@
     条件二：有中国球员 —— 名单在 data/cn_players.json
 
 两个条件是**或**的关系：郑钦文的第二轮要，辛纳的决赛也要。
-**双打一律不要**（`--include-doubles` 可放开），库里 1377 条里有 103 条双打。
+
+范围限定在 **ATP / WTA 巡回赛与四大满贯的单打**，两道硬过滤：
+
+    双打        滤掉（`--include-doubles` 放开），库里 103 条
+    非巡回赛    滤掉（`--include-team` 放开）：拉沃尔杯（无积分，表演性质）、
+                霍普曼杯与戴维斯杯（ITF）、比莉·简·金杯。**United Cup 不算在内**——
+                它是 ATP 与 WTA 官方联办、计双方积分、在两边日历上，属巡回赛
 
 ## 轮次是从标题里解析的，不是元数据
 
@@ -118,6 +124,34 @@ def load_cn() -> tuple[list[dict], list, list, list]:
     return cfg["players"], full, sur, excl
 
 
+# 不属于 ATP / WTA 巡回赛的赛事。要的是「巡回赛 + 四大满贯」，
+# 所以这些一律不推：
+#
+#   拉沃尔杯   ATP 承办但**不算积分**，性质是表演赛
+#   霍普曼杯   ITF 混合团体赛，不在 ATP/WTA 日历上
+#   戴维斯杯   ITF 国家团体赛
+#   比莉·简·金杯  ITF（原联合会杯）
+#
+# **United Cup 不在此列**——它是 ATP 与 WTA 官方联办、计入双方排名积分、
+# 同时出现在两边的赛季日历上，属巡回赛。而且它是中国球员场上采访的重要
+# 来源（张之臻、高馨妤两条都出自这里），砍掉会让本就稀少的中国球员条目
+# 再少三分之一。
+_NON_TOUR = re.compile(
+    r"\blaver\s+cup\b|\bhopman\s+cup\b|\bdavis\s+cup\b"
+    r"|\bbillie\s+jean\s+king\s+cup\b|\bfed\s+cup\b|\bATP\s+Cup\b"
+    r"|\bworld\s+tennis\s+challenge\b|\bultimate\s+tennis\s+showdown\b"
+    r"|\bexhibition\b|\bcharity\s+match\b", re.I)
+
+
+def is_tour_event(item: dict) -> bool:
+    """这条是不是 ATP / WTA 巡回赛或四大满贯的。
+
+    判据放在标题上而不是源上——转播方和搬运号的条目混着各种赛事，
+    只按源过滤会连它们的巡回赛内容一起砍掉。
+    """
+    return not _NON_TOUR.search(item.get("title", ""))
+
+
 # 双打识别。**只认配对写法和带限定词的 doubles**，不能认光秃秃的 "doubles"
 # ——实测三条误伤全是单打球员在谈双打：
 #   `"I need a crash course in doubles" | Emma Raducanu | Third round On-court…`
@@ -185,8 +219,9 @@ def cn_hit(title: str, rules) -> tuple[dict, bool] | None:
 
 
 def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = False,
-         n_doubles=None) -> list[dict]:
+         include_team: bool = False, n_doubles=None, n_team=None) -> list[dict]:
     n_doubles = n_doubles if n_doubles is not None else [0]
+    n_team = n_team if n_team is not None else [0]
     out = []
     for it in items.values():
         rnd = parse_round(it)
@@ -197,6 +232,9 @@ def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = Fals
         is_key = rnd in KEY_ROUNDS
         if not include_doubles and is_doubles(it):
             n_doubles[0] += 1
+            continue
+        if not include_team and not is_tour_event(it):
+            n_team[0] += 1
             continue
         if only_cn and not cn:
             continue
@@ -260,6 +298,9 @@ def main() -> int:
     ap.add_argument("--only-cn", action="store_true", help="只要有中国球员的")
     ap.add_argument("--include-doubles", action="store_true",
                     help="连双打一起收（默认只要单打）")
+    ap.add_argument("--include-team", action="store_true",
+                    help="连拉沃尔杯/霍普曼杯/戴维斯杯等非巡回赛一起收"
+                         "（默认只要 ATP/WTA 巡回赛与四大满贯）")
     ap.add_argument("--all", action="store_true", help="不去重，把库里所有符合条件的都列出来")
     ap.add_argument("--out", help="把 HTML 写到这个文件")
     ap.add_argument("--seed", action="store_true",
@@ -273,9 +314,11 @@ def main() -> int:
         return 2
     items = json.loads(STORE.read_text(encoding="utf-8"))["items"]
     _players, *rules = load_cn()
-    n_doubles = [0]
+    n_doubles, n_team = [0], [0]
     rows = pick(items, rules, only_cn=args.only_cn,
-                include_doubles=args.include_doubles, n_doubles=n_doubles)
+                include_doubles=args.include_doubles,
+                include_team=args.include_team,
+                n_doubles=n_doubles, n_team=n_team)
 
     sent = set()
     if SENT.exists() and not args.all:
@@ -285,6 +328,9 @@ def main() -> int:
     print(f"库内 {len(items)} 条 -> 符合条件 {len(rows)} 条 -> 未推送过 {len(fresh)} 条")
     if n_doubles[0]:
         print(f"  （已滤掉双打 {n_doubles[0]} 条，要的话加 --include-doubles）")
+    if n_team[0]:
+        print(f"  （已滤掉非巡回赛 {n_team[0]} 条：拉沃尔杯/霍普曼杯/戴维斯杯等，"
+              "要的话加 --include-team）")
     n_cn = sum(1 for r in fresh if r["cn_player"])
     print(f"  其中中国球员 {n_cn} 条，关键场次 {len(fresh) - n_cn} 条\n")
     for r in fresh[:25]:
