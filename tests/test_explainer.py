@@ -851,10 +851,14 @@ def test_字幕待在卡片下沿和app界面之间():
 
     assert E._ASS_ALIGN == 8, "要从顶边算，否则一行两行会落在不同高度"
     top = E._ASS_MARGIN_V
-    bottom_two_lines = top + E._ASS_SIZE * 2   # libass 的行高就是 FontSize
+    # 行高按放大后的字号算：数字那一档更高，一行里有数字就按它撑。
+    bottom_two_lines = top + max(E._ASS_SIZE, E._ASS_NUM_SIZE) * 2
 
     assert top >= E.CARD_TOP + E.CARD_H, "字幕压到画面上了"
-    assert E.VIDEO_H - bottom_two_lines >= 240, "两行字幕会掉进 app 盖住的那一块"
+    one_line = top + max(E._ASS_SIZE, E._ASS_NUM_SIZE)
+    assert E.VIDEO_H - one_line >= 240, "字幕会掉进 app 盖住的那一块"
+    # 切行保证只有一行，两行只是兜底，所以这一条松一些。
+    assert E.VIDEO_H - bottom_two_lines >= 200, "兜底的第二行也不能压到底"
     assert E._ASS_SIZE / E._ASS_CJK_RATIO >= 0.04 * E.VIDEO_W, "手机上太小了"
 
 
@@ -936,6 +940,7 @@ def test_一行字幕待在左右两条边栏之间():
     usable = E.VIDEO_W - 2 * E._ASS_MARGIN_H
     # 一个汉字占 FontSize/1.46，不是 FontSize——量出来的，别按字号直接算。
     widest = E._SUB_MAX * E._ASS_SIZE / E._ASS_CJK_RATIO + 2 * 3
+    # 一格＝一个汉字；数字/西文按 0.68 格算，已经含了单独放大那一档。
     assert widest <= usable, f"一行最宽 {widest}px，可用只有 {usable}px"
     assert E._ASS_MARGIN_H >= 0.13 * E.VIDEO_W, "右边那一列按钮会盖住字幕"
 
@@ -944,3 +949,26 @@ def test_一行字幕待在左右两条边栏之间():
         for seg in E.explainer_script(find_story_by_slug(slug)):
             for _, _, shown in E.subtitle_lines(E.readable(seg.narration)):
                 assert E._sub_width(shown) <= E._SUB_MAX, f"{slug}：{shown}"
+
+
+def test_数字和汉字看起来是一家的():
+    """同一个字体文件，但思源黑体的西文比汉字矮 17%（墨高 52 : 63），并排放着
+    像换了一种字体。拿成片里的「6」和 NotoSansCJK-Bold 逐像素比对过——**字体本来
+    就是同一个**，差的是西文画得小。所以数字和西文单独放大一档。
+
+    全角数字试过，不行：思源的全角只是把同一个字形塞进全角框，字没变粗，
+    「2026」反而散成「２ ０ ２ ６」。
+    """
+    from tennislive.video import explainer as E
+
+    out = E._ass_text("曾经的世界第4，现在世界第464")
+    assert out.count(f"{{\\fs{E._ASS_NUM_SIZE}}}") == 2, out   # 两段数字各套一次
+    assert out.count(f"{{\\fs{E._ASS_SIZE}}}") == 2, out       # 每段后面都收回来
+    assert "第4，" not in out and "第464" not in out, "数字没被套上"
+    assert "曾经的世界第" in out and "，现在世界第" in out, "汉字被动过"
+
+    # 西文缩写同理，不然「ATP」也比旁边的汉字矮一截。
+    assert f"{{\\fs{E._ASS_NUM_SIZE}}}ATP{{\\fs{E._ASS_SIZE}}}" in E._ass_text("一个 ATP 冠军")
+
+    # 放大之后更宽了，行宽模型要跟着——按 0.5 估会宽出小半个字。
+    assert E._sub_width("2026") > 2.5
