@@ -284,6 +284,7 @@ PLAYER_ZH: dict[str, str] = {
     "Katie Volynets": "沃利内茨",
     "Robin Montgomery": "蒙哥马利",
     "Venus Williams": "大威廉姆斯",
+    "Serena Williams": "小威廉姆斯",
     "Varvara Gracheva": "格拉乔娃",
     "Diane Parry": "帕里",
     "Elsa Jacquemot": "雅克莫",

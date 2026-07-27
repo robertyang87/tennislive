@@ -947,3 +947,58 @@ def test_成片链接和图片走同一条_CDN():
     assert f"@{rev}/{outdir.as_posix()}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
     assert f"@{rev}/{outdir.as_posix()}/slide_00.png" in pinned, "图片没被钉住"
     assert "@main/" not in pinned
+
+
+# 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
+# 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
+_ON_PURPOSE = {
+    "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
+}
+
+
+def test_人名要以译名表为准():
+    """人名不手打，以 `zh/players.py` 为准——这条写在 CLAUDE.md 里，仍然被违反了两次。
+
+    把 Rybakina 写成「里巴金娜」发了出去（表里一直是**莱巴金娜**），把 Ostapenko
+    写成「奥斯塔片科」（表里是**奥斯塔彭科**）。两次都不是不知道，是没查。所以
+    落成测试。
+
+    判据是**近似串**：先把文中所有规范名遮掉，再找剩下的、与某个规范名只差一个字的
+    片段。这样「德约科维奇」不会因为内含「科维奇」而被误判成「约维奇」——不遮的话
+    同样一批稿子会报出 61 条误报，遮完只剩 3 条，其中一条是真错。
+
+    只查四个字以上：三个字的窗口会撞上大量普通词（「东西里挑」撞「西里奇」）。
+    这意味着两三个字的名字写错了它挡不住——**表里没有的名字，仍然要自己补进表里**。
+    """
+    from tennislive.video import explainer as E
+    from tennislive.zh.players import PLAYER_ZH
+
+    known = sorted(set(PLAYER_ZH.values()) | _ON_PURPOSE, key=len, reverse=True)
+    canon = [n for n in known if len(n) >= 4]
+
+    def strip_known(text: str) -> str:
+        for name in known:          # 长的先遮，短名才不会把长名切碎
+            text = text.replace(name, "　" * len(name))
+        return text
+
+    bad = []
+    for slug in E._SCRIPTS:
+        opening = E._OPENINGS.get(slug) or {}
+        texts = [opening.get("topic", ""), opening.get("narration", "")]
+        for seg in E.explainer_script(find_story_by_slug(slug)):
+            # 示意图里的名字是**画在屏幕上**的，一样要查——反向验证时才发现漏了：
+            # 「莱巴金娜」第一处就在十冠那张图的 <text> 里。SVG 里的标记不会误报，
+            # 因为窗口要求整段都是汉字。
+            texts += [seg.title, seg.narration, seg.question or "", seg.label,
+                      seg.diagram or "", *seg.points]
+        for text in filter(None, texts):
+            masked = strip_known(text)
+            for name in canon:
+                width = len(name)
+                for i in range(len(masked) - width + 1):
+                    window = masked[i:i + width]
+                    if not all("一" <= c <= "鿿" or c == "·" for c in window):
+                        continue
+                    if sum(a != b for a, b in zip(window, name)) == 1:
+                        bad.append(f"{slug}：「{window}」是不是想写「{name}」")
+    assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
