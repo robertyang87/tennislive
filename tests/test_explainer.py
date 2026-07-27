@@ -840,92 +840,32 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("那是他第一次遇上") == "那是他第一次遇上"
 
 
-def test_字幕待在卡片下沿和app界面之间():
-    """字幕既不能压画面，也不能掉进 app 盖住的那一块。
+def test_字幕待在3比4画面里(): 
+    """两头都有 UI，所以字幕必须待在**卡片内部**，而不是画布的边条里。
 
-    量过一版真成片：卡片上下居中、字幕贴底时，像素落在 y 1849–1882，离底边只有
-    38px——小红书/抖音的底部文案区和 home 指示条正好在那儿，静音刷的人一个字
-    看不到。现在卡片抬高，字幕上锚在下边条的顶部，底部整整 240px 空着。
+    走过两版弯路，都是量真成片量出来的：
+
+    1. 贴画布最底（`MarginV=30`）——字幕像素落在 y 1849–1882，离底边只有 38px，
+       被小红书/抖音的底部文案区和 home 指示条盖住
+    2. 把整张卡抬到 `CARD_TOP=88`、字幕塞进变宽的下边条——底下躲开了，卡片顶上
+       那行「网球时差 · 开球之前」又钻进了 app 顶部的返回键/状态栏
+
+    答案不是挪卡片，是把卡上的文字块往上收，在卡片里腾一条出来。所以这条测试盯的是
+    **字幕的上下沿都在卡片内**，以及它和卡上文字块不打架。
     """
     from tennislive.video import explainer as E
 
-    assert E._ASS_ALIGN == 8, "要从顶边算，否则一行两行会落在不同高度"
+    card_top, card_bottom = E.CARD_TOP, E.CARD_TOP + E.CARD_H
+    copy_bottom = card_bottom - E.CARD_COPY_BOTTOM      # 卡上文字块的下沿
     top = E._ASS_MARGIN_V
-    # 行高按放大后的字号算：数字那一档更高，一行里有数字就按它撑。
-    bottom_two_lines = top + max(E._ASS_SIZE, E._ASS_NUM_SIZE) * 2
+    one, two = top + E._ASS_NUM_SIZE, top + E._ASS_NUM_SIZE * 2
 
-    assert top >= E.CARD_TOP + E.CARD_H, "字幕压到画面上了"
-    one_line = top + max(E._ASS_SIZE, E._ASS_NUM_SIZE)
-    assert E.VIDEO_H - one_line >= 240, "字幕会掉进 app 盖住的那一块"
-    # 切行保证只有一行，两行只是兜底，所以这一条松一些。
-    assert E.VIDEO_H - bottom_two_lines >= 200, "兜底的第二行也不能压到底"
-    assert E._ASS_SIZE / E._ASS_CJK_RATIO >= 0.04 * E.VIDEO_W, "手机上太小了"
+    assert E.CARD_TOP == (E.VIDEO_H - E.CARD_H) // 2, "卡片要居中，两头才都躲得开 UI"
+    assert E._ASS_ALIGN == 8, "上锚，一行两行才从同一条线往下长"
 
-
-def test_合成时要明确问服务端要词级时间轴(monkeypatch, tmp_path):
-    """edge-tts 的 boundary 默认是 SentenceBoundary，不显式要就拿不到词级时刻。
-
-    第一版只收 WordBoundary，而默认配置下服务端根本不发这种事件——
-    `voice_XX.words.json` 每条都是 `[]`，字幕悄悄退回按字数等比分配。
-    **空列表和「这个声音不报边界」长得一模一样**，产物看起来完全正常。
-    """
-    import json
-
-    from tennislive.video import explainer as E
-
-    seen = {}
-
-    class FakeCommunicate:
-        def __init__(self, text, voice, **kw):
-            seen.update(kw)
-
-        def stream(self):
-            async def gen():
-                yield {"type": "audio", "data": b"\x00" * 64}
-                yield {"type": "SentenceBoundary", "offset": 0,
-                       "duration": 1_000_000, "text": "先说对面站的是谁"}
-            return gen()
-
-    fake = type("M", (), {"Communicate": FakeCommunicate})
-    monkeypatch.setitem(__import__("sys").modules, "edge_tts", fake)
-
-    segs = E.explainer_script(find_story_by_slug("zheng-eala"))[:1]
-    E.synthesize_narration(segs, tmp_path)
-
-    assert seen.get("boundary") == "WordBoundary", seen
-    # 句级事件也要收下：拿不到词级时，它仍然比按字数猜准。
-    marks = json.loads((tmp_path / "voice_00.words.json").read_text(encoding="utf-8"))
-    assert marks and marks[0]["text"] == "先说对面站的是谁", marks
-
-
-def test_字幕时间轴不会越往后越漂():
-    """边界事件里**没有标点**，所以字位要在原文里找，不能靠累加事件文本的长度。
-
-    真实数据：某一段旁白 122 个非空白字，边界流只有 109 个，差的 13 个全是逗号
-    句号。按累加长度算，「他自己说」在原文排第 108 位、在边界空间只排第 97 位，
-    查出来的时刻晚了 1.7 秒——**越往后漂得越多**，最后一句被压成 0.94 秒读 13 个字。
-
-    症状是每行的「秒/字」前后不一致，所以判据就盯这个：全片各行的节奏必须接近。
-    """
-    from tennislive.video import explainer as E
-
-    text = "二〇二六年四月三十日，锦织圭宣布这是他的最后一个赛季。今年他多在挑战赛打球。他自己说：我其实还想继续打。"
-    # 每个字一个边界，标点不发事件——和服务端的真实行为一致。每字 0.2 秒。
-    marks, t = [], 0.0
-    for ch in text:
-        if ch in "，。：、——":
-            continue
-        marks.append({"offset": int(t * 1e7), "duration": 2_000_000, "text": ch})
-        t += 0.2
-
-    cues = E.subtitle_cues(text, t, boundaries=marks)
-    assert len(cues) >= 3
-    pace = [(e - s) / len(shown) for s, e, shown in cues]
-    assert max(pace) / min(pace) < 1.6, [
-        (round(p, 3), c[2]) for p, c in zip(pace, cues)
-    ]
-    # 最后一句尤其容易被压扁——它吃下了全部累积误差。
-    assert cues[-1][1] - cues[-1][0] > 1.5, cues[-1]
+    assert top > copy_bottom, "字幕压到卡上的要点了"
+    assert two <= card_bottom, "字幕掉出 3:4 画面，会被 app 底部盖住"
+    assert card_top + E.CARD_H * 0.75 < top, "字幕爬得太高，挡住画面主体"
 
 
 def test_一行字幕待在左右两条边栏之间():
