@@ -87,20 +87,34 @@ def parse_round(item: dict) -> str | None:
     return None
 
 
-def load_cn() -> tuple[list[dict], list[re.Pattern]]:
+def load_cn() -> tuple[list[dict], list, list, list]:
+    """返回 (名单, 全名模式, 姓氏模式, 消歧用的排除全名模式)。
+
+    **全名和姓氏两套都要**。只认全名会漏掉一大半——实测漏的正是最关键的
+    那几条：`Zheng Quarter-final post-match interview | Roland-Garros 2025`
+    （郑钦文法网八强，标题只写姓）、`Zhu/Zhang On-Court Interview |
+    United Cup 2026`（双打配对，写两个姓）。
+
+    但姓氏歧义大，所以姓氏匹配前必须先过 excluded_full：Michael Zheng 是
+    美国人、Lulu Sun 是新西兰人、Ann Li 是美国人，他们的姓都在名单里。
+    """
     with CN.open(encoding="utf-8") as fh:
         cfg = json.load(fh)
-    pats = []
+    full = []
     for p in cfg["players"]:
         parts = p["en"].split()
         if len(parts) < 2:
             continue
         given, family = " ".join(parts[:-1]), parts[-1]
         # 两种顺序都认；\b 两端保证不会把 Sun 匹配进 Sunday 之类
-        pats.append((p, re.compile(
+        full.append((p, re.compile(
             rf"\b{re.escape(given)}\s+{re.escape(family)}\b"
             rf"|\b{re.escape(family)}\s+{re.escape(given)}\b", re.I)))
-    return cfg["players"], pats
+    sur = [(sn, re.compile(rf"\b{re.escape(sn)}\b", re.I))
+           for sn in cfg.get("surnames", [])]
+    excl = [re.compile(rf"\b{re.escape(n)}\b", re.I)
+            for n in cfg.get("excluded_full", [])]
+    return cfg["players"], full, sur, excl
 
 
 # 名字前面出现这些词，说明这人是**被打败的对手**，不是受访者。
@@ -114,7 +128,7 @@ _BEATEN = re.compile(
     r"knocks?\s+out|ousts?|sees?\s+off|edges?|downs?)\s*$", re.I)
 
 
-def cn_hit(title: str, pats) -> tuple[dict, bool] | None:
+def cn_hit(title: str, rules) -> tuple[dict, bool] | None:
     """标题里的中国球员，以及他/她是不是受访者。
 
     返回 `(球员, 是受访者吗)`；没有中国球员则 None。
@@ -123,20 +137,36 @@ def cn_hit(title: str, pats) -> tuple[dict, bool] | None:
     （`Zhizhen Zhang On-Court Interview | United Cup 2026`）和冒号后紧跟
     （`On-Court Interview: Zheng Qinwen says …`），这两种实测都是受访者。
     """
-    for player, rx in pats:
+    full, sur, excl = rules
+
+    def _is_subject(at: int) -> bool:
+        before = title[max(0, at - 28):at]
+        return not _BEATEN.search(before.rstrip())
+
+    # 一、全名优先，能确定是哪一位
+    for player, rx in full:
         m = rx.search(title)
-        if not m:
-            continue
-        before = title[max(0, m.start() - 28):m.start()]
-        return player, not _BEATEN.search(before.rstrip())
+        if m:
+            return player, _is_subject(m.start())
+
+    # 二、只写姓的情况。先排除同姓的非大陆球员——Michael Zheng（美国）、
+    #     Lulu Sun（新西兰）、Ann Li（美国）都会被姓氏规则误收。
+    if any(rx.search(title) for rx in excl):
+        return None
+    for sn, rx in sur:
+        m = rx.search(title)
+        if m:
+            # 只有姓，不断言是哪一位，标成待确认交人工看。
+            return ({"en": sn, "zh": f"{sn}（姓氏匹配·待确认）", "surname_only": True},
+                    _is_subject(m.start()))
     return None
 
 
-def pick(items: dict, pats, only_cn: bool = False) -> list[dict]:
+def pick(items: dict, rules, only_cn: bool = False) -> list[dict]:
     out = []
     for it in items.values():
         rnd = parse_round(it)
-        hit = cn_hit(it.get("title", ""), pats)
+        hit = cn_hit(it.get("title", ""), rules)
         # 中国球员**是受访者**才算数；作为被打败的对手出现的不算。
         cn = hit[0] if (hit and hit[1]) else None
         beaten = hit[0] if (hit and not hit[1]) else None
@@ -213,8 +243,8 @@ def main() -> int:
               file=sys.stderr)
         return 2
     items = json.loads(STORE.read_text(encoding="utf-8"))["items"]
-    _players, pats = load_cn()
-    rows = pick(items, pats, only_cn=args.only_cn)
+    _players, *rules = load_cn()
+    rows = pick(items, rules, only_cn=args.only_cn)
 
     sent = set()
     if SENT.exists() and not args.all:

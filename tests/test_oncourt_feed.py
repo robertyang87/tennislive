@@ -13,7 +13,8 @@ from tools.oncourt_feed import KEY_ROUNDS, cn_hit, load_cn, parse_round, pick
 
 @pytest.fixture(scope="module")
 def pats():
-    return load_cn()[1]
+    """cn_hit 现在要 (全名, 姓氏, 排除) 三套模式。"""
+    return load_cn()[1:]
 
 
 def rnd(title, round_field=""):
@@ -107,15 +108,48 @@ def test_name_order_both_ways(pats):
 
 
 def test_non_mainland_lookalikes_are_excluded(pats):
-    """Ann Li（美国）、Lulu Sun（新西兰）、谢淑薇（中华台北）不是中国大陆球员。
+    """同姓但不是中国大陆球员的，必须挡住。
 
-    只匹配姓会把她们全收进来——Li / Sun / Wu 这些姓在名单里到处都是，
-    所以匹配必须用全名，且名单里明确列了排除项。
+    开了姓氏匹配之后这条变成硬需求：Michael Zheng 是美国人、Lulu Sun 是
+    新西兰人、Ann Li 是美国人、谢淑薇是中华台北，他们的姓全在名单里。
+    消歧靠 cn_players.json 的 excluded_full，且必须在姓氏匹配**之前**判。
     """
     for t in ["Ann Li On-Court Interview | Final",
               "Lulu Sun On-Court Interview | Wimbledon 2026",
-              "Su-Wei Hsieh On-Court Interview | Final"]:
+              "Su-Wei Hsieh On-Court Interview | Final",
+              "Michael Zheng On-Court Interview | Australian Open 2026 First Round",
+              "An emotional Lulu Sun after knocking out Raducanu | On-court Interview"]:
         assert cn_hit(t, pats) is None, t
+
+
+def test_surname_only_titles_are_caught():
+    """只写姓的标题必须收——漏的正是最关键的那几条。
+
+    实测漏过：
+      `Zheng Quarter-final post-match interview | Roland-Garros 2025`
+          郑钦文法网八强，标题只有姓
+      `Zhu/Zhang On-Court Interview | United Cup 2026 Group B`
+          双打配对，写两个姓
+      `Zheng Post-Match Interview: "Finding My Rhythm" vs Kenin | Madrid 2026`
+
+    只认全名时这三条全丢，中国球员条目从 7 掉到 4。
+    姓氏命中时**不断言是哪一位**，标 surname_only 交人工确认。
+    """
+    rules = load_cn()[1:]
+    for t in ["Zheng Quarter-final post-match interview | Roland-Garros 2025",
+              "Zhu/Zhang On-Court Interview | United Cup 2026 Group B",
+              'Zheng Post-Match Interview: "Finding My Rhythm" vs Kenin | Madrid 2026']:
+        hit = cn_hit(t, rules)
+        assert hit, t
+        assert hit[0].get("surname_only"), f"只有姓，不该断言具体是谁：{t}"
+
+
+def test_full_name_wins_over_surname():
+    """标题里有全名时要认全名，不能退化成姓氏匹配的『待确认』。"""
+    rules = load_cn()[1:]
+    hit = cn_hit("Zheng Qinwen On-Court Interview | Final", rules)
+    assert hit and hit[0]["zh"] == "郑钦文"
+    assert not hit[0].get("surname_only")
 
 
 def test_pick_requires_key_round_or_chinese_interviewee(pats):
