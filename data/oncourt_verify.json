@@ -1,5 +1,5 @@
 {
-  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。",
+  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。",
   "verdicts": {
     "aLMwctJsY9A": {
       "verdict": "oncourt",
@@ -2116,6 +2116,118 @@
       "title": "Alex Eala R3 Press Interview Indian Wells '26",
       "by": "auto-frames-2026-07-27",
       "note": "BNP Paribas Open 背景板 + WTA TOUR 台麦，发布厅"
+    },
+    "tennistv:4255274": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Mensik tames Shelton in Madrid",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4392904": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Khachanov advances following Fonseca clash",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4503257": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Ruud into fourth Rome SF",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4535877": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Wawrinka Says Farewell to Gstaad",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4253560": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fonseca passes Moller test",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4332629": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev making progress in Toronto",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4483760": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fonseca fires into last 16",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4501877": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Jodar in late-night epic",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4493203": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Jodar books Fonseca showdown",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4337397": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Hey Arthur, what a win!",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4229685": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Rune feeling healthy and back in-form",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4245646": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Borges overcomes injured Rune",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4254503": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "De Minaur cruises into third round",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4376522": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Griekspoor shows his class after Sinner retirement",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4247747": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Alcaraz into first Monte Carlo final",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4494073": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Hilarious Sinner Interview!",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
     }
   }
 }
