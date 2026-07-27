@@ -98,13 +98,46 @@
 
 | 类别 | 代表 | 实扫场上采访条数 |
 | --- | --- | --- |
-| **转播方** | Eurosport Tennis | **78** |
+| **转播方** | Eurosport 78、TNT Sports 44、Nine 2 | **124** |
 | **团体赛** | United Cup 56、Laver Cup 26、Davis Cup 12 | **94** |
-| **赛事方** | 温网 20、法网 18、Dubai 45、罗马 12、美网 11、巴黎 10、澳网 10 | **126** |
+| **赛事方** | Dubai 45、温网 20、法网 18、罗马 12、美网 11、巴黎 10、澳网 10、华盛顿 1 | **127** |
+| **ATP 官网库** | tennistv.com/library/interviews | **16** |
 
-**转播方这一整个类别，第一版完全没想到。** Eurosport Tennis 一家就 78 条，
-比任何赛事方都多，而且**比赛事方自己发的更长**（2–5 分钟 vs 1–2 分钟），
-因为它保留了主持人的完整提问——对英语学习反而更有价值。
+**转播方这一整个类别，第一版完全没想到，而它现在是最大的一类。**
+Eurosport 78 条、TNT Sports 44 条（同系，格式一样但内容不完全重叠），
+而且**比赛事方自己发的更长**（3–5 分钟 vs 1–2 分钟），因为它保留了主持人的
+完整提问——对英语学习反而更有价值。
+
+### 综合体育频道要过"网球闸"，否则灌进来的是足球
+
+TNT Sports、Wide World of Sports、Amazon Prime Video Sport 都是**综合**体育频道，
+而 `post-match interview` 是**通用体育说法**。Amazon 深扫 500 条命中 25 条，
+**全是 UEFA 欧冠的足球采访**，一条网球都没有。
+
+所以这类源要打 `require_tennis`，标题里必须出现网球标记（赛事名、`tennis`、
+`ATP`/`WTA`、`on-court` 等）才收。加闸后 Amazon 从 25 条降到 **0**，
+TNT 保留 44、Nine 保留 2。
+
+两点设计上的讲究：
+
+- **闸只给综合频道开，网球专频不开。** 罗马那条
+  `Jannik Sinner On-Court Interview | Final | Rome 2026` 里没有 `tennis` 字样，
+  全局开闸会误伤（虽然 `on-court` 本身也是标记，但别依赖这种巧合）
+- **赛事名这张表必然不全。** 踩过：`Venus Williams Post Match Interview |
+  2025 Mubadala DC Citi Open` 一度过不了闸。新增综合频道时要顺手补它转播的赛事名
+
+测试里把两件事**分开**断言：足球标题**照样判成 `oncourt`**（正则只看格式，
+这是对的），拦下它的是网球闸。混在一起测，改坏任何一边都发现不了。
+
+### 没量的转播方
+
+也实扫过、确认量小或没有，省得以后重查：
+
+| 频道 | 深扫 | 场上采访 |
+| --- | --- | --- |
+| TSN（加拿大） | 500 | **0** |
+| Amazon Prime Video Sport | 500 | 0（25 条全是足球） |
+| Wide World of Sports（澳洲九号台） | 500 | 2 |
 
 **团体赛是另一个盲区**：United Cup 每场（含双打）都发，实扫 300 条命中 56 条，
 是单一赛事里最多的。Laver Cup 按 `Match N` 编号，也是每场都发。
@@ -266,7 +299,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 
 | 文件 | 作用 |
 | --- | --- |
-| `data/oncourt_sources.json` | 21 个源的注册表，逐源可配扫描深度与说明 |
+| `data/oncourt_sources.json` | 24 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
 | `data/oncourt_interviews.json` | 累积产物 |
@@ -554,9 +587,10 @@ yt-dlp --flat-playlist --playlist-end 60 \
 - 蒙特卡洛、迈阿密、加拿大、Queen's 的正确频道句柄（我猜的四个全错，
   所以**不能说它们没有发布会**——只能说我没找到入口）。
   正确做法见第二节末尾：用搜索反推，别猜句柄
-- 转播方只查了 Eurosport 一家有量。Sky Sports、Wide World of Sports、
-  Amazon Prime Video Sport、TSN 各只搜到 1 条，**没有深扫过它们的频道**——
-  按 Eurosport 的例子看，深扫可能还有
+- Sky Sports 的**主**频道还没找对（搜索解析到的是 Sky Sports Retro 分频道）。
+  TSN / Amazon / Nine 已深扫 500 条并记录结果，Sky 是这批里唯一没自证的
+- beIN SPORTS、SuperSport、Stan Sport、ESPN、Sportsnet、DAZN、Star Sports
+  解析到了句柄但**没深扫**
 - ASAP Sports 早年（1992–2006）网球条目的密度，只确认了年份存在
 - 各大满贯官网视频页与 YouTube 的内容是否完全重合，只做了抽样比对
 - **美网完整颁奖礼的字幕质量**：`--list-subs` 确认有自动字幕，但退避到 240 秒仍撞 429，

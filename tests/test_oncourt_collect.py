@@ -13,7 +13,12 @@ from __future__ import annotations
 
 import pytest
 
-from tools.collect_oncourt_interviews import classify, compile_rules, load_sources
+from tools.collect_oncourt_interviews import (
+    classify,
+    compile_rules,
+    is_tennis,
+    load_sources,
+)
 
 
 @pytest.fixture(scope="module")
@@ -131,6 +136,42 @@ def test_victory_and_possessive_forms(rules):
     """
     assert tag("Holger Rune Reacts To Victory Over Baez | Shanghai 2025", rules) == "maybe"
     assert tag("Jannik Sinner Champion's Dinner Speech | Wimbledon 2026", rules) == "ceremony"
+
+
+# 综合体育频道上的真实足球标题——它们命中 post-match interview，但不是网球
+FOOTBALL = [
+    "Arteta reacts to reaching UCL FINAL 🤩 | full post-match interview | UEFA Champions League",
+    '"I KNEW we would win" 😤 | Declan Rice full post-match interview | UEFA Champions League',
+    '"More, even more" 🤨 | Kompany post-match interview | UEFA Champions League 🎙️',
+]
+
+
+@pytest.mark.parametrize("title", FOOTBALL)
+def test_football_matches_the_pattern_but_fails_the_tennis_gate(title, rules):
+    """`post-match interview` 是通用体育说法，综合频道上会大量误收。
+
+    真实污染：Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。
+    分类器**照样把它判成 oncourt**——这是对的，正则本来就只看格式；
+    拦下来的是 `require_tennis` 那道闸。两件事要分开测，
+    否则改坏了任何一边都发现不了。
+    """
+    assert classify(title, rules) == "oncourt"      # 格式确实是赛后采访
+    assert not is_tennis(title, rules)              # 但不是网球
+
+
+@pytest.mark.parametrize("title", ONCOURT)
+def test_real_tennis_titles_pass_the_tennis_gate(title, rules):
+    """网球闸不能误伤真条目——它只在 require_tennis 的源上开，但也得准。"""
+    assert is_tennis(title, rules), title
+
+
+def test_general_sport_sources_have_the_tennis_gate_on():
+    """综合体育频道必须打 require_tennis，否则足球会灌进库里。"""
+    cfg = load_sources()
+    general = {"Amazon Prime Video Sport", "TNT Sports", "Wide World of Sports (Nine)"}
+    for src in cfg["sources"]:
+        if src["name"] in general:
+            assert src.get("require_tennis"), f"{src['name']} 是综合体育频道，必须开 require_tennis"
 
 
 def test_sources_registry_is_sane():

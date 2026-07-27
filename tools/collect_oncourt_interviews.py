@@ -93,7 +93,22 @@ def compile_rules(cfg: dict) -> dict[str, list]:
         "ceremony": [re.compile(p, re.I) for p in cfg.get("patterns_ceremony", [])],
         "maybe": [re.compile(p, re.I) for p in cfg.get("patterns_maybe", [])],
         "exclude": [re.compile(p, re.I) for p in cfg.get("exclude", [])],
+        "tennis": [re.compile(p, re.I) for p in cfg.get("tennis_markers", [])],
     }
+
+
+def is_tennis(title: str, rules: dict[str, list]) -> bool:
+    """标题里有没有网球标记。只用于综合体育频道。
+
+    起因是一次真实污染：Amazon Prime Video Sport 深扫 500 条命中 25 条
+    `post-match interview`，**全是 UEFA 欧冠的足球采访**。
+    `post-match interview` 是通用体育说法，在综合频道上不区分项目。
+
+    `on-court interview` 本身是网球术语，不受影响——所以这道闸只对
+    打了 `require_tennis` 的源生效，别全局开，那会误伤只写
+    `Player On-Court Interview | Final | Rome 2026` 却没写 tennis 的条目。
+    """
+    return any(p.search(title) for p in rules["tennis"])
 
 
 def classify(title: str, rules: dict[str, list]) -> str | None:
@@ -287,6 +302,11 @@ def main() -> int:
             # 不能再拿标题正则去筛——它的标题是编辑体，一条都匹配不上。
             kind = "oncourt" if r["id"].startswith("tennistv:") else classify(r["title"], rules)
             if kind is None:
+                continue
+            # 综合体育频道要过网球闸：那里的 post-match interview 会命中
+            # 足球、橄榄球等所有项目。被这道闸挡掉的也计进 dropped 报出来。
+            if src.get("require_tennis") and not is_tennis(r["title"], rules):
+                dropped.append((src["name"], f"[非网球] {r['title']}"))
                 continue
             if kind == "excluded":
                 # 被挡掉的也要报出来——只报通过的，没法证明筛子是对的。
