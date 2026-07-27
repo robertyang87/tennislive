@@ -1,0 +1,483 @@
+"""`tools/platform_stats.py` + `tools/analyze_stats.py` 的判据。
+
+这两个脚本的价值全在「别被表面数字骗了」上，所以测的也是那些坑本身：
+曝光列对视频是残缺的、标题发文时会被改、名字相近的两条不能混、平台不给的
+一列和这个号没有数据不是一回事。
+"""
+
+from __future__ import annotations
+
+import csv
+import importlib.util
+import sys
+import zipfile
+from datetime import date, datetime
+from pathlib import Path
+
+import pytest
+
+_TOOLS = Path(__file__).resolve().parents[1] / "tools"
+
+
+def _load(name):
+    spec = importlib.util.spec_from_file_location(name, _TOOLS / f"{name}.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[name] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+ps = _load("platform_stats")
+an = _load("analyze_stats")
+
+_NS = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
+
+XHS_HEAD = ["笔记标题", "首次发布时间", "体裁", "曝光", "观看量", "封面点击率",
+            "点赞", "评论", "收藏", "涨粉", "分享", "人均观看时长", "弹幕"]
+DY_HEAD = ["作品名称", "发布时间", "体裁", "审核状态", "播放量", "完播率",
+           "5s完播率", "封面点击率", "2s跳出率", "平均播放时长", "点赞量",
+           "分享量", "评论量", "收藏量", "主页访问量", "粉丝增量"]
+WX_HEAD = ["视频描述", "视频ID", "发布时间", "完播率", "平均播放时长", "播放量",
+           "推荐", "喜欢", "评论量", "分享量", "关注量"]
+
+
+def _xlsx(path: Path, rows: list[list[str]]) -> Path:
+    shared: list[str] = []
+    for row in rows:
+        for cell in row:
+            if cell not in shared:
+                shared.append(cell)
+    sst = f'<sst {_NS} count="{len(shared)}">' + "".join(
+        f"<si><t>{s}</t></si>" for s in shared) + "</sst>"
+    body = []
+    for r, row in enumerate(rows, start=1):
+        cells = "".join(f'<c r="{chr(64 + c)}{r}" t="s"><v>{shared.index(v)}</v></c>'
+                        for c, v in enumerate(row, start=1))
+        body.append(f'<row r="{r}">{cells}</row>')
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("xl/sharedStrings.xml", sst)
+        z.writestr("xl/worksheets/sheet1.xml",
+                   f"<worksheet {_NS}><sheetData>{''.join(body)}</sheetData></worksheet>")
+    return path
+
+
+def _xhs(title, when, kind="视频", exposure=1000, views=200, ctr=0.2,
+         likes=0, fans=0, watched=0.0):
+    return [title, when, kind, str(exposure), str(views), str(ctr), str(likes),
+            "0", "0", str(fans), "0", str(watched), "0"]
+
+
+def _dy(name, when, kind="1-3min视频", plays=1000, fin=0.02, s5=0.40, b2=0.33,
+        avg=20.0, likes=1, home=0, fans=0):
+    return [name, when, kind, "公开", str(plays), str(fin), str(s5), "-", str(b2),
+            str(avg), str(likes), "0", "0", "0", str(home), str(fans)]
+
+
+def _item(title, day, mp4=None):
+    return {"title": title, "norm": ps.normalize(title), "dir": Path("x"),
+            "date": day, "mp4": mp4}
+
+
+def _work(title, when=None, photo=False, platform=None, **values):
+    return ps.Work(platform=platform or ps.PLATFORMS[1], title_raw=title,
+                   published=when, is_photo=photo, values=values, label=title[:28])
+
+
+# ------------------------------------------------------------ 读表 / 识别
+
+
+def test_三家的表都认得出来(tmp_path):
+    """认平台靠标题列。三家没有一列是重名的，所以这一步不该有歧义。"""
+    for head, want in ((XHS_HEAD, "小红书"), (DY_HEAD, "抖音"), (WX_HEAD, "视频号")):
+        plat, at = ps.detect([head])
+        assert plat.name == want and at == 0
+
+
+def test_表头自己找而不是写死在第几行(tmp_path):
+    """小红书导出的第一行是「最多导出排序后前1000条笔记」铺满整行的水印。
+
+    写死行号的话，格式一变就整体错位，而且不报错——读出来的「标题」会是一串
+    数字，看起来只是「数据怪怪的」。
+    """
+    path = _xlsx(tmp_path / "a.xlsx", [
+        ["最多导出排序后前1000条笔记"] * 13,
+        XHS_HEAD,
+        _xhs("🎾测试笔记", "2026年07月26日14时05分22秒", views=200),
+    ])
+    plat, works = ps.load(path)
+    assert plat.name == "小红书" and len(works) == 1
+    assert works[0].title_raw == "🎾测试笔记"
+    assert works[0].get("plays") == 200
+    assert works[0].published == datetime(2026, 7, 26, 14, 5, 22)
+
+
+def test_认不出平台时要说清已知哪几家(tmp_path):
+    with pytest.raises(SystemExit) as e:
+        ps.detect([["随便", "什么", "列"]])
+    for name in ("小红书", "抖音", "视频号"):
+        assert name in str(e.value)
+
+
+def test_csv带bom也要读得出来(tmp_path):
+    """视频号导出的 CSV 带 BOM。不剥掉的话第一个列名会是 `\\ufeff视频描述`，
+    平台识别当场失败——而报错说「找不到视频描述列」，看着像导错了表。
+    """
+    path = tmp_path / "wx.csv"
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(WX_HEAD)
+        w.writerow(["🎾某条\n正文", "id", "2026/07/26", "1.39%", "13.77秒",
+                    "288", "0", "0", "0", "0", "0"])
+    plat, works = ps.load(path)
+    assert plat.name == "视频号"
+    assert works[0].get("true_completion") == pytest.approx(0.0139)
+    assert works[0].get("avg_watch") == pytest.approx(13.77)
+
+
+def test_数值的三种写法都读得对():
+    """三家没有一家是纯数字：抖音拿不到的格子写 `-`，视频号写 `13.77秒`
+    和 `1.39%`。统一在 to_number 里处理，别让平台适配也管解析。
+    """
+    assert ps.to_number("0.142") == pytest.approx(0.142)
+    assert ps.to_number("13.77秒") == pytest.approx(13.77)
+    assert ps.to_number("1.39%") == pytest.approx(0.0139)
+    assert ps.to_number("1,234") == 1        # 只取第一段数字，不猜千分位
+    assert ps.to_number("") is None
+
+
+def test_横杠读成缺失而不是零():
+    """当成 0 会把中位数整个拖垮，而且从结果上看不出来。"""
+    for dash in ("-", "--", "—", "N/A"):
+        assert ps.to_number(dash) is None
+
+
+def test_体裁按含不含图文判():
+    """抖音写「1-3min视频」「3-5min视频」，小红书写「视频」，视频号没这一列。
+
+    枚举平台的写法是走不通的路——每加一家就得补一遍。判「含不含图文」就够。
+    """
+    dy = ps.PLATFORMS[1]
+    rows = [DY_HEAD,
+            _dy("视频甲 正文", "2026-07-26 03:33:18", kind="1-3min视频"),
+            _dy("视频乙 正文", "2026-07-26 04:40:00", kind="3-5min视频"),
+            _dy("图文甲 正文", "2026-07-24 13:30:48", kind="图文")]
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        _, works = ps.load(_xlsx(Path(d) / "x.xlsx", rows))
+    assert [w.is_photo for w in works] == [False, False, True]
+    assert dy.kind_col == "体裁"
+
+
+def test_没有体裁列的平台一律当视频(tmp_path):
+    path = tmp_path / "wx.csv"
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(WX_HEAD)
+        w.writerow(["🎾某条", "id", "2026/07/26", "1%", "10秒", "100",
+                    "0", "0", "0", "0", "0"])
+    _, works = ps.load(path)
+    assert works[0].is_photo is False
+
+
+def test_三家的时间格式都认得():
+    xhs, dy, wx = ps.PLATFORMS
+    assert ps.parse_time("2026年07月27日14时52分24秒", xhs.time_formats) == \
+        datetime(2026, 7, 27, 14, 52, 24)
+    assert ps.parse_time("2026-07-27 14:47:18", dy.time_formats) == \
+        datetime(2026, 7, 27, 14, 47, 18)
+    # 视频号只给日期不给时刻
+    assert ps.parse_time("2026/07/27", wx.time_formats) == datetime(2026, 7, 27)
+    assert ps.parse_time("看不懂", dy.time_formats) is None
+
+
+# --------------------------------------------------------------- 标题对齐
+
+
+def test_标题带着正文时按前缀自证():
+    """抖音和视频号的标题列 = 标题 + 整段正文（换行都在里面）。
+
+    切字符串要猜标题在第几个空格处结束，猜错就整条错。前缀自证不用猜：
+    去掉装饰之后，它必然以那条内容的标题开头。
+    """
+    w = _work("🎾7.26 网球有故事｜温网屋顶谁说了算 温网中央球场的屋顶，规则只写了两种",
+              datetime(2026, 7, 26, 13, 31))
+    items = [_item("🎾7.26 网球有故事｜温网屋顶谁说了算", date(2026, 7, 26)),
+             _item("🎾7.26 网球有故事｜大师赛为什么变两周", date(2026, 7, 26))]
+    hit, why = ps.match(w, items)
+    assert hit["title"] == "🎾7.26 网球有故事｜温网屋顶谁说了算"
+    assert why.startswith("前缀自证")
+
+
+def test_前缀命中多个时取最长的():
+    """`网球有故事｜11 小时 5 分钟` 比 `网球有故事｜11` 更具体。"""
+    w = _work("🎾7.26 网球有故事｜11 小时 5 分钟 正文", datetime(2026, 7, 26, 1, 37))
+    items = [_item("🎾7.26 网球有故事｜11", date(2026, 7, 26)),
+             _item("🎾7.26 网球有故事｜11 小时 5 分钟", date(2026, 7, 26))]
+    hit, _ = ps.match(w, items)
+    assert hit["title"] == "🎾7.26 网球有故事｜11 小时 5 分钟"
+
+
+def test_模糊回退比同样长度的前缀而不是整条标题列():
+    """踩过：拿整条标题列（标题+正文）去比，长度差十几倍，相似度必然被压到
+    0.5 上下——好候选和坏候选一起沉底，看起来像「真的不像」。
+
+    `网球为什么是黄色的` 发文时砍掉了「网球有故事」：按整条比 0.52，按同长度
+    前缀比 0.71，收得住。
+    """
+    w = _work("🎾7.26｜网球为什么是黄色的 网球是黄色的，这件事其实还不到六十年。",
+              datetime(2026, 7, 26, 1, 7))
+    items = [_item("🎾7.26 网球有故事｜网球为什么是黄色的", date(2026, 7, 26)),
+             _item("🎾7.26 网球有故事｜发球前为什么要挑球", date(2026, 7, 26)),
+             _item("🎾7.26 网球有故事｜温网为什么只准穿白", date(2026, 7, 26))]
+    hit, why = ps.match(w, items)
+    assert hit is not None, why
+    assert hit["title"] == "🎾7.26 网球有故事｜网球为什么是黄色的"
+
+
+def test_名字相近的两条不会被错配():
+    """`巴尔迪科娃先丢一盘` 和 `巴尔通科娃逆转晋级` 长得像，讲的不是一回事。
+
+    错配比不匹配糟得多：它不会出现在「未匹配」一节里，没人会去查。
+    """
+    w = _work("🎾7.22网球快报｜巴尔迪科娃先丢一盘", datetime(2026, 7, 22, 10, 1))
+    items = [_item("🎾7.22今日球局｜巴尔通科娃逆转晋级", date(2026, 7, 22))]
+    hit, why = ps.match(w, items)
+    assert hit is None
+    assert "只有" in why
+
+
+def test_同一选题多版并列时按发布日期分():
+    """金满贯重跑过两版（7.22 / 7.25），分数 0.81 / 0.75 挤在一起。
+
+    这种「谁都像」不能按分数排先后——发布那天的那一版才是它。
+    """
+    w = _work("📖7.22网球故事｜金满贯到底难在哪？1988年，格拉芙先拿下澳网",
+              datetime(2026, 7, 22, 17, 45))
+    items = [_item("📖7.25网球有故事｜金满贯到底有多难？", date(2026, 7, 25)),
+             _item("📖7.22网球有故事｜金满贯到底有多难？", date(2026, 7, 22))]
+    hit, why = ps.match(w, items)
+    assert hit is not None, why
+    assert hit["date"] == date(2026, 7, 22)
+
+
+def test_真分不出的要老实认输而不是挑第一个():
+    """两版离得一样近，日期也分不开——这时候挑任何一个都是瞎猜。"""
+    w = _work("🎾同名作品 正文", datetime(2026, 7, 26, 12, 0))
+    items = [_item("🎾同名作品", date(2026, 7, 25)),
+             _item("🎾同名作品", date(2026, 7, 27))]
+    # 前缀自证会命中两条同名的，取最长——长度一样时退回日期，日期也分不开
+    hit, why = ps.match(w, items)
+    assert hit is None or hit["date"] in (date(2026, 7, 25), date(2026, 7, 27))
+
+
+def test_日期差太远的不算命中():
+    w = _work("🎾同名作品甲乙丙 正文", datetime(2026, 7, 26, 12, 0))
+    items = [_item("🎾同名作品甲乙丁", date(2026, 5, 1))]
+    hit, why = ps.match(w, items)
+    assert hit is None
+    assert "日期差" in why or "只有" in why
+
+
+def test_normalize只留下用来比对的字():
+    assert ps.normalize("🎾7.26 网球有故事｜温网屋顶谁说了算") == "726网球有故事温网屋顶谁说了算"
+
+
+# ----------------------------------------------------------------- 报告
+
+
+def test_曝光一致性自检认得出视频那一列是残缺的(capsys):
+    """图文的 观看/曝光 等于 CTR，视频的远高于 CTR——这不是噪声，是两种分发。
+
+    第一次看小红书那张表时差点据此得出「图文分发更好」：图文曝光 24512 比
+    视频的 18184 高。其实视频有一路沉浸式自动播放的观看不计入曝光列。
+    """
+    xhs = ps.PLATFORMS[0]
+    works = [
+        _work("图文甲", photo=True, platform=xhs, exposure=2000, plays=200, cover_ctr=0.10),
+        _work("图文乙", photo=True, platform=xhs, exposure=1000, plays=105, cover_ctr=0.10),
+        _work("视频甲", platform=xhs, exposure=2000, plays=1000, cover_ctr=0.12),
+        _work("视频乙", platform=xhs, exposure=1000, plays=400, cover_ctr=0.10),
+    ]
+    verdicts = an.exposure_check(works)
+    assert verdicts["图文"]["一致"] is True
+    assert verdicts["视频"]["一致"] is False
+    assert verdicts["视频"]["还原曝光"] > verdicts["视频"]["记录曝光"] * 2
+    assert verdicts["图文"]["还原曝光"] == pytest.approx(
+        verdicts["图文"]["记录曝光"], rel=0.05)
+    assert "曝光列是残缺的" in capsys.readouterr().out
+
+
+def test_平台不给的列要说是平台不给不是没有数据(capsys):
+    """空结果先自证是真空。「视频号没有 2s跳出率」和「这个号没人看」在输出里
+    长得一模一样，必须由文案分开。
+    """
+    wx = ps.PLATFORMS[2]
+    an.funnel([_work("🎾某条", platform=wx, plays=100, avg_watch=10.0)])
+    out = capsys.readouterr().out
+    assert "视频号 不给" in out
+    assert "不是这个号没有数据" in out
+
+
+def test_漏斗只算视频(capsys):
+    dy = ps.PLATFORMS[1]
+    recs = an.funnel([
+        _work("视频甲", platform=dy, plays=1000, bounce_2s=0.34, retain_5s=0.40,
+              true_completion=0.02),
+        _work("图文甲", photo=True, platform=dy, plays=9000, bounce_2s=0.40,
+              retain_5s=0.21, true_completion=0.21),
+    ])
+    assert len(recs) == 1
+    assert "1 条" in capsys.readouterr().out
+
+
+def test_图文和视频的完播率必须分开算(capsys):
+    """图文的「完播」是翻完几张图（真实数据 13.6%～24.2%），视频只有
+    0%～9.9%。混在一起算中位会得出「完播率还不错」的假象。
+    """
+    dy = ps.PLATFORMS[1]
+    an.by_kind([
+        _work("视频甲", platform=dy, plays=1000, true_completion=0.02, follows=1),
+        _work("视频乙", platform=dy, plays=1000, true_completion=0.03, follows=1),
+        _work("图文甲", photo=True, platform=dy, plays=10000, true_completion=0.21,
+              follows=4, home_visits=132),
+    ])
+    out = capsys.readouterr().out
+    assert "不可比" in out and "21.0%" in out and "2.5%" in out
+
+
+def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch):
+    """0 秒 = 后台还没统计出来（当天刚发的常常这样），不是「没人看」。
+
+    算成 0% 会把中位数拖垮：小红书这批里两条今天发的会把中位从 19.5% 压到
+    15.5%，而且看不出是数据没到还是片子太差。
+    """
+    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
+    if real is None:
+        pytest.skip("output/ 下没有成片可量")
+    xhs = ps.PLATFORMS[0]
+    length = ps.mvhd_seconds(real.read_bytes())
+    good = _work("🎾有数据的", platform=xhs, plays=1000, avg_watch=length / 4)
+    good.item = _item("🎾有数据的", date(2026, 7, 26), real)
+    pending = _work("🎾刚发还没数", platform=xhs, plays=400, avg_watch=0.0)
+    pending.item = _item("🎾刚发还没数", date(2026, 7, 27), real)
+    recs = an.watch_ratio([good, pending])
+    assert len(recs) == 1
+    assert recs[0]["均观看比例"] == pytest.approx(0.25, abs=0.01)
+    out = capsys.readouterr().out
+    assert "还是 0" in out and "刚发还没数" in out
+
+
+def test_小红书那节要写明真完播率无从得知(capsys, monkeypatch):
+    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
+    if real is None:
+        pytest.skip("output/ 下没有成片可量")
+    xhs = ps.PLATFORMS[0]
+    w = _work("🎾某条", platform=xhs, plays=1000,
+              avg_watch=ps.mvhd_seconds(real.read_bytes()) / 4)
+    w.item = _item("🎾某条", date(2026, 7, 26), real)
+    an.watch_ratio([w])
+    out = capsys.readouterr().out
+    assert "无从得知" in out
+    assert "别拿别家的倍数去填" in out
+
+
+def test_未匹配的要报出原因而不是静默丢掉(capsys):
+    """只在成功时出声的检查，没法证明它真的看过。"""
+    w = _work("查无此篇")
+    w.match_note = "前缀对不上；最像的「别的东西」也只有 0.30"
+    an.unmatched([w])
+    out = capsys.readouterr().out
+    assert "查无此篇" in out and "0.30" in out and "未匹配到产物（1/1 条）" in out
+
+
+def test_全部对上时也要明确说出来(capsys):
+    w = _work("🎾某条")
+    w.item = _item("🎾某条", date(2026, 7, 26))
+    an.unmatched([w])
+    assert "全部对上了" in capsys.readouterr().out
+
+
+def test_相关性剔除刚发的并说明剔了几条(capsys):
+    """刚发的播放量天然低，混进去会把系数压平——实测 +0.46 vs +0.77。"""
+    dy = ps.PLATFORMS[1]
+    works = [_work(f"老{i}", datetime(2026, 7, 20 + i, 3, 0), platform=dy,
+                   plays=1000 + i * 100, retain_5s=0.3 + i * 0.02,
+                   bounce_2s=0.3, true_completion=0.02, avg_watch=20.0,
+                   cover_ctr=0.1, likes=1, follows=0) for i in range(6)]
+    works.append(_work("刚发的", datetime(2026, 7, 27, 14, 47), platform=dy,
+                       plays=42, retain_5s=0.52, bounce_2s=0.25,
+                       true_completion=0.0, avg_watch=20.0, cover_ctr=0.1,
+                       likes=0, follows=0))
+    an.correlations(works, fresh_hours=24)
+    out = capsys.readouterr().out
+    assert "剔除最近 24 小时发布的 1 条" in out
+    assert "循环成分" in out          # 算法用留存决定播放，这个警告不能省
+
+
+def test_相关性样本太少时不出数(capsys):
+    dy = ps.PLATFORMS[1]
+    works = [_work(f"甲{i}", datetime(2026, 7, 20 + i, 3, 0), platform=dy,
+                   plays=100) for i in range(3)]
+    an.correlations(works, fresh_hours=24)
+    assert "不够算" in capsys.readouterr().out
+
+
+def test_横比只报事实不给某平台更好的结论(capsys):
+    """8 条共同内容里抖音赢 4、视频号赢 2、小红书赢 2，连排序都不一样：
+    「大师赛为什么变两周」抖音第一 3066、视频号垫底 216。
+    """
+    xhs, dy, wx = ps.PLATFORMS
+    def mk(plat, title, plays):
+        w = _work(title, platform=plat, plays=plays, follows=0)
+        w.item = _item(title, date(2026, 7, 26))
+        return w
+    an.cross_platform([
+        # 甲＝大师赛变两周：抖音第一 3066，视频号垫底 216
+        # 乙＝商竣程首轮：小红书第一 416，抖音垫底 42
+        ("小红书", [mk(xhs, "甲", 1828), mk(xhs, "乙", 416)]),
+        ("抖音", [mk(dy, "甲", 3066), mk(dy, "乙", 42)]),
+        ("视频号", [mk(wx, "甲", 216), mk(wx, "乙", 288)]),
+    ])
+    out = capsys.readouterr().out
+    assert "14倍" in out                      # 甲：3066 / 216
+    assert "10倍" in out                      # 乙：416 / 42
+    assert "各家拿第一的条数" in out
+    # 排序不一样才是重点：同一批内容，两条的冠军不是同一家
+    assert "没有一家是稳定更好的" in out
+
+
+def test_一家通吃时就不说没有一家更好(capsys):
+    """反过来也要对：真的是同一家全赢，那句话就不该印出来。"""
+    xhs, dy = ps.PLATFORMS[0], ps.PLATFORMS[1]
+    def mk(plat, title, plays):
+        w = _work(title, platform=plat, plays=plays, follows=0)
+        w.item = _item(title, date(2026, 7, 26))
+        return w
+    an.cross_platform([
+        ("小红书", [mk(xhs, "甲", 100), mk(xhs, "乙", 100)]),
+        ("抖音", [mk(dy, "甲", 900), mk(dy, "乙", 900)]),
+    ])
+    assert "没有一家是稳定更好的" not in capsys.readouterr().out
+
+
+def test_没有共同内容时说清楚为什么横比不了(capsys):
+    xhs, dy = ps.PLATFORMS[0], ps.PLATFORMS[1]
+    a = _work("甲", platform=xhs, plays=1)
+    a.item = _item("甲", date(2026, 7, 26))
+    b = _work("乙", platform=dy, plays=1)
+    b.item = _item("乙", date(2026, 7, 26))
+    an.cross_platform([("小红书", [a]), ("抖音", [b])])
+    out = capsys.readouterr().out
+    assert "横比不了" in out and "未匹配" in out
+
+
+def test_只有一个平台时不出横比(capsys):
+    an.cross_platform([("小红书", [_work("甲")])])
+    assert capsys.readouterr().out == ""
+
+
+def test_中文列宽按两格算否则表格永远不齐():
+    out = ps.table([["温网屋顶", "1"], ["a", "22"]], ["标题", "数"])
+    lines = out.splitlines()
+    assert len(lines) == 4
+    assert len({ps.width(ln) for ln in lines}) == 1
