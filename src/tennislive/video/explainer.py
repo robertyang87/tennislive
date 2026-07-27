@@ -2568,10 +2568,13 @@ def readable(text: str) -> str:
     return re.sub(r"(?<!\d)(\d{1,3})\s*[-–—−]\s*(\d{1,3})(?!\d)", r"\1 比 \2", text)
 
 
-# 一行字幕的长度。18 字 × 52px 约 936px，在 1080 宽里两边各留 72px；
-# 再长就顶到边，再短又会把一句话拆得七零八落。
-_SUB_MAX = 18
-_SUB_SOFT = 11
+# 一行字幕最多多宽。这个数是从**左右要空出多少**倒推的，不是拍出来的：
+# 小红书/抖音在右边压着点赞收藏评论那一列（约屏宽 15%），字幕横过去就被盖住。
+# 所以两边各留 150px，可用 780px；一个汉字实际 46.6px（见 _ASS_CJK_RATIO），
+# 16 个字 746px，加描边 752px，正好待得住。**改字号或改边距，这个数要跟着算**，见
+# test_一行字幕待在左右两条边栏之间。
+_SUB_MAX = 16
+_SUB_SOFT = 10
 _SUB_HARD_BREAK = "。！？；…"
 _SUB_SOFT_BREAK = "，、：,"
 _SUB_TRIM = "。，、：；,… "
@@ -2850,14 +2853,22 @@ def _ass_stamp(seconds: float) -> str:
 # 以内，正常不会超宽；但万一漏过一条，不折行就是**左右直接切掉**，折行只是往下
 # 长一行——而字幕是上锚的，多长一行仍然离底边 240px。坏的方式要选能兜住的那种。
 _ASS_FONT = "Noto Sans CJK SC"
-_ASS_SIZE = 52
+# 字号不等于一个汉字占的宽度。libass 按字体的 ascent+descent 把字缩到「行高＝
+# FontSize」，思源黑体这两项加起来是 1.46 em，所以一个汉字实际只占 FontSize/1.46。
+# 量出来的：FontSize 46 时 16 个字横跨 505px（31.6px/字），字高 30px——在手机上
+# 偏小，而我一直按「52px 一个字」在算行宽。**这个换算不能省**，见
+# test_一行字幕待在左右两条边栏之间。
+_ASS_CJK_RATIO = 1.46
+_ASS_SIZE = 68                      # → 一个汉字约 46.6px，占屏宽 4.3%
+# 左右各留这么多：右边那一列是 app 的点赞/评论/分享按钮，字幕横过去就被盖住。
+_ASS_MARGIN_H = 150
 # 字幕贴在**下边条的顶部**（紧挨卡片下沿），不是画布最底下。
 # 量过一版真成片：MarginV=30 时字幕像素落在 y 1849–1882，离底边只有 38px——
 # 小红书/抖音的底部文案区和 home 指示条正好压在那儿，静音刷的人一个字看不到。
 # 这里改成上锚（Alignment=8，MarginV 从**顶边**算），一行两行都从同一个位置往下长，
 # 底部那 240px 完全空出来给 app 的界面。
 _ASS_ALIGN = 8
-_ASS_MARGIN_V = CARD_TOP + CARD_H + 22
+_ASS_MARGIN_V = CARD_TOP + CARD_H + 16
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
 _ASS_HEADER = f"""[Script Info]
 ScriptType: v4.00+
@@ -2871,7 +2882,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
 BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
-1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},48,48,{_ASS_MARGIN_V},1
+1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{_ASS_MARGIN_V},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

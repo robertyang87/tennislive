@@ -744,7 +744,7 @@ def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
     # 亲眼看见才发现的，滤镜链本身一点问题都没有。
     assert f"PlayResX: {E.VIDEO_W}" in first and f"PlayResY: {E.VIDEO_H}" in first
     assert "Alignment" not in first.split("[Events]")[1]  # 样式只在 Style 行里定义
-    assert f",{E._ASS_ALIGN},48,48,{E._ASS_MARGIN_V},1" in first, "上锚居中"
+    assert f",{E._ASS_ALIGN},{E._ASS_MARGIN_H},{E._ASS_MARGIN_H},{E._ASS_MARGIN_V},1" in first
 
     # 第一段被片头静音推过。
     assert "Dialogue: 0,0:00:00.60," in first, first[-300:]
@@ -851,10 +851,11 @@ def test_字幕待在卡片下沿和app界面之间():
 
     assert E._ASS_ALIGN == 8, "要从顶边算，否则一行两行会落在不同高度"
     top = E._ASS_MARGIN_V
-    bottom_two_lines = top + E._ASS_SIZE * 2 * 1.25
+    bottom_two_lines = top + E._ASS_SIZE * 2   # libass 的行高就是 FontSize
 
     assert top >= E.CARD_TOP + E.CARD_H, "字幕压到画面上了"
     assert E.VIDEO_H - bottom_two_lines >= 240, "两行字幕会掉进 app 盖住的那一块"
+    assert E._ASS_SIZE / E._ASS_CJK_RATIO >= 0.04 * E.VIDEO_W, "手机上太小了"
 
 
 def test_合成时要明确问服务端要词级时间轴(monkeypatch, tmp_path):
@@ -921,3 +922,25 @@ def test_字幕时间轴不会越往后越漂():
     ]
     # 最后一句尤其容易被压扁——它吃下了全部累积误差。
     assert cues[-1][1] - cues[-1][0] > 1.5, cues[-1]
+
+
+def test_一行字幕待在左右两条边栏之间():
+    """字幕横过去会被 app 右边那一列按钮盖住，所以左右要留够，而且**只排一行**。
+
+    小红书/抖音在右侧压着点赞、收藏、评论、分享一列，约占屏宽 15%；我们的字幕
+    正落在它的高度上。所以一行的最大宽度不是拍出来的，是从边距倒推的——
+    改字号或改边距，`_SUB_MAX` 必须跟着算，否则字就伸到按钮底下去了。
+    """
+    from tennislive.video import explainer as E
+
+    usable = E.VIDEO_W - 2 * E._ASS_MARGIN_H
+    # 一个汉字占 FontSize/1.46，不是 FontSize——量出来的，别按字号直接算。
+    widest = E._SUB_MAX * E._ASS_SIZE / E._ASS_CJK_RATIO + 2 * 3
+    assert widest <= usable, f"一行最宽 {widest}px，可用只有 {usable}px"
+    assert E._ASS_MARGIN_H >= 0.13 * E.VIDEO_W, "右边那一列按钮会盖住字幕"
+
+    # 每条字幕都排得下一行——真排到两行就说明切行那步漏了。
+    for slug in E._SCRIPTS:
+        for seg in E.explainer_script(find_story_by_slug(slug)):
+            for _, _, shown in E.subtitle_lines(E.readable(seg.narration)):
+                assert E._sub_width(shown) <= E._SUB_MAX, f"{slug}：{shown}"
