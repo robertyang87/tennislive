@@ -399,7 +399,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | --- | --- |
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
-| `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
+| `.github/workflows/oncourt-interviews.yml` | 每天两轮：北京 05:00 与 11:00 |
 | `data/oncourt_interviews.json` | 累积产物，当前 2037 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
