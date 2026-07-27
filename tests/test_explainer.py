@@ -744,11 +744,7 @@ def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
     # 亲眼看见才发现的，滤镜链本身一点问题都没有。
     assert f"PlayResX: {E.VIDEO_W}" in first and f"PlayResY: {E.VIDEO_H}" in first
     assert "Alignment" not in first.split("[Events]")[1]  # 样式只在 Style 行里定义
-    assert f",2,48,48,{E._ASS_MARGIN_V},1" in first, "贴底居中"
-
-    band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2   # 上下黑边各多高
-    assert band == 240
-    assert E._ASS_MARGIN_V + E._ASS_SIZE * 2 * 1.25 < band, "两行字幕会顶出黑边压到画面上"
+    assert f",{E._ASS_ALIGN},48,48,{E._ASS_MARGIN_V},1" in first, "上锚居中"
 
     # 第一段被片头静音推过。
     assert "Dialogue: 0,0:00:00.60," in first, first[-300:]
@@ -844,14 +840,21 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("那是他第一次遇上") == "那是他第一次遇上"
 
 
-def test_字幕贴在最下面():
-    """字幕待在下边条的底部，离画面越远越好——它是补给耳朵的，不该抢眼睛。"""
+def test_字幕待在卡片下沿和app界面之间():
+    """字幕既不能压画面，也不能掉进 app 盖住的那一块。
+
+    量过一版真成片：卡片上下居中、字幕贴底时，像素落在 y 1849–1882，离底边只有
+    38px——小红书/抖音的底部文案区和 home 指示条正好在那儿，静音刷的人一个字
+    看不到。现在卡片抬高，字幕上锚在下边条的顶部，底部整整 240px 空着。
+    """
     from tennislive.video import explainer as E
 
-    band = (E.VIDEO_H - E.VIDEO_W * 4 // 3) // 2
-    assert E._ASS_MARGIN_V < band / 4, "字幕离底边太远，贴回去"
-    assert E._ASS_MARGIN_V >= 24, "再低就要贴到屏幕边缘了"
-    assert E._ASS_MARGIN_V + E._ASS_SIZE * 2 * 1.25 < band, "两行会顶到画面上"
+    assert E._ASS_ALIGN == 8, "要从顶边算，否则一行两行会落在不同高度"
+    top = E._ASS_MARGIN_V
+    bottom_two_lines = top + E._ASS_SIZE * 2 * 1.25
+
+    assert top >= E.CARD_TOP + E.CARD_H, "字幕压到画面上了"
+    assert E.VIDEO_H - bottom_two_lines >= 240, "两行字幕会掉进 app 盖住的那一块"
 
 
 def test_合成时要明确问服务端要词级时间轴(monkeypatch, tmp_path):
