@@ -195,3 +195,56 @@ def test_cn_roster_matches_the_repo_translation_table():
         if p["en"] in PLAYER_ZH:
             assert PLAYER_ZH[p["en"]] == p["zh"], (
                 f"{p['en']}：名单写 {p['zh']}，译名表写 {PLAYER_ZH[p['en']]}")
+
+
+# 双打识别：只要单打，双打不推
+DOUBLES = [
+    "Zhu/Zhang On-Court Interview | United Cup 2026 Group B",
+    "Collins/Harrison On-Court Interview | 2025 US Open Round 1",
+    "Kawa/Zielinski On-Court Interview | United Cup 2026 Group E",
+    "Alfie Hewett & Gordon Reid: Wheelchair Doubles Final Post-Match Interview | Wimbledon",
+    "Men's Doubles Trophy Ceremony | Australian Open 2026",
+]
+
+# **单打**，但球员在采访里谈到了双打——不能因为出现 doubles 就误杀
+SINGLES_MENTIONING_DOUBLES = [
+    '"I need a crash course in doubles" | Emma Raducanu | Third round On-court Interview',
+    "Playing her former doubles partner | Iga Swiatek | On-Court Interview | Wimbledon",
+    "Why she'll play doubles with Andy | Emma Raducanu | Second round On-court Interview",
+]
+
+
+@pytest.mark.parametrize("title", DOUBLES)
+def test_doubles_detected(title):
+    from tools.oncourt_feed import is_doubles
+    assert is_doubles({"title": title}), title
+
+
+@pytest.mark.parametrize("title", SINGLES_MENTIONING_DOUBLES)
+def test_singles_players_talking_about_doubles_are_not_filtered(title):
+    """光秃秃的 `doubles` 不能当双打判据。
+
+    库里三条真实标题都是**单打**采访，只是球员聊到了双打。按词一刀切
+    会把它们全杀掉。所以判据是配对写法（`Zhu/Zhang`）和带限定词的
+    （`Wheelchair Doubles`、`Men's Doubles`），不是这个词本身。
+    """
+    from tools.oncourt_feed import is_doubles
+    assert not is_doubles({"title": title}), title
+
+
+def test_tennistv_match_type_beats_the_title():
+    """tennistv.com 自带 matchType，比从标题猜可靠，要优先用。"""
+    from tools.oncourt_feed import is_doubles
+    assert not is_doubles({"title": "A/B On-Court Interview", "matchType": "singles"})
+    assert is_doubles({"title": "Sinner On-Court Interview", "matchType": "doubles"})
+
+
+def test_pick_drops_doubles_by_default(pats):
+    items = {
+        "s": {"id": "s", "title": "Jannik Sinner On-Court Interview | Final | Rome 2026",
+              "url": "u", "source": "x"},
+        "d": {"id": "d", "title": "Bolelli/Vavassori On-Court Interview | Final | Rome 2026",
+              "url": "u", "source": "x"},
+    }
+    assert {r["id"] for r in pick(items, pats)} == {"s"}
+    assert {r["id"] for r in pick(items, pats, include_doubles=True)} == {"s", "d"}

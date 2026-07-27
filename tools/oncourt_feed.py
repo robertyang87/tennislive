@@ -8,6 +8,7 @@
     条件二：有中国球员 —— 名单在 data/cn_players.json
 
 两个条件是**或**的关系：郑钦文的第二轮要，辛纳的决赛也要。
+**双打一律不要**（`--include-doubles` 可放开），库里 1377 条里有 103 条双打。
 
 ## 轮次是从标题里解析的，不是元数据
 
@@ -117,6 +118,27 @@ def load_cn() -> tuple[list[dict], list, list, list]:
     return cfg["players"], full, sur, excl
 
 
+# 双打识别。**只认配对写法和带限定词的 doubles**，不能认光秃秃的 "doubles"
+# ——实测三条误伤全是单打球员在谈双打：
+#   `"I need a crash course in doubles" | Emma Raducanu | Third round On-court…`
+#   `Playing her former doubles partner | Iga Swiatek | On-Court Interview | …`
+#   `Why she'll play doubles with Andy | Emma Raducanu | Second round …`
+# 真双打的写法是 `Zhu/Zhang`、`Collins/Harrison` 这种斜杠配对（库里 102 条），
+# 或者 `Wheelchair Doubles` / `Men's Doubles` 这种带限定词的。
+_DOUBLES = [
+    re.compile(r"\b[A-Z][\w'\u00C0-\u024F-]+\s*/\s*[A-Z][\w'\u00C0-\u024F-]+"),
+    re.compile(r"\b(?:men'?s|women'?s|ladies'?|mixed|wheelchair|quad)\s+doubles\b", re.I),
+]
+
+
+def is_doubles(item: dict) -> bool:
+    """这条是不是双打。tennistv.com 自带 matchType，比标题可靠，优先用。"""
+    mt = (item.get("matchType") or item.get("match_type") or "").lower()
+    if mt:
+        return "doubles" in mt
+    return any(rx.search(item.get("title", "")) for rx in _DOUBLES)
+
+
 # 名字前面出现这些词，说明这人是**被打败的对手**，不是受访者。
 # 起因是一条真实误收：
 #   `On-Court Interview: Jasmine Paolini feels 'elated' with her stunning
@@ -162,7 +184,9 @@ def cn_hit(title: str, rules) -> tuple[dict, bool] | None:
     return None
 
 
-def pick(items: dict, rules, only_cn: bool = False) -> list[dict]:
+def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = False,
+         n_doubles=None) -> list[dict]:
+    n_doubles = n_doubles if n_doubles is not None else [0]
     out = []
     for it in items.values():
         rnd = parse_round(it)
@@ -171,6 +195,9 @@ def pick(items: dict, rules, only_cn: bool = False) -> list[dict]:
         cn = hit[0] if (hit and hit[1]) else None
         beaten = hit[0] if (hit and not hit[1]) else None
         is_key = rnd in KEY_ROUNDS
+        if not include_doubles and is_doubles(it):
+            n_doubles[0] += 1
+            continue
         if only_cn and not cn:
             continue
         if not (cn or is_key):
@@ -231,6 +258,8 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true", help="只打印，不推送也不记已发")
     ap.add_argument("--push", action="store_true", help="推到微信（需要 PUSHPLUS_TOKEN）")
     ap.add_argument("--only-cn", action="store_true", help="只要有中国球员的")
+    ap.add_argument("--include-doubles", action="store_true",
+                    help="连双打一起收（默认只要单打）")
     ap.add_argument("--all", action="store_true", help="不去重，把库里所有符合条件的都列出来")
     ap.add_argument("--out", help="把 HTML 写到这个文件")
     ap.add_argument("--seed", action="store_true",
@@ -244,7 +273,9 @@ def main() -> int:
         return 2
     items = json.loads(STORE.read_text(encoding="utf-8"))["items"]
     _players, *rules = load_cn()
-    rows = pick(items, rules, only_cn=args.only_cn)
+    n_doubles = [0]
+    rows = pick(items, rules, only_cn=args.only_cn,
+                include_doubles=args.include_doubles, n_doubles=n_doubles)
 
     sent = set()
     if SENT.exists() and not args.all:
@@ -252,6 +283,8 @@ def main() -> int:
     fresh = [r for r in rows if r["id"] not in sent]
 
     print(f"库内 {len(items)} 条 -> 符合条件 {len(rows)} 条 -> 未推送过 {len(fresh)} 条")
+    if n_doubles[0]:
+        print(f"  （已滤掉双打 {n_doubles[0]} 条，要的话加 --include-doubles）")
     n_cn = sum(1 for r in fresh if r["cn_player"])
     print(f"  其中中国球员 {n_cn} 条，关键场次 {len(fresh) - n_cn} 条\n")
     for r in fresh[:25]:
