@@ -502,3 +502,52 @@ def test_match_coverage_counts_singles_only():
         "Jannik Sinner | First round On-court Interview | Wimbledon 2026",
     ]:
         assert is_main_singles({"title": title}), title
+
+
+def test_chinese_player_qualifying_wins_say_so_on_the_card():
+    """中国球员的资格赛，卡片上必须写出「资格赛」——**不能看着像正赛**。
+
+    资格赛不是关键轮次，进推送口径只有一条路：中国球员赢了球。
+    但卡片标签原来写的是「中国球员就只显示名字」，于是这三条
+
+        布云朝克特 2026 温网资格赛一轮
+        王曦雨     2026 温网资格赛一轮
+        张帅       2026 温网资格赛二轮
+
+    推出去只写着球员名，和正赛长得一模一样。**而覆盖率的分母是正赛签表，
+    根本不含它们**（`rounds_of()` 只到「第一轮」，资格赛不在表里）——
+    推的时候当正赛、算的时候不算数，两边对不上。
+
+    只给资格赛加后缀：正赛轮次每条都跟在名字后面就成了噪音，
+    而资格赛不写就是误导。两者不对称是故意的。
+    """
+    from tools.oncourt_feed import tag_of
+
+    zheng = {"zh": "郑钦文"}
+    assert tag_of({"cn_player": zheng, "round_zh": "资格赛"}) == "郑钦文 · 资格赛"
+    assert tag_of({"cn_player": zheng, "round_zh": "四分之一决赛"}) == "郑钦文"
+    assert tag_of({"cn_player": zheng, "round_zh": "决赛"}) == "郑钦文"
+    # 没有中国球员时照旧显示轮次
+    assert tag_of({"cn_player": None, "round_zh": "半决赛"}) == "半决赛"
+    assert tag_of({"cn_player": None, "round_zh": None}) == ""
+
+
+def test_qualifying_never_counts_toward_main_draw_coverage():
+    """资格赛条目一条都不能进场次覆盖率的分子。
+
+    Edimator 的温网 99 条里 **75 条是资格赛**（76%）——它是补温网早轮缺口的
+    主力源，但那个「99」大部分不在正赛口径内，真正补上的是 24 条。
+    分子若混进资格赛，温网男单会从 61% 虚高上去，而分母（127 场）
+    是正赛签表，压根没有资格赛的位置。
+
+    机制是 `coverage()` 里的 `if rd in tbl`——`rounds_of()` 生成的表
+    只到「第一轮」。这条测试盯的是**那个机制别被人「顺手补全」**：
+    有人看到 `parse_round` 会返回「资格赛」，很容易觉得表里漏了一项。
+    """
+    from tools.oncourt_match_coverage import rounds_of
+
+    for draw in (128, 96, 64, 56, 32, 28):
+        assert "资格赛" not in rounds_of(draw), f"{draw} 签的轮次表里混进了资格赛"
+
+    # 分母只到正赛：128 签逐轮相加正好是 127 场
+    assert sum(rounds_of(128).values()) == 127

@@ -296,6 +296,23 @@ def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = Fals
     return out
 
 
+def tag_of(row: dict) -> str:
+    """卡片上那一小行的标签：中国球员显示名字，否则显示轮次。
+
+    **但资格赛必须显式说出来。** 原来写的是「中国球员就只显示名字」，
+    于是三条温网资格赛（布云朝克特、王曦雨、张帅）推出去只写着球员名，
+    看着和正赛一模一样——而覆盖率的分母是正赛签表，**根本不含它们**。
+    推的时候当正赛、算的时候不算数，两边对不上。
+
+    只有资格赛需要这个后缀：正赛轮次在名字后面显得啰嗦（「郑钦文 · 四分之一决赛」
+    信息是有的，但每条都带就成了噪音），而资格赛不写就是误导。
+    """
+    if row["cn_player"]:
+        name = row["cn_player"]["zh"]
+        return f"{name} · 资格赛" if row["round_zh"] == "资格赛" else name
+    return row["round_zh"] or ""
+
+
 def render_html(rows: list[dict]) -> str:
     # 官方 / 搬运分开列。搬运号补的是官方确实没有的那几处（亚洲赛季、
     # 七个大师赛），但来源不规范、可能删档，所以要让人一眼看出是哪一类。
@@ -313,7 +330,7 @@ def render_html(rows: list[dict]) -> str:
         for r in items:
             secs = r.get("duration_s") or 0
             dur = f"{secs // 60}:{secs % 60:02d}" if secs else "—"
-            tag = r["cn_player"]["zh"] if r["cn_player"] else (r["round_zh"] or "")
+            tag = tag_of(r)
             parts.append(
                 "<div style='margin:0 0 12px;padding:10px 12px;background:#f6f8f7;"
                 "border-radius:8px'>"
@@ -399,7 +416,7 @@ def main() -> int:
     for r in fresh[:25]:
         secs = r.get("duration_s") or 0
         dur = f"{secs // 60}:{secs % 60:02d}" if secs else "—"
-        tag = r["cn_player"]["zh"] if r["cn_player"] else (r["round_zh"] or "?")
+        tag = tag_of(r) or "?"
         print(f"  [{tag}] {dur:>6}  {r.get('title','')[:66]}")
     if len(fresh) > 25:
         print(f"  …… 另有 {len(fresh) - 25} 条")
