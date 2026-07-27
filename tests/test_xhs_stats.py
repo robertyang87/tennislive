@@ -136,7 +136,7 @@ def test_发文时改过标题的笔记仍然对得上产物():
 def test_名字相近的两条不会被错配():
     """`巴尔迪科娃先丢一盘` 和 `巴尔通科娃逆转晋级` 长得像，讲的不是一回事。
 
-    模糊匹配一放松就会把这两条粘在一起，然后完播率算到别人头上——错配比
+    模糊匹配一放松就会把这两条粘在一起，然后比例算到别人头上——错配比
     不匹配糟得多，因为它不会出现在「未匹配」一节里，没人会去查。
     """
     note = {"笔记标题": "🎾7.22网球快报｜巴尔迪科娃先丢一盘",
@@ -181,7 +181,7 @@ def test_同名多份按发布日期取最近的那份():
     assert "同名多份" in why
 
 
-def test_完播率按成片时长算不按估计(tmp_path, capsys):
+def test_均观看比例按成片时长算不按估计(tmp_path, capsys):
     """人均观看 46 秒，片长 140 秒是 33%，片长 60 秒就是 77%——差别是全部。
 
     所以片长必须来自成片本身。这里塞一个真的 mp4 进去量。
@@ -194,13 +194,13 @@ def test_完播率按成片时长算不按估计(tmp_path, capsys):
             "观看量": 1000, "涨粉": 3}
     records = xhs.report_completion([(note, _item("🎾某条", date(2026, 7, 26), real), "精确")])
     assert len(records) == 1
-    assert records[0]["完播率"] == pytest.approx(0.25, abs=0.01)
+    assert records[0]["均观看比例"] == pytest.approx(0.25, abs=0.01)
     assert records[0]["片长"] == pytest.approx(length, abs=0.1)
     assert "25%" in capsys.readouterr().out
 
 
-def test_没有成片的笔记不进完播率而不是记成零(capsys):
-    """图文没有 mp4。把它当成「完播率 0」会把中位数整个拉垮。"""
+def test_没有成片的笔记不进均观看比例而不是记成零(capsys):
+    """图文没有 mp4。把它当成「均观看比例 0」会把中位数整个拉垮。"""
     note = {"笔记标题": "📖图文一篇", "人均观看时长": 25, "观看量": 500, "涨粉": 1}
     records = xhs.report_completion([(note, _item("📖图文一篇", date(2026, 7, 24)), "精确")])
     assert records == []

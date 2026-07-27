@@ -3,13 +3,33 @@
 
 后台那张表只告诉你「人均观看时长 46 秒」，不告诉你那条片子有多长。46 秒是看完了
 还是刚开头就走，差别是全部——`ball-pick` 是 139.8 秒，46 秒只到三分之一。
-片长在 `output/**/**.mp4` 里躺着，两边一join，完播率就出来了。
+片长在 `output/**/**.mp4` 里躺着，两边一join，平均看了多久占全片的多少就出来了。
 
 三件事，都直接查产物：
 
 1. **体裁/系列/时段的常规切分** —— 但曝光那一列对视频是残缺的，见下。
-2. **完播率** = 人均观看时长 ÷ 成片时长。片长用 `mp4_duration.mvhd_seconds` 直接量
-   成片，不靠 ffprobe（沙箱里没有），也不靠「渲染参数应该是多少」推断。
+2. **均观看比例** = 人均观看时长 ÷ 成片时长。片长用 `mp4_duration.mvhd_seconds`
+   直接量成片，不靠 ffprobe（沙箱里没有），也不靠「渲染参数应该是多少」推断。
+
+   **这个数不是完播率，别当完播率用。** 头一版就叫它「完播率」，是错的，而且
+   错在定义上，不需要任何数据来推翻：它是个**均值**。一半人 2 秒划走、一半人
+   看完，和所有人都看一半，算出来一模一样。均值只回答「平均看了多久」，
+   回答不了「几个人看到了结尾」——而后者才是「末屏那一问有多少人听见」要问的。
+
+   小红书的导出表里没有真完播率这一栏，所以**这个号在小红书上的真完播率，
+   目前无从得知**，别拿这个数去顶替。
+
+   缺口能有多大？抖音后台直接给真完播率，同一批片子在抖音是：
+
+       大师赛为什么变两周   均观看比例 22.0%   抖音真完播 6.1%
+       鹰眼是怎么来的       均观看比例  8.8%   抖音真完播 1.0%
+       中位（11 条）        均观看比例 10.4%   抖音真完播 2.0%
+
+   **注意这组倍数只属于抖音那批观众**，不能搬到小红书当估计值——两个平台的
+   人群、推荐机制、自动播放行为都不一样，同一条内容的播放量在两边差过 69 倍
+   （三巨头图文：小红书 152，抖音 10567）也差过 25 倍（挑球视频：小红书 1581，
+   抖音 69）。它在这里只说明一件事：**均值和完播能差出一个数量级**，所以名字
+   必须叫对。
 3. **曝光一致性自检** —— 头一回看这张表时，差点拿「图文曝光 24512 > 视频 18184」
    得出「图文分发更好」。其实是图文 12 条的 `观看/曝光` 和`封面点击率`分毫不差，
    视频 11 条全部对不上（2.2～4.6 倍）：视频有一路观看不计入曝光。所以这个自检
@@ -27,7 +47,7 @@
 模糊匹配卡三道：相似度过阈值、发布日期和产物目录日期在窗口内、和第二名拉开差距。
 **三道都过不了的一律报出来**，不静默丢掉 —— 只在成功时出声的检查，没法证明它
 真的看过。头一版手写映射表就把「季莫费耶娃这一拍」指到了 `official-highlight`
-（那天根本没有这个文件），完播率算不出来还以为是数据缺失；自动匹配指到
+（那天根本没有这个文件），比例算不出来还以为是数据缺失；自动匹配指到
 `yesterday-point/wta`，29.4 秒，一直好好躺在那儿。
 
 用法：
@@ -202,7 +222,7 @@ def index_output(root: Path) -> list[dict]:
     """扫出所有「已生成的一篇内容」：标题 + 目录日期 + 同目录的成片。
 
     以 `xiaohongshu.txt` 为锚 —— 有它才算一篇可发的内容。mp4 在同目录下找；
-    找不到不是错（图文本来就没有），只是这条算不出完播率。
+    找不到不是错（图文本来就没有），只是这条算不出均观看比例。
     """
     items = []
     for txt in sorted(root.rglob("xiaohongshu.txt")):
@@ -372,8 +392,8 @@ def report_by(notes: list[dict], key: str, label: str) -> None:
 
 
 def report_completion(matched: list[tuple[dict, dict, str]]) -> list[dict]:
-    """完播率 —— 这份表最有信息量的一栏，也是后台唯一给不出的一栏。"""
-    print("\n### 完播率（人均观看时长 ÷ 成片时长）")
+    """均观看比例 —— 小红书后台给不出的一栏。注意它不是完播率，见模块开头。"""
+    print("\n### 均观看比例（人均观看时长 ÷ 成片时长，不是完播率）")
     rows, records = [], []
     for note, item, how in matched:
         if not item["mp4"]:
@@ -387,7 +407,7 @@ def report_completion(matched: list[tuple[dict, dict, str]]) -> list[dict]:
         rate = watched / length if watched and length else None
         records.append({
             "标题": note["笔记标题"], "成片": str(item["mp4"].relative_to(REPO)),
-            "片长": round(length, 1), "人均观看": watched, "完播率": rate,
+            "片长": round(length, 1), "人均观看": watched, "均观看比例": rate,
             "观看量": note.get("观看量"), "涨粉": note.get("涨粉"), "匹配": how,
         })
         rows.append([note["笔记标题"], f"{length:.1f}s", _fmt(watched, "{:.0f}s"),
@@ -397,17 +417,17 @@ def report_completion(matched: list[tuple[dict, dict, str]]) -> list[dict]:
         print("  没有能对上成片的笔记 —— 先看「未匹配」一节，别当成没有视频。")
         return records
     rows.sort(key=lambda r: float(r[3].rstrip("%")) if r[3] != "—" else -1, reverse=True)
-    print(_table(rows, ["笔记标题", "片长", "人均观看", "完播率", "观看量", "涨粉", "匹配"]))
+    print(_table(rows, ["笔记标题", "片长", "人均观看", "均观看比例", "观看量", "涨粉", "匹配"]))
 
-    live = [r for r in records if r["完播率"] and r["人均观看"]]
+    live = [r for r in records if r["均观看比例"] and r["人均观看"]]
     if live:
         print(f"\n  {len(live)} 条有效：片长中位 {_median([r['片长'] for r in live]):.0f}s，"
               f"人均观看中位 {_median([r['人均观看'] for r in live]):.0f}s，"
-              f"完播率中位 {_median([r['完播率'] for r in live]):.1%}")
+              f"均观看比例中位 {_median([r['均观看比例'] for r in live]):.1%}")
         if len(live) > 2:
             xs = [r["片长"] for r in live]
-            ys = [r["完播率"] for r in live]
-            print(f"  片长 vs 完播率 相关性 {_pearson(xs, ys):+.2f}"
+            ys = [r["均观看比例"] for r in live]
+            print(f"  片长 vs 均观看比例 相关性 {_pearson(xs, ys):+.2f}"
                   f"　片长 vs 人均观看 相关性 "
                   f"{_pearson(xs, [r['人均观看'] for r in live]):+.2f}")
     return records
@@ -476,7 +496,7 @@ def main() -> int:
                     help="成片所在目录，默认 output/")
     ap.add_argument("--min-ratio", type=float, default=MIN_RATIO,
                     help=f"模糊匹配的相似度下限，默认 {MIN_RATIO}")
-    ap.add_argument("--json", type=Path, help="把完播率明细另存一份 JSON")
+    ap.add_argument("--json", type=Path, help="把均观看比例明细另存一份 JSON")
     args = ap.parse_args()
 
     notes = load_notes(args.xlsx)
@@ -500,7 +520,7 @@ def main() -> int:
     if args.json:
         args.json.write_text(json.dumps(records, ensure_ascii=False, indent=2),
                              encoding="utf-8")
-        print(f"\n完播率明细已写入 {args.json}")
+        print(f"\n均观看比例明细已写入 {args.json}")
     return 0
 
 
