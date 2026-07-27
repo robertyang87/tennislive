@@ -551,3 +551,60 @@ def test_qualifying_never_counts_toward_main_draw_coverage():
 
     # 分母只到正赛：128 签逐轮相加正好是 127 场
     assert sum(rounds_of(128).values()) == 127
+
+
+def test_push_is_called_with_the_real_signature():
+    """推送那一行的关键字参数，必须和 `pushplus.push()` 的形参对得上。
+
+    **这条是从一次线上事故里长出来的。** 第一次定时触发（2026-07-27 21:54 UTC）
+    整个 run 显示 success，11 个步骤全绿，日志里却躺着：
+
+        TypeError: push() got an unexpected keyword argument 'content'
+
+    50 条待推的一条都没出去。两个错叠在一起才让它变成静默失败：
+
+      ① 调用写的是 `push(token=…, title=…, content=…, template="html")`，
+         而形参是 `push(title, html_content, token=None, …)`——
+         `content` 和 `template` 都不存在（template 在 push() 内部写死了）
+      ② 工作流那一步是 `python ... | tee`，bash 默认报**管道最后一环**的退出码，
+         所以 python 崩了照样绿。已加 `set -o pipefail`
+
+    **这就是「查产物不要查信号」的又一次**：run 绿、step 绿，产物是零。
+
+    用 inspect 比签名而不是真的调一次，是因为真调会往用户手机推微信。
+    """
+    import inspect
+    import re
+
+    from tennislive.publish.pushplus import push
+    from tools import oncourt_feed
+
+    sig = inspect.signature(push)
+    src = inspect.getsource(oncourt_feed.main)
+    # **取所有 `push(...)` 里带关键字参数的那一个**，不能拿 re.search 的第一个：
+    # 上面的注释里就写着 `push()`，第一次这么写的时候正好匹到它，
+    # 捕获组是空的，测试于是报「没把正文传给 push()」——**假阳性**。
+    calls = [c for c in re.findall(r"push\(([^)]*)\)", src) if "=" in c]
+    assert calls, "oncourt_feed.main 里找不到带参数的 push( 调用"
+    kwargs = [k for c in calls for k in re.findall(r"(\w+)\s*=", c)]
+    unknown = [k for k in kwargs if k not in sig.parameters]
+    assert not unknown, (
+        f"push() 没有这些形参：{unknown}；它接受的是 {list(sig.parameters)}")
+    # 正文必须传进去——只传 title 的话推出去是一条空消息
+    assert "html_content" in kwargs, "没把正文传给 push()，推出去会是空的"
+
+
+def test_the_push_step_does_not_swallow_a_crash():
+    """工作流里推送那一步必须开 `pipefail`，否则 python 崩了也报成功。
+
+    上面那条测试防的是「参数写错」，这条防的是「写错了也看不见」——
+    两道都得有。别的步骤故意写了 `|| true`（搜索和缺口对账失败不该拦住推送），
+    那些不算数，这里只查推送这一步。
+    """
+    from pathlib import Path
+
+    wf = Path(__file__).resolve().parent.parent / ".github/workflows/oncourt-interviews.yml"
+    text = wf.read_text(encoding="utf-8")
+    step = text.split("筛出关键场次与中国球员，推到微信", 1)[1].split("- name:", 1)[0]
+    assert "set -o pipefail" in step, "推送这一步没开 pipefail，崩了会被 tee 吞掉"
+    assert "oncourt_feed.py --push" in step, "样本取错了段落，这条测试没在看推送步骤"

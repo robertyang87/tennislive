@@ -449,7 +449,11 @@ def main() -> int:
         if n_cn:
             title = f"🇨🇳 中国球员 {n_cn} 条 · " + title
         try:
-            push(token=token, title=title, content=html_body, template="html")
+            # 形参名是 `html_content`，不是 `content`；`template` 在 push() 内部
+            # 就写死成 "html" 了，传进来会 TypeError。**这两个错误上线跑了一轮
+            # 才发现**——因为工作流那一步是 `python ... | tee`，报的是 tee 的
+            # 退出码，崩了照样绿。见 test_push_is_called_with_the_real_signature。
+            push(title=title, html_content=html_body, token=token)
         except PushPlusError as exc:
             print(f"推送失败：{exc}", file=sys.stderr)
             return 2
