@@ -2757,17 +2757,30 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     return out
 
 
-def _boundary_marks(boundaries: Sequence[dict]) -> list[tuple[int, float]]:
-    """WordBoundary 事件 → [(念到第几个非空白字, 那一刻的秒数)]。
+def _boundary_marks(boundaries: Sequence[dict], text: str) -> list[tuple[int, float]]:
+    """WordBoundary 事件 → [(这一刻念到原文第几个字, 秒数)]。
 
-    edge-tts 的 offset 以 100 纳秒为单位，且已经把 rate 算进去了，所以直接可用。
-    事件里的 text 不含标点，累加长度得到的是「去掉空白之后的字位」。
+    edge-tts 的 offset 以 100 纳秒为单位，且已经把 rate 算进去了，直接可用。
+
+    位置要**在原文里找**，不能靠累加事件文本的长度。事件文本里**没有标点**：
+    某一段旁白 122 个非空白字，边界流只有 109 个，差的 13 个全是逗号句号。
+    按累加长度算，「他自己说」在原文排第 108 位、在边界空间只排第 97 位，
+    查出来的时刻晚了 1.7 秒——而且越往后漂得越多，最后一句被压成不到一秒。
     """
     marks: list[tuple[int, float]] = []
-    idx = 0
+    pos = 0
     for b in boundaries:
-        marks.append((idx, float(b.get("offset", 0)) / 1e7))
-        idx += len(re.sub(r"\s", "", str(b.get("text") or "")))
+        spoken = str(b.get("text") or "").strip()
+        seconds = float(b.get("offset", 0)) / 1e7
+        if not spoken:
+            continue
+        found = text.find(spoken, pos)
+        if found < 0:
+            # 合成器拿到的那份和显示的这份差一个字（挑→选的纠音）时会落到这里。
+            # 保持单调，宁可沿用上一处，也别让时间轴倒退。
+            found = pos
+        marks.append((found, seconds))
+        pos = found + len(spoken)
     return marks
 
 
@@ -2789,17 +2802,16 @@ def subtitle_cues(
     lines = subtitle_lines(text)
     if not lines:
         return []
-    marks = _boundary_marks(boundaries)
+    marks = _boundary_marks(boundaries, text)
     stripped = [len(re.sub(r"\s", "", text[:i])) for i in range(len(text) + 1)]
     total = stripped[-1] or 1
 
     def at(char_index: int) -> float:
-        want = stripped[char_index]
         if not marks:
-            return duration * want / total
+            return duration * stripped[char_index] / total
         seconds = marks[0][1]
         for idx, sec in marks:
-            if idx > want:
+            if idx > char_index:
                 break
             seconds = sec
         return min(seconds, duration)
