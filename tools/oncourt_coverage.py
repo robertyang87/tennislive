@@ -13,9 +13,13 @@
     男女分流   同名不同巡回的（迪拜、华盛顿、印第安维尔斯、罗马……）
                按球员性别分开数，因为 ATP 和 WTA 那一站的来源常常完全不同
 
-**性别是按名单认的，不是猜的。** 名单不全会低估 WTA 那一侧，所以
-`--unmatched` 会把认不出性别的条目打出来，用来补名单——只报命中的
-没法证明名单是全的。
+**性别以 ATP / WTA 各 500 人的官方排名快照为准**（`side()`），认出率 88%。
+认不出的一律返回 None，**不猜**——`--unmatched` 会把它们打出来，
+只报命中的没法证明名单是全的。
+
+注意这里和 `oncourt_match_coverage.py` **故意不一致**：那边算的是占签表的
+百分比，认不出性别的条目会在男单女单各算一次，所以一律不算；这边报的是
+「这一站有没有覆盖、有几条」，多算不致命而漏算会让缺口从报表上消失，所以放过去。
 
 用法：
     python tools/oncourt_coverage.py                 # 全量对账
@@ -27,9 +31,11 @@
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
+import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -39,40 +45,83 @@ CALENDAR = ROOT / "data" / "tour_calendar_2026.json"
 
 sys.path.insert(0, str(ROOT))
 
-# 女子球员标记。**只用来把同名赛事的男女两侧分开**，不参与收录判断。
-# 名单必然不全——所以 --unmatched 会把认不出的打出来，用来补。
-WOMEN = re.compile(
-    r"Sabalenka|Swiatek|Gauff|Rybakina|Paolini|Pegula|Andreeva|Keys|Navarro|Kasatkina|"
-    r"Vekic|Ostapenko|Muchova|Krejcikova|Krejikova|Badosa|Kostyuk|Samsonova|Alexandrova|"
-    r"Haddad|Collins|Azarenka|Osaka|Raducanu|Boulter|Kartal|Svitolina|Shnaider|Noskova|"
-    r"Bouzkova|Fernandez|Mboko|Anisimova|Tauson|Bencic|Siniakova|Linette|Frech|Sakkari|"
-    r"Jabeur|Garcia|Potapova|Kalinina|Marcinko|Tagger|Snigur|Havlickova|Valentova|"
-    r"Starodubtseva|Bejlek|Salkova|Yastremska|Putintseva|Rakhimova|Eala|Kalinskaya|Lys|"
-    r"Begu|Ruse|Kessler|Baptiste|Parks|Danilina|Krunic|Mertens|Pliskova|Townsend|"
-    r"Andreescu|Jovic|Grant|Semenistaja|Gjorcheska|Bolkvadze|Venus Williams|Serena|"
-    r"Stearns|Dolehide|Avanesyan|Gracheva|Kudermetova|Tomljanovic|Sherif|Cristian|"
-    r"Bronzetti|Cocciaretto|Errani|Wozniacki|Zvonareva|Siegemund|Schuurs|Perez|Sutjiadi|"
-    r"Zheng|Xinyu Wang|Xiyu Wang|Zhang Shuai|Shuai Zhang|Xinyu Gao|Sijia Wei|Lulu Sun|"
-    r"Hontama|Tararudee|Bartunkova|Kovackova|Siskova|Fajmonova|Valdmannova|Martincova|"
-    r"Grabher|Day|Hibino|Tjen|Ferro|Babel|Oliynykova|Korneeva|Trevisan|Brancaccio|"
-    r"Zakharova|Erjavec|Bassols|Vandewinkel|Mandlikova|Peng|Hsieh|Gajdosova|Puig",
-    re.I)
+SNAPSHOT = ROOT / "src" / "tennislive" / "zh" / "player_names_top500.json"
 
-MEN = re.compile(
-    r"Sinner|Alcaraz|Djokovic|Zverev|Medvedev|Rublev|Tsitsipas|Ruud|Fritz|Shelton|"
-    r"Musetti|Rune|Draper|Paul|Tiafoe|Humbert|Khachanov|Auger[\s-]?Aliassime|Felix|"
-    r"Dimitrov|Bublik|Cerundolo|Cobolli|Fonseca|Mensik|Berrettini|Arnaldi|Nadal|Federer|"
-    r"Murray|Wawrinka|Thiem|Nishikori|Monfils|Gasquet|Evans|Norrie|Kyrgios|de Minaur|"
-    r"Griekspoor|Struff|Popyrin|Baez|Darderi|Vacherot|Collignon|Moutet|Korda|Tabilo|"
-    r"Jarry|Gar[íi]n|Barrios|Vallejo|Tirante|Travaglia|Borges|Pellegrino|Carabelli|"
-    r"Misolic|van de Zandschulp|Dzumhur|Montiero|Carballes|Skatov|Machac|Bergs|Hurkacz|"
-    r"Shevchenko|Fils|Mpetshi|Perricard|Blockx|Van Assche|Halys|Basilashvili|Choinski|"
-    r"Faria|Mochizuki|Tarvet|Rodesch|Stewart|Basing|Harris|Zhukayev|Kouame|Gaston|"
-    r"Schoolkate|Fucsovics|Safiullin|Ofner|Ymer|Sousa|Stebe|Tipsarevic|Janowicz|"
-    r"Ramos|Kolar|Atmane|Bonzi|Fery|Patten|Heliovaara|Pavic|Arevalo|Zhizhen Zhang|"
-    r"Yunchaokete|\bBu\b|Shang|\bWu\b|Nishioka|Etcheverry|Munar|Ivani[šs]evi[ćc]|"
-    r"Ajdukovi[ćc]|Lehecka|Kermode|Norman|Olivetti|Prizmic|Tsonga|Agassi|Ferrero",
-    re.I)
+
+def _fold(s: str) -> str:
+    """去掉音标。`Karolína Muchová` 和快照里的 `Karolina Muchova` 得能对上。"""
+    return "".join(c for c in unicodedata.normalize("NFD", s) if not unicodedata.combining(c))
+
+
+def _roster() -> tuple[list, list, list, list]:
+    """从 ATP / WTA 各 500 人的官方排名快照里造匹配器。
+
+    **这才是权威名单。** 原来只有下面那两串手搓正则，认出率 78%——
+    剩下 22% 在单巡回赛事里会「男女两边各算一次」，直接把覆盖率算虚。
+
+    快照的两个性质是实测过的，不是假设：
+      · **全名零重叠**——ATP 500 和 WTA 500 没有一个同名，所以全名命中即可定案
+      · **姓氏有 10 个两边都有**（Zhang / Zheng / Sun / Smith / Jones …），
+        所以姓氏只用两边独占的那部分，共用姓一律判不出
+
+    顺序也是有讲究的：全名 → 补充名单 → 独占姓氏。补充那份排在姓氏前面，
+    因为它装的是**退役传奇**（纳达尔、费德勒、大小威、桑普拉斯这一档），
+    这些人早不在 top 500 里了，但库里跨 2017–2026 全是他们。
+    """
+    with SNAPSHOT.open(encoding="utf-8") as fh:
+        snap = json.load(fh)
+
+    def full(tour):
+        return [re.compile(r"\b" + re.escape(_fold(e["name_en"])).replace(r"\ ", r"\s+") + r"\b",
+                           re.I) for e in snap["tours"][tour]]
+
+    sur = {t: {_fold(e["name_en"]).split()[-1] for e in snap["tours"][t]} for t in ("ATP", "WTA")}
+    only = lambda a, b: [re.compile(rf"\b{re.escape(s)}\b", re.I) for s in sur[a] - sur[b]]
+    return full("ATP"), full("WTA"), only("ATP", "WTA"), only("WTA", "ATP")
+
+
+# 补充名单：**只放快照里没有的人**——退役的、掉出 top 500 的、以及双打专精
+# 选手（双打排名不进单打 500）。原来这两串是唯一的判据，塞了 249 个词，
+# 其中 191 个现役球员现在由快照覆盖，**留在这里只会和快照打架**：
+#
+#     Cristian   雅克琳·克里斯蒂安（女）匹上了 Cristian Garín（男）
+#     Jovic      伊娃·约维奇（女）匹上了 Dusan Lajovic（男）
+#     Paul       汤米·保罗（男）匹上了 Paula Badosa —— **旧版没有词边界**，
+#                短姓氏会匹进长名字里：Lys→Halys、Day→Dayana
+#     Day        凯拉·戴（女）匹上了 "a tough day at the office"
+#
+# 所以现在两条规矩：**词边界必须有**（`_word()` 统一加），
+# **快照里有的人不许写在这**（有测试拦，见 test_supplementary_roster_does_not_duplicate_the_snapshot）。
+def _word(*names: str) -> re.Pattern:
+    return re.compile(r"\b(?:" + "|".join(names) + r")\b", re.I)
+
+
+WOMEN = _word(
+    # 退役 / 早已掉出 top 500
+    "Serena", "Venus Williams", "Wozniacki", "Mandlikova", "Peng",
+    "Hsieh", "Gajdosova", "Puig", "Errani", "Jabeur",
+    # 双打专精，单打排名不进 500
+    "Krejikova", "Danilina", "Krunic", "Schuurs", "Sutjiadi", "Babel", "Bassols",
+    # 中国球员的另一种写法（快照里是 "Shuai Zhang" 这一种语序）
+    "Zhang Shuai", "Shuai Zhang",
+    # 姓氏拼法与快照不同
+    "Haddad", "Fajmonova",
+)
+
+MEN = _word(
+    # 退役 / 早已掉出 top 500
+    "Nadal", "Federer", "Murray", "Thiem", "Nishikori", "Gasquet", "Kyrgios",
+    "Tsonga", "Agassi", "Ferrero", "Tipsarevic", "Janowicz", r"Ivani[sš]evi[cć]",
+    "Sousa",
+    # 双打专精
+    "Patten", "Heliovaara", "Pavic", "Arevalo", r"Ajdukovi[cć]",
+    # 姓氏拼法 / 语序与快照不同
+    r"Auger[\s-]?Aliassime", "de Minaur", "van de Zandschulp", "Van Assche",
+    "Mpetshi", r"Gar[ií]n", "Carballes", "Montiero", "Barrios", "Jarry",
+    "Yunchaokete", "Zhizhen Zhang",
+    # 赛事官员 / 教练，出现在标题里时按男子算比判不出好
+    "Kermode", "Norman", "Olivetti",
+)
 
 
 def load() -> tuple[dict, list]:
@@ -93,14 +142,58 @@ def haystack(item: dict) -> str:
     return f"{item.get('title', '')} {item.get('page_url') or ''} {item.get('url', '')}"
 
 
+@functools.lru_cache(maxsize=1)
+def _matchers():
+    return _roster()
+
+
+def _named(text: str, pats: list) -> bool:
+    """这些名字模式里，有没有一个匹在**真的像个名字**的地方。
+
+    判据是大小写：**人名在标题里一定不是全小写的。**
+
+    起因是快照里真有几个姓氏本身就是英文常用词——`Day`（凯拉·戴，WTA 独占姓）
+    匹上了 `Sinner: 'Today was a very difficult day in the office'`，
+    于是这条被判成「男女都命中」，直接算不出性别。全小写的 `day` 一律不认之后
+    它就干净了。
+
+    不用「首字母大写」而用「不全小写」，是因为标题常常整句大写
+    （`WORLD NO.1 IGA SWIATEK ON COURT INTERVIEW`）——那种也得认。
+    """
+    return any(m.group(0) != m.group(0).lower()
+               for rx in pats if (m := rx.search(text)))
+
+
 def side(item: dict) -> str | None:
-    """这条是男子还是女子。认不出返回 None，**不猜**。"""
-    t = item.get("title", "")
-    w, m = bool(WOMEN.search(t)), bool(MEN.search(t))
-    if w and not m:
-        return "wta"
-    if m and not w:
-        return "atp"
+    """这条是男子还是女子。认不出返回 None，**不猜**。
+
+    三级判据，越靠前越硬：
+
+        ① 官方排名快照里的**全名**     ATP/WTA 各 500 人，全名零重叠，命中即定案
+        ② 手写的退役球员名单           纳达尔、费德勒、大小威……快照里没有
+        ③ 快照里**某一边独占的姓氏**   共用姓（Zhang/Zheng/Sun/Smith…）不算
+
+    男女两边都命中就返回 None——霍普曼杯的混合队（`Karen Khachanov and
+    Anastasia Pavlyuchenkova`）和「斯维托丽娜夸丈夫蒙菲尔斯」都长这样，
+    **强行选一边不如承认认不出来**。
+
+    认出率从 78%（只有手写名单）提到 88%。剩下 12% 大多是 2017–2021 的
+    老条目（巴蒂、科贝尔、库兹涅佐娃、拉奥尼奇）和霍普曼杯的 `Team Germany`。
+    """
+    t = _fold(item.get("title", ""))
+    atp_f, wta_f, atp_s, wta_s = _matchers()
+    a, w = _named(t, atp_f), _named(t, wta_f)
+    if a != w:
+        return "atp" if a else "wta"
+    if a and w:
+        return None
+    raw = item.get("title", "")
+    w, m = bool(WOMEN.search(raw)), bool(MEN.search(raw))
+    if w != m:
+        return "wta" if w else "atp"
+    a, w = _named(t, atp_s), _named(t, wta_s)
+    if a != w:
+        return "atp" if a else "wta"
     return None
 
 

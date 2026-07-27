@@ -597,3 +597,120 @@ def test_broadcaster_round_interview_form(rules):
         "Frances Tiafoe | Post Match Press Conference | 2025 Mubadala Citi DC Open",
     ]:
         assert tag(title, rules) is None, title
+
+
+def test_gender_is_read_off_the_official_ranking_snapshot():
+    """男女分流以 ATP / WTA 各 500 人的官方排名快照为准，不靠手搓正则。
+
+    **这条是从一个虚高的数字里长出来的。** 澳网男单曾经报 100%、女单 99%，
+    而当时进入统计的 847 条里有 365 条**认不出球员性别**——按老规则
+    「认不出的两边都算」，同一批条目把男单和女单两个 127 的分母同时填满了。
+
+    快照的两个性质是实测的，不是假设：全名零重叠（所以全名命中即定案），
+    姓氏有 10 个两边都有（Zhang / Zheng / Sun / Smith …，所以共用姓不作数）。
+    """
+    from tools.oncourt_coverage import side
+
+    assert side({"title": "Jannik Sinner On-Court Interview | Australian Open 2026"}) == "atp"
+    assert side({"title": "Aryna Sabalenka On-Court Interview | US Open 2025 Final"}) == "wta"
+    # 音标要去掉：库里写 Muchová，快照写 Muchova
+    assert side({"title": "Karolína Muchová On-Court Interview | 2023 US Open Round 3"}) == "wta"
+    # 退役的走补充名单
+    assert side({"title": "Roger Federer on-court interview (3R) | Australian Open 2018"}) == "atp"
+    assert side({"title": "Serena Williams on court interview | US Open 2019"}) == "wta"
+    # 男女都命中就认不出——霍普曼杯的混合队、以及「斯维托丽娜夸丈夫蒙菲尔斯」
+    assert side({"title": "Karen Khachanov and Anastasia Pavlyuchenkova "
+                          "on-court interview (RR) | Hopman Cup"}) is None
+    assert side({"title": "Team Germany on-court interview (RR) | Hopman Cup 2019"}) is None
+
+
+def test_short_surnames_do_not_match_inside_longer_words():
+    """短姓氏不能匹进别的词里，也不能匹上英文常用词。
+
+    旧的手搓正则**没有词边界**，四个真实的误判：
+
+        Paul      汤米·保罗（男）匹上 `against Paula Badosa`
+        Lys       伊娃·利斯（女）匹上 `Quentin Halys`
+        Jovic     伊娃·约维奇（女）匹上 `Dusan Lajovic`
+        Cristian  雅克琳·克里斯蒂安（女）匹上 `Cristian Garín`
+
+    还有一类词边界救不了：`Day` 是凯拉·戴的姓，**也是英文里最常见的词之一**，
+    匹上了 `Sinner: 'Today was a very difficult day in the office'`。
+    那条判据是大小写——人名在标题里一定不是全小写的。
+    不用「首字母大写」而用「不全小写」，是因为标题常常整句大写。
+    """
+    from tools.oncourt_coverage import side
+
+    assert side({"title": "Katie Boulter interview after 1st round win "
+                          "against Paula Badosa"}) == "wta"
+    assert side({"title": "Quentin Halys | Post-Match Interview | QF | 2025 Dubai"}) == "atp"
+    assert side({"title": "ON-COURT INTERVIEW with Dusan Lajovic"}) == "atp"
+    assert side({"title": "Cristian Garín interview after 1st Round win"}) == "atp"
+    assert side({"title": "Sinner: 'Today was a very difficult day in the office'"}) == "atp"
+    # 但真的叫 Day 的还是要认出来
+    assert side({"title": "Kayla Day On-Court Interview | Australian Open 2024"}) == "wta"
+    # 整句大写也要认
+    assert side({"title": "WORLD NO.1 IGA SWIATEK ON COURT INTERVIEW"}) == "wta"
+
+
+def test_supplementary_roster_does_not_duplicate_the_snapshot():
+    """补充名单里不许出现快照已有的现役球员——**两份名单打架就是这么来的**。
+
+    补充名单原来塞了 249 个词，其中 191 个是现役球员。快照接手之后它们
+    全是冗余，而冗余不是无害的：`Cristian`（女）和 `Jovic`（女）正是这样
+    把 Cristian Garín 和 Dusan Lajovic 判成了女子。
+
+    这条只查姓氏层面的重复。**语序或拼法与快照不同的允许保留**
+    （`Zhang Shuai` vs 快照的 `Shuai Zhang`、`Auger-Aliassime` 的连字符），
+    所以比的是「补充名单里这个词，是不是同一巡回赛快照里的某个姓氏」。
+    """
+    import json as _json
+    import re as _re
+
+    from tools.oncourt_coverage import MEN, SNAPSHOT, WOMEN, _fold
+
+    snap = _json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    sur = {t: {_fold(e["name_en"]).split()[-1].lower() for e in snap["tours"][t]}
+           for t in ("ATP", "WTA")}
+
+    def words(rx):
+        inner = _re.sub(r"^\\b\(\?:|\)\\b$", "", rx.pattern)
+        return [w for w in inner.split("|") if w]
+
+    for rx, tour in ((WOMEN, "WTA"), (MEN, "ATP")):
+        dupes = [w for w in words(rx) if _fold(w).lower() in sur[tour]]
+        assert not dupes, f"{tour} 补充名单和快照重复：{dupes}"
+
+
+def test_unknown_gender_never_counts_toward_a_single_tour_draw():
+    """认不出性别的条目，不许进单巡回赛事的分子。
+
+    两个工具在这里**故意不一致**，别去「统一」它：
+
+        oncourt_coverage.py        放过去。它报的是「这一站有没有覆盖、有几条」，
+                                   多算不致命，漏算反而会让缺口从报表上消失
+        oncourt_match_coverage.py  丢掉。它报的是**占某一张签表的百分比**，
+                                   一条认不出性别的条目会在男单和女单各算一次，
+                                   两个 127 的分母被同一批条目同时填
+
+    辛辛那提 WTA 是最干净的例证：混在里面的 35 条全是男子
+    （Fonseca、Opelka、Rune、Tsitsipas、Sinner…），剔掉之后从 8% 落到 1%。
+    """
+    import re as _re
+
+    from tools.oncourt_coverage import haystack, side
+    from tools.oncourt_match_coverage import coverage, is_main_singles, load
+
+    items, events = load()
+    ev = next(e for e in events if e["zh"] == "辛辛那提公开赛" and e["tour"] == "wta")
+    rx, own = _re.compile(ev["pat"], _re.I), set(ev.get("srcs", ()))
+    leaked = [it for it in items.values()
+              if (it.get("source") in own or rx.search(haystack(it)))
+              and is_main_singles(it) and side(it) == "atp"]
+    assert leaked, "这一站本来就是靠混进来的男子条目撑着的，样本没了这条测试就失去意义"
+
+    row = next(r for r in coverage(items, events)
+               if r["zh"] == "辛辛那提公开赛" and r["tour"] == "wta")
+    assert row["covered"] <= 3, f"辛辛那提 WTA 覆盖 {row['covered']} 场，男子条目又混进来了"
+    # 被丢掉的数量要报出来——只报命中的，没法证明它真的看过全部
+    assert "unknown" in row

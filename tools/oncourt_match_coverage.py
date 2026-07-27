@@ -75,14 +75,26 @@ def coverage(items: dict, events: list) -> list[dict]:
         if not ev.get("matches"):
             continue
         rx, own = re.compile(ev["pat"], re.I), set(ev.get("srcs", ()))
-        hits = []
+        hits, unknown = [], 0
         for it in items.values():
             if it.get("source") not in own and not rx.search(haystack(it)):
                 continue
             if not is_main_singles(it):
                 continue
             s = side(it)
-            if ev["tour"] != "both" and s is not None and s != ev["tour"]:
+            # **认不出性别的不算进单巡回赛事的分子。**
+            #
+            # `oncourt_coverage.py` 那边是放过去的（宁可多算也别把真条目丢在
+            # 报表外面），那里报的是「有没有覆盖」，多算不致命。**这里报的是
+            # 占某一张签表的百分比，多算就是虚高**：一条认不出性别的条目会
+            # 在男单和女单**各算一次**，两个 127 的分母同时被它填。
+            #
+            # 实测过洞有多大：澳网男单进入统计的 847 条里 365 条认不出性别
+            # （43%），女单 799 条里 365 条——**就是同一批**。那时男单报 100%、
+            # 女单 99%。改用 top 500 排名快照认人之后认出率 78% → 88%，
+            # 剩下认不出的一律不算。
+            if ev["tour"] != "both" and s != ev["tour"]:
+                unknown += s is None
                 continue
             hits.append(it)
         if not hits:
@@ -95,7 +107,7 @@ def coverage(items: dict, events: list) -> list[dict]:
                 # 球员指纹：标题前 34 字去掉非字母，够区分同轮不同人
                 byr[rd].add(re.sub(r"[^a-z]", "", h["title"][:34].lower())[:14])
         covered = sum(min(len(v), tbl[k]) for k, v in byr.items())
-        rows.append({**ev, "hits": len(hits), "covered": covered,
+        rows.append({**ev, "hits": len(hits), "covered": covered, "unknown": unknown,
                      "rate": covered / ev["matches"],
                      "byround": {k: (len(v), tbl[k]) for k, v in sorted(byr.items())}})
     return sorted(rows, key=lambda r: -r["rate"])
@@ -124,7 +136,12 @@ def main() -> int:
               f"{r['rate']:>8.0%}  {det[:52]}{flag}")
     tm = sum(r["matches"] for r in rows)
     tc = sum(r["covered"] for r in rows)
+    tu = sum(r["unknown"] for r in rows)
     print(f"\n{len(rows)} 站合计：总场次 {tm}，有采访 {tc}，整体 {tc/tm:.0%}")
+    if tu:
+        # 被丢掉的也要报出来。只在成功时出声的检查，没法证明它真的看过。
+        print(f"另有 {tu} 条**认不出球员性别**，没算进任何一侧的分子"
+              f"（认出率 88%，剩下多是 2017–2021 的老条目）")
     if args.target:
         need = sum(int(r["matches"] * args.target / 100) - r["covered"] for r in miss)
         print(f"达标线 {args.target:.0f}%：{len(miss)}/{len(rows)} 站未达标，"
