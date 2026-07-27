@@ -31,7 +31,9 @@ SAMPLE = (
 # published signal about how each one reads before you hear it.
 CANDIDATES = [
     ("zh-CN-YunjianNeural", "+14%", "云健 · Passion（体育解说向）"),
-    ("zh-CN-YunjianNeural", "+22%", "云健 · 更快"),
+    ("zh-CN-YunjianNeural", "+22%", "云健 · 更快（上一档）"),
+    ("zh-CN-YunjianNeural", "+28%", "云健 · 现用"),
+    ("zh-CN-YunjianNeural", "+35%", "云健 · 再快一档（对照上限）"),
     ("zh-CN-YunxiNeural", "+14%", "云希 · Lively/Sunshine（现用嗓，提速）"),
     ("zh-CN-XiaoxiaoNeural", "+14%", "晓晓 · Warm（女声）"),
     ("zh-CN-YunyangNeural", "+14%", "云扬 · Professional（播报向）"),
