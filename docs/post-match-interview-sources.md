@@ -400,7 +400,7 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 | `data/oncourt_sources.json` | 27 个源的注册表，逐源可配扫描深度、网球闸与说明 |
 | `tools/collect_oncourt_interviews.py` | 扫描、按类型分类、增量并库 |
 | `.github/workflows/oncourt-interviews.yml` | 每天两轮：北京 05:00 与 11:00 |
-| `data/oncourt_interviews.json` | 累积产物，当前 2187 条 |
+| `data/oncourt_interviews.json` | 累积产物，当前 2230 条 |
 | `tools/verify_oncourt_sample.py` | 抽样看图验证「是不是真在场上」＋探可达性 |
 | `data/oncourt_verify.json` | 看图判定的结果，逐条记 oncourt / press / other / unknown |
 
@@ -696,6 +696,64 @@ Edimator 偏草地赛季和加拿大站，**印第安维尔斯和巴德洪堡的
 **顺带的收获：中国球员条目 13 → 17。** Edimator 标题里直接带中文名
 （`Yunchaokete Bu 布云朝克特`、`Xiyu Wang 王曦雨`、`Zhang Shuai 张帅`、
 `Zhizhen Zhang 张之臻`），这四条是别处一条都没有的。
+
+### 「250 级别没有自己的赛事频道」是错的——是我没逐个探
+
+这条结论写进文档之后，**赛果反查一轮就把它推翻了**：拿巴斯塔德那几场没采访的
+比赛去搜，撞见 `Nordea Open` 官方频道，27 条 `Player - Round - Winner interview`，
+72–138 秒，抽 8 条看帧全在红土场上，字幕条写着 `DEFEATED S. OFNER 6-4 6-4` 自证。
+
+所以把 60+ 个 250/500 赛事逐个探了一遍官方频道。结果是**有，但极不均匀**：
+
+| 有量 | 没量 |
+| --- | --- |
+| Nordea Open 27、安特卫普 5、德尔雷比奇 2 | Croatia Open Umag（6 条全是阿加西/费雷罗这类传奇专访）、阿拉木图（4 条都是比莉·简·金杯）、成都（只有 2017 年 3 条）、斯德哥尔摩（瑞典语为主）、Palermo（2 条采访的是赛事副主席） |
+
+**教训不是「250 有频道」，是「没逐个探就别下结论」**——这和「空结果先自证是真空」
+是同一条，只不过这次的空结果是我自己没去查。
+
+### assume_oncourt 会灌爆，allow_by_source 才是对的
+
+给 Nordea 打 `assume_oncourt` 的后果：**300 条全进来了**，其中大半是 16–35 秒的
+`Hot shot` 好球集锦和赛前预告，多收 273 条。
+
+问题在于官方赛事频道的标题**极简**——`Filip Misolic Interview - Nordea Open 2025`，
+只有一个光秃秃的 `interview`，全局模式够不着；但把 `\binterview\b` 加进全局，
+发布会、播客、专访会一起灌进来。
+
+所以加了第三种机制 `allow_by_source`：**这个源上**标题长这样就算场上采访。
+不豁免 `exclude` 和 `deny_ids`，两道出口闸照旧。三者的分工：
+
+| 机制 | 用在什么源 |
+| --- | --- |
+| 全局 `patterns_oncourt` | 标题写 on-court / post-match / interview after 的 |
+| `allow_by_source` | 标题极简的官方赛事频道，逐源验过才加 |
+| `assume_oncourt` | 整个频道**只发**场上采访的（`Tennis Interviews`） |
+
+顺带修一个刚引入的 bug：`winner interview` 是**体裁标签**不是轮次。
+巴斯塔德写 `Andrea Pellegrino winner interview at Nordea Open 2026`（赢家采访），
+搬运号写 `Elena Rybakina Winner Porsche GP '26`（冠军）——**同一个词，
+隔一个 interview 就换了意思**，后视否定分开。
+
+### 画面有瑕疵但内容对题的，收下并标 degraded
+
+判据松了一档，起因是一句话：「虽然需要完整的 on court interview，
+但后续可以裁剪高光的时刻」。既然要裁，**水印 / 画中画 / 边框就不再是否决理由**，
+只有「根本不是场上采访」和「频道性质有问题」才是。
+
+所以上一轮因画面拒掉的两个改收了，并在注册表里标 `degraded`——
+裁之前人得知道这条素材是什么成色：
+
+| 源 | degraded |
+| --- | --- |
+| Karendoms Tandem | `picture-in-picture`，加了画中画小窗和字幕条 |
+| Sportiva Arena | `border+watermark`，画面被缩进装饰边框，带 @sportivaArena 水印 |
+
+**但 ANTI GOSU EATING CLUB 仍然不收**，而且理由不受这次放宽影响：它的片子确实是
+真场上采访（还正好能补巴德洪堡和郑钦文的缺口），但 41 条里 16 条是
+「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成
+`McCartney "Sweaty" Kessler`。**那是频道性质问题，不是画面瑕疵问题**——
+推送会把人导到那个频道去。
 
 ### 可达性：列表页挂着链接 ≠ 详情页打得开
 

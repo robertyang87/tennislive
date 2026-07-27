@@ -102,7 +102,10 @@ _ROUNDS: list[tuple[str, str]] = [
     # 所以每个词都带前缀排除。`Championship(s)` 更要挡住——迪拜赛事全名就叫
     # `Dubai Duty Free Tennis Championships`，库里 126 条含 champion 的
     # 有 116 条是它，不挡就全成决赛了。
-    (r"(?<!slam )(?<!Slam )\bwinners?\b", "决赛"),
+    # `winner interview` 是**体裁标签**不是轮次——巴斯塔德官方频道写
+    # `Andrea Pellegrino winner interview at Nordea Open 2026`，那是「赢家采访」，
+    # 不是「决赛」。后视否定把它放过去。
+    (r"(?<!slam )(?<!Slam )\bwinners?\b(?!'?s?\s+interview)", "决赛"),
     (r"(?<!defending )(?<!Defending )(?<!former )(?<!Former )(?<!slam )(?<!Slam )"
      r"(?<!a )(?<!A )\bchampions?\b(?!ship)", "决赛"),
     (r"(?<![0-9] )(?<!former )(?<!Former )(?<!'s )\bfinalists?\b", "决赛"),

@@ -454,3 +454,21 @@ def test_ordinal_round_forms_are_recognised():
         ("Emma Raducanu | Second round On-court Interview | Wimbledon 2026", "第二轮"),
     ]:
         assert parse_round({"title": title}) == expect, title
+
+
+def test_winner_interview_is_a_genre_label_not_a_round():
+    """`winner interview` 是**体裁标签**，不是「决赛」。
+
+    巴斯塔德官方频道写 `Andrea Pellegrino winner interview at Nordea Open 2026`
+    ——意思是「赢家采访」。而搬运号写 `Elena Rybakina Winner Porsche GP '26`
+    才是「冠军」。**同一个词，隔一个 interview 就换了意思。**
+    """
+    from tools.oncourt_feed import parse_round
+
+    assert parse_round({"title": "Andrea Pellegrino winner interview at Nordea Open 2026"}) is None
+    assert parse_round({"title": "Nuno Borges winner interview - R32 - Nordea Open 2026"}) == "早轮"
+    assert parse_round({"title": "Andrey Rublev - R16 - Winner interview - Nordea Open 2026"}) \
+        == "十六强"
+    # 冠军那一档不受影响
+    assert parse_round({"title": "Elena Rybakina Winner Porsche GP '26"}) == "决赛"
+    assert parse_round({"title": "Jessica Pegula Winner Charleston '26"}) == "决赛"

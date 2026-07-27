@@ -371,6 +371,58 @@
       "verified": true,
       "unofficial": true,
       "note": "以 Alex Eala 为主的搬运号，写法 `Full Interview after Win vs X | Event Year`。满画幅原始转播画面，没有画中画和水印。抽 6 条看视频自动帧：4 条在场上（WTA TOUR 手持麦、看台、记分条），2 条是发布会——但它**自己在标题里写 Press Conference**，被 exclude 挡住，不用额外规则。补的是印第安维尔斯和迈阿密的缺口，那两站官方和其他搬运号都很薄。"
+    },
+    {
+      "name": "Nordea Open",
+      "url": "https://www.youtube.com/channel/UCMw2gKNraN85N9f3PWxu5UA/videos",
+      "tier": "atp250",
+      "scan_depth": 300,
+      "verified": true,
+      "note": "巴斯塔德 ATP 250 的**官方赛事频道**。300 条里 27 条带 interview，72–138 秒；抽 8 条看视频自动帧，全在红土场上，字幕条写着 `DEFEATED S. OFNER 6-4 6-4` 自证。\n**踩过一次**：一开始打 assume_oncourt，把 300 条全拉进来了——其中大半是 16–35 秒的 `Hot shot` 好球集锦和赛前预告。改用 allow_by_source 只放标题带 interview 的那 27 条。"
+    },
+    {
+      "name": "Karendoms Tandem",
+      "url": "https://www.youtube.com/channel/UCVflJ2-Zcn_J8wxCfUDgcdQ/videos",
+      "tier": "unofficial",
+      "scan_depth": 250,
+      "verified": true,
+      "unofficial": true,
+      "degraded": "picture-in-picture",
+      "note": "Iga Swiatek 粉丝号。**画面被加了画中画小窗和字幕条**，原来因为这个拒过；既然后续要裁高光，画面瑕疵不再是否决理由，改为收下并标 degraded。发布会与场上混着，靠标题正则和 exclude 分。"
+    },
+    {
+      "name": "Sportiva Arena",
+      "url": "https://www.youtube.com/channel/UCQ2qpWnxoBsaPCaO7CXoJjA/videos",
+      "tier": "unofficial",
+      "scan_depth": 250,
+      "verified": true,
+      "unofficial": true,
+      "degraded": "border+watermark",
+      "note": "二次上传，**加装饰边框和 @sportivaArena 水印，画面被缩进边框里**。内容是真的场上采访（看得见 WTA Tour 手持麦和 MATCH WINNER 记分条）。同上：裁剪用途下画面瑕疵不否决，标 degraded 交人工判断。"
+    },
+    {
+      "name": "European Open Antwerp",
+      "url": "https://www.youtube.com/channel/UCmxFKPdF0Z3hwArsv1v7WLA/videos",
+      "tier": "atp250",
+      "scan_depth": 300,
+      "verified": true,
+      "note": "安特卫普 ATP 250 官方频道。13 条含 interview，`Stan Wawrinka | Post match interview` 这种写法 50–60 秒，全局模式直接收得到，不用白名单。"
+    },
+    {
+      "name": "Delray Beach Open",
+      "url": "https://www.youtube.com/channel/UCrQnl_dI5fr_LzgxwF0Nwnw/videos",
+      "tier": "atp250",
+      "scan_depth": 300,
+      "verified": true,
+      "note": "德尔雷比奇 ATP 250 官方频道。量小（7 条含 interview），靠全局模式收。"
+    },
+    {
+      "name": "Stockholm Open",
+      "url": "https://www.youtube.com/channel/UCAP8rnEQz7LZN8rFNRkFdOg/videos",
+      "tier": "atp250",
+      "scan_depth": 300,
+      "verified": true,
+      "note": "斯德哥尔摩 ATP 250 官方频道。量小，且大半是瑞典语（vinnarintervju）。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -594,5 +646,12 @@
     "zMTGlAtDhoM",
     "zdJlZEOn_rk"
   ],
-  "_rejected_note": "查过但**决定不收**的频道，记下来免得下次重查：\n· ANTI GOSU EATING CLUB —— 片子本身是真场上采访（WTA Tour 话筒、球场），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney \"Sweaty\" Kessler`。推送会把人导到那个频道，不收。\n· QualityShot Tennis —— 不是场上画面，是庆祝定格照配音，中间插球机广告。\n· Karendoms Tandem —— 画中画叠加加字幕条，单球员粉丝号，且发布会与场上混着。\n· Sportiva Arena —— 二次上传，加装饰边框和 @sportivaArena 水印，画面被缩进边框里。\n· The Tennis Tribe —— 25–30 分钟的播客式长访谈，不是场上。\n· LTA —— 主要是发布会（14 条），场上的只有 3 条温网双打。"
+  "_rejected_note": "查过但**决定不收**的频道，记下来免得下次重查：\n· ANTI GOSU EATING CLUB —— 片子本身是真场上采访（WTA Tour 话筒、球场，而且正好能补巴德洪堡和郑钦文的缺口），但 41 条里 16 条是「Sweating moment」「SWEATY at Ningbo」这类女子球员出汗合集，连采访都 retitle 成 `McCartney \"Sweaty\" Kessler`。**这一条不是画面瑕疵问题，是频道性质问题**——推送会把人导到那个频道去，`degraded` 那套放宽不适用于它。\n· QualityShot Tennis —— **不是场上画面**：庆祝定格照配音，中间插球机广告，没有可裁的画面。而且能匹配的 6 条里有一半是 Media Day，不是赛后。\n· The Tennis Tribe —— 25–30 分钟播客式长访谈，不是场上。\n· LTA —— 主要是发布会（14 条），场上的只有 3 条温网双打。\n· Palermo Ladies Open —— 官方赛事频道，但 61 条里只有 2 条 intervista，而且采访的是赛事副主席和记者，不是球员。\n· Croatia Open Umag —— 官方频道，但 6 条 interview 全是阿加西/费雷罗/佩内塔这类传奇人物的专访，不是赛后场上。\n· Almaty Open（哈萨克网协）—— 4 条都是比莉·简·金杯的，团体赛，本来就不在口径内。\n· Chengdu Open —— 只有 2017 年的 3 条。",
+  "_degraded_note": "`degraded` 字段记的是**画面有瑕疵但内容对题**的源。起因是一句话：「虽然需要完整的 on court interview，但后续可以裁剪高光的时刻」——既然要裁，水印 / 画中画 / 边框就不再是否决理由，只有「根本不是场上采访」和「频道性质有问题」才是。但**瑕疵要记下来**，裁之前人得知道这条素材是什么成色。",
+  "_allow_note": "`allow_by_source`：**这个源上**标题长这样就算场上采访。\n官方赛事频道的标题往往极简——`Filip Misolic Interview - Nordea Open 2025`，只有一个光秃秃的 interview。加进全局 `patterns_oncourt` 会把发布会、播客、专访一起灌进来；但在巴斯塔德自己的频道里，27 条带 interview 的抽 8 条看帧全在红土场上，那就是安全的。\n**和 assume_oncourt 的区别**：后者整个频道照单全收，Nordea 那样 300 条里混着 16 秒 Hot shot 的会被灌爆（实测多收 273 条）。白名单只放标题对得上的那部分。\n白名单**不豁免 exclude 和 deny_ids**。",
+  "allow_by_source": {
+    "Nordea Open": [
+      "\\binterview\\b"
+    ]
+  }
 }

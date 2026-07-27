@@ -420,3 +420,31 @@ def test_store_matches_every_rule_and_every_verdict():
                if v["verdict"] == "oncourt" and vid not in items
                and not any(p.search(v.get("title", "")) for p in deny.get(v.get("source", ""), ()))]
     assert missing == [], f"看图确认在场上、却被剔出库的：{missing}"
+
+
+def test_allow_by_source_is_scoped_to_its_own_source():
+    """按源的白名单：官方赛事频道标题太简，全局模式够不着。
+
+    巴斯塔德写 `Filip Misolic Interview - Nordea Open 2025`——只有一个光秃秃的
+    `interview`。加进全局 `patterns_oncourt` 会把发布会、播客、专访一起灌进来。
+
+    **和 assume_oncourt 的区别是踩出来的**：一开始给 Nordea 打了
+    assume_oncourt，300 条全进来了，其中大半是 16–35 秒的 `Hot shot` 好球集锦。
+    白名单只放标题对得上的那 27 条。
+    """
+    from tools.collect_oncourt_interviews import compile_allow, load_sources
+
+    cfg = load_sources()
+    allow = compile_allow(cfg)
+    assert "Nordea Open" in allow
+    assert allow.get("Wimbledon") is None, "白名单不能外溢到别的源"
+
+    rx = allow["Nordea Open"]
+    assert any(p.search("Filip Misolic Interview - Nordea Open 2025") for p in rx)
+    # 好球集锦不带 interview，白名单碰不到它
+    assert not any(p.search("Luciano Darderi - Hot shot - Nordea Open 2026") for p in rx)
+
+    # 打了白名单的源不该同时打 assume_oncourt——那样白名单就没意义了
+    for src in cfg["sources"]:
+        if src["name"] in allow:
+            assert not src.get("assume_oncourt"), f"{src['name']} 白名单与整包收不能并存"
