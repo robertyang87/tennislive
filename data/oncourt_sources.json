@@ -29,6 +29,15 @@
     "\\bdraw\\s+ceremony\\b",
     "\\bpre[\\s-]?tournament\\b"
   ],
+  "_deny_note": "单源黑名单：标题看着像场上采访、画面却是发布会 / 媒体混合区的形状。只放**看图确认过**的。两条都出自法网体系（罗兰加洛斯和巴黎大师赛同属法网协会 FFT），它们把 media zone 的采访也写成 post-match interview：抽 32 条罗兰加洛斯 post-match，2024 那批 18 条里 16 条画面是新闻发布厅，2025 那批 10 条里 8 条真在场上（红土、看台、手持杆麦）——同一个词隔一年意思相反，所以按年记；巴黎大师赛更直接，它自己的图卡上就分 POST-MATCH ITW 和 ON-COURT ITW 两种标签，16 条样本里写 POST-MATCH 的那张背景是背景板加长杆麦，写 ON-COURT 的才在场上。验证工具见 tools/verify_oncourt_sample.py，判定记在 data/oncourt_verify.json。",
+  "deny_by_source": {
+    "Roland-Garros": [
+      "post-match interview \\| roland-garros 20(?:1\\d|2[0-4])\\b"
+    ],
+    "Rolex Paris Masters": [
+      "^(?!.*on[\\s-]?court).*post[\\s-]?match"
+    ]
+  },
   "sources": [
     {
       "name": "Tennis Channel",

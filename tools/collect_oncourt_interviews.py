@@ -119,6 +119,19 @@ def compile_rules(cfg: dict) -> dict[str, list]:
     }
 
 
+def compile_deny(cfg: dict) -> dict[str, list]:
+    """每个源自己的黑名单：这些标题看着像场上采访，实际是发布会。
+
+    为什么不放进全局 `exclude`：这是**单个频道的编辑习惯**，不是通用规律。
+    罗兰加洛斯 2024 那批一律写 `X Round N post-match interview |
+    Roland-Garros 2024`，画面里却是新闻发布厅（BNP Paribas 背景板、长桌、
+    矿泉水）；同样写法的 2025 那批反而**真的在场上**（手持话筒、看台、红土）。
+    同一个词在同一个频道里，隔一年意思就反了——只能按源按年记。
+    """
+    return {name: [re.compile(p, re.I) for p in pats]
+            for name, pats in cfg.get("deny_by_source", {}).items()}
+
+
 def is_tennis(title: str, rules: dict[str, list]) -> bool:
     """标题里有没有网球标记。只用于综合体育频道。
 
@@ -248,6 +261,18 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     return rows, "ok"
 
 
+def _wta_page_alive(vid: str, slug: str) -> bool:
+    """详情页是不是真打得开。**只把 404 当死**——超时、403、429 都是
+    「没问过」而不是「不存在」，那种情况宁可放过去，也别当成删了。
+    """
+    proc = subprocess.run(
+        ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}", "--max-time", "20",
+         "-H", "User-Agent: Mozilla/5.0",
+         f"https://www.wtatennis.com/videos/{vid}/{slug}"],
+        capture_output=True, text=True, timeout=40)
+    return proc.stdout.strip() != "404"
+
+
 def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
     """wtatennis.com 的视频页——WTA 那边对应 tennistv.com 的东西。
 
@@ -285,6 +310,12 @@ def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
 
     rows = []
     for vid, slug in slugs.items():
+        # **列表页挂着链接 ≠ 详情页打得开。** 实测这三条 post-match-interview
+        # 全部 404，而同一张列表页上另外八条视频 8/8 都是 200 —— 不是整站坏了，
+        # 是这几条被下架了、链接却没撤。收进来就是推给人一个死链，
+        # 所以逐条探一下再收。这个源本来就只有个位数，探得起。
+        if not _wta_page_alive(vid, slug):
+            continue
         m = re.match(r"([a-z\-]+?)-(?:post-match|on-court)-interview-"
                      r"(final|sf|qf|r\d+|semi\w*|quarter\w*)?-?(.*)", slug)
         event = (m.group(1).replace("-", " ").title() if m else "")
@@ -377,6 +408,7 @@ def main() -> int:
 
     cfg = load_sources()
     rules = compile_rules(cfg)
+    deny = compile_deny(cfg)
     keep = {"oncourt"}
     if args.include_ceremony:
         keep.add("ceremony")
@@ -425,6 +457,11 @@ def main() -> int:
             # 足球、橄榄球等所有项目。被这道闸挡掉的也计进 dropped 报出来。
             if src.get("require_tennis") and not is_tennis(r["title"], rules):
                 dropped.append((src["name"], f"[非网球] {r['title']}"))
+                continue
+            # 单源黑名单。有的官方频道把**发布会**也写成 post-match interview，
+            # 标题正则永远分不出来——只有画面能分。这里放的是看图确认过的形状。
+            if any(p.search(r["title"]) for p in deny.get(src["name"], ())):
+                dropped.append((src["name"], f"[发布会] {r['title']}"))
                 continue
             if kind == "excluded":
                 # 被挡掉的也要报出来——只报通过的，没法证明筛子是对的。
