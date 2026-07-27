@@ -303,6 +303,7 @@ def main() -> int:
                          "（默认只要 ATP/WTA 巡回赛与四大满贯）")
     ap.add_argument("--all", action="store_true", help="不去重，把库里所有符合条件的都列出来")
     ap.add_argument("--out", help="把 HTML 写到这个文件")
+    ap.add_argument("--gaps", help="oncourt_gaps.py 生成的缺口片段，附在推送末尾")
     ap.add_argument("--seed", action="store_true",
                     help="把当前库里符合条件的全部标记为已推送，但不真推。"
                          "首次接上时用一次——否则第一条推送会是两百多条历史存量。")
@@ -324,6 +325,20 @@ def main() -> int:
     if SENT.exists() and not args.all:
         sent = set(json.loads(SENT.read_text(encoding="utf-8")).get("ids", []))
     fresh = [r for r in rows if r["id"] not in sent]
+
+    html_body = render_html(fresh)
+    # 缺口附在最后：采集保证不了每场都有采访，把「赢了但没采访」的列出来，
+    # 比让人以为「这天没比赛」强。见 tools/oncourt_gaps.py。
+    if args.gaps and Path(args.gaps).exists():
+        gap_html = Path(args.gaps).read_text(encoding="utf-8").strip()
+        if gap_html:
+            html_body += gap_html
+
+    # **先落盘，再打印。** 和采集器同一个坑：下面的清单有几十行，
+    # 下游一个 `| head -4` 就会 SIGPIPE 掉进程，`--out` 永远走不到，
+    # 而报告看起来跑完了。查产物不查信号。
+    if args.out:
+        Path(args.out).write_text(html_body, encoding="utf-8")
 
     print(f"库内 {len(items)} 条 -> 符合条件 {len(rows)} 条 -> 未推送过 {len(fresh)} 条")
     if n_doubles[0]:
@@ -351,11 +366,8 @@ def main() -> int:
               "往后只推新出现的。")
         return 0
 
-    html_body = render_html(fresh)
     if args.out:
-        Path(args.out).write_text(html_body, encoding="utf-8")
         print(f"\nHTML 已写到 {args.out}")
-
     if args.dry_run or not fresh:
         if not fresh:
             print("\n没有新条目，不推送。")

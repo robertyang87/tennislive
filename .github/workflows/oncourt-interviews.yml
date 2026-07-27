@@ -58,6 +58,15 @@ jobs:
             ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
             | tee /tmp/oncourt.log
 
+      - name: 比对赛果，算出「赢了但没采访」的缺口
+        run: |
+          # 采集保证不了每场都有采访（源头就不是每场都发），所以把缺口
+          # 明确列出来，别让它静默存在。抓不到赛果时退出码 2，
+          # 这里不让它中断整个流程——采访照推，只是没有缺口对照。
+          pip install -q -e . 2>&1 | tail -1
+          python tools/oncourt_gaps.py --html /tmp/oncourt_gaps.html \
+            | tee -a /tmp/oncourt.log || echo "::warning::赛果抓取失败，本次没有缺口对照"
+
       - name: 筛出关键场次与中国球员，推到微信
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -70,7 +79,8 @@ jobs:
             python tools/oncourt_feed.py --dry-run | tee -a /tmp/oncourt.log
           else
             pip install -q -e . 2>&1 | tail -1
-            python tools/oncourt_feed.py --push | tee -a /tmp/oncourt.log
+            python tools/oncourt_feed.py --push --gaps /tmp/oncourt_gaps.html \
+              | tee -a /tmp/oncourt.log
           fi
 
       - name: 提交新增条目
