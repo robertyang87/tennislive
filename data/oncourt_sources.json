@@ -1,0 +1,143 @@
+{
+  "_note": "场上赛后采访（on-court interview）与冠军致辞（trophy / championship speech）的视频来源。不含媒体间发布会——那是另一类，见 docs/post-match-interview-sources.md。verified 字段记的是 2026-07-27 用 yt-dlp --flat-playlist 实际扫到过内容；false 表示还没自证。",
+  "_patterns_note": "分两档。confident 档的标题自己就说明了场合（on-court / trophy / speech），拿来就能用。maybe 档是各家赛事自己的叫法，能确定是赛后球员讲话，但**标题分不出是在场上还是在媒体间**——上海写作『X Reacts After…』，马德里写作西语『Entrevista con…, campeón』。这一档要人工看一眼再归类，别直接混进 confident 里。",
+  "patterns": [
+    "champion(?:ship)?\\s+speech",
+    "finalist\\s+speech",
+    "winner'?s?\\s+speech",
+    "on[\\s-]?court\\s+interview",
+    "trophy\\s*(?:&|and)?\\s*speech",
+    "trophy\\s+(?:ceremony|presentation)",
+    "post[\\s-]?match\\s+(?:interview|ceremony)",
+    "champion'?s?\\s+dinner\\s+speech"
+  ],
+  "patterns_maybe": [
+    "reacts?\\s+(?:after|to)\\b(?=.*\\b(?:champion|final|semi|quarter|win|won|victor|defeat|beat|comeback|title|round|retirement|match|epic)\\w*)",
+    "entrevista\\s+con\\b",
+    "entrevista\\s+a\\b",
+    "is\\s+crowned\\s+champion",
+    "discurso\\b"
+  ],
+  "_exclude_note": "命中了模式但明显不是赛后讲话的，在这里挡掉。踩过：『Henry Patten Reacts to the ATP's Controversial Doubles Proposal | The Big T Podcast』—— reacts to 后面跟的是一项提案，不是一场球。",
+  "exclude": [
+    "\\bpodcast\\b",
+    "\\bproposal\\b",
+    "\\bpreview\\b",
+    "\\bdraw\\s+ceremony\\b",
+    "\\bpre[\\s-]?tournament\\b"
+  ],
+  "sources": [
+    {
+      "name": "Tennis Channel",
+      "url": "https://www.youtube.com/@tennischannel/videos",
+      "tier": "tour-wide",
+      "scan_depth": 250,
+      "verified": true,
+      "note": "覆盖面最广的一个：近 250 条里命中 16 项赛事，ATP+WTA、250 级到大满贯都有。命名统一为『球员 Championship/Finalist Speech | 年份 赛事』。小赛事（Kitzbuhel、Gstaad、Bastad、Prague、Athens、Bad Homburg、Strasbourg）自己没有频道，只在这里能拿到。"
+    },
+    {
+      "name": "Rome / Internazionali BNL d'Italia",
+      "url": "https://www.youtube.com/channel/UCxJDHLvJsuGNHbZPUjFDCNA/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "最规范的一家：每一轮都单发『球员 On-Court Interview | 轮次 | Rome 年份』，决赛另有『Trophy & Speech』。想按轮次建语料库从这里入手。注意颁奖礼中途会转意大利语。"
+    },
+    {
+      "name": "Wimbledon",
+      "url": "https://www.youtube.com/@Wimbledon/videos",
+      "tier": "slam",
+      "scan_depth": 200,
+      "verified": true,
+      "note": "全英文。除颁奖礼外独有 Champion's Dinner Speech（有讲稿、语速慢），是最接近标准英语演讲的一类。"
+    },
+    {
+      "name": "Roland-Garros",
+      "url": "https://www.youtube.com/@rolandgarros/videos",
+      "tier": "slam",
+      "scan_depth": 200,
+      "verified": true,
+      "note": "颁奖礼是 18–23 分钟完整版（Men's/Women's singles final post-match ceremony），法英混说。"
+    },
+    {
+      "name": "Australian Open",
+      "url": "https://www.youtube.com/@australianopen/videos",
+      "tier": "slam",
+      "scan_depth": 400,
+      "verified": false,
+      "note": "全英文，主持人常是 Jim Courier。scan_depth 特意调大：赛事在 1 月，其他月份扫近 100 条会全部落空——踩过这个假阴性。"
+    },
+    {
+      "name": "US Open",
+      "url": "https://www.youtube.com/@usopen/videos",
+      "tier": "slam",
+      "scan_depth": 300,
+      "verified": false,
+      "note": "全英文，有完整 trophy ceremony。频道句柄按搜索结果填，还没实扫过。"
+    },
+    {
+      "name": "Indian Wells / BNP Paribas Open",
+      "url": "https://www.youtube.com/@bnpparibasopen/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "实扫命中发布会；场上采访/致辞条目未单独确认。"
+    },
+    {
+      "name": "Madrid / Mutua Madrid Open",
+      "url": "https://www.youtube.com/@MMOPEN/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "英西双语并发，挑英文那条。"
+    },
+    {
+      "name": "Cincinnati Open",
+      "url": "https://www.youtube.com/@cincyprotennis/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "全英文。"
+    },
+    {
+      "name": "Shanghai / Rolex Shanghai Masters",
+      "url": "https://www.youtube.com/@RolexShanghaiMasters/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "另有专门的 Interviews & Press Conferences 播放列表。"
+    },
+    {
+      "name": "Rolex Paris Masters",
+      "url": "https://www.youtube.com/@RolexParisMasters/videos",
+      "tier": "masters",
+      "scan_depth": 120,
+      "verified": true,
+      "note": "实扫近 40 条里 10 条含采访。"
+    },
+    {
+      "name": "ATP Tour",
+      "url": "https://www.youtube.com/@ATPTour/videos",
+      "tier": "central",
+      "scan_depth": 150,
+      "verified": true,
+      "note": "补漏用。以集锦为主，采访不是常规栏目。"
+    },
+    {
+      "name": "Tennis TV",
+      "url": "https://www.youtube.com/@tennistv/videos",
+      "tier": "central",
+      "scan_depth": 150,
+      "verified": true,
+      "note": "补漏用。以集锦为主，偶发发布会合辑。"
+    },
+    {
+      "name": "WTA",
+      "url": "https://www.youtube.com/@wta/videos",
+      "tier": "central",
+      "scan_depth": 150,
+      "verified": false,
+      "note": "补漏用。官网发布会页要注册，但 YouTube 上的免费内容值得一扫。"
+    }
+  ]
+}

@@ -87,6 +87,42 @@
 `Luciano Darderi On-Court Interview | Quarterfinal`（0:39）。
 **想批量建语料库，从罗马开始最省事**——一条正则就能把场上、发布会、颁奖礼分干净。
 
+### 小赛事没有自己的频道，但 Tennis Channel 全收了
+
+这是覆盖"所有巡回赛赛事"的关键。ATP / WTA 各有六十来站，**250 级别的赛事大多
+没有自己的 YouTube 频道**——一开始按"一个赛事一个频道"去建注册表是走不通的。
+
+实扫 [Tennis Channel YouTube](https://www.youtube.com/@tennischannel/videos) 近 250 条，
+命中 16 项赛事，命名统一：
+
+```
+球员 Championship Speech | 年份 赛事      # 冠军
+球员 Finalist Speech | 年份 赛事          # 亚军也有
+```
+
+覆盖到的小站：Kitzbuhel、Gstaad、Bastad、Prague、Athens、Bad Homburg、
+Strasbourg、Eastbourne、Halle、Berlin、Hamburg——**这些只有这里能拿到**。
+大满贯和大师赛它也发，所以它是主源，赛事自己的频道是补充。
+
+注意它的**网站**（tennischannel.com）发布会是订阅内容，$11.99/月；
+**YouTube 频道上的致辞是免费的**，两回事。
+
+### 各家叫法不一样，零命中先怀疑自己的正则
+
+按 `on-court interview` / `speech` 去扫，印第安维尔斯、马德里、上海都是 0 命中。
+深扫到 500 条仍是 0——**但这不是"它们没有"，是它们不这么叫**：
+
+| 赛事 | 实际用的叫法 |
+| --- | --- |
+| 上海 | `Valentin Vacherot Reacts After Becoming The Shanghai Champion` |
+| 马德里 | 西语 `Entrevista con Jannik Sinner, campeón del #MMOPEN 2026` |
+| 印第安维尔斯 | 只有 `Champion's Press Conference` —— 这家**确实**只发发布会 |
+
+麻烦在于 `Reacts After` 这类叫法**分不出是在场上还是在媒体间**：上海那条
+11 分 07 秒的多半是发布会，1 分 48 秒的 `Holger Rune Reacts To Victory Over Baez`
+才像场上。所以采集脚本把它们单列成**待定**档，人工看一眼再归类，
+不混进"确定"里（见下一节）。
+
 ### 四大满贯：颁奖礼是完整长视频
 
 | 赛事 | 场上采访 | 颁奖礼 / 致辞 | 备注 |
@@ -107,8 +143,33 @@ Champion's Dinner Speech | Wimbledon 2026`，4:02）。**这是全部素材里�
 > 但"字幕干净到能直接当教材"这句，对这一条我没验证过。
 
 > 踩点记录：我第一次扫澳网频道近 100 条，`on-court` 零命中，差点写成"澳网没有"。
-> 实际是频道当时在发休赛期内容，1 月的采访早被挤出前 100 条。
-> **零命中先看自己的取样窗口。**
+> 实际是频道当时在发休赛期内容，1 月的采访早被挤出前 100 条。深度调到 400 之后
+> 一次扫出 27 条，含 32 分 57 秒的男单完整颁奖礼。**零命中先看自己的取样窗口。**
+
+### 这条线已经做成自动采集了
+
+不用每次手搓。注册表 + 脚本 + 每周定时：
+
+| 文件 | 作用 |
+| --- | --- |
+| `data/oncourt_sources.json` | 14 个源的注册表，逐源可配扫描深度与说明 |
+| `tools/collect_oncourt_interviews.py` | 扫描、按两档正则分类、增量并库 |
+| `.github/workflows/oncourt-interviews.yml` | 每周二 05:20（北京）跑一次 |
+| `data/oncourt_interviews.json` | 累积产物 |
+
+```bash
+python tools/collect_oncourt_interviews.py --dry-run              # 看看有什么，不落库
+python tools/collect_oncourt_interviews.py --only "Tennis Channel" # 只扫某个源
+```
+
+脚本把三种"看起来一样"的空结果**分开报**，这是踩出来的：
+
+- `handle-error`（一条都没取到）＝频道句柄写错了，**不是频道没内容**
+- `ok` 但命中 0 ＝这批里确实没有，正常
+- `rate-limited` ＝ 429，跟"没有"毫无关系，退避重试
+
+**跑在 Actions 不跑本地**：沙箱下 YouTube 对连续请求返 429，退避到 240 秒都拿不到；
+Actions 的出口没这个问题。
 
 ## 三、视频：四大满贯发布会（免费、整场、有播放列表）
 

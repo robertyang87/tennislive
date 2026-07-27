@@ -1,0 +1,77 @@
+name: oncourt-interviews
+
+# 场上赛后采访 / 冠军致辞的持续采集。每周一次，把新出现的视频并进
+# data/oncourt_interviews.json，供英语学习选材用。
+#
+# 只收「场上」那一类：赢球后还在场上对着观众讲的、决赛后颁奖礼上讲的。
+# 媒体间的新闻发布会不在此列——那类有 ASAP Sports 的人工文字稿，
+# 来源和用法都不同，见 docs/post-match-interview-sources.md。
+#
+# 为什么跑在 Actions 而不是本地：沙箱下 YouTube 会对连续请求返 429，
+# 退避到 240 秒都拿不到；Actions 的出口没这个问题。
+on:
+  schedule:
+    - cron: "20 21 * * 1"   # 每周二 05:20 北京时间（周一赛事收官之后）
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "只扫名字含这些子串的源（空格分隔，留空＝全部）"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oncourt-interviews
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装 yt-dlp
+        run: pip install -q "yt-dlp>=2026.7.4"
+
+      - name: 采集
+        run: |
+          python tools/collect_oncourt_interviews.py ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
+            | tee /tmp/oncourt.log
+
+      - name: 提交新增条目
+        run: |
+          # 只碰这一个文件。并行的生成任务互相覆盖过整棵 output/，
+          # 这里从一开始就把范围钉死。
+          if git diff --quiet -- data/oncourt_interviews.json; then
+            echo "没有新增，不提交。"
+            exit 0
+          fi
+          n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/oncourt_interviews.json
+          git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((2 ** i))
+          done
+          echo "::error::推送失败"
+          exit 1
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo '### 场上采访采集'
+            echo '```'
+            cat /tmp/oncourt.log 2>/dev/null || echo '（没有日志）'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
