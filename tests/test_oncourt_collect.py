@@ -510,7 +510,12 @@ def test_source_owned_events_catch_titles_without_the_event_name():
 
     with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
         events = json.load(fh)["events"]
-    owned = {s: e["zh"] for e in events for s in e.get("srcs", ())}
-    assert owned.get("Hamburg European Open") == "汉堡公开赛"
-    assert owned.get("Wimbledon") == "温布尔登网球锦标赛"
-    assert owned.get("Nordea Open") == "博斯塔德公开赛"
+    owned = {}
+    for e in events:
+        for s in e.get("srcs", ()):
+            owned.setdefault(s, set()).add(e["zh"])
+    assert owned.get("Hamburg European Open") == {"汉堡公开赛"}
+    assert owned.get("Nordea Open") == {"博斯塔德公开赛"}
+    # 大满贯拆成了男单 / 女单两个赛事，同一个频道挂在两边——
+    # 一届大满贯是两个 128 签、男女各 127 场，分母不拆会把覆盖率算高一倍。
+    assert owned.get("Wimbledon") == {"温布尔登网球锦标赛（男单）", "温布尔登网球锦标赛（女单）"}
