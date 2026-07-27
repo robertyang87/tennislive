@@ -50,7 +50,14 @@ _BAND_COLOR = "0x061c14"
 # 而那正是小红书/抖音盖住文案和按钮的地方。把卡片抬高，下边条从 240 变成 384：
 # 字幕贴在这条宽边的顶部，底部 240px 留给 app 的界面，画面一个像素也没被压。
 CARD_H = VIDEO_W * 4 // 3           # 3:4 的卡在 1080 宽下有多高
-CARD_TOP = 88                       # 上边条：留一点给状态栏，但不必对称
+# 卡片在画布上**居中**。一度把它抬到 CARD_TOP=88 好在下面腾地方放字幕，结果
+# 卡片顶上那行「网球时差 · 开球之前」钻进了 app 顶部的返回键/状态栏里——
+# 上下各 240px 的对称留白就是躲开两头 UI 的，动它得不偿失。
+CARD_TOP = (VIDEO_H - CARD_H) // 2  # = 240
+# 卡上的文字块（小标 / 大标题 / 要点 / 末屏那一问）离卡片下沿留这么多。原来是
+# 120px，抬到 300px 是为了在**卡片内部**腾出一条给字幕——字幕必须待在 3:4 画面里，
+# 掉到画布下边条里就会被 app 底部的文案区和 home 指示条盖住。
+CARD_COPY_BOTTOM = 300
 
 _REPO = Path(__file__).resolve().parents[3]
 _REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
@@ -2456,7 +2463,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .tag{{font-family:'Barlow Condensed','TL Sans SC',sans-serif;
  font-size:28px;color:#9fb4aa;font-weight:600;letter-spacing:2px;
  text-shadow:0 2px 10px rgba(0,0,0,.7);}}
-.copy{{position:absolute;left:70px;right:70px;bottom:120px;z-index:5;
+.copy{{position:absolute;left:70px;right:70px;bottom:{CARD_COPY_BOTTOM}px;z-index:5;
  display:flex;flex-direction:column;gap:28px;}}
 .chip{{align-self:flex-start;background:#37e29a;color:#062018;font-size:32px;
  font-weight:800;letter-spacing:3px;padding:12px 28px;border-radius:999px;}}
@@ -2911,13 +2918,16 @@ def _ass_text(shown: str) -> str:
     )
 # 左右各留这么多：右边那一列是 app 的点赞/评论/分享按钮，字幕横过去就被盖住。
 _ASS_MARGIN_H = 150
-# 字幕贴在**下边条的顶部**（紧挨卡片下沿），不是画布最底下。
-# 量过一版真成片：MarginV=30 时字幕像素落在 y 1849–1882，离底边只有 38px——
-# 小红书/抖音的底部文案区和 home 指示条正好压在那儿，静音刷的人一个字看不到。
-# 这里改成上锚（Alignment=8，MarginV 从**顶边**算），一行两行都从同一个位置往下长，
-# 底部那 240px 完全空出来给 app 的界面。
+# 字幕待在**卡片里面**，不在画布的下边条里。
+# 走过两版弯路：先是贴画布最底（MarginV=30），量出来字幕像素落在 y 1849–1882，
+# 离底边只有 38px，被 app 底部文案区和 home 指示条盖住；然后把整张卡抬到
+# CARD_TOP=88、字幕塞进变宽的下边条——底下是躲开了，卡片顶上那行台头又钻进了
+# app 顶部的控件里。两头都有 UI，所以答案不是挪卡片，是**把卡上的文字往上收**，
+# 在卡片内部腾一条出来。
+#
+# 上锚（Alignment=8，MarginV 从顶边算）：一行两行都从同一条线往下长，不会跳。
 _ASS_ALIGN = 8
-_ASS_MARGIN_V = CARD_TOP + CARD_H + 16
+_ASS_MARGIN_V = CARD_TOP + CARD_H - 190
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
 _ASS_HEADER = f"""[Script Info]
 ScriptType: v4.00+
@@ -3087,7 +3097,7 @@ def assemble_explainer_video(
     for i in range(n):
         chain = (
             f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
-            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:{CARD_TOP}:color={_BAND_COLOR},"
+            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
         )
         # 字幕。静音刷是默认状态——旁白里的引语、数字、来龙去脉，静音的人一个字
