@@ -448,7 +448,7 @@ def test_标题不靠代词指人():
 def test_栏目是登记过的并且赛前片子写清了日期():
     """栏目名不是装饰，是对读者的承诺，所以它必须是登记过的那几个之一。
 
-    「开赛之前」和「网球有故事」并行，两者的保质期完全不同：知识片明年再翻出来
+    「开球之前」和「网球有故事」并行，两者的保质期完全不同：知识片明年再翻出来
     也还成立，赛前片在开球那一刻就过期了。所以易逝栏目多一条硬要求——**片子里
     必须写出比赛日期**，读者一眼能判断这条还算不算数。没有日期的赛前片，过期之后
     看起来和没过期一模一样。
@@ -573,7 +573,7 @@ def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch)
 
 
 def test_同一天可以并存多条片子():
-    """一天不止一条「开赛之前」——两条前瞻不能互相覆盖。
+    """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 
     这条测试盯的是工作流，不是 Python：成片路径、并发分组、提交范围三处只要有一处
     丢掉 slug，同一天的第二条片子就会把第一条盖掉。三处都是事故换来的：
@@ -599,11 +599,11 @@ def test_同一天可以并存多条片子():
     assert 'git checkout rendered -- "$OUTDIR"' in yml
     assert "git checkout rendered -- output/" not in yml
 
-    # 并且「开赛之前」这个栏目此刻确实挂着不止一条片子——不是理论上支持而已。
+    # 并且「开球之前」这个栏目此刻确实挂着不止一条片子——不是理论上支持而已。
     from tennislive.video.explainer import explainer_column
 
-    previews = [s for s in _SCRIPTED if explainer_column(s) == "开赛之前"]
-    assert len(previews) >= 2, f"开赛之前只有 {previews}，多场并存没有真的被用起来"
+    previews = [s for s in _SCRIPTED if explainer_column(s) == "开球之前"]
+    assert len(previews) >= 2, f"开球之前只有 {previews}，多场并存没有真的被用起来"
     assert len(set(previews)) == len(previews)
     assert Path("assets/explainer").is_dir()
 

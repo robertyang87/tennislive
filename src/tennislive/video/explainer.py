@@ -2042,7 +2042,7 @@ class Column:
 
     A column is a promise, not a decoration: the reader who sees 网球有故事
     expects something that will still be true next year, and the one who sees
-    开赛之前 expects a match that has not started yet. Mixing them costs the
+    开球之前 expects a match that has not started yet. Mixing them costs the
     label its meaning — a preview published under 网球有故事 is stale the
     moment play begins, and nothing on the card would have said so.
     """
@@ -2061,12 +2061,12 @@ COLUMNS: dict[str, Column] = {
         promise="一个人人见过、没人讲得清的网球现象，讲清它的来历和现在。",
         perishable=False,
     ),
-    "开赛之前": Column(
-        name="开赛之前",
+    "开球之前": Column(
+        name="开球之前",
         promise="一场还没开打的比赛，把两边这几年的来路摆在一起；不猜比分。",
         perishable=True,
     ),
-    # 和「开赛之前」成对：两个名字都指一个**时刻**，不是一段时间——第一分之前，
+    # 和「开球之前」成对：两个名字都指一个**时刻**，不是一段时间——第一分之前，
     # 和网前那一握之后。收尾的握手是网球独有的，别的项目吹哨响铃就散了。
     #
     # 这里一度还有 First Serve / Second Serve 两个英文栏目，专收「讲一个人」的片子
@@ -2178,7 +2178,7 @@ _OPENINGS: dict[str, dict] = {
         "image": "assets/explainer/shot-clock/umpire.jpg",
     },
     "zheng-eala": {
-        "column": "开赛之前",
+        "column": "开球之前",
         "topic": "郑钦文 VS 伊埃拉：华盛顿站首轮前瞻",
         # 「她」has no safe antecedent on this cover: both players are women and
         # the picture shows one of them, so a viewer can read it either way.
@@ -2200,7 +2200,7 @@ _OPENINGS: dict[str, dict] = {
         "credit": "账号所有者提供 · 摄影师与出处未标注（unknown / unverified）· 郑钦文",
     },
     "shang-nishikori": {
-        "column": "开赛之前",
+        "column": "开球之前",
         "topic": "商竣程 VS 锦织圭：华盛顿站首轮前瞻",
         "question": "锦织圭的最后一年，谁来接？",
         "narration": "锦织圭已经宣布，二〇二六年打完就退役。他是公开赛年代唯一一位"
@@ -2211,7 +2211,7 @@ _OPENINGS: dict[str, dict] = {
         "credit": "CGTN · 2026 年 1 月香港站，商竣程",
     },
     "venus-potapova": {
-        "column": "开赛之前",
+        "column": "开球之前",
         "topic": "维纳斯 VS 波塔波娃：华盛顿站首轮前瞻",
         "question": "46 岁了，维纳斯为什么还在打？",
         "narration": "去年的这一站，四十五岁的维纳斯赢下一场单打，创下二〇〇四年之后的最年长纪录。"

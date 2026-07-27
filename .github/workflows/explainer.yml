@@ -41,7 +41,7 @@ permissions:
 # 同一个 slug 则取消旧的。改完发一版、没等落库又改一版再发，两个 run 会一起跑，
 # 谁后落库谁赢——今晚两次都是先落库的旧版赢了，而两次的 commit message 一模一样，
 # 光看 git log 完全看不出来，是逐像素比对才发现的。同一条片子只可能有一个"最新"，
-# 所以让新的顶掉旧的。不同 slug 不受影响：分组名里带着 slug，多条「开赛之前」
+# 所以让新的顶掉旧的。不同 slug 不受影响：分组名里带着 slug，多条「开球之前」
 # 可以同一天并行生成，各写各的 output/<日期>/explainer/<slug>/。
 concurrency:
   group: explainer-video-${{ github.event.inputs.slug || 'hawkeye' }}
