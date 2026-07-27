@@ -68,9 +68,17 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 15,
+      "media_heat": 19,
       "search_heat": 0,
       "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "ATP Tour",
+          "title": "Van Assche cracks the Top 50, Mover of Week",
+          "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9rN2xXU0toaDhBY0twMWN6TFRYcXI2aWJYbDM4cFFfbnRnbUtNeXU4TFFsaGx3azNTTW94bFpDSFQ5QnBOWEFlWldYdDAySTA5ZjFJQ2lTQ2FUOTdXSEdiUU1DTzJuZTVUeEdySEhjYlVMWG9kdkJUZUotLU0?oc=5",
+          "published_at": "2026-07-27T10:02:08+00:00",
+          "traffic": ""
+        },
         {
           "kind": "official-news",
           "source": "ATP Tour",
@@ -1017,9 +1025,17 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 15,
+      "media_heat": 19,
       "search_heat": 0,
       "trend_signals": [
+        {
+          "kind": "official-news",
+          "source": "ATP Tour",
+          "title": "Van Assche cracks the Top 50, Mover of Week",
+          "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9rN2xXU0toaDhBY0twMWN6TFRYcXI2aWJYbDM4cFFfbnRnbUtNeXU4TFFsaGx3azNTTW94bFpDSFQ5QnBOWEFlWldYdDAySTA5ZjFJQ2lTQ2FUOTdXSEdiUU1DTzJuZTVUeEdySEhjYlVMWG9kdkJUZUotLU0?oc=5",
+          "published_at": "2026-07-27T10:02:08+00:00",
+          "traffic": ""
+        },
         {
           "kind": "official-news",
           "source": "ATP Tour",
@@ -1114,67 +1130,6 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    }
-  ],
-  "live": [],
-  "schedule": [
-    {
-      "match_id": "1073-2026:179586",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Axeria Open 2026 powered by Intaro Sport",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1073-2026"
-      },
-      "home": [
-        {
-          "name": "Caijsa Hennemann",
-          "country": "SWE",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5328.png",
-          "player_id": "5328"
-        }
-      ],
-      "away": [
-        {
-          "name": "Mia Pohankova",
-          "country": "SVK",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/16296.png",
-          "player_id": "16296"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 09:30:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Court 4",
-      "status_detail": "Mon, July 27th at 5:30 AM EDT",
-      "stats": null,
-      "editorial_note": "首轮没有纸面答案；双方都没有明显身份光环，反而更像一场抢戏之战。",
-      "editorial_source": "赛程背景",
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": "2026-07-27T09:30:00+00:00"
-      },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
     },
     {
       "match_id": "1073-2026:179598",
@@ -1208,24 +1163,37 @@
           "player_id": "15344"
         }
       ],
-      "status": "scheduled",
+      "status": "finished",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 09:30:00+00:00",
-      "sets": [],
-      "winner": null,
+      "start_utc": "2026-07-27 09:50:00+00:00",
+      "sets": [
+        {
+          "home": 3,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 3,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
+      "winner": 1,
       "note": null,
       "court": "Court 1",
-      "status_detail": "Mon, July 27th at 5:30 AM EDT",
+      "status_detail": "Final",
       "stats": null,
-      "editorial_note": "首轮没有纸面答案；双方都没有明显身份光环，反而更像一场抢戏之战。",
-      "editorial_source": "赛程背景",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T09:30:00+00:00"
+        "espn": "2026-07-27T09:50:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1233,9 +1201,11 @@
       "media_heat": 0,
       "search_heat": 0,
       "trend_signals": []
-    },
+    }
+  ],
+  "live": [
     {
-      "match_id": "1073-2026:179589",
+      "match_id": "1073-2026:179586",
       "tour": "WTA",
       "tournament": {
         "name": "Axeria Open 2026 powered by Intaro Sport",
@@ -1248,42 +1218,55 @@
       },
       "home": [
         {
-          "name": "Alice Rame",
-          "country": "FRA",
+          "name": "Caijsa Hennemann",
+          "country": "SWE",
           "seed": null,
           "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4691.png",
-          "player_id": "4691"
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5328.png",
+          "player_id": "5328"
         }
       ],
       "away": [
         {
-          "name": "Julie Struplova",
-          "country": "CZE",
+          "name": "Mia Pohankova",
+          "country": "SVK",
           "seed": null,
           "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/18479.png",
-          "player_id": "18479"
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/16296.png",
+          "player_id": "16296"
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 11:00:00+00:00",
-      "sets": [],
+      "start_utc": "2026-07-27 10:50:00+00:00",
+      "sets": [
+        {
+          "home": 6,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 4,
+          "away": 6,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Court 4",
-      "status_detail": "Mon, July 27th at 7:00 AM EDT",
+      "status_detail": "2nd Set",
       "stats": null,
-      "editorial_note": "首轮没有纸面答案；双方都没有明显身份光环，反而更像一场抢戏之战。",
-      "editorial_source": "赛程背景",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T11:00:00+00:00"
+        "espn": "2026-07-27T10:50:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1324,24 +1307,97 @@
           "player_id": "4476"
         }
       ],
-      "status": "scheduled",
+      "status": "live",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 11:00:00+00:00",
-      "sets": [],
+      "start_utc": "2026-07-27 11:40:00+00:00",
+      "sets": [
+        {
+          "home": 6,
+          "away": 1,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        },
+        {
+          "home": 1,
+          "away": 0,
+          "home_tiebreak": null,
+          "away_tiebreak": null
+        }
+      ],
       "winner": null,
       "note": null,
       "court": "Court 1",
-      "status_detail": "Mon, July 27th at 7:00 AM EDT",
+      "status_detail": "2nd Set",
       "stats": null,
-      "editorial_note": "克维多背着1号种子的签位，首轮先过“必须赢”这一关。",
-      "editorial_source": "实时排名与赛程",
+      "editorial_note": null,
+      "editorial_source": null,
       "editorial_url": null,
       "data_sources": [
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T11:00:00+00:00"
+        "espn": "2026-07-27T11:40:00+00:00"
+      },
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    }
+  ],
+  "schedule": [
+    {
+      "match_id": "1073-2026:179589",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Axeria Open 2026 powered by Intaro Sport",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1073-2026"
+      },
+      "home": [
+        {
+          "name": "Alice Rame",
+          "country": "FRA",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4691.png",
+          "player_id": "4691"
+        }
+      ],
+      "away": [
+        {
+          "name": "Julie Struplova",
+          "country": "CZE",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/18479.png",
+          "player_id": "18479"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-27 12:30:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Court 4",
+      "status_detail": "Mon, July 27th at 8:30 AM EDT",
+      "stats": null,
+      "editorial_note": "首轮没有纸面答案；双方都没有明显身份光环，反而更像一场抢戏之战。",
+      "editorial_source": "赛程背景",
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": "2026-07-27T12:30:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1385,12 +1441,12 @@
       "status": "scheduled",
       "round_name": "Round 1",
       "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 11:00:00+00:00",
+      "start_utc": "2026-07-27 12:30:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "Court 3",
-      "status_detail": "Mon, July 27th at 7:00 AM EDT",
+      "status_detail": "Mon, July 27th at 8:30 AM EDT",
       "stats": null,
       "editorial_note": "首轮没有纸面答案；双方都没有明显身份光环，反而更像一场抢戏之战。",
       "editorial_source": "赛程背景",
@@ -1399,7 +1455,65 @@
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T11:00:00+00:00"
+        "espn": "2026-07-27T12:30:00+00:00"
+      },
+      "schedule_time_status": "single-source",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "1073-2026:179587",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Axeria Open 2026 powered by Intaro Sport",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1073-2026"
+      },
+      "home": [
+        {
+          "name": "Leyre Romero Gormaz",
+          "country": "ESP",
+          "seed": 6,
+          "rank": 147,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10676.png",
+          "player_id": "10676"
+        }
+      ],
+      "away": [
+        {
+          "name": "Sara Sorribes Tormo",
+          "country": "ESP",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2929.png",
+          "player_id": "2929"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Singles",
+      "start_utc": "2026-07-27 13:00:00+00:00",
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": "Court 1",
+      "status_detail": "Mon, July 27th at 9:00 AM EDT",
+      "stats": null,
+      "editorial_note": "罗梅罗·戈尔马斯背着6号种子的签位，首轮先过“必须赢”这一关。",
+      "editorial_source": "实时排名与赛程",
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": "2026-07-27T13:00:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1459,12 +1573,12 @@
       "status": "scheduled",
       "round_name": "Round 1",
       "discipline": "Women's Doubles",
-      "start_utc": "2026-07-27 12:00:00+00:00",
+      "start_utc": "2026-07-27 13:30:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "Court 3",
-      "status_detail": "Mon, July 27th at 8:00 AM EDT",
+      "status_detail": "Mon, July 27th at 9:30 AM EDT",
       "stats": null,
       "editorial_note": "双打首轮先看默契。西里克·巴加里克 / Angelica Moratelli与蒙诺 / 鲁夫罗伊，组合感能不能马上打出来。",
       "editorial_source": "赛程背景",
@@ -1473,65 +1587,7 @@
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T12:00:00+00:00"
-      },
-      "schedule_time_status": "single-source",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
-      "match_id": "1073-2026:179587",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Axeria Open 2026 powered by Intaro Sport",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1073-2026"
-      },
-      "home": [
-        {
-          "name": "Leyre Romero Gormaz",
-          "country": "ESP",
-          "seed": 6,
-          "rank": 147,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/10676.png",
-          "player_id": "10676"
-        }
-      ],
-      "away": [
-        {
-          "name": "Sara Sorribes Tormo",
-          "country": "ESP",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/2929.png",
-          "player_id": "2929"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Singles",
-      "start_utc": "2026-07-27 12:30:00+00:00",
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": "Court 1",
-      "status_detail": "Mon, July 27th at 8:30 AM EDT",
-      "stats": null,
-      "editorial_note": "罗梅罗·戈尔马斯背着6号种子的签位，首轮先过“必须赢”这一关。",
-      "editorial_source": "实时排名与赛程",
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": "2026-07-27T12:30:00+00:00"
+        "espn": "2026-07-27T13:30:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1591,12 +1647,12 @@
       "status": "scheduled",
       "round_name": "Round 1",
       "discipline": "Women's Doubles",
-      "start_utc": "2026-07-27 12:30:00+00:00",
+      "start_utc": "2026-07-27 13:30:00+00:00",
       "sets": [],
       "winner": null,
       "note": null,
       "court": "Court 4",
-      "status_detail": "Mon, July 27th at 8:30 AM EDT",
+      "status_detail": "Mon, July 27th at 9:30 AM EDT",
       "stats": null,
       "editorial_note": "双打首轮先看默契。Yu-Yun Li / 叶秋语与伊布拉吉莫娃 / 托特，组合感能不能马上打出来。",
       "editorial_source": "赛程背景",
@@ -1605,7 +1661,7 @@
         "espn"
       ],
       "time_observations": {
-        "espn": "2026-07-27T12:30:00+00:00"
+        "espn": "2026-07-27T13:30:00+00:00"
       },
       "schedule_time_status": "single-source",
       "schedule_note": null,
@@ -1742,18 +1798,9 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 22,
+      "media_heat": 0,
       "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Alejandro Tabilo vs Tallon Griekspoor · Round 1 · ATP/WTA Washington D.C.",
-          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPamlSMnVNRWZLamdGd2RsOGNzZlpNTkFqYmFlbktsWXRqaTFEb1hyaFRfVjNUMnR4Y1pfWDMwUW82OVBYcUdUeHBmbTJXaEN5SlZkUXVKa1RWb1VocWhmNnF1Q0M5Q3ZIRU53a2l3a1JER25EWVhRRVdENmloRVZ2WDQ3TG43ZHpiRF9ELUdYVVdYZzFsNC1Cc3BuZw?oc=5",
-          "published_at": "2026-07-27T04:07:56+00:00",
-          "traffic": ""
-        }
-      ]
+      "trend_signals": []
     },
     {
       "match_id": "888-2026:179012",
@@ -1809,7 +1856,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -1950,7 +1997,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 22,
+      "media_heat": 20,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -2017,7 +2064,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 35,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -2025,62 +2072,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -2140,7 +2139,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 35,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -2148,62 +2147,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -2263,7 +2214,7 @@
       "schedule_time_status": "single-source",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 21,
+      "media_heat": 12,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -2271,63 +2222,23 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "Tennis.com",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
+          "published_at": "2026-07-27T05:02:16+00:00",
+          "traffic": ""
+        },
+        {
+          "kind": "official-news",
+          "source": "ATP Tour",
+          "title": "Best photos from Alex de Minaur & Katie Boulter's wedding celebration",
+          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOd194cW50dHBndURKRm9UeURNUl9WLUMyMHJLUVJtaERmT0RYZDFWczNGajk4YjNYNmZ0cEZGNXBLd1JhWTlrWENBUGFfdGhYdkIwT0ZkSnZJQmdaSjFyWXJGM3VKLW96NWhSZkdQNUJrY3g1OWxEdDVaQzBIakR2QjhBQ3M5dnFJMFZkdDNR?oc=5",
+          "published_at": "2026-07-25T16:34:13+00:00",
           "traffic": ""
         }
       ]
@@ -2635,7 +2546,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -2893,18 +2804,9 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 0,
       "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        }
-      ]
+      "trend_signals": []
     },
     {
       "match_id": "888-2026:178975",
@@ -2960,18 +2862,9 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 0,
       "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        }
-      ]
+      "trend_signals": []
     },
     {
       "match_id": "888-2026:178980",
@@ -3043,7 +2936,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -3200,18 +3093,9 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 0,
       "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Frances Tiafoe vs Térence Atmane · Round 1 · ATP/WTA Washington D.C.",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPT2NCRUxjRGZLR2tjT0lpLXZJS1o3TUdJSHl1dTFtQUlIbzh6N2tvZmhSN3hfNlBEQ3MyQ2tjU2hMTzBWOUllZlE4eGZrdFBWVjdGWlVrNy1OVUxuSFpDRHNsZXlZYm05cDRtRDZlcU9heC0wc240SHpWakNLMUxMTkprVERsVVQ0SG9JMTNIWlIxX2tfMVE?oc=5",
-          "published_at": "2026-07-27T04:07:53+00:00",
-          "traffic": ""
-        }
-      ]
+      "trend_signals": []
     },
     {
       "match_id": "888-2026:178994",
@@ -3636,154 +3520,6 @@
       "trend_signals": []
     },
     {
-      "match_id": "1073-2026:179615",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Axeria Open 2026 powered by Intaro Sport",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1073-2026"
-      },
-      "home": [
-        {
-          "name": "Madeleine Brooks",
-          "country": "GBR",
-          "seed": 1,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/16558.png",
-          "player_id": "16558"
-        },
-        {
-          "name": "Isabelle Haverlag",
-          "country": "NED",
-          "seed": 1,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/6124.png",
-          "player_id": "6124"
-        }
-      ],
-      "away": [
-        {
-          "name": "Caijsa Hennemann",
-          "country": "SWE",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5328.png",
-          "player_id": "5328"
-        },
-        {
-          "name": "Sofya Lansere",
-          "country": "RUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3401.png",
-          "player_id": "3401"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Doubles",
-      "start_utc": null,
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": null,
-      "status_detail": "M/d - 'TBD'",
-      "stats": null,
-      "editorial_note": "双打首轮先看默契。Madeleine Brooks / Isabelle Haverlag与亨尼曼 / 兰塞尔，组合感能不能马上打出来。",
-      "editorial_source": "赛程背景",
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": null
-      },
-      "schedule_time_status": "unpublished",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
-      "match_id": "1073-2026:179613",
-      "tour": "WTA",
-      "tournament": {
-        "name": "Axeria Open 2026 powered by Intaro Sport",
-        "tour": "WTA",
-        "level": null,
-        "surface": null,
-        "city": null,
-        "country": null,
-        "tournament_id": "1073-2026"
-      },
-      "home": [
-        {
-          "name": "Andreea Prisacariu",
-          "country": "ROM",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4803.png",
-          "player_id": "4803"
-        },
-        {
-          "name": "Isabella Shinikova",
-          "country": "BUL",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3070.png",
-          "player_id": "3070"
-        }
-      ],
-      "away": [
-        {
-          "name": "Elena Ruxandra Bertea",
-          "country": "ROM",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/15344.png",
-          "player_id": "15344"
-        },
-        {
-          "name": "Ekaterina Kazionova",
-          "country": "RUS",
-          "seed": null,
-          "rank": null,
-          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4792.png",
-          "player_id": "4792"
-        }
-      ],
-      "status": "scheduled",
-      "round_name": "Round 1",
-      "discipline": "Women's Doubles",
-      "start_utc": null,
-      "sets": [],
-      "winner": null,
-      "note": null,
-      "court": null,
-      "status_detail": "M/d - 'TBD'",
-      "stats": null,
-      "editorial_note": "双打首轮先看默契。普里萨卡留 / 希尼科娃与贝尔泰亚 / 卡济奥诺娃，组合感能不能马上打出来。",
-      "editorial_source": "赛程背景",
-      "editorial_url": null,
-      "data_sources": [
-        "espn"
-      ],
-      "time_observations": {
-        "espn": null
-      },
-      "schedule_time_status": "unpublished",
-      "schedule_note": null,
-      "schedule_source_urls": [],
-      "media_heat": 0,
-      "search_heat": 0,
-      "trend_signals": []
-    },
-    {
       "match_id": "1073-2026:179608",
       "tour": "WTA",
       "tournament": {
@@ -3916,6 +3652,154 @@
       "status_detail": "M/d - 'TBD'",
       "stats": null,
       "editorial_note": "双打首轮先看默契。斯皮泰里 / Ekaterina Yashina与Irina Bara / Naima Karamoko，组合感能不能马上打出来。",
+      "editorial_source": "赛程背景",
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": null
+      },
+      "schedule_time_status": "unpublished",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "1073-2026:179613",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Axeria Open 2026 powered by Intaro Sport",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1073-2026"
+      },
+      "home": [
+        {
+          "name": "Andreea Prisacariu",
+          "country": "ROM",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4803.png",
+          "player_id": "4803"
+        },
+        {
+          "name": "Isabella Shinikova",
+          "country": "BUL",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3070.png",
+          "player_id": "3070"
+        }
+      ],
+      "away": [
+        {
+          "name": "Elena Ruxandra Bertea",
+          "country": "ROM",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/15344.png",
+          "player_id": "15344"
+        },
+        {
+          "name": "Ekaterina Kazionova",
+          "country": "RUS",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/4792.png",
+          "player_id": "4792"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Doubles",
+      "start_utc": null,
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": null,
+      "status_detail": "M/d - 'TBD'",
+      "stats": null,
+      "editorial_note": "双打首轮先看默契。普里萨卡留 / 希尼科娃与贝尔泰亚 / 卡济奥诺娃，组合感能不能马上打出来。",
+      "editorial_source": "赛程背景",
+      "editorial_url": null,
+      "data_sources": [
+        "espn"
+      ],
+      "time_observations": {
+        "espn": null
+      },
+      "schedule_time_status": "unpublished",
+      "schedule_note": null,
+      "schedule_source_urls": [],
+      "media_heat": 0,
+      "search_heat": 0,
+      "trend_signals": []
+    },
+    {
+      "match_id": "1073-2026:179615",
+      "tour": "WTA",
+      "tournament": {
+        "name": "Axeria Open 2026 powered by Intaro Sport",
+        "tour": "WTA",
+        "level": null,
+        "surface": null,
+        "city": null,
+        "country": null,
+        "tournament_id": "1073-2026"
+      },
+      "home": [
+        {
+          "name": "Madeleine Brooks",
+          "country": "GBR",
+          "seed": 1,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/16558.png",
+          "player_id": "16558"
+        },
+        {
+          "name": "Isabelle Haverlag",
+          "country": "NED",
+          "seed": 1,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/6124.png",
+          "player_id": "6124"
+        }
+      ],
+      "away": [
+        {
+          "name": "Caijsa Hennemann",
+          "country": "SWE",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/5328.png",
+          "player_id": "5328"
+        },
+        {
+          "name": "Sofya Lansere",
+          "country": "RUS",
+          "seed": null,
+          "rank": null,
+          "headshot_url": "https://a.espncdn.com/i/headshots/tennis/players/full/3401.png",
+          "player_id": "3401"
+        }
+      ],
+      "status": "scheduled",
+      "round_name": "Round 1",
+      "discipline": "Women's Doubles",
+      "start_utc": null,
+      "sets": [],
+      "winner": null,
+      "note": null,
+      "court": null,
+      "status_detail": "M/d - 'TBD'",
+      "stats": null,
+      "editorial_note": "双打首轮先看默契。Madeleine Brooks / Isabelle Haverlag与亨尼曼 / 兰塞尔，组合感能不能马上打出来。",
       "editorial_source": "赛程背景",
       "editorial_url": null,
       "data_sources": [
@@ -4117,17 +4001,9 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 15,
+      "media_heat": 8,
       "search_heat": 0,
       "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
         {
           "kind": "official-news",
           "source": "Tennis.com",
@@ -4688,18 +4564,9 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 5,
+      "media_heat": 0,
       "search_heat": 0,
-      "trend_signals": [
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Janice Tjen vs Rebecca Šramková · Round 1 · ATP/WTA Washington D.C.",
-          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOcU84cWJnOFZ6U1p4enN4bFBnQW1nYWRUMUpHbVVmMU1xUWM3Ylp5b282Y3pFbFAxWWJWcGVVT1ZELUpjWERSSjZfQjk0TjlRN01BSGtyTUY0N2VIY3JCTDdta1g0TmplQ0d4Vm5LNWV4dzJBSlYzRnUxZ0lDTDh4U2pWeXdqMzA0ZE9xbEdFbmNkTHRpVkE?oc=5",
-          "published_at": "2026-07-27T04:07:59+00:00",
-          "traffic": ""
-        }
-      ]
+      "trend_signals": []
     },
     {
       "match_id": "1067-2026:179443",
@@ -4755,7 +4622,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -4763,62 +4630,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -4878,7 +4697,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 30,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -4886,62 +4705,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5001,7 +4772,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 30,
+      "media_heat": 16,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5009,62 +4780,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5124,7 +4847,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5132,62 +4855,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5247,7 +4922,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5255,62 +4930,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5370,7 +4997,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 30,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5378,62 +5005,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5493,7 +5072,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 35,
+      "media_heat": 22,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5501,62 +5080,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5616,7 +5147,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5624,62 +5155,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5755,7 +5238,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 30,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5763,62 +5246,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -5894,7 +5329,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -5902,62 +5337,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -6033,7 +5420,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 35,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -6041,62 +5428,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -6180,62 +5519,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -6311,7 +5602,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 30,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -6319,62 +5610,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -6450,7 +5693,7 @@
       "schedule_time_status": "unpublished",
       "schedule_note": null,
       "schedule_source_urls": [],
-      "media_heat": 16,
+      "media_heat": 4,
       "search_heat": 0,
       "trend_signals": [
         {
@@ -6458,62 +5701,14 @@
           "source": "Tennis.com",
           "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-          "published_at": "2026-07-27T05:04:13+00:00",
+          "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         },
         {
           "kind": "official-news",
           "source": "Tennis.com",
-          "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-          "published_at": "2026-07-27T05:04:12+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-          "published_at": "2026-07-27T05:04:05+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-          "published_at": "2026-07-27T05:03:26+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-          "published_at": "2026-07-27T05:03:18+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-          "published_at": "2026-07-27T05:03:07+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-          "published_at": "2026-07-27T05:02:56+00:00",
-          "traffic": ""
-        },
-        {
-          "kind": "official-news",
-          "source": "Tennis.com",
-          "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-          "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
+          "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+          "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
           "published_at": "2026-07-27T05:02:16+00:00",
           "traffic": ""
         }
@@ -6524,7 +5719,7 @@
   "source_status": {
     "espn": "正常 · 113 场",
     "sofascore": "失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）",
-    "实时选题雷达": "正常 · 70 条信号，命中 40 场比赛",
+    "实时选题雷达": "正常 · 63 条信号，命中 35 场比赛",
     "ATP 官方技术统计": "未配置 · 缺少 ATP_PROTENNISLIVE_TOKEN",
     "Sportradar 技术统计": "未配置 · 缺少 SPORTRADAR_API_KEY",
     "焦点复盘数据": "降级 · 所有逐场统计源均未命中，使用比分结构复盘",
@@ -6532,7 +5727,7 @@
     "外媒观点雷达": "本期无达到多源证据门槛的事件",
     "球员与赛事知识库": "正常 · 28 场接入历史背景",
     "GitHub Models 数据编辑": "关闭",
-    "官方视频雷达": "正常 · 已生成中文竖版片段"
+    "官方视频雷达": "降级 · Translation for cue 2 contains no Chinese"
   },
   "rankings": {
     "atp": [
@@ -8945,217 +8140,329 @@
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "s27 ultra",
+      "title": "sean astin",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T07:00:00+00:00",
+      "published_at": "2026-07-27T12:10:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends GB",
-      "title": "stone cloak",
+      "title": "gta6",
       "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T07:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "tyson pedro",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:50:00+00:00",
+      "published_at": "2026-07-27T12:10:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends GB",
-      "title": "andrew mountbatten-windsor",
+      "title": "navy lookout",
       "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:50:00+00:00",
+      "published_at": "2026-07-27T12:10:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends GB",
-      "title": "ted danson",
+      "title": "loch fyne",
       "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:50:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "sussexes summer holiday instagram photos",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:50:00+00:00",
+      "published_at": "2026-07-27T12:10:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "h&m",
+      "title": "tesla cybertruck",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T06:40:00+00:00",
+      "published_at": "2026-07-27T12:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "ing australia savings booster",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T12:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "kit margetson manchester united transfer",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T12:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "ferrari hungarian grand prix strategy",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T12:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "andy burnham social care plan",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T12:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "armie hammer",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T12:00:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "meteor showers",
+      "title": "abdul el sayed haley stevens contest",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T06:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "carlton football club",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "car rental",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "thames water hosepipe ban",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:40:00+00:00",
+      "published_at": "2026-07-27T11:50:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "abigail breslin",
+      "title": "playstation plus",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T06:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "charlene, princess of monaco",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "love island live final",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "oil prices",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:30:00+00:00",
+      "published_at": "2026-07-27T11:50:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "donald trump iran war",
+      "title": "congress social security benefits bill",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T06:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "uefa euro 2028",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "liquidation",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:10:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "afl coaches votes",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T06:10:00+00:00",
+      "published_at": "2026-07-27T11:50:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends US",
-      "title": "justin hartley",
+      "title": "peptides",
       "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T06:00:00+00:00",
+      "published_at": "2026-07-27T11:40:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "stephen darby",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:00:00+00:00",
+      "source": "Google Trends US",
+      "title": "russia",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-27T11:40:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
-      "source": "Google Trends GB",
-      "title": "solar eclipse 2026",
-      "url": "https://trends.google.com/trending/rss?geo=GB",
-      "published_at": "2026-07-27T06:00:00+00:00",
+      "source": "Google Trends US",
+      "title": "steven bartlett",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-27T11:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "rick moranis",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-27T11:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends US",
+      "title": "buffalo bills",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "published_at": "2026-07-27T11:40:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends HK",
-      "title": "死亡",
+      "title": "chiikawa 麥當勞",
       "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T05:50:00+00:00",
+      "published_at": "2026-07-27T11:40:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends AU",
-      "title": "argentina national football team",
+      "title": "sally mcmanus",
       "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T05:30:00+00:00",
+      "published_at": "2026-07-27T11:30:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends AU",
-      "title": "st george illawarra dragons",
+      "title": "andrew dillon",
       "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T05:30:00+00:00",
+      "published_at": "2026-07-27T11:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "furious",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T11:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "david byrne latitude 2026 performance",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T11:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends GB",
+      "title": "italy",
+      "url": "https://trends.google.com/trending/rss?geo=GB",
+      "published_at": "2026-07-27T11:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "torrie lewis",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T11:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "theft",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T11:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "xbox outages",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T11:00:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends HK",
-      "title": "觀塘",
+      "title": "陳秀珠",
       "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T05:20:00+00:00",
+      "published_at": "2026-07-27T11:00:00+00:00",
       "traffic": ""
     },
     {
       "kind": "search-trend",
       "source": "Google Trends AU",
-      "title": "imax odyssey melbourne",
+      "title": "game of thrones",
       "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T05:20:00+00:00",
+      "published_at": "2026-07-27T10:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "kyle chalmers",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T10:20:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "ransom canyon cast",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T10:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "ATP Tour",
+      "title": "Van Assche cracks the Top 50, Mover of Week",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9rN2xXU0toaDhBY0twMWN6TFRYcXI2aWJYbDM4cFFfbnRnbUtNeXU4TFFsaGx3azNTTW94bFpDSFQ5QnBOWEFlWldYdDAySTA5ZjFJQ2lTQ2FUOTdXSEdiUU1DTzJuZTVUeEdySEhjYlVMWG9kdkJUZUotLU0?oc=5",
+      "published_at": "2026-07-27T10:02:08+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends AU",
+      "title": "australia electric vehicle sales 2026",
+      "url": "https://trends.google.com/trending/rss?geo=AU",
+      "published_at": "2026-07-27T10:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "陳嘉信",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T10:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "陈志",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T09:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "萧正楠",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T09:00:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "意外事故",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T08:50:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "神探伽利略",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T08:40:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "梁榮武",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T08:30:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "東野圭吾",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T07:10:00+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "search-trend",
+      "source": "Google Trends HK",
+      "title": "东野圭吾",
+      "url": "https://trends.google.com/trending/rss?geo=HK",
+      "published_at": "2026-07-27T07:10:00+00:00",
       "traffic": ""
     },
     {
@@ -9163,127 +8470,15 @@
       "source": "Tennis.com",
       "title": "Starodubtseva / Zarazúa vs Frey / Stephens · Round 1 · WTA Memphis",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZ3hzWjNwaUJrYUZGS1lvNUlFN3pUZDJ3T09OZkNJYjVQY3R5dzQwbDBEOVVKUHdqa0FNNGUyS0dNYWQ1ZUpseHlWLWgyeXlSZHIxR1VoTl9SeVNEeGFjV0NVYXhkcEpCSmFFWXVWMkNBbnhmXzJZbGcwaFZ0RHBIODkzS19vYWtQMjhDbUJqMzR4am4xTzRwVkdFdGhfcnFQMldHbVE1T3ZVNE43OXlYQUVR?oc=5",
-      "published_at": "2026-07-27T05:04:13+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Katherine Sebov vs Elvina Kalieva · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOM0dldElRaV9GcjlHa0JHUnpYOWtiQ3ZfZ3ZBOTdhOG5ERE5LZ1VCUzdYc1AzOVV6eWdnNXYtZE9EQThpUXJGYnF6a1hnQU9HY0VjY2F1RXktMHk1SDNnQ3ZzSlVHa1dXSVUxNWtIdjJreENPci1OdFNGcEltMllYRkN4by1Uem5mdEVraXZlaw?oc=5",
-      "published_at": "2026-07-27T05:04:12+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Solana Sierra vs Tatiana Prozorova · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQUpyaUU1WnpiYXlaWklYVmlfbC1yZ1NzSWIyanB4LWxpNnFBWmRiZGxMeHVTOFBWcm9jLXFHZEhJM1NXN3daSWRyRnBYTjRibUVlNmxkY01Da0VDZlh4OWdOa1BOOHlmTHFXYWRVQi1oQ0NfSnZQSDRaYVBQMndhRUFHLWZlYU80WGlUODVfekRBekU?oc=5",
-      "published_at": "2026-07-27T05:04:05+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Maya Joint vs Whitney Osuigwe · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNSkFYb3g2U3ZlOXhDVWQ3eTJqaWZ5V01OV09YWFBRODJHcHBoTWpaOHo4ajVTWHlnMlZHaUZDZ1pQOGlKVk5kNDFlMGdqdHljcjBhX1BZTGZweU9FUklnWVVFSjUwWUhiSWtKTkJwcC1SZG1QalpwcmQwdnM2TjZiTzNwOGVVbnNpQmdNalo0RQ?oc=5",
-      "published_at": "2026-07-27T05:03:26+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Anastasia Zakharova vs Linda Fruhvirtová · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQZjd0aUxTOTJyM2tBalU0cFprbjVaek1jb1BXR0piM3VvNGhhamZMYnNhWEF4ZmhXeHdBNjNmVE1SNHFMTEtmWTQxVzlpS2lfSmVHUVdMdVVrVUliVm5FM1BHNjlsLVFRbnh5dDFsQndneDUxYnpHS1ZoUktLVEhYTUc2VGFHeTdMbndHMVdVWTJFS2d5TlBWdVd3?oc=5",
-      "published_at": "2026-07-27T05:03:18+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Camila Osorio vs Storm Hunter · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQOFd5cTJYRGtqV0hEcGxNMUN2QUwtSm1uYnpvcXpDLUNvSXNsclJ0STh0VjB4SXpKVEM3S25fU3BtYVdDcDVxMGctNi1rNmdhUlh2N3VuQllRdm91NXFFb2piaDk3OTJ6Q3RUbl9vYjNZamFkdWNZbE5lOHhkRVZjdHVKUF9XWmZRNHlndVRBVQ?oc=5",
-      "published_at": "2026-07-27T05:03:07+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Martins / Ovcharenko vs Birrell / Stearns · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOcWd6eUk3MnJjQWlUM0JzZklKd0RmZm02a1hPYWhVdkpka25USU84OTRJTURoVmtiMFlwNlNHemNfemFvdVRrU1BWUVh0bEJ5WGhialg0R0JfZ0twNVpzZFNEOHB4bWdQWThGYk5YbWxycllvT1RZUUdoVjlqUFVNOFIyTG45T1ZnQjBFQzBTOWZaUjZJYldVNzNLZXU2OVNfSW8yaFJ2ZjBqajd2R0Rqdg?oc=5",
-      "published_at": "2026-07-27T05:02:56+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Talia Gibson vs Tatjana Maria · Round 1 · WTA Memphis",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQX0hoQXlET3dBT3c0enRmc2hOZkktYlBLZzRuNW5GTWVnX2M4TDhrakVTX0Y5d0Q1RkY5c1c2S3FGOFBBYTBGZmktbHU5SDF0Q2R5WllFSUhYcmc4MGI5MlZiWmVVVkNWOG9ydlNIV2tTTlRHdnNfb2VIZ3hsb0hSOEtZaWhXYjJUU3pkeDVB?oc=5",
       "published_at": "2026-07-27T05:02:16+00:00",
       "traffic": ""
     },
     {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "rebecca ferguson",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T05:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends AU",
-      "title": "ben roberts-smith",
-      "url": "https://trends.google.com/trending/rss?geo=AU",
-      "published_at": "2026-07-27T05:00:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "frontier airlines news",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T04:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "xbox",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T04:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends US",
-      "title": "rick and morty season 9 episode 10",
-      "url": "https://trends.google.com/trending/rss?geo=US",
-      "published_at": "2026-07-27T04:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "chiikawa",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T04:20:00+00:00",
-      "traffic": ""
-    },
-    {
       "kind": "official-news",
       "source": "Tennis.com",
-      "title": "Taylor Fritz vs Zizou Bergs · Round 1 · ATP/WTA Washington D.C.",
-      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOTS1EV1pVaUpJYTVUS3hEQTRNU1RIMnNVR2F2THZaa3ZiMmkySW1NYmVnelh6dWwwVzVGOVpKRlFLWmhRQzVQOGJnNXpkczc4LXVZd21ucGlyQmlYbDdVM2twMi1rYm9lSVZ1ZmFLcl8tUlhSSnlGUlVZQk9KUm9UTnktUFkzVW1pU1JBbVY5RjhOUWs?oc=5",
-      "published_at": "2026-07-27T04:08:01+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Janice Tjen vs Rebecca Šramková · Round 1 · ATP/WTA Washington D.C.",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOcU84cWJnOFZ6U1p4enN4bFBnQW1nYWRUMUpHbVVmMU1xUWM3Ylp5b282Y3pFbFAxWWJWcGVVT1ZELUpjWERSSjZfQjk0TjlRN01BSGtyTUY0N2VIY3JCTDdta1g0TmplQ0d4Vm5LNWV4dzJBSlYzRnUxZ0lDTDh4U2pWeXdqMzA0ZE9xbEdFbmNkTHRpVkE?oc=5",
-      "published_at": "2026-07-27T04:07:59+00:00",
+      "title": "Iryna Shymanovich vs Reese Brantmeier · Round 1 · WTA Memphis",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQd00wRFZUQkNWUXNEQXJpV2h5QmIzcXpoaElFclpNWHVYVHdUbmh0c0phZGxQa2dZdE5CemNRMGp1c1Ewb1FyRThDeTJkUTNUVlpvUGx1Wm1lTlpmYkhRQzJ4TzN3UWJSSWYzOU9pYkcyNGEzbWVSaE5fYkRxejRVUHNMeDZoUUV3cm1rclY0UUM1VVg2UExyUl9BOA?oc=5",
+      "published_at": "2026-07-27T05:02:16+00:00",
       "traffic": ""
     },
     {
@@ -9292,14 +8487,6 @@
       "title": "Matteo Arnaldi vs Lorenzo Musetti · Round 1 · ATP/WTA Washington D.C.",
       "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQcjB5ekNaZFpob3VucEw2ZTZOYTJkc2tMTDZ6YnFybnlmc2htVVAwRkVaZTJrTmQ5OW9IU1djZDFQaGZQRS1SQ21NQUU3QkxKdnN4ck51b09wUlU4YTdoMWdjYW5ubXBIaElWQXpNbWhzOUhseTJ4VzFxcW9Ub3dZWlM3OU5qRGg3UHZhdUN0OUoyWnZaUWp2eQ?oc=5",
       "published_at": "2026-07-27T04:07:57+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
-      "title": "Alejandro Tabilo vs Tallon Griekspoor · Round 1 · ATP/WTA Washington D.C.",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPamlSMnVNRWZLamdGd2RsOGNzZlpNTkFqYmFlbktsWXRqaTFEb1hyaFRfVjNUMnR4Y1pfWDMwUW82OVBYcUdUeHBmbTJXaEN5SlZkUXVKa1RWb1VocWhmNnF1Q0M5Q3ZIRU53a2l3a1JER25EWVhRRVdENmloRVZ2WDQ3TG43ZHpiRF9ELUdYVVdYZzFsNC1Cc3BuZw?oc=5",
-      "published_at": "2026-07-27T04:07:56+00:00",
       "traffic": ""
     },
     {
@@ -9315,6 +8502,14 @@
       "source": "Tennis.com",
       "title": "Ansari / Ma vs Klepac / Ninomiya · Round 1 · ATP/WTA Washington D.C.",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOMWRPYjRnMUhUc1NRaUdnOVlCLV9zeV81SEJMOG8xd0FEUzFXSjFwNE4yMGF0OWYtRFJxa0tVcjNUejkyaVFlQnk5cWVSbUY3RkQ1YmdjUUNTOHNIaG8tMGFMQ1MyNXhFckprazlnMUU1NGVZal9DNFF4ZkhjY25iLVZ3OEF1VnhCdGFSVTVWOUNLM012RGV0MURhcDhHWUNJUFZkNkJmaGMyUjA?oc=5",
+      "published_at": "2026-07-27T04:07:54+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "Tennis.com",
+      "title": "Kei Nishikori vs Juncheng Shang · Round 1 · ATP/WTA Washington D.C.",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOMWJiSUtBNnJ6TVVsdDRvd1NTTUNLYWpOXzNXcXBnUzJVbEE2cEtJSjN3NmJFSHRzdHp3THpRRWphbjcxTE5yYVNVNXhmRkxyY3BDa0JySUhPRTRFaXlqeF9iNnp2bFRrRGR4bVZqRjdfQ2xpbWFyTm5EWTMzTGdpSWowdFRZS2E4b25QMFFCQkg0bEpFUDI3Yw?oc=5",
       "published_at": "2026-07-27T04:07:54+00:00",
       "traffic": ""
     },
@@ -9337,65 +8532,9 @@
     {
       "kind": "official-news",
       "source": "Tennis.com",
-      "title": "Frances Tiafoe vs Térence Atmane · Round 1 · ATP/WTA Washington D.C.",
-      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPT2NCRUxjRGZLR2tjT0lpLXZJS1o3TUdJSHl1dTFtQUlIbzh6N2tvZmhSN3hfNlBEQ3MyQ2tjU2hMTzBWOUllZlE4eGZrdFBWVjdGWlVrNy1OVUxuSFpDRHNsZXlZYm05cDRtRDZlcU9heC0wc240SHpWakNLMUxMTkprVERsVVQ0SG9JMTNIWlIxX2tfMVE?oc=5",
-      "published_at": "2026-07-27T04:07:53+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "official-news",
-      "source": "Tennis.com",
       "title": "Aleksandar Vukic vs Zachary Svajda · Round 1 · ATP/WTA Washington D.C.",
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPdEZobl9TWWd6NXQzTXpRWGRmWmdTRzZNUm9qdjlHOWpyNnd2S2ZvUEdnRGFZc2M3QmNDbmc3NDVwTkJKbWxoUlppVWZWQWh6OGtnYmpON2xSUnpfZTRWUlBEVG1BN0RrWjdvNlhRWl9rZ3lzNzM1eExDeURzOU1Vd0ZPYVcxcE5zOHlqRjNsRWwxQVdj?oc=5",
       "published_at": "2026-07-27T04:07:53+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "麥當勞 chiikawa",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T03:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "長鑫科技",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T03:20:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "长鑫科技",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T02:30:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "cxmt",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T01:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "張翔",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T01:40:00+00:00",
-      "traffic": ""
-    },
-    {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "mps",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T01:10:00+00:00",
       "traffic": ""
     },
     {
@@ -9407,19 +8546,19 @@
       "traffic": ""
     },
     {
-      "kind": "search-trend",
-      "source": "Google Trends HK",
-      "title": "noul",
-      "url": "https://trends.google.com/trending/rss?geo=HK",
-      "published_at": "2026-07-27T00:40:00+00:00",
-      "traffic": ""
-    },
-    {
       "kind": "official-news",
       "source": "ATP Tour",
       "title": "Van Assche on milestone win & love for math: First-Time Winner Spotlight",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOLUl6cnJrd1F6OW9BQWhKc0Fydy1yd2VNZ0NSOGY4dERwY3N2Yi1fZFFtTlhHR1ozTFk3M1EzREQxbTVZVUJZRHd0c1NrblRJU1NoWTVXRFdfZXBYWWtxdmRFaG9wbXFqWFlkOUZOZHg3SWZqcWR1LXlJQTF6MmZoU1Z5ek8?oc=5",
       "published_at": "2026-07-26T22:36:29+00:00",
+      "traffic": ""
+    },
+    {
+      "kind": "official-news",
+      "source": "WTA Tennis",
+      "title": "'I don't really want to be famous': How Osaka has stayed grounded through career",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPVXRiUEdKVXpmMmhTRE9hZU9MM0g3RUJIZG9YdGNFVXZ4OE1DTF9yb0NZb25iZEFmVjF0bXZfRV9SWVdwZGZudzg2aklnZ0Y1ajkybmdkSkJ6QVo5OV9GYXdGdXRqYWRST0hpRFdDQkVNU1R6ajQ4V2pRM0ZNbmpvdjljSDRGSUV2ZGVIOUltUndULU9QOWprYUlSQ1dxVDc5V1ZrMXJ2LWR1M3JhLWZKZlExLVBqNm9LTlZoVEU0X2dLdzg?oc=5",
+      "published_at": "2026-07-26T22:07:59+00:00",
       "traffic": ""
     },
     {
