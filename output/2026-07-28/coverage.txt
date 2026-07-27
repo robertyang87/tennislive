@@ -1,0 +1,26 @@
+数据源：espn
+总场次：122（赛果 5 / 直播 0 / 赛程 117）
+
+数据源健康状态：
+- espn｜正常 · 121 场
+- sofascore｜失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）
+- 实时选题雷达｜正常 · 63 条信号，命中 56 场比赛
+- ATP 官方技术统计｜未配置 · 缺少 ATP_PROTENNISLIVE_TOKEN
+- Sportradar 技术统计｜未配置 · 缺少 SPORTRADAR_API_KEY
+- 焦点复盘数据｜降级 · 所有逐场统计源均未命中，使用比分结构复盘
+- 头条技术统计｜降级 · 头条候选无逐场统计，头条页使用比分结构复盘
+- 外媒观点雷达｜本期无达到多源证据门槛的事件
+- 球员与赛事知识库｜正常 · 40 场接入历史背景
+- GitHub Models 数据编辑｜关闭
+- 官方视频雷达｜正常 · 已生成中文竖版片段
+
+ATP/WTA 巡回赛覆盖：
+- ATP ATP500｜ATP 500｜华盛顿公开赛｜23 场（赛果 0 / 直播 0 / 赛程 23）
+- WTA WTA500｜WTA 500｜华盛顿公开赛｜17 场（赛果 0 / 直播 0 / 赛程 17）
+- ATP ATP250｜ATP 250｜埃斯托利尔公开赛｜1 场（赛果 1 / 直播 0 / 赛程 0）
+- WTA WTA250｜WTA 250｜孟菲斯精英赛｜21 场（赛果 0 / 直播 0 / 赛程 21）
+
+待识别赛事（不影响收录，但需要补级别映射）：
+- ATP｜Mifel Tennis Open by Telcel Oppo｜20 场
+- WTA｜Axeria Open 2026 powered by Intaro Sport｜21 场
+- WTA｜Odlum Brown VanOpen｜18 场
