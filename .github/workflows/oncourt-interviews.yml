@@ -58,6 +58,14 @@ jobs:
             ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
             | tee /tmp/oncourt.log
 
+      - name: 用赛果反查缺口（顺带发现新频道）
+        run: |
+          # 拿「赢了但没采访」的场次当种子，按「球员 + 赛事」直接搜。
+          # 比通用查询强的地方在于能撞见标题不含 on-court/interview 的频道
+          # ——`Tennis Interviews`（234 条，补马德里/迈阿密/印第安维尔斯）
+          # 就是这么找到的，通用查询永远搜不到它。
+          python tools/oncourt_hunt.py --days 2 | tee -a /tmp/oncourt.log || true
+
       - name: 发现新来源（每周一次）
         # 注册表里最有价值的几个源全是手搜出来的（Eurosport 78 条、
         # United Cup 84、Hopman Cup 118），它们不在任何官方清单上。

@@ -332,6 +332,24 @@
       "scan_depth": 20,
       "verified": true,
       "note": "WTA 那边对应 tennistv.com 的东西，但量小得多：四个视频分区去重后只有 3 条，翻页参数无效。补的是别处拿不到的 WTA 250/500（Athens、Berlin）。slug 自带赛事/轮次/球员，比标题可靠。Brightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），所以只能走页面。"
+    },
+    {
+      "name": "Tennis Interviews",
+      "url": "https://www.youtube.com/channel/UCMADDo-joPSXbbhTfj0i__g/videos",
+      "tier": "unofficial",
+      "unofficial": true,
+      "assume_oncourt": true,
+      "scan_depth": 400,
+      "verified": true,
+      "note": "**靠「用赛果反查」才找到的，通用查询永远找不到它**——它的标题是『球员 轮次 赛事 年份』（如 `Lilli Tagger Champion Prague 2026`），完全不含 on-court / interview 字样，标题正则一条都收不到。所以打 assume_oncourt 按源判。234 条，覆盖的正好是官方缺口：马德里 31、迈阿密 17、印第安维尔斯 9、Berlin 10、Athens 6、Prague 4、Bad Homburg 4，还有 `Qinwen Zheng R32 Athens 2026`。缩略图确认是场上（球衣未换、场上麦、球筐），右上角 Tennis Channel 水印说明是转录，故归 unofficial。"
+    },
+    {
+      "name": "Hamburg European Open",
+      "url": "https://www.youtube.com/channel/UC4rv1XVrR_TE7A8uMdGDxFQ/videos",
+      "tier": "atp500",
+      "scan_depth": 400,
+      "verified": true,
+      "note": "**靠「用赛果反查」找到的赛事官方频道**——之前按句柄猜找不到。391 条里 28 条场上采访，格式 `HEO2021 /// ATP SF /// ON-COURT INTERVIEW with 球员`，ATP 与 WTA 两站都发。"
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",

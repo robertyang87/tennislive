@@ -377,7 +377,15 @@ def main() -> int:
         for r in rows:
             # tennistv 的 videoType=interviews + 有轮次，已经等价于场上采访，
             # 不能再拿标题正则去筛——它的标题是编辑体，一条都匹配不上。
-            kind = "oncourt" if r["id"].startswith("tennistv:") else classify(r["title"], rules)
+            # assume_oncourt：整个频道都是场上采访，标题却不含 on-court /
+            # post-match 字样。`Tennis Interviews` 就是这样——它写
+            # `Lilli Tagger Champion Prague 2026`，靠标题正则一条都收不到，
+            # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
+            # 全是官方缺口。这类源按源判，不按标题判。
+            if r["id"].startswith(("tennistv:", "wta:")) or src.get("assume_oncourt"):
+                kind = "oncourt"
+            else:
+                kind = classify(r["title"], rules)
             if kind is None:
                 continue
             # 综合体育频道要过网球闸：那里的 post-match interview 会命中
