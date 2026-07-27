@@ -1,10 +1,10 @@
 数据源：espn
-总场次：77（赛果 12 / 直播 0 / 赛程 65）
+总场次：77（赛果 13 / 直播 2 / 赛程 62）
 
 数据源健康状态：
 - espn｜正常 · 113 场
 - sofascore｜失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）
-- 实时选题雷达｜正常 · 70 条信号，命中 40 场比赛
+- 实时选题雷达｜正常 · 63 条信号，命中 35 场比赛
 - ATP 官方技术统计｜未配置 · 缺少 ATP_PROTENNISLIVE_TOKEN
 - Sportradar 技术统计｜未配置 · 缺少 SPORTRADAR_API_KEY
 - 焦点复盘数据｜降级 · 所有逐场统计源均未命中，使用比分结构复盘
@@ -12,7 +12,7 @@
 - 外媒观点雷达｜本期无达到多源证据门槛的事件
 - 球员与赛事知识库｜正常 · 28 场接入历史背景
 - GitHub Models 数据编辑｜关闭
-- 官方视频雷达｜正常 · 已生成中文竖版片段
+- 官方视频雷达｜降级 · Translation for cue 2 contains no Chinese
 
 ATP/WTA 巡回赛覆盖：
 - ATP ATP500｜ATP 500｜华盛顿公开赛｜15 场（赛果 0 / 直播 0 / 赛程 15）
