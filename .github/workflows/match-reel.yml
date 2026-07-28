@@ -49,9 +49,9 @@ on:
         required: false
         default: "锦织圭 vs 商竣程"
       score:
-        description: "赛果，进标题：赢家在前，如「6-7(3) 6-3 6-4」"
+        description: "赛果，进标题：赢家在前，如「2:1」"
         required: false
-        default: "6-7(3) 6-3 6-4"
+        default: "2:1"
       event:
         description: "赛事与轮次，进标题：如「华盛顿 ATP500 首轮」"
         required: false
@@ -176,12 +176,30 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
+      # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
+      # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
+      # 链接打开 404。**又一次「查信号不查产物」**。
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py --stage page \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --score "${{ github.event.inputs.score }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --copy "$COPY"
+
       - name: 丢掉不进仓库的中间物
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
-          # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片
+          # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
+          # _cover.html 是封面那一屏的渲染输入，图以 data URI 内嵌，单个 12 MB，
+          # 之前漏在清单外，每出一版就往仓库里塞一份（和 source_av.mp4 同一个毛病）。
           rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
-            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
@@ -212,8 +230,8 @@ jobs:
             git rebase origin/${{ github.ref_name }} || git rebase --abort
           done
 
-      # 推送**必须排在提交之后**——推送正文里那个下载链接指向仓库里的成片，
-      # 成片还没提交上去，链接就是 404。这一段的注释一直写着「推送是最后一步：
+      # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
+      # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
       # 前面提交完成片才有可下载的链接」，而它本人一直排在提交**前面**：
       # `wait_for_images` 探了二十次全失败，整条推送被取消（run 30339377013）。
       # 之所以一直没被发现，是因为这一步以前从没真的跑成功过。

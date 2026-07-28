@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """把竖版短片推到微信：成片链接 + 小红书标题文案（整段可复制）。
 
-两件事是踩过坑之后定的：
+三件事是踩过坑之后定的：
+
+- **复制页要在提交之前写，所以这个脚本分两段跑**。`--stage page` 只把
+  `copy.html` 落进 outdir，由工作流的提交步骤带进仓库；`--stage push`（默认）
+  才发微信。之前两件事挤在同一步里，而那一步排在提交**之后**——文件只存在于
+  runner 的工作区，从来没被 commit 过，GitHub Pages 自然是 404
+  （run 30342567879：推送步骤 success，链接打开 404）。**又一次「查信号不查产物」**
 
 - **成片优先走 jsDelivr，超过 20 MB 只能回 raw**。`github.com/<repo>/raw/...`
   会 302 到 raw.githubusercontent.com，国内没有 CDN，下载慢——所以能走 jsDelivr
@@ -14,10 +20,13 @@
   又印一遍，字符串断言全过，人一看整页才发现。所以正文只讲片子，
   文案只在复制块里出现一次
 
-用法：
+用法（两段，中间隔着工作流的 git commit）：
 
-    python tools/push_reel.py --outdir output/2026-07-28/reel/nishikori-shang \\
-        --title "商竣程复出首战" --copy specs/reels/nishikori-shang.xhs.txt
+    python tools/push_reel.py --stage page --outdir output/2026-07-28/reel/… \\
+        --matchup "锦织圭 vs 商竣程" --copy specs/reels/nishikori-shang.xhs.txt
+    # …提交产物…
+    python tools/push_reel.py --outdir output/2026-07-28/reel/… \\
+        --matchup "锦织圭 vs 商竣程" --copy specs/reels/nishikori-shang.xhs.txt
 """
 
 from __future__ import annotations
@@ -27,7 +36,10 @@ import html
 import os
 import re
 import sys
+import time
 from pathlib import Path
+
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -51,6 +63,42 @@ def video_url(outdir: Path, name: str) -> str:
         return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{path}"
     print(f"[链接] 成片 {size / 1e6:.1f} MB 超过 jsDelivr 的 20 MB 上限，改用 raw")
     return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
+
+
+def copy_page_url(outdir: Path) -> str:
+    """复制页由 GitHub Pages 提供——raw 和 jsDelivr 都按纯文本发 .html，
+    点开是一屏源码，按钮和 JS 都不会生效。"""
+    return f"{_PAGES}/{outdir.as_posix()}/copy.html"
+
+
+def wait_for_copy_page(url: str, *, attempts: int = 12, delay: float = 15.0,
+                       timeout: int = 15) -> None:
+    """等 Pages 把刚提交的复制页发出来，等不到就别推。
+
+    提交完到 Pages 重新发布之间有一两分钟，所以要等；但**等不到就必须报错**，
+    不能带着一个 404 的按钮把消息发出去——微信那条消息发出去就收不回来了。
+    """
+    attempts = max(1, min(30, int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS",
+                                                 attempts))))
+    delay = max(0.0, min(60.0, float(os.environ.get(
+        "TENNISLIVE_COPYPAGE_RETRY_SECONDS", delay))))
+    last = ""
+    for attempt in range(attempts):
+        try:
+            response = requests.get(url, timeout=timeout)
+            if response.status_code == 200:
+                print(f"[复制页] 第 {attempt + 1} 次探活拿到 200")
+                return
+            last = f"HTTP {response.status_code}"
+        except requests.RequestException as exc:  # 网络抖动也算没起来
+            last = f"{type(exc).__name__}: {exc}"
+        print(f"[复制页] 第 {attempt + 1}/{attempts} 次探活 {last}，{delay:.0f}s 后重试")
+        if attempt + 1 < attempts:
+            time.sleep(delay)
+    raise SystemExit(
+        f"复制页 {url} 始终打不开（{last}）。先确认 copy.html 已经**提交进仓库**"
+        "——它必须由 --stage page 在提交步骤之前写出来，写在推送步骤里等于没写。"
+    )
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
@@ -101,6 +149,8 @@ def build_html(video_url: str, copy_url: str, lead: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--stage", choices=("page", "push"), default="push",
+                    help="page=只写复制页（须排在 git commit 之前）；push=发微信")
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
     ap.add_argument("--column", default="赛场之上", help="栏目名")
@@ -112,6 +162,23 @@ def main() -> int:
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
+    copy_text = Path(args.copy).read_text(encoding="utf-8").strip()
+    if not copy_text:
+        raise SystemExit("文案是空的")
+
+    # 微信那条消息的标题（`7.28 赛场之上 | …`）**不能塞进复制页的「标题」格**——
+    # 那一格是拿去粘小红书的，小红书标题上限 20 字，而这一句二十七字；塞进去
+    # 还会把文案自己那句真标题挤成正文第一行。两个标题各归各的。
+    title = headline(outdir, args.column, args.matchup, args.score, args.event)
+    page = outdir / "copy.html"
+    copy_url = copy_page_url(outdir)
+
+    if args.stage == "page":
+        page.write_text(to_copy_page(copy_text), encoding="utf-8")
+        print(f"已写复制页：{page}（{len(copy_text)} 字）\n  发布后是 {copy_url}\n"
+              "  这一步必须排在 git commit 之前，否则它进不了仓库。")
+        return 0
+
     name = args.video
     if not name:
         mp4s = sorted(p.name for p in outdir.glob("*.mp4"))
@@ -120,18 +187,11 @@ def main() -> int:
         name = mp4s[0]
     if not (outdir / name).is_file():
         raise SystemExit(f"找不到成片 {outdir / name}")
+    if not page.is_file():
+        raise SystemExit(f"{page} 不在——先跑一次 --stage page，且要排在提交之前")
 
-    copy_text = Path(args.copy).read_text(encoding="utf-8").strip()
-    if not copy_text:
-        raise SystemExit("文案是空的")
-
-    title = headline(outdir, args.column, args.matchup, args.score, args.event)
-    copy_text = f"{title}\n\n{copy_text}"
-
-    # 复制页和成片一起落在 outdir 里，由 GitHub Pages 提供——raw 和 jsDelivr
-    # 都按纯文本发 .html，点开是一屏源码，按钮和 JS 都不会生效。
-    (outdir / "copy.html").write_text(to_copy_page(copy_text), encoding="utf-8")
-    copy_url = f"{_PAGES}/{outdir.as_posix()}/copy.html"
+    # 查产物，不查信号：Pages 真的把它发出来了才发微信。
+    wait_for_copy_page(copy_url)
 
     url = video_url(outdir, name)
     body = build_html(url, copy_url, args.lead)
