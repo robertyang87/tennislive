@@ -1,0 +1,1200 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "story_slug": "wildcard",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
+  "selected_count": 0,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "degraded_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "failed_curated_source_urls": [],
+  "input_domains": [
+    "en.wikipedia.org",
+    "france24.com",
+    "itftennis.com",
+    "tennismajors.com"
+  ],
+  "providers_queried": [
+    "bing-web-image",
+    "curated-editorial",
+    "duckduckgo-web-image",
+    "flickr-public",
+    "official-story-pages",
+    "official-tennis-archive",
+    "openverse",
+    "wikimedia-commons"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 4
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard 2001 wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "wildcard 2001 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "wildcard 2001 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "wildcard 2001 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "wildcard 2001 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "wildcard 2001 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard 2001 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "wildcard wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "wildcard wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "wildcard wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "wildcard wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "wildcard wimbledon tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard wimbledon tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "wildcard 2009 us open tennis",
+      "status": "ok",
+      "candidate_count": 4
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "wildcard 2009 us open tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard 2009 us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "wildcard 2009 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "wildcard 2009 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "wildcard 2009 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "wildcard 2009 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "wildcard 2009 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard 2009 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "wildcard us open tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "wildcard us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "wildcard us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "wildcard us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "wildcard us open tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard us open tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "wildcard 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "wildcard 2026 tennis",
+      "status": "ok",
+      "candidate_count": 4
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "wildcard 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "wildcard 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "wildcard 2026 tennis",
+      "status": "ok",
+      "candidate_count": 3
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "wildcard 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "wildcard 2026 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard 2026 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "wildcard tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "wildcard tennis",
+      "status": "empty",
+      "candidate_count": 0
+    }
+  ],
+  "selected_providers": [],
+  "excluded_source_urls": [],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-media",
+      "page_url": "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+      "source_url": "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+      "image_url": "",
+      "credit": "itftennis.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "  https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.france24.com/en/live-news/20260708-britain-s-fery-becomes-first-wildcard-to-reach-wimbledon-semis-in-25-years",
+      "source_url": "https://www.france24.com/en/live-news/20260708-britain-s-fery-becomes-first-wildcard-to-reach-wimbledon-semis-in-25-years",
+      "image_url": "https://s.france24.com/media/display/1980352c-7aec-11f1-978c-005056a90284/w:1280/p:16x9/dc557dd9d3dade5a8b8f503c70d7b9f7d03c7d96.jpg",
+      "credit": "france24.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "britain&#039;s fery becomes first wildcard to reach wimbledon semis in 25 years arthur fery became the first man to reach the wimbledon semi-finals as a wildcard in 25 years after the briton extended his fairytale run with a stunning victory against flavio cobolli on wednesday. https://www.france24.com/en/live-news/20260708-britain-s-fery-becomes-first-wildcard-to-reach-wimbledon-semis-in-25-years",
+      "image_text": " https://s.france24.com/media/display/1980352c-7aec-11f1-978c-005056a90284/w:1280/p:16x9/dc557dd9d3dade5a8b8f503c70d7b9f7d03c7d96.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.tennismajors.com/wimbledon-news/july-9-2001-the-day-goran-ivanisevic-finally-won-wimbledon-270642.html",
+      "source_url": "https://www.tennismajors.com/wimbledon-news/july-9-2001-the-day-goran-ivanisevic-finally-won-wimbledon-270642.html",
+      "image_url": "https://www.tennismajors.com/app/uploads/2020/07/Ivanisevic-07_09.jpg",
+      "credit": "tennismajors.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "the day goran ivanisevic finally won wimbledon - tennis majors - tennis majors after losing in the final three times in the 1990s, ivanisevic finally got his hands on the wimbledon trophy when he beat rafter in a five-set final https://www.tennismajors.com/wimbledon-news/july-9-2001-the-day-goran-ivanisevic-finally-won-wimbledon-270642.html",
+      "image_text": "goran ivanisevic on this day 2001 https://www.tennismajors.com/app/uploads/2020/07/ivanisevic-07_09.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://www.tennismajors.com/us-open-news/september-12-2009-the-day-kim-clijsters-became-the-first-wildcard-to-win-the-us-open-491468.html",
+      "source_url": "https://www.tennismajors.com/us-open-news/september-12-2009-the-day-kim-clijsters-became-the-first-wildcard-to-win-the-us-open-491468.html",
+      "image_url": "https://www.tennismajors.com/app/uploads/2021/09/clijsters-otd-09_12.jpg",
+      "credit": "tennismajors.com",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "the day clijsters won the us open as a wildcard - tennis majors on september 12, 2009, kim clijsters, who had just come back on the tour after a two-year hiatus, won the us open without even holding a wta ranking. https://www.tennismajors.com/us-open-news/september-12-2009-the-day-kim-clijsters-became-the-first-wildcard-to-win-the-us-open-491468.html",
+      "image_text": "kim clijsters otd 09_12 https://www.tennismajors.com/app/uploads/2021/09/clijsters-otd-09_12.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://en.wikipedia.org/wiki/2001_Wimbledon_Championships_%E2%80%93_Men%27s_singles",
+      "source_url": "https://en.wikipedia.org/wiki/2001_Wimbledon_Championships_%E2%80%93_Men%27s_singles",
+      "image_url": "",
+      "credit": "en.wikipedia.org",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "2001 wimbledon championships – men's singles - wikipedia  https://en.wikipedia.org/wiki/2001_wimbledon_championships_%e2%80%93_men%27s_singles",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://en.wikipedia.org/wiki/2009_US_Open_%E2%80%93_Women%27s_singles",
+      "source_url": "https://en.wikipedia.org/wiki/2009_US_Open_%E2%80%93_Women%27s_singles",
+      "image_url": "",
+      "credit": "en.wikipedia.org",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "reference-only",
+      "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
+      "search_text": "2009 us open – women's singles - wikipedia  https://en.wikipedia.org/wiki/2009_us_open_%e2%80%93_women%27s_singles",
+      "image_text": " ",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "provider": "official-media",
+      "page_url": "https://en.wikipedia.org/wiki/Arthur_Fery",
+      "source_url": "https://en.wikipedia.org/wiki/Arthur_Fery",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Fery_WMQ22_%2813%29_%2852191184348%29.jpg/960px-Fery_WMQ22_%2813%29_%2852191184348%29.jpg",
+      "credit": "en.wikipedia.org",
+      "license": "官方媒体 · 非商业资讯引用",
+      "status": "candidate",
+      "reason": "官方页面图片作为正常候选参与评分；机构署名照记",
+      "search_text": "arthur fery - wikipedia  https://en.wikipedia.org/wiki/arthur_fery",
+      "image_text": " https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/fery_wmq22_%2813%29_%2852191184348%29.jpg/960px-fery_wmq22_%2813%29_%2852191184348%29.jpg",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "trivia-wildcard.jpg",
+      "title": "File:Goran Ivanisevic serve Wimbledon 2004.jpg",
+      "subject": "wildcard",
+      "required_years": [
+        "2001"
+      ],
+      "required_event_terms": [],
+      "person_required": false,
+      "subject_match": false,
+      "year_match": false,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": true,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "wildcard 2001 wimbledon tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 88,
+      "exact_candidate_count": 0,
+      "archive_candidate_count": 0,
+      "rejection_counts": {
+        "subject-or-person-mismatch": 26,
+        "duplicate-candidate": 37,
+        "metadata-relevance-below-3": 23,
+        "low-visual-impact-metadata": 2
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 4
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard 2001 wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "wildcard 2001 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "wildcard 2001 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "wildcard 2001 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "wildcard 2001 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "wildcard 2001 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard 2001 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "wildcard wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "wildcard wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "wildcard wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "wildcard wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "wildcard wimbledon tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard wimbledon tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "page": "explainer",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "wildcard 2009 us open tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 77,
+      "exact_candidate_count": 0,
+      "archive_candidate_count": 0,
+      "rejection_counts": {
+        "subject-or-person-mismatch": 12,
+        "metadata-relevance-below-3": 39,
+        "low-visual-impact-metadata": 2,
+        "duplicate-candidate": 24
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "wildcard 2009 us open tennis",
+          "status": "ok",
+          "candidate_count": 4
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "wildcard 2009 us open tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard 2009 us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "wildcard 2009 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "wildcard 2009 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "wildcard 2009 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "wildcard 2009 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "wildcard 2009 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard 2009 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "wildcard us open tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "wildcard us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "wildcard us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "wildcard us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "wildcard us open tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard us open tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "page": "today",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "wildcard 2026 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 55,
+      "exact_candidate_count": 0,
+      "archive_candidate_count": 0,
+      "rejection_counts": {
+        "subject-or-person-mismatch": 19,
+        "metadata-relevance-below-3": 20,
+        "low-visual-impact-metadata": 5,
+        "duplicate-candidate": 11
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "wildcard 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "wildcard 2026 tennis",
+          "status": "ok",
+          "candidate_count": 4
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "wildcard 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "wildcard 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "wildcard 2026 tennis",
+          "status": "ok",
+          "candidate_count": 3
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "wildcard 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "wildcard 2026 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard 2026 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "wildcard tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "wildcard tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    }
+  ],
+  "selection_evidence": {
+    "kind": "trivia",
+    "candidate_slug": "wildcard",
+    "result_count": 53,
+    "live_count": 2,
+    "schedule_count": 31,
+    "selection_basis": "live media/search signals first; intrinsic curiosity and shareability provide the no-signal fallback",
+    "viral_prior": 0.0,
+    "topic_score": 0.0,
+    "live_relevance_score": 0.0,
+    "trend_signal_count": 0,
+    "candidate_rank": 1,
+    "candidate_count": 1,
+    "visual_preflight_rejections": 0,
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 4
+  },
+  "rejected_candidates": [],
+  "recovery": {
+    "status": "not-needed",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
+}
