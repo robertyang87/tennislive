@@ -373,11 +373,14 @@ def test_body_only_lists_matches_that_are_on_the_cards():
     """正文和图对不上，读者第一眼就发现。"""
     from tennislive.render.schedule_post import post_body
 
-    a, b = sched(match_id="a"), sched(match_id="b")
+    a = sched(match_id="a", home="Alpha One", away="Beta One")
+    b = sched(match_id="b", home="Gamma Two", away="Delta Two")
     display = schedule_time_display([a, b])
     body = post_body([a], display)
-    assert "Alpha Player" in body or "阿尔法" in body
-    assert body.count("·") >= 1
+    assert "Alpha One" in body
+    assert "Gamma Two" not in body, "列进了没上卡的那场"
+    # 一个赛事标题 + 一行比赛
+    assert len([ln for ln in body.splitlines() if ln.strip()]) == 2
 
 
 def test_copy_button_only_appears_when_the_link_is_known_reachable():
