@@ -34,6 +34,17 @@ OUT = Path("tools/broll/topics.json")
 # the words that must appear in a file's own title or description — a
 # non-empty result has to prove it is on-topic, the same way an empty one has
 # to prove it is really empty.
+#
+# A keyword that must appear is not enough on its own, because the words that
+# name a topic are substrings of words that name something else. Probing the
+# 2026-08 candidates, "mixed doubles" + "tennis" let through the 2018 Youth
+# Olympics **table tennis** mixed doubles, and "wimbledon" let through the
+# South Wimbledon tube sign and a stained-glass window in Coventry. Both slots
+# reported healthy counts made entirely of wrong pictures — the same failure
+# the _must list exists to stop, arriving through the door it left open. So a
+# topic may also name the words that disqualify a file outright.
+_NEVER = ("table tennis", "tube sign", "stained glass")
+
 TOPICS: dict[str, dict] = {
     "whites 温网全白着装": {
         "_must": ["wimbledon", "tennis"],
@@ -89,6 +100,51 @@ TOPICS: dict[str, dict] = {
         "发球": ["tennis serve fastest", "Sam Groth serve", "John Isner serve"],
         "测速": ["tennis speed radar gun", "serve speed display"],
     },
+    # 2026-08 的一批候选，结论记在 docs/newshook-topics.md。
+    # 这一轮又撞上「零命中先怀疑自己的查询词」：法网 2026 的分类不叫
+    # `2026 French Open`（0 张），它叫 `2026 Roland Garros`（24 张 + 7 个子类）。
+    # 所以年份赛事这一档一律按分类真名写，别按赛事的英文俗名猜。
+    "wearable 腕上那条带子": {
+        "_must": ["whoop", "wristband", "roland garros", "australian open"],
+        "戴着带子的球员": ["Whoop band tennis", "tennis player wristband",
+                     "Aryna Sabalenka training", "Maria Sakkari 2025"],
+        "2026 法网": ["2026 Roland Garros", "Roland Garros 2026 scoreboard"],
+        "2026 澳网": ["Australian Open 2026", "Australian Open 2026 match"],
+    },
+    "video-review 两跳算不算": {
+        "_must": ["umpire", "wimbledon", "tennis"],
+        "主裁椅上的裁判": ["tennis chair umpire", "Umpire chair 2026 Roland Garros"],
+        "温网球场": ["2026 Wimbledon Championships", "Wimbledon Centre Court match"],
+        "低球救球": ["tennis player low volley stretch", "tennis half volley reach"],
+    },
+    "cramps 抽筋不算伤": {
+        "_must": ["tennis", "physio", "trainer", "sinner", "medvedev"],
+        "队医上场": ["tennis trainer treating player", "tennis player receiving treatment",
+                 "tennis injury timeout", "tennis physiotherapist treatment court"],
+        "辛纳": ["Jannik Sinner"],
+        "梅德韦杰夫": ["Daniil Medvedev"],
+    },
+    "wildcard 签表上那个 WC": {
+        "_must": ["draw", "tennis", "williams"],
+        "签表/抽签": ["tennis singles draw board", "tennis draw ceremony",
+                  "Grand Slam draw sheet"],
+        "拿外卡的人": ["Venus Williams 2025", "Serena Williams"],
+    },
+    "ranking 赢了球排名还在掉": {
+        "_must": ["tennis", "ranking", "zheng"],
+        "排名榜": ["tennis rankings screen", "ATP ranking board"],
+        "郑钦文": ["Zheng Qinwen"],
+    },
+    "tax 支票上的数字": {
+        "_must": ["wimbledon", "trophy", "tennis"],
+        "冠军奖杯": ["Wimbledon trophy champion", "Wimbledon Venus Rosewater Dish"],
+        "颁奖时刻": ["Wimbledon trophy ceremony", "tennis champion trophy ceremony"],
+    },
+    "mixed-doubles 混双被搬走了": {
+        "_must": ["mixed doubles", "arthur ashe", "us open"],
+        "混双比赛": ["mixed doubles tennis US Open", "Wimbledon mixed doubles"],
+        "亚瑟阿什球场": ["Arthur Ashe Stadium", "US Open night session"],
+    },
 }
 
 
@@ -119,6 +175,22 @@ def _plain(raw) -> str:
     return " ".join("".join(buf).split())
 
 
+def on_topic(title: str, description: str, must: list[str]) -> bool:
+    """Does this file prove, in its own words, that it is about the topic?
+
+    Kept separate from the network call so the two ways a candidate list goes
+    wrong can be checked without Commons: a file that never mentions the
+    subject, and a file that mentions it only as a substring of something
+    else (table tennis, South Wimbledon).
+    """
+    blob = f"{title} {description}".lower()
+    if any(word in blob for word in _NEVER):
+        return False
+    if ".pdf" in title.lower():
+        return False
+    return not must or any(word in blob for word in must)
+
+
 def _hits(term: str, must: list[str]) -> list[dict]:
     data = _get(action="query", format="json", maxlag=5, generator="search",
                 gsrsearch=term, gsrnamespace=6, gsrlimit=20,
@@ -133,11 +205,8 @@ def _hits(term: str, must: list[str]) -> list[dict]:
         w, h = info.get("width", 0), info.get("height", 0)
         if not any(f in lic.lower() for f in FREE) or w < MIN_W or h < MIN_H:
             continue
-        blob = (page.get("title", "") + " " +
-                _plain((meta.get("ImageDescription") or {}).get("value", ""))).lower()
-        if must and not any(k in blob for k in must):
-            continue
-        if blob.endswith(".pdf") or ".pdf" in page.get("title", "").lower():
+        desc = _plain((meta.get("ImageDescription") or {}).get("value", ""))
+        if not on_topic(page.get("title", ""), desc, must):
             continue
         rows.append({
             "title": page.get("title", ""), "size": [w, h], "licence": lic,
