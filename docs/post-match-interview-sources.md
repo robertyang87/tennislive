@@ -913,6 +913,58 @@ SuperSport 命中的是标题里带 interview 的 highlights。
 顺带补出第四条标题模式「轮次 + Interview」：Stan Sport 写
 `Wimbledon First Round Interview 🎙️`，前三条模式一条都不认，88 条取到 0 条。
 
+### 赛事官网有个公开的视频 JSON 接口——但里面没有采访
+
+2026-07-28 被问「今天华盛顿的赛后场上采访还有别的渠道么」，顺着查了一圈，
+**结论是没有**，但挖出一个之前不知道的入口，记下来免得下次重找。
+
+赛事官网 `mubadaladcopen.com` 是 Pulselive CMS（路径带 `/-/media/sites/tournaments/…`，
+和 atptour.com 同一套）。首页 HTML 里 `data-*` 属性藏着一个接口：
+
+    https://www.mubadaladcopen.com/en/-/tournaments/videos/latest
+
+返回 14.5 KB JSON，`content.articles[]`，每条带 `title` / `description` /
+**`videoId`（Brightcove）** / `url`。**公开可取，不需要任何绕过。**
+
+值得记的两点：
+
+- **它同时覆盖 ATP 和 WTA**（华盛顿是合办赛）——曾俊欣、萨姆索诺娃、大威、
+  纳瓦罗、费尔南德斯都在里面。WTA 侧是覆盖率最大的缺口，所以这类合办赛的
+  官网接口本来很有希望
+- **但它一条采访都没有**：20 条全是 Highlights / Hot Shot / 战报。
+  试过 `?count=100` `?tag=interview` `?page=2` `/videos/all` `/media/videos/latest`
+  ——**参数一律被忽略，永远是同样 20 条**，没有采访分类
+
+同一轮排除掉的其他渠道（华盛顿首日，2026-07-27）：
+
+| 渠道 | 结果 |
+| --- | --- |
+| ATP Tour YouTube | 只有 Highlights |
+| Tennis TV YouTube | 只有 Highlights |
+| Tennis Channel YouTube | 有华盛顿内容，但是**演播台/场外段落**（「穆塞蒂谈错过法网温网」「Fritz 聊婚礼上的舞」），不是场上 |
+| 赛事自有 YouTube 频道 | 当天六条**全是 Press Conference**（大坂、锦织圭、伊拉、郑钦文、德米纳尔、保罗）；翻 2025 存档同样清一色发布会 |
+| YouTube 搜索（8 组词，含中文） | 6 组零命中，2 组只翻出旧条目 |
+| atptour.com | 403（本环境一贯如此） |
+| dcopen.com | **不是赛事官网**，是 GoDaddy 停放页 |
+
+**唯一有的还是 tennistv：整站 26 个视频里只有 1 条赛后采访。**
+
+### tennistv 的 slug 自证轮次，`preview-interview` 不是赛后采访
+
+同一轮的一个具体收获：tennistv 的视频 URL 形如 `/videos/{id}/{slug}`，
+而 slug 把该说的都说了。华盛顿首日 26 条里有 11 条 slug 带 `interview`：
+
+    washington-2026-r1-taylor-fritz-interview      ← 赛后，唯一一条
+    washington-2026-musetti-preview-interview      ← 赛前预告
+    washington-2026-nishikori-preview-interview    ← 赛前预告
+    …另外 8 条同为 preview-interview
+
+**采集器剔对了，而且是有意的**，不是碰巧：`scan_tennistv()` 要求
+`videoType == "interviews"` **且** `metadataRound` 非空。实测核过字段——
+Fritz 那条 `round=R1`，菲斯那条 `round=—`（空），所以赛前的进不来。
+**这里记一笔是因为标题完全看不出来**：`Fils discusses his year so far` 和
+`250th hard court victory for Fritz!` 从标题上分不出哪个是赛后。
+
 ### scan_depth 骗了我：14 个源没扫到底，合计漏 350 条
 
 「多找一些信息源检索」——找了一轮，最大的收获**不是新源，是旧源没扫完**。
