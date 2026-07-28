@@ -77,8 +77,29 @@ jobs:
           echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
 
-      # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」——沙箱和
-      # 托管 runner 都中招。配了这个 Secret 就带 cookie 下载，没配就走 client 梯子。
+      # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」。第一道解法
+      # 是 GVS PO token：yt-dlp 官方推荐的 bgutil provider 起在本机 4416，插件会
+      # 自动去取，web/mweb/tv 三档就能过。**起不来不算失败**——起不来就退回 client
+      # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
+      - name: 起 PO token provider
+        id: pot
+        continue-on-error: true
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "provider 起来了（第 ${i} 次探活）"
+              echo "up=1" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      # 配了这个 Secret 就带 cookie 下载，没配就只能靠上面的 PO token + client 梯子。
       - name: 落 cookies（配了 Secret 才有）
         id: cookies
         env:
@@ -96,6 +117,7 @@ jobs:
         if: github.event.inputs.mode == 'probe'
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
@@ -107,6 +129,7 @@ jobs:
         if: github.event.inputs.mode == 'render'
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
