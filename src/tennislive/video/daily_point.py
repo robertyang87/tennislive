@@ -885,6 +885,65 @@ def discover_tennistv_point(
     return selection
 
 
+# YouTube 404s the uploads feed from some datacenter/CI IPs even though the
+# identical URL is 200 elsewhere (verified: fetched off-runner, the ATP feed
+# carries yesterday's match highlights; the daily skip run's resolver_attempts
+# show every feed returning a clean 404 in Actions). A bare bot User-Agent is
+# the request most likely refused, so present a browser-shaped UA/Accept while
+# still identifying the project.
+_OFFICIAL_FEED_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/126.0 Safari/537.36 tennislive/0.1 "
+        "(+https://github.com/robertyang87/tennislive)"
+    ),
+    "Accept": "application/atom+xml,application/xml,text/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.8",
+}
+
+
+def _official_feed_urls(feed_url: str, channel_id: str) -> list[str]:
+    """The uploads feed plus its ``channel_id`` twin as a fallback.
+
+    The feed the pipeline builds is the ``playlist_id=UU…`` uploads form; the
+    ``channel_id=UC…`` feed mirrors the same uploads. YouTube does not always
+    gate the two identically, so trying the twin on a persistent failure is a
+    free second chance that costs nothing when the first form already works.
+    """
+    urls = [feed_url]
+    twin = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+    if twin not in urls:
+        urls.append(twin)
+    return urls
+
+
+def _fetch_official_youtube_feed(
+    get: Callable[..., object],
+    feed_url: str,
+    channel_id: str,
+    *,
+    timeout: int,
+) -> object:
+    """Fetch an uploads feed, hardened against the datacenter-IP 404.
+
+    Sends a browser-shaped UA/Accept and, on failure, falls back from the
+    ``playlist_id`` form to the ``channel_id`` twin. Raises the last error if
+    every form fails so the caller records it in ``resolver_attempts`` -- a
+    persistent 404 across both forms is the signature of a pure IP block, which
+    only a proxy or authenticated fetch (not a header tweak) can clear.
+    """
+    last_exc: Exception | None = None
+    for url in _official_feed_urls(feed_url, channel_id):
+        try:
+            response = get(url, headers=_OFFICIAL_FEED_HEADERS, timeout=timeout)
+            response.raise_for_status()
+            return response
+        except requests.RequestException as exc:
+            last_exc = exc
+    assert last_exc is not None  # loop runs at least once, so this is set on failure
+    raise last_exc
+
+
 def _discover_official_youtube_point(
     digest: Digest,
     *,
@@ -898,12 +957,9 @@ def _discover_official_youtube_point(
     source: str = "",
 ) -> PointSelection | None:
     """Resolve one verified official YouTube uploads feed."""
-    response = get(
-        feed_url,
-        headers={"User-Agent": "tennislive/0.1 (+https://github.com/robertyang87/tennislive)"},
-        timeout=timeout,
+    response = _fetch_official_youtube_feed(
+        get, feed_url, channel_id, timeout=timeout
     )
-    response.raise_for_status()
     candidates = parse_official_youtube_feed(
         str(response.text),
         channel_id=channel_id,
