@@ -80,9 +80,12 @@ jobs:
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
       # 64MB 源片、合完音之后才死——白跑一分半。
+      # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
+      # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
+      # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
       - name: 装依赖
         run: |
-          pip install -q -e ".[webrender]"
+          pip install -q -e ".[webrender,visualqa]"
           pip install -q edge-tts yt-dlp
 
       - name: 缓存 Chromium
