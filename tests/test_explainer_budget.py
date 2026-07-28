@@ -166,6 +166,18 @@ def _hook(slug: str) -> int:
 # 够到就说明是拼错了，不是写长了。
 SANITY_MAX_CHARS = 5000
 
+# **目标**（不是闸门）：账号所有者「最好控制在 3 分钟左右的配音」。
+# 按实测语速 6.1 字/秒，3 分钟 ≈ 1100 字。写稿时朝这个数走，超一点不拦——
+# 上面那条硬断言只管拼接失控。已发成品的实际落点：hawkeye 659、ball-pick 800、
+# ten-champions 962，都在这个量级里偏短的一侧，说明 1100 是够用的。
+TARGET_SECONDS = 180
+TARGET_CHARS = round((TARGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * SPEECH_RATE)
+
+
+def narration_seconds(slug: str) -> float:
+    """这条片子的旁白大概多长（秒）。写稿时拿来对目标，不参与断言。"""
+    return _total(slug) / SPEECH_RATE + LEAD_SILENCE + TAIL_SILENCE
+
 
 @pytest.mark.parametrize("slug", sorted(_SCRIPTS))
 def test_旁白字数不超过片长预算(slug):
