@@ -319,7 +319,7 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     # slug -> 必须仍然是这张球场照（换成别的球场照请连同理由一起改这里）
     court_photos = {
         "los-cabos": "los-cabos-estadio-alejandro-burillo.jpg",
-        "memphis": "memphis-leftwich-tennis-center.jpg",
+        "memphis": "memphis-leftwich-stadium-court.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 
