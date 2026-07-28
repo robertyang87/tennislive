@@ -68,8 +68,8 @@
       "page": "story",
       "provider": "bing-web-image",
       "query": "washington 2021 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 2
     },
     {
       "page": "story",
@@ -431,14 +431,15 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 70,
-      "exact_candidate_count": 0,
+      "candidate_count": 72,
+      "exact_candidate_count": 1,
       "archive_candidate_count": 0,
       "rejection_counts": {
         "subject-or-person-mismatch": 17,
-        "low-visual-impact-metadata": 6,
+        "low-visual-impact-metadata": 7,
         "metadata-relevance-below-3": 35,
-        "duplicate-candidate": 12
+        "duplicate-candidate": 12,
+        "download-or-resolution-failed": 1
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -474,8 +475,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "washington 2021 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 2
         },
         {
           "page": "story",
