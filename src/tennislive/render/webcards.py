@@ -47,6 +47,7 @@ from .rating import (
 )
 from .schedule_time import (
     has_estimated_times,
+    has_next_day_times,
     match_key,
     round_rank,
     schedule_time_display,
@@ -1967,7 +1968,8 @@ def _event_backdrop(match: Match) -> tuple[str, str]:
 
 
 def _event_meta_html(
-    event_groups, match: Match, *, location: str, has_estimates: bool
+    event_groups, match: Match, *, location: str, has_estimates: bool,
+    has_next_day: bool = False,
 ) -> str:
     """赛事页顶部那一条：级别、场地类型、地点、时间口径。
 
@@ -1986,18 +1988,26 @@ def _event_meta_html(
         if len(levels) == 1
         else f'<b class="event-level">{html.escape(" / ".join(levels))}</b>'
     )
+    note = ["北京时间"]
+    if has_estimates:
+        note.append("*为预计时间")
+    if has_next_day:
+        note.append("+1 为次日")
     return "".join(
         (
             level_html,
             f'<b class="event-surface">{html.escape(surface_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
-            '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
+            f'<i>{" · ".join(note)}</i>',
         )
     )
 
 
-# 一页放几场：卡片去掉看点之后矮了不少，但页面高度是死的。这个数字不是拍
-# 出来的——渲染后用 _SHED_STAT_ROWS_JS 量过溢出，见 tests 里的分页用例。
+# 一页放几场：卡片去掉看点之后矮了不少，但页面高度是死的。
+#
+# 这个数字是量出来的，不是拍的。想放宽到 8 时 _SHED_STAT_ROWS_JS 报"超出页脚
+# 286px"，7 仍然超 114px，6 才归零——.frame 的 overflow:hidden 会把溢出悄悄
+# 裁掉，不看这个告警就发现不了。要再放宽只能先压卡片高度。
 SCHEDULE_PER_PAGE = 6
 
 
@@ -2008,6 +2018,7 @@ def schedule_body(
     time_display: dict[str, str] | None = None,
     page: int = 1,
     total: int = 1,
+    today=None,
 ) -> str:
     """今日赛程页：一个赛事一页，只列场次不写看点.
 
@@ -2020,7 +2031,10 @@ def schedule_body(
     ``_tonight_event_groups`` 又把它们并回去的，这里不要那个合并。
     """
     group = group_by_tournament(matches)[0]
-    display = time_display if time_display is not None else schedule_time_display(matches)
+    display = (
+        time_display if time_display is not None
+        else schedule_time_display(matches, today=today)
+    )
     times = [display.get(match_key(m), fmt_schedule_time(m)) for m in matches]
 
     # 有场地就标，没有就空着。赛程的用处是"几点、在哪块场"，场地名是这里
@@ -2043,6 +2057,7 @@ def schedule_body(
         matches[0],
         location=location,
         has_estimates=has_estimated_times(times),
+        has_next_day=has_next_day_times(times),
     )
     kicker = "Today's Schedule · 今日赛程"
     if total > 1:
@@ -3651,12 +3666,15 @@ def _schedule_selection(matches: list[Match]) -> list[Match]:
     return core
 
 
-# 全天一共放几场。跨日窗口打开之后单日能到 42 场（七页），推送正文两千多字，
-# 小红书那一千字的正文根本放不下，读者也不会逐行看完。
+# 全天一共放几场（卡片这一侧）。
 #
-# 16 这个数是从正文长度倒推的：一场一行、连赛事标题在内约 800 字，正好落在
-# 「一屏能扫完」的量级；分页后是三页左右，也比七页更像一份"今日主要赛程"。
-SCHEDULE_MAX_MATCHES = 16
+# 卡片和正文的口径**是分开的**：正文受小红书一千字硬约束（见
+# schedule_post.CAPTION_MAX_CHARS，装不下的按赛事轮流丢弃），卡片没有这条
+# 约束，可以更详细。正文里的场次永远是卡片的子集。
+#
+# 32 是按"一页 8 场、四页"定的：再多读者划不完，而当天巡回赛级别的场次通常
+# 也就这个量级（2026-07-28 跨日窗口打开后是 53 场，其中单打 31 场）。
+SCHEDULE_MAX_MATCHES = 32
 
 
 def _cap_by_importance(
@@ -3732,6 +3750,7 @@ def schedule_pages(
     date_label: str,
     *,
     tour_level_only: bool = True,
+    today=None,
 ) -> list[tuple[str, str]]:
     """今日赛程的整组页面 [(kind, body)]，按赛事分页、ATP 与 WTA 各自成页。
 
@@ -3742,7 +3761,7 @@ def schedule_pages(
         return []
     # 推算用全部场次（含双打、含被级别挡掉的）：留下来的场次可以借同赛事其他
     # 场次的已知时间当依据，先滤掉会平白少掉一批证据。
-    display = schedule_time_display(matches)
+    display = schedule_time_display(matches, today=today)
 
     pages: list[tuple[str, str]] = []
     for _group, selected in schedule_selection(
@@ -3756,6 +3775,7 @@ def schedule_pages(
                     chunk,
                     date_label,
                     time_display=display,
+                    today=today,
                     page=index,
                     total=len(chunks),
                 ),
@@ -3769,11 +3789,15 @@ def generate_schedule_deck(
     theme: str | None = None,
     *,
     tour_level_only: bool = True,
+    today=None,
 ):
     """渲染今日赛程卡组，返回 [(kind, Image)]."""
     if theme is None:
         theme = daily_card_theme()
-    pages = schedule_pages(matches, date_label, tour_level_only=tour_level_only)
+    pages = schedule_pages(
+        matches, date_label,
+        tour_level_only=tour_level_only, today=today,
+    )
     if not pages:
         return []
     return _screenshot_pages(pages, theme)
