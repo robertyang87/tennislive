@@ -11,6 +11,7 @@ from tennislive.video.official import (
     OfficialVideoMetadata,
     _curated_chinese_cues,
     _montage_starts,
+    _ytdl_opts,
     _source_cues,
     fetch_youtube_video_metadata,
     fetch_tennistv_video_metadata,
@@ -756,3 +757,30 @@ def test_champions_reel_render_uses_four_segments(tmp_path, monkeypatch):
     assert "BorderStyle=1" in filters
     assert "BackColour=&H00000000" in filters
     assert "MarginV=28" in filters
+
+
+def test_ytdl_opts_attaches_cookies_and_pot_aware_ladder(tmp_path, monkeypatch):
+    # 机房 IP 被 YouTube 按机器人验证挡住时，一份 YT_COOKIES 指向的 cookies.txt
+    # 是唯一稳定的解；client 梯子按有没有 PO token provider 换序。
+    jar = tmp_path / "yt-cookies.txt"
+    jar.write_text("# Netscape HTTP Cookie File\n", encoding="utf-8")
+
+    # 没配 cookie / 没有 provider：不带 cookiefile，非 web 客户端排前面。
+    monkeypatch.delenv("YT_COOKIES", raising=False)
+    monkeypatch.delenv("YT_POT_PROVIDER", raising=False)
+    plain = _ytdl_opts(skip_download=True)
+    assert "cookiefile" not in plain
+    assert plain["skip_download"] is True
+    assert plain["extractor_args"]["youtube"]["player_client"][0] == "android_vr"
+
+    # 配了 cookie 文件：带上 cookiefile。
+    monkeypatch.setenv("YT_COOKIES", str(jar))
+    assert _ytdl_opts()["cookiefile"] == str(jar)
+
+    # cookie 环境变量指向不存在的文件：不带 cookiefile（不硬塞一个坏路径）。
+    monkeypatch.setenv("YT_COOKIES", str(tmp_path / "missing.txt"))
+    assert "cookiefile" not in _ytdl_opts()
+
+    # 有 provider：web/mweb/tv 排前面（它们要 GVS PO token）。
+    monkeypatch.setenv("YT_POT_PROVIDER", "1")
+    assert _ytdl_opts()["extractor_args"]["youtube"]["player_client"][0] == "web"

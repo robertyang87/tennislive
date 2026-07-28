@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 
 import pytest
+import requests
 
 from tennislive.video.daily_point import (
     PointSelection,
@@ -433,6 +434,56 @@ def test_atp_discovery_uses_verified_official_channel_feed(sample_digest):
 
     assert selection is not None
     assert selection.metadata.candidate.tour == "ATP"
+
+
+def test_official_feed_falls_back_to_channel_id_twin_on_404(sample_digest):
+    # The playlist_id uploads feed 404s (the datacenter-IP symptom seen in the
+    # daily skip run); the fetch must retry the channel_id twin, which mirrors
+    # the same uploads, so a blocked primary form doesn't silently drop the
+    # whole free YouTube path.
+    feed_id = ATP_YOUTUBE_CHANNEL_ID[2:]
+    page = f'''<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:yt="http://www.youtube.com/xml/schemas/2015">
+      <yt:channelId>{feed_id}</yt:channelId>
+      <entry><yt:videoId>abc123</yt:videoId>
+        <title>Shot of the day: Jannik Sinner vs Novak Djokovic at Wimbledon</title></entry>
+    </feed>'''
+
+    calls: list[str] = []
+
+    def get(url, **_kwargs):
+        calls.append(url)
+        if "channel_id=" in url:
+            return _Response(page)
+        raise requests.HTTPError("404 Client Error: Not Found")
+
+    selection = discover_atp_point(
+        sample_digest,
+        get=get,
+        metadata_fetcher=lambda candidate: replace(
+            _metadata(),
+            candidate=candidate,
+            description=(
+                "Official shot of the day by Jannik Sinner against "
+                "Novak Djokovic at Wimbledon."
+            ),
+        ),
+    )
+
+    assert selection is not None
+    # Primary (playlist_id) tried first and 404'd, then the channel_id twin.
+    assert any("playlist_id=" in u for u in calls)
+    assert any("channel_id=" in u for u in calls)
+
+
+def test_official_feed_raises_when_both_forms_fail(sample_digest):
+    # A persistent failure across both feed forms must propagate (recorded as an
+    # error in resolver_attempts), not be swallowed into a false "empty".
+    def get(_url, **_kwargs):
+        raise requests.HTTPError("404 Client Error: Not Found")
+
+    with pytest.raises(requests.RequestException):
+        discover_atp_point(sample_digest, get=get)
 
 
 def test_tennistv_youtube_discovery_uses_its_own_verified_channel_feed(sample_digest):
