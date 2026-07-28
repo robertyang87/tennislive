@@ -39,6 +39,19 @@ on:
         description: "render：语速"
         required: false
         default: "+6%"
+      push:
+        description: "render 完成后推送到微信"
+        required: false
+        type: boolean
+        default: false
+      push_title:
+        description: "推送标题"
+        required: false
+        default: "赛场之上｜他等到第七个破发点才赢"
+      push_lead:
+        description: "推送正文那一句"
+        required: false
+        default: "商竣程复出首战打满三盘，锦织圭 6-7 6-3 6-4 逆转。竖版成片可直接下载。"
 
 permissions:
   contents: write
@@ -160,6 +173,22 @@ jobs:
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
+
+      # 推送是**最后一步**：前面提交完成片才有可下载的链接。
+      # 「触发成功」不算推了，这一步 success 才算。
+      - name: 推送到微信（可选）
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --title "${{ github.event.inputs.push_title }}" \
+            --lead "${{ github.event.inputs.push_lead }}" \
+            --copy "$COPY"
 
       - name: 上传 artifact
         uses: actions/upload-artifact@v4
