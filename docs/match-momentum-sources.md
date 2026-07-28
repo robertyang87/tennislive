@@ -84,6 +84,19 @@ https://api.wtatennis.com/tennis/tournaments/{eventId}/{year}/matches/{matchId}/
 ——**这条路是看运气的，不能写进日更流程**。而且它拿到的也只是**逐场汇总**，
 ATP 从来没有公开过逐分。
 
+### ATP 拿不到逐分，但赛报要的骨架有两条路
+
+**逐分和发球统计确实没有**，可"这场发生了什么"不是只有逐分能讲。以锦织圭 d. 商竣程
+（2026-07-27 华盛顿首轮）为例，这两条实测都通：
+
+| 源 | 拿到了 |
+|---|---|
+| **赛事自己的站点** `mubadaladcopen.com/en/scores/mens-results` | 服务端渲染，**ATP 官网那层 Cloudflare 拦不到这里**。轮次、球场（John Harris）、**用时 02:31:36**、双方的参赛身份（锦织圭 `(WC)` 外卡、商竣程 `(PR)` 受保护排名）。页面上那个 `Match Stats` 链接是**空的**，技术统计没公开 |
+| **TennisExplorer** `tennisexplorer.com/match-detail/?id=…` | 完整交手记录（这场之后 3-2）、逐年胜负、分场地战绩。**没有发球统计**（`Aces` 在页面上出现 0 次） |
+
+赛事官网这条和「赛事官方图库按命名规律直接探」是同一个道理：**ATP 总站封，
+办赛的自己的站反而是通的**。以后 ATP 场次的赛报，先去这一站的官网翻。
+
 其它试过的：
 
 - **SofaScore**（`api.sofascore.com` / `api.sofascore.app` / `www.sofascore.com`）
@@ -119,9 +132,16 @@ ATP 从来没有公开过逐分。
 
 | 频道 | 实测拿到的 |
 |---|---|
+| `@atptour` | `Taylor Fritz vs Zizou Bergs Highlights \| 2026 DC Open Round 1`（2 分 21 秒） |
 | `@TennisTV` | `Luca Van Assche vs Alexander Blockx For A First ATP Title! 🏆 \| Estoril 2026 Final Highlights`（8 分 14 秒） |
 | `@wta` | `Emma Navarro vs. Sofia Kenin \| 2026 Washington, DC Round 1 \| WTA Match Highlights`（7 分 50 秒） |
 | `@Wimbledon` | `An ICONIC battle \| Stan Wawrinka v Matteo Berrettini \| Full Match Replay \| Wimbledon 2026` |
+
+**男子赛事的集锦看 `@atptour`，不是 `@TennisTV`。** 华盛顿开打当天，
+`@atptour` 已经发了三条 DC Open 首轮集锦，而 `@TennisTV` 最新的还停在上一周的
+埃斯托里尔和基茨比厄尔——一条华盛顿都没有。只盯 Tennis TV 会得出"集锦还没出"
+的错误结论。**同一场的集锦也不是打完就有**：锦织圭那场结束两小时后仍未上架，
+排在当天更早结束的几场后面。
 
 **标题本身就是四要素自证**——球员、赛事、年份、轮次都由发布方自己写在标题里，
 不靠看画面推断。和赛事官方图库按命名规律探图是同一个道理。
