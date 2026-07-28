@@ -1,5 +1,5 @@
 {
-  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。",
+  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。\n**wtatennis.com 的 `post-match-interview` 不等于场上采访**：五条里四条是 `WTA MEDIA` 深色背景板的坐访，只有雅典决赛那条真在场上。slug 里没有字段能分开（`-english` 两边都有），判据只能落在画面上——台卡写 WTA MEDIA / 深色无缝背景 / 便服 + 领夹麦 = 背景板；WTA TOUR 手持话筒旗 + 球网 + 看台 = 场上。所以这个源登记成 `review_each`，默认不收，进 `allow_ids` 才收。",
   "verdicts": {
     "aLMwctJsY9A": {
       "verdict": "oncourt",
@@ -3152,6 +3152,41 @@
       "verdict": "press",
       "method": "auto-frames",
       "note": "法网 TENNIS 重复 logo 墙，媒体区不是场上"
+    },
+    "wta:4539195": {
+      "verdict": "oncourt",
+      "why": "雅典决赛克雷奇科娃：站在蓝色硬地上，身后是球网和看台，手持 WTA TOUR 话筒旗（下挂 DRIVEN BY 梅赛德斯方块），场边有 250 级别的赛事标识。真场上。",
+      "title": "Barbora Krejcikova Post-Match Interview | FINAL | Athens",
+      "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-28"
+    },
+    "wta:4524976": {
+      "verdict": "press",
+      "why": "柏林决赛诺斯科娃：深色无缝背景板，左侧烧着 WTA / VANDA / BERLIN TENNIS OPEN 台卡，穿黑色训练外套抱臂而坐，没有话筒旗。是 WTA 的背景板坐访，不在场上。",
+      "title": "Linda Noskova Post-Match Interview | FINAL | Berlin",
+      "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-28"
+    },
+    "wta:4523019": {
+      "verdict": "press",
+      "why": "柏林半决赛佩古拉：同一块深色背景板 + BERLIN TENNIS OPEN 台卡，坐姿。不在场上。",
+      "title": "Jessica Pegula Post-Match Interview | SF | Berlin",
+      "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-28"
+    },
+    "wta:4517515": {
+      "verdict": "press",
+      "why": "女王杯 R16 阿尼西莫娃：台卡直接写着 **WTA MEDIA**，深色背景板，穿薄荷绿连帽外套（不是比赛服）。媒体拍摄位，不在场上。",
+      "title": "Amanda Anisimova Post-Match Interview | R16 | Queens",
+      "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-28"
+    },
+    "wta:4519217": {
+      "verdict": "press",
+      "why": "女王杯决赛维基奇：同样的 HSBC CHAMPIONSHIPS / **WTA MEDIA** 台卡，白色针织上衣、领夹麦。媒体拍摄位，不在场上。",
+      "title": "Donna Vekic Post-Match Interview | FINAL | Queens",
+      "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-28"
     }
   }
 }

@@ -416,36 +416,123 @@ def test_ceremony_speech_and_ceremony_interview_are_split_by_the_microphone():
             assert interview not in ids
 
 
-def test_wta_dead_page_is_not_collected():
-    """列表页挂着链接 ≠ 详情页打得开。
+def test_wta_slug_regex_keeps_the_underscore():
+    """WTA 的 slug 带 `_digital-download_m50936` 后缀，正则不能在下划线处截断。
 
-    实测 wtatennis.com 的三条 post-match-interview 详情页全 404，
-    而同一张列表页上另外八条视频 8/8 都是 200——不是整站坏了，
-    是这几条下架了、链接没撤。收进来就是推给人一个死链。
+    **这条测试是从一次「查信号不查产物」里长出来的。** 旧正则写的是
+    `[a-z0-9\\-]`，不含下划线，于是每条 slug 都在 `_digital` 处被切掉；
+    拼出来的 `/videos/<id>/<截断 slug>` 一律 404，而存活探测只看 404，
+    就把它们全判成「下架了」——旧注释白纸黑字写着「实测这三条全部 404 …
+    是这几条被下架了、链接却没撤」。
 
-    **只把 404 当死**：超时、403、429 都是「没问过」，
-    那种情况要放过去——这就是「空结果 ≠ 不存在」在可达性上的那一面。
+    **链接一直是活的。** 同一个 id 三种形式实测：截断 slug 404、
+    完整 slug 200、不带 slug 的 `/videos/<id>` 也 200（站点 canonical
+    就是这个形式）。这个 bug 让 wtatennis.com 在库里长期挂零，
+    而 WTA 500/1000 的覆盖率一直被记在「WTA 不发场上采访」头上。
+
+    所以探测改用**不带 slug 的 URL**：slug 解析错了它照样对。
     """
-    import subprocess as sp
+    import re
 
-    from tools.collect_oncourt_interviews import _wta_page_alive
+    from tools.collect_oncourt_interviews import _WTA_IS_INTERVIEW, _WTA_SLUG
 
-    calls = {}
+    html = ('<a href="/videos/4539195/athens-post-match-interview-final-'
+            'barbora-krejcikova-english_digital-download_m50936">x</a>')
+    found = _WTA_SLUG.findall(html)
+    assert found == [("4539195", "athens-post-match-interview-final-barbora-"
+                      "krejcikova-english_digital-download_m50936")], found
+    assert _WTA_IS_INTERVIEW.search(found[0][1])
+    # 反向验证：把下划线从字符类里去掉，就复现出当年那个截断
+    truncated = re.findall(r"/videos/(\d+)/([a-z0-9\-]{6,})", html)[0][1]
+    assert truncated.endswith("english"), truncated
+    assert truncated != found[0][1], "去掉下划线之后必须截断，否则这条测试没在测东西"
 
-    def fake_run(cmd, **kw):
-        calls["url"] = cmd[-1]
-        return sp.CompletedProcess(cmd, 0, stdout=calls["code"], stderr="")
 
-    orig = sp.run
+def test_wta_soft_404_is_recognised_by_title():
+    """没发布的 ID 不返回 404，而是回退到站点通名——软 404 得按标题认。
+
+    `/videos/9999999` 和 `/videos/<ATP 的 id>` 都是 **HTTP 200**、
+    十几万字节的正常页面，只有 `og:title` 退回
+    `Women's Tennis Association - Official Website`。拿状态码当判据
+    会把整段 ID 空间当成全部命中。
+    """
+    import tools.collect_oncourt_interviews as ci
+
+    real = ('<meta property="og:title" content="Krejcikova on rediscovering the feeling"/>'
+            'titleUrlSegment&quot;:&quot;athens-post-match-interview-final-'
+            'barbora-krejcikova-english_digital-download_m50936&quot;'
+            '"duration": "PT1M16S" "uploadDate": "2026-07-20T11:49:21Z"')
+    miss = '<meta property="og:title" content="Women\'s Tennis Association - Official Website"/>'
+    # 集锦：页面正常、但 slug 不是采访
+    other = ('<meta property="og:title" content="Navarro wins all-American derby"/>'
+             'titleUrlSegment&quot;:&quot;gettyimages-2287893140&quot;')
+
+    orig = ci._wta_page
     try:
-        sp.run = fake_run
-        for code, alive in (("404", False), ("200", True),
-                            ("403", True), ("429", True), ("000", True)):
-            calls["code"] = code
-            assert _wta_page_alive("1", "berlin-post-match-interview-sf-x") is alive, code
+        ci._wta_page = lambda vid: {"1": real, "2": miss, "3": other, "4": None}[vid]
+        got = ci._wta_item("1")
+        assert got["slug"].endswith("_m50936")
+        assert got["secs"] == 76, got["secs"]
+        assert got["published"] == "2026-07-20T11:49:21Z"
+        for vid in ("2", "3", "4"):
+            assert ci._wta_item(vid) is None, vid
     finally:
-        sp.run = orig
-    assert calls["url"].endswith("/videos/1/berlin-post-match-interview-sf-x")
+        ci._wta_page = orig
+
+
+def test_wta_row_parses_event_round_player_from_the_slug():
+    """slug 自己写死了赛事 / 类型 / 轮次 / 球员，不靠标题猜。
+
+    两个坑都踩过：`queen_s` 里的下划线会被拼成「Queen S」，
+    `_digital-download_m50936` 会被拼进球员名里。
+    """
+    from tools.collect_oncourt_interviews import _wta_row
+
+    row = _wta_row({"vid": "4517515", "secs": 149, "published": None, "headline": "x",
+                    "slug": "queen_s-post-match-interview-r16-amanda-"
+                            "anisimova_digital-download_m50338"})
+    assert row["title"] == "Amanda Anisimova Post-Match Interview | R16 | Queens", row["title"]
+    assert row["round"] == "r16"
+    assert row["id"] == "wta:4517515"
+    # page_url 要带完整 slug——截断的那份是 404
+    assert row["page_url"].endswith("_digital-download_m50338")
+
+    row = _wta_row({"vid": "1", "secs": None, "published": None, "headline": "x",
+                    "slug": "berlin-post-match-interview-sf-jessica-pegula"})
+    assert row["title"] == "Jessica Pegula Post-Match Interview | SF | Berlin", row["title"]
+
+
+def test_review_each_sources_need_a_picture_verdict_before_they_count():
+    """标题分不出场合的源，默认不收——**方向不能反**。
+
+    wtatennis.com 的 `*-post-match-interview-*` 实测五条里**四条**是
+    `WTA MEDIA` 深色背景板的坐访（便服、领夹麦、赛事台卡），
+    只有雅典决赛那条真在场上（WTA TOUR 手持话筒旗、球网、看台）。
+    slug 里没有任何字段能分开这两类：`-english` 两边都有。
+
+    所以这类源登记 `review_each`，默认判 `maybe`，看过画面确认在场上的
+    才进 `allow_ids`。**反过来做**——默认收、逐条拉黑——等于在没人看之前
+    先把背景板推给读者，而库里的东西是直接进推送的（feed 不再按 kind 筛）。
+    """
+    from tools.collect_oncourt_interviews import ROOT, STORE, load_sources
+
+    cfg = load_sources()
+    allow_ids = set(cfg.get("allow_ids", []))
+    review = [s["name"] for s in cfg["sources"] if s.get("review_each")]
+    assert review, "至少 wtatennis.com 该是 review_each"
+
+    with (ROOT / "data" / "oncourt_verify.json").open(encoding="utf-8") as fh:
+        seen = json.load(fh)["verdicts"]
+    for vid in allow_ids:
+        assert vid in seen, f"{vid} 放行了却没有看图记录"
+        assert seen[vid]["verdict"] == "oncourt", \
+            f"{vid} 的判定是 {seen[vid]['verdict']}，不该在放行名单上"
+
+    with STORE.open(encoding="utf-8") as fh:
+        items = json.load(fh)["items"]
+    unreviewed = [vid for vid, it in items.items()
+                  if it.get("source") in review and vid not in allow_ids]
+    assert unreviewed == [], f"没看过图就进库的 {review}：{unreviewed}"
 
 
 def test_store_matches_every_rule_and_every_verdict():
