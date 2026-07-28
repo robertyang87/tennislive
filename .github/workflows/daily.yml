@@ -368,6 +368,21 @@ jobs:
               then "  已按台账扩展到官方赛报检索" else "" end' "$COVER_REPORT"
           fi
 
+          # 纪念日一年只回来一次：它参选了却没成稿，必须有人被吵醒。
+          # 这份台账写在当日目录而不是 knowledge/ 里，正是为了不被上面那句
+          # `rm -rf "$OUT_DIR/knowledge"` 连着删掉。
+          SELECTION="$OUT_DIR/story_selection.json"
+          if [ -s "$SELECTION" ]; then
+            jq -r '.shifts[-1]
+              | select(.anniversary_missed)
+              | "::warning file='"$SELECTION"'::今天有「历史上的今天」参选（"
+                + (.anniversary_slugs | join("、"))
+                + "）却没有成稿，最终发的是 " + (if .selected == "" then "（无）" else .selected end)' \
+              "$SELECTION"
+          else
+            echo "::warning::缺少 $SELECTION，这一班次的选题排序没有落盘"
+          fi
+
           KNOWLEDGE_READY=true
           if [ ! -d "$OUT_DIR/knowledge" ]; then
             KNOWLEDGE_READY=false

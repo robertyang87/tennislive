@@ -1,3 +1,4 @@
+import json
 import re
 from datetime import date
 from pathlib import Path
@@ -3885,3 +3886,221 @@ def test_headline_match_still_appears_when_the_focus_page_carries_it(
 
     assert "focus" in kinds
     assert lead.match_id not in seen, "焦点复盘讲过了，速递里不该重复"
+
+
+# ---- R1/R2：「历史上的今天」的参选与诊断（见 docs/column-operations.md）----
+
+def _otd_digest(today, **kw):
+    """当天既有夺冠球员、又有在库赛事的 digest——纪念日要压过的就是这两个。"""
+    return Digest(
+        today=today,
+        results=[
+            make_match(
+                tournament="Plava Laguna Croatia Open Umag",
+                home_name="Qinwen Zheng",
+                away_name="Player Two",
+                home_country="CHN",
+                winner=0,
+            )
+        ],
+        **kw,
+    )
+
+
+def test_历史今天在正日子压过所有其他候选(tmp_path, monkeypatch):
+    """纪念日一年只回来一次，昨夜的高光球员明天还有。
+
+    7/25 那天 otd-0725 四道闸门全过却排不到前面——因为它当时只有 1 分，
+    低于球员特写的 3 分。
+    """
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+
+    on_the_day = tournament_story.tournament_story_candidates(
+        _otd_digest(date(2026, 7, 25))
+    )
+    assert on_the_day[0].slug == "otd-0725"
+
+    # 同一份赛果换个日子：纪念日退场，球员特写重新拿回第一
+    off_the_day = tournament_story.tournament_story_candidates(
+        _otd_digest(date(2026, 7, 24))
+    )
+    assert not any(story.slug.startswith("otd-") for story in off_the_day)
+    assert off_the_day[0].kind == "player"
+
+
+def test_历史今天不吃冷却期也不被同日已定的故事挡住(tmp_path, monkeypatch):
+    """后续班次正是它的重试机会——被 pinned 挡住就再也轮不到了。"""
+    from tennislive.render import tournament_story
+
+    state = tmp_path / "story_state.json"
+    monkeypatch.setattr(tournament_story, "STATE_PATH", state)
+    # otd-0725 昨天刚"讲过"（冷却期内），而当天已经定了另一条故事
+    state.write_text(
+        '{"otd-0725": "2026-07-24", "umag": "2026-07-25"}', encoding="utf-8"
+    )
+
+    candidates = tournament_story.tournament_story_candidates(
+        _otd_digest(date(2026, 7, 25))
+    )
+    assert candidates[0].slug == "otd-0725"
+
+
+def test_知识帖要记下排序后的完整候选和得分(tmp_path, monkeypatch):
+    """只记胜者的时候，"今天没有历史今天"和"有但没轮到它"分不出来。"""
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    ranking = tournament_story.story_ranking(_otd_digest(date(2026, 7, 25)))
+
+    assert len(ranking) == len(tournament_story.STORIES)
+    winner = next(r for r in ranking if r["rank"] == 1)
+    assert winner["story_slug"] == "otd-0725"
+    assert winner["bucket"] == "anniversary"
+    assert winner["score"] == tournament_story.ANNIVERSARY_SCORE
+
+    # 落选的必须自己说明为什么，否则和"根本没这条"分不出来
+    dropped = [r for r in ranking if r["bucket"] == "excluded"]
+    assert dropped, "应当有落选候选"
+    assert all(r.get("reason") for r in dropped)
+    other_days = [
+        r
+        for r in dropped
+        if r["story_slug"].startswith("otd-")
+        and r["story_slug"] != "otd-0725"
+        and "配图" not in r["reason"]
+    ]
+    assert other_days and all("正日子" in r["reason"] for r in other_days)
+
+
+def test_同日重跑不会冲掉上一班的候选诊断(tmp_path, monkeypatch):
+    """daily.yml 同日重跑会 rm -rf knowledge/；台账写在当日目录并逐班追加。"""
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    digest = _otd_digest(date(2026, 7, 25))
+    ranking = tournament_story.story_ranking(digest)
+    day_dir = tmp_path / "2026-07-25"
+    knowledge_dir = day_dir / "knowledge"
+    knowledge_dir.mkdir(parents=True)
+
+    # 第一班：纪念日排第一却没成稿
+    path = tournament_story.record_story_selection(
+        day_dir, digest, ranking, selected_slug="golden-slam", error="素材预检失败"
+    )
+    assert path.parent == day_dir, "写进 knowledge/ 会被同日重跑删掉"
+
+    # 第二班：pinned 直接命中，一次拒绝都不会发生
+    import shutil
+
+    shutil.rmtree(knowledge_dir)
+    tournament_story.record_story_selection(
+        day_dir, digest, ranking, selected_slug="golden-slam"
+    )
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert len(payload["shifts"]) == 2
+    first = payload["shifts"][0]
+    assert first["error"] == "素材预检失败"
+    assert first["anniversary_slugs"] == ["otd-0725"]
+    assert first["anniversary_missed"] is True
+    assert first["ranking"][0]["story_slug"] == "otd-0725"
+
+
+def test_纪念日成稿时不再报警(tmp_path, monkeypatch):
+    from tennislive.render import tournament_story
+
+    monkeypatch.setattr(tournament_story, "STATE_PATH", tmp_path / "story_state.json")
+    digest = _otd_digest(date(2026, 7, 25))
+    path = tournament_story.record_story_selection(
+        tmp_path / "day",
+        digest,
+        tournament_story.story_ranking(digest),
+        selected_slug="otd-0725",
+    )
+    shift = json.loads(path.read_text(encoding="utf-8"))["shifts"][-1]
+    assert shift["anniversary_missed"] is False
+
+
+def test_daily工作流会把没成稿的纪念日报出来():
+    workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
+    assert "story_selection.json" in workflow
+    warn_at = workflow.index("anniversary_missed")
+    assert "::warning" in workflow[warn_at : warn_at + 400]
+
+
+def test_历史今天用自己的标题前缀():
+    """卡片小标早就写着这四个字，只有标题一直印「网球有故事」——而读者只看标题。"""
+    from tennislive.render.knowledge import knowledge_title, knowledge_wechat_title
+    from tennislive.render.tournament_story import STORIES
+
+    for story in STORIES:
+        if not story.slug.startswith("otd-"):
+            continue
+        mm, dd = int(story.slug[4:6]), int(story.slug[6:])
+        digest = Digest(today=date(2026, mm, dd))
+        title = knowledge_title(story, digest)
+        assert "历史上的今天" in title, story.slug
+        assert "网球有故事" not in title, story.slug
+        assert "历史上的今天" in knowledge_wechat_title(story, digest), story.slug
+
+
+# 每条纪念日的配图必须和它讲的赛事对得上。值是文件名里必须出现的记号；
+# None = 拿不到实拍，宁可不参选也不退回库存空镜。
+# 新增 otd 条目必须同时登记在这儿——漏登记就红，这是故意的。
+_OTD_IMAGE_TOKEN = {
+    "otd-0725": "umag",         # 2021 乌马格首冠
+    "otd-0728": "otd-0728",     # 2024-07-28 奥运首战，专属实拍
+    "otd-0803": "otd-0803",     # 2024-08-03 领奖台，WTA 图库（非自由授权，见 credits）
+    "otd-0820": "cincinnati",   # 2023 辛辛那提决赛
+    "otd-0909": "usopen",       # 2023 美网决赛（仍是场馆空镜，待换真图）
+    "otd-0910": "otd-0910",     # 2022-09-10 美网颁奖，WTA 图库（非自由授权，见 credits）
+}
+
+
+def test_历史今天的图片要和它讲的赛事对得上():
+    """otd-0803 一度配着蒙特利尔的球场照去讲巴黎奥运金牌。
+
+    这和「讲法网配温网草地」是同一个错误，而且落在全年最强的锚点上。
+    """
+    from tennislive.render.tournament_story import STORIES, TRIVIA_ASSETS
+
+    credits = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))
+    slugs = [s.slug for s in STORIES if s.slug.startswith("otd-")]
+    assert set(slugs) == set(_OTD_IMAGE_TOKEN), "新增的纪念日没有登记配图记号"
+
+    for story in STORIES:
+        token = _OTD_IMAGE_TOKEN.get(story.slug)
+        if not story.slug.startswith("otd-"):
+            continue
+        if token is None:
+            assert not story.image.exists(), (
+                f"{story.slug} 声明拿不到实拍，却还是有图 {story.image.name}——"
+                "宁可不参选也不能退回库存空镜"
+            )
+            continue
+        assert token in story.image.name, (
+            f"{story.slug} 讲的赛事和配图 {story.image.name} 对不上"
+        )
+        if story.image.parent == TRIVIA_ASSETS:
+            entry = credits.get(story.image.name)
+            assert entry, f"{story.image.name} 没有 credits 记录"
+            for field in ("license", "artist", "page"):
+                assert entry.get(field), f"{story.image.name} 缺 {field}"
+
+
+def test_今天这条纪念日的图对得上它讲的那一天():
+    """otd-0728 讲 2024-07-28 郑钦文奥运首战，图必须是那场的实拍。"""
+    from tennislive.render.tournament_story import TRIVIA_ASSETS, find_story_by_slug
+
+    story = find_story_by_slug("otd-0728")
+    assert story is not None and story.image.exists()
+    entry = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))[
+        "trivia-otd-0728.jpg"
+    ]
+    # 来源自己把时刻写死了：对手、轮次、赛事、日期都在图注和 EXIF 里
+    assert "Errani" in entry["description"]
+    assert "first round" in entry["description"]
+    assert "2024 Paris Olympics" in entry["description"]
+    assert entry["date_original"].startswith("2024-07-28")

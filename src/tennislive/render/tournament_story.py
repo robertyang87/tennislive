@@ -18,6 +18,16 @@ PLAYER_ASSETS = Path(__file__).resolve().parents[3] / "assets" / "players"
 STATE_PATH = Path(__file__).resolve().parents[3] / "data" / "story_state.json"
 COOLDOWN_DAYS = 30
 
+# 「历史上的今天」命中正日子时的得分，高于球员特写的 3、赛事档案的 2。
+# 纪念日一年只回来一次；昨夜的高光球员明天还有。
+ANNIVERSARY_SCORE = 4
+
+# 每个班次的排序结果落在**当日目录**（不是 knowledge/ 里），逐班追加。
+# 两条都是 7/25 那次丢失换来的：daily.yml 同日重跑会 `rm -rf "$OUT_DIR/knowledge"`，
+# 而第二班次被 pinned 分支直接命中已定的故事、一次拒绝都不会发生——
+# 写在里面会被删掉，覆盖写会把上一班的证据擦掉。
+SELECTION_LOG_NAME = "story_selection.json"
+
 
 @dataclass(frozen=True)
 class ChampionMoment:
@@ -971,6 +981,38 @@ STORIES = STORIES + (
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2021_Croatia_Open_Umag",
     ),
+    # 配图是这条自己那天的实拍：Commons 上传者写明「first round match against
+    # Sara Errani at the 2024 Paris Olympics」，EXIF 时间 2024-07-28 14:27——
+    # 时间/地点/人物/事件四要素由来源和文件自己写死，不靠看图推断。画面里
+    # 场边板上的「2024」和五环还在，属于「能自证的元素比看着像值钱」。
+    _trivia_story(
+        slug="otd-0728",
+        title="6-0、6-0",
+        subtitle="历史上的今天 · 7 月 28 日",
+        identity="2024 · 郑钦文奥运首战",
+        chips=("历史上的今天", "2024", "巴黎"),
+        hero=(
+            "2024 年的今天，郑钦文在罗兰·加洛斯打出 6-0、6-0——"
+            "她那届奥运，是从一场双蛋开始的。"
+        ),
+        facts=(
+            "首轮对手埃拉尼是前世界前十，那天一局没拿到。",
+            "头两场比赛加起来，她只丢了六局。",
+            "六天后的同一片红土，她拿到亚洲第一块奥运网球单打金牌。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-07-28", player="郑钦文", age="21 岁",
+                headline="奥运首战 6-0、6-0",
+                detail="六天之后，同一片红土上换成了金牌。",
+                source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Kuberzog / Wikimedia Commons · CC BY-SA 4.0",
+        source_label="奥运官方档案",
+        source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+    ),
     _trivia_story(
         slug="otd-0803",
         title="巴黎的金牌",
@@ -978,10 +1020,14 @@ STORIES = STORIES + (
         identity="2024 · 郑钦文奥运夺金",
         chips=("历史上的今天", "2024", "巴黎"),
         hero="2024 年的今天，郑钦文在巴黎为中国拿下奥运网球单打首金——亚洲球员的第一次。",
+        # 「掀翻红土女王」是形容词，「交手六次输六次」是可核的数字——
+        # 后者更抓人，因为它具体、能查、自带画面（CLAUDE.md：煽情不是靠
+        # 形容词堆出来的，是把最硬的那个事实摆到最前面）。原来第三条那句
+        # 「刷遍全网热搜」查不到出处，删掉。
         facts=(
-            "半决赛掀翻红土女王斯瓦泰克，决赛直落两盘击败维基奇。",
+            "半决赛之前，她和斯瓦泰克交手六次、输了六次；那天 6-2、7-5。",
+            "决赛直落两盘击败维基奇，6-2、6-3。",
             "距离李婷/孙甜甜的雅典女双首金，恰好二十年。",
-            "她赛后说这是'为中国而战'——那周她的名字刷遍全网热搜。",
         ),
         moments=(
             ChampionMoment(
@@ -991,7 +1037,15 @@ STORIES = STORIES + (
                 source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
             ),
         ),
-        image_keys=("canada",),
+        # 这里原来兜底到蒙特利尔的球场空镜——讲巴黎奥运配加拿大站，正是
+        # 「讲法网配温网草地」那条错误。Commons 三个查法（按分类、按对手、
+        # 按领奖）都证实那天没有自由授权的实拍，最后用的是 WTA 图库当天的
+        # 领奖台照（2024/08/03，Getty via WTA，**非自由授权，发布前需人工过权利**）。
+        #
+        # 裁法是试出来的：满高裁 3:4 会把维基奇和斯瓦泰克的脸切在两边，
+        # 「真裁不下就换一张，别硬切」；收到 1399×1866 才成立——郑钦文居中、
+        # 金牌举在脸侧、胸前国旗和五环都在，另外两人在画面里但明显是配角。
+        image_keys=(),
         source_label="奥运官方档案",
         source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
     ),
@@ -1018,6 +1072,36 @@ STORIES = STORIES + (
         image_keys=("cincinnati",),
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
+    ),
+    # 配图来自 WTA 官方战报（按文章 ID 取；带 slug 的旧链接已 404）。杯身刻着
+    # US OPEN TENNIS CHAMPIONSHIPS / WOMEN'S SINGLES——赛事与项目由画面自证。
+    _trivia_story(
+        slug="otd-0910",
+        title="纽约的第一座",
+        subtitle="历史上的今天 · 9 月 10 日",
+        identity="2022 · 斯瓦泰克美网首冠",
+        chips=("历史上的今天", "2022", "纽约"),
+        hero=(
+            "2022 年的今天，斯瓦泰克拿下生涯第一座美网奖杯——"
+            "在这之前，她在纽约从没走过第四轮。"
+        ),
+        facts=(
+            "决赛 6-2、7-6(5) 击败贾巴尔，这是她的第三座大满贯。",
+            "第一盘她接了 19 个发球，19 个都回到了场内。",
+            "同一年她还拿了法网；上一个单赛季两满贯，是 2016 年的科贝尔。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-09-10", player="斯瓦泰克", age="21 岁",
+                headline="生涯首座美网",
+                detail="此前她在这片场地从没打进过第四轮。",
+                source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Getty Images via WTA · 官方媒体供图",
+        source_label="WTA 官方战报",
+        source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
     ),
     _trivia_story(
         slug="otd-0909",
@@ -2412,12 +2496,22 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     return candidates[0] if candidates else None
 
 
-def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
-    """Return stories in editorial order so rendering can skip weak visual packages.
+def is_anniversary(story: TournamentStory, today: date) -> bool:
+    """今天是不是这条「历史上的今天」的正日子."""
+    return (
+        story.kind == "trivia"
+        and story.slug.startswith("otd-")
+        and story.slug.endswith(today.strftime("%m%d"))
+    )
 
-    Selection and production are deliberately separate: the hottest subject is
-    tried first, but a story without a complete, precisely matched visual set
-    must not block a lower-ranked story that can be published well.
+
+def story_ranking(digest: Digest) -> list[dict]:
+    """每条故事的参选结果：分档、得分、名次，落选的带原因。
+
+    单独抽出来是因为产物里只留"谁赢了"不够。7/25 那天 `otd-0725` 的四道闸门
+    （图在、日期对、未冷却、trivia）离线复算全部通过，却没上；而落盘的
+    `rejected_candidates` 是空的——它根本没被生产环节试过。只记胜者的时候，
+    "今天没有历史今天"和"有但没轮到它"长得一模一样。
     """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
@@ -2428,54 +2522,189 @@ def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
     player_heat, tournament_heat, newsworthy_losers = _result_heat(digest)
     headliners = winners | newsworthy_losers
     state = _load_state()
-
-    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡
     today_iso = digest.today.isoformat()
-    pinned: list[TournamentStory] = []
-    for story in STORIES:
-        if state.get(story.slug) == today_iso and story.image.exists():
-            pinned.append(story)
 
-    fresh: list[tuple[int, float, int, TournamentStory]] = []
-    cooling: list[tuple[str, int, float, int, TournamentStory]] = []
+    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡。
+    # 纪念日不吃这条——见下面 anniversary 分档。
+    pinned_slugs = {
+        story.slug
+        for story in STORIES
+        if state.get(story.slug) == today_iso and story.image.exists()
+    }
+
+    records: list[dict] = []
     for order, story in enumerate(STORIES):
+        # 每条都带齐同一套字段（落选的 rank/score 留 None）——读这份台账的
+        # jq 不该为了"这个键在不在"分两种写法。
+        record: dict = {
+            "story_slug": story.slug,
+            "title": story.title,
+            "kind": story.kind,
+            "pinned": story.slug in pinned_slugs,
+            "last_used": state.get(story.slug, ""),
+            "rank": None,
+            "score": None,
+            "heat": None,
+            "reason": "",
+        }
+
+        def drop(reason: str) -> None:
+            records.append({**record, "bucket": "excluded", "reason": reason})
+
         if not story.image.exists():
+            drop("配图不在仓库里")
             continue
         aliases = tuple(_norm(alias) for alias in story.aliases)
+        anniversary = is_anniversary(story, digest.today)
         if story.kind == "player":
             if _matched(aliases, headliners):
                 score = 3
             elif _matched(aliases, todays):
                 score = 1
             else:
+                drop("这名球员今天没有比赛")
                 continue
             heat = _alias_heat(aliases, player_heat)
         elif story.kind == "trivia":
             if story.slug.startswith("otd-"):
-                # 历史上的今天：只在对应日期参选，优先于普通冷知识
-                if not story.slug.endswith(digest.today.strftime("%m%d")):
+                # 历史上的今天：只在对应日期参选。命中当日给最高分——
+                # 纪念日一年只回来一次，昨夜的高光球员明天还有。
+                if not anniversary:
+                    drop(f"不是它的正日子（{story.slug.removeprefix('otd-')}）")
                     continue
-                score = 1
+                score = ANNIVERSARY_SCORE
             else:
                 score = 0
             heat = _trivia_topic_score(story, digest)
         else:
             if not _matched(aliases, tournaments):
+                drop("这项赛事今天没有比赛")
                 continue
             score = 2
             heat = _alias_heat(aliases, tournament_heat)
-        if _recently_used(story.slug, digest.today, state):
-            cooling.append((state.get(story.slug, ""), -score, -heat, order, story))
+
+        if anniversary:
+            # 冷却期对纪念日没有意义（一年只回来一次）；同日重跑时也不该被
+            # 上一班次钉住的那条挡在后面——后续班次正是它的重试机会。
+            bucket = "anniversary"
+        elif _recently_used(story.slug, digest.today, state):
+            bucket = "cooling"
         else:
-            fresh.append((-score, -heat, order, story))
-    ordered_fresh = [item[-1] for item in sorted(fresh)]
+            bucket = "fresh"
+        records.append(
+            {**record, "bucket": bucket, "score": score, "heat": round(float(heat), 4)}
+        )
+
+    by_slug = {record["story_slug"]: record for record in records}
+    order_of = {story.slug: index for index, story in enumerate(STORIES)}
+
+    def picked(bucket: str) -> list[dict]:
+        return [r for r in records if r["bucket"] == bucket]
+
+    anniversaries = sorted(picked("anniversary"), key=lambda r: order_of[r["story_slug"]])
+    # 当天已定的故事照样参选，**即使它今天本来会落选**——这是原有的同日重跑
+    # 幂等行为，不能因为重算而换卡。分档改标成 pinned（reason 留着），
+    # 否则台账里会出现「excluded 却有名次」这种自相矛盾的行。
+    pinned = []
+    for slug in sorted(pinned_slugs, key=lambda s: order_of[s]):
+        record = by_slug[slug]
+        if record["bucket"] == "anniversary":
+            continue
+        record["bucket"] = "pinned"
+        pinned.append(record)
+    fresh = sorted(
+        picked("fresh"),
+        key=lambda r: (-r["score"], -r["heat"], order_of[r["story_slug"]]),
+    )
     # ISO 日期字符串最小 = 距上次讲述最久；仍保留新闻分作为次级排序。
-    ordered_cooling = [item[-1] for item in sorted(cooling)]
-    ordered: list[TournamentStory] = []
-    for story in [*pinned, *ordered_fresh, *ordered_cooling]:
-        if story not in ordered:
-            ordered.append(story)
-    return ordered
+    cooling = sorted(
+        picked("cooling"),
+        key=lambda r: (
+            r["last_used"],
+            -r["score"],
+            -r["heat"],
+            order_of[r["story_slug"]],
+        ),
+    )
+
+    rank = 0
+    seen: set[str] = set()
+    for record in [*anniversaries, *pinned, *fresh, *cooling]:
+        if record["story_slug"] in seen:
+            continue
+        seen.add(record["story_slug"])
+        rank += 1
+        record["rank"] = rank
+    return records
+
+
+def record_story_selection(
+    day_dir: Path | str,
+    digest: Digest,
+    ranking: list[dict],
+    *,
+    selected_slug: str | None,
+    error: str = "",
+) -> Path:
+    """把这一班次的排序结果追加进当日目录的 `story_selection.json`.
+
+    刻意不写进 `knowledge/`、刻意不覆盖——理由见 `SELECTION_LOG_NAME` 上面那段。
+    `anniversary_missed` 是给 daily.yml 打 `::warning` 用的：当天有纪念日参选、
+    最后成稿的却不是它，就该有人被吵醒。
+    """
+    from datetime import datetime, timezone
+
+    path = Path(day_dir) / SELECTION_LOG_NAME
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        shifts = list(payload.get("shifts") or [])
+    except (OSError, ValueError):
+        shifts = []
+
+    anniversaries = [
+        record["story_slug"] for record in ranking if record["bucket"] == "anniversary"
+    ]
+    shifts.append(
+        {
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+            "selected": selected_slug or "",
+            "error": error,
+            "anniversary_slugs": anniversaries,
+            "anniversary_missed": bool(anniversaries)
+            and selected_slug not in anniversaries,
+            "ranking": sorted(
+                ranking,
+                key=lambda record: (record.get("rank") or 10_000, record["story_slug"]),
+            ),
+        }
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "published_for": digest.today.isoformat(),
+                "shifts": shifts,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
+def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
+    """Return stories in editorial order so rendering can skip weak visual packages.
+
+    Selection and production are deliberately separate: the hottest subject is
+    tried first, but a story without a complete, precisely matched visual set
+    must not block a lower-ranked story that can be published well.
+    """
+    by_slug = {story.slug: story for story in STORIES}
+    ranked = [record for record in story_ranking(digest) if record.get("rank")]
+    ranked.sort(key=lambda record: record["rank"])
+    return [by_slug[record["story_slug"]] for record in ranked]
 
 
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"
