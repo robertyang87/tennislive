@@ -272,3 +272,25 @@ def test_标题末尾那句不超过二十字():
         assert "超过" in str(exc)
     else:
         raise AssertionError("超长的那句被放过去了")
+
+
+def test_封面没给cx时自动定心():
+    """源片在本地看不到时（YouTube 对沙箱一律 403），cx 只能靠猜，
+    猜错就是把人裁到画面边上。所以封面和分段一样，缺 cx 就按运动质心自动定。"""
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    assert 'cover.get("cx") is None' in source
+    assert "auto_center(source, probe, source_w)" in source
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    assert "cx" not in spec["cover"]
+
+
+def test_伊埃拉按译名表写():
+    """人名不要手打——`Alexandra Eala` 在 players.py 里是「伊埃拉」。"""
+    table = Path("src/tennislive/zh/players.py").read_text(encoding="utf-8")
+    assert '"Alexandra Eala": "伊埃拉"' in table
+    for path in ("specs/reels/eala-zheng.json", "specs/reels/eala-zheng.xhs.txt"):
+        text = Path(path).read_text(encoding="utf-8")
+        assert "伊埃拉" in text, path
+        for wrong in ("埃拉拉", "伊阿拉", "阿莱克斯"):
+            assert wrong not in text, f"{path} 里出现了 {wrong}"

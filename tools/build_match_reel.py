@@ -700,7 +700,15 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     cover = spec["cover"]
     grab = dest.parent / "_cover_frame.jpg"
     at = float(cover.get("frame_at", 3.0))
-    cx = float(cover.get("cx", 0.5))
+    # 封面的固定中心和分段一样可以自己定：**源片在本地看不到时更需要它**
+    # （YouTube 对沙箱一律 403，cx 只能靠猜，猜错就是把人裁到边上）。
+    # 取抓帧前后两秒的运动质心中位数——握手、庆祝这类镜头人不在正中。
+    if cover.get("cx") is None:
+        probe = Segment(max(0.0, at - 1.2), at + 1.2, None, "")
+        cx = auto_center(source, probe, source_w)
+        print(f"    [cover] 没给 cx，自动定心 cx={cx:.3f}")
+    else:
+        cx = float(cover["cx"])
     # 底图两种铺法：
     #
     #   cover（默认）  真·竖版大图，9:16 裁切铺满整屏。1080p 里裁 608 宽再拉到
