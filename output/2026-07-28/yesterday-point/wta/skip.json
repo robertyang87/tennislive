@@ -1,6 +1,6 @@
 {
   "status": "skipped",
-  "generated_at": "2026-07-28T04:56:11.752842+00:00",
+  "generated_at": "2026-07-28T06:29:07.880285+00:00",
   "project": "yesterday-point",
   "tour": "WTA",
   "published_for": "2026-07-28",
@@ -9,48 +9,67 @@
   "resolver_attempts": [
     {
       "resolver": "discover_tennistv_point",
-      "status": "empty"
+      "source": "Tennis TV Hot Shots",
+      "status": "empty",
+      "fetched": 60,
+      "matched": 1,
+      "note": "命中昨日比赛 1 张卡片，但均为 freemium/无可播放源（缺 TENNISTV_JWT），ATP YouTube 镜像也未找到同一片"
     },
     {
       "resolver": "discover_wta_point",
-      "status": "empty"
+      "source": "WTA 官方视频（官网）",
+      "status": "empty",
+      "fetched": 4,
+      "matched": 0,
+      "note": "抓到 4 条候选，0 条命中昨日比赛"
     },
     {
       "resolver": "discover_wta_youtube_point",
+      "source": "WTA 官方 YouTube",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUaBIVVpHjq6j3tSyxwTE-8Q"
     },
     {
       "resolver": "discover_atp_point",
+      "source": "ATP 官方 YouTube",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUY_5h5zaSwN7Or4kIJDYNXA"
     },
     {
       "resolver": "discover_tennistv_youtube_point",
+      "source": "Tennis TV YouTube",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUbcxFkd6B9xUU54InHv4Tig"
     },
     {
       "resolver": "discover_youtube_search_point",
-      "status": "empty"
+      "source": "官方频道搜索",
+      "status": "empty",
+      "fetched": 0,
+      "matched": 0,
+      "note": "源未返回候选（可能是当日无内容或抓取/解析异常）"
     },
     {
       "resolver": "discover_slam_point:AO",
+      "source": "澳网官方视频（官方频道）",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUeTKJSW1NTAkf27nNmjWt5A"
     },
     {
       "resolver": "discover_slam_point:RG",
+      "source": "法网官方视频（官方频道）",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUF3K1Jf8hjFW8qliei8fQ3A"
     },
     {
       "resolver": "discover_slam_point:WIMBLEDON",
+      "source": "温网官方视频（官方频道）",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUNa8NxMgSm7m4Ii9d4QGk1Q"
     },
     {
       "resolver": "discover_slam_point:USOPEN",
+      "source": "美网官方视频（官方频道）",
       "status": "error",
       "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUXbboag48Qlr78zzz6SkzkQ"
     }
