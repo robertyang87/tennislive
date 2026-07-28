@@ -486,6 +486,8 @@ TOURNAMENT_SURFACE: dict[str, str] = {
     # DC Open（Mubadala Citi DC Open）是硬地；孟菲斯 2026 年新设的 WTA250
     # 在 Leftwich Tennis Center，室外硬地。
     "dc open": "Hard",
+    "mifel tennis open": "Hard",
+    "los cabos": "Hard",
     "memphis classic": "Hard",
     "australian open": "Hard",
     "roland garros": "Clay",

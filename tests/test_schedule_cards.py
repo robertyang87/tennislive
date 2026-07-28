@@ -418,3 +418,40 @@ def test_the_push_always_carries_a_copyable_title_and_body():
     assert "郑钦文凌晨1点战伊埃拉" in html_out
     assert "长按可复制标题" in html_out
     assert "正文一行" in html_out
+
+
+# ---------- 全局收口 ----------
+
+
+def test_the_day_is_capped_so_the_caption_still_fits():
+    """跨日窗口打开后单日能到 40 多场，正文两千多字——小红书放不下。"""
+    from tennislive.render.webcards import SCHEDULE_MAX_MATCHES, schedule_selection
+
+    many = [sched(match_id=f"m{i}") for i in range(40)]
+    picked = [m for _g, ms in schedule_selection(many) for m in ms]
+    assert len(picked) <= SCHEDULE_MAX_MATCHES
+
+
+def test_every_event_keeps_a_seat_when_the_day_is_capped():
+    """收口时按赛事轮流取，否则大站会把名额吃光、小站整站消失。"""
+    from tennislive.render.webcards import schedule_selection
+
+    big = [sched(match_id=f"b{i}") for i in range(30)]
+    small = [
+        sched(match_id=f"s{i}", tournament="The Memphis Classic", tour=Tour.WTA,
+              discipline="Women's Singles")
+        for i in range(3)
+    ]
+    picked = schedule_selection(big + small)
+    assert len(picked) == 2, "小站被整个挤掉了"
+    assert all(ms for _g, ms in picked)
+
+
+def test_chinese_singles_survive_the_cap():
+    """中国单打一场都不能被收口砍掉——读者就是冲这个来的。"""
+    from tennislive.render.webcards import schedule_selection
+
+    filler = [sched(match_id=f"f{i}") for i in range(40)]
+    cn = sched(match_id="cn", home="Zhizhen Zhang", home_country="CHN")
+    picked = [m for _g, ms in schedule_selection(filler + [cn]) for m in ms]
+    assert any(m.match_id == "cn" for m in picked)

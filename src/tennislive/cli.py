@@ -824,7 +824,12 @@ def cmd_schedule_cards(args) -> int:
         return 0
 
     outdir = Path(args.outdir) / d.isoformat() / "schedule"
-    (outdir / "cards").mkdir(parents=True, exist_ok=True)
+    cards_dir = outdir / "cards"
+    cards_dir.mkdir(parents=True, exist_ok=True)
+    # 先清干净：页数会随取材变化（收口之后从七页降到四页），不清的话上一轮的
+    # card_schedule05..07 会作为陈图留在仓库里，看起来像本期的一部分。
+    for stale in cards_dir.glob("card_schedule*.jpg"):
+        stale.unlink()
     date_label = f"{d.month}.{d.day}"
 
     pages = schedule_pages(upcoming, date_label)
