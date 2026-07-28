@@ -84,29 +84,60 @@ def _clock_zh(m: Match) -> str:
     return period + clock
 
 
-def headline_hook(m: Match, time_text: str = "") -> str:
-    """标题里那半句看点。
+# 小红书标题超过 20 字左右就会被截断，读者看到的是半句话。这个预算算的是
+# 整条标题（含「7.28 今日赛程 | 」那截前缀），西文按半个汉字宽计。
+TITLE_MAX = 20
 
-    只用数据能自证的四样：谁、第几轮、对手排名、几点在哪块场。不写"生死战"
+
+def _width(text: str) -> float:
+    """汉字算 1，西文/数字/空格算 0.5——和标题被截断的实际观感对得上。"""
+    return sum(1.0 if ord(ch) > 0x2E80 else 0.5 for ch in text)
+
+
+def headline_hook(m: Match, time_text: str = "", budget: float | None = None) -> str:
+    """标题里那半句看点，按 ``budget`` 逐级砍到放得下。
+
+    只用数据能自证的东西：谁、第几轮、对手排名、几点在哪块场。不写"生死战"
     "复仇"这类站不住的形容——一句煽得起来但站不住的话，比一句平淡的真话糟
-    得多（见 CLAUDE.md）。对手排名本身就是最硬的那个"引爆点"：
-    「对上世界第 28」比任何形容词都具体。
+    得多（见 CLAUDE.md）。对手排名本身就是最硬的"引爆点"：「世界第 28」比
+    任何形容词都具体。
+
+    砍的顺序按信息价值从低到高：球场 → 对手排名 → 轮次 → 时段。**中国球员和
+    对手的名字永远留着**，那是读者点进来的理由，砍掉就什么都不剩了。
     """
+    limit = TITLE_MAX if budget is None else budget
     cn = _chinese_side(m)
-    if cn:
-        opponent = _opponent_of(m, cn)
-        rank = next(
-            (p.rank for p in m.home + m.away
-             if p.rank and not is_chinese_player(p)), None
-        )
-        who = f"世界第 {rank} 的{opponent}" if rank and opponent else opponent
-        core = f"{cn}{_short_round(m)}对上{who}" if who else f"{cn}{_short_round(m)}"
+    opponent = _opponent_of(m, cn) if cn else ""
+    rank = next(
+        (p.rank for p in m.home + m.away
+         if p.rank and not is_chinese_player(p)), None
+    ) if cn else None
+    clock, court, rnd = _clock_zh(m), _court_zh(m), _short_round(m)
+
+    if not cn:
+        candidates = [
+            f"{rnd}{_versus(m)}，{clock}{court}",
+            f"{rnd}{_versus(m)}，{clock}",
+            f"{_versus(m)}",
+        ]
     else:
-        core = f"{_short_round(m)}{_versus(m)}"
-    tail = [t for t in (_clock_zh(m), _court_zh(m)) if t]
-    if not tail:
-        tail = [time_text.replace("*", "").strip()] if time_text else []
-    return f"{core}，{''.join(tail)}" if tail else core
+        candidates = [
+            f"{cn}{rnd}对上世界第 {rank} 的{opponent}，{clock}{court}",
+            f"{cn}{rnd}对上世界第 {rank} 的{opponent}，{clock}",
+            f"{cn}{rnd}战世界第 {rank} 的{opponent}",
+            f"{cn}{rnd}战{opponent}，{clock}",
+            f"{cn}{clock}战{opponent}",
+            f"{cn}战{opponent}",
+        ]
+    # 只有排名/时段/场地缺失时才会留下空档，顺手清掉
+    cleaned = [
+        c.replace("世界第 None 的", "").replace("，，", "，").strip("，·")
+        for c in candidates
+    ]
+    for text in cleaned:
+        if _width(text) <= limit:
+            return text
+    return cleaned[-1]
 
 
 def pick_lead(matches: Sequence[Match]) -> Match | None:
@@ -139,11 +170,13 @@ def _start_key(m: Match) -> float:
 
 
 def post_title(day, lead: Match | None, time_text: str = "") -> str:
-    """`7.28 今日赛程 | <看点>`。没有可写的重点场次时只留前半截。"""
+    """`7.28 今日赛程 | <看点>`，整条控制在 TITLE_MAX 宽度内。"""
     stem = f"{day.month}.{day.day} 今日赛程"
     if lead is None:
         return stem
-    return f"{stem} | {headline_hook(lead, time_text)}"
+    prefix = f"{stem} | "
+    hook = headline_hook(lead, time_text, budget=TITLE_MAX - _width(prefix))
+    return prefix + hook
 
 
 def _event_heading(group) -> str:
