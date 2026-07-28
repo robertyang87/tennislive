@@ -78,7 +78,7 @@ COVER_SECONDS = 2.6
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
-ORIGINAL_GAIN = 0.14
+ORIGINAL_GAIN = 0.34
 
 
 class ReelError(RuntimeError):
