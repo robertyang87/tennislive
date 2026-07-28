@@ -54,10 +54,32 @@ def test_official_exact_time_overrides_feed_time():
 
     counts = _apply_document([match], doc)
 
-    assert counts == {"exact": 1, "ordered": 0, "unlisted": 0}
+    # 聚合源说 14:00，官方说 11:30——差 2.5 小时，算一次"两源不一致"。
+    # 这个计数是这条线唯一能自证在做交叉校验的证据：全是 conflict 就说明
+    # 某一侧（多半是时区或场序解析）系统性错了，而卡面上看不出差别。
+    assert counts == {
+        "exact": 1, "ordered": 0, "unlisted": 0, "conflict": 1, "agree": 0,
+    }
     assert match.start_utc == datetime(2026, 7, 20, 11, 30, tzinfo=timezone.utc)
     assert match.schedule_time_status == "official-exact"
     assert "已以官方为准" in match.schedule_note
+
+
+def test_matching_feed_time_counts_as_agreement_not_conflict():
+    """两源对得上时不能记成冲突——否则 conflict 恒为正，计数就没有判别力了。"""
+    match = _scheduled(datetime(2026, 7, 20, 11, 30, tzinfo=timezone.utc))
+    doc = _document(
+        Fragment("Not before 1:30 PM", 100, 700),
+        Fragment("BARTUNKOVA", 90, 650),
+        Fragment("YUAN", 115, 620),
+    )
+
+    counts = _apply_document([match], doc)
+
+    assert counts == {
+        "exact": 1, "ordered": 0, "unlisted": 0, "conflict": 0, "agree": 1,
+    }
+    assert "已以官方为准" not in (match.schedule_note or "")
 
 
 def test_official_followed_by_marks_feed_time_as_estimate():
