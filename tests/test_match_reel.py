@@ -109,6 +109,11 @@ def test_有赛果时标题把vs换成比分():
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程").endswith(
         "锦织圭 vs 商竣程"
     )
+    # 比分说不清的片子（退赛、以转折为主）改用一句话概括，顶掉末尾那一格
+    assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
+                     event="华盛顿 ATP500 首轮",
+                     summary="复出首战打满三盘") == (
+        "7.28 赛场之上 | 华盛顿 ATP500 首轮 | 复出首战打满三盘")
 
 
 def test_page阶段不发推送也不需要成片(tmp_path):
@@ -125,11 +130,11 @@ def test_page阶段不发推送也不需要成片(tmp_path):
         check=True, capture_output=True, text=True,
     )
     page = (outdir / "copy.html").read_text(encoding="utf-8")
+    # 格式化标题就是这条帖子的标题，复制页那一格里放的是它；文案自己那句钩子
+    # 退成正文第一行。（口径选择，问过之后定的。）
+    assert "7.28 赛场之上 | 锦织圭 2:1 商竣程" in page   # 这一跑没传 --event
     assert "小红书那句标题" in page and "正文第二行" in page
     assert "navigator.clipboard" in page or "execCommand" in page
-    # 微信那条消息的标题不进复制页：小红书标题上限 20 字，这一句二十多字，
-    # 塞进去还会把文案自己那句真标题挤成正文第一行
-    assert "赛场之上" not in page
     # 这条线没有置顶评论，那一格就不该留个空框加一个复制不出东西的按钮
     assert "复制评论" not in page
 
@@ -184,3 +189,30 @@ def test_yt_dlp装default才解得了n_challenge():
     # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
     assert "n challenge solving failed" in check
     assert "not a bot" in check
+
+
+def test_回合镜头也铺满不走contain():
+    """竖版短片在手机上整屏播，上下留黑边等于把冲击力先折一半。窗口只有源片
+    32% 宽，球飞到两边确实会出画——**铺满仍然赢过「不丢画面」**。这一条是人
+    看过两版之后定的，代码注释以前写的正好相反（「回合镜头必须用 contain」）。"""
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    assert all(s.get("fit", "crop") == "crop" for s in spec["segments"])
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    assert "回合镜头必须用这个" not in source
+
+
+def test_标题默认不带赛事名且别太长():
+    """「7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程」被判定太长。
+    赛事名文案里本来就有，标题这一格留给**人物 + 结果 + 抓得住人的那句**。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = text[text.index("      event:"):text.index("      summary:")]
+    assert 'default: ""' in block, "event 默认要留空"
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import headline  # noqa: PLC0415
+
+    got = headline(Path("output/2026-07-28/reel/x"), "赛场之上",
+                   "锦织圭 vs 商竣程", "2:1", "",
+                   "商竣程复出首战先赢一盘，被 36 岁的锦织圭逆转")
+    assert "ATP500" not in got
+    assert len(got) <= 40, f"{len(got)} 字，太长：{got}"
