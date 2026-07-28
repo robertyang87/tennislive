@@ -1232,7 +1232,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "二十一岁二百三十六天，2011 年科维托娃之后最年轻的温网女单冠军。"
             "那天傍晚，她端着维纳斯玫瑰露水盘站上俱乐部阳台，底下站满了人。",
             "assets/explainer/ten-champions/noskova.jpg",
-            "AELTC/Thomas Lovelock · wimbledon.com 官方图 · 2026 温网女单决赛后",
+            "AELTC/Thomas Lovelock · wimbledon.com 官方图 · "
+            "2026 温网女单决赛后，诺斯科娃在会员楼阳台上捧起维纳斯玫瑰露水盘",
             (
                 "2026 温网决赛 6-2 5-7 6-3 胜穆霍娃",
                 "首进大满贯决赛即夺冠，第三轮救过赛点",
