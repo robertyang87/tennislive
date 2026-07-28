@@ -603,3 +603,89 @@ def test_caption_omits_the_court_but_the_card_keeps_it():
 
     assert "Estadio" not in _match_line(m, display)
     assert "Estadio" in schedule_body([m], "7.28"), "卡片上不该少了球场"
+
+
+# ---------- 开赛时间的多方校验 ----------
+
+
+def test_official_exact_times_carry_no_estimate_marker():
+    """官方排期确认过的时间不带 *——那个星号是"我们自己推的"的标记。"""
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="official-exact")
+    assert schedule_time_display([m])[match_key(m)] == "01:00"
+
+
+def test_official_order_estimate_still_carries_the_marker():
+    """只给了场序、没给钟点的，仍是预计。"""
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="official-order-estimate")
+    assert schedule_time_display([m])[match_key(m)] == "预计 01:00*"
+
+
+def test_the_registry_covers_every_event_we_publish():
+    """赛程卡收录的赛事都该有官方 OOP 来源登记。
+
+    别名要**按赛事名**写：真实数据里 city/country 恒为 None，按城市写的永远
+    命不中——洛斯卡沃斯就因为表里只登记了 `los cabos` 而整站被判成非巡回赛
+    级别过一次。
+    """
+    import json
+    from pathlib import Path
+
+    from tennislive.sources.official_schedule import _event_for_match, _load_registry
+
+    registry = Path("data/official_schedule_sources.json")
+    assert registry.exists()
+    events = _load_registry(registry)
+    assert json.loads(registry.read_text(encoding="utf-8"))
+
+    for name, tour, discipline in [
+        ("Mubadala DC Open", Tour.ATP, "Men's Singles"),
+        ("Mubadala DC Open", Tour.WTA, "Women's Singles"),
+        ("The Memphis Classic", Tour.WTA, "Women's Singles"),
+        ("Mifel Tennis Open by Telcel Oppo", Tour.ATP, "Men's Singles"),
+    ]:
+        m = sched(match_id="x", tournament=name, tour=tour, discipline=discipline)
+        assert _event_for_match(m, events) is not None, f"{tour.value} {name} 没有官方来源"
+
+
+def test_cross_source_agreement_is_counted():
+    """两源一致/不一致要数出来，行为落在 tests/test_official_schedule.py。
+
+    这里只保证计数键存在——赛程卡的时间口径全靠它：`official-exact` 不带 *，
+    其余带 *。2026-07-28 实测 15 场精确里 14 场一致、1 场不一致（洛斯卡沃斯的
+    沙波瓦洛夫那场，ESPN 比官方早 1.5 小时），按官方为准。
+    """
+    from datetime import date
+
+    from tennislive.sources.official_schedule import (
+        Fragment,
+        OfficialDocument,
+        OfficialEvent,
+        _apply_document,
+    )
+
+    event = OfficialEvent(
+        tour="ATP", aliases=("Mubadala DC Open",), source="ATP 官方 OOP",
+        url="https://example.test/{year}/op.pdf", timezone="America/New_York",
+    )
+    doc = OfficialDocument(
+        event=event, url="https://example.test/2026/op.pdf",
+        play_date=date(2026, 7, 28),
+        text="ORDER OF PLAY - TUESDAY, JULY 28, 2026",
+        fragments=(
+            Fragment("Not before 1:00 PM", 100, 700),
+            Fragment("ALPHA", 90, 650),
+            Fragment("BETA", 115, 620),
+        ),
+    )
+    m = sched(match_id="a", home="Alpha Player", away="Beta Player",
+              start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC))
+    counts = _apply_document([m], doc)
+
+    assert set(counts) >= {"exact", "conflict", "agree"}
+    # 17:00Z 与官方的 1:00 PM EDT 是同一时刻，应记为一致
+    assert counts["agree"] == 1 and counts["conflict"] == 0
+    assert m.schedule_time_status == "official-exact"
+    # 官方确认过的时间在卡上不带 *
+    assert schedule_time_display([m])[match_key(m)] == "01:00"

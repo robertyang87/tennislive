@@ -213,7 +213,7 @@ def _append_unique(values: list[str], value: str) -> None:
 
 
 def _apply_document(matches: list[Match], document: OfficialDocument) -> dict[str, int]:
-    counts = {"exact": 0, "ordered": 0, "unlisted": 0}
+    counts = {"exact": 0, "ordered": 0, "unlisted": 0, "conflict": 0, "agree": 0}
     for match in matches:
         _append_unique(match.data_sources, document.event.source)
         _append_unique(match.schedule_source_urls, document.url)
@@ -238,16 +238,21 @@ def _apply_document(matches: list[Match], document: OfficialDocument) -> dict[st
             )
             if official is not None:
                 original = match.start_utc
+                # 两源对不对得上要**数出来**：官方永远压过聚合源是对的，但"压过
+                # 了多少场"是这条线唯一能自证在做交叉校验的证据。全是 conflict
+                # 就说明某一侧（多半是时区或场序解析）系统性错了，而卡面上看不
+                # 出差别——只在成功时出声的检查证明不了自己看过。
+                disagrees = bool(
+                    original
+                    and abs((original - official).total_seconds()) > 15 * 60
+                )
+                counts["conflict" if disagrees else "agree"] += 1
                 match.start_utc = official
                 match.time_observations[document.event.source] = official.isoformat()
                 match.schedule_time_status = "official-exact"
                 match.schedule_note = (
                     f"{document.event.source}：{directive}"
-                    + (
-                        "；聚合源时间与官方时间不一致，已以官方为准"
-                        if original and abs((original - official).total_seconds()) > 15 * 60
-                        else ""
-                    )
+                    + ("；聚合源时间与官方时间不一致，已以官方为准" if disagrees else "")
                 )
                 counts["exact"] += 1
                 continue
@@ -280,8 +285,9 @@ def enrich_official_schedules(
             document = _read_pdf(event, digest.today.year)
             counts = _apply_document(matches, document)
             statuses[label] = (
-                f"正常 · 精确 {counts['exact']} 场 / 场序 {counts['ordered']} 场 / "
-                f"待下一版 {counts['unlisted']} 场"
+                f"正常 · 精确 {counts['exact']} 场（与聚合源一致 {counts['agree']} / "
+                f"不一致 {counts['conflict']}，以官方为准） / "
+                f"场序 {counts['ordered']} 场 / 待下一版 {counts['unlisted']} 场"
             )
         except Exception as exc:  # noqa: BLE001 - each official event degrades alone
             logger.warning("官方 OOP 读取失败（%s）: %s", label, exc)

@@ -195,7 +195,7 @@ def _event_heading(group) -> str:
 CAPTION_MAX_CHARS = 1000
 # 脚注按"两个标记都出现"算——预算要按最坏情况留，算少了就会超
 _NOTE_WORST = (
-    "时间为北京时间；+1 为次日；带 * 为按同赛事场序推算的预计时间，以官方排期为准。"
+    "时间为北京时间；+1 为次日；无标记为赛事官方排期确认，带 * 为按场序推算的预计时间。"
 )
 
 
@@ -299,5 +299,5 @@ def schedule_post(
         # 美东夜场落在北京次日凌晨，不说清楚读者会当成今天白天那个点
         note.append("+1 为次日")
     if has_estimated_times(shown):
-        note.append("带 * 为按同赛事场序推算的预计时间，以官方排期为准")
+        note.append("无标记为赛事官方排期确认，带 * 为按场序推算的预计时间")
     return f"{title}\n\n{body}\n\n{'；'.join(note)}。\n\n{TAGS}\n"
