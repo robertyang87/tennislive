@@ -202,21 +202,21 @@ _NOTE_WORST = (
 def _match_line(m: Match, display: dict[str, str]) -> str:
     """一场一行，写得尽量短——省下的每个字都能多装一场进一千字的正文。
 
-    对着原来的写法省了三处，都不丢信息：
+    对着最初的写法省了四处，都不丢关键信息：
 
     - 轮次用短形式：「男单·第一轮」→「男单首轮」（6 → 4）
     - 分隔符用空格不用「 · 」（每处 3 → 1，一行三处）
     - 时间去掉「预计」二字：末尾那个 `*` 已经是预计的标记，脚注里也说了
       （「预计 23:00*」→「23:00*」）
+    - **不写球场**。球场名留在卡片上（那儿有的是地方），正文里它最占字又最
+      不影响读者的决定——挑哪场看的是人和时间。而且这些名字大多是长英文
+      （`Estadio Alejandro Burillo` 一个就 25 字），一行能顶掉半场别的比赛。
 
-    实测一行 39 → 28 字，同样一千字能多装五六场。
+    一行 39 → 24 字上下。
     """
     when = display.get(match_key(m), "").replace("预计 ", "")
-    court = (m.court or "").strip()
     discipline = (match_round_display(m) or "").split("·")[0].strip()
     bits = [f"{discipline}{_short_round(m)}".strip(), _versus(m), when]
-    if court:
-        bits.append(court)
     mark = "🇨🇳" if any(is_chinese_player(p) for p in m.home + m.away) else ""
     return (mark + " ".join(b for b in bits if b)).strip()
 
