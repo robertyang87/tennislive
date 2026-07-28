@@ -2362,9 +2362,22 @@ def _slide_html(
             '<div class="scrim"></div>'
         )
     else:
+        if not segment.diagram:
+            # 这里原来是 `segment.diagram or _HAWKEYE_DIAGRAM`。一屏既没配图也没
+            # 画示意图时，它会**悄悄**把鹰眼那张「摄像机三角测量落点」摆上去——
+            # 起草外卡那条时就这么中过：封面渲出来是一张网球场测线图，和外卡毫无
+            # 关系，而且不报错。已发的十四条每一屏都自带图或示意图，所以这个兜底
+            # 从来没在产物里露过面，正因如此也没人发现它指着别的选题。
+            #
+            # 和「补位的静音盖住真音轨」「-filter_complex 不打标签就静默失效」
+            # 是同一种毛病：**兜底出事的时候不吭声**。缺图就停下来说缺图。
+            raise ValueError(
+                f"这一屏既没有 image 也没有 diagram：[{segment.label}] {segment.title}\n"
+                "补一张图或画一张示意图；别让它悄悄套用别的选题的图。"
+            )
         hero = (
             '<div class="hero diagram"></div>'
-            f'<div class="diagram-wrap">{segment.diagram or _HAWKEYE_DIAGRAM}</div>'
+            f'<div class="diagram-wrap">{segment.diagram}</div>'
             '<div class="scrim"></div>'
         )
     # One line, always: CJK glyphs run about one em wide, so size the headline
