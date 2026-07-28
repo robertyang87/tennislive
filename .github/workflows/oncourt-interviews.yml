@@ -106,6 +106,15 @@ jobs:
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: |
+          # **pipefail 必须开。** 这一步是 `python ... | tee`，默认情况下 bash
+          # 报的是管道最后一环（tee）的退出码——第一次定时跑的时候 oncourt_feed.py
+          # 抛了 TypeError 直接崩掉，一条都没推出去，而这一步和整个 run
+          # 都显示 success。**又是拿信号当产物。**
+          #
+          # 上面几步的 `| tee ... || true` 是**故意**吞错的（搜索和缺口对账失败
+          # 不该拦住推送），那几处不受影响——pipefail 只让没写 `|| true`
+          # 的那几步真实反映退出码。
+          set -o pipefail
           # 采集是全量的（八百多条），推送只推两类：关键场次（决赛/半决赛/
           # 四分之一）和中国球员**赢球后**的。已推过的记在
           # data/oncourt_feed_sent.json 里，不会重复打扰。

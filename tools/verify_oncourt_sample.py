@@ -41,7 +41,15 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 
 # tennistv / wtatennis 的海报图都落在 pulselive 的 photo-resources 下。
 # 页面里第一张就是这条片子自己的海报，后面的是「相关推荐」的。
-_POSTER = re.compile(r"https?://resources[^\"\\ ]*?photo-resources[^\"\\ ]*?\.(?:jpg|jpeg|png|webp)")
+#
+# **query 串不能截掉**。原文写的是
+#   …/Griekspoor2.jpg?width=1024&height=512
+# 去掉 `?width=…` 之后 CDN 一律返 400。踩过：正则只匹到 `.jpg` 为止，
+# 于是 522 条 tennistv 条目「取不到海报」——**看着像这个源没有图，
+# 其实是我自己把 URL 截断了**。空结果先自证是真空，这次的空是自己造的。
+_POSTER = re.compile(
+    r"https?://resources[^\"\\ ]*?photo-resources[^\"\\ ]*?\.(?:jpg|jpeg|png|webp)"
+    r"(?:\?[\w=&%.-]*)?")
 
 CELL_W, CELL_H = 480, 270      # 缩略图统一裁成 16:9
 LABEL_H = 34                   # 编号条
