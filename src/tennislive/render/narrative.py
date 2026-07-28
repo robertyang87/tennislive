@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Container
 from datetime import date
 
 from ..models import Match
@@ -80,7 +81,60 @@ def _topicality_angle(match: Match) -> str | None:
     return None
 
 
-def preview_angle(match: Match, today: date | None = None) -> str:
+def data_angle(match: Match, limit: int) -> str:
+    """一行装得下的数据看点：短、带数字、只用这场比赛真有的字段。
+
+    preview_angle 与 schedule_insight 写得比这一行的预算长得多（决赛那句
+    44 字、账号连载那句 59 字），一旦都截不出完整句子，看点就跌回赛段套话
+    ——"最后一场定归属，谁先扛住谁捧杯"这种任何一场决赛都能印的话。
+    这里按排名 → 种子 → 中国球员 → 纯对阵逐级降，每一级都先量长度，
+    装不下就换下一级，保证落到套话之前还有一句带信息的。
+
+    原来住在 xiaohongshu.py 里只给推送正文用。它是全篇唯一**逐场不同**的
+    兜底句，preview_angle 的收尾也需要：赛段套话是按轮次写的，同一轮的两场
+    比赛会拿到一模一样的一句（五场页上"四强席位就在眼前…"印过两遍）。
+    """
+    stage = round_zh(match.round_name) or ""
+    home = match.home[0] if match.home else None
+    away = match.away[0] if match.away else None
+    if home is None or away is None:
+        return ""
+    home_name, away_name = player_zh(home.name), player_zh(away.name)
+    prefix = f"{stage}：" if stage else ""
+
+    candidates: list[str] = []
+    if home.rank is not None and away.rank is not None:
+        candidates.append(
+            f"{prefix}世界第{home.rank}的{home_name}对上第{away.rank}的{away_name}。"
+        )
+        candidates.append(f"{prefix}{home_name}第{home.rank}，{away_name}第{away.rank}。")
+    if home.seed is not None and away.seed is not None:
+        candidates.append(
+            f"{prefix}{home.seed}号种子{home_name}对{away.seed}号种子{away_name}。"
+        )
+    chinese = [p for p in match.home + match.away if is_chinese_player(p)]
+    if chinese:
+        name = player_zh(chinese[0].name)
+        opponent = away if chinese[0] is home else home
+        if opponent.rank is not None:
+            candidates.append(f"{name}打{stage or '这一轮'}，对手世界第{opponent.rank}。")
+        candidates.append(f"{name}的{stage or '这一轮'}，今晚这场先看她。")
+    candidates.append(f"{prefix}{home_name}对{away_name}。")
+
+    for line in candidates:
+        if len(line) <= limit:
+            return line
+    return ""
+
+
+# data_angle 收尾时给的字数上限。看点行最宽是两行 74 字（见 webcards 的
+# REASON_LIMIT_TWO_LINES），这里放宽一点，让渲染层自己再裁。
+_DATA_ANGLE_LIMIT = 80
+
+
+def preview_angle(
+    match: Match, today: date | None = None, *, used: Container[str] = ()
+) -> str:
     """Explain why a match matters, weighing media opinion, both sides'
     topicality, and historical relevance before falling back to mechanical
     rank/seed facts.
@@ -90,35 +144,66 @@ def preview_angle(match: Match, today: date | None = None) -> str:
     account continuity (this player's last appearance in our own coverage) >
     automated trend-radar topicality (real, sourced buzz, not yet reviewed) >
     mechanical schedule_insight as the final, always-available fallback.
+
+    ``used`` 是同一页上已经印出去的角度。赛事故事那一档是**赛事级**的——同一
+    站的每场比赛都会拿到同一句"…又要添一位新主角；这场不只抢晋级，也抢本届
+    赛事的叙事中心"，五场的今晚焦点页上曾一字不差地重复三遍。传入 used 后，
+    已经出现过的那句会被跳过，掉到下面按比赛本身取材的档位（往绩、热度、
+    赛程事实），赛事故事仍然保留、但一页只讲一次。
     """
+    candidates: list[str] = []
+
+    def offer(value: str | None) -> str | None:
+        """记下候选；没被用过就直接采纳。"""
+        if not value:
+            return None
+        candidates.append(value)
+        return value if value not in used else None
+
     media = brief_for_match(match, today) if today is not None else None
-    if media is not None:
-        return media.consensus
+    if media is not None and (picked := offer(media.consensus)):
+        return picked
     if match.editorial_note and (
         match.editorial_url or match.editorial_source == "背景编辑"
     ):
-        return match.editorial_note
+        if picked := offer(match.editorial_note):
+            return picked
 
     story = direct_story_for_match(match, prefer_player=True)
     if story is not None and story.kind == "player":
-        return _player_preview(story.slug, today) or _PLAYER_PREVIEWS.get(story.slug, story.hero_fact)
+        if picked := offer(
+            _player_preview(story.slug, today)
+            or _PLAYER_PREVIEWS.get(story.slug, story.hero_fact)
+        ):
+            return picked
 
     chinese = next(
         (player for player in match.home + match.away if is_chinese_player(player)),
         None,
     )
-    if chinese is not None:
-        return schedule_insight(match, today)
+    if chinese is not None and (picked := offer(schedule_insight(match, today))):
+        return picked
 
-    if story is not None:
-        return f"{story.title}又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心。"
+    if story is not None and (picked := offer(
+        f"{story.title}又要添一位新主角；这场不只抢晋级，也抢本届赛事的叙事中心。"
+    )):
+        return picked
 
     if today is not None:
         historical = historical_context(match, today)
-        if historical is not None and historical.summary:
-            return historical.summary
+        if historical is not None and (picked := offer(historical.summary)):
+            return picked
 
-    return _topicality_angle(match) or schedule_insight(match, today)
+    if picked := offer(_topicality_angle(match)):
+        return picked
+    if picked := offer(schedule_insight(match, today)):
+        return picked
+    # schedule_insight 是按**轮次**写的，同一轮的两场会拿到同一句。收尾换成
+    # 逐场取材的数据句，否则"已经用过就往下走"到这里就断了。
+    if picked := offer(data_angle(match, _DATA_ANGLE_LIMIT)):
+        return picked
+    # 全都用过了：宁可重复也不能让这一行空着。
+    return candidates[-1] if candidates else schedule_insight(match, today)
 
 
 def editor_takeaway(match: Match, today: date | None = None) -> str:
@@ -144,14 +229,18 @@ def _grounded_takeaway(match: Match) -> str:
     loser_name = player_zh(losers[0].name)
 
     r = round_zh(match.round_name) or ""
+    # 赢下一场比赛是**兑现**了这一轮的赌注，不是把它推给下一场。原来写的是
+    # "{winner}把{stakes}的悬念留到了下一场"，方向整个反了；决赛尤其离谱——
+    # 决赛本身就是最后一场，没有"下一场"。7.26 的头条卡上印着阿利斯夺冠，
+    # 下面一行却说他"把冠军奖杯的悬念留到了下一场"。
     stakes = {
-        "决赛": "冠军奖杯",
+        "决赛": "冠军",
         "半决赛": "决赛门票",
         "四分之一决赛": "四强席位",
         "八分之一决赛": "八强门票",
     }.get(r)
     if stakes:
-        return f"{winner_name}把{stakes}的悬念留到了下一场；{loser_name}这个赛季，还得找别的地方把状态找回来。"
+        return f"{winner_name}拿下{stakes}；{loser_name}这个赛季，还得找别的地方把状态找回来。"
 
     tiebreaks = sum(
         1

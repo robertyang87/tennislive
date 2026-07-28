@@ -2,11 +2,11 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 from tennislive import cli, timeutil
 from tennislive.models import DailyData, MatchStatus, Tour
-from tennislive.render.cards import MARGIN, W, _flash_headline_lines, _Fonts
+from tennislive.render.cards import MARGIN, W, _find_font, _flash_headline_lines, _Fonts
 
 from conftest import make_match
 
@@ -80,27 +80,36 @@ def test_flash_radar_queues_only_offcourt_nonsensitive_news(tmp_path, monkeypatc
 
     from tennislive.research.trends import TrendSignal
 
+    # 时间戳跟着真实时钟走。原来写死在 2026-07-24，而 offcourt_flash_candidates
+    # 的新鲜度闸门（48 小时）用的是 datetime.now()——测试只 monkeypatch 了
+    # beijing_today，管不到它。所以现实时间一过 07-26 09:00Z，三条信号全部过期，
+    # 候选恒为空，这条测试从此永远红。写成"相对现在"就跟日期无关了。
+    fresh = datetime.now(timezone.utc) - timedelta(hours=2)
+
+    def stamp(offset_minutes: int) -> str:
+        return (fresh + timedelta(minutes=offset_minutes)).isoformat()
+
     signals = [
         TrendSignal(
             kind="official-news",
             source="ATP",
             title="Sinner beats Alcaraz 7-5 6-4 in Cincinnati final",
             url="u1",
-            published_at="2026-07-24T08:00:00+00:00",
+            published_at=stamp(0),
         ),
         TrendSignal(
             kind="official-news",
             source="ATP",
             title="ATP announces electronic line calling across all events",
             url="u2",
-            published_at="2026-07-24T09:00:00+00:00",
+            published_at=stamp(60),
         ),
         TrendSignal(
             kind="official-news",
             source="ITIA",
             title="Player suspended after positive doping test",
             url="u3",
-            published_at="2026-07-24T09:30:00+00:00",
+            published_at=stamp(90),
         ),
     ]
     monkeypatch.setattr(
@@ -149,6 +158,34 @@ def test_flash_uses_bundled_editorial_display_fonts(monkeypatch):
 
     assert "Smiley Sans" in fonts.display_title.getname()[0]
     assert "Barlow Condensed" in fonts.latin.getname()[0]
+
+
+def test_default_fonts_render_cjk_without_env(monkeypatch):
+    """无环境变量时默认字体必须能画中文（2026-07-25 实测 bug）。
+
+    assets/fonts/ 里 Latin-only 的 BarlowCondensed 按字母序排在 Noto 之前，
+    早前的 "*" 泛匹配会把它选成正文默认字体，"网球时差"全渲染成豆腐块。
+    Latin-only 字体绝不能排在 CJK 字体前面。
+    """
+    monkeypatch.delenv("TENNISLIVE_FONT", raising=False)
+    monkeypatch.delenv("TENNISLIVE_FONT_BOLD", raising=False)
+
+    for bold in (False, True):
+        path, idx = _find_font(bold=bold)
+        name = Path(path).name
+        assert "barlow" not in name.lower(), name
+        assert any(tag in name for tag in ("Noto", "CJK", "SC")), name
+
+        font = ImageFont.truetype(path, size=48, index=idx)
+
+        def render(text: str) -> bytes:
+            img = Image.new("L", (240, 64), 0)
+            ImageDraw.Draw(img).text((0, 0), text, font=font, fill=255)
+            return img.tobytes()
+
+        # 有笔画，且不同汉字形状不同——豆腐块会每个字都一模一样
+        assert render("网球时差") != render("")
+        assert render("网") != render("时")
 
 
 def test_flash_writes_one_review_manifest_for_duplicate_source_rows(
@@ -563,19 +600,19 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
 
     seen_skip_tours = {}
 
-    def fake_generate(_digest, out_dir, *, skip_tours=frozenset(), report=None):
+    def fake_generate(_digest, out_dir, *, skip_tours=frozenset(), diagnostics=None):
         seen_skip_tours["value"] = skip_tours
-        if report is not None:
-            report.append(
+        if diagnostics is not None:
+            diagnostics["enabled"] = True
+            diagnostics["resolver_attempts"] = [
                 {
-                    "source": "STUB",
-                    "fetched": 0,
+                    "resolver": "discover_wta_point",
+                    "source": "WTA 官方视频（官网）",
+                    "status": "empty",
+                    "fetched": 4,
                     "matched": 0,
-                    "picked": False,
-                    "note": "",
-                    "error": "",
                 }
-            )
+            ]
         wta_dir = out_dir / "wta"
         wta_dir.mkdir(parents=True, exist_ok=True)
         video = wta_dir / "yesterday-point.mp4"
@@ -596,14 +633,75 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
     manifest = json.loads((output_dir / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["tours"] == {"ATP": "pass", "WTA": "pass"}
     assert manifest["fresh_tours"] == ["WTA"]
-    # The per-source discovery ledger rides along in the top-level manifest.
-    assert manifest["discovery"] == [
-        {
-            "source": "STUB",
-            "fetched": 0,
-            "matched": 0,
-            "picked": False,
-            "note": "",
-            "error": "",
-        }
-    ]
+    # The per-source ledger (with fetched/matched counts) also rides along in
+    # the top-level manifest, so the workflow can surface it from one place.
+    assert manifest["resolver_attempts"][0]["source"] == "WTA 官方视频（官网）"
+    assert manifest["resolver_attempts"][0]["fetched"] == 4
+
+
+def test_yesterday_point_cli_reports_switch_off_and_writes_skip_diagnostics(
+    tmp_path, monkeypatch
+):
+    import json
+
+    # 开关未开时没有查询过任何源，理由必须如实说"开关未开启"，
+    # 不能伪称"已查询各源"。
+    monkeypatch.delenv("TENNISLIVE_YESTERDAY_POINT", raising=False)
+    monkeypatch.setattr(cli, "build_digest", lambda _d, prefer=None: object())
+
+    args = SimpleNamespace(
+        date="2026-07-16", outdir=str(tmp_path / "output"), source=None
+    )
+    assert cli.cmd_yesterday_point(args) == 0
+
+    output_dir = tmp_path / "output" / "2026-07-16" / "yesterday-point"
+    for tour in ("atp", "wta"):
+        manifest = json.loads(
+            (output_dir / tour / "manifest.json").read_text(encoding="utf-8")
+        )
+        assert "开关未开启" in manifest["reason"]
+        assert "已查询" not in manifest["reason"]
+        skip = json.loads(
+            (output_dir / tour / "skip.json").read_text(encoding="utf-8")
+        )
+        assert skip["status"] == "skipped"
+        assert skip["switch_enabled"] is False
+        assert skip["resolver_attempts"] == []
+
+
+def test_yesterday_point_cli_persists_resolver_diagnostics_on_skip(
+    tmp_path, monkeypatch
+):
+    import json
+
+    def fake_generate(_digest, _out_dir, *, skip_tours=frozenset(), diagnostics=None):
+        if diagnostics is not None:
+            diagnostics["enabled"] = True
+            diagnostics["resolver_attempts"] = [
+                {
+                    "resolver": "discover_wta_point",
+                    "status": "error",
+                    "error": "HTTPError: 500",
+                }
+            ]
+        return {}
+
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.generate_yesterday_point", fake_generate
+    )
+    monkeypatch.setattr(cli, "build_digest", lambda _d, prefer=None: object())
+
+    args = SimpleNamespace(
+        date="2026-07-16", outdir=str(tmp_path / "output"), source=None
+    )
+    assert cli.cmd_yesterday_point(args) == 0
+
+    output_dir = tmp_path / "output" / "2026-07-16" / "yesterday-point"
+    for tour in ("atp", "wta"):
+        skip = json.loads(
+            (output_dir / tour / "skip.json").read_text(encoding="utf-8")
+        )
+        assert skip["resolver_attempts"][0]["error"] == "HTTPError: 500"
+        assert "已查询" in skip["reason"]
+    top = json.loads((output_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert top["status"] == "skipped"

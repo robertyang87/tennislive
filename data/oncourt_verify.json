@@ -1,0 +1,3157 @@
+{
+  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。",
+  "verdicts": {
+    "aLMwctJsY9A": {
+      "verdict": "oncourt",
+      "source": "Australian Open",
+      "n": 1,
+      "title": "Alexander Zverev On-Court Interview | Australian Open 2026 Third Round",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "DJhe8zBXStY": {
+      "verdict": "oncourt",
+      "source": "Australian Open",
+      "n": 2,
+      "title": "Arthur Fery On-Court Interview | Australian Open 2026 First Round",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "2GeU8CBdx84": {
+      "verdict": "oncourt",
+      "source": "Australian Open",
+      "n": 3,
+      "title": "Casper Ruud On-Court Interview | Australian Open 2026 Third Round",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "kG3xSHnpT4s": {
+      "verdict": "oncourt",
+      "source": "Australian Open",
+      "n": 4,
+      "title": "Victoria Mboko On-Court Interview | Australian Open 2026 Third Round",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "qMg90wrD1Ig": {
+      "verdict": "oncourt",
+      "source": "Davis Cup / World Tennis",
+      "n": 5,
+      "title": "Jaume Munar post-match interview | Spain v Czechia | 2025 Davis Cup Final 8",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "XfbpyASiQLY": {
+      "verdict": "oncourt",
+      "source": "Davis Cup / World Tennis",
+      "n": 6,
+      "title": "Matteo Berrettini post-match interview | Italy v Austria | 2025 Davis Cup Final 8",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "t4EmCGxsKX0": {
+      "verdict": "oncourt",
+      "source": "Davis Cup / World Tennis",
+      "n": 7,
+      "title": "Marcel Granollers/ Pedro Martinez post-match interview | Spain v Czechia | 2025 Davis Cup Final 8",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "nOZEXDETYD0": {
+      "verdict": "oncourt",
+      "source": "Davis Cup / World Tennis",
+      "n": 8,
+      "title": "\"My level goes up in the Davis Cup\" | On-court Interview | Spain v Germany | 2025 Davis Cup Final 8",
+      "by": "auto-frames-2026-07-27",
+      "note": "三帧都在场上：西班牙队服、球场、ADVANCE TO THE NEXT ROUND 字幕条"
+    },
+    "4Y8JthgFehw": {
+      "verdict": "oncourt",
+      "source": "Dubai Duty Free Tennis Championships",
+      "n": 9,
+      "title": "Post-Match Interview: Tallon Griekspoor after QF of 2026 Dubai Duty Free Tennis Championships",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "HDOPIhy1zis": {
+      "verdict": "oncourt",
+      "source": "Dubai Duty Free Tennis Championships",
+      "n": 10,
+      "title": "Andrey Rublev - R2 Post-Match Interview - 2024 Dubai Duty Free Tennis Championships",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "b87mZYw65qI": {
+      "verdict": "oncourt",
+      "source": "Dubai Duty Free Tennis Championships",
+      "n": 11,
+      "title": "Jannik Sinner - Post-Match Interview - R1- 2022 Dubai Duty Free Tennis Championships",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "-rnMQgl2ez0": {
+      "verdict": "oncourt",
+      "source": "Dubai Duty Free Tennis Championships",
+      "n": 12,
+      "title": "Post-Match Interview: Roger Federer",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "5-kx9OOgqrE": {
+      "verdict": "oncourt",
+      "source": "ElenaRybakinaHD",
+      "n": 13,
+      "title": "Elena Rybakina passed her driving test in a PORSCHE😂| On court Interview Porsche tennis 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "SkDvoVcrELM": {
+      "verdict": "oncourt",
+      "source": "ElenaRybakinaHD",
+      "n": 14,
+      "title": "Elena Rybakina on court interview after Miami Open round 3 win 😊🇰🇿",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "fp2njsV6zh0": {
+      "verdict": "oncourt",
+      "source": "ElenaRybakinaHD",
+      "n": 15,
+      "title": "Elena Rybakina is Happy after reaching Indian Wells FINAL!😊❤️| On Court Interview",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "7eOi7jnUZHM": {
+      "verdict": "oncourt",
+      "source": "Eurosport Tennis",
+      "n": 16,
+      "title": "On-Court Interview: Jannik Sinner reacts after beating Ben Shelton to reach Australian Open final 🏆",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + KIA 广告牌，另两帧是他的教练席"
+    },
+    "L4hyNspeFyY": {
+      "verdict": "oncourt",
+      "source": "Eurosport Tennis",
+      "n": 17,
+      "title": "On-Court Interview: Aryna Sabalenka on playing in tough conditions after reaching Australian Open QF",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + KIA 场边广告牌"
+    },
+    "2F70I9471Vs": {
+      "verdict": "oncourt",
+      "source": "Eurosport Tennis",
+      "n": 18,
+      "title": "On-Court Interview: Kei Nishikori wins on first Australian Open tennis match in four years 🇯🇵",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上，Emirates 场边牌 + 看台日本国旗"
+    },
+    "S7MGjoOkVQg": {
+      "verdict": "oncourt",
+      "source": "Eurosport Tennis",
+      "n": 19,
+      "title": "On-Court Interview: Emotional Naomi Osaka has message of support for Los Angeles ❤️",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + POLO/DUNLOP 场边牌，还带 DEFEATED C. GARCIA 6-3 3-6 6-3 字幕条"
+    },
+    "4TRG_HeCUl8": {
+      "verdict": "oncourt",
+      "source": "Fédération Française de Tennis",
+      "n": 20,
+      "title": "Diane Parry's on-court interview after qualifying for the round of 16 | Roland-Garros 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "haW5653r88Q": {
+      "verdict": "oncourt",
+      "source": "Fédération Française de Tennis",
+      "n": 21,
+      "title": "Moïse Kouame's on-court interview after his STUNNING performance in the second round | Roland-Gar...",
+      "by": "auto-frames-2026-07-27",
+      "note": "法网标话筒，主持人和球员对答，室外看台——在场上"
+    },
+    "2DYCxpInZoU": {
+      "verdict": "oncourt",
+      "source": "Hamburg European Open",
+      "n": 22,
+      "title": "HEO2021 /// ATP QF /// ON-COURT INTERVIEW with Filip Krajinovic",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "AKXNzqdBjOo": {
+      "verdict": "oncourt",
+      "source": "Hamburg European Open",
+      "n": 23,
+      "title": "HEO2021 /// ATP F /// ON-COURT INTERVIEW with Pablo Carreno Busta",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "5MpkluE6A_A": {
+      "verdict": "oncourt",
+      "source": "Hamburg European Open",
+      "n": 24,
+      "title": "HEO2021 /// ATP R2 /// ON-COURT INTERVIEW with Dusan Lajovic",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "1vVVmLkykhc": {
+      "verdict": "oncourt",
+      "source": "Hamburg European Open",
+      "n": 25,
+      "title": "HEO2021 /// WTA SF /// ON-COURT INTERVIEW with Andrea Petkovic",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "TiBorL7X2ac": {
+      "verdict": "oncourt",
+      "source": "Hopman Cup",
+      "n": 26,
+      "title": "Serena Williams on-court interview (RR) | Mastercard Hopman Cup 2019",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "JsdX17MjAf4": {
+      "verdict": "oncourt",
+      "source": "Hopman Cup",
+      "n": 27,
+      "title": "Roger Federer on-court interview - Mastercard Hopman Cup 2017",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "C-CryGbnyrY": {
+      "verdict": "oncourt",
+      "source": "Hopman Cup",
+      "n": 28,
+      "title": "Belinda Bencic on-court interview (RR) | Mastercard Hopman Cup 2019",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "csOTSqe0zY0": {
+      "verdict": "oncourt",
+      "source": "Hopman Cup",
+      "n": 29,
+      "title": "Angelique Kerber on-court interview (RR) | Mastercard Hopman Cup 2018",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "CV-6TADWxTk": {
+      "verdict": "oncourt",
+      "source": "ICONIC CHANNEL TENNIS",
+      "n": 30,
+      "title": "ARYNA SABALENKA/ON COURT INTERVIEW/MIAMI SEMI-FINAL 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "FkbFbwkYfeU": {
+      "verdict": "oncourt",
+      "source": "ICONIC CHANNEL TENNIS",
+      "n": 31,
+      "title": "VICTORIA MBOKO/ON COURT INTERVIEW/ADELAIDE SEMI-FINAL 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "G_Ii0skaCjY": {
+      "verdict": "oncourt",
+      "source": "ICONIC CHANNEL TENNIS",
+      "n": 32,
+      "title": "KAMILLA RAKHIMOVA/ON COURT INTERVIEW/NATIONAL BANK OPEN 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "yOwRcwaSblY": {
+      "verdict": "oncourt",
+      "source": "ICONIC CHANNEL TENNIS",
+      "n": 33,
+      "title": "ELENA RYBAKINA/ON COURT INTERVIEW/STRASBOUG SEMI-FINAL 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "1n4dxFTU778": {
+      "verdict": "oncourt",
+      "source": "Indian Wells / BNP Paribas Open",
+      "n": 34,
+      "title": "Frances Tiafoe Quarterfinal Post-Match Interview",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "B4zoPvpwYjA": {
+      "verdict": "oncourt",
+      "source": "Laver Cup",
+      "n": 35,
+      "title": "Roger Federer On Court Interview (Match 5) | Laver Cup 2017",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "1YGVZ-6X6cA": {
+      "verdict": "oncourt",
+      "source": "Laver Cup",
+      "n": 36,
+      "title": "Shelton/Fritz On-Court Interview | Laver Cup 2024 Match 4",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "uKKOKra2Aag": {
+      "verdict": "oncourt",
+      "source": "Laver Cup",
+      "n": 37,
+      "title": "Jakub Mensik On-Court Interview | Laver Cup 2025 Match 2",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "fG1ooqXgb0o": {
+      "verdict": "oncourt",
+      "source": "Laver Cup",
+      "n": 38,
+      "title": "On Court Interview:  Federer / Tsitsipas  v  Isner / Sock, Day 3, September 22 2019",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "eNvX4jgqXko": {
+      "verdict": "other",
+      "source": "Queenlenka",
+      "n": 39,
+      "title": "“How Can I Say No to This Ring?” 💍| Aryna Sabalenka On-Court Interview | Indian Wells 2026 2nd Round",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "rztVHAitexE": {
+      "verdict": "oncourt",
+      "source": "Queenlenka",
+      "n": 40,
+      "title": "Aryna Sabalenka After Beating Rybakina 💥 | On-Court Interview Miami 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "YAGvS5joOmk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "n": 41,
+      "title": "Sabalenka Round 1 post-match interview | Roland-Garros 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "kXlVZlnnYpQ": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "n": 42,
+      "title": "Djokovic Round 4 post-match interview | Roland-Garros 2025",
+      "by": "maxres-recheck-2026-07-27",
+      "note": "大图上是室外、看台虚化、手持长杆麦，在场上；小图上误判成发布会"
+    },
+    "T8Nzoii_0tc": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "vc9_56rBBqY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Garcia Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "p8z5dEVgXck": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Jannik Sinner post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "IOLtTF-PzZ8": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Jannik Sinner post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "UQKy_5DqSmM": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Felix Auger-Aliassime post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "bWTTWu_uA_I": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Jannik Sinner post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "BeteMCQj6Ko": {
+      "verdict": "oncourt",
+      "source": "Rome / Internazionali BNL d'Italia",
+      "n": 49,
+      "title": "Lorenzo Musetti On-Court Interview | Round 2 | Rome 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "CYMC5uRZw5E": {
+      "verdict": "oncourt",
+      "source": "Rome / Internazionali BNL d'Italia",
+      "n": 50,
+      "title": "Jannik Sinner On-Court Interview | Semifinal | Internazionali BNL d’Italia 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "5GfXqvtn9Rs": {
+      "verdict": "oncourt",
+      "source": "Rome / Internazionali BNL d'Italia",
+      "n": 51,
+      "title": "Tallon Griekspoor On-Court Interview | Internazionali BNL d’Italia 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "Lcf-pbN7JAY": {
+      "verdict": "oncourt",
+      "source": "Rome / Internazionali BNL d'Italia",
+      "n": 52,
+      "title": "Jannik Sinner On-Court Interview | Round 3 | Rome 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "502VroUhUIA": {
+      "verdict": "oncourt",
+      "source": "Stefan P.",
+      "n": 53,
+      "title": "Sabalenka Post-Match Interview after Beating Noskova | Indian Wells 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "wr3MQ0oYcDk": {
+      "verdict": "oncourt",
+      "source": "Stefan P.",
+      "n": 54,
+      "title": "Aryna Sabalenka Post-Match Interview after Beating Cristian | Indian Wells 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "jMM52b7NgjU": {
+      "verdict": "oncourt",
+      "source": "Stefan P.",
+      "n": 55,
+      "title": "Iga Swiatek Post-Match Interview after Beating Kayla Day | Indian Wells 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "1CZHK9jFcjA": {
+      "verdict": "oncourt",
+      "source": "Stefan P.",
+      "n": 56,
+      "title": "Victoria Mboko Post-Match Interview After Beating Birrell | Indian Wells 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "VVQB_Z12j0s": {
+      "verdict": "oncourt",
+      "source": "TNT Sports",
+      "n": 57,
+      "title": "On-Court Interview: EMOTIONAL Elena Rybakina reacts after winning the Australian Open title 🏆",
+      "by": "auto-frames-2026-07-27",
+      "note": "颁奖礼上举着奖杯接受采访，AO 话筒，人在场上"
+    },
+    "tPt8M0AW2oQ": {
+      "verdict": "oncourt",
+      "source": "TNT Sports",
+      "n": 58,
+      "title": "Aryna Sabalenka On-Court Interview | Australian Open 2026 Round Two",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + Haier 场边牌"
+    },
+    "Bay_GQBoG_o": {
+      "verdict": "oncourt",
+      "source": "TNT Sports",
+      "n": 59,
+      "title": "Elena Rybakina On-Court Interview: Australian Open 2026 Quarter-Final",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + Haier 场边牌，带 THROUGH TO SEMIFINALS 字幕条"
+    },
+    "tLucysFwdCw": {
+      "verdict": "oncourt",
+      "source": "TNT Sports",
+      "n": 60,
+      "title": "On-Court Interview: Novak Djokovic on having to find his best form against Mpetshi Perricard 😅",
+      "by": "auto-frames-2026-07-27",
+      "note": "三帧都是场上主持人，法网标话筒 + 红土 + Emirates 牌 + 2:51 比赛计时"
+    },
+    "TCGEAPw0PME": {
+      "verdict": "oncourt",
+      "source": "Team Swiatek",
+      "n": 61,
+      "title": "\"I feel the love here\" Iga Świątek On-Court Interview | Semifinal Cincinnati Open 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "uPPYNOy3GRQ": {
+      "verdict": "oncourt",
+      "source": "Team Swiatek",
+      "n": 62,
+      "title": "Iga Swiatek On-Court Interview Wuhan Open 2025 #igaswiatek #WuhanOpen #WuhanOpen2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "qbBEbaJudWI": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "n": 63,
+      "title": "Anastasia Potapova R16 Transylvania Open '26",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "RG3zzXd5XRg": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "n": 64,
+      "title": "Irina-Camelia Begu R32 Bad Homburg 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "u-FeAhFkQQ8": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "n": 65,
+      "title": "Alexandra Eala R32 Dubai '26",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "JyZtsjLtEo4": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "n": 66,
+      "title": "Nick Kyrgios R32 Stuttgart '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP 250 手持话筒，右侧露出草地，第三帧是看台"
+    },
+    "_e4v8tj2TkI": {
+      "verdict": "oncourt",
+      "source": "Tennis x Tennis",
+      "n": 67,
+      "title": "Sabalenka vs Stearns Post-Match Interview | Madrid 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "LOs_q07iEjw": {
+      "verdict": "oncourt",
+      "source": "Tennis x Tennis",
+      "n": 68,
+      "title": "Rybakina Survives Fernandez Marathon! 🎾 Post-Match Interview | Porsche Tennis Grand Prix",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "dSzC7SiQQ-Y": {
+      "verdict": "oncourt",
+      "source": "Tennis x Tennis",
+      "n": 69,
+      "title": "Coco Gauff Post Match Interview vs Mirra Andreeva | Rome 2026 Quarterfinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "N0ohQjMuDh8": {
+      "verdict": "oncourt",
+      "source": "Tennis x Tennis",
+      "n": 70,
+      "title": "Leylah Fernandez Post-Match Interview | Round 1 vs Alex Eala | Stuttgart 2026",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "2vB1vfXRStE": {
+      "verdict": "oncourt",
+      "source": "Tennistion",
+      "n": 71,
+      "title": "Iga swiatek On Court Interview After Her Match vs Barbora Krejčíková",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "Bpsm499m0lU": {
+      "verdict": "oncourt",
+      "source": "Tennistion",
+      "n": 72,
+      "title": "Iga Swiatek On-Court Interview | United Cup 2025 Semifinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "I4ASPukLe0g": {
+      "verdict": "oncourt",
+      "source": "Tennistion",
+      "n": 73,
+      "title": "Coco Gauff On Court Interview After Her First WTA Finals Match vs Pagula",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "q-cAf8zz0Ds": {
+      "verdict": "oncourt",
+      "source": "US Open",
+      "n": 74,
+      "title": "Caty McNally On-Court Interview | 2025 US Open Round 1",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "W2D5D8enfhY": {
+      "verdict": "oncourt",
+      "source": "US Open",
+      "n": 75,
+      "title": "Beatriz Haddad Maia On-Court Interview | 2025 US Open Round 2",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "hRUAYSE0WXU": {
+      "verdict": "oncourt",
+      "source": "US Open",
+      "n": 76,
+      "title": "Victoria Azarenka On-Court Interview | 2025 US Open Round 2",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "LV-gkfKQHgU": {
+      "verdict": "oncourt",
+      "source": "US Open",
+      "n": 77,
+      "title": "Naomi Osaka On-Court Interview | 2025 US Open Quarterfinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "mbR9IrD4PHY": {
+      "verdict": "oncourt",
+      "source": "USTA",
+      "n": 78,
+      "title": "Taylor Fritz On-Court Interview | 2024 Davis Cup",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "RV6jVbO8yUY": {
+      "verdict": "oncourt",
+      "source": "United Cup",
+      "n": 79,
+      "title": "Karolina Muchova On-Court Interview | United Cup 2025 Quarterfinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "Wpu8VjBtlRk": {
+      "verdict": "oncourt",
+      "source": "United Cup",
+      "n": 80,
+      "title": "Paul/Bencic On-Court Interview | United Cup 2026 Quarterfinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "b9nnoIkRS40": {
+      "verdict": "oncourt",
+      "source": "United Cup",
+      "n": 81,
+      "title": "Puetz/Siegemund On-Court Interview | United Cup 2025 Group E",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "pk8Wgtfb2vM": {
+      "verdict": "oncourt",
+      "source": "United Cup",
+      "n": 82,
+      "title": "Alex de Minaur On-Court Interview | United Cup 2026 Quarterfinal",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "PSAeEa0K2Rw": {
+      "verdict": "oncourt",
+      "source": "Washington / Mubadala DC Open",
+      "n": 83,
+      "title": "Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "gNfOgn3jZ-g": {
+      "verdict": "oncourt",
+      "source": "Wide World of Sports (Nine)",
+      "n": 84,
+      "title": "Alexander Zverev RINSES HIMSELF in post match interview | AO 2026 | Wide World of Sports",
+      "by": "maxres-recheck-2026-07-27",
+      "note": "大图上看得见 AO 蓝话筒和球场看台，在场上"
+    },
+    "nHTBYpKXUKI": {
+      "verdict": "oncourt",
+      "source": "Wide World of Sports (Nine)",
+      "n": 85,
+      "title": "Andrey Rublev STRUGGLES through his post match interview | AO 2026 | Wide World of Sports",
+      "by": "auto-frames-2026-07-27",
+      "note": "AO 蓝话筒 + KIA / mastercard 场边牌"
+    },
+    "2yuo_UOgIUk": {
+      "verdict": "oncourt",
+      "source": "Wimbledon",
+      "n": 86,
+      "title": "Ben Shelton's HILARIOUS interview | Third Round On-Court Interview",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "-uBDHqYy1sE": {
+      "verdict": "oncourt",
+      "source": "Wimbledon",
+      "n": 87,
+      "title": "\"I don't consider myself a Champion yet\" | Carlos Alcaraz | On-court Interview | Wimbledon 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "温网绿话筒，主持人在场上，第三帧是德约——决赛颁奖礼的场上采访"
+    },
+    "VC4ibXK6F6A": {
+      "verdict": "oncourt",
+      "source": "Wimbledon",
+      "n": 88,
+      "title": "Ons Jabeur Semi-Final Post Match Interview | Wimbledon 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "温网绿话筒，主持人与贾贝尔一问一答，都在场上"
+    },
+    "GL24VuQLt0U": {
+      "verdict": "oncourt",
+      "source": "Wimbledon",
+      "n": 89,
+      "title": "\"I thought I was about to go out\" | Aryna Sabalenka | Quarter-final On-court Interview | Wimbledon",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "Pohxqra_21s": {
+      "verdict": "oncourt",
+      "source": "dotdotennisTV",
+      "n": 90,
+      "title": "Andrey Rublev On court interview SF | Doha Open 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "VqTsRwqBYBs": {
+      "verdict": "oncourt",
+      "source": "dotdotennisTV",
+      "n": 91,
+      "title": "Andrey Rublev vs Zhang Zhizhen on court Interview | Rotterdam Open 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "dT7ppXNAOqY": {
+      "verdict": "oncourt",
+      "source": "dotdotennisTV",
+      "n": 92,
+      "title": "Andrey Rublev vs Nikoloz Basilashvili on court Interview | Montpellier Open 2025",
+      "by": "contact-sheet-2026-07-27"
+    },
+    "V02U15tf5Yo": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Novak Djokovic on-court interview Semi-final | Rolex Paris Masters 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "tSc5_4jZyCA": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Arthur Fils Round 1 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "1SPh7oMfYl0": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Carlos Alcaraz Round 3 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "0vPdQT8jk8M": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Henry Patten and Harri Heliovaara post match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "OeHQOGrm3jc": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Holger Rune on-court interview Round 3 | Rolex Paris Masters 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "xM0Y9YgheV0": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Giovanni Mpetshi Perricard Round 1 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "OkoROnJa1HA": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Grigor Dimitrov on-court interview Final | Rolex Paris Masters 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "s06zm148VcI": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "405Jjo9b8BQ": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "gkjnyMX4VmA": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Holger Rune quarter-final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "pywhVa-Ero4": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev Round 3 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "kXa34Euuexs": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Ugo Humbert Round 3 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "LTtLh9ePKLE": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Ugo Humbert final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "ncpz4rBfURs": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Ugo Humbert quarter-final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "isPJeV6Uc7g": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Richard Gasquet Round 1 post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "s3SnaIs4MAw": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev's quarter-finals on-court interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "qGr1vHvYzmA": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Jannik Sinner quarter-finals on-court interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "RznbbKeF-7o": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Bublik post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "d0ReAqoyIYc": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev quarter-final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "oB1XtPzbOHU": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Arthur Fils Round 2 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "oWKVpPImTVo": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Ugo Humbert semi-final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "19wSF4pLQWo": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Arthur Cazaux post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "0c6zcQfck-s": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Carlos Alcaraz Round 2 post-match interview | Rolex Paris Masters",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "Oz1pbllzWGo": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Arthur Cazaux Round 2 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "4dFeOlOfKWo": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Alexander Zverev semi-final post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "-gTRfDRnS4s": {
+      "verdict": "press",
+      "source": "Rolex Paris Masters",
+      "title": "Ugo Humbert Round 2 post-match interview | Rolex Paris Masters 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "ATP Masters 1000 媒体背景板前，看不到球场"
+    },
+    "BI2Lkc8JDnE": {
+      "verdict": "oncourt",
+      "source": "Rolex Paris Masters",
+      "title": "Novak Djokovic on-court interview Final | Rolex Paris Masters 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "球场地面 / 场边广告牌 / 身后看台"
+    },
+    "UU30Hl0nmFI": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "64CtF036sho": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "nUnyqolzd2o": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "NRxhS4d08Ng": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "AOrmtC0BEKM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "mI0lTuItrjY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Andreeva Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "LBnkvDByUHk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Andreeva Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "AHlfX2rYylg": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Arnaldi Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "_CqxFhS-_90": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Auger-Aliassime Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "F2DH_041AlY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Cornet Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "aD0MJCtCb_Q": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "De Minaur Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "ywwKe24KD-s": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "6dC3xhmYv3E": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "ZOrIoBg5hdc": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "JCs8oY2N8-4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "h_zo8sLgOI8": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "MOg33nZ-1UM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "nwumJjuBcD4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "3OxhtYbOBFk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Jabeur Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "5Y9vhDNxfQY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Jabeur Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "oRYrUR3uHQk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Jabeur Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "WFBgVrHqXDU": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Jabeur Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "zMTGlAtDhoM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Medvedev Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "U-SBVgFxjJw": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Medvedev Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "vuI3UvrVcgs": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Medvedev Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "rhKHumsnDkU": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Nadal Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "OAH5whd3p68": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Osaka Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "Hwc24Zyzex0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Osaka Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "sqIlAxYWTA8": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "FjPf3YmmeoQ": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "z8KALsvWA84": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "r6khJIMRBPo": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "j3lspty0OvI": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Rune Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "3MINOSK1BMI": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Rune Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "1spYe5QuIT4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Ruud Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "kDEXgwmA7Fo": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Rybakina Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "s76J1OPTNqA": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "nsZBxxY7EC4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "pUnK98b6J7w": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "p-3M9ShbxXE": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Schwartzman Q2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：主持人手持话筒、看台、红土"
+    },
+    "MGY60kAYly0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "g_OxuWHc3Ss": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "30eMEaHkZYA": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：主持人手持话筒、看台、红土"
+    },
+    "SxnPju-tjmo": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "M1DP5Zf5E6M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "1sldLDs78x8": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Svitolina Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "A66CcWAfh0M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "FQ_LP2bg9cM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Quarter-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "9yLEsC7I1rU": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "GS8fDBFcX8M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "AFxQQLJ7fNY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 3 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "3O_D9trpe5s": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 4 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "ktMwBMEr0Kk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "paGqMt6lZZ0": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Thiem Q1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：主持人手持话筒、看台、红土"
+    },
+    "DAEof8b1RkM": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Wawrinka Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：主持人手持话筒、看台、红土"
+    },
+    "lTTRreYhRz4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "_-E6A8rkd04": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Round 1 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "NAHsLUnTFv0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Round 2 post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "yWI1G4YN4PE": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Semi-final post-match interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水，新闻发布厅"
+    },
+    "4EgEs04QrGM": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Quarter-final on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "R3LiNCWq86c": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "hjiAiVJLdf4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "0_M2VRIxMhA": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "YWc39dAoTTE": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 3 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "QC8dwY_f-ZE": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "i1CgoZ301qY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "bXZNZB2IZqU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alcaraz post-match interview Round 3 | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Mnbax5if5I4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alcaraz semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "knj_qF6YsXs": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Alexander Zverev final post-match interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "2026 决赛的短片：白底 BNP 重复标背景板前站着答，67/91 秒，而同年 23 条真 on-court 全部 ≥138 秒且标题写 `| … on-court Interview |`——三个信号一致，判为媒体区"
+    },
+    "lAJZxM_ufr0": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alexander Zverev | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "4QLtxzAFrGI": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alexander Zverev | Round 2 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Lshp-hBLeZM": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alexander Zverev | Round 3 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Dm3T0XFzjNw": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Alexander Zverev | Semi-final on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "DCX_zdB6erw": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Andreeva Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "OjK113MRM6Y": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Andreeva Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "_CyPRPhQtXY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Andreeva Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "8yATUr-BcYA": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Arevalo/Pavic Doubles Final on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Oq7wHdHsu0Y": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Aryna Sabalenka | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "QxyNBceS9tM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Badosa Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "J-W3crVGCIY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Boisson Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "8nF7_6yXE2M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Boisson Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "ckO1IFaPiRA": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Boisson Semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "Oe__Ex_GZkk": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Bublik Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "krO0lhByolI": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Diana Shnaider | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "XrVl0-NkOlU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Djokovic Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "tcZVZ4c0nSY": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 1 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "jOGaHwIJdBY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "YdVTOKEit44": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "cTf_iU-Q8WY": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 3 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "YdKu5rSXqhI": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Djokovic Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "7yAJp2r1uvo": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Djokovic semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "BMZYU8iwxio": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Draper Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "cbjN35IAsTk": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Elina Svitolina | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Mkg6w7_FDak": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Felix Auger-Aliassime | Round 3 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "417wbExBD1Q": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Flavio Cobolli | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "suTNeTs42hE": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Flavio Cobolli | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "j4BwnYXPRoo": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Garcia Round 1 post-match on-court interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "PliWY1_cLio": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gasquet Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "RkOzuh7jnic": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "NlyUlX4ilm4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "lzxIqEokYrE": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "U5HIToTF2Os": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "YSK6AUnVgOw": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "qoqvzT8Hbp0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Gauff Semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "v6u1hc5-sdA": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Gauff/Siniakova Doubles Final on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "2R-CYHHvC-Q": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Hugo Gaston | Round 1 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Lq2OSxZaCm0": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Jakub Mensik | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "_9gmWSDgXQc": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Jakub Mensik | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "QuUWCcRjxDY": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Jannik Sinner | Round 1 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "m1ymE161DLo": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Joao Fonseca | Round 3 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "bJu45JNZ_84": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Joao Fonseca | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "SdEjFtD4CTU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Maja Chwalinska | Semi-final on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "hoSVORHnWMw": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Marta Kostyuk | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "hNKvsSIdIoA": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Matteo Arnaldi | QF on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "vYgZMCZXVgE": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Matteo Arnaldi | Round 4 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "a9Mk53Ro0xQ": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Matteo Berrettini | Round 2 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "pfQkGhbMG_A": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Mirra Andreeva final post-match interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "2026 决赛的短片：白底 BNP 重复标背景板前站着答，67/91 秒，而同年 23 条真 on-court 全部 ≥138 秒且标题写 `| … on-court Interview |`——三个信号一致，判为媒体区"
+    },
+    "3OFfRHE9JHU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Mirra Andreeva | Semi-final on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "h0KJtkAmmVI": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Monfils Round 1 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "AhI85Iklu3E": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Monfils Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "CdO8i1vOrnQ": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Musetti Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "pUMBTAZhDdo": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Musetti Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "KOPHy26lOmY": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Musetti Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "uWMg7dbM65U": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Musetti Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "vCSbhC-sK7M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Musetti semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "dF2KM7d_3EU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Nadal Round 1 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "s0iyPxjW_38": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Novak Djokovic | Round 1 on-court Interview | Roland-Garros 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "i-XnNVeLDp8": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "JZpO2KBfr0E": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Paolini Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "lrTC7miuATs": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Ruud Round 3 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "lJrfIIbOEBg": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Ruud semi-final on-court interview | Roland-Garros 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "S7cFKz9PLbE": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "zdJlZEOn_rk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "37WRGhAZrBQ": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "JgVvL9z3bBk": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "NtwoWefyaE4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sabalenka Semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "BgV2lrD-ldI": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Shelton Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "4-eULI5yvP0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "lVOtASIPHuM": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "e5RK2fwbBpQ": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "PN5RGKMKfWs": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "0BZidaWqkbA": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 4 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "j7Zw7czZ0zQ": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Sinner Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "HA40Xq3sHHE": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Sinner final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "7j48yMuUEoQ": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Sinner semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "Z65cWKjZaoQ": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Svitolina Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "4rIOa76H0l4": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "U0irhE5Pp4M": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "CtRwovU-hNM": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 2 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "HAOiRQF10M0": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "S8PM-aYWTDA": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Round 4 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "RW3z6qmPeP8": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Swiatek Semi-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "GM4qn-JoiMk": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Swiatek semi-final on-court interview | Roland-Garros 2023",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "JVpRHJXz4is": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zheng Quarter-final post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "FUKWqY4DCo0": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Zverev Quarter-final on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "hm2ly2wB4to": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Round 1 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "GgPRfDC8i1E": {
+      "verdict": "press",
+      "source": "Roland-Garros",
+      "title": "Zverev Round 3 post-match interview | Roland-Garros 2025",
+      "by": "auto-frames-2026-07-27",
+      "note": "新闻发布厅：白底 BNP Paribas 背景板 + 长桌 + 绿瓶矿泉水 + 绿色台麦"
+    },
+    "Fjn7qzifwUU": {
+      "verdict": "oncourt",
+      "source": "Roland-Garros",
+      "title": "Zverev Round 4 on-court interview | Roland-Garros 2024",
+      "by": "auto-frames-2026-07-27",
+      "note": "场上：深色 BNP 背景板 / 红色手持话筒 / 看台或红土，画面带 ADVANCES TO… 字幕条"
+    },
+    "OYF3JzJlUAQ": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Alexander Zverev Finalist Wimbledon 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "tuFRrYHeaT8": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Anastasia Potapova Finalist Linz '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "Dmr2AvBxt2g": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Anastasia Potapova Finalist Linz Part 2",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "1E_UHfmGoBA": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Anhelina Kalinina Finalist Rabat 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "x7DxjTzBwtk": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Coco Gauff Finalist Miami '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "mEF6IgVmK-0": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Coco Gauff Finalist Rome 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "KVBsEzlll1w": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Daria Snigur Finalist Prague 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "pIDTGZSyVqc": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Elena Rybakina Finalist Indian Wells '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "beclt2li098": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Emma Raducanu Finalist London '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "DKj_DenW73Q": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Jannik Sinner Champion Wimbledon 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "3rELpwPYBxY": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Jessica Pegula Finalist Berlin 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "WYCcBTDO9_0": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Karolina Muchova Finalist Porsche GP '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "TgvGNvqYuYk": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Lilli Tagger Champion Prague 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "1VPHJq8isq0": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Mirra Andreeva Finalist Madrid '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "2OdBb9EL0D0": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Petra Marcinko Champion Rabat 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "-CmHC5ppAjg": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Victoria Mboko Finalist Qatar '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "emFstZGTSAA": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Victoria Mboko Finalist Strasbourg 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "手持话筒（WTA TOUR / 转播方标），有人在问——是采访"
+    },
+    "b9m1zaUTmTI": {
+      "verdict": "ceremony",
+      "source": "Tennis Interviews",
+      "title": "Yuliia Starodubtseva Finalist Charleston '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "落地支架麦，独自对着观众讲，多数还捧着奖杯或花束——是颁奖礼致辞"
+    },
+    "BY7GOFzxWOU": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Lilli Tagger Semi Final Prague 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "WTA TOUR 手持话筒 + 看台，画面带 ADVANCES TO… 字幕条"
+    },
+    "hHaklqxZmKY": {
+      "verdict": "oncourt",
+      "source": "Tennis Interviews",
+      "title": "Lucie Havlickova R32 Prague 2026",
+      "by": "auto-frames-2026-07-27",
+      "note": "WTA TOUR 手持话筒 + 看台，画面带 ADVANCES TO… 字幕条"
+    },
+    "4EehtQwk4LE": {
+      "verdict": "press",
+      "source": "Tennis Interviews",
+      "title": "Alex Eala Press R32 Win vs Linette Miami '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "迈阿密背景板 + WTA TOUR 台麦，发布厅"
+    },
+    "MxRXgVgPoS8": {
+      "verdict": "press",
+      "source": "Tennis Interviews",
+      "title": "Alex Eala Press Miami '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "ANC Digital SOUNDBYTES，赞助商走廊的媒体区"
+    },
+    "Sw0APcGeIGk": {
+      "verdict": "press",
+      "source": "Tennis Interviews",
+      "title": "Alex Eala R3 Press Interview Indian Wells '26",
+      "by": "auto-frames-2026-07-27",
+      "note": "BNP Paribas Open 背景板 + WTA TOUR 台麦，发布厅"
+    },
+    "tennistv:4255274": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Mensik tames Shelton in Madrid",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4392904": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Khachanov advances following Fonseca clash",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4503257": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Ruud into fourth Rome SF",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4535877": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Wawrinka Says Farewell to Gstaad",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4253560": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fonseca passes Moller test",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4332629": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev making progress in Toronto",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4483760": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fonseca fires into last 16",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4501877": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Jodar in late-night epic",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4493203": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Jodar books Fonseca showdown",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4337397": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Hey Arthur, what a win!",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4229685": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Rune feeling healthy and back in-form",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4245646": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Borges overcomes injured Rune",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4254503": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "De Minaur cruises into third round",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4376522": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Griekspoor shows his class after Sinner retirement",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4247747": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Alcaraz into first Monte Carlo final",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4494073": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Hilarious Sinner Interview!",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / ATP 250 手持麦 + 球场地面 + 场边广告牌（Rolex / BNP Paribas / Dunlop）"
+    },
+    "tennistv:4338976": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fritz overcomes Sonego, power outage to reach last 16",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4393715": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Medvedev survives Sonego epic",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4328188": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Ruud cruises through opener",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4337459": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Tsitsipas claims much-needed win in Cincinnati",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4324108": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fokina's Fitness in the Foreground",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4254986": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Composed, calm and collected Draper",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4377709": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Rune overcomes Mpetshi Perricard",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4500111": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Machac sets up Medvedev clash",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4336983": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Tien eases into the second round",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4262669": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Cerundolo conquers last year's finalist Jarry",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4502935": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Lucky loser Landaluce into QFs",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4375714": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "De Minaur seals third round spot",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4233060": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Draper excited for his first Masters 1000 semi-final",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4502875": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Sinner equals Djokovic record",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4265749": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Paul into second straight Rome SF",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4324017": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "de Minaur knows how to beat the heat",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4504500": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Sinner sets up Ruud final",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4475115": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Cerundolo topples Medvedev in thriller",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4322190": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Nishioka on the comeback trail",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4394403": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev conquers Medvedev; sets up Sinner SF",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4393634": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Auger-Aliassime sets up Vacherot showdown",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4255267": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Fritz claims 300th career win despite 'nightmare' opponent",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4246613": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Ruud discusses World No.1 ranking",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4340561": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev 'I am happy to be back on court'",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4496798": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Sinner completes ATP Masters 1000 finals set",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4329257": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "O'Connell gaining confidence in Toronto",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4333409": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Shelton happy to advance to Canada quarters",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4324071": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Shelton's backhand taking form in Washington",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4241018": {
+      "verdict": "press",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Arevalo, Pavic complete 'Sunshine Double'",
+      "by": "poster-2026-07-27",
+      "note": "迈阿密 itaú 媒体背景板前，双打组合，不在场上"
+    },
+    "tennistv:4328296": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Tien keeps his cool in hostile territory",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4492910": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Barça champ underway",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4245259": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Davidovich Fokina upsets Shelton in Monte Carlo",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4248248": {
+      "verdict": "other",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Albert II, Prince of Monaco special interview",
+      "by": "poster-2026-07-27",
+      "note": "画面里是摩纳哥阿尔贝二世亲王，不是球员采访"
+    },
+    "tennistv:4330700": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev hits 500th career win in Toronto",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4394250": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Auger-Aliassime ends Vacherot's run",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4247343": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Alcaraz seals SF spot",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4495246": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Ruud: 'This is why we love this sport'",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4245561": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Dimitrov passes Jarry test",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4254238": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Shelton survives Navone scare",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4342832": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Alcaraz 'excited' for Sinner clash in Cincinnati",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4493579": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Zverev passes Navone test",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4256043": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "De Minaur 'super happy' after defeating Shapovalov in Madrid",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4464849": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Tiafoe gains Cobolli revenge",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4238272": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "'Lucky loser' Walton into fourth round",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4477587": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Lehecka storms into first ATP Masters 1000 final",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "tennistv:4338262": {
+      "verdict": "oncourt",
+      "source": "Tennis TV 站 (库页 + 各赛事页)",
+      "title": "Shelton continues winning ways",
+      "by": "poster-2026-07-27",
+      "note": "ATP Masters 1000 / 500 手持麦 + 球场 + 看台 + 场边广告牌"
+    },
+    "UvGupjUlS0s": {
+      "source": "European Open Antwerp",
+      "title": "Andy Murray | Post match interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "赞助商拼贴背景板（PSA/Emirates/ATP250），媒体区不是场上"
+    },
+    "XwFh1FjEUVk": {
+      "source": "European Open Antwerp",
+      "title": "Post Match interview Andy Murray",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "同上，第一帧是走廊，后两帧背景板"
+    },
+    "e5z5dLR9K9g": {
+      "source": "European Open Antwerp",
+      "title": "Jannik Sinner: Post Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "辛纳，第三帧是 tennium/Port of Antwerp 背景板"
+    },
+    "uyqxJNyazq8": {
+      "source": "European Open Antwerp",
+      "title": "Stan Wawrinka | Post match interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "瓦林卡，EUROPEAN OPEN ANTWERP 13-20 OCTOBER 2019 背景板"
+    },
+    "zVePtA_lgQ8": {
+      "source": "European Open Antwerp",
+      "title": "Stan Wawrinka vs Feliciano Lopez - Post Match Interview - European Open 2019",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "瓦林卡对洛佩兹，同一块背景板"
+    },
+    "4sqC6dMSMqs": {
+      "source": "Sportiva Arena",
+      "title": "Jessica Pegula Breaks Down After WTA 2026 Final Defeat 💔 | Emotional Post Match Interview",
+      "verdict": "ceremony",
+      "method": "auto-frames",
+      "note": "「2026 BERLIN TENNIS OPEN TROPHY CEREMONY」，颁奖礼；且画面缩成小窗套边框"
+    },
+    "GBeccDMtI4U": {
+      "source": "Sportiva Arena",
+      "title": "🔥 Alex Eala STUNS Rybakina! LIVE Post-Match Interview & Emotional Reaction | Berlin Open 2026",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "转播画面缩到约四成，外面套红框和 ONE FILIPINO TV 横幅，@sportivaArena 水印铺满"
+    },
+    "wBJu_kDRWmg": {
+      "source": "Sportiva Arena",
+      "title": "🚨 Alex Eala LIVE! Exclusive Post-Match Interview After Svitolina Battle | Emotional Reaction",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "同上，画中画 + 水印，可用画幅不足一半"
+    },
+    "2Y08fJ-Pt_U": {
+      "source": "Karendoms Tandem",
+      "title": "UPDATE: IGA SWIATEK ON COURT INTERVIEW AFTER SHE WON THE QUARTER FINALS IN WARSAW POLAND / CONGRATS❣",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "左右镜像补边，右侧还塞了另一段比赛画面"
+    },
+    "5HXQGwqKeFg": {
+      "source": "Karendoms Tandem",
+      "title": "IGA SWIATEK ON COURT INTERVIEW AFTER SHE WON THE ROUND 2 MATCH VS. MARIA SAKKARI / QATAR OPEN2025",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "开场是烧录标题卡，主体是远景和剧照拼接"
+    },
+    "AiZRzbeCW9I": {
+      "source": "Karendoms Tandem",
+      "title": "WORLD NO.1 IGA SWIATEK ON COURT INTERVIEW AFTER THE FIRST MATCH WINNER | CINCINNATI OHIO|CINCYTENNIS",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "放大裁切后左右用虚化侧栏补满"
+    },
+    "Ci-kKK11ufw": {
+      "source": "Karendoms Tandem",
+      "title": "IGA SWIATEK POST MATCH INTERVIEW AFTER WINNING THE ROUND OF 16 / TOKYO JAPAN | TORAYPPO🎾🇯🇵",
+      "verdict": "other",
+      "method": "auto-frames",
+      "note": "室内暗背景，不在场上；另有红黄烧录字幕和镜像补边"
+    },
+    "GNx25BoxziM": {
+      "source": "Karendoms Tandem",
+      "title": "ARYNA SABALENKA TALKS ABOUT IGA SWIATEK ON HER POSTMATCH INTERVIEW AT US OPEN IN NEW YORK CITY",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "右上角画中画贴了另一段素材，底部烧录字幕"
+    },
+    "bWVYKR_l4a0": {
+      "source": "Karendoms Tandem",
+      "title": "WORLD NO.7 COCO GAUF TALKS ABOUT IGA SWIATEK ON HER POST MATCH INTERVIEW AFTER SEMIFINAL IN CINCY23",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "第三帧整个换成「congrats」贴图，不是转播画面"
+    },
+    "s4Ie5XJBInY": {
+      "source": "Dribble Drive Diaries",
+      "title": "Alex Eala Full Interview after Big Win vs Yastremska | Indian Wells 2026",
+      "verdict": "degraded",
+      "method": "auto-frames",
+      "note": "画面缩成居中小窗，四周大片黑边；同源其余 5 条是满幅的"
+    },
+    "c3Hfa2TXvc0": {
+      "source": "Edimator",
+      "title": "Julia Paternain 🇺🇾 BBC interview after winning bronze 🥉 at the 2025 World Athletics Championships",
+      "verdict": "other",
+      "method": "auto-frames",
+      "note": "田径，不是网球——2025 世锦赛铜牌赛后 BBC 采访"
+    },
+    "CeCWwlfxpQk": {
+      "source": "Edimator",
+      "title": "Nicolás Jarry interview after 2nd round win at 2023 Halle (Terra Wortmann Open)",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "赫尔辛海姆，ATP 500 话筒旗，场内机位"
+    },
+    "kT7y5SsCBIk": {
+      "source": "Edimator",
+      "title": "João Fonseca interview after 1st round win at 2025 Cincinnati Open",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "辛辛那提，ATP Masters 1000 话筒旗"
+    },
+    "AJllqKE_WIo": {
+      "source": "Edimator",
+      "title": "Nicolás Jarry interview after 3rd round win at 2023 Rolex Shanghai Masters (y en Español)",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "上海，右上角 prime 台标——上海站持权方 Amazon Prime"
+    },
+    "fAjncelcHfM": {
+      "source": "Edimator",
+      "title": "Emma Raducanu interview after 2nd round win at 2025 Canadian Open",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "加拿大站，有反打机位拍到采访者"
+    },
+    "p8y5LruU02E": {
+      "source": "Edimator",
+      "title": "Adrian Mannarino interview after 1st round win against Jakub Menšík at 2026 Queen's/London",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "女王杯，celio/Championships 话筒旗"
+    },
+    "qlNr4wn29Mk": {
+      "source": "Edimator",
+      "title": "Cristian Garín interview after 3rd round win at 2023 Indian Wells (y en Español)",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯，ATP Masters 1000 话筒旗"
+    },
+    "0-uUXYtXyb0": {
+      "source": "Edimator",
+      "title": "UPSET! Oliver Tarvet (719) interview after final round qualifying win at 2025 Wimbledon",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "温网资格赛决胜轮，温网紫绿话筒旗，草地场内"
+    },
+    "fFL7hFSfCPc": {
+      "source": "Edimator",
+      "title": "Hugo Gaston interview after 2nd round qualifying at 2024 Wimbledon",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "温网资格赛二轮，温网话筒旗，外场"
+    },
+    "7n5dPXkIP8o": {
+      "source": "Edimator",
+      "title": "Yunchaokete Bu 布云朝克特 interview after 1st round qualifying win at 2026 Wimbledon",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "温网资格赛一轮，画面带温网转播下方字幕条 BU YUNCHAOKETE bt. H. DELLIEN 6-4 6-0"
+    },
+    "z2dVlPaxuQQ": {
+      "source": "Edimator",
+      "title": "Nuno Borges interview after 2nd round win at 2025 Wimbledon",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "温网正赛二轮，有反打机位拍到持温网话筒的采访者"
+    },
+    "JxjMgBNTF3E": {
+      "source": "Miami Open",
+      "title": "2018 Miami Open Men's Singles Champion John Isner, Post-match  Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "uMtCNwYXAEQ": {
+      "source": "Miami Open",
+      "title": "Miami Open, Pablo Carreño Busta, Post Match Quarterfinal Interview - En Español",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "Oq5R2xGpqFk": {
+      "source": "Miami Open",
+      "title": "Miami Open, Alexander Zverev, Post Match Quarterfinal Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "lO8hCZQMbaw": {
+      "source": "Miami Open",
+      "title": "Miami Open, Sloane Stephens, Post Match Semifinal Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "qmbI1FtvG-E": {
+      "source": "Miami Open",
+      "title": "Miami Open, John Isner Post Match Quarterfinal Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "oY1oZiAu3ZQ": {
+      "source": "Miami Open",
+      "title": "Miami Open, Alexander Zverev Post Match 4th Round Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "fkt1htevJRo": {
+      "source": "Miami Open",
+      "title": "Miami Open, Borna Coric Post Match 4th Round Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "kZwISJVu-vs": {
+      "source": "Miami Open",
+      "title": "Miami Open, Venus Williams, Post-Match, 4th Round Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "iTFnbaNG0WU": {
+      "source": "Miami Open",
+      "title": "Miami Open, Jelena Ostapenko - 3rd Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "CIQGY_ElHvE": {
+      "source": "Miami Open",
+      "title": "Miami Open, Elina Svitolina - 3rd Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "4ykDziRPa_o": {
+      "source": "Miami Open",
+      "title": "Miami Open, Agnieszka Radwanska - 2nd Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "b2UQFO1GVLU": {
+      "source": "Miami Open",
+      "title": "Miami Open, Venus Williams - 2nd Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "nPcx6BiZ6fQ": {
+      "source": "Miami Open",
+      "title": "Miami Open, Post Match Interview, 2nd Round, Johanna Konta",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "QcyRooTODRk": {
+      "source": "Miami Open",
+      "title": "Miami Open, Post Match Interview, 2nd Round, Petra Kvitova",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "O9vJ6S6T06s": {
+      "source": "Miami Open",
+      "title": "Miami Open, Angelique Kerber - 2nd Round Post Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "LE_3kwkO7Hw": {
+      "source": "Miami Open",
+      "title": "Miami Open -  Naomi Osaka , 1st Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "aHeKQP88Isk": {
+      "source": "Miami Open",
+      "title": "Miami Open,  Victoria Azarenka, 1st Round Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "24zPaNnrbvA": {
+      "source": "Miami Open",
+      "title": "Roger Federer Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "C-fhxXP6MZI": {
+      "source": "Miami Open",
+      "title": "Rafael Nadal Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "SJHi1WUQGFU": {
+      "source": "Miami Open",
+      "title": "Milos Raonic Interview After Withdrawing from Miami Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "D3f4wZIojcQ": {
+      "source": "Miami Open",
+      "title": "Novak Djokovic Interview after semifinal win",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "CHDXPhgtHTc": {
+      "source": "Miami Open",
+      "title": "Kei Nishikori Interview after quarterfinal win",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "ApmCZ3Dg0XY": {
+      "source": "Miami Open",
+      "title": "Tomas Berdych Interview after his 4th round win",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "迈阿密赛事赞助商拼贴背景板（miami open / itaú / ATP / WTA），媒体区不是场上"
+    },
+    "NacBgxzi8tg": {
+      "source": "Miami Open",
+      "title": "Miami Open, Jelena Ostapenko, Post Match On-Court Semifinal Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "lJi5mFVJUJM": {
+      "source": "Miami Open",
+      "title": "Miami Open, Kevin Anderson Post Match 4th Round Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "fzHh4cEcjuo": {
+      "source": "Miami Open",
+      "title": "Miami Open, Jelena Ostapenko, Post-Match, 4th Round On-court Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "6apezFq9T7M": {
+      "source": "Miami Open",
+      "title": "Miami Open, Garbiñe Muguruza - 3rd Round Post-Match on-court Interview - Español",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "HRlgSaUzh34": {
+      "source": "Miami Open",
+      "title": "Miami Open -  Post Match Interview, 2nd Round, Monica Puig Español",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "x5QQlSVjGWQ": {
+      "source": "Miami Open",
+      "title": "Miami Open - Monica Puig, 1st Round Post-Match Interview Español",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "wSGCEYapQOo": {
+      "source": "Miami Open",
+      "title": "Federer Post-Match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "BGWX5SkSE0g": {
+      "source": "Miami Open",
+      "title": "Nick Kyrgios Post-Match Interview - 3/30/17",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "dz4s-3Ual8A": {
+      "source": "Miami Open",
+      "title": "Nadal - Post-Match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "h4EJQt3ZLXk": {
+      "source": "Miami Open",
+      "title": "Stan Wawrinka Post-Match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "tY1f3VlARPo": {
+      "source": "Miami Open",
+      "title": "Novak Djokovic post-match interview after clinching the Miami Open",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "s6uyBhYBBB0": {
+      "source": "Miami Open",
+      "title": "Kei Nishikori post-match interview after semifinal win",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "BxFgr_9ev2s": {
+      "source": "Miami Open",
+      "title": "Novak Djokovic post-match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "lX0t2HdDgis": {
+      "source": "Miami Open",
+      "title": "Kei Nishikori Post-Match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "夜场球场、观众席、WTA/ATP 话筒旗，画面在场上"
+    },
+    "NtgJwDMowKA": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "2015 Novak Djokovic Semifinal Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯球场看台在背景里，手持 BNP Paribas / ATP 话筒旗，画面在场上"
+    },
+    "_Kwp2Y95ryI": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "2015 Roger Federer Semifinal Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯球场看台在背景里，手持 BNP Paribas / ATP 话筒旗，画面在场上"
+    },
+    "Gr8SmapHXWc": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Angelique Kerber Post Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "3aLgJpYwpsc": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Angelique Kerber Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "iAwjIVL60k0": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "BNP Paribas Open 2017: Venus Williams 2R Post-Match Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯球场看台在背景里，手持 BNP Paribas / ATP 话筒旗，画面在场上"
+    },
+    "lq8Ua5eRBW0": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "BNP Paribas Open: Agnieszka Radwanska 3R On-Court Interview",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯球场看台在背景里，手持 BNP Paribas / ATP 话筒旗，画面在场上"
+    },
+    "-t1JB0w98OQ": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "BNP Paribas Open: Jelena Jankovic R3 Post-Match Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "VisysQ9TCUM": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Belinda Bencic Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "EFDpRlLbhk8": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Christina McHale Post Match Interview at BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "Wf_aaXnpHIQ": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Elina Svitolina Post-Match Interview at BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "Q-7bpa-r2eY": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Kirsten Flipkens Post Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "_ibtg2dcSKQ": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Markéta Vondroušová Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "TSNtFw7IDvg": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Miomir Kecmanović Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "OCq5ksmxc4c": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Naomi Osaka Post Match Interview at BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "JdRECz1at1k": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "On-Court Interview with 2011 BNP Paribas Open Champion Novak Djokovic",
+      "verdict": "oncourt",
+      "method": "auto-frames",
+      "note": "印第安维尔斯球场看台在背景里，手持 BNP Paribas / ATP 话筒旗，画面在场上"
+    },
+    "ou5-S1unpcg": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Roger Federer Post-Match Interview at the 2019 BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "RwG87LHhtKs": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Simona Halep 4R Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "8viPDYKaOeU": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Simona Halep Post-Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "1MMHr6cj0p0": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Stefanie Vogele Post Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "lDvtVdNdCKU": {
+      "source": "Indian Wells / BNP Paribas Open",
+      "title": "Venus Williams Post Match Interview at the BNP Paribas Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "BNP PARIBAS 拼贴背景板 + 长桌台式麦；两条在赛场草坪/步道上做的站位采访，也不在场上"
+    },
+    "L_x223X7wl8": {
+      "source": "Cincinnati Open",
+      "title": "Maria Sharapova Post Match Interview at the Western & Southern Open",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "CINCINNATI 拼贴背景板，媒体区不是场上"
+    },
+    "jKy7Kiw90Hw": {
+      "source": "Cincinnati Open",
+      "title": "Kim Clijsters On Court Interview",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "CINCINNATI 拼贴背景板，媒体区不是场上"
+    },
+    "Ueu14cpG2fA": {
+      "source": "Fédération Française de Tennis",
+      "title": "Kristina Mladenovic - Post-1st Round Interview - Roland-Garros 2021 | FFT",
+      "verdict": "press",
+      "method": "auto-frames",
+      "note": "法网 TENNIS 重复 logo 墙，媒体区不是场上"
+    }
+  }
+}

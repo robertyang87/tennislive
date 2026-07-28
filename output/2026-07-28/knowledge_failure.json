@@ -1,0 +1,1033 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "story_slug": "washington",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
+  "selected_count": 2,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [
+    "story"
+  ],
+  "degraded_pages": [
+    "story"
+  ],
+  "failed_curated_source_urls": [],
+  "input_domains": [
+    "amazingamerica.com",
+    "atptour.com",
+    "mubadalacitidcopen.com",
+    "traveldfe.org",
+    "wtatennis.com"
+  ],
+  "providers_queried": [
+    "bing-web-image",
+    "curated-editorial",
+    "duckduckgo-web-image",
+    "flickr-public",
+    "official-story-pages",
+    "official-tennis-archive",
+    "openverse",
+    "wikimedia-commons"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "washington 2021 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "washington 2021 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "washington 2021 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "washington 2021 tennis",
+      "status": "ok",
+      "candidate_count": 10
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "washington 2021 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "washington 2021 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "washington 2021 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "washington 2021 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 6
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 11
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 6
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 11
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "washington 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "washington 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "washington tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "washington tennis",
+      "status": "empty",
+      "candidate_count": 0
+    }
+  ],
+  "selected_providers": [
+    "bing-web-image"
+  ],
+  "excluded_source_urls": [],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-page",
+      "page_url": "https://mubadalacitidcopen.com/history/",
+      "status": "error",
+      "reason": "404 Client Error: Not Found for url: https://mubadalacitidcopen.com/history/"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.atptour.com/en/news/sinner-mcdonald-washington-2021-final",
+      "status": "error",
+      "reason": "403 Client Error: Forbidden for url: https://www.atptour.com/en/news/sinner-mcdonald-washington-2021-final"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.wtatennis.com/news/3660060/gauff-beats-sakkari-to-win-washington-title",
+      "status": "error",
+      "reason": "404 Client Error: Not Found for url: https://www.wtatennis.com/news/3660060/gauff-beats-sakkari-to-win-washington-title"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "washington-fitzgerald-tennis-center.jpg",
+      "title": "File:Karatsev–Tiafoe in stadium at the 2023 DC Open 01.jpg",
+      "subject": "washington",
+      "required_years": [
+        "2021"
+      ],
+      "required_event_terms": [],
+      "person_required": false,
+      "subject_match": false,
+      "year_match": false,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": false,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "washington 2021 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 70,
+      "exact_candidate_count": 0,
+      "archive_candidate_count": 0,
+      "rejection_counts": {
+        "subject-or-person-mismatch": 17,
+        "low-visual-impact-metadata": 6,
+        "metadata-relevance-below-3": 35,
+        "duplicate-candidate": 12
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "washington 2021 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "washington 2021 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "washington 2021 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "washington 2021 tennis",
+          "status": "ok",
+          "candidate_count": 10
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "washington 2021 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "washington 2021 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "washington 2021 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "washington 2021 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "page": "explainer",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 21,
+        "low-visual-impact-metadata": 14,
+        "metadata-relevance-below-3": 26,
+        "watermarked-stock-library": 1,
+        "duplicate-candidate": 23,
+        "subject-archive-rejected-in-strict-mode": 2
+      },
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 6
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 11
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ],
+      "provider": "bing-web-image",
+      "source_url": "https://traveldfe.org/top-places-to-visit-in-washington-d-c-must-see-attractions/",
+      "image_url": "https://traveldfe.org/wp-content/uploads/2023/08/Hidden-gems-in-Washington-D.C-1024x574.jpg",
+      "credit": "traveldfe.org",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "relevance": 8,
+      "sha256": "b2fb075b71f5db9fa094ac1532d4ac18a661bfaf1d79ab682ff128894de1e666",
+      "focus": "50% 38%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "explainer-b2fb075b71f5.jpg"
+    },
+    {
+      "page": "today",
+      "status": "selected",
+      "required_event_terms": [],
+      "match_level": "exact-event",
+      "rejection_counts": {
+        "subject-or-person-mismatch": 21,
+        "low-visual-impact-metadata": 14,
+        "metadata-relevance-below-3": 26,
+        "source-already-used": 1,
+        "watermarked-stock-library": 1,
+        "duplicate-candidate": 12,
+        "subject-archive-rejected-in-strict-mode": 1
+      },
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 6
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 11
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "washington 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "washington 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "washington tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "washington tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ],
+      "provider": "bing-web-image",
+      "source_url": "https://amazingamerica.com/2023/05/10/must-see-attractions-in-washington-dc/",
+      "image_url": "https://amazingamerica.com/wp-content/uploads/2023/05/andy-he-cherry-blossoms-washington-dc-stock-unsplash1200798.jpg",
+      "credit": "amazingamerica.com",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "washington 2023 tennis",
+      "relevance": 8,
+      "sha256": "d59b78b1e3058568a635c3c074477d989d46cd15acb32b2af9a66940177fd8da",
+      "focus": "50% 38%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "today-d59b78b1e305.jpg"
+    }
+  ],
+  "selection_evidence": {
+    "kind": "tournament",
+    "candidate_slug": "washington",
+    "result_count": 45,
+    "live_count": 0,
+    "schedule_count": 37,
+    "selection_basis": "current player or tournament relevance, match news value, and recency",
+    "candidate_rank": 2,
+    "candidate_count": 14,
+    "visual_preflight_rejections": 1,
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 4
+  },
+  "rejected_candidates": [
+    {
+      "story_slug": "otd-0728",
+      "title": "6-0、6-0",
+      "stage": "visual-preflight",
+      "errors": [
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
+      ],
+      "excluded_source_urls": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 3,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 4,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        }
+      ]
+    }
+  ],
+  "recovery": {
+    "status": "recovered",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
+}

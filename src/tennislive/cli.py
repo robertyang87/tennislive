@@ -332,13 +332,36 @@ def cmd_explainer(args) -> int:
         out = generate_explainer_video(
             story,
             args.outdir,
-            date_label=f"{d.month}.{d.day}",
             theme=args.theme,
-            voice=args.voice,
+            **{k: v for k, v in (("voice", args.voice), ("rate", args.rate),
+                                 ("pitch", args.pitch)) if v},
         )
     except ExplainerVideoError as e:
         console.print(f"[red]解说视频生成失败：{e}[/red]")
         return 2
+
+    # Leave a push body beside the video so `publish pushplus` can send the
+    # slides to WeChat; the MP4 itself cannot play inline in a push.
+    from .video.explainer import (
+        explainer_push_html,
+        explainer_script,
+        explainer_xiaohongshu,
+    )
+
+    from .render.pushmsg import to_copy_page
+
+    outdir = Path(args.outdir)
+    segments = explainer_script(story)
+    xhs_text = explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}")
+    (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
+    (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
+    (outdir / "push.html").write_text(
+        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
+        encoding="utf-8",
+    )
+    (outdir / "wechat_title.txt").write_text(
+        f"{story.title}｜{segments[0].title}", encoding="utf-8"
+    )
     console.print(f"[green]解说视频已生成：{out}[/green]")
     return 0
 
@@ -473,6 +496,13 @@ def cmd_digest(args) -> int:
             "[yellow]今日已由 ad-hoc 流程发布知识帖，日报跳过自动知识帖（避免同日重复）[/yellow]"
         )
     elif not args.no_cards:
+        from .render.tournament_story import record_story_selection, story_ranking
+
+        # 排序在生成之前算好：即使这一班次整个失败，也要留下"谁参选了、
+        # 各得几分"。只记胜者的话，"今天没有历史今天"和"有但没轮到它"
+        # 分不出来——7/25 就是这么丢的。
+        ranking = story_ranking(digest)
+        selection_error = ""
         try:
             from .render.knowledge import generate_knowledge_package
 
@@ -482,9 +512,29 @@ def cmd_digest(args) -> int:
                 theme=theme,
             )
         except Exception as e:  # noqa: BLE001
+            selection_error = f"{type(e).__name__}: {e}"
             console.print(
                 f"[yellow]每日网球知识生成失败（跳过）：{e}[/yellow]"
             )
+        try:
+            log_path = record_story_selection(
+                outdir,
+                digest,
+                ranking,
+                selected_slug=knowledge_story.slug if knowledge_story else None,
+                error=selection_error,
+            )
+            missed = [r for r in ranking if r["bucket"] == "anniversary"]
+            if missed and (
+                knowledge_story is None
+                or knowledge_story.slug != missed[0]["story_slug"]
+            ):
+                console.print(
+                    f"[yellow]今天有「历史上的今天」参选（{missed[0]['story_slug']}）"
+                    f"却没有成稿，拒因见 {log_path}[/yellow]"
+                )
+        except Exception as e:  # noqa: BLE001 - 诊断不该拖垮当日内容
+            console.print(f"[yellow]选题排序未能落盘：{e}[/yellow]")
 
     card_paths: list[Path] = []
     if not args.no_cards:
@@ -676,9 +726,14 @@ def cmd_digest(args) -> int:
         from .render.xiaohongshu import record_quiz
 
         record_quiz()
-        from .render.editorial_memory import record_daily_lead
+        from .render.editorial_memory import record_daily_focus, record_daily_lead
 
         record_daily_lead(digest)
+        # 焦点复盘和头条经常不是同一场，两份都要记，否则焦点没人拦得住它
+        # 连着两天挑中同一场比赛。
+        from .render.focus import select_focus_match
+
+        record_daily_focus(select_focus_match(digest), digest.today)
     except Exception as e:  # noqa: BLE001
         logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
 
@@ -704,6 +759,8 @@ def cmd_yesterday_point(args) -> int:
     several times a day and have whichever tour's video shows up first get
     pushed immediately, while the other keeps retrying independently.
     """
+    from datetime import datetime, timezone
+
     from .render.terminal import console
     from .video.daily_point import generate_yesterday_point
 
@@ -722,14 +779,14 @@ def cmd_yesterday_point(args) -> int:
         if existing.get("status") == "pass":
             already_done.add(tour)
 
-    discovery_report: list[dict] = []
+    diagnostics: dict = {}
     try:
         digest = build_digest(d, prefer=args.source)
         videos = generate_yesterday_point(
             digest,
             output_dir,
             skip_tours=frozenset(already_done),
-            report=discovery_report,
+            diagnostics=diagnostics,
         )
     except Exception as exc:  # noqa: BLE001
         (output_dir / "manifest.json").write_text(
@@ -748,13 +805,22 @@ def cmd_yesterday_point(args) -> int:
         console.print(f"[red]昨日好球生成失败：{exc}[/red]")
         return 1
 
-    skip_reason = (
-        "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
-        "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
-        "官方单分标签、完整回合和日期匹配的视频。"
-        "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
-        "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
-    )
+    # The reason must state what actually happened: with the switch off no
+    # source was ever queried, and claiming "已查询各源" would be a false
+    # audit trail.
+    if diagnostics.get("enabled") is False:
+        skip_reason = (
+            "TENNISLIVE_YESTERDAY_POINT 开关未开启，本期未查询任何官方视频源；"
+            "在工作流或环境变量中设为 on 后才会开始检索。"
+        )
+    else:
+        skip_reason = (
+            "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
+            "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
+            "官方单分或集锦标签、完整回合和日期匹配的视频。"
+            "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
+            "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
+        )
     tour_status: dict[str, str] = {}
     for tour in ("ATP", "WTA"):
         if tour in already_done:
@@ -781,6 +847,26 @@ def cmd_yesterday_point(args) -> int:
             ),
             encoding="utf-8",
         )
+        # skip 也要把诊断落盘：每路 resolver 试了什么、为什么失败。这份
+        # skip.json 会被工作流提交回仓库，避免"视频静默消失"只能翻已过期
+        # 的 Actions 日志。
+        (tour_dir / "skip.json").write_text(
+            json.dumps(
+                {
+                    "status": "skipped",
+                    "generated_at": datetime.now(timezone.utc).isoformat(),
+                    "project": "yesterday-point",
+                    "tour": tour,
+                    "published_for": d.isoformat(),
+                    "switch_enabled": diagnostics.get("enabled"),
+                    "reason": skip_reason,
+                    "resolver_attempts": diagnostics.get("resolver_attempts", []),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
         tour_status[tour] = "skipped"
         console.print(f"[yellow]{tour} 昨日好球跳过：本期没有可验证的官方完整回合[/yellow]")
 
@@ -792,21 +878,27 @@ def cmd_yesterday_point(args) -> int:
                 "published_for": d.isoformat(),
                 "tours": tour_status,
                 "fresh_tours": sorted(videos),
-                # Per-source discovery ledger: when a tour skips, this says
-                # which official source found how many clips and where the gap
-                # was, so a no-material day is auditably distinct from a broken
-                # source (empty by design when every tour was already done).
-                "discovery": discovery_report,
+                # Per-source discovery ledger in one place: which official
+                # source fetched how many clips, how many matched yesterday,
+                # and each resolver's outcome. Lets a skip run separate a real
+                # no-material day (fetched N, matched 0) from a broken source
+                # (fetched 0 / error), and is what the workflow surfaces to the
+                # Actions summary.
+                "resolver_attempts": diagnostics.get("resolver_attempts", []),
             },
             ensure_ascii=False,
             indent=2,
         ),
         encoding="utf-8",
     )
-    if discovery_report and not videos and not already_done:
-        for item in discovery_report:
+    attempts = diagnostics.get("resolver_attempts", [])
+    if attempts and not videos and not already_done:
+        for item in attempts:
+            detail = item.get("note") or item.get("error") or item.get("status", "")
             console.print(
-                f"[dim]· {item['source']}：{item['note']}[/dim]"
+                f"[dim]· {item.get('source', item.get('resolver', ''))}："
+                f"抓取{item.get('fetched', '-')}/命中{item.get('matched', '-')}"
+                f"（{detail}）[/dim]"
             )
     return 0
 
@@ -1406,8 +1498,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--theme", choices=["dark", "light"], default="dark", help="幻灯主题（默认 dark）"
     )
     sp.add_argument(
-        "--voice", default="zh-CN-YunxiNeural", help="edge-tts 中文语音（默认云希）"
+        "--voice", default=None, help="edge-tts 中文语音（默认云健，语气偏解说）"
     )
+    sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
+    sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")

@@ -11,17 +11,41 @@ on:
         description: "知识选题 slug（默认 hawkeye）"
         required: false
         default: "hawkeye"
+      # Empty means "whatever the code says". This used to default to
+      # zh-CN-YunxiNeural and was passed unconditionally, so choosing a new
+      # default voice in code changed nothing: every dispatch silently put
+      # the old voice back on the command line. Three decks were regenerated
+      # that way and came out in the voice that had just been replaced.
       voice:
-        description: "edge-tts 中文语音"
+        description: "edge-tts 中文语音（留空＝用代码默认：云健）"
         required: false
-        default: "zh-CN-YunxiNeural"
+        default: ""
+      rate:
+        description: "语速，如 +22%（留空＝用代码默认）"
+        required: false
+        default: ""
+      push:
+        description: "生成后推送到微信（true/false）"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
 
+# Per topic, not per workflow. A single group meant that dispatching a batch
+# of slugs kept only the first and the last: GitHub holds one run pending per
+# group and cancels the rest. Different topics touch different output
+# directories, so they have no reason to queue behind each other — and two
+# runs landing at once is now handled by the push step's replay-and-retry.
+#
+# 同一个 slug 则取消旧的。改完发一版、没等落库又改一版再发，两个 run 会一起跑，
+# 谁后落库谁赢——今晚两次都是先落库的旧版赢了，而两次的 commit message 一模一样，
+# 光看 git log 完全看不出来，是逐像素比对才发现的。同一条片子只可能有一个"最新"，
+# 所以让新的顶掉旧的。不同 slug 不受影响：分组名里带着 slug，多条「开球之前」
+# 可以同一天并行生成，各写各的 output/<日期>/explainer/<slug>/。
 concurrency:
-  group: explainer-video
-  cancel-in-progress: false
+  group: explainer-video-${{ github.event.inputs.slug || 'hawkeye' }}
+  cancel-in-progress: true
 
 jobs:
   explainer:
@@ -29,6 +53,8 @@ jobs:
     timeout-minutes: 25
     env:
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -65,9 +91,16 @@ jobs:
           if [ -z "$SLUG" ]; then SLUG="hawkeye"; fi
           OUT_DIR="output/$OUT_DATE/explainer/$SLUG"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
-          tennislive explainer --slug "$SLUG" \
-            --voice "${{ github.event.inputs.voice }}" \
-            --outdir "$OUT_DIR"
+          # if-blocks, not `[ -n "$V" ] && ARGS+=(...)`: this step runs under
+          # `bash -e`, where a top-level AND-list whose test fails aborts the
+          # whole step.
+          ARGS=(--slug "$SLUG" --outdir "$OUT_DIR")
+          VOICE="${{ github.event.inputs.voice }}"
+          RATE="${{ github.event.inputs.rate }}"
+          if [ -n "$VOICE" ]; then ARGS+=(--voice "$VOICE"); fi
+          if [ -n "$RATE" ]; then ARGS+=(--rate "$RATE"); fi
+          echo "生成参数：${ARGS[*]}"
+          tennislive explainer "${ARGS[@]}"
           ls -la "$OUT_DIR"
           # 视频体积可观，仅保留成片与幻灯，丢弃中间音频。
           rm -f "$OUT_DIR"/voice_*.mp3
@@ -83,11 +116,55 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/
+          OUTDIR="${{ steps.gen.outputs.outdir }}"
+          git add "$OUTDIR"
           if git diff --cached --quiet; then
             echo "没有新成片"
-          else
-            git commit -m "content: 知识解说视频 $(basename '${{ steps.gen.outputs.outdir }}')"
-            git pull --rebase origin "${{ github.ref_name }}"
-            git push origin "${{ github.ref_name }}"
+            exit 0
           fi
+          # `git pull --rebase` used to sit here, and it cannot rebase a run
+          # whose output landed while this one was rendering: the conflicting
+          # files are mp4 and png, git refuses to merge binaries, and the job
+          # dies after doing all the work. Five regenerations were lost that
+          # way before anyone noticed, because the run that dies leaves the
+          # previous output in place and the repo still looks populated.
+          #
+          # Generated output has exactly one correct resolution — the copy
+          # this run just rendered — so replay it onto whatever main is now
+          # instead of merging. Retry because main can move again mid-push.
+          #
+          # Replay only THIS topic's directory. Replaying all of output/ put
+          # back every other topic as it stood at this run's checkout, so a
+          # batch of eight runs spent the evening reverting each other: a
+          # deck would render correctly, land, and then be overwritten by
+          # the next run's stale copy of it. The published cards flickered
+          # between the old and new brand mark for half an hour.
+          BRANCH="${{ github.ref_name }}"
+          MSG="content: 知识解说视频 $(basename "$OUTDIR")"
+          git commit -m "$MSG"
+          # Backoff has to outlast a whole batch, not one collision. With
+          # five tries three seconds apart, a run regenerating alongside six
+          # siblings burned every attempt in fifteen seconds and gave up
+          # while the others were still pushing. Jitter so the losers of a
+          # collision do not line up and collide again.
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本次成片重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            git checkout rendered -- "$OUTDIR"
+            git add "$OUTDIR"
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 5 + RANDOM % 10))
+          done
+          echo "::error::连续 10 次推送失败，成片仍在 artifact 里"
+          exit 1
+
+      - name: PushPlus 推送到微信
+        if: github.event.inputs.push == 'true' && env.PUSHPLUS_TOKEN != ''
+        run: |
+          export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
+          tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"

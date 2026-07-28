@@ -18,6 +18,16 @@ PLAYER_ASSETS = Path(__file__).resolve().parents[3] / "assets" / "players"
 STATE_PATH = Path(__file__).resolve().parents[3] / "data" / "story_state.json"
 COOLDOWN_DAYS = 30
 
+# 「历史上的今天」命中正日子时的得分，高于球员特写的 3、赛事档案的 2。
+# 纪念日一年只回来一次；昨夜的高光球员明天还有。
+ANNIVERSARY_SCORE = 4
+
+# 每个班次的排序结果落在**当日目录**（不是 knowledge/ 里），逐班追加。
+# 两条都是 7/25 那次丢失换来的：daily.yml 同日重跑会 `rm -rf "$OUT_DIR/knowledge"`，
+# 而第二班次被 pinned 分支直接命中已定的故事、一次拒绝都不会发生——
+# 写在里面会被删掉，覆盖写会把上一班的证据擦掉。
+SELECTION_LOG_NAME = "story_selection.json"
+
 
 @dataclass(frozen=True)
 class ChampionMoment:
@@ -971,6 +981,38 @@ STORIES = STORIES + (
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2021_Croatia_Open_Umag",
     ),
+    # 配图是这条自己那天的实拍：Commons 上传者写明「first round match against
+    # Sara Errani at the 2024 Paris Olympics」，EXIF 时间 2024-07-28 14:27——
+    # 时间/地点/人物/事件四要素由来源和文件自己写死，不靠看图推断。画面里
+    # 场边板上的「2024」和五环还在，属于「能自证的元素比看着像值钱」。
+    _trivia_story(
+        slug="otd-0728",
+        title="6-0、6-0",
+        subtitle="历史上的今天 · 7 月 28 日",
+        identity="2024 · 郑钦文奥运首战",
+        chips=("历史上的今天", "2024", "巴黎"),
+        hero=(
+            "2024 年的今天，郑钦文在罗兰·加洛斯打出 6-0、6-0——"
+            "她那届奥运，是从一场双蛋开始的。"
+        ),
+        facts=(
+            "首轮对手埃拉尼是前世界前十，那天一局没拿到。",
+            "头两场比赛加起来，她只丢了六局。",
+            "六天后的同一片红土，她拿到亚洲第一块奥运网球单打金牌。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-07-28", player="郑钦文", age="21 岁",
+                headline="奥运首战 6-0、6-0",
+                detail="六天之后，同一片红土上换成了金牌。",
+                source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Kuberzog / Wikimedia Commons · CC BY-SA 4.0",
+        source_label="奥运官方档案",
+        source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+    ),
     _trivia_story(
         slug="otd-0803",
         title="巴黎的金牌",
@@ -978,10 +1020,14 @@ STORIES = STORIES + (
         identity="2024 · 郑钦文奥运夺金",
         chips=("历史上的今天", "2024", "巴黎"),
         hero="2024 年的今天，郑钦文在巴黎为中国拿下奥运网球单打首金——亚洲球员的第一次。",
+        # 「掀翻红土女王」是形容词，「交手六次输六次」是可核的数字——
+        # 后者更抓人，因为它具体、能查、自带画面（CLAUDE.md：煽情不是靠
+        # 形容词堆出来的，是把最硬的那个事实摆到最前面）。原来第三条那句
+        # 「刷遍全网热搜」查不到出处，删掉。
         facts=(
-            "半决赛掀翻红土女王斯瓦泰克，决赛直落两盘击败维基奇。",
+            "半决赛之前，她和斯瓦泰克交手六次、输了六次；那天 6-2、7-5。",
+            "决赛直落两盘击败维基奇，6-2、6-3。",
             "距离李婷/孙甜甜的雅典女双首金，恰好二十年。",
-            "她赛后说这是'为中国而战'——那周她的名字刷遍全网热搜。",
         ),
         moments=(
             ChampionMoment(
@@ -991,7 +1037,15 @@ STORIES = STORIES + (
                 source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
             ),
         ),
-        image_keys=("canada",),
+        # 这里原来兜底到蒙特利尔的球场空镜——讲巴黎奥运配加拿大站，正是
+        # 「讲法网配温网草地」那条错误。Commons 三个查法（按分类、按对手、
+        # 按领奖）都证实那天没有自由授权的实拍，最后用的是 WTA 图库当天的
+        # 领奖台照（2024/08/03，Getty via WTA，**非自由授权，发布前需人工过权利**）。
+        #
+        # 裁法是试出来的：满高裁 3:4 会把维基奇和斯瓦泰克的脸切在两边，
+        # 「真裁不下就换一张，别硬切」；收到 1399×1866 才成立——郑钦文居中、
+        # 金牌举在脸侧、胸前国旗和五环都在，另外两人在画面里但明显是配角。
+        image_keys=(),
         source_label="奥运官方档案",
         source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
     ),
@@ -1018,6 +1072,67 @@ STORIES = STORIES + (
         image_keys=("cincinnati",),
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
+    ),
+    # 这条是靠 Openverse 找到的：同一批照片就在 Commons 上，但 Commons 自己的
+    # 检索把它们埋了。图注写「playing US Open Final 2024」、EXIF 2024-09-07 16:45，
+    # 而且是 **CC0**——不像 8/3 与 9/10 那两张 Getty via WTA 还要过权利。
+    _trivia_story(
+        slug="otd-0907",
+        title="连丢五局之后",
+        subtitle="历史上的今天 · 9 月 7 日",
+        identity="2024 · 萨巴伦卡美网首冠",
+        chips=("历史上的今天", "2024", "纽约"),
+        hero=(
+            "2024 年的今天，萨巴伦卡拿下第一座美网——"
+            "一年前的同一片场地，她领先一盘却把决赛输掉了。"
+        ),
+        facts=(
+            "决赛 7-5、7-5 击败佩古拉，第三座大满贯。",
+            "第二盘她 3-0 领先，被连追五局到 3-5，然后连下四局收掉比赛。",
+            "2023 年这片场地上，她领先一盘输给了高芙。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-09-07", player="萨巴伦卡", age="26 岁",
+                headline="生涯首座美网",
+                detail="上一年的决赛她也站在这儿，领先一盘之后输掉了。",
+                source_url="https://en.wikipedia.org/wiki/2024_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Ocoudis / Wikimedia Commons · CC0",
+        source_label="美网官方档案",
+        source_url="https://en.wikipedia.org/wiki/2024_US_Open_%E2%80%93_Women%27s_singles",
+    ),
+    # 配图来自 WTA 官方战报（按文章 ID 取；带 slug 的旧链接已 404）。杯身刻着
+    # US OPEN TENNIS CHAMPIONSHIPS / WOMEN'S SINGLES——赛事与项目由画面自证。
+    _trivia_story(
+        slug="otd-0910",
+        title="纽约的第一座",
+        subtitle="历史上的今天 · 9 月 10 日",
+        identity="2022 · 斯瓦泰克美网首冠",
+        chips=("历史上的今天", "2022", "纽约"),
+        hero=(
+            "2022 年的今天，斯瓦泰克拿下生涯第一座美网奖杯——"
+            "在这之前，她在纽约从没走过第四轮。"
+        ),
+        facts=(
+            "决赛 6-2、7-6(5) 击败贾巴尔，这是她的第三座大满贯。",
+            "第一盘她接了 19 个发球，19 个都回到了场内。",
+            "同一年她还拿了法网；上一个单赛季两满贯，是 2016 年的科贝尔。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-09-10", player="斯瓦泰克", age="21 岁",
+                headline="生涯首座美网",
+                detail="此前她在这片场地从没打进过第四轮。",
+                source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Getty Images via WTA · 官方媒体供图",
+        source_label="WTA 官方战报",
+        source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
     ),
     _trivia_story(
         slug="otd-0909",
@@ -1134,6 +1249,537 @@ STORIES = STORIES + (
         source_label="ITF / 温网官方史料",
         image_credit="Acabashi / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
+    ),
+    _trivia_story(
+        slug="roof",
+        title="温网屋顶谁说了算",
+        subtitle="网球观察 · 规则篇",
+        identity="「光线不足」没有写时间",
+        chips=("规则争议", "19:40 对 20:30", "2009 装成"),
+        hero=(
+            "中央球场屋顶只在下雨或光线不足时关闭；2025 年 20:30 关，"
+            "2026 年 19:40 关，德约科维奇当场质问执行标准。"
+        ),
+        facts=(
+            "中央球场可开合屋顶装成于 2009 年，规则只允许两种情形关闭：降雨，或光线不足；"
+            "关闭后可开灯续赛，直至当地议会规定的 23:00 宵禁。",
+            "2026 年温网第四轮，辛纳与望月慎太郎在第二盘 4-4 时意见相反："
+            "辛纳要求关顶，望月希望续打，官方选择关闭；辛纳随后以 7-0 拿下该盘抢七，"
+            "全场 6-3、7-6(0)、6-3 获胜。",
+            "两天后的四分之一决赛，赛事主管于 19:40、第三盘开始前通知关顶，"
+            "德约科维奇当场质疑执行不一；该场耗时 5 小时 15 分，为温网史上最长的四分之一决赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-07",
+                player="德约科维奇",
+                age="19:40",
+                headline="「我们是户外赛事」",
+                detail=(
+                    "第三盘开始前被通知关顶，他回应称前几日到 20:30 都未关，"
+                    "当时完全可以在户外再打一盘。"
+                ),
+                source_url=(
+                    "https://www.foxnews.com/sports/"
+                    "novak-djokovic-heated-argument-wimbledon-roof-quarterfinal-win"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-07-07",
+                player="迪米特洛夫",
+                age="20:30",
+                headline="领先两盘后退赛",
+                detail=(
+                    "第二盘后因光线关顶、中断约 10 分钟；复赛后第三盘他胸肌撕裂退赛。"
+                    "其教练德尔加多向 BBC 表示，转入室内并非受伤原因。"
+                ),
+                source_url=(
+                    "https://www.tennis365.com/tennis-news/"
+                    "grigor-dimitrov-wimbledon-injury-coach-roof-closure-jannik-sinner-"
+                    "andy-murray-criticism"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="温网官方规则 / Fox Sports / BBC / ATP",
+        image_credit="Carine06 / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://en.wikipedia.org/wiki/Centre_Court",
+    ),
+    _trivia_story(
+        slug="ten-champions",
+        title="十届温网十个女冠军",
+        subtitle="网球观察 · 格局篇",
+        identity="同样十届，男单只有五人",
+        chips=("女单 10 人", "男单 5 人", "无人卫冕"),
+        hero=(
+            "2016 至 2026 年共十届温网（2020 年停办），女单出了十个不同的冠军、"
+            "无人卫冕；男单同期只有五个人分走十座冠军。"
+        ),
+        facts=(
+            "女单十届出了十个不同的冠军：小威、穆古鲁扎、科贝尔、哈勒普、巴蒂，"
+            "以及莱巴金娜、万卓索娃、克雷吉茨科娃、斯瓦泰克、诺斯科娃；"
+            "上一次有人卫冕温网女单，正是这十届的第一届、2016 年的小威。",
+            "男单同期只有五人：德约科维奇 4 冠（2018、2019、2021、2022），"
+            "阿尔卡拉斯 2 冠（2023、2024），辛纳 2 冠（2025、2026），"
+            "穆雷与费德勒各 1 冠。",
+            "捷克球员占了女单这十席中的三席（万卓索娃、克雷吉茨科娃、诺斯科娃）；"
+            "2026 年决赛为捷克内战，捷克成为公开赛年代第六个由两名本国女将会师"
+            "大满贯单打决赛的国家。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-11",
+                player="诺斯科娃",
+                age="21 岁 236 天",
+                headline="首进大满贯决赛即夺冠",
+                detail=(
+                    "6-2、5-7、6-3 击败同胞穆霍娃夺得温网女单冠军，"
+                    "第三轮曾救下一个赛点；为 2011 年科维托娃之后最年轻的温网女单冠军。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Women%27s_singles"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-07-12",
+                player="辛纳",
+                age="2026 年",
+                headline="男单卫冕，十届只有五人",
+                detail=(
+                    "6-7(7-9)、7-6(7-2)、6-3、6-4 击败兹维列夫成功卫冕；"
+                    "在此之前上一位卫冕温网男单的是 2022 年的德约科维奇。"
+                ),
+                source_url=(
+                    "https://en.wikipedia.org/wiki/"
+                    "2026_Wimbledon_Championships_%E2%80%93_Men%27s_singles"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="各届温网维基百科条目",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
+    ),
+    _trivia_story(
+        slug="ball-pick",
+        title="发球前为什么要挑球",
+        subtitle="网球观察 · 规则篇",
+        identity="挑的是毛，也是时间",
+        chips=("场上仪式", "7 局 / 9 局", "毛毡"),
+        hero=(
+            "球员发球前从球童手里挑球，找的是毛最少、阻力最小的一颗；"
+            "比赛用球第一次换在 7 局后，此后每 9 局一次，差的两局在赛前热身里。"
+        ),
+        facts=(
+            "WTA 官方说明：球员发球前查看数颗球，是在找空气动力学上最好、也就是毛起得最少的那一颗，"
+            "以求把发球的优势拉到最大。",
+            "换球节奏为「先七局、之后每九局」；两个数字之所以不同，"
+            "是因为开赛这一批球在赛前热身时就已经用过，上场时并非全新。",
+            "网球由充压橡胶壳外粘一层羊毛、尼龙与棉的混纺毛毡构成，"
+            "内部气压比外界高约 80 千帕；毛毡被击打后逐渐松散，球随之变蓬、变慢。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="",
+                player="WTA 官方",
+                age="规则",
+                headline="先 7 局，之后每 9 局",
+                detail=(
+                    "主裁喊「新球」即为换球节点；差的两局计入赛前热身，"
+                    "换球的目的是避免用过蓬、过慢的球比赛。"
+                ),
+                source_url="https://www.wtatennis.com/news/3043764/tennis-explained-learn-the-game",
+            ),
+            ChampionMoment(
+                date="",
+                player="ITF",
+                age="球体规格",
+                headline="充压橡胶壳外粘毛毡",
+                detail=(
+                    "直径 6.54–6.86 厘米、质量 56.0–59.4 克；内部气压比外界高约 80 千帕，"
+                    "封罐后即持续外漏。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Tennis_ball",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方规则说明 / ITF 球体规格",
+        image_credit="Steven Pisano / Wikimedia Commons · CC BY 2.0",
+        source_url="https://www.wtatennis.com/news/3043764/tennis-explained-learn-the-game",
+    ),
+    _trivia_story(
+        slug="shot-clock",
+        title="发球 25 秒是怎么来的",
+        subtitle="网球观察 · 规则篇",
+        identity="2018 年上墙，2026 年自动",
+        chips=("20 秒 → 25 秒", "2018 美网", "2026 全自动"),
+        hero=(
+            "2018 年美网成为首个在正赛使用 25 秒发球计时器的大满贯，"
+            "大满贯同期由 20 秒改为 25 秒；2026 年 ATP 改为自动计时，一分结束即起算。"
+        ),
+        facts=(
+            "2018 年之前，大满贯的分间时限为 20 秒、巡回赛为 25 秒，没有可视计时器，"
+            "是否超时由主裁判断；2018 年四大满贯统一改为 25 秒并引入计时器。",
+            "2018 年美网是首个在正赛使用 25 秒计时器的大满贯，此前仅在 2017 年美网资格赛试行；"
+            "计时器由主裁在报分之后启动，掌声不计入其中。",
+            "超时罚则为首次警告，此后每次罚掉一个一发；2026 年 ATP 改为自动计时，"
+            "一分结束后几乎立刻起算、不再等报分，阿尔卡拉斯与辛纳均公开提出异议。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2018-08-27",
+                player="美网",
+                age="2018 年",
+                headline="首个用上计时器的大满贯正赛",
+                detail=(
+                    "25 秒计时器在 2018 年美网正赛启用，此前于 2017 年美网资格赛试行；"
+                    "同年四大满贯将分间时限由 20 秒统一为 25 秒。"
+                ),
+                source_url=(
+                    "https://www.guinnessworldrecords.com/world-records/"
+                    "544272-first-grand-slam-to-adopt-a-shot-clock-for-the-main-draws"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-06",
+                player="阿尔卡拉斯",
+                age="女王杯",
+                headline="「钟不停，我全程都在赶」",
+                detail=(
+                    "负于德拉珀后他表示：主裁告知有新规则，一分结束后计时立即开始；"
+                    "他称分与分之间没有恢复时间。此前在迈阿密对戈芬一场，"
+                    "他因超时被罚，当场称在网前结束一分时根本无法赶上。"
+                ),
+                source_url=(
+                    "https://www.skysports.com/tennis/news/12110/13156552/"
+                    "carlos-alcaraz-plans-atp-talks-over-new-shot-clock-rule-after-defeat-at-queens-club"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="Guinness World Records / LTA 裁判手册 / Sky Sports",
+        image_credit="AELTC/Ben Solomon · wimbledon.com 官方图",
+        source_url=(
+            "https://www.lta.org.uk/494f0e/siteassets/lta-officials/my-resources/"
+            "role-specific-resources/serve-shot-clock-procedures-2023.pdf"
+        ),
+    ),
+    _trivia_story(
+        slug="zheng-eala",
+        title="郑钦文首轮VS伊埃拉",
+        subtitle="赛事前瞻 · WTA 500",
+        identity="三年前的亚运会半决赛之后",
+        chips=("WTA 500", "首轮", "第二次交手"),
+        hero=(
+            "郑钦文以外卡身份出战华盛顿站，首轮对阵生涯新高世界第 28 的伊埃拉；"
+            "两人上一次交手是 2023 年杭州亚运会半决赛，郑钦文取胜后夺金。"
+        ),
+        facts=(
+            "伊埃拉 2005 年 5 月生，2022 年成为菲律宾首位青少年大满贯单打冠军；"
+            "2025 年迈阿密以外卡身份连胜奥斯塔片科、基斯与斯瓦泰克闯入四强。",
+            "2026 年 7 月 13 日，伊埃拉升至生涯新高世界第 28 位，为菲律宾球员在 WTA 巡回赛的历史最高排名；"
+            "本届温网她第三轮再胜斯瓦泰克，首次打进大满贯第二周。",
+            "郑钦文 2024 年巴黎奥运会夺得女单金牌，为亚洲首位奥运网球单打冠军；"
+            "生涯最高排名世界第 4（2025 年 6 月），2025 年温网后接受右肘手术，2026 年 2 月复出。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2023-09",
+                player="郑钦文",
+                age="杭州亚运会",
+                headline="半决赛 6-1、6-7(5)、6-3 胜伊埃拉",
+                detail="该届郑钦文夺得女单金牌，伊埃拉获得铜牌；这是两人此前唯一一次交手。",
+                source_url="https://en.wikipedia.org/wiki/Zheng_Qinwen",
+            ),
+            ChampionMoment(
+                date="2026-07-13",
+                player="伊埃拉",
+                age="21 岁",
+                headline="升至世界第 28，菲律宾史上最高",
+                detail="本届温网第三轮击败斯瓦泰克，首次打进大满贯第二周后升至生涯新高。",
+                source_url="https://en.wikipedia.org/wiki/Alexandra_Eala",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / WTA 官方赛会信息",
+        image_credit="官方媒体供图 · ausopen.com",
+        source_url="https://en.wikipedia.org/wiki/Alexandra_Eala",
+    ),
+    _trivia_story(
+        slug="shang-nishikori",
+        title="商竣程首轮VS锦织圭",
+        subtitle="赛事前瞻 · ATP 500",
+        identity="锦织圭退役赛季的华盛顿首轮",
+        chips=("ATP 500", "首轮", "第二次交手"),
+        hero=(
+            "锦织圭以外卡身份出战华盛顿站，首轮对阵商竣程；"
+            "锦织圭已宣布 2026 赛季结束后退役，两人上一次交手是 2024 年成都公开赛首轮，"
+            "19 岁的商竣程 6-4、6-4 取胜并最终夺冠。"
+        ),
+        facts=(
+            "锦织圭 1989 年 12 月生，生涯最高世界第 4，12 个 ATP 单打冠军；"
+            "2014 年美网打进决赛，是公开赛年代唯一一位代表亚洲国家打进大满贯男单决赛的球员。",
+            "2026 年 4 月，锦织圭宣布将在赛季结束后退役；髋、腕、背、肩、膝多处伤病长期困扰，"
+            "现世界排名四百开外，本站靠外卡进入正赛。",
+            "商竣程 2005 年 2 月生，生涯最高世界第 47（2024 年 10 月）；"
+            "2024 年成都公开赛夺冠，成为公开赛年代第二位赢得 ATP 单打冠军的中国男子球员，"
+            "2026 年 2 月迪拜站后因伤停赛，本站是他五个月来的首场比赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2014-09",
+                player="锦织圭",
+                age="24 岁",
+                headline="美网决赛，亚洲男子唯一一次",
+                detail="半决赛击败德约科维奇后闯入决赛，最终负于西里奇；这是公开赛年代代表亚洲国家的男子球员唯一一次打进大满贯单打决赛。",
+                source_url="https://en.wikipedia.org/wiki/Kei_Nishikori",
+            ),
+            ChampionMoment(
+                date="2024-09",
+                player="商竣程",
+                age="19 岁",
+                headline="成都首轮 6-4、6-4 胜锦织圭",
+                detail="那一周他一路夺冠，成为公开赛年代第二位拿到 ATP 单打冠军的中国男子球员。",
+                source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / ATP 官方赛会信息",
+        image_credit="CGTN / ATP 官方赛会图",
+        source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+    ),
+    _trivia_story(
+        slug="venus-potapova",
+        title="维纳斯首轮VS波塔波娃",
+        subtitle="赛事前瞻 · WTA 500",
+        identity="46 岁重返华盛顿站",
+        chips=("WTA 500", "首轮", "首次交手"),
+        hero=(
+            "维纳斯·威廉姆斯以外卡身份重返华盛顿站，首轮对阵波塔波娃；"
+            "一年前正是在这一站，45 岁的她赢下 2004 年之后 WTA 巡回赛最年长的单打胜利。"
+        ),
+        facts=(
+            "2025 年 7 月华盛顿站，维纳斯 6-3、6-4 战胜斯特恩斯，成为自 2004 年温网"
+            "纳芙拉蒂洛娃（47 岁）之后赢下 WTA 巡回赛单打的最年长球员；"
+            "那也是她自 2023 年 8 月辛辛那提以来的首场单打胜利。",
+            "维纳斯 1980 年 6 月生，7 座大满贯女单冠军（温网 5 次、美网 2 次）、"
+            "4 枚奥运金牌，2002 年 2 月登上世界第一；2026 赛季至今尚无巡回赛单打胜绩。",
+            "波塔波娃 2001 年 3 月生，2026 赛季起代表奥地利出战；"
+            "2026 年马德里站以幸运落败者身份进入正赛并打进四强，"
+            "为 1990 年分级制度确立以来首位打进 WTA 1000 四强的幸运落败者。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2025-07",
+                player="维纳斯·威廉姆斯",
+                age="45 岁",
+                headline="华盛顿站 6-3、6-4 胜斯特恩斯",
+                detail="2004 年温网纳芙拉蒂洛娃之后，WTA 巡回赛最年长的单打胜者。",
+                source_url="https://en.wikipedia.org/wiki/Venus_Williams",
+            ),
+            ChampionMoment(
+                date="2026-04",
+                player="波塔波娃",
+                age="25 岁",
+                headline="马德里站幸运落败者打进四强",
+                detail="资格赛末轮出局后递补进正赛，先后战胜莱巴金娜与普利斯科娃。",
+                source_url="https://en.wikipedia.org/wiki/Anastasia_Potapova",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / WTA 官方赛会信息",
+        image_credit="Hameltion · CC BY-SA 4.0 · Wikimedia Commons",
+        source_url="https://en.wikipedia.org/wiki/Venus_Williams",
+    ),
+    _trivia_story(
+        slug="masters-format",
+        title="大师赛为什么变两周",
+        subtitle="网球观察 · 赛程篇",
+        identity="扩容之后的退赛潮",
+        chips=("赛程争议", "9 站中 7 站", "56→96"),
+        hero=(
+            "九站大师赛已有七站从一周改为十二天；2026 年蒙特利尔站开赛前一周，"
+            "辛纳与德约科维奇双双退赛。"
+        ),
+        facts=(
+            "九站 ATP 大师赛中已有七站改为十二天赛期，"
+            "仅巴黎大师赛与蒙特卡洛大师赛仍保持一周；顶尖球员赛季跨越 11 个月。",
+            "2025 年起，加拿大站与辛辛那提站将正赛签表由 56 人扩至 96 人，"
+            "赛期相应延长至 12 天。",
+            "2026 年蒙特利尔站赛前，辛纳与德约科维奇退赛，此前阿尔卡拉斯已退赛；"
+            "赛事总监瓦莱丽·泰特罗表示尊重球员决定，"
+            "但指出临时退赛日益频繁已成为项目层面的问题。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24",
+                player="辛纳 / 德约科维奇",
+                age="2026 年",
+                headline="双双退出蒙特利尔",
+                detail=(
+                    "加拿大网球协会宣布两人退出 8 月 1 日开赛的大师赛；"
+                    "辛纳称与团队权衡后决定把健康放在第一位。"
+                ),
+                source_url=(
+                    "https://www.nbcsports.com/tennis/news/"
+                    "top-ranked-sinner-24-time-grand-slam-champ-djokovic-"
+                    "withdraw-from-the-national-bank-open"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-01-01",
+                player="ATP",
+                age="2025 年",
+                headline="签表扩容至 96 人",
+                detail="加拿大站与辛辛那提站正赛签表由 56 人扩至 96 人，赛期延长至 12 天。",
+                source_url="https://en.wikipedia.org/wiki/2025_National_Bank_Open",
+            ),
+        ),
+        image_keys=(),
+        source_label="BBC / NBC Sports / 加拿大网协",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/ATP_Masters_1000",
+    ),
+    _trivia_story(
+        slug="queue",
+        title="温网的队要排一晚上",
+        subtitle="网球冷知识 · 观赛篇",
+        identity="一条有专名的队：The Queue",
+        chips=("冷知识", "温网传统", "2003 编号"),
+        hero=(
+            "四大满贯里只有温网和法网，当天排队还能坐进主球场；"
+            "代价是在草地上睡一晚。"
+        ),
+        facts=(
+            "温网与法网是仅有的两项大满贯，无票观众可当天排队买到三块主球场的座位；"
+            "排队卡自 2003 年起编号，2008 年起合并为单一队列，每块主球场约留 500 个座位。",
+            "全英俱乐部允许通宵排队并为露宿者提供厕所与饮水；"
+            "清晨队伍向场地移动时，引导员沿队发放按球场分色的腕带，"
+            "凭腕带与票款在售票处换取门票。",
+            "提前离场者退回的门票于下午 2:30 重新发售，所得捐予慈善；"
+            "主球场的排队在八强赛结束后停止。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2010-06-28",
+                player="Rose Stanley",
+                age="2010 年",
+                headline="第一百万张排队卡",
+                detail=(
+                    "2010 年温网第七个比赛日下午 2 点 40，"
+                    "第 100 万张编号排队卡发给了来自南非的 Rose Stanley。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2003-01-01",
+                player="全英俱乐部",
+                age="2003 年",
+                headline="排队卡开始编号",
+                detail="排队卡自此按顺序编号；2008 年起合并为单一队列。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="Carine06 / Wikimedia Commons · CC BY-SA 2.0",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+    ),
+    _trivia_story(
+        slug="rufus",
+        title="温网雇了一只鹰",
+        subtitle="网球冷知识 · 园区篇",
+        identity="工牌职位：赶鸟员",
+        chips=("冷知识", "温网园区", "2008 上岗"),
+        hero=(
+            "温网有一名员工是哈里斯鹰，工牌上的职位写着 Bird Scarer；"
+            "2012 年它被人从车里偷走，三天后在温布尔登公地找回。"
+        ),
+        facts=(
+            "Rufus 生于 2008 年，同年 18 周大时首次在温网上岗，"
+            "接替上一只鹰 Hamish；它有推特账号，也有自己的温网工牌，"
+            "职位写作 Bird Scarer。",
+            "全英俱乐部雇它全年巡视 42 英亩园区，赛期每日到岗；"
+            "鸽子尤其爱停在中央球场屋顶。它也在 2012 年伦敦奥运会期间每天工作。",
+            "2012 年 6 月 28 日它从车后座被偷，引发全球关注，"
+            "三天后在温布尔登公地被找到并交给 RSPCA，仅一条腿略有酸痛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2012-06-28",
+                player="Rufus",
+                age="2012 年",
+                headline="被偷走三天",
+                detail=(
+                    "从车后座被偷；它的无线电发射器夜间会取下，因此无法追踪。"
+                    "三天后在温布尔登公地被发现，身体健康。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+            ChampionMoment(
+                date="2026-01-01",
+                player="全英俱乐部",
+                age="2026 年",
+                headline="无人机会取代它吗",
+                detail=(
+                    "驯鹰师担心这份工作终将被无人机取代；"
+                    "全英俱乐部表示没有替换它的打算。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+            ),
+        ),
+        image_keys=(),
+        source_label="全英俱乐部 / 维基百科",
+        image_credit="AvianEnvironmental / Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://en.wikipedia.org/wiki/Rufus_the_Hawk",
+    ),
+    _trivia_story(
+        slug="wimbledon-whites",
+        title="温网为什么只准穿白",
+        subtitle="网球冷知识 · 规矩篇",
+        identity="一条管到内衣的着装规定",
+        chips=("冷知识", "温网传统", "1963 成文"),
+        hero=(
+            "白衣打网球比规则本身老得多；温网 1963 年把它写成规定，"
+            "此后严到彩边不得超过 1 厘米。"
+        ),
+        facts=(
+            "温网要求参赛者穿全白或近乎全白的服装，"
+            "这条着装规定于 1963 年首次成文执行。",
+            "细则严到：不得有整块色彩，彩色滚边不得超过 1 厘米，"
+            "上衣或裙子的后背必须全白；短裤、帽子、发带、袜子与鞋面也须以白为主。",
+            "2023 年起，女子选手首次获准穿非白色内衣——"
+            "规则写明为“纯色、中/深色打底短裤，长度不超过其短裤或裙子”。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="1963-01-01",
+                player="全英俱乐部",
+                age="1963 年",
+                headline="着装规定首次成文",
+                detail="温网把沿用已久的白衣传统写成规则，要求全白或近乎全白。",
+                source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
+            ),
+            ChampionMoment(
+                date="2023-07-03",
+                player="温布尔登",
+                age="2023 年",
+                headline="内衣松口",
+                detail=(
+                    "女子选手首次获准穿中/深色打底短裤，长度不超过短裤或裙子；"
+                    "推动修改的是球员对生理期的顾虑。"
+                ),
+                source_url=(
+                    "https://www.nytimes.com/athletic/4634722/2023/07/02/"
+                    "wimbledon-period-all-white-dress-code/"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="温网官方规则 / 维基百科",
+        image_credit="Wikimedia Commons",
+        source_url="https://en.wikipedia.org/wiki/Wimbledon_Championships",
     ),
     _trivia_story(
         slug="longest-match",
@@ -1881,12 +2527,22 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     return candidates[0] if candidates else None
 
 
-def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
-    """Return stories in editorial order so rendering can skip weak visual packages.
+def is_anniversary(story: TournamentStory, today: date) -> bool:
+    """今天是不是这条「历史上的今天」的正日子."""
+    return (
+        story.kind == "trivia"
+        and story.slug.startswith("otd-")
+        and story.slug.endswith(today.strftime("%m%d"))
+    )
 
-    Selection and production are deliberately separate: the hottest subject is
-    tried first, but a story without a complete, precisely matched visual set
-    must not block a lower-ranked story that can be published well.
+
+def story_ranking(digest: Digest) -> list[dict]:
+    """每条故事的参选结果：分档、得分、名次，落选的带原因。
+
+    单独抽出来是因为产物里只留"谁赢了"不够。7/25 那天 `otd-0725` 的四道闸门
+    （图在、日期对、未冷却、trivia）离线复算全部通过，却没上；而落盘的
+    `rejected_candidates` 是空的——它根本没被生产环节试过。只记胜者的时候，
+    "今天没有历史今天"和"有但没轮到它"长得一模一样。
     """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
@@ -1897,54 +2553,189 @@ def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
     player_heat, tournament_heat, newsworthy_losers = _result_heat(digest)
     headliners = winners | newsworthy_losers
     state = _load_state()
-
-    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡
     today_iso = digest.today.isoformat()
-    pinned: list[TournamentStory] = []
-    for story in STORIES:
-        if state.get(story.slug) == today_iso and story.image.exists():
-            pinned.append(story)
 
-    fresh: list[tuple[int, float, int, TournamentStory]] = []
-    cooling: list[tuple[str, int, float, int, TournamentStory]] = []
+    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡。
+    # 纪念日不吃这条——见下面 anniversary 分档。
+    pinned_slugs = {
+        story.slug
+        for story in STORIES
+        if state.get(story.slug) == today_iso and story.image.exists()
+    }
+
+    records: list[dict] = []
     for order, story in enumerate(STORIES):
+        # 每条都带齐同一套字段（落选的 rank/score 留 None）——读这份台账的
+        # jq 不该为了"这个键在不在"分两种写法。
+        record: dict = {
+            "story_slug": story.slug,
+            "title": story.title,
+            "kind": story.kind,
+            "pinned": story.slug in pinned_slugs,
+            "last_used": state.get(story.slug, ""),
+            "rank": None,
+            "score": None,
+            "heat": None,
+            "reason": "",
+        }
+
+        def drop(reason: str) -> None:
+            records.append({**record, "bucket": "excluded", "reason": reason})
+
         if not story.image.exists():
+            drop("配图不在仓库里")
             continue
         aliases = tuple(_norm(alias) for alias in story.aliases)
+        anniversary = is_anniversary(story, digest.today)
         if story.kind == "player":
             if _matched(aliases, headliners):
                 score = 3
             elif _matched(aliases, todays):
                 score = 1
             else:
+                drop("这名球员今天没有比赛")
                 continue
             heat = _alias_heat(aliases, player_heat)
         elif story.kind == "trivia":
             if story.slug.startswith("otd-"):
-                # 历史上的今天：只在对应日期参选，优先于普通冷知识
-                if not story.slug.endswith(digest.today.strftime("%m%d")):
+                # 历史上的今天：只在对应日期参选。命中当日给最高分——
+                # 纪念日一年只回来一次，昨夜的高光球员明天还有。
+                if not anniversary:
+                    drop(f"不是它的正日子（{story.slug.removeprefix('otd-')}）")
                     continue
-                score = 1
+                score = ANNIVERSARY_SCORE
             else:
                 score = 0
             heat = _trivia_topic_score(story, digest)
         else:
             if not _matched(aliases, tournaments):
+                drop("这项赛事今天没有比赛")
                 continue
             score = 2
             heat = _alias_heat(aliases, tournament_heat)
-        if _recently_used(story.slug, digest.today, state):
-            cooling.append((state.get(story.slug, ""), -score, -heat, order, story))
+
+        if anniversary:
+            # 冷却期对纪念日没有意义（一年只回来一次）；同日重跑时也不该被
+            # 上一班次钉住的那条挡在后面——后续班次正是它的重试机会。
+            bucket = "anniversary"
+        elif _recently_used(story.slug, digest.today, state):
+            bucket = "cooling"
         else:
-            fresh.append((-score, -heat, order, story))
-    ordered_fresh = [item[-1] for item in sorted(fresh)]
+            bucket = "fresh"
+        records.append(
+            {**record, "bucket": bucket, "score": score, "heat": round(float(heat), 4)}
+        )
+
+    by_slug = {record["story_slug"]: record for record in records}
+    order_of = {story.slug: index for index, story in enumerate(STORIES)}
+
+    def picked(bucket: str) -> list[dict]:
+        return [r for r in records if r["bucket"] == bucket]
+
+    anniversaries = sorted(picked("anniversary"), key=lambda r: order_of[r["story_slug"]])
+    # 当天已定的故事照样参选，**即使它今天本来会落选**——这是原有的同日重跑
+    # 幂等行为，不能因为重算而换卡。分档改标成 pinned（reason 留着），
+    # 否则台账里会出现「excluded 却有名次」这种自相矛盾的行。
+    pinned = []
+    for slug in sorted(pinned_slugs, key=lambda s: order_of[s]):
+        record = by_slug[slug]
+        if record["bucket"] == "anniversary":
+            continue
+        record["bucket"] = "pinned"
+        pinned.append(record)
+    fresh = sorted(
+        picked("fresh"),
+        key=lambda r: (-r["score"], -r["heat"], order_of[r["story_slug"]]),
+    )
     # ISO 日期字符串最小 = 距上次讲述最久；仍保留新闻分作为次级排序。
-    ordered_cooling = [item[-1] for item in sorted(cooling)]
-    ordered: list[TournamentStory] = []
-    for story in [*pinned, *ordered_fresh, *ordered_cooling]:
-        if story not in ordered:
-            ordered.append(story)
-    return ordered
+    cooling = sorted(
+        picked("cooling"),
+        key=lambda r: (
+            r["last_used"],
+            -r["score"],
+            -r["heat"],
+            order_of[r["story_slug"]],
+        ),
+    )
+
+    rank = 0
+    seen: set[str] = set()
+    for record in [*anniversaries, *pinned, *fresh, *cooling]:
+        if record["story_slug"] in seen:
+            continue
+        seen.add(record["story_slug"])
+        rank += 1
+        record["rank"] = rank
+    return records
+
+
+def record_story_selection(
+    day_dir: Path | str,
+    digest: Digest,
+    ranking: list[dict],
+    *,
+    selected_slug: str | None,
+    error: str = "",
+) -> Path:
+    """把这一班次的排序结果追加进当日目录的 `story_selection.json`.
+
+    刻意不写进 `knowledge/`、刻意不覆盖——理由见 `SELECTION_LOG_NAME` 上面那段。
+    `anniversary_missed` 是给 daily.yml 打 `::warning` 用的：当天有纪念日参选、
+    最后成稿的却不是它，就该有人被吵醒。
+    """
+    from datetime import datetime, timezone
+
+    path = Path(day_dir) / SELECTION_LOG_NAME
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        shifts = list(payload.get("shifts") or [])
+    except (OSError, ValueError):
+        shifts = []
+
+    anniversaries = [
+        record["story_slug"] for record in ranking if record["bucket"] == "anniversary"
+    ]
+    shifts.append(
+        {
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+            "selected": selected_slug or "",
+            "error": error,
+            "anniversary_slugs": anniversaries,
+            "anniversary_missed": bool(anniversaries)
+            and selected_slug not in anniversaries,
+            "ranking": sorted(
+                ranking,
+                key=lambda record: (record.get("rank") or 10_000, record["story_slug"]),
+            ),
+        }
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "published_for": digest.today.isoformat(),
+                "shifts": shifts,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
+def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
+    """Return stories in editorial order so rendering can skip weak visual packages.
+
+    Selection and production are deliberately separate: the hottest subject is
+    tried first, but a story without a complete, precisely matched visual set
+    must not block a lower-ranked story that can be published well.
+    """
+    by_slug = {story.slug: story for story in STORIES}
+    ranked = [record for record in story_ranking(digest) if record.get("rank")]
+    ranked.sort(key=lambda record: record["rank"])
+    return [by_slug[record["story_slug"]] for record in ranked]
 
 
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"

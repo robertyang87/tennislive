@@ -2,13 +2,16 @@ name: yesterday-tennis-point
 
 on:
   schedule:
-    # ATP、WTA 官方视频上架时间不同步，四班次独立重试：一方先有素材先推送，
+    # ATP、WTA 官方视频上架时间不同步，六班次独立重试：一方先有素材先推送，
     # 另一方留到下一班次继续找，互不等待。已经成功的巡回赛后续班次会被跳过，
     # 不重复生成也不重复推送（见 cmd_yesterday_point 的 skip_tours 逻辑）。
+    # 16:00 / 21:00 两班接欧美下午、晚间才上架的官方剪辑。
     - cron: "0 22 * * *"    # 北京时间 06:00（首班）
     - cron: "0 0 * * *"     # 北京时间 08:00（重试）
     - cron: "0 2 * * *"     # 北京时间 10:00（重试）
-    - cron: "0 4 * * *"     # 北京时间 12:00（末班）
+    - cron: "0 4 * * *"     # 北京时间 12:00（重试）
+    - cron: "0 8 * * *"     # 北京时间 16:00（重试）
+    - cron: "0 13 * * *"    # 北京时间 21:00（末班）
   workflow_dispatch:
     inputs:
       date:
@@ -88,7 +91,7 @@ jobs:
           tennislive point --date "$DATE_ARG" --outdir output
 
       - name: 昨日好球发现记账（来源诊断）
-        # 全跳过的日子不提交空包，带 discovery 台账的顶层 manifest 只落在
+        # 全跳过的日子不提交空包，带 resolver_attempts 台账的顶层 manifest 只落在
         # 工作区/artifact 里；这一步把它升到 Actions 摘要，让「为什么没推」
         # 一眼可见，并把 ATP 主通道的根因（命中卡片却缺 JWT）单独升为 warning。
         if: always() && steps.generate.conclusion == 'success'
@@ -97,14 +100,15 @@ jobs:
         run: |
           MANIFEST="${{ steps.generate.outputs.outdir }}/manifest.json"
           [ -s "$MANIFEST" ] || exit 0
-          jq -r '.discovery // [] | .[] |
-            "· \(.source): 抓取\(.fetched)/命中\(.matched)/" +
-            (if .error != "" then "报错 \(.error)"
-             elif .picked then "选中"
-             else "未选中——\(.note)" end)' "$MANIFEST" \
+          jq -r '.resolver_attempts // [] | .[] |
+            "· \(.source): 抓取\(.fetched // "-")/命中\(.matched // "-")/" +
+            (if .status == "error" then "报错 \(.error)"
+             elif .status == "candidate" then "选中"
+             else "未选中——\(.note // .status)" end)' "$MANIFEST" \
             | while IFS= read -r line; do echo "::notice::$line"; done
-          if [ -z "${TENNISTV_JWT}" ] && jq -e '.discovery // [] | any(
-                .source == "Tennis TV Hot Shots" and .matched > 0 and (.picked | not))' \
+          if [ -z "${TENNISTV_JWT}" ] && jq -e '.resolver_attempts // [] | any(
+                .source == "Tennis TV Hot Shots"
+                and (.matched // 0) > 0 and .status != "candidate")' \
                 "$MANIFEST" >/dev/null; then
             echo "::warning::Tennis TV 命中了昨日比赛的 Hot Shots，但缺 TENNISTV_JWT，无法解析可播放源；配置该 Secret 可打通 ATP 主通道"
           fi
@@ -142,11 +146,21 @@ jobs:
                  .consensus.basis == "official-daily-best" and
                  any(.consensus.signals[];
                      .kind == "official-best-designation" and .scope == "day")) or
+                (.consensus.rank == 2 and
+                 .consensus.score == 85 and
+                 .consensus.basis == "official-match-best" and
+                 any(.consensus.signals[];
+                     .kind == "official-best-designation" and .scope == "match")) or
                 (.consensus.rank == 1 and
                  .consensus.score == 72 and
                  .consensus.basis == "official-hot-shot" and
                  any(.consensus.signals[];
-                     .kind == "official-hot-shot" and .scope == "hot-shot"))
+                     .kind == "official-hot-shot" and .scope == "hot-shot")) or
+                (.consensus.rank == 0 and
+                 .consensus.score == 40 and
+                 .consensus.basis == "official-highlights" and
+                 any(.consensus.signals[];
+                     .kind == "official-highlights" and .scope == "highlights"))
               ) and
               .framing.mode == "contain" and
               .framing.dynamic_tracking_crop == false and
@@ -172,27 +186,32 @@ jobs:
           name: yesterday-point-${{ github.run_number }}
           path: ${{ steps.generate.outputs.outdir }}
 
-      - name: 提交通过门禁的成片
+      - name: 提交成片或 skip 诊断
         id: commit
         if: github.event_name != 'push' && github.event.inputs.force != 'true'
         run: |
           echo "ready=false" >> "$GITHUB_OUTPUT"
           OUT_DIR="${{ steps.generate.outputs.outdir }}"
-          if [ "$(jq -r '.status' "$OUT_DIR/manifest.json")" != "pass" ]; then
-            echo "没有满足门槛的完整回合，不提交空包"
-            exit 0
-          fi
+          STATUS=$(jq -r '.status' "$OUT_DIR/manifest.json")
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # skip 也提交：skip.json 记录了每路 resolver 的尝试与失败原因，
+          # 落进仓库才不会随 Actions 日志过期而消失。只有 pass 才触发推送。
           git add "$OUT_DIR"
           if git diff --cached --quiet; then
             echo "内容与仓库一致，不重复提交或推送"
             exit 0
           fi
-          git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
+          if [ "$STATUS" = "pass" ]; then
+            git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
+          else
+            git commit -m "chore: 昨日好球 skip 诊断 $(basename "$(dirname "$OUT_DIR")")"
+          fi
           git pull --rebase origin "${{ github.ref_name }}"
           git push origin "${{ github.ref_name }}"
-          echo "ready=true" >> "$GITHUB_OUTPUT"
+          if [ "$STATUS" = "pass" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: PushPlus 推送昨日 Hot Shots / 最佳回合（只推本次新完成的巡回赛）
         if: steps.commit.outputs.ready == 'true' && env.PUSHPLUS_TOKEN != ''

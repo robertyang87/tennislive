@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from ..digest import Digest
-from ..models import Match
+from ..models import Match, MatchStatus
 from ..zh import player_zh, surface_zh
 from ..zh.terms import round_zh
 from ..zh.tournaments import tournament_surface
@@ -93,6 +93,16 @@ def result_insight(match: Match) -> str:
     loser_seed = losers[0].seed if losers else None
     tiebreaks = _tiebreak_count(match)
 
+    # 退赛/不战而胜的比分不能按常规读：6-1 2-0 退赛里那个 2-0 是被中断的一盘，
+    # 不是拿下的一盘，照常统计就落进"直落两盘拿下，关键分处理更加稳定"——
+    # 头版印着"谢里夫退赛"，下面一行却说人家直落两盘（trajectory_arc 已经为
+    # 同一个 6-1 2-0 挡过一次，这条路径当时漏了）。
+    if match.status in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        if match.status is MatchStatus.WALKOVER:
+            return "对手赛前退出，不战而胜进入下一轮"
+        played = "首盘" if len(match.sets) <= 1 else f"第{len(match.sets)}盘"
+        return f"对手{played}中途退赛，比赛没能打完"
+
     if is_upset(match):
         if len(sets) >= 3 and tiebreaks >= 3 and loser_seed:
             return f"三盘全部进入抢七，硬仗掀翻{loser_seed}号种子"
@@ -126,6 +136,10 @@ def trajectory_arc(match: Match) -> str:
     purely about set-by-set momentum, so the two are meant to sit side by
     side without repeating each other.
     """
+    # 退赛/不战而胜没有"走势"可言：6-1 2-0 退赛里那个 2-0 是被中断的一盘，
+    # 不是拿下的一盘，照常统计就会印成"直落2盘，全程没有让对手看到机会"。
+    if match.status in (MatchStatus.RETIRED, MatchStatus.WALKOVER):
+        return ""
     decided = [s for s in match.sets if s.home != s.away]
     if len(decided) < 2 or match.winner not in (0, 1):
         return ""
@@ -189,9 +203,12 @@ def schedule_insight(match: Match, today: date | None = None) -> str:
     if match.is_doubles:
         sides = " / ".join(player_zh(p.name) for p in match.home[:2])
         opponents = " / ".join(player_zh(p.name) for p in match.away[:2])
+        # 第一个分句必须能单独成句：四个人名放句首，36 字的看点行连名字都装不下，
+        # 裁下来就是"Magali Kempen / Alexandra"——半个人名当看点印出去
+        # （2026-07-26 汉堡站女双决赛的成品）。和决赛那句是同一个毛病。
         if target == "下一轮席位":
-            return f"双打最怕默契还没上线：{sides}与{opponents}，首轮就得把组合感打出来。"
-        return f"{sides}与{opponents}只差这一场，就能把默契换成{target}。"
+            return f"双打首轮先看默契。{sides}与{opponents}，组合感能不能马上打出来。"
+        return f"{target}只差这一场双打决赛。{sides}与{opponents}，看谁的默契先上线。"
 
     cn = chinese_players(match)
     if cn:
@@ -210,7 +227,11 @@ def schedule_insight(match: Match, today: date | None = None) -> str:
         return f"{cn_name}的{r or '首轮'}不缺关注，真正的悬念是她能否一上来就接管比赛。"
 
     if r == "决赛":
-        return f"{event}只剩最后一问：{home}和{away}，谁能把这一周换成奖杯？"
+        # 第一个分句必须独立成句——和下面淘汰赛三句同样的道理。原来写的是
+        # "{event}只剩最后一问：…"，冒号前读不完整，正文层按 34 字预算
+        # 截断时找不到可用的切点，整句作废、跌回赛段套话（"最后一场定归属，
+        # 谁先扛住谁捧杯"），一个数字都不剩。
+        return f"{event}今天决出冠军。{home}和{away}，谁把这一周换成奖杯？"
 
     # 淘汰赛阶段（决赛除外）：同一赛事常常一次出现好几场同轮次比赛
     # （比如四强/八强战一晚打完），必须按具体排名/种子差异区分文案，

@@ -167,6 +167,7 @@ PLAYER_ZH: dict[str, str] = {
     # ===== WTA =====
     "Aryna Sabalenka": "萨巴伦卡",
     "Iga Swiatek": "斯瓦泰克",
+    "Angelique Kerber": "科贝尔",
     "Elena Rybakina": "莱巴金娜",
     "Coco Gauff": "高芙",
     "Jessica Pegula": "佩古拉",
@@ -284,6 +285,7 @@ PLAYER_ZH: dict[str, str] = {
     "Katie Volynets": "沃利内茨",
     "Robin Montgomery": "蒙哥马利",
     "Venus Williams": "大威廉姆斯",
+    "Serena Williams": "小威廉姆斯",
     "Varvara Gracheva": "格拉乔娃",
     "Diane Parry": "帕里",
     "Elsa Jacquemot": "雅克莫",

@@ -19,6 +19,7 @@ from .common import (
 )
 from .focus import focus_comparison, has_detailed_stats, select_focus_match
 from .hashtags import limit_hashtags
+from .narrative import data_angle as _data_angle
 from .narrative import editor_takeaway, preview_angle
 from .rating import (
     editorial_tonight_focus,
@@ -326,146 +327,17 @@ class XhsPostPlan:
         return asdict(self)
 
 
-# 一条被截断的文案要能独立读完。下面这些收尾方式在生产环境里真的印出来过，
-# 每一条都是"字数够了但话没说完"：
-#   看点｜7月24日。                      -> 只剩日期，主句被砍掉
-#   看点｜结束16个月冠军等待后。          -> 状语从句，正文没了
-#   看点｜……和阿利斯（世界第83）         -> 括号没闭合 / 冒号后的答案丢了
-_MIN_TRUNCATED_CHARS = 8
-# 纯日期/比分/序号，没有任何叙述成分
-_BARE_FACT_RE = re.compile(r"^[\d\s年月日号时分秒点第.:：、\-—~～/]+$")
-# 悬空的连接词、介词、副词、系动词：中文句子不会停在这些字上
-_DANGLING_TAIL = frozenset("的地得和与及或但而却则并把被让使从向对为于是在有就才也还都很更最会能要想将已又再")
-_DANGLING_SUFFIX = (
-    "之后", "以后", "过后", "之前", "以前", "的时候", "之时", "之际",
-    "以来", "的话", "不仅", "不但", "因为", "虽然", "尽管", "随着",
+# 裁句规则挪到了 textfit.py，卡片层要复用同一套；这里保留原名转出，
+# 既有调用方与测试不受影响。
+from .textfit import (  # noqa: F401
+    _BRACKET_PAIRS,
+    _CUT_PUNCT,
+    _close_brackets,
+    _is_complete_thought,
+    _short,
+    _short_complete,
+    _shorten_candidates,
 )
-# "后/时/前"多数情况下是状语从句的尾巴，但这几个词组本身就是完整收尾
-_COMPLETE_TIME_TAIL = frozenset(
-    {"最后", "落后", "身后", "背后", "滞后", "当时", "准时", "及时", "按时",
-     "当前", "目前", "眼前", "面前", "空前"}
-)
-# 以介词/从属连词开头、又没有下一个分句的片段，本身只是状语，不是话
-_SUBORDINATE_OPENER = (
-    "从", "自", "随着", "在", "当", "如果", "虽然", "尽管", "因为",
-    "为了", "除了", "若", "一旦", "结束", "等到", "直到",
-)
-_BRACKET_PAIRS = (("（", "）"), ("(", ")"), ("「", "」"), ("《", "》"), ("【", "】"))
-_QUOTE_MARKS = ("“", "”", "‘", "’")
-_CUT_PUNCT = "。！？；;，,"
-_KEEP_TAIL_PUNCT = "？！"
-
-
-def _is_complete_thought(piece: str, *, truncated: bool) -> bool:
-    """Can this fragment be read on its own without the text we cut away?"""
-    if not truncated:
-        return True
-    if len(piece) < _MIN_TRUNCATED_CHARS or _BARE_FACT_RE.match(piece):
-        return False
-    # 冒号是在许下承诺（"只剩最后一问："），答案被截掉就只剩半句话
-    if "：" in piece or ":" in piece:
-        return False
-    for opener, closer in _BRACKET_PAIRS:
-        if piece.count(opener) != piece.count(closer):
-            return False
-    if piece.count(_QUOTE_MARKS[0]) != piece.count(_QUOTE_MARKS[1]):
-        return False
-    if piece.count(_QUOTE_MARKS[2]) != piece.count(_QUOTE_MARKS[3]):
-        return False
-    if piece.endswith(_DANGLING_SUFFIX):
-        return False
-    if piece[-1] in _DANGLING_TAIL:
-        return False
-    if piece[-1] in "后时前" and piece[-2:] not in _COMPLETE_TIME_TAIL:
-        return False
-    if piece.startswith(_SUBORDINATE_OPENER) and not re.search(r"[，,]", piece):
-        return False
-    return True
-
-
-def _drop_parentheticals(text: str) -> str:
-    """Rank/seed asides carry the least meaning per character, so they go first."""
-    return " ".join(re.sub(r"[（(][^（()）]*[)）]", "", text).split())
-
-
-def _shorten_candidates(cleaned: str) -> list[tuple[str, bool]]:
-    """Prefix cuts of `cleaned`, longest first, paired with a truncated flag."""
-    seen: set[str] = set()
-    out: list[tuple[str, bool]] = []
-    for source in (cleaned, _drop_parentheticals(cleaned)):
-        if not source:
-            continue
-        trimmed_aside = source != cleaned
-        cuts = {m.end() for m in re.finditer(f"[{re.escape(_CUT_PUNCT)}]", source)}
-        cuts.add(len(source))
-        for cut in sorted(cuts, reverse=True):
-            piece = source[:cut].strip().rstrip(_CUT_PUNCT + "、：:")
-            if not piece or piece in seen:
-                continue
-            seen.add(piece)
-            out.append((piece, cut < len(source) or trimmed_aside))
-    # 留得越多越好；同长度时原文优先于删掉括号的版本
-    out.sort(key=lambda row: (len(row[0]), not row[1]), reverse=True)
-    return out
-
-
-def _short_complete(text: str, limit: int) -> str:
-    """Shorten to at most `limit` chars, cutting only where the thought ends.
-
-    Returns "" when nothing that fits can be read on its own -- callers that
-    have a fallback should use it rather than print a dangling clause.
-    """
-    cleaned = " ".join(text.strip().split()).rstrip(_CUT_PUNCT)
-    if len(cleaned) <= limit:
-        return cleaned
-    for piece, truncated in _shorten_candidates(cleaned):
-        if len(piece) <= limit and _is_complete_thought(piece, truncated=truncated):
-            return piece
-    words = cleaned.split()
-    if len(words) > 1:
-        built = ""
-        for word in words:
-            candidate = f"{built} {word}".strip()
-            if len(candidate) > limit:
-                break
-            built = candidate
-        if built and _is_complete_thought(built, truncated=True):
-            return built
-    return ""
-
-
-def _short(text: str, limit: int) -> str:
-    """Same as `_short_complete`, but never returns empty.
-
-    The old fallback here returned the untouched string, so a sentence with no
-    usable cut point silently blew the caller's limit -- a 49-char preview angle
-    reached print under a 34-char budget. `plan_post` rejects any post
-    containing an ellipsis, so the last resort cuts rather than elides: a
-    punctuation cut if one fits, otherwise a flat cut at the limit. Callers with
-    a better line to fall back on should call `_short_complete` and branch.
-    """
-    picked = _short_complete(text, limit)
-    if picked:
-        return picked
-    cleaned = " ".join(text.strip().split()).rstrip(_CUT_PUNCT)
-    if len(cleaned) <= limit:
-        return cleaned
-    for piece, _ in _shorten_candidates(cleaned):
-        if len(piece) <= limit:
-            return piece
-    return _close_brackets(cleaned[:limit]).rstrip(_CUT_PUNCT + "、：:") or cleaned[:limit]
-
-
-def _close_brackets(piece: str) -> str:
-    """Drop a bracket or quote that a flat cut left hanging open."""
-    for opener, closer in _BRACKET_PAIRS:
-        if piece.count(opener) > piece.count(closer):
-            piece = piece[: piece.rfind(opener)]
-    if piece.count(_QUOTE_MARKS[0]) > piece.count(_QUOTE_MARKS[1]):
-        piece = piece[: piece.rfind(_QUOTE_MARKS[0])]
-    if piece.count(_QUOTE_MARKS[2]) > piece.count(_QUOTE_MARKS[3]):
-        piece = piece[: piece.rfind(_QUOTE_MARKS[2])]
-    return piece
 
 
 def _as_sentence(text: str) -> str:
@@ -657,10 +529,14 @@ def _tonight_section(digest: Digest, *, compact: bool) -> tuple[XhsSection | Non
                     angle = angle.replace(name, pronoun)
         # 看点这一行只有一行的预算，宁可换一句说得完的，也不印半句。
         # preview_angle 可能给回账号连载回忆或整段决赛导语，都太长；
-        # schedule_insight 通常是为单行写的，最后再退到固定的赛段看点。
+        # schedule_insight 通常是为单行写的；两条都截不出完整句子时，
+        # 先退到"按预算现写的数据看点"（带排名/种子/人名），把固定的赛段
+        # 套话留到最后——它是唯一一句不含本场任何信息的兜底。
         shortened = _short_complete(angle, limit)
         if not shortened:
             shortened = _short_complete(schedule_insight(match, digest.today), limit)
+        if not shortened:
+            shortened = _data_angle(match, limit)
         if not shortened:
             shortened = _stage_angle(match, digest.today, index)
         if index:
@@ -736,16 +612,77 @@ def _discussion_question(match: Match | None) -> str:
     return f"你站{left}还是{right}？评论区押一个名字👇"
 
 
+def _pinned_followup(match: Match) -> str:
+    """置顶评论里「我先写」的那句，必须挂当日这场比赛的具体事实。
+
+    原来这里是一句写死的常量（"别急着追比分，先把自己的发球局守住。"），
+    连着五天一字不变，读起来就是模板。现在按这场比赛真有的信息逐级取：
+    轮次晋级线 → 中国球员 → 种子/排名差 → 开赛时间。每一级都落在具体
+    的人名或数字上，取不到就往下退，绝不退回一句放之四海皆准的话。
+    """
+    left = side_display(match.home, with_seed=False)
+    right = side_display(match.away, with_seed=False)
+    # match_round_display() 带着"男单/女单"，接在这句里会读成"女单决赛谁赢
+    # 谁捧杯"；这里只要轮次本身。
+    stage = round_zh(match.round_name) or ""
+
+    stake = {
+        "决赛": "谁赢谁捧杯",
+        "半决赛": "赢的那个进决赛",
+        "四分之一决赛": "赢的那个进四强",
+        "八分之一决赛": "赢的那个进八强",
+    }.get(stage)
+
+    chinese = [p for p in match.home + match.away if is_chinese_player(p)]
+    if chinese:
+        name = player_zh(chinese[0].name)
+        tail = f"，{stake}" if stake else ""
+        return f"我先写{name}{tail}。明早回来对照赛果。"
+
+    if stake:
+        return f"我先写{left}——{stage}{stake}。明早回来对照赛果。"
+
+    # 种子/排名：只在两边都有、且确实拉得开时才说，否则"1号种子对2号种子"
+    # 这种话等于没说。
+    def marker(players) -> tuple[str, int] | None:
+        player = players[0] if players else None
+        if player is None:
+            return None
+        if player.seed:
+            return f"{player.seed}号种子", int(player.seed)
+        if player.rank:
+            return f"世界第{player.rank}", int(player.rank)
+        return None
+
+    home_mark, away_mark = marker(match.home), marker(match.away)
+    if home_mark and away_mark and abs(home_mark[1] - away_mark[1]) >= 3:
+        higher, lower = (
+            (left, home_mark) if home_mark[1] < away_mark[1] else (right, away_mark)
+        )
+        return f"我先写{higher}——{lower[0]}这一边。明早回来对照赛果。"
+
+    when = fmt_schedule_time(match)
+    if when:
+        return f"我先写{left}，{when}这场。明早回来对照赛果。"
+    return f"我先写{left}对{right}这场。明早回来对照赛果。"
+
+
 def _pinned_comment(
-    question: str, *, has_upcoming: bool, reflective: bool = False
+    question: str,
+    *,
+    has_upcoming: bool,
+    reflective: bool = False,
+    focus: Match | None = None,
 ) -> str:
     if reflective:
         return (
             f"{question}\n\n我先不写标准答案。想听你记住的是哪一场、"
             "哪一分，或者哪个瞬间。"
         )
-    if has_upcoming:
-        follow_up = "我先写：别急着追比分，先把自己的发球局守住。明早回来对照赛果。"
+    if has_upcoming and focus is not None:
+        follow_up = _pinned_followup(focus)
+    elif has_upcoming:
+        follow_up = "我先写一个名字，明早回来对照赛果。"
     else:
         follow_up = "说具体一点更好：发球、接发、相持或关键分。"
     return f"{question}\n\n{follow_up}"
@@ -879,6 +816,9 @@ def build_post_plan(digest: Digest, *, compact: bool = False) -> XhsPostPlan:
             question,
             has_upcoming=bool(tonight_matches),
             reflective=reflective,
+            # 钩子说的必须是提问指向的那一场，也就是 _discussion_question
+            # 用的同一场（今晚焦点第一场）。
+            focus=tonight_matches[0] if tonight_matches else None,
         ),
         signature="关注 @网球时差｜明早一起对答案。",
         tags=tuple(_tags(evidence_matches)),

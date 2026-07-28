@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 import time
 from pathlib import Path
 
@@ -29,16 +30,25 @@ OUT = Path("tools/broll")
 # Commons keeps the per-year tournaments under a "... by year" container, not
 # directly under the tournament — which is why three passes walking from
 # "Category:French Open" found nothing recent and were misread as "no photos".
-ROOTS = {
-    "rg_year": ("Category:French Open by year", 2),
-    "uso_year": ("Category:US Open (tennis) by year", 2),
-    "ashe": ("Category:Arthur Ashe Stadium", 1),
+# Guessing year-category names has now failed four times ("2025 French Open",
+# "2025 Roland Garros", "2026 French Open"...). Ask the by-year container which
+# editions it actually holds and walk the newest ones.
+YEAR_CONTAINERS = {
+    "rg": "Category:French Open by year",
 }
+# Beat 5 says clay keeps the ball's mark; these categories are where a frame
+# of an actual mark, or an umpire reading one, would live.
+EXTRA_ROOTS = {
+    "ballmark": ("Category:Tennis ball marks", 1),
+    "clay": ("Category:Clay tennis courts", 1),
+}
+NEWEST_EDITIONS = 2
+ROOTS: dict[str, tuple[str, int]] = {}
 
 FREE = ("cc by", "cc by-sa", "cc0", "public domain", "pd-")
 MIN_W, MIN_H = 1200, 800
-PER_ROOT = 14
-MAX_CATEGORIES = 120  # keep a deep walk from turning into a full crawl
+PER_ROOT = 16
+MAX_CATEGORIES = 40  # keep a deep walk from turning into a full crawl
 
 
 def _api(**params):
@@ -47,7 +57,7 @@ def _api(**params):
     last = None
     for attempt in range(5):
         try:
-            time.sleep(0.5)
+            time.sleep(0.2)
             r = requests.get(
                 API,
                 params=params,
@@ -90,11 +100,16 @@ def _plain(raw) -> str:
 
 
 def _year(text: str) -> int:
-    for token in str(text).replace("-", " ").replace("/", " ").split():
-        if len(token) == 4 and token.isdigit():
-            y = int(token)
-            if 1970 < y < 2100:
-                return y
+    """First plausible four-digit year in `text`.
+
+    Splitting on whitespace missed every category, because "Category:2024
+    French Open" tokenises to "Category:2024" — not a bare number — so all 38
+    editions of each tournament were discarded as undated.
+    """
+    for match in re.findall(r"(?<!\d)(19|20)(\d{2})(?!\d)", str(text)):
+        y = int(match[0] + match[1])
+        if 1970 < y < 2100:
+            return y
     return 0
 
 
@@ -168,10 +183,31 @@ def _petscan(category: str, depth: int) -> list[str]:
         return []
 
 
+def _discover_roots() -> dict[str, tuple[str, int]]:
+    """Name the newest editions from the by-year container itself."""
+    roots: dict[str, tuple[str, int]] = {}
+    for prefix, container in YEAR_CONTAINERS.items():
+        editions = _members(container, "subcat")
+        dated = sorted(
+            ((_year(c), c) for c in editions if _year(c)),
+            reverse=True,
+        )
+        print(f"\n##### {container}: {len(editions)} editions; newest:")
+        for year, cat in dated[:6]:
+            print(f"    {year}  {cat}")
+        for year, cat in dated[:NEWEST_EDITIONS]:
+            roots[f"{prefix}{year}"] = (cat, 2)
+    roots.update(EXTRA_ROOTS)
+    return roots
+
+
 def main() -> None:
     manifest: dict = {}
-    for slot, (root, depth) in ROOTS.items():
+    for slot, (root, depth) in _discover_roots().items():
         titles, cats = _walk(root, depth)
+        # Describing thousands of files is what pushed the job past its
+        # timeout; a couple of hundred is plenty to choose from.
+        titles = titles[:240]
         print(f"\n===== {slot}: walked {len(cats)} categories, {len(titles)} files")
         for c in cats[:40]:
             print(f"    {c}")

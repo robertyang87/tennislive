@@ -1,0 +1,58 @@
+{
+  "status": "skipped",
+  "generated_at": "2026-07-28T04:56:11.752842+00:00",
+  "project": "yesterday-point",
+  "tour": "WTA",
+  "published_for": "2026-07-28",
+  "switch_enabled": true,
+  "reason": "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、官方单分或集锦标签、完整回合和日期匹配的视频。若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。",
+  "resolver_attempts": [
+    {
+      "resolver": "discover_tennistv_point",
+      "status": "empty"
+    },
+    {
+      "resolver": "discover_wta_point",
+      "status": "empty"
+    },
+    {
+      "resolver": "discover_wta_youtube_point",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUaBIVVpHjq6j3tSyxwTE-8Q"
+    },
+    {
+      "resolver": "discover_atp_point",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUY_5h5zaSwN7Or4kIJDYNXA"
+    },
+    {
+      "resolver": "discover_tennistv_youtube_point",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUbcxFkd6B9xUU54InHv4Tig"
+    },
+    {
+      "resolver": "discover_youtube_search_point",
+      "status": "empty"
+    },
+    {
+      "resolver": "discover_slam_point:AO",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUeTKJSW1NTAkf27nNmjWt5A"
+    },
+    {
+      "resolver": "discover_slam_point:RG",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUF3K1Jf8hjFW8qliei8fQ3A"
+    },
+    {
+      "resolver": "discover_slam_point:WIMBLEDON",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUNa8NxMgSm7m4Ii9d4QGk1Q"
+    },
+    {
+      "resolver": "discover_slam_point:USOPEN",
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?playlist_id=UUXbboag48Qlr78zzz6SkzkQ"
+    }
+  ]
+}

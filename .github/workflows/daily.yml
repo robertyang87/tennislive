@@ -85,9 +85,11 @@ jobs:
       GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_MODELS_MODEL: ${{ vars.GITHUB_MODELS_MODEL || 'openai/gpt-4.1' }}
       TENNISLIVE_AI_EDITORIAL: ${{ vars.TENNISLIVE_AI_EDITORIAL || 'off' }}
-      # 日报只生成图片和文案；昨日好球使用独立工作流，不受此开关影响。
-      TENNISLIVE_DAILY_VIDEO: 'off'
-      TENNISLIVE_OFFICIAL_VIDEO: 'off'
+      # 日报视频与官方集锦视频：默认 on；需要关闭时在仓库 Variables 里
+      # 设为 off，不再硬编码字面量（2026-07-24 起视频消失就是被写死 off）。
+      # 昨日好球使用独立工作流，不受这两个开关影响。
+      TENNISLIVE_DAILY_VIDEO: ${{ vars.TENNISLIVE_DAILY_VIDEO || 'on' }}
+      TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}
       # Runner 探测成功后仍给 PushPlus/微信抓图节点留出 CDN 同步时间。
       TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
       TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
@@ -108,7 +110,7 @@ jobs:
       TENNISLIVE_COVER_FLICKR: ${{ vars.TENNISLIVE_COVER_FLICKR || 'on' }}
       # 日报封面必须通过动作/情绪场景、清晰度和 3:4 安全裁切门禁。
       TENNISLIVE_COVER_VISUAL_STRICT: ${{ vars.TENNISLIVE_COVER_VISUAL_STRICT || 'on' }}
-      TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '72' }}
+      TENNISLIVE_COVER_VISUAL_MIN_SCORE: ${{ vars.TENNISLIVE_COVER_VISUAL_MIN_SCORE || '65' }}
       # 首选头条无当场合格图时，并行尝试同日下一条高热度单打；
       # 一旦切换，封面、复盘、文案和事实包全部绑定到同一场。
       TENNISLIVE_COVER_HEADLINE_ATTEMPTS: ${{ vars.TENNISLIVE_COVER_HEADLINE_ATTEMPTS || '4' }}
@@ -289,7 +291,7 @@ jobs:
           }
           jq -e \
             --arg expected_match_id "$EXPECTED_MATCH_ID" \
-            --argjson minimum "${TENNISLIVE_COVER_VISUAL_MIN_SCORE:-72}" '
+            --argjson minimum "${TENNISLIVE_COVER_VISUAL_MIN_SCORE:-65}" '
             (
               (
               .status == "selected"
@@ -364,6 +366,21 @@ jobs:
               "  连续空手渠道: " + names("barren")' "$COVER_REPORT"
             jq -r 'if (.widened_by_registry // false)
               then "  已按台账扩展到官方赛报检索" else "" end' "$COVER_REPORT"
+          fi
+
+          # 纪念日一年只回来一次：它参选了却没成稿，必须有人被吵醒。
+          # 这份台账写在当日目录而不是 knowledge/ 里，正是为了不被上面那句
+          # `rm -rf "$OUT_DIR/knowledge"` 连着删掉。
+          SELECTION="$OUT_DIR/story_selection.json"
+          if [ -s "$SELECTION" ]; then
+            jq -r '.shifts[-1]
+              | select(.anniversary_missed)
+              | "::warning file='"$SELECTION"'::今天有「历史上的今天」参选（"
+                + (.anniversary_slugs | join("、"))
+                + "）却没有成稿，最终发的是 " + (if .selected == "" then "（无）" else .selected end)' \
+              "$SELECTION"
+          else
+            echo "::warning::缺少 $SELECTION，这一班次的选题排序没有落盘"
           fi
 
           KNOWLEDGE_READY=true

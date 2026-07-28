@@ -41,13 +41,29 @@ def _date_label(d) -> str:
     return f"{d.month}.{d.day} · {WEEKDAY_ZH[d.weekday()]}"
 
 
+# 栏目名印在标题上——卡片小标和 chips 早就写着「历史上的今天」，只有标题一直
+# 印「网球有故事」。读者只看标题，承诺印不出来这个栏目对外就不存在。
+# 见 docs/columns.md 与 docs/column-operations.md 的 R4。
+_COLUMN_EMOJI = {"历史上的今天": "📅", "网球有故事": "📖"}
+
+
+def knowledge_column(story: TournamentStory) -> str:
+    """这条故事对外挂在哪个栏目下."""
+    return "历史上的今天" if story.slug.startswith("otd-") else "网球有故事"
+
+
 def knowledge_title(story: TournamentStory, digest: Digest) -> str:
     day = f"{digest.today.month}.{digest.today.day}"
+    # 「历史上的今天」比「网球有故事」长一个字，钩子的预算跟着少一个字——
+    # otd 的钩子是照新前缀重写过的，别照搬冷知识那几条的长度。
     trivia_hooks = {
-        "otd-0725": "18岁第一冠，从乌马格开始",
-        "otd-0803": "郑钦文巴黎摘金的那一天",
-        "otd-0820": "3小时49分，决赛打到极限",
-        "otd-0909": "19岁高芙，主场圆梦夜",
+        "otd-0725": "18岁的乌马格首冠",
+        "otd-0728": "郑钦文那天一局没丢",
+        "otd-0803": "郑钦文巴黎摘金那天",
+        "otd-0820": "3小时49分的决赛",
+        "otd-0907": "萨巴伦卡的第一座美网",
+        "otd-0909": "19岁高芙主场圆梦",
+        "otd-0910": "斯瓦泰克第一座美网",
         "scoring-history": "网球为什么是15、30、40？",
         "yellow-ball": "网球为什么从白色变黄？",
         "longest-match": "最长一场网球，到底打了多久？",
@@ -63,7 +79,8 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         hook = trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
     else:
         hook = f"为什么要记住{story.title}？"
-    prefix = f"📖{day}网球有故事｜"
+    column = knowledge_column(story)
+    prefix = f"{_COLUMN_EMOJI[column]}{day}{column}｜"
     if xhs_title_len(prefix + hook) > 20:
         if story.kind == "player":
             short_name = story.title.rsplit("·", 1)[-1]
@@ -78,7 +95,8 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
 def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
     """Use a distinct, fully preserved title for WeChat image posts."""
     title = (
-        f"{digest.today.month}.{digest.today.day}网球有故事｜{story.title}"
+        f"{digest.today.month}.{digest.today.day}"
+        f"{knowledge_column(story)}｜{story.title}"
     )
     if len(title) > 64:
         raise ValueError(f"公众号图片消息标题超长: {len(title)} > 64")
@@ -425,6 +443,70 @@ def _validate_copy_for_publish(copy: str) -> None:
         raise ValueError("知识帖话题标签应保持 3 至 5 个")
 
 
+def knowledge_push_html_from_parts(
+    *,
+    date,
+    image_urls: list[str],
+    xhs_text: str,
+    copy_url: str,
+    badge: str = "小红书知识帖",
+    extra_action: tuple[str, str] | None = None,
+) -> str:
+    """The push body itself, given the pieces.
+
+    Split out so the explainer video can send the same layout instead of
+    growing its own — the badge, the per-image "didn't load?" fallback, the
+    copy page button and the long-press hint are the parts that make a push
+    usable on a phone, and they were worth having in one place.
+    """
+    lines = xhs_text.strip().splitlines()
+    title = html.escape(lines[0] if lines else "")
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+    # One block, not paragraph divs: the body has to be readable *and* liftable
+    # in a single long-press. Splitting it into elements made copying a drag-
+    # across-the-whole-screen job, and pairing pretty paragraphs with a second
+    # copyable copy of the same text just sent everything twice. pre-wrap keeps
+    # the blank lines between beats, so it reads the same and selects as one.
+    body_block = (
+        '<div style="color:#7a8580;font-size:12px;margin:0 0 8px;">'
+        "👇 正文全文如下，长按整段即可复制</div>"
+        '<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;'
+        'word-break:break-word;margin:0 0 4px;">'
+        f"{html.escape(body)}</div>"
+    )
+    images = []
+    for index, card_url in enumerate(image_urls, 1):
+        images.append(
+            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
+            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
+            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
+            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
+            'style="color:#087747;font-size:13px;text-decoration:none;">'
+            f'第{index}张未显示？点此打开原图</a></div>'
+        )
+    action = ""
+    if extra_action:
+        href, label = extra_action
+        action = (
+            f'<a href="{href}" style="display:block;background-color:#102d23;'
+            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
+            f'{html.escape(label)}</a>'
+        )
+    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
+<div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
+  <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">{badge} · {date.month}.{date.day}</div>
+  <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
+  {''.join(images)}
+  {body_block}
+  <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
+  {action}<a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
+  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
+</div>
+</div>"""
+
+
 def knowledge_push_html(
     digest: Digest,
     story: TournamentStory,
@@ -443,40 +525,13 @@ def knowledge_push_html(
     story actually being pushed.
     """
     d = digest.today
-    copy_url = f"{_PAGES}/output/{d.isoformat()}/{output_dir_name}/copy.html"
-    lines = xhs_text.strip().splitlines()
-    title = html.escape(lines[0] if lines else knowledge_title(story, digest))
-    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    body = "\n".join(lines[body_start:]).strip()
-    paragraphs = []
-    for paragraph in body.split("\n\n"):
-        safe = "<br/>".join(html.escape(line) for line in paragraph.splitlines())
-        paragraphs.append(
-            '<div style="font-size:15px;line-height:1.85;margin:0 0 13px;">'
-            f"{safe}</div>"
-        )
-    images = []
-    for index, card_name in enumerate(card_names, 1):
-        card_url = f"{_CDN}/output/{d.isoformat()}/{output_dir_name}/cards/{card_name}"
-        images.append(
-            f'<img src="{card_url}" data-src="{card_url}" width="100%" '
-            f'alt="{title} · 第{index}页" referrerpolicy="no-referrer" '
-            'style="width:100%;border-radius:6px;margin:0 0 10px;display:block;" />'
-            f'<div style="text-align:center;margin:0 0 16px;"><a href="{card_url}" '
-            'style="color:#087747;font-size:13px;text-decoration:none;">'
-            f'第{index}张未显示？点此打开原图</a></div>'
-        )
-    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">
-<div style="max-width:680px;margin:0 auto;background-color:#ffffff;border-top:5px solid #ff2442;padding:18px 16px 22px;">
-  <div style="display:inline-block;background-color:#e7f5ea;color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">小红书知识帖 · {d.month}.{d.day}</div>
-  <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;margin:10px 0 14px;">{title}</div>
-  {''.join(images)}
-  {''.join(paragraphs)}
-  <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>
-  <a href="{copy_url}" style="display:block;background-color:#ff2442;color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;padding:13px 16px;border-radius:6px;margin:0 0 7px;">分别复制标题 / 正文 / 置顶评论</a>
-  <div style="text-align:center;color:#7a8580;font-size:12px;">图片长按保存</div>
-</div>
-</div>"""
+    base = f"output/{d.isoformat()}/{output_dir_name}"
+    return knowledge_push_html_from_parts(
+        date=d,
+        image_urls=[f"{_CDN}/{base}/cards/{name}" for name in card_names],
+        xhs_text=xhs_text or knowledge_title(story, digest),
+        copy_url=f"{_PAGES}/{base}/copy.html",
+    )
 
 
 def _validate_story_for_publish(story: TournamentStory, digest: Digest) -> None:
@@ -609,6 +664,10 @@ def _generate_knowledge_candidate(
                 "title": candidate.title,
                 "errors": candidate_report.get("errors", []),
                 "missing_pages": candidate_report.get("missing_pages", []),
+                "degraded_pages": candidate_report.get("degraded_pages", []),
+                "failed_curated_source_urls": candidate_report.get(
+                    "failed_curated_source_urls", []
+                ),
                 "input_domains": candidate_report.get("input_domains", []),
                 "providers_queried": candidate_report.get(
                     "providers_queried", []
@@ -621,7 +680,7 @@ def _generate_knowledge_candidate(
         failure = {
             "schema_version": 1,
             "status": "fail",
-            "policy": "精确人物/年份/赛事/地点/授权素材不足时自动换题；候选耗尽则停止发布",
+            "policy": "精确人物/年份/赛事/地点素材不足时自动换题；候选耗尽则停止发布；授权信息仅记录不做过滤",
             "rejected_candidates": rejected_candidates,
             "errors": ["候选故事均未通过素材生产性预检"],
             "attempts": [],
@@ -759,17 +818,36 @@ def _knowledge_failure_stage(message: str) -> str:
 def _selected_visual_sources(slug: str, manifest: dict) -> set[str]:
     """Source URLs to exclude on the next retry.
 
-    Curated picks are deliberately excluded from this set: they have no
-    alternative candidate to diversify toward, so excluding one just
-    strands that page with zero options on the retry that follows an
+    Curated picks that were *selected* are deliberately excluded from this
+    set: they have no alternative candidate to diversify toward, so excluding
+    one just strands that page with zero options on the retry that follows an
     unrelated page's failure.
+
+    Curated picks that *failed download or verification* are the opposite
+    case: the entry is static data and will fail the same way on every retry
+    (2026-07-25 实测同题 4 次重试逐字节相同)。resolve_story_visuals 把它们记
+    在 failed_curated_source_urls 里；计入排除集后，下一轮会跳过它们并直接
+    放开网络检索。
     """
     selected = {
         str(item["source_url"])
         for item in manifest.get("attempts", [])
         if item.get("status") == "selected" and item.get("source_url")
     }
-    return selected - curated_source_urls(slug)
+    failed_curated = {
+        str(url)
+        for url in manifest.get("failed_curated_source_urls", []) or []
+        if url
+    }
+    for rejected in manifest.get("rejected_candidates", []) or []:
+        if not isinstance(rejected, dict) or rejected.get("story_slug") != slug:
+            continue
+        failed_curated.update(
+            str(url)
+            for url in rejected.get("failed_curated_source_urls", []) or []
+            if url
+        )
+    return (selected - curated_source_urls(slug)) | failed_curated
 
 
 def generate_knowledge_package(

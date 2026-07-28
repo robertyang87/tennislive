@@ -1,0 +1,158 @@
+name: oncourt-interviews
+
+# 场上赛后采访的持续采集。每天两轮，把新出现的视频并进
+# data/oncourt_interviews.json，供英语学习选材用。
+#
+# 只收一类：**赛后直接在场上接受采访**（主持人拿麦上场问、球员站着答）。
+# 颁奖礼致辞、冠军演讲也在场上，但那是「讲」不是「接受采访」，默认不收；
+# 媒体间的新闻发布会永远不收（另有 ASAP Sports 的人工文字稿，
+# 见 docs/post-match-interview-sources.md）。
+#
+# 为什么跑在 Actions 而不是本地：沙箱下 YouTube 会对连续请求返 429，
+# 退避到 240 秒都拿不到；Actions 的出口没这个问题。
+on:
+  schedule:
+    # **每天两轮**，不是每周。「赢球后的采访」等一周就没意义了——
+    # 赛事一周打完，周推的话决赛采访最晚要等七天才到手。
+    #
+    # cron 一律是 UTC，北京时间要自己减八小时；**减完跨了零点就要连日期一起挪**。
+    #
+    # 两轮的分工按**赛区落在 UTC 的哪一段**来定，不是随手挑两个整点：
+    #   北京 05:00（21:00 UTC）——欧洲白天和傍晚场都打完并上传了
+    #   北京 11:00（03:00 UTC）——补美洲晚场。美东夜场常在 01:00–04:00 UTC
+    #                             才结束，上一轮跑的时候它还没打完
+    # 眼下华盛顿（美东）正在打，第二轮直接冲着它去的。
+    - cron: "0 21 * * *"   # 北京 05:00（次日）
+    - cron: "0 3 * * *"    # 北京 11:00（当日）
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "只扫名字含这些子串的源（空格分隔，留空＝全部）"
+        required: false
+        default: ""
+      full:
+        description: "重扫全部历史（每源 600–800 条，十几分钟）。日常不需要"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oncourt-interviews
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装 yt-dlp
+        run: pip install -q "yt-dlp>=2026.7.4"
+
+      - name: 采集
+        run: |
+          # 默认日常增量（每源 60 条，约 1 分钟）。新内容永远在频道最前面，
+          # 每天重刷 800 条历史既慢又没意义——手动派发时勾 full 才深扫。
+          python tools/collect_oncourt_interviews.py \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }} \
+            ${{ github.event.inputs.full == 'true' && '--full' || '' }} \
+            | tee /tmp/oncourt.log
+
+      - name: 用赛果反查缺口（顺带发现新频道）
+        run: |
+          # 拿「赢了但没采访」的场次当种子，按「球员 + 赛事」直接搜。
+          # 比通用查询强的地方在于能撞见标题不含 on-court/interview 的频道
+          # ——`Tennis Interviews`（234 条，补马德里/迈阿密/印第安维尔斯）
+          # 就是这么找到的，通用查询永远搜不到它。
+          python tools/oncourt_hunt.py --days 2 | tee -a /tmp/oncourt.log || true
+
+      - name: 发现新来源（每周一次）
+        # 注册表里最有价值的几个源全是手搜出来的（Eurosport 78 条、
+        # United Cup 84、Hopman Cup 118），它们不在任何官方清单上。
+        # 新的还会不断冒出来，搬运号尤其如此，所以把发现本身自动化。
+        # 只在周一跑：搜索有配额，每天跑没必要——新源不会天天出现。
+        #
+        # **只挂在早上那一轮上。** 一天跑两轮，不限定的话周一会搜两遍。
+        if: github.event.schedule != '0 3 * * *'
+        run: |
+          # 星期几按**上海时间**算。早上那一轮是 21:00 UTC 起跑，UTC 还停在
+          # 前一天——`date -u +%u` 判出来的「周一」其实是北京的周二。
+          # 这就是仓库里那条「产物在哪个日期目录下按上海时间算」的同一个坑。
+          if [ "$(TZ=Asia/Shanghai date +%u)" = "1" ] || [ -n "${{ github.event.inputs.only }}" ]; then
+            python tools/discover_oncourt_sources.py --min 2 | tee -a /tmp/oncourt.log || true
+          else
+            echo "非周一（上海时间 $(TZ=Asia/Shanghai date '+%F %A')），跳过来源发现。"
+          fi
+
+      - name: 比对赛果，算出「赢了但没采访」的缺口
+        run: |
+          # 采集保证不了每场都有采访（源头就不是每场都发），所以把缺口
+          # 明确列出来，别让它静默存在。抓不到赛果时退出码 2，
+          # 这里不让它中断整个流程——采访照推，只是没有缺口对照。
+          pip install -q -e . 2>&1 | tail -1
+          python tools/oncourt_gaps.py --html /tmp/oncourt_gaps.html \
+            | tee -a /tmp/oncourt.log || echo "::warning::赛果抓取失败，本次没有缺口对照"
+
+      - name: 筛出关键场次与中国球员，推到微信
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: |
+          # **pipefail 必须开。** 这一步是 `python ... | tee`，默认情况下 bash
+          # 报的是管道最后一环（tee）的退出码——第一次定时跑的时候 oncourt_feed.py
+          # 抛了 TypeError 直接崩掉，一条都没推出去，而这一步和整个 run
+          # 都显示 success。**又是拿信号当产物。**
+          #
+          # 上面几步的 `| tee ... || true` 是**故意**吞错的（搜索和缺口对账失败
+          # 不该拦住推送），那几处不受影响——pipefail 只让没写 `|| true`
+          # 的那几步真实反映退出码。
+          set -o pipefail
+          # 采集是全量的（八百多条），推送只推两类：关键场次（决赛/半决赛/
+          # 四分之一）和中国球员**赢球后**的。已推过的记在
+          # data/oncourt_feed_sent.json 里，不会重复打扰。
+          if [ -z "$PUSHPLUS_TOKEN" ]; then
+            echo "::notice::没有 PUSHPLUS_TOKEN，只生成清单不推送"
+            python tools/oncourt_feed.py --dry-run | tee -a /tmp/oncourt.log
+          else
+            pip install -q -e . 2>&1 | tail -1
+            python tools/oncourt_feed.py --push --gaps /tmp/oncourt_gaps.html \
+              | tee -a /tmp/oncourt.log
+          fi
+
+      - name: 提交新增条目
+        run: |
+          # 只碰这一个文件。并行的生成任务互相覆盖过整棵 output/，
+          # 这里从一开始就把范围钉死。
+          if git diff --quiet -- data/oncourt_interviews.json data/oncourt_feed_sent.json; then
+            echo "没有新增，不提交。"
+            exit 0
+          fi
+          n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/oncourt_interviews.json data/oncourt_feed_sent.json
+          git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((2 ** i))
+          done
+          echo "::error::推送失败"
+          exit 1
+
+      - name: 摘要
+        if: always()
+        run: |
+          {
+            echo '### 场上采访采集'
+            echo '```'
+            cat /tmp/oncourt.log 2>/dev/null || echo '（没有日志）'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
