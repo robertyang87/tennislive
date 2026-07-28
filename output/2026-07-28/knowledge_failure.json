@@ -68,8 +68,8 @@
       "page": "story",
       "provider": "bing-web-image",
       "query": "washington 2021 tennis",
-      "status": "ok",
-      "candidate_count": 2
+      "status": "empty",
+      "candidate_count": 0
     },
     {
       "page": "story",
@@ -209,7 +209,7 @@
       "provider": "bing-web-image",
       "query": "washington 2023 tennis",
       "status": "ok",
-      "candidate_count": 11
+      "candidate_count": 6
     },
     {
       "page": "explainer",
@@ -307,7 +307,7 @@
       "provider": "bing-web-image",
       "query": "washington 2023 tennis",
       "status": "ok",
-      "candidate_count": 11
+      "candidate_count": 6
     },
     {
       "page": "today",
@@ -431,15 +431,14 @@
         "flickr-public",
         "duckduckgo-web-image"
       ],
-      "candidate_count": 72,
-      "exact_candidate_count": 1,
+      "candidate_count": 70,
+      "exact_candidate_count": 0,
       "archive_candidate_count": 0,
       "rejection_counts": {
         "subject-or-person-mismatch": 17,
-        "low-visual-impact-metadata": 7,
+        "low-visual-impact-metadata": 6,
         "metadata-relevance-below-3": 35,
-        "duplicate-candidate": 12,
-        "download-or-resolution-failed": 1
+        "duplicate-candidate": 12
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -475,8 +474,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "washington 2021 tennis",
-          "status": "ok",
-          "candidate_count": 2
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -550,9 +549,8 @@
       "match_level": "exact-event",
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 14,
+        "low-visual-impact-metadata": 10,
         "metadata-relevance-below-3": 26,
-        "watermarked-stock-library": 1,
         "duplicate-candidate": 23,
         "subject-archive-rejected-in-strict-mode": 2
       },
@@ -632,7 +630,7 @@
           "provider": "bing-web-image",
           "query": "washington 2023 tennis",
           "status": "ok",
-          "candidate_count": 11
+          "candidate_count": 6
         },
         {
           "page": "explainer",
@@ -720,10 +718,9 @@
       "match_level": "exact-event",
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 14,
+        "low-visual-impact-metadata": 10,
         "metadata-relevance-below-3": 26,
         "source-already-used": 1,
-        "watermarked-stock-library": 1,
         "duplicate-candidate": 12,
         "subject-archive-rejected-in-strict-mode": 1
       },
@@ -761,7 +758,7 @@
           "provider": "bing-web-image",
           "query": "washington 2023 tennis",
           "status": "ok",
-          "candidate_count": 11
+          "candidate_count": 6
         },
         {
           "page": "today",
@@ -846,9 +843,9 @@
   "selection_evidence": {
     "kind": "tournament",
     "candidate_slug": "washington",
-    "result_count": 45,
-    "live_count": 0,
-    "schedule_count": 37,
+    "result_count": 47,
+    "live_count": 1,
+    "schedule_count": 34,
     "selection_basis": "current player or tournament relevance, match news value, and recency",
     "candidate_rank": 2,
     "candidate_count": 14,
