@@ -341,12 +341,20 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
+    # 源片有原声就用原声；**只有它真的没有音轨时**才补静音。之前这里是无条件
+    # `-map 1:a:0`，把补位的静音当成音轨——原声合进来之后照样取静音，成片里
+    # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
+    # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
+    has_audio = _has_audio(source)
+    extra_in = ([] if has_audio else
+                ["-f", "lavfi", "-i",
+                 "anullsrc=channel_layout=stereo:sample_rate=48000"])
     run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-i", str(source),
-        "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+        "-i", str(source), *extra_in,
         "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
         "-filter_complex", chain if seg.fit == "contain" else f"[0:v]{chain}",
-        "-shortest", "-map", "0:v:0", "-map", "1:a:0",
+        "-shortest", "-map", "0:v:0",
+        "-map", "0:a:0" if has_audio else "1:a:0",
         "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "160k",
         str(dest))
