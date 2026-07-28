@@ -1073,6 +1073,37 @@ STORIES = STORIES + (
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
     ),
+    # 这条是靠 Openverse 找到的：同一批照片就在 Commons 上，但 Commons 自己的
+    # 检索把它们埋了。图注写「playing US Open Final 2024」、EXIF 2024-09-07 16:45，
+    # 而且是 **CC0**——不像 8/3 与 9/10 那两张 Getty via WTA 还要过权利。
+    _trivia_story(
+        slug="otd-0907",
+        title="连丢五局之后",
+        subtitle="历史上的今天 · 9 月 7 日",
+        identity="2024 · 萨巴伦卡美网首冠",
+        chips=("历史上的今天", "2024", "纽约"),
+        hero=(
+            "2024 年的今天，萨巴伦卡拿下第一座美网——"
+            "一年前的同一片场地，她领先一盘却把决赛输掉了。"
+        ),
+        facts=(
+            "决赛 7-5、7-5 击败佩古拉，第三座大满贯。",
+            "第二盘她 3-0 领先，被连追五局到 3-5，然后连下四局收掉比赛。",
+            "2023 年这片场地上，她领先一盘输给了高芙。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-09-07", player="萨巴伦卡", age="26 岁",
+                headline="生涯首座美网",
+                detail="上一年的决赛她也站在这儿，领先一盘之后输掉了。",
+                source_url="https://en.wikipedia.org/wiki/2024_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Ocoudis / Wikimedia Commons · CC0",
+        source_label="美网官方档案",
+        source_url="https://en.wikipedia.org/wiki/2024_US_Open_%E2%80%93_Women%27s_singles",
+    ),
     # 配图来自 WTA 官方战报（按文章 ID 取；带 slug 的旧链接已 404）。杯身刻着
     # US OPEN TENNIS CHAMPIONSHIPS / WOMEN'S SINGLES——赛事与项目由画面自证。
     _trivia_story(
