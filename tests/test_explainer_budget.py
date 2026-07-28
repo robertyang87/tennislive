@@ -157,8 +157,14 @@ def _hook(slug: str) -> int:
 # 所以上限从「90 秒」放到 **150 秒**（≈900 字），并保留一条硬上限——不是为了
 # 省时长，是为了挡住「一屏写成一篇」：超过这个数就该拆片，不该继续加长。
 # 名单里的老片子仍然只许降不许升，那条没变。
-BUDGET_SECONDS_MAX = 150
-NARRATION_CEILING = round((BUDGET_SECONDS_MAX - LEAD_SILENCE - TAIL_SILENCE) * SPEECH_RATE)
+# 2026-07-28 再次收紧口径：账号所有者说的是「**字数和图片都不用做限制，
+# 只是为了把问题讲清楚就行**」。所以这里**不再有编辑意义上的上限**。
+#
+# 只留一条**防 bug 的兜底**，它和「片长该多长」无关：旁白是拼接出来的，
+# 一次模板错误或循环写错就可能拼出几千字，那种东西 TTS 会跑十几分钟、
+# 成片没法用。5000 字 ≈ 13 分钟，任何正常的知识片都够不到，
+# 够到就说明是拼错了，不是写长了。
+SANITY_MAX_CHARS = 5000
 
 
 @pytest.mark.parametrize("slug", sorted(_SCRIPTS))
@@ -175,11 +181,10 @@ def test_旁白字数不超过片长预算(slug):
             f"要么把它写短，要么说清为什么这一条值得更长。"
             f"（预算是 {NARRATION_BUDGET} 字 ≈ {BUDGET_SECONDS} 秒）")
         return
-    assert got <= NARRATION_CEILING, (
-        f"{slug} 的旁白 {got} 字 ≈ {got / SPEECH_RATE + LEAD_SILENCE + TAIL_SILENCE:.0f} 秒，"
-        f"超出上限 {NARRATION_CEILING} 字（{BUDGET_SECONDS_MAX} 秒）。\n"
-        f"字数本身不再刻意限制——讲清楚话题最重要；但超过两分半就该**拆成两条**，"
-        f"而不是把一条继续写长。")
+    assert got <= SANITY_MAX_CHARS, (
+        f"{slug} 的旁白 {got} 字 ≈ {got / SPEECH_RATE / 60:.0f} 分钟。\n"
+        f"字数**不设编辑上限**（讲清楚最重要），这条只是防拼接出错的兜底——"
+        f"到这个量级基本可以确定是模板或循环写错了。")
 
 
 def test_超预算名单只能变短():

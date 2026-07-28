@@ -103,8 +103,8 @@ jobs:
             exit 1
           }
           CARD_COUNT="$(find "$OUT_DIR/cards" -maxdepth 1 -type f -name 'card_*.jpg' 2>/dev/null | wc -l)"
-          test "$CARD_COUNT" -eq 4 || {
-            echo "::error::知识帖未完整生成 4 张卡片（实际 $CARD_COUNT）"
+          test "$CARD_COUNT" -ge 3 || {
+            echo "::error::知识帖卡片过少（实际 $CARD_COUNT，至少 3 张）"
             exit 1
           }
 
