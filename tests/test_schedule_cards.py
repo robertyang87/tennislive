@@ -507,3 +507,78 @@ def test_footnote_explains_the_day_marker():
     assert has_next_day_times(display.values())
     body = schedule_body([m], "7.28", time_display=display)
     assert "+1 为次日" in body
+
+
+# ---------- 正文的字数预算 ----------
+
+
+def test_caption_fits_the_thousand_character_budget():
+    """小红书正文上限一千字，超了后半截读者看不到。"""
+    from datetime import date
+
+    from tennislive.render.schedule_post import (
+        CAPTION_MAX_CHARS,
+        pick_lead,
+        schedule_post,
+    )
+
+    many = [sched(match_id=f"m{i}") for i in range(60)]
+    display = schedule_time_display(many, today=date(2026, 7, 28))
+    post = schedule_post(date(2026, 7, 28), many, display, pick_lead(many))
+    assert len(post) <= CAPTION_MAX_CHARS, len(post)
+
+
+def test_caption_fills_the_budget_rather_than_stopping_early():
+    """预算内要尽量装满——留着半页空白等于少列了重要场次。"""
+    from datetime import date
+
+    from tennislive.render.schedule_post import (
+        CAPTION_MAX_CHARS,
+        pick_lead,
+        schedule_post,
+    )
+
+    many = [sched(match_id=f"m{i}") for i in range(60)]
+    display = schedule_time_display(many, today=date(2026, 7, 28))
+    post = schedule_post(date(2026, 7, 28), many, display, pick_lead(many))
+    # 再多放一场就会超，说明确实装满了（一行约 40 字）
+    assert len(post) > CAPTION_MAX_CHARS - 80, len(post)
+
+
+def test_caption_drops_round_robin_so_no_event_vanishes():
+    """装不下时按赛事轮流丢弃末尾，不能把靠后的赛事整段砍掉。"""
+    from tennislive.render.schedule_post import post_body
+
+    big = [sched(match_id=f"b{i}") for i in range(20)]
+    small = [
+        sched(match_id=f"s{i}", tournament="The Memphis Classic", tour=Tour.WTA,
+              discipline="Women's Singles")
+        for i in range(20)
+    ]
+    display = schedule_time_display(big + small)
+    body = post_body(big + small, display, limit=400)
+    assert "华盛顿" in body and "孟菲斯" in body, body
+
+
+def test_caption_matches_are_a_subset_of_the_cards():
+    """正文只列卡片上有的场次——正文和图对不上，读者第一眼就发现。"""
+    from datetime import date
+
+    from tennislive.render.schedule_post import _match_line, post_body
+    from tennislive.render.webcards import schedule_selection
+
+    # 每场给不同的名字：夹具都一样时 _match_line 会生成重复的行，
+    # 子串检查就会匹到别人的那一行，测试等于什么也没验到
+    many = [
+        sched(match_id=f"m{i}", home=f"Home{i} Player", away=f"Away{i} Player")
+        for i in range(40)
+    ]
+    on_card = [m for _g, ms in schedule_selection(many) for m in ms]
+    display = schedule_time_display(many, today=date(2026, 7, 28))
+    body = post_body(on_card, display, limit=800)
+
+    card_keys = {match_key(m) for m in on_card}
+    appeared = [m for m in many if _match_line(m, display) in body]
+    assert appeared, "正文是空的"
+    for m in appeared:
+        assert match_key(m) in card_keys

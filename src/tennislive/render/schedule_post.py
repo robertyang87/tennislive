@@ -190,26 +190,72 @@ def _event_heading(group) -> str:
     return f"{group.compact_level} {group.name_zh}" + (f"（{label}）" if label else "")
 
 
+# 小红书正文上限一千字。正文按这个预算**尽量装满**重要场次，而不是固定几场
+# ——卡片可以更详细（页数放得开），正文受这一条硬约束。
+CAPTION_MAX_CHARS = 1000
+# 脚注按"两个标记都出现"算——预算要按最坏情况留，算少了就会超
+_NOTE_WORST = (
+    "时间为北京时间；+1 为次日；带 * 为按同赛事场序推算的预计时间，以官方排期为准。"
+)
+
+
+def _match_line(m: Match, display: dict[str, str]) -> str:
+    when = display.get(match_key(m), "")
+    court = (m.court or "").strip()
+    bits = [match_round_display(m) or "", _versus(m), when]
+    if court:
+        bits.append(court)
+    mark = "🇨🇳 " if any(is_chinese_player(p) for p in m.home + m.away) else ""
+    return mark + " · ".join(b for b in bits if b)
+
+
 def post_body(
     pages_matches: Sequence[Match],
     display: dict[str, str],
+    *,
+    limit: int | None = None,
 ) -> str:
     """正文：按赛事分组，逐场「轮次 对阵 时间 场地」。
 
-    只列真正上卡的那些场次——正文和图不一致的话，读者第一眼就发现了。
+    ``limit`` 是正文的字数预算。超预算时**按赛事轮流丢弃末尾的场次**，不是从
+    最后一个赛事整段砍——后者会让排在后面的小站整站消失，读者看到的"今天只有
+    华盛顿在打"是假的。中国选手那几场排在各组最前，因此最后才会被丢到。
+
+    正文里的场次一定是卡片上的子集：卡片可以更详细，正文受一千字硬约束。
     """
-    blocks: list[str] = []
-    for group in group_by_tournament(list(pages_matches)):
-        lines = [f"🎾 {_event_heading(group)}"]
-        for m in group.matches:
-            when = display.get(match_key(m), "")
-            court = (m.court or "").strip()
-            bits = [match_round_display(m) or "", _versus(m), when]
-            if court:
-                bits.append(court)
-            mark = "🇨🇳 " if any(is_chinese_player(p) for p in m.home + m.away) else ""
-            lines.append(mark + " · ".join(b for b in bits if b))
-        blocks.append("\n".join(lines))
+    groups = group_by_tournament(list(pages_matches))
+    if not groups:
+        return ""
+    headers = [f"🎾 {_event_heading(g)}" for g in groups]
+    rows = [[_match_line(m, display) for m in g.matches] for g in groups]
+
+    if limit is None:
+        kept = rows
+    else:
+        kept = [[] for _ in groups]
+        # 每组的标题行是固定开销，先扣掉
+        used = sum(len(h) + 1 for h in headers) + 2 * len(groups)
+        queues = [list(r) for r in rows]
+        while any(queues):
+            progressed = False
+            for index, queue in enumerate(queues):
+                if not queue:
+                    continue
+                line = queue[0]
+                if used + len(line) + 1 > limit:
+                    queues[index] = []  # 这一组装不下了，别再试
+                    continue
+                kept[index].append(queue.pop(0))
+                used += len(line) + 1
+                progressed = True
+            if not progressed:
+                break
+
+    blocks = [
+        "\n".join([header] + lines)
+        for header, lines in zip(headers, kept)
+        if lines
+    ]
     return "\n\n".join(blocks)
 
 
@@ -225,8 +271,17 @@ def schedule_post(
     """整篇：首行标题、空行、正文、标签。格式与知识帖一致，可直接喂 to_copy_page。"""
     lead_time = display.get(match_key(lead), "") if lead is not None else ""
     title = post_title(day, lead, lead_time)
-    body = post_body(pages_matches, display)
-    shown = [display.get(match_key(m), "") for m in pages_matches]
+    # 预算精确算：一千字里除掉标题、脚注、话题标签和分隔空行，剩下的全给赛程
+    overhead = len(title) + len(_NOTE_WORST) + len(TAGS) + 6
+    body = post_body(
+        pages_matches, display, limit=max(0, CAPTION_MAX_CHARS - overhead)
+    )
+    # 脚注只解释正文里真的出现了的标记
+    shown = [
+        display.get(match_key(m), "")
+        for m in pages_matches
+        if _match_line(m, display) in body
+    ]
     note = ["时间为北京时间"]
     if has_next_day_times(shown):
         # 美东夜场落在北京次日凌晨，不说清楚读者会当成今天白天那个点
