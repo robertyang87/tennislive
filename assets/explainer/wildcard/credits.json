@@ -32,11 +32,11 @@
     "note": "**赛事和年份写在画面里**：背景横幅整块 ATHENS OPEN 26 加赛事徽标，另有 VANDA PHARMACEUTICALS INC.（冠名商）——不靠看图推断。时间由图库自己的 Day 5 分组写死（赛事日历 7 月 11–19 日，Day 5 即 7 月 15 日，正是她击败米契奇打进八强那天）；人物与场次再由 WTA 官方那张带说明的同场次照片交叉印证（photoresources.wtatennis.com 的 Zheng-R2-AG.JPG，路径日期 2026/07/15，文章标题《Zheng defeats Micic in Athens; into first quarterfinal in 13 months》），球衣 Alipay+ / vivo、裙装、腕带逐项吻合。\n\n⚠️ 换过两次，两次都是被同一件事推着走：\n① 一开始用 WTA 那张 3200×2132 裁 3:4——球到伸出的左手横跨约 1930px，3:4 只有 1599px，球拍和球必被切在边上。\n② 于是改成**不裁**、走信箱式缩放，像素一个不动。但那张是强逆光剪影，**均值只有 16.5、中位数 0、95.3% 的像素暗于 50**，压在深绿卡上人脸和球拍都看不清——账号所有者一句「太黑了看不清楚」。亮度是可以量的，早该量。\n③ 现在这张同一场比赛、同一天，均值 75.7、中位数 109，蓝场顺光。\n\n**裁法是「收边」而不是裁到 3:4**：横向裁到 x 330–1660（1330×1080，比例 1.231），刚好压在渲染器 `wide = pw/ph >= 1.2` 的门槛上方 → 仍走 contain 不被切，但比 16:9 原图窄了三成，主体在卡上大了约 44%。球拍、球、双脚、双手、ATHENS OPEN 26 全部在框内。三版（16:9 不裁 / 1.23 收边 / 3:4 硬裁）渲出来摆在一起比过。\n\n华盛顿站的比赛照真的不存在：WTA 的 Order of Play 上这场仍标着 Upcoming，她那场球还没打。"
   },
   "clijsters_2009_final.jpg": {
-    "artist": "Clive Brunskill/Getty Images",
-    "license": "unverified",
-    "page": "https://www.flickr.com/photos/sonyericssonwtatour/3931103821/",
-    "source": "Sony Ericsson WTA Tour（2009 年巡回赛官方名）Flickr 账号转发的 Getty 通稿，原图 2592×3888",
-    "credit": "Clive Brunskill/Getty Images · Sony Ericsson WTA Tour 官方账号转发 · 2009 年 9 月 13 日美网女单决赛，克里斯特尔斯对沃兹尼亚奇",
-    "note": "四要素全部由通稿图注写死：NEW YORK - SEPTEMBER 13: Kim Clijsters of Belgium celebrates a point during the Women's Singles final against Caroline Wozniacki of Denmark on day fourteen of the 2009 U.S. Open at the USTA Billie Jean King National Tennis Center on September 13, 2009... (Photo by Clive Brunskill/Getty Images)。画面是蓝场上全身握拳、跨步中、球拍在手、网在前景，决赛本场、比赛进行中。原图 2:3，已中心裁成 3:4（2592×3456）。usopen.org 官方图库有对得上的 f_ClijstersTrophy2009 / f_ClijstersWin2009，但天花板只有 1280×720。⚠️ 简报里那批 Commons『2009 美网克里斯特尔斯』其实是正赛开打前一天上午的训练照（EXIF 2009-08-30，同批还有与伊万诺维奇练球的图注），第 2 道闸门不过，已弃用。"
+    "artist": "Timothy A. Clary / AFP / Getty Images",
+    "license": "All Rights Reserved（通稿图，由 Sony Ericsson WTA Tour 官方账号转发）",
+    "page": "https://www.flickr.com/photos/sonyericssonwtatour/3931103403/",
+    "source": "Sony Ericsson WTA Tour（2009 年巡回赛官方名）Flickr 账号转发的 AFP 通稿，原图 2700×2179",
+    "credit": "Timothy A. Clary/AFP · Sony Ericsson WTA Tour 官方账号转发 · 2009 年 9 月 13 日美网女单决赛后，克里斯特尔斯捧起奖杯",
+    "note": "四要素全部由通稿图注写死：Kim Clijsters from Belgium kisses her trophy after winning the Women's Final US Open match at the USTA Billie Jean King National Tennis Center September 13, 2009 in New York. AFP PHOTO / TIMOTHY A. CLARY。\n\n原图比例 1.239，**不裁**——刚好在渲染器 `wide = pw/ph >= 1.2` 之上，走 contain，2700px 一个像素不动。亮度均值 100.2、中位 100，不存在暗部问题。\n\n⚠️ 第 2 道闸门的取舍：这是颁奖时刻，不是击球中。整条片子的收束点就是「外卡拿了大满贯」，账号所有者点名要捧杯照片；伊万尼塞维奇那一屏同理。\n\n同批看过、没选的：\n· `3931103249`（2339×2196，与女儿 Jada 及奖杯，背景 US OPEN 2009 横幅）——年份写在画面上，但**奖杯搁在地上不是捧着**；裁 3:4 之后奖杯还会被文字块盖掉大半。三版渲出来比过。\n· `3931103821`（2592×3888，Clive Brunskill/Getty，决赛本场蓝场握拳跨步、球拍在手）——四道闸门全过、原来用的就是它，但不是捧杯。要换回「比赛进行中」的收尾时用这张。\n· usopen.org 官方图库有对得上的 f_ClijstersTrophy2009 / f_ClijstersWin2009，天花板只有 1280×720。\n· 简报里那批 Commons『2009 美网克里斯特尔斯』其实是正赛开打前一天上午的训练照（EXIF 2009-08-30，同批还有与伊万诺维奇练球的图注），第 2 道闸门不过。"
   }
 }
