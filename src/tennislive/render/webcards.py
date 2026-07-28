@@ -3223,6 +3223,108 @@ def _knowledge_today_body(
     )
 
 
+def knowledge_slide_bodies(
+    story: TournamentStory,
+    date_label: str,
+    *,
+    question: str,
+    page_visuals: Mapping[str, object] | None = None,
+) -> list[tuple[str, str]]:
+    """图片优先的知识帖卡，**张数由内容定**。
+
+    和旧的 `knowledge_deck_bodies` 的两处不同，都是编辑决定：
+
+    1. **样式复用解说片那套**（`explainer._slide_html`）——整屏照片、编号标签、
+       大标题、要点列表。不复制第二套 CSS 出来维护，所以它和「温网白衣」那条
+       保证长得一样。
+    2. **不再固定四张**。封面一张，每个时刻一张，事实一张，收尾一张——
+       话题需要几张就是几张。目标是把这件事讲清楚，不是凑满一个数。
+
+    每一段要么挂一张核过的照片，要么挂一张自己画的示意图：`_slide_html` 在
+    两者都没有时会报错（那条兜底原本会**悄悄**摆上鹰眼的示意图）。
+    """
+    # 就近 import：knowledge.py 已经 import 了 webcards，顶层再反向 import
+    # 会成环。
+    from ..video.explainer import ExplainerSegment, _slide_html
+    from .knowledge import knowledge_column
+
+    page_visuals = page_visuals or {}
+
+    def _visual_path(key: str) -> str:
+        raw = page_visuals.get(key)
+        if raw is None:
+            return ""
+        value = raw.get("path") if isinstance(raw, Mapping) else getattr(raw, "path", "")
+        return str(value or "")
+
+    segments: list[tuple[str, ExplainerSegment]] = []
+
+    # 封面：主图 + 那一问。台头走 story.title，和解说片同一个位置。
+    segments.append((
+        "knowledge",
+        ExplainerSegment(
+            kind="cover", label="", title=_card_excerpt(story.hero_fact, 30),
+            narration=story.hero_fact, image=str(story.image),
+            credit=story.image_credit,
+        ),
+    ))
+
+    # 每个时刻一张。有几个就出几张——这是「张数按内容定」最直接的一处。
+    for index, moment in enumerate(story.moments):
+        photo = _visual_path("story" if index == 0 else f"moment{index}")
+        segments.append((
+            f"moment{index}",
+            ExplainerSegment(
+                kind="cause", label=moment.age, title=moment.headline,
+                narration=moment.detail,
+                points=tuple(
+                    part for part in re.split(r"[；。]", moment.detail) if part.strip()
+                )[:3],
+                image=photo,
+                diagram="" if photo else _timeline_visual(
+                    [m.date[:4] for m in story.moments], css_class="knowledge-story-visual"
+                ),
+                credit=story.image_credit if photo else "",
+            ),
+        ))
+
+    # 事实卡：把 facts 直接铺成要点。
+    facts_photo = _visual_path("explainer")
+    segments.append((
+        "explainer",
+        ExplainerSegment(
+            kind="mechanism", label="怎么回事", title=_card_excerpt(story.venue, 24),
+            narration=" ".join(story.facts),
+            points=tuple(_card_excerpt(fact, 38) for fact in story.facts[:3]),
+            image=facts_photo,
+            diagram="" if facts_photo else _timeline_visual(
+                [m.date[:4] for m in story.moments], css_class="knowledge-story-visual"
+            ),
+            credit=story.image_credit if facts_photo else "",
+        ),
+    ))
+
+    # 收尾：留问题给评论区。
+    today_photo = _visual_path("today")
+    segments.append((
+        "today",
+        ExplainerSegment(
+            kind="today", label=date_label, title=_card_excerpt(question, 26),
+            narration=question, question=question, image=today_photo,
+            diagram="" if today_photo else _timeline_visual(
+                [m.date[:4] for m in story.moments], css_class="knowledge-story-visual"
+            ),
+            credit=story.image_credit if today_photo else "",
+        ),
+    ))
+
+    return [
+        (kind, _slide_html(index, segment, topic=story.title,
+                           column=knowledge_column(story)))
+        for index, (kind, segment) in enumerate(segments)
+    ]
+
+
 def knowledge_deck_bodies(
     story: TournamentStory,
     date_label: str,
@@ -3409,7 +3511,12 @@ def _screenshot_pages(pages: list[tuple[str, str]], theme: str):
                     viewport={"width": W, "height": H}, device_scale_factor=2
                 )
                 try:
-                    page.set_content(_shell(body, theme))
+                    # 知识帖改用解说片那套图片优先的卡之后，body 已经是一份完整
+                    # 的 HTML 文档（`explainer._slide_html` 自带 <style>），
+                    # 再套一层 `_shell` 会把它塞进另一套 CSS 里。样式只有一份，
+                    # 所以这里放行完整文档，别复制第二套卡片 CSS 出来维护。
+                    doc = body if body.lstrip().startswith("<!DOCTYPE") else _shell(body, theme)
+                    page.set_content(doc)
                     page.wait_for_function(
                         "document.fonts.status === 'loaded'", timeout=15000
                     )

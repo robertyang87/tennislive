@@ -25,7 +25,7 @@ from .tournament_story import (
     story_selection_evidence,
     tournament_story_candidates,
 )
-from .webcards import _screenshot_pages, knowledge_deck_bodies
+from .webcards import _screenshot_pages, knowledge_deck_bodies, knowledge_slide_bodies
 from .xiaohongshu import xhs_title_len
 
 
@@ -710,6 +710,12 @@ def _generate_knowledge_candidate(
 
     date_label = _date_label(digest.today)
     question = _knowledge_question(story)
+    # 图片优先的新模板（`knowledge_slide_bodies`，张数由内容定）已经能渲出卡，
+    # 但**还没接进发布路径**：`knowledge_visual_qa` 的契约是照旧卡的标记写的，
+    # 新卡一条都不满足——每页要声明 data-visual-kind 与视觉主体，而且**明令禁止
+    # 带圈顺序编号**，偏偏 ①②③ 正是解说片那套卡的节拍标签。这是两套设计的
+    # 约定冲突，要先定口径再改，不能靠改渲染器绕过去。
+    # 在那之前发布仍走旧的四张卡，别让产线停在生成失败上。
     bodies = knowledge_deck_bodies(
         story,
         date_label,
@@ -730,15 +736,11 @@ def _generate_knowledge_candidate(
     images = _screenshot_pages(bodies, theme)
     from .image_output import save_social_image
 
-    card_stems = {
-        "knowledge": "card_00_knowledge",
-        "story": "card_01_story",
-        "explainer": "card_02_explainer",
-        "today": "card_03_today",
-    }
+    # 卡片文件名按**序号 + kind** 生成，不再是写死的四个名字：新模板的张数
+    # 由内容定（封面 + 每个时刻 + 事实 + 收尾），话题需要几张就是几张。
     card_paths = [
-        save_social_image(image, cards_dir / card_stems[kind])
-        for kind, image in images
+        save_social_image(image, cards_dir / f"card_{index:02d}_{kind}")
+        for index, (kind, image) in enumerate(images)
     ]
     visual_qa = evaluate_knowledge_visuals(
         story,
