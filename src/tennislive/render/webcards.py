@@ -45,6 +45,12 @@ from .rating import (
     tonight_event_focus,
     top_results,
 )
+from .schedule_time import (
+    has_estimated_times,
+    match_key,
+    round_rank,
+    schedule_time_display,
+)
 from .textfit import _short, _short_complete
 from .story import (
     chinese_side_won,
@@ -606,6 +612,22 @@ html.light .chip-green { color:#fff; }
 .venue-credit { position:absolute!important; left:64px; bottom:28px; max-width:500px;
   overflow:hidden; color:#AAB8B1; font-size:15px; line-height:1.2; white-space:nowrap;
   text-overflow:ellipsis; }
+/* ---------- 今日赛程 ----------
+   复用今晚焦点的整套视觉（同一张地标底图、同一种玻璃面板），所以它带着
+   .tonight-page 一起进 class，这里只写"因为不带看点、要多放几场"而不同的几条。
+   写在这里而不是下面的 daily 段里：那一段有测试盯着，要求逐条 html.daily
+   作用域（保证知识贴不被动到）；赛程页是个新页型，知识贴根本没有这个 class，
+   基础样式和其他页型放在一起才对。 */
+/* 赛程居中：前后两个弹性 spacer 把卡片夹在中间。今晚焦点那边只有前面一个
+   （卡片沉底、地标照片占住中段），赛程页要的是场次居中。 */
+.schedule-page .event-spacer { flex:1 1 0; height:auto; min-height:0; }
+.schedule-page .pick { border-left-width:4px; }
+.schedule-page .pick .side.nosets { height:50px; }
+/* 时间这一格要放得下"23:00 后*"这种推算出来的写法（比"预计 21:00*"更长），
+   不给够宽度就会在数字和"后"之间断行，把卡片撑高一行。 */
+.schedule-page .pick .htime { font-size:26px; white-space:nowrap; }
+.schedule-page .pick header > .hl:last-child { flex:none; }
+
 .pick { border-left:5px solid var(--sky); padding:7px 26px 8px; margin-bottom:8px; }
 .tonight-page .pick {
   background:linear-gradient(90deg,rgba(2,29,23,.72),rgba(2,29,23,.52));
@@ -1159,6 +1181,11 @@ html.daily .tonight-page.count-3 .event-spacer { flex:1 1 0; height:auto; min-he
 html.daily .tonight-page .pick { margin-bottom:14px; padding:12px 26px 14px; }
 /* 五场是这一页的上限，弹性 spacer 已经压到 0 仍差一点，把卡距再收一档 */
 html.daily .tonight-page.count-5 .pick { margin-bottom:9px; padding:10px 26px 12px; }
+/* 今日赛程页在 daily 下的间距：一页最多 6 场，比今晚焦点的 5 场还紧一档。
+   .count-N 那套是今晚焦点为 1~5 场调的，这里一律用同一个值。 */
+html.daily .schedule-page .pick,
+html.daily .schedule-page.count-5 .pick,
+html.daily .schedule-page.count-6 .pick { margin-bottom:10px; padding:9px 24px 11px; }
 
 /* ---------- daily 的"一屏只点亮比分与决胜数据" ----------
    这一段是**唯一**准许改颜色的地方，而且只在技术统计表内部生效。
@@ -1244,6 +1271,7 @@ html.daily .results-page .set.sw, html.daily .focus-page .set.sw { font-weight:6
 html.daily .results-page .set.sl, html.daily .focus-page .set.sl { font-weight:500; }
 html.daily .results-page .hero .set, html.daily .focus-page .hero .set { font-size:58px; }
 html.daily .focus-page .compare-row span { font-size:34px; font-weight:500; }
+
 """
 
 
@@ -1458,20 +1486,30 @@ def _sched_card(
     show_tournament: bool = True,
     reason_limit: int = REASON_LIMIT_ONE_LINE,
     used_angles: set[str] | None = None,
+    time_text: str | None = None,
+    glass: bool = False,
+    court: str | None = None,
 ) -> str:
     """赛程卡：时间、对阵，以及可核验的推荐理由.
 
     ``used_angles`` 由调用方跨卡片传进来并就地累加：赛事故事那一档是赛事级
     的，同一页每张卡都会拿到同一句话（五场的今晚焦点页上重复过三遍）。
+
+    ``time_text`` 让调用方替换时间显示——赛程页要用按同赛事场次推出来的预计
+    时间（见 render.schedule_time），那需要看到整个赛事的场次，单场算不出来。
+    ``glass`` 单独控制压在照片上的半透明面板样式：它原本和"有没有看点"绑在
+    一起，而赛程页要面板不要看点。
     """
     g = group_by_tournament([m])[0]
     meta = html.escape(match_round_display(m) or "")
+    if court:
+        meta = f"{meta} · {html.escape(court)}" if meta else html.escape(court)
     tour_txt = html.escape(g.name_zh) if show_tournament else ""
     level_html = _tour_badge(g) if show_tournament else ""
-    t = fmt_schedule_time(m)
-    right = f'<span class="htime">{t}</span>'
+    t = time_text or fmt_schedule_time(m)
+    right = f'<span class="htime">{html.escape(t)}</span>'
     reason = ""
-    card_class = "card"
+    card_class = "card pick" if glass and not with_reason else "card"
     if with_reason:
         label = recommendation_label(m)
         label_icon = {
@@ -1893,9 +1931,26 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
             )
         )
 
-    venue = venue_asset_for_match(matches[0])
+    page_style, location = _event_backdrop(matches[0])
+    meta = _event_meta_html(
+        event_groups, matches[0], location=location, has_estimates=has_estimates
+    )
+    return (
+        f'<div class="poster tonight-page count-{len(matches)}" style="{page_style}">'
+        + _masthead(date_label)
+        + _titleband("Tonight's Focus · 今晚焦点", group.name_zh)
+        + f'<div class="event-meta">{meta}</div><div class="event-spacer"></div>'
+        + "".join(cards)
+        + _FOOTER
+        + "</div>"
+    )
+
+
+def _event_backdrop(match: Match) -> tuple[str, str]:
+    """地标/主球场底图与地点文字；没有登记图片时两者都退成空串。"""
     page_style = ""
     location = ""
+    venue = venue_asset_for_match(match)
     if venue is not None:
         uri = _asset_image_uri(venue.image)
         if uri:
@@ -1904,20 +1959,34 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
                 f"--page-bg-pos:{html.escape(venue.focal_point)}"
             )
             location = venue.location
-    first = matches[0].tournament
-    location = location or " · ".join(filter(None, (first.city, first.country)))
-    levels = list(dict.fromkeys(event_group.compact_level for event_group in event_groups))
-    level_label = " / ".join(levels)
-    surface = first.surface or tournament_surface(first.name)
+    tournament = match.tournament
+    location = location or " · ".join(
+        filter(None, (tournament.city, tournament.country))
+    )
+    return page_style, location
+
+
+def _event_meta_html(
+    event_groups, match: Match, *, location: str, has_estimates: bool
+) -> str:
+    """赛事页顶部那一条：级别、场地类型、地点、时间口径。
+
+    今晚焦点页与今日赛程页共用——两页视觉是一套的，分开写迟早会各自漂移。
+    """
+    tournament = match.tournament
+    levels = list(
+        dict.fromkeys(event_group.compact_level for event_group in event_groups)
+    )
+    surface = tournament.surface or tournament_surface(tournament.name)
     surface_label = surface_zh(surface) or "场地待核"
     # 巡回赛标记用官方 logo（无底色）；一页混着多个级别时退回纯文字，
     # 因为那时 logo 配哪个级别都不对。
     level_html = (
         _tour_badge(event_groups[0])
         if len(levels) == 1
-        else f'<b class="event-level">{html.escape(level_label)}</b>'
+        else f'<b class="event-level">{html.escape(" / ".join(levels))}</b>'
     )
-    meta = "".join(
+    return "".join(
         (
             level_html,
             f'<b class="event-surface">{html.escape(surface_label)}</b>',
@@ -1925,12 +1994,71 @@ def tonight_body(matches: list[Match], date_label: str) -> str:
             '<i>北京时间 · *为预计时间</i>' if has_estimates else '<i>北京时间</i>',
         )
     )
+
+
+# 一页放几场：卡片去掉看点之后矮了不少，但页面高度是死的。这个数字不是拍
+# 出来的——渲染后用 _SHED_STAT_ROWS_JS 量过溢出，见 tests 里的分页用例。
+SCHEDULE_PER_PAGE = 6
+
+
+def schedule_body(
+    matches: list[Match],
+    date_label: str,
+    *,
+    time_display: dict[str, str] | None = None,
+    page: int = 1,
+    total: int = 1,
+) -> str:
+    """今日赛程页：一个赛事一页，只列场次不写看点.
+
+    和今晚焦点页共用整套视觉（地标底图、玻璃面板卡），区别在取材：今晚焦点
+    挑几场重点、每场配一句看点；赛程页要把这个赛事当天的场次列全，所以去掉
+    看点、把卡压扁，超出一页就分页。
+
+    ATP 与 WTA 天然分成两页：``group_by_tournament`` 按 (巡回赛, 赛事名) 分组，
+    同名赛事的两个巡回赛本来就是两组——是今晚焦点页那边的
+    ``_tonight_event_groups`` 又把它们并回去的，这里不要那个合并。
+    """
+    group = group_by_tournament(matches)[0]
+    display = time_display if time_display is not None else schedule_time_display(matches)
+    times = [display.get(match_key(m), fmt_schedule_time(m)) for m in matches]
+
+    # 场地只在这一页真的分布在多块场地时才标：单一场地时每张卡印同一个名字
+    # 是纯噪声，而场次多的时候这一行会把卡片撑高。
+    courts = {m.court.strip() for m in matches if m.court and m.court.strip()}
+    show_court = len(courts) > 1
+    cards = [
+        _sched_card(
+            m,
+            with_reason=False,
+            show_tournament=False,
+            glass=True,
+            time_text=time_text,
+            court=((m.court or "").strip() or None) if show_court else None,
+        )
+        for m, time_text in zip(matches, times)
+    ]
+
+    page_style, location = _event_backdrop(matches[0])
+    meta = _event_meta_html(
+        [group],
+        matches[0],
+        location=location,
+        has_estimates=has_estimated_times(times),
+    )
+    kicker = "Today's Schedule · 今日赛程"
+    if total > 1:
+        kicker += f" · {page}/{total}"
+    # 前后各一个弹性 spacer，把赛程卡夹在中间：今晚焦点是"卡片沉底、照片占住
+    # 中段"，赛程页要的是场次居中。场次填满时两个 spacer 自己缩到 0。
     return (
-        f'<div class="poster tonight-page count-{len(matches)}" style="{page_style}">'
+        f'<div class="poster tonight-page schedule-page count-{len(matches)}" '
+        f'style="{page_style}">'
         + _masthead(date_label)
-        + _titleband("Tonight's Focus · 今晚焦点", group.name_zh)
+        + _titleband(kicker, group.name_zh)
         + f'<div class="event-meta">{meta}</div><div class="event-spacer"></div>'
         + "".join(cards)
+        + '<div class="event-spacer event-spacer-tail"></div>'
         + _FOOTER
         + "</div>"
     )
@@ -3452,6 +3580,128 @@ def generate_deck(
     if len(pages) > target_pages:
         pages = [page for page in pages if page[0] != "rankings"]
 
+    return _screenshot_pages(pages, theme)
+
+
+# 巡回赛级别：ATP/WTA 250 / 500 / 1000、大满贯、年终总决赛、团体赛。
+# 低于这个门槛的（WTA 125、挑战赛、ITF）不进今日赛程——2026-07-28 那天混进来
+# 的 Axeria Open 是罗马尼亚特尔古穆列什的 WTA 125，13 场比三个巡回赛级别的赛事
+# 加起来还多，而且 feed 名带年份和冠名商（"Axeria Open 2026 powered by Intaro
+# Sport"），标题位上要折两行。level 为 None 的一律挡掉：能认出级别是"进得来"的
+# 前提，认不出来就说明它不在已登记的巡回赛日程里。
+TOUR_LEVELS = frozenset({
+    "GS", "Finals", "TeamCup",
+    "M1000", "W1000", "ATP1000", "WTA1000",
+    "ATP500", "WTA500", "W500",
+    "ATP250", "WTA250", "W250",
+})
+
+
+def _balanced_chunks(items: list, limit: int) -> list[list]:
+    """按不超过 limit 的最少页数均分：7 场分成 4+3，而不是 6+1。
+
+    直接按 limit 切会把余数单独留成一页——7 场切出来的第二页只有一张卡，
+    整页九成是空的（渲出来看过）。
+    """
+    if len(items) <= limit:
+        return [list(items)]
+    pages = -(-len(items) // limit)
+    base, extra = divmod(len(items), pages)
+    chunks, start = [], 0
+    for index in range(pages):
+        size = base + (1 if index < extra else 0)
+        chunks.append(list(items[start:start + size]))
+        start += size
+    return chunks
+
+
+def _schedule_sort_key(m: Match) -> tuple:
+    """页内排序：中国球员 → 单打 → 轮次靠后 → 开赛早。"""
+    return (
+        0 if is_chinese_involved(m) else 1,
+        0 if m.is_singles else 1,
+        round_rank(m),
+        m.start_utc.timestamp() if m.start_utc else float("inf"),
+    )
+
+
+def _schedule_selection(matches: list[Match]) -> list[Match]:
+    """一个赛事在赛程页上放哪些场、按什么顺序放。
+
+    中国球员的场次不分单双打一律进；其余单打全进；剩下的双打只用来**填空位**
+    ——按 match_score 取最重要的几场，且只补到"单打本来就要占的页数"还剩的
+    位置为止，绝不会把单打挤到多出来的一页上。
+    """
+    core = [m for m in matches if is_chinese_involved(m) or m.is_singles]
+    core_keys = {match_key(m) for m in core}
+    spare = [m for m in matches if match_key(m) not in core_keys]
+    core.sort(key=_schedule_sort_key)
+    if not spare:
+        return core
+    # 单打本来就要占这么多页，把这些页填满为止
+    capacity = len(_balanced_chunks(core, SCHEDULE_PER_PAGE)) * SCHEDULE_PER_PAGE
+    room = max(0, capacity - len(core))
+    if room:
+        spare.sort(key=lambda m: -match_score(m, cn_boost=False))
+        core.extend(spare[:room])
+        core.sort(key=_schedule_sort_key)
+    return core
+
+
+def schedule_pages(
+    matches: list[Match],
+    date_label: str,
+    *,
+    tour_level_only: bool = True,
+) -> list[tuple[str, str]]:
+    """今日赛程的整组页面 [(kind, body)]，按赛事分页、ATP 与 WTA 各自成页。
+
+    ``tour_level_only`` 只留巡回赛级别（见 TOUR_LEVELS）。这不是悄悄砍：
+    调用方拿得到被挡掉的赛事，cli 会打印出来。
+    """
+    if not matches:
+        return []
+    # 推算用全部场次（含双打、含被级别挡掉的）：留下来的场次可以借同赛事其他
+    # 场次的已知时间当依据，先滤掉会平白少掉一批证据。
+    display = schedule_time_display(matches)
+
+    groups = group_by_tournament(matches)
+    if tour_level_only:
+        groups = [g for g in groups if g.level in TOUR_LEVELS]
+
+    pages: list[tuple[str, str]] = []
+    for group in groups:
+        selected = _schedule_selection(group.matches)
+        if not selected:
+            continue
+        chunks = _balanced_chunks(selected, SCHEDULE_PER_PAGE)
+        for index, chunk in enumerate(chunks, start=1):
+            pages.append((
+                f"schedule{len(pages) + 1:02d}",
+                schedule_body(
+                    chunk,
+                    date_label,
+                    time_display=display,
+                    page=index,
+                    total=len(chunks),
+                ),
+            ))
+    return pages
+
+
+def generate_schedule_deck(
+    matches: list[Match],
+    date_label: str,
+    theme: str | None = None,
+    *,
+    tour_level_only: bool = True,
+):
+    """渲染今日赛程卡组，返回 [(kind, Image)]."""
+    if theme is None:
+        theme = daily_card_theme()
+    pages = schedule_pages(matches, date_label, tour_level_only=tour_level_only)
+    if not pages:
+        return []
     return _screenshot_pages(pages, theme)
 
 

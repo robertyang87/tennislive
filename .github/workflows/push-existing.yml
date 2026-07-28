@@ -15,6 +15,7 @@ on:
           - main
           - knowledge
           - grand-slam
+          - schedule
         default: main
   push:
     branches: [main]
@@ -58,6 +59,8 @@ jobs:
             OUT_DIR="output/${DATE}/knowledge"
           elif [ "$SCOPE" = "grand-slam" ]; then
             OUT_DIR="output/grand-slam-vertical-v2"
+          elif [ "$SCOPE" = "schedule" ]; then
+            OUT_DIR="output/${DATE}/schedule"
           else
             OUT_DIR="output/${DATE}"
           fi

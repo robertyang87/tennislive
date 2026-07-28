@@ -479,6 +479,11 @@ TOURNAMENT_SURFACE: dict[str, str] = {
     "kitzbuehel": "Clay",
     "millennium estoril open": "Clay",
     "estoril open": "Clay",
+    # 美国夏季硬地赛季这两站：赛程卡上原来一律印「场地待核」。
+    # DC Open（Mubadala Citi DC Open）是硬地；孟菲斯 2026 年新设的 WTA250
+    # 在 Leftwich Tennis Center，室外硬地。
+    "dc open": "Hard",
+    "memphis classic": "Hard",
     "australian open": "Hard",
     "roland garros": "Clay",
     "wimbledon": "Grass",
