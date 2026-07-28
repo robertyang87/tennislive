@@ -57,8 +57,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from tennislive.video.explainer import (  # noqa: E402
+    CARD_H,
+    CARD_TOP,
     VIDEO_H,
     VIDEO_W,
+    _BAND_COLOR,
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
     readable,
@@ -71,6 +74,9 @@ FPS = 30
 CROP_H = 1080
 CROP_W = 608
 COVER_SECONDS = 2.6
+# contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
+# 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
+CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 ORIGINAL_GAIN = 0.14
 
@@ -93,6 +99,12 @@ def probe_duration(path: Path) -> float:
     out = run("ffprobe", "-v", "error", "-show_entries", "format=duration",
               "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
     return float(out)
+
+
+def _has_audio(path: Path) -> bool:
+    out = run("ffprobe", "-v", "error", "-select_streams", "a",
+              "-show_entries", "stream=index", "-of", "csv=p=0", str(path)).stdout
+    return bool(out.strip())
 
 
 def probe_size(path: Path) -> tuple[int, int]:
@@ -146,6 +158,26 @@ def download(url: str, dest: Path) -> Path:
     if dest.is_file() and dest.stat().st_size > 0:
         print(f"[skip] 已有 {dest}")
         return dest
+
+    # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
+    # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
+    # 传到网盘，再把直链给我们。
+    if "youtube.com" not in url and "youtu.be" not in url:
+        proc = subprocess.run(
+            ["curl", "-sSL", "--fail", "-o", str(dest), url],
+            capture_output=True, text=True)
+        if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
+            dest.unlink(missing_ok=True)
+            raise ReelError(f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}")
+        head = dest.read_bytes()[:64]
+        if head[:15].lower().startswith(b"<!doctype html") or b"<html" in head.lower():
+            dest.unlink(missing_ok=True)
+            raise ReelError(
+                "直链回的是 HTML 不是视频——网盘多半还是「仅限受邀者」，"
+                "改成「知道链接的任何人」再试")
+        print(f"[ok] 直链下到 {dest.stat().st_size / 1e6:.1f} MB")
+        return dest
+
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
     if not binary:
         raise ReelError("找不到 yt-dlp")
@@ -255,6 +287,7 @@ class Segment:
     end: float
     cx: float
     narration: str
+    fit: str = "crop"
 
     @property
     def length(self) -> float:
@@ -275,15 +308,47 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
     """
-    x = int(round(seg.cx * source_w - CROP_W / 2))
-    x = max(0, min(x, source_w - CROP_W))
+    # 两种取景，按这一段的内容选，不能一刀切：
+    #
+    #   crop    真·9:16 裁切，铺满全屏。**只用于特写**——球员脸、庆祝、握手、
+    #           看台。主体本来就在正中，裁掉的是空白。
+    #   contain 整幅 16:9 缩到卡宽放在卡中央。**回合镜头必须用这个**。
+    #           这场转播的主机位里，球员经常跑到画面 20% / 80% 的位置，而
+    #           9:16 的窗口只有 32% 宽（608/1920）——硬裁会把人切掉半个。
+    #           照片那条「横幅走 contain」的规矩，动态画面同样成立。
+    if seg.fit == "contain":
+        # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
+        # 「冲击力先折一半」。所以两件事一起做：
+        #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
+        #   2. 上下不留纯色，用同一帧放大模糊垫底
+        # 模糊垫底比纯色好在：屏幕是满的，眼睛跟着中间那条走，不会被两条黑边切断。
+        keep = int(1920 * CONTAIN_KEEP) // 2 * 2
+        x = (1920 - keep) // 2
+        chain = (
+            f"split=2[bg][fg];"
+            f"[bg]crop={keep}:{CROP_H}:{x}:0,"
+            f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
+            f"[fg]crop={keep}:{CROP_H}:{x}:0,"
+            f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
+            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps={FPS},setsar=1"
+        )
+    else:
+        x = int(round(seg.cx * source_w - CROP_W / 2))
+        x = max(0, min(x, source_w - CROP_W))
+        chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
+                 f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
+    # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
+    # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
+    # 进去——后面混音那步要求每段都有音频流。
     run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-i", str(source), "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
-        "-vf", (f"crop={CROP_W}:{CROP_H}:{x}:0,"
-                f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},"
-                "setsar=1"),
+        "-i", str(source),
+        "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+        "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
+        "-filter_complex", chain if seg.fit == "contain" else f"[0:v]{chain}",
+        "-shortest", "-map", "0:v:0", "-map", "1:a:0",
         "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
+        "-c:a", "aac", "-b:a", "160k",
         str(dest))
     return dest
 
@@ -401,13 +466,27 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     source = source_override or (outdir / "source.mp4")
     if not source.is_file():
         source = download(spec["source_url"], source)
+    # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
+    # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
+    audio = spec.get("source_audio")
+    if audio and not _has_audio(source):
+        merged = outdir / "source_av.mp4"
+        if not merged.is_file():
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(source), "-i", str(Path(audio)),
+                "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k", "-shortest", str(merged))
+        print(f"[audio] 合上原声 {audio}")
+        source = merged
+
     source_w, source_h = probe_size(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
     if source_h != CROP_H:
         print(f"[注意] 源片不是 1080 高，裁剪按等比换算")
 
     segments = [Segment(float(s["start"]), float(s["end"]),
-                        float(s.get("cx", 0.5)), s.get("narration", "").strip())
+                        float(s.get("cx", 0.5)), s.get("narration", "").strip(),
+                        str(s.get("fit", "crop")))
                 for s in spec["segments"]]
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
