@@ -699,6 +699,19 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
 
+    # 缺 cv2 要**在这儿**报，不要等到第一段切片。跟踪合进来的那次 render 就是
+    # 下完 64MB 源片、合完原声、渲完封面之后才死在 `import cv2` 上——和当初
+    # playwright 那次一模一样的浪费。用到跟踪就先验一下。
+    if any(seg.track for seg in segments):
+        try:
+            import cv2  # noqa: F401,PLC0415
+        except ImportError as exc:  # pragma: no cover - 环境问题
+            raise ReelError(
+                "spec 里有段要跟踪裁切，但这台机器没有 cv2。"
+                '装：pip install -e ".[visualqa]"；'
+                "或者把这些段的 track 置为 false（画面退回固定中心）。"
+            ) from exc
+
     parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
