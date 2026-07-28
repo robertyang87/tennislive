@@ -71,33 +71,46 @@ def copy_page_url(outdir: Path) -> str:
     return f"{_PAGES}/{outdir.as_posix()}/copy.html"
 
 
-def wait_for_copy_page(url: str, *, attempts: int = 12, delay: float = 15.0,
-                       timeout: int = 15) -> None:
-    """等 Pages 把刚提交的复制页发出来，等不到就别推。
+def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 12,
+                       delay: float = 15.0, timeout: int = 15) -> None:
+    """等 Pages 把**这一版**的复制页发出来，等不到就别推。
+
+    `expect` 传这一版的标题：**只查 200 是不够的**。这个 URL 上一版就存在，
+    Pages 还没重新发布时照样立刻返回 200，于是探活一次就过、推送照发，
+    人点开复制到的还是上一版的标题和正文（2026-07-28 就是这么翻的车）。
+    「打得开」是信号，「内容是这一版」才是产物。
 
     提交完到 Pages 重新发布之间有一两分钟，所以要等；但**等不到就必须报错**，
-    不能带着一个 404 的按钮把消息发出去——微信那条消息发出去就收不回来了。
+    不能带着一个指向旧内容的按钮把消息发出去——微信那条消息发出去就收不回来了。
     """
     attempts = max(1, min(30, int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS",
                                                  attempts))))
     delay = max(0.0, min(60.0, float(os.environ.get(
         "TENNISLIVE_COPYPAGE_RETRY_SECONDS", delay))))
+    want = html.escape(expect.strip())
     last = ""
     for attempt in range(attempts):
         try:
-            response = requests.get(url, timeout=timeout)
-            if response.status_code == 200:
-                print(f"[复制页] 第 {attempt + 1} 次探活拿到 200")
+            response = requests.get(url, timeout=timeout,
+                                    headers={"Cache-Control": "no-cache"})
+            if response.status_code != 200:
+                last = f"HTTP {response.status_code}"
+            elif want and want not in response.text:
+                # **这一支就是那次翻车**：URL 上一版就存在，Pages 还没重新发布，
+                # 200 立刻到手（日志「第 1 次探活拿到 200」），推送照发，
+                # 人点开复制到的还是上一版的标题和正文。
+                last = "打得开，但还是上一版的内容（Pages 尚未重新发布）"
+            else:
+                print(f"[复制页] 第 {attempt + 1} 次探活：已是这一版的内容")
                 return
-            last = f"HTTP {response.status_code}"
         except requests.RequestException as exc:  # 网络抖动也算没起来
             last = f"{type(exc).__name__}: {exc}"
         print(f"[复制页] 第 {attempt + 1}/{attempts} 次探活 {last}，{delay:.0f}s 后重试")
         if attempt + 1 < attempts:
             time.sleep(delay)
     raise SystemExit(
-        f"复制页 {url} 始终打不开（{last}）。先确认 copy.html 已经**提交进仓库**"
-        "——它必须由 --stage page 在提交步骤之前写出来，写在推送步骤里等于没写。"
+        f"复制页 {url} 没等到这一版（{last}）。两种可能：copy.html 没被提交进仓库"
+        "（它必须由 --stage page 在提交步骤之前写出来），或者 Pages 迟迟没发布。"
     )
 
 
@@ -232,7 +245,7 @@ def main() -> int:
         raise SystemExit(f"{page} 不在——先跑一次 --stage page，且要排在提交之前")
 
     # 查产物，不查信号：Pages 真的把它发出来了才发微信。
-    wait_for_copy_page(copy_url)
+    wait_for_copy_page(copy_url, title)
 
     url = video_url(outdir, name)
     body = build_html(url, copy_url, args.lead, copy_text)
