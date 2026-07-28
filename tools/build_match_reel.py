@@ -46,6 +46,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -106,8 +107,26 @@ def probe_size(path: Path) -> tuple[int, int]:
 # probe：下载 + 缩略图墙
 # --------------------------------------------------------------------------
 
+# YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」——沙箱和
+# GitHub 托管 runner 都中招（2026-07-28 实测两边都是这句）。不同的 player
+# client 走的是不同的接口，被挡的程度不一样，所以按梯子一档档试，**每一档的
+# 报错都打出来**：一句笼统的「下载失败」没法区分「这条视频不存在」「这台机器
+# 被挡了」「格式选错了」。
+_CLIENT_LADDER = [
+    ("默认", []),
+    ("android_vr", ["--extractor-args", "youtube:player_client=android_vr"]),
+    ("tv_simply", ["--extractor-args", "youtube:player_client=tv_simply"]),
+    ("web_embedded", ["--extractor-args", "youtube:player_client=web_embedded"]),
+    ("android+ios", ["--extractor-args", "youtube:player_client=android,ios"]),
+]
+
+
 def download(url: str, dest: Path) -> Path:
-    """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。"""
+    """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
+
+    `YT_COOKIES` 指向一个 cookies.txt 就带上——机房 IP 被挡的时候，
+    一份登录过的 cookie 是唯一稳定的解。
+    """
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 0:
         print(f"[skip] 已有 {dest}")
@@ -119,16 +138,38 @@ def download(url: str, dest: Path) -> Path:
         "bestvideo[height<=1080][vcodec^=avc1]+bestaudio[ext=m4a]/"
         "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best"
     )
-    proc = subprocess.run(
-        [binary, "--js-runtimes", "node", "-f", selector,
-         "--merge-output-format", "mp4", "-o", str(dest), url],
-        capture_output=True, text=True,
+    cookies: list[str] = []
+    jar = os.environ.get("YT_COOKIES", "").strip()
+    if jar and Path(jar).is_file():
+        cookies = ["--cookies", jar]
+        print(f"[cookies] 用 {jar}")
+
+    failures: list[str] = []
+    for label, extra in _CLIENT_LADDER:
+        proc = subprocess.run(
+            [binary, "--js-runtimes", "node", "--no-warnings", "-f", selector,
+             *cookies, *extra, "--merge-output-format", "mp4",
+             "-o", str(dest), url],
+            capture_output=True, text=True,
+        )
+        if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
+            print(f"[ok] {label} 下到了 {dest.stat().st_size / 1e6:.1f} MB")
+            return dest
+        reason = " | ".join(
+            line.strip() for line in (proc.stderr or "").splitlines()
+            if line.startswith("ERROR") or "403" in line
+        )[:300] or (proc.stderr or "")[-300:]
+        print(f"[fail] {label}: {reason}")
+        failures.append(f"{label}: {reason}")
+        dest.unlink(missing_ok=True)
+
+    raise ReelError(
+        f"五种 player client 都下不下来（{url}）。逐条原因：\n  "
+        + "\n  ".join(failures)
+        + "\n\n如果全是 “Sign in to confirm you’re not a bot”，那是**这台机器的 IP "
+        "被 YouTube 挡了**，不是视频的问题：把一份登录过的 cookies.txt 存成仓库 "
+        "Secret（YT_COOKIES_TXT），工作流会写到文件并通过 YT_COOKIES 传进来。"
     )
-    if proc.returncode != 0 or not dest.is_file():
-        tail = (proc.stderr or "")[-2000:]
-        # 报出原因，别让「下不下来」和「没有这条视频」长得一样
-        raise ReelError(f"下载失败（{url}）：\n{tail}")
-    return dest
 
 
 def scene_changes(path: Path, threshold: float = 0.35) -> list[float]:
