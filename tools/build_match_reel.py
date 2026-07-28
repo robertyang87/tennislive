@@ -288,6 +288,7 @@ class Segment:
     cx: float
     narration: str
     fit: str = "crop"
+    track: bool = True
 
     @property
     def length(self) -> float:
@@ -300,6 +301,74 @@ def load_spec(path: Path) -> dict:
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
     return spec
+
+
+# 跟踪裁切 -----------------------------------------------------------------
+TRACK_FPS = 5.0        # 抽帧频率：够跟上回合，又不至于让镜头抖
+TRACK_SMOOTH = 9       # 平滑窗口（帧），越大越像摇臂
+TRACK_DEADZONE = 40    # 死区（源片像素）：球在中间小幅晃动时镜头不动
+TRACK_MAX_SPEED = 260  # 每秒最多摇多少像素，防止镜头追着球甩
+
+
+def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, int]]:
+    """按运动质心给出这一段的裁切中心轨迹 [(相对秒, x像素)]。
+
+    网球转播的主机位是固定的：动的是球和两个人，静的是看台、场地线、广告板。
+    所以**相邻帧差分的加权质心**天然落在回合上，不需要任何模型。
+
+    三层处理缺一不可，少哪层都会晕：
+      平滑   —— 质心逐帧跳，直接用就是抽搐
+      死区   —— 球在画面中间小幅来回时不该动镜头
+      限速   —— 镜头要像摇臂一样慢慢摇，不能追着球甩
+    """
+    import cv2
+    import numpy as np
+
+    cap = cv2.VideoCapture(str(source))
+    cap.set(cv2.CAP_PROP_POS_MSEC, seg.start * 1000.0)
+    step = 1.0 / TRACK_FPS
+    half = CROP_W / 2
+    lo, hi = half, source_w - half
+
+    prev = None
+    raw: list[tuple[float, float]] = []
+    t = 0.0
+    while t < seg.length:
+        cap.set(cv2.CAP_PROP_POS_MSEC, (seg.start + t) * 1000.0)
+        ok, frame = cap.read()
+        if not ok:
+            break
+        small = cv2.cvtColor(cv2.resize(frame, (480, 270)), cv2.COLOR_BGR2GRAY)
+        if prev is not None:
+            diff = cv2.absdiff(small, prev)
+            _, mask = cv2.threshold(diff, 12, 255, cv2.THRESH_BINARY)
+            col = mask.sum(axis=0).astype(np.float64)
+            if col.sum() > 0:
+                cx = float((col * np.arange(col.size)).sum() / col.sum())
+                raw.append((t, cx / col.size * source_w))
+        prev = small
+        t += step
+    cap.release()
+
+    if not raw:
+        # 没抽到运动就退回固定中心——但要说出来，别让「没跟踪」和「跟踪了但没动」
+        # 长得一样
+        print(f"    [track] {seg.start:.1f}s 段没检出运动，退回 cx={seg.cx}")
+        return []
+
+    xs = np.array([x for _, x in raw])
+    kernel = np.ones(min(TRACK_SMOOTH, len(xs))) / min(TRACK_SMOOTH, len(xs))
+    xs = np.convolve(xs, kernel, mode="same")
+
+    out: list[tuple[float, int]] = []
+    cur = float(np.clip(xs[0], lo, hi))
+    for (t_rel, _), target in zip(raw, xs):
+        target = float(np.clip(target, lo, hi))
+        if abs(target - cur) > TRACK_DEADZONE:
+            limit = TRACK_MAX_SPEED * step
+            cur += max(-limit, min(limit, target - cur))
+        out.append((round(t_rel, 3), int(round(cur - half))))
+    return out
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
@@ -336,8 +405,19 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
-        chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
-                 f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
+        path = track_x(source, seg, source_w) if seg.track else []
+        if path:
+            cmds = dest.with_suffix(".cmds")
+            cmds.write_text("".join(f"{t:.3f} crop@c x {v};\n" for t, v in path),
+                            encoding="utf-8")
+            span = max(v for _, v in path) - min(v for _, v in path)
+            print(f"    [track] {seg.start:.1f}s 段 {len(path)} 个点，横摇 {span}px")
+            chain = (f"sendcmd=f={_escape(cmds)},"
+                     f"crop@c={CROP_W}:{CROP_H}:{path[0][1]}:0,"
+                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
+        else:
+            chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
+                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -352,8 +432,11 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
         "-i", str(source), *extra_in,
         "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
-        "-filter_complex", chain if seg.fit == "contain" else f"[0:v]{chain}",
-        "-shortest", "-map", "0:v:0",
+        # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
+        # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
+        "-filter_complex",
+        (chain + "[vout]") if seg.fit == "contain" else f"[0:v]{chain}[vout]",
+        "-shortest", "-map", "[vout]",
         "-map", "0:a:0" if has_audio else "1:a:0",
         "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "160k",
@@ -532,7 +615,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     segments = [Segment(float(s["start"]), float(s["end"]),
                         float(s.get("cx", 0.5)), s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")))
+                        str(s.get("fit", "crop")), bool(s.get("track", True)))
                 for s in spec["segments"]]
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
