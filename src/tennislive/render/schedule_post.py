@@ -17,7 +17,11 @@ from ..timeutil import to_beijing
 from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
 from .common import group_by_tournament, match_round_display
-from .schedule_time import match_key
+from .schedule_time import (
+    has_estimated_times,
+    has_next_day_times,
+    match_key,
+)
 from .story import is_chinese_player
 
 
@@ -222,5 +226,11 @@ def schedule_post(
     lead_time = display.get(match_key(lead), "") if lead is not None else ""
     title = post_title(day, lead, lead_time)
     body = post_body(pages_matches, display)
-    note = "带 * 为按同赛事场序推算的预计时间，以官方排期为准；时间为北京时间。"
-    return f"{title}\n\n{body}\n\n{note}\n\n{TAGS}\n"
+    shown = [display.get(match_key(m), "") for m in pages_matches]
+    note = ["时间为北京时间"]
+    if has_next_day_times(shown):
+        # 美东夜场落在北京次日凌晨，不说清楚读者会当成今天白天那个点
+        note.append("+1 为次日")
+    if has_estimated_times(shown):
+        note.append("带 * 为按同赛事场序推算的预计时间，以官方排期为准")
+    return f"{title}\n\n{body}\n\n{'；'.join(note)}。\n\n{TAGS}\n"
