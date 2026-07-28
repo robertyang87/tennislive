@@ -155,3 +155,32 @@ def test_cookies模式不产任何产物():
     check = text[text.index("cookies — 只验"):].split("- name:")[0]
     assert "--download-sections" in check
     assert "stat -c%s" in check and "exit 1" in check
+
+
+def test_推送正文里印文案且只印一遍():
+    """手机上要先能读到这一条写了什么，再决定点不点复制页——和知识帖那条推送
+    同一个结构。但**同一段不能印两遍**：以前正文印一遍、灰底复制块又印一遍，
+    字符串断言全过，人一看整页才发现。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import build_html, split_copy  # noqa: PLC0415
+
+    copy = Path("specs/reels/nishikori-shang.xhs.txt").read_text("utf-8").strip()
+    title, body_text = split_copy(copy)
+    page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy)
+    assert page.count(title) == 1
+    first = body_text.splitlines()[0]
+    assert page.count(first) == 1
+    # 复制页的入口要说清楚它是干嘛的
+    assert "复制页" in page and "https://p/copy.html" in page
+
+
+def test_yt_dlp装default才解得了n_challenge():
+    """少了 yt-dlp-ejs 不会报「装少了」，而是 `n challenge solving failed` +
+    `Only images are available`——任何视频格式选择器都匹配不上，看起来像
+    「这个视频没有格式」或者「cookie 过期了」。第一次跑 cookies 模式就栽在这上面。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert '"yt-dlp[default]"' in text
+    check = text[text.index("cookies — 只验"):].split("- name:")[0]
+    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
+    assert "n challenge solving failed" in check
+    assert "not a bot" in check

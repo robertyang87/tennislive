@@ -97,7 +97,14 @@ jobs:
       - name: 装依赖
         run: |
           pip install -q -e ".[webrender,visualqa]"
-          pip install -q edge-tts yt-dlp
+          # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+          # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
+          # `n challenge solving failed` + `Only images are available`，
+          # 于是任何视频格式选择器都匹配不上，看起来像「这个视频没有格式」或者
+          # 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），
+          # 命令行统一带 `--js-runtimes node`。
+          pip install -q "yt-dlp[default]" edge-tts
+          node --version
 
       - name: 缓存 Chromium
         uses: actions/cache@v4
@@ -171,12 +178,23 @@ jobs:
             echo "::warning::没有 YT_COOKIES_TXT，这次只验 PO token + client 梯子"
           fi
           rm -rf "$RUNNER_TEMP/ytcheck" && mkdir -p "$RUNNER_TEMP/ytcheck"
-          yt-dlp $ARGS --download-sections "*0-3" --force-keyframes-at-cuts \
+          yt-dlp $ARGS --js-runtimes node --download-sections "*0-3" \
+            --force-keyframes-at-cuts \
             -f "bv*[height<=720]+ba/b[height<=720]/b" \
-            -o "$RUNNER_TEMP/ytcheck/probe.%(ext)s" "$URL" || true
+            -o "$RUNNER_TEMP/ytcheck/probe.%(ext)s" "$URL" 2>&1 | tee "$RUNNER_TEMP/yt.log" || true
           FILE=$(ls -S "$RUNNER_TEMP/ytcheck" 2>/dev/null | head -1)
           if [ -z "$FILE" ]; then
-            echo "::error::一个文件都没下下来——cookie 可能过期了，或者这个地址取不到媒体流"
+            # **别把「没下到」一律说成「cookie 过期」**——第一次跑就栽在这上面：
+            # 真实原因是没装 yt-dlp-ejs，n challenge 解不了，只剩图片格式，
+            # 而我的报错写着「cookie 可能过期了」，方向反了。所以按日志分因。
+            if grep -q "not a bot\|Sign in to confirm" "$RUNNER_TEMP/yt.log"; then
+              echo "::error::撞上了机器人验证——cookie 无效或已过期，重新导一份"
+            elif grep -q "n challenge solving failed\|Only images are available" "$RUNNER_TEMP/yt.log"; then
+              echo "::error::n challenge 解不了：yt-dlp 缺 yt-dlp-ejs 或没有 JS 运行时，和 cookie 无关"
+            else
+              echo "::error::没下到媒体流，原因见下面的格式表"
+            fi
+            yt-dlp $ARGS --js-runtimes node --list-formats "$URL" 2>&1 | tail -25 || true
             exit 1
           fi
           SIZE=$(stat -c%s "$RUNNER_TEMP/ytcheck/$FILE")
