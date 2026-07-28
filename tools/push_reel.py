@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import html
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -34,6 +35,9 @@ from tennislive.publish.pushplus import push  # noqa: E402
 from tennislive.render.pushmsg import _PAGES, to_copy_page  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+# 日期从 outdir 里取（output/YYYY-MM-DD/...），别另传一个参数——两处日期
+# 迟早会对不上，而目录名是产物自己的位置，不会说谎。
+_DATE_IN_PATH = re.compile(r"/(\d{4})-(\d{2})-(\d{2})/")
 BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
 # jsDelivr 的 /gh/ 单文件上限。超过就是 403，不是慢，是打不开。
 JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
@@ -47,6 +51,15 @@ def video_url(outdir: Path, name: str) -> str:
         return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{path}"
     print(f"[链接] 成片 {size / 1e6:.1f} MB 超过 jsDelivr 的 20 MB 上限，改用 raw")
     return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
+
+
+def headline(outdir: Path, column: str, matchup: str) -> str:
+    """`7.28 赛场之上 | 锦织圭 vs 商竣程`——推送标题和复制页顶上都用这一行。"""
+    found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+    if not found:
+        raise SystemExit(f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…")
+    _, month, day = found.groups()
+    return f"{int(month)}.{int(day)} {column} | {matchup}"
 
 
 def build_html(video_url: str, copy_url: str, lead: str) -> str:
@@ -79,7 +92,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
-    ap.add_argument("--title", required=True, help="推送标题")
+    ap.add_argument("--column", default="赛场之上", help="栏目名")
+    ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
     args = ap.parse_args()
@@ -98,6 +112,9 @@ def main() -> int:
     if not copy_text:
         raise SystemExit("文案是空的")
 
+    title = headline(outdir, args.column, args.matchup)
+    copy_text = f"{title}\n\n{copy_text}"
+
     # 复制页和成片一起落在 outdir 里，由 GitHub Pages 提供——raw 和 jsDelivr
     # 都按纯文本发 .html，点开是一屏源码，按钮和 JS 都不会生效。
     (outdir / "copy.html").write_text(to_copy_page(copy_text), encoding="utf-8")
@@ -105,8 +122,8 @@ def main() -> int:
 
     url = video_url(outdir, name)
     body = build_html(url, copy_url, args.lead)
-    push(args.title, body, asset_dir=outdir)
-    print(f"已推送：{args.title}\n  成片 {url}\n  复制页 {copy_url}\n"
+    push(title, body, asset_dir=outdir)
+    print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")
     return 0
 

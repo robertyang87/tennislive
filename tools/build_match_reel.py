@@ -374,9 +374,9 @@ def load_spec(path: Path) -> dict:
 
 # 跟踪裁切 -----------------------------------------------------------------
 TRACK_FPS = 5.0        # 抽帧频率：够跟上回合，又不至于让镜头抖
-TRACK_SMOOTH = 9       # 平滑窗口（帧），越大越像摇臂
+TRACK_SMOOTH = 13      # 平滑窗口（帧），越大越像摇臂
 TRACK_DEADZONE = 40    # 死区（源片像素）：球在中间小幅晃动时镜头不动
-TRACK_MAX_SPEED = 260  # 每秒最多摇多少像素，防止镜头追着球甩
+TRACK_MAX_SPEED = 200  # 每秒最多摇多少像素，防止镜头追着球甩
 
 
 def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, int]]:
@@ -442,15 +442,25 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
     kernel = np.ones(min(TRACK_SMOOTH, len(xs))) / min(TRACK_SMOOTH, len(xs))
     xs = np.convolve(xs, kernel, mode="same")
 
-    out: list[tuple[float, int]] = []
+    coarse: list[tuple[float, float]] = []
     cur = float(np.clip(xs[0], lo, hi))
     for (t_rel, _), target in zip(raw, xs):
         target = float(np.clip(target, lo, hi))
         if abs(target - cur) > TRACK_DEADZONE:
             limit = TRACK_MAX_SPEED * step
             cur += max(-limit, min(limit, target - cur))
-        out.append((round(t_rel, 3), int(round(cur - half))))
-    return out
+        coarse.append((t_rel, cur))
+
+    # **重采样到每一帧**。抽帧是 5 Hz，成片是 30 fps——直接把 5 Hz 的命令发给
+    # sendcmd，x 就每 200 毫秒跳一次、一跳最多 TRACK_MAX_SPEED*step 像素，
+    # 看上去就是一格一格的台阶，摇得越快越明显。中间线性插值补齐，
+    # 镜头才是连续地摇。多出来的命令行数无所谓（67 秒约两千行）。
+    ct = np.array([t for t, _ in coarse])
+    cx_arr = np.array([x for _, x in coarse])
+    frames = np.arange(0.0, seg.length, 1.0 / FPS)
+    smooth = np.interp(frames, ct, cx_arr)
+    return [(round(float(t), 3), int(round(float(x) - half)))
+            for t, x in zip(frames, smooth)]
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
