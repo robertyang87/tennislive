@@ -101,6 +101,12 @@ COVER_SECONDS = 2.6
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
+# 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
+# AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
+# （69.9s 的画面配 64.3s 的音轨，64.3/69.9 = 0.9196 ≈ 44100/48000）。
+# 它不报错，ffprobe 也只写着「48000」，只有把两个时长摆在一起才看得出来。
+AUDIO_RATE = "48000"
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
 # crf 17/preset slow，等于把画质编进一个马上要被重编的文件里。成片那一步的参数
 # 没有跟着降。
@@ -505,7 +511,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     has_audio = _has_audio(source)
     extra_in = ([] if has_audio else
                 ["-f", "lavfi", "-i",
-                 "anullsrc=channel_layout=stereo:sample_rate=48000"])
+                 f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
     with stage("分段编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
@@ -540,7 +546,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
             # 成片那一步的参数没有动。
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "160k",
+            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
             str(dest))
     return dest
 
@@ -632,11 +638,12 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
     with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
-            "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+            "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
             "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "160k", "-shortest", str(dest))
+            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            "-shortest", str(dest))
     return dest
 
 
@@ -804,12 +811,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
                 # 下一步再整个丢掉。（改前/改后的实测见提交说明。）
                 "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
-                "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+                "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE,
                 "-shortest", str(mixed))
         else:
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
-                str(mixed))
+                "-ar", AUDIO_RATE, str(mixed))
 
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
     # 成片这一步的画质**不降**：preset slow / crf 18 原样保留。省时间要从
