@@ -16,6 +16,13 @@ WTA 官网自己的接口就有逐分，免鉴权、不封数据中心 IP：
   别直接拿它当"打到这里是几比几"
 - **大满贯不在这条路上**。同一个赛事 id 下 `/stats` 有（只有 setnum=0 一行汇总），
   `/point-by-point` 是 404——四大满贯自己跑计分系统，WTA 只收到了汇总
+- **`ScoreString` 是赢家视角，不是 A 视角**。华盛顿资格赛 `RS008` 的 A 是张帅，
+  `ScoreString` 写着 `6-4,1-6,6-1`，照着念就成了"张帅先下一盘"——可
+  `ScoreSet1A=4 / ScoreSet1B=6`，逐分数出来局数是 4:6、6:1、1:6，最后一分归 B。
+  **实际是克努特松赢的**。要谁赢就看 `pointWinner` 或 `ScoreSetNA/B`，别读 `ScoreString`
+- **进行中的比赛，逐分落后实时比分好几分钟**。同一时刻比分已经走到 4-4，
+  逐分还停在几分钟前那一分上，连拉五分钟纹丝不动。**赛后拉是完整的，
+  别拿它做直播**
 - **ATP 目前没有对应通路**：`api.protennislive.com` 401（要 token），
   `atptour.com` 的 Hawkeye 接口在 Cloudflare 后面，2026-07-27 这天连
   真 Chromium 都过不去（Turnstile 不放行），`infosys-platforms.com` 403
@@ -114,9 +121,15 @@ def find_match(
 
 def summarise(payload: dict) -> dict:
     """从逐分数据里算出走势、保发破发、连得分、耗时。"""
-    a, b = payload["contestants"]
-    name_a = f"{a['firstName']} {a['lastName']}".strip()
-    name_b = f"{b['firstName']} {b['lastName']}".strip()
+    # 双打的 contestants 是四条（每边两个人），单打是两条——按 team 归并，
+    # 别写成 `a, b = payload["contestants"]`，双打会直接崩
+    sides: dict[str, list[str]] = {"A": [], "B": []}
+    for person in payload["contestants"]:
+        sides.setdefault(person["team"], []).append(
+            f"{person['firstName']} {person['lastName']}".strip()
+        )
+    name_a = " / ".join(sides["A"])
+    name_b = " / ".join(sides["B"])
     points = payload["points"]
 
     server_of_game: dict[tuple[int, int], str] = {}
@@ -126,18 +139,26 @@ def summarise(payload: dict) -> dict:
     running, series = 0, []
     current, run = None, 0
 
+    # 一局的赢家 = **这一局最后一分**的赢家。不能盯 gameScore 里的 `G`：
+    # 抢七局根本不出 `G`（比分一路是 7-2 这样的数字），盯 `G` 会把抢七整局丢掉，
+    # 7-6 就数成 6-6。抢七局的 `server` 也是空字符串，保发统计要把它排除。
+    previous_key: tuple[int, int] | None = None
+    previous_winner: str | None = None
+
     for point in points:
         key = (point["setNumber"], point["gameNumber"])
         server_of_game.setdefault(key, point["server"])
+        if previous_key is not None and key != previous_key:
+            winner_of_game[previous_key] = previous_winner
+
         game = point["scoreAfterPoint"]["gameScore"]
         score_a = str(game["teamAScore"]).upper()
         score_b = str(game["teamBScore"]).upper()
         server = point["server"]
-        on_serve = (score_a, score_b) if server == "A" else (score_b, score_a)
-        if on_serve in BREAK_POINT:
-            break_point_states[server] += 1
-        if "G" in (score_a, score_b):
-            winner_of_game[key] = "A" if score_a == "G" else "B"
+        if server in ("A", "B"):
+            on_serve = (score_a, score_b) if server == "A" else (score_b, score_a)
+            if on_serve in BREAK_POINT:
+                break_point_states[server] += 1
 
         won = point["pointWinner"]
         run = run + 1 if won == current else 1
@@ -145,12 +166,20 @@ def summarise(payload: dict) -> dict:
         longest_run[current] = max(longest_run[current], run)
         running += 1 if won == "A" else -1
         series.append(running)
+        previous_key, previous_winner = key, won
+
+    # 最后一局：只有比赛打完了才算数，打到一半的那一局还没有赢家
+    played = str(payload.get("matchStatus", "")).casefold() == "played"
+    if played and previous_key is not None:
+        winner_of_game[previous_key] = previous_winner
 
     served = {"A": 0, "B": 0}
     held = {"A": 0, "B": 0}
     broken = {"A": 0, "B": 0}
     for key, winner in winner_of_game.items():
         server = server_of_game[key]
+        if server not in ("A", "B"):  # 抢七局没有发球方，不进保发统计
+            continue
         served[server] += 1
         if winner == server:
             held[server] += 1
@@ -161,9 +190,21 @@ def summarise(payload: dict) -> dict:
         "A": sum(1 for p in points if p["pointWinner"] == "A"),
         "B": sum(1 for p in points if p["pointWinner"] == "B"),
     }
+
+    # 每盘的局数，从逐分自己数出来——赛会给的 ScoreString 是赢家视角，不能直接用
+    set_games: dict[int, dict[str, int]] = {}
+    for (set_number, _game), winner in winner_of_game.items():
+        set_games.setdefault(set_number, {"A": 0, "B": 0})[winner] += 1
+    sets = [
+        {"set": s, "A": set_games[s]["A"], "B": set_games[s]["B"]}
+        for s in sorted(set_games)
+    ]
+
     return {
         "players": {"A": name_a, "B": name_b},
         "status": payload.get("matchStatus"),
+        "sets": sets,
+        "winner": (points[-1]["pointWinner"] if points and played else None),
         "points_total": len(points),
         "points_won": points_won,
         "games_completed": len(winner_of_game),
@@ -183,17 +224,30 @@ def summarise(payload: dict) -> dict:
 def render(summary: dict) -> str:
     a = summary["players"]["A"]
     b = summary["players"]["B"]
+    sets = " ".join(f"{s['A']}-{s['B']}" for s in summary["sets"])
+    who = summary["winner"]
+    verdict = (f"{summary['players'][who]} 胜" if who else "未打完")
     lines = [
         f"{a} vs {b} — {summary['status']}，共 {summary['points_total']} 分 / "
         f"{summary['games_completed']} 局",
+        f"  局数(A-B)   {sets}   → {verdict}（按逐分数出来的，不是赛会那串比分）",
         f"  总得分      {a} {summary['points_won']['A']} : "
         f"{summary['points_won']['B']} {b}",
-        f"  发球局保住  {a} {summary['holds']['A']}/{summary['service_games']['A']}   "
-        f"{b} {summary['holds']['B']}/{summary['service_games']['B']}",
-        f"  被破        {a} {summary['breaks_conceded']['A']} 次   "
-        f"{b} {summary['breaks_conceded']['B']} 次",
-        f"  破发点局面  {a} 面对 {summary['break_point_states']['A']} 分   "
-        f"{b} 面对 {summary['break_point_states']['B']} 分",
+    ]
+    # 双打这条接口一分都不写发球方，全是空串。这里如果照样印 0/0，
+    # 读起来就是"一次都没被破"——那是假的。说清楚"这场没有发球方"
+    if summary["service_games"]["A"] or summary["service_games"]["B"]:
+        lines += [
+            f"  发球局保住  {a} {summary['holds']['A']}/{summary['service_games']['A']}   "
+            f"{b} {summary['holds']['B']}/{summary['service_games']['B']}",
+            f"  被破        {a} {summary['breaks_conceded']['A']} 次   "
+            f"{b} {summary['breaks_conceded']['B']} 次",
+            f"  破发点局面  {a} 面对 {summary['break_point_states']['A']} 分   "
+            f"{b} 面对 {summary['break_point_states']['B']} 分",
+        ]
+    else:
+        lines.append("  发球局      这场逐分里没有发球方字段（双打一律没有），保发/破发算不出来")
+    lines += [
         f"  最长连得分  {a} {summary['longest_point_run']['A']} 分   "
         f"{b} {summary['longest_point_run']['B']} 分",
         f"  累计分差    最高 +{summary['momentum_peak']}（{a} 领先）  "
@@ -226,9 +280,10 @@ def main() -> int:
         since = date.fromisoformat(args.since) if args.since else today - timedelta(days=7)
         until = date.fromisoformat(args.until) if args.until else today + timedelta(days=1)
         event_id, year, match_id, meta = find_match(session, args.players, since, until)
+        # ScoreString 是赢家视角，这里只当线索打印，谁赢一律以逐分为准
         print(f"命中 {event_id}/{year}/{match_id} — "
               f"{meta.get('PlayerNameLastA')} vs {meta.get('PlayerNameLastB')} "
-              f"{meta.get('ScoreString') or ''}", file=sys.stderr)
+              f"（赛会记分 {meta.get('ScoreString') or '-'}，赢家视角）", file=sys.stderr)
     else:
         parser.error("要么给 --event-id 和 --match-id，要么给 --players")
 
