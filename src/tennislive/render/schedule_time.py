@@ -18,13 +18,39 @@ from __future__ import annotations
 from collections.abc import Iterable, Sequence
 
 from ..models import Match
-from ..timeutil import fmt_schedule_time, fmt_time_beijing
+from ..timeutil import fmt_schedule_time, fmt_time_beijing, to_beijing
 from ..zh.terms import round_zh
 from .common import round_order
 
 # 只有「确实不知道」的这两种才补推算：「时间待核」是多源冲突，覆盖它等于
 # 把冲突藏起来；已有确切时间的更不该动。
 ESTIMABLE_PLACEHOLDERS = frozenset({"待官方排期", "待定"})
+
+
+# 「今日赛程」窗口延到次日几点（北京时间）。
+#
+# 北京日历会把美洲赛事的比赛日拦腰切断：华盛顿的日场 11:00 美东开打 = 北京
+# 23:00，整个夜场都落在北京的次日凌晨。郑钦文 vs 埃亚拉正是这样掉出去的——
+# ESPN 给的是 2026-07-28T17:00Z（美东 13:00，Stadium），换成北京是 7/29
+# 01:00，espn.py 按 `astimezone(BEIJING).date() != d` 一刀切掉。前一天那张卡
+# 上还有这场，只是因为当时它还没有时间、没被时间窗筛到。
+#
+# 对中国观众来说「今晚看什么」本来就包含凌晨那几场，所以窗口要延过午夜。
+# 12:00 这个点是从赛程本身推出来的，不是拍的：美东夜场最晚打到北京次日
+# 11:00 上下，而欧洲赛事最早也要北京 17:00 才开赛——12:00 落在两者之间，
+# 既能把美洲这一夜收全，又不会把欧洲的下一天拉进来。
+NEXT_DAY_CUTOFF_HOUR = 12
+
+
+def in_schedule_window(m: Match, cutoff_hour: int = NEXT_DAY_CUTOFF_HOUR) -> bool:
+    """次日的场次算不算进「今日赛程」（见 NEXT_DAY_CUTOFF_HOUR）。
+
+    没有开赛时间的一律不收：那种场次在「今天」那一份里已经收过一次，
+    这里再收就会重复；而且没有时间就无从判断它在不在这个窗口里。
+    """
+    if m.start_utc is None:
+        return False
+    return to_beijing(m.start_utc).hour < cutoff_hour
 
 
 def match_key(m: Match) -> str:

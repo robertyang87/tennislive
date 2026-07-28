@@ -124,6 +124,8 @@ TOURNAMENT_ZH: dict[str, str] = {
     "libema open": "利贝马公开赛",
     "linz": "林茨站",
     "los cabos": "洛斯卡沃斯站",
+    # feed 给的是带冠名商的全名，按赛事名登记别名——只写城市名永远命不中
+    "mifel tennis open": "洛斯卡沃斯站",
     "los cabos open": "洛斯卡沃斯公开赛",
     "madrid": "马德里公开赛",
     "madrid open": "马德里站",
@@ -349,6 +351,7 @@ TOURNAMENT_LEVEL: dict[str, str] = {
     "libema open": "250/W250",
     "linz": "W500",
     "los cabos": "250",
+    "mifel tennis open": "250",
     "los cabos open": "250",
     "madrid": "M1000/W1000",
     "madrid open": "M1000/W1000",

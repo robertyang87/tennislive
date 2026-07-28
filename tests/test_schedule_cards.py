@@ -154,15 +154,27 @@ def test_round_rank_puts_earlier_rounds_higher():
 # ---------- 取材优先级 ----------
 
 
-def test_chinese_players_come_first_even_in_doubles():
-    """优先中国球员，不分单双打。"""
+def test_chinese_singles_come_first():
+    """优先中国单打。"""
     plain = sched(match_id="p")
-    cn_doubles = sched(
-        match_id="cn", discipline="Men's Doubles", doubles=True, home="Zhizhen Zhang",
-        home_country="CHN",
-    )
-    selected = _schedule_selection([plain, cn_doubles])
+    cn = sched(match_id="cn", home="Zhizhen Zhang", home_country="CHN")
+    selected = _schedule_selection([plain, cn])
     assert selected[0].match_id == "cn"
+
+
+def test_a_chinese_doubles_never_outranks_a_singles_match():
+    """「优先中国球员」限定在单打上。
+
+    一场中国组合的双打排在大坂直美那种单打前面，不是读者要的——所以中国
+    这一维只在单打内部生效，不越过"单打先于双打"这条线。
+    """
+    singles = sched(match_id="s")
+    cn_doubles = sched(
+        match_id="cn", discipline="Men's Doubles", doubles=True,
+        home="Zhizhen Zhang", home_country="CHN",
+    )
+    selected = _schedule_selection([cn_doubles, singles])
+    assert [m.match_id for m in selected] == ["s", "cn"]
 
 
 def test_singles_outrank_doubles_after_chinese_players():
@@ -283,14 +295,20 @@ def test_schedule_page_marks_the_estimate_footnote():
     assert "*为预计时间" in schedule_body([known, blank], "7.28")
 
 
-def test_court_labels_appear_only_when_the_page_spans_several_courts():
+def test_every_match_shows_its_court_when_the_feed_gives_one():
+    """有场地就标，没有就空着——赛程最实用的就是「几点、在哪块场」。"""
     a = sched(match_id="a")
     b = sched(match_id="b")
     a.court = b.court = "Stadium"
-    assert "Stadium" not in schedule_body([a, b], "7.28")
+    assert schedule_body([a, b], "7.28").count("Stadium") == 2
     b.court = "Court 4"
     body = schedule_body([a, b], "7.28")
     assert "Stadium" in body and "Court 4" in body
+
+
+def test_a_match_without_a_court_just_omits_it():
+    body = schedule_body([sched(match_id="a")], "7.28")
+    assert "·  ·" not in body and "· </span>" not in body
 
 
 def test_page_number_appears_only_when_there_is_more_than_one_page():
