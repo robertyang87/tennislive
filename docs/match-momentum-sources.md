@@ -137,11 +137,18 @@ ATP 从来没有公开过逐分。
 | `@wta` | `Emma Navarro vs. Sofia Kenin \| 2026 Washington, DC Round 1 \| WTA Match Highlights`（7 分 50 秒） |
 | `@Wimbledon` | `An ICONIC battle \| Stan Wawrinka v Matteo Berrettini \| Full Match Replay \| Wimbledon 2026` |
 
-**男子赛事的集锦看 `@atptour`，不是 `@TennisTV`。** 华盛顿开打当天，
-`@atptour` 已经发了三条 DC Open 首轮集锦，而 `@TennisTV` 最新的还停在上一周的
-埃斯托里尔和基茨比厄尔——一条华盛顿都没有。只盯 Tennis TV 会得出"集锦还没出"
-的错误结论。**同一场的集锦也不是打完就有**：锦织圭那场结束两小时后仍未上架，
-排在当天更早结束的几场后面。
+**男子赛事两个频道都发，`@atptour` 先出，`@TennisTV` 后出，而且各发各的场次。**
+华盛顿开打当天 `@atptour` 已经有三条 DC Open 首轮集锦时，`@TennisTV` 最新的
+还停在上一周的埃斯托里尔和基茨比厄尔；一小时后锦织圭 vs 商竣程那条出现在
+**`@TennisTV`**，`@atptour` 反而一直没有。**只盯一个频道会误判成"集锦还没出"。**
+
+**同一场的集锦不是打完就有**：锦织圭那场结束约两小时仍未上架，排在当天更早结束的
+几场后面，第三小时才出现。
+
+**按外文名 grep 会漏。** 那条的标题是
+`2015 Champ Kei Nishikori Faces Jerry Shang 👀 | Washington 2026 Highlights`
+——Tennis TV 用的是商竣程的英文名 **Jerry Shang**，不是 `Juncheng`。
+搜集锦要按**姓**（`Shang`）加赛事名，别按护照上的全名。
 
 **标题本身就是四要素自证**——球员、赛事、年份、轮次都由发布方自己写在标题里，
 不靠看画面推断。和赛事官方图库按命名规律探图是同一个道理。
