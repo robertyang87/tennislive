@@ -1208,7 +1208,11 @@ STORIES = STORIES + (
     ),
     _trivia_story(
         slug="wildcard",
-        title="签表上那个 WC",
+        # 台头和封面那一问会被拼成微信标题 `title｜question`。封面那一问
+        # 加了「签表里」之后，原来的台头「签表上那个 WC」就让「签表」和「WC」
+        # 在同一行里各出现两次。换成 identity 那句，两半各说一件事：
+        # 「一张不设上限的入场券｜签表里名字旁的 WC，是谁给的？」
+        title="一张不设上限的入场券",
         subtitle="网球冷知识 · 规则篇",
         identity="一张不设上限的入场券",
         # chips[2] 会变成 `founded`，而故事卡的时间轴把它抠数字当**起点年份**用：
