@@ -144,7 +144,8 @@ jobs:
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
+          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
