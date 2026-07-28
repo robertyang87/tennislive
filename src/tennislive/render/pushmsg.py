@@ -107,6 +107,12 @@ def to_copy_page(
     safe_title = html.escape(title)
     safe_body = html.escape(body)
     safe_comment = html.escape((pinned_comment or "").strip())
+    # 没有置顶评论就别留那一格：一个空框加一个复制不出东西的按钮，
+    # 页面上看着像坏了（竖版赛报那条线没有置顶评论，一渲染就露馅）。
+    comment_section = f"""<section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>{safe_comment}</textarea>
+    </section>""" if safe_comment else ""
     alt_sections = ""
     for i, alt in enumerate(t for t in (alt_titles or []) if t and t != title):
         safe_alt = html.escape(alt)
@@ -165,10 +171,7 @@ def to_copy_page(
       <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
       <textarea id="body" readonly>{safe_body}</textarea>
     </section>
-    <section>
-      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
-      <textarea id="comment" readonly>{safe_comment}</textarea>
-    </section>
+    {comment_section}
   </main>
   <div id="toast" role="status">已复制</div>
   <script>

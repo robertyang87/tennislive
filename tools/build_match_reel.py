@@ -91,7 +91,15 @@ from tennislive.video.explainer import (  # noqa: E402
     write_subtitles,
 )
 
-FPS = 30
+# **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
+# 而滤镜链里写死 `fps=30`：25 和 30 的比是 5:6，于是每 5 帧就复制一帧，
+# 一秒卡五次。更糟的是它和横摇**不同频**——画面内容 25 Hz 前进，裁切窗口
+# 30 Hz 平移，同一帧里两种节奏，看着就是"顿一下、飘一下"。
+# 复制出来的帧还查不出来：裁切位置每帧都在变，两帧的**像素**并不相同
+# （2099 帧里逐帧比对，完全相同的 0 帧），只有比源片和成片的帧率才看得出。
+# 这是「兜底和默认值出事的时候不吭声」的又一例：`fps=` 从不报错，只是默默补帧。
+FPS = 30            # 兜底值；render 开跑时按源片改写（见 resolve_fps）
+FPS_EXPR = "30"     # 传给 ffmpeg 的那份，保留分数形式（29.97 是 30000/1001）
 # 1080 高的源，9:16 的宽 = 1080*9/16 = 607.5。裁剪宽度必须是偶数，取 608。
 CROP_H = 1080
 CROP_W = 608
@@ -174,6 +182,27 @@ def _has_audio(path: Path) -> bool:
     out = run("ffprobe", "-v", "error", "-select_streams", "a",
               "-show_entries", "stream=index", "-of", "csv=p=0", str(path)).stdout
     return bool(out.strip())
+
+
+def resolve_fps(path: Path) -> tuple[str, float]:
+    """成片帧率 = 源片帧率。返回 (给 ffmpeg 的分数式, 浮点值)。
+
+    分数式要原样传给 `fps=`：29.97 写成 `30000/1001` 才是准的，写 `29.97`
+    会一点点漂。离谱的值（<10 或 >60）不认，退回 30 并说出来。
+    """
+    raw = run("ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=r_frame_rate",
+              "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
+    try:
+        num, den = (raw.split("/") + ["1"])[:2]
+        value = float(num) / float(den)
+    except (ValueError, ZeroDivisionError):
+        value = 0.0
+    if not 10.0 <= value <= 60.0:
+        print(f"[fps] 源片报的帧率是 {raw!r}，不合常理，退回 30")
+        return "30", 30.0
+    print(f"[fps] 成片跟着源片走：{raw} = {value:.3f}")
+    return raw, value
 
 
 def probe_size(path: Path) -> tuple[int, int]:
@@ -354,7 +383,7 @@ def _frange(start: float, stop: float, step: float):
 class Segment:
     start: float
     end: float
-    cx: float
+    cx: float | None          # None = 没人量过，按整段运动质心的中位数自己定
     narration: str
     fit: str = "crop"
     track: bool = True
@@ -375,12 +404,25 @@ def load_spec(path: Path) -> dict:
 # 跟踪裁切 -----------------------------------------------------------------
 TRACK_FPS = 5.0        # 抽帧频率：够跟上回合，又不至于让镜头抖
 TRACK_SMOOTH = 13      # 平滑窗口（帧），越大越像摇臂
-TRACK_DEADZONE = 40    # 死区（源片像素）：球在中间小幅晃动时镜头不动
-TRACK_MAX_SPEED = 200  # 每秒最多摇多少像素，防止镜头追着球甩
+TRACK_MAX_SPEED = 150  # 每秒最多摇多少像素，防止镜头追着球甩
+# **不出画就不摇。** 窗口只有 608 宽（源片的 32%），原来是 40px 死区跟着质心走，
+# 等于一直在摇——而源片是 25 fps，一横摇，画面里本该静止的底线、球网、广告板、
+# 看台全跟着滑，25 fps 下滑动的静止物最容易看出一格一格。窗口不动时只有人和球在动，
+# 眼睛对这个宽容得多。所以改成**边缘触发**：回合中心在窗口中间这一段里随便晃都不动，
+# 只有要顶出去了才补那一截，补完继续钉住。
+TRACK_SLACK = 0.62     # 目标可以离窗口中心多远（占半宽），超了才动
 
 
-def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, int]]:
-    """按运动质心给出这一段的裁切中心轨迹 [(相对秒, x像素)]。
+def track_run(source: Path, start: float, end: float, source_w: int,
+              *, quiet: bool = False) -> list[tuple[float, float]]:
+    """按运动质心给出 [start, end) 这一整段镜头的裁切中心轨迹。
+
+    返回的是**源片绝对秒 + 中心 x（浮点）**的粗轨迹（5 Hz），交给
+    `sample_track` 去按段重采样。之所以分成两步：spec 里相邻的两段常常在源片里
+    是**同一个没剪断的镜头**（66.0–74.2 接 74.2–79.28），一段一段各跟各的，
+    交界处窗口会瞬间横移——实测跳了 222 / 448 / 399 像素，画面内容一模一样、
+    位置突然平移一大截，看着就是"转场卡了一下"。整条镜头跟一次再切开，
+    交界处才是连续的。
 
     网球转播的主机位是固定的：动的是球和两个人，静的是看台、场地线、广告板。
     所以**相邻帧差分的加权质心**天然落在回合上，不需要任何模型。
@@ -407,8 +449,8 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
 
     # 寻址一次到段首，之后一路 grab()/retrieve()：grab 只解码不转格式，
     # 跳过的帧走 grab，要用的帧才 retrieve。
-    cap.set(cv2.CAP_PROP_POS_MSEC, seg.start * 1000.0)
-    want = int(math.ceil(seg.length / step))
+    cap.set(cv2.CAP_PROP_POS_MSEC, start * 1000.0)
+    want = int(math.ceil((end - start) / step))
 
     prev = None
     raw: list[tuple[float, float]] = []
@@ -420,7 +462,7 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
         ok, frame = cap.read()
         if not ok:
             break
-        t = index * step
+        t = start + index * step          # 绝对秒：切段的时候要按它对齐
         small = cv2.cvtColor(cv2.resize(frame, (480, 270)), cv2.COLOR_BGR2GRAY)
         if prev is not None:
             diff = cv2.absdiff(small, prev)
@@ -435,7 +477,7 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
     if not raw:
         # 没抽到运动就退回固定中心——但要说出来，别让「没跟踪」和「跟踪了但没动」
         # 长得一样
-        print(f"    [track] {seg.start:.1f}s 段没检出运动，退回 cx={seg.cx}")
+        print(f"    [track] {start:.1f}–{end:.1f}s 没检出运动，退回 spec 里的 cx")
         return []
 
     xs = np.array([x for _, x in raw])
@@ -444,26 +486,105 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
 
     coarse: list[tuple[float, float]] = []
     cur = float(np.clip(xs[0], lo, hi))
-    for (t_rel, _), target in zip(raw, xs):
+    slack = CROP_W / 2 * TRACK_SLACK       # 目标在这个范围内晃，窗口不动
+    limit = TRACK_MAX_SPEED * step
+    moved = 0
+    for (t_abs, _), target in zip(raw, xs):
         target = float(np.clip(target, lo, hi))
-        if abs(target - cur) > TRACK_DEADZONE:
-            limit = TRACK_MAX_SPEED * step
-            cur += max(-limit, min(limit, target - cur))
-        coarse.append((t_rel, cur))
+        off = target - cur
+        if abs(off) > slack:
+            # 只补超出的那一截，补完目标正好回到边界上——不是把它拉回正中，
+            # 那样每次都要多摇 slack 那么多，等于又变成一直在跟
+            want = off - math.copysign(slack, off)
+            cur = float(np.clip(cur + max(-limit, min(limit, want)), lo, hi))
+            moved += 1
+        coarse.append((t_abs, cur))
+    if not quiet:
+        span = max(x for _, x in coarse) - min(x for _, x in coarse)
+        print(f"    [track] {start:.1f}–{end:.1f}s：{moved}/{len(coarse)} 个采样点需要摇，"
+              f"总横移 {span:.0f}px")
+    return coarse
 
-    # **重采样到每一帧**。抽帧是 5 Hz，成片是 30 fps——直接把 5 Hz 的命令发给
-    # sendcmd，x 就每 200 毫秒跳一次、一跳最多 TRACK_MAX_SPEED*step 像素，
-    # 看上去就是一格一格的台阶，摇得越快越明显。中间线性插值补齐，
-    # 镜头才是连续地摇。多出来的命令行数无所谓（67 秒约两千行）。
+
+def sample_track(coarse: list[tuple[float, float]],
+                 seg: "Segment") -> list[tuple[float, int]]:
+    """把整条镜头的粗轨迹按这一段重采样成 [(段内秒, 裁切左边界)]。
+
+    **重采样到每一帧**。抽帧是 5 Hz，成片是二三十 fps——直接把 5 Hz 的命令发给
+    sendcmd，x 就每 200 毫秒跳一次、一跳最多 TRACK_MAX_SPEED*step 像素，
+    看上去就是一格一格的台阶，摇得越快越明显。中间线性插值补齐，
+    镜头才是连续地摇。多出来的命令行数无所谓（67 秒约两千行）。
+    """
+    import numpy as np
+
+    if not coarse:
+        return []
+    half = CROP_W / 2
     ct = np.array([t for t, _ in coarse])
     cx_arr = np.array([x for _, x in coarse])
     frames = np.arange(0.0, seg.length, 1.0 / FPS)
-    smooth = np.interp(frames, ct, cx_arr)
+    smooth = np.interp(seg.start + frames, ct, cx_arr)   # 按绝对秒取值
     return [(round(float(t), 3), int(round(float(x) - half)))
             for t, x in zip(frames, smooth)]
 
 
-def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
+def auto_center(source: Path, seg: "Segment", source_w: int) -> float:
+    """不摇的那些段，固定中心取**整段运动质心的中位数**。
+
+    钉死画面不等于钉在正中：庆祝那一屏人偏左，钉在 0.5 就把他挤到边上。
+    中位数比均值稳——中间一两次大幅挥拍带不动它。
+    """
+    coarse = track_run(source, seg.start, seg.end, source_w, quiet=True)
+    if not coarse:
+        return 0.5
+    import numpy as np
+
+    return float(np.median([x for _, x in coarse])) / source_w
+
+
+def track_shots(source: Path, segments: list["Segment"],
+                source_w: int) -> dict[int, list[tuple[float, int]]]:
+    """把在源片里连着的段合成一个镜头跟一次，再切回各段。
+
+    「连着」的判据是**上一段的 end 就是这一段的 start**。spec 里之所以要断开，
+    是为了给不同的旁白和不同的画面文字配时间，源片那边并没有剪；镜头一断，
+    跟踪就重新起步，交界处窗口瞬移（实测 222 / 448 / 399 px）。
+
+    顺带把不摇的那些段的固定中心也定了（`auto_center`）。
+    """
+    runs: list[list[int]] = []
+    for index, seg in enumerate(segments):
+        trackable = seg.fit != "contain" and seg.track
+        joins = (runs and trackable
+                 and abs(seg.start - segments[runs[-1][-1]].end) < 1e-3
+                 and segments[runs[-1][-1]].fit != "contain"
+                 and segments[runs[-1][-1]].track)
+        if joins:
+            runs[-1].append(index)
+        elif trackable:
+            runs.append([index])
+
+    tracks: dict[int, list[tuple[float, int]]] = {}
+    for index, seg in enumerate(segments):
+        if seg.track or seg.fit == "contain" or seg.cx is not None:
+            continue
+        with stage("定心抽帧"):
+            seg.cx = auto_center(source, seg, source_w)
+        print(f"    [fixed] 第 {index} 段不摇，固定中心 cx={seg.cx:.3f}")
+    for members in runs:
+        start = segments[members[0]].start
+        end = segments[members[-1]].end
+        with stage("跟踪抽帧"):
+            coarse = track_run(source, start, end, source_w)
+        if len(members) > 1:
+            print(f"    [track] 上面这条是 {len(members)} 段连着的同一个镜头")
+        for index in members:
+            tracks[index] = sample_track(coarse, segments[index])
+    return tracks
+
+
+def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
+                path: list[tuple[float, int]] | None = None) -> Path:
     """切一段、裁成 9:16、放大到 1080×1920。
 
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
@@ -492,13 +613,11 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
             f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
             f"[fg]crop={keep}:{CROP_H}:{x}:0,"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
-            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps={FPS},setsar=1"
+            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps={FPS_EXPR},setsar=1"
         )
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
-        with stage("跟踪抽帧"):
-            path = track_x(source, seg, source_w) if seg.track else []
         if path:
             cmds = dest.with_suffix(".cmds")
             cmds.write_text("".join(f"{t:.3f} crop@c x {v};\n" for t, v in path),
@@ -507,10 +626,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
             print(f"    [track] {seg.start:.1f}s 段 {len(path)} 个点，横摇 {span}px")
             chain = (f"sendcmd=f={_escape(cmds)},"
                      f"crop@c={CROP_W}:{CROP_H}:{path[0][1]}:0,"
-                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
+                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                     f"fps={FPS_EXPR},setsar=1")
         else:
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
-                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},setsar=1")
+                     f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                     f"fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -579,18 +700,32 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     grab = dest.parent / "_cover_frame.jpg"
     at = float(cover.get("frame_at", 3.0))
     cx = float(cover.get("cx", 0.5))
-    # 底图**不要裁 608 再放大**。那是把 1080p 里三分之一的宽度拉到 1080 宽——
-    # 放大 1.78 倍，糊得一眼能看出来。改成整幅缩到 1080 宽（是缩小），
-    # 两侧用同一帧放大模糊垫满：清晰度立刻不一样，人也不会被裁掉。
+    # 底图两种铺法：
+    #
+    #   cover（默认）  真·竖版大图，9:16 裁切铺满整屏。1080p 里裁 608 宽再拉到
+    #                 1080，是放大 1.78 倍，本来会糊——所以走 lanczos 再补一道
+    #                 轻 unsharp，把放大吃掉的边缘找回来一点。**人要在框里**，
+    #                 cx 按握手那两个人的位置量。
+    #   contain       整幅缩到 1080 宽（是缩小，最清晰），两侧用同一帧放大模糊
+    #                 垫满。清楚，但画面只占屏高一半多，冲击力折一半。
+    #
+    # 先用过 contain，反馈是"要竖版大图"——封面这一屏首要是**砸下来**，
+    # 清晰度排第二，何况上面还压着渐变和大标题。
+    if str(cover.get("fill", "cover")) == "contain":
+        chain = (f"[0:v]split=2[bg][fg];"
+                 f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+                 f"crop={VIDEO_W}:{VIDEO_H},boxblur=46:2,eq=brightness=-0.22[bgb];"
+                 f"[fg]scale={VIDEO_W}:-2:flags=lanczos[fgs];"
+                 f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2[out]")
+    else:
+        x = max(0, min(int(round(cx * source_w - CROP_W / 2)), source_w - CROP_W))
+        chain = (f"[0:v]crop={CROP_W}:{CROP_H}:{x}:0,"
+                 f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
+                 f"unsharp=5:5:0.7:5:5:0.0[out]")
     with stage("封面抓帧"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
-            "-filter_complex",
-            f"[0:v]split=2[bg][fg];"
-            f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-            f"crop={VIDEO_W}:{VIDEO_H},boxblur=46:2,eq=brightness=-0.22[bgb];"
-            f"[fg]scale={VIDEO_W}:-2:flags=lanczos[fgs];"
-            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2",
+            "-filter_complex", chain, "-map", "[out]",
             "-q:v", "2", str(grab))
 
     lines = "".join(
@@ -649,7 +784,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
-            "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS},setsar=1",
+            "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
@@ -732,13 +867,21 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         source = merged
 
     source_w, source_h = probe_size(source)
+    # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
+    global FPS, FPS_EXPR
+    FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
     if source_h != CROP_H:
         print(f"[注意] 源片不是 1080 高，裁剪按等比换算")
 
+    # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
+    # 广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
+    # 真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
+    # （`"track": true`），只留给主机位的宽景回合。
     segments = [Segment(float(s["start"]), float(s["end"]),
-                        float(s.get("cx", 0.5)), s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", True)))
+                        None if s.get("cx") is None else float(s["cx"]),
+                        s.get("narration", "").strip(),
+                        str(s.get("fit", "crop")), bool(s.get("track", False)))
                 for s in spec["segments"]]
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
@@ -758,10 +901,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "或者把这些段的 track 置为 false（画面退回固定中心）。"
             ) from exc
 
+    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
+    tracks = track_shots(source, segments, source_w)
+
     parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
-                                 source_w))
+                                 source_w, tracks.get(index)))
 
     listing = outdir / "_concat.txt"
     listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
