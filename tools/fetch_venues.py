@@ -99,7 +99,11 @@ VENUES = [
     ("canada-national-bank-open-stadium.jpg",
      "File:Rexall Centre York University Toronto.JPG", None),
     ("cincinnati-lindner-tennis-center.jpg", "File:Lindner Family Tennis Center 2025.jpg", None),
-    ("usopen-arthur-ashe-stadium.jpg", None, "Arthur Ashe Stadium"),
+    # 美网：原来是按分类自动挑的，挑到一张从侧面看台横拍的——竖版裁完只剩
+    # 中间一条。换成"从顶层沿球场长轴往下看"：整个碗竖着排在画面里，
+    # 近端看台在下、球场在中、远端看台和天际线在上，竖切也切不掉。
+    ("usopen-arthur-ashe-stadium.jpg",
+     "File:View From the Top of the Arthur Ashe Stadium (9614299124).jpg", None),
     # 基茨比厄尔：原来用的是山景地标。球场照 Commons 上有——红土中心球场，
     # 看台后面就是阿尔卑斯，赛事身份和地点一张图说全了。
     ("kitzbuhel-tennis-stadium.jpg", "File:Tennisstadion Kitzbuehel, 2015.jpg", None),
