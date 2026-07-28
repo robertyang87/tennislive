@@ -491,7 +491,7 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
-    assert meta["rate"] == E.DEFAULT_RATE == "+22%"
+    assert meta["rate"] == E.DEFAULT_RATE == "+28%"
     assert meta["segments"] == 2
 
     E.generate_explainer_video(
@@ -1002,3 +1002,64 @@ def test_人名要以译名表为准():
                     if sum(a != b for a, b in zip(window, name)) == 1:
                         bad.append(f"{slug}：「{window}」是不是想写「{name}」")
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
+
+
+def test_不要在片子里交代自己的规矩():
+    """「比分我们不猜」这类话，是在向读者交代**我们自己的编辑规矩**。
+
+    读者不关心一个账号给自己定了什么规矩，他关心的是这场球。这句话占掉的是
+    收尾最值钱的那个位置——末屏那一问之前的最后一句。三条前瞻的结尾都挂着它，
+    删掉之后句子反而更利落。
+
+    「不预测结果」这条原则本身留着，写在 `Column.promise` 里给以后的自己看；
+    **原则归原则，别念出来。**
+    """
+    from tennislive.video import explainer as E
+
+    banned = ("不猜", "不预测", "不做预测", "我们不", "本栏目", "按惯例")
+    bad = []
+    for slug in E._SCRIPTS:
+        opening = E._OPENINGS.get(slug) or {}
+        texts = [("topic", opening.get("topic", "")),
+                 ("xhs", opening.get("narration", ""))]
+        for seg in E.explainer_script(find_story_by_slug(slug)):
+            texts += [(f"{seg.kind}.title", seg.title),
+                      (f"{seg.kind}.旁白", seg.narration),
+                      (f"{seg.kind}.问", seg.question or "")]
+            texts += [(f"{seg.kind}.要点", p) for p in seg.points]
+        for where, text in texts:
+            for word in banned:
+                if word in (text or ""):
+                    bad.append(f"{slug}/{where}：「{word}」出现在「{text[:30]}…」")
+    assert not bad, "片子里在交代自己的规矩：\n  " + "\n  ".join(bad)
+
+
+def test_旁白不解说画面():
+    """旁白不说「画面里是什么」。
+
+    片子里图和话是两条腿：**画负责一眼看懂，话负责讲清楚**。旁白一开口描述画面，
+    就等于把观众已经看见的东西再念一遍——占掉的是本该讲事实的时间，而看得见的人
+    不需要，听不见画面的人（比如通勤时只听声音）也拿不到有用信息。
+
+    改法不是删句子，是**把指画面的那半句去掉、把事实留住**：
+    「画面里是 2026 年温网的莱巴金娜，你可以照着条文一条条对」→
+    「2026 年温网的莱巴金娜，可以照着条文一条条对」。二十九句都是这么改的。
+
+    卡上的要点不在这条管辖内：那儿的「图为 2022 年温网冠军莱巴金娜」是在**把年份
+    写到画面上**，是另一条规矩要求的（旧照片必须标年份）。
+    """
+    import re
+
+    from tennislive.video import explainer as E
+
+    pointing = re.compile(r"画面(里|上|中|就是)|镜头(里|中)|图为|这张图|图片里|上图|下图")
+    bad = []
+    for slug in E._SCRIPTS:
+        for seg in E.explainer_script(find_story_by_slug(slug)):
+            for field, text in (("旁白", seg.narration), ("标题", seg.title),
+                                ("末屏问", seg.question or "")):
+                m = pointing.search(text or "")
+                if m:
+                    bad.append(f"{slug}/{seg.kind} 的{field}在解说画面："
+                               f"「{m.group(0)}」→ {text[:36]}…")
+    assert not bad, "旁白在解说画面：\n  " + "\n  ".join(bad)
