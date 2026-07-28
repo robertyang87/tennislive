@@ -764,3 +764,75 @@ def test_depth_exempt_sources_say_why():
     for s in exempt:
         assert len(s["depth_exempt"]) > 30, f"{s['name']} 的豁免理由太短，说不清查过什么"
         assert s.get("measured"), f"{s['name']} 声称豁免却没有实测数"
+
+
+def test_round_table_covers_every_match_in_the_draw():
+    """`rounds_of()` 列出的场次，加起来必须等于「签表 − 1」。
+
+    **上一版只对 2 的幂签表成立，73 / 103 站受影响。** 28 / 48 / 56 / 96 签
+    有轮空，首轮场次要按 `轮空 = 2^ceil(log2 签) − 签`、`首轮 = (签 − 轮空)/2` 算。
+    旧版是从决赛纯倒推的固定表，28 签只列出 15 场（实际 27）、96 签列 63 场
+    （实际 95），多出来的那一轮在表里没格子，条目直接被丢掉。
+    """
+    from tools.oncourt_match_coverage import rounds_of
+
+    for draw in (28, 32, 48, 56, 64, 96, 128):
+        assert sum(rounds_of(draw).values()) == draw - 1, f"{draw} 签的轮次表盖不住"
+    # 有轮空的签表，首轮场次不等于「签/2」
+    assert rounds_of(48)["第一轮"] == 16 and rounds_of(48)["第二轮"] == 16
+    assert rounds_of(56)["第一轮"] == 24
+    assert rounds_of(28)["第一轮"] == 12
+
+
+def test_round_names_match_what_parse_round_emits():
+    """轮次表的键，必须是 `parse_round()` 真会产出的名字。
+
+    **旧版连 2 的幂签表也错**：它把 32 签的 16 场那一轮叫「第三轮」（按离决赛
+    的距离命名），可赛事自己标的是 `R1`，`parse_round` 给出「第一轮」——
+    表里没这一格，条目全丢。**迪拜 ATP500 因此丢掉 43 条第一轮 + 28 条第二轮，
+    覆盖率从真实的 ~100% 被压到 35%。**
+
+    修法是末四轮按人数定名、更早的按从上往下第几轮定名，再由 `canon()`
+    把两套叫法归到同一格——**归一必须在计数之前**，否则逐格 min() 封顶会让
+    同一轮的上限翻倍。
+    """
+    from tools.oncourt_match_coverage import canon, rounds_of
+
+    # 32 签：赛事标 R1/R2，8 场那一轮两个叫法都要认得
+    assert canon("第一轮", 32) == "第一轮"
+    assert canon("第二轮", 32) == canon("十六强", 32) == "十六强"
+    assert rounds_of(32)[canon("第二轮", 32)] == 8
+
+    # 48 签：R1 和 R2 都是 16 场，各占一格
+    assert canon("第一轮", 48) == "第一轮" and canon("第二轮", 48) == "第二轮"
+    assert canon("第三轮", 48) == "十六强"
+
+    # 大满贯不受影响——128 签本来就对
+    for r in ("第一轮", "第二轮", "第三轮", "十六强", "四分之一决赛", "半决赛", "决赛"):
+        assert canon(r, 128) == r, r
+
+    # 认不出的返回 None，不塞进错的格子
+    assert canon("早轮", 32) is None
+    assert canon(None, 32) is None
+
+
+def test_cross_edition_cap_is_close_to_the_best_single_edition():
+    """跨届封顶那个数，得和「最好的一届」实测对得上——否则它只是个虚高的上限。
+
+    修好 `rounds_of()` 之后迪拜 ATP500 从 35% 跳到 100%，**数太好看了，
+    先怀疑它**：33 条第一轮散在六届里，封顶成 16 说的是「最好那届全覆盖」，
+    可平均每届才 5.5 条。按年份拆开验——**2025 那届单届实测 30/31 = 97%**，
+    跨届上限 100% 只比它高一场。上限站得住。
+
+    这条测试盯的是这个关系别再滑走：跨届上限不能比最好的单届高出太多。
+    """
+    from tools.oncourt_match_coverage import by_edition, coverage, load
+
+    items, events = load()
+    ev = next(e for e in events if e["zh"] == "迪拜网球锦标赛" and e["tour"] == "atp")
+    row = next(r for r in coverage(items, events)
+               if r["zh"] == ev["zh"] and r["tour"] == "atp")
+    per, _ = by_edition(items, ev)
+    best = max(c for _, c in per)
+    assert best >= row["covered"] - 2, (
+        f"跨届上限 {row['covered']} 比最好的单届 {best} 高出太多，这个数是虚的")
