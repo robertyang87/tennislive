@@ -102,18 +102,25 @@ def wait_for_copy_page(url: str, *, attempts: int = 12, delay: float = 15.0,
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
-             event: str = "") -> str:
-    """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 6-7(3) 6-3 6-4 商竣程`。
+             event: str = "", summary: str = "") -> str:
+    """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
-    给了赛果就**把「vs」换成比分**——网球的写法本来就是赢家在前、比分居中，
-    这样谁赢了不用再猜；没给赛果（比如赛前）就保留「vs」。
+    末尾那一格有两种写法，按这条片子哪种更说得清选：
+
+    - **对阵 + 比分**（默认）。给了赛果就把「vs」换成比分——网球的写法本来就是
+      赢家在前、比分居中，谁赢了不用再猜；没给赛果（比如赛前前瞻）就保留「vs」
+    - **一句话概括赛果**（传 `summary`）。比分说不清的时候用，例如退赛、
+      三盘大战里的某个转折、或者一条不以胜负为重点的片子
     """
     found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
         raise SystemExit(f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…")
     _, month, day = found.groups()
-    pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
-        else (f"{matchup} {score}".strip() if score else matchup)
+    if summary.strip():
+        pair = summary.strip()
+    else:
+        pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
+            else (f"{matchup} {score}".strip() if score else matchup)
     parts = [f"{int(month)}.{int(day)} {column}"]
     if event:
         parts.append(event)
@@ -165,7 +172,7 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str) -> str:
 </p>
 <div style="border-top:1px solid #e6ebe8;margin:14px 0 12px"></div>
 <div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 6px">
-小红书标题</div>
+标题</div>
 <div style="font-size:19px;font-weight:800;color:#102d23;line-height:1.4;
  margin:0 0 16px">{html.escape(title)}</div>
 <div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 8px">
@@ -186,6 +193,8 @@ def main() -> int:
     ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
     ap.add_argument("--score", default="", help="赛果，如「6-7(3) 6-3 6-4」，赢家在前")
     ap.add_argument("--event", default="", help="赛事与轮次，如「华盛顿 ATP500 首轮」")
+    ap.add_argument("--summary", default="",
+                    help="一句话概括赛果，给了就顶掉标题末尾的「对阵 + 比分」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
     args = ap.parse_args()
@@ -195,10 +204,13 @@ def main() -> int:
     if not copy_text:
         raise SystemExit("文案是空的")
 
-    # 微信那条消息的标题（`7.28 赛场之上 | …`）**不能塞进复制页的「标题」格**——
-    # 那一格是拿去粘小红书的，小红书标题上限 20 字，而这一句二十七字；塞进去
-    # 还会把文案自己那句真标题挤成正文第一行。两个标题各归各的。
-    title = headline(outdir, args.column, args.matchup, args.score, args.event)
+    # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
+    # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
+    # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
+    # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
+    title = headline(outdir, args.column, args.matchup, args.score, args.event,
+                     args.summary)
+    copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
 
