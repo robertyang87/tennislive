@@ -125,7 +125,18 @@ def _resolve(url: str) -> tuple[list[dict], list[str]]:
     # 文章页：把官方图库的直链抠出来。一篇稿子里混着二十多个站点装饰件
     # （页脚 logo、栏目磁贴），先按路径和文件名筛掉——但**筛掉的要报出来**，
     # 否则"没找到图"和"找到了但被我自己滤了"分不出来。
-    html = _get(url).decode("utf-8", errors="replace")
+    try:
+        html = _get(url).decode("utf-8", errors="replace")
+    except Exception as exc:  # noqa: BLE001 - 取不到页就报出来，别甩 traceback
+        # WTA 的旧稿会改 slug：`/news/2787921/swiatek-outlasts-jabeur-...` 是 404，
+        # 而 **`/news/2787921` 是 200**——按 ID 取才稳。检索引擎给的旧链接常常
+        # 带着过期的 slug，砍掉再试一次，比让人以为"这篇没了"强。
+        retry = re.match(r"(https://[^/]*wtatennis\.com/news/\d+)/", url)
+        if retry:
+            rejected.append(f"{url}：带 slug 取不到，改按文章 ID 重试")
+            return _resolve(retry.group(1))
+        rejected.append(f"{url}：页面取不到（{type(exc).__name__}: {exc}）")
+        return [], rejected
     found = sorted(set(_IMAGE_IN_PAGE.findall(html)))
     editorial, furniture = [], []
     for item in found:

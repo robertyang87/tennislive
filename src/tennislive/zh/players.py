@@ -167,6 +167,7 @@ PLAYER_ZH: dict[str, str] = {
     # ===== WTA =====
     "Aryna Sabalenka": "萨巴伦卡",
     "Iga Swiatek": "斯瓦泰克",
+    "Angelique Kerber": "科贝尔",
     "Elena Rybakina": "莱巴金娜",
     "Coco Gauff": "高芙",
     "Jessica Pegula": "佩古拉",

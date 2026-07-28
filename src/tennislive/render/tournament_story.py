@@ -1073,6 +1073,36 @@ STORIES = STORIES + (
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2023_Cincinnati_Masters",
     ),
+    # 配图来自 WTA 官方战报（按文章 ID 取；带 slug 的旧链接已 404）。杯身刻着
+    # US OPEN TENNIS CHAMPIONSHIPS / WOMEN'S SINGLES——赛事与项目由画面自证。
+    _trivia_story(
+        slug="otd-0910",
+        title="纽约的第一座",
+        subtitle="历史上的今天 · 9 月 10 日",
+        identity="2022 · 斯瓦泰克美网首冠",
+        chips=("历史上的今天", "2022", "纽约"),
+        hero=(
+            "2022 年的今天，斯瓦泰克拿下生涯第一座美网奖杯——"
+            "在这之前，她在纽约从没走过第四轮。"
+        ),
+        facts=(
+            "决赛 6-2、7-6(5) 击败贾巴尔，这是她的第三座大满贯。",
+            "第一盘她接了 19 个发球，19 个都回到了场内。",
+            "同一年她还拿了法网；上一个单赛季两满贯，是 2016 年的科贝尔。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2022-09-10", player="斯瓦泰克", age="21 岁",
+                headline="生涯首座美网",
+                detail="此前她在这片场地从没打进过第四轮。",
+                source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Getty Images via WTA · 官方媒体供图",
+        source_label="WTA 官方战报",
+        source_url="https://en.wikipedia.org/wiki/2022_US_Open_%E2%80%93_Women%27s_singles",
+    ),
     _trivia_story(
         slug="otd-0909",
         title="主场圆梦夜",
