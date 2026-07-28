@@ -53,8 +53,9 @@ def video_url(outdir: Path, name: str) -> str:
     return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
 
 
-def headline(outdir: Path, column: str, matchup: str, score: str = "") -> str:
-    """`7.28 赛场之上 | 锦织圭 6-7(3) 6-3 6-4 商竣程`。
+def headline(outdir: Path, column: str, matchup: str, score: str = "",
+             event: str = "") -> str:
+    """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 6-7(3) 6-3 6-4 商竣程`。
 
     给了赛果就**把「vs」换成比分**——网球的写法本来就是赢家在前、比分居中，
     这样谁赢了不用再猜；没给赛果（比如赛前）就保留「vs」。
@@ -65,7 +66,11 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "") -> str:
     _, month, day = found.groups()
     pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
         else (f"{matchup} {score}".strip() if score else matchup)
-    return f"{int(month)}.{int(day)} {column} | {pair}"
+    parts = [f"{int(month)}.{int(day)} {column}"]
+    if event:
+        parts.append(event)
+    parts.append(pair)
+    return " | ".join(parts)
 
 
 def build_html(video_url: str, copy_url: str, lead: str) -> str:
@@ -101,6 +106,7 @@ def main() -> int:
     ap.add_argument("--column", default="赛场之上", help="栏目名")
     ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
     ap.add_argument("--score", default="", help="赛果，如「6-7(3) 6-3 6-4」，赢家在前")
+    ap.add_argument("--event", default="", help="赛事与轮次，如「华盛顿 ATP500 首轮」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
     args = ap.parse_args()
@@ -119,7 +125,7 @@ def main() -> int:
     if not copy_text:
         raise SystemExit("文案是空的")
 
-    title = headline(outdir, args.column, args.matchup, args.score)
+    title = headline(outdir, args.column, args.matchup, args.score, args.event)
     copy_text = f"{title}\n\n{copy_text}"
 
     # 复制页和成片一起落在 outdir 里，由 GitHub Pages 提供——raw 和 jsDelivr
