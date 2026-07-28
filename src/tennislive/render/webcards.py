@@ -48,6 +48,7 @@ from .rating import (
 from .schedule_time import (
     has_estimated_times,
     has_next_day_times,
+    has_not_before_times,
     match_key,
     round_rank,
     schedule_time_display,
@@ -1969,7 +1970,7 @@ def _event_backdrop(match: Match) -> tuple[str, str]:
 
 def _event_meta_html(
     event_groups, match: Match, *, location: str, has_estimates: bool,
-    has_next_day: bool = False,
+    has_next_day: bool = False, has_not_before: bool = False,
 ) -> str:
     """赛事页顶部那一条：级别、场地类型、地点、时间口径。
 
@@ -1989,6 +1990,10 @@ def _event_meta_html(
         else f'<b class="event-level">{html.escape(" / ".join(levels))}</b>'
     )
     note = ["北京时间"]
+    if has_not_before:
+        # 官方 OOP 的 Not Before 是下界不是开赛时刻。不说清楚，读者会照着这个
+        # 点定闹钟，然后发现前一场还在打第三盘。
+        note.append("不早于＝需等前一场结束")
     if has_estimates:
         note.append("*为预计时间")
     if has_next_day:
@@ -2058,6 +2063,7 @@ def schedule_body(
         location=location,
         has_estimates=has_estimated_times(times),
         has_next_day=has_next_day_times(times),
+        has_not_before=has_not_before_times(times),
     )
     kicker = "Today's Schedule · 今日赛程"
     if total > 1:

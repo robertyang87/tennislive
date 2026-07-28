@@ -44,7 +44,7 @@ def _scheduled(start_utc=None):
     )
 
 
-def test_official_exact_time_overrides_feed_time():
+def test_official_time_overrides_feed_time():
     match = _scheduled(datetime(2026, 7, 20, 14, tzinfo=timezone.utc))
     doc = _document(
         Fragment("Not before 1:30 PM", 100, 700),
@@ -58,11 +58,43 @@ def test_official_exact_time_overrides_feed_time():
     # 这个计数是这条线唯一能自证在做交叉校验的证据：全是 conflict 就说明
     # 某一侧（多半是时区或场序解析）系统性错了，而卡面上看不出差别。
     assert counts == {
-        "exact": 1, "ordered": 0, "unlisted": 0, "conflict": 1, "agree": 0,
+        "exact": 0, "not_before": 1, "ordered": 0, "unlisted": 0,
+        "conflict": 1, "agree": 0,
     }
     assert match.start_utc == datetime(2026, 7, 20, 11, 30, tzinfo=timezone.utc)
-    assert match.schedule_time_status == "official-exact"
     assert "已以官方为准" in match.schedule_note
+
+
+def test_starts_at_and_not_before_are_two_different_things():
+    """`Starts At` 是这块场地这一节的首场，到点就打；`Not Before` 只是下界。
+
+    原来两种都记 `official-exact`，卡上一律印裸时间。郑钦文那场是
+    `Not Before 1:00 AM`，跟在 23:00 那场后面——前一场打成三盘就得往后拖，
+    印成"01:00"等于告诉熬夜的人到点开电视。
+    """
+    firm = _scheduled(datetime(2026, 7, 20, 17, 30, tzinfo=timezone.utc))
+    floor = _scheduled(datetime(2026, 7, 20, 17, 30, tzinfo=timezone.utc))
+
+    firm_counts = _apply_document([firm], _document(
+        Fragment("Starts At 1:30 PM", 100, 700),
+        Fragment("BARTUNKOVA", 90, 650),
+        Fragment("YUAN", 115, 620),
+    ))
+    floor_counts = _apply_document([floor], _document(
+        Fragment("Not before 1:30 PM", 100, 700),
+        Fragment("BARTUNKOVA", 90, 650),
+        Fragment("YUAN", 115, 620),
+    ))
+
+    # 时刻是同一个，口径不是
+    assert firm.start_utc == floor.start_utc
+    assert firm.schedule_time_status == "official-exact"
+    assert floor.schedule_time_status == "official-not-before"
+    assert firm_counts["exact"] == 1 and firm_counts["not_before"] == 0
+    assert floor_counts["not_before"] == 1 and floor_counts["exact"] == 0
+    # 口径差别要落进 note，否则只有 status 知道，人看不见
+    assert "需等前一场结束" in (floor.schedule_note or "")
+    assert "需等前一场结束" not in (firm.schedule_note or "")
 
 
 def test_matching_feed_time_counts_as_agreement_not_conflict():
@@ -76,8 +108,10 @@ def test_matching_feed_time_counts_as_agreement_not_conflict():
 
     counts = _apply_document([match], doc)
 
+    # 「不早于」照样参与交叉校验：口径是下界，时刻仍然是两源都给出的那个
     assert counts == {
-        "exact": 1, "ordered": 0, "unlisted": 0, "conflict": 0, "agree": 1,
+        "exact": 0, "not_before": 1, "ordered": 0, "unlisted": 0,
+        "conflict": 0, "agree": 1,
     }
     assert "已以官方为准" not in (match.schedule_note or "")
 

@@ -622,6 +622,75 @@ def test_official_order_estimate_still_carries_the_marker():
     assert schedule_time_display([m])[match_key(m)] == "预计 01:00*"
 
 
+def test_not_before_is_not_shown_as_a_start_time():
+    """`Not Before` 是下界，不是开赛时刻，卡上要说出来。
+
+    ATP app 上这两种是分开印的：场地这一节的首场写 `Starts At 11:00 PM`，
+    其余写 `Not Before 1:00 AM`。郑钦文那场是后者——跟在 23:00 那场后面，
+    前一场打成三盘就往后拖。印成裸的「01:00」等于告诉熬夜的人到点开电视。
+    """
+    firm = sched(match_id="a", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
+                 status_text="official-exact")
+    floor = sched(match_id="b", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+                  status_text="official-not-before")
+    display = schedule_time_display([firm, floor])
+
+    assert display[match_key(firm)] == "23:00"
+    assert display[match_key(floor)] == "不早于 01:00"
+    # 两种都是官方给的时刻，都不带 *（* 只属于我们自己推的那一类）
+    assert "*" not in display[match_key(floor)]
+
+
+def test_not_before_keeps_the_next_day_marker():
+    """跨天标识要落在钟点上，不能被「不早于」这三个字挤掉。
+
+    赛程窗口开到北京次日 12:00，「不早于 01:00」不写 +1 就会被当成今天白天
+    那个已经过去的点——两个口径叠在一起时最容易漏掉其中一个。
+    """
+    from datetime import date
+
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="official-not-before")
+    assert (schedule_time_display([m], today=date(2026, 7, 28))[match_key(m)]
+            == "不早于 +1 01:00")
+
+
+def test_the_not_before_legend_appears_only_when_a_match_needs_it():
+    """顶栏那句解释按实际有没有来印。
+
+    官方 OOP 一节里只有首场是 `Starts At`，所以「不早于」多数时候都会出现；
+    但一页全是各场地首场时印出来就是句废话，而顶栏那一条位置有限，废话会把
+    「*为预计时间」「+1 为次日」挤下去。
+    """
+    floor = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+                  status_text="official-not-before")
+    firm = sched(match_id="b", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
+                 status_text="official-exact")
+
+    assert "不早于＝需等前一场结束" in schedule_body([floor], "7.28")
+    assert "不早于＝需等前一场结束" not in schedule_body([firm], "7.28")
+
+
+def test_caption_keeps_not_before_instead_of_shortening_it_away():
+    """正文里「不早于」不能像「预计」那样省掉。
+
+    「预计 01:00*」省成「01:00*」不丢信息——星号本身就是标记，脚注也说了。
+    「不早于」没有对应的符号，省掉就变成一个看着确切的时刻，而它是下界。
+    这是这一整条规矩最容易在"精简正文"时被顺手砍掉的地方。
+    """
+    from datetime import date
+
+    from tennislive.render.schedule_post import schedule_post
+
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="official-not-before")
+    display = schedule_time_display([m], today=date(2026, 7, 28))
+    post = schedule_post(date(2026, 7, 28), [m], display, m)
+
+    assert "不早于 +1 01:00" in post
+    assert "不早于＝官方排期，需等前一场打完才开始" in post
+
+
 def test_the_registry_covers_every_event_we_publish():
     """赛程卡收录的赛事都该有官方 OOP 来源登记。
 
@@ -652,9 +721,9 @@ def test_the_registry_covers_every_event_we_publish():
 def test_cross_source_agreement_is_counted():
     """两源一致/不一致要数出来，行为落在 tests/test_official_schedule.py。
 
-    这里只保证计数键存在——赛程卡的时间口径全靠它：`official-exact` 不带 *，
-    其余带 *。2026-07-28 实测 15 场精确里 14 场一致、1 场不一致（洛斯卡沃斯的
-    沙波瓦洛夫那场，ESPN 比官方早 1.5 小时），按官方为准。
+    这里只保证计数键存在，并把它接到卡面的显示上——赛程卡的时间口径全靠它。
+    2026-07-28 实测 15 场官方给了时刻，其中 14 场与聚合源一致、1 场不一致
+    （洛斯卡沃斯的沙波瓦洛夫那场，ESPN 比官方早 1.5 小时），按官方为准。
     """
     from datetime import date
 
@@ -683,9 +752,10 @@ def test_cross_source_agreement_is_counted():
               start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC))
     counts = _apply_document([m], doc)
 
-    assert set(counts) >= {"exact", "conflict", "agree"}
+    assert set(counts) >= {"exact", "not_before", "conflict", "agree"}
     # 17:00Z 与官方的 1:00 PM EDT 是同一时刻，应记为一致
     assert counts["agree"] == 1 and counts["conflict"] == 0
-    assert m.schedule_time_status == "official-exact"
-    # 官方确认过的时间在卡上不带 *
-    assert schedule_time_display([m])[match_key(m)] == "01:00"
+    # 这份 OOP 写的是 Not before，所以是下界不是开赛时刻
+    assert m.schedule_time_status == "official-not-before"
+    # 官方给过时刻的都不带 *（* 是我们自己推的标记），但「不早于」要说出来
+    assert schedule_time_display([m])[match_key(m)] == "不早于 01:00"

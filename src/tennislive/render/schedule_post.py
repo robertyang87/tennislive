@@ -18,8 +18,10 @@ from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
 from .common import group_by_tournament, match_round_display
 from .schedule_time import (
+    NOT_BEFORE_PREFIX,
     has_estimated_times,
     has_next_day_times,
+    has_not_before_times,
     match_key,
 )
 from .story import is_chinese_player
@@ -193,9 +195,10 @@ def _event_heading(group) -> str:
 # 小红书正文上限一千字。正文按这个预算**尽量装满**重要场次，而不是固定几场
 # ——卡片可以更详细（页数放得开），正文受这一条硬约束。
 CAPTION_MAX_CHARS = 1000
-# 脚注按"两个标记都出现"算——预算要按最坏情况留，算少了就会超
+# 脚注按"三个标记全出现"算——预算要按最坏情况留，算少了就会超
 _NOTE_WORST = (
-    "时间为北京时间；+1 为次日；无标记为赛事官方排期确认，带 * 为按场序推算的预计时间。"
+    "时间为北京时间；+1 为次日；不早于＝官方排期，需等前一场打完才开始；"
+    "无标记为官方给定的开赛时刻，带 * 为按场序推算的预计时间。"
 )
 
 
@@ -207,7 +210,8 @@ def _match_line(m: Match, display: dict[str, str]) -> str:
     - 轮次用短形式：「男单·第一轮」→「男单首轮」（6 → 4）
     - 分隔符用空格不用「 · 」（每处 3 → 1，一行三处）
     - 时间去掉「预计」二字：末尾那个 `*` 已经是预计的标记，脚注里也说了
-      （「预计 23:00*」→「23:00*」）
+      （「预计 23:00*」→「23:00*」）。**「不早于」不能照这样省**：它没有对应
+      的符号，省掉就变成一个看着确切的时刻，而它其实是下界
     - **不写球场**。球场名留在卡片上（那儿有的是地方），正文里它最占字又最
       不影响读者的决定——挑哪场看的是人和时间。而且这些名字大多是长英文
       （`Estadio Alejandro Burillo` 一个就 25 字），一行能顶掉半场别的比赛。
@@ -298,6 +302,10 @@ def schedule_post(
     if has_next_day_times(shown):
         # 美东夜场落在北京次日凌晨，不说清楚读者会当成今天白天那个点
         note.append("+1 为次日")
+    if has_not_before_times(shown):
+        # 官方 OOP 上一节里只有首场是确切时刻，其余都是"不早于"。照着这个点
+        # 定闹钟，很可能前一场还在打第三盘
+        note.append("不早于＝官方排期，需等前一场打完才开始")
     if has_estimated_times(shown):
-        note.append("无标记为赛事官方排期确认，带 * 为按场序推算的预计时间")
+        note.append("无标记为官方给定的开赛时刻，带 * 为按场序推算的预计时间")
     return f"{title}\n\n{body}\n\n{'；'.join(note)}。\n\n{TAGS}\n"
