@@ -1,11 +1,12 @@
 name: match-reel
 
-# 把一条官方集锦剪成 9:16 竖版短片。两步走，因为**选段必须靠眼睛**：
+# 把一条官方集锦剪成 9:16 竖版短片。分两步，因为**选段必须靠眼睛**：
 #
 #   mode=probe   下载源片 → 出场景切点 + 带时间码的缩略图墙 → 提交进仓库
 #                （只提交几张 JPEG 和一个 json，源片 50MB 不进仓库）
 #   mode=render  按 specs/reels/<slug>.json 剪 → 裁 9:16 → 中文解说 → 烧字幕
 #                → 加封面 → 成片提交
+#   mode=cookies 什么都不产，只验 YouTube 还下不下得动（cookie 会过期）
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
 # 一取媒体就 403；真 Chromium 打开播放页直接是「detected unusual traffic」。
@@ -14,10 +15,10 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；render=按 spec 出成片"
+        description: "probe=下载并出缩略图墙；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        options: [probe, render]
+        options: [probe, render, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -34,7 +35,9 @@ on:
       voice:
         description: "render：解说音色"
         required: false
-        default: "zh-CN-YunxiNeural"
+        # 定下来的是云见（Yunjian）——体育解说那把嗓子。默认值一直写着云希，
+        # 靠每次手动传参盖过去，漏一次就换了个人在说话。
+        default: "zh-CN-YunjianNeural"
       rate:
         description: "render：语速"
         required: false
@@ -49,9 +52,9 @@ on:
         required: false
         default: "锦织圭 vs 商竣程"
       score:
-        description: "赛果，进标题：赢家在前，如「6-7(3) 6-3 6-4」"
+        description: "赛果，进标题：赢家在前，如「2:1」"
         required: false
-        default: "6-7(3) 6-3 6-4"
+        default: "2:1"
       event:
         description: "赛事与轮次，进标题：如「华盛顿 ATP500 首轮」"
         required: false
@@ -149,6 +152,41 @@ jobs:
             echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"
           fi
 
+      # **cookie 会过期，而过期时的表现和「没配」一模一样。** 所以要有一条随时能跑、
+      # 不产生任何产物的验证：真下三秒媒体流。
+      # 注意 `--skip-download` 那种探活是**假的**——不带 cookie 也拿得到标题和格式表，
+      # 只有真去取媒体流才会撞上 "Sign in to confirm you're not a bot"。
+      - name: cookies — 只验 YouTube 还能不能下
+        if: github.event.inputs.mode == 'cookies'
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          URL="${{ github.event.inputs.url }}"
+          [ -n "$URL" ] || URL="https://www.youtube.com/watch?v=HyKTXynnI9c"
+          ARGS=""
+          if [ -n "$YT_COOKIES" ]; then
+            ARGS="--cookies $YT_COOKIES"
+            echo "带 cookie 试（$(wc -l < "$YT_COOKIES") 行）"
+          else
+            echo "::warning::没有 YT_COOKIES_TXT，这次只验 PO token + client 梯子"
+          fi
+          rm -rf "$RUNNER_TEMP/ytcheck" && mkdir -p "$RUNNER_TEMP/ytcheck"
+          yt-dlp $ARGS --download-sections "*0-3" --force-keyframes-at-cuts \
+            -f "bv*[height<=720]+ba/b[height<=720]/b" \
+            -o "$RUNNER_TEMP/ytcheck/probe.%(ext)s" "$URL" || true
+          FILE=$(ls -S "$RUNNER_TEMP/ytcheck" 2>/dev/null | head -1)
+          if [ -z "$FILE" ]; then
+            echo "::error::一个文件都没下下来——cookie 可能过期了，或者这个地址取不到媒体流"
+            exit 1
+          fi
+          SIZE=$(stat -c%s "$RUNNER_TEMP/ytcheck/$FILE")
+          echo "拿到 $FILE，$SIZE 字节"
+          # 几百字节的「文件」多半是错误页，不是媒体
+          [ "$SIZE" -gt 51200 ] || { echo "::error::文件只有 $SIZE 字节，不是媒体流"; exit 1; }
+          ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 \
+            "$RUNNER_TEMP/ytcheck/$FILE"
+          echo "YouTube 下载可用。"
+
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
         env:
@@ -176,16 +214,36 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
+      # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
+      # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
+      # 链接打开 404。**又一次「查信号不查产物」**。
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py --stage page \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --score "${{ github.event.inputs.score }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --copy "$COPY"
+
       - name: 丢掉不进仓库的中间物
+        if: github.event.inputs.mode != 'cookies'
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
-          # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片
+          # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
+          # _cover.html 是封面那一屏的渲染输入，图以 data URI 内嵌，单个 12 MB，
+          # 之前漏在清单外，每出一版就往仓库里塞一份（和 source_av.mp4 同一个毛病）。
           rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
-            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
       - name: 上传 artifact
+        if: github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
@@ -193,6 +251,7 @@ jobs:
           retention-days: 14
 
       - name: 提交产物
+        if: github.event.inputs.mode != 'cookies'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -212,8 +271,8 @@ jobs:
             git rebase origin/${{ github.ref_name }} || git rebase --abort
           done
 
-      # 推送**必须排在提交之后**——推送正文里那个下载链接指向仓库里的成片，
-      # 成片还没提交上去，链接就是 404。这一段的注释一直写着「推送是最后一步：
+      # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
+      # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
       # 前面提交完成片才有可下载的链接」，而它本人一直排在提交**前面**：
       # `wait_for_images` 探了二十次全失败，整条推送被取消（run 30339377013）。
       # 之所以一直没被发现，是因为这一步以前从没真的跑成功过。
