@@ -1,0 +1,134 @@
+name: match-reel
+
+# 把一条官方集锦剪成 9:16 竖版短片。两步走，因为**选段必须靠眼睛**：
+#
+#   mode=probe   下载源片 → 出场景切点 + 带时间码的缩略图墙 → 提交进仓库
+#                （只提交几张 JPEG 和一个 json，源片 50MB 不进仓库）
+#   mode=render  按 specs/reels/<slug>.json 剪 → 裁 9:16 → 中文解说 → 烧字幕
+#                → 加封面 → 成片提交
+#
+# **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
+# 一取媒体就 403；真 Chromium 打开播放页直接是「detected unusual traffic」。
+# edge-tts 同理。所以下载和合成都只能在 runner 上做。
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe=下载并出缩略图墙；render=按 spec 出成片"
+        required: true
+        type: choice
+        options: [probe, render]
+        default: probe
+      slug:
+        description: "片子 slug，决定目录名与 spec 文件名"
+        required: true
+        default: "nishikori-shang"
+      url:
+        description: "源片地址（probe 必填；render 从 spec 里读）"
+        required: false
+        default: ""
+      every:
+        description: "probe：每几秒抓一帧"
+        required: false
+        default: "2"
+      voice:
+        description: "render：解说音色"
+        required: false
+        default: "zh-CN-YunxiNeural"
+      rate:
+        description: "render：语速"
+        required: false
+        default: "+6%"
+
+permissions:
+  contents: write
+
+# 同一条片子只留一个在跑——并行两个 run 会互相覆盖 output/ 里的成片。
+# 分组名带 slug，不同片子互不影响。
+concurrency:
+  group: match-reel-${{ github.event.inputs.slug }}
+  cancel-in-progress: true
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装中文字体（封面和字幕都要）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+
+      - name: 装依赖
+        run: |
+          pip install -q -e .
+          pip install -q edge-tts yt-dlp
+
+      - name: 算出目录
+        id: paths
+        run: |
+          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+          SLUG="${{ github.event.inputs.slug }}"
+          echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
+          echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+
+      - name: probe — 下载 + 缩略图墙
+        if: github.event.inputs.mode == 'probe'
+        run: |
+          python tools/build_match_reel.py probe \
+            --url "${{ github.event.inputs.url }}" \
+            --every "${{ github.event.inputs.every }}" \
+            --outdir "${{ steps.paths.outputs.outdir }}"
+          ls -la "${{ steps.paths.outputs.outdir }}"
+
+      - name: render — 出成片
+        if: github.event.inputs.mode == 'render'
+        run: |
+          SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          python tools/build_match_reel.py render \
+            --spec "$SPEC" \
+            --voice "${{ github.event.inputs.voice }}" \
+            --rate "${{ github.event.inputs.rate }}" \
+            --outdir "${{ steps.paths.outputs.outdir }}"
+          ls -la "${{ steps.paths.outputs.outdir }}"
+
+      - name: 丢掉不进仓库的中间物
+        run: |
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片
+          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg
+          rm -rf "$OUTDIR"/frames
+          ls -la "$OUTDIR" || true
+
+      - name: 上传 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
+          path: ${{ steps.paths.outputs.outdir }}
+          retention-days: 14
+
+      - name: 提交产物
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          # 只 add 本次的目录：一起 add output/ 会把别的选题的成片一并重放，
+          # 并行跑的时候会来回覆盖（explainer 那条线上踩过）
+          git add "$OUTDIR"
+          if git diff --cached --quiet; then
+            echo "没有变化"
+            exit 0
+          fi
+          git commit -m "reel: ${{ github.event.inputs.mode }} ${{ github.event.inputs.slug }}"
+          for i in 1 2 3 4; do
+            git push origin HEAD:${{ github.ref_name }} && break
+            sleep $((2 ** i))
+            git fetch origin ${{ github.ref_name }}
+            git rebase origin/${{ github.ref_name }} || git rebase --abort
+          done
