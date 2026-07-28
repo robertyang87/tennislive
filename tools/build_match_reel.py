@@ -413,8 +413,15 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
     page_file.write_text(html, encoding="utf-8")
     still = dest.parent / "_cover.jpg"
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(
-            executable_path=_chromium(), args=["--no-sandbox"])
+        # 先让 playwright 自己找（CI 上装在它的默认位置）；找不到再回退到
+        # 显式路径（沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的目录带版本号，
+        # playwright 自己对不上）。反过来写就会像这次一样：CI 上直接
+        # 「找不到 chromium」，而它其实装好了，只是不在我猜的那两个路径里。
+        try:
+            browser = pw.chromium.launch(args=["--no-sandbox"])
+        except Exception:  # noqa: BLE001
+            browser = pw.chromium.launch(
+                executable_path=_chromium(), args=["--no-sandbox"])
         page = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
                                 device_scale_factor=1)
         page.goto(page_file.resolve().as_uri())
@@ -435,8 +442,9 @@ def _chromium() -> str:
     """沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的路径带版本号，playwright 自己找不到，
     得显式给。CI 上装的那份在默认位置，glob 一下两边都覆盖。"""
     import glob as _glob
-    for pattern in ("/opt/pw-browsers/chromium*/chrome-linux/chrome",
-                    str(Path.home() / ".cache/ms-playwright/chromium*/chrome-linux/chrome")):
+    roots = ["/opt/pw-browsers", str(Path.home() / ".cache/ms-playwright")]
+    for pattern in [f"{r}/chromium*/chrome-linux*/{exe}"
+                    for r in roots for exe in ("chrome", "headless_shell")]:
         hits = sorted(_glob.glob(pattern))
         if hits:
             return hits[-1]
