@@ -52,11 +52,13 @@ Zheng / Wang / Zhang / Li / Sun 这些姓名单里到处都是，而且外国球
 from __future__ import annotations
 
 import argparse
+import functools
 import html
 import json
 import os
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -313,6 +315,66 @@ def tag_of(row: dict) -> str:
     return row["round_zh"] or ""
 
 
+@functools.lru_cache(maxsize=1)
+def _zh_lookup():
+    """中文球员名 + 中文赛事名的查表器。
+
+    **卡片是给中文读者看的，标题却是来源的原文。** 推送里印着
+    `Karolina Muchova R16 Bad Homburg 2026`——球员名在 `src/tennislive/zh/players.py`
+    里写着**穆霍娃**，赛事名在赛历里写着**巴特洪堡公开赛**，两张表都在仓库里躺着
+    却没接上。
+
+    **不改标题本身**：标题是来源的原文，是溯源用的，改了就对不上了。
+    中文另起一行放在下面。
+    """
+    import sys
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.zh.players import PLAYER_ZH
+
+    # 全名优先；姓氏兜底，但**只收姓氏唯一对应一个中文名的**——
+    # Zhang / Zheng / Sun 这类一个姓对好几个人，认错了比不认更糟
+    full = [(re.compile(r"\b" + re.escape(en).replace(r"\ ", r"\s+") + r"\b", re.I), zh)
+            for en, zh in PLAYER_ZH.items() if " " in en]
+    by_sur = defaultdict(set)
+    for en, zh in PLAYER_ZH.items():
+        by_sur[en.split()[-1]].add(zh)
+    sur = [(re.compile(rf"\b{re.escape(s)}\b"), next(iter(z)))
+           for s, z in by_sur.items() if len(z) == 1 and len(s) > 3]
+
+    with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
+        events = json.load(fh)["events"]
+    # 同名不同巡回的（迪拜、罗马…）去掉「（男单）/（女单）」后缀再去重
+    seen, tours = set(), []
+    for e in events:
+        zh = re.sub(r"（[男女]单）$", "", e["zh"])
+        if zh in seen:
+            continue
+        seen.add(zh)
+        tours.append((re.compile(e["pat"], re.I), zh))
+    return full, sur, tours
+
+
+def zh_line(row: dict) -> str:
+    """给卡片配一行中文：`穆霍娃 · 巴特洪堡公开赛`。
+
+    两边都认不出来就返回空串——**宁可不显示，也不显示错的**。
+
+    **中国球员那一区不重复印名字**：那儿的标签本来就是「郑钦文」，
+    中文行再写一遍就成了「郑钦文」+「郑钦文 · 联合杯」。渲出来才看见的——
+    断言查不出这种重复。那一区只留赛事名。
+    """
+    title = row.get("title", "")
+    hay = f"{title} {row.get('page_url') or ''} {row.get('url', '')}"
+    full, sur, tours = _zh_lookup()
+    who = ""
+    if not row.get("cn_player"):          # 标签已经印了中国球员的名字
+        who = next((zh for rx, zh in full if rx.search(title)), "")
+        if not who:
+            who = next((zh for rx, zh in sur if rx.search(title)), "")
+    where = next((zh for rx, zh in tours if rx.search(hay)), "")
+    return " · ".join(x for x in (who, where) if x)
+
+
 def render_html(rows: list[dict]) -> str:
     # 官方 / 搬运分开列。搬运号补的是官方确实没有的那几处（亚洲赛季、
     # 七个大师赛），但来源不规范、可能删档，所以要让人一眼看出是哪一类。
@@ -331,6 +393,10 @@ def render_html(rows: list[dict]) -> str:
             secs = r.get("duration_s") or 0
             dur = f"{secs // 60}:{secs % 60:02d}" if secs else "—"
             tag = tag_of(r)
+            # 标题保留来源原文（溯源用，改了就对不上了），中文另起一行
+            zh = zh_line(r)
+            zh_html = (f"<div style='font-size:13px;color:#5b7a68;margin-top:4px'>"
+                       f"{html.escape(zh)}</div>") if zh else ""
             parts.append(
                 "<div style='margin:0 0 12px;padding:10px 12px;background:#f6f8f7;"
                 "border-radius:8px'>"
@@ -338,16 +404,25 @@ def render_html(rows: list[dict]) -> str:
                 f"{html.escape(tag)} · {dur} · {html.escape(r.get('source',''))}</div>"
                 f"<a href='{html.escape(r['url'])}' "
                 "style='color:#1a1a1a;text-decoration:none;font-weight:500'>"
-                f"{html.escape(r.get('title',''))}</a></div>")
+                f"{html.escape(r.get('title',''))}</a>"
+                f"{zh_html}</div>")
 
     block("🇨🇳 中国球员", cn)
     block("🎾 关键场次", key)
     if unof:
-        block("📎 非官方搬运（亚洲赛季 / 大师赛补漏）", unof)
+        block("📎 非官方搬运", unof)
+        # **注脚要说这一批实际是哪些赛事，不能写死一句。** 原来固定写着
+        # 「因为亚洲赛季（北京/武汉等）和七个大师赛官方不发切片」——那是当初
+        # 只有那几处缺口时写的，后来搬运号补的范围早就宽了，结果这句话盖在
+        # 巴特洪堡（德国草地 500）的条目上，说的和列的对不上。
+        where = [w for w in dict.fromkeys(
+            (zh_line(r).split(" · ")[-1] if " · " in zh_line(r) else "") for r in unof) if w]
+        scope = ("（这一批：" + "、".join(where[:4])
+                 + ("等" if len(where) > 4 else "") + "）") if where else ""
         parts.append(
             "<p style='font-size:12px;color:#8a8a8a;margin:4px 0 0'>"
-            "上面这一区来自粉丝搬运号，不是赛事官方发布。收它们是因为亚洲赛季"
-            "（北京 / 武汉等）和七个大师赛的场上采访官方确实不发切片。"
+            f"上面这一区来自粉丝搬运号，不是赛事官方发布{scope}。"
+            "收它们是因为这些赛事的官方渠道确实不发场上采访切片。"
             "可能删档、元数据不规范，转发前请自行核对。</p>")
     if not rows:
         parts.append("<p style='color:#8a8a8a'>这一轮没有新的关键场次或中国球员场上采访。</p>")

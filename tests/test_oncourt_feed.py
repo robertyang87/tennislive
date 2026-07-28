@@ -608,3 +608,64 @@ def test_the_push_step_does_not_swallow_a_crash():
     step = text.split("筛出关键场次与中国球员，推到微信", 1)[1].split("- name:", 1)[0]
     assert "set -o pipefail" in step, "推送这一步没开 pipefail，崩了会被 tee 吞掉"
     assert "oncourt_feed.py --push" in step, "样本取错了段落，这条测试没在看推送步骤"
+
+
+def test_card_shows_chinese_names_from_the_repo_tables():
+    """卡片要配一行中文——球员名和赛事名两张表都在仓库里躺着，得接上。
+
+    **这条是渲出来看见的，不是断言查出来的。** 推送卡上印着
+    `Karolina Muchova R16 Bad Homburg 2026`，而 `src/tennislive/zh/players.py`
+    里写着**穆霍娃**、赛历里写着**巴特洪堡公开赛**，中文读者一个字都拿不到。
+
+    **标题本身不改**：它是来源的原文，溯源要用，改了就对不上了。中文另起一行。
+
+    两边都认不出来就返回空串——**宁可不显示，也不显示错的**。
+    """
+    from tools.oncourt_feed import zh_line
+
+    assert zh_line({"title": "Karolina Muchova R16 Bad Homburg 2026",
+                    "cn_player": None, "url": ""}) == "穆霍娃 · 巴特洪堡公开赛"
+    assert zh_line({"title": "Jannik Sinner On-Court Interview | Final | Rome 2026",
+                    "cn_player": None, "url": ""}) == "辛纳 · 罗马大师赛"
+    # 赛事名可能只在 URL 里（tennistv 的标题不写赛事）
+    assert zh_line({"title": "250th hard court victory for Fritz!", "cn_player": None,
+                    "url": "https://www.tennistv.com/videos/4547709/"
+                           "washington-2026-r1-taylor-fritz-interview"}) \
+        == "弗里茨 · 华盛顿公开赛"
+    # 认不出的留空，不猜
+    assert zh_line({"title": "Some Unknown Player at Nowhere Open",
+                    "cn_player": None, "url": ""}) == ""
+
+
+def test_chinese_player_cards_do_not_print_the_name_twice():
+    """中国球员那一区的标签已经是「郑钦文」，中文行不能再写一遍。
+
+    第一版就是这么错的：卡上先一个「郑钦文」，底下又一行「郑钦文 · 联合杯」。
+    **渲成图看才发现的**——断言查不出重复，字符串都对。
+    """
+    from tools.oncourt_feed import zh_line
+
+    row = {"title": "Qinwen Zheng's On-Court Interview | United Cup 2024",
+           "cn_player": {"zh": "郑钦文"}, "url": ""}
+    assert zh_line(row) == "联合杯", "中国球员区只该留赛事名"
+    assert "郑钦文" not in zh_line(row)
+
+
+def test_unofficial_footnote_names_the_events_actually_listed():
+    """搬运号那一区的注脚，要说这一批实际是哪些赛事，不能写死一句。
+
+    原来固定写着「收它们是因为**亚洲赛季（北京/武汉等）和七个大师赛**的场上采访
+    官方确实不发切片」——那是当初只有那几处缺口时写的。后来搬运号补的范围早就
+    宽了，结果这句话盖在**巴特洪堡（德国草地 500）**的条目上，说的和列的对不上。
+
+    这条查的是「注脚里出现的赛事名，来自这一批条目本身」。
+    """
+    from tools.oncourt_feed import render_html
+
+    rows = [{"title": "Karolina Muchova R16 Bad Homburg 2026", "url": "https://x/1",
+             "source": "Tennis Interviews", "unofficial": True, "duration_s": 138,
+             "round_zh": "十六强", "cn_player": None}]
+    html_out = render_html(rows)
+    assert "巴特洪堡公开赛" in html_out, "注脚没说出这一批实际是哪个赛事"
+    assert "七个大师赛" not in html_out, "写死的旧措辞还在"
+    assert "北京 / 武汉" not in html_out, "写死的旧措辞还在"
