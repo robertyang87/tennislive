@@ -448,6 +448,44 @@ def parse_official_youtube_feed(
     ]
 
 
+# YouTube answers "Sign in to confirm you're not a bot" to the default web
+# client from datacenter/CI IPs. A logged-in cookies.txt is the reliable pass:
+# the workflow writes the YT_COOKIES_TXT secret to a file and points YT_COOKIES
+# at it. The player-client ladder covers which innertube client the cookie is
+# accepted on -- web/mweb/tv want a GVS PO token (a running provider sets
+# YT_POT_PROVIDER, so they lead then), otherwise the cookie-friendly non-web
+# clients lead. Mirrors tools/build_match_reel.py's proven ladder. n-challenge
+# solving still needs yt-dlp[default] (yt-dlp-ejs) + a JS runtime, or the
+# streaming URL comes back image-only.
+_YT_CLIENTS_POT_FIRST = [
+    "web", "mweb", "tv", "android_vr", "tv_simply", "web_embedded", "android", "ios",
+]
+_YT_CLIENTS_PLAIN = [
+    "android_vr", "tv_simply", "web_embedded", "android", "ios", "tv", "mweb", "web",
+]
+
+
+def _youtube_player_clients() -> list[str]:
+    if os.environ.get("YT_POT_PROVIDER", "").strip():
+        return list(_YT_CLIENTS_POT_FIRST)
+    return list(_YT_CLIENTS_PLAIN)
+
+
+def _ytdl_opts(**overrides: object) -> dict:
+    """Base yt-dlp options hardened for datacenter/CI IPs (cookies + ladder)."""
+    opts: dict = {
+        "quiet": True,
+        "no_warnings": True,
+        "noplaylist": True,
+        "extractor_args": {"youtube": {"player_client": _youtube_player_clients()}},
+    }
+    jar = os.environ.get("YT_COOKIES", "").strip()
+    if jar and os.path.isfile(jar):
+        opts["cookiefile"] = jar
+    opts.update(overrides)
+    return opts
+
+
 def fetch_youtube_video_metadata(
     candidate: OfficialVideoCandidate,
     *,
@@ -461,14 +499,7 @@ def fetch_youtube_video_metadata(
             raise VideoPipelineError("yt-dlp is required for official YouTube video") from exc
 
         def info_fetcher(url: str) -> dict:
-            with YoutubeDL(
-                {
-                    "quiet": True,
-                    "no_warnings": True,
-                    "noplaylist": True,
-                    "skip_download": True,
-                }
-            ) as downloader:
+            with YoutubeDL(_ytdl_opts(skip_download=True)) as downloader:
                 return downloader.extract_info(url, download=False)
 
     try:
@@ -550,9 +581,7 @@ def search_official_youtube_candidates(
             raise VideoPipelineError("yt-dlp is required for YouTube mirror search") from exc
 
         def searcher(url: str) -> dict:
-            with YoutubeDL(
-                {"quiet": True, "no_warnings": True, "extract_flat": True, "noplaylist": True}
-            ) as downloader:
+            with YoutubeDL(_ytdl_opts(extract_flat=True)) as downloader:
                 return downloader.extract_info(url, download=False)
 
     try:
