@@ -30,8 +30,6 @@ MAX_EDGE = 1920
 VENUES = [
     # 城市地标（该站没有可用的球场照时用）
     ("athens-parthenon.jpg", "File:Parthenon Athens.jpg", None),
-    ("kitzbuhel-panorama.jpg", "File:Kitzbuehel Panorama.jpg", None),
-    ("prague-castle-panorama.jpg", "File:Prague castle panorama.jpg", None),
     # 埃斯托里尔原来是 File:Estoril - panoramio.jpg，一段海岸步道加铁轨，既不是
     # 地标也不是球场，整页铺开像个火车站。Commons 上也没有中央球场——卡西诺那张
     # 建筑只占中间一条，上下全是天空和草坪。改用赛事官方媒体，见 OFFICIAL_VENUES。
@@ -102,6 +100,13 @@ VENUES = [
      "File:Rexall Centre York University Toronto.JPG", None),
     ("cincinnati-lindner-tennis-center.jpg", "File:Lindner Family Tennis Center 2025.jpg", None),
     ("usopen-arthur-ashe-stadium.jpg", None, "Arthur Ashe Stadium"),
+    # 基茨比厄尔：原来用的是山景地标。球场照 Commons 上有——红土中心球场，
+    # 看台后面就是阿尔卑斯，赛事身份和地点一张图说全了。
+    ("kitzbuhel-tennis-stadium.jpg", "File:Tennisstadion Kitzbuehel, 2015.jpg", None),
+    # 布拉格：原来用的是城堡地标。Livesport Prague Open 打在 Štvanice，
+    # 场地前场刷着 PRAGUE，赞助带是 crocodille / Quantcom——画面自己认领。
+    ("prague-stvanice-central-court.jpg",
+     "File:Central tennis court at Štvanice 02.jpg", None),
     # Gstaad：搜索里名字带赛事的那张（EFG Swiss Open Gstaad-ATP 250）其实是
     # 球员特写，中间还压着摄影师水印，既不是场馆也不能用——名字对题不等于
     # 内容对题。Commons 上也没有 Roy Emerson Arena 的照片，Category:Gstaad
@@ -123,8 +128,9 @@ VENUES = [
     # 夏蒂埃球场只在背后露一角——当背景图时雕像成了焦点，不像主球场。
     # 换成球场内景：红土、看台，以及"LA VICTOIRE APPARTIENT AU PLUS OPINIÂTRE"。
     ("rg-philippe-chatrier.jpg", "File:Court Philippe Chatrier 2024.jpg", None),
-    ("wimbledon-centre-court.jpg",
-     "File:2023 09 09 arne mueseler 14 40 13 00734-Verbessert-RR (53284505824).jpg", None),
+    # 原来钉的是**全园航拍**，中心球场只是画面里的一块，当背景时看不出是哪儿。
+    # 换成场内满场：草地、看台、顶棚桁架。
+    ("wimbledon-centre-court.jpg", "File:Centre Court Wimbledon 2009.JPG", None),
     ("usopen-arthur-ashe-exterior.jpg", "File:Arthur Ashe Stadium, July 7, 2018.jpg", None),
 ]
 

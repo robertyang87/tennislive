@@ -298,6 +298,44 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
         )
 
 
+# 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
+# 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
+LANDMARK_BUDGET = 8
+
+
+def test_every_venue_declares_what_kind_of_shot_it_is():
+    """背景图一律要中心球场全景；还没换到的必须显式挂账，不能沉默。
+
+    这条是用户定的：「背景都要找中心球场全景的照片」。地标（帕特农、竞技场、
+    山谷）只能当**临时**兜底，不是终点——而兜底最麻烦的地方是它不报错：
+    地点对、画面还挺好看，扫过去不觉得有什么不对，直到有人问一句"为啥不用
+    中心球场"（洛斯卡沃斯和孟菲斯就各这样待了好几版）。
+
+    所以每条都要声明 shot，非 centre-court 的必须写清楚卡在哪儿，并且总数
+    只许降不许升。
+    """
+    import json
+
+    from tennislive.render.venue_assets import MANIFEST
+
+    rows = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    problems = [
+        f"{row.get('slug')}: shot 只能是 centre-court / landmark，现在是 {row.get('shot')!r}"
+        for row in rows if row.get("shot") not in {"centre-court", "landmark"}
+    ]
+    problems += [
+        f"{row.get('slug')}: 还是地标，但没写 todo（卡在哪儿）"
+        for row in rows if row.get("shot") == "landmark" and not row.get("todo")
+    ]
+    assert not problems, "\n".join(problems)
+
+    pending = sorted(r["slug"] for r in rows if r["shot"] != "centre-court")
+    assert len(pending) <= LANDMARK_BUDGET, (
+        f"待换成中心球场的站点从 {LANDMARK_BUDGET} 涨到了 {len(pending)}：{pending}。"
+        "新站要带着球场照来；确实拿不到就显式调高 LANDMARK_BUDGET 并说明原因"
+    )
+
+
 def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     """能拿到球场照的站，manifest 不许再指回城市地标。
 
