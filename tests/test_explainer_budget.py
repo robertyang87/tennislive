@@ -144,11 +144,28 @@ def _hook(slug: str) -> int:
     return _chars(_first_sentence(cover))
 
 
+# 2026-07-28，账号所有者改了口径：**「字数不用刻意限制，讲清楚话题最重要」**。
+#
+# 这条闸门原来硬卡 536 字（≈90 秒），依据是三家平台的人均播放 13–21 秒、
+# 真完播 2–3%。那个依据没变，但它回答的是「怎样让更多人看完」，而所有者要的是
+# 「先把这件事讲清楚」——这是编辑取舍，不是测量结论，所以由他定。
+#
+# 现实也支持这次放宽：已发的十一条里，ball-pick 800 字、hawkeye 659 字、
+# ten-champions 962 字，全都远超 536，而它们就是所有者拿来当参照的成品。
+# 硬卡 536 等于要求新片子比参照件短一半。
+#
+# 所以上限从「90 秒」放到 **150 秒**（≈900 字），并保留一条硬上限——不是为了
+# 省时长，是为了挡住「一屏写成一篇」：超过这个数就该拆片，不该继续加长。
+# 名单里的老片子仍然只许降不许升，那条没变。
+BUDGET_SECONDS_MAX = 150
+NARRATION_CEILING = round((BUDGET_SECONDS_MAX - LEAD_SILENCE - TAIL_SILENCE) * SPEECH_RATE)
+
+
 @pytest.mark.parametrize("slug", sorted(_SCRIPTS))
 def test_旁白字数不超过片长预算(slug):
     """片长由旁白字数决定，所以预算卡在字数上。
 
-    新片子直接达标；名单里的老片子只许降不许升。
+    上限是 150 秒那一档（见上面那段口径说明）；名单里的老片子只许降不许升。
     """
     got = _total(slug)
     if slug in _OVER_BUDGET:
@@ -158,11 +175,11 @@ def test_旁白字数不超过片长预算(slug):
             f"要么把它写短，要么说清为什么这一条值得更长。"
             f"（预算是 {NARRATION_BUDGET} 字 ≈ {BUDGET_SECONDS} 秒）")
         return
-    assert got <= NARRATION_BUDGET, (
+    assert got <= NARRATION_CEILING, (
         f"{slug} 的旁白 {got} 字 ≈ {got / SPEECH_RATE + LEAD_SILENCE + TAIL_SILENCE:.0f} 秒，"
-        f"超出预算 {NARRATION_BUDGET} 字（{BUDGET_SECONDS} 秒）。\n"
-        f"三家平台的人均播放时长是 13–21 秒，真完播 2–3%——"
-        f"写到两分半，后面那一多半没人看得到。")
+        f"超出上限 {NARRATION_CEILING} 字（{BUDGET_SECONDS_MAX} 秒）。\n"
+        f"字数本身不再刻意限制——讲清楚话题最重要；但超过两分半就该**拆成两条**，"
+        f"而不是把一条继续写长。")
 
 
 def test_超预算名单只能变短():
