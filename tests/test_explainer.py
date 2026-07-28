@@ -1,5 +1,6 @@
 import html
 import re
+from pathlib import Path
 
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
@@ -1063,3 +1064,40 @@ def test_旁白不解说画面():
                     bad.append(f"{slug}/{seg.kind} 的{field}在解说画面："
                                f"「{m.group(0)}」→ {text[:36]}…")
     assert not bad, "旁白在解说画面：\n  " + "\n  ".join(bad)
+
+
+def test_栏目名不能只活在代码里():
+    """代码里印出去的栏目名，必须能在 docs/columns.md 找到。
+
+    「昨日好球」那条线一度有四个名字同时在跑（值回放 / 值得回放 / 值得暂停 /
+    昨日好球）。四个名字等于没有名字——这条盯的就是别再长出第五个。
+    """
+    doc = Path("docs/columns.md").read_text(encoding="utf-8")
+
+    from tennislive.video.explainer import COLUMNS
+
+    for name in COLUMNS:
+        assert name in doc, f"COLUMNS 里的「{name}」没有写进 docs/columns.md"
+
+    # 各生产线自带的栏目名常量（解说视频之外的那些线不共用 COLUMNS）
+    labels = {
+        path.name: match
+        for path in Path("src/tennislive").rglob("*.py")
+        for match in re.findall(
+            r'^_COLUMN_LABEL\s*=\s*["\'](.+?)["\']',
+            path.read_text(encoding="utf-8"),
+            re.MULTILINE,
+        )
+    }
+    assert labels, "没扫到任何 _COLUMN_LABEL，判据失效了"
+    for source, name in labels.items():
+        assert name in doc, f"{source} 的栏目名「{name}」没有写进 docs/columns.md"
+
+
+def test_新定的两个栏目写清了位置和承诺():
+    doc = Path("docs/columns.md").read_text(encoding="utf-8")
+    for name in ("赛场之上", "赛后开麦"):
+        assert name in doc
+    # 界线按时间划，不按深浅——这是选它的全部理由，丢了这句表就白排
+    assert "打到握手为止" in doc
+    assert "话筒递过来" in doc
