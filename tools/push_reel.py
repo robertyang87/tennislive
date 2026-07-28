@@ -53,6 +53,9 @@ _DATE_IN_PATH = re.compile(r"/(\d{4})-(\d{2})-(\d{2})/")
 BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
 # jsDelivr 的 /gh/ 单文件上限。超过就是 403，不是慢，是打不开。
 JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
+# 标题末尾那句的字数上限。标题是给人扫的，不是给人读的——和「卡片上每条
+# 不超过 16 字」同一个道理：一句要换行才排得下，就说明它该被砍。
+SUMMARY_MAX = 20
 
 
 def video_url(outdir: Path, name: str) -> str:
@@ -123,7 +126,8 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     - **对阵 + 比分**（默认）。给了赛果就把「vs」换成比分——网球的写法本来就是
       赢家在前、比分居中，谁赢了不用再猜；没给赛果（比如赛前前瞻）就保留「vs」
     - **一句话概括赛果**（传 `summary`）。比分说不清的时候用，例如退赛、
-      三盘大战里的某个转折、或者一条不以胜负为重点的片子
+      三盘大战里的某个转折、或者一条不以胜负为重点的片子。**不超过 20 字**——
+      标题是给人扫的，长了就没人扫完；超了直接报错，别让它悄悄溜出去
     """
     found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
@@ -131,6 +135,11 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     _, month, day = found.groups()
     if summary.strip():
         pair = summary.strip()
+        if len(pair) > SUMMARY_MAX:
+            raise SystemExit(
+                f"标题末尾那句 {len(pair)} 字，超过 {SUMMARY_MAX} 字：{pair}\n"
+                "标题是给人扫的，不是给人读的——提炼到一个最硬的事实上。"
+            )
     else:
         pair = matchup.replace(" vs ", f" {score} ") if score and " vs " in matchup \
             else (f"{matchup} {score}".strip() if score else matchup)
