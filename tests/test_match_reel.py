@@ -1,7 +1,10 @@
 """竖版赛报短片这条线上的规矩（CLAUDE.md：规则要落成测试）。
 
-两条都是踩出来的：
+都是踩出来的：
 
+- **成片帧率要跟着源片走**。源片 25 fps、成片硬定 30，就是每 5 帧补一帧。
+- **默认不横摇**。窗口只有源片 32% 宽，一摇，画面里本该静止的底线、球网、
+  广告板、看台全跟着滑，25 fps 下滑动的静止物最容易看出一格一格。
 - **复制页要在 git commit 之前写**。它由 GitHub Pages 提供，没进仓库就是 404。
   run 30342567879 里推送步骤 success、日志里印着复制页链接，点开却 404——
   因为写文件那一句挤在推送步骤里，而推送排在提交之后，文件只活在 runner 的
@@ -10,6 +13,7 @@
 - **推送标题必须让人一眼看出谁赢了**，所以给了赛果就把「vs」换成比分。
 """
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -44,6 +48,50 @@ def test_中间物清单包含封面渲染输入():
     cleanup = text[text.index("丢掉不进仓库的中间物"):].split("- name:")[0]
     for name in ("source.mp4", "source_av.mp4", "_cover.jpg", "_cover.html"):
         assert name in cleanup, name
+
+
+def _reel():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel  # noqa: PLC0415
+
+    return build_match_reel
+
+
+def test_成片帧率跟着源片走(monkeypatch):
+    """硬定 30 而源片 25，就是每 5 帧补一帧、一秒卡五次。
+
+    补出来的帧还查不出来：裁切位置每帧都在变，两帧的像素并不相同（成片 2099 帧
+    里逐帧比对，完全相同的 0 帧），只有比源片和成片的帧率才看得见。
+    """
+    reel = _reel()
+
+    def fake(*args, **kwargs):
+        return type("P", (), {"stdout": fake.out})()
+
+    monkeypatch.setattr(reel, "run", fake)
+    fake.out = "25/1\n"
+    assert reel.resolve_fps(Path("x.mp4")) == ("25/1", 25.0)
+    fake.out = "30000/1001\n"                       # 29.97 要保留分数式
+    expr, value = reel.resolve_fps(Path("x.mp4"))
+    assert expr == "30000/1001" and round(value, 2) == 29.97
+    fake.out = "0/0\n"                              # 报不出来就退回 30，别硬算
+    assert reel.resolve_fps(Path("x.mp4")) == ("30", 30.0)
+
+
+def test_默认不横摇():
+    """窗口只有源片 32% 宽，一摇，底线球网广告板看台全跟着滑——25 fps 下
+    滑动的静止物最容易看出一格一格。所以横摇改成按段显式打开。"""
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    assert 'bool(s.get("track", False))' in source
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    assert not any(s.get("track") for s in spec["segments"])
+
+
+def test_收尾不带播出方的片尾():
+    """握手镜头放到底，但 185.92 之后是 TennisTV 的 logo 和二维码，不要。"""
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    assert spec["segments"][-1]["end"] <= 185.92
 
 
 def _headline(**kwargs) -> str:
