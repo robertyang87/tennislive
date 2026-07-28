@@ -379,10 +379,17 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     grab = dest.parent / "_cover_frame.jpg"
     at = float(cover.get("frame_at", 3.0))
     cx = float(cover.get("cx", 0.5))
-    x = max(0, min(int(round(cx * source_w - CROP_W / 2)), source_w - CROP_W))
+    # 底图**不要裁 608 再放大**。那是把 1080p 里三分之一的宽度拉到 1080 宽——
+    # 放大 1.78 倍，糊得一眼能看出来。改成整幅缩到 1080 宽（是缩小），
+    # 两侧用同一帧放大模糊垫满：清晰度立刻不一样，人也不会被裁掉。
     run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
         "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
-        "-vf", f"crop={CROP_W}:{CROP_H}:{x}:0,scale={VIDEO_W}:{VIDEO_H}:flags=lanczos",
+        "-filter_complex",
+        f"[0:v]split=2[bg][fg];"
+        f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+        f"crop={VIDEO_W}:{VIDEO_H},boxblur=46:2,eq=brightness=-0.22[bgb];"
+        f"[fg]scale={VIDEO_W}:-2:flags=lanczos[fgs];"
+        f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2",
         "-q:v", "2", str(grab))
 
     lines = "".join(
