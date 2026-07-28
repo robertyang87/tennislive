@@ -3,9 +3,13 @@
 
 两件事是踩过坑之后定的：
 
-- **成片走 jsDelivr，不走 raw**。`github.com/<repo>/raw/...` 会 302 到
-  raw.githubusercontent.com，国内没有 CDN，下载慢到打不开。写成 `@main`，
-  `push(asset_dir=...)` 会顺手把它钉到具体 commit
+- **成片优先走 jsDelivr，超过 20 MB 只能回 raw**。`github.com/<repo>/raw/...`
+  会 302 到 raw.githubusercontent.com，国内没有 CDN，下载慢——所以能走 jsDelivr
+  就走。但 **jsDelivr 对单文件卡 20 MB**，超了直接
+  `403 File size exceeded the configured limit of 20 MB`；1080×1920 / crf 18
+  的七十秒成片是 35 MB，一次都过不去。`wait_for_images` 于是二十次探活全失败，
+  整条推送被取消（run 30339377013）。**慢链接也比 403 强**，所以按文件大小选：
+  ≤20 MB 用 jsDelivr，超了用 raw。别为了迁就 CDN 去压成片的画质
 - **同一份文案只印一遍**。之前给推送加"可复制文案"时，正文印一遍、灰底复制块
   又印一遍，字符串断言全过，人一看整页才发现。所以正文只讲片子，
   文案只在复制块里出现一次
@@ -29,6 +33,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.publish.pushplus import push  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
+# jsDelivr 的 /gh/ 单文件上限。超过就是 403，不是慢，是打不开。
+JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
+
+
+def video_url(outdir: Path, name: str) -> str:
+    """成片链接：够小走 jsDelivr（国内快），超 20 MB 只能回 raw。"""
+    size = (outdir / name).stat().st_size
+    path = f"{outdir.as_posix()}/{name}"
+    if size <= JSDELIVR_MAX_BYTES:
+        return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{path}"
+    print(f"[链接] 成片 {size / 1e6:.1f} MB 超过 jsDelivr 的 20 MB 上限，改用 raw")
+    return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
 
 
 def build_html(video_url: str, lead: str, copy_text: str) -> str:
@@ -70,10 +87,10 @@ def main() -> int:
     if not copy_text:
         raise SystemExit("文案是空的")
 
-    video_url = f"https://cdn.jsdelivr.net/gh/{REPO}@main/{outdir.as_posix()}/{name}"
-    body = build_html(video_url, args.lead, copy_text)
+    url = video_url(outdir, name)
+    body = build_html(url, args.lead, copy_text)
     push(args.title, body, asset_dir=outdir)
-    print(f"已推送：{args.title}\n  成片 {video_url}\n  文案 {len(copy_text)} 字")
+    print(f"已推送：{args.title}\n  成片 {url}\n  文案 {len(copy_text)} 字")
     return 0
 
 
