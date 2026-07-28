@@ -728,6 +728,43 @@ ATP500+WTA500 的大站会把 16 个名额吃光，**孟菲斯和洛斯卡沃斯
 - 本地沙箱取不到外网图片和 TTS，这类验证走 GitHub Actions
 - 规则要落成测试，别只写在文档里 —— 见 `tests/test_explainer.py`
 
+### 沙箱跑全量测试前先装依赖，别把缺依赖当成「已知红」
+
+沙箱里全量跑常年 26 条红，我一直当成环境噪音，还在回复里写过「全是
+`_cffi_backend` 缺失那一类」——**那句话是错的**。真去看每条的第一行错误，
+是四种原因，只有最后一种被我说对了：
+
+| 条数 | 报错 | 装什么 |
+|---|---|---|
+| 16 | `No module named 'rich'` | 主依赖，`pip install -e .` 就有 |
+| 2 | `cv2 has no attribute 'CascadeClassifier'` | `visualqa` extra |
+| 7 | `pyo3_runtime.PanicException` → `No module named '_cffi_backend'` | `pip install cffi` |
+| 1 | `AssertionError: wqy-zenhei.ttc` | **真问题，见下** |
+
+照 CI 那行装完（`ci.yml` 里就写着），26 → 1：
+
+```bash
+pip install -q -e ".[dev,webrender,visualqa]" && pip install -q cffi
+PYTHONPATH=src python3 -m pytest tests/ -q      # 892 passed, 7 skipped
+```
+
+两条教训：
+
+- **`opencv-python-headless` 不能不带版本装。** `pyproject.toml` 里钉着
+  `>=4.10,<5`，我为了抽视频帧随手 `pip install opencv-python-headless`
+  装到 **5.0.0**，`cv2.CascadeClassifier` 在 5.x 里没了——于是那两条红从
+  「没装 cv2」变成「装错了 cv2」，长得一模一样。装 extra，别装包名
+- **「一批红」要逐条看第一行错误。** 26 条里 25 条同因、1 条不同因，
+  只看前几条就下结论，那一条就永远被埋在噪音里。这和「空结果先自证是真空」
+  是同一个毛病：**一个笼统的解释盖住了一个具体的 bug**
+
+那第 1 条是真的：`test_default_fonts_render_cjk_without_env` 里有一句
+`any(tag in name for tag in ("Noto", "CJK", "SC"))`，拿**文件名**近似
+「这是不是中文字体」。沙箱装的是文泉驿正黑（`wqy-zenhei.ttc`），中文渲染
+完全正常，却因为名字里没那三个词被判红——**假阴性**。判据本来就在同一个
+测试的下面两行（画出来比笔画：`render("网") != render("时")`，Latin-only
+字体画出来两个豆腐块字节完全相同，反向验证过），把名字白名单删掉即可。
+
 断言全绿不等于页面对。给推送加"可复制文案"时，`'长按下面整段' in body`、`'#网球时差' in body` 全过，人却没看过整页 —— 实际是同一份文案在推送里印了两遍，正文一遍、灰底复制块又一遍。截图一眼就看出来了。
 
 本地渲染 HTML 不需要外网（图片会裂，无所谓，看的是排版）：
