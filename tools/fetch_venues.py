@@ -65,7 +65,14 @@ VENUES = [
     # 球场）；赛事官网票务页那三张 Stadium 图**全是效果图不是实拍**——横幅上
     # 的字是糊的（TOPNO / MEMPH / TENOS GEHPLIS），观众是重复贴图。带假文字
     # 的渲染图比一张真实城市照更糟。
-    ("memphis-leftwich-tennis-center.jpg", None, None),
+    # 后来换成了主球场：全场航拍是对的，但那不是中心球场。WTA 赛事页的 hero
+    # 图（1167_Memphis-Hero-2）拍的就是这座临时主球场——满场看台、紫黄赞助带，
+    # 前场地面刷着 MEMPHIS CLASSIC。放大看观众是一个个不同的人（工作证、折叠
+    # 椅、举手机的小孩），不是效果图那种重复贴图。
+    # 两点如实记在 credits 里：一是它是 2.44 的横幅，裁成 3:4 之后场地上那行
+    # MEMPHIS CLASSIC 不在画面内；二是它上传于 2026-06-25，早于首届开赛，
+    # 无法确认拍的是不是正赛。
+    ("memphis-leftwich-stadium-court.jpg", None, None),
     # 洛斯卡沃斯 ATP250（Cabo Sports Complex 的 Estadio Alejandro Burillo）：
     # 球场在 Commons 上是真空——"Cabo Sports Complex" 只命中一张波兰滑水赛的
     # 照片，"Estadio Alejandro Burillo" 0 命中，全站与这个赛事沾边的只剩一个
@@ -119,13 +126,13 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
-    "memphis-leftwich-tennis-center.jpg": {
-        "title": "Leftwich Tennis Center \u00b7 Courts\uff08WTA \u5b98\u65b9\u56fe\u5e93\uff09",
-        "license": "unverified \u00b7 \u8d5b\u4e8b\u5b98\u65b9\u5a92\u4f53",
+    "memphis-leftwich-stadium-court.jpg": {
+        "title": "Memphis Classic 主球场（WTA 赛事页 hero 图 1167_Memphis-Hero-2；"
+                 "场地前场刷着 MEMPHIS CLASSIC，裁成 3:4 后不在画面内）",
+        "license": "unverified · 赛事官方媒体",
         "artist": "WTA / Memphis Classic",
-        "page": "https://photoresources.wtatennis.com/photo-resources/2026/03/02/"
-                "b47c47ce-33d6-4eb5-bc1a-a0e9bdd64ee6/"
-                "Marked_Leftwich-Tennis-Center_Courts.jpg",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/06/25/"
+                "9a7c7f59-5a1f-4afd-bb33-bd3bdf8d56ca/1167_Memphis-Hero-2.jpg",
     },
     # 画面自己把身份说死了：右侧赞助带印着 LOS CABOS（带市徽）和 Mifel，场地
     # 前场地面上也刷着 LOS CABOS。放大看这些字都是清楚的——不是效果图那种
