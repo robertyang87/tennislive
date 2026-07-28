@@ -2059,8 +2059,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "她是第一个以外卡拿下美网的人，也是一九八〇年古拉贡之后，"
             "第一个当了妈妈还能拿下大满贯的人。",
             "assets/explainer/wildcard/clijsters_2009_final.jpg",
-            "Clive Brunskill/Getty Images · Sony Ericsson WTA Tour 官方账号转发 · "
-            "2009 年 9 月 13 日美网女单决赛，克里斯特尔斯对沃兹尼亚奇",
+            "Timothy A. Clary/AFP · Sony Ericsson WTA Tour 官方账号转发 · "
+            "2009 年 9 月 13 日美网女单决赛后，克里斯特尔斯捧起奖杯",
             (
                 "2009 美网，当时连排名都没有",
                 "八强淘汰李娜，四强淘汰小威廉姆斯",
