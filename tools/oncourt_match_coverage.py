@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import collections
 import importlib.util
+import math
 import json
 import re
 import sys
@@ -48,25 +49,117 @@ _spec = importlib.util.spec_from_file_location("feed", ROOT / "tools" / "oncourt
 feed = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(feed)
 
-# 各轮场次数，从决赛倒推。签表小的赛事前面的轮次不存在。
-_SIZES = {"决赛": 1, "半决赛": 2, "四分之一决赛": 4, "十六强": 8,
-          "第三轮": 16, "第二轮": 32, "第一轮": 64}
+# 末四轮按人数定名，更早的轮次按**从上往下第几轮**定名（第一轮 / 第二轮 / …）。
+# 这个顺序不能倒过来：见 rounds_of() 的说明。
+_TAIL = ["决赛", "半决赛", "四分之一决赛", "十六强"]
 TIER_RANK = {"大满贯": 4, "ATP1000": 3, "WTA1000": 3, "ATP500": 2, "WTA500": 2,
              "ATP250": 1, "WTA250": 1}
 
 
 def rounds_of(draw: int) -> dict[str, int]:
-    """这个签表里每一轮有几场。
+    """这个签表里每一轮有几场，**名字要和 `parse_round()` 的产出对得上**。
 
-    倒推而不是正推：**轮次名是按「离决赛多远」定的**，
-    32 签的「第一轮」有 16 场，128 签的「第一轮」有 64 场，同名不同量。
+    上一版是从决赛纯倒推的固定表（决赛 1、半决 2、八强 4、十六强 8、
+    第三轮 16、第二轮 32、第一轮 64），两处都错，**73 / 103 站受影响**：
+
+    **一、盖不住有轮空的签表。** 28 / 48 / 56 / 96 签不是 2 的幂，首轮场次
+    要按轮空算：`轮空 = 2^ceil(log2 签) − 签`，`首轮场次 = (签 − 轮空) / 2`。
+    28 签实际打 27 场，旧表只列出 15 场；96 签打 95 场，旧表 63 场。
+    多出来的那一轮在表里没有格子，条目直接被丢掉。
+
+    **二、名字对不上，连 2 的幂签表也错。** 旧表把 32 签的 16 场那一轮叫
+    「第三轮」——可赛事自己标的是 `R1`，`parse_round` 给出「第一轮」，
+    表里没这一格。**迪拜 ATP500 因此丢掉 43 条第一轮 + 28 条第二轮。**
+
+    所以改成：**末四轮按人数定名**（8 场＝十六强、4＝四分之一、2＝半决、1＝决赛），
+    **更早的轮次按从上往下第几轮定名**（第一轮 / 第二轮 / 第三轮…）——
+    这正是赛事和 tennistv 的 `metadataRound` 用的那套。
+
+    32 签的 8 场那一轮是个骑墙的：赛事标 `R2`（→第二轮），但它确实是
+    round of 16。**两个名字都给一格**，谁来了都算得上。
     """
-    keep, used = {}, 0
-    for r in ["决赛", "半决赛", "四分之一决赛", "十六强", "第三轮", "第二轮", "第一轮"]:
-        if _SIZES[r] == 1 or _SIZES[r] * 2 <= draw:
-            keep[r] = min(_SIZES[r], max(draw - used, 0) or _SIZES[r])
-        used = sum(keep.values())
-    return keep
+    full = 1 << math.ceil(math.log2(draw))
+    byes = full - draw
+    counts = [(draw - byes) // 2]
+    n = counts[0] + byes
+    while n > 1:
+        counts.append(n // 2)
+        n //= 2
+
+    names: list[str] = []
+    head = len(counts) - len(_TAIL)          # 前面按序号命名的轮数
+    for i in range(len(counts)):
+        if i >= head:
+            names.append(_TAIL[len(counts) - 1 - i])
+        else:
+            names.append(f"第{'一二三四五六'[i]}轮")
+    return dict(zip(names, counts))
+
+
+def canon(round_zh: str | None, draw: int) -> str | None:
+    """把 `parse_round()` 给的轮次名，归到 `rounds_of()` 的某一格。
+
+    **同一轮有两个叫法，得先合并再计数。** 32 签的 8 场那一轮，
+    按人数叫「十六强」，赛事自己标 `R2`（→「第二轮」）——两个名字指同一轮。
+    直接把别名也塞进 `rounds_of()` 的返回值不行：`coverage()` 是逐格
+    `min(命中数, 该轮场次)` 封顶的，两个键各自封顶会让这一轮的上限翻倍。
+    所以归一放在这里，表里每一轮只有一个键。
+
+    认不出的返回 None——**宁可不算，也别塞进错的格子**。
+    """
+    if not round_zh:
+        return None
+    tbl = rounds_of(draw)
+    if round_zh in tbl:
+        return round_zh
+    # 位置名 ↔ 人数名互转：找场次数相同的那一格
+    size = {"十六强": 8, "四分之一决赛": 4, "半决赛": 2, "决赛": 1}.get(round_zh)
+    if size is None:
+        order = {f"第{c}轮": i for i, c in enumerate("一二三四五六")}
+        i = order.get(round_zh)
+        names = list(tbl)
+        return names[i] if i is not None and i < len(names) else None
+    for nm, c in tbl.items():
+        if c == size:
+            return nm
+    return None
+
+
+def by_edition(items: dict, ev: dict) -> list[tuple[str, int]]:
+    """这一站**逐届**各覆盖了多少场，从高到低。
+
+    默认那个数是跨届逐轮封顶的，意思是「最好的一届能覆盖到几成」——**上限**。
+    修好 `rounds_of()` 之后迪拜 ATP500 跳到 100%，数太好看了，
+    所以按年份拆开验了一遍：**2025 那届单届实测 30/31 = 97%**，
+    和跨届上限 100% 只差一场。上限是站得住的。
+
+    但别的站不一定这么齐。年份从标题和 page_url 里找，找不到的跳过并报出来
+    ——**只报能归届的，没法证明剩下的也归得上**。
+    """
+    rx, own = re.compile(ev["pat"], re.I), set(ev.get("srcs", ()))
+    tbl = rounds_of(ev["draw"])
+    per: dict[str, dict[str, set]] = collections.defaultdict(
+        lambda: collections.defaultdict(set))
+    skipped = 0
+    for it in items.values():
+        if it.get("source") not in own and not rx.search(haystack(it)):
+            continue
+        if not is_main_singles(it):
+            continue
+        if ev["tour"] != "both" and side(it) != ev["tour"]:
+            continue
+        rd = canon(feed.parse_round(it), ev["draw"])
+        if rd not in tbl:
+            continue
+        m = re.search(r"20\d\d", f"{it.get('title', '')} {it.get('page_url') or ''}")
+        if not m:
+            skipped += 1
+            continue
+        per[m.group()][rd].add(re.sub(r"[^a-z]", "", it["title"][:34].lower())[:14])
+    out = [(y, sum(min(len(v), tbl[k]) for k, v in rounds.items()))
+           for y, rounds in per.items()]
+    out.sort(key=lambda x: -x[1])
+    return out, skipped
 
 
 def coverage(items: dict, events: list) -> list[dict]:
@@ -102,7 +195,7 @@ def coverage(items: dict, events: list) -> list[dict]:
         tbl = rounds_of(ev["draw"])
         byr = collections.defaultdict(set)
         for h in hits:
-            rd = feed.parse_round(h)
+            rd = canon(feed.parse_round(h), ev["draw"])
             if rd in tbl:
                 # 球员指纹：标题前 34 字去掉非字母，够区分同轮不同人
                 byr[rd].add(re.sub(r"[^a-z]", "", h["title"][:34].lower())[:14])
@@ -118,9 +211,24 @@ def main() -> int:
     ap.add_argument("--min-tier", type=int, default=0,
                     help="只看这个级别及以上：250/500/1000（大满贯永远算在内）")
     ap.add_argument("--target", type=float, help="达标线（百分数），标出没到的")
+    ap.add_argument("--by-edition", metavar="赛事",
+                    help="把某一站按届拆开——默认那个数是跨届上限，这个是单届实测")
     args = ap.parse_args()
 
     items, events = load()
+    if args.by_edition:
+        hit = [e for e in events if args.by_edition in e["zh"] and e.get("matches")]
+        if not hit:
+            print(f"赛历里没有名字含「{args.by_edition}」的站")
+            return 2
+        for ev in hit:
+            rows_y, skipped = by_edition(items, ev)
+            print(f"\n{ev['zh']}（{ev['tier']}，{ev['matches']} 场）逐届：")
+            for y, cov in rows_y:
+                print(f"   {y}  {cov:>3}/{ev['matches']}  {cov / ev['matches']:>4.0%}")
+            if skipped:
+                print(f"   （另有 {skipped} 条标题和 URL 里都没有年份，归不了届）")
+        return 0
     rank = {0: 0, 250: 1, 500: 2, 1000: 3}[args.min_tier] if args.min_tier in (0, 250, 500, 1000) else 0
     rows = [r for r in coverage(items, events) if TIER_RANK.get(r["tier"], 0) >= rank]
 
