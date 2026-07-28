@@ -455,3 +455,55 @@ def test_chinese_singles_survive_the_cap():
     cn = sched(match_id="cn", home="Zhizhen Zhang", home_country="CHN")
     picked = [m for _g, ms in schedule_selection(filler + [cn]) for m in ms]
     assert any(m.match_id == "cn" for m in picked)
+
+
+# ---------- 跨天标识 ----------
+
+
+def test_next_day_matches_are_marked():
+    """跨日窗口让「今日赛程」里有一半场次落在北京次日凌晨。
+
+    只印「预计 01:00」看不出是哪天的 01:00——读者会当成今天白天已经过去的
+    那个点。郑钦文那场正是 17:00Z = 北京次日 01:00。
+    """
+    from datetime import date
+
+    today = date(2026, 7, 28)
+    same_day = sched(match_id="a", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
+                     status_text="single-source")
+    next_day = sched(match_id="b", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+                     status_text="single-source")
+    display = schedule_time_display([same_day, next_day], today=today)
+    assert display[match_key(same_day)] == "预计 23:00*"
+    assert display[match_key(next_day)] == "预计 +1 01:00*"
+
+
+def test_the_estimate_anchor_carries_the_day_marker_too():
+    """「…后」那种下界，锚点本身跨天时也要标出来。"""
+    from datetime import date
+
+    r1 = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+               status_text="single-source")
+    r2 = sched(match_id="b", round_name="Round 2", status_text="unpublished")
+    display = schedule_time_display([r1, r2], today=date(2026, 7, 28))
+    assert display[match_key(r2)] == "+1 01:00 后*"
+
+
+def test_no_day_marker_without_a_reference_date():
+    """不传 today 就不标——没有基准日就没法判断跨没跨天，不能瞎标。"""
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="single-source")
+    assert "+1" not in schedule_time_display([m])[match_key(m)]
+
+
+def test_footnote_explains_the_day_marker():
+    from datetime import date
+
+    from tennislive.render.schedule_time import has_next_day_times
+
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
+              status_text="single-source")
+    display = schedule_time_display([m], today=date(2026, 7, 28))
+    assert has_next_day_times(display.values())
+    body = schedule_body([m], "7.28", time_display=display)
+    assert "+1 为次日" in body

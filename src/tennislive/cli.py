@@ -832,12 +832,12 @@ def cmd_schedule_cards(args) -> int:
         stale.unlink()
     date_label = f"{d.month}.{d.day}"
 
-    pages = schedule_pages(upcoming, date_label)
+    pages = schedule_pages(upcoming, date_label, today=d)
     console.print(f"共 {len(pages)} 页")
 
     card_paths: list[Path] = []
     try:
-        for kind, image in generate_schedule_deck(upcoming, date_label):
+        for kind, image in generate_schedule_deck(upcoming, date_label, today=d):
             path = outdir / "cards" / f"card_{kind}.jpg"
             image.convert("RGB").save(path, quality=92)
             card_paths.append(path)
@@ -853,7 +853,7 @@ def cmd_schedule_cards(args) -> int:
 
     selection = schedule_selection(upcoming)
     on_card = [m for _group, ms in selection for m in ms]
-    display = schedule_time_display(upcoming)
+    display = schedule_time_display(upcoming, today=d)
     lead = pick_lead(on_card)
     post = schedule_post(d, on_card, display, lead)
     console.print(f"[cyan]标题[/cyan] {post.splitlines()[0]}")
