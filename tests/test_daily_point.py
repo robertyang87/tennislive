@@ -979,7 +979,7 @@ def test_discovery_records_per_resolver_attempts_and_failures(
     ):
         monkeypatch.setattr(daily_point_module, name, broken)
     monkeypatch.setattr(
-        daily_point_module, "discover_slam_point", lambda _digest, _tour: None
+        daily_point_module, "discover_slam_point", lambda _digest, _tour, **_kwargs: None
     )
 
     diagnostics = {}
@@ -1123,3 +1123,127 @@ def test_generate_skips_discovery_when_every_tour_already_done(
     )
 
     assert outputs == {}
+
+
+def test_discovery_ledger_records_no_match_gap(sample_digest):
+    # A source that fetched a labelled clip but nothing named a yesterday
+    # player must leave an auditable "0 matched" line, not a silent skip.
+    page = (
+        '<a href="/videos/9/point-of-the-day">'
+        "Point of the day: Somebody Nobody Watch Now</a>"
+    )
+    report: list[dict] = []
+
+    selection = discover_wta_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _Response(page),
+        metadata_fetcher=lambda candidate, **kwargs: _metadata(),
+        report=report,
+    )
+
+    assert selection is None
+    assert len(report) == 1
+    entry = report[0]
+    assert entry["source"] == "WTA 官方视频（官网）"
+    assert entry["fetched"] == 1
+    assert entry["matched"] == 0
+    assert entry["picked"] is False
+    assert "0 条命中" in entry["note"]
+    assert entry["error"] == ""
+
+
+def test_discovery_ledger_records_a_picked_line(sample_digest):
+    page = (
+        '<a href="/videos/123/point-of-the-day-zheng">'
+        "Point of the day: Qinwen Zheng Watch Now</a>"
+    )
+    report: list[dict] = []
+
+    selection = discover_wta_point(
+        sample_digest,
+        get=lambda *args, **kwargs: _Response(page),
+        metadata_fetcher=lambda candidate, **kwargs: replace(
+            _metadata(),
+            candidate=candidate,
+            description=(
+                "Qinwen Zheng and Aryna Sabalenka produce the official "
+                "point of the day at Wimbledon."
+            ),
+        ),
+        report=report,
+    )
+
+    assert selection is not None
+    assert report[0]["source"] == "WTA 官方视频（官网）"
+    assert report[0]["matched"] == 1
+    assert report[0]["picked"] is True
+
+
+def test_resolver_attempts_fold_in_fetched_matched_counts(sample_digest, monkeypatch):
+    # An erroring source is recorded as an error; a source that fetched clips
+    # but matched nothing carries fetched/matched so "empty" separates a real
+    # no-material day (fetched N, matched 0) from a broken feed (fetched 0).
+    import tennislive.video.daily_point as dp
+
+    def boom(_digest, report=None):
+        raise dp.VideoPipelineError("feed HTTP 500")
+
+    def gap(_digest, report=None):
+        dp._record_source(report, "STUB", fetched=5, matched=0, picked=False)
+        return None
+
+    monkeypatch.setattr(dp, "discover_tennistv_point", boom)
+    for name in (
+        "discover_wta_point",
+        "discover_wta_youtube_point",
+        "discover_atp_point",
+        "discover_tennistv_youtube_point",
+        "discover_youtube_search_point",
+    ):
+        monkeypatch.setattr(dp, name, gap)
+    monkeypatch.setattr(
+        dp, "discover_slam_point", lambda _digest, _tour, report=None: None
+    )
+
+    diagnostics: dict = {}
+    picks = dp.discover_official_points_by_tour(sample_digest, diagnostics=diagnostics)
+
+    assert picks == {}
+    attempts = diagnostics["resolver_attempts"]
+    errored = [a for a in attempts if a.get("status") == "error"]
+    assert errored and errored[0]["source"] == dp._SRC_TENNISTV
+    assert "feed HTTP 500" in errored[0]["error"]
+    # The five non-raising stubs each folded in fetched=5/matched=0 -- the
+    # signal that separates a real gap from a broken source.
+    gaps = [
+        a
+        for a in attempts
+        if a.get("status") == "empty" and a.get("fetched") == 5 and a.get("matched") == 0
+    ]
+    assert len(gaps) == 5
+
+
+def test_generate_threads_diagnostics(sample_digest, tmp_path, monkeypatch):
+    monkeypatch.setenv("TENNISLIVE_YESTERDAY_POINT", "on")
+
+    def fake_discover(_digest, *, diagnostics=None):
+        assert diagnostics is not None
+        diagnostics["resolver_attempts"] = [
+            {"resolver": "stub", "source": "STUB", "status": "empty",
+             "fetched": 0, "matched": 0}
+        ]
+        return {}
+
+    monkeypatch.setattr(
+        "tennislive.video.daily_point.discover_official_points_by_tour",
+        fake_discover,
+    )
+
+    diagnostics: dict = {}
+    outputs = generate_yesterday_point(
+        sample_digest, tmp_path, diagnostics=diagnostics
+    )
+
+    assert outputs == {}
+    assert diagnostics["enabled"] is True
+    assert diagnostics["resolver_attempts"][0]["source"] == "STUB"

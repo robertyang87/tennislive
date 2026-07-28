@@ -878,12 +878,28 @@ def cmd_yesterday_point(args) -> int:
                 "published_for": d.isoformat(),
                 "tours": tour_status,
                 "fresh_tours": sorted(videos),
+                # Per-source discovery ledger in one place: which official
+                # source fetched how many clips, how many matched yesterday,
+                # and each resolver's outcome. Lets a skip run separate a real
+                # no-material day (fetched N, matched 0) from a broken source
+                # (fetched 0 / error), and is what the workflow surfaces to the
+                # Actions summary.
+                "resolver_attempts": diagnostics.get("resolver_attempts", []),
             },
             ensure_ascii=False,
             indent=2,
         ),
         encoding="utf-8",
     )
+    attempts = diagnostics.get("resolver_attempts", [])
+    if attempts and not videos and not already_done:
+        for item in attempts:
+            detail = item.get("note") or item.get("error") or item.get("status", "")
+            console.print(
+                f"[dim]· {item.get('source', item.get('resolver', ''))}："
+                f"抓取{item.get('fetched', '-')}/命中{item.get('matched', '-')}"
+                f"（{detail}）[/dim]"
+            )
     return 0
 
 

@@ -602,6 +602,17 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
 
     def fake_generate(_digest, out_dir, *, skip_tours=frozenset(), diagnostics=None):
         seen_skip_tours["value"] = skip_tours
+        if diagnostics is not None:
+            diagnostics["enabled"] = True
+            diagnostics["resolver_attempts"] = [
+                {
+                    "resolver": "discover_wta_point",
+                    "source": "WTA 官方视频（官网）",
+                    "status": "empty",
+                    "fetched": 4,
+                    "matched": 0,
+                }
+            ]
         wta_dir = out_dir / "wta"
         wta_dir.mkdir(parents=True, exist_ok=True)
         video = wta_dir / "yesterday-point.mp4"
@@ -622,6 +633,10 @@ def test_yesterday_point_cli_skips_already_done_tour_and_tracks_fresh(
     manifest = json.loads((output_dir / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["tours"] == {"ATP": "pass", "WTA": "pass"}
     assert manifest["fresh_tours"] == ["WTA"]
+    # The per-source ledger (with fetched/matched counts) also rides along in
+    # the top-level manifest, so the workflow can surface it from one place.
+    assert manifest["resolver_attempts"][0]["source"] == "WTA 官方视频（官网）"
+    assert manifest["resolver_attempts"][0]["fetched"] == 4
 
 
 def test_yesterday_point_cli_reports_switch_off_and_writes_skip_diagnostics(
