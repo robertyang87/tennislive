@@ -3651,8 +3651,64 @@ def _schedule_selection(matches: list[Match]) -> list[Match]:
     return core
 
 
+# 全天一共放几场。跨日窗口打开之后单日能到 42 场（七页），推送正文两千多字，
+# 小红书那一千字的正文根本放不下，读者也不会逐行看完。
+#
+# 16 这个数是从正文长度倒推的：一场一行、连赛事标题在内约 800 字，正好落在
+# 「一屏能扫完」的量级；分页后是三页左右，也比七页更像一份"今日主要赛程"。
+SCHEDULE_MAX_MATCHES = 16
+
+
+def _cap_by_importance(
+    per_event: list[tuple[object, list[Match]]], limit: int
+) -> list[tuple[object, list[Match]]]:
+    """全局收口到 ``limit`` 场，且**每个赛事都留得住代表**。
+
+    先把中国单打整批保下来（读者就是冲这个来的，一场都不能丢），再在各赛事
+    之间轮流取——按分量排好序之后一轮一场。不这么轮的话，华盛顿那种大站会
+    把名额吃光，孟菲斯和洛斯卡沃斯整站消失。
+    """
+    kept: dict[int, list[Match]] = {i: [] for i in range(len(per_event))}
+    queues: list[list[Match]] = []
+    total = 0
+    for index, (_group, matches) in enumerate(per_event):
+        rest = []
+        for m in matches:
+            if m.is_singles and is_chinese_involved(m):
+                kept[index].append(m)
+                total += 1
+            else:
+                rest.append(m)
+        queues.append(rest)
+
+    # 轮流取，直到取满或全部取完（各队列内部已按分量排好）
+    while total < limit and any(queues):
+        progressed = False
+        for index, queue in enumerate(queues):
+            if total >= limit:
+                break
+            if not queue:
+                continue
+            kept[index].append(queue.pop(0))
+            total += 1
+            progressed = True
+        if not progressed:
+            break
+
+    out = []
+    for index, (group, _matches) in enumerate(per_event):
+        chosen = kept[index]
+        if chosen:
+            chosen.sort(key=_schedule_sort_key)
+            out.append((group, chosen))
+    return out
+
+
 def schedule_selection(
-    matches: list[Match], *, tour_level_only: bool = True
+    matches: list[Match],
+    *,
+    tour_level_only: bool = True,
+    limit: int | None = SCHEDULE_MAX_MATCHES,
 ) -> list[tuple[object, list[Match]]]:
     """[(赛事组, 这一组真正上卡的场次)]，顺序与出图一致。
 
@@ -3666,6 +3722,8 @@ def schedule_selection(
         selected = _schedule_selection(group.matches)
         if selected:
             out.append((group, selected))
+    if limit is not None:
+        out = _cap_by_importance(out, limit)
     return out
 
 
