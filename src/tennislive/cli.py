@@ -748,6 +748,81 @@ def cmd_digest(args) -> int:
     return 0
 
 
+def cmd_schedule_cards(args) -> int:
+    """今日赛程卡：按赛事分页、ATP 与 WTA 各自成页、不带看点。"""
+    from .render.common import group_by_tournament
+    from .render.pushmsg import to_schedule_push_html
+    from .render.terminal import console
+    from .render.webcards import (
+        TOUR_LEVELS,
+        generate_schedule_deck,
+        schedule_pages,
+    )
+
+    d = parse_date_arg(args.date)
+    try:
+        digest: Digest = build_digest(d, prefer=args.source)
+    except SourceError as e:
+        console.print(f"[red]抓取失败：{e}[/red]")
+        return 1
+
+    from .sources.official_schedule import enrich_official_schedules
+
+    digest.source_status.update(enrich_official_schedules(digest))
+
+    upcoming = digest.schedule
+    if not upcoming:
+        console.print("[yellow]今天没有未开赛的场次，不出赛程卡[/yellow]")
+        return 0
+
+    # 取材口径要能被人核对：哪些赛事进了、哪些被级别挡了、每站列了几场，
+    # 全部打出来。只在成功时出声的检查没法证明它真的看过。
+    kept, skipped = [], []
+    for group in group_by_tournament(upcoming):
+        target = kept if group.level in TOUR_LEVELS else skipped
+        target.append((group, len(group.matches)))
+    for group, count in kept:
+        console.print(f"[green]收录[/green] {group.compact_level} · {group.name_zh}（{count} 场）")
+    for group, count in skipped:
+        console.print(
+            f"[yellow]挡掉[/yellow] {group.name_zh}（{count} 场）"
+            f"：级别 {group.level or '未识别'}，非巡回赛级别"
+        )
+    if not kept:
+        console.print("[yellow]今天没有巡回赛级别的赛事[/yellow]")
+        return 0
+
+    outdir = Path(args.outdir) / d.isoformat() / "schedule"
+    (outdir / "cards").mkdir(parents=True, exist_ok=True)
+    date_label = f"{d.month}.{d.day}"
+
+    pages = schedule_pages(upcoming, date_label)
+    console.print(f"共 {len(pages)} 页")
+
+    card_paths: list[Path] = []
+    try:
+        for kind, image in generate_schedule_deck(upcoming, date_label):
+            path = outdir / "cards" / f"card_{kind}.jpg"
+            image.convert("RGB").save(path, quality=92)
+            card_paths.append(path)
+    except Exception as e:  # noqa: BLE001 - 字体/浏览器缺失不该吞掉诊断信息
+        console.print(f"[red]赛程卡渲染失败：{e}[/red]")
+        return 1
+
+    events = [f"{group.compact_level}·{group.name_zh}" for group, _ in kept]
+    (outdir / "push.html").write_text(
+        to_schedule_push_html(d, [p.name for p in card_paths], events=events),
+        encoding="utf-8",
+    )
+    # push-existing.yml 用 xiaohongshu.txt 的首行当推送标题
+    (outdir / "xiaohongshu.txt").write_text(
+        f"今日赛程 · {d.month}.{d.day}\n\n" + "\n".join(events) + "\n",
+        encoding="utf-8",
+    )
+    console.print(f"[green]已生成 {len(card_paths)} 张赛程卡 → {outdir}[/green]")
+    return 0
+
+
 def cmd_yesterday_point(args) -> int:
     """Generate the independent, source-audited yesterday-point package(s).
 
@@ -1503,6 +1578,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
+    sp = sub.add_parser(
+        "schedule-cards", help="今日赛程卡：按赛事分页、ATP/WTA 分开、无看点"
+    )
+    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1571,6 +1653,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_radar(args)
     if args.command == "explainer":
         return cmd_explainer(args)
+    if args.command == "schedule-cards":
+        return cmd_schedule_cards(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":

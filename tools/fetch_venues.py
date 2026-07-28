@@ -56,6 +56,14 @@ VENUES = [
     # 自己就把身份说清楚了。
     ("washington-fitzgerald-tennis-center.jpg",
      "File:Karatsev–Tiafoe in stadium at the 2023 DC Open 01.jpg", None),
+    # 孟菲斯（2026 年新设的 WTA250，在 Leftwich Tennis Center）：球场本身在
+    # Commons 上是真空——"Leftwich Tennis Center" 与 "Memphis Tennis Center"
+    # 两条查询都是 0 命中，而同一批其他查询各返回 25 条，不是限流。
+    # 退回城市地标。首选是德索托大桥（那个 M 形拱是孟菲斯最好认的东西），但
+    # 大桥的全部候选、全部缩略图宽度都被 upload.wikimedia.org 持续 429 挡住，
+    # 比尔街同样。先用能取到的夜景天际线，之后可以用本脚本换成大桥。
+    ("memphis-downtown-night.jpg",
+     "File:Memphis Skyline at Night January 2015.jpg", None),
     # 加拿大站：原来钉的 File:RogersCup2011-2.jpg 名字里带赛事，画面却是场外
     # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
     # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央

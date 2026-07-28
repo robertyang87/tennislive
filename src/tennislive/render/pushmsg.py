@@ -288,6 +288,50 @@ def to_push_html(
     return "\n".join(parts)
 
 
+def to_schedule_push_html(
+    day, cards: list[str], *, events: list[str] | None = None, subdir: str = "schedule"
+) -> str:
+    """今日赛程的推送消息：只有卡片图，没有小红书文案。
+
+    和 ``to_push_html`` 分开写：那条是"待发稿"的审稿消息（标题 + 卡片 + 可复制
+    正文 + 复制页链接），这条是直接给人看的赛程，多一个字都是噪声。
+
+    图片地址仍写成 jsDelivr 的 output 路径：``publish.pushplus`` 会先按
+    ``asset_dir`` 把它们换成本地文件上传到 PushPlus 图床，只有没配图床密钥时
+    才真的走 CDN（那时需要图已经提交上去）。
+    """
+    parts = [
+        '<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;'
+        'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">',
+        '<div style="max-width:680px;margin:0 auto;background-color:#ffffff;'
+        'border-top:5px solid #0b3d2e;padding:18px 16px 22px;">',
+        '<div style="display:inline-block;background-color:#e7f5ea;color:#087747;'
+        'font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">'
+        f'今日赛程 · {day.month}.{day.day}</div>',
+    ]
+    if events:
+        parts.append(
+            '<div style="font-size:20px;line-height:1.4;font-weight:800;'
+            'color:#102d23;margin:10px 0 4px;">'
+            + html.escape(" / ".join(events))
+            + "</div>"
+        )
+    parts.append(
+        '<div style="color:#5f6f68;font-size:13px;margin:0 0 14px;">'
+        "北京时间；带 * 的是按同赛事场序推算的预计时间，以官方排期为准</div>"
+    )
+    for name in cards:
+        safe_name = html.escape(name, quote=True)
+        url = f"{_CDN}/output/{day.isoformat()}/{subdir}/cards/{safe_name}"
+        parts.append(
+            f'<img src="{url}" data-src="{url}" width="100%" '
+            'referrerpolicy="no-referrer" style="width:100%;border-radius:6px;'
+            'margin:0 0 10px;display:block;" />'
+        )
+    parts.extend(["</div>", "</div>"])
+    return "\n".join(parts)
+
+
 def _label(m) -> str:
     g = group_by_tournament([m])[0]
     r = match_round_display(m)
