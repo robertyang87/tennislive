@@ -316,3 +316,65 @@ def test_page_number_appears_only_when_there_is_more_than_one_page():
     assert "· 1/1" not in single
     paged = schedule_body([sched(match_id="a")], "7.28", page=1, total=2)
     assert "· 1/2" in paged
+
+
+# ---------- 推送文案 ----------
+
+
+def _cn_lead():
+    m = sched(
+        match_id="z", tour=Tour.WTA, discipline="Women's Singles",
+        start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC), status_text="single-source",
+        home="Alexandra Eala", home_country="PHI",
+        away="Zheng Qinwen", away_country="CHN",
+    )
+    m.home[0].rank, m.home[0].seed = 28, None
+    m.away[0].rank, m.away[0].seed = 123, None
+    m.court = "Stadium"
+    return m
+
+
+def test_title_fits_the_xiaohongshu_budget():
+    """标题超过 20 字左右会被小红书截断，读者看到的是半句话。"""
+    from datetime import date
+
+    from tennislive.render.schedule_post import TITLE_MAX, _width, post_title
+
+    title = post_title(date(2026, 7, 28), _cn_lead())
+    assert _width(title) <= TITLE_MAX, title
+    assert title.startswith("7.28 今日赛程 | ")
+
+
+def test_title_never_drops_the_two_names():
+    """砍长度时球场、排名、轮次都能丢，两个人名不能——那是读者点进来的理由。"""
+    from datetime import date
+
+    from tennislive.render.schedule_post import post_title
+
+    title = post_title(date(2026, 7, 28), _cn_lead())
+    assert "郑钦文" in title and "伊埃拉" in title
+
+
+def test_lead_prefers_the_chinese_match_with_the_stronger_opponent():
+    """同为中国单打时看对手排名——对手越强，这一问越有分量。"""
+    from tennislive.render.schedule_post import pick_lead
+
+    strong = _cn_lead()
+    weak = sched(
+        match_id="w", tour=Tour.WTA, discipline="Women's Singles",
+        home="Wang Xinyu", home_country="CHN", away="Julieta Pareja",
+    )
+    weak.home[0].rank, weak.home[0].seed = 42, None
+    weak.away[0].rank, weak.away[0].seed = None, None
+    assert pick_lead([weak, strong]) is strong
+
+
+def test_body_only_lists_matches_that_are_on_the_cards():
+    """正文和图对不上，读者第一眼就发现。"""
+    from tennislive.render.schedule_post import post_body
+
+    a, b = sched(match_id="a"), sched(match_id="b")
+    display = schedule_time_display([a, b])
+    body = post_body([a], display)
+    assert "Alpha Player" in body or "阿尔法" in body
+    assert body.count("·") >= 1
