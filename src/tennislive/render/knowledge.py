@@ -72,6 +72,9 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         "surfaces": "三种场地，真像三项运动？",
         "big-three": "三巨头统治了多少年？",
         "china-tennis": "中国网球，从哪一冠开始？",
+        # 兜底的「X 的故事」在这条上尤其糟：「签表上那个 WC的故事」——
+        # 既丢了空格，也把全篇最硬的那个数字留在了标题外面。
+        "wildcard": "第125名靠外卡拿了温网",
     }
     if story.kind == "player":
         hook = f"{story.title}，不只是一场比分"
