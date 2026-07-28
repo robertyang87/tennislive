@@ -5,26 +5,24 @@
   "fetch_enabled": true,
   "strict": true,
   "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
-  "selected_count": 0,
+  "selected_count": 2,
   "required_pages": [
     "explainer",
     "story",
     "today"
   ],
   "missing_pages": [
-    "explainer",
-    "story",
-    "today"
+    "story"
   ],
   "degraded_pages": [
-    "explainer",
-    "story",
-    "today"
+    "story"
   ],
   "failed_curated_source_urls": [],
   "input_domains": [
+    "amazingamerica.com",
     "atptour.com",
     "mubadalacitidcopen.com",
+    "traveldfe.org",
     "wtatennis.com"
   ],
   "providers_queried": [
@@ -210,8 +208,8 @@
       "page": "explainer",
       "provider": "bing-web-image",
       "query": "washington 2023 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 6
     },
     {
       "page": "explainer",
@@ -308,8 +306,8 @@
       "page": "today",
       "provider": "bing-web-image",
       "query": "washington 2023 tennis",
-      "status": "empty",
-      "candidate_count": 0
+      "status": "ok",
+      "candidate_count": 6
     },
     {
       "page": "today",
@@ -375,7 +373,9 @@
       "candidate_count": 0
     }
   ],
-  "selected_providers": [],
+  "selected_providers": [
+    "bing-web-image"
+  ],
   "excluded_source_urls": [],
   "errors": [],
   "attempts": [
@@ -433,13 +433,12 @@
       ],
       "candidate_count": 70,
       "exact_candidate_count": 0,
-      "archive_candidate_count": 1,
+      "archive_candidate_count": 0,
       "rejection_counts": {
         "subject-or-person-mismatch": 17,
-        "low-visual-impact-metadata": 3,
-        "metadata-relevance-below-3": 37,
-        "duplicate-candidate": 12,
-        "subject-archive-rejected-in-strict-mode": 1
+        "low-visual-impact-metadata": 6,
+        "metadata-relevance-below-3": 35,
+        "duplicate-candidate": 12
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -545,31 +544,16 @@
     },
     {
       "page": "explainer",
-      "status": "generated-visual",
-      "reason": "多源检索后无相关性和分辨率同时达标的照片",
-      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "status": "selected",
       "required_event_terms": [],
-      "providers": [
-        "curated-editorial",
-        "official-media",
-        "wikimedia-commons",
-        "openverse",
-        "bing-web-image",
-        "official-tennis-archive",
-        "flickr-public",
-        "duckduckgo-web-image"
-      ],
-      "candidate_count": 78,
-      "exact_candidate_count": 0,
-      "archive_candidate_count": 3,
+      "match_level": "exact-event",
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 2,
-        "metadata-relevance-below-3": 29,
+        "low-visual-impact-metadata": 10,
+        "metadata-relevance-below-3": 26,
         "duplicate-candidate": 23,
-        "subject-archive-rejected-in-strict-mode": 3
+        "subject-archive-rejected-in-strict-mode": 2
       },
-      "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "explainer",
@@ -645,8 +629,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "washington 2023 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 6
         },
         {
           "page": "explainer",
@@ -711,35 +695,35 @@
           "status": "empty",
           "candidate_count": 0
         }
-      ]
+      ],
+      "provider": "bing-web-image",
+      "source_url": "https://amazingamerica.com/2023/05/10/must-see-attractions-in-washington-dc/",
+      "image_url": "https://amazingamerica.com/wp-content/uploads/2023/05/andy-he-cherry-blossoms-washington-dc-stock-unsplash1200798.jpg",
+      "credit": "amazingamerica.com",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "washington 2023 室外硬地 华盛顿特区 tennis",
+      "relevance": 8,
+      "sha256": "d59b78b1e3058568a635c3c074477d989d46cd15acb32b2af9a66940177fd8da",
+      "focus": "50% 38%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "explainer-d59b78b1e305.jpg"
     },
     {
       "page": "today",
-      "status": "generated-visual",
-      "reason": "多源检索后无相关性和分辨率同时达标的照片",
-      "query": "washington 2023 tennis",
+      "status": "selected",
       "required_event_terms": [],
-      "providers": [
-        "curated-editorial",
-        "official-media",
-        "wikimedia-commons",
-        "openverse",
-        "bing-web-image",
-        "official-tennis-archive",
-        "flickr-public",
-        "duckduckgo-web-image"
-      ],
-      "candidate_count": 66,
-      "exact_candidate_count": 0,
-      "archive_candidate_count": 2,
+      "match_level": "exact-event",
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 3,
-        "metadata-relevance-below-3": 28,
-        "duplicate-candidate": 12,
-        "subject-archive-rejected-in-strict-mode": 2
+        "low-visual-impact-metadata": 11,
+        "metadata-relevance-below-3": 26,
+        "source-already-used": 1,
+        "duplicate-candidate": 11,
+        "subject-archive-rejected-in-strict-mode": 1
       },
-      "failed_curated_source_urls": [],
       "source_runs": [
         {
           "page": "today",
@@ -773,8 +757,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "washington 2023 tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 6
         },
         {
           "page": "today",
@@ -839,26 +823,207 @@
           "status": "empty",
           "candidate_count": 0
         }
-      ]
+      ],
+      "provider": "bing-web-image",
+      "source_url": "https://traveldfe.org/top-places-to-visit-in-washington-d-c-must-see-attractions/",
+      "image_url": "https://traveldfe.org/wp-content/uploads/2023/08/Hidden-gems-in-Washington-D.C-1024x574.jpg",
+      "credit": "traveldfe.org",
+      "license": "公开网页图片 · 非商业资讯引用",
+      "query": "washington 2023 tennis",
+      "relevance": 8,
+      "sha256": "b2fb075b71f5db9fa094ac1532d4ac18a661bfaf1d79ab682ff128894de1e666",
+      "focus": "50% 38%",
+      "subject_match": true,
+      "year_match": true,
+      "event_match": true,
+      "person_required": false,
+      "cached_file": "today-b2fb075b71f5.jpg"
     }
   ],
   "selection_evidence": {
     "kind": "tournament",
     "candidate_slug": "washington",
-    "result_count": 5,
-    "live_count": 0,
-    "schedule_count": 117,
+    "result_count": 44,
+    "live_count": 1,
+    "schedule_count": 37,
     "selection_basis": "current player or tournament relevance, match news value, and recency",
-    "candidate_rank": 1,
-    "candidate_count": 15,
-    "visual_preflight_rejections": 0,
+    "candidate_rank": 2,
+    "candidate_count": 14,
+    "visual_preflight_rejections": 1,
     "visual_preflight_status": "pass",
     "same_topic_attempt": 1,
     "same_topic_attempt_limit": 4
   },
-  "rejected_candidates": [],
+  "rejected_candidates": [
+    {
+      "story_slug": "otd-0728",
+      "title": "6-0、6-0",
+      "stage": "visual-preflight",
+      "errors": [
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
+      ],
+      "excluded_source_urls": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 3,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 4,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "trivia-otd-0728.jpg",
+              "title": "File:Qinwen Zheng - 2024 Olympics.jpg",
+              "subject": "otd-0728",
+              "required_years": [
+                "2024"
+              ],
+              "required_event_terms": [],
+              "person_required": false,
+              "subject_match": false,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        }
+      ]
+    }
+  ],
   "recovery": {
-    "status": "not-needed",
+    "status": "recovered",
     "same_topic_attempt": 1,
     "excluded_source_urls": [],
     "failed_attempts": []
