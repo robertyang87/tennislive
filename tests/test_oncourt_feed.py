@@ -472,3 +472,139 @@ def test_winner_interview_is_a_genre_label_not_a_round():
     # 冠军那一档不受影响
     assert parse_round({"title": "Elena Rybakina Winner Porsche GP '26"}) == "决赛"
     assert parse_round({"title": "Jessica Pegula Winner Charleston '26"}) == "决赛"
+
+
+def test_match_coverage_counts_singles_only():
+    """场次覆盖率**只算单打正赛**——分母是单打签表，分子混进双打就是虚高。
+
+    被用户抓到的：澳网深扫新增的 835 条里有 213 条是双打
+    （`Kostyuk/Ruse On-Court Interview | Australian Open 2023 Second Round`
+    这种斜杠配对），当时报的「100%」是假的。滤掉之后澳网女单 99%、
+    美网 85%/84%——**都掉了 6–7 个点**。
+
+    轮椅、青少年、传奇表演赛同理：都不在单打正赛签表里。
+    """
+    from tools.oncourt_match_coverage import is_main_singles
+
+    for title in [
+        "Kostyuk/Ruse On-Court Interview | Australian Open 2023 Second Round",
+        "Neal Skupski and Desirae Krawczyk Post-Match Interview | Wimbledon 2022",
+        "Men's Doubles Final On-Court Interview | Australian Open 2026",
+        "Oda's brilliant interview after winning Wheelchair Singles | Wimbledon 2026",
+        "Boys' Singles Final Post-match Interview | Wimbledon 2025",
+        "Legends Invitational On-Court Interview | Wimbledon 2024",
+    ]:
+        assert not is_main_singles({"title": title}), title
+
+    for title in [
+        "Carlos Alcaraz On-Court Interview | Australian Open 2026 Final",
+        '"I need a crash course in doubles" | Emma Raducanu | Third round On-court Interview',
+        "Jannik Sinner | First round On-court Interview | Wimbledon 2026",
+    ]:
+        assert is_main_singles({"title": title}), title
+
+
+def test_chinese_player_qualifying_wins_say_so_on_the_card():
+    """中国球员的资格赛，卡片上必须写出「资格赛」——**不能看着像正赛**。
+
+    资格赛不是关键轮次，进推送口径只有一条路：中国球员赢了球。
+    但卡片标签原来写的是「中国球员就只显示名字」，于是这三条
+
+        布云朝克特 2026 温网资格赛一轮
+        王曦雨     2026 温网资格赛一轮
+        张帅       2026 温网资格赛二轮
+
+    推出去只写着球员名，和正赛长得一模一样。**而覆盖率的分母是正赛签表，
+    根本不含它们**（`rounds_of()` 只到「第一轮」，资格赛不在表里）——
+    推的时候当正赛、算的时候不算数，两边对不上。
+
+    只给资格赛加后缀：正赛轮次每条都跟在名字后面就成了噪音，
+    而资格赛不写就是误导。两者不对称是故意的。
+    """
+    from tools.oncourt_feed import tag_of
+
+    zheng = {"zh": "郑钦文"}
+    assert tag_of({"cn_player": zheng, "round_zh": "资格赛"}) == "郑钦文 · 资格赛"
+    assert tag_of({"cn_player": zheng, "round_zh": "四分之一决赛"}) == "郑钦文"
+    assert tag_of({"cn_player": zheng, "round_zh": "决赛"}) == "郑钦文"
+    # 没有中国球员时照旧显示轮次
+    assert tag_of({"cn_player": None, "round_zh": "半决赛"}) == "半决赛"
+    assert tag_of({"cn_player": None, "round_zh": None}) == ""
+
+
+def test_qualifying_never_counts_toward_main_draw_coverage():
+    """资格赛条目一条都不能进场次覆盖率的分子。
+
+    Edimator 的温网 99 条里 **75 条是资格赛**（76%）——它是补温网早轮缺口的
+    主力源，但那个「99」大部分不在正赛口径内，真正补上的是 24 条。
+    分子若混进资格赛，温网男单会从 61% 虚高上去，而分母（127 场）
+    是正赛签表，压根没有资格赛的位置。
+
+    机制是 `coverage()` 里的 `if rd in tbl`——`rounds_of()` 生成的表
+    只到「第一轮」。这条测试盯的是**那个机制别被人「顺手补全」**：
+    有人看到 `parse_round` 会返回「资格赛」，很容易觉得表里漏了一项。
+    """
+    from tools.oncourt_match_coverage import rounds_of
+
+    for draw in (128, 96, 64, 56, 32, 28):
+        assert "资格赛" not in rounds_of(draw), f"{draw} 签的轮次表里混进了资格赛"
+
+    # 分母只到正赛：128 签逐轮相加正好是 127 场
+    assert sum(rounds_of(128).values()) == 127
+
+
+def test_push_is_called_with_the_real_signature():
+    """推送那一行的关键字参数，必须和 `pushplus.push()` 的形参对得上。
+
+    **这条是从一次线上事故里长出来的。** 第一次定时触发（2026-07-27 21:54 UTC）
+    整个 run 显示 success，11 个步骤全绿，日志里却躺着：
+
+        TypeError: push() got an unexpected keyword argument 'content'
+
+    50 条待推的一条都没出去。两个错叠在一起才让它变成静默失败：
+
+      ① 调用写的是 `push(token=…, title=…, content=…, template="html")`，
+         而形参是 `push(title, html_content, token=None, …)`——
+         `content` 和 `template` 都不存在（template 在 push() 内部写死了）
+      ② 工作流那一步是 `python ... | tee`，bash 默认报**管道最后一环**的退出码，
+         所以 python 崩了照样绿。已加 `set -o pipefail`
+
+    **这就是「查产物不要查信号」的又一次**：run 绿、step 绿，产物是零。
+
+    用 inspect 比签名而不是真的调一次，是因为真调会往用户手机推微信。
+    """
+    import inspect
+    import re
+
+    from tennislive.publish.pushplus import push
+    from tools import oncourt_feed
+
+    sig = inspect.signature(push)
+    src = inspect.getsource(oncourt_feed.main)
+    # **取所有 `push(...)` 里带关键字参数的那一个**，不能拿 re.search 的第一个：
+    # 上面的注释里就写着 `push()`，第一次这么写的时候正好匹到它，
+    # 捕获组是空的，测试于是报「没把正文传给 push()」——**假阳性**。
+    calls = [c for c in re.findall(r"push\(([^)]*)\)", src) if "=" in c]
+    assert calls, "oncourt_feed.main 里找不到带参数的 push( 调用"
+    kwargs = [k for c in calls for k in re.findall(r"(\w+)\s*=", c)]
+    unknown = [k for k in kwargs if k not in sig.parameters]
+    assert not unknown, (
+        f"push() 没有这些形参：{unknown}；它接受的是 {list(sig.parameters)}")
+    # 正文必须传进去——只传 title 的话推出去是一条空消息
+    assert "html_content" in kwargs, "没把正文传给 push()，推出去会是空的"
+
+
+def test_the_push_step_does_not_swallow_a_crash():
+    """工作流里推送那一步必须开 `pipefail`，否则 python 崩了也报成功。
+
+    上面那条测试防的是「参数写错」，这条防的是「写错了也看不见」——
+    两道都得有。别的步骤故意写了 `|| true`（搜索和缺口对账失败不该拦住推送），
+    那些不算数，这里只查推送这一步。
+    """
+    from pathlib import Path
+
+    wf = Path(__file__).resolve().parent.parent / ".github/workflows/oncourt-interviews.yml"
+    text = wf.read_text(encoding="utf-8")
+    step = text.split("筛出关键场次与中国球员，推到微信", 1)[1].split("- name:", 1)[0]
+    assert "set -o pipefail" in step, "推送这一步没开 pipefail，崩了会被 tee 吞掉"
+    assert "oncourt_feed.py --push" in step, "样本取错了段落，这条测试没在看推送步骤"

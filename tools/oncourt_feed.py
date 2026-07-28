@@ -194,9 +194,18 @@ def is_tour_event(item: dict) -> bool:
 #   `Why she'll play doubles with Andy | Emma Raducanu | Second round …`
 # 真双打的写法是 `Zhu/Zhang`、`Collins/Harrison` 这种斜杠配对（库里 102 条），
 # 或者 `Wheelchair Doubles` / `Men's Doubles` 这种带限定词的。
+# 第三种写法是 `X and Y`（`Neal Skupski and Desirae Krawczyk Post-Match
+# Interview`）。**必须限定在标题开头**，否则会误杀单打——库里 35 条含
+# `X and Y` 的里面有这么一条：
+#   `"I'll sit on a beach with Federer and Nadal" | Novak Djokovic On-Court Interview`
+# 那是德约的单打采访，引语里提了两个人。开头那一条限制把它放过去。
+# 代价：`Glory for Krawietz and Puetz` 这种以别的词开头的真双打抓不到，
+# 宁可漏也别误杀。
 _DOUBLES = [
     re.compile(r"\b[A-Z][\w'\u00C0-\u024F-]+\s*/\s*[A-Z][\w'\u00C0-\u024F-]+"),
     re.compile(r"\b(?:men'?s|women'?s|ladies'?|mixed|wheelchair|quad)\s+doubles\b", re.I),
+    re.compile(r"^[A-Z][\w'\u00C0-\u024F-]+(?:\s+[A-Z][\w'\u00C0-\u024F-]+)?\s+and\s+"
+               r"[A-Z][\w'\u00C0-\u024F-]+(?:\s+[A-Z][\w'\u00C0-\u024F-]+)?\s"),
 ]
 
 
@@ -287,6 +296,23 @@ def pick(items: dict, rules, only_cn: bool = False, include_doubles: bool = Fals
     return out
 
 
+def tag_of(row: dict) -> str:
+    """卡片上那一小行的标签：中国球员显示名字，否则显示轮次。
+
+    **但资格赛必须显式说出来。** 原来写的是「中国球员就只显示名字」，
+    于是三条温网资格赛（布云朝克特、王曦雨、张帅）推出去只写着球员名，
+    看着和正赛一模一样——而覆盖率的分母是正赛签表，**根本不含它们**。
+    推的时候当正赛、算的时候不算数，两边对不上。
+
+    只有资格赛需要这个后缀：正赛轮次在名字后面显得啰嗦（「郑钦文 · 四分之一决赛」
+    信息是有的，但每条都带就成了噪音），而资格赛不写就是误导。
+    """
+    if row["cn_player"]:
+        name = row["cn_player"]["zh"]
+        return f"{name} · 资格赛" if row["round_zh"] == "资格赛" else name
+    return row["round_zh"] or ""
+
+
 def render_html(rows: list[dict]) -> str:
     # 官方 / 搬运分开列。搬运号补的是官方确实没有的那几处（亚洲赛季、
     # 七个大师赛），但来源不规范、可能删档，所以要让人一眼看出是哪一类。
@@ -304,7 +330,7 @@ def render_html(rows: list[dict]) -> str:
         for r in items:
             secs = r.get("duration_s") or 0
             dur = f"{secs // 60}:{secs % 60:02d}" if secs else "—"
-            tag = r["cn_player"]["zh"] if r["cn_player"] else (r["round_zh"] or "")
+            tag = tag_of(r)
             parts.append(
                 "<div style='margin:0 0 12px;padding:10px 12px;background:#f6f8f7;"
                 "border-radius:8px'>"
@@ -390,7 +416,7 @@ def main() -> int:
     for r in fresh[:25]:
         secs = r.get("duration_s") or 0
         dur = f"{secs // 60}:{secs % 60:02d}" if secs else "—"
-        tag = r["cn_player"]["zh"] if r["cn_player"] else (r["round_zh"] or "?")
+        tag = tag_of(r) or "?"
         print(f"  [{tag}] {dur:>6}  {r.get('title','')[:66]}")
     if len(fresh) > 25:
         print(f"  …… 另有 {len(fresh) - 25} 条")
@@ -423,7 +449,11 @@ def main() -> int:
         if n_cn:
             title = f"🇨🇳 中国球员 {n_cn} 条 · " + title
         try:
-            push(token=token, title=title, content=html_body, template="html")
+            # 形参名是 `html_content`，不是 `content`；`template` 在 push() 内部
+            # 就写死成 "html" 了，传进来会 TypeError。**这两个错误上线跑了一轮
+            # 才发现**——因为工作流那一步是 `python ... | tee`，报的是 tee 的
+            # 退出码，崩了照样绿。见 test_push_is_called_with_the_real_signature。
+            push(title=title, html_content=html_body, token=token)
         except PushPlusError as exc:
             print(f"推送失败：{exc}", file=sys.stderr)
             return 2

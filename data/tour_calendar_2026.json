@@ -2,57 +2,126 @@
   "_note": "2026 赛季 ATP / WTA 赛历。`pat` 是用来把库里的条目认到赛事上的正则，**按标题 + page_url 一起匹配**——tennistv 的条目赛事名只在 URL 里。同名不同巡回的（迪拜、华盛顿、印第安维尔斯……）按 tour 字段分开记，因为 ATP 和 WTA 那一站的采访来源常常完全不同。",
   "events": [
     {
-      "zh": "澳大利亚网球公开赛",
+      "zh": "澳大利亚网球公开赛（男单）",
       "en": "Australian Open",
       "loc": "墨尔本",
       "tier": "大满贯",
       "start": "01-18",
       "end": "02-01",
       "pat": "australian open|\\bAO\\s*20\\d\\d|\\bAusOpen",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Australian Open"
-      ]
+      ],
+      "draw": 128,
+      "matches": 127
     },
     {
-      "zh": "法国网球公开赛",
+      "zh": "澳大利亚网球公开赛（女单）",
+      "en": "Australian Open",
+      "loc": "墨尔本",
+      "tier": "大满贯",
+      "start": "01-18",
+      "end": "02-01",
+      "pat": "australian open|\\bAO\\s*20\\d\\d|\\bAusOpen",
+      "tour": "wta",
+      "srcs": [
+        "Australian Open"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "法国网球公开赛（男单）",
       "en": "Roland-Garros",
       "loc": "巴黎",
       "tier": "大满贯",
       "start": "05-24",
       "end": "06-07",
       "pat": "roland[\\s-]?garros|french open",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Roland-Garros",
         "Fédération Française de Tennis"
-      ]
+      ],
+      "draw": 128,
+      "matches": 127
     },
     {
-      "zh": "温布尔登网球锦标赛",
+      "zh": "法国网球公开赛（女单）",
+      "en": "Roland-Garros",
+      "loc": "巴黎",
+      "tier": "大满贯",
+      "start": "05-24",
+      "end": "06-07",
+      "pat": "roland[\\s-]?garros|french open",
+      "tour": "wta",
+      "srcs": [
+        "Roland-Garros",
+        "Fédération Française de Tennis"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "温布尔登网球锦标赛（男单）",
       "en": "Wimbledon",
       "loc": "伦敦",
       "tier": "大满贯",
       "start": "06-29",
       "end": "07-12",
       "pat": "wimbledon",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "Wimbledon"
-      ]
+      ],
+      "draw": 128,
+      "matches": 127
     },
     {
-      "zh": "美国网球公开赛",
+      "zh": "温布尔登网球锦标赛（女单）",
+      "en": "Wimbledon",
+      "loc": "伦敦",
+      "tier": "大满贯",
+      "start": "06-29",
+      "end": "07-12",
+      "pat": "wimbledon",
+      "tour": "wta",
+      "srcs": [
+        "Wimbledon"
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "美国网球公开赛（男单）",
       "en": "US Open",
       "loc": "纽约",
       "tier": "大满贯",
       "start": "08-31",
       "end": "09-13",
       "pat": "\\bus open\\b|usopen",
-      "tour": "both",
+      "tour": "atp",
       "srcs": [
         "US Open"
-      ]
+      ],
+      "draw": 128,
+      "matches": 127
+    },
+    {
+      "zh": "美国网球公开赛（女单）",
+      "en": "US Open",
+      "loc": "纽约",
+      "tier": "大满贯",
+      "start": "08-31",
+      "end": "09-13",
+      "pat": "\\bus open\\b|usopen",
+      "tour": "wta",
+      "srcs": [
+        "US Open"
+      ],
+      "draw": 128,
+      "matches": 127
     },
     {
       "zh": "印第安维尔斯大师赛",
@@ -65,7 +134,9 @@
       "tour": "atp",
       "srcs": [
         "Indian Wells / BNP Paribas Open"
-      ]
+      ],
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "迈阿密大师赛",
@@ -75,7 +146,9 @@
       "start": "03-25",
       "end": "04-05",
       "pat": "\\bmiami\\b",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "蒙特卡洛大师赛",
@@ -85,7 +158,9 @@
       "start": "04-12",
       "end": "04-19",
       "pat": "monte[\\s_-]?carlo|monaco",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 56,
+      "matches": 55
     },
     {
       "zh": "马德里大师赛",
@@ -95,7 +170,9 @@
       "start": "04-22",
       "end": "05-03",
       "pat": "madrid|mmopen",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "罗马大师赛",
@@ -108,7 +185,9 @@
       "tour": "atp",
       "srcs": [
         "Rome / Internazionali BNL d'Italia"
-      ]
+      ],
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "加拿大大师赛",
@@ -118,7 +197,9 @@
       "start": "08-09",
       "end": "08-16",
       "pat": "canadian open|national bank open|toronto|montr",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "辛辛那提大师赛",
@@ -128,7 +209,9 @@
       "start": "08-16",
       "end": "08-23",
       "pat": "cincinnati",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "上海大师赛",
@@ -138,7 +221,9 @@
       "start": "10-07",
       "end": "10-18",
       "pat": "shanghai",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "巴黎大师赛",
@@ -151,7 +236,9 @@
       "tour": "atp",
       "srcs": [
         "Rolex Paris Masters"
-      ]
+      ],
+      "draw": 56,
+      "matches": 55
     },
     {
       "zh": "卡塔尔公开赛",
@@ -161,7 +248,9 @@
       "start": "02-08",
       "end": "02-14",
       "pat": "\\bdoha\\b|qatar",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 56,
+      "matches": 55
     },
     {
       "zh": "迪拜网球锦标赛",
@@ -171,7 +260,9 @@
       "start": "02-15",
       "end": "02-21",
       "pat": "dubai",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "印第安维尔斯公开赛",
@@ -181,7 +272,9 @@
       "start": "03-04",
       "end": "03-15",
       "pat": "indian[\\s_-]?wells|bnp[\\s_-]?paribas[\\s_-]?open",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "迈阿密公开赛",
@@ -191,7 +284,9 @@
       "start": "03-17",
       "end": "03-29",
       "pat": "\\bmiami\\b",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "马德里公开赛",
@@ -201,7 +296,9 @@
       "start": "04-21",
       "end": "05-03",
       "pat": "madrid|mmopen",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "罗马公开赛",
@@ -211,7 +308,9 @@
       "start": "05-05",
       "end": "05-17",
       "pat": "\\brome\\b|internazionali|#IBI\\d\\d",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "加拿大公开赛",
@@ -221,7 +320,9 @@
       "start": "08-02",
       "end": "08-13",
       "pat": "canadian open|national bank open|toronto|montr",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "辛辛那提公开赛",
@@ -231,7 +332,9 @@
       "start": "08-13",
       "end": "08-23",
       "pat": "cincinnati",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 96,
+      "matches": 95
     },
     {
       "zh": "中国网球公开赛",
@@ -241,7 +344,9 @@
       "start": "09-29",
       "end": "10-11",
       "pat": "china open|beijing",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 64,
+      "matches": 63
     },
     {
       "zh": "武汉网球公开赛",
@@ -251,7 +356,9 @@
       "start": "10-12",
       "end": "10-18",
       "pat": "wuhan",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 56,
+      "matches": 55
     },
     {
       "zh": "达拉斯公开赛",
@@ -261,7 +368,9 @@
       "start": "02-02",
       "end": "02-08",
       "pat": "dallas",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "鹿特丹公开赛",
@@ -271,7 +380,9 @@
       "start": "02-09",
       "end": "02-15",
       "pat": "rotterdam|abn amro",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "多哈公开赛",
@@ -281,7 +392,9 @@
       "start": "02-16",
       "end": "02-22",
       "pat": "\\bdoha\\b|qatar exxon",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "里约公开赛",
@@ -291,7 +404,9 @@
       "start": "02-16",
       "end": "02-22",
       "pat": "\\brio\\b",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "阿卡普尔科公开赛",
@@ -301,7 +416,9 @@
       "start": "02-23",
       "end": "02-28",
       "pat": "acapulco|abierto mexicano",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "迪拜网球锦标赛",
@@ -314,7 +431,9 @@
       "tour": "atp",
       "srcs": [
         "Dubai Duty Free Tennis Championships"
-      ]
+      ],
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "巴塞罗那公开赛",
@@ -324,7 +443,9 @@
       "start": "04-20",
       "end": "04-26",
       "pat": "barcelona",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 48,
+      "matches": 47
     },
     {
       "zh": "慕尼黑公开赛",
@@ -334,7 +455,9 @@
       "start": "04-20",
       "end": "04-26",
       "pat": "munich|m[üu]nchen|\\bBMW Open\\b",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "汉堡公开赛",
@@ -347,7 +470,9 @@
       "tour": "atp",
       "srcs": [
         "Hamburg European Open"
-      ]
+      ],
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "哈雷公开赛",
@@ -357,7 +482,9 @@
       "start": "06-15",
       "end": "06-21",
       "pat": "\\bhalle\\b|terra wortmann",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "伦敦女王杯",
@@ -367,7 +494,9 @@
       "start": "06-15",
       "end": "06-21",
       "pat": "queen'?s|HSBC Championships",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "华盛顿公开赛",
@@ -380,7 +509,9 @@
       "tour": "atp",
       "srcs": [
         "Washington / Mubadala DC Open"
-      ]
+      ],
+      "draw": 48,
+      "matches": 47
     },
     {
       "zh": "中国网球公开赛",
@@ -390,7 +521,9 @@
       "start": "09-24",
       "end": "09-30",
       "pat": "china open|beijing",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 64,
+      "matches": 63
     },
     {
       "zh": "日本网球公开赛",
@@ -400,7 +533,9 @@
       "start": "09-24",
       "end": "09-30",
       "pat": "japan open|\\btokyo\\b",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "巴塞尔室内赛",
@@ -410,7 +545,9 @@
       "start": "10-26",
       "end": "11-01",
       "pat": "basel|swiss indoors",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "维也纳公开赛",
@@ -421,7 +558,9 @@
       "end": "11-01",
       "pat": "vienna|erste bank",
       "tour": "atp",
-      "srcs": []
+      "srcs": [],
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "布里斯班国际赛",
@@ -431,7 +570,9 @@
       "start": "01-04",
       "end": "01-11",
       "pat": "brisbane",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "阿德莱德国际赛",
@@ -441,7 +582,9 @@
       "start": "01-11",
       "end": "01-16",
       "pat": "adelaide",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "阿布扎比公开赛",
@@ -451,7 +594,9 @@
       "start": "02-01",
       "end": "02-07",
       "pat": "abu dhabi",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "梅里达公开赛",
@@ -461,7 +606,9 @@
       "start": "02-23",
       "end": "03-01",
       "pat": "m[ée]rida",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "查尔斯顿公开赛",
@@ -471,7 +618,9 @@
       "start": "03-30",
       "end": "04-05",
       "pat": "charleston",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "林茨公开赛",
@@ -481,7 +630,9 @@
       "start": "04-06",
       "end": "04-12",
       "pat": "\\blinz\\b",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "斯图加特公开赛",
@@ -491,7 +642,9 @@
       "start": "04-13",
       "end": "04-19",
       "pat": "stuttgart|porsche",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "斯特拉斯堡公开赛",
@@ -501,7 +654,9 @@
       "start": "05-17",
       "end": "05-23",
       "pat": "strasbourg",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "女王俱乐部锦标赛",
@@ -511,7 +666,9 @@
       "start": "06-08",
       "end": "06-14",
       "pat": "queen'?s|HSBC Championships",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "柏林公开赛",
@@ -521,7 +678,9 @@
       "start": "06-15",
       "end": "06-21",
       "pat": "berlin",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "巴特洪堡公开赛",
@@ -531,7 +690,9 @@
       "start": "06-21",
       "end": "06-27",
       "pat": "bad homburg",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "华盛顿公开赛",
@@ -541,7 +702,9 @@
       "start": "07-27",
       "end": "08-02",
       "pat": "washington|citi[\\s_-]?(dc[\\s_-]?)?open|mubadala.{0,12}dc|/washingto",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 48,
+      "matches": 47
     },
     {
       "zh": "蒙特雷公开赛",
@@ -551,7 +714,9 @@
       "start": "08-23",
       "end": "08-29",
       "pat": "monterrey",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "瓜达拉哈拉公开赛",
@@ -561,7 +726,9 @@
       "start": "09-13",
       "end": "09-19",
       "pat": "guadalajara",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "新加坡网球公开赛",
@@ -571,7 +738,9 @@
       "start": "09-20",
       "end": "09-27",
       "pat": "singapore",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "宁波网球公开赛",
@@ -581,7 +750,9 @@
       "start": "10-19",
       "end": "10-25",
       "pat": "ningbo",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "东京泛太平洋公开赛",
@@ -591,7 +762,9 @@
       "start": "10-26",
       "end": "11-01",
       "pat": "pan pacific|toray|\\btokyo\\b",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "布里斯班国际赛",
@@ -601,7 +774,9 @@
       "start": "01-05",
       "end": "01-11",
       "pat": "brisbane",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "香港网球公开赛",
@@ -611,7 +786,9 @@
       "start": "01-05",
       "end": "01-11",
       "pat": "hong kong",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "阿德莱德国际赛",
@@ -621,7 +798,9 @@
       "start": "01-12",
       "end": "01-17",
       "pat": "adelaide",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "奥克兰公开赛",
@@ -631,7 +810,9 @@
       "start": "01-12",
       "end": "01-17",
       "pat": "auckland|ASB Classic",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "蒙彼利埃公开赛",
@@ -641,7 +822,9 @@
       "start": "02-02",
       "end": "02-08",
       "pat": "montpellier|occitanie",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "阿根廷公开赛",
@@ -651,7 +834,9 @@
       "start": "02-09",
       "end": "02-15",
       "pat": "argentina open|buenos aires",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "德雷海滩公开赛",
@@ -664,7 +849,9 @@
       "tour": "atp",
       "srcs": [
         "Delray Beach Open"
-      ]
+      ],
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "智利公开赛",
@@ -674,7 +861,9 @@
       "start": "02-23",
       "end": "03-01",
       "pat": "chile open|santiago",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "休斯顿红土赛",
@@ -684,7 +873,9 @@
       "start": "03-30",
       "end": "04-05",
       "pat": "houston|clay court champ",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "马拉喀什公开赛",
@@ -694,7 +885,9 @@
       "start": "03-30",
       "end": "04-05",
       "pat": "marrakech|hassan",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "日内瓦公开赛",
@@ -704,7 +897,9 @@
       "start": "05-18",
       "end": "05-24",
       "pat": "geneva|gen[èe]ve",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "斯图加特公开赛",
@@ -714,7 +909,9 @@
       "start": "06-08",
       "end": "06-14",
       "pat": "boss open|stuttgart",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "马略卡锦标赛",
@@ -724,7 +921,9 @@
       "start": "06-21",
       "end": "06-27",
       "pat": "mallorca",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "伊斯本公开赛",
@@ -734,7 +933,9 @@
       "start": "06-21",
       "end": "06-27",
       "pat": "eastbourne",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "博斯塔德公开赛",
@@ -747,7 +948,9 @@
       "tour": "atp",
       "srcs": [
         "Nordea Open"
-      ]
+      ],
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "格斯塔德公开赛",
@@ -757,7 +960,9 @@
       "start": "07-13",
       "end": "07-19",
       "pat": "gstaad",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "洛斯卡波斯公开赛",
@@ -767,7 +972,9 @@
       "start": "07-20",
       "end": "07-26",
       "pat": "los cabos|mifel",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "温斯顿-塞勒姆公开赛",
@@ -777,7 +984,9 @@
       "start": "08-23",
       "end": "08-29",
       "pat": "winston[\\s_-]?salem",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "成都公开赛",
@@ -787,7 +996,9 @@
       "start": "09-17",
       "end": "09-23",
       "pat": "chengdu",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "杭州公开赛",
@@ -797,7 +1008,9 @@
       "start": "09-17",
       "end": "09-23",
       "pat": "hangzhou",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "阿拉木图公开赛",
@@ -807,7 +1020,9 @@
       "start": "10-19",
       "end": "10-25",
       "pat": "almaty",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "奥克兰公开赛",
@@ -817,7 +1032,9 @@
       "start": "01-05",
       "end": "01-11",
       "pat": "auckland|ASB Classic",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "霍巴特国际赛",
@@ -827,7 +1044,9 @@
       "start": "01-12",
       "end": "01-17",
       "pat": "hobart",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "俄斯特拉发公开赛",
@@ -837,7 +1056,9 @@
       "start": "02-01",
       "end": "02-07",
       "pat": "ostrava",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "特兰西瓦尼亚公开赛",
@@ -847,7 +1068,9 @@
       "start": "02-01",
       "end": "02-07",
       "pat": "transylvania|cluj",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "奥斯汀公开赛",
@@ -857,7 +1080,9 @@
       "start": "02-23",
       "end": "03-01",
       "pat": "\\baustin\\b|ATX Open",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "波哥大公开赛",
@@ -867,7 +1092,9 @@
       "start": "03-30",
       "end": "04-05",
       "pat": "bogot[áa]|colsanitas",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "鲁昂公开赛",
@@ -877,7 +1104,9 @@
       "start": "04-13",
       "end": "04-19",
       "pat": "rouen",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "拉巴特公开赛",
@@ -887,7 +1116,9 @@
       "start": "05-18",
       "end": "05-23",
       "pat": "rabat",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "斯海尔托亨博斯公开赛",
@@ -897,7 +1128,9 @@
       "start": "06-08",
       "end": "06-14",
       "pat": "hertogenbosch|lib[ée]ma|rosmalen",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "诺丁汉公开赛",
@@ -907,7 +1140,9 @@
       "start": "06-15",
       "end": "06-21",
       "pat": "nottingham",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "伊斯本公开赛",
@@ -917,7 +1152,9 @@
       "start": "06-21",
       "end": "06-27",
       "pat": "eastbourne",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "布拉格公开赛",
@@ -927,7 +1164,9 @@
       "start": "07-20",
       "end": "07-26",
       "pat": "prague|praha",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "克利夫兰公开赛",
@@ -937,7 +1176,9 @@
       "start": "08-23",
       "end": "08-29",
       "pat": "cleveland|tennis in the land",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "首尔公开赛",
@@ -947,7 +1188,9 @@
       "start": "09-20",
       "end": "09-26",
       "pat": "korea open|seoul",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "大阪公开赛",
@@ -957,7 +1200,9 @@
       "start": "10-19",
       "end": "10-25",
       "pat": "osaka open|kinoshita",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "广州网球公开赛",
@@ -967,7 +1212,9 @@
       "start": "10-26",
       "end": "11-01",
       "pat": "guangzhou",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "香港网球公开赛",
@@ -977,7 +1224,9 @@
       "start": "11-01",
       "end": "11-07",
       "pat": "hong kong",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     },
     {
       "zh": "联合杯",
@@ -1070,7 +1319,9 @@
       "tour": "atp",
       "srcs": [
         "European Open Antwerp"
-      ]
+      ],
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "埃斯托里尔公开赛",
@@ -1080,7 +1331,9 @@
       "start": "03-30",
       "end": "04-05",
       "pat": "estoril",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "基茨比厄尔公开赛",
@@ -1090,7 +1343,9 @@
       "start": "07-27",
       "end": "08-02",
       "pat": "kitzb[üu]hel",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "乌马格公开赛",
@@ -1100,7 +1355,9 @@
       "start": "07-20",
       "end": "07-26",
       "pat": "\\bumag\\b|croatia open",
-      "tour": "atp"
+      "tour": "atp",
+      "draw": 28,
+      "matches": 27
     },
     {
       "zh": "巴斯塔德女子赛",
@@ -1110,9 +1367,13 @@
       "start": "07-13",
       "end": "07-19",
       "pat": "nordea|b[åa]stad",
-      "tour": "wta"
+      "tour": "wta",
+      "draw": 32,
+      "matches": 31
     }
   ],
   "_srcs_note": "`srcs`：**这个源的条目一律归到这一站**，不看标题。起因是 423 条孤儿里一大半是这种——汉堡频道写 `HEO2021 /// ATP QF ///`，迪拜写 `Post-Match Interview: Roger Federer`，罗马写 `#IBI23`，标题里根本没有赛事名，但**频道本身就说明了赛事**。同名不同巡回的（迪拜、华盛顿、印第安维尔斯）只挂在 ATP 那一侧，因为那几个赛事频道发的是男子内容。",
-  "_extra_note": "用户给的赛历是「代表性赛事」，不是全量。以下几站是**对账时从库里撞出来的**——库里有条目却归不到任何赛事，反过来说明赛历漏了它们：埃斯托里尔、基茨比厄尔、乌马格、安特卫普。**这就是孤儿报表的用处**：它不只是清理噪音，还能反推赛历的缺口。"
+  "_extra_note": "用户给的赛历是「代表性赛事」，不是全量。以下几站是**对账时从库里撞出来的**——库里有条目却归不到任何赛事，反过来说明赛历漏了它们：埃斯托里尔、基茨比厄尔、乌马格、安特卫普。**这就是孤儿报表的用处**：它不只是清理噪音，还能反推赛历的缺口。",
+  "_draw_note": "`draw` 是单打正赛签表大小，`matches` = draw − 1 是该赛事单打总场次。**这是「场次覆盖率」的分母**——之前只算「关键轮次占理论 8」，那个分母是 8，回答不了「这个赛事一共打了多少场、其中多少场有采访」。签表按级别给默认值，蒙特卡洛/巴黎(56)、华盛顿/巴塞罗那(48)、中网(64)、多哈/武汉(56) 这些例外单列。ATP250 多数是 28 签。",
+  "_slam_note": "**大满贯必须按男女拆成两个赛事**。一届大满贯是两个 128 签、男女各 127 场、合计 254 场。原来记成 `tour: both` + `matches: 127`，男女条目都往同一个分母里算——**覆盖率直接算高一倍**，美网「91%」实际是 46%。1000/500/250 里同名不同巡回的（迪拜、华盛顿、印第安维尔斯……）本来就是分开两条，只有大满贯漏了这一刀。"
 }

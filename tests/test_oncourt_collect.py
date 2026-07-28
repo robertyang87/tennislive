@@ -196,7 +196,11 @@ def test_sources_registry_is_sane():
 def test_tennistv_site_source_is_present_and_not_the_youtube_channel():
     """tennistv.com 的库和 Tennis TV 的 YouTube 频道是两回事，别搞混。
 
-    YouTube 频道深扫 800 条是 **0 条**场上采访；站上的库逐轮都有
+    ~~YouTube 频道深扫 800 条是 0 条场上采访~~ ——**这句话作废了**：
+    实测 Tennis TV 频道有 3000+ 条，800 根本没扫到底，那个「0」是扫深不够
+    造出来的（见 `test_scan_depth_reaches_the_bottom_of_every_channel`）。
+    现在扫深已提到 5000。留着这条测试是为了另一件事：**两个源不能合并**。
+    站上的库逐轮都有
     （R1/QF/SF/Final，0:56–3:27），而且 16/20 免费、4/20 freemium，
     premium 一条都没有。它是唯一系统覆盖 ATP 250 场上采访的来源。
     """
@@ -314,11 +318,23 @@ def test_denied_ids_are_all_recorded_as_verified():
 
     不许凭印象拉黑——名单和证据必须一一对上。
 
-    **两种理由都算数**，因为它们是两回事：
+    **四种理由都算数**，因为它们是四回事：
       press    人根本不在场上（发布厅、媒体混合区）
       ceremony 人在场上，但是**独自对着观众讲**，不是接受采访
                （判据是话筒：落地支架麦＝致辞，手持话筒＝有人在问）
-    用户要的只有「赛后直接在场上接受采访」，两种都不是。
+      other    在场上、也是采访，但**受访的不是球员**——
+               tennistv 那条 `Albert II, Prince of Monaco special interview`
+               画面里是摩纳哥亲王站在蒙特卡洛红土边上。
+      degraded 是场上采访，画面也是官方转播信号，但**被二次加工毁掉了**：
+               缩成小窗套装饰边框、竖屏放大后左右补虚化侧栏、烧录字幕、画中画。
+               这一档是后来才有的——「肯定要用官方的直播的视频，清晰度和角度
+               根本达不到要求」。**它和上面三种不一样：内容合格，画面不合格。**
+               台标和轻微裁切不算，那两样裁完还是转播画质，记在源的 `picture` 里照收。
+    用户要的只有「球员赛后直接在场上接受采访、且画面是能用的转播信号」，四种都不是。
+
+    **`oncourt` 绝不能出现在拉黑名单上**——那说明看过是场上采访却还是剔了。
+    （`degraded` 之所以单列而不并进 `oncourt`，就是为了守住这一条：
+    画面不合格要说成画面不合格，不能借 `oncourt` 的名义悄悄剔掉。）
     """
     from tools.collect_oncourt_interviews import ROOT, load_sources
 
@@ -326,8 +342,54 @@ def test_denied_ids_are_all_recorded_as_verified():
         seen = json.load(fh)["verdicts"]
     for vid in load_sources()["deny_ids"]:
         assert vid in seen, f"{vid} 被拉黑却没有看图记录"
-        assert seen[vid]["verdict"] in ("press", "ceremony"), \
+        assert seen[vid]["verdict"] in ("press", "ceremony", "other", "degraded"), \
             f"{vid} 的判定是 {seen[vid]['verdict']}，不该在拉黑名单上"
+
+
+def test_every_source_declares_where_its_picture_comes_from():
+    """每个源都要声明 `provenance`，而且必须是那三档之一。
+
+    **这条测试是从一次口误里长出来的。** Edimator 那 158 条我一直说成「现场拍摄者」，
+    还据此打算把它整个删掉；直到把自动帧拼成联络表看了一眼——温网那条带着**转播下方
+    字幕条**，上海那条右上角是 **prime 台标**，加拿大那条**切到了采访者**（反打机位，
+    看台上拍不出来）。它是搬运官方转播信号，不是自己拍的。
+
+    同一批看下来，11 个 rehost 源**没有一个**是自己拍的。所以字段的意义不在于
+    区分「官方 / 非官方」——那是 `unofficial` 管的事——而在于**逼着每个源在进库之前
+    回答「这段画面是谁拍的」**，答不上来就不能进。
+
+    判据只认画面里的转播要素：官方话筒旗、转播图形包（比分条 / 下方字幕条 /
+    LED 上的 MATCH WINNER / 角落台标）、反打机位。频道名字看着像不像官方不作数。
+    """
+    cfg = load_sources()
+    ok = {"official", "broadcaster", "rehost"}
+    for src in cfg["sources"]:
+        assert src.get("provenance") in ok, \
+            f"{src['name']} 没声明画面出处（provenance），或者写了 {src.get('provenance')!r}"
+        # rehost 是搬运官方信号，不是自拍——两个标记必须一致，
+        # 免得哪天又把「非官方频道」和「自己拍的」混为一谈
+        if src["provenance"] == "rehost":
+            assert src.get("unofficial"), f"{src['name']} 标了 rehost 却没标 unofficial"
+        else:
+            assert not src.get("unofficial"), \
+                f"{src['name']} 标了 {src['provenance']} 却又标 unofficial"
+
+
+def test_store_sources_are_all_declared_in_the_registry():
+    """库里出现过的每个来源，注册表里都要有——**摘掉一个源要连着它的条目一起摘。**
+
+    起因：安特卫普、Sportiva Arena、Karendoms Tandem 三个源这一轮被判不合格，
+    从注册表里摘掉了。但注册表和库是两份文件，只改一份的话，库里那 14 条会
+    继续被推送、被统计成覆盖率，而报表上再也看不到它们来自哪个源——
+    **看着像已经清干净了。**
+    """
+    from tools.collect_oncourt_interviews import ROOT
+
+    with (ROOT / "data" / "oncourt_interviews.json").open(encoding="utf-8") as fh:
+        items = json.load(fh)["items"]
+    known = {s["name"] for s in load_sources()["sources"]}
+    stray = {it["source"] for it in items.values()} - known
+    assert not stray, f"库里这些来源已经不在注册表里，条目却还留着：{sorted(stray)}"
 
 
 def test_ceremony_speech_and_ceremony_interview_are_split_by_the_microphone():
@@ -505,7 +567,200 @@ def test_source_owned_events_catch_titles_without_the_event_name():
 
     with (ROOT / "data" / "tour_calendar_2026.json").open(encoding="utf-8") as fh:
         events = json.load(fh)["events"]
-    owned = {s: e["zh"] for e in events for s in e.get("srcs", ())}
-    assert owned.get("Hamburg European Open") == "汉堡公开赛"
-    assert owned.get("Wimbledon") == "温布尔登网球锦标赛"
-    assert owned.get("Nordea Open") == "博斯塔德公开赛"
+    owned = {}
+    for e in events:
+        for s in e.get("srcs", ()):
+            owned.setdefault(s, set()).add(e["zh"])
+    assert owned.get("Hamburg European Open") == {"汉堡公开赛"}
+    assert owned.get("Nordea Open") == {"博斯塔德公开赛"}
+    # 大满贯拆成了男单 / 女单两个赛事，同一个频道挂在两边——
+    # 一届大满贯是两个 128 签、男女各 127 场，分母不拆会把覆盖率算高一倍。
+    assert owned.get("Wimbledon") == {"温布尔登网球锦标赛（男单）", "温布尔登网球锦标赛（女单）"}
+
+
+def test_broadcaster_round_interview_form(rules):
+    """转播商写「赛事 + 轮次 + Interview」，不写 on-court / post-match。
+
+    Stan Sport（澳洲持权方）写 `Wimbledon First Round Interview 🎙️`——
+    前三条模式一条都不认，88 条取到 **0 条**。
+
+    加这条之前拿库里 4241 条全量试过：额外命中 0，不扰动现有分类；
+    `Quarterfinals Press Conference` 这类发布会也不会被它收进来
+    （它要求 `round interview` 连在一起，或 `quarter-final interview`）。
+    """
+    for title in [
+        "Stan Wawrinka tears up during farewell 🥹 | Wimbledon First Round Interview 🎙️",
+        "Grigor Dimitrov on last year's return 🥹 | Wimbledon Second Round Interview",
+        "Jannik Sinner Reveals Golf Skills 🏌️| Wimbledon Second Round Interview 🎙️",
+    ]:
+        assert tag(title, rules) == "oncourt", title
+
+    # 发布会不能被顺进来
+    for title in [
+        "Iga Swiatek | Quarterfinals Press Conference | 2025 Cincinnati Open",
+        "Frances Tiafoe | Post Match Press Conference | 2025 Mubadala Citi DC Open",
+    ]:
+        assert tag(title, rules) is None, title
+
+
+def test_gender_is_read_off_the_official_ranking_snapshot():
+    """男女分流以 ATP / WTA 各 500 人的官方排名快照为准，不靠手搓正则。
+
+    **这条是从一个虚高的数字里长出来的。** 澳网男单曾经报 100%、女单 99%，
+    而当时进入统计的 847 条里有 365 条**认不出球员性别**——按老规则
+    「认不出的两边都算」，同一批条目把男单和女单两个 127 的分母同时填满了。
+
+    快照的两个性质是实测的，不是假设：全名零重叠（所以全名命中即定案），
+    姓氏有 10 个两边都有（Zhang / Zheng / Sun / Smith …，所以共用姓不作数）。
+    """
+    from tools.oncourt_coverage import side
+
+    assert side({"title": "Jannik Sinner On-Court Interview | Australian Open 2026"}) == "atp"
+    assert side({"title": "Aryna Sabalenka On-Court Interview | US Open 2025 Final"}) == "wta"
+    # 音标要去掉：库里写 Muchová，快照写 Muchova
+    assert side({"title": "Karolína Muchová On-Court Interview | 2023 US Open Round 3"}) == "wta"
+    # 退役的走补充名单
+    assert side({"title": "Roger Federer on-court interview (3R) | Australian Open 2018"}) == "atp"
+    assert side({"title": "Serena Williams on court interview | US Open 2019"}) == "wta"
+    # 男女都命中就认不出——霍普曼杯的混合队、以及「斯维托丽娜夸丈夫蒙菲尔斯」
+    assert side({"title": "Karen Khachanov and Anastasia Pavlyuchenkova "
+                          "on-court interview (RR) | Hopman Cup"}) is None
+    assert side({"title": "Team Germany on-court interview (RR) | Hopman Cup 2019"}) is None
+
+
+def test_short_surnames_do_not_match_inside_longer_words():
+    """短姓氏不能匹进别的词里，也不能匹上英文常用词。
+
+    旧的手搓正则**没有词边界**，四个真实的误判：
+
+        Paul      汤米·保罗（男）匹上 `against Paula Badosa`
+        Lys       伊娃·利斯（女）匹上 `Quentin Halys`
+        Jovic     伊娃·约维奇（女）匹上 `Dusan Lajovic`
+        Cristian  雅克琳·克里斯蒂安（女）匹上 `Cristian Garín`
+
+    还有一类词边界救不了：`Day` 是凯拉·戴的姓，**也是英文里最常见的词之一**，
+    匹上了 `Sinner: 'Today was a very difficult day in the office'`。
+    那条判据是大小写——人名在标题里一定不是全小写的。
+    不用「首字母大写」而用「不全小写」，是因为标题常常整句大写。
+    """
+    from tools.oncourt_coverage import side
+
+    assert side({"title": "Katie Boulter interview after 1st round win "
+                          "against Paula Badosa"}) == "wta"
+    assert side({"title": "Quentin Halys | Post-Match Interview | QF | 2025 Dubai"}) == "atp"
+    assert side({"title": "ON-COURT INTERVIEW with Dusan Lajovic"}) == "atp"
+    assert side({"title": "Cristian Garín interview after 1st Round win"}) == "atp"
+    assert side({"title": "Sinner: 'Today was a very difficult day in the office'"}) == "atp"
+    # 但真的叫 Day 的还是要认出来
+    assert side({"title": "Kayla Day On-Court Interview | Australian Open 2024"}) == "wta"
+    # 整句大写也要认
+    assert side({"title": "WORLD NO.1 IGA SWIATEK ON COURT INTERVIEW"}) == "wta"
+
+
+def test_supplementary_roster_does_not_duplicate_the_snapshot():
+    """补充名单里不许出现快照已有的现役球员——**两份名单打架就是这么来的**。
+
+    补充名单原来塞了 249 个词，其中 191 个是现役球员。快照接手之后它们
+    全是冗余，而冗余不是无害的：`Cristian`（女）和 `Jovic`（女）正是这样
+    把 Cristian Garín 和 Dusan Lajovic 判成了女子。
+
+    这条只查姓氏层面的重复。**语序或拼法与快照不同的允许保留**
+    （`Zhang Shuai` vs 快照的 `Shuai Zhang`、`Auger-Aliassime` 的连字符），
+    所以比的是「补充名单里这个词，是不是同一巡回赛快照里的某个姓氏」。
+    """
+    import json as _json
+    import re as _re
+
+    from tools.oncourt_coverage import MEN, SNAPSHOT, WOMEN, _fold
+
+    snap = _json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    sur = {t: {_fold(e["name_en"]).split()[-1].lower() for e in snap["tours"][t]}
+           for t in ("ATP", "WTA")}
+
+    def words(rx):
+        inner = _re.sub(r"^\\b\(\?:|\)\\b$", "", rx.pattern)
+        return [w for w in inner.split("|") if w]
+
+    for rx, tour in ((WOMEN, "WTA"), (MEN, "ATP")):
+        dupes = [w for w in words(rx) if _fold(w).lower() in sur[tour]]
+        assert not dupes, f"{tour} 补充名单和快照重复：{dupes}"
+
+
+def test_unknown_gender_never_counts_toward_a_single_tour_draw():
+    """认不出性别的条目，不许进单巡回赛事的分子。
+
+    两个工具在这里**故意不一致**，别去「统一」它：
+
+        oncourt_coverage.py        放过去。它报的是「这一站有没有覆盖、有几条」，
+                                   多算不致命，漏算反而会让缺口从报表上消失
+        oncourt_match_coverage.py  丢掉。它报的是**占某一张签表的百分比**，
+                                   一条认不出性别的条目会在男单和女单各算一次，
+                                   两个 127 的分母被同一批条目同时填
+
+    辛辛那提 WTA 是最干净的例证：混在里面的 35 条全是男子
+    （Fonseca、Opelka、Rune、Tsitsipas、Sinner…），剔掉之后从 8% 落到 1%。
+    """
+    import re as _re
+
+    from tools.oncourt_coverage import haystack, side
+    from tools.oncourt_match_coverage import coverage, is_main_singles, load
+
+    items, events = load()
+    ev = next(e for e in events if e["zh"] == "辛辛那提公开赛" and e["tour"] == "wta")
+    rx, own = _re.compile(ev["pat"], _re.I), set(ev.get("srcs", ()))
+    leaked = [it for it in items.values()
+              if (it.get("source") in own or rx.search(haystack(it)))
+              and is_main_singles(it) and side(it) == "atp"]
+    assert leaked, "这一站本来就是靠混进来的男子条目撑着的，样本没了这条测试就失去意义"
+
+    row = next(r for r in coverage(items, events)
+               if r["zh"] == "辛辛那提公开赛" and r["tour"] == "wta")
+    assert row["covered"] <= 3, f"辛辛那提 WTA 覆盖 {row['covered']} 场，男子条目又混进来了"
+    # 被丢掉的数量要报出来——只报命中的，没法证明它真的看过全部
+    assert "unknown" in row
+
+
+def test_scan_depth_reaches_the_bottom_of_every_channel():
+    """注册的 `scan_depth` 不能小于这个频道实测的条数——**否则采集器走不到底**。
+
+    **这条是 `scan_depth` 骗过我之后加的。** WTA 官方频道注册的是 800，看着不小；
+    全量扫下来 13791 条，而分类器判为场上采访的 86 条**全部排在第 800 名之后**——
+    按注册深度一条都拿不到。而报表上它只显示「这个源贡献 0 条」，
+    看着像「WTA 不发场上采访」。
+
+    **不够深的时候采集器不报错，它只是没走到那里。** 这是「空结果 ≠ 不存在」
+    里最隐蔽的一种：没有异常、没有告警、数字看着就是真的。
+
+    顺着查下来 14 个源不够深，合计漏 350 条：Tennis TV 800→5000、
+    印第安维尔斯 500→2600、Tennis Channel 250→5000……**其中 Tennis Channel
+    那条最要命**——我曾据 700 条深扫断言它「一条场上采访都没有」，
+    而它的真实体量是 3000+，那个结论根本不作数。
+
+    `measured` 是 2026-07-27 用 `tools/check_scan_depth.py` 实测的条数；
+    探到 3000 就停，所以记 3000 的是**下界**不是真值，注册深度给了余量。
+    """
+    for src in load_sources()["sources"]:
+        m = src.get("measured")
+        if m is None or src.get("depth_exempt"):
+            continue
+        assert src.get("scan_depth", 150) >= m, (
+            f"{src['name']} 实测 {m} 条，scan_depth 只有 {src.get('scan_depth', 150)}"
+            f"——后面那截扫不到")
+
+
+def test_depth_exempt_sources_say_why():
+    """扫深故意低于实测条数的，必须写明理由——**不许默默留个浅的**。
+
+    只有一个：WTA 官方频道。它实测 13791 条，深处 86 条命中分类器，
+    但逐批看帧全是发布会（2020 罗马那 28 条：长桌、BNL 背景板、台式麦）
+    和演播室专访（2016 新加坡年终、2016 亚洲赛季：黑底、赛事 logo 角标、领夹麦），
+    真在场上的只有 2–3 条。为这个把扫深开到 14000 不划算。
+
+    **豁免要写清楚是「查过了，那里没有」，不是「没查」。** 两者在报表上
+    长得一模一样，只有这段字能分开。
+    """
+    cfg = load_sources()
+    exempt = [s for s in cfg["sources"] if s.get("depth_exempt")]
+    for s in exempt:
+        assert len(s["depth_exempt"]) > 30, f"{s['name']} 的豁免理由太短，说不清查过什么"
+        assert s.get("measured"), f"{s['name']} 声称豁免却没有实测数"
