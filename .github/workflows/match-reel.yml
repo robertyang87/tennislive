@@ -77,8 +77,25 @@ jobs:
           echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
 
+      # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」——沙箱和
+      # 托管 runner 都中招。配了这个 Secret 就带 cookie 下载，没配就走 client 梯子。
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，只能靠 player client 梯子碰运气"
+          fi
+
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
@@ -88,6 +105,8 @@ jobs:
 
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
