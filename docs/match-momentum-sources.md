@@ -8,8 +8,9 @@
 | 要的东西 | 现在拿得到吗 | 走哪条路 |
 |---|---|---|
 | WTA 巡回赛逐分（走势 + 关键分） | ✅ 免鉴权，当天就有 | `api.wtatennis.com` 的 `point-by-point`，见 `tools/fetch_match_pbp.py` |
+| **ATP / WTA 逐场技术统计（含逐盘）** | ✅ 免鉴权 | Flashscore 喂料 `df_st_1_{id}`，见 `tools/fetch_match_stats_fs.py` |
 | 四大满贯逐分 | ❌ | WTA 那条接口对大满贯一律 404；赛会自己跑计分系统 |
-| ATP 巡回赛逐分 | ❌ | 三条路今天全堵（见下） |
+| ATP 巡回赛逐分 | ❌ | 官方三条路全堵，Flashscore 也只有统计没有逐分 |
 | 拍数 / 球速 / 落点 / 击球类型 | ⚠️ 部分 | Match Charting Project（志愿者标注，滞后约两个月） |
 | 集锦 | ✅ | 官方 YouTube 频道，`yt-dlp` 直接列 |
 
@@ -71,7 +72,44 @@ https://api.wtatennis.com/tennis/tournaments/{eventId}/{year}/matches/{matchId}/
   `/point-by-point` 404。这是"这条路对大满贯不通"，不是"这场没数据"——
   两条都试过才敢这么写
 
-## 二、ATP：三条路今天全堵
+## 二、ATP 的技术统计：Flashscore 的喂料，免鉴权
+
+官方三条路全堵，但**统计本身不是只有官方有**。Flashscore 给赛果页供数的那个
+接口是公开的，ATP / WTA 都覆盖：
+
+```
+https://local-global.flashscore.ninja/2/x/feed/df_st_1_{matchId}
+请求头：x-fsign: SW9D1eZo    Referer: https://www.flashscore.com/
+```
+
+锦织圭 d. 商竣程（2026-07-27 华盛顿首轮，`z7Bgg1lU`）实测拿到——**全场 + 逐盘各一段**：
+
+| | 锦织圭 | 商竣程 |
+|---|---:|---:|
+| Ace | 4 | 6 |
+| 双误 | 0 | 2 |
+| 一发成功率 | 72% | 53% |
+| 一发得分率 | 73% (51/70) | 71% (41/58) |
+| 二发得分率 | 70% (19/27) | 61% (31/51) |
+| 破发点化解 | **0/0** | 7/9 |
+| 破发点转化 | 2/9 | 0/0 |
+| 总得分 | 52% (107/206) | 48% (99/206) |
+| 发球局胜率 | **100% (16/16)** | 87% (13/15) |
+
+见 `tools/fetch_match_stats_fs.py`（按 id 或按两个球员名字找）。
+
+### 格式与坑
+
+- `¬` 分字段、`~` 分记录、`÷` 分键值。`SE` 是段名（Match / Set 1 / …），
+  `SF` 是分组，`SG` 是指标名，**`SH` 是主队、`SI` 是客队**
+- **谁是主队要另外问**（`df_hh_1_` / `dc_1_`），别照着比分猜
+- **找场次 id 要扫三天**：`f_2_{-1,0,1}_2_en_1`。北京时间凌晨打完的比赛在
+  Flashscore 那边算「昨天」，只扫今天会漏
+- **逐分这条路还是没有**：`df_pbp_1_` 和 `df_po_1_` 都返回 1 个字节；
+  `dc_1_` 里的 `DX÷ST,MH,MC,OD,HH,TTS,DR,HITO` 列的是这场有哪些标签页，
+  里面**没有逐分**。所以逐分走势仍然只有 WTA 巡回赛拿得到
+
+## 三、ATP 官方：三条路仍然全堵
 
 | 路 | 状态（2026-07-27） |
 |---|---|
@@ -109,7 +147,7 @@ ATP 从来没有公开过逐分。
   两个巡回赛和大满贯都覆盖。仓库里 `sources/sportradar.py` 已经接好了统计部分，
   逐分要另写。这是目前**唯一能同时覆盖 ATP 和大满贯**的路
 
-## 三、拍数/落点这一层：Match Charting Project
+## 四、拍数/落点这一层：Match Charting Project
 
 `JeffSackmann/tennis_MatchChartingProject`（raw.githubusercontent 可达，实测 200）：
 
@@ -126,7 +164,7 @@ ATP 从来没有公开过逐分。
 同一账号下的 `tennis_atp` / `tennis_wta` / `tennis_slam_pointbypoint` 三个仓库
 **本环境取不到**（`master`/`main` 分支、多个路径、仓库首页都试了，全是 404/403）。
 
-## 四、集锦
+## 五、集锦
 
 官方频道逐场发，`yt-dlp --flat-playlist` 直接列，实测都通：
 
@@ -158,11 +196,11 @@ ATP 从来没有公开过逐分。
 标题规则就能用。注意 `scan()` 里那条：**一条都没取到时只能报"疑似句柄错"，
 不能报"这个频道没有"**。
 
-## 五、所以赛报怎么写
+## 六、所以赛报怎么写
 
-1. **WTA 场次**：`tools/fetch_match_pbp.py` 出走势和关键分，
-   `sources/official_stats.py` 出逐场技术统计，两份拼起来就够了
-2. **ATP 场次**：目前只有比分级数据（ESPN linescores + 赛会赛果）。
-   要走势得上 Sportradar，或者接受"这一场不做走势图"
+1. **WTA 场次**：`fetch_match_pbp.py` 出走势和关键分，`fetch_match_stats_fs.py`
+   出全场与逐盘技术统计，两份拼起来是完整的
+2. **ATP 场次**：`fetch_match_stats_fs.py` 出技术统计（能画图了），
+   走势折线仍然缺——只能靠逐盘的统计变化和叙述来讲，或者上 Sportradar
 3. **大满贯**：两个巡回赛的接口都不覆盖，同样落到 Sportradar 或人工
 4. **集锦**：官方频道抓链接，不搬运
