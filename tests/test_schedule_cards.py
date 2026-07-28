@@ -378,3 +378,43 @@ def test_body_only_lists_matches_that_are_on_the_cards():
     body = post_body([a], display)
     assert "Alpha Player" in body or "阿尔法" in body
     assert body.count("·") >= 1
+
+
+def test_copy_button_only_appears_when_the_link_is_known_reachable():
+    """宁可不放按钮，也不放一个 404 的死链——微信消息发出去收不回来。
+
+    踩过：GitHub Pages 只服务 main，而赛程包是在特性分支上生成的，Pages 永远
+    取不到，按钮点开就是 404。图片没事是因为它们走 jsDelivr 并钉在 commit SHA
+    上；pushplus.wait_for_images 也帮不上，它故意把 Pages 链接排除在外。
+    """
+    from datetime import date
+
+    from tennislive.render.pushmsg import to_schedule_push_html
+
+    day = date(2026, 7, 28)
+    text = "7.28 今日赛程 | 标题\n\n🎾 正文\n"
+    without = to_schedule_push_html(day, ["a.jpg"], xhs_text=text, copy_url=None)
+    assert "copy.html" not in without
+    assert "分别复制标题" not in without
+
+    with_link = to_schedule_push_html(
+        day, ["a.jpg"], xhs_text=text,
+        copy_url="https://example.invalid/copy.html",
+    )
+    assert "分别复制标题" in with_link
+
+
+def test_the_push_always_carries_a_copyable_title_and_body():
+    """复制页不可达时，消息本身必须还能长按复制——否则文案就传不出去。"""
+    from datetime import date
+
+    from tennislive.render.pushmsg import to_schedule_push_html
+
+    html_out = to_schedule_push_html(
+        date(2026, 7, 28), ["a.jpg"],
+        xhs_text="7.28 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n🎾 正文一行\n",
+        copy_url=None,
+    )
+    assert "郑钦文凌晨1点战伊埃拉" in html_out
+    assert "长按可复制标题" in html_out
+    assert "正文一行" in html_out
