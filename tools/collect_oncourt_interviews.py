@@ -78,6 +78,7 @@ import re
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -282,76 +283,141 @@ def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     return rows, "ok"
 
 
-def _wta_page_alive(vid: str, slug: str) -> bool:
-    """详情页是不是真打得开。**只把 404 当死**——超时、403、429 都是
-    「没问过」而不是「不存在」，那种情况宁可放过去，也别当成删了。
+# slug 里 `_digital-download_m50936` 这一截是 WTA 发行系统的资产编号，
+# 对我们没用，但**不能在正则里把 `_` 排除掉**——见 `_WTA_SLUG` 下面那条注释。
+_WTA_TAIL = re.compile(r"_digital[-_]download.*$|_m\d{4,}$")
+# **`_` 必须在字符类里。** 少了它，`..._digital-download_m50936` 会在下划线处
+# 截断，拼出来的 URL 一律 404 —— 而 WTA 的场上采访 slug **全部**带这个后缀，
+# 于是整个源一条都收不到。这不是「条目被下架了」，是 URL 被我拼断了。
+_WTA_SLUG = re.compile(r"/videos/(\d+)/([a-z0-9_\-]{6,})")
+_WTA_IS_INTERVIEW = re.compile(r"(?:post-match|on-court)-interview")
+
+# 列表页是**滚动窗口**（`/videos` 约 60 条、`/videos/interviews` 恰好 10 条，
+# 翻页参数服务端直接忽略），一条采访赶上出片密集的那半天就会被挤出窗口，
+# 之后永远取不到。兜底是顺着 ID 往回扫——ID 是按发布时间递增的。
+# 900 是倒推出来的，不是拍的：实测华盛顿周 ID 走 ~670/天，两次 cron
+# 之间最长的一档是 03:00→21:00 的 18 小时 ≈ 500，留 1.8 倍余量。
+WTA_SWEEP_BACK = 900
+WTA_SWEEP_JOBS = 12
+# 未发布的 ID 不返回 404，而是回退到站点通名——**软 404，得按标题认**。
+_WTA_MISS_TITLE = "Women's Tennis Association - Official"
+
+
+def _wta_page(vid: str) -> str | None:
+    """取一条 WTA 视频详情页。
+
+    **用不带 slug 的 `/videos/<id>`**：站点自己的 canonical 就是这个形式，
+    而且它不会因为 slug 解析错就整条丢掉。`--compressed` 是必须的——
+    一页 178 KB，压完 20 KB，一轮扫 900 个差了 140 MB。
     """
-    proc = subprocess.run(
-        ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}", "--max-time", "20",
-         "-H", "User-Agent: Mozilla/5.0",
-         f"https://www.wtatennis.com/videos/{vid}/{slug}"],
-        capture_output=True, text=True, timeout=40)
-    return proc.stdout.strip() != "404"
+    try:
+        proc = subprocess.run(
+            ["curl", "-sS", "--compressed", "--max-time", "25",
+             "-H", "User-Agent: Mozilla/5.0", f"https://www.wtatennis.com/videos/{vid}"],
+            capture_output=True, text=True, timeout=45)
+    except subprocess.TimeoutExpired:
+        return None      # 超时是「没问过」，不是「不存在」
+    return proc.stdout or None
+
+
+def _wta_item(vid: str) -> dict | None:
+    """详情页 → 一条采访候选；不是采访 / 取不到就返回 None。
+
+    页面自带三样别处拿不到的东西：`titleUrlSegment`（完整 slug，自证赛事+
+    轮次+球员）、`uploadDate`（**库里第一批真发布时间**）、`duration`。
+    """
+    raw = _wta_page(vid)
+    if not raw:
+        return None
+    m = re.search(r'<meta property="og:title" content="([^"]*)"', raw)
+    if not m or m.group(1).startswith(_WTA_MISS_TITLE):
+        return None
+    headline = m.group(1)
+    # 一页里 `titleUrlSegment` 出现多次（封面图一份、视频一份）。**全收**，
+    # 只要有一份是采访就算——只取第一份的话，封面用 Getty 图的条目会漏。
+    segs = re.findall(r"titleUrlSegment&quot;:&quot;([a-z0-9_\-]{4,160})&quot;", raw)
+    slug = next((s for s in segs if _WTA_IS_INTERVIEW.search(s)), None)
+    if not slug:
+        return None
+    d = re.search(r'"duration":\s*"PT(?:(\d+)M)?(?:(\d+)S)?"', raw)
+    dt = re.search(r'"uploadDate":\s*"([0-9T:\-Z]+)"', raw)
+    return {"vid": vid, "slug": slug, "headline": headline,
+            "secs": (int(d.group(1) or 0) * 60 + int(d.group(2) or 0)) if d else None,
+            "published": dt.group(1) if dt else None}
+
+
+def _wta_row(it: dict) -> dict:
+    """把 slug 拆成条目。slug 自己写死了四要素，不靠标题猜。
+
+        athens-post-match-interview-final-barbora-krejcikova-english_digital-download_m50936
+        └赛事┘ └──────类型──────┘ └轮次┘ └────球员────┘ └语言┘ └───发行编号───┘
+    """
+    slug = it["slug"]
+    core = _WTA_TAIL.sub("", slug)
+    m = re.match(r"([a-z0-9_\-]+?)-(?:post-match|on-court)-interview-"
+                 r"(final|sf|qf|r\d+|semi\w*|quarter\w*)?-?(.*)", core)
+    # `queen_s-post-match-interview-r16-...` 里的下划线是 WTA 自己的写法，
+    # 拼回标题时当成撇号去掉，别留成「Queen S」。
+    event = (m.group(1).replace("_", "").replace("-", " ").title() if m else "")
+    rnd = (m.group(2) or "") if m else ""
+    who = (m.group(3) or "").replace("-english", "").replace("-", " ").title() if m else ""
+    return {
+        "id": f"wta:{it['vid']}",
+        # slug 拼回可读标题：轮次和赛事都塞进去，下游的轮次解析才认得出
+        "title": f"{who} Post-Match Interview | {rnd.upper()} | {event}".replace("|  |", "|"),
+        "duration_s": it["secs"],
+        "published": it["published"],
+        "channel": "WTA (wtatennis.com)",
+        "page_url": f"https://www.wtatennis.com/videos/{it['vid']}/{slug}",
+        "round": rnd,
+    }
 
 
 def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
-    """wtatennis.com 的视频页——WTA 那边对应 tennistv.com 的东西。
+    """wtatennis.com 的视频——WTA 那边对应 tennistv.com 的东西。
 
-    它是 ATP 那套 CMS 的姊妹站（都是 Pulselive），但**结构不一样**：
-    tennistv 把条目以 JSON 内嵌在 HTML 里，WTA 只留站内链接，
-    详情靠 JS 拉。好在 slug 本身信息就够：
+    两步：先读列表页拿到**当前最新的 ID**，再从那儿往回扫 `WTA_SWEEP_BACK`
+    个 ID。只读列表页是不够的，理由见 `WTA_SWEEP_BACK` 上面那段。
 
-        /videos/4539195/athens-post-match-interview-final-barbora-krejcikova-english
-        /videos/4523019/berlin-post-match-interview-sf-jessica-pegula
-                        └赛事┘ └──类型──┘ └轮次┘ └───球员───┘ └语言┘
+    **收上来的一律是候选，不是场上采访。** 实测五条 `post-match-interview`
+    里四条是 `WTA MEDIA` 深色背景板的坐访（便服、领夹麦、赛事台卡），
+    只有雅典决赛那条真在场上。slug 分不出这两类，所以这个源登记
+    `review_each`，看过画面才逐条放行——见注册表的 `_allow_ids_note`。
 
-    量很小——四个视频分区加起来去重后只有 3 条，`page` / `pageSize` 参数
-    都无效。但它补的是别处拿不到的 WTA 250/500（Athens、Berlin），
-    而且按天跑能滚动收到新的。
+    **产量本来就低，这是 WTA 的出片规律，不是采集漏了。** 实测柏林决赛日
+    那 280 个 ID 里只有 1 条采访，其余全是集锦；见到的是女王杯 R16、
+    柏林 SF/F、雅典 F ——**基本只做到半决赛和决赛**。首轮的场上采访是
+    **发生了但不发视频**：WTA 自己的战报写着「In her on-court interview,
+    Samsonova stated: ...」（2026 华盛顿首轮），而同一天 wtatennis.com、
+    @wta、Tennis Channel 上一条对应的视频都没有。
 
     **Brightcove 那条路走不通**：WTA 的视频托管在 Brightcove（account
     6041795521001），播放器 config 里能拿到 policy key，但目录搜索接口返回
     `ACCESS_DENIED` —— 那是 WTA 设的访问策略，只允许按 ID 播放单条，
     不允许列目录。不绕。
     """
-    slugs: dict[str, str] = {}
+    seen: set[str] = set()
+    listed: set[str] = set()
     for page in ("videos", "videos/interviews", "videos/press-conferences"):
         try:
             proc = subprocess.run(
-                ["curl", "-sS", "--max-time", "30", "-H", "User-Agent: Mozilla/5.0",
-                 f"https://www.wtatennis.com/{page}"],
+                ["curl", "-sS", "--compressed", "--max-time", "30",
+                 "-H", "User-Agent: Mozilla/5.0", f"https://www.wtatennis.com/{page}"],
                 capture_output=True, text=True, timeout=50)
         except subprocess.TimeoutExpired:
             continue
-        for vid, slug in re.findall(r"/videos/(\d+)/([a-z0-9\-]{6,})", proc.stdout):
-            if re.search(r"post-match|on-court", slug):
-                slugs[vid] = slug
-    if not slugs:
-        return [], "no-entries"
+        for vid, slug in _WTA_SLUG.findall(proc.stdout):
+            seen.add(vid)
+            if _WTA_IS_INTERVIEW.search(slug):
+                listed.add(vid)
+    if not seen:
+        return [], "error: 列表页一个视频链接都没取到"
 
-    rows = []
-    for vid, slug in slugs.items():
-        # **列表页挂着链接 ≠ 详情页打得开。** 实测这三条 post-match-interview
-        # 全部 404，而同一张列表页上另外八条视频 8/8 都是 200 —— 不是整站坏了，
-        # 是这几条被下架了、链接却没撤。收进来就是推给人一个死链，
-        # 所以逐条探一下再收。这个源本来就只有个位数，探得起。
-        if not _wta_page_alive(vid, slug):
-            continue
-        m = re.match(r"([a-z\-]+?)-(?:post-match|on-court)-interview-"
-                     r"(final|sf|qf|r\d+|semi\w*|quarter\w*)?-?(.*)", slug)
-        event = (m.group(1).replace("-", " ").title() if m else "")
-        rnd = (m.group(2) or "") if m else ""
-        who = (m.group(3) or "").replace("-english", "").replace("-", " ").title() if m else ""
-        rows.append({
-            "id": f"wta:{vid}",
-            # slug 拼回可读标题：轮次和赛事都塞进去，下游的轮次解析才认得出
-            "title": f"{who} Post-Match Interview | {rnd.upper()} | {event}".replace("|  |", "|"),
-            "duration_s": None,
-            "channel": "WTA (wtatennis.com)",
-            "page_url": f"https://www.wtatennis.com/videos/{vid}/{slug}",
-            "round": rnd,
-        })
-    return rows, "ok"
+    top = max(int(v) for v in seen)
+    todo = sorted({str(v) for v in range(top - WTA_SWEEP_BACK, top + 1)} | listed)
+    with ThreadPoolExecutor(WTA_SWEEP_JOBS) as ex:
+        items = [it for it in ex.map(_wta_item, todo) if it]
+    return [_wta_row(it) for it in items], f"ok（扫 {len(todo)} 个 ID）"
 
 
 def scan(url: str, depth: int) -> tuple[list[dict], str]:
@@ -432,6 +498,9 @@ def main() -> int:
     allow = compile_allow(cfg)
     deny = compile_deny(cfg)
     deny_ids = set(cfg.get("deny_ids", []))
+    # `allow_ids` 是 `deny_ids` 的对称面，只对 `review_each` 的源起作用：
+    # 那类源默认不收，看过画面确认在场上的才逐条放行。
+    allow_ids = set(cfg.get("allow_ids", []))
     keep = {"oncourt"}
     if args.include_ceremony:
         keep.add("ceremony")
@@ -470,7 +539,15 @@ def main() -> int:
             # `Lilli Tagger Champion Prague 2026`，靠标题正则一条都收不到，
             # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
             # 全是官方缺口。这类源按源判，不按标题判。
-            if r["id"].startswith(("tennistv:", "wta:")) or src.get("assume_oncourt"):
+            if src.get("review_each"):
+                # **这个源的 slug 分不出场合，只有画面能分。** wtatennis.com 的
+                # `*-post-match-interview-*` 五条里四条是 `WTA MEDIA` 深色背景板的
+                # 坐访（便服、领夹麦、赛事台卡），只有雅典决赛那条是真在场上
+                # （WTA TOUR 手持话筒、球网、看台）。slug 里没有任何字段能分开这两类，
+                # `-english` 两边都有。所以默认不算，看过图进 allow_ids 才算。
+                # 反过来做（默认算、逐条拉黑）就是在没人看之前先把背景板推给读者。
+                kind = "oncourt" if r["id"] in allow_ids else "maybe"
+            elif r["id"].startswith("tennistv:") or src.get("assume_oncourt"):
                 kind = "oncourt"
             elif any(p.search(r["title"]) for p in allow.get(src["name"], ())):
                 # 按源的白名单：官方赛事频道标题太简，全局模式够不着。
@@ -542,7 +619,10 @@ def main() -> int:
     for name, status, got, oncourt, skip, fresh in report:
         print(f"{name:<34} {status:<20} {got:>5} {oncourt:>5} {skip:>5} {fresh:>5}")
 
-    bad = [r for r in report if r[1] != "ok"]
+    # **判据是前缀，不是全等。** 状态里允许带括号说明（`ok（扫 906 个 ID）`），
+    # 全等比对会把一个刚收了 5 条的源列进「没取到内容」，然后建议「换个时间再跑」。
+    ok = lambda s: s.startswith("ok")            # noqa: E731
+    bad = [r for r in report if not ok(r[1])]
     if bad:
         print("\n没取到内容的源（**不代表它们没有采访**）：")
         for name, status, *_ in bad:
@@ -551,7 +631,7 @@ def main() -> int:
                 }.get(status, "网络/限流，换个时间再跑")
             print(f"  - {name}：{status} —— {hint}")
 
-    empty = [r for r in report if r[1] == "ok" and r[3] == 0 and r[4] == 0]
+    empty = [r for r in report if ok(r[1]) and r[3] == 0 and r[4] == 0]
     if empty:
         print("\n取到了内容但一条没命中（这批里确实没有，属正常）：")
         for name, _s, got, *_ in empty:

@@ -407,13 +407,14 @@
     },
     {
       "name": "WTA 官网视频 (wtatennis.com)",
-      "url": "https://www.wtatennis.com/videos/interviews",
+      "url": "https://www.wtatennis.com/videos",
       "fetch": "wta",
       "tier": "wta-site",
-      "scan_depth": 20,
+      "scan_depth": 900,
       "verified": true,
-      "note": "WTA 那边对应 tennistv.com 的东西，但量小得多：四个视频分区去重后只有 3 条，翻页参数无效。补的是别处拿不到的 WTA 250/500（Athens、Berlin）。slug 自带赛事/轮次/球员，比标题可靠。Brightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），所以只能走页面。",
-      "provenance": "official"
+      "note": "WTA 那边对应 tennistv.com 的东西。**曾经长期一条都收不到，原因是我把 URL 拼断了**：slug 正则写的是 `[a-z0-9\\-]`，不含下划线，而 WTA 场上采访的 slug 一律带 `_digital-download_m50936` 这个发行编号后缀——截断之后 `/videos/<id>/<截断 slug>` 一律 404，旧注释据此断言「这几条被下架了」。**链接一直是活的**，纯 ID 的 `/videos/<id>` 更是稳定 200（站点 canonical 就是这个形式）。\n现在两步走：列表页拿最新 ID，再往回扫 900 个 ID 兜底。列表页是滚动窗口（/videos 约 60 条、/videos/interviews 恰好 10 条，翻页参数服务端忽略），出片密集时新采访会被挤出窗口后永久取不到。\n详情页自带 titleUrlSegment（完整 slug，自证赛事+轮次+球员）、uploadDate、duration，所以这个源是库里**第一个带真发布时间**的。\n**产量低是 WTA 的出片规律，不是采集漏了**：柏林决赛日 280 个 ID 里只有 1 条采访，见到的都是女王杯 R16、柏林 SF/F、雅典 F，基本只做半决赛和决赛。首轮的场上采访是「发生了但不发视频」——WTA 自己 2026 华盛顿首轮的战报写着 In her on-court interview, Samsonova stated: ...，同一天全网没有对应视频。推送要的正是 F/SF/QF，对得上。\nBrightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），不绕。",
+      "provenance": "official",
+      "review_each": true
     },
     {
       "name": "Tennis Interviews",
@@ -782,6 +783,10 @@
     "vc9_56rBBqY",
     "vuI3UvrVcgs",
     "wBJu_kDRWmg",
+    "wta:4517515",
+    "wta:4519217",
+    "wta:4523019",
+    "wta:4524976",
     "x7DxjTzBwtk",
     "xM0Y9YgheV0",
     "yWI1G4YN4PE",
@@ -800,5 +805,9 @@
   },
   "_broadcaster_note": "**「找持权转播商，他们直播里有场上采访」这条路已经查透了，结论是行不通。**\n思路本身对——直播信号里确实有。但他们**不把采访上传到 YouTube**，上传的是集锦。\n\n两轮实测（2026-07-27）：\n① 频道 /videos 深扫 14 家、约 16000 条 → 网球场上采访 **5 条**（Stan Sport 4、Sky Sports 1）。\n② 改用**播放列表**入口重查（这是转播商的正确入口——综合频道的 /videos 会被本地热门项目淹掉）：ESPN 18 个网球列表、SuperSport 4、TSN 2、Sky 4，逐个扫完，含 `interview` 字样的一共 31 条，而且**绝大多数不是场上采访**——ESPN 那几条是演播室长访谈（532 秒 Alcaraz、1015 秒 Djokovic + McEnroe）、甚至有一条 23 秒是「德约拒绝接受场上采访」；Sky 那两条 600–871 秒是颁奖礼全程；SuperSport 命中的是标题里带 interview 的 highlights。\n\n**最硬的一条对照**：ESPN 的 `2026 Wimbledon`（197 条）、`2025 Wimbledon`（241 条）、`2026 Australian Open`（125 条）三个列表，**含 interview 的是 0**。那正是温网早轮缺口该在的地方。\n\n唯一收下的是 Stan Sport 的温网列表（4 条，`Wimbledon First/Second Round Interview`），它的法网列表 247 条里 0 条采访——同一家转播商，两个大满贯，一个 4 条一个 0 条，说明这不是政策而是随手。",
   "_provenance_note": "`provenance` 记的是**这段画面是谁拍的**，三档：\n  official     赛事方 / 巡回赛 / 联合会自有频道\n  broadcaster  持权转播商自有频道\n  rehost       二次上传官方转播信号——画面仍然来自转播，不是自己拍的\n\n**加这个字段是因为我把 rehost 说成了「现场拍摄者」，说了不止一次。**\nEdimator 那 158 条我一直当成观众自己拍的，直到把自动帧拼出来看：温网那条布云朝克特带着**转播下方字幕条**（`BU YUNCHAOKETE bt. H. DELLIEN 6-4 6-0`，温网紫绿图形包）；上海那条右上角是 **prime 台标**（上海站持权方）；加拿大和温网各有一条**切到了采访者**——反打机位，观众席上拍不出来。另外十条挨个看过：ATP 500 / Masters 1000 / WTA TOUR 的话筒旗、场内机位、满幅 16:9。**它是搬运，不是自拍。**\n\n所以判 rehost 的判据是画面里的转播要素，不是频道名字看着像不像官方：\n  · 官方话筒旗（赛事标 / ATP 500 / WTA TOUR）\n  · 转播图形包（比分条、下方字幕条、LED 上的 MATCH WINNER、右上角台标）\n  · 反打机位——能切到采访者，就说明不止一台机器\n**同一批看下来，11 个 rehost 源没有一个是自己拍的。**「粉丝号 = 手机拍的」这个假设从头到尾就没成立过。\n\n**这个字段不是授权判断。** 仓库既有做法不变：授权不做检索闸门，来源全程记录，权利判断留给发布前的人工环节。",
-  "_picture_note": "`picture` 记的是**画面成色**，只在不是 clean 时写出来：\n  watermark  满幅转播画面，但烧了上传者自己的台标\n  zoom       轻微放大裁切，边缘发虚，主体和转播图形还在\n\n起因是一句话：「虽然需要完整的 on court interview，但后续可以裁剪高光的时刻」——既然要裁，台标和轻微裁切就不是否决理由，但**裁之前人得知道这条素材是什么成色**。\n\n**但有个下限，这一轮划出来了。** 后来又补了一条要求：「肯定要用官方的直播的视频，或者是记录的视频，清晰度和角度根本达不到要求」。按这条重看一遍，两个源出局——不是因为有台标，是因为**转播画面本身被二次加工毁掉了**：Sportiva Arena 把画面缩成小窗套装饰边框，可用画幅不到一半；Karendoms Tandem 把竖屏放大后左右用镜像侧栏补满。\n分界线是：**台标、轻微裁切 → 记下来照收；缩窗、补边、画中画、烧录字幕 → 不收。**前者裁出来还是转播画质，后者裁不出来。"
+  "_picture_note": "`picture` 记的是**画面成色**，只在不是 clean 时写出来：\n  watermark  满幅转播画面，但烧了上传者自己的台标\n  zoom       轻微放大裁切，边缘发虚，主体和转播图形还在\n\n起因是一句话：「虽然需要完整的 on court interview，但后续可以裁剪高光的时刻」——既然要裁，台标和轻微裁切就不是否决理由，但**裁之前人得知道这条素材是什么成色**。\n\n**但有个下限，这一轮划出来了。** 后来又补了一条要求：「肯定要用官方的直播的视频，或者是记录的视频，清晰度和角度根本达不到要求」。按这条重看一遍，两个源出局——不是因为有台标，是因为**转播画面本身被二次加工毁掉了**：Sportiva Arena 把画面缩成小窗套装饰边框，可用画幅不到一半；Karendoms Tandem 把竖屏放大后左右用镜像侧栏补满。\n分界线是：**台标、轻微裁切 → 记下来照收；缩窗、补边、画中画、烧录字幕 → 不收。**前者裁出来还是转播画质，后者裁不出来。",
+  "_allow_ids_note": "`allow_ids` 是 `deny_ids` 的对称面，**只对 `review_each` 的源起作用**。那类源的标题/slug 分不出场合（wtatennis.com 的 `*-post-match-interview-*` 五条里四条是背景板坐访），默认一条不收；看过画面确认在场上的，才把 id 放进来。**方向不能反**：默认收、逐条拉黑，等于在没人看之前先把背景板推给读者。判定和证据记在 data/oncourt_verify.json。",
+  "allow_ids": [
+    "wta:4539195"
+  ]
 }
