@@ -172,3 +172,15 @@ def test_推送正文里印文案且只印一遍():
     assert page.count(first) == 1
     # 复制页的入口要说清楚它是干嘛的
     assert "复制页" in page and "https://p/copy.html" in page
+
+
+def test_yt_dlp装default才解得了n_challenge():
+    """少了 yt-dlp-ejs 不会报「装少了」，而是 `n challenge solving failed` +
+    `Only images are available`——任何视频格式选择器都匹配不上，看起来像
+    「这个视频没有格式」或者「cookie 过期了」。第一次跑 cookies 模式就栽在这上面。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert '"yt-dlp[default]"' in text
+    check = text[text.index("cookies — 只验"):].split("- name:")[0]
+    # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
+    assert "n challenge solving failed" in check
+    assert "not a bot" in check
