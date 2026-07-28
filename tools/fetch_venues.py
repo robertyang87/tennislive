@@ -65,13 +65,23 @@ VENUES = [
     # 球场）；赛事官网票务页那三张 Stadium 图**全是效果图不是实拍**——横幅上
     # 的字是糊的（TOPNO / MEMPH / TENOS GEHPLIS），观众是重复贴图。带假文字
     # 的渲染图比一张真实城市照更糟。
-    # 后来换成了主球场：全场航拍是对的，但那不是中心球场。WTA 赛事页的 hero
-    # 图（1167_Memphis-Hero-2）拍的就是这座临时主球场——满场看台、紫黄赞助带，
-    # 前场地面刷着 MEMPHIS CLASSIC。放大看观众是一个个不同的人（工作证、折叠
-    # 椅、举手机的小孩），不是效果图那种重复贴图。
-    # 两点如实记在 credits 里：一是它是 2.44 的横幅，裁成 3:4 之后场地上那行
-    # MEMPHIS CLASSIC 不在画面内；二是它上传于 2026-06-25，早于首届开赛，
-    # 无法确认拍的是不是正赛。
+    # 后来换成主球场（全场航拍是对的，但那不是中心球场）。这一步差点栽进
+    # **另一个坑，比效果图更隐蔽**：WTA 赛事页挂在这一站名下的 hero 图
+    # （1167_Memphis-Hero-2）确实是**实拍**——放大看观众是一个个不同的人，
+    # 场地上还刷着 MEMPHIS CLASSIC——但它**不是这个场地**。
+    #
+    # 判据是**场地自身的颜色**，不是文字：孟菲斯主球场是**灰色前场 + 蓝色
+    # 场心 + 蓝白临时看台**，赞助带是深蓝的（Mercedes-Benz / TOPNOTCH /
+    # crionet / Campbell Clinic）；那张 hero 是**绿色前场 + 紫黄赞助带 +
+    # 绿色折叠椅**。两者对不上。它上传于 2026-06-25、早于首届 7/25 开赛，
+    # 多半是别处拍的宣传图后期刷上了场地文字。
+    #
+    # 「官方图库把它挂在这一站名下」是**间接信号**，不是产物。真正能证伪的
+    # 是把它跟同场地的另一份画面并排比颜色——见 CLAUDE.md。
+    #
+    # 现在用的是 Action News 5 (WMC-TV) 2026-07-26 赛事报道成片第 14.0 秒的
+    # 截帧：临时看台坐着人、蓝色场地、赞助带清楚。代价如实记在 credits：
+    # 1280×720 的源，裁掉下方台标条后放大了 2.78 倍，偏软。
     ("memphis-leftwich-stadium-court.jpg", None, None),
     # 洛斯卡沃斯 ATP250（Cabo Sports Complex 的 Estadio Alejandro Burillo）：
     # 球场在 Commons 上是真空——"Cabo Sports Complex" 只命中一张波兰滑水赛的
@@ -127,12 +137,14 @@ VENUES = [
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
     "memphis-leftwich-stadium-court.jpg": {
-        "title": "Memphis Classic 主球场（WTA 赛事页 hero 图 1167_Memphis-Hero-2；"
-                 "场地前场刷着 MEMPHIS CLASSIC，裁成 3:4 后不在画面内）",
-        "license": "unverified · 赛事官方媒体",
-        "artist": "WTA / Memphis Classic",
-        "page": "https://photoresources.wtatennis.com/photo-resources/2026/06/25/"
-                "9a7c7f59-5a1f-4afd-bb33-bd3bdf8d56ca/1167_Memphis-Hero-2.jpg",
+        "title": "Memphis Classic 主球场（Action News 5 2026-07-26 赛事报道，"
+                 "成片第 14.0 秒；临时看台、Mercedes-Benz / TOPNOTCH / crionet "
+                 "赞助带、Campbell Clinic 挡布；裁掉了下方的台标条，"
+                 "1280×720 源放大 2.78 倍）",
+        "license": "unverified · 电视台新闻画面截帧",
+        "artist": "Action News 5 / WMC-TV",
+        "page": "https://www.actionnews5.com/2026/07/26/"
+                "memphis-classic-tournament-full-swing-pro-tennis-returns-leftwich/",
     },
     # 画面自己把身份说死了：右侧赞助带印着 LOS CABOS（带市徽）和 Mifel，场地
     # 前场地面上也刷着 LOS CABOS。放大看这些字都是清楚的——不是效果图那种
