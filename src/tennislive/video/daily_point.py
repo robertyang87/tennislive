@@ -143,6 +143,20 @@ _SLAM_EVENT_ALIASES = {
     "USOPEN": ("us open", "u s open"),
 }
 
+# Canonical per-source labels for the discovery ledger. Kept as named constants
+# so a resolver's own ``report`` entry and the aggregator's error entry always
+# use the exact same name for the same source (no drift between the two paths).
+_SRC_TENNISTV = "Tennis TV Hot Shots"
+_SRC_WTA_HUB = "WTA 官方视频（官网）"
+_SRC_WTA_YT = "WTA 官方 YouTube"
+_SRC_ATP_YT = "ATP 官方 YouTube"
+_SRC_TENNISTV_YT = "Tennis TV YouTube"
+_SRC_YT_SEARCH = "官方频道搜索"
+
+
+def _slam_source(tour: str) -> str:
+    return f"{_OFFICIAL_YOUTUBE_TOURS.get(tour.upper(), tour)}（官方频道）"
+
 
 @dataclass(frozen=True)
 class PointSelection:
@@ -617,12 +631,65 @@ def _unique_consensus_pick(
     return ordered[0] if ordered else None
 
 
+def _record_source(
+    report: list[dict] | None,
+    source: str,
+    *,
+    fetched: int = 0,
+    matched: int = 0,
+    picked: bool = False,
+    note: str = "",
+    error: str = "",
+) -> None:
+    """Append one auditable per-source line to the discovery ledger.
+
+    ``report`` is opt-in: every existing caller (and every direct-resolver
+    test) passes ``None`` and keeps the old behaviour untouched. Only the tour
+    aggregator threads a list, so a skip can state, per official source, how
+    many clips were fetched, how many matched yesterday's matches, and where
+    the gap was -- turning a silent "nothing published" into an auditable
+    ledger that separates a genuine no-material day from a broken source.
+
+    ``fetched`` is the raw candidate count a source returned; ``matched`` is how
+    many of those named a player and event from one of yesterday's matches
+    (the generalisation of Tennis TV's existing ``matching_cards`` signal);
+    ``picked`` is whether the source yielded a publishable clip.
+    """
+    if report is None:
+        return
+    if error:
+        note = note or f"源请求失败：{error}"
+    elif not note:
+        if fetched == 0:
+            note = "源未返回候选（可能是当日无内容或抓取/解析异常）"
+        elif matched == 0:
+            note = f"抓到 {fetched} 条候选，0 条命中昨日比赛"
+        elif not picked:
+            note = (
+                f"命中昨日比赛 {matched} 条，"
+                "但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+            )
+        else:
+            note = f"命中 {matched} 条，选出 1 条可发布"
+    report.append(
+        {
+            "source": source,
+            "fetched": int(fetched),
+            "matched": int(matched),
+            "picked": bool(picked),
+            "note": note,
+            "error": error,
+        }
+    )
+
+
 def discover_wta_point(
     digest: Digest,
     *,
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_wta_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Resolve a small shortlist from the official WTA video hub."""
     response = get(
@@ -649,7 +716,15 @@ def discover_wta_point(
             metadata_items.append(metadata_fetcher(candidate, get=get, timeout=timeout))
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
             continue
-    return select_daily_point(digest, metadata_items)
+    selection = select_daily_point(digest, metadata_items)
+    _record_source(
+        report,
+        _SRC_WTA_HUB,
+        fetched=len(candidates),
+        matched=len(shortlist),
+        picked=selection is not None,
+    )
+    return selection
 
 
 def discover_tennistv_point(
@@ -658,6 +733,7 @@ def discover_tennistv_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 30,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_tennistv_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Use Tennis TV's public Hot Shots library as the ATP discovery layer.
 
@@ -765,6 +841,13 @@ def discover_tennistv_point(
             continue
     direct = select_daily_point(digest, metadata_items)
     if direct is not None:
+        _record_source(
+            report,
+            _SRC_TENNISTV,
+            fetched=len(entries),
+            matched=len(shortlist),
+            picked=True,
+        )
         return direct
 
     # Tennis TV cards are the best ATP discovery source, but many cards are
@@ -784,7 +867,22 @@ def discover_tennistv_point(
                 mirror_items.append(fetch_youtube_video_metadata(candidate))
             except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
                 continue
-    return select_daily_point(digest, mirror_items)
+    selection = select_daily_point(digest, mirror_items)
+    note = ""
+    if len(shortlist) and selection is None:
+        note = (
+            f"命中昨日比赛 {len(shortlist)} 张卡片，但均为 freemium/无可播放源"
+            "（缺 TENNISTV_JWT），ATP YouTube 镜像也未找到同一片"
+        )
+    _record_source(
+        report,
+        _SRC_TENNISTV,
+        fetched=len(entries),
+        matched=len(shortlist),
+        picked=selection is not None,
+        note=note,
+    )
+    return selection
 
 
 def _discover_official_youtube_point(
@@ -796,6 +894,8 @@ def _discover_official_youtube_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
+    source: str = "",
 ) -> PointSelection | None:
     """Resolve one verified official YouTube uploads feed."""
     response = get(
@@ -831,7 +931,15 @@ def _discover_official_youtube_point(
             metadata_items.append(metadata_fetcher(candidate))
         except (VideoPipelineError, ValueError, TypeError):
             continue
-    return select_daily_point(digest, metadata_items)
+    selection = select_daily_point(digest, metadata_items)
+    _record_source(
+        report,
+        source or tour,
+        fetched=len(candidates),
+        matched=len(shortlist),
+        picked=selection is not None,
+    )
+    return selection
 
 
 def discover_atp_point(
@@ -840,6 +948,7 @@ def discover_atp_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Resolve ATP's verified official YouTube feed without scraping its CF page."""
     return _discover_official_youtube_point(
@@ -850,6 +959,8 @@ def discover_atp_point(
         get=get,
         timeout=timeout,
         metadata_fetcher=metadata_fetcher,
+        report=report,
+        source=_SRC_ATP_YT,
     )
 
 
@@ -859,6 +970,7 @@ def discover_tennistv_youtube_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Resolve Tennis TV's own public YouTube uploads.
 
@@ -875,6 +987,8 @@ def discover_tennistv_youtube_point(
         get=get,
         timeout=timeout,
         metadata_fetcher=metadata_fetcher,
+        report=report,
+        source=_SRC_TENNISTV_YT,
     )
 
 
@@ -884,6 +998,7 @@ def discover_wta_youtube_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Resolve WTA's verified YouTube uploads as a second WTA path."""
     return _discover_official_youtube_point(
@@ -894,6 +1009,8 @@ def discover_wta_youtube_point(
         get=get,
         timeout=timeout,
         metadata_fetcher=metadata_fetcher,
+        report=report,
+        source=_SRC_WTA_YT,
     )
 
 
@@ -902,6 +1019,7 @@ def discover_youtube_search_point(
     *,
     searcher: Callable[..., list[OfficialVideoCandidate]] = search_official_youtube_candidates,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Search verified tour channels using yesterday's match context.
 
@@ -943,7 +1061,18 @@ def discover_youtube_search_point(
                     metadata_items.append(metadata_fetcher(candidate))
                 except (VideoPipelineError, requests.RequestException, ValueError, TypeError):
                     continue
-    return select_daily_point(digest, metadata_items)
+    selection = select_daily_point(digest, metadata_items)
+    # This path already searches by yesterday's players+event, so every fetched
+    # candidate is "matched"; the ledger records how many labelled candidates
+    # came back and whether one cleared the publish gate.
+    _record_source(
+        report,
+        _SRC_YT_SEARCH,
+        fetched=len(metadata_items),
+        matched=len(metadata_items),
+        picked=selection is not None,
+    )
+    return selection
 
 
 def discover_slam_point(
@@ -953,6 +1082,7 @@ def discover_slam_point(
     get: Callable[..., object] = requests.get,
     timeout: int = 25,
     metadata_fetcher: Callable[..., OfficialVideoMetadata] = fetch_youtube_video_metadata,
+    report: list[dict] | None = None,
 ) -> PointSelection | None:
     """Resolve an official Grand Slam uploads feed through the same hard gate."""
     code = tour.upper()
@@ -966,6 +1096,8 @@ def discover_slam_point(
         get=get,
         timeout=timeout,
         metadata_fetcher=metadata_fetcher,
+        report=report,
+        source=_slam_source(code),
     )
 
 
@@ -985,15 +1117,26 @@ def discover_official_points_by_tour(
     ``diagnostics`` (when given) receives a ``resolver_attempts`` list that
     records every resolver's outcome -- including the exceptions this loop
     would otherwise swallow -- so a skip run can persist why each source
-    produced nothing instead of leaving that only in expiring CI logs.
+    produced nothing instead of leaving that only in expiring CI logs. Each
+    attempt also carries this source's ``fetched``/``matched`` counts (and a
+    human ``note``), so an "empty" outcome distinguishes "fetched N, matched 0"
+    (a real no-material day) from "fetched 0" (a broken feed/parser).
     """
     selections: list[PointSelection] = []
     attempts: list[dict] = []
 
-    def _attempt(name: str, call: Callable[[], PointSelection | None]) -> None:
-        record: dict = {"resolver": name}
+    def _attempt(
+        name: str,
+        source: str,
+        call: Callable[[list[dict]], PointSelection | None],
+    ) -> None:
+        record: dict = {"resolver": name, "source": source}
+        # Each resolver appends exactly one ledger entry (fetched/matched/note)
+        # to ``counts`` on a normal return; on an exception it raises before
+        # appending, so ``counts`` stays empty and only the error is recorded.
+        counts: list[dict] = []
         try:
-            selection = call()
+            selection = call(counts)
         except (VideoPipelineError, requests.RequestException, ValueError, TypeError) as exc:
             record["status"] = "error"
             record["error"] = f"{type(exc).__name__}: {exc}"
@@ -1007,24 +1150,43 @@ def discover_official_points_by_tour(
                 record["title"] = selection.metadata.candidate.title
                 record["url"] = selection.metadata.candidate.url
                 selections.append(selection)
+        if counts:
+            record["fetched"] = counts[-1].get("fetched", 0)
+            record["matched"] = counts[-1].get("matched", 0)
+            if counts[-1].get("note"):
+                record["note"] = counts[-1]["note"]
         attempts.append(record)
 
-    for resolver in (
-        discover_tennistv_point,
-        discover_wta_point,
-        discover_wta_youtube_point,
-        discover_atp_point,
-        discover_tennistv_youtube_point,
-        discover_youtube_search_point,
+    for source, resolver in (
+        (_SRC_TENNISTV, discover_tennistv_point),
+        (_SRC_WTA_HUB, discover_wta_point),
+        (_SRC_WTA_YT, discover_wta_youtube_point),
+        (_SRC_ATP_YT, discover_atp_point),
+        (_SRC_TENNISTV_YT, discover_tennistv_youtube_point),
+        (_SRC_YT_SEARCH, discover_youtube_search_point),
     ):
-        _attempt(resolver.__name__, lambda resolver=resolver: resolver(digest))
+        _attempt(
+            resolver.__name__,
+            source,
+            lambda rep, resolver=resolver: resolver(digest, report=rep),
+        )
     for tour in _SLAM_EVENT_ALIASES:
         _attempt(
             f"discover_slam_point:{tour}",
-            lambda tour=tour: discover_slam_point(digest, tour),
+            _slam_source(tour),
+            lambda rep, tour=tour: discover_slam_point(digest, tour, report=rep),
         )
     if diagnostics is not None:
         diagnostics["resolver_attempts"] = attempts
+    logger.info(
+        "昨日好球来源记账：%s",
+        "；".join(
+            f"{item['source']} 抓取{item.get('fetched', '-')}"
+            f"/命中{item.get('matched', '-')}/{item['status']}"
+            for item in attempts
+        )
+        or "无源被查询",
+    )
     by_tour: dict[str, list[PointSelection]] = {"ATP": [], "WTA": []}
     for selection in selections:
         by_tour[selection.match.tour.value].append(selection)
@@ -1691,7 +1853,10 @@ def generate_yesterday_point(
     ``diagnostics`` (when given) records whether the feature switch was on
     (``enabled``) and each resolver's outcome (``resolver_attempts``), so a
     skip manifest can state the true reason -- "开关未开启" is not the same
-    story as "queried every source and found nothing".
+    story as "queried every source and found nothing". Each resolver attempt
+    also carries this source's ``fetched``/``matched`` counts, so an "empty"
+    outcome distinguishes "fetched N, matched 0" (a real no-material day) from
+    "fetched 0" (a broken feed/parser).
     """
     if diagnostics is None:
         diagnostics = {}
