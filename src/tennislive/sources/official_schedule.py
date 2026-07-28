@@ -212,8 +212,24 @@ def _append_unique(values: list[str], value: str) -> None:
         values.append(value)
 
 
+# OOP 上的两种时间是**两回事**，不能压成同一个：
+#
+# - `Starts At 11:00 PM` —— 这块场地这一节的**首场**，到点就开打
+# - `Not Before 1:00 AM` —— 排在前一场之后，1:00 只是**下界**；前一场打成
+#   三盘，这场就往后拖
+#
+# 原来两种都记 `official-exact`、卡上印成裸时间，读者会当成"到点开打"。郑钦文
+# 那场正是 `Not Before 1:00 AM`——它跟在 Majchrzak–Paul（23:00 开打）后面，
+# 真打起来可能是两点。对熬夜看球的人来说这个差别就是这条卡的全部价值。
+_FIRM_DIRECTIVE = re.compile(r"starting at|starts at", re.I)
+_FLOOR_DIRECTIVE = re.compile(r"not before", re.I)
+
+
 def _apply_document(matches: list[Match], document: OfficialDocument) -> dict[str, int]:
-    counts = {"exact": 0, "ordered": 0, "unlisted": 0, "conflict": 0, "agree": 0}
+    counts = {
+        "exact": 0, "not_before": 0, "ordered": 0, "unlisted": 0,
+        "conflict": 0, "agree": 0,
+    }
     for match in matches:
         _append_unique(match.data_sources, document.event.source)
         _append_unique(match.schedule_source_urls, document.url)
@@ -228,7 +244,8 @@ def _apply_document(matches: list[Match], document: OfficialDocument) -> dict[st
                 counts["unlisted"] += 1
             continue
         directive = _directive_for(document, position)
-        if directive and re.search(r"starting at|starts at|not before", directive, re.I):
+        if directive and (_FIRM_DIRECTIVE.search(directive)
+                          or _FLOOR_DIRECTIVE.search(directive)):
             official = (
                 _official_datetime(
                     document.play_date, directive, document.event.timezone
@@ -249,12 +266,16 @@ def _apply_document(matches: list[Match], document: OfficialDocument) -> dict[st
                 counts["conflict" if disagrees else "agree"] += 1
                 match.start_utc = official
                 match.time_observations[document.event.source] = official.isoformat()
-                match.schedule_time_status = "official-exact"
+                floor = bool(_FLOOR_DIRECTIVE.search(directive))
+                match.schedule_time_status = (
+                    "official-not-before" if floor else "official-exact"
+                )
                 match.schedule_note = (
                     f"{document.event.source}：{directive}"
+                    + ("；不早于该时间，需等前一场结束" if floor else "")
                     + ("；聚合源时间与官方时间不一致，已以官方为准" if disagrees else "")
                 )
-                counts["exact"] += 1
+                counts["not_before" if floor else "exact"] += 1
                 continue
         match.schedule_time_status = "official-order-estimate"
         match.schedule_note = f"{document.event.source}：{directive or '已列入场序，未给定开赛时间'}"
@@ -285,9 +306,10 @@ def enrich_official_schedules(
             document = _read_pdf(event, digest.today.year)
             counts = _apply_document(matches, document)
             statuses[label] = (
-                f"正常 · 精确 {counts['exact']} 场（与聚合源一致 {counts['agree']} / "
-                f"不一致 {counts['conflict']}，以官方为准） / "
-                f"场序 {counts['ordered']} 场 / 待下一版 {counts['unlisted']} 场"
+                f"正常 · 确切 {counts['exact']} 场 / 不早于 {counts['not_before']} 场"
+                f"（与聚合源一致 {counts['agree']} / 不一致 {counts['conflict']}，"
+                f"以官方为准） / 场序 {counts['ordered']} 场 / "
+                f"待下一版 {counts['unlisted']} 场"
             )
         except Exception as exc:  # noqa: BLE001 - each official event degrades alone
             logger.warning("官方 OOP 读取失败（%s）: %s", label, exc)
