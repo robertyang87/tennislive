@@ -177,22 +177,6 @@ jobs:
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
-      # 推送是**最后一步**：前面提交完成片才有可下载的链接。
-      # 「触发成功」不算推了，这一步 success 才算。
-      - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
-        env:
-          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
-        run: |
-          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
-          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
-          python tools/push_reel.py \
-            --outdir "${{ steps.paths.outputs.outdir }}" \
-            --title "${{ github.event.inputs.push_title }}" \
-            --lead "${{ github.event.inputs.push_lead }}" \
-            --copy "$COPY"
-
       - name: 上传 artifact
         uses: actions/upload-artifact@v4
         with:
@@ -219,3 +203,24 @@ jobs:
             git fetch origin ${{ github.ref_name }}
             git rebase origin/${{ github.ref_name }} || git rebase --abort
           done
+
+      # 推送**必须排在提交之后**——推送正文里那个下载链接指向仓库里的成片，
+      # 成片还没提交上去，链接就是 404。这一段的注释一直写着「推送是最后一步：
+      # 前面提交完成片才有可下载的链接」，而它本人一直排在提交**前面**：
+      # `wait_for_images` 探了二十次全失败，整条推送被取消（run 30339377013）。
+      # 之所以一直没被发现，是因为这一步以前从没真的跑成功过。
+      #
+      # 「触发成功」不算推了，**这一步 success 才算**。
+      - name: 推送到微信（可选）
+        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --title "${{ github.event.inputs.push_title }}" \
+            --lead "${{ github.event.inputs.push_lead }}" \
+            --copy "$COPY"
