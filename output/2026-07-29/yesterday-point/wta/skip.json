@@ -1,0 +1,91 @@
+{
+  "status": "skipped",
+  "generated_at": "2026-07-28T23:07:37.824236+00:00",
+  "project": "yesterday-point",
+  "tour": "WTA",
+  "published_for": "2026-07-29",
+  "switch_enabled": true,
+  "reason": "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、官方单分或集锦标签、完整回合和日期匹配的视频。若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。",
+  "resolver_attempts": [
+    {
+      "resolver": "discover_tennistv_point",
+      "source": "Tennis TV Hot Shots",
+      "status": "empty",
+      "fetched": 60,
+      "matched": 2,
+      "note": "命中昨日比赛 2 张卡片，但均为 freemium/无可播放源（缺 TENNISTV_JWT），ATP YouTube 镜像也未找到同一片"
+    },
+    {
+      "resolver": "discover_wta_point",
+      "source": "WTA 官方视频（官网）",
+      "status": "empty",
+      "fetched": 4,
+      "matched": 0,
+      "note": "抓到 4 条候选，0 条命中昨日比赛"
+    },
+    {
+      "resolver": "discover_wta_youtube_point",
+      "source": "WTA 官方 YouTube",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 7,
+      "note": "命中昨日比赛 7 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+    },
+    {
+      "resolver": "discover_atp_point",
+      "source": "ATP 官方 YouTube",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 8,
+      "note": "命中昨日比赛 8 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+    },
+    {
+      "resolver": "discover_tennistv_youtube_point",
+      "source": "Tennis TV YouTube",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 4,
+      "note": "命中昨日比赛 4 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+    },
+    {
+      "resolver": "discover_youtube_search_point",
+      "source": "官方频道搜索",
+      "status": "empty",
+      "fetched": 0,
+      "matched": 0,
+      "note": "源未返回候选（可能是当日无内容或抓取/解析异常）"
+    },
+    {
+      "resolver": "discover_slam_point:AO",
+      "source": "澳网官方视频（官方频道）",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 1,
+      "note": "命中昨日比赛 1 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+    },
+    {
+      "resolver": "discover_slam_point:RG",
+      "source": "法网官方视频（官方频道）",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
+    },
+    {
+      "resolver": "discover_slam_point:WIMBLEDON",
+      "source": "温网官方视频（官方频道）",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
+    },
+    {
+      "resolver": "discover_slam_point:USOPEN",
+      "source": "美网官方视频（官方频道）",
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
+    }
+  ]
+}

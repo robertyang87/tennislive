@@ -17,7 +17,13 @@ from ..timeutil import to_beijing
 from ..zh import player_zh, surface_zh
 from ..zh.tournaments import tournament_surface
 from .common import group_by_tournament, match_round_display
-from .schedule_time import match_key
+from .schedule_time import (
+    NOT_BEFORE_PREFIX,
+    has_estimated_times,
+    has_next_day_times,
+    has_not_before_times,
+    match_key,
+)
 from .story import is_chinese_player
 
 
@@ -186,26 +192,86 @@ def _event_heading(group) -> str:
     return f"{group.compact_level} {group.name_zh}" + (f"（{label}）" if label else "")
 
 
+# 小红书正文上限一千字。正文按这个预算**尽量装满**重要场次，而不是固定几场
+# ——卡片可以更详细（页数放得开），正文受这一条硬约束。
+CAPTION_MAX_CHARS = 1000
+# 脚注按"三个标记全出现"算——预算要按最坏情况留，算少了就会超
+_NOTE_WORST = (
+    "时间为北京时间；+1 为次日；不早于＝官方排期，需等前一场打完才开始；"
+    "无标记为官方给定的开赛时刻，带 * 为按场序推算的预计时间。"
+)
+
+
+def _match_line(m: Match, display: dict[str, str]) -> str:
+    """一场一行，写得尽量短——省下的每个字都能多装一场进一千字的正文。
+
+    对着最初的写法省了四处，都不丢关键信息：
+
+    - 轮次用短形式：「男单·第一轮」→「男单首轮」（6 → 4）
+    - 分隔符用空格不用「 · 」（每处 3 → 1，一行三处）
+    - 时间去掉「预计」二字：末尾那个 `*` 已经是预计的标记，脚注里也说了
+      （「预计 23:00*」→「23:00*」）。**「不早于」不能照这样省**：它没有对应
+      的符号，省掉就变成一个看着确切的时刻，而它其实是下界
+    - **不写球场**。球场名留在卡片上（那儿有的是地方），正文里它最占字又最
+      不影响读者的决定——挑哪场看的是人和时间。而且这些名字大多是长英文
+      （`Estadio Alejandro Burillo` 一个就 25 字），一行能顶掉半场别的比赛。
+
+    一行 39 → 24 字上下。
+    """
+    when = display.get(match_key(m), "").replace("预计 ", "")
+    discipline = (match_round_display(m) or "").split("·")[0].strip()
+    bits = [f"{discipline}{_short_round(m)}".strip(), _versus(m), when]
+    mark = "🇨🇳" if any(is_chinese_player(p) for p in m.home + m.away) else ""
+    return (mark + " ".join(b for b in bits if b)).strip()
+
+
 def post_body(
     pages_matches: Sequence[Match],
     display: dict[str, str],
+    *,
+    limit: int | None = None,
 ) -> str:
     """正文：按赛事分组，逐场「轮次 对阵 时间 场地」。
 
-    只列真正上卡的那些场次——正文和图不一致的话，读者第一眼就发现了。
+    ``limit`` 是正文的字数预算。超预算时**按赛事轮流丢弃末尾的场次**，不是从
+    最后一个赛事整段砍——后者会让排在后面的小站整站消失，读者看到的"今天只有
+    华盛顿在打"是假的。中国选手那几场排在各组最前，因此最后才会被丢到。
+
+    正文里的场次一定是卡片上的子集：卡片可以更详细，正文受一千字硬约束。
     """
-    blocks: list[str] = []
-    for group in group_by_tournament(list(pages_matches)):
-        lines = [f"🎾 {_event_heading(group)}"]
-        for m in group.matches:
-            when = display.get(match_key(m), "")
-            court = (m.court or "").strip()
-            bits = [match_round_display(m) or "", _versus(m), when]
-            if court:
-                bits.append(court)
-            mark = "🇨🇳 " if any(is_chinese_player(p) for p in m.home + m.away) else ""
-            lines.append(mark + " · ".join(b for b in bits if b))
-        blocks.append("\n".join(lines))
+    groups = group_by_tournament(list(pages_matches))
+    if not groups:
+        return ""
+    headers = [f"🎾 {_event_heading(g)}" for g in groups]
+    rows = [[_match_line(m, display) for m in g.matches] for g in groups]
+
+    if limit is None:
+        kept = rows
+    else:
+        kept = [[] for _ in groups]
+        # 每组的标题行是固定开销，先扣掉
+        used = sum(len(h) + 1 for h in headers) + 2 * len(groups)
+        queues = [list(r) for r in rows]
+        while any(queues):
+            progressed = False
+            for index, queue in enumerate(queues):
+                if not queue:
+                    continue
+                line = queue[0]
+                if used + len(line) + 1 > limit:
+                    queues[index] = []  # 这一组装不下了，别再试
+                    continue
+                kept[index].append(queue.pop(0))
+                used += len(line) + 1
+                progressed = True
+            if not progressed:
+                break
+
+    blocks = [
+        "\n".join([header] + lines)
+        for header, lines in zip(headers, kept)
+        if lines
+    ]
     return "\n\n".join(blocks)
 
 
@@ -221,6 +287,25 @@ def schedule_post(
     """整篇：首行标题、空行、正文、标签。格式与知识帖一致，可直接喂 to_copy_page。"""
     lead_time = display.get(match_key(lead), "") if lead is not None else ""
     title = post_title(day, lead, lead_time)
-    body = post_body(pages_matches, display)
-    note = "带 * 为按同赛事场序推算的预计时间，以官方排期为准；时间为北京时间。"
-    return f"{title}\n\n{body}\n\n{note}\n\n{TAGS}\n"
+    # 预算精确算：一千字里除掉标题、脚注、话题标签和分隔空行，剩下的全给赛程
+    overhead = len(title) + len(_NOTE_WORST) + len(TAGS) + 6
+    body = post_body(
+        pages_matches, display, limit=max(0, CAPTION_MAX_CHARS - overhead)
+    )
+    # 脚注只解释正文里真的出现了的标记
+    shown = [
+        display.get(match_key(m), "")
+        for m in pages_matches
+        if _match_line(m, display) in body
+    ]
+    note = ["时间为北京时间"]
+    if has_next_day_times(shown):
+        # 美东夜场落在北京次日凌晨，不说清楚读者会当成今天白天那个点
+        note.append("+1 为次日")
+    if has_not_before_times(shown):
+        # 官方 OOP 上一节里只有首场是确切时刻，其余都是"不早于"。照着这个点
+        # 定闹钟，很可能前一场还在打第三盘
+        note.append("不早于＝官方排期，需等前一场打完才开始")
+    if has_estimated_times(shown):
+        note.append("无标记为官方给定的开赛时刻，带 * 为按场序推算的预计时间")
+    return f"{title}\n\n{body}\n\n{'；'.join(note)}。\n\n{TAGS}\n"
