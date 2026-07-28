@@ -585,3 +585,21 @@ def test_caption_matches_are_a_subset_of_the_cards():
     assert appeared, "正文是空的"
     for m in appeared:
         assert match_key(m) in card_keys
+
+
+def test_caption_omits_the_court_but_the_card_keeps_it():
+    """球场名留在卡片上，正文里不写。
+
+    正文受一千字硬约束，而球场名最占字又最不影响读者的决定——挑哪场看的是
+    人和时间。这些名字大多还是长英文（`Estadio Alejandro Burillo` 一个 25 字），
+    一行能顶掉半场别的比赛。去掉之后同样一千字从 22 场装到 29 场。
+    """
+    from tennislive.render.schedule_post import _match_line
+
+    m = sched(match_id="a", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
+              status_text="single-source")
+    m.court = "Estadio Alejandro Burillo"
+    display = schedule_time_display([m])
+
+    assert "Estadio" not in _match_line(m, display)
+    assert "Estadio" in schedule_body([m], "7.28"), "卡片上不该少了球场"
