@@ -67,7 +67,21 @@ def round_rank(m: Match) -> int:
     return round_order(round_zh(m.round_name))
 
 
-def _estimate(m: Match, siblings: Sequence[Match]) -> str | None:
+def _clock(moment, today) -> str:
+    """`01:00` 或跨天时的 `+1 01:00`。
+
+    跨日窗口打开之后，「今日赛程」里有一半场次其实落在北京的次日凌晨（美东
+    夜场 = 北京 23:00 到次日 11:00）。只印「预计 01:00」看不出是哪天的
+    01:00——读者会以为是今天白天已经打完的那个点。
+    """
+    stamp = fmt_time_beijing(moment)
+    if today is None:
+        return stamp
+    offset = (to_beijing(moment).date() - today).days
+    return f"+{offset} {stamp}" if offset > 0 else stamp
+
+
+def _estimate(m: Match, siblings: Sequence[Match], today=None) -> str | None:
     """按证据强度逐级下探；每一级都能说清凭什么。"""
     rank = round_rank(m)
 
@@ -82,7 +96,8 @@ def _estimate(m: Match, siblings: Sequence[Match]) -> str | None:
             and (not same_discipline or s.is_singles == m.is_singles)
         ]
         if earlier:
-            return f"{fmt_time_beijing(max(s.start_utc for s in earlier))} 后*"
+            anchor = max(s.start_utc for s in earlier)
+            return f"{_clock(anchor, today)} 后*"
 
     # 2) 同轮次：同一轮通常排在同一时段，取最早的一场作预计开赛。
     for same_discipline in (True, False):
@@ -93,13 +108,28 @@ def _estimate(m: Match, siblings: Sequence[Match]) -> str | None:
             and (not same_discipline or s.is_singles == m.is_singles)
         ]
         if peers:
-            return f"预计 {fmt_time_beijing(min(s.start_utc for s in peers))}*"
+            anchor = min(s.start_utc for s in peers)
+            return f"预计 {_clock(anchor, today)}*"
 
     return None
 
 
-def schedule_time_display(matches: Iterable[Match]) -> dict[str, str]:
+def _mark_next_day(text: str, moment, today) -> str:
+    """给已有确切/单源时间的那些补上跨天标识。"""
+    if today is None or moment is None:
+        return text
+    stamp = fmt_time_beijing(moment)
+    marked = _clock(moment, today)
+    return text.replace(stamp, marked, 1) if stamp != marked and stamp in text else text
+
+
+def schedule_time_display(
+    matches: Iterable[Match], *, today=None
+) -> dict[str, str]:
     """返回 ``match_key -> 时间显示``；能推的补预计时间，推不出的保持原样。
+
+    传 ``today``（北京日期）时，落在次日的场次会标上 ``+1``——跨日窗口打开
+    之后「今日赛程」里有一半场次其实是北京次日凌晨，不标出来读者分不清。
 
     只读，不改 Match：``schedule_time_status`` 是数据源的事实，推算是展示层的
     加工，混在一起会让下一个人以为官方真给了时间。
@@ -114,7 +144,9 @@ def schedule_time_display(matches: Iterable[Match]) -> dict[str, str]:
     for m in matches:
         base = fmt_schedule_time(m)
         if m.start_utc is None and base in ESTIMABLE_PLACEHOLDERS:
-            base = _estimate(m, known.get(_event_key(m), ())) or base
+            base = _estimate(m, known.get(_event_key(m), ()), today) or base
+        else:
+            base = _mark_next_day(base, m.start_utc, today)
         display[match_key(m)] = base
     return display
 
@@ -122,3 +154,21 @@ def schedule_time_display(matches: Iterable[Match]) -> dict[str, str]:
 def has_estimated_times(displays: Iterable[str]) -> bool:
     """页脚那句「*为预计时间」要不要出现。"""
     return any("*" in text for text in displays)
+
+
+def has_next_day_times(displays: Iterable[str]) -> bool:
+    """页脚那句「+1 为次日」要不要出现。"""
+    return any("+1 " in text or "+2 " in text for text in displays)
+
+
+NOT_BEFORE_PREFIX = "不早于"
+
+
+def has_not_before_times(displays: Iterable[str]) -> bool:
+    """顶栏那句「不早于＝要等前一场打完」要不要出现。
+
+    官方 OOP 上一节里只有首场是 `Starts At`，其余都是 `Not Before`——所以这条
+    多数时候都会出现。它仍然要按实际有没有来判断：一页全是各场地首场时印出来
+    就是句废话，而废话会把真正要看的那几条挤掉。
+    """
+    return any(text.startswith(NOT_BEFORE_PREFIX) for text in displays)

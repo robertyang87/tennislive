@@ -53,6 +53,11 @@ def fmt_schedule_time(match) -> str:
             if match.start_utc is not None
             else "待官方排期"
         )
+    # 官方 OOP 上的 `Not Before`：时间是**下界**不是开赛时刻，前一场打成三盘
+    # 这场就往后拖。印成裸时间会被当成"到点开打"——对熬夜看球的人来说，这个
+    # 差别就是这条卡的全部价值。
+    if status == "official-not-before" and match.start_utc is not None:
+        return f"不早于 {fmt_time_beijing(match.start_utc)}"
     if match.start_utc is None:
         return "待官方排期" if status == "unpublished" else "待定"
     return fmt_time_beijing(match.start_utc)

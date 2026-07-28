@@ -433,12 +433,13 @@
       ],
       "candidate_count": 70,
       "exact_candidate_count": 0,
-      "archive_candidate_count": 0,
+      "archive_candidate_count": 4,
       "rejection_counts": {
         "subject-or-person-mismatch": 17,
-        "low-visual-impact-metadata": 7,
-        "metadata-relevance-below-3": 35,
-        "duplicate-candidate": 11
+        "low-visual-impact-metadata": 5,
+        "metadata-relevance-below-3": 32,
+        "duplicate-candidate": 12,
+        "subject-archive-rejected-in-strict-mode": 4
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -560,13 +561,13 @@
       ],
       "candidate_count": 78,
       "exact_candidate_count": 0,
-      "archive_candidate_count": 2,
+      "archive_candidate_count": 6,
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 7,
-        "metadata-relevance-below-3": 26,
-        "duplicate-candidate": 22,
-        "subject-archive-rejected-in-strict-mode": 2
+        "low-visual-impact-metadata": 4,
+        "metadata-relevance-below-3": 23,
+        "duplicate-candidate": 24,
+        "subject-archive-rejected-in-strict-mode": 6
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -730,13 +731,13 @@
       ],
       "candidate_count": 66,
       "exact_candidate_count": 0,
-      "archive_candidate_count": 1,
+      "archive_candidate_count": 5,
       "rejection_counts": {
         "subject-or-person-mismatch": 21,
-        "low-visual-impact-metadata": 6,
-        "metadata-relevance-below-3": 26,
+        "low-visual-impact-metadata": 5,
+        "metadata-relevance-below-3": 23,
         "duplicate-candidate": 12,
-        "subject-archive-rejected-in-strict-mode": 1
+        "subject-archive-rejected-in-strict-mode": 5
       },
       "failed_curated_source_urls": [],
       "source_runs": [
@@ -844,9 +845,9 @@
   "selection_evidence": {
     "kind": "tournament",
     "candidate_slug": "washington",
-    "result_count": 49,
-    "live_count": 2,
-    "schedule_count": 32,
+    "result_count": 55,
+    "live_count": 3,
+    "schedule_count": 27,
     "selection_basis": "current player or tournament relevance, match news value, and recency",
     "candidate_rank": 2,
     "candidate_count": 14,

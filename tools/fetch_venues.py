@@ -66,10 +66,17 @@ VENUES = [
     # 的字是糊的（TOPNO / MEMPH / TENOS GEHPLIS），观众是重复贴图。带假文字
     # 的渲染图比一张真实城市照更糟。
     ("memphis-leftwich-tennis-center.jpg", None, None),
-    # 洛斯卡沃斯 ATP250：球场（Delmar 国际学校）Commons 上没有，用地标
-    # 埃尔阿尔科海蚀拱。
-    ("los-cabos-el-arco.jpg",
-     "File:El Arco, Cabo San Lucas, M\u00e9xico, 2024-12-22, DD 03.jpg", None),
+    # 洛斯卡沃斯 ATP250（Cabo Sports Complex 的 Estadio Alejandro Burillo）：
+    # 球场在 Commons 上是真空——"Cabo Sports Complex" 只命中一张波兰滑水赛的
+    # 照片，"Estadio Alejandro Burillo" 0 命中，全站与这个赛事沾边的只剩一个
+    # logo PNG。原来退而用地标埃尔阿尔科海蚀拱，但那是海蚀拱不是球场。
+    #
+    # 球场照最后在赛事官网自己的媒体库里找到，见 OFFICIAL_VENUES。顺带三条
+    # 探测经验：官网挂着三个域名，abiertoloscabos.com 是个裸的目录索引、
+    # loscabosopen.com 是 Hostinger 的停放页，活的那个是 loscabostennisopen.com；
+    # 它的 /en/photos 和 /en/gallery 都是 404，**别据此判定"没有图库"**——
+    # 它是 WordPress，wp-json/wp/v2/media?search=… 一查就把原图连尺寸一起列出来。
+    ("los-cabos-estadio-alejandro-burillo.jpg", None, None),
     # 加拿大站：原来钉的 File:RogersCup2011-2.jpg 名字里带赛事，画面却是场外
     # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
     # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央
@@ -119,6 +126,17 @@ OFFICIAL_VENUES = {
         "page": "https://photoresources.wtatennis.com/photo-resources/2026/03/02/"
                 "b47c47ce-33d6-4eb5-bc1a-a0e9bdd64ee6/"
                 "Marked_Leftwich-Tennis-Center_Courts.jpg",
+    },
+    # 画面自己把身份说死了：右侧赞助带印着 LOS CABOS（带市徽）和 Mifel，场地
+    # 前场地面上也刷着 LOS CABOS。放大看这些字都是清楚的——不是效果图那种
+    # "像英文的形状"（孟菲斯那三张栽在这儿，见上面 VENUES 的注释）。
+    # 媒体库里这就是原图，1200×800，没有更大的 size。
+    "los-cabos-estadio-alejandro-burillo.jpg": {
+        "title": "Estadio Alejandro Burillo · Cabo Sports Complex（赛事官方媒体库 Main stadium 09）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Mifel Tennis Open by Telcel Oppo",
+        "page": "https://loscabostennisopen.com/wp-content/uploads/"
+                "2025/07/Main-stadium-09.jpg",
     },
     "estoril-centre-court.jpg": {
         "title": "Millennium Estoril Open · estadio2",
