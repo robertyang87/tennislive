@@ -78,7 +78,7 @@ COVER_SECONDS = 2.6
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
-ORIGINAL_GAIN = 0.34
+BED_LOUD = 0.72   # 没人说话时的现场声
 
 
 class ReelError(RuntimeError):
@@ -556,17 +556,24 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     mixed = outdir / "_audio.m4a"
     if filters:
+        # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
+        # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
+        # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
         chain = ";".join(filters)
         names = "".join(f"[v{i}]" for i, seg in enumerate(segments)
                         if seg.narration.strip())
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent), *mix_inputs,
             "-filter_complex",
-            f"[0:a]volume={ORIGINAL_GAIN}[bed];{chain};"
-            f"[bed]{names}amix=inputs={len(filters)+1}:normalize=0:"
-            f"dropout_transition=0[out]",
-            "-map", "[out]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-            str(mixed))
+            f"[0:a]volume={BED_LOUD}[bed];{chain};"
+            f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
+            f"[voice]asplit=2[vk][vm];"
+            f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
+            f"attack=15:release=450:makeup=1[duck];"
+            f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+            "-map", "0:v:0", "-map", "[out]",
+            "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+            "-shortest", str(mixed))
     else:
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k", str(mixed))
