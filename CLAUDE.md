@@ -420,3 +420,18 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
   内容。锦织圭那条最后只在**开头和结尾**各留一句，中间全交给现场
 - **收尾那句要提前起**。末屏往往只有两三秒（握手那段 2.9 秒），装不下一整句；
   从上一段（庆祝）就开始说，跨进末屏
+
+### ATP 总站封，赛事域名镜像着同一批图
+
+`atptour.com` 全站 403（带浏览器 UA 也一样），但**赛事自己的域名镜像了同一批 ATP 文章
+和同样的 `/-/media/` 图片路径，免鉴权、原尺寸**。华盛顿站实测：
+`mubadaladcopen.com/-/media/images/news/2026/07/27/23/25/nishikori-washington-2026-monday-r1.jpg`
+1920×1080 直接拿到，署名 `© Emilee Chinn/Getty Images`。
+
+**别只试 `/en/photos`**——那个是 404，很容易得出「没有图库」的结论；
+真正有图的是 **`/en/media/news`**，每篇文章挂一张编辑图。新闻图路径里嵌着
+上传时刻（`/YYYY/MM/DD/HH/mm/`），所以**猜不出来**，只能从文章页取。
+
+顺带一条：盲猜文件名探路时，**soft-404 会返回 200**。华盛顿站那个目录下
+`nishikori` / `shang` / `handshake` 等九个猜测全是 `200 + text/html`，而已知存在的
+图返回 `image/jpeg`。**只看状态码会把「不存在」读成「存在」——要看 Content-Type。**
