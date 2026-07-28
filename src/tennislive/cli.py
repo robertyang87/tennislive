@@ -766,6 +766,37 @@ def cmd_schedule_cards(args) -> int:
         console.print(f"[red]抓取失败：{e}[/red]")
         return 1
 
+    # 北京日历会把美洲赛事的比赛日拦腰切断（详见 render.schedule_time 的
+    # NEXT_DAY_CUTOFF_HOUR）。把次日 12:00 前的场次补进来，否则整个美东夜场
+    # ——包括郑钦文 vs 埃亚拉这种——都会从「今日赛程」里消失。
+    from datetime import timedelta
+
+    from .digest import _is_qualifying
+    from .render.schedule_time import in_schedule_window, match_key
+
+    known = {match_key(m) for m in digest.schedule}
+    carried: list = []
+    try:
+        next_day = fetch_day(d + timedelta(days=1), prefer=args.source)
+        for m in next_day.upcoming():
+            if _is_qualifying(m) or not in_schedule_window(m):
+                continue
+            if match_key(m) in known:
+                continue
+            known.add(match_key(m))
+            carried.append(m)
+    except SourceError as e:
+        console.print(f"[yellow]次日凌晨场次抓取失败，只出今天：{e}[/yellow]")
+    if carried:
+        digest.schedule.extend(carried)
+        # build_digest 的排名回填只作用于它自己取到的那批；这些是之后追加的，
+        # 不补一次就会出现「郑钦文没有排名」，排序也拿不到"top 选手"这一维。
+        if digest.rankings is not None:
+            from .digest import apply_rankings
+
+            apply_rankings(digest.rankings, carried)
+        console.print(f"[cyan]跨日补入[/cyan] {len(carried)} 场（北京次日 12:00 之前开赛）")
+
     from .sources.official_schedule import enrich_official_schedules
 
     digest.source_status.update(enrich_official_schedules(digest))
@@ -809,14 +840,27 @@ def cmd_schedule_cards(args) -> int:
         console.print(f"[red]赛程卡渲染失败：{e}[/red]")
         return 1
 
+    # 文案的正文必须按"真正上卡的那些场次"写——正文和图对不上，读者一眼看出来
+    from .render.pushmsg import to_copy_page
+    from .render.schedule_post import pick_lead, schedule_post
+    from .render.schedule_time import schedule_time_display
+    from .render.webcards import schedule_selection
+
+    selection = schedule_selection(upcoming)
+    on_card = [m for _group, ms in selection for m in ms]
+    display = schedule_time_display(upcoming)
+    lead = pick_lead(on_card)
+    post = schedule_post(d, on_card, display, lead)
+    console.print(f"[cyan]标题[/cyan] {post.splitlines()[0]}")
+
+    (outdir / "xiaohongshu.txt").write_text(post, encoding="utf-8")
+    (outdir / "copy.html").write_text(to_copy_page(post), encoding="utf-8")
+
     events = [f"{group.compact_level}·{group.name_zh}" for group, _ in kept]
     (outdir / "push.html").write_text(
-        to_schedule_push_html(d, [p.name for p in card_paths], events=events),
-        encoding="utf-8",
-    )
-    # push-existing.yml 用 xiaohongshu.txt 的首行当推送标题
-    (outdir / "xiaohongshu.txt").write_text(
-        f"今日赛程 · {d.month}.{d.day}\n\n" + "\n".join(events) + "\n",
+        to_schedule_push_html(
+            d, [p.name for p in card_paths], events=events, xhs_text=post,
+        ),
         encoding="utf-8",
     )
     console.print(f"[green]已生成 {len(card_paths)} 张赛程卡 → {outdir}[/green]")

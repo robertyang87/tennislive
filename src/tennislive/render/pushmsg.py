@@ -289,7 +289,12 @@ def to_push_html(
 
 
 def to_schedule_push_html(
-    day, cards: list[str], *, events: list[str] | None = None, subdir: str = "schedule"
+    day,
+    cards: list[str],
+    *,
+    events: list[str] | None = None,
+    subdir: str = "schedule",
+    xhs_text: str | None = None,
 ) -> str:
     """今日赛程的推送消息：只有卡片图，没有小红书文案。
 
@@ -300,6 +305,12 @@ def to_schedule_push_html(
     ``asset_dir`` 把它们换成本地文件上传到 PushPlus 图床，只有没配图床密钥时
     才真的走 CDN（那时需要图已经提交上去）。
     """
+    raw = (xhs_text or "").strip()
+    lines = raw.splitlines()
+    title = lines[0].strip() if lines else ""
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+
     parts = [
         '<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;'
         'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">',
@@ -309,16 +320,11 @@ def to_schedule_push_html(
         'font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">'
         f'今日赛程 · {day.month}.{day.day}</div>',
     ]
-    if events:
-        parts.append(
-            '<div style="font-size:20px;line-height:1.4;font-weight:800;'
-            'color:#102d23;margin:10px 0 4px;">'
-            + html.escape(" / ".join(events))
-            + "</div>"
-        )
     parts.append(
-        '<div style="color:#5f6f68;font-size:13px;margin:0 0 14px;">'
-        "北京时间；带 * 的是按同赛事场序推算的预计时间，以官方排期为准</div>"
+        '<div style="font-size:22px;line-height:1.38;font-weight:800;'
+        'color:#102d23;margin:10px 0 12px;">'
+        + html.escape(title or " / ".join(events or []))
+        + "</div>"
     )
     for name in cards:
         safe_name = html.escape(name, quote=True)
@@ -328,6 +334,38 @@ def to_schedule_push_html(
             'referrerpolicy="no-referrer" style="width:100%;border-radius:6px;'
             'margin:0 0 10px;display:block;" />'
         )
+    if cards:
+        parts.append(
+            '<div style="color:#7a8580;font-size:12px;margin:0 0 18px;">'
+            "长按保存图片 · 按当前顺序上传小红书</div>"
+        )
+    if body:
+        parts.append(
+            '<div style="border-left:3px solid #f1c84b;padding-left:12px;'
+            'margin:4px 0 14px;font-size:13px;font-weight:bold;color:#087747;">'
+            "可直接发布的正文</div>"
+        )
+        for paragraph in re.split(r"\n\s*\n", body):
+            safe_paragraph = "<br/>".join(
+                html.escape(line) for line in paragraph.splitlines()
+            )
+            style = (
+                "color:#087747;font-size:14px;line-height:1.8;margin:14px 0 0;"
+                if paragraph.lstrip().startswith("#")
+                else "color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px;"
+            )
+            parts.append(f'<div style="{style}">{safe_paragraph}</div>')
+    if raw:
+        copy_url = f"{_PAGES}/output/{day.isoformat()}/{subdir}/copy.html"
+        parts.extend([
+            '<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>',
+            f'<a href="{copy_url}" style="display:block;background-color:#0b3d2e;'
+            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
+            "分别复制标题 / 正文</a>",
+            '<div style="text-align:center;color:#7a8580;font-size:12px;">'
+            "标题与正文已拆分，粘贴后即可发布</div>",
+        ])
     parts.extend(["</div>", "</div>"])
     return "\n".join(parts)
 

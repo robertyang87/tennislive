@@ -2023,10 +2023,8 @@ def schedule_body(
     display = time_display if time_display is not None else schedule_time_display(matches)
     times = [display.get(match_key(m), fmt_schedule_time(m)) for m in matches]
 
-    # 场地只在这一页真的分布在多块场地时才标：单一场地时每张卡印同一个名字
-    # 是纯噪声，而场次多的时候这一行会把卡片撑高。
-    courts = {m.court.strip() for m in matches if m.court and m.court.strip()}
-    show_court = len(courts) > 1
+    # 有场地就标，没有就空着。赛程的用处是"几点、在哪块场"，场地名是这里
+    # 最实用的一条信息——今天 32 场里有 15 场带场地，值得每场都印。
     cards = [
         _sched_card(
             m,
@@ -2034,7 +2032,7 @@ def schedule_body(
             show_tournament=False,
             glass=True,
             time_text=time_text,
-            court=((m.court or "").strip() or None) if show_court else None,
+            court=(m.court or "").strip() or None,
         )
         for m, time_text in zip(matches, times)
     ]
@@ -3616,10 +3614,16 @@ def _balanced_chunks(items: list, limit: int) -> list[list]:
 
 
 def _schedule_sort_key(m: Match) -> tuple:
-    """页内排序：中国球员 → 单打 → 轮次靠后 → 开赛早。"""
+    """页内排序：中国单打 → 分量高的单打 → 其余单打 → 双打。
+
+    「中国球员优先」限定在单打上：一场中国组合的双打排在大坂直美、莱巴金娜
+    这种单打前面，不是读者要的。中国双打仍然优先于其他双打（match_score 里
+    的 +35 会把它顶上去），只是不越过单打这条线。
+    """
     return (
-        0 if is_chinese_involved(m) else 1,
         0 if m.is_singles else 1,
+        0 if (m.is_singles and is_chinese_involved(m)) else 1,
+        -match_score(m),
         round_rank(m),
         m.start_utc.timestamp() if m.start_utc else float("inf"),
     )
@@ -3628,13 +3632,12 @@ def _schedule_sort_key(m: Match) -> tuple:
 def _schedule_selection(matches: list[Match]) -> list[Match]:
     """一个赛事在赛程页上放哪些场、按什么顺序放。
 
-    中国球员的场次不分单双打一律进；其余单打全进；剩下的双打只用来**填空位**
-    ——按 match_score 取最重要的几场，且只补到"单打本来就要占的页数"还剩的
-    位置为止，绝不会把单打挤到多出来的一页上。
+    单打全进，按「中国选手 → 分量」排序；剩下的双打只用来**填空位**——按
+    match_score 取最重要的几场，且只补到"单打本来就要占的页数"还剩的位置
+    为止，绝不会把单打挤到多出来的一页上。
     """
-    core = [m for m in matches if is_chinese_involved(m) or m.is_singles]
-    core_keys = {match_key(m) for m in core}
-    spare = [m for m in matches if match_key(m) not in core_keys]
+    core = [m for m in matches if m.is_singles]
+    spare = [m for m in matches if not m.is_singles]
     core.sort(key=_schedule_sort_key)
     if not spare:
         return core
@@ -3642,10 +3645,28 @@ def _schedule_selection(matches: list[Match]) -> list[Match]:
     capacity = len(_balanced_chunks(core, SCHEDULE_PER_PAGE)) * SCHEDULE_PER_PAGE
     room = max(0, capacity - len(core))
     if room:
-        spare.sort(key=lambda m: -match_score(m, cn_boost=False))
+        spare.sort(key=lambda m: -match_score(m))
         core.extend(spare[:room])
         core.sort(key=_schedule_sort_key)
     return core
+
+
+def schedule_selection(
+    matches: list[Match], *, tour_level_only: bool = True
+) -> list[tuple[object, list[Match]]]:
+    """[(赛事组, 这一组真正上卡的场次)]，顺序与出图一致。
+
+    推送文案要按这份结果写正文——正文和图对不上，读者第一眼就发现了。
+    """
+    groups = group_by_tournament(matches)
+    if tour_level_only:
+        groups = [g for g in groups if g.level in TOUR_LEVELS]
+    out = []
+    for group in groups:
+        selected = _schedule_selection(group.matches)
+        if selected:
+            out.append((group, selected))
+    return out
 
 
 def schedule_pages(
@@ -3665,15 +3686,10 @@ def schedule_pages(
     # 场次的已知时间当依据，先滤掉会平白少掉一批证据。
     display = schedule_time_display(matches)
 
-    groups = group_by_tournament(matches)
-    if tour_level_only:
-        groups = [g for g in groups if g.level in TOUR_LEVELS]
-
     pages: list[tuple[str, str]] = []
-    for group in groups:
-        selected = _schedule_selection(group.matches)
-        if not selected:
-            continue
+    for _group, selected in schedule_selection(
+        matches, tour_level_only=tour_level_only
+    ):
         chunks = _balanced_chunks(selected, SCHEDULE_PER_PAGE)
         for index, chunk in enumerate(chunks, start=1):
             pages.append((
