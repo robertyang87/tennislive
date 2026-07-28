@@ -24,12 +24,12 @@
     "note": "四要素由来源自证：文章标题《Fearless Fery sails into landmark semi-final》写死了是哪一场。原图 2400×1632，已裁成 3:4（1224×1632）。Commons 上关于费里只有一张 2022 年温网资格赛的空场照，四道闸门不过。"
   },
   "zheng_athens_2026.jpg": {
-    "artist": "unverified（该站其他图署名 AlexGrymanis_Athens_Open_2026_*，文件名尾缀 AG 与之吻合，但页面未署名）",
+    "artist": "unverified（该站其他图署名 AlexGrymanis_Athens_Open_2026_*，页面本身未逐张署名）",
     "license": "unverified",
-    "page": "https://www.wtatennis.com/videos/4536442/zheng-defeats-micic-in-athens-into-first-quarterfinal-in-13-months",
-    "source": "WTA 官方图床原图 https://photoresources.wtatennis.com/wta/photo/2026/07/15/de5da076-bc45-4bb7-b6a4-5c1498430be7/Zheng-R2-AG.JPG",
-    "credit": "WTA 官方图 · 2026 年 7 月 15 日雅典站第二轮，郑钦文正手击球",
-    "note": "四要素由来源自证：文章标题《Zheng defeats Micic in Athens; into first quarterfinal in 13 months》，描述里写着 Vanda Pharmaceuticals Athens Open second round，文件名 Zheng-R2-AG.JPG，路径日期 2026/07/15。画面另有自证：背景整块 VANDA PHARMACEUTICALS 广告板是雅典站冠名商，球衣上 Alipay+ / vivo / NikeCourt。⚠️ 这一张**故意不裁**：球到她伸出的左手横跨约 1930px，3:4 只有 1599px，怎么裁都要把球拍和球切在边上。走信箱式缩放（wide = pw/ph ≥ 1.2 → contain）之后 3200px 原图一个像素不动，而这张的背景本来就压成近黑，上下留白融进深绿卡面几乎看不出边——渲出来比任何一版裁切都强。曾经改用雅典站官网图库 athens_day5_016（1920×1080）裁 3:4 再 2× 上采样，构图是让位了，但既丢了球拍又白挨一次放大。华盛顿站的比赛照真的不存在：WTA 的 Order of Play 上这场仍标着 Upcoming，她那场球还没打。"
+    "page": "https://athens-open.com/gallery/day-5",
+    "source": "athens-open.com 官方图库 Day 5（原文件 athens_day5_042，1920×1080）",
+    "credit": "athens-open.com 官方图库 Day 5 · 2026 年 7 月 15 日雅典站第二轮，郑钦文正手击球",
+    "note": "**赛事和年份写在画面里**：背景横幅整块 ATHENS OPEN 26 加赛事徽标，另有 VANDA PHARMACEUTICALS INC.（冠名商）——不靠看图推断。时间由图库自己的 Day 5 分组写死（赛事日历 7 月 11–19 日，Day 5 即 7 月 15 日，正是她击败米契奇打进八强那天）；人物与场次再由 WTA 官方那张带说明的同场次照片交叉印证（photoresources.wtatennis.com 的 Zheng-R2-AG.JPG，路径日期 2026/07/15，文章标题《Zheng defeats Micic in Athens; into first quarterfinal in 13 months》），球衣 Alipay+ / vivo、裙装、腕带逐项吻合。\n\n⚠️ 换过两次，两次都是被同一件事推着走：\n① 一开始用 WTA 那张 3200×2132 裁 3:4——球到伸出的左手横跨约 1930px，3:4 只有 1599px，球拍和球必被切在边上。\n② 于是改成**不裁**、走信箱式缩放，像素一个不动。但那张是强逆光剪影，**均值只有 16.5、中位数 0、95.3% 的像素暗于 50**，压在深绿卡上人脸和球拍都看不清——账号所有者一句「太黑了看不清楚」。亮度是可以量的，早该量。\n③ 现在这张同一场比赛、同一天，均值 75.7、中位数 109，蓝场顺光。\n\n**裁法是「收边」而不是裁到 3:4**：横向裁到 x 330–1660（1330×1080，比例 1.231），刚好压在渲染器 `wide = pw/ph >= 1.2` 的门槛上方 → 仍走 contain 不被切，但比 16:9 原图窄了三成，主体在卡上大了约 44%。球拍、球、双脚、双手、ATHENS OPEN 26 全部在框内。三版（16:9 不裁 / 1.23 收边 / 3:4 硬裁）渲出来摆在一起比过。\n\n华盛顿站的比赛照真的不存在：WTA 的 Order of Play 上这场仍标着 Upcoming，她那场球还没打。"
   },
   "clijsters_2009_final.jpg": {
     "artist": "Clive Brunskill/Getty Images",
