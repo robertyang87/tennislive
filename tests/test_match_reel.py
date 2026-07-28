@@ -212,10 +212,9 @@ def test_标题默认不带赛事名且别太长():
     from push_reel import headline  # noqa: PLC0415
 
     got = headline(Path("output/2026-07-28/reel/x"), "赛场之上",
-                   "锦织圭 vs 商竣程", "2:1", "",
-                   "商竣程复出首战先赢一盘，被 36 岁的锦织圭逆转")
+                   "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球，总分只差 8 分")
     assert "ATP500" not in got
-    assert len(got) <= 40, f"{len(got)} 字，太长：{got}"
+    assert len(got) <= 32, f"{len(got)} 字，太长：{got}"
 
 
 def test_复制页探活要认内容不能只认200(monkeypatch):
@@ -253,3 +252,23 @@ def test_复制页探活要认内容不能只认200(monkeypatch):
         assert "上一版" in str(exc) or "没等到这一版" in str(exc)
     else:                                    # 一直是旧内容就不能放行
         raise AssertionError("旧内容也放过去了")
+
+
+def test_标题末尾那句不超过二十字():
+    """标题是给人扫的，不是给人读的。超了直接报错，别让它悄悄溜出去——
+    和「卡片上每条不超过 16 字」同一个道理。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import SUMMARY_MAX, headline  # noqa: PLC0415
+
+    text = WORKFLOW.read_text(encoding="utf-8")
+    default = text.split("      summary:")[1].split("default:")[1]
+    default = default.split("\n")[0].strip().strip('"')
+    assert len(default) <= SUMMARY_MAX, f"工作流默认那句 {len(default)} 字：{default}"
+
+    try:
+        headline(Path("output/2026-07-28/reel/x"), "赛场之上", "甲 vs 乙",
+                 summary="一" * (SUMMARY_MAX + 1))
+    except SystemExit as exc:
+        assert "超过" in str(exc)
+    else:
+        raise AssertionError("超长的那句被放过去了")
