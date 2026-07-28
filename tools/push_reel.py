@@ -121,13 +121,27 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return " | ".join(parts)
 
 
-def build_html(video_url: str, copy_url: str, lead: str) -> str:
-    """推送正文：一个下载按钮 + 一个复制页按钮。
+def split_copy(copy_text: str) -> tuple[str, str]:
+    """文案的第一行是标题，空一行之后是正文——和 `to_copy_page` 同一套切法。
 
-    **文案本身不印在这儿。**知识帖那边早就是这么做的——文案走独立的复制页
-    （`render/pushmsg.py` 的 `to_copy_page`，真按钮 + JS + 「已复制」提示），
-    推送里只放链接。把整段文案塞进推送正文，读者只能长按选，选不干净；
-    而且当初就是这么干，才出过「同一份文案印了两遍」那次。
+    两处必须用同一套，否则推送里印的和复制页里复制到的会不是同一段。
+    """
+    lines = copy_text.splitlines()
+    title = lines[0].strip() if lines else ""
+    start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    return title, "\n".join(lines[start:]).strip()
+
+
+def build_html(video_url: str, copy_url: str, lead: str, copy_text: str) -> str:
+    """推送正文：先给人看的文案（标题 + 正文），再两个按钮。
+
+    **文案要印在这儿，而且只印一遍。** 手机上先能读到这一条到底写了什么，
+    再决定要不要点进复制页——和知识帖那条推送同一个结构（`to_push_html`：
+    标题、正文、然后「分别复制标题 / 正文」的按钮）。
+
+    要避开的是**同一段印两遍**：以前正文印一遍、灰底复制块又印一遍，
+    字符串断言全过，人一看整页才发现。所以这里只印一遍，
+    「分开复制」交给复制页——微信里没法放能点的 JS 按钮。
     """
     def btn(url: str, text: str, bg: str, fg: str = "#fff") -> str:
         return (f'<a href="{url}" style="display:inline-block;background:{bg};'
@@ -135,15 +149,30 @@ def build_html(video_url: str, copy_url: str, lead: str) -> str:
                 f'border-radius:999px;font-weight:700;margin:0 10px 12px 0">'
                 f'{text}</a>')
 
+    title, body = split_copy(copy_text)
+    paragraphs = "".join(
+        '<div style="color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px">'
+        + "<br/>".join(html.escape(line) for line in block.splitlines())
+        + "</div>"
+        for block in re.split(r"\n\s*\n", body) if block.strip()
+    )
     return f"""<div style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;
  line-height:1.75;color:#1f2a24;max-width:640px">
 <p style="margin:0 0 16px">{html.escape(lead)}</p>
 <p style="margin:0 0 6px">
 {btn(video_url, "▶ 下载竖版成片", "#0f7a52")}
-{btn(copy_url, "📋 打开复制页", "#c6f65a", "#062018")}
+{btn(copy_url, "📋 打开复制页（标题 / 正文分开复制）", "#c6f65a", "#062018")}
 </p>
-<p style="margin:0;color:#5b6b63;font-size:14px">
-复制页里标题、正文、置顶评论各有一个按钮，点一下就进剪贴板。</p>
+<div style="border-top:1px solid #e6ebe8;margin:14px 0 12px"></div>
+<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 6px">
+小红书标题</div>
+<div style="font-size:19px;font-weight:800;color:#102d23;line-height:1.4;
+ margin:0 0 16px">{html.escape(title)}</div>
+<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 8px">
+正文</div>
+{paragraphs}
+<p style="margin:10px 0 0;color:#5b6b63;font-size:14px">
+上面这份可以直接长按选；要一键复制就点「打开复制页」，标题和正文各有一个按钮。</p>
 </div>"""
 
 
@@ -194,7 +223,7 @@ def main() -> int:
     wait_for_copy_page(copy_url)
 
     url = video_url(outdir, name)
-    body = build_html(url, copy_url, args.lead)
+    body = build_html(url, copy_url, args.lead, copy_text)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")
