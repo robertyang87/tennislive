@@ -2388,8 +2388,8 @@ _OPENINGS: dict[str, dict] = {
         "topic": "外卡：一张不设上限的入场券",
         # 封面的画面就是澳网签表，所以这里说 WC 是对的；温网写 (W)，
         # 这个差别放在第 ① 屏的旁白里讲，别在封面上笼统一句「签表上都写 WC」。
-        "question": "名字旁边那个 WC，是谁给的？",
-        "narration": "签表上，有的名字后面跟着两个字母：WC。它是谁给的，凭什么给？",
+        "question": "签表里名字旁的 WC，是谁给的？",
+        "narration": "签表里，有的名字后面跟着两个字母：WC。它是谁给的，凭什么给？",
         "image": "assets/explainer/wildcard/ao_draw_wc.jpg",
     },
 }
