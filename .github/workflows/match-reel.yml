@@ -44,10 +44,10 @@ on:
         required: false
         type: boolean
         default: false
-      push_title:
-        description: "推送标题"
+      matchup:
+        description: "对阵，进标题：如「锦织圭 vs 商竣程」"
         required: false
-        default: "赛场之上｜他等到第七个破发点才赢"
+        default: "锦织圭 vs 商竣程"
       push_lead:
         description: "推送正文那一句"
         required: false
@@ -221,6 +221,6 @@ jobs:
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
           python tools/push_reel.py \
             --outdir "${{ steps.paths.outputs.outdir }}" \
-            --title "${{ github.event.inputs.push_title }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
             --copy "$COPY"
