@@ -348,7 +348,7 @@ def cmd_explainer(args) -> int:
         explainer_xiaohongshu,
     )
 
-    from .render.pushmsg import to_copy_page
+    from .render.pushmsg import live_copy_page_url, to_copy_page
 
     outdir = Path(args.outdir)
     segments = explainer_script(story)
@@ -841,7 +841,7 @@ def cmd_schedule_cards(args) -> int:
         return 1
 
     # 文案的正文必须按"真正上卡的那些场次"写——正文和图对不上，读者一眼看出来
-    from .render.pushmsg import to_copy_page
+    from .render.pushmsg import live_copy_page_url, to_copy_page
     from .render.schedule_post import pick_lead, schedule_post
     from .render.schedule_time import schedule_time_display
     from .render.webcards import schedule_selection
@@ -856,10 +856,23 @@ def cmd_schedule_cards(args) -> int:
     (outdir / "xiaohongshu.txt").write_text(post, encoding="utf-8")
     (outdir / "copy.html").write_text(to_copy_page(post), encoding="utf-8")
 
+    # 复制页的按钮只在链接确认可达时才放进推送：GitHub Pages 只服务 main，
+    # 特性分支上生成的包它取不到，按钮点开就是 404。微信那条消息发出去就
+    # 收不回来——宁可不放按钮，也不放一个死链。
+    copy_url = live_copy_page_url(d, subdir="schedule")
+    if copy_url:
+        console.print(f"[green]复制页可达[/green] {copy_url}")
+    else:
+        console.print(
+            "[yellow]复制页尚不可达（Pages 只服务 main），本次推送不放该按钮；"
+            "标题与正文已在消息里各自成块，可长按复制[/yellow]"
+        )
+
     events = [f"{group.compact_level}·{group.name_zh}" for group, _ in kept]
     (outdir / "push.html").write_text(
         to_schedule_push_html(
             d, [p.name for p in card_paths], events=events, xhs_text=post,
+            copy_url=copy_url,
         ),
         encoding="utf-8",
     )
