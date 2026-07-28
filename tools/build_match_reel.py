@@ -1,0 +1,477 @@
+#!/usr/bin/env python3
+"""把一条官方集锦剪成 9:16 的竖版短片：只留高光、中文解说、字幕、封面。
+
+两段式，因为**选段必须靠眼睛**：
+
+    probe   下载源片 → 出场景切点 + 一张缩略图墙（带时间码）→ 提交进仓库
+            人（或我）看着这张图挑出要哪几段、每段横向裁在哪儿
+    render  按 spec.json 剪 → 裁 9:16 → 合成中文解说 → 烧字幕 → 加封面 → 成片
+
+## 为什么必须在 GitHub Actions 上跑
+
+**沙箱的 IP 被 YouTube 挡了**：yt-dlp 拿得到清单和格式表（走 android_vr 的
+player API），一取媒体就 403；用真 Chromium 打开播放页，页面直接是
+「Our systems have detected unusual traffic from your computer network」，
+`playabilityStatus` = `UNPLAYABLE`。这不是「视频不存在」，是**这台机器不让下**
+——又一次「空结果先自证是真空」。edge-tts 同理，本地取不到。
+
+## 裁剪：横向裁到 9:16，不是加模糊边
+
+1920×1080 裁成 9:16 就是 **608×1080**，再放大到 1080×1920。网球转播的主机位
+在底线后方架高，球场是个左右对称的梯形，两个人大部分时间都在画面中间三分之一
+里——所以中间裁得住。裁掉的是两侧的双打边线外沿和看台。
+
+**每一段的横向中心单独给**（`cx`，0~1 的比例）。防的是那种一方跑到边线外
+接球的镜头：整段用一个中心会把人裁掉半个身子。挑段的时候看着缩略图墙定。
+
+## 字幕位置沿用解说片那一套
+
+`explainer.py` 里那组常量（上锚、`MarginV=1524`、左右各 150px、字号 68）是
+量真成片量出来的：躲开小红书/抖音底部的文案区与 home 条，也躲开右侧那列
+点赞收藏评论。这里直接 import 过来，不重新拍一组数字。
+
+用法：
+
+    # 第一步：下载 + 出缩略图墙（在 Actions 上）
+    python tools/build_match_reel.py probe --url "https://www.youtube.com/watch?v=..." \\
+        --outdir output/2026-07-28/reel/nishikori-shang
+
+    # 第二步：按 spec 出成片
+    python tools/build_match_reel.py render --spec specs/nishikori-shang.json \\
+        --outdir output/2026-07-28/reel/nishikori-shang
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import re
+import shutil
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from tennislive.video.explainer import (  # noqa: E402
+    VIDEO_H,
+    VIDEO_W,
+    _ASS_MARGIN_H,
+    _ASS_MARGIN_V,
+    readable,
+    subtitle_cues,
+    write_subtitles,
+)
+
+FPS = 30
+# 1080 高的源，9:16 的宽 = 1080*9/16 = 607.5。裁剪宽度必须是偶数，取 608。
+CROP_H = 1080
+CROP_W = 608
+COVER_SECONDS = 2.6
+# 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
+ORIGINAL_GAIN = 0.14
+
+
+class ReelError(RuntimeError):
+    pass
+
+
+def run(*args: str, quiet: bool = True) -> subprocess.CompletedProcess:
+    proc = subprocess.run(list(args), capture_output=True, text=True)
+    if proc.returncode != 0:
+        tail = (proc.stderr or "")[-2500:]
+        raise ReelError(f"命令失败 {args[0]}：\n{' '.join(args)[:400]}\n{tail}")
+    if not quiet:
+        print(proc.stdout)
+    return proc
+
+
+def probe_duration(path: Path) -> float:
+    out = run("ffprobe", "-v", "error", "-show_entries", "format=duration",
+              "-of", "default=nw=1:nk=1", str(path)).stdout.strip()
+    return float(out)
+
+
+def probe_size(path: Path) -> tuple[int, int]:
+    out = run("ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=width,height",
+              "-of", "csv=p=0:s=x", str(path)).stdout.strip()
+    w, h = out.split("x")[:2]
+    return int(w), int(h)
+
+
+# --------------------------------------------------------------------------
+# probe：下载 + 缩略图墙
+# --------------------------------------------------------------------------
+
+def download(url: str, dest: Path) -> Path:
+    """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。"""
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if dest.is_file() and dest.stat().st_size > 0:
+        print(f"[skip] 已有 {dest}")
+        return dest
+    binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
+    if not binary:
+        raise ReelError("找不到 yt-dlp")
+    selector = (
+        "bestvideo[height<=1080][vcodec^=avc1]+bestaudio[ext=m4a]/"
+        "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best"
+    )
+    proc = subprocess.run(
+        [binary, "--js-runtimes", "node", "-f", selector,
+         "--merge-output-format", "mp4", "-o", str(dest), url],
+        capture_output=True, text=True,
+    )
+    if proc.returncode != 0 or not dest.is_file():
+        tail = (proc.stderr or "")[-2000:]
+        # 报出原因，别让「下不下来」和「没有这条视频」长得一样
+        raise ReelError(f"下载失败（{url}）：\n{tail}")
+    return dest
+
+
+def scene_changes(path: Path, threshold: float = 0.35) -> list[float]:
+    proc = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-i", str(path),
+         "-filter:v", f"select='gt(scene,{threshold})',showinfo",
+         "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    return [round(float(m), 2)
+            for m in re.findall(r"pts_time:([0-9.]+)", proc.stderr or "")]
+
+
+def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
+                  columns: int = 6, tile_w: int = 360) -> list[Path]:
+    """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
+
+    时间码必须烧进画面里——不然看图挑完段，还得数第几格再乘回去，数错一次
+    整段就切偏了。
+    """
+    outdir.mkdir(parents=True, exist_ok=True)
+    frames = outdir / "frames"
+    frames.mkdir(exist_ok=True)
+    for old in frames.glob("*.jpg"):
+        old.unlink()
+    duration = probe_duration(path)
+    stamps = [round(t, 2) for t in _frange(0.5, duration, every)]
+    for index, t in enumerate(stamps):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
+            "-vf", (f"scale={tile_w}:-2,"
+                    f"drawtext=text='{t:.1f}s':x=8:y=8:fontsize=26:"
+                    f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
+            "-q:v", "3", str(frames / f"f{index:03d}.jpg"))
+    sheets: list[Path] = []
+    per_sheet = columns * 5
+    picked = sorted(frames.glob("*.jpg"))
+    for n in range(0, len(picked), per_sheet):
+        chunk = picked[n:n + per_sheet]
+        listing = outdir / f"_sheet{n // per_sheet}.txt"
+        listing.write_text("".join(f"file '{p.resolve()}'\n" for p in chunk),
+                           encoding="utf-8")
+        sheet = outdir / f"contact_{n // per_sheet:02d}.jpg"
+        rows = math.ceil(len(chunk) / columns)
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "concat", "-safe", "0", "-i", str(listing),
+            "-filter_complex", f"tile={columns}x{rows}:padding=6:color=0x11221b",
+            "-frames:v", "1", "-q:v", "3", str(sheet))
+        listing.unlink()
+        sheets.append(sheet)
+    return sheets
+
+
+def _frange(start: float, stop: float, step: float):
+    value = start
+    while value < stop:
+        yield value
+        value += step
+
+
+# --------------------------------------------------------------------------
+# render
+# --------------------------------------------------------------------------
+
+@dataclass
+class Segment:
+    start: float
+    end: float
+    cx: float
+    narration: str
+
+    @property
+    def length(self) -> float:
+        return round(self.end - self.start, 3)
+
+
+def load_spec(path: Path) -> dict:
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    for key in ("segments", "cover"):
+        if key not in spec:
+            raise ReelError(f"spec 缺少 {key}")
+    return spec
+
+
+def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
+    """切一段、裁成 9:16、放大到 1080×1920。
+
+    `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
+    后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
+    """
+    x = int(round(seg.cx * source_w - CROP_W / 2))
+    x = max(0, min(x, source_w - CROP_W))
+    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-i", str(source), "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
+        "-vf", (f"crop={CROP_W}:{CROP_H}:{x}:0,"
+                f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,fps={FPS},"
+                "setsar=1"),
+        "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
+        str(dest))
+    return dest
+
+
+def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
+    """封面：从片子里抓一帧当底，压暗，写赛果 + 一句钩子。"""
+    from PIL import Image, ImageDraw, ImageFilter, ImageFont
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from tennislive.render.cards import _find_font  # noqa: PLC0415
+
+    cover = spec["cover"]
+    grab = dest.parent / "_cover_frame.jpg"
+    at = float(cover.get("frame_at", 3.0))
+    cx = float(cover.get("cx", 0.5))
+    x = max(0, min(int(round(cx * source_w - CROP_W / 2)), source_w - CROP_W))
+    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
+        "-vf", f"crop={CROP_W}:{CROP_H}:{x}:0,scale={VIDEO_W}:{VIDEO_H}:flags=lanczos",
+        "-q:v", "2", str(grab))
+
+    image = Image.open(grab).convert("RGB")
+    # 底部压暗，让字站得住；上半张几乎不动——糊了整张就看不出是哪一场了。
+    # 渐变从 42% 高处才起，到文字区已经接近全黑：第一版用的是
+    # `210*(i/h)**1.6`，文字那一带只压到四成，浅色画面上（测试用的彩条）
+    # 白字直接糊在一起。压暗要按**文字落在哪一段高度**来定，不是整张按比例推。
+    shade = Image.new("L", image.size, 0)
+    pen = ImageDraw.Draw(shade)
+    for i in range(image.height):
+        ramp = min(1.0, max(0.0, (i / image.height - 0.42) / 0.30))
+        pen.line([(0, i), (image.width, i)], fill=int(238 * ramp ** 1.1))
+    dark = Image.new("RGB", image.size, (4, 18, 13))
+    image = Image.composite(dark, image, shade.filter(ImageFilter.GaussianBlur(2)))
+
+    draw = ImageDraw.Draw(image)
+    bold_path, bold_idx = _find_font(bold=True)
+    regular_path, regular_idx = _find_font(bold=False)
+
+    def font(size: int, bold: bool = True):
+        path, idx = (bold_path, bold_idx) if bold else (regular_path, regular_idx)
+        return ImageFont.truetype(path, size, index=idx)
+
+    def centered(text: str, y: int, size: int, fill: str, bold: bool = True) -> int:
+        f = font(size, bold)
+        w = draw.textbbox((0, 0), text, font=f)[2]
+        draw.text(((VIDEO_W - w) // 2, y), text, font=f, fill=fill)
+        return y + size + 18
+
+    y = 1180
+    if cover.get("eyebrow"):
+        y = centered(cover["eyebrow"], y, 40, "#9fd08a", bold=False)
+    for line in str(cover.get("hook", "")).split("\n"):
+        if line.strip():
+            y = centered(line.strip(), y, 84, "#ffffff")
+    y += 14
+    if cover.get("score"):
+        y = centered(cover["score"], y, 62, "#c3e88d")
+    if cover.get("sub"):
+        y = centered(cover["sub"], y, 38, "#a9bcb2", bold=False)
+
+    still = dest.parent / "_cover.jpg"
+    image.save(still, quality=95)
+    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-loop", "1", "-i", str(still), "-f", "lavfi",
+        "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+        "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS},setsar=1",
+        "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-b:a", "160k", "-shortest", str(dest))
+    return dest
+
+
+def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
+               ) -> list[tuple[Path, list[dict]]]:
+    # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
+    # 是个合法的形态（先看画面剪得对不对，再配音）
+    if not any(seg.narration.strip() for seg in segments):
+        return [(outdir / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+
+    import asyncio
+
+    import edge_tts
+
+    async def one(text: str, path: Path) -> list[dict]:
+        marks: list[dict] = []
+        with path.open("wb") as fh:
+            stream = edge_tts.Communicate(
+                text, voice, rate=rate, boundary="WordBoundary").stream()
+            async for chunk in stream:
+                if chunk.get("type") == "audio" and chunk.get("data"):
+                    fh.write(chunk["data"])
+                elif chunk.get("type") in ("WordBoundary", "SentenceBoundary"):
+                    marks.append({"offset": chunk.get("offset", 0),
+                                  "duration": chunk.get("duration", 0),
+                                  "text": chunk.get("text", "")})
+        return marks
+
+    out: list[tuple[Path, list[dict]]] = []
+    for index, seg in enumerate(segments):
+        path = outdir / f"voice_{index:02d}.mp3"
+        if not seg.narration.strip():
+            out.append((path, []))
+            continue
+        marks = asyncio.run(one(seg.narration, path))
+        if not path.is_file() or path.stat().st_size == 0:
+            raise ReelError(f"第 {index + 1} 段 TTS 没出音频")
+        path.with_suffix(".words.json").write_text(
+            json.dumps(marks, ensure_ascii=False), encoding="utf-8")
+        out.append((path, marks))
+    return out
+
+
+def render(spec: dict, outdir: Path, *, voice: str, rate: str,
+           source_override: Path | None = None) -> Path:
+    outdir.mkdir(parents=True, exist_ok=True)
+    source = source_override or (outdir / "source.mp4")
+    if not source.is_file():
+        source = download(spec["source_url"], source)
+    source_w, source_h = probe_size(source)
+    print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
+    if source_h != CROP_H:
+        print(f"[注意] 源片不是 1080 高，裁剪按等比换算")
+
+    segments = [Segment(float(s["start"]), float(s["end"]),
+                        float(s.get("cx", 0.5)), s.get("narration", "").strip())
+                for s in spec["segments"]]
+    total = sum(s.length for s in segments) + COVER_SECONDS
+    print(f"{len(segments)} 段，画面共 {total:.1f}s")
+    if total > 120:
+        print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
+
+    parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
+    for index, seg in enumerate(segments):
+        parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
+                                 source_w))
+
+    listing = outdir / "_concat.txt"
+    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
+                       encoding="utf-8")
+    silent = outdir / "_video.mp4"
+    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-f", "concat", "-safe", "0", "-i", str(listing),
+        "-c", "copy", str(silent))
+
+    voices = synthesize(segments, outdir, voice, rate)
+
+    # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
+    cues: list[tuple[float, float, str]] = []
+    mix_inputs: list[str] = []
+    filters: list[str] = []
+    offset = COVER_SECONDS
+    for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
+        if seg.narration.strip():
+            spoken = probe_duration(path)
+            if spoken > seg.length + 0.35:
+                print(f"[注意] 第 {index + 1} 段解说 {spoken:.1f}s 比画面 "
+                      f"{seg.length:.1f}s 长，字幕会压到下一段")
+            mix_inputs.extend(["-i", str(path)])
+            filters.append(
+                f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
+                f"{int(offset*1000)}[v{index}]")
+            cues.extend(subtitle_cues(readable(seg.narration), spoken,
+                                      boundaries=marks, offset=offset))
+        offset += seg.length
+
+    ass = write_subtitles(cues, outdir / "subtitles.ass")
+    print(f"字幕 {len(cues)} 行 → {ass.name}（上锚 MarginV={_ASS_MARGIN_V}，"
+          f"左右 {_ASS_MARGIN_H}）")
+
+    mixed = outdir / "_audio.m4a"
+    if filters:
+        chain = ";".join(filters)
+        names = "".join(f"[v{i}]" for i, seg in enumerate(segments)
+                        if seg.narration.strip())
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(silent), *mix_inputs,
+            "-filter_complex",
+            f"[0:a]volume={ORIGINAL_GAIN}[bed];{chain};"
+            f"[bed]{names}amix=inputs={len(filters)+1}:normalize=0:"
+            f"dropout_transition=0[out]",
+            "-map", "[out]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+            str(mixed))
+    else:
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k", str(mixed))
+
+    final = outdir / f"{spec.get('slug', 'reel')}.mp4"
+    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-i", str(silent), "-i", str(mixed),
+        "-vf", f"subtitles={_escape(ass)}",
+        "-map", "0:v:0", "-map", "1:a:0",
+        "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
+        "-c:a", "copy", "-movflags", "+faststart", str(final))
+
+    for junk in list(outdir.glob("part_*.mp4")) + [listing, silent, mixed,
+                                                   outdir / "_cover_frame.jpg"]:
+        junk.unlink(missing_ok=True)
+    print(f"成片 {final}（{probe_duration(final):.1f}s，"
+          f"{final.stat().st_size / 1e6:.1f} MB）")
+    return final
+
+
+def _escape(path: Path) -> str:
+    return str(path).replace("\\", "/").replace(":", r"\:").replace("'", r"\'")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    sub = parser.add_subparsers(dest="mode", required=True)
+
+    p = sub.add_parser("probe", help="下载源片并出缩略图墙")
+    p.add_argument("--url", required=True)
+    p.add_argument("--outdir", required=True)
+    p.add_argument("--every", type=float, default=2.0)
+
+    r = sub.add_parser("render", help="按 spec 出成片")
+    r.add_argument("--spec", required=True)
+    r.add_argument("--outdir", required=True)
+    r.add_argument("--source", help="已经下好的源片（跳过下载）")
+    r.add_argument("--voice", default="zh-CN-YunxiNeural")
+    r.add_argument("--rate", default="+6%")
+
+    args = parser.parse_args()
+    outdir = Path(args.outdir)
+
+    if args.mode == "probe":
+        outdir.mkdir(parents=True, exist_ok=True)
+        source = download(args.url, outdir / "source.mp4")
+        w, h = probe_size(source)
+        duration = probe_duration(source)
+        cuts = scene_changes(source)
+        print(f"源片 {w}×{h}，{duration:.1f}s，检出 {len(cuts)} 个切点")
+        sheets = contact_sheet(source, outdir, every=args.every)
+        (outdir / "probe.json").write_text(json.dumps({
+            "url": args.url, "width": w, "height": h, "duration": duration,
+            "scene_cuts": cuts, "sheets": [s.name for s in sheets],
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+        print("缩略图墙:", ", ".join(s.name for s in sheets))
+        return 0
+
+    render(load_spec(Path(args.spec)), outdir,
+           voice=args.voice, rate=args.rate,
+           source_override=Path(args.source) if args.source else None)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
