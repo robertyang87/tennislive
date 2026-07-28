@@ -496,6 +496,13 @@ def cmd_digest(args) -> int:
             "[yellow]今日已由 ad-hoc 流程发布知识帖，日报跳过自动知识帖（避免同日重复）[/yellow]"
         )
     elif not args.no_cards:
+        from .render.tournament_story import record_story_selection, story_ranking
+
+        # 排序在生成之前算好：即使这一班次整个失败，也要留下"谁参选了、
+        # 各得几分"。只记胜者的话，"今天没有历史今天"和"有但没轮到它"
+        # 分不出来——7/25 就是这么丢的。
+        ranking = story_ranking(digest)
+        selection_error = ""
         try:
             from .render.knowledge import generate_knowledge_package
 
@@ -505,9 +512,29 @@ def cmd_digest(args) -> int:
                 theme=theme,
             )
         except Exception as e:  # noqa: BLE001
+            selection_error = f"{type(e).__name__}: {e}"
             console.print(
                 f"[yellow]每日网球知识生成失败（跳过）：{e}[/yellow]"
             )
+        try:
+            log_path = record_story_selection(
+                outdir,
+                digest,
+                ranking,
+                selected_slug=knowledge_story.slug if knowledge_story else None,
+                error=selection_error,
+            )
+            missed = [r for r in ranking if r["bucket"] == "anniversary"]
+            if missed and (
+                knowledge_story is None
+                or knowledge_story.slug != missed[0]["story_slug"]
+            ):
+                console.print(
+                    f"[yellow]今天有「历史上的今天」参选（{missed[0]['story_slug']}）"
+                    f"却没有成稿，拒因见 {log_path}[/yellow]"
+                )
+        except Exception as e:  # noqa: BLE001 - 诊断不该拖垮当日内容
+            console.print(f"[yellow]选题排序未能落盘：{e}[/yellow]")
 
     card_paths: list[Path] = []
     if not args.no_cards:

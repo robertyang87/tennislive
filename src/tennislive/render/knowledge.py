@@ -41,13 +41,28 @@ def _date_label(d) -> str:
     return f"{d.month}.{d.day} · {WEEKDAY_ZH[d.weekday()]}"
 
 
+# 栏目名印在标题上——卡片小标和 chips 早就写着「历史上的今天」，只有标题一直
+# 印「网球有故事」。读者只看标题，承诺印不出来这个栏目对外就不存在。
+# 见 docs/columns.md 与 docs/column-operations.md 的 R4。
+_COLUMN_EMOJI = {"历史上的今天": "📅", "网球有故事": "📖"}
+
+
+def knowledge_column(story: TournamentStory) -> str:
+    """这条故事对外挂在哪个栏目下."""
+    return "历史上的今天" if story.slug.startswith("otd-") else "网球有故事"
+
+
 def knowledge_title(story: TournamentStory, digest: Digest) -> str:
     day = f"{digest.today.month}.{digest.today.day}"
+    # 「历史上的今天」比「网球有故事」长一个字，钩子的预算跟着少一个字——
+    # otd 的钩子是照新前缀重写过的，别照搬冷知识那几条的长度。
     trivia_hooks = {
-        "otd-0725": "18岁第一冠，从乌马格开始",
-        "otd-0803": "郑钦文巴黎摘金的那一天",
-        "otd-0820": "3小时49分，决赛打到极限",
-        "otd-0909": "19岁高芙，主场圆梦夜",
+        "otd-0725": "18岁的乌马格首冠",
+        "otd-0728": "郑钦文那天一局没丢",
+        "otd-0803": "郑钦文巴黎摘金那天",
+        "otd-0820": "3小时49分的决赛",
+        "otd-0909": "19岁高芙主场圆梦",
+        "otd-0910": "斯瓦泰克第一座美网",
         "scoring-history": "网球为什么是15、30、40？",
         "yellow-ball": "网球为什么从白色变黄？",
         "longest-match": "最长一场网球，到底打了多久？",
@@ -63,7 +78,8 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         hook = trivia_hooks.get(story.slug, f"{story.title}，你真懂吗？")
     else:
         hook = f"为什么要记住{story.title}？"
-    prefix = f"📖{day}网球有故事｜"
+    column = knowledge_column(story)
+    prefix = f"{_COLUMN_EMOJI[column]}{day}{column}｜"
     if xhs_title_len(prefix + hook) > 20:
         if story.kind == "player":
             short_name = story.title.rsplit("·", 1)[-1]
@@ -78,7 +94,8 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
 def knowledge_wechat_title(story: TournamentStory, digest: Digest) -> str:
     """Use a distinct, fully preserved title for WeChat image posts."""
     title = (
-        f"{digest.today.month}.{digest.today.day}网球有故事｜{story.title}"
+        f"{digest.today.month}.{digest.today.day}"
+        f"{knowledge_column(story)}｜{story.title}"
     )
     if len(title) > 64:
         raise ValueError(f"公众号图片消息标题超长: {len(title)} > 64")
