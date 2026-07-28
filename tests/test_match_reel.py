@@ -184,3 +184,14 @@ def test_yt_dlp装default才解得了n_challenge():
     # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
     assert "n challenge solving failed" in check
     assert "not a bot" in check
+
+
+def test_回合镜头也铺满不走contain():
+    """竖版短片在手机上整屏播，上下留黑边等于把冲击力先折一半。窗口只有源片
+    32% 宽，球飞到两边确实会出画——**铺满仍然赢过「不丢画面」**。这一条是人
+    看过两版之后定的，代码注释以前写的正好相反（「回合镜头必须用 contain」）。"""
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    assert all(s.get("fit", "crop") == "crop" for s in spec["segments"])
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    assert "回合镜头必须用这个" not in source
