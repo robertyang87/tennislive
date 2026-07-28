@@ -200,3 +200,19 @@ def test_回合镜头也铺满不走contain():
     reel = _reel()
     source = Path(reel.__file__).read_text(encoding="utf-8")
     assert "回合镜头必须用这个" not in source
+
+
+def test_标题默认不带赛事名且别太长():
+    """「7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程」被判定太长。
+    赛事名文案里本来就有，标题这一格留给**人物 + 结果 + 抓得住人的那句**。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = text[text.index("      event:"):text.index("      summary:")]
+    assert 'default: ""' in block, "event 默认要留空"
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import headline  # noqa: PLC0415
+
+    got = headline(Path("output/2026-07-28/reel/x"), "赛场之上",
+                   "锦织圭 vs 商竣程", "2:1", "",
+                   "商竣程复出首战先赢一盘，被 36 岁的锦织圭逆转")
+    assert "ATP500" not in got
+    assert len(got) <= 40, f"{len(got)} 字，太长：{got}"
