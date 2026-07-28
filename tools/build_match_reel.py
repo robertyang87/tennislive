@@ -354,11 +354,18 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
 
 
 def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
-    """封面：从片子里抓一帧当底，压暗，写赛果 + 一句钩子。"""
-    from PIL import Image, ImageDraw, ImageFilter, ImageFont
+    """封面：从片子里抓一帧当底，压暗，写台头 / 大标题 / 赛果 / 落款。
+
+    **走和知识帖、开球之前同一套字**——`webcards._font_css()` 里那几张脸：
+    标题用 TL Display SC（得意黑），正文用 TL Sans SC（思源黑），比分用
+    TL Numeral（Montserrat）。所以这里不再用 PIL 画字，改成渲 HTML 再截图：
+    PIL 那条路拿的是系统里随便一个 CJK 字体，和卡片上的标题根本不是一家。
+    """
+    from playwright.sync_api import sync_playwright
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-    from tennislive.render.cards import _find_font  # noqa: PLC0415
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    from tennislive.video.explainer import _data_uri  # noqa: PLC0415
 
     cover = spec["cover"]
     grab = dest.parent / "_cover_frame.jpg"
@@ -370,47 +377,51 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
         "-vf", f"crop={CROP_W}:{CROP_H}:{x}:0,scale={VIDEO_W}:{VIDEO_H}:flags=lanczos",
         "-q:v", "2", str(grab))
 
-    image = Image.open(grab).convert("RGB")
-    # 底部压暗，让字站得住；上半张几乎不动——糊了整张就看不出是哪一场了。
-    # 渐变从 42% 高处才起，到文字区已经接近全黑：第一版用的是
-    # `210*(i/h)**1.6`，文字那一带只压到四成，浅色画面上（测试用的彩条）
-    # 白字直接糊在一起。压暗要按**文字落在哪一段高度**来定，不是整张按比例推。
-    shade = Image.new("L", image.size, 0)
-    pen = ImageDraw.Draw(shade)
-    for i in range(image.height):
-        ramp = min(1.0, max(0.0, (i / image.height - 0.42) / 0.30))
-        pen.line([(0, i), (image.width, i)], fill=int(238 * ramp ** 1.1))
-    dark = Image.new("RGB", image.size, (4, 18, 13))
-    image = Image.composite(dark, image, shade.filter(ImageFilter.GaussianBlur(2)))
+    lines = "".join(
+        f"<div>{line.strip()}</div>"
+        for line in str(cover.get("hook", "")).split("\n") if line.strip()
+    )
+    html = f"""<!doctype html><meta charset="utf-8"><style>
+{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
+.f{{position:absolute;inset:0;background-image:url('{_data_uri(grab)}');
+   background-size:cover;background-position:center}}
+/* 渐变从 44% 高处才起，到文字那一带接近全黑——压暗要按文字落在哪一段算，
+   不是整张按比例推。上半张几乎不动，糊了就看不出是哪一场。 */
+.s{{position:absolute;inset:0;background:linear-gradient(
+   180deg,rgba(4,18,13,0) 44%,rgba(4,18,13,.72) 62%,rgba(4,18,13,.94) 78%)}}
+.c{{position:absolute;left:78px;right:78px;bottom:250px;z-index:3;
+   display:flex;flex-direction:column;align-items:flex-start;gap:26px}}
+.k{{background:#c6f65a;color:#062018;font-family:'TL Sans SC',sans-serif;
+   font-size:30px;font-weight:800;letter-spacing:4px;padding:11px 26px;
+   border-radius:999px}}
+.t{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
+   font-size:104px;line-height:1.16;color:#f4fbf7;letter-spacing:1px;
+   text-shadow:0 4px 30px rgba(0,0,0,.55)}}
+.n{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:600;
+   font-size:52px;color:#c6f65a;letter-spacing:1px}}
+.b{{font-family:'TL Sans SC',sans-serif;font-weight:400;font-size:34px;
+   color:#9fb4aa;letter-spacing:2px}}
+</style><div class="f"></div><div class="s"></div><div class="c">
+<div class="k">{cover.get('eyebrow','')}</div>
+<div class="t">{lines}</div>
+<div class="n">{cover.get('score','')}</div>
+<div class="b">{cover.get('sub','')}</div></div>"""
 
-    draw = ImageDraw.Draw(image)
-    bold_path, bold_idx = _find_font(bold=True)
-    regular_path, regular_idx = _find_font(bold=False)
-
-    def font(size: int, bold: bool = True):
-        path, idx = (bold_path, bold_idx) if bold else (regular_path, regular_idx)
-        return ImageFont.truetype(path, size, index=idx)
-
-    def centered(text: str, y: int, size: int, fill: str, bold: bool = True) -> int:
-        f = font(size, bold)
-        w = draw.textbbox((0, 0), text, font=f)[2]
-        draw.text(((VIDEO_W - w) // 2, y), text, font=f, fill=fill)
-        return y + size + 18
-
-    y = 1180
-    if cover.get("eyebrow"):
-        y = centered(cover["eyebrow"], y, 40, "#9fd08a", bold=False)
-    for line in str(cover.get("hook", "")).split("\n"):
-        if line.strip():
-            y = centered(line.strip(), y, 84, "#ffffff")
-    y += 14
-    if cover.get("score"):
-        y = centered(cover["score"], y, 62, "#c3e88d")
-    if cover.get("sub"):
-        y = centered(cover["sub"], y, 38, "#a9bcb2", bold=False)
-
+    page_file = dest.parent / "_cover.html"
+    page_file.write_text(html, encoding="utf-8")
     still = dest.parent / "_cover.jpg"
-    image.save(still, quality=95)
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(
+            executable_path=_chromium(), args=["--no-sandbox"])
+        page = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
+                                device_scale_factor=1)
+        page.goto(page_file.resolve().as_uri())
+        page.wait_for_timeout(700)
+        page.screenshot(path=str(still), type="jpeg", quality=95)
+        browser.close()
+
     run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
         "-loop", "1", "-i", str(still), "-f", "lavfi",
         "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
@@ -418,6 +429,18 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
         "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "160k", "-shortest", str(dest))
     return dest
+
+
+def _chromium() -> str:
+    """沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的路径带版本号，playwright 自己找不到，
+    得显式给。CI 上装的那份在默认位置，glob 一下两边都覆盖。"""
+    import glob as _glob
+    for pattern in ("/opt/pw-browsers/chromium*/chrome-linux/chrome",
+                    str(Path.home() / ".cache/ms-playwright/chromium*/chrome-linux/chrome")):
+        hits = sorted(_glob.glob(pattern))
+        if hits:
+            return hits[-1]
+    raise ReelError("找不到 chromium")
 
 
 def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
