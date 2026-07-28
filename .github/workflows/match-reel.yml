@@ -48,6 +48,10 @@ on:
         description: "对阵，进标题：如「锦织圭 vs 商竣程」"
         required: false
         default: "锦织圭 vs 商竣程"
+      score:
+        description: "赛果，进标题：赢家在前，如「6-7(3) 6-3 6-4」"
+        required: false
+        default: "6-7(3) 6-3 6-4"
       push_lead:
         description: "推送正文那一句"
         required: false
@@ -222,5 +226,6 @@ jobs:
           python tools/push_reel.py \
             --outdir "${{ steps.paths.outputs.outdir }}" \
             --matchup "${{ github.event.inputs.matchup }}" \
+            --score "${{ github.event.inputs.score }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
             --copy "$COPY"
