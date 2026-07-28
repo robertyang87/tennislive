@@ -9,8 +9,11 @@
 from __future__ import annotations
 
 import html
+import logging
 import os
 import re
+
+import requests
 
 from ..digest import Digest
 from ..timeutil import fmt_schedule_time, fmt_time_beijing
@@ -28,6 +31,8 @@ from .rating import (
     top_results,
 )
 from .titles import pick_headline_auto
+
+logger = logging.getLogger(__name__)
 
 # 主题策略：内联浅色样式兜底 + <style> 媒体查询做深色覆盖。
 # 微信内置浏览器支持 prefers-color-scheme；若个别环境剥离 <style>，
@@ -284,6 +289,133 @@ def to_push_html(
                 'padding:12px 16px;border-radius:6px;margin:6px 0;">▶ 播放竖版视频</a>'
             )
 
+    parts.extend(["</div>", "</div>"])
+    return "\n".join(parts)
+
+
+def copy_page_url(day, *, subdir: str = "schedule") -> str:
+    return f"{_PAGES}/output/{day.isoformat()}/{subdir}/copy.html"
+
+
+def live_copy_page_url(
+    day, *, subdir: str = "schedule", attempts: int = 3, delay: float = 20.0
+) -> str | None:
+    """探复制页是否真的能打开；打不开就返回 None，让调用方别放那个按钮。
+
+    Pages 重新发布要一两分钟，等得起，所以留几次重试；但**只在分支上存在的
+    包永远等不到**（Pages 只服务 main），那时如实返回 None。
+    """
+    import time
+
+    url = copy_page_url(day, subdir=subdir)
+    for attempt in range(max(1, attempts)):
+        try:
+            response = requests.get(url, timeout=15)
+            if response.status_code == 200 and "text/html" in (
+                response.headers.get("Content-Type", "").lower()
+            ):
+                return url
+            logger.info("复制页暂不可达（HTTP %s）：%s", response.status_code, url)
+        except requests.RequestException as e:  # noqa: PERF203
+            logger.info("复制页探测失败：%s", e)
+        if attempt + 1 < attempts:
+            time.sleep(delay)
+    return None
+
+
+def to_schedule_push_html(
+    day,
+    cards: list[str],
+    *,
+    events: list[str] | None = None,
+    subdir: str = "schedule",
+    xhs_text: str | None = None,
+    copy_url: str | None = None,
+) -> str:
+    """今日赛程的推送消息：只有卡片图，没有小红书文案。
+
+    和 ``to_push_html`` 分开写：那条是"待发稿"的审稿消息（标题 + 卡片 + 可复制
+    正文 + 复制页链接），这条是直接给人看的赛程，多一个字都是噪声。
+
+    图片地址仍写成 jsDelivr 的 output 路径：``publish.pushplus`` 会先按
+    ``asset_dir`` 把它们换成本地文件上传到 PushPlus 图床，只有没配图床密钥时
+    才真的走 CDN（那时需要图已经提交上去）。
+    """
+    raw = (xhs_text or "").strip()
+    lines = raw.splitlines()
+    title = lines[0].strip() if lines else ""
+    body_start = 2 if len(lines) > 1 and not lines[1].strip() else 1
+    body = "\n".join(lines[body_start:]).strip()
+
+    parts = [
+        '<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;'
+        'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">',
+        '<div style="max-width:680px;margin:0 auto;background-color:#ffffff;'
+        'border-top:5px solid #0b3d2e;padding:18px 16px 22px;">',
+        '<div style="display:inline-block;background-color:#e7f5ea;color:#087747;'
+        'font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px;">'
+        f'今日赛程 · {day.month}.{day.day}</div>',
+    ]
+    # 标题单独成块：复制页有时不可用（GitHub Pages 只服务 main，分支上生成的
+    # 包它取不到），那时这一块就是唯一能长按复制标题的地方。
+    parts.append(
+        '<div style="font-size:22px;line-height:1.38;font-weight:800;'
+        'color:#102d23;margin:10px 0 4px;">'
+        + html.escape(title or " / ".join(events or []))
+        + "</div>"
+    )
+    if title:
+        parts.append(
+            '<div style="color:#7a8580;font-size:12px;margin:0 0 12px;">'
+            "↑ 长按可复制标题</div>"
+        )
+    for name in cards:
+        safe_name = html.escape(name, quote=True)
+        url = f"{_CDN}/output/{day.isoformat()}/{subdir}/cards/{safe_name}"
+        parts.append(
+            f'<img src="{url}" data-src="{url}" width="100%" '
+            'referrerpolicy="no-referrer" style="width:100%;border-radius:6px;'
+            'margin:0 0 10px;display:block;" />'
+        )
+    if cards:
+        parts.append(
+            '<div style="color:#7a8580;font-size:12px;margin:0 0 18px;">'
+            "长按保存图片 · 按当前顺序上传小红书</div>"
+        )
+    if body:
+        parts.append(
+            '<div style="border-left:3px solid #f1c84b;padding-left:12px;'
+            'margin:4px 0 14px;font-size:13px;font-weight:bold;color:#087747;">'
+            "可直接发布的正文</div>"
+        )
+        for paragraph in re.split(r"\n\s*\n", body):
+            safe_paragraph = "<br/>".join(
+                html.escape(line) for line in paragraph.splitlines()
+            )
+            style = (
+                "color:#087747;font-size:14px;line-height:1.8;margin:14px 0 0;"
+                if paragraph.lstrip().startswith("#")
+                else "color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px;"
+            )
+            parts.append(f'<div style="{style}">{safe_paragraph}</div>')
+    # 复制页的按钮只在链接**确认可达**时才放。
+    #
+    # 踩过：GitHub Pages 只服务 main，而赛程包是在特性分支上生成的，Pages 永远
+    # 取不到——按钮点开就是 404。图片没事，是因为它们走 jsDelivr 并钉在 commit
+    # SHA 上，任意 commit 都能取。pushplus.wait_for_images 也帮不上：它**故意**
+    # 把 Pages 链接排除在外（Pages 发布延迟大，不该阻塞推送）。
+    # 微信那条消息发出去就收不回来，所以宁可不放按钮，也不放一个死链。
+    if raw and copy_url:
+        parts.extend([
+            '<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px;"></div>',
+            f'<a href="{html.escape(copy_url, quote=True)}" '
+            'style="display:block;background-color:#0b3d2e;'
+            'color:#ffffff;text-align:center;text-decoration:none;font-weight:bold;'
+            'padding:13px 16px;border-radius:6px;margin:0 0 7px;">'
+            "分别复制标题 / 正文</a>",
+            '<div style="text-align:center;color:#7a8580;font-size:12px;">'
+            "标题与正文已拆分，粘贴后即可发布</div>",
+        ])
     parts.extend(["</div>", "</div>"])
     return "\n".join(parts)
 

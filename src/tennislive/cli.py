@@ -348,7 +348,7 @@ def cmd_explainer(args) -> int:
         explainer_xiaohongshu,
     )
 
-    from .render.pushmsg import to_copy_page
+    from .render.pushmsg import live_copy_page_url, to_copy_page
 
     outdir = Path(args.outdir)
     segments = explainer_script(story)
@@ -745,6 +745,143 @@ def cmd_digest(args) -> int:
     )
     if digest.is_empty:
         console.print("[yellow]提示：当天没有巡回赛比赛，内容为空档说明。[/yellow]")
+    return 0
+
+
+def cmd_schedule_cards(args) -> int:
+    """今日赛程卡：按赛事分页、ATP 与 WTA 各自成页、不带看点。"""
+    from .render.common import group_by_tournament
+    from .render.pushmsg import to_schedule_push_html
+    from .render.terminal import console
+    from .render.webcards import (
+        TOUR_LEVELS,
+        generate_schedule_deck,
+        schedule_pages,
+    )
+
+    d = parse_date_arg(args.date)
+    try:
+        digest: Digest = build_digest(d, prefer=args.source)
+    except SourceError as e:
+        console.print(f"[red]抓取失败：{e}[/red]")
+        return 1
+
+    # 北京日历会把美洲赛事的比赛日拦腰切断（详见 render.schedule_time 的
+    # NEXT_DAY_CUTOFF_HOUR）。把次日 12:00 前的场次补进来，否则整个美东夜场
+    # ——包括郑钦文 vs 埃亚拉这种——都会从「今日赛程」里消失。
+    from datetime import timedelta
+
+    from .digest import _is_qualifying
+    from .render.schedule_time import in_schedule_window, match_key
+
+    known = {match_key(m) for m in digest.schedule}
+    carried: list = []
+    try:
+        next_day = fetch_day(d + timedelta(days=1), prefer=args.source)
+        for m in next_day.upcoming():
+            if _is_qualifying(m) or not in_schedule_window(m):
+                continue
+            if match_key(m) in known:
+                continue
+            known.add(match_key(m))
+            carried.append(m)
+    except SourceError as e:
+        console.print(f"[yellow]次日凌晨场次抓取失败，只出今天：{e}[/yellow]")
+    if carried:
+        digest.schedule.extend(carried)
+        # build_digest 的排名回填只作用于它自己取到的那批；这些是之后追加的，
+        # 不补一次就会出现「郑钦文没有排名」，排序也拿不到"top 选手"这一维。
+        if digest.rankings is not None:
+            from .digest import apply_rankings
+
+            apply_rankings(digest.rankings, carried)
+        console.print(f"[cyan]跨日补入[/cyan] {len(carried)} 场（北京次日 12:00 之前开赛）")
+
+    from .sources.official_schedule import enrich_official_schedules
+
+    digest.source_status.update(enrich_official_schedules(digest))
+
+    upcoming = digest.schedule
+    if not upcoming:
+        console.print("[yellow]今天没有未开赛的场次，不出赛程卡[/yellow]")
+        return 0
+
+    # 取材口径要能被人核对：哪些赛事进了、哪些被级别挡了、每站列了几场，
+    # 全部打出来。只在成功时出声的检查没法证明它真的看过。
+    kept, skipped = [], []
+    for group in group_by_tournament(upcoming):
+        target = kept if group.level in TOUR_LEVELS else skipped
+        target.append((group, len(group.matches)))
+    for group, count in kept:
+        console.print(f"[green]收录[/green] {group.compact_level} · {group.name_zh}（{count} 场）")
+    for group, count in skipped:
+        console.print(
+            f"[yellow]挡掉[/yellow] {group.name_zh}（{count} 场）"
+            f"：级别 {group.level or '未识别'}，非巡回赛级别"
+        )
+    if not kept:
+        console.print("[yellow]今天没有巡回赛级别的赛事[/yellow]")
+        return 0
+
+    outdir = Path(args.outdir) / d.isoformat() / "schedule"
+    cards_dir = outdir / "cards"
+    cards_dir.mkdir(parents=True, exist_ok=True)
+    # 先清干净：页数会随取材变化（收口之后从七页降到四页），不清的话上一轮的
+    # card_schedule05..07 会作为陈图留在仓库里，看起来像本期的一部分。
+    for stale in cards_dir.glob("card_schedule*.jpg"):
+        stale.unlink()
+    date_label = f"{d.month}.{d.day}"
+
+    pages = schedule_pages(upcoming, date_label)
+    console.print(f"共 {len(pages)} 页")
+
+    card_paths: list[Path] = []
+    try:
+        for kind, image in generate_schedule_deck(upcoming, date_label):
+            path = outdir / "cards" / f"card_{kind}.jpg"
+            image.convert("RGB").save(path, quality=92)
+            card_paths.append(path)
+    except Exception as e:  # noqa: BLE001 - 字体/浏览器缺失不该吞掉诊断信息
+        console.print(f"[red]赛程卡渲染失败：{e}[/red]")
+        return 1
+
+    # 文案的正文必须按"真正上卡的那些场次"写——正文和图对不上，读者一眼看出来
+    from .render.pushmsg import live_copy_page_url, to_copy_page
+    from .render.schedule_post import pick_lead, schedule_post
+    from .render.schedule_time import schedule_time_display
+    from .render.webcards import schedule_selection
+
+    selection = schedule_selection(upcoming)
+    on_card = [m for _group, ms in selection for m in ms]
+    display = schedule_time_display(upcoming)
+    lead = pick_lead(on_card)
+    post = schedule_post(d, on_card, display, lead)
+    console.print(f"[cyan]标题[/cyan] {post.splitlines()[0]}")
+
+    (outdir / "xiaohongshu.txt").write_text(post, encoding="utf-8")
+    (outdir / "copy.html").write_text(to_copy_page(post), encoding="utf-8")
+
+    # 复制页的按钮只在链接确认可达时才放进推送：GitHub Pages 只服务 main，
+    # 特性分支上生成的包它取不到，按钮点开就是 404。微信那条消息发出去就
+    # 收不回来——宁可不放按钮，也不放一个死链。
+    copy_url = live_copy_page_url(d, subdir="schedule")
+    if copy_url:
+        console.print(f"[green]复制页可达[/green] {copy_url}")
+    else:
+        console.print(
+            "[yellow]复制页尚不可达（Pages 只服务 main），本次推送不放该按钮；"
+            "标题与正文已在消息里各自成块，可长按复制[/yellow]"
+        )
+
+    events = [f"{group.compact_level}·{group.name_zh}" for group, _ in kept]
+    (outdir / "push.html").write_text(
+        to_schedule_push_html(
+            d, [p.name for p in card_paths], events=events, xhs_text=post,
+            copy_url=copy_url,
+        ),
+        encoding="utf-8",
+    )
+    console.print(f"[green]已生成 {len(card_paths)} 张赛程卡 → {outdir}[/green]")
     return 0
 
 
@@ -1503,6 +1640,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
+    sp = sub.add_parser(
+        "schedule-cards", help="今日赛程卡：按赛事分页、ATP/WTA 分开、无看点"
+    )
+    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
+    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
+
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1571,6 +1715,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_radar(args)
     if args.command == "explainer":
         return cmd_explainer(args)
+    if args.command == "schedule-cards":
+        return cmd_schedule_cards(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
