@@ -161,6 +161,30 @@
 
 **追加判据**：`test_历史今天的slug和它写的日期一致`——`slug` 尾号 == `location` 里那个「X 月 X 日」。
 
+#### 批次二的图源：探过的四条路，只剩一条
+
+批次二六个锚点里**五个是美网**，所以该攻的不是 ATP 的 Cloudflare，是美网自己的档案。逐条探完：
+
+| 通道 | 判定 | 证据 |
+|---|---|---|
+| Commons | ❌ 覆盖不到 | 「Carlos Alcaraz」2057 张真照片里**没有一张 2022 美网**——志愿者拍的集中在欧洲赛事和奥运 |
+| usopen.org 抓页面 | ❌ 全前端渲染 | 站点**是通的**（0.7s，不是 Cloudflare），但 HTML 里图片地址一个都没有 |
+| usopen.org 猜 JSON | ❌ | `/en_US/json/man/manifest.json` 只是 PWA manifest；同空间几个路径全 404 |
+| **webrender（Chromium）** | ⚠️ **沙箱不通，CI 可能通** | 见下 |
+
+**Commons 检索还有个坑**：`Alcaraz 2022 US Open` 这样查，返回 19 条**全是欧盟法律 PDF**——
+它匹配的是 PDF 正文。要写成 `"Carlos Alcaraz" filemime:image/jpeg`，
+即 CLAUDE.md 那条「让每个话题声明必须出现的关键词，**排除 PDF**，再看数字」。
+
+**webrender 这条要分清楚是谁的限制。** 本沙箱里 Playwright/Chromium 走代理时
+**对任何站点都 `ERR_CONNECTION_RESET`**——连 curl 能通的 Commons 也连不上，
+关掉 HTTP/2 与 QUIC 也没用。按 `/root/.ccr/README.md` 的规矩这属于「报告，不绕过」。
+
+但**这是沙箱代理的限制，不是这条路本身的限制**：GitHub Actions 上没有这层代理，
+CLAUDE.md 里「本地沙箱取不到外网图片，这类验证走 Actions」说的正是这种情况。
+所以 webrender 仍然是批次二最可能成的一条，**但要写成在 Actions 里跑的工具**，
+不能在沙箱里验完就当它能用——那就成了「拿信号当产物」。
+
 #### R4 · 让读者看见这个承诺
 
 | | |
