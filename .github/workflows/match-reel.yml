@@ -56,9 +56,13 @@ on:
         required: false
         default: "2:1"
       event:
-        description: "赛事与轮次，进标题：如「华盛顿 ATP500 首轮」"
+        description: "赛事与轮次，进标题。默认留空——加上就太长了，赛事名文案里有"
         required: false
-        default: "华盛顿 ATP500 首轮"
+        default: ""
+      summary:
+        description: "一句话概括赛果（顶掉「对阵 + 比分」）：要有人物、有结果、抓得住人"
+        required: false
+        default: "商竣程复出首战先赢一盘，被 36 岁的锦织圭逆转"
       push_lead:
         description: "推送正文那一句"
         required: false
@@ -246,6 +250,7 @@ jobs:
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
             --copy "$COPY"
 
       - name: 丢掉不进仓库的中间物
@@ -309,5 +314,6 @@ jobs:
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
             --copy "$COPY"
