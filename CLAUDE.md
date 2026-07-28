@@ -440,9 +440,42 @@ Ostapenko 又被写成「奥斯塔片科」（表里是**奥斯塔彭科**）发
 - **接口报 400 的时候先读它说了什么**。那个图床对无参请求返回
   `Bad parameter: At least one of width or height parameters must be specified`
   ——加个 `?width=2400` 就拿到了。只看状态码会判成"取不到"
-- **官网整站返回 200 不等于有东西**。洛斯卡沃斯官网是个 `noindex` 空壳，
-  `/en/media/news`、`/-/media/`、`/en/photos` 三个路径**全返回 200 但
-  Content-Type 是 `text/html`**——soft-404。要看 Content-Type，见下面 ATP 那条
+- **官网整站返回 200 不等于有东西**。洛斯卡沃斯当时试的那个域名是个 `noindex`
+  空壳，`/en/media/news`、`/-/media/`、`/en/photos` 三个路径**全返回 200 但
+  Content-Type 是 `text/html`**——soft-404。要看 Content-Type，见下面 ATP 那条。
+  （后来发现那根本不是活的域名，见下一条）
+
+### 图库路径 404，不等于这个站没有图库
+
+洛斯卡沃斯的球场照就这么被判过"不存在"，然后拿海蚀拱地标顶了好几版。复盘下来
+每一步都错在**拿一个间接信号当结论**：
+
+- **先确认哪个域名是活的**。这个赛事挂着三个：`abiertoloscabos.com` 是个裸的
+  Apache 目录索引（里面只有一个 20 G 的站点备份），`loscabosopen.com` 是
+  Hostinger 的停放页，活的是 `loscabostennisopen.com`。三个都返回 200
+- **`/en/photos`、`/en/gallery` 全是 404，图库却在**。它是 WordPress，
+  `wp-json/wp/v2/media?search=<词>&per_page=40` 一查就把原图连同
+  `media_details.width/height` 列出来——比在页面上抓省事得多，也顺手回答了
+  "有没有更大的尺寸"（`media_details.sizes` / `original_image`）
+- **搜索词按赛事自己的语言写**。`stadium` 只出 3 条，`estadio` 出 36 条，
+  `cancha` 出 10 条。西语站用英文词搜等于自己把结果掐掉
+
+这两条合起来还是那句：**空结果先自证是真空**。
+
+### 地标是合法的兜底，但兜底会过期
+
+有些站在 Commons 和官方图库里确实没有球场照，用城市地标是对的——雅典的帕特农、
+维罗纳的竞技场、汉堡的天际线都是这么来的。问题是**兜底一旦生效就很难被发现已经
+过期**：地点对、画面还挺好看，扫过去不觉得有什么不对，直到有人问一句"为啥不用
+中心球场"。
+
+- 兜底时**把"为什么退到地标"写在 `tools/fetch_venues.py` 的注释里**，连同当时
+  查过哪些词、命中多少条。下次有人回来看，能一眼判断这个结论还算不算数
+- 找到球场照之后**把它钉进测试**（`test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark`），
+  否则改 manifest 时又会悄悄退回去
+- 竖版卡是 `background-size:cover`，**源图的整个高度都会铺满卡**。这张原图上面
+  近一半是天空，直接入库的话球场被挤到下三分之一、标题下面全是空云。裁掉顶部
+  170px 之后球场回到画面中央——**先裁再入库**，和短片那条是同一条
 
 ### 画出来的那一屏，也要够大够直观
 

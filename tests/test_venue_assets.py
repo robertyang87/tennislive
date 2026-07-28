@@ -298,6 +298,43 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
         )
 
 
+def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
+    """能拿到球场照的站，manifest 不许再指回城市地标。
+
+    地标本身是合法的兜底——雅典的帕特农、维罗纳的竞技场、汉堡的天际线，
+    那几站在 Commons 和官方图库里都真的没有球场照。但**兜底一旦生效就很难
+    发现它已经过期了**：洛斯卡沃斯用埃尔阿尔科海蚀拱用了好几版，画面漂亮、
+    地点也对，只是它不是球场；直到有人问"为啥不用中心球场"才发现赛事官网
+    自己的媒体库里一直挂着 Estadio Alejandro Burillo 的实拍。
+
+    所以把"已经找到球场照"这件事钉下来。这两站的图都不在 Commons，来自赛事
+    官方媒体库，而 VENUES 里 pinned 字段是 None——也就是说 fetch_venues.py
+    重跑时不会去 Commons 重取，唯一能把它换掉的是有人改 manifest。这条测试
+    就是那时候会响的铃。
+    """
+    import json
+
+    from tennislive.render.venue_assets import ASSETS, MANIFEST
+
+    # slug -> 必须仍然是这张球场照（换成别的球场照请连同理由一起改这里）
+    court_photos = {
+        "los-cabos": "los-cabos-estadio-alejandro-burillo.jpg",
+        "memphis": "memphis-leftwich-tennis-center.jpg",
+    }
+    rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
+
+    problems = []
+    for slug, image in court_photos.items():
+        row = rows.get(slug)
+        if row is None:
+            problems.append(f"{slug}: manifest 里整条不见了")
+        elif row.get("image") != image:
+            problems.append(f"{slug}: 现在指的是 {row.get('image')}，应为球场照 {image}")
+        elif not (ASSETS / image).is_file():
+            problems.append(f"{slug}: {image} 不在盘上")
+    assert not problems, "球场照被换回地标或丢了：\n" + "\n".join(problems)
+
+
 def test_backfill_drops_credits_for_images_no_longer_on_disk():
     """图删掉之后，它的 credits 也要清掉。
 
