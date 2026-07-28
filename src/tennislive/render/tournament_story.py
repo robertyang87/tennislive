@@ -18,6 +18,16 @@ PLAYER_ASSETS = Path(__file__).resolve().parents[3] / "assets" / "players"
 STATE_PATH = Path(__file__).resolve().parents[3] / "data" / "story_state.json"
 COOLDOWN_DAYS = 30
 
+# 「历史上的今天」命中正日子时的得分，高于球员特写的 3、赛事档案的 2。
+# 纪念日一年只回来一次；昨夜的高光球员明天还有。
+ANNIVERSARY_SCORE = 4
+
+# 每个班次的排序结果落在**当日目录**（不是 knowledge/ 里），逐班追加。
+# 两条都是 7/25 那次丢失换来的：daily.yml 同日重跑会 `rm -rf "$OUT_DIR/knowledge"`，
+# 而第二班次被 pinned 分支直接命中已定的故事、一次拒绝都不会发生——
+# 写在里面会被删掉，覆盖写会把上一班的证据擦掉。
+SELECTION_LOG_NAME = "story_selection.json"
+
 
 @dataclass(frozen=True)
 class ChampionMoment:
@@ -2412,12 +2422,22 @@ def pick_tournament_story(digest: Digest) -> TournamentStory | None:
     return candidates[0] if candidates else None
 
 
-def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
-    """Return stories in editorial order so rendering can skip weak visual packages.
+def is_anniversary(story: TournamentStory, today: date) -> bool:
+    """今天是不是这条「历史上的今天」的正日子."""
+    return (
+        story.kind == "trivia"
+        and story.slug.startswith("otd-")
+        and story.slug.endswith(today.strftime("%m%d"))
+    )
 
-    Selection and production are deliberately separate: the hottest subject is
-    tried first, but a story without a complete, precisely matched visual set
-    must not block a lower-ranked story that can be published well.
+
+def story_ranking(digest: Digest) -> list[dict]:
+    """每条故事的参选结果：分档、得分、名次，落选的带原因。
+
+    单独抽出来是因为产物里只留"谁赢了"不够。7/25 那天 `otd-0725` 的四道闸门
+    （图在、日期对、未冷却、trivia）离线复算全部通过，却没上；而落盘的
+    `rejected_candidates` 是空的——它根本没被生产环节试过。只记胜者的时候，
+    "今天没有历史今天"和"有但没轮到它"长得一模一样。
     """
     matches = digest.results + digest.live + digest.schedule
     tournaments = {_norm(m.tournament.name) for m in matches}
@@ -2428,54 +2448,184 @@ def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
     player_heat, tournament_heat, newsworthy_losers = _result_heat(digest)
     headliners = winners | newsworthy_losers
     state = _load_state()
-
-    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡
     today_iso = digest.today.isoformat()
-    pinned: list[TournamentStory] = []
-    for story in STORIES:
-        if state.get(story.slug) == today_iso and story.image.exists():
-            pinned.append(story)
 
-    fresh: list[tuple[int, float, int, TournamentStory]] = []
-    cooling: list[tuple[str, int, float, int, TournamentStory]] = []
+    # 同日重跑幂等：当天已定的故事直接复用，避免重生成时轮换换卡。
+    # 纪念日不吃这条——见下面 anniversary 分档。
+    pinned_slugs = {
+        story.slug
+        for story in STORIES
+        if state.get(story.slug) == today_iso and story.image.exists()
+    }
+
+    records: list[dict] = []
     for order, story in enumerate(STORIES):
+        # 每条都带齐同一套字段（落选的 rank/score 留 None）——读这份台账的
+        # jq 不该为了"这个键在不在"分两种写法。
+        record: dict = {
+            "story_slug": story.slug,
+            "title": story.title,
+            "kind": story.kind,
+            "pinned": story.slug in pinned_slugs,
+            "last_used": state.get(story.slug, ""),
+            "rank": None,
+            "score": None,
+            "heat": None,
+            "reason": "",
+        }
+
+        def drop(reason: str) -> None:
+            records.append({**record, "bucket": "excluded", "reason": reason})
+
         if not story.image.exists():
+            drop("配图不在仓库里")
             continue
         aliases = tuple(_norm(alias) for alias in story.aliases)
+        anniversary = is_anniversary(story, digest.today)
         if story.kind == "player":
             if _matched(aliases, headliners):
                 score = 3
             elif _matched(aliases, todays):
                 score = 1
             else:
+                drop("这名球员今天没有比赛")
                 continue
             heat = _alias_heat(aliases, player_heat)
         elif story.kind == "trivia":
             if story.slug.startswith("otd-"):
-                # 历史上的今天：只在对应日期参选，优先于普通冷知识
-                if not story.slug.endswith(digest.today.strftime("%m%d")):
+                # 历史上的今天：只在对应日期参选。命中当日给最高分——
+                # 纪念日一年只回来一次，昨夜的高光球员明天还有。
+                if not anniversary:
+                    drop(f"不是它的正日子（{story.slug.removeprefix('otd-')}）")
                     continue
-                score = 1
+                score = ANNIVERSARY_SCORE
             else:
                 score = 0
             heat = _trivia_topic_score(story, digest)
         else:
             if not _matched(aliases, tournaments):
+                drop("这项赛事今天没有比赛")
                 continue
             score = 2
             heat = _alias_heat(aliases, tournament_heat)
-        if _recently_used(story.slug, digest.today, state):
-            cooling.append((state.get(story.slug, ""), -score, -heat, order, story))
+
+        if anniversary:
+            # 冷却期对纪念日没有意义（一年只回来一次）；同日重跑时也不该被
+            # 上一班次钉住的那条挡在后面——后续班次正是它的重试机会。
+            bucket = "anniversary"
+        elif _recently_used(story.slug, digest.today, state):
+            bucket = "cooling"
         else:
-            fresh.append((-score, -heat, order, story))
-    ordered_fresh = [item[-1] for item in sorted(fresh)]
+            bucket = "fresh"
+        records.append(
+            {**record, "bucket": bucket, "score": score, "heat": round(float(heat), 4)}
+        )
+
+    by_slug = {record["story_slug"]: record for record in records}
+    order_of = {story.slug: index for index, story in enumerate(STORIES)}
+
+    def picked(bucket: str) -> list[dict]:
+        return [r for r in records if r["bucket"] == bucket]
+
+    anniversaries = sorted(picked("anniversary"), key=lambda r: order_of[r["story_slug"]])
+    pinned = [
+        by_slug[slug]
+        for slug in sorted(pinned_slugs, key=lambda s: order_of[s])
+        if by_slug[slug]["bucket"] != "anniversary"
+    ]
+    fresh = sorted(
+        picked("fresh"),
+        key=lambda r: (-r["score"], -r["heat"], order_of[r["story_slug"]]),
+    )
     # ISO 日期字符串最小 = 距上次讲述最久；仍保留新闻分作为次级排序。
-    ordered_cooling = [item[-1] for item in sorted(cooling)]
-    ordered: list[TournamentStory] = []
-    for story in [*pinned, *ordered_fresh, *ordered_cooling]:
-        if story not in ordered:
-            ordered.append(story)
-    return ordered
+    cooling = sorted(
+        picked("cooling"),
+        key=lambda r: (
+            r["last_used"],
+            -r["score"],
+            -r["heat"],
+            order_of[r["story_slug"]],
+        ),
+    )
+
+    rank = 0
+    seen: set[str] = set()
+    for record in [*anniversaries, *pinned, *fresh, *cooling]:
+        if record["story_slug"] in seen:
+            continue
+        seen.add(record["story_slug"])
+        rank += 1
+        record["rank"] = rank
+    return records
+
+
+def record_story_selection(
+    day_dir: Path | str,
+    digest: Digest,
+    ranking: list[dict],
+    *,
+    selected_slug: str | None,
+    error: str = "",
+) -> Path:
+    """把这一班次的排序结果追加进当日目录的 `story_selection.json`.
+
+    刻意不写进 `knowledge/`、刻意不覆盖——理由见 `SELECTION_LOG_NAME` 上面那段。
+    `anniversary_missed` 是给 daily.yml 打 `::warning` 用的：当天有纪念日参选、
+    最后成稿的却不是它，就该有人被吵醒。
+    """
+    from datetime import datetime, timezone
+
+    path = Path(day_dir) / SELECTION_LOG_NAME
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        shifts = list(payload.get("shifts") or [])
+    except (OSError, ValueError):
+        shifts = []
+
+    anniversaries = [
+        record["story_slug"] for record in ranking if record["bucket"] == "anniversary"
+    ]
+    shifts.append(
+        {
+            "recorded_at": datetime.now(timezone.utc).isoformat(),
+            "selected": selected_slug or "",
+            "error": error,
+            "anniversary_slugs": anniversaries,
+            "anniversary_missed": bool(anniversaries)
+            and selected_slug not in anniversaries,
+            "ranking": sorted(
+                ranking,
+                key=lambda record: (record.get("rank") or 10_000, record["story_slug"]),
+            ),
+        }
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "published_for": digest.today.isoformat(),
+                "shifts": shifts,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
+def tournament_story_candidates(digest: Digest) -> list[TournamentStory]:
+    """Return stories in editorial order so rendering can skip weak visual packages.
+
+    Selection and production are deliberately separate: the hottest subject is
+    tried first, but a story without a complete, precisely matched visual set
+    must not block a lower-ranked story that can be published well.
+    """
+    by_slug = {story.slug: story for story in STORIES}
+    ranked = [record for record in story_ranking(digest) if record.get("rank")]
+    ranked.sort(key=lambda record: record["rank"])
+    return [by_slug[record["story_slug"]] for record in ranked]
 
 
 WISHLIST_PATH = Path(__file__).resolve().parents[3] / "data" / "story_wishlist.json"
