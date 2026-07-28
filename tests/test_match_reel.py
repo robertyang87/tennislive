@@ -132,3 +132,26 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "赛场之上" not in page
     # 这条线没有置顶评论，那一格就不该留个空框加一个复制不出东西的按钮
     assert "复制评论" not in page
+
+
+def test_默认音色是云见():
+    """定下来的是云见（体育解说那把嗓子）。默认值以前写着云希，靠每次手动传参
+    盖过去——漏一次就换了个人在说话。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert "zh-CN-YunjianNeural" in text
+    assert "zh-CN-YunxiNeural" not in text
+
+
+def test_cookies模式不产任何产物():
+    """cookie 会过期，过期时的表现和「没配」一模一样，所以要有一条随时能跑的验证；
+    但它不该往仓库里提交任何东西。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert "mode == 'cookies'" in text
+    for step in ("丢掉不进仓库的中间物", "上传 artifact", "提交产物"):
+        block = text[text.index(step):].split("- name:")[0]
+        assert "mode != 'cookies'" in block, step
+    # 必须**真下媒体流**再看字节数：不带 cookie 也拿得到标题和格式表，
+    # 只查「命令有没有报错」会把「被挡住」读成「可用」
+    check = text[text.index("cookies — 只验"):].split("- name:")[0]
+    assert "--download-sections" in check
+    assert "stat -c%s" in check and "exit 1" in check
