@@ -31,6 +31,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from tennislive.publish.pushplus import push  # noqa: E402
+from tennislive.render.pushmsg import _PAGES, to_copy_page  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
@@ -48,19 +49,29 @@ def video_url(outdir: Path, name: str) -> str:
     return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
 
 
-def build_html(video_url: str, lead: str, copy_text: str) -> str:
-    esc = html.escape(copy_text).replace("\n", "<br>")
+def build_html(video_url: str, copy_url: str, lead: str) -> str:
+    """推送正文：一个下载按钮 + 一个复制页按钮。
+
+    **文案本身不印在这儿。**知识帖那边早就是这么做的——文案走独立的复制页
+    （`render/pushmsg.py` 的 `to_copy_page`，真按钮 + JS + 「已复制」提示），
+    推送里只放链接。把整段文案塞进推送正文，读者只能长按选，选不干净；
+    而且当初就是这么干，才出过「同一份文案印了两遍」那次。
+    """
+    def btn(url: str, text: str, bg: str, fg: str = "#fff") -> str:
+        return (f'<a href="{url}" style="display:inline-block;background:{bg};'
+                f'color:{fg};text-decoration:none;padding:13px 24px;'
+                f'border-radius:999px;font-weight:700;margin:0 10px 12px 0">'
+                f'{text}</a>')
+
     return f"""<div style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;
  line-height:1.75;color:#1f2a24;max-width:640px">
-<p style="margin:0 0 14px">{html.escape(lead)}</p>
-<p style="margin:0 0 20px">
-  <a href="{video_url}" style="display:inline-block;background:#0f7a52;color:#fff;
-   text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:700">
-   ▶ 下载竖版成片（1080×1920）</a>
+<p style="margin:0 0 16px">{html.escape(lead)}</p>
+<p style="margin:0 0 6px">
+{btn(video_url, "▶ 下载竖版成片", "#0f7a52")}
+{btn(copy_url, "📋 打开复制页", "#c6f65a", "#062018")}
 </p>
-<p style="margin:0 0 8px;color:#5b6b63;font-size:14px">长按下面整段复制，直接发小红书：</p>
-<div style="background:#f2f6f4;border:1px solid #d8e4de;border-radius:12px;
- padding:16px 18px;font-size:15px;white-space:normal">{esc}</div>
+<p style="margin:0;color:#5b6b63;font-size:14px">
+复制页里标题、正文、置顶评论各有一个按钮，点一下就进剪贴板。</p>
 </div>"""
 
 
@@ -87,10 +98,16 @@ def main() -> int:
     if not copy_text:
         raise SystemExit("文案是空的")
 
+    # 复制页和成片一起落在 outdir 里，由 GitHub Pages 提供——raw 和 jsDelivr
+    # 都按纯文本发 .html，点开是一屏源码，按钮和 JS 都不会生效。
+    (outdir / "copy.html").write_text(to_copy_page(copy_text), encoding="utf-8")
+    copy_url = f"{_PAGES}/{outdir.as_posix()}/copy.html"
+
     url = video_url(outdir, name)
-    body = build_html(url, args.lead, copy_text)
+    body = build_html(url, copy_url, args.lead)
     push(args.title, body, asset_dir=outdir)
-    print(f"已推送：{args.title}\n  成片 {url}\n  文案 {len(copy_text)} 字")
+    print(f"已推送：{args.title}\n  成片 {url}\n  复制页 {copy_url}\n"
+          f"  文案 {len(copy_text)} 字")
     return 0
 
 
