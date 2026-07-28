@@ -52,6 +52,10 @@ on:
         description: "赛果，进标题：赢家在前，如「6-7(3) 6-3 6-4」"
         required: false
         default: "6-7(3) 6-3 6-4"
+      event:
+        description: "赛事与轮次，进标题：如「华盛顿 ATP500 首轮」"
+        required: false
+        default: "华盛顿 ATP500 首轮"
       push_lead:
         description: "推送正文那一句"
         required: false
@@ -227,5 +231,6 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}" \
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
+            --event "${{ github.event.inputs.event }}" \
             --lead "${{ github.event.inputs.push_lead }}" \
             --copy "$COPY"
