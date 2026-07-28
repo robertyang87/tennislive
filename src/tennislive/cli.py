@@ -799,7 +799,15 @@ def cmd_schedule_cards(args) -> int:
 
     from .sources.official_schedule import enrich_official_schedules
 
-    digest.source_status.update(enrich_official_schedules(digest))
+    official = enrich_official_schedules(digest)
+    digest.source_status.update(official)
+    # 官方 OOP 生效没有必须看得见：时间口径全靠它，静默失败会让整份赛程退回
+    # 单源"预计"，而卡上看不出差别。
+    for label, state in official.items():
+        style = "green" if state.startswith("正常") else "yellow"
+        console.print(f"[{style}]官方排期[/{style}] {label} → {state}")
+    if not official:
+        console.print("[yellow]官方排期 无匹配来源，时间仅有聚合源单源[/yellow]")
 
     upcoming = digest.schedule
     if not upcoming:
