@@ -4052,7 +4052,7 @@ def test_历史今天用自己的标题前缀():
 _OTD_IMAGE_TOKEN = {
     "otd-0725": "umag",         # 2021 乌马格首冠
     "otd-0728": "otd-0728",     # 2024-07-28 奥运首战，专属实拍
-    "otd-0803": None,           # 巴黎决赛没有可用实拍，见 tournament_story 注释
+    "otd-0803": "otd-0803",     # 2024-08-03 领奖台，WTA 图库（非自由授权，见 credits）
     "otd-0820": "cincinnati",   # 2023 辛辛那提决赛
     "otd-0909": "usopen",       # 2023 美网决赛
 }
