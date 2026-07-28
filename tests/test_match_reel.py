@@ -216,3 +216,40 @@ def test_标题默认不带赛事名且别太长():
                    "商竣程复出首战先赢一盘，被 36 岁的锦织圭逆转")
     assert "ATP500" not in got
     assert len(got) <= 40, f"{len(got)} 字，太长：{got}"
+
+
+def test_复制页探活要认内容不能只认200(monkeypatch):
+    """**只查 200 是不够的**：这个 URL 上一版就存在，Pages 还没重新发布时照样
+    立刻返回 200，探活一次就过、推送照发，人点开复制到的还是上一版的标题和正文
+    （2026-07-28 真出过）。「打得开」是信号，「内容是这一版」才是产物。"""
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    class Resp:
+        status_code = 200
+
+        def __init__(self, text):
+            self.text = text
+
+    calls = {"n": 0}
+    stale = '<textarea id="title">他等到第七个破发点才赢</textarea>'
+    fresh = '<textarea id="title">7.28 赛场之上 | 谁赢了</textarea>'
+
+    def fake_get(url, **kw):
+        calls["n"] += 1
+        return Resp(stale if calls["n"] == 1 else fresh)
+
+    monkeypatch.setattr(push_reel.requests, "get", fake_get)
+    monkeypatch.setattr(push_reel.time, "sleep", lambda _s: None)
+    push_reel.wait_for_copy_page("https://p/copy.html", "7.28 赛场之上 | 谁赢了")
+    assert calls["n"] == 2, "第一次拿到的是旧内容，必须继续等"
+
+    calls["n"] = 0
+    monkeypatch.setattr(push_reel.requests, "get", lambda url, **kw: Resp(stale))
+    try:
+        push_reel.wait_for_copy_page("https://p/copy.html", "永远不会出现的标题",
+                                     attempts=2, delay=0)
+    except SystemExit as exc:
+        assert "上一版" in str(exc) or "没等到这一版" in str(exc)
+    else:                                    # 一直是旧内容就不能放行
+        raise AssertionError("旧内容也放过去了")
