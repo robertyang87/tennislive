@@ -64,10 +64,22 @@ jobs:
       - name: 装中文字体（封面和字幕都要）
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
 
+      # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
+      # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
+      # 64MB 源片、合完音之后才死——白跑一分半。
       - name: 装依赖
         run: |
-          pip install -q -e .
+          pip install -q -e ".[webrender]"
           pip install -q edge-tts yt-dlp
+
+      - name: 缓存 Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+
+      - name: 装 Chromium
+        run: python -m playwright install --with-deps chromium
 
       - name: 算出目录
         id: paths
