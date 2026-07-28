@@ -4054,6 +4054,7 @@ _OTD_IMAGE_TOKEN = {
     "otd-0728": "otd-0728",     # 2024-07-28 奥运首战，专属实拍
     "otd-0803": "otd-0803",     # 2024-08-03 领奖台，WTA 图库（非自由授权，见 credits）
     "otd-0820": "cincinnati",   # 2023 辛辛那提决赛
+    "otd-0907": "otd-0907",     # 2024-09-07 决赛比赛中，Commons CC0（自由授权）
     "otd-0909": "usopen",       # 2023 美网决赛（仍是场馆空镜，待换真图）
     "otd-0910": "otd-0910",     # 2022-09-10 美网颁奖，WTA 图库（非自由授权，见 credits）
 }
@@ -4104,3 +4105,27 @@ def test_今天这条纪念日的图对得上它讲的那一天():
     assert "first round" in entry["description"]
     assert "2024 Paris Olympics" in entry["description"]
     assert entry["date_original"].startswith("2024-07-28")
+
+
+def test_每条纪念日配图都要明说是不是自由授权():
+    """权利检验靠 license_free 这个字段，缺了就等于没标。
+
+    已建的四条里两条是 Getty via WTA（非自由），两条是 Commons CC0 / CC BY-SA。
+    混着用没问题，但**每一条都必须自己说清楚是哪一种**——发布前的人工检验
+    要按这个字段筛，字段缺失比标错更危险：它会被当成"没问题"。
+    """
+    from tennislive.render.tournament_story import STORIES, TRIVIA_ASSETS
+
+    credits = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))
+    for story in STORIES:
+        if not story.slug.startswith("otd-"):
+            continue
+        name = f"trivia-{story.slug}.jpg"
+        if not (TRIVIA_ASSETS / name).exists():
+            continue
+        entry = credits.get(name, {})
+        assert isinstance(entry.get("license_free"), bool), (
+            f"{name} 没有明说 license_free，人工权利检验筛不到它"
+        )
+        if entry["license_free"] is False:
+            assert entry.get("rights_note"), f"{name} 是非自由授权却没写 rights_note"

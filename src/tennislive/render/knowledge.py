@@ -61,6 +61,7 @@ def knowledge_title(story: TournamentStory, digest: Digest) -> str:
         "otd-0728": "郑钦文那天一局没丢",
         "otd-0803": "郑钦文巴黎摘金那天",
         "otd-0820": "3小时49分的决赛",
+        "otd-0907": "萨巴伦卡的第一座美网",
         "otd-0909": "19岁高芙主场圆梦",
         "otd-0910": "斯瓦泰克第一座美网",
         "scoring-history": "网球为什么是15、30、40？",
