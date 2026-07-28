@@ -2,6 +2,8 @@ import html
 import re
 from pathlib import Path
 
+import pytest
+
 from tennislive.render.tournament_story import STORIES, find_story_by_slug
 from tennislive.video.explainer import (
     H,
@@ -187,12 +189,15 @@ def test_card_stays_3x4_while_video_canvas_is_9x16():
     # The image/card keeps the brand 3:4; only the video canvas is 9:16.
     assert (W, H) == (1080, 1440)  # card / image 3:4 (unchanged)
     assert (VIDEO_W, VIDEO_H) == (1080, 1920)  # video 9:16
-    # No image -> the schematic diagram is the hero (never a text-only slide).
-    seg = ExplainerSegment("mechanism", "技术原理", "起<点>", "旁白仅配音")
+    # No photo -> the beat's own schematic is the hero (never a text-only slide).
+    # 这一屏原来不带 diagram，靠渲染时的兜底补上鹰眼那张图，断言写的也是
+    # 「三角测量」——等于把那个 bug 当成期望行为记了下来。现在显式给一张。
+    seg = ExplainerSegment("mechanism", "技术原理", "起<点>", "旁白仅配音",
+                           diagram='<svg id="schematic"></svg>')
     doc = _slide_html(1, seg)  # index 1 = first beat; index 0 is the cover
     assert "① 技术原理" in doc
     assert "起&lt;点&gt;" in doc and "<点>" not in doc
-    assert "<svg" in doc and "三角测量" in doc  # original schematic, not text-only
+    assert "<svg" in doc and 'id="schematic"' in doc  # its own, not text-only
     assert "width:1080px;height:1440px" in doc  # the card is 3:4
 
 
@@ -219,7 +224,42 @@ def test_every_story_has_a_renderable_script():
         assert len(segments) >= 3
         assert all(s.narration.strip() for s in segments)
         # Never a text-only beat: a real photo, or an original diagram.
-        assert all(s.image or s.diagram or s.kind == "mechanism" for s in segments)
+        # 这里原来给 `kind == "mechanism"` 开了个口子，靠渲染时的兜底补图——
+        # 而那个兜底摆的是**鹰眼**那张示意图。口子和兜底一起去掉了，见
+        # `test_缺图的那一屏要报错而不是套用别的选题的图`。
+        assert all(s.image or s.diagram for s in segments), (
+            f"{story.slug} 有既没图也没示意图的一屏"
+        )
+
+
+def test_缺图的那一屏要报错而不是套用别的选题的图():
+    """一屏既没配图也没画示意图时，渲染器原来会**悄悄**摆上鹰眼那张示意图。
+
+    起草外卡那条时中过：封面渲出来是一张「8–12 台摄像机 · 三角测量落点」的网球场
+    测线图，和外卡毫无关系，而且一声不吭。已发的十四条每屏都自带图或示意图，
+    所以这个兜底从来没在产物里露过面——正因如此也没人发现它指着别的选题。
+
+    和「补位的静音盖住真音轨」「-filter_complex 不打标签就静默失效」同一种毛病：
+    **兜底出事的时候不吭声。** 缺图就停下来说缺图。
+    """
+    from tennislive.video.explainer import ExplainerSegment
+
+    naked = ExplainerSegment(
+        kind="cause", label="试", title="既没图也没示意图",
+        narration="随便一句", image="", diagram="",
+    )
+
+    with pytest.raises(ValueError, match="既没有 image 也没有 diagram"):
+        _slide_html(0, naked)
+
+    # 有示意图就该照常渲，而且渲的是它自己那张，不是鹰眼那张。
+    ok = ExplainerSegment(
+        kind="cause", label="试", title="自带示意图",
+        narration="随便一句", image="", diagram='<svg id="mine"></svg>',
+    )
+    doc = _slide_html(0, ok)
+    assert 'id="mine"' in doc
+    assert "三角测量落点" not in doc
 
 
 def test_每个成稿选题都要有可查证的图片出处():
