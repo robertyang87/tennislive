@@ -159,3 +159,16 @@ def has_estimated_times(displays: Iterable[str]) -> bool:
 def has_next_day_times(displays: Iterable[str]) -> bool:
     """页脚那句「+1 为次日」要不要出现。"""
     return any("+1 " in text or "+2 " in text for text in displays)
+
+
+NOT_BEFORE_PREFIX = "不早于"
+
+
+def has_not_before_times(displays: Iterable[str]) -> bool:
+    """顶栏那句「不早于＝要等前一场打完」要不要出现。
+
+    官方 OOP 上一节里只有首场是 `Starts At`，其余都是 `Not Before`——所以这条
+    多数时候都会出现。它仍然要按实际有没有来判断：一页全是各场地首场时印出来
+    就是句废话，而废话会把真正要看的那几条挤掉。
+    """
+    return any(text.startswith(NOT_BEFORE_PREFIX) for text in displays)
