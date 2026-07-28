@@ -116,21 +116,34 @@ def build_digest(
 
     # 用世界排名补全球员 rank（供冷门检测/评分/排名卡使用），失败不阻塞
     try:
-        from .sources.rankings import fetch_rankings, norm_name, rank_map
+        from .sources.rankings import fetch_rankings
 
         rankings = fetch_rankings()
         if not rankings.is_empty:
             digest.rankings = rankings
-            # 按巡回赛分表查找，避免 ATP/WTA 同名误匹配
-            lookups = {"ATP": rank_map(rankings.atp), "WTA": rank_map(rankings.wta)}
-            for m in digest.results + digest.live + digest.schedule:
-                lookup = lookups.get(m.tour.value, {})
-                for p in m.home + m.away:
-                    if p.rank is None:
-                        key = norm_name(p.name)
-                        if key in lookup:
-                            p.rank = lookup[key]
+            apply_rankings(rankings, digest.results + digest.live + digest.schedule)
     except Exception as e:  # noqa: BLE001
         logger.warning("排名补全失败（不影响内容生成）: %s", e)
 
     return digest
+
+
+def apply_rankings(rankings, matches: list[Match]) -> None:
+    """把世界排名补进球员的 ``rank``（供冷门检测/评分/排名卡使用）。
+
+    单独成函数是因为**追加进 digest 的场次也得补一次**：赛程卡把北京次日
+    凌晨的场次补进 ``digest.schedule``，那批是在 build_digest 之后追加的，
+    漏了回填就会出现「郑钦文没有排名」——名字后面空着，排序时也拿不到
+    「top 选手」这一维。
+    """
+    from .sources.rankings import norm_name, rank_map
+
+    # 按巡回赛分表查找，避免 ATP/WTA 同名误匹配
+    lookups = {"ATP": rank_map(rankings.atp), "WTA": rank_map(rankings.wta)}
+    for m in matches:
+        lookup = lookups.get(m.tour.value, {})
+        for p in m.home + m.away:
+            if p.rank is None:
+                key = norm_name(p.name)
+                if key in lookup:
+                    p.rank = lookup[key]

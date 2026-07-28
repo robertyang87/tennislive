@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>7.28 今日赛程 | 郑钦文凌晨1点战伊埃拉</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>🎾 ATP500 华盛顿公开赛（硬地）
+男单·第二轮 · 武基奇 vs 穆塞蒂 · 06:00 后*
+男单·第一轮 · 小马丁·达姆 vs 谢尔顿 · 预计 02:30* · Stadium
+男单·第一轮 · 德米纳尔 vs 西西帕斯 · 预计 06:00* · Stadium
+
+🎾 WTA500 华盛顿公开赛（硬地）
+女单·第二轮 · 克鲁格 vs 大坂直美 · 07:30 后*
+女单·第二轮 · 纳瓦罗 vs 科恰雷托 · 07:30 后*
+🇨🇳 女单·第一轮 · 帕雷哈 vs 王欣瑜 · 预计 23:00* · John Harris
+女单·第一轮 · 布克沙 vs 波利娜·库德梅托娃 · 预计 23:00* · Grandstand
+🇨🇳 女单·第一轮 · 伊埃拉 vs 郑钦文 · 预计 01:00* · Stadium
+
+🎾 ATP250 洛斯卡沃斯站（硬地）
+男单·第一轮 · 岛袋将 vs 帕切科·门德斯 · 预计 09:00* · Estadio Alejandro Burillo
+男单·第一轮 · 梅奥 vs 达克沃斯 · 预计 09:00* · Cancha 1
+男单·第一轮 · 库阿梅 vs 温特 · 预计 09:00* · Grandstand
+
+🎾 WTA250 孟菲斯精英赛（硬地）
+🇨🇳 女单·第一轮 · 王曦雨 vs 麦克纳莉 · 预计 23:00* · Court 3
+女单·第一轮 · 亚历山德罗娃 vs 柳托娃 · 预计 23:00* · Court 1
+女单·第一轮 · 森梅兹 vs 布雷斯 · 预计 23:00* · Court 2
+🇨🇳 女单·第一轮 · 马烨欣 vs 比勒尔 · 预计 07:30* · Court 2
+女单·第一轮 · 萨拉苏亚 vs 凯斯勒 · 预计 07:30* · Court 1
+
+带 * 为按同赛事场序推算的预计时间，以官方排期为准；时间为北京时间。
+
+#网球 #网球时差 #今日赛程 #ATP #WTA</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

@@ -56,6 +56,20 @@ VENUES = [
     # 自己就把身份说清楚了。
     ("washington-fitzgerald-tennis-center.jpg",
      "File:Karatsev–Tiafoe in stadium at the 2023 DC Open 01.jpg", None),
+    # 孟菲斯（2026 年新设的 WTA250，在 Leftwich Tennis Center）：球场本身在
+    # Commons 上是真空——"Leftwich Tennis Center" 与 "Memphis Tennis Center"
+    # 两条查询都是 0 命中，而同一批其他查询各返回 25 条，不是限流。最后是在
+    # WTA 官方图库里找到的，见 OFFICIAL_VENUES。
+    #
+    # 中途走过两条弯路，都留在这儿免得再走一遍：城市夜景天际线（对题但不是
+    # 球场）；赛事官网票务页那三张 Stadium 图**全是效果图不是实拍**——横幅上
+    # 的字是糊的（TOPNO / MEMPH / TENOS GEHPLIS），观众是重复贴图。带假文字
+    # 的渲染图比一张真实城市照更糟。
+    ("memphis-leftwich-tennis-center.jpg", None, None),
+    # 洛斯卡沃斯 ATP250：球场（Delmar 国际学校）Commons 上没有，用地标
+    # 埃尔阿尔科海蚀拱。
+    ("los-cabos-el-arco.jpg",
+     "File:El Arco, Cabo San Lucas, M\u00e9xico, 2024-12-22, DD 03.jpg", None),
     # 加拿大站：原来钉的 File:RogersCup2011-2.jpg 名字里带赛事，画面却是场外
     # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
     # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央
@@ -98,6 +112,14 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "memphis-leftwich-tennis-center.jpg": {
+        "title": "Leftwich Tennis Center \u00b7 Courts\uff08WTA \u5b98\u65b9\u56fe\u5e93\uff09",
+        "license": "unverified \u00b7 \u8d5b\u4e8b\u5b98\u65b9\u5a92\u4f53",
+        "artist": "WTA / Memphis Classic",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/03/02/"
+                "b47c47ce-33d6-4eb5-bc1a-a0e9bdd64ee6/"
+                "Marked_Leftwich-Tennis-Center_Courts.jpg",
+    },
     "estoril-centre-court.jpg": {
         "title": "Millennium Estoril Open · estadio2",
         "license": "unverified · 赛事官方媒体",
