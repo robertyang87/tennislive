@@ -112,13 +112,28 @@ def probe_size(path: Path) -> tuple[int, int]:
 # client 走的是不同的接口，被挡的程度不一样，所以按梯子一档档试，**每一档的
 # 报错都打出来**：一句笼统的「下载失败」没法区分「这条视频不存在」「这台机器
 # 被挡了」「格式选错了」。
-_CLIENT_LADDER = [
+#
+# `web` / `mweb` / `tv` 这几档要 GVS PO token 才放行，装了 bgutil 的
+# provider 之后 yt-dlp 会自己去取——所以有 provider 的时候把它们排在前面，
+# 没有的话它们会最先失败、白等一轮，就排到后面去。
+_POT_FIRST = [
+    ("web(+POT)", ["--extractor-args", "youtube:player_client=web"]),
+    ("mweb(+POT)", ["--extractor-args", "youtube:player_client=mweb"]),
+    ("tv(+POT)", ["--extractor-args", "youtube:player_client=tv"]),
+]
+_PLAIN = [
     ("默认", []),
     ("android_vr", ["--extractor-args", "youtube:player_client=android_vr"]),
     ("tv_simply", ["--extractor-args", "youtube:player_client=tv_simply"]),
     ("web_embedded", ["--extractor-args", "youtube:player_client=web_embedded"]),
     ("android+ios", ["--extractor-args", "youtube:player_client=android,ios"]),
 ]
+
+
+def _ladder() -> list[tuple[str, list[str]]]:
+    if os.environ.get("YT_POT_PROVIDER", "").strip():
+        return _POT_FIRST + _PLAIN
+    return _PLAIN + _POT_FIRST
 
 
 def download(url: str, dest: Path) -> Path:
@@ -145,7 +160,7 @@ def download(url: str, dest: Path) -> Path:
         print(f"[cookies] 用 {jar}")
 
     failures: list[str] = []
-    for label, extra in _CLIENT_LADDER:
+    for label, extra in _ladder():
         proc = subprocess.run(
             [binary, "--js-runtimes", "node", "--no-warnings", "-f", selector,
              *cookies, *extra, "--merge-output-format", "mp4",
@@ -164,7 +179,7 @@ def download(url: str, dest: Path) -> Path:
         dest.unlink(missing_ok=True)
 
     raise ReelError(
-        f"五种 player client 都下不下来（{url}）。逐条原因：\n  "
+        f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
         + "\n  ".join(failures)
         + "\n\n如果全是 “Sign in to confirm you’re not a bot”，那是**这台机器的 IP "
         "被 YouTube 挡了**，不是视频的问题：把一份登录过的 cookies.txt 存成仓库 "
