@@ -24,6 +24,26 @@ player API），一取媒体就 403；用真 Chromium 打开播放页，页面�
 **每一段的横向中心单独给**（`cx`，0~1 的比例）。防的是那种一方跑到边线外
 接球的镜头：整段用一个中心会把人裁掉半个身子。挑段的时候看着缩略图墙定。
 
+## 慢在哪，要量出来
+
+render 每一步都记时间，末尾按耗时排一张表（`report_timings()`）。这条流水线
+一度在 runner 上跑七分半，我照着直觉猜是 `-preset slow` 太狠——量出来第一名
+是**每段都从第 0 秒解码整条源片**（`-ss` 放在 `-i` 后面）。同一段 19.2s → 6.2s，
+而且那个写法还让跟踪的 `sendcmd` 全部空放（见 `cut_segment`）。
+
+四核沙箱上、67 秒素材、十一段（无旁白，本地取不到 TTS）：
+
+    改前 318.2s                      改后 142.4s
+      分段编码 184.1s  57.9%           烧字幕+成片 71.7s  50.3%
+      烧字幕+成片 69.8s 21.9%          分段编码   59.5s  41.8%
+      跟踪抽帧  53.1s  16.7%           跟踪抽帧    5.5s   3.8%
+
+外加混音那一步（要有旁白才走到，单独量的）20.3s → 1.35s：它产出的是个 m4a，
+却在默认参数下把整条画面重编了一遍。
+
+**成片那一步（preset slow / crf 18）一个字没动**——省时间要从中间产物和重复
+解码上省，不能从最后交出去的那一份上省。
+
 ## 字幕位置沿用解说片那一套
 
 `explainer.py` 里那组常量（上锚、`MarginV=1524`、左右各 150px、字号 68）是
@@ -51,6 +71,8 @@ import re
 import shutil
 import subprocess
 import sys
+import time
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -79,10 +101,51 @@ COVER_SECONDS = 2.6
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
+# crf 17/preset slow，等于把画质编进一个马上要被重编的文件里。成片那一步的参数
+# 没有跟着降。
+PART_PRESET = "medium"
+PART_CRF = "20"
 
 
 class ReelError(RuntimeError):
     pass
+
+
+# 计时 ---------------------------------------------------------------------
+# 「慢在哪」和「做完了」是同一类问题：**要量，不要猜**。之前这条 render 在
+# runner 上跑七分半，我以为瓶颈在 `-preset slow`；量出来第一名是别的（每段都
+# 从头解码整条源片）。所以每一步都记时间，最后按耗时排序打一张表——下次谁再
+# 想优化，先看这张表，别照着直觉改。
+_TIMINGS: list[tuple[str, float]] = []
+
+
+@contextmanager
+def stage(name: str):
+    started = time.perf_counter()
+    try:
+        yield
+    finally:
+        spent = time.perf_counter() - started
+        _TIMINGS.append((name, spent))
+        print(f"    [耗时] {name} {spent:.2f}s", flush=True)
+
+
+def report_timings() -> None:
+    if not _TIMINGS:
+        return
+    total = sum(s for _, s in _TIMINGS)
+    # 同名的步骤（每段切片、每段跟踪）合起来看，不然十一行淹掉重点
+    buckets: dict[str, tuple[int, float]] = {}
+    for name, spent in _TIMINGS:
+        key = name.split("#")[0].strip()
+        count, acc = buckets.get(key, (0, 0.0))
+        buckets[key] = (count + 1, acc + spent)
+    print(f"\n=== 耗时明细（合计 {total:.1f}s，{os.cpu_count()} 核）===")
+    for key, (count, acc) in sorted(buckets.items(), key=lambda kv: -kv[1][1]):
+        share = acc / total * 100 if total else 0
+        times = f" ×{count}" if count > 1 else ""
+        print(f"  {acc:7.1f}s  {share:5.1f}%  {key}{times}")
 
 
 def run(*args: str, quiet: bool = True) -> subprocess.CompletedProcess:
@@ -320,24 +383,38 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
       平滑   —— 质心逐帧跳，直接用就是抽搐
       死区   —— 球在画面中间小幅来回时不该动镜头
       限速   —— 镜头要像摇臂一样慢慢摇，不能追着球甩
+
+    抽帧是**顺序解码 + 按帧号挑**，只在段首寻址一次。原来每个采样点都
+    `cap.set(CAP_PROP_POS_MSEC)` 随机寻址，等于每次都回到关键帧重新解一遍：
+    实测 55 帧要 9.12s，顺序解码 0.81s，**快十一倍**。跳过的帧照样要解码，
+    但解码一帧比重新寻址一次便宜得多。
     """
     import cv2
     import numpy as np
 
     cap = cv2.VideoCapture(str(source))
-    cap.set(cv2.CAP_PROP_POS_MSEC, seg.start * 1000.0)
-    step = 1.0 / TRACK_FPS
+    src_fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    every = max(1, int(round(src_fps / TRACK_FPS)))   # 每隔几帧取一个样
+    step = every / src_fps                            # 样点之间的真实间隔
     half = CROP_W / 2
     lo, hi = half, source_w - half
 
+    # 寻址一次到段首，之后一路 grab()/retrieve()：grab 只解码不转格式，
+    # 跳过的帧走 grab，要用的帧才 retrieve。
+    cap.set(cv2.CAP_PROP_POS_MSEC, seg.start * 1000.0)
+    want = int(math.ceil(seg.length / step))
+
     prev = None
     raw: list[tuple[float, float]] = []
-    t = 0.0
-    while t < seg.length:
-        cap.set(cv2.CAP_PROP_POS_MSEC, (seg.start + t) * 1000.0)
+    for index in range(want):
+        if index:
+            for _ in range(every - 1):
+                if not cap.grab():
+                    break
         ok, frame = cap.read()
         if not ok:
             break
+        t = index * step
         small = cv2.cvtColor(cv2.resize(frame, (480, 270)), cv2.COLOR_BGR2GRAY)
         if prev is not None:
             diff = cv2.absdiff(small, prev)
@@ -347,7 +424,6 @@ def track_x(source: Path, seg: "Segment", source_w: int) -> list[tuple[float, in
                 cx = float((col * np.arange(col.size)).sum() / col.sum())
                 raw.append((t, cx / col.size * source_w))
         prev = small
-        t += step
     cap.release()
 
     if not raw:
@@ -405,7 +481,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
         x = max(0, min(x, source_w - CROP_W))
-        path = track_x(source, seg, source_w) if seg.track else []
+        with stage("跟踪抽帧"):
+            path = track_x(source, seg, source_w) if seg.track else []
         if path:
             cmds = dest.with_suffix(".cmds")
             cmds.write_text("".join(f"{t:.3f} crop@c x {v};\n" for t, v in path),
@@ -429,18 +506,42 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int) -> Path:
     extra_in = ([] if has_audio else
                 ["-f", "lavfi", "-i",
                  "anullsrc=channel_layout=stereo:sample_rate=48000"])
-    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-i", str(source), *extra_in,
-        "-ss", f"{seg.start:.3f}", "-to", f"{seg.end:.3f}",
-        # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
-        # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
-        "-filter_complex",
-        (chain + "[vout]") if seg.fit == "contain" else f"[0:v]{chain}[vout]",
-        "-shortest", "-map", "[vout]",
-        "-map", "0:a:0" if has_audio else "1:a:0",
-        "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "160k",
-        str(dest))
+    with stage("分段编码"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
+            # 「放前面只能定位到关键帧，可能偏几百毫秒」——那是 ffmpeg 2.1 之前的
+            # 老规矩了。现在输入寻址默认 accurate_seek：跳到前一个关键帧，再解码
+            # 丢弃到精确时刻，**帧是同一帧**（两种写法出的首帧逐像素比对，平均差
+            # 0.0）。差的是时间：放后面是从第 0 秒开始解码整条源片再把前面丢掉，
+            # 183s 那一段光解码就白跑三分钟的画面。实测同一段 19.2s → 6.2s。
+            # 十一段起点加起来一千多秒的 1080p 解码，这是本条流水线第一大头。
+            #
+            # **它顺带修好了跟踪**。`sendcmd` 的时刻走的是滤镜图上的时间；输出
+            # 寻址时整条源片都要过滤镜图，于是 0.2~11.8s 这些命令在**被丢掉的
+            # 那段画面里**就全部发完了，真正留下来的帧拿到的是最后一条命令。
+            # 量过：142.5s 那一段，输出的每一帧裁切位置都卡在 x=802（末条命令
+            # 是 803），从头到尾一动不动；改成输入寻址后逐帧模板匹配，实测位置
+            # 和 sendcmd 对得上（稳定处误差 0~1px）。日志照样打「59 个点，
+            # 横摇 977px」——**算了、打印了、没生效**，和「补位静音盖住真音轨」
+            # 是同一种病：出事的时候不吭声。
+            "-ss", f"{seg.start:.3f}", "-i", str(source), *extra_in,
+            # 时长而不是 `-to`：`-ss` 变成输入选项之后输出时间轴从 0 起算，
+            # 再写 `-to seg.end` 会把整段截没。
+            "-t", f"{seg.length:.3f}",
+            # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
+            # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
+            "-filter_complex",
+            (chain + "[vout]") if seg.fit == "contain" else f"[0:v]{chain}[vout]",
+            "-shortest", "-map", "[vout]",
+            "-map", "0:a:0" if has_audio else "1:a:0",
+            # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
+            # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
+            # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
+            # 成片那一步的参数没有动。
+            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "160k",
+            str(dest))
     return dest
 
 
@@ -465,15 +566,16 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     # 底图**不要裁 608 再放大**。那是把 1080p 里三分之一的宽度拉到 1080 宽——
     # 放大 1.78 倍，糊得一眼能看出来。改成整幅缩到 1080 宽（是缩小），
     # 两侧用同一帧放大模糊垫满：清晰度立刻不一样，人也不会被裁掉。
-    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
-        "-filter_complex",
-        f"[0:v]split=2[bg][fg];"
-        f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-        f"crop={VIDEO_W}:{VIDEO_H},boxblur=46:2,eq=brightness=-0.22[bgb];"
-        f"[fg]scale={VIDEO_W}:-2:flags=lanczos[fgs];"
-        f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2",
-        "-q:v", "2", str(grab))
+    with stage("封面抓帧"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
+            "-filter_complex",
+            f"[0:v]split=2[bg][fg];"
+            f"[bg]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},boxblur=46:2,eq=brightness=-0.22[bgb];"
+            f"[fg]scale={VIDEO_W}:-2:flags=lanczos[fgs];"
+            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2",
+            "-q:v", "2", str(grab))
 
     lines = "".join(
         f"<div>{line.strip()}</div>"
@@ -510,7 +612,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
     page_file = dest.parent / "_cover.html"
     page_file.write_text(html, encoding="utf-8")
     still = dest.parent / "_cover.jpg"
-    with sync_playwright() as pw:
+    with stage("封面截图"), sync_playwright() as pw:
         # 先让 playwright 自己找（CI 上装在它的默认位置）；找不到再回退到
         # 显式路径（沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的目录带版本号，
         # playwright 自己对不上）。反过来写就会像这次一样：CI 上直接
@@ -527,12 +629,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
         page.screenshot(path=str(still), type="jpeg", quality=95)
         browser.close()
 
-    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-loop", "1", "-i", str(still), "-f", "lavfi",
-        "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
-        "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS},setsar=1",
-        "-c:v", "libx264", "-preset", "slow", "-crf", "17", "-pix_fmt", "yuv420p",
-        "-c:a", "aac", "-b:a", "160k", "-shortest", str(dest))
+    with stage("封面编码"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-loop", "1", "-i", str(still), "-f", "lavfi",
+            "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+            "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS},setsar=1",
+            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "160k", "-shortest", str(dest))
     return dest
 
 
@@ -594,17 +698,19 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     outdir.mkdir(parents=True, exist_ok=True)
     source = source_override or (outdir / "source.mp4")
     if not source.is_file():
-        source = download(spec["source_url"], source)
+        with stage("下载源片"):
+            source = download(spec["source_url"], source)
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
     # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
     audio = spec.get("source_audio")
     if audio and not _has_audio(source):
         merged = outdir / "source_av.mp4"
         if not merged.is_file():
-            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-i", str(source), "-i", str(Path(audio)),
-                "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
-                "-c:a", "aac", "-b:a", "192k", "-shortest", str(merged))
+            with stage("合原声"):
+                run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-i", str(source), "-i", str(Path(audio)),
+                    "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy",
+                    "-c:a", "aac", "-b:a", "192k", "-shortest", str(merged))
         print(f"[audio] 合上原声 {audio}")
         source = merged
 
@@ -622,6 +728,19 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
 
+    # 缺 cv2 要**在这儿**报，不要等到第一段切片。跟踪合进来的那次 render 就是
+    # 下完 64MB 源片、合完原声、渲完封面之后才死在 `import cv2` 上——和当初
+    # playwright 那次一模一样的浪费。用到跟踪就先验一下。
+    if any(seg.track for seg in segments):
+        try:
+            import cv2  # noqa: F401,PLC0415
+        except ImportError as exc:  # pragma: no cover - 环境问题
+            raise ReelError(
+                "spec 里有段要跟踪裁切，但这台机器没有 cv2。"
+                '装：pip install -e ".[visualqa]"；'
+                "或者把这些段的 track 置为 false（画面退回固定中心）。"
+            ) from exc
+
     parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
@@ -631,11 +750,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
                        encoding="utf-8")
     silent = outdir / "_video.mp4"
-    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-f", "concat", "-safe", "0", "-i", str(listing),
-        "-c", "copy", str(silent))
+    with stage("拼接"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "concat", "-safe", "0", "-i", str(listing),
+            "-c", "copy", str(silent))
 
-    voices = synthesize(segments, outdir, voice, rate)
+    with stage("TTS 合成"):
+        voices = synthesize(segments, outdir, voice, rate)
 
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
@@ -661,42 +782,53 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
-    if filters:
-        # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
-        # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
-        # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
-        chain = ";".join(filters)
-        names = "".join(f"[v{i}]" for i, seg in enumerate(segments)
-                        if seg.narration.strip())
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), *mix_inputs,
-            "-filter_complex",
-            f"[0:a]volume={BED_LOUD}[bed];{chain};"
-            f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
-            f"[voice]asplit=2[vk][vm];"
-            f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
-            f"attack=15:release=450:makeup=1[duck];"
-            f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
-            "-map", "0:v:0", "-map", "[out]",
-            "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-            "-shortest", str(mixed))
-    else:
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k", str(mixed))
+    with stage("混音"):
+        if filters:
+            # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
+            # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
+            # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
+            chain = ";".join(filters)
+            names = "".join(f"[v{i}]" for i, seg in enumerate(segments)
+                            if seg.narration.strip())
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(silent), *mix_inputs,
+                "-filter_complex",
+                f"[0:a]volume={BED_LOUD}[bed];{chain};"
+                f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
+                f"[voice]asplit=2[vk][vm];"
+                f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
+                f"attack=15:release=450:makeup=1[duck];"
+                f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+                # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
+                # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
+                # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
+                # 下一步再整个丢掉。（改前/改后的实测见提交说明。）
+                "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+                "-shortest", str(mixed))
+        else:
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(silent), "-vn", "-c:a", "aac", "-b:a", "192k",
+                str(mixed))
 
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
-    run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-        "-i", str(silent), "-i", str(mixed),
-        "-vf", f"subtitles={_escape(ass)}",
-        "-map", "0:v:0", "-map", "1:a:0",
-        "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
-        "-c:a", "copy", "-movflags", "+faststart", str(final))
+    # 成片这一步的画质**不降**：preset slow / crf 18 原样保留。省时间要从
+    # 中间产物和重复解码上省，不能从最后交出去的这一份上省。
+    with stage("烧字幕+成片"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(silent), "-i", str(mixed),
+            "-vf", f"subtitles={_escape(ass)}",
+            "-map", "0:v:0", "-map", "1:a:0",
+            "-c:v", "libx264", "-preset", "slow", "-crf", "18",
+            "-pix_fmt", "yuv420p",
+            "-c:a", "copy", "-movflags", "+faststart", str(final))
 
     for junk in list(outdir.glob("part_*.mp4")) + [listing, silent, mixed,
                                                    outdir / "_cover_frame.jpg"]:
         junk.unlink(missing_ok=True)
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
+    report_timings()
     return final
 
 
