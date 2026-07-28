@@ -981,6 +981,38 @@ STORIES = STORIES + (
         source_label="ATP 官方档案",
         source_url="https://en.wikipedia.org/wiki/2021_Croatia_Open_Umag",
     ),
+    # 配图是这条自己那天的实拍：Commons 上传者写明「first round match against
+    # Sara Errani at the 2024 Paris Olympics」，EXIF 时间 2024-07-28 14:27——
+    # 时间/地点/人物/事件四要素由来源和文件自己写死，不靠看图推断。画面里
+    # 场边板上的「2024」和五环还在，属于「能自证的元素比看着像值钱」。
+    _trivia_story(
+        slug="otd-0728",
+        title="6-0、6-0",
+        subtitle="历史上的今天 · 7 月 28 日",
+        identity="2024 · 郑钦文奥运首战",
+        chips=("历史上的今天", "2024", "巴黎"),
+        hero=(
+            "2024 年的今天，郑钦文在罗兰·加洛斯打出 6-0、6-0——"
+            "她那届奥运，是从一场双蛋开始的。"
+        ),
+        facts=(
+            "首轮对手埃拉尼是前世界前十，那天一局没拿到。",
+            "头两场比赛加起来，她只丢了六局。",
+            "六天后的同一片红土，她拿到亚洲第一块奥运网球单打金牌。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-07-28", player="郑钦文", age="21 岁",
+                headline="奥运首战 6-0、6-0",
+                detail="六天之后，同一片红土上换成了金牌。",
+                source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Kuberzog / Wikimedia Commons · CC BY-SA 4.0",
+        source_label="奥运官方档案",
+        source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
+    ),
     _trivia_story(
         slug="otd-0803",
         title="巴黎的金牌",
@@ -1001,7 +1033,12 @@ STORIES = STORIES + (
                 source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
             ),
         ),
-        image_keys=("canada",),
+        # 这里原来兜底到蒙特利尔的球场空镜——讲巴黎奥运配加拿大站，正是
+        # 「讲法网配温网草地」那条错误。Commons 三个查法（按分类、按对手、
+        # 按领奖）都证实没有决赛或领奖的实拍，所以**不用近似照片顶替**：
+        # image_keys 留空 = 没有专属图就不参选，让它在选题台账里显性缺席，
+        # 而不是带着错图上场。决赛图去 WTA photoresources 找，8/3 之前补上。
+        image_keys=(),
         source_label="奥运官方档案",
         source_url="https://en.wikipedia.org/wiki/Tennis_at_the_2024_Summer_Olympics_%E2%80%93_Women%27s_singles",
     ),
@@ -2528,11 +2565,16 @@ def story_ranking(digest: Digest) -> list[dict]:
         return [r for r in records if r["bucket"] == bucket]
 
     anniversaries = sorted(picked("anniversary"), key=lambda r: order_of[r["story_slug"]])
-    pinned = [
-        by_slug[slug]
-        for slug in sorted(pinned_slugs, key=lambda s: order_of[s])
-        if by_slug[slug]["bucket"] != "anniversary"
-    ]
+    # 当天已定的故事照样参选，**即使它今天本来会落选**——这是原有的同日重跑
+    # 幂等行为，不能因为重算而换卡。分档改标成 pinned（reason 留着），
+    # 否则台账里会出现「excluded 却有名次」这种自相矛盾的行。
+    pinned = []
+    for slug in sorted(pinned_slugs, key=lambda s: order_of[s]):
+        record = by_slug[slug]
+        if record["bucket"] == "anniversary":
+            continue
+        record["bucket"] = "pinned"
+        pinned.append(record)
     fresh = sorted(
         picked("fresh"),
         key=lambda r: (-r["score"], -r["heat"], order_of[r["story_slug"]]),

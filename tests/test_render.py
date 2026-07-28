@@ -3965,7 +3965,11 @@ def test_知识帖要记下排序后的完整候选和得分(tmp_path, monkeypat
     assert dropped, "应当有落选候选"
     assert all(r.get("reason") for r in dropped)
     other_days = [
-        r for r in dropped if r["story_slug"].startswith("otd-") and r["story_slug"] != "otd-0725"
+        r
+        for r in dropped
+        if r["story_slug"].startswith("otd-")
+        and r["story_slug"] != "otd-0725"
+        and "配图" not in r["reason"]
     ]
     assert other_days and all("正日子" in r["reason"] for r in other_days)
 
@@ -4024,3 +4028,78 @@ def test_daily工作流会把没成稿的纪念日报出来():
     assert "story_selection.json" in workflow
     warn_at = workflow.index("anniversary_missed")
     assert "::warning" in workflow[warn_at : warn_at + 400]
+
+
+def test_历史今天用自己的标题前缀():
+    """卡片小标早就写着这四个字，只有标题一直印「网球有故事」——而读者只看标题。"""
+    from tennislive.render.knowledge import knowledge_title, knowledge_wechat_title
+    from tennislive.render.tournament_story import STORIES
+
+    for story in STORIES:
+        if not story.slug.startswith("otd-"):
+            continue
+        mm, dd = int(story.slug[4:6]), int(story.slug[6:])
+        digest = Digest(today=date(2026, mm, dd))
+        title = knowledge_title(story, digest)
+        assert "历史上的今天" in title, story.slug
+        assert "网球有故事" not in title, story.slug
+        assert "历史上的今天" in knowledge_wechat_title(story, digest), story.slug
+
+
+# 每条纪念日的配图必须和它讲的赛事对得上。值是文件名里必须出现的记号；
+# None = 拿不到实拍，宁可不参选也不退回库存空镜。
+# 新增 otd 条目必须同时登记在这儿——漏登记就红，这是故意的。
+_OTD_IMAGE_TOKEN = {
+    "otd-0725": "umag",         # 2021 乌马格首冠
+    "otd-0728": "otd-0728",     # 2024-07-28 奥运首战，专属实拍
+    "otd-0803": None,           # 巴黎决赛没有可用实拍，见 tournament_story 注释
+    "otd-0820": "cincinnati",   # 2023 辛辛那提决赛
+    "otd-0909": "usopen",       # 2023 美网决赛
+}
+
+
+def test_历史今天的图片要和它讲的赛事对得上():
+    """otd-0803 一度配着蒙特利尔的球场照去讲巴黎奥运金牌。
+
+    这和「讲法网配温网草地」是同一个错误，而且落在全年最强的锚点上。
+    """
+    from tennislive.render.tournament_story import STORIES, TRIVIA_ASSETS
+
+    credits = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))
+    slugs = [s.slug for s in STORIES if s.slug.startswith("otd-")]
+    assert set(slugs) == set(_OTD_IMAGE_TOKEN), "新增的纪念日没有登记配图记号"
+
+    for story in STORIES:
+        token = _OTD_IMAGE_TOKEN.get(story.slug)
+        if not story.slug.startswith("otd-"):
+            continue
+        if token is None:
+            assert not story.image.exists(), (
+                f"{story.slug} 声明拿不到实拍，却还是有图 {story.image.name}——"
+                "宁可不参选也不能退回库存空镜"
+            )
+            continue
+        assert token in story.image.name, (
+            f"{story.slug} 讲的赛事和配图 {story.image.name} 对不上"
+        )
+        if story.image.parent == TRIVIA_ASSETS:
+            entry = credits.get(story.image.name)
+            assert entry, f"{story.image.name} 没有 credits 记录"
+            for field in ("license", "artist", "page"):
+                assert entry.get(field), f"{story.image.name} 缺 {field}"
+
+
+def test_今天这条纪念日的图对得上它讲的那一天():
+    """otd-0728 讲 2024-07-28 郑钦文奥运首战，图必须是那场的实拍。"""
+    from tennislive.render.tournament_story import TRIVIA_ASSETS, find_story_by_slug
+
+    story = find_story_by_slug("otd-0728")
+    assert story is not None and story.image.exists()
+    entry = json.loads((TRIVIA_ASSETS / "credits.json").read_text(encoding="utf-8"))[
+        "trivia-otd-0728.jpg"
+    ]
+    # 来源自己把时刻写死了：对手、轮次、赛事、日期都在图注和 EXIF 里
+    assert "Errani" in entry["description"]
+    assert "first round" in entry["description"]
+    assert "2024 Paris Olympics" in entry["description"]
+    assert entry["date_original"].startswith("2024-07-28")
