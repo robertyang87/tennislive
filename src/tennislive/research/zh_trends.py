@@ -342,6 +342,13 @@ _BOARDS: tuple[_Board, ...] = (
     _Board("微信热文榜", "https://tophub.today/n/WnBe01o371",
            "https://tophub.today/", _tophub,
            note="经今日热榜镜像；这是 24h 热文榜，不是微信指数"),
+    # 这两路是顺手加的，走的是小红书那同一个接口，各一行的成本。
+    # 它们各代表中文舆论的另一面：知乎是**讨论**（问题标题本身就带着争议点），
+    # 百度是**搜索**（和 Google 每日热搜同一个性质，但看的是国内的搜法）。
+    _Board("知乎热榜", "https://uapis.cn/api/v1/misc/hotboard?type=zhihu",
+           "https://uapis.cn/", _uapis, note="第三方聚合，非官方接口"),
+    _Board("百度热搜", "https://uapis.cn/api/v1/misc/hotboard?type=baidu",
+           "https://uapis.cn/", _uapis, note="第三方聚合，非官方接口"),
 )
 
 # 拿不到、且**短期内也不打算再试**的源。写进产物里，别让它悄悄消失。
@@ -437,7 +444,7 @@ def fetch_zh_hot(
     拿不到的源照实记进 `status`，包括那两个需要签名的（见 `UNAVAILABLE`）。
     """
     result = ZhTrendResult()
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=len(_BOARDS)) as pool:
         futures = [pool.submit(_fetch_board, b, get, timeout, top) for b in _BOARDS]
         for future in as_completed(futures):
             board, hits, near, scanned, detail = future.result()
