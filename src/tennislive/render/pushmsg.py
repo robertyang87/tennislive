@@ -301,6 +301,60 @@ def copy_page_url(day, *, subdir: str = "schedule") -> str:
     return f"{_PAGES}/output/{day.isoformat()}/{subdir}/copy.html"
 
 
+_COPY_BUTTON_RE = re.compile(
+    r'<a\s+href="(?P<url>[^"]*?/copy\.html)"[^>]*>.*?</a>\s*', re.DOTALL
+)
+
+
+def drop_dead_copy_button(
+    html_body: str, *, probe=None, attempts: int = 3, delay: float = 20.0
+) -> tuple[str, str | None]:
+    """发之前探一次复制页；取不到就把那个按钮从正文里摘掉。
+
+    **这道闸必须装在「发」那一步，不是「渲」那一步。** 第一版我把
+    `live_copy_page_url` 放进了生成流程，结果每次都把按钮拿掉——因为渲染
+    排在提交之前，那一刻 copy.html 还没进仓库，Pages 当然取不到。安全是
+    安全了，可它同时也让**能用的按钮永远出不来**：2026-07-29 蒂姆那条推送
+    就是这么少了按钮的（run 30432435525）。
+
+    `tennislive publish pushplus` 跑在提交之后，那才是链接真正该可达的时刻。
+    放在这里还有一层好处：解说片、知识帖、赛程包共用同一个出口，一处装闸
+    三条线都护住，不用各自记得调一次。
+
+    返回 (正文, 可达的 URL 或 None)，让调用方能如实打印判断依据——只在
+    成功时出声的检查没法证明它真的看过。
+    """
+    match = _COPY_BUTTON_RE.search(html_body)
+    if not match:
+        return html_body, None
+    url = match.group("url")
+    ok = _probe_page(url, attempts=attempts, delay=delay) if probe is None else probe(url)
+    if ok:
+        return html_body, url
+    # 只摘按钮，不动正文：复制页是文案的出口之一，另一个是消息里整段渲染的
+    # 正文（可长按复制）。两个一起丢，这条文案就传不出去了。
+    return _COPY_BUTTON_RE.sub("", html_body, count=1), None
+
+
+def _probe_page(url: str, *, attempts: int = 3, delay: float = 20.0) -> bool:
+    """200 且 Content-Type 是 text/html 才算数——soft-404 会返回 200。"""
+    import time
+
+    for attempt in range(max(1, attempts)):
+        try:
+            response = requests.get(url, timeout=15)
+            if response.status_code == 200 and "text/html" in (
+                response.headers.get("Content-Type", "").lower()
+            ):
+                return True
+            logger.info("复制页暂不可达（HTTP %s）：%s", response.status_code, url)
+        except requests.RequestException as e:  # noqa: PERF203
+            logger.info("复制页探测失败：%s", e)
+        if attempt + 1 < attempts:
+            time.sleep(delay)
+    return False
+
+
 def live_copy_page_url(
     day, *, subdir: str = "schedule", attempts: int = 3, delay: float = 20.0
 ) -> str | None:

@@ -349,7 +349,9 @@ def cmd_explainer(args) -> int:
         explainer_xiaohongshu,
     )
 
-    from .render.pushmsg import live_copy_page_url, to_copy_page
+    # 只要 to_copy_page：复制页可达性由 `publish pushplus` 在提交之后探，
+    # 不在这儿探。见 drop_dead_copy_button 的注释。
+    from .render.pushmsg import to_copy_page
 
     outdir = Path(args.outdir)
     segments = explainer_script(story)
@@ -357,25 +359,12 @@ def cmd_explainer(args) -> int:
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
     (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
 
-    # 复制页的按钮只在链接确认可达时才放进推送：GitHub Pages 只服务 main，
-    # 特性分支上生成的包它取不到，按钮点开就是 404。这道闸赛程那条线早就有
-    # （见 cmd_schedule），解说片这条一直没接上——`live_copy_page_url` 在上面
-    # import 了却没人调用。
-    #
-    # subdir 是 `explainer/<slug>`：copy_page_url 拼的是
-    # output/<date>/<subdir>/copy.html，而解说片的产物就落在这儿。
-    copy_url = live_copy_page_url(d, subdir=f"explainer/{story.slug}")
-    if copy_url:
-        console.print(f"[green]复制页可达[/green] {copy_url}")
-    else:
-        console.print(
-            "[yellow]复制页尚不可达（Pages 只服务 main），本次推送不放该按钮；"
-            "标题与正文已在消息里各自成块，可长按复制[/yellow]"
-        )
+    # 这里**不探**复制页。渲染排在提交之前，那一刻 copy.html 还没进仓库，
+    # Pages 必然取不到——在这儿探等于每次都把按钮拿掉，连 main 上本来能用的
+    # 也一起拿掉（2026-07-29 蒂姆那条推送就是这么少了按钮的，run 30432435525）。
+    # 闸装在 `publish pushplus` 里，那一步跑在提交之后，见 drop_dead_copy_button。
     (outdir / "push.html").write_text(
-        explainer_push_html(
-            segments, outdir, date=d, xhs_text=xhs_text, copy_url=copy_url
-        ),
+        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
         encoding="utf-8",
     )
     (outdir / "wechat_title.txt").write_text(
@@ -1589,7 +1578,7 @@ def cmd_publish_wechat(args) -> int:
 
 def cmd_publish_pushplus(args) -> int:
     from .publish.pushplus import PushPlusError, push
-    from .render.pushmsg import pin_asset_revision
+    from .render.pushmsg import drop_dead_copy_button, pin_asset_revision
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -1613,6 +1602,17 @@ def cmd_publish_pushplus(args) -> int:
 
     html = re.sub(r"\{\{IMAGE:[^}]+\}\}", "", html)
     html = pin_asset_revision(html, os.environ.get("TENNISLIVE_ASSET_REV", ""))
+    # 发之前探一次复制页，取不到就摘掉那个按钮。**这一步跑在提交之后**，
+    # 所以是唯一能给出真实答案的时刻；渲染那会儿文件还没进仓库，探必然失败。
+    # 装在这里，解说片 / 知识帖 / 赛程包三条线一起护住。
+    html, live_copy = drop_dead_copy_button(html)
+    if live_copy:
+        console.print(f"[green]复制页可达[/green] {live_copy}")
+    else:
+        console.print(
+            "[yellow]复制页取不到，本次不放该按钮；正文已整段渲染在消息里，"
+            "可长按复制[/yellow]"
+        )
     try:
         push(title, html, asset_dir=d)
     except PushPlusError as e:
