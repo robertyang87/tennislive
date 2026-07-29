@@ -34,13 +34,23 @@ VENUES = [
     # 地标也不是球场，整页铺开像个火车站。Commons 上也没有中央球场——卡西诺那张
     # 建筑只占中间一条，上下全是天空和草坪。改用赛事官方媒体，见 OFFICIAL_VENUES。
     ("estoril-centre-court.jpg", None, None),
-    # 汉堡：原来是一片屋顶远景，既不是地标也不是球场。罗森布洛姆中央球场那几张
-    # 都不能用——"Centre Court Am Rothenbaum"那张画面是场外纪念品帐篷，顶棚那张
-    # 只见钢索不见球场，球场全景是 2200×590 的宽幅（cover 到 3:4 只剩中间 20%，
-    # 页眉整个糊掉）。改用易北爱乐音乐厅这个地标；注意 File:Elbphilharmonie
-    # Hamburg.jpg 拍于施工期、满屏塔吊，要的是建成后的这张。
-    ("hamburg-skyline.jpg",
-     "File:Elbphilharmonie with Kaiserkai promenade viewed from HafenCity.jpg", None),
+    # 汉堡：地标（易北爱乐）→ Am Rothenbaum 中心球场。这一站被判过两次"没有"，
+    # 两次都是**查法不对**，不是真没有：
+    #
+    # 1. 第一次翻 Commons 关键词搜索，只翻出场外纪念品帐篷 / 只见钢索的顶棚 /
+    #    2200×590 的宽幅。**改成按分类列**（`Category:Am Rothenbaum`，19 个文件）
+    #    立刻看见 `Hamburg Rotherbaum DS148n..DS177n` 一整组球场内景——
+    #    关键词搜索命中的是标题里带词的，这一组标题里一个词都没有
+    # 2. 第二次翻官网的 wp-json `?search=`，德语 Rothenbaum / Center Court /
+    #    Stadion / Anlage 全 0。**search 匹配的是标题/说明**，而赛事站的图叫
+    #    `WIV_7686`、`20260726_1639255` 这种相机原始文件名，再准的词也搜不到。
+    #    要按页把媒体库整个列下来再按尺寸筛（`--wp-list`）
+    #
+    # 选中 DS150n：从底线后方高处沿球场长轴拍，竖切之后近端看台/红土/远端看台
+    # 与顶棚全在框内——正是「竖版卡里的全景取决于拍摄视角」那条要的角度。
+    # 远处大屏写着 HAMBURG 2024，那是汉堡申办 2024 奥运的口号，不是赛事年份
+    # （拍摄时间 2015-08，两者对得上，不矛盾）。
+    ("hamburg-rothenbaum-centre-court.jpg", "File:Hamburg Rotherbaum DS150n.jpg", None),
     # 巴勒莫：原来用的是马西莫剧院这个地标。赛事官网是 WordPress，
     # wp-json 里搜意大利语 "campo centrale" 就出了 Campo-centrale-dallalto——
     # 自上而下拍的中心球场，红土上刷着 PALERMO，两侧看台都在竖切里。

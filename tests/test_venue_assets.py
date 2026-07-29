@@ -300,7 +300,7 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
 
 # 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
 # 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
-LANDMARK_BUDGET = 5
+LANDMARK_BUDGET = 4
 
 
 def test_every_venue_declares_what_kind_of_shot_it_is():
@@ -339,8 +339,8 @@ def test_every_venue_declares_what_kind_of_shot_it_is():
 def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     """能拿到球场照的站，manifest 不许再指回城市地标。
 
-    地标本身是合法的兜底——雅典的帕特农、维罗纳的竞技场、汉堡的天际线，
-    那几站在 Commons 和官方图库里都真的没有球场照。但**兜底一旦生效就很难
+    地标本身是合法的兜底——雅典的帕特农、维罗纳的竞技场，那几站眼下确实还
+    没找到能用的球场照。但**兜底一旦生效就很难
     发现它已经过期了**：洛斯卡沃斯用埃尔阿尔科海蚀拱用了好几版，画面漂亮、
     地点也对，只是它不是球场；直到有人问"为啥不用中心球场"才发现赛事官网
     自己的媒体库里一直挂着 Estadio Alejandro Burillo 的实拍。
@@ -358,6 +358,9 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     court_photos = {
         "los-cabos": "los-cabos-estadio-alejandro-burillo.jpg",
         "memphis": "memphis-leftwich-stadium-court.jpg",
+        # 汉堡这张来自 Commons，但同样容易被换回去：关键词搜索翻不到它
+        # （标题里一个相关词都没有，是按 Category:Am Rothenbaum 列出来的）
+        "hamburg": "hamburg-rothenbaum-centre-court.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 

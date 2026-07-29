@@ -178,6 +178,71 @@ def wordpress_media(site: str, query: str, limit: int = 20) -> list[str]:
     return out
 
 
+def wordpress_list(site: str, *, pages: int = 8, per_page: int = 100,
+                   min_px: int = 1500) -> list[str]:
+    """把整个媒体库按页拉下来，只按**尺寸**筛。
+
+    `?search=` 匹配的是标题/说明，而赛事站的图大多叫 `WIV_7686`、`Frame-1-8`
+    这种相机原始文件名——**再准的德语关键词也搜不到**，于是"这个站没有球场照"
+    的结论是假的。汉堡就是这么被判过一次：Rothenbaum / Center Court /
+    Stadion / Anlage 四个词全 0，实际首页上就挂着球场照。
+    """
+    out = []
+    for page in range(1, pages + 1):
+        url = (f"{site.rstrip('/')}/wp-json/wp/v2/media?per_page={per_page}&page={page}"
+               f"&media_type=image&_fields=source_url,media_details,date")
+        try:
+            items = json.loads(_get(url, tries=2))
+        except (Blocked, ValueError):
+            break
+        if not isinstance(items, list) or not items:
+            break
+        for item in items:
+            detail = item.get("media_details") or {}
+            width, height = detail.get("width") or 0, detail.get("height") or 0
+            if max(width, height) < min_px:
+                continue
+            out.append(f"{width}x{height}  {str(item.get('date'))[:10]}  {item.get('source_url')}")
+    return out
+
+
+def contact_sheet(urls: list[str], out: str, *, cols: int = 6, cell: int = 300) -> str:
+    """把一批候选拼成联系表——**判据是打开看**，而候选常常是几百张。
+
+    一张一张 Read 过去既慢又容易半路放弃（汉堡媒体库一次就列出 196 张）。
+    拼成一张图扫一遍，能一眼排除掉九成的人像特写和拼图，剩下的再单独看原图。
+    格子左上角印序号，对得回 URL 列表。
+    """
+    from PIL import Image, ImageDraw, ImageOps
+
+    Image.MAX_IMAGE_PIXELS = None
+    tiles = []
+    for i, url in enumerate(urls):
+        try:
+            import io
+            img = ImageOps.exif_transpose(Image.open(io.BytesIO(_get(url, tries=2)))).convert("RGB")
+        except Exception as exc:  # noqa: BLE001
+            print(f"  [{i}] 取不到：{str(exc)[:60]}")
+            continue
+        canvas = Image.new("RGB", (cell, cell), (18, 18, 18))
+        img.thumbnail((cell, cell), Image.LANCZOS)
+        canvas.paste(img, ((cell - img.width) // 2, (cell - img.height) // 2))
+        tiles.append((i, canvas))
+
+    if not tiles:
+        return ""
+    rows = (len(tiles) + cols - 1) // cols
+    sheet = Image.new("RGB", (cols * cell, rows * cell), (0, 0, 0))
+    draw = ImageDraw.Draw(sheet)
+    for n, (idx, tile) in enumerate(tiles):
+        x, y = (n % cols) * cell, (n // cols) * cell
+        sheet.paste(tile, (x, y))
+        draw.rectangle([x + 1, y + 1, x + 30, y + 16], fill=(0, 0, 0))
+        draw.text((x + 4, y + 4), str(idx), fill=(255, 220, 60))
+    sheet.save(out, quality=82)
+    return out
+
+
 CHANNELS = {
     "commons": lambda q, site: commons(q),
     "openverse": lambda q, site: openverse(q),
@@ -358,7 +423,31 @@ def main() -> int:
     ap.add_argument("--render", action="append", default=[],
                     help="用 Playwright 打开这个 URL，列出渲染后 DOM 里的大图（SPA 站用）")
     ap.add_argument("--min-px", type=int, default=900)
+    ap.add_argument("--wp-list", action="append", default=[],
+                    help="把这个 WordPress 站的媒体库整个按尺寸列一遍（文件名没意义时用）")
+    ap.add_argument("--sheet", help="从这个文件里读 URL（每行末尾一个），拼成联系表")
+    ap.add_argument("--skip", type=int, default=0)
+    ap.add_argument("--take", type=int, default=60)
+    ap.add_argument("--out", default="candidates.jpg")
     args = ap.parse_args()
+
+    if args.sheet:
+        urls = [ln.split()[-1] for ln in
+                open(args.sheet, encoding="utf-8").read().splitlines() if ln.strip()]
+        urls = urls[args.skip:args.skip + args.take]
+        for i, u in enumerate(urls):
+            print(f"  [{i}] {u}")
+        print(contact_sheet(urls, args.out) or "一张都没取到")
+        return 0
+
+    if args.wp_list:
+        for site in args.wp_list:
+            print(f"\n{'=' * 68}\n### 媒体库 {site}")
+            hits = wordpress_list(site, min_px=args.min_px)
+            print(f"  → {len(hits)} 张 ≥{args.min_px}px")
+            for hit in hits:
+                print(f"     {hit}")
+        return 0
 
     if args.render:
         for url in args.render:
