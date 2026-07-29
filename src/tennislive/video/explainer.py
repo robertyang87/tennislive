@@ -40,6 +40,8 @@ import dataclasses
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
+from ..cdn import jsdelivr_base
+from .subtitle_text import DROP as SUB_DROP, TRIM as SUB_TRIM, drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
 # (1080x1920) with that 3:4 card centred on brand-colour bands.
@@ -2820,7 +2822,13 @@ _SUB_MAX = 16
 _SUB_SOFT = 10
 _SUB_HARD_BREAK = "。！？；…"
 _SUB_SOFT_BREAK = "，、：,"
-_SUB_TRIM = "。，、：；,… "
+# 屏幕上的字幕**不写标点**，规矩和实现全站统一放在 video/subtitle_text.py
+# （账号所有者：「以后字幕里的尽量不要用标点符号，可以切换下一页表达」，
+# 后来又补「字幕要应用到全局里」）。这儿只留本产线自己的两个数。
+_SUB_TRIM = SUB_TRIM
+_SUB_DROP = SUB_DROP
+# 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到邻行去。
+_SUB_MIN = 5
 
 
 _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
@@ -2932,6 +2940,23 @@ def _break_bonus(text: str, i: int) -> int:
     return int(before in _SUB_AFTER) + int(after in _SUB_BEFORE)
 
 
+def _sub_display(chunk: str) -> str:
+    """原文的一段 → 屏幕上真正画出来的那一行。
+
+    先换阿拉伯数字（宽度会变），再去标点——顺序不能反。去标点那一步全站
+    共用，见 `video/subtitle_text.py`。
+
+    算宽度和最后取字**必须用同一份**，否则宽度判断和实际画出来的对不上，
+    正是「一百→100 顶出一行」那次的翻版。
+    """
+    return drop_punctuation(arabic_numerals(chunk))
+
+
+def _sub_len(chunk: str) -> int:
+    """这一段在屏幕上有几个字（去标点之后）。"""
+    return len(_sub_display(chunk))
+
+
 def _best_break(text: str) -> int:
     """一句没有标点的长句该在哪儿断。返回断点字位。
 
@@ -2984,10 +3009,11 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         clauses.append((start, len(text)))
 
     # 2) 超宽的子句自己再断，断在像词语边界的地方。
-    #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字之后的。汉字数字
-    #    大多换完更窄，但「一百」两格换成「100」是 2.03 格——正好把一行顶出边。
+    #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字、去掉标点之后的。
+    #    汉字数字大多换完更窄，但「一百」两格换成「100」是 2.03 格——正好把
+    #    一行顶出边。
     def shown_width(a: int, b: int) -> float:
-        return _sub_width(arabic_numerals(text[a:b].strip(_SUB_TRIM)))
+        return _sub_width(_sub_display(text[a:b]))
 
     pieces: list[tuple[int, int]] = []
     for a, b in clauses:
@@ -3000,20 +3026,28 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         if a < b:
             pieces.append((a, b))
 
-    # 3) 拼行：能装下就接着装，装不下另起一行。
+    # 3) 一个子句就是一行——**不再把两个子句拼进同一行**。
+    #    原来是「能装下就接着装」，于是「先看一眼签表。这是澳网女单签表的」
+    #    这种句号夹在中间的行到处都是。停顿改由换页表达，句号就没地方待了。
+    #
+    #    唯一还合并的情形：短到会一闪而过的那种（「WC」「签表里」两三个字，
+    #    时间轴最短只给 0.4 秒）。往后并一行，中间用空格——空格不是标点。
     lines: list[tuple[int, int]] = []
     for a, b in pieces:
-        if lines and shown_width(lines[-1][0], b) <= _SUB_MAX:
+        too_short = (
+            _sub_len(text[a:b]) < _SUB_MIN                      # 这一句太短
+            or (lines and _sub_len(text[lines[-1][0]:lines[-1][1]]) < _SUB_MIN)
+        )                                                       # 上一行太短
+        if lines and too_short and shown_width(lines[-1][0], b) <= _SUB_MAX:
             lines[-1] = (lines[-1][0], b)
         else:
             lines.append((a, b))
 
     out = []
     for a, b in lines:
-        # 阿拉伯数字只换**显示的那一份**：位置 (a, b) 仍然指向原文，时间轴是拿
-        # 原文的字位去对 WordBoundary 的，换完再算就对不上了。数字比汉字窄，
-        # 换完只会更短，不会顶出边。
-        shown = arabic_numerals(text[a:b].strip(_SUB_TRIM))
+        # 去标点和换阿拉伯数字都只作用在**显示的那一份**：位置 (a, b) 仍然指向
+        # 原文，时间轴是拿原文的字位去对 WordBoundary 的，改完再算就对不上了。
+        shown = _sub_display(text[a:b])
         if shown:
             out.append((a, b, shown))
     return out
@@ -3071,18 +3105,39 @@ def subtitle_cues(
     def at(char_index: int) -> float:
         if not marks:
             return duration * stripped[char_index] / total
-        seconds = marks[0][1]
+        # 落在两个标记之间时**按字数插值**，不是沿用前一个标记的时刻。
+        #
+        # 原来是「取最后一个 idx ≤ char_index 的标记」。字幕改成一句一行之后
+        # 行变密了，同一对标记之间经常落进两三行——它们会拿到**同一个起始时刻**，
+        # 于是两条字幕在时间轴上重叠，libass 会同时画出来。
+        # 边界事件本来就稀（一段 122 字的旁白只有 109 个），指望每行都正好压在
+        # 一个事件上是不现实的；两端有锚点，中间按字数摊开就够准了。
+        prev_idx, prev_sec = 0, marks[0][1]
         for idx, sec in marks:
             if idx > char_index:
-                break
-            seconds = sec
-        return min(seconds, duration)
+                span = idx - prev_idx
+                if span <= 0:
+                    return min(prev_sec, duration)
+                frac = (char_index - prev_idx) / span
+                return min(prev_sec + (sec - prev_sec) * frac, duration)
+            prev_idx, prev_sec = idx, sec
+        # 最后一个标记之后：按剩下的字数一路摊到音频结束。
+        span = len(text) - prev_idx
+        if span <= 0:
+            return min(prev_sec, duration)
+        frac = (char_index - prev_idx) / span
+        return min(prev_sec + (duration - prev_sec) * frac, duration)
 
     cues = []
+    prev_end = 0.0
     for n, (a, b, shown) in enumerate(lines):
-        start = at(a)
+        # 起点不许倒退，也不许压在上一条的显示时间里——插值之后仍然可能出现
+        # 两行落在同一处（同一个标记上多次命中），兜住它。
+        start = max(at(a), prev_end)
         end = at(lines[n + 1][0]) if n + 1 < len(lines) else duration
-        cues.append((offset + start, offset + max(end, start + 0.4), shown))
+        end = max(end, start + 0.4)
+        cues.append((offset + start, offset + end, shown))
+        prev_end = end
     return cues
 
 
@@ -3359,8 +3414,26 @@ def assemble_explainer_video(
         [
             "-filter_complex", ";".join(filters),
             "-map", "[outv]", "-map", "[outa]",
-            "-c:v", "libx264", "-preset", "medium", "-crf", "22",
-            "-c:a", "aac", "-b:a", "160k",
+            # 这条片子是**静止画面的幻灯**：每屏 `-loop 1` 铺一张卡，全片唯一
+            # 在动的像素是烧进去的字幕。所以给 x264 的参数按静图调，不按视频调。
+            #
+            # 量过的一份（wildcard，2 分 56 秒，1080×1920，原来 7.85 MB）：
+            #   视频 5.75 MB / 264 kb/s     音频 2.22 MB / 102 kb/s
+            #
+            # · `-b:a 160k` 是给 **24 kHz 单声道**的 edge-tts 语音开的，超配两倍
+            #   有余（实测编码器根本填不满，只跑到 102 kb/s）。64k 单声道对语音
+            #   已经透明，省下约 750 KB
+            # · `-tune stillimage` 就是给这种内容用的：放宽 deblock、加大心理
+            #   视觉权重，静止区域不再逐帧掏比特
+            # · crf 22 → 26：抽帧逐像素比过（示意图那屏字最密），肉眼无差别
+            # · `-preset slow` 换来更小的体积；这一步在整条流水线里只占几十秒，
+            #   而下载是在国内那条慢链路上发生的
+            #
+            # ⚠️ 别把 crf 再往上推：卡片是深绿底上的浅色小字，26 以上开始出块。
+            # 改之前抽一帧放大比对，别按比例推。
+            "-c:v", "libx264", "-preset", "slow", "-tune", "stillimage",
+            "-crf", "26",
+            "-c:a", "aac", "-b:a", "64k", "-ac", "1",
             "-movflags", "+faststart", str(output),
         ]
     )
@@ -3446,11 +3519,11 @@ def explainer_push_html(
     # 一起钉到本次 commit 上：钉住之后 jsDelivr 给的是 max-age=31536000, immutable，
     # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
     # 指向新片子。
-    video_url = f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{video_name}"
+    video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
     return knowledge_push_html_from_parts(
         date=date,
         image_urls=[
-            f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{name}"
+            f"{jsdelivr_base(_REPOSITORY)}/{rel}/{name}"
             for name in slides
         ],
         xhs_text=xhs_text,

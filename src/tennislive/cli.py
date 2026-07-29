@@ -25,6 +25,7 @@ from .digest import Digest, build_digest
 from .models import Match, MatchStatus
 from .sources import SourceError, fetch_day
 from .timeutil import beijing_today, parse_date_arg
+from .cdn import jsdelivr_base
 
 logger = logging.getLogger(__name__)
 
@@ -1448,7 +1449,7 @@ def cmd_publish_flash(args) -> int:
     revision = os.environ.get("TENNISLIVE_ASSET_REV", "main")
     if revision != "main" and not re.fullmatch(r"[0-9a-fA-F]{7,40}", revision):
         revision = "main"
-    asset_root = f"https://cdn.jsdelivr.net/gh/{repository}@{revision}/"
+    asset_root = f"{jsdelivr_base(repository, revision)}/"
 
     sent = 0
     for item in items:

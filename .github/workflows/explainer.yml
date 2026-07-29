@@ -53,6 +53,10 @@ jobs:
     timeout-minutes: 25
     env:
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
+      # 卡片图和成片走哪个 jsDelivr 入口。留空＝代码默认（gcore）。
+      # 想 A/B 别的镜像，在仓库 Actions variables 里改这一个值即可，
+      # 不用动代码；填错域名会被代码挡掉并退回默认，不会发出裂图。
+      TENNISLIVE_JSDELIVR_HOST: ${{ vars.TENNISLIVE_JSDELIVR_HOST }}
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
       PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
     steps:
@@ -104,6 +108,10 @@ jobs:
           ls -la "$OUT_DIR"
           # 视频体积可观，仅保留成片与幻灯，丢弃中间音频。
           rm -f "$OUT_DIR"/voice_*.mp3
+          # 卡片 2026-07-29 起存 JPEG。重生成一条旧片子时，同名的 .png 还留在
+          # 目录里（提交步骤只 add，不会删），于是仓库里同时躺着新旧两套图——
+          # 一条就是 31 MB 的死重量，而且 `git add` 之后谁也看不出哪套是活的。
+          rm -f "$OUT_DIR"/slide_*.png
 
       - name: 上传成片 artifact
         uses: actions/upload-artifact@v4

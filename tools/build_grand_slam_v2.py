@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 
 import edge_tts
+from tennislive.video.subtitle_text import drop_punctuation
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "output" / "grand-slam-vertical"
@@ -327,9 +328,14 @@ Format: Layer, Start, End, Style, Text
         if not scene_cuts(sc) and sc.get("type") in CARD_TYPES:
             continue
         for (a, b, text) in group_lines(p["words"], p.get("vo", "")):
+            # 烧进画面的字幕不写标点，全站统一——见 video/subtitle_text.py。
+            # 去标点放在**切完行之后**：group_lines 还要靠原文的标点断句。
+            shown = drop_punctuation(text)
+            if not shown:
+                continue
             lines_out.append(
                 f"Dialogue: 0,{fmt_ass_t(st0 + a)},{fmt_ass_t(st0 + b + 0.15)},Sub,"
-                f"{highlight(ass_escape(text))}")
+                f"{highlight(ass_escape(shown))}")
     ass.write_text(header + "\n".join(lines_out) + "\n", "utf-8")
     print(f"字幕 {len(lines_out)} 行 → {ass}")
 
