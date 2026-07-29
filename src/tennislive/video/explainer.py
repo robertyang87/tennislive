@@ -2191,7 +2191,12 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # function. They used to be literals inside the caption builder, written for
 # Hawk-Eye — so the moment a second deck existed, the yellow-ball post opened
 # with a line about line calls and tagged itself #鹰眼 #电子司线 #法网.
-_DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识")
+# 小红书的标签**要放满五个**，账号所有者定的。这组是兜底，正常每条片子都该在
+# `_CAPTIONS` 里写自己的五个——但兜底本身也必须是五个，否则漏写条目的那条会
+# 无声地少两个标签。thiem-football 就是这么发出去只带三个的：它在 _CAPTIONS
+# 里没有条目，而当时的默认组只有三个，其余 15 条各自写满了，光看别的条看不出
+# 这个洞。判据落在 test_每条片子的标签都放满五个。
+_DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
     "hawkeye": {
         "hook": (
@@ -2302,6 +2307,16 @@ _CAPTIONS: dict[str, dict] = {
             "今年七月，一个人靠它打进温网四强；另一个人在等一张始终没等到的外卡。"
         ),
         "tags": ("网球", "网球时差", "网球规则", "郑钦文", "温网"),
+    },
+    "thiem-football": {
+        "hook": (
+            "2020 年 9 月 13 日，他在纽约 0-2 落后翻盘，拿下生涯唯一一座大满贯。\n"
+            "五年后的同一天，他在奥地利第八级联赛替补上场，12 分钟后打进一球。\n"
+            "中间那几年叫手腕伤——31 岁那年他退役了。\n"
+            "今年 7 月，他在足协重新登记成了球员。踢球的。"
+        ),
+        # 人名一律查译名表：player_zh("Dominic Thiem") → 蒂姆。
+        "tags": ("网球", "网球时差", "蒂姆", "美网", "足球"),
     },
 }
 
