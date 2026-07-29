@@ -23,13 +23,13 @@ the photographs are not otherwise altered.
 - License: CC BY-SA 4.0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
-## `athens-telekom-center-court.jpg`
+## `athens-olympic-tennis-centre.jpg`
 
-- Title: Telekom Center Athens 改成网球场 · 满场（场地前场刷着 ATHENS，顶上挂着 VANDA HELLENIC 横幅，记分牌是 Musetti 那场；室内夜场，入库前做过 gamma 2.4 提亮，未裁剪）
-- Author: Telekom Center Athens
-- Source: https://telekomcenterathens.gr/wp-content/uploads/2025/12/SAK06840-scaled.jpg
-- License: unverified · 场馆官方媒体
-- Note: 唯一一张动过像素的场馆图：原图压完卡片遮罩后均值 21.6 / 中位 14，摆在格施塔德（54）和汉堡（67）旁边就是一块黑；gamma 2.4 之后是 55.6 / 53
+- Title: Athens Olympic Tennis Centre（ΟΑΚΑ）中心球场 · 2026 首届 Athens Open 开幕式，满场
+- Author: Vanda Pharmaceuticals Athens Open
+- Source: https://athens-open.com/venue
+- License: unverified · 赛事官方媒体
+- Note: ⚠️ 换掉了一张**赛事本身就搞错了**的图。上一版用的是 Telekom Center Athens 的室内蓝场——那是 ATP 的 Hellenic Championship（2025 年 11 月，室内），而 manifest 这一条对应的是 **WTA 250 的 Athens Open**：2026 年 7 月 13–19 日、露天硬地、打在 Athens Olympic Tennis Centre（WTA 官方页 /tournaments/1175/athens/，赛事官网 athens-open.com/venue 也写着 OAKA）。同城不同赛事不同场地，和「ATV Bancomat 印成维罗纳」是同一类错
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `bastad-tennis-stadium.jpg`
@@ -38,6 +38,14 @@ the photographs are not otherwise altered.
 - Author: PROGuillaume Baviere
 - Source: https://commons.wikimedia.org/wiki/File%3AB%C3%A5stad_Tennis_Stadium.jpg
 - License: CC BY-SA 2.0
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `canada-iga-stadium-centre-court.jpg`
+
+- Title: Stade IGA 中心球场 · 满场（场地前场刷着 MONTRÉAL，赞助带 Banque Nationale / ROGERS；近端看台、蓝绿场地、远端满场看台与雷暴天空全在竖切里）
+- Author: unknown（Radio-Canada 转载）
+- Source: https://images.radio-canada.ca/q_auto,w_2400/v1/ici-info/sports/16x9/stade-iga-montreal-tennis-omnium-banque-nationale.jpg
+- License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `canada-sobeys-centre-court.jpg`
@@ -175,10 +183,11 @@ the photographs are not otherwise altered.
 
 ## `usopen-arthur-ashe-stadium.jpg`
 
-- Title: File:View From the Top of the Arthur Ashe Stadium (9614299124).jpg
-- Author: slgckgc
-- Source: https://commons.wikimedia.org/wiki/File:View_From_the_Top_of_the_Arthur_Ashe_Stadium_(9614299124).jpg
-- License: CC BY 2.0
+- Title: File:Aryna Sabalenka vs. Qinwen Zheng in a quarterfinals of the 2024 US Open - 01.jpg
+- Author: Oleg Yunakov
+- Source: https://commons.wikimedia.org/wiki/File:Aryna_Sabalenka_vs._Qinwen_Zheng_in_a_quarterfinals_of_the_2024_US_Open_-_01.jpg
+- License: CC BY-SA 4.0
+- Note: 阿瑟阿什球场 · 2024 美网女单四分之一决赛（LED 带上写着 QINWEN ZHENG / ARYNA SABALENKA，包厢层写着 ARTHUR ASHE STADIUM）。**上一版是 2013 年的，画面里没有顶棚**——阿瑟阿什 2016 年才装可开合顶棚，那张等于印了一个已经不存在的样子
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `washington-fitzgerald-tennis-center.jpg`

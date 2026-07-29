@@ -39,7 +39,15 @@ VENUES = [
     # 暗的是四周。gamma 2.4 提亮之后压完是均值 55.6 / 中位 53，正好落在
     # 已用那几张的区间里，看台、横幅、记分牌全部可读。
     # **动了像素就要写明**——credits 里记着 gamma 值。
-    ("athens-telekom-center-court.jpg", None, None),
+    # ⚠️ 雅典这一条**赛事本身搞错过一次**。manifest 里的 "athens open" 对应的是
+    # **WTA 250 的 Athens Open**：2026 年 7 月 13–19 日、露天硬地、打在
+    # Athens Olympic Tennis Centre（ΟΑΚΑ）。而我先后配过两张
+    # Telekom Center Athens 的室内照——那是 **ATP 的 Hellenic Championship**，
+    # 2025 年 11 月、室内、另一个场馆，2026 年 ATP 赛历上根本没有雅典站。
+    # 同城不同赛事不同场地，和「ATV Bancomat 印成维罗纳」是同一类错：
+    # **先确认这条 alias 对的是哪个赛事，再去找场地**。
+    # 判据：WTA 官方页 /tournaments/1175/athens/，赛事官网 athens-open.com/venue。
+    ("athens-olympic-tennis-centre.jpg", None, None),
     # 埃斯托里尔原来是 File:Estoril - panoramio.jpg，一段海岸步道加铁轨，既不是
     # 地标也不是球场，整页铺开像个火车站。Commons 上也没有中央球场——卡西诺那张
     # 建筑只占中间一条，上下全是天空和草坪。改用赛事官方媒体，见 OFFICIAL_VENUES。
@@ -148,17 +156,28 @@ VENUES = [
     # 都不是 WordPress（wp-json 全 404），tenniscanada 的 assets CDN 要从页面读
     # 真实 URL、猜不出来；Commons 与 Openverse 都是 0。
     ("canada-sobeys-centre-court.jpg", None, None),
+    # 加拿大站是**一个赛事名、同周在两座城市办**，而且男女每年互换主办城市
+    # （2025 男子多伦多／女子蒙特利尔，2026 反过来）。只按赛事名匹配的话
+    # 两条都命中，随便挑一条就有一半的概率在卡上印错城市。
+    # manifest 里用 host_years 声明「哪一年办哪条巡回赛」，
+    # venue_assets._hosts() 按 match.tour + 年份奇偶挑。
+    # 蒙特利尔这张：场地前场刷着 MONTRÉAL，赞助带 Banque Nationale / ROGERS。
+    ("canada-iga-stadium-centre-court.jpg", None, None),
     # 辛辛那提：原来那张是侧面横拍，竖版裁完只剩中段。赛事官网是 WordPress，
     # wp-json/wp/v2/media?search=stadium 一查就是一堆 2560 宽的官方图；选的这张
     # 从底线后方顶层往下拍，近端看台 / 球场 / 远端看台整个碗都在竖切里。
     # 注意：这个站用浏览器 UA 请求 wp-json 会被 WAF 挡 403，用脚本自己的 UA 反而
     # 200——「取不到」和「0 命中」要分开，见 tools/probe_venue_photos.py 的 Blocked。
     ("cincinnati-center-court.jpg", None, None),
-    # 美网：原来是按分类自动挑的，挑到一张从侧面看台横拍的——竖版裁完只剩
-    # 中间一条。换成"从顶层沿球场长轴往下看"：整个碗竖着排在画面里，
-    # 近端看台在下、球场在中、远端看台和天际线在上，竖切也切不掉。
+    # 美网换过两次。第一次从侧面横拍换成 View From the Top of the Arthur Ashe
+    # Stadium——角度对了，但那张拍于 2013 年，**画面里没有顶棚**：阿瑟阿什
+    # 2016 年才装可开合顶棚，等于印了一个已经不存在的样子（画面上半屏是
+    # 露天看台加曼哈顿天际线）。
+    # 现在这张是 2024 女单四分之一决赛：顶棚桁架在画面上方，两层看台满场，
+    # LED 带上写着 QINWEN ZHENG / ARYNA SABALENKA，包厢层写着
+    # ARTHUR ASHE STADIUM——年份、场地、赛事全部自证。
     ("usopen-arthur-ashe-stadium.jpg",
-     "File:View From the Top of the Arthur Ashe Stadium (9614299124).jpg", None),
+     "File:Aryna Sabalenka vs. Qinwen Zheng in a quarterfinals of the 2024 US Open - 01.jpg", None),
     # 基茨比厄尔换过两次：山景地标 → Commons 的 Tennisstadion Kitzbuehel 2015
     # → 现在这张满场。第二版是**空场**，而且拍摄点在一端很高处，竖切之后
     # 球场被压在画面最底下，整屏是空看台和山坡；试过按 x 位移预裁 3:4 四档，
@@ -249,13 +268,12 @@ OFFICIAL_VENUES = {
         "page": "https://loscabostennisopen.com/wp-content/uploads/"
                 "2025/07/Main-stadium-09.jpg",
     },
-    "athens-telekom-center-court.jpg": {
-        "title": "Telekom Center Athens 改成网球场 · 满场（场地前场刷着 ATHENS，"
-                 "顶上挂着 VANDA HELLENIC 横幅，记分牌是 Musetti 那场；"
-                 "室内夜场，入库前做过 gamma 2.4 提亮，未裁剪）",
-        "license": "unverified · 场馆官方媒体",
-        "artist": "Telekom Center Athens",
-        "page": "https://telekomcenterathens.gr/wp-content/uploads/2025/12/SAK06840-scaled.jpg",
+    "athens-olympic-tennis-centre.jpg": {
+        "title": "Athens Olympic Tennis Centre（ΟΑΚΑ）中心球场 · "
+                 "2026 首届 Athens Open 开幕式，满场",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Vanda Pharmaceuticals Athens Open",
+        "page": "https://athens-open.com/venue",
     },
     "rome-atv-tennis-open-courts.jpg": {
         "title": "Circolo Antico Tiro a Volo（罗马）红土场 · 挡板上写着 "
@@ -272,6 +290,15 @@ OFFICIAL_VENUES = {
         "artist": "Fabian Meierhans / EFG Swiss Open Gstaad",
         "page": "https://swissopengstaad.ch/wp-content/uploads/2024/05/"
                 "EFG-SOG23-3-%C2%A9FabianMeierhans.jpg",
+    },
+    "canada-iga-stadium-centre-court.jpg": {
+        "title": "Stade IGA 中心球场 · 满场（场地前场刷着 MONTRÉAL，赞助带 "
+                 "Banque Nationale / ROGERS；近端看台、蓝绿场地、远端满场看台"
+                 "与雷暴天空全在竖切里）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（Radio-Canada 转载）",
+        "page": "https://images.radio-canada.ca/q_auto,w_2400/v1/ici-info/sports/"
+                "16x9/stade-iga-montreal-tennis-omnium-banque-nationale.jpg",
     },
     "canada-sobeys-centre-court.jpg": {
         "title": "Sobeys Stadium 中心球场 · 单打决赛满场（场地前场刷着 TORONTO）",
