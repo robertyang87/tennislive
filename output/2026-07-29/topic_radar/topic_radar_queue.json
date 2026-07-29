@@ -1,38 +1,38 @@
 {
   "date": "2026-07-29",
   "source_status": {
-    "WTA": "正常 · 11 条",
-    "ATP Tour": "正常 · 8 条",
-    "US Open": "正常 · 1 条",
-    "Roland-Garros": "正常 · 0 条",
-    "Wimbledon": "正常 · 0 条",
     "Australian Open": "正常 · 1 条",
-    "Top media": "正常 · 9 条",
+    "Roland-Garros": "正常 · 0 条",
+    "WTA": "正常 · 12 条",
+    "Wimbledon": "正常 · 0 条",
+    "US Open": "正常 · 1 条",
     "US": "正常 · 10 条",
-    "GB": "正常 · 10 条",
+    "ATP Tour": "正常 · 11 条",
     "HK": "正常 · 10 条",
     "AU": "正常 · 10 条",
+    "Top media": "正常 · 10 条",
+    "GB": "正常 · 10 条",
     "微信热文榜": "正常 · 扫 30 条 / 网球 0 条",
-    "抖音热搜": "正常 · 扫 50 条 / 网球 1 条",
-    "微博热搜": "正常 · 扫 51 条 / 网球 0 条",
-    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
-    "知乎热榜": "正常 · 扫 30 条 / 网球 0 条",
+    "知乎热榜": "正常 · 扫 30 条 / 网球 1 条",
+    "微博热搜": "正常 · 扫 50 条 / 网球 1 条",
     "小红书热榜": "正常 · 扫 20 条 / 网球 0 条",
+    "抖音热搜": "正常 · 扫 50 条 / 网球 0 条",
+    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
     "微信指数": "拿不到 · search.weixin.qq.com 无签名返回 {\"code\":-1}，签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」",
     "小红书官方接口": "拿不到 · edith 域 404、www 域 500，两条都要签名；已改走 UApiPro（主）+ 今日热榜镜像（备）",
     "微信搜一搜热点词 / 公众号热点话题榜": "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot 一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
   },
-  "news_signals": 30,
+  "news_signals": 35,
   "trend_signals": 40,
-  "zh_scanned": 232,
+  "zh_scanned": 231,
   "zh_hot": [
     {
       "kind": "zh-hot-search",
-      "source": "抖音热搜",
-      "word": "郑钦文遭逆转止步首轮",
-      "rank": 10,
-      "heat": "9189135",
-      "url": "https://www.douyin.com/search/%E9%83%91%E9%92%A6%E6%96%87%E9%81%AD%E9%80%86%E8%BD%AC%E6%AD%A2%E6%AD%A5%E9%A6%96%E8%BD%AE",
+      "source": "微博热搜",
+      "word": "郑钦文排名跌至123位",
+      "rank": 48,
+      "heat": "162777",
+      "url": "https://s.weibo.com/weibo?q=%23%E9%83%91%E9%92%A6%E6%96%87%E6%8E%92%E5%90%8D%E8%B7%8C%E8%87%B3123%E4%BD%8D%23",
       "matched": [
         "郑钦文"
       ],
@@ -40,58 +40,66 @@
         "qinwen",
         "zheng"
       ]
+    },
+    {
+      "kind": "zh-hot-search",
+      "source": "知乎热榜（第三方聚合，非官方接口）",
+      "word": "美、日、韩、中股市都在下跌，2026 年真会如罗杰斯所预言发生金融危机吗？",
+      "rank": 21,
+      "heat": "128 万热度",
+      "url": "https://www.zhihu.com/question/2065446585165509621",
+      "matched": [
+        "罗杰斯"
+      ],
+      "terms": [
+        "anna",
+        "rogers"
+      ]
     }
   ],
   "zh_near_miss": [
     {
       "source": "抖音热搜",
-      "word": "保罗乔治抖音发文寻找电动车男孩",
+      "word": "挑战地狱客栈安吉尔仿妆",
       "clues": [
-        "保罗"
-      ]
-    },
-    {
-      "source": "微博热搜",
-      "word": "特朗普被发现在格雷厄姆葬礼打瞌睡",
-      "clues": [
-        "格雷"
+        "吉尔"
       ]
     }
   ],
   "count": 0,
   "topics": [],
-  "unmatched_clusters": 1,
+  "unmatched_clusters": 4,
   "unmatched_terms": [
     {
-      "term": "fans",
+      "term": "old",
+      "clusters": 2
+    },
+    {
+      "term": "washington",
+      "clusters": 2
+    },
+    {
+      "term": "world",
+      "clusters": 2
+    },
+    {
+      "term": "100",
       "clusters": 1
     },
     {
-      "term": "grounds",
+      "term": "34c",
       "clusters": 1
     },
     {
-      "term": "harrison",
+      "term": "612",
       "clusters": 1
     },
     {
-      "term": "krajicek",
+      "term": "advances",
       "clusters": 1
     },
     {
-      "term": "mektic",
-      "clusters": 1
-    },
-    {
-      "term": "osaka",
-      "clusters": 1
-    },
-    {
-      "term": "prevail",
-      "clusters": 1
-    },
-    {
-      "term": "quarterfinal",
+      "term": "against",
       "clusters": 1
     }
   ]
