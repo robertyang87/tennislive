@@ -134,3 +134,35 @@ def test_产物里带着信号数和没对上的词(tmp_path):
     assert back["count"] == 0
     assert back["unmatched_clusters"] == 1
     assert any(x["term"] == "ballkid" for x in back["unmatched_terms"])
+
+
+def test_该补什么角度那份清单必须是确定的():
+    """本地过、CI 红，查出来是 `Counter.most_common` 在**计数全相同**时按插入
+    顺序返回，而插入顺序来自遍历 `set`——字符串的 set 顺序取决于
+    `PYTHONHASHSEED`，每个进程都不一样。
+
+    这不只是测试不稳：这份清单是给人看「该往 ANGLES 里补什么角度」的，
+    每次随机取八个等于没写。改成按 (-次数, 词) 排。
+    """
+    import subprocess
+    import sys
+
+    code = (
+        "from tennislive.research.topic_radar import distil_topics, leftover_terms\n"
+        "h=lambda t,s:{'title':t,'source':s,'url':'x'}\n"
+        "n=[h('Wimbledon ballkid selection begins','ATP Tour'),"
+        " h('How Wimbledon picks its ballkid squad','ESPN')]\n"
+        "print([x[0] for x in leftover_terms(distil_topics(n)[1])])\n"
+    )
+    seen = set()
+    for seed in ("0", "1", "12345", "99999"):
+        out = subprocess.run(
+            [sys.executable, "-c", code],
+            capture_output=True, text=True,
+            env={"PYTHONHASHSEED": seed, "PYTHONPATH": "src", "PATH": "/usr/bin:/bin"},
+        )
+        assert out.returncode == 0, out.stderr
+        seen.add(out.stdout.strip())
+    assert len(seen) == 1, f"不同 PYTHONHASHSEED 下结果不一致：{seen}"
+    # 拼接词是聚类的中间产物，人读起来是噪点，不该出现在这份清单里
+    assert "ballkidsquad" not in seen.pop()
