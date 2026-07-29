@@ -10,6 +10,7 @@ from tennislive.research.topic_radar import (
     distil_topics,
     leftover_terms,
     match_angle,
+    measure_heat,
     published_topics,
 )
 
@@ -91,9 +92,12 @@ def test_空产要能分清是没热点还是没角度():
     topics, leftover = distil_topics(quiet)
     assert topics == [] and leftover == [], "单条标题不成簇，也不该算没对上角度"
 
+    # ⚠️ 这个例子换过一次：原来用的是球童（ballkid），而球童**已经被补进
+    # `ANGLES` 了**——正是这份清单该起的作用（它连着几天占着 unmatched_terms
+    # 第一位）。所以撞不上角度的例子要换成表里确实没有的：装备/赞助那一路。
     hot_but_unmatched = [
-        _h("Wimbledon ballkid selection begins for the season", "ATP Tour"),
-        _h("How Wimbledon picks its ballkid squad each season", "ESPN"),
+        _h("Alcaraz unveils his new Nike kit", "ATP Tour"),
+        _h("Inside the Alcaraz Nike kit launch", "ESPN"),
     ]
     topics, leftover = distil_topics(hot_but_unmatched)
     assert topics == [] and len(leftover) == 1
@@ -115,13 +119,71 @@ def test_每条角度都写了出处和开场问题():
             f"{angle.slug} 的开场没有问出一个问题：{angle.question}")
 
 
+def test_触发词必须是切得出来的词():
+    """`hawk-eye`、`12-day`、`no1`、`top10` 都当过触发词，**一次都没匹配上**。
+
+    `match_angle` 拿的是 `_WORD.findall(标题)` 那个词集合，而 `_WORD` 把连字符
+    和句点当分隔符：`hawk-eye` 切成 hawk / eye，`No. 1` 切成 no / 1，
+    `Top 50` 切成 top / 50。整词永远不在集合里——写进表里看着像在防守，
+    其实是个哑弹，而且**不吭声**，和「兜底出事的时候不报错」是同一种毛病。
+    """
+    from tennislive.research.topic_radar import _WORD
+
+    dead = [
+        (a.slug, t) for a in ANGLES for t in a.triggers
+        if not _WORD.fullmatch(t) or t != t.casefold()
+    ]
+    assert dead == [], f"这些触发词切不出来，永远匹配不上：{dead}"
+
+
+def test_触发词不能是每周都会出现的词():
+    """「退役与告别」原来的触发词里有 `final` 和 `last`。
+
+    **任何一个赛事周都会把它们撞上**——「reaches final」「into final」两条标题
+    就够了，于是每周都自动冒出一条假的「退役与告别」，看着像模像样，
+    和聚类那两个假阳性是同一种错。触发词要挑**只有这类新闻才会用的词**。
+    """
+    routine = [
+        _h("Alcaraz reaches final in Cincinnati", "ATP Tour"),
+        _h("Alcaraz into Cincinnati final", "ESPN"),
+    ]
+    assert match_angle(routine) is None
+
+    real = [
+        _h("Nishikori announces he will retire after this season", "ATP Tour"),
+        _h("Nishikori to retire, farewell tour confirmed", "ESPN"),
+    ]
+    angle = match_angle(real)
+    assert angle is not None and angle.slug == "retirement-farewell"
+
+
+def test_中文热搜只是加成不能单独把一条顶上来():
+    """中文平台比 Google 热搜重一点（×4 vs ×3）——读者就在那儿。
+
+    但仍然是**加成**：三家在报、零中文热搜的那条，仍然要排在
+    一家在报、撞满中文热搜的那条前面。中文那边热而没有一家媒体在报的事，
+    产物里 `zh_hot` 那一栏会单独列出来，不该靠打分挤进选题候选。
+    """
+    zh = [{"word": f"热搜{i}", "terms": ["draper"]} for i in range(3)]
+    thin = measure_heat(
+        [{"title": "Draper withdraws", "source": "ATP Tour"}], zh_signals=zh
+    )
+    thick = measure_heat(
+        [{"title": "Sinner withdraws", "source": "ATP Tour"},
+         {"title": "Sinner out", "source": "ESPN"},
+         {"title": "Sinner pulls out", "source": "BBC"}],
+    )
+    assert thin.zh_hits == 3 and thick.zh_hits == 0
+    assert thick.score > thin.score
+
+
 def test_产物里带着信号数和没对上的词(tmp_path):
     """queue 文件要能自己回答「今天为什么没有候选」。"""
     from tennislive.research.topic_radar import distil_topics as _d
 
     news = [
-        _h("Wimbledon ballkid selection begins", "ATP Tour"),
-        _h("How Wimbledon picks its ballkid squad", "ESPN"),
+        _h("Alcaraz unveils his new Nike kit", "ATP Tour"),
+        _h("Inside the Alcaraz Nike kit launch", "ESPN"),
     ]
     topics, leftover = _d(news)
     payload = {
@@ -133,7 +195,7 @@ def test_产物里带着信号数和没对上的词(tmp_path):
     back = json.loads((tmp_path / "q.json").read_text("utf-8"))
     assert back["count"] == 0
     assert back["unmatched_clusters"] == 1
-    assert any(x["term"] == "ballkid" for x in back["unmatched_terms"])
+    assert any(x["term"] == "nike" for x in back["unmatched_terms"])
 
 
 def test_该补什么角度那份清单必须是确定的():
@@ -150,8 +212,8 @@ def test_该补什么角度那份清单必须是确定的():
     code = (
         "from tennislive.research.topic_radar import distil_topics, leftover_terms\n"
         "h=lambda t,s:{'title':t,'source':s,'url':'x'}\n"
-        "n=[h('Wimbledon ballkid selection begins','ATP Tour'),"
-        " h('How Wimbledon picks its ballkid squad','ESPN')]\n"
+        "n=[h('Alcaraz unveils his new Nike kit','ATP Tour'),"
+        " h('Inside the Alcaraz Nike kit launch','ESPN')]\n"
         "print([x[0] for x in leftover_terms(distil_topics(n)[1])])\n"
     )
     seen = set()
@@ -164,5 +226,7 @@ def test_该补什么角度那份清单必须是确定的():
         assert out.returncode == 0, out.stderr
         seen.add(out.stdout.strip())
     assert len(seen) == 1, f"不同 PYTHONHASHSEED 下结果不一致：{seen}"
+    only = seen.pop()
+    assert "nike" in only, "这个例子必须真的撞不上角度，否则测的是一份空清单"
     # 拼接词是聚类的中间产物，人读起来是噪点，不该出现在这份清单里
-    assert "ballkidsquad" not in seen.pop()
+    assert "nikekit" not in only
