@@ -2603,7 +2603,8 @@ _OPENINGS: dict[str, dict] = {
         # `time` 留空：当时没有记下官方开赛时刻，宁可不印也不猜。
         "fixture": {
             "date": "7.27",
-            "event": "WTA500 华盛顿",
+            "level": "WTA500",
+            "site": "华盛顿",
             "round": "首轮",
             "players": ("郑钦文", "伊埃拉"),
         },
@@ -2620,7 +2621,8 @@ _OPENINGS: dict[str, dict] = {
         "锦织圭的最后一年，谁来接？",
         "fixture": {
             "date": "7.27",
-            "event": "ATP500 华盛顿",
+            "level": "ATP500",
+            "site": "华盛顿",
             "round": "首轮",
             "players": ("商竣程", "锦织圭"),
         },
@@ -2640,7 +2642,8 @@ _OPENINGS: dict[str, dict] = {
         # never match play, and no screen says otherwise.
         "fixture": {
             "date": "7.27",
-            "event": "WTA500 华盛顿",
+            "level": "WTA500",
+            "site": "华盛顿",
             "round": "首轮",
             # 表里她是「大威廉姆斯」，这条片子通篇叫她维纳斯（见测试里的
             # _ON_PURPOSE）。封面没有上下文消歧，所以写全名。
@@ -2656,13 +2659,13 @@ _OPENINGS: dict[str, dict] = {
         "topic": "黄泽林 VS 莱赫奇卡：洛斯卡沃斯站 16 强",
         # 「他」在这条片子里没有安全的指代——两个人都是男球员，封面上站着其中
         # 一个。所以封面这一问点名，正文里的第三人称一律靠上一句消歧。
-        "question": "黄泽林拿什么打世界第 12？",
+        "question": "黄泽林要怎样挑战世界第 12？",
         # 第一句在句号处收住（25 字 ≈ 4.7 秒），把对阵挪到第二句：前 5 秒
         # 决定 62% 的人走不走，一句话铺完时间地点对阵就是 57 字、9 秒多。
         # 已发的两条「开球之前」都栽在这儿（见 _HOOK_TOO_LONG），这条不进名单。
         "narration": "北京时间七月三十日上午九点，洛斯卡沃斯的中心球场。"
         "第一场，一号种子、世界第十二的莱赫奇卡，对世界第一百零八的黄泽林，"
-        "两个人此前从没交过手。黄泽林拿什么打世界第十二？",
+        "两个人此前从没交过手。黄泽林要怎样挑战世界第十二？",
         # 封面复用「珠海」那一屏的图，所以出处由那一屏的 credit 带过来。
         # 选它当封面的理由：它是他最近一场可及的击球帧（2025 年 11 月），
         # 球在拍面上，胸口的紫荆花徽章让画面自己说清这是谁。
@@ -2674,7 +2677,8 @@ _OPENINGS: dict[str, dict] = {
         "fixture": {
             "date": "7.30",
             "time": "09:00",
-            "event": "ATP250 洛斯卡沃斯",
+            "level": "ATP250",
+            "site": "洛斯卡沃斯",
             "round": "16 强",
             "players": ("黄泽林", "莱赫奇卡"),
         },
@@ -2723,14 +2727,20 @@ def _fixture_lines(spec: dict) -> tuple[str, ...]:
     从结构化字段拼，不让人手写整行——日期和轮次在旁白、要点、文案里都各出现
     一次，手写第四遍必然会有一处对不上。时间可以缺（三条已发的前瞻当时没有
     记下官方开赛时刻），缺了就不占位置，别印一个空的冒号。
+
+    级别和站点分开存（`level` + `site`，印出来仍是「ATP250 洛斯卡沃斯」），
+    是为了让「只做 250 及以上」这条选题门槛能对着 `TOUR_LEVELS` 查——
+    合成一个字符串就只能靠正则去猜级别了。
     """
     fixture = spec.get("fixture") or {}
     if not fixture:
         return ()
+    event = f"{fixture['level']} {fixture['site']}"
     head = "  ".join(
-        str(fixture[key])
-        for key in ("date", "time", "event", "round")
-        if fixture.get(key)
+        str(value)
+        for value in (fixture.get("date"), fixture.get("time"), event,
+                      fixture.get("round"))
+        if value
     )
     home, away = fixture["players"]
     return (head, f"{home}  VS  {away}")
@@ -2822,6 +2832,42 @@ def explainer_script(story) -> list[ExplainerSegment]:
             facts[-1] if facts else story.hero_fact, cover, credit,
         ),
     ]
+
+
+# 封面大标题在这套显示字体里的字宽，**量出来的**（Chromium 里按 96px 渲一串，
+# 读 getBoundingClientRect().width，再除以字号）：
+#
+#     一个汉字（含全角标点）  0.80 em（12 个字量出来正好 9.60）
+#     一个空格               0.190 em
+#     一个数字/字母          0.286～0.42 em —— **这套字体的数字不等宽**：
+#                            单量「1」是 0.286，而「 12」整串是 0.892，
+#                            扣掉空格摊到每个数字是 0.35。所以这里取 0.45
+#                            往宽了算，宁可字号小一点也不要算窄了溢出。
+#
+# 别按「一个字一个 em」估：那样算「黄泽林要怎样挑战世界第 12？」是 15 em，
+# 实际只有 10.49 em，差三分之一，估出来的字号会小一大截。
+_COVER_EM_CJK = 0.80
+_COVER_EM_ASCII = 0.45
+_COVER_EM_SPACE = 0.190
+# 再留 1.5% 余量：hawkeye 那句按模型算出来正好卡在 940px 上，差一个像素就
+# 翻成两行，而翻没翻只有渲出来才知道。
+_COVER_WIDTH_MARGIN = 0.985
+# 一行装不下就退到两行的下限。定 84 的依据：再往下就是「一行小字」而不是
+# 「一行大字」了，那时两行反而好读（`.cover .title` 那段注释里的老结论）。
+_COVER_MIN_ONE_LINE_PX = 84
+
+
+def _cover_title_em(title: str) -> float:
+    """封面标题按上面那三个实测字宽折算成多少个 em。"""
+    total = 0.0
+    for ch in title:
+        if ch == " ":
+            total += _COVER_EM_SPACE
+        elif ch.isascii():
+            total += _COVER_EM_ASCII
+        else:
+            total += _COVER_EM_CJK
+    return total
 
 
 def _data_uri(path: Path) -> str:
@@ -2930,7 +2976,16 @@ def _slide_html(
     if cover:
         # The question is the whole point of this card, so let it be big and
         # let it wrap; two lines of 9 characters beats one line of tiny text.
-        title_px = min(96, int(usable_px * 2 / max(len(segment.title), 1)))
+        #
+        # 但**能一行就一行**。中文没有词边界，浏览器可以在任意两个汉字之间断，
+        # 于是两行版必然会在某处把一个词劈开：「黄泽林要怎样挑 / 战世界第 12？」
+        # 就是 `text-wrap:balance` 断出来的，「挑战」被切成两半。缩 7% 字号让
+        # 整句落在一行上，比断在词中间好得多。装不下才退回两行（那时 balance
+        # 至少保证两行长度接近，不会甩出一个三字符的孤行）。
+        one_line = int(usable_px * _COVER_WIDTH_MARGIN / _cover_title_em(segment.title))
+        title_px = min(96, one_line) if one_line >= _COVER_MIN_ONE_LINE_PX else min(
+            96, int(usable_px * 2 / max(len(segment.title), 1))
+        )
     else:
         title_px = min(62, int(usable_px / max(len(segment.title), 1)))
     question_html = (
@@ -3024,7 +3079,12 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
-.cover .title{{white-space:normal;line-height:1.24;font-weight:400;
+/* `text-wrap:balance` 而不是自己插换行：封面问题换行时，浏览器默认把最后
+   一个装不下的片段甩到第二行，「黄泽林要怎样挑战世界第 / 12？」就是这么断的
+   ——第二行只剩三个字符，像个错误。balance 让两行长度接近，而且**不动标题
+   字符串本身**（`test_每条片子都以问题开场` 断言原字符串要出现在页面里，
+   手插 `<br>` 或换行符会把那条判据弄假）。 */
+.cover .title{{white-space:normal;text-wrap:balance;line-height:1.24;font-weight:400;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7);}}
 .cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
