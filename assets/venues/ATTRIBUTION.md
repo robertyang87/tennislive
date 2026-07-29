@@ -23,12 +23,13 @@ the photographs are not otherwise altered.
 - License: CC BY-SA 4.0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
-## `athens-parthenon.jpg`
+## `athens-telekom-center-court.jpg`
 
-- Title: File:Parthenon Athens.jpg
-- Author: Giammuz at Italian Wikipedia
-- Source: https://commons.wikimedia.org/wiki/File%3AParthenon_Athens.jpg
-- License: Public domain
+- Title: Telekom Center Athens 改成网球场 · 满场（场地前场刷着 ATHENS，顶上挂着 VANDA HELLENIC 横幅，记分牌是 Musetti 那场；室内夜场，入库前做过 gamma 2.4 提亮，未裁剪）
+- Author: Telekom Center Athens
+- Source: https://telekomcenterathens.gr/wp-content/uploads/2025/12/SAK06840-scaled.jpg
+- License: unverified · 场馆官方媒体
+- Note: 唯一一张动过像素的场馆图：原图压完卡片遮罩后均值 21.6 / 中位 14，摆在格施塔德（54）和汉堡（67）旁边就是一块黑；gamma 2.4 之后是 55.6 / 53
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `bastad-tennis-stadium.jpg`

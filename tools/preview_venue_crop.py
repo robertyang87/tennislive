@@ -52,6 +52,41 @@ def cover(img: Image.Image, focal: str = "50% 50%", box=CARD) -> Image.Image:
     return scaled.crop((x, y, x + bw, y + bh))
 
 
+# 卡片在照片上压的那层遮罩，抄自 webcards.py 的 `.poster.tonight-page::before`
+# （从上到下 .16 → .22 → .42 → .76 的深色渐变）加 `::after`（顶部 300px 的
+# 页眉暗底）。**不模拟它就等于只看了一半**：一张原本就暗的夜场照，压完之后
+# 下半屏可能糊成一块黑，而联系表上看着还行。
+_SCRIM_STOPS = ((0.00, 0.16), (0.30, 0.22), (0.58, 0.42), (1.00, 0.76))
+_SCRIM_RGB = (2, 18, 19)
+_MASTHEAD_PX, _MASTHEAD_TOP, _MASTHEAD_MID = 300, 0.82, 0.58
+
+
+def _lerp(stops, t: float) -> float:
+    for (t0, a0), (t1, a1) in zip(stops, stops[1:]):
+        if t <= t1:
+            span = t1 - t0
+            return a0 + (a1 - a0) * ((t - t0) / span if span else 0)
+    return stops[-1][1]
+
+
+def with_scrim(card: Image.Image) -> Image.Image:
+    """把卡片实际压的遮罩叠上去——判"暗不暗"要看这一版。"""
+    w, h = card.size
+    out = card.convert("RGB").copy()
+    scrim = Image.new("RGB", (1, h), _SCRIM_RGB)
+    alpha = Image.new("L", (1, h))
+    for y in range(h):
+        t = y / max(h - 1, 1)
+        a = _lerp(_SCRIM_STOPS, t)
+        if y < _MASTHEAD_PX:  # ::after 的页眉暗底，只覆盖顶上有字的那一段
+            u = y / _MASTHEAD_PX
+            head = _MASTHEAD_TOP + (0 - _MASTHEAD_TOP) * u if u > 0.48 else \
+                _MASTHEAD_TOP + (_MASTHEAD_MID - _MASTHEAD_TOP) * (u / 0.48)
+            a = 1 - (1 - a) * (1 - head)  # 两层叠加
+        alpha.putpixel((0, y), round(a * 255))
+    return Image.composite(scrim.resize((w, h)), out, alpha.resize((w, h)))
+
+
 def kept_width_pct(img: Image.Image, box=CARD) -> int:
     """cover 之后原图横向还剩百分之几——越低越容易把看台切光。"""
     bw, bh = box
@@ -83,13 +118,19 @@ def main() -> int:
     ap.add_argument("--file", action="append", default=[], help="预览一张还没入库的候选图")
     ap.add_argument("--focal", default="50% 50%", help="配合 --file 用的 focal point")
     ap.add_argument("--out", default="venue_crop_preview.jpg")
+    ap.add_argument("--scrim", action="store_true",
+                    help="叠上卡片实际压的深色遮罩——判'暗不暗'必须看这一版")
     args = ap.parse_args()
+
+    def _shot(img: Image.Image, focal: str) -> Image.Image:
+        card = cover(img, focal)
+        return with_scrim(card) if args.scrim else card
 
     items: list[tuple[str, Image.Image]] = []
     for raw in args.file:
         img = _load(Path(raw))
         items.append((f"{Path(raw).name[:26]} 留 {kept_width_pct(img)}%",
-                      cover(img, args.focal)))
+                      _shot(img, args.focal)))
 
     if not args.file:
         rows = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -105,7 +146,7 @@ def main() -> int:
                 continue
             img = _load(path)
             items.append((f"{row['slug']} 留 {kept_width_pct(img)}%",
-                          cover(img, row.get("focal_point", "50% 50%"))))
+                          _shot(img, row.get("focal_point", "50% 50%"))))
 
     if not items:
         print("没有可预览的条目", file=sys.stderr)

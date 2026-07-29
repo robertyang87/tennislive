@@ -29,7 +29,17 @@ MAX_EDGE = 1920
 # (输出文件名, Commons 文件名或 None, 检索词/分类名)
 VENUES = [
     # 城市地标（该站没有可用的球场照时用）
-    ("athens-parthenon.jpg", "File:Parthenon Athens.jpg", None),
+    # 雅典：帕特农地标 → Telekom Center Athens 改成网球场的实拍，见 OFFICIAL_VENUES。
+    # 这一站是**唯一一个需要动像素**的：赛事在室内、晚场、看台不打灯，原图
+    # 压完卡片遮罩后均值只有 21.6、中位 14，摆在格施塔德（54）和汉堡（67）
+    # 旁边就是一块黑。
+    #
+    # 但它和「逆光剪影」那条不是一回事，别混：那张是**主体本身**没入暗部
+    # （中位 0、95% 像素纯黑，怎么调都回不来）；这张的球场是打了灯的，
+    # 暗的是四周。gamma 2.4 提亮之后压完是均值 55.6 / 中位 53，正好落在
+    # 已用那几张的区间里，看台、横幅、记分牌全部可读。
+    # **动了像素就要写明**——credits 里记着 gamma 值。
+    ("athens-telekom-center-court.jpg", None, None),
     # 埃斯托里尔原来是 File:Estoril - panoramio.jpg，一段海岸步道加铁轨，既不是
     # 地标也不是球场，整页铺开像个火车站。Commons 上也没有中央球场——卡西诺那张
     # 建筑只占中间一条，上下全是天空和草坪。改用赛事官方媒体，见 OFFICIAL_VENUES。
@@ -213,6 +223,14 @@ OFFICIAL_VENUES = {
         "artist": "Mifel Tennis Open by Telcel Oppo",
         "page": "https://loscabostennisopen.com/wp-content/uploads/"
                 "2025/07/Main-stadium-09.jpg",
+    },
+    "athens-telekom-center-court.jpg": {
+        "title": "Telekom Center Athens 改成网球场 · 满场（场地前场刷着 ATHENS，"
+                 "顶上挂着 VANDA HELLENIC 横幅，记分牌是 Musetti 那场；"
+                 "室内夜场，入库前做过 gamma 2.4 提亮，未裁剪）",
+        "license": "unverified · 场馆官方媒体",
+        "artist": "Telekom Center Athens",
+        "page": "https://telekomcenterathens.gr/wp-content/uploads/2025/12/SAK06840-scaled.jpg",
     },
     "gstaad-roy-emerson-arena.jpg": {
         "title": "Roy Emerson Arena 中心球场 · 满场（红土上刷着 GSTAAD，赞助带 "
