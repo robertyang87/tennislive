@@ -852,9 +852,19 @@ ATP500+WTA500 的大站会把 16 个名额吃光，**孟菲斯和洛斯卡沃斯
 照 CI 那行装完（`ci.yml` 里就写着），26 → 1：
 
 ```bash
+sudo apt-get install -y -qq fonts-noto-cjk        # ← 别漏，见下
 pip install -q -e ".[dev,webrender,visualqa]" && pip install -q cffi
-PYTHONPATH=src python3 -m pytest tests/ -q      # 892 passed, 7 skipped
+PYTHONPATH=src python3 -m pytest tests/ -q        # 907 passed, 0 skipped
 ```
+
+**那 7 条 skip 也是缺依赖，不是「这里跑不了」。** 全是
+`tests/test_collection_cover.py`——整个文件挂着
+`skipif(not NotoSansCJK-Bold.ttc.exists())`。沙箱装的是文泉驿，
+路径对不上就整file跳过，装上 `fonts-noto-cjk` 之后 7 条全绿。
+CI 的 apt 那一步本来就装了它，我照抄 pip 那行时漏了 apt 那行。
+
+**skip 和 fail 要一样对待**：一个常年不变的 skip 数字，和一个常年不变的
+fail 数字一样，都是「没人真的看过」。`-rs` 一跑就知道为什么跳。
 
 两条教训：
 
