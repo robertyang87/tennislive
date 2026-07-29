@@ -340,3 +340,19 @@ def test_源片太小要在开跑前挡住(monkeypatch):
     assert (reel.CROP_W, reel.CROP_H) == (608, 1080)
     reel.resolve_crop(1280, 720)                 # 720p 也要能跑，按比例换算
     assert (reel.CROP_W, reel.CROP_H) == (404, 720)   # 720*9/16=405，取偶
+
+
+def test_下载不把编码当硬条件():
+    """**「下载成功」和「只拿到 360p」曾经是同一件事。** 第一档写死
+    `vcodec^=avc1` + `ext=m4a`，而 YouTube 的 1080p 多是 VP9/AV1(webm)；
+    格式表不全时前两档全落空，一路掉到 `best`——它唯一预合成好的档是 itag 18，
+    正好 640×360。中间没有一步会报错，直到裁切那步才炸（run 30412173035）。
+
+    所以编码只能是**偏好**（`-S`），不能是过滤条件（`-f`）。
+    """
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    picker = source[source.index("selector = "):source.index("cookies: list[str]")]
+    assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
+    assert "ext=m4a" not in picker
+    assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
