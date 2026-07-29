@@ -187,8 +187,9 @@ the photographs are not otherwise altered.
 
 ## `wimbledon-centre-court.jpg`
 
-- Title: File:Centre Court Wimbledon 2009.JPG
-- Author: Delfort
-- Source: https://commons.wikimedia.org/wiki/File:Centre_Court_Wimbledon_2009.JPG
-- License: CC BY-SA 3.0
+- Title: File:2023 Wimbledon Men's singles final (1).jpg
+- Author: Daniel Cooper
+- Source: https://commons.wikimedia.org/wiki/File:2023_Wimbledon_Men%27s_singles_final_(1).jpg
+- License: CC BY-SA 2.0
+- Note: 中央球场满场 · 2023 男单决赛（阿尔卡拉斯对德约科维奇，记分牌可读）；从底线后方看台高处拍，近端观众/草地/远端满场看台/开着的屋顶全在竖切里
 - Changes: resized and cropped by the card renderer; no semantic alteration
