@@ -816,7 +816,10 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
                 raise ReelError(
                     f"cutout 版式的 {key} 格找不到抠图：{cut}\n"
                     "WTA：photoresources 的 <Name>-Torso_<wta_id>.png?width=3000；"
-                    "ATP：赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。")
+                    "ATP：赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。\n"
+                    "**这个球员根本没有官方抠图，就退回 `layout: diagonal` 的"
+                    "照片版**（账号所有者定的兜底）——别拿头像凑，见 versus_poster.py "
+                    "里同一处的说明。")
     else:
         for key in ("top", "bottom"):
             side = dict(versus[key])
