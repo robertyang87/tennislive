@@ -72,11 +72,14 @@ SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
 BAND = 100.0 * (VIDEO_W / 2) * math.tan(math.radians(SEAM_ANGLE)) / VIDEO_H
 
 # ── cutout 版式的几个数，都是按画幅算出来的，不是拍的 ────────────────────
-# 斜线（＝两个人站的那条地平线）压在 0.60，正好把画面分成「上面留给脸」和
-# 「下面留给字」：钩子块 `bottom:150px` 起算，两行 100px 的钩子 + 比分 + 赛事
-# 约 348px 高，顶边落在 942——斜线 864 再加名字的半高 35，到 899，不打架。
-CUT_SEAM = 0.60
-CUT_SCALE = 0.46           # 抠图高度占画幅的比例 → 662px
+# 斜线（＝两个人站的那条地平线）把画面分成「上面留给脸」和「下面留给字」。
+# 0.60 那一版**下面的文案看着被挤压**：钩子块 `bottom:150px` 起算，两行 100px
+# 的钩子 + 比分 + 赛事约 348px 高，顶边落在 942；斜线 864 加名字半高 35 到 899，
+# 中间只剩 43px。提到 0.545 之后是 785 → 817，留出 125px，字才透得过气。
+# 人物跟着一起上去（底边永远收在斜线上方），所以要同时缩一点，否则头顶会钻进
+# 左上角那块台头。
+CUT_SEAM = 0.545
+CUT_SCALE = 0.44           # 抠图高度占画幅的比例 → 634px
 CUT_CX = (0.29, 0.71)      # 左右两人的横向中心
 CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 # 抠图的底边**收在斜线上方**，不压过去。
@@ -86,6 +89,31 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
 CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+
+
+def _cut_crop(image: Path, box) -> Path:
+    """抠图的裁切，**走 PNG 保住透明通道**——不能用 `_precrop`，那个存 JPEG。
+
+    存在的理由是两家给的画幅不一样：WTA 是**半身**（`<Name>-Torso_<id>.png`），
+    ATP 是**全身**（`player-gladiator-image`）。同一个 662px 的槽位里，全身的
+    那张脸会小掉四成——而这张海报的全部作用就是让人一眼认出是谁打谁。
+    所以 ATP 那两格要 `crop: [0, 0, 1, 0.68]` 裁到胯，脸的大小才对得上。
+
+    代价照实记：ATP 原图去掉透明边只有 256×584，裁到 68% 再铺到 662px 是
+    1.67 倍放大，比 WTA 那边软一档。
+    """
+    if not box:
+        return image
+    from PIL import Image  # noqa: PLC0415
+
+    if len(box) != 4:
+        raise SystemExit(f"cutout 的 crop 要四个数 [x0,y0,x1,y1]（0~1）：{box}")
+    im = Image.open(image).convert("RGBA")
+    w, h = im.size
+    x0, y0, x1, y1 = box
+    out = image.with_suffix(".crop.png")
+    im.crop((round(x0 * w), round(y0 * h), round(x1 * w), round(y1 * h))).save(out)
+    return out
 
 
 def _cutout_geometry(cx: float, seam: float) -> float:
@@ -130,12 +158,12 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
                 "ATP 走赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。")
         cx = float(panel.get("cx", cx0))
         h = float(panel.get("scale", CUT_SCALE)) * VIDEO_H
+        src = _cut_crop(Path(panel["cutout"]), panel.get("crop"))
         sink = float(versus.get("sink", CUT_SINK)) + float(panel.get("dy", 0))
         bottom = _cutout_geometry(cx, seam) + sink
         css.append(f".c-{side}{{left:{cx * 100:.2f}%;top:{bottom - h:.0f}px;"
                    f"height:{h:.0f}px}}")
-        imgs.append(f'<img class="cut c-{side}" '
-                    f'src="{_data_uri(Path(panel["cutout"]))}">')
+        imgs.append(f'<img class="cut c-{side}" src="{_data_uri(src)}">')
     body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
             f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'
             f'<div class="nm" style="top:{seam * 100:.1f}%">'

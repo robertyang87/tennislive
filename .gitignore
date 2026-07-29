@@ -26,3 +26,8 @@ output/grand-slam-vertical-v2/_work/
 
 # 找图时下载的候选，看完即弃
 tools/broll/
+
+# 海报模板的裁切中间物：`_precrop` 存 .crop.jpg，`_cut_crop` 存 .crop.png
+# （抠图要保 alpha，所以走 PNG）。两个都落在原图旁边，渲完即弃，别进仓库。
+*.crop.jpg
+*.crop.png
