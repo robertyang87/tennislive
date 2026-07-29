@@ -609,3 +609,42 @@ def test_japan_events_do_not_borrow_each_others_city():
         if got is None or got.slug != expected:
             wrong.append(f"{name}（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
     assert not wrong, "日本三站互相串了城市：\n" + "\n".join(wrong)
+
+
+def test_stuttgart_events_do_not_share_one_venue():
+    """斯图加特两站在**两个场馆**，一张图不许同时命中。
+
+    - 4 月 WTA500「Porsche Tennis Grand Prix」在 **Porsche-Arena**，室内红土
+    - 6 月 ATP250「Boss Open」在 **TC Weissenhof**，室外草地
+
+    同城、同名（赛历里中文都叫「斯图加特公开赛」）、不同场馆、连场地类型都不同。
+    和东京／大阪那对是同一类，只是那对是「同名不同城」，这对是「同城不同馆」。
+
+    这条测试现在是**预防性**的：两站都还没有图，所以都返回 None，测试通过。
+    它拦的是下一次——谁按 `stuttgart` 这个别名加一张图，就会同时套住两站，
+    于是 6 月的草地赛事印出一张室内红土馆。**别名要写赛事名，不是城市名**：
+    WTA 那站认 `porsche`，ATP 那站认 `boss open`，真要共用城市别名就得配
+    `only_tour`（见 `_specificity`）。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour, month: int):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, 20, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    wta = venue_asset_for_match(_m("Porsche Tennis Grand Prix", Tour.WTA, 4))
+    atp = venue_asset_for_match(_m("Boss Open", Tour.ATP, 6))
+    if wta is None and atp is None:
+        return  # 两站都还没有图，还没到会出错的时候
+    assert not (wta and atp and wta.slug == atp.slug), (
+        f"斯图加特两站套上了同一张图（{wta.slug}）——"
+        "4 月 WTA 在 Porsche-Arena（室内红土），6 月 ATP 在 Weissenhof（室外草地），"
+        "是两个场馆。别名按赛事名写（porsche / boss open），或配 only_tour")
