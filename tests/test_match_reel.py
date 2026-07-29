@@ -678,3 +678,31 @@ def test_封面固定版式是抠图不是抽帧():
                    for cx in versus_poster.CUT_CX)
     assert left > right, "左端应该更低（y 更大）"
     assert 50 < left - right < 70, f"两脚高差 {left - right:.0f}px 不对"
+
+
+def test_等复制页的预算要够Pages发布():
+    """**「等不到」和「没等够」长得一模一样**，代价却完全不对称。
+
+    2026-07-29 王欣瑜那条：`wait_for_copy_page` 探了 12 次 × 15 秒 = 3 分钟，
+    全是 404，exit 1，微信一个字没发出去——而复制页在这一步放弃**之后**才
+    发布出来（沙箱里探到 200，内容正是那一版）。多等几分钟只是让 runner 空转，
+    等不够就是整条推送作废、前面六分钟的渲染白跑。
+
+    所以默认预算至少 8 分钟，而且**上限要留在默认值之上**——上限卡在 30 时，
+    环境变量把次数往上调是调不动的。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import inspect  # noqa: PLC0415
+
+    import push_reel  # noqa: PLC0415
+
+    sig = inspect.signature(push_reel.wait_for_copy_page)
+    attempts = sig.parameters["attempts"].default
+    delay = sig.parameters["delay"].default
+    assert attempts * delay >= 480, f"只等 {attempts * delay:.0f} 秒，不够 Pages 发布"
+
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    cap = re.search(r"min\((\d+), int\(os\.environ\.get\(\"TENNISLIVE_COPYPAGE_ATTEMPTS",
+                    src)
+    assert cap, "找不到次数上限"
+    assert int(cap.group(1)) > attempts, "上限不能卡在默认值上，否则调不上去"
