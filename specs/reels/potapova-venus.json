@@ -1,0 +1,108 @@
+{
+  "slug": "potapova-venus",
+  "source_url": "https://www.youtube.com/watch?v=CHM9qmelvyg",
+  "_source": "WTA 官方集锦（频道 @WTA，oEmbed 报的 author_name 就是 WTA），437.3 秒，1920×1080。标题自证四要素：「Anastasia Potapova vs. Venus Williams | 2026 Washington, DC Round 1 | WTA Match Highlights」。缩略图墙再证一次：记分条全程 A POTAPOVA / V WILLIAMS，场地印 WASHINGTON D.C.，138.5s 有官方盘分图 6/3，294.5s 有官方赛果图 ROUND 1 · POTAPOVA 6 6 / VENUS WILLIAMS 3 3。",
+  "_cut": "比赛内容止于 299.88（场景切点），300s 起是波塔波娃的场边采访，全部不要——这条片子讲的是比赛本身。选段一律卡在 probe 报的真实剪辑点上，只有开头一段是镜头内取窗口。第一版 13 段 2 分 38 秒，剪成 11 段 2 分 10 秒：丢掉的两段（16.5-24.0、200.2-213.72）没有旁白也没有具体节点，是纯填充；另有两段起点从镜头中段收到真实切点上（101.24→103.12、150.16→154.96）。已发的两条是 69 秒和 83 秒，这条讲的是完整两盘，长一些，但不该长一倍。",
+  "_tracking": "全片固定中心，不横摇；固定中心按整段运动质心的中位数自动定（auto_center）。转播机位从头到尾没动，没有一段需要摇。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "hook": "一发还赢七成八\n二发只剩两成四",
+    "winner": "波塔波娃",
+    "result": "6-3 6-3",
+    "tier": "WTA 500",
+    "round": "R1",
+    "meta": "华盛顿 · 1 小时 15 分",
+    "layout": "diagonal",
+    "versus": {
+      "_why": "两格都是本场（2026-07-28 华盛顿女单首轮，Rock Creek Park）的真实照片。**本场的判据是球衣**：官方集锦里大威穿深藏青连衣裙配白色遮阳帽、波塔波娃穿浅蓝条纹两件套，两张照片都对得上——比图注更硬，因为图注可以缺，球衣不会骗人。下格大威是失误后的懊恼帧：账号所有者定的口径是「时间地点人物匹配上这是基本，有情绪的高清照片也可以，懊恼也可以，是比赛中的一部分」。出处见 assets/reel/potapova-venus.credits.json。",
+      "split": 0.46,
+      "names": [
+        "波塔波娃",
+        "大威廉姆斯"
+      ],
+      "top": {
+        "image": "assets/reel/potapova-washington-2026.jpg",
+        "focus": 0.5,
+        "focus_y": 0.0,
+        "zoom": 1.0
+      },
+      "_bottom_why": "上下位置是账号所有者指定的：波塔波娃在上，大威在下。下格用 `fit: width` 而不是 cover——大威那张头顶几乎没有留白（头在 y≈40/1601），按高度铺满会把她挤到最右、头顶被中缝压掉（比过 zoom 1.30 和 1.15，都是这个毛病）。**focus_y=1.0 是「再往下移一点」那一步**：按宽度铺之后图比格子矮 58px，focus_y 就在这 58px 里挪，取 1.0 把整张图压到格底，头顶那 58px 让给模糊垫层，名字不再压着她。也试过缩到 zoom 0.92 换 115px 下移——垫层那条带子就看得出来了，人还小了 8%，不值。",
+      "bottom": {
+        "image": "assets/reel/venus-washington-2026.jpg",
+        "fit": "width",
+        "focus": 0.5,
+        "focus_y": 1.0,
+        "zoom": 1.0
+      }
+    },
+    "_copy_why": "钩子下面那一块用 2026-07-29 重做的三级结果块（和 wang-pareja 同一套），不再是 score 一整句加一行灰 sub——那样级别、轮次、赛事、时长四样挤在同一行灰字里，扫过去一样重。现在赢家（白）+ 盘分（品牌绿、数字大一档）+ 败者（灰，从 versus.names 推，不另写），级别和轮次做成描边药丸，赛事与时长走次级灰。"
+  },
+  "segments": [
+    {
+      "start": 2.0,
+      "end": 11.6,
+      "fit": "crop",
+      "narration": "华盛顿首轮，四十六岁的大威廉姆斯，手里是一张外卡。去年也是在这站，她赢下了到今天为止的最后一场球。"
+    },
+    {
+      "start": 45.6,
+      "end": 55.68,
+      "fit": "crop",
+      "narration": "第一盘她一度三比二领先。之后波塔波娃连下七局。"
+    },
+    {
+      "start": 60.6,
+      "end": 67.56,
+      "fit": "crop",
+      "narration": ""
+    },
+    {
+      "start": 103.12,
+      "end": 115.44,
+      "fit": "crop",
+      "narration": "她的一发这天赢了七成八，三十七分里拿下二十九分。这个数字放在整个巡回赛都不算差。"
+    },
+    {
+      "start": 117.28,
+      "end": 128.32,
+      "fit": "crop",
+      "narration": ""
+    },
+    {
+      "start": 133.44,
+      "end": 139.44,
+      "fit": "crop",
+      "narration": "第一盘六比三。"
+    },
+    {
+      "start": 154.96,
+      "end": 164.6,
+      "fit": "crop",
+      "narration": ""
+    },
+    {
+      "start": 185.44,
+      "end": 196.04,
+      "fit": "crop",
+      "narration": "塌下来的是二发。二十九分只赢了七分，两成四。"
+    },
+    {
+      "start": 241.08,
+      "end": 263.4,
+      "fit": "crop",
+      "narration": ""
+    },
+    {
+      "start": 263.4,
+      "end": 284.64,
+      "fit": "crop",
+      "narration": "一小时十五分，六比三、六比三。今年九场全输，连败到了十二场；二十二盘里，她赢下过四盘。"
+    },
+    {
+      "start": 289.84,
+      "end": 299.88,
+      "fit": "crop",
+      "narration": "她最后一次赢球，就在这站。下一次会在哪儿？"
+    }
+  ]
+}
