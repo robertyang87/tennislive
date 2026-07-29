@@ -296,17 +296,25 @@ def test_伊埃拉按译名表写():
             assert wrong not in text, f"{path} 里出现了 {wrong}"
 
 
-def test_VS拼接两格都出自这场比赛():
-    """封面上写着赛事和比分，配一张别处的图就是「讲法网配温网」那个错。
-    这条片子：上格是这场集锦的一帧，下格是 WTA 官方图库当天发的静态图。"""
+def test_VS拼接两格都用真实照片():
+    """**封面不抽帧。** 1920×1080 的一帧裁 9:16 要放大 1.78 倍，比官方照片软一大截，
+    而封面是唯一决定人点不点的那一屏。官方图库里这场只有伊埃拉的照片——那就把范围
+    扩到图库里她对手最近的一张真实照，也不退回抽帧。每一格的出处和日期都要记下来，
+    尤其是**不是本场**的那一格，别让下一个人以为它就是本场。
+    """
     spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
     versus = spec["cover"]["versus"]
-    assert "frame_at" in versus["top"]                 # 来自本场源片
-    image = Path(versus["bottom"]["image"])
-    assert image.is_file(), image
     credits = json.loads(
         Path("assets/reel/eala-zheng.credits.json").read_text("utf-8"))
-    entry = credits[image.name]
-    assert entry["date"] == "2026-07-28" and "华盛顿" in entry["event"]
-    # 为什么另一格只能用视频帧，要写下来，别让下一个人重新踩一遍
+    for key in ("top", "bottom"):
+        side = versus[key]
+        assert "frame_at" not in side, f"{key} 用了抽帧"
+        image = Path(side["image"])
+        assert image.is_file(), image
+        entry = credits[image.name]
+        assert entry["source"] and entry["credit"]
+        assert entry.get("date") or entry.get("uploaded"), image.name
+    # 非本场的那一格必须把「不是本场」写在明面上
+    assert "不是华盛顿这场" in credits["zheng-2026-r1.jpg"]["event"]
+    # 为什么绕了这么大一圈，要留给下一个人
     assert "soft-404" in credits["_zheng"]["note"]

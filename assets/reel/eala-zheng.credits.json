@@ -10,9 +10,20 @@
     "checked": "打开看过：伊埃拉在 WASHINGTON, D.C. 字墙前反手击球，单人。"
   },
   "_zheng": {
-    "note": "郑钦文这场没有可取的官方静态图。查过 WTA 图库、赛事站、AFP（两家菲媒）、GMA 图集，全是伊埃拉单人；按 eala-1920.jpg 的规律猜的五个 zheng 文件名全是 soft-404（200 + text/html，53.7 KB 同一张错误页，只看状态码会误判为命中）。赛后握手的照片指向 Getty 付费库。所以另一格取官方集锦里的一帧，同样出自这场。"
+    "note": "郑钦文这场没有可取的官方静态图。查过 WTA 图库、赛事站、AFP（两家菲媒）、GMA 图集，全是伊埃拉单人；按 eala-1920.jpg 的规律猜的五个 zheng 文件名全是 soft-404（200 + text/html，53.7 KB 同一张错误页，只看状态码会误判为命中）。赛后握手的照片指向 Getty 付费库。所以另一格取官方集锦里的一帧，同样出自这场。 后来在图库里找到了她 2026-07-13 的真实照片（Zheng-R1-AG.jpg），封面改用它，不再抽帧。"
   },
   "_rejected": {
     "inquirer": "sports.inquirer.net 那张文件名带 Alex-Qinwen，打开是媒体自制宣传图——两张单人头像加烧录大字，不是真实时刻，弃用。文件名对题不等于画面对题。"
+  },
+  "zheng-2026-r1.jpg": {
+    "source": "WTA 官方图库 photoresources.wtatennis.com",
+    "url": "https://photoresources.wtatennis.com/photo-resources/2026/07/13/29dff0b0-47fb-4098-8608-896512ea3c79/Zheng-R1-AG.jpg?width=2048",
+    "credit": "WTA（文件名 Zheng-R1-AG：郑钦文、首轮、摄影 AG）",
+    "uploaded": "2026-07-13",
+    "size": "2048x1365",
+    "event": "**不是华盛顿这场**——图库上传日期 2026-07-13，早于华盛顿首轮（07-28）两周，具体是哪站没有自证信息，不猜。",
+    "why": "封面 VS 拼接的一格。华盛顿这场找不到她的真实照片（见 _zheng），而封面不该用视频抽帧——所以取图库里最近的一张真实高清照。她身上是这场同一套粉色球衣（Alipay+ / vivo），蓝色硬地。",
+    "checked": "打开看过：郑钦文单人，握拳，球网在身后。",
+    "note": "取图要带 ?width=2048，不带参数图库一律返回 400。"
   }
 }

@@ -773,7 +773,9 @@ def build_versus_base(source: Path, versus: dict, dest: Path,
         img = Image.open(src).convert("RGB")
         # 铺满这一格：先按较大的那个比例缩，再按 focus 横向取一段。
         # focus 是这一格里人在原图的横向位置（0~1），默认正中。
-        scale = max(VIDEO_W / img.width, height / img.height)
+        # zoom 把人拉近。铺满只保证不留边，不保证人够大——广角实拍里球员常常
+        # 只占画面三分之一，直接铺满就是一个小人贴在压暗区里。
+        scale = max(VIDEO_W / img.width, height / img.height) * float(side.get("zoom", 1.0))
         img = img.resize((max(1, round(img.width * scale)),
                           max(1, round(img.height * scale))), Image.LANCZOS)
         # focus / focus_y：人在原图里的位置（0~1）。**竖向也要能调**——VS 卡的
@@ -805,6 +807,10 @@ def _render_cover_html(cover: dict, grab: Path, dest: Path,
 
     seam = int(float(cover.get("versus", {}).get("split", 0.44)) * VIDEO_H)
     vs_badge = (f'<div class="vs" style="top:{seam}px">VS</div>' if versus else "")
+    # 渐变从哪儿起：单图封面 44%（上半张几乎不动，糊了就看不出是哪一场）；
+    # **VS 拼接要往下挪到 58%**——接缝就在 46%，44% 起等于把整个下格压进暗部，
+    # 下面那个人只剩一个黑影。压暗要按文字落在哪一段算，不是整张按比例推。
+    grad = 58 if versus else 44
     lines = "".join(
         f"<div>{line.strip()}</div>"
         for line in str(cover.get("hook", "")).split("\n") if line.strip()
@@ -818,7 +824,8 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
 /* 渐变从 44% 高处才起，到文字那一带接近全黑——压暗要按文字落在哪一段算，
    不是整张按比例推。上半张几乎不动，糊了就看不出是哪一场。 */
 .s{{position:absolute;inset:0;background:linear-gradient(
-   180deg,rgba(4,18,13,0) 44%,rgba(4,18,13,.72) 62%,rgba(4,18,13,.94) 78%)}}
+   180deg,rgba(4,18,13,0) {grad}%,rgba(4,18,13,.72) {grad + 18}%,
+   rgba(4,18,13,.94) {grad + 34}%)}}
 .c{{position:absolute;left:78px;right:78px;bottom:250px;z-index:3;
    display:flex;flex-direction:column;align-items:flex-start;gap:26px}}
 .k{{background:#c6f65a;color:#062018;font-family:'TL Sans SC',sans-serif;

@@ -9,17 +9,19 @@
     "score": "伊埃拉 4-6 6-4 6-1 郑钦文",
     "sub": "华盛顿首轮 · 2 小时 26 分",
     "versus": {
-      "_why": "两格都出自这场：上格是官方集锦第 120.5 秒的郑钦文，下格是 WTA 官方图库当天发的伊埃拉（Eala-R1-EC.jpg，Emilee Chinn）。郑钦文这场没有可取的官方静态图，见 assets/reel/eala-zheng.credits.json。",
+      "_why": "两格都是真实高清照片，不抽帧。上格郑钦文取自 WTA 图库 Zheng-R1-AG.jpg（2026-07-13，非本场，同一套球衣），下格伊埃拉取自图库当天发的 Eala-R1-EC.jpg（2026-07-28，本场）。取舍写在 assets/reel/eala-zheng.credits.json。",
       "split": 0.46,
       "top": {
-        "frame_at": 120.5,
+        "image": "assets/reel/zheng-2026-r1.jpg",
         "focus": 0.5,
-        "focus_y": 0.5
+        "focus_y": 0.44,
+        "zoom": 1.08
       },
       "bottom": {
         "image": "assets/reel/eala-washington-2026.jpg",
-        "focus": 0.5,
-        "focus_y": 0.4
+        "focus": 0.42,
+        "focus_y": 0.44,
+        "zoom": 1.1
       }
     }
   },
