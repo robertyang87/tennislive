@@ -294,3 +294,19 @@ def test_伊埃拉按译名表写():
         assert "伊埃拉" in text, path
         for wrong in ("埃拉拉", "伊阿拉", "阿莱克斯"):
             assert wrong not in text, f"{path} 里出现了 {wrong}"
+
+
+def test_VS拼接两格都出自这场比赛():
+    """封面上写着赛事和比分，配一张别处的图就是「讲法网配温网」那个错。
+    这条片子：上格是这场集锦的一帧，下格是 WTA 官方图库当天发的静态图。"""
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    assert "frame_at" in versus["top"]                 # 来自本场源片
+    image = Path(versus["bottom"]["image"])
+    assert image.is_file(), image
+    credits = json.loads(
+        Path("assets/reel/eala-zheng.credits.json").read_text("utf-8"))
+    entry = credits[image.name]
+    assert entry["date"] == "2026-07-28" and "华盛顿" in entry["event"]
+    # 为什么另一格只能用视频帧，要写下来，别让下一个人重新踩一遍
+    assert "soft-404" in credits["_zheng"]["note"]
