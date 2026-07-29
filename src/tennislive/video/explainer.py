@@ -76,6 +76,18 @@ _PAGES_URL = os.environ.get(
 _SLIDE_JPEG_QUALITY = 86
 
 
+class _Unset:
+    """「这个参数没传」的哨兵，用来和「传了 None」区分开。
+
+    复制页的 URL 上，两者含义相反：没传＝调用方没探过，按老规矩自己拼一个；
+    传 None＝调用方探过了、链接取不到，别放那个按钮。用 None 当默认值就把
+    这两件事压成一件，「没探」会被当成「探过了没有」，按钮无声消失。
+    """
+
+
+_UNSET = _Unset()
+
+
 class ExplainerVideoError(RuntimeError):
     pass
 
@@ -1960,6 +1972,99 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # ⚠️ 「签表上写着 WC」这句话不通用：温网 2026 官方签表 PDF 里
     # 「WC」出现 0 次，用的是 (W)/(Q)/(L)。所以第 ① 屏的画面是澳网，
     # 旁白也把两种写法都点出来，别笼统说「签表上都写 WC」。
+    # 蒂姆这条**一张示意图都没有**，六屏全是实拍。账号所有者的原话：
+    # 「不一定要有示意图，示意图是真实图片解释不了的时候再用示意图」。
+    # 我第一版给「同一天」那个巧合画了张对照图，理由站不住——我伸手去画的
+    # 真实原因是**找不到他踢球的照片**，那正是文档里标 ❌ 的那一档
+    # （「找不到合适的照片」≠「照片本身讲不清」）。
+    #
+    # 后来照片找到了（见 assets/.../credits.json 的 kicking.jpg），于是
+    # 「同一天」并进夺冠那一屏：两个日期写在同一张卡上，自己就成立，
+    # 不需要画。顺带避开了「①屏埋钩子、③屏才兑现」那种悬空写法。
+    "thiem-football": (
+        (
+            "now",
+            "答案",
+            "第八级联赛，替补 12 分钟破门",
+            "答案是奥地利联赛金字塔最底下那一层，第八级。今年七月十五日，他在"
+            "奥地利足协重新登记成了球员，转会到一家一八九九年成立的老俱乐部——"
+            "那是下奥地利州最古老的球队，一九三五年拿过全国业余冠军。俱乐部的"
+            "足球部负责人只说了一句：在我们这儿，谁都得自己去争首发。"
+            "而在那之前，二〇二五年九月十三日，他为家乡队替补上场，十二分钟后"
+            "打进一球，把比分改成三比二——踢球以来第八场正式比赛的第一粒进球。"
+            "那一天，正好是他在纽约拿下美网的五周年。",
+            "assets/explainer/thiem-football/kicking.jpg",
+            "GEPA pictures 经 laola1 转载 · 蒂姆在业余球场上（来源未标注时间与地点，unverified）",
+            (
+                "2026.7.15 在足协登记，打第 8 级",
+                "2025.9.13 替补 12 分钟破门",
+                "同月同日，正是美网夺冠 5 周年",
+            ),
+        ),
+        (
+            "decline",
+            "断点",
+            "手腕伤之后，正手回不来了",
+            "中间发生的事是手腕。那处伤拖了很久，回来之后他的正手不再是原来那个正手——"
+            "而正手是他整套打法的支点。他后来说，他早就知道自己的生涯要结束了。",
+            "assets/explainer/thiem-football/monte_carlo_2023.jpg",
+            "si.robi · CC BY-SA 2.0 · Wikimedia Commons · 2023 年 4 月 10 日蒙特卡洛大师赛",
+            (
+                "手腕伤拖了很久，正手回不来了",
+                "图为 2023 年 4 月蒙特卡洛大师赛",
+                "「我早就知道生涯要结束了」",
+            ),
+        ),
+        (
+            "farewell",
+            "最后一场",
+            "主场首轮出局，全场没人走",
+            "二〇二四年十月二十二日，维也纳，他的主场。首轮六比七、二比六负于达尔代里，"
+            "九十一分钟。球打完了，全场没人走。那年他三十一岁，十七个巡回赛冠军，"
+            "一座大满贯。",
+            "assets/explainer/thiem-football/vienna_farewell.jpg",
+            "erstebank-open.com 官方图 · 2024 年 10 月 22 日维也纳，蒂姆打完最后一场后向全场挥手",
+            (
+                "2024.10.22 维也纳首轮，91 分钟",
+                "6-7(6) 2-6 负于达尔代里",
+                "31 岁退役，17 个巡回赛冠军",
+            ),
+        ),
+        (
+            "crossover",
+            "另一条路",
+            "她换了个赛场，当上世界第一",
+            "网球运动员离开之后能走到哪儿，历史上给过很不一样的答案。玛尔塔·马雷罗，"
+            "西班牙人，WTA 单打最高世界第四十七，法网八强。二〇一三年她改打板式网球，"
+            "一种在玻璃墙里打的拍类项目。三年之后，她做到了那个项目的世界第一——"
+            "在第二个赛场上，比在第一个赛场上高得多。",
+            "assets/explainer/thiem-football/marrero_padel.jpg",
+            "Harpagornis · CC BY-SA 4.0 · Wikimedia Commons · 2019 年 5 月世界板式网球巡回赛维戈站，马雷罗",
+            (
+                "马雷罗：WTA 单打最高第 47",
+                "2013 年改打板式网球",
+                "2016 年做到该项目世界第 1",
+            ),
+        ),
+        (
+            "mirror",
+            "反过来",
+            "金球奖得主，45 岁去打网球",
+            "也有人是反着走的。迭戈·弗兰，二〇一〇年世界杯金球奖得主。二〇一八年"
+            "他从足球退役，二〇二四年十一月十三日，四十五岁的他在蒙得维的亚的挑战赛"
+            "打了职业网球首秀，双打，主场坐满。一比六、二比六，输了。"
+            "一个足球金球奖跑去打网球，一个网球大满贯冠军跑去踢第八级联赛。",
+            "assets/explainer/thiem-football/forlan_tennis.jpg",
+            "图片社图经 Forbes 转载 · 2024 年 11 月蒙得维的亚挑战赛，弗兰的职业网球首秀",
+            (
+                "弗兰：2010 世界杯金球奖得主",
+                "2024.11.13，45 岁打网球首秀",
+                "1-6 2-6，主场满座",
+            ),
+            "",
+            "网球练出来的本事，换个赛场还剩多少？",
+        ),
+    ),
     "wildcard": (
         (
             "sheet",
@@ -2391,6 +2496,28 @@ _OPENINGS: dict[str, dict] = {
         # never match play, and no screen says otherwise.
         "image": "assets/explainer/venus-potapova/venus_serve.jpg",
         "credit": "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站赛前训练",
+    },
+    "thiem-football": {
+        "topic": "蒂姆退役之后：从大满贯到第八级联赛",
+        # 封面用他踢球那张，一眼就说清这条片子讲什么。**卡上不写日期**：
+        # 来源（GEPA 经 laola1）只给了 `Foto: © gepa`，没有图注、没有拍摄
+        # 时间地点，写年份就是靠看图推断。画面本身立得住的只有「他在踢球」，
+        # 那就只说这一句。
+        "question": "美网冠军退役两年后，在哪儿比赛？",
+        # 第一句必须在 5 秒内说完（上限 27 字）——0-2 落后翻盘那段挪去第二句。
+        "narration": "二〇二〇年美网，他拿了生涯唯一一座大满贯。"
+        "决赛先丢两盘，然后连扳三盘，第五盘抢七八比六，那年他世界第三。"
+        "四年之后，手腕伤让他在三十一岁退役。"
+        "美网冠军退役两年后，在哪儿比赛？",
+        # 封面本来想用他踢球那张（一眼说清这条片子讲什么），换成捧杯是被
+        # `test_封面图不许被放大` 逼回来的：那张 GEPA 图高只有 964px，
+        # 而卡片是 1080x1440，`fill = min(w/1080, h/1440)` 怎么裁都是 0.67
+        # ——封面一上来就放大 1.5 倍，和「别拿视频抽帧当封面」是同一个毛病。
+        # 加进 _UNDERSIZED 能让测试过，但那是把判据改成迁就素材。
+        # 踢球那张挪到第 ① 屏，正好落在讲「他现在在哪儿踢」的那一屏上；
+        # 封面用捧杯 + 「退役两年后在哪儿比赛」，悬念反而更足。
+        "image": "assets/explainer/thiem-football/trophy_2020.jpg",
+        "credit": "AP/Getty 经 CNN 转载 · 2020 年 9 月 13 日纽约，蒂姆举起美网男单奖杯",
     },
     "wildcard": {
         "topic": "外卡：一张不设上限的入场券",
@@ -3503,6 +3630,7 @@ def explainer_push_html(
     date,
     xhs_text: str,
     video_name: str = "explainer.mp4",
+    copy_url: str | None | _Unset = _UNSET,
 ) -> str:
     """Build the WeChat push using the knowledge post's own template.
 
@@ -3530,6 +3658,17 @@ def explainer_push_html(
     # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
     # 指向新片子。
     video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
+    # 复制页的按钮只在链接确认可达时才放进推送。**GitHub Pages 只服务 main**，
+    # 特性分支上生成的包它永远取不到，按钮点开就是 404——微信那条消息发出去
+    # 就收不回来。赛程那条线早就这么做了（cmd_schedule 调 live_copy_page_url），
+    # 解说片这条却把 URL 硬写在这儿：cli.py 里 `live_copy_page_url` 甚至已经
+    # import 了却没人用，是道装了一半的闸。
+    #
+    # 默认值用哨兵而不是 None：不传＝保持老行为（自己拼 URL），传 None＝
+    # 调用方探过了、探不到，别放按钮。两者必须分得开，否则「没探」会被当成
+    # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
+    if isinstance(copy_url, _Unset):
+        copy_url = f"{_PAGES_URL}/{rel}/copy.html"
     return knowledge_push_html_from_parts(
         date=date,
         image_urls=[
@@ -3537,7 +3676,7 @@ def explainer_push_html(
             for name in slides
         ],
         xhs_text=xhs_text,
-        copy_url=f"{_PAGES_URL}/{rel}/copy.html",
+        copy_url=copy_url,
         badge="知识解说视频",
         extra_action=(video_url, "▶ 打开 9:16 成片"),
     )
