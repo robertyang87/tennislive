@@ -56,6 +56,9 @@ JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
 # 标题末尾那句的字数上限。标题是给人扫的，不是给人读的——和「卡片上每条
 # 不超过 16 字」同一个道理：一句要换行才排得下，就说明它该被砍。
 SUMMARY_MAX = 20
+# 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
+# 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
+POSTER_NAME = "poster.jpg"
 
 
 def video_url(outdir: Path, name: str) -> str:
@@ -161,48 +164,74 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     return title, "\n".join(lines[start:]).strip()
 
 
-def build_html(video_url: str, copy_url: str, lead: str, copy_text: str) -> str:
-    """推送正文：先给人看的文案（标题 + 正文），再两个按钮。
+def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
+    """封面海报的图片链接。海报只有几百 KB，稳走 jsDelivr。"""
+    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
 
-    **文案要印在这儿，而且只印一遍。** 手机上先能读到这一条到底写了什么，
-    再决定要不要点进复制页——和知识帖那条推送同一个结构（`to_push_html`：
-    标题、正文、然后「分别复制标题 / 正文」的按钮）。
 
-    要避开的是**同一段印两遍**：以前正文印一遍、灰底复制块又印一遍，
-    字符串断言全过，人一看整页才发现。所以这里只印一遍，
-    「分开复制」交给复制页——微信里没法放能点的 JS 按钮。
+def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
+               poster: str = "") -> str:
+    """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
+
+        白卡（顶上一条 #ff2442 红边）
+          台头小药丸  →  大标题
+          海报，**铺满整卡宽，左右不留白边**
+          「图片没显示？点此打开原图」
+          「👇 正文全文如下，长按整段即可复制」
+          正文（pre-wrap，一整段）
+          ── 分隔线 ──
+          ▶ 打开竖版成片
+          分别复制标题 / 正文
+          图片长按保存
+
+    两处和参照不同，都是这条线自己的教训：
+
+    - **海报要铺满**。参照里那几张 slide 是 3:4 的卡片图，缩在 16px 内边距里
+      正好；海报是这条片子的第一眼，账号所有者的原话是「海报要铺满全屏的」。
+      所以白卡的 `padding` 拆开写——文字块各自带左右内边距，海报单独一行
+      顶到卡边。用负 margin 抵消内边距在微信里不可靠，**结构上让它没有内边距**
+    - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
+      人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
     """
-    def btn(url: str, text: str, bg: str, fg: str = "#fff") -> str:
-        return (f'<a href="{url}" style="display:inline-block;background:{bg};'
-                f'color:{fg};text-decoration:none;padding:13px 24px;'
-                f'border-radius:999px;font-weight:700;margin:0 10px 12px 0">'
-                f'{text}</a>')
-
     title, body = split_copy(copy_text)
-    paragraphs = "".join(
-        '<div style="color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px">'
-        + "<br/>".join(html.escape(line) for line in block.splitlines())
-        + "</div>"
-        for block in re.split(r"\n\s*\n", body) if block.strip()
-    )
-    return f"""<div style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;
- line-height:1.75;color:#1f2a24;max-width:640px">
-<p style="margin:0 0 16px">{html.escape(lead)}</p>
-<p style="margin:0 0 6px">
-{btn(video_url, "▶ 下载竖版成片", "#0f7a52")}
-{btn(copy_url, "📋 打开复制页（标题 / 正文分开复制）", "#c6f65a", "#062018")}
-</p>
-<div style="border-top:1px solid #e6ebe8;margin:14px 0 12px"></div>
-<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 6px">
-标题</div>
-<div style="font-size:19px;font-weight:800;color:#102d23;line-height:1.4;
- margin:0 0 16px">{html.escape(title)}</div>
-<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 8px">
-正文</div>
-{paragraphs}
-<p style="margin:10px 0 0;color:#5b6b63;font-size:14px">
-上面这份可以直接长按选；要一键复制就点「打开复制页」，标题和正文各有一个按钮。</p>
-</div>"""
+    pad = "padding:0 16px"
+    img = ""
+    if poster:
+        img = (f'<img src="{poster}" width="100%" alt="{html.escape(title)}"'
+               f' referrerpolicy="no-referrer"'
+               f' style="width:100%;display:block;margin:0 0 10px">'
+               f'<div style="text-align:center;margin:0 0 16px;{pad}">'
+               f'<a href="{poster}" style="color:#087747;font-size:13px;'
+               f'text-decoration:none">封面没显示？点此打开原图</a></div>')
+
+    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
+        return (f'<a href="{url}" style="display:block;background-color:{bg};'
+                f'color:{fg};text-align:center;text-decoration:none;'
+                f'font-weight:bold;padding:13px 16px;border-radius:6px;'
+                f'margin:0 0 7px">{text}</a>')
+
+    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;\
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<div style="max-width:680px;margin:0 auto;background-color:#ffffff;\
+border-top:5px solid #ff2442;padding:18px 0 22px">
+<div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
+color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
+赛场之上</div>
+<div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
+margin:10px 0 14px">{html.escape(title)}</div></div>
+{img}
+<div style="{pad}">
+<div style="font-size:15px;line-height:1.8;color:#25342e;margin:0 0 14px">\
+{html.escape(lead)}</div>
+<div style="color:#7a8580;font-size:12px;margin:0 0 8px">\
+👇 正文全文如下，长按整段即可复制</div>
+<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
+word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
+<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
+{btn(video_url, "▶ 打开竖版成片", "#102d23")}
+{btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
+<div style="text-align:center;color:#7a8580;font-size:12px">图片长按保存</div>
+</div></div></div>"""
 
 
 def main() -> int:
@@ -257,7 +286,15 @@ def main() -> int:
     wait_for_copy_page(copy_url, title)
 
     url = video_url(outdir, name)
-    body = build_html(url, copy_url, args.lead, copy_text)
+    # 海报没进仓库就别硬塞一个链接进去——那就是「推送正文里的每个链接，
+    # 指向的文件都必须在推送之前进仓库」那条踩过两次的规矩。缺了就退回无图版，
+    # 并且**说出来**，别让它悄悄少一屏。
+    poster = ""
+    if (outdir / POSTER_NAME).is_file():
+        poster = poster_url(outdir)
+    else:
+        print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
+    body = build_html(url, copy_url, args.lead, copy_text, poster)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")

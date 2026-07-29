@@ -3199,10 +3199,17 @@ _ASS_ALIGN = 8
 # 减 156 而不是更小：这样**两行的兜底情况**（1524+78×2=1680）也正好还在卡内。
 _ASS_MARGIN_V = CARD_TOP + CARD_H - 156
 # ASS 的颜色是 &HAABBGGRR：#e7f3ec → ecf3e7，深底 #141e18 → 181e14。
-_ASS_HEADER = f"""[Script Info]
+def _ass_header(height: int = VIDEO_H, margin_v: int = _ASS_MARGIN_V) -> str:
+    """ASS 头。**画布高度和上锚位置要能换。**
+
+    赛场之上的竖版片是 3:4（1080×1440），不是解说片的 9:16。`PlayResY` 写错，
+    libass 会按它和真实画面的比例把整套坐标缩一遍，字幕整体跑位——而且不报错。
+    默认值保持解说片原样，那组数是量真成片量出来的，别动。
+    """
+    return f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {VIDEO_W}
-PlayResY: {VIDEO_H}
+PlayResY: {height}
 WrapStyle: 0
 ScaledBorderAndShadow: yes
 
@@ -3211,20 +3218,23 @@ Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour,
 BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, \
 BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: TL,{_ASS_FONT},{_ASS_SIZE},&H00ECF3E7,&H000000FF,&H00181E14,&H00000000,\
-1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{_ASS_MARGIN_V},1
+1,0,0,0,100,100,0,0,1,3,0,{_ASS_ALIGN},{_ASS_MARGIN_H},{_ASS_MARGIN_H},{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 
-def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path) -> Path:
+def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
+                    *, height: int = VIDEO_H,
+                    margin_v: int = _ASS_MARGIN_V) -> Path:
     lines = [
         f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
         f"{_ass_text(shown.replace(chr(10), ' '))}"
         for start, end, shown in cues
     ]
-    path.write_text(_ASS_HEADER + "\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
+                    encoding="utf-8")
     return path
 
 

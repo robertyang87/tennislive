@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""把一条官方集锦剪成 9:16 的竖版短片：只留高光、中文解说、字幕、封面。
+"""把一条官方集锦剪成 3:4 的竖版短片：只留高光、中文解说、字幕、封面。
 
 两段式，因为**选段必须靠眼睛**：
 
     probe   下载源片 → 出场景切点 + 一张缩略图墙（带时间码）→ 提交进仓库
             人（或我）看着这张图挑出要哪几段、每段横向裁在哪儿
-    render  按 spec.json 剪 → 裁 9:16 → 合成中文解说 → 烧字幕 → 加封面 → 成片
+    render  按 spec.json 剪 → 裁 3:4 → 合成中文解说 → 烧字幕 → 加封面 → 成片
 
 ## 为什么必须在 GitHub Actions 上跑
 
@@ -15,9 +15,9 @@ player API），一取媒体就 403；用真 Chromium 打开播放页，页面�
 `playabilityStatus` = `UNPLAYABLE`。这不是「视频不存在」，是**这台机器不让下**
 ——又一次「空结果先自证是真空」。edge-tts 同理，本地取不到。
 
-## 裁剪：横向裁到 9:16，不是加模糊边
+## 裁剪：横向裁到 3:4，不是加模糊边
 
-1920×1080 裁成 9:16 就是 **608×1080**，再放大到 1080×1920。网球转播的主机位
+1920×1080 裁成 3:4 就是 **810×1080**，再放大到 1080×1440。网球转播的主机位
 在底线后方架高，球场是个左右对称的梯形，两个人大部分时间都在画面中间三分之一
 里——所以中间裁得住。裁掉的是两侧的双打边线外沿和看台。
 
@@ -81,7 +81,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
     CARD_TOP,
-    VIDEO_H,
+    VIDEO_H as _EXPLAINER_H,
     VIDEO_W,
     _BAND_COLOR,
     _ASS_MARGIN_H,
@@ -100,16 +100,34 @@ from tennislive.video.explainer import (  # noqa: E402
 # 这是「兜底和默认值出事的时候不吭声」的又一例：`fps=` 从不报错，只是默默补帧。
 FPS = 30            # 兜底值；render 开跑时按源片改写（见 resolve_fps）
 FPS_EXPR = "30"     # 传给 ffmpeg 的那份，保留分数形式（29.97 是 30000/1001）
-# 1080 高的源，9:16 的宽 = 1080*9/16 = 607.5。裁剪宽度必须是偶数，取 608。
-# 9:16 的裁切窗口。**按源片实际高度算，不是写死 1080**——`resolve_crop()` 在
+# 3:4 的裁切窗口。**按源片实际高度算，不是写死 1080**——`resolve_crop()` 在
 # render 开跑时改写这两个值。原来这里写死 1080，而源片有时只下到 360p，
-# `crop=608:1080` 直接被 ffmpeg 拒掉；那句「源片不是 1080 高，裁剪按等比换算」
+# `crop=810:1080` 直接被 ffmpeg 拒掉；那句「源片不是 1080 高，裁剪按等比换算」
 # 的提示只打印，从来没真的换算过（注释和行为对不上，跑起来才炸）。
 CROP_H = 1080
-CROP_W = 608
-# 低于这个高度的源片不值得做成片：裁成 9:16 再放到 1080 宽是放大好几倍。
+CROP_W = 810
+# **成片是 3:4（1080×1440），不是 9:16。** 定这个画幅的理由是「尽可能多保住主体」：
+#
+# - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里会被裁掉上下两条，
+#   海报的台头、比分、赛事行首当其冲——而那几行正是让人看懂这是哪一场的东西
+# - 从 1920×1080 的源片里取窗口，9:16 只有 **608px 宽**，3:4 有 **810px 宽**，
+#   多 33% 的球场。球飞到两边出画、窗口中心偏一点就丢半个场，这两件事同时缓解
+#
+# 代价是抖音/视频号播放时不铺满，上下留黑边——两边权衡下来，
+# 主体完整比铺满更要紧。解说片那条线仍是 9:16 画布 + 3:4 卡（`_EXPLAINER_H`），
+# 两条线的画幅是分开的，别互相牵动。
+VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
+# 字幕的上锚要跟着画布重算，不能沿用解说片那个 1524：那是在 1920 画布里、
+# 卡底（1680）往上 156px。这里整幅画布就是那张卡，所以同样是「卡底往上 156」，
+# 换算过来是 1440-156=1284。**保的是同一个物理位置**——量出来的那组数没变。
+_REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
+# 低于这个高度的源片不值得做成片：裁成 3:4 再放到 1080 宽是放大好几倍。
 MIN_SOURCE_H = 700
 COVER_SECONDS = 2.6
+# 封面海报**要进仓库**：推送正文的第一屏就是它（布局照着知识解说那条推送来），
+# 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
+# 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
+POSTER_NAME = "poster.jpg"
 # contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
@@ -191,10 +209,10 @@ def _has_audio(path: Path) -> bool:
 
 
 def resolve_crop(source_w: int, source_h: int) -> None:
-    """按源片实际高度定 9:16 的裁切窗口，太小的源片直接拒掉。
+    """按源片实际高度定 3:4 的裁切窗口，太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
-    看起来一切正常，直到 `crop=608:1080` 撞上 640×360 的源片才炸在第一段切片上
+    看起来一切正常，直到 `crop=810:1080` 撞上 640×360 的源片才炸在第一段切片上
     （run 30412173035）。所以这里既换算、也把不合格的源片挡在开跑前，
     别等渲了一半才发现。
     """
@@ -202,13 +220,13 @@ def resolve_crop(source_w: int, source_h: int) -> None:
     if source_h < MIN_SOURCE_H:
         raise ReelError(
             f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {MIN_SOURCE_H}）。"
-            "裁成 9:16 再放到 1080 宽是放大好几倍，成片糊得没法看。"
+            "裁成 3:4 再放到 1080 宽是放大好几倍，成片糊得没法看。"
             "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
             "或者换一个能拿到 720p 以上的源。"
         )
     CROP_H = source_h // 2 * 2
-    CROP_W = int(round(CROP_H * 9 / 16)) // 2 * 2
-    print(f"[裁切] 源片 {source_w}×{source_h} → 9:16 窗口 {CROP_W}×{CROP_H}")
+    CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
+    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}")
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
@@ -334,7 +352,7 @@ def download(url: str, dest: Path) -> Path:
         if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
             # **下到了不等于下对了。** 某些 player client 只放得出 360p，
             # yt-dlp 照样 returncode 0、照样有文件——直到裁切那一步才炸
-            # （run 30412173035：640×360 的源撞上 crop=608:1080）。
+            # （run 30412173035：640×360 的源撞上 crop=810:1080）。
             # 所以在这儿量一次高度，不够就换下一档 client 接着试。
             width, height = probe_size(dest)
             if height < MIN_SOURCE_H:
@@ -450,7 +468,7 @@ def load_spec(path: Path) -> dict:
 TRACK_FPS = 5.0        # 抽帧频率：够跟上回合，又不至于让镜头抖
 TRACK_SMOOTH = 13      # 平滑窗口（帧），越大越像摇臂
 TRACK_MAX_SPEED = 150  # 每秒最多摇多少像素，防止镜头追着球甩
-# **不出画就不摇。** 窗口只有 608 宽（源片的 32%），原来是 40px 死区跟着质心走，
+# **不出画就不摇。** 窗口只有 810 宽（源片的 42%），原来是 40px 死区跟着质心走，
 # 等于一直在摇——而源片是 25 fps，一横摇，画面里本该静止的底线、球网、广告板、
 # 看台全跟着滑，25 fps 下滑动的静止物最容易看出一格一格。窗口不动时只有人和球在动，
 # 眼睛对这个宽容得多。所以改成**边缘触发**：回合中心在窗口中间这一段里随便晃都不动，
@@ -573,115 +591,38 @@ def sample_track(coarse: list[tuple[float, float]],
             for t, x in zip(frames, smooth)]
 
 
-COURT_BAND = (0.40, 0.98)      # 只看近半场那一带：上面是看台和广告板
-COURT_INK = (0.02, 0.16)       # 线像素占比要落在这个区间才算「画面里有球场」
-COURT_MAX_SPREAD = 0.035       # 各帧估计值的标准差上限（占画面宽）
-
-
-def _court_axis(frame) -> float | None:
-    """一帧里球场中轴的横向位置（0~1）；这一帧里没有球场就返回 None。
-
-    **门槛是「线像素占比」，不是「有没有长直线」。** 一开始想用 HoughLinesP
-    数长直线，量下来根本不分家：真球场只有 5~29 条，而一段看台噪声能凑出
-    132 条共线像素——比球场还多。换成占比，实测立刻分开（都是成片真实帧）：
-
-        回合镜头   5.1% / 5.6% / 6.9% / 8.0% / 8.7% / 12.7%
-        网前特写   20.5% / 24.9%
-        看台       63.8%
-
-    球场是**干净场地上几根细线**，本来就该稀疏；人脸、球衣褶皱、看台上密密麻麻
-    的人头经 tophat 之后到处都是亮结构。上界 16% 落在 12.7 和 20.5 中间。
-    下界 2% 挡的是另一头：糊满整屏的大特写，一根线都没有。
-    """
-    import cv2
-    import numpy as np
-
-    gray = cv2.cvtColor(cv2.resize(frame, (640, 360)), cv2.COLOR_BGR2GRAY)
-    band = gray[int(360 * COURT_BAND[0]):int(360 * COURT_BAND[1])]
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (41, 41))
-    lines = cv2.morphologyEx(band, cv2.MORPH_TOPHAT, kernel)
-    _, mask = cv2.threshold(lines, 0, 255,
-                            cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    ink = float(mask.sum()) / 255.0 / mask.size
-    if not COURT_INK[0] <= ink <= COURT_INK[1]:
-        return None
-    profile = mask.sum(axis=0).astype(np.float64) / 255.0
-    # p ⊛ p 的峰值落在 2c 上：一条剖面和它的镜像对齐得最好的那条轴
-    peak = int(np.argmax(np.convolve(profile, profile)))
-    return peak / 2.0 / profile.size
-
-
-def court_center(source: Path, start: float, end: float, *,
-                 samples: int = 10) -> float | None:
-    """球场中轴在画面里的横向位置（0~1）；这一段里没有球场就返回 None。
-
-    **转播主机位是对着球场中轴架的，但「对着」不等于「在正中」。** 转播车会
-    为了带上记分条、球员通道或者某块广告板把机位偏一点点；1920 宽里偏一两百
-    像素肉眼根本看不出来，可竖版只裁 608 宽，同样的偏移就是**小半个球场**。
-    实测这条片子的回合镜头：左边网柱和奔驰广告板贴着画面左沿，右半场直接出画。
-
-    更要紧的是**不能拿运动质心当中心**。质心跟着人跑——人站哪边窗口就偏哪边，
-    而回合里两个人本来就轮流在两边，于是每一段的固定中心都被随机拽走一点。
-    「不摇」解决的是窗口在段内乱动，这条解决的是窗口**整段站错地方**。
-
-    判据是**球场左右对称于机位轴线**：把白线抽出来（tophat 只留细的亮结构，
-    球衣、皮肤这类大块亮斑留不下），按列统计得到一条剖面 p，再找一条轴让 p
-    和它自己的镜像重合得最好。这等价于取 `p ⊛ p` 的峰值位置除以二——
-    一次卷积就够，不用搜。
-
-    用整条剖面而不是「最左/最右那根线」，是因为场地上那行 `WASHINGTON, D.C.`
-    大字和球网两端的广告牌也是亮的，取极值会被它们拽走；对称性用的是全部结构。
-
-    两道门槛，缺一不可：**这一帧里得有球场**（`_court_axis` 按线像素占比判），
-    **各帧还得彼此吻合**。后一道单独用不住——一段看台噪声在统计上是左右对称的，
-    每一帧都稳稳报 0.499，「一致」得很，其实一根线都没有。
-    """
-    import cv2
-    import numpy as np
-
-    cap = cv2.VideoCapture(str(source))
-    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
-    picks = np.linspace(start, max(start, end - 1.0 / fps), samples)
-    guesses: list[float] = []
-    for at in picks:
-        cap.set(cv2.CAP_PROP_POS_MSEC, float(at) * 1000.0)
-        ok, frame = cap.read()
-        if not ok:
-            continue
-        axis = _court_axis(frame)
-        if axis is not None:
-            guesses.append(axis)
-    cap.release()
-    if len(guesses) < max(3, samples // 2):
-        return None
-    arr = np.array(guesses)
-    if float(arr.std()) > COURT_MAX_SPREAD:
-        return None                      # 各帧对不上，说明这段里没有球场
-    return float(np.median(arr))
-
-
-def auto_center(source: Path, seg: "Segment",
+def auto_center(source: Path, segs: "list[Segment]",
                 source_w: int) -> tuple[float, str]:
-    """不摇的那些段，固定中心**先钉球场中轴，钉不上才退回运动质心中位数**。
+    """不摇的那些段，**全片共用一个固定中心**：所有回合段的运动质心中位数。
 
-    返回 `(cx, 用了哪条判据)`——**打印出来是为了能一眼核对**：一条回合镜头
-    如果报的是「运动质心」，那就是球场没被认出来，八成要看一眼。
+    「一段一个中心」是这条线上真正的毛病。逐段取中位数，一段只有几秒、
+    往往就是一两个回合，谁那边球多中心就偏谁——实测九段取出来
+    0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 / 0.455 / 0.407，
+    在 1920 宽里前后差了 400 像素，而**转播机位从头到尾没动过**。
+    裁成竖版之后，这就是左边网柱贴着画面沿、右半场整个出画。
 
-    顺序不能反：有球场的时候球场说了算（见 `court_center`）；特写、看台、
-    庆祝这些没有球场的镜头才轮到质心——钉死画面不等于钉在正中，庆祝那一屏
-    人偏左，钉在 0.5 就把他挤到边上。中位数比均值稳，中间一两次大幅挥拍
-    带不动它。
+    池化到全片就对了：**一整场球的落点是对称于球场中轴的**，
+    样本一多，中位数自己收敛到中轴上（这批数据是 0.455）。同一个机位，
+    本来就该只有一个中心。
+
+    ⚠️ 曾经写过一版按白线剖面找对称轴的检测器（`p ⊛ p` 取峰值），
+    **合成画面上误差 0.001，真实素材上完全不成立**——108 张真源片帧
+    估出来的轴从 0.0 散到 0.85，没有任何聚集；把成片反解回去，
+    同一个机位解出 0.29~0.51。原因也说得通：机位一旦偏离中轴，
+    球场在画面里**本来就不再左右对称**，"找对称轴"找的不是球场中轴。
+    合成画面之所以过，是因为那张图除了球场什么都没有。别再走这条路。
+
+    个别段要另定，spec 里给 `cx`——那是人看着缩略图墙定的，说了算。
     """
-    court = court_center(source, seg.start, seg.end)
-    if court is not None:
-        return court, "球场中轴"
-    coarse = track_run(source, seg.start, seg.end, source_w, quiet=True)
-    if not coarse:
-        return 0.5, "画面正中（既没球场也没运动）"
     import numpy as np
 
-    return float(np.median([x for _, x in coarse])) / source_w, \
-        "运动质心（这段没找到球场）"
+    xs: list[float] = []
+    for seg in segs:
+        xs += [x for _, x in track_run(source, seg.start, seg.end, source_w,
+                                       quiet=True)]
+    if not xs:
+        return 0.5, "画面正中（全片都没取到运动）"
+    return float(np.median(xs)) / source_w, f"全片 {len(xs)} 个采样点的质心中位数"
 
 
 def track_shots(source: Path, segments: list["Segment"],
@@ -707,12 +648,17 @@ def track_shots(source: Path, segments: list["Segment"],
             runs.append([index])
 
     tracks: dict[int, list[tuple[float, int]]] = {}
-    for index, seg in enumerate(segments):
-        if seg.track or seg.fit == "contain" or seg.cx is not None:
-            continue
+    # **全片一个固定中心**，不是一段一个。同一个转播机位从头到尾没动过，
+    # 逐段各定各的等于让每一段跟着这几秒里谁的球多而左右横跳（实测 0.338~0.547，
+    # 1920 宽里差 400px）。给了 `cx` 的段仍然按人定的来。
+    fixed = [s for s in segments
+             if not s.track and s.fit != "contain" and s.cx is None]
+    if fixed:
         with stage("定心抽帧"):
-            seg.cx, how = auto_center(source, seg, source_w)
-        print(f"    [fixed] 第 {index} 段不摇，固定中心 cx={seg.cx:.3f}（{how}）")
+            shared, how = auto_center(source, fixed, source_w)
+        print(f"    [fixed] {len(fixed)} 段不摇，共用固定中心 cx={shared:.3f}（{how}）")
+        for seg in fixed:
+            seg.cx = shared
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -727,14 +673,14 @@ def track_shots(source: Path, segments: list["Segment"],
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None) -> Path:
-    """切一段、裁成 9:16、放大到 1080×1920。
+    """切一段、裁成 3:4、放大到 1080×1440。
 
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
     """
     # 两种取景。**默认 crop，铺满全屏——回合镜头也一样。**
     #
-    #   crop    真·9:16 裁切，铺满全屏。窗口只有 32% 宽（608/1920），球飞到
+    #   crop    真·3:4 裁切，铺满画布。窗口 42% 宽（810/1920），球飞到
     #           两边时确实会出画，但**铺满的观感赢过「不丢画面」**：竖版短片
     #           在手机上是整屏播的，上下留黑边等于把冲击力先折一半。
     #           这一条是人看过两版之后定的，不是推出来的。
@@ -852,14 +798,14 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     # （YouTube 对沙箱一律 403，cx 只能靠猜，猜错就是把人裁到边上）。
     # 取抓帧前后两秒的运动质心中位数——握手、庆祝这类镜头人不在正中。
     if cover.get("cx") is None:
-        probe = Segment(max(0.0, at - 1.2), at + 1.2, None, "")
+        probe = [Segment(max(0.0, at - 1.2), at + 1.2, None, "")]
         cx, how = auto_center(source, probe, source_w)
         print(f"    [cover] 没给 cx，自动定心 cx={cx:.3f}（{how}）")
     else:
         cx = float(cover["cx"])
     # 底图两种铺法：
     #
-    #   cover（默认）  真·竖版大图，9:16 裁切铺满整屏。1080p 里裁 608 宽再拉到
+    #   cover（默认）  真·竖版大图，3:4 裁切铺满整屏。1080p 里裁 810 宽再拉到
     #                 1080，是放大 1.78 倍，本来会糊——所以走 lanczos 再补一道
     #                 轻 unsharp，把放大吃掉的边缘找回来一点。**人要在框里**，
     #                 cx 按握手那两个人的位置量。
@@ -915,11 +861,13 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
                     "-frames:v", "1", "-q:v", "2", str(grab))
             side["image"] = str(grab)
         versus[key] = side
+    layout = str(cover.get("layout", "diagonal"))
+    poster = dest.parent / POSTER_NAME
     with stage("封面海报"):
-        build_poster({**cover, "versus": versus}, dest,
-                     layout=str(cover.get("layout", "diagonal")))
-    print(f"    [封面] 赛场之上海报 {cover.get('layout', 'diagonal')} → {dest.name}")
-    return dest
+        build_poster({**cover, "versus": versus}, poster, layout=layout)
+    poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
+    print(f"    [封面] 赛场之上海报 {layout} → {poster.name}")
+    return _still_to_clip(poster, dest)
 
 
 def _render_cover_html(cover: dict, grab: Path, dest: Path) -> Path:
@@ -967,7 +915,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
 
     page_file = dest.parent / "_cover.html"
     page_file.write_text(html, encoding="utf-8")
-    still = dest.parent / "_cover.jpg"
+    still = dest.parent / POSTER_NAME
     with stage("封面截图"), sync_playwright() as pw:
         # 先让 playwright 自己找（CI 上装在它的默认位置）；找不到再回退到
         # 显式路径（沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的目录带版本号，
@@ -985,6 +933,11 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
         page.screenshot(path=str(still), type="jpeg", quality=95)
         browser.close()
 
+    return _still_to_clip(still, dest)
+
+
+def _still_to_clip(still: Path, dest: Path) -> Path:
+    """封面静图 → 一小段带静音轨的视频，接进片头。"""
     with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
@@ -1144,8 +1097,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                       boundaries=marks, offset=offset))
         offset += seg.length
 
-    ass = write_subtitles(cues, outdir / "subtitles.ass")
-    print(f"字幕 {len(cues)} 行 → {ass.name}（上锚 MarginV={_ASS_MARGIN_V}，"
+    ass = write_subtitles(cues, outdir / "subtitles.ass",
+                          height=VIDEO_H, margin_v=_REEL_MARGIN_V)
+    print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
+          f"上锚 MarginV={_REEL_MARGIN_V}，"
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"

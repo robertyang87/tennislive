@@ -258,10 +258,12 @@ jobs:
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
-          # _cover.html 是封面那一屏的渲染输入，图以 data URI 内嵌，单个 12 MB，
-          # 之前漏在清单外，每出一版就往仓库里塞一份（和 source_av.mp4 同一个毛病）。
+          # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
+          # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
+          # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
           rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
-            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 

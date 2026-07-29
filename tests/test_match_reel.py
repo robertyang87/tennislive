@@ -175,8 +175,8 @@ def test_推送正文里印文案且只印一遍():
     assert page.count(title) == 1
     first = body_text.splitlines()[0]
     assert page.count(first) == 1
-    # 复制页的入口要说清楚它是干嘛的
-    assert "复制页" in page and "https://p/copy.html" in page
+    # 复制页的入口要在，按钮上写的是它能干嘛（标题和正文分开复制）
+    assert "https://p/copy.html" in page and "分别复制标题 / 正文" in page
 
 
 def test_yt_dlp装default才解得了n_challenge():
@@ -325,7 +325,7 @@ def test_VS拼接两格都用真实照片():
 
 def test_源片太小要在开跑前挡住(monkeypatch):
     """**下到 360p 也算「下载成功」**：yt-dlp 退到低画质那一档时 returncode 0、
-    文件也在，看起来一切正常，直到第一段切片撞上 `crop=608:1080` 才炸
+    文件也在，看起来一切正常，直到第一段切片撞上 `crop=810:1080` 才炸
     （run 30412173035，源片 640×360）。所以裁切窗口按源片实际高度算，
     太小的源片在开跑前就拒掉，别渲到一半才发现。"""
     reel = _reel()
@@ -337,9 +337,9 @@ def test_源片太小要在开跑前挡住(monkeypatch):
         raise AssertionError("360p 的源片被放过去了")
 
     reel.resolve_crop(1920, 1080)
-    assert (reel.CROP_W, reel.CROP_H) == (608, 1080)
+    assert (reel.CROP_W, reel.CROP_H) == (810, 1080)
     reel.resolve_crop(1280, 720)                 # 720p 也要能跑，按比例换算
-    assert (reel.CROP_W, reel.CROP_H) == (404, 720)   # 720*9/16=405，取偶
+    assert (reel.CROP_W, reel.CROP_H) == (540, 720)   # 720*3/4=540
 
 
 def test_下载不把编码当硬条件():
@@ -356,104 +356,6 @@ def test_下载不把编码当硬条件():
     assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
     assert "ext=m4a" not in picker
     assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
-
-
-def _court_frame(axis: float, w: int = 1280, h: int = 720):
-    """合成一帧「转播主机位」：球场中轴故意偏离画面正中，人站在另一边。
-
-    真源片在沙箱里取不到（YouTube 对沙箱一律 403），所以中轴的**准确度**
-    在这儿用合成画面验；「有没有球场」那道门槛用成片的真实帧验（下一个测试）。
-    两者分开，别拿一个去冒充另一个。
-    """
-    import cv2  # noqa: PLC0415
-    import numpy as np  # noqa: PLC0415
-
-    img = np.zeros((h, w, 3), np.uint8)
-    img[:, :] = (60, 90, 40)
-    cv2.rectangle(img, (0, 0), (w, int(h * .30)), (70, 60, 120), -1)   # 看台
-    cv2.rectangle(img, (0, int(h * .26)), (w, int(h * .32)), (110, 60, 40), -1)
-    cx = axis * w
-    far_y, near_y = int(h * .38), int(h * .96)
-    far_w, near_w = w * .17, w * .62
-    cv2.fillPoly(img, [np.array(
-        [[cx - far_w, far_y], [cx + far_w, far_y],
-         [cx + near_w, near_y], [cx - near_w, near_y]], np.int32)], (120, 70, 35))
-    white = (245, 245, 245)
-    for y in (far_y, near_y, int(h * .55), int(h * .74)):
-        t = (y - far_y) / (near_y - far_y)
-        half = far_w + (near_w - far_w) * t
-        cv2.line(img, (int(cx - half), y), (int(cx + half), y), white, 3)
-    for k in (-1.0, -0.72, 0.0, 0.72, 1.0):
-        cv2.line(img, (int(cx + k * far_w), far_y),
-                 (int(cx + k * near_w), near_y), white, 3)
-    cv2.rectangle(img, (0, int(h * .49)), (w, int(h * .52)), (30, 30, 30), -1)
-    # 场地上那行白色大字**故意画偏**：取「最左/最右那根线」会被它拽走
-    cv2.putText(img, "WASHINGTON, D.C.", (int(cx - near_w * .55), int(h * .90)),
-                cv2.FONT_HERSHEY_DUPLEX, 2.2, white, 6)
-    cv2.ellipse(img, (int(.74 * w), int(h * .78)), (26, 60), 0, 0, 360,
-                (200, 170, 210), -1)                       # 站在右边的人
-    return img
-
-
-def test_竖版窗口钉球场中轴而不是画面正中():
-    """**转播机位对着中轴，但不一定在正中。**
-
-    1920 宽里偏一两百像素肉眼看不出来，竖版只裁 608 宽，同样的偏移就是小半个
-    球场——已发的那条片子里左网柱和奔驰广告板贴着左沿、右半场直接出画。
-
-    更要紧的是不能拿运动质心当中心：质心跟着人跑，而回合里两个人轮流在两边。
-    所以合成画面里那个人固定站在 0.74，中轴给 0.44——**认对了就该报 0.44**。
-    """
-    import pytest  # noqa: PLC0415
-
-    pytest.importorskip("cv2")
-    reel = _reel()
-    for axis in (0.50, 0.44, 0.58):
-        got = reel._court_axis(_court_frame(axis))
-        assert got is not None, f"中轴 {axis} 的球场没被认出来"
-        assert abs(got - axis) < 0.02, f"中轴 {axis} → 认成 {got:.3f}"
-
-
-def test_没有球场的镜头不能硬报一个中轴():
-    """**「各帧彼此吻合」单独用不住。**
-
-    一段看台噪声在统计上左右对称，每帧都稳稳报 0.499，「一致」得很，其实一根线
-    都没有。真按它去钉窗口，庆祝、特写这些人不在正中的镜头就被拽回画面中间。
-
-    分家的判据是**线像素占比**，不是「有没有长直线」——量下来长直线根本不分家：
-    真球场 5~29 条，一段看台噪声能凑出 132 条，比球场还多。
-    """
-    import pytest  # noqa: PLC0415
-
-    pytest.importorskip("cv2")
-    import cv2  # noqa: PLC0415
-    import numpy as np  # noqa: PLC0415
-
-    reel = _reel()
-    rng = np.random.default_rng(7)
-    stand = cv2.GaussianBlur(
-        rng.integers(40, 190, (720, 1280, 3), dtype=np.uint8), (0, 0), 3)
-    assert reel._court_axis(stand) is None, "看台噪声被当成了球场"
-    # 另一头：糊满整屏的大特写，一根线都没有
-    flat = np.full((720, 1280, 3), 90, np.uint8)
-    cv2.ellipse(flat, (640, 430), (300, 380), 0, 0, 360, (140, 120, 110), -1)
-    assert reel._court_axis(flat) is None, "大特写被当成了球场"
-
-
-def test_球场判据的上下界是量出来的():
-    """把测出来的数钉住，别让人顺手把区间放宽。
-
-    都是成片的真实帧（`ffmpeg -ss` 抽的）：
-
-        回合镜头   5.1% / 5.6% / 6.9% / 8.0% / 8.7% / 12.7%
-        网前特写   20.5% / 24.9%
-        看台       63.8%
-
-    上界 16% 落在 12.7 和 20.5 中间；下界 2% 挡另一头的大特写。
-    """
-    reel = _reel()
-    lo, hi = reel.COURT_INK
-    assert lo <= 0.02 and 0.127 < hi < 0.205, reel.COURT_INK
 
 
 def test_赛场之上走固定海报模板():
@@ -497,3 +399,108 @@ def test_海报上的名字以译名表为准():
     top, bottom = spec["cover"]["versus"]["names"]
     assert top == player_zh("Zheng Qinwen"), top
     assert bottom == player_zh("Alexandra Eala"), bottom
+
+
+def test_成片是3比4不是9比16():
+    """**画幅定成 3:4，为的是尽可能多保住主体。**
+
+    两个理由，都是量出来的：
+
+    - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里被裁掉上下两条，
+      海报的台头、比分、赛事行首当其冲，而那几行正是让人看懂这是哪一场的东西
+    - 从 1920×1080 的源片里取窗口，9:16 只有 608px 宽，3:4 有 **810px 宽**，
+      多 33% 的球场。球飞到两边出画、窗口中心偏一点就丢半个场，同时缓解
+
+    代价是抖音/视频号不铺满。这是口径选择，问过了，选的就是这样。
+    """
+    reel = _reel()
+    assert (reel.VIDEO_W, reel.VIDEO_H) == (1080, 1440)
+    reel.resolve_crop(1920, 1080)
+    assert (reel.CROP_W, reel.CROP_H) == (810, 1080), (reel.CROP_W, reel.CROP_H)
+    # 解说片那条线**不受影响**：它仍是 9:16 画布 + 3:4 卡，两条线的画幅分开
+    assert reel._EXPLAINER_H == 1920
+
+
+def test_字幕上锚跟着画布重算():
+    """**沿用 1524 就跑位了。** 那个数是在 1920 画布里、卡底（1680）往上 156px；
+    这里整幅画布就是那张卡，同样是「卡底往上 156」换算成 1440-156=1284。
+    保的是同一个物理位置——量出来的那组数一个没动。
+
+    `PlayResY` 也要跟着改：写错的话 libass 按比例缩整套坐标，字幕整体跑位，
+    **而且不报错**。
+    """
+    reel = _reel()
+    assert reel._REEL_MARGIN_V == 1284, reel._REEL_MARGIN_V
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import _ass_header  # noqa: PLC0415
+
+    head = _ass_header(reel.VIDEO_H, reel._REEL_MARGIN_V)
+    assert "PlayResY: 1440" in head and ",1284,1" in head
+    # 解说片的默认值必须一个字节都没变
+    assert "PlayResY: 1920" in _ass_header() and ",1524,1" in _ass_header()
+
+
+def test_固定中心全片共用一个():
+    """**一段一个中心才是那个毛病。**
+
+    逐段取运动质心的中位数，一段只有几秒、往往就一两个回合，谁那边球多中心就
+    偏谁：实测九段是 0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 /
+    0.455 / 0.407，1920 宽里前后差 400px，而**转播机位从头到尾没动过**。
+
+    池化到全片才对：一整场球的落点对称于球场中轴，样本一多就收敛（这批是 0.455）。
+
+    ⚠️ 曾经写过一版按白线剖面找对称轴的检测器，合成画面上误差 0.001，
+    **真实素材上完全不成立**（108 张真源片帧估出来的轴从 0.0 散到 0.85）。
+    机位一旦偏离中轴，球场在画面里本来就不再左右对称——"找对称轴"找的不是
+    球场中轴。已经删掉，别再走这条路。
+    """
+    reel = _reel()
+    assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "全片共用一个固定中心" in src
+    # 签名收的是一批段，不是一段——池化本身就写在类型里
+    import inspect  # noqa: PLC0415
+
+    params = list(inspect.signature(reel.auto_center).parameters)
+    assert params[1] == "segs", params
+
+
+def test_海报进仓库且推送第一屏是它():
+    """海报要**进仓库**：推送正文的第一屏就是它，微信里得一眼看出谁打谁、几比几。
+
+    以前它叫 `_cover.jpg`、下划线开头，被「丢掉不进仓库的中间物」那步删掉了，
+    于是推送里一张图都没有，只有两个按钮。
+    """
+    reel = _reel()
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    assert reel.POSTER_NAME == push_reel.POSTER_NAME == "poster.jpg"
+    text = WORKFLOW.read_text(encoding="utf-8")
+    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    rm = " ".join(line for line in clean.splitlines()
+                  if not line.strip().startswith("#"))
+    assert "poster.html" in rm, "渲染输入（十几 MB 的 data URI）没被清掉"
+    assert "poster.jpg" not in rm.replace("poster.html", ""), "海报被误删了"
+
+
+def test_推送版式照着知识解说那条且海报铺满():
+    """账号所有者指定了参照（那条 7.29 的知识解说推送）和一条硬要求：
+    「海报要铺满全屏的」。
+
+    所以白卡的左右内边距**拆开写**——文字块各自带 `padding:0 16px`，海报单独
+    一行顶到卡边。用负 margin 去抵消内边距在微信里不可靠，结构上让它没有内边距。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    body = push_reel.build_html("https://x/v.mp4", "https://x/c.html", "导语",
+                                "标题一行\n\n正文一段", "https://x/poster.jpg")
+    assert "border-top:5px solid #ff2442" in body        # 参照那条红边
+    img = body[body.index("<img"):body.index(">", body.index("<img"))]
+    assert "width:100%" in img and "padding" not in img, img
+    assert "border-radius" not in img, "铺满就不该有圆角"
+    # 正文只印一遍
+    assert body.count("正文一段") == 1
+    # 没有海报时退回无图版，而不是塞一个空 img
+    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")

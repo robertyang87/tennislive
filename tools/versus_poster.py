@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -34,14 +35,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from tennislive.render.webcards import _font_css  # noqa: E402
 from tennislive.video.explainer import _data_uri  # noqa: E402
 
-VIDEO_W, VIDEO_H = 1080, 1920
+# **海报和成片同一个画幅：3:4（1080×1440）。**
+# 小红书的视频静态展示就是 3:4——9:16 的海报在信息流里被裁掉上下两条，
+# 台头、比分、赛事行首当其冲，而那几行正是让人看懂这是哪一场的东西。
+# 画幅本身定成 3:4，就不用再留什么「安全区」，整张海报都露得出来。
+VIDEO_W, VIDEO_H = 1080, 1440
 BRAND = "#c6f65a"          # 品牌绿
 INK = "#04120d"            # 深底
 TEXT = "#f4fbf7"
 DIM = "#9fb4aa"
 
 
-BAND = 7.0                 # 斜切带的半高（占画布高度的百分比）
+SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
+# 斜切带的半高，**从倾角推出来，不是另拍一个数**。画布 1080 宽，斜线从中点到
+# 一端升 540·tan(7.4°)=70px，占 1440 高的 4.87%。原来这里写死 7%——比画出来的
+# 那条线更陡，于是两张照片的交界和绿线**对不上**，而且下格被多切掉一条，
+# 伊埃拉的头正好卡在那一条里。两个数必须同源。
+BAND = 100.0 * (VIDEO_W / 2) * math.tan(math.radians(SEAM_ANGLE)) / VIDEO_H
 
 
 def _panel_css(side: str, image: Path, panel: dict,
@@ -133,7 +143,7 @@ def build(spec: dict, layout: str, out: Path) -> Path:
 
 
 def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
-    """把一个 `cover` 段落渲成 1080×1920 的海报。`build_match_reel` 直接调它。"""
+    """把一个 `cover` 段落渲成 1080×1440 的海报。`build_match_reel` 直接调它。"""
     versus = cover["versus"]
     top, bottom = versus["top"], versus["bottom"]
     # 名字是模板的一部分，不是可选装饰：只有两张脸的 VS 卡等于让人猜这是谁打谁，
@@ -179,7 +189,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   rgba(4,18,13,.42) 0%,rgba(4,18,13,0) 18%,rgba(4,18,13,0) 52%,
   rgba(4,18,13,.80) 72%,rgba(4,18,13,.96) 86%)}}
 .seam{{position:absolute;left:-6%;right:-6%;height:10px;background:{BRAND};
-  transform:translateY(-50%) rotate(-7.4deg);box-shadow:0 0 40px rgba(0,0,0,.5)}}
+  transform:translateY(-50%) rotate(-{SEAM_ANGLE}deg);box-shadow:0 0 40px rgba(0,0,0,.5)}}
 .vs{{position:absolute;left:50%;transform:translate(-50%,-50%);z-index:5;
   width:176px;height:176px;border-radius:50%;background:{BRAND};color:{INK};
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
