@@ -50,9 +50,14 @@ VENUES = [
      "File:Historical peninsula and modern skyline of Istanbul.jpg", None),
     # 雅西：原来用的是文化宫地标。Baza Sportivă Ciric 的中心球场满场照在
     # 罗马尼亚新闻站上（红土、两侧蓝色看台、树林作背景），整个碗都在竖切里。
-    # 顺带记一条：**atptour.com 这次没有 403**——它的
-    # /-/media/images/atp-tournaments/tournament-images/<slug>-<year>-venue.jpg
-    # 是按赛事 slug 命名的，可以直接拼；封锁看来是间歇性的，值得每轮再试一次。
+    # 顺带记一条，纠正 CLAUDE.md 里「ATP 总站封」那个说法：**403 是按文件来的，
+    # 不是整站**。同一时刻 iasi-2023-venue.jpg 返回 200 + image/jpeg，
+    # gstaad-2023-venue.jpg / hamburg-2023-venue.jpg 返回 403——Sitecore 对
+    # 不存在的媒体就是回 403 而不是 404。所以：
+    #   - `<slug>-<year>-venue.jpg` 这个命名**猜不出来**，七个站四个年份全军覆没
+    #   - 但**拿到真实文件名就能直接取**，不需要绕镜像域名
+    #   - 判据是拿一个已知存在的（iasi-2023-venue.jpg）当对照：它 200 而别的 403，
+    #     说明是文件不在，不是我被挡了
     ("iasi-ciric-centre-court.jpg", None, None),
     ("verona-arena.jpg", "File:Verona Arena (Arena di Verona).jpg", None),
     # 主球场／主场馆（优先用这一类）
