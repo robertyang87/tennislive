@@ -321,3 +321,22 @@ def test_VS拼接两格都用真实照片():
     # 为什么绕了这么大一圈，留给下一个人
     note = credits["_zheng"]["note"]
     assert "soft-404" in note and "CDN 不认文件名" in note
+
+
+def test_源片太小要在开跑前挡住(monkeypatch):
+    """**下到 360p 也算「下载成功」**：yt-dlp 退到低画质那一档时 returncode 0、
+    文件也在，看起来一切正常，直到第一段切片撞上 `crop=608:1080` 才炸
+    （run 30412173035，源片 640×360）。所以裁切窗口按源片实际高度算，
+    太小的源片在开跑前就拒掉，别渲到一半才发现。"""
+    reel = _reel()
+    try:
+        reel.resolve_crop(640, 360)
+    except reel.ReelError as exc:
+        assert "太小" in str(exc)
+    else:
+        raise AssertionError("360p 的源片被放过去了")
+
+    reel.resolve_crop(1920, 1080)
+    assert (reel.CROP_W, reel.CROP_H) == (608, 1080)
+    reel.resolve_crop(1280, 720)                 # 720p 也要能跑，按比例换算
+    assert (reel.CROP_W, reel.CROP_H) == (404, 720)   # 720*9/16=405，取偶
