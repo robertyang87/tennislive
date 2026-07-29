@@ -1012,39 +1012,58 @@ def test_成片链接和图片走同一条_CDN():
 def test_复制页探不到就不放那个按钮():
     """GitHub Pages 只服务 main，分支上生成的包点开是 404。
 
-    这条规矩赛程那条线早就有（`cmd_schedule` 调 `live_copy_page_url`，探不到
-    就不放按钮），解说片这条一直没接上：`explainer_push_html` 把 Pages 的 URL
-    硬写在函数里，而 cli.py 里 `live_copy_page_url` 已经 import 了却没人调用
-    ——一道装了一半的闸。微信那条消息**发出去就收不回来**，宁可不放按钮。
-
-    三档必须分得开，尤其是前两档：
-      不传    = 调用方没探过，按老规矩自己拼 URL（保持既有行为）
-      传 None = 调用方探过了、取不到，别放按钮
-      传 URL  = 探到了，放这个
-
-    用 None 当默认值会把「没探」和「探过了没有」压成一件事，按钮就会在所有
-    没显式传参的调用点上无声消失——而复制页是那段文案唯一的出口。
+    微信那条消息**发出去就收不回来**，宁可不放按钮。判据是探一次：200 且
+    Content-Type 是 text/html 才算数（soft-404 会返回 200）。
     """
     import datetime
     from pathlib import Path as _Path
 
+    from tennislive.render.pushmsg import drop_dead_copy_button
     from tennislive.video import explainer as E
 
     outdir = _Path("output/2026-07-29/explainer/thiem-football")
     segs = E.explainer_script(find_story_by_slug("thiem-football"))
-    day = datetime.date(2026, 7, 29)
-    kw = {"date": day, "xhs_text": "测试文案"}
+    body = E.explainer_push_html(
+        segs, outdir, date=datetime.date(2026, 7, 29), xhs_text="测试文案")
+    assert f"{outdir.as_posix()}/copy.html" in body, "渲染时就该带上复制页链接"
 
-    default = E.explainer_push_html(segs, outdir, **kw)
-    assert f"{outdir.as_posix()}/copy.html" in default, "不传时应保持老行为：自己拼 URL"
+    kept, url = drop_dead_copy_button(body, probe=lambda _u: True)
+    assert url and url.endswith("/copy.html"), "探到了却没报出是哪个 URL"
+    assert "分别复制标题" in kept, "探到了反而把按钮摘了"
 
-    dead = E.explainer_push_html(segs, outdir, copy_url=None, **kw)
-    assert "copy.html" not in dead, "探不到时仍然放了复制页按钮——那是个死链"
-    # 去掉按钮不能连带把文案弄丢：正文得还在消息里，可以长按复制
-    assert "测试文案" in dead, "去掉按钮的同时把正文也弄丢了，文案就没有出口了"
+    dropped, url = drop_dead_copy_button(body, probe=lambda _u: False)
+    assert url is None
+    assert "copy.html" not in dropped, "探不到时仍然放了复制页按钮——那是个死链"
+    assert "分别复制标题" not in dropped
+    # 摘按钮不能连带把文案弄丢：正文得还在消息里，可以长按复制
+    assert "测试文案" in dropped, "摘按钮的同时把正文也弄丢了，文案就没有出口了"
+    # 别误伤别的按钮：成片链接和图片得原样留着
+    assert "explainer.mp4" in dropped, "把成片链接一起摘掉了"
+    assert dropped.count("slide_0") == body.count("slide_0"), "图片被误伤"
 
-    live = "https://example.test/output/2026-07-29/explainer/thiem-football/copy.html"
-    assert live in E.explainer_push_html(segs, outdir, copy_url=live, **kw)
+
+def test_复制页那道闸装在发的那一步不是渲的那一步():
+    """第一版装错了位置，结果每次都把按钮拿掉。
+
+    渲染（`tennislive explainer`）排在提交**之前**，那一刻 copy.html 还没进
+    仓库，Pages 必然取不到——在渲染时探等于给所有推送判死刑，连 main 上本来
+    能用的也一起摘掉。2026-07-29 蒂姆那条推送就是这么少了按钮的
+    （run 30432435525：第 9 步渲染 07:41，第 11 步提交 07:43，第 12 步推送 07:44）。
+
+    `publish pushplus` 跑在提交之后，那才是链接真正该可达的时刻。这条测试
+    盯的是**位置**：生成流程里不许再出现探测调用，否则又会回到那个行为。
+    """
+    import inspect
+
+    from tennislive import cli
+
+    gen = inspect.getsource(cli.cmd_explainer)
+    assert "live_copy_page_url" not in gen, (
+        "生成流程里又探复制页了——那时文件还没提交，必然探不到，"
+        "按钮会被无声摘掉。闸要装在 cmd_publish_pushplus 里。")
+
+    send = inspect.getsource(cli.cmd_publish_pushplus)
+    assert "drop_dead_copy_button" in send, "发送那一步没装这道闸"
 
 
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
