@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>7.30 赛场之上 | 王欣瑜两盘只赢四局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>王欣瑜华盛顿止步次轮：面对前赛会冠军萨姆索诺娃，两盘 16 局只拿下 4 局，6-2 6-2 落败，全场 1 小时 10 分。前一天她刚救下 3 个盘点淘汰帕雷哈，这一场没能再撑住。
+
+📍华盛顿 WTA500 第二轮
+🎾 萨姆索诺娃 6-2 6-2 王欣瑜
+⏱ 1 小时 10 分
+
+第一盘：2-6
+第二盘：2-6
+两盘合计 16 局，王欣瑜拿到 4 局
+
+对比一下两个人的这两天：
+王欣瑜首轮 1 小时 51 分，5-6 落后连救 3 个盘点，7-6(3) 6-3 过关
+萨姆索诺娃首轮 2 小时 25 分，3-6 6-4 6-4 淘汰 6 号种子基斯
+到了第二轮，她只用了 1 小时 10 分
+
+萨姆索诺娃是 2022 年这项赛事的冠军，决赛 4-6 6-3 6-3 击败卡内皮拿到生涯第二冠。
+
+两人交手史，藏着一条更具体的线索：
+2022 东京 硬地 7-6(5) 6-3 萨姆索诺娃胜
+2024 辛辛那提 硬地 6-4 6-4 萨姆索诺娃胜
+2025 柏林 半决赛 草地 6-4 6-1 王欣瑜胜
+2026 华盛顿 硬地 6-2 6-2 萨姆索诺娃胜
+
+王欣瑜赢过她，但只在草地上——那一站王欣瑜还是从资格赛打进正赛的。硬地上三次交手，一场没赢过。
+
+硬地上的这道坎，她什么时候能过？
+
+#网球 #王欣瑜 #WTA #华盛顿公开赛 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
