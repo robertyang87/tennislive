@@ -131,6 +131,12 @@ VENUES = [
     ("tokyo-ariake-coliseum.jpg", None, None),
     # 新加坡：Kallang Tennis Hub，场地刷着 SINGAPORE 自证。空场且只有 680px，是这一批里最弱的一张，代价记在 credits。
     ("singapore-centre-court.jpg", None, None),
+    # 巴塞尔：St. Jakobshalle 满场，场地刷着 BASEL 自证。
+    ("basel-st-jakobshalle.jpg", None, None),
+    # 维也纳：Wiener Stadthalle 满场。
+    ("vienna-stadthalle-centre-court.jpg", None, None),
+    # 大阪：靱テニスセンター。⚠️ 和东京有明是**同名不同场地**，见下面 tokyo 那条的别名注释。
+    ("osaka-utsubo-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -276,6 +282,24 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "osaka-utsubo-centre-court.jpg": {
+        "title": "靱テニスセンター（Utsubo Tennis Center）中央球场 · 从底线后方看，远端与两侧绿色看台都在框内",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "unknown（モリタテニス靱 转载）",
+        "page": "http://mtp-tennis.com/utsubo/images/senter.jpg",
+    },
+    "vienna-stadthalle-centre-court.jpg": {
+        "title": "Wiener Stadthalle 中心球场 · 满场（2025 Erste Bank Open）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（Kronen Zeitung 转载）",
+        "page": "https://imgl.krone.at/scaled/3913474/v9f6623/full.jpg",
+    },
+    "basel-st-jakobshalle.jpg": {
+        "title": "St. Jakobshalle 中心球场 · 满场（场地前场刷着 BASEL）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（unitycms 转载）",
+        "page": "https://cdn.unitycms.io/images/7usBtfvqq_sAboyyMyFIom.jpg",
+    },
     "singapore-centre-court.jpg": {
         "title": "Kallang Tennis Hub 中心球场（场地前场刷着 SINGAPORE，室内，两侧蓝色看台与顶棚桁架都在竖切里）",
         "license": "unverified · 新闻站转载，作者未署名",

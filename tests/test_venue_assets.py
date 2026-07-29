@@ -505,7 +505,7 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
 # 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
 # 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
 # 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
-VENUE_COVERAGE_FLOOR = 43
+VENUE_COVERAGE_FLOOR = 45
 
 
 def test_calendar_coverage_only_goes_up():
@@ -533,3 +533,42 @@ def test_calendar_coverage_only_goes_up():
         f"现在命中的 slug：{covered}。"
         "补完新站记得把 VENUE_COVERAGE_FLOOR 一起提上去"
     )
+
+
+def test_japan_events_do_not_borrow_each_others_city():
+    """同名不同城：东京的 ATP500 和大阪的 WTA250 都叫 Japan Open。
+
+    赛历里东京那站的 en 就是 `Japan Open`，大阪那站是
+    `Kinoshita Group Japan Open`——同一条别名 `japan open` 两边都命中，
+    长度还一样，`max()` 只能随便挑，于是大阪的卡上印出「东京 · 日本」，
+    两座城市差着 400 公里。和「ATV Bancomat 印成维罗纳」是同一类错。
+
+    修法是 `only_tour`：大阪那条声明只认 WTA，而 `_specificity` 让
+    **声明了限制的那条赢**。东京同时办 ATP500（Japan Open）和
+    WTA500（Toray Pan Pacific），所以东京那条不能按 tour 限死。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour, month: int):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, 20, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    cases = [
+        ("Japan Open", Tour.ATP, 9, "tokyo"),                     # 东京 ATP500
+        ("Kinoshita Group Japan Open", Tour.WTA, 10, "osaka"),     # 大阪 WTA250
+        ("Toray Pan Pacific Open", Tour.WTA, 10, "tokyo"),         # 东京 WTA500
+    ]
+    wrong = []
+    for name, tour, month, expected in cases:
+        got = venue_asset_for_match(_m(name, tour, month))
+        if got is None or got.slug != expected:
+            wrong.append(f"{name}（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
+    assert not wrong, "日本三站互相串了城市：\n" + "\n".join(wrong)
