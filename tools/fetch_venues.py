@@ -48,7 +48,12 @@ VENUES = [
     ("palermo-campo-centrale.jpg", None, None),
     ("istanbul-historical-peninsula.jpg",
      "File:Historical peninsula and modern skyline of Istanbul.jpg", None),
-    ("iasi-palace-of-culture.jpg", "File:2020 04 17 Iași Palatul Culturii.jpg", None),
+    # 雅西：原来用的是文化宫地标。Baza Sportivă Ciric 的中心球场满场照在
+    # 罗马尼亚新闻站上（红土、两侧蓝色看台、树林作背景），整个碗都在竖切里。
+    # 顺带记一条：**atptour.com 这次没有 403**——它的
+    # /-/media/images/atp-tournaments/tournament-images/<slug>-<year>-venue.jpg
+    # 是按赛事 slug 命名的，可以直接拼；封锁看来是间歇性的，值得每轮再试一次。
+    ("iasi-ciric-centre-court.jpg", None, None),
     ("verona-arena.jpg", "File:Verona Arena (Arena di Verona).jpg", None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
@@ -199,6 +204,12 @@ OFFICIAL_VENUES = {
         "artist": "Croatian National Tourist Board（croatia.hr 媒体库）",
         "page": "https://cdn.croatia.hr/mediagallery-dxp-production/"
                 "_ATP_Stadion_Gorana_Ivanisevica_Colours_of_Istria.jpg",
+    },
+    "iasi-ciric-centre-court.jpg": {
+        "title": "Baza Sportivă Ciric 中心球场 · 满场（红土、两侧蓝色看台）",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "unknown（ProSport.ro 转载）",
+        "page": "https://www.prosport.ro/wp-content/uploads/2022/12/iasi-open-scaled.jpg",
     },
     "palermo-campo-centrale.jpg": {
         "title": "Country Time Club 中心球场 · 自上而下"
