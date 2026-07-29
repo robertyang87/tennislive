@@ -288,11 +288,24 @@ def test_schedule_page_shows_the_estimated_time_not_the_placeholder():
     assert "待官方排期" not in body
 
 
-def test_schedule_page_marks_the_estimate_footnote():
+def test_the_header_carries_no_legend_line():
+    """顶栏不再印时间口径的图例，口径贴着每一场的时刻走。
+
+    原来那一条是「北京时间 · 不早于＝需等前一场结束 · *为预计时间 · +1 为次日」。
+    账号所有者看渲出来的卡之后定的：那行小字挤在顶栏右侧，自己要占两行，还把
+    左边的级别、场地、地点一起压扁——「美国」「硬地」都被从中间断成两行过。
+
+    信息没有丢，只是换了地方：「不早于」「预计」写在每一场的时刻前面，
+    `*` 和 `+1` 也都贴着时刻。读者看的是那一行，不是顶栏的小字。
+    """
     blank = sched(match_id="b", status_text="unpublished")
     known = sched(match_id="k", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
                   status_text="single-source")
-    assert "*为预计时间" in schedule_body([known, blank], "7.28")
+    body = schedule_body([known, blank], "7.28")
+    for legend in ("*为预计时间", "+1 为次日", "不早于＝需等前一场结束", "北京时间"):
+        assert legend not in body, f"顶栏又把图例印回来了：{legend}"
+    # 口径本身必须还在——星号是「预计」的唯一标记，丢了就成了确切时刻
+    assert "*" in body
 
 
 def test_every_match_shows_its_court_when_the_feed_gives_one():
@@ -499,7 +512,12 @@ def test_no_day_marker_without_a_reference_date():
     assert "+1" not in schedule_time_display([m])[match_key(m)]
 
 
-def test_footnote_explains_the_day_marker():
+def test_next_day_matches_carry_the_marker_on_the_time_itself():
+    """跨天标识贴着时刻走，不靠顶栏那行图例解释。
+
+    图例已经拿掉（见 test_the_header_carries_no_legend_line），所以 `+1`
+    必须**印在时刻那一行**——它是这条信息唯一的载体了。
+    """
     from datetime import date
 
     from tennislive.render.schedule_time import has_next_day_times
@@ -509,7 +527,8 @@ def test_footnote_explains_the_day_marker():
     display = schedule_time_display([m], today=date(2026, 7, 28))
     assert has_next_day_times(display.values())
     body = schedule_body([m], "7.28", time_display=display)
-    assert "+1 为次日" in body
+    assert "+1" in body
+    assert "+1 为次日" not in body
 
 
 # ---------- 正文的字数预算 ----------
@@ -655,20 +674,21 @@ def test_not_before_keeps_the_next_day_marker():
             == "不早于 +1 01:00")
 
 
-def test_the_not_before_legend_appears_only_when_a_match_needs_it():
-    """顶栏那句解释按实际有没有来印。
+def test_not_before_is_written_on_the_match_not_in_a_legend():
+    """「不早于」印在那一场的时刻前面，而不是顶栏的一句解释。
 
-    官方 OOP 一节里只有首场是 `Starts At`，所以「不早于」多数时候都会出现；
-    但一页全是各场地首场时印出来就是句废话，而顶栏那一条位置有限，废话会把
-    「*为预计时间」「+1 为次日」挤下去。
+    顶栏图例已经拿掉，所以这三个字必须**贴着时刻**——它是下界不是开赛时刻，
+    省掉就变成一个看着确切的时间，熬夜的人会照着它定闹钟。
+    确切开赛的那一场则不该出现这三个字。
     """
     floor = sched(match_id="a", start=datetime(2026, 7, 28, 17, 0, tzinfo=UTC),
                   status_text="official-not-before")
     firm = sched(match_id="b", start=datetime(2026, 7, 28, 15, 0, tzinfo=UTC),
                  status_text="official-exact")
 
-    assert "不早于＝需等前一场结束" in schedule_body([floor], "7.28")
-    assert "不早于＝需等前一场结束" not in schedule_body([firm], "7.28")
+    assert "不早于" in schedule_body([floor], "7.28")
+    assert "不早于" not in schedule_body([firm], "7.28")
+    assert "不早于＝需等前一场结束" not in schedule_body([floor], "7.28")
 
 
 def test_caption_keeps_not_before_instead_of_shortening_it_away():

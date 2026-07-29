@@ -73,8 +73,8 @@ def test_aliases_match_the_real_tournament_names():
     """别名要对着**赛事名**写——真实数据里 city/country 恒为 None。
 
     匹配用的 subject 是 _norm("赛事名 城市 国家")，而抓下来的赛程里
-    city/country 一直是空的，所以按城市写别名永远命不中：维罗纳那站叫
-    "ATV Bancomat Tennis Open"，写 "verona" 没有任何作用；Båstad 那站叫
+    city/country 一直是空的，所以按城市写别名永远命不中：罗马那站叫
+    "ATV Bancomat Tennis Open"，写 "rome" 没有任何作用；Båstad 那站叫
     "Nordea Open" 同理。
     """
     from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
@@ -85,7 +85,8 @@ def test_aliases_match_the_real_tournament_names():
         ("Palermo Ladies Open", "palermo"),
         ("Enka Open", "istanbul"),
         ("Unicredit Iasi Open", "iasi"),
-        ("ATV Bancomat Tennis Open", "verona"),
+        # ATV = Antico Tiro a Volo（罗马），不是 Associazione Tennis Verona
+        ("ATV Bancomat Tennis Open", "rome-atv"),
         ("EFG Swiss Open Gstaad", "gstaad"),
         ("Nordea Open", "bastad"),
         ("Australian Open", "australian-open"),
@@ -298,11 +299,49 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
         )
 
 
+# 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
+# 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
+LANDMARK_BUDGET = 2
+
+
+def test_every_venue_declares_what_kind_of_shot_it_is():
+    """背景图一律要中心球场全景；还没换到的必须显式挂账，不能沉默。
+
+    这条是用户定的：「背景都要找中心球场全景的照片」。地标（帕特农、竞技场、
+    山谷）只能当**临时**兜底，不是终点——而兜底最麻烦的地方是它不报错：
+    地点对、画面还挺好看，扫过去不觉得有什么不对，直到有人问一句"为啥不用
+    中心球场"（洛斯卡沃斯和孟菲斯就各这样待了好几版）。
+
+    所以每条都要声明 shot，非 centre-court 的必须写清楚卡在哪儿，并且总数
+    只许降不许升。
+    """
+    import json
+
+    from tennislive.render.venue_assets import MANIFEST
+
+    rows = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    problems = [
+        f"{row.get('slug')}: shot 只能是 centre-court / landmark，现在是 {row.get('shot')!r}"
+        for row in rows if row.get("shot") not in {"centre-court", "landmark"}
+    ]
+    problems += [
+        f"{row.get('slug')}: 还是地标，但没写 todo（卡在哪儿）"
+        for row in rows if row.get("shot") == "landmark" and not row.get("todo")
+    ]
+    assert not problems, "\n".join(problems)
+
+    pending = sorted(r["slug"] for r in rows if r["shot"] != "centre-court")
+    assert len(pending) <= LANDMARK_BUDGET, (
+        f"待换成中心球场的站点从 {LANDMARK_BUDGET} 涨到了 {len(pending)}：{pending}。"
+        "新站要带着球场照来；确实拿不到就显式调高 LANDMARK_BUDGET 并说明原因"
+    )
+
+
 def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     """能拿到球场照的站，manifest 不许再指回城市地标。
 
-    地标本身是合法的兜底——雅典的帕特农、维罗纳的竞技场、汉堡的天际线，
-    那几站在 Commons 和官方图库里都真的没有球场照。但**兜底一旦生效就很难
+    地标本身是合法的兜底——伊斯坦布尔的老城眼下确实还
+    没找到能用的球场照。但**兜底一旦生效就很难
     发现它已经过期了**：洛斯卡沃斯用埃尔阿尔科海蚀拱用了好几版，画面漂亮、
     地点也对，只是它不是球场；直到有人问"为啥不用中心球场"才发现赛事官网
     自己的媒体库里一直挂着 Estadio Alejandro Burillo 的实拍。
@@ -319,7 +358,18 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     # slug -> 必须仍然是这张球场照（换成别的球场照请连同理由一起改这里）
     court_photos = {
         "los-cabos": "los-cabos-estadio-alejandro-burillo.jpg",
-        "memphis": "memphis-leftwich-tennis-center.jpg",
+        "memphis": "memphis-leftwich-stadium-court.jpg",
+        # 汉堡这张来自 Commons，但同样容易被换回去：关键词搜索翻不到它
+        # （标题里一个相关词都没有，是按 Category:Am Rothenbaum 列出来的）
+        "hamburg": "hamburg-rothenbaum-centre-court.jpg",
+        # 格施塔德这张藏在官网 sitemap 列出的 /infos/le-village-le-stade/ 里
+        # ——wp-json 被 401 挡着，按关键词也搜不到（文件名是 EFG-SOG23-3）
+        "gstaad": "gstaad-roy-emerson-arena.jpg",
+        # 雅典钉住的理由不是构图，是**赛事本身容易搞错**：manifest 这条对的是
+        # WTA 250 的 Athens Open（7 月、露天、Olympic Tennis Centre），
+        # 不是 ATP 的 Hellenic Championship（11 月、室内、Telekom Center）。
+        # 我已经在这上面栽过一次，钉住免得第二次
+        "athens": "athens-olympic-tennis-centre.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 
@@ -365,3 +415,197 @@ def test_backfill_drops_credits_for_images_no_longer_on_disk():
         written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
         assert set(written) == {"here.jpg"}
         assert written["here.jpg"] == entry
+
+
+def test_attribution_md_is_generated_from_credits():
+    """署名页要和 credits.json 逐字一致——手写的那一版一定会过期。
+
+    换图时 credits.json 有好几条测试盯着，`ATTRIBUTION.md` 一条都没有，
+    于是它悄悄留下了三条指向早就删掉的文件的记录（kitzbuhel-panorama /
+    prague-castle-panorama / estoril-coast）——署名页写着三张不存在的图的
+    作者和许可，而真正在用的那几张一个字都没有。
+
+    这和「换文件名要 grep 整个仓库包括 .md」是同一个毛病，只是靠人记住挡不住
+    第四次。现在这个 .md 由 render_attribution() 生成，这条测试是那把锁：
+    改了图就重跑 `python tools/fetch_venues.py`，或直接调 write_attribution()。
+    """
+    from tennislive.render.venue_assets import ASSETS, CREDITS
+    import json
+
+    module = _fetch_tool()
+    credits = json.loads(CREDITS.read_text(encoding="utf-8"))
+    on_disk = {p.name for p in ASSETS.glob("*.jpg")} | {p.name for p in ASSETS.glob("*.png")}
+    expected = module.render_attribution(credits, on_disk)
+    actual = (ASSETS / "ATTRIBUTION.md").read_text(encoding="utf-8")
+
+    assert actual == expected, (
+        "ATTRIBUTION.md 和 credits.json 对不上了。它是生成的，不要手改——"
+        "跑 tools/fetch_venues.py，或 write_attribution(assets/venues)"
+    )
+
+
+def test_attribution_md_never_credits_a_file_that_is_gone():
+    """署名页里不许出现盘上没有的文件。
+
+    上一条已经能挡住绝大部分，但它比的是"和生成器一致"；万一生成器本身被改
+    坏（比如不再按 on_disk 过滤），这条仍然会响。**错的出处比没有出处更糟**：
+    它把某个人的作品记在一张根本没发出去的图上。
+    """
+    import re
+
+    from tennislive.render.venue_assets import ASSETS
+
+    text = (ASSETS / "ATTRIBUTION.md").read_text(encoding="utf-8")
+    named = re.findall(r"^## `([^`]+)`", text, flags=re.M)
+    assert named, "署名页一条记录都没有？"
+    missing = [n for n in named if not (ASSETS / n).is_file()]
+    assert not missing, f"署名页记着这些图，但它们已经不在盘上：{missing}"
+
+
+def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
+    """加拿大站一个赛事名、两座城市，男女每年互换——挑错就在卡上印错城市。
+
+    2025 年男子在多伦多、女子在蒙特利尔；2026 年反过来。只按赛事名匹配的话
+    两条都命中，`max()` 随便挑一条，就有一半的概率印错。和「ATV Bancomat
+    印成维罗纳」是同一类错，区别是**这个错每年会自己翻面**，靠人肉盯不住。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _match(tour: Tour, year: int | None):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name="National Bank Open presented by Rogers", tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=None if year is None else datetime(year, 8, 5, tzinfo=timezone.utc),
+            sets=[], winner=None,
+        )
+
+    cases = [
+        (Tour.ATP, 2026, "canada-montreal"),
+        (Tour.WTA, 2026, "canada-toronto"),
+        (Tour.ATP, 2025, "canada-toronto"),
+        (Tour.WTA, 2025, "canada-montreal"),
+    ]
+    wrong = []
+    for tour, year, expected in cases:
+        got = venue_asset_for_match(_match(tour, year))
+        if got is None or got.slug != expected:
+            wrong.append(f"{tour.value} {year} -> {got.slug if got else None}（应为 {expected}）")
+    assert not wrong, "加拿大挑错城市：\n" + "\n".join(wrong)
+
+    # 拿不到年份时**宁可不给图**：卡上的 location 是要印出来的，
+    # 印错城市比没有背景图糟。
+    assert venue_asset_for_match(_match(Tour.ATP, None)) is None
+
+
+# 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
+# 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
+# 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
+VENUE_COVERAGE_FLOOR = 58
+
+
+def test_calendar_coverage_only_goes_up():
+    """按 2026 赛历逐站问「这站有中心球场图吗」，覆盖数不许降。
+
+    场馆图一直是**按遇到的站补**：今天日报里出现哪站就找哪站。好处是永远在
+    做最急的，坏处是**永远不知道还差多少**。把赛历当清单跑一遍才有分母。
+
+    判据是真的调 `venue_asset_for_match`，不是比 slug 字符串——别名写错、
+    host_years 写反、credits 缺字段导致整条被丢弃，这些只有走一遍才看得见。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    rows = module.survey()
+    covered = sorted({r["slug"] for r in rows if r["shot"] == "centre-court"})
+    have = sum(1 for r in rows if r["shot"] == "centre-court")
+    assert have >= VENUE_COVERAGE_FLOOR, (
+        f"赛历覆盖从 {VENUE_COVERAGE_FLOOR} 站掉到了 {have} 站。"
+        f"现在命中的 slug：{covered}。"
+        "补完新站记得把 VENUE_COVERAGE_FLOOR 一起提上去"
+    )
+
+
+def test_known_gaps_still_point_at_a_real_calendar_entry():
+    """「已查明拿不到」的备注要挂在赛历里真实存在、且真的还缺图的站上。
+
+    这份备注存在的意义是**别再重找**——「还没去找」和「找过了拿不到」在
+    输出里长得一模一样，孟菲斯那站就被重找过三轮。但备注按 `en` 写死，
+    有两种走味的方式，都不吭声：
+
+    - 赛事改名或从赛历里去掉了 → 备注成了孤儿，永远不显示，等于没写
+    - 那站后来补上图了 → 备注还挂着「拿不到」，下一个人照着它就不去看了
+
+    所以两头都钉：键必须能在赛历里找到，且那站此刻确实是「缺」。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    rows = module.survey()
+    by_en = {r["en"]: r for r in rows}
+    for name, reason in module.KNOWN_GAPS.items():
+        assert name in by_en, (
+            f"KNOWN_GAPS 里的「{name}」在 2026 赛历里找不到——赛事改名或已移除，"
+            "这条备注成了孤儿，永远不会显示。改键或删掉它"
+        )
+        assert by_en[name]["slug"] is None, (
+            f"「{name}」已经接上 {by_en[name]['slug']} 了，"
+            "KNOWN_GAPS 里那条「拿不到」的备注要删掉——留着会让下一个人不去看"
+        )
+        assert len(reason) >= 40, (
+            f"「{name}」的理由太短：要说清查过哪些源、卡在哪儿，"
+            "不然下一个人还是得重跑一遍"
+        )
+
+
+def test_japan_events_do_not_borrow_each_others_city():
+    """同名不同城：东京的 ATP500 和大阪的 WTA250 都叫 Japan Open。
+
+    赛历里东京那站的 en 就是 `Japan Open`，大阪那站是
+    `Kinoshita Group Japan Open`——同一条别名 `japan open` 两边都命中，
+    长度还一样，`max()` 只能随便挑，于是大阪的卡上印出「东京 · 日本」，
+    两座城市差着 400 公里。和「ATV Bancomat 印成维罗纳」是同一类错。
+
+    修法是 `only_tour`：大阪那条声明只认 WTA，而 `_specificity` 让
+    **声明了限制的那条赢**。东京同时办 ATP500（Japan Open）和
+    WTA500（Toray Pan Pacific），所以东京那条不能按 tour 限死。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour, month: int):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, 20, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    cases = [
+        ("Japan Open", Tour.ATP, 9, "tokyo"),                     # 东京 ATP500
+        ("Kinoshita Group Japan Open", Tour.WTA, 10, "osaka"),     # 大阪 WTA250
+        ("Toray Pan Pacific Open", Tour.WTA, 10, "tokyo"),         # 东京 WTA500
+    ]
+    wrong = []
+    for name, tour, month, expected in cases:
+        got = venue_asset_for_match(_m(name, tour, month))
+        if got is None or got.slug != expected:
+            wrong.append(f"{name}（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
+    assert not wrong, "日本三站互相串了城市：\n" + "\n".join(wrong)
