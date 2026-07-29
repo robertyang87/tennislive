@@ -76,6 +76,18 @@ _PAGES_URL = os.environ.get(
 _SLIDE_JPEG_QUALITY = 86
 
 
+class _Unset:
+    """「这个参数没传」的哨兵，用来和「传了 None」区分开。
+
+    复制页的 URL 上，两者含义相反：没传＝调用方没探过，按老规矩自己拼一个；
+    传 None＝调用方探过了、链接取不到，别放那个按钮。用 None 当默认值就把
+    这两件事压成一件，「没探」会被当成「探过了没有」，按钮无声消失。
+    """
+
+
+_UNSET = _Unset()
+
+
 class ExplainerVideoError(RuntimeError):
     pass
 
@@ -3618,6 +3630,7 @@ def explainer_push_html(
     date,
     xhs_text: str,
     video_name: str = "explainer.mp4",
+    copy_url: str | None | _Unset = _UNSET,
 ) -> str:
     """Build the WeChat push using the knowledge post's own template.
 
@@ -3645,6 +3658,17 @@ def explainer_push_html(
     # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
     # 指向新片子。
     video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
+    # 复制页的按钮只在链接确认可达时才放进推送。**GitHub Pages 只服务 main**，
+    # 特性分支上生成的包它永远取不到，按钮点开就是 404——微信那条消息发出去
+    # 就收不回来。赛程那条线早就这么做了（cmd_schedule 调 live_copy_page_url），
+    # 解说片这条却把 URL 硬写在这儿：cli.py 里 `live_copy_page_url` 甚至已经
+    # import 了却没人用，是道装了一半的闸。
+    #
+    # 默认值用哨兵而不是 None：不传＝保持老行为（自己拼 URL），传 None＝
+    # 调用方探过了、探不到，别放按钮。两者必须分得开，否则「没探」会被当成
+    # 「探过了没有」，按钮就无声消失了——正文里那段文案的唯一出口。
+    if isinstance(copy_url, _Unset):
+        copy_url = f"{_PAGES_URL}/{rel}/copy.html"
     return knowledge_push_html_from_parts(
         date=date,
         image_urls=[
@@ -3652,7 +3676,7 @@ def explainer_push_html(
             for name in slides
         ],
         xhs_text=xhs_text,
-        copy_url=f"{_PAGES_URL}/{rel}/copy.html",
+        copy_url=copy_url,
         badge="知识解说视频",
         extra_action=(video_url, "▶ 打开 9:16 成片"),
     )

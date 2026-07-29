@@ -356,8 +356,26 @@ def cmd_explainer(args) -> int:
     xhs_text = explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}")
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
     (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
+
+    # 复制页的按钮只在链接确认可达时才放进推送：GitHub Pages 只服务 main，
+    # 特性分支上生成的包它取不到，按钮点开就是 404。这道闸赛程那条线早就有
+    # （见 cmd_schedule），解说片这条一直没接上——`live_copy_page_url` 在上面
+    # import 了却没人调用。
+    #
+    # subdir 是 `explainer/<slug>`：copy_page_url 拼的是
+    # output/<date>/<subdir>/copy.html，而解说片的产物就落在这儿。
+    copy_url = live_copy_page_url(d, subdir=f"explainer/{story.slug}")
+    if copy_url:
+        console.print(f"[green]复制页可达[/green] {copy_url}")
+    else:
+        console.print(
+            "[yellow]复制页尚不可达（Pages 只服务 main），本次推送不放该按钮；"
+            "标题与正文已在消息里各自成块，可长按复制[/yellow]"
+        )
     (outdir / "push.html").write_text(
-        explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
+        explainer_push_html(
+            segments, outdir, date=d, xhs_text=xhs_text, copy_url=copy_url
+        ),
         encoding="utf-8",
     )
     (outdir / "wechat_title.txt").write_text(

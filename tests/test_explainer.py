@@ -1009,6 +1009,44 @@ def test_成片链接和图片走同一条_CDN():
     assert "@main/" not in pinned
 
 
+def test_复制页探不到就不放那个按钮():
+    """GitHub Pages 只服务 main，分支上生成的包点开是 404。
+
+    这条规矩赛程那条线早就有（`cmd_schedule` 调 `live_copy_page_url`，探不到
+    就不放按钮），解说片这条一直没接上：`explainer_push_html` 把 Pages 的 URL
+    硬写在函数里，而 cli.py 里 `live_copy_page_url` 已经 import 了却没人调用
+    ——一道装了一半的闸。微信那条消息**发出去就收不回来**，宁可不放按钮。
+
+    三档必须分得开，尤其是前两档：
+      不传    = 调用方没探过，按老规矩自己拼 URL（保持既有行为）
+      传 None = 调用方探过了、取不到，别放按钮
+      传 URL  = 探到了，放这个
+
+    用 None 当默认值会把「没探」和「探过了没有」压成一件事，按钮就会在所有
+    没显式传参的调用点上无声消失——而复制页是那段文案唯一的出口。
+    """
+    import datetime
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    outdir = _Path("output/2026-07-29/explainer/thiem-football")
+    segs = E.explainer_script(find_story_by_slug("thiem-football"))
+    day = datetime.date(2026, 7, 29)
+    kw = {"date": day, "xhs_text": "测试文案"}
+
+    default = E.explainer_push_html(segs, outdir, **kw)
+    assert f"{outdir.as_posix()}/copy.html" in default, "不传时应保持老行为：自己拼 URL"
+
+    dead = E.explainer_push_html(segs, outdir, copy_url=None, **kw)
+    assert "copy.html" not in dead, "探不到时仍然放了复制页按钮——那是个死链"
+    # 去掉按钮不能连带把文案弄丢：正文得还在消息里，可以长按复制
+    assert "测试文案" in dead, "去掉按钮的同时把正文也弄丢了，文案就没有出口了"
+
+    live = "https://example.test/output/2026-07-29/explainer/thiem-football/copy.html"
+    assert live in E.explainer_push_html(segs, outdir, copy_url=live, **kw)
+
+
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
