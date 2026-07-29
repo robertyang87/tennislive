@@ -700,7 +700,22 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     cover = spec["cover"]
     grab = dest.parent / "_cover_frame.jpg"
     at = float(cover.get("frame_at", 3.0))
-    cx = float(cover.get("cx", 0.5))
+    # VS 拼接：上下两格，一格一个人，中间压一个 VS。
+    # **两格都必须出自这场比赛**——一格给官方静态图（清楚），另一格给集锦里的
+    # 一帧（这场没有那个人的官方静态图时）。别拿别的赛事的照片来凑：封面上写着
+    # 赛事和比分，配一张别处的图就是「讲法网配温网」那个错。
+    if cover.get("versus"):
+        build_versus_base(source, cover["versus"], grab, source_w)
+        return _render_cover_html(cover, grab, dest, versus=True)
+    # 封面的固定中心和分段一样可以自己定：**源片在本地看不到时更需要它**
+    # （YouTube 对沙箱一律 403，cx 只能靠猜，猜错就是把人裁到边上）。
+    # 取抓帧前后两秒的运动质心中位数——握手、庆祝这类镜头人不在正中。
+    if cover.get("cx") is None:
+        probe = Segment(max(0.0, at - 1.2), at + 1.2, None, "")
+        cx = auto_center(source, probe, source_w)
+        print(f"    [cover] 没给 cx，自动定心 cx={cx:.3f}")
+    else:
+        cx = float(cover["cx"])
     # 底图两种铺法：
     #
     #   cover（默认）  真·竖版大图，9:16 裁切铺满整屏。1080p 里裁 608 宽再拉到
@@ -728,7 +743,74 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
             "-ss", f"{at:.2f}", "-i", str(source), "-frames:v", "1",
             "-filter_complex", chain, "-map", "[out]",
             "-q:v", "2", str(grab))
+    return _render_cover_html(cover, grab, dest)
 
+
+def build_versus_base(source: Path, versus: dict, dest: Path,
+                      source_w: int) -> Path:
+    """上下两格拼一张 1080×1920 的底图，每格一个人。
+
+    每一格给 `image`（本地静态图）或 `frame_at`（从源片抓一帧）。**两者都要
+    出自这场比赛**——这场找不到某人的官方静态图时才用集锦里的帧，不要拿别的
+    赛事的照片来凑。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    top_h = int(versus.get("split", 0.44) * VIDEO_H) // 2 * 2
+    panels = []
+    for key, height in (("top", top_h), ("bottom", VIDEO_H - top_h)):
+        side = versus[key]
+        if side.get("image"):
+            src = Path(side["image"])
+            if not src.is_file():
+                raise ReelError(f"VS 拼接的 {key} 格找不到图：{src}")
+        else:
+            src = dest.parent / f"_versus_{key}.jpg"
+            with stage(f"VS 抓帧 {key}"):
+                run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-ss", f"{float(side['frame_at']):.2f}", "-i", str(source),
+                    "-frames:v", "1", "-q:v", "2", str(src))
+        img = Image.open(src).convert("RGB")
+        # 铺满这一格：先按较大的那个比例缩，再按 focus 横向取一段。
+        # focus 是这一格里人在原图的横向位置（0~1），默认正中。
+        # zoom 把人拉近。铺满只保证不留边，不保证人够大——广角实拍里球员常常
+        # 只占画面三分之一，直接铺满就是一个小人贴在压暗区里。
+        scale = max(VIDEO_W / img.width, height / img.height) * float(side.get("zoom", 1.0))
+        img = img.resize((max(1, round(img.width * scale)),
+                          max(1, round(img.height * scale))), Image.LANCZOS)
+        # focus / focus_y：人在原图里的位置（0~1）。**竖向也要能调**——VS 卡的
+        # 经典构图是两个人的头都靠近中间那道缝，居中裁会把上格的人顶到天上、
+        # 把下格的人埋进压暗区。
+        focus = float(side.get("focus", 0.5))
+        left = int(round(focus * img.width - VIDEO_W / 2))
+        left = max(0, min(left, img.width - VIDEO_W))
+        focus_y = float(side.get("focus_y", 0.5))
+        top = int(round(focus_y * img.height - height / 2))
+        top = max(0, min(top, img.height - height))
+        panels.append(img.crop((left, top, left + VIDEO_W, top + height)))
+        print(f"    [versus] {key} ← {src.name}，{panels[-1].size[0]}×{panels[-1].size[1]}")
+
+    base = Image.new("RGB", (VIDEO_W, VIDEO_H), (4, 18, 13))
+    base.paste(panels[0], (0, 0))
+    base.paste(panels[1], (0, top_h))
+    base.save(dest, quality=95)
+    return dest
+
+
+def _render_cover_html(cover: dict, grab: Path, dest: Path,
+                       versus: bool = False) -> Path:
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    from tennislive.video.explainer import _data_uri  # noqa: PLC0415
+
+    seam = int(float(cover.get("versus", {}).get("split", 0.44)) * VIDEO_H)
+    vs_badge = (f'<div class="vs" style="top:{seam}px">VS</div>' if versus else "")
+    # 渐变从哪儿起：单图封面 44%（上半张几乎不动，糊了就看不出是哪一场）；
+    # **VS 拼接要往下挪到 58%**——接缝就在 46%，44% 起等于把整个下格压进暗部，
+    # 下面那个人只剩一个黑影。压暗要按文字落在哪一段算，不是整张按比例推。
+    grad = 58 if versus else 44
     lines = "".join(
         f"<div>{line.strip()}</div>"
         for line in str(cover.get("hook", "")).split("\n") if line.strip()
@@ -742,7 +824,8 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
 /* 渐变从 44% 高处才起，到文字那一带接近全黑——压暗要按文字落在哪一段算，
    不是整张按比例推。上半张几乎不动，糊了就看不出是哪一场。 */
 .s{{position:absolute;inset:0;background:linear-gradient(
-   180deg,rgba(4,18,13,0) 44%,rgba(4,18,13,.72) 62%,rgba(4,18,13,.94) 78%)}}
+   180deg,rgba(4,18,13,0) {grad}%,rgba(4,18,13,.72) {grad + 18}%,
+   rgba(4,18,13,.94) {grad + 34}%)}}
 .c{{position:absolute;left:78px;right:78px;bottom:250px;z-index:3;
    display:flex;flex-direction:column;align-items:flex-start;gap:26px}}
 .k{{background:#c6f65a;color:#062018;font-family:'TL Sans SC',sans-serif;
@@ -755,7 +838,15 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
    font-size:52px;color:#c6f65a;letter-spacing:1px}}
 .b{{font-family:'TL Sans SC',sans-serif;font-weight:400;font-size:34px;
    color:#9fb4aa;letter-spacing:2px}}
-</style><div class="f"></div><div class="s"></div><div class="c">
+/* VS 压在两格的接缝上：品牌绿圆牌，上下各出一半，让接缝看起来是有意为之，
+   而不是两张图硬拼在一起 */
+.vs{{position:absolute;left:50%;transform:translate(-50%,-50%);z-index:4;
+   width:168px;height:168px;border-radius:50%;background:#c6f65a;
+   color:#062018;font-family:'TL Numeral','TL Sans SC',sans-serif;
+   font-weight:700;font-size:66px;letter-spacing:2px;
+   display:flex;align-items:center;justify-content:center;
+   box-shadow:0 10px 40px rgba(0,0,0,.45)}}
+</style><div class="f"></div><div class="s"></div>{vs_badge}<div class="c">
 <div class="k">{cover.get('eyebrow','')}</div>
 <div class="t">{lines}</div>
 <div class="n">{cover.get('score','')}</div>
