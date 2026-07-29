@@ -101,8 +101,14 @@ from tennislive.video.explainer import (  # noqa: E402
 FPS = 30            # 兜底值；render 开跑时按源片改写（见 resolve_fps）
 FPS_EXPR = "30"     # 传给 ffmpeg 的那份，保留分数形式（29.97 是 30000/1001）
 # 1080 高的源，9:16 的宽 = 1080*9/16 = 607.5。裁剪宽度必须是偶数，取 608。
+# 9:16 的裁切窗口。**按源片实际高度算，不是写死 1080**——`resolve_crop()` 在
+# render 开跑时改写这两个值。原来这里写死 1080，而源片有时只下到 360p，
+# `crop=608:1080` 直接被 ffmpeg 拒掉；那句「源片不是 1080 高，裁剪按等比换算」
+# 的提示只打印，从来没真的换算过（注释和行为对不上，跑起来才炸）。
 CROP_H = 1080
 CROP_W = 608
+# 低于这个高度的源片不值得做成片：裁成 9:16 再放到 1080 宽是放大好几倍。
+MIN_SOURCE_H = 700
 COVER_SECONDS = 2.6
 # contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
@@ -182,6 +188,27 @@ def _has_audio(path: Path) -> bool:
     out = run("ffprobe", "-v", "error", "-select_streams", "a",
               "-show_entries", "stream=index", "-of", "csv=p=0", str(path)).stdout
     return bool(out.strip())
+
+
+def resolve_crop(source_w: int, source_h: int) -> None:
+    """按源片实际高度定 9:16 的裁切窗口，太小的源片直接拒掉。
+
+    **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
+    看起来一切正常，直到 `crop=608:1080` 撞上 640×360 的源片才炸在第一段切片上
+    （run 30412173035）。所以这里既换算、也把不合格的源片挡在开跑前，
+    别等渲了一半才发现。
+    """
+    global CROP_H, CROP_W
+    if source_h < MIN_SOURCE_H:
+        raise ReelError(
+            f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {MIN_SOURCE_H}）。"
+            "裁成 9:16 再放到 1080 宽是放大好几倍，成片糊得没法看。"
+            "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
+            "或者换一个能拿到 720p 以上的源。"
+        )
+    CROP_H = source_h // 2 * 2
+    CROP_W = int(round(CROP_H * 9 / 16)) // 2 * 2
+    print(f"[裁切] 源片 {source_w}×{source_h} → 9:16 窗口 {CROP_W}×{CROP_H}")
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
@@ -298,7 +325,18 @@ def download(url: str, dest: Path) -> Path:
             capture_output=True, text=True,
         )
         if proc.returncode == 0 and dest.is_file() and dest.stat().st_size > 0:
-            print(f"[ok] {label} 下到了 {dest.stat().st_size / 1e6:.1f} MB")
+            # **下到了不等于下对了。** 某些 player client 只放得出 360p，
+            # yt-dlp 照样 returncode 0、照样有文件——直到裁切那一步才炸
+            # （run 30412173035：640×360 的源撞上 crop=608:1080）。
+            # 所以在这儿量一次高度，不够就换下一档 client 接着试。
+            width, height = probe_size(dest)
+            if height < MIN_SOURCE_H:
+                print(f"[低画质] {label} 只有 {width}×{height}，换下一档再试")
+                failures.append(f"{label}: 只拿到 {width}×{height}")
+                dest.unlink(missing_ok=True)
+                continue
+            print(f"[ok] {label} 下到了 {width}×{height}，"
+                  f"{dest.stat().st_size / 1e6:.1f} MB")
             return dest
         reason = " | ".join(
             line.strip() for line in (proc.stderr or "").splitlines()
@@ -963,8 +1001,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
-    if source_h != CROP_H:
-        print(f"[注意] 源片不是 1080 高，裁剪按等比换算")
+    resolve_crop(source_w, source_h)
 
     # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
     # 广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
