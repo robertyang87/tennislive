@@ -112,7 +112,7 @@ STORIES = (
             ),
         ),
         venue="ATP Stadium Goran Ivanišević · 4,032 席",
-        image=ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        image=ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         image_credit="Silverije / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://www.croatiaopen.hr/en/tournament/history",
         image_source_url=(
@@ -864,7 +864,7 @@ STORIES = (
 
 _STOCK_IMAGES = {
     "umag": (
-        ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         "Silverije / Wikimedia Commons · CC BY-SA 4.0",
     ),
     "washington": (
