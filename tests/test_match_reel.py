@@ -356,3 +356,144 @@ def test_下载不把编码当硬条件():
     assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
     assert "ext=m4a" not in picker
     assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
+
+
+def _court_frame(axis: float, w: int = 1280, h: int = 720):
+    """合成一帧「转播主机位」：球场中轴故意偏离画面正中，人站在另一边。
+
+    真源片在沙箱里取不到（YouTube 对沙箱一律 403），所以中轴的**准确度**
+    在这儿用合成画面验；「有没有球场」那道门槛用成片的真实帧验（下一个测试）。
+    两者分开，别拿一个去冒充另一个。
+    """
+    import cv2  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+
+    img = np.zeros((h, w, 3), np.uint8)
+    img[:, :] = (60, 90, 40)
+    cv2.rectangle(img, (0, 0), (w, int(h * .30)), (70, 60, 120), -1)   # 看台
+    cv2.rectangle(img, (0, int(h * .26)), (w, int(h * .32)), (110, 60, 40), -1)
+    cx = axis * w
+    far_y, near_y = int(h * .38), int(h * .96)
+    far_w, near_w = w * .17, w * .62
+    cv2.fillPoly(img, [np.array(
+        [[cx - far_w, far_y], [cx + far_w, far_y],
+         [cx + near_w, near_y], [cx - near_w, near_y]], np.int32)], (120, 70, 35))
+    white = (245, 245, 245)
+    for y in (far_y, near_y, int(h * .55), int(h * .74)):
+        t = (y - far_y) / (near_y - far_y)
+        half = far_w + (near_w - far_w) * t
+        cv2.line(img, (int(cx - half), y), (int(cx + half), y), white, 3)
+    for k in (-1.0, -0.72, 0.0, 0.72, 1.0):
+        cv2.line(img, (int(cx + k * far_w), far_y),
+                 (int(cx + k * near_w), near_y), white, 3)
+    cv2.rectangle(img, (0, int(h * .49)), (w, int(h * .52)), (30, 30, 30), -1)
+    # 场地上那行白色大字**故意画偏**：取「最左/最右那根线」会被它拽走
+    cv2.putText(img, "WASHINGTON, D.C.", (int(cx - near_w * .55), int(h * .90)),
+                cv2.FONT_HERSHEY_DUPLEX, 2.2, white, 6)
+    cv2.ellipse(img, (int(.74 * w), int(h * .78)), (26, 60), 0, 0, 360,
+                (200, 170, 210), -1)                       # 站在右边的人
+    return img
+
+
+def test_竖版窗口钉球场中轴而不是画面正中():
+    """**转播机位对着中轴，但不一定在正中。**
+
+    1920 宽里偏一两百像素肉眼看不出来，竖版只裁 608 宽，同样的偏移就是小半个
+    球场——已发的那条片子里左网柱和奔驰广告板贴着左沿、右半场直接出画。
+
+    更要紧的是不能拿运动质心当中心：质心跟着人跑，而回合里两个人轮流在两边。
+    所以合成画面里那个人固定站在 0.74，中轴给 0.44——**认对了就该报 0.44**。
+    """
+    import pytest  # noqa: PLC0415
+
+    pytest.importorskip("cv2")
+    reel = _reel()
+    for axis in (0.50, 0.44, 0.58):
+        got = reel._court_axis(_court_frame(axis))
+        assert got is not None, f"中轴 {axis} 的球场没被认出来"
+        assert abs(got - axis) < 0.02, f"中轴 {axis} → 认成 {got:.3f}"
+
+
+def test_没有球场的镜头不能硬报一个中轴():
+    """**「各帧彼此吻合」单独用不住。**
+
+    一段看台噪声在统计上左右对称，每帧都稳稳报 0.499，「一致」得很，其实一根线
+    都没有。真按它去钉窗口，庆祝、特写这些人不在正中的镜头就被拽回画面中间。
+
+    分家的判据是**线像素占比**，不是「有没有长直线」——量下来长直线根本不分家：
+    真球场 5~29 条，一段看台噪声能凑出 132 条，比球场还多。
+    """
+    import pytest  # noqa: PLC0415
+
+    pytest.importorskip("cv2")
+    import cv2  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+
+    reel = _reel()
+    rng = np.random.default_rng(7)
+    stand = cv2.GaussianBlur(
+        rng.integers(40, 190, (720, 1280, 3), dtype=np.uint8), (0, 0), 3)
+    assert reel._court_axis(stand) is None, "看台噪声被当成了球场"
+    # 另一头：糊满整屏的大特写，一根线都没有
+    flat = np.full((720, 1280, 3), 90, np.uint8)
+    cv2.ellipse(flat, (640, 430), (300, 380), 0, 0, 360, (140, 120, 110), -1)
+    assert reel._court_axis(flat) is None, "大特写被当成了球场"
+
+
+def test_球场判据的上下界是量出来的():
+    """把测出来的数钉住，别让人顺手把区间放宽。
+
+    都是成片的真实帧（`ffmpeg -ss` 抽的）：
+
+        回合镜头   5.1% / 5.6% / 6.9% / 8.0% / 8.7% / 12.7%
+        网前特写   20.5% / 24.9%
+        看台       63.8%
+
+    上界 16% 落在 12.7 和 20.5 中间；下界 2% 挡另一头的大特写。
+    """
+    reel = _reel()
+    lo, hi = reel.COURT_INK
+    assert lo <= 0.02 and 0.127 < hi < 0.205, reel.COURT_INK
+
+
+def test_赛场之上走固定海报模板():
+    """**这是栏目的固定封面，不是一条片子的一次性设计。**
+
+    以前是在 `build_match_reel` 里现拼一张上下两格的底图再盖字，每条片子的比例、
+    压暗、名字位置都要重调。现在版式定死在 `tools/versus_poster.py`，换片子只换
+    素材和文字——改版式改一处，三条片子一起重渲比一眼。
+    """
+    reel = _reel()
+    source = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "build_versus_poster" in source and hasattr(reel, "build_versus_poster")
+    # 旧的现拼那套要真的删掉，不能留着让人以为还有第二条路
+    assert not hasattr(reel, "build_versus_base"), "旧的现拼底图还在"
+    poster = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert 'layout: str = "diagonal"' in poster, "默认版式不是斜切"
+
+
+def test_海报必须写两个人的中文名():
+    """只有两张脸的 VS 卡等于让人猜这是谁打谁。名字是模板的一部分。"""
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    names = spec["cover"]["versus"]["names"]
+    assert len(names) == 2 and all(n.strip() for n in names), names
+    bare = json.loads(json.dumps(spec["cover"]))
+    bare["versus"].pop("names")
+    with pytest.raises(SystemExit, match="中文名"):
+        versus_poster.build_poster(bare, Path("/tmp/never-written.jpg"))
+
+
+def test_海报上的名字以译名表为准():
+    """人名不手打——莱巴金娜、奥斯塔彭科都是这么错出去的。"""
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.zh import player_zh  # noqa: PLC0415
+
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    top, bottom = spec["cover"]["versus"]["names"]
+    assert top == player_zh("Zheng Qinwen"), top
+    assert bottom == player_zh("Alexandra Eala"), bottom

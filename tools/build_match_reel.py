@@ -573,18 +573,115 @@ def sample_track(coarse: list[tuple[float, float]],
             for t, x in zip(frames, smooth)]
 
 
-def auto_center(source: Path, seg: "Segment", source_w: int) -> float:
-    """不摇的那些段，固定中心取**整段运动质心的中位数**。
+COURT_BAND = (0.40, 0.98)      # 只看近半场那一带：上面是看台和广告板
+COURT_INK = (0.02, 0.16)       # 线像素占比要落在这个区间才算「画面里有球场」
+COURT_MAX_SPREAD = 0.035       # 各帧估计值的标准差上限（占画面宽）
 
-    钉死画面不等于钉在正中：庆祝那一屏人偏左，钉在 0.5 就把他挤到边上。
-    中位数比均值稳——中间一两次大幅挥拍带不动它。
+
+def _court_axis(frame) -> float | None:
+    """一帧里球场中轴的横向位置（0~1）；这一帧里没有球场就返回 None。
+
+    **门槛是「线像素占比」，不是「有没有长直线」。** 一开始想用 HoughLinesP
+    数长直线，量下来根本不分家：真球场只有 5~29 条，而一段看台噪声能凑出
+    132 条共线像素——比球场还多。换成占比，实测立刻分开（都是成片真实帧）：
+
+        回合镜头   5.1% / 5.6% / 6.9% / 8.0% / 8.7% / 12.7%
+        网前特写   20.5% / 24.9%
+        看台       63.8%
+
+    球场是**干净场地上几根细线**，本来就该稀疏；人脸、球衣褶皱、看台上密密麻麻
+    的人头经 tophat 之后到处都是亮结构。上界 16% 落在 12.7 和 20.5 中间。
+    下界 2% 挡的是另一头：糊满整屏的大特写，一根线都没有。
     """
-    coarse = track_run(source, seg.start, seg.end, source_w, quiet=True)
-    if not coarse:
-        return 0.5
+    import cv2
     import numpy as np
 
-    return float(np.median([x for _, x in coarse])) / source_w
+    gray = cv2.cvtColor(cv2.resize(frame, (640, 360)), cv2.COLOR_BGR2GRAY)
+    band = gray[int(360 * COURT_BAND[0]):int(360 * COURT_BAND[1])]
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (41, 41))
+    lines = cv2.morphologyEx(band, cv2.MORPH_TOPHAT, kernel)
+    _, mask = cv2.threshold(lines, 0, 255,
+                            cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    ink = float(mask.sum()) / 255.0 / mask.size
+    if not COURT_INK[0] <= ink <= COURT_INK[1]:
+        return None
+    profile = mask.sum(axis=0).astype(np.float64) / 255.0
+    # p ⊛ p 的峰值落在 2c 上：一条剖面和它的镜像对齐得最好的那条轴
+    peak = int(np.argmax(np.convolve(profile, profile)))
+    return peak / 2.0 / profile.size
+
+
+def court_center(source: Path, start: float, end: float, *,
+                 samples: int = 10) -> float | None:
+    """球场中轴在画面里的横向位置（0~1）；这一段里没有球场就返回 None。
+
+    **转播主机位是对着球场中轴架的，但「对着」不等于「在正中」。** 转播车会
+    为了带上记分条、球员通道或者某块广告板把机位偏一点点；1920 宽里偏一两百
+    像素肉眼根本看不出来，可竖版只裁 608 宽，同样的偏移就是**小半个球场**。
+    实测这条片子的回合镜头：左边网柱和奔驰广告板贴着画面左沿，右半场直接出画。
+
+    更要紧的是**不能拿运动质心当中心**。质心跟着人跑——人站哪边窗口就偏哪边，
+    而回合里两个人本来就轮流在两边，于是每一段的固定中心都被随机拽走一点。
+    「不摇」解决的是窗口在段内乱动，这条解决的是窗口**整段站错地方**。
+
+    判据是**球场左右对称于机位轴线**：把白线抽出来（tophat 只留细的亮结构，
+    球衣、皮肤这类大块亮斑留不下），按列统计得到一条剖面 p，再找一条轴让 p
+    和它自己的镜像重合得最好。这等价于取 `p ⊛ p` 的峰值位置除以二——
+    一次卷积就够，不用搜。
+
+    用整条剖面而不是「最左/最右那根线」，是因为场地上那行 `WASHINGTON, D.C.`
+    大字和球网两端的广告牌也是亮的，取极值会被它们拽走；对称性用的是全部结构。
+
+    两道门槛，缺一不可：**这一帧里得有球场**（`_court_axis` 按线像素占比判），
+    **各帧还得彼此吻合**。后一道单独用不住——一段看台噪声在统计上是左右对称的，
+    每一帧都稳稳报 0.499，「一致」得很，其实一根线都没有。
+    """
+    import cv2
+    import numpy as np
+
+    cap = cv2.VideoCapture(str(source))
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    picks = np.linspace(start, max(start, end - 1.0 / fps), samples)
+    guesses: list[float] = []
+    for at in picks:
+        cap.set(cv2.CAP_PROP_POS_MSEC, float(at) * 1000.0)
+        ok, frame = cap.read()
+        if not ok:
+            continue
+        axis = _court_axis(frame)
+        if axis is not None:
+            guesses.append(axis)
+    cap.release()
+    if len(guesses) < max(3, samples // 2):
+        return None
+    arr = np.array(guesses)
+    if float(arr.std()) > COURT_MAX_SPREAD:
+        return None                      # 各帧对不上，说明这段里没有球场
+    return float(np.median(arr))
+
+
+def auto_center(source: Path, seg: "Segment",
+                source_w: int) -> tuple[float, str]:
+    """不摇的那些段，固定中心**先钉球场中轴，钉不上才退回运动质心中位数**。
+
+    返回 `(cx, 用了哪条判据)`——**打印出来是为了能一眼核对**：一条回合镜头
+    如果报的是「运动质心」，那就是球场没被认出来，八成要看一眼。
+
+    顺序不能反：有球场的时候球场说了算（见 `court_center`）；特写、看台、
+    庆祝这些没有球场的镜头才轮到质心——钉死画面不等于钉在正中，庆祝那一屏
+    人偏左，钉在 0.5 就把他挤到边上。中位数比均值稳，中间一两次大幅挥拍
+    带不动它。
+    """
+    court = court_center(source, seg.start, seg.end)
+    if court is not None:
+        return court, "球场中轴"
+    coarse = track_run(source, seg.start, seg.end, source_w, quiet=True)
+    if not coarse:
+        return 0.5, "画面正中（既没球场也没运动）"
+    import numpy as np
+
+    return float(np.median([x for _, x in coarse])) / source_w, \
+        "运动质心（这段没找到球场）"
 
 
 def track_shots(source: Path, segments: list["Segment"],
@@ -614,8 +711,8 @@ def track_shots(source: Path, segments: list["Segment"],
         if seg.track or seg.fit == "contain" or seg.cx is not None:
             continue
         with stage("定心抽帧"):
-            seg.cx = auto_center(source, seg, source_w)
-        print(f"    [fixed] 第 {index} 段不摇，固定中心 cx={seg.cx:.3f}")
+            seg.cx, how = auto_center(source, seg, source_w)
+        print(f"    [fixed] 第 {index} 段不摇，固定中心 cx={seg.cx:.3f}（{how}）")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -750,15 +847,14 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     # 一帧（这场没有那个人的官方静态图时）。别拿别的赛事的照片来凑：封面上写着
     # 赛事和比分，配一张别处的图就是「讲法网配温网」那个错。
     if cover.get("versus"):
-        build_versus_base(source, cover["versus"], grab, source_w)
-        return _render_cover_html(cover, grab, dest, versus=True)
+        return build_versus_poster(source, cover, dest)
     # 封面的固定中心和分段一样可以自己定：**源片在本地看不到时更需要它**
     # （YouTube 对沙箱一律 403，cx 只能靠猜，猜错就是把人裁到边上）。
     # 取抓帧前后两秒的运动质心中位数——握手、庆祝这类镜头人不在正中。
     if cover.get("cx") is None:
         probe = Segment(max(0.0, at - 1.2), at + 1.2, None, "")
-        cx = auto_center(source, probe, source_w)
-        print(f"    [cover] 没给 cx，自动定心 cx={cx:.3f}")
+        cx, how = auto_center(source, probe, source_w)
+        print(f"    [cover] 没给 cx，自动定心 cx={cx:.3f}（{how}）")
     else:
         cx = float(cover["cx"])
     # 底图两种铺法：
@@ -791,71 +887,51 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
     return _render_cover_html(cover, grab, dest)
 
 
-def build_versus_base(source: Path, versus: dict, dest: Path,
-                      source_w: int) -> Path:
-    """上下两格拼一张 1080×1920 的底图，每格一个人。
+def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
+    """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
+
+    **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
+    上下两格的底图再盖字，每条片子的比例、压暗、名字位置都得重调；现在只换素材
+    和文字。改版式要改那个模块，改完三条片子一起重渲比一眼。
 
     每一格给 `image`（本地静态图）或 `frame_at`（从源片抓一帧）。**两者都要
     出自这场比赛**——这场找不到某人的官方静态图时才用集锦里的帧，不要拿别的
     赛事的照片来凑。
     """
-    from PIL import Image  # noqa: PLC0415
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from versus_poster import build_poster  # noqa: PLC0415
 
-    top_h = int(versus.get("split", 0.44) * VIDEO_H) // 2 * 2
-    panels = []
-    for key, height in (("top", top_h), ("bottom", VIDEO_H - top_h)):
-        side = versus[key]
+    versus = dict(cover["versus"])
+    for key in ("top", "bottom"):
+        side = dict(versus[key])
         if side.get("image"):
-            src = Path(side["image"])
-            if not src.is_file():
-                raise ReelError(f"VS 拼接的 {key} 格找不到图：{src}")
+            if not Path(side["image"]).is_file():
+                raise ReelError(f"VS 拼接的 {key} 格找不到图：{side['image']}")
         else:
-            src = dest.parent / f"_versus_{key}.jpg"
+            grab = dest.parent / f"_versus_{key}.jpg"
             with stage(f"VS 抓帧 {key}"):
                 run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", f"{float(side['frame_at']):.2f}", "-i", str(source),
-                    "-frames:v", "1", "-q:v", "2", str(src))
-        img = Image.open(src).convert("RGB")
-        # 铺满这一格：先按较大的那个比例缩，再按 focus 横向取一段。
-        # focus 是这一格里人在原图的横向位置（0~1），默认正中。
-        # zoom 把人拉近。铺满只保证不留边，不保证人够大——广角实拍里球员常常
-        # 只占画面三分之一，直接铺满就是一个小人贴在压暗区里。
-        scale = max(VIDEO_W / img.width, height / img.height) * float(side.get("zoom", 1.0))
-        img = img.resize((max(1, round(img.width * scale)),
-                          max(1, round(img.height * scale))), Image.LANCZOS)
-        # focus / focus_y：人在原图里的位置（0~1）。**竖向也要能调**——VS 卡的
-        # 经典构图是两个人的头都靠近中间那道缝，居中裁会把上格的人顶到天上、
-        # 把下格的人埋进压暗区。
-        focus = float(side.get("focus", 0.5))
-        left = int(round(focus * img.width - VIDEO_W / 2))
-        left = max(0, min(left, img.width - VIDEO_W))
-        focus_y = float(side.get("focus_y", 0.5))
-        top = int(round(focus_y * img.height - height / 2))
-        top = max(0, min(top, img.height - height))
-        panels.append(img.crop((left, top, left + VIDEO_W, top + height)))
-        print(f"    [versus] {key} ← {src.name}，{panels[-1].size[0]}×{panels[-1].size[1]}")
-
-    base = Image.new("RGB", (VIDEO_W, VIDEO_H), (4, 18, 13))
-    base.paste(panels[0], (0, 0))
-    base.paste(panels[1], (0, top_h))
-    base.save(dest, quality=95)
+                    "-frames:v", "1", "-q:v", "2", str(grab))
+            side["image"] = str(grab)
+        versus[key] = side
+    with stage("封面海报"):
+        build_poster({**cover, "versus": versus}, dest,
+                     layout=str(cover.get("layout", "diagonal")))
+    print(f"    [封面] 赛场之上海报 {cover.get('layout', 'diagonal')} → {dest.name}")
     return dest
 
 
-def _render_cover_html(cover: dict, grab: Path, dest: Path,
-                       versus: bool = False) -> Path:
+def _render_cover_html(cover: dict, grab: Path, dest: Path) -> Path:
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
     from tennislive.render.webcards import _font_css  # noqa: PLC0415
     from tennislive.video.explainer import _data_uri  # noqa: PLC0415
 
-    seam = int(float(cover.get("versus", {}).get("split", 0.44)) * VIDEO_H)
-    vs_badge = (f'<div class="vs" style="top:{seam}px">VS</div>' if versus else "")
-    # 渐变从哪儿起：单图封面 44%（上半张几乎不动，糊了就看不出是哪一场）；
-    # **VS 拼接要往下挪到 58%**——接缝就在 46%，44% 起等于把整个下格压进暗部，
-    # 下面那个人只剩一个黑影。压暗要按文字落在哪一段算，不是整张按比例推。
-    grad = 58 if versus else 44
+    # 渐变从 44% 起：上半张几乎不动，糊了就看不出是哪一场。
+    # 两个人的 VS 海报走 `versus_poster.py`，不从这儿出。
+    grad = 44
     lines = "".join(
         f"<div>{line.strip()}</div>"
         for line in str(cover.get("hook", "")).split("\n") if line.strip()
@@ -883,15 +959,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:#04120d}}
    font-size:52px;color:#c6f65a;letter-spacing:1px}}
 .b{{font-family:'TL Sans SC',sans-serif;font-weight:400;font-size:34px;
    color:#9fb4aa;letter-spacing:2px}}
-/* VS 压在两格的接缝上：品牌绿圆牌，上下各出一半，让接缝看起来是有意为之，
-   而不是两张图硬拼在一起 */
-.vs{{position:absolute;left:50%;transform:translate(-50%,-50%);z-index:4;
-   width:168px;height:168px;border-radius:50%;background:#c6f65a;
-   color:#062018;font-family:'TL Numeral','TL Sans SC',sans-serif;
-   font-weight:700;font-size:66px;letter-spacing:2px;
-   display:flex;align-items:center;justify-content:center;
-   box-shadow:0 10px 40px rgba(0,0,0,.45)}}
-</style><div class="f"></div><div class="s"></div>{vs_badge}<div class="c">
+</style><div class="f"></div><div class="s"></div><div class="c">
 <div class="k">{cover.get('eyebrow','')}</div>
 <div class="t">{lines}</div>
 <div class="n">{cover.get('score','')}</div>
