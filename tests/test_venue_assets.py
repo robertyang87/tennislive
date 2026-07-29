@@ -500,3 +500,36 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
     # 拿不到年份时**宁可不给图**：卡上的 location 是要印出来的，
     # 印错城市比没有背景图糟。
     assert venue_asset_for_match(_match(Tour.ATP, None)) is None
+
+
+# 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
+# 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
+# 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
+VENUE_COVERAGE_FLOOR = 24
+
+
+def test_calendar_coverage_only_goes_up():
+    """按 2026 赛历逐站问「这站有中心球场图吗」，覆盖数不许降。
+
+    场馆图一直是**按遇到的站补**：今天日报里出现哪站就找哪站。好处是永远在
+    做最急的，坏处是**永远不知道还差多少**。把赛历当清单跑一遍才有分母。
+
+    判据是真的调 `venue_asset_for_match`，不是比 slug 字符串——别名写错、
+    host_years 写反、credits 缺字段导致整条被丢弃，这些只有走一遍才看得见。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    rows = module.survey()
+    covered = sorted({r["slug"] for r in rows if r["shot"] == "centre-court"})
+    have = sum(1 for r in rows if r["shot"] == "centre-court")
+    assert have >= VENUE_COVERAGE_FLOOR, (
+        f"赛历覆盖从 {VENUE_COVERAGE_FLOOR} 站掉到了 {have} 站。"
+        f"现在命中的 slug：{covered}。"
+        "补完新站记得把 VENUE_COVERAGE_FLOOR 一起提上去"
+    )
