@@ -32,12 +32,13 @@ the photographs are not otherwise altered.
 - Source: https://commons.wikimedia.org/wiki/File:Estoril_-_panoramio.jpg
 - License: Creative Commons Attribution-ShareAlike 3.0
 
-## Hamburg: skyline
+## Hamburg: Am Rothenbaum centre court
 
-- File: `hamburg-skyline.jpg`
-- Author: Managementboy
-- Source: https://commons.wikimedia.org/wiki/File:Hamburg_city_skyline.jpg
-- License: Creative Commons Attribution-ShareAlike 3.0
+- File: `hamburg-rothenbaum-centre-court.jpg`
+- Author: AltSylt
+- Source: https://commons.wikimedia.org/wiki/File:Hamburg_Rotherbaum_DS150n.jpg
+- License: Creative Commons Attribution-ShareAlike 4.0 International
+- Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## Umag: ATP Stadium Goran Ivanisevic
 
