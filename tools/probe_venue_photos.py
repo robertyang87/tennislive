@@ -86,8 +86,12 @@ VENUES: dict[str, dict] = {
                 "queries": ["Am Rothenbaum Center Court Luftaufnahme", "Rothenbaum Tennisstadion innen"]},
     "iasi": {"site": "https://iasiopen.ro",
              "queries": ["Iasi Open teren central", "Ciric tenis Iasi arena"]},
-    "istanbul": {"site": "https://www.tenisfederasyonu.org",
-                 "queries": ["Enka Spor Kulübü tenis kortu", "İstanbul tenis merkez kort"]},
+    # 场地是 TTF İstanbul Tenis Merkezi（WTA 官方页 /tournaments/1160/
+    # istanbul-125/），不是 ENKA 也不是 TED Club——那两个是别的赛事，
+    # 之前按它们查了半天，查的根本不是这一站
+    "istanbul": {"site": "https://www.ttf.org.tr",
+                 "queries": ["TTF İstanbul Tenis Merkezi merkez kort tribün",
+                             "Istanbul Open WTA 125 kort"]},
     "palermo": {"site": "https://www.palermoladiesopen.it",
                 "queries": ["Country Time Club Palermo campo centrale", "Palermo Ladies Open campo centrale"]},
     "umag": {"site": "https://www.croatiaopen.hr",
