@@ -260,6 +260,26 @@ def _douyin(payload: bytes) -> list[tuple[str, str, str]]:
     return out
 
 
+def _uapis(payload: bytes) -> list[tuple[str, str, str]]:
+    """UApiPro 的统一热榜接口 → (词, 热度, 链接)。
+
+    小红书原来是抓今日热榜的 HTML `<table>`，现在改走这个 JSON 接口：
+    **同一份上游数据**（实测当天第一条一字不差），但契约是 JSON 而不是
+    一段会随时被改掉的 HTML。免注册、免 key。
+
+    ⚠️ **它没有微信**（`type=weixin` / `wechat` / `wxhot` 一律
+    `invalid hotboard type`），所以微信那一路仍然只能走镜像。
+    """
+    data = json.loads(payload.decode("utf-8"))
+    out = []
+    for item in data.get("list") or []:
+        word = str(item.get("title") or "").strip()
+        if word:
+            out.append((word, str(item.get("hot_value") or ""),
+                        str(item.get("url") or "")))
+    return out
+
+
 _ROW = re.compile(
     r'<td align="center">(\d+)\.</td>\s*<td><a href="([^"]+)"[^>]*>(.*?)</a></td>'
     r'\s*(?:<td class="ws">([^<]*)</td>)?',
@@ -293,6 +313,9 @@ class _Board:
     referer: str
     parse: object
     note: str = ""
+    # 主源取不到（或解析出 0 行）时退到这一路。**只给第三方源配**：
+    # 官方接口挂了就该报降级，拿镜像顶上去等于把「官方变了」这件事藏起来。
+    fallback: "tuple[str, str, object] | None" = None
 
 
 _BOARDS: tuple[_Board, ...] = (
@@ -304,13 +327,28 @@ _BOARDS: tuple[_Board, ...] = (
     # 小红书官方两个入口：`edith.xiaohongshu.com/api/sns/web/v1/search/hot_list`
     # 返回 404，`www.xiaohongshu.com/api/sns/web/v1/search/hot_list` 返回 500
     # （`create invoker failed, service: jarvis-gateway-default`）——都要签名。
-    _Board("小红书热榜", "https://tophub.today/n/L4MdA5ldxD",
-           "https://tophub.today/", _tophub, note="经今日热榜镜像，非官方接口"),
-    # 微信指数（search.weixin.qq.com）无签名一律 `{"code":-1}`，且它是「给词
-    # 查数」不是「给榜发现」。热文榜是标题榜，反而能拿来发现话题。
+    # 主源改走 UApiPro 的 JSON，今日热榜的 HTML 退居备用：两边是同一份上游
+    # 数据，但 JSON 的契约比一段随时会被改掉的 `<table>` 稳。
+    _Board("小红书热榜", "https://uapis.cn/api/v1/misc/hotboard?type=xiaohongshu",
+           "https://uapis.cn/", _uapis, note="第三方聚合，非官方接口",
+           fallback=("https://tophub.today/n/L4MdA5ldxD",
+                     "https://tophub.today/", _tophub)),
+    # ⚠️ **「微信热搜」至少是五种不同的东西**，接之前先想清楚要哪一种：
+    #   ① 搜一搜热点词  ② 公众号热点话题榜  ③ 公众号 24h 热文榜
+    #   ④ 微信指数（给词查数）  ⑤ 视频号热点榜
+    # 我们接的是 ③。想要的其实更接近 ①/②，但那两种目前只有付费接口
+    # （聚合数据卖的是 ②，无 key 返回「错误的请求KEY」）。
+    # ④ 无签名一律 `{"code":-1}`，而且它回答不了「今天什么热」。
     _Board("微信热文榜", "https://tophub.today/n/WnBe01o371",
            "https://tophub.today/", _tophub,
            note="经今日热榜镜像；这是 24h 热文榜，不是微信指数"),
+    # 这两路是顺手加的，走的是小红书那同一个接口，各一行的成本。
+    # 它们各代表中文舆论的另一面：知乎是**讨论**（问题标题本身就带着争议点），
+    # 百度是**搜索**（和 Google 每日热搜同一个性质，但看的是国内的搜法）。
+    _Board("知乎热榜", "https://uapis.cn/api/v1/misc/hotboard?type=zhihu",
+           "https://uapis.cn/", _uapis, note="第三方聚合，非官方接口"),
+    _Board("百度热搜", "https://uapis.cn/api/v1/misc/hotboard?type=baidu",
+           "https://uapis.cn/", _uapis, note="第三方聚合，非官方接口"),
 )
 
 # 拿不到、且**短期内也不打算再试**的源。写进产物里，别让它悄悄消失。
@@ -320,7 +358,13 @@ UNAVAILABLE: dict[str, str] = {
         "签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」"
     ),
     "小红书官方接口": (
-        "拿不到 · edith 域 404、www 域 500，两条都要签名，已改走今日热榜镜像"
+        "拿不到 · edith 域 404、www 域 500，两条都要签名；"
+        "已改走 UApiPro（主）+ 今日热榜镜像（备）"
+    ),
+    "微信搜一搜热点词 / 公众号热点话题榜": (
+        "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；"
+        "百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot "
+        "一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
     ),
 }
 
@@ -333,23 +377,44 @@ class ZhTrendResult:
     near: list[dict] = field(default_factory=list)
 
 
-def _fetch_board(board: _Board, get, timeout: int, top: int):
-    try:
-        response = get(
-            board.url,
-            headers={
-                "User-Agent": _UA,
-                "Referer": board.referer,
-                "Accept-Language": "zh-CN,zh;q=0.9",
-            },
-            timeout=timeout,
-        )
-        response.raise_for_status()
-        rows = board.parse(response.content)[:top]
-    except Exception as exc:  # noqa: BLE001 - 每个源都是可选信号，一个挂了不能挡住别的
-        return board, [], [], 0, f"降级 · {type(exc).__name__}"
+def _pull(url: str, referer: str, parse, get, timeout: int, top: int):
+    response = get(
+        url,
+        headers={
+            "User-Agent": _UA,
+            "Referer": referer,
+            "Accept-Language": "zh-CN,zh;q=0.9",
+        },
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    rows = parse(response.content)[:top]
+    if not rows:
+        # **一张热榜不会是空的。** 解析出 0 行只有一个意思：结构变了。
+        # 当成异常抛，好让它和「取不到」走同一条退路——「扫 0 条」和
+        # 「今天榜上没有网球」在状态里长得一模一样，能静默好几个月。
+        raise ValueError("解析出 0 行")
+    return rows
 
-    label = board.label + (f"（{board.note}）" if board.note else "")
+
+def _fetch_board(board: _Board, get, timeout: int, top: int):
+    note = board.note
+    try:
+        rows = _pull(board.url, board.referer, board.parse, get, timeout, top)
+    except Exception as exc:  # noqa: BLE001 - 每个源都是可选信号，一个挂了不能挡住别的
+        why = "解析出 0 行，结构可能变了" if isinstance(exc, ValueError) else type(exc).__name__
+        if board.fallback is None:
+            return board, [], [], 0, f"降级 · {why}"
+        url, referer, parse = board.fallback
+        try:
+            rows = _pull(url, referer, parse, get, timeout, top)
+        except Exception as exc2:  # noqa: BLE001
+            return board, [], [], 0, f"降级 · 主源 {why}／备用 {type(exc2).__name__}"
+        # **退到备用了要说出来。** 悄悄换源等于把「主源已经坏了」藏起来，
+        # 下次它彻底不能用的时候没人知道它坏了多久。
+        note = (note + "；" if note else "") + f"主源 {why}，本次走备用源"
+
+    label = board.label + (f"（{note}）" if note else "")
     hits: list[ZhHot] = []
     near: list[dict] = []
     for rank, (word, heat, url) in enumerate(rows, 1):
@@ -379,7 +444,7 @@ def fetch_zh_hot(
     拿不到的源照实记进 `status`，包括那两个需要签名的（见 `UNAVAILABLE`）。
     """
     result = ZhTrendResult()
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=len(_BOARDS)) as pool:
         futures = [pool.submit(_fetch_board, b, get, timeout, top) for b in _BOARDS]
         for future in as_completed(futures):
             board, hits, near, scanned, detail = future.result()
