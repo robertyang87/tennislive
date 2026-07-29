@@ -44,6 +44,10 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from tennislive.publish.pushplus import push  # noqa: E402
+from tennislive.render.hashtags import (  # noqa: E402
+    MAX_HASHTAGS,
+    hashtag_count,
+)
 from tennislive.render.pushmsg import _PAGES, to_copy_page  # noqa: E402
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
@@ -291,6 +295,14 @@ def main() -> int:
     copy_text = Path(args.copy).read_text(encoding="utf-8").strip()
     if not copy_text:
         raise SystemExit("文案是空的")
+    # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
+    # reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以在这儿
+    # 拦一道——**发出去就收不回来**，宁可在推送之前报错。
+    tags = hashtag_count(copy_text)
+    if tags > MAX_HASHTAGS:
+        raise SystemExit(
+            f"{args.copy} 里有 {tags} 个 tag，超过 {MAX_HASHTAGS} 个。\n"
+            "删到五个以内再推——留最能被搜到的那几个（人名、赛事、账号）。")
 
     # 格式化标题（`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`）
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
