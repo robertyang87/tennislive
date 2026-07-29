@@ -297,10 +297,12 @@ def test_伊埃拉按译名表写():
 
 
 def test_VS拼接两格都用真实照片():
-    """**封面不抽帧。** 1920×1080 的一帧裁 9:16 要放大 1.78 倍，比官方照片软一大截，
-    而封面是唯一决定人点不点的那一屏。官方图库里这场只有伊埃拉的照片——那就把范围
-    扩到图库里她对手最近的一张真实照，也不退回抽帧。每一格的出处和日期都要记下来，
-    尤其是**不是本场**的那一格，别让下一个人以为它就是本场。
+    """**封面不抽帧，而且两格都要是这场。** 1920×1080 的一帧裁 9:16 要放大 1.78 倍，
+    比照片软一大截，而封面是唯一决定人点不点的那一屏。
+
+    找图那一轮的两个假命中都记在 credits 里，别让下一个人再踩：文件名对题不等于
+    画面对题；同一个 UUID 目录换五个文件名全返回 200 且大小相同，打开却是同一张
+    别人的照片——**CDN 根本不认文件名**。
     """
     spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
     versus = spec["cover"]["versus"]
@@ -312,9 +314,10 @@ def test_VS拼接两格都用真实照片():
         image = Path(side["image"])
         assert image.is_file(), image
         entry = credits[image.name]
-        assert entry["source"] and entry["credit"]
-        assert entry.get("date") or entry.get("uploaded"), image.name
-    # 非本场的那一格必须把「不是本场」写在明面上
-    assert "不是华盛顿这场" in credits["zheng-2026-r1.jpg"]["event"]
-    # 为什么绕了这么大一圈，要留给下一个人
-    assert "soft-404" in credits["_zheng"]["note"]
+        assert entry["date"] == "2026-07-28", f"{image.name} 不是这场"
+        assert entry["checked"], f"{image.name} 没记「打开看过」"
+    # 清晰度不够的那一格要把代价写在明面上，别让人以为它是原图
+    assert "不是高清原图" in credits["zheng-washington-2026.jpg"]["caveat"]
+    # 为什么绕了这么大一圈，留给下一个人
+    note = credits["_zheng"]["note"]
+    assert "soft-404" in note and "CDN 不认文件名" in note
