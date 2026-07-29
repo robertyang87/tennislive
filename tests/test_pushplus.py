@@ -170,8 +170,13 @@ def test_prepare_image_delivery_uses_jsdelivr_fallback(tmp_path, monkeypatch):
     # Pinned to the exact commit (not "@main") so the URL path itself is a
     # distinct resource per version -- avoids caches that key off the path
     # only and ignore query strings.
+    #
+    # 主机名从配置读，不写死：镜像是可换的（见 tennislive/cdn.py），这条测试
+    # 要盯的是「钉住了 commit」，不是「用的哪个入口」。
+    from tennislive.cdn import jsdelivr_host
+
     assert (
-        "https://cdn.jsdelivr.net/gh/robertyang87/tennislive@abc1234/"
+        f"https://{jsdelivr_host()}/gh/robertyang87/tennislive@abc1234/"
         "output/2026-07-23/cards/cover.jpg"
     ) in rendered
     assert "@main/" not in rendered
@@ -206,3 +211,44 @@ def test_prepare_image_delivery_uploads_every_card_to_pushplus(
     assert provider == "pushplus"
     assert "https://pic.pushplus.plus/1/cover.jpg@p" in rendered
     upload.assert_called_once()
+
+
+def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
+    """镜像主机名换掉之后，两处按 `cdn.jsdelivr.net` 写死的判据会**悄悄失效**。
+
+    账号所有者反馈国内下载慢，选了「换 jsDelivr 镜像」。主机名从
+    `cdn.jsdelivr.net` 换成 `gcore.jsdelivr.net` 之后，原来那两处只认
+    `cdn.` 的地方不会报错，只会不匹配：
+
+    · `jsdelivr_link_sources` 返回空 —— 推送前那道「链接可取吗」的校验
+      变成一张都不校验，然后把一堆还没就绪的链接发出去
+    · `_JSDELIVR_MAIN_RE` 匹配不上 —— 图片全停在 `@main`，钉 commit 那步
+      等于没做，同一路径的新旧内容会被微信的图片缓存混起来
+
+    两个都是「兜底出事的时候不吭声」，和补位静音盖住真音轨、
+    `-filter_complex` 不打标签就静默失效是同一类。
+    """
+    from tennislive.cdn import DEFAULT_JSDELIVR_HOST, jsdelivr_host
+    from tennislive.publish.pushplus import jsdelivr_link_sources
+    from tennislive.render.pushmsg import pin_asset_revision
+
+    assert DEFAULT_JSDELIVR_HOST != "cdn.jsdelivr.net", "这条测试的前提没了"
+
+    rev = "37853825db235e7290df16fe890d00d556327d94"
+    for host in ("cdn.jsdelivr.net", DEFAULT_JSDELIVR_HOST, "fastly.jsdelivr.net"):
+        url = f"https://{host}/gh/robertyang87/tennislive@main/output/x/a.mp4"
+        html = f'<a href="{url}">片子</a><img src="{url[:-4]}.jpg">'
+
+        assert jsdelivr_link_sources(html) == [url], f"{host} 的链接没被收进校验"
+        pinned = pin_asset_revision(html, rev)
+        assert f"@{rev}/" in pinned, f"{host} 的资源没被钉住版本"
+        assert "@main/" not in pinned, f"{host} 还有没钉住的 @main"
+
+    # 环境变量能换镜像，写错的域名要退回默认——发出去一封全是裂图的推送，
+    # 比慢一点糟得多。
+    monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "fastly.jsdelivr.net")
+    assert jsdelivr_host() == "fastly.jsdelivr.net"
+    monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "evil.example.com")
+    assert jsdelivr_host() == DEFAULT_JSDELIVR_HOST
+    monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "")
+    assert jsdelivr_host() == DEFAULT_JSDELIVR_HOST

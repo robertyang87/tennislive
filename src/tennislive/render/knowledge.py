@@ -27,10 +27,11 @@ from .tournament_story import (
 )
 from .webcards import _screenshot_pages, knowledge_deck_bodies, knowledge_slide_bodies
 from .xiaohongshu import xhs_title_len
+from ..cdn import jsdelivr_base
 
 
 _REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
-_CDN = f"https://cdn.jsdelivr.net/gh/{_REPO}@main"
+_CDN = jsdelivr_base(_REPO)
 _OWNER, _REPO_NAME = _REPO.split("/", 1)
 _PAGES = os.environ.get(
     "TENNISLIVE_PAGES_URL", f"https://{_OWNER}.github.io/{_REPO_NAME}"

@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Callable, Protocol, Sequence
 
 import requests
+from .subtitle_text import drop_punctuation
 
 GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4.1"
@@ -233,10 +234,13 @@ def render_ass(
             margin_v=margin_v,
         )
     ]
+    # 烧进画面的字幕不写标点，全站统一——见 video/subtitle_text.py。
+    # 只作用在**定时字幕**上；`overlays` 是常驻的角标／台标，不是字幕，
+    # 去掉它们的标点会把水印本身改掉。
     events = [
         f"Dialogue: 0,{_format_ass_timestamp(cue.start_ms)},"
         f"{_format_ass_timestamp(cue.end_ms)},Caption,,0,0,0,,"
-        + cue.text.replace("\n", "\\N")
+        + drop_punctuation(cue.text).replace("\n", "\\N")
         for cue in cues
     ]
     for index, mark in enumerate(overlays):
