@@ -68,6 +68,12 @@ _PAGES_URL = os.environ.get(
 ).rstrip("/")
 
 
+# 卡片截图的 JPEG 质量。82 是下限（深绿底上的浅色小字开始出现块状噪点），
+# 86 与无损 PNG 逐像素比过看不出差别。改这个数要重新渲一屏文字最密的
+# 示意图，放大对比，别按比例推。
+_SLIDE_JPEG_QUALITY = 86
+
+
 class ExplainerVideoError(RuntimeError):
     pass
 
@@ -2722,9 +2728,22 @@ def render_explainer_slides(
                         "Array.from(document.images).every(i => i.complete)",
                         timeout=15000,
                     )
-                    out = outdir / f"slide_{index:02d}.png"
+                    # JPEG，不是 PNG。卡片是**照片**铺满的 3:4 图，PNG 对它
+                    # 是最坏的格式：七屏 2160×2880 存成 PNG 合计 **31 MB**，
+                    # 换成 q86 的 JPEG 是 **3.9 MB**（12%），同一块文字区域
+                    # 放大逐像素比过，肉眼看不出差别——2× 截图是为了字锐利，
+                    # 那是**分辨率**的事，和无损编码无关。
+                    #
+                    # 这 31 MB 是要经 jsDelivr 发到微信里去的，国内那条链路
+                    # 本来就慢；顺带也少往仓库里塞 27 MB/条（推分支吃 HTTP 413
+                    # 那次就是被 mp4/jpg 的 pack 体积撑爆的）。
+                    #
+                    # 不能再压的两条：不缩尺寸（字会糊），q 不低于 82
+                    # （深绿底上的浅色小字开始出现块状噪点）。
+                    out = outdir / f"slide_{index:02d}.jpg"
                     page.screenshot(
-                        path=str(out), clip={"x": 0, "y": 0, "width": W, "height": H}
+                        path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
+                        clip={"x": 0, "y": 0, "width": W, "height": H},
                     )
                     paths.append(out)
                 finally:
@@ -3392,7 +3411,7 @@ def explainer_push_html(
     """
     from ..render.knowledge import knowledge_push_html_from_parts
 
-    slides = [f"slide_{i:02d}.png" for i in range(len(segments))]
+    slides = [f"slide_{i:02d}.jpg" for i in range(len(segments))]
     rel = outdir.as_posix()
     if "output/" in rel:
         rel = rel[rel.index("output/") :]

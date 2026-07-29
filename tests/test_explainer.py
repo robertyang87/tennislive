@@ -986,7 +986,7 @@ def test_成片链接和图片走同一条_CDN():
     rev = "37853825db235e7290df16fe890d00d556327d94"
     pinned = pin_asset_revision(html, rev)
     assert f"@{rev}/{outdir.as_posix()}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
-    assert f"@{rev}/{outdir.as_posix()}/slide_00.png" in pinned, "图片没被钉住"
+    assert f"@{rev}/{outdir.as_posix()}/slide_00.jpg" in pinned, "图片没被钉住"
     assert "@main/" not in pinned
 
 
