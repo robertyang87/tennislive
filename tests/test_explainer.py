@@ -460,6 +460,7 @@ _ROSTER = (
     ("克雷吉茨科娃",), ("纳芙拉蒂洛娃",), ("斯特恩斯",), ("弗雷赫",),
     ("莱巴金娜",), ("普利斯科娃",), ("商竣程",), ("锦织圭",),
     ("穆塞蒂",), ("吴易昺",), ("梅德韦杰夫",),
+    ("黄泽林",), ("莱赫奇卡",), ("谢尔顿",), ("卢布列夫",),
 )
 
 
@@ -513,6 +514,82 @@ def test_栏目是登记过的并且赛前片子写清了日期():
         assert re.search(r"\d{1,2}\s*月\s*\d{1,2}\s*日", blob), (
             f"{slug} 在易逝栏目「{name}」里，却没写出比赛日期"
         )
+
+
+def test_赛前片的封面要写清是哪一场():
+    """封面被单独截图转发时，大问题本身说不清「哪一场、几点」。
+
+    账号所有者定的版式：问题下面两行小字，第一行是比赛坐标，第二行是对阵。
+
+        7.30  09:00  ATP250 洛斯卡沃斯  16 强
+        黄泽林  VS  莱赫奇卡
+
+    这一条只管「开球之前」——知识片没有一场比赛可以钉，印上去反而是噪点，
+    所以常青栏目必须**没有**这两行。
+
+    时刻允许缺（三条已发的前瞻当时没记下官方开赛时刻，宁可不印也不猜），
+    日期、赛事、轮次、两个人的名字一个都不能缺：少了任何一样，这两行就
+    回答不了它唯一要回答的问题。名字一律查译名表。
+    """
+    from tennislive.video.explainer import (
+        COLUMNS,
+        _OPENINGS,
+        _slide_html,
+        explainer_column,
+    )
+    from tennislive.zh.players import PLAYER_ZH
+
+    # 判据和 test_人名要以译名表为准 用的是同一份表，外加那份「同一个人的
+    # 另一种叫法」白名单——封面上的名字没有上下文消歧，更不该是手打的。
+    known = set(PLAYER_ZH.values()) | _ON_PURPOSE
+
+    for slug in _SCRIPTED:
+        cover = explainer_script(find_story_by_slug(slug))[0]
+        column = explainer_column(slug)
+        if not COLUMNS[column].perishable:
+            assert not cover.fixture, f"{slug} 是常青栏目「{column}」，封面不该印比赛坐标"
+            continue
+        assert len(cover.fixture) == 2, f"{slug} 的封面缺了那两行小字"
+        spec = _OPENINGS[slug]["fixture"]
+        when, who = cover.fixture
+        assert re.fullmatch(r"\d{1,2}\.\d{1,2}", spec["date"]), (
+            f"{slug} 的比赛日期写法不对：{spec['date']}")
+        for key in ("date", "level", "site", "round"):
+            assert spec.get(key) and str(spec[key]) in when, f"{slug} 的封面小字缺 {key}"
+        home, away = spec["players"]
+        assert who == f"{home}  VS  {away}", f"{slug} 的对阵行版式不对：{who}"
+        for name in (home, away):
+            assert name in known, (
+                f"{slug} 封面上的「{name}」不在译名表里——人名不要手打，"
+                "先查 src/tennislive/zh/")
+        # 渲出来也要真的在卡上，不能只活在数据里。
+        doc = _slide_html(0, cover, column=column)
+        assert when in doc and who in doc, f"{slug} 的封面小字没渲进卡片"
+
+
+def test_赛前片只做巡回赛级别的比赛():
+    """账号所有者定的选题门槛：「**需要巡回赛级别，250 以上**」。
+
+    这条不是排版规矩，是**选题规矩**——它决定哪一场值得做一条片子。低于这个
+    门槛的（WTA 125、挑战赛、ITF）不做：读者认不出赛事，两边的来路也摆不出
+    什么份量。同一条线在今日赛程那边早就有了（`TOUR_LEVELS`，2026-07-28 那天
+    一个罗马尼亚的 WTA 125 混进来，13 场比三个巡回赛级别的赛事加起来还多），
+    这里复用**同一份**名单，免得两处各定一套门槛然后慢慢漂开。
+
+    判据落在封面小字的 `level` 上：那是唯一一处把级别写成机器可读的地方，
+    而且它会印在卡上——门槛和产物是同一个数，改不动其中一个而不动另一个。
+    """
+    from tennislive.render.webcards import TOUR_LEVELS
+    from tennislive.video.explainer import COLUMNS, _OPENINGS, explainer_column
+
+    for slug in _SCRIPTED:
+        column = explainer_column(slug)
+        if not COLUMNS[column].perishable:
+            continue
+        level = (_OPENINGS[slug].get("fixture") or {}).get("level")
+        assert level in TOUR_LEVELS, (
+            f"{slug} 的赛事级别是「{level}」，不在巡回赛级别里。"
+            f"「开球之前」只做 250 及以上，见 TOUR_LEVELS。")
 
 
 def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):

@@ -164,6 +164,10 @@ PLAYER_ZH: dict[str, str] = {
     "Yibing Wu": "吴易昺",
     "Yi Zhou": "周意",
     "Fajing Sun": "孙发京",
+    # 机器音译只切出一个姓字「卢」，姓本身还写错了：英文维基 Lu Jiajing
+    # 写明是「逯佳境」，排名史（生涯最高 162、2026 年 4 月第 425）与我们
+    # 7 月 27 日快照里的第 417 对得上。卡片上印一个单字姓是坏输出。
+    "Jia-Jing Lu": "逯佳境",
     # ===== WTA =====
     "Aryna Sabalenka": "萨巴伦卡",
     "Iga Swiatek": "斯瓦泰克",

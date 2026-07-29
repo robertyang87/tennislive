@@ -112,6 +112,13 @@ class ExplainerSegment:
     # A closing question on the final beat: a short explainer earns its
     # reach in the comments, so end by asking rather than concluding.
     question: str = ""
+    # 封面上那两行小字，只有「开球之前」有：
+    #     7.30  09:00  ATP250 洛斯卡沃斯  16 强
+    #     黄泽林  VS  莱赫奇卡
+    # 赛前片的封面被单独截图转发时，大问题本身说不清「哪一场、几点」——
+    # 这两行把比赛坐标钉在同一屏上。由 `_fixture_lines()` 从结构化字段拼出来，
+    # 不手写，免得日期和轮次在几处各写各的。
+    fixture: tuple[str, ...] = ()
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -1981,6 +1988,102 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 后来照片找到了（见 assets/.../credits.json 的 kicking.jpg），于是
     # 「同一天」并进夺冠那一屏：两个日期写在同一张卡上，自己就成立，
     # 不需要画。顺带避开了「①屏埋钩子、③屏才兑现」那种悬空写法。
+    # 五屏全是实拍，一张示意图都没有——「能不画的就不要自己画图」。这条片子里
+    # 没有任何一件事是照片讲不清的：排名、赛点、比分都由屏幕上的要点承担。
+    #
+    # ⚠️ 黄泽林在本站（2026 洛斯卡沃斯）的实拍**不存在于任何可及来源**，探过哪些
+    # 源、各返回什么，记在 credits.json 的 _gate2_note 里。所以他的四张图分别来自
+    # 全运会、美网、亚运会和辛辛那提，**每一张都配在讲那件事的那一屏上**，
+    # 没有一张是拿来顶替另一场比赛的。
+    "wong-lehecka": (
+        (
+            "rival",
+            "头号种子",
+            "莱赫奇卡今年打进了大师赛决赛",
+            "对面这位叫莱赫奇卡，捷克人，二〇〇一年十一月生，二十四岁，"
+            "是目前捷克排名最高的男子球员。今年三月的迈阿密大师赛，他以二十一号种子"
+            "一路打到决赛——那是他生涯第一个大师赛决赛，而通往决赛的那几场球，"
+            "他的发球局一次都没有被破掉；决赛四比六、四比六不敌辛纳。"
+            "五月二十五日，他升到生涯最高的世界第十二。这一站他是一号种子，"
+            "首轮轮空，所以这是他在洛斯卡沃斯打的第一场球。",
+            "assets/explainer/wong-lehecka/lehecka_miami.jpg",
+            "Miami Open 官方图库 · 2026 年 3 月迈阿密大师赛，莱赫奇卡救球",
+            (
+                "24 岁，捷克排名最高的男子球员",
+                "2026 迈阿密首进大师赛决赛，负于辛纳",
+                "5 月 25 日升到生涯最高世界第 12",
+            ),
+        ),
+        (
+            "record",
+            "大满贯",
+            "去年黄泽林赢了世界第 14",
+            "再看这一边。二〇二五年三月的迈阿密大师赛，黄泽林在六十四强击败了"
+            "当时世界第十四的谢尔顿。那年八月的美网，他以世界第一百七十三的排名"
+            "从资格赛第一轮打起，连过三关进入正赛，成为公开赛年代第一个"
+            "打进大满贯正赛的香港男子。正赛首轮，他直落三盘赢下世界第七十一的"
+            "科瓦切维奇，那是香港男子的第一场大满贯正赛胜利；第二轮又用四盘"
+            "赢了沃尔顿，全场发出二十一记 Ace，成为第一个打进大满贯第三轮的"
+            "香港男子。第三轮他碰上世界第十五的卢布列夫，五盘落败。",
+            "assets/explainer/wong-lehecka/wong_usopen.jpg",
+            "SCMP · 2025 年 8 月 29 日美网第二轮，黄泽林四盘胜沃尔顿",
+            (
+                "2025 迈阿密 64 强胜世界第 14 谢尔顿",
+                "2025 美网从资格赛打进第三轮，香港首人",
+                "第三轮五盘负于世界第 15 卢布列夫",
+            ),
+        ),
+        (
+            "asiad",
+            "杭州",
+            "亚运会那场，黄泽林救了 5 个赛点",
+            "这些第一次，要从三年前那一场算起。二〇二三年九月，杭州亚运会男单十六强，"
+            "十九岁的黄泽林对上当时世界第九十八的吴易昺——排名比他高三百六十位。"
+            "决胜盘抢七里他一度一比六落后，连救五个赛点，最后六比四、三比六、七比六"
+            "拿下这场两小时四十八分钟的球。那是香港球员第一次战胜世界前一百。",
+            "assets/explainer/wong-lehecka/wong_asiad.jpg",
+            "SCMP · 2023 年 9 月杭州亚运会男单，黄泽林反手击球",
+            (
+                "2023 年 9 月杭州亚运会 16 强",
+                "抢七 1-6 落后连救 5 个赛点，打了 2 小时 48 分",
+                "香港球员第一次赢下世界前 100",
+            ),
+        ),
+        (
+            "rematch",
+            "珠海",
+            "两年后，吴易昺赢了回去",
+            "两年之后，两个人在珠海又碰上了。二〇二五年十一月的全运会，横琴的"
+            "男单半决赛，这一次吴易昺六比七、七比六、六比四赢了回去，"
+            "黄泽林拿到一枚铜牌。赛后黄泽林说：我挺为自己骄傲的，"
+            "因为哪怕打到最后一分我也没有放弃，那才是最重要的。",
+            "assets/explainer/wong-lehecka/wong_national_games.jpg",
+            "Eugene Lee · SCMP · 2025 年 11 月全运会男单半决赛，黄泽林对吴易昺",
+            (
+                "2025 年 11 月全运会半决赛，珠海横琴",
+                "吴易昺 6-7 7-6 6-4，黄泽林拿铜牌",
+                "「哪怕打到最后一分，我也没有放弃」",
+            ),
+        ),
+        (
+            "stake",
+            "九点开球",
+            "黄泽林大部分比赛在外场",
+            "这些年他大部分球是在外场打的，看台上几十个人；六次挑战赛决赛，"
+            "才在今年的九江拿到第一个冠军，那也是香港球手的第一个挑战赛冠军。"
+            "北京时间七月三十日上午九点，洛斯卡沃斯的中心球场，第一场，"
+            "他站到世界第十二的对面。",
+            "assets/explainer/wong-lehecka/wong_cincinnati.jpg",
+            "Navin75 · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 8 月辛辛那提站 4 号场",
+            (
+                "7 月 30 日 09:00，洛斯卡沃斯 16 强",
+                "首轮 6-3 6-4 胜世界第 266 的布兰奇",
+                "6 次挑战赛决赛，才拿到第一个冠军",
+            ),
+            "",
+            "还会有一次救 5 个赛点吗？",
+        ),
+    ),
     "thiem-football": (
         (
             "now",
@@ -2300,6 +2403,17 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "维纳斯威廉姆斯", "WTA", "华盛顿站"),
     },
+    "wong-lehecka": {
+        "hook": (
+            "世界第 108 打世界第 12，中间差了 96 位。\n"
+            "但公开赛年代第一个打进大满贯正赛、第一个赢下大满贯正赛、"
+            "第一个打进第三轮的香港男子，都是黄泽林一个人。\n"
+            "2023 年杭州亚运会，他救了 5 个赛点淘汰吴易昺；"
+            "2025 年迈阿密，他赢过世界第 14 的谢尔顿。\n"
+            "7 月 30 日 09:00，洛斯卡沃斯中心球场第一场。"
+        ),
+        "tags": ("网球", "网球时差", "黄泽林", "莱赫奇卡", "洛斯卡沃斯"),
+    },
     "wildcard": {
         "hook": (
             "签表上那两个字母 WC，是主办方直接发的正赛资格：不看排名，也不用打资格赛。\n"
@@ -2484,6 +2598,16 @@ _OPENINGS: dict[str, dict] = {
         # The two older photos in the deck stay where they are because their
         # dates are the point: the Olympic beat needs the gold, and the
         # "three years ago" beat needs 2023.
+        # 这三条是 2026-07-27 已经推送出去的，封面小字是后加的版式，
+        # 只在下次重渲时才会出现——「改的是以后，不动已经发出去的」。
+        # `time` 留空：当时没有记下官方开赛时刻，宁可不印也不猜。
+        "fixture": {
+            "date": "7.27",
+            "level": "WTA500",
+            "site": "华盛顿",
+            "round": "首轮",
+            "players": ("郑钦文", "伊埃拉"),
+        },
         "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
         "credit": "账号所有者提供 · 摄影师与出处未标注（unknown / unverified）· 郑钦文",
     },
@@ -2495,6 +2619,13 @@ _OPENINGS: dict[str, dict] = {
         "代表亚洲国家打进大满贯男单决赛的球员。七月二十七日华盛顿首轮，"
         "站在他对面的是二十一岁的商竣程——两年前在成都赢过他的那个人。"
         "锦织圭的最后一年，谁来接？",
+        "fixture": {
+            "date": "7.27",
+            "level": "ATP500",
+            "site": "华盛顿",
+            "round": "首轮",
+            "players": ("商竣程", "锦织圭"),
+        },
         "image": "assets/explainer/shang-nishikori/cover_shang.jpg",
         "credit": "CGTN · 2026 年 1 月香港站，商竣程",
     },
@@ -2509,8 +2640,48 @@ _OPENINGS: dict[str, dict] = {
         # every Venus frame in it comes from the same shoot — 2025-07-20, the
         # week she made the record. The source calls them practice and press,
         # never match play, and no screen says otherwise.
+        "fixture": {
+            "date": "7.27",
+            "level": "WTA500",
+            "site": "华盛顿",
+            "round": "首轮",
+            # 表里她是「大威廉姆斯」，这条片子通篇叫她维纳斯（见测试里的
+            # _ON_PURPOSE）。封面没有上下文消歧，所以写全名。
+            "players": ("维纳斯·威廉姆斯", "波塔波娃"),
+        },
         "image": "assets/explainer/venus-potapova/venus_serve.jpg",
         "credit": "Hameltion · CC BY-SA 4.0 · Wikimedia Commons · 2025 年 7 月华盛顿站赛前训练",
+    },
+    "wong-lehecka": {
+        "column": "开球之前",
+        # 台头不写「前瞻」：上面一行印着栏目名「开球之前」，已经说了这是赛前。
+        # 加上它正好把台头顶到 21 字，超小红书那条 20 字的线。
+        "topic": "黄泽林 VS 莱赫奇卡：洛斯卡沃斯站 16 强",
+        # 「他」在这条片子里没有安全的指代——两个人都是男球员，封面上站着其中
+        # 一个。所以封面这一问点名，正文里的第三人称一律靠上一句消歧。
+        "question": "黄泽林要怎样挑战世界第 12？",
+        # 第一句在句号处收住（25 字 ≈ 4.7 秒），把对阵挪到第二句：前 5 秒
+        # 决定 62% 的人走不走，一句话铺完时间地点对阵就是 57 字、9 秒多。
+        # 已发的两条「开球之前」都栽在这儿（见 _HOOK_TOO_LONG），这条不进名单。
+        "narration": "北京时间七月三十日上午九点，洛斯卡沃斯的中心球场。"
+        "第一场，一号种子、世界第十二的莱赫奇卡，对世界第一百零八的黄泽林，"
+        "两个人此前从没交过手。黄泽林要怎样挑战世界第十二？",
+        # 封面复用「珠海」那一屏的图，所以出处由那一屏的 credit 带过来。
+        # 选它当封面的理由：它是他最近一场可及的击球帧（2025 年 11 月），
+        # 球在拍面上，胸口的紫荆花徽章让画面自己说清这是谁。
+        "image": "assets/explainer/wong-lehecka/wong_national_games.jpg",
+        "credit": "Eugene Lee · SCMP · 2025 年 11 月全运会男单半决赛，黄泽林对吴易昺",
+        # 时刻取自赛会官方 Order of Play（07/29 02:24 发布）：Estadio Alejandro
+        # Burillo「Starts At 18:00」第一场，当地 UTC-7，换算成北京时间 7/30 09:00。
+        # 是 Starts At 不是 Not Before，所以这个点就是开赛时刻，不是下界。
+        "fixture": {
+            "date": "7.30",
+            "time": "09:00",
+            "level": "ATP250",
+            "site": "洛斯卡沃斯",
+            "round": "16 强",
+            "players": ("黄泽林", "莱赫奇卡"),
+        },
     },
     "thiem-football": {
         "topic": "蒂姆退役之后：从大满贯到第八级联赛",
@@ -2545,6 +2716,36 @@ _OPENINGS: dict[str, dict] = {
 }
 
 
+def _fixture_lines(spec: dict) -> tuple[str, ...]:
+    """封面上那两行小字：比赛坐标 + 对阵。
+
+    账号所有者定的版式：
+
+        7.30  09:00  ATP250 洛斯卡沃斯  16 强
+        黄泽林  VS  莱赫奇卡
+
+    从结构化字段拼，不让人手写整行——日期和轮次在旁白、要点、文案里都各出现
+    一次，手写第四遍必然会有一处对不上。时间可以缺（三条已发的前瞻当时没有
+    记下官方开赛时刻），缺了就不占位置，别印一个空的冒号。
+
+    级别和站点分开存（`level` + `site`，印出来仍是「ATP250 洛斯卡沃斯」），
+    是为了让「只做 250 及以上」这条选题门槛能对着 `TOUR_LEVELS` 查——
+    合成一个字符串就只能靠正则去猜级别了。
+    """
+    fixture = spec.get("fixture") or {}
+    if not fixture:
+        return ()
+    event = f"{fixture['level']} {fixture['site']}"
+    head = "  ".join(
+        str(value)
+        for value in (fixture.get("date"), fixture.get("time"), event,
+                      fixture.get("round"))
+        if value
+    )
+    home, away = fixture["players"]
+    return (head, f"{home}  VS  {away}")
+
+
 def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     """The cover card: the question, said out loud, before any explaining."""
     spec = _OPENINGS.get(story.slug) or {}
@@ -2568,6 +2769,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         points=(),
         diagram="",
         question="",
+        fixture=_fixture_lines(spec),
     )
 
 
@@ -2630,6 +2832,42 @@ def explainer_script(story) -> list[ExplainerSegment]:
             facts[-1] if facts else story.hero_fact, cover, credit,
         ),
     ]
+
+
+# 封面大标题在这套显示字体里的字宽，**量出来的**（Chromium 里按 96px 渲一串，
+# 读 getBoundingClientRect().width，再除以字号）：
+#
+#     一个汉字（含全角标点）  0.80 em（12 个字量出来正好 9.60）
+#     一个空格               0.190 em
+#     一个数字/字母          0.286～0.42 em —— **这套字体的数字不等宽**：
+#                            单量「1」是 0.286，而「 12」整串是 0.892，
+#                            扣掉空格摊到每个数字是 0.35。所以这里取 0.45
+#                            往宽了算，宁可字号小一点也不要算窄了溢出。
+#
+# 别按「一个字一个 em」估：那样算「黄泽林要怎样挑战世界第 12？」是 15 em，
+# 实际只有 10.49 em，差三分之一，估出来的字号会小一大截。
+_COVER_EM_CJK = 0.80
+_COVER_EM_ASCII = 0.45
+_COVER_EM_SPACE = 0.190
+# 再留 1.5% 余量：hawkeye 那句按模型算出来正好卡在 940px 上，差一个像素就
+# 翻成两行，而翻没翻只有渲出来才知道。
+_COVER_WIDTH_MARGIN = 0.985
+# 一行装不下就退到两行的下限。定 84 的依据：再往下就是「一行小字」而不是
+# 「一行大字」了，那时两行反而好读（`.cover .title` 那段注释里的老结论）。
+_COVER_MIN_ONE_LINE_PX = 84
+
+
+def _cover_title_em(title: str) -> float:
+    """封面标题按上面那三个实测字宽折算成多少个 em。"""
+    total = 0.0
+    for ch in title:
+        if ch == " ":
+            total += _COVER_EM_SPACE
+        elif ch.isascii():
+            total += _COVER_EM_ASCII
+        else:
+            total += _COVER_EM_CJK
+    return total
 
 
 def _data_uri(path: Path) -> str:
@@ -2738,7 +2976,16 @@ def _slide_html(
     if cover:
         # The question is the whole point of this card, so let it be big and
         # let it wrap; two lines of 9 characters beats one line of tiny text.
-        title_px = min(96, int(usable_px * 2 / max(len(segment.title), 1)))
+        #
+        # 但**能一行就一行**。中文没有词边界，浏览器可以在任意两个汉字之间断，
+        # 于是两行版必然会在某处把一个词劈开：「黄泽林要怎样挑 / 战世界第 12？」
+        # 就是 `text-wrap:balance` 断出来的，「挑战」被切成两半。缩 7% 字号让
+        # 整句落在一行上，比断在词中间好得多。装不下才退回两行（那时 balance
+        # 至少保证两行长度接近，不会甩出一个三字符的孤行）。
+        one_line = int(usable_px * _COVER_WIDTH_MARGIN / _cover_title_em(segment.title))
+        title_px = min(96, one_line) if one_line >= _COVER_MIN_ONE_LINE_PX else min(
+            96, int(usable_px * 2 / max(len(segment.title), 1))
+        )
     else:
         title_px = min(62, int(usable_px / max(len(segment.title), 1)))
     question_html = (
@@ -2746,8 +2993,25 @@ def _slide_html(
         if segment.question
         else ""
     )
+    # 封面那两行小字（只有「开球之前」有）：第一行是比赛坐标，第二行是对阵。
+    # 排在大问题下面，字号压到问题的三分之一上下——它是给「这到底是哪一场」
+    # 兜底的，不是来抢封面的。
+    fixture_html = (
+        '<div class="fixture">'
+        + "".join(
+            f'<div class="{cls}">{html.escape(line)}</div>'
+            for cls, line in zip(("when", "who"), segment.fixture)
+        )
+        + "</div>"
+        if segment.fixture
+        else ""
+    )
     cover_cls = " cover" if cover else ""
-    topic_html = f'<span class="topic">{html.escape(topic)}</span>' if topic else ""
+    # 台头和封面小字讲的是同一件事（「黄泽林 VS 莱赫奇卡：洛斯卡沃斯站 16 强」
+    # 对「7.30 09:00 ATP250 洛斯卡沃斯 16 强／黄泽林 VS 莱赫奇卡」），同一屏印两遍
+    # 是噪点，而小字那份还多一个开赛时刻。所以封面有小字时台头让位，正文各屏照常。
+    show_topic = topic and not (cover and segment.fixture)
+    topic_html = f'<span class="topic">{html.escape(topic)}</span>' if show_topic else ""
     chip_html = (
         f'<span class="kicker">{html.escape(column)}</span>'
         if cover
@@ -2815,7 +3079,12 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .title{{font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:{title_px}px;line-height:1.2;font-weight:400;
  white-space:nowrap;text-shadow:0 4px 24px rgba(0,0,0,.75);}}
-.cover .title{{white-space:normal;line-height:1.24;font-weight:400;
+/* `text-wrap:balance` 而不是自己插换行：封面问题换行时，浏览器默认把最后
+   一个装不下的片段甩到第二行，「黄泽林要怎样挑战世界第 / 12？」就是这么断的
+   ——第二行只剩三个字符，像个错误。balance 让两行长度接近，而且**不动标题
+   字符串本身**（`test_每条片子都以问题开场` 断言原字符串要出现在页面里，
+   手插 `<br>` 或换行符会把那条判据弄假）。 */
+.cover .title{{white-space:normal;text-wrap:balance;line-height:1.24;font-weight:400;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7);}}
 .cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
@@ -2845,11 +3114,20 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
+/* 赛前片的封面小字。两行之间用一道细线分开，而不是靠间距——封面底下就是
+   照片，间距在深浅不一的画面上读不出「这两行是一组」。 */
+.fixture{{align-self:flex-start;display:flex;flex-direction:column;gap:12px;
+ margin-top:-10px;padding-left:4px;border-left:5px solid #c6f65a;
+ padding-top:2px;padding-bottom:2px;}}
+.fixture .when{{padding-left:16px;font-size:33px;font-weight:700;letter-spacing:1px;
+ color:#dff3e8;text-shadow:0 2px 10px rgba(0,0,0,.8);}}
+.fixture .who{{padding-left:16px;font-size:44px;font-weight:800;letter-spacing:2px;
+ color:#f4fbf7;text-shadow:0 3px 14px rgba(0,0,0,.85);}}
 </style></head><body>
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
-<div class="title">{html.escape(segment.title)}</div>{points_html}{question_html}{tail_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
