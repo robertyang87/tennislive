@@ -151,6 +151,10 @@ VENUES = [
     ("paris-centre-court.jpg", None, None),
     # 香港：维多利亚公园中央球场，ATP／WTA 两站共用；协会站 tennishk.org 开着 wp-json，按 search=victoria 就能翻出整批
     ("hongkong-victoria-park.jpg", None, None),
+    # 迪拜：赛事官网开着 wp-json，search=stadium 直接给出整组中心球场全景；WTA1000 与 ATP500 共用
+    ("dubai-centre-court.jpg", None, None),
+    # 迈阿密：赛事官网开着 wp-json；WTA1000 与 ATP1000 共用硬石球场
+    ("miami-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -296,6 +300,18 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "miami-centre-court.jpg": {
+        "title": "硬石球场中心球场 · 2026 年迈阿密公开赛，满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "miamiopen.com 官方图库",
+        "page": "https://www.miamiopen.com/wp-content/uploads/2026/07/260328_MO_TDS6543-scaled.jpg",
+    },
+    "dubai-centre-court.jpg": {
+        "title": "迪拜网球场中心球场 · 黄昏满场，场地前场刷着 DUBAI",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "dubaidutyfreetennischampionships.com 官方图库",
+        "page": "https://dubaidutyfreetennischampionships.com/wp-content/uploads/2026/02/Dubai-Duty-Free-Championships-Stadium_005.jpg",
+    },
     "hongkong-victoria-park.jpg": {
         "title": "维多利亚公园中央球场 · 2024 年香港网球公开赛，满场（袁悦 vs 布尔特）",
         "license": "unverified · 协会官方媒体库",
