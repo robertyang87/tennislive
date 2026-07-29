@@ -40,6 +40,14 @@ the photographs are not otherwise altered.
 - License: CC BY-SA 2.0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `beijing-diamond-court.jpg`
+
+- Title: 国家网球中心钻石球场 · 满场（场地前场刷着「北京中网」，2023 中网男单决赛）
+- Author: unknown（新浪体育转载）
+- Source: https://n.sinaimg.cn/spider20231005/214/w2048h1366/20231005/0a57-133e0b7b85e05c9a50f65167521a5b79.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `canada-iga-stadium-centre-court.jpg`
 
 - Title: Stade IGA 中心球场 · 满场（场地前场刷着 MONTRÉAL，赞助带 Banque Nationale / ROGERS；近端看台、蓝绿场地、远端满场看台与雷暴天空全在竖切里）
@@ -56,12 +64,22 @@ the photographs are not otherwise altered.
 - License: unverified · 转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
-## `cincinnati-center-court.jpg`
+## `chengdu-centre-court.jpg`
 
-- Title: Center Court · Lindner Family Tennis Center（赛事官方媒体库 STADIUM-2021_WSOPEN_SOLOMON_001）
-- Author: Cincinnati Open（署名 Solomon）
-- Source: https://cincinnatiopen.com/wp-content/uploads/2023/04/STADIUM-2021_WSOPEN_SOLOMON_001.jpg
+- Title: 四川川投国际网球中心中央球场 · 满场（ATP 官方图库 chengdu-2025-stadium-shot）
+- Author: ATP Tour
+- Source: https://www.atptour.com/-/media/images/news/2025/08/13/13/44/chengdu-2025-stadium-shot.jpg
 - License: unverified · 赛事官方媒体
+- Note: ⚠️ atptour.com 这个图床**用浏览器 UA 请求会被 WAF 挡 403，用脚本自己的 UA 反而 200**——取不到时先换 UA 再下结论
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `cincinnati-centre-court-full.jpg`
+
+- Title: Center Court · Lindner Family Tennis Center 满场（2025 赛事官方图 AW5_0234）
+- Author: Cincinnati Open
+- Source: https://cincinnatiopen.com/wp-content/uploads/2025/10/AW5_0234.jpg
+- License: unverified · 赛事官方媒体
+- Note: 换掉了上一版 STADIUM-2021_WSOPEN_SOLOMON_001：那张角度对、是官方图，但**空场加阴天**，压完卡片遮罩后整屏是灰蓝色的空座位。这张同一个场地、同样从底线后方，但满场
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `estoril-centre-court.jpg`
@@ -80,6 +98,14 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `guangzhou-centre-court.jpg`
+
+- Title: 广州网球公开赛中央球场 · 满场（2025 赛事收官报道）
+- Author: unknown（南方 + 转载）
+- Source: https://media.nfnews.com/media-nfh/image/202510/27/7dda1595028b42189b7a215a0541e62a.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `hamburg-rothenbaum-centre-court.jpg`
 
 - Title: File:Hamburg Rotherbaum DS150n.jpg
@@ -87,6 +113,14 @@ the photographs are not otherwise altered.
 - Source: https://commons.wikimedia.org/wiki/File:Hamburg_Rotherbaum_DS150n.jpg
 - License: CC BY-SA 4.0
 - Note: Am Rothenbaum 中心球场 · 从底线后方高处沿长轴拍，近端看台/红土/远端看台与顶棚全在竖切里；2015-08 拍摄，远处大屏是汉堡申办 2024 奥运的口号「HAMBURG 2024 – Das gibt's nur einmal!」，不是赛事年份
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `hangzhou-lotus-centre-court.jpg`
+
+- Title: 杭州奥体中心网球中心「小莲花」中央球场 · 满场（2025 领克杭州网球公开赛）
+- Author: unknown（普利吉体育 转载）
+- Source: https://img03.71360.com/w3/0qn2g4/20250924/66d99a1c5687521d16f8c59b2adf26de.jpg
+- License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `iasi-ciric-centre-court.jpg`
@@ -131,6 +165,22 @@ the photographs are not otherwise altered.
 - Note: 2026-07-29 又整轮翻过一次，结论是**这张已经是能拿到的最好的实拍**，别再重跑：官网（Squarespace）只有 WebHero 和赞助 logo；WTA 赛事页只剩那张已被证伪的 1167_Memphis-Hero-2；StyleBlueprint 那张 StadiumView 是**效果图**（同一批搜索结果里就写着 releases stadium renderings）；Action News 5 另一条 7/23 的片子是场馆改建纪录片，没有赛事看台画面。⚠️ **新闻成片里会混进资料画面**：同一条 7/26 报道的 25–27 秒是室内蓝场、场地上印着 MEMPHIS OPEN / ATP WORLD TOUR——那是十年前停办的旧 ATP 赛事，**不是这个场地**。抽帧时要看场地上写的是什么，别只看片子讲的是哪一站
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `monterrey-centre-court.jpg`
+
+- Title: Estadio GNP Seguros 中心球场 · 满场（场地前场刷着 MONTERREY，看台顶写着 GNP Estadio，背景是马德雷山）
+- Author: Abierto GNP Seguros
+- Source: https://abiertognpseguros.com/media/pages/guia-del-torneo/visit-monterrey/b9f38a59c0-1715623630/estadio-gnp-seguros-1920x.jpg
+- License: unverified · 赛事官方媒体
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `ningbo-centre-court.jpg`
+
+- Title: 宁波网球中心中央球场 · 满场（2024 宁波公开赛开赛，PR Newswire 发布的赛事官方图）
+- Author: Ningbo Open（PR Newswire 发布）
+- Source: https://mma.prnewswire.com/media/2532199/Ningbo_International.jpg
+- License: unverified · 赛事官方媒体
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `palermo-country-time-centre-court.jpg`
 
 - Title: Country Time Club 中心球场 · 黄昏（挡板上 Veneta Cucine / PEUGEOT / WTATENNIS.COM，背景是巴勒莫的山；近端蓝色看台、红土、远端看台全在竖切里）
@@ -163,6 +213,14 @@ the photographs are not otherwise altered.
 - Source: https://ilmondodeltennis.com/2022/07/torneo-internazionale-al-circolo-antico-tiro-a-volo/
 - License: unverified · 新闻站转载
 - Note: 这一站原来被标成「维罗纳 · 意大利」并配了维罗纳圆形竞技场——赛事名里的 ATV 是 Antico Tiro a Volo（罗马的俱乐部），不是 Associazione Tennis Verona。WTA 自己的赛事页就是 /tournaments/1130/rome/
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `shanghai-qizhong-centre-court.jpg`
+
+- Title: 旗忠网球中心中央球场 · 顶棚八瓣白玉兰可开合（上海劳力士大师赛）
+- Author: unknown（赛倍明照明 转载）
+- Source: https://www.sportsbeams.cn/web/uploads/image/20250516/7KQ41674TPF5pOWqJj2Dfvx20909D21F.jpg
+- License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `umag-goran-ivanisevic-centre-court.jpg`
@@ -205,4 +263,20 @@ the photographs are not otherwise altered.
 - Source: https://commons.wikimedia.org/wiki/File:2023_Wimbledon_Men%27s_singles_final_(1).jpg
 - License: CC BY-SA 2.0
 - Note: 中央球场满场 · 2023 男单决赛（阿尔卡拉斯对德约科维奇，记分牌可读）；从底线后方看台高处拍，近端观众/草地/远端满场看台/开着的屋顶全在竖切里
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `winston-salem-centre-court.jpg`
+
+- Title: Wake Forest Tennis Complex 中心球场 · 黄昏满场
+- Author: Camera Work USA（Triad Business Journal 转载）
+- Source: https://media.bizj.us/view/img/12022122/winston-salem-open-stadium-photo-by-camera-work-usa.jpg
+- License: unverified · 新闻站转载
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `wuhan-optics-valley-centre-court.jpg`
+
+- Title: 光谷国际网球中心中央球场 · 满场（挡板上写着「东风岚图·武汉网球公开赛 DONGFENG VOYAH · WUHAN OPEN」与「2024东风岚图·武汉网球公开赛」）
+- Author: unknown（大武汉 转载）
+- Source: https://www.app.dawuhanapp.com/c/10001/202410/d45fc4e1868afc8ae97999dffa39df03.jpeg
+- License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
