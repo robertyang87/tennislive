@@ -108,6 +108,15 @@ the photographs are not otherwise altered.
 - Note: 换掉了上一版 STADIUM-2021_WSOPEN_SOLOMON_001：那张角度对、是官方图，但**空场加阴天**，压完卡片遮罩后整屏是灰蓝色的空座位。这张同一个场地、同样从底线后方，但满场
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `dubai-centre-court.jpg`
+
+- Title: 迪拜网球场中心球场 · 黄昏满场，场地前场刷着 DUBAI
+- Author: dubaidutyfreetennischampionships.com 官方图库
+- Source: https://dubaidutyfreetennischampionships.com/wp-content/uploads/2026/02/Dubai-Duty-Free-Championships-Stadium_005.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：场地前场刷着 DUBAI，围板一圈是这项赛事的赞助带，那顶帐篷状看台顶棚是这个场馆独有的。一张管两站——2 月的 WTA1000 和 ATP500 同场地，别名同为 dubai。官方媒体库（wp-json，12628 项）按 search=stadium 一次翻出十三张同角度的，挑的是顶棚居中、近端球员在击球的这一张。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `estoril-centre-court.jpg`
 
 - Title: Millennium Estoril Open · estadio2
@@ -206,6 +215,15 @@ the photographs are not otherwise altered.
 - Source: https://www.actionnews5.com/2026/07/26/memphis-classic-tournament-full-swing-pro-tennis-returns-leftwich/
 - License: unverified · 电视台新闻画面截帧
 - Note: 2026-07-29 又整轮翻过一次，结论是**这张已经是能拿到的最好的实拍**，别再重跑：官网（Squarespace）只有 WebHero 和赞助 logo；WTA 赛事页只剩那张已被证伪的 1167_Memphis-Hero-2；StyleBlueprint 那张 StadiumView 是**效果图**（同一批搜索结果里就写着 releases stadium renderings）；Action News 5 另一条 7/23 的片子是场馆改建纪录片，没有赛事看台画面。⚠️ **新闻成片里会混进资料画面**：同一条 7/26 报道的 25–27 秒是室内蓝场、场地上印着 MEMPHIS OPEN / ATP WORLD TOUR——那是十年前停办的旧 ATP 赛事，**不是这个场地**。抽帧时要看场地上写的是什么，别只看片子讲的是哪一站
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `miami-centre-court.jpg`
+
+- Title: 硬石球场中心球场 · 2026 年迈阿密公开赛，满场
+- Author: miamiopen.com 官方图库
+- Source: https://www.miamiopen.com/wp-content/uploads/2026/07/260328_MO_TDS6543-scaled.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：球网上是 WTA TOUR，围板一圈 itaú / PIF / betway / LACOSTE 是这项赛事的赞助带，看台那种蓝绿配色是硬石球场（Hard Rock Stadium）的。一张管两站——3 月的 WTA1000 与 ATP1000 同场地。官网开着 wp-json（4485 项），按 search=stadium/court/aerial 筛大横图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `monterrey-centre-court.jpg`
