@@ -407,4 +407,37 @@ PLAYER_ZH: dict[str, str] = {
     "Evonne Goolagong": "古拉贡",
     "Martina Navratilova": "纳芙拉蒂洛娃",
     "Na Li": "李娜",
+
+    # ↓ 2026-07-29 补。触发的是两件事，都指向同一个漏：
+    #
+    # 1. **仓库里已经在用了，表里却没有**——`render/tournament_story.py` 和
+    #    `render/knowledge.py` 里「费德勒」出现在 8 个文件、「纳达尔」7 个、
+    #    「穆雷」7 个，全是手打的。正是「人名不要手打，先查仓库里的译名表」
+    #    那条踩过两次的坑，只是这回错在**表里根本没有可查的**。
+    # 2. **中文热搜要拿它当关键词**（`research/zh_trends.py`）。表里没有，
+    #    微博上一条「费德勒回应」就会被判成和网球无关。
+    "Roger Federer": "费德勒",
+    "Rafael Nadal": "纳达尔",
+    "Andy Murray": "穆雷",
+    "Andre Agassi": "阿加西",
+    "Pete Sampras": "桑普拉斯",
+    "Boris Becker": "贝克尔",
+    "Bjorn Borg": "博格",
+    "John McEnroe": "麦肯罗",
+    "Jimmy Connors": "康纳斯",
+    "Lleyton Hewitt": "休伊特",
+    "Marat Safin": "萨芬",
+    "Juan Martin del Potro": "德尔波特罗",
+    "Dominic Thiem": "蒂姆",
+    "Steffi Graf": "格拉芙",
+    "Monica Seles": "塞莱斯",
+    "Chris Evert": "埃弗特",
+    "Martina Hingis": "辛吉斯",
+    "Justine Henin": "海宁",
+    "Maria Sharapova": "莎拉波娃",
+    "Ana Ivanovic": "伊万诺维奇",
+    # 中国线：这几个是本人的名字，不是音译
+    "Michael Chang": "张德培",
+    "Shuai Peng": "彭帅",
+    "Jie Zheng": "郑洁",
 }
