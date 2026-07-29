@@ -1868,3 +1868,51 @@ B 站那套 `x/player/videoshot` 雪碧图是目前唯一能看到「视频结�
 （`Sign in to confirm you're not a bot`），`--flat-playlist` 的列表接口
 仍然通。那种时候拿不到数据是**被限流**，不是「这条视频没有日期」——
 别据此下结论。RSS（`feeds/videos.xml`）在本环境返回 500，也走不通。
+
+## 附五：找 Edimator 的替代者——没找到，但差点得出一个假阴性
+
+Edimator 停更之后 WTA 500 那一侧归零（见附四），去扫一轮有没有别人在做同一件事。
+
+**结论：没有。** 但过程里踩了一脚，值得单记。
+
+### 泛化的查询词搜不到这类号
+
+第一轮用了六组"概念式"措辞——`on-court interview WTA 2026`、
+`post match interview WTA 500 2026`、`interview after 1st round win 2026 WTA`……
+108 条命中，按频道汇总，前排全是已登记的官方号（温网 33、Tennis Channel 25、
+澳网 13…），新面孔只有一堆前瞻/反应号。看着像"确实没有替代者"。
+
+**但这 108 条里一条 Edimator 都没有**——而它库里躺着 158 条，正是要找的那种号。
+
+原因是 **YouTube 搜索按标题字面匹配**，而这类号用自己的固定句式：
+
+    <球员> interview after <轮次> win at <年份> <赛事>
+
+换成这个句式，第一条就是它：
+
+```
+$ yt-dlp --flat-playlist "ytsearch5:interview after 1st round win at 2025 Citi Open"
+  Edimator ||| Emma Raducanu interview after 1st Round win at 2025 Citi Open
+  Edimator ||| Naomi Osaka 大坂 なおみ interview after 1st round win at 2025 Citi Open
+  Edimator ||| Emma Raducanu interview after 2nd round win against Naomi Osaka
+```
+
+所以采集器注释里那句"用搜索反推"要加一条：**查询词照目标的句式写，
+不是照你想找的概念写**；而且**每轮放一个已知非空的对照查询**，
+对照组不出来这一轮的零就不算数。和 B 站那个金丝雀是同一个道理——
+只不过这里骗人的不是限流，是措辞。
+
+### 改对之后：确实没有
+
+同一句式打 2026 华盛顿 / 基茨比厄尔 / 乌马格 / 孟菲斯，70 条命中里
+**符合那个句式的一条都没有**，返回的全是噪音（NBA 选秀、孟菲斯警方通报、
+Denzel Washington、大学篮球赛后发布会）。而对照组在同一轮里照常带出
+Edimator。**这才是"真的没有"该有的样子。**
+
+### 顺带排掉的三个
+
+| 频道 | 为什么不行 |
+|---|---|
+| `QualityShot Tennis` | **照片配音频 + 中插广告**。自动帧 hq3 直接是产品广告（`Serve Smart, Anywhere`），全片没有采访画面；而且引语多是"After Loss"——输球的人没有场上采访，那是发布会音频 |
+| `MSB Rewind` | 4 小时 09 分的整场直播转录（`Washington DC Open Live: Eala vs Zheng`），不是采访片段 |
+| `Talking Tennis` / `TennisLegends` / `RedDust Report` / `Chérie Diaries` / `Tennis News Network` | 解说、反应、二次评论，没有原始画面 |
