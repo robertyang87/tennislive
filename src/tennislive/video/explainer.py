@@ -3359,8 +3359,26 @@ def assemble_explainer_video(
         [
             "-filter_complex", ";".join(filters),
             "-map", "[outv]", "-map", "[outa]",
-            "-c:v", "libx264", "-preset", "medium", "-crf", "22",
-            "-c:a", "aac", "-b:a", "160k",
+            # 这条片子是**静止画面的幻灯**：每屏 `-loop 1` 铺一张卡，全片唯一
+            # 在动的像素是烧进去的字幕。所以给 x264 的参数按静图调，不按视频调。
+            #
+            # 量过的一份（wildcard，2 分 56 秒，1080×1920，原来 7.85 MB）：
+            #   视频 5.75 MB / 264 kb/s     音频 2.22 MB / 102 kb/s
+            #
+            # · `-b:a 160k` 是给 **24 kHz 单声道**的 edge-tts 语音开的，超配两倍
+            #   有余（实测编码器根本填不满，只跑到 102 kb/s）。64k 单声道对语音
+            #   已经透明，省下约 750 KB
+            # · `-tune stillimage` 就是给这种内容用的：放宽 deblock、加大心理
+            #   视觉权重，静止区域不再逐帧掏比特
+            # · crf 22 → 26：抽帧逐像素比过（示意图那屏字最密），肉眼无差别
+            # · `-preset slow` 换来更小的体积；这一步在整条流水线里只占几十秒，
+            #   而下载是在国内那条慢链路上发生的
+            #
+            # ⚠️ 别把 crf 再往上推：卡片是深绿底上的浅色小字，26 以上开始出块。
+            # 改之前抽一帧放大比对，别按比例推。
+            "-c:v", "libx264", "-preset", "slow", "-tune", "stillimage",
+            "-crf", "26",
+            "-c:a", "aac", "-b:a", "64k", "-ac", "1",
             "-movflags", "+faststart", str(output),
         ]
     )
