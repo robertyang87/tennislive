@@ -9,17 +9,35 @@
 - **一句钩子压在下三分之一**，上面留给人脸
 - 台头、比分、赛事轮次各有固定位置，换片子只换字
 
-三种版式，`layout` 选：
+四种版式，`layout` 选：
 
-    diagonal  斜切。张力最强，两个人相对而立，中缝一道品牌绿
+    cutout    **默认，也是账号所有者定下来的那一版**。背景是本场的比赛画面
+              （虚化压暗），两个人用官方抠图站在品牌绿那条斜线上
+    diagonal  斜切。两格各一张实拍，中缝一道品牌绿
     split     上下平分，中缝压一个 VS 圆牌
     stack     上下平分但名字压在各自那一格里，比分居中
 
-素材两边各给一张图（本场的真实照片，别抽帧——见 CLAUDE.md），
-每张可调 `focus` / `focus_y` / `zoom`：铺满不等于人够大。
+**为什么默认换成 `cutout`**：`diagonal` 要两张「本场、比赛中、有冲击力、够清晰」
+的实拍，四道闸门同时过——王欣瑜那条折腾了十几轮，因为帕雷哈（17 岁资格赛球员）
+根本没有一张能用的比赛照，最后只能拿握手那一帧顶，结果**王欣瑜在同一张海报上
+出现了两次**、帕雷哈的脸还是糊的、两个名字压在中缝上谁是谁都说不清。
 
-    python tools/versus_poster.py --spec specs/reels/eala-zheng.json \\
-        --layout diagonal --out /tmp/poster.jpg
+抠图这条路把「认人」这件事一次性解决掉：
+
+- **WTA**：`api.wtatennis.com/tennis/players/?name=<姓>` 查 ID，抠图在
+  `photoresources.wtatennis.com/.../<Name>-Torso_<wta_id>.png?width=3000`，
+  3000×2813 透明底。**文件名自带 WTA ID，人物这一要素由来源自己写死**
+- **ATP**：总站 403，但赛事自己的域名镜像着同一批
+  `/-/media/alias/player-gladiator-image/<atp_id>`，379×603 全身抠图。
+  尺寸是 alias 定死的（`?w=` 无效），铺到一格约 1.3 倍放大，比 WTA 那边软一档
+- 两边都是**棚拍摆拍**，所以张力交给背景那张本场画面，不交给人物
+
+素材：`cutout` 版式每格给 `cutout`（透明 PNG），背景给 `versus.background`
+（`image` 或 `frame_at`）；`diagonal` 等版式每格给 `image`，可调
+`focus` / `focus_y` / `zoom`——铺满不等于人够大。
+
+    python tools/versus_poster.py --spec specs/reels/wang-pareja.json \\
+        --layout cutout --out /tmp/poster.jpg
 """
 
 from __future__ import annotations
@@ -53,6 +71,143 @@ SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
 # 伊埃拉的头正好卡在那一条里。两个数必须同源。
 BAND = 100.0 * (VIDEO_W / 2) * math.tan(math.radians(SEAM_ANGLE)) / VIDEO_H
 
+# ── cutout 版式的几个数，都是按画幅算出来的，不是拍的 ────────────────────
+# 斜线（＝两个人站的那条地平线）把画面分成「上面留给脸」和「下面留给字」。
+# 0.60 那一版**下面的文案看着被挤压**：钩子块 `bottom:150px` 起算，两行 100px
+# 的钩子 + 比分 + 赛事约 348px 高，顶边落在 942；斜线 864 加名字半高 35 到 899，
+# 中间只剩 43px。提到 0.545 之后是 785 → 817，留出 125px，字才透得过气。
+# 人物跟着一起上去（底边永远收在斜线上方），所以要同时缩一点，否则头顶会钻进
+# 左上角那块台头。
+CUT_SEAM = 0.545
+CUT_SCALE = 0.44           # 抠图高度占画幅的比例 → 634px
+CUT_CX = (0.29, 0.71)      # 左右两人的横向中心
+CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
+# 抠图的底边**收在斜线上方**，不压过去。
+# 第一版是沉到线下 40px、想让线横过小腿，渲出来是**线从胯部穿过去，像在切人**；
+# 而且名字压在斜线上，正好落在两个人身上，白字盖白衣看不清。收到线上方之后，
+# 线下那一条是干净的暗底，名字才有地方待。
+CUT_SINK = -36
+# 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
+CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+
+
+def _cut_crop(image: Path, box) -> Path:
+    """抠图的裁切，**走 PNG 保住透明通道**——不能用 `_precrop`，那个存 JPEG。
+
+    存在的理由是两家给的画幅不一样：WTA 是**半身**（`<Name>-Torso_<id>.png`），
+    ATP 是**全身**（`player-gladiator-image`）。同一个 662px 的槽位里，全身的
+    那张脸会小掉四成——而这张海报的全部作用就是让人一眼认出是谁打谁。
+    所以 ATP 那两格要 `crop: [0, 0, 1, 0.68]` 裁到胯，脸的大小才对得上。
+
+    代价照实记：ATP 原图去掉透明边只有 256×584，裁到 68% 再铺到 662px 是
+    1.67 倍放大，比 WTA 那边软一档。
+    """
+    if not box:
+        return image
+    from PIL import Image  # noqa: PLC0415
+
+    if len(box) != 4:
+        raise SystemExit(f"cutout 的 crop 要四个数 [x0,y0,x1,y1]（0~1）：{box}")
+    im = Image.open(image).convert("RGBA")
+    w, h = im.size
+    x0, y0, x1, y1 = box
+    out = image.with_suffix(".crop.png")
+    im.crop((round(x0 * w), round(y0 * h), round(x1 * w), round(y1 * h))).save(out)
+    return out
+
+
+def _cutout_geometry(cx: float, seam: float) -> float:
+    """抠图底边落在斜线上的位置（px）。
+
+    线是 `rotate(-7.4deg)`：**左端低、右端高**，所以两个人的脚不在同一水平线上。
+    按各自的横向中心去算，人才像真的站在这条线上；两边都用同一个 y，
+    右边那个就会浮起来 62px（1080 宽两端差 2·540·tan7.4° = 140px）。
+    """
+    dx = (cx - 0.5) * VIDEO_W
+    return seam * VIDEO_H - dx * math.tan(math.radians(SEAM_ANGLE))
+
+
+def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
+    """cutout 版式：背景一张本场画面，两个官方抠图站在斜线上。"""
+    bg = versus.get("background") or {}
+    if not bg.get("image"):
+        raise SystemExit(
+            "cutout 版式要 versus.background = {image|frame_at}："
+            "背景是**本场**的比赛画面，人物才有语境。")
+    seam = float(versus.get("split", CUT_SEAM))
+    vs_y = float(versus.get("vs_y", CUT_VS_Y)) * 100
+    css = [
+        f".bg{{background-image:url('{_data_uri(Path(bg['image']))}');"
+        f"background-size:cover;background-position:"
+        f"{float(bg.get('focus', 0.5)) * 100:.1f}% "
+        f"{float(bg.get('focus_y', 0.5)) * 100:.1f}%;"
+        # scale 给模糊留溢出量，否则四边透底
+        # blur 22 + dim .5 渲出来是一片黑绿，**完全看不出是个球场**——背景的
+        # 全部作用就是给棚拍抠图一个「这是一场球」的语境，糊到认不出等于没有。
+        # 12 / .72 是渲了三档比出来的：dim .88 又太亮，场地线和看台开始跟人抢。
+        f"filter:blur({float(bg.get('blur', 12)):.0f}px) "
+        f"brightness({float(bg.get('dim', 0.72)):.2f});transform:scale(1.1)}}"
+    ]
+    imgs = []
+    for side, key, cx0 in (("a", "top", CUT_CX[0]), ("b", "bottom", CUT_CX[1])):
+        panel = versus[key]
+        if not panel.get("cutout"):
+            raise SystemExit(
+                f"cutout 版式的 {key} 格要 `cutout`：官方抠图的透明 PNG。\n"
+                "WTA 走 photoresources 的 <Name>-Torso_<wta_id>.png?width=3000，"
+                "ATP 走赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。")
+        cx = float(panel.get("cx", cx0))
+        h = float(panel.get("scale", CUT_SCALE)) * VIDEO_H
+        src = _cut_crop(Path(panel["cutout"]), panel.get("crop"))
+        sink = float(versus.get("sink", CUT_SINK)) + float(panel.get("dy", 0))
+        bottom = _cutout_geometry(cx, seam) + sink
+        css.append(f".c-{side}{{left:{cx * 100:.2f}%;top:{bottom - h:.0f}px;"
+                   f"height:{h:.0f}px}}")
+        imgs.append(f'<img class="cut c-{side}" src="{_data_uri(src)}">')
+    body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
+            f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'
+            f'<div class="nm" style="top:{seam * 100:.1f}%">'
+            f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>'
+            f'<div class="vs" style="top:{vs_y:.1f}%">VS</div>')
+    extra = ("".join(css) + """
+.bg{position:absolute;inset:0;background-repeat:no-repeat}
+/* `.shade` 那一档是给实拍海报调的（52% 起就压到 .96），压在**已经调暗过**的
+   背景上就是一片纯黑——渲出来完全看不出人站在球场上。cutout 这一档把中段
+   放开，只在斜线以下压住，给钩子一个能读的底。 */
+.cutshade{background:linear-gradient(180deg,
+  rgba(4,18,13,.34) 0%,rgba(4,18,13,.06) 24%,rgba(4,18,13,.06) 50%,
+  rgba(4,18,13,.70) 64%,rgba(4,18,13,.94) 78%)}
+.cut{position:absolute;transform:translateX(-50%);z-index:3;
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));""" + CUT_FADE + "}")
+    return body, extra
+
+
+def _precrop(image: Path, panel: dict) -> Path:
+    """`crop: [x0, y0, x1, y1]`（0~1 的比例）——**先裁再铺**。
+
+    `focus` / `zoom` 只能在整幅图里挪窗口，挪不动主体在图里的位置。照片可以
+    自己先裁好再入库（伊埃拉那张就是裁到右边六成六处，给钩子让出空场），
+    但**从源片抓的帧没有这一步**：转播机位怎么拍就是怎么拍，近景天然居中，
+    落到底格就正好被文案块压住；换大全景又小得看不清。
+
+    所以给面板一个裁切框，照片和抽帧共用。裁完的图落在原图旁边，
+    带 `.crop.jpg` 后缀——渲染的中间物，不进仓库。
+    """
+    box = panel.get("crop")
+    if not box:
+        return image
+    from PIL import Image, ImageOps  # noqa: PLC0415
+
+    if len(box) != 4:
+        raise SystemExit(f"crop 要四个数 [x0, y0, x1, y1]（0~1 的比例）：{box}")
+    im = ImageOps.exif_transpose(Image.open(image)).convert("RGB")
+    w, h = im.size
+    x0, y0, x1, y1 = box
+    out = image.with_suffix(".crop.jpg")
+    im.crop((round(x0 * w), round(y0 * h), round(x1 * w), round(y1 * h))
+            ).save(out, quality=95)
+    return out
+
 
 def _panel_css(side: str, image: Path, panel: dict,
                top: float, height: float, clip: str) -> str:
@@ -74,7 +229,7 @@ def _panel_css(side: str, image: Path, panel: dict,
 
     `zoom` 是在此之上再推一档，给「人在画面里很小」的素材用。
     """
-    uri = _data_uri(image)
+    uri = _data_uri(_precrop(image, panel))
     focus = float(panel.get("focus", 0.5)) * 100
     focus_y = float(panel.get("focus_y", 0.5)) * 100
     zoom = float(panel.get("zoom", 1.0)) * 100
@@ -138,6 +293,54 @@ def _geometry(layout: str, seam: float) -> tuple[tuple, tuple, str]:
             f'<div class="seam" style="top:{seam:.1f}%"></div>')
 
 
+def _result_block(cover: dict, names: list) -> str:
+    """钩子下面那一块：结果 + 元信息。
+
+    原来是两行平铺——`score` 一整句「王欣瑜 7-6(3) 6-3 帕雷哈」加一行灰色
+    `sub`。毛病是**只有两级**：级别（WTA 500）、轮次（R1）、赛事、时长四样
+    信息挤在同一行灰字里，扫过去一样重。
+
+    现在是：
+
+        王欣瑜 7-6(3) 6-3 帕雷哈      赢家（白）· 盘分（品牌绿，数字大一档）· 输家（灰）
+        [WTA 500] [R1]  华盛顿 · 1 小时 51 分
+
+    **两个人的名字都要在，输的那个置灰、不能省。** 中间改过一版只留赢家，
+    理由是名字已经印在绿线上了；账号所有者一句「怎么对手的名字没了」——
+    这一行是**赛果**，赛果本来就是「谁赢了谁」，少一个人它就不成句。
+    置灰解决的是层次问题，不是删掉。
+
+    输家**从 `versus.names` 里推**，不另开字段：这样它和绿线上印的那个
+    永远是同一个，不会两处各写一遍再对不上。
+
+    级别和轮次做成**描边药丸**——它们是标签不是句子，而且描边用的是同一个
+    品牌绿，不引入第二个强调色（一屏最多一个强调色）。
+
+    老的 `score` / `sub` 两个字段继续认，斜切那两条已发布的片子不受影响。
+    """
+    if not cover.get("result"):
+        return (f'<div class="score">{cover.get("score", "")}</div>'
+                f'<div class="sub">{cover.get("sub", "")}</div>')
+    winner = str(cover.get("winner", "")).strip()
+    loser = next((n for n in names if str(n).strip() != winner), "")
+    result = str(cover["result"])
+    # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
+    # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
+    sets_px = 62 if len(result) <= 11 else 54
+    pills = "".join(f'<span class="pill">{p}</span>'
+                    for p in (cover.get("tier"), cover.get("round")) if p)
+    meta = str(cover.get("meta", "")).strip()
+    return (
+        '<div class="res">'
+        + (f'<span class="win">{winner}</span>' if winner else "")
+        + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
+        + (f'<span class="lose">{loser}</span>' if loser else "")
+        + "</div>"
+        + f'<div class="meta">{pills}'
+        + (f'<span class="mtx">{meta}</span>' if meta else "")
+        + "</div>")
+
+
 def build(spec: dict, layout: str, out: Path) -> Path:
     return build_poster(spec["cover"], out, layout=layout)
 
@@ -156,24 +359,31 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
             "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
             "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
 
-    # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
-    # 拼贴**；有了它，斜线成了设计的一部分。
-    seam = float(versus.get("split", 0.5)) * 100
-    (box_a, box_b, seam_el) = _geometry(layout, seam)
-    panels = "".join(
-        _panel_css(side, Path(s["image"]), s, box[0], box[1], box[2])
-        for side, s, box in (("a", top, box_a), ("b", bottom, box_b))
-    )
-    badge = f'<div class="vs" style="top:{seam:.1f}%">VS</div>'
     hook = "".join(f"<div>{line.strip()}</div>"
                    for line in str(cover.get("hook", "")).split("\n") if line.strip())
-    # stack：名字压在各自那一格，其余版式名字并排在 VS 两侧
-    if layout == "stack":
-        name_els = (f'<div class="na n-a" style="top:{seam - 12:.1f}%">{names[0]}</div>'
-                    f'<div class="na n-b" style="top:{seam + 5:.1f}%">{names[1]}</div>')
+
+    if layout == "cutout":
+        body, panels = _cutout_body(cover, versus, names)
     else:
-        name_els = (f'<div class="nm" style="top:{seam:.1f}%">'
-                    f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>')
+        # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
+        # 拼贴**；有了它，斜线成了设计的一部分。
+        seam = float(versus.get("split", 0.5)) * 100
+        (box_a, box_b, seam_el) = _geometry(layout, seam)
+        panels = "".join(
+            _panel_css(side, Path(s["image"]), s, box[0], box[1], box[2])
+            for side, s, box in (("a", top, box_a), ("b", bottom, box_b))
+        )
+        badge = f'<div class="vs" style="top:{seam:.1f}%">VS</div>'
+        # stack：名字压在各自那一格，其余版式名字并排在 VS 两侧
+        if layout == "stack":
+            name_els = (
+                f'<div class="na n-a" style="top:{seam - 12:.1f}%">{names[0]}</div>'
+                f'<div class="na n-b" style="top:{seam + 5:.1f}%">{names[1]}</div>')
+        else:
+            name_els = (f'<div class="nm" style="top:{seam:.1f}%">'
+                        f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>')
+        body = (f'<div class="p p-a"></div><div class="p p-b"></div>{seam_el}'
+                f'<div class="shade"></div>{name_els}{badge}')
 
     html = f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
@@ -213,13 +423,26 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
+/* 结果那一行按基线对齐：赢家是汉字、盘分是西文数字，两种字的墨高差着一截，
+   按 center 对齐会看出高低不齐（和字幕里数字要单独放大一档是同一回事）。 */
+.res{{margin-top:28px;display:flex;align-items:baseline;gap:22px}}
+.win{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
+  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
+.sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
+  font-size:62px;color:{BRAND};letter-spacing:1px}}
+/* 输的一方**要写，但置灰**：这一行是赛果，少一个人就不成句；灰是层次，不是删除 */
+.lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
+  color:{DIM}}}
+.meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+.pill{{border:2px solid {BRAND};color:{BRAND};border-radius:999px;
+  font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
+  font-size:26px;letter-spacing:3px;padding:6px 18px 7px;white-space:nowrap}}
+.mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
-<div class="p p-a"></div><div class="p p-b"></div>{seam_el}
-<div class="shade"></div>{name_els}{badge}
+{body}
 <div class="top">{cover.get('eyebrow', '')}</div>
 <div class="copy"><div class="hook">{hook}</div>
-<div class="score">{cover.get('score', '')}</div>
-<div class="sub">{cover.get('sub', '')}</div></div>"""
+{_result_block(cover, names)}</div>"""
 
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
@@ -244,8 +467,8 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--spec", required=True)
-    ap.add_argument("--layout", default="diagonal",
-                    choices=("diagonal", "split", "stack"))
+    ap.add_argument("--layout", default="cutout",
+                    choices=("cutout", "diagonal", "split", "stack"))
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
