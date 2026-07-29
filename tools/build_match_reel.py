@@ -145,6 +145,20 @@ AUDIO_RATE = "48000"
 PART_PRESET = "medium"
 PART_CRF = "20"
 
+# 成片那一步的参数。**不要为了压体积动它们。**
+#
+# 账号所有者 2026-07-29 定的：「不要舍弃画质，没有硬性要求 20mb」。
+#
+# 20 MB 是 jsDelivr 的单文件上限，超了就退回 raw。那**不是一条要满足的指标**——
+# 这条线从来没有一条片子进得去：按实测码率（3315 / 3517 / 3779 kb/s 三条几乎
+# 一样）算，20 MB 只够 44 秒，而已发的 69 秒和 83 秒那两条是 28.8 和 32.9 MB。
+# 要真挤进去得把 crf 推到 23 上下，那是拿画质换一条通道，方向反了。
+#
+# 片长可以商量（大威那条从 2 分 38 秒剪到 1 分 35 秒，59 → 42.6 MB），
+# **画质不商量**。判据落在 test_成片的编码参数不许为了压体积往下调。
+FINAL_PRESET = "slow"
+FINAL_CRF = "18"
+
 
 class ReelError(RuntimeError):
     pass
@@ -1038,7 +1052,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             "-i", str(silent), "-i", str(mixed),
             "-vf", f"subtitles={_escape(ass)}",
             "-map", "0:v:0", "-map", "1:a:0",
-            "-c:v", "libx264", "-preset", "slow", "-crf", "18",
+            "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
 
