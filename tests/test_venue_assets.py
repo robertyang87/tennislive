@@ -300,7 +300,7 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
 
 # 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
 # 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
-LANDMARK_BUDGET = 4
+LANDMARK_BUDGET = 3
 
 
 def test_every_venue_declares_what_kind_of_shot_it_is():
@@ -361,6 +361,9 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
         # 汉堡这张来自 Commons，但同样容易被换回去：关键词搜索翻不到它
         # （标题里一个相关词都没有，是按 Category:Am Rothenbaum 列出来的）
         "hamburg": "hamburg-rothenbaum-centre-court.jpg",
+        # 格施塔德这张藏在官网 sitemap 列出的 /infos/le-village-le-stade/ 里
+        # ——wp-json 被 401 挡着，按关键词也搜不到（文件名是 EFG-SOG23-3）
+        "gstaad": "gstaad-roy-emerson-arena.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 
@@ -406,3 +409,48 @@ def test_backfill_drops_credits_for_images_no_longer_on_disk():
         written = json.loads((out / "credits.json").read_text(encoding="utf-8"))
         assert set(written) == {"here.jpg"}
         assert written["here.jpg"] == entry
+
+
+def test_attribution_md_is_generated_from_credits():
+    """署名页要和 credits.json 逐字一致——手写的那一版一定会过期。
+
+    换图时 credits.json 有好几条测试盯着，`ATTRIBUTION.md` 一条都没有，
+    于是它悄悄留下了三条指向早就删掉的文件的记录（kitzbuhel-panorama /
+    prague-castle-panorama / estoril-coast）——署名页写着三张不存在的图的
+    作者和许可，而真正在用的那几张一个字都没有。
+
+    这和「换文件名要 grep 整个仓库包括 .md」是同一个毛病，只是靠人记住挡不住
+    第四次。现在这个 .md 由 render_attribution() 生成，这条测试是那把锁：
+    改了图就重跑 `python tools/fetch_venues.py`，或直接调 write_attribution()。
+    """
+    from tennislive.render.venue_assets import ASSETS, CREDITS
+    import json
+
+    module = _fetch_tool()
+    credits = json.loads(CREDITS.read_text(encoding="utf-8"))
+    on_disk = {p.name for p in ASSETS.glob("*.jpg")} | {p.name for p in ASSETS.glob("*.png")}
+    expected = module.render_attribution(credits, on_disk)
+    actual = (ASSETS / "ATTRIBUTION.md").read_text(encoding="utf-8")
+
+    assert actual == expected, (
+        "ATTRIBUTION.md 和 credits.json 对不上了。它是生成的，不要手改——"
+        "跑 tools/fetch_venues.py，或 write_attribution(assets/venues)"
+    )
+
+
+def test_attribution_md_never_credits_a_file_that_is_gone():
+    """署名页里不许出现盘上没有的文件。
+
+    上一条已经能挡住绝大部分，但它比的是"和生成器一致"；万一生成器本身被改
+    坏（比如不再按 on_disk 过滤），这条仍然会响。**错的出处比没有出处更糟**：
+    它把某个人的作品记在一张根本没发出去的图上。
+    """
+    import re
+
+    from tennislive.render.venue_assets import ASSETS
+
+    text = (ASSETS / "ATTRIBUTION.md").read_text(encoding="utf-8")
+    named = re.findall(r"^## `([^`]+)`", text, flags=re.M)
+    assert named, "署名页一条记录都没有？"
+    missing = [n for n in named if not (ASSETS / n).is_file()]
+    assert not missing, f"署名页记着这些图，但它们已经不在盘上：{missing}"

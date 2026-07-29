@@ -150,7 +150,15 @@ VENUES = [
     # 拿雪景当七月比赛的背景，季节整个错了，和"温网草地配法网司线"是同一类错。
     # 所以取夏季的萨嫩兰谷地：季节对得上，chalet + 阿尔卑斯谷地也就是格施塔德
     # 本身的样子。
-    ("gstaad-panorama.jpg", "File:July in Gstaad.jpg", None),
+    # 格施塔德：山谷地标 → Roy Emerson Arena 中心球场，见 OFFICIAL_VENUES。
+    # 这一站踩的是「图库路径 404 不等于没有图库」的变体：官网 wp-json 返回
+    # 401（插件挡了），首页那张叫 Roy-Emerson-Arena.png 的打开是**谷歌地图
+    # 截图**，于是"官网没有球场照"。
+    # 真正的入口在 **sitemap** 里：`wp-sitemap-posts-page-1.xml` 一列就看见
+    # `/media/photos/`（530 张）和 `/infos/le-village-le-stade/`。后者 12 张
+    # 里就有整个球场。**wp-json 被挡时，sitemap 是另一条进得去的门。**
+    # 另：站上挂的是 `-1024x683` 的缩略图，去掉这个后缀就是 6000×4000 原图。
+    ("gstaad-roy-emerson-arena.jpg", None, None),
     ("bastad-tennis-stadium.jpg", "File:Båstad Tennis Stadium.jpg", None),
     # 下面这批原本只躺在 assets/ 与 credits.json 里、不在本列表中。fetch_set()
     # 会按本列表重建 credits.json，所以漏登记的条目每跑一次 CI 就被冲掉一次
@@ -205,6 +213,14 @@ OFFICIAL_VENUES = {
         "artist": "Mifel Tennis Open by Telcel Oppo",
         "page": "https://loscabostennisopen.com/wp-content/uploads/"
                 "2025/07/Main-stadium-09.jpg",
+    },
+    "gstaad-roy-emerson-arena.jpg": {
+        "title": "Roy Emerson Arena 中心球场 · 满场（红土上刷着 GSTAAD，赞助带 "
+                 "EFG Private Banking，记分牌显示比赛进行中；背景是木屋群与阿尔卑斯山）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Fabian Meierhans / EFG Swiss Open Gstaad",
+        "page": "https://swissopengstaad.ch/wp-content/uploads/2024/05/"
+                "EFG-SOG23-3-%C2%A9FabianMeierhans.jpg",
     },
     "canada-sobeys-centre-court.jpg": {
         "title": "Sobeys Stadium 中心球场 · 单打决赛满场（场地前场刷着 TORONTO）",
@@ -603,9 +619,51 @@ def backfill_credits(out_dir: Path, wanted: list) -> list[str]:
     return failed
 
 
+ATTRIBUTION_HEADER = """# Venue image attribution
+
+<!-- 这个文件由 tools/fetch_venues.py 的 render_attribution() 生成，别手改。 -->
+<!-- 判据：test_attribution_md_is_generated_from_credits。 -->
+
+The machine-readable author, license, and source records live in `credits.json`.
+Event-specific schedule backgrounds are cropped and darkened by the renderer;
+the photographs are not otherwise altered.
+"""
+
+
+def render_attribution(credits: dict, on_disk: set[str]) -> str:
+    """按 credits.json 生成署名页——**手写的那一版一定会过期**。
+
+    换图时 credits.json 有测试盯着，这个 .md 没有，于是它悄悄留下了三条指向
+    早就删掉的文件的记录（kitzbuhel-panorama / prague-castle-panorama /
+    estoril-coast）。跟「换文件名要 grep 整个仓库包括 .md」是同一件事，只是
+    靠人记住的方式挡不住第四次——所以改成生成的。
+    """
+    lines = [ATTRIBUTION_HEADER]
+    for name in sorted(n for n in credits if n in on_disk):
+        entry = credits[name]
+        lines.append(f"## `{name}`\n")
+        lines.append(f"- Title: {entry.get('title', '')}")
+        lines.append(f"- Author: {entry.get('artist', 'unknown')}")
+        lines.append(f"- Source: {entry.get('page', '')}")
+        lines.append(f"- License: {entry.get('license', 'unverified')}")
+        if entry.get("note"):
+            lines.append(f"- Note: {entry['note']}")
+        lines.append("- Changes: resized and cropped by the card renderer;"
+                     " no semantic alteration\n")
+    return "\n".join(lines)
+
+
+def write_attribution(out_dir: Path) -> None:
+    credits = json.loads((out_dir / "credits.json").read_text(encoding="utf-8"))
+    on_disk = {p.name for p in out_dir.glob("*.jpg")} | {p.name for p in out_dir.glob("*.png")}
+    (out_dir / "ATTRIBUTION.md").write_text(
+        render_attribution(credits, on_disk), encoding="utf-8")
+
+
 def main() -> int:
     failed = fetch_set(ROOT / "assets" / "venues", VENUES, min_width=1600)
     failed += backfill_credits(ROOT / "assets" / "venues", VENUES)
+    write_attribution(ROOT / "assets" / "venues")
     failed += fetch_set(
         ROOT / "assets" / "players", PLAYERS, min_width=1000, prefer_portrait=True
     )
