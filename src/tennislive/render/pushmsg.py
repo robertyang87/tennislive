@@ -31,6 +31,7 @@ from .rating import (
     top_results,
 )
 from .titles import pick_headline_auto
+from ..cdn import jsdelivr_base
 
 logger = logging.getLogger(__name__)
 
@@ -77,15 +78,18 @@ def _score_of(m) -> str:
 
 # 卡片图 CDN：jsDelivr 镜像 GitHub 内容，国内可访问
 _REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
-_CDN = f"https://cdn.jsdelivr.net/gh/{_REPO}@main"
+_CDN = jsdelivr_base(_REPO)
 _OWNER, _REPO_NAME = _REPO.split("/", 1)
 _PAGES = os.environ.get(
     "TENNISLIVE_PAGES_URL", f"https://{_OWNER}.github.io/{_REPO_NAME}"
 ).rstrip("/")
 
 _ASSET_REVISION_RE = re.compile(r"[0-9a-fA-F]{7,40}")
+# 主机名不写死：换镜像之后，只认 cdn. 的正则会**悄悄不匹配**，于是推送里的
+# 图片全部停在 @main 上，钉版本那一步等于没做（同一路径的新旧内容会被
+# 微信的图片缓存混起来，正是当初钉 commit 要解决的问题）。
 _JSDELIVR_MAIN_RE = re.compile(
-    r"(https://cdn\.jsdelivr\.net/gh/[^/@\s\"'<>]+/[^/@\s\"'<>]+)@main/"
+    r"(https://[a-z0-9.\-]+\.jsdelivr\.net/gh/[^/@\s\"'<>]+/[^/@\s\"'<>]+)@main/"
 )
 
 
