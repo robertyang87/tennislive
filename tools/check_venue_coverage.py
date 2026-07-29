@@ -36,8 +36,11 @@ from tennislive.render.venue_assets import venue_asset_for_match  # noqa: E402
 CALENDAR = ROOT / "data" / "tour_calendar_2026.json"
 MANIFEST = ROOT / "data" / "venue_assets.json"
 
-# 不是「一站比赛」，没有固定主场馆，不该算进覆盖率
-SKIP_TIERS = {"团体", "年终"}
+# 不算进覆盖率的：团体赛和年终总决赛没有固定主场馆；125 不在账号所有者定的
+# 范围里（他给的清单只含 250 / 500 / 1000 + 大满贯）。
+# ⚠️ 125 这一档要单独排除，不能靠「manifest 里没有就算了」——伊斯坦布尔和
+# 罗马 ATV 这两条恰好就是 125，留在分母里会让覆盖率永远差两站。
+SKIP_TIERS = {"团体", "年终", "WTA125", "ATP125"}
 
 
 def _match_for(event: dict, year: int = 2026) -> Match:
@@ -101,7 +104,7 @@ def main() -> int:
     ok = sum(1 for r in rows if r["shot"] == "centre-court")
     fall = sum(1 for r in rows if r["slug"] and r["shot"] != "centre-court")
     miss = total - ok - fall
-    print(f"\n共 {total} 站（不含团体赛与年终总决赛）："
+    print(f"\n共 {total} 站（不含团体赛、年终总决赛与 125）："
           f"中心球场 {ok} / 兜底 {fall} / 缺 {miss}"
           f"　—— 覆盖 {ok * 100 // total}%")
     return 0
