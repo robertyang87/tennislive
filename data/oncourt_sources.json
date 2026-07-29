@@ -412,7 +412,7 @@
       "tier": "wta-site",
       "scan_depth": 900,
       "verified": true,
-      "note": "WTA 那边对应 tennistv.com 的东西。**曾经长期一条都收不到，原因是我把 URL 拼断了**：slug 正则写的是 `[a-z0-9\\-]`，不含下划线，而 WTA 场上采访的 slug 一律带 `_digital-download_m50936` 这个发行编号后缀——截断之后 `/videos/<id>/<截断 slug>` 一律 404，旧注释据此断言「这几条被下架了」。**链接一直是活的**，纯 ID 的 `/videos/<id>` 更是稳定 200（站点 canonical 就是这个形式）。\n现在两步走：列表页拿最新 ID，再往回扫 900 个 ID 兜底。列表页是滚动窗口（/videos 约 60 条、/videos/interviews 恰好 10 条，翻页参数服务端忽略），出片密集时新采访会被挤出窗口后永久取不到。\n详情页自带 titleUrlSegment（完整 slug，自证赛事+轮次+球员）、uploadDate、duration，所以这个源是库里**第一个带真发布时间**的。\n**产量低是 WTA 的出片规律，不是采集漏了**：柏林决赛日 280 个 ID 里只有 1 条采访，见到的都是女王杯 R16、柏林 SF/F、雅典 F，基本只做半决赛和决赛。首轮的场上采访是「发生了但不发视频」——WTA 自己 2026 华盛顿首轮的战报写着 In her on-court interview, Samsonova stated: ...，同一天全网没有对应视频。推送要的正是 F/SF/QF，对得上。\nBrightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），不绕。",
+      "note": "WTA 那边对应 tennistv.com 的东西。**曾经长期一条都收不到，原因是我把 URL 拼断了**：slug 正则写的是 `[a-z0-9\\-]`，不含下划线，而 WTA 场上采访的 slug 一律带 `_digital-download_m50936` 这个发行编号后缀——截断之后 `/videos/<id>/<截断 slug>` 一律 404，旧注释据此断言「这几条被下架了」。**链接一直是活的**，纯 ID 的 `/videos/<id>` 更是稳定 200（站点 canonical 就是这个形式）。\n现在两步走：列表页拿最新 ID，再往回扫 900 个 ID 兜底。列表页是滚动窗口（/videos 约 60 条、/videos/interviews 恰好 10 条，翻页参数服务端忽略），出片密集时新采访会被挤出窗口后永久取不到。\n详情页自带 titleUrlSegment（完整 slug，自证赛事+轮次+球员）、uploadDate、duration，所以这个源是库里**第一个带真发布时间**的。\n**产量低是 WTA 的出片规律，不是采集漏了**：柏林决赛日 280 个 ID 里只有 1 条采访，见到的都是女王杯 R16、柏林 SF/F、雅典 F，基本只做半决赛和决赛。**出片滞后约 14 小时**：2026 华盛顿首轮萨姆索诺娃 01:01 UTC 打完，采访 15:41 UTC 才上线（id 4548633）。我第一轮只扫到 4548420 就停了，据此写下「首轮不发视频」——错在扫得太早，不是它不发。两次 cron 隔 6–18 小时，而滞后就有 14 小时，所以 900 的 ID 兜底是必需的，光看列表页那 10 条窗口必然错过。**但它同样是背景板坐访**：累计看过 6 条 post-match-interview，5 条背景板、1 条场上（雅典决赛）。WTA 真正稀缺的不是采访视频，是**场上那一类**。\nBrightcove 目录搜索返回 ACCESS_DENIED（WTA 的访问策略，只准按 ID 播单条），不绕。",
       "provenance": "official",
       "review_each": true
     },
@@ -787,6 +787,7 @@
     "wta:4519217",
     "wta:4523019",
     "wta:4524976",
+    "wta:4548633",
     "x7DxjTzBwtk",
     "xM0Y9YgheV0",
     "yWI1G4YN4PE",
