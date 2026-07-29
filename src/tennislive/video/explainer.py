@@ -2042,8 +2042,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "他从足球退役，二〇二四年十一月十三日，四十五岁的他在蒙得维的亚的挑战赛"
             "打了职业网球首秀，双打，主场坐满。一比六、二比六，输了。"
             "一个足球金球奖跑去打网球，一个网球大满贯冠军跑去踢第八级联赛。",
-            "assets/explainer/thiem-football/forlan_football.jpg",
-            "George Groutas · CC BY 2.0 · Wikimedia Commons · 2009 年 11 月马德里竞技欧冠比赛，弗兰",
+            "assets/explainer/thiem-football/forlan_tennis.jpg",
+            "图片社图经 Forbes 转载 · 2024 年 11 月蒙得维的亚挑战赛，弗兰的职业网球首秀",
             (
                 "弗兰：2010 世界杯金球奖得主",
                 "2024.11.13，45 岁打网球首秀",
