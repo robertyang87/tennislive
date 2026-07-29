@@ -18,6 +18,13 @@
 拿到候选之后**必须**过 `tools/preview_venue_crop.py`：判"是不是全景"要看卡片
 实际的裁法，不是看原图。
 
+**第三种「0 不是真 0」：页面是 SPA。** wimbledon.com 的 centre_court.html 和
+dcopentennis.com 首页用 urllib 抓下来，正则一张图都找不到——不是站上没有图，
+是图由 JS 渲染，`<img src>` 根本不在初始 HTML 里。这类站要用 Playwright
+（本环境预装了 Chromium，`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`）打开
+页面等渲染完再取 DOM。目前脚本还没做这一步，所以对 SPA 站的结果只能记
+"未查过"，**不能记 0**。
+
 用法：
     python tools/probe_venue_photos.py wimbledon roland-garros
     python tools/probe_venue_photos.py --all
