@@ -14,7 +14,9 @@ from .tournament_story import TournamentStory
 
 
 CARD_SIZE = (1080, 1440)
-MAX_PHOTO_USES = 4
+# 张数不设上限：账号所有者「字数和图片都不用做限制，只是为了把问题讲清楚就行」。
+# 卡片数由内容定，照片自然跟着走。留一个够不到的数只为挡住拼接失控。
+MAX_PHOTO_USES = 64
 MAX_TEXT_BLOCK_CHARS = 82
 MAX_CARD_TEXT_CHARS = 520
 MAX_CARD_BYTES = 950_000
@@ -108,7 +110,7 @@ def evaluate_knowledge_visuals(
             f"标准为 {expected_photo_uses} 张"
         )
     elif photo_uses > MAX_PHOTO_USES:
-        errors.append(f"四页共使用 {photo_uses} 张照片，标准上限为 {MAX_PHOTO_USES} 张")
+        errors.append(f"共使用 {photo_uses} 张照片，超出兜底上限 {MAX_PHOTO_USES} 张")
     elif photo_uses < 1:
         errors.append("封面必须至少使用一张经过核验的主题图片")
     if len(set(all_photo_sources)) != len(all_photo_sources):

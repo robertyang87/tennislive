@@ -419,8 +419,8 @@ jobs:
               KNOWLEDGE_READY=false
             fi
             CARD_COUNT="$(find "$OUT_DIR/knowledge/cards" -maxdepth 1 -type f -name 'card_*.jpg' 2>/dev/null | wc -l)"
-            if [ "$CARD_COUNT" -ne 4 ]; then
-              echo "::warning::知识帖未完整生成 4 张卡片"
+            if [ "$CARD_COUNT" -lt 3 ]; then
+              echo "::warning::知识帖卡片过少（少于 3 张）"
               KNOWLEDGE_READY=false
             fi
           fi

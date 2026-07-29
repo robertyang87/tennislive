@@ -97,8 +97,8 @@ def test_能推近的片子是算出来的不是手写的():
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
     eligible = [s for s in sorted(_SCRIPTS) if _fill(s) / chk.PUSH >= chk.FLOOR]
-    # 当前这批：9 条够推，5 条不够（3 张本来就在放大 + 2 张够铺满推不动）
-    assert len(eligible) == len(_SCRIPTS) - 5
+    # 当前这批：9 条够推，6 条不够（3 张本来就在放大 + 3 张够铺满推不动）
+    assert len(eligible) == len(_SCRIPTS) - 6
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
@@ -111,7 +111,10 @@ def test_够铺满但推不动的要能被单独认出来():
     floor_ok = {s for s in _SCRIPTS if _fill(s) >= chk.FLOOR}
     push_ok = {s for s in _SCRIPTS if _fill(s) / chk.PUSH >= chk.FLOOR}
     static_only = floor_ok - push_ok
-    assert static_only == {"queue", "ten-champions"}, (
+    # wildcard 的封面是澳网签表的屏摄，官方原图上限就是 1080×810（见
+    # assets/explainer/wildcard/credits.json 里的取舍说明）；它是唯一一张
+    # 「WC 两个字母清楚可读」的候选，所以按静止封面出片，不加推近。
+    assert static_only == {"queue", "ten-champions", "wildcard"}, (
         f"够铺满但推不动的这一档变了：现在是 {sorted(static_only)}。"
         f"确认是换了图还是改了 PUSH，再更新这条。")
 

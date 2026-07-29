@@ -1207,6 +1207,90 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_scoring_system",
     ),
     _trivia_story(
+        slug="wildcard",
+        # 台头和封面那一问会被拼成微信标题 `title｜question`。封面那一问
+        # 加了「签表里」之后，原来的台头「签表上那个 WC」就让「签表」和「WC」
+        # 在同一行里各出现两次。换成 identity 那句，两半各说一件事：
+        # 「一张不设上限的入场券｜签表里名字旁的 WC，是谁给的？」
+        title="一张不设上限的入场券",
+        subtitle="网球冷知识 · 规则篇",
+        identity="一张不设上限的入场券",
+        # chips[2] 会变成 `founded`，而故事卡的时间轴把它抠数字当**起点年份**用：
+        # 写「正赛 8 张」抠出来是「8」，时间轴就成了 8 → 2001 → 2009，
+        # 而且把 2026 那条挤了出去。外卡这条没有可核的起源年份，**不能编一个**，
+        # 所以用非数字标签（和已发的 scoring-history 同一套路，起点显示 NOW）。
+        chips=("冷知识", "规则原文", "不设上限"),
+        hero=(
+            "名字旁边那个 WC，是赛事自己发的一张入场券。"
+            "它有多硬？世界第 125 靠它拿过温网冠军。"
+        ),
+        # 每条事实的**第一句必须在 38 字内收住**：图解卡走
+        # `_card_excerpt(fact, 38)`，而它截的是「窗口内最后一个分句符」，
+        # 不是最后一个句号。原来第三条写成「…不能再拿正赛外卡；而报名过了
+        # 截止日的人，只能靠外卡或资格赛进正赛。」，截出来是
+        # 「…不能再拿正赛外卡；而报名过了截止日的人。」——**一个没有谓语的病句**，
+        # 渲出来才看见。判据见 test_render 里那条同名测试。
+        facts=(
+            "大满贯正赛 128 个签位里，只有外卡固定 8 张。"
+            "加上资格赛的 8 到 9 张、双打 7 张、混双 8 张，一届发出去三十张出头。",
+            "规则书里有整整一节叫「外卡 / 不设上限」：一辈子能领多少张，没有限制。"
+            "发给谁由赛事独自决定，条件一个都没写。",
+            "打过本届资格赛的人，不能再拿正赛外卡。外卡还可以被列为种子。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2001-07-09",
+                player="伊万尼塞维奇",
+                age="2001 年",
+                headline="世界第 125，靠外卡拿下温网",
+                detail=(
+                    "他本该去打资格赛，温网直接给了正赛外卡；"
+                    "决赛第五盘 9-7 胜拉夫特，那天因雨改在周一，"
+                    "中央球场的票当天现卖。男子公开赛年代唯一以外卡夺得大满贯的人。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2001_Wimbledon_Championships_%E2%80%93_Men%27s_singles",
+            ),
+            ChampionMoment(
+                date="2009-09-13",
+                player="克里斯特尔斯",
+                age="2009 年",
+                headline="连世界排名都没有的美网冠军",
+                detail=(
+                    "那是她生完孩子复出后的第三站比赛：八强淘汰李娜，"
+                    "四强淘汰卫冕冠军小威廉姆斯，决赛 7-5 6-3 胜沃兹尼亚奇——"
+                    "首位以外卡拿下美网的球员。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2009_US_Open_%E2%80%93_Women%27s_singles",
+            ),
+            ChampionMoment(
+                date="2026-07-10",
+                player="费里",
+                age="2026 年",
+                headline="25 年来第一个闯进温网四强的外卡",
+                detail=(
+                    "世界第 114 的他 1/4 决赛 6-4 7-6 6-0 横扫 10 号种子科博利，"
+                    "四强负于兹维列夫；赛后排名从 114 升到生涯最高第 36。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Arthur_Fery",
+            ),
+        ),
+        image_keys=(),
+        # 封面角标必须显式给，而且**不能是年份**。不给的话会退回
+        # `moments[0].date[:4]` = 2001，而封面那张照片是 **2004** 年温网的
+        # （2001 年那届在自由图源里一张都没有）——等于在一张 2004 年的照片上
+        # 印「2001」。改成这条选题最硬的那个非年份数字：正赛固定 8 张。
+        hero_marker="8 张",
+        source_label="2026 官方大满贯规则书",
+        image_credit="daramot / Wikimedia Commons · CC BY 2.0",
+        source_url="https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+        evidence_urls=(
+            "https://www.itftennis.com/media/5986/grand-slam-rulebook-2026-f2.pdf",
+            "https://www.france24.com/en/live-news/20260708-britain-s-fery-becomes-first-wildcard-to-reach-wimbledon-semis-in-25-years",
+            "https://www.tennismajors.com/wimbledon-news/july-9-2001-the-day-goran-ivanisevic-finally-won-wimbledon-270642.html",
+            "https://www.tennismajors.com/us-open-news/september-12-2009-the-day-kim-clijsters-became-the-first-wildcard-to-win-the-us-open-491468.html",
+        ),
+    ),
+    _trivia_story(
         slug="yellow-ball",
         title="网球为什么是黄色的",
         subtitle="网球冷知识 · 装备篇",

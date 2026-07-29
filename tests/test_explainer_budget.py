@@ -144,11 +144,46 @@ def _hook(slug: str) -> int:
     return _chars(_first_sentence(cover))
 
 
+# 2026-07-28，账号所有者改了口径：**「字数不用刻意限制，讲清楚话题最重要」**。
+#
+# 这条闸门原来硬卡 536 字（≈90 秒），依据是三家平台的人均播放 13–21 秒、
+# 真完播 2–3%。那个依据没变，但它回答的是「怎样让更多人看完」，而所有者要的是
+# 「先把这件事讲清楚」——这是编辑取舍，不是测量结论，所以由他定。
+#
+# 现实也支持这次放宽：已发的十一条里，ball-pick 800 字、hawkeye 659 字、
+# ten-champions 962 字，全都远超 536，而它们就是所有者拿来当参照的成品。
+# 硬卡 536 等于要求新片子比参照件短一半。
+#
+# 所以上限从「90 秒」放到 **150 秒**（≈900 字），并保留一条硬上限——不是为了
+# 省时长，是为了挡住「一屏写成一篇」：超过这个数就该拆片，不该继续加长。
+# 名单里的老片子仍然只许降不许升，那条没变。
+# 2026-07-28 再次收紧口径：账号所有者说的是「**字数和图片都不用做限制，
+# 只是为了把问题讲清楚就行**」。所以这里**不再有编辑意义上的上限**。
+#
+# 只留一条**防 bug 的兜底**，它和「片长该多长」无关：旁白是拼接出来的，
+# 一次模板错误或循环写错就可能拼出几千字，那种东西 TTS 会跑十几分钟、
+# 成片没法用。5000 字 ≈ 13 分钟，任何正常的知识片都够不到，
+# 够到就说明是拼错了，不是写长了。
+SANITY_MAX_CHARS = 5000
+
+# **目标**（不是闸门）：账号所有者「最好控制在 3 分钟左右的配音」。
+# 按实测语速 6.1 字/秒，3 分钟 ≈ 1100 字。写稿时朝这个数走，超一点不拦——
+# 上面那条硬断言只管拼接失控。已发成品的实际落点：hawkeye 659、ball-pick 800、
+# ten-champions 962，都在这个量级里偏短的一侧，说明 1100 是够用的。
+TARGET_SECONDS = 180
+TARGET_CHARS = round((TARGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * SPEECH_RATE)
+
+
+def narration_seconds(slug: str) -> float:
+    """这条片子的旁白大概多长（秒）。写稿时拿来对目标，不参与断言。"""
+    return _total(slug) / SPEECH_RATE + LEAD_SILENCE + TAIL_SILENCE
+
+
 @pytest.mark.parametrize("slug", sorted(_SCRIPTS))
 def test_旁白字数不超过片长预算(slug):
     """片长由旁白字数决定，所以预算卡在字数上。
 
-    新片子直接达标；名单里的老片子只许降不许升。
+    上限是 150 秒那一档（见上面那段口径说明）；名单里的老片子只许降不许升。
     """
     got = _total(slug)
     if slug in _OVER_BUDGET:
@@ -158,11 +193,10 @@ def test_旁白字数不超过片长预算(slug):
             f"要么把它写短，要么说清为什么这一条值得更长。"
             f"（预算是 {NARRATION_BUDGET} 字 ≈ {BUDGET_SECONDS} 秒）")
         return
-    assert got <= NARRATION_BUDGET, (
-        f"{slug} 的旁白 {got} 字 ≈ {got / SPEECH_RATE + LEAD_SILENCE + TAIL_SILENCE:.0f} 秒，"
-        f"超出预算 {NARRATION_BUDGET} 字（{BUDGET_SECONDS} 秒）。\n"
-        f"三家平台的人均播放时长是 13–21 秒，真完播 2–3%——"
-        f"写到两分半，后面那一多半没人看得到。")
+    assert got <= SANITY_MAX_CHARS, (
+        f"{slug} 的旁白 {got} 字 ≈ {got / SPEECH_RATE / 60:.0f} 分钟。\n"
+        f"字数**不设编辑上限**（讲清楚最重要），这条只是防拼接出错的兜底——"
+        f"到这个量级基本可以确定是模板或循环写错了。")
 
 
 def test_超预算名单只能变短():

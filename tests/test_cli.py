@@ -174,7 +174,12 @@ def test_default_fonts_render_cjk_without_env(monkeypatch):
         path, idx = _find_font(bold=bold)
         name = Path(path).name
         assert "barlow" not in name.lower(), name
-        assert any(tag in name for tag in ("Noto", "CJK", "SC")), name
+        # 这里原来还有一条 `any(tag in name for tag in ("Noto", "CJK", "SC"))`。
+        # 它是拿**文件名**近似「这是不是中文字体」，而判据其实就在下面几行：
+        # 画出来看笔画。沙箱里装的中文字体是文泉驿正黑（`wqy-zenhei.ttc`），
+        # 中文渲染完全正常，却因为名字里没有那三个词被判红——一条**假阴性**，
+        # 26 条失败里唯一不是缺依赖的那条。CI 上装的是 Noto，两边都该绿。
+        # 排除 barlow 这条留着：它挡的是具体那个文件，不是在猜字体语言。
 
         font = ImageFont.truetype(path, size=48, index=idx)
 
