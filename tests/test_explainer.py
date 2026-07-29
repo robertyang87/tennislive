@@ -1009,6 +1009,36 @@ def test_成片链接和图片走同一条_CDN():
     assert "@main/" not in pinned
 
 
+def test_每条片子的标签都放满五个():
+    """小红书标签最多五个，**要放满**——账号所有者定的：「最多五个，以后要放满」。
+
+    thiem-football 发出去时只带了三个。原因不是谁写少了，是它在 `_CAPTIONS`
+    里**根本没有条目**，于是 hook 和 tags 一起退回默认，而当时的
+    `_DEFAULT_TAGS` 只有三个。其余 15 条都各自写满了五个——所以光看别的条
+    完全看不出这个洞，直到成品发出去才被一眼看见。
+
+    所以这条测试查的是**渲染出来的那份文案**，不是 `_CAPTIONS` 的字面值：
+    只查表就漏掉了「没有条目 → 走默认」这条路径，正是出问题的那条。
+    兜底那组也一起查，它必须自己就是五个。
+    """
+    from tennislive.video.explainer import _DEFAULT_TAGS, explainer_xiaohongshu
+
+    assert len(_DEFAULT_TAGS) == 5, (
+        f"_DEFAULT_TAGS 只有 {len(_DEFAULT_TAGS)} 个。它是漏写条目时的兜底，"
+        "自己不满五个，那条片子就会无声地少几个标签。")
+
+    for slug in sorted(_SCRIPTED):
+        story = find_story_by_slug(slug)
+        text = explainer_xiaohongshu(story, explainer_script(story), "7.29")
+        tags = [w for w in text.split() if w.startswith("#")]
+        assert len(tags) == 5, (
+            f"{slug} 的文案里有 {len(tags)} 个标签：{' '.join(tags)}\n"
+            "小红书最多五个，要放满——在 _CAPTIONS 里给它写自己的五个。")
+        assert len(set(tags)) == 5, f"{slug} 的标签有重复：{' '.join(tags)}"
+        assert tags[:2] == ["#网球", "#网球时差"], (
+            f"{slug} 前两个标签不是 #网球 #网球时差：{' '.join(tags)}")
+
+
 def test_复制页探不到就不放那个按钮():
     """GitHub Pages 只服务 main，分支上生成的包点开是 404。
 
