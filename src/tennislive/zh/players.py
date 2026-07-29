@@ -395,4 +395,16 @@ PLAYER_ZH: dict[str, str] = {
     "Julia Riera": "里埃拉",
     "Nuria Brancaccio": "布兰卡乔",
     "Georgia Pedone": "佩多内",
+
+    # ===== 已退役 / 历史人物 =====
+    # 知识帖里经常要提上一个年代的人，而两张表都只收现役球员——写稿时
+    # grep 不到就只能手打，正是「人名不要手打」那条踩过两次的坑。定下来
+    # 就补进表里，让 player_zh() 和 test_人名要以译名表为准 都查得到。
+    "Goran Ivanisevic": "伊万尼塞维奇",
+    "Patrick Rafter": "拉夫特",
+    "Kim Clijsters": "克里斯特尔斯",
+    "Caroline Wozniacki": "沃兹尼亚奇",
+    "Evonne Goolagong": "古拉贡",
+    "Martina Navratilova": "纳芙拉蒂洛娃",
+    "Na Li": "李娜",
 }
