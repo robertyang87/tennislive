@@ -306,10 +306,17 @@ def download(url: str, dest: Path) -> Path:
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
     if not binary:
         raise ReelError("找不到 yt-dlp")
-    selector = (
-        "bestvideo[height<=1080][vcodec^=avc1]+bestaudio[ext=m4a]/"
-        "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best"
-    )
+    # **编码是偏好，不是硬条件。** 原来第一档写死 `vcodec^=avc1` + `ext=m4a`：
+    # YouTube 的高清一律是分离流，而 1080p 那几档常常是 VP9/AV1(webm)。某个
+    # player client 列出来的格式表不全时（PO token / n challenge 那一环没打通
+    # 就会这样），前两档全匹配不上，一路掉到 `best`——**YouTube 唯一预合成好的
+    # 格式是 itag 18，正好 640×360**。于是「下载成功」和「只拿到 360p」成了同一
+    # 件事，中间没有一步会报错，直到裁切那步才炸（run 30412173035）。
+    #
+    # 现在 `-f` 只管分辨率上限，编码偏好交给 `-S`：h264 排在前面（下游 ffmpeg
+    # 处理最省事），但拿不到就用 VP9/AV1，而不是掉回 360p。
+    selector = "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
+    sort = ["-S", "res:1080,fps,vcodec:h264,acodec:m4a"]
     cookies: list[str] = []
     jar = os.environ.get("YT_COOKIES", "").strip()
     if jar and Path(jar).is_file():
@@ -320,7 +327,7 @@ def download(url: str, dest: Path) -> Path:
     for label, extra in _ladder():
         proc = subprocess.run(
             [binary, "--js-runtimes", "node", "--no-warnings", "-f", selector,
-             *cookies, *extra, "--merge-output-format", "mp4",
+             *sort, *cookies, *extra, "--merge-output-format", "mp4",
              "-o", str(dest), url],
             capture_output=True, text=True,
         )
