@@ -2822,6 +2822,21 @@ _SUB_SOFT = 10
 _SUB_HARD_BREAK = "。！？；…"
 _SUB_SOFT_BREAK = "，、：,"
 _SUB_TRIM = "。，、：；,… "
+# 屏幕上的字幕**不写标点**。账号所有者：「以后字幕里的尽量不要用标点符号，
+# 可以切换下一页表达。」——停顿本来就该由换页表达，一个逗号在屏幕上只是噪点。
+#
+# 只留 `？` 和 `！`：换页表达得了停顿，表达不了「这是一问」。末屏那一问
+# 「你觉得合理吗」少了问号，读起来就成了陈述句。
+#
+# ⚠️ 去标点只作用在**显示的那一份**。切子句、找断点仍然靠原文里的标点
+# （见 subtitle_lines 的第 1 步）——先去掉就没有断点可依，又会退回「数满
+# 16 个字一刀切」，把词劈成两半。
+_SUB_DROP = "。，、：；,…「」『』（）《》()·—"
+# 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到下一行去。
+_SUB_MIN = 5
+# 映射到空格而不是 None（删除）：删掉的话合并出来的两句会糊成一坨，
+# 「WC。它是谁给的」变成「WC它是谁给的」。空格不是标点。
+_SUB_DROP_MAP = {ord(c): " " for c in _SUB_DROP}
 
 
 _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
@@ -2933,6 +2948,28 @@ def _break_bonus(text: str, i: int) -> int:
     return int(before in _SUB_AFTER) + int(after in _SUB_BEFORE)
 
 
+def _sub_display(chunk: str) -> str:
+    """原文的一段 → 屏幕上真正画出来的那一行。
+
+    三件事，顺序不能反：换阿拉伯数字（宽度会变）→ 掐掉两头的标点 →
+    去掉句内剩下的标点。留 `？！`，见 `_SUB_DROP` 的说明。
+
+    两处都要用它：算宽度的时候和最后取字的时候。**只算不去标点会顶出边**
+    ——不，反过来：去掉标点只会更窄，但两处用的必须是同一份，否则宽度判断
+    和实际画出来的对不上，正是「一百→100 顶出一行」那次的翻版。
+    """
+    shown = arabic_numerals(chunk).strip(_SUB_TRIM)
+    # 标点换成**空格**，不是直接删掉。合并两个子句时（见 subtitle_lines 第 3 步）
+    # 中间那个逗号／句号一删，两句就糊成一坨——「WC。它是谁给的」变成
+    # 「WC它是谁给的」。空格不是标点，读起来就是一个停顿。
+    return re.sub(r"\s+", " ", shown.translate(_SUB_DROP_MAP)).strip()
+
+
+def _sub_len(chunk: str) -> int:
+    """这一段在屏幕上有几个字（去标点之后）。"""
+    return len(_sub_display(chunk))
+
+
 def _best_break(text: str) -> int:
     """一句没有标点的长句该在哪儿断。返回断点字位。
 
@@ -2985,10 +3022,11 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         clauses.append((start, len(text)))
 
     # 2) 超宽的子句自己再断，断在像词语边界的地方。
-    #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字之后的。汉字数字
-    #    大多换完更窄，但「一百」两格换成「100」是 2.03 格——正好把一行顶出边。
+    #    宽度要按**真正画出来的那份**算，也就是换成阿拉伯数字、去掉标点之后的。
+    #    汉字数字大多换完更窄，但「一百」两格换成「100」是 2.03 格——正好把
+    #    一行顶出边。
     def shown_width(a: int, b: int) -> float:
-        return _sub_width(arabic_numerals(text[a:b].strip(_SUB_TRIM)))
+        return _sub_width(_sub_display(text[a:b]))
 
     pieces: list[tuple[int, int]] = []
     for a, b in clauses:
@@ -3001,20 +3039,28 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
         if a < b:
             pieces.append((a, b))
 
-    # 3) 拼行：能装下就接着装，装不下另起一行。
+    # 3) 一个子句就是一行——**不再把两个子句拼进同一行**。
+    #    原来是「能装下就接着装」，于是「先看一眼签表。这是澳网女单签表的」
+    #    这种句号夹在中间的行到处都是。停顿改由换页表达，句号就没地方待了。
+    #
+    #    唯一还合并的情形：短到会一闪而过的那种（「WC」「签表里」两三个字，
+    #    时间轴最短只给 0.4 秒）。往后并一行，中间用空格——空格不是标点。
     lines: list[tuple[int, int]] = []
     for a, b in pieces:
-        if lines and shown_width(lines[-1][0], b) <= _SUB_MAX:
+        too_short = (
+            _sub_len(text[a:b]) < _SUB_MIN                      # 这一句太短
+            or (lines and _sub_len(text[lines[-1][0]:lines[-1][1]]) < _SUB_MIN)
+        )                                                       # 上一行太短
+        if lines and too_short and shown_width(lines[-1][0], b) <= _SUB_MAX:
             lines[-1] = (lines[-1][0], b)
         else:
             lines.append((a, b))
 
     out = []
     for a, b in lines:
-        # 阿拉伯数字只换**显示的那一份**：位置 (a, b) 仍然指向原文，时间轴是拿
-        # 原文的字位去对 WordBoundary 的，换完再算就对不上了。数字比汉字窄，
-        # 换完只会更短，不会顶出边。
-        shown = arabic_numerals(text[a:b].strip(_SUB_TRIM))
+        # 去标点和换阿拉伯数字都只作用在**显示的那一份**：位置 (a, b) 仍然指向
+        # 原文，时间轴是拿原文的字位去对 WordBoundary 的，改完再算就对不上了。
+        shown = _sub_display(text[a:b])
         if shown:
             out.append((a, b, shown))
     return out
@@ -3072,18 +3118,39 @@ def subtitle_cues(
     def at(char_index: int) -> float:
         if not marks:
             return duration * stripped[char_index] / total
-        seconds = marks[0][1]
+        # 落在两个标记之间时**按字数插值**，不是沿用前一个标记的时刻。
+        #
+        # 原来是「取最后一个 idx ≤ char_index 的标记」。字幕改成一句一行之后
+        # 行变密了，同一对标记之间经常落进两三行——它们会拿到**同一个起始时刻**，
+        # 于是两条字幕在时间轴上重叠，libass 会同时画出来。
+        # 边界事件本来就稀（一段 122 字的旁白只有 109 个），指望每行都正好压在
+        # 一个事件上是不现实的；两端有锚点，中间按字数摊开就够准了。
+        prev_idx, prev_sec = 0, marks[0][1]
         for idx, sec in marks:
             if idx > char_index:
-                break
-            seconds = sec
-        return min(seconds, duration)
+                span = idx - prev_idx
+                if span <= 0:
+                    return min(prev_sec, duration)
+                frac = (char_index - prev_idx) / span
+                return min(prev_sec + (sec - prev_sec) * frac, duration)
+            prev_idx, prev_sec = idx, sec
+        # 最后一个标记之后：按剩下的字数一路摊到音频结束。
+        span = len(text) - prev_idx
+        if span <= 0:
+            return min(prev_sec, duration)
+        frac = (char_index - prev_idx) / span
+        return min(prev_sec + (duration - prev_sec) * frac, duration)
 
     cues = []
+    prev_end = 0.0
     for n, (a, b, shown) in enumerate(lines):
-        start = at(a)
+        # 起点不许倒退，也不许压在上一条的显示时间里——插值之后仍然可能出现
+        # 两行落在同一处（同一个标记上多次命中），兜住它。
+        start = max(at(a), prev_end)
         end = at(lines[n + 1][0]) if n + 1 < len(lines) else duration
-        cues.append((offset + start, offset + max(end, start + 0.4), shown))
+        end = max(end, start + 0.4)
+        cues.append((offset + start, offset + end, shown))
+        prev_end = end
     return cues
 
 

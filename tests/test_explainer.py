@@ -742,11 +742,23 @@ def test_没有词边界也要有字幕(tmp_path):
     for (s1, e1, _), (s2, _, _) in zip(cues, cues[1:]):
         assert s1 < e1 and e1 <= s2 + 1e-6, (s1, e1, s2)
 
-    # 有词边界时按它对齐，不再按字数猜。
+    # 有词边界时按它对齐，不再按字数猜——**正好压在标记上的那一行拿到标记的
+    # 时刻，中间的按字数插值**。字幕改成一句一行之后行变密了，同一对标记之间
+    # 经常落进两三行；沿用前一个标记的话它们会拿到同一个起始时刻，两条字幕在
+    # 时间轴上重叠，libass 会同时画出来。
     marks = [{"offset": 0, "duration": 5_000_000, "text": "他说过一句话"},
              {"offset": 60_000_000, "duration": 5_000_000, "text": "三十六岁"}]
     aligned = E.subtitle_cues(text, 10.0, boundaries=marks)
-    assert aligned[1][0] == pytest.approx(6.0), aligned
+    at_mark = text.index("三十六岁")
+    lines = E.subtitle_lines(text)
+    for (start, _, _), (a, _, _) in zip(aligned, lines):
+        if a == at_mark:
+            assert start == pytest.approx(6.0), aligned
+        # 插值出来的时刻要落在两个锚点之间，不能倒退也不能越过。
+        assert 0.0 <= start <= 10.0, aligned
+    # 谁也不许和上一条重叠。
+    for (_, e1, _), (s2, _, _) in zip(aligned, aligned[1:]):
+        assert e1 <= s2 + 1e-6, aligned
 
 
 def test_字幕烧在下边条里不压画面(tmp_path, monkeypatch):
@@ -1148,3 +1160,33 @@ def test_新定的两个栏目写清了位置和承诺():
     # 界线按时间划，不按深浅——这是选它的全部理由，丢了这句表就白排
     assert "打到握手为止" in doc
     assert "话筒递过来" in doc
+
+
+def test_字幕里不写标点():
+    """账号所有者：「以后字幕里的尽量不要用标点符号，可以切换下一页表达。」
+
+    停顿本来就该由换页表达，一个逗号在屏幕上只是噪点。只留 `？！`——换页
+    表达得了停顿，表达不了「这是一问」，末屏那一问少了问号就成了陈述句。
+
+    ⚠️ 去标点只作用在**显示的那一份**。切子句、找断点仍然靠原文里的标点，
+    先去掉就没有断点可依，又会退回「数满 16 个字一刀切」，把词劈成两半
+    （「代表亚洲国家打／进大满贯」那次）。所以这条测试查的是 subtitle_lines
+    的第三个返回值，不是它的输入。
+    """
+    from tennislive.video.explainer import _SUB_MAX, _sub_width, subtitle_lines
+
+    banned = "。，、：；,…「」『』（）《》·—"
+    for slug in _SCRIPTED:
+        for seg in explainer_script(find_story_by_slug(slug)):
+            for _, _, shown in subtitle_lines(seg.narration):
+                hit = [c for c in shown if c in banned]
+                assert not hit, f"{slug} 字幕里还有标点 {hit}：{shown}"
+                # 合并两句时中间要留个空格，不能糊成一坨（「WC它是谁给的」）。
+                assert "  " not in shown, f"{slug} 字幕里有连续空格：{shown}"
+                assert shown == shown.strip(), f"{slug} 字幕两头有空白：{shown}"
+                # 去标点之后仍然不能顶出左右两条边栏。
+                assert _sub_width(shown) <= _SUB_MAX, f"{slug} 字幕超宽：{shown}"
+                # 一闪而过的行读不到（时间轴最短只给 0.4 秒）。
+                # 三个字是下限：左右两邻都已经排满时并不进去，只能
+                # 自己站一行（roof 那条的「他赢了」）。再短就该改稿。
+                assert len(shown) >= 3, f"{slug} 字幕太短会一闪而过：{shown}"
