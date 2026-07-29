@@ -1103,6 +1103,24 @@ _ON_PURPOSE = {
     "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
 }
 
+#: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
+#: 测试只查四个字以上。可表里有 210 个两三字的名字，「凯斯」就在里面：我把
+#: Madison Keys 写成「基斯」，写进了王欣瑜那条的旁白和文案，**全绿照过、推到了
+#: 微信**，屏幕上和配音里都是错的。
+#:
+#: 补不了射程，就补记性：**每次真写错一个，就把这一对钉在这儿。** 覆盖面窄，
+#: 但零误报，而且每踩一次就长一条——和这个仓库里其它规矩一样。
+_KNOWN_TYPOS = {
+    "基斯": "凯斯",            # Madison Keys
+    "雷巴金娜": "莱巴金娜",     # Elena Rybakina
+    "里巴金娜": "莱巴金娜",     # 同上，更早的一次
+    "奥斯塔片科": "奥斯塔彭科",  # Jelena Ostapenko
+}
+
+#: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
+#: 短名做子串匹配必然会撞上这种，遮掉比放宽判据好。
+_TYPO_SAFE = ("巴基斯坦",)
+
 
 def test_人名要以译名表为准():
     """人名不手打，以 `zh/players.py` 为准——这条写在 CLAUDE.md 里，仍然被违反了两次。
@@ -1132,6 +1150,12 @@ def test_人名要以译名表为准():
     bad = []
 
     def scan(where: str, text: str) -> None:
+        safe = text
+        for word in _TYPO_SAFE:
+            safe = safe.replace(word, "　" * len(word))
+        for wrong, right in _KNOWN_TYPOS.items():
+            if wrong in safe:
+                bad.append(f"{where}：「{wrong}」写错了，表里是「{right}」")
         masked = strip_known(text)
         for name in canon:
             width = len(name)
