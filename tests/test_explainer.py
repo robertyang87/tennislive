@@ -1190,3 +1190,33 @@ def test_字幕里不写标点():
                 # 三个字是下限：左右两邻都已经排满时并不进去，只能
                 # 自己站一行（roof 那条的「他赢了」）。再短就该改稿。
                 assert len(shown) >= 3, f"{slug} 字幕太短会一闪而过：{shown}"
+
+
+def test_去标点这条规矩是全站的不是解说片专属():
+    """账号所有者补的那句：「字幕要应用到全局里。」
+
+    先只改了解说片，于是「昨日一分」「视频本地化」「大满贯竖版 v2」三条线
+    还在往画面上烧逗号句号。同一个账号出去的片子，字幕两种样子。
+
+    规矩和实现收在 `video/subtitle_text.py`，四条线共用；这条测试盯的是
+    「每条写 ASS 的路径都真的过了这一道」，而不是某一条的输出长什么样。
+    """
+    import inspect
+
+    from tennislive.video import pipeline
+    from tennislive.video.subtitle_text import drop_punctuation
+
+    # 1) 定时字幕过这一道；常驻角标／台标不过——去掉水印的标点等于改水印本身。
+    src = inspect.getsource(pipeline.render_ass)
+    assert "drop_punctuation(cue.text)" in src, "render_ass 没给定时字幕去标点"
+    assert "drop_punctuation(mark" not in src, "角标不该被去标点"
+
+    # 2) 大满贯竖版 v2 是独立脚本，自己写 Dialogue 行。
+    grand_slam = (_REPO / "tools" / "build_grand_slam_v2.py").read_text("utf-8")
+    assert "drop_punctuation(text)" in grand_slam, "大满贯竖版没给字幕去标点"
+
+    # 3) 共用函数本身：标点换空格（不是删掉，删掉会把两句糊成一坨），
+    #    换行留着（ASS 靠它排两行），`？！` 留着。
+    assert drop_punctuation("他说过一句话：我其实还想继续打。") == "他说过一句话 我其实还想继续打"
+    assert drop_punctuation("郑钦文 6-4、7-5 取胜，晋级八强。") == "郑钦文 6-4 7-5 取胜 晋级八强"
+    assert drop_punctuation("上一行，好\n下一行。真的吗？") == "上一行 好\n下一行 真的吗？"

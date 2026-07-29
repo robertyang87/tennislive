@@ -41,6 +41,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
 from ..cdn import jsdelivr_base
+from .subtitle_text import DROP as SUB_DROP, TRIM as SUB_TRIM, drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
 # (1080x1920) with that 3:4 card centred on brand-colour bands.
@@ -2821,22 +2822,13 @@ _SUB_MAX = 16
 _SUB_SOFT = 10
 _SUB_HARD_BREAK = "。！？；…"
 _SUB_SOFT_BREAK = "，、：,"
-_SUB_TRIM = "。，、：；,… "
-# 屏幕上的字幕**不写标点**。账号所有者：「以后字幕里的尽量不要用标点符号，
-# 可以切换下一页表达。」——停顿本来就该由换页表达，一个逗号在屏幕上只是噪点。
-#
-# 只留 `？` 和 `！`：换页表达得了停顿，表达不了「这是一问」。末屏那一问
-# 「你觉得合理吗」少了问号，读起来就成了陈述句。
-#
-# ⚠️ 去标点只作用在**显示的那一份**。切子句、找断点仍然靠原文里的标点
-# （见 subtitle_lines 的第 1 步）——先去掉就没有断点可依，又会退回「数满
-# 16 个字一刀切」，把词劈成两半。
-_SUB_DROP = "。，、：；,…「」『』（）《》()·—"
-# 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到下一行去。
+# 屏幕上的字幕**不写标点**，规矩和实现全站统一放在 video/subtitle_text.py
+# （账号所有者：「以后字幕里的尽量不要用标点符号，可以切换下一页表达」，
+# 后来又补「字幕要应用到全局里」）。这儿只留本产线自己的两个数。
+_SUB_TRIM = SUB_TRIM
+_SUB_DROP = SUB_DROP
+# 比这还短的一行会一闪而过（时间轴给的最短是 0.4 秒），并到邻行去。
 _SUB_MIN = 5
-# 映射到空格而不是 None（删除）：删掉的话合并出来的两句会糊成一坨，
-# 「WC。它是谁给的」变成「WC它是谁给的」。空格不是标点。
-_SUB_DROP_MAP = {ord(c): " " for c in _SUB_DROP}
 
 
 _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4",
@@ -2951,18 +2943,13 @@ def _break_bonus(text: str, i: int) -> int:
 def _sub_display(chunk: str) -> str:
     """原文的一段 → 屏幕上真正画出来的那一行。
 
-    三件事，顺序不能反：换阿拉伯数字（宽度会变）→ 掐掉两头的标点 →
-    去掉句内剩下的标点。留 `？！`，见 `_SUB_DROP` 的说明。
+    先换阿拉伯数字（宽度会变），再去标点——顺序不能反。去标点那一步全站
+    共用，见 `video/subtitle_text.py`。
 
-    两处都要用它：算宽度的时候和最后取字的时候。**只算不去标点会顶出边**
-    ——不，反过来：去掉标点只会更窄，但两处用的必须是同一份，否则宽度判断
-    和实际画出来的对不上，正是「一百→100 顶出一行」那次的翻版。
+    算宽度和最后取字**必须用同一份**，否则宽度判断和实际画出来的对不上，
+    正是「一百→100 顶出一行」那次的翻版。
     """
-    shown = arabic_numerals(chunk).strip(_SUB_TRIM)
-    # 标点换成**空格**，不是直接删掉。合并两个子句时（见 subtitle_lines 第 3 步）
-    # 中间那个逗号／句号一删，两句就糊成一坨——「WC。它是谁给的」变成
-    # 「WC它是谁给的」。空格不是标点，读起来就是一个停顿。
-    return re.sub(r"\s+", " ", shown.translate(_SUB_DROP_MAP)).strip()
+    return drop_punctuation(arabic_numerals(chunk))
 
 
 def _sub_len(chunk: str) -> int:
