@@ -137,6 +137,20 @@ VENUES = [
     ("vienna-stadthalle-centre-court.jpg", None, None),
     # 大阪：靱テニスセンター。⚠️ 和东京有明是**同名不同场地**，见下面 tokyo 那条的别名注释。
     ("osaka-utsubo-centre-court.jpg", None, None),
+    # 布鲁塞尔：欧洲公开赛 2025 年搬到 Brussels Expo Palais 12，别拿安特卫普时期的图
+    ("brussels-centre-court.jpg", None, None),
+    # 金奈：SDAT Nungambakkam，2026 年这站是 WTA250，场馆沿用旧 ATP 金奈赛的中心球场。
+    # Commons 来的，钉住文件名让 fetch_set 能重取——**不进 OFFICIAL_VENUES**，
+    # 那一档的含义是「不在 Commons、许可没核实」。
+    ("chennai-centre-court.jpg",
+     "File:Nungambakkam SDAT Tennis Stadium floodlit match panorama.jpg", None),
+    # 斯德哥尔摩：皇家网球馆，官网（ATP Sitecore）只有合作方 logo 和球员头像，没有场馆图；
+    # 这张出自 Commons，同上钉文件名
+    ("stockholm-centre-court.jpg", "File:Kungliga Tennishallen.JPG", None),
+    # 巴黎：2025 年起在 Paris La Défense Arena，别拿贝尔西的图
+    ("paris-centre-court.jpg", None, None),
+    # 香港：维多利亚公园中央球场，ATP／WTA 两站共用；协会站 tennishk.org 开着 wp-json，按 search=victoria 就能翻出整批
+    ("hongkong-victoria-park.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -282,6 +296,24 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "hongkong-victoria-park.jpg": {
+        "title": "维多利亚公园中央球场 · 2024 年香港网球公开赛，满场（袁悦 vs 布尔特）",
+        "license": "unverified · 协会官方媒体库",
+        "artist": "香港网球总会（tennishk.org）官方图库",
+        "page": "https://www.tennishk.org/wp-content/uploads/2024/12/241102_CCM1_Katie-Boulter_PHKTO250_HN109223-scaled.jpg",
+    },
+    "paris-centre-court.jpg": {
+        "title": "Paris La Défense Arena 中心球场 · 2025 年巴黎大师赛，满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "André Ferreira / FFT · rolexparismasters.com 官方图",
+        "page": "https://images.prismic.io/rpm-site/ajvcN1bRV8_Qf0Qh_RolexParisMasters2025-Andr%C3%A9FerreiraFFT.jpg",
+    },
+    "brussels-centre-court.jpg": {
+        "title": "Palais 12（Brussels Expo）中心球场 · 2025 年首届布鲁塞尔站，科梅萨纳 vs 戈芬",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Belga / europeanopen.be 官方图库",
+        "page": "https://europeanopen.be/wp-content/uploads/2025/10/Belgaimage-136797717.jpg",
+    },
     "osaka-utsubo-centre-court.jpg": {
         "title": "靱テニスセンター（Utsubo Tennis Center）中央球场 · 从底线后方看，远端与两侧绿色看台都在框内",
         "license": "unverified · 转载，作者未署名",

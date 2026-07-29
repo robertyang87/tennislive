@@ -56,6 +56,15 @@ the photographs are not otherwise altered.
 - License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `brussels-centre-court.jpg`
+
+- Title: Palais 12（Brussels Expo）中心球场 · 2025 年首届布鲁塞尔站，科梅萨纳 vs 戈芬
+- Author: Belga / europeanopen.be 官方图库
+- Source: https://europeanopen.be/wp-content/uploads/2025/10/Belgaimage-136797717.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：顶上记分屏印着 CENTRE COURT 与两位球员名，横幅是这项赛事 2016–2024 的历届冠军，场边围板写着 BNP PARIBAS FORTIS / BXL。**赛事 2025 年从安特卫普 Lotto Arena 搬到布鲁塞尔 Brussels Expo Palais 12**，官方图库里 2024 及以前的照片全是旧场馆，不能用。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `canada-iga-stadium-centre-court.jpg`
 
 - Title: Stade IGA 中心球场 · 满场（场地前场刷着 MONTRÉAL，赞助带 Banque Nationale / ROGERS；近端看台、蓝绿场地、远端满场看台与雷暴天空全在竖切里）
@@ -79,6 +88,15 @@ the photographs are not otherwise altered.
 - Source: https://www.atptour.com/-/media/images/news/2025/08/13/13/44/chengdu-2025-stadium-shot.jpg
 - License: unverified · 赛事官方媒体
 - Note: ⚠️ atptour.com 这个图床**用浏览器 UA 请求会被 WAF 挡 403，用脚本自己的 UA 反而 200**——取不到时先换 UA 再下结论
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `chennai-centre-court.jpg`
+
+- Title: File:Nungambakkam SDAT Tennis Stadium floodlit match panorama.jpg
+- Author: PlaneMad / Wikimedia
+- Source: https://commons.wikimedia.org/wiki/File%3ANungambakkam_SDAT_Tennis_Stadium_floodlit_match_panorama.jpg
+- License: CC BY-SA 3.0
+- Note: SDAT 网球场（Nungambakkam）中心球场 · 夜场灯光下的整碗全景。自证：场边围板印着 CHENNAI OPEN，球网上是 ATP 标，看台上方写着 SPORTS DEVELOPMENT AUTHORITY OF TAMILNADU。⚠️ 拍的是旧的 ATP 金奈公开赛（2017 年停办），2026 年新办的是 WTA250，**同一座 SDAT 球场**——场馆没变、赛事换了。照片偏旧，是这一站唯一一张比赛中的整碗全景。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `cincinnati-centre-court-full.jpg`
@@ -137,6 +155,15 @@ the photographs are not otherwise altered.
 - Author: unknown（普利吉体育 转载）
 - Source: https://img03.71360.com/w3/0qn2g4/20250924/66d99a1c5687521d16f8c59b2adf26de.jpg
 - License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `hongkong-victoria-park.jpg`
+
+- Title: 维多利亚公园中央球场 · 2024 年香港网球公开赛，满场（袁悦 vs 布尔特）
+- Author: 香港网球总会（tennishk.org）官方图库
+- Source: https://www.tennishk.org/wp-content/uploads/2024/12/241102_CCM1_Katie-Boulter_PHKTO250_HN109223-scaled.jpg
+- License: unverified · 协会官方媒体库
+- Note: 自证：场地前场刷着 HONG KONG，大屏写着 CENTRE COURT / YUAN · BOULTER，围板是 PRUDENTIAL 保誠香港網球公開賽，背景是铜锣湾天际线。一张图管两站——1 月的 ATP250 和 11 月的 WTA250 都在维园中央球场，别名同为 hong kong。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `iasi-ciric-centre-court.jpg`
@@ -215,6 +242,15 @@ the photographs are not otherwise altered.
 - Note: 上一版是赛事官网的 Campo-centrale-dallalto，几乎纯俯视——竖切之后整屏只有球场，看不出是个碗。官网媒体库 430 张里翻过，没有第二张全景（全是球员、颁奖、发布会）
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `paris-centre-court.jpg`
+
+- Title: Paris La Défense Arena 中心球场 · 2025 年巴黎大师赛，满场
+- Author: André Ferreira / FFT · rolexparismasters.com 官方图
+- Source: https://images.prismic.io/rpm-site/ajvcN1bRV8_Qf0Qh_RolexParisMasters2025-Andr%C3%A9FerreiraFFT.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：二层 LED 环带整圈滚着 PARIS LA DEFENSE ARENA，场边 LED 打着冠军 FELIX AUGER-ALIASSIME，文件名由 FFT 自己写着 RolexParisMasters2025。⚠️ **这项赛事 2025 年已从贝尔西（Accor Arena）搬到 Paris La Défense Arena**，贝尔西的照片是旧场馆。原图 3000×2000 顶上大半是灯梁，按 (0,700,1900,1980) 收成 1900×1280 再入库——竖版只取中间一条，不收边的话碗全被挤出画面（三档裁法渲出来比过）。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `prague-stvanice-central-court.jpg`
 
 - Title: File:Central tennis court at Štvanice 02.jpg
@@ -271,6 +307,15 @@ the photographs are not otherwise altered.
 - Source: https://media.tennistalker.it/2025/01/Singapore-Open-campo.jpeg
 - License: unverified · 新闻站转载，作者未署名
 - Note: ⚠️ 三条闸门都过了（场内 / 中心球场 / 看得见看台），**只差在清晰度和空场**：源仅 680×454，竖切要放大 1.59 倍；而且是赛前空场。翻过：赛事官网、Kallang 官方 heretoplay 站（TROPHY-5 那张取不到）、Sport Singapore、WTA photoresources、DDG 四组查询——满场的现场大图没找到，剩下的要么是带烧录文字的宣传图（prnewswire 那张 Key_Visual 是球员抠图拼的），要么是乒乓球的 OCBC Arena。要换就等 2026 赛期的现场图
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `stockholm-centre-court.jpg`
+
+- Title: File:Kungliga Tennishallen.JPG
+- Author: Kjetil Eggen
+- Source: https://commons.wikimedia.org/wiki/File%3AKungliga_Tennishallen.JPG
+- License: CC BY-SA 4.0
+- Note: 皇家网球馆（Kungliga tennishallen）中心球场 · 满场，斯德哥尔摩公开赛比赛中。自证：围板印着 If STOCKHOLM OPEN，看台横幅 #ifsthlmopen，右侧挂 ATP 250 标；二层那条历届冠军名录（帕纳塔、麦肯罗、博格、维兰德、费德勒、蒙菲尔斯、伯蒂奇、迪米特洛夫）是这项赛事自己的荣誉墙。2014-10-19 拍摄。赛事官网走 ATP 的 Sitecore，/-/media 下只有合作方 logo 和球员头像，没有场馆图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `tokyo-ariake-coliseum.jpg`

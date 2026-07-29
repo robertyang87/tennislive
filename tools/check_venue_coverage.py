@@ -42,6 +42,22 @@ MANIFEST = ROOT / "data" / "venue_assets.json"
 # 罗马 ATV 这两条恰好就是 125，留在分母里会让覆盖率永远差两站。
 SKIP_TIERS = {"团体", "年终", "WTA125", "ATP125"}
 
+# 已经翻到底、确实拿不到的站——**写在这里是为了别再重跑一遍**。
+# 「缺」有两种：一种是还没去找，一种是找过了拿不到，两者在输出里长得一模一样，
+# 而后者会被反复重找（孟菲斯那一站就被重找过三轮）。键按赛历里的 `en` 写。
+KNOWN_GAPS = {
+    "Grand Prix Auvergne-Rhone-Alpes":
+        "2026 年首办、首届还没打（10-18 起），LDLC Arena 没有网球布置的实拍。"
+        "官网唯一一张 LDLCARENA_Tenniscourt.jpg 是 3D 效果图——观众是重复贴图、"
+        "人物是 CG，正是「新赛事新场馆先放渲染图」那一类。Commons 的 "
+        "Category:LDLC Arena 只有演唱会、施工和外立面。**打完首届再来取**。",
+    "Almaty Open":
+        "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张），"
+        "但**本沙箱取不到**：出口网关给 ktf.kz 的证书链验不过，curl / urllib / "
+        "Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，而规矩是不许关校验。"
+        "Commons 只有冰球馆外景和大运会开幕式。换个能出网的环境重跑即可。",
+}
+
 
 def _match_for(event: dict, year: int = 2026) -> Match:
     """按赛历条目造一场假比赛——**start 要给**，加拿大那条按年份挑城市。"""
@@ -97,8 +113,15 @@ def main() -> int:
     shown = [r for r in rows if not args.missing or r["slug"] is None]
     for r in shown:
         flag = mark.get(r["shot"], "⚠️ 兜底")
+        note = "  ← 已查明拿不到" if r["slug"] is None and r["en"] in KNOWN_GAPS else ""
         print(f"{r['start']}  {r['tier']:<8} {flag:<8} {r['zh'][:22]:<24}"
-              f" {r['loc'][:10]:<12} {r['slug'] or ''}")
+              f" {r['loc'][:10]:<12} {r['slug'] or ''}{note}")
+
+    gaps = [r for r in shown if r["slug"] is None and r["en"] in KNOWN_GAPS]
+    if gaps:
+        print("\n已查明拿不到的站（别再重找，换环境或等赛事打完再说）：")
+        for r in gaps:
+            print(f"  · {r['zh']}：{KNOWN_GAPS[r['en']]}")
 
     total = len(rows)
     ok = sum(1 for r in rows if r["shot"] == "centre-court")

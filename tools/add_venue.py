@@ -10,6 +10,11 @@ load_venue_assets() 丢掉，fetch_venues 没登记则下次 CI 重跑会把 cre
 ⚠️ 这个脚本**不判断图好不好**。入库前必须先过
 `tools/preview_venue_crop.py --scrim`，亲眼看过整个碗在不在画面里。
 
+⚠️ **Commons 来的图要带 `--commons-file`**，它走的是另一套登记方式：钉进
+VENUES 让 fetch_set 能重取、不写进 OFFICIAL_VENUES（那一档的 license 必须带
+unverified）、credits 的 `title` 记 Commons 文件名而不是中文说明。
+不带这个参数就会同时炸两条测试，斯德哥尔摩和金奈各炸过一次。
+
 用法：
     python tools/add_venue.py \
         --slug beijing --image /path/to.jpg \
@@ -18,6 +23,11 @@ load_venue_assets() 丢掉，fetch_venues 没登记则下次 CI 重跑会把 cre
         --title "钻石球场 · 满场（场地前场刷着 北京中网）" \
         --artist "新浪体育转载" --license "unverified · 新闻站转载，作者未署名" \
         --page "https://..."
+
+    # Commons 来的：
+    python tools/add_venue.py --slug stockholm --image /path/to.jpg \
+        --commons-file "File:Kungliga Tennishallen.JPG" \
+        --artist "Kjetil Eggen" --license "CC BY-SA 4.0" ...
 """
 
 from __future__ import annotations
@@ -46,6 +56,11 @@ def main() -> int:
     ap.add_argument("--artist", required=True)
     ap.add_argument("--license", required=True)
     ap.add_argument("--page", required=True)
+    ap.add_argument("--commons-file", default="",
+                    help='Commons 上的文件名（"File:xxx.jpg"）。给了就钉进 VENUES 让 '
+                         "fetch_set 能重取，**并且不写进 OFFICIAL_VENUES**——那一档的"
+                         "含义是「不在 Commons、许可没核实」，Commons 来的图许可是"
+                         "站方自己声明的，写成 unverified 反而是假的")
     ap.add_argument("--note", default="")
     ap.add_argument("--comment", default="", help="写进 fetch_venues.py 的一行理由")
     ap.add_argument("--quality", type=int, default=90)
@@ -75,28 +90,47 @@ def main() -> int:
                         encoding="utf-8")
 
     credits = json.loads(CREDITS.read_text(encoding="utf-8"))
-    entry = {"artist": args.artist, "license": args.license,
-             "page": args.page, "title": args.title}
-    if args.note:
-        entry["note"] = args.note
+    # Commons 来的图，`title` 这一格记的是**Commons 文件名**而不是中文说明——
+    # `test_credits_point_at_the_file_currently_pinned_in_venues` 拿它跟 VENUES
+    # 里钉的那一张比对，为的是「换了图但忘了换 credits」当场报错（错出处比
+    # 没出处糟：会把别人的作品记到另一个人名下）。中文说明并到 note 里。
+    if args.commons_file:
+        note = " ".join(x for x in (args.title, args.note) if x)
+        entry = {"artist": args.artist, "license": args.license,
+                 "page": args.page, "title": args.commons_file}
+        if note:
+            entry["note"] = note
+    else:
+        entry = {"artist": args.artist, "license": args.license,
+                 "page": args.page, "title": args.title}
+        if args.note:
+            entry["note"] = args.note
     credits[name] = entry
     CREDITS.write_text(json.dumps(credits, ensure_ascii=False, indent=2, sort_keys=True)
                        + "\n", encoding="utf-8")
 
-    # fetch_venues.VENUES 登记（pinned=None：不是 Commons 来的，重跑不去 Commons 重取）
+    # fetch_venues 登记。**两个 bucket 含义不同，别都写**：
+    #   VENUES 里 pinned=文件名 → Commons 来的，fetch_set 能按名重取
+    #   VENUES 里 pinned=None  → 别处来的，重跑不去 Commons 找
+    #   OFFICIAL_VENUES        → 只给「不在 Commons」那一档，license 必须带
+    #                            unverified（test_official_media_records_… 在盯）
+    # 把 Commons 来的图塞进 OFFICIAL_VENUES 会当场炸测试：它的 license 是
+    # 站方声明的 `CC BY-SA 4.0`，写成 unverified 反而把已知的事实抹掉了。
     src = FETCH.read_text(encoding="utf-8")
     if f'"{name}"' not in src:
         comment = f"    # {args.comment}\n" if args.comment else ""
+        pinned = json.dumps(args.commons_file, ensure_ascii=False) if args.commons_file else "None"
         src = src.replace("    # 主球场／主场馆（优先用这一类）",
-                          f'{comment}    ("{name}", None, None),\n'
+                          f'{comment}    ("{name}", {pinned}, None),\n'
                           "    # 主球场／主场馆（优先用这一类）", 1)
-        official = (f'    "{name}": {{\n'
-                    f'        "title": {json.dumps(args.title, ensure_ascii=False)},\n'
-                    f'        "license": {json.dumps(args.license, ensure_ascii=False)},\n'
-                    f'        "artist": {json.dumps(args.artist, ensure_ascii=False)},\n'
-                    f'        "page": {json.dumps(args.page, ensure_ascii=False)},\n'
-                    f'    }},\n')
-        src = src.replace("OFFICIAL_VENUES = {\n", "OFFICIAL_VENUES = {\n" + official, 1)
+        if not args.commons_file:
+            official = (f'    "{name}": {{\n'
+                        f'        "title": {json.dumps(args.title, ensure_ascii=False)},\n'
+                        f'        "license": {json.dumps(args.license, ensure_ascii=False)},\n'
+                        f'        "artist": {json.dumps(args.artist, ensure_ascii=False)},\n'
+                        f'        "page": {json.dumps(args.page, ensure_ascii=False)},\n'
+                        f'    }},\n')
+            src = src.replace("OFFICIAL_VENUES = {\n", "OFFICIAL_VENUES = {\n" + official, 1)
         FETCH.write_text(src, encoding="utf-8")
 
     spec = importlib.util.spec_from_file_location("fetch_venues", FETCH)
