@@ -300,7 +300,7 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
 
 # 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
 # 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
-LANDMARK_BUDGET = 3
+LANDMARK_BUDGET = 2
 
 
 def test_every_venue_declares_what_kind_of_shot_it_is():
@@ -339,7 +339,7 @@ def test_every_venue_declares_what_kind_of_shot_it_is():
 def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     """能拿到球场照的站，manifest 不许再指回城市地标。
 
-    地标本身是合法的兜底——雅典的帕特农、维罗纳的竞技场，那几站眼下确实还
+    地标本身是合法的兜底——维罗纳的竞技场、伊斯坦布尔的老城，那两站眼下确实还
     没找到能用的球场照。但**兜底一旦生效就很难
     发现它已经过期了**：洛斯卡沃斯用埃尔阿尔科海蚀拱用了好几版，画面漂亮、
     地点也对，只是它不是球场；直到有人问"为啥不用中心球场"才发现赛事官网
@@ -364,6 +364,9 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
         # 格施塔德这张藏在官网 sitemap 列出的 /infos/le-village-le-stade/ 里
         # ——wp-json 被 401 挡着，按关键词也搜不到（文件名是 EFG-SOG23-3）
         "gstaad": "gstaad-roy-emerson-arena.jpg",
+        # 雅典这张是唯一动过像素的（室内夜场，gamma 2.4 提亮），
+        # 更容易被人"顺手换回一张没修过的"，所以钉住
+        "athens": "athens-telekom-center-court.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 
