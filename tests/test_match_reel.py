@@ -596,3 +596,17 @@ def test_文案里的tag最多五个():
     assert push_reel.MAX_HASHTAGS == MAX_HASHTAGS, "两处上限要同源，别各写一个"
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
     assert "个 tag，超过" in src, "推送前没有拦 tag 数"
+
+
+def test_下载残留不进仓库():
+    """`source.f137.mp4.part` 混进过仓库（probe wang-pareja）。
+
+    清理那一步原来按**名字**列（`source.mp4` / `source_av.mp4`），而 yt-dlp
+    分轨下载留下的是 `source.fNNN.mp4.part`——名字对不上，10 MB 就跟着提交了。
+    按**后缀**删才拦得住。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    assert '"$OUTDIR"/*.part' in clean, "yt-dlp 的 .part 残留没被清掉"
+    for path in Path("output").rglob("*.part"):
+        raise AssertionError(f"仓库里还有下载残留：{path}")
