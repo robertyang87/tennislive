@@ -147,15 +147,40 @@ def test_扫了几条和中了几条都要报():
 def test_解析出零行要当降级报而不是当空榜():
     """**一张热榜不会是空的。** 解析出 0 行只有一个意思：结构变了。
 
-    小红书和微信走的是今日热榜的页面镜像——那个站改一次 `<table>`，
-    `_tophub` 就返回空列表。要是照「正常 · 扫 0 条」报，它和「今天榜上
-    没有网球」长得一模一样，能静默好几个月。
+    微信走的是今日热榜的页面镜像——那个站改一次 `<table>`，`_tophub` 就
+    返回空列表。要是照「正常 · 扫 0 条」报，它和「今天榜上没有网球」
+    长得一模一样，能静默好几个月。
     """
     result = fetch_zh_hot(get=lambda url, **kw: _Fake(b"<html>nothing here</html>"),
                           top=10)
     live = {k: v for k, v in result.status.items() if k not in UNAVAILABLE}
     assert live, "至少要有几个源报状态"
     assert all(v.startswith("降级") for v in live.values()), live
+
+
+def test_退到备用源要说出来():
+    """小红书主源是 UApiPro 的 JSON，备用是今日热榜的 HTML——同一份上游数据，
+    但 JSON 的契约比一段随时会被改掉的 `<table>` 稳。
+
+    **退到备用了必须写在状态里。** 悄悄换源等于把「主源已经坏了」藏起来，
+    等它彻底不能用的时候，没人知道它坏了多久。
+    """
+    html = (
+        '<table><tbody><tr><td align="center">1.</td>'
+        '<td><a href="https://x/1">郑钦文夺冠</a></td>'
+        '<td class="ws">918.6w</td></tr></tbody></table>'
+    ).encode("utf-8")
+
+    def only_mirror(url, **kw):
+        if "uapis.cn" in url:
+            raise TimeoutError("boom")
+        return _Fake(html)
+
+    result = fetch_zh_hot(get=only_mirror, top=10)
+    assert result.status["小红书热榜"].startswith("正常"), "备用源顶上了就该报正常"
+    xhs = [h for h in result.hits if h.source.startswith("小红书")]
+    assert xhs and xhs[0].word == "郑钦文夺冠"
+    assert "走备用源" in xhs[0].source, f"没说自己走的是备用源：{xhs[0].source}"
 
 
 @pytest.mark.parametrize("name", sorted(UNAVAILABLE))
