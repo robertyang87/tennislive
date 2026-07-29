@@ -504,3 +504,15 @@ def test_推送版式照着知识解说那条且海报铺满():
     assert body.count("正文一段") == 1
     # 没有海报时退回无图版，而不是塞一个空 img
     assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
+
+
+def test_海报台头只写栏目名():
+    """台头那颗小药丸只写**栏目名**，不带账号名。
+
+    原来是「网球时差 · 赛场之上」——账号名在片子里已经有落款，海报上再挂一遍
+    等于把最显眼的位置让给一句读者不需要的信息。首屏那点地方要留给
+    「这是哪一场」。
+    """
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
+        assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
