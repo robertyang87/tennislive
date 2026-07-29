@@ -350,6 +350,11 @@ def _fetch_board(board: _Board, get, timeout: int, top: int):
         return board, [], [], 0, f"降级 · {type(exc).__name__}"
 
     label = board.label + (f"（{board.note}）" if board.note else "")
+    if not rows:
+        # **一张热榜不会是空的。** 解析出 0 行只有一个意思：页面/接口结构变了。
+        # 走镜像那两路尤其要盯——今日热榜改一次 `<table>` 就会静默失效，
+        # 而「扫 0 条」和「今天榜上没有网球」在状态里长得一模一样。
+        return board, [], [], 0, "降级 · 解析出 0 行，页面结构可能变了"
     hits: list[ZhHot] = []
     near: list[dict] = []
     for rank, (word, heat, url) in enumerate(rows, 1):

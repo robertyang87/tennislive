@@ -144,6 +144,20 @@ def test_扫了几条和中了几条都要报():
     assert any("扫" in v and "网球 0 条" in v for v in result.status.values())
 
 
+def test_解析出零行要当降级报而不是当空榜():
+    """**一张热榜不会是空的。** 解析出 0 行只有一个意思：结构变了。
+
+    小红书和微信走的是今日热榜的页面镜像——那个站改一次 `<table>`，
+    `_tophub` 就返回空列表。要是照「正常 · 扫 0 条」报，它和「今天榜上
+    没有网球」长得一模一样，能静默好几个月。
+    """
+    result = fetch_zh_hot(get=lambda url, **kw: _Fake(b"<html>nothing here</html>"),
+                          top=10)
+    live = {k: v for k, v in result.status.items() if k not in UNAVAILABLE}
+    assert live, "至少要有几个源报状态"
+    assert all(v.startswith("降级") for v in live.values()), live
+
+
 @pytest.mark.parametrize("name", sorted(UNAVAILABLE))
 def test_拿不到的源要写在产物里而不是消失(name):
     """微信指数要小程序签名、小红书官方两个入口 404/500——**拿不到就写清楚
