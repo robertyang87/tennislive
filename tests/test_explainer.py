@@ -1,6 +1,7 @@
 import html
 import re
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -1147,6 +1148,55 @@ def test_复制页探不到就不放那个按钮():
     # 别误伤别的按钮：成片链接和图片得原样留着
     assert "explainer.mp4" in dropped, "把成片链接一起摘掉了"
     assert dropped.count("slide_0") == body.count("slide_0"), "图片被误伤"
+
+
+def test_复制页可达但内容是旧版时也要摘掉按钮():
+    """「能打开」不等于「是这一版」。
+
+    2026-07-29 那条赛程推送踩了这个：新的 copy.html 只在特性分支上，而
+    **Pages 只服务 main**，于是线上那份还是同一天早些时候生成的旧包。
+    探到 200 就把按钮留下了，读者点开看到的是另一批场次——
+    **这比死链更糟**：死链一眼能看出坏了，旧内容看着完全正常。
+
+    所以判据从「HTTP 200 + text/html」加成「正文里有本地这一版的标题」。
+    """
+    import requests
+
+    from tennislive.render.pushmsg import _probe_page, copy_page_fingerprint
+
+    class _Resp:
+        status_code = 200
+        headers = {"Content-Type": "text/html; charset=utf-8"}
+
+        def __init__(self, text):
+            self.text = text
+
+    live_old = _Resp("<html><h1>7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉</h1></html>")
+    live_new = _Resp("<html><h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1></html>")
+    fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
+
+    with mock.patch.object(requests, "get", return_value=live_old):
+        assert not _probe_page("http://x/copy.html", attempts=1, expect=fresh), (
+            "线上还是旧版，却判成可用——按钮会指向另一批场次")
+        # 不给指纹时退回旧行为：只探可达。老调用方不该被这次改动带崩
+        assert _probe_page("http://x/copy.html", attempts=1)
+
+    with mock.patch.object(requests, "get", return_value=live_new):
+        assert _probe_page("http://x/copy.html", attempts=1, expect=fresh)
+
+    # 指纹取的是 <h1>，不是模板里的固定文字——换一版内容它必须跟着变
+    page = tmp_copy_page("<h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1>")
+    assert copy_page_fingerprint(page) == fresh
+    assert copy_page_fingerprint("/nowhere/copy.html") == "", "取不到时要退回空串"
+
+
+def tmp_copy_page(body: str):
+    import tempfile
+    from pathlib import Path as _P
+
+    path = _P(tempfile.mkdtemp()) / "copy.html"
+    path.write_text(f"<html><body>{body}</body></html>", encoding="utf-8")
+    return path
 
 
 def test_复制页那道闸装在发的那一步不是渲的那一步():
