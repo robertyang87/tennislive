@@ -17,6 +17,7 @@ import json
 import re
 import subprocess
 import sys
+from fnmatch import fnmatch
 from pathlib import Path
 
 WORKFLOW = Path(".github/workflows/match-reel.yml")
@@ -42,13 +43,63 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
-def test_中间物清单包含封面渲染输入():
-    # _cover.html 把封面图以 data URI 内嵌，单个 12 MB，不能每出一版就进一次仓库
+def test_中间物一个都不许进仓库():
+    """清理这一步要**盖住**这些文件，而不是**逐字列出**它们。
+
+    原来这条按字面名字断言（`"source.mp4" in cleanup`）。那个判据和它想拦的
+    bug 是同一个毛病：**逐个列名字挡不住名字猜不出来的那些**。yt-dlp 下 DASH
+    时音视频分开取，落在磁盘上的是 `source.f137.mp4.part`——format id 嵌在
+    名字里，事先写不出来。于是清理漏掉它，`git add "$OUTDIR"` 照单全收，
+    10 MB 的半成品连着进了两条片子的仓库（eala-zheng、potapova-venus）。
+
+    所以改成按 glob 语义验**覆盖**：把清理里的 `rm -f` 模式抽出来，让每个
+    必须死的文件名去匹配。这样工作流写成一串通配、还是拆成十行具名，测试都
+    认——它只关心「这个文件会不会被删掉」。
+    """
     text = WORKFLOW.read_text(encoding="utf-8")
     # 从这一步的名字切到下一步的 `- name:`，只看它自己那段
     cleanup = text[text.index("丢掉不进仓库的中间物"):].split("- name:")[0]
-    for name in ("source.mp4", "source_av.mp4", "_cover.jpg", "_cover.html"):
-        assert name in cleanup, name
+
+    # 抽出 rm -f 那几行里的模式，去掉 "$OUTDIR"/ 前缀和续行符
+    pats = re.findall(r'"\$OUTDIR"/(\S+)', cleanup)
+    pats = [p.rstrip("\\").strip() for p in pats if p.strip()]
+    assert pats, "清理这一步没抽到任何 rm 模式"
+
+    must_die = [
+        "source.mp4",                 # 合过音的源片
+        "source_av.mp4",
+        "source.f137.mp4.part",       # ← 真正漏掉过的那个，DASH 视频流半成品
+        "source.f251.webm",           # 音频流，另一种后缀
+        "source.f140.m4a",
+        "_cover.jpg", "_cover.html",  # 封面渲染输入，data URI 内嵌，单个 12 MB
+        "poster.html",
+        "voice_03.mp3",
+    ]
+    for name in must_die:
+        assert any(fnmatch(name, p) for p in pats), (
+            f"{name} 不会被清理掉，会跟着 git add 进仓库。现有模式：{pats}")
+
+    # **poster.jpg 要留下**：推送正文第一屏就是它，删了推送里一张图都没有。
+    # 成片同理——它就是产物本身。
+    for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json"):
+        assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
+
+
+def test_清理之后还有大文件要报错退出():
+    """模式挡的是**已知**的中间物，挡不住下一个没见过的。
+
+    上面那条测的是覆盖，可覆盖永远是事后补的——`.part` 就是补进去的。所以
+    清理之后还要再量一次，超标就 `::error::` 退出，让它红在这一步，而不是
+    无声进仓库、等到推分支吃 413 才发现（那次就是被 pack 体积撑爆的）。
+
+    「不吭声」正是这一类 bug 的共同特征：`rm` 不报错，`git add` 不报错，
+    产物看起来一切正常。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    cleanup = text[text.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    assert "find" in cleanup and "-size +8M" in cleanup, "清理之后没有再量一次大小"
+    assert "::error::" in cleanup, "查出漏网只是打印，没有出声——这种检查证明不了它看过"
+    assert "exit 1" in cleanup, "报了错却不退出，等于没拦"
 
 
 def _reel():
