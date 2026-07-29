@@ -596,3 +596,85 @@ def test_文案里的tag最多五个():
     assert push_reel.MAX_HASHTAGS == MAX_HASHTAGS, "两处上限要同源，别各写一个"
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
     assert "个 tag，超过" in src, "推送前没有拦 tag 数"
+
+
+def test_下载残留不进仓库():
+    """`source.f137.mp4.part` 混进过仓库（probe wang-pareja）。
+
+    清理那一步原来按**名字**列（`source.mp4` / `source_av.mp4`），而 yt-dlp
+    分轨下载留下的是 `source.fNNN.mp4.part`——名字对不上，10 MB 就跟着提交了。
+    按**后缀**删才拦得住。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    assert '"$OUTDIR"/*.part' in clean, "yt-dlp 的 .part 残留没被清掉"
+    for path in Path("output").rglob("*.part"):
+        raise AssertionError(f"仓库里还有下载残留：{path}")
+
+
+def test_面板可以先裁再铺():
+    """`crop: [x0, y0, x1, y1]`——**照片能自己先裁好再入库，抽帧不能**。
+
+    `focus` / `zoom` 只能在整幅图里挪窗口，挪不动主体在图里的位置。转播机位
+    怎么拍就是怎么拍：近景天然居中，落到底格正好被文案块压住；换大全景又小得
+    看不清。所以给面板一个裁切框，照片和抽帧共用。
+    """
+    import pytest  # noqa: PLC0415
+
+    pytest.importorskip("PIL")
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        src = Path(tmp) / "x.jpg"
+        Image.new("RGB", (1000, 500), (30, 90, 60)).save(src)
+        assert versus_poster._precrop(src, {}) == src, "没给 crop 就不该动原图"
+        out = versus_poster._precrop(src, {"crop": [0.25, 0.0, 1.0, 0.5]})
+        assert out != src and Image.open(out).size == (750, 250), Image.open(out).size
+        with pytest.raises(SystemExit, match="四个数"):
+            versus_poster._precrop(src, {"crop": [0.1, 0.2]})
+
+
+def test_封面固定版式是抠图不是抽帧():
+    """「赛场之上」的固定海报 2026-07-29 换成 cutout：官方抠图 + 本场画面当底。
+
+    换的理由是 diagonal 那条路要**两张**「本场 + 比赛中 + 有冲击力 + 够清晰」的
+    实拍同时到位。帕雷哈是 17 岁资格赛球员，四类源全探到底一张都没有，最后拿
+    握手那一帧顶——渲出来**王欣瑜在同一张海报上出现了两次**（上格一次、下格
+    握手里又一次），两个名字压在中缝上谁是谁都说不清。
+
+    抠图按球员 ID 永远拿得到（WTA 走 `<Name>-Torso_<wta_id>.png`，文件名自带
+    ID，人物这一要素由来源自己写死），所以「认人」这件事一次性解决。
+
+    已经发出去的两条**显式钉着 diagonal**：素材是实拍照片不是抠图，
+    不写死就会在下次重渲时炸在默认值上。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert 'cover.get("layout", "cutout")' in reel, "默认版式不是 cutout"
+
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        cover = json.loads(path.read_text(encoding="utf-8"))["cover"]
+        layout = cover.get("layout")
+        assert layout, f"{path.name} 没写 layout——会跟着默认值漂"
+        if layout != "cutout":
+            continue
+        versus = cover["versus"]
+        assert (versus.get("background") or {}).get("frame_at") is not None, (
+            f"{path.name} 的 cutout 背景要给本场的一帧")
+        for key in ("top", "bottom"):
+            cut = Path(versus[key]["cutout"])
+            assert cut.is_file(), f"{path.name} 的 {key} 格找不到抠图 {cut}"
+            assert "frame_at" not in versus[key], f"{path.name} 的 {key} 格还在抽帧"
+
+    # 抠图的脚**按各自的横向位置**落在斜线上：线是 -7.4°，左端低右端高。
+    # 两边都用同一个 y，右边那个会浮起来 2·(0.71-0.29)·540·tan7.4° ≈ 59px。
+    seam = versus_poster.CUT_SEAM
+    left, right = (versus_poster._cutout_geometry(cx, seam)
+                   for cx in versus_poster.CUT_CX)
+    assert left > right, "左端应该更低（y 更大）"
+    assert 50 < left - right < 70, f"两脚高差 {left - right:.0f}px 不对"
