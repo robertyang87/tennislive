@@ -365,9 +365,11 @@ def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
         # 格施塔德这张藏在官网 sitemap 列出的 /infos/le-village-le-stade/ 里
         # ——wp-json 被 401 挡着，按关键词也搜不到（文件名是 EFG-SOG23-3）
         "gstaad": "gstaad-roy-emerson-arena.jpg",
-        # 雅典这张是唯一动过像素的（室内夜场，gamma 2.4 提亮），
-        # 更容易被人"顺手换回一张没修过的"，所以钉住
-        "athens": "athens-telekom-center-court.jpg",
+        # 雅典钉住的理由不是构图，是**赛事本身容易搞错**：manifest 这条对的是
+        # WTA 250 的 Athens Open（7 月、露天、Olympic Tennis Centre），
+        # 不是 ATP 的 Hellenic Championship（11 月、室内、Telekom Center）。
+        # 我已经在这上面栽过一次，钉住免得第二次
+        "athens": "athens-olympic-tennis-centre.jpg",
     }
     rows = {row["slug"]: row for row in json.loads(MANIFEST.read_text(encoding="utf-8"))}
 
@@ -458,3 +460,43 @@ def test_attribution_md_never_credits_a_file_that_is_gone():
     assert named, "署名页一条记录都没有？"
     missing = [n for n in named if not (ASSETS / n).is_file()]
     assert not missing, f"署名页记着这些图，但它们已经不在盘上：{missing}"
+
+
+def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
+    """加拿大站一个赛事名、两座城市，男女每年互换——挑错就在卡上印错城市。
+
+    2025 年男子在多伦多、女子在蒙特利尔；2026 年反过来。只按赛事名匹配的话
+    两条都命中，`max()` 随便挑一条，就有一半的概率印错。和「ATV Bancomat
+    印成维罗纳」是同一类错，区别是**这个错每年会自己翻面**，靠人肉盯不住。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _match(tour: Tour, year: int | None):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name="National Bank Open presented by Rogers", tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=None if year is None else datetime(year, 8, 5, tzinfo=timezone.utc),
+            sets=[], winner=None,
+        )
+
+    cases = [
+        (Tour.ATP, 2026, "canada-montreal"),
+        (Tour.WTA, 2026, "canada-toronto"),
+        (Tour.ATP, 2025, "canada-toronto"),
+        (Tour.WTA, 2025, "canada-montreal"),
+    ]
+    wrong = []
+    for tour, year, expected in cases:
+        got = venue_asset_for_match(_match(tour, year))
+        if got is None or got.slug != expected:
+            wrong.append(f"{tour.value} {year} -> {got.slug if got else None}（应为 {expected}）")
+    assert not wrong, "加拿大挑错城市：\n" + "\n".join(wrong)
+
+    # 拿不到年份时**宁可不给图**：卡上的 location 是要印出来的，
+    # 印错城市比没有背景图糟。
+    assert venue_asset_for_match(_match(Tour.ATP, None)) is None
