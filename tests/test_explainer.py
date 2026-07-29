@@ -83,7 +83,11 @@ def test_推送里的图必须是绝对地址否则微信收到空图():
     )
     found = image_sources(body)
     assert len(found) == len(segments), "推送里的图没有被识别为可投递图片"
-    assert all(u.startswith("https://cdn.jsdelivr.net/") for u in found)
+    # 主机名从配置读，不写死：镜像是可换的（见 tennislive/cdn.py）。
+    # 这条要盯的是「绝对地址、走 jsDelivr」，不是「用的哪个入口」。
+    from tennislive.cdn import jsdelivr_host
+
+    assert all(u.startswith(f"https://{jsdelivr_host()}/") for u in found)
     assert all("@main/" in u for u in found)  # so pin_asset_revision can pin it
     # ...and it uses the knowledge post's layout, not a second one.
     assert "第1张未显示？点此打开原图" in body
@@ -981,7 +985,10 @@ def test_成片链接和图片走同一条_CDN():
     assert "/raw/main/" not in html, "视频还在走 raw.githubusercontent"
     urls = [u for u in html.replace("'", '"').split('"') if u.endswith("explainer.mp4")]
     assert urls, "推送里没有成片链接"
-    assert urls[0].startswith(f"https://cdn.jsdelivr.net/gh/{E._REPOSITORY}@main/"), urls[0]
+    from tennislive.cdn import jsdelivr_host
+
+    assert urls[0].startswith(
+        f"https://{jsdelivr_host()}/gh/{E._REPOSITORY}@main/"), urls[0]
 
     rev = "37853825db235e7290df16fe890d00d556327d94"
     pinned = pin_asset_revision(html, rev)

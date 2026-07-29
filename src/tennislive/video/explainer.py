@@ -40,6 +40,7 @@ import dataclasses
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
+from ..cdn import jsdelivr_base
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
 # (1080x1920) with that 3:4 card centred on brand-colour bands.
@@ -3464,11 +3465,11 @@ def explainer_push_html(
     # 一起钉到本次 commit 上：钉住之后 jsDelivr 给的是 max-age=31536000, immutable，
     # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
     # 指向新片子。
-    video_url = f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{video_name}"
+    video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
     return knowledge_push_html_from_parts(
         date=date,
         image_urls=[
-            f"https://cdn.jsdelivr.net/gh/{_REPOSITORY}@main/{rel}/{name}"
+            f"{jsdelivr_base(_REPOSITORY)}/{rel}/{name}"
             for name in slides
         ],
         xhs_text=xhs_text,

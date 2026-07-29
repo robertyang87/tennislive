@@ -53,6 +53,7 @@ from .official import (
     search_official_youtube_candidates,
 )
 from .pipeline import AssOverlay, SubtitleCue, VideoPipelineError, render_ass, render_srt
+from ..cdn import jsdelivr_base
 
 BEIJING = ZoneInfo("Asia/Shanghai")
 MIN_POINT_SECONDS = 6.0
@@ -1651,7 +1652,7 @@ def point_push_html(
     repository = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
     subpath = f"yesterday-point/{tour_dir}" if tour_dir else "yesterday-point"
     video_url = (
-        f"https://cdn.jsdelivr.net/gh/{repository}@main/output/"
+        f"{jsdelivr_base(repository)}/output/"
         f"{digest.today.isoformat()}/{subpath}/yesterday-point.mp4"
     )
     owner, _, repo_name = repository.partition("/")

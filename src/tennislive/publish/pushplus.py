@@ -19,6 +19,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import requests
+from ..cdn import is_jsdelivr, jsdelivr_base
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +71,7 @@ def jsdelivr_link_sources(html_content: str) -> list[str]:
     parser.feed(html_content)
     return list(
         dict.fromkeys(
-            url for url in parser.link_sources if "cdn.jsdelivr.net" in url
+            url for url in parser.link_sources if is_jsdelivr(url)
         )
     )
 
@@ -183,7 +184,7 @@ def _pages_image_url(source: str, revision: str) -> str | None:
     if len(owner_repo) != 2:
         return None
     pinned_revision = revision if re.fullmatch(r"[0-9a-fA-F]{7,40}", revision or "") else "main"
-    return f"https://cdn.jsdelivr.net/gh/{repository}@{pinned_revision}/{output_path}"
+    return f"{jsdelivr_base(repository, pinned_revision)}/{output_path}"
 
 
 def prepare_image_delivery(
