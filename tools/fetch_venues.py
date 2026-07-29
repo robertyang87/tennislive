@@ -159,6 +159,8 @@ VENUES = [
     ("madrid-centre-court.jpg", None, None),
     # 蒙特卡洛：官网 montecarlotennismasters.com 开着 wp-json（rolexmontecarlomasters.mc 那个域名本环境不通），搜索词用法语
     ("montecarlo-centre-court.jpg", None, None),
+    # 斯海尔托亨博斯：libema-open.nl 开着 wp-json，搜索词用荷兰语；ATP250 与 WTA250 共用
+    ("denbosch-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -304,6 +306,12 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "denbosch-centre-court.jpg": {
+        "title": "Autotron 中心球场 · 草地，满场（利贝马公开赛）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "libema-open.nl 官方图库",
+        "page": "https://libema-open.nl/wp-content/uploads/2025/06/Libema_250612_2862-scaled.jpg",
+    },
     "montecarlo-centre-court.jpg": {
         "title": "蒙特卡洛乡村俱乐部雷尼尔三世球场 · 满场，背景是地中海",
         "license": "unverified · 赛事官方媒体库",

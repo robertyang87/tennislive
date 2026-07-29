@@ -108,6 +108,15 @@ the photographs are not otherwise altered.
 - Note: 换掉了上一版 STADIUM-2021_WSOPEN_SOLOMON_001：那张角度对、是官方图，但**空场加阴天**，压完卡片遮罩后整屏是灰蓝色的空座位。这张同一个场地、同样从底线后方，但满场
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `denbosch-centre-court.jpg`
+
+- Title: Autotron 中心球场 · 草地，满场（利贝马公开赛）
+- Author: libema-open.nl 官方图库
+- Source: https://libema-open.nl/wp-content/uploads/2025/06/Libema_250612_2862-scaled.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：围板一圈 Libéma / KNLTB（荷兰网协）/ DEN BOSCH，草地上印着 ATP TOUR，右侧记分屏是 MEDVEDEV–MANNARINO。一张管两站——6 月的 ATP250 与 WTA250 同场地。官网 wp-json 4812 项，荷兰语词 baan / overzicht 比英语管用。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `dubai-centre-court.jpg`
 
 - Title: 迪拜网球场中心球场 · 黄昏满场，场地前场刷着 DUBAI
