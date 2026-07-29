@@ -554,7 +554,7 @@ def test_赛前片的封面要写清是哪一场():
         when, who = cover.fixture
         assert re.fullmatch(r"\d{1,2}\.\d{1,2}", spec["date"]), (
             f"{slug} 的比赛日期写法不对：{spec['date']}")
-        for key in ("date", "event", "round"):
+        for key in ("date", "level", "site", "round"):
             assert spec.get(key) and str(spec[key]) in when, f"{slug} 的封面小字缺 {key}"
         home, away = spec["players"]
         assert who == f"{home}  VS  {away}", f"{slug} 的对阵行版式不对：{who}"
@@ -565,6 +565,31 @@ def test_赛前片的封面要写清是哪一场():
         # 渲出来也要真的在卡上，不能只活在数据里。
         doc = _slide_html(0, cover, column=column)
         assert when in doc and who in doc, f"{slug} 的封面小字没渲进卡片"
+
+
+def test_赛前片只做巡回赛级别的比赛():
+    """账号所有者定的选题门槛：「**需要巡回赛级别，250 以上**」。
+
+    这条不是排版规矩，是**选题规矩**——它决定哪一场值得做一条片子。低于这个
+    门槛的（WTA 125、挑战赛、ITF）不做：读者认不出赛事，两边的来路也摆不出
+    什么份量。同一条线在今日赛程那边早就有了（`TOUR_LEVELS`，2026-07-28 那天
+    一个罗马尼亚的 WTA 125 混进来，13 场比三个巡回赛级别的赛事加起来还多），
+    这里复用**同一份**名单，免得两处各定一套门槛然后慢慢漂开。
+
+    判据落在封面小字的 `level` 上：那是唯一一处把级别写成机器可读的地方，
+    而且它会印在卡上——门槛和产物是同一个数，改不动其中一个而不动另一个。
+    """
+    from tennislive.render.webcards import TOUR_LEVELS
+    from tennislive.video.explainer import COLUMNS, _OPENINGS, explainer_column
+
+    for slug in _SCRIPTED:
+        column = explainer_column(slug)
+        if not COLUMNS[column].perishable:
+            continue
+        level = (_OPENINGS[slug].get("fixture") or {}).get("level")
+        assert level in TOUR_LEVELS, (
+            f"{slug} 的赛事级别是「{level}」，不在巡回赛级别里。"
+            f"「开球之前」只做 250 及以上，见 TOUR_LEVELS。")
 
 
 def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
