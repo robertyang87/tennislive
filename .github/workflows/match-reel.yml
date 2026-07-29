@@ -82,6 +82,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
+      # **`push=true` 只能跑在 main 上，而且要在第一步就拦住。**
+      #
+      # GitHub Pages 只服务 main。复制页提交在特性分支上，那个 URL 永远是 404，
+      # 而 `wait_for_copy_page` 等不到这一版就 `exit 1`——**一个字都不发**。
+      # 这个设计是对的（宁可不发也不发一条带死链的消息），代价是它把失败推到了
+      # 最后：渲片 6 分钟 → 轮询 10 分钟 → 才报错，前面全白跑。
+      # 2026-07-29 大威那条就是这么烧掉一次的（run 30457284612），而
+      # **CLAUDE.md 里白纸黑字记着这个坑**，照样走了进去。
+      #
+      # 判据探得很干净：同一个 Pages 站、同样的路径形状，分支上的 copy.html
+      # 是 404，main 上 wang-pareja 的是 200，差别只有分支。
+      #
+      # 所以在这儿拦：让失败发生在第 5 秒，不是第 16 分钟。要出片不推送就
+      # `push=false`，在分支上随便跑；要推送先把 PR 合进 main。
+      - name: push=true 必须在 main 上
+        if: github.event.inputs.push == 'true' && github.ref_name != 'main'
+        run: |
+          echo "::error::push=true 只能在 main 上跑，当前分支是 ${{ github.ref_name }}。"
+          echo "::error::GitHub Pages 只服务 main——复制页留在分支上永远是 404，"
+          echo "::error::推送那一步等不到它就会 exit 1，渲染和轮询全白跑十几分钟。"
+          echo "::error::出片但不推送用 push=false；要推送先把 PR 合进 main 再跑。"
+          exit 1
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

@@ -155,7 +155,11 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
             raise SystemExit(
                 f"cutout 版式的 {key} 格要 `cutout`：官方抠图的透明 PNG。\n"
                 "WTA 走 photoresources 的 <Name>-Torso_<wta_id>.png?width=3000，"
-                "ATP 走赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。")
+                "ATP 走赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。\n"
+                "**这个球员根本没有官方抠图，就退回 `layout: diagonal` 的照片版**"
+                "（账号所有者定的兜底）——别拿头像凑：头像只到锁骨，贴进这个"
+                "版式里头身比对不上，要让两颗头一样大得把它压到 0.16 倍，"
+                "成了一颗没有身子的浮头，而且头像本身是方图、三边硬边。")
         cx = float(panel.get("cx", cx0))
         h = float(panel.get("scale", CUT_SCALE)) * VIDEO_H
         src = _cut_crop(Path(panel["cutout"]), panel.get("crop"))
