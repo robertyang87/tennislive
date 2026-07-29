@@ -261,7 +261,11 @@ jobs:
           # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
           # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
           # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
+          # **`.part` 也要删**：yt-dlp 分轨下载留下的 `source.fNNN.mp4.part`
+          # 不叫 source.mp4，躲过了上面那两个名字，10 MB 就这么进了仓库
+          # （probe wang-pareja 那次）。按后缀删，别按名字列。
+          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 "$OUTDIR"/*.part \
+            "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
             "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg
           rm -rf "$OUTDIR"/frames
