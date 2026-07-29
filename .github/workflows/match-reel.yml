@@ -23,7 +23,7 @@ on:
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
         required: true
-        default: "nishikori-shang"
+        default: "eala-zheng"
       url:
         description: "源片地址（probe 必填；render 从 spec 里读）"
         required: false
@@ -50,7 +50,7 @@ on:
       matchup:
         description: "对阵，进标题：如「锦织圭 vs 商竣程」"
         required: false
-        default: "锦织圭 vs 商竣程"
+        default: "伊埃拉 vs 郑钦文"
       score:
         description: "赛果，进标题：赢家在前，如「2:1」"
         required: false
@@ -62,11 +62,11 @@ on:
       summary:
         description: "一句话概括赛果（顶掉「对阵 + 比分」）：人物 + 结果 + 抓人，**不超过 20 字**"
         required: false
-        default: "商竣程复出被锦织圭逆转，只差 8 分"
+        default: "一盘一破后只赢一局，郑钦文首轮出局"
       push_lead:
         description: "推送正文那一句"
         required: false
-        default: "商竣程复出首战打满三盘，锦织圭 6-7 6-3 6-4 逆转。竖版成片可直接下载。"
+        default: "郑钦文一盘一破在手，之后只再赢下一局，华盛顿首轮出局。竖版成片可直接下载。"
 
 permissions:
   contents: write

@@ -272,3 +272,52 @@ def test_标题末尾那句不超过二十字():
         assert "超过" in str(exc)
     else:
         raise AssertionError("超长的那句被放过去了")
+
+
+def test_封面没给cx时自动定心():
+    """源片在本地看不到时（YouTube 对沙箱一律 403），cx 只能靠猜，
+    猜错就是把人裁到画面边上。所以封面和分段一样，缺 cx 就按运动质心自动定。"""
+    reel = _reel()
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    assert 'cover.get("cx") is None' in source
+    assert "auto_center(source, probe, source_w)" in source
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    assert "cx" not in spec["cover"]
+
+
+def test_伊埃拉按译名表写():
+    """人名不要手打——`Alexandra Eala` 在 players.py 里是「伊埃拉」。"""
+    table = Path("src/tennislive/zh/players.py").read_text(encoding="utf-8")
+    assert '"Alexandra Eala": "伊埃拉"' in table
+    for path in ("specs/reels/eala-zheng.json", "specs/reels/eala-zheng.xhs.txt"):
+        text = Path(path).read_text(encoding="utf-8")
+        assert "伊埃拉" in text, path
+        for wrong in ("埃拉拉", "伊阿拉", "阿莱克斯"):
+            assert wrong not in text, f"{path} 里出现了 {wrong}"
+
+
+def test_VS拼接两格都用真实照片():
+    """**封面不抽帧，而且两格都要是这场。** 1920×1080 的一帧裁 9:16 要放大 1.78 倍，
+    比照片软一大截，而封面是唯一决定人点不点的那一屏。
+
+    找图那一轮的两个假命中都记在 credits 里，别让下一个人再踩：文件名对题不等于
+    画面对题；同一个 UUID 目录换五个文件名全返回 200 且大小相同，打开却是同一张
+    别人的照片——**CDN 根本不认文件名**。
+    """
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    credits = json.loads(
+        Path("assets/reel/eala-zheng.credits.json").read_text("utf-8"))
+    for key in ("top", "bottom"):
+        side = versus[key]
+        assert "frame_at" not in side, f"{key} 用了抽帧"
+        image = Path(side["image"])
+        assert image.is_file(), image
+        entry = credits[image.name]
+        assert entry["date"] == "2026-07-28", f"{image.name} 不是这场"
+        assert entry["checked"], f"{image.name} 没记「打开看过」"
+    # 清晰度不够的那一格要把代价写在明面上，别让人以为它是原图
+    assert "不是高清原图" in credits["zheng-washington-2026.jpg"]["caveat"]
+    # 为什么绕了这么大一圈，留给下一个人
+    note = credits["_zheng"]["note"]
+    assert "soft-404" in note and "CDN 不认文件名" in note
