@@ -610,3 +610,28 @@ def test_下载残留不进仓库():
     assert '"$OUTDIR"/*.part' in clean, "yt-dlp 的 .part 残留没被清掉"
     for path in Path("output").rglob("*.part"):
         raise AssertionError(f"仓库里还有下载残留：{path}")
+
+
+def test_面板可以先裁再铺():
+    """`crop: [x0, y0, x1, y1]`——**照片能自己先裁好再入库，抽帧不能**。
+
+    `focus` / `zoom` 只能在整幅图里挪窗口，挪不动主体在图里的位置。转播机位
+    怎么拍就是怎么拍：近景天然居中，落到底格正好被文案块压住；换大全景又小得
+    看不清。所以给面板一个裁切框，照片和抽帧共用。
+    """
+    import pytest  # noqa: PLC0415
+
+    pytest.importorskip("PIL")
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        src = Path(tmp) / "x.jpg"
+        Image.new("RGB", (1000, 500), (30, 90, 60)).save(src)
+        assert versus_poster._precrop(src, {}) == src, "没给 crop 就不该动原图"
+        out = versus_poster._precrop(src, {"crop": [0.25, 0.0, 1.0, 0.5]})
+        assert out != src and Image.open(out).size == (750, 250), Image.open(out).size
+        with pytest.raises(SystemExit, match="四个数"):
+            versus_poster._precrop(src, {"crop": [0.1, 0.2]})
