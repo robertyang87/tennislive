@@ -216,19 +216,27 @@ def contact_sheet(urls: list[str], out: str, *, cols: int = 6, cell: int = 300) 
     from PIL import Image, ImageDraw, ImageOps
 
     Image.MAX_IMAGE_PIXELS = None
-    tiles = []
+    tiles, dropped = [], 0
     for i, url in enumerate(urls):
         try:
             import io
-            img = ImageOps.exif_transpose(Image.open(io.BytesIO(_get(url, tries=2)))).convert("RGB")
+            img = ImageOps.exif_transpose(Image.open(io.BytesIO(_get(url, tries=4)))).convert("RGB")
         except Exception as exc:  # noqa: BLE001
-            print(f"  [{i}] 取不到：{str(exc)[:60]}")
+            print(f"  [{i}] 取不到：{str(exc)[:70]}")
+            dropped += 1
             continue
+        # Commons 连着拉几十张就开始 429，而 429 在联系表上和"这张不存在"长得
+        # 一模一样——第一次跑温网 78 个候选只出来 4 张，看着像"分类里就这么点"。
+        # 每张之间歇一下，并且**把丢掉的张数印出来**，别让空格子冒充结论。
+        if "wikimedia.org" in url:
+            time.sleep(0.8)
         canvas = Image.new("RGB", (cell, cell), (18, 18, 18))
         img.thumbnail((cell, cell), Image.LANCZOS)
         canvas.paste(img, ((cell - img.width) // 2, (cell - img.height) // 2))
         tiles.append((i, canvas))
 
+    print(f"  联系表：{len(tiles)}/{len(urls)} 张取到"
+          + (f"，**{dropped} 张没取到（不是「不存在」）**" if dropped else ""))
     if not tiles:
         return ""
     rows = (len(tiles) + cols - 1) // cols

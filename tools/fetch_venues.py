@@ -189,9 +189,14 @@ VENUES = [
     # 夏蒂埃球场只在背后露一角——当背景图时雕像成了焦点，不像主球场。
     # 换成球场内景：红土、看台，以及"LA VICTOIRE APPARTIENT AU PLUS OPINIÂTRE"。
     ("rg-philippe-chatrier.jpg", "File:Court Philippe Chatrier 2024.jpg", None),
-    # 原来钉的是**全园航拍**，中心球场只是画面里的一块，当背景时看不出是哪儿。
-    # 换成场内满场：草地、看台、顶棚桁架。
-    ("wimbledon-centre-court.jpg", "File:Centre Court Wimbledon 2009.JPG", None),
+    # 温网换过两次。第一次从**全园航拍**换成 Centre Court Wimbledon 2009——
+    # 那张确实是场内，但**站在侧面看台横着拍**：竖切之后画面上半屏全是顶棚
+    # 桁架，草地只剩底下一条。是 `--scrim` 那一版联系表把它暴露出来的
+    # （之前只渲裁切不渲遮罩，压完更看不清）。
+    # 现在这张是 2023 男单决赛，从底线后方看台高处沿长轴拍：近端观众、整片
+    # 草地、远端满场看台、开着的屋顶，一个不少；记分牌上 Alcaraz / Djokovic
+    # 可读，画面自己把是哪一场说死了。
+    ("wimbledon-centre-court.jpg", "File:2023 Wimbledon Men's singles final (1).jpg", None),
     ("usopen-arthur-ashe-exterior.jpg", "File:Arthur Ashe Stadium, July 7, 2018.jpg", None),
 ]
 
