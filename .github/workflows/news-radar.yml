@@ -54,6 +54,13 @@ jobs:
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
           tennislive flash-radar --outdir output
 
+      - name: 提炼选题候选（新闻钩子 + 底下的常青线）
+        # 和上一步是两件事：flash-radar 出的是「一条新闻 → 一张快讯卡」，
+        # 这一步出的是选题——同一天几家在报同一件事才算新闻点，再去撞人工
+        # 维护的角度表。撞不上就不猜，留在 unmatched_terms 里让人看该补什么。
+        continue-on-error: true
+        run: tennislive topic-radar --outdir output
+
       - name: 提交候选队列到仓库
         run: |
           git config user.name "github-actions[bot]"
@@ -79,6 +86,23 @@ jobs:
           BODY="$(jq -nc \
             --arg t "$PUSHPLUS_TOKEN" \
             --arg title "场外网球快讯候选 · ${{ steps.radar.outputs.date }}" \
+            --rawfile c "$FILE" \
+            '{token:$t,title:$title,content:$c,template:"html"}')"
+          curl -s -m 20 -X POST https://www.pushplus.plus/send \
+            -H "Content-Type: application/json" -d "$BODY" || true
+
+      - name: 推送今日选题候选到微信
+        if: env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          FILE="output/${{ steps.radar.outputs.date }}/topic_radar/topic_radar_push.html"
+          if [ ! -s "$FILE" ]; then
+            echo "今天没有对上角度的选题候选，跳过推送"
+            exit 0
+          fi
+          BODY="$(jq -nc \
+            --arg t "$PUSHPLUS_TOKEN" \
+            --arg title "今日选题候选 · ${{ steps.radar.outputs.date }}" \
             --rawfile c "$FILE" \
             '{token:$t,title:$title,content:$c,template:"html"}')"
           curl -s -m 20 -X POST https://www.pushplus.plus/send \
