@@ -60,13 +60,13 @@ on:
         required: false
         default: ""
       summary:
-        description: "一句话概括赛果（顶掉「对阵 + 比分」）：人物 + 结果 + 抓人，**不超过 20 字**"
+        description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
         required: false
-        default: "一盘一破后只赢一局，郑钦文首轮出局"
+        default: "郑钦文首轮出局"
       push_lead:
         description: "推送正文那一句"
         required: false
-        default: "郑钦文一盘一破在手，之后只再赢下一局，华盛顿首轮出局。竖版成片可直接下载。"
+        default: "一盘一破在手，之后只再赢下 1 局。全场 8 个破发点保住 2 个，二发得分率 35%，12 记 Ace 全场最多，2 小时 26 分。"
 
 permissions:
   contents: write

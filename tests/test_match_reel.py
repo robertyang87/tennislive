@@ -14,6 +14,7 @@
 """
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -102,18 +103,16 @@ def _headline(**kwargs) -> str:
 
 
 def test_有赛果时标题把vs换成比分():
-    got = _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
-                    event="华盛顿 ATP500 首轮")
-    assert got == "7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程"
+    got = _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1")
+    assert got == "7.28 赛场之上 | 锦织圭 2:1 商竣程"
     # 没赛果（比如赛前前瞻）就保留「vs」
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程").endswith(
         "锦织圭 vs 商竣程"
     )
     # 比分说不清的片子（退赛、以转折为主）改用一句话概括，顶掉末尾那一格
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
-                     event="华盛顿 ATP500 首轮",
                      summary="复出首战打满三盘") == (
-        "7.28 赛场之上 | 华盛顿 ATP500 首轮 | 复出首战打满三盘")
+        "7.28 赛场之上 | 复出首战打满三盘")
 
 
 def test_page阶段不发推送也不需要成片(tmp_path):
@@ -202,19 +201,38 @@ def test_回合镜头也铺满不走contain():
     assert "回合镜头必须用这个" not in source
 
 
-def test_标题默认不带赛事名且别太长():
-    """「7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程」被判定太长。
-    赛事名文案里本来就有，标题这一格留给**人物 + 结果 + 抓得住人的那句**。"""
+def test_标题整句不超过20个字位():
+    """账号所有者的原话：「标题控制在 20 个汉字内，言简意赅直达重点，精炼内容。
+    讲不完的放到副标题，可以放到正文第一行，详细总结概括。」
+
+    卡的是**整句**，不是末尾那一格——以前只卡 `summary`，前面还挂着日期、栏目、
+    赛事轮次，加起来 25 个字位，通知栏里根本读不完。
+
+    量的是小红书字位（全角 1、半角 0.5），不是 `len()`：「7.28 」五个半角只占
+    2.5 个，按 `len()` 算会白白吃掉两格。两处用同一把尺，标题才不会在这儿过、
+    到小红书又超。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    from push_reel import TITLE_MAX, headline  # noqa: PLC0415
+    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+
+    out = Path("output/2026-07-28/reel/x")
+    got = headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球")
+    assert xhs_title_len(got) <= TITLE_MAX, got
+    # **赛事名就是这么被挤出去的**，所以工作流里 event 默认留空
     text = WORKFLOW.read_text(encoding="utf-8")
     block = text[text.index("      event:"):text.index("      summary:")]
     assert 'default: ""' in block, "event 默认要留空"
-    sys.path.insert(0, str(Path("tools").resolve()))
-    from push_reel import headline  # noqa: PLC0415
-
-    got = headline(Path("output/2026-07-28/reel/x"), "赛场之上",
-                   "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球，总分只差 8 分")
-    assert "ATP500" not in got
-    assert len(got) <= 32, f"{len(got)} 字，太长：{got}"
+    with pytest.raises(SystemExit, match="字位"):
+        headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "华盛顿 ATP500 首轮",
+                 "商竣程复出输球")
+    # 工作流的默认值自己也要过得了这道闸
+    summary = re.search(r"      summary:.*?default: \"(.*?)\"", text, re.S).group(1)
+    assert xhs_title_len(headline(out, "赛场之上", "伊埃拉 vs 郑钦文", "2:1", "",
+                                  summary)) <= TITLE_MAX
 
 
 def test_复制页探活要认内容不能只认200(monkeypatch):
@@ -274,15 +292,27 @@ def test_标题末尾那句不超过二十字():
         raise AssertionError("超长的那句被放过去了")
 
 
-def test_封面没给cx时自动定心():
-    """源片在本地看不到时（YouTube 对沙箱一律 403），cx 只能靠猜，
-    猜错就是把人裁到画面边上。所以封面和分段一样，缺 cx 就按运动质心自动定。"""
+def test_封面只有海报模板一条路():
+    """账号所有者定的：「以后『赛场之上』封面海报都用新的模板方案。」
+
+    所以抽帧那条分支**删掉了，不是留着兜底**。留着的后果是可预见的：哪条片子
+    一时找不到照片就悄悄退回抽帧，栏目的封面从此有两副面孔，而且退回去的那次
+    没人会注意到——和「兜底出事的时候不吭声」是同一个毛病。
+
+    缺图要报错，并且把出路写在报错里：去扩检索源，不是退回抽帧。
+    """
+    import pytest  # noqa: PLC0415
+
     reel = _reel()
     source = Path(reel.__file__).read_text(encoding="utf-8")
-    assert 'cover.get("cx") is None' in source
-    assert "auto_center(source, probe, source_w)" in source
-    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
-    assert "cx" not in spec["cover"]
+    assert not hasattr(reel, "_render_cover_html"), "单图封面那条路还在"
+    body = source.split("def build_cover")[1].split("\ndef ")[0]
+    assert "frame_at" not in body, "build_cover 里还留着抽帧的兜底"
+    # 模板的**单格**仍可显式给 frame_at（某人一张照片都找不到时的最后一招），
+    # 但那是 spec 里写死的选择，不是自动降级——差别就在这儿
+    with pytest.raises(reel.ReelError, match="扩检索源"):
+        reel.build_cover(Path("x.mp4"), {"cover": {"hook": "无图"}},
+                         Path("y.mp4"), 1920)
 
 
 def test_伊埃拉按译名表写():
@@ -516,3 +546,33 @@ def test_海报台头只写栏目名():
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
         assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
+
+
+def test_商竣程那格是本场真实照片不是抽帧():
+    """**上一版写过「没有任何一张商竣程的照片」——那句话是错的。**
+
+    它的真实含义只是「赛事官方图库和日媒里没有」：官方媒体库按
+    `<球员>-1920.jpg` / `<球员>-washington-2026-monday-r1.jpg` 五种拼法探过去
+    全是 302（同目录已知存在的两张返回 200 image/jpeg，所以探测本身是有效的），
+    日媒那边只有锦织圭。换到**中新社的图片新闻**立刻有三张他的比赛照。
+
+    又一次「某一个源上没有 ≠ 不存在」，也是「过不了闸门是换源的信号，
+    不是放弃的理由」。
+    """
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    credits = json.loads(
+        Path("assets/reel/nishikori-shang.credits.json").read_text("utf-8"))
+    assert versus["names"] == ["商竣程", "锦织圭"]
+    for key in ("top", "bottom"):
+        side = versus[key]
+        assert "frame_at" not in side, f"{key} 还在抽帧"
+        image = Path(side["image"])
+        assert image.is_file(), image
+        entry = credits[image.name]
+        assert entry["date"] == "2026-07-27", f"{image.name} 不是这场"
+        assert entry["checked"], f"{image.name} 没记「打开看过」"
+        # 图注自证第二道闸门：来源自己写了「在比赛中」
+        assert "在比赛中" in entry["caption_verbatim"]
+    # 水印是**固定 100px**，不是按比例——按比例裁会漏
+    assert "100px" in credits["shang-washington-2026.jpg"]["watermark"]

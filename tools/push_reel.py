@@ -53,9 +53,11 @@ _DATE_IN_PATH = re.compile(r"/(\d{4})-(\d{2})-(\d{2})/")
 BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
 # jsDelivr 的 /gh/ 单文件上限。超过就是 403，不是慢，是打不开。
 JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
-# 标题末尾那句的字数上限。标题是给人扫的，不是给人读的——和「卡片上每条
-# 不超过 16 字」同一个道理：一句要换行才排得下，就说明它该被砍。
-SUMMARY_MAX = 20
+# 标题**整句**的上限，单位是小红书字位（全角 1、半角 0.5）。标题是给人扫的，
+# 不是给人读的——和「卡片上每条不超过 16 字」同一个道理。
+TITLE_MAX = 20
+# 末尾那一格自己还有个上限，比整句更紧：前面的日期和栏目已经占掉七个多字位。
+SUMMARY_MAX = 13
 # 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
 # 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
 POSTER_NAME = "poster.jpg"
@@ -129,8 +131,11 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     - **对阵 + 比分**（默认）。给了赛果就把「vs」换成比分——网球的写法本来就是
       赢家在前、比分居中，谁赢了不用再猜；没给赛果（比如赛前前瞻）就保留「vs」
     - **一句话概括赛果**（传 `summary`）。比分说不清的时候用，例如退赛、
-      三盘大战里的某个转折、或者一条不以胜负为重点的片子。**不超过 20 字**——
-      标题是给人扫的，长了就没人扫完；超了直接报错，别让它悄悄溜出去
+      三盘大战里的某个转折、或者一条不以胜负为重点的片子
+
+    两道字数闸门，超了直接报错，别让它悄悄溜出去：末尾那一格 `SUMMARY_MAX`，
+    整句 `TITLE_MAX`（见 `_fits`）。**讲不完的不要硬塞进标题**——用 `--lead`
+    放到正文第一行去详细概括，那儿有的是地方。
     """
     found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
@@ -150,7 +155,34 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     if event:
         parts.append(event)
     parts.append(pair)
-    return " | ".join(parts)
+    return _fits(" | ".join(parts))
+
+
+def _fits(title: str) -> str:
+    """标题**整句**不超过 20 个汉字，超了直接报错。
+
+    账号所有者的原话：「标题控制在 20 个汉字内，言简意赅直达重点，精炼内容。
+    讲不完的放到副标题，可以放到正文第一行，详细总结概括。」
+
+    所以这里卡的是**整句**，不是末尾那一格——以前只卡 `summary` 的 20 字，
+    前面还挂着日期、栏目、赛事轮次，加起来 25 个字位，通知栏里根本读不完。
+
+    量的是**小红书的字位**（`xhs_title_len`：全角记 1，半角记 0.5），不是
+    `len()`。「7.29 」五个半角只占 2.5 个字位，按 `len()` 算会白白吃掉两格。
+    两处用同一把尺，标题才不会在这儿过、到小红书又超。
+
+    讲不完的那半句交给 `--lead`——它就印在正文第一行，位置正好。
+    """
+    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+
+    width = xhs_title_len(title)
+    if width > TITLE_MAX:
+        raise SystemExit(
+            f"标题 {width:g} 个字位，超过 {TITLE_MAX}：{title}\n"
+            f"（半角算半个字位；日期+栏目已经占掉 "
+            f"{xhs_title_len(title.split(' | ')[0]) + 1.5:g} 个）\n"
+            "标题只留最硬的那个结果，剩下的用 --lead 放到正文第一行去详细概括。")
+    return title
 
 
 def split_copy(copy_text: str) -> tuple[str, str]:
