@@ -231,6 +231,48 @@ def classify(title: str, rules: dict[str, list]) -> str | None:
     return hit
 
 
+def _tail_interview(row: dict, cfg: dict) -> bool:
+    """这条集锦的**尾巴上接没接场上采访**——判据是时长，不是标题。
+
+    这是这套东西里最反直觉的一条，也是把 WTA 那一侧从零救回来的那条。
+    我一直把 `@wta` 记成「只有集锦，场上采访 0」，深扫 800 条也确实一条
+    带 interview 的标题都没有。**但采访根本不在标题里，它在片子后半段。**
+
+    `@wta` 的逐场集锦是**固定格式**的。100 条实测，时长分布是干净的双峰：
+
+        285–310 秒   66 条   纯集锦（这个格式卡得极死，绝大多数是 306–310）
+        ── 空档 ──          310 到 333 之间一条都没有
+        333–648 秒   33 条   集锦 + 赛后场上采访
+
+    逐帧验过：309/310/310 那几条的 75% 处还在比赛里；333 是红色 DC Open
+    话筒旗、339 是 `WTA TOUR` 黑话筒旗加烧录条
+    `SARA BEJLEK — ADVANCES TO THE 2ND ROUND`、360/422/447 同样是采访。
+
+    ⚠️ **hq3 只到 75%，够不着短尾巴。** 353 秒那条在 75% 处仍是比赛画面——
+    那不是反证，只说明它的采访不足全长的四分之一。所以**别拿"帧里没看到"
+    去否定时长判据**，两者的分辨率不一样。
+
+    ⚠️ 也**不是每个赢家都有**：伊拉胜郑钦文那场是 310 秒，没有尾巴。
+    这个判据回答的是"这条片子里有没有"，不是"这场比赛做没做"。
+
+    界划在 320：落在实测那个 23 秒宽的空档正中间。改它要重新量分布，
+    别按比例推。
+    """
+    secs = row.get("duration_s")
+    if not secs or secs < cfg.get("min_secs", 320):
+        return False
+    title = row.get("title", "")
+    if (bad := cfg.get("exclude_pat")) and re.search(bad, title):
+        # **长 ≠ 有尾巴。** 两类东西会混进来，长的理由完全不同：
+        #   `… Cincinnati Finał Full Match | WTA Match Highlights`  6235 秒——
+        #       标题结尾照样是 Match Highlights，实际是整场录播（录播尾巴上
+        #       不接采访，那是另一条实测结论）
+        #   `Day 2 in Memphis with Sonmez, Stephens & more | …`     1464 秒——
+        #       塞了一整天的比赛
+        return False
+    return bool(re.search(cfg["title_pat"], title))
+
+
 def load_store() -> dict:
     if not STORE.exists():
         return {"items": {}}
@@ -705,7 +747,11 @@ def main() -> int:
             # `Lilli Tagger Champion Prague 2026`，靠标题正则一条都收不到，
             # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
             # 全是官方缺口。这类源按源判，不按标题判。
-            if src.get("review_each"):
+            if (tail := src.get("tail_interview")) and _tail_interview(r, tail):
+                # **采访藏在集锦片子的后半段里。** 判据是时长，见 `_tail_interview`。
+                kind = "oncourt"
+                r["tail_interview"] = True
+            elif src.get("review_each"):
                 # **这个源的 slug 分不出场合，只有画面能分。** wtatennis.com 的
                 # `*-post-match-interview-*` 五条里四条是 `WTA MEDIA` 深色背景板的
                 # 坐访（便服、领夹麦、赛事台卡），只有雅典决赛那条是真在场上

@@ -803,9 +803,19 @@ def test_unknown_gender_never_counts_toward_a_single_tour_draw():
               and is_main_singles(it) and side(it) == "atp"]
     assert leaked, "这一站本来就是靠混进来的男子条目撑着的，样本没了这条测试就失去意义"
 
+    # **判据是「不许超过女子那批的条数」，不是一个魔数。** 原来写的是
+    # `covered <= 3`——那是按当时库里只有三条女子条目校出来的。@wta 的集锦
+    # 尾巴那批进来之后辛辛那提 WTA 真有了七条女子条目，测试就红了，而它要守的
+    # 性质（男子条目不许进女单分子）**一条都没被破坏**。魔数会随着库长大而失效，
+    # 换成直接比对那批女子条目。
+    female = [it for it in items.values()
+              if (it.get("source") in own or rx.search(haystack(it)))
+              and is_main_singles(it) and side(it) == "wta"]
     row = next(r for r in coverage(items, events)
                if r["zh"] == "辛辛那提公开赛" and r["tour"] == "wta")
-    assert row["covered"] <= 3, f"辛辛那提 WTA 覆盖 {row['covered']} 场，男子条目又混进来了"
+    assert row["covered"] <= len(female), (
+        f"辛辛那提 WTA 覆盖 {row['covered']} 场，而女子条目只有 {len(female)} 条"
+        f"——多出来的只能是那 {len(leaked)} 条男子的混进来了")
     # 被丢掉的数量要报出来——只报命中的，没法证明它真的看过全部
     assert "unknown" in row
 
@@ -1028,3 +1038,68 @@ def test_bilibili_frame_sheet_skips_the_ungenerated_black_cells():
     _, live = sheet(black.getvalue(), Path(tempfile.mkdtemp()) / "b.jpg")
     assert live == 0
     assert DARK > 3, "纯黑格 JPEG 解出来均值 0–3，阈值要在它之上"
+
+
+def test_wta_highlights_carry_the_interview_in_their_tail():
+    """`@wta` 的逐场集锦，长出来的那一截就是赛后场上采访。
+
+    **这是最反直觉的一条，也是把 WTA 那一侧从零救回来的那条。** 源注释里
+    原本白纸黑字写着「深扫 800 条，场上采访 0」——深扫再多也找不到，
+    因为**采访不在标题里，在片子后半段**，要看的是时长不是标题。
+
+    100 条实测，时长分布是干净的双峰：
+
+        285–310 秒   66 条   纯集锦（绝大多数卡在 306–310）
+        ── 空档 ──          310 到 333 之间一条都没有
+        333–648 秒   33 条   集锦 + 赛后场上采访
+
+    逐帧验过：309/310/310 的 75% 处还在比赛里；333 是红色 DC Open 话筒旗、
+    339 是 `WTA TOUR` 黑话筒旗加烧录条 `SARA BEJLEK — ADVANCES TO THE 2ND
+    ROUND`、360/422/447 同样是采访。界划在 320，落在那个 23 秒空档正中间。
+    """
+    from tools.collect_oncourt_interviews import _tail_interview, load_sources
+
+    cfg = next(s for s in load_sources()["sources"]
+               if "youtube.com/@wta" in s["url"].lower())["tail_interview"]
+
+    def hit(secs, title=("Julieta Pareja vs. Xinyu Wang | 2026 Washington, DC "
+                         "Round 1 | WTA Match Highlights")):
+        return _tail_interview({"duration_s": secs, "title": title}, cfg)
+
+    for secs in (285, 306, 309, 310):          # 实测的纯集锦
+        assert not hit(secs), f"{secs} 秒是纯集锦"
+    for secs in (333, 339, 360, 422, 447):     # 实测逐帧确认有采访的
+        assert hit(secs), f"{secs} 秒那条看过帧，尾巴上是采访"
+
+    # **长 ≠ 有尾巴。** 两类会混进来，长的理由完全不同，都要排掉：
+    # 日集锦塞了一整天的比赛——
+    assert not hit(1464, "Day 2 in Memphis with Sonmez, Stephens & more | WTA Match Highlights")
+    assert not hit(1100, "Day 2 in Washington, DC with Eala, Potapova & more | WTA Match Highlights")
+    # 整场录播——**标题结尾照样是 `WTA Match Highlights`**，这条真的被误收进过库，
+    # 6235 秒的辛辛那提决赛。而录播的末尾确实不接采访（时长对账：比比赛还短）。
+    assert not hit(6235, "Iga Świątek vs. Jasmine Paolini Cincinnati Finał Full Match "
+                         "| WTA Match Highlights")
+    assert not hit(6028, "Vekic's First WTA 500 Title | Donna Vekic vs. Emma "
+                         "Raducanu 2026 London Final | WTA Full Match")
+    # 没有时长就不能判——**拿不到不等于不是**，宁可漏也别瞎收
+    assert not hit(None)
+
+
+def test_tail_interview_items_are_marked_so_downstream_knows_to_skip_ahead():
+    """尾巴型条目要带标记：整条片子是集锦，采访在后半段。
+
+    不标的话下游会把它当成一条三分钟的纯采访推出去，人点开看到的是比赛集锦，
+    还得自己找采访从哪儿开始。
+    """
+    import json as _json
+
+    from tools.collect_oncourt_interviews import STORE
+
+    with STORE.open(encoding="utf-8") as fh:
+        items = _json.load(fh)["items"]
+    tails = [v for v in items.values() if v.get("tail_interview")]
+    assert tails, "库里该有尾巴型条目"
+    for v in tails:
+        assert v["kind"] == "oncourt"
+        assert v["duration_s"] >= 320, v["title"]
+        assert "Match Highlights" in v["title"], v["title"]
