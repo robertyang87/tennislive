@@ -20,14 +20,24 @@
 
 **第三种「0 不是真 0」：页面是 SPA。** wimbledon.com 的 centre_court.html 和
 dcopentennis.com 首页用 urllib 抓下来，正则一张图都找不到——不是站上没有图，
-是图由 JS 渲染，`<img src>` 根本不在初始 HTML 里。这类站要用 Playwright
-（本环境预装了 Chromium，`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`）打开
-页面等渲染完再取 DOM。目前脚本还没做这一步，所以对 SPA 站的结果只能记
-"未查过"，**不能记 0**。
+是图由 JS 渲染，`<img src>` 根本不在初始 HTML 里。`--render` 就是补这一刀：
+用 Playwright（本环境预装了 Chromium，`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`）
+打开页面、滚到底触发懒加载，再从**渲染后的 DOM**里取 `<img src/srcset>`、
+`<source srcset>` 和 CSS 的 `background-image`。
+
+取 DOM 的三个细节都是踩出来的：
+
+- **只读 `src` 会漏掉一半**。响应式图站在 `srcset` 里放大图、`src` 留一张
+  占位小图；只读 src 会把 2400px 的原图读成 300px 的缩略图
+- **懒加载要滚**。首屏之外的 `<img>` 在 DOM 里 `src` 是 1×1 的透明底图，
+  滚过去才换成真图
+- **`naturalWidth` 比 URL 里的数字可信**。URL 上写着 `-2048x1152` 的可能是
+  个 CDN 参数，浏览器加载完的 `naturalWidth` 才是真尺寸
 
 用法：
     python tools/probe_venue_photos.py wimbledon roland-garros
     python tools/probe_venue_photos.py --all
+    python tools/probe_venue_photos.py --render https://www.wimbledon.com/en_GB/atoz/centre_court.html
 """
 
 from __future__ import annotations
@@ -175,6 +185,147 @@ CHANNELS = {
     "wp": lambda q, site: wordpress_media(site, q) if site else [],
 }
 
+# 沙箱里 PLAYWRIGHT_BROWSERS_PATH 指的目录带版本号，playwright 自己找的那条
+# 路径对不上，得显式给 executable_path（CLAUDE.md 里记过同一条）。
+_CHROME_GLOBS = (
+    "/opt/pw-browsers/chromium-*/chrome-linux/chrome",
+    "/opt/pw-browsers/chromium/chrome-linux/chrome",
+)
+
+
+def _chromium_path() -> str:
+    import glob
+    for pattern in _CHROME_GLOBS:
+        found = sorted(glob.glob(pattern))
+        if found:
+            return found[-1]
+    raise Blocked("找不到 Chromium，装了 playwright 也没用")
+
+
+# ⚠️ Chromium 在这个沙箱里连不上网，报的是 `ERR_CONNECTION_RESET`，而
+# **真正的原因和这条报错没关系**。查了两个假线索才找到，都记在这儿：
+#
+# 1. netlog 里 `net_error` 出现最多的是 **-202（ERR_CERT_AUTHORITY_INVALID）**，
+#    128 次。看着就是"代理拆包 CA 没进浏览器的 NSS 库"——很合理，因为
+#    Chromium 在 Linux 上确实不读系统 CA 目录，而这台机器没装 certutil。
+#    照这个方向改完**一点没变**：那 128 次全是 Chromium 自己那些组件更新域名
+#    （clients2.google.com 之类）产生的噪音，跟我要打开的页面无关。
+#    **「一批红要逐条看第一行错误」在 netlog 上是「按请求对上号再看」**——
+#    统计出现次数最多的错误码，选出来的往往是背景噪音。
+# 2. 大 ClientHello（后量子密钥交换）被中间设备打断，也是常见成因。
+#    关掉 `PostQuantumKyber,UseMLKEM` 同样没变。
+#
+# 真正的线索在按请求对上号之后：CONNECT 隧道**建成了**
+# （`HTTP_TRANSACTION_SEND_TUNNEL_HEADERS` 正常），然后 `SSL_CONNECT` →
+# `SOCKET_READ_ERROR os_error 104`——是**握手阶段被对端 RST**。
+# 逐个试下来只有一个变量管用：`--ssl-version-max=tls1.2`。
+# 出网网关会重置 Chromium 的 TLS 1.3 握手（curl / python 走的是另一条栈，
+# 所以它们一直好好的，这正是"本地能跑不等于这条路通"）。
+#
+# **限的是协议版本，不是校验**：TLS 1.2 的证书链照常验，没有关掉任何检查。
+_TLS_MAX = "tls1.2"
+
+# 顺带记一句，省得下次重走：我一度以为要把拆包 CA 的公钥按 SPKI 摘要钉给
+# Chromium 才连得上，写完发现**一点用没有**（真正的原因就是上面那条 TLS 版本）。
+# 那段代码已经删掉了——留着一个看起来像"绕过证书校验"的开关，比没有更糟。
+
+
+def render_images(url: str, *, min_px: int = 900, timeout: int = 90000) -> list[str]:
+    """打开页面等 JS 渲染完，把**渲染后 DOM** 里的图连真实尺寸一起列出来。
+
+    返回 `WxH  url`，按面积从大到小；小于 min_px 宽的直接丢掉（图标、头像、
+    赞助商 logo 占了绝大多数，留着只会把真正的大图埋掉）。
+    """
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as exc:  # 依赖检查提到最前面，别跑到一半才报
+        raise Blocked(f"没装 playwright（{exc}）") from exc
+
+    script = """() => {
+      const out = new Map();
+      const add = (u, w, h) => {
+        if (!u || u.startsWith('data:')) return;
+        const prev = out.get(u);
+        if (!prev || prev[0] * prev[1] < w * h) out.set(u, [w, h]);
+      };
+      for (const im of document.querySelectorAll('img')) {
+        add(im.currentSrc || im.src, im.naturalWidth, im.naturalHeight);
+        // src 常是占位小图，大图藏在 srcset 里
+        for (const part of (im.srcset || '').split(',')) {
+          const u = part.trim().split(/\\s+/)[0];
+          const w = /(\\d+)w/.exec(part);
+          if (u) add(new URL(u, location.href).href, w ? +w[1] : 0, 0);
+        }
+      }
+      for (const s of document.querySelectorAll('source[srcset]')) {
+        for (const part of s.srcset.split(',')) {
+          const u = part.trim().split(/\\s+/)[0];
+          const w = /(\\d+)w/.exec(part);
+          if (u) add(new URL(u, location.href).href, w ? +w[1] : 0, 0);
+        }
+      }
+      for (const el of document.querySelectorAll('*')) {
+        const bg = getComputedStyle(el).backgroundImage;
+        const m = bg && bg.match(/url\\((["']?)(.*?)\\1\\)/);
+        if (m) add(new URL(m[2], location.href).href, el.clientWidth, el.clientHeight);
+      }
+      return [...out].map(([u, wh]) => [u, wh[0], wh[1]]);
+    }"""
+
+    # Chromium 不读 HTTPS_PROXY 这些环境变量，得显式给 --proxy-server；
+    # 不给就是 ERR_CONNECTION_RESET，看着像"这个站打不开"。
+    import os
+    proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+    # 走代理时 HTTP/2 会零星 ERR_HTTP2_PROTOCOL_ERROR，关掉换 1.1 稳得多
+    launch_args = ["--no-sandbox", f"--ssl-version-max={_TLS_MAX}", "--disable-http2"]
+    if proxy:
+        launch_args.append(f"--proxy-server={proxy}")
+
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(executable_path=_chromium_path(),
+                                     args=launch_args)
+        try:
+            # 默认 UA 里带着 HeadlessChrome，Akamai 那一类风控一眼认出来，
+            # 表现是导航**一直不落地**直到超时——不是站慢，是没让进
+            page = browser.new_page(
+                viewport={"width": 1600, "height": 1200},
+                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) "
+                           "Chrome/141.0.0.0 Safari/537.36",
+                locale="en-GB")
+            last = ""
+            for attempt in range(3):
+                try:
+                    # "commit" 而不是 "domcontentloaded"：大站挂着一堆第三方
+                    # 统计脚本，等 DOMContentLoaded 常常直接超时；导航一落地
+                    # 就往下走，后面本来就有固定等待 + 滚动
+                    page.goto(url, timeout=timeout, wait_until="commit")
+                    break
+                except Exception as exc:  # noqa: BLE001
+                    last = str(exc).splitlines()[0][:90]
+                    page.wait_for_timeout(2000 * (attempt + 1))
+            else:
+                raise Blocked(last)
+            page.wait_for_timeout(2500)
+            # 懒加载：首屏之外的 img 要滚过去才换成真图
+            for _ in range(6):
+                page.mouse.wheel(0, 1600)
+                page.wait_for_timeout(700)
+            page.wait_for_timeout(1500)
+            found = page.evaluate(script)
+            # 「0 命中」要自证是真空：落地在哪个 URL、标题是什么、DOM 里到底
+            # 有几个 <img>。跳到了同意页 / 404 页时这三行立刻看得出来。
+            print(f"     · 落地 {page.url[:110]}")
+            print(f"     · 标题 {(page.title() or '')[:80]}")
+            print(f"     · DOM 里 {page.evaluate('document.images.length')} 个 <img>，"
+                  f"取到 {len(found)} 个图 URL")
+        finally:
+            browser.close()
+
+    rows = [(w, h, u) for u, w, h in found if w >= min_px or h >= min_px]
+    rows.sort(key=lambda r: -(r[0] * max(r[1], 1)))
+    return [f"{w}x{h}  {u}" for w, h, u in rows]
+
 
 def probe(slug: str) -> None:
     spec = VENUES[slug]
@@ -204,7 +355,24 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("slugs", nargs="*")
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--render", action="append", default=[],
+                    help="用 Playwright 打开这个 URL，列出渲染后 DOM 里的大图（SPA 站用）")
+    ap.add_argument("--min-px", type=int, default=900)
     args = ap.parse_args()
+
+    if args.render:
+        for url in args.render:
+            print(f"\n{'=' * 68}\n### 渲染 {url}")
+            try:
+                hits = render_images(url, min_px=args.min_px)
+            except Blocked as exc:
+                print(f"  **打不开**（{exc}）—— 这不是 0 命中")
+                continue
+            print(f"  → {len(hits)} 张 ≥{args.min_px}px")
+            for hit in hits[:25]:
+                print(f"     {hit}")
+        return 0
+
     slugs = list(VENUES) if args.all else args.slugs
     if not slugs:
         print("要查哪些站？可选：" + " ".join(VENUES), file=sys.stderr)
