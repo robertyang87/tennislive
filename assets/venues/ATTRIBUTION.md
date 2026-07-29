@@ -120,6 +120,7 @@ the photographs are not otherwise altered.
 - Author: Action News 5 / WMC-TV
 - Source: https://www.actionnews5.com/2026/07/26/memphis-classic-tournament-full-swing-pro-tennis-returns-leftwich/
 - License: unverified · 电视台新闻画面截帧
+- Note: 2026-07-29 又整轮翻过一次，结论是**这张已经是能拿到的最好的实拍**，别再重跑：官网（Squarespace）只有 WebHero 和赞助 logo；WTA 赛事页只剩那张已被证伪的 1167_Memphis-Hero-2；StyleBlueprint 那张 StadiumView 是**效果图**（同一批搜索结果里就写着 releases stadium renderings）；Action News 5 另一条 7/23 的片子是场馆改建纪录片，没有赛事看台画面。⚠️ **新闻成片里会混进资料画面**：同一条 7/26 报道的 25–27 秒是室内蓝场、场地上印着 MEMPHIS OPEN / ATP WORLD TOUR——那是十年前停办的旧 ATP 赛事，**不是这个场地**。抽帧时要看场地上写的是什么，别只看片子讲的是哪一站
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `palermo-country-time-centre-court.jpg`
