@@ -788,20 +788,40 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
     from versus_poster import build_poster  # noqa: PLC0415
 
     versus = dict(cover["versus"])
-    for key in ("top", "bottom"):
-        side = dict(versus[key])
-        if side.get("image"):
-            if not Path(side["image"]).is_file():
-                raise ReelError(f"VS 拼接的 {key} 格找不到图：{side['image']}")
-        else:
-            grab = dest.parent / f"_versus_{key}.jpg"
-            with stage(f"VS 抓帧 {key}"):
-                run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", f"{float(side['frame_at']):.2f}", "-i", str(source),
-                    "-frames:v", "1", "-q:v", "2", str(grab))
-            side["image"] = str(grab)
-        versus[key] = side
-    layout = str(cover.get("layout", "diagonal"))
+    layout = str(cover.get("layout", "cutout"))
+
+    def _grab(spot: dict, tag: str) -> str:
+        """`image` 直接用，`frame_at` 从源片抓一帧。抓出来的不进仓库。"""
+        if spot.get("image"):
+            if not Path(spot["image"]).is_file():
+                raise ReelError(f"VS 拼接的 {tag} 找不到图：{spot['image']}")
+            return str(spot["image"])
+        grab = dest.parent / f"_versus_{tag}.jpg"
+        with stage(f"VS 抓帧 {tag}"):
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-ss", f"{float(spot['frame_at']):.2f}", "-i", str(source),
+                "-frames:v", "1", "-q:v", "2", str(grab))
+        return str(grab)
+
+    if layout == "cutout":
+        # 人物是官方抠图（本地 PNG），只有背景那张要抓帧。
+        bg = dict(versus.get("background") or {})
+        if not bg:
+            raise ReelError("cutout 版式要 versus.background = {image|frame_at}")
+        bg["image"] = _grab(bg, "bg")
+        versus["background"] = bg
+        for key in ("top", "bottom"):
+            cut = (versus[key] or {}).get("cutout")
+            if not cut or not Path(cut).is_file():
+                raise ReelError(
+                    f"cutout 版式的 {key} 格找不到抠图：{cut}\n"
+                    "WTA：photoresources 的 <Name>-Torso_<wta_id>.png?width=3000；"
+                    "ATP：赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。")
+    else:
+        for key in ("top", "bottom"):
+            side = dict(versus[key])
+            side["image"] = _grab(side, key)
+            versus[key] = side
     poster = dest.parent / POSTER_NAME
     with stage("封面海报"):
         build_poster({**cover, "versus": versus}, poster, layout=layout)

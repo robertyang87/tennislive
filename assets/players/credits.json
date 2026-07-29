@@ -46,5 +46,47 @@
   "license": "CC BY-SA 2.0",
   "artist": "si.robi",
   "page": "https://commons.wikimedia.org/wiki/File%3ATsitsipas_RG21_%288%29_%2851377088465%29.jpg"
+ },
+ "_torso_howto": {
+  "what": "「赛场之上」固定海报的人物层：官方抠图，透明底，按球员存、跨片子复用。diagonal 版式要两张「本场 + 比赛中 + 有冲击力 + 够清晰」的实拍同时到位，帕雷哈（17 岁资格赛球员）四类源全探到底一张都没有，只能拿握手那一帧顶——结果王欣瑜在同一张海报上出现了两次。抠图把「认人」一次性解决，而且按球员 ID 永远拿得到。",
+  "wta": [
+   "1. 查 ID：api.wtatennis.com/tennis/players/?page=0&pageSize=100&name=<姓>。name 是子串匹配（name=Wang 会带出 Hwang），要按 fullName 再过一遍。",
+   "2. 球员页 wtatennis.com/players/<id>/<slug> 的 HTML 里搜 Torso，得到 photoresources.wtatennis.com/photo-resources/YYYY/MM/DD/<uuid>/<Name>-Torso_<id>.png",
+   "3. **必须带 width 参数**：不带参数这个图床返回 400，错误体里写着 「At least one of width or height parameters must be specified」。?width=3000 拿到 3000x2813。只看状态码会判成「取不到」。",
+   "纯头像在 wtafiles.blob.core.windows.net/images/headshots/<id>.jpg（492x656），但新球员常常 404（帕雷哈就是），抠图两个人都有——所以走抠图这条。"
+  ],
+  "atp": [
+   "atptour.com 全站 403（带浏览器 UA 也一样），但赛事自己的域名镜像同一批：",
+   "  <赛事域名>/-/media/alias/player-gladiator-image/<atp_id>  → 379x603 全身抠图",
+   "  <赛事域名>/-/media/alias/player-headshot/<atp_id>         → 300x300",
+   "尺寸是 alias 定死的，?w= / ?mw= / ?width= 一律无效（返回同一个 50097 字节的文件）。别的路径（/-/media/images/players/gladiator/<id>.png 等）全是 302——**302 就是不存在**。",
+   "379px 铺到一格 662px 高约 1.3 倍放大，比 WTA 那边软一档，但脸仍然清楚。"
+  ],
+  "prep": "原图 3000x2813 是 8 MB，直接入库太肥。裁到非透明包围盒（getbbox）再缩到 1600px 高——海报上渲 662px，2× 有余。别再往上加，那只是塞字节。"
+ },
+ "wta-326376-wang-xinyu.png": {
+  "title": "Xinyu Wang official WTA torso cutout (transparent PNG)",
+  "license": "WTA 官方图库 · 非商业资讯引用",
+  "artist": "WTA",
+  "page": "https://www.wtatennis.com/players/326376/xinyu-wang",
+  "url": "https://photoresources.wtatennis.com/photo-resources/2026/04/08/f68a949e-9922-4d65-9a26-f998ca966a76/Wang-Xin-Torso_326376.png?width=3000",
+  "player": "王欣瑜",
+  "wta_id": 326376,
+  "self_evident": "文件名 Wang-Xin-Torso_326376 自带 WTA ID——人物这一要素由来源自己写死",
+  "size": "1056x1600（原图 3000x2813，裁到包围盒后缩放）",
+  "checked": "打开看过：橙色 adidas 背心，正面微笑，抠图边缘干净"
+ },
+ "wta-333685-julieta-pareja.png": {
+  "title": "Julieta Pareja official WTA torso cutout (transparent PNG)",
+  "license": "WTA 官方图库 · 非商业资讯引用",
+  "artist": "WTA",
+  "page": "https://www.wtatennis.com/players/333685/julieta-pareja",
+  "url": "https://photoresources.wtatennis.com/photo-resources/2026/07/27/65494b51-50ab-4b3a-bd07-f3aebe1390e1/Pareja-Torso_333685.png?width=3000",
+  "player": "帕雷哈",
+  "wta_id": 333685,
+  "self_evident": "文件名 Pareja-Torso_333685 自带 WTA ID",
+  "size": "1124x1600（原图 3000x2813，裁到包围盒后缩放）",
+  "checked": "打开看过：USA 深蓝外套抱臂，白色 On 遮阳帽，抠图边缘干净",
+  "note": "2026-07-27 上传，正是华盛顿这一站期间。她的 headshots/333685.jpg 是 404"
  }
 }
