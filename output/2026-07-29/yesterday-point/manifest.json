@@ -27,10 +27,8 @@
     {
       "resolver": "discover_wta_youtube_point",
       "source": "WTA 官方 YouTube",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 7,
-      "note": "命中昨日比赛 7 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCaBIVVpHjq6j3tSyxwTE-8Q"
     },
     {
       "resolver": "discover_atp_point",
@@ -43,10 +41,8 @@
     {
       "resolver": "discover_tennistv_youtube_point",
       "source": "Tennis TV YouTube",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 4,
-      "note": "命中昨日比赛 4 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCbcxFkd6B9xUU54InHv4Tig"
     },
     {
       "resolver": "discover_youtube_search_point",
@@ -59,34 +55,26 @@
     {
       "resolver": "discover_slam_point:AO",
       "source": "澳网官方视频（官方频道）",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 1,
-      "note": "命中昨日比赛 1 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCeTKJSW1NTAkf27nNmjWt5A"
     },
     {
       "resolver": "discover_slam_point:RG",
       "source": "法网官方视频（官方频道）",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 0,
-      "note": "抓到 15 条候选，0 条命中昨日比赛"
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCF3K1Jf8hjFW8qliei8fQ3A"
     },
     {
       "resolver": "discover_slam_point:WIMBLEDON",
       "source": "温网官方视频（官方频道）",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 0,
-      "note": "抓到 15 条候选，0 条命中昨日比赛"
+      "status": "error",
+      "error": "HTTPError: 500 Server Error: Internal Server Error for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCNa8NxMgSm7m4Ii9d4QGk1Q"
     },
     {
       "resolver": "discover_slam_point:USOPEN",
       "source": "美网官方视频（官方频道）",
-      "status": "empty",
-      "fetched": 15,
-      "matched": 0,
-      "note": "抓到 15 条候选，0 条命中昨日比赛"
+      "status": "error",
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCXbboag48Qlr78zzz6SkzkQ"
     }
   ]
 }
