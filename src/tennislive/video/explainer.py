@@ -2541,18 +2541,34 @@ def _slide_html(
         # question — and bands there just make the opening look empty, so the
         # cover always fills.
         letterbox = wide and not cover
-        fit = (
-            "background-size:contain;background-repeat:no-repeat;"
-            "background-position:center 34%;"
-            if letterbox
-            else "background-size:cover;background-position:center;"
-        )
-        backdrop = ' class="hero diagram"' if letterbox else ' class="hero"'
-        hero = (
-            f'<div{backdrop} style="background-image:url(\'{_data_uri(image_path)}\');'
-            f'{fit}"></div>'
-            '<div class="scrim"></div>'
-        )
+        uri = _data_uri(image_path)
+        if letterbox:
+            # 信箱式缩放的那几屏，上下留白原来铺的是 `.hero.diagram` 那层
+            # 绿色径向渐变——**不透明**，于是卡片顶栏成了一条实心色带，
+            # 而铺满的那几屏顶栏是压在照片上的（半透明观感）。同一条片子里
+            # 两种顶栏，账号所有者一眼看出来：「顶部一定要半透明，和前面
+            # 几张卡片一样」。
+            #
+            # 修法不是挪照片——挪上去她的头又会钻到顶栏底下，正是上一版
+            # 被指出的问题。改成在底下垫一层**同一张照片**的模糊放大版：
+            # 顶栏因此压在照片色上，和铺满的那几屏一致；上面那层 contain
+            # 一个像素都不动，构图完全保持原样。
+            #
+            # scale(1.2) 是给 blur 留出溢出量，否则边缘会透出底色。
+            hero = (
+                f'<div class="hero blurbg" style="background-image:url(\'{uri}\');">'
+                "</div>"
+                f'<div class="hero" style="background-image:url(\'{uri}\');'
+                "background-size:contain;background-repeat:no-repeat;"
+                'background-position:center 34%;"></div>'
+                '<div class="scrim"></div>'
+            )
+        else:
+            hero = (
+                f'<div class="hero" style="background-image:url(\'{uri}\');'
+                'background-size:cover;background-position:center;"></div>'
+                '<div class="scrim"></div>'
+            )
     else:
         if not segment.diagram:
             # 这里原来是 `segment.diagram or _HAWKEYE_DIAGRAM`。一屏既没配图也没
@@ -2612,6 +2628,11 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  background:#061c14;}}
 .hero{{position:absolute;inset:0;}}
 .hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,#155a41 0%,#0b3a2a 55%,#061c14 100%);}}
+/* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
+   和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
+   视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */
+.hero.blurbg{{background-size:cover;background-position:center;
+ filter:blur(44px) brightness(.42) saturate(.85);transform:scale(1.2);}}
 /* 760px on a 1080 card left the drawing at 70% width, and a 20px label inside
    a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
    not on a phone held at arm's length. Fill the card instead, and start
