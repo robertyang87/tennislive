@@ -266,7 +266,7 @@ STORIES = (
             ),
         ),
         venue="Lindner 家族网球中心 · 中央球场 11,435 席",
-        image=ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        image=ASSETS / "cincinnati-center-court.jpg",
         image_credit="RandyFitz / Wikimedia Commons · CC0",
         source_url="https://www.cincinnatiopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:Lindner_Family_Tennis_Center_2025.jpg",
@@ -876,7 +876,7 @@ _STOCK_IMAGES = {
         "Raysonho / Wikimedia Commons · CC BY 3.0",
     ),
     "cincinnati": (
-        ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        ASSETS / "cincinnati-center-court.jpg",
         "RandyFitz / Wikimedia Commons · CC0",
     ),
     "usopen": (
