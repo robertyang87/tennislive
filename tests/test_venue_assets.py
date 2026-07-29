@@ -300,7 +300,7 @@ def test_official_media_records_source_url_and_marks_licence_unverified():
 
 # 还没换到中心球场全景的站点数。**只许降不许升**——加新站时要么带着球场照来，
 # 要么明确把这个数字调高，让"又退回地标了"变成一次显式的决定而不是悄悄发生。
-LANDMARK_BUDGET = 8
+LANDMARK_BUDGET = 7
 
 
 def test_every_venue_declares_what_kind_of_shot_it_is():
