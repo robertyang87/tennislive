@@ -73,8 +73,8 @@ def test_aliases_match_the_real_tournament_names():
     """别名要对着**赛事名**写——真实数据里 city/country 恒为 None。
 
     匹配用的 subject 是 _norm("赛事名 城市 国家")，而抓下来的赛程里
-    city/country 一直是空的，所以按城市写别名永远命不中：维罗纳那站叫
-    "ATV Bancomat Tennis Open"，写 "verona" 没有任何作用；Båstad 那站叫
+    city/country 一直是空的，所以按城市写别名永远命不中：罗马那站叫
+    "ATV Bancomat Tennis Open"，写 "rome" 没有任何作用；Båstad 那站叫
     "Nordea Open" 同理。
     """
     from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
@@ -85,7 +85,8 @@ def test_aliases_match_the_real_tournament_names():
         ("Palermo Ladies Open", "palermo"),
         ("Enka Open", "istanbul"),
         ("Unicredit Iasi Open", "iasi"),
-        ("ATV Bancomat Tennis Open", "verona"),
+        # ATV = Antico Tiro a Volo（罗马），不是 Associazione Tennis Verona
+        ("ATV Bancomat Tennis Open", "rome-atv"),
         ("EFG Swiss Open Gstaad", "gstaad"),
         ("Nordea Open", "bastad"),
         ("Australian Open", "australian-open"),
@@ -339,7 +340,7 @@ def test_every_venue_declares_what_kind_of_shot_it_is():
 def test_sites_with_a_real_court_photo_do_not_fall_back_to_a_landmark():
     """能拿到球场照的站，manifest 不许再指回城市地标。
 
-    地标本身是合法的兜底——维罗纳的竞技场、伊斯坦布尔的老城，那两站眼下确实还
+    地标本身是合法的兜底——伊斯坦布尔的老城眼下确实还
     没找到能用的球场照。但**兜底一旦生效就很难
     发现它已经过期了**：洛斯卡沃斯用埃尔阿尔科海蚀拱用了好几版，画面漂亮、
     地点也对，只是它不是球场；直到有人问"为啥不用中心球场"才发现赛事官网

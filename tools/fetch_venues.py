@@ -79,7 +79,16 @@ VENUES = [
     #   - 判据是拿一个已知存在的（iasi-2023-venue.jpg）当对照：它 200 而别的 403，
     #     说明是文件不在，不是我被挡了
     ("iasi-ciric-centre-court.jpg", None, None),
-    ("verona-arena.jpg", "File:Verona Arena (Arena di Verona).jpg", None),
+    # ⚠️ 这一站原来整条都是错的：slug 叫 verona、卡上印「维罗纳 · 意大利」、
+    # 配图是维罗纳的圆形竞技场（一座歌剧院，跟网球没关系）。
+    # **赛事名里的 ATV 是 Antico Tiro a Volo——罗马的一家俱乐部**，
+    # 不是 Associazione Tennis Verona。判据是 WTA 自己的赛事页：
+    # wtatennis.com/tournaments/1130/**rome**/ 的标题就是
+    # 「ATV BANCOMAT TENNIS OPEN Overview」。
+    # 别名里的 "verona" 也一并去掉——维罗纳另有一站 ATP Challenger
+    # （Internazionali di Tennis Verona），留着会把那站也套上罗马的图。
+    # 现在的图见 OFFICIAL_VENUES：挡板上写着 ATV / ROMA，自证。
+    ("rome-atv-tennis-open-courts.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -236,6 +245,14 @@ OFFICIAL_VENUES = {
         "license": "unverified · 场馆官方媒体",
         "artist": "Telekom Center Athens",
         "page": "https://telekomcenterathens.gr/wp-content/uploads/2025/12/SAK06840-scaled.jpg",
+    },
+    "rome-atv-tennis-open-courts.jpg": {
+        "title": "Circolo Antico Tiro a Volo（罗马）红土场 · 挡板上写着 "
+                 "ATV · ANTICO TIRO A VOLO TENNIS OPEN 与 ROMA，背景是罗马城郊",
+        "license": "unverified · 新闻站转载",
+        "artist": "Il Mondo del Tennis",
+        "page": "https://ilmondodeltennis.com/2022/07/"
+                "torneo-internazionale-al-circolo-antico-tiro-a-volo/",
     },
     "gstaad-roy-emerson-arena.jpg": {
         "title": "Roy Emerson Arena 中心球场 · 满场（红土上刷着 GSTAAD，赞助带 "

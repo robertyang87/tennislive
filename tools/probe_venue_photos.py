@@ -92,8 +92,11 @@ VENUES: dict[str, dict] = {
                 "queries": ["Country Time Club Palermo campo centrale", "Palermo Ladies Open campo centrale"]},
     "umag": {"site": "https://www.croatiaopen.hr",
              "queries": ["Stadion Goran Ivanišević Umag teren", "Umag centralni teren"]},
-    "verona": {"site": None,
-               "queries": ["Verona tennis campo centrale", "ATV Bancomat Tennis Open campo"]},
+    # ATV = Antico Tiro a Volo（罗马），不是维罗纳——查了半天维罗纳的俱乐部，
+    # 查的根本不是这个赛事。判据是 WTA 自己的赛事页 /tournaments/1130/rome/
+    "rome-atv": {"site": "https://www.anticotiroavolo.com",
+                 "queries": ["Circolo Antico Tiro a Volo campo centrale",
+                             "ATV Bancomat Tennis Open Roma tribune"]},
     "los-cabos": {"site": "https://loscabostennisopen.com",
                   "queries": ["Estadio Alejandro Burillo cancha", "Los Cabos estadio tenis"]},
     "us-open": {"site": "https://www.usopen.org",
