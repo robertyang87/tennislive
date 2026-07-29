@@ -98,7 +98,12 @@ VENUES = [
     # 球场俯瞰，场地上就印着 TORONTO。
     ("canada-national-bank-open-stadium.jpg",
      "File:Rexall Centre York University Toronto.JPG", None),
-    ("cincinnati-lindner-tennis-center.jpg", "File:Lindner Family Tennis Center 2025.jpg", None),
+    # 辛辛那提：原来那张是侧面横拍，竖版裁完只剩中段。赛事官网是 WordPress，
+    # wp-json/wp/v2/media?search=stadium 一查就是一堆 2560 宽的官方图；选的这张
+    # 从底线后方顶层往下拍，近端看台 / 球场 / 远端看台整个碗都在竖切里。
+    # 注意：这个站用浏览器 UA 请求 wp-json 会被 WAF 挡 403，用脚本自己的 UA 反而
+    # 200——「取不到」和「0 命中」要分开，见 tools/probe_venue_photos.py 的 Blocked。
+    ("cincinnati-center-court.jpg", None, None),
     # 美网：原来是按分类自动挑的，挑到一张从侧面看台横拍的——竖版裁完只剩
     # 中间一条。换成"从顶层沿球场长轴往下看"：整个碗竖着排在画面里，
     # 近端看台在下、球场在中、远端看台和天际线在上，竖切也切不掉。
@@ -166,6 +171,14 @@ OFFICIAL_VENUES = {
         "artist": "Mifel Tennis Open by Telcel Oppo",
         "page": "https://loscabostennisopen.com/wp-content/uploads/"
                 "2025/07/Main-stadium-09.jpg",
+    },
+    "cincinnati-center-court.jpg": {
+        "title": "Center Court · Lindner Family Tennis Center"
+                 "（赛事官方媒体库 STADIUM-2021_WSOPEN_SOLOMON_001）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Cincinnati Open（署名 Solomon）",
+        "page": "https://cincinnatiopen.com/wp-content/uploads/2023/04/"
+                "STADIUM-2021_WSOPEN_SOLOMON_001.jpg",
     },
     "estoril-centre-court.jpg": {
         "title": "Millennium Estoril Open · estadio2",

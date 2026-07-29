@@ -87,18 +87,29 @@ VENUES: dict[str, dict] = {
 CANARY = "tennis"
 
 
-def _get(url: str, *, timeout: int = 35, tries: int = 4, referer: str | None = None) -> bytes | None:
+class Blocked(Exception):
+    """渠道自己没让我进来——**这不是"0 命中"**。
+
+    第一版把取不到一律当成空列表返回，于是 cincinnatiopen.com 的 wp-json 被 WAF
+    挡了 403，屏幕上印的是「→ 0」，看着就像"这个站没有图库"。跟"只在成功时出声
+    的检查"是同一个毛病：失败必须自己喊出来，否则"没找到"这个结论是假的。
+    """
+
+
+def _get(url: str, *, timeout: int = 35, tries: int = 4, referer: str | None = None) -> bytes:
     headers = dict(UA)
     if referer:
         headers["Referer"] = referer
+    last = ""
     for attempt in range(tries):
         try:
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return resp.read()
-        except Exception:  # noqa: BLE001 - 每个渠道各自降级，不互相拖累
+        except Exception as exc:  # noqa: BLE001 - 每个渠道各自降级，不互相拖累
+            last = str(exc)[:60]
             time.sleep(2 * (attempt + 1))
-    return None
+    raise Blocked(last)
 
 
 def commons(query: str, limit: int = 8) -> list[str]:
@@ -107,8 +118,6 @@ def commons(query: str, limit: int = 8) -> list[str]:
         "srsearch": f"{query} filetype:bitmap", "srnamespace": "6", "srlimit": str(limit),
     })
     raw = _get(f"{COMMONS}?{params}")
-    if raw is None:
-        return []
     hits = json.loads(raw).get("query", {}).get("search", [])
     return [h["title"] for h in hits]
 
@@ -116,24 +125,18 @@ def commons(query: str, limit: int = 8) -> list[str]:
 def openverse(query: str, limit: int = 8) -> list[str]:
     url = f"https://api.openverse.org/v1/images/?q={urllib.parse.quote(query)}&page_size={limit}"
     raw = _get(url)
-    if raw is None:
-        return []
     return [f"{r.get('width')}x{r.get('height')} {r.get('title')}"
             for r in (json.loads(raw).get("results") or [])]
 
 
 def ddg_images(query: str, limit: int = 10) -> list[str]:
     page = _get("https://duckduckgo.com/?q=" + urllib.parse.quote(query) + "&iax=images&ia=images")
-    if page is None:
-        return []
     token = re.search(rb"vqd=([\d-]+)", page)
     if not token:
         return []
     url = (f"https://duckduckgo.com/i.js?l=us-en&o=json&q={urllib.parse.quote(query)}"
            f"&vqd={token.group(1).decode()}&f=,,,&p=1")
     raw = _get(url, referer="https://duckduckgo.com/")
-    if raw is None:
-        return []
     out = []
     for r in (json.loads(raw).get("results") or [])[:limit]:
         out.append(f"{r.get('width')}x{r.get('height')} {str(r.get('title'))[:52]} {r.get('image')}")
@@ -145,8 +148,6 @@ def wordpress_media(site: str, query: str, limit: int = 20) -> list[str]:
     url = (f"{site.rstrip('/')}/wp-json/wp/v2/media?search={urllib.parse.quote(query)}"
            f"&per_page={limit}&_fields=source_url,media_details")
     raw = _get(url, tries=2)
-    if raw is None:
-        return []
     try:
         items = json.loads(raw)
     except ValueError:
@@ -172,12 +173,20 @@ def probe(slug: str) -> None:
     spec = VENUES[slug]
     print(f"\n{'=' * 68}\n### {slug}   官网 {spec['site'] or '（未知）'}")
     for name, fn in CHANNELS.items():
-        canary = fn(CANARY, spec["site"])
+        try:
+            canary = fn(CANARY, spec["site"])
+        except Blocked as exc:
+            print(f"  [{name}] **渠道被挡**（{exc}）—— 这不是 0 命中，这一站在这个渠道还没查过")
+            continue
         if not canary and name != "wp":
             print(f"  [{name}] 对照查询 `{CANARY}` 也是 0 —— 渠道本身有问题，这轮的 0 不作数")
             continue
         for query in spec["queries"]:
-            hits = fn(query, spec["site"])
+            try:
+                hits = fn(query, spec["site"])
+            except Blocked as exc:
+                print(f"  [{name}] 「{query}」 **被挡**（{exc}）")
+                continue
             print(f"  [{name}] 「{query}」 → {len(hits)}")
             for hit in hits[:6]:
                 print(f"        {hit[:150]}")
