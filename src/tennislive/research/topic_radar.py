@@ -348,12 +348,28 @@ def distil_topics(
 
 
 def leftover_terms(clusters: list[list[dict]], *, top: int = 8) -> list[tuple[str, int]]:
-    """没对上角度的那些簇里，哪些词反复出现——下一条该往表里补什么。"""
+    """没对上角度的那些簇里，哪些词反复出现——下一条该往表里补什么。
+
+    两处不能省：
+
+    · **排序要确定**。`Counter.most_common` 在计数全部相同时按插入顺序返回，
+      而插入顺序来自遍历 `set`——字符串的 set 顺序取决于 `PYTHONHASHSEED`，
+      每个进程都不一样。本地过、CI 红，就是这么来的；更糟的是这份清单本来
+      是给人看「该补什么角度」的，随机取八个等于没写。按 (-次数, 词) 排。
+    · **不报拼接词**。`ballkidsquad`、`wimbledonballkid` 是给聚类用的中间产物，
+      人读起来是噪点。
+    """
     counter: Counter[str] = Counter()
     for group in clusters:
-        for term in set().union(*(_terms(str(h.get("title") or "")) for h in group)):
+        words: set[str] = set()
+        for h in group:
+            words |= {
+                w for w in _WORD.findall(_fold(str(h.get("title") or "")))
+                if len(w) > 2 and w not in _STOP
+            }
+        for term in words:
             counter[term] += 1
-    return counter.most_common(top)
+    return sorted(counter.items(), key=lambda kv: (-kv[1], kv[0]))[:top]
 
 # ---------------------------------------------------------------- 舆论热度
 
