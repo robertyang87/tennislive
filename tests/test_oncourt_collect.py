@@ -12,6 +12,9 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
+import tempfile
+import io
 
 import pytest
 
@@ -923,3 +926,105 @@ def test_cross_edition_cap_is_close_to_the_best_single_edition():
     best = max(c for _, c in per)
     assert best >= row["covered"] - 2, (
         f"跨届上限 {row['covered']} 比最好的单届 {best} 高出太多，这个数是虚的")
+
+
+def test_bilibili_throttling_is_never_reported_as_no_match():
+    """B 站限流时返回 `code: 0` + 空列表——**和「没有」一模一样**。
+
+    实测同一个词：几分钟前 8 条 → 连发几次后 **0 条** → 等 90 秒后 20 条。
+    仓库里栽过三次的「空结果 ≠ 不存在」，在这里连 `code != 0` 那根救命
+    稻草都没有：状态码是成功的，`message` 是 `OK`。
+
+    所以每轮**首尾各放一次金丝雀**——一个已知长期非空的词。金丝雀空了，
+    这一轮所有的零都不算数，状态要报 `rate-limited` 而不是 `no-match`。
+    收尾那次也不能省：只在开头查一次的话，「扫到一半被掐」会被报成
+    「后面那些词本来就没有内容」。
+    """
+    import tools.collect_oncourt_interviews as ci
+
+    orig = ci._bili_search
+    calls = []
+
+    def fake(kw):
+        calls.append(kw)
+        return responses.get(kw, [])
+
+    hit = [{"bvid": "BV1x", "title": "王欣瑜<em>赛后采访</em>", "duration": "1:53",
+            "author": "TennisTube", "pubdate": 1}]
+    try:
+        ci._bili_search = fake
+        ci.BILI_GAP_S = 0
+
+        # ① 一上来金丝雀就空 —— 整轮不算数
+        responses = {}
+        rows, status = ci.scan_bilibili("网球 场上采访", 0)
+        assert status == "rate-limited", status
+        assert rows == []
+
+        # ② 金丝雀活着、某个词真的没内容 —— 那才是真空，照常报 ok
+        responses = {ci.BILI_CANARY: hit}
+        calls.clear()
+        rows, status = ci.scan_bilibili("某个真没有的词", 0)
+        assert status.startswith("ok"), status
+
+        # ③ **扫到一半被掐**：开头的金丝雀活着，收尾的不活
+        state = {"n": 0}
+
+        def fading(kw):
+            state["n"] += 1
+            if kw == ci.BILI_CANARY:
+                return hit if state["n"] == 1 else []
+            return hit
+        ci._bili_search = fading
+        rows, status = ci.scan_bilibili("甲,乙", 0)
+        assert status.startswith("rate-limited"), \
+            f"中途被掐必须报 rate-limited，实际 {status}"
+        assert rows, "被掐之前收到的还是要带出来"
+    finally:
+        ci._bili_search = orig
+
+
+def test_bilibili_rows_carry_bv_id_and_strip_search_highlight():
+    """搜索结果里的标题带 `<em>` 高亮标记，拼回条目时要去掉。"""
+    import tools.collect_oncourt_interviews as ci
+
+    row = ci._bili_row({"bvid": "BV1PL3k6WEJH", "duration": "1:53",
+                        "author": "TennisTube", "pubdate": 1785295168,
+                        "title": "王欣瑜闯过<em class=\"keyword\">华盛顿</em>站首轮"})
+    assert row["title"] == "王欣瑜闯过华盛顿站首轮", row["title"]
+    assert row["id"] == "bili:BV1PL3k6WEJH"
+    assert row["duration_s"] == 113
+    assert row["page_url"] == "https://www.bilibili.com/video/BV1PL3k6WEJH"
+
+
+def test_bilibili_frame_sheet_skips_the_ungenerated_black_cells():
+    """雪碧图是**渐进生成**的，刚投稿的片子只有前几格有画面。
+
+    均匀抽 5 帧会抽到 4 张纯黑，然后得出「这片子里没有采访画面」——
+    又一个「空结果 ≠ 不存在」。实测王欣瑜华盛顿那条投稿一小时后
+    只有 19/100 格有内容，而**采访恰恰在第 19 格**（前 18 格是演播室
+    口播和比赛集锦）。按非黑格抽才看得到它。
+    """
+    from PIL import Image
+
+    from tools.check_bili_frames import DARK, sheet
+
+    im = Image.new("RGB", (1000, 500), (0, 0, 0))
+    for i in range(19):                       # 前 19 格给成亮的
+        x, y = (i % 10) * 100, (i // 10) * 50
+        im.paste(Image.new("RGB", (100, 50), (200, 200, 200)), (x, y))
+    im.paste(Image.new("RGB", (100, 50), (30, 90, 40)), (800, 50))   # 第 18 格＝采访
+    buf = io.BytesIO()
+    im.save(buf, format="JPEG")
+
+    out = Path(tempfile.mkdtemp()) / "s.jpg"
+    _, live = sheet(buf.getvalue(), out)
+    assert live == 19, f"只有 19 格有画面，实际数到 {live}"
+    assert out.exists()
+
+    # 全黑的雪碧图要报 0，不能拼出一张黑联络表冒充「看过了」
+    black = io.BytesIO()
+    Image.new("RGB", (1000, 500), (0, 0, 0)).save(black, format="JPEG")
+    _, live = sheet(black.getvalue(), Path(tempfile.mkdtemp()) / "b.jpg")
+    assert live == 0
+    assert DARK > 3, "纯黑格 JPEG 解出来均值 0–3，阈值要在它之上"
