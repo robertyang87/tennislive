@@ -591,40 +591,6 @@ def sample_track(coarse: list[tuple[float, float]],
             for t, x in zip(frames, smooth)]
 
 
-def auto_center(source: Path, segs: "list[Segment]",
-                source_w: int) -> tuple[float, str]:
-    """不摇的那些段，**全片共用一个固定中心**：所有回合段的运动质心中位数。
-
-    「一段一个中心」是这条线上真正的毛病。逐段取中位数，一段只有几秒、
-    往往就是一两个回合，谁那边球多中心就偏谁——实测九段取出来
-    0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 / 0.455 / 0.407，
-    在 1920 宽里前后差了 400 像素，而**转播机位从头到尾没动过**。
-    裁成竖版之后，这就是左边网柱贴着画面沿、右半场整个出画。
-
-    池化到全片就对了：**一整场球的落点是对称于球场中轴的**，
-    样本一多，中位数自己收敛到中轴上（这批数据是 0.455）。同一个机位，
-    本来就该只有一个中心。
-
-    ⚠️ 曾经写过一版按白线剖面找对称轴的检测器（`p ⊛ p` 取峰值），
-    **合成画面上误差 0.001，真实素材上完全不成立**——108 张真源片帧
-    估出来的轴从 0.0 散到 0.85，没有任何聚集；把成片反解回去，
-    同一个机位解出 0.29~0.51。原因也说得通：机位一旦偏离中轴，
-    球场在画面里**本来就不再左右对称**，"找对称轴"找的不是球场中轴。
-    合成画面之所以过，是因为那张图除了球场什么都没有。别再走这条路。
-
-    个别段要另定，spec 里给 `cx`——那是人看着缩略图墙定的，说了算。
-    """
-    import numpy as np
-
-    xs: list[float] = []
-    for seg in segs:
-        xs += [x for _, x in track_run(source, seg.start, seg.end, source_w,
-                                       quiet=True)]
-    if not xs:
-        return 0.5, "画面正中（全片都没取到运动）"
-    return float(np.median(xs)) / source_w, f"全片 {len(xs)} 个采样点的质心中位数"
-
-
 def track_shots(source: Path, segments: list["Segment"],
                 source_w: int) -> dict[int, list[tuple[float, int]]]:
     """把在源片里连着的段合成一个镜头跟一次，再切回各段。
@@ -633,7 +599,7 @@ def track_shots(source: Path, segments: list["Segment"],
     是为了给不同的旁白和不同的画面文字配时间，源片那边并没有剪；镜头一断，
     跟踪就重新起步，交界处窗口瞬移（实测 222 / 448 / 399 px）。
 
-    顺带把不摇的那些段的固定中心也定了（`auto_center`）。
+    顺带把不摇的那些段的固定中心也定了：恒定取源片正中。
     """
     runs: list[list[int]] = []
     for index, seg in enumerate(segments):
@@ -648,17 +614,27 @@ def track_shots(source: Path, segments: list["Segment"],
             runs.append([index])
 
     tracks: dict[int, list[tuple[float, int]]] = {}
-    # **全片一个固定中心**，不是一段一个。同一个转播机位从头到尾没动过，
-    # 逐段各定各的等于让每一段跟着这几秒里谁的球多而左右横跳（实测 0.338~0.547，
-    # 1920 宽里差 400px）。给了 `cx` 的段仍然按人定的来。
+    # **裁切窗口恒定取源片正中，向左右两边等量扩到 3:4。** 账号所有者定的。
+    #
+    # 自动定心走过三版，全删了：
+    #
+    # 1. 逐段取运动质心的中位数——一段几秒就一两个回合，谁球多中心就偏谁。
+    #    实测九段 0.338~0.547，1920 宽里差 400px，而机位从头到尾没动过
+    # 2. 池化到全片，稳了，但仍偏离正中（0.455，86px），**而且解释不了**：
+    #    转播主机位本来就对着球场架，正中才是最合理的先验，质心只是个弱代理
+    # 3. 按白线剖面找球场对称轴——合成画面误差 0.001，真实素材上 108 张源片帧
+    #    估出来的轴从 0.0 散到 0.85（机位一偏离中轴，球场在画面里就不再对称，
+    #    "找对称轴"找的不是球场中轴）
+    #
+    # 3:4 之后窗口占源片 41.3% 宽（9:16 时只有 32%），对中的余量本来就宽裕。
+    # **可预期比「聪明」要紧**：读者的直觉就是等比裁切，行为得对得上。
+    # 个别段要另定，spec 里显式给 `cx`——那是人看着缩略图墙定的，说了算。
     fixed = [s for s in segments
              if not s.track and s.fit != "contain" and s.cx is None]
+    for seg in fixed:
+        seg.cx = 0.5
     if fixed:
-        with stage("定心抽帧"):
-            shared, how = auto_center(source, fixed, source_w)
-        print(f"    [fixed] {len(fixed)} 段不摇，共用固定中心 cx={shared:.3f}（{how}）")
-        for seg in fixed:
-            seg.cx = shared
+        print(f"    [fixed] {len(fixed)} 段不摇，窗口取源片正中 cx=0.500")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end

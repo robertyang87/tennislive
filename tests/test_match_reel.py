@@ -470,29 +470,26 @@ def test_字幕上锚跟着画布重算():
     assert "PlayResY: 1920" in _ass_header() and ",1524,1" in _ass_header()
 
 
-def test_固定中心全片共用一个():
-    """**一段一个中心才是那个毛病。**
+def test_裁切窗口恒定取源片正中():
+    """**从源片正中往左右两边等量扩到 3:4**，账号所有者定的。
 
-    逐段取运动质心的中位数，一段只有几秒、往往就一两个回合，谁那边球多中心就
-    偏谁：实测九段是 0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 /
-    0.455 / 0.407，1920 宽里前后差 400px，而**转播机位从头到尾没动过**。
+    自动定心走过三版，全删了：
 
-    池化到全片才对：一整场球的落点对称于球场中轴，样本一多就收敛（这批是 0.455）。
+    1. 逐段取运动质心的中位数——一段几秒就一两个回合，谁球多中心就偏谁。
+       实测九段 0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 /
+       0.455 / 0.407，1920 宽里差 400px，而机位从头到尾没动过
+    2. 池化到全片，稳了，但仍偏离正中（0.455，86px），**而且解释不了**：
+       转播主机位本来就对着球场架，正中才是最合理的先验
+    3. 按白线剖面找球场对称轴——合成画面误差 0.001，真实素材上 108 张源片帧
+       估出来的轴从 0.0 散到 0.85
 
-    ⚠️ 曾经写过一版按白线剖面找对称轴的检测器，合成画面上误差 0.001，
-    **真实素材上完全不成立**（108 张真源片帧估出来的轴从 0.0 散到 0.85）。
-    机位一旦偏离中轴，球场在画面里本来就不再左右对称——"找对称轴"找的不是
-    球场中轴。已经删掉，别再走这条路。
+    **可预期比「聪明」要紧。** 个别段要另定，spec 里显式给 `cx`。
     """
     reel = _reel()
-    assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
-    assert "全片共用一个固定中心" in src
-    # 签名收的是一批段，不是一段——池化本身就写在类型里
-    import inspect  # noqa: PLC0415
-
-    params = list(inspect.signature(reel.auto_center).parameters)
-    assert params[1] == "segs", params
+    assert not hasattr(reel, "auto_center"), "自动定心还在"
+    assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
+    assert "seg.cx = 0.5" in src, "不摇的段没有取正中"
 
 
 def test_海报进仓库且推送第一屏是它():
