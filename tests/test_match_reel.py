@@ -573,3 +573,26 @@ def test_商竣程那格是本场真实照片不是抽帧():
         assert "在比赛中" in entry["caption_verbatim"]
     # 水印是**固定 100px**，不是按比例——按比例裁会漏
     assert "100px" in credits["shang-washington-2026.jpg"]["watermark"]
+
+
+def test_文案里的tag最多五个():
+    """**正文里的 tag 最多五个**，和知识帖那条线共用 `MAX_HASHTAGS`。
+
+    reel 的文案是手写的 spec，不像知识帖那样过 `limit_hashtags`，所以两头都要管：
+    这里盯住仓库里的 spec，`push_reel` 在发之前再拦一道——发出去就收不回来。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("src").resolve()))
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from tennislive.render.hashtags import MAX_HASHTAGS, hashtag_count  # noqa: PLC0415
+
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        n = hashtag_count(path.read_text(encoding="utf-8"))
+        assert n <= MAX_HASHTAGS, f"{path.name} 有 {n} 个 tag"
+
+    import push_reel  # noqa: PLC0415
+
+    assert push_reel.MAX_HASHTAGS == MAX_HASHTAGS, "两处上限要同源，别各写一个"
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    assert "个 tag，超过" in src, "推送前没有拦 tag 数"
