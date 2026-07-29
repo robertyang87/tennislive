@@ -293,6 +293,43 @@ def _geometry(layout: str, seam: float) -> tuple[tuple, tuple, str]:
             f'<div class="seam" style="top:{seam:.1f}%"></div>')
 
 
+def _result_block(cover: dict) -> str:
+    """钩子下面那一块：结果 + 元信息。
+
+    原来是两行平铺——`score` 一整句「王欣瑜 7-6(3) 6-3 帕雷哈」加一行灰色
+    `sub`。两个毛病：
+
+    - **输赢双方的名字印了两遍**。两个人的中文名已经压在绿线上了，比分行里
+      再来一遍，占掉的正是这一块最值钱的横向空间
+    - **只有两级，没有层次**。级别（WTA 500）、轮次（R1）、赛事、时长四样
+      信息挤在同一行灰字里，扫过去一样重
+
+    现在三级，各管一件事：
+
+        王欣瑜  7-6(3) 6-3            赢家（白）+ 盘分（品牌绿，数字字体大一档）
+        [WTA 500] [R1]  华盛顿 · 1 小时 51 分
+
+    级别和轮次做成**描边药丸**——它们是标签不是句子，而且描边用的是同一个
+    品牌绿，不引入第二个强调色（一屏最多一个强调色）。
+
+    老的 `score` / `sub` 两个字段继续认，斜切那三条已发布的片子不受影响。
+    """
+    if not cover.get("result"):
+        return (f'<div class="score">{cover.get("score", "")}</div>'
+                f'<div class="sub">{cover.get("sub", "")}</div>')
+    winner = str(cover.get("winner", "")).strip()
+    pills = "".join(f'<span class="pill">{p}</span>'
+                    for p in (cover.get("tier"), cover.get("round")) if p)
+    meta = str(cover.get("meta", "")).strip()
+    return (
+        '<div class="res">'
+        + (f'<span class="win">{winner}</span>' if winner else "")
+        + f'<span class="sets">{cover["result"]}</span></div>'
+        + f'<div class="meta">{pills}'
+        + (f'<span class="mtx">{meta}</span>' if meta else "")
+        + "</div>")
+
+
 def build(spec: dict, layout: str, out: Path) -> Path:
     return build_poster(spec["cover"], out, layout=layout)
 
@@ -375,12 +412,23 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
+/* 结果那一行按基线对齐：赢家是汉字、盘分是西文数字，两种字的墨高差着一截，
+   按 center 对齐会看出高低不齐（和字幕里数字要单独放大一档是同一回事）。 */
+.res{{margin-top:28px;display:flex;align-items:baseline;gap:22px}}
+.win{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
+  color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
+.sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
+  font-size:62px;color:{BRAND};letter-spacing:1px}}
+.meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+.pill{{border:2px solid {BRAND};color:{BRAND};border-radius:999px;
+  font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
+  font-size:26px;letter-spacing:3px;padding:6px 18px 7px;white-space:nowrap}}
+.mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
 {body}
 <div class="top">{cover.get('eyebrow', '')}</div>
 <div class="copy"><div class="hook">{hook}</div>
-<div class="score">{cover.get('score', '')}</div>
-<div class="sub">{cover.get('sub', '')}</div></div>"""
+{_result_block(cover)}</div>"""
 
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
