@@ -989,6 +989,36 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate)
 
+    # **旁白比画面长，就不是「注意」，是错的。**
+    #
+    # 每段的语音都按自己那一段的开头 `adelay`，所以上一段一旦超出边界，
+    # 下一段的语音**从边界那一刻照常开始**——两个人同时在说话。字幕同理：
+    # 两条 Dialogue 在时间轴上重叠，libass 会把它们**一起画出来**，屏幕上
+    # 叠着两行。
+    #
+    # 这儿原来只 `print` 一句「[注意] …字幕会压到下一段」，而且容差是 0.35s。
+    # 伊埃拉那条第 10 段只超了 **0.29s**——够不着容差，一声不吭，成片里却是
+    # 实实在在的两行字幕加两个声音（88.7 秒那一帧上看得清清楚楚）。
+    # **只要超出一点点就会重叠**，因为下一段是卡着边界起的，所以容差要小；
+    # 而且要**一次把所有超出的段都列出来**，别改一段跑一次六分钟。
+    over = []
+    spoken_of: dict[int, float] = {}
+    for index, (seg, (path, _marks)) in enumerate(zip(segments, voices)):
+        if not seg.narration.strip():
+            continue
+        spoken_of[index] = probe_duration(path)
+        if spoken_of[index] > seg.length + 0.12:
+            over.append(f"  第 {index + 1} 段：画面 {seg.length:.1f}s，"
+                        f"旁白 {spoken_of[index]:.2f}s，超出 "
+                        f"{spoken_of[index] - seg.length:.2f}s"
+                        f"　「{seg.narration[:24]}…」")
+    if over:
+        raise ReelError(
+            "有旁白比它那一段的画面长，会和下一段的语音、字幕叠在一起：\n"
+            + "\n".join(over)
+            + "\n\n两条出路，选一条：把这几段的旁白删短，或者把画面拉长"
+              "（`end` 往后挪，但别越过下一段的 `start`）。")
+
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
     mix_inputs: list[str] = []
@@ -996,16 +1026,22 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     offset = COVER_SECONDS
     for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
         if seg.narration.strip():
-            spoken = probe_duration(path)
-            if spoken > seg.length + 0.35:
-                print(f"[注意] 第 {index + 1} 段解说 {spoken:.1f}s 比画面 "
-                      f"{seg.length:.1f}s 长，字幕会压到下一段")
+            spoken = spoken_of[index]
             mix_inputs.extend(["-i", str(path)])
             filters.append(
                 f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
                 f"{int(offset*1000)}[v{index}]")
-            cues.extend(subtitle_cues(readable(seg.narration), spoken,
-                                      boundaries=marks, offset=offset))
+            # 上面已经拦掉了超长的段，这儿再把字幕**收进本段的窗口**——
+            # 边界事件的时刻是按语音插值出来的，末尾那一条可以比语音本身还长
+            # 几分之一秒（伊埃拉那条超出 0.29s 的段，字幕尾巴甩出去 1.02s）。
+            # 兜底和它拦的那件事分开写，坏的方式要选能兜住的那种。
+            limit = offset + seg.length
+            cues.extend(
+                (a, min(b, limit), text)
+                for a, b, text in subtitle_cues(
+                    readable(seg.narration), spoken,
+                    boundaries=marks, offset=offset)
+                if a < limit)
         offset += seg.length
 
     ass = write_subtitles(cues, outdir / "subtitles.ass",

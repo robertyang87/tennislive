@@ -201,6 +201,9 @@ PLAYER_ZH: dict[str, str] = {
     "Barbora Krejcikova": "克雷吉茨科娃",
     "Veronika Kudermetova": "维罗妮卡·库德梅托娃",
     "Anna Kalinskaya": "卡林斯卡娅",
+    # 表里没有的名字，定下来就要补进来，别只写在稿子里——2026-07-29 写萨姆索诺娃
+    # 2022 年华盛顿夺冠那条时用到，当时 `player_zh("Kaia Kanepi")` 原样返回英文。
+    "Kaia Kanepi": "卡内皮",
     "Leylah Fernandez": "费尔南德斯",
     "Maya Joint": "乔因特",
     "Iva Jovic": "约维奇",
