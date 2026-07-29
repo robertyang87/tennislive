@@ -181,7 +181,7 @@
       "tier": "central",
       "scan_depth": 800,
       "verified": true,
-      "note": "**深扫 800 条，场上采访 0**（宽口径只命中 1 条发布会）。WTA 中央渠道同样不产出场上采访。",
+      "note": "**深扫 800 条，场上采访 0**（宽口径只命中 1 条发布会）。WTA 中央渠道同样不产出场上采访。\n**「WTA Full Match」完整录播的末尾不接场上采访**——判据是时长对账，而且是单向硬的：短于比赛用时就一定装不下赛后那一段。实测两条都比比赛还短：2025 女王杯决赛录播 76:05 / 官方用时 84 分钟；2026 女王杯决赛录播 100:28 / 官方 108 分钟。这个系列是剪过的，换边和间歇被压掉了。别再指望从录播尾巴上捞采访。",
       "provenance": "official",
       "measured": 13791,
       "depth_exempt": "深处 86 条逐批看帧全是发布会（2020 罗马）和演播室专访（2016 新加坡年终 / 亚洲赛季），真在场上的只有 2–3 条，不值得为它把扫深开到 14000"
@@ -445,7 +445,7 @@
       "scan_depth": 400,
       "verified": true,
       "unofficial": true,
-      "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。",
+      "note": "专拍场上采访的个人号，321 条里 155 条是 `Player interview after Nth round win at YYYY Event` 这种固定写法，轮次/赛事/年份全在标题里。抽 12 条看视频自动帧，12/12 都在场上（草地、看台、温网紫麦 / HSBC / WTA Tour 手持麦）。**不能开 assume_oncourt**：另外 157 条是致辞、好球集锦、西语采访，还混着一条田径和一条足球。覆盖面偏资格赛和早轮，正好补官方不发的那一层。\n⚠️ **WTA 500 那一侧是单点依赖这个号，而它 2026-07-16 之后停更了。** 2025 华盛顿 WTA 的三条场上采访全部来自这里，且是当天/次日同步上传（7/22 发 7/21–22 首轮）。2026 最新一条停在巴斯塔德次轮（20260716），而且是停在那站打到一半——之后的基茨比厄尔、乌马格、华盛顿一条都没有。它一停，整个 WTA 500 的场上采访供给归零（ATP 侧有 tennistv 顶着，不受影响）。**「最新内容是上周的赛事」有两种读法**——「在慢慢补」和「已经不发了」，光看内容日期分不出来，要查上传日期。",
       "provenance": "rehost",
       "measured": 321
     },
@@ -510,6 +510,23 @@
       "provenance": "official",
       "note": "迈阿密赛事官方频道，382 条里 37 条命中 oncourt，**逐条看过帧：14 条真在场上，23 条在赞助商背景板前**。判据不在标题里——`on-court` 有的写有的不写（普伊格两条只写 `Post-Match Interview` 却在场上，伊斯内尔写了 `Post-match` 却在背景板前），所以那 23 条只能按 id 拉黑。\n**TENNISTV 台标不代表场上**：TennisTV 也拍媒体区，同一个台标下两种画面都有。\n补的是迈阿密站——ATP 1000 那侧 48%，WTA 那侧只有 6%。",
       "measured": 382
+    },
+    {
+      "name": "哔哩哔哩（中文搬运）",
+      "url": "https://search.bilibili.com/video",
+      "fetch": "bilibili",
+      "tier": "cn-repost",
+      "unofficial": true,
+      "review_each": true,
+      "verified": true,
+      "provenance": "rehost",
+      "note": "**只用来捞官方场上采访的中文搬运，不收中国转播商自己那一场。** 账号所有者定的口径：「要 atp 和 wta 或者大满贯官方的场上采访」。B 站上量最大的恰恰是被这句话排掉的那类——腾讯体育/咪咕/央视的记者举着自家台标牌在球场上问中国球员，**在场上、赛后、转播画质都对得上，但不是官方那场，而且是中文的**（这个库是英语学习素材）。判据落在话筒上：官方是 WTA TOUR / ATP / 赛事自己的话筒旗（黑底白字、常挂赞助商方块），转播商举的是台标牌。光看人在不在球场上分不出来。\n留着这个源是因为确实有号在搬官方那一场：网球视频尽快更新 的标题直接抄英文原话（Osaka explains how beat Sabalanka、Muchova: I'm really shaking!）。杂草小喵（王欣瑜专号）、TennisTube、爱网球的小土豆、北京网球教练张扬、家豹养成日志 则多是中文采访和集锦包装。\n**按关键词搜，不按 UP 主枚举**：x/space/wbi/arc/search 返回 -403 访问权限不足（要 WBI 签名 / cookie），搜索接口不用。\n**限流的空结果和「没有」一模一样，连 code 都是 0**——实测同一个词几分钟前 8 条、连发几次后 0 条、等 90 秒后 20 条。所以每轮首尾各放一次金丝雀查询，金丝雀空了报 rate-limited，不报 no-match。\n**收上来一律是候选**，标题分不出场合，只有画面能分，所以 review_each。B 站自己生成 10×10 雪碧预览图（x/player/videoshot），那是视频里的真实画面、up 主改不了，正是 YouTube hq1/hq2/hq3 在这边的对应物——见 tools/check_bili_frames.py。**雪碧图是渐进生成的**，刚投稿的片子只有前十几格有内容，均匀抽帧会抽到一片黑，要按非黑格抽。",
+      "keywords": [
+        "网球 场上采访",
+        "网球 赛后采访",
+        "WTA 赛后采访",
+        "ATP 赛后采访"
+      ]
     }
   ],
   "_tennis_note": "综合体育频道上 `post-match interview` 会命中足球、橄榄球等所有项目——Amazon Prime Video Sport 深扫 500 条命中 25 条，全是 UEFA 欧冠。所以给这类源打 require_tennis，标题里必须出现下列网球标记之一才收。注意 `on-court interview` 本身就是网球术语，不受影响；出问题的只有通用的 `post-match interview`。 赛事名这张表**必然不全**——踩过：`Venus Williams Post Match Interview | 2025 Mubadala DC Citi Open` 一度过不了闸。所以这道闸只给综合体育频道开，网球专频不开；新增综合频道时要顺手补它转播的赛事名。",
@@ -722,6 +739,9 @@
     "b2UQFO1GVLU",
     "b9m1zaUTmTI",
     "bWVYKR_l4a0",
+    "bili:BV1CGGx6VEU3",
+    "bili:BV1HoKX6iEva",
+    "bili:BV1PL3k6WEJH",
     "c3Hfa2TXvc0",
     "ckO1IFaPiRA",
     "d0ReAqoyIYc",
