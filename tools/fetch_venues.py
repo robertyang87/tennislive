@@ -155,6 +155,10 @@ VENUES = [
     ("dubai-centre-court.jpg", None, None),
     # 迈阿密：赛事官网开着 wp-json；WTA1000 与 ATP1000 共用硬石球场
     ("miami-centre-court.jpg", None, None),
+    # 马德里：赛事官网开着 wp-json，搜索词要用西语（pista/estadio）；WTA1000 与 ATP1000 共用
+    ("madrid-centre-court.jpg", None, None),
+    # 蒙特卡洛：官网 montecarlotennismasters.com 开着 wp-json（rolexmontecarlomasters.mc 那个域名本环境不通），搜索词用法语
+    ("montecarlo-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -300,6 +304,18 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "montecarlo-centre-court.jpg": {
+        "title": "蒙特卡洛乡村俱乐部雷尼尔三世球场 · 满场，背景是地中海",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "montecarlotennismasters.com 官方图库",
+        "page": "https://montecarlotennismasters.com/wp-content/uploads/2020/04/vue.jpg",
+    },
+    "madrid-centre-court.jpg": {
+        "title": "魔盒（Caja Mágica）曼诺洛·桑塔纳球场 · 满场，红土",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "mutuamadridopen.com 官方图库",
+        "page": "https://mutuamadridopen.com/wp-content/uploads/2025/04/wta.jpg",
+    },
     "miami-centre-court.jpg": {
         "title": "硬石球场中心球场 · 2026 年迈阿密公开赛，满场",
         "license": "unverified · 赛事官方媒体库",

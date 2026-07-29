@@ -208,6 +208,15 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `madrid-centre-court.jpg`
+
+- Title: 魔盒（Caja Mágica）曼诺洛·桑塔纳球场 · 满场，红土
+- Author: mutuamadridopen.com 官方图库
+- Source: https://mutuamadridopen.com/wp-content/uploads/2025/04/wta.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：红土两侧写着 MADRID，围板一圈 MUTUA MADRILEÑA / ESTRELLA DAMM / PIF 是这项赛事的赞助带。一张管两站——4 月的 WTA1000 与 ATP1000 同场地。官网开着 wp-json（5978 项），西语词 pista / estadio 比英语词管用。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `memphis-leftwich-stadium-court.jpg`
 
 - Title: Memphis Classic 主球场（Action News 5 2026-07-26 赛事报道，成片第 14.0 秒；临时看台、Mercedes-Benz / TOPNOTCH / crionet 赞助带、Campbell Clinic 挡布；裁掉了下方的台标条，1280×720 源放大 2.78 倍）
@@ -224,6 +233,15 @@ the photographs are not otherwise altered.
 - Source: https://www.miamiopen.com/wp-content/uploads/2026/07/260328_MO_TDS6543-scaled.jpg
 - License: unverified · 赛事官方媒体库
 - Note: 自证：球网上是 WTA TOUR，围板一圈 itaú / PIF / betway / LACOSTE 是这项赛事的赞助带，看台那种蓝绿配色是硬石球场（Hard Rock Stadium）的。一张管两站——3 月的 WTA1000 与 ATP1000 同场地。官网开着 wp-json（4485 项），按 search=stadium/court/aerial 筛大横图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `montecarlo-centre-court.jpg`
+
+- Title: 蒙特卡洛乡村俱乐部雷尼尔三世球场 · 满场，背景是地中海
+- Author: montecarlotennismasters.com 官方图库
+- Source: https://montecarlotennismasters.com/wp-content/uploads/2020/04/vue.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：红土两侧写着 MONTE CARLO，围板 BNP PARIBAS / ROLEX / FEDCOM（FEDCOM 是摩纳哥雇主联合会，本站赞助商，不是 Fed Cup），两块 ATP 记分屏上是迪米特洛夫对纳达尔。官网开着 wp-json（5580 项），法语词 vue / stade 命中率比英语高。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `monterrey-centre-court.jpg`
