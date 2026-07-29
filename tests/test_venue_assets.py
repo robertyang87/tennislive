@@ -505,7 +505,7 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
 # 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
 # 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
 # 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
-VENUE_COVERAGE_FLOOR = 45
+VENUE_COVERAGE_FLOOR = 51
 
 
 def test_calendar_coverage_only_goes_up():
@@ -533,6 +533,43 @@ def test_calendar_coverage_only_goes_up():
         f"现在命中的 slug：{covered}。"
         "补完新站记得把 VENUE_COVERAGE_FLOOR 一起提上去"
     )
+
+
+def test_known_gaps_still_point_at_a_real_calendar_entry():
+    """「已查明拿不到」的备注要挂在赛历里真实存在、且真的还缺图的站上。
+
+    这份备注存在的意义是**别再重找**——「还没去找」和「找过了拿不到」在
+    输出里长得一模一样，孟菲斯那站就被重找过三轮。但备注按 `en` 写死，
+    有两种走味的方式，都不吭声：
+
+    - 赛事改名或从赛历里去掉了 → 备注成了孤儿，永远不显示，等于没写
+    - 那站后来补上图了 → 备注还挂着「拿不到」，下一个人照着它就不去看了
+
+    所以两头都钉：键必须能在赛历里找到，且那站此刻确实是「缺」。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    rows = module.survey()
+    by_en = {r["en"]: r for r in rows}
+    for name, reason in module.KNOWN_GAPS.items():
+        assert name in by_en, (
+            f"KNOWN_GAPS 里的「{name}」在 2026 赛历里找不到——赛事改名或已移除，"
+            "这条备注成了孤儿，永远不会显示。改键或删掉它"
+        )
+        assert by_en[name]["slug"] is None, (
+            f"「{name}」已经接上 {by_en[name]['slug']} 了，"
+            "KNOWN_GAPS 里那条「拿不到」的备注要删掉——留着会让下一个人不去看"
+        )
+        assert len(reason) >= 40, (
+            f"「{name}」的理由太短：要说清查过哪些源、卡在哪儿，"
+            "不然下一个人还是得重跑一遍"
+        )
 
 
 def test_japan_events_do_not_borrow_each_others_city():
