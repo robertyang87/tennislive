@@ -277,16 +277,29 @@ jobs:
           # 兜底：上面那串模式挡住的是**已知**的中间物，挡不住下一个没见过的。
           # 所以清完再量一次，超过 8 MB 而又不是成片的，一律当成漏网并报错——
           # 宁可这一步红，也别再往仓库里塞一个没人发现的大文件（推分支吃 413
-          # 就是被 pack 体积撑爆的）。成片本身 8 MB 上下，用 20 MB 放行。
+          # 就是被 pack 体积撑爆的）。
+          #
+          # **成片按名字放行，不按体积放行。** 第一版给成片卡了个 20 MB 的上限，
+          # 结果第一条片子就被自己拦下来了：那个数是从**解说片**那条线搬来的
+          # （静图幻灯，2 分 56 秒只有 7.7 MB / 365 kb/s），而这条线是真实比赛
+          # 画面、crf 18，实测 3315 / 3517 / 3610 kb/s 三条几乎一样——**体积
+          # 由时长决定**，写死一个字节数等于给片长设了个暗上限。
+          SLUG="${{ github.event.inputs.slug }}"
           BAD=0
           while IFS= read -r f; do
-            case "$(basename "$f")" in
-              *.mp4) [ "$(stat -c%s "$f")" -gt 20971520 ] || continue ;;
-            esac
+            [ "$(basename "$f")" = "$SLUG.mp4" ] && continue
             echo "::error::清理之后仍有大文件进仓库：$f（$(stat -c%s "$f") 字节）"
             BAD=1
           done < <(find "$OUTDIR" -type f -size +8M)
           [ "$BAD" = 0 ] || exit 1
+          # 成片自己只报不拦：拦它等于拦片长，而片长是编辑决定的。但**要出声**
+          # ——已发的三条是 29–34 MB，明显跳出这个量级时得有人看见。
+          REEL="$OUTDIR/$SLUG.mp4"
+          if [ -f "$REEL" ]; then
+            SZ=$(stat -c%s "$REEL")
+            echo "成片 $SLUG.mp4：$((SZ/1048576)) MB"
+            [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
+          fi
 
       - name: 上传 artifact
         if: github.event.inputs.mode != 'cookies'
