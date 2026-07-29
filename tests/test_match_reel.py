@@ -189,6 +189,39 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "复制评论" not in page
 
 
+def test_push只能在main上而且要第一步就拦():
+    """`push=true` 跑在特性分支上，结局是**渲十六分钟然后一个字都不发**。
+
+    GitHub Pages 只服务 main。复制页提交在分支上，那个 URL 永远 404，而
+    `wait_for_copy_page` 等不到这一版就 exit 1——这个设计是对的（宁可不发也
+    不发一条带死链的消息），代价是它把失败推到最后：渲片 6 分钟 + 轮询
+    10 分钟，全白跑。2026-07-29 大威那条就这么烧掉一次（run 30457284612）。
+
+    判据当时探得很干净：同一个 Pages 站、同样的路径形状，分支上的 copy.html
+    是 404，main 上 wang-pareja 的是 200，差别只有分支。
+
+    所以这条测的是**位置**，不只是存在：闸必须排在 checkout 之前。装字体、
+    装依赖、装 Chromium 加起来三分多钟——拦在它们后面就不叫「第 5 秒失败」了。
+    「只测行为拦不住位置错」这一课在复制页那道闸上已经上过一次。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    guard = "push=true 必须在 main 上"
+    assert guard in text, "没有这道闸"
+
+    # 条件要同时卡住「要推送」和「不在 main」，少一个都拦错人
+    block = text[text.index(guard):].split("- name:")[0]
+    assert "github.event.inputs.push == 'true'" in block
+    assert "github.ref_name != 'main'" in block
+    assert "exit 1" in block, "报了错却不退出，等于没拦"
+    # 出路要说清楚：两条都写出来，别只说「不行」
+    assert "push=false" in block and "合进 main" in block
+
+    # **位置**：必须排在 checkout 之前，否则拦不住那三分多钟的安装
+    assert text.index(guard) < text.index("actions/checkout@v4"), (
+        "这道闸排在了 checkout 后面——装字体/依赖/Chromium 三分多钟白跑，"
+        "就不叫在第 5 秒失败了")
+
+
 def test_默认音色是云见():
     """定下来的是云见（体育解说那把嗓子）。默认值以前写着云希，靠每次手动传参
     盖过去——漏一次就换了个人在说话。"""
