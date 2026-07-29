@@ -96,8 +96,12 @@ VENUES = [
     # 的赞助商帐篷、排队人群和旗杆——不是球场也不是地标。整页拿它当底的时候
     # 一眼就看出来了。换成主球场（Sobeys Stadium / 旧称 Rexall Centre）的中央
     # 球场俯瞰，场地上就印着 TORONTO。
-    ("canada-national-bank-open-stadium.jpg",
-     "File:Rexall Centre York University Toronto.JPG", None),
+    # 再换一次：那张 Rexall Centre 俯瞰是侧面横拍且空场，竖版裁完只剩中段。
+    # 现在是单打决赛满场的中心球场，整个碗都在竖切里，场地前场还刷着 TORONTO。
+    # 官方渠道这站全空：nationalbankopen / tenniscanada / sobeysstadium 三个域名
+    # 都不是 WordPress（wp-json 全 404），tenniscanada 的 assets CDN 要从页面读
+    # 真实 URL、猜不出来；Commons 与 Openverse 都是 0。
+    ("canada-sobeys-centre-court.jpg", None, None),
     # 辛辛那提：原来那张是侧面横拍，竖版裁完只剩中段。赛事官网是 WordPress，
     # wp-json/wp/v2/media?search=stadium 一查就是一堆 2560 宽的官方图；选的这张
     # 从底线后方顶层往下拍，近端看台 / 球场 / 远端看台整个碗都在竖切里。
@@ -171,6 +175,13 @@ OFFICIAL_VENUES = {
         "artist": "Mifel Tennis Open by Telcel Oppo",
         "page": "https://loscabostennisopen.com/wp-content/uploads/"
                 "2025/07/Main-stadium-09.jpg",
+    },
+    "canada-sobeys-centre-court.jpg": {
+        "title": "Sobeys Stadium 中心球场 · 单打决赛满场（场地前场刷着 TORONTO）",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "unknown（View the VIBE 转载）",
+        "page": "https://viewthevibe.com/wp-content/uploads/2022/08/"
+                "Aviva-Centre-during-the-singles-final-3-Res.jpeg",
     },
     "cincinnati-center-court.jpg": {
         "title": "Center Court · Lindner Family Tennis Center"

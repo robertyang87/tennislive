@@ -216,7 +216,7 @@ STORIES = (
             ),
         ),
         venue="Sobeys 球场（多伦多）/ IGA 球场（蒙特利尔）",
-        image=ASSETS / "canada-national-bank-open-stadium.jpg",
+        image=ASSETS / "canada-sobeys-centre-court.jpg",
         image_credit="Raysonho / Wikimedia Commons · CC BY 3.0",
         source_url="https://nationalbankopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:RogersCup2011-2.jpg",
@@ -872,7 +872,7 @@ _STOCK_IMAGES = {
         "Asolsma1988 / Wikimedia Commons · CC0",
     ),
     "canada": (
-        ASSETS / "canada-national-bank-open-stadium.jpg",
+        ASSETS / "canada-sobeys-centre-court.jpg",
         "Raysonho / Wikimedia Commons · CC BY 3.0",
     ),
     "cincinnati": (
