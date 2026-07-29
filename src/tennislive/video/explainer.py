@@ -68,6 +68,12 @@ _PAGES_URL = os.environ.get(
 ).rstrip("/")
 
 
+# 卡片截图的 JPEG 质量。82 是下限（深绿底上的浅色小字开始出现块状噪点），
+# 86 与无损 PNG 逐像素比过看不出差别。改这个数要重新渲一屏文字最密的
+# 示意图，放大对比，别按比例推。
+_SLIDE_JPEG_QUALITY = 86
+
+
 class ExplainerVideoError(RuntimeError):
     pass
 
@@ -2535,18 +2541,34 @@ def _slide_html(
         # question — and bands there just make the opening look empty, so the
         # cover always fills.
         letterbox = wide and not cover
-        fit = (
-            "background-size:contain;background-repeat:no-repeat;"
-            "background-position:center 34%;"
-            if letterbox
-            else "background-size:cover;background-position:center;"
-        )
-        backdrop = ' class="hero diagram"' if letterbox else ' class="hero"'
-        hero = (
-            f'<div{backdrop} style="background-image:url(\'{_data_uri(image_path)}\');'
-            f'{fit}"></div>'
-            '<div class="scrim"></div>'
-        )
+        uri = _data_uri(image_path)
+        if letterbox:
+            # 信箱式缩放的那几屏，上下留白原来铺的是 `.hero.diagram` 那层
+            # 绿色径向渐变——**不透明**，于是卡片顶栏成了一条实心色带，
+            # 而铺满的那几屏顶栏是压在照片上的（半透明观感）。同一条片子里
+            # 两种顶栏，账号所有者一眼看出来：「顶部一定要半透明，和前面
+            # 几张卡片一样」。
+            #
+            # 修法不是挪照片——挪上去她的头又会钻到顶栏底下，正是上一版
+            # 被指出的问题。改成在底下垫一层**同一张照片**的模糊放大版：
+            # 顶栏因此压在照片色上，和铺满的那几屏一致；上面那层 contain
+            # 一个像素都不动，构图完全保持原样。
+            #
+            # scale(1.2) 是给 blur 留出溢出量，否则边缘会透出底色。
+            hero = (
+                f'<div class="hero blurbg" style="background-image:url(\'{uri}\');">'
+                "</div>"
+                f'<div class="hero" style="background-image:url(\'{uri}\');'
+                "background-size:contain;background-repeat:no-repeat;"
+                'background-position:center 34%;"></div>'
+                '<div class="scrim"></div>'
+            )
+        else:
+            hero = (
+                f'<div class="hero" style="background-image:url(\'{uri}\');'
+                'background-size:cover;background-position:center;"></div>'
+                '<div class="scrim"></div>'
+            )
     else:
         if not segment.diagram:
             # 这里原来是 `segment.diagram or _HAWKEYE_DIAGRAM`。一屏既没配图也没
@@ -2606,6 +2628,11 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
  background:#061c14;}}
 .hero{{position:absolute;inset:0;}}
 .hero.diagram{{background:radial-gradient(125% 80% at 50% 20%,#155a41 0%,#0b3a2a 55%,#061c14 100%);}}
+/* 信箱式缩放那几屏的底衬：同一张照片的模糊放大版，让卡片顶栏压在照片色上，
+   和铺满的那几屏观感一致。压暗到 .42 是为了让上层 contain 的那张仍然是
+   视觉主体；scale(1.2) 给 blur 留溢出量，否则边缘透底。 */
+.hero.blurbg{{background-size:cover;background-position:center;
+ filter:blur(44px) brightness(.42) saturate(.85);transform:scale(1.2);}}
 /* 760px on a 1080 card left the drawing at 70% width, and a 20px label inside
    a 900-unit viewBox came out around 17 real pixels — legible on a monitor,
    not on a phone held at arm's length. Fill the card instead, and start
@@ -2722,9 +2749,22 @@ def render_explainer_slides(
                         "Array.from(document.images).every(i => i.complete)",
                         timeout=15000,
                     )
-                    out = outdir / f"slide_{index:02d}.png"
+                    # JPEG，不是 PNG。卡片是**照片**铺满的 3:4 图，PNG 对它
+                    # 是最坏的格式：七屏 2160×2880 存成 PNG 合计 **31 MB**，
+                    # 换成 q86 的 JPEG 是 **3.9 MB**（12%），同一块文字区域
+                    # 放大逐像素比过，肉眼看不出差别——2× 截图是为了字锐利，
+                    # 那是**分辨率**的事，和无损编码无关。
+                    #
+                    # 这 31 MB 是要经 jsDelivr 发到微信里去的，国内那条链路
+                    # 本来就慢；顺带也少往仓库里塞 27 MB/条（推分支吃 HTTP 413
+                    # 那次就是被 mp4/jpg 的 pack 体积撑爆的）。
+                    #
+                    # 不能再压的两条：不缩尺寸（字会糊），q 不低于 82
+                    # （深绿底上的浅色小字开始出现块状噪点）。
+                    out = outdir / f"slide_{index:02d}.jpg"
                     page.screenshot(
-                        path=str(out), clip={"x": 0, "y": 0, "width": W, "height": H}
+                        path=str(out), type="jpeg", quality=_SLIDE_JPEG_QUALITY,
+                        clip={"x": 0, "y": 0, "width": W, "height": H},
                     )
                     paths.append(out)
                 finally:
@@ -3392,7 +3432,7 @@ def explainer_push_html(
     """
     from ..render.knowledge import knowledge_push_html_from_parts
 
-    slides = [f"slide_{i:02d}.png" for i in range(len(segments))]
+    slides = [f"slide_{i:02d}.jpg" for i in range(len(segments))]
     rel = outdir.as_posix()
     if "output/" in rel:
         rel = rel[rel.index("output/") :]

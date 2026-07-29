@@ -59,11 +59,18 @@ def main() -> int:
     ref = sys.argv[2] if len(sys.argv) > 2 else "origin/main"
     stale = []
     for slug in SLUGS:
-        path = f"output/{date}/explainer/{slug}/slide_01.png"
+        # 卡片 2026-07-29 起存 JPEG，之前发的是 PNG——两个后缀都试。
+        base = f"output/{date}/explainer/{slug}/slide_01"
         try:
-            png = subprocess.run(
-                ["git", "show", f"{ref}:{path}"],
-                capture_output=True, check=True).stdout
+            png = b""
+            for suffix in (".jpg", ".png"):
+                got = subprocess.run(["git", "show", f"{ref}:{base}{suffix}"],
+                                     capture_output=True)
+                if got.returncode == 0 and got.stdout:
+                    png = got.stdout
+                    break
+            if not png:
+                raise subprocess.CalledProcessError(1, "git show")
         except subprocess.CalledProcessError:
             print(f"  ?? {slug:18} 没有成片")
             stale.append(slug)

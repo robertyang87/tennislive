@@ -108,9 +108,15 @@ def main() -> int:
 
     if args.slide is not None and args.against:
         from PIL import Image
-        raw = _git(args.ref, f"{outdir}/slide_{args.slide:02d}.png")
+        # 卡片 2026-07-29 起存 JPEG，之前发的是 PNG——两个后缀都试，
+        # 否则查旧成片会误报「还没落库」。
+        raw = b""
+        for suffix in (".jpg", ".png"):
+            raw = _git(args.ref, f"{outdir}/slide_{args.slide:02d}{suffix}")
+            if raw:
+                break
         if not raw:
-            print(f"  slide_{args.slide:02d}.png 还没落库"); return 2
+            print(f"  slide_{args.slide:02d}.[jpg|png] 还没落库"); return 2
         repo = _grid(Image.open(io.BytesIO(raw)))
         new = _grid(Image.open(args.against))
         d_new = _dist(repo, new)

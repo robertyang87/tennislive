@@ -49,6 +49,24 @@ def _brightness(png: bytes) -> float:
     return ImageStat.Stat(img).mean[0]
 
 
+def _local(outdir: Path, index: int) -> bytes:
+    for suffix in (".jpg", ".png"):
+        p = outdir / f"slide_{index:02d}{suffix}"
+        if p.is_file():
+            return p.read_bytes()
+    raise FileNotFoundError(f"{outdir}/slide_{index:02d}.[jpg|png]")
+
+
+def _published(ref: str, outdir: str, index: int) -> bytes | None:
+    for suffix in (".jpg", ".png"):
+        got = subprocess.run(
+            ["git", "show", f"{ref}:{outdir}/slide_{index:02d}{suffix}"],
+            capture_output=True)
+        if got.returncode == 0 and got.stdout:
+            return got.stdout
+    return None
+
+
 def main() -> int:
     date = sys.argv[1] if len(sys.argv) > 1 else "2026-07-26"
     ref = sys.argv[2] if len(sys.argv) > 2 else "origin/main"
@@ -62,16 +80,15 @@ def main() -> int:
                 explainer_script(story)[:1], out,
                 topic=(_OPENINGS.get(slug) or {}).get("topic", ""),
             )
-            want = _brightness((out / "slide_00.png").read_bytes())
-            path = f"output/{date}/explainer/{slug}/slide_00.png"
-            try:
-                got = _brightness(subprocess.run(
-                    ["git", "show", f"{ref}:{path}"],
-                    capture_output=True, check=True).stdout)
-            except subprocess.CalledProcessError:
+            want = _brightness(_local(out, 0))
+            # 卡片 2026-07-29 起存 JPEG（七屏 31 MB → 3.9 MB），之前发的是
+            # PNG。这个工具要能比对当天之前的成片，所以两个后缀都试。
+            raw = _published(ref, f"output/{date}/explainer/{slug}", 0)
+            if raw is None:
                 print(f"  ?? {slug:18} 没有成片")
                 stale.append(slug)
                 continue
+            got = _brightness(raw)
             ok = abs(got - want) <= TOL
             print(f"  {'OK' if ok else '!!'} {slug:18} 已发布 {got:6.1f}  本地 {want:6.1f}"
                   f"  差 {got - want:+5.1f}")
