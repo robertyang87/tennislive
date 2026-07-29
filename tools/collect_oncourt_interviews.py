@@ -2,7 +2,24 @@
 """把巡回赛的**场上赛后采访**持续收进 data/oncourt_interviews.json。
 
 **只收一类：赛后直接在场上接受采访**——主持人拿麦上场问两三个问题、
-球员站着答，通常 40 秒到 4 分钟。其余两类默认不收：
+球员站着答，通常 40 秒到 4 分钟。
+
+而且必须是**赛事官方那一场**（ATP / WTA / 四大满贯）。账号所有者的原话：
+「要 atp 和 wta 或者大满贯官方的场上采访」。这句话排掉的是一整类看着很像、
+判据却过不了的东西——**中国转播商的记者在球场上做的采访**：
+
+    腾讯体育在温网草地上问王欣瑜        在场上 ✓  赛后 ✓  转播画质 ✓  但不是官方那场
+    咪咕/央视在华盛顿场边问王欣瑜        同上
+    央视在法网 BNP PARIBAS 背景板前      连场上都不是，是混合区
+
+判据落在**话筒**上，和 `Lilli Tagger Champion Prague 2026` 那条一样：
+官方场上采访是 `WTA TOUR` / `ATP` / 赛事自己的话筒旗（黑底白字，常挂赞助商
+方块），面向全场观众；转播商那种举的是自家台标牌（`腾讯体育`、`CCTV`），
+是给自己频道做的独家。**光看「人在不在球场上」分不出来，得看话筒。**
+
+顺带一层：那类采访基本是**中文进行的**，而这个库是英语学习素材。
+
+其余两类默认不收：
 
 - **颁奖礼致辞 / 冠军演讲**（`Championship Speech`、`Trophy Ceremony`）：
   也在场上，但是"讲"不是"接受采访"。要的话加 `--include-ceremony`。
@@ -78,12 +95,14 @@ import re
 import subprocess
 import sys
 import time
+import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = ROOT / "data" / "oncourt_sources.json"
 STORE = ROOT / "data" / "oncourt_interviews.json"
+VERDICTS = ROOT / "data" / "oncourt_verify.json"
 
 # yt-dlp 单源超时。频道扫 400 条时会比较久。
 TIMEOUT = 300
@@ -420,6 +439,134 @@ def scan_wta(url: str, _depth: int) -> tuple[list[dict], str]:
     return [_wta_row(it) for it in items], f"ok（扫 {len(todo)} 个 ID）"
 
 
+# ---------------------------------------------------------------- 哔哩哔哩
+
+BILI_API = "https://api.bilibili.com/x/web-interface/wbi/search/type"
+# 两次查询之间的间隔。**这是从限流实测倒推的，不是拍的**：连发四次之后
+# 接口开始返回空列表，等 90 秒恢复。20 秒是留了余量的稳态节奏。
+BILI_GAP_S = 20
+# **金丝雀查询**：一个已知长期非空的词。见 `_bili_search` 上面那段。
+BILI_CANARY = "网球 赛后采访"
+CN_PLAYERS = ROOT / "data" / "cn_players.json"
+
+
+def _bili_search(keyword: str) -> list[dict] | None:
+    """搜一次。返回条目列表；**取不到就返回 None，绝不返回空列表**。
+
+    这个区分是这个源的全部要害。B 站搜索接口被限流时返回的是
+
+        {"code": 0, "message": "OK", "data": {"result": []}}
+
+    ——**状态码是成功的，列表是空的**，和「这个词真的没有视频」一模一样。
+    实测：同一个词几分钟前返回 8 条，连发几次之后返回 0 条，等 90 秒
+    再查返回 20 条。仓库里栽过三次的「空结果 ≠ 不存在」，在这里连
+    `code != 0` 这根救命稻草都没有。
+
+    所以调用方必须靠 `_bili_alive()` 的金丝雀来判断这一轮到底算不算数。
+    """
+    url = (f"{BILI_API}?search_type=video&order=pubdate"
+           f"&keyword={urllib.parse.quote(keyword)}")
+    try:
+        proc = subprocess.run(
+            ["curl", "-sS", "--compressed", "--max-time", "25",
+             "-H", "User-Agent: Mozilla/5.0",
+             "-H", "Referer: https://www.bilibili.com", url],
+            capture_output=True, text=True, timeout=45)
+        data = json.loads(proc.stdout)
+    except (subprocess.TimeoutExpired, ValueError):
+        return None
+    if data.get("code") != 0:
+        return None
+    return (data.get("data") or {}).get("result") or []
+
+
+def _bili_alive() -> bool:
+    """金丝雀：一个已知长期非空的词还出不出结果。
+
+    出——这一轮的空结果是真空；不出——被限流了，这一轮所有的零都不算数。
+    **这就是「空结果先自证是真空」做成机制的样子**，不靠人记得去对一下。
+    """
+    return bool(_bili_search(BILI_CANARY))
+
+
+def _bili_keywords() -> list[str]:
+    """通用搜索词，登记在注册表的 `keywords` 字段里。"""
+    for s in load_sources()["sources"]:
+        if s.get("fetch") == "bilibili":
+            return list(s.get("keywords") or [])
+    return []
+
+
+def _bili_row(r: dict) -> dict:
+    """搜索结果 → 条目。标题里的 `<em>` 高亮标记要去掉。"""
+    title = html.unescape(re.sub(r"<[^>]+>", "", r.get("title") or ""))
+    mins, _, secs = (r.get("duration") or "0:0").partition(":")
+    return {
+        "id": f"bili:{r.get('bvid')}",
+        "title": title,
+        "duration_s": int(mins or 0) * 60 + int(secs or 0),
+        "published": r.get("pubdate"),
+        "channel": f"bilibili / {r.get('author')}",
+        "page_url": f"https://www.bilibili.com/video/{r.get('bvid')}",
+        "uploader": r.get("author"),
+    }
+
+
+def scan_bilibili(url: str, _depth: int) -> tuple[list[dict], str]:
+    """B 站搜索——**中国球员那一档在别处根本拿不到的东西**。
+
+    为什么值得单开一路：2026 华盛顿王欣瑜首轮赢球，做了场上采访
+    （画面里她在场上、肩搭毛巾、手持话筒，背板 `WTA 500` / `MDE.TENNIS`
+    / `TENNIS Channel`），但 wtatennis.com、@wta、Tennis Channel 的 YouTube、
+    赛事官方频道**一条都没发**。唯一露头的地方是 B 站上中文转播方的赛事
+    集锦包装片。而中国球员正是推送最看重的一档。
+
+    找到的搬运号：`杂草小喵`（王欣瑜专号）、`TennisTube`、`网球视频尽快更新`、
+    `爱网球的小土豆`、`北京网球教练张扬`、`家豹养成日志`。
+
+    **按关键词搜，不按 UP 主枚举**：`x/space/wbi/arc/search` 返回
+    `-403 访问权限不足`（要 WBI 签名 / cookie），搜索接口不用。
+
+    两个坑：
+
+    - **限流的空结果长得跟「没有」一模一样**，连 `code` 都是 0。所以每轮
+      先放金丝雀，见 `_bili_search`。
+    - **收上来的一律是候选**。B 站上的「赛后采访」至少有四类混在一起：
+      场上采访、**央视/中文记者的混合区采访**（`杂草小喵` 的标题里直接写着
+      「央视采访」）、演播室口播、集锦包装。标题分不出，只有画面能分——
+      所以这个源和 wtatennis.com 一样登记 `review_each`。
+      好在 B 站自己生成 10×10 的雪碧预览图（`x/player/videoshot`），
+      **那是视频里的真实画面、up 主改不了**，正好是 YouTube `hq1/hq2/hq3`
+      在 B 站这边的对应物。见 `tools/check_bili_frames.py`。
+    """
+    # **关键词不放在 `url` 字段里。** 每个源的 url 必须是个真地址，
+    # 那条不变式挡过好几次「句柄写错了」（见 test_sources_registry_is_sane），
+    # 为了省一个字段把它废掉不值当。
+    words = list(_bili_keywords())
+    if CN_PLAYERS.exists():
+        with CN_PLAYERS.open(encoding="utf-8") as fh:
+            words += [f"{p['zh']} 采访" for p in json.load(fh)["players"]]
+
+    if not _bili_alive():
+        return [], "rate-limited"
+
+    rows: dict[str, dict] = {}
+    for i, w in enumerate(words):
+        if i:
+            time.sleep(BILI_GAP_S)
+        got = _bili_search(w)
+        if got is None:
+            return list(rows.values()), f"error: 第 {i + 1} 个词取不到（已收 {len(rows)}）"
+        for r in got:
+            if r.get("bvid"):
+                rows[r["bvid"]] = _bili_row(r)
+    # **收尾再放一次金丝雀。** 中途被限流的话，后面那些词的零是假的——
+    # 只在开头查一次，会把「扫到一半被掐」报成「后面那些词没有内容」。
+    if not _bili_alive():
+        return list(rows.values()), f"rate-limited（中途被掐，已收 {len(rows)}）"
+    return list(rows.values()), f"ok（{len(words)} 个词）"
+
+
 def scan(url: str, depth: int) -> tuple[list[dict], str]:
     """扫一个频道。返回 (条目列表, 状态)。
 
@@ -519,11 +666,14 @@ def main() -> int:
     new_items: dict[str, dict] = {}
     report: list[tuple[str, str, int, int, int, int]] = []
     dropped: list[tuple[str, str]] = []
+    # review_each 的源里还没看过画面的，攒起来写进判定文件当队列。
+    pending: dict[str, dict] = {}
     skipped: list[tuple[str, str, str]] = []
     any_fetched = False
 
     for src in sources:
-        fetch = {"tennistv": scan_tennistv, "wta": scan_wta}.get(src.get("fetch"), scan)
+        fetch = {"tennistv": scan_tennistv, "wta": scan_wta,
+                 "bilibili": scan_bilibili}.get(src.get("fetch"), scan)
         depth = src.get("scan_depth", 150) if args.full else min(
             args.daily_depth, src.get("scan_depth", 150))
         rows, status = fetch(src["url"], depth)
@@ -581,6 +731,15 @@ def main() -> int:
                 # 是赛后讲话，但不是要的那一类（致辞 / 分不出场合）。
                 n_skipped += 1
                 skipped.append((src["name"], kind, r["title"]))
+                if src.get("review_each"):
+                    # **待看图的要留下来，不能每轮跑完就丢。** 报告里那一行
+                    # 下一轮就没了，而 review_each 的源本来就指望人回来看画面；
+                    # 记进判定文件的 unknown 档，才有一个能被 --recheck-unknown
+                    # 接上的持久队列。
+                    pending[r["id"]] = {
+                        "verdict": "unknown", "title": r["title"],
+                        "source": src["name"], "page_url": r.get("page_url", ""),
+                    }
                 continue
             if kind == "oncourt":
                 n_oncourt += 1
@@ -610,6 +769,16 @@ def main() -> int:
             json.dump({"items": known}, fh, ensure_ascii=False, indent=2, sort_keys=True)
             fh.write("\n")
         wrote = True
+        if pending:
+            # 已经有判定的不覆盖——人看过的结论比这里的 unknown 硬。
+            with VERDICTS.open(encoding="utf-8") as fh:
+                data = json.load(fh)
+            fresh_q = {k: v for k, v in pending.items() if k not in data["verdicts"]}
+            if fresh_q:
+                data["verdicts"].update(fresh_q)
+                with VERDICTS.open("w", encoding="utf-8") as fh:
+                    json.dump(data, fh, ensure_ascii=False, indent=2)
+                    fh.write("\n")
 
     # 报告：成功的和失败的都列出来。只在成功时出声的检查，没法证明它真的看过。
     mode = "全量（重扫历史）" if args.full else f"日常（每源 {args.daily_depth} 条）"

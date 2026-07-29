@@ -1,5 +1,5 @@
 {
-  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。\n**wtatennis.com 的 `post-match-interview` 不等于场上采访**：五条里四条是 `WTA MEDIA` 深色背景板的坐访，只有雅典决赛那条真在场上。slug 里没有字段能分开（`-english` 两边都有），判据只能落在画面上——台卡写 WTA MEDIA / 深色无缝背景 / 便服 + 领夹麦 = 背景板；WTA TOUR 手持话筒旗 + 球网 + 看台 = 场上。所以这个源登记成 `review_each`，默认不收，进 `allow_ids` 才收。",
+  "note": "人工看图判定。oncourt=画面在球场；press=发布会厅或媒体混合区；other=不是采访；unknown=还没看到画面。**引语卡封面要调视频自动帧**：YouTube 除了上传的封面，还在 25%/50%/75% 处各截一帧存成 hq1/hq2/hq3.jpg，那是视频里的真实画面、上传者改不了。14 条 unknown 全靠这个验完，14/14 都在场上——引语卡挡的是我，不是内容有问题。 tennistv 的海报要带 `?width=1024&height=512`，去掉 query 串 CDN 一律返 400——这个 bug 让 522 条 tennistv 条目一直「取不到海报」，看着像这个源没有图。\n**wtatennis.com 的 `post-match-interview` 不等于场上采访**：五条里四条是 `WTA MEDIA` 深色背景板的坐访，只有雅典决赛那条真在场上。slug 里没有字段能分开（`-english` 两边都有），判据只能落在画面上——台卡写 WTA MEDIA / 深色无缝背景 / 便服 + 领夹麦 = 背景板；WTA TOUR 手持话筒旗 + 球网 + 看台 = 场上。所以这个源登记成 `review_each`，默认不收，进 `allow_ids` 才收。\n**「在球场上」不等于「官方场上采访」。** 账号所有者的口径是「要 atp 和 wta 或者大满贯官方的场上采访」，而中国转播商（腾讯体育/咪咕/央视）会派记者到场上对中国球员做自家独家采访——人在场上、赛后、转播画质，三样都对得上。**判据在话筒**：官方是 WTA TOUR / ATP / 赛事话筒旗（黑底白字、常挂赞助商方块），转播商举的是台标牌。那类采访还基本是中文的，而这个库是英语学习素材。",
   "verdicts": {
     "aLMwctJsY9A": {
       "verdict": "oncourt",
@@ -3193,6 +3193,27 @@
       "why": "2026 华盛顿首轮萨姆索诺娃：深色幕布背景板，左侧烧着 WTA / MUBADALA DC OPEN 台卡，上身黑色训练服，没有话筒旗也没有球场。slug 写着 post-match-interview-r32，画面是坐访。**它推翻了「WTA 首轮不发视频」那个结论**——发了，滞后约 14 小时（比赛 07-28 01:01 UTC 结束，视频 15:41 UTC 上线），只是发的是背景板那一类。",
       "title": "Liudmila Samsonova Post-Match Interview | R32 | Washington",
       "source": "WTA 官网视频 (wtatennis.com)",
+      "checked": "2026-07-29"
+    },
+    "bili:BV1PL3k6WEJH": {
+      "verdict": "press",
+      "why": "2026 华盛顿王欣瑜首轮，中文转播方的集锦包装片：开头演播室口播（WTA 500 台标）、中段比赛（带转播记分条 J. PAREJA / XN. WANG）、末尾几秒场上采访。采访那一格里她在场上、肩搭毛巾，背板是 WTA 500 / MDE.TENNIS / DC / TENNIS Channel，**但手持的是转播商台标牌，不是 WTA TOUR 话筒旗**。按「只要赛事官方那一场」的口径不收。",
+      "title": "王欣瑜闯过华盛顿站首轮",
+      "source": "哔哩哔哩（中文搬运）",
+      "checked": "2026-07-29"
+    },
+    "bili:BV1HoKX6iEva": {
+      "verdict": "press",
+      "why": "2026 温网王欣瑜首轮：人确实在草地球场上（球网、看台、BARCLAYS 广告板、裁判椅都在），但手里举的是 **腾讯体育 / 腾讯新闻·体育** 的台标牌——转播商的独家采访，不是官方场上采访，且为中文。",
+      "title": "王欣瑜温网首轮赛后采访",
+      "source": "哔哩哔哩（中文搬运）",
+      "checked": "2026-07-29"
+    },
+    "bili:BV1CGGx6VEU3": {
+      "verdict": "press",
+      "why": "2026 法网王欣瑜首轮：BNP PARIBAS 背景板 + **CCTV** 话筒，连场上都不是，是媒体混合区。",
+      "title": "【王欣瑜】法网首轮赛后央视采访",
+      "source": "哔哩哔哩（中文搬运）",
       "checked": "2026-07-29"
     }
   }
