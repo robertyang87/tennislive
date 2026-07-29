@@ -121,6 +121,16 @@ VENUES = [
     ("monterrey-centre-court.jpg", None, None),
     # 辛辛那提：从空场换成满场。上一版构图没问题，问题是空。
     ("cincinnati-centre-court-full.jpg", None, None),
+    # 瓜达拉哈拉：Complejo Panamericano 满场，场地刷着 GUADALAJARA。
+    ("guadalajara-centre-court.jpg", None, None),
+    # 圣保罗：2025 首届 SP Open，场地刷着 SÃO PAULO。
+    ("sao-paulo-centre-court.jpg", None, None),
+    # 首尔：奥林匹克公园网球中心。
+    ("seoul-olympic-park-centre-court.jpg", None, None),
+    # 东京：有明コロシアム，ATP500 与 WTA500 共用。注意大阪那站同名不同场地。
+    ("tokyo-ariake-coliseum.jpg", None, None),
+    # 新加坡：Kallang Tennis Hub，场地刷着 SINGAPORE 自证。空场且只有 680px，是这一批里最弱的一张，代价记在 credits。
+    ("singapore-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -266,6 +276,36 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "singapore-centre-court.jpg": {
+        "title": "Kallang Tennis Hub 中心球场（场地前场刷着 SINGAPORE，室内，两侧蓝色看台与顶棚桁架都在竖切里）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（TennisTalker 转载）",
+        "page": "https://media.tennistalker.it/2025/01/Singapore-Open-campo.jpeg",
+    },
+    "tokyo-ariake-coliseum.jpg": {
+        "title": "有明コロシアム（Ariake Coliseum）中心球场 · 场地前场刷着 TOKYO",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "unknown（个人博客转载）",
+        "page": "https://cdn-ak.f.st-hatena.com/images/fotolife/e/epokopoko/20200405/20200405173255.jpg",
+    },
+    "seoul-olympic-park-centre-court.jpg": {
+        "title": "首尔奥林匹克公园网球中心中心球场（Korea Open）",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "unknown（Trip.com 转载）",
+        "page": "https://ak-d.tripcdn.com/images/0103912000ew95azuF824.jpg",
+    },
+    "sao-paulo-centre-court.jpg": {
+        "title": "SP Open 中心球场（场地前场刷着 SÃO PAULO，2025 首届）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（Guia do Tenista 转载）",
+        "page": "https://guiadotenista.com.br/wp-content/uploads/2025/09/IMG_8074-scaled.jpg",
+    },
+    "guadalajara-centre-court.jpg": {
+        "title": "Complejo Panamericano de Tenis 中心球场 · 满场夜场（场地前场刷着 GUADALAJARA，赞助带 AKRON）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（Guadalajara Secreta 转载）",
+        "page": "https://offloadmedia.feverup.com/guadalajarasecreta.com/wp-content/uploads/2024/05/08095411/1-2.jpg",
+    },
     "cincinnati-centre-court-full.jpg": {
         "title": "Center Court · Lindner Family Tennis Center 满场（2025 赛事官方图 AW5_0234）",
         "license": "unverified · 赛事官方媒体",

@@ -98,6 +98,14 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `guadalajara-centre-court.jpg`
+
+- Title: Complejo Panamericano de Tenis 中心球场 · 满场夜场（场地前场刷着 GUADALAJARA，赞助带 AKRON）
+- Author: unknown（Guadalajara Secreta 转载）
+- Source: https://offloadmedia.feverup.com/guadalajarasecreta.com/wp-content/uploads/2024/05/08095411/1-2.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `guangzhou-centre-court.jpg`
 
 - Title: 广州网球公开赛中央球场 · 满场（2025 赛事收官报道）
@@ -215,12 +223,46 @@ the photographs are not otherwise altered.
 - Note: 这一站原来被标成「维罗纳 · 意大利」并配了维罗纳圆形竞技场——赛事名里的 ATV 是 Antico Tiro a Volo（罗马的俱乐部），不是 Associazione Tennis Verona。WTA 自己的赛事页就是 /tournaments/1130/rome/
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `sao-paulo-centre-court.jpg`
+
+- Title: SP Open 中心球场（场地前场刷着 SÃO PAULO，2025 首届）
+- Author: unknown（Guia do Tenista 转载）
+- Source: https://guiadotenista.com.br/wp-content/uploads/2025/09/IMG_8074-scaled.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `seoul-olympic-park-centre-court.jpg`
+
+- Title: 首尔奥林匹克公园网球中心中心球场（Korea Open）
+- Author: unknown（Trip.com 转载）
+- Source: https://ak-d.tripcdn.com/images/0103912000ew95azuF824.jpg
+- License: unverified · 转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `shanghai-qizhong-centre-court.jpg`
 
 - Title: 旗忠网球中心中央球场 · 顶棚八瓣白玉兰可开合（上海劳力士大师赛）
 - Author: unknown（赛倍明照明 转载）
 - Source: https://www.sportsbeams.cn/web/uploads/image/20250516/7KQ41674TPF5pOWqJj2Dfvx20909D21F.jpg
 - License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `singapore-centre-court.jpg`
+
+- Title: Kallang Tennis Hub 中心球场（场地前场刷着 SINGAPORE，室内，两侧蓝色看台与顶棚桁架都在竖切里）
+- Author: unknown（TennisTalker 转载）
+- Source: https://media.tennistalker.it/2025/01/Singapore-Open-campo.jpeg
+- License: unverified · 新闻站转载，作者未署名
+- Note: ⚠️ 三条闸门都过了（场内 / 中心球场 / 看得见看台），**只差在清晰度和空场**：源仅 680×454，竖切要放大 1.59 倍；而且是赛前空场。翻过：赛事官网、Kallang 官方 heretoplay 站（TROPHY-5 那张取不到）、Sport Singapore、WTA photoresources、DDG 四组查询——满场的现场大图没找到，剩下的要么是带烧录文字的宣传图（prnewswire 那张 Key_Visual 是球员抠图拼的），要么是乒乓球的 OCBC Arena。要换就等 2026 赛期的现场图
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `tokyo-ariake-coliseum.jpg`
+
+- Title: 有明コロシアム（Ariake Coliseum）中心球场 · 场地前场刷着 TOKYO
+- Author: unknown（个人博客转载）
+- Source: https://cdn-ak.f.st-hatena.com/images/fotolife/e/epokopoko/20200405/20200405173255.jpg
+- License: unverified · 转载，作者未署名
+- Note: ⚠️ 东京有两站共用有明：9 月的 ATP500 木下集团日本公开赛，和 10 月的 WTA500 东丽泛太平洋公开赛。别名两边都收。10 月大阪那站是另一个场馆（靱公园），不要被「Kinoshita Group Japan Open」这个同名冠名骗过去
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `umag-goran-ivanisevic-centre-court.jpg`
