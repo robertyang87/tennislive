@@ -135,8 +135,11 @@ VENUES = [
     ("umag-goran-ivanisevic-stadium.jpg",
      "File:Teniski stadion 'Goran Ivanišević', Umag.jpg", None),
     ("ao-rod-laver-arena.jpg", "File:RodLaverArenanight2013.jpg", None),
-    ("ao-court-interior.jpg",
-     "File:Rod Laver Arena Melbourne Park Australian Open 2023 first round.jpg", None),
+    # 同一组照片里换了一张：first round 那张是从角上拍的，竖切之后球场歪在一边；
+    # quarter final 这张是从底线后方看过去，近端看台 / 蓝色球场 / 远端看台加墨尔本
+    # 天际线整个碗都在竖切里。
+    ("ao-rod-laver-bowl.jpg",
+     "File:Rod Laver Arena Melbourne Park Australian Open 2023 quarter final.jpg", None),
     # 法网：原来钉的 "vue extérieure" 那张，画面主体是场外一尊举拍的雕像，
     # 夏蒂埃球场只在背后露一角——当背景图时雕像成了焦点，不像主球场。
     # 换成球场内景：红土、看台，以及"LA VICTOIRE APPARTIENT AU PLUS OPINIÂTRE"。
