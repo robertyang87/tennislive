@@ -97,12 +97,13 @@ the photographs are not otherwise altered.
 - License: CC0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
-## `kitzbuhel-tennis-stadium.jpg`
+## `kitzbuhel-centre-court.jpg`
 
-- Title: File:Tennisstadion Kitzbuehel, 2015.jpg
-- Author: Pinkd56
-- Source: https://commons.wikimedia.org/wiki/File:Tennisstadion_Kitzbuehel,_2015.jpg
-- License: CC BY-SA 3.0
+- Title: Generali Open 中心球场 · 满场（远端看台雨棚上写着 KITZBÜHEL CHAMPIONSHIPS，赞助带 Stanglwirt / ALPQUELL；近端看台的观众、红土、远端看台与阿尔卑斯山全在竖切里）
+- Author: unknown（Kitzbüheler Anzeiger 转载）
+- Source: https://www.kitzanzeiger.at/media/system/singleimage/center-court-kitzbuehel.webp
+- License: unverified · 新闻站转载，作者未署名
+- Note: 源只有 1496×997，竖切要放大 1.44 倍，偏软；但上一版（Commons 的 Tennisstadion Kitzbuehel 2015）是空场且球场被压在画面最底下，竖切之后整屏是空看台和山坡，构图差得多——精准与构图优先于清晰度
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `los-cabos-estadio-alejandro-burillo.jpg`
@@ -121,12 +122,13 @@ the photographs are not otherwise altered.
 - License: unverified · 电视台新闻画面截帧
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
-## `palermo-campo-centrale.jpg`
+## `palermo-country-time-centre-court.jpg`
 
-- Title: Country Time Club 中心球场 · 自上而下（场地前场刷着 PALERMO；赛事官网媒体库 Campo-centrale-dallalto）
-- Author: Palermo Ladies Open
-- Source: https://www.palermoladiesopen.it/wp-content/uploads/2021/09/Campo-centrale-dallalto.jpg
-- License: unverified · 赛事官方媒体
+- Title: Country Time Club 中心球场 · 黄昏（挡板上 Veneta Cucine / PEUGEOT / WTATENNIS.COM，背景是巴勒莫的山；近端蓝色看台、红土、远端看台全在竖切里）
+- Author: unknown（LiveSicilia 转载）
+- Source: https://livesicilia.it/wp-content/uploads/2021/07/Campo-centrale-Country-Time-Club-scaled.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Note: 上一版是赛事官网的 Campo-centrale-dallalto，几乎纯俯视——竖切之后整屏只有球场，看不出是个碗。官网媒体库 430 张里翻过，没有第二张全景（全是球员、颁奖、发布会）
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `prague-stvanice-central-court.jpg`
