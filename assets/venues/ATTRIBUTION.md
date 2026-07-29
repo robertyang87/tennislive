@@ -145,6 +145,15 @@ the photographs are not otherwise altered.
 - License: CC BY-SA 4.0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `rome-atv-tennis-open-courts.jpg`
+
+- Title: Circolo Antico Tiro a Volo（罗马）红土场 · 挡板上写着 ATV · ANTICO TIRO A VOLO TENNIS OPEN 与 ROMA，背景是罗马城郊
+- Author: Il Mondo del Tennis
+- Source: https://ilmondodeltennis.com/2022/07/torneo-internazionale-al-circolo-antico-tiro-a-volo/
+- License: unverified · 新闻站转载
+- Note: 这一站原来被标成「维罗纳 · 意大利」并配了维罗纳圆形竞技场——赛事名里的 ATV 是 Antico Tiro a Volo（罗马的俱乐部），不是 Associazione Tennis Verona。WTA 自己的赛事页就是 /tournaments/1130/rome/
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `umag-goran-ivanisevic-centre-court.jpg`
 
 - Title: Stadion Goran Ivanišević 中心球场 · 满场夜场（红土、蓝色看台、泛光灯）
@@ -166,14 +175,6 @@ the photographs are not otherwise altered.
 - Title: File:View From the Top of the Arthur Ashe Stadium (9614299124).jpg
 - Author: slgckgc
 - Source: https://commons.wikimedia.org/wiki/File:View_From_the_Top_of_the_Arthur_Ashe_Stadium_(9614299124).jpg
-- License: CC BY 2.0
-- Changes: resized and cropped by the card renderer; no semantic alteration
-
-## `verona-arena.jpg`
-
-- Title: File:Verona Arena (Arena di Verona).jpg
-- Author: Kevin Poh
-- Source: https://commons.wikimedia.org/wiki/File%3AVerona_Arena_%28Arena_di_Verona%29.jpg
 - License: CC BY 2.0
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
