@@ -61,11 +61,15 @@ VENUES = [
     # 远处大屏写着 HAMBURG 2024，那是汉堡申办 2024 奥运的口号，不是赛事年份
     # （拍摄时间 2015-08，两者对得上，不矛盾）。
     ("hamburg-rothenbaum-centre-court.jpg", "File:Hamburg Rotherbaum DS150n.jpg", None),
-    # 巴勒莫：原来用的是马西莫剧院这个地标。赛事官网是 WordPress，
-    # wp-json 里搜意大利语 "campo centrale" 就出了 Campo-centrale-dallalto——
-    # 自上而下拍的中心球场，红土上刷着 PALERMO，两侧看台都在竖切里。
-    # 又一次印证「搜索词按赛事自己的语言写」。
-    ("palermo-campo-centrale.jpg", None, None),
+    # 巴勒莫换过两次。第一次从马西莫剧院这个地标换成官网的
+    # Campo-centrale-dallalto（wp-json 搜意大利语 campo centrale 命中的）。
+    # 但那张**几乎是纯俯视**——竖切之后整屏只有红土，看不出是个碗，
+    # 是 `preview_venue_crop.py --scrim` 那一版联系表把它暴露出来的。
+    # 官网媒体库 430 张整个列过一遍（--wp-list），**没有第二张全景**：
+    # 全是球员、颁奖、发布会。现在这张来自 LiveSicilia 的转载，黄昏、
+    # 近端蓝色看台 + 红土 + 远端看台 + 巴勒莫的山，整个碗都在。
+    # 官方来源优先，但**官方没有全景时，构图优先于出处**。
+    ("palermo-country-time-centre-court.jpg", None, None),
     ("istanbul-historical-peninsula.jpg",
      "File:Historical peninsula and modern skyline of Istanbul.jpg", None),
     # 雅西：原来用的是文化宫地标。Baza Sportivă Ciric 的中心球场满场照在
@@ -155,9 +159,16 @@ VENUES = [
     # 近端看台在下、球场在中、远端看台和天际线在上，竖切也切不掉。
     ("usopen-arthur-ashe-stadium.jpg",
      "File:View From the Top of the Arthur Ashe Stadium (9614299124).jpg", None),
-    # 基茨比厄尔：原来用的是山景地标。球场照 Commons 上有——红土中心球场，
-    # 看台后面就是阿尔卑斯，赛事身份和地点一张图说全了。
-    ("kitzbuhel-tennis-stadium.jpg", "File:Tennisstadion Kitzbuehel, 2015.jpg", None),
+    # 基茨比厄尔换过两次：山景地标 → Commons 的 Tennisstadion Kitzbuehel 2015
+    # → 现在这张满场。第二版是**空场**，而且拍摄点在一端很高处，竖切之后
+    # 球场被压在画面最底下，整屏是空看台和山坡；试过按 x 位移预裁 3:4 四档，
+    # 四档都救不回来——**问题在拍摄点，不在裁法**。
+    # Commons 这条线是真空：Category:Austrian Open (tennis) 连两个年份子分类
+    # 一起列完，横图且 ≥1500px 的只有两张，其中一张就是上一版。
+    # 官网 generaliopen.com 的图廊按 /img/<md5>.jpg 存（去掉 _soft 后缀就是原图），
+    # 22 张里没有球场全景。现在这张来自 Kitzbüheler Anzeiger，
+    # 远端雨棚上写着 KITZBÜHEL CHAMPIONSHIPS，自证。
+    ("kitzbuhel-centre-court.jpg", None, None),
     # 布拉格：原来用的是城堡地标。Livesport Prague Open 打在 Štvanice，
     # 场地前场刷着 PRAGUE，赞助带是 crocodille / Quantcom——画面自己认领。
     ("prague-stvanice-central-court.jpg",
@@ -282,13 +293,23 @@ OFFICIAL_VENUES = {
         "artist": "unknown（ProSport.ro 转载）",
         "page": "https://www.prosport.ro/wp-content/uploads/2022/12/iasi-open-scaled.jpg",
     },
-    "palermo-campo-centrale.jpg": {
-        "title": "Country Time Club 中心球场 · 自上而下"
-                 "（场地前场刷着 PALERMO；赛事官网媒体库 Campo-centrale-dallalto）",
-        "license": "unverified · 赛事官方媒体",
-        "artist": "Palermo Ladies Open",
-        "page": "https://www.palermoladiesopen.it/wp-content/uploads/2021/09/"
-                "Campo-centrale-dallalto.jpg",
+    "kitzbuhel-centre-court.jpg": {
+        "title": "Generali Open 中心球场 · 满场（远端看台雨棚上写着 KITZBÜHEL "
+                 "CHAMPIONSHIPS，赞助带 Stanglwirt / ALPQUELL；近端看台的观众、"
+                 "红土、远端看台与阿尔卑斯山全在竖切里）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（Kitzbüheler Anzeiger 转载）",
+        "page": "https://www.kitzanzeiger.at/media/system/singleimage/"
+                "center-court-kitzbuehel.webp",
+    },
+    "palermo-country-time-centre-court.jpg": {
+        "title": "Country Time Club 中心球场 · 黄昏（挡板上 Veneta Cucine / PEUGEOT / "
+                 "WTATENNIS.COM，背景是巴勒莫的山；近端蓝色看台、红土、远端看台"
+                 "全在竖切里）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（LiveSicilia 转载）",
+        "page": "https://livesicilia.it/wp-content/uploads/2021/07/"
+                "Campo-centrale-Country-Time-Club-scaled.jpg",
     },
     "cincinnati-center-court.jpg": {
         "title": "Center Court · Lindner Family Tennis Center"
