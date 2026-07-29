@@ -293,38 +293,49 @@ def _geometry(layout: str, seam: float) -> tuple[tuple, tuple, str]:
             f'<div class="seam" style="top:{seam:.1f}%"></div>')
 
 
-def _result_block(cover: dict) -> str:
+def _result_block(cover: dict, names: list) -> str:
     """钩子下面那一块：结果 + 元信息。
 
     原来是两行平铺——`score` 一整句「王欣瑜 7-6(3) 6-3 帕雷哈」加一行灰色
-    `sub`。两个毛病：
+    `sub`。毛病是**只有两级**：级别（WTA 500）、轮次（R1）、赛事、时长四样
+    信息挤在同一行灰字里，扫过去一样重。
 
-    - **输赢双方的名字印了两遍**。两个人的中文名已经压在绿线上了，比分行里
-      再来一遍，占掉的正是这一块最值钱的横向空间
-    - **只有两级，没有层次**。级别（WTA 500）、轮次（R1）、赛事、时长四样
-      信息挤在同一行灰字里，扫过去一样重
+    现在是：
 
-    现在三级，各管一件事：
-
-        王欣瑜  7-6(3) 6-3            赢家（白）+ 盘分（品牌绿，数字字体大一档）
+        王欣瑜 7-6(3) 6-3 帕雷哈      赢家（白）· 盘分（品牌绿，数字大一档）· 输家（灰）
         [WTA 500] [R1]  华盛顿 · 1 小时 51 分
+
+    **两个人的名字都要在，输的那个置灰、不能省。** 中间改过一版只留赢家，
+    理由是名字已经印在绿线上了；账号所有者一句「怎么对手的名字没了」——
+    这一行是**赛果**，赛果本来就是「谁赢了谁」，少一个人它就不成句。
+    置灰解决的是层次问题，不是删掉。
+
+    输家**从 `versus.names` 里推**，不另开字段：这样它和绿线上印的那个
+    永远是同一个，不会两处各写一遍再对不上。
 
     级别和轮次做成**描边药丸**——它们是标签不是句子，而且描边用的是同一个
     品牌绿，不引入第二个强调色（一屏最多一个强调色）。
 
-    老的 `score` / `sub` 两个字段继续认，斜切那三条已发布的片子不受影响。
+    老的 `score` / `sub` 两个字段继续认，斜切那两条已发布的片子不受影响。
     """
     if not cover.get("result"):
         return (f'<div class="score">{cover.get("score", "")}</div>'
                 f'<div class="sub">{cover.get("sub", "")}</div>')
     winner = str(cover.get("winner", "")).strip()
+    loser = next((n for n in names if str(n).strip() != winner), "")
+    result = str(cover["result"])
+    # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
+    # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
+    sets_px = 62 if len(result) <= 11 else 54
     pills = "".join(f'<span class="pill">{p}</span>'
                     for p in (cover.get("tier"), cover.get("round")) if p)
     meta = str(cover.get("meta", "")).strip()
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
-        + f'<span class="sets">{cover["result"]}</span></div>'
+        + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
+        + (f'<span class="lose">{loser}</span>' if loser else "")
+        + "</div>"
         + f'<div class="meta">{pills}'
         + (f'<span class="mtx">{meta}</span>' if meta else "")
         + "</div>")
@@ -419,6 +430,9 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
+/* 输的一方**要写，但置灰**：这一行是赛果，少一个人就不成句；灰是层次，不是删除 */
+.lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
+  color:{DIM}}}
 .meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
 .pill{{border:2px solid {BRAND};color:{BRAND};border-radius:999px;
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
@@ -428,7 +442,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 {body}
 <div class="top">{cover.get('eyebrow', '')}</div>
 <div class="copy"><div class="hook">{hook}</div>
-{_result_block(cover)}</div>"""
+{_result_block(cover, names)}</div>"""
 
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
