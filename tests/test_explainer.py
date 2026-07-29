@@ -1,4 +1,5 @@
 import html
+import json
 import re
 from pathlib import Path
 
@@ -1129,6 +1130,33 @@ def test_人名要以译名表为准():
         return text
 
     bad = []
+
+    def scan(where: str, text: str) -> None:
+        masked = strip_known(text)
+        for name in canon:
+            width = len(name)
+            for i in range(len(masked) - width + 1):
+                window = masked[i:i + width]
+                if not all("一" <= c <= "鿿" or c == "·" for c in window):
+                    continue
+                if sum(a != b for a, b in zip(window, name)) == 1:
+                    bad.append(f"{where}：「{window}」是不是想写「{name}」")
+
+    # **「赛场之上」的 spec 和文案也要扫。** 这条测试原来只看解说片的脚本，
+    # 于是 2026-07-29 我在 `eala-fernandez.xhs.txt` 里把 Rybakina 写成
+    # 「雷巴金娜」（表里是**莱巴金娜**），全绿照过——**同一个名字，第三次写错**，
+    # 前两次是「里巴金娜」和这次。判据早就写好了，只是没指到这批文件上。
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        scan(path.name, path.read_text(encoding="utf-8"))
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        texts = [cover.get("hook", ""), cover.get("winner", ""), cover.get("meta", "")]
+        texts += list((cover.get("versus") or {}).get("names") or [])
+        texts += [s.get("narration", "") for s in spec.get("segments") or []]
+        for text in filter(None, texts):
+            scan(path.name, text)
+
     for slug in E._SCRIPTS:
         opening = E._OPENINGS.get(slug) or {}
         texts = [opening.get("topic", ""), opening.get("narration", "")]
@@ -1139,15 +1167,7 @@ def test_人名要以译名表为准():
             texts += [seg.title, seg.narration, seg.question or "", seg.label,
                       seg.diagram or "", *seg.points]
         for text in filter(None, texts):
-            masked = strip_known(text)
-            for name in canon:
-                width = len(name)
-                for i in range(len(masked) - width + 1):
-                    window = masked[i:i + width]
-                    if not all("一" <= c <= "鿿" or c == "·" for c in window):
-                        continue
-                    if sum(a != b for a, b in zip(window, name)) == 1:
-                        bad.append(f"{slug}：「{window}」是不是想写「{name}」")
+            scan(slug, text)
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
 
 
