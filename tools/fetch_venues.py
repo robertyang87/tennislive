@@ -41,8 +41,11 @@ VENUES = [
     # Hamburg.jpg 拍于施工期、满屏塔吊，要的是建成后的这张。
     ("hamburg-skyline.jpg",
      "File:Elbphilharmonie with Kaiserkai promenade viewed from HafenCity.jpg", None),
-    ("palermo-teatro-massimo.jpg",
-     "File:Teatro Massimo Vittorio Emanuele (Palermo).jpg", None),
+    # 巴勒莫：原来用的是马西莫剧院这个地标。赛事官网是 WordPress，
+    # wp-json 里搜意大利语 "campo centrale" 就出了 Campo-centrale-dallalto——
+    # 自上而下拍的中心球场，红土上刷着 PALERMO，两侧看台都在竖切里。
+    # 又一次印证「搜索词按赛事自己的语言写」。
+    ("palermo-campo-centrale.jpg", None, None),
     ("istanbul-historical-peninsula.jpg",
      "File:Historical peninsula and modern skyline of Istanbul.jpg", None),
     ("iasi-palace-of-culture.jpg", "File:2020 04 17 Iași Palatul Culturii.jpg", None),
@@ -185,6 +188,14 @@ OFFICIAL_VENUES = {
         "artist": "unknown（View the VIBE 转载）",
         "page": "https://viewthevibe.com/wp-content/uploads/2022/08/"
                 "Aviva-Centre-during-the-singles-final-3-Res.jpeg",
+    },
+    "palermo-campo-centrale.jpg": {
+        "title": "Country Time Club 中心球场 · 自上而下"
+                 "（场地前场刷着 PALERMO；赛事官网媒体库 Campo-centrale-dallalto）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Palermo Ladies Open",
+        "page": "https://www.palermoladiesopen.it/wp-content/uploads/2021/09/"
+                "Campo-centrale-dallalto.jpg",
     },
     "cincinnati-center-court.jpg": {
         "title": "Center Court · Lindner Family Tennis Center"
