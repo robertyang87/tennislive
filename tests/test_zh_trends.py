@@ -45,6 +45,11 @@ def test_两个字的译名要有网球语境才算():
     assert tennis_clues("李娜回应")[0] == ()
     assert "保罗" in tennis_clues("网球保罗")[0]
 
+    # 还有一种撞法：两个字的译名**嵌在另一个更长的名字里**。
+    # 「格雷厄姆」头两个字就是球员「格雷」——同一天微博热搜实录。
+    assert tennis_clues("特朗普被发现在格雷厄姆葬礼打瞌睡")[0] == ()
+    assert "格雷" in near_miss("特朗普被发现在格雷厄姆葬礼打瞌睡")
+
     # 「辛纳」在 _SHORT_OK 里：世界第一，单独出现就算数
     assert tennis_clues("辛纳夺冠")[0] == ("辛纳",)
 
