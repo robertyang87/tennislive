@@ -54,6 +54,33 @@ SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
 BAND = 100.0 * (VIDEO_W / 2) * math.tan(math.radians(SEAM_ANGLE)) / VIDEO_H
 
 
+def _precrop(image: Path, panel: dict) -> Path:
+    """`crop: [x0, y0, x1, y1]`（0~1 的比例）——**先裁再铺**。
+
+    `focus` / `zoom` 只能在整幅图里挪窗口，挪不动主体在图里的位置。照片可以
+    自己先裁好再入库（伊埃拉那张就是裁到右边六成六处，给钩子让出空场），
+    但**从源片抓的帧没有这一步**：转播机位怎么拍就是怎么拍，近景天然居中，
+    落到底格就正好被文案块压住；换大全景又小得看不清。
+
+    所以给面板一个裁切框，照片和抽帧共用。裁完的图落在原图旁边，
+    带 `.crop.jpg` 后缀——渲染的中间物，不进仓库。
+    """
+    box = panel.get("crop")
+    if not box:
+        return image
+    from PIL import Image, ImageOps  # noqa: PLC0415
+
+    if len(box) != 4:
+        raise SystemExit(f"crop 要四个数 [x0, y0, x1, y1]（0~1 的比例）：{box}")
+    im = ImageOps.exif_transpose(Image.open(image)).convert("RGB")
+    w, h = im.size
+    x0, y0, x1, y1 = box
+    out = image.with_suffix(".crop.jpg")
+    im.crop((round(x0 * w), round(y0 * h), round(x1 * w), round(y1 * h))
+            ).save(out, quality=95)
+    return out
+
+
 def _panel_css(side: str, image: Path, panel: dict,
                top: float, height: float, clip: str) -> str:
     """一格的底图。**盒子只占自己那一格**，图在这一格里铺满。
@@ -74,7 +101,7 @@ def _panel_css(side: str, image: Path, panel: dict,
 
     `zoom` 是在此之上再推一档，给「人在画面里很小」的素材用。
     """
-    uri = _data_uri(image)
+    uri = _data_uri(_precrop(image, panel))
     focus = float(panel.get("focus", 0.5)) * 100
     focus_y = float(panel.get("focus_y", 0.5)) * 100
     zoom = float(panel.get("zoom", 1.0)) * 100
