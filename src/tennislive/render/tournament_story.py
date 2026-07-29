@@ -1446,6 +1446,84 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
     ),
     _trivia_story(
+        slug="thiem-football",
+        # 标题连着品牌语一起进小红书的 20 字上限（`🎾7.26 网球有故事｜` 占 9.5）。
+        # 原来写「美网冠军去踢第八级联赛」是 20.5 字，会被截断——而截掉的正好是
+        # 「联赛」那两个字，读者看到的会是「美网冠军去踢第八级」。砍掉「去」。
+        title="美网冠军踢第八级联赛",
+        subtitle="网球观察 · 退役篇",
+        identity="从大满贯到第八级",
+        # chips[2] 会变成 `founded`，故事卡的时间轴把它抠数字当起点年份用。
+        # 写「第 8 级」抠出来是 8，时间轴就成了 8 → 2020 → 2024。用非数字标签
+        # （和 wildcard、scoring-history 同一套路），起点显示 NOW。
+        chips=("退役之后", "两个 9.13", "第八级"),
+        hero=(
+            "2020 年美网冠军蒂姆 2024 年 10 月退役，2026 年 7 月 15 日在奥地利足协"
+            "重新登记为球员，转会 Badener AC，打第八级的 2. Klasse Triestingtal。"
+        ),
+        facts=(
+            "蒂姆 2026 年 7 月 15 日在奥地利足协完成注册，转入 Badener AC；"
+            "该队打 2. Klasse Triestingtal，是奥地利联赛金字塔的第八级。"
+            "促成转会的是一位已在队中的朋友。",
+            "2025 年 9 月 13 日，他为原队利希滕韦特替补上场 12 分钟后打进一球，"
+            "把比分改写为 3:2——踢球以来第 8 场正式比赛的第一粒进球，"
+            "而那一天正是他在纽约夺得美网五周年。",
+            "Badener AC 1899 年 2 月 19 日成立，是今天下奥地利州最古老的俱乐部，"
+            "1934/35 赛季拿过奥地利业余全国冠军。足球部负责人对他的表态是："
+            "在我们这儿，谁都得自己去争首发。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2020-09-13",
+                player="蒂姆",
+                age="27 岁",
+                headline="0-2 落后翻盘，拿下美网",
+                detail=(
+                    "决赛先丢两盘后连扳三盘，第五盘抢七 8-6 胜兹维列夫，"
+                    "拿到生涯唯一一座大满贯；生涯最高世界第三，17 个巡回赛冠军。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2020_US_Open_%E2%80%93_Men%27s_singles",
+            ),
+            ChampionMoment(
+                date="2024-10-22",
+                player="蒂姆",
+                age="31 岁",
+                headline="维也纳首轮出局，就此退役",
+                detail=(
+                    "主场首轮 6-7(6) 2-6 负于达尔代里，91 分钟；"
+                    "长期的手腕伤让他再没回到从前的水准。"
+                ),
+                source_url="https://www.atptour.com/en/news/darderi-thiem-vienna-2024-tuesday",
+            ),
+            ChampionMoment(
+                date="2026-07-15",
+                player="蒂姆",
+                age="32 岁",
+                headline="在足协登记为球员，转会 Badener AC",
+                detail=(
+                    "打第八级的 2. Klasse Triestingtal；此前两个赛季效力家乡队"
+                    "利希滕韦特，上赛季 10 场 1 球。他同时是自己创办的"
+                    "维也纳小场联赛球队 Ecoballers 的合伙人之一。"
+                ),
+                source_url="https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+            ),
+        ),
+        image_keys=(),
+        # 封面角标不能是年份：这条片子里有两个 9.13，印任何一个都会和另一屏打架。
+        # 用那个非年份的数字——他现在打第几级。
+        hero_marker="第 8 级",
+        source_label="laola1 / NÖN / 奥地利联赛体系",
+        image_credit="GEPA pictures 经 laola1 转载（unverified）",
+        source_url="https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+        evidence_urls=(
+            "https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+            "https://www.atptour.com/en/news/darderi-thiem-vienna-2024-tuesday",
+            "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Ligasystem_in_%C3%96sterreich",
+            "https://de.wikipedia.org/wiki/Badener_AC",
+            "https://sportbusinessmagazin.com/ecoballers-dominic-thiem-amateurfussball/",
+        ),
+    ),
+    _trivia_story(
         slug="ball-pick",
         title="发球前为什么要挑球",
         subtitle="网球观察 · 规则篇",
