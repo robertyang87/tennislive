@@ -1755,6 +1755,64 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Venus_Williams",
     ),
     _trivia_story(
+        slug="wong-lehecka",
+        title="黄泽林16强VS莱赫奇卡",
+        subtitle="赛事前瞻 · ATP 250",
+        identity="世界第 108 对世界第 12",
+        chips=("ATP 250", "16 强", "首次交手"),
+        hero=(
+            "洛斯卡沃斯站 16 强，香港一哥黄泽林对上头号种子莱赫奇卡；"
+            "官方赛程把这场排在中心球场当地时间 18:00 的第一场，两人此前从未交手。"
+        ),
+        facts=(
+            "黄泽林 2004 年 6 月生，2026 年 6 月 8 日升到生涯最高的世界第 108，"
+            "是历来排名最高的香港男子球员；公开赛年代首位打进大满贯正赛、"
+            "首位赢下大满贯正赛、首位打进大满贯第三轮、首位夺得挑战赛冠军的香港男子，"
+            "四项纪录都在他名下。",
+            "莱赫奇卡 2001 年 11 月生，捷克男子头号球员，2026 年 5 月 25 日"
+            "升到生涯最高的世界第 12；同年 3 月以 21 号种子打进迈阿密大师赛决赛，"
+            "那是他生涯第一个大师赛决赛，晋级路上发球局一次未被破，决赛负于辛纳。",
+            "两人的名字此前只在同一张签表上出现过，从未交手；"
+            "本站黄泽林签位不带任何标记，是按排名直接进入正赛，"
+            "首轮 6-3、6-4 击败世界第 266 的布兰奇。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2023-09",
+                player="黄泽林",
+                age="19 岁",
+                headline="杭州亚运会 16 强救 5 个赛点胜吴易昺",
+                detail="6-4、3-6、7-6 淘汰当时世界第 98 的吴易昺，香港球员首次战胜世界前 100。",
+                source_url=(
+                    "https://www.scmp.com/sport/china/article/3235885/"
+                    "asian-games-2023-coleman-wong-upsets-chinas-no-2-wu-yibing-"
+                    "mens-singles-tennis-tournament-nail-biter"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-08",
+                player="黄泽林",
+                age="21 岁",
+                headline="美网从资格赛打进第三轮",
+                detail="以世界第 173 连过三轮资格赛，正赛连胜科瓦切维奇与沃尔顿，"
+                "成为首位打进大满贯第三轮的香港男子。",
+                source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
+            ),
+            ChampionMoment(
+                date="2026-03",
+                player="莱赫奇卡",
+                age="24 岁",
+                headline="迈阿密打进生涯首个大师赛决赛",
+                detail="晋级路上发球局一次未被破发，决赛 4-6、4-6 不敌辛纳。",
+                source_url="https://en.wikipedia.org/wiki/Ji%C5%99%C3%AD_Lehe%C4%8Dka",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / 赛会官方 Order of Play / SCMP",
+        image_credit="Eugene Lee · SCMP",
+        source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
+    ),
+    _trivia_story(
         slug="masters-format",
         title="大师赛为什么变两周",
         subtitle="网球观察 · 赛程篇",
