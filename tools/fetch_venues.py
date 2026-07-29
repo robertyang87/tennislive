@@ -101,6 +101,26 @@ VENUES = [
     # （Internazionali di Tennis Verona），留着会把那站也套上罗马的图。
     # 现在的图见 OFFICIAL_VENUES：挡板上写着 ATV / ROMA，自证。
     ("rome-atv-tennis-open-courts.jpg", None, None),
+    # 北京：钻石球场满场。中网 ATP500 与 WTA1000 同场地，一条别名两边都命中。
+    ("beijing-diamond-court.jpg", None, None),
+    # 上海：旗忠中央球场。判据是顶棚那八瓣白玉兰——全世界只有这一个，认场地不用看文字。
+    ("shanghai-qizhong-centre-court.jpg", None, None),
+    # 武汉：光谷中央球场满场。挡板上的赛事名和年份自证，不靠看图推断。
+    ("wuhan-optics-valley-centre-court.jpg", None, None),
+    # 成都：ATP 官方图库的 stadium shot，文件名自证年份与场地。
+    ("chengdu-centre-court.jpg", None, None),
+    # 杭州：小莲花那圈花瓣状可开合顶棚是这个场馆独有的，认场地不用看文字。
+    ("hangzhou-lotus-centre-court.jpg", None, None),
+    # 宁波：赛事方通过 PR Newswire 发的官方图。
+    ("ningbo-centre-court.jpg", None, None),
+    # 广州：2025 收官报道的现场图。
+    ("guangzhou-centre-court.jpg", None, None),
+    # 温斯顿-塞勒姆：Wake Forest 中心球场黄昏满场。
+    ("winston-salem-centre-court.jpg", None, None),
+    # 蒙特雷：赛事官网自己的场馆图，场地刷着 MONTERREY，背景马德雷山，自证。
+    ("monterrey-centre-court.jpg", None, None),
+    # 辛辛那提：从空场换成满场。上一版构图没问题，问题是空。
+    ("cincinnati-centre-court-full.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -168,7 +188,6 @@ VENUES = [
     # 从底线后方顶层往下拍，近端看台 / 球场 / 远端看台整个碗都在竖切里。
     # 注意：这个站用浏览器 UA 请求 wp-json 会被 WAF 挡 403，用脚本自己的 UA 反而
     # 200——「取不到」和「0 命中」要分开，见 tools/probe_venue_photos.py 的 Blocked。
-    ("cincinnati-center-court.jpg", None, None),
     # 美网换过两次。第一次从侧面横拍换成 View From the Top of the Arthur Ashe
     # Stadium——角度对了，但那张拍于 2013 年，**画面里没有顶棚**：阿瑟阿什
     # 2016 年才装可开合顶棚，等于印了一个已经不存在的样子（画面上半屏是
@@ -247,6 +266,66 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "cincinnati-centre-court-full.jpg": {
+        "title": "Center Court · Lindner Family Tennis Center 满场（2025 赛事官方图 AW5_0234）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Cincinnati Open",
+        "page": "https://cincinnatiopen.com/wp-content/uploads/2025/10/AW5_0234.jpg",
+    },
+    "monterrey-centre-court.jpg": {
+        "title": "Estadio GNP Seguros 中心球场 · 满场（场地前场刷着 MONTERREY，看台顶写着 GNP Estadio，背景是马德雷山）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Abierto GNP Seguros",
+        "page": "https://abiertognpseguros.com/media/pages/guia-del-torneo/visit-monterrey/b9f38a59c0-1715623630/estadio-gnp-seguros-1920x.jpg",
+    },
+    "winston-salem-centre-court.jpg": {
+        "title": "Wake Forest Tennis Complex 中心球场 · 黄昏满场",
+        "license": "unverified · 新闻站转载",
+        "artist": "Camera Work USA（Triad Business Journal 转载）",
+        "page": "https://media.bizj.us/view/img/12022122/winston-salem-open-stadium-photo-by-camera-work-usa.jpg",
+    },
+    "guangzhou-centre-court.jpg": {
+        "title": "广州网球公开赛中央球场 · 满场（2025 赛事收官报道）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（南方 + 转载）",
+        "page": "https://media.nfnews.com/media-nfh/image/202510/27/7dda1595028b42189b7a215a0541e62a.jpg",
+    },
+    "ningbo-centre-court.jpg": {
+        "title": "宁波网球中心中央球场 · 满场（2024 宁波公开赛开赛，PR Newswire 发布的赛事官方图）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "Ningbo Open（PR Newswire 发布）",
+        "page": "https://mma.prnewswire.com/media/2532199/Ningbo_International.jpg",
+    },
+    "hangzhou-lotus-centre-court.jpg": {
+        "title": "杭州奥体中心网球中心「小莲花」中央球场 · 满场（2025 领克杭州网球公开赛）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（普利吉体育 转载）",
+        "page": "https://img03.71360.com/w3/0qn2g4/20250924/66d99a1c5687521d16f8c59b2adf26de.jpg",
+    },
+    "chengdu-centre-court.jpg": {
+        "title": "四川川投国际网球中心中央球场 · 满场（ATP 官方图库 chengdu-2025-stadium-shot）",
+        "license": "unverified · 赛事官方媒体",
+        "artist": "ATP Tour",
+        "page": "https://www.atptour.com/-/media/images/news/2025/08/13/13/44/chengdu-2025-stadium-shot.jpg",
+    },
+    "wuhan-optics-valley-centre-court.jpg": {
+        "title": "光谷国际网球中心中央球场 · 满场（挡板上写着「东风岚图·武汉网球公开赛 DONGFENG VOYAH · WUHAN OPEN」与「2024东风岚图·武汉网球公开赛」）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（大武汉 转载）",
+        "page": "https://www.app.dawuhanapp.com/c/10001/202410/d45fc4e1868afc8ae97999dffa39df03.jpeg",
+    },
+    "shanghai-qizhong-centre-court.jpg": {
+        "title": "旗忠网球中心中央球场 · 顶棚八瓣白玉兰可开合（上海劳力士大师赛）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（赛倍明照明 转载）",
+        "page": "https://www.sportsbeams.cn/web/uploads/image/20250516/7KQ41674TPF5pOWqJj2Dfvx20909D21F.jpg",
+    },
+    "beijing-diamond-court.jpg": {
+        "title": "国家网球中心钻石球场 · 满场（场地前场刷着「北京中网」，2023 中网男单决赛）",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "unknown（新浪体育转载）",
+        "page": "https://n.sinaimg.cn/spider20231005/214/w2048h1366/20231005/0a57-133e0b7b85e05c9a50f65167521a5b79.jpg",
+    },
     "memphis-leftwich-stadium-court.jpg": {
         "title": "Memphis Classic 主球场（Action News 5 2026-07-26 赛事报道，"
                  "成片第 14.0 秒；临时看台、Mercedes-Benz / TOPNOTCH / crionet "
@@ -337,14 +416,6 @@ OFFICIAL_VENUES = {
         "artist": "unknown（LiveSicilia 转载）",
         "page": "https://livesicilia.it/wp-content/uploads/2021/07/"
                 "Campo-centrale-Country-Time-Club-scaled.jpg",
-    },
-    "cincinnati-center-court.jpg": {
-        "title": "Center Court · Lindner Family Tennis Center"
-                 "（赛事官方媒体库 STADIUM-2021_WSOPEN_SOLOMON_001）",
-        "license": "unverified · 赛事官方媒体",
-        "artist": "Cincinnati Open（署名 Solomon）",
-        "page": "https://cincinnatiopen.com/wp-content/uploads/2023/04/"
-                "STADIUM-2021_WSOPEN_SOLOMON_001.jpg",
     },
     "estoril-centre-court.jpg": {
         "title": "Millennium Estoril Open · estadio2",
