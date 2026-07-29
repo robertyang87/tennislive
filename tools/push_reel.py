@@ -227,6 +227,12 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     """
     title, body = split_copy(copy_text)
     pad = "padding:0 16px"
+    # **导语给空就不占那一行。** 详细概括现在写在文案正文的第一行（账号所有者的
+    # 要求：标题精炼，讲不完的放正文第一行详细总结），导语再印一遍同样的意思
+    # 就是「同一段印两遍」那个老毛病。
+    lead_el = (f'<div style="font-size:15px;line-height:1.8;color:#25342e;'
+               f'margin:0 0 14px">{html.escape(lead.strip())}</div>'
+               if lead.strip() else "")
     img = ""
     if poster:
         img = (f'<img src="{poster}" width="100%" alt="{html.escape(title)}"'
@@ -253,8 +259,7 @@ color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px"
 margin:10px 0 14px">{html.escape(title)}</div></div>
 {img}
 <div style="{pad}">
-<div style="font-size:15px;line-height:1.8;color:#25342e;margin:0 0 14px">\
-{html.escape(lead)}</div>
+{lead_el}
 <div style="color:#7a8580;font-size:12px;margin:0 0 8px">\
 👇 正文全文如下，长按整段即可复制</div>
 <div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
