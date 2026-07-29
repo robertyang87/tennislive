@@ -596,9 +596,25 @@ html.light .chip-green { color:#fff; }
 .tonight-page .titleband { margin:16px 0 4px; }
 .event-meta { display:flex; align-items:center; gap:14px; min-height:40px; color:#fff; }
 .event-meta b { padding:5px 10px; border-radius:4px; background:var(--section-accent);
-  color:#09221B; font-family:'Barlow Condensed'; font-size:21px; letter-spacing:1px; }
-.event-meta span { font-size:23px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.65); }
-.event-meta i { margin-left:auto; font-size:19px; font-style:normal; color:#E4EBE7; }
+  color:#09221B; font-family:'Barlow Condensed'; font-size:21px; letter-spacing:1px;
+  white-space:nowrap; flex:0 0 auto; }
+/* 地点不许断词。这一行是 flex，右边那条图例（不早于＝… · *为预计时间 · +1 为次日）
+   长起来会把地点挤扁，于是「华盛顿特区 · 美国」被从中间劈成「…美」「国」两行——
+   地名断一半比图例换行糟得多。所以地点 nowrap 且不参与压缩，要让位的是图例。 */
+.event-meta span { font-size:23px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.65);
+  white-space:nowrap; flex:0 0 auto; }
+/* 顶栏这一条不加框。`html.daily .event-meta b` 那条描边是给日报页写的，它按
+   标签名匹配，于是**把 ATP／WTA 官方 logo 也一起框了**——而 .tour-level.has-logo
+   本来就特意声明了 background:none/padding:0，就是为了让 logo 干净地立在那儿。
+   一圈描边把 logo 和「硬地」变成两个挨着的小方块，看着像同一个控件被切成两半。
+   赛程／今晚焦点页统一去掉，级别与场地都按纯文字排。 */
+.tonight-page .event-meta b,
+html.daily .tonight-page .event-meta b {
+  background:transparent; box-shadow:none; padding:0; color:#fff; }
+.tonight-page .event-meta b.event-surface { font-size:23px; letter-spacing:.02em; }
+.tonight-page .event-meta .tour-level.has-logo { color:var(--section-accent); }
+.event-meta i { margin-left:auto; font-size:19px; font-style:normal; color:#E4EBE7;
+  min-width:0; text-align:right; }
 .event-spacer { height:220px; flex:none; }
 .tonight-page.count-1 .event-spacer { height:310px; }
 .tonight-page.count-2 .event-spacer { height:230px; }
@@ -1989,21 +2005,19 @@ def _event_meta_html(
         if len(levels) == 1
         else f'<b class="event-level">{html.escape(" / ".join(levels))}</b>'
     )
-    note = ["北京时间"]
-    if has_not_before:
-        # 官方 OOP 的 Not Before 是下界不是开赛时刻。不说清楚，读者会照着这个
-        # 点定闹钟，然后发现前一场还在打第三盘。
-        note.append("不早于＝需等前一场结束")
-    if has_estimates:
-        note.append("*为预计时间")
-    if has_next_day:
-        note.append("+1 为次日")
+    # 时间口径的图例（北京时间 · 不早于＝需等前一场结束 · *为预计时间 · +1 为次日）
+    # 已经拿掉：账号所有者看渲出来的卡后定的——那行小字挤在顶栏右侧，本身要占两行，
+    # 还把左边的级别、场地、地点一起压扁（「美国」「硬地」都被从中间断开过）。
+    # **口径不靠这行小字讲**：「不早于」「预计」是写在每一场时刻前面的，
+    # `*` 和 `+1` 也都贴着时刻，读者在那儿就能看懂。
+    # has_estimates / has_next_day / has_not_before 三个参数留着——调用方按它们
+    # 决定别的事，且哪天要把图例换个地方放回来时不用再把管道接一遍。
+    del has_estimates, has_next_day, has_not_before
     return "".join(
         (
             level_html,
             f'<b class="event-surface">{html.escape(surface_label)}</b>',
             f'<span>{html.escape(location)}</span>' if location else "",
-            f'<i>{" · ".join(note)}</i>',
         )
     )
 

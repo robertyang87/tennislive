@@ -112,7 +112,7 @@ STORIES = (
             ),
         ),
         venue="ATP Stadium Goran Ivanišević · 4,032 席",
-        image=ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        image=ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         image_credit="Silverije / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://www.croatiaopen.hr/en/tournament/history",
         image_source_url=(
@@ -216,7 +216,7 @@ STORIES = (
             ),
         ),
         venue="Sobeys 球场（多伦多）/ IGA 球场（蒙特利尔）",
-        image=ASSETS / "canada-national-bank-open-stadium.jpg",
+        image=ASSETS / "canada-sobeys-centre-court.jpg",
         image_credit="Raysonho / Wikimedia Commons · CC BY 3.0",
         source_url="https://nationalbankopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:RogersCup2011-2.jpg",
@@ -266,7 +266,7 @@ STORIES = (
             ),
         ),
         venue="Lindner 家族网球中心 · 中央球场 11,435 席",
-        image=ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        image=ASSETS / "cincinnati-centre-court-full.jpg",
         image_credit="RandyFitz / Wikimedia Commons · CC0",
         source_url="https://www.cincinnatiopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:Lindner_Family_Tennis_Center_2025.jpg",
@@ -864,7 +864,7 @@ STORIES = (
 
 _STOCK_IMAGES = {
     "umag": (
-        ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         "Silverije / Wikimedia Commons · CC BY-SA 4.0",
     ),
     "washington": (
@@ -872,11 +872,11 @@ _STOCK_IMAGES = {
         "Asolsma1988 / Wikimedia Commons · CC0",
     ),
     "canada": (
-        ASSETS / "canada-national-bank-open-stadium.jpg",
+        ASSETS / "canada-sobeys-centre-court.jpg",
         "Raysonho / Wikimedia Commons · CC BY 3.0",
     ),
     "cincinnati": (
-        ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        ASSETS / "cincinnati-centre-court-full.jpg",
         "RandyFitz / Wikimedia Commons · CC0",
     ),
     "usopen": (

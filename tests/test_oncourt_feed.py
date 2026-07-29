@@ -620,6 +620,12 @@ def test_card_shows_chinese_names_from_the_repo_tables():
     **标题本身不改**：它是来源的原文，溯源要用，改了就对不上了。中文另起一行。
 
     两边都认不出来就返回空串——**宁可不显示，也不显示错的**。
+
+    ⚠️ 这条也是 `data/tour_calendar_2026.json` 的**顺序守卫**。`zh_line` 用
+    `next(...)` 取第一条匹配上的赛事，而罗马那两条 ATP/WTA 的 `pat` 一模一样
+    ——谁在数组里靠前谁赢。我给 events 排过一次序（按 start, tour），
+    WTA 的罗马跑到前面，男子采访当场变成「罗马公开赛」，就是这条炸的。
+    **新赛事 append 到末尾，不要排序。**
     """
     from tools.oncourt_feed import zh_line
 
@@ -669,3 +675,4 @@ def test_unofficial_footnote_names_the_events_actually_listed():
     assert "巴特洪堡公开赛" in html_out, "注脚没说出这一批实际是哪个赛事"
     assert "七个大师赛" not in html_out, "写死的旧措辞还在"
     assert "北京 / 武汉" not in html_out, "写死的旧措辞还在"
+

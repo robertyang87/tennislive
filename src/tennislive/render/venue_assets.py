@@ -27,6 +27,13 @@ class VenueAsset:
     artist: str
     license: str
     source_url: str
+    # 同一个赛事名分在两座城市办、且每年互换时用：{"ATP": "even", "WTA": "odd"}
+    # 表示偶数年男子在这座城市、奇数年女子在这座城市。空 dict = 不分。
+    host_years: tuple[tuple[str, str], ...] = ()
+    # 只认这一条巡回赛。用在**同名不同城**上：东京的 ATP500 叫 "Japan Open"，
+    # 大阪的 WTA250 叫 "Kinoshita Group Japan Open"——同一个别名两边都命中，
+    # 而两座城市差着 400 公里。
+    only_tour: str = ""
 
     @property
     def credit_label(self) -> str:
@@ -65,6 +72,7 @@ def load_venue_assets() -> tuple[VenueAsset, ...]:
         )
         if not aliases:
             continue
+        host_years = row.get("host_years") or {}
         assets.append(VenueAsset(
             slug=str(row.get("slug") or image.stem),
             aliases=aliases,
@@ -74,8 +82,34 @@ def load_venue_assets() -> tuple[VenueAsset, ...]:
             artist=str(credit["artist"]),
             license=str(credit["license"]),
             source_url=str(credit["page"]),
+            host_years=tuple(sorted(
+                (str(k).upper(), str(v).lower()) for k, v in host_years.items())),
+            only_tour=str(row.get("only_tour") or "").upper(),
         ))
     return tuple(assets)
+
+
+def _hosts(asset: VenueAsset, match: Match) -> bool:
+    """这座城市在这一年办不办这条巡回赛的这一站。
+
+    加拿大站是一个赛事名、**同周在两座城市办**，而且男女每年互换：
+    2025 年男子在多伦多、女子在蒙特利尔，2026 年反过来。只按赛事名匹配的话
+    两条都命中，随便挑一条就有一半的概率在卡上印错城市——和「ATV Bancomat
+    印成维罗纳」是同一类错，只是这个错每年都会自己翻面。
+
+    拿不到年份时**宁可不给图**：卡上的 `location` 是要印出来的，
+    印错城市比没有背景图糟。
+    """
+    if asset.only_tour and asset.only_tour != match.tour.value.upper():
+        return False
+    if not asset.host_years:
+        return True
+    wanted = dict(asset.host_years).get(match.tour.value.upper())
+    if wanted is None:
+        return False
+    if match.start_utc is None:
+        return False
+    return wanted == ("even" if match.start_utc.year % 2 == 0 else "odd")
 
 
 def venue_asset_for_match(match: Match) -> VenueAsset | None:
@@ -87,7 +121,22 @@ def venue_asset_for_match(match: Match) -> VenueAsset | None:
     matches = [
         asset for asset in load_venue_assets()
         if any(alias == subject or alias in subject for alias in asset.aliases)
+        and _hosts(asset, match)
     ]
     if not matches:
         return None
-    return max(matches, key=lambda asset: max(len(alias) for alias in asset.aliases if alias in subject))
+
+    def _specificity(asset: VenueAsset) -> tuple[int, int]:
+        """越具体的越优先。
+
+        东京的 ATP500 就叫 `Japan Open`，大阪的 WTA250 叫
+        `Kinoshita Group Japan Open`——同一条别名 `japan open` 两边都命中，
+        长度也一样，`max()` 只能随便挑一个，于是大阪那站的卡上印出「东京」。
+        大阪那条声明了 `only_tour: WTA`，**声明了限制的那条更具体**，
+        它该赢。这也顺带覆盖加拿大那两条（都声明了 host_years）。
+        """
+        restricted = 1 if (asset.only_tour or asset.host_years) else 0
+        longest = max(len(alias) for alias in asset.aliases if alias in subject)
+        return (restricted, longest)
+
+    return max(matches, key=_specificity)
