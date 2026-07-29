@@ -62,7 +62,7 @@
 
 | slug | 讲的是 | 配的图 | 对不对 |
 |---|---|---|---|
-| `otd-0725` | 2021 阿尔卡拉斯乌马格首冠 | `umag-goran-ivanisevic-stadium.jpg` | ✅ |
+| `otd-0725` | 2021 阿尔卡拉斯乌马格首冠 | `umag-goran-ivanisevic-centre-court.jpg` | ✅ |
 | **`otd-0803`** | **2024 郑钦文巴黎奥运金** | **`canada-sobeys-centre-court.jpg`** | ❌ **蒙特利尔** |
 | `otd-0820` | 2023 辛辛那提决赛 | `cincinnati-lindner-tennis-center.jpg` | ✅ |
 | `otd-0909` | 2023 高芙美网夺冠 | `usopen-arthur-ashe-stadium.jpg` | ✅ |

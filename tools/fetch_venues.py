@@ -135,8 +135,12 @@ VENUES = [
     # 下面这批原本只躺在 assets/ 与 credits.json 里、不在本列表中。fetch_set()
     # 会按本列表重建 credits.json，所以漏登记的条目每跑一次 CI 就被冲掉一次
     # ——umag 的图还在 manifest 里生效，credits 一丢它就整条消失。补登记。
-    ("umag-goran-ivanisevic-stadium.jpg",
-     "File:Teniski stadion 'Goran Ivanišević', Umag.jpg", None),
+    # 乌马格：Commons 那张是球场**外立面**，不是场内。赛事官网走的是 Sitecore，
+    # 图廊路径 /-/media/sites/tournaments/umag/galerije/goran/goran-(N).png 顺着
+    # N 探就能拿到场内图（1..3、6 存在，其余是 soft-404 的 text/html——**要看
+    # Content-Type**）。最后选的是克罗地亚旅游局媒体库那张满场夜场：红土、蓝色
+    # 看台、泛光灯，整个碗都在竖切里，比官方图廊里的空场版有气氛。
+    ("umag-goran-ivanisevic-centre-court.jpg", None, None),
     ("ao-rod-laver-arena.jpg", "File:RodLaverArenanight2013.jpg", None),
     # 同一组照片里换了一张：first round 那张是从角上拍的，竖切之后球场歪在一边；
     # quarter final 这张是从底线后方看过去，近端看台 / 蓝色球场 / 远端看台加墨尔本
@@ -188,6 +192,13 @@ OFFICIAL_VENUES = {
         "artist": "unknown（View the VIBE 转载）",
         "page": "https://viewthevibe.com/wp-content/uploads/2022/08/"
                 "Aviva-Centre-during-the-singles-final-3-Res.jpeg",
+    },
+    "umag-goran-ivanisevic-centre-court.jpg": {
+        "title": "Stadion Goran Ivanišević 中心球场 · 满场夜场（红土、蓝色看台、泛光灯）",
+        "license": "unverified · 旅游局官方媒体",
+        "artist": "Croatian National Tourist Board（croatia.hr 媒体库）",
+        "page": "https://cdn.croatia.hr/mediagallery-dxp-production/"
+                "_ATP_Stadion_Gorana_Ivanisevica_Colours_of_Istria.jpg",
     },
     "palermo-campo-centrale.jpg": {
         "title": "Country Time Club 中心球场 · 自上而下"
