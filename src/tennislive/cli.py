@@ -1578,7 +1578,11 @@ def cmd_publish_wechat(args) -> int:
 
 def cmd_publish_pushplus(args) -> int:
     from .publish.pushplus import PushPlusError, push
-    from .render.pushmsg import drop_dead_copy_button, pin_asset_revision
+    from .render.pushmsg import (
+        copy_page_fingerprint,
+        drop_dead_copy_button,
+        pin_asset_revision,
+    )
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -1605,13 +1609,16 @@ def cmd_publish_pushplus(args) -> int:
     # 发之前探一次复制页，取不到就摘掉那个按钮。**这一步跑在提交之后**，
     # 所以是唯一能给出真实答案的时刻；渲染那会儿文件还没进仓库，探必然失败。
     # 装在这里，解说片 / 知识帖 / 赛程包三条线一起护住。
-    html, live_copy = drop_dead_copy_button(html)
+    # 拿本地 copy.html 的标题当指纹：线上那份必须是**这一版**才放按钮。
+    # 只探可达会漏掉「Pages 上还是旧包」——旧内容照样 200，比死链更难发现。
+    expect = copy_page_fingerprint(d / "copy.html")
+    html, live_copy = drop_dead_copy_button(html, expect=expect)
     if live_copy:
-        console.print(f"[green]复制页可达[/green] {live_copy}")
+        console.print(f"[green]复制页可达且是这一版[/green] {live_copy}")
     else:
         console.print(
-            "[yellow]复制页取不到，本次不放该按钮；正文已整段渲染在消息里，"
-            "可长按复制[/yellow]"
+            "[yellow]复制页取不到或还是旧版，本次不放该按钮；正文已整段渲染在"
+            "消息里，可长按复制[/yellow]"
         )
     try:
         push(title, html, asset_dir=d)
