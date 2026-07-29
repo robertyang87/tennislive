@@ -1,6 +1,6 @@
 {
   "status": "skipped",
-  "generated_at": "2026-07-29T06:35:39.484399+00:00",
+  "generated_at": "2026-07-29T10:37:02.737068+00:00",
   "project": "yesterday-point",
   "tour": "ATP",
   "published_for": "2026-07-29",
@@ -11,7 +11,7 @@
       "resolver": "discover_tennistv_point",
       "source": "Tennis TV Hot Shots",
       "status": "empty",
-      "fetched": 60,
+      "fetched": 59,
       "matched": 2,
       "note": "命中昨日比赛 2 张卡片，但均为 freemium/无可播放源（缺 TENNISTV_JWT），ATP YouTube 镜像也未找到同一片"
     },
@@ -26,20 +26,26 @@
     {
       "resolver": "discover_wta_youtube_point",
       "source": "WTA 官方 YouTube",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCaBIVVpHjq6j3tSyxwTE-8Q"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 8,
+      "note": "命中昨日比赛 8 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
     },
     {
       "resolver": "discover_atp_point",
       "source": "ATP 官方 YouTube",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCY_5h5zaSwN7Or4kIJDYNXA"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 8,
+      "note": "命中昨日比赛 8 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
     },
     {
       "resolver": "discover_tennistv_youtube_point",
       "source": "Tennis TV YouTube",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCbcxFkd6B9xUU54InHv4Tig"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 5,
+      "note": "命中昨日比赛 5 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
     },
     {
       "resolver": "discover_youtube_search_point",
@@ -52,26 +58,34 @@
     {
       "resolver": "discover_slam_point:AO",
       "source": "澳网官方视频（官方频道）",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCeTKJSW1NTAkf27nNmjWt5A"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 1,
+      "note": "命中昨日比赛 1 条，但无一通过官方单分标签/完整回合/日期/可播放源门槛"
     },
     {
       "resolver": "discover_slam_point:RG",
       "source": "法网官方视频（官方频道）",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCF3K1Jf8hjFW8qliei8fQ3A"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
     },
     {
       "resolver": "discover_slam_point:WIMBLEDON",
       "source": "温网官方视频（官方频道）",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCNa8NxMgSm7m4Ii9d4QGk1Q"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
     },
     {
       "resolver": "discover_slam_point:USOPEN",
       "source": "美网官方视频（官方频道）",
-      "status": "error",
-      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.youtube.com/feeds/videos.xml?channel_id=UCXbboag48Qlr78zzz6SkzkQ"
+      "status": "empty",
+      "fetched": 15,
+      "matched": 0,
+      "note": "抓到 15 条候选，0 条命中昨日比赛"
     }
   ]
 }
