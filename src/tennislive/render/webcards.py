@@ -597,8 +597,13 @@ html.light .chip-green { color:#fff; }
 .event-meta { display:flex; align-items:center; gap:14px; min-height:40px; color:#fff; }
 .event-meta b { padding:5px 10px; border-radius:4px; background:var(--section-accent);
   color:#09221B; font-family:'Barlow Condensed'; font-size:21px; letter-spacing:1px; }
-.event-meta span { font-size:23px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.65); }
-.event-meta i { margin-left:auto; font-size:19px; font-style:normal; color:#E4EBE7; }
+/* 地点不许断词。这一行是 flex，右边那条图例（不早于＝… · *为预计时间 · +1 为次日）
+   长起来会把地点挤扁，于是「华盛顿特区 · 美国」被从中间劈成「…美」「国」两行——
+   地名断一半比图例换行糟得多。所以地点 nowrap 且不参与压缩，要让位的是图例。 */
+.event-meta span { font-size:23px; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,.65);
+  white-space:nowrap; flex:0 0 auto; }
+.event-meta i { margin-left:auto; font-size:19px; font-style:normal; color:#E4EBE7;
+  min-width:0; text-align:right; }
 .event-spacer { height:220px; flex:none; }
 .tonight-page.count-1 .event-spacer { height:310px; }
 .tonight-page.count-2 .event-spacer { height:230px; }
