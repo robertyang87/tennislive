@@ -387,6 +387,7 @@ def cmd_topic_radar(args) -> int:
         previous_slugs,
     )
     from .research.trends import fetch_trend_signals
+    from .research.zh_trends import fetch_zh_hot
 
     d = parse_date_arg(args.date)
     signals, status = fetch_trend_signals()
@@ -397,10 +398,16 @@ def cmd_topic_radar(args) -> int:
     # 大众热搜那一路（search-trend）不做选题来源，但**是舆论热度的证据**：
     # 撞上说明这件事溢出了网球圈。只当加成，不能靠它把没人报的东西顶上来。
     trends_only = [s for s in signal_dicts if str(s.get("kind") or "") == "search-trend"]
+    # 中文平台热搜（微博/抖音/小红书/微信）。**这是「舆论热点」判断原来最大的
+    # 洞**：读者在中文平台上，而热度原来完全由英文媒体的家数决定。中文那边
+    # 炸了而英文没报的事，整套一点都看不见。
+    zh = fetch_zh_hot()
+    zh_dicts = [h.as_dict() for h in zh.hits]
+    status.update(zh.status)
     prev = previous_slugs(Path(args.outdir), d.isoformat(), back=args.persist_days)
     topics, leftover = distil_topics(
         news, min_sources=args.min_sources, limit=args.max,
-        trend_signals=trends_only, prev_slugs=prev,
+        trend_signals=trends_only, zh_signals=zh_dicts, prev_slugs=prev,
     )
 
     outdir = Path(args.outdir) / d.isoformat() / "topic_radar"
@@ -411,6 +418,12 @@ def cmd_topic_radar(args) -> int:
             "source_status": status,
             "news_signals": len(news),
             "trend_signals": len(trends_only),
+            # 中文热搜**自己单独列一栏**，不只是当热度加成：中文平台上热而
+            # 一家英文媒体都没报的事（郑钦文相关最典型），既撞不上簇也撞不上
+            # 角度，只有这一栏能让它被看见。
+            "zh_scanned": zh.scanned,
+            "zh_hot": zh_dicts,
+            "zh_near_miss": zh.near,
             "count": len(topics),
             "topics": [t.as_dict() for t in topics],
             # 空产要自证：一条候选都没有时，得能分清是「今天没热点」还是
@@ -427,6 +440,12 @@ def cmd_topic_radar(args) -> int:
         f"[cyan]新闻信号 {len(news)} 条 → 选题候选 {len(topics)} 个"
         f"，没对上角度的热点簇 {len(leftover)} 个[/cyan]"
     )
+    console.print(
+        f"[cyan]中文平台扫了 {zh.scanned} 条 → 网球相关 {len(zh_dicts)} 条"
+        f"（差一点的 {len(zh.near)} 条）[/cyan]"
+    )
+    for h in zh.hits:
+        console.print(f"  中 {h.source} #{h.rank} {h.word} · 命中 {'、'.join(h.matched)}")
     if not topics:
         console.print("[yellow]今天没有对上角度的选题候选[/yellow]")
         if leftover:
@@ -435,6 +454,31 @@ def cmd_topic_radar(args) -> int:
                 f"{len(leftover)} 个热点簇没对上——看 unmatched_terms，"
                 "该往 ANGLES 里补角度了[/yellow]"
             )
+
+    # 中文平台那一栏**独立于选题候选**：一条候选都没有、中文那边却热着，
+    # 是最该被看见的情况，不是「今天没东西」。
+    zh_block = ""
+    if zh_dicts:
+        rows = "".join(
+            f'<div style="margin:3px 0;"><a href="{_html.escape(h["url"], quote=True)}" '
+            'style="color:#087747;text-decoration:none;">'
+            f'{_html.escape(h["word"])}</a>'
+            f'<span style="color:#7a8580;"> · {_html.escape(h["source"])} '
+            f'第 {h["rank"]} 位 · 命中 {_html.escape("、".join(h["matched"]))}</span></div>'
+            for h in zh_dicts
+        )
+        zh_block = (
+            '<div style="margin:0 0 18px;padding:10px;background:#fdf6ec;'
+            'border-radius:8px;">'
+            '<div style="font-weight:800;font-size:15px;">中文平台上的网球热词 '
+            f'<span style="color:#7a8580;font-weight:400;font-size:12px;">'
+            f'扫 {zh.scanned} 条 / 中 {len(zh_dicts)} 条</span></div>'
+            f"{rows}"
+            '<div style="color:#7a8580;font-size:12px;margin-top:6px;">'
+            "这一栏不经过角度表——中文那边热而英文媒体没报的事，只有这儿看得见。"
+            "</div></div>"
+        )
+    if not topics and not zh_block:
         return 0
 
     blocks = []
@@ -458,6 +502,10 @@ def cmd_topic_radar(args) -> int:
             f"{len(t.sources)} 家在报"
             + (f" · 连着第 {t.heat.days_running} 天" if t.heat and t.heat.days_running > 1 else "")
             + (f" · 撞上 {t.heat.trend_hits} 条热搜" if t.heat and t.heat.trend_hits else "")
+            + (
+                f" · 中文热搜 {_html.escape('、'.join(t.heat.zh_words))}"
+                if t.heat and t.heat.zh_words else ""
+            )
             + f"</span> {done}</div>"
             f'<div style="margin:6px 0;color:#20302a;">{_html.escape(t.angle.evergreen)}</div>'
             f'<div style="color:#7a8580;font-size:12px;">核实：'
@@ -469,10 +517,16 @@ def cmd_topic_radar(args) -> int:
     push_html = (
         '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:10px;">'
         f'<div style="font-weight:800;font-size:17px;margin:0 0 12px;">'
-        f"今日选题候选 · {d.month}.{d.day}（{len(topics)} 个）</div>"
-        f"{''.join(blocks)}"
+        f"今日选题候选 · {d.month}.{d.day}（{len(topics)} 个"
+        # 候选 0 个、中文平台却热着，是最该被看见的情况——标题里就要说出来，
+        # 否则一句「0 个」会让人直接划走。
+        + (f"，另有中文热词 {len(zh_dicts)} 条" if not topics and zh_dicts else "")
+        + "）</div>"
+        f"{''.join(blocks)}{zh_block}"
         '<div style="color:#7a8580;font-size:12px;margin-top:10px;">'
-        "角度是人工表里对上的，**事实一条都没核**——按「核实」那行去翻原始出处。"
+        # 这儿是 HTML，不是 Markdown——原来写的 `**事实一条都没核**` 在微信里
+        # 就是四个星号，渲出来看一眼就发现了。
+        "角度是人工表里对上的，<b>事实一条都没核</b>——按「核实」那行去翻原始出处。"
         "</div></div>"
     )
     (outdir / "topic_radar_push.html").write_text(push_html, encoding="utf-8")
@@ -481,7 +535,9 @@ def cmd_topic_radar(args) -> int:
         heat = t.heat
         extra = (
             f" · 连着第 {heat.days_running} 天" if heat and heat.days_running > 1 else ""
-        ) + (f" · 撞上 {heat.trend_hits} 条热搜" if heat and heat.trend_hits else "")
+        ) + (f" · 撞上 {heat.trend_hits} 条热搜" if heat and heat.trend_hits else "") + (
+            f" · 中文热搜「{'、'.join(heat.zh_words)}」" if heat and heat.zh_words else ""
+        )
         console.print(
             f"  ★ {t.angle.label}{mark} · {len(t.sources)} 家在报{extra}"
         )

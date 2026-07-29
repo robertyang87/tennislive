@@ -42,7 +42,10 @@ _STOP = {
     "tennis", "atp", "wta", "tour", "open", "match", "round", "week", "year",
     "says", "said", "will", "can", "has", "have", "had", "not", "but", "все",
 }
-_WORD = re.compile(r"[a-z0-9']+")
+# 撇号只能在词**中间**（`player's`、`o'brien`）。原来写成 `[a-z0-9']+`，
+# 于是 `…'The` 切出来是 `'the`——一个带引号的停用词躲过了停用表，
+# 大摇大摆进了「该补什么角度」那份清单。
+_WORD = re.compile(r"[a-z0-9]+(?:'[a-z0-9]+)*")
 # 一个词出现在今天不超过这么多条标题里，就算「罕见」——共享它一个就够。
 _RARE_DF = 3
 
@@ -145,7 +148,7 @@ ANGLES: tuple[Angle, ...] = (
     ),
     Angle(
         "calendar-length", "赛历与赛期",
-        ("calendar", "schedule", "fatigue", "workload", "mandatory", "12-day"),
+        ("calendar", "schedule", "fatigue", "workload", "mandatory"),
         "大师赛从一周变十二天之后，顶尖球员一个接一个退赛；"
         "赛历长度和强制参赛是同一件事的两面。",
         "docs/newshook-topics.md 大师赛那条；ATP 强制参赛条款",
@@ -153,7 +156,7 @@ ANGLES: tuple[Angle, ...] = (
     ),
     Angle(
         "electronic-line-calling", "电子司线",
-        ("line", "calling", "hawk-eye", "hawkeye", "electronic", "umpire", "call"),
+        ("line", "calling", "hawkeye", "electronic", "umpire", "call"),
         "澳网美网温网已全面电子司线，法网仍留人工——红土上球印是证据，"
         "这是唯一还看得见人的地方。",
         "已发选题 hawkeye；各赛事官方公告",
@@ -168,8 +171,12 @@ ANGLES: tuple[Angle, ...] = (
         "混双改成明星表演赛，双打球员怎么办？",
     ),
     Angle(
+        # ⚠️ 触发词里原来有 `final` 和 `last`——**任何一个赛事周都会把它撞上**
+        # （「reaches final」「into final」两条标题就够两条了），于是每周都有
+        # 一条假的「退役与告别」。触发词要挑**只有这类新闻才会用的词**。
         "retirement-farewell", "退役与告别",
-        ("retire", "retirement", "farewell", "final", "last", "quits"),
+        ("retire", "retires", "retiring", "retirement", "farewell", "quits",
+         "swansong", "goodbye"),
         "宣布退役到真正打完最后一场之间，通常还有大半年；"
         "告别赛怎么安排、外卡怎么给，赛事各有各的做法。",
         "球员公告 + 赛事外卡名单",
@@ -190,6 +197,91 @@ ANGLES: tuple[Angle, ...] = (
         "打到一半关顶，对场上两个人并不对称。",
         "已发选题 roof；温网 Order of Play 规程",
         "打到一半关屋顶，对场上两个人公平吗？",
+    ),
+    # ↓ 2026-07-29 补的第二批。第一批十条实跑下来，每天都有三四个热点簇撞不上
+    # （washington / fernandez / eala 那几个），补角度是让候选变多最直接的办法。
+    # **每条仍然要有能翻的出处**——补角度不是放宽标准。
+    Angle(
+        "ranking-points", "积分与排名",
+        ("ranking", "rankings", "ranked", "seedings"),
+        "排名是 52 周滚动的：这周赢了球，掉的可能是去年同期那批分。"
+        "「赢了球排名还在跌」不是错觉，是要卫冕上一年的积分。",
+        "docs/newshook-topics.md 第 5 条；ATP/WTA 排名规则「52-week rolling」",
+        "赢了球，排名怎么还会掉？",
+    ),
+    Angle(
+        "qualifying-lucky-loser", "资格赛与幸运落败者",
+        ("qualifier", "qualifiers", "qualifying", "lucky", "loser", "alternate"),
+        "资格赛输了还有两条路进正赛：被抽为幸运落败者，或作为候补顶替。"
+        "谁先被叫到有明文顺序，不是先到先得。",
+        "大满贯规则书 Qualifying / Lucky Loser 条款",
+        "资格赛输了的人，怎么还会出现在正赛签表里？",
+    ),
+    Angle(
+        "age-eligibility", "年龄资格规则",
+        ("teenager", "teen", "youngest", "prodigy", "junior", "juniors"),
+        "WTA 有一条年龄资格规则，限制未成年球员一年能打多少站——"
+        "为的是躲开上世纪那批十几岁就打废的先例。ATP 没有同样的限制。",
+        "WTA 规则手册 Age Eligibility Rule 一章",
+        "十六岁的球员，一年最多能打几站？",
+    ),
+    Angle(
+        "coaching-in-match", "场上指导",
+        ("coach", "coaching", "coaches"),
+        "场边指导从「一律违规」变成「在规定范围内合法」只有几年时间；"
+        "教练席能说什么、什么时候能说，规则写得比观众想的细。",
+        "ATP/WTA 规则手册 Coaching 一节；大满贯规则书对应条款",
+        "教练在场边说话，什么时候变成合法的了？",
+    ),
+    Angle(
+        "medical-timeout", "伤病暂停与抽筋",
+        ("cramp", "cramps", "medical", "physio", "trainer", "treatment",
+         "dehydration", "timeout"),
+        "抽筋在规则里不算「伤」——想让防护师上场处理，得先把这一分送掉。"
+        "伤病暂停能叫几次、什么时候能叫，条文写得很死。",
+        "docs/newshook-topics.md 第 3 条（带 PDF 页码）；大满贯规则书 Medical 一节",
+        "抽筋倒在场上，为什么不能马上叫医生？",
+    ),
+    Angle(
+        "shot-clock", "25 秒计时器",
+        ("clock", "violation", "warning", "penalty", "stalling"),
+        "两分之间 25 秒，超时先警告再罚分；而这条规则真正改变的是发球前"
+        "拍球的次数——很多人的固定动作是被计时器逼着改的。",
+        "docs/ritual-topics.md 第 6 条；ATP/WTA 规则手册 Time Violation 一节",
+        "发球前拍几下球，是谁定的？",
+    ),
+    Angle(
+        "ballkids", "球童",
+        ("ballkid", "ballkids", "ballboy", "ballboys", "ballgirl", "ballgirls"),
+        "球童是选出来的：报名、体测、轮次淘汰，四大满贯各有各的一套，"
+        "温网从当地中学里挑，录取率比很多大学低。",
+        "docs/ritual-topics.md 第 2 条；各赛事官方球童招募页",
+        "站在底线后面那些孩子，是怎么被选出来的？",
+    ),
+    Angle(
+        "china-swing", "中国赛季",
+        ("china", "chinese", "beijing", "shanghai", "wuhan", "ningbo",
+         "zhuhai", "chengdu", "hangzhou"),
+        "秋天那两个月挤着一整段中国赛季，级别、积分、出场费和赛历位置"
+        "互相咬着；对中国球员来说，这是一年里唯一的主场窗口。",
+        "docs/structural-topics.md 第 4 条；ATP/WTA 官方赛历",
+        "中国赛季为什么全挤在这两个月？",
+    ),
+    Angle(
+        "saudi-expansion", "沙特与扩张",
+        ("saudi", "riyadh", "jeddah", "exhibition", "expansion", "pif"),
+        "沙特资本进来之后，赛历上多出来的不只是一站表演赛——"
+        "大师赛加到第十站是 35 年来头一回，钱从哪来、话语权跟着去哪，是同一件事。",
+        "docs/structural-topics.md 第 2 条（带信源）",
+        "网球的钱，正在从哪儿来？",
+    ),
+    Angle(
+        "player-union", "球员工会与诉讼",
+        ("ptpa", "lawsuit", "union", "antitrust", "sues", "sued", "arbitration"),
+        "PTPA 把 ATP、WTA、ITF、ITIA 一起告了——球员没有工会、"
+        "却要受四个机构的规则约束，这条线比任何一场官司都长。",
+        "docs/structural-topics.md 第 3 条（带信源）；PTPA 起诉书",
+        "打球的人，凭什么没有工会？",
     ),
 )
 
@@ -312,6 +404,7 @@ def distil_topics(
     limit: int = 5,
     state_path: Path | None = None,
     trend_signals: Sequence[dict] = (),
+    zh_signals: Sequence[dict] = (),
     prev_slugs: Sequence[str] = (),
 ) -> tuple[list[TopicCandidate], list[list[dict]]]:
     """今天的信号 → (对上角度的选题候选, 没对上角度的热点簇)。
@@ -336,7 +429,7 @@ def distil_topics(
         cand.headlines.extend(group)
     for cand in matched.values():
         cand.heat = measure_heat(
-            cand.headlines, trend_signals=trend_signals,
+            cand.headlines, trend_signals=trend_signals, zh_signals=zh_signals,
             previous_slugs=prev_slugs, slug=cand.angle.slug,
         )
     ranked = sorted(
@@ -375,12 +468,14 @@ def leftover_terms(clusters: list[list[dict]], *, top: int = 8) -> list[tuple[st
 
 @dataclass(frozen=True)
 class Heat:
-    """一簇新闻有多热。三个都是**能查的证据**，不是打分模型。"""
+    """一簇新闻有多热。四个都是**能查的证据**，不是打分模型。"""
 
     outlets: int          # 几家在报
     trend_hits: int       # 撞上几条大众热搜词
     trend_traffic: int    # 那些热搜词的搜索量之和
     days_running: int     # 连着第几天在报
+    zh_hits: int = 0      # 撞上几条中文平台热搜（微博/抖音/小红书…）
+    zh_words: tuple[str, ...] = ()   # 撞上的原词，判据要摆得出来
 
     @property
     def score(self) -> int:
@@ -389,8 +484,18 @@ class Heat:
         热搜那一路是大众热搜（足球运动员、流行歌手都在里面），撞上说明这件事
         溢出了网球圈；但它也最容易误配，所以只当加成，不能靠它单独把一条
         没人报的东西顶上来。
+
+        中文热搜比 Google 热搜重一点（×4 vs ×3）：**这个号的读者就在那几个
+        平台上**，中文那边热等于「我们的读者正在讨论」，比英语世界热更贴题。
+        但仍然是加成——中文平台上热而没有一家媒体在报的事，它自己那一栏里
+        会列出来，不该靠打分挤进选题候选。
         """
-        return self.outlets * 10 + self.days_running * 6 + min(self.trend_hits, 3) * 3
+        return (
+            self.outlets * 10
+            + self.days_running * 6
+            + min(self.trend_hits, 3) * 3
+            + min(self.zh_hits, 3) * 4
+        )
 
     def as_dict(self) -> dict:
         return {
@@ -398,6 +503,8 @@ class Heat:
             "trend_hits": self.trend_hits,
             "trend_traffic": self.trend_traffic,
             "days_running": self.days_running,
+            "zh_hits": self.zh_hits,
+            "zh_words": list(self.zh_words),
             "score": self.score,
         }
 
@@ -419,6 +526,7 @@ def measure_heat(
     headlines: list[dict],
     *,
     trend_signals: Sequence[dict] = (),
+    zh_signals: Sequence[dict] = (),
     previous_slugs: Sequence[str] = (),
     slug: str = "",
 ) -> Heat:
@@ -427,6 +535,10 @@ def measure_heat(
     **热搜那一路要用专名对**，不是用整句。Google 每日热搜给的是搜索词
     （`Jannik Sinner`、`US Open`），拿它去和簇里的专名取交集，撞上才算——
     用整句去 `in` 会把「open」这种词配上一切。
+
+    中文热搜是同一个做法，只是交集的那一边由 `zh_trends` 先算好了：中文词
+    「郑钦文状态怎么了」自己带着 `("qinwen", "zheng")`，因为**中文和英文标题
+    之间没有任何共享的字符串**，非得先过一次译名表不可。
     """
     proper: set[str] = set()
     for h in headlines:
@@ -442,8 +554,16 @@ def measure_heat(
         if words & proper:
             hits += 1
             traffic += _traffic_number(sig.get("traffic", ""))
+    zh_words: list[str] = []
+    for sig in zh_signals:
+        terms = {str(t).casefold() for t in (sig.get("terms") or ())}
+        if terms & proper:
+            zh_words.append(str(sig.get("word") or ""))
     days = 1 + (1 if slug and slug in set(previous_slugs) else 0)
-    return Heat(outlets=outlets, trend_hits=hits, trend_traffic=traffic, days_running=days)
+    return Heat(
+        outlets=outlets, trend_hits=hits, trend_traffic=traffic, days_running=days,
+        zh_hits=len(zh_words), zh_words=tuple(dict.fromkeys(w for w in zh_words if w)),
+    )
 
 
 def previous_slugs(outroot: Path, date_iso: str, *, back: int = 1) -> list[str]:
