@@ -41,12 +41,20 @@ _STOP = {
     "who", "how", "why", "when", "new", "first", "last", "next", "more", "most",
     "tennis", "atp", "wta", "tour", "open", "match", "round", "week", "year",
     "says", "said", "will", "can", "has", "have", "had", "not", "but", "все",
+    # 缩写代词是纯功能词，可它们长得像实词（`i've` 四个字母、不在上面任何一条
+    # 里），于是「Eala's grit yields Washington debut」和「Shelton on 2026
+    # ahead of Washington」就靠一个共享的 `i've` 凑够了两个共享词。
+    "i've", "i'm", "i'll", "it's", "that's", "there's", "he's", "she's",
+    "we've", "they've", "you're", "don't", "didn't", "doesn't", "isn't",
+    "won't", "can't", "aren't", "haven't", "only", "just", "still", "back",
+    "around", "ahead", "already", "way", "ways", "thing", "things", "day", "days",
 }
 # 撇号只能在词**中间**（`player's`、`o'brien`）。原来写成 `[a-z0-9']+`，
 # 于是 `…'The` 切出来是 `'the`——一个带引号的停用词躲过了停用表，
 # 大摇大摆进了「该补什么角度」那份清单。
 _WORD = re.compile(r"[a-z0-9]+(?:'[a-z0-9]+)*")
-# 一个词出现在今天不超过这么多条标题里，就算「罕见」——共享它一个就够。
+# 一个词出现在今天不超过这么多条标题里，就算「罕见」。低于这个数一律算罕见，
+# 免得测试里那种两三条的小样本被自己的比例算法判成「满天飞」。
 _RARE_DF = 3
 
 
@@ -344,18 +352,38 @@ def cluster_headlines(signals: list[dict], *, min_sources: int = 2) -> list[list
     # 就足以判定是同一件事；共享一个**满天飞的词**（washington、open）什么也
     # 说明不了，那种要两个才算。纯按「共享 ≥2 个词」一刀切，短标题永远不成簇。
     proper = [_proper_terms(str(s.get("title") or "")) for s in items]
+    # 一个词今天在多少条标题里出现过。
+    df: Counter[str] = Counter()
+    for bag in terms:
+        df.update(bag)
+    # 「今天满天飞」的门槛：标题数的四分之一，且不低于 `_RARE_DF`。
+    # 比例是必须的——绝对值定死会在小样本上误伤（两条标题的簇里，那个专名
+    # 天然 df=2），也在大样本上失效（本周 28 条标题里 washington 出现 13 次）。
+    common_at = max(_RARE_DF, len(items) // 4)
 
     def same_story(i: int, j: int) -> bool:
-        """同一件事的判据：**共享至少一个专名，且总共享词不少于两个。**
+        """同一件事的判据：**共享一个「今天不满天飞」的专名，且总共享词 ≥ 2。**
 
-        两条都要。只看专名，「Washington」能把一整周的比赛全并成一簇；
-        只看词数，「breaks」「2026」这种满天飞的虚词凑够两个就成簇了，
-        并出来的东西看着像模像样，全是错的。宁可少给一条也别给一条假的。
+        三个条件是一层层叠上来的，每一层都是被一个具体的假阳性逼出来的：
+
+        1. 只看词数 → 「breaks」「2026」这种虚词凑够两个就成簇
+        2. 加上「必须共享专名」→ 挡住了上面那两个，但**赛事名也是专名**：
+           2026-07-29 那天 28 条标题里 `washington` 占了 **13 条**，于是
+           「Eala 首胜郑钦文」和「Shelton 谈 2026 赛季」靠 washington + `i've`
+           并成一簇，「Draper 退赛」和「媒体日语录」靠 washington + `only`
+           并成一簇——**而后者把一条真的候选吃掉了**：Draper 那条自己带着
+           `withdraws`，本该对上「退赛与截止日」，被并进一个没有第二条
+           `withdraws` 的簇之后，触发词那关就过不去了
+        3. 所以专名还得**今天罕见**。`washington` 13/28 出局；同一天的
+           `venus` 2/28、经典的 `sinner` 5/40 都留得住
+
+        宁可少给一条，也别给一条假的。
         """
         shared = terms[i] & terms[j]
         if len(shared) < 2:
             return False
-        return bool(proper[i] & proper[j] & shared)
+        anchors = proper[i] & proper[j] & shared
+        return any(df[a] <= common_at for a in anchors)
 
     for i, base in enumerate(items):
         if i in used or not terms[i]:

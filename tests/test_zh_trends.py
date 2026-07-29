@@ -45,6 +45,11 @@ def test_两个字的译名要有网球语境才算():
     assert tennis_clues("李娜回应")[0] == ()
     assert "保罗" in tennis_clues("网球保罗")[0]
 
+    # 还有一种撞法：两个字的译名**嵌在另一个更长的名字里**。
+    # 「格雷厄姆」头两个字就是球员「格雷」——同一天微博热搜实录。
+    assert tennis_clues("特朗普被发现在格雷厄姆葬礼打瞌睡")[0] == ()
+    assert "格雷" in near_miss("特朗普被发现在格雷厄姆葬礼打瞌睡")
+
     # 「辛纳」在 _SHORT_OK 里：世界第一，单独出现就算数
     assert tennis_clues("辛纳夺冠")[0] == ("辛纳",)
 
@@ -142,6 +147,45 @@ def test_扫了几条和中了几条都要报():
     assert result.hits == []
     assert result.scanned > 0
     assert any("扫" in v and "网球 0 条" in v for v in result.status.values())
+
+
+def test_解析出零行要当降级报而不是当空榜():
+    """**一张热榜不会是空的。** 解析出 0 行只有一个意思：结构变了。
+
+    微信走的是今日热榜的页面镜像——那个站改一次 `<table>`，`_tophub` 就
+    返回空列表。要是照「正常 · 扫 0 条」报，它和「今天榜上没有网球」
+    长得一模一样，能静默好几个月。
+    """
+    result = fetch_zh_hot(get=lambda url, **kw: _Fake(b"<html>nothing here</html>"),
+                          top=10)
+    live = {k: v for k, v in result.status.items() if k not in UNAVAILABLE}
+    assert live, "至少要有几个源报状态"
+    assert all(v.startswith("降级") for v in live.values()), live
+
+
+def test_退到备用源要说出来():
+    """小红书主源是 UApiPro 的 JSON，备用是今日热榜的 HTML——同一份上游数据，
+    但 JSON 的契约比一段随时会被改掉的 `<table>` 稳。
+
+    **退到备用了必须写在状态里。** 悄悄换源等于把「主源已经坏了」藏起来，
+    等它彻底不能用的时候，没人知道它坏了多久。
+    """
+    html = (
+        '<table><tbody><tr><td align="center">1.</td>'
+        '<td><a href="https://x/1">郑钦文夺冠</a></td>'
+        '<td class="ws">918.6w</td></tr></tbody></table>'
+    ).encode("utf-8")
+
+    def only_mirror(url, **kw):
+        if "uapis.cn" in url:
+            raise TimeoutError("boom")
+        return _Fake(html)
+
+    result = fetch_zh_hot(get=only_mirror, top=10)
+    assert result.status["小红书热榜"].startswith("正常"), "备用源顶上了就该报正常"
+    xhs = [h for h in result.hits if h.source.startswith("小红书")]
+    assert xhs and xhs[0].word == "郑钦文夺冠"
+    assert "走备用源" in xhs[0].source, f"没说自己走的是备用源：{xhs[0].source}"
 
 
 @pytest.mark.parametrize("name", sorted(UNAVAILABLE))

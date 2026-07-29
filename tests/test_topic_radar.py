@@ -119,6 +119,46 @@ def test_每条角度都写了出处和开场问题():
             f"{angle.slug} 的开场没有问出一个问题：{angle.question}")
 
 
+def test_赛事名不能当并簇的锚():
+    """2026-07-29 实跑：28 条标题里 `washington` 占了 **13 条**——它是本周
+    那一站，凡是那站的新闻都带着它。
+
+    「共享一个专名 + 总共享词 ≥2」挡不住这个：随便一个虚词（`i've`、`only`）
+    凑上去就成簇了，于是「Eala 首胜郑钦文」和「Shelton 谈 2026 赛季」并到了
+    一起。**而且这不只是多出一条假候选，它还会吃掉真的**：Draper 那条自己
+    带着 `withdraws`，本该对上「退赛与截止日」，被并进一个没有第二条
+    `withdraws` 的簇之后，触发词那一关就过不去了。
+
+    所以锚定的那个专名还得**今天罕见**（df ≤ 标题数的四分之一）。
+    """
+    week = [
+        _h("'I've already had that in me.' Eala's grit yields Washington debut win vs. Zheng", "WTA Tennis"),
+        _h("Shelton on 2026 season ahead of Washington: 'There are so many things I've been frustrated about'", "ATP Tour"),
+        _h("Draper withdraws from Washington: 'I'm only grateful for the struggle'", "ATP Tour"),
+        _h("Top quotes from Washington DC media day: 'The only way to go forward is growth'", "WTA Tennis"),
+        _h("Atmane gains Tiafoe revenge, breaks home hearts in Washington opener", "ATP Tour"),
+        _h("By the numbers: Samsonova puts third-set woes behind her in Washington upset of Keys", "WTA Tennis"),
+        _h("In Washington, Fernandez has an 'aggressive' approach to title defense", "WTA Tennis"),
+        _h("What is the Washington schedule?", "ATP Tour"),
+        _h("What to watch this week: De Minaur, Shelton in Washington; Cerundolo in Los Cabos", "ATP Tour"),
+        _h("Ngounoue / Smith vs Routliffe / Sutjiadi · Quarterfinal · ATP/WTA Washington D.C.", "Tennis.com"),
+        _h("Krajicek / Mektic vs Harrison / Skupski · Quarterfinal · ATP/WTA Washington D.C.", "Tennis.com"),
+        _h("Anastasia Potapova vs Venus Williams · Round 1 · ATP/WTA Washington D.C.", "Tennis.com"),
+        _h("Around the Washington grounds: Osaka unites DC fans as Venus, Shnaider prevail", "WTA Tennis"),
+    ]
+    clusters = cluster_headlines(week)
+    titles = [{h["title"] for h in g} for g in clusters]
+    for group in titles:
+        assert not any("Eala" in t for t in group) or len(group) == 1, \
+            f"Eala 那条又被赛事名并进别的故事里了：{group}"
+        assert not any("Draper" in t for t in group), \
+            f"Draper 退赛被并进了别的簇，「退赛与截止日」就撞不上了：{group}"
+
+    # 罕见的专名照样并得起来：同一天 venus 只出现在两条里，那两条确实是同一件事
+    assert any({"Venus", "venus"} & {w for t in g for w in t.split()} for g in titles), \
+        "把满天飞的词挡掉之后，罕见专名那条真簇不能跟着一起没了"
+
+
 def test_触发词必须是切得出来的词():
     """`hawk-eye`、`12-day`、`no1`、`top10` 都当过触发词，**一次都没匹配上**。
 
