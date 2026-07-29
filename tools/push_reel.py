@@ -53,9 +53,14 @@ _DATE_IN_PATH = re.compile(r"/(\d{4})-(\d{2})-(\d{2})/")
 BRANCH = os.environ.get("GITHUB_REF_NAME", "main")
 # jsDelivr 的 /gh/ 单文件上限。超过就是 403，不是慢，是打不开。
 JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
-# 标题末尾那句的字数上限。标题是给人扫的，不是给人读的——和「卡片上每条
-# 不超过 16 字」同一个道理：一句要换行才排得下，就说明它该被砍。
-SUMMARY_MAX = 20
+# 标题**整句**的上限，单位是小红书字位（全角 1、半角 0.5）。标题是给人扫的，
+# 不是给人读的——和「卡片上每条不超过 16 字」同一个道理。
+TITLE_MAX = 20
+# 末尾那一格自己还有个上限，比整句更紧：前面的日期和栏目已经占掉七个多字位。
+SUMMARY_MAX = 13
+# 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
+# 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
+POSTER_NAME = "poster.jpg"
 
 
 def video_url(outdir: Path, name: str) -> str:
@@ -126,8 +131,11 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     - **对阵 + 比分**（默认）。给了赛果就把「vs」换成比分——网球的写法本来就是
       赢家在前、比分居中，谁赢了不用再猜；没给赛果（比如赛前前瞻）就保留「vs」
     - **一句话概括赛果**（传 `summary`）。比分说不清的时候用，例如退赛、
-      三盘大战里的某个转折、或者一条不以胜负为重点的片子。**不超过 20 字**——
-      标题是给人扫的，长了就没人扫完；超了直接报错，别让它悄悄溜出去
+      三盘大战里的某个转折、或者一条不以胜负为重点的片子
+
+    两道字数闸门，超了直接报错，别让它悄悄溜出去：末尾那一格 `SUMMARY_MAX`，
+    整句 `TITLE_MAX`（见 `_fits`）。**讲不完的不要硬塞进标题**——用 `--lead`
+    放到正文第一行去详细概括，那儿有的是地方。
     """
     found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
@@ -147,7 +155,34 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     if event:
         parts.append(event)
     parts.append(pair)
-    return " | ".join(parts)
+    return _fits(" | ".join(parts))
+
+
+def _fits(title: str) -> str:
+    """标题**整句**不超过 20 个汉字，超了直接报错。
+
+    账号所有者的原话：「标题控制在 20 个汉字内，言简意赅直达重点，精炼内容。
+    讲不完的放到副标题，可以放到正文第一行，详细总结概括。」
+
+    所以这里卡的是**整句**，不是末尾那一格——以前只卡 `summary` 的 20 字，
+    前面还挂着日期、栏目、赛事轮次，加起来 25 个字位，通知栏里根本读不完。
+
+    量的是**小红书的字位**（`xhs_title_len`：全角记 1，半角记 0.5），不是
+    `len()`。「7.29 」五个半角只占 2.5 个字位，按 `len()` 算会白白吃掉两格。
+    两处用同一把尺，标题才不会在这儿过、到小红书又超。
+
+    讲不完的那半句交给 `--lead`——它就印在正文第一行，位置正好。
+    """
+    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+
+    width = xhs_title_len(title)
+    if width > TITLE_MAX:
+        raise SystemExit(
+            f"标题 {width:g} 个字位，超过 {TITLE_MAX}：{title}\n"
+            f"（半角算半个字位；日期+栏目已经占掉 "
+            f"{xhs_title_len(title.split(' | ')[0]) + 1.5:g} 个）\n"
+            "标题只留最硬的那个结果，剩下的用 --lead 放到正文第一行去详细概括。")
+    return title
 
 
 def split_copy(copy_text: str) -> tuple[str, str]:
@@ -161,48 +196,79 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     return title, "\n".join(lines[start:]).strip()
 
 
-def build_html(video_url: str, copy_url: str, lead: str, copy_text: str) -> str:
-    """推送正文：先给人看的文案（标题 + 正文），再两个按钮。
+def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
+    """封面海报的图片链接。海报只有几百 KB，稳走 jsDelivr。"""
+    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
 
-    **文案要印在这儿，而且只印一遍。** 手机上先能读到这一条到底写了什么，
-    再决定要不要点进复制页——和知识帖那条推送同一个结构（`to_push_html`：
-    标题、正文、然后「分别复制标题 / 正文」的按钮）。
 
-    要避开的是**同一段印两遍**：以前正文印一遍、灰底复制块又印一遍，
-    字符串断言全过，人一看整页才发现。所以这里只印一遍，
-    「分开复制」交给复制页——微信里没法放能点的 JS 按钮。
+def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
+               poster: str = "") -> str:
+    """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
+
+        白卡（顶上一条 #ff2442 红边）
+          台头小药丸  →  大标题
+          海报，**铺满整卡宽，左右不留白边**
+          「图片没显示？点此打开原图」
+          「👇 正文全文如下，长按整段即可复制」
+          正文（pre-wrap，一整段）
+          ── 分隔线 ──
+          ▶ 打开竖版成片
+          分别复制标题 / 正文
+          图片长按保存
+
+    两处和参照不同，都是这条线自己的教训：
+
+    - **海报要铺满**。参照里那几张 slide 是 3:4 的卡片图，缩在 16px 内边距里
+      正好；海报是这条片子的第一眼，账号所有者的原话是「海报要铺满全屏的」。
+      所以白卡的 `padding` 拆开写——文字块各自带左右内边距，海报单独一行
+      顶到卡边。用负 margin 抵消内边距在微信里不可靠，**结构上让它没有内边距**
+    - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
+      人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
     """
-    def btn(url: str, text: str, bg: str, fg: str = "#fff") -> str:
-        return (f'<a href="{url}" style="display:inline-block;background:{bg};'
-                f'color:{fg};text-decoration:none;padding:13px 24px;'
-                f'border-radius:999px;font-weight:700;margin:0 10px 12px 0">'
-                f'{text}</a>')
-
     title, body = split_copy(copy_text)
-    paragraphs = "".join(
-        '<div style="color:#25342e;font-size:15px;line-height:1.85;margin:0 0 13px">'
-        + "<br/>".join(html.escape(line) for line in block.splitlines())
-        + "</div>"
-        for block in re.split(r"\n\s*\n", body) if block.strip()
-    )
-    return f"""<div style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;
- line-height:1.75;color:#1f2a24;max-width:640px">
-<p style="margin:0 0 16px">{html.escape(lead)}</p>
-<p style="margin:0 0 6px">
-{btn(video_url, "▶ 下载竖版成片", "#0f7a52")}
-{btn(copy_url, "📋 打开复制页（标题 / 正文分开复制）", "#c6f65a", "#062018")}
-</p>
-<div style="border-top:1px solid #e6ebe8;margin:14px 0 12px"></div>
-<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 6px">
-标题</div>
-<div style="font-size:19px;font-weight:800;color:#102d23;line-height:1.4;
- margin:0 0 16px">{html.escape(title)}</div>
-<div style="font-size:13px;font-weight:700;color:#087747;margin:0 0 8px">
-正文</div>
-{paragraphs}
-<p style="margin:10px 0 0;color:#5b6b63;font-size:14px">
-上面这份可以直接长按选；要一键复制就点「打开复制页」，标题和正文各有一个按钮。</p>
-</div>"""
+    pad = "padding:0 16px"
+    # **导语给空就不占那一行。** 详细概括现在写在文案正文的第一行（账号所有者的
+    # 要求：标题精炼，讲不完的放正文第一行详细总结），导语再印一遍同样的意思
+    # 就是「同一段印两遍」那个老毛病。
+    lead_el = (f'<div style="font-size:15px;line-height:1.8;color:#25342e;'
+               f'margin:0 0 14px">{html.escape(lead.strip())}</div>'
+               if lead.strip() else "")
+    img = ""
+    if poster:
+        img = (f'<img src="{poster}" width="100%" alt="{html.escape(title)}"'
+               f' referrerpolicy="no-referrer"'
+               f' style="width:100%;display:block;margin:0 0 10px">'
+               f'<div style="text-align:center;margin:0 0 16px;{pad}">'
+               f'<a href="{poster}" style="color:#087747;font-size:13px;'
+               f'text-decoration:none">封面没显示？点此打开原图</a></div>')
+
+    def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
+        return (f'<a href="{url}" style="display:block;background-color:{bg};'
+                f'color:{fg};text-align:center;text-decoration:none;'
+                f'font-weight:bold;padding:13px 16px;border-radius:6px;'
+                f'margin:0 0 7px">{text}</a>')
+
+    return f"""<div style="background-color:#f6f7f4;color:#17251f;padding:12px 10px;\
+font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<div style="max-width:680px;margin:0 auto;background-color:#ffffff;\
+border-top:5px solid #ff2442;padding:18px 0 22px">
+<div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
+color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
+赛场之上</div>
+<div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
+margin:10px 0 14px">{html.escape(title)}</div></div>
+{img}
+<div style="{pad}">
+{lead_el}
+<div style="color:#7a8580;font-size:12px;margin:0 0 8px">\
+👇 正文全文如下，长按整段即可复制</div>
+<div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
+word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
+<div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
+{btn(video_url, "▶ 打开竖版成片", "#102d23")}
+{btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
+<div style="text-align:center;color:#7a8580;font-size:12px">图片长按保存</div>
+</div></div></div>"""
 
 
 def main() -> int:
@@ -257,7 +323,15 @@ def main() -> int:
     wait_for_copy_page(copy_url, title)
 
     url = video_url(outdir, name)
-    body = build_html(url, copy_url, args.lead, copy_text)
+    # 海报没进仓库就别硬塞一个链接进去——那就是「推送正文里的每个链接，
+    # 指向的文件都必须在推送之前进仓库」那条踩过两次的规矩。缺了就退回无图版，
+    # 并且**说出来**，别让它悄悄少一屏。
+    poster = ""
+    if (outdir / POSTER_NAME).is_file():
+        poster = poster_url(outdir)
+    else:
+        print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
+    body = build_html(url, copy_url, args.lead, copy_text, poster)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")

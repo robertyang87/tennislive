@@ -1,6 +1,6 @@
 {
   "match": "2026-07-27 华盛顿 Mubadala Citi DC Open 男单首轮 · 锦织圭 d. 商竣程 6-7(3) 6-3 6-4",
-  "note": "封面用的是集锦里网前握手那一帧（两人都在、居中）。官方静态图里**没有握手**，也没有任何一张商竣程的照片——下面这张放图文稿。",
+  "note": "封面改走「赛场之上」的固定海报模板，两格都是本场的真实照片，不再抽帧。**上一版说「没有任何一张商竣程的照片」，那句话的真实含义只是「官方图库和日媒里没有」**——换到中新社的图片新闻立刻有三张他的比赛照。又一次「某一个源上没有 ≠ 不存在」。",
   "article_photo": {
     "url": "https://newsatcl-pctr.c.yimg.jp/t/amd-img/20260728-00000043-kyodonews-000-4-view.jpg",
     "pixels": "2200x1532",
@@ -25,5 +25,39 @@
   "rejected": {
     "url": "https://hochi.news/images/2026/07/28/20260728-OHT1I51079-L.jpg",
     "why": "唯一一张握拳庆祝，但图注只有「錦織圭（ロイター）」——没有日期、场地、轮次；背景板是 Mercedes-Benz，而四张有独立图注的 DC 图里出现的是 MUBADALA / verizon / NEREUS / EQT，赛事合作伙伴里也没有奔驰。分不出是哪一场，和大威那张 AP25204 是同一个坑"
+  },
+  "shang-washington-2026.jpg": {
+    "source": "中新社（中新网 图片新闻）",
+    "gallery": "https://www.chinanews.com.cn/tp/hd2011/2026/07-28/1199484.shtml",
+    "date": "2026-07-27",
+    "event": "Mubadala Citi DC Open 华盛顿 ATP500 男单首轮",
+    "licence": "unverified",
+    "caption_verbatim": "当地时间7月27日，华盛顿，中国选手商竣程在2026华盛顿网球公开赛中不敌日本老将锦织圭，止步首轮。图为{谁}在比赛中。",
+    "four_elements": "图注自己把时间/地点/赛事/人物全写死了，还写明「在比赛中」——第二道闸门也由来源自证，不用看图推断",
+    "watermark": "原图右下角有中新網水印，**固定 100px 高**（五张量下来一模一样，不是按比例）。按红色字样定出顶边再往上留 8px 裁掉；按百分比裁会漏——930×551 那张 15% 只切掉一半",
+    "checked": true,
+    "player": "商竣程",
+    "url": "https://i2.chinanews.com.cn/simg/hd/2026/07/28/314df145ac014aeab8006fd925d73a87.jpg",
+    "size": "527x650（原图 527x750，切掉水印）",
+    "why": "海报上格。全身腾空鱼跃救球，球和拍都在画面里，背景 MUBADALA / EGA 两块赛事广告板可读——**画面自己证明是这一站**。",
+    "caveat": "527px 是全套里最软的一张，铺到 1080 宽是 2.05 倍放大。同一组里另有 930px 的两张（正手、腾空高压，见 rejected_but_usable），但冲击力差一档；精准和张力优先于清晰度，代价记在这里"
+  },
+  "nishikori-washington-2026.jpg": {
+    "source": "中新社（中新网 图片新闻）",
+    "gallery": "https://www.chinanews.com.cn/tp/hd2011/2026/07-28/1199484.shtml",
+    "date": "2026-07-27",
+    "event": "Mubadala Citi DC Open 华盛顿 ATP500 男单首轮",
+    "licence": "unverified",
+    "caption_verbatim": "当地时间7月27日，华盛顿，中国选手商竣程在2026华盛顿网球公开赛中不敌日本老将锦织圭，止步首轮。图为{谁}在比赛中。",
+    "four_elements": "图注自己把时间/地点/赛事/人物全写死了，还写明「在比赛中」——第二道闸门也由来源自证，不用看图推断",
+    "watermark": "原图右下角有中新網水印，**固定 100px 高**（五张量下来一模一样，不是按比例）。按红色字样定出顶边再往上留 8px 裁掉；按百分比裁会漏——930×551 那张 15% 只切掉一半",
+    "checked": true,
+    "player": "锦织圭",
+    "url": "https://i2.chinanews.com.cn/simg/hd/2026/07/28/53e73c5de0d54581a5dcc6cc8cfe4e1d.jpg",
+    "size": "930x558（原图 930x658，切掉水印）",
+    "why": "海报下格。开阔球场上的正手击球，人和影子都完整，脸看得清。"
+  },
+  "rejected_but_usable": {
+    "shang-washington-2026-leap.jpg": "930x451，腾空高压，ATP TOUR 球网带在画面里。清晰度比在用的那张高一档，但人小、姿态没有鱼跃那张张开。留着备用"
   }
 }

@@ -14,6 +14,7 @@
 """
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -102,18 +103,16 @@ def _headline(**kwargs) -> str:
 
 
 def test_有赛果时标题把vs换成比分():
-    got = _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
-                    event="华盛顿 ATP500 首轮")
-    assert got == "7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程"
+    got = _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1")
+    assert got == "7.28 赛场之上 | 锦织圭 2:1 商竣程"
     # 没赛果（比如赛前前瞻）就保留「vs」
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程").endswith(
         "锦织圭 vs 商竣程"
     )
     # 比分说不清的片子（退赛、以转折为主）改用一句话概括，顶掉末尾那一格
     assert _headline(column="赛场之上", matchup="锦织圭 vs 商竣程", score="2:1",
-                     event="华盛顿 ATP500 首轮",
                      summary="复出首战打满三盘") == (
-        "7.28 赛场之上 | 华盛顿 ATP500 首轮 | 复出首战打满三盘")
+        "7.28 赛场之上 | 复出首战打满三盘")
 
 
 def test_page阶段不发推送也不需要成片(tmp_path):
@@ -175,8 +174,8 @@ def test_推送正文里印文案且只印一遍():
     assert page.count(title) == 1
     first = body_text.splitlines()[0]
     assert page.count(first) == 1
-    # 复制页的入口要说清楚它是干嘛的
-    assert "复制页" in page and "https://p/copy.html" in page
+    # 复制页的入口要在，按钮上写的是它能干嘛（标题和正文分开复制）
+    assert "https://p/copy.html" in page and "分别复制标题 / 正文" in page
 
 
 def test_yt_dlp装default才解得了n_challenge():
@@ -202,19 +201,38 @@ def test_回合镜头也铺满不走contain():
     assert "回合镜头必须用这个" not in source
 
 
-def test_标题默认不带赛事名且别太长():
-    """「7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程」被判定太长。
-    赛事名文案里本来就有，标题这一格留给**人物 + 结果 + 抓得住人的那句**。"""
+def test_标题整句不超过20个字位():
+    """账号所有者的原话：「标题控制在 20 个汉字内，言简意赅直达重点，精炼内容。
+    讲不完的放到副标题，可以放到正文第一行，详细总结概括。」
+
+    卡的是**整句**，不是末尾那一格——以前只卡 `summary`，前面还挂着日期、栏目、
+    赛事轮次，加起来 25 个字位，通知栏里根本读不完。
+
+    量的是小红书字位（全角 1、半角 0.5），不是 `len()`：「7.28 」五个半角只占
+    2.5 个，按 `len()` 算会白白吃掉两格。两处用同一把尺，标题才不会在这儿过、
+    到小红书又超。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    from push_reel import TITLE_MAX, headline  # noqa: PLC0415
+    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+
+    out = Path("output/2026-07-28/reel/x")
+    got = headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球")
+    assert xhs_title_len(got) <= TITLE_MAX, got
+    # **赛事名就是这么被挤出去的**，所以工作流里 event 默认留空
     text = WORKFLOW.read_text(encoding="utf-8")
     block = text[text.index("      event:"):text.index("      summary:")]
     assert 'default: ""' in block, "event 默认要留空"
-    sys.path.insert(0, str(Path("tools").resolve()))
-    from push_reel import headline  # noqa: PLC0415
-
-    got = headline(Path("output/2026-07-28/reel/x"), "赛场之上",
-                   "锦织圭 vs 商竣程", "2:1", "", "商竣程复出输球，总分只差 8 分")
-    assert "ATP500" not in got
-    assert len(got) <= 32, f"{len(got)} 字，太长：{got}"
+    with pytest.raises(SystemExit, match="字位"):
+        headline(out, "赛场之上", "锦织圭 vs 商竣程", "2:1", "华盛顿 ATP500 首轮",
+                 "商竣程复出输球")
+    # 工作流的默认值自己也要过得了这道闸
+    summary = re.search(r"      summary:.*?default: \"(.*?)\"", text, re.S).group(1)
+    assert xhs_title_len(headline(out, "赛场之上", "伊埃拉 vs 郑钦文", "2:1", "",
+                                  summary)) <= TITLE_MAX
 
 
 def test_复制页探活要认内容不能只认200(monkeypatch):
@@ -274,15 +292,27 @@ def test_标题末尾那句不超过二十字():
         raise AssertionError("超长的那句被放过去了")
 
 
-def test_封面没给cx时自动定心():
-    """源片在本地看不到时（YouTube 对沙箱一律 403），cx 只能靠猜，
-    猜错就是把人裁到画面边上。所以封面和分段一样，缺 cx 就按运动质心自动定。"""
+def test_封面只有海报模板一条路():
+    """账号所有者定的：「以后『赛场之上』封面海报都用新的模板方案。」
+
+    所以抽帧那条分支**删掉了，不是留着兜底**。留着的后果是可预见的：哪条片子
+    一时找不到照片就悄悄退回抽帧，栏目的封面从此有两副面孔，而且退回去的那次
+    没人会注意到——和「兜底出事的时候不吭声」是同一个毛病。
+
+    缺图要报错，并且把出路写在报错里：去扩检索源，不是退回抽帧。
+    """
+    import pytest  # noqa: PLC0415
+
     reel = _reel()
     source = Path(reel.__file__).read_text(encoding="utf-8")
-    assert 'cover.get("cx") is None' in source
-    assert "auto_center(source, probe, source_w)" in source
-    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
-    assert "cx" not in spec["cover"]
+    assert not hasattr(reel, "_render_cover_html"), "单图封面那条路还在"
+    body = source.split("def build_cover")[1].split("\ndef ")[0]
+    assert "frame_at" not in body, "build_cover 里还留着抽帧的兜底"
+    # 模板的**单格**仍可显式给 frame_at（某人一张照片都找不到时的最后一招），
+    # 但那是 spec 里写死的选择，不是自动降级——差别就在这儿
+    with pytest.raises(reel.ReelError, match="扩检索源"):
+        reel.build_cover(Path("x.mp4"), {"cover": {"hook": "无图"}},
+                         Path("y.mp4"), 1920)
 
 
 def test_伊埃拉按译名表写():
@@ -325,7 +355,7 @@ def test_VS拼接两格都用真实照片():
 
 def test_源片太小要在开跑前挡住(monkeypatch):
     """**下到 360p 也算「下载成功」**：yt-dlp 退到低画质那一档时 returncode 0、
-    文件也在，看起来一切正常，直到第一段切片撞上 `crop=608:1080` 才炸
+    文件也在，看起来一切正常，直到第一段切片撞上 `crop=810:1080` 才炸
     （run 30412173035，源片 640×360）。所以裁切窗口按源片实际高度算，
     太小的源片在开跑前就拒掉，别渲到一半才发现。"""
     reel = _reel()
@@ -337,9 +367,9 @@ def test_源片太小要在开跑前挡住(monkeypatch):
         raise AssertionError("360p 的源片被放过去了")
 
     reel.resolve_crop(1920, 1080)
-    assert (reel.CROP_W, reel.CROP_H) == (608, 1080)
+    assert (reel.CROP_W, reel.CROP_H) == (810, 1080)
     reel.resolve_crop(1280, 720)                 # 720p 也要能跑，按比例换算
-    assert (reel.CROP_W, reel.CROP_H) == (404, 720)   # 720*9/16=405，取偶
+    assert (reel.CROP_W, reel.CROP_H) == (540, 720)   # 720*3/4=540
 
 
 def test_下载不把编码当硬条件():
@@ -356,3 +386,193 @@ def test_下载不把编码当硬条件():
     assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
     assert "ext=m4a" not in picker
     assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
+
+
+def test_赛场之上走固定海报模板():
+    """**这是栏目的固定封面，不是一条片子的一次性设计。**
+
+    以前是在 `build_match_reel` 里现拼一张上下两格的底图再盖字，每条片子的比例、
+    压暗、名字位置都要重调。现在版式定死在 `tools/versus_poster.py`，换片子只换
+    素材和文字——改版式改一处，三条片子一起重渲比一眼。
+    """
+    reel = _reel()
+    source = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "build_versus_poster" in source and hasattr(reel, "build_versus_poster")
+    # 旧的现拼那套要真的删掉，不能留着让人以为还有第二条路
+    assert not hasattr(reel, "build_versus_base"), "旧的现拼底图还在"
+    poster = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert 'layout: str = "diagonal"' in poster, "默认版式不是斜切"
+
+
+def test_海报必须写两个人的中文名():
+    """只有两张脸的 VS 卡等于让人猜这是谁打谁。名字是模板的一部分。"""
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    names = spec["cover"]["versus"]["names"]
+    assert len(names) == 2 and all(n.strip() for n in names), names
+    bare = json.loads(json.dumps(spec["cover"]))
+    bare["versus"].pop("names")
+    with pytest.raises(SystemExit, match="中文名"):
+        versus_poster.build_poster(bare, Path("/tmp/never-written.jpg"))
+
+
+def test_海报上的名字以译名表为准():
+    """人名不手打——莱巴金娜、奥斯塔彭科都是这么错出去的。"""
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.zh import player_zh  # noqa: PLC0415
+
+    spec = json.loads(Path("specs/reels/eala-zheng.json").read_text("utf-8"))
+    top, bottom = spec["cover"]["versus"]["names"]
+    assert top == player_zh("Zheng Qinwen"), top
+    assert bottom == player_zh("Alexandra Eala"), bottom
+
+
+def test_成片是3比4不是9比16():
+    """**画幅定成 3:4，为的是尽可能多保住主体。**
+
+    两个理由，都是量出来的：
+
+    - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里被裁掉上下两条，
+      海报的台头、比分、赛事行首当其冲，而那几行正是让人看懂这是哪一场的东西
+    - 从 1920×1080 的源片里取窗口，9:16 只有 608px 宽，3:4 有 **810px 宽**，
+      多 33% 的球场。球飞到两边出画、窗口中心偏一点就丢半个场，同时缓解
+
+    代价是抖音/视频号不铺满。这是口径选择，问过了，选的就是这样。
+    """
+    reel = _reel()
+    assert (reel.VIDEO_W, reel.VIDEO_H) == (1080, 1440)
+    reel.resolve_crop(1920, 1080)
+    assert (reel.CROP_W, reel.CROP_H) == (810, 1080), (reel.CROP_W, reel.CROP_H)
+    # 解说片那条线**不受影响**：它仍是 9:16 画布 + 3:4 卡，两条线的画幅分开
+    assert reel._EXPLAINER_H == 1920
+
+
+def test_字幕上锚跟着画布重算():
+    """**沿用 1524 就跑位了。** 那个数是在 1920 画布里、卡底（1680）往上 156px；
+    这里整幅画布就是那张卡，同样是「卡底往上 156」换算成 1440-156=1284。
+    保的是同一个物理位置——量出来的那组数一个没动。
+
+    `PlayResY` 也要跟着改：写错的话 libass 按比例缩整套坐标，字幕整体跑位，
+    **而且不报错**。
+    """
+    reel = _reel()
+    assert reel._REEL_MARGIN_V == 1284, reel._REEL_MARGIN_V
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import _ass_header  # noqa: PLC0415
+
+    head = _ass_header(reel.VIDEO_H, reel._REEL_MARGIN_V)
+    assert "PlayResY: 1440" in head and ",1284,1" in head
+    # 解说片的默认值必须一个字节都没变
+    assert "PlayResY: 1920" in _ass_header() and ",1524,1" in _ass_header()
+
+
+def test_固定中心全片共用一个():
+    """**一段一个中心才是那个毛病。**
+
+    逐段取运动质心的中位数，一段只有几秒、往往就一两个回合，谁那边球多中心就
+    偏谁：实测九段是 0.338 / 0.406 / 0.381 / 0.470 / 0.482 / 0.547 / 0.466 /
+    0.455 / 0.407，1920 宽里前后差 400px，而**转播机位从头到尾没动过**。
+
+    池化到全片才对：一整场球的落点对称于球场中轴，样本一多就收敛（这批是 0.455）。
+
+    ⚠️ 曾经写过一版按白线剖面找对称轴的检测器，合成画面上误差 0.001，
+    **真实素材上完全不成立**（108 张真源片帧估出来的轴从 0.0 散到 0.85）。
+    机位一旦偏离中轴，球场在画面里本来就不再左右对称——"找对称轴"找的不是
+    球场中轴。已经删掉，别再走这条路。
+    """
+    reel = _reel()
+    assert not hasattr(reel, "court_center") and not hasattr(reel, "_court_axis")
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "全片共用一个固定中心" in src
+    # 签名收的是一批段，不是一段——池化本身就写在类型里
+    import inspect  # noqa: PLC0415
+
+    params = list(inspect.signature(reel.auto_center).parameters)
+    assert params[1] == "segs", params
+
+
+def test_海报进仓库且推送第一屏是它():
+    """海报要**进仓库**：推送正文的第一屏就是它，微信里得一眼看出谁打谁、几比几。
+
+    以前它叫 `_cover.jpg`、下划线开头，被「丢掉不进仓库的中间物」那步删掉了，
+    于是推送里一张图都没有，只有两个按钮。
+    """
+    reel = _reel()
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    assert reel.POSTER_NAME == push_reel.POSTER_NAME == "poster.jpg"
+    text = WORKFLOW.read_text(encoding="utf-8")
+    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    rm = " ".join(line for line in clean.splitlines()
+                  if not line.strip().startswith("#"))
+    assert "poster.html" in rm, "渲染输入（十几 MB 的 data URI）没被清掉"
+    assert "poster.jpg" not in rm.replace("poster.html", ""), "海报被误删了"
+
+
+def test_推送版式照着知识解说那条且海报铺满():
+    """账号所有者指定了参照（那条 7.29 的知识解说推送）和一条硬要求：
+    「海报要铺满全屏的」。
+
+    所以白卡的左右内边距**拆开写**——文字块各自带 `padding:0 16px`，海报单独
+    一行顶到卡边。用负 margin 去抵消内边距在微信里不可靠，结构上让它没有内边距。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    body = push_reel.build_html("https://x/v.mp4", "https://x/c.html", "导语",
+                                "标题一行\n\n正文一段", "https://x/poster.jpg")
+    assert "border-top:5px solid #ff2442" in body        # 参照那条红边
+    img = body[body.index("<img"):body.index(">", body.index("<img"))]
+    assert "width:100%" in img and "padding" not in img, img
+    assert "border-radius" not in img, "铺满就不该有圆角"
+    # 正文只印一遍
+    assert body.count("正文一段") == 1
+    # 没有海报时退回无图版，而不是塞一个空 img
+    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
+
+
+def test_海报台头只写栏目名():
+    """台头那颗小药丸只写**栏目名**，不带账号名。
+
+    原来是「网球时差 · 赛场之上」——账号名在片子里已经有落款，海报上再挂一遍
+    等于把最显眼的位置让给一句读者不需要的信息。首屏那点地方要留给
+    「这是哪一场」。
+    """
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
+        assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
+
+
+def test_商竣程那格是本场真实照片不是抽帧():
+    """**上一版写过「没有任何一张商竣程的照片」——那句话是错的。**
+
+    它的真实含义只是「赛事官方图库和日媒里没有」：官方媒体库按
+    `<球员>-1920.jpg` / `<球员>-washington-2026-monday-r1.jpg` 五种拼法探过去
+    全是 302（同目录已知存在的两张返回 200 image/jpeg，所以探测本身是有效的），
+    日媒那边只有锦织圭。换到**中新社的图片新闻**立刻有三张他的比赛照。
+
+    又一次「某一个源上没有 ≠ 不存在」，也是「过不了闸门是换源的信号，
+    不是放弃的理由」。
+    """
+    spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    credits = json.loads(
+        Path("assets/reel/nishikori-shang.credits.json").read_text("utf-8"))
+    assert versus["names"] == ["商竣程", "锦织圭"]
+    for key in ("top", "bottom"):
+        side = versus[key]
+        assert "frame_at" not in side, f"{key} 还在抽帧"
+        image = Path(side["image"])
+        assert image.is_file(), image
+        entry = credits[image.name]
+        assert entry["date"] == "2026-07-27", f"{image.name} 不是这场"
+        assert entry["checked"], f"{image.name} 没记「打开看过」"
+        # 图注自证第二道闸门：来源自己写了「在比赛中」
+        assert "在比赛中" in entry["caption_verbatim"]
+    # 水印是**固定 100px**，不是按比例——按比例裁会漏
+    assert "100px" in credits["shang-washington-2026.jpg"]["watermark"]
