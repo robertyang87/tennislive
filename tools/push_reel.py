@@ -83,8 +83,8 @@ def copy_page_url(outdir: Path) -> str:
     return f"{_PAGES}/{outdir.as_posix()}/copy.html"
 
 
-def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 12,
-                       delay: float = 15.0, timeout: int = 15) -> None:
+def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
+                       delay: float = 20.0, timeout: int = 15) -> None:
     """等 Pages 把**这一版**的复制页发出来，等不到就别推。
 
     `expect` 传这一版的标题：**只查 200 是不够的**。这个 URL 上一版就存在，
@@ -94,8 +94,15 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 12,
 
     提交完到 Pages 重新发布之间有一两分钟，所以要等；但**等不到就必须报错**，
     不能带着一个指向旧内容的按钮把消息发出去——微信那条消息发出去就收不回来了。
+
+    **预算给足。** 原来是 12 次 × 15 秒 = 3 分钟，2026-07-29 王欣瑜那条就是这么
+    黄的：十二次全 404、exit 1、微信一个字没发出去，而复制页在这一步放弃之后
+    才发布出来（我在沙箱里探到 200，内容正是那一版）。**「等不到」和「没等够」
+    长得一模一样**，而两边的代价完全不对称——多等几分钟只是让 runner 空转，
+    等不够就是整条推送作废、六分钟的渲染白跑。现在 30 次 × 20 秒 = 10 分钟。
+    上限 `min(30, …)` 也跟着提到 60，否则环境变量调不上去。
     """
-    attempts = max(1, min(30, int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS",
+    attempts = max(1, min(60, int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS",
                                                  attempts))))
     delay = max(0.0, min(60.0, float(os.environ.get(
         "TENNISLIVE_COPYPAGE_RETRY_SECONDS", delay))))
