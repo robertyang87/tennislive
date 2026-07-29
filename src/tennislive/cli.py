@@ -367,6 +367,127 @@ def cmd_explainer(args) -> int:
     return 0
 
 
+def cmd_topic_radar(args) -> int:
+    """把今天扫来的新闻**提炼成选题**（不是快讯）。
+
+    `flash-radar` 做的是「一条新闻 → 一张快讯卡」，讲发生了什么；这条做的是
+    `docs/newshook-topics.md` 那个形状：**新闻钩子 + 底下压着的常青线**。
+
+    两步都是机器能做的：同一天里几家在报同一件事才算一个新闻点（聚类），
+    再拿这一簇去撞人工维护的角度表（`research/topic_radar.ANGLES`）。
+    **撞不上就不猜**——那些进「没对上角度的热点」，让人自己看。
+    """
+    import dataclasses as _dc
+    import html as _html
+
+    from .render.terminal import console
+    from .research.topic_radar import (
+        distil_topics,
+        leftover_terms,
+        previous_slugs,
+    )
+    from .research.trends import fetch_trend_signals
+
+    d = parse_date_arg(args.date)
+    signals, status = fetch_trend_signals()
+    signal_dicts = [_dc.asdict(s) for s in signals]
+    # 只用官方新闻源：search-trend 那一路是大众热搜（足球运动员、流行歌手），
+    # 从来做不成网球选题，混进来只会把簇搅乱。
+    news = [s for s in signal_dicts if str(s.get("kind") or "") == "official-news"]
+    # 大众热搜那一路（search-trend）不做选题来源，但**是舆论热度的证据**：
+    # 撞上说明这件事溢出了网球圈。只当加成，不能靠它把没人报的东西顶上来。
+    trends_only = [s for s in signal_dicts if str(s.get("kind") or "") == "search-trend"]
+    prev = previous_slugs(Path(args.outdir), d.isoformat(), back=args.persist_days)
+    topics, leftover = distil_topics(
+        news, min_sources=args.min_sources, limit=args.max,
+        trend_signals=trends_only, prev_slugs=prev,
+    )
+
+    outdir = Path(args.outdir) / d.isoformat() / "topic_radar"
+    outdir.mkdir(parents=True, exist_ok=True)
+    _dump_json(
+        {
+            "date": d.isoformat(),
+            "source_status": status,
+            "news_signals": len(news),
+            "trend_signals": len(trends_only),
+            "count": len(topics),
+            "topics": [t.as_dict() for t in topics],
+            # 空产要自证：一条候选都没有时，得能分清是「今天没热点」还是
+            # 「热点都没撞上表里的角度」。后者说明该往 ANGLES 里补一条。
+            "unmatched_clusters": len(leftover),
+            "unmatched_terms": [
+                {"term": t, "clusters": n} for t, n in leftover_terms(leftover)
+            ],
+        },
+        outdir / "topic_radar_queue.json",
+    )
+
+    console.print(
+        f"[cyan]新闻信号 {len(news)} 条 → 选题候选 {len(topics)} 个"
+        f"，没对上角度的热点簇 {len(leftover)} 个[/cyan]"
+    )
+    if not topics:
+        console.print("[yellow]今天没有对上角度的选题候选[/yellow]")
+        if leftover:
+            console.print(
+                "[yellow]但有 "
+                f"{len(leftover)} 个热点簇没对上——看 unmatched_terms，"
+                "该往 ANGLES 里补角度了[/yellow]"
+            )
+        return 0
+
+    blocks = []
+    for t in topics:
+        done = (
+            f'<span style="color:#c0392b;">· 做过（{_html.escape(t.published_on)}）</span>'
+            if t.published_on
+            else ""
+        )
+        heads = "".join(
+            f'<div style="margin:2px 0;"><a href="{_html.escape(h["url"], quote=True)}" '
+            'style="color:#087747;text-decoration:none;">'
+            f'{_html.escape(h["title"])}</a>'
+            f'<span style="color:#7a8580;"> · {_html.escape(h["source"])}</span></div>'
+            for h in t.as_dict()["headlines"][:4]
+        )
+        blocks.append(
+            '<div style="margin:0 0 18px;padding:10px;background:#f4f8f6;border-radius:8px;">'
+            f'<div style="font-weight:800;font-size:16px;">{_html.escape(t.angle.label)} '
+            f'<span style="color:#7a8580;font-weight:400;font-size:12px;">'
+            f"{len(t.sources)} 家在报"
+            + (f" · 连着第 {t.heat.days_running} 天" if t.heat and t.heat.days_running > 1 else "")
+            + (f" · 撞上 {t.heat.trend_hits} 条热搜" if t.heat and t.heat.trend_hits else "")
+            + f"</span> {done}</div>"
+            f'<div style="margin:6px 0;color:#20302a;">{_html.escape(t.angle.evergreen)}</div>'
+            f'<div style="color:#7a8580;font-size:12px;">核实：'
+            f"{_html.escape(t.angle.source)}</div>"
+            f'<div style="color:#20302a;font-size:13px;margin:6px 0;">开场问：'
+            f"{_html.escape(t.angle.question)}</div>"
+            f"{heads}</div>"
+        )
+    push_html = (
+        '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding:10px;">'
+        f'<div style="font-weight:800;font-size:17px;margin:0 0 12px;">'
+        f"今日选题候选 · {d.month}.{d.day}（{len(topics)} 个）</div>"
+        f"{''.join(blocks)}"
+        '<div style="color:#7a8580;font-size:12px;margin-top:10px;">'
+        "角度是人工表里对上的，**事实一条都没核**——按「核实」那行去翻原始出处。"
+        "</div></div>"
+    )
+    (outdir / "topic_radar_push.html").write_text(push_html, encoding="utf-8")
+    for t in topics:
+        mark = f"（做过 {t.published_on}）" if t.published_on else ""
+        heat = t.heat
+        extra = (
+            f" · 连着第 {heat.days_running} 天" if heat and heat.days_running > 1 else ""
+        ) + (f" · 撞上 {heat.trend_hits} 条热搜" if heat and heat.trend_hits else "")
+        console.print(
+            f"  ★ {t.angle.label}{mark} · {len(t.sources)} 家在报{extra}"
+        )
+    return 0
+
+
 def cmd_digest(args) -> int:
     from .render.terminal import console
     from .render.wechat import article_title, to_html, to_markdown
@@ -1615,6 +1736,28 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     sp = sub.add_parser(
+        "topic-radar",
+        help="把今天的新闻提炼成选题候选（新闻钩子 + 底下的常青线），不是快讯",
+    )
+    sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出根目录（默认 output/）")
+    sp.add_argument("--max", type=int, default=5, help="选题候选上限（默认 5）")
+    sp.add_argument(
+        "--min-sources",
+        dest="min_sources",
+        type=int,
+        default=2,
+        help="几家在报才算一个新闻点（默认 2；同一家发两条不算两家）",
+    )
+    sp.add_argument(
+        "--persist-days",
+        dest="persist_days",
+        type=int,
+        default=1,
+        help="往前看几天判断「连着第几天在报」（默认 1）",
+    )
+
+    sp = sub.add_parser(
         "flash-radar",
         help="自动扫描场外网球新闻，筛出可发候选进待发队列（比赛新闻归日报，敏感转人工）",
     )
@@ -1720,6 +1863,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_knowledge_adhoc(args)
     if args.command == "flash-card":
         return cmd_flash_card(args)
+    if args.command == "topic-radar":
+        return cmd_topic_radar(args)
     if args.command == "flash-radar":
         return cmd_flash_radar(args)
     if args.command == "explainer":
