@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾7.31网球有故事｜唯一的男女双500</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>1️⃣ 起点：阿什把比赛带进公共公园
+· 1968年，他成为首位赢得美网男单冠军的非裔球员
+· 1969年参与筹办华盛顿站时，他提出：比赛必须设在种族融合的公共设施
+· 首届赛事因此落户岩溪公园
+
+2️⃣ 变迁：从红土，走进北美硬地赛季
+· 最初17年，这里打的是红土
+· 阿什1973年亲自夺冠，康纳斯3冠、伦德尔2冠
+· 1987年改为硬地，逐渐成为美网前最有辨识度的热身站之一
+
+3️⃣ 传奇：阿加西把名字写了五次
+· 1990、1991、1995、1998和1999年五次夺冠
+· 1995年决赛，场地温度逼近华氏118度
+· 他一度热到呕吐，仍以6-4、2-6、7-5击败埃德伯格
+
+4️⃣ 独一无二：男子、女子都是500
+· 女子赛事在2011年加入
+· 2023年完成整合，成为全球唯一的ATP与WTA双500合办赛事
+· 19岁的高芙在这里拿到首座WTA500冠军，四周后又捧起美网冠军
+
+5️⃣ 还在续写：纪录之外，是那扇门
+· 2024年，科达父子相隔32年先后夺冠，写下ATP巡回赛第一次
+· 2025年，德米纳尔挽救3个冠军点完成逆转
+· 2026年起赛事更名，冠名合作延续到2030年
+
+💬 留个答案
+顶级职业赛事，今天还应该承担这样的公共使命吗？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #华盛顿网球公开赛 #ATP500 #WTA500</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
