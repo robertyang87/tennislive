@@ -11,8 +11,8 @@
 
 四种版式，`layout` 选：
 
-    cutout    **默认，也是账号所有者定下来的那一版**。背景是本场的比赛画面
-              （虚化压暗），两个人用官方抠图站在品牌绿那条斜线上
+    cutout    **默认，也是账号所有者定下来的那一版**。背景从本场比赛视频截取
+              底线全场机位（虚化压暗），两个人用官方抠图站在品牌绿斜线上
     diagonal  斜切。两格各一张实拍，中缝一道品牌绿
     split     上下平分，中缝压一个 VS 圆牌
     stack     上下平分但名字压在各自那一格里，比分居中
@@ -32,8 +32,9 @@
   尺寸是 alias 定死的（`?w=` 无效），铺到一格约 1.3 倍放大，比 WTA 那边软一档
 - 两边都是**棚拍摆拍**，所以张力交给背景那张本场画面，不交给人物
 
-素材：`cutout` 版式每格给 `cutout`（透明 PNG），背景给 `versus.background`
-（`image` 或 `frame_at`）；`diagonal` 等版式每格给 `image`，可调
+素材：`cutout` 版式每格给 `cutout`（透明 PNG），原始 spec 的背景给
+`versus.background = {frame_at, shot: "wide_court"}`；渲染管线会从本场源片
+抽帧并在调用本模块前换成本地 `image`。`diagonal` 等版式每格给 `image`，可调
 `focus` / `focus_y` / `zoom`——铺满不等于人够大。
 
     python tools/versus_poster.py --spec specs/reels/wang-pareja.json \\
@@ -43,8 +44,10 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -128,12 +131,12 @@ def _cutout_geometry(cx: float, seam: float) -> float:
 
 
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
-    """cutout 版式：背景一张本场画面，两个官方抠图站在斜线上。"""
+    """cutout 版式：背景是本场视频的全场机位，两个官方抠图站在斜线上。"""
     bg = versus.get("background") or {}
     if not bg.get("image"):
         raise SystemExit(
-            "cutout 版式要 versus.background = {image|frame_at}："
-            "背景是**本场**的比赛画面，人物才有语境。")
+            "cutout 版式渲染前要把本场视频的 `frame_at` 全场机位抽成 "
+            "versus.background.image；不要用场馆资料图或通用球场图。")
     seam = float(versus.get("split", CUT_SEAM))
     vs_y = float(versus.get("vs_y", CUT_VS_Y)) * 100
     css = [
@@ -183,74 +186,6 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
   rgba(4,18,13,.70) 64%,rgba(4,18,13,.94) 78%)}
 .cut{position:absolute;transform:translateX(-50%);z-index:3;
   filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));""" + CUT_FADE + "}")
-    return body, extra
-
-
-def _hero_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
-    """赛后主视觉：赢家用本场近景占据主位，对手缩小并退后。
-
-    这一版不替换 ``cutout`` 的可靠兜底；只有本场能拿到两张清晰近景时才显式启用。
-    """
-    bg = versus.get("background") or {}
-    if not bg.get("image"):
-        raise SystemExit(
-            "hero 版式要 versus.background = {image|frame_at}："
-            "背景必须来自本场比赛。")
-    for key in ("top", "bottom"):
-        if not versus[key].get("cutout"):
-            raise SystemExit(f"hero 版式的 {key} 格要本场真实近景的透明 PNG。")
-
-    win = versus["top"]
-    rival = versus["bottom"]
-    win_src = _cut_crop(Path(win["cutout"]), win.get("crop"))
-    rival_src = _cut_crop(Path(rival["cutout"]), rival.get("crop"))
-    bg_uri = _data_uri(Path(bg["image"]))
-
-    body = (
-        '<div class="hero-bg"></div><div class="hero-wash"></div>'
-        f'<img class="hero-person hero-rival" src="{_data_uri(rival_src)}">'
-        f'<img class="hero-person hero-win" src="{_data_uri(win_src)}">'
-        '<div class="hero-fade"></div>'
-        '<div class="hero-edge"></div>'
-        '<div class="hero-names">'
-        f'<span class="hero-winner">{names[0]}</span>'
-        '<span class="hero-vs">胜</span>'
-        f'<span class="hero-loser">{names[1]}</span>'
-        '</div>'
-    )
-    extra = f"""
-.hero-bg{{position:absolute;inset:-30px;background-image:url('{bg_uri}');
-  background-size:cover;background-position:
-  {float(bg.get('focus', .5)) * 100:.1f}%
-  {float(bg.get('focus_y', .5)) * 100:.1f}%;
-  filter:blur({float(bg.get('blur', 18)):.0f}px)
-  brightness({float(bg.get('dim', .38)):.2f}) saturate(.72);transform:scale(1.08)}}
-.hero-wash{{position:absolute;inset:0;background:
-  radial-gradient(circle at 60% 26%,rgba(198,246,90,.15),transparent 34%),
-  linear-gradient(180deg,rgba(4,18,13,.14) 0%,rgba(4,18,13,.06) 43%,
-  rgba(4,18,13,.88) 65%,{INK} 79%)}}
-.hero-person{{position:absolute;z-index:3;object-fit:contain;
-  filter:drop-shadow(0 22px 44px rgba(0,0,0,.62))}}
-.hero-win{{height:{float(win.get('scale', .58)) * VIDEO_H:.0f}px;
-  left:{float(win.get('cx', .42)) * 100:.2f}%;top:{float(win.get('top', .055)) * 100:.2f}%;
-  transform:translateX(-50%)}}
-.hero-rival{{height:{float(rival.get('scale', .42)) * VIDEO_H:.0f}px;
-  left:{float(rival.get('cx', .79)) * 100:.2f}%;top:{float(rival.get('top', .13)) * 100:.2f}%;
-  transform:translateX(-50%);filter:grayscale(.28) brightness(.72)
-  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9}}
-.hero-fade{{position:absolute;z-index:4;left:0;right:0;top:530px;height:410px;
-  background:linear-gradient(180deg,transparent 0%,rgba(4,18,13,.30) 43%,
-  rgba(4,18,13,.94) 88%,{INK} 100%)}}
-.hero-edge{{position:absolute;z-index:4;left:55px;top:764px;width:154px;height:8px;
-  background:{BRAND};transform:rotate(-{SEAM_ANGLE}deg);transform-origin:left center}}
-.hero-names{{position:absolute;z-index:5;left:66px;top:790px;display:flex;
-  align-items:center;gap:16px;font-family:'TL Display SC','TL Sans SC',sans-serif;
-  text-shadow:0 4px 24px rgba(0,0,0,.8)}}
-.hero-winner{{font-size:66px;color:{TEXT}}}
-.hero-vs{{font-size:25px;color:{INK};background:{BRAND};border-radius:999px;
-  padding:5px 12px 7px;font-weight:900}}
-.hero-loser{{font-size:44px;color:{DIM}}}
-"""
     return body, extra
 
 
@@ -399,18 +334,40 @@ def _result_block(cover: dict, names: list) -> str:
     # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
     # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
     sets_px = 62 if len(result) <= 11 else 54
-    pills = "".join(f'<span class="pill">{p}</span>'
-                    for p in (cover.get("tier"), cover.get("round")) if p)
-    meta = str(cover.get("meta", "")).strip()
+    event_badge = cover.get("event_badge") or {}
+    if event_badge:
+        tour = str(event_badge.get("tour", "")).strip().lower()
+        if tour not in {"atp", "wta"}:
+            raise SystemExit("event_badge.tour 只能是 ATP 或 WTA。")
+        logo_path = Path(f"assets/logo/tours/{tour}.svg")
+        if not logo_path.is_file():
+            raise SystemExit(f"找不到官方巡回赛标识：{logo_path}")
+        logo = logo_path.read_text(encoding="utf-8").replace(
+            "<svg ", '<svg class="tour-logo" aria-hidden="true" ', 1)
+        level = html.escape(str(event_badge.get("level", "")).strip())
+        text = html.escape(str(event_badge.get("text", "")).strip())
+        footer = (
+            '<div class="eventline">'
+            f'<span class="tourmark">{logo}<b>{level}</b></span>'
+            f'<span class="eventtext">{text}</span>'
+            "</div>"
+        )
+    else:
+        pills = "".join(f'<span class="pill">{p}</span>'
+                        for p in (cover.get("tier"), cover.get("round")) if p)
+        meta = str(cover.get("meta", "")).strip()
+        footer = (
+            f'<div class="meta">{pills}'
+            + (f'<span class="mtx">{meta}</span>' if meta else "")
+            + "</div>"
+        )
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
         + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
         + (f'<span class="lose">{loser}</span>' if loser else "")
         + "</div>"
-        + f'<div class="meta">{pills}'
-        + (f'<span class="mtx">{meta}</span>' if meta else "")
-        + "</div>")
+        + footer)
 
 
 def build(spec: dict, layout: str, out: Path) -> Path:
@@ -436,8 +393,6 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
 
     if layout == "cutout":
         body, panels = _cutout_body(cover, versus, names)
-    elif layout == "hero":
-        body, panels = _hero_body(cover, versus, names)
     else:
         # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
         # 拼贴**；有了它，斜线成了设计的一部分。
@@ -494,11 +449,6 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:100px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
-body.hero .copy{{bottom:100px}}
-body.hero .hook{{font-size:78px;line-height:1.12}}
-body.hero .hook div:last-child{{font-size:94px;color:{BRAND}}}
-body.hero .res{{margin-top:22px}}
-body.hero .meta{{margin-top:16px}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
@@ -513,12 +463,19 @@ body.hero .meta{{margin-top:16px}}
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}
 .meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+.eventline{{margin-top:20px;display:flex;align-items:center;gap:22px}}
+.tourmark{{height:48px;min-width:158px;border:2px solid {BRAND};
+  border-radius:999px;color:{BRAND};display:inline-flex;align-items:center;
+  justify-content:center;gap:11px;padding:7px 18px 8px}}
+.tour-logo{{display:block;width:76px;height:25px;color:{BRAND}}}
+.tourmark b{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:29px;
+  line-height:1;font-weight:800;letter-spacing:1px}}
+.eventtext{{font-size:31px;color:{DIM};letter-spacing:2px}}
 .pill{{border:2px solid {BRAND};color:{BRAND};border-radius:999px;
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:26px;letter-spacing:3px;padding:6px 18px 7px;white-space:nowrap}}
 .mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
-<body class="{layout}">
 {body}
 <div class="top">{cover.get('eyebrow', '')}</div>
 <div class="copy"><div class="hook">{hook}</div>
@@ -531,10 +488,25 @@ body.hero .meta{{margin-top:16px}}
     with sync_playwright() as pw:
         try:
             browser = pw.chromium.launch(args=["--no-sandbox"])
-        except Exception:  # noqa: BLE001
-            browser = pw.chromium.launch(
-                executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-                args=["--no-sandbox"])
+        except Exception as default_error:  # noqa: BLE001
+            # 本地 Work 环境和 GitHub runner 的浏览器位置不同。优先尊重显式配置，
+            # 再找项目旁的本地 Chromium，最后兼容既有 runner 镜像；不要因为
+            # Playwright 缓存目录不同就把每次封面预览都送去 Actions。
+            candidates = [
+                os.environ.get("CHROMIUM_PATH"),
+                str(Path(__file__).resolve().parents[2]
+                    / ".local-browser" / "chromium"),
+                "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+            ]
+            browser = None
+            for executable in candidates:
+                if not executable or not Path(executable).is_file():
+                    continue
+                browser = pw.chromium.launch(
+                    executable_path=executable, args=["--no-sandbox"])
+                break
+            if browser is None:
+                raise default_error
         tab = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
                                device_scale_factor=1)
         tab.goto(page.resolve().as_uri())
@@ -548,7 +520,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--spec", required=True)
     ap.add_argument("--layout", default="cutout",
-                    choices=("hero", "cutout", "diagonal", "split", "stack"))
+                    choices=("cutout", "diagonal", "split", "stack"))
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
