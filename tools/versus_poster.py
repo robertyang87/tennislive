@@ -186,6 +186,70 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+def _hero_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
+    """赛后主视觉：赢家用本场近景占据主位，对手缩小并退后。
+
+    这一版不替换 ``cutout`` 的可靠兜底；只有本场能拿到两张清晰近景时才显式启用。
+    """
+    bg = versus.get("background") or {}
+    if not bg.get("image"):
+        raise SystemExit(
+            "hero 版式要 versus.background = {image|frame_at}："
+            "背景必须来自本场比赛。")
+    for key in ("top", "bottom"):
+        if not versus[key].get("cutout"):
+            raise SystemExit(f"hero 版式的 {key} 格要本场真实近景的透明 PNG。")
+
+    win = versus["top"]
+    rival = versus["bottom"]
+    win_src = _cut_crop(Path(win["cutout"]), win.get("crop"))
+    rival_src = _cut_crop(Path(rival["cutout"]), rival.get("crop"))
+    bg_uri = _data_uri(Path(bg["image"]))
+
+    body = (
+        '<div class="hero-bg"></div><div class="hero-wash"></div>'
+        f'<img class="hero-person hero-rival" src="{_data_uri(rival_src)}">'
+        f'<img class="hero-person hero-win" src="{_data_uri(win_src)}">'
+        '<div class="hero-edge"></div>'
+        '<div class="hero-names">'
+        f'<span class="hero-winner">{names[0]}</span>'
+        '<span class="hero-vs">胜</span>'
+        f'<span class="hero-loser">{names[1]}</span>'
+        '</div>'
+    )
+    extra = f"""
+.hero-bg{{position:absolute;inset:-30px;background-image:url('{bg_uri}');
+  background-size:cover;background-position:
+  {float(bg.get('focus', .5)) * 100:.1f}%
+  {float(bg.get('focus_y', .5)) * 100:.1f}%;
+  filter:blur({float(bg.get('blur', 18)):.0f}px)
+  brightness({float(bg.get('dim', .38)):.2f}) saturate(.72);transform:scale(1.08)}}
+.hero-wash{{position:absolute;inset:0;background:
+  radial-gradient(circle at 60% 26%,rgba(198,246,90,.15),transparent 34%),
+  linear-gradient(180deg,rgba(4,18,13,.14) 0%,rgba(4,18,13,.06) 43%,
+  rgba(4,18,13,.88) 65%,{INK} 79%)}}
+.hero-person{{position:absolute;z-index:3;object-fit:contain;
+  filter:drop-shadow(0 22px 44px rgba(0,0,0,.62))}}
+.hero-win{{height:{float(win.get('scale', .58)) * VIDEO_H:.0f}px;
+  left:{float(win.get('cx', .42)) * 100:.2f}%;top:{float(win.get('top', .055)) * 100:.2f}%;
+  transform:translateX(-50%)}}
+.hero-rival{{height:{float(rival.get('scale', .42)) * VIDEO_H:.0f}px;
+  left:{float(rival.get('cx', .79)) * 100:.2f}%;top:{float(rival.get('top', .13)) * 100:.2f}%;
+  transform:translateX(-50%);filter:grayscale(.28) brightness(.72)
+  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9}}
+.hero-edge{{position:absolute;z-index:4;left:55px;top:720px;width:154px;height:8px;
+  background:{BRAND};transform:rotate(-{SEAM_ANGLE}deg);transform-origin:left center}}
+.hero-names{{position:absolute;z-index:5;left:66px;top:748px;display:flex;
+  align-items:center;gap:16px;font-family:'TL Display SC','TL Sans SC',sans-serif;
+  text-shadow:0 4px 24px rgba(0,0,0,.8)}}
+.hero-winner{{font-size:66px;color:{TEXT}}}
+.hero-vs{{font-size:25px;color:{INK};background:{BRAND};border-radius:999px;
+  padding:5px 12px 7px;font-weight:900}}
+.hero-loser{{font-size:44px;color:{DIM}}}
+"""
+    return body, extra
+
+
 def _precrop(image: Path, panel: dict) -> Path:
     """`crop: [x0, y0, x1, y1]`（0~1 的比例）——**先裁再铺**。
 
@@ -368,6 +432,8 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
 
     if layout == "cutout":
         body, panels = _cutout_body(cover, versus, names)
+    elif layout == "hero":
+        body, panels = _hero_body(cover, versus, names)
     else:
         # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
         # 拼贴**；有了它，斜线成了设计的一部分。
@@ -424,6 +490,11 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .copy{{position:absolute;left:66px;right:66px;bottom:150px;z-index:6}}
 .hook{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:100px;
   line-height:1.14;color:{TEXT};text-shadow:0 4px 30px rgba(0,0,0,.6)}}
+body.hero .copy{{bottom:100px}}
+body.hero .hook{{font-size:78px;line-height:1.12}}
+body.hero .hook div:last-child{{font-size:94px;color:{BRAND}}}
+body.hero .res{{margin-top:22px}}
+body.hero .meta{{margin-top:16px}}
 .score{{margin-top:26px;font-family:'TL Numeral','TL Sans SC',sans-serif;
   font-weight:600;font-size:50px;color:{BRAND}}}
 .sub{{margin-top:12px;font-size:32px;color:{DIM};letter-spacing:2px}}
@@ -443,6 +514,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   font-size:26px;letter-spacing:3px;padding:6px 18px 7px;white-space:nowrap}}
 .mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
+<body class="{layout}">
 {body}
 <div class="top">{cover.get('eyebrow', '')}</div>
 <div class="copy"><div class="hook">{hook}</div>
@@ -472,7 +544,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--spec", required=True)
     ap.add_argument("--layout", default="cutout",
-                    choices=("cutout", "diagonal", "split", "stack"))
+                    choices=("hero", "cutout", "diagonal", "split", "stack"))
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
