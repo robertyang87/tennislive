@@ -210,6 +210,7 @@ def _hero_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
         '<div class="hero-bg"></div><div class="hero-wash"></div>'
         f'<img class="hero-person hero-rival" src="{_data_uri(rival_src)}">'
         f'<img class="hero-person hero-win" src="{_data_uri(win_src)}">'
+        '<div class="hero-fade"></div>'
         '<div class="hero-edge"></div>'
         '<div class="hero-names">'
         f'<span class="hero-winner">{names[0]}</span>'
@@ -232,13 +233,14 @@ def _hero_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
   filter:drop-shadow(0 22px 44px rgba(0,0,0,.62))}}
 .hero-win{{height:{float(win.get('scale', .58)) * VIDEO_H:.0f}px;
   left:{float(win.get('cx', .42)) * 100:.2f}%;top:{float(win.get('top', .055)) * 100:.2f}%;
-  transform:translateX(-50%);
-  mask-image:linear-gradient(180deg,#000 76%,transparent 99%)}}
+  transform:translateX(-50%)}}
 .hero-rival{{height:{float(rival.get('scale', .42)) * VIDEO_H:.0f}px;
   left:{float(rival.get('cx', .79)) * 100:.2f}%;top:{float(rival.get('top', .13)) * 100:.2f}%;
   transform:translateX(-50%);filter:grayscale(.28) brightness(.72)
-  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9;
-  mask-image:linear-gradient(180deg,#000 70%,transparent 99%)}}
+  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9}}
+.hero-fade{{position:absolute;z-index:4;left:0;right:0;top:530px;height:410px;
+  background:linear-gradient(180deg,transparent 0%,rgba(4,18,13,.30) 43%,
+  rgba(4,18,13,.94) 88%,{INK} 100%)}}
 .hero-edge{{position:absolute;z-index:4;left:55px;top:764px;width:154px;height:8px;
   background:{BRAND};transform:rotate(-{SEAM_ANGLE}deg);transform-origin:left center}}
 .hero-names{{position:absolute;z-index:5;left:66px;top:790px;display:flex;
