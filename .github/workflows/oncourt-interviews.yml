@@ -103,6 +103,10 @@ jobs:
             | tee -a /tmp/oncourt.log || echo "::warning::赛果抓取失败，本次没有缺口对照"
 
       - name: 筛出关键场次与中国球员，推到微信
+        id: feed
+        # 推送失败必须保留真实 outcome，但不能阻断下一步把已经采集到的数据
+        # 提交回仓库。提交后会再次按 outcome 让整个 run 红灯告警。
+        continue-on-error: true
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
         run: |
@@ -145,6 +149,12 @@ jobs:
             sleep $((2 ** i))
           done
           echo "::error::推送失败"
+          exit 1
+
+      - name: 推送失败后确认数据已保留并告警
+        if: steps.feed.outcome == 'failure'
+        run: |
+          echo "::error::采访推送失败；本轮已采集的数据已先提交到仓库，下轮不会重新丢失。"
           exit 1
 
       - name: 摘要

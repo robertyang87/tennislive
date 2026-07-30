@@ -47,3 +47,22 @@ def test_scheduled_radar_workflows_summarize_empty_runs():
         empty_step = workflow.index("空产摘要")
         # 空产必须把原因写进运行摘要，而不是只留在会过期的日志正文里
         assert "GITHUB_STEP_SUMMARY" in workflow[empty_step:], name
+
+
+def test_external_source_health_is_strict_and_separate_from_pr_ci():
+    ci = _workflow("ci.yml")
+    health = _workflow("source-health.yml")
+
+    # PR 单测必须可重复，不依赖实时比分源；运行时健康由独立定时任务负责。
+    assert "tennislive today" not in ci
+    assert "真实抓取" not in ci
+
+    assert 'cron: "17 */6 * * *"' in health
+    assert "fetch_day(day)" in health
+    assert "source_status" in health
+    assert "if: failure()" in health
+    assert "GITHUB_STEP_SUMMARY" in health
+    assert "pushplus.plus/send" in health
+    # 主探测不能吞失败；只有告警通道自身允许降级为 warning。
+    probe = health.split("- name: 严格检查比分数据源", 1)[1].split("- name:", 1)[0]
+    assert "||" not in probe

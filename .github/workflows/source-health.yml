@@ -1,0 +1,102 @@
+name: source-health
+
+# 真实数据源是运行时依赖，不应让 PR 单测随外部网络抖动变红；但也不能用
+# `|| echo warning` 把所有来源同时失效伪装成成功。独立健康检查严格保留退出码。
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-health
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            src
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装 tennislive
+        run: pip install -q -e .
+
+      - name: 严格检查比分数据源
+        id: source_probe
+        env:
+          REPORT_PATH: ${{ runner.temp }}/source-health.json
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          from tennislive.sources import fetch_day
+          from tennislive.timeutil import beijing_today
+
+          day = beijing_today()
+          data = fetch_day(day)
+          report = {
+              "date_beijing": day.isoformat(),
+              "matches": len(data.matches),
+              "source": data.source,
+              "source_status": data.source_status,
+              "fetched_at_utc": data.fetched_at_utc.isoformat(),
+          }
+          Path(os.environ["REPORT_PATH"]).write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+
+      - name: 写入健康检查摘要
+        if: always()
+        env:
+          REPORT_PATH: ${{ runner.temp }}/source-health.json
+        run: |
+          {
+            echo "## 比分数据源健康检查"
+            echo ""
+            if [ -s "$REPORT_PATH" ]; then
+              jq -r '"- 北京日期：" + .date_beijing,
+                     "- 可用聚合源：" + .source,
+                     "- 比赛数：" + (.matches | tostring),
+                     (.source_status | to_entries[] |
+                       "- " + .key + "：" + (.value | tostring))' "$REPORT_PATH"
+            else
+              echo "- 检查未完成；若『严格检查比分数据源』步骤失败，表示所有比分来源均不可用。"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 所有来源失效时通知
+        if: failure()
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "::error::所有比分数据源均不可用，请检查 $RUN_URL"
+          if [ -n "$PUSHPLUS_TOKEN" ]; then
+            BODY="$(jq -nc \
+              --arg token "$PUSHPLUS_TOKEN" \
+              --arg url "$RUN_URL" \
+              '{token:$token,
+                title:"⚠️ 网球比分数据源全部失效",
+                content:("ESPN 与备用比分源均不可用，请查看：<a href=\"" + $url + "\">Actions 日志</a>"),
+                template:"html"}')"
+            curl -sS --fail -m 20 -X POST https://www.pushplus.plus/send \
+              -H "Content-Type: application/json" \
+              -d "$BODY" \
+              || echo "::warning::数据源告警的 PushPlus 通知发送失败"
+          fi
