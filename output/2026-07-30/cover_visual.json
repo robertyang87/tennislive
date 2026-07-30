@@ -153,7 +153,7 @@
     {
       "player": "Zheng Qinwen",
       "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/101561334@N08/55361958864/",
+      "source_url": "https://www.flickr.com/photos/101561334@N08/55361753561/",
       "subject_match": true,
       "person_match": true,
       "both_sides_match": false,
@@ -202,30 +202,6 @@
       "player": "Zheng Qinwen",
       "provider": "flickr-public",
       "source_url": "https://www.flickr.com/photos/101561334@N08/55362165930/",
-      "subject_match": true,
-      "person_match": true,
-      "both_sides_match": false,
-      "exact_match": false,
-      "event_match": false,
-      "year_match": false,
-      "scene": "unknown",
-      "china_priority_bonus": 6,
-      "scene_evidence": {
-        "motion": [],
-        "reaction": [],
-        "trophy": [],
-        "rejected": []
-      },
-      "metadata_score": 37,
-      "status": "rejected",
-      "hard_failures": [
-        "not-the-exact-headline-match"
-      ]
-    },
-    {
-      "player": "Zheng Qinwen",
-      "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/101561334@N08/55361952674/",
       "subject_match": true,
       "person_match": true,
       "both_sides_match": false,
@@ -345,7 +321,55 @@
     {
       "player": "Zheng Qinwen",
       "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/101561334@N08/55361753561/",
+      "source_url": "https://www.flickr.com/photos/101561334@N08/55361756636/",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 6,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 37,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Zheng Qinwen",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/101561334@N08/55361958864/",
+      "subject_match": true,
+      "person_match": true,
+      "both_sides_match": false,
+      "exact_match": false,
+      "event_match": false,
+      "year_match": false,
+      "scene": "unknown",
+      "china_priority_bonus": 6,
+      "scene_evidence": {
+        "motion": [],
+        "reaction": [],
+        "trophy": [],
+        "rejected": []
+      },
+      "metadata_score": 35,
+      "status": "rejected",
+      "hard_failures": [
+        "not-the-exact-headline-match"
+      ]
+    },
+    {
+      "player": "Zheng Qinwen",
+      "provider": "flickr-public",
+      "source_url": "https://www.flickr.com/photos/101561334@N08/55361952674/",
       "subject_match": true,
       "person_match": true,
       "both_sides_match": false,
@@ -666,31 +690,6 @@
       ]
     },
     {
-      "player": "Alexandra Eala",
-      "provider": "flickr-public",
-      "source_url": "https://www.flickr.com/photos/mariannebevis/55383254239/",
-      "subject_match": false,
-      "person_match": false,
-      "both_sides_match": false,
-      "exact_match": false,
-      "event_match": false,
-      "year_match": false,
-      "scene": "unknown",
-      "china_priority_bonus": 0,
-      "scene_evidence": {
-        "motion": [],
-        "reaction": [],
-        "trophy": [],
-        "rejected": []
-      },
-      "metadata_score": 26,
-      "status": "rejected",
-      "hard_failures": [
-        "headline-match-player-mismatch",
-        "not-the-exact-headline-match"
-      ]
-    },
-    {
       "player": "Zheng Qinwen",
       "provider": "official-match-media",
       "source_url": "https://www.wtatennis.com/videos/4548805/eala-overhauls-zheng-from-a-set-and-a-break-down-on-washington-debut",
@@ -757,7 +756,7 @@
   "flickr_enabled": true,
   "wta_official_enabled": true,
   "wta_video_hub_candidates": 1,
-  "editorial_source_urls": 2,
+  "editorial_source_urls": 4,
   "source_registry": {
     "as_of": "run-start",
     "proven": [
@@ -866,6 +865,20 @@
         ]
       },
       {
+        "match_id": "888-2026:178968",
+        "status": "unavailable",
+        "errors": [
+          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
+        ],
+        "providers_queried": [
+          "wta-video-hub",
+          "wikimedia-commons",
+          "openverse",
+          "bing-web-image",
+          "flickr-public"
+        ]
+      },
+      {
         "match_id": "1067-2026:179452",
         "status": "unavailable",
         "errors": [
@@ -892,21 +905,6 @@
           "bing-web-image",
           "flickr-public"
         ]
-      },
-      {
-        "match_id": "888-2026:179010",
-        "status": "unavailable",
-        "errors": [
-          "没有找到同时满足当场比赛、运动场景、画质和竖版安全裁切的照片"
-        ],
-        "providers_queried": [
-          "wta-video-hub",
-          "wikimedia-commons",
-          "openverse",
-          "bing-web-image",
-          "flickr-public",
-          "official-match-media"
-        ]
       }
     ]
   },
@@ -924,6 +922,6 @@
     "match_id": "888-2026:179022",
     "selected_asset_sha256": "37449088983159912405c9813aee0992eabcbec46a9d569c52921acb8020efef",
     "card_file": "cards/card_00_cover.jpg",
-    "card_sha256": "de11dc78273d53814c86ce8b0c17ab27ec8c01eeec31847a51b98356c68dba19"
+    "card_sha256": "6f19c0a6709c1ef3b1d67b7b435c2b4abce118c1cad9cd0aedf464ffc8c7d7df"
   }
 }
