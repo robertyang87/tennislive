@@ -45,5 +45,3 @@ jobs:
         run: python -m playwright install --with-deps chromium
       - name: 运行测试
         run: pytest -v -rs
-      - name: 冒烟测试：真实抓取今日数据
-        run: tennislive today || echo "::warning::真实抓取失败（可能是数据源临时不可用）"
