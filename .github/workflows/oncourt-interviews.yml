@@ -143,6 +143,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/oncourt_interviews.json data/oncourt_feed_sent.json
+          python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"
           for i in 1 2 3 4; do
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0

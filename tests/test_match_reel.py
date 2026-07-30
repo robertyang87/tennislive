@@ -102,6 +102,19 @@ def test_清理之后还有大文件要报错退出():
     assert "exit 1" in cleanup, "报了错却不退出，等于没拦"
 
 
+def test_提交重试耗尽必须失败且只重放本条成片():
+    """所有 push 都失败却继续微信步骤，会把一个 404 链接发出去。"""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    commit = text.split("- name: 提交产物", 1)[1].split("- name:", 1)[0]
+
+    assert 'if git push origin "HEAD:$BRANCH"; then' in commit
+    assert "exit 0" in commit
+    assert 'git checkout rendered -- "$OUTDIR"' in commit
+    assert "git checkout rendered -- output/" not in commit
+    assert "::error::连续" in commit
+    assert commit.rfind("exit 1") > commit.rfind("done")
+
+
 def _reel():
     sys.path.insert(0, str(Path("tools").resolve()))
     import build_match_reel  # noqa: PLC0415
