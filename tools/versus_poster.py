@@ -232,14 +232,16 @@ def _hero_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
   filter:drop-shadow(0 22px 44px rgba(0,0,0,.62))}}
 .hero-win{{height:{float(win.get('scale', .58)) * VIDEO_H:.0f}px;
   left:{float(win.get('cx', .42)) * 100:.2f}%;top:{float(win.get('top', .055)) * 100:.2f}%;
-  transform:translateX(-50%)}}
+  transform:translateX(-50%);
+  mask-image:linear-gradient(180deg,#000 76%,transparent 99%)}}
 .hero-rival{{height:{float(rival.get('scale', .42)) * VIDEO_H:.0f}px;
   left:{float(rival.get('cx', .79)) * 100:.2f}%;top:{float(rival.get('top', .13)) * 100:.2f}%;
   transform:translateX(-50%);filter:grayscale(.28) brightness(.72)
-  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9}}
-.hero-edge{{position:absolute;z-index:4;left:55px;top:720px;width:154px;height:8px;
+  drop-shadow(0 22px 44px rgba(0,0,0,.62));opacity:.9;
+  mask-image:linear-gradient(180deg,#000 70%,transparent 99%)}}
+.hero-edge{{position:absolute;z-index:4;left:55px;top:764px;width:154px;height:8px;
   background:{BRAND};transform:rotate(-{SEAM_ANGLE}deg);transform-origin:left center}}
-.hero-names{{position:absolute;z-index:5;left:66px;top:748px;display:flex;
+.hero-names{{position:absolute;z-index:5;left:66px;top:790px;display:flex;
   align-items:center;gap:16px;font-family:'TL Display SC','TL Sans SC',sans-serif;
   text-shadow:0 4px 24px rgba(0,0,0,.8)}}
 .hero-winner{{font-size:66px;color:{TEXT}}}
