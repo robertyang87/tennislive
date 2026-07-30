@@ -71,6 +71,27 @@ def _player_lookup() -> dict[str, str]:
     return _PLAYER_LOOKUP
 
 
+#: 姓氏兜底时，名要共用的最少字符数。三个字符是「Catherine 对 Caty」（认）和
+#: 「Cody 对 Coleman」（不认）之间唯一的分界，见 `player_zh` 里的说明。
+_GIVEN_NAME_PREFIX = 3
+
+
+def _given_names_agree(feed: list[str], table: list[str]) -> bool:
+    """feed 里的名和表里的名对不对得上：同词，或公共前缀够长（昵称）。"""
+    for a in feed:
+        for b in table:
+            if a == b:
+                return True
+            common = 0
+            for x, y in zip(a, b):
+                if x != y:
+                    break
+                common += 1
+            if common >= _GIVEN_NAME_PREFIX:
+                return True
+    return False
+
+
 def player_zh(name: str) -> str:
     """球员英文名 → 中文译名；没有译名时原样返回英文名.
 
@@ -100,13 +121,39 @@ def player_zh(name: str) -> str:
 
     # Feeds sometimes add a middle/given name or use a spelling variant while
     # preserving the surname. Only accept a surname match when it maps to one
-    # unique Chinese display name across the complete top-500 snapshot.
+    # unique Chinese display name across the complete top-500 snapshot **and**
+    # the feed's name shares a given name with that entry.
+    #
+    # 「表里这个姓只有一个人」不足以断定是同一个人——它只说明**表里**只有一个。
+    # 香港有两个姓 Wong 的球员同时在打：`Coleman Wong`（黄泽林，男，ATP）进了
+    # 表，`Hong Yi Cody Wong`（女，WTA，温哥华站）没进；姓氏兜底于是把她也
+    # 解析成「黄泽林」——错的人，还错了性别。这是 2026-07-29 查黄泽林那场时
+    # 撞出来的，两个人同一天都在比赛。
+    #
+    # 但这条兜底不能删：ESPN 给黄泽林的写法是 `Chak Lam Coleman Wong`，
+    # 全名、反序、去中间名三条都匹配不上，**正是靠姓氏兜底**才认出来的。
+    # 所以加一条：除了姓一致，名也要对得上——**认不出来好过认成另一个人**。
+    #
+    # 判据得同时分开三种情况，所以不能只比「有没有共用一个词」：
+    #
+    #   Chak Lam Coleman Wong  vs  coleman wong    同一个词          → 认
+    #   Catherine McNally      vs  caty mcnally    昵称，不共用词    → 认
+    #   Hong Yi Cody Wong      vs  coleman wong    两个人            → 不认
+    #
+    # 中间那条是踩出来的：只要求「共用一个词」会把 `Catherine McNally` 拦掉
+    # （表里是 `Caty`），而它本来是对的。改成按**名的公共前缀**算：
+    # catherine/caty 共 `cat` 三个字符，cody/coleman 只共 `co` 两个。
+    #
+    # 三个字符是这两种情况之间唯一的分界，收在这儿；再松就会把 Cody 放进来。
+    # 代价照实记：同姓、名又共前三个字符的两个人仍会撞（`Carla`/`Carlos`
+    # 这种），但那比「同姓就算同一个人」窄得多。
     if len(words) >= 2:
         surname = words[-1]
         matches = {
             value
             for key, value in lookup.items()
             if key.split()[-1:] == [surname]
+            and _given_names_agree(words[:-1], key.split()[:-1])
         }
         if len(matches) == 1:
             return next(iter(matches))

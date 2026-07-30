@@ -796,8 +796,8 @@ def test_面板可以先裁再铺():
             versus_poster._precrop(src, {"crop": [0.1, 0.2]})
 
 
-def test_封面固定版式是抠图不是抽帧():
-    """「赛场之上」的固定海报 2026-07-29 换成 cutout：官方抠图 + 本场画面当底。
+def test_封面固定版式是官方抠图加本场视频全场机位():
+    """「赛场之上」固定海报：官方抠图 + 本场比赛视频的底线全场机位。
 
     换的理由是 diagonal 那条路要**两张**「本场 + 比赛中 + 有冲击力 + 够清晰」的
     实拍同时到位。帕雷哈是 17 岁资格赛球员，四类源全探到底一张都没有，最后拿
@@ -823,8 +823,13 @@ def test_封面固定版式是抠图不是抽帧():
         if layout != "cutout":
             continue
         versus = cover["versus"]
-        assert (versus.get("background") or {}).get("frame_at") is not None, (
-            f"{path.name} 的 cutout 背景要给本场的一帧")
+        background = versus.get("background") or {}
+        assert background.get("frame_at") is not None, (
+            f"{path.name} 的 cutout 背景必须从本场比赛视频抽帧，不能用场馆资料图")
+        assert "image" not in background, (
+            f"{path.name} 的 cutout 背景写了静态图；要用本场视频的 frame_at")
+        assert background.get("shot") == "wide_court", (
+            f"{path.name} 的 cutout 背景必须是能看清整片球场的底线全场机位")
         for key in ("top", "bottom"):
             cut = Path(versus[key]["cutout"])
             assert cut.is_file(), f"{path.name} 的 {key} 格找不到抠图 {cut}"
