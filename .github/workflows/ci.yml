@@ -13,6 +13,19 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # output/ is the public delivery archive and is currently over 1 GB.
+          # Unit tests need source, workflow contracts, data and curated assets,
+          # but must not download every previously published card/video.
+          sparse-checkout: |
+            .github
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -31,6 +44,6 @@ jobs:
       - name: 安装 Chromium
         run: python -m playwright install --with-deps chromium
       - name: 运行测试
-        run: pytest -v
+        run: pytest -v -rs
       - name: 冒烟测试：真实抓取今日数据
         run: tennislive today || echo "::warning::真实抓取失败（可能是数据源临时不可用）"

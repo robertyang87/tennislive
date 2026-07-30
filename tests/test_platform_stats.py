@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import csv
 import importlib.util
+import struct
 import sys
 import zipfile
 from datetime import date, datetime
@@ -76,6 +77,20 @@ def _dy(name, when, kind="1-3min视频", plays=1000, fin=0.02, s5=0.40, b2=0.33,
 def _item(title, day, mp4=None):
     return {"title": title, "norm": ps.normalize(title), "dir": Path("x"),
             "date": day, "mp4": mp4}
+
+
+def _mp4_with_duration(tmp_path: Path, seconds: int = 120) -> Path:
+    """写一个只含 moov/mvhd 的最小 MP4，避免测试依赖 output/ 历史成片。"""
+    timescale = 1_000
+    mvhd_body = (
+        b"\0\0\0\0"  # version + flags
+        + struct.pack(">IIII", 0, 0, timescale, seconds * timescale)
+    )
+    mvhd = struct.pack(">I4s", 8 + len(mvhd_body), b"mvhd") + mvhd_body
+    moov = struct.pack(">I4s", 8 + len(mvhd), b"moov") + mvhd
+    path = tmp_path / "duration-fixture.mp4"
+    path.write_bytes(moov)
+    return path
 
 
 def _work(title, when=None, photo=False, platform=None, **values):
@@ -345,15 +360,13 @@ def test_图文和视频的完播率必须分开算(capsys):
     assert "不可比" in out and "21.0%" in out and "2.5%" in out
 
 
-def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch):
+def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch, tmp_path):
     """0 秒 = 后台还没统计出来（当天刚发的常常这样），不是「没人看」。
 
     算成 0% 会把中位数拖垮：小红书这批里两条今天发的会把中位从 19.5% 压到
     15.5%，而且看不出是数据没到还是片子太差。
     """
-    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
-    if real is None:
-        pytest.skip("output/ 下没有成片可量")
+    real = _mp4_with_duration(tmp_path)
     xhs = ps.PLATFORMS[0]
     length = ps.mvhd_seconds(real.read_bytes())
     good = _work("🎾有数据的", platform=xhs, plays=1000, avg_watch=length / 4)
@@ -367,10 +380,8 @@ def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch
     assert "还是 0" in out and "刚发还没数" in out
 
 
-def test_小红书那节要写明真完播率无从得知(capsys, monkeypatch):
-    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
-    if real is None:
-        pytest.skip("output/ 下没有成片可量")
+def test_小红书那节要写明真完播率无从得知(capsys, monkeypatch, tmp_path):
+    real = _mp4_with_duration(tmp_path)
     xhs = ps.PLATFORMS[0]
     w = _work("🎾某条", platform=xhs, plays=1000,
               avg_watch=ps.mvhd_seconds(real.read_bytes()) / 4)
