@@ -5,30 +5,44 @@
   "_tracking": "这场全部是固定底线主机位与近景切换，不横摇。3:4 窗口固定取源片正中；赛点、掩面和握手都在中央。",
   "cover": {
     "eyebrow": "赛场之上",
-    "hook": "世界第108\n逆转世界第12",
+    "hook": "先输 1-6\n再掀翻头号种子",
     "winner": "黄泽林",
     "result": "1-6 6-3 6-4",
     "tier": "ATP 250",
     "round": "R2",
-    "meta": "洛斯卡沃斯 · 1 小时 52 分",
-    "layout": "cutout",
-    "_copy_why": "最硬的事实不是普通的三盘逆转，而是世界第 108 击败世界第 12、本站头号种子。两行都用排名数字，扫一眼就能看懂冷门分量；完整比分留在结果块。",
+    "meta": "世界第108 vs 世界第12 · 相差96位",
+    "layout": "hero",
+    "_copy_why": "第一行用 1-6 建立绝境，第二行给出掀翻头号种子的结果，形成扫一眼就能读完的反差故事；排名差和完整比分下沉到证据层，避免主标题堆数字。",
     "versus": {
-      "_why": "人物使用 ATP 官方球员页半身抠图，文件名带 ATP ID（黄泽林 w0bh、莱赫奇卡 l0bv）；背景取本场 182.5 秒赛点画面，记分条可见黄泽林 5-4 领先。",
+      "_why": "两个人物都来自 Tennis TV 官方 1080p 集锦中的本场近景：黄泽林用赛后汗水近景做主视觉，莱赫奇卡缩小、压暗作为对手；背景暂用同一场赛后画面压暗虚化。真实人像先讲结果，不再做赛前式等权 VS 卡。",
       "background": {
-        "frame_at": 182.5,
+        "image": "assets/reel/wong-lehecka/candidates/wong-180.5.jpg",
         "focus": 0.5,
-        "focus_y": 0.5
+        "focus_y": 0.5,
+        "blur": 18,
+        "dim": 0.38
       },
       "names": [
         "黄泽林",
         "莱赫奇卡"
       ],
       "top": {
-        "cutout": "assets/players/atp-w0bh-coleman-wong.png"
+        "cutout": "assets/reel/wong-lehecka/candidates/wong-180.5.cutout.png",
+        "crop": [
+          0.17,
+          0,
+          1,
+          1
+        ],
+        "scale": 0.58,
+        "cx": 0.42,
+        "top": 0.055
       },
       "bottom": {
-        "cutout": "assets/players/atp-l0bv-jiri-lehecka.png"
+        "cutout": "assets/reel/wong-lehecka/candidates/lehecka-52.5.cutout.png",
+        "scale": 0.42,
+        "cx": 0.79,
+        "top": 0.13
       }
     }
   },
