@@ -11,8 +11,8 @@
 
 四种版式，`layout` 选：
 
-    cutout    **默认，也是账号所有者定下来的那一版**。背景是本场的比赛画面
-              （虚化压暗），两个人用官方抠图站在品牌绿那条斜线上
+    cutout    **默认，也是账号所有者定下来的那一版**。背景从本场比赛视频截取
+              底线全场机位（虚化压暗），两个人用官方抠图站在品牌绿斜线上
     diagonal  斜切。两格各一张实拍，中缝一道品牌绿
     split     上下平分，中缝压一个 VS 圆牌
     stack     上下平分但名字压在各自那一格里，比分居中
@@ -32,8 +32,9 @@
   尺寸是 alias 定死的（`?w=` 无效），铺到一格约 1.3 倍放大，比 WTA 那边软一档
 - 两边都是**棚拍摆拍**，所以张力交给背景那张本场画面，不交给人物
 
-素材：`cutout` 版式每格给 `cutout`（透明 PNG），背景给 `versus.background`
-（`image` 或 `frame_at`）；`diagonal` 等版式每格给 `image`，可调
+素材：`cutout` 版式每格给 `cutout`（透明 PNG），原始 spec 的背景给
+`versus.background = {frame_at, shot: "wide_court"}`；渲染管线会从本场源片
+抽帧并在调用本模块前换成本地 `image`。`diagonal` 等版式每格给 `image`，可调
 `focus` / `focus_y` / `zoom`——铺满不等于人够大。
 
     python tools/versus_poster.py --spec specs/reels/wang-pareja.json \\
@@ -43,8 +44,10 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -128,12 +131,12 @@ def _cutout_geometry(cx: float, seam: float) -> float:
 
 
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
-    """cutout 版式：背景一张本场画面，两个官方抠图站在斜线上。"""
+    """cutout 版式：背景是本场视频的全场机位，两个官方抠图站在斜线上。"""
     bg = versus.get("background") or {}
     if not bg.get("image"):
         raise SystemExit(
-            "cutout 版式要 versus.background = {image|frame_at}："
-            "背景是**本场**的比赛画面，人物才有语境。")
+            "cutout 版式渲染前要把本场视频的 `frame_at` 全场机位抽成 "
+            "versus.background.image；不要用场馆资料图或通用球场图。")
     seam = float(versus.get("split", CUT_SEAM))
     vs_y = float(versus.get("vs_y", CUT_VS_Y)) * 100
     css = [
@@ -331,18 +334,40 @@ def _result_block(cover: dict, names: list) -> str:
     # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
     # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
     sets_px = 62 if len(result) <= 11 else 54
-    pills = "".join(f'<span class="pill">{p}</span>'
-                    for p in (cover.get("tier"), cover.get("round")) if p)
-    meta = str(cover.get("meta", "")).strip()
+    event_badge = cover.get("event_badge") or {}
+    if event_badge:
+        tour = str(event_badge.get("tour", "")).strip().lower()
+        if tour not in {"atp", "wta"}:
+            raise SystemExit("event_badge.tour 只能是 ATP 或 WTA。")
+        logo_path = Path(f"assets/logo/tours/{tour}.svg")
+        if not logo_path.is_file():
+            raise SystemExit(f"找不到官方巡回赛标识：{logo_path}")
+        logo = logo_path.read_text(encoding="utf-8").replace(
+            "<svg ", '<svg class="tour-logo" aria-hidden="true" ', 1)
+        level = html.escape(str(event_badge.get("level", "")).strip())
+        text = html.escape(str(event_badge.get("text", "")).strip())
+        footer = (
+            '<div class="eventline">'
+            f'<span class="tourmark">{logo}<b>{level}</b></span>'
+            f'<span class="eventtext">{text}</span>'
+            "</div>"
+        )
+    else:
+        pills = "".join(f'<span class="pill">{p}</span>'
+                        for p in (cover.get("tier"), cover.get("round")) if p)
+        meta = str(cover.get("meta", "")).strip()
+        footer = (
+            f'<div class="meta">{pills}'
+            + (f'<span class="mtx">{meta}</span>' if meta else "")
+            + "</div>"
+        )
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
         + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
         + (f'<span class="lose">{loser}</span>' if loser else "")
         + "</div>"
-        + f'<div class="meta">{pills}'
-        + (f'<span class="mtx">{meta}</span>' if meta else "")
-        + "</div>")
+        + footer)
 
 
 def build(spec: dict, layout: str, out: Path) -> Path:
@@ -438,6 +463,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}
 .meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+.eventline{{margin-top:20px;display:flex;align-items:center;gap:22px}}
+.tourmark{{height:48px;min-width:158px;border:2px solid {BRAND};
+  border-radius:999px;color:{BRAND};display:inline-flex;align-items:center;
+  justify-content:center;gap:11px;padding:7px 18px 8px}}
+.tour-logo{{display:block;width:76px;height:25px;color:{BRAND}}}
+.tourmark b{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:29px;
+  line-height:1;font-weight:800;letter-spacing:1px}}
+.eventtext{{font-size:31px;color:{DIM};letter-spacing:2px}}
 .pill{{border:2px solid {BRAND};color:{BRAND};border-radius:999px;
   font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:26px;letter-spacing:3px;padding:6px 18px 7px;white-space:nowrap}}
@@ -455,10 +488,25 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
     with sync_playwright() as pw:
         try:
             browser = pw.chromium.launch(args=["--no-sandbox"])
-        except Exception:  # noqa: BLE001
-            browser = pw.chromium.launch(
-                executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-                args=["--no-sandbox"])
+        except Exception as default_error:  # noqa: BLE001
+            # 本地 Work 环境和 GitHub runner 的浏览器位置不同。优先尊重显式配置，
+            # 再找项目旁的本地 Chromium，最后兼容既有 runner 镜像；不要因为
+            # Playwright 缓存目录不同就把每次封面预览都送去 Actions。
+            candidates = [
+                os.environ.get("CHROMIUM_PATH"),
+                str(Path(__file__).resolve().parents[2]
+                    / ".local-browser" / "chromium"),
+                "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+            ]
+            browser = None
+            for executable in candidates:
+                if not executable or not Path(executable).is_file():
+                    continue
+                browser = pw.chromium.launch(
+                    executable_path=executable, args=["--no-sandbox"])
+                break
+            if browser is None:
+                raise default_error
         tab = browser.new_page(viewport={"width": VIDEO_W, "height": VIDEO_H},
                                device_scale_factor=1)
         tab.goto(page.resolve().as_uri())

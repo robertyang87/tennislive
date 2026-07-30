@@ -794,9 +794,10 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
     上下两格的底图再盖字，每条片子的比例、压暗、名字位置都得重调；现在只换素材
     和文字。改版式要改那个模块，改完三条片子一起重渲比一眼。
 
-    每一格给 `image`（本地静态图）或 `frame_at`（从源片抓一帧）。**两者都要
-    出自这场比赛**——这场找不到某人的官方静态图时才用集锦里的帧，不要拿别的
-    赛事的照片来凑。
+    照片版每一格给 `image`（本地静态图）或 `frame_at`（从源片抓一帧）。
+    cutout 版式则更严格：人物用官方抠图，背景必须给
+    `frame_at + shot: "wide_court"`，从**本场比赛视频**截取底线全场机位；
+    场馆资料图、别场比赛和通用球场图都不能代替。
     """
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from versus_poster import build_poster  # noqa: PLC0415
@@ -820,8 +821,15 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
     if layout == "cutout":
         # 人物是官方抠图（本地 PNG），只有背景那张要抓帧。
         bg = dict(versus.get("background") or {})
-        if not bg:
-            raise ReelError("cutout 版式要 versus.background = {image|frame_at}")
+        if bg.get("frame_at") is None:
+            raise ReelError(
+                "cutout 版式的背景必须用本场比赛视频："
+                "versus.background.frame_at = <底线全场机位秒数>；"
+                "不能用场馆资料图、别场比赛或通用球场图。")
+        if bg.get("shot") != "wide_court":
+            raise ReelError(
+                'cutout 版式的背景景别必须写 shot: "wide_court"：'
+                "选能看清整片球场的底线全场机位，不用人物近景。")
         bg["image"] = _grab(bg, "bg")
         versus["background"] = bg
         for key in ("top", "bottom"):
