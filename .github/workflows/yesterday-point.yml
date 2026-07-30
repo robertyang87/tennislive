@@ -255,6 +255,7 @@ jobs:
             echo "内容与仓库一致，不重复提交或推送"
             exit 0
           fi
+          python tools/check_staged_file_sizes.py
           if [ "$STATUS" = "pass" ]; then
             git commit -m "content: 昨日好球 $(basename "$(dirname "$OUT_DIR")")"
           else

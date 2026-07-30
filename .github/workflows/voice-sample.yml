@@ -44,6 +44,7 @@ jobs:
             echo "样本没有变化"
             exit 0
           fi
+          python tools/check_staged_file_sizes.py
           git commit -m "chore: 语音样本（供试听选嗓）"
           for attempt in 1 2 3 4 5; do
             git push origin "HEAD:${{ github.ref_name }}" && exit 0
@@ -52,6 +53,7 @@ jobs:
             git reset --hard "origin/${{ github.ref_name }}"
             git checkout rendered -- output/voice-samples
             git add output/voice-samples
+            python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "chore: 语音样本（供试听选嗓）"
             sleep $((attempt * 4))
           done
