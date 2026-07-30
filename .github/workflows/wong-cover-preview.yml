@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y fonts-noto-cjk
-          python -m pip install -e .
+          python -m pip install -e . playwright
           python -m playwright install --with-deps chromium
 
       - name: Render the first real-match hero cover
