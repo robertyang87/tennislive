@@ -66,3 +66,24 @@ def test_external_source_health_is_strict_and_separate_from_pr_ci():
     # 主探测不能吞失败；只有告警通道自身允许降级为 warning。
     probe = health.split("- name: 严格检查比分数据源", 1)[1].split("- name:", 1)[0]
     assert "||" not in probe
+
+
+def test_every_workflow_that_commits_generated_files_has_a_size_gate():
+    """Do not spend a whole run rendering only to have GitHub reject the blob."""
+    workflows = (
+        "assets.yml",
+        "daily.yml",
+        "explainer.yml",
+        "flash.yml",
+        "knowledge-adhoc.yml",
+        "match-reel.yml",
+        "news-radar.yml",
+        "oncourt-interviews.yml",
+        "player-name-sync.yml",
+        "voice-sample.yml",
+        "yesterday-point.yml",
+    )
+    for name in workflows:
+        workflow = _workflow(name)
+        assert "git commit" in workflow, name
+        assert "python tools/check_staged_file_sizes.py" in workflow, name

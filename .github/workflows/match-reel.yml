@@ -345,13 +345,29 @@ jobs:
             echo "没有变化"
             exit 0
           fi
-          git commit -m "reel: ${{ github.event.inputs.mode }} ${{ github.event.inputs.slug }}"
-          for i in 1 2 3 4; do
-            git push origin HEAD:${{ github.ref_name }} && break
-            sleep $((2 ** i))
-            git fetch origin ${{ github.ref_name }}
-            git rebase origin/${{ github.ref_name }} || git rebase --abort
+          BRANCH="${{ github.ref_name }}"
+          MSG="reel: ${{ github.event.inputs.mode }} ${{ github.event.inputs.slug }}"
+          python tools/check_staged_file_sizes.py
+          git commit -m "$MSG"
+          # 多条不同 slug 可以并行落库。push 被别的 run 抢先后，只把本条
+          # OUTDIR 重放到最新分支；普通 rebase 遇到同名二进制文件会冲突，
+          # 而 `break` 版循环在重试耗尽后还会错误地继续微信推送。
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本条成片重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            git checkout rendered -- "$OUTDIR"
+            git add "$OUTDIR"
+            python tools/check_staged_file_sizes.py
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 5 + RANDOM % 10))
           done
+          echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
+          exit 1
 
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：
