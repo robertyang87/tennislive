@@ -1,0 +1,42 @@
+name: Wong cover preview
+
+on:
+  push:
+    paths:
+      - ".github/workflows/wong-cover-preview.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Chinese fonts and render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+          python -m pip install -e .
+          python -m playwright install --with-deps chromium
+
+      - name: Render the first real-match hero cover
+        run: |
+          python tools/versus_poster.py \
+            --spec specs/reels/wong-lehecka.json \
+            --layout hero \
+            --out output/2026-07-30/reel/wong-lehecka/poster-preview.jpg
+
+      - name: Commit preview
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/2026-07-30/reel/wong-lehecka/poster-preview.jpg
+          git diff --cached --quiet && exit 0
+          git commit -m "preview: 黄泽林真实赛场封面"
+          git push
