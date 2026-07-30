@@ -1,0 +1,22 @@
+name: Push Wong reel once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/push-wong-once.yml"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    if: "!contains(github.event.head_commit.message, '[cleanup-wong-dispatch]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch approved reel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run match-reel.yml             --repo "$GITHUB_REPOSITORY"             --ref main             -f mode=render             -f slug=wong-lehecka             -f voice=zh-CN-YunjianNeural             -f rate='+6%'             -f push=true             -f matchup='黄泽林 vs 莱赫奇卡'             -f score='2:1'             -f event=''             -f summary='黄泽林逆转头号种子'             -f push_lead='首盘1-6后连扳两盘，世界第108击败世界第12、本站头号种子；全场16记Ace，赛点用内角Ace收尾。'
