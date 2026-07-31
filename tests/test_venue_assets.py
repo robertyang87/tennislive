@@ -505,7 +505,7 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
 # 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
 # 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
 # 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
-VENUE_COVERAGE_FLOOR = 60
+VENUE_COVERAGE_FLOOR = 67
 
 
 def test_calendar_coverage_only_goes_up():

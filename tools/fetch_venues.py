@@ -161,6 +161,14 @@ VENUES = [
     ("montecarlo-centre-court.jpg", None, None),
     # 斯海尔托亨博斯：libema-open.nl 开着 wp-json，搜索词用荷兰语；ATP250 与 WTA250 共用
     ("denbosch-centre-court.jpg", None, None),
+    # 鹿特丹：官网非 WP，图在 /files/images/<年>/，渲染首页拿路径；DOM 尺寸是缩略的，原图更大
+    ("rotterdam-centre-court.jpg", None, None),
+    # 布里斯班：Tennis Australia 的 Adobe DM 图床（tennis.com.au/adobe/dynamicmedia/deliver/），width= 可调；源图 1200×800 封顶
+    ("brisbane-centre-court.jpg", None, None),
+    # 阿德莱德：同布里斯班，走 Tennis Australia 的 Adobe DM；WTA500 与 ATP250 共用
+    ("adelaide-centre-court.jpg", None, None),
+    # 奥克兰：asbclassic.co.nz 走 ATP Sitecore，/-/media/sites/tournaments/auckland/news/ 下有 finals-stadium-generic；ATP250 与 WTA250 共用
+    ("auckland-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -306,6 +314,30 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "auckland-centre-court.jpg": {
+        "title": "ASB 网球中心中心球场 · 满场，场地上写着 AUCKLAND / TĀMAKI MAKAURAU",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "asbclassic.co.nz 官方图库",
+        "page": "https://www.asbclassic.co.nz/-/media/sites/tournaments/auckland/news/finals-stadium-generic.jpg",
+    },
+    "adelaide-centre-court.jpg": {
+        "title": "纪念大道公园中心球场 · 满场，场地前场刷着 ADELAIDE",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Tennis Australia 官方图库",
+        "page": "https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--c42ebf2c-6c1d-4667-aba1-21221d7a24b4/adelaide-summer-of-tennis-court.jpg",
+    },
+    "brisbane-centre-court.jpg": {
+        "title": "帕特·拉夫特球场（昆士兰网球中心）· 满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Tennis Australia 官方图库",
+        "page": "https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--29ecf2d2-3d24-4378-a734-13a92a329a35/brisbane-international-pat-rafter-arena.jpg",
+    },
+    "rotterdam-centre-court.jpg": {
+        "title": "鹿特丹 Ahoy 中心球场 · 满场，从高处俯瞰整个碗",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Alyssa van Heyst / abnamro-open.nl 官方图库",
+        "page": "https://www.abnamro-open.nl/files/images/2027/AAO_260215_Alyssa%20van%20Heyst_3545.jpg",
+    },
     "denbosch-centre-court.jpg": {
         "title": "Autotron 中心球场 · 草地，满场（利贝马公开赛）",
         "license": "unverified · 赛事官方媒体库",
