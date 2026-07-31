@@ -181,6 +181,28 @@ VENUES = [
     ("doha-centre-court.jpg", None, None),
     # 印第安维尔斯：官网是 DatoCMS、/media 页没有场馆图，走 WTA 赛事页 hero；Commons 那张是 Pacific Life Open 年代的，别用
     ("indianwells-centre-court.jpg", None, None),
+    # charleston：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("charleston-centre-court.jpg", None, None),
+    # bogota：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("bogota-centre-court.jpg", None, None),
+    # ostrava：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("ostrava-centre-court.jpg", None, None),
+    # linz：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("linz-centre-court.jpg", None, None),
+    # rouen：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("rouen-centre-court.jpg", None, None),
+    # strasbourg：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("strasbourg-centre-court.jpg", None, None),
+    # nottingham：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("nottingham-centre-court.jpg", None, None),
+    # badhomburg：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("badhomburg-centre-court.jpg", None, None),
+    # hobart：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("hobart-centre-court.jpg", None, None),
+    # abudhabi：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("abudhabi-centre-court.jpg", None, None),
+    # cluj：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("cluj-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -326,6 +348,72 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "cluj-centre-court.jpg": {
+        "title": "BT Arena 中心球场 · 室内紫色场地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/cdcb778a-237c-4075-820e-f5e4762863e2/2050-Cluj.jpg",
+    },
+    "abudhabi-centre-court.jpg": {
+        "title": "扎耶德体育城网球中心中心球场 · 满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/20/cbae0b62-ac90-4b4f-8c15-4acdb35ea037/2088-Abu-Dhabi.jpg",
+    },
+    "hobart-centre-court.jpg": {
+        "title": "Domain 网球中心中心球场 · 满场，背景是霍巴特的山",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1ead324-0027-4f5b-a4d4-489b562639ea/1050-Hobart.jpg",
+    },
+    "badhomburg-centre-court.jpg": {
+        "title": "Bad Homburg 中心球场 · 草地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/5023f41c-baec-4531-b585-260d8d468f3f/2017-Bad-Homburg-Open-2.jpg",
+    },
+    "nottingham-centre-court.jpg": {
+        "title": "诺丁汉网球中心中心球场 · 草地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/16/0b899ba9-b477-48ea-9e9e-5cb6aeb30699/1080_bg_Nottingham-min.jpg",
+    },
+    "strasbourg-centre-court.jpg": {
+        "title": "Tennis Club de Strasbourg 中心球场 · 红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/05/12/ffbc5331-cbef-4d6a-8f6d-3a0c93eefa0e/406-Strasbourg.jpg",
+    },
+    "rouen-centre-court.jpg": {
+        "title": "Kindarena 中心球场 · 室内红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/05/02/45da6924-0e65-40ec-b971-04b2806da1f8/2066-Rouen.png",
+    },
+    "linz-centre-court.jpg": {
+        "title": "TipsArena Linz 中心球场 · 室内紫色场地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/5b8f9a8e-bc19-4019-8e7a-f8a5ccd60071/528-Linz.jpg",
+    },
+    "ostrava-centre-court.jpg": {
+        "title": "Ostravar Aréna 中心球场 · 室内满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/05/29/1c78195c-5e01-4cfd-9c6b-c8b3fba080c4/1054-Ostrava-Background.jpg",
+    },
+    "bogota-centre-court.jpg": {
+        "title": "Centro de Alto Rendimiento 中心球场 · 红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/06/03/55ee0af0-08ca-4764-96e3-21b366d4bfae/Tournament-background-894-Bogota-new.png",
+    },
+    "charleston-centre-court.jpg": {
+        "title": "Credit One Stadium 中心球场 · 满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/1588de8d-8dcd-449f-99a9-e0e2eb688e40/804-Charleston.JPG",
+    },
     "indianwells-centre-court.jpg": {
         "title": "印第安维尔斯网球花园 1 号球场 · 满场，场地前场刷着 INDIAN WELLS",
         "license": "unverified · WTA 官方媒体库",

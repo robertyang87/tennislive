@@ -7,6 +7,15 @@ The machine-readable author, license, and source records live in `credits.json`.
 Event-specific schedule backgrounds are cropped and darkened by the renderer;
 the photographs are not otherwise altered.
 
+## `abudhabi-centre-court.jpg`
+
+- Title: 扎耶德体育城网球中心中心球场 · 满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/10/20/cbae0b62-ac90-4b4f-8c15-4acdb35ea037/2088-Abu-Dhabi.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板一圈是 Mubadala Abu Dhabi Open 的赞助带。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `adelaide-centre-court.jpg`
 
 - Title: 纪念大道公园中心球场 · 满场，场地前场刷着 ADELAIDE
@@ -50,6 +59,15 @@ the photographs are not otherwise altered.
 - Note: 自证：场地上刷着 AUCKLAND 和毛利语地名 TĀMAKI MAKAURAU，看台横幅 ASB CLASSIC，背景是奥克兰天际线。3600×2400，是这一批里最大的一张。一张管两站——1 月的 ATP250 与 WTA250 同场地。官网走 ATP 的 Sitecore（/-/media/sites/tournaments/auckland/），和斯德哥尔摩同一套；**斯德哥尔摩那站这条路只有合作方 logo 和球员头像，奥克兰这站却有场馆图**——同一个 CMS 不等于同样的内容，要一站一站看。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `badhomburg-centre-court.jpg`
+
+- Title: Bad Homburg 中心球场 · 草地满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/5023f41c-baec-4531-b585-260d8d468f3f/2017-Bad-Homburg-Open-2.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板 SOLARWATT / Bäderland 是本站赞助带。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `barcelona-centre-court.jpg`
 
 - Title: 皇家巴塞罗那网球俱乐部 拉法·纳达尔球场 · 红土满场
@@ -81,6 +99,15 @@ the photographs are not otherwise altered.
 - Author: unknown（新浪体育转载）
 - Source: https://n.sinaimg.cn/spider20231005/214/w2048h1366/20231005/0a57-133e0b7b85e05c9a50f65167521a5b79.jpg
 - License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `bogota-centre-court.jpg`
+
+- Title: Centro de Alto Rendimiento 中心球场 · 红土满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2026/06/03/55ee0af0-08ca-4764-96e3-21b366d4bfae/Tournament-background-894-Bogota-new.png
+- License: unverified · WTA 官方媒体库
+- Note: 自证：那道拱形钢架看台顶棚是这个场地独有的。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `brisbane-centre-court.jpg`
@@ -117,6 +144,15 @@ the photographs are not otherwise altered.
 - License: unverified · 转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `charleston-centre-court.jpg`
+
+- Title: Credit One Stadium 中心球场 · 满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/1588de8d-8dcd-449f-99a9-e0e2eb688e40/804-Charleston.JPG
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板 Credit One / Prudential 是本站赞助带。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `chengdu-centre-court.jpg`
 
 - Title: 四川川投国际网球中心中央球场 · 满场（ATP 官方图库 chengdu-2025-stadium-shot）
@@ -142,6 +178,15 @@ the photographs are not otherwise altered.
 - Source: https://cincinnatiopen.com/wp-content/uploads/2025/10/AW5_0234.jpg
 - License: unverified · 赛事官方媒体
 - Note: 换掉了上一版 STADIUM-2021_WSOPEN_SOLOMON_001：那张角度对、是官方图，但**空场加阴天**，压完卡片遮罩后整屏是灰蓝色的空座位。这张同一个场地、同样从底线后方，但满场
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `cluj-centre-court.jpg`
+
+- Title: BT Arena 中心球场 · 室内紫色场地满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/cdcb778a-237c-4075-820e-f5e4762863e2/2050-Cluj.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：场地前场刷着 CLUJ-NAPOCA，围板 TeraPlast。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `denbosch-centre-court.jpg`
@@ -220,6 +265,15 @@ the photographs are not otherwise altered.
 - License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `hobart-centre-court.jpg`
+
+- Title: Domain 网球中心中心球场 · 满场，背景是霍巴特的山
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1ead324-0027-4f5b-a4d4-489b562639ea/1050-Hobart.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：官网被 Cloudflare 挡着（CNAME Cross-User Banned），这张来自 WTA 赛事页。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `hongkong-victoria-park.jpg`
 
 - Title: 维多利亚公园中央球场 · 2024 年香港网球公开赛，满场（袁悦 vs 布尔特）
@@ -261,6 +315,15 @@ the photographs are not otherwise altered.
 - Source: https://www.kitzanzeiger.at/media/system/singleimage/center-court-kitzbuehel.webp
 - License: unverified · 新闻站转载，作者未署名
 - Note: 源只有 1496×997，竖切要放大 1.44 倍，偏软；但上一版（Commons 的 Tennisstadion Kitzbuehel 2015）是空场且球场被压在画面最底下，竖切之后整屏是空看台和山坡，构图差得多——精准与构图优先于清晰度
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `linz-centre-court.jpg`
+
+- Title: TipsArena Linz 中心球场 · 室内紫色场地满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/5b8f9a8e-bc19-4019-8e7a-f8a5ccd60071/528-Linz.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：场地前场刷着 LINZ，围板 LINZ AG。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `los-cabos-estadio-alejandro-burillo.jpg`
@@ -341,6 +404,15 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `nottingham-centre-court.jpg`
+
+- Title: 诺丁汉网球中心中心球场 · 草地满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/10/16/0b899ba9-b477-48ea-9e9e-5cb6aeb30699/1080_bg_Nottingham-min.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板一圈是本站赞助带。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `osaka-utsubo-centre-court.jpg`
 
 - Title: 靱テニスセンター（Utsubo Tennis Center）中央球场 · 从底线后方看，远端与两侧绿色看台都在框内
@@ -348,6 +420,15 @@ the photographs are not otherwise altered.
 - Source: http://mtp-tennis.com/utsubo/images/senter.jpg
 - License: unverified · 转载，作者未署名
 - Note: 空场、源 1280×720（竖切放大 2.0 倍），偏软。留着是因为**不留会更糟**：这一站原来被东京有明那张图套走了，卡上会印「东京 · 日本」——同名不同城。等 WTA250 赛期的现场大图再换
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `ostrava-centre-court.jpg`
+
+- Title: Ostravar Aréna 中心球场 · 室内满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2026/05/29/1c78195c-5e01-4cfd-9c6b-c8b3fba080c4/1054-Ostrava-Background.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：大屏上写着 OSTRAVA 与 WTA 250。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `palermo-country-time-centre-court.jpg`
@@ -411,6 +492,15 @@ the photographs are not otherwise altered.
 - Note: 自证：环场 LED 带上是 ABN AMRO OPEN，以及这项赛事的历届冠军名录（'05 FEDERER / '06 STEPANEK / '07 YOUZHNY / '08 LLODRA / '16 MURRAY…），场边围板 ABN·AMRO / LEXUS。室内夜场，均值 29、中位 19——和已入库的巴塞尔（30 / 7）同一档，球场本身打了灯，压完遮罩整个碗仍然读得出来。官网不是 WordPress，图在 /files/images/<年>/ 下，靠 Playwright 渲染首页拿到路径；DOM 里显示的是 1600×640，**直接取那个 URL 才是 2400×1600 的原图**。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `rouen-centre-court.jpg`
+
+- Title: Kindarena 中心球场 · 室内红土满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/05/02/45da6924-0e65-40ec-b971-04b2806da1f8/2066-Rouen.png
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板一圈是本站赞助带；官网 wp-json 里 central 指的是球场名，不是全景。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `sao-paulo-centre-court.jpg`
 
 - Title: SP Open 中心球场（场地前场刷着 SÃO PAULO，2025 首届）
@@ -451,6 +541,15 @@ the photographs are not otherwise altered.
 - Source: https://commons.wikimedia.org/wiki/File%3AKungliga_Tennishallen.JPG
 - License: CC BY-SA 4.0
 - Note: 皇家网球馆（Kungliga tennishallen）中心球场 · 满场，斯德哥尔摩公开赛比赛中。自证：围板印着 If STOCKHOLM OPEN，看台横幅 #ifsthlmopen，右侧挂 ATP 250 标；二层那条历届冠军名录（帕纳塔、麦肯罗、博格、维兰德、费德勒、蒙菲尔斯、伯蒂奇、迪米特洛夫）是这项赛事自己的荣誉墙。2014-10-19 拍摄。赛事官网走 ATP 的 Sitecore，/-/media 下只有合作方 logo 和球员头像，没有场馆图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `strasbourg-centre-court.jpg`
+
+- Title: Tennis Club de Strasbourg 中心球场 · 红土满场
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/05/12/ffbc5331-cbef-4d6a-8f6d-3a0c93eefa0e/406-Strasbourg.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：看台横幅写着 Strasbourg / Grand Est。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `tokyo-ariake-coliseum.jpg`
