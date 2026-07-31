@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from platform_stats import (  # noqa: E402
     FRESH_HOURS,
+    INTERACTION,
     REPO,
     Work,
     attach,
@@ -49,15 +50,29 @@ def overview(works: list[Work]) -> None:
         head += f"　{min(span):%Y-%m-%d} ~ {max(span):%Y-%m-%d}"
     print(head)
     plays = sum(w.get("plays") or 0 for w in works)
-    inter = sum(w.interaction for w in works)
-    fans = sum(w.get("follows") or 0 for w in works)
-    line = (f"播放 {plays:.0f}　互动 {inter:.0f}（{_rate(inter, plays)}）"
-            f"　涨粉 {fans:.0f}（每千播放 {fans / plays * 1000:.2f}）" if plays
-            else "播放为 0")
+    if not plays:
+        print("播放为 0")
+        return
+    # 只印这个平台真给的指标。踩过：抖音的「视频数据」视图不导点赞和涨粉，
+    # 无条件打印会印成「互动 0　涨粉 0」——和「真的没人互动」长得一模一样，
+    # 正是这个工具处处在防的那种假空值。
+    bits = [f"播放 {plays:.0f}"]
+    if any(plat.has(k) for k in INTERACTION):
+        inter = sum(w.interaction for w in works)
+        bits.append(f"互动 {inter:.0f}（{_rate(inter, plays)}）")
+    if plat.has("follows"):
+        fans = sum(w.get("follows") or 0 for w in works)
+        bits.append(f"涨粉 {fans:.0f}（每千播放 {fans / plays * 1000:.2f}）")
     if plat.has("home_visits"):
         home = sum(w.get("home_visits") or 0 for w in works)
-        line += f"　主页访问 {home:.0f}（{_rate(home, plays)}）"
-    print(line)
+        bits.append(f"主页访问 {home:.0f}（{_rate(home, plays)}）")
+    print("　".join(bits))
+    absent = [n for k, n in (("follows", "涨粉"), ("likes", "点赞"),
+                             ("true_completion", "真完播率"),
+                             ("cover_ctr", "封面点击率"))
+              if not plat.has(k)]
+    if absent:
+        print(f"　（{plat.name}这个视图不给：{'、'.join(absent)}——空着，不是 0）")
 
 
 def by_kind(works: list[Work]) -> None:
@@ -169,11 +184,16 @@ def funnel(works: list[Work]) -> list[dict]:
     # 一边用存活率的中位，两个中位数不互补，三段加起来对不上一百。
     alive2 = median([1 - w.get("bounce_2s") for w in vids])
     s5 = median([w.get("retain_5s") for w in vids])
-    fin = median([w.get("true_completion") for w in vids]) or 0
+    # 没有真完播率就别印「看到结尾 0 人」——那是这个视图不给，不是真的没人看完。
+    fin_med = median([w.get("true_completion") for w in vids])
+    fin = fin_med or 0.0
     print(f"\n  中位漏斗（{len(vids)} 条）：开播 100 人")
     print(f"    2 秒后还剩 {alive2 * 100:>3.0f} 人　← 这 2 秒走掉 {(1 - alive2) * 100:.0f} 人")
     print(f"    5 秒后还剩 {s5 * 100:>3.0f} 人　← 这 3 秒又走掉 {(alive2 - s5) * 100:.0f} 人")
-    print(f"    看到结尾   {fin * 100:>3.0f} 人")
+    if fin_med is None:
+        print(f"    看到结尾   —— {plat.name}不给真完播率，这一格空着")
+    else:
+        print(f"    看到结尾   {fin * 100:>3.0f} 人")
     print(f"  5 秒内累计走掉 {(1 - s5) * 100:.0f}%")
 
     lens = [d for d in (duration_of(w) for w in vids) if d]
@@ -268,6 +288,13 @@ def correlations(works: list[Work], fresh_hours: int) -> None:
     if len(keep) < 4:
         print("  样本不够算 —— 不出数好过出个假的。")
         return
+    # 平台不给的因变量不出这一栏。踩过：抖音的「视频数据」视图没有点赞和涨粉，
+    # 照样算出来全是 +0.00，看着像「留存和涨粉毫无关系」这个实打实的结论。
+    outs = [("plays", "vs 播放", lambda w: w.get("plays"))]
+    if any(plat.has(k) for k in INTERACTION):
+        outs.append(("interaction", "vs 互动", lambda w: w.interaction))
+    if plat.has("follows"):
+        outs.append(("follows", "vs 涨粉", lambda w: w.get("follows") or 0))
     rows = []
     for key, name in (("bounce_2s", "2s跳出率"), ("retain_5s", "5s完播率"),
                       ("true_completion", "真完播率"), ("avg_watch", "平均播放时长"),
@@ -275,14 +302,12 @@ def correlations(works: list[Work], fresh_hours: int) -> None:
         xs = [w.get(key) for w in keep]
         if any(x is None for x in xs):
             continue
-        rows.append([name,
-                     f"{pearson(xs, [w.get('plays') for w in keep]):+.2f}",
-                     f"{pearson(xs, [w.interaction for w in keep]):+.2f}",
-                     f"{pearson(xs, [w.get('follows') or 0 for w in keep]):+.2f}"])
+        rows.append([name] + [f"{pearson(xs, [f(w) for w in keep]):+.2f}"
+                              for _, _, f in outs])
     if not rows:
         print("  这个平台给的列不足以算相关性。")
         return
-    print(table(rows, ["", "vs 播放", "vs 互动", "vs 涨粉"]))
+    print(table(rows, [""] + [n for _, n, _ in outs]))
     print(f"\n  n={len(keep)}，全部当线索看。播放量本身由算法决定、算法又用留存，")
     print("  这里有循环成分，别读成「提高留存就能换来播放」。实测过：剔除窗口")
     print("  从 24 小时改成「只剔当天」，抖音的 5s完播率 vs 真完播率就从 +0.38")
