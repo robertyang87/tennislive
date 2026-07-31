@@ -12,6 +12,10 @@ on:
         description: "要在正文里找的词，逗号分隔"
         required: false
         default: "Coleman Wong,Brooksby"
+      urls:
+        description: "自定义目标 URL，逗号分隔（给了就不探默认那五条）。图片会存成 artifact"
+        required: false
+        default: ""
 
 jobs:
   probe:
@@ -22,9 +26,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: 装 Pillow（图片这一档要解码才报得出真实尺寸）
+        run: pip install -q pillow
       - name: 探
         run: |
           ARGS=""
           IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
-          for w in "${WORDS[@]}"; do ARGS="$ARGS --want \"$w\""; done
-          eval python tools/probe_blocked_sources.py $ARGS
+          for w in "${WORDS[@]}"; do [ -n "$w" ] && ARGS="$ARGS --want \"$w\""; done
+          IFS=',' read -ra URLS <<< "${{ github.event.inputs.urls }}"
+          for u in "${URLS[@]}"; do [ -n "$u" ] && ARGS="$ARGS --url \"$u\""; done
+          eval python tools/probe_blocked_sources.py --save probe_out $ARGS
+      # 取到的图要能拿回来看——**光有日志里的尺寸没法过那四道闸门**，
+      # 精准/在比赛中/冲击力/清晰度全都得打开看。
+      - name: 把取到的图传出来
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-images
+          path: probe_out/
+          if-no-files-found: ignore
