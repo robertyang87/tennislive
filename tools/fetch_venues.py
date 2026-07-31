@@ -229,6 +229,8 @@ VENUES = [
     ("santiago-centre-court.jpg", None, None),
     # 斯图加特 WTA500：Porsche-Arena 室内红土；别名按赛事名写，别用城市名
     ("stuttgart-porsche-arena-centre-court.jpg", None, None),
+    # 布加勒斯特 ATP250：赛事域名上的 stadium shot，红土满场
+    ("bucharest-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -374,6 +376,12 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "bucharest-centre-court.jpg": {
+        "title": "布加勒斯特中央球场满场，红土，远端看台顶上写着 ROMANIA，围板是 ȚIRIAC OPEN，球网上是 ATP TOUR",
+        "license": "unverified · ATP 官方图，经赛事域名 tiriacopen.ro 取得",
+        "artist": "ATP 官方图（摄影师未署名）",
+        "page": "https://www.tiriacopen.ro/-/media/images/news/2024/04/21/12/16/bucharest-2024-stadium-shot-2.jpg",
+    },
     "stuttgart-porsche-arena-centre-court.jpg": {
         "title": "斯图加特 Porsche-Arena 室内红土中心球场，场地前场刷着 STUTTGART，围板 porsche-tennis.com，大屏是 Świątek 对 Raducanu 与 WTA 500",
         "license": "unverified · 赛事主办方官方图，转载站未署名",
