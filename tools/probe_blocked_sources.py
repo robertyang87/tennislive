@@ -24,6 +24,16 @@ runner 的出口 IP 不一样，这几处可能通。**通不通本身就是结�
 （curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED）；
 霍巴特官网被 Cloudflare 挡（标题 `CNAME Cross-User Banned`）；
 `atptour.com` 全站 403。runner 的出口不一样，**通不通本身就是结论**。
+
+⚠️ 2026-07-31 第一次拿场馆图这条线跑出来的结论，**和我的预期相反，记下来**：
+runner 上 `atptour.com`（索引页和赛事页）、霍巴特官网**仍然 403**，
+ktf.kz 两张仍然连不上（`ERR URLError`）。同一次跑里里约那张对照图
+200 + 2048x929 取到了，所以不是工具坏了。
+
+所以「换个出口就能过」这个假设**对这三处都不成立**：403 那两处是按 UA／
+机器人规则挡的（换 IP 没用），ktf.kz 则是从两个完全不同的网络都到不了。
+**每加一条「本环境取不到」的记录之前，先用这个工具证一次**——
+别把「我这儿取不到」直接写成「换个环境就有」。
 """
 
 from __future__ import annotations

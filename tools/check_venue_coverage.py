@@ -63,10 +63,15 @@ KNOWN_GAPS = {
         "**还没试的**：Getty/AFP 等图片社经二手站的转载，以及意大利体育媒体"
         "（Gazzetta、Corriere dello Sport）的赛事图集。",
     "Almaty Open":
-        "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张），"
-        "但**本沙箱取不到**：出口网关给 ktf.kz 的证书链验不过，curl / urllib / "
-        "Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，而规矩是不许关校验。"
-        "Commons 只有冰球馆外景和大运会开幕式。换个能出网的环境重跑即可。",
+        "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张）。"
+        "沙箱里 curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，"
+        "我据此写过「换个能出网的环境重跑即可」——**那句是错的，已经验过**："
+        "2026-07-31 从 GitHub Actions 的 runner（另一个出口、正常的 CA）再探两张，"
+        "报的是 `ERR URLError`，连不上。同一次跑里里约那张对照图 200 + 2048x929 取到了，"
+        "所以不是工具的问题。**换出口这条路对 ktf.kz 无效**，"
+        "这个主机从两个完全不同的网络都到不了。"
+        "Commons 只有冰球馆外景和大运会开幕式。"
+        "下一步只能换源：哈萨克斯坦本地新闻站（tengrinews / vesti.kz / sports.kz）的赛事图集。",
 }
 
 
