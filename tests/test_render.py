@@ -4021,15 +4021,6 @@ def test_纪念日成稿时不再报警(tmp_path, monkeypatch):
     )
     shift = json.loads(path.read_text(encoding="utf-8"))["shifts"][-1]
     assert shift["anniversary_missed"] is False
-
-
-def test_daily工作流会把没成稿的纪念日报出来():
-    workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
-    assert "story_selection.json" in workflow
-    warn_at = workflow.index("anniversary_missed")
-    assert "::warning" in workflow[warn_at : warn_at + 400]
-
-
 def test_历史今天用自己的标题前缀():
     """卡片小标早就写着这四个字，只有标题一直印「网球有故事」——而读者只看标题。"""
     from tennislive.render.knowledge import knowledge_title, knowledge_wechat_title

@@ -1,5 +1,12 @@
 name: Push existing content to PlusPlus
 
+# 把仓库里**已经生成好**的包推到微信。
+#
+# 2026-07-31：`main`（日报）和 `knowledge`（每日知识）两个 scope 连同盯
+# `output/**/knowledge/**` 的 push 触发一起删了——日报停产之后没人再产它们，
+# 留着就是两个永远选不出东西的选项和一个永远不触发的触发器。
+# 剩下的 `schedule`（赛程包）和 `grand-slam` 各有各的生产线。
+
 on:
   workflow_dispatch:
     inputs:
@@ -12,23 +19,15 @@ on:
         required: true
         type: choice
         options:
-          - main
-          - knowledge
           - grand-slam
           - schedule
-        default: main
-  push:
-    branches: [main]
-    paths:
-      - "output/**/knowledge/**"
-      - ".github/workflows/push-existing.yml"
+        default: schedule
 
 permissions:
   contents: read
 
 jobs:
   push-existing:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[pushplus]') || contains(github.event.head_commit.message, '[push-knowledge]')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,19 +56,15 @@ jobs:
           TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
         run: |
           DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
-          SCOPE="${INPUT_SCOPE:-main}"
-          if [ "${{ github.event_name }}" = "push" ] && \
-             echo "${{ github.event.head_commit.message }}" | grep -q '\[push-knowledge\]'; then
-            SCOPE="knowledge"
-          fi
-          if [ "$SCOPE" = "knowledge" ]; then
-            OUT_DIR="output/${DATE}/knowledge"
-          elif [ "$SCOPE" = "grand-slam" ]; then
+          SCOPE="${INPUT_SCOPE:-schedule}"
+          if [ "$SCOPE" = "grand-slam" ]; then
             OUT_DIR="output/grand-slam-vertical-v2"
           elif [ "$SCOPE" = "schedule" ]; then
             OUT_DIR="output/${DATE}/schedule"
           else
-            OUT_DIR="output/${DATE}"
+            echo "::error::认不出来的 scope「$SCOPE」。日报和每日知识已于"
+            echo "::error::2026-07-31 停产，main / knowledge 两个 scope 已删。"
+            exit 1
           fi
           git sparse-checkout add "${OUT_DIR}"
           test -s "${OUT_DIR}/push.html"
