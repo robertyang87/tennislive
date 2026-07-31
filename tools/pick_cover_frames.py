@@ -192,14 +192,19 @@ def main() -> int:
         cap.release()
         if not ok:
             continue
-        path = args.out / f"cand_{i:02d}_t{rec['t']}.png"
-        Image.fromarray(frame[:, :, ::-1]).save(path)
+        # **候选帧存 JPEG，不是 PNG。** 1920×1080 的转播帧存 PNG 单张 2~3 MB，
+        # 12 张就是 30 MB——每条清理规则都按「单个 8 MB」量，整批过得去，
+        # 于是悄悄进仓库。挑帧是给人看的中间物，q92 看不出差别。
+        path = args.out / f"cand_{i:02d}_t{rec['t']}.jpg"
+        Image.fromarray(frame[:, :, ::-1]).save(path, quality=92)
         print(f"  #{i:02d} {rec['t']:7.2f}s 脸 {rec['h']}px 清晰 {rec['sharp']} "
               f"运动 {rec['motion']} → {path.name}")
         tiles.append((f"#{i:02d} {rec['t']}s {rec['h']}px", Image.open(path)))
 
     if tiles:
-        tw = 420
+        # 一格 640px：候选墙是**唯一进仓库的那份**，得看得出正脸和表情。
+        # 420px 那一版，371px 的脸缩到 81px，判不了「能不能看到表情」。
+        tw = 640
         thumbs = [(t, im.resize((tw, round(im.height * tw / im.width))))
                   for t, im in tiles]
         cols = 4
