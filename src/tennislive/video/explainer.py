@@ -119,6 +119,11 @@ class ExplainerSegment:
     # 这两行把比赛坐标钉在同一屏上。由 `_fixture_lines()` 从结构化字段拼出来，
     # 不手写，免得日期和轮次在几处各写各的。
     fixture: tuple[str, ...] = ()
+    # 封面大标题底下的一行小字，用来给标题里的缩写或行话当场作注。
+    # 和 `fixture` 分开是因为那一路被钉死给「开球之前」了（常青栏目的封面
+    # 不该印比赛坐标），而作注这件事和赛前片没关系。
+    # **加在最后**：`_SCRIPTS` 里的 beat 是按位置解包的，插中间会整体错位。
+    gloss: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -2697,6 +2702,7 @@ _OPENINGS: dict[str, dict] = {
         "topic": "幸运落败者：输了才有的名额",
         "question": "资格赛输了，怎么还在正赛？",
         "narration": "资格赛输了，怎么还在正赛？他自己管这叫——输的那个人，是幸运的。",
+        "gloss": "LL = Lucky Loser",
         "image": "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
     },
     "hawkeye": {
@@ -2957,6 +2963,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         diagram="",
         question="",
         fixture=_fixture_lines(spec),
+        gloss=spec.get("gloss", ""),
     )
 
 
@@ -3183,6 +3190,11 @@ def _slide_html(
     # 封面那两行小字（只有「开球之前」有）：第一行是比赛坐标，第二行是对阵。
     # 排在大问题下面，字号压到问题的三分之一上下——它是给「这到底是哪一场」
     # 兜底的，不是来抢封面的。
+    gloss_html = (
+        f'<div class="gloss">{html.escape(segment.gloss)}</div>'
+        if segment.gloss
+        else ""
+    )
     fixture_html = (
         '<div class="fixture">'
         + "".join(
@@ -3301,6 +3313,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
+/* 封面标题底下那行注。它是**注**不是副标题：字号压到标题的三分之一上下，
+   颜色比标题淡一档，别把观众的眼睛从大问题上拽走。 */
+.gloss{{align-self:flex-start;margin-top:-2px;font-size:34px;font-weight:700;
+ letter-spacing:1px;color:#cfe6d8;text-shadow:0 2px 12px rgba(0,0,0,.85);}}
 /* 赛前片的封面小字。两行之间用一道细线分开，而不是靠间距——封面底下就是
    照片，间距在深浅不一的画面上读不出「这两行是一组」。 */
 .fixture{{align-self:flex-start;display:flex;flex-direction:column;gap:12px;
@@ -3314,7 +3330,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
-<div class="title">{html.escape(segment.title)}</div>{fixture_html}{points_html}{question_html}{tail_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
