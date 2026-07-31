@@ -36,12 +36,33 @@ chk = _load("check_cover_resolution")
 
 from tennislive.video.explainer import _SCRIPTS  # noqa: E402
 
-# 现在就在放大的三张，只许变大不许变小。换了更大的原图就从这里删掉。
-# 值是当前的铺满倍数，留 0.02 的容差给不同 Pillow 版本的读取差异。
+# 现在就在放大的那几张，只许变大不许变小。换了更大的原图就从这里删掉。
+# 值是 (当前铺满倍数, 为什么只能用这张)，倍数留 0.02 的容差给不同 Pillow
+# 版本的读取差异。
+#
+# **理由是这张表最值钱的一格。** 原来只记一个数字加一句 `# 1600x1200`，
+# 于是每个人接手都要把同样的源重新搜一遍——而「查过了、没有」和「没查过」
+# 在一张只有数字的表里长得一模一样。所以理由里必须写清换源查到哪一步、
+# 下一步该去哪，判据在 test_名单里的每一条都写了换源查到哪一步。
+#
+# wimbledon-whites 2026-07-31 还清了：原来 937x1250（0.87x）是原图
+# 3648x5472 上一块裁得很紧的框，重裁成 1300x1733（1.20x）——**主体的像素数
+# 一个没变**，两块都是原生裁切，只是框放宽、渲到卡上人小一点。顺带把
+# THE CHAMPIONSHIPS / WIMBLEDON 圆标完整收进来。
 _UNDERSIZED = {
-    "rufus": 0.83,             # 1600x1200
-    "wimbledon-whites": 0.87,  # 937x1250，全套最小
-    "shang-nishikori": 0.95,   # 1023x1365
+    "rufus": (0.83, "1600x1200。Commons 上 Rufus 在温网只有三张"
+              "（1600x1200 / 1200x1600 / 1040x1673），唯一过线的 1200x1600 那张里"
+              "鹰只是背景中停在摄像机上的小黑影，主体是三个工作人员和三脚架——"
+              "第 3 道闸门差得远，而清晰度是第 4 道。现在这张鹰在前景合焦，"
+              "背后是温网园区、COURT 18 指示牌和 THE CHAMPIONSHIPS 圆标。"
+              "下一步去 wimbledon.com 官方图库找，Commons 这条线已经到底了"),
+    "shang-nishikori": (0.95, "1023x1365，只放大 5%。Commons 上商竣程有 18 张"
+                        "4000x6000，但 2024 DC Open 那张是场外披毛巾的大头特写"
+                        "（第 2、3 道都不过），其余全是 2023 年**资格赛**——"
+                        "封面问的是「锦织圭的最后一年，谁来接」，拿三年前资格赛的"
+                        "照片答这个问题明显更弱。现在这张是 2026 年 1 月香港站正赛、"
+                        "背板写着赛事名、他伤停前最近的比赛画面。"
+                        "下一步找 2026 年的大图，不是往回退到 2023"),
 }
 # lucky-loser 的封面不在这张名单上，但它的做法值得记一句，因为**这条 1.00x 的
 # 地板正是那张图的垫层能减到多小的下界**。
@@ -72,7 +93,7 @@ def test_封面图不许被放大(slug):
     """原图比显示区域小，等于一上来就在插值。这和推不推近无关，是底线。"""
     got = _fill(slug)
     if slug in _UNDERSIZED:
-        was = _UNDERSIZED[slug]
+        was = _UNDERSIZED[slug][0]
         assert got >= was - 0.02, (
             f"{slug} 的封面图从 {was:.2f}x 变小到 {got:.2f}x——名单里的只许变大。")
         return
@@ -121,9 +142,10 @@ def test_能推近的片子是算出来的不是手写的():
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
     eligible = [s for s in sorted(_SCRIPTS) if _fill(s) / chk.PUSH >= chk.FLOOR]
-    # 当前这批：不够推的有 7 条（3 张本来就在放大 + 4 张够铺满推不动）。
+    # 当前这批：不够推的有 6 条（2 张本来就在放大 + 4 张够铺满推不动）。
     # 加选题会动这个数——它跟着实际分辨率走，不是另维护的名单。
-    assert len(eligible) == len(_SCRIPTS) - 7
+    # 7 → 6 是 wimbledon-whites 重裁到 1.20x 之后腾出来的那一条。
+    assert len(eligible) == len(_SCRIPTS) - 6
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
@@ -162,3 +184,27 @@ def test_命令行对不合格的报非零而对推不动的不报():
     assert run("--only", "rufus").returncode == 2          # 在放大
     assert run("--only", "queue").returncode == 0          # 只是推不动
     assert run("--only", "hawkeye").returncode == 0        # 全过
+
+
+def test_名单里的每一条都写了换源查到哪一步():
+    """欠账要留线索，否则下一个人把同样的源再搜一遍。
+
+    「查过了、没有」和「没查过」在一张只有数字的表里长得一模一样——这是
+    「空结果先自证是真空」的一个变种：**别人的空结果也要能自证**。
+    所以每条理由都得说出查了哪儿、为什么不能用、下一步去哪。
+    """
+    for slug, (_fill_at, why) in _UNDERSIZED.items():
+        assert len(why) >= 80, f"{slug} 的理由太短，看不出换源查到哪一步：{why}"
+        assert "下一步" in why, f"{slug} 的理由没写下一步该去哪找：{why}"
+
+
+def test_还清了的要从名单里删掉而不是留着():
+    """`wimbledon-whites` 2026-07-31 重裁到 1.20x 之后从名单里删了。
+
+    留着的话这张表就开始骗人：看着像三张欠着，其实只欠两张——而「欠得
+    比实际多」会让人去换根本不用换的图，正是 `test_够铺满但推不动的要能被
+    单独认出来` 拦的那个毛病的镜像。
+    """
+    assert "wimbledon-whites" not in _UNDERSIZED, "已经还清了，别留在名单里"
+    assert _fill("wimbledon-whites") >= chk.PUSH, (
+        f"wimbledon-whites 退回到 {_fill('wimbledon-whites'):.2f}x 了")
