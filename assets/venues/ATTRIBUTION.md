@@ -50,6 +50,15 @@ the photographs are not otherwise altered.
 - Note: 自证：场地上刷着 AUCKLAND 和毛利语地名 TĀMAKI MAKAURAU，看台横幅 ASB CLASSIC，背景是奥克兰天际线。3600×2400，是这一批里最大的一张。一张管两站——1 月的 ATP250 与 WTA250 同场地。官网走 ATP 的 Sitecore（/-/media/sites/tournaments/auckland/），和斯德哥尔摩同一套；**斯德哥尔摩那站这条路只有合作方 logo 和球员头像，奥克兰这站却有场馆图**——同一个 CMS 不等于同样的内容，要一站一站看。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `barcelona-centre-court.jpg`
+
+- Title: 皇家巴塞罗那网球俱乐部 拉法·纳达尔球场 · 红土满场
+- Author: barcelonaopenbancsabadell.com 官方图库
+- Source: https://www.barcelonaopenbancsabadell.com/-/media/images/news/2026/04/13/19/29/barcelona-2026-results.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：围板一圈 Sabadell / Occident / LA VANGUARDIA 是这项赛事的赞助带，背景是俱乐部所在的 Pedralbes 一带山形。⚠️ 这个站 curl 拿浏览器 UA 返回 403，**Playwright 渲染却正常**——和 ATP 图床那条「403 是按文件来的」不同，这里是按 UA 来的：403 不等于取不到，换条路再试。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `basel-st-jakobshalle.jpg`
 
 - Title: St. Jakobshalle 中心球场 · 满场（场地前场刷着 BASEL）

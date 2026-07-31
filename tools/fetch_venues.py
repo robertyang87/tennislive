@@ -175,6 +175,8 @@ VENUES = [
     ("rio-centre-court.jpg", None, None),
     # 蒙彼利埃：官网从 opensuddefrance.com 改名到 openoccitanie.com，wp-json 在新域名上
     ("montpellier-centre-court.jpg", None, None),
+    # 巴塞罗那：curl 403 但 Playwright 渲染能过（按 UA 挡的）；ATP Sitecore
+    ("barcelona-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -320,6 +322,12 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "barcelona-centre-court.jpg": {
+        "title": "皇家巴塞罗那网球俱乐部 拉法·纳达尔球场 · 红土满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "barcelonaopenbancsabadell.com 官方图库",
+        "page": "https://www.barcelonaopenbancsabadell.com/-/media/images/news/2026/04/13/19/29/barcelona-2026-results.jpg",
+    },
     "montpellier-centre-court.jpg": {
         "title": "Sud de France Arena 中心球场 · 满场（粉蓝双色场地）",
         "license": "unverified · 赛事官方媒体库",
