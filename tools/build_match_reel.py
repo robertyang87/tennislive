@@ -833,15 +833,23 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
         bg["image"] = _grab(bg, "bg")
         versus["background"] = bg
         for key in ("top", "bottom"):
-            cut = (versus[key] or {}).get("cutout")
+            panel = dict(versus[key] or {})
+            if panel.get("frame_at") is not None:
+                panel["cutout"] = _cut_person(source, panel, key, dest.parent)
+                panel.pop("crop", None)   # box 已经在抠之前裁过了，别再裁一次
+                versus[key] = panel
+                continue
+            cut = panel.get("cutout")
             if not cut or not Path(cut).is_file():
                 raise ReelError(
-                    f"cutout 版式的 {key} 格找不到抠图：{cut}\n"
+                    f"cutout 版式的 {key} 格既没给 frame_at 也找不到抠图：{cut}\n"
+                    "首选 `frame_at`：从**本场源片**抓一帧抠出来，衣服、光、球场"
+                    "都是这场的；官方棚拍图退居兜底。\n"
                     "WTA：photoresources 的 <Name>-Torso_<wta_id>.png?width=3000；"
                     "ATP：赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。\n"
-                    "**这个球员根本没有官方抠图，就退回 `layout: diagonal` 的"
-                    "照片版**（账号所有者定的兜底）——别拿头像凑，见 versus_poster.py "
-                    "里同一处的说明。")
+                    "**这个球员根本没有官方抠图、源片里也挑不出近景，就退回 "
+                    "`layout: diagonal` 的照片版**（账号所有者定的兜底）——"
+                    "别拿头像凑，见 versus_poster.py 里同一处的说明。")
     else:
         for key in ("top", "bottom"):
             side = dict(versus[key])
@@ -853,6 +861,66 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
     poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
     print(f"    [封面] 赛场之上海报 {layout} → {poster.name}")
     return _still_to_clip(poster, dest)
+
+
+#: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
+#: 把锦织圭的发梢切平了一条，isnet 保住了。
+CUT_MODEL = "isnet-general-use"
+
+
+def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
+    """从本场源片抓一帧、裁出人、抠掉背景 —— 封面人物的首选来源。
+
+    **为什么不用官方棚拍图**：棚拍的衣服、光、背景都跟这场球没关系，压在本场
+    画面上像两张贴纸。账号所有者的原话：「因为更贴近比赛的服装，感觉会更好，
+    用之前资料就有点脱节」。
+
+    顺带还赢在分辨率，这个能量（模板槽位 634px）：
+
+        ATP 官方棚拍 裁到胯   265×410   → 1.55× **放大**
+        本场抽帧              660×1040  → 0.61× 缩小
+
+    看着"正规"的棚拍图其实是全套素材里最软的一档。
+
+    挑哪一帧交给 `tools/pick_cover_frames.py`（判据：正脸或稍微侧脸、上半身
+    直立、表情读得出），**挑完要打开看**——谁是谁、表情对不对题机器判不了。
+
+    `box` 是 0~1 的裁切框，作用在**源帧**上，抠之前裁。它有两件事要做：
+    少给模型无关像素（alpha 干净得多），以及把转播叠加物排除掉——记分条在
+    左下、台标在右上，它们不是人，但离人近的时候会被一起圈进来。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    raw = workdir / f"_versus_raw_{tag}.png"
+    out = workdir / f"_versus_cut_{tag}.png"
+    with stage(f"VS 抠帧 {tag}"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-ss", f"{float(panel['frame_at']):.2f}", "-i", str(source),
+            "-frames:v", "1", str(raw))
+        im = Image.open(raw).convert("RGB")
+        box = panel.get("box")
+        if box:
+            if len(box) != 4:
+                raise ReelError(f"VS {tag} 的 box 要四个数 [x0,y0,x1,y1]（0~1）：{box}")
+            w, h = im.size
+            im = im.crop((round(box[0] * w), round(box[1] * h),
+                          round(box[2] * w), round(box[3] * h)))
+        from rembg import new_session, remove  # noqa: PLC0415
+
+        # **`post_process_mask=True` 不能省。** 不加的时候深色球衣压在深色背景墙上
+        # （锦织圭那格）会留**一整块方底**，渲到海报上是一个看得见的矩形边。
+        # 加上之后三个模型的 alpha 全干净——那不是模型不行，是后处理没开。
+        cut = remove(im, session=new_session(CUT_MODEL), post_process_mask=True)
+        bbox = cut.getbbox()
+        if not bbox:
+            raise ReelError(
+                f"VS {tag} 抠出来是空的：{panel['frame_at']}s 那一帧里没找到人。"
+                "换一帧，或者用 tools/pick_cover_frames.py 重挑。")
+        cut = cut.crop(bbox)
+        cut.save(out)
+    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}")
+    raw.unlink(missing_ok=True)
+    return str(out)
 
 
 def _still_to_clip(still: Path, dest: Path) -> Path:
@@ -922,9 +990,32 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
     return out
 
 
+def _preflight_cutout(spec: dict) -> None:
+    """封面要抽帧抠图就先验一次 rembg —— **在下源片之前**。
+
+    「加新能力要同时改三处」那条已经踩过三次（playwright、Chromium、cv2），
+    每次都是下完 64MB 源片、合完原声之后才死在 import 上，白跑一分半。
+    这里是第四次，提前收在第 5 秒。
+    """
+    versus = (spec.get("cover") or {}).get("versus") or {}
+    if not any((versus.get(k) or {}).get("frame_at") is not None
+               for k in ("top", "bottom")):
+        return
+    try:
+        import rembg  # noqa: F401,PLC0415
+    except ImportError as exc:  # pragma: no cover - 环境问题
+        raise ReelError(
+            "封面要从源片抽帧抠图（versus.top/bottom 里写了 frame_at），"
+            "但这台机器没有 rembg。\n"
+            '装：pip install "rembg[cpu]"；'
+            "或者把那一格换回官方棚拍抠图（`cutout`: 本地透明 PNG）。"
+        ) from exc
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    _preflight_cutout(spec)
     source = source_override or (outdir / "source.mp4")
     if not source.is_file():
         with stage("下载源片"):
