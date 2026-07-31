@@ -283,10 +283,21 @@ def load_store() -> dict:
 def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     """tennistv.com 的媒体库——不是 YouTube，得单独抓。
 
-    这是唯一系统性覆盖 **ATP 250** 场上采访的来源，而且**不在付费墙后面**：
-    实测 20 条里 16 条 `entitlement:free`、4 条 `freemium`（注册即可），
-    premium 一条都没有。Tennis TV 的 YouTube 频道深扫 800 条是 0 条场上采访，
-    东西全在站上，两者别搞混。
+    这是唯一系统性覆盖 **ATP 250** 场上采访的来源。实测 20 条里 16 条
+    `entitlement:free`、4 条 `freemium`，premium 一条都没有。
+    Tennis TV 的 YouTube 频道是 0 条场上采访，东西全在站上，两者别搞混。
+
+    ⚠️ **但「entitlement:free」不等于「拿得到视频」，这句我先前写错过。**
+    原文写的是「**不在付费墙后面**」——那是我从 `free` 这个字面推的，没验。
+    实际：页面挂着 Cleeng（订阅 SDK）和身份 SDK，播放器是 JS 起的；
+    拿标准客户端去取，yt-dlp 的 TennisTV 提取器直接回
+
+        This video is only available for registered users.
+
+    `free` / `freemium` / `premium` 是**他们账号体系内部的档位**，不是
+    「匿名可取」。**元数据（标题、轮次、时长、赛事）照常公开可抓，那部分
+    没变**；变的是「视频文件能不能拿到」的结论——那需要账号，绕开它的做法
+    不做。要 ATP 侧的画面，只能人自己开账号看。
 
     页面是服务端渲染，条目以 JSON 内嵌在 HTML 里，字段齐全：
     `videoType`（interviews / preview）、`metadataRound`（R1/QF/SF/Final）、

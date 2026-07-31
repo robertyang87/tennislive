@@ -209,13 +209,45 @@ beIN 那两家值得注意：**有大量网球内容（45 / 73 条）但一条�
 | YouTube [@tennistv](https://www.youtube.com/@tennistv) | 深扫 800 条 → **0** |
 | 站上 [tennistv.com/library/interviews](https://www.tennistv.com/library/interviews) | 20 条里 **16 条**，逐轮 |
 
-**而且不在付费墙后面。** 页面内嵌 JSON 里有 `entitlement` 字段，实测：
+页面内嵌 JSON 里有 `entitlement` 字段，实测：
 
 | entitlement | 条数 |
 | --- | --- |
 | `free` | 16 |
-| `freemium`（注册即可） | 4 |
+| `freemium` | 4 |
 | `premium` | **0** |
+
+> ⚠️ **原文这里写的是「而且不在付费墙后面」——那句话是错的，已删。**
+> 那是我从 `free` 这个字面推出来的，没验过。见下一节。
+
+### `entitlement: free` ≠ 拿得到视频
+
+被问到「这些能拿到视频么」才去验的，结果和字面相反：
+
+- 页面挂着 **Cleeng**（订阅/付费墙 SDK）和 `pulselive-id` 身份 SDK，
+  播放器是 JS 起的，静态 HTML 里只有一个 `data-entry-id="0_ds2ltvk2"`
+  （Kaltura entry）
+- 拿标准客户端去取，yt-dlp 的 TennisTV 提取器直接回
+  **`This video is only available for registered users.`**
+- 华盛顿 2026 那 10 条实测：9 条 `free`、1 条 `freemium`，**结果一样**
+
+所以 `free` / `freemium` / `premium` 是**他们账号体系内部的档位**，
+不是「匿名可取」。绕开它的做法不做。
+
+**分清楚两件事，别一起否定：**
+
+| | 状态 |
+|---|---|
+| **元数据**（标题、`metadataRound`、时长、`videoType`、赛事） | **照常公开可抓**，采集器这部分不受影响 |
+| **视频文件** | 需要 Tennis TV 账号 |
+
+也就是说：ATP 侧我们能**知道有哪些采访、是哪一轮、多长**，但要看画面得人
+自己开账号。相比之下 WTA 侧那批（`@wta` 集锦尾巴）是完全公开的 YouTube，
+这一点上反而比 ATP 好用。
+
+⚠️ 想用浏览器实地验一次的话：本环境的 Playwright 打 tennistv.com 会
+`ERR_CONNECTION_RESET`（代理层），curl 却是 200——**那是环境限制，
+不是站点拒绝**，别拿它当证据。
 
 内容是 Estoril、Bastad、Kitzbuhel、Gstaad 这些 **ATP 250**，逐轮发
 （`metadataRound` 为 R1/QF/SF/Final），时长 0:56–3:27。
