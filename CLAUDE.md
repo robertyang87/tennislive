@@ -1306,6 +1306,20 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 ⚠️ **年份要跟场馆对得上**。里昂 2018 那张是 Parc de la Tête d'Or，而 2026 起搬去
 LDLC Arena——同一个 slug，**不是同一个场馆**。搬过家的站，旧年份的主视觉是陷阱。
 
+**WTA 那边的对应物是赛事页的主视觉**，取法：
+
+    https://www.wtatennis.com/tournament/<id>/<城市 slug>/<年>
+      → 页面里那张 photoresources.wtatennis.com/.../<id>-<名字>.jpg
+
+`<id>` 从 `api.wtatennis.com/tennis/tournaments/?from=&to=` 里拿（⚠️ 年份只认
+`from`/`to`，写 `year=2026` 会被**静默忽略**并返回 1971 年的数据）。这个接口
+**没有图片字段**，图只能从赛事页取。URL 上**只传 `width`**——传 `height` 是裁图。
+柏林（Steffi-Graf-Stadion 满场，横幅上写着场馆名）和梅里达都是这么拿到的。
+
+⚠️ **slug 传空会落到通用页**，而通用页返回一整套赞助商 logo——四个赛事的图集
+**一模一样**。这是「非空 ≠ 对题」的典型：数字很好看，内容全是别人的 logo。
+判据就是拿两站的结果比一比，完全相同就说明落错了页。
+
 顺带另一条同类的：**LTA 的 `/siteassets/events/<场馆>/` 是按场馆分的图库**
 （女王、伊斯本、诺丁汉、伯明翰、伊尔克利）。女王那张 6000×4000 的
 `hsbc-queens-centre-court.jpg` 挂在**天气预报页**上，首页和票务页都扫不到——

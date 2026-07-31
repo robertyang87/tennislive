@@ -101,6 +101,15 @@ the photographs are not otherwise altered.
 - License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `berlin-steffi-graf-stadion-centre-court.jpg`
+
+- Title: 柏林 Steffi-Graf-Stadion 草地中心球场满场，远端看台横幅写着 STEFFI-GRAF-STADION 与 BERLIN TENNIS OPEN，左侧标着 WTA 500
+- Author: WTA 官方赛事主视觉（摄影师未署名）
+- Source: https://www.wtatennis.com/tournament/2012/berlin/2026
+- License: unverified · WTA 官方图库 photoresources.wtatennis.com
+- Note: WTA 主视觉的取法：赛事页 /tournament/<id>/<城市 slug>/<年> 里那张 <id>-<名字>.jpg，URL 上只传 width（传 height 会**裁**图）。⚠️ slug 传空会落到通用页——四站返回一模一样的赞助 logo，那是「非空 ≠ 对题」的典型
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `bogota-centre-court.jpg`
 
 - Title: Centro de Alto Rendimiento 中心球场 · 红土满场
@@ -421,6 +430,15 @@ the photographs are not otherwise altered.
 - Source: https://www.actionnews5.com/2026/07/26/memphis-classic-tournament-full-swing-pro-tennis-returns-leftwich/
 - License: unverified · 电视台新闻画面截帧
 - Note: 2026-07-29 又整轮翻过一次，结论是**这张已经是能拿到的最好的实拍**，别再重跑：官网（Squarespace）只有 WebHero 和赞助 logo；WTA 赛事页只剩那张已被证伪的 1167_Memphis-Hero-2；StyleBlueprint 那张 StadiumView 是**效果图**（同一批搜索结果里就写着 releases stadium renderings）；Action News 5 另一条 7/23 的片子是场馆改建纪录片，没有赛事看台画面。⚠️ **新闻成片里会混进资料画面**：同一条 7/26 报道的 25–27 秒是室内蓝场、场地上印着 MEMPHIS OPEN / ATP WORLD TOUR——那是十年前停办的旧 ATP 赛事，**不是这个场地**。抽帧时要看场地上写的是什么，别只看片子讲的是哪一站
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `merida-centre-court.jpg`
+
+- Title: 梅里达中心球场黄昏满场，紫色硬地前场刷着 MÉRIDA，近端远端看台都在画面里
+- Author: WTA 官方赛事主视觉（摄影师未署名）
+- Source: https://www.wtatennis.com/tournament/2085/merida/2026
+- License: unverified · WTA 官方图库 photoresources.wtatennis.com
+- Note: 赛事官网 wtameridaopen.com 的媒体库 279 条全看过，没有全景；网上广泛转载的那张「梅里达中央球场」是**瓜达拉哈拉**（远端建筑印着 GUADALAJARA）。这张来自 WTA 官方图库
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `miami-centre-court.jpg`
