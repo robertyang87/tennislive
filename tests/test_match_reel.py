@@ -1078,3 +1078,13 @@ def test_源片自己烧了记分条时字幕要让开():
     top = spec["subtitle_top"]
     # 两行字幕占 156px，下沿必须落在记分条上沿 1281 之上
     assert top + 156 < 1281, f"字幕上锚 {top} 两行到 {top + 156}，仍然压在记分条上"
+
+    # **这是特例，不是新默认。** 账号所有者定的：抬字幕只针对这条源片，
+    # 版式本身照旧。所以两头都钉住——默认值不许被改掉，别的片子不许跟着抬。
+    assert reel._REEL_MARGIN_V == 1284, (
+        "默认上锚被改了。抬字幕是给「源片自带记分条」那种源片的特例，"
+        "不是新的版式——改默认等于把一条片子的补丁摊给全部")
+    others = [p.name for p in sorted(Path("specs/reels").glob("*.json"))
+              if p.name != "wong-brooksby.json"
+              and "subtitle_top" in json.loads(p.read_text("utf-8"))]
+    assert not others, f"这些片子也写了 subtitle_top，特例正在扩散：{others}"
