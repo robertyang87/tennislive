@@ -26,6 +26,25 @@ import sys
 from pathlib import Path
 
 
+def preflight() -> None:
+    """**开跑前先验依赖，别下完 100 MB 再报 ImportError。**
+
+    让失败发生在第 5 秒，不是第 90 秒；而且报错要说出路，不能只说不行。
+    """
+    missing = []
+    try:
+        import numpy  # noqa: F401, PLC0415
+    except ImportError:
+        missing.append("numpy（pip install numpy）")
+    try:
+        subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
+    except Exception:  # noqa: BLE001
+        missing.append("ffmpeg（apt-get install ffmpeg）")
+    if missing:
+        raise SystemExit("缺依赖，这条验不了（不是片子的问题）：\n  "
+                         + "\n  ".join(missing))
+
+
 def envelope(media: Path, sr: int = 8000, hop: float = 0.02):
     """短时能量包络。解成单声道 PCM 自己算，不引第三方音频库。"""
     import numpy as np  # noqa: PLC0415
@@ -77,6 +96,8 @@ def main() -> int:
     ap.add_argument("--hold", type=float, default=0.30, help="要维持多久")
     ap.add_argument("--gap", type=float, default=3.0, help="两次之间至少隔多久")
     args = ap.parse_args()
+
+    preflight()
 
     import numpy as np  # noqa: PLC0415
 
