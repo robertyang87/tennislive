@@ -190,15 +190,29 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
 
 
 def _solo_body(cover: dict) -> tuple[str, str]:
-    """`solo`：一个人、一张照片铺满，名字压在下三分之一的上沿。
+    """`solo`：**「网球有故事」的封面版式**——照片铺满整幅，钩子压在正中。
 
-    **这不是 VS 的降级，是给「讲一个人」的片子用的另一种海报。**
-    账号所有者 2026-07-31：休伊特那条「是讲休伊特的儿子的话题」「所以封面
-    只有休伊特儿子照片」——栏目是网球有故事，只是这次用视频呈现。
+    这不是我另拟的一套。这个栏目在知识贴／解说片那条线上早就有固定封面
+    （`src/tennislive/video/explainer.py` 的 cover 屏、`webcards.py` 的
+    `knowledge-cover`），账号所有者 2026-07-31 指出剪辑线这版**不是那个版式**。
+    所以照着搬：同一个 1080×1440 画幅、同一条顶部彩条、同一组品牌行、
+    同一颗品牌绿药丸、同一档标题字号和阴影。
 
-    VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决；套在讲人的
-    片子上，等于让读者去猜这是谁打谁。所以 solo 把那三样全去掉，只留品牌
-    的其余部分：台头药丸、钩子、结果块的位置一个没动，换片子仍然只换素材。
+    和「赛场之上」的 VS 海报的差别只在讲什么：
+
+    - 赛场之上讲一**场对决** → 两格 + 中缝 + VS 圆牌 + 两个名字 + 赛果行
+    - 网球有故事讲一**个人** → 一张照片铺满 + 一颗药丸 + 一句钩子，
+      **底下什么都不加**
+
+    ⚠️ 三条硬约定，都是账号所有者当场指出来的：
+
+    1. **底下那一行去掉**。原来印着「ATP 500 · 17 岁 · 2026 华盛顿」——
+       赛果那一行本来就该去（它是最后一拍），级别／年龄／赛事这三颗药丸
+       同样不属于这个栏目的封面：知识贴那十三条封面上一颗都没有
+    2. **照片铺满，不留垫层**（`background-size:cover`）。上一版走
+       `fit: width` + 上下垫模糊，等于把 3:4 的画幅让掉一半
+    3. **要全身、要看得见球场**。铺满意味着 16:9 的横素材横向只剩中间
+       42%，所以素材本身必须是竖着能站住的一张——半身特写铺满就是一张脸
 
     ⚠️ **赛场之上仍然只能用 VS 模板**，判据在 test_封面只有海报模板一条路。
     """
@@ -207,42 +221,71 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         raise SystemExit(
             "solo 版式要 `cover.portrait.image`：这条片子主角的一张实拍。\n"
             "四道闸门照旧（时间地点人物对得上 / 在比赛中 / 有冲击力 / 够清晰）；"
-            "四类源都拿不到本场的，就从本场源片抓一帧（portrait.frame_at）。")
+            "四类源都拿不到本场的，就从本场源片抓一帧（portrait.frame_at）。\n"
+            "**要全身、要看得见是球场**——照片铺满整幅，半身特写铺满就是一张脸。")
     src = _precrop(Path(art["image"]), art)
     uri = _data_uri(src)
     focus = float(art.get("focus", 0.5)) * 100
     focus_y = float(art.get("focus_y", 0.5)) * 100
     zoom = float(art.get("zoom", 1.0)) * 100
-    # 名字压在钩子上沿那条暗带上。**0.575 是倒推的，不是拍的**：`.copy` 从
-    # bottom:150 起算，两行钩子 228 + 结果块约 118 + 药丸行 68，顶边落在 904；
-    # 名字 62px 高、居中锚，0.575 → 828，上下各留 45px。原来的 0.60（864）
-    # 渲出来「克鲁兹·休伊特」直接压在「这个姓能换一张外卡」上。
-    name_y = float(cover.get("name_y", 0.575)) * 100
-    body = (f'<div class="bg solopad"></div><div class="bg solo"></div>'
-            f'<div class="shade"></div>'
-            f'<div class="na solo-na" style="top:{name_y:.1f}%">'
-            f'{cover.get("subject", "")}</div>')
-    if art.get("fit") == "width":
-        # **横素材在 3:4 的海报里，`cover` 是最坏的铺法。** 1920×1080 铺满
-        # 1080×1440 要先放大到 2560×1440，横向只留中间 42%——挥拍那一下的
-        # 球拍、伸出去的另一只手全被切在外面，剩一张脸占满屏，正是
-        # 「大头特写不等于有冲击力」拦的那种。按宽度铺是 1.0 倍，整个动作
-        # 都在框里，上下不够的两条垫同图的模糊放大版（和 `_panel_css` 同一招）。
-        art_css = (
-            f".solopad{{background-image:url('{uri}');background-size:cover;"
-            f"background-position:{focus:.1f}% 50%;"
-            f"filter:blur(44px) brightness(.42);transform:scale(1.2)}}"
-            f"\n.solo{{background-image:url('{uri}');"
-            f"background-size:{zoom:.1f}% auto;"
-            f"background-position:{focus:.1f}% {focus_y:.1f}%;"
-            f"{_feather(src, art, 100.0)}}}")
-    else:
-        art_css = (f".solo{{background-image:url('{uri}');"
-                   f"background-size:auto {zoom:.1f}%;"
-                   f"background-position:{focus:.1f}% {focus_y:.1f}%}}")
-    extra = (art_css
-             + "\n.bg{position:absolute;inset:0;background-repeat:no-repeat}"
-             "\n.solo-na{transform:translateY(-50%)}")
+    icon = Path("assets/logo/brand/icon.png")
+    icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
+                 if icon.is_file() else "")
+    topic = str(cover.get("topic", "")).strip()
+    lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
+    hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
+    # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
+    # 约占一个字号的宽，写死 96px 时 10 个字就是 960px——**顶出去自动折行**，
+    # 而钩子本来已经手写好了断行，再折一次就多出一个孤行。
+    title_px = min(96, int(940 / max((len(ln) for ln in lines), default=1)))
+    column = html.escape(str(cover.get("eyebrow", "网球有故事")))
+    body = (
+        f'<div class="hero"></div><div class="scrim"></div><div class="bar"></div>'
+        f'<div class="head"><div class="brandwrap">{icon_html}'
+        f'<div class="brandlines"><span class="brand">网球时差 · {column}</span>'
+        + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
+        + f'</div></div></div>'
+        f'<div class="storycopy"><span class="kicker">{column}</span>'
+        f'<div class="storytitle">{hook}</div></div>')
+    extra = (
+        # 照片铺满。`zoom` 留着给「人在画面里太小」的素材再推一档，默认 1.0。
+        f".hero{{position:absolute;inset:0;background-repeat:no-repeat;"
+        f"background-image:url('{uri}');background-size:cover;"
+        + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
+        + f"background-position:{focus:.1f}% {focus_y:.1f}%}}"
+        # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
+        # 封面必须是同一个样子，各调各的就会慢慢漂开。
+        """
+.scrim{position:absolute;inset:0;background:
+ linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
+  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
+  rgba(6,28,20,.58) 100%),
+ radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,
+  rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)}
+.bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
+ background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}
+.head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
+ align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.brandwrap{display:flex;align-items:center;gap:14px}
+.brandlines{display:flex;flex-direction:column;gap:2px}
+.brand-icon{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}
+.brand{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
+ font-weight:400;letter-spacing:1px;color:#f4fbf7}
+.topic{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#dcefe4;letter-spacing:1px;
+ text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}
+.storycopy{position:absolute;left:70px;right:70px;top:50%;
+ transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;
+ gap:34px;align-items:flex-start}
+.kicker{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
+ font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px}
+.storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
+ 0 0 60px rgba(6,28,20,.7)}
+"""
+        + f".storytitle{{font-size:{title_px}px}}")
     return body, extra
 
 
@@ -498,6 +541,15 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
         body = (f'<div class="p p-a"></div><div class="p p-b"></div>{seam_el}'
                 f'<div class="shade"></div>{name_els}{badge}')
 
+    # **solo 自带整块文案，不再接 VS 那一套。** VS 的尾巴是「台头药丸 + 钩子 +
+    # 赛果行」；网球有故事的封面版式里，台头在顶部的品牌行里、钩子压在正中，
+    # **底下什么都不加**——赛果是最后一拍，级别／年龄／赛事那三颗药丸也不属于
+    # 这个栏目的封面（知识贴那十三条封面上一颗都没有）。
+    tail = "" if layout == "solo" else (
+        f'<div class="top">{cover.get("eyebrow", "")}</div>'
+        f'<div class="copy"><div class="hook">{hook}</div>'
+        f'{_result_block(cover, names)}</div>')
+
     html = f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
 *{{margin:0;padding:0;box-sizing:border-box}}
@@ -564,9 +616,7 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
 {body}
-<div class="top">{cover.get('eyebrow', '')}</div>
-<div class="copy"><div class="hook">{hook}</div>
-{_result_block(cover, names)}</div>"""
+{tail}"""
 
     return _render_html(html, out)
 
