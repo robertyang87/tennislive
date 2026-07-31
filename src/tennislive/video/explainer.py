@@ -629,7 +629,181 @@ _DRAW_SPLIT_DIAGRAM = """
 </svg>
 """
 
+# 「空出来的位置给谁」——**照片讲不清的那一类**：它是一条按时刻分岔的流程，
+# 不是一个能被拍下来的瞬间。两条路的判据是同一个时刻（资格赛打完那一刻正赛空没空），
+# 所以画成一条主干往下分叉。一屏一个强调色：只有「抽签」那一支给品牌绿。
+_LUCKY_LOSER_PICK_DIAGRAM = """
+<svg viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">资格赛打完那一刻，正赛空没空</text>
+
+  <path d="M450 70 L450 150 M210 150 L690 150 M210 150 L210 190 M690 150 L690 190"
+        stroke="#9fb4aa" stroke-width="4" fill="none"/>
+
+  <text x="210" y="232" text-anchor="middle" fill="#9fb4aa"
+        font-size="28" font-weight="700">还没空出来</text>
+  <text x="690" y="232" text-anchor="middle" fill="#c6f65a"
+        font-size="28" font-weight="700">已经空着了</text>
+  <text x="210" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">按排名排队</text>
+  <text x="690" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">前两名抽签</text>
+
+  <rect x="96"  y="316" width="228" height="54" rx="10" fill="rgba(231,243,236,.34)"/>
+  <rect x="96"  y="384" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <rect x="96"  y="452" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <text x="210" y="552" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">排最前的那个进</text>
+
+  <rect x="576" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <rect x="698" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <path d="M629 378 L690 430 M751 378 L690 430" stroke="#9fb4aa"
+        stroke-width="3" fill="none" stroke-dasharray="7 7"/>
+  <rect x="637" y="436" width="106" height="54" rx="10" fill="#c6f65a"/>
+  <text x="690" y="552" text-anchor="middle" fill="#c6f65a"
+        font-size="27" font-weight="700">抽中的那个进</text>
+</svg>
+"""
+
+# 「大满贯七轮，第四轮到顶」——同样拍不出来：它是一个**没有发生过**的纪录。
+# 条上一个字都不写（轮次标在条的上一行），一屏一个强调色。
+_LUCKY_LOSER_WALL_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">大满贯打七轮，他们最远只到第四轮</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝有人到过　空格＝至今没有人</text>
+
+  <g fill="#9fb4aa" font-size="26" font-weight="700" text-anchor="middle">
+    <text x="118" y="186">首轮</text>
+    <text x="228" y="186">2 轮</text>
+    <text x="338" y="186">3 轮</text>
+    <text x="448" y="186">4 轮</text>
+    <text x="562" y="186">8 强</text>
+    <text x="672" y="186">4 强</text>
+    <text x="782" y="186">决赛</text>
+  </g>
+
+  <rect x="68"  y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="178" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="288" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="398" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="512" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="622" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="732" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+
+  <line x1="505" y1="190" x2="505" y2="310" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="505" y="352" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">这条线还没人越过</text>
+
+  <text x="450" y="430" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">摸到第 4 轮的：1995 诺曼 · 2023 阿瓦涅相</text>
+  <text x="450" y="472" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">2025 利斯 · 2025 谢拉 · 2026 德容</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "lucky-loser": (
+        (
+            "this-week",
+            "这一周",
+            "赢的人进了，输的那个也进了",
+            "先看这一周。华盛顿的资格赛最后一轮，十七岁的克鲁兹·休伊特赢了，"
+            "拿到正赛资格。而输给他的斯瓦伊达——第三盘 0 比 2 时中途退出的那个人——"
+            "几天后同样出现在正赛签表里。同一周还有更极端的：洛斯卡沃斯的托米奇，"
+            "资格赛最后一轮因为肠胃问题弃权，一分都没打，后来递补进正赛，"
+            "6-2、6-4 赢了世界第二十六的哈恰诺夫。让他们站上那片场地的身份，"
+            "规则里叫幸运落败者。",
+            "assets/explainer/lucky-loser/cruz-hewitt-washington-2026.jpg",
+            "ATP Tour / © Mubadala DC Open · 2026 华盛顿首轮，克鲁兹·休伊特",
+            (
+                "他赢了那场资格赛",
+                "输给他的人 也进了正赛",
+                "同一周的托米奇 一分没打",
+            ),
+        ),
+        (
+            "how",
+            "空位给谁",
+            "多数时候按排名，有时候要抽签",
+            "空出来的位置给谁，分两种情况。多数时候很简单：最后一轮输掉的那批人里，"
+            "排名最高的先补进去。但有一种要抽签——如果资格赛还没打完，正赛的位置"
+            "就已经空着了，那么排名最高的两个人抽签决定，谁抽到谁进；空出两个位置，"
+            "就是三个人一起抽。为什么要多这一道？想一下就明白：位置已经空在那儿，"
+            "补位又完全按排名，那排名最高的那个人最后一轮赢也进、输也进，"
+            "这场球认不认真都一样。抽签把它掰回来——输了不再是稳进，只是有机会。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "一般 排名最高的先补",
+                "位置早空着 就要抽签",
+                "抽签让输球重新有代价",
+            ),
+            _LUCKY_LOSER_PICK_DIAGRAM,
+        ),
+        (
+            "rublev",
+            "第一个冠军",
+            "「输的那个人，是幸运的」",
+            "这个身份能走多远？2017 年乌马格，卢布列夫资格赛最后一轮输了，"
+            "丘里奇退赛，他补了进去——然后一路赢到决赛，6-4、6-2 击败四号种子洛伦齐，"
+            "拿下十九岁那年生涯第一个冠军，颁奖的是伊万尼塞维奇。当天他自己在社媒上"
+            "只写了一句：输的那个人是幸运的，我赢下了第一个 ATP 冠军。",
+            "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+            "Merlo de Graia · 卢布列夫本人社媒 2017-07-24 · 乌马格夺冠",
+            (
+                "2017 乌马格 资格赛末轮输掉",
+                "递补进正赛 一路赢到夺冠",
+                "19 岁 生涯第一个冠军",
+            ),
+        ),
+        (
+            "gauff",
+            "被叫回来",
+            "开赛前十五分钟，高芙回到球场",
+            "两年后的林茨更夸张。高芙资格赛直落两盘输给科尔帕奇，本来已经出局。"
+            "首轮开打前十五分钟，萨卡里手腕伤退，已经收拾东西的她被叫了回来。"
+            "接下来她连赢五场，包括头号种子贝尔腾斯，决赛 6-3、1-6、6-2 击败"
+            "奥斯塔彭科。十五岁七个月，2004 年以来最年轻的 WTA 冠军，也是历史上"
+            "第三个以这个身份夺冠的女子球员。",
+            "assets/explainer/lucky-loser/gauff_linz_2019_trophy.jpg",
+            "wtatennis.com 官方图 · 2019 林茨决赛，高芙夺冠",
+            (
+                "资格赛已经输了 直落两盘",
+                "萨卡里伤退 赛前 15 分钟顶上",
+                "15 岁 7 个月 拿下冠军",
+            ),
+        ),
+        (
+            "wall",
+            "到不了第五场",
+            "但大满贯，没人走过第四轮",
+            "不过有一堵墙，到今天还没人撞开。大满贯要赢七场才拿冠军，而靠这个身份"
+            "进来的人，一个都没打进过八强——第四轮就是尽头。摸到过那儿的没几个："
+            "1995 年温网的诺曼，2023 年法网的阿瓦涅相，2025 年澳网的利斯，"
+            "同年温网的谢拉，还有今年法网的德容。利斯那次最接近，再赢一场"
+            "就是史上第一个。她没赢下来。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "至今 0 人打进大满贯八强",
+                "第 4 轮就是天花板",
+                "利斯 2025 澳网 差一场",
+            ),
+            _LUCKY_LOSER_WALL_DIAGRAM,
+            "如果名额早就空着，最后一轮那场球，你还会拼吗？",
+        ),
+    ),
     "hawkeye": (
         (
             "human",
@@ -2301,6 +2475,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "lucky-loser": {
+        "hook": (
+            "资格赛输掉的人，可以因为别人退赛递补进正赛——这个身份叫幸运落败者。\n"
+            "卢布列夫和高芙的第一个冠军，都是这么来的。"
+        ),
+        "tags": ("网球", "网球时差", "幸运落败者", "卢布列夫", "网球冷知识"),
+    },
     "hawkeye": {
         "hook": (
             "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
@@ -2512,6 +2693,12 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "lucky-loser": {
+        "topic": "幸运落败者：输了才有的名额",
+        "question": "资格赛输了，怎么还在正赛？",
+        "narration": "资格赛输了，怎么还在正赛？他自己管这叫——输的那个人，是幸运的。",
+        "image": "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+    },
     "hawkeye": {
         "topic": "鹰眼的来历：源于一次误判",
         "question": "球压没压线，到底谁说了算？",

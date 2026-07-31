@@ -43,6 +43,15 @@ _UNDERSIZED = {
     "wimbledon-whites": 0.87,  # 937x1250，全套最小
     "shang-nishikori": 0.95,   # 1023x1365
 }
+# lucky-loser 一度在这张名单上（1179x1219，只有 0.85x）。它现在够铺满了，而且
+# **不是靠换图**——干净原图四条路全走完都取不到（Commons 全 0、乌马格官网 2017
+# 的文章页和图集页在两个镜像上都 404、ATP 总站 403、Wayback 整站对本环境 403、
+# Getty 付费），用的仍是账号所有者从卢布列夫本人社媒截的那张。
+# 做法是**把素材垫成正好 3:4**（1179x1572，上下补同图的模糊放大版，和管线给横图
+# 垫 .hero.blurbg 是同一套）。这么做另有一个理由：近正方的图走 cover 会左右各切
+# 掉 11%，右下角那行摄影署名 `© MERLO DE GRAIA` 正好被裁成半截——我们特意保留
+# 的署名，发出去变成残的比没有更糟。垫完一个像素都不裁。
+# 详见 assets/explainer/lucky-loser/credits.json。
 
 
 def _fill(slug: str) -> float:
@@ -105,7 +114,8 @@ def test_能推近的片子是算出来的不是手写的():
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
     eligible = [s for s in sorted(_SCRIPTS) if _fill(s) / chk.PUSH >= chk.FLOOR]
-    # 当前这批：9 条够推，6 条不够（3 张本来就在放大 + 3 张够铺满推不动）
+    # 当前这批：不够推的有 6 条（3 张本来就在放大 + 3 张够铺满推不动）。
+    # 加选题会动这个数——它跟着实际分辨率走，不是另维护的名单。
     assert len(eligible) == len(_SCRIPTS) - 6
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
