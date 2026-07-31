@@ -305,6 +305,39 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### 判据扫得太宽，一天之内犯了四次——三次是被自己的注释误伤
+
+写「不碰产物的工作流不许把 output 拉下来」那条测试时，同一个形状连着踩：
+
+| 扫什么 | 被误伤的 | 收窄成 |
+|---|---|---|
+| 工作流输入的旧默认值 | 注释里正写着 `伊埃拉 vs 郑钦文` 那个坑 | 先 `_yaml_only` 去掉整行注释 |
+| `push-reel` 里不许出现 `ffmpeg` | 注释里写着「这里不装 ffmpeg」 | 同上 |
+| checkout 有没有 `fetch-depth: 0` | 注释里写着「原来这儿写着 `fetch-depth: 0`」 | 同上 |
+| 工作流碰不碰 `output/` | `ci.yml` 的 `paths-ignore: output/**` 是**触发条件**；`probe.yml` 写的是 **`probe-output/`** | 只看 `jobs:` 以后 + 词边界 `(?<![\w-])output/` |
+
+**工作流和测试的注释正是这个仓库记教训的地方**，正文里必然写着当年那些错值。
+连注释一起扫，「把坑记下来」会被判成「又踩了这个坑」。所以扫工作流一律先
+`_yaml_only`。判据宁可窄，不可宽——**扩大化的判据不吭声**，它不会告诉你
+「我拦错了」，只会让下一个人把对的写法改成错的。
+
+### 测试自己也吃「本地装着不等于 CI 装着」
+
+上面那条测试第一版写了 `import yaml`。沙箱里装着，全量 1013 绿；CI 上没有，
+`ModuleNotFoundError`，整条 PR 红（run 30648727062）。**yaml 不在 pyproject
+的任何一个 extra 里，全仓库也只有这一处 import。**
+
+- 扫工作流一律**按文本切**（`_steps` / `_yaml_only` / `_checkout_block`），
+  别为一条断言把 PyYAML 拖进依赖
+- 判据落在 `test_测试里不许import没声明的包`：扫 **AST 里真正的 import**，
+  每个顶层模块名必须是标准库、`pyproject` 声明过的依赖、或本仓库自己的模块。
+  ⚠️ **别写成「不许 import yaml」**——第一版就是这么写的，结果被自己
+  docstring 里那句「第一版真加了 `import yaml`」误伤，而且拦不住下一个包
+- 反向验证过两次：塞回 `import yaml`、随便塞一个 `import boto3`，都红
+
+这条和「加新能力就要同时改三处」是同一家的，只是这次出问题的是**测试**
+而不是产品代码——沙箱越用越肥，测试的依赖面也会跟着悄悄变宽。
+
 ### 别的线上没有「双份编码」和「重渲一遍」
 
 顺手核过，省得下次再查一遍：

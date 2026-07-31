@@ -1998,11 +1998,34 @@ def test_中间段的编码参数要往快里调不是往省比特里调():
         "改中间段不许连累成片——省时间要从中间产物上省，不能从交出去的那一份上省")
 
 
+def _checkout_block(text: str) -> str | None:
+    """切出 `- uses: actions/checkout` 那一步（含它的 `with:`）。
+
+    **不用 PyYAML。** 这个文件里其他扫工作流的判据（`_steps`、`_yaml_only`）
+    一直是按文本切的，而 yaml 不是这个仓库的依赖——为一条断言加一个运行时
+    依赖，代价比收益大。第一版真加了 `import yaml`，沙箱里装着、CI 里没有，
+    于是 CI 红：**又一次「本地装着不等于 CI 装着」**（run 30648727062）。
+    """
+    # **先去掉整行注释。** 注释里正写着「原来这儿写着 `fetch-depth: 0`」，
+    # 连注释一起扫会把「把坑记下来」判成「又踩了这个坑」——同一个错这一天
+    # 犯了三次（工作流输入的旧默认值、push-reel 里的 ffmpeg、这里）。
+    lines = _yaml_only(text).splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("      - uses:") and "checkout" in line:
+            block = [line]
+            for nxt in lines[i + 1:]:
+                if nxt.startswith("      - "):
+                    break
+                block.append(nxt)
+            return "\n".join(block)
+    return None
+
+
 def test_不碰产物的工作流不许把output拉下来():
     """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要一分半上下
     （daily 量到 1:31，match-reel 2:44）——**而多数工作流一个字节都不碰它**。
 
-    这条按「这条工作流提不提 `output/`」自动分类，不维护白名单：
+    这条按「这条工作流碰不碰 `output/`」自动分类，不维护白名单：
 
     - **提都不提的**：必须稀疏检出，且不需要 `sparse-checkout add`
     - **要写产物的**：稀疏之后得把自己那一格 add 回来，那是每条各自的活，
@@ -2013,52 +2036,96 @@ def test_不碰产物的工作流不许把output拉下来():
     `player-name-sync` 原来就是这样，而它唯一的 git 读操作是
     `git diff -- <被跟踪的文件>`——工作区对 HEAD，一条历史都不需要。
     """
-    import yaml  # noqa: PLC0415
-
     workflows = sorted(Path(".github/workflows").glob("*.yml"))
     assert workflows, "找不到工作流"
     for path in workflows:
         text = path.read_text(encoding="utf-8")
-        spec = yaml.safe_load(text)
-        for job in (spec.get("jobs") or {}).values():
-            steps = job.get("steps") or []
-            checkout = next((s for s in steps
-                             if "checkout" in str(s.get("uses", ""))), None)
-            if checkout is None:
-                continue
-            with_ = checkout.get("with") or {}
-            sparse = "sparse-checkout" in with_
-
-            assert str(with_.get("fetch-depth", "1")) != "0", (
-                f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
-                "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
-
-            # 三处收窄，全是「判据宁可窄，不可宽」当场踩出来的：
-            # 1. 注释里正写着「别把 output/ 拉下来」，连注释一起扫会反过来判错
-            # 2. **只看 `jobs:` 以后**。`ci.yml` 的 `paths-ignore: output/**`
-            #    是触发条件，不是产物路径——按整份文本扫会把它判成「写产物」，
-            #    然后要求它 add 一个它根本不写的目录
-            # 3. **要词边界**。`probe.yml` 写的是 `probe-output/`，裸的
-            #    `"output/" in body` 会从中间匹配上——又一次「正则少了词边界」
-            body = _yaml_only(text)
-            body = body[body.index("\njobs:"):] if "\njobs:" in body else body
-            writes_output = re.search(r"(?<![\w-])output/", body) is not None
-            if not writes_output:
-                assert sparse, (
-                    f"{path.name} 一个字节都不碰 output/，却做了全量 checkout——"
-                    "白等一分半。照 assets.yml 那段加稀疏检出。")
-                assert "git sparse-checkout add" not in body, (
-                    f"{path.name} 不写产物，不该 add 任何 output 目录")
-            elif sparse:
-                assert "git sparse-checkout add" in body, (
-                    f"{path.name} 做了稀疏检出却没把自己那一格 add 回来——"
-                    "`git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸。")
-
-    # 排除的必须只有 output：assets 155 MB 看着也不小，但渲染真要读它
-    for path in workflows:
-        text = path.read_text(encoding="utf-8")
-        if "sparse-checkout:" not in text:
+        block = _checkout_block(text)
+        if block is None:
             continue
-        listed = text[text.index("sparse-checkout:"):].split("\n\n")[0]
-        assert "\n            output\n" not in listed, (
-            f"{path.name} 把 output/ 列进了稀疏范围，1.36 GB 又要下一遍")
+        sparse = "sparse-checkout:" in block
+
+        assert not re.search(r"fetch-depth:\s*0\b", block), (
+            f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
+            "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
+
+        # 三处收窄，全是「判据宁可窄，不可宽」当场踩出来的：
+        # 1. 连注释一起扫——注释里正写着「别把 output/ 拉下来」，于是被判成
+        #    「写产物」，然后要求它 add 一个它根本不写的目录
+        # 2. 按整份文本扫——`ci.yml` 的 `paths-ignore: output/**` 是**触发
+        #    条件**，不是产物路径。只看 `jobs:` 以后
+        # 3. 裸的 `"output/" in body`——`probe.yml` 写的是 **`probe-output/`**，
+        #    从中间匹配上了。要词边界
+        body = _yaml_only(text)
+        body = body[body.index("\njobs:"):] if "\njobs:" in body else body
+        writes_output = re.search(r"(?<![\w-])output/", body) is not None
+
+        if not writes_output:
+            assert sparse, (
+                f"{path.name} 一个字节都不碰 output/，却做了全量 checkout——"
+                "白等一分半。照 assets.yml 那段加稀疏检出。")
+            assert "git sparse-checkout add" not in body, (
+                f"{path.name} 不写产物，不该 add 任何 output 目录")
+        elif sparse:
+            assert "git sparse-checkout add" in body, (
+                f"{path.name} 做了稀疏检出却没把自己那一格 add 回来——"
+                "`git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸。")
+
+        # 排除的必须只有 output：assets 155 MB 看着也不小，但渲染真要读它
+        if sparse:
+            listed = block[block.index("sparse-checkout:"):]
+            assert "\n            output\n" not in listed, (
+                f"{path.name} 把 output/ 列进了稀疏范围，1.36 GB 又要下一遍")
+
+
+# pip 包名 → import 名。只列这个仓库真用到的那几个，别去猜没用到的。
+_DIST_TO_MODULE = {
+    "pillow": "PIL", "opencv-python-headless": "cv2", "yt-dlp": "yt_dlp",
+    "gtts": "gtts", "edge-tts": "edge_tts", "imageio-ffmpeg": "imageio_ffmpeg",
+    "pypdf": "pypdf", "requests": "requests", "rich": "rich",
+    "pytest": "pytest", "ruff": "ruff", "playwright": "playwright",
+    "rembg": "rembg",
+}
+
+
+def test_测试里不许import没声明的包():
+    """**本地装着不等于 CI 装着。** 沙箱是长期攒出来的环境，runner 每次都是
+    干净的——这个文件里一度写了 `import yaml`，沙箱里绿、CI 里
+    `ModuleNotFoundError`，整条 PR 红（run 30648727062）。
+
+    判据不是「别 import yaml」（那种写法拦不住下一个包，而且我自己那句
+    docstring 就把它误伤了一次）：**扫 AST 里真正的 import 语句**，每个
+    顶层模块名必须是标准库、`pyproject` 声明过的依赖、或者本仓库自己的模块。
+
+    工作流的判据一律按文本切（`_steps` / `_yaml_only` / `_checkout_block`），
+    别为一条断言把 PyYAML 拖进依赖。
+    """
+    import ast  # noqa: PLC0415
+    import sys as _sys  # noqa: PLC0415
+
+    declared = set()
+    for line in Path("pyproject.toml").read_text(encoding="utf-8").splitlines():
+        for hit in re.findall(r'"([A-Za-z0-9_.\-]+)\s*(?:\[[^\]]*\])?\s*[><=!]', line):
+            declared.add(_DIST_TO_MODULE.get(hit.lower(), hit.lower().replace("-", "_")))
+
+    local = {p.stem for p in Path("tools").glob("*.py")}
+    local |= {p.stem for p in Path("src/tennislive").glob("*.py")}
+    local |= {"tennislive", "tests"}
+    allowed = set(_sys.stdlib_module_names) | declared | local
+
+    tree = ast.parse(Path("tests/test_match_reel.py").read_text(encoding="utf-8"))
+    used = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            used |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            used.add(node.module.split(".")[0])
+
+    stray = sorted(used - allowed)
+    assert not stray, (
+        f"这些包 import 了却没在 pyproject 里声明：{stray}。\n"
+        "沙箱里装着不代表 runner 上有——CI 会 ModuleNotFoundError。\n"
+        "要么加进 pyproject 的某个 extra，要么换个不用它的写法"
+        "（扫工作流按文本切，见 _checkout_block）。")
+    # 反过来也验一下：这个判据真的认得出 stdlib 和本地模块，不是恒真
+    assert {"json", "pathlib"} <= allowed and "push_reel" in allowed
