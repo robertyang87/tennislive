@@ -1538,3 +1538,174 @@ def test_封面抽帧抠图那条路要真的被调用一次(tmp_path, monkeypat
     with pytest.raises(reel.ReelError, match="拼错的键"):
         reel.build_versus_poster({"r1": Path("a.mp4")}, "r1", cover,
                                  tmp_path / "part_cover.mp4")
+
+
+def test_封面可以指定谁在前压住谁():
+    """两个人叠在一起时，**赢的那个画在上面**——前后关系本身就在说结果。
+
+    压的是后面那个（z-index 2），不是把前面那个抬到 4。名字那一层是 4、
+    VS 圆牌是 5：抬上去会盖住名字，而名字是这张卡在信息流里唯一能被扫到的东西。
+
+    还要用 `img.c-x` 提一档特异性，否则后面那条 `.cut{z-index:3}` 会把它盖回去
+    ——同为单类选择器时后写的赢，而 `.cut` 恰好写在后面。**这种错不报错**，
+    只是叠压方向反过来，渲出来才看得见。
+
+    顺带：这一层关系在黄泽林那条里还兼着修一道**修不掉**的切口。近景抽帧里
+    人比画框大（去掉录屏 UI 后抠出来四边全贴满），侧边一定断；把前面那个放大、
+    中心外移，断面就落到画布外面——**切口不能修掉，但可以让它不在画面里**。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert 'panel.get("front")' in src, "没有「谁在前」这个开关"
+    assert 'img.c-{side}{{z-index:2}}' in src, (
+        "要用 img.c-x 压后面那个：写成 .c-x 会被后面的 .cut{z-index:3} 盖回去")
+    for layer in ("z-index:4", "z-index:5"):      # 名字、VS 圆牌
+        assert layer in src, f"{layer} 那一层没了，前后关系的前提就变了"
+
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    assert versus["top"].get("front") is True, "黄泽林应该在前"
+    assert not versus["bottom"].get("front"), "只能有一个在前"
+    # **侧边的断面靠淡出解决，不靠「把人放大到溢出画布」。**
+    # 第一版是后者：把前面那个放到 0.48 让左缘落到画外，代价是他占了大半张
+    # 封面（账号所有者：「占得地方太大了」）。构图不该替修图背锅——所以现在
+    # 钉的是淡出这条路还在，尺寸放开给版面自己定。
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert "def _fade_cut_sides(" in src, "侧边淡出没了，抠图的断面会变回一条硬边"
+    assert "_fade_cut_sides(src)" in src, "写了函数却没调用"
+    # 烤进 alpha，不是 CSS 遮罩：多层遮罩合成在这条渲染路径上不生效，
+    # **而且不报错**，只是安静地什么也不做，渲出来和没加一模一样。
+    # 判据盯**做了什么**（改 alpha），不盯「没写某个词」——上一版按
+    # `"mask-composite" not in src` 判，结果撞上了解释这条弯路的注释本身。
+    # 这个文件里已经有同样的教训：盯那句本身，别盯措辞。
+    assert "im.putalpha(" in src, "侧边淡出没有落到 alpha 上，多半又退回 CSS 遮罩了"
+    faded = src[src.index("def _fade_cut_sides("):]
+    assert "getextrema()" in faded.split("def ", 2)[0] + faded[:1200], (
+        "没有先量 alpha 贴没贴到边——那样会把人物自己的轮廓也淡掉")
+
+
+def test_源片自己烧了记分条时字幕要让开():
+    """两层白字叠在一起，而且**只在竖版源片上才撞**。
+
+    以前没撞过是运气：16:9 转播源片的记分条也在左下，但 3:4 的窗口只取中间
+    42% 宽，整块被裁掉了。Tennis TV 的竖版短片画幅本来就是竖的，裁不掉——
+    记分条量出来占 y 1281~1439，而字幕默认上锚是 1284，第一版渲出来四帧抽检
+    帧帧都中：「5比1 盘点」压着 `40`，「你还 hold 住吗?」压着 `6`。
+
+    **不做自动检测。** 记分条的位置、颜色、在不在都随播出方变，检测不到时会
+    悄悄退回原位——又是「兜底出事的时候不吭声」。让写 spec 的人量一次、写死。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    assert 'spec.get("subtitle_top", _REEL_MARGIN_V)' in src, (
+        "字幕上锚不能只有一个写死的值——竖版源片会撞上它自己的记分条")
+    # 抬高了要说出来：默认值和实际值不一样却不吭声，下次没人知道它被挪过
+    assert "比默认抬高" in src, "抬了字幕却不打印，产物上看不出是有意的还是漂了"
+
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    top = spec["subtitle_top"]
+    # 两行字幕占 156px，下沿必须落在记分条上沿 1281 之上
+    assert top + 156 < 1281, f"字幕上锚 {top} 两行到 {top + 156}，仍然压在记分条上"
+
+    # **这是特例，不是新默认。** 账号所有者定的：抬字幕只针对这条源片，
+    # 版式本身照旧。所以两头都钉住——默认值不许被改掉，别的片子不许跟着抬。
+    assert reel._REEL_MARGIN_V == 1284, (
+        "默认上锚被改了。抬字幕是给「源片自带记分条」那种源片的特例，"
+        "不是新的版式——改默认等于把一条片子的补丁摊给全部")
+    others = [p.name for p in sorted(Path("specs/reels").glob("*.json"))
+              if p.name != "wong-brooksby.json"
+              and "subtitle_top" in json.loads(p.read_text("utf-8"))]
+    assert not others, f"这些片子也写了 subtitle_top，特例正在扩散：{others}"
+
+
+def test_每一段都收在死球之后():
+    """一分打到一半切走，观众不知道这分谁赢了。
+
+    账号所有者的原话：「很多球没有播放完成就切到下一个了，建议死球后再切换
+    下一个，不然让人看的不明不白的」。而**看懂这一分归谁**是回合镜头唯一的作用。
+
+    死球时刻不用靠看球——源片烧死的记分条在死球那一刻才翻牌，
+    `tools/find_point_ends.py` 就是量它。**框只框比分那一列**：框整条记分条
+    同一门槛只报 26 次，框比分列报 39 次，名字那半边从不变，把翻牌的占比稀释
+    掉一个量级。又一次「门槛的数要在同一个口径下量」。
+
+    ⚠️ **工具只给候选。** 赛点那一分它抓不到——转播在庆祝时不翻牌，记分条一直
+    停在 `6 6 40`。那一段是打开看定的：172.5 秒球还在打，173.5 秒已经是握拳
+    嘶吼。所以最后一步永远是人看。
+    """
+    tool = Path("tools/find_point_ends.py")
+    assert tool.is_file(), "死球检测工具没了，段尾就只能靠猜"
+    text = tool.read_text(encoding="utf-8")
+    assert "dark" in text, "没有「记分条还在不在」这一判据——镜头切走也会被当成死球"
+    assert "比分那一列" in text, "没记下框要框哪儿，下一个人会框整条然后漏掉一半"
+
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    # 三处切在球中间的段尾，改完不许退回去
+    ends = [s["end"] for s in spec["segments"]]
+    for bad, good in ((128.0, 132.7), (143.0, 147.7), (173.0, 173.0)):
+        assert bad not in ends, f"{bad}s 那个段尾切在球中间，实际这一分到 {good}s 才结束"
+    assert "_editing_why" in spec, "为什么这么切没有留下判据"
+
+
+def test_旁白要讲清楚比赛走向():
+    """账号所有者：「同时要讲清楚比赛的走向，这样大家才不会看的一头雾水」。
+
+    赛报片不是集锦。第一版只报了几个孤立比分（「五比一」「赛点」），
+    第二盘被对手压着打了大半盘这条线整个是空的，观众串不起来。
+
+    判据取「转折」这一环——四问里最容易漏、也最要命的那个：前面赢得轻松、
+    后面赢了，中间发生过什么，不说观众就不知道这场球难在哪。
+    """
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    told = "".join(s["narration"] for s in spec["segments"])
+    assert "转折" in told or "反了过来" in told, "旁白没讲转折，观众不知道这场球难在哪"
+    # **别按措辞判。** 上一版查「领先」，而稿子写的是「一直是布鲁克斯比在前」——
+    # 意思在、词不在，测试自己红了。改成结构判据：输的那个必须在**开场之后**
+    # 还被提到，也就是片子真的讲了他做过什么，而不只是开头报了个名字。
+    loser = next(n for n in spec["cover"]["versus"]["names"]
+                 if n != spec["cover"]["winner"])
+    later = "".join(s["narration"] for s in spec["segments"][2:])
+    assert loser in later, (
+        f"{loser} 只在开场露过名字，中段一句没提——那就没有「对手一度领先」这条线，"
+        "走向是断的")
+    assert "_narration_why" in spec, "为什么这么写没有留下判据"
+
+
+def test_封面别停太久():
+    """`2.6` 秒会被当成图片。
+
+    账号所有者：「封面 2.6 秒是不是有点多啊，建议缩短点，不然好多人以为是图片
+    不是视频」。封面同时是信息流里的缩略图——点进来的人已经看过它了，画面迟迟
+    不动，第一反应是「这是张图」，然后划走。
+    """
+    reel = _reel()
+    assert reel.COVER_SECONDS <= 1.5, (
+        f"封面停了 {reel.COVER_SECONDS} 秒，太长会被当成图片")
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    assert "以为是图片" in src, "为什么缩短没有留下判据，下次会有人调回去"
+
+
+def test_封面跟着配音走只给网球有故事():
+    """两条线的封面节奏是**分开的**，别互相牵动。
+
+    账号所有者定的：「封面跟着配音走，是针对网球有故事类的」「赛场之上还是按
+    1.2」。网球有故事讲一个人，封面念的就是海报上那句钩子，说完就切；赛场之上
+    是一场对决的赛报，封面只是短亮相——**停久了会被当成图片不是视频**。
+
+    所以赛场之上写了 `cover.narration` 要**报错**，不是默默把封面拉长：
+    悄悄拉长的话，「封面怎么变长了」和「谁给它加了句配音」长得一模一样。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    block = src[src.index("def synth_cover("):]
+    block = block[:block.index("def cover_length(")]
+    assert "赛场之上" in block and "raise ReelError(" in block, (
+        "赛场之上写了封面配音不会报错，封面会被悄悄拉长")
+    assert reel.COVER_SECONDS == 1.2, "赛场之上的定长封面不是 1.2 秒了"
+
+    # 存量的赛场之上一条都不许有封面配音
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        column = str(spec.get("column") or cover.get("eyebrow") or "")
+        if "赛场之上" in column:
+            assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
