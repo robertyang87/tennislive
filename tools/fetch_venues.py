@@ -231,6 +231,10 @@ VENUES = [
     ("stuttgart-porsche-arena-centre-court.jpg", None, None),
     # 布加勒斯特 ATP250：赛事域名上的 stadium shot，红土满场
     ("bucharest-centre-court.jpg", None, None),
+    # 柏林 WTA500：WTA 官方主视觉，Steffi-Graf-Stadion 满场
+    ("berlin-steffi-graf-stadion-centre-court.jpg", None, None),
+    # 梅里达 WTA500：WTA 官方主视觉，紫色硬地满场
+    ("merida-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -376,6 +380,18 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "merida-centre-court.jpg": {
+        "title": "梅里达中心球场黄昏满场，紫色硬地前场刷着 MÉRIDA，近端远端看台都在画面里",
+        "license": "unverified · WTA 官方图库 photoresources.wtatennis.com",
+        "artist": "WTA 官方赛事主视觉（摄影师未署名）",
+        "page": "https://www.wtatennis.com/tournament/2085/merida/2026",
+    },
+    "berlin-steffi-graf-stadion-centre-court.jpg": {
+        "title": "柏林 Steffi-Graf-Stadion 草地中心球场满场，远端看台横幅写着 STEFFI-GRAF-STADION 与 BERLIN TENNIS OPEN，左侧标着 WTA 500",
+        "license": "unverified · WTA 官方图库 photoresources.wtatennis.com",
+        "artist": "WTA 官方赛事主视觉（摄影师未署名）",
+        "page": "https://www.wtatennis.com/tournament/2012/berlin/2026",
+    },
     "bucharest-centre-court.jpg": {
         "title": "布加勒斯特中央球场满场，红土，远端看台顶上写着 ROMANIA，围板是 ȚIRIAC OPEN，球网上是 ATP TOUR",
         "license": "unverified · ATP 官方图，经赛事域名 tiriacopen.ro 取得",
