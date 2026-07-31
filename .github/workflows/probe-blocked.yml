@@ -32,6 +32,10 @@ on:
         description: "browser 模式：把页面里含这个串的 href 列出来"
         required: false
         default: ""
+      audio_url:
+        description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
+        required: false
+        default: ""
 
 jobs:
   probe:
@@ -49,7 +53,32 @@ jobs:
         run: |
           pip install -q playwright
           python -m playwright install --with-deps chromium
+      # audio 模式：YouTube 要 cookie 才下得动（沙箱直接吃 bot 校验），
+      # 所以这一条只能在 runner 上跑。
+      - name: 落 cookies（audio 模式才要）
+        if: github.event.inputs.audio_url != ''
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          pip install -q yt-dlp
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::warning::没有 YT_COOKIES_TXT，多半会被 bot 校验挡住"
+          fi
+
+      - name: 验观众声
+        if: github.event.inputs.audio_url != ''
+        run: |
+          A=""
+          [ -n "${{ steps.cookies.outputs.path }}" ] && A="--cookies ${{ steps.cookies.outputs.path }}"
+          python tools/check_crowd_rise.py --url "${{ github.event.inputs.audio_url }}" $A
+
       - name: 探
+        if: github.event.inputs.audio_url == ''
         run: |
           ARGS=""
           IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
