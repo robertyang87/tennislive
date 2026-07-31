@@ -373,11 +373,18 @@ def cross_platform(loaded: list[tuple[str, list[Work]]]) -> None:
     rows = []
     for name, works in loaded:
         vids = [w for w in works if not w.is_photo]
+        plat = works[0].platform
         plays = sum(w.get("plays") or 0 for w in vids)
-        fans = sum(w.get("follows") or 0 for w in vids)
         true = median([w.get("true_completion") for w in vids])
-        rows.append([name, str(len(vids)), f"{plays:.0f}", f"{fans:.0f}",
-                     f"{fans / plays * 1000:.2f}" if plays else "—",
+        # 平台不给涨粉就写「不给」，别写 0 —— 这一格印成 0.00 会让人以为
+        # 「这个平台一个粉都没涨」。同一个毛病在 overview、漏斗、相关性里
+        # 各犯过一次，这是第四处。
+        if plat.has("follows"):
+            fans = sum(w.get("follows") or 0 for w in vids)
+            fan_cells = [f"{fans:.0f}", f"{fans / plays * 1000:.2f}" if plays else "—"]
+        else:
+            fan_cells = ["不给", "不给"]
+        rows.append([name, str(len(vids)), f"{plays:.0f}", *fan_cells,
                      fmt(true, "{:.1%}", dash="平台不给")])
     print()
     print(table(rows, ["平台", "视频数", "视频播放", "涨粉", "千播涨粉", "真完播中位"]))

@@ -549,3 +549,21 @@ def test_平台不给的因变量不出相关性那一栏(capsys):
     out = capsys.readouterr().out
     assert "vs 播放" in out
     assert "vs 涨粉" not in out and "vs 互动" not in out
+
+
+def test_横比表里平台不给的涨粉不许印成零(capsys):
+    """第四处同类的假零值：抖音的「视频数据」视图没有涨粉列，横比表照样印
+    「0 / 0.00」，看着像「这个平台一个粉都没涨」。
+    """
+    xhs, dy2 = _plat("小红书"), _plat("抖音·视频数据")
+    def mk(plat, title, plays, **kw):
+        w = _work(title, platform=plat, plays=plays, **kw)
+        w.item = _item(title, date(2026, 7, 26))
+        return w
+    an.cross_platform([
+        ("小红书", [mk(xhs, "甲", 1000, follows=5), mk(xhs, "乙", 800, follows=3)]),
+        ("抖音·视频数据", [mk(dy2, "甲", 3000), mk(dy2, "乙", 2000)]),
+    ])
+    out = capsys.readouterr().out
+    assert "不给" in out
+    assert "0.00" not in out
