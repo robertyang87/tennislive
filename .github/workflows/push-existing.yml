@@ -2,10 +2,15 @@ name: Push existing content to PlusPlus
 
 # 把仓库里**已经生成好**的包推到微信。
 #
-# 2026-07-31：`main`（日报）和 `knowledge`（每日知识）两个 scope 连同盯
-# `output/**/knowledge/**` 的 push 触发一起删了——日报停产之后没人再产它们，
-# 留着就是两个永远选不出东西的选项和一个永远不触发的触发器。
-# 剩下的 `schedule`（赛程包）和 `grand-slam` 各有各的生产线。
+# 2026-07-31 连删三个 scope：
+#
+# - `main`（昨日赛果日报）、`knowledge`（每日知识旧路径）——日报停产，没人再产
+# - `schedule`（今日赛程包）——账号所有者：「昨日赛果和今日赛程都要拿掉了」。
+#   这是赛程包唯一的发布出口，删掉它就等于这个栏目不再发出去
+#
+# 盯 `output/**/knowledge/**` 的 push 触发也一起删了（永远不会再触发）。
+# 只剩 `grand-slam` 一个 scope。每日知识现在由 `knowledge-adhoc.yml` 自己
+# 定时产、自己推，不再走这条。
 
 on:
   workflow_dispatch:
@@ -20,8 +25,7 @@ on:
         type: choice
         options:
           - grand-slam
-          - schedule
-        default: schedule
+        default: grand-slam
 
 permissions:
   contents: read
@@ -56,11 +60,9 @@ jobs:
           TENNISLIVE_PUSHPLUS_IMAGE_RETRY_SECONDS: '15'
         run: |
           DATE="${INPUT_DATE:-$(TZ=Asia/Shanghai date +%F)}"
-          SCOPE="${INPUT_SCOPE:-schedule}"
+          SCOPE="${INPUT_SCOPE:-grand-slam}"
           if [ "$SCOPE" = "grand-slam" ]; then
             OUT_DIR="output/grand-slam-vertical-v2"
-          elif [ "$SCOPE" = "schedule" ]; then
-            OUT_DIR="output/${DATE}/schedule"
           else
             echo "::error::认不出来的 scope「$SCOPE」。日报和每日知识已于"
             echo "::error::2026-07-31 停产，main / knowledge 两个 scope 已删。"

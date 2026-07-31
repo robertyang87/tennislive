@@ -11,7 +11,23 @@ name: knowledge-adhoc
 # （tournament_story_candidates），按当日真实赛事/球员热度与时效性排序
 # 候选，逐个尝试配图，配图不达标就自动换下一个候选，直到成功或候选
 # 耗尽——不需要人工挑一个 slug 再试错。
+#
+# ## 2026-07-31：每日网球知识从 daily 里分出来，落在这条线上
+#
+# 账号所有者：「**所以要分开啊**。昨日赛果和今日赛程都要拿掉了，**其他的
+# 可以保留**」。日报（`daily.yml`）连同昨日赛果、今日赛程一起删了，而知识帖
+# 一直是搭它顺风车出的（同一趟 `tennislive digest`，分两条 PushPlus 推）。
+#
+# 分出来几乎不用改代码：这条工作流跑的 `cmd_knowledge_adhoc` 用的就是同一个
+# `generate_knowledge_package`，而且**本来就支持 slug 留空自动选题**（按当日
+# 赛事/球员热度排序、配图不达标自动换候选）。定时触发时
+# `github.event.inputs.slug` 是空的，正好走自动选题那条路。
+#
+# 时刻 00:37 UTC = 08:37 北京时间。**避开 :00/:30**——GitHub 定时任务在整点
+# 半点最容易被延迟或丢弃，这是 daily 当年留下的经验。
 on:
+  schedule:
+    - cron: "37 0 * * *"   # 08:37 北京时间：每日网球知识
   workflow_dispatch:
     inputs:
       slug:
