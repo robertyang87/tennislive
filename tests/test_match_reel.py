@@ -311,6 +311,59 @@ def test_文案到tag那一行为止(tmp_path):
     assert "tag 之后还有" in done.stdout, "砍了却不说砍了什么"
 
 
+def test_逐分解析认的是df_mh_1那套字段():
+    """**逐分不在 `df_pbp_1`，在 `df_mh_1`。**
+
+    我先试的 `df_pbp_1` 对黄泽林那场返回 `0`，据此差点写下「这场没有逐分」——
+    换个 feed 名，整份逐分连破发点标记一起出来了。**零命中先怀疑自己的查询词。**
+
+    这条测试喂一段真实抓下来的 `df_mh_1` 片段，验解析器把四件事读对：
+    局比分、发球方、谁拿下、以及 `|B1|` 破发点的个数。**真调用它一次**，
+    不是 grep 源码里有没有那个函数名——「写了」不等于「跑过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import match_feed  # noqa: PLC0415
+
+    assert match_feed.FS_POINTS == "df_mh_1", "逐分的 feed 名被改错了"
+
+    # 洛斯卡沃斯那场第一盘的真实片段：他在自己的发球局被逼到 15-40 救回来
+    raw = ("HA÷Set 1¬HB÷Point by point - Set 1¬~"
+           "HC÷1¬HE÷0¬HG÷1¬HK÷1¬HL÷0:15, 15:15, 30:15, 30:30, 40:30, 40:40, A:40¬~"
+           "HC÷3¬HE÷1¬HG÷2¬HH÷2¬HK÷1¬HL÷15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|¬~"
+           "HC÷4¬HE÷1¬HG÷1¬HK÷1¬HL÷15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40¬~")
+    games = match_feed._parse_points(raw)
+    assert len(games) == 3, f"没把三局都读出来：{games}"
+    hold, brk, saved = games
+    assert (hold["home_games"], hold["away_games"]) == ("1", "0")
+    assert brk["broken"] and brk["server"] == "away" and brk["winner"] == "home", \
+        "破发那一局读错了（HH=2 是被破发，HG 是发球方，HK 是赢家）"
+    assert brk["break_points"] == 3, "0-40 那三个破发点没数出来"
+    assert saved["server"] == "home" and saved["winner"] == "home" \
+        and saved["break_points"] == 2, "「自己发球被逼到 15-40 又救回来」这一局读错了"
+
+
+def test_旁白里连下五局的起止要和逐分对得上():
+    """账号所有者纠正过的那一处：「**不是连下五局到 5:1，是 1:1 之后连下五局到 6:1**」。
+
+    逐分（`df_mh_1`）和源片记分条两边都证实：第一盘七局里他发了四局，
+    布鲁克斯比只保住第 2 局，所以是 `1-0 → 1-1 → 连下五局 → 6-1`。
+    而上一版旁白写「连下五局，把比分拉到五比一」，正压在屏幕上显示 1-0 / 1-1
+    的那一段——**画面在打脸**。
+
+    判据卡的是**这个跨栏的起止**，不是措辞：出现「连下五局」的那句话里，
+    必须把起点（一比一）或终点（六比一）说出来，且不能说成五比一。
+    只盯措辞会把下一个更好的写法也拦掉。
+    """
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    said = [s.get("narration", "") for s in spec["segments"]]
+    runs = [t for t in said if "连下五局" in t]
+    assert runs, "这条片子的旁白里没有那段连下五局——改写法了就把这条一起改"
+    for t in runs:
+        assert "五比一" not in t, f"又写成「连下五局到五比一」了：{t}"
+        assert "一比一" in t or "六比一" in t, \
+            f"「连下五局」没说清从哪儿到哪儿：{t}"
+
+
 def _reel_specs():
     return {p.stem: json.loads(p.read_text("utf-8"))
             for p in sorted(Path("specs/reels").glob("*.json"))}
@@ -1709,7 +1762,14 @@ def test_旁白要讲清楚比赛走向():
     """
     spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
     told = "".join(s["narration"] for s in spec["segments"])
-    assert "转折" in told or "反了过来" in told, "旁白没讲转折，观众不知道这场球难在哪"
+    # **第二次栽在措辞上了。** 原来只认「转折」「反了过来」两个词；按逐分数据
+    # 重写之后，稿子把转折讲得比原来细（「五平，对方发球局，零比四十。第三个
+    # 破发点他拿下了」），却一个词都没撞上，测试红了——而它下面三行正写着
+    # 「别按措辞判」。网球比赛的走向就是由**破发**换的手，认这一类词即可；
+    # 真要判「讲没讲清」得有人读，测试只拦「整条线压根没提」。
+    swing = ("转折", "反了过来", "破发", "反超", "扳回", "追平")
+    assert any(w in told for w in swing), \
+        f"旁白没讲这场球是怎么换的手，观众不知道难在哪（找的是 {swing}）"
     # **别按措辞判。** 上一版查「领先」，而稿子写的是「一直是布鲁克斯比在前」——
     # 意思在、词不在，测试自己红了。改成结构判据：输的那个必须在**开场之后**
     # 还被提到，也就是片子真的讲了他做过什么，而不只是开头报了个名字。
