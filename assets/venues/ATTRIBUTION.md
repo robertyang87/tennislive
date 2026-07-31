@@ -128,6 +128,15 @@ the photographs are not otherwise altered.
 - Note: 自证：顶上记分屏印着 CENTRE COURT 与两位球员名，横幅是这项赛事 2016–2024 的历届冠军，场边围板写着 BNP PARIBAS FORTIS / BXL。**赛事 2025 年从安特卫普 Lotto Arena 搬到布鲁塞尔 Brussels Expo Palais 12**，官方图库里 2024 及以前的照片全是旧场馆，不能用。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `bucharest-centre-court.jpg`
+
+- Title: 布加勒斯特中央球场满场，红土，远端看台顶上写着 ROMANIA，围板是 ȚIRIAC OPEN，球网上是 ATP TOUR
+- Author: ATP 官方图（摄影师未署名）
+- Source: https://www.tiriacopen.ro/-/media/images/news/2024/04/21/12/16/bucharest-2024-stadium-shot-2.jpg
+- License: unverified · ATP 官方图，经赛事域名 tiriacopen.ro 取得
+- Note: 这一站的主视觉不在 tournament-images 目录下，而在 /-/media/images/news/<日期>/ 里（bucharest_tournimage_2025.jpg 也在那儿）——**同一类图会散在两个目录**
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `buenos-aires-vilas-centre-court.jpg`
 
 - Title: 布宜诺斯艾利斯草地网球俱乐部 Guillermo Vilas 中央球场满场，红土，近端远端看台与灯柱都在画面里

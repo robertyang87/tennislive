@@ -59,6 +59,52 @@ KNOWN_GAPS = {
         "官网唯一一张 LDLCARENA_Tenniscourt.jpg 是 3D 效果图——观众是重复贴图、"
         "人物是 CG，正是「新赛事新场馆先放渲染图」那一类。Commons 的 "
         "Category:LDLC Arena 只有演唱会、施工和外立面。**打完首届再来取**。",
+    "Abierto Mexicano Telcel":
+        "场馆是 Arena GNP Seguros（2022 起，室内外混合的新馆）。官网"
+        "abiertomexicanodetenis.com（WordPress）媒体库里 1500px 以上的 142 张——"
+        "⚠️ **这一档还没查完**：抓联系表时 24 张里有 11 张取不到（限流，不是不存在），"
+        "看过的 13 张是球员动作、发布会、颁奖。搜到的场馆全景两类都不合格："
+        "一类是**空场**（开赛前的宣传照，看台全空），一类是开幕式夜景"
+        "（GQ 那张 1600x1067：均值 40.3 / 中位 **16** / 69% 暗于 50，"
+        "属于「中位数接近 0 就是一半以上纯黑」那一类，怎么裁都救不回来）。"
+        "**下次从这儿接着做**：把媒体库剩下的 118 张分批抓完再判。",
+    "Grand Prix Lalla Meryem":
+        "官方域名没找到活的（grandprixlallasalmameryem.com 解析不了）；"
+        "摩洛哥网球协会 frmt.ma 是 WordPress，但站上是协会通用内容。"
+        "搜到的两类都不合格：bakir.co 那批 1800x1195 是**空场**（蓝天、无观众），"
+        "其余是颁奖典礼特写。**还没试的**：摩洛哥媒体（Le Matin、Medias24、le360）"
+        "的赛事图集，以及 WTA 官方图库按赛事 id 取 hero。",
+    "Mérida Open":
+        "官方站是 wtameridaopen.com（WordPress，**不是** meridaopen.mx / abiertogntmerida，"
+        "那两个域名解析不了）。媒体库 279 条全量分页取下、按尺寸筛出 78 张、拼成两张"
+        "联系表逐格看过——**全是球员动作和颁奖**，唯一一张全景是空场白天的航拍。"
+        "⚠️ 网上广泛转载的那张「梅里达中央球场」（rastroinformativo 等站，1600x1067，"
+        "蓝色球场 + 满场看台 + 黄昏）**是瓜达拉哈拉**——远端建筑上印着 GUADALAJARA。"
+        "转载站配了别站的图，标题却写着梅里达。**还没试的**：尤卡坦本地媒体"
+        "（Diario de Yucatán、La Jornada Maya）的赛事图集。",
+    "ATX Open":
+        "官方站 atxopen.com（WordPress）媒体库全量列过：球员动作 + 两张 DJI 航拍。"
+        "航拍是**整个球场群**（Westwood Country Club 一片场地 + 奥斯汀天际线），"
+        "中心球场只占一角，竖切会把它切掉。官网那张 1800x929 的 stadium 图**是效果图**"
+        "——文件名自己写着 `ATX Open Unveils Stadium Rendering`。"
+        "**还没试的**：奥斯汀本地媒体（Austin American-Statesman、KVUE）的赛事图集。",
+    "Grand Prix Hassan II":
+        "ATP 主视觉（marrakech_tournimage_2019）是**场地平视**：下半屏全是空红土，"
+        "近端没有看台，碗读不出来。官网 grandprixhassan2.com（WordPress+Elementor）"
+        "媒体库里 1750x1163 那一批是**赛事简报的版面图**（La Gazette 的 PDF 转图），"
+        "不是照片；唯一一张场地照 CHF_2050 是从底线平视，同样只有一侧看台。"
+        "**还没试的**：摩洛哥媒体（Le Matin、Medias24）与皇家网球俱乐部自己的社媒。",
+    "Gonet Geneva Open":
+        "ATP 赛事域名上有一张 2560x1440 的无人机图，但那是**整个 Parc des Eaux-Vives**"
+        "（球场群 + 日内瓦湖 + 大喷泉），中心球场在左下角只占一块，竖切留中间 42% 正好"
+        "把它切掉。裁出中心球场那一块只有约 900x700，放大 2 倍以上，太软。"
+        "站上其余的图是球员照和 VIP 区。**还没试的**：Tribune de Genève / RTS 的赛事图集。",
+    "Berlin Open":
+        "官方站是 berlintennisopen.com（Webflow，**不是** berlin-tennis-open.com/.de，"
+        "那些解析不了）。站上的图统一压到 **1030x618**，套到 1080x1440 的卡上要放大 2.33 倍。"
+        "搜到的 Steffi-Graf-Stadion 全景清一色在 alamy / getty / dreamstime 上（带水印）。"
+        "**还没试的**：主办方 LTTC Rot-Weiß Berlin 自己的站（rot-weiss-berlin.de，通）、"
+        "Tagesspiegel / rbb24 的赛事图集原图。",
     "Almaty Open":
         "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张）。"
         "沙箱里 curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，"
