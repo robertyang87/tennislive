@@ -74,14 +74,19 @@ def test_中间物一个都不许进仓库():
         "_cover.jpg", "_cover.html",  # 封面渲染输入，data URI 内嵌，单个 12 MB
         "poster.html",
         "voice_03.mp3",
+        # yt-dlp 落的字幕原文件。名字由它自己拼（`_subs.en.vtt` / `_subs.en-orig.json3`
+        # / 猜不到的第三种），所以**按前缀删**——这正是 `.part` 那次的教训。
+        "_subs.en.vtt", "_subs.en-orig.json3",
     ]
     for name in must_die:
         assert any(fnmatch(name, p) for p in pats), (
             f"{name} 不会被清理掉，会跟着 git add 进仓库。现有模式：{pats}")
 
     # **poster.jpg 要留下**：推送正文第一屏就是它，删了推送里一张图都没有。
-    # 成片同理——它就是产物本身。
-    for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json"):
+    # 成片同理——它就是产物本身。captions.txt / captions_debug.txt 也是产物：
+    # 一个是选段用的，一个是「为什么没拿到」的判据，都要跟着提交。
+    for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json",
+                 "captions.txt", "captions_debug.txt"):
         assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
 
 
@@ -141,6 +146,45 @@ def test_成片帧率跟着源片走(monkeypatch):
     assert expr == "30000/1001" and round(value, 2) == 29.97
     fake.out = "0/0\n"                              # 报不出来就退回 30，别硬算
     assert reel.resolve_fps(Path("x.mp4")) == ("30", 30.0)
+
+
+def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
+    """两样对不上的**严重程度不同**，判据也要分开。
+
+    - **尺寸**对不上就是裁错（裁切窗口按源片宽高算），没有出路，一律红
+    - **帧率**对不上是重采样：50 → 25 整齐隔帧丢，看不出来；30 → 25 六帧丢
+      一帧，**静态说话头几乎无感，回合镜头一眼看得出一顿一顿**
+
+    所以帧率要在 spec 里**显式认领**。原来一律红——那会把采访这类素材整个挡在
+    门外（采访多是 30，赛事集锦多是 25/50）；一律放行又回到「兜底出事的时候
+    不吭声」。认领这一步是让这个取舍**留下判据**。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1"), "b": (1920, 1080, "30/1"),
+             "c": (1280, 720, "25/1")}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: (table[p.stem][2], 0.0))
+    p = {k: Path(f"{k}.mp4") for k in table}
+
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match({"a": p["a"], "c": p["c"]}, {})
+    # 尺寸这条**认领不了**：写了 mixed_fps 也拦得住
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match({"a": p["a"], "c": p["c"]}, {"mixed_fps": {"c": "随便"}})
+
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "b": p["b"]}, {})
+    # 认领了就放行——反面锚点，免得判据宽成「多源一律不许」
+    reel.check_sources_match({"a": p["a"], "b": p["b"]},
+                             {"mixed_fps": {"b": "采访的说话头"}})
+    # 认领的是**别的**源，挡的那条照旧红
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "b": p["b"]},
+                                 {"mixed_fps": {"zz": "写错了键"}})
+    # 一条源片时什么都不查
+    reel.check_sources_match({"a": p["a"]}, {})
 
 
 def test_默认不横摇():

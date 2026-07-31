@@ -293,7 +293,7 @@ jobs:
             "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
             "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
-            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg "$OUTDIR"/_subs*
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 

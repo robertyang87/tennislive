@@ -285,20 +285,33 @@ def fetch_captions(url: str, outdir: Path) -> Path | None:
     jar = os.environ.get("YT_COOKIES", "").strip()
     if jar and Path(jar).is_file():
         cookies = ["--cookies", jar]
-    stem = outdir / "_subs"
+    # **`-o` 要带 `%(ext)s`。** 写成一个没有扩展名的裸前缀时，yt-dlp 落盘的
+    # 名字由它自己拼，我这边靠 glob 去猜——猜错就是「拿不到字幕」，
+    # 和「这条片子没有字幕」长得一模一样。用惯例写法，名字就不用猜了。
+    tmpl = str(outdir / "_subs.%(ext)s")
+    notes: list[str] = []
     for label, extra in _ladder():
         proc = subprocess.run(
             [binary, "--skip-download", "--write-auto-subs", "--write-subs",
-             "--sub-langs", "en.*", "--sub-format", "json3/vtt",
-             "-o", str(stem), url, *cookies, *extra],
+             "--sub-langs", "en.*,en", "--sub-format", "json3/vtt/best",
+             "-o", tmpl, url, *cookies, *extra],
             capture_output=True, text=True)
         got = sorted(outdir.glob("_subs*.json3")) + sorted(outdir.glob("_subs*.vtt"))
         if got:
             print(f"[字幕] {label} 拿到 {got[0].name}")
             break
-        print(f"[字幕] {label} 没拿到：{(proc.stderr or '').strip()[-160:]}")
+        why = (proc.stderr or proc.stdout or "").strip()
+        notes.append(f"### {label}\n{why[-1200:]}")
+        print(f"[字幕] {label} 没拿到：{why[-160:]}")
     else:
-        print("[字幕] 所有 client 都没拿到自动字幕——这条源片只能靠画面选段")
+        # **把失败原因落进产物里。** 「所有 client 都没拿到」有好几种成因
+        # （这条片子真没字幕 / 这台机器被挡 / 我的参数写错），只印在日志里
+        # 就得翻 run 才看得见，而 run 的日志翻起来很贵。写成文件跟着提交，
+        # 下次一眼就知道该改参数还是该换路子。
+        (outdir / "captions_debug.txt").write_text(
+            "拿不到自动字幕，各 client 的原因如下：\n\n" + "\n\n".join(notes),
+            encoding="utf-8")
+        print("[字幕] 所有 client 都没拿到自动字幕 → captions_debug.txt")
         return None
     lines = _caption_lines(got[0])
     if not lines:
@@ -1135,26 +1148,47 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return {"": spec["source_url"]}
 
 
-def check_sources_match(paths: dict[str, Path]) -> None:
-    """多源必须**尺寸和帧率都一致**，不一致就在这儿报，别渲到一半。
+def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> None:
+    """多源要对得上，不一致就在这儿报，别渲到一半。**两样的严重程度不同：**
 
-    裁切窗口是按源片宽度算的（`resolve_crop`），帧率是全局的（`FPS`）——
-    两条源片对不上，切出来的段一个被裁错、一个被补帧，**而且全程不报错**：
-    ffmpeg 照样出片，只是画面比例不对、动作一顿一顿。这正是仓库里反复记的
-    「兜底和默认值出事的时候不吭声」。
+    - **尺寸**：裁切窗口按源片宽高算（`resolve_crop`），对不上就是**裁错**。
+      没有出路，一律红
+    - **帧率**：成片跟**主源**走（`FPS`），别的源会被 `fps=` 重采样。这有代价，
+      但代价随内容差得很远：50 → 25 是整齐地隔帧丢，看不出来；30 → 25 是
+      六帧丢一帧，**静态说话头几乎无感，回合镜头一眼能看出一顿一顿**
 
-    所以宁可在下载完就红，也不要出一条悄悄坏掉的片子。
+    所以帧率不一致**要在 spec 里显式认领**（`mixed_fps: {源键: 为什么可以}`），
+    不认领就红。原来是一律红——那会把「让当事人自己说」这类素材整个挡在门外
+    （采访多是 30，赛事集锦多是 25/50）；一律放行又回到「兜底出事的时候不吭声」。
+    认领这一步的作用就是**让这个取舍留下判据**，而不是让它悄悄发生。
     """
     if len(paths) < 2:
         return
     seen = {k: (*probe_size(p), resolve_fps(p)[0]) for k, p in paths.items()}
-    first = next(iter(seen.values()))
-    bad = {k: v for k, v in seen.items() if v != first}
-    if bad:
-        rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}" for k, (w, h, f) in seen.items())
+    ref_key = next(iter(seen))
+    rw, rh, rf = seen[ref_key]
+    rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}"
+                       for k, (w, h, f) in seen.items())
+    bad_size = [k for k, (w, h, _) in seen.items() if (w, h) != (rw, rh)]
+    if bad_size:
         raise ReelError(
-            "多条源片的尺寸/帧率对不上，裁切和补帧会静默出错：\n  " + rows +
-            "\n把它们统一之后再剪（同一个官方频道的集锦通常是一致的）。")
+            f"这些源片和主源 {ref_key or '(主源)'} 的尺寸对不上，裁切会静默裁错："
+            f"{bad_size}\n  " + rows +
+            "\n尺寸没有出路——换一条同尺寸的源片。")
+    declared = (spec or {}).get("mixed_fps") or {}
+    bad_fps = [k for k, (_, _, f) in seen.items() if f != rf and k not in declared]
+    if bad_fps:
+        raise ReelError(
+            f"这些源片的帧率和主源 {ref_key or '(主源)'}（{rf}）不一样：{bad_fps}\n  "
+            + rows +
+            f"\n成片跟主源走，它们会被重采样到 {rf}——**静态画面（采访、定镜）"
+            "几乎无感，回合镜头会一顿一顿**。\n"
+            "确实可以接受就在 spec 里认领，并写清为什么：\n"
+            '  "mixed_fps": {"' + bad_fps[0] + '": "30 fps；这条只用来放采访的'
+            '说话头，重采样看不出来"}')
+    for key, why in declared.items():
+        if key in seen and seen[key][2] != rf:
+            print(f"[fps] {key} 是 {seen[key][2]}，重采样到主源的 {rf}——{why}")
 
 
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
@@ -1170,7 +1204,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             with stage(f"下载源片 {key or '(主源)'}"):
                 path = download(url, path)
         sources[key] = path
-    check_sources_match(sources)
+    check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
