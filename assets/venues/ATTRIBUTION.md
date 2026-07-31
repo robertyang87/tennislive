@@ -288,6 +288,15 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `montpellier-centre-court.jpg`
+
+- Title: Sud de France Arena 中心球场 · 满场（粉蓝双色场地）
+- Author: openoccitanie.com 官方图库
+- Source: https://www.openoccitanie.com/wp-content/uploads/2025/01/sdf-arena-pleine-scaled.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：文件名 sdf-arena-pleine（Sud de France Arena「满场」）由赛事方自己写着；那块粉红内场配蓝色外场是这个赛事独有的配色，大屏上是奥克西塔尼大区的徽记。⚠️ 赛事官网域名换过：opensuddefrance.com 会跳到 openoccitanie.com，wp-json 在后者上（517 项）——**按旧名找会以为这站没有 CMS**。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `munich-centre-court.jpg`
 
 - Title: MTTC Iphitos 中心球场 · 红土满场（BMW Open）
@@ -346,6 +355,15 @@ the photographs are not otherwise altered.
 - Author: MFonzatti
 - Source: https://commons.wikimedia.org/wiki/File%3ACourt_Philippe_Chatrier_2024.jpg
 - License: CC BY-SA 4.0
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `rio-centre-court.jpg`
+
+- Title: 瓜加·库尔滕球场（Jockey Club）· 红土满场，背景是里约的山
+- Author: rioopen.com 官方图库
+- Source: https://www.rioopen.com/-/media/sites/tournaments/rio/vistageral.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：文件名 vistageral（葡语「全景」）由赛事方自己写着，画面是里约赛马会那片红土加科尔科瓦多一侧的山形，黄昏满场。同一个目录下还有一张纯俯视航拍（250226_geral），竖切之后只剩一块红土、看不出是个碗，按巴勒莫那条弃用。官网走 ATP 的 Sitecore，图直接挂在 /-/media/sites/tournaments/rio/ 根下。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `rome-atv-tennis-open-courts.jpg`
