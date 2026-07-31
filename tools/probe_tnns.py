@@ -87,6 +87,8 @@ def main() -> int:
                     help="过了挑战之后，**在页面里** fetch 这个 URL 并打印。"
                          "关键是借它已经拿到的 clearance cookie——同一个 URL "
                          "在 curl 里仍然是 403")
+    ap.add_argument("--link", default="",
+                    help="把页面里含这个串的 href 全列出来（找详情页的路由）")
     ap.add_argument("--dump", default="",
                     help="在 fetch 回来的 JSON 里找含这个词的对象并整个打出来")
     args = ap.parse_args()
@@ -136,19 +138,32 @@ def main() -> int:
         for w in args.want:
             print(f"  页面正文里有 {w!r}：{w in html}")
 
+        if args.link:
+            # 详情接口的路径猜不出来，但页面里一定有通往这场的链接。
+            hrefs = sorted({h for h in re.findall(r'href="([^"]+)"', html)
+                            if args.link in h})
+            print(f"\n→ 页面里含 {args.link!r} 的链接 {len(hrefs)} 条")
+            for h in hrefs[:20]:
+                print(f"   {h}")
+            if not hrefs:
+                print("   一条都没有——多半是前端用 JS 路由，不写 href")
+
         for url in args.fetch:
-            print(f"\n→ 在页面里 fetch {url}")
+            print(f"\n→ fetch {url}")
+            # **不能在页面里 fetch()**：跨域被浏览器自己拦掉（Failed to fetch），
+            # 通行证在 cookie 里但请求压根没发出去。`context.request` 走的是
+            # 浏览器的网络栈、带同一套 cookie，且不受 CORS 管。
             try:
-                got = page.evaluate(
-                    """async (u) => {
-                        const r = await fetch(u, {credentials: 'include'});
-                        return {status: r.status, text: await r.text()};
-                    }""", url)
+                resp = ctx.request.get(url, headers={
+                    "Referer": "https://tnnslive.com/",
+                    "Accept": "application/json,text/plain,*/*",
+                })
+                body = resp.text()
+                status = resp.status
             except Exception as exc:  # noqa: BLE001
                 print(f"  失败：{type(exc).__name__}: {exc}")
                 continue
-            body = got.get("text") or ""
-            print(f"  HTTP {got.get('status')} · {len(body)} 字节")
+            print(f"  HTTP {status} · {len(body)} 字节")
             for w in args.want:
                 print(f"  里面有 {w!r}：{w in body}")
             if args.dump:
