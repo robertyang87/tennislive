@@ -153,6 +153,15 @@ the photographs are not otherwise altered.
 - Note: 自证：围板一圈 Libéma / KNLTB（荷兰网协）/ DEN BOSCH，草地上印着 ATP TOUR，右侧记分屏是 MEDVEDEV–MANNARINO。一张管两站——6 月的 ATP250 与 WTA250 同场地。官网 wp-json 4812 项，荷兰语词 baan / overzicht 比英语管用。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `doha-centre-court.jpg`
+
+- Title: 哈利法国际网球场中心球场 · 夜场满场，背景是多哈天际线
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/10/16/31b8cefd-8f3d-4180-949d-be019385cdd6/1003_bg_Qatar_Doha-min.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：围板一圈 Qatar TotalEnergies Open / ooredoo，远处那座扭转塔楼是多哈天际线。一张管两站——2 月的 WTA1000（Qatar TotalEnergies Open）与 ATP500（Qatar ExxonMobil Open）同场地。⚠️ 这站的赛事官网五个域名全试过都连不上（qatartennis.org 根路径是 Page not found），最后是从 **WTA 赛事页的 hero 图**拿到的。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `dubai-centre-court.jpg`
 
 - Title: 迪拜网球场中心球场 · 黄昏满场，场地前场刷着 DUBAI
@@ -226,6 +235,15 @@ the photographs are not otherwise altered.
 - Author: unknown（ProSport.ro 转载）
 - Source: https://www.prosport.ro/wp-content/uploads/2022/12/iasi-open-scaled.jpg
 - License: unverified · 转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `indianwells-centre-court.jpg`
+
+- Title: 印第安维尔斯网球花园 1 号球场 · 满场，场地前场刷着 INDIAN WELLS
+- Author: photoresources.wtatennis.com 官方图库
+- Source: https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1b371b4-11cf-4c25-99dc-a3b8bcaa06e4/609-BNP-Paribas-Open.jpg
+- License: unverified · WTA 官方媒体库
+- Note: 自证：场地前场刷着 INDIAN WELLS，那圈绿色外场配紫色内场是这个场馆独有的。一张管两站——3 月的 WTA1000 与 ATP1000 同场地。⚠️ 上一轮从 Commons 找到的 Stadium 1 全景（4554×2000）构图更好，但记分牌上写着 PACIFIC LIFE OPEN——那是 2002–2008 的冠名，2009 年起就是 BNP Paribas Open 了，和「美网那张没有顶棚」同一类，弃用。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `istanbul-historical-peninsula.jpg`
