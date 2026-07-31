@@ -75,7 +75,11 @@ KNOWN_GAPS = {
         "近端没有看台，碗读不出来。官网 grandprixhassan2.com（WordPress+Elementor）"
         "媒体库里 1750x1163 那一批是**赛事简报的版面图**（La Gazette 的 PDF 转图），"
         "不是照片；唯一一张场地照 CHF_2050 是从底线平视，同样只有一侧看台。"
-        "**还没试的**：摩洛哥媒体（Le Matin、Medias24）与皇家网球俱乐部自己的社媒。",
+        "摩洛哥媒体**试过了**，法语和阿拉伯语两套检索词各跑一轮"
+        "（snrtnews / k24 / hespress / kech24 / marrakech7 / latribunedemarrakech 等）："
+        "拿到的三类全不合格——颁奖特写、开幕式、以及场地平视且只有一侧看台的空场。"
+        "**还没试的**：皇家网球俱乐部自己的社媒，以及赛事转播方的成片抽帧"
+        "（孟菲斯那站就是这么解决的，见 CLAUDE.md「新闻台的成片是个被忽略的源」）。",
     "Almaty Open":
         "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张）。"
         "沙箱里 curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，"
