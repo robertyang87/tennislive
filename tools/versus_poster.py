@@ -100,6 +100,58 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
 CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+#: 侧边被切断时那一条淡出的宽度（占抠图宽的比例）。
+#: **官方棚拍抠图用不上**——那种图人物四周本来就有空白，边是人自己的轮廓。
+#: 本场抽帧不一样：近景里人比画框大，抠出来的 alpha 直接贴到画框侧边，
+#: 于是留下一条**笔直的竖边**。人物大到溢出画布时看不见（黄泽林 0.48 那版
+#: 就是这么藏掉的），一旦收小就露出来，一眼看出是抠图裁的。
+#: 6% 是渲出来比的：3% 还能看出硬边，10% 手臂开始像化掉。
+CUT_SIDE_FADE = 0.06
+
+
+def _fade_cut_sides(image: Path) -> Path:
+    """被画框切断的那一侧，把 alpha 抹成一条渐变。
+
+    只淡**真被切断**的那一侧：人物自己的轮廓不该被淡掉，所以先量 alpha 有没有
+    贴到左/右边界。贴到了就是画框切的，没贴到就是他自己的边。
+
+    **烤进 PNG，不用 CSS 遮罩。** 先写的是
+    `mask-image: <底部渐变>, <侧边渐变>` 加 `mask-composite:intersect`，
+    渲出来一点变化都没有——多层遮罩的合成在这条渲染路径上不生效，而且
+    **它不报错**，只是安静地什么也不做。烤进 alpha 是能量的：
+    `_fade_cut_sides` 之后左边两列的最大 alpha 应该是 0。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    im = Image.open(image).convert("RGBA")
+    alpha = im.getchannel("A")
+    w, h = im.size
+    left = alpha.crop((0, 0, 2, h)).getextrema()[1] > 24
+    right = alpha.crop((w - 2, 0, w, h)).getextrema()[1] > 24
+    if not (left or right):
+        return image
+    span = max(2, round(w * CUT_SIDE_FADE))
+    ramp = Image.new("L", (w, 1), 255)
+    px = ramp.load()
+    for x in range(span):
+        v = round(255 * x / span)
+        if left:
+            px[x, 0] = min(px[x, 0], v)
+        if right:
+            px[w - 1 - x, 0] = min(px[w - 1 - x, 0], v)
+    im.putalpha(Image.fromarray(
+        (_np().asarray(alpha, dtype=_np().float32)
+         * _np().asarray(ramp.resize((w, h)), dtype=_np().float32) / 255
+         ).astype("uint8")))
+    out = image.with_suffix(".faded.png")
+    im.save(out)
+    return out
+
+
+def _np():
+    import numpy  # noqa: PLC0415
+
+    return numpy
 
 
 def _cut_crop(image: Path, box) -> Path:
@@ -187,6 +239,7 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
         # 用 `img.c-x` 提一档特异性，否则后面 `.cut{z-index:3}` 会把它盖回去。
         if not panel.get("front"):
             css.append(f"img.c-{side}{{z-index:2}}")
+        src = _fade_cut_sides(src)   # 被画框切断的侧边淡出，否则是一条笔直的竖边
         imgs.append(f'<img class="cut c-{side}" src="{_data_uri(src)}">')
     body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
             f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'

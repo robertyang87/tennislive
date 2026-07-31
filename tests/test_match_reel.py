@@ -1051,9 +1051,22 @@ def test_封面可以指定谁在前压住谁():
     versus = spec["cover"]["versus"]
     assert versus["top"].get("front") is True, "黄泽林应该在前"
     assert not versus["bottom"].get("front"), "只能有一个在前"
-    # 左缘要溢出画布，断面才不在画面里
-    assert versus["top"]["cx"] <= 0.40 and versus["top"]["scale"] >= 0.46, (
-        "前面那个不够大或不够靠左，侧边的断面会留在画内")
+    # **侧边的断面靠淡出解决，不靠「把人放大到溢出画布」。**
+    # 第一版是后者：把前面那个放到 0.48 让左缘落到画外，代价是他占了大半张
+    # 封面（账号所有者：「占得地方太大了」）。构图不该替修图背锅——所以现在
+    # 钉的是淡出这条路还在，尺寸放开给版面自己定。
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert "def _fade_cut_sides(" in src, "侧边淡出没了，抠图的断面会变回一条硬边"
+    assert "_fade_cut_sides(src)" in src, "写了函数却没调用"
+    # 烤进 alpha，不是 CSS 遮罩：多层遮罩合成在这条渲染路径上不生效，
+    # **而且不报错**，只是安静地什么也不做，渲出来和没加一模一样。
+    # 判据盯**做了什么**（改 alpha），不盯「没写某个词」——上一版按
+    # `"mask-composite" not in src` 判，结果撞上了解释这条弯路的注释本身。
+    # 这个文件里已经有同样的教训：盯那句本身，别盯措辞。
+    assert "im.putalpha(" in src, "侧边淡出没有落到 alpha 上，多半又退回 CSS 遮罩了"
+    faded = src[src.index("def _fade_cut_sides("):]
+    assert "getextrema()" in faded.split("def ", 2)[0] + faded[:1200], (
+        "没有先量 alpha 贴没贴到边——那样会把人物自己的轮廓也淡掉")
 
 
 def test_源片自己烧了记分条时字幕要让开():
