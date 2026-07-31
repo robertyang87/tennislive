@@ -288,6 +288,15 @@ the photographs are not otherwise altered.
 - License: unverified · 赛事官方媒体
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `munich-centre-court.jpg`
+
+- Title: MTTC Iphitos 中心球场 · 红土满场（BMW Open）
+- Author: bmwopen.de 官方图库
+- Source: https://www.bmwopen.de/wp-content/uploads/2025/04/Center-Court.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：红土上刷着 MUNICH，球网上是 ATP TOUR，看台横幅 BMW Open by bitpanda，记分屏是 ALEXANDER ZVEREV 对 DANIEL ALTMAIER。原图 8192×5464，入库按 max-edge 缩到 4200。德语搜索词 center court / centercourt 直接命中（stadion / anlage 都是 0）。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `ningbo-centre-court.jpg`
 
 - Title: 宁波网球中心中央球场 · 满场（2024 宁波公开赛开赛，PR Newswire 发布的赛事官方图）
