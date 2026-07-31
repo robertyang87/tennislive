@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -62,6 +63,10 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=20)
     ap.add_argument("--recent", type=int, default=0,
                     help="只看每个源最新的 N 条（默认 0＝按注册深度全取）")
+    ap.add_argument("--event", default="",
+                    help="只看标题命中这个正则的赛事，如 'Washington|Memphis'。"
+                         "**默认不过滤会把五月的罗马、六月的柏林一起排进来**——"
+                         "那些倍数最高，但跟当前赛程无关")
     args = ap.parse_args()
 
     cfg = load_sources()
@@ -83,6 +88,8 @@ def main() -> int:
         for rank, (views, secs, vid, title) in enumerate(rows, 1):
             tail = channel == "@wta" and _tail_interview(
                 {"duration_s": secs, "title": title}, tail_cfg)
+            if args.event and not re.search(args.event, title, re.I):
+                continue
             if tail or classify(title, rules) == "oncourt":
                 hits.append((views / base, views, secs, vid, title, channel,
                              "尾巴" if tail else "整条", rank, base))
