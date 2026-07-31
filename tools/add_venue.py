@@ -139,7 +139,54 @@ def main() -> int:
     module.write_attribution(ASSETS)
 
     print(f"入库 {args.slug} <- {name} {img.size}")
-    return 0
+    return _report_landing(args.slug)
+
+
+def _report_landing(slug: str) -> int:
+    """入库之后**回头问一句**：赛历上真的有站命中它吗？
+
+    别名写错不会报错，只是悄悄不生效——休斯顿那次别名写成
+    `clay court championships`，而赛历里的名字是 `U.S. Men's Clay Court Chps.`，
+    根本不是子串。文件、manifest、credits、fetch_venues 四处全都写对了，
+    `add_venue` 打印「入库成功」，覆盖率却一动没动。
+    这和「查产物不查信号」是同一条：**「写进去了」是信号，「有站命中」才是产物。**
+
+    走的是渲染时真正那条路（`venue_asset_for_match`），不是比对字符串。
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "src"))
+    from datetime import datetime, timezone
+
+    from tennislive.models import (Match, MatchStatus, Player,  # noqa: E402
+                                   Tour, Tournament)
+    from tennislive.render.venue_assets import (  # noqa: E402
+        load_venue_assets, venue_asset_for_match)
+
+    load_venue_assets.cache_clear()
+    calendar = json.loads((ROOT / "data" / "tour_calendar_2026.json")
+                          .read_text(encoding="utf-8"))["events"]
+    landed = []
+    for event in calendar:
+        month, day = (int(x) for x in str(event.get("start", "01-01")).split("-")[:2])
+        tour = Tour.WTA if str(event.get("tour")) == "wta" else Tour.ATP
+        match = Match(
+            match_id="add-venue", tour=tour,
+            tournament=Tournament(name=str(event.get("en") or ""), tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, day, 12, tzinfo=timezone.utc),
+            sets=[], winner=None)
+        got = venue_asset_for_match(match)
+        if got is not None and got.slug == slug:
+            landed.append(f"{event.get('start')} {event.get('tier')} {event.get('zh')}")
+    if landed:
+        print("  赛历上命中 " + str(len(landed)) + " 站：" + "；".join(landed))
+        return 0
+    print(f"  ⚠️ **赛历上一站都没命中 {slug}**——别名多半对不上赛事名。"
+          f"\n     赛历里的写法要自己去 data/tour_calendar_2026.json 的 `en` 看，"
+          f"\n     别按城市名或想当然的全称写（休斯顿那站叫 "
+          f"`U.S. Men's Clay Court Chps.`，不是 `...Championships`）。")
+    return 1
 
 
 if __name__ == "__main__":

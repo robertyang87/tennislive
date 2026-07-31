@@ -45,23 +45,20 @@ SKIP_TIERS = {"团体", "年终", "WTA125", "ATP125"}
 # 已经翻到底、确实拿不到的站——**写在这里是为了别再重跑一遍**。
 # 「缺」有两种：一种是还没去找，一种是找过了拿不到，两者在输出里长得一模一样，
 # 而后者会被反复重找（孟菲斯那一站就被重找过三轮）。键按赛历里的 `en` 写。
+#
+# ⚠️ **写进这里之前，先把 CLAUDE.md 里已有的那几条路挨个试一遍。**
+# 罗马在这儿躺过一轮：我列了五条走不通的路（Commons 五个年份分类、fitp.it 相册、
+# 官网 SPA、意大利语信息页、猜文件名），写得很详细，看起来很尽责——
+# 而真正解开它的是 `/-/media/images/atp-tournaments/tournament-images/`，
+# **那条规矩早就写在 CLAUDE.md 的「ATP 总站封，赛事域名镜像着同一批图」里**，
+# 只是我没往罗马身上试。「某一个源上没有 ≠ 不存在」这次换的壳是
+# **「我试过的源里没有 ≠ 我把该试的都试了」**。
 KNOWN_GAPS = {
     "Grand Prix Auvergne-Rhone-Alpes":
         "2026 年首办、首届还没打（10-18 起），LDLC Arena 没有网球布置的实拍。"
         "官网唯一一张 LDLCARENA_Tenniscourt.jpg 是 3D 效果图——观众是重复贴图、"
         "人物是 CG，正是「新赛事新场馆先放渲染图」那一类。Commons 的 "
         "Category:LDLC Arena 只有演唱会、施工和外立面。**打完首届再来取**。",
-    "Internazionali BNL d'Italia":
-        "四轮都没拿下，把已经排除的记全免得第五轮重来："
-        "①Commons 五个年份分类（2012–2018、2023、2026 Italian Open）加关键词搜索，"
-        "共 73 张大横图**全是侧场的球员动作**；②标题写着 Campo Centrale / "
-        "Central Tennis Court 的两张，打开是**场馆外立面**；"
-        "③官网是 SPA，Playwright 渲出来图床在 fitp.it，首页那 14 张全是发布会和颁奖；"
-        "④fitp.it 的相册目录（media_gallery/fotogallery/<id>/）返回 403 不能列，"
-        "文件名是 `<日期>_<球员>_<序号>.jpg` 猜不出全景；"
-        "⑤/biglietti /foro-italico /impianti 等意大利语信息页全部落到 404 外壳。"
-        "**还没试的**：Getty/AFP 等图片社经二手站的转载，以及意大利体育媒体"
-        "（Gazzetta、Corriere dello Sport）的赛事图集。",
     "Almaty Open":
         "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张）。"
         "沙箱里 curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，"
