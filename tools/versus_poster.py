@@ -180,6 +180,13 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
         bottom = _cutout_geometry(cx, seam) + sink
         css.append(f".c-{side}{{left:{cx * 100:.2f}%;top:{bottom - h:.0f}px;"
                    f"height:{h:.0f}px}}")
+        # **谁压住谁**：`front: true` 的那个画在上面。两个人叠在一起时，赢的
+        # 那个在前是这类海报的常规读法——前后关系本身就在说结果。
+        # 压到 2（而不是把前面那个抬到 4）是因为名字那一层是 4、VS 圆牌是 5：
+        # 抬上去会盖住名字，而名字是这张卡在信息流里唯一能被扫到的东西。
+        # 用 `img.c-x` 提一档特异性，否则后面 `.cut{z-index:3}` 会把它盖回去。
+        if not panel.get("front"):
+            css.append(f"img.c-{side}{{z-index:2}}")
         imgs.append(f'<img class="cut c-{side}" src="{_data_uri(src)}">')
     body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
             f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'

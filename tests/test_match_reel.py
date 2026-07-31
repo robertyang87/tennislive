@@ -1024,3 +1024,33 @@ def test_挑帧要在probe那一步跑并且整帧不进仓库():
     text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
     assert 'f"cand_{i:02d}_t{rec[\'t\']}.jpg"' in text, "候选帧还在存 PNG，单张 2~3 MB"
     assert "tw = 640" in text, "候选墙一格太小，判不了「能不能看到表情」"
+
+
+def test_封面可以指定谁在前压住谁():
+    """两个人叠在一起时，**赢的那个画在上面**——前后关系本身就在说结果。
+
+    压的是后面那个（z-index 2），不是把前面那个抬到 4。名字那一层是 4、
+    VS 圆牌是 5：抬上去会盖住名字，而名字是这张卡在信息流里唯一能被扫到的东西。
+
+    还要用 `img.c-x` 提一档特异性，否则后面那条 `.cut{z-index:3}` 会把它盖回去
+    ——同为单类选择器时后写的赢，而 `.cut` 恰好写在后面。**这种错不报错**，
+    只是叠压方向反过来，渲出来才看得见。
+
+    顺带：这一层关系在黄泽林那条里还兼着修一道**修不掉**的切口。近景抽帧里
+    人比画框大（去掉录屏 UI 后抠出来四边全贴满），侧边一定断；把前面那个放大、
+    中心外移，断面就落到画布外面——**切口不能修掉，但可以让它不在画面里**。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    assert 'panel.get("front")' in src, "没有「谁在前」这个开关"
+    assert 'img.c-{side}{{z-index:2}}' in src, (
+        "要用 img.c-x 压后面那个：写成 .c-x 会被后面的 .cut{z-index:3} 盖回去")
+    for layer in ("z-index:4", "z-index:5"):      # 名字、VS 圆牌
+        assert layer in src, f"{layer} 那一层没了，前后关系的前提就变了"
+
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    versus = spec["cover"]["versus"]
+    assert versus["top"].get("front") is True, "黄泽林应该在前"
+    assert not versus["bottom"].get("front"), "只能有一个在前"
+    # 左缘要溢出画布，断面才不在画面里
+    assert versus["top"]["cx"] <= 0.40 and versus["top"]["scale"] >= 0.46, (
+        "前面那个不够大或不够靠左，侧边的断面会留在画内")
