@@ -1963,3 +1963,36 @@ def test_checkout不许把整个output拉下来():
     for needed in ("assets", "data", "specs", "src", "tools"):
         assert f"\n            {needed}\n" in listed, (
             f"稀疏检出漏了 {needed}/——渲染读它，少了就是第 5 分钟才炸")
+
+
+def test_中间段的编码参数要往快里调不是往省比特里调():
+    """**中间产物要花的是比特，不是时间。**
+
+    分段和封面拼完之后整片还要以 `slow`/`crf 18` 重编一次，所以中间段省下来的
+    比特一点用都没有——它唯一的作用是别把画质提前丢掉。preset 决定编码器花
+    多少**时间**去找省比特的编法，crf 决定留多少**画质**，两件事各管各的：
+    preset 推到最快、crf 压到很低，就是又快又更保真。
+
+    量出来的（10 秒 1080×1440/60fps 素材，四核）：
+
+        medium   / crf 20   14.73s   最终 SSIM 0.993110 / PSNR 47.09  ← 改前
+        ultrafast/ crf 12    2.92s   最终 SSIM 0.993212 / PSNR 48.01  ← 改后
+
+    **5 倍快，而且最终成片比改前更接近源片。** 这条测试拦的不是手滑，是下一次
+    有人照着「preset 越慢画质越好」的直觉，把它改回 medium/slow——那会把
+    runner 上的分段编码从 ~47s 拉回 176.7s，换来一个更差的成片。
+
+    成片那一步（`FINAL_*`）不在这条的管辖范围，那儿由
+    `test_成片的编码参数不许为了压体积往下调` 守着。
+    """
+    reel = _reel()
+    fast = ("ultrafast", "superfast", "veryfast")
+    assert reel.PART_PRESET in fast, (
+        f"中间段 preset 被改成了 {reel.PART_PRESET}。它是马上要被重编的临时文件，"
+        "在这儿花时间找省比特的编法是白花——量过：medium 慢 5 倍，成片还更差。")
+    assert int(reel.PART_CRF) <= 14, (
+        f"中间段 crf 被推到了 {reel.PART_CRF}。快 preset + 高 crf 是两头都丢："
+        "既没省时间，又把画质提前丢在一个临时文件里。")
+    # 成片那一步一个字都不许跟着动
+    assert reel.FINAL_PRESET == "slow" and reel.FINAL_CRF == "18", (
+        "改中间段不许连累成片——省时间要从中间产物上省，不能从交出去的那一份上省")
