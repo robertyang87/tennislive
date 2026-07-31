@@ -170,6 +170,33 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return _fits(" | ".join(parts))
 
 
+POSTED_TITLE_FILE = "xiaohongshu.txt"
+
+
+def write_posted_title(outdir: Path, copy_text: str) -> Path:
+    """把「这条片子发出去时叫什么」落进产物目录，第一行就是标题。
+
+    **不是给谁读的，是让产物自证。** `tools/platform_stats.py` 的 `index_output()`
+    以 `xiaohongshu.txt` 为锚、拿它的第一行当发文标题；知识解说那条线一直在写，
+    剪辑这条线不写——于是 16 个成片**一个都没被索引进去**，后台导出里每条
+    「赛场之上」都报「前缀对不上」。
+
+    这个错骗人的地方在于它**长得像另一个错**：真正的原因是「产物压根没进索引」，
+    报出来却是「最像的 XX 也只有 0.35」，看着像发文时改过标题。空结果先自证是
+    真空——那一节里 9 条的解释我全写错了。
+
+    标题在这儿是**现成的**：`copy_text` 的第一行就是 `headline()` 拼出来、
+    同时印在微信通知栏和复制页上的那一句。所以这里不重算，只落盘。
+
+    写在 `--stage page` 里，跟复制页同一步——那一步排在 `git commit` 之前，
+    文件才进得了仓库。
+    """
+    path = outdir / POSTED_TITLE_FILE
+    path.write_text(copy_text if copy_text.endswith("\n") else copy_text + "\n",
+                    encoding="utf-8")
+    return path
+
+
 def column_of(copy_path: Path) -> str:
     """栏目名从 spec 的 `cover.eyebrow` 读，别在命令行上另写一遍。
 
@@ -378,7 +405,9 @@ def main() -> int:
 
     if args.stage == "page":
         page.write_text(to_copy_page(copy_text), encoding="utf-8")
+        posted = write_posted_title(outdir, copy_text)
         print(f"已写复制页：{page}（{len(copy_text)} 字）\n  发布后是 {copy_url}\n"
+              f"已写发文标题：{posted}（第一行「{title}」）\n"
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
         return 0
 

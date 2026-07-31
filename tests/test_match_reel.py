@@ -1874,3 +1874,80 @@ def test_封面跟着配音走只给网球有故事():
         column = str(spec.get("column") or cover.get("eyebrow") or "")
         if "赛场之上" in column:
             assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
+
+
+def test_每份成片都写下了它发出去时的标题():
+    """产物要自证「我发出去时叫什么」，否则统计一条都对不上。
+
+    `platform_stats.index_output()` 以 `xiaohongshu.txt` 为锚、拿第一行当发文
+    标题。知识解说那条线一直在写，**剪辑这条线不写**——标题是推送时用
+    `headline()` 现拼的，只印在微信和复制页上，仓库里一个字都没留。
+
+    于是 16 个成片**一个都没进索引**，三个平台的后台导出里每条「赛场之上」
+    都落在「未匹配」一节，报的却是「最像的 XX 也只有 0.35」——看着像发文时改
+    过标题。**一个笼统的解释盖住了具体的 bug**，那一节里 19 条的原因我全写错了。
+    补齐之后未匹配 19 → 6，剩下的才是真改过标题的。
+
+    这条拦的是「下一条片子又忘了写」。
+    """
+    missing = [p.parent for p in sorted(Path("output").rglob("copy.html"))
+               if not (p.parent / "xiaohongshu.txt").is_file()]
+    assert not missing, (
+        f"{len(missing)} 份成片没写 xiaohongshu.txt，统计对不上：\n  "
+        + "\n  ".join(str(p) for p in missing[:5])
+        + "\n跑 `python tools/backfill_reel_titles.py` 补齐")
+
+
+def test_发文标题写在提交之前那一步():
+    """闸装在**渲**那一步，不是**发**那一步——这次和复制页正好相反。
+
+    复制页那道「探链接可达吗」必须排在提交**之后**（发的时候才该可达）；
+    而写标题是**落盘**，必须排在提交**之前**，否则文件只活在 runner 的工作区，
+    跟当年复制页 404 是同一个形状。两件事方向相反，别照抄。
+
+    只测行为拦不住位置错：把 `write_posted_title` 挪进 push 分支，文件照样
+    被写出来、断言照样全绿，仓库里却什么都没有。所以这里盯**位置**。
+    """
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    body = src[src.index("def main("):]
+    page_branch = body[body.index('if args.stage == "page":'):]
+    page_branch = page_branch[:page_branch.index("return 0")]
+    assert "write_posted_title(" in page_branch, (
+        "写发文标题不在 --stage page 分支里——它排在提交之后，文件进不了仓库")
+    assert body.count("write_posted_title(") == 1, "写标题只该有一处调用"
+
+
+def test_从复制页反解出来的就是印在页上那一句():
+    """补历史成片时标题不许猜：复制页里那一格就是发出去的标题。
+
+    `assert "def fields_of(" in src` 那种写法只能防「有人把它删了」，防不住
+    「它从来没工作过」——所以这里真调一次，喂 push_reel 自己渲的复制页。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import to_copy_page  # noqa: PLC0415
+    from backfill_reel_titles import fields_of, posted_text  # noqa: PLC0415
+
+    title = "7.30 赛场之上 | 黄泽林逆转头号种子"
+    copy_text = f"{title}\n\n正文第一行 & <尖括号>\n📍洛斯卡沃斯 ATP250 第二轮"
+    got = fields_of(to_copy_page(copy_text))
+    assert got["title"] == title, got
+    # 反解出来的整段，第一行必须还是那句标题——index_output 只读第一行
+    assert posted_text(to_copy_page(copy_text)).splitlines()[0] == title
+    # 转义过的字符要还原，别把 &amp; 写进产物
+    assert "&amp;" not in got["body"] and "&" in got["body"]
+
+
+def test_成片能被统计索引到():
+    """端到端：`index_output()` 必须真的把成片目录扫进来。
+
+    上一条测的是「标题反解得对」，这条测的是「扫得到」。分开写是因为它们会
+    以不同的方式坏掉：文件写对了但锚文件名不对，前一条照样绿。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from platform_stats import index_output  # noqa: PLC0415
+
+    dirs = {it["dir"] for it in index_output(Path("output"))}
+    reels = [p.parent for p in Path("output").rglob("copy.html")]
+    assert reels, "output/ 下一个成片都没有，这条测试等于没测"
+    missing = [p for p in reels if p not in dirs]
+    assert not missing, f"这些成片扫不进索引：{missing[:5]}"
