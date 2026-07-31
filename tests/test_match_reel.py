@@ -2392,6 +2392,33 @@ def test_日报生成器换成了只出覆盖率的命令():
     assert hasattr(cli, "cmd_coverage"), (
         "覆盖率命令没了——probe.yml 的数据源探测就断了")
 
+    # **真跑一遍，别只断言符号存在。** 第一版就只写了上面那句 hasattr，
+    # 而命令本身是坏的：`fetch_day` 给的是 `DailyData`，`coverage_report`
+    # 要的是 `Digest`，一上 runner 就 AttributeError（run 30653131605）。
+    # 「写了」不等于「跑过」——查符号的断言只能防「有人把它删了」。
+    import argparse  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+    from datetime import date  # noqa: PLC0415
+
+    from conftest import make_match  # noqa: PLC0415
+
+    import tennislive.digest as digest_mod  # noqa: PLC0415
+    from tennislive.digest import Digest  # noqa: PLC0415
+
+    fake = Digest(today=date(2026, 7, 31), results=[make_match()],
+                  live=[], schedule=[], source="espn")
+    real = digest_mod.build_digest
+    digest_mod.build_digest = lambda *a, **k: fake
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            rc = cli.cmd_coverage(argparse.Namespace(
+                date="2026-07-31", source="auto", outdir=tmp))
+            written = Path(tmp) / "2026-07-31" / "coverage.txt"
+            assert rc == 0 and written.is_file() and written.read_text(
+                encoding="utf-8").strip(), "coverage 命令跑不出报告"
+    finally:
+        digest_mod.build_digest = real
+
     probe = _yaml_only(
         Path(".github/workflows/probe.yml").read_text(encoding="utf-8"))
     assert "tennislive coverage" in probe and "tennislive digest" not in probe, (
