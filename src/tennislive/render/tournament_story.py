@@ -1335,6 +1335,58 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="lucky-loser",
+        title="输了才有的名额",
+        subtitle="网球观察 · 规则篇",
+        identity="幸运落败者：资格赛输了也能进正赛",
+        chips=("规则冷知识", "抽签还是排名", "大满贯 0 人进八强"),
+        hero=(
+            "资格赛最后一轮输掉的人，可以因为正赛有人退出而递补进正赛；"
+            "这个身份叫幸运落败者，卢布列夫和高芙的第一个冠军都是这么来的。"
+        ),
+        facts=(
+            "ATP 7.20 A.1：末轮失利者按资格赛种子排名排序；但**资格赛打完那一刻正赛"
+            "已有空缺**时，排名最高的两人抽签决定，空 N 个位置就抽 N+1 人。"
+            "WTA 2026 规则书 V.A.1.b.vi 的触发条件相同。",
+            "WTA 把三种情形写全（lost, retired, or withdrawn），并加三道闸："
+            "签到、赛会医生检查、正赛不得排在退赛当天；ATP 全本 210 页、123 处提到"
+            "lucky loser，这三条一条都没有，医疗条款反而明写「同一天或之后」皆可。",
+            "至今没有人以幸运落败者身份打进大满贯八强，第四轮是天花板："
+            "1995 温网诺曼、2023 法网阿瓦涅相、2025 澳网利斯、2025 温网谢拉、"
+            "2026 法网德容；利斯那次再赢一场就是史上第一个。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2017-07-23",
+                player="卢布列夫",
+                age="19 岁",
+                headline="「输的那个人是幸运的」",
+                detail=(
+                    "资格赛末轮输掉，因丘里奇退赛递补进正赛，一路赢到决赛，"
+                    "6-4、6-2 击败四号种子洛伦齐，拿下生涯第一个 ATP 冠军；"
+                    "颁奖人是伊万尼塞维奇。他当天在社媒写下 Loser is lucky!"
+                ),
+                source_url="https://www.atptour.com/en/news/rublev-lorenzi-umag-2017-final",
+            ),
+            ChampionMoment(
+                date="2019-10-13",
+                player="高芙",
+                age="15 岁 7 个月",
+                headline="开赛前 15 分钟被叫回球场",
+                detail=(
+                    "资格赛直落两盘负于科尔帕奇后已出局；首轮开打前 15 分钟"
+                    "萨卡里手腕伤退，她递补上场，连赢五场（含头号种子贝尔腾斯），"
+                    "决赛 6-3、1-6、6-2 胜奥斯塔彭科，成为 2004 年以来最年轻的 WTA 冠军。"
+                ),
+                source_url="https://www.wtatennis.com/news/1485527",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 7.20 / WTA 2026 规则书 V.A.1.b / ATP / WTA",
+        image_credit="Merlo de Graia · 卢布列夫本人社媒",
+        source_url="https://en.wikipedia.org/wiki/Lucky_loser",
+    ),
+    _trivia_story(
         slug="roof",
         title="温网屋顶谁说了算",
         subtitle="网球观察 · 规则篇",
