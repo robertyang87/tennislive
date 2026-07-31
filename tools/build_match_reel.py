@@ -1023,7 +1023,7 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
                 "格式：cover.portrait = {image | frame_at, source, "
                 "focus, focus_y, zoom, fit}\n"
                 "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
-        return build_versus_poster(sources, primary, cover, dest)
+        return build_versus_poster(sources, primary, cover, dest, seconds)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -1035,11 +1035,11 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
             "格式：cover.versus = {split, names: [上, 下], "
             "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}\n"
             "讲一个人的栏目（网球有故事）用 `layout: \"solo\"` + cover.portrait。")
-    return build_versus_poster(sources, primary, cover, dest)
+    return build_versus_poster(sources, primary, cover, dest, seconds)
 
 
 def build_versus_poster(sources: dict[str, Path], primary: str,
-                        cover: dict, dest: Path) -> Path:
+                        cover: dict, dest: Path, seconds: float = COVER_SECONDS) -> Path:
     """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
 
     **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
@@ -1099,7 +1099,18 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
         for key in ("top", "bottom"):
             panel = dict(versus[key] or {})
             if panel.get("frame_at") is not None:
-                panel["cutout"] = _cut_person(source, panel, key, dest.parent)
+                # **抓哪条源要按 panel 自己写的算**，和 `_grab` 同一套。原来这儿
+                # 写的是 `source`，而这个函数的作用域里根本没有这个名字——
+                # 「首选本场抽帧」这条路一次都没跑起来过，第一次用必 NameError。
+                # `ruff --select F821` 一秒就能指出来，判据落在
+                # test_没有名字是凭空来的。
+                skey = str(panel.get("source", primary))
+                if skey not in sources:
+                    raise ReelError(
+                        f"VS 的 {key} 要从源 {skey!r} 抽帧抠图，"
+                        f"但 spec 里声明的是 {sorted(sources)}")
+                panel["cutout"] = _cut_person(sources[skey], panel, key,
+                                              dest.parent)
                 panel.pop("crop", None)   # box 已经在抠之前裁过了，别再裁一次
                 versus[key] = panel
                 continue
