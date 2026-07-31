@@ -364,6 +364,41 @@ def test_旁白里连下五局的起止要和逐分对得上():
             f"「连下五局」没说清从哪儿到哪儿：{t}"
 
 
+# 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
+# 带着坐标来，要么显式往这份清单里写一笔，让「又忘了交代」变成一次看得见的决定。
+_NO_SLATE_YET = {
+    "eala-fernandez", "eala-zheng", "nishikori-shang", "potapova-venus",
+    "wang-pareja", "wang-samsonova", "wong-lehecka",
+}
+
+
+def test_赛场之上开场要给出北京时间赛事和轮次():
+    """账号所有者：「以后赛场之上上来首先交代下时间（北京时间几月几号几点几分
+    之类 开球的时间）赛事和轮次」。
+
+    刷到片子的人不知道这是哪天哪站哪一轮，第 ① 段那十秒就是用来安置他的。
+
+    判据只卡**三样在不在**，不卡写法：时间要认得出是北京时间的开球时刻、
+    赛事名、轮次。措辞不管——这条线上已经有两条测试因为盯措辞而误伤过好写法。
+    """
+    import re  # noqa: PLC0415
+
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
+            continue
+        if path.stem in _NO_SLATE_YET:
+            continue
+        opening = spec["segments"][0].get("narration", "")
+        assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
+        assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
+            f"{path.stem} 开场没给开球时刻：{opening}"
+        assert re.search(r"[月][一二三四五六七八九十]+[号日]", opening), \
+            f"{path.stem} 开场没给日期：{opening}"
+        assert re.search(r"(强|轮|决赛|资格赛)", opening), \
+            f"{path.stem} 开场没给轮次：{opening}"
+
+
 def _reel_specs():
     return {p.stem: json.loads(p.read_text("utf-8"))
             for p in sorted(Path("specs/reels").glob("*.json"))}
