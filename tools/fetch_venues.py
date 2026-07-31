@@ -169,6 +169,8 @@ VENUES = [
     ("adelaide-centre-court.jpg", None, None),
     # 奥克兰：asbclassic.co.nz 走 ATP Sitecore，/-/media/sites/tournaments/auckland/news/ 下有 finals-stadium-generic；ATP250 与 WTA250 共用
     ("auckland-centre-court.jpg", None, None),
+    # 慕尼黑：bmwopen.de 开着 wp-json（747 项），搜 center court 直接中
+    ("munich-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -314,6 +316,12 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "munich-centre-court.jpg": {
+        "title": "MTTC Iphitos 中心球场 · 红土满场（BMW Open）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "bmwopen.de 官方图库",
+        "page": "https://www.bmwopen.de/wp-content/uploads/2025/04/Center-Court.jpg",
+    },
     "auckland-centre-court.jpg": {
         "title": "ASB 网球中心中心球场 · 满场，场地上写着 AUCKLAND / TĀMAKI MAKAURAU",
         "license": "unverified · 赛事官方媒体库",
