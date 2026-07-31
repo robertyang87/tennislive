@@ -38,6 +38,44 @@ API_HINT = re.compile(
 SKIP = re.compile(r"\.(png|jpe?g|webp|svg|gif|ico|woff2?|ttf|css|mp4)(\?|$)", re.I)
 
 
+def _dump_objects(body: str, word: str, limit: int = 3) -> None:
+    """在一坨 JSON 里把**含这个词的那几个对象**整个打出来。
+
+    整份 145 KB 打出来没人看得完，只截命中前后几百字又会把对象拦腰砍断——
+    id 和它的比分常常分在两头。所以从命中位置向外找配平的花括号，
+    打出完整的一个对象。
+    """
+    try:
+        data = json.loads(body)
+    except Exception:  # noqa: BLE001
+        data = None
+
+    def walk(node, path=""):
+        if isinstance(node, dict):
+            if word in json.dumps(node, ensure_ascii=False):
+                kids = [v for v in node.values()
+                        if isinstance(v, (dict, list))
+                        and word in json.dumps(v, ensure_ascii=False)]
+                if not kids:            # 最小的那个含它的对象才有信息量
+                    yield path, node
+                for k, v in node.items():
+                    yield from walk(v, f"{path}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                yield from walk(v, f"{path}[{i}]")
+
+    if data is None:
+        print(f"  （不是 JSON，退回按文本找 {word!r}）")
+        i = body.find(word)
+        print("  " + body[max(0, i - 300):i + 700].replace("\n", " "))
+        return
+    hits = list(walk(data))[:limit]
+    print(f"  含 {word!r} 的最小对象 {len(hits)} 个：")
+    for path, obj in hits:
+        print(f"  --- {path}")
+        print("  " + json.dumps(obj, ensure_ascii=False, indent=1)[:2500])
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--want", action="append", default=[],
@@ -45,6 +83,12 @@ def main() -> int:
     ap.add_argument("--url", default=HOME, help="要加载的页面")
     ap.add_argument("--wait", type=int, default=25,
                     help="加载后再等几秒，给 Cloudflare 挑战和前端拉数据留时间")
+    ap.add_argument("--fetch", action="append", default=[],
+                    help="过了挑战之后，**在页面里** fetch 这个 URL 并打印。"
+                         "关键是借它已经拿到的 clearance cookie——同一个 URL "
+                         "在 curl 里仍然是 403")
+    ap.add_argument("--dump", default="",
+                    help="在 fetch 回来的 JSON 里找含这个词的对象并整个打出来")
     args = ap.parse_args()
 
     try:
@@ -91,6 +135,24 @@ def main() -> int:
         print(f"  Cloudflare 挑战{'**没过**' if challenged else '过了'}")
         for w in args.want:
             print(f"  页面正文里有 {w!r}：{w in html}")
+
+        for url in args.fetch:
+            print(f"\n→ 在页面里 fetch {url}")
+            try:
+                got = page.evaluate(
+                    """async (u) => {
+                        const r = await fetch(u, {credentials: 'include'});
+                        return {status: r.status, text: await r.text()};
+                    }""", url)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  失败：{type(exc).__name__}: {exc}")
+                continue
+            body = got.get("text") or ""
+            print(f"  HTTP {got.get('status')} · {len(body)} 字节")
+            for w in args.want:
+                print(f"  里面有 {w!r}：{w in body}")
+            if args.dump:
+                _dump_objects(body, args.dump)
         browser.close()
 
     print(f"\n=== 前端打了 {len(seen)} 个像接口的请求 ===")

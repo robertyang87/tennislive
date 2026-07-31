@@ -20,6 +20,14 @@ on:
         description: "browser 模式要加载的页面（默认 tnnslive.com 首页）"
         required: false
         default: ""
+      fetch:
+        description: "browser 模式：过了挑战之后在页面里 fetch 的接口，逗号分隔"
+        required: false
+        default: ""
+      dump:
+        description: "browser 模式：在 fetch 回来的 JSON 里找含这个词的对象"
+        required: false
+        default: ""
 
 jobs:
   probe:
@@ -44,6 +52,9 @@ jobs:
           for w in "${WORDS[@]}"; do ARGS="$ARGS --want \"$w\""; done
           if [ "${{ github.event.inputs.mode }}" = "browser" ]; then
             [ -n "${{ github.event.inputs.url }}" ] && ARGS="$ARGS --url '${{ github.event.inputs.url }}'"
+            [ -n "${{ github.event.inputs.dump }}" ] && ARGS="$ARGS --dump '${{ github.event.inputs.dump }}'"
+            IFS=',' read -ra FS <<< "${{ github.event.inputs.fetch }}"
+            for f in "${FS[@]}"; do [ -n "$f" ] && ARGS="$ARGS --fetch '$f'"; done
             eval python tools/probe_tnns.py $ARGS
           else
             eval python tools/probe_blocked_sources.py $ARGS
