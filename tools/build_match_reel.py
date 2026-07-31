@@ -464,6 +464,10 @@ class Segment:
     narration: str
     fit: str = "crop"
     track: bool = True
+    # 这一段取自哪条源片（`spec["sources"]` 的键）。空＝主源。
+    # 一条片子跨两场比赛时用得上：休伊特那条要「首胜吉隆」和「负于德米纳尔」
+    # 两条官方集锦，故事才完整。
+    source: str = ""
 
     @property
     def length(self) -> float:
@@ -605,7 +609,7 @@ def sample_track(coarse: list[tuple[float, float]],
             for t, x in zip(frames, smooth)]
 
 
-def track_shots(source: Path, segments: list["Segment"],
+def track_shots(sources: dict[str, Path], segments: list["Segment"],
                 source_w: int) -> dict[int, list[tuple[float, int]]]:
     """把在源片里连着的段合成一个镜头跟一次，再切回各段。
 
@@ -618,10 +622,16 @@ def track_shots(source: Path, segments: list["Segment"],
     runs: list[list[int]] = []
     for index, seg in enumerate(segments):
         trackable = seg.fit != "contain" and seg.track
+        prev = segments[runs[-1][-1]] if runs else None
         joins = (runs and trackable
-                 and abs(seg.start - segments[runs[-1][-1]].end) < 1e-3
-                 and segments[runs[-1][-1]].fit != "contain"
-                 and segments[runs[-1][-1]].track)
+                 and abs(seg.start - prev.end) < 1e-3
+                 and prev.fit != "contain"
+                 and prev.track
+                 # **跨源不许合并镜头。** 「连着」的判据是时间码相接，而两条
+                 # 源片的时间码会**偶然**相接——那样就把两场比赛的画面当成
+                 # 一个连续镜头去跟，跟出来的质心横跨两个机位，毫无意义。
+                 # 而且它不吭声：合出来的窗口照样能渲。
+                 and prev.source == seg.source)
         if joins:
             runs[-1].append(index)
         elif trackable:
@@ -653,7 +663,9 @@ def track_shots(source: Path, segments: list["Segment"],
         start = segments[members[0]].start
         end = segments[members[-1]].end
         with stage("跟踪抽帧"):
-            coarse = track_run(source, start, end, source_w)
+            # 同一条 run 里的段来自同一条源（跨源不合并，见上面 joins 的判据）
+            coarse = track_run(sources[segments[members[0]].source],
+                               start, end, source_w)
         if len(members) > 1:
             print(f"    [track] 上面这条是 {len(members)} 段连着的同一个镜头")
         for index in members:
@@ -922,13 +934,71 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
     return out
 
 
+def spec_sources(spec: dict) -> dict[str, str]:
+    """spec 声明的源片：`{键: url}`。
+
+    单源写 `source_url`（历史写法，全部存量都是它），键是 `""`。
+    跨场次的片子写 `sources`，段里用 `"source": "<键>"` 指定取自哪条。
+
+    休伊特那条就是跨两场：17 岁的克鲁兹从资格赛打进正赛、首轮赢下生涯第一场
+    ATP 正赛（一条集锦），下一轮遇上他父亲带出来的德米纳尔（另一条集锦）。
+    只用后一场，故事少了前半截；只用前一场，没有那个拥抱。
+    """
+    # **按键在不在判断，不按真假**：`"sources": []` 或 `{}` 是假值，用 `if multi:`
+    # 会静静绕过校验、掉进 `spec["source_url"]` 的 KeyError——报错完全不说人话。
+    # 自己的冒烟测试抓到的。
+    if "sources" in spec:
+        multi = spec["sources"]
+        if "source_url" in spec:
+            raise ReelError("`sources` 和 `source_url` 只能有一个，别两处各写一遍")
+        if not isinstance(multi, dict) or not multi:
+            raise ReelError(
+                f'`sources` 要写成非空的 {{"键": "url"}}，段里用 "source": "键" 引用；'
+                f"现在是 {multi!r}")
+        return {str(k): str(v) for k, v in multi.items()}
+    if "source_url" not in spec:
+        raise ReelError('spec 里要有 `source_url`（单源）或 `sources`（多源）')
+    return {"": spec["source_url"]}
+
+
+def check_sources_match(paths: dict[str, Path]) -> None:
+    """多源必须**尺寸和帧率都一致**，不一致就在这儿报，别渲到一半。
+
+    裁切窗口是按源片宽度算的（`resolve_crop`），帧率是全局的（`FPS`）——
+    两条源片对不上，切出来的段一个被裁错、一个被补帧，**而且全程不报错**：
+    ffmpeg 照样出片，只是画面比例不对、动作一顿一顿。这正是仓库里反复记的
+    「兜底和默认值出事的时候不吭声」。
+
+    所以宁可在下载完就红，也不要出一条悄悄坏掉的片子。
+    """
+    if len(paths) < 2:
+        return
+    seen = {k: (*probe_size(p), resolve_fps(p)[0]) for k, p in paths.items()}
+    first = next(iter(seen.values()))
+    bad = {k: v for k, v in seen.items() if v != first}
+    if bad:
+        rows = "\n  ".join(f"{k or '(主源)'}: {w}×{h} @ {f}" for k, (w, h, f) in seen.items())
+        raise ReelError(
+            "多条源片的尺寸/帧率对不上，裁切和补帧会静默出错：\n  " + rows +
+            "\n把它们统一之后再剪（同一个官方频道的集锦通常是一致的）。")
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
-    source = source_override or (outdir / "source.mp4")
-    if not source.is_file():
-        with stage("下载源片"):
-            source = download(spec["source_url"], source)
+    urls = spec_sources(spec)
+    sources: dict[str, Path] = {}
+    for key, url in urls.items():
+        path = outdir / (f"source_{key}.mp4" if key else "source.mp4")
+        if key == "" and source_override:
+            path = source_override
+        if not path.is_file():
+            with stage(f"下载源片 {key or '(主源)'}"):
+                path = download(url, path)
+        sources[key] = path
+    check_sources_match(sources)
+    primary = next(iter(sources))
+    source = sources[primary]
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
     # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
     audio = spec.get("source_audio")
@@ -957,8 +1027,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     segments = [Segment(float(s["start"]), float(s["end"]),
                         None if s.get("cx") is None else float(s["cx"]),
                         s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", False)))
+                        str(s.get("fit", "crop")), bool(s.get("track", False)),
+                        str(s.get("source", primary)))
                 for s in spec["segments"]]
+    unknown = sorted({s.source for s in segments} - set(sources))
+    if unknown:
+        raise ReelError(
+            f"这些段引用了不存在的源：{unknown}；spec 里声明的是 {sorted(sources)}")
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
     if total > 120:
@@ -978,11 +1053,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             ) from exc
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
-    tracks = track_shots(source, segments, source_w)
+    tracks = track_shots(sources, segments, source_w)
 
     parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
-        parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
+        parts.append(cut_segment(sources[seg.source], seg,
+                                 outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index)))
 
     listing = outdir / "_concat.txt"

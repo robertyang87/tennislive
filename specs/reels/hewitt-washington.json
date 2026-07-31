@@ -1,0 +1,95 @@
+{
+  "slug": "hewitt-washington",
+  "sources": {
+    "r1": "https://www.youtube.com/watch?v=twVxGhX3-5k",
+    "r2": "https://www.youtube.com/watch?v=EyYEgNYwNNQ"
+  },
+  "_source": "两条都是 Tennis TV 官方集锦（ATP 的官方流媒体频道）。r1「17-Year-Old Cruz Hewitt's FIRST ATP Tour Win!」186.3 秒，记分条全程 GIRON / HEWITT；r2「Alex De Minaur And Cruz Hewitt Generational First Meeting In DC!」216.9 秒，记分条 DE MINAUR / HEWITT，场地印 WASHINGTON D.C.。两条都是 1920×1080。**这条片子必须跨两场**：只用 r2 少了前半截（他是从资格赛打进来的、拿下生涯第一胜），只用 r1 没有那个拥抱。",
+  "_cut": "r1 内容止于 176.3、r2 止于 206.9，之后都是 TennisTV 的片尾订阅卡，不要。段边界一律卡在 probe 报的真实剪辑点上。",
+  "_tracking": "全片固定中心，不横摇。转播机位没动。**跨源的段不会被合并成一个镜头**——track_shots 的「连着」判据是时间码相接，而两条源片的时间码会偶然相接，合并会跟出一个横跨两个机位的质心；这条已经在代码里堵住。",
+  "_beats": "六拍，每一拍留一个问题、下一拍回答它（CLAUDE.md：不要平白叙事）。1 他姓休伊特，这个姓能换外卡，他没要 → 那他怎么进来的？2 资格赛打进正赛，首轮 74 分钟拿下 → 下一轮呢？3 首胜那一刻交给现场声 → 4 下一轮是德米纳尔，卫冕冠军，也是澳大利亚把他带出来的人 → 这怎么打？5 他叫他哥哥 → 结果呢？6 61 分钟直落两盘，差距是真的——**但片子不停在这儿**，走到网前那个拥抱和看台上的父亲。第 5 拍是分水岭：停在比分上就是赛报。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "hook": "这个姓能换一张外卡\n他没要",
+    "winner": "德米纳尔",
+    "result": "6-2 6-3",
+    "tier": "ATP 500",
+    "round": "R2",
+    "meta": "华盛顿 · 61 分钟",
+    "layout": "diagonal",
+    "versus": {
+      "_why": "**退回照片版**：克鲁兹 17 岁、世界第 612 位，2026-07 才第一次打进 ATP 正赛，官方抠图还没有——赛事域名的 player-gladiator-image/h0k0 返回的是通用人形占位剪影（14382 字节，和大威那次的占位图一模一样）。对照 dh58 是 82108 字节的真抠图，所以不是路走不通，是这个球员没有。见 assets/players/credits.json 的 _no_torso。⚠️ top/bottom 的实拍照片**还没探**，探到之前这条 spec 不能渲。",
+      "names": [
+        "德米纳尔",
+        "克鲁兹·休伊特"
+      ],
+      "top": {},
+      "bottom": {}
+    }
+  },
+  "segments": [
+    {
+      "start": 31.2,
+      "end": 42.0,
+      "fit": "crop",
+      "source": "r1",
+      "narration": "他姓休伊特。父亲是前世界第一，拿过两座大满贯。这个姓能给他一张外卡——他没要。"
+    },
+    {
+      "start": 116.8,
+      "end": 128.0,
+      "fit": "crop",
+      "source": "r1",
+      "narration": "十七岁，他从资格赛一轮一轮打进正赛。首轮对吉隆，六比三、六比四，七十四分钟。"
+    },
+    {
+      "start": 156.7,
+      "end": 165.7,
+      "fit": "crop",
+      "source": "r1",
+      "narration": ""
+    },
+    {
+      "start": 165.7,
+      "end": 176.3,
+      "fit": "crop",
+      "source": "r1",
+      "narration": "生涯第一场 ATP 正赛胜利。"
+    },
+    {
+      "start": 15.8,
+      "end": 28.2,
+      "fit": "crop",
+      "source": "r2",
+      "narration": "下一轮的对手是德米纳尔。卫冕冠军，世界前十——也是澳大利亚把他一路带出来的那个人。"
+    },
+    {
+      "start": 61.2,
+      "end": 74.8,
+      "fit": "crop",
+      "source": "r2",
+      "narration": "克鲁兹自己说，德米纳尔像他哥哥。"
+    },
+    {
+      "start": 121.2,
+      "end": 140.2,
+      "fit": "crop",
+      "source": "r2",
+      "narration": ""
+    },
+    {
+      "start": 168.9,
+      "end": 188.0,
+      "fit": "crop",
+      "source": "r2",
+      "narration": "六比二、六比三，六十一分钟。差距是真的。"
+    },
+    {
+      "start": 194.0,
+      "end": 206.9,
+      "fit": "crop",
+      "source": "r2",
+      "narration": "网前那个拥抱持续了很久。看台上，他父亲看完了全场。下一次这两个人隔网站着，会是什么时候？"
+    }
+  ]
+}
