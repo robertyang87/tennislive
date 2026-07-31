@@ -51,6 +51,17 @@ KNOWN_GAPS = {
         "官网唯一一张 LDLCARENA_Tenniscourt.jpg 是 3D 效果图——观众是重复贴图、"
         "人物是 CG，正是「新赛事新场馆先放渲染图」那一类。Commons 的 "
         "Category:LDLC Arena 只有演唱会、施工和外立面。**打完首届再来取**。",
+    "Internazionali BNL d'Italia":
+        "四轮都没拿下，把已经排除的记全免得第五轮重来："
+        "①Commons 五个年份分类（2012–2018、2023、2026 Italian Open）加关键词搜索，"
+        "共 73 张大横图**全是侧场的球员动作**；②标题写着 Campo Centrale / "
+        "Central Tennis Court 的两张，打开是**场馆外立面**；"
+        "③官网是 SPA，Playwright 渲出来图床在 fitp.it，首页那 14 张全是发布会和颁奖；"
+        "④fitp.it 的相册目录（media_gallery/fotogallery/<id>/）返回 403 不能列，"
+        "文件名是 `<日期>_<球员>_<序号>.jpg` 猜不出全景；"
+        "⑤/biglietti /foro-italico /impianti 等意大利语信息页全部落到 404 外壳。"
+        "**还没试的**：Getty/AFP 等图片社经二手站的转载，以及意大利体育媒体"
+        "（Gazzetta、Corriere dello Sport）的赛事图集。",
     "Almaty Open":
         "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张），"
         "但**本沙箱取不到**：出口网关给 ktf.kz 的证书链验不过，curl / urllib / "
