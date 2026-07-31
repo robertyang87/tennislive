@@ -272,6 +272,51 @@ PNG 对它是最坏的格式。换成 q86 的 JPEG 是 **3.7 MB（12%）**，同
 - 成片本身没什么可压的：`libx264 -preset medium -crf 22`，2 分 56 秒的
   1080×1920 只有 7.7 MB（**365 kbps**），已经很省，再压画质就掉了
 
+### checkout 拉 1.36 GB 是全仓库的问题，不是这一条线的
+
+`output/` 在 HEAD 上就有 1.36 GB（.git 1.77 GiB），于是**每一条工作流的
+checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 run 6:34，真正
+生成内容只用了 1:40），match-reel `2:44`。
+
+按「这条工作流碰不碰 `output/`」分两类，判据自动分，不维护白名单
+（`test_不碰产物的工作流不许把output拉下来`）：
+
+- **提都不提的**（assets / verify-names / probe-blocked / player-name-sync /
+  probe / oncourt-interviews）：直接稀疏检出排除 `output`，不用 add 任何东西
+- **要写产物的**：稀疏之后必须把自己那一格 `git sparse-checkout add` 回来。
+  **半个是最坏的情况**——`git add` 会说路径在稀疏范围之外，而那是在跑完之后
+  才炸。所以测试要求「要么两半都有，要么老老实实全量」
+
+顺带挖出一条更贵的：**`player-name-sync` 写着 `fetch-depth: 0`**，也就是把
+1.77 GiB 的完整历史（每条成片的每个版本）全拉下来——而它唯一的 git 读操作是
+`git diff --quiet -- <两个被跟踪的文件>`，那是**工作区对 HEAD** 的比较，
+一条历史都不需要。提交和推送在浅克隆上照样能做。
+
+写这条测试当场踩了三次「判据宁可窄，不可宽」，每次都是**扫得太宽反而判错**：
+
+1. 连注释一起扫——注释里正写着「别把 output/ 拉下来」，于是被判成「写产物」
+2. 按整份文本扫——`ci.yml` 的 `paths-ignore: output/**` 是**触发条件**，
+   不是产物路径。只看 `jobs:` 以后
+3. 裸的 `"output/" in body`——`probe.yml` 写的是 **`probe-output/`**，
+   从中间匹配上了。要词边界 `(?<![\w-])output/`
+
+**还没做的**（每条都要把自己的 outdir wire 进去，而且没法在沙箱里验完，
+建议一条一条上、每条看一轮真实 run）：daily / explainer / flash /
+knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
+yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
+
+### 别的线上没有「双份编码」和「重渲一遍」
+
+顺手核过，省得下次再查一遍：
+
+- **解说片是单趟编码**（`explainer.py` 一个 `filter_complex` 把所有屏 concat
+  完直接出片），没有中间产物这一层，所以上面那条编码优化跟它无关
+- **`build_grand_slam_v2.py` 的方向本来就是对的**：中间段 `veryfast`/crf 17，
+  成片 `medium`/crf 19——中间比成片**更保真**，正是「花比特不花时间」
+- **解说片的推送不会因为分支而整条作废**：它走 `publish pushplus`，那条闸是
+  `drop_dead_copy_button`（取不到就只摘按钮，正文照发），不是 `exit 1`。
+  所以「必须走 main、否则重渲」是 match-reel 独有的
+
 ### 中间产物要花的是比特，不是时间
 
 分段编码原来是 `medium`/`crf 20`，理由写着「中间产物不用编太好」——**方向对了

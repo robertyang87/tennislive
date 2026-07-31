@@ -1996,3 +1996,69 @@ def test_中间段的编码参数要往快里调不是往省比特里调():
     # 成片那一步一个字都不许跟着动
     assert reel.FINAL_PRESET == "slow" and reel.FINAL_CRF == "18", (
         "改中间段不许连累成片——省时间要从中间产物上省，不能从交出去的那一份上省")
+
+
+def test_不碰产物的工作流不许把output拉下来():
+    """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要一分半上下
+    （daily 量到 1:31，match-reel 2:44）——**而多数工作流一个字节都不碰它**。
+
+    这条按「这条工作流提不提 `output/`」自动分类，不维护白名单：
+
+    - **提都不提的**：必须稀疏检出，且不需要 `sparse-checkout add`
+    - **要写产物的**：稀疏之后得把自己那一格 add 回来，那是每条各自的活，
+      这条只要求「要么两半都有，要么老老实实全量」——**半个是最坏的情况**，
+      `git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸
+
+    顺带钉住 `fetch-depth`：`0` 是把 1.77 GiB 的完整历史全拉下来。
+    `player-name-sync` 原来就是这样，而它唯一的 git 读操作是
+    `git diff -- <被跟踪的文件>`——工作区对 HEAD，一条历史都不需要。
+    """
+    import yaml  # noqa: PLC0415
+
+    workflows = sorted(Path(".github/workflows").glob("*.yml"))
+    assert workflows, "找不到工作流"
+    for path in workflows:
+        text = path.read_text(encoding="utf-8")
+        spec = yaml.safe_load(text)
+        for job in (spec.get("jobs") or {}).values():
+            steps = job.get("steps") or []
+            checkout = next((s for s in steps
+                             if "checkout" in str(s.get("uses", ""))), None)
+            if checkout is None:
+                continue
+            with_ = checkout.get("with") or {}
+            sparse = "sparse-checkout" in with_
+
+            assert str(with_.get("fetch-depth", "1")) != "0", (
+                f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
+                "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
+
+            # 三处收窄，全是「判据宁可窄，不可宽」当场踩出来的：
+            # 1. 注释里正写着「别把 output/ 拉下来」，连注释一起扫会反过来判错
+            # 2. **只看 `jobs:` 以后**。`ci.yml` 的 `paths-ignore: output/**`
+            #    是触发条件，不是产物路径——按整份文本扫会把它判成「写产物」，
+            #    然后要求它 add 一个它根本不写的目录
+            # 3. **要词边界**。`probe.yml` 写的是 `probe-output/`，裸的
+            #    `"output/" in body` 会从中间匹配上——又一次「正则少了词边界」
+            body = _yaml_only(text)
+            body = body[body.index("\njobs:"):] if "\njobs:" in body else body
+            writes_output = re.search(r"(?<![\w-])output/", body) is not None
+            if not writes_output:
+                assert sparse, (
+                    f"{path.name} 一个字节都不碰 output/，却做了全量 checkout——"
+                    "白等一分半。照 assets.yml 那段加稀疏检出。")
+                assert "git sparse-checkout add" not in body, (
+                    f"{path.name} 不写产物，不该 add 任何 output 目录")
+            elif sparse:
+                assert "git sparse-checkout add" in body, (
+                    f"{path.name} 做了稀疏检出却没把自己那一格 add 回来——"
+                    "`git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸。")
+
+    # 排除的必须只有 output：assets 155 MB 看着也不小，但渲染真要读它
+    for path in workflows:
+        text = path.read_text(encoding="utf-8")
+        if "sparse-checkout:" not in text:
+            continue
+        listed = text[text.index("sparse-checkout:"):].split("\n\n")[0]
+        assert "\n            output\n" not in listed, (
+            f"{path.name} 把 output/ 列进了稀疏范围，1.36 GB 又要下一遍")

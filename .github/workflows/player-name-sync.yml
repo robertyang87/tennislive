@@ -15,7 +15,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # **原来这儿写着 `fetch-depth: 0`**，也就是把 1.77 GiB 的完整历史
+          # （每一条成片的每一个版本）全拉下来。而这条工作流里唯一的 git 读操作
+          # 是 `git diff --quiet -- <两个被跟踪的文件>`——那是**工作区对 HEAD**
+          # 的比较，一条历史都不需要。提交和推送在浅克隆上照样能做，别的工作流
+          # 一直是这么跑的。
+          #
+          # 顺带把 output/ 也挡在外面：HEAD 上它就有 1.36 GB，而这条一个字节
+          # 都不碰它。cone 模式下根目录的文件总是带上。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
