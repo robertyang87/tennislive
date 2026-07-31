@@ -1,8 +1,13 @@
 name: player-name-sync
 
 on:
-  schedule:
-    - cron: "23 12 * * 1" # 周一 20:23 北京时间，等待两站官方周榜稳定
+# **2026-07-31：定时停掉，只留手动。**
+# 六月至今 `player_names_top500.json` 只变过一次，而那次是人手改的，
+# 不是这个周任务改的。译名表要补的时候手动跑一次即可。
+#
+# 原来的定时（留档，恢复时照抄）：
+#   schedule:
+#   - cron: "23 12 * * 1" # 周一 20:23 北京时间，等待两站官方周榜稳定
   workflow_dispatch:
 
 permissions:

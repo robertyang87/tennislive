@@ -14,6 +14,7 @@
 """
 
 import json
+import inspect
 import re
 import subprocess
 import sys
@@ -2459,3 +2460,55 @@ def test_停产栏目的历史产物清掉了活栏目一个不动():
     loose = [p for p in tracked
              if re.match(r"output/\d{4}-\d\d-\d\d/[^/]+$", p)]
     assert not loose, f"日报包的散件还在：{loose[:3]}"
+
+
+def test_内容雷达的间隔要按发布窗口算():
+    """**72 次/天换来 1 个包。**
+
+    run 30643007873 全程 3 分 44 秒，checkout 占 3 分 02 秒（81%），而真正
+    「自动选题并生成」只用了 **3 秒**。产出是每天雷打不动 1 个（就是日限），
+    即时赛果停掉后只剩赛前焦点——**上限就是 1 个/天**。
+
+    间隔不是拍的：`preview_candidates` 收赛前 45–210 分钟的对阵，窗口宽
+    165 分钟。这条测试钉住「间隔和窗口是一起算的」——改窗口就得回来看间隔，
+    别让它们各走各的。
+    """
+    from tennislive.content_ops import preview_candidates  # noqa: PLC0415
+
+    sig = inspect.signature(preview_candidates)
+    window = (sig.parameters["max_lead_minutes"].default
+              - sig.parameters["min_lead_minutes"].default)
+    assert window == 165, f"发布窗口改成了 {window} 分钟——间隔要跟着重算"
+
+    body = _yaml_only(Path(".github/workflows/flash.yml").read_text(encoding="utf-8"))
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minute, hours = cron.split()[0], cron.split()[1]
+    assert "," in hours or hours.startswith("*/"), (
+        f"内容雷达又变成每小时跑了：{cron}")
+    per_day = len(hours.split(","))
+    assert per_day <= 8, (
+        f"内容雷达一天 {per_day} 次——日限只有 1 个包，多跑的都是空转")
+    assert minute not in ("0", "30"), "定时落在整点半点，GitHub 最容易延迟或丢弃"
+    # 间隔要匀，别六次全挤在半天里
+    hs = sorted(int(h) for h in hours.split(","))
+    gaps = [(b - a) for a, b in zip(hs, hs[1:])] + [24 - hs[-1] + hs[0]]
+    assert max(gaps) - min(gaps) <= 1, f"班次间隔不匀：{gaps}"
+
+
+def test_没有下游在读的定时任务不许一直跑():
+    """**采集了没人读，和空跑是一回事。**
+
+    - `oncourt-interviews`：`data/oncourt_interviews.json` 攒到 4551 条，
+      而除了 oncourt 自己那套采集工具，**没有任何代码 import 它**
+    - `player-name-sync`：六月至今译名表只变过一次，还是人手改的
+
+    两条都摘掉定时、留手动。这条测试拦的是「顺手把 cron 加回来」——
+    要恢复，先给它找个下游，或者把这条测试一起改。
+    """
+    for name in ("oncourt-interviews", "player-name-sync"):
+        body = _yaml_only(
+            Path(f".github/workflows/{name}.yml").read_text(encoding="utf-8"))
+        head = body.split("\njobs:")[0]
+        assert "schedule:" not in head, (
+            f"{name} 又挂上定时了——它的产出没有下游在读（2026-07-31 停的）")
+        assert "workflow_dispatch:" in head, f"{name} 的手动入口不能一起摘掉"

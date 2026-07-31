@@ -305,6 +305,49 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### 定时的频次要从产出倒推，别从「越勤越好」倒推
+
+2026-07-31 按实际产出盘了一遍七条定时任务，动了三条：
+
+| 线 | 原来 | 量出来的产出 | 现在 |
+|---|---|---|---|
+| 内容雷达 | **72 次/天** | 每天 1 个包（就是日限） | **6 次/天** |
+| 场边采访 | 2 次/天 | 4551 条数据，**没有任何代码在读** | 停定时，留手动 |
+| 译名同步 | 每周 | 六月至今译名表只变过 1 次，还是人手改的 | 停定时，留手动 |
+| 昨日一分 | 6 次/天 | **11 天 66 趟只出 3 条片** | 没动，见下 |
+| 场外快讯 / 选题候选 | 2 次/天 | 当天还在产 | 留 |
+| 数据源健康 | 4 次/天 | **告警线，「没动静」正是它正常** | 留 |
+
+**内容雷达的间隔是算出来的，不是拍的**：`preview_candidates` 收赛前
+45–210 分钟的对阵，窗口宽 165 分钟。要一场不漏得 ≤165 分钟间隔（≈10 次/天）；
+选了 4 小时（6 次/天），中间留 75 分钟的缝——**因为日限本来就是 1 个**，
+漏几场不影响「今天挑出一条」。判据在
+`test_内容雷达的间隔要按发布窗口算`：改窗口会红，逼你回来重算间隔。
+
+**判频次要看它是产出线还是告警线。** 数据源健康 4 次/天从来「没动静」，
+按产出量判它会被误杀——告警线的正常状态就是安静。
+
+### 昨日一分：66 趟出 3 条，根因在源不在频次
+
+skip 诊断里写得清清楚楚（`output/<date>/yesterday-point/*/skip.json`）：
+
+    Tennis TV Hot Shots   empty   抓到 60 命中 0（有一天命中 2，但都是 freemium，缺 TENNISTV_JWT）
+    WTA 官方 YouTube       error
+    ATP 官方 YouTube       error
+    Tennis TV YouTube     error
+    澳网/法网/温网 官方频道     error
+    WTA 官网 / 美网官方      empty   抓到 4 / 15，命中 0
+
+**十个检索源里五个直接 error，全是 YouTube 系**——和 match-reel 那条
+「YouTube 对机房 IP 一律 Sign in to confirm you're not a bot」是同一个病，
+而 match-reel 已经有解法（bgutil PO token provider + `YT_COOKIES_TXT`），
+这条线一样都没接。唯一能拿到候选的 Tennis TV 又卡在 `TENNISTV_JWT` 上。
+
+所以**降频救不了它，接源才能**。三条出路按代价排：
+配 `TENNISTV_JWT` → 把 match-reel 那套 PO token/cookie 搬过来 → 停掉这条线。
+⚠️ 别顺手降频：skip 诊断写着「本期会在下一次重试班次继续检索」，
+那 6 趟是**重试**，降频会把本来就低的命中率再砍一刀。
+
 ### `tennislive digest` 删了；覆盖率报告抽成自己的命令
 
 `probe.yml` 原来跑 `tennislive digest --no-cards`，**只为拿一张 coverage.txt**
