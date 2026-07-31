@@ -443,6 +443,21 @@ PLAYER_ZH: dict[str, str] = {
     "Justine Henin": "海宁",
     "Maria Sharapova": "莎拉波娃",
     "Ana Ivanovic": "伊万诺维奇",
+    # 「幸运落败者」那条选题里要念到的人，全部已退役或已改名——**前 500 的快照
+    # 永远同步不到他们**（`update_player_names.py` 只抓现役前 500），所以家在
+    # 这儿，不在 `data/player_name_overrides.json`：那个文件只喂快照生成器。
+    # 译名一律取中文维基条目的姓，写全名的惯例只留给需要区分的人。
+    "Paolo Lorenzi": "洛伦齐",          # 保罗·洛伦齐，2017 乌马格决赛负于卢布列夫
+    "Kiki Bertens": "贝尔腾斯",         # 基基·贝尔腾斯——是「腾」不是「滕」
+    "Andrea Petkovic": "佩特科维奇",
+    "Stefanie Voegele": "沃格勒",       # 史蒂芬妮·沃格勒
+    "Stefanie Vogele": "沃格勒",        # 带变音的写法数据源里两种都出现过
+    "Nicole Vaidisova": "瓦伊迪索娃",   # 妮科莱·瓦伊迪索娃
+    # 同一个人：2019 年林茨时叫 Kozlova，后改姓 Baindl。两个都要认得——
+    # 她先在林茨输给幸运落败者高芙，四年后又在布达佩斯决赛输给幸运落败者
+    # 季莫费耶娃，这条选题里两次都点到她。
+    "Kateryna Kozlova": "科兹洛娃",
+    "Kateryna Baindl": "班德尔",
     # 中国线：这几个是本人的名字，不是音译
     "Michael Chang": "张德培",
     "Shuai Peng": "彭帅",
