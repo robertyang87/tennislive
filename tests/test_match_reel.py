@@ -1164,3 +1164,48 @@ def test_旁白不能比它那一段的画面长():
     assert "seg.length + 0.12" in src, f"容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出"
     # 字幕收进本段窗口：末尾时刻要被 min(...) 夹住
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
+
+
+def test_静图段是给没有影像的事实留的():
+    """**父亲那一下只有图，没有影像。**
+
+    休伊特那条讲的是儿子做了父亲的动作，而三条官方存档集锦**都没拍到父亲做那
+    一下**：澳网 2005 半决赛按 1 秒一格把全部 56 个剪辑点扫完，只有握拳 come on
+    和末尾双臂谢场；澳网 2024 致敬片整段烧着大字幕；美网 2001 长版是 4:3 加蓝边
+    的标清升帧、冠军点是仰面倒地。那一下只有零点几秒，集锦剪辑一般跳过去。
+
+    所以静图要能当一段用。判据有三条，都是「不吭声」型的错：
+
+    - **文件必须在**——路径写错时 ffmpeg 只会在切片那一步炸，而那已经是下完
+      三条源片之后了
+    - **不能拿静图段去查源**（它不引用任何源片，`source` 是默认值）
+    - **不能跟踪**（没有源片可跟，也没有运动质心可算）
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    spec = {"cover": {}, "segments": [
+        {"start": 0, "end": 3.0, "still": "assets/reel/lleyton-vicht.jpg",
+         "narration": "他父亲做了一整个职业生涯。"},
+        {"start": 10, "end": 20, "source": "r1", "narration": "旁白"},
+    ]}
+    segs = reel.parse_segments(spec, {"r1": Path("a.mp4")}, "r1")
+    assert segs[0].still.endswith("lleyton-vicht.jpg")
+    assert segs[0].length == 3.0
+    assert Path(segs[0].still).is_file(), "静图素材不在仓库里"
+
+    # 路径写错要当场红，不要等到切片
+    bad = {"cover": {}, "segments": [
+        {"start": 0, "end": 3.0, "still": "assets/reel/没有这张.jpg"}]}
+    with pytest.raises(reel.ReelError, match="找不到文件"):
+        reel.parse_segments(bad, {"r1": Path("a.mp4")}, "r1")
+
+    # 静图段不参与「引用了不存在的源」那一条（它的 source 是默认值）
+    reel.parse_segments({"cover": {}, "segments": [
+        {"start": 0, "end": 2.0, "still": "assets/reel/lleyton-vicht.jpg"}]},
+        {"r1": Path("a.mp4")}, "r1")
+
+    # 跟踪要跳过它
+    body = Path(reel.__file__).read_text(encoding="utf-8")
+    assert "and not seg.still" in body, "track_shots 没把静图段排除掉"
+    assert "if seg.still:" in body, "切片循环没给静图段留分支"

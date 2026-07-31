@@ -583,6 +583,11 @@ class Segment:
     # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
     # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
     quote: str = ""
+    # 这一段不是源片的一截，而是**一张静图**（仓库里的路径）。
+    # 只在「这件事只有图、没有影像」时用——休伊特那条的父亲那一下就是：
+    # 三条官方存档集锦都没拍到，ATP 自己的赛报配图里才有。
+    # 有 `still` 时 start/end 只用来定时长（`start: 0, end: 1.8`）。
+    still: str = ""
 
     @property
     def length(self) -> float:
@@ -609,9 +614,18 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         s.get("narration", "").strip(),
                         str(s.get("fit", "crop")), bool(s.get("track", False)),
                         str(s.get("source", primary)),
-                        s.get("quote", "").strip())
+                        s.get("quote", "").strip(),
+                        str(s.get("still", "")).strip())
                 for s in spec["segments"]]
-    unknown = sorted({s.source for s in segments} - set(sources))
+    missing = [i + 1 for i, s in enumerate(segments)
+               if s.still and not Path(s.still).is_file()]
+    if missing:
+        raise ReelError(
+            f"第 {missing} 段的 `still` 找不到文件："
+            + "、".join(s.still for s in segments if s.still
+                        and not Path(s.still).is_file()))
+    # 静图段不引用源片，别拿它去查源
+    unknown = sorted({s.source for s in segments if not s.still} - set(sources))
     if unknown:
         raise ReelError(
             f"这些段引用了不存在的源：{unknown}；spec 里声明的是 {sorted(sources)}")
@@ -773,7 +787,8 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     """
     runs: list[list[int]] = []
     for index, seg in enumerate(segments):
-        trackable = seg.fit != "contain" and seg.track
+        # 静图段没有源片可跟，也没有运动质心可算
+        trackable = seg.fit != "contain" and seg.track and not seg.still
         prev = segments[runs[-1][-1]] if runs else None
         joins = (runs and trackable
                  and abs(seg.start - prev.end) < 1e-3
@@ -1064,13 +1079,22 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     return _still_to_clip(poster, dest)
 
 
-def _still_to_clip(still: Path, dest: Path) -> Path:
-    """封面静图 → 一小段带静音轨的视频，接进片头。"""
-    with stage("封面编码"):
+def _still_to_clip(still: Path, dest: Path, seconds: float | None = None,
+                   *, label: str = "封面编码") -> Path:
+    """静图 → 一小段带静音轨的视频。封面用它，**片中插图也用它**。
+
+    片中插图这条路是为「让读者看见那件事本身」开的：休伊特那条讲的是儿子做了
+    父亲的动作，而三条官方存档集锦里**都没有拍到父亲做那一下**（澳网 2005 全部
+    剪辑点扫完只有握拳和双臂谢场；澳网 2024 致敬片整段烧着大字幕；美网 2001 的
+    冠军点是仰面倒地）。ATP 自己那篇赛报的配图里有——那是一张图，不是一段视频。
+    所以静图得能当一段用。
+    """
+    with stage(label):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
-            "-t", f"{COVER_SECONDS}", "-vf", f"fps={FPS_EXPR},setsar=1",
+            "-t", f"{COVER_SECONDS if seconds is None else seconds:.3f}",
+            "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
@@ -1263,6 +1287,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
+        if seg.still:
+            parts.append(_still_to_clip(
+                Path(seg.still), outdir / f"part_{index:02d}.mp4", seg.length,
+                label=f"静图段 {index + 1}（{seg.length:.1f}s）"))
+            continue
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index)))

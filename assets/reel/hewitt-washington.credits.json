@@ -41,5 +41,19 @@
       "https://en.tennistemple.com/match/svajda-hewitt-washington-2026/9474448/",
       "https://worldtennismagazine.com/cruz-hewitt-benefits-from-two-retirements-to-get-atp-tour-singles-shot-in-washington-d-c-via-qualifying/28593"
     ]
+  },
+  "lleyton-vicht.jpg": {
+    "source": "ATP 官方赛报 hewitt-celebration-washington-2026-tuesday 的配图（经赛事域名 mubadaladcopen.com 取得）",
+    "file": "hewitt-hewitt-celebration-washington-2026.jpg 的**右半**",
+    "page": "https://www.mubadaladcopen.com/en/media/news/hewitt-celebration-washington-2026-tuesday",
+    "description": "莱顿·休伊特做那个招牌庆祝动作：弯臂、手掌摊平在眉骨高度、张口喊。片中作为 3 秒静图插在儿子那一下之后。",
+    "author": "ATP Tour（摄影师未标注）",
+    "licence": "unverified — ATP 官方发布的图，未取得授权；按账号所有者指示使用，发布前由人工判断",
+    "size": [
+      1080,
+      1440
+    ],
+    "_为什么用图不用影像": "**三条官方存档集锦都没拍到这一下**，逐条查过：\n· 澳网 2005 半决赛 罗迪克 vs 休伊特（AO 官方，1920×1080@25，画面干净无叠加）——按 1 秒一格把**全部 56 个剪辑点**扫完，只有握拳 come on（219.5、284.5）和末尾双臂谢场，没有摊掌搭眉那一下；\n· 澳网 2024 名人堂致敬片（AO 官方，1920×1080@25）——**整段烧着大字幕**（US OPEN CHAMPION 2001 之类），把别人的包装剪进来不合适；\n· 美网 2001 决赛长版（USO 官方，1920×1080@29.97）——画面是 **4:3 加蓝边**的标清升帧，而且冠军点是**仰面倒地**，不是这个动作。\n那一下只有零点几秒，集锦剪辑一般跳过去。账号所有者定：用 ATP 自己那张。",
+    "_怎么裁的": "原拼图 1920×1080，右半 960×1080 就是莱顿。**右上角烧着 ATP1 CLUB 金标**（含一道金色闪电压在他帽子上），和他的帽子在横向上叠着，满高 3:4（810×1080）收不干净。所以裁 **565×753**（3:4，x 0–565、y 55–808）——金标整个在框外，代价是切掉帽子后半，看起来就是一个紧一点的人像裁切。\n**只重采样一次**：565×753 直接 Lanczos 到 1080×1440（1.91 倍）再加一道UnsharpMask(2.0/55/3)，不先放到 810 让 ffmpeg 再放一次。"
   }
 }
