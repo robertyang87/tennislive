@@ -1344,7 +1344,7 @@
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
               "status": "ok",
-              "candidate_count": 4
+              "candidate_count": 5
             },
             {
               "page": "story",
@@ -1554,7 +1554,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -1596,7 +1596,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -1797,8 +1797,8 @@
               "rejection_counts": {
                 "low-visual-impact-metadata": 13,
                 "subject-or-person-mismatch": 16,
-                "metadata-relevance-below-3": 22,
-                "duplicate-candidate": 12,
+                "metadata-relevance-below-3": 20,
+                "duplicate-candidate": 14,
                 "download-or-resolution-failed": 1
               },
               "failed_curated_source_urls": [],
@@ -1919,14 +1919,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 54,
+              "candidate_count": 55,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 14,
-                "subject-or-person-mismatch": 14,
+                "subject-or-person-mismatch": 11,
                 "metadata-relevance-below-3": 20,
-                "duplicate-candidate": 6
+                "duplicate-candidate": 10
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -1949,7 +1949,7 @@
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye 2004 tennis",
                   "status": "ok",
-                  "candidate_count": 4
+                  "candidate_count": 5
                 },
                 {
                   "page": "story",
@@ -2050,10 +2050,10 @@
               "exact_candidate_count": 8,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 11,
+                "subject-or-person-mismatch": 12,
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 17,
-                "duplicate-candidate": 8,
+                "metadata-relevance-below-3": 15,
+                "duplicate-candidate": 9,
                 "download-or-resolution-failed": 8
               },
               "failed_curated_source_urls": [],
@@ -2174,14 +2174,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 71,
+              "candidate_count": 69,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "subject-or-person-mismatch": 15,
                 "duplicate-candidate": 34,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 21
+                "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -2218,7 +2217,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -2260,7 +2259,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -2723,7 +2722,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -2765,7 +2764,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -2887,18 +2886,10 @@
               "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
             },
             {
-              "provider": "official-media",
+              "provider": "official-page",
               "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-              "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
+              "status": "error",
+              "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
             },
             {
               "provider": "official-page",
@@ -2973,9 +2964,9 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "subject-or-person-mismatch": 10,
-                "duplicate-candidate": 14,
-                "metadata-relevance-below-3": 12
+                "subject-or-person-mismatch": 12,
+                "duplicate-candidate": 11,
+                "metadata-relevance-below-3": 13
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3100,9 +3091,9 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 16,
-                "subject-or-person-mismatch": 9,
-                "duplicate-candidate": 7
+                "metadata-relevance-below-3": 18,
+                "subject-or-person-mismatch": 8,
+                "duplicate-candidate": 6
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3227,9 +3218,9 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 16,
+                "metadata-relevance-below-3": 17,
                 "subject-or-person-mismatch": 7,
-                "duplicate-candidate": 9
+                "duplicate-candidate": 8
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3349,14 +3340,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 58,
+              "candidate_count": 56,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "subject-or-person-mismatch": 3,
-                "duplicate-candidate": 36,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 18
+                "duplicate-candidate": 34,
+                "metadata-relevance-below-3": 19
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3393,7 +3383,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -3435,7 +3425,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -3898,7 +3888,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -3940,7 +3930,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -4275,8 +4265,8 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 16,
-                "subject-or-person-mismatch": 8,
+                "metadata-relevance-below-3": 17,
+                "subject-or-person-mismatch": 7,
                 "duplicate-candidate": 8
               },
               "failed_curated_source_urls": [],
@@ -4402,9 +4392,9 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 15,
+                "metadata-relevance-below-3": 16,
                 "subject-or-person-mismatch": 7,
-                "duplicate-candidate": 10
+                "duplicate-candidate": 9
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -4524,13 +4514,12 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 58,
+              "candidate_count": 56,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "subject-or-person-mismatch": 3,
-                "duplicate-candidate": 34,
-                "watermarked-stock-library": 1,
+                "duplicate-candidate": 33,
                 "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
@@ -4568,7 +4557,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -4610,7 +4599,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -4862,8 +4851,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 4
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -4904,8 +4893,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 12
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -5073,7 +5062,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -5114,8 +5103,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
-              "status": "ok",
-              "candidate_count": 2
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -5198,8 +5187,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling tennis",
-              "status": "ok",
-              "candidate_count": 1
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -5323,9 +5312,9 @@
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "low-visual-impact-metadata": 6,
-                "subject-or-person-mismatch": 11,
-                "duplicate-candidate": 13,
-                "metadata-relevance-below-3": 12
+                "subject-or-person-mismatch": 13,
+                "duplicate-candidate": 8,
+                "metadata-relevance-below-3": 15
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5445,14 +5434,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 54,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 14,
-                "subject-or-person-mismatch": 12,
-                "metadata-relevance-below-3": 19,
-                "duplicate-candidate": 9
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 15,
+                "subject-or-person-mismatch": 7,
+                "duplicate-candidate": 10
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5474,8 +5463,8 @@
                   "page": "story",
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 4
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5516,8 +5505,8 @@
                   "page": "story",
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 12
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5578,8 +5567,8 @@
               "rejection_counts": {
                 "subject-or-person-mismatch": 11,
                 "low-visual-impact-metadata": 6,
-                "metadata-relevance-below-3": 16,
-                "duplicate-candidate": 9,
+                "metadata-relevance-below-3": 14,
+                "duplicate-candidate": 11,
                 "download-or-resolution-failed": 8
               },
               "failed_curated_source_urls": [],
@@ -5700,14 +5689,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 71,
+              "candidate_count": 67,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
                 "subject-or-person-mismatch": 15,
-                "duplicate-candidate": 33,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 22
+                "duplicate-candidate": 32,
+                "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5744,7 +5732,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -5785,8 +5773,8 @@
                   "page": "today",
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
-                  "status": "ok",
-                  "candidate_count": 2
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "today",
@@ -5869,8 +5857,8 @@
                   "page": "today",
                   "provider": "bing-web-image",
                   "query": "electronic line calling tennis",
-                  "status": "ok",
-                  "candidate_count": 1
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "today",
@@ -7134,7 +7122,7 @@
           "provider": "wikimedia-commons",
           "query": "Hawk Eye 2004 tennis",
           "status": "ok",
-          "candidate_count": 4
+          "candidate_count": 5
         },
         {
           "page": "story",
@@ -7344,7 +7332,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -7386,7 +7374,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -7587,8 +7575,8 @@
           "rejection_counts": {
             "low-visual-impact-metadata": 13,
             "subject-or-person-mismatch": 16,
-            "metadata-relevance-below-3": 22,
-            "duplicate-candidate": 12,
+            "metadata-relevance-below-3": 20,
+            "duplicate-candidate": 14,
             "download-or-resolution-failed": 1
           },
           "failed_curated_source_urls": [],
@@ -7709,14 +7697,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 54,
+          "candidate_count": 55,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 14,
-            "subject-or-person-mismatch": 14,
+            "subject-or-person-mismatch": 11,
             "metadata-relevance-below-3": 20,
-            "duplicate-candidate": 6
+            "duplicate-candidate": 10
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -7739,7 +7727,7 @@
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
               "status": "ok",
-              "candidate_count": 4
+              "candidate_count": 5
             },
             {
               "page": "story",
@@ -7840,10 +7828,10 @@
           "exact_candidate_count": 8,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 11,
+            "subject-or-person-mismatch": 12,
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 17,
-            "duplicate-candidate": 8,
+            "metadata-relevance-below-3": 15,
+            "duplicate-candidate": 9,
             "download-or-resolution-failed": 8
           },
           "failed_curated_source_urls": [],
@@ -7964,14 +7952,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 71,
+          "candidate_count": 69,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
             "subject-or-person-mismatch": 15,
             "duplicate-candidate": 34,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 21
+            "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -8008,7 +7995,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -8050,7 +8037,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -8513,7 +8500,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -8555,7 +8542,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -8677,18 +8664,10 @@
           "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
         },
         {
-          "provider": "official-media",
+          "provider": "official-page",
           "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_url": "",
-          "credit": "itftennis.com",
-          "license": "官方媒体 · 非商业资讯引用",
-          "status": "reference-only",
-          "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-          "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_text": " ",
-          "width": 0,
-          "height": 0
+          "status": "error",
+          "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
         },
         {
           "provider": "official-page",
@@ -8763,9 +8742,9 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "subject-or-person-mismatch": 10,
-            "duplicate-candidate": 14,
-            "metadata-relevance-below-3": 12
+            "subject-or-person-mismatch": 12,
+            "duplicate-candidate": 11,
+            "metadata-relevance-below-3": 13
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -8890,9 +8869,9 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 16,
-            "subject-or-person-mismatch": 9,
-            "duplicate-candidate": 7
+            "metadata-relevance-below-3": 18,
+            "subject-or-person-mismatch": 8,
+            "duplicate-candidate": 6
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -9017,9 +8996,9 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 16,
+            "metadata-relevance-below-3": 17,
             "subject-or-person-mismatch": 7,
-            "duplicate-candidate": 9
+            "duplicate-candidate": 8
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -9139,14 +9118,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 58,
+          "candidate_count": 56,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
             "subject-or-person-mismatch": 3,
-            "duplicate-candidate": 36,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 18
+            "duplicate-candidate": 34,
+            "metadata-relevance-below-3": 19
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -9183,7 +9161,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -9225,7 +9203,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -9688,7 +9666,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -9730,7 +9708,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -10065,8 +10043,8 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 16,
-            "subject-or-person-mismatch": 8,
+            "metadata-relevance-below-3": 17,
+            "subject-or-person-mismatch": 7,
             "duplicate-candidate": 8
           },
           "failed_curated_source_urls": [],
@@ -10192,9 +10170,9 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 15,
+            "metadata-relevance-below-3": 16,
             "subject-or-person-mismatch": 7,
-            "duplicate-candidate": 10
+            "duplicate-candidate": 9
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -10314,13 +10292,12 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 58,
+          "candidate_count": 56,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
             "subject-or-person-mismatch": 3,
-            "duplicate-candidate": 34,
-            "watermarked-stock-library": 1,
+            "duplicate-candidate": 33,
             "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
@@ -10358,7 +10335,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -10400,7 +10377,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -10652,8 +10629,8 @@
           "page": "story",
           "provider": "wikimedia-commons",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 4
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -10694,8 +10671,8 @@
           "page": "story",
           "provider": "wikimedia-commons",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 12
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -10863,7 +10840,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -10904,8 +10881,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
-          "status": "ok",
-          "candidate_count": 2
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -10988,8 +10965,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "electronic line calling tennis",
-          "status": "ok",
-          "candidate_count": 1
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -11113,9 +11090,9 @@
           "archive_candidate_count": 0,
           "rejection_counts": {
             "low-visual-impact-metadata": 6,
-            "subject-or-person-mismatch": 11,
-            "duplicate-candidate": 13,
-            "metadata-relevance-below-3": 12
+            "subject-or-person-mismatch": 13,
+            "duplicate-candidate": 8,
+            "metadata-relevance-below-3": 15
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11235,14 +11212,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 54,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 14,
-            "subject-or-person-mismatch": 12,
-            "metadata-relevance-below-3": 19,
-            "duplicate-candidate": 9
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 15,
+            "subject-or-person-mismatch": 7,
+            "duplicate-candidate": 10
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11264,8 +11241,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 4
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11306,8 +11283,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 12
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11368,8 +11345,8 @@
           "rejection_counts": {
             "subject-or-person-mismatch": 11,
             "low-visual-impact-metadata": 6,
-            "metadata-relevance-below-3": 16,
-            "duplicate-candidate": 9,
+            "metadata-relevance-below-3": 14,
+            "duplicate-candidate": 11,
             "download-or-resolution-failed": 8
           },
           "failed_curated_source_urls": [],
@@ -11490,14 +11467,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 71,
+          "candidate_count": 67,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
             "subject-or-person-mismatch": 15,
-            "duplicate-candidate": 33,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 22
+            "duplicate-candidate": 32,
+            "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11534,7 +11510,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -11575,8 +11551,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
-              "status": "ok",
-              "candidate_count": 2
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -11659,8 +11635,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling tennis",
-              "status": "ok",
-              "candidate_count": 1
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
