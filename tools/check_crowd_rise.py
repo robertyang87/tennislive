@@ -112,14 +112,31 @@ def main() -> int:
     import numpy as np  # noqa: PLC0415
 
     if args.url:
-        dest = Path("crowd_test.m4a")
-        cmd = ["yt-dlp", "--no-warnings", "-f", "bestaudio/best",
-               "-o", str(dest), args.url]
-        if args.cookies:
-            cmd[2:2] = ["--cookies", args.cookies]
-        print("→ 下载音轨…")
-        subprocess.run(cmd, check=True)
-        media = next(Path(".").glob("crowd_test.*"))
+        # **别只给一个格式选择器。** `bestaudio` 在「tv downgraded player」
+        # 那个客户端上不存在，yt-dlp 直接报 Requested format is not available
+        # ——而那句话读起来像「这条片子取不到」，其实只是选择器不合这个梯子。
+        # 依次退让，并**报出用的是哪一个**。
+        picks = ["bestaudio", "bestaudio/best", "worst[height<=480]", ""]
+        last = None
+        for f in picks:
+            for old in Path(".").glob("crowd_test.*"):
+                old.unlink()
+            cmd = ["yt-dlp", "--no-warnings", "-o", "crowd_test.%(ext)s", args.url]
+            if f:
+                cmd[2:2] = ["-f", f]
+            if args.cookies:
+                cmd[2:2] = ["--cookies", args.cookies]
+            print(f"→ 下载音轨（格式 {f or '默认'}）…")
+            r = subprocess.run(cmd, capture_output=True, text=True)
+            if r.returncode == 0:
+                print(f"  成了：{f or '默认'}")
+                break
+            last = (r.stderr or r.stdout or "").strip().splitlines()[-1:] or [""]
+            print(f"  不行：{last[0][:120]}")
+        got = sorted(Path(".").glob("crowd_test.*"))
+        if not got:
+            raise SystemExit(f"四种格式都下不下来，最后一条：{last}")
+        media = got[0]
     else:
         media = Path(args.file)
     print(f"素材：{media}（{media.stat().st_size/1e6:.1f} MB）")
