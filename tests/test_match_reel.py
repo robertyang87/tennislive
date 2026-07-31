@@ -2115,6 +2115,8 @@ def test_测试里不许import没声明的包():
 
     local = {p.stem for p in Path("tools").glob("*.py")}
     local |= {p.stem for p in Path("src/tennislive").glob("*.py")}
+    # `tests/` 下的也算本地——`conftest` 就是（`make_match` 那个共用夹具）。
+    local |= {p.stem for p in Path("tests").glob("*.py")}
     local |= {"tennislive", "tests"}
     allowed = set(_sys.stdlib_module_names) | declared | local
 
@@ -2228,3 +2230,104 @@ def test_日报这条线不许回来():
             f"{path.name} 又在出带卡片图的日报包了——digest 现在只留给 "
             "probe.yml 做覆盖率探测（--no-cards）")
 
+
+
+def test_即时赛果推送已经停掉():
+    """**2026-07-31：「即时赛果推送也不要了」。**
+
+    内容雷达（`flash.yml`）一天两种产出，各占一个名额：`result` 是刚完赛的
+    高价值比赛（即时赛果），`preview` 是赛前焦点。停的**只有前者**——同一句话
+    里还有「其他的可以保留」，赛前焦点不是赛果。
+
+    判据落在名额本身而不是工作流：`select_content` 按名额取，`RESULT_DAILY_LIMIT`
+    是 0 就一条都取不进去。改回 1 要连这条测试一起改。
+
+    **真调一次，不查源码文本**——「写了」不等于「跑过」。
+    """
+    from datetime import UTC, datetime  # noqa: PLC0415
+
+    from tennislive.content_ops import (  # noqa: PLC0415
+        PREVIEW_DAILY_LIMIT,
+        RESULT_DAILY_LIMIT,
+        select_content,
+    )
+
+    assert RESULT_DAILY_LIMIT == 0, (
+        "即时赛果推送又开回来了。账号所有者 2026-07-31 停掉了它——"
+        "要恢复请连这条测试一起改。")
+    assert PREVIEW_DAILY_LIMIT >= 1, "赛前焦点是「其他的可以保留」那一半，别一起关了"
+
+    # 喂一场刚完赛的重点比赛进去，确认它一条都取不出来。
+    # 用 conftest 的 make_match，别自己搓一个——模型改了它会跟着改。
+    from datetime import timedelta  # noqa: PLC0415
+
+    from conftest import make_match  # noqa: PLC0415
+
+    from tennislive.render.hotspot import (  # noqa: PLC0415
+        HOTSPOT_THRESHOLD,
+        hotspot_score,
+    )
+
+    from tennislive.timeutil import BEIJING  # noqa: PLC0415
+
+    now = datetime(2026, 7, 31, 20, 0, tzinfo=BEIJING)
+    just_finished = make_match(start_utc=now.astimezone(UTC) - timedelta(hours=2))
+    # **排名要补上。** `make_match` 的默认值只给了 seed，`hotspot_score` 算出来
+    # 是 49，而门槛是 50——差一分。第一版就栽在这儿：把开关拧回 1 重新跑，
+    # 这场球**照样一条都选不出来**，于是下面这句断言是恒真的，等于没测。
+    # 反向验证救回来的，又一次「断言全绿不等于页面对」。
+    just_finished.home[0].rank = 1
+    just_finished.away[0].rank = 2
+    assert hotspot_score(just_finished) >= HOTSPOT_THRESHOLD, (
+        f"这场球只有 {hotspot_score(just_finished)} 分，够不着热点门槛 "
+        f"{HOTSPOT_THRESHOLD}——那下面那句断言就白写了")
+
+    picks = select_content([just_finished], now=now, state={})
+    assert not [p for p in picks if p.kind == "result"], (
+        f"刚完赛的重点比赛还是被选成了即时赛果：{picks}")
+
+
+def test_今日赛程没有发布出口了():
+    """**2026-07-31：「昨日赛果和今日赛程都要拿掉了」。**
+
+    昨日赛果随 `daily.yml` 一起删了。今日赛程（赛程包）的生成器
+    （`tennislive schedule` → `output/<date>/schedule`）**没有任何工作流会自动
+    跑它**，它唯一的发布出口是 `push-existing.yml` 的 `schedule` scope——
+    删掉那个 scope，这个栏目就发不出去了。
+
+    生成器和它那一整套判据（跨日窗口、`NEXT_DAY_CUTOFF_HOUR`、按组轮流收口）
+    **故意留着**：那些教训写在 CLAUDE.md 里，代码是它的判据。停的是发布，
+    不是把知识铲掉。
+    """
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        assert "tennislive schedule" not in body, (
+            f"{path.name} 又在自动产今日赛程了")
+        assert '/schedule"' not in body and "= \"schedule\"" not in body, (
+            f"{path.name} 又给今日赛程开了发布出口")
+
+
+def test_每日网球知识分出来单独跑():
+    """**「所以要分开啊……其他的可以保留」。**
+
+    知识帖一直搭日报的顺风车（同一趟 `tennislive digest`，分两条 PushPlus 推），
+    所以我第一版把 daily 整个删掉时，它跟着一起没了。账号所有者纠正的正是这个：
+    **要拿掉的是昨日赛果和今日赛程，不是 daily 干的每一件事。**
+
+    分出来几乎不用改代码——`knowledge-adhoc.yml` 跑的就是同一个
+    `generate_knowledge_package`，而且本来就支持 slug 留空自动选题。缺的只是
+    一个定时。
+    """
+    text = Path(".github/workflows/knowledge-adhoc.yml").read_text(encoding="utf-8")
+    body = _yaml_only(text)
+    assert "schedule:" in body and "cron:" in body, (
+        "knowledge-adhoc 没有定时——每日网球知识就断了")
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minute, hour = cron.split()[0], cron.split()[1]
+    assert minute not in ("0", "30"), (
+        f"定时落在 :{minute}——GitHub 在整点半点最容易延迟或丢弃，"
+        "这是 daily 当年留下的经验")
+    # 推送那一步不能被定时触发挡住（schedule 事件下 inputs.push 是空的）
+    push_block = text[text.index("- name: PushPlus 推送到微信"):]
+    assert "inputs.push != 'false'" in push_block, (
+        "推送条件改了——定时触发时 inputs.push 是空的，别写成 == 'true'")
