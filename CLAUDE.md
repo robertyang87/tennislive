@@ -305,6 +305,69 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### 全仓库都改成稀疏检出：两个写法，一个静默陷阱
+
+19 条工作流全部排除了 `output/`（1.36 GB）。最夸张的是 **content-radar：
+一天 72 趟，run 30643007873 全程 3 分 44 秒，checkout 占 3 分 02 秒（81%），
+而「自动选题并生成」只用了 3 秒。**
+
+把产物那一格弄回 cone 有两种写法，都在合成仓库上验过：
+
+- **目录按日期/slug 算** → 算完之后 `git sparse-checkout add "$OUT_DIR"`。
+  它会把 HEAD 上那一版**先铺回工作区**，所以必须排在生成**之前**（反过来
+  会拿旧内容盖掉刚生成的）。重放循环里的 `git checkout rendered -- "$OUTDIR"`
+  也要它在 cone 里
+- **目录固定**（`output/voice-samples`）→ 直接列进 `sparse-checkout:`，不用 add
+
+**⚠️ 静默陷阱：裸的 `git add output/` 在稀疏模式下只警告、退出码 0。**
+合成仓库上验过：cone 外的路径，git 打一句 "will not be updated in the index"
+然后**成功退出**，接着 `git diff --cached --quiet` 说「没有变化」，工作流
+打印「没有新内容」正常结束——**这一轮的产物就这么静默丢了**。整棵
+`git add output/` 的必须带 `--sparse`（`git add --sparse output/ data/`）。
+又一次「兜底出事的时候不吭声」，只是这次兜底的是 git 自己。
+
+**⚠️ 第二个陷阱：读产物的步骤不能排在 add 前面。** `daily.yml` 的幂等检查
+（备份班次用）在 checkout 之后立刻 `[ -f "$OUT_DIR/digest.json" ]` 判断今天
+是不是已经生成过。目录不在工作区，这些判断**全是假**，`CONTENT_READY`
+永远 false——幂等检查永远不跳过，备份班次会把当天内容重新生成、
+**微信重复推一遍**。而它不报错，看起来只是「今天又跑了一次」。
+
+三条判据都落了测试并反向验证过：`test_不碰产物的工作流不许把output拉下来`、
+`test_稀疏检出之后git_add要带sparse`、`test_读产物的步骤不能排在sparse_add前面`。
+
+**找这个陷阱时又踩了一次「空结果先自证是真空」**：我写的探测脚本要求行里
+字面出现 `output/`，而 daily 那两行写的是 `$OUT_DIR/digest.json`——脚本报
+「0 处」，而我几分钟前刚亲眼看过那段代码。两个数对不上就说明是探测错了。
+
+### 冠名商在前的赛事名：级别表又漏了两站
+
+2026-07-31 那条 daily 红在 `[FATAL] 小红书正文过短: 279 < 300`，但**同一份
+质检里还有两条被忽略的 WARN**：
+
+    [WARN] 赛事级别未映射，整站 26 场未收录: Odlum Brown VanOpen（含中国球员 逯佳境）
+    [WARN] 赛事级别未映射，整站 14 场未收录: Axeria Open 2026 powered by Intaro Sport
+
+形状和洛斯卡沃斯那次是**反过来的**：那次表里记城市名、feed 给冠名全名；
+这两站的 feed 名里**一个城市字都没有**（`Odlum Brown` 是券商，`AXERIA` /
+`INTARO` 是保险和体育营销公司）。级别由 WTA 官网自证，不是看名字猜的：
+`wtatennis.com/tournaments/2064/vancouver-125/2026`（与 ATP Challenger 125
+合办）、`wtatennis.com/tournaments/1163/targu-mures-125/2026`。
+
+⚠️ 我按 `Axeria` 猜它在里昂，**查出来是罗马尼亚的特尔古穆列什**。赛事名
+猜地点要查，和「非空 ≠ 对题」是一回事。
+
+两件事要分开记，别像我一开始那样合成一条因果：
+
+- **映射上 ≠ 收进日报。** 日报的门槛是 `TOUR_FOCUS_LEVELS`，只有 250 及以上；
+  `WTA125` 映射之后照样在门外。所以补映射表**修不了那条 FATAL**——
+  正文过短是当天内容本来就少
+- **ATP 那半边故意留空**：温哥华的男子赛事是 Challenger，而级别词表里没有
+  Challenger 的码位（`atp_token` 只认 `M1000` 和纯数字），写 `"125"` 会解析成
+  `ATP125`——一个 ATP 巡回赛并不存在的级别。**宁可留着那半边的警告，
+  也别造一个假级别**
+
+判据在 `test_冠名商在前的赛事名也要认得出级别` 和 `test_WTA125不在日报的收录门槛里`。
+
 ### 判据扫得太宽，一天之内犯了四次——三次是被自己的注释误伤
 
 写「不碰产物的工作流不许把 output 拉下来」那条测试时，同一个形状连着踩：

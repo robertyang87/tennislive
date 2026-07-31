@@ -32,6 +32,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来**（1.36 GB）。这条只读——从仓库里已有的包
+          # 发微信，不生成也不提交——所以只要把它这次要读的那一格 add 回来。
+          sparse-checkout: |
+            data
+            src
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -64,6 +71,7 @@ jobs:
           else
             OUT_DIR="output/${DATE}"
           fi
+          git sparse-checkout add "${OUT_DIR}"
           test -s "${OUT_DIR}/push.html"
           test -s "${OUT_DIR}/xiaohongshu.txt"
           test -n "${PUSHPLUS_TOKEN}"

@@ -116,6 +116,19 @@ jobs:
       TENNISLIVE_COVER_HEADLINE_ATTEMPTS: ${{ vars.TENNISLIVE_COVER_HEADLINE_ATTEMPTS || '4' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半到三分钟。量过：run 30593080273 的 checkout 是 1:31，
+          # 而「生成每日内容包」只用了 1:40。
+          # 本次要写的那一格在下面 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - name: 手动任务同步最新主分支
         if: github.event_name == 'workflow_dispatch'
@@ -130,6 +143,12 @@ jobs:
           TODAY=$(TZ=Asia/Shanghai date +%F)
           OUT_DIR="output/$TODAY"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # **这一步要读 `$OUT_DIR` 里的文件，所以它得先进稀疏范围。**
+          # checkout 把整个 output/ 排除掉了（1.36 GB），不 add 回来的话下面
+          # 每一个 `[ -f ... ]` 都是假，`CONTENT_READY` 永远 false——幂等检查
+          # **永远不跳过**，于是备份班次会把当天的内容重新生成、微信重复推一遍。
+          # 它不报错，看起来只是「今天又跑了一次」。
+          git sparse-checkout add "$OUT_DIR"
           QA_FILE="$OUT_DIR/qa.txt"
           PUSHED_MARKER="$OUT_DIR/.pushplus_sent"
           CONTENT_READY=false
@@ -221,6 +240,9 @@ jobs:
           # 计算实际输出目录（北京时间日期）
           OUT_DIR=$(python -c "from tennislive.timeutil import parse_date_arg; print('output/' + parse_date_arg('$DATE_ARG').isoformat())")
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # 进 cone 要排在生成**之前**：`sparse-checkout add` 会把 HEAD 上
+          # 那一版先铺回工作区，铺完再生成才是对的顺序。
+          git sparse-checkout add "$OUT_DIR"
           # 内容一旦重新生成就不再是标记里对应的那份；旧推送标记必须清掉，
           # 否则备份班次会把"上一版内容推送过"误当成"这一版也推送过"而跳过。
           rm -f "$OUT_DIR/.pushplus_sent"
@@ -440,7 +462,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/ data/
+          # **必须带 `--sparse`**：裸的 `git add output/` 对 cone 外的路径
+          # 只警告、退出码 0，什么也不暂存，然后「没有变化」静默丢产物。
+          git add --sparse output/ data/
           if git diff --cached --quiet; then
             echo "没有新内容，跳过提交"
           else

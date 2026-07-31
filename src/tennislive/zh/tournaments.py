@@ -392,6 +392,20 @@ TOURNAMENT_LEVEL: dict[str, str] = {
     "open de rouen": "W250",
     "open occitanie": "250",
     "osaka": "W250",
+    # 冠名商在前、赛事名在后，城市名一个字都没有——正是「赛事级别的别名也要
+    # 按赛事名写」那条坑的形状（洛斯卡沃斯当年是反过来：表里记城市名，feed 给
+    # 冠名全名）。2026-07-31 那条 daily 的质检报了「整站 26 场未收录」，其中
+    # 含中国球员逯佳境。
+    # 级别由 WTA 官网自证：wtatennis.com/tournaments/2064/vancouver-125/2026，
+    # 与 2026 ATP Challenger 125 合办（en.wikipedia.org/wiki/2026_Odlum_Brown_Vancouver_Open）。
+    # ⚠️ 只登记 W 码：ATP 那半边是 Challenger，而这个词表里没有 Challenger 的
+    # 码位（`atp_token` 只认 M1000 和纯数字），写 "125" 会解析成 `ATP125`——
+    # 一个 ATP 巡回赛并不存在的级别。宁可留着那半边的警告，也别造一个假级别。
+    "odlum brown": "W125",
+    "vanopen": "W125",
+    # 特尔古穆列什（罗马尼亚）WTA125，不是里昂——我按名字猜过一次地点，猜错了。
+    # 出处：wtatennis.com/tournaments/1163/targu-mures-125/2026
+    "axeria open": "W125",
     "palermo": "W125",
     "palermo ladies open": "W125",
     "pan pacific open": "W500",
