@@ -202,6 +202,63 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "复制评论" not in page
 
 
+def _reel_specs():
+    return {p.stem: json.loads(p.read_text("utf-8"))
+            for p in sorted(Path("specs/reels").glob("*.json"))}
+
+
+def test_收尾要落在一问上不能停在数据上():
+    """账号所有者定的：「**不要平白地叙事**，要有饱满情感、激起共鸣和代入感……
+    同时能引爆人们传播」。
+
+    「饱满情感」测不了，但**产生它的那个结构测得了**：一条片子最后一句是什么。
+
+    停在比分和数据上，读者读完就走——那是赛报的收法。落在一问上，读者会在
+    评论区接话，而评论正是这类短片唯一能换来的传播。这和解说片那条
+    `末屏那个问题，旁白必须问出来` 是同一条规矩，只是当时漏了剪辑线。
+
+    **七条里六条本来就这么做了**，判据是把既有的好做法钉住，同时抓住那一次
+    失手：`wong-lehecka` 原来停在「排名差九十六位，生涯排名最高胜。」
+
+    ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
+    """
+    bad = []
+    for slug, spec in _reel_specs().items():
+        nars = [s["narration"] for s in spec["segments"] if s["narration"]]
+        if not nars:
+            continue
+        if "？" not in nars[-1][-30:]:
+            bad.append(f"{slug}: …{nars[-1][-26:]}")
+    assert not bad, (
+        "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
+
+
+def test_剪辑线的旁白也不解说画面():
+    """和解说片那条 `test_旁白不解说画面` 同一条规矩——**当时漏了剪辑线**。
+
+    剪辑线上这个毛病更容易犯，因为旁白本来就压在真实画面上，顺手就写成了
+    解说：`wong-lehecka` 原来那句「赛点，黄泽林在二区发出内角 Ace。**球落地，
+    他放下球拍，双手掩面。**」——后半句把观众正在看的东西又念了一遍。
+
+    改法不是删句子，是**把指画面的那半句去掉、事实留住**：那记 Ace 是事实，
+    「球落地／放下球拍／双手掩面」是画面。
+
+    注意这条**不禁止陈述画面外的事实**。休伊特那条片子里「他父亲在看台上看完
+    全场」是 ATP 官方报道核过的事实，而集锦里并没有莱顿的镜头——这正是
+    「画面负责一眼看懂，旁白负责讲清楚」的分工，不在禁止之列。
+    """
+    pointing = re.compile(
+        r"画面(里|上|中|就是)|镜头(里|中)|图为|这张图|图片里|"
+        r"球落地[，,]他|你(现在)?看到的")
+    bad = []
+    for slug, spec in _reel_specs().items():
+        for seg in spec["segments"]:
+            m = pointing.search(seg["narration"] or "")
+            if m:
+                bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
+    assert not bad, "旁白在解说画面：\n  " + "\n  ".join(bad)
+
+
 def test_成片的编码参数不许为了压体积往下调():
     """账号所有者 2026-07-29 定的：「**不要舍弃画质，没有硬性要求 20mb**」。
 
