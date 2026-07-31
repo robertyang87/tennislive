@@ -311,7 +311,9 @@ def test_收尾要落在一问上不能停在数据上():
     """
     bad = []
     for slug, spec in _reel_specs().items():
-        nars = [s["narration"] for s in spec["segments"] if s["narration"]]
+        # `.get`：原声段（`quote`）根本没有 narration 这个键
+        nars = [s.get("narration", "") for s in spec["segments"]]
+        nars = [n for n in nars if n]
         if not nars:
             continue
         if "？" not in nars[-1][-30:]:
@@ -343,9 +345,11 @@ def test_旁白不许用指示语指画面():
     bad = []
     for slug, spec in _reel_specs().items():
         for seg in spec["segments"]:
-            m = pointing.search(seg["narration"] or "")
-            if m:
-                bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
+            # 原声段的中文字幕（`quote`）也是我们写的，一样受这条管
+            for text in (seg.get("narration") or "", seg.get("quote") or ""):
+                m = pointing.search(text)
+                if m:
+                    bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
     assert not bad, "旁白用指示语指画面：\n  " + "\n  ".join(bad)
 
     # 反面锚点：这句必须**过**——它是描述动作和情绪，不是指示语
