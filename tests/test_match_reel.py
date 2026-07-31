@@ -71,6 +71,9 @@ def test_中间物一个都不许进仓库():
         "source.f137.mp4.part",       # ← 真正漏掉过的那个，DASH 视频流半成品
         "source.f251.webm",           # 音频流，另一种后缀
         "source.f140.m4a",
+        # 多源之后每条源片各带一个键：加多源时改了下载的落盘名，没改清理，
+        # 三条源片 250 MB 全靠兜底拦下（run 30603686748）。第四次同一个形状。
+        "source_r1.mp4", "source_iv.mp4", "source_r2.f616.webm",
         "_cover.jpg", "_cover.html",  # 封面渲染输入，data URI 内嵌，单个 12 MB
         "poster.html",
         "voice_03.mp3",

@@ -284,14 +284,16 @@ jobs:
           # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
           # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
           # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
-          # **`.part` 也要删**：yt-dlp 分轨下载留下的 `source.fNNN.mp4.part`
-          # 不叫 source.mp4，躲过了上面那两个名字，10 MB 就这么进了仓库
-          # （probe wang-pareja 那次）。按后缀删，别按名字列。
-          # 同一个漏在 eala-zheng 和 potapova-venus 上又各中一次，一并补上两种
-          # 还没见过的：分轨的 webm，和 yt-dlp 的续传记录 .ytdl。
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 "$OUTDIR"/*.part \
-            "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
-            "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
+          # **`source*` 一整片删掉，不要逐个列名字。** 这个坑连着栽了四次，
+          # 每次都是同一个形状：源片换了个名字，就从清单里溜过去了。
+          #   1. `source.fNNN.mp4.part`（yt-dlp 分轨下载的半成品，probe wang-pareja）
+          #   2. 同一个漏在 eala-zheng、potapova-venus 上各中一次
+          #   3. 分轨的 `.webm` 和 yt-dlp 的续传记录 `.ytdl`
+          #   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时
+          #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
+          #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
+          # 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。
+          rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
             "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg "$OUTDIR"/_subs*
           rm -rf "$OUTDIR"/frames
