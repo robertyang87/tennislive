@@ -1504,3 +1504,37 @@ def test_没有名字是凭空来的():
     assert proc.returncode == 0, (
         "有名字是凭空来的（F821）——这类错 py_compile 和 pytest 都看不见，"
         f"只会在真跑到那一行时炸：\n{proc.stdout}{proc.stderr}")
+
+
+def test_封面抽帧抠图那条路要真的被调用一次(tmp_path, monkeypatch):
+    """**「写了」不等于「跑过」。**
+
+    `_cut_person(source, …)` 里的 `source` 在 `build_versus_poster` 的作用域里
+    从来就不存在（它拿的是 `sources` 字典加 `primary`）——「封面人物首选本场
+    抽帧」合并了、写进文档了、还带着测试，却**一次都没跑起来过**。
+
+    那条测试是 `assert "def _cut_person(" in reel`：**它证明的是这段代码被写
+    出来了，不是它跑得起来**。所以这儿改成真调用一次，让那一行真的执行。
+
+    走的是「源片键写错」这个分支：它在碰 ffmpeg / rembg 之前就返回，沙箱里跑
+    得动，而**要执行到那句报错，`sources` 和 `primary` 必须都在作用域里**——
+    正是当初炸掉的那两个名字。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    # `_grab` 会 shell 出去抓帧，沙箱没有 ffmpeg 也不需要真抓——它只按约定
+    # 返回路径。挡掉之后就能走到下面那个循环。
+    monkeypatch.setattr(reel, "run", lambda *a, **k: None)
+
+    cover = {
+        "layout": "cutout",
+        "versus": {
+            "background": {"frame_at": 12.0, "shot": "wide_court"},
+            "top": {"frame_at": 30.0, "source": "拼错的键"},
+            "bottom": {"cutout": "assets/reel/lleyton-vicht-inset.png"},
+        },
+    }
+    with pytest.raises(reel.ReelError, match="拼错的键"):
+        reel.build_versus_poster({"r1": Path("a.mp4")}, "r1", cover,
+                                 tmp_path / "part_cover.mp4")
