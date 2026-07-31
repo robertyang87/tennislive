@@ -991,3 +991,36 @@ def test_抽帧抠图要同时改代码工作流和预检():
     check = body.index("_preflight_cutout(spec)")
     download = body.index('with stage("下载源片")')
     assert check < download, "预检排在下载之后——又是下完 64MB 才报错"
+
+
+def test_挑帧要在probe那一步跑并且整帧不进仓库():
+    """`pick_cover_frames.py` 得**在 runner 上**跑，而且只留候选墙。
+
+    源片只在 runner 上有——沙箱下不动 YouTube。这一步不在 probe 里做，挑帧就
+    只能拿 2 秒一格的缩略图墙用肉眼找正脸，而那正是这个工具要替掉的活。
+
+    整帧不进仓库。量出来的（1920×1080 转播帧）：PNG 单张 0.7~0.8 MB、12 张
+    约 9 MB；q92 的 JPEG 单张 132 KB、12 张 1.6 MB。**两种都过得了清理那道
+    「单个 8 MB」的兜底**，却是每探一次就往仓库里加一份——和 `.part` 那次是
+    同一个毛病：按单张尺寸设的闸拦不住按批次累积的量。
+    """
+    flow = WORKFLOW.read_text(encoding="utf-8")
+    assert "tools/pick_cover_frames.py" in flow, "probe 不出封面候选帧"
+    steps = _steps(flow)
+    probe = next(i for i, n in enumerate(steps) if "缩略图墙" in n)
+    picks = next(i for i, n in enumerate(steps) if "封面候选帧" in n)
+    clean = next(i for i, n in enumerate(steps) if "丢掉不进仓库的中间物" in n)
+    assert probe < picks < clean, f"挑帧要排在下载之后、清理之前：{steps}"
+
+    cleanup = flow[flow.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    pats = re.findall(r'"\$OUTDIR"/(\S+)', cleanup)
+    pats = [p.rstrip("\\").strip() for p in pats if p.strip()]
+    assert any(fnmatch("cover_candidates/cand_00_t12.5.jpg", p) for p in pats), (
+        f"候选整帧不会被清理掉，每探一次往仓库里加 5 MB。现有模式：{pats}")
+    for keep in ("cover_candidates/sheet.jpg", "cover_candidates/candidates.json"):
+        assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
+
+    # 候选帧存 JPEG，候选墙一格要够大——它是唯一进仓库的那份
+    text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
+    assert 'f"cand_{i:02d}_t{rec[\'t\']}.jpg"' in text, "候选帧还在存 PNG，单张 2~3 MB"
+    assert "tw = 640" in text, "候选墙一格太小，判不了「能不能看到表情」"

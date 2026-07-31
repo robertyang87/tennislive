@@ -255,6 +255,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
+      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
+      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
+      # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
+      # 候选墙，不自动写进 spec。
+      # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
+      # 缩略图墙那条老路还在。
+      - name: probe — 封面候选帧
+        if: github.event.inputs.mode == 'probe'
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          python tools/pick_cover_frames.py \
+            --video "$OUT/source.mp4" \
+            --out "$OUT/cover_candidates" \
+            --top 12 || true
+          ls -la "$OUT/cover_candidates" 2>/dev/null || true
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -302,11 +320,15 @@ jobs:
           # 还没见过的：分轨的 webm，和 yt-dlp 的续传记录 .ytdl。
           # `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
           # `_versus_cut_top.png`——又一次「逐个列名字挡不住猜不出来的那些」。
+          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
+          # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
+          # 那道兜底**，却每探一次就加一份。
           rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 "$OUTDIR"/*.part \
             "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
             "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
-            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_* \
+            "$OUTDIR"/cover_candidates/cand_*
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
