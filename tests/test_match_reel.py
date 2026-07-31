@@ -944,6 +944,15 @@ def test_栏目和封面模板要配对():
                 (cover.get("portrait") or {}).get("frame_at") is not None, \
                 f"{path.name} 的 solo 封面没有 portrait"
             assert "versus" not in cover, f"{path.name} 是 solo，不该还有 versus"
+            # 上下叠一张的变体（父子做同一个动作那种）：上格也要有图和名字，
+            # 否则渲出来是半张空白，**而且不报错**——cover 铺不满就露底色。
+            above = cover.get("portrait_above") or {}
+            if above:
+                assert above.get("image"), f"{path.name} 的 portrait_above 没有图"
+                assert Path(above["image"]).is_file(), above["image"]
+                assert above.get("name"), (
+                    f"{path.name} 的上格没写 name——两张脸摆在一起而没有名字，"
+                    "等于让读者猜上面那个是谁")
             assert not cover.get("result"), (
                 f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
                 "那是最后一拍，印在封面上等于先把结局说了")

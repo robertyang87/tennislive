@@ -228,6 +228,18 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     focus = float(art.get("focus", 0.5)) * 100
     focus_y = float(art.get("focus_y", 0.5)) * 100
     zoom = float(art.get("zoom", 1.0)) * 100
+    # **上下叠一张的变体**：`cover.portrait_above` 有图时，画幅分成两格，
+    # 上格是另一个人、下格是主角，中间一道品牌绿。
+    #
+    # 这是给「这条片子讲的就是两个人做同一件事」用的——休伊特那条的父子同一个
+    # 庆祝动作。Tennis TV 自己发过同一个构图（标题 THE HEWITT CELEBRATION），
+    # 那张**不能直接用**（带他们的台标和横幅，把别人的包装摆在我们台头下面），
+    # 但构图是对的：**上下并排比左右并排好**，因为竖版画幅本来就是上下长。
+    #
+    # 和「赛场之上」的 VS 海报不是一回事：VS 讲的是两个人**对打**，这里讲的是
+    # 两个人**做同一件事**，所以没有中缝斜切、没有 VS 圆牌、没有两个名字并列，
+    # 只有一道平直的分界线和各自一枚小名条。
+    above = cover.get("portrait_above") or {}
     icon = Path("assets/logo/brand/icon.png")
     icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
                  if icon.is_file() else "")
@@ -239,23 +251,49 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     # 而钩子本来已经手写好了断行，再折一次就多出一个孤行。
     title_px = min(96, int(940 / max((len(ln) for ln in lines), default=1)))
     column = html.escape(str(cover.get("eyebrow", "网球有故事")))
+    if above:
+        if not above.get("image"):
+            raise SystemExit("portrait_above 要 `image`：上格那个人的一张实拍。")
+        asrc = _precrop(Path(above["image"]), above)
+        split = float(cover.get("split", 0.47)) * 100
+        hero = (f'<div class="hero hero-a"></div><div class="hero hero-b"></div>'
+                f'<div class="hseam" style="top:{split:.1f}%"></div>')
+        if above.get("name"):
+            hero += (f'<div class="pname pn-a" style="top:{split:.1f}%">'
+                     f'{html.escape(str(above["name"]))}</div>')
+        if cover.get("subject"):
+            hero += (f'<div class="pname pn-b" style="top:{split:.1f}%">'
+                     f'{html.escape(str(cover["subject"]))}</div>')
+        stack_css = (
+            f".hero-a{{bottom:{100 - split:.1f}%;"
+            f"background-image:url('{_data_uri(asrc)}');background-size:cover;"
+            f"background-position:{float(above.get('focus', .5)) * 100:.1f}% "
+            f"{float(above.get('focus_y', .5)) * 100:.1f}%}}"
+            f"\n.hero-b{{top:{split:.1f}%;"
+            f"background-image:url('{uri}');background-size:cover;"
+            f"background-position:{focus:.1f}% {focus_y:.1f}%}}")
+    else:
+        hero = '<div class="hero"></div>'
+        stack_css = ""
     body = (
-        f'<div class="hero"></div><div class="scrim"></div><div class="bar"></div>'
+        f'{hero}<div class="scrim"></div><div class="bar"></div>'
         f'<div class="head"><div class="brandwrap">{icon_html}'
         f'<div class="brandlines"><span class="brand">网球时差 · {column}</span>'
         + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
         + f'</div></div></div>'
         f'<div class="storycopy"><span class="kicker">{column}</span>'
         f'<div class="storytitle">{hook}</div></div>')
+    solo_bg = "" if above else (
+        f"background-image:url('{uri}');background-size:cover;"
+        + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
+        + f"background-position:{focus:.1f}% {focus_y:.1f}%")
     extra = (
         # 照片铺满。`zoom` 留着给「人在画面里太小」的素材再推一档，默认 1.0。
         f".hero{{position:absolute;inset:0;background-repeat:no-repeat;"
-        f"background-image:url('{uri}');background-size:cover;"
-        + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
-        + f"background-position:{focus:.1f}% {focus_y:.1f}%}}"
+        f"{solo_bg}}}" + stack_css
         # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
         # 封面必须是同一个样子，各调各的就会慢慢漂开。
-        """
+        + """
 .scrim{position:absolute;inset:0;background:
  linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
   rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
@@ -278,6 +316,15 @@ def _solo_body(cover: dict) -> tuple[str, str]:
 .storycopy{position:absolute;left:70px;right:70px;top:50%;
  transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;
  gap:34px;align-items:flex-start}
+.hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
+ transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
+.pname{position:absolute;right:34px;z-index:5;background:rgba(4,18,13,.82);
+ color:#f4fbf7;font-family:'TL Sans SC',sans-serif;font-size:30px;
+ font-weight:700;letter-spacing:2px;padding:8px 20px;border-radius:8px}
+/* 两枚名条都挂在分界线上：上格那枚往上顶、下格那枚往下压。
+   下格原来写 `top:0`——那是**整幅画布的顶**，于是它跑到台头旁边去了。 */
+.pn-a{transform:translateY(-142%)}
+.pn-b{transform:translateY(26px)}
 .kicker{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
  font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px}
 .storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
@@ -285,7 +332,12 @@ def _solo_body(cover: dict) -> tuple[str, str]:
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7)}
 """
-        + f".storytitle{{font-size:{title_px}px}}")
+        + f".storytitle{{font-size:{title_px}px}}"
+        # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
+        # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
+        # 追加在最后，同特异性下后写的赢。
+        + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
+           if above else ""))
     return body, extra
 
 
