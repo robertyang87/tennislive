@@ -43,6 +43,45 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
+def test_复制页排在渲染之前而且当场提交():
+    """**它不依赖成片，所以没有理由排在成片后面等。**
+
+    `push_reel.py --stage page` 的内容只来自 `specs/reels/<slug>.xhs.txt` 和
+    从 spec 算出来的标题——全程没碰过 mp4。可它原来排在渲染之后，于是 Pages
+    要等渲染 + 提交都完事才开始发布，推送那一步只能站着等：run 30624808733
+    的日志是连续 12 次 `HTTP 404`、第 13 次才中，**240 秒纯空转**，占了整条
+    十六分钟 run 的四分之一。
+
+    挪到渲染前面并**当场提交**，Pages 的发布就和七分二十二秒的渲染并行了。
+    两件事都要钉住——只挪写、不挪提交，Pages 照样要等到最后那次提交才动。
+
+    顺带钉住第二个好处：这一步是标题字数、tag 个数、spec 有没有 push 块的
+    第一道校验，排在渲染前面意味着这些错死在第 3 分钟而不是第 12 分钟。
+    """
+    names = _steps(WORKFLOW.read_text(encoding="utf-8"))
+    page = next(i for i, n in enumerate(names) if "写复制页" in n)
+    page_commit = next(i for i, n in enumerate(names) if "提交复制页" in n)
+    render = next(i for i, n in enumerate(names) if n.startswith("render"))
+    assert page < page_commit < render, (
+        f"复制页要「写→提交」都排在渲染之前，现在是 {names}")
+
+
+def test_复制页那一步不挑推不推送():
+    """分支上渲的片子也要把复制页带上，否则 push-reel 又得现写现等。
+
+    渲染那次不写复制页，它就只能在推送那一刻才第一次进仓库——Pages 从零开始
+    发布，又是四分钟的原地等待。写它几乎不要钱（一个 HTML 文件），而它决定了
+    后面那条三分钟的推送要不要退回十几分钟。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    for step in ("写复制页", "提交复制页"):
+        block = text[text.index(f"- name: {step}"):].split("\n      - name:")[0]
+        assert "inputs.push == 'true'" not in block, (
+            f"「{step}」挂在 push=true 上了——分支上渲的片子就带不上复制页，"
+            "合进 main 之后 push-reel 还得现写现等 Pages")
+        assert "inputs.mode == 'render'" in block, f"「{step}」没限定在 render 模式"
+
+
 def test_中间物一个都不许进仓库():
     """清理这一步要**盖住**这些文件，而不是**逐字列出**它们。
 
@@ -1761,3 +1800,166 @@ def test_封面跟着配音走只给网球有故事():
         column = str(spec.get("column") or cover.get("eyebrow") or "")
         if "赛场之上" in column:
             assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
+
+
+PUSH_WORKFLOW = Path(".github/workflows/push-reel.yml")
+
+
+def _yaml_only(text: str) -> str:
+    """去掉整行注释。
+
+    工作流里的注释是这个仓库记教训的地方，正文里必然写着当年那些错值
+    （`伊埃拉 vs 郑钦文`）和不该装的东西（ffmpeg）。连注释一起扫，
+    「把坑记下来」就会被判成「又踩了这个坑」——判据宁可窄，不可宽。
+    """
+    return "\n".join(ln for ln in text.splitlines()
+                      if not ln.lstrip().startswith("#"))
+
+
+def test_推送元数据从spec读工作流不许挂上一条片子的默认值():
+    """**对阵和比分本来就在 spec 里**，标题没有理由让人再打一遍。
+
+    海报的两个名字读 `cover.versus.names`，比分读 `cover.result`——而工作流
+    一直让人在 `--matchup "黄泽林 vs 布鲁克斯比" --score "6-1 7-5"` 里把同样
+    两件事再敲一遍。这就是 `column_of` 那条注释讲的「栏目只有一个出处」，
+    在这两项上一直没做。
+
+    两处写的代价不是抽象的：这几个输入的默认值挂的是**上一条片子的**
+    （`伊埃拉 vs 郑钦文`、`郑钦文首轮出局`），漏传一项就拿另一场球的标题把
+    这条片子发出去——而微信那条消息发出去就收不回来。
+
+    还有一层，复制页和微信正文现在分在两次 run 里跑，
+    `wait_for_copy_page(expect=title)` 要求两次算出**同一句标题**：
+    从 spec 读必然相同，靠人两次都敲对不必然。
+
+    判据是「算出来的标题和已经发出去的那句一模一样」，不是「代码里有那个函数」
+    ——查源码文本的断言只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # 两条已发的片子，一条 VS 版式一条 solo，标题要原样重现
+    for slug, outdir, want in (
+        ("wong-brooksby", "output/2026-07-31/reel/wong-brooksby",
+         "7.31 赛场之上 | 黄泽林首进ATP四强"),
+        ("hewitt-washington", "output/2026-07-31/reel/hewitt-washington",
+         "7.31 网球有故事 | 休伊特之子做了那个动作"),
+    ):
+        copy_path = Path(f"specs/reels/{slug}.xhs.txt")
+        meta = push_reel.push_meta(copy_path)
+        got = push_reel.headline(Path(outdir), push_reel.column_of(copy_path),
+                                 meta["matchup"], meta["score"], meta["event"],
+                                 meta["summary"])
+        assert got == want, f"{slug} 从 spec 算出来的标题是「{got}」，发出去的是「{want}」"
+
+    # 没写 push 块的老 spec 也要能算出对阵——它是从 cover 来的，不靠新字段
+    old = push_reel.push_meta(Path("specs/reels/wong-lehecka.xhs.txt"))
+    assert old["matchup"] == "黄泽林 vs 莱赫奇卡" and old["score"] == "1-6 6-3 6-4"
+
+    # 工作流的默认值不许再是某条具体片子的内容。
+    # **只看 YAML 的值，不看注释**——注释里正要讲这些值当年错在哪儿，
+    # 连注释一起扫会把「记下这个坑」判成「又踩了这个坑」。
+    inputs = _yaml_only(WORKFLOW.read_text(encoding="utf-8").split("permissions:")[0])
+    for stale in ("伊埃拉 vs 郑钦文", "郑钦文首轮出局", "2:1"):
+        assert stale not in inputs, (
+            f"工作流输入里还挂着「{stale}」——那是上一条片子的内容，"
+            "漏传一次就拿另一场球的标题发出去")
+
+
+def test_写错的push字段要报错不许悄悄不生效():
+    """`sumary` 写漏一个 m，标题就悄悄退回「对阵 + 比分」——而那和「这条片子
+    本来就没写 summary」长得一模一样。**兜底出事的时候不吭声**是这个仓库
+    反复踩的那个坑，所以认不出来的字段一律报错。
+
+    `_` 开头的是写给下一个人的备注（仓库里到处都是 `_why`），不算字段。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    import tempfile  # noqa: PLC0415
+
+    # 存量 spec 里的 push 块都得认得出来，每条都要真跑一遍
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        push_reel.push_meta(path.parent / f"{path.stem}.xhs.txt")
+
+    def _meta_for(push_block):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "x.json").write_text(json.dumps(
+                {"cover": {"eyebrow": "赛场之上",
+                           "versus": {"names": ["甲", "乙"]}},
+                 "push": push_block}, ensure_ascii=False), encoding="utf-8")
+            (root / "x.xhs.txt").write_text("标题\n\n正文", encoding="utf-8")
+            return push_reel.push_meta(root / "x.xhs.txt")
+
+    with pytest.raises(SystemExit, match="认不出来的字段"):
+        _meta_for({"sumary": "打错了"})
+    # 备注不算字段，也不能被当成值灌进去
+    assert _meta_for({"_why": "写给下一个人的", "summary": "对的"})["summary"] == "对的"
+
+
+def test_推送不用重渲一遍():
+    """**合进 main 之后重跑整条 match-reel，等于把七分钟的渲染白付一遍。**
+
+    判据摆得很干净：wong-brooksby 在 PR #108（分支上渲的）里是 55,028,417
+    字节，run 30623994190 在 main 上重渲出来是 55,028,980 字节——差 563 字节
+    的同一条片子，外加往仓库里再塞一个 55 MB 的 blob。hewitt-washington 同样
+    来了一次（56,953,265 → 57,297,653）。.git 涨到 1.77 GiB、checkout 每次要
+    两分多钟，就是这么攒出来的。
+
+    所以要有一条**只推送、不渲染**的线：它不下载源片、不合成语音、不装
+    Chromium/ffmpeg/OpenCV，失败重跑三分钟。
+    """
+    assert PUSH_WORKFLOW.is_file(), "没有只推送的工作流，合进 main 就只能重渲"
+    text = PUSH_WORKFLOW.read_text(encoding="utf-8")
+
+    # 不许把渲染那套东西拖进来——拖进来它就不是三分钟了。
+    # 同样只看 YAML 的值：注释里写着「这里不装 ffmpeg/Chromium」，那是判据本身。
+    body = _yaml_only(text)
+    for heavy in ("build_match_reel", "yt-dlp", "edge-tts", "playwright",
+                  "ffmpeg", "visualqa", "cutout", "webrender"):
+        assert heavy not in body, f"只推送的工作流里出现了 {heavy}，它不该渲染任何东西"
+
+    # Pages 只服务 main，这道闸和 match-reel 那道同一个理由、同一个位置
+    guard = "- name: 只能在 main 上跑"
+    assert guard in body, "没有这道闸"
+    assert body.index(guard) < body.index("actions/checkout@v4"), (
+        "这道闸排在 checkout 后面了")
+    block = body[body.index(guard):].split("- name:")[1]
+    assert "github.ref_name != 'main'" in block and "exit 1" in block
+
+    # 查产物不查信号：成片和文案真的在这个目录里才推
+    assert ".mp4" in body and "找不到成片" in body
+
+
+def test_checkout不许把整个output拉下来():
+    """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要 1 分 35 秒到
+    2 分 44 秒（run 30622667742 / 30624808733）——而渲染一个字节都用不到
+    别人的成片。
+
+    稀疏检出把它挡在外面，剩下的全部加起来 161 MB。本次的 outdir 由
+    「算出目录」那一步 `git sparse-checkout add` 进来（新目录没有历史 blob
+    要下；重渲已有的片子才取它自己那几十 MB）。**两半都要在**：只写
+    `sparse-checkout` 不 add，`git add "$OUTDIR"` 会被判在稀疏范围之外。
+
+    ⚠️ 排除的只有 `output`。assets 155 MB 看着也不小，但它是渲染真要读的
+    东西——少一个就是第 5 分钟才炸的 FileNotFoundError。
+    """
+    for path in (WORKFLOW, PUSH_WORKFLOW):
+        text = path.read_text(encoding="utf-8")
+        head = text[:text.index("actions/setup-python@v5")]
+        assert "sparse-checkout:" in head, f"{path.name} 的 checkout 没做稀疏检出"
+        listed = head[head.index("sparse-checkout:"):]
+        assert "\n            output\n" not in listed, (
+            f"{path.name} 把整个 output/ 列进了稀疏范围，1.36 GB 又要下一遍")
+        assert "git sparse-checkout add" in text, (
+            f"{path.name} 没把本次的 outdir 加进稀疏范围，git add 会被判在范围之外")
+
+    # 渲染要读的那几个目录一个都不能少
+    text = WORKFLOW.read_text(encoding="utf-8")
+    listed = text[text.index("sparse-checkout:"):text.index("- uses: actions/setup-python")]
+    for needed in ("assets", "data", "specs", "src", "tools"):
+        assert f"\n            {needed}\n" in listed, (
+            f"稀疏检出漏了 {needed}/——渲染读它，少了就是第 5 分钟才炸")
