@@ -7,6 +7,15 @@ The machine-readable author, license, and source records live in `credits.json`.
 Event-specific schedule backgrounds are cropped and darkened by the renderer;
 the photographs are not otherwise altered.
 
+## `adelaide-centre-court.jpg`
+
+- Title: 纪念大道公园中心球场 · 满场，场地前场刷着 ADELAIDE
+- Author: Tennis Australia 官方图库
+- Source: https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--c42ebf2c-6c1d-4667-aba1-21221d7a24b4/adelaide-summer-of-tennis-court.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：场地前场刷着 ADELAIDE，围板一圈是本站赞助带。一张管两站——1 月的 WTA500 与 ATP250 同场地。⚠️ 同布里斯班：源图 1200×800 封顶，竖版卡 1.8× 放大。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `ao-rod-laver-arena.jpg`
 
 - Title: File:RodLaverArenanight2013.jpg
@@ -32,6 +41,15 @@ the photographs are not otherwise altered.
 - Note: ⚠️ 换掉了一张**赛事本身就搞错了**的图。上一版用的是 Telekom Center Athens 的室内蓝场——那是 ATP 的 Hellenic Championship（2025 年 11 月，室内），而 manifest 这一条对应的是 **WTA 250 的 Athens Open**：2026 年 7 月 13–19 日、露天硬地、打在 Athens Olympic Tennis Centre（WTA 官方页 /tournaments/1175/athens/，赛事官网 athens-open.com/venue 也写着 OAKA）。同城不同赛事不同场地，和「ATV Bancomat 印成维罗纳」是同一类错
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `auckland-centre-court.jpg`
+
+- Title: ASB 网球中心中心球场 · 满场，场地上写着 AUCKLAND / TĀMAKI MAKAURAU
+- Author: asbclassic.co.nz 官方图库
+- Source: https://www.asbclassic.co.nz/-/media/sites/tournaments/auckland/news/finals-stadium-generic.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：场地上刷着 AUCKLAND 和毛利语地名 TĀMAKI MAKAURAU，看台横幅 ASB CLASSIC，背景是奥克兰天际线。3600×2400，是这一批里最大的一张。一张管两站——1 月的 ATP250 与 WTA250 同场地。官网走 ATP 的 Sitecore（/-/media/sites/tournaments/auckland/），和斯德哥尔摩同一套；**斯德哥尔摩那站这条路只有合作方 logo 和球员头像，奥克兰这站却有场馆图**——同一个 CMS 不等于同样的内容，要一站一站看。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `basel-st-jakobshalle.jpg`
 
 - Title: St. Jakobshalle 中心球场 · 满场（场地前场刷着 BASEL）
@@ -54,6 +72,15 @@ the photographs are not otherwise altered.
 - Author: unknown（新浪体育转载）
 - Source: https://n.sinaimg.cn/spider20231005/214/w2048h1366/20231005/0a57-133e0b7b85e05c9a50f65167521a5b79.jpg
 - License: unverified · 新闻站转载，作者未署名
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `brisbane-centre-court.jpg`
+
+- Title: 帕特·拉夫特球场（昆士兰网球中心）· 满场
+- Author: Tennis Australia 官方图库
+- Source: https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--29ecf2d2-3d24-4378-a734-13a92a329a35/brisbane-international-pat-rafter-arena.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：文件名由赛事方自己写着 brisbane-international-pat-rafter-arena，围板 ANZ / Queensland Australia。一张管两站——1 月的 WTA500 与 ATP250 同场地。⚠️ 代价：源图上限就是 1200×800（ 也只给 1200），竖版卡要 1.8× 放大，比同批其他站软。Tennis Australia 三站（布里斯班/阿德莱德/霍巴特）共用 tennis.com.au 的 Adobe Dynamic Media，URL 上的  可调但不会超过源图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `brussels-centre-court.jpg`
@@ -319,6 +346,15 @@ the photographs are not otherwise altered.
 - Source: https://ilmondodeltennis.com/2022/07/torneo-internazionale-al-circolo-antico-tiro-a-volo/
 - License: unverified · 新闻站转载
 - Note: 这一站原来被标成「维罗纳 · 意大利」并配了维罗纳圆形竞技场——赛事名里的 ATV 是 Antico Tiro a Volo（罗马的俱乐部），不是 Associazione Tennis Verona。WTA 自己的赛事页就是 /tournaments/1130/rome/
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `rotterdam-centre-court.jpg`
+
+- Title: 鹿特丹 Ahoy 中心球场 · 满场，从高处俯瞰整个碗
+- Author: Alyssa van Heyst / abnamro-open.nl 官方图库
+- Source: https://www.abnamro-open.nl/files/images/2027/AAO_260215_Alyssa%20van%20Heyst_3545.jpg
+- License: unverified · 赛事官方媒体库
+- Note: 自证：环场 LED 带上是 ABN AMRO OPEN，以及这项赛事的历届冠军名录（'05 FEDERER / '06 STEPANEK / '07 YOUZHNY / '08 LLODRA / '16 MURRAY…），场边围板 ABN·AMRO / LEXUS。室内夜场，均值 29、中位 19——和已入库的巴塞尔（30 / 7）同一档，球场本身打了灯，压完遮罩整个碗仍然读得出来。官网不是 WordPress，图在 /files/images/<年>/ 下，靠 Playwright 渲染首页拿到路径；DOM 里显示的是 1600×640，**直接取那个 URL 才是 2400×1600 的原图**。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `sao-paulo-centre-court.jpg`
