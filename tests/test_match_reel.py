@@ -80,6 +80,9 @@ def test_中间物一个都不许进仓库():
         # yt-dlp 落的字幕原文件。名字由它自己拼（`_subs.en.vtt` / `_subs.en-orig.json3`
         # / 猜不到的第三种），所以**按前缀删**——这正是 `.part` 那次的教训。
         "_subs.en.vtt", "_subs.en-orig.json3",
+        "_versus_bg.jpg",             # 背景抓帧
+        "_versus_cut_top.png",        # 抽帧抠图，**后缀和上一个不一样**
+        "_versus_raw_bottom.png",     # 抠之前那张原帧，报错时会留下
     ]
     for name in must_die:
         assert any(fnmatch(name, p) for p in pats), (
@@ -88,8 +91,10 @@ def test_中间物一个都不许进仓库():
     # **poster.jpg 要留下**：推送正文第一屏就是它，删了推送里一张图都没有。
     # 成片同理——它就是产物本身。captions.txt / captions_debug.txt 也是产物：
     # 一个是选段用的，一个是「为什么没拿到」的判据，都要跟着提交。
+    # render.json 也是产物：封面停多久现在跟着配音走，**光看 spec 算不出来**，
+    # check_reel_landed 拿它对片长。删了就只能拿常量猜。
     for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json",
-                 "captions.txt", "captions_debug.txt"):
+                 "captions.txt", "captions_debug.txt", "render.json"):
         assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
 
 
@@ -1110,9 +1115,13 @@ def test_封面固定版式是官方抠图加本场视频全场机位():
         assert background.get("shot") == "wide_court", (
             f"{path.name} 的 cutout 背景必须是能看清整片球场的底线全场机位")
         for key in ("top", "bottom"):
-            cut = Path(versus[key]["cutout"])
+            panel = versus[key]
+            # 人物有两个来源，**首选本场抽帧**（见 test_封面人物首选本场抽帧）。
+            # 官方棚拍图仍然认，那是源片里挑不出近景时的兜底。
+            if panel.get("frame_at") is not None:
+                continue
+            cut = Path(panel["cutout"])
             assert cut.is_file(), f"{path.name} 的 {key} 格找不到抠图 {cut}"
-            assert "frame_at" not in versus[key], f"{path.name} 的 {key} 格还在抽帧"
 
     # 抠图的脚**按各自的横向位置**落在斜线上：线是 -7.4°，左端低右端高。
     # 两边都用同一个 y，右边那个会浮起来 2·(0.71-0.29)·540·tan7.4° ≈ 59px。
@@ -1225,3 +1234,199 @@ def test_角标把两件事放进同一帧():
     body = Path(reel.__file__).read_text(encoding="utf-8")
     assert 'f"{null_idx}:a:0"' in body, "补位静音的输入索引写死了，插入角标后会取错流"
     assert "null_idx = 2 if ins else 1" in body
+def test_封面人物首选本场抽帧():
+    """封面的两个人**首选从本场源片抠**，官方棚拍图退居兜底。
+
+    账号所有者的原话：「因为更贴近比赛的服装，感觉会更好，用之前资料就有点
+    脱节」。棚拍图的衣服、光、背景都跟这场球没关系，压在本场画面上像两张贴纸。
+
+    顺带还赢在分辨率，这个能量（模板槽位 634px 高）：
+
+        ATP 官方棚拍 裁到胯   265×410   → 1.55× **放大**
+        本场抽帧              660×1040  → 0.61× 缩小
+
+    看着"正规"的棚拍图其实是全套素材里最软的一档。
+
+    挑帧的三条判据是账号所有者给的，落在 `tools/pick_cover_frames.py`：
+    **正脸或稍微侧脸、上半身直立、表情读得出**。
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    poster = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+
+    assert "def _cut_person(" in reel, "没有从源片抠人的那条路"
+    # **`post_process_mask=True` 不能省**：不加的时候深色球衣压在深色背景墙上会
+    # 留一整块方底，渲到海报上是一个看得见的矩形边。那不是模型不行，是后处理没开。
+    assert "post_process_mask=True" in reel, (
+        "抠图没开 post_process_mask——深色球衣会留一整块方底")
+    assert 'CUT_MODEL = "isnet-general-use"' in reel, (
+        "换模型要重新把 alpha 摊在棋盘格上看边：u2net 把发梢切平了一条")
+    # 报错要把「首选抽帧」说出来，否则下一个人只会看到两条棚拍图的 URL
+    anchor = "cutout 版式的 {key} 格"
+    assert "frame_at" in reel[reel.index(anchor):reel.index(anchor) + 700]
+    assert "首选本场抽帧" in poster, "海报模块的报错没指出首选是抽帧"
+
+    # 判据三条要写在挑帧工具里，别只活在对话里
+    picker = Path("tools/pick_cover_frames.py")
+    assert picker.is_file(), "挑帧工具没了——这三条判据就只剩口头约定"
+    text = picker.read_text(encoding="utf-8")
+    for rule in ("正脸", "上半身直立", "表情"):
+        assert rule in text, f"挑帧工具里没写「{rule}」这一条"
+
+
+def test_挑帧的门槛要在同一个口径下量():
+    """清晰度必须**把脸缩到同一个尺寸再算**，否则门槛是反的。
+
+    第一版直接在原尺寸 ROI 上求 Laplacian 方差，结果和放大倍率成反比——
+    371px 的近景 17.6，198px 的中景 123.9。于是 40 这个门槛把**所有近景**
+    判成「糊」，整条片子过闸 0 帧，而它长得和「这条片子里没有近景」一模一样。
+
+    同一个毛病还有第二处：运动量的门槛拍了个 12，而我已经打开看过、确认站着
+    不动的那几帧量出来是 19~25——门槛会把正确答案全部拒掉。所以运动量降级成
+    排序里的罚分，不设闸。
+
+    这就是「门槛的数要在同一个口径下量」和「空结果先自证是真空」的合体：
+    **自己写的探测脚本报空时，先拿一个已知非空的口径对一下**。
+    """
+    text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
+    assert "cv2.resize(roi, (SHARP_SIDE, SHARP_SIDE))" in text, (
+        "清晰度还在原尺寸上算——脸越大分越低，门槛是反的")
+    assert "MAX_MOTION" not in text, "运动量又变回闸门了；量出来 19~25，闸设不住"
+    # 不合格的也要报出来：只列通过的检查，没法证明它真看过整条片子
+    assert "丢弃" in text, "没有把被丢掉的帧和原因打出来"
+
+
+def test_抽帧抠图要同时改代码工作流和预检():
+    """「加新能力要同时改三处」——playwright、Chromium、cv2 三次都漏过。
+
+    三次都死得很晚：下完 64MB 源片、合完原声之后才报 ModuleNotFoundError，
+    每次白跑一分半。而沙箱里这些依赖恰好都装着，本地怎么试都试不出来。
+
+    rembg 是第四次，所以三处一起钉住：
+
+    1. 代码：`_cut_person` 用它
+    2. 工作流：`pip install "rembg[cpu]"`，并缓存 176MB 的模型
+    3. 预检：**在下源片之前** import 一次，让失败发生在第 5 秒
+    """
+    flow = Path(".github/workflows/match-reel.yml").read_text(encoding="utf-8")
+    assert "cutout]" in flow, "工作流没装 cutout extra——runner 上会死在 import rembg"
+    assert 'cutout = ["rembg[cpu]' in Path("pyproject.toml").read_text("utf-8"), (
+        "依赖没钉在 pyproject 里；装裸包名踩过 opencv 5.x 那次")
+    assert "~/.u2net" in flow, "没缓存抠图模型，每条片子都要现下 176MB"
+
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "def _preflight_cutout(" in reel, "没有开跑前的依赖预检"
+    body = reel[reel.index("def render("):]
+    check = body.index("_preflight_cutout(spec)")
+    # **别拿整句 `with stage("下载源片")` 当锚点。** 多源之后这一句成了
+    # `with stage(f"下载源片 {key or '(主源)'}")`，字面量对不上，测试直接
+    # ValueError——它想验的「预检排在下载之前」明明还成立。锚点只认下载那件事。
+    download = body.index("下载源片")
+    assert check < download, "预检排在下载之后——又是下完 64MB 才报错"
+
+
+def test_挑帧要在probe那一步跑并且整帧不进仓库():
+    """`pick_cover_frames.py` 得**在 runner 上**跑，而且只留候选墙。
+
+    源片只在 runner 上有——沙箱下不动 YouTube。这一步不在 probe 里做，挑帧就
+    只能拿 2 秒一格的缩略图墙用肉眼找正脸，而那正是这个工具要替掉的活。
+
+    整帧不进仓库。量出来的（1920×1080 转播帧）：PNG 单张 0.7~0.8 MB、12 张
+    约 9 MB；q92 的 JPEG 单张 132 KB、12 张 1.6 MB。**两种都过得了清理那道
+    「单个 8 MB」的兜底**，却是每探一次就往仓库里加一份——和 `.part` 那次是
+    同一个毛病：按单张尺寸设的闸拦不住按批次累积的量。
+    """
+    flow = WORKFLOW.read_text(encoding="utf-8")
+    assert "tools/pick_cover_frames.py" in flow, "probe 不出封面候选帧"
+    steps = _steps(flow)
+    probe = next(i for i, n in enumerate(steps) if "缩略图墙" in n)
+    picks = next(i for i, n in enumerate(steps) if "封面候选帧" in n)
+    clean = next(i for i, n in enumerate(steps) if "丢掉不进仓库的中间物" in n)
+    assert probe < picks < clean, f"挑帧要排在下载之后、清理之前：{steps}"
+
+    cleanup = flow[flow.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    pats = re.findall(r'"\$OUTDIR"/(\S+)', cleanup)
+    pats = [p.rstrip("\\").strip() for p in pats if p.strip()]
+    assert any(fnmatch("cover_candidates/cand_00_t12.5.jpg", p) for p in pats), (
+        f"候选整帧不会被清理掉，每探一次往仓库里加 5 MB。现有模式：{pats}")
+    for keep in ("cover_candidates/sheet.jpg", "cover_candidates/candidates.json"):
+        assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
+
+    # 候选帧存 JPEG，候选墙一格要够大——它是唯一进仓库的那份
+    text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
+    assert 'f"cand_{i:02d}_t{rec[\'t\']}.jpg"' in text, "候选帧还在存 PNG，单张 2~3 MB"
+    assert "tw = 640" in text, "候选墙一格太小，判不了「能不能看到表情」"
+
+
+def test_封面停多久跟着配音走():
+    """账号所有者定的：「这个栏目不要求〔固定几秒〕，**随着配音切换**吧」。
+
+    在这之前封面是**定长静止 2.6 秒的哑屏**——`anullsrc` 一路铺到底，开场那
+    一屏一个字都没说。改成配音驱动之后要钉住四件事，每一件都是「不吭声」型的：
+
+    - **长度由语音算**（`cover_length`），不是 spec 里另写一个数。写两处必分叉
+    - **没配音的片子退回定长，并且要出声说退了**。存量的赛场之上都没有封面
+      配音，悄悄退回去的话，「封面短了」和「配音没合出来」长得一模一样
+    - **封面那一路要真的混进音轨**。滤镜标签从 filters 一起攒，不在下游拿
+      另一个条件重筛——原来 `names` 就是重筛的，封面那一路定义了没人接
+    - **长度要落进 render.json**。跟着配音走之后从 spec 算不出来，
+      `check_reel_landed.py` 拿常量对片长只会得到一个假红
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    check = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+
+    assert "def cover_length(" in reel, "封面长度还是个常量，没有跟着配音走的那条路"
+    assert "def synth_cover(" in reel, "封面那句没有单独合成——它得在渲封面之前就有"
+    # 合成排在渲封面之前：反过来的话长度还没算出来，只能又退回常量
+    body = reel[reel.index("def render("):]
+    assert body.index("cover_secs = cover_length(") < body.index("build_cover("), (
+        "封面长度算在渲封面之后——那就只能拿常量渲，等于没改")
+    # 定长那条路要出声
+    assert "没有配音，定长停" in reel, "退回定长时不吭声，和「配音没合出来」分不开"
+    # 封面那一路要接进混音，标签不能在下游重筛
+    assert "voice_labels.append" in reel, "混音的标签又在下游重筛了"
+    assert 'names = "".join(voice_labels)' in reel
+    # 长度要记进产物旁边
+    assert '"cover_seconds"' in reel, "封面长度没落进 render.json"
+    assert "render.json" in check, "检查工具还在拿常量算封面长度"
+    assert "没有 render.json" in check, "读不到 render.json 时不吭声地退回常量"
+
+
+def test_封面念的就是海报上那句钩子就不另排字幕():
+    """念的和印的是同一句，就别在同一帧里再写一行小字。
+
+    但**判据是「一不一样」，不是「封面一律不出字幕」**——封面那句要是另说了
+    一件事，它照样要有字幕：「静音刷是默认状态」这条对开场同样成立。
+    一律不出字幕会把这个区别抹掉，而且抹掉之后不吭声。
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "drop_punctuation" in reel, "比对没有去标点——印的带换行、念的带句号，永远不等"
+    assert "不另排字幕" in reel
+    # else 分支必须还在：另说一件事时要排字幕
+    head = reel[reel.index("[封面] 旁白就是海报上那句钩子"):]
+    assert "else:" in head[:400] and "subtitle_cues(readable(cover_text)" in head[:800], (
+        "封面变成一律不出字幕了——另说一件事的那种情况就没字幕了")
+
+    spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
+    cover = spec["cover"]
+    assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
+    from tennislive.video.subtitle_text import drop_punctuation
+    assert drop_punctuation(cover["narration"]) == drop_punctuation(
+        cover["hook"].replace("\n", " ")), (
+        "封面念的和印的不是同一句了。那没问题，但字幕会跟着出现——"
+        "确认过排版再改这条断言")
+
+
+def test_检查工具认的画布要和成片的画布是同一个():
+    """`check_reel_landed.py` 一度还在要 1080×1920，而成片早改成 3:4 了。
+
+    于是它每跑一次都在第一行报「不合格」——**一条常年红的检查等于没有检查**，
+    和常年不变的 skip 数字是同一个毛病：没人真的看过。
+
+    两个数写在两处就会分叉，所以这儿把它们钉在一起。检查脚本是**故意**只用
+    标准库的（要能在任何地方跑），不能 import 过去拿，那就用测试当那根绳子。
+    """
+    reel = _reel()
+    text = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+    assert f"VIDEO_W, VIDEO_H = {reel.VIDEO_W}, {reel.VIDEO_H}" in text, (
+        f"检查工具认的画布和成片的 {reel.VIDEO_W}×{reel.VIDEO_H} 对不上")
+    assert "(VIDEO_W, VIDEO_H)" in text, "画布比对又写死成字面量了"

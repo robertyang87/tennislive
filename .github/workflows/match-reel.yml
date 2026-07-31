@@ -121,9 +121,20 @@ jobs:
       # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
       # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
+      # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
+      - name: 缓存抠图模型
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-${{ runner.os }}
+
       - name: 装依赖
         run: |
-          pip install -q -e ".[webrender,visualqa]"
+          # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
+          # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
+          # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
+          # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
+          pip install -q -e ".[webrender,visualqa,cutout]"
           # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
           # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
           # `n challenge solving failed` + `Only images are available`，
@@ -244,6 +255,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
+      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
+      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
+      # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
+      # 候选墙，不自动写进 spec。
+      # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
+      # 缩略图墙那条老路还在。
+      - name: probe — 封面候选帧
+        if: github.event.inputs.mode == 'probe'
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          python tools/pick_cover_frames.py \
+            --video "$OUT/source.mp4" \
+            --out "$OUT/cover_candidates" \
+            --top 12 || true
+          ls -la "$OUT/cover_candidates" 2>/dev/null || true
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -292,10 +321,16 @@ jobs:
           #   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时
           #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
           #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
+          # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
+          # `_versus_cut_top.png`。
+          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
+          # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
+          # 那道兜底**，却每探一次就加一份。
           # 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。
           rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
-            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg "$OUTDIR"/_subs*
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_* "$OUTDIR"/_subs* \
+            "$OUTDIR"/cover_candidates/cand_*
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 

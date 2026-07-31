@@ -1,0 +1,30 @@
+name: probe-blocked-sources
+
+# 在 Actions 的出口网络上探那些**沙箱够不到**的源（ATP 全站 403、
+# live-tennis.eu 403、赛事图库的 Cloudflare 人机校验）。
+#
+# 什么都不产、什么都不提交，结论**全打在日志里**——包括探不通的那几条。
+# 只在成功时出声的检查，没法证明它真的看过。
+on:
+  workflow_dispatch:
+    inputs:
+      want:
+        description: "要在正文里找的词，逗号分隔"
+        required: false
+        default: "Coleman Wong,Brooksby"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 探
+        run: |
+          ARGS=""
+          IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
+          for w in "${WORDS[@]}"; do ARGS="$ARGS --want \"$w\""; done
+          eval python tools/probe_blocked_sources.py $ARGS

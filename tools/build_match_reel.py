@@ -90,6 +90,7 @@ from tennislive.video.explainer import (  # noqa: E402
     subtitle_cues,
     write_subtitles,
 )
+from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
 
 # **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
 # 而滤镜链里写死 `fps=30`：25 和 30 的比是 5:6，于是每 5 帧就复制一帧，
@@ -123,7 +124,10 @@ VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
 _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
 # 低于这个高度的源片不值得做成片：裁成 3:4 再放到 1080 宽是放大好几倍。
 MIN_SOURCE_H = 700
-COVER_SECONDS = 2.6
+# 封面**没有配音时**停多久。有配音就跟着配音走，这个数用不上（见 `cover_length`）。
+COVER_SECONDS = 1.2
+# 说完之后留的那口气。贴着最后一个字切，末尾辅音会被 concat 的边界削掉。
+COVER_TAIL = 0.25
 # 封面海报**要进仓库**：推送正文的第一屏就是它（布局照着知识解说那条推送来），
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
@@ -979,7 +983,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
 
 
 def build_cover(sources: dict[str, Path], primary: str, spec: dict,
-                dest: Path, source_w: int) -> Path:
+                dest: Path, source_w: int, seconds: float = COVER_SECONDS) -> Path:
     """封面：**一律走「赛场之上」的固定海报模板**（`tools/versus_poster.py`）。
 
     账号所有者定的：「以后『赛场之上』封面海报都用新的模板方案。」所以这里
@@ -1093,15 +1097,23 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
         bg["image"] = _grab(bg, "bg")
         versus["background"] = bg
         for key in ("top", "bottom"):
-            cut = (versus[key] or {}).get("cutout")
+            panel = dict(versus[key] or {})
+            if panel.get("frame_at") is not None:
+                panel["cutout"] = _cut_person(source, panel, key, dest.parent)
+                panel.pop("crop", None)   # box 已经在抠之前裁过了，别再裁一次
+                versus[key] = panel
+                continue
+            cut = panel.get("cutout")
             if not cut or not Path(cut).is_file():
                 raise ReelError(
-                    f"cutout 版式的 {key} 格找不到抠图：{cut}\n"
+                    f"cutout 版式的 {key} 格既没给 frame_at 也找不到抠图：{cut}\n"
+                    "首选 `frame_at`：从**本场源片**抓一帧抠出来，衣服、光、球场"
+                    "都是这场的；官方棚拍图退居兜底。\n"
                     "WTA：photoresources 的 <Name>-Torso_<wta_id>.png?width=3000；"
                     "ATP：赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。\n"
-                    "**这个球员根本没有官方抠图，就退回 `layout: diagonal` 的"
-                    "照片版**（账号所有者定的兜底）——别拿头像凑，见 versus_poster.py "
-                    "里同一处的说明。")
+                    "**这个球员根本没有官方抠图、源片里也挑不出近景，就退回 "
+                    "`layout: diagonal` 的照片版**（账号所有者定的兜底）——"
+                    "别拿头像凑，见 versus_poster.py 里同一处的说明。")
     else:
         for key in ("top", "bottom"):
             side = dict(versus[key])
@@ -1114,16 +1126,80 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
     column = str(cover.get("eyebrow", "")).strip() or "赛场之上"
     print(f"    [封面] {column}海报 {layout} → {poster.name}")
-    return _still_to_clip(poster, dest)
+    return _still_to_clip(poster, dest, seconds)
 
 
-def _still_to_clip(still: Path, dest: Path) -> Path:
-    """封面静图 → 一小段带静音轨的视频，接进片头。"""
+#: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
+#: 把锦织圭的发梢切平了一条，isnet 保住了。
+CUT_MODEL = "isnet-general-use"
+
+
+def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
+    """从本场源片抓一帧、裁出人、抠掉背景 —— 封面人物的首选来源。
+
+    **为什么不用官方棚拍图**：棚拍的衣服、光、背景都跟这场球没关系，压在本场
+    画面上像两张贴纸。账号所有者的原话：「因为更贴近比赛的服装，感觉会更好，
+    用之前资料就有点脱节」。
+
+    顺带还赢在分辨率，这个能量（模板槽位 634px）：
+
+        ATP 官方棚拍 裁到胯   265×410   → 1.55× **放大**
+        本场抽帧              660×1040  → 0.61× 缩小
+
+    看着"正规"的棚拍图其实是全套素材里最软的一档。
+
+    挑哪一帧交给 `tools/pick_cover_frames.py`（判据：正脸或稍微侧脸、上半身
+    直立、表情读得出），**挑完要打开看**——谁是谁、表情对不对题机器判不了。
+
+    `box` 是 0~1 的裁切框，作用在**源帧**上，抠之前裁。它有两件事要做：
+    少给模型无关像素（alpha 干净得多），以及把转播叠加物排除掉——记分条在
+    左下、台标在右上，它们不是人，但离人近的时候会被一起圈进来。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    raw = workdir / f"_versus_raw_{tag}.png"
+    out = workdir / f"_versus_cut_{tag}.png"
+    with stage(f"VS 抠帧 {tag}"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-ss", f"{float(panel['frame_at']):.2f}", "-i", str(source),
+            "-frames:v", "1", str(raw))
+        im = Image.open(raw).convert("RGB")
+        box = panel.get("box")
+        if box:
+            if len(box) != 4:
+                raise ReelError(f"VS {tag} 的 box 要四个数 [x0,y0,x1,y1]（0~1）：{box}")
+            w, h = im.size
+            im = im.crop((round(box[0] * w), round(box[1] * h),
+                          round(box[2] * w), round(box[3] * h)))
+        from rembg import new_session, remove  # noqa: PLC0415
+
+        # **`post_process_mask=True` 不能省。** 不加的时候深色球衣压在深色背景墙上
+        # （锦织圭那格）会留**一整块方底**，渲到海报上是一个看得见的矩形边。
+        # 加上之后三个模型的 alpha 全干净——那不是模型不行，是后处理没开。
+        cut = remove(im, session=new_session(CUT_MODEL), post_process_mask=True)
+        bbox = cut.getbbox()
+        if not bbox:
+            raise ReelError(
+                f"VS {tag} 抠出来是空的：{panel['frame_at']}s 那一帧里没找到人。"
+                "换一帧，或者用 tools/pick_cover_frames.py 重挑。")
+        cut = cut.crop(bbox)
+        cut.save(out)
+    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}")
+    raw.unlink(missing_ok=True)
+    return str(out)
+
+
+def _still_to_clip(still: Path, dest: Path, seconds: float = COVER_SECONDS) -> Path:
+    """封面静图 → 一小段带静音轨的视频，接进片头。
+
+    静音轨是**占位**：封面那句旁白和其他段一样，在最后混音那一步按 `adelay=0`
+    叠上去。这儿要是也塞一路音频，就成了「补位的静音盖住真音轨」那个老毛病。
+    """
     with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
-            "-t", f"{COVER_SECONDS}",
+            "-t", f"{seconds:.3f}",
             "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
@@ -1145,18 +1221,17 @@ def _chromium() -> str:
     raise ReelError("找不到 chromium")
 
 
-def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
-               ) -> list[tuple[Path, list[dict]]]:
-    # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
-    # 是个合法的形态（先看画面剪得对不对，再配音）
-    if not any(seg.narration.strip() for seg in segments):
-        return [(outdir / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
+    """合一条语音，落盘并返回词边界。
 
+    抽出来是因为**封面也要配音**了：封面那句得在渲封面之前就合出来——封面停多久
+    由它的长度决定（见 `cover_length`），不能等到 `synthesize()` 那一步。
+    """
     import asyncio
 
     import edge_tts
 
-    async def one(text: str, path: Path) -> list[dict]:
+    async def one() -> list[dict]:
         marks: list[dict] = []
         with path.open("wb") as fh:
             stream = edge_tts.Communicate(
@@ -1170,18 +1245,61 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
                                   "text": chunk.get("text", "")})
         return marks
 
+    marks = asyncio.run(one())
+    if not path.is_file() or path.stat().st_size == 0:
+        raise ReelError(f"TTS 没出音频：{path.name}　「{text[:24]}…」")
+    path.with_suffix(".words.json").write_text(
+        json.dumps(marks, ensure_ascii=False), encoding="utf-8")
+    return marks
+
+
+def synth_cover(spec: dict, outdir: Path, voice: str, rate: str
+                ) -> tuple[Path | None, list[dict]]:
+    """封面那句旁白。没写就返回 `(None, [])`——封面退回定长静止。"""
+    text = str((spec.get("cover") or {}).get("narration") or "").strip()
+    if not text:
+        return None, []
+    path = outdir / "voice_cover.mp3"
+    with stage("封面配音"):
+        marks = tts_one(text, path, voice, rate)
+    return path, marks
+
+
+def cover_length(voice_path: Path | None) -> float:
+    """封面停多久。
+
+    **有配音就跟着配音走，没有才用定长。** 账号所有者定的：「这个栏目不要求
+    〔固定几秒〕，随着配音切换吧」——封面那句话说完就切，不多停，也不半路截断。
+
+    `COVER_TAIL` 是说完之后留的那口气：切得贴着最后一个字，末尾的辅音会被
+    concat 的边界削掉，听着像卡了一下。0.25s 是「说完了」和「停顿」之间那一档。
+
+    没有配音的片子（存量的赛场之上都是）退回 `COVER_SECONDS`，并且**要出声说
+    走的是哪条路**——两条路的产物长得不一样，日志里不写就只能靠猜。
+    """
+    if voice_path is None:
+        print(f"[封面] 没有配音，定长停 {COVER_SECONDS}s")
+        return COVER_SECONDS
+    spoken = probe_duration(voice_path)
+    length = round(spoken + COVER_TAIL, 3)
+    print(f"[封面] 跟着配音走：旁白 {spoken:.2f}s + 尾 {COVER_TAIL}s = {length:.2f}s")
+    return length
+
+
+def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
+               ) -> list[tuple[Path, list[dict]]]:
+    # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
+    # 是个合法的形态（先看画面剪得对不对，再配音）
+    if not any(seg.narration.strip() for seg in segments):
+        return [(outdir / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+
     out: list[tuple[Path, list[dict]]] = []
     for index, seg in enumerate(segments):
         path = outdir / f"voice_{index:02d}.mp3"
         if not seg.narration.strip():
             out.append((path, []))
             continue
-        marks = asyncio.run(one(seg.narration, path))
-        if not path.is_file() or path.stat().st_size == 0:
-            raise ReelError(f"第 {index + 1} 段 TTS 没出音频")
-        path.with_suffix(".words.json").write_text(
-            json.dumps(marks, ensure_ascii=False), encoding="utf-8")
-        out.append((path, marks))
+        out.append((path, tts_one(seg.narration, path, voice, rate)))
     return out
 
 
@@ -1255,9 +1373,32 @@ def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> Non
             print(f"[fps] {key} 是 {seen[key][2]}，重采样到主源的 {rf}——{why}")
 
 
+def _preflight_cutout(spec: dict) -> None:
+    """封面要抽帧抠图就先验一次 rembg —— **在下源片之前**。
+
+    「加新能力要同时改三处」那条已经踩过三次（playwright、Chromium、cv2），
+    每次都是下完 64MB 源片、合完原声之后才死在 import 上，白跑一分半。
+    这里是第四次，提前收在第 5 秒。
+    """
+    versus = (spec.get("cover") or {}).get("versus") or {}
+    if not any((versus.get(k) or {}).get("frame_at") is not None
+               for k in ("top", "bottom")):
+        return
+    try:
+        import rembg  # noqa: F401,PLC0415
+    except ImportError as exc:  # pragma: no cover - 环境问题
+        raise ReelError(
+            "封面要从源片抽帧抠图（versus.top/bottom 里写了 frame_at），"
+            "但这台机器没有 rembg。\n"
+            '装：pip install "rembg[cpu]"；'
+            "或者把那一格换回官方棚拍抠图（`cutout`: 本地透明 PNG）。"
+        ) from exc
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    _preflight_cutout(spec)
     urls = spec_sources(spec)
     sources: dict[str, Path] = {}
     for key, url in urls.items():
@@ -1293,7 +1434,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     resolve_crop(source_w, source_h)
 
     segments = parse_segments(spec, sources, primary)
-    total = sum(s.length for s in segments) + COVER_SECONDS
+    # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
+    cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
+    cover_secs = cover_length(cover_voice)
+    total = sum(s.length for s in segments) + cover_secs
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
@@ -1315,7 +1459,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     tracks = track_shots(sources, segments, source_w)
 
     parts: list[Path] = [build_cover(sources, primary, spec,
-                                 outdir / "part_cover.mp4", source_w)]
+                                 outdir / "part_cover.mp4", source_w,
+                                 cover_secs)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
@@ -1367,7 +1512,30 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     cues: list[tuple[float, float, str]] = []
     mix_inputs: list[str] = []
     filters: list[str] = []
-    offset = COVER_SECONDS
+    # 标签跟着 filters 一起攒，**别在下面另拿一个条件重算一遍**：加封面配音那次
+    # 就是这么差点漏的——`names` 原来是从 segments 里重新筛一遍，封面那一路
+    # 定义了却没人接。这类「两处各写一遍同一个条件」迟早会分叉。
+    voice_labels: list[str] = []
+    # 封面这一句从第 0 秒起。**它也要出字幕**——「静音刷是默认状态」，
+    # 只给耳朵不给眼睛，等于开场那句话对一半人不存在。
+    if cover_voice is not None:
+        mix_inputs.extend(["-i", str(cover_voice)])
+        filters.append(f"[{len(mix_inputs)//2}:a]adelay=0|0[vcover]")
+        voice_labels.append("[vcover]")
+        cover_text = str(spec["cover"]["narration"]).strip()
+        # **念的就是海报上印的那句，就别再排一行字幕。** 钩子在海报上是几十号的
+        # 大字，字幕把同样的话在同一帧里再写一遍，只是把画面弄脏。
+        # 判据是「一不一样」，不是「封面一律不出字幕」：封面那句要是**另说了
+        # 一件事**（存量里没有，但迟早会有），它照样要有字幕——静音刷是默认状态。
+        printed = drop_punctuation(
+            str(spec["cover"].get("hook", "")).replace("\n", " "))
+        if drop_punctuation(cover_text) == printed:
+            print("[封面] 旁白就是海报上那句钩子，不另排字幕")
+        else:
+            cues.extend(subtitle_cues(readable(cover_text),
+                                      probe_duration(cover_voice),
+                                      boundaries=cover_marks, offset=0.0))
+    offset = cover_secs
     for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
         if seg.quote:
             # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
@@ -1380,6 +1548,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             filters.append(
                 f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
                 f"{int(offset*1000)}[v{index}]")
+            voice_labels.append(f"[v{index}]")
             # 上面已经拦掉了超长的段，这儿再把字幕**收进本段的窗口**——
             # 边界事件的时刻是按语音插值出来的，末尾那一条可以比语音本身还长
             # 几分之一秒（伊埃拉那条超出 0.29s 的段，字幕尾巴甩出去 1.02s）。
@@ -1406,8 +1575,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
             chain = ";".join(filters)
-            names = "".join(f"[v{i}]" for i, seg in enumerate(segments)
-                            if seg.narration.strip())
+            names = "".join(voice_labels)
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
                 "-filter_complex",
@@ -1444,6 +1612,15 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     for junk in list(outdir.glob("part_*.mp4")) + [listing, silent, mixed,
                                                    outdir / "_cover_frame.jpg"]:
         junk.unlink(missing_ok=True)
+    # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——
+    # `check_reel_landed.py` 拿它对片长，没有这份就只能拿常量猜，而猜错的样子
+    # 是「片长对不上」，和真出问题长得一模一样。
+    (outdir / "render.json").write_text(json.dumps({
+        "cover_seconds": round(cover_secs, 3),
+        "cover_narrated": cover_voice is not None,
+        "segments_seconds": round(sum(s.length for s in segments), 3),
+        "film_seconds": round(probe_duration(final), 3),
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
     report_timings()
