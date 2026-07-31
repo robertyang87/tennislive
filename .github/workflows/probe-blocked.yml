@@ -12,19 +12,39 @@ on:
         description: "要在正文里找的词，逗号分隔"
         required: false
         default: "Coleman Wong,Brooksby"
+      mode:
+        description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
+        required: false
+        default: "http"
+      url:
+        description: "browser 模式要加载的页面（默认 tnnslive.com 首页）"
+        required: false
+        default: ""
 
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      # browser 模式要浏览器。**装在跑之前**，别等跑到一半才报
+      # ModuleNotFoundError——竖版剪辑那条线同一个毛病犯过三次。
+      - name: 装 Chromium（browser 模式才要）
+        if: github.event.inputs.mode == 'browser'
+        run: |
+          pip install -q playwright
+          python -m playwright install --with-deps chromium
       - name: 探
         run: |
           ARGS=""
           IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
           for w in "${WORDS[@]}"; do ARGS="$ARGS --want \"$w\""; done
-          eval python tools/probe_blocked_sources.py $ARGS
+          if [ "${{ github.event.inputs.mode }}" = "browser" ]; then
+            [ -n "${{ github.event.inputs.url }}" ] && ARGS="$ARGS --url '${{ github.event.inputs.url }}'"
+            eval python tools/probe_tnns.py $ARGS
+          else
+            eval python tools/probe_blocked_sources.py $ARGS
+          fi
