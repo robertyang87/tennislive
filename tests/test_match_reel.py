@@ -1472,3 +1472,35 @@ def test_栏目名从spec读不要在命令行上另写一遍():
         cover = spec.get("cover") or {}
         assert str(cover.get("eyebrow", "")).strip(), (
             f"{slug} 没写 cover.eyebrow——推送标题会取不到栏目名")
+
+
+def test_没有名字是凭空来的():
+    """`ruff --select F821`：整个仓库不许有未定义的名字。
+
+    一天里被这一条咬了两次，**两次 `py_compile` 和 pytest 都看不见**：
+
+    - `build_versus_poster` 里 `_cut_person(source, …)` —— 这个作用域里根本没有
+      `source`（它拿的是 `sources` 字典加 `primary`）。也就是说 #105 引进的
+      「封面人物首选本场抽帧」**一次都没跑起来过**，第一次用必 NameError
+    - 我自己把封面时长传给 `build_cover` 却漏了它委托的 `build_versus_poster`，
+      在 runner 上下完两条源片、合完配音、渲完海报之后才炸（run 30622667742）
+
+    这正是「加新能力就要同时改三处」和「让失败发生在第 5 秒」两条的合体，
+    只是这次连第 5 秒都不用——静态就能看见。
+
+    `cards.py` 的主题色是 `globals().update` 灌进来的，静态看不见，**排除写在
+    pyproject 里**而不是藏在这儿：让它是一个看得见的决定。
+    """
+    import shutil  # noqa: PLC0415
+
+    ruff = shutil.which("ruff")
+    # 缺依赖就 skip 的话，这条检查会常年跳过而没人发现——和常年红是同一个毛病。
+    # ruff 已经写进 dev extra，CI 的 `pip install -e ".[dev,…]"` 就带上了。
+    assert ruff, 'ruff 没装。装：pip install -e ".[dev]"'
+    proc = subprocess.run(
+        [ruff, "check", "--select", "F821", "--output-format", "concise",
+         "src", "tools", "tests"],
+        capture_output=True, text=True)
+    assert proc.returncode == 0, (
+        "有名字是凭空来的（F821）——这类错 py_compile 和 pytest 都看不见，"
+        f"只会在真跑到那一行时炸：\n{proc.stdout}{proc.stderr}")
