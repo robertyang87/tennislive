@@ -137,6 +137,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$OUTDIR/copy.html"
           git diff --cached --quiet && exit 0
+          python tools/check_staged_file_sizes.py
           git commit -m "reel: $SLUG 复制页"
           for attempt in $(seq 1 5); do
             git push origin HEAD:main && exit 0
@@ -146,6 +147,7 @@ jobs:
             git reset --hard origin/main
             git checkout staged -- "$OUTDIR/copy.html"
             git add "$OUTDIR/copy.html"
+            python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "reel: $SLUG 复制页"
             sleep $((attempt * 3 + RANDOM % 5))
           done
