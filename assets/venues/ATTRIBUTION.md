@@ -128,6 +128,15 @@ the photographs are not otherwise altered.
 - Note: 自证：顶上记分屏印着 CENTRE COURT 与两位球员名，横幅是这项赛事 2016–2024 的历届冠军，场边围板写着 BNP PARIBAS FORTIS / BXL。**赛事 2025 年从安特卫普 Lotto Arena 搬到布鲁塞尔 Brussels Expo Palais 12**，官方图库里 2024 及以前的照片全是旧场馆，不能用。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `buenos-aires-vilas-centre-court.jpg`
+
+- Title: 布宜诺斯艾利斯草地网球俱乐部 Guillermo Vilas 中央球场满场，红土，近端远端看台与灯柱都在画面里
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/buenosaires_tournimage_2019.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: ATP 的 slug 是 buenosaires（**无连字符**），按 buenos-aires 探会一无所获
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `canada-iga-stadium-centre-court.jpg`
 
 - Title: Stade IGA 中心球场 · 满场（场地前场刷着 MONTRÉAL，赞助带 Banque Nationale / ROGERS；近端看台、蓝绿场地、远端满场看台与雷暴天空全在竖切里）
@@ -579,6 +588,15 @@ the photographs are not otherwise altered.
 - Note: 自证：围板一圈是本站赞助带；官网 wp-json 里 central 指的是球场名，不是全景。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `santiago-centre-court.jpg`
+
+- Title: 圣地亚哥中央球场夜场满场，红土，灯柱亮着，远处是安第斯山与圣地亚哥城区
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/santiago_tournimage_2020-sunset.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: 同一年份有两个文件：santiago_tournimage_2020 是**空场**（无观众、场边停着车），带 -sunset 后缀这张才是满场夜赛。**文件名有后缀变体，别只探裸名**
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `sao-paulo-centre-court.jpg`
 
 - Title: SP Open 中心球场（场地前场刷着 SÃO PAULO，2025 首届）
@@ -628,6 +646,15 @@ the photographs are not otherwise altered.
 - Source: https://photoresources.wtatennis.com/photo-resources/2025/05/12/ffbc5331-cbef-4d6a-8f6d-3a0c93eefa0e/406-Strasbourg.jpg
 - License: unverified · WTA 官方媒体库
 - Note: 自证：看台横幅写着 Strasbourg / Grand Est。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `stuttgart-porsche-arena-centre-court.jpg`
+
+- Title: 斯图加特 Porsche-Arena 室内红土中心球场，场地前场刷着 STUTTGART，围板 porsche-tennis.com，大屏是 Świątek 对 Raducanu 与 WTA 500
+- Author: Porsche 赛事官方图（摄影师未署名，经 sport-s.de 转载）
+- Source: https://sport-s.de/wp-content/uploads/2024/06/Porsche-Tennis-Totale.jpg
+- License: unverified · 赛事主办方官方图，转载站未署名
+- Note: 别名只认 porsche，**不认城市名 stuttgart**——6 月 ATP250 在 TC Weissenhof（室外草地），套上这张就成了室内红土。另探过 porschepictures.flowcenter.de 的 3954x2250 原图，那张是开幕灯光秀（球场被打成粉橙色、不在比赛中），弃用
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `stuttgart-weissenhof-centre-court.jpg`

@@ -223,6 +223,12 @@ VENUES = [
     ("halle-owl-arena-centre-court.jpg", None, None),
     # 斯图加特 ATP250：ATP 赛事主视觉，Weissenhof 草地；别名按赛事名写，别用城市名
     ("stuttgart-weissenhof-centre-court.jpg", None, None),
+    # 布宜诺斯艾利斯 ATP250：ATP 赛事主视觉，Vilas 中央球场满场
+    ("buenos-aires-vilas-centre-court.jpg", None, None),
+    # 圣地亚哥 ATP250：ATP 赛事主视觉的 -sunset 变体，满场夜赛
+    ("santiago-centre-court.jpg", None, None),
+    # 斯图加特 WTA500：Porsche-Arena 室内红土；别名按赛事名写，别用城市名
+    ("stuttgart-porsche-arena-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -368,6 +374,24 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "stuttgart-porsche-arena-centre-court.jpg": {
+        "title": "斯图加特 Porsche-Arena 室内红土中心球场，场地前场刷着 STUTTGART，围板 porsche-tennis.com，大屏是 Świątek 对 Raducanu 与 WTA 500",
+        "license": "unverified · 赛事主办方官方图，转载站未署名",
+        "artist": "Porsche 赛事官方图（摄影师未署名，经 sport-s.de 转载）",
+        "page": "https://sport-s.de/wp-content/uploads/2024/06/Porsche-Tennis-Totale.jpg",
+    },
+    "santiago-centre-court.jpg": {
+        "title": "圣地亚哥中央球场夜场满场，红土，灯柱亮着，远处是安第斯山与圣地亚哥城区",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/santiago_tournimage_2020-sunset.jpg",
+    },
+    "buenos-aires-vilas-centre-court.jpg": {
+        "title": "布宜诺斯艾利斯草地网球俱乐部 Guillermo Vilas 中央球场满场，红土，近端远端看台与灯柱都在画面里",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/buenosaires_tournimage_2019.jpg",
+    },
     "stuttgart-weissenhof-centre-court.jpg": {
         "title": "斯图加特 TC Weissenhof 草地中心球场满场，挡板写着 BOSS，侧板写着 TC Weissenhof 与 Region Stuttgart",
         "license": "unverified · ATP 官方图，经赛事域名镜像取得",
