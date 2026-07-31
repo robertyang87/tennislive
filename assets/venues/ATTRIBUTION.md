@@ -16,6 +16,15 @@ the photographs are not otherwise altered.
 - Note: 自证：围板一圈是 Mubadala Abu Dhabi Open 的赞助带。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `acapulco-arena-gnp-centre-court.jpg`
+
+- Title: 阿卡普尔科 Arena GNP Seguros 夜间航拍，八边形主球场，场地中央铺着墨西哥国旗，四周看台环绕
+- Author: 新闻站转载（摄影师未署名）
+- Source: https://chihuahuaaldia.com/wp-content/uploads/2025/10/abierto-mexicano-de-tenis-2025.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Note: ⚠️ 这张是**垂直航拍**、且是开幕式（场地铺国旗、看台只坐了一部分），不是「底线后方沿长轴 + 比赛进行中」那个标准样例。用它是因为官方渠道已经翻到底：官网媒体库 142 条里 129 条 HTTP 404，存在的 13 张全是球员照；站外找到的另外两张一张全空场、一张均值 40.3/中位 16 太黑。**找到更好的就换掉**
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `adelaide-centre-court.jpg`
 
 - Title: 纪念大道公园中心球场 · 满场，场地前场刷着 ADELAIDE
@@ -57,6 +66,15 @@ the photographs are not otherwise altered.
 - Source: https://www.asbclassic.co.nz/-/media/sites/tournaments/auckland/news/finals-stadium-generic.jpg
 - License: unverified · 赛事官方媒体库
 - Note: 自证：场地上刷着 AUCKLAND 和毛利语地名 TĀMAKI MAKAURAU，看台横幅 ASB CLASSIC，背景是奥克兰天际线。3600×2400，是这一批里最大的一张。一张管两站——1 月的 ATP250 与 WTA250 同场地。官网走 ATP 的 Sitecore（/-/media/sites/tournaments/auckland/），和斯德哥尔摩同一套；**斯德哥尔摩那站这条路只有合作方 logo 和球员头像，奥克兰这站却有场馆图**——同一个 CMS 不等于同样的内容，要一站一站看。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `austin-westwood-centre-court.jpg`
+
+- Title: 奥斯汀 Westwood Country Club 主看台球场满场，绿色硬地，挡板写着 ATX OPEN 与 WTA 250，围板 WTATENNIS.COM，近端远端看台都在
+- Author: 新闻站转载（Hearst 图床，摄影师未署名）
+- Source: https://s.hdnux.com/photos/01/63/40/25/30278996/3/1920x0.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Note: 官方站 atxopen.com 的媒体库全量列过，只有球员照和球场群航拍；官网那张 stadium 图和 WTA 官方主视觉都是同一张球场群航拍或效果图。这张是本地新闻站的赛报配图
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `badhomburg-centre-court.jpg`
@@ -275,6 +293,15 @@ the photographs are not otherwise altered.
 - Author: Millennium Estoril Open
 - Source: https://estoril-open-media.s3.amazonaws.com/images/605e1eb638ec06001c0f674b-estadio2.jpeg
 - License: unverified · 赛事官方媒体
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `geneva-eaux-vives-centre-court.jpg`
+
+- Title: 日内瓦 Parc des Eaux-Vives 中心球场，红土，远端挡板写着 GONET BANQUIERS 1845、球网上是 ATP TOUR，侧板 GONET GENEVA OPEN 与 Tribune de Genève，背后是园中的木屋与瑞士旗
+- Author: 新闻站转载（Le Dauphiné Libéré，摄影师未署名）
+- Source: https://cdn-s-www.ledauphine.com/images/90D9B0F5-04B0-4F1B-B541-6D32555F8DD9/NW_raw/le-court-central.jpg
+- License: unverified · 新闻站转载，作者未署名
+- Note: 赛事域名上那张 2560x1440 的无人机图是**整个 Parc des Eaux-Vives**（球场群 + 日内瓦湖 + 大喷泉），中心球场只占左下一角，竖切正好切掉。这张是从近端看台拍的，整个碗都在；代价是白天场次看台只坐了一部分
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `gstaad-roy-emerson-arena.jpg`
