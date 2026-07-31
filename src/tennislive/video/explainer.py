@@ -119,6 +119,11 @@ class ExplainerSegment:
     # 这两行把比赛坐标钉在同一屏上。由 `_fixture_lines()` 从结构化字段拼出来，
     # 不手写，免得日期和轮次在几处各写各的。
     fixture: tuple[str, ...] = ()
+    # 封面大标题底下的一行小字，用来给标题里的缩写或行话当场作注。
+    # 和 `fixture` 分开是因为那一路被钉死给「开球之前」了（常青栏目的封面
+    # 不该印比赛坐标），而作注这件事和赛前片没关系。
+    # **加在最后**：`_SCRIPTS` 里的 beat 是按位置解包的，插中间会整体错位。
+    gloss: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -629,7 +634,182 @@ _DRAW_SPLIT_DIAGRAM = """
 </svg>
 """
 
+# 「空出来的位置给谁」——**照片讲不清的那一类**：它是一条按时刻分岔的流程，
+# 不是一个能被拍下来的瞬间。两条路的判据是同一个时刻（资格赛打完那一刻正赛空没空），
+# 所以画成一条主干往下分叉。一屏一个强调色：只有「抽签」那一支给品牌绿。
+_LUCKY_LOSER_PICK_DIAGRAM = """
+<svg viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">资格赛打完那一刻，正赛空没空</text>
+
+  <path d="M450 70 L450 150 M210 150 L690 150 M210 150 L210 190 M690 150 L690 190"
+        stroke="#9fb4aa" stroke-width="4" fill="none"/>
+
+  <text x="210" y="232" text-anchor="middle" fill="#9fb4aa"
+        font-size="28" font-weight="700">还没空出来</text>
+  <text x="690" y="232" text-anchor="middle" fill="#c6f65a"
+        font-size="28" font-weight="700">已经空着了</text>
+  <text x="210" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">按排名排队</text>
+  <text x="690" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">前两名抽签</text>
+
+  <rect x="96"  y="316" width="228" height="54" rx="10" fill="rgba(231,243,236,.34)"/>
+  <rect x="96"  y="384" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <rect x="96"  y="452" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <text x="210" y="552" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">排最前的那个进</text>
+
+  <rect x="576" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <rect x="698" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <path d="M629 378 L690 430 M751 378 L690 430" stroke="#9fb4aa"
+        stroke-width="3" fill="none" stroke-dasharray="7 7"/>
+  <rect x="637" y="436" width="106" height="54" rx="10" fill="#c6f65a"/>
+  <text x="690" y="552" text-anchor="middle" fill="#c6f65a"
+        font-size="27" font-weight="700">抽中的那个进</text>
+</svg>
+"""
+
+# 「大满贯七轮，第四轮到顶」——同样拍不出来：它是一个**没有发生过**的纪录。
+# 条上一个字都不写（轮次标在条的上一行），一屏一个强调色。
+_LUCKY_LOSER_WALL_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">大满贯打七轮，他们最远只到第四轮</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝有人到过　空格＝至今没有人</text>
+
+  <g fill="#9fb4aa" font-size="26" font-weight="700" text-anchor="middle">
+    <text x="118" y="186">首轮</text>
+    <text x="228" y="186">2 轮</text>
+    <text x="338" y="186">3 轮</text>
+    <text x="448" y="186">4 轮</text>
+    <text x="562" y="186">8 强</text>
+    <text x="672" y="186">4 强</text>
+    <text x="782" y="186">决赛</text>
+  </g>
+
+  <rect x="68"  y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="178" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="288" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="398" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="512" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="622" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="732" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+
+  <line x1="505" y1="190" x2="505" y2="310" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="505" y="352" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">这条线还没人越过</text>
+
+  <text x="450" y="430" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">摸到第 4 轮的：1995 诺曼 · 2023 阿瓦涅相</text>
+  <text x="450" y="472" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">2025 利斯 · 2025 谢拉 · 2026 德容</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "lucky-loser": (
+        (
+            "this-week",
+            "这一周",
+            "那场资格赛，托米奇一分都没打",
+            "先看这一周。洛斯卡沃斯的资格赛最后一轮，托米奇因为肠胃问题弃权，"
+            "一分都没打，这一站对他来说本来就结束了。可几个小时后正赛有人退出，"
+            "空出一个位置，按规则那个位置归他。三天后，他 6-2、6-4 赢了世界第二十六的"
+            "哈恰诺夫，那是他七年来最大的一场胜利。同一周华盛顿也有一个："
+            "资格赛最后一轮，斯瓦伊达在第三盘 0 比 2 时中途退出，输给了十七岁的"
+            "克鲁兹·休伊特——几天后他同样出现在正赛签表里。让他们站上那片场地的身份，"
+            "规则里叫幸运落败者。",
+            "assets/explainer/lucky-loser/tomic_los_cabos_2026.jpg",
+            "Tennis TV / @abiertoloscabos · 2026 洛斯卡沃斯，托米奇对哈恰诺夫",
+            (
+                "资格赛末轮 他弃权了",
+                "递补进正赛 赢下世界第 26",
+                "同一周 华盛顿也有一个",
+            ),
+        ),
+        (
+            "how",
+            "空位给谁",
+            "多数时候按排名，有时候要抽签",
+            "空出来的位置给谁，分两种情况。多数时候很简单：最后一轮输掉的那批人里，"
+            "排名最高的先补进去。但有一种要抽签——如果资格赛还没打完，正赛的位置"
+            "就已经空着了，那么排名最高的两个人抽签决定，谁抽到谁进；空出两个位置，"
+            "就是三个人一起抽。为什么要多这一道？想一下就明白：位置已经空在那儿，"
+            "补位又完全按排名，那排名最高的那个人最后一轮赢也进、输也进，"
+            "这场球认不认真都一样。抽签把它掰回来——输了不再是稳进，只是有机会。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "一般 排名最高的先补",
+                "位置早空着 就要抽签",
+                "抽签让输球重新有代价",
+            ),
+            _LUCKY_LOSER_PICK_DIAGRAM,
+        ),
+        (
+            "rublev",
+            "第一个冠军",
+            "「输的那个人，是幸运的」",
+            "这个身份能走多远？2017 年乌马格，卢布列夫资格赛最后一轮输了，"
+            "丘里奇退赛，他补了进去——然后一路赢到决赛，6-4、6-2 击败四号种子洛伦齐，"
+            "拿下十九岁那年生涯第一个冠军，颁奖的是伊万尼塞维奇。当天他自己在社媒上"
+            "只写了一句：输的那个人是幸运的，我赢下了第一个 ATP 冠军。",
+            "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+            "Merlo de Graia · 卢布列夫本人社媒 2017-07-24 · 乌马格夺冠",
+            (
+                "2017 乌马格 资格赛末轮输掉",
+                "递补进正赛 一路赢到夺冠",
+                "19 岁 生涯第一个冠军",
+            ),
+        ),
+        (
+            "gauff",
+            "被叫回来",
+            "开赛前十五分钟，高芙回到球场",
+            "两年后的林茨更夸张。高芙资格赛直落两盘输给科尔帕奇，本来已经出局。"
+            "首轮开打前十五分钟，萨卡里手腕伤退，已经收拾东西的她被叫了回来。"
+            "接下来她连赢五场，包括头号种子贝尔腾斯，决赛 6-3、1-6、6-2 击败"
+            "奥斯塔彭科。十五岁七个月，2004 年以来最年轻的 WTA 冠军，也是历史上"
+            "第三个以这个身份夺冠的女子球员。",
+            "assets/explainer/lucky-loser/gauff_linz_2019_trophy.jpg",
+            "wtatennis.com 官方图 · 2019 林茨决赛，高芙夺冠",
+            (
+                "资格赛已经输了 直落两盘",
+                "萨卡里伤退 赛前 15 分钟顶上",
+                "15 岁 7 个月 拿下冠军",
+            ),
+        ),
+        (
+            "wall",
+            "到不了第五场",
+            "但大满贯，没人走过第四轮",
+            "不过有一堵墙，到今天还没人撞开。大满贯要赢七场才拿冠军，而靠这个身份"
+            "进来的人，一个都没打进过八强——第四轮就是尽头。摸到过那儿的没几个："
+            "1995 年温网的诺曼，2023 年法网的阿瓦涅相，2025 年澳网的利斯，"
+            "同年温网的谢拉，还有今年法网的德容。利斯那次最接近，再赢一场"
+            "就是史上第一个。她没赢下来。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "至今 0 人打进大满贯八强",
+                "第 4 轮就是天花板",
+                "利斯 2025 澳网 差一场",
+            ),
+            _LUCKY_LOSER_WALL_DIAGRAM,
+            "如果名额早就空着，最后一轮那场球，你还会拼吗？",
+        ),
+    ),
     "hawkeye": (
         (
             "human",
@@ -2301,6 +2481,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "lucky-loser": {
+        "hook": (
+            "资格赛输掉的人，可以因为别人退赛递补进正赛——这个身份叫幸运落败者。\n"
+            "卢布列夫和高芙的第一个冠军，都是这么来的。"
+        ),
+        "tags": ("网球", "网球时差", "幸运落败者", "卢布列夫", "网球冷知识"),
+    },
     "hawkeye": {
         "hook": (
             "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
@@ -2512,6 +2699,13 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "lucky-loser": {
+        "topic": "幸运落败者：输了才有的名额",
+        "question": "资格赛输了，怎么还在正赛？",
+        "narration": "资格赛输了，怎么还在正赛？他自己管这叫——输的那个人，是幸运的。",
+        "gloss": "LL = Lucky Loser",
+        "image": "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+    },
     "hawkeye": {
         "topic": "鹰眼的来历：源于一次误判",
         "question": "球压没压线，到底谁说了算？",
@@ -2770,6 +2964,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         diagram="",
         question="",
         fixture=_fixture_lines(spec),
+        gloss=spec.get("gloss", ""),
     )
 
 
@@ -2996,6 +3191,11 @@ def _slide_html(
     # 封面那两行小字（只有「开球之前」有）：第一行是比赛坐标，第二行是对阵。
     # 排在大问题下面，字号压到问题的三分之一上下——它是给「这到底是哪一场」
     # 兜底的，不是来抢封面的。
+    gloss_html = (
+        f'<div class="gloss">{html.escape(segment.gloss)}</div>'
+        if segment.gloss
+        else ""
+    )
     fixture_html = (
         '<div class="fixture">'
         + "".join(
@@ -3114,6 +3314,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
+/* 封面标题底下那行注。它是**注**不是副标题：字号压到标题的三分之一上下，
+   颜色比标题淡一档，别把观众的眼睛从大问题上拽走。 */
+.gloss{{align-self:flex-start;margin-top:-2px;font-size:34px;font-weight:700;
+ letter-spacing:1px;color:#cfe6d8;text-shadow:0 2px 12px rgba(0,0,0,.85);}}
 /* 赛前片的封面小字。两行之间用一道细线分开，而不是靠间距——封面底下就是
    照片，间距在深浅不一的画面上读不出「这两行是一组」。 */
 .fixture{{align-self:flex-start;display:flex;flex-direction:column;gap:12px;
@@ -3127,7 +3331,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
-<div class="title">{html.escape(segment.title)}</div>{fixture_html}{points_html}{question_html}{tail_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
