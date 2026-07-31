@@ -2331,3 +2331,47 @@ def test_每日网球知识分出来单独跑():
     push_block = text[text.index("- name: PushPlus 推送到微信"):]
     assert "inputs.push != 'false'" in push_block, (
         "推送条件改了——定时触发时 inputs.push 是空的，别写成 == 'true'")
+
+
+def test_查赛果的命令留着卡片和推送不留():
+    """**2026-07-31：「可以用命令查赛果，但没必要做卡片图然后推送微信了」。**
+
+    这条把边界划在**产物**上，不是划在功能上：
+
+    | 命令 | 干什么 | 处置 |
+    |---|---|---|
+    | `today` / `schedule` / `results` / `live` | 终端里列出来给人看 | ✅ 留 |
+    | `flash`（即时战报） | 检测热点 → 渲赛果卡 → 推微信 | ❌ 删 |
+    | `schedule-cards`（今日赛程卡） | 渲赛程卡 → 写 push.html → 推微信 | ❌ 删 |
+    | `publish flash` | 发已提交的热点包 | ❌ 删别名 |
+
+    ⚠️ **`flash-card` 不是赛果卡，别删错。** 它渲的是**场外快讯卡**
+    （`render/flashcard.py`，带敏感话题闸门），配的是 `flash-radar` 那条线——
+    那条线是「其他的可以保留」里的。我差一点按名字把它一起删了：
+    名字里都有 flash，一个是即时战报（赛果），一个是场外快讯（新闻）。
+
+    `cmd_publish_flash` 这个**函数**留着——`publish content`（内容雷达的
+    赛前焦点）还在用它，删掉的只是 `flash` 那个 channel 别名。
+    """
+    from tennislive import cli  # noqa: PLC0415
+
+    for gone in ("cmd_flash", "cmd_schedule_cards"):
+        assert not hasattr(cli, gone), (
+            f"{gone} 又回来了——它渲卡片并推微信，2026-07-31 停掉了")
+    # 查询那几条必须还在
+    for keep in ("cmd_today", "cmd_day"):
+        assert hasattr(cli, keep), f"{keep} 不见了——「可以用命令查赛果」这半边丢了"
+    # 场外快讯那条线一个零件都不许少
+    assert hasattr(cli, "cmd_flash_card"), (
+        "cmd_flash_card 被删了——它是场外快讯卡，不是赛果卡，属于要保留的那条线")
+    from tennislive.render import flashcard  # noqa: PLC0415
+
+    assert hasattr(flashcard, "generate_flash_card")
+    # 赛果卡的渲染器该没有了
+    from tennislive.render import cards  # noqa: PLC0415
+
+    assert not hasattr(cards, "generate_flash_card"), (
+        "赛果卡渲染器又回来了（render.cards.generate_flash_card）")
+    # publish content 还得能用
+    assert hasattr(cli, "cmd_publish_flash"), (
+        "cmd_publish_flash 被连坐删了——publish content（赛前焦点）还在用它")

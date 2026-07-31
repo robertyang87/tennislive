@@ -24,7 +24,7 @@ from . import __version__
 from .digest import Digest, build_digest
 from .models import Match, MatchStatus
 from .sources import SourceError, fetch_day
-from .timeutil import beijing_today, parse_date_arg
+from .timeutil import parse_date_arg
 from .cdn import jsdelivr_base
 
 logger = logging.getLogger(__name__)
@@ -933,151 +933,6 @@ def cmd_digest(args) -> int:
     return 0
 
 
-def cmd_schedule_cards(args) -> int:
-    """今日赛程卡：按赛事分页、ATP 与 WTA 各自成页、不带看点。"""
-    from .render.common import group_by_tournament
-    from .render.pushmsg import to_schedule_push_html
-    from .render.terminal import console
-    from .render.webcards import (
-        TOUR_LEVELS,
-        generate_schedule_deck,
-        schedule_pages,
-    )
-
-    d = parse_date_arg(args.date)
-    try:
-        digest: Digest = build_digest(d, prefer=args.source)
-    except SourceError as e:
-        console.print(f"[red]抓取失败：{e}[/red]")
-        return 1
-
-    # 北京日历会把美洲赛事的比赛日拦腰切断（详见 render.schedule_time 的
-    # NEXT_DAY_CUTOFF_HOUR）。把次日 12:00 前的场次补进来，否则整个美东夜场
-    # ——包括郑钦文 vs 埃亚拉这种——都会从「今日赛程」里消失。
-    from datetime import timedelta
-
-    from .digest import _is_qualifying
-    from .render.schedule_time import in_schedule_window, match_key
-
-    known = {match_key(m) for m in digest.schedule}
-    carried: list = []
-    try:
-        next_day = fetch_day(d + timedelta(days=1), prefer=args.source)
-        for m in next_day.upcoming():
-            if _is_qualifying(m) or not in_schedule_window(m):
-                continue
-            if match_key(m) in known:
-                continue
-            known.add(match_key(m))
-            carried.append(m)
-    except SourceError as e:
-        console.print(f"[yellow]次日凌晨场次抓取失败，只出今天：{e}[/yellow]")
-    if carried:
-        digest.schedule.extend(carried)
-        # build_digest 的排名回填只作用于它自己取到的那批；这些是之后追加的，
-        # 不补一次就会出现「郑钦文没有排名」，排序也拿不到"top 选手"这一维。
-        if digest.rankings is not None:
-            from .digest import apply_rankings
-
-            apply_rankings(digest.rankings, carried)
-        console.print(f"[cyan]跨日补入[/cyan] {len(carried)} 场（北京次日 12:00 之前开赛）")
-
-    from .sources.official_schedule import enrich_official_schedules
-
-    official = enrich_official_schedules(digest)
-    digest.source_status.update(official)
-    # 官方 OOP 生效没有必须看得见：时间口径全靠它，静默失败会让整份赛程退回
-    # 单源"预计"，而卡上看不出差别。
-    for label, state in official.items():
-        style = "green" if state.startswith("正常") else "yellow"
-        console.print(f"[{style}]官方排期[/{style}] {label} → {state}")
-    if not official:
-        console.print("[yellow]官方排期 无匹配来源，时间仅有聚合源单源[/yellow]")
-
-    upcoming = digest.schedule
-    if not upcoming:
-        console.print("[yellow]今天没有未开赛的场次，不出赛程卡[/yellow]")
-        return 0
-
-    # 取材口径要能被人核对：哪些赛事进了、哪些被级别挡了、每站列了几场，
-    # 全部打出来。只在成功时出声的检查没法证明它真的看过。
-    kept, skipped = [], []
-    for group in group_by_tournament(upcoming):
-        target = kept if group.level in TOUR_LEVELS else skipped
-        target.append((group, len(group.matches)))
-    for group, count in kept:
-        console.print(f"[green]收录[/green] {group.compact_level} · {group.name_zh}（{count} 场）")
-    for group, count in skipped:
-        console.print(
-            f"[yellow]挡掉[/yellow] {group.name_zh}（{count} 场）"
-            f"：级别 {group.level or '未识别'}，非巡回赛级别"
-        )
-    if not kept:
-        console.print("[yellow]今天没有巡回赛级别的赛事[/yellow]")
-        return 0
-
-    outdir = Path(args.outdir) / d.isoformat() / "schedule"
-    cards_dir = outdir / "cards"
-    cards_dir.mkdir(parents=True, exist_ok=True)
-    # 先清干净：页数会随取材变化（收口之后从七页降到四页），不清的话上一轮的
-    # card_schedule05..07 会作为陈图留在仓库里，看起来像本期的一部分。
-    for stale in cards_dir.glob("card_schedule*.jpg"):
-        stale.unlink()
-    date_label = f"{d.month}.{d.day}"
-
-    pages = schedule_pages(upcoming, date_label, today=d)
-    console.print(f"共 {len(pages)} 页")
-
-    card_paths: list[Path] = []
-    try:
-        for kind, image in generate_schedule_deck(upcoming, date_label, today=d):
-            path = outdir / "cards" / f"card_{kind}.jpg"
-            image.convert("RGB").save(path, quality=92)
-            card_paths.append(path)
-    except Exception as e:  # noqa: BLE001 - 字体/浏览器缺失不该吞掉诊断信息
-        console.print(f"[red]赛程卡渲染失败：{e}[/red]")
-        return 1
-
-    # 文案的正文必须按"真正上卡的那些场次"写——正文和图对不上，读者一眼看出来
-    from .render.pushmsg import live_copy_page_url, to_copy_page
-    from .render.schedule_post import pick_lead, schedule_post
-    from .render.schedule_time import schedule_time_display
-    from .render.webcards import schedule_selection
-
-    selection = schedule_selection(upcoming)
-    on_card = [m for _group, ms in selection for m in ms]
-    display = schedule_time_display(upcoming, today=d)
-    lead = pick_lead(on_card)
-    post = schedule_post(d, on_card, display, lead)
-    console.print(f"[cyan]标题[/cyan] {post.splitlines()[0]}")
-
-    (outdir / "xiaohongshu.txt").write_text(post, encoding="utf-8")
-    (outdir / "copy.html").write_text(to_copy_page(post), encoding="utf-8")
-
-    # 复制页的按钮只在链接确认可达时才放进推送：GitHub Pages 只服务 main，
-    # 特性分支上生成的包它取不到，按钮点开就是 404。微信那条消息发出去就
-    # 收不回来——宁可不放按钮，也不放一个死链。
-    copy_url = live_copy_page_url(d, subdir="schedule")
-    if copy_url:
-        console.print(f"[green]复制页可达[/green] {copy_url}")
-    else:
-        console.print(
-            "[yellow]复制页尚不可达（Pages 只服务 main），本次推送不放该按钮；"
-            "标题与正文已在消息里各自成块，可长按复制[/yellow]"
-        )
-
-    events = [f"{group.compact_level}·{group.name_zh}" for group, _ in kept]
-    (outdir / "push.html").write_text(
-        to_schedule_push_html(
-            d, [p.name for p in card_paths], events=events, xhs_text=post,
-            copy_url=copy_url,
-        ),
-        encoding="utf-8",
-    )
-    console.print(f"[green]已生成 {len(card_paths)} 张赛程卡 → {outdir}[/green]")
-    return 0
-
-
 def cmd_yesterday_point(args) -> int:
     """Generate the independent, source-audited yesterday-point package(s).
 
@@ -1234,150 +1089,6 @@ def cmd_yesterday_point(args) -> int:
 
 
 # ---------- 闪发（即时战报） ----------
-
-def cmd_flash(args) -> int:
-    """检测传播窗口内的重点比赛，生成小红书单场内容包.
-
-    用 data/flash_state.json 去重，适合高频定时运行。
-    """
-    import os
-    from datetime import timedelta
-
-    from .render.hotspot import (
-        hotspot_candidates,
-        hotspot_post,
-        hotspot_reasons,
-        hotspot_score,
-        hotspot_title_candidates,
-    )
-    from .render.terminal import console
-    from .timeutil import beijing_today, now_beijing
-
-    today = beijing_today()
-    manifest_path = Path(args.manifest) if args.manifest else None
-    if manifest_path and manifest_path.exists():
-        manifest_path.unlink()
-    matches = []
-    for d in (today - timedelta(days=1), today):
-        try:
-            matches.extend(fetch_day(d, prefer=args.source).matches)
-        except SourceError as e:
-            console.print(f"[yellow]{d} 抓取失败：{e}[/yellow]")
-    if not matches:
-        console.print("[red]无数据，跳过[/red]")
-        return 1
-
-    state_path = Path("data/flash_state.json")
-    state_path.parent.mkdir(parents=True, exist_ok=True)
-    state: dict[str, str] = {}
-    if state_path.exists():
-        state = json.loads(state_path.read_text(encoding="utf-8"))
-    # 清理两天前的记录
-    cutoff = (today - timedelta(days=2)).isoformat()
-    state = {k: v for k, v in state.items() if v >= cutoff}
-
-    now = now_beijing()
-    new = [
-        m
-        for m in hotspot_candidates(matches, now=now)
-        if m.match_id not in state
-    ]
-    if not new:
-        state_path.write_text(
-            json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
-        )
-        console.print("没有新完赛的重点比赛")
-        return 0
-
-    outdir = Path(args.outdir) / today.isoformat() / "flash"
-    outdir.mkdir(parents=True, exist_ok=True)
-    stamp = now.strftime("%H%M")
-    published = 0
-    manifest_items = []
-    for i, m in enumerate(new):
-        titles = hotspot_title_candidates(m)
-        headline = titles[0]
-        card = outdir / f"flash_{stamp}_{i:02d}.jpg"
-        try:
-            from .render.cards import generate_flash_card
-
-            card = generate_flash_card(m, card, headline)
-        except Exception as e:
-            console.print(f"[yellow]战报卡生成失败（跳过图片）：{e}[/yellow]")
-            card = None
-        text = hotspot_post(m)
-        (outdir / f"flash_{stamp}_{i:02d}.txt").write_text(text, encoding="utf-8")
-
-        card_ref = None
-        if card is not None:
-            try:
-                card_ref = card.resolve().relative_to(Path.cwd().resolve()).as_posix()
-            except ValueError:
-                card_ref = card.as_posix()
-        manifest_items.append(
-            {
-                "match_id": m.match_id,
-                "title": headline,
-                "title_candidates": titles,
-                "text": text,
-                "card": card_ref,
-                "hotspot_score": hotspot_score(m),
-                "reasons": hotspot_reasons(m),
-            }
-        )
-
-        # 自动发布（配置了才执行）
-        if not args.no_publish and os.environ.get("PUSHPLUS_TOKEN"):
-            try:
-                from .publish.pushplus import push
-
-                push(f"⚡{headline}", text.replace("\n", "<br/>"))
-                published += 1
-            except Exception as e:
-                console.print(f"[yellow]PushPlus 失败：{e}[/yellow]")
-        wechat_mode = os.environ.get("WECHAT_MODE", "off")
-        if (
-            not args.no_publish
-            and card is not None
-            and os.environ.get("WECHAT_APPID")
-            and wechat_mode != "off"
-        ):
-            try:
-                from .publish.wechat_mp import publish_image_post
-
-                publish_image_post(
-                    title=f"⚡{headline}"[:64],
-                    content=text,
-                    images=[card],
-                    do_publish=(wechat_mode == "publish"),
-                )
-                published += 1
-            except Exception as e:
-                console.print(f"[yellow]公众号闪发失败：{e}[/yellow]")
-
-        state[m.match_id] = today.isoformat()
-        console.print(f"[green]⚡ {headline}[/green]")
-
-    if manifest_path:
-        manifest_path.parent.mkdir(parents=True, exist_ok=True)
-        manifest_path.write_text(
-            json.dumps(
-                {
-                    "generated_at": now.isoformat(),
-                    "date": today.isoformat(),
-                    "items": manifest_items,
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-
-    state_path.write_text(
-        json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8"
-    )
-    console.print(f"闪发 {len(new)} 条（发布动作 {published} 次）")
-    return 0
 
 
 def cmd_content(args) -> int:
@@ -1749,15 +1460,6 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("live", help="进行中的比赛")
     add_common(sp, with_date=False)
 
-    sp = sub.add_parser("flash", help="即时战报：检测刚完赛的重点比赛并闪发")
-    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
-    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
-    sp.add_argument("--no-publish", action="store_true", help="只生成不发布")
-    sp.add_argument(
-        "--manifest",
-        help="写出本批待发布清单；工作流提交图片后再据此发送",
-    )
-
     sp = sub.add_parser("content", help="内容雷达：自动选择完赛热点和赛前焦点")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
     sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
@@ -1873,13 +1575,6 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
-    sp = sub.add_parser(
-        "schedule-cards", help="今日赛程卡：按赛事分页、ATP/WTA 分开、无看点"
-    )
-    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
-    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
-    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
-
     sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
     sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
@@ -1909,8 +1604,6 @@ def build_parser() -> argparse.ArgumentParser:
     )
     spp = pub_sub.add_parser("pushplus", help="通过 PushPlus 推送到自己微信")
     spp.add_argument("--dir", required=True, help="digest 生成的内容目录")
-    spf = pub_sub.add_parser("flash", help="发送已提交的热点待发布包")
-    spf.add_argument("--manifest", required=True, help="flash 生成的批次清单 JSON")
     spc = pub_sub.add_parser("content", help="发送已提交的内容待发布包")
     spc.add_argument("--manifest", required=True, help="content 生成的批次清单 JSON")
 
@@ -1934,8 +1627,6 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "live":
         args.date = "today"
         return cmd_day(args, [MatchStatus.LIVE], "进行中")
-    if args.command == "flash":
-        return cmd_flash(args)
     if args.command == "content":
         return cmd_content(args)
     if args.command == "digest":
@@ -1950,8 +1641,6 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_radar(args)
     if args.command == "explainer":
         return cmd_explainer(args)
-    if args.command == "schedule-cards":
-        return cmd_schedule_cards(args)
     if args.command == "point":
         return cmd_yesterday_point(args)
     if args.command == "video":
@@ -1961,8 +1650,6 @@ def main(argv: list[str] | None = None) -> int:
             return cmd_publish_wechat(args)
         if args.channel == "pushplus":
             return cmd_publish_pushplus(args)
-        if args.channel == "flash":
-            return cmd_publish_flash(args)
         if args.channel == "content":
             return cmd_publish_flash(args)
         build_parser().parse_args(["publish", "--help"])

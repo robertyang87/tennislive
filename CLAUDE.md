@@ -305,6 +305,34 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### 查询留着，卡片图和推送不留
+
+账号所有者：「**可以用命令查赛果，但没必要做卡片图然后推送微信了**」。
+
+边界划在**产物**上，不是划在功能上：
+
+| 命令 | 干什么 | 处置 |
+|---|---|---|
+| `today` / `schedule` / `results` / `live` | 终端里列出来给人看 | ✅ 留 |
+| `flash`（即时战报） | 检测热点 → 渲赛果卡 → 推微信 | ❌ 删 |
+| `schedule-cards`（今日赛程卡） | 渲赛程卡 → 写 push.html → 推微信 | ❌ 删 |
+| `publish flash` | 发已提交的热点包 | ❌ 删别名（函数留着） |
+| `render.cards.generate_flash_card` | 赛果卡渲染器，删完零调用方 | ❌ 删 |
+
+⚠️ **`flash-card` 不是赛果卡，差一点删错。** 它渲的是**场外快讯卡**
+（`render/flashcard.py`，带敏感话题闸门），配的是 `flash-radar` 那条线——
+那条线在「其他的可以保留」里。**名字里都有 flash，一个是即时战报（赛果），
+一个是场外快讯（新闻）**，按名字扫必删错。是翻测试名
+（`test_flash_card_cli_blocks_sensitive_topic_without_rendering`、
+`test_flash_radar_queues_only_offcourt_nonsensitive_news`）才认出来的。
+
+同样的形状还有一个：`cmd_publish_flash` 这个**函数**不能删——
+`publish content`（内容雷达的赛前焦点）走的是同一个函数，删掉的只是
+`flash` 那个 channel 别名。**一个函数挂两个入口时，删入口别删函数。**
+
+判据在 `test_查赛果的命令留着卡片和推送不留`，两个方向都反验过：
+把 `cmd_flash` 加回来会红，把场外快讯卡误删也会红。
+
 ### 停一条线要**按产品分**，不是按工作流分
 
 账号所有者纠正了我两次，第二次一句话把边界划清楚了：
