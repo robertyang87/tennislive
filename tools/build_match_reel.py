@@ -292,7 +292,8 @@ def fetch_captions(url: str, outdir: Path) -> Path | None:
     notes: list[str] = []
     for label, extra in _ladder():
         proc = subprocess.run(
-            [binary, "--skip-download", "--write-auto-subs", "--write-subs",
+            [binary, *YTDLP_BASE, "--skip-download",
+             "--write-auto-subs", "--write-subs",
              "--sub-langs", "en.*,en", "--sub-format", "json3/vtt/best",
              "-o", tmpl, url, *cookies, *extra],
             capture_output=True, text=True)
@@ -392,6 +393,15 @@ _PLAIN = [
 FMT_SELECTOR = "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
 FMT_SORT = "res:1080,fps,vcodec:h264,acodec:m4a"
 
+# **每一次 yt-dlp 调用都要带上这几个**，所以抽出来共用。
+# `--js-runtimes node` 是解 n challenge 的那一环：没有它，YouTube 的格式表
+# 只剩故事板，报出来是「Only images are available」+「Requested format is
+# not available」——看起来像「这条片子取不到」，其实是**这一次调用少带了一个
+# 参数**。我给 `fetch_captions` 新写 yt-dlp 调用时正是这么漏的：同一个 job 里
+# `download()` 明明下得动整条 294 秒的片子，字幕那条八个 client 全红。
+# 这就是「加新能力就要同时改三处」的又一个变种——新调用没继承旧调用的前提。
+YTDLP_BASE = ["--js-runtimes", "node"]
+
 
 def _ladder() -> list[tuple[str, list[str]]]:
     if os.environ.get("YT_POT_PROVIDER", "").strip():
@@ -451,7 +461,7 @@ def download(url: str, dest: Path) -> Path:
     failures: list[str] = []
     for label, extra in _ladder():
         proc = subprocess.run(
-            [binary, "--js-runtimes", "node", "--no-warnings", "-f", selector,
+            [binary, *YTDLP_BASE, "--no-warnings", "-f", selector,
              *sort, *cookies, *extra, "--merge-output-format", "mp4",
              "-o", str(dest), url],
             capture_output=True, text=True,

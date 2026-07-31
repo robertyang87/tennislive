@@ -717,6 +717,27 @@ def test_下载不把编码当硬条件():
     assert '"-f", selector' in source
 
 
+def test_每一次yt_dlp调用都要带上同一组前提():
+    """**新写的 yt-dlp 调用要继承旧调用的前提，一个都不能漏。**
+
+    `--js-runtimes node` 是解 n challenge 的那一环。`fetch_captions` 是后加的
+    第二处调用，我没带它——于是同一个 job 里 `download()` 下得动整条 294 秒的
+    片子，字幕那条**八个 client 全红**，报的是「Only images are available」
+    ＋「Requested format is not available」，看起来像「YouTube 把这台机器挡了」，
+    其实是这一次调用少带了一个参数。
+
+    和「加新能力就要同时改三处」是同一个毛病，只是这次漏的不是依赖，是前提。
+    判据：源码里每一处 `[binary,` 开头的 yt-dlp 调用都要接 `*YTDLP_BASE`。
+    """
+    reel = _reel()
+    assert "--js-runtimes" in reel.YTDLP_BASE
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    calls = re.findall(r"\[binary,[^\]]*", source)
+    assert len(calls) >= 2, f"只找到 {len(calls)} 处 yt-dlp 调用，判据大概失效了"
+    for call in calls:
+        assert "*YTDLP_BASE" in call, f"这处 yt-dlp 调用没带上共同前提：{call[:90]}"
+
+
 def test_赛场之上走固定海报模板():
     """**这是栏目的固定封面，不是一条片子的一次性设计。**
 
