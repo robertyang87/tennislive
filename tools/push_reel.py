@@ -220,6 +220,32 @@ def _fits(title: str) -> str:
     return title
 
 
+def cut_at_tags(copy_text: str) -> str:
+    """**文案到 tag 那一行为止，后面的一概不发。**
+
+    账号所有者：「推送的正文复制文案里有不需要的东西，**tag 之后就不要了**」。
+
+    `wong-brooksby.xhs.txt` 末尾挂着一段「素材来源（写给下一个人）」——写给
+    仓库里的下一个人的备注，471 字，跟着正文一起进了微信推送和复制页。而复制页
+    正是账号所有者往小红书粘贴的那个出口，等于把内部备忘发给读者。
+
+    tag 行是小红书文案天然的结尾，判据不用另定：**最后一个 `#` 标签所在的行
+    就是终点**。后面无论写了什么（素材来源、待办、分隔线），都是仓库的事。
+
+    砍掉的**要打印出来**，不能默默吃掉——「兜底出事的时候不吭声」是这个仓库
+    反复踩的那个坑。真有一天正文被误判砍掉，日志里看得见砍了什么。
+    """
+    lines = copy_text.splitlines()
+    last = max((i for i, ln in enumerate(lines)
+                if hashtag_count(ln)), default=-1)
+    if last < 0 or not "\n".join(lines[last + 1:]).strip():
+        return copy_text.strip()
+    dropped = "\n".join(lines[last + 1:]).strip()
+    head = dropped.splitlines()[0][:40]
+    print(f"[文案] tag 之后还有 {len(dropped)} 字，不发：「{head}…」")
+    return "\n".join(lines[:last + 1]).strip()
+
+
 def split_copy(copy_text: str) -> tuple[str, str]:
     """文案的第一行是标题，空一行之后是正文——和 `to_copy_page` 同一套切法。
 
@@ -325,7 +351,10 @@ def main() -> int:
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
-    copy_text = Path(args.copy).read_text(encoding="utf-8").strip()
+    # **两个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
+    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
+    # 所以收口也收在这儿，别在下游各切一次。
+    copy_text = cut_at_tags(Path(args.copy).read_text(encoding="utf-8"))
     if not copy_text:
         raise SystemExit("文案是空的")
     # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。

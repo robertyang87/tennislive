@@ -259,6 +259,58 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "复制评论" not in page
 
 
+def test_文案到tag那一行为止(tmp_path):
+    """**tag 之后的东西不发出去。**
+
+    账号所有者：「推送的正文复制文案里有不需要的东西，**tag 之后就不要了**」。
+    `wong-brooksby.xhs.txt` 末尾挂过一段 471 字的「素材来源（写给下一个人）」，
+    跟着正文进了微信推送，也进了复制页——而复制页正是往小红书粘贴的那个出口，
+    等于把仓库内部的备忘发给读者。（那段话本来就该待在 spec 的 `_source` 里，
+    它现在也确实在那儿。）
+
+    两头都要管，和「tag 最多五个」那条同一个形状：
+
+    - **仓库里的 spec** 不许在 tag 之后还写东西——写了就在 CI 上红，
+      而不是等它发出去
+    - **`push_reel` 发之前再切一刀**，因为发出去就收不回来
+
+    第二条是**真跑一遍 `--stage page`** 验的，不是 grep 源码里有没有那个函数：
+    「写了」不等于「跑过」，而且这一刀必须落在两个 stage 共用的那一处读上——
+    只切复制页不切微信正文，两边粘出来的就不是同一段字了。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import cut_at_tags  # noqa: PLC0415
+
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        text = path.read_text(encoding="utf-8")
+        assert cut_at_tags(text) == text.strip(), (
+            f"{path.name} 在 tag 之后还写了东西——写给下一个人的备注放 spec 的 "
+            f"`_source`，文案文件到 tag 那一行为止")
+
+    outdir = tmp_path / "output" / "2026-07-28" / "reel" / "demo"
+    outdir.mkdir(parents=True)
+    copy = tmp_path / "demo.xhs.txt"
+    copy.write_text(
+        "小红书那句标题\n\n正文第一行\n\n#网球 #网球时差\n\n"
+        "---\n素材来源（写给下一个人）：这段不该发出去\n",
+        encoding="utf-8")
+    (tmp_path / "demo.json").write_text(
+        json.dumps({"cover": {"eyebrow": "赛场之上"}}, ensure_ascii=False),
+        encoding="utf-8")
+    done = subprocess.run(
+        [sys.executable, str(Path("tools/push_reel.py").resolve()),
+         "--stage", "page", "--outdir", str(outdir),
+         "--matchup", "锦织圭 vs 商竣程", "--score", "2:1",
+         "--copy", str(copy)],
+        check=True, capture_output=True, text=True,
+    )
+    page = (outdir / "copy.html").read_text(encoding="utf-8")
+    assert "#网球时差" in page and "正文第一行" in page, "把正文也砍掉了"
+    assert "素材来源" not in page, "tag 之后那段跟着发出去了"
+    # **砍掉的要出声**：默默吃掉的话，「砍对了」和「砍错了」长得一模一样。
+    assert "tag 之后还有" in done.stdout, "砍了却不说砍了什么"
+
+
 def _reel_specs():
     return {p.stem: json.loads(p.read_text("utf-8"))
             for p in sorted(Path("specs/reels").glob("*.json"))}
