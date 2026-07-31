@@ -1523,3 +1523,49 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 不打标签时 `-map 0:v:0` 取的是原始流，把整个滤镜图绕过去——裁切、缩放、跟踪
 全部静默失效，成片直接是 16:9。**它不报错**，只是不生效，跟「补位的静音盖住
 真音轨」是同一种毛病：**兜底和默认值出事的时候不吭声**。
+
+### 「写了」不等于「跑过」——源码文本断言证明不了这一点
+
+2026-07-31 同一天被咬两次，同一个形状：**一个凭空来的名字**。
+
+    build_versus_poster 里  _still_to_clip(poster, dest, seconds)
+                                                       ^^^^^^^ 没定义
+    build_versus_poster 里  _cut_person(source, panel, key, …)
+                                        ^^^^^^ 没定义
+
+第一个是我自己的：封面时长加在 `build_cover` 上，而它把活**委托给**
+`build_versus_poster`，那边没跟着改。下完 189 MB 源片、合完配音、渲完海报，
+五分钟白跑才炸（run 30622667742）。**改签名要跟着委托链改到底**——两头都改了，
+中间那一层最容易漏。
+
+**第二个才是真正的收获**：`_cut_person(source, …)` 里的 `source` 在那个作用域
+里**从来就不存在**（它拿的是 `sources` 字典加 `primary`）。也就是说 #105 引进的
+「封面人物首选本场抽帧」**一次都没跑起来过**——任何一条 spec 第一次用
+`versus.top.frame_at` 都会 NameError。它合并了、写进文档了、还带着测试。
+
+**那条测试是这么写的**：
+
+```python
+assert "def _cut_person(" in reel, "没有从源片抠人的那条路"
+assert "post_process_mask=True" in reel
+```
+
+——**它证明的是这段代码被写出来了，不是它跑得起来**。绿灯和「这个功能好用」
+长得一模一样，而它整整一天都是坏的。这是「断言全绿不等于页面对」的静态版本：
+查源码文本的断言只能防「有人把它删了」，防不住「它从来没工作过」。
+
+判据落在 `test_没有名字是凭空来的`：`ruff --select F821` 扫 `src tools tests`。
+
+- **`py_compile` 和 pytest 都看不见这类错**，只有真跑到那一行才炸。而那一行
+  可能一年都跑不到一次——上面第二个就是
+- ruff 一秒扫完，写进 dev extra（`pip install -e ".[dev]"` 就带上）。
+  **缺 ruff 时这条测试要红，不许 skip**：一个常年跳过的检查和常年红是同一个毛病
+- `cards.py` 的主题色是 `globals().update(_THEMES[...])` 灌进来的，静态看不见，
+  72 条全是假阳性。**排除写在 `pyproject` 的 `per-file-ignores` 里，不藏在测试
+  里**——让它是一个看得见的决定
+- 反向验证过：把 `seconds` 改成 `secondz`，这条立刻红（改回来记得清
+  `__pycache__`）
+
+顺带一条给测试本身的：**新加一条代码路径时，测试至少要真调用它一次**（哪怕
+喂假数据、只断言它抛的是预期的那个错）。`assert "def foo(" in source` 这种写法
+留给「这条规矩别被删掉」，不要拿它当功能测试。

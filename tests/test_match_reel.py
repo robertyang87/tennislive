@@ -1474,6 +1474,72 @@ def test_栏目名从spec读不要在命令行上另写一遍():
             f"{slug} 没写 cover.eyebrow——推送标题会取不到栏目名")
 
 
+def test_没有名字是凭空来的():
+    """`ruff --select F821`：整个仓库不许有未定义的名字。
+
+    一天里被这一条咬了两次，**两次 `py_compile` 和 pytest 都看不见**：
+
+    - `build_versus_poster` 里 `_cut_person(source, …)` —— 这个作用域里根本没有
+      `source`（它拿的是 `sources` 字典加 `primary`）。也就是说 #105 引进的
+      「封面人物首选本场抽帧」**一次都没跑起来过**，第一次用必 NameError
+    - 我自己把封面时长传给 `build_cover` 却漏了它委托的 `build_versus_poster`，
+      在 runner 上下完两条源片、合完配音、渲完海报之后才炸（run 30622667742）
+
+    这正是「加新能力就要同时改三处」和「让失败发生在第 5 秒」两条的合体，
+    只是这次连第 5 秒都不用——静态就能看见。
+
+    `cards.py` 的主题色是 `globals().update` 灌进来的，静态看不见，**排除写在
+    pyproject 里**而不是藏在这儿：让它是一个看得见的决定。
+    """
+    import shutil  # noqa: PLC0415
+
+    ruff = shutil.which("ruff")
+    # 缺依赖就 skip 的话，这条检查会常年跳过而没人发现——和常年红是同一个毛病。
+    # ruff 已经写进 dev extra，CI 的 `pip install -e ".[dev,…]"` 就带上了。
+    assert ruff, 'ruff 没装。装：pip install -e ".[dev]"'
+    proc = subprocess.run(
+        [ruff, "check", "--select", "F821", "--output-format", "concise",
+         "src", "tools", "tests"],
+        capture_output=True, text=True)
+    assert proc.returncode == 0, (
+        "有名字是凭空来的（F821）——这类错 py_compile 和 pytest 都看不见，"
+        f"只会在真跑到那一行时炸：\n{proc.stdout}{proc.stderr}")
+
+
+def test_封面抽帧抠图那条路要真的被调用一次(tmp_path, monkeypatch):
+    """**「写了」不等于「跑过」。**
+
+    `_cut_person(source, …)` 里的 `source` 在 `build_versus_poster` 的作用域里
+    从来就不存在（它拿的是 `sources` 字典加 `primary`）——「封面人物首选本场
+    抽帧」合并了、写进文档了、还带着测试，却**一次都没跑起来过**。
+
+    那条测试是 `assert "def _cut_person(" in reel`：**它证明的是这段代码被写
+    出来了，不是它跑得起来**。所以这儿改成真调用一次，让那一行真的执行。
+
+    走的是「源片键写错」这个分支：它在碰 ffmpeg / rembg 之前就返回，沙箱里跑
+    得动，而**要执行到那句报错，`sources` 和 `primary` 必须都在作用域里**——
+    正是当初炸掉的那两个名字。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    # `_grab` 会 shell 出去抓帧，沙箱没有 ffmpeg 也不需要真抓——它只按约定
+    # 返回路径。挡掉之后就能走到下面那个循环。
+    monkeypatch.setattr(reel, "run", lambda *a, **k: None)
+
+    cover = {
+        "layout": "cutout",
+        "versus": {
+            "background": {"frame_at": 12.0, "shot": "wide_court"},
+            "top": {"frame_at": 30.0, "source": "拼错的键"},
+            "bottom": {"cutout": "assets/reel/lleyton-vicht-inset.png"},
+        },
+    }
+    with pytest.raises(reel.ReelError, match="拼错的键"):
+        reel.build_versus_poster({"r1": Path("a.mp4")}, "r1", cover,
+                                 tmp_path / "part_cover.mp4")
+
+
 def test_封面可以指定谁在前压住谁():
     """两个人叠在一起时，**赢的那个画在上面**——前后关系本身就在说结果。
 
