@@ -74,6 +74,9 @@ def test_中间物一个都不许进仓库():
         "_cover.jpg", "_cover.html",  # 封面渲染输入，data URI 内嵌，单个 12 MB
         "poster.html",
         "voice_03.mp3",
+        "_versus_bg.jpg",             # 背景抓帧
+        "_versus_cut_top.png",        # 抽帧抠图，**后缀和上一个不一样**
+        "_versus_raw_bottom.png",     # 抠之前那张原帧，报错时会留下
     ]
     for name in must_die:
         assert any(fnmatch(name, p) for p in pats), (
@@ -831,9 +834,13 @@ def test_封面固定版式是官方抠图加本场视频全场机位():
         assert background.get("shot") == "wide_court", (
             f"{path.name} 的 cutout 背景必须是能看清整片球场的底线全场机位")
         for key in ("top", "bottom"):
-            cut = Path(versus[key]["cutout"])
+            panel = versus[key]
+            # 人物有两个来源，**首选本场抽帧**（见 test_封面人物首选本场抽帧）。
+            # 官方棚拍图仍然认，那是源片里挑不出近景时的兜底。
+            if panel.get("frame_at") is not None:
+                continue
+            cut = Path(panel["cutout"])
             assert cut.is_file(), f"{path.name} 的 {key} 格找不到抠图 {cut}"
-            assert "frame_at" not in versus[key], f"{path.name} 的 {key} 格还在抽帧"
 
     # 抠图的脚**按各自的横向位置**落在斜线上：线是 -7.4°，左端低右端高。
     # 两边都用同一个 y，右边那个会浮起来 2·(0.71-0.29)·540·tan7.4° ≈ 59px。
@@ -897,3 +904,90 @@ def test_旁白不能比它那一段的画面长():
     assert "seg.length + 0.12" in src, f"容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出"
     # 字幕收进本段窗口：末尾时刻要被 min(...) 夹住
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
+
+
+def test_封面人物首选本场抽帧():
+    """封面的两个人**首选从本场源片抠**，官方棚拍图退居兜底。
+
+    账号所有者的原话：「因为更贴近比赛的服装，感觉会更好，用之前资料就有点
+    脱节」。棚拍图的衣服、光、背景都跟这场球没关系，压在本场画面上像两张贴纸。
+
+    顺带还赢在分辨率，这个能量（模板槽位 634px 高）：
+
+        ATP 官方棚拍 裁到胯   265×410   → 1.55× **放大**
+        本场抽帧              660×1040  → 0.61× 缩小
+
+    看着"正规"的棚拍图其实是全套素材里最软的一档。
+
+    挑帧的三条判据是账号所有者给的，落在 `tools/pick_cover_frames.py`：
+    **正脸或稍微侧脸、上半身直立、表情读得出**。
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    poster = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+
+    assert "def _cut_person(" in reel, "没有从源片抠人的那条路"
+    # **`post_process_mask=True` 不能省**：不加的时候深色球衣压在深色背景墙上会
+    # 留一整块方底，渲到海报上是一个看得见的矩形边。那不是模型不行，是后处理没开。
+    assert "post_process_mask=True" in reel, (
+        "抠图没开 post_process_mask——深色球衣会留一整块方底")
+    assert 'CUT_MODEL = "isnet-general-use"' in reel, (
+        "换模型要重新把 alpha 摊在棋盘格上看边：u2net 把发梢切平了一条")
+    # 报错要把「首选抽帧」说出来，否则下一个人只会看到两条棚拍图的 URL
+    anchor = "cutout 版式的 {key} 格"
+    assert "frame_at" in reel[reel.index(anchor):reel.index(anchor) + 700]
+    assert "首选本场抽帧" in poster, "海报模块的报错没指出首选是抽帧"
+
+    # 判据三条要写在挑帧工具里，别只活在对话里
+    picker = Path("tools/pick_cover_frames.py")
+    assert picker.is_file(), "挑帧工具没了——这三条判据就只剩口头约定"
+    text = picker.read_text(encoding="utf-8")
+    for rule in ("正脸", "上半身直立", "表情"):
+        assert rule in text, f"挑帧工具里没写「{rule}」这一条"
+
+
+def test_挑帧的门槛要在同一个口径下量():
+    """清晰度必须**把脸缩到同一个尺寸再算**，否则门槛是反的。
+
+    第一版直接在原尺寸 ROI 上求 Laplacian 方差，结果和放大倍率成反比——
+    371px 的近景 17.6，198px 的中景 123.9。于是 40 这个门槛把**所有近景**
+    判成「糊」，整条片子过闸 0 帧，而它长得和「这条片子里没有近景」一模一样。
+
+    同一个毛病还有第二处：运动量的门槛拍了个 12，而我已经打开看过、确认站着
+    不动的那几帧量出来是 19~25——门槛会把正确答案全部拒掉。所以运动量降级成
+    排序里的罚分，不设闸。
+
+    这就是「门槛的数要在同一个口径下量」和「空结果先自证是真空」的合体：
+    **自己写的探测脚本报空时，先拿一个已知非空的口径对一下**。
+    """
+    text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
+    assert "cv2.resize(roi, (SHARP_SIDE, SHARP_SIDE))" in text, (
+        "清晰度还在原尺寸上算——脸越大分越低，门槛是反的")
+    assert "MAX_MOTION" not in text, "运动量又变回闸门了；量出来 19~25，闸设不住"
+    # 不合格的也要报出来：只列通过的检查，没法证明它真看过整条片子
+    assert "丢弃" in text, "没有把被丢掉的帧和原因打出来"
+
+
+def test_抽帧抠图要同时改代码工作流和预检():
+    """「加新能力要同时改三处」——playwright、Chromium、cv2 三次都漏过。
+
+    三次都死得很晚：下完 64MB 源片、合完原声之后才报 ModuleNotFoundError，
+    每次白跑一分半。而沙箱里这些依赖恰好都装着，本地怎么试都试不出来。
+
+    rembg 是第四次，所以三处一起钉住：
+
+    1. 代码：`_cut_person` 用它
+    2. 工作流：`pip install "rembg[cpu]"`，并缓存 176MB 的模型
+    3. 预检：**在下源片之前** import 一次，让失败发生在第 5 秒
+    """
+    flow = Path(".github/workflows/match-reel.yml").read_text(encoding="utf-8")
+    assert "cutout]" in flow, "工作流没装 cutout extra——runner 上会死在 import rembg"
+    assert 'cutout = ["rembg[cpu]' in Path("pyproject.toml").read_text("utf-8"), (
+        "依赖没钉在 pyproject 里；装裸包名踩过 opencv 5.x 那次")
+    assert "~/.u2net" in flow, "没缓存抠图模型，每条片子都要现下 176MB"
+
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "def _preflight_cutout(" in reel, "没有开跑前的依赖预检"
+    body = reel[reel.index("def render("):]
+    check = body.index("_preflight_cutout(spec)")
+    download = body.index('with stage("下载源片")')
+    assert check < download, "预检排在下载之后——又是下完 64MB 才报错"

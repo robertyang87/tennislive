@@ -22,15 +22,23 @@
 根本没有一张能用的比赛照，最后只能拿握手那一帧顶，结果**王欣瑜在同一张海报上
 出现了两次**、帕雷哈的脸还是糊的、两个名字压在中缝上谁是谁都说不清。
 
-抠图这条路把「认人」这件事一次性解决掉：
+抠图这条路把「认人」这件事一次性解决掉。人物有两个来源，**首选本场抽帧**：
 
-- **WTA**：`api.wtatennis.com/tennis/players/?name=<姓>` 查 ID，抠图在
-  `photoresources.wtatennis.com/.../<Name>-Torso_<wta_id>.png?width=3000`，
+- **本场抽帧（首选）**：从这场球的源片里挑一帧近景抠出来。衣服、光、球场都是
+  这一场的。账号所有者的原话：「因为更贴近比赛的服装，感觉会更好，用之前资料
+  就有点脱节」。挑帧判据是三条——**正脸或稍微侧脸、上半身直立、表情读得出**，
+  收在 `tools/pick_cover_frames.py`；spec 里写
+  `versus.top = {"frame_at": 142.4, "box": [x0,y0,x1,y1]}`
+- **WTA 官方棚拍（兜底）**：`api.wtatennis.com/tennis/players/?name=<姓>` 查 ID，
+  抠图在 `photoresources.wtatennis.com/.../<Name>-Torso_<wta_id>.png?width=3000`，
   3000×2813 透明底。**文件名自带 WTA ID，人物这一要素由来源自己写死**
-- **ATP**：总站 403，但赛事自己的域名镜像着同一批
+- **ATP 官方棚拍（兜底）**：总站 403，但赛事自己的域名镜像着同一批
   `/-/media/alias/player-gladiator-image/<atp_id>`，379×603 全身抠图。
-  尺寸是 alias 定死的（`?w=` 无效），铺到一格约 1.3 倍放大，比 WTA 那边软一档
-- 两边都是**棚拍摆拍**，所以张力交给背景那张本场画面，不交给人物
+  尺寸是 alias 定死的（`?w=` 无效）
+
+**棚拍图是全套素材里最软的一档**，这个能量（槽位 634px 高）：ATP 那张裁到胯
+只有 265×410，铺上去是 **1.55× 放大**；同一场源片抓的近景 660×1040，
+**0.61× 缩小**。看着"正规"，实际更糊。
 
 素材：`cutout` 版式每格给 `cutout`（透明 PNG），原始 spec 的背景给
 `versus.background = {frame_at, shot: "wide_court"}`；渲染管线会从本场源片
@@ -156,7 +164,9 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
         panel = versus[key]
         if not panel.get("cutout"):
             raise SystemExit(
-                f"cutout 版式的 {key} 格要 `cutout`：官方抠图的透明 PNG。\n"
+                f"cutout 版式的 {key} 格要 `cutout`：一张透明 PNG。\n"
+                "首选本场抽帧（spec 里写 frame_at + box，由 build_match_reel 抠好"
+                "再传进来）；拿不到再退官方棚拍：\n"
                 "WTA 走 photoresources 的 <Name>-Torso_<wta_id>.png?width=3000，"
                 "ATP 走赛事域名的 /-/media/alias/player-gladiator-image/<atp_id>。\n"
                 "**这个球员根本没有官方抠图，就退回 `layout: diagonal` 的照片版**"
