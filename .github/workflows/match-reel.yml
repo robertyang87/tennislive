@@ -43,30 +43,37 @@ on:
         required: false
         default: "+6%"
       push:
-        description: "render 完成后推送到微信"
+        description: "render 完成后顺手推送到微信（只能在 main 上）。分支上渲的片子合进 main 之后跑 push-reel 就行，不用重渲"
         required: false
         type: boolean
         default: false
+      # 下面四项**默认全空，从 spec 读**（`push_reel.push_meta`）：对阵取
+      # `cover.versus.names`、比分取 `cover.result`——海报印的就是这两个值，
+      # 标题没有理由再让人打一遍。`summary` / `lead` 写在 spec 的 `push` 块里。
+      #
+      # 原来这几项挂着**上一条片子的默认值**（`伊埃拉 vs 郑钦文`、
+      # `郑钦文首轮出局`、一整句郑钦文的数据），漏传一项就拿另一场球的标题
+      # 把这条片子发出去，而微信那条消息发出去就收不回来。
       matchup:
-        description: "对阵，进标题：如「锦织圭 vs 商竣程」"
+        description: "覆盖对阵（默认取 spec 的 cover.versus.names）"
         required: false
-        default: "伊埃拉 vs 郑钦文"
+        default: ""
       score:
-        description: "赛果，进标题：赢家在前，如「2:1」"
+        description: "覆盖赛果（默认取 spec 的 cover.result），赢家在前"
         required: false
-        default: "2:1"
+        default: ""
       event:
-        description: "赛事与轮次，进标题。默认留空——加上就太长了，赛事名文案里有"
+        description: "赛事与轮次，进标题。一般留空——加上就太长了，赛事名文案里有"
         required: false
         default: ""
       summary:
-        description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
+        description: "覆盖一句话概括（默认取 spec 的 push.summary）。整句标题不超过 20 个字位"
         required: false
-        default: "郑钦文首轮出局"
+        default: ""
       push_lead:
-        description: "推送正文那一句"
+        description: "覆盖推送正文那一句（默认取 spec 的 push.lead）"
         required: false
-        default: "一盘一破在手，之后只再赢下 1 局。全场 8 个破发点保住 2 个，二发得分率 35%，12 记 Ace 全场最多，2 小时 26 分。"
+        default: ""
 
 permissions:
   contents: write
@@ -96,16 +103,47 @@ jobs:
       #
       # 所以在这儿拦：让失败发生在第 5 秒，不是第 16 分钟。要出片不推送就
       # `push=false`，在分支上随便跑；要推送先把 PR 合进 main。
+      #
+      # **但「合进 main 再跑一遍」不该是重渲一遍。** 一直以来的做法是把整条
+      # match-reel 在 main 上从头再跑一次：run 30623994190 重渲 wong-brooksby，
+      # 出来的 mp4 和 PR #108 里那份差 563 字节（55,028,417 → 55,028,980），
+      # 七分二十二秒的渲染换来一个字节级相同的文件，外加往仓库里再塞一个 55 MB
+      # 的 blob（这正是 .git 涨到 1.77 GiB、每次 checkout 要两分多钟的原因）。
+      # 现在合进 main 之后跑 `push-reel.yml` 就行——它只推送仓库里已经有的那份，
+      # 三分钟，失败了重跑也是三分钟。
       - name: push=true 必须在 main 上
         if: github.event.inputs.push == 'true' && github.ref_name != 'main'
         run: |
           echo "::error::push=true 只能在 main 上跑，当前分支是 ${{ github.ref_name }}。"
           echo "::error::GitHub Pages 只服务 main——复制页留在分支上永远是 404，"
           echo "::error::推送那一步等不到它就会 exit 1，渲染和轮询全白跑十几分钟。"
-          echo "::error::出片但不推送用 push=false；要推送先把 PR 合进 main 再跑。"
+          echo "::error::用 push=false 在这个分支上出片，把 PR 合进 main，"
+          echo "::error::然后跑 push-reel 工作流（slug=${{ github.event.inputs.slug }}）——"
+          echo "::error::它推送的就是仓库里这一份，不用重渲。"
           exit 1
 
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要 1 分 35 秒到 2 分 44 秒（run 30622667742 /
+          # 30624808733）——而渲染一个字节都用不到别人的成片。稀疏检出把它
+          # 挡在外面，剩下的全部加起来 161 MB。
+          #
+          # cone 模式下**根目录的文件总是带上**（pyproject.toml、CLAUDE.md），
+          # 不用列。本次的 outdir 在「算出目录」那一步再 add 进来——重渲一条
+          # 已有的片子时只取它自己那几十 MB，不取别人的。
+          #
+          # ⚠️ 排除的只有 output/。assets 155 MB 看着也不小，但它是渲染真要读
+          # 的东西（抠图、示意图、字体），少一个就是第 5 分钟才炸的
+          # FileNotFoundError——「加新能力就要同时改三处」那条坑的又一种形状。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -158,8 +196,14 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           SLUG="${{ github.event.inputs.slug }}"
-          echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
+          OUTDIR="output/$OUT_DATE/reel/$SLUG"
+          echo "outdir=$OUTDIR" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          # 上面的稀疏检出把整个 output/ 挡在外面了，本次要写要提交的这一格
+          # 得放进来，否则 `git add` 会说它在 sparse-checkout 之外。
+          # 新目录没有历史 blob 要下；重渲已有的片子才会取它自己那几十 MB。
+          git sparse-checkout add "$OUTDIR"
+          echo "稀疏检出的范围：$(git sparse-checkout list | tr '\n' ' ')"
 
       # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」。第一道解法
       # 是 GVS PO token：yt-dlp 官方推荐的 bgutil provider 起在本机 4416，插件会
@@ -273,6 +317,69 @@ jobs:
             --top 12 || true
           ls -la "$OUT/cover_candidates" 2>/dev/null || true
 
+      # **复制页排在渲染之前，而且当场提交。**
+      #
+      # 它一个字节都不依赖成片——内容只来自 `specs/reels/<slug>.xhs.txt` 和
+      # 从 spec 算出来的标题（`push_reel.py --stage page` 全程没碰过 mp4）。
+      # 可它原来排在渲染**之后**（第 17 步），于是 Pages 要等提交完才开始发布，
+      # 推送那一步只能站在原地等：run 30624808733 的日志是连续 12 次
+      # `HTTP 404`、第 13 次才拿到——**240 秒纯空转，占了整条 run 的四分之一**。
+      #
+      # 挪到渲染前面并单独提交一次，Pages 的发布就和七分二十二秒的渲染并行了，
+      # 等推送那一步跑到时它早就是 200。判据仍然是那行探活日志：改对了，
+      # 「第 1 次探活：已是这一版的内容」应该一次就中。
+      #
+      # 另一半好处是**失败提前**：标题超字数、tag 超五个、spec 少了 push 块
+      # 这类错，现在死在第 3 分钟而不是第 12 分钟。
+      - name: 写复制页（排在渲染之前：它不依赖成片）
+        if: github.event.inputs.mode == 'render'
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          mkdir -p "${{ steps.paths.outputs.outdir }}"
+          python tools/push_reel.py --stage page \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --score "${{ github.event.inputs.score }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
+            --copy "$COPY"
+
+      # 这一次提交只带 copy.html（成片还没渲出来），所以重放也只重放它。
+      # 分支上照样提交：合进 main 的时候复制页跟着一起进去，之后跑 push-reel
+      # 就完全不用等 Pages——那时它已经发布好几分钟了。
+      - name: 提交复制页（让 Pages 和渲染并行跑）
+        if: github.event.inputs.mode == 'render'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          PAGE="${{ steps.paths.outputs.outdir }}/copy.html"
+          BRANCH="${{ github.ref_name }}"
+          MSG="reel: ${{ github.event.inputs.slug }} 复制页"
+          git add "$PAGE"
+          if git diff --cached --quiet; then
+            echo "复制页没有变化（这一版已经在仓库里了）"
+            exit 0
+          fi
+          git commit -m "$MSG"
+          for attempt in $(seq 1 5); do
+            if git push origin "HEAD:$BRANCH"; then
+              echo "复制页已落库，Pages 开始发布——渲染这就开始，两边并行"
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把复制页重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f staged HEAD
+            git reset --hard "origin/$BRANCH"
+            git checkout staged -- "$PAGE"
+            git add "$PAGE"
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 3 + RANDOM % 5))
+          done
+          # 这里**不能 exit 1**：复制页没提上去只是「推送时要多等几分钟」，
+          # 而渲染是这条 run 真正的产物。为它整条作废，代价反了。
+          echo "::warning::复制页没能提前落库，推送那一步会退回原来的等待"
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -287,23 +394,6 @@ jobs:
             --rate "${{ github.event.inputs.rate }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
-
-      # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
-      # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
-      # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
-      # 链接打开 404。**又一次「查信号不查产物」**。
-      - name: 写复制页（必须排在提交之前）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
-        run: |
-          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
-          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
-          python tools/push_reel.py --stage page \
-            --outdir "${{ steps.paths.outputs.outdir }}" \
-            --matchup "${{ github.event.inputs.matchup }}" \
-            --score "${{ github.event.inputs.score }}" \
-            --event "${{ github.event.inputs.event }}" \
-            --summary "${{ github.event.inputs.summary }}" \
-            --copy "$COPY"
 
       - name: 丢掉不进仓库的中间物
         if: github.event.inputs.mode != 'cookies'

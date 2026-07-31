@@ -170,6 +170,89 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return _fits(" | ".join(parts))
 
 
+def spec_of(copy_path: Path) -> dict:
+    """`specs/reels/<slug>.xhs.txt` 旁边那份 `<slug>.json`。"""
+    slug = copy_path.name.split(".")[0]
+    spec = copy_path.parent / f"{slug}.json"
+    if not spec.is_file():
+        raise SystemExit(f"找不到 {spec}，取不到栏目名和推送元数据。要么放好 spec，"
+                         "要么在命令行上把每一项都显式传齐")
+    return json.loads(spec.read_text(encoding="utf-8"))
+
+
+# 推送元数据里能从 spec 自己算出来的那几项，命令行只作覆盖。
+_META_FIELDS = ("matchup", "score", "event", "summary", "lead")
+
+
+def push_meta(copy_path: Path) -> dict:
+    """推送元数据的出处是 spec，不是命令行。
+
+    **对阵和比分本来就在 spec 里**：海报的两个名字读 `cover.versus.names`，
+    比分读 `cover.result`。而工作流一直让人在 `--matchup "黄泽林 vs 布鲁克斯比"
+    --score "6-1 7-5"` 里把同样两件事再打一遍——`column_of` 那条注释讲的
+    「栏目只有一个出处」，在这两项上一直没做。
+
+    两处写的代价不是抽象的：**这个工作流的输入默认值是上一条片子的**
+    （`伊埃拉 vs 郑钦文` / `郑钦文首轮出局`），漏传一项就会拿另一场球的
+    标题把这条片子发出去，而微信那条消息发出去就收不回来。
+
+    还有一层：复制页（`--stage page`）和微信正文（`--stage push`）现在分在
+    两次 run 里跑，`wait_for_copy_page(expect=title)` 要求两次算出**同一句
+    标题**。从 spec 读就必然相同；靠人两次都把同样的参数敲对，不必然。
+
+    `summary` / `lead` 是这条片子的编辑决定，算不出来，写在 spec 的 `push`
+    块里。缺了不报错——没有 `summary` 就退回「对阵 + 比分」，那是 `headline`
+    本来就支持的写法。
+    """
+    spec = spec_of(copy_path)
+    cover = spec.get("cover") or {}
+    names = [str(n).strip() for n in
+             ((cover.get("versus") or {}).get("names") or []) if str(n).strip()]
+    meta = {
+        "matchup": " vs ".join(names[:2]) if len(names) >= 2 else "",
+        "score": str(cover.get("result") or "").strip(),
+        "event": "",
+        "summary": "",
+        "lead": "",
+    }
+    block = spec.get("push") or {}
+    if not isinstance(block, dict):
+        raise SystemExit(f"{copy_path.parent}/{copy_path.name.split('.')[0]}.json "
+                         "的 push 不是一个对象")
+    # `_` 开头的是写给下一个人的备注（仓库里到处都是 `_why`），不是字段。
+    # 认不出来的字段要报错：写成 `sumary` 悄悄不生效，标题就退回「对阵 + 比分」，
+    # 而那和「这条片子本来就没写 summary」长得一模一样。
+    unknown = {k for k in block if not k.startswith("_")} - set(_META_FIELDS)
+    if unknown:
+        raise SystemExit(f"spec 的 push 块里有认不出来的字段：{sorted(unknown)}\n"
+                         f"只认这几项：{list(_META_FIELDS)}")
+    meta.update({k: str(v).strip() for k, v in block.items()
+                 if not k.startswith("_")})
+    return meta
+
+
+def resolve_meta(copy_path: Path, args) -> dict:
+    """spec 打底，命令行覆盖，**覆盖了要出声**。
+
+    命令行留着是为了临时改一句标题不用先改 spec 再提交。但它一旦生效，
+    复制页那次和推送那次就可能算出不同的标题（两次 run 之间参数敲得不一样），
+    `wait_for_copy_page` 会等一句永远不出现的话——所以每次覆盖都印出来，
+    真出这事的时候日志里看得见是谁改的。
+    """
+    meta = push_meta(copy_path)
+    for field in _META_FIELDS:
+        value = str(getattr(args, field, "") or "").strip()
+        if value and value != meta[field]:
+            print(f"[元数据] --{field} 覆盖了 spec：「{meta[field]}」→「{value}」")
+            meta[field] = value
+    if not (meta["matchup"] or meta["summary"]):
+        raise SystemExit(
+            "标题末尾那一格是空的：spec 里既没有 cover.versus.names（对阵），"
+            "也没有 push.summary（一句话概括）。补一个再推——"
+            "不带对阵的标题让人看不出这是哪一场。")
+    return meta
+
+
 def column_of(copy_path: Path) -> str:
     """栏目名从 spec 的 `cover.eyebrow` 读，别在命令行上另写一遍。
 
@@ -180,16 +263,11 @@ def column_of(copy_path: Path) -> str:
     这是「栏目决定封面模板」那条的另一半：**栏目只有一个出处**，海报和标题
     都从它来。读不到就报错——悄悄退回一个默认值，正是上面那个错本身。
     """
-    slug = copy_path.name.split(".")[0]
-    spec = copy_path.parent / f"{slug}.json"
-    if not spec.is_file():
-        raise SystemExit(f"找不到 {spec}，取不到栏目名。要么放好 spec，"
-                         "要么显式传 --column")
-    eyebrow = str((json.loads(spec.read_text(encoding="utf-8")).get("cover") or {})
+    eyebrow = str((spec_of(copy_path).get("cover") or {})
                   .get("eyebrow", "")).strip()
     if not eyebrow:
-        raise SystemExit(f"{spec} 的 cover.eyebrow 是空的——海报台头印什么，"
-                         "标题就该写什么，这一个值两处共用")
+        raise SystemExit(f"{copy_path} 对应 spec 的 cover.eyebrow 是空的——"
+                         "海报台头印什么，标题就该写什么，这一个值两处共用")
     return eyebrow
 
 
@@ -341,8 +419,13 @@ def main() -> int:
     ap.add_argument("--column", default="",
                     help="栏目名。默认不传——从 spec 的 cover.eyebrow 读，"
                          "海报印的是哪个栏目，标题就写哪个")
-    ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
-    ap.add_argument("--score", default="", help="赛果，如「6-7(3) 6-3 6-4」，赢家在前")
+    # 这五项默认从 spec 读（对阵和比分就是海报用的那两个值，见 `push_meta`），
+    # 命令行只作临时覆盖。原来 `--matchup` 是必填，于是工作流给它挂了个
+    # 上一条片子的默认值——漏传一次就拿另一场球的标题发出去。
+    ap.add_argument("--matchup", default="",
+                    help="对阵，如「锦织圭 vs 商竣程」。默认取 cover.versus.names")
+    ap.add_argument("--score", default="",
+                    help="赛果，赢家在前。默认取 cover.result")
     ap.add_argument("--event", default="", help="赛事与轮次，如「华盛顿 ATP500 首轮」")
     ap.add_argument("--summary", default="",
                     help="一句话概括赛果，给了就顶掉标题末尾的「对阵 + 比分」")
@@ -370,13 +453,20 @@ def main() -> int:
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
     # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
     # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
+    meta = resolve_meta(Path(args.copy), args)
     title = headline(outdir, args.column or column_of(Path(args.copy)),
-                     args.matchup, args.score, args.event, args.summary)
+                     meta["matchup"], meta["score"], meta["event"],
+                     meta["summary"])
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
 
     if args.stage == "page":
+        # **它不依赖成片**，只依赖 spec 里的文案和标题——所以这一步可以（而且
+        # 应该）排在渲染**之前**跑并当场提交：Pages 的发布就和七分钟的渲染
+        # 并行了。原来它排在渲染之后，提交完 Pages 才开始发布，推送那一步于是
+        # 原地探 404 探掉四分钟（run 30624808733：连续 12 次 404，第 13 次才中）。
+        page.parent.mkdir(parents=True, exist_ok=True)
         page.write_text(to_copy_page(copy_text), encoding="utf-8")
         print(f"已写复制页：{page}（{len(copy_text)} 字）\n  发布后是 {copy_url}\n"
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
