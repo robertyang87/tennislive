@@ -71,9 +71,15 @@ def test_中间物一个都不许进仓库():
         "source.f137.mp4.part",       # ← 真正漏掉过的那个，DASH 视频流半成品
         "source.f251.webm",           # 音频流，另一种后缀
         "source.f140.m4a",
+        # 多源之后每条源片各带一个键：加多源时改了下载的落盘名，没改清理，
+        # 三条源片 250 MB 全靠兜底拦下（run 30603686748）。第四次同一个形状。
+        "source_r1.mp4", "source_iv.mp4", "source_r2.f616.webm",
         "_cover.jpg", "_cover.html",  # 封面渲染输入，data URI 内嵌，单个 12 MB
         "poster.html",
         "voice_03.mp3",
+        # yt-dlp 落的字幕原文件。名字由它自己拼（`_subs.en.vtt` / `_subs.en-orig.json3`
+        # / 猜不到的第三种），所以**按前缀删**——这正是 `.part` 那次的教训。
+        "_subs.en.vtt", "_subs.en-orig.json3",
         "_versus_bg.jpg",             # 背景抓帧
         "_versus_cut_top.png",        # 抽帧抠图，**后缀和上一个不一样**
         "_versus_raw_bottom.png",     # 抠之前那张原帧，报错时会留下
@@ -83,8 +89,12 @@ def test_中间物一个都不许进仓库():
             f"{name} 不会被清理掉，会跟着 git add 进仓库。现有模式：{pats}")
 
     # **poster.jpg 要留下**：推送正文第一屏就是它，删了推送里一张图都没有。
-    # 成片同理——它就是产物本身。
-    for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json"):
+    # 成片同理——它就是产物本身。captions.txt / captions_debug.txt 也是产物：
+    # 一个是选段用的，一个是「为什么没拿到」的判据，都要跟着提交。
+    # render.json 也是产物：封面停多久现在跟着配音走，**光看 spec 算不出来**，
+    # check_reel_landed 拿它对片长。删了就只能拿常量猜。
+    for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json",
+                 "captions.txt", "captions_debug.txt", "render.json"):
         assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
 
 
@@ -146,6 +156,45 @@ def test_成片帧率跟着源片走(monkeypatch):
     assert reel.resolve_fps(Path("x.mp4")) == ("30", 30.0)
 
 
+def test_多源对不上时尺寸没有出路帧率要认领(monkeypatch):
+    """两样对不上的**严重程度不同**，判据也要分开。
+
+    - **尺寸**对不上就是裁错（裁切窗口按源片宽高算），没有出路，一律红
+    - **帧率**对不上是重采样：50 → 25 整齐隔帧丢，看不出来；30 → 25 六帧丢
+      一帧，**静态说话头几乎无感，回合镜头一眼看得出一顿一顿**
+
+    所以帧率要在 spec 里**显式认领**。原来一律红——那会把采访这类素材整个挡在
+    门外（采访多是 30，赛事集锦多是 25/50）；一律放行又回到「兜底出事的时候
+    不吭声」。认领这一步是让这个取舍**留下判据**。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    table = {"a": (1920, 1080, "25/1"), "b": (1920, 1080, "30/1"),
+             "c": (1280, 720, "25/1")}
+    monkeypatch.setattr(reel, "probe_size", lambda p: table[p.stem][:2])
+    monkeypatch.setattr(reel, "resolve_fps", lambda p: (table[p.stem][2], 0.0))
+    p = {k: Path(f"{k}.mp4") for k in table}
+
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match({"a": p["a"], "c": p["c"]}, {})
+    # 尺寸这条**认领不了**：写了 mixed_fps 也拦得住
+    with pytest.raises(reel.ReelError, match="尺寸没有出路"):
+        reel.check_sources_match({"a": p["a"], "c": p["c"]}, {"mixed_fps": {"c": "随便"}})
+
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "b": p["b"]}, {})
+    # 认领了就放行——反面锚点，免得判据宽成「多源一律不许」
+    reel.check_sources_match({"a": p["a"], "b": p["b"]},
+                             {"mixed_fps": {"b": "采访的说话头"}})
+    # 认领的是**别的**源，挡的那条照旧红
+    with pytest.raises(reel.ReelError, match="mixed_fps"):
+        reel.check_sources_match({"a": p["a"], "b": p["b"]},
+                                 {"mixed_fps": {"zz": "写错了键"}})
+    # 一条源片时什么都不查
+    reel.check_sources_match({"a": p["a"]}, {})
+
+
 def test_默认不横摇():
     """窗口只有源片 32% 宽，一摇，底线球网广告板看台全跟着滑——25 fps 下
     滑动的静止物最容易看出一格一格。所以横摇改成按段显式打开。"""
@@ -185,8 +234,13 @@ def test_有赛果时标题把vs换成比分():
 def test_page阶段不发推送也不需要成片(tmp_path):
     outdir = tmp_path / "output" / "2026-07-28" / "reel" / "demo"
     outdir.mkdir(parents=True)
-    copy = tmp_path / "copy.txt"
+    copy = tmp_path / "demo.xhs.txt"
     copy.write_text("小红书那句标题\n\n正文第一行\n正文第二行", encoding="utf-8")
+    # **栏目名从 spec 的 cover.eyebrow 读**，所以文案旁边要有它的 spec——
+    # 真实布局本来就是 `specs/reels/<slug>.xhs.txt` 和 `<slug>.json` 挨着放。
+    (tmp_path / "demo.json").write_text(
+        json.dumps({"cover": {"eyebrow": "赛场之上"}}, ensure_ascii=False),
+        encoding="utf-8")
     # 目录里没有 mp4：page 阶段不该因此失败，它要在渲染之外也能单独补跑
     subprocess.run(
         [sys.executable, str(Path("tools/push_reel.py").resolve()),
@@ -203,6 +257,118 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "navigator.clipboard" in page or "execCommand" in page
     # 这条线没有置顶评论，那一格就不该留个空框加一个复制不出东西的按钮
     assert "复制评论" not in page
+
+
+def _reel_specs():
+    return {p.stem: json.loads(p.read_text("utf-8"))
+            for p in sorted(Path("specs/reels").glob("*.json"))}
+
+
+def test_让当事人自己说的那一段也要有字幕():
+    """采访原声那一段**不配旁白，但必须出中文字幕**。
+
+    字幕那条线原来只认 `narration`——没有旁白就没有字幕。于是「让他自己说」
+    这一段在成片里对**大多数人是彻底空白**：听不懂英文的看不懂，而
+    「静音刷是默认状态」，静音的人连声音都没有。两头都丢，**而且不报错**。
+
+    所以原声段走 `quote`：不合成语音（也就不会闪避把他的话压下去），
+    字幕按字数等比铺满整段——拿不到词边界时本来就是这么退的。
+
+    两条判据：**行确实排出来了**，以及 **narration 和 quote 不许并存**
+    （并存＝两个人同时开口，而且他的原声会被闪避压掉）。
+    """
+    import pytest  # noqa: PLC0415
+
+    from tennislive.video.explainer import subtitle_cues  # noqa: PLC0415
+
+    reel = _reel()
+    quote = "这个动作叫 Vicht 吧我得去确认一下"
+    cues = subtitle_cues(quote, 8.0, offset=1.0)
+    assert cues, "原声段排不出字幕"
+    assert cues[0][0] >= 1.0, "字幕没跟着片头偏移推"
+    assert cues[-1][1] <= 1.0 + 8.0 + 0.01, "字幕甩出了这一段的窗口"
+
+    # 排出来的行**必须回到 render 的那条路上**：只测 subtitle_cues 说明不了
+    # build_match_reel 用了它——原来的 bug 恰恰是「函数在，但这条分支没调它」。
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "if seg.quote:" in body, "cue 那条循环没给原声段留分支"
+
+    spec = {"segments": [{"start": 0, "end": 5, "narration": "我们讲",
+                          "quote": "他自己讲"}],
+            "cover": {}}
+    with pytest.raises(reel.ReelError, match="互斥"):
+        reel.parse_segments(spec, {"": 1}, "")
+    # 反面锚点：各写各的要放行
+    ok = {"segments": [{"start": 0, "end": 5, "quote": "他自己讲"},
+                       {"start": 5, "end": 9, "narration": "我们讲"}],
+          "cover": {}}
+    got = reel.parse_segments(ok, {"": 1}, "")
+    assert [s.quote for s in got] == ["他自己讲", ""]
+    assert [s.narration for s in got] == ["", "我们讲"]
+
+
+def test_收尾要落在一问上不能停在数据上():
+    """账号所有者定的：「**不要平白地叙事**，要有饱满情感、激起共鸣和代入感……
+    同时能引爆人们传播」。
+
+    「饱满情感」测不了，但**产生它的那个结构测得了**：一条片子最后一句是什么。
+
+    停在比分和数据上，读者读完就走——那是赛报的收法。落在一问上，读者会在
+    评论区接话，而评论正是这类短片唯一能换来的传播。这和解说片那条
+    `末屏那个问题，旁白必须问出来` 是同一条规矩，只是当时漏了剪辑线。
+
+    **七条里六条本来就这么做了**，判据是把既有的好做法钉住，同时抓住那一次
+    失手：`wong-lehecka` 原来停在「排名差九十六位，生涯排名最高胜。」
+
+    ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
+    """
+    bad = []
+    for slug, spec in _reel_specs().items():
+        # `.get`：原声段（`quote`）根本没有 narration 这个键
+        nars = [s.get("narration", "") for s in spec["segments"]]
+        nars = [n for n in nars if n]
+        if not nars:
+            continue
+        if "？" not in nars[-1][-30:]:
+            bad.append(f"{slug}: …{nars[-1][-26:]}")
+    assert not bad, (
+        "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
+
+
+def test_旁白不许用指示语指画面():
+    """拦的是**指示语**，不是「描述动作」——这两件事我一度混为一谈。
+
+    原规矩（`test_旁白不解说画面`）是给**解说片**写的，那条线的画面是**静止图卡**，
+    描述静图确实等于复读。它真正拦的是「画面里是」「镜头里」「图为」「这张图」
+    这类**指示语**：把观众已经看见的东西再指一遍，一个字的信息都不加。
+
+    **剪辑线不一样。** 它是动态画面加现场声，旁白落在关键点和关键情绪上正是
+    它的本分——云见那把体育解说的嗓子就是为此选的。账号所有者的原话：
+    「解说匹配画面是必要的……**针对关键点和关键情绪配合画面解说就很好**」。
+
+    所以 `wong-lehecka` 那句「赛点，黄泽林在二区发出内角 Ace。球落地，他放下
+    球拍，双手掩面。」**是好的**。我一度把它判成违规，还把 `球落地[，,]他`
+    硬写进正则——**等于把一句好台词钉死成违规**。判据只留指示语。
+
+    这条也不禁止**陈述画面外的事实**：休伊特那条里「他父亲在看台上看完全场」
+    是 ATP 官方报道核过的事实，而集锦里并没有莱顿的镜头——那正是
+    「画面负责一眼看懂，旁白负责讲清楚」的分工。
+    """
+    pointing = re.compile(r"画面(里|上|中|就是)|镜头(里|中)|图为|这张图|图片里|上图|下图")
+    bad = []
+    for slug, spec in _reel_specs().items():
+        for seg in spec["segments"]:
+            # 原声段的中文字幕（`quote`）也是我们写的，一样受这条管
+            for text in (seg.get("narration") or "", seg.get("quote") or ""):
+                m = pointing.search(text)
+                if m:
+                    bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
+    assert not bad, "旁白用指示语指画面：\n  " + "\n  ".join(bad)
+
+    # 反面锚点：这句必须**过**——它是描述动作和情绪，不是指示语
+    good = "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"
+    assert not pointing.search(good), (
+        "判据又扩大化了：这句是关键点加关键情绪的解说，是这条线该有的写法")
 
 
 def test_成片的编码参数不许为了压体积往下调():
@@ -466,14 +632,23 @@ def test_封面只有海报模板一条路():
     import pytest  # noqa: PLC0415
 
     reel = _reel()
-    source = Path(reel.__file__).read_text(encoding="utf-8")
     assert not hasattr(reel, "_render_cover_html"), "单图封面那条路还在"
-    body = source.split("def build_cover")[1].split("\ndef ")[0]
-    assert "frame_at" not in body, "build_cover 里还留着抽帧的兜底"
-    # 模板的**单格**仍可显式给 frame_at（某人一张照片都找不到时的最后一招），
-    # 但那是 spec 里写死的选择，不是自动降级——差别就在这儿
+
+    # **判据是「缺图会不会报错」，不是「源码里有没有 frame_at 这几个字」。**
+    #
+    # 原来这儿写的是 `assert "frame_at" not in body`——字符串粗判。2026-07-31
+    # 账号所有者把抽帧放回来了（「或者从比赛中抠大图，要情绪饱满的」），我把这
+    # 句写进报错文案当出路，那条断言立刻红——**它把自己注释里明确允许的情况
+    # 也拦了**。这和「钩子里不许出现比分」是同一个毛病：判据比它要守的规矩宽。
+    #
+    # 要守的性质从来只有一条：**缺图必须报错，不能自动退回抽帧**。单格在 spec
+    # 里显式写 `frame_at` 是人做的选择，不是降级——差别就在「谁决定的」。
     with pytest.raises(reel.ReelError, match="扩检索源"):
-        reel.build_cover(Path("x.mp4"), {"cover": {"hook": "无图"}},
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": {"hook": "无图"}},
+                         Path("y.mp4"), 1920)
+    # 报错要把出路说全：先扩源，四类都没有才抓帧
+    with pytest.raises(reel.ReelError, match="frame_at"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": {"hook": "无图"}},
                          Path("y.mp4"), 1920)
 
 
@@ -541,13 +716,43 @@ def test_下载不把编码当硬条件():
     正好 640×360。中间没有一步会报错，直到裁切那步才炸（run 30412173035）。
 
     所以编码只能是**偏好**（`-S`），不能是过滤条件（`-f`）。
+
+    **判据查的是两个常量的值，不是源码里的一段字符串。** 原来是「从
+    `selector = ` 切到 `cookies: list[str]`」——两个记号在文件里都不唯一，
+    后来加的 `fetch_captions` 里也有 `cookies: list[str]` 且排在更前面，
+    那一刀切出来是空串：`not in` 全过、`in` 全挂。**空串上的断言不吭声地
+    全部成立**，正是仓库里反复记的那种假绿。
     """
     reel = _reel()
+    assert "vcodec^=avc1" not in reel.FMT_SELECTOR, "编码又被写成硬条件了"
+    assert "ext=m4a" not in reel.FMT_SELECTOR
+    assert "vcodec" not in reel.FMT_SELECTOR, "-f 里不许出现编码"
+    assert "vcodec:h264" in reel.FMT_SORT, "h264 偏好要留着，下游 ffmpeg 最省事"
+    # 常量要真的接到命令行上，不是摆在那儿
     source = Path(reel.__file__).read_text(encoding="utf-8")
-    picker = source[source.index("selector = "):source.index("cookies: list[str]")]
-    assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
-    assert "ext=m4a" not in picker
-    assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
+    assert "selector, sort = FMT_SELECTOR" in source
+    assert '"-f", selector' in source
+
+
+def test_每一次yt_dlp调用都要带上同一组前提():
+    """**新写的 yt-dlp 调用要继承旧调用的前提，一个都不能漏。**
+
+    `--js-runtimes node` 是解 n challenge 的那一环。`fetch_captions` 是后加的
+    第二处调用，我没带它——于是同一个 job 里 `download()` 下得动整条 294 秒的
+    片子，字幕那条**八个 client 全红**，报的是「Only images are available」
+    ＋「Requested format is not available」，看起来像「YouTube 把这台机器挡了」，
+    其实是这一次调用少带了一个参数。
+
+    和「加新能力就要同时改三处」是同一个毛病，只是这次漏的不是依赖，是前提。
+    判据：源码里每一处 `[binary,` 开头的 yt-dlp 调用都要接 `*YTDLP_BASE`。
+    """
+    reel = _reel()
+    assert "--js-runtimes" in reel.YTDLP_BASE
+    source = Path(reel.__file__).read_text(encoding="utf-8")
+    calls = re.findall(r"\[binary,[^\]]*", source)
+    assert len(calls) >= 2, f"只找到 {len(calls)} 处 yt-dlp 调用，判据大概失效了"
+    for call in calls:
+        assert "*YTDLP_BASE" in call, f"这处 yt-dlp 调用没带上共同前提：{call[:90]}"
 
 
 def test_赛场之上走固定海报模板():
@@ -695,16 +900,97 @@ def test_推送版式照着知识解说那条且海报铺满():
     assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
 
 
+# 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
+_COLUMNS = {
+    "赛场之上": ("cutout", "diagonal", "split", "stack"),   # 讲一场对决 → VS
+    "网球有故事": ("solo",),                                 # 讲一个人 → 单人
+}
+
+
 def test_海报台头只写栏目名():
     """台头那颗小药丸只写**栏目名**，不带账号名。
 
     原来是「网球时差 · 赛场之上」——账号名在片子里已经有落款，海报上再挂一遍
     等于把最显眼的位置让给一句读者不需要的信息。首屏那点地方要留给
     「这是哪一场」。
+
+    **判据不能写成 `== "赛场之上"`**（原来就是）。那把「只写栏目名」这条规矩
+    钉成了「只能有一个栏目」，于是 2026-07-31 账号所有者说休伊特那条
+    「是讲休伊特的儿子的话题，不是赛场之上的内容」时，加一个栏目就得改测试——
+    而要守的性质从头到尾只有一条：**药丸里没有账号名**。
     """
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
-        assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
+        assert eyebrow in _COLUMNS, f"{path.name} 的台头是 {eyebrow!r}，不是栏目名"
+        assert "网球时差" not in eyebrow, f"{path.name} 的台头挂了账号名"
+        assert "·" not in eyebrow, f"{path.name} 的台头是一串，不是一个栏目名"
+
+
+def test_栏目和封面模板要配对():
+    """**「赛场之上」仍然只能用 VS 模板**，`solo` 不是它缺图时的兜底。
+
+    账号所有者 2026-07-31 给的是**新增一个栏目**（「当前对话历史都是网球有故事
+    的话题」「只是这次网球有故事的主题要用视频方式呈现」），不是给赛场之上
+    松绑。这两件事很容易混：单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，
+    就会「先用 solo 顶一下」——正是 `test_封面只有海报模板一条路` 拦的那个滑坡，
+    只是换了个滑法。
+
+    所以配对写死在两处，缺一不可：
+
+    - spec 里（这一条）——已发布的片子不会悄悄漂
+    - `build_cover` 里——**新写的 spec 也拦得住**，判据在下面那条
+    """
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        cover = json.loads(path.read_text("utf-8"))["cover"]
+        allowed = _COLUMNS[cover["eyebrow"]]
+        assert cover.get("layout") in allowed, (
+            f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
+            f"写的是 {cover.get('layout')!r}")
+        if cover.get("layout") == "solo":
+            # 单人海报讲的是一个人：主角、他的照片，**而且不许印赛果**——
+            # 「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先说结局。
+            assert cover.get("subject"), f"{path.name} 的 solo 封面没写 subject"
+            assert (cover.get("portrait") or {}).get("image") or \
+                (cover.get("portrait") or {}).get("frame_at") is not None, \
+                f"{path.name} 的 solo 封面没有 portrait"
+            assert "versus" not in cover, f"{path.name} 是 solo，不该还有 versus"
+            # 上下叠一张的变体（父子做同一个动作那种）：上格也要有图和名字，
+            # 否则渲出来是半张空白，**而且不报错**——cover 铺不满就露底色。
+            above = cover.get("portrait_above") or {}
+            if above:
+                assert above.get("image"), f"{path.name} 的 portrait_above 没有图"
+                assert Path(above["image"]).is_file(), above["image"]
+                # ⚠️ 这里原来要求上格必须写 `name`，理由是「两张脸摆在一起
+                # 没有名字等于让读者猜」。账号所有者 2026-07-31 否了：「这里
+                # 名字没必要」——台头那行和钩子已经说清谁是父亲谁是儿子，
+                # 名条只是在两张脸上各压一块黑。判据跟着改成**不许有名条**。
+                assert "name" not in above, (
+                    f"{path.name} 的上格又挂上名条了——账号所有者定过不要")
+            assert not cover.get("result"), (
+                f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
+                "那是最后一拍，印在封面上等于先把结局说了")
+
+
+def test_赛场之上不许退回单人封面():
+    """上一条钉的是已发布的 spec，这一条钉的是**代码**：新写一个 spec 也拦得住。
+
+    只钉 spec 的话，判据只在「有人把它写进仓库」之后才生效——而滑坡发生在
+    渲染那一刻（缺图 → 换个 layout 试试 → 出片了 → 才提交）。闸要装在出片
+    那一步，和「复制页那道闸装在发的那一步不是渲的那一步」是同一条。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    solo = {"eyebrow": "赛场之上", "layout": "solo", "subject": "谁",
+            "portrait": {"image": "x.jpg"}}
+    with pytest.raises(reel.ReelError, match="VS 模板"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": solo},
+                         Path("y.mp4"), 1920)
+    # 反面锚点：换成讲人的栏目就该放行（这儿只验它不再拦，渲染另有判据）
+    with pytest.raises(reel.ReelError, match="portrait"):
+        reel.build_cover({"": Path("x.mp4")}, "",
+                         {"cover": {"eyebrow": "网球有故事", "layout": "solo"}},
+                         Path("y.mp4"), 1920)
 
 
 def test_商竣程那格是本场真实照片不是抽帧():
@@ -906,6 +1192,53 @@ def test_旁白不能比它那一段的画面长():
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
 
 
+def test_角标把两件事放进同一帧():
+    """**父亲那一下只有图，没有影像**（三条官方存档集锦都扫过，都没拍到）。
+
+    账号所有者定的做法不是切一张整屏静图，而是**压在角上**：儿子做那一下的
+    同一帧里就有父亲做同一个动作，「他做了父亲的那个动作」这句话本身就是这一
+    帧——而且不停三秒、不剪断片子。
+
+    三条判据，都是「不吭声」型的错：
+
+    - **图必须在**——路径写错时 ffmpeg 只会在切片那一步炸，而那已经是下完
+      三条源片之后了
+    - **corner 只能是四个角之一**——写错会被 `.get(..., "tl")` 悄悄吃掉
+    - **音轨索引要跟着输入路数走**——角标插进第 1 路之后，补位静音从 `1:a:0`
+      变成 `2:a:0`；取错流不报错，只是没声音
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    art = "assets/reel/lleyton-vicht-inset.png"
+    assert Path(art).is_file(), "角标素材不在仓库里"
+    spec = {"cover": {}, "segments": [
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": art, "corner": "tl", "width": 0.34}}]}
+    segs = reel.parse_segments(spec, {"r1": Path("a.mp4")}, "r1")
+    assert segs[0].inset["corner"] == "tl"
+
+    bad = {"cover": {}, "segments": [
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": "assets/reel/没有这张.png"}}]}
+    with pytest.raises(reel.ReelError, match="找不到文件"):
+        reel.parse_segments(bad, {"r1": Path("a.mp4")}, "r1")
+
+    corner = {"cover": {}, "segments": [
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": art, "corner": "middle"}}]}
+    with pytest.raises(reel.ReelError, match="corner"):
+        reel.parse_segments(corner, {"r1": Path("a.mp4")}, "r1")
+
+    # 没有角标时滤镜图不变形，只是把 [base] 改名
+    assert reel._overlay_chain("[0:v]x[base]", {}) == "[0:v]x[vout]"
+    chain = reel._overlay_chain("[0:v]x[base]", {"image": art, "corner": "br"})
+    assert "[1:v]scale=" in chain and "overlay=W-w-" in chain and "[vout]" in chain
+
+    # 音轨索引：有角标时补位静音是第 2 路
+    body = Path(reel.__file__).read_text(encoding="utf-8")
+    assert 'f"{null_idx}:a:0"' in body, "补位静音的输入索引写死了，插入角标后会取错流"
+    assert "null_idx = 2 if ins else 1" in body
 def test_封面人物首选本场抽帧():
     """封面的两个人**首选从本场源片抠**，官方棚拍图退居兜底。
 
@@ -989,7 +1322,10 @@ def test_抽帧抠图要同时改代码工作流和预检():
     assert "def _preflight_cutout(" in reel, "没有开跑前的依赖预检"
     body = reel[reel.index("def render("):]
     check = body.index("_preflight_cutout(spec)")
-    download = body.index('with stage("下载源片")')
+    # **别拿整句 `with stage("下载源片")` 当锚点。** 多源之后这一句成了
+    # `with stage(f"下载源片 {key or '(主源)'}")`，字面量对不上，测试直接
+    # ValueError——它想验的「预检排在下载之前」明明还成立。锚点只认下载那件事。
+    download = body.index("下载源片")
     assert check < download, "预检排在下载之后——又是下完 64MB 才报错"
 
 
@@ -1024,3 +1360,115 @@ def test_挑帧要在probe那一步跑并且整帧不进仓库():
     text = Path("tools/pick_cover_frames.py").read_text(encoding="utf-8")
     assert 'f"cand_{i:02d}_t{rec[\'t\']}.jpg"' in text, "候选帧还在存 PNG，单张 2~3 MB"
     assert "tw = 640" in text, "候选墙一格太小，判不了「能不能看到表情」"
+
+
+def test_封面停多久跟着配音走():
+    """账号所有者定的：「这个栏目不要求〔固定几秒〕，**随着配音切换**吧」。
+
+    在这之前封面是**定长静止 2.6 秒的哑屏**——`anullsrc` 一路铺到底，开场那
+    一屏一个字都没说。改成配音驱动之后要钉住四件事，每一件都是「不吭声」型的：
+
+    - **长度由语音算**（`cover_length`），不是 spec 里另写一个数。写两处必分叉
+    - **没配音的片子退回定长，并且要出声说退了**。存量的赛场之上都没有封面
+      配音，悄悄退回去的话，「封面短了」和「配音没合出来」长得一模一样
+    - **封面那一路要真的混进音轨**。滤镜标签从 filters 一起攒，不在下游拿
+      另一个条件重筛——原来 `names` 就是重筛的，封面那一路定义了没人接
+    - **长度要落进 render.json**。跟着配音走之后从 spec 算不出来，
+      `check_reel_landed.py` 拿常量对片长只会得到一个假红
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    check = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+
+    assert "def cover_length(" in reel, "封面长度还是个常量，没有跟着配音走的那条路"
+    assert "def synth_cover(" in reel, "封面那句没有单独合成——它得在渲封面之前就有"
+    # 合成排在渲封面之前：反过来的话长度还没算出来，只能又退回常量
+    body = reel[reel.index("def render("):]
+    assert body.index("cover_secs = cover_length(") < body.index("build_cover("), (
+        "封面长度算在渲封面之后——那就只能拿常量渲，等于没改")
+    # 定长那条路要出声
+    assert "没有配音，定长停" in reel, "退回定长时不吭声，和「配音没合出来」分不开"
+    # 封面那一路要接进混音，标签不能在下游重筛
+    assert "voice_labels.append" in reel, "混音的标签又在下游重筛了"
+    assert 'names = "".join(voice_labels)' in reel
+    # 长度要记进产物旁边
+    assert '"cover_seconds"' in reel, "封面长度没落进 render.json"
+    assert "render.json" in check, "检查工具还在拿常量算封面长度"
+    assert "没有 render.json" in check, "读不到 render.json 时不吭声地退回常量"
+
+
+def test_封面念的就是海报上那句钩子就不另排字幕():
+    """念的和印的是同一句，就别在同一帧里再写一行小字。
+
+    但**判据是「一不一样」，不是「封面一律不出字幕」**——封面那句要是另说了
+    一件事，它照样要有字幕：「静音刷是默认状态」这条对开场同样成立。
+    一律不出字幕会把这个区别抹掉，而且抹掉之后不吭声。
+    """
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "drop_punctuation" in reel, "比对没有去标点——印的带换行、念的带句号，永远不等"
+    assert "不另排字幕" in reel
+    # else 分支必须还在：另说一件事时要排字幕
+    head = reel[reel.index("[封面] 旁白就是海报上那句钩子"):]
+    assert "else:" in head[:400] and "subtitle_cues(readable(cover_text)" in head[:800], (
+        "封面变成一律不出字幕了——另说一件事的那种情况就没字幕了")
+
+    spec = json.loads(Path("specs/reels/hewitt-washington.json").read_text("utf-8"))
+    cover = spec["cover"]
+    assert cover.get("narration"), "休伊特那条封面没有配音——那就又是一屏哑的"
+    from tennislive.video.subtitle_text import drop_punctuation
+    assert drop_punctuation(cover["narration"]) == drop_punctuation(
+        cover["hook"].replace("\n", " ")), (
+        "封面念的和印的不是同一句了。那没问题，但字幕会跟着出现——"
+        "确认过排版再改这条断言")
+
+
+def test_检查工具认的画布要和成片的画布是同一个():
+    """`check_reel_landed.py` 一度还在要 1080×1920，而成片早改成 3:4 了。
+
+    于是它每跑一次都在第一行报「不合格」——**一条常年红的检查等于没有检查**，
+    和常年不变的 skip 数字是同一个毛病：没人真的看过。
+
+    两个数写在两处就会分叉，所以这儿把它们钉在一起。检查脚本是**故意**只用
+    标准库的（要能在任何地方跑），不能 import 过去拿，那就用测试当那根绳子。
+    """
+    reel = _reel()
+    text = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+    assert f"VIDEO_W, VIDEO_H = {reel.VIDEO_W}, {reel.VIDEO_H}" in text, (
+        f"检查工具认的画布和成片的 {reel.VIDEO_W}×{reel.VIDEO_H} 对不上")
+    assert "(VIDEO_W, VIDEO_H)" in text, "画布比对又写死成字面量了"
+
+
+def test_栏目名从spec读不要在命令行上另写一遍():
+    """推送标题里的栏目，和海报台头上的栏目，**必须是同一个值**。
+
+    `push_reel.py` 原来把 `--column` 默认成「赛场之上」，而工作流一个字都没传
+    ——于是休伊特那条「网球有故事」的片子，海报印着网球有故事、微信标题写着
+    赛场之上。**同一条推送里两个栏目名，而推送发出去就收不回来。**
+
+    这是「栏目决定封面模板，不是素材凑手决定」那条的另一半：栏目只有一个出处
+    （spec 的 `cover.eyebrow`），海报和标题都从它来。读不到要报错——悄悄退回
+    一个默认值，正是上面那个错本身。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    assert push_reel.column_of(
+        Path("specs/reels/hewitt-washington.xhs.txt")) == "网球有故事"
+    assert push_reel.column_of(
+        Path("specs/reels/wong-lehecka.xhs.txt")) == "赛场之上"
+
+    # 默认值不能再是某个栏目名——那正是这条测试拦的那个错
+    text = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    assert 'ap.add_argument("--column", default="赛场之上"' not in text, (
+        "栏目名又写死默认值了；工作流不传，网球有故事就会被标成赛场之上")
+
+    # 读不到就报错，别退回默认
+    with pytest.raises(SystemExit, match="取不到栏目名"):
+        push_reel.column_of(Path("specs/reels/没有这条.xhs.txt"))
+
+    # 每条 spec 的栏目都要和它的封面模板配对（solo ↔ 网球有故事）
+    for slug, spec in _reel_specs().items():
+        cover = spec.get("cover") or {}
+        assert str(cover.get("eyebrow", "")).strip(), (
+            f"{slug} 没写 cover.eyebrow——推送标题会取不到栏目名")
