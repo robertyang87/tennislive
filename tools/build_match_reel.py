@@ -124,6 +124,17 @@ VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
 # 卡底（1680）往上 156px。这里整幅画布就是那张卡，所以同样是「卡底往上 156」，
 # 换算过来是 1440-156=1284。**保的是同一个物理位置**——量出来的那组数没变。
 _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
+# **源片自己烧了记分条时，字幕要让开它。**
+#
+# 以前没撞过是因为运气：16:9 的转播源片把记分条放在左下，而 3:4 的窗口只取中间
+# 42% 宽，整块被裁掉了。Tennis TV 的**竖版**短片不一样——画幅本来就是竖的，
+# 记分条烧在左下，量出来占 y 1281~1439，而字幕上锚正好是 1284：两层白字叠在
+# 一起，四帧抽出来帧帧都中。
+#
+# 这个数是**源片的属性**，不是画幅的属性，所以放在 spec 里（`subtitle_top`），
+# 默认沿用 `_REEL_MARGIN_V`。给了就把字幕整体抬到记分条上沿之上。
+# **别改成自动检测**：记分条的位置、颜色、是否存在都随播出方变，检测不到时
+# 会悄悄退回原位——又是「兜底出事的时候不吭声」。让写 spec 的人量一次、写死。
 # 低于这个高度的源片不值得做成片：裁成 3:4 再放到 1080 宽是放大好几倍。
 MIN_SOURCE_H = 700
 COVER_SECONDS = 2.6
@@ -1182,10 +1193,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 if a < limit)
         offset += seg.length
 
+    margin_v = int(spec.get("subtitle_top", _REEL_MARGIN_V))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
-                          height=VIDEO_H, margin_v=_REEL_MARGIN_V)
+                          height=VIDEO_H, margin_v=margin_v)
+    moved = "" if margin_v == _REEL_MARGIN_V else (
+        f"，比默认抬高 {_REEL_MARGIN_V - margin_v}px 让开源片自己的记分条")
     print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
-          f"上锚 MarginV={_REEL_MARGIN_V}，"
+          f"上锚 MarginV={margin_v}{moved}，"
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
