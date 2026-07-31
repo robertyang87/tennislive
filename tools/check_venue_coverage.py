@@ -59,45 +59,23 @@ KNOWN_GAPS = {
         "官网唯一一张 LDLCARENA_Tenniscourt.jpg 是 3D 效果图——观众是重复贴图、"
         "人物是 CG，正是「新赛事新场馆先放渲染图」那一类。Commons 的 "
         "Category:LDLC Arena 只有演唱会、施工和外立面。**打完首届再来取**。",
-    "Abierto Mexicano Telcel":
-        "场馆是 Arena GNP Seguros（2022 起的新馆）。官网 abiertomexicanodetenis.com"
-        "（WordPress）媒体库列出 1500px 以上的 142 条，**逐条带退避重试抓完**："
-        "只有 **13 张真的存在**，另外 **129 张返回 HTTP 404**——WP 数据库里还留着记录，"
-        "文件已经从盘上删了。存在的那 13 张全是球员动作、发布会、颁奖。"
-        "⚠️ 我第一版把「取不到」猜成了限流并这么写进了这里，**那是错的**："
-        "带重试重跑之后接口自己说的是 404。**「取不到」有好几种，要让接口自己说是哪一种**，"
-        "限流该退避重试，404 是真没有——两者的下一步完全相反。"
-        "站外找到的场馆全景两类都不合格：一类是**空场**"
-        "（Commons 的 Arena_GNP_Seguros_cancha_principal_1 也是，看台全空、还是视频抽帧），"
-        "一类是开幕式夜景（GQ 那张：均值 40.3 / 中位 **16** / 69% 暗于 50，"
-        "属于「中位数接近 0 就是一半以上纯黑」那一类）。"
-        "**还没试的**：墨西哥媒体（Récord、ESTO、Mediotiempo）的赛事图集。",
     "Grand Prix Lalla Meryem":
         "官方域名没找到活的（grandprixlallasalmameryem.com 解析不了）；"
         "摩洛哥网球协会 frmt.ma 是 WordPress，但站上是协会通用内容。"
         "搜到的两类都不合格：bakir.co 那批 1800x1195 是**空场**（蓝天、无观众），"
-        "其余是颁奖典礼特写。WTA 官方图库这条**试过了**：赛事页 "
-        "/tournament/1005/rabat/2026 上**没有 `<id>-` 那张主视觉**（柏林、梅里达、"
-        "奥斯汀、斯图加特都有），非 logo 的两张一张是罗兰加洛斯的高芙、一张是 Getty 的球员照。"
+        "其余是颁奖典礼特写。"
+        "WTA 主视觉**是有的**（`.../1005-Rabat.JPG?width=2400` → 2400x983）——"
+        "⚠️ 我第一遍扫赛事页时说「没有」，那是**我的正则漏了大小写**："
+        "扩展名写的是大写 `.JPG`，而我按 `\\.(jpg|jpeg|png|webp)` 不带 re.I 匹配。"
+        "拿到之后打开看：**court-level 视角、一侧看台都没有**，背后是公寓楼和棕榈树，"
+        "碗读不出来，仍然过不了闸门。"
         "**还没试的**：摩洛哥媒体（Le Matin、Medias24、le360）的赛事图集。",
-    "ATX Open":
-        "官方站 atxopen.com（WordPress）媒体库全量列过：球员动作 + 两张 DJI 航拍。"
-        "航拍是**整个球场群**（Westwood Country Club 一片场地 + 奥斯汀天际线），"
-        "中心球场只占一角，竖切会把它切掉。官网那张 1800x929 的 stadium 图**是效果图**"
-        "——文件名自己写着 `ATX Open Unveils Stadium Rendering`。"
-        "WTA 官方图库那张主视觉（2082-Austin.jpg，2400x983）**也是同一张球场群航拍**。"
-        "**还没试的**：奥斯汀本地媒体（Austin American-Statesman、KVUE）的赛事图集。",
     "Grand Prix Hassan II":
         "ATP 主视觉（marrakech_tournimage_2019）是**场地平视**：下半屏全是空红土，"
         "近端没有看台，碗读不出来。官网 grandprixhassan2.com（WordPress+Elementor）"
         "媒体库里 1750x1163 那一批是**赛事简报的版面图**（La Gazette 的 PDF 转图），"
         "不是照片；唯一一张场地照 CHF_2050 是从底线平视，同样只有一侧看台。"
         "**还没试的**：摩洛哥媒体（Le Matin、Medias24）与皇家网球俱乐部自己的社媒。",
-    "Gonet Geneva Open":
-        "ATP 赛事域名上有一张 2560x1440 的无人机图，但那是**整个 Parc des Eaux-Vives**"
-        "（球场群 + 日内瓦湖 + 大喷泉），中心球场在左下角只占一块，竖切留中间 42% 正好"
-        "把它切掉。裁出中心球场那一块只有约 900x700，放大 2 倍以上，太软。"
-        "站上其余的图是球员照和 VIP 区。**还没试的**：Tribune de Genève / RTS 的赛事图集。",
     "Almaty Open":
         "官方图库在 ktf.kz（almatyopen.kz 的相册全指过去，六本 290 张）。"
         "沙箱里 curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED，"

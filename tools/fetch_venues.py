@@ -235,6 +235,12 @@ VENUES = [
     ("berlin-steffi-graf-stadion-centre-court.jpg", None, None),
     # 梅里达 WTA500：WTA 官方主视觉，紫色硬地满场
     ("merida-centre-court.jpg", None, None),
+    # 奥斯汀 WTA250：新闻站的赛报配图，主看台球场满场
+    ("austin-westwood-centre-court.jpg", None, None),
+    # 阿卡普尔科 ATP500：Arena GNP 夜间航拍（垂直视角，非标准样例，见 credits 的 note）
+    ("acapulco-arena-gnp-centre-court.jpg", None, None),
+    # 日内瓦 ATP250：新闻站的现场照，从近端看台拍，整个碗都在
+    ("geneva-eaux-vives-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -380,6 +386,24 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "geneva-eaux-vives-centre-court.jpg": {
+        "title": "日内瓦 Parc des Eaux-Vives 中心球场，红土，远端挡板写着 GONET BANQUIERS 1845、球网上是 ATP TOUR，侧板 GONET GENEVA OPEN 与 Tribune de Genève，背后是园中的木屋与瑞士旗",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（Le Dauphiné Libéré，摄影师未署名）",
+        "page": "https://cdn-s-www.ledauphine.com/images/90D9B0F5-04B0-4F1B-B541-6D32555F8DD9/NW_raw/le-court-central.jpg",
+    },
+    "acapulco-arena-gnp-centre-court.jpg": {
+        "title": "阿卡普尔科 Arena GNP Seguros 夜间航拍，八边形主球场，场地中央铺着墨西哥国旗，四周看台环绕",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（摄影师未署名）",
+        "page": "https://chihuahuaaldia.com/wp-content/uploads/2025/10/abierto-mexicano-de-tenis-2025.jpg",
+    },
+    "austin-westwood-centre-court.jpg": {
+        "title": "奥斯汀 Westwood Country Club 主看台球场满场，绿色硬地，挡板写着 ATX OPEN 与 WTA 250，围板 WTATENNIS.COM，近端远端看台都在",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（Hearst 图床，摄影师未署名）",
+        "page": "https://s.hdnux.com/photos/01/63/40/25/30278996/3/1920x0.jpg",
+    },
     "merida-centre-court.jpg": {
         "title": "梅里达中心球场黄昏满场，紫色硬地前场刷着 MÉRIDA，近端远端看台都在画面里",
         "license": "unverified · WTA 官方图库 photoresources.wtatennis.com",
