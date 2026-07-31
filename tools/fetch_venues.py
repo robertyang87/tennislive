@@ -171,6 +171,10 @@ VENUES = [
     ("auckland-centre-court.jpg", None, None),
     # 慕尼黑：bmwopen.de 开着 wp-json（747 项），搜 center court 直接中
     ("munich-centre-court.jpg", None, None),
+    # 里约：rioopen.com 走 ATP Sitecore，vistageral.jpg 直接挂在 sites/tournaments/rio/ 根下
+    ("rio-centre-court.jpg", None, None),
+    # 蒙彼利埃：官网从 opensuddefrance.com 改名到 openoccitanie.com，wp-json 在新域名上
+    ("montpellier-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -316,6 +320,18 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "montpellier-centre-court.jpg": {
+        "title": "Sud de France Arena 中心球场 · 满场（粉蓝双色场地）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "openoccitanie.com 官方图库",
+        "page": "https://www.openoccitanie.com/wp-content/uploads/2025/01/sdf-arena-pleine-scaled.jpg",
+    },
+    "rio-centre-court.jpg": {
+        "title": "瓜加·库尔滕球场（Jockey Club）· 红土满场，背景是里约的山",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "rioopen.com 官方图库",
+        "page": "https://www.rioopen.com/-/media/sites/tournaments/rio/vistageral.jpg",
+    },
     "munich-centre-court.jpg": {
         "title": "MTTC Iphitos 中心球场 · 红土满场（BMW Open）",
         "license": "unverified · 赛事官方媒体库",
