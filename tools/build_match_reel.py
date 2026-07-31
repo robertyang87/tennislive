@@ -583,11 +583,16 @@ class Segment:
     # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
     # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
     quote: str = ""
-    # 这一段不是源片的一截，而是**一张静图**（仓库里的路径）。
-    # 只在「这件事只有图、没有影像」时用——休伊特那条的父亲那一下就是：
-    # 三条官方存档集锦都没拍到，ATP 自己的赛报配图里才有。
-    # 有 `still` 时 start/end 只用来定时长（`start: 0, end: 1.8`）。
-    still: str = ""
+    # **角标**：一张 PNG 压在这一段的角上，画面不中断。
+    #
+    # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
+    # 父亲的动作，而父亲那一下只有图没有影像（三条官方存档集锦都没拍到）。
+    # 切成整屏静图要停三秒、把片子剪断；压在角上，儿子做那一下的同一帧里就
+    # 有父亲做同一个动作——那句话本身就是这个画面，不用讲。
+    # 账号所有者 2026-07-31：「把这个照片贴在他儿子做动作视频页面的角落里，
+    # 这样就不用切画面了」。
+    # 格式：`inset: {"image": 路径, "corner": "tl|tr|bl|br", "width": 0.34}`
+    inset: dict | None = None
 
     @property
     def length(self) -> float:
@@ -615,17 +620,22 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         str(s.get("fit", "crop")), bool(s.get("track", False)),
                         str(s.get("source", primary)),
                         s.get("quote", "").strip(),
-                        str(s.get("still", "")).strip())
+                        s.get("inset") or None)
                 for s in spec["segments"]]
-    missing = [i + 1 for i, s in enumerate(segments)
-               if s.still and not Path(s.still).is_file()]
-    if missing:
+    gone = [(i + 1, str((s.inset or {}).get("image", "")))
+            for i, s in enumerate(segments) if s.inset]
+    gone = [(i, f) for i, f in gone if not f or not Path(f).is_file()]
+    if gone:
         raise ReelError(
-            f"第 {missing} 段的 `still` 找不到文件："
-            + "、".join(s.still for s in segments if s.still
-                        and not Path(s.still).is_file()))
-    # 静图段不引用源片，别拿它去查源
-    unknown = sorted({s.source for s in segments if not s.still} - set(sources))
+            "这些段的图片找不到文件（写错路径时 ffmpeg 只会在切片那一步才炸，"
+            "而那已经是下完所有源片之后了）：\n  "
+            + "\n  ".join(f"第 {i} 段：{f or '(空)'}" for i, f in gone))
+    bad_corner = [i + 1 for i, s in enumerate(segments) if s.inset
+                  and str(s.inset.get("corner", "tl")) not in
+                  {"tl", "tr", "bl", "br"}]
+    if bad_corner:
+        raise ReelError(f"第 {bad_corner} 段的 `inset.corner` 只能是 tl/tr/bl/br")
+    unknown = sorted({s.source for s in segments} - set(sources))
     if unknown:
         raise ReelError(
             f"这些段引用了不存在的源：{unknown}；spec 里声明的是 {sorted(sources)}")
@@ -787,8 +797,7 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     """
     runs: list[list[int]] = []
     for index, seg in enumerate(segments):
-        # 静图段没有源片可跟，也没有运动质心可算
-        trackable = seg.fit != "contain" and seg.track and not seg.still
+        trackable = seg.fit != "contain" and seg.track
         prev = segments[runs[-1][-1]] if runs else None
         joins = (runs and trackable
                  and abs(seg.start - prev.end) < 1e-3
@@ -838,6 +847,27 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
         for index in members:
             tracks[index] = sample_track(coarse, segments[index])
     return tracks
+
+
+def _overlay_chain(base: str, ins: dict) -> str:
+    """把角标压上去。没有角标时只是把 `[base]` 改名成 `[vout]`。
+
+    **位置和边距都按画幅算，不写死像素。** 角标宽度给的是占画幅宽的比例，
+    1080 宽下 0.34 → 367px；边距 4.3% → 46px。改画幅时两个数一起跟着走。
+
+    ⚠️ 角标要**避开字幕那一条**。字幕上锚在 y=1284（卡底往上 156px），
+    所以底部两角实际只剩到 1284 为止——贴 `bl`/`br` 时自己算清楚，
+    默认给 `tl`：这条线的成片顶部没有常驻角标，那儿是空的。
+    """
+    if not ins:
+        return base.replace("[base]", "[vout]")
+    width = int(round(float(ins.get("width", 0.34)) * VIDEO_W)) // 2 * 2
+    pad = int(round(float(ins.get("pad", 0.043)) * VIDEO_W))
+    corner = str(ins.get("corner", "tl"))
+    x = f"{pad}" if corner in ("tl", "bl") else f"W-w-{pad}"
+    y = f"{pad}" if corner in ("tl", "tr") else f"H-h-{pad}"
+    return (f"{base};[1:v]scale={width}:-2[ins];"
+            f"[base][ins]overlay={x}:{y}[vout]")
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
@@ -898,6 +928,12 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
     # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
     has_audio = _has_audio(source)
+    # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
+    # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
+    # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
+    ins = seg.inset or {}
+    inset_in = ["-i", str(ins["image"])] if ins else []
+    null_idx = 2 if ins else 1
     extra_in = ([] if has_audio else
                 ["-f", "lavfi", "-i",
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
@@ -919,16 +955,18 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 和 sendcmd 对得上（稳定处误差 0~1px）。日志照样打「59 个点，
             # 横摇 977px」——**算了、打印了、没生效**，和「补位静音盖住真音轨」
             # 是同一种病：出事的时候不吭声。
-            "-ss", f"{seg.start:.3f}", "-i", str(source), *extra_in,
+            "-ss", f"{seg.start:.3f}", "-i", str(source), *inset_in, *extra_in,
             # 时长而不是 `-to`：`-ss` 变成输入选项之后输出时间轴从 0 起算，
             # 再写 `-to seg.end` 会把整段截没。
             "-t", f"{seg.length:.3f}",
             # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
             # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
             "-filter_complex",
-            (chain + "[vout]") if seg.fit == "contain" else f"[0:v]{chain}[vout]",
+            _overlay_chain(
+                (chain + "[base]") if seg.fit == "contain"
+                else f"[0:v]{chain}[base]", ins),
             "-shortest", "-map", "[vout]",
-            "-map", "0:a:0" if has_audio else "1:a:0",
+            "-map", "0:a:0" if has_audio else f"{null_idx}:a:0",
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
             # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
@@ -1079,21 +1117,13 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     return _still_to_clip(poster, dest)
 
 
-def _still_to_clip(still: Path, dest: Path, seconds: float | None = None,
-                   *, label: str = "封面编码") -> Path:
-    """静图 → 一小段带静音轨的视频。封面用它，**片中插图也用它**。
-
-    片中插图这条路是为「让读者看见那件事本身」开的：休伊特那条讲的是儿子做了
-    父亲的动作，而三条官方存档集锦里**都没有拍到父亲做那一下**（澳网 2005 全部
-    剪辑点扫完只有握拳和双臂谢场；澳网 2024 致敬片整段烧着大字幕；美网 2001 的
-    冠军点是仰面倒地）。ATP 自己那篇赛报的配图里有——那是一张图，不是一段视频。
-    所以静图得能当一段用。
-    """
-    with stage(label):
+def _still_to_clip(still: Path, dest: Path) -> Path:
+    """封面静图 → 一小段带静音轨的视频，接进片头。"""
+    with stage("封面编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-loop", "1", "-i", str(still), "-f", "lavfi",
             "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
-            "-t", f"{COVER_SECONDS if seconds is None else seconds:.3f}",
+            "-t", f"{COVER_SECONDS}",
             "-vf", f"fps={FPS_EXPR},setsar=1",
             "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
             "-pix_fmt", "yuv420p",
@@ -1287,11 +1317,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
-        if seg.still:
-            parts.append(_still_to_clip(
-                Path(seg.still), outdir / f"part_{index:02d}.mp4", seg.length,
-                label=f"静图段 {index + 1}（{seg.length:.1f}s）"))
-            continue
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index)))

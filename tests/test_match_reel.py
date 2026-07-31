@@ -1166,46 +1166,50 @@ def test_旁白不能比它那一段的画面长():
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
 
 
-def test_静图段是给没有影像的事实留的():
-    """**父亲那一下只有图，没有影像。**
+def test_角标把两件事放进同一帧():
+    """**父亲那一下只有图，没有影像**（三条官方存档集锦都扫过，都没拍到）。
 
-    休伊特那条讲的是儿子做了父亲的动作，而三条官方存档集锦**都没拍到父亲做那
-    一下**：澳网 2005 半决赛按 1 秒一格把全部 56 个剪辑点扫完，只有握拳 come on
-    和末尾双臂谢场；澳网 2024 致敬片整段烧着大字幕；美网 2001 长版是 4:3 加蓝边
-    的标清升帧、冠军点是仰面倒地。那一下只有零点几秒，集锦剪辑一般跳过去。
+    账号所有者定的做法不是切一张整屏静图，而是**压在角上**：儿子做那一下的
+    同一帧里就有父亲做同一个动作，「他做了父亲的那个动作」这句话本身就是这一
+    帧——而且不停三秒、不剪断片子。
 
-    所以静图要能当一段用。判据有三条，都是「不吭声」型的错：
+    三条判据，都是「不吭声」型的错：
 
-    - **文件必须在**——路径写错时 ffmpeg 只会在切片那一步炸，而那已经是下完
+    - **图必须在**——路径写错时 ffmpeg 只会在切片那一步炸，而那已经是下完
       三条源片之后了
-    - **不能拿静图段去查源**（它不引用任何源片，`source` 是默认值）
-    - **不能跟踪**（没有源片可跟，也没有运动质心可算）
+    - **corner 只能是四个角之一**——写错会被 `.get(..., "tl")` 悄悄吃掉
+    - **音轨索引要跟着输入路数走**——角标插进第 1 路之后，补位静音从 `1:a:0`
+      变成 `2:a:0`；取错流不报错，只是没声音
     """
     import pytest  # noqa: PLC0415
 
     reel = _reel()
+    art = "assets/reel/lleyton-vicht-inset.png"
+    assert Path(art).is_file(), "角标素材不在仓库里"
     spec = {"cover": {}, "segments": [
-        {"start": 0, "end": 3.0, "still": "assets/reel/lleyton-vicht.jpg",
-         "narration": "他父亲做了一整个职业生涯。"},
-        {"start": 10, "end": 20, "source": "r1", "narration": "旁白"},
-    ]}
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": art, "corner": "tl", "width": 0.34}}]}
     segs = reel.parse_segments(spec, {"r1": Path("a.mp4")}, "r1")
-    assert segs[0].still.endswith("lleyton-vicht.jpg")
-    assert segs[0].length == 3.0
-    assert Path(segs[0].still).is_file(), "静图素材不在仓库里"
+    assert segs[0].inset["corner"] == "tl"
 
-    # 路径写错要当场红，不要等到切片
     bad = {"cover": {}, "segments": [
-        {"start": 0, "end": 3.0, "still": "assets/reel/没有这张.jpg"}]}
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": "assets/reel/没有这张.png"}}]}
     with pytest.raises(reel.ReelError, match="找不到文件"):
         reel.parse_segments(bad, {"r1": Path("a.mp4")}, "r1")
 
-    # 静图段不参与「引用了不存在的源」那一条（它的 source 是默认值）
-    reel.parse_segments({"cover": {}, "segments": [
-        {"start": 0, "end": 2.0, "still": "assets/reel/lleyton-vicht.jpg"}]},
-        {"r1": Path("a.mp4")}, "r1")
+    corner = {"cover": {}, "segments": [
+        {"start": 1, "end": 7, "source": "r1",
+         "inset": {"image": art, "corner": "middle"}}]}
+    with pytest.raises(reel.ReelError, match="corner"):
+        reel.parse_segments(corner, {"r1": Path("a.mp4")}, "r1")
 
-    # 跟踪要跳过它
+    # 没有角标时滤镜图不变形，只是把 [base] 改名
+    assert reel._overlay_chain("[0:v]x[base]", {}) == "[0:v]x[vout]"
+    chain = reel._overlay_chain("[0:v]x[base]", {"image": art, "corner": "br"})
+    assert "[1:v]scale=" in chain and "overlay=W-w-" in chain and "[vout]" in chain
+
+    # 音轨索引：有角标时补位静音是第 2 路
     body = Path(reel.__file__).read_text(encoding="utf-8")
-    assert "and not seg.still" in body, "track_shots 没把静图段排除掉"
-    assert "if seg.still:" in body, "切片循环没给静图段留分支"
+    assert 'f"{null_idx}:a:0"' in body, "补位静音的输入索引写死了，插入角标后会取错流"
+    assert "null_idx = 2 if ins else 1" in body
