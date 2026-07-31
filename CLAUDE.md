@@ -305,6 +305,28 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### daily 停了（2026-07-31），但停的是触发器不是工作流
+
+账号所有者的原话：「以后 daily 就停掉了，**之前的图片形式没有意义了**」。
+
+`daily.yml` 现在只剩 `workflow_dispatch`。生成逻辑、幂等检查、推送那一整套
+原样留着，原来的 `push` 和四条 cron **抄在工作流头部的注释里留档**——恢复时
+照抄，别让人去翻 git 历史。判据在 `test_daily不许再自动跑`：加回任何一条
+自动触发就红，**要恢复得连测试一起改**（和 `LANDMARK_BUDGET` 只许降不许升
+是同一个手法）。
+
+⚠️ **停掉的不只是日报。** 四条 cron 里有两条（15:07 / 18:23）是给**每日网球
+知识**补产的——知识帖和日报是同一趟 `tennislive digest` 出的，只是分两条
+PushPlus 推。所以 daily 一停，知识帖也不再自动推送。工作流里本来就有
+`push_scope: knowledge-only`，真要单留知识帖，把主班次那条 cron 放回来、
+scope 钉成 knowledge-only 即可。
+
+**没做的（故意）**：卡片渲染那套代码一行没动。「图片形式没有意义」说的是
+这个栏目不发了，不是渲染器要删——解说片、赛程包、知识帖都还在用它。
+
+停掉之后定时任务从 90.1 次/天降到 86.1 次/天，`content-radar` 那 72 趟
+占了 84%。
+
 ### 全仓库都改成稀疏检出：两个写法，一个静默陷阱
 
 19 条工作流全部排除了 `output/`（1.36 GB）。最夸张的是 **content-radar：

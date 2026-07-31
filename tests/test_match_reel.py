@@ -1803,6 +1803,7 @@ def test_封面跟着配音走只给网球有故事():
 
 
 PUSH_WORKFLOW = Path(".github/workflows/push-reel.yml")
+DAILY = Path(".github/workflows/daily.yml")
 
 
 def _yaml_only(text: str) -> str:
@@ -2195,3 +2196,28 @@ def test_读产物的步骤不能排在sparse_add前面():
         assert not early, (
             f"{path.name} 在把产物目录加进稀疏范围之前就去读它了：{early[:2]}\n"
             "目录不在工作区，这些判断全是假的，而且不报错。")
+
+
+def test_daily不许再自动跑():
+    """**2026-07-31 账号所有者定的：「以后 daily 就停掉了，之前的图片形式没有
+    意义了」。**
+
+    停掉的是**触发器**，不是工作流——生成逻辑和 `workflow_dispatch` 原样留着，
+    随时能手动跑一次。这条测试拦的不是手滑，是**「顺手把定时加回去」**：
+    `daily.yml` 的四条 cron 里有两条是给每日知识帖补产的，加回任何一条都会
+    让微信重新开始每天收到内容——**推送发出去就收不回来**。
+
+    要恢复，把工作流头部注释里留档的那两块放回去，**并且改掉这条测试**——
+    让它变成一次看得见的决定，和 `LANDMARK_BUDGET` 只许降不许升是同一个手法。
+    """
+    text = DAILY.read_text(encoding="utf-8")
+    body = _yaml_only(text)
+    assert "\non:\n  workflow_dispatch:" in body, (
+        "daily.yml 的触发器被改了——它现在只该有 workflow_dispatch")
+    for auto in ("  schedule:", "  push:", "  pull_request:", "  repository_dispatch:"):
+        assert f"\n{auto}" not in body.split("\njobs:")[0], (
+            f"daily.yml 又挂上了 {auto.strip()} 自动触发。"
+            "账号所有者 2026-07-31 停掉了它——要恢复请连这条测试一起改。")
+    # 留档的注释要还在：恢复时照抄，别让人去翻 git 历史
+    assert "cron: \"17 23 * * *\"" in text and "knowledge-only" in text, (
+        "原来的 cron 留档被删了——恢复自动班次时就没得照抄了")

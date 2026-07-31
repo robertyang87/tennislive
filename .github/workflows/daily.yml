@@ -1,29 +1,40 @@
 name: daily-tennis-digest
 
-# 每天北京时间早间生成内容包（昨夜赛果 + 今日赛程）。这是材料生成
-# 窗口，不是强制发布时间；提交回仓库并按配置推送，也可手动触发。
-# GitHub 定时任务在 :00/:30 高峰时段可能被延迟或丢弃，
-# 因此：主班次避开热门分钟 + 备份班次带幂等检查兜底。
+# 每天北京时间早间生成内容包（昨夜赛果 + 今日赛程）。
+#
+# ## 2026-07-31：**自动班次全部停掉，只留手动触发**
+#
+# 账号所有者的原话：「以后 daily 就停掉了，**之前的图片形式没有意义了**」。
+#
+# 所以这里删掉的是**触发器**，不是工作流本身——生成逻辑、幂等检查、推送
+# 那一整套原样留着，`workflow_dispatch` 也留着，随时能手动跑一次。想恢复
+# 自动班次，把下面注释掉的那两块放回来即可（一并改掉那条测试）。
+#
+# ⚠️ **停掉的不只是日报。** 四条 cron 里有两条是给**每日网球知识**补产的
+# （15:07 / 18:23），知识帖和日报是同一趟 `tennislive digest` 出的、
+# 只是分两条 PushPlus 推。停掉之后知识帖也不再自动推送。
+# 工作流里本来就有 `push_scope: knowledge-only`，真要单留知识帖，
+# 把主班次那条 cron 放回来、并把 scope 钉成 knowledge-only 就行。
+#
+# 原来的触发器（留档，别删——恢复时照抄）：
+#
+#   push:
+#     branches: [main]
+#     paths: [ .github/workflows/daily.yml, assets/venues/**,
+#              data/venue_assets.json, data/official_schedule_sources.json,
+#              src/tennislive/sources/**, src/tennislive/models.py,
+#              pyproject.toml, src/tennislive/render/**,
+#              src/tennislive/research/**, src/tennislive/video/**,
+#              src/tennislive/cli.py ]
+#   schedule:
+#     - cron: "17 23 * * *"   # 主班次：07:17 北京时间
+#     - cron: "5 0 * * *"     # 备份班次：08:05（当日已生成则跳过）
+#     - cron: "7 7 * * *"     # 知识帖补产：15:07（仅在知识包缺失时运行）
+#     - cron: "23 10 * * *"   # 知识帖末次补产：18:23
+#
+# GitHub 定时任务在 :00/:30 高峰时段可能被延迟或丢弃，所以当年是
+# 「主班次避开热门分钟 + 备份班次带幂等检查兜底」——恢复时这条别忘了。
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/daily.yml"
-      - "assets/venues/**"
-      - "data/venue_assets.json"
-      - "data/official_schedule_sources.json"
-      - "src/tennislive/sources/**"
-      - "src/tennislive/models.py"
-      - "pyproject.toml"
-      - "src/tennislive/render/**"
-      - "src/tennislive/research/**"
-      - "src/tennislive/video/**"
-      - "src/tennislive/cli.py"
-  schedule:
-    - cron: "17 23 * * *"   # 主班次：23:17 UTC = 次日 07:17 北京时间
-    - cron: "5 0 * * *"     # 备份班次：00:05 UTC = 08:05 北京时间（当日已生成则跳过）
-    - cron: "7 7 * * *"     # 知识帖补产：15:07 北京时间（仅在知识包缺失时运行）
-    - cron: "23 10 * * *"   # 知识帖末次补产：18:23 北京时间
   workflow_dispatch:
     inputs:
       date:
