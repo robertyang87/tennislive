@@ -234,8 +234,13 @@ def test_有赛果时标题把vs换成比分():
 def test_page阶段不发推送也不需要成片(tmp_path):
     outdir = tmp_path / "output" / "2026-07-28" / "reel" / "demo"
     outdir.mkdir(parents=True)
-    copy = tmp_path / "copy.txt"
+    copy = tmp_path / "demo.xhs.txt"
     copy.write_text("小红书那句标题\n\n正文第一行\n正文第二行", encoding="utf-8")
+    # **栏目名从 spec 的 cover.eyebrow 读**，所以文案旁边要有它的 spec——
+    # 真实布局本来就是 `specs/reels/<slug>.xhs.txt` 和 `<slug>.json` 挨着放。
+    (tmp_path / "demo.json").write_text(
+        json.dumps({"cover": {"eyebrow": "赛场之上"}}, ensure_ascii=False),
+        encoding="utf-8")
     # 目录里没有 mp4：page 阶段不该因此失败，它要在渲染之外也能单独补跑
     subprocess.run(
         [sys.executable, str(Path("tools/push_reel.py").resolve()),
@@ -1430,3 +1435,40 @@ def test_检查工具认的画布要和成片的画布是同一个():
     assert f"VIDEO_W, VIDEO_H = {reel.VIDEO_W}, {reel.VIDEO_H}" in text, (
         f"检查工具认的画布和成片的 {reel.VIDEO_W}×{reel.VIDEO_H} 对不上")
     assert "(VIDEO_W, VIDEO_H)" in text, "画布比对又写死成字面量了"
+
+
+def test_栏目名从spec读不要在命令行上另写一遍():
+    """推送标题里的栏目，和海报台头上的栏目，**必须是同一个值**。
+
+    `push_reel.py` 原来把 `--column` 默认成「赛场之上」，而工作流一个字都没传
+    ——于是休伊特那条「网球有故事」的片子，海报印着网球有故事、微信标题写着
+    赛场之上。**同一条推送里两个栏目名，而推送发出去就收不回来。**
+
+    这是「栏目决定封面模板，不是素材凑手决定」那条的另一半：栏目只有一个出处
+    （spec 的 `cover.eyebrow`），海报和标题都从它来。读不到要报错——悄悄退回
+    一个默认值，正是上面那个错本身。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    assert push_reel.column_of(
+        Path("specs/reels/hewitt-washington.xhs.txt")) == "网球有故事"
+    assert push_reel.column_of(
+        Path("specs/reels/wong-lehecka.xhs.txt")) == "赛场之上"
+
+    # 默认值不能再是某个栏目名——那正是这条测试拦的那个错
+    text = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    assert 'ap.add_argument("--column", default="赛场之上"' not in text, (
+        "栏目名又写死默认值了；工作流不传，网球有故事就会被标成赛场之上")
+
+    # 读不到就报错，别退回默认
+    with pytest.raises(SystemExit, match="取不到栏目名"):
+        push_reel.column_of(Path("specs/reels/没有这条.xhs.txt"))
+
+    # 每条 spec 的栏目都要和它的封面模板配对（solo ↔ 网球有故事）
+    for slug, spec in _reel_specs().items():
+        cover = spec.get("cover") or {}
+        assert str(cover.get("eyebrow", "")).strip(), (
+            f"{slug} 没写 cover.eyebrow——推送标题会取不到栏目名")

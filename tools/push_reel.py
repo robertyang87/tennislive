@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import os
 import re
 import sys
@@ -169,6 +170,29 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     return _fits(" | ".join(parts))
 
 
+def column_of(copy_path: Path) -> str:
+    """栏目名从 spec 的 `cover.eyebrow` 读，别在命令行上另写一遍。
+
+    **原来这儿默认 `赛场之上`，而工作流一个字都没传**——于是休伊特那条
+    「网球有故事」的片子，海报台头印着网球有故事，微信标题却写赛场之上。
+    同一条推送里两个栏目名，而推送发出去就收不回来。
+
+    这是「栏目决定封面模板」那条的另一半：**栏目只有一个出处**，海报和标题
+    都从它来。读不到就报错——悄悄退回一个默认值，正是上面那个错本身。
+    """
+    slug = copy_path.name.split(".")[0]
+    spec = copy_path.parent / f"{slug}.json"
+    if not spec.is_file():
+        raise SystemExit(f"找不到 {spec}，取不到栏目名。要么放好 spec，"
+                         "要么显式传 --column")
+    eyebrow = str((json.loads(spec.read_text(encoding="utf-8")).get("cover") or {})
+                  .get("eyebrow", "")).strip()
+    if not eyebrow:
+        raise SystemExit(f"{spec} 的 cover.eyebrow 是空的——海报台头印什么，"
+                         "标题就该写什么，这一个值两处共用")
+    return eyebrow
+
+
 def _fits(title: str) -> str:
     """标题**整句**不超过 20 个汉字，超了直接报错。
 
@@ -288,7 +312,9 @@ def main() -> int:
                     help="page=只写复制页（须排在 git commit 之前）；push=发微信")
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
-    ap.add_argument("--column", default="赛场之上", help="栏目名")
+    ap.add_argument("--column", default="",
+                    help="栏目名。默认不传——从 spec 的 cover.eyebrow 读，"
+                         "海报印的是哪个栏目，标题就写哪个")
     ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
     ap.add_argument("--score", default="", help="赛果，如「6-7(3) 6-3 6-4」，赢家在前")
     ap.add_argument("--event", default="", help="赛事与轮次，如「华盛顿 ATP500 首轮」")
@@ -315,8 +341,8 @@ def main() -> int:
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
     # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
     # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
-    title = headline(outdir, args.column, args.matchup, args.score, args.event,
-                     args.summary)
+    title = headline(outdir, args.column or column_of(Path(args.copy)),
+                     args.matchup, args.score, args.event, args.summary)
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
