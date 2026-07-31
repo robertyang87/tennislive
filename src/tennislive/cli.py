@@ -717,12 +717,18 @@ def cmd_coverage(args) -> int:
     跑一整套日报**。2026-07-31 日报停产、`cmd_digest` 删掉，把它抽出来独立成
     命令：抓一天数据、写一张 coverage.txt，就这些。
     """
+    from .digest import build_digest
     from .render.coverage import coverage_report
     from .render.terminal import console
 
     d = parse_date_arg(args.date)
     try:
-        digest = fetch_day(d, prefer=args.source)
+        # **`fetch_day` 给的是 `DailyData`，`coverage_report` 要的是 `Digest`。**
+        # 第一版直接把 `fetch_day` 的结果传下去了，本地跑不到（沙箱没网），
+        # 一上 runner 就 `AttributeError: 'DailyData' object has no attribute
+        # 'results'`（run 30653131605）。**「写了」不等于「跑过」**——这条这次
+        # 是靠 CI 抓到的，不是靠我自己。
+        digest = build_digest(d, prefer=args.source)
     except SourceError as exc:
         console.print(f"[red]{d} 抓取失败：{exc}[/red]")
         return 1
