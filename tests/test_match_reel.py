@@ -1101,3 +1101,70 @@ def test_源片自己烧了记分条时字幕要让开():
               if p.name != "wong-brooksby.json"
               and "subtitle_top" in json.loads(p.read_text("utf-8"))]
     assert not others, f"这些片子也写了 subtitle_top，特例正在扩散：{others}"
+
+
+def test_每一段都收在死球之后():
+    """一分打到一半切走，观众不知道这分谁赢了。
+
+    账号所有者的原话：「很多球没有播放完成就切到下一个了，建议死球后再切换
+    下一个，不然让人看的不明不白的」。而**看懂这一分归谁**是回合镜头唯一的作用。
+
+    死球时刻不用靠看球——源片烧死的记分条在死球那一刻才翻牌，
+    `tools/find_point_ends.py` 就是量它。**框只框比分那一列**：框整条记分条
+    同一门槛只报 26 次，框比分列报 39 次，名字那半边从不变，把翻牌的占比稀释
+    掉一个量级。又一次「门槛的数要在同一个口径下量」。
+
+    ⚠️ **工具只给候选。** 赛点那一分它抓不到——转播在庆祝时不翻牌，记分条一直
+    停在 `6 6 40`。那一段是打开看定的：172.5 秒球还在打，173.5 秒已经是握拳
+    嘶吼。所以最后一步永远是人看。
+    """
+    tool = Path("tools/find_point_ends.py")
+    assert tool.is_file(), "死球检测工具没了，段尾就只能靠猜"
+    text = tool.read_text(encoding="utf-8")
+    assert "dark" in text, "没有「记分条还在不在」这一判据——镜头切走也会被当成死球"
+    assert "比分那一列" in text, "没记下框要框哪儿，下一个人会框整条然后漏掉一半"
+
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    # 三处切在球中间的段尾，改完不许退回去
+    ends = [s["end"] for s in spec["segments"]]
+    for bad, good in ((128.0, 132.7), (143.0, 147.7), (173.0, 173.0)):
+        assert bad not in ends, f"{bad}s 那个段尾切在球中间，实际这一分到 {good}s 才结束"
+    assert "_editing_why" in spec, "为什么这么切没有留下判据"
+
+
+def test_旁白要讲清楚比赛走向():
+    """账号所有者：「同时要讲清楚比赛的走向，这样大家才不会看的一头雾水」。
+
+    赛报片不是集锦。第一版只报了几个孤立比分（「五比一」「赛点」），
+    第二盘被对手压着打了大半盘这条线整个是空的，观众串不起来。
+
+    判据取「转折」这一环——四问里最容易漏、也最要命的那个：前面赢得轻松、
+    后面赢了，中间发生过什么，不说观众就不知道这场球难在哪。
+    """
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    told = "".join(s["narration"] for s in spec["segments"])
+    assert "转折" in told or "反了过来" in told, "旁白没讲转折，观众不知道这场球难在哪"
+    # **别按措辞判。** 上一版查「领先」，而稿子写的是「一直是布鲁克斯比在前」——
+    # 意思在、词不在，测试自己红了。改成结构判据：输的那个必须在**开场之后**
+    # 还被提到，也就是片子真的讲了他做过什么，而不只是开头报了个名字。
+    loser = next(n for n in spec["cover"]["versus"]["names"]
+                 if n != spec["cover"]["winner"])
+    later = "".join(s["narration"] for s in spec["segments"][2:])
+    assert loser in later, (
+        f"{loser} 只在开场露过名字，中段一句没提——那就没有「对手一度领先」这条线，"
+        "走向是断的")
+    assert "_narration_why" in spec, "为什么这么写没有留下判据"
+
+
+def test_封面别停太久():
+    """`2.6` 秒会被当成图片。
+
+    账号所有者：「封面 2.6 秒是不是有点多啊，建议缩短点，不然好多人以为是图片
+    不是视频」。封面同时是信息流里的缩略图——点进来的人已经看过它了，画面迟迟
+    不动，第一反应是「这是张图」，然后划走。
+    """
+    reel = _reel()
+    assert reel.COVER_SECONDS <= 1.5, (
+        f"封面停了 {reel.COVER_SECONDS} 秒，太长会被当成图片")
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    assert "以为是图片" in src, "为什么缩短没有留下判据，下次会有人调回去"
