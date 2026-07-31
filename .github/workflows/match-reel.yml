@@ -320,8 +320,9 @@ jobs:
           # 还没见过的：分轨的 webm，和 yt-dlp 的续传记录 .ytdl。
           # `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
           # `_versus_cut_top.png`——又一次「逐个列名字挡不住猜不出来的那些」。
-          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：单张 400KB 过得了
-          # 「单个 8 MB」那道兜底，整批却是 5 MB，每探一次加一份。
+          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
+          # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
+          # 那道兜底**，却每探一次就加一份。
           rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 "$OUTDIR"/*.part \
             "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
             "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
