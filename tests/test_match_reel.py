@@ -2440,8 +2440,7 @@ def test_停产栏目的历史产物清掉了活栏目一个不动():
     reel 的一个 mp4 它不红，把 reel 整个目录拿掉才红。它拦的是「一次清理
     把整条线扫了」，不是手滑删一个文件。
     """
-    live = ("reel", "explainer", "yesterday-point", "queue",
-            "knowledge_adhoc", "flash_radar")
+    live = ("reel", "explainer", "queue", "knowledge_adhoc", "flash_radar")
     tracked = subprocess.run(
         ["git", "ls-files", "--", "output"],
         capture_output=True, text=True, check=True).stdout.splitlines()
@@ -2512,3 +2511,38 @@ def test_没有下游在读的定时任务不许一直跑():
         assert "schedule:" not in head, (
             f"{name} 又挂上定时了——它的产出没有下游在读（2026-07-31 停的）")
         assert "workflow_dispatch:" in head, f"{name} 的手动入口不能一起摘掉"
+
+
+def test_昨日一分这条线不许回来():
+    """**2026-07-31：「昨日一分全功能拿掉」。**
+
+    停之前查过根因，不是频次问题：skip 诊断里十个检索源有五个直接 error
+    （全是 YouTube 系，和 match-reel 那条「机房 IP 被挡」同一个病），唯一能
+    拿到候选的 Tennis TV 卡在缺 `TENNISTV_JWT`——**11 天 66 趟只出 3 条片**。
+    出路是接源不是降频，账号所有者选了整条拿掉。
+
+    删掉的：工作流、`tennislive point` 命令、`video/daily_point.py`（1937 行）、
+    `tests/test_daily_point.py`（57 条）、`test_cli` 里三条、历史产物 45 个文件。
+
+    **没删的**：`video/pipeline.py` 的 `render_ass` 和 `subtitle_text.py`——
+    视频本地化那条线还在用。停的是栏目，不是底下那套工具。
+    """
+    assert not Path(".github/workflows/yesterday-point.yml").exists()
+    assert not Path("src/tennislive/video/daily_point.py").exists()
+    assert not Path("tests/test_daily_point.py").exists()
+
+    from tennislive import cli  # noqa: PLC0415
+
+    assert not hasattr(cli, "cmd_yesterday_point"), "昨日一分的命令又回来了"
+
+    # 共用的字幕/ASS 那套要还在——视频本地化靠它
+    from tennislive.video import pipeline  # noqa: PLC0415
+    from tennislive.video.subtitle_text import drop_punctuation  # noqa: PLC0415
+
+    assert hasattr(pipeline, "render_ass") and callable(drop_punctuation), (
+        "把共用的字幕工具一起删了——视频本地化那条线还在用")
+
+    # 历史产物也清了
+    tracked = subprocess.run(["git", "ls-files", "--", "output"],
+                             capture_output=True, text=True, check=True).stdout
+    assert "yesterday-point" not in tracked, "昨日一分的历史产物还在"

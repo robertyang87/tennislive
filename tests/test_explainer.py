@@ -1396,18 +1396,25 @@ def test_栏目名不能只活在代码里():
     for name in COLUMNS:
         assert name in doc, f"COLUMNS 里的「{name}」没有写进 docs/columns.md"
 
-    # 各生产线自带的栏目名常量（解说视频之外的那些线不共用 COLUMNS）
+    # 各生产线自带的栏目名（解说视频之外的那些线不共用 COLUMNS）。
+    #
+    # 原来这里扫的是 `_COLUMN_LABEL` 常量，而它只存在于「昨日一分」那条线；
+    # 2026-07-31 那条线整个拿掉之后，扫描结果为空，这个判据自己的自检
+    # （`assert labels`）当场报「判据失效了」——**它设计对了**，主语没了就出声，
+    # 而不是变成一条恒真的断言。
+    #
+    # 换成还活着的主语：竖版短片的栏目名写在每条 spec 的 `cover.eyebrow` 里，
+    # 海报台头和微信标题都从它来（见 `push_reel.column_of`）。
+    import json  # noqa: PLC0415
+
     labels = {
-        path.name: match
-        for path in Path("src/tennislive").rglob("*.py")
-        for match in re.findall(
-            r'^_COLUMN_LABEL\s*=\s*["\'](.+?)["\']',
-            path.read_text(encoding="utf-8"),
-            re.MULTILINE,
-        )
+        path.name: str((json.loads(path.read_text(encoding="utf-8")).get("cover")
+                        or {}).get("eyebrow", "")).strip()
+        for path in sorted(Path("specs/reels").glob("*.json"))
     }
-    assert labels, "没扫到任何 _COLUMN_LABEL，判据失效了"
+    assert labels, "没扫到任何 spec 的栏目名，判据失效了"
     for source, name in labels.items():
+        assert name, f"{source} 的 cover.eyebrow 是空的"
         assert name in doc, f"{source} 的栏目名「{name}」没有写进 docs/columns.md"
 
 
@@ -1453,10 +1460,10 @@ def test_字幕里不写标点():
 def test_去标点这条规矩是全站的不是解说片专属():
     """账号所有者补的那句：「字幕要应用到全局里。」
 
-    先只改了解说片，于是「昨日一分」「视频本地化」「大满贯竖版 v2」三条线
+    先只改了解说片，于是「视频本地化」「大满贯竖版 v2」等线
     还在往画面上烧逗号句号。同一个账号出去的片子，字幕两种样子。
 
-    规矩和实现收在 `video/subtitle_text.py`，四条线共用；这条测试盯的是
+    规矩和实现收在 `video/subtitle_text.py`，写 ASS 的几条路径共用；这条测试盯的是
     「每条写 ASS 的路径都真的过了这一道」，而不是某一条的输出长什么样。
     """
     import inspect

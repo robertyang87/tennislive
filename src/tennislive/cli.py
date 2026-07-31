@@ -551,164 +551,6 @@ def cmd_topic_radar(args) -> int:
     return 0
 
 
-def cmd_yesterday_point(args) -> int:
-    """Generate the independent, source-audited yesterday-point package(s).
-
-    ATP and WTA are discovered and published independently under
-    ``atp/`` and ``wta/`` subdirectories; either tour can pass or skip on
-    its own. A tour that already passed in an earlier run today (e.g. an
-    earlier retry pass) is left untouched and not re-pushed -- only a tour
-    still missing its clip is retried. This is what lets the workflow run
-    several times a day and have whichever tour's video shows up first get
-    pushed immediately, while the other keeps retrying independently.
-    """
-    from datetime import datetime, timezone
-
-    from .render.terminal import console
-    from .video.daily_point import generate_yesterday_point
-
-    d = parse_date_arg(args.date)
-    output_dir = Path(args.outdir) / d.isoformat() / "yesterday-point"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    already_done: set[str] = set()
-    for tour in ("ATP", "WTA"):
-        manifest_path = output_dir / tour.lower() / "manifest.json"
-        if not manifest_path.is_file():
-            continue
-        try:
-            existing = json.loads(manifest_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            existing = {}
-        if existing.get("status") == "pass":
-            already_done.add(tour)
-
-    diagnostics: dict = {}
-    try:
-        digest = build_digest(d, prefer=args.source)
-        videos = generate_yesterday_point(
-            digest,
-            output_dir,
-            skip_tours=frozenset(already_done),
-            diagnostics=diagnostics,
-        )
-    except Exception as exc:  # noqa: BLE001
-        (output_dir / "manifest.json").write_text(
-            json.dumps(
-                {
-                    "status": "failed",
-                    "project": "yesterday-point",
-                    "published_for": d.isoformat(),
-                    "error": str(exc),
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-        console.print(f"[red]昨日好球生成失败：{exc}[/red]")
-        return 1
-
-    # The reason must state what actually happened: with the switch off no
-    # source was ever queried, and claiming "已查询各源" would be a false
-    # audit trail.
-    if diagnostics.get("enabled") is False:
-        skip_reason = (
-            "TENNISLIVE_YESTERDAY_POINT 开关未开启，本期未查询任何官方视频源；"
-            "在工作流或环境变量中设为 on 后才会开始检索。"
-        )
-    else:
-        skip_reason = (
-            "已查询 Tennis TV Hot Shots、ATP/WTA 官方 YouTube、"
-            "WTA 官网及四大满贯官方频道；仍没有同时满足昨日赛事、"
-            "官方单分或集锦标签、完整回合和日期匹配的视频。"
-            "若 Tennis TV 卡片为 freemium，请配置 TENNISTV_JWT；"
-            "Action 不会读取浏览器登录态。本期会在下一次重试班次继续检索。"
-        )
-    tour_status: dict[str, str] = {}
-    for tour in ("ATP", "WTA"):
-        if tour in already_done:
-            tour_status[tour] = "pass"
-            console.print(f"[green]{tour} 昨日好球此前已生成，本次不重复生成/推送[/green]")
-            continue
-        if tour in videos:
-            tour_status[tour] = "pass"
-            console.print(f"[green]{tour} 昨日好球已生成：{videos[tour]}[/green]")
-            continue
-        tour_dir = output_dir / tour.lower()
-        tour_dir.mkdir(parents=True, exist_ok=True)
-        (tour_dir / "manifest.json").write_text(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "project": "yesterday-point",
-                    "tour": tour,
-                    "published_for": d.isoformat(),
-                    "reason": skip_reason,
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-        # skip 也要把诊断落盘：每路 resolver 试了什么、为什么失败。这份
-        # skip.json 会被工作流提交回仓库，避免"视频静默消失"只能翻已过期
-        # 的 Actions 日志。
-        (tour_dir / "skip.json").write_text(
-            json.dumps(
-                {
-                    "status": "skipped",
-                    "generated_at": datetime.now(timezone.utc).isoformat(),
-                    "project": "yesterday-point",
-                    "tour": tour,
-                    "published_for": d.isoformat(),
-                    "switch_enabled": diagnostics.get("enabled"),
-                    "reason": skip_reason,
-                    "resolver_attempts": diagnostics.get("resolver_attempts", []),
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-        tour_status[tour] = "skipped"
-        console.print(f"[yellow]{tour} 昨日好球跳过：本期没有可验证的官方完整回合[/yellow]")
-
-    (output_dir / "manifest.json").write_text(
-        json.dumps(
-            {
-                "status": "pass" if (videos or already_done) else "skipped",
-                "project": "yesterday-point",
-                "published_for": d.isoformat(),
-                "tours": tour_status,
-                "fresh_tours": sorted(videos),
-                # Per-source discovery ledger in one place: which official
-                # source fetched how many clips, how many matched yesterday,
-                # and each resolver's outcome. Lets a skip run separate a real
-                # no-material day (fetched N, matched 0) from a broken source
-                # (fetched 0 / error), and is what the workflow surfaces to the
-                # Actions summary.
-                "resolver_attempts": diagnostics.get("resolver_attempts", []),
-            },
-            ensure_ascii=False,
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
-    attempts = diagnostics.get("resolver_attempts", [])
-    if attempts and not videos and not already_done:
-        for item in attempts:
-            detail = item.get("note") or item.get("error") or item.get("status", "")
-            console.print(
-                f"[dim]· {item.get('source', item.get('resolver', ''))}："
-                f"抓取{item.get('fetched', '-')}/命中{item.get('matched', '-')}"
-                f"（{detail}）[/dim]"
-            )
-    return 0
-
-
-# ---------- 闪发（即时战报） ----------
-
-
 def cmd_coverage(args) -> int:
     """只出「数据源与赛事覆盖」这一张报告，不生成任何内容包。
 
@@ -1226,11 +1068,6 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--rate", default=None, help="语速，如 +22%%（默认 +22%%）")
     sp.add_argument("--pitch", default=None, help="音高，如 +2Hz（默认 +0Hz）")
 
-    sp = sub.add_parser("point", help="生成独立的昨日好球完整回合视频包")
-    sp.add_argument("--date", default="today", help="发布日期（北京时间，默认 today）")
-    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
-    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先赛果数据源")
-
     sp = sub.add_parser("video", help="中文化本地且已授权的视频素材")
     sp.add_argument("--video", required=True, help="本地视频文件；不接受 URL")
     sp.add_argument("--subtitles", required=True, help="本地原文 SRT 字幕")
@@ -1292,8 +1129,6 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_flash_radar(args)
     if args.command == "explainer":
         return cmd_explainer(args)
-    if args.command == "point":
-        return cmd_yesterday_point(args)
     if args.command == "video":
         return cmd_video(args)
     if args.command == "publish":
