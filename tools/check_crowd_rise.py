@@ -26,6 +26,16 @@ import sys
 from pathlib import Path
 
 
+def ffmpeg_exe() -> str:
+    """ffmpeg 的可执行文件。**别假设 runner 自带**——我假设过一次，预检当场
+    打脸。`imageio-ffmpeg` 会带一个便携版，仓库里其他几条线也是这么解的。"""
+    try:
+        import imageio_ffmpeg  # noqa: PLC0415
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:  # noqa: BLE001
+        return "ffmpeg"
+
+
 def preflight() -> None:
     """**开跑前先验依赖，别下完 100 MB 再报 ImportError。**
 
@@ -37,9 +47,9 @@ def preflight() -> None:
     except ImportError:
         missing.append("numpy（pip install numpy）")
     try:
-        subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
+        subprocess.run([ffmpeg_exe(), "-version"], capture_output=True, check=True)
     except Exception:  # noqa: BLE001
-        missing.append("ffmpeg（apt-get install ffmpeg）")
+        missing.append("ffmpeg（pip install imageio-ffmpeg，或 apt-get install ffmpeg）")
     if missing:
         raise SystemExit("缺依赖，这条验不了（不是片子的问题）：\n  "
                          + "\n  ".join(missing))
@@ -50,7 +60,7 @@ def envelope(media: Path, sr: int = 8000, hop: float = 0.02):
     import numpy as np  # noqa: PLC0415
 
     out = subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(media), "-f", "s16le",
+        [ffmpeg_exe(), "-v", "error", "-i", str(media), "-f", "s16le",
          "-ac", "1", "-ar", str(sr), "-"],
         capture_output=True, check=True).stdout
     a = np.frombuffer(out, dtype="<i2").astype("float32") / 32768.0

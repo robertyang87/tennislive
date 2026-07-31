@@ -63,7 +63,7 @@ jobs:
         run: |
           # numpy 是算能量包络要的；ffmpeg runner 自带。
           # 「加能力要同时改三处」——这条线上漏依赖已经是第四次了。
-          pip install -q yt-dlp numpy
+          pip install -q yt-dlp numpy imageio-ffmpeg
           if [ -n "$YT_COOKIES_TXT" ]; then
             printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
             echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
