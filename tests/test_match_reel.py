@@ -528,14 +528,23 @@ def test_封面只有海报模板一条路():
     import pytest  # noqa: PLC0415
 
     reel = _reel()
-    source = Path(reel.__file__).read_text(encoding="utf-8")
     assert not hasattr(reel, "_render_cover_html"), "单图封面那条路还在"
-    body = source.split("def build_cover")[1].split("\ndef ")[0]
-    assert "frame_at" not in body, "build_cover 里还留着抽帧的兜底"
-    # 模板的**单格**仍可显式给 frame_at（某人一张照片都找不到时的最后一招），
-    # 但那是 spec 里写死的选择，不是自动降级——差别就在这儿
+
+    # **判据是「缺图会不会报错」，不是「源码里有没有 frame_at 这几个字」。**
+    #
+    # 原来这儿写的是 `assert "frame_at" not in body`——字符串粗判。2026-07-31
+    # 账号所有者把抽帧放回来了（「或者从比赛中抠大图，要情绪饱满的」），我把这
+    # 句写进报错文案当出路，那条断言立刻红——**它把自己注释里明确允许的情况
+    # 也拦了**。这和「钩子里不许出现比分」是同一个毛病：判据比它要守的规矩宽。
+    #
+    # 要守的性质从来只有一条：**缺图必须报错，不能自动退回抽帧**。单格在 spec
+    # 里显式写 `frame_at` 是人做的选择，不是降级——差别就在「谁决定的」。
     with pytest.raises(reel.ReelError, match="扩检索源"):
-        reel.build_cover(Path("x.mp4"), {"cover": {"hook": "无图"}},
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": {"hook": "无图"}},
+                         Path("y.mp4"), 1920)
+    # 报错要把出路说全：先扩源，四类都没有才抓帧
+    with pytest.raises(reel.ReelError, match="frame_at"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": {"hook": "无图"}},
                          Path("y.mp4"), 1920)
 
 

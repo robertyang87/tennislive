@@ -773,7 +773,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     return dest
 
 
-def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
+def build_cover(sources: dict[str, Path], primary: str, spec: dict,
+                dest: Path, source_w: int) -> Path:
     """封面：**一律走「赛场之上」的固定海报模板**（`tools/versus_poster.py`）。
 
     账号所有者定的：「以后『赛场之上』封面海报都用新的模板方案。」所以这里
@@ -792,14 +793,17 @@ def build_cover(source: Path, spec: dict, dest: Path, source_w: int) -> Path:
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
             "要两个人各一张**本场**的真实照片。\n"
-            "找不到就去扩检索源（赛事官方图库 → 协会/赛事新闻页 → 新闻站/图片社 "
-            "→ Commons/Flickr），别退回从视频里抽帧——那条路已经删了。\n"
+            "先扩检索源（赛事官方图库 → 协会/赛事新闻页 → 新闻站/图片社 → "
+            "Commons/Flickr）；**四类源都拿不到本场的实拍，就从本场源片抓一帧**"
+            "（`frame_at`，账号所有者 2026-07-31 定：「或者从比赛中抠大图，"
+            "要情绪饱满的」）。抓帧要挑情绪最满的那一格，别挑随便一个回合。\n"
             "格式：cover.versus = {split, names: [上, 下], "
             "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}")
-    return build_versus_poster(source, cover, dest)
+    return build_versus_poster(sources, primary, cover, dest)
 
 
-def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
+def build_versus_poster(sources: dict[str, Path], primary: str,
+                        cover: dict, dest: Path) -> Path:
     """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
 
     **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
@@ -818,15 +822,23 @@ def build_versus_poster(source: Path, cover: dict, dest: Path) -> Path:
     layout = str(cover.get("layout", "cutout"))
 
     def _grab(spot: dict, tag: str) -> str:
-        """`image` 直接用，`frame_at` 从源片抓一帧。抓出来的不进仓库。"""
+        """`image` 直接用，`frame_at` 从源片抓一帧。抓出来的不进仓库。
+
+        多源之后 `frame_at` 要说清楚**抓哪条源**（`"source": "键"`，默认主源）。
+        不说清楚就会从主源的同一时刻抓——那是另一场比赛的画面，而且**不报错**。
+        """
         if spot.get("image"):
             if not Path(spot["image"]).is_file():
                 raise ReelError(f"VS 拼接的 {tag} 找不到图：{spot['image']}")
             return str(spot["image"])
+        key = str(spot.get("source", primary))
+        if key not in sources:
+            raise ReelError(
+                f"VS 的 {tag} 要从源 {key!r} 抓帧，但 spec 里声明的是 {sorted(sources)}")
         grab = dest.parent / f"_versus_{tag}.jpg"
-        with stage(f"VS 抓帧 {tag}"):
+        with stage(f"VS 抓帧 {tag}（源 {key or '主'}）"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-ss", f"{float(spot['frame_at']):.2f}", "-i", str(source),
+                "-ss", f"{float(spot['frame_at']):.2f}", "-i", str(sources[key]),
                 "-frames:v", "1", "-q:v", "2", str(grab))
         return str(grab)
 
@@ -1055,7 +1067,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
 
-    parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
+    parts: list[Path] = [build_cover(sources, primary, spec,
+                                 outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
