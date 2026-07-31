@@ -297,56 +297,6 @@ def test_content_command_generates_complete_preview_package(tmp_path, monkeypatc
     assert facts["cover"]["main"] == item["cover_headline"]
 
 
-def test_digest_cli_fatal_returns_two_without_advancing_state(tmp_path, monkeypatch):
-    from tennislive.digest import Digest
-
-    today = date(2026, 7, 20)
-    invalid = make_match(home_name="?", match_id="invalid-name")
-    digest = Digest(today=today, results=[invalid], source="test")
-    state_calls: list[str] = []
-
-    monkeypatch.setattr(cli, "build_digest", lambda *args, **kwargs: digest)
-    monkeypatch.setattr(
-        "tennislive.sources.sportradar.SportradarOfficialStats.from_env",
-        lambda: None,
-    )
-    monkeypatch.setattr(
-        "tennislive.render.ai_editorial.enrich_with_github_models",
-        lambda _digest: SimpleNamespace(status="disabled in test"),
-    )
-    monkeypatch.setattr(
-        "tennislive.render.tournament_story.mark_story_used",
-        lambda *args, **kwargs: state_calls.append("story"),
-    )
-    monkeypatch.setattr(
-        "tennislive.render.tournament_story.record_story_wishlist",
-        lambda *args, **kwargs: state_calls.append("wishlist"),
-    )
-    monkeypatch.setattr(
-        "tennislive.render.xiaohongshu.record_quiz",
-        lambda *args, **kwargs: state_calls.append("quiz"),
-    )
-    outdir = tmp_path / "output"
-    result = cli.main(
-        [
-            "digest",
-            "--date",
-            today.isoformat(),
-            "--outdir",
-            str(outdir),
-            "--no-cards",
-        ]
-    )
-
-    package = outdir / today.isoformat()
-    assert result == 2
-    assert "[FATAL] 存在空球员名" in (package / "qa.txt").read_text("utf-8")
-    assert (package / "cover_facts.json").exists()
-    assert (package / "pinned_comment.txt").exists()
-    assert (outdir / "profile" / "background.png").exists()
-    assert state_calls == []
-
-
 def test_knowledge_adhoc_rejects_unknown_slug_without_touching_network(tmp_path, monkeypatch):
     """未知 slug 必须在联网抓取赛程之前就报错退出——知识帖只能从人工核验
     过的选题池里选，不支持凭空生成，所以这里不该给 build_digest 兜底。"""

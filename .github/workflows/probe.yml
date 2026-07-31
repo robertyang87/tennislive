@@ -47,13 +47,12 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 生成无图片探测包
+      # 原来这一步是 `tennislive digest --no-cards`——**为了一张覆盖率报告，
+      # 跑一整套日报**。日报 2026-07-31 停产，覆盖率报告抽成了自己的命令。
+      - name: 出数据源与赛事覆盖报告
         shell: bash
         run: |
-          tennislive digest --date today --outdir probe-output --no-cards
-          REPORT=$(find probe-output -name coverage.txt -print -quit)
-          echo "===== 数据源与赛事覆盖 ====="
-          cat "$REPORT"
+          tennislive coverage --date today --outdir probe-output
 
       - name: 上传探测报告
         uses: actions/upload-artifact@v4

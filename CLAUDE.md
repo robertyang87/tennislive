@@ -305,6 +305,49 @@ checkout 都要一分半上下**——量过的两个：daily `1:31`（整条 ru
 knowledge-adhoc / news-radar / push-existing / video-localize / voice-sample /
 yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上。
 
+### `tennislive digest` 删了；覆盖率报告抽成自己的命令
+
+`probe.yml` 原来跑 `tennislive digest --no-cards`，**只为拿一张 coverage.txt**
+——为了一张覆盖率报告跑一整套日报。日报停产之后：
+
+- `cmd_digest`（382 行）删掉
+- 新增 `tennislive coverage`：抓一天数据、写一张 `coverage.txt`，就这些
+- `probe.yml` 改用它
+
+⚠️ **卡片渲染器删不掉，别再去试。** `render/cards.py`、`render/webcards.py`
+被知识帖、解说片、内容雷达一起用着（`content_package` / `knowledge` /
+`flashcard` / `video.explainer` 都 import 它们）。日报是它们的一个调用方，
+不是它们的主人。
+
+### 删历史产物也要按栏目分——我差点报错一个数量级
+
+账号所有者说「删掉吧」时，我给的选项写着「仓库里 **1.33 GB** 历史日报产物」。
+**错得离谱**。真按栏目拆开：
+
+| 停产、删掉 | | 还在用、不能删 | |
+|---|---|---|---|
+| 日报本体（含 cards / video） | 134.8 MB | 解说片 | 576 MB |
+| knowledge（日报带的知识帖） | 8.5 MB | 成片 | 440 MB |
+| schedule（今日赛程包） | 3.4 MB | grand-slam ×2 | 132 MB |
+| flash（即时战报） | 1.7 MB | 昨日一分 / 内容雷达 queue / 场外快讯 | 56 MB |
+| **小计** | **148.4 MB** | | **1.18 GB** |
+
+**为什么活栏目一个都不能删**：解说片和成片的链接走 jsDelivr / raw 指向仓库里
+这些文件，而那些链接**已经发在微信消息里了**——删文件就是把老消息变成死链，
+而消息发出去收不回来。
+
+两条配套：
+
+- **删文件不会让 `.git` 变小**。1.77 GiB 的历史 blob 还在，checkout 慢那个
+  问题早就用稀疏检出解决了。所以这次删除的收益是「仓库干净」，不是性能
+- **判据钉「活栏目还在」，不是「output 变小了」**。粒度是整条线：反向验证过，
+  删掉 reel 的一个 mp4 不红，把 reel 整个目录拿掉才红——它拦的是「一次清理
+  把整条线扫了」
+
+**同一天第五次「判据扫得太宽」**：第一版用 `"/cards/" in path` 找日报卡片，
+把 `output/<date>/queue/<pick>/cards/`（内容雷达自己的卡片，活的）一起扫了。
+改成锚在日期目录正下方 `^output/\d{4}-\d\d-\d\d/cards/`。
+
 ### 查询留着，卡片图和推送不留
 
 账号所有者：「**可以用命令查赛果，但没必要做卡片图然后推送微信了**」。
