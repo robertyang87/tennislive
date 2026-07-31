@@ -106,6 +106,9 @@ FPS_EXPR = "30"     # 传给 ffmpeg 的那份，保留分数形式（29.97 是 3
 # 的提示只打印，从来没真的换算过（注释和行为对不上，跑起来才炸）。
 CROP_H = 1080
 CROP_W = 810
+# 裁切窗口在源片里的纵向落点。横幅源片恒为 0（窗口高度就是源片高度，没得挪）；
+# **竖版源片才用得上**——那种源片宽度顶满、要在高度上取一段，见 `resolve_crop`。
+CROP_Y = 0
 # **成片是 3:4（1080×1440），不是 9:16。** 定这个画幅的理由是「尽可能多保住主体」：
 #
 # - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里会被裁掉上下两条，
@@ -222,15 +225,25 @@ def _has_audio(path: Path) -> bool:
     return bool(out.strip())
 
 
-def resolve_crop(source_w: int, source_h: int) -> None:
-    """按源片实际高度定 3:4 的裁切窗口，太小的源片直接拒掉。
+def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
+    """在源片里取**最大的 3:4 窗口**，太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
     看起来一切正常，直到 `crop=810:1080` 撞上 640×360 的源片才炸在第一段切片上
     （run 30412173035）。所以这里既换算、也把不合格的源片挡在开跑前，
     别等渲了一半才发现。
+
+    **两种朝向都要认。** 原来只按高度算，隐含「源片一定比 3:4 宽」——
+    转播集锦确实都是 16:9。但 Tennis TV 的**竖版短片**是 1180×2114，
+    照旧算出来 `CROP_W = 1584 > 1180`，`crop` 直接被 ffmpeg 拒掉。
+    竖版源片要反过来：宽度顶满，在高度上取一段。
+
+    `crop_y` 是竖版源片的纵向落点，spec 里给。**不给就居中，而居中往往是错的**
+    ——手机录屏的顶上压着进度条、标题、关闭叉和台标，底下压着上滑箭头，
+    居中会把台标留在画面里。黄泽林那条量出来是 345（渲了 310/345/380 三档比
+    出来的：310 台标还在、记分条被切掉一行，380 白丢 35px）。
     """
-    global CROP_H, CROP_W
+    global CROP_H, CROP_W, CROP_Y
     if source_h < MIN_SOURCE_H:
         raise ReelError(
             f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {MIN_SOURCE_H}）。"
@@ -238,9 +251,23 @@ def resolve_crop(source_w: int, source_h: int) -> None:
             "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
             "或者换一个能拿到 720p 以上的源。"
         )
-    CROP_H = source_h // 2 * 2
-    CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
-    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}")
+    if source_w * 4 >= source_h * 3:          # 比 3:4 宽：高度顶满
+        CROP_H = source_h // 2 * 2
+        CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
+        CROP_Y = 0
+        shape = "横幅"
+    else:                                      # 比 3:4 竖：宽度顶满
+        CROP_W = source_w // 2 * 2
+        CROP_H = int(round(CROP_W * 4 / 3)) // 2 * 2
+        default_y = (source_h - CROP_H) // 2 // 2 * 2
+        CROP_Y = default_y if crop_y is None else int(crop_y) // 2 * 2
+        if CROP_Y < 0 or CROP_Y + CROP_H > source_h:
+            raise ReelError(
+                f"crop_y={crop_y} 超出源片：窗口 {CROP_W}×{CROP_H} 放在 y={CROP_Y}，"
+                f"下沿 {CROP_Y + CROP_H} 超过源片高度 {source_h}。")
+        shape = f"竖版，纵向落点 y={CROP_Y}" + (
+            "（居中，spec 没给 crop_y）" if crop_y is None else "")
+    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}（{shape}）")
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
@@ -708,7 +735,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
         else:
-            chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
+            chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
@@ -1039,7 +1066,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
-    resolve_crop(source_w, source_h)
+    resolve_crop(source_w, source_h, spec.get("crop_y"))
+    portrait = source_w * 4 < source_h * 3
 
     # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
     # 广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
@@ -1054,6 +1082,17 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
+
+    # 竖版源片的窗口就是整幅宽度，横向一个像素都挪不动——`track` 和 `cx` 在
+    # 这里没有意义。**不吭声地忽略掉是最坏的做法**（spec 里写着 track，成片
+    # 却纹丝不动，看起来像跟踪失效），所以直接报错，让人去删掉那两个字段。
+    if portrait:
+        bad = [i for i, seg in enumerate(segments) if seg.track or seg.cx is not None]
+        if bad:
+            raise ReelError(
+                f"源片是竖版（{source_w}×{source_h}），裁切窗口就是整幅宽度，"
+                f"横摇和 cx 都无处可摇。请删掉第 {[i + 1 for i in bad]} 段的 "
+                "`track` / `cx`；要挪画面只能用 spec 顶层的 `crop_y`（纵向）。")
 
     # 缺 cv2 要**在这儿**报，不要等到第一段切片。跟踪合进来的那次 render 就是
     # 下完 64MB 源片、合完原声、渲完封面之后才死在 `import cv2` 上——和当初
