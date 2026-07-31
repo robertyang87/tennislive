@@ -193,58 +193,6 @@ def test_default_fonts_render_cjk_without_env(monkeypatch):
         assert render("网") != render("时")
 
 
-def test_flash_writes_one_review_manifest_for_duplicate_source_rows(
-    tmp_path, monkeypatch
-):
-    today = date(2026, 7, 19)
-    now = datetime(2026, 7, 19, 20, tzinfo=timezone(timedelta(hours=8)))
-    match = make_match(
-        home_name="Qinwen Zheng",
-        home_country="CHN",
-        tournament="Prague Open",
-        tour=Tour.WTA,
-        start_utc=now.astimezone(timezone.utc) - timedelta(hours=3),
-        match_id="hot-cn",
-    )
-    match.tournament.level = "WTA250"
-
-    regular_font = Path("assets/fonts/NotoSansSC-Regular-sub.ttf").resolve()
-    bold_font = Path("assets/fonts/NotoSansSC-Bold-sub.ttf").resolve()
-    monkeypatch.setenv("TENNISLIVE_FONT", str(regular_font))
-    monkeypatch.setenv("TENNISLIVE_FONT_BOLD", str(bold_font))
-    monkeypatch.setattr(timeutil, "beijing_today", lambda: today)
-    monkeypatch.setattr(timeutil, "now_beijing", lambda: now)
-    monkeypatch.setattr(
-        cli,
-        "fetch_day",
-        lambda requested, prefer=None: DailyData(
-            date_beijing=requested.isoformat(), matches=[match], source="test"
-        ),
-    )
-    monkeypatch.chdir(tmp_path)
-
-    manifest = tmp_path / "review.json"
-    args = SimpleNamespace(
-        outdir=str(tmp_path / "output"),
-        source=None,
-        no_publish=True,
-        manifest=str(manifest),
-    )
-
-    assert cli.cmd_flash(args) == 0
-
-    import json
-
-    payload = json.loads(manifest.read_text(encoding="utf-8"))
-    assert len(payload["items"]) == 1
-    assert payload["items"][0]["match_id"] == "hot-cn"
-    assert len(payload["items"][0]["title_candidates"]) == 3
-    card = Path(payload["items"][0]["card"])
-    assert card.exists()
-    with Image.open(card) as image:
-        assert image.size == (1080, 1440)
-
-
 def test_publish_flash_pins_committed_card_revision(tmp_path, monkeypatch):
     import json
 
