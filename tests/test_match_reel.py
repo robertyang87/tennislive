@@ -2067,9 +2067,14 @@ def test_不碰产物的工作流不许把output拉下来():
             assert "git sparse-checkout add" not in body, (
                 f"{path.name} 不写产物，不该 add 任何 output 目录")
         elif sparse:
-            assert "git sparse-checkout add" in body, (
-                f"{path.name} 做了稀疏检出却没把自己那一格 add 回来——"
-                "`git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸。")
+            # 把产物那一格弄进 cone 有两种写法，都算数：
+            # - 目录要按日期／slug 算 → `git sparse-checkout add "$OUT_DIR"`
+            # - 目录是固定的（`output/voice-samples`）→ 直接列进 sparse-checkout
+            listed_statically = re.search(
+                r"\n\s+output/\S+", block[block.index("sparse-checkout:"):])
+            assert "git sparse-checkout add" in body or listed_statically, (
+                f"{path.name} 做了稀疏检出却没把自己那一格弄进 cone——"
+                "`git add` 只会警告并退出 0，产物静默丢掉，而那是跑完之后才发现。")
 
         # 排除的必须只有 output：assets 155 MB 看着也不小，但渲染真要读它
         if sparse:
@@ -2129,3 +2134,64 @@ def test_测试里不许import没声明的包():
         "（扫工作流按文本切，见 _checkout_block）。")
     # 反过来也验一下：这个判据真的认得出 stdlib 和本地模块，不是恒真
     assert {"json", "pathlib"} <= allowed and "push_reel" in allowed
+
+
+def test_稀疏检出之后git_add要带sparse():
+    """**裸的 `git add output/` 在稀疏模式下只警告、退出码 0。**
+
+    合成仓库上验过：cone 外的路径，`git add output/` 打一句
+    "The following paths ... will not be updated in the index"，然后**成功退出**。
+    接着 `git diff --cached --quiet` 说「没有变化」，工作流打印「没有新内容」
+    正常结束——**这一轮的产物就这么静默丢了**。
+
+    和「兜底出事的时候不吭声」是同一种病，只是这次兜底的是 git 自己。
+    所以凡是整棵 `git add output/` 的，必须带 `--sparse`；按目录 add 的
+    （`git add "$OUTDIR"`）靠上一条测试保证那一格在 cone 里。
+    """
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        if "sparse-checkout:" not in body:
+            continue
+        for line in body.splitlines():
+            stripped = line.strip()
+            if not stripped.startswith("git add "):
+                continue
+            # 只管整棵 output/ 那种；`git add "$OUTDIR"` 由稀疏范围保证
+            if re.search(r"git add\s+(--sparse\s+)?output/\s", stripped + " "):
+                assert "--sparse" in stripped, (
+                    f"{path.name}：`{stripped}` 在稀疏模式下什么也不会暂存，"
+                    "而且退出码是 0——产物会静默丢掉。要带 --sparse。")
+
+
+def test_读产物的步骤不能排在sparse_add前面():
+    """**稀疏检出把 `output/` 挡在外面之后，「读它」和「它不存在」长得一模一样。**
+
+    `daily.yml` 的幂等检查（备份班次用）就踩在这上面：它在 checkout 之后立刻
+    `[ -f "$OUT_DIR/digest.json" ]` 判断今天是不是已经生成过。目录不在工作区，
+    这些判断**全是假**，`CONTENT_READY` 永远 false——幂等检查永远不跳过，
+    备份班次会把当天内容重新生成、微信**重复推一遍**。而它不报错，
+    看起来只是「今天又跑了一次」。
+
+    所以这条按行号盯顺序：任何读 `$OUT_DIR` / `output/` 的判断，都必须排在
+    把它加进稀疏范围之后。判据是行号，不是「有没有」——「只测行为拦不住
+    位置错」这一课在复制页那道闸上已经上过一次。
+    """
+    reads = re.compile(r'\$\{?(OUT_DIR|OUTDIR|RADAR_DIR)\b|(?<![\w-])output/')
+    tests = re.compile(r'\[\s*-[fdse]\s|test\s+-[fdse]\s')
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        text = path.read_text(encoding="utf-8")
+        if "sparse-checkout:" not in text:
+            continue
+        code = [(i, ln) for i, ln in enumerate(text.splitlines())
+                if not ln.lstrip().startswith("#")]
+        # 固定目录直接列进 cone 的，从第一行起就在范围内
+        if any(ln.strip().startswith("output/") for _, ln in code[:45]):
+            continue
+        add_at = next((i for i, ln in code if "sparse-checkout add" in ln), None)
+        if add_at is None:
+            continue
+        early = [(i + 1, ln.strip()) for i, ln in code
+                 if i < add_at and reads.search(ln) and tests.search(ln)]
+        assert not early, (
+            f"{path.name} 在把产物目录加进稀疏范围之前就去读它了：{early[:2]}\n"
+            "目录不在工作区，这些判断全是假的，而且不报错。")

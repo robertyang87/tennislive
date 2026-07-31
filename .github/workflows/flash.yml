@@ -31,6 +31,21 @@ jobs:
       TENNISLIVE_FONT_BOLD: assets/fonts/NotoSansSC-Bold-sub.ttf
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** 这条一天跑 72 趟，而它每趟只干 3 秒的活：
+          # run 30643007873 全程 3 分 44 秒，其中 checkout 占 **3 分 02 秒（81%）**，
+          # 「自动选题并生成」只用了 3 秒。HEAD 上 output/ 就有 1.36 GB，
+          # 而这条只写当天那一格。
+          #
+          # 本次要写的那一格在「算出今天的目录」那一步 add 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -49,6 +64,15 @@ jobs:
       - name: 安装 Chromium
         run: python -m playwright install --with-deps chromium
 
+      - name: 算出今天的目录并放进稀疏范围
+        run: |
+          # 日期用 `beijing_today()` 算，和 `cmd_content` 写 `output/<today>/queue/`
+          # 用的是**同一个函数**——拿 shell 的 `date` 另算一次，跨零点那一趟就会
+          # 对不上，而对不上的表现是「git add 什么也没暂存」，不报错。
+          DATE=$(python -c "from tennislive.timeutil import beijing_today; print(beijing_today())")
+          git sparse-checkout add "output/$DATE"
+          echo "今天是 $DATE，稀疏范围：$(git sparse-checkout list | tr '\n' ' ')"
+
       - name: 自动选题并生成完整内容包
         id: generate
         run: |
@@ -64,7 +88,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/ data/
+          # **必须带 `--sparse`。** 稀疏检出之后，裸的 `git add output/` 对
+          # cone 外的路径只打一句警告（"will not be updated in the index"）
+          # 然后**退出码 0**——接着 `git diff --cached --quiet` 说「没有新内容」，
+          # 这一轮的产物就这么静默丢了。合成仓库上验过两种写法。
+          git add --sparse output/ data/
           if git diff --cached --quiet; then
             echo "没有新内容"
           else
