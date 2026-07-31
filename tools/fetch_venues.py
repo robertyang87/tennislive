@@ -177,6 +177,10 @@ VENUES = [
     ("montpellier-centre-court.jpg", None, None),
     # 巴塞罗那：curl 403 但 Playwright 渲染能过（按 UA 挡的）；ATP Sitecore
     ("barcelona-centre-court.jpg", None, None),
+    # 多哈：赛事官网全部不通，走 WTA 赛事页 hero（photoresources.wtatennis.com）；WTA1000 与 ATP500 共用
+    ("doha-centre-court.jpg", None, None),
+    # 印第安维尔斯：官网是 DatoCMS、/media 页没有场馆图，走 WTA 赛事页 hero；Commons 那张是 Pacific Life Open 年代的，别用
+    ("indianwells-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -322,6 +326,18 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "indianwells-centre-court.jpg": {
+        "title": "印第安维尔斯网球花园 1 号球场 · 满场，场地前场刷着 INDIAN WELLS",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1b371b4-11cf-4c25-99dc-a3b8bcaa06e4/609-BNP-Paribas-Open.jpg",
+    },
+    "doha-centre-court.jpg": {
+        "title": "哈利法国际网球场中心球场 · 夜场满场，背景是多哈天际线",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/16/31b8cefd-8f3d-4180-949d-be019385cdd6/1003_bg_Qatar_Doha-min.jpg",
+    },
     "barcelona-centre-court.jpg": {
         "title": "皇家巴塞罗那网球俱乐部 拉法·纳达尔球场 · 红土满场",
         "license": "unverified · 赛事官方媒体库",
