@@ -25,7 +25,6 @@ tennislive content                  # 自动选题并生成完整待发布内容
 
 ⚠️ **日报（`daily.yml`）已于 2026-07-31 停产并删除**——形式落后、任务重且没收益。
 下面这段留作历史说明；现在还在跑的自动内容是 `flash.yml`（内容雷达）、
-`yesterday-point.yml`（昨日一分）、`news-radar.yml`，以及手动触发的
 `match-reel.yml`（赛场之上 / 网球有故事）和 `explainer.yml`（知识解说视频）。
 
 <details><summary>已停产：每日晨报（历史说明）</summary>

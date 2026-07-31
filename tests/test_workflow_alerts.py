@@ -5,7 +5,6 @@
 
 （另一条「daily.yml 把视频开关硬编码成 'off'」随日报 2026-07-31 停产一起删了。）
 
-yesterday-point.yml 的告警由独立改造负责，不在本文件覆盖。
 """
 
 from pathlib import Path

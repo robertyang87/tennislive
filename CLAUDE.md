@@ -327,26 +327,38 @@ yesterday-point。daily 那条最值——它一天跑四趟还挂在 push 上�
 **判频次要看它是产出线还是告警线。** 数据源健康 4 次/天从来「没动静」，
 按产出量判它会被误杀——告警线的正常状态就是安静。
 
-### 昨日一分：66 趟出 3 条，根因在源不在频次
+### 昨日一分整条拿掉（2026-07-31）——先查根因再决定
 
-skip 诊断里写得清清楚楚（`output/<date>/yesterday-point/*/skip.json`）：
+账号所有者：「昨日一分全功能拿掉」。**停之前先查了根因，不是频次问题。**
+skip 诊断（`output/<date>/yesterday-point/*/skip.json`）写得很清楚：
 
     Tennis TV Hot Shots   empty   抓到 60 命中 0（有一天命中 2，但都是 freemium，缺 TENNISTV_JWT）
-    WTA 官方 YouTube       error
-    ATP 官方 YouTube       error
-    Tennis TV YouTube     error
-    澳网/法网/温网 官方频道     error
-    WTA 官网 / 美网官方      empty   抓到 4 / 15，命中 0
+    WTA / ATP / Tennis TV 官方 YouTube    error
+    澳网 / 法网 / 温网 官方频道              error
+    WTA 官网 / 美网官方                    empty   抓到 4 / 15，命中 0
 
 **十个检索源里五个直接 error，全是 YouTube 系**——和 match-reel 那条
 「YouTube 对机房 IP 一律 Sign in to confirm you're not a bot」是同一个病，
-而 match-reel 已经有解法（bgutil PO token provider + `YT_COOKIES_TXT`），
-这条线一样都没接。唯一能拿到候选的 Tennis TV 又卡在 `TENNISTV_JWT` 上。
+而 match-reel 早有解法（bgutil PO token provider + `YT_COOKIES_TXT`），
+这条线一样都没接。结果是 **11 天 66 趟只出 3 条片**。
 
-所以**降频救不了它，接源才能**。三条出路按代价排：
-配 `TENNISTV_JWT` → 把 match-reel 那套 PO token/cookie 搬过来 → 停掉这条线。
-⚠️ 别顺手降频：skip 诊断写着「本期会在下一次重试班次继续检索」，
-那 6 趟是**重试**，降频会把本来就低的命中率再砍一刀。
+出路本来有三条（配 `TENNISTV_JWT` → 搬 match-reel 那套 → 停掉），
+账号所有者选了停。**记这一段是因为：如果只看「6 次/天产出很低」就去降频，
+方向是反的**——那 6 趟是重试班次，降频只会把命中率再削一刀。
+**低产出要先分清是「跑得不够」还是「源就不通」。**
+
+删掉的：工作流、`tennislive point`、`video/daily_point.py`（1937 行）、
+`tests/test_daily_point.py`（57 条）、`test_cli` 里 3 条、历史产物 45 个文件
+（含 3 条已推送过的成片——老消息里的链接会变死链，这是停产的代价）。
+
+**没删的**：`video/pipeline.py` 的 `render_ass` 和 `video/subtitle_text.py`
+——视频本地化还在用。又一次「停的是栏目，不是底下那套工具」。
+
+⚠️ **一条测试的自检替我抓到了连带损伤**：`test_栏目名不能只活在代码里`
+扫的是 `_COLUMN_LABEL` 常量，而它只存在于昨日一分那条线，删完扫描结果为空——
+它自己那句 `assert labels, "判据失效了"` 当场报错。**这就是「判据自己也要有
+判据」的价值**：主语没了它出声，而不是变成一条恒真的绿灯。现在改扫竖版短片
+每条 spec 的 `cover.eyebrow`（还活着的栏目名）。
 
 ### `tennislive digest` 删了；覆盖率报告抽成自己的命令
 
