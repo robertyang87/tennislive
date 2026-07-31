@@ -2546,3 +2546,47 @@ def test_昨日一分这条线不许回来():
     tracked = subprocess.run(["git", "ls-files", "--", "output"],
                              capture_output=True, text=True, check=True).stdout
     assert "yesterday-point" not in tracked, "昨日一分的历史产物还在"
+
+
+def test_并行装依赖要分别检两边的退出码():
+    """apt（42s）和 pip（25s）装的东西互不相干，串起来是白等。丢到后台并行
+    之后取长的那个，量出来 1:07 → 0:44 上下。
+
+    ⚠️ **`wait` 不带参数只返回最后一个后台任务的状态。** apt 挂了而 pip 成功，
+    这一步照样绿，然后 render 在第 5 分钟死在「找不到 ffmpeg」——**又一次
+    「兜底出事的时候不吭声」**。所以必须按 PID 分别 wait，谁挂了报谁。
+
+    这条测的是那个模式，不是某一行字：只要还并行装，就得两个 PID 都 wait。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    step = body[body.index("- name: 装系统依赖和 Python 依赖"):]
+    step = step.split("\n      - ")[0]
+    assert step.count("&\n") >= 2 or step.count(" &") >= 2, "没有并行装"
+    pids = re.findall(r"^\s*(\w+)=\$!", step, re.M)
+    assert len(pids) >= 2, f"只捕获到 {pids}——两边都要留 PID 才能分别 wait"
+    for pid in pids:
+        assert re.search(rf"wait \${pid}\b\s*\|\|", step), (
+            f"`wait ${pid}` 没检退出码——它挂了这一步会照样绿，"
+            "然后 render 在第 5 分钟才死")
+    # 装完当场自证：ffmpeg 真的在
+    assert "ffmpeg -version" in step, "并行装完没验 ffmpeg，装没装上要到 render 才知道"
+
+
+def test_PO_token_探活挪到了render之前():
+    """容器是 `docker run -d` 起的，原地轮询最多 50 秒纯属空转——它下一次被
+    用到是 render 里下载源片那一刻。探活挪到 render 前面，启动和中间那几步
+    并行，实测那 12 秒基本被吃掉。
+
+    **起不来仍然不算失败**：退回 client 梯子，让下载那一步去报真正的原因。
+    """
+    names = _steps(WORKFLOW.read_text(encoding="utf-8"))
+    start = next(i for i, n in enumerate(names) if "起 PO token provider" in n)
+    wait = next(i for i, n in enumerate(names) if "等 PO token provider" in n)
+    render = next(i for i, n in enumerate(names) if n.startswith("render"))
+    assert start < wait < render, f"探活的位置不对：{names}"
+    assert wait - start >= 2, (
+        "探活紧挨着启动——那和原地等是一回事，中间要隔几步给它启动时间")
+
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    block = body[body.index("- name: 起 PO token provider"):].split("\n      - ")[0]
+    assert "for i in $(seq" not in block, "启动那一步又在原地轮询了"

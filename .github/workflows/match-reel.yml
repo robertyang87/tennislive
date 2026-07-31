@@ -150,8 +150,38 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 装中文字体（封面和字幕都要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      # **apt 和 pip 一起跑。** 两边装的东西互不相干（apt 装字体和 ffmpeg，
+      # pip 装 Python 包），而串起来是 42s + 25s。丢到后台并行，取长的那个。
+      # 量出来：串行 1:07，并行 0:44 上下。
+      #
+      # ⚠️ **两边都要检退出码。** `wait` 不带参数只等所有后台任务、返回最后
+      # 一个的状态——apt 挂了而 pip 成功，这一步照样绿，然后 render 在第 5
+      # 分钟死在「找不到 ffmpeg」。所以按 PID 分别 wait，谁挂了报谁。
+      - name: 装系统依赖和 Python 依赖（并行）
+        run: |
+          (
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+          ) > /tmp/apt.log 2>&1 &
+          APT=$!
+          (
+            # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
+            # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
+            # runner 上没有，而且都死在下完 64MB 源片之后。
+            pip install -q -e ".[webrender,visualqa,cutout]"
+            # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+            # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
+            # `n challenge solving failed` + `Only images are available`，
+            # 于是任何格式选择器都匹配不上，看起来像「这个视频没有格式」。
+            pip install -q "yt-dlp[default]" edge-tts
+          ) > /tmp/pip.log 2>&1 &
+          PIP=$!
+          FAIL=0
+          wait $APT || { echo "::error::apt 装失败"; cat /tmp/apt.log; FAIL=1; }
+          wait $PIP || { echo "::error::pip 装失败"; cat /tmp/pip.log; FAIL=1; }
+          [ "$FAIL" = 0 ] || exit 1
+          ffmpeg -version | head -1
+          node --version
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
@@ -165,22 +195,6 @@ jobs:
         with:
           path: ~/.u2net
           key: rembg-isnet-general-use-${{ runner.os }}
-
-      - name: 装依赖
-        run: |
-          # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
-          # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
-          # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
-          # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
-          pip install -q -e ".[webrender,visualqa,cutout]"
-          # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
-          # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
-          # `n challenge solving failed` + `Only images are available`，
-          # 于是任何视频格式选择器都匹配不上，看起来像「这个视频没有格式」或者
-          # 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），
-          # 命令行统一带 `--js-runtimes node`。
-          pip install -q "yt-dlp[default]" edge-tts
-          node --version
 
       - name: 缓存 Chromium
         uses: actions/cache@v4
@@ -216,16 +230,10 @@ jobs:
           pip install -q bgutil-ytdlp-pot-provider
           docker run --name bgutil-pot -d -p 4416:4416 \
             brainicism/bgutil-ytdlp-pot-provider
-          for i in $(seq 1 25); do
-            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 ${i} 次探活）"
-              echo "up=1" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            sleep 2
-          done
-          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
-          docker logs bgutil-pot 2>&1 | tail -20 || true
+          # **只管起，不在这儿等。** 容器已经是 `-d`，原地轮询最多 50 秒
+          # 纯粹是空转——而它下一次被用到是在 render 里下载源片那一刻，中间
+          # 还隔着装 Chromium、算目录、写复制页几步。探活挪到 render 之前。
+          echo "up=1" >> "$GITHUB_OUTPUT"
 
       # 配了这个 Secret 就带 cookie 下载，没配就只能靠上面的 PO token + client 梯子。
       - name: 落 cookies（配了 Secret 才有）
@@ -379,6 +387,25 @@ jobs:
           # 这里**不能 exit 1**：复制页没提上去只是「推送时要多等几分钟」，
           # 而渲染是这条 run 真正的产物。为它整条作废，代价反了。
           echo "::warning::复制页没能提前落库，推送那一步会退回原来的等待"
+
+      # PO token provider 的探活收在这儿：容器在前面几步就 `-d` 起来了，
+      # 装 Chromium、写复制页、提交复制页这几步给了它足够的启动时间，
+      # 所以这一探通常一次就中。**起不来不算失败**——退回 client 梯子，
+      # 让下载那一步去报真正的原因。
+      - name: 等 PO token provider 就绪
+        if: github.event.inputs.mode != 'cookies' && steps.pot.outputs.up == '1'
+        id: potwait
+        run: |
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "provider 就绪（第 ${i} 次探活）"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+          echo "POT_DOWN=1" >> "$GITHUB_ENV"
 
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
