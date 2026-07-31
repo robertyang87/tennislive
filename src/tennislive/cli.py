@@ -551,388 +551,6 @@ def cmd_topic_radar(args) -> int:
     return 0
 
 
-def cmd_digest(args) -> int:
-    from .render.terminal import console
-    from .render.wechat import article_title, to_html, to_markdown
-    from .render.xiaohongshu import plan_post
-
-    d = parse_date_arg(args.date)
-    try:
-        digest: Digest = build_digest(d, prefer=args.source)
-    except SourceError as e:
-        console.print(f"[red]抓取失败：{e}[/red]")
-        return 1
-
-    # 巡回赛官方 OOP 决定时间是否精确、仅有场序，或尚未发布；
-    # ESPN 与 SofaScore 保留为覆盖面和交叉验证来源。
-    from .sources.official_schedule import enrich_official_schedules
-
-    digest.source_status.update(enrich_official_schedules(digest))
-
-    from .research.trends import apply_trend_signals
-
-    trend_result = apply_trend_signals(
-        digest.results + digest.live + digest.schedule
-    )
-    # 保留完整信号池，供候选池选题使用：未绑定到当日比赛的相关新闻也是热点。
-    digest.trend_signals = list(trend_result.all_signals)
-    trend_state = "正常" if trend_result.signals else "降级"
-    digest.source_status["实时选题雷达"] = (
-        f"{trend_state} · {trend_result.signals} 条信号，"
-        f"命中 {trend_result.matched_matches} 场比赛"
-    )
-
-    # 焦点复盘依次尝试巡回赛官方逐场接口和已配置的授权备用源。
-    # 所有结构化统计均不可用时，渲染层才回退到盘分/局分结构复盘。
-    from .render.focus import select_focus_match
-    from .sources.official_stats import fetch_match_stats_with_fallback
-
-    focus_match = select_focus_match(digest)
-    if focus_match:
-        stats_result = fetch_match_stats_with_fallback(focus_match)
-        focus_match.stats = stats_result.stats
-        digest.source_status.update(stats_result.source_status)
-        digest.source_status["焦点复盘数据"] = (
-            f"正常 · {focus_match.stats.source}"
-            if focus_match.stats is not None
-            else "降级 · 所有逐场统计源均未命中，使用比分结构复盘"
-        )
-
-    # 头条页（card_01_lead）只在 match.stats 存在时才画技术对比表，否则退化
-    # 成纯文字复盘——而文字复盘只该是"真的没有数据"时的兜底。上面这次取数是
-    # 按 select_focus_match() 选的，和头条经常不是同一场，所以头条自己也要取。
-    from .render.focus import headline_stats_targets
-
-    headline_budget = max(
-        1, int(os.environ.get("TENNISLIVE_COVER_HEADLINE_ATTEMPTS", "4") or 4)
-    )
-    headline_stats_hits = 0
-    for candidate in headline_stats_targets(digest, headline_budget):
-        if candidate.stats is not None:
-            headline_stats_hits += 1
-            continue
-        try:
-            candidate.stats = fetch_match_stats_with_fallback(candidate).stats
-        except Exception as e:  # noqa: BLE001 - 统计是增强项，绝不阻断出片
-            digest.source_status["头条技术统计"] = f"降级 · {e}"
-            continue
-        if candidate.stats is not None:
-            headline_stats_hits += 1
-    digest.source_status["头条技术统计"] = (
-        f"正常 · {headline_stats_hits} 场头条候选已接入逐场统计"
-        if headline_stats_hits
-        else "降级 · 头条候选无逐场统计，头条页使用比分结构复盘"
-    )
-
-    # 人工核验的权威媒体摘要优先；未覆盖的比赛使用当前排名、赛事阶段
-    # 与晋级目标生成背景看点，不复述上一轮比分或泛化技战术套话。
-    from .render.authority import apply_curated_editorial, enrich_schedule_editorial
-
-    curated_count = apply_curated_editorial(digest)
-    if curated_count:
-        digest.source_status["编辑台媒体看点"] = (
-            f"正常 · {curated_count} 场人工核验并保留原文链接"
-        )
-    from .research.media import apply_media_briefs
-
-    media_count = apply_media_briefs(digest)
-    digest.source_status["外媒观点雷达"] = (
-        f"正常 · {media_count} 场多源原创摘要"
-        if media_count
-        else "本期无达到多源证据门槛的事件"
-    )
-    from .render.narrative import apply_knowledge_angles
-
-    knowledge_count = apply_knowledge_angles(digest)
-    digest.source_status["球员与赛事知识库"] = (
-        f"正常 · {knowledge_count} 场接入历史背景"
-        if knowledge_count
-        else "本期焦点暂无直接命中的审核档案"
-    )
-    try:
-        from .render.ai_editorial import enrich_with_github_models
-
-        ai_result = enrich_with_github_models(digest)
-        digest.source_status["GitHub Models 数据编辑"] = ai_result.status
-    except Exception as e:  # noqa: BLE001
-        digest.source_status["GitHub Models 数据编辑"] = f"降级 · {e}"
-    enrich_schedule_editorial(digest)
-
-    outdir = Path(args.outdir) / d.isoformat()
-    outdir.mkdir(parents=True, exist_ok=True)
-    theme = os.environ.get("TENNISLIVE_THEME", "dark")
-
-    # 一次性主页配置包放在 output/profile；内容稳定时不会产生重复提交。
-    try:
-        from .render.profile import generate_profile_pack
-
-        generate_profile_pack(Path(args.outdir) / "profile")
-    except Exception as e:  # noqa: BLE001
-        console.print(f"[yellow]主页配置物料生成失败（跳过）：{e}[/yellow]")
-
-    # 卡片图
-    knowledge_story = None
-    from .render.tournament_story import adhoc_knowledge_published_on
-
-    if not args.no_cards and adhoc_knowledge_published_on(digest.today):
-        # 当天已由手动/热点 ad-hoc 流程发布知识帖：日报不再自动补第二篇，
-        # 避免同日重复推送。热点 ad-hoc 不受此限制，仍可随时发。
-        console.print(
-            "[yellow]今日已由 ad-hoc 流程发布知识帖，日报跳过自动知识帖（避免同日重复）[/yellow]"
-        )
-    elif not args.no_cards:
-        from .render.tournament_story import record_story_selection, story_ranking
-
-        # 排序在生成之前算好：即使这一班次整个失败，也要留下"谁参选了、
-        # 各得几分"。只记胜者的话，"今天没有历史今天"和"有但没轮到它"
-        # 分不出来——7/25 就是这么丢的。
-        ranking = story_ranking(digest)
-        selection_error = ""
-        try:
-            from .render.knowledge import generate_knowledge_package
-
-            knowledge_story = generate_knowledge_package(
-                digest,
-                outdir / "knowledge",
-                theme=theme,
-            )
-        except Exception as e:  # noqa: BLE001
-            selection_error = f"{type(e).__name__}: {e}"
-            console.print(
-                f"[yellow]每日网球知识生成失败（跳过）：{e}[/yellow]"
-            )
-        try:
-            log_path = record_story_selection(
-                outdir,
-                digest,
-                ranking,
-                selected_slug=knowledge_story.slug if knowledge_story else None,
-                error=selection_error,
-            )
-            missed = [r for r in ranking if r["bucket"] == "anniversary"]
-            if missed and (
-                knowledge_story is None
-                or knowledge_story.slug != missed[0]["story_slug"]
-            ):
-                console.print(
-                    f"[yellow]今天有「历史上的今天」参选（{missed[0]['story_slug']}）"
-                    f"却没有成稿，拒因见 {log_path}[/yellow]"
-                )
-        except Exception as e:  # noqa: BLE001 - 诊断不该拖垮当日内容
-            console.print(f"[yellow]选题排序未能落盘：{e}[/yellow]")
-
-    card_paths: list[Path] = []
-    if not args.no_cards:
-        try:
-            from .render.cards import generate_cards
-
-            card_paths = generate_cards(digest, outdir / "cards")
-        except Exception as e:  # 字体缺失等不阻塞文字内容生成
-            console.print(f"[yellow]卡片图生成失败（跳过）：{e}[/yellow]")
-
-    video_paths: list[Path] = []
-    daily_video_enabled = (
-        os.environ.get("TENNISLIVE_DAILY_VIDEO", "off").casefold() == "on"
-    )
-    if daily_video_enabled and card_paths:
-        try:
-            from .render.video_digest import generate_digest_video
-
-            video_paths = [
-                generate_digest_video(
-                    card_paths,
-                    outdir / "video" / "daily-brief.mp4",
-                )
-            ]
-        except Exception as e:  # noqa: BLE001
-            console.print(f"[yellow]竖版视频生成失败（跳过）：{e}[/yellow]")
-
-    if daily_video_enabled:
-        try:
-            from .video.official import generate_official_video
-
-            official_video = generate_official_video(digest, outdir / "video")
-            if official_video:
-                video_paths.append(official_video)
-                digest.source_status["官方视频雷达"] = "正常 · 已生成中文竖版片段"
-        except Exception as e:  # noqa: BLE001
-            digest.source_status["官方视频雷达"] = f"降级 · {e}"
-            console.print(f"[yellow]官方视频生成失败（跳过）：{e}[/yellow]")
-    else:
-        digest.source_status["日报视频"] = "关闭 · 日报仅生成图片与文案"
-
-    # 标题：自动选用 + 候选留档
-    from .render.titles import (
-        cover_fact_bundle,
-        cover_highlights,
-        daily_lead_match,
-        title_candidates,
-    )
-
-    title = article_title(digest)
-    cover_copy = cover_highlights(digest)
-    (outdir / "wechat_title.txt").write_text(title, encoding="utf-8")
-    (outdir / "title_candidates.txt").write_text(
-        "\n".join(title_candidates(digest)), encoding="utf-8"
-    )
-
-    # 公众号
-    (outdir / "wechat.md").write_text(to_markdown(digest), encoding="utf-8")
-    html = to_html(digest)
-    if card_paths:
-        # 文末附卡片图占位符；publish wechat 时会上传并替换为微信图片 URL
-        content_cards = [p for p in card_paths if "cover" not in p.name]
-        html += "\n" + "\n".join(
-            f"{{{{IMAGE:{p.name}}}}}" for p in content_cards
-        )
-    (outdir / "wechat.html").write_text(html, encoding="utf-8")
-
-    # 小红书
-    xhs_plan, xhs = plan_post(digest)
-    (outdir / "xiaohongshu.txt").write_text(xhs, encoding="utf-8")
-    (outdir / "pinned_comment.txt").write_text(
-        xhs_plan.pinned_comment, encoding="utf-8"
-    )
-    _dump_json(xhs_plan, outdir / "xiaohongshu_plan.json")
-
-    # V2 证据资产：来源、逐项事实、选题理由和外媒共识都独立留档。
-    # 发布端只消费这些经过审核的摘要，不保存或转载媒体正文。
-    from .render.evidence import evidence_artifacts
-
-    for filename, artifact in evidence_artifacts(digest, xhs_plan).items():
-        _dump_json(artifact, outdir / filename)
-
-    # 与最近 7 期比较，阻止标题钩子或正文机械复用。固定栏目、日期、标签
-    # 和账号签名会被忽略，因此这里只拦真实内容重复。
-    from .render.history_dedupe import check_recent_posts
-
-    dedupe = check_recent_posts(
-        xhs,
-        Path(args.outdir),
-        current_date=d,
-        history_limit=7,
-    )
-    _dump_json(
-        {
-            "passed": dedupe.passed,
-            "history_count": dedupe.history_count,
-            "reason": dedupe.reason,
-            "comparisons": [
-                {
-                    "date": item.published_on.isoformat(),
-                    "title_similarity": item.title_similarity,
-                    "opening_similarity": item.opening_similarity,
-                    "body_similarity": item.body_similarity,
-                    "repeated_phrases": item.repeated_phrases,
-                    "triggers": item.triggers,
-                }
-                for item in dedupe.comparisons
-            ],
-        },
-        outdir / "xiaohongshu_similarity.json",
-    )
-
-    # 手机推送模板：文案走独立复制页，卡片图留在消息中便于保存。
-    from .render.pushmsg import to_copy_page, to_push_html
-
-    from .render.xiaohongshu import decorate_title
-
-    (outdir / "copy.html").write_text(
-        to_copy_page(
-            xhs,
-            alt_titles=[
-                decorate_title(digest, t, category="今日球局")
-                for t in title_candidates(digest)[1:]
-            ],
-            pinned_comment=xhs_plan.pinned_comment,
-        ),
-        encoding="utf-8",
-    )
-
-    (outdir / "push.html").write_text(
-        to_push_html(
-            digest,
-            cards=[p.name for p in card_paths],
-            xhs_text=xhs,
-            videos=[p.name for p in video_paths],
-        ),
-        encoding="utf-8",
-    )
-
-    # 每期输出覆盖清单，便于快速核对 ATP/WTA 各级别赛事是否被收录。
-    from .render.coverage import coverage_report
-
-    (outdir / "coverage.txt").write_text(
-        coverage_report(digest), encoding="utf-8"
-    )
-
-    # 原始数据
-    _dump_json(digest, outdir / "digest.json")
-    lead = daily_lead_match(digest)
-    if lead is not None:
-        _dump_json(
-            cover_fact_bundle(lead, source=digest.source),
-            outdir / "cover_facts.json",
-        )
-
-    # 自动质检（替代人工审核）
-    from .qa import run_checks
-
-    fatal, warns = run_checks(digest, title, xhs, cover_copy=cover_copy)
-    if not dedupe.passed:
-        # 文案查重是风格性提醒，不是事实错误：赛果的时效性与准确性优先，
-        # 不能让某一句"看点"复用挡住当天比分、赛程和公众号推送（曾在生产
-        # 环境实际触发过整包被 FATAL 阻断、当天日报完全没有推送的事故）。
-        warns.append(f"小红书近7期重复度过高: {dedupe.reason}")
-    (outdir / "qa.txt").write_text(
-        "\n".join(["[FATAL] " + f for f in fatal] + ["[WARN] " + w for w in warns])
-        or "OK",
-        encoding="utf-8",
-    )
-    for w in warns:
-        console.print(f"[yellow]质检警告：{w}[/yellow]")
-    if fatal:
-        for f in fatal:
-            console.print(f"[red]质检不通过：{f}[/red]")
-        return 2  # 非零退出阻断后续自动发布
-
-    # 生成成功后记录"一分钟"故事已使用（30 天冷却），并把昨日最热
-    # 但库里还没有故事的胜者记入扩库清单——选题跟着热度走
-    try:
-        from .render.tournament_story import (
-            mark_story_used,
-            record_story_wishlist,
-        )
-
-        if knowledge_story:
-            mark_story_used(knowledge_story.slug, digest.today)
-        record_story_wishlist(digest)
-        # 保存今日竞猜场次，明早文案里自动开奖
-        from .render.xiaohongshu import record_quiz
-
-        record_quiz()
-        from .render.editorial_memory import record_daily_focus, record_daily_lead
-
-        record_daily_lead(digest)
-        # 焦点复盘和头条经常不是同一场，两份都要记，否则焦点没人拦得住它
-        # 连着两天挑中同一场比赛。
-        from .render.focus import select_focus_match
-
-        record_daily_focus(select_focus_match(digest), digest.today)
-    except Exception as e:  # noqa: BLE001
-        logging.getLogger(__name__).warning("故事状态记录失败（不影响生成）: %s", e)
-
-    console.print(f"[green]内容包已生成：{outdir}[/green]")
-    console.print(
-        f"  赛果 {len(digest.results)} 场 | 进行中 {len(digest.live)} 场 | "
-        f"今日赛程 {len(digest.schedule)} 场 | 卡片 {len(card_paths)} 张 | "
-        f"数据源 {digest.source}"
-    )
-    if digest.is_empty:
-        console.print("[yellow]提示：当天没有巡回赛比赛，内容为空档说明。[/yellow]")
-    return 0
-
-
 def cmd_yesterday_point(args) -> int:
     """Generate the independent, source-audited yesterday-point package(s).
 
@@ -1089,6 +707,33 @@ def cmd_yesterday_point(args) -> int:
 
 
 # ---------- 闪发（即时战报） ----------
+
+
+def cmd_coverage(args) -> int:
+    """只出「数据源与赛事覆盖」这一张报告，不生成任何内容包。
+
+    这段原来长在 `cmd_digest`（日报生成器）里，`probe.yml` 于是要靠
+    `tennislive digest --no-cards` 顺带把它带出来——**为了一张覆盖率报告，
+    跑一整套日报**。2026-07-31 日报停产、`cmd_digest` 删掉，把它抽出来独立成
+    命令：抓一天数据、写一张 coverage.txt，就这些。
+    """
+    from .render.coverage import coverage_report
+    from .render.terminal import console
+
+    d = parse_date_arg(args.date)
+    try:
+        digest = fetch_day(d, prefer=args.source)
+    except SourceError as exc:
+        console.print(f"[red]{d} 抓取失败：{exc}[/red]")
+        return 1
+    report = coverage_report(digest)
+    outdir = Path(args.outdir) / d.isoformat()
+    outdir.mkdir(parents=True, exist_ok=True)
+    path = outdir / "coverage.txt"
+    path.write_text(report, encoding="utf-8")
+    console.print(report)
+    console.print(f"[green]已写[/green] {path}")
+    return 0
 
 
 def cmd_content(args) -> int:
@@ -1468,12 +1113,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="写出本批待发布清单；工作流提交图片后再据此发送",
     )
 
-    sp = sub.add_parser("digest", help="生成每日内容包（公众号+小红书+卡片图）")
-    sp.add_argument("--date", default="today", help="基准日期（北京时间，默认 today）")
-    sp.add_argument("--outdir", default="output", help="输出目录（默认 output/）")
-    sp.add_argument("--no-cards", action="store_true", help="不生成卡片图")
-    sp.add_argument("--source", choices=["espn", "sofascore"], help="优先数据源")
-
+    sp = sub.add_parser(
+        "coverage", help="数据源与赛事覆盖报告（只出一张 coverage.txt）"
+    )
+    sp.add_argument("--date", default="today")
+    sp.add_argument("--source", default="auto")
+    sp.add_argument("--outdir", default="output")
     sp = sub.add_parser(
         "knowledge-adhoc",
         help="按指定 slug 单独生成一篇知识帖（不占用当天常规知识帖位置）",
@@ -1629,8 +1274,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_day(args, [MatchStatus.LIVE], "进行中")
     if args.command == "content":
         return cmd_content(args)
-    if args.command == "digest":
-        return cmd_digest(args)
+    if args.command == "coverage":
+        return cmd_coverage(args)
     if args.command == "knowledge-adhoc":
         return cmd_knowledge_adhoc(args)
     if args.command == "flash-card":

@@ -2375,3 +2375,60 @@ def test_查赛果的命令留着卡片和推送不留():
     # publish content 还得能用
     assert hasattr(cli, "cmd_publish_flash"), (
         "cmd_publish_flash 被连坐删了——publish content（赛前焦点）还在用它")
+
+
+def test_日报生成器换成了只出覆盖率的命令():
+    """**`tennislive digest` 删了，`tennislive coverage` 顶上。**
+
+    `probe.yml` 原来跑 `tennislive digest --no-cards` 只为拿一张
+    `coverage.txt`——**为了一张覆盖率报告跑一整套日报**。日报停产之后把这段
+    抽成自己的命令：抓一天数据、写一张报告，就这些。
+
+    钉两头：`digest` 不许回来，`coverage` 必须在，而且 probe 那条线要接上。
+    """
+    from tennislive import cli  # noqa: PLC0415
+
+    assert not hasattr(cli, "cmd_digest"), "日报生成器又回来了"
+    assert hasattr(cli, "cmd_coverage"), (
+        "覆盖率命令没了——probe.yml 的数据源探测就断了")
+
+    probe = _yaml_only(
+        Path(".github/workflows/probe.yml").read_text(encoding="utf-8"))
+    assert "tennislive coverage" in probe and "tennislive digest" not in probe, (
+        "probe.yml 还在用 tennislive digest")
+
+
+def test_停产栏目的历史产物清掉了活栏目一个不动():
+    """**删产物要按栏目分，和停产那次是同一条。**
+
+    我一开始把整个 `output/`（1.33 GB）当成「历史日报产物」报给账号所有者——
+    **错得离谱**：日报本体加上它带的知识帖、赛程包、即时战报一共只有 148 MB，
+    剩下 1.18 GB 是解说片（576M）、成片（440M）这些**还在用的栏目**，
+    而它们的链接挂在**已经发出去的微信消息里**，删了就是把老消息变成死链。
+
+    所以判据钉的是「活栏目还在」，不是「output 变小了」。
+
+    ⚠️ **粒度是「这条线还有没有产物」，不是逐个文件。** 反向验证过：删掉
+    reel 的一个 mp4 它不红，把 reel 整个目录拿掉才红。它拦的是「一次清理
+    把整条线扫了」，不是手滑删一个文件。
+    """
+    live = ("reel", "explainer", "yesterday-point", "queue",
+            "knowledge_adhoc", "flash_radar")
+    tracked = subprocess.run(
+        ["git", "ls-files", "--", "output"],
+        capture_output=True, text=True, check=True).stdout.splitlines()
+    for name in live:
+        assert any(f"/{name}/" in p for p in tracked), (
+            f"output/ 里 {name} 的产物没了——那条线还在用，"
+            "链接挂在已发出去的消息里")
+    # 停产的四类不许再有。**判据要锚在日期目录正下方**——裸的 `"/cards/" in p`
+    # 会把 `output/<date>/queue/<pick>/cards/`（内容雷达自己的卡片，活的）
+    # 一起扫进去。同一天第五次「判据扫得太宽」，这次是路径。
+    for dead in ("cards", "knowledge", "schedule", "flash", "video"):
+        stale = [p for p in tracked
+                 if re.match(rf"output/\d{{4}}-\d\d-\d\d/{dead}/", p)]
+        assert not stale, f"停产栏目 {dead} 的历史产物还在：{stale[:3]}"
+    # 日期目录正下方的散件（wechat.md / xiaohongshu.txt 那些）也该没了
+    loose = [p for p in tracked
+             if re.match(r"output/\d{4}-\d\d-\d\d/[^/]+$", p)]
+    assert not loose, f"日报包的散件还在：{loose[:3]}"
