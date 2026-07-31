@@ -217,6 +217,12 @@ VENUES = [
     ("mallorca-country-club-centre-court.jpg", None, None),
     # 达拉斯 ATP500：Ford Center 网球布置的实拍，底线后方沿长轴
     ("dallas-ford-center-centre-court.jpg", None, None),
+    # 罗马 ATP1000 + WTA1000：ATP 赛事主视觉，Campo Centrale 满场
+    ("rome-foro-italico-centre-court.jpg", None, None),
+    # 哈雷 ATP500：ATP 赛事主视觉，OWL Arena 开顶满场
+    ("halle-owl-arena-centre-court.jpg", None, None),
+    # 斯图加特 ATP250：ATP 赛事主视觉，Weissenhof 草地；别名按赛事名写，别用城市名
+    ("stuttgart-weissenhof-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -362,6 +368,24 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "stuttgart-weissenhof-centre-court.jpg": {
+        "title": "斯图加特 TC Weissenhof 草地中心球场满场，挡板写着 BOSS，侧板写着 TC Weissenhof 与 Region Stuttgart",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/stuttgart_tournimage_2022.jpg",
+    },
+    "halle-owl-arena-centre-court.jpg": {
+        "title": "哈雷 OWL Arena 中心球场满场，开顶状态，环形挡板写着 TERRA WORTMANN OPEN 与 owlarena-world.de",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/halle_tournimage_2023.jpg",
+    },
+    "rome-foro-italico-centre-court.jpg": {
+        "title": "福罗意大利中央球场（Campo Centrale）满场，从底线后方沿长轴拍，记分牌写着 F. VERDASCO / R. NADAL，围板是 Internazionali 的赞助带",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/rome_tournimage_2019.jpg",
+    },
     "dallas-ford-center-centre-court.jpg": {
         "title": "弗里斯科 Ford Center at The Star 主球场，从底线后方高处沿长轴拍，挡板写着 DALLAS OPEN 与 ATP 500，记分牌是 PAUL / OPELKA，场地前场刷着 DALLAS",
         "license": "unverified · 赛事官网媒体库 dallasopen.com",

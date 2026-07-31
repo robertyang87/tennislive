@@ -274,6 +274,15 @@ the photographs are not otherwise altered.
 - License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `halle-owl-arena-centre-court.jpg`
+
+- Title: 哈雷 OWL Arena 中心球场满场，开顶状态，环形挡板写着 TERRA WORTMANN OPEN 与 owlarena-world.de
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/halle_tournimage_2023.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: 别名不写裸的 halle——它是 challenger 的子串，会误命中
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `hamburg-rothenbaum-centre-court.jpg`
 
 - Title: File:Hamburg Rotherbaum DS150n.jpg
@@ -315,7 +324,7 @@ the photographs are not otherwise altered.
 - Author: ATP 官方赛事主视觉（摄影师未署名）
 - Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/houston_tournimage_2019.jpg
 - License: unverified · ATP 官方图，经赛事域名镜像取得
-- Note: atptour.com 本环境全站 403，但 /-/media/images/atp-tournaments/tournament-images/ 是全站共享路径，任一 ATP 赛事域名都能代取
+- Note: atptour.com 本环境全站 403，但 /-/media/images/atp-tournaments/tournament-images/ 是全站共享路径，任一 ATP 赛事域名都能代取。别名不能写 clay court championships——赛历里的名字是 U.S. Men's Clay Court Chps.，不是子串
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `iasi-ciric-centre-court.jpg`
@@ -543,6 +552,15 @@ the photographs are not otherwise altered.
 - Note: 这一站原来被标成「维罗纳 · 意大利」并配了维罗纳圆形竞技场——赛事名里的 ATV 是 Antico Tiro a Volo（罗马的俱乐部），不是 Associazione Tennis Verona。WTA 自己的赛事页就是 /tournaments/1130/rome/
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `rome-foro-italico-centre-court.jpg`
+
+- Title: 福罗意大利中央球场（Campo Centrale）满场，从底线后方沿长轴拍，记分牌写着 F. VERDASCO / R. NADAL，围板是 Internazionali 的赞助带
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/rome_tournimage_2019.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: 此前四轮（Commons 五个年份分类、fitp.it 相册、官网 SPA 渲染、意大利语信息页）全部落空，被我写进 KNOWN_GAPS。第五条路是 ATP 共享的 tournament-images——那条规矩早就写在 CLAUDE.md 里，只是没往罗马身上试。一图覆盖 ATP1000 与 WTA1000 两站，同一座 Campo Centrale
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `rotterdam-centre-court.jpg`
 
 - Title: 鹿特丹 Ahoy 中心球场 · 满场，从高处俯瞰整个碗
@@ -610,6 +628,15 @@ the photographs are not otherwise altered.
 - Source: https://photoresources.wtatennis.com/photo-resources/2025/05/12/ffbc5331-cbef-4d6a-8f6d-3a0c93eefa0e/406-Strasbourg.jpg
 - License: unverified · WTA 官方媒体库
 - Note: 自证：看台横幅写着 Strasbourg / Grand Est。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `stuttgart-weissenhof-centre-court.jpg`
+
+- Title: 斯图加特 TC Weissenhof 草地中心球场满场，挡板写着 BOSS，侧板写着 TC Weissenhof 与 Region Stuttgart
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/stuttgart_tournimage_2022.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: 顶部收 200px 去掉空天（放大 1.64x）。别名只认 boss open / weissenhof，**不认城市名 stuttgart**——4 月 WTA500 在 Porsche-Arena（室内红土），套上这张就成了室外草地
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `tokyo-ariake-coliseum.jpg`

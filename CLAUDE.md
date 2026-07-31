@@ -1291,6 +1291,28 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 `nishikori` / `shang` / `handshake` 等九个猜测全是 `200 + text/html`，而已知存在的
 图返回 `image/jpeg`。**只看状态码会把「不存在」读成「存在」——要看 Content-Type。**
 
+#### 场馆全景先试这一条：`tournament-images` 是**全站共享**的，不是各站各自的
+
+    /-/media/images/atp-tournaments/tournament-images/<slug>_tournimage_<年>.jpg
+
+这是赛事的主视觉，**十有八九就是中心球场全景**（新闻图那一档全是球员动作）。
+关键在「共享」：路径不带站点前缀，所以**任一能出网的 ATP 赛事域名都能代取别站的**。
+休斯顿自己不是 Sitecore 站，是拿 `dallasopen.com` 代取到的；罗马、哈雷、斯图加特、
+马略卡同理。年份要一个个试（2018–2027），一站往往只有一两年有。
+
+一轮探下来的产出：罗马 Campo Centrale、哈雷 OWL Arena、斯图加特 Weissenhof、
+马略卡、休斯顿 River Oaks、德雷海滩 —— 六站，一条路径。
+
+⚠️ **年份要跟场馆对得上**。里昂 2018 那张是 Parc de la Tête d'Or，而 2026 起搬去
+LDLC Arena——同一个 slug，**不是同一个场馆**。搬过家的站，旧年份的主视觉是陷阱。
+
+顺带另一条同类的：**LTA 的 `/siteassets/events/<场馆>/` 是按场馆分的图库**
+（女王、伊斯本、诺丁汉、伯明翰、伊尔克利）。女王那张 6000×4000 的
+`hsbc-queens-centre-court.jpg` 挂在**天气预报页**上，首页和票务页都扫不到——
+要顺着站内链接翻深一层。URL 上的 `?width=`／`?height=` 只是显示参数，
+**去掉就是原图**（DOM 报的 1600×960 其实是 3075×2051）。
+WordPress 同理：`-scaled` 后缀是缩过的，去掉才是原图（4000×2667 → 5457×3638）。
+
 ### 加新能力就要同时改三处：代码、工作流的依赖、开跑前的预检
 
 竖版剪辑那条线上，**同一类错误连着犯了三次**，每次都是「本地能跑，runner 上缺依赖」：
