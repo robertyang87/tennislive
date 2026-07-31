@@ -304,6 +304,13 @@ jobs:
             --event "${{ github.event.inputs.event }}" \
             --summary "${{ github.event.inputs.summary }}" \
             --copy "$COPY"
+          # 复制页和发文标题必须成对落盘：xiaohongshu.txt 是统计索引的锚
+          # （platform_stats.index_output 拿它的第一行当发文标题），少了它这条
+          # 片子在三个平台的后台导出里都会落进「未匹配」。
+          # 这道闸只能装在这儿：ci.yml 的 sparse-checkout 故意不取 output/，
+          # pytest 那条同名棘轮在 CI 上只能 skip。
+          python tools/backfill_reel_titles.py \
+            --root "${{ steps.paths.outputs.outdir }}" --check
 
       - name: 丢掉不进仓库的中间物
         if: github.event.inputs.mode != 'cookies'

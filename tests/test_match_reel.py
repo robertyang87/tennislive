@@ -17,8 +17,11 @@ import json
 import re
 import subprocess
 import sys
+from datetime import date
 from fnmatch import fnmatch
 from pathlib import Path
+
+import pytest
 
 WORKFLOW = Path(".github/workflows/match-reel.yml")
 
@@ -1889,9 +1892,23 @@ def test_每份成片都写下了它发出去时的标题():
     补齐之后未匹配 19 → 6，剩下的才是真改过标题的。
 
     这条拦的是「下一条片子又忘了写」。
+
+    ⚠️ **它只在有产物归档的环境里成立。** `ci.yml` 的 sparse-checkout **故意**
+    不取 `output/`（那是 1 GB 的成品归档），所以 CI 上这条扫出来必然是空的——
+    第一版没写这个判断，于是它在 CI 上**空过**：0 个 copy.html → 0 个缺失 →
+    绿。**空过比红更糟**，它看起来和「存量全都写了」一模一样。所以这里显式
+    skip 并说清楚为什么，CI 那行 `pytest -rs` 会把理由印出来。
+
+    这条棘轮的真正阵地是**生成的那一刻**：`match-reel.yml` 在提交之前跑一次
+    `backfill_reel_titles.py --check`，缺了当场红。那一步跑在有 outdir 的
+    runner 上，不受 sparse-checkout 影响。
     """
-    missing = [p.parent for p in sorted(Path("output").rglob("copy.html"))
-               if not (p.parent / "xiaohongshu.txt").is_file()]
+    pages = sorted(Path("output").rglob("copy.html"))
+    if not pages:
+        pytest.skip("output/ 没被 checkout（ci.yml 的 sparse-checkout 故意排除"
+                    " 1 GB 的成品归档）；这条棘轮只在有产物的环境里跑，"
+                    "生成侧的判据是 match-reel.yml 里的 --check 那一步")
+    missing = [p.parent for p in pages if not (p.parent / "xiaohongshu.txt").is_file()]
     assert not missing, (
         f"{len(missing)} 份成片没写 xiaohongshu.txt，统计对不上：\n  "
         + "\n  ".join(str(p) for p in missing[:5])
@@ -1937,17 +1954,50 @@ def test_从复制页反解出来的就是印在页上那一句():
     assert "&amp;" not in got["body"] and "&" in got["body"]
 
 
-def test_成片能被统计索引到():
-    """端到端：`index_output()` 必须真的把成片目录扫进来。
+def test_成片能被统计索引到(tmp_path):
+    """端到端：`--stage page` 落的盘，`index_output()` 必须扫得到、读得对。
 
-    上一条测的是「标题反解得对」，这条测的是「扫得到」。分开写是因为它们会
-    以不同的方式坏掉：文件写对了但锚文件名不对，前一条照样绿。
+    上一条测的是「标题反解得对」，这条测的是「两头接得上」。分开写是因为它们
+    会以不同的方式坏掉：文件写对了但锚文件名不对（`posted.txt` 之类），前一条
+    照样绿。
+
+    **在临时目录里跑，不扫 `output/`。** 第一版扫真归档，而 CI 的
+    sparse-checkout 故意不取 `output/`，于是那句「一个成片都没有」的自证断言
+    在 CI 上直接红——判据本身没错，错在它要的数据那儿根本不存在。真链路不需要
+    归档：`write_posted_title` 写什么、`index_output` 读什么，建两个文件就验完了。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     from platform_stats import index_output  # noqa: PLC0415
+    from push_reel import write_posted_title  # noqa: PLC0415
 
-    dirs = {it["dir"] for it in index_output(Path("output"))}
-    reels = [p.parent for p in Path("output").rglob("copy.html")]
-    assert reels, "output/ 下一个成片都没有，这条测试等于没测"
-    missing = [p for p in reels if p not in dirs]
-    assert not missing, f"这些成片扫不进索引：{missing[:5]}"
+    title = "7.30 赛场之上 | 黄泽林逆转头号种子"
+    outdir = tmp_path / "output" / "2026-07-30" / "reel" / "wong-lehecka"
+    outdir.mkdir(parents=True)
+    write_posted_title(outdir, f"{title}\n\n正文第一行\n📍洛斯卡沃斯 ATP250 第二轮")
+
+    items = index_output(tmp_path / "output")
+    assert [it["dir"] for it in items] == [outdir], items
+    # 第一行就是发文标题——index_output 只读这一行，抖音/视频号的前缀自证靠它
+    assert items[0]["title"] == title
+    # 目录日期也要解出来，模糊匹配那一段拿它分并列候选
+    assert items[0]["date"] == date(2026, 7, 30)
+
+
+def test_发文标题的棘轮装在生成那一步():
+    """pytest 那条同名棘轮在 CI 上只能 skip，所以真闸必须在工作流里。
+
+    `ci.yml` 的 sparse-checkout **故意**不取 `output/`（1 GB 的成品归档），
+    于是任何扫产物的 pytest 检查在 CI 上要么空过、要么硬红。真正能拦住
+    「这条片子忘了写标题」的位置是**生成的那一刻**——那时 outdir 就在手边。
+
+    顺序也要对：`--check` 排在写复制页之后、提交之前。排到提交之后就成了
+    「文件已经进仓库了才发现它不该缺」，晚了一步。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+    page = next(i for i, n in enumerate(names) if "写复制页" in n)
+    commit = next(i for i, n in enumerate(names) if "提交产物" in n)
+    assert page < commit, names
+    block = text[text.index("- name: 写复制页"):].split("- name:")[1]
+    assert "backfill_reel_titles.py" in block and "--check" in block, (
+        "写复制页那一步没有校验发文标题落盘了没有")

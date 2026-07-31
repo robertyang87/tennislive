@@ -76,6 +76,16 @@ def main() -> int:
     ap.add_argument("--check", action="store_true", help="只报，不写")
     args = ap.parse_args()
 
+    seen = list(args.root.rglob("copy.html"))
+    if not seen and args.root != Path("output"):
+        # 点名了一个目录却一张复制页都没扫到 —— 那不是「都补齐了」，是**找错了
+        # 地方**（或者上一步没跑）。工作流里就是这么用的：`--root <outdir>`，
+        # 那儿必然刚写完一张复制页。**空结果先自证是真空**，不然这道闸会在
+        # 「路径写错」和「一切正常」之间静默地选后者。
+        print(f"{args.root} 下一张 copy.html 都没有——路径写错了，"
+              "还是 --stage page 没跑？", file=sys.stderr)
+        return 1
+
     ok, blocked = find_gaps(args.root)
     for page in ok:
         title = fields_of(page.read_text(encoding="utf-8"))["title"]
