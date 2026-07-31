@@ -238,7 +238,12 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     #
     # 和「赛场之上」的 VS 海报不是一回事：VS 讲的是两个人**对打**，这里讲的是
     # 两个人**做同一件事**，所以没有中缝斜切、没有 VS 圆牌、没有两个名字并列，
-    # 只有一道平直的分界线和各自一枚小名条。
+    # 只有一道平直的分界线。
+    #
+    # **两格都不挂名条**（账号所有者 2026-07-31：「这里名字没必要」）。理由站得住：
+    # 台头那行已经写着「十七岁的休伊特，和那个没有名字的动作」，钩子写着
+    # 「他做了父亲的那个动作」——谁是父亲、谁是儿子，字已经说完了，名条只是
+    # 在两张脸上各压一块黑。
     above = cover.get("portrait_above") or {}
     icon = Path("assets/logo/brand/icon.png")
     icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
@@ -258,12 +263,6 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         split = float(cover.get("split", 0.47)) * 100
         hero = (f'<div class="hero hero-a"></div><div class="hero hero-b"></div>'
                 f'<div class="hseam" style="top:{split:.1f}%"></div>')
-        if above.get("name"):
-            hero += (f'<div class="pname pn-a" style="top:{split:.1f}%">'
-                     f'{html.escape(str(above["name"]))}</div>')
-        if cover.get("subject"):
-            hero += (f'<div class="pname pn-b" style="top:{split:.1f}%">'
-                     f'{html.escape(str(cover["subject"]))}</div>')
         stack_css = (
             f".hero-a{{bottom:{100 - split:.1f}%;"
             f"background-image:url('{_data_uri(asrc)}');background-size:cover;"
@@ -318,13 +317,6 @@ def _solo_body(cover: dict) -> tuple[str, str]:
  gap:34px;align-items:flex-start}
 .hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
  transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
-.pname{position:absolute;right:34px;z-index:5;background:rgba(4,18,13,.82);
- color:#f4fbf7;font-family:'TL Sans SC',sans-serif;font-size:30px;
- font-weight:700;letter-spacing:2px;padding:8px 20px;border-radius:8px}
-/* 两枚名条都挂在分界线上：上格那枚往上顶、下格那枚往下压。
-   下格原来写 `top:0`——那是**整幅画布的顶**，于是它跑到台头旁边去了。 */
-.pn-a{transform:translateY(-142%)}
-.pn-b{transform:translateY(26px)}
 .kicker{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
  font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px}
 .storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;

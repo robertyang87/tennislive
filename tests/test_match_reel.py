@@ -950,9 +950,12 @@ def test_栏目和封面模板要配对():
             if above:
                 assert above.get("image"), f"{path.name} 的 portrait_above 没有图"
                 assert Path(above["image"]).is_file(), above["image"]
-                assert above.get("name"), (
-                    f"{path.name} 的上格没写 name——两张脸摆在一起而没有名字，"
-                    "等于让读者猜上面那个是谁")
+                # ⚠️ 这里原来要求上格必须写 `name`，理由是「两张脸摆在一起
+                # 没有名字等于让读者猜」。账号所有者 2026-07-31 否了：「这里
+                # 名字没必要」——台头那行和钩子已经说清谁是父亲谁是儿子，
+                # 名条只是在两张脸上各压一块黑。判据跟着改成**不许有名条**。
+                assert "name" not in above, (
+                    f"{path.name} 的上格又挂上名条了——账号所有者定过不要")
             assert not cover.get("result"), (
                 f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
                 "那是最后一拍，印在封面上等于先把结局说了")
