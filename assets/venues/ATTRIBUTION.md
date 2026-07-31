@@ -189,6 +189,24 @@ the photographs are not otherwise altered.
 - Note: 自证：场地前场刷着 CLUJ-NAPOCA，围板 TeraPlast。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `dallas-ford-center-centre-court.jpg`
+
+- Title: 弗里斯科 Ford Center at The Star 主球场，从底线后方高处沿长轴拍，挡板写着 DALLAS OPEN 与 ATP 500，记分牌是 PAUL / OPELKA，场地前场刷着 DALLAS
+- Author: 赛事官方图（摄影师未署名）
+- Source: https://www.dallasopen.com/-/media/images/news/2026/01/12/02/39/dallas-2026-prize-money-image.jpg
+- License: unverified · 赛事官网媒体库 dallasopen.com
+- Note: 这一站三张搜到的「大图」全是 3D 效果图（WFAA 那张迁址报道、官网 Premium Seating 那张、2023-11-27 的公告图 web20231127v1standsupdate）——CG 观众、平涂看台，一眼可辨。新场馆首届前后最容易混进渲染图
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `delray-beach-stadium-centre-court.jpg`
+
+- Title: 德雷海滩网球中心主看台球场夜场满场，场地刷着 ATP TOUR，记分牌写着 PAUL / TIEN 与 ATP 250
+- Author: 赛事官方图（摄影师未署名）
+- Source: https://www.delraybeachopen.com/
+- License: unverified · 赛事官网媒体库 delraybeachopen.com
+- Note: 同目录邻号 dbo-feb-21st-general-night-095..110 逐个探过，只有 100 这一张是真图，其余全是 200 + text/html 的 soft-404
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `denbosch-centre-court.jpg`
 
 - Title: Autotron 中心球场 · 草地，满场（利贝马公开赛）
@@ -214,6 +232,14 @@ the photographs are not otherwise altered.
 - Source: https://dubaidutyfreetennischampionships.com/wp-content/uploads/2026/02/Dubai-Duty-Free-Championships-Stadium_005.jpg
 - License: unverified · 赛事官方媒体库
 - Note: 自证：场地前场刷着 DUBAI，围板一圈是这项赛事的赞助带，那顶帐篷状看台顶棚是这个场馆独有的。一张管两站——2 月的 WTA1000 和 ATP500 同场地，别名同为 dubai。官方媒体库（wp-json，12628 项）按 search=stadium 一次翻出十三张同角度的，挑的是顶棚居中、近端球员在击球的这一张。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `eastbourne-devonshire-park-centre-court.jpg`
+
+- Title: 德文郡公园中心球场满场，挡网写着 EASTBOURNE、围板写着 Rothesay INTERNATIONAL，背景是伊斯本的教堂尖顶与维多利亚式排屋
+- Author: LTA 官方图（摄影师未署名）
+- Source: https://www.lta.org.uk/fan-zone/international/hsbc-championships/
+- License: unverified · 赛事主办方 LTA 官网图库
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `estoril-centre-court.jpg`
@@ -283,6 +309,15 @@ the photographs are not otherwise altered.
 - Note: 自证：场地前场刷着 HONG KONG，大屏写着 CENTRE COURT / YUAN · BOULTER，围板是 PRUDENTIAL 保誠香港網球公開賽，背景是铜锣湾天际线。一张图管两站——1 月的 ATP250 和 11 月的 WTA250 都在维园中央球场，别名同为 hong kong。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `houston-river-oaks-centre-court.jpg`
+
+- Title: River Oaks 乡村俱乐部主球场满场，绿色顶棚看台与裁判塔，围板写着冠名商 FAYEZ SAROFIM & CO.，旗杆上是美国旗与得州旗
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/houston_tournimage_2019.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: atptour.com 本环境全站 403，但 /-/media/images/atp-tournaments/tournament-images/ 是全站共享路径，任一 ATP 赛事域名都能代取
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `iasi-ciric-centre-court.jpg`
 
 - Title: Baza Sportivă Ciric 中心球场 · 满场（红土、两侧蓝色看台）
@@ -341,6 +376,15 @@ the photographs are not otherwise altered.
 - Source: https://mutuamadridopen.com/wp-content/uploads/2025/04/wta.jpg
 - License: unverified · 赛事官方媒体库
 - Note: 自证：红土两侧写着 MADRID，围板一圈 MUTUA MADRILEÑA / ESTRELLA DAMM / PIF 是这项赛事的赞助带。一张管两站——4 月的 WTA1000 与 ATP1000 同场地。官网开着 wp-json（5978 项），西语词 pista / estadio 比英语词管用。
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `mallorca-country-club-centre-court.jpg`
+
+- Title: 圣蓬萨 Mallorca Country Club 中心球场满场，草地两端看台都在，围板写着 MALLORCA，背后是松林覆盖的山坡
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://mallorcachampionships.com/-/media/images/atp-tournaments/tournament-images/mallorca_tournimage_2022.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: 原图 1920x1080 上半是空天，按卡片裁法一半被遮罩压掉；顶部收 160px 后碗充满画面（放大 1.57x）。另有一张 emotiongroup 的鱼眼全景更漂亮，但记分牌是 KERBER / SHARAPOVA、围板写 Mallorca Open——那是已停办的 WTA 赛事，不是这一站，弃用
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `memphis-leftwich-stadium-court.jpg`
@@ -455,6 +499,22 @@ the photographs are not otherwise altered.
 - Author: Dobroš
 - Source: https://commons.wikimedia.org/wiki/File:Central_tennis_court_at_%C5%A0tvanice_02.jpg
 - License: CC BY-SA 4.0
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `queens-club-centre-court-atp.jpg`
+
+- Title: 女王俱乐部中心球场（安迪·穆雷球场）满场，场地前场刷着 ATP TOUR，围板写着 HSBC CHAMPIONSHIPS，左侧为俱乐部红砖会所
+- Author: LTA 官方图（摄影师未署名）
+- Source: https://www.lta.org.uk/fan-zone/international/hsbc-championships/weather-forecast/
+- License: unverified · 赛事主办方 LTA 官网图库
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `queens-club-centre-court-wta.jpg`
+
+- Title: 女王俱乐部中心球场满场，围板写着 HSBC CHAMPIONSHIPS 与 WTA 500，草地上刷着 LONDON
+- Author: LTA 官方图（摄影师未署名）
+- Source: https://www.lta.org.uk/fan-zone/international/hsbc-championships/
+- License: unverified · 赛事主办方 LTA 官网图库
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `rg-philippe-chatrier.jpg`

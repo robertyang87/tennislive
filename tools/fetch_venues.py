@@ -203,6 +203,20 @@ VENUES = [
     ("abudhabi-centre-court.jpg", None, None),
     # cluj：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
     ("cluj-centre-court.jpg", None, None),
+    # 女王俱乐部 ATP500：LTA 官网 /siteassets/events/hsbc/ 的 6000x4000 原图，底线后方沿长轴
+    ("queens-club-centre-court-atp.jpg", None, None),
+    # 女王俱乐部 WTA500：同一座中心球场，取 WTA 那一届的画面（围板 WTA 500）
+    ("queens-club-centre-court-wta.jpg", None, None),
+    # 伊斯本 ATP250 + WTA250：LTA 官网 /siteassets/events/eastbourne/，底线后方沿长轴，整个碗都在
+    ("eastbourne-devonshire-park-centre-court.jpg", None, None),
+    # 德雷海滩 ATP250：官网媒体库 2026-2027-press，夜场全景，近端远端看台都在
+    ("delray-beach-stadium-centre-court.jpg", None, None),
+    # 休斯顿 ATP250：ATP 赛事主视觉，红土 + 绿顶看台，focal 左移到 30% 让球场成为落点
+    ("houston-river-oaks-centre-court.jpg", None, None),
+    # 马略卡 ATP250：ATP 赛事主视觉，顶部收 160px 去掉空天
+    ("mallorca-country-club-centre-court.jpg", None, None),
+    # 达拉斯 ATP500：Ford Center 网球布置的实拍，底线后方沿长轴
+    ("dallas-ford-center-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -348,6 +362,48 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "dallas-ford-center-centre-court.jpg": {
+        "title": "弗里斯科 Ford Center at The Star 主球场，从底线后方高处沿长轴拍，挡板写着 DALLAS OPEN 与 ATP 500，记分牌是 PAUL / OPELKA，场地前场刷着 DALLAS",
+        "license": "unverified · 赛事官网媒体库 dallasopen.com",
+        "artist": "赛事官方图（摄影师未署名）",
+        "page": "https://www.dallasopen.com/-/media/images/news/2026/01/12/02/39/dallas-2026-prize-money-image.jpg",
+    },
+    "mallorca-country-club-centre-court.jpg": {
+        "title": "圣蓬萨 Mallorca Country Club 中心球场满场，草地两端看台都在，围板写着 MALLORCA，背后是松林覆盖的山坡",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://mallorcachampionships.com/-/media/images/atp-tournaments/tournament-images/mallorca_tournimage_2022.jpg",
+    },
+    "houston-river-oaks-centre-court.jpg": {
+        "title": "River Oaks 乡村俱乐部主球场满场，绿色顶棚看台与裁判塔，围板写着冠名商 FAYEZ SAROFIM & CO.，旗杆上是美国旗与得州旗",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/houston_tournimage_2019.jpg",
+    },
+    "delray-beach-stadium-centre-court.jpg": {
+        "title": "德雷海滩网球中心主看台球场夜场满场，场地刷着 ATP TOUR，记分牌写着 PAUL / TIEN 与 ATP 250",
+        "license": "unverified · 赛事官网媒体库 delraybeachopen.com",
+        "artist": "赛事官方图（摄影师未署名）",
+        "page": "https://www.delraybeachopen.com/",
+    },
+    "eastbourne-devonshire-park-centre-court.jpg": {
+        "title": "德文郡公园中心球场满场，挡网写着 EASTBOURNE、围板写着 Rothesay INTERNATIONAL，背景是伊斯本的教堂尖顶与维多利亚式排屋",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/",
+    },
+    "queens-club-centre-court-wta.jpg": {
+        "title": "女王俱乐部中心球场满场，围板写着 HSBC CHAMPIONSHIPS 与 WTA 500，草地上刷着 LONDON",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/",
+    },
+    "queens-club-centre-court-atp.jpg": {
+        "title": "女王俱乐部中心球场（安迪·穆雷球场）满场，场地前场刷着 ATP TOUR，围板写着 HSBC CHAMPIONSHIPS，左侧为俱乐部红砖会所",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/weather-forecast/",
+    },
     "cluj-centre-court.jpg": {
         "title": "BT Arena 中心球场 · 室内紫色场地满场",
         "license": "unverified · WTA 官方媒体库",

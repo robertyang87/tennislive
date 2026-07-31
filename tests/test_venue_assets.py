@@ -505,7 +505,7 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
 # 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
 # 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
 # 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
-VENUE_COVERAGE_FLOOR = 86
+VENUE_COVERAGE_FLOOR = 93
 
 
 def test_calendar_coverage_only_goes_up():
@@ -648,3 +648,38 @@ def test_stuttgart_events_do_not_share_one_venue():
         f"斯图加特两站套上了同一张图（{wta.slug}）——"
         "4 月 WTA 在 Porsche-Arena（室内红土），6 月 ATP 在 Weissenhof（室外草地），"
         "是两个场馆。别名按赛事名写（porsche / boss open），或配 only_tour")
+
+
+def test_queens_gives_the_atp_and_wta_events_their_own_picture():
+    """女王俱乐部同一座中心球场办两站，但**画面里的字不一样**。
+
+    2025 年起男女两站都叫 `HSBC Championships`，赛历里 WTA 那条的 en 还写着
+    `Queen's Club Championships`——而真实 feed 给哪一个名字**不由我们决定**。
+    所以这里不能靠赛事名分，只能靠 `only_tour`：ATP 那张场地前场刷着
+    `ATP TOUR`，WTA 那张围板写着 `WTA 500`，各归各的。
+
+    判据要**两个名字 × 两条巡回赛四种组合都对**：只测「HSBC + ATP」会漏掉
+    feed 把 WTA 那站也叫成 HSBC 的情况，而那正是最可能发生的一种。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, 6, 16, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    wrong = []
+    for name in ("HSBC Championships", "Queen's Club Championships"):
+        for tour, expected in ((Tour.ATP, "queens-atp"), (Tour.WTA, "queens-wta")):
+            got = venue_asset_for_match(_m(name, tour))
+            if got is None or got.slug != expected:
+                wrong.append(
+                    f"「{name}」（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
+    assert not wrong, "女王俱乐部两站没有各用各的图：\n" + "\n".join(wrong)
