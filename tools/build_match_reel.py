@@ -107,6 +107,9 @@ FPS_EXPR = "30"     # 传给 ffmpeg 的那份，保留分数形式（29.97 是 3
 # 的提示只打印，从来没真的换算过（注释和行为对不上，跑起来才炸）。
 CROP_H = 1080
 CROP_W = 810
+# 裁切窗口在源片里的纵向落点。横幅源片恒为 0（窗口高度就是源片高度，没得挪）；
+# **竖版源片才用得上**——那种源片宽度顶满、要在高度上取一段，见 `resolve_crop`。
+CROP_Y = 0
 # **成片是 3:4（1080×1440），不是 9:16。** 定这个画幅的理由是「尽可能多保住主体」：
 #
 # - 小红书的视频**静态展示就是 3:4**。9:16 的成片在信息流里会被裁掉上下两条，
@@ -122,9 +125,30 @@ VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
 # 卡底（1680）往上 156px。这里整幅画布就是那张卡，所以同样是「卡底往上 156」，
 # 换算过来是 1440-156=1284。**保的是同一个物理位置**——量出来的那组数没变。
 _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
+# **源片自己烧了记分条时，字幕要让开它。**
+#
+# 以前没撞过是因为运气：16:9 的转播源片把记分条放在左下，而 3:4 的窗口只取中间
+# 42% 宽，整块被裁掉了。Tennis TV 的**竖版**短片不一样——画幅本来就是竖的，
+# 记分条烧在左下，量出来占 y 1281~1439，而字幕上锚正好是 1284：两层白字叠在
+# 一起，四帧抽出来帧帧都中。
+#
+# 这个数是**源片的属性**，不是画幅的属性，所以放在 spec 里（`subtitle_top`），
+# 默认沿用 `_REEL_MARGIN_V`。给了就把字幕整体抬到记分条上沿之上。
+# **别改成自动检测**：记分条的位置、颜色、是否存在都随播出方变，检测不到时
+# 会悄悄退回原位——又是「兜底出事的时候不吭声」。让写 spec 的人量一次、写死。
+#
+# **这是特例，不是新默认**（账号所有者定的）：只有自带记分条的源片才写这个
+# 字段，版式本身照旧。判据在 `test_源片自己烧了记分条时字幕要让开` 里两头钉着
+# ——默认值不许改，别的 spec 不许跟着写。
 # 低于这个高度的源片不值得做成片：裁成 3:4 再放到 1080 宽是放大好几倍。
 MIN_SOURCE_H = 700
-# 封面**没有配音时**停多久。有配音就跟着配音走，这个数用不上（见 `cover_length`）。
+# 封面**没有配音时**停多久——「赛场之上」走的就是这一档（它不给封面配音）。
+# **2.6 秒太长**：账号所有者「好多人以为是图片不是视频」。封面同时是信息流里的
+# 缩略图，点进来的人已经看过它了；画面迟迟不动，第一反应是「这是张图」，划走。
+# 1.2 秒够读完两行钩子加一行比分，又能让第一个回合立刻接上。
+#
+# 「网球有故事」那条线不一样：它给封面配音，封面停多久跟着配音走（`cover_length`），
+# 这个数用不上。**两条线别互相牵动**——判据见 `test_封面跟着配音走只给网球有故事`。
 COVER_SECONDS = 1.2
 # 说完之后留的那口气。贴着最后一个字切，末尾辅音会被 concat 的边界削掉。
 COVER_TAIL = 0.25
@@ -226,15 +250,25 @@ def _has_audio(path: Path) -> bool:
     return bool(out.strip())
 
 
-def resolve_crop(source_w: int, source_h: int) -> None:
-    """按源片实际高度定 3:4 的裁切窗口，太小的源片直接拒掉。
+def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
+    """在源片里取**最大的 3:4 窗口**，太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
     看起来一切正常，直到 `crop=810:1080` 撞上 640×360 的源片才炸在第一段切片上
     （run 30412173035）。所以这里既换算、也把不合格的源片挡在开跑前，
     别等渲了一半才发现。
+
+    **两种朝向都要认。** 原来只按高度算，隐含「源片一定比 3:4 宽」——
+    转播集锦确实都是 16:9。但 Tennis TV 的**竖版短片**是 1180×2114，
+    照旧算出来 `CROP_W = 1584 > 1180`，`crop` 直接被 ffmpeg 拒掉。
+    竖版源片要反过来：宽度顶满，在高度上取一段。
+
+    `crop_y` 是竖版源片的纵向落点，spec 里给。**不给就居中，而居中往往是错的**
+    ——手机录屏的顶上压着进度条、标题、关闭叉和台标，底下压着上滑箭头，
+    居中会把台标留在画面里。黄泽林那条量出来是 345（渲了 310/345/380 三档比
+    出来的：310 台标还在、记分条被切掉一行，380 白丢 35px）。
     """
-    global CROP_H, CROP_W
+    global CROP_H, CROP_W, CROP_Y
     if source_h < MIN_SOURCE_H:
         raise ReelError(
             f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {MIN_SOURCE_H}）。"
@@ -242,9 +276,23 @@ def resolve_crop(source_w: int, source_h: int) -> None:
             "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
             "或者换一个能拿到 720p 以上的源。"
         )
-    CROP_H = source_h // 2 * 2
-    CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
-    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}")
+    if source_w * 4 >= source_h * 3:          # 比 3:4 宽：高度顶满
+        CROP_H = source_h // 2 * 2
+        CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
+        CROP_Y = 0
+        shape = "横幅"
+    else:                                      # 比 3:4 竖：宽度顶满
+        CROP_W = source_w // 2 * 2
+        CROP_H = int(round(CROP_W * 4 / 3)) // 2 * 2
+        default_y = (source_h - CROP_H) // 2 // 2 * 2
+        CROP_Y = default_y if crop_y is None else int(crop_y) // 2 * 2
+        if CROP_Y < 0 or CROP_Y + CROP_H > source_h:
+            raise ReelError(
+                f"crop_y={crop_y} 超出源片：窗口 {CROP_W}×{CROP_H} 放在 y={CROP_Y}，"
+                f"下沿 {CROP_Y + CROP_H} 超过源片高度 {source_h}。")
+        shape = f"竖版，纵向落点 y={CROP_Y}" + (
+            "（居中，spec 没给 crop_y）" if crop_y is None else "")
+    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}（{shape}）")
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
@@ -921,7 +969,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
         else:
-            chain = (f"crop={CROP_W}:{CROP_H}:{x}:0,"
+            chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
@@ -1266,10 +1314,25 @@ def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
 
 def synth_cover(spec: dict, outdir: Path, voice: str, rate: str
                 ) -> tuple[Path | None, list[dict]]:
-    """封面那句旁白。没写就返回 `(None, [])`——封面退回定长静止。"""
+    """封面那句旁白。没写就返回 `(None, [])`——封面退回定长静止。
+
+    **封面配音是「网球有故事」那条线的做法**（账号所有者定的）：那个栏目讲一个人，
+    封面念的就是海报上那句钩子，封面停多久跟着它走。
+
+    「赛场之上」不走这条：它是一场对决的赛报，封面是定长 1.2 秒的短亮相，
+    立刻切进第一个回合——**停久了会被当成图片**。所以在这儿拦住，别让两条线
+    互相牵动：赛场之上写了 `cover.narration` 直接报错，而不是默默把封面拉长。
+    """
     text = str((spec.get("cover") or {}).get("narration") or "").strip()
     if not text:
         return None, []
+    column = str(spec.get("column") or (spec.get("cover") or {}).get("eyebrow") or "")
+    if "赛场之上" in column:
+        raise ReelError(
+            "「赛场之上」的封面不配音：它是定长 1.2 秒的短亮相，立刻切进第一个"
+            "回合——停久了会被当成图片而不是视频。封面跟着配音走是「网球有故事」"
+            "那条线的做法（那个栏目讲一个人，念的就是海报上那句钩子）。\n"
+            "把 cover.narration 删掉；那句话要留，就放进第一段的 narration。")
     path = outdir / "voice_cover.mp3"
     with stage("封面配音"):
         marks = tts_one(text, path, voice, rate)
@@ -1442,7 +1505,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
-    resolve_crop(source_w, source_h)
+    resolve_crop(source_w, source_h, spec.get("crop_y"))
+    portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
@@ -1452,6 +1516,17 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
+
+    # 竖版源片的窗口就是整幅宽度，横向一个像素都挪不动——`track` 和 `cx` 在
+    # 这里没有意义。**不吭声地忽略掉是最坏的做法**（spec 里写着 track，成片
+    # 却纹丝不动，看起来像跟踪失效），所以直接报错，让人去删掉那两个字段。
+    if portrait:
+        bad = [i for i, seg in enumerate(segments) if seg.track or seg.cx is not None]
+        if bad:
+            raise ReelError(
+                f"源片是竖版（{source_w}×{source_h}），裁切窗口就是整幅宽度，"
+                f"横摇和 cx 都无处可摇。请删掉第 {[i + 1 for i in bad]} 段的 "
+                "`track` / `cx`；要挪画面只能用 spec 顶层的 `crop_y`（纵向）。")
 
     # 缺 cv2 要**在这儿**报，不要等到第一段切片。跟踪合进来的那次 render 就是
     # 下完 64MB 源片、合完原声、渲完封面之后才死在 `import cv2` 上——和当初
@@ -1573,10 +1648,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 if a < limit)
         offset += seg.length
 
+    margin_v = int(spec.get("subtitle_top", _REEL_MARGIN_V))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
-                          height=VIDEO_H, margin_v=_REEL_MARGIN_V)
+                          height=VIDEO_H, margin_v=margin_v)
+    moved = "" if margin_v == _REEL_MARGIN_V else (
+        f"，比默认抬高 {_REEL_MARGIN_V - margin_v}px 让开源片自己的记分条")
     print(f"字幕 {len(cues)} 行 → {ass.name}（画布 {VIDEO_W}×{VIDEO_H}，"
-          f"上锚 MarginV={_REEL_MARGIN_V}，"
+          f"上锚 MarginV={margin_v}{moved}，"
           f"左右 {_ASS_MARGIN_H}）")
 
     mixed = outdir / "_audio.m4a"
