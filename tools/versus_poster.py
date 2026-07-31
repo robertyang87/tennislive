@@ -189,6 +189,63 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+def _solo_body(cover: dict) -> tuple[str, str]:
+    """`solo`：一个人、一张照片铺满，名字压在下三分之一的上沿。
+
+    **这不是 VS 的降级，是给「讲一个人」的片子用的另一种海报。**
+    账号所有者 2026-07-31：休伊特那条「是讲休伊特的儿子的话题」「所以封面
+    只有休伊特儿子照片」——栏目是网球有故事，只是这次用视频呈现。
+
+    VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决；套在讲人的
+    片子上，等于让读者去猜这是谁打谁。所以 solo 把那三样全去掉，只留品牌
+    的其余部分：台头药丸、钩子、结果块的位置一个没动，换片子仍然只换素材。
+
+    ⚠️ **赛场之上仍然只能用 VS 模板**，判据在 test_封面只有海报模板一条路。
+    """
+    art = cover.get("portrait") or {}
+    if not art.get("image"):
+        raise SystemExit(
+            "solo 版式要 `cover.portrait.image`：这条片子主角的一张实拍。\n"
+            "四道闸门照旧（时间地点人物对得上 / 在比赛中 / 有冲击力 / 够清晰）；"
+            "四类源都拿不到本场的，就从本场源片抓一帧（portrait.frame_at）。")
+    src = _precrop(Path(art["image"]), art)
+    uri = _data_uri(src)
+    focus = float(art.get("focus", 0.5)) * 100
+    focus_y = float(art.get("focus_y", 0.5)) * 100
+    zoom = float(art.get("zoom", 1.0)) * 100
+    # 名字压在钩子上沿那条暗带上。**0.575 是倒推的，不是拍的**：`.copy` 从
+    # bottom:150 起算，两行钩子 228 + 结果块约 118 + 药丸行 68，顶边落在 904；
+    # 名字 62px 高、居中锚，0.575 → 828，上下各留 45px。原来的 0.60（864）
+    # 渲出来「克鲁兹·休伊特」直接压在「这个姓能换一张外卡」上。
+    name_y = float(cover.get("name_y", 0.575)) * 100
+    body = (f'<div class="bg solopad"></div><div class="bg solo"></div>'
+            f'<div class="shade"></div>'
+            f'<div class="na solo-na" style="top:{name_y:.1f}%">'
+            f'{cover.get("subject", "")}</div>')
+    if art.get("fit") == "width":
+        # **横素材在 3:4 的海报里，`cover` 是最坏的铺法。** 1920×1080 铺满
+        # 1080×1440 要先放大到 2560×1440，横向只留中间 42%——挥拍那一下的
+        # 球拍、伸出去的另一只手全被切在外面，剩一张脸占满屏，正是
+        # 「大头特写不等于有冲击力」拦的那种。按宽度铺是 1.0 倍，整个动作
+        # 都在框里，上下不够的两条垫同图的模糊放大版（和 `_panel_css` 同一招）。
+        art_css = (
+            f".solopad{{background-image:url('{uri}');background-size:cover;"
+            f"background-position:{focus:.1f}% 50%;"
+            f"filter:blur(44px) brightness(.42);transform:scale(1.2)}}"
+            f"\n.solo{{background-image:url('{uri}');"
+            f"background-size:{zoom:.1f}% auto;"
+            f"background-position:{focus:.1f}% {focus_y:.1f}%;"
+            f"{_feather(src, art, 100.0)}}}")
+    else:
+        art_css = (f".solo{{background-image:url('{uri}');"
+                   f"background-size:auto {zoom:.1f}%;"
+                   f"background-position:{focus:.1f}% {focus_y:.1f}%}}")
+    extra = (art_css
+             + "\n.bg{position:absolute;inset:0;background-repeat:no-repeat}"
+             "\n.solo-na{transform:translateY(-50%)}")
+    return body, extra
+
+
 def _precrop(image: Path, panel: dict) -> Path:
     """`crop: [x0, y0, x1, y1]`（0~1 的比例）——**先裁再铺**。
 
@@ -324,17 +381,25 @@ def _result_block(cover: dict, names: list) -> str:
     品牌绿，不引入第二个强调色（一屏最多一个强调色）。
 
     老的 `score` / `sub` 两个字段继续认，斜切那两条已发布的片子不受影响。
+
+    **赛果那一行可以整行不要**（只给 `tier` / `round` / `meta`，不给 `result`）。
+    「赛场之上」讲的是一场对决，赛果就是标题；**网球有故事讲的是一个人**，
+    把「德米纳尔 6-2 6-3 克鲁兹·休伊特」印在封面上等于**先把结局说了**——
+    休伊特那条六拍的结构里，比分是第 5 拍，而第 5 拍恰恰是「片子不能停在
+    这儿」的那一拍。封面剧透完，后面五拍就没人看了。
     """
-    if not cover.get("result"):
+    result = str(cover.get("result") or "")
+    event_badge = cover.get("event_badge") or {}
+    has_footer = bool(event_badge or cover.get("tier")
+                      or cover.get("round") or cover.get("meta"))
+    if not result and not has_footer:
         return (f'<div class="score">{cover.get("score", "")}</div>'
                 f'<div class="sub">{cover.get("sub", "")}</div>')
     winner = str(cover.get("winner", "")).strip()
     loser = next((n for n in names if str(n).strip() != winner), "")
-    result = str(cover["result"])
     # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
     # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
     sets_px = 62 if len(result) <= 11 else 54
-    event_badge = cover.get("event_badge") or {}
     if event_badge:
         tour = str(event_badge.get("tour", "")).strip().lower()
         if tour not in {"atp", "wta"}:
@@ -361,6 +426,8 @@ def _result_block(cover: dict, names: list) -> str:
             + (f'<span class="mtx">{meta}</span>' if meta else "")
             + "</div>"
         )
+    if not result:
+        return footer
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
@@ -376,22 +443,39 @@ def build(spec: dict, layout: str, out: Path) -> Path:
 
 def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     """把一个 `cover` 段落渲成 1080×1440 的海报。`build_match_reel` 直接调它。"""
-    versus = cover["versus"]
-    top, bottom = versus["top"], versus["bottom"]
-    # 名字是模板的一部分，不是可选装饰：只有两张脸的 VS 卡等于让人猜这是谁打谁，
-    # 而中文名是这条片子在信息流里唯一能被扫到的东西。
-    # **一律以译名表为准**（`src/tennislive/zh/player_names_top500.json` 优先），
-    # 别手打——莱巴金娜、奥斯塔彭科都是这么错出去的。
-    names = versus.get("names") or []
-    if len(names) != 2 or not all(str(n).strip() for n in names):
-        raise SystemExit(
-            "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
-            "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
+    # **`solo` 是给「讲一个人」的片子用的，不是 VS 的降级。**
+    #
+    # 账号所有者 2026-07-31：休伊特那条「是讲休伊特的儿子的话题，不是赛场之上的
+    # 内容」「所以封面只有休伊特儿子照片」——栏目是**网球有故事**，只是这次用
+    # 视频呈现。VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决，
+    # 套在讲人的片子上，等于让读者去猜这是谁打谁。
+    #
+    # ⚠️ **赛场之上仍然只能用 VS 模板**——那条规矩没变，判据在
+    # `test_封面只有海报模板一条路`。solo 认的是别的栏目。
+    if layout == "solo":
+        names = [str(cover.get("subject", "")).strip()]
+        if not names[0]:
+            raise SystemExit(
+                "solo 版式要 `cover.subject`：这条片子讲的是谁（中文名）。\n"
+                "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
+    else:
+        versus = cover["versus"]
+        top, bottom = versus["top"], versus["bottom"]
+        # 名字是模板的一部分，不是可选装饰：只有两张脸的 VS 卡等于让人猜这是谁
+        # 打谁，而中文名是这条片子在信息流里唯一能被扫到的东西。
+        # **一律以译名表为准**，别手打——莱巴金娜、奥斯塔彭科都是这么错的。
+        names = versus.get("names") or []
+        if len(names) != 2 or not all(str(n).strip() for n in names):
+            raise SystemExit(
+                "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
+                "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
 
     hook = "".join(f"<div>{line.strip()}</div>"
                    for line in str(cover.get("hook", "")).split("\n") if line.strip())
 
-    if layout == "cutout":
+    if layout == "solo":
+        body, panels = _solo_body(cover)
+    elif layout == "cutout":
         body, panels = _cutout_body(cover, versus, names)
     else:
         # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
@@ -463,6 +547,9 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}
 .meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+/* 没有赛果那一行时（网球有故事），药丸直接顶着钩子，20px 太紧——那 20px
+   本来是接在 `.res` 的 28px 下面的。 */
+.hook+.meta,.hook+.eventline{{margin-top:34px}}
 .eventline{{margin-top:20px;display:flex;align-items:center;gap:22px}}
 .tourmark{{height:48px;min-width:158px;border:2px solid {BRAND};
   border-radius:999px;color:{BRAND};display:inline-flex;align-items:center;
@@ -481,6 +568,12 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 <div class="copy"><div class="hook">{hook}</div>
 {_result_block(cover, names)}</div>"""
 
+    return _render_html(html, out)
+
+
+def _render_html(html: str, out: Path) -> Path:
+    """把一段 HTML 渲成 1080×1440 的 JPEG。solo 和 VS 两条版式共用这一段，
+    免得浏览器查找的那串兜底路径在两处各写一遍、改一处漏一处。"""
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
@@ -516,11 +609,12 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
     return out
 
 
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--spec", required=True)
     ap.add_argument("--layout", default="cutout",
-                    choices=("cutout", "diagonal", "split", "stack"))
+                    choices=("cutout", "diagonal", "split", "stack", "solo"))
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))

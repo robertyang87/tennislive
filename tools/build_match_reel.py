@@ -264,6 +264,78 @@ def resolve_fps(path: Path) -> tuple[str, float]:
     return raw, value
 
 
+def fetch_captions(url: str, outdir: Path) -> Path | None:
+    """把自动字幕连时间码拉下来，写成 `captions.txt`（`秒数<TAB>这一句`）。
+
+    **为什么要它**：采访素材靠缩略图墙是选不了段的——一整条五分钟的访谈，
+    每一帧都是一个人在说话，画面上分不出他这一秒在讲什么。要用他的原声，
+    就得知道那句话落在第几秒。
+
+    沙箱拿不到（timedtext 对这台机器返回 **0 字节的 200**，看起来和「这条片子
+    没有字幕」一模一样——又一次「空结果先自证是真空」：播放页里明明列着
+    `asr` 轨）。runner 的 IP 拿得到，所以收在 probe 里。
+
+    拿不到就返回 None，**不影响 probe 的其余产物**：字幕是锦上添花，
+    缩略图墙和切点才是这一步的主产物。
+    """
+    binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
+    if not binary or ("youtube.com" not in url and "youtu.be" not in url):
+        return None
+    cookies: list[str] = []
+    jar = os.environ.get("YT_COOKIES", "").strip()
+    if jar and Path(jar).is_file():
+        cookies = ["--cookies", jar]
+    stem = outdir / "_subs"
+    for label, extra in _ladder():
+        proc = subprocess.run(
+            [binary, "--skip-download", "--write-auto-subs", "--write-subs",
+             "--sub-langs", "en.*", "--sub-format", "json3/vtt",
+             "-o", str(stem), url, *cookies, *extra],
+            capture_output=True, text=True)
+        got = sorted(outdir.glob("_subs*.json3")) + sorted(outdir.glob("_subs*.vtt"))
+        if got:
+            print(f"[字幕] {label} 拿到 {got[0].name}")
+            break
+        print(f"[字幕] {label} 没拿到：{(proc.stderr or '').strip()[-160:]}")
+    else:
+        print("[字幕] 所有 client 都没拿到自动字幕——这条源片只能靠画面选段")
+        return None
+    lines = _caption_lines(got[0])
+    if not lines:
+        return None
+    dest = outdir / "captions.txt"
+    dest.write_text("".join(f"{t:.2f}\t{s}\n" for t, s in lines), encoding="utf-8")
+    for f in got:
+        f.unlink(missing_ok=True)
+    print(f"[字幕] {len(lines)} 句 → {dest.name}")
+    return dest
+
+
+def _caption_lines(path: Path) -> list[tuple[float, str]]:
+    """json3 或 vtt → [(起始秒, 这一句)]。两种都认，因为 yt-dlp 给哪种看运气。"""
+    text = path.read_text(encoding="utf-8", errors="replace")
+    if path.suffix == ".json3":
+        out = []
+        for event in json.loads(text).get("events", []):
+            body = "".join(s.get("utf8", "") for s in event.get("segs") or ())
+            body = " ".join(body.split())
+            if body:
+                out.append((event.get("tStartMs", 0) / 1000, body))
+        return out
+    out, stamp = [], None
+    for raw in text.splitlines():
+        line = raw.strip()
+        m = re.match(r"(\d+):(\d+):(\d+)[.,](\d+)\s*-->", line)
+        if m:
+            h, mi, s, ms = (int(g) for g in m.groups())
+            stamp = h * 3600 + mi * 60 + s + ms / 1000
+        elif line and stamp is not None and "-->" not in line:
+            body = " ".join(re.sub(r"<[^>]+>", "", line).split())
+            if body and (not out or out[-1][1] != body):
+                out.append((stamp, body))
+    return out
+
+
 def probe_size(path: Path) -> tuple[int, int]:
     out = run("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=width,height",
@@ -297,6 +369,15 @@ _PLAIN = [
     ("web_embedded", ["--extractor-args", "youtube:player_client=web_embedded"]),
     ("android+ios", ["--extractor-args", "youtube:player_client=android,ios"]),
 ]
+
+
+# **编码是偏好，不是硬条件。** 抽成常量是为了能测：判据原来靠在源码里
+# 「从 `selector = ` 切到 `cookies: list[str]`」取一段字符串，而这两个记号
+# 在文件里都不是唯一的——后来 `fetch_captions` 里也有一句 `cookies: list[str]`，
+# 而且排在前面，那一刀切出来是**空串**，于是「不含 avc1」自动成立、
+# 「含 h264」自动失败。**判据不该依赖它在文件里的位置。**
+FMT_SELECTOR = "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
+FMT_SORT = "res:1080,fps,vcodec:h264,acodec:m4a"
 
 
 def _ladder() -> list[tuple[str, list[str]]]:
@@ -347,8 +428,7 @@ def download(url: str, dest: Path) -> Path:
     #
     # 现在 `-f` 只管分辨率上限，编码偏好交给 `-S`：h264 排在前面（下游 ffmpeg
     # 处理最省事），但拿不到就用 VP9/AV1，而不是掉回 360p。
-    selector = "bv*[height<=1080]+ba/b[height<=1080]/bv*+ba/b"
-    sort = ["-S", "res:1080,fps,vcodec:h264,acodec:m4a"]
+    selector, sort = FMT_SELECTOR, ["-S", FMT_SORT]
     cookies: list[str] = []
     jar = os.environ.get("YT_COOKIES", "").strip()
     if jar and Path(jar).is_file():
@@ -468,10 +548,59 @@ class Segment:
     # 一条片子跨两场比赛时用得上：休伊特那条要「首胜吉隆」和「负于德米纳尔」
     # 两条官方集锦，故事才完整。
     source: str = ""
+    # **这一段让当事人自己说**：现场采访的原声不配旁白，只上中文字幕。
+    #
+    # 为什么要单开一个字段而不是塞进 narration：narration 会合成一条中文语音
+    # 压在原声上（而且 sidechaincompress 会把原声压下去），等于把他的话盖掉。
+    # 而字幕那条线**只认 narration**——没有 narration 就没有字幕，于是
+    # 「静音刷是默认状态」那条规矩下，这一段对多数人是彻底空白：
+    # 听不懂英文的看不懂，静音的什么也没有。两头都丢。
+    #
+    # 所以 quote 是「不出声、只出字」的那一档：原声开到 BED_LOUD 不闪避
+    # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
+    # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
+    quote: str = ""
 
     @property
     def length(self) -> float:
         return round(self.end - self.start, 3)
+
+
+def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
+    """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
+
+    **抽出来是为了能测。** 原来这段在 `render()` 里内联，而 `render()` 要先下
+    源片、探 fps、渲封面才走到这儿——判据只能在 runner 上、六分钟之后才生效，
+    等于没有。这两条都是「不吭声」型的错：
+
+    - 引用了不存在的源 → 会静默从主源抓（另一场比赛的画面）
+    - 同一段既有 narration 又有 quote → 两个人同时开口，而且闪避把原声压掉
+
+    **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
+    广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
+    真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
+    （`"track": true`），只留给主机位的宽景回合。
+    """
+    segments = [Segment(float(s["start"]), float(s["end"]),
+                        None if s.get("cx") is None else float(s["cx"]),
+                        s.get("narration", "").strip(),
+                        str(s.get("fit", "crop")), bool(s.get("track", False)),
+                        str(s.get("source", primary)),
+                        s.get("quote", "").strip())
+                for s in spec["segments"]]
+    unknown = sorted({s.source for s in segments} - set(sources))
+    if unknown:
+        raise ReelError(
+            f"这些段引用了不存在的源：{unknown}；spec 里声明的是 {sorted(sources)}")
+    both = [i + 1 for i, s in enumerate(segments) if s.narration and s.quote]
+    if both:
+        raise ReelError(
+            f"第 {both} 段同时写了 narration 和 quote。\n"
+            "两者是互斥的：quote 那一段要让当事人自己说，配上旁白就是"
+            "**两个人同时开口**，而且闪避会把原声压下去——他的话就没了。\n"
+            "要么把这句话改写成旁白（narration，我们替他讲），"
+            "要么只留 quote（原声 + 中文字幕）。")
+    return segments
 
 
 def load_spec(path: Path) -> dict:
@@ -787,8 +916,34 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
 
     缺图就报错，并把出路写在报错里——**去扩检索源**（赛事官方图库 → 协会/赛事
     新闻页 → 新闻站与图片社 → Commons/Flickr），不是退回抽帧。
+
+    **模板有两副，按栏目选，不按素材凑手选**：
+
+    - `赛场之上`讲一场对决 → VS 模板（两格 + 中缝 + VS 圆牌 + 两个名字）
+    - `网球有故事`讲一个人 → `layout: "solo"`，封面只有主角
+
+    账号所有者 2026-07-31 定的：休伊特那条「是讲休伊特的儿子的话题，不是
+    赛场之上的内容」「所以封面只有休伊特儿子照片」。反过来那条**没有松**：
+    赛场之上仍然只能用 VS 模板，solo 不是它缺图时的兜底。
     """
     cover = spec["cover"]
+    layout = str(cover.get("layout", "cutout"))
+    eyebrow = str(cover.get("eyebrow", "")).strip()
+    if layout == "solo":
+        if eyebrow == "赛场之上":
+            raise ReelError(
+                "「赛场之上」的封面一律是 VS 模板：这个栏目讲的是一场对决，"
+                "封面只放一个人就少了一半。\n"
+                "solo 是给讲人的栏目（网球有故事）用的，不是缺图时的兜底——"
+                "缺图去扩检索源，或从本场源片抓一帧。")
+        if not (cover.get("portrait") or {}).get("image") and \
+                (cover.get("portrait") or {}).get("frame_at") is None:
+            raise ReelError(
+                "solo 封面缺 `cover.portrait`：要主角的一张**本场**实拍。\n"
+                "格式：cover.portrait = {image | frame_at, source, "
+                "focus, focus_y, zoom, fit}\n"
+                "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
+        return build_versus_poster(sources, primary, cover, dest)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -798,7 +953,8 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
             "（`frame_at`，账号所有者 2026-07-31 定：「或者从比赛中抠大图，"
             "要情绪饱满的」）。抓帧要挑情绪最满的那一格，别挑随便一个回合。\n"
             "格式：cover.versus = {split, names: [上, 下], "
-            "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}")
+            "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}\n"
+            "讲一个人的栏目（网球有故事）用 `layout: \"solo\"` + cover.portrait。")
     return build_versus_poster(sources, primary, cover, dest)
 
 
@@ -818,8 +974,8 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from versus_poster import build_poster  # noqa: PLC0415
 
-    versus = dict(cover["versus"])
     layout = str(cover.get("layout", "cutout"))
+    versus = dict(cover.get("versus") or {})
 
     def _grab(spot: dict, tag: str) -> str:
         """`image` 直接用，`frame_at` 从源片抓一帧。抓出来的不进仓库。
@@ -842,7 +998,11 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
                 "-frames:v", "1", "-q:v", "2", str(grab))
         return str(grab)
 
-    if layout == "cutout":
+    if layout == "solo":
+        art = dict(cover["portrait"])
+        art["image"] = _grab(art, "portrait")
+        cover = {**cover, "portrait": art}
+    elif layout == "cutout":
         # 人物是官方抠图（本地 PNG），只有背景那张要抓帧。
         bg = dict(versus.get("background") or {})
         if bg.get("frame_at") is None:
@@ -872,10 +1032,12 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
             side["image"] = _grab(side, key)
             versus[key] = side
     poster = dest.parent / POSTER_NAME
+    payload = dict(cover) if layout == "solo" else {**cover, "versus": versus}
     with stage("封面海报"):
-        build_poster({**cover, "versus": versus}, poster, layout=layout)
+        build_poster(payload, poster, layout=layout)
     poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
-    print(f"    [封面] 赛场之上海报 {layout} → {poster.name}")
+    column = str(cover.get("eyebrow", "")).strip() or "赛场之上"
+    print(f"    [封面] {column}海报 {layout} → {poster.name}")
     return _still_to_clip(poster, dest)
 
 
@@ -1032,20 +1194,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
     resolve_crop(source_w, source_h)
 
-    # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
-    # 广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
-    # 真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
-    # （`"track": true`），只留给主机位的宽景回合。
-    segments = [Segment(float(s["start"]), float(s["end"]),
-                        None if s.get("cx") is None else float(s["cx"]),
-                        s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", False)),
-                        str(s.get("source", primary)))
-                for s in spec["segments"]]
-    unknown = sorted({s.source for s in segments} - set(sources))
-    if unknown:
-        raise ReelError(
-            f"这些段引用了不存在的源：{unknown}；spec 里声明的是 {sorted(sources)}")
+    segments = parse_segments(spec, sources, primary)
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
     if total > 120:
@@ -1122,7 +1271,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     filters: list[str] = []
     offset = COVER_SECONDS
     for index, (seg, (path, marks)) in enumerate(zip(segments, voices)):
-        if seg.narration.strip():
+        if seg.quote:
+            # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
+            # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
+            cues.extend(subtitle_cues(readable(seg.quote), seg.length,
+                                      offset=offset))
+        elif seg.narration.strip():
             spoken = spoken_of[index]
             mix_inputs.extend(["-i", str(path)])
             filters.append(
@@ -1226,12 +1380,20 @@ def main() -> int:
         source = download(args.url, outdir / "source.mp4")
         w, h = probe_size(source)
         duration = probe_duration(source)
+        # **帧率要记进 probe.json。** 多源那条线上，`check_sources_match` 拿
+        # 尺寸和帧率一起判，对不上就红——而 probe 之前只报尺寸，于是「这条源
+        # 能不能和已有的那条一起剪」要等到 render 跑六分钟之后才知道。
+        # 探测的作用就是把这种问题提前，别让它藏到最后一步。
+        fps_expr, fps = resolve_fps(source)
         cuts = scene_changes(source)
-        print(f"源片 {w}×{h}，{duration:.1f}s，检出 {len(cuts)} 个切点")
+        print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点")
         sheets = contact_sheet(source, outdir, every=args.every)
+        captions = fetch_captions(args.url, outdir)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
+            "fps": fps_expr, "fps_value": round(fps, 3),
             "scene_cuts": cuts, "sheets": [s.name for s in sheets],
+            "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         print("缩略图墙:", ", ".join(s.name for s in sheets))
         return 0

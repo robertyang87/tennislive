@@ -207,6 +207,49 @@ def _reel_specs():
             for p in sorted(Path("specs/reels").glob("*.json"))}
 
 
+def test_让当事人自己说的那一段也要有字幕():
+    """采访原声那一段**不配旁白，但必须出中文字幕**。
+
+    字幕那条线原来只认 `narration`——没有旁白就没有字幕。于是「让他自己说」
+    这一段在成片里对**大多数人是彻底空白**：听不懂英文的看不懂，而
+    「静音刷是默认状态」，静音的人连声音都没有。两头都丢，**而且不报错**。
+
+    所以原声段走 `quote`：不合成语音（也就不会闪避把他的话压下去），
+    字幕按字数等比铺满整段——拿不到词边界时本来就是这么退的。
+
+    两条判据：**行确实排出来了**，以及 **narration 和 quote 不许并存**
+    （并存＝两个人同时开口，而且他的原声会被闪避压掉）。
+    """
+    import pytest  # noqa: PLC0415
+
+    from tennislive.video.explainer import subtitle_cues  # noqa: PLC0415
+
+    reel = _reel()
+    quote = "这个动作叫 Vicht 吧我得去确认一下"
+    cues = subtitle_cues(quote, 8.0, offset=1.0)
+    assert cues, "原声段排不出字幕"
+    assert cues[0][0] >= 1.0, "字幕没跟着片头偏移推"
+    assert cues[-1][1] <= 1.0 + 8.0 + 0.01, "字幕甩出了这一段的窗口"
+
+    # 排出来的行**必须回到 render 的那条路上**：只测 subtitle_cues 说明不了
+    # build_match_reel 用了它——原来的 bug 恰恰是「函数在，但这条分支没调它」。
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert "if seg.quote:" in body, "cue 那条循环没给原声段留分支"
+
+    spec = {"segments": [{"start": 0, "end": 5, "narration": "我们讲",
+                          "quote": "他自己讲"}],
+            "cover": {}}
+    with pytest.raises(reel.ReelError, match="互斥"):
+        reel.parse_segments(spec, {"": 1}, "")
+    # 反面锚点：各写各的要放行
+    ok = {"segments": [{"start": 0, "end": 5, "quote": "他自己讲"},
+                       {"start": 5, "end": 9, "narration": "我们讲"}],
+          "cover": {}}
+    got = reel.parse_segments(ok, {"": 1}, "")
+    assert [s.quote for s in got] == ["他自己讲", ""]
+    assert [s.narration for s in got] == ["", "我们讲"]
+
+
 def test_收尾要落在一问上不能停在数据上():
     """账号所有者定的：「**不要平白地叙事**，要有饱满情感、激起共鸣和代入感……
     同时能引爆人们传播」。
@@ -612,13 +655,22 @@ def test_下载不把编码当硬条件():
     正好 640×360。中间没有一步会报错，直到裁切那步才炸（run 30412173035）。
 
     所以编码只能是**偏好**（`-S`），不能是过滤条件（`-f`）。
+
+    **判据查的是两个常量的值，不是源码里的一段字符串。** 原来是「从
+    `selector = ` 切到 `cookies: list[str]`」——两个记号在文件里都不唯一，
+    后来加的 `fetch_captions` 里也有 `cookies: list[str]` 且排在更前面，
+    那一刀切出来是空串：`not in` 全过、`in` 全挂。**空串上的断言不吭声地
+    全部成立**，正是仓库里反复记的那种假绿。
     """
     reel = _reel()
+    assert "vcodec^=avc1" not in reel.FMT_SELECTOR, "编码又被写成硬条件了"
+    assert "ext=m4a" not in reel.FMT_SELECTOR
+    assert "vcodec" not in reel.FMT_SELECTOR, "-f 里不许出现编码"
+    assert "vcodec:h264" in reel.FMT_SORT, "h264 偏好要留着，下游 ffmpeg 最省事"
+    # 常量要真的接到命令行上，不是摆在那儿
     source = Path(reel.__file__).read_text(encoding="utf-8")
-    picker = source[source.index("selector = "):source.index("cookies: list[str]")]
-    assert "vcodec^=avc1" not in picker, "编码又被写成硬条件了"
-    assert "ext=m4a" not in picker
-    assert "vcodec:h264" in picker, "h264 偏好要留着，下游 ffmpeg 处理最省事"
+    assert "selector, sort = FMT_SELECTOR" in source
+    assert '"-f", selector' in source
 
 
 def test_赛场之上走固定海报模板():
@@ -766,16 +818,85 @@ def test_推送版式照着知识解说那条且海报铺满():
     assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
 
 
+# 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
+_COLUMNS = {
+    "赛场之上": ("cutout", "diagonal", "split", "stack"),   # 讲一场对决 → VS
+    "网球有故事": ("solo",),                                 # 讲一个人 → 单人
+}
+
+
 def test_海报台头只写栏目名():
     """台头那颗小药丸只写**栏目名**，不带账号名。
 
     原来是「网球时差 · 赛场之上」——账号名在片子里已经有落款，海报上再挂一遍
     等于把最显眼的位置让给一句读者不需要的信息。首屏那点地方要留给
     「这是哪一场」。
+
+    **判据不能写成 `== "赛场之上"`**（原来就是）。那把「只写栏目名」这条规矩
+    钉成了「只能有一个栏目」，于是 2026-07-31 账号所有者说休伊特那条
+    「是讲休伊特的儿子的话题，不是赛场之上的内容」时，加一个栏目就得改测试——
+    而要守的性质从头到尾只有一条：**药丸里没有账号名**。
     """
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
-        assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
+        assert eyebrow in _COLUMNS, f"{path.name} 的台头是 {eyebrow!r}，不是栏目名"
+        assert "网球时差" not in eyebrow, f"{path.name} 的台头挂了账号名"
+        assert "·" not in eyebrow, f"{path.name} 的台头是一串，不是一个栏目名"
+
+
+def test_栏目和封面模板要配对():
+    """**「赛场之上」仍然只能用 VS 模板**，`solo` 不是它缺图时的兜底。
+
+    账号所有者 2026-07-31 给的是**新增一个栏目**（「当前对话历史都是网球有故事
+    的话题」「只是这次网球有故事的主题要用视频方式呈现」），不是给赛场之上
+    松绑。这两件事很容易混：单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，
+    就会「先用 solo 顶一下」——正是 `test_封面只有海报模板一条路` 拦的那个滑坡，
+    只是换了个滑法。
+
+    所以配对写死在两处，缺一不可：
+
+    - spec 里（这一条）——已发布的片子不会悄悄漂
+    - `build_cover` 里——**新写的 spec 也拦得住**，判据在下面那条
+    """
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        cover = json.loads(path.read_text("utf-8"))["cover"]
+        allowed = _COLUMNS[cover["eyebrow"]]
+        assert cover.get("layout") in allowed, (
+            f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
+            f"写的是 {cover.get('layout')!r}")
+        if cover.get("layout") == "solo":
+            # 单人海报讲的是一个人：主角、他的照片，**而且不许印赛果**——
+            # 「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先说结局。
+            assert cover.get("subject"), f"{path.name} 的 solo 封面没写 subject"
+            assert (cover.get("portrait") or {}).get("image") or \
+                (cover.get("portrait") or {}).get("frame_at") is not None, \
+                f"{path.name} 的 solo 封面没有 portrait"
+            assert "versus" not in cover, f"{path.name} 是 solo，不该还有 versus"
+            assert not cover.get("result"), (
+                f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
+                "那是最后一拍，印在封面上等于先把结局说了")
+
+
+def test_赛场之上不许退回单人封面():
+    """上一条钉的是已发布的 spec，这一条钉的是**代码**：新写一个 spec 也拦得住。
+
+    只钉 spec 的话，判据只在「有人把它写进仓库」之后才生效——而滑坡发生在
+    渲染那一刻（缺图 → 换个 layout 试试 → 出片了 → 才提交）。闸要装在出片
+    那一步，和「复制页那道闸装在发的那一步不是渲的那一步」是同一条。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    solo = {"eyebrow": "赛场之上", "layout": "solo", "subject": "谁",
+            "portrait": {"image": "x.jpg"}}
+    with pytest.raises(reel.ReelError, match="VS 模板"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": solo},
+                         Path("y.mp4"), 1920)
+    # 反面锚点：换成讲人的栏目就该放行（这儿只验它不再拦，渲染另有判据）
+    with pytest.raises(reel.ReelError, match="portrait"):
+        reel.build_cover({"": Path("x.mp4")}, "",
+                         {"cover": {"eyebrow": "网球有故事", "layout": "solo"}},
+                         Path("y.mp4"), 1920)
 
 
 def test_商竣程那格是本场真实照片不是抽帧():
