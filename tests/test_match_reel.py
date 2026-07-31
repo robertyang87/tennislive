@@ -399,6 +399,24 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             f"{path.stem} 开场没给轮次：{opening}"
 
 
+def test_音频那套不许接进出片流程():
+    """账号所有者：「这个默认不要开启，会很慢，拖慢出片速度」。
+
+    解整条音轨要用 ffmpeg 把片子过一遍，接进 render 就是每条片子白等几十秒；
+    而它换来的只是段尾秒数准一点，那个数写进 spec 之后就固定了，不必每次重算。
+
+    所以它是**写 spec 时手工跑一次**的辅助，判据是出片路径里一处都不出现。
+    """
+    hot = (Path("tools/build_match_reel.py"),
+           Path(".github/workflows/match-reel.yml"))
+    for path in hot:
+        text = path.read_text(encoding="utf-8")
+        for name in ("unlag", "audio_envelope", "true_end", "check_crowd_rise"):
+            assert name not in text, (
+                f"{path.name} 里出现了 {name}——音频那套被接进出片流程了，"
+                "它每条片子要多花几十秒解音轨，而段尾秒数写进 spec 后就固定了")
+
+
 def _reel_specs():
     return {p.stem: json.loads(p.read_text("utf-8"))
             for p in sorted(Path("specs/reels").glob("*.json"))}

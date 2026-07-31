@@ -1434,6 +1434,19 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 
 存量的七条片子发在这条规矩之前，测试里挂了一份清单，**只许减不许加**。
 
+### 音频那套默认不开，别接进出片流程
+
+账号所有者：「这个默认不要开启，会很慢，拖慢出片速度」。
+
+「夹逼 + 音频回溯」是**写 spec 时手工跑一次**的辅助（`find_point_ends.py`
+的 `unlag`、`check_crowd_rise.py`），不是出片的一环：解一条 188 秒的音轨要
+拿 ffmpeg 把整条片子过一遍，接进 render 就是每条片子白等几十秒，而它换来的
+只是段尾秒数更准一点——那个数一旦写进 spec 就固定了，不需要每次重算。
+
+判据是**出片路径里一处都不许出现**：`build_match_reel.py` 和
+`match-reel.yml` 里对 `unlag` / `audio_envelope` / `check_crowd_rise`
+的引用数必须是 0。
+
 ### 走势数据从哪儿取：`tools/match_feed.py`
 
 账号所有者：「你要去找到真实的比赛走势数据和每一盘的技术统计对比，然后分析后
