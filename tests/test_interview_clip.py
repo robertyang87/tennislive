@@ -523,6 +523,82 @@ def test_复制页写在提交之前推送排在提交之后():
     assert "push_reel" not in str(render_step.get("run") or "")
 
 
+def test_按slug存的线要能显式给日期(tmp_path):
+    """`push_reel` 原来**只从目录路径解日期**（`output/2026-07-28/reel/…`）。
+
+    赛后开麦按 slug 存（`output/interviews/<slug>/`）——同一场采访哪天发都可能，
+    目录里没有日期是**故意的**。于是第一次推送在「写复制页」那步 0 秒失败：
+    `从 output/interviews/… 里取不到日期`。**闸装对了**：失败发生在提交之前，
+    微信一个字都没出去。
+    """
+    from tools.push_reel import headline
+
+    od = tmp_path / "output" / "interviews" / "x"
+    title = headline(od, "赛后开麦", "甲 vs 乙", "6-3 6-4",
+                     summary="伊埃拉再胜斯维托丽娜", date="2026-08-01")
+    assert title.startswith("8.1 赛后开麦"), title
+    with pytest.raises(SystemExit) as e:      # 不给日期、路径里也没有 → 报错要说出路
+        headline(od, "赛后开麦", "甲 vs 乙")
+    assert "--date" in str(e.value)
+    with pytest.raises(SystemExit):           # 格式不对不许放过
+        headline(od, "赛后开麦", "甲 vs 乙", date="2026/08/01")
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_spec里的推送字段拼得出合格标题(path):
+    """**标题上限 20 字位，超了 `push_reel` 直接拒发。**
+
+    这是在 runner 上跑一趟才发现的第二个问题（第一个是日期）——本来该在
+    这儿一秒就知道。判据放在测试里，spec 一改就重算。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    if not (push := spec.get("push")):
+        pytest.skip("这条 spec 还不推送")
+    from tools.push_reel import headline
+
+    assert push.get("matchup"), f"{path.name} 的 push.matchup 是空的"
+    title = headline(ROOT / "output" / "interviews" / spec["slug"],
+                     spec["column"], push["matchup"], push.get("score", ""),
+                     push.get("event", ""), push.get("summary", ""),
+                     date="2026-12-31")     # 用固定日期，别让测试跟着今天变
+    print(f"{path.stem} → {title}")
+    # 换行只对**工作流真正导出的那几个**字段有害（`$GITHUB_OUTPUT` 一行一个
+    # `k=v`）。`_why` 这种注释字段随便换行——**判据宁可窄不可宽**，
+    # 第一版把它也算上，报了个假错。要导出哪几个从工作流里读，别再抄一份。
+    exported = re.search(r'for k in \(([^)]*)\)',
+                         _run_scripts("interview-clip.yml")).group(1)
+    for k in re.findall(r'"(\w+)"', exported):
+        assert "\n" not in str(push.get(k, "")), \
+            f"push.{k} 里有换行，塞不进 GITHUB_OUTPUT"
+
+
+def test_只推送时不做出片那一堆准备():
+    """**非关键阶段失败之后重跑，别把前面所有阶段的准备再做一遍。**
+
+    账号所有者：「有些非关键步骤失败了，不要从第一步开始再做，中间能否接上
+    继续做，你要有一定的判断。」
+
+    push 模式什么重依赖都不需要——封面已经在仓库里、不转写、不下载、不编码，
+    `push_reel.py` 只用 requests 和 tennislive 自己那几个模块。原来照样装
+    apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
+    而真正要跑的那一步只要二十秒。
+
+    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
+    for step in wf["jobs"]["render"]["steps"]:
+        run = str(step.get("run") or "")
+        if not any(h in run for h in heavy):
+            continue
+        assert "mode != 'push'" in str(step.get("if", "")), (
+            f"步骤「{step.get('name')}」装/用了出片才要的东西，"
+            "却没挂 mode != 'push'——只推送的时候它是白跑的")
+
+
 def test_封面文件名是push_reel认的那个():
     """`push_reel.py` 只认 `poster.jpg`。改名等于推送里少一整屏海报，
     而它**只打印一行提示，不报错**——又一个不吭声的兜底。"""
