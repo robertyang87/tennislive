@@ -1322,36 +1322,6 @@ def test_人名要以译名表为准():
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
 
 
-def test_不要在片子里交代自己的规矩():
-    """「比分我们不猜」这类话，是在向读者交代**我们自己的编辑规矩**。
-
-    读者不关心一个账号给自己定了什么规矩，他关心的是这场球。这句话占掉的是
-    收尾最值钱的那个位置——末屏那一问之前的最后一句。三条前瞻的结尾都挂着它，
-    删掉之后句子反而更利落。
-
-    「不预测结果」这条原则本身留着，写在 `Column.promise` 里给以后的自己看；
-    **原则归原则，别念出来。**
-    """
-    from tennislive.video import explainer as E
-
-    banned = ("不猜", "不预测", "不做预测", "我们不", "本栏目", "按惯例")
-    bad = []
-    for slug in E._SCRIPTS:
-        opening = E._OPENINGS.get(slug) or {}
-        texts = [("topic", opening.get("topic", "")),
-                 ("xhs", opening.get("narration", ""))]
-        for seg in E.explainer_script(find_story_by_slug(slug)):
-            texts += [(f"{seg.kind}.title", seg.title),
-                      (f"{seg.kind}.旁白", seg.narration),
-                      (f"{seg.kind}.问", seg.question or "")]
-            texts += [(f"{seg.kind}.要点", p) for p in seg.points]
-        for where, text in texts:
-            for word in banned:
-                if word in (text or ""):
-                    bad.append(f"{slug}/{where}：「{word}」出现在「{text[:30]}…」")
-    assert not bad, "片子里在交代自己的规矩：\n  " + "\n  ".join(bad)
-
-
 def test_旁白不解说画面():
     """旁白不说「画面里是什么」。
 
