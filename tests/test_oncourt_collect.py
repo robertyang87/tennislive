@@ -1103,3 +1103,53 @@ def test_tail_interview_items_are_marked_so_downstream_knows_to_skip_ahead():
         assert v["kind"] == "oncourt"
         assert v["duration_s"] >= 320, v["title"]
         assert "Match Highlights" in v["title"], v["title"]
+
+
+def test_测试用到的第三方包都在dev依赖里():
+    """测试 `import` 的第三方包，必须登记在 `dev` extra 里。
+
+    **本地装着不等于 CI 装着。** `test_match_reel.py` 里那条「渲染专用的依赖
+    不许挂在 probe 路径上」`import yaml` 读工作流，而 `pyyaml` 一直不在
+    `pyproject.toml` 的 dev extra 里——沙箱恰好装着，于是本地 1019 条全绿，
+    CI 干净环境一跑就红。
+
+    这和竖版剪辑线上那三次（playwright、Chromium、cv2）是同一个毛病，
+    只是这次栽在**测试自己的依赖**上，而不是产品代码的。
+
+    只查**测试目录里出现过的**第三方包，不做全仓扫描——产品代码的依赖归
+    `project.dependencies` 和各个 extra 管，混在一起查会把这条判据搞糊。
+    """
+    import re
+    import sys
+
+    root = Path(__file__).resolve().parent.parent
+    text = (root / "pyproject.toml").read_text(encoding="utf-8")
+    declared = set(re.findall(r'"([A-Za-z0-9_.\-]+)[><=\[]', text)) | \
+        set(re.findall(r'"([A-Za-z0-9_.\-]+)"', text))
+    declared = {d.lower().replace("-", "") for d in declared}
+
+    # import 名 → 发行包名，对不上的那几个
+    DIST = {"yaml": "pyyaml", "PIL": "pillow", "cv2": "opencvpythonheadless",
+            "dateutil": "pythondateutil", "bs4": "beautifulsoup4"}
+    missing = []
+    for path in sorted((root / "tests").glob("test_*.py")):
+        src = path.read_text(encoding="utf-8")
+        for mod in set(re.findall(r"^\s*import (\w+)|^\s*from (\w+) import",
+                                  src, re.M)):
+            name = mod[0] or mod[1]
+            if not name or name in sys.stdlib_module_names:
+                continue
+            if name in ("tools", "tennislive", "tests", "pytest", "conftest"):
+                continue
+            # **本地模块不算第三方。** `tools/` 下的脚本是被 sys.path 插进来
+            # 直接 import 的（`import build_match_reel`），名字和第三方包长得
+            # 一模一样。不排掉的话这条判据会报出五条噪音，然后被当成坏判据关掉
+            # ——**扩大化的判据不吭声**，它只会让下一个人不再相信它。
+            if (root / "tools" / f"{name}.py").exists() or \
+                    (root / "src" / name).is_dir():
+                continue
+            if DIST.get(name, name).lower().replace("-", "").replace("_", "") not in declared:
+                missing.append(f"{path.name} import {name}")
+    assert not missing, (
+        "这些测试 import 的包没登记在 pyproject 里——本地装着就看不出来，"
+        f"CI 干净环境必红：{sorted(set(missing))}")
