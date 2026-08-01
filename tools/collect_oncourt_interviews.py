@@ -45,6 +45,22 @@ ceremony 再判 oncourt**，否则颁奖礼会被当成场上采访收进来。
 
 按频道汇总一看，谁在发一目了然。
 
+**但这句查询词本身会骗人，而且骗得很像「真的没有」。** 找 Edimator 的替代者
+时我拿它扫了六组泛化措辞（`on-court interview WTA 2026`、`post match
+interview WTA 500 2026`…），108 条命中里**一条 Edimator 都没有**——而它库里
+躺着 158 条，正是要找的那种号。原因是 **YouTube 搜索按标题字面匹配**，
+而这类号用的是自己的固定句式：
+
+    <球员> interview after <轮次> win at <年份> <赛事>
+
+换成这个句式一搜，第一条就是它。所以：
+
+- **查询词要照目标的句式写**，不是照你想找的"概念"写
+- **每一轮都放一个已知非空的对照查询**（比如
+  `interview after 1st round win at 2025 Citi Open` 必出 Edimator）。
+  对照组不出来，这一轮的零就不算数——**和 B 站那个金丝雀是同一个道理**，
+  只不过这里骗人的不是限流，是措辞
+
 **空结果要自证是真空**（吃过三次亏，见 CLAUDE.md）。这里把三种"看起来一样"
 的空结果分开报，绝不混为一谈：
 
@@ -215,6 +231,48 @@ def classify(title: str, rules: dict[str, list]) -> str | None:
     return hit
 
 
+def _tail_interview(row: dict, cfg: dict) -> bool:
+    """这条集锦的**尾巴上接没接场上采访**——判据是时长，不是标题。
+
+    这是这套东西里最反直觉的一条，也是把 WTA 那一侧从零救回来的那条。
+    我一直把 `@wta` 记成「只有集锦，场上采访 0」，深扫 800 条也确实一条
+    带 interview 的标题都没有。**但采访根本不在标题里，它在片子后半段。**
+
+    `@wta` 的逐场集锦是**固定格式**的。100 条实测，时长分布是干净的双峰：
+
+        285–310 秒   66 条   纯集锦（这个格式卡得极死，绝大多数是 306–310）
+        ── 空档 ──          310 到 333 之间一条都没有
+        333–648 秒   33 条   集锦 + 赛后场上采访
+
+    逐帧验过：309/310/310 那几条的 75% 处还在比赛里；333 是红色 DC Open
+    话筒旗、339 是 `WTA TOUR` 黑话筒旗加烧录条
+    `SARA BEJLEK — ADVANCES TO THE 2ND ROUND`、360/422/447 同样是采访。
+
+    ⚠️ **hq3 只到 75%，够不着短尾巴。** 353 秒那条在 75% 处仍是比赛画面——
+    那不是反证，只说明它的采访不足全长的四分之一。所以**别拿"帧里没看到"
+    去否定时长判据**，两者的分辨率不一样。
+
+    ⚠️ 也**不是每个赢家都有**：伊拉胜郑钦文那场是 310 秒，没有尾巴。
+    这个判据回答的是"这条片子里有没有"，不是"这场比赛做没做"。
+
+    界划在 320：落在实测那个 23 秒宽的空档正中间。改它要重新量分布，
+    别按比例推。
+    """
+    secs = row.get("duration_s")
+    if not secs or secs < cfg.get("min_secs", 320):
+        return False
+    title = row.get("title", "")
+    if (bad := cfg.get("exclude_pat")) and re.search(bad, title):
+        # **长 ≠ 有尾巴。** 两类东西会混进来，长的理由完全不同：
+        #   `… Cincinnati Finał Full Match | WTA Match Highlights`  6235 秒——
+        #       标题结尾照样是 Match Highlights，实际是整场录播（录播尾巴上
+        #       不接采访，那是另一条实测结论）
+        #   `Day 2 in Memphis with Sonmez, Stephens & more | …`     1464 秒——
+        #       塞了一整天的比赛
+        return False
+    return bool(re.search(cfg["title_pat"], title))
+
+
 def load_store() -> dict:
     if not STORE.exists():
         return {"items": {}}
@@ -225,10 +283,21 @@ def load_store() -> dict:
 def scan_tennistv(url: str, _depth: int) -> tuple[list[dict], str]:
     """tennistv.com 的媒体库——不是 YouTube，得单独抓。
 
-    这是唯一系统性覆盖 **ATP 250** 场上采访的来源，而且**不在付费墙后面**：
-    实测 20 条里 16 条 `entitlement:free`、4 条 `freemium`（注册即可），
-    premium 一条都没有。Tennis TV 的 YouTube 频道深扫 800 条是 0 条场上采访，
-    东西全在站上，两者别搞混。
+    这是唯一系统性覆盖 **ATP 250** 场上采访的来源。实测 20 条里 16 条
+    `entitlement:free`、4 条 `freemium`，premium 一条都没有。
+    Tennis TV 的 YouTube 频道是 0 条场上采访，东西全在站上，两者别搞混。
+
+    ⚠️ **但「entitlement:free」不等于「拿得到视频」，这句我先前写错过。**
+    原文写的是「**不在付费墙后面**」——那是我从 `free` 这个字面推的，没验。
+    实际：页面挂着 Cleeng（订阅 SDK）和身份 SDK，播放器是 JS 起的；
+    拿标准客户端去取，yt-dlp 的 TennisTV 提取器直接回
+
+        This video is only available for registered users.
+
+    `free` / `freemium` / `premium` 是**他们账号体系内部的档位**，不是
+    「匿名可取」。**元数据（标题、轮次、时长、赛事）照常公开可抓，那部分
+    没变**；变的是「视频文件能不能拿到」的结论——那需要账号，绕开它的做法
+    不做。要 ATP 侧的画面，只能人自己开账号看。
 
     页面是服务端渲染，条目以 JSON 内嵌在 HTML 里，字段齐全：
     `videoType`（interviews / preview）、`metadataRound`（R1/QF/SF/Final）、
@@ -689,7 +758,11 @@ def main() -> int:
             # `Lilli Tagger Champion Prague 2026`，靠标题正则一条都收不到，
             # 而它 234 条里覆盖了马德里 31、迈阿密 17、印第安维尔斯 9，
             # 全是官方缺口。这类源按源判，不按标题判。
-            if src.get("review_each"):
+            if (tail := src.get("tail_interview")) and _tail_interview(r, tail):
+                # **采访藏在集锦片子的后半段里。** 判据是时长，见 `_tail_interview`。
+                kind = "oncourt"
+                r["tail_interview"] = True
+            elif src.get("review_each"):
                 # **这个源的 slug 分不出场合，只有画面能分。** wtatennis.com 的
                 # `*-post-match-interview-*` 五条里四条是 `WTA MEDIA` 深色背景板的
                 # 坐访（便服、领夹麦、赛事台卡），只有雅典决赛那条是真在场上
