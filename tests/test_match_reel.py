@@ -1872,6 +1872,96 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
             "漏传一次就拿另一场球的标题发出去")
 
 
+def _poster_name_order(cover: dict, names: list) -> list:
+    """海报的赛果那一行**实际印出来**的名字顺序。
+
+    不是读 `winner` 再自己推一遍——那样两边会用同一个假设，一起错。
+    直接调 `versus_poster._result_block`（渲海报走的就是它），把标签剥掉，
+    按名字在文本里出现的先后排。新写法（`winner` + `result`）和老写法
+    （一整句 `score`）都走得通，因为量的是**印出来的那句**。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    text = re.sub(r"<[^>]+>", "", versus_poster._result_block(cover, names))
+    seen = [(text.index(n), n) for n in names if n in text]
+    return [n for _, n in sorted(seen)]
+
+
+def test_标题里的赛果顺序要和海报印的一样():
+    """**海报说谁赢，标题就得说谁赢。**
+
+    `versus.names` 是**版式顺序**（上格/下格），不是赛果顺序。海报的赛果行按
+    `cover.winner` 排（`versus_poster._result_block`：`loser = 另一个名字`），
+    而 `headline` 把比分插在两个名字中间——这个栏目的规矩是**赢家在前**。
+    两边各读各的，就会在同一条推送里说反：
+
+    - `wang-samsonova`：`names[0]` 是王欣瑜，`winner` 是萨姆索诺娃。
+      海报印「萨姆索诺娃 6-2 6-2 王欣瑜」，标题算出来是「王欣瑜 vs 萨姆索诺娃」
+    - `eala-zheng` / `nishikori-shang`（老写法，只有一整句 `cover.score`）：
+      海报印「伊埃拉 4-6 6-4 6-1 郑钦文」，标题算出来是「郑钦文 vs 伊埃拉」
+      ——**比分整个丢了，而且赢家写反了**
+
+    而微信那条消息发出去就收不回来。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    checked = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        names = [str(n).strip() for n in
+                 ((cover.get("versus") or {}).get("names") or []) if str(n).strip()]
+        printed = _poster_name_order(cover, names)
+        if len(printed) < 2:  # solo 版式、或这条片子的封面不印赛果
+            continue
+        matchup = push_reel.push_meta(path.parent / f"{path.stem}.xhs.txt")["matchup"]
+        assert matchup == " vs ".join(printed), (
+            f"{path.stem}：海报印的是「{' '.join(printed)}」，"
+            f"标题算出来是「{matchup}」——同一条推送里两种赛果")
+        checked += 1
+    # **判据自己也要有判据**：主语没了要出声，别变成一条恒真的绿灯。
+    assert checked >= 7, f"只校到 {checked} 条印赛果的 spec，判据失效了"
+
+
+def test_每条spec都能原样重现已经发出去的标题():
+    """判据是「算出来的和已经发出去的一模一样」，不是「代码里有那个函数」。
+
+    每条片子的 `copy.html` 就躺在仓库里，标题写在 `<textarea id="title">` 里
+    ——那是**真的发出去的那一句**。拿 spec 重新算一遍必须逐字相同：算不出来
+    （缺 `push.summary` 而对阵又顶破 20 字位的闸）就是重推时当场报错，
+    算错了就是拿另一句话把消息发出去。
+
+    比的是**每个 slug 最新的那一份**：`nishikori-shang` 在 7.28 发过一版
+    30 字位的长标题（那时标题闸还不存在），7.29 重发时已经收成了短的。
+    拿被顶替掉的那一版当判据，等于要求今天的代码去重现一个已经改掉的错。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    latest: dict[str, Path] = {}
+    for page in sorted(Path("output").glob("*/reel/*/copy.html")):
+        latest[page.parent.name] = page.parent  # 按日期升序，留最后一份
+
+    checked = 0
+    for slug, outdir in sorted(latest.items()):
+        copy_path = Path(f"specs/reels/{slug}.xhs.txt")
+        if not copy_path.is_file():  # 已停产的片子，spec 不在了
+            continue
+        want = re.search(r'<textarea id="title"[^>]*>(.*?)</textarea>',
+                         (outdir / "copy.html").read_text(encoding="utf-8"),
+                         re.DOTALL).group(1).strip()
+        meta = push_reel.push_meta(copy_path)
+        got = push_reel.headline(outdir, push_reel.column_of(copy_path),
+                                 meta["matchup"], meta["score"], meta["event"],
+                                 meta["summary"])
+        assert got == want, (
+            f"{slug}：从 spec 算出来的是「{got}」，已经发出去的是「{want}」")
+        checked += 1
+    assert checked >= 9, f"只校到 {checked} 条已发的片子，判据失效了"
+
+
 def test_写错的push字段要报错不许悄悄不生效():
     """`sumary` 写漏一个 m，标题就悄悄退回「对阵 + 比分」——而那和「这条片子
     本来就没写 summary」长得一模一样。**兜底出事的时候不吭声**是这个仓库

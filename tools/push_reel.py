@@ -184,6 +184,31 @@ def spec_of(copy_path: Path) -> dict:
 _META_FIELDS = ("matchup", "score", "event", "summary", "lead")
 
 
+def _legacy_result(cover: dict, names: list) -> tuple[list, str] | None:
+    """老写法的赛果：`cover.score` 是一整句「赢家 比分 输家」。
+
+    斜切那两条已发布的片子（`eala-zheng` / `nishikori-shang`）没有
+    `result` / `winner`，只有 `score: "伊埃拉 4-6 6-4 6-1 郑钦文"`——海报把
+    这一整句原样印出来（`versus_poster._result_block` 的 `if not result` 那一支）。
+
+    不认它的代价是**赛果反着说**：`versus.names` 是版式顺序（这条 spec 里是
+    `["郑钦文", "伊埃拉"]`，输的那个在前），于是标题算出来是
+    「郑钦文 vs 伊埃拉」——比分整个丢了，而且按这个栏目「赢家在前」的规矩，
+    读起来是郑钦文赢了。**海报和标题在同一条推送里说反**，和
+    `wang-samsonova` 那次是同一个毛病，只是从新字段换到了老字段。
+
+    判据是「两个名字都在这句里」：找不到就返回 None 走原路，别硬猜。
+    """
+    legacy = str(cover.get("score") or "").strip()
+    if len(names) < 2 or not all(n in legacy for n in names[:2]):
+        return None
+    first, second = sorted(names[:2], key=legacy.index)
+    middle = legacy[legacy.index(first) + len(first):legacy.index(second)].strip()
+    if not middle:
+        return None
+    return [first, second], middle
+
+
 def push_meta(copy_path: Path) -> dict:
     """推送元数据的出处是 spec，不是命令行。
 
@@ -208,9 +233,29 @@ def push_meta(copy_path: Path) -> dict:
     cover = spec.get("cover") or {}
     names = [str(n).strip() for n in
              ((cover.get("versus") or {}).get("names") or []) if str(n).strip()]
+    score = str(cover.get("result") or "").strip()
+    winner = str(cover.get("winner") or "").strip()
+
+    # **顺序按 `winner` 排，和海报同一个出处。**
+    #
+    # `versus.names` 是**版式顺序**（上格/下格），不是赛果顺序——海报的比分行
+    # 读的是 `cover.winner`（`versus_poster.py:555`：`loser = 另一个名字`）。
+    # 我第一版按 `names` 的顺序拼 matchup，于是 `wang-samsonova` 上两边打架：
+    # names[0] 是王欣瑜，而 winner 是萨姆索诺娃——**海报说萨姆索诺娃赢，
+    # 标题说王欣瑜赢**（`headline` 把比分插在两个名字中间，而这个栏目的规矩是
+    # 「赢家在前」）。同一条推送里两种赛果，而消息发出去收不回来。
+    #
+    # 没有 `winner` 就只能按 names 排——但那时也没有 `result`（判据钉住了
+    # 「有 result 就必须有 winner」），标题里是中性的「A vs B」，不声称谁赢。
+    if winner and winner in names:
+        loser = next((n for n in names if n != winner), "")
+        names = [winner, loser] if loser else [winner]
+    elif not score:
+        names, score = _legacy_result(cover, names) or (names, score)
+
     meta = {
         "matchup": " vs ".join(names[:2]) if len(names) >= 2 else "",
-        "score": str(cover.get("result") or "").strip(),
+        "score": score,
         "event": "",
         "summary": "",
         "lead": "",
