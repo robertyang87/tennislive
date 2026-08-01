@@ -417,6 +417,31 @@ def test_音频那套不许接进出片流程():
                 "它每条片子要多花几十秒解音轨，而段尾秒数写进 spec 后就固定了")
 
 
+def test_渲染专用的依赖不许挂在probe路径上():
+    """probe 只是下片子、出缩略图墙，**不需要中文字体、抠图模型和 Chromium**。
+
+    原来这几步挂在所有模式前面，于是 `apt-get install fonts-noto-cjk` 挂死那次
+    把 probe 拖了二十分钟——被一个它根本用不到的依赖卡住。而「in_progress 挂太久」
+    读起来和「还在跑」一模一样，我等了两轮才发现。
+
+    ffmpeg 两种模式都要，所以它不带条件；其余三样必须只在 render 时装。
+    另外每个 apt 步骤都要有 `timeout-minutes`：**卡住要失败，不要空转**。
+    """
+    import yaml  # noqa: PLC0415
+
+    spec = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    steps = {s.get("name", ""): s for s in spec["jobs"]["reel"]["steps"]}
+    for name, step in steps.items():
+        if any(k in name for k in ("中文字体", "抠图模型", "Chromium")):
+            assert "render" in str(step.get("if", "")), (
+                f"「{name}」没有限定在 render——probe 用不到它，"
+                "却会被它拖住甚至卡死")
+        if "apt-get" in str(step.get("run", "")):
+            assert step.get("timeout-minutes"), (
+                f"「{name}」是 apt 步骤但没有 timeout-minutes；"
+                "它挂死过一次，空转二十分钟看起来和正常运行一样")
+
+
 def _reel_specs():
     return {p.stem: json.loads(p.read_text("utf-8"))
             for p in sorted(Path("specs/reels").glob("*.json"))}
