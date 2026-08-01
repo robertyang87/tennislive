@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.1 赛场之上 | 伊埃拉再胜总决赛冠军</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>伊埃拉 6-3 6-4 击败 2 号种子、世界第 10 的斯维托丽娜，打进华盛顿四强。这一周她在同一片场地上连过三关：奥运冠军郑钦文、美网亚军费尔南德斯、年终总决赛冠军斯维托丽娜。
+
+📍华盛顿 WTA500 八强
+🎾 伊埃拉 6-3 6-4 斯维托丽娜
+⏱ 1 小时 34 分（第一盘 43 分，第二盘 51 分）
+
+这场球的形状是「破发大战」：
+19 局，9 局易主
+25 个破发点，伊埃拉造了 16 个，斯维托丽娜 9 个
+总得分 71 比 64，只差 7 分
+
+第一盘 9 局，6 局被破——开场前五局全是破发。
+第一盘 4-3 伊埃拉自己的发球局，0-40，三个破发点全部化解；下一局回破，第二个盘点收下第一盘。
+第二盘她 1-3 落后，2-3 时在对方发球局连拿两次占先破发，3-3 换手，之后一路到 6-4。
+六比四那一局，她用掉了第三个赛点。
+
+化解破发点：伊埃拉 6/9，斯维托丽娜 10/16
+发球：斯维托丽娜 4 个 ACE、5 个双误；伊埃拉 1 个 ACE、2 个双误
+
+斯维托丽娜的履历摆在这儿：
+2018 年终总决赛冠军
+5 个 WTA 1000 冠军
+4 次打进大满贯四强
+生涯最高世界第 3，现在世界第 10
+
+伊埃拉这一周：
+首轮 2 小时 28 分，4-6 6-4 6-1 淘汰郑钦文
+次轮 1 小时 54 分，6-2 7-6(1) 送走卫冕冠军费尔南德斯
+八强 1 小时 34 分，6-3 6-4 击败斯维托丽娜
+
+这也是两个月里她第二次赢下斯维托丽娜——上一次在柏林，比分一模一样，同样是打进四强的那一场。现场解说说，这是她本赛季第六次赢下世界前十的球员。
+
+伊埃拉 21 岁，菲律宾人，世界第 28。菲律宾的纪录一直是她自己在破：第一个进前 30、第一个赢下 top 10、第一个打进大满贯第四轮、第一个打进 WTA 决赛。
+
+四强对手是大坂直美。
+
+她还能走多远？
+
+#网球 #伊埃拉 #WTA #华盛顿公开赛 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

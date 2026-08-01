@@ -43,6 +43,63 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
+def test_只发不重渲要有一条单独的路():
+    """**「先验产物再推」意味着推是另一次动作。**
+
+    原来只有 `mode=render` 那一条路带推送，于是「渲完看一眼，没问题再发」
+    要跑两轮 render——而一轮十五分钟（装中文字体 4 分 20 秒、渲片 7 分半），
+    第二轮渲出来的还得再验一次，等于把验证这件事做成了无限循环。
+
+    `mode=push` 跳过下载和渲染，只做「写复制页 → 提交 → 发微信」这三步。
+
+    两条判据缺一不可：
+
+    - **顺序不能变**：复制页仍然要排在提交之前，否则链接 404（这条已经有
+      `test_复制页写在提交之前` 盯着，这里只确认新模式没绕开它）
+    - **前提要在最前面验**：成片必须已经在**这个 commit 里**。查 `git ls-files`
+      而不是 `test -f`——只在工作区里躺着的文件，推送发出去就是 404，
+      复制页在这上面栽过两次
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+
+    assert "options: [probe, render, push, cookies]" in text, "mode 里没有 push"
+
+    for step in ("写复制页", "推送到微信"):
+        i = next(k for k, n in enumerate(names) if step in n)
+        cond = text.split(f"- name: {names[i]}", 1)[1].split("\n", 2)[1]
+        assert "'push'" in cond, f"{step} 这一步在 push 模式下不跑，等于这个模式发不出东西"
+
+    # 渲染那一步**不能**在 push 模式下跑，否则「只发不重渲」名不副实
+    render_cond = text.split("- name: render — 出成片", 1)[1].split("\n", 2)[1]
+    assert "mode == 'render'" in render_cond and "push" not in render_cond, \
+        "push 模式还会重渲一遍"
+
+    # push 模式**不装渲染那套**：它不下片、不渲染、不抠图，rembg / opencv /
+    # playwright / yt-dlp / ffmpeg 一个都用不上。装它们不只是白等半分钟——
+    # 那几个包里任何一个装不上，都会让一条本来只是发消息的 run 挂掉。
+    ffmpeg_cond = text.split("- name: 装 ffmpeg", 1)[1].split("run:", 1)[0]
+    assert "mode != 'push'" in ffmpeg_cond, "push 模式还在装 ffmpeg"
+    deps = text.split("- name: 装依赖", 1)[1].split("- name:", 1)[0]
+    assert '= "push" ]' in deps and "pip install -q -e ." in deps, \
+        "push 模式没有走「只装主依赖」那条分支"
+    # 而且那条分支要**真验一次 import**，不许把失败吞掉——装少了得在第 5 秒炸。
+    # **判据只看代码，不看注释**：第一版没剔注释，结果被工作流里那句解释
+    # 「不许 xx」自己绊倒了——注释里提到一个反模式，不等于用了它。
+    head = deps.split('= "push" ]', 1)[1].split("fi", 1)[0]
+    code = "\n".join(ln for ln in head.splitlines() if not ln.strip().startswith("#"))
+    assert "import requests" in code, "push 分支没有真验一次 import"
+    assert "|| true" not in code and "2>/dev/null" not in code, \
+        "push 分支的依赖检查把失败吞掉了，永远不会红"
+
+    guard = next((n for n in names if "push 模式先确认成片" in n), "")
+    assert guard, "push 模式没有前置检查——成片不在时会一路跑到推送才炸"
+    assert names.index(guard) < names.index(
+        next(n for n in names if "写复制页" in n)), "前置检查排在写复制页后面了"
+    assert "git ls-files" in text, (
+        "前置检查用的是 test -f——只在工作区里的文件推出去就是 404")
+
+
 def test_中间物一个都不许进仓库():
     """清理这一步要**盖住**这些文件，而不是**逐字列出**它们。
 
@@ -552,6 +609,31 @@ def test_旁白不许用指示语指画面():
     good = "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"
     assert not pointing.search(good), (
         "判据又扩大化了：这句是关键点加关键情绪的解说，是这条线该有的写法")
+
+
+def test_闪避的钥匙要补齐否则片尾没声音():
+    """`sidechaincompress` **两路里任一路 EOF 就整个结束**，所以钥匙那一路
+    必须 `apad`。
+
+    最后一段的旁白往往说不满整段画面——伊埃拉那条末段画面 11.5s、旁白 8.8s。
+    钥匙先断，现场声跟着被掐掉：成片最后 2.74 秒**一点声音都没有**，
+    而那正是她抱住教练的那一下。
+
+    **它不吭声**：画面照旧、有音轨、有码率，只有把音轨长度和画面长度摆在
+    一起才看得见（`check_reel_landed.py` 报「音轨 157.86s，比画面短 2.74s」）。
+    和「补位的静音盖住真音轨」是同一族——兜底和默认值出事的时候都不吭声。
+
+    合成信号上验过闪避没变：有旁白 -38.1 dB、旁白说完 -24.0 dB。
+    """
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    # 认的是**真正接进滤镜图的那一处**（`[bed][vk]sidechaincompress=`），
+    # 不是注释里提到它的那几行——按第一次出现找会撞上注释，判据就废了。
+    i = src.index("[bed][vk]sidechaincompress=")
+    head = src[max(0, i - 1200):i]
+    assert "[vk0]apad[vk]" in head, (
+        "闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，片尾整段没声音")
+    # 报错要说出路：判据本身也得留在源码里，别只活在测试里
+    assert "任一路 EOF" in src, "为什么要 apad 没有留下判据，下次会有人删掉"
 
 
 def test_成片的编码参数不许为了压体积往下调():

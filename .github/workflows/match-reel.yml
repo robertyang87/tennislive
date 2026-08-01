@@ -6,6 +6,10 @@ name: match-reel
 #                （只提交几张 JPEG 和一个 json，源片 50MB 不进仓库）
 #   mode=render  按 specs/reels/<slug>.json 剪 → 裁 9:16 → 中文解说 → 烧字幕
 #                → 加封面 → 成片提交
+#   mode=push    **成片已经在仓库里**，只写复制页 → 提交 → 发微信。
+#                「先验产物再推」意味着推是**另一次**动作；没有这个模式就得为了
+#                发一条消息把整条片子重渲一遍（一轮十五分钟：装中文字体 4 分 20、
+#                渲片 7 分半），而重渲出来的那一版还得再验一次。
 #   mode=cookies 什么都不产，只验 YouTube 还下不下得动（cookie 会过期）
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
@@ -15,10 +19,10 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        options: [probe, render, cookies]
+        options: [probe, render, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -116,6 +120,9 @@ jobs:
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
       # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
       - name: 装 ffmpeg
+        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
+        # subprocess **一个都没出现**，装它白花半分钟。
+        if: github.event.inputs.mode != 'push'
         timeout-minutes: 5
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
@@ -140,6 +147,17 @@ jobs:
 
       - name: 装依赖
         run: |
+          # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
+          # playwright、yt-dlp 一个都用不上，装全套只是把失败面铺大：那几个包
+          # 里任何一个装不上，都会让一条**本来只是发消息**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+            pip install -q -e .
+            # 真验一次 push 那条路要的东西，**不许 `|| true`**：装少了要在
+            # 第 5 秒炸，而不是三分钟后死在推送那一步。
+            python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+            echo "push 模式：只装主依赖，推送那条路的 import 已验过"
+            exit 0
+          fi
           # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
@@ -173,12 +191,33 @@ jobs:
           echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
 
+      # push 模式的前提是**成片已经在这个 commit 里**。不在就当场报，别等到
+      # 装完依赖、写完复制页、提交完之后才在推送那一步炸——「让失败发生在
+      # 第 5 秒，不是第 90 秒」。
+      # 查的是 `git ls-files`，不是 `test -f`：只在工作区里躺着的文件，推送
+      # 发出去就是 404（同一个毛病在复制页上踩过两次）。
+      - name: push 模式先确认成片真的在仓库里
+        if: github.event.inputs.mode == 'push'
+        run: |
+          REEL="${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+          if [ -z "$(git ls-files -- "$REEL")" ]; then
+            echo "::error::$REEL 不在这个 commit 里——push 模式只发已经落库的成片。"
+            echo "::error::先跑一次 mode=render（push=false），验完再用 mode=push 发。"
+            git ls-files -- "${{ steps.paths.outputs.outdir }}" || true
+            exit 1
+          fi
+          echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
+          test -f "${{ steps.paths.outputs.outdir }}/poster.jpg" || {
+            echo "::error::海报不在——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }
+
       # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」。第一道解法
       # 是 GVS PO token：yt-dlp 官方推荐的 bgutil provider 起在本机 4416，插件会
       # 自动去取，web/mweb/tv 三档就能过。**起不来不算失败**——起不来就退回 client
       # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
       - name: 起 PO token provider
         id: pot
+        # push 模式不下任何东西——docker pull 那一分钟白等
+        if: github.event.inputs.mode != 'push'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -305,7 +344,7 @@ jobs:
       # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
       # 链接打开 404。**又一次「查信号不查产物」**。
       - name: 写复制页（必须排在提交之前）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
@@ -426,7 +465,7 @@ jobs:
       #
       # 「触发成功」不算推了，**这一步 success 才算**。
       - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
