@@ -1883,6 +1883,77 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
             "漏传一次就拿另一场球的标题发出去")
 
 
+def test_快速预览的开关要在工作流里够得着():
+    """**`--cover-only` 落地了，但工作流的 `mode` 里没有它，等于零。**
+
+    源片只在 runner 上活过几分钟（沙箱下不动 YouTube），所以「能用的那台机器
+    上没有开关，有开关的那台机器上没有源片」。又一次「写了不等于跑过」，
+    只是这次卡在工作流入口而不是函数里。
+
+    封面是全流程返工最多的那一屏：spec 注释里 wong-brooksby 记着
+    `0.32/0.40 → 0.33/0.42 → 0.34/0.44` 三档、hewitt 记着 0.60/0.67/0.74，
+    每一档在没有这条快路之前都要付一趟完整 render。
+
+    判据两头都要钉：**入口够得着**（options 里有 cover），
+    **而且那条路真的短**（不跑分段/TTS/推送）——只钉前者的话，
+    有人把 cover 那一步写成完整 render 也照样绿。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    head, jobs = body.split("\njobs:", 1)
+
+    assert "cover" in head[head.index("options:"):head.index("options:") + 80], (
+        "mode 的 options 里没有 cover——`--cover-only` 在唯一能用的那台机器上"
+        "够不着")
+
+    # `_steps` 给的是步骤**名**，这儿要的是步骤**体**，所以另切一次
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+    cover_steps = [b for b in blocks if "mode == 'cover'" in b]
+    assert len(cover_steps) == 1, f"cover 模式的步骤有 {len(cover_steps)} 个"
+    step = cover_steps[0]
+    assert "--cover-only" in step, "cover 那一步没传 --cover-only，那就是完整 render"
+    for heavy in ("push_reel.py", "--voice", "--rate"):
+        assert heavy not in step, (
+            f"cover 那一步还在做 {heavy}——它只该下源片、出海报、退出")
+
+    # 推送那一步不许被 cover 模式触发：海报不是成片
+    push_steps = [b for b in blocks
+                  if "push_reel.py" in b and "--stage page" not in b]
+    assert push_steps, "找不到推送那一步，判据失效了"
+    for block in push_steps:
+        assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
+
+
+def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
+    """`if:` 里不含状态函数时，GitHub 会**隐式和上 `success()`**。
+
+    「丢掉不进仓库的中间物」末尾有个体积兜底会 `exit 1`（连着栽过四次，最近
+    一次是多源之后源片改名 `source_r1.mp4`，run 30603686748）。那一刻**成片
+    已经渲完了**，可上传和提交都被跳过——六分钟整趟作废，只能重跑。
+
+    判据两头都要钉：
+
+    - 上传要带 `always()`，否则前面一红它就不跑
+    - 而且**位置不许往前挪**：清理那一步先 `rm` 再做体积检查，所以走到上传
+      时源片已经删干净了。挪到清理之前，392 MB 的源片会一起传上去——
+      「修好」的方向反了一样是坏的
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    jobs = body.split("\njobs:", 1)[1]
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+
+    upload = [b for b in blocks if "actions/upload-artifact" in b]
+    assert len(upload) == 1, f"上传 artifact 的步骤有 {len(upload)} 个"
+    assert "always()" in upload[0], (
+        "上传 artifact 没带 always()——清理那一步的体积兜底一 exit 1，"
+        "渲完的成片就既不上传也不提交，整趟白跑")
+
+    names = _steps(jobs)
+    clean = next(i for i, n in enumerate(names) if "丢掉不进仓库的中间物" in n)
+    up = next(i for i, n in enumerate(names) if "上传 artifact" in n)
+    assert clean < up, (
+        "上传排在清理之前——那会把 392 MB 的源片一起传上去")
+
+
 def test_现场声不许在最后一句话结束时断掉(tmp_path):
     """**九条已发的成片里七条，结尾 2~4.5 秒完全没有声音。**
 
