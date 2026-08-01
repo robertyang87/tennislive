@@ -17,6 +17,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 from datetime import date
 from fnmatch import fnmatch
 from pathlib import Path
@@ -420,9 +421,25 @@ def test_音频那套不许接进出片流程():
                 "它每条片子要多花几十秒解音轨，而段尾秒数写进 spec 后就固定了")
 
 
-def _reel_specs():
-    return {p.stem: json.loads(p.read_text("utf-8"))
-            for p in sorted(Path("specs/reels").glob("*.json"))}
+def _reel_specs(*, include_wip: bool = False):
+    """所有**成品** spec。认领了「未完成」的底稿默认不算。
+
+    `specs/reels/` 原来的契约是「里面每一份都能送渲」，于是有人把已核实但
+    没写完的底稿 park 进来时，六条测试一起红（eala-svitolina，commit 0475af4，
+    main 从 02:56 起一直是红的）。底稿该留——查过的赛事、比分、转折点丢了要
+    重查；错的是没有一个地方能表达「这份还没好」。
+
+    ⚠️ **只跳不拦就是把红灯换成一个洞。** 渲染那头同时装了闸
+    （`build_match_reel.load_spec` 撞见标记直接 ReelError），判据见
+    `test_认领了未完成的spec不许被送渲`。
+    """
+    specs = {p.stem: json.loads(p.read_text("utf-8"))
+             for p in sorted(Path("specs/reels").glob("*.json"))}
+    if include_wip:
+        return specs
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from build_match_reel import is_wip  # noqa: PLC0415
+    return {k: v for k, v in specs.items() if not is_wip(v)}
 
 
 def test_让当事人自己说的那一段也要有字幕():
@@ -1080,11 +1097,11 @@ def test_海报台头只写栏目名():
     「是讲休伊特的儿子的话题，不是赛场之上的内容」时，加一个栏目就得改测试——
     而要守的性质从头到尾只有一条：**药丸里没有账号名**。
     """
-    for path in sorted(Path("specs/reels").glob("*.json")):
-        eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
-        assert eyebrow in _COLUMNS, f"{path.name} 的台头是 {eyebrow!r}，不是栏目名"
-        assert "网球时差" not in eyebrow, f"{path.name} 的台头挂了账号名"
-        assert "·" not in eyebrow, f"{path.name} 的台头是一串，不是一个栏目名"
+    for slug, spec in _reel_specs().items():
+        eyebrow = spec["cover"]["eyebrow"]
+        assert eyebrow in _COLUMNS, f"{slug} 的台头是 {eyebrow!r}，不是栏目名"
+        assert "网球时差" not in eyebrow, f"{slug} 的台头挂了账号名"
+        assert "·" not in eyebrow, f"{slug} 的台头是一串，不是一个栏目名"
 
 
 def test_栏目和封面模板要配对():
@@ -1101,8 +1118,9 @@ def test_栏目和封面模板要配对():
     - spec 里（这一条）——已发布的片子不会悄悄漂
     - `build_cover` 里——**新写的 spec 也拦得住**，判据在下面那条
     """
-    for path in sorted(Path("specs/reels").glob("*.json")):
-        cover = json.loads(path.read_text("utf-8"))["cover"]
+    for slug, spec in _reel_specs().items():
+        cover = spec["cover"]
+        path = Path(f"specs/reels/{slug}.json")
         allowed = _COLUMNS[cover["eyebrow"]]
         assert cover.get("layout") in allowed, (
             f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
@@ -1266,8 +1284,9 @@ def test_封面固定版式是官方抠图加本场视频全场机位():
     reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert 'cover.get("layout", "cutout")' in reel, "默认版式不是 cutout"
 
-    for path in sorted(Path("specs/reels").glob("*.json")):
-        cover = json.loads(path.read_text(encoding="utf-8"))["cover"]
+    for slug, spec in _reel_specs().items():
+        cover = spec["cover"]
+        path = Path(f"specs/reels/{slug}.json")
         layout = cover.get("layout")
         assert layout, f"{path.name} 没写 layout——会跟着默认值漂"
         if layout != "cutout":
@@ -2001,3 +2020,53 @@ def test_发文标题的棘轮装在生成那一步():
     block = text[text.index("- name: 写复制页"):].split("- name:")[1]
     assert "backfill_reel_titles.py" in block and "--check" in block, (
         "写复制页那一步没有校验发文标题落盘了没有")
+
+
+def test_认领了未完成的spec不许被送渲():
+    """跳过 ≠ 放行。**只在测试里跳过，等于把红灯换成一个洞。**
+
+    `specs/reels/` 里 park 半成品底稿是允许的（查过的赛事、比分、转折点丢了
+    要重查），代价必须由渲染那头承担：`load_spec` 撞见「未完成」直接报错，
+    而且错误信息要说清怎么解除，不能只说不行。
+
+    真调一次，不是 `assert "is_wip" in src`——那种写法只能防「有人把它删了」，
+    防不住「它从来没工作过」（`_cut_person(source, …)` 就是这么坏了一整天的）。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "wip.json"
+        path.write_text(json.dumps(
+            {"slug": "wip", "_status": "**未完成，别直接送渲。** 还差三件…",
+             "segments": [], "cover": {}}, ensure_ascii=False), encoding="utf-8")
+        with pytest.raises(reel.ReelError, match="未完成"):
+            reel.load_spec(path)
+        # 报错要说出路：怎么解除这个标记
+        try:
+            reel.load_spec(path)
+        except reel.ReelError as exc:
+            assert "_status" in str(exc), f"报错没说怎么解除：{exc}"
+
+        # 反过来：没这个标记的照常读得出来
+        path.write_text(json.dumps(
+            {"slug": "ok", "_status": "已核实，可送渲", "segments": [], "cover": {}},
+            ensure_ascii=False), encoding="utf-8")
+        assert reel.load_spec(path)["slug"] == "ok"
+
+
+def test_未完成的底稿不会被当成成品来查():
+    """存量里确实有一份认领了未完成的，遍历成品时必须看不见它。
+
+    这条盯的是「跳过真的生效了」。没有它的话，`_reel_specs()` 里那个
+    `include_wip` 参数写错方向也不会有人发现——而那正好是把红灯换成洞的写法。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from build_match_reel import is_wip  # noqa: PLC0415
+
+    everything = _reel_specs(include_wip=True)
+    finished = _reel_specs()
+    parked = {k for k, v in everything.items() if is_wip(v)}
+    assert parked, "存量里一份未完成的底稿都没有——这条测试等于没测"
+    assert parked & set(everything), parked
+    assert not (parked & set(finished)), f"未完成的底稿混进成品里了：{parked & set(finished)}"

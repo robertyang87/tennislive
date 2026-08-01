@@ -709,8 +709,33 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     return segments
 
 
+# 半成品 spec 的标记。写在 `_status` 里，值里带这四个字就算认领。
+WIP_MARK = "未完成"
+
+
+def is_wip(spec: dict) -> bool:
+    """这份 spec 是不是明确认领了「还没写完」。
+
+    `specs/reels/` 这个目录原来的契约是「里面每一份都能送渲」，于是有人把
+    **已核实但没写完**的底稿 park 进来时，main 上六条测试一起红
+    （`eala-svitolina`，commit 0475af4）。
+
+    底稿本身是该留的——查过的赛事、比分、转折点是真金白银，丢了要重查。
+    错的是**没有一个地方能表达「这份还没好」**，于是它只能伪装成成品。
+
+    所以给它一个显式的标记，两头同时接住：测试遍历时跳过（下面
+    `tests/test_match_reel.py::_reel_specs`），渲染时**直接报错**。
+    只跳不拦就是把红灯换成一个洞——半成品照样能被送进 render。
+    """
+    return WIP_MARK in str(spec.get("_status", ""))
+
+
 def load_spec(path: Path) -> dict:
     spec = json.loads(path.read_text(encoding="utf-8"))
+    if is_wip(spec):
+        raise ReelError(
+            f"{path} 认领了「{WIP_MARK}」，不能送渲：{spec.get('_status', '')}\n"
+            "写完之后把 _status 删掉或改成不含这四个字的说明，它才会被当成成品。")
     for key in ("segments", "cover"):
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
