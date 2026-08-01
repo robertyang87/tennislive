@@ -717,7 +717,167 @@ _LUCKY_LOSER_WALL_DIAGRAM = """
 """
 
 
+#: 「保护排名」到底替你做什么、不替你做什么。这件事没有任何一张照片能表达——
+#: 它是一张权限表，不是一个瞬间。两栏对照，只给"能用"那一栏上品牌绿。
+_PR_SCOPE_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">它替你报名，别的一概不管</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝可以用它　空格＝一律按真实排名</text>
+
+  <text x="245" y="156" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">能用</text>
+  <text x="655" y="156" text-anchor="middle" fill="#9fb4aa"
+        font-size="30" font-weight="800">不能用</text>
+
+  <rect x="70" y="182" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="230" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名正赛</text>
+  <rect x="70" y="272" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="320" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名资格赛</text>
+  <rect x="70" y="362" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="410" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">特殊豁免位</text>
+
+  <rect x="480" y="182" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="230" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">种子</text>
+  <rect x="480" y="272" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="320" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">幸运落败者顺位</text>
+  <rect x="480" y="362" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="410" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">你的世界排名</text>
+
+  <text x="450" y="490" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">ATP 规则书原话：for Entry, Not Seeding</text>
+</svg>
+"""
+
+#: 26 周为什么不能拆。两截各自量、各自不够，而合计比门槛还多——
+#: 这个"加起来够了却一分不算"只有并排画出来才一眼看得懂。
+#: 横轴 0–32 周映射到 x 150–780，即 1 周 ≈ 19.7px；26 周落在 x=662。
+_PR_GAP_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="48" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">26 周必须是连着的一段</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">虚线＝门槛　中网那两场把它切成了两截</text>
+
+  <text x="60" y="162" fill="#9fb4aa" font-size="27" font-weight="700">温网结束 → 中网复出</text>
+  <rect x="60" y="180" width="211" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="291" y="236" fill="#e7f3ec" font-size="30" font-weight="800">10.7 周</text>
+
+  <text x="60" y="322" fill="#9fb4aa" font-size="27" font-weight="700">中网结束 → 多哈复出</text>
+  <rect x="60" y="340" width="357" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="437" y="396" fill="#e7f3ec" font-size="30" font-weight="800">18.1 周</text>
+
+  <line x1="572" y1="150" x2="572" y2="446" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="572" y="484" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">26 周</text>
+
+  <text x="450" y="538" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">两截加起来 28.8 周，一分不算</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "protected-ranking": (
+        (
+            "now",
+            "一年之后",
+            "世界第 123，够不上美网那条线",
+            "先看现在。郑钦文的世界排名是第一百二十三。美网正赛的直入线七月二十号"
+            "锁定，大约在前一百零四，她差了将近二十位。七月十七号雅典站八强，"
+            "四比六、四比六负于克雷吉茨科娃，那是锁线之前最后的机会。十天后她"
+            "出现在华盛顿的签表里，靠的是一张外卡。而一年前的六月，她是世界第四。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文负克雷吉茨科娃",
+            (
+                "世界第 123 生涯最高第 4",
+                "美网直入线 约前 104",
+                "华盛顿那张签表 靠外卡",
+            ),
+        ),
+        (
+            "scope",
+            "保护什么",
+            "它替你报名，不替你保排名",
+            "伤停这么久，规则里不是有保护排名吗。有，但这四个字翻拧了。"
+            "ATP 规则书正文里它的名字是 Entry Protection，进赛保护。"
+            "它给你的是一张用来报名的旧排名：报正赛、报资格赛、占特殊豁免位，都算数。"
+            "剩下的一概不管——不算种子，不算幸运落败者的顺位，更不会让你的世界排名"
+            "停下来。规则书自己有一行标题，写着 for Entry, Not Seeding。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "英文叫 Entry Protection",
+                "报名能用 那个旧排名",
+                "真实排名 该掉照掉",
+            ),
+            _PR_SCOPE_DIAGRAM,
+        ),
+        (
+            "threshold",
+            "门槛",
+            "先得彻底停下来，26 周",
+            "那她为什么没有这张凭证。因为门槛在前面：WTA 要求连续二十六周不参加"
+            "任何比赛，ATP 那边写的是六个月，而且两家都把表演赛算在里头。"
+            "二十六周就是半年——你得整整半年一场都不打，才够得着它。",
+            "assets/explainer/zheng-eala/zheng_clay.jpg",
+            "账号所有者提供 · 郑钦文反手随挥",
+            (
+                "WTA 连续 26 周",
+                "ATP 6 个月",
+                "表演赛也算在里头",
+            ),
+        ),
+        (
+            "gap",
+            "断在哪",
+            "28.8 周，却一分不算",
+            "她停了多久。温网之后到二月复出多哈，中间只打过一站：二零二五年九月的"
+            "中网，两场球，第二场对诺斯科娃还中途退了赛。就是这一站，把一整段停赛"
+            "切成了两半——前面十点七周，后面十八点一周。两截加起来二十八点八周，"
+            "比门槛还多出两周多。可条文只认连着的一段，两截各自都不够。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "中网只打了 2 场",
+                "前段 10.7 周 后段 18.1 周",
+                "合计 28.8 周 一分不算",
+            ),
+            _PR_GAP_DIAGRAM,
+        ),
+        (
+            "cost",
+            "代价",
+            "它保护的是彻底停下来的人",
+            "把条文一条条对下来，她够不上这张凭证。所以过去这一年，排名一路往下，"
+            "没有任何机制替她刹住。有一点要说清楚：她本人到底申请过没有、"
+            "有没有拿到过豁免，都没有公开记录，上面这些是照着规则算出来的。"
+            "但规则本身写得很直白——它保护彻底停下来的人。九月硬撑着打的那两场，"
+            "一年后的价码是美网正赛的一个位置。",
+            "assets/explainer/wildcard/zheng_athens_2026.jpg",
+            "athens-open.com 官方图库 Day 5 · 2026 雅典站第二轮，郑钦文正手击球",
+            (
+                "按条文算 她够不上",
+                "排名一路掉 没有刹车",
+                "价码是一个正赛名额",
+            ),
+            None,
+            "硬撑着打完那两场，和彻底停满半年，换你会怎么选？",
+        ),
+    ),
     "lucky-loser": (
         (
             "this-week",
@@ -2481,6 +2641,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "protected-ranking": {
+        "hook": (
+            "「保护排名」这四个字翻拧了——ATP 规则书里它叫 Entry Protection，进赛保护。\n"
+            "它替你报名，一个字都不保你的排名，而且只保护彻底停下来的人。"
+        ),
+        "tags": ("网球", "网球时差", "郑钦文", "保护排名", "网球冷知识"),
+    },
     "lucky-loser": {
         "hook": (
             "资格赛输掉的人，可以因为别人退赛递补进正赛——这个身份叫幸运落败者。\n"
@@ -2695,6 +2862,18 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "protected-ranking": {
+        "topic": "保护排名：它保的是报名，不是排名",
+        "question": "不打球，排名为什么还在掉？",
+        "narration": "不打球，排名为什么还在掉？那个叫「保护排名」的东西，"
+                     "一个字都没保住排名。",
+        "gloss": "PR = Protected Ranking",
+        "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
+        # 封面这张没有任何一屏在用，所以借不到出处，必须自己写一行。
+        # 选它是因为**原图 1184×1579 正好 3:4**，铺满 1.096x，一个像素的垫层都不用
+        # ——上一条片子的封面顶部虚化占了 15.6%，这条是 0。
+        "credit": "账号所有者提供 · 郑钦文回望球员席",
+    },
     "lucky-loser": {
         "topic": "幸运落败者：输了才有的名额",
         "question": "资格赛输了，怎么还在正赛？",
