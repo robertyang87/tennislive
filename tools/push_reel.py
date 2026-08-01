@@ -135,7 +135,7 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
-             event: str = "", summary: str = "") -> str:
+             event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
     末尾那一格有两种写法，按这条片子哪种更说得清选：
@@ -149,9 +149,21 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     整句 `TITLE_MAX`（见 `_fits`）。**讲不完的不要硬塞进标题**——用 `--lead`
     放到正文第一行去详细概括，那儿有的是地方。
     """
-    found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+    # **日期优先用显式给的那个。** 赛场之上的产物按日期分目录
+    # （`output/2026-07-28/reel/…`），所以从路径里解得出来；而「赛后开麦」
+    # 按 slug 存（`output/interviews/<slug>/`）——同一场采访哪天发都可能，
+    # 目录里没有日期是**故意的**，不是漏了。缺日期就报错等于把这条线整个挡在
+    # 门外，所以给一条显式的路：`--date`。
+    if date:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+        found = re.match(r"(\d{4})-(\d{2})-(\d{2})", date)
+    else:
+        found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
-        raise SystemExit(f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…")
+        raise SystemExit(
+            f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…；"
+            "产物不按日期分目录的线（如 output/interviews/<slug>/）请显式传 --date")
     _, month, day = found.groups()
     if summary.strip():
         pair = summary.strip()
@@ -353,6 +365,9 @@ def main() -> int:
                     help="一句话概括赛果，给了就顶掉标题末尾的「对阵 + 比分」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
+    ap.add_argument("--date", default="",
+                    help="标题里的日期 YYYY-MM-DD。产物按日期分目录的线不用传"
+                         "（从路径解）；按 slug 存的线（output/interviews/…）必须传")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
@@ -376,7 +391,7 @@ def main() -> int:
     # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
     # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
     title = headline(outdir, args.column or column_of(Path(args.copy)),
-                     args.matchup, args.score, args.event, args.summary)
+                     args.matchup, args.score, args.event, args.summary, args.date)
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
