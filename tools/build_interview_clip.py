@@ -485,22 +485,57 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
 # ⚠️ 代价是她举起的手偶尔会贴到画面边缘。要更保险就把 `CROP_RATIO` 调到 16/9。
 CANVAS_W, CANVAS_H = 1080, 1440
 CROP_RATIO = 4 / 3
+# 顶栏。**原来这 150px 是空的**——账号所有者：「建议顶部文字说明当前是什么
+# 比赛的赛后采访，不然好多人不知道背景」。刷到中段的人只看见一个人在说话，
+# 不知道这是哪一站、哪一轮、谁跟谁。封面那一屏答得了，但它只出现 1.8 秒，
+# 而**滑进来的人根本没看过封面**。
 VIDEO_TOP = 150
 VIDEO_H = int(CANVAS_W / CROP_RATIO)          # 810
+_BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 
 # 字幕**上锚**（Alignment=8）不贴底：一行和两行要从同一个高度往下长，
 # 贴底的话行数一变位置就跳。MarginV 是距画布顶的距离。
 #
+# **字号是量出来的。** 原来 40/48，烧帧量下来墨迹只有 29 / 31px 高——
+# 而同样 1440 高的画布上，「赛场之上」那条线的中文字幕是 68 号、墨高 44px。
+# 差 42%，账号所有者一句「字体又太小」。
+# ⚠️ **两侧的代价完全不一样，别一起调。**
+#
+# **中文那侧几乎免费**：中文是手写的、一行对一行，只受 952px 可用宽约束。
+# 天花板是 68（那时最宽的一行 967px 就超了），64 是上限，62 留一格余量。
+#
+# **英文那侧要花钱**：断行按子句切、子句放不下才拆，字号一大长子句开始被拆，
+# 行数跟着涨，而且**开始出现「收在虚词上」的硬断**——正是仓库里明令禁止的
+# 「把词组劈成两半」。量出来的代价表（伊埃拉那条，146 秒）：
+#
+#     EN   行数   虚词收尾   最短行   平均
+#     40    56       0      0.96s   2.46s   ← 原来
+#     42    59       0      0.32s   2.33s
+#     46    69       1      0.56s   1.99s   ← 现在
+#     52    71       2      0.56s   1.94s
+#     56    77       2      0.48s   1.79s
+#
+# **46 是拿「多一处硬断」换来的**，不是白拿：40 是唯一零硬断的档，往上一定
+# 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
+# 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
+# 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
+_FONT_SIZE = {"en": 46, "zh": 62}
+# 顶栏两行：主行给赛事和轮次，次行给对阵和「赛后场上采访」。
+_HEAD_SIZE = {"a": 44, "b": 34}
+_HEAD_A_TOP, _HEAD_B_TOP = 30, 88
+
 # **两行之间的距离是量出来的，不是拍的。** 原来差 118，烧帧量下来两行之间
 # 有 **89px 纯空白＝中文字高的 2.78 倍**——两行读起来像两块不相干的东西，
 # 而它们本该是同一句话的两种语言。渲了 43/47/51 三档摆一起比：
 # 43（14px，0.44 倍）挤，51（22px，0.69 倍）松，**47（18px，0.56 倍）**正好。
-# 改字号要重量：这个数是「字号 40/48 下的墨迹间距」，不能按比例推。
-_ZH_GAP = 47
-# 收拢之后整对会往上缩 70px，所以顶端跟着下移 40，**让这一对的视觉中心
-# 留在原来的位置**（原 1029–1179 中心 1104，现 1069–1148 中心 1108）。
-# 不再往下挪：下面那条 480px 的背景带是留给 app 的点赞列和底部文案区的。
-_EN_TOP = VIDEO_TOP + VIDEO_H + 100           # 1060
+# 改字号要重量：47 是「40/48 下」的数，46/62 下重量出来是 **53**（22px，0.55 倍）。
+_ZH_GAP = 53
+# **这一对要落在字幕带的正中，不能贴着视频挂。** 原来 `_EN_TOP` 是
+# 「视频下沿 + 100」，于是墨迹落在 1069–1147：上面空 109，**下面空 293**。
+# 账号所有者说的「下面字幕空间太大」就是这 293——不是带子太宽，是字全堆在
+# 上半截，下半截整片空着。居中之后两头各 190 左右，同样一条带子不再显得空。
+# 1141 是烧帧量出来的：墨迹落在 1152–1249，上空 192 / 下空 191。
+_EN_TOP = 1141
 _ZH_TOP = _EN_TOP + _ZH_GAP
 
 _ASS_HEAD = f"""[Script Info]
@@ -512,12 +547,38 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,Noto Sans,40,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
-Style: ZH,Noto Sans CJK SC,48,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: EN,Noto Sans,{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: ZH,Noto Sans CJK SC,{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: HEADA,Noto Sans CJK SC,{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADB,Noto Sans CJK SC,{_HEAD_SIZE['b']},&H00B2BCA9,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
+
+
+def header_lines(spec: dict) -> tuple[str, str]:
+    """顶栏那两行。**从已有字段推，不另开一份手打的。**
+
+    账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道
+    背景。」要答的就是三件事：哪一站哪一轮、谁跟谁、这是什么。
+
+    - 第一行 `event` —— 赛事＋级别＋轮次。**它和 `push.event` 不是一回事**：
+      那个为了把推送标题压进 20 字位是**故意留空的**，这儿没有长度限制。
+    - 第二行 `push.matchup` ＋「赛后场上采访」。
+
+    ⚠️ **不写比分**。`matchup` 的顺序**不保证是胜者在前**（`@wta` 的标题就
+    按签位排，我照着推过一次，推错了），把比分插进两个名字中间等于用词序
+    断言谁赢了。赛事、轮次、谁跟谁已经答完了「这是什么比赛」，比分交给字幕。
+    """
+    if not (ev := (spec.get("event") or "").strip()):
+        raise SystemExit(
+            f"{spec['slug']} 缺 `event`——顶栏第一行没东西可写。\n"
+            "写赛事＋级别＋轮次，例如「2026 华盛顿 WTA500 女单八强」。\n"
+            "⚠️ 别拿 `push.event` 顶：那个是为了把推送标题压进 20 字位故意留空的。")
+    if not (mu := ((spec.get("push") or {}).get("matchup") or "").strip()):
+        raise SystemExit(f"{spec['slug']} 缺 `push.matchup`——顶栏第二行没东西可写。")
+    return ev, f"{mu} · 赛后场上采访"
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -547,13 +608,25 @@ def _ts(x: float) -> str:
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
 
 
-def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path) -> None:
+def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
+              spec: dict | None = None) -> None:
     if len(zh) != len(lines):
-        raise SystemExit(f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
-                         f"先跑 --stage subs 看切出来几行，再照着补 spec 里的 zh。")
+        raise SystemExit(
+            f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
+            f"先跑 --stage subs 看切出来几行，再照着补 spec 里的 zh。\n"
+            "⚠️ 改过字幕字号也会走到这儿：断行按子句切、放不下才拆，"
+            "字号一大长子句开始被拆，行数就变了。**`en_fixed` 的行号跟着失准，"
+            "得照新的行重挂一遍**。")
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
+    if spec is not None:
+        # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
+        # 刷到中段的人没看过封面，而封面只有 1.8 秒。
+        a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
+        head_a, head_b = header_lines(spec)
+        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
+        ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
     for seg, cn in zip(lines, zh):
         en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
         a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
@@ -1141,7 +1214,7 @@ def main() -> int:
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
         return 0
-    write_ass(lines, zh, spec["start"], ass)
+    write_ass(lines, zh, spec["start"], ass, spec)
     print(f"字幕 {len(lines)} 组双语 → {ass}")
     # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
     review_sheet(spec, lines, outdir)
