@@ -330,6 +330,49 @@ def test_挂账的行号得真的存在(path):
     assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"
 
 
+# ---------------------------------------------------------------- 找 Chromium
+
+@pytest.mark.parametrize("layout", ["chrome-linux", "chrome-linux64"])
+def test_找chromium认新旧两种目录名(layout, tmp_path, monkeypatch):
+    """**新版 playwright 把可执行文件挪进了 `chrome-linux64`。**
+
+    原来只按 `chromium*/chrome-linux/chrome` glob，于是 runner 上装好了却报
+    「找不到 Chromium」——日志上一行还写着 `downloaded to …`。预检确实在第 4 秒
+    就炸了（它该干的活干了），**但炸的原因是检查工具自己写错了**。
+
+    喂一个假的目录结构让它真去找，而不是断言源码里有没有那个字符串——
+    `assert "chrome-linux64" in source` 只能证明有人写过，证明不了它能找到。
+    """
+    import playwright.sync_api as pw
+
+    from tools.build_interview_clip import _chromium
+
+    # 先把「问 playwright」那条路堵掉：这台机器上它可能答得出真的 Chromium
+    monkeypatch.setattr(pw, "sync_playwright", lambda: (_ for _ in ()).throw(RuntimeError))
+    exe = tmp_path / "chromium-1234" / layout / "chrome"
+    exe.parent.mkdir(parents=True)
+    exe.write_text("#!/bin/sh\n")
+    monkeypatch.setenv("PLAYWRIGHT_BROWSERS_PATH", str(tmp_path))
+    assert _chromium() == str(exe)
+
+
+def test_这台机器上真的找得到chromium():
+    """**查产物不查信号**：路径存在还不够，得真能跑起来报出版本号。
+
+    缺 Chromium 时这条要红，不许 skip——封面走 HTML 渲染，没有它出不了片，
+    而一个常年跳过的检查和常年红是同一个毛病。
+    """
+    import subprocess
+
+    from tools.build_interview_clip import _chromium
+
+    exe = Path(_chromium())
+    assert exe.exists(), exe
+    out = subprocess.run([str(exe), "--version"], capture_output=True, text=True,
+                         timeout=60).stdout
+    assert "Chromium" in out or "Chrome" in out, f"跑不出版本号：{out!r}"
+
+
 # ---------------------------------------------------------------- 工作流依赖
 
 def test_ci装的字体覆盖代码要的每一个():
