@@ -985,3 +985,42 @@ def test_跟踪按源分别算不能跨源接成一个镜头():
     assert "track_shots(path, [segments[i] for i in mine]" in body, (
         "跟踪还在拿整份 segments 算，跨源会接成一个镜头")
     assert "cut_segment(sources[seg.source]" in body, "切片没有按段取自己的源片"
+
+
+def test_每一段都要待在同一个镜头里():
+    """跨场景切点的那一段中途会换镜头，而换过去的那个镜头里常常是另一个人。
+
+    郑钦文那条第一版踩了三处，**渲染一次都没报错**：末屏那句「你定闹钟吗？」
+    压在对手握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；
+    「往回爬」那句前两秒是对手走开的背影；巴黎那段最重的「亚洲的第一枚奥运
+    网球单打金牌」整句落在维基奇身上。画面和旁白对不上不会让 ffmpeg 失败，
+    只会静静地发出去。
+
+    挑段仍然要靠眼睛看缩略图墙，这一条只拦「窗口中途换了镜头而我没看见」。
+    """
+    reel = _reel()
+    probes = [{"url": "u://a", "scene_cuts": [10.0, 20.0]},
+              {"url": "u://b", "scene_cuts": [5.0]}]
+    spec = {
+        "sources": {"a": "u://a", "b": "u://b"},
+        "segments": [
+            {"start": 11.0, "end": 19.0, "source": "a", "narration": "干净"},
+            {"start": 18.0, "end": 22.0, "source": "a", "narration": "跨了"},
+            {"start": 0.0, "end": 9.0, "source": "b", "narration": "也跨了"},
+        ],
+    }
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes)
+    assert unchecked == []
+    assert [b["index"] for b in bad] == [1, 2], "跨切点的段没被抓出来"
+    assert bad[0]["cuts"] == [20.0] and bad[1]["cuts"] == [5.0]
+
+    # 真要跨（两边是同一个人）就显式挂账，别默默跨过去
+    spec["segments"][1]["crosses_cut"] = "两边都是她，只是机位换了"
+    bad, _ = reel.segments_straddling_cuts(spec, probes)
+    assert [b["index"] for b in bad] == [2]
+
+    # **probe 给不全时不许假绿**：零命中和「全都合格」长得一模一样，
+    # 所以没查成的源片要单独报出来（CLAUDE.md：空结果先自证是真空）。
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes[:1])
+    assert unchecked == ["b"], "缺 probe 的源片没有被报出来"
+    assert all(b["source"] == "a" for b in bad)

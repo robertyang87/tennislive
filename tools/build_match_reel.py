@@ -505,6 +505,49 @@ def load_spec(path: Path) -> dict:
     return spec
 
 
+def segments_straddling_cuts(
+    spec: dict, probes: list[dict],
+) -> tuple[list[dict], list[str]]:
+    """哪几段跨过了源片的场景切点，以及哪几条源片没查成。
+
+    **跨切点＝这一段中途换镜头，而换过去的那个镜头里常常是另一个人。**
+    郑钦文那条第一版踩了三处，一处都没报错：末屏「你定闹钟吗？」压在对手
+    握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；「往回爬」
+    那句前两秒是对手的背影；巴黎那段「亚洲的第一枚奥运网球单打金牌」整句
+    落在维基奇身上。画面和旁白对不上**不会让渲染失败**，只会静静地发出去。
+
+    `probe.json` 里本来就记着 `scene_cuts` 和 `url`，按 url 认源片就能机检——
+    挑段仍然要靠眼睛，这一条只负责拦住「窗口中途换了镜头而我没看见」。
+
+    真要跨（两边都是同一个人时），在这一段写 `"crosses_cut": "<为什么>"`
+    显式挂账，别默默跨过去。
+
+    第二个返回值是**没查成的源片**：probe 没给全时，前一个返回值会是空的，
+    而空的和「全都合格」长得一模一样（CLAUDE.md：空结果先自证是真空）。
+    """
+    by_url = {p.get("url"): list(p.get("scene_cuts") or []) for p in probes}
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec.get("source_url", "")}
+    straddling: list[dict] = []
+    unchecked = sorted(
+        name for name, url in urls.items() if url not in by_url)
+    for index, seg in enumerate(spec["segments"]):
+        name = seg.get("source", "")
+        url = urls.get(name)
+        if url not in by_url or seg.get("crosses_cut"):
+            continue
+        inside = [c for c in by_url[url]
+                  if seg["start"] < c < seg["end"]]
+        if inside:
+            straddling.append({
+                "index": index, "source": name,
+                "start": seg["start"], "end": seg["end"],
+                "cuts": inside, "narration": seg["narration"],
+            })
+    return straddling, unchecked
+
+
 def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
     """把 spec 里的源片全下下来，返回 {名字: 路径}。
 
