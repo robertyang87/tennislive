@@ -725,13 +725,46 @@ def _unresolved_suspects(spec: dict) -> list[str]:
 
 
 def _chromium() -> str:
-    """沙箱和 runner 上 Chromium 的路径都带版本号，playwright 自己找不到。"""
+    """找 Chromium：**先问 playwright 自己，它答错了再自己找，而且不写死目录名。**
+
+    两边都不能单独信，实测：
+
+    | | playwright 说 | 磁盘上实际是 |
+    |---|---|---|
+    | 沙箱 | `chromium-1228/chrome-linux64/chrome`（不存在） | `chromium-1194/chrome-linux/chrome` |
+    | runner | 对的 | 新版是 **`chrome-linux64`**，不是 `chrome-linux` |
+
+    原来只按 `chromium*/chrome-linux/chrome` glob，于是 runner 上装好了却报
+    「找不到」——**日志上一行还写着 `downloaded to …/chromium_headless_shell-1234`**。
+    仓库里记过同一个毛病（「我那个查找函数只按猜的路径 glob，它其实装好了」），
+    这次换成新版改了目录名又踩一次。
+
+    所以中间那一段用 `chromium-*/*/chrome`：`chrome-linux` 和 `chrome-linux64`
+    都能中，以后再改名也不用跟着改。
+    """
     import glob
-    for pat in ("/opt/pw-browsers/chromium*/chrome-linux/chrome",
-                str(Path.home() / ".cache/ms-playwright/chromium*/chrome-linux/chrome")):
-        if hit := sorted(glob.glob(pat)):
-            return hit[-1]
-    raise SystemExit("找不到 Chromium。装：python -m playwright install chromium")
+    import os
+
+    try:
+        from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+        with sync_playwright() as p:
+            if (exe := p.chromium.executable_path) and Path(exe).exists():
+                return exe
+    except Exception:  # noqa: BLE001 — 没装 playwright / 版本对不上，都退回自己找
+        pass
+
+    roots = [os.environ.get("PLAYWRIGHT_BROWSERS_PATH"), "/opt/pw-browsers",
+             str(Path.home() / ".cache/ms-playwright")]
+    for root in filter(None, roots):
+        # 完整版优先；headless shell 是最后一招（渲封面截图够用，但别当默认）
+        for pat in ("chromium-*/*/chrome", "chromium_headless_shell-*/*/headless_shell"):
+            if hit := sorted(glob.glob(str(Path(root) / pat))):
+                return hit[-1]
+    raise SystemExit(
+        "找不到 Chromium。装：python -m playwright install chromium\n"
+        f"（找过 playwright 自报的路径，和 {', '.join(filter(None, roots))} 下的 "
+        "chromium-*/*/chrome）")
 
 
 def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
