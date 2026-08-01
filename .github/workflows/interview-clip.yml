@@ -134,8 +134,13 @@ jobs:
 
       - name: 提交成片
         run: |
-          # 源片 50MB+ 不进仓库，只提交成片和字幕。
-          rm -f output/interviews/${{ github.event.inputs.slug }}/source.mp4
+          # **中间物一个都别留。** 只列 `source.mp4` 是不够的——第七趟出片时
+          # 跟着进仓库的还有 `_audio.m4a`（6.6 MB，verify 下的音轨）、
+          # `cover.html`（**12.5 MB**，字体 base64 内嵌进去的那份）、
+          # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
+          # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
+          D="output/interviews/${{ github.event.inputs.slug }}"
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
