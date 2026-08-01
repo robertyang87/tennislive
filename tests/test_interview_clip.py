@@ -351,12 +351,40 @@ def test_ci装的字体覆盖代码要的每一个():
             "缺了会悄悄回退到别的字体，量出来的行宽和渲出来的对不上。")
 
 
+def _ci_sparse_block() -> list[str]:
+    """`ci.yml` 里 `sparse-checkout: |` 那个块的原始行。"""
+    import yaml  # noqa: PLC0415
+
+    ci = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "ci.yml").read_text(encoding="utf-8"))
+    for step in ci["jobs"]["test"]["steps"]:
+        if (block := (step.get("with") or {}).get("sparse-checkout")):
+            return [ln for ln in block.splitlines() if ln.strip()]
+    return []
+
+
 def test_ci能看到赛后开麦的转写产物():
     """CI 是 sparse-checkout，**默认不含 `output/`**（那目录 1 GB+）。
 
     `test_spec里的人工引语和en_fixed是自洽的` 要读 `lines.json`，
     没有它就永远 skip——而常年不变的 skip 和常年不变的 fail 是同一个毛病。
     """
-    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
-    assert "sparse-checkout" not in ci or "output/interviews" in ci, \
+    block = _ci_sparse_block()
+    assert not block or "output/interviews" in [ln.strip() for ln in block], \
         "ci.yml 用了 sparse-checkout 却没带上 output/interviews，spec 测试会永远 skip"
+
+
+def test_ci的sparse块里不许有注释():
+    """**那个块是纯路径列表，不是 YAML。**
+
+    在里面写 `#` 不会被当成注释，会原样传给 `git sparse-checkout set`：
+
+        git sparse-checkout set .github assets … tools # 「赛后开麦」那条线的… output/interviews
+        fatal: specify directories rather than patterns
+
+    而且它**在 checkout 那一步就炸**，一条测试都跑不到——报错信息里也完全
+    看不出是注释惹的祸。说明只能写在块外面。
+    """
+    for ln in _ci_sparse_block():
+        assert "#" not in ln, f"sparse-checkout 块里有注释，会被当成路径：{ln.strip()}"
+        assert not set("*?[]\\") & set(ln), f"sparse-checkout 只吃目录名：{ln.strip()}"
