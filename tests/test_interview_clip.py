@@ -331,6 +331,64 @@ def test_挂账的行号得真的存在(path):
     assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"
 
 
+# ---------------------------------------------------------------- 下载
+
+def _fake_run(monkeypatch, sink: list):
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip.subprocess, "run",
+                        lambda cmd, **kw: sink.append(cmd) or None)
+
+
+def test_下载落到别的后缀要认出来(tmp_path, monkeypatch, capsys):
+    """**`-o` 是模板不是保证。**
+
+    `bv*+ba` 合流时，最佳的那对不是 mp4 装得下的编码（VP9 / Opus）就会被
+    yt-dlp 自己改成 `.mkv`，并 warn 一句——而我们开着 `--no-warnings`，
+    那句被吞掉。下游 ffmpeg 拿 `source.mp4` 去开，报 ENOENT，
+    退出码 `-2 & 0xff = 254`，日志里只剩一个数字，
+    **而 artifact 里明明躺着 66 MB 的视频**。这是真实踩到的那次。
+    """
+    from tools.build_interview_clip import yt_download
+
+    _fake_run(monkeypatch, [])
+    (tmp_path / "source.mkv").write_bytes(b"x" * 99)
+    got = yt_download("u", tmp_path / "source.mp4", "f", {})
+    assert got.name == "source.mkv"
+    assert "落到了 source.mkv" in capsys.readouterr().out
+
+
+def test_下载不到要把目录里有什么列出来(tmp_path, monkeypatch):
+    """**空结果先自证是真空。** 只说「文件不存在」，下一个人还得自己去翻。"""
+    from tools.build_interview_clip import yt_download
+
+    _fake_run(monkeypatch, [])
+    with pytest.raises(SystemExit) as e:
+        yt_download("u", tmp_path / "source.mp4", "f", {})
+    assert "目录里有" in str(e.value)
+
+
+def test_合流一律remux成目标容器(tmp_path, monkeypatch):
+    """加了 `--merge-output-format`，落到别的后缀这件事本身就少发生。
+
+    上面那条兜底仍然留着——**兜底和默认值出事的时候不吭声**，
+    所以两层都要，而且都要出声。
+    """
+    from tools.build_interview_clip import yt_download
+
+    import tools.build_interview_clip as clip
+
+    cmds: list = []
+    dest = tmp_path / "s.mp4"
+    # 让假的 run 顺手把文件建出来，模拟「下成功了」
+    monkeypatch.setattr(clip.subprocess, "run",
+                        lambda cmd, **kw: cmds.append(cmd) or dest.write_bytes(b"x"))
+    yt_download("u", dest, "bv*+ba", {})
+    assert cmds, "根本没调 yt-dlp"
+    assert "--merge-output-format" in cmds[0]
+    assert cmds[0][cmds[0].index("--merge-output-format") + 1] == "mp4"
+
+
 # ---------------------------------------------------------------- 找 Chromium
 
 @pytest.mark.parametrize("layout", ["chrome-linux", "chrome-linux64"])
