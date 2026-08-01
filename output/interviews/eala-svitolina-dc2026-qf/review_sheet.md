@@ -12,7 +12,7 @@
 | 6 | 0:13.1 | [▶](https://youtu.be/AiBTDJd_ekQ?t=306) | The crazy thing is the last semi-final you made | 离谱的是 你上一次打进半决赛 |  |
 | 7 | 0:15.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=309) | was not that long ago in Berlin and you beat | 也没过多久 就在柏林 |  |
 | 8 | 0:17.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=311) | your same opponent the same score line. | 对手一样 比分也一模一样 |  |
-| 9 | 0:20.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=314) | What I know it's nuts. | 我知道 这太离谱了 | 👂 账号所有者确认。`What` 疑似主持人的惊讶语气词，`I know, it's nuts` 归属谁听不出来——中文按伊埃拉说处理。**没有第二个源能定它**，所以记成人工确认而不是机器判定。 |
+| 9 | 0:20.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=314) | What I know it's nuts. | 我知道 这太离谱了 | 👂 账号所有者确认。`What` 疑似主持人的惊讶语气词，`I know, it's nuts` 归属谁听不出来——中文按伊埃拉说处理。第二份 ASR 整段只差 7.0%，但没读到它在这一行怎么听，所以记成人工确认而不是机器判定。 |
 | 10 | 0:23.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=317) | What is it about playing Elina | 跟斯维托丽娜交手 |  |
 | 11 | 0:25.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=319) | that brings out the best in you | 为什么总能让你打出最好的状态 |  |
 | 12 | 0:26.4 | [▶](https://youtu.be/AiBTDJd_ekQ?t=320) | as such a great player that you have to beat? | 她可是你必须战胜的强手 |  |
@@ -43,7 +43,7 @@
 | 37 | 1:24.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=378) | Now, I know your next opponent, Naomi Osaka, | 你的下一个对手是大坂直美 |  |
 | 38 | 1:33.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=386) | which is going to be an amazing match | 这一定会是一场精彩的对决 |  |
 | 39 | 1:36.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=390) | between the two of you. | 就在你们两人之间 |  |
-| 40 | 1:38.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=392) | You're all very excited about it. | 大家都很期待 | 👂 账号所有者确认。`You're all` / `We're all` 两种都成立（主持人对全场说 / 主持人代表大家说），中文「大家都很期待」两种都对得上，所以这处不改。 |
+| 40 | 1:38.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=392) | You're all very excited about it. | 大家都很期待 | 👂 账号所有者确认。`You're all` / `We're all` 两种都成立（主持人对全场说 / 主持人代表大家说），中文「大家都很期待」两种都对得上，所以这处不改。（第二份 ASR 整段分歧 7.0%，未逐处核对这一行） |
 | 41 | 1:40.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=394) | What are your thoughts about playing Naomi? | 跟大坂直美交手你怎么看 |  |
 | 42 | 1:42.1 | [▶](https://youtu.be/AiBTDJd_ekQ?t=395) | And I'm sure you've grown up also watching her. | 我想你也是看着她长大的 |  |
 | 43 | 1:44.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=398) | Yes, she is of course such an accomplished player | 是的 她当然是非常有成就的球员 | ✅ 人工引语 |
