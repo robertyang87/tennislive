@@ -1750,8 +1750,6 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 照 `mixed_fps` 那套做**显式认领**：量出来是哑的就报错并给出路，
     # spec 里写 `silent_source: "为什么可以"` 才放行。一律放行等于继续出哑片，
     # 一律拒绝会把纯视频轨的源片整个挡在门外——认领这一步是让这个取舍留下判据。
-    require_live_sound(source, spec)
-
     source_w, source_h = probe_size(source)
 
     # **只出封面就到此为止。** 封面是全流程返工最多的那一屏（CLAUDE.md 里
@@ -1771,6 +1769,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
               f"  这一步不出成片。看着对了再跑完整 render。")
         cover.unlink(missing_ok=True)
         return poster
+
+    # ⚠️ **这道闸排在只出封面那条路的后面。** 封面一个音频样本都不碰，
+    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处（改一档 scale
+    # 就想看一眼）废掉——和 `_preflight_cutout` 那次是同一个错：
+    # **别把跟这条路无关的检查塞进它前面**。
+    require_live_sound(source, spec)
 
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
     global FPS, FPS_EXPR
