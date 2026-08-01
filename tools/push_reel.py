@@ -134,6 +134,45 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
     )
 
 
+def wait_for_video(url: str, *, attempts: int = 8, delay: float = 15.0,
+                   timeout: int = 20) -> None:
+    """探一次成片链接，取不到就别推——那个 ▶ 按钮是这条推送的全部。
+
+    **这条链接从来没有被校验过**，而且不是偶尔漏掉，是**一次都没有**：
+    `pushplus.wait_for_images` 只校 `<img>` 和 **jsDelivr 域名**的 `<a>`
+    （`jsdelivr_link_sources`），而成片超过 20 MB 就退回
+    `raw.githubusercontent.com`——量过，仓库里十条成片 28~54 MB，**十条全超**。
+    也就是说这个 `if` 分支在真实数据上从来没走到过 jsDelivr 那一支，
+    校验对成片等于不存在。又一次「兜底出事的时候不吭声」。
+
+    复制页那道闸取不到时只摘按钮、正文照发（`drop_dead_copy_button`），
+    **这里不能那么办**：文案没了还有正文，片子没了这条推送就没有内容了。
+    所以取不到就 exit 1，一个字都不发——这条工作流三分钟一轮，重跑不心疼。
+
+    用 `Range: bytes=0-1023` 探：真文件回 206，缺文件回 404，而**只下 1 KB**，
+    不用为了探活把 52 MB 拉一遍。
+    """
+    last = ""
+    for attempt in range(max(1, attempts)):
+        try:
+            response = requests.get(url, timeout=timeout, stream=True,
+                                    headers={"Range": "bytes=0-1023"})
+            response.close()
+            if response.status_code in (200, 206):
+                print(f"[成片] 第 {attempt + 1} 次探活：链接可取")
+                return
+            last = f"HTTP {response.status_code}"
+        except requests.RequestException as exc:
+            last = f"{type(exc).__name__}: {exc}"
+        print(f"[成片] 第 {attempt + 1}/{attempts} 次探活 {last}，{delay:.0f}s 后重试")
+        if attempt + 1 < attempts:
+            time.sleep(delay)
+    raise SystemExit(
+        f"成片链接 {url} 取不到（{last}）。多半是这一版还没进 main——"
+        "先把渲染那条 PR 合进去再推。带着一个打不开的 ▶ 按钮发出去，"
+        "微信那条消息收不回来。")
+
+
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
              event: str = "", summary: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
@@ -532,6 +571,7 @@ def main() -> int:
     wait_for_copy_page(copy_url, title)
 
     url = video_url(outdir, name)
+    wait_for_video(url)
     # 海报没进仓库就别硬塞一个链接进去——那就是「推送正文里的每个链接，
     # 指向的文件都必须在推送之前进仓库」那条踩过两次的规矩。缺了就退回无图版，
     # 并且**说出来**，别让它悄悄少一屏。
