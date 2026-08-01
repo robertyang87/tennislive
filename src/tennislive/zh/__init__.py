@@ -32,8 +32,38 @@ __all__ = [
 ]
 
 
+#: 变音符号不参与匹配。NFKD 拆不开的那几个字母要显式列出来——它们不是
+#: 「带符号的拉丁字母」，而是独立码位，`combining` 判据一个都拦不住。
+#: 网球圈里真正会遇到的就这几个（Đoković、Ruud 那一带的北欧拼写、波兰的 ł）。
+_LETTER_FOLD = str.maketrans({
+    # `đ` 折成 `dj` 不是 `d`：塞尔维亚语的拉丁转写就是这么写的
+    # （`Đoković` → `Djokovic`，表里正是后者）。折成 `d` 会得到
+    # `dokovic`，照样查不到——一个改一半的折叠比不折更难发现。
+    "đ": "dj", "Đ": "Dj", "ø": "o", "Ø": "O", "ł": "l", "Ł": "L",
+    "ð": "d", "Ð": "D", "þ": "th", "Þ": "Th", "ß": "ss",
+})
+
+
+def _fold_accents(name: str) -> str:
+    """`Géa` → `Gea`。
+
+    **同一个人换个拼法就掉回英文名**，而且不吭声：`player_zh("Gaël Monfils")`
+    原样返回 `Gaël Monfils`，`player_zh("Gael Monfils")` 给「孟菲尔斯」。
+    卡片上印出来是一个英文名混在一排中文名里，看着像「这个人表里没有」——
+    和真的没有长得一模一样。今天这条片子的对手正是 `Arthur Géa`（法国人，
+    维基条目标题带重音），ESPN 恰好给的是不带重音的写法，纯属运气。
+
+    折叠**同时作用在建索引和查询两边**，所以它只会把「查不到」变成「查得到」，
+    不会改动任何已经查得到的结果。
+    """
+    import unicodedata  # noqa: PLC0415
+
+    folded = unicodedata.normalize("NFKD", name.translate(_LETTER_FOLD))
+    return "".join(ch for ch in folded if not unicodedata.combining(ch))
+
+
 def _normalize_name(name: str) -> str:
-    return " ".join(name.strip().split()).lower()
+    return " ".join(_fold_accents(name).strip().split()).lower()
 
 
 _PLAYER_LOOKUP: dict[str, str] | None = None
