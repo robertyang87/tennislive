@@ -2,14 +2,20 @@
 
 ## Smiley Sans v2.0.1 (得意黑)
 
-- File: `SmileySans-Oblique.woff2`
+- Files: `SmileySans-Oblique.woff2`, `SmileySans-Oblique.ttf`
 - Project: <https://github.com/atelier-anchor/smiley-sans>
 - Version: 2.0.1 (2024-02-07)
 - Copyright: Copyright 2022-2024 atelierAnchor. All rights reserved.
 - License: SIL Open Font License 1.1. The full license is included in
   `OFL-SmileySans.txt`.
-- Usage in TennisLive: display headings on poster covers only. Body copy keeps
-  the bundled Noto Sans SC subset for long-form legibility.
+- Usage in TennisLive: display headings on poster covers, and the top bar burned
+  into 赛后开麦 clips. Body copy — including subtitles — keeps Noto Sans SC /
+  Noto Sans CJK SC for long-form legibility; this face is oblique and condensed,
+  which is what makes it good for a heading and tiring for a paragraph.
+- The `.ttf` is the same font, unpacked from the `.woff2` with fontTools
+  (`TTFont(woff2).flavor = None`). It exists because **libass cannot read
+  woff2** — the browser path (`webcards._font_css`) keeps using the woff2,
+  the ffmpeg/ASS path needs the ttf. Do not edit either by hand; re-derive.
 
 ## Montserrat (latin subset)
 
