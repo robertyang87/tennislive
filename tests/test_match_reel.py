@@ -2590,3 +2590,37 @@ def test_PO_token_探活挪到了render之前():
     body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
     block = body[body.index("- name: 起 PO token provider"):].split("\n      - ")[0]
     assert "for i in $(seq" not in block, "启动那一步又在原地轮询了"
+
+
+def test_海报的裁切中间物一个都不许进仓库():
+    """`versus_poster.py` 把裁切/抠图/淡出的中间物**存在原图旁边**
+    （`image.with_suffix(...)`），而原图在 `assets/players/` 里是被跟踪的
+    ——中间物只要没被 gitignore 挡住，就会跟着一起被 `git add` 进仓库。
+
+    **判据自己推导，不维护名单。** `.gitignore` 原来手写着 `.crop.jpg` 和
+    `.crop.png`，而同一条链上的第三个 `_fade_cut_sides` 存的是
+    `X.crop.png` → `X.crop.faded.png`，`*.crop.png` 匹配不上它，于是两张
+    中间物躺在 `assets/players/` 里等着被提交。逐个列名字挡不住下一个——
+    和 outdir 里 `source*` 那个坑连栽四次是同一个形状。
+
+    所以这条扫源码里真正的 `with_suffix("...")`，每个图片后缀都必须被
+    `.gitignore` 挡住。**加一个新的中间物后缀就会红**，逼你同时改 gitignore。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    suffixes = set(re.findall(r'with_suffix\(\s*"(\.[a-z.]+)"\s*\)', src))
+    images = {s for s in suffixes if s.endswith((".png", ".jpg", ".jpeg"))}
+    assert images, "没扫到任何图片中间物，判据失效了"
+
+    ignored = [ln.strip() for ln in Path(".gitignore").read_text(encoding="utf-8")
+               .splitlines() if ln.strip() and not ln.startswith("#")]
+    for suffix in sorted(images):
+        assert f"*{suffix}" in ignored, (
+            f"`with_suffix(\"{suffix}\")` 存的中间物落在原图旁边，"
+            f"而 .gitignore 里没有 `*{suffix}`——它会跟着 assets/ 一起进仓库")
+
+    # 反过来：这些中间物此刻真的一个都不在索引里
+    tracked = subprocess.run(["git", "ls-files"], capture_output=True,
+                             text=True, check=True).stdout
+    for suffix in sorted(images):
+        stray = [ln for ln in tracked.splitlines() if ln.endswith(suffix)]
+        assert not stray, f"仓库里已经有 {suffix} 的中间物：{stray[:3]}"
