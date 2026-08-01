@@ -1,0 +1,155 @@
+{
+  "slug": "zheng-lanlana",
+  "_column": "开球之前",
+  "_source": "比赛还没打，所以画面来自四条源片：两人各自最近的一场，加各自的高光。每段的 source 显式声明，见 tools/build_match_reel.py 的多源支持。probe 结果在 output/2026-08-01/reel/zheng-lanlana-{src,hl}-* 下，缩略图墙逐张看过——回合窗口是数出来的，不是猜的。",
+  "_fixture": "北京时间 2026-08-02 00:30，加拿大站（National Bank Open）女单资格赛。郑钦文（世界第 123）VS 塔拉鲁迪（世界第 78）。ESPN 421-2026，两人此前无交手。",
+  "sources": {
+    "zheng": "https://www.youtube.com/watch?v=_z06v_b8bIM",
+    "paris": "https://www.youtube.com/watch?v=DfWrAu8ALPo",
+    "lanlana": "https://www.youtube.com/watch?v=brqf3Ocg6yQ",
+    "ao": "https://www.youtube.com/watch?v=br8VYo6GvQ4"
+  },
+  "_sources_why": {
+    "zheng": "WTA 官方 · 2026 华盛顿首轮 伊埃拉 d. 郑钦文。画面自证：场地印 WASHINGTON D.C.，WTA 记分条，92.5 秒看台上有五星红旗。她最近的一场。",
+    "paris": "Olympic Games 官方 · 2024 巴黎奥运女单决赛。画面自证：PARIS 2024 围板 + 奥运五环 + 红土，郑钦文红色中国队服。用在第 ② 段。",
+    "lanlana": "WTA 官方 · 2026 布拉格 Bartunkova vs 塔拉鲁迪。画面自证：蓝场围板 FLASHSCORE / AGGE，WTA 记分条两个名字。她最近的一场。",
+    "ao": "Australian Open 官方 · 2026 澳网 梅尔滕斯 vs 塔拉鲁迪。画面自证：场地印 MELBOURNE，记分条 MERTENS / TARARUDEE。那是她第一次打进大满贯正赛。"
+  },
+  "cover": {
+    "eyebrow": "开球之前",
+    "hook": "奥运冠军打资格赛\n对面排名比她高",
+    "tier": "WTA 1000",
+    "round": "Q1",
+    "meta": "加拿大站 · 8 月 2 日 00:30",
+    "layout": "cutout",
+    "versus": {
+      "_why": "两格都是 WTA 官方半身抠图，文件名自带 WTA ID（Zheng-Torso_328120 / Tararudee-Torso_329651），人物这一要素由来源自己写死，不靠看图推断。背景从 zheng 那条源片抽一帧底线全场机位。",
+      "split": 0.5,
+      "names": [
+        "郑钦文",
+        "塔拉鲁迪"
+      ],
+      "background": {
+        "frame_at": 126.0,
+        "shot": "wide_court"
+      },
+      "top": {
+        "cutout": "assets/players/wta-328120-zheng-qinwen.png"
+      },
+      "bottom": {
+        "cutout": "assets/players/wta-329651-lanlana-tararudee.png"
+      }
+    }
+  },
+  "segments": [
+    {
+      "start": 60.5,
+      "end": 69.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八月二日凌晨，加拿大站，资格赛第一轮。世界第一百二十三，对世界第七十八。排名高的那个，是对面。"
+    },
+    {
+      "start": 104.5,
+      "end": 116.0,
+      "source": "paris",
+      "fit": "crop",
+      "narration": "两年前的这个夏天，她站在巴黎。半决赛赢斯瓦泰克，决赛赢维基奇，亚洲的第一枚奥运网球单打金牌。那一年她二十一岁。从那儿到今天，一共两年。"
+    },
+    {
+      "start": 136.5,
+      "end": 144.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "转折有确切日期：二〇二五年七月十八日，她做了右肘手术。之前那几个月，她一直带着疼在打。"
+    },
+    {
+      "start": 144.5,
+      "end": 150.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "复出是九月的中网。第三轮，同一处肘，退赛。排名从那以后一直在掉。"
+    },
+    {
+      "start": 150.5,
+      "end": 158.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "今年法网首轮，她全场只赢下四局，生涯第一次在法网首轮就走人。"
+    },
+    {
+      "start": 158.5,
+      "end": 167.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "赢她的那个人叫赫瓦林斯卡，波兰人，当时世界第一百一十四。"
+    },
+    {
+      "start": 76.5,
+      "end": 82.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "丢的是排名：跌出前一百，六月一度掉到第一百六十。"
+    },
+    {
+      "start": 108.5,
+      "end": 115.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "往回爬是从七月的雅典开始的。她连赢两场，两个月来第一次。"
+    },
+    {
+      "start": 168.5,
+      "end": 176.0,
+      "source": "zheng",
+      "fit": "crop",
+      "cx": 0.5,
+      "narration": "那两周她从资格赛一路打进决赛，是史上第一个做到的资格赛球员。所以那场球不丢人。"
+    },
+    {
+      "start": 122.5,
+      "end": 130.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八强碰上克雷奇科娃，输了。三天前华盛顿首轮，一比六丢掉决胜盘，输给伊埃拉。"
+    },
+    {
+      "start": 176.0,
+      "end": 181.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "所以才有了加拿大站的资格赛。"
+    },
+    {
+      "start": 180.5,
+      "end": 190.5,
+      "source": "lanlana",
+      "fit": "crop",
+      "cx": 0.5,
+      "narration": "对面这位二十二岁，泰国人，叫塔拉鲁迪。四天前她升到生涯最高的世界第七十八，是泰国排名最高的球员。"
+    },
+    {
+      "start": 244.5,
+      "end": 256.5,
+      "source": "ao",
+      "fit": "crop",
+      "cx": 0.5,
+      "narration": "今年澳网，她连过三轮资格赛，第一次打进大满贯正赛。她正在往上走。这一场，她没有什么可输的。"
+    },
+    {
+      "start": 278.5,
+      "end": 290.5,
+      "source": "ao",
+      "fit": "crop",
+      "cx": 0.5,
+      "narration": "有人说，奥运冠军沦落到打资格赛。沦落这个词用错了。手术之后的每一场球都是往回爬，爬到哪儿都比停下强。"
+    },
+    {
+      "start": 60.5,
+      "end": 69.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八月二日凌晨，她从资格赛继续出发。凌晨零点半，你定闹钟吗？"
+    }
+  ]
+}
