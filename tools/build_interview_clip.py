@@ -210,6 +210,31 @@ def _phrase_ok(clause: list[tuple[float, str]], i: int) -> bool:
     return _bare(clause[i][1]) in _BREAK_BEFORE and _bare(clause[i - 1][1]) not in _NO_TAIL
 
 
+def cookie_args(spec: dict) -> list[str]:
+    """给 yt-dlp 的 `--cookies`，**从环境变量拿，不从 spec 拿**。
+
+    原来只认 `spec["cookies"]`，而工作流是在**出片那一步**才把路径写进 spec 的
+    （写完还要 `git checkout --` 撤掉，免得提交进仓库）。于是 `--stage verify`
+    这一步拿不到 cookie，yt-dlp 立刻吃 `Sign in to confirm you're not a bot`
+    ——**cookie 文件明明就在那儿，环境变量也打在日志上了**。
+
+    `COOKIES` 环境变量两步都有，直接读它，顺带把「写进 spec 再撤回」那套
+    危险动作整个删掉：secret 的路径再也不会经过仓库里的文件。
+
+    **拿没拿到都要出声。** 没有 cookie 时 yt-dlp 未必立刻失败（公开视频在
+    某些 IP 上裸下得动），失败时也长得像「视频没了」——不说清楚就得从头猜。
+    """
+    import os
+
+    path = spec.get("cookies") or os.environ.get("COOKIES") or ""
+    if path and Path(path).exists():
+        print(f"带 cookie 下载：{path}")
+        return ["--cookies", path]
+    print(f"⚠️ 没有 cookie（COOKIES={path or '未设置'}），裸下试试——"
+          "YouTube 挡了的话报的是 `Sign in to confirm you're not a bot`")
+    return []
+
+
 def _sentences(keep: list[tuple[float, str]]) -> list[list[tuple[float, str]]]:
     """切成句子。句号问号感叹号是边界，**说话人换人（`>>`）也是**。
 
@@ -486,8 +511,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     if not audio.exists():
         cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
                "-f", "ba", "-o", str(audio)]
-        if (ck := spec.get("cookies")) and Path(ck).exists():
-            cmd += ["--cookies", ck]
+        cmd += cookie_args(spec)
         subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
 
     model = WhisperModel(spec.get("whisper_model", "small.en"), compute_type="int8")
@@ -831,8 +855,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 少了它不会报「装少了」，而是任何格式选择器都匹配不上。见 match-reel.yml。
         cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
                "-f", "bv*[height<=720]+ba/b[height<=720]", "-o", str(src)]
-        if (ck := spec.get("cookies")) and Path(ck).exists():
-            cmd += ["--cookies", ck]
+        cmd += cookie_args(spec)
         subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
