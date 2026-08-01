@@ -1677,7 +1677,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-filter_complex",
                 f"[0:a]volume={BED_LOUD}[bed];{chain};"
                 f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
-                f"[voice]asplit=2[vk][vm];"
+                f"[voice]asplit=2[vk0][vm];"
+                # **`apad` 不能省。** `sidechaincompress` 两路里**任一路 EOF
+                # 就整个结束**——旁白在最后一段里往往说不满（伊埃拉那条末段
+                # 画面 11.5s、旁白 8.8s），于是钥匙那一路先断，现场声跟着被
+                # 一起掐掉：成片最后 2.74 秒**一点声音都没有**，正好是拥抱教练
+                # 那一下。它不报错，画面照旧，只有把音轨长度和画面长度摆在一起
+                # 才看得见（`check_reel_landed.py` 那条「音轨比画面短」）。
+                # 补成无限长之后，这一路由 `[bed]` 定长度，闪避行为一点没变：
+                # 合成信号实测有旁白时 -38.1 dB、旁白说完 -24.0 dB。
+                f"[vk0]apad[vk];"
                 f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
                 f"attack=15:release=450:makeup=1[duck];"
                 f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
