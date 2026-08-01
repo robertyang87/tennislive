@@ -15,6 +15,7 @@
 
 import json
 import inspect
+import os
 import re
 import subprocess
 import sys
@@ -1872,6 +1873,94 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
             "漏传一次就拿另一场球的标题发出去")
 
 
+def _published_reels() -> list[Path]:
+    """仓库里已发的成片目录——**CI 上是空的，这是正常的**。
+
+    `ci.yml` 的稀疏检出从来不含 `output/`（一 GB 多的公开产物存档），所以任何
+    读产物的测试在 CI 上都会拿到空列表。**空列表不等于「没有成片」**，
+    它等于「这台机器没把产物拉下来」——两者长得一模一样，正是这个仓库反复
+    踩的那个坑，我 2026-08-01 又踩了一次（run 30707236335：`只校到 0 条`）。
+
+    所以读产物的断言一律**当加餐**：核心判据必须只吃 `specs/`，在 CI 上真的
+    跑起来；产物在的时候（本地沙箱）再多验一层。写成 `skip` 是不行的——
+    一条常年跳过的检查和常年红是同一个毛病。
+    """
+    return sorted(Path("output").glob("*/reel/*"))
+
+
+def test_成片链接发之前要自己探一次(monkeypatch):
+    """**那个 ▶ 按钮是这条推送的全部，而它从来没有被校验过。**
+
+    `pushplus.wait_for_images` 只校 `<img>` 和 **jsDelivr 域名**的 `<a>`
+    （`jsdelivr_link_sources`）。而成片超过 20 MB 就退回
+    `raw.githubusercontent.com`——仓库里十条成片 28~54 MB，**十条全超**。
+    也就是说那条 jsDelivr 分支在真实数据上一次都没走到过，成片链接等于裸奔。
+    又一次「兜底出事的时候不吭声」。
+
+    复制页取不到时只摘按钮、正文照发；**成片取不到必须整条不发**——文案没了
+    还有正文，片子没了这条推送就没有内容了。
+
+    判据分三层，缺一层都可能变成假绿：
+    1. 存量成片确实全都超 20 MB（否则「从来没校验过」这句话不成立）
+    2. `wait_for_images` 拿到推送正文时，成片那条链接确实不在它的清单里
+    3. 探不到就 `SystemExit`，探得到就放行
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    from tennislive.publish.pushplus import jsdelivr_link_sources  # noqa: PLC0415
+
+    # ① 超过 20 MB 的成片一律退回 raw——这是「校验从来没生效过」的前提。
+    # 拿一个稀疏文件量，不依赖 `output/`（CI 上它不在，见 `_published_reels`）。
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        big = Path(tmp) / "x.mp4"
+        big.touch()
+        os.truncate(big, push_reel.JSDELIVR_MAX_BYTES + 1)
+        url = push_reel.video_url(big.parent, big.name)
+    assert url.startswith("https://raw.githubusercontent.com/"), url
+
+    # 产物在的时候（本地沙箱）再验一层：**存量十条真的一条都没进 jsDelivr**
+    reels = [p / f"{p.name}.mp4" for p in _published_reels()]
+    reels = [p for p in reels if p.is_file()]
+    if reels:
+        small = [p for p in reels
+                 if p.stat().st_size <= push_reel.JSDELIVR_MAX_BYTES]
+        assert not small, (
+            "有成片能走 jsDelivr 了——那 `wait_for_images` 对它是管用的，"
+            f"这条测试的前提要重写：{[p.name for p in small]}")
+
+    # ② 推送正文里那条成片链接，`wait_for_images` 看不见
+    body = push_reel.build_html(url, "https://example.invalid/copy.html",
+                                "", "标题\n\n正文", "")
+    assert url not in jsdelivr_link_sources(body), (
+        "成片链接居然进了 jsDelivr 清单——这条测试的前提要重写")
+
+    # ③ 探不到就整条不发，探得到就放行
+    class _Resp:
+        def __init__(self, code):
+            self.status_code = code
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(push_reel.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(push_reel.requests, "get", lambda *a, **k: _Resp(404))
+    with pytest.raises(SystemExit, match="取不到"):
+        push_reel.wait_for_video(url, attempts=2, delay=0)
+    monkeypatch.setattr(push_reel.requests, "get", lambda *a, **k: _Resp(206))
+    push_reel.wait_for_video(url, attempts=1, delay=0)
+
+    # ④ 而且这道闸要真的装在发送那一步上，不是写了个函数没人调
+    source = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    stage = source[source.index("url = video_url(outdir, name)"):]
+    assert stage.index("wait_for_video(") < stage.index("push(title"), (
+        "wait_for_video 没排在 push 之前——「写了」不等于「跑过」")
+
+
 def _poster_name_order(cover: dict, names: list) -> list:
     """海报的赛果那一行**实际印出来**的名字顺序。
 
@@ -1925,26 +2014,42 @@ def test_标题里的赛果顺序要和海报印的一样():
     assert checked >= 7, f"只校到 {checked} 条印赛果的 spec，判据失效了"
 
 
-def test_每条spec都能原样重现已经发出去的标题():
-    """判据是「算出来的和已经发出去的一模一样」，不是「代码里有那个函数」。
+def test_每条spec都算得出一句过得了闸的标题():
+    """**每条 spec 都要能算出标题，而且当场就过闸**——不能等到重推那一刻才炸。
 
-    每条片子的 `copy.html` 就躺在仓库里，标题写在 `<textarea id="title">` 里
-    ——那是**真的发出去的那一句**。拿 spec 重新算一遍必须逐字相同：算不出来
-    （缺 `push.summary` 而对阵又顶破 20 字位的闸）就是重推时当场报错，
-    算错了就是拿另一句话把消息发出去。
+    `headline` 有两道闸（末尾那格 13 字、整句 20 字位）。缺 `push.summary` 时
+    它退回「对阵 + 比分」，而那一句往往更长：`萨姆索诺娃 6-2 6-2 王欣瑜`
+    加上日期和栏目是 20.5 字位，顶破闸门直接 `SystemExit`。也就是说
+    **一条没写 summary 的 spec，重推时是在 runner 上才报错的**。
 
-    比的是**每个 slug 最新的那一份**：`nishikori-shang` 在 7.28 发过一版
+    这条测试只吃 `specs/`，所以它在 CI 上真的跑得起来（见 `_published_reels`：
+    `output/` 从来不在 CI 的稀疏检出里）。产物在的时候再多验一层：
+    算出来的那一句要和**已经发出去的那一句**逐字相同。
+
+    比的是每个 slug **最新的那一份**：`nishikori-shang` 在 7.28 发过一版
     30 字位的长标题（那时标题闸还不存在），7.29 重发时已经收成了短的。
     拿被顶替掉的那一版当判据，等于要求今天的代码去重现一个已经改掉的错。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
-    latest: dict[str, Path] = {}
-    for page in sorted(Path("output").glob("*/reel/*/copy.html")):
-        latest[page.parent.name] = page.parent  # 按日期升序，留最后一份
+    # ① 只吃 spec：每条都算得出、都过得了闸。日期随便给一个合法的目录名——
+    # 闸门量的是整句宽度，而日期那一格所有片子都一样宽。
+    titles: dict[str, str] = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        copy_path = path.parent / f"{path.stem}.xhs.txt"
+        meta = push_reel.push_meta(copy_path)
+        titles[path.stem] = push_reel.headline(
+            Path("output/2026-07-31/reel") / path.stem,
+            push_reel.column_of(copy_path), meta["matchup"], meta["score"],
+            meta["event"], meta["summary"])
+    assert len(titles) >= 9, f"只校到 {len(titles)} 条 spec，判据失效了"
 
-    checked = 0
+    # ② 产物在的时候（本地沙箱）再验一层：和已经发出去的那句逐字相同
+    latest: dict[str, Path] = {}
+    for outdir in _published_reels():
+        if (outdir / "copy.html").is_file():
+            latest[outdir.name] = outdir  # 按日期升序，留最后一份
     for slug, outdir in sorted(latest.items()):
         copy_path = Path(f"specs/reels/{slug}.xhs.txt")
         if not copy_path.is_file():  # 已停产的片子，spec 不在了
@@ -1958,8 +2063,6 @@ def test_每条spec都能原样重现已经发出去的标题():
                                  meta["summary"])
         assert got == want, (
             f"{slug}：从 spec 算出来的是「{got}」，已经发出去的是「{want}」")
-        checked += 1
-    assert checked >= 9, f"只校到 {checked} 条已发的片子，判据失效了"
 
 
 def test_写错的push字段要报错不许悄悄不生效():
