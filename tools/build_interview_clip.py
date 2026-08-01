@@ -849,6 +849,11 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
     return dest
 
 
+# yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——
+# 它是音轨容器，不在这张表里，传进去 yt-dlp 直接报参数非法。
+_MERGE_CONTAINERS = frozenset("mp4 mkv webm mov avi flv".split())
+
+
 def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     """下到 `dest`，**下完必须确认它真的在那儿**。返回实际落地的路径。
 
@@ -866,8 +871,15 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     # `yt-dlp[default]` 带 yt-dlp-ejs 才解得开 n challenge；少了它不会报
     # 「装少了」，而是任何格式选择器都匹配不上。见 match-reel.yml。
     cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-           "-f", fmt, "--merge-output-format", dest.suffix.lstrip("."),
-           "-o", str(dest), *cookie_args(spec), url]
+           "-f", fmt, "-o", str(dest), *cookie_args(spec)]
+    # ⚠️ **`--merge-output-format` 只在真的要合流、且容器它认识时才加。**
+    # 加在纯音轨那条路上（`-f ba` → `.m4a`）会直接吃
+    # `error: invalid merge output format "m4a" given`，yt-dlp **一秒退出**，
+    # 看起来像网络问题。踩过：为了「别留一条没有保险的路」把音频也接进这个
+    # 函数，结果**把本来通的那条弄坏了**——加保险也要验它对每条路都成立。
+    if "+" in fmt and (ext := dest.suffix.lstrip(".")) in _MERGE_CONTAINERS:
+        cmd += ["--merge-output-format", ext]
+    cmd.append(url)
     subprocess.run(cmd, check=True, timeout=1800)
     if dest.exists():
         return dest
