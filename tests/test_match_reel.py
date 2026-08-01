@@ -1543,6 +1543,38 @@ def test_封面人物首选本场抽帧():
         assert rule in text, f"挑帧工具里没写「{rule}」这一条"
 
 
+def test_抠出来只有一条残影也要报错():
+    """**「抠出来是空的」有两种，`getbbox()` 只拦得住一种。**
+
+    完全透明它拦得住。抠到一条球拍残影、一道边线，bbox 非空，于是一路绿到底——
+    render success、`check_reel_landed` 0 项不合格、**海报上人没了**。
+    2026-08-01 黄泽林那张就是这么出去的：138.14s 那一帧，左格只剩背景和一道白线，
+    只有打开海报才看得见。又一次「兜底出事的时候不吭声」。
+
+    判据是**不透明像素占裁切框的比例**：人物近景是一大块，残影是一条线。
+    门槛从已知好素材倒推——官方半身抠图 65%，两者隔着一个数量级。
+
+    报错要说出路（换一帧 / 退回官方抠图），别只说不行。
+    """
+    reel = _reel()
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+
+    assert 0 < reel.CUT_MIN_SHARE < 0.2, (
+        f"门槛 {reel.CUT_MIN_SHARE} 不在合理量级——太低拦不住残影，太高会误伤真人物")
+    # 门槛怎么来的要留下判据，否则下一个人只会看到一个数字
+    head = src[:src.index("CUT_MIN_SHARE = ")]
+    assert "65%" in src[src.index("CUT_MIN_SHARE") - 400:src.index("CUT_MIN_SHARE")], \
+        "没记下这个数是从哪个已知素材倒推的"
+    assert "CUT_MIN_SHARE" in src[src.index("def _cut_person("):], "闸没接在抠图那一步"
+    block = src[src.index("def _cut_person("):]
+    block = block[:block.index("def ", 10)]
+    assert "share <" in block, "没有按比例判"
+    for way_out in ("换一帧", "官方抠图"):
+        assert way_out in block, f"报错没说出路：{way_out}"
+    # 比例要**每次都打进日志**，不只在失败时——下次调门槛才有数可依
+    assert "占裁切框" in block and "print(" in block, "成功时不报比例，等于没量过"
+
+
 def test_挑帧的门槛要在同一个口径下量():
     """清晰度必须**把脸缩到同一个尺寸再算**，否则门槛是反的。
 
