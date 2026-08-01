@@ -312,17 +312,51 @@ def test_没验过转写的spec不许标verified(path):
 def test_挂账的行号得真的存在(path):
     """行号是手写的，写错了**不吭声**——它只会安静地指不到任何一行。
 
-    改过切行规则（断句长度、`_NOISE`）之后行数会变，旧行号跟着失准，
+    改过切行规则之后行数会变（这次就从 37 变成了 56），旧行号跟着失准，
     而那正是「一个常年挂着的待办和没有待办长得一模一样」的由来。
+
+    拿 `zh` 的长度当行数，**不去读 `output/`**：`write_ass` 已经钉死了
+    「中文行数＝英文行数」，而 CI 是 sparse-checkout，读 output/ 的测试
+    在那儿只会永远 skip。
     """
     spec = json.loads(path.read_text(encoding="utf-8"))
     keys = {*(spec.get("suspect") or {}), *(spec.get("suspect_ok") or {}),
             *(spec.get("en_fixed") or {})}
     if not keys:
         pytest.skip("这条 spec 没有挂账")
-    lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
-    if not lines_path.exists():
-        pytest.skip(f"还没跑过 --stage subs：{lines_path}")
-    n = len(json.loads(lines_path.read_text(encoding="utf-8")))
+    n = len(spec.get("zh") or [])
+    assert n, f"{path.name} 挂了账却还没有中文，行号无从校验"
     bad = [k for k in keys if not 1 <= int(k) <= n]
     assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"
+
+
+# ---------------------------------------------------------------- 工作流依赖
+
+def test_ci装的字体覆盖代码要的每一个():
+    """**加新能力要同时改三处：代码、工作流的依赖、开跑前的预检。**
+
+    这条又栽了一次：切行改成量真实字宽之后，我把 `fonts-noto-core` 加进了
+    `interview-clip.yml`，**忘了 `ci.yml`**——于是四条测试在 CI 上红，
+    本地全绿。沙箱是长期攒出来的环境，runner 每次都是干净的。
+
+    判据不是「装了哪几个包」，是「代码点名要的每一个包都在」——
+    以后 `_FONT_FILES` 里加字体，这条会替我记得。
+    """
+    import tools.build_interview_clip as clip
+
+    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    for kind, (path, pkg) in clip._FONT_FILES.items():
+        assert pkg in ci, (
+            f"代码量 {kind} 的宽度要 {path}（{pkg}），ci.yml 里没装它。"
+            "缺了会悄悄回退到别的字体，量出来的行宽和渲出来的对不上。")
+
+
+def test_ci能看到赛后开麦的转写产物():
+    """CI 是 sparse-checkout，**默认不含 `output/`**（那目录 1 GB+）。
+
+    `test_spec里的人工引语和en_fixed是自洽的` 要读 `lines.json`，
+    没有它就永远 skip——而常年不变的 skip 和常年不变的 fail 是同一个毛病。
+    """
+    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    assert "sparse-checkout" not in ci or "output/interviews" in ci, \
+        "ci.yml 用了 sparse-checkout 却没带上 output/interviews，spec 测试会永远 skip"

@@ -26,12 +26,24 @@ jobs:
             src
             tests
             tools
+            # 「赛后开麦」那条线的转写产物（lines.json / .ass / 核对表，几百 KB）。
+            # 少了它 test_interview_clip 里两条 spec 测试**永远 skip**——而
+            # 「一个常年不变的 skip 数字和一个常年不变的 fail 数字一样，
+            # 都是没人真的看过」。⚠️ 成片 mp4 也落在这个目录下，等条数多起来
+            # 要改成非 cone 模式按后缀挑，别让 CI 每次拉几十兆。
+            output/interviews
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
+      # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
+      # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
+      # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
+      # 判据落在 `test_ci装的字体覆盖代码要的每一个`。
       - name: 安装中文字体（卡片图测试需要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
