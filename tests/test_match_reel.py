@@ -262,6 +262,29 @@ def test_默认不横摇():
     assert not any(s.get("track") for s in spec["segments"])
 
 
+def test_合集片子的段尾要躲开下一场的转场卡():
+    """**`scene_cuts` 报的是切点被检测到的时刻，不是转场开始的时刻。**
+
+    Tennis TV 把两场四强发成一条，中间用一张 `NORRIE v SHAPOVALOV` 的卡过渡。
+    探测报的切点是 204.79，我照它把段尾收在 204.0，成片最后 1.7 秒是**下一场的
+    片头**——扫入动画早在 202.3 就开始了。又一次拿信号当产物。
+
+    边界只能**从画面量**：逐 0.2 秒采帧算大面积青色占比，202.2 还是 0.008
+    （那点是蓝色场地），202.4 跳到 0.477，202.6 到 0.739。
+
+    判据钉住「最后一段收在转场之前」，别再退回去。
+    """
+    spec = json.loads(Path("specs/reels/wong-gea.json").read_text("utf-8"))
+    last = spec["segments"][-1]
+    assert last["end"] <= 202.0, (
+        f"最后一段收在 {last['end']}s，而转场卡 202.3 秒就开始扫入了——"
+        "成片会带上下一场的片头")
+    assert "202.3" in spec["_editing_why"], (
+        "为什么不是按 scene_cuts 的 204.79 收尾，没有留下判据")
+    # 源片是两场合成的，这件事本身要写在 `_source` 里，否则下一个人不会去找边界
+    assert "两场" in spec["_source"], "没写清楚这条源片装着两场比赛"
+
+
 def test_收尾不带播出方的片尾():
     """握手镜头放到底，但 185.92 之后是 TennisTV 的 logo 和二维码，不要。"""
     spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
