@@ -1335,6 +1335,63 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="protected-ranking",
+        title="保护的不是排名",
+        subtitle="网球观察 · 规则篇",
+        identity="保护排名：它保的是报名，不是排名",
+        chips=("规则冷知识", "连续 26 周", "两截不累加"),
+        hero=(
+            "长期伤停的球员可以用停赛前的旧排名报名，这张凭证 ATP 叫 "
+            "Entry Protection、WTA 叫 Special Ranking；它只管报名，"
+            "不管种子、不管幸运落败者顺位，也不会让真实排名停下来。"
+        ),
+        facts=(
+            "ATP 2026 规则书 IX.F 的正式名是 **Entry Protection**（进赛保护）："
+            "停赛满 6 个月、期间一场不打（含表演赛）才可申请，且明写不得用于种子"
+            "与幸运落败者顺位。",
+            "WTA 2026 规则书 VIII.C 叫 **Special Ranking**，门槛是连续 26 周；"
+            "适用情形比 ATP 多出怀孕与成为父母。种子上两家分叉：WTA 允许复出后"
+            "前 8 站当额外种子，ATP 一律不给。",
+            "26 周必须连续，**不累加**。郑钦文 2025 温网后至 2026 多哈复出之间"
+            "只打过一站中网，把停赛切成 10.7 周加 18.1 周；合计 28.8 周已过门槛，"
+            "两截却各自不够。",
+            "⚠️ 上述推算依据两家规则书条文，不是 WTA 的公开裁定；她是否申请过、"
+            "是否获得过豁免，均无公开记录。",
+        ),
+        # 这两个时刻不是"夺冠瞬间"，是这条规则在她身上落地的两个端点。
+        # ⚠️ 不能留空：moments 为空时文案模板会回退到 `founded`，而 trivia 的
+        # founded 取自 chips，于是拼出「从两截不累加年的…」这种坏句子，
+        # 而且只有把整段渲出来才看得见。lucky-loser 没踩到是因为它有两个 moment。
+        moments=(
+            ChampionMoment(
+                date="2025-09-24",
+                player="郑钦文",
+                age="22 岁",
+                headline="那两场中网",
+                detail=(
+                    "右肘手术两个多月后回到北京，轮空后胜阿朗戈，"
+                    "次战对诺斯科娃中途退赛——一整段停赛被这一站切成两半。"
+                ),
+                source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+            ),
+            ChampionMoment(
+                date="2026-07-17",
+                player="郑钦文",
+                age="23 岁",
+                headline="雅典八强",
+                detail=(
+                    "4-6、4-6 负于克雷吉茨科娃，那是美网正赛直入线锁定前"
+                    "最后的机会；三天后线锁在约前 104，她排在第 123。"
+                ),
+                source_url="https://athens-open.com/gallery/day-7",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 IX.F / WTA 2026 规则书 VIII.C",
+        image_credit="athens-open.com 官方图库",
+        source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+    ),
+    _trivia_story(
         slug="lucky-loser",
         title="输了才有的名额",
         subtitle="网球观察 · 规则篇",
