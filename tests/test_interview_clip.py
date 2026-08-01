@@ -21,15 +21,23 @@ from pathlib import Path
 import pytest
 
 from tools.build_interview_clip import (
+    CANVAS_H,
     CAPTION_GAP_SECS,
     ROOT,
     caption_gaps,
     check_human_quote,
     gap_key,
+    header_lines,
     review_sheet,
     segment,
+    write_ass,
     zh_problems,
+    _BAND_TOP,
+    _EN_TOP,
+    _FONT_SIZE,
     _LINE_PX,
+    _ZH_TOP,
+    _ts,
     _NO_TAIL,
     _SENT_END,
     _FILLER,
@@ -436,6 +444,124 @@ def test_真实那条片子只报出该报的那一处():
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     assert caption_gaps(spec, outdir) == [(431.64, 434.88)]
     assert _unresolved_gaps(spec, caption_gaps(spec, outdir)) == []
+
+
+# ---------------------------------------------------------------- 版式
+
+# 墨迹相对字号的比例，**烧真帧量出来的**（不是字体表里的 ascent/descent）：
+# 40/48 那版量到 EN 墨高 29、ZH 墨高 31，46/62 这版量到 34 / 40。
+_INK_TOP = 0.21                      # 墨迹上沿离 MarginV 多远
+_INK_H = {"en": 0.74, "zh": 0.645}   # 墨高
+
+
+def _ink(kind: str, margin_v: int) -> tuple[float, float]:
+    fs = _FONT_SIZE[kind]
+    top = margin_v + _INK_TOP * fs
+    return top, top + _INK_H[kind] * fs
+
+
+def test_字幕这一对要落在字幕带的正中():
+    """账号所有者：「下面字幕空间太大」。
+
+    **不是带子太宽，是字全堆在上半截。** 原来 `_EN_TOP` 写成「视频下沿 + 100」，
+    墨迹落在 1069–1147：上面空 109，**下面空 293**——同一条 480px 的带子，
+    一头挤一头空，看起来就是「下面一大片没用」。
+
+    这条拦的是**改了字号却没重新算位置**：字号一变，墨块高度跟着变，
+    还钉在老的 `_EN_TOP` 上就会重新偏到一头去，而**它不报错**。
+    """
+    en_top, en_bot = _ink("en", _EN_TOP)
+    zh_top, zh_bot = _ink("zh", _ZH_TOP)
+    above, below = en_top - _BAND_TOP, CANVAS_H - zh_bot
+    assert abs(above - below) <= 40, (
+        f"字幕没落在带子中间：上空 {above:.0f}px、下空 {below:.0f}px。"
+        f"改过字号就要重新量 `_EN_TOP`（当前 {_EN_TOP}）。")
+    assert en_bot < zh_top, "英文和中文的墨迹叠在一起了"
+
+
+def test_两行之间的空白要跟着字号重新量():
+    """`_ZH_GAP` 是**墨迹间距**，不是字号的比例——40/48 下是 47，46/62 下是 53。
+
+    按比例推会得到 47×62/48 = 61，渲出来两行就散开了。目标区间是
+    「中文墨高的 0.45–0.70 倍」，量出来 0.56 正好（43 挤、51 松，比过三档）。
+    """
+    _, en_bot = _ink("en", _EN_TOP)
+    zh_top, zh_bot = _ink("zh", _ZH_TOP)
+    white = zh_top - en_bot
+    ratio = white / (zh_bot - zh_top)
+    assert 0.45 <= ratio <= 0.70, (
+        f"两行之间空白 {white:.0f}px ＝ 中文墨高的 {ratio:.2f} 倍，"
+        "超出 0.45–0.70。改字号要重新量 `_ZH_GAP`。")
+
+
+def test_中文字号不许大到让行放不下():
+    """中文那侧的天花板是 952px 可用宽。
+
+    **68 号就有行超出**（伊埃拉那条最宽的一行 967px），所以 64 是上限。
+    这条拦的是「中文那侧几乎免费」被读成「随便调」。
+    """
+    assert _FONT_SIZE["zh"] <= 64, (
+        f"中文字号 {_FONT_SIZE['zh']} 超过 64——952px 的行宽装不下，"
+        "写稿的人会被逼着把句子切碎。")
+
+
+def test_顶栏说清这是哪一场():
+    """账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道背景」。
+
+    刷到中段的人没看过封面（而封面只有 1.8 秒），画面上只有一个人在说话。
+    """
+    spec = {"slug": "t", "event": "2026 华盛顿 WTA500 女单八强",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜"}}
+    a, b = header_lines(spec)
+    assert a == "2026 华盛顿 WTA500 女单八强"
+    assert "伊埃拉 vs 斯维托丽娜" in b and "赛后" in b
+
+
+def test_顶栏不写比分():
+    """**`matchup` 的顺序不保证是胜者在前。**
+
+    `@wta` 的标题就按签位排——我照着推过一次「标题里在前的是赢家」，推错了
+    （`Zheng Qinwen vs. Clara Tauson` 赢的是 Tauson）。把比分插进两个名字
+    中间等于用词序断言谁赢了，而这个断言站不住。
+    """
+    spec = {"slug": "t", "event": "2026 华盛顿 WTA500 女单八强",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    assert all("6-3" not in line and "6-4" not in line for line in header_lines(spec))
+
+
+def test_顶栏缺字段要报错而不是印半句():
+    """空着比错着更难发现：顶栏印出「 · 赛后场上采访」，看着像设计如此。"""
+    for spec in ({"slug": "t", "push": {"matchup": "甲 vs 乙"}},
+                 {"slug": "t", "event": "某站某轮"}):
+        with pytest.raises(SystemExit):
+            header_lines(spec)
+
+
+def test_顶栏从头挂到尾(tmp_path):
+    """顶栏不是开场卡：**整条片子任何一帧都要能回答「这是哪一场」。**"""
+    lines = _lines(["one two", "three four"])
+    spec = {"slug": "t", "event": "某站八强", "push": {"matchup": "甲 vs 乙"},
+            "zh": ["一", "二"]}
+    path = tmp_path / "t.ass"
+    write_ass(lines, spec["zh"], 0.0, path, spec)
+    body = path.read_text(encoding="utf-8")
+    head = [r for r in body.splitlines() if r.startswith("Dialogue") and "HEAD" in r]
+    assert len(head) == 2, "顶栏该有两行"
+    assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
+    end = _ts(lines[-1]["b"])
+    assert all(end in r for r in head), f"顶栏要挂到最后一行结束（{end}）"
+
+
+def test_改字号会让行号失准要在报错里说出来(tmp_path):
+    """`en_fixed` 的键是行号。**字号一改断行就变，行号跟着失准**——而它不吭声：
+    键还在范围内，订正只是悄悄落到了别的行上。
+
+    这里唯一能拦住的地方就是「中文行数和英文行数对不上」那道闸，
+    所以它的报错必须把这个成因说出来，不能只说「对不上」。
+    """
+    with pytest.raises(SystemExit) as e:
+        write_ass(_lines(["a b", "c d", "e f"]), ["一", "二"], 0.0, tmp_path / "t.ass")
+    assert "字号" in str(e.value) and "en_fixed" in str(e.value)
 
 
 # ---------------------------------------------------------------- spec 本身
