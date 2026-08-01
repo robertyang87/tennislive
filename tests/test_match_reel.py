@@ -698,10 +698,24 @@ def test_海报台头只写栏目名():
     原来是「网球时差 · 赛场之上」——账号名在片子里已经有落款，海报上再挂一遍
     等于把最显眼的位置让给一句读者不需要的信息。首屏那点地方要留给
     「这是哪一场」。
+
+    这条原来写死成「赛场之上」——那时候剪辑线只有那一个栏目。「开球之前」
+    改成视频剪辑之后，写死的那个值把新栏目判成了错。**要拦的从来不是「不是
+    赛场之上」，是「混进了账号名」**，所以改成对着文档里那张栏目表查。
     """
+    import re
+
+    doc = Path("docs/columns.md").read_text("utf-8")
+    columns = set(re.findall(r"\|\s*\*\*(.+?)\*\*\s*\|", doc))
+    assert "赛场之上" in columns and "开球之前" in columns, "栏目表没解析出来"
+
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
-        assert eyebrow == "赛场之上", f"{path.name} 的台头是 {eyebrow!r}"
+        assert eyebrow in columns, (
+            f"{path.name} 的台头是 {eyebrow!r}，不在 docs/columns.md 的栏目表里")
+        assert "网球时差" not in eyebrow and "·" not in eyebrow, (
+            f"{path.name} 的台头带了账号名或分隔符：{eyebrow!r}——"
+            "首屏那点地方要留给「这是哪一场」")
 
 
 def test_商竣程那格是本场真实照片不是抽帧():
