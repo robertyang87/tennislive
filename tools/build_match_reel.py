@@ -714,7 +714,81 @@ def load_spec(path: Path) -> dict:
     for key in ("segments", "cover"):
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
+    if not spec.get("sources") and not spec.get("source_url"):
+        raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
+    # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
+    # 剪出来是另一场比赛的画面，而且画面本身不会报错，只会静静地对不上旁白。
+    names = set(spec.get("sources") or {})
+    if names:
+        for index, seg in enumerate(spec["segments"]):
+            got = seg.get("source")
+            if got not in names:
+                raise ReelError(
+                    f"第 {index} 段的 source 是 {got!r}，不在 sources 里"
+                    f"（有 {sorted(names)}）。多源 spec 的每一段都必须显式声明来源。")
     return spec
+
+
+def segments_straddling_cuts(
+    spec: dict, probes: list[dict],
+) -> tuple[list[dict], list[str]]:
+    """哪几段跨过了源片的场景切点，以及哪几条源片没查成。
+
+    **跨切点＝这一段中途换镜头，而换过去的那个镜头里常常是另一个人。**
+    郑钦文那条第一版踩了三处，一处都没报错：末屏「你定闹钟吗？」压在对手
+    握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；「往回爬」
+    那句前两秒是对手的背影；巴黎那段「亚洲的第一枚奥运网球单打金牌」整句
+    落在维基奇身上。画面和旁白对不上**不会让渲染失败**，只会静静地发出去。
+
+    `probe.json` 里本来就记着 `scene_cuts` 和 `url`，按 url 认源片就能机检——
+    挑段仍然要靠眼睛，这一条只负责拦住「窗口中途换了镜头而我没看见」。
+
+    真要跨（两边都是同一个人时），在这一段写 `"crosses_cut": "<为什么>"`
+    显式挂账，别默默跨过去。
+
+    第二个返回值是**没查成的源片**：probe 没给全时，前一个返回值会是空的，
+    而空的和「全都合格」长得一模一样（CLAUDE.md：空结果先自证是真空）。
+    """
+    by_url = {p.get("url"): list(p.get("scene_cuts") or []) for p in probes}
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec.get("source_url", "")}
+    straddling: list[dict] = []
+    unchecked = sorted(
+        name for name, url in urls.items() if url not in by_url)
+    for index, seg in enumerate(spec["segments"]):
+        name = seg.get("source", "")
+        url = urls.get(name)
+        if url not in by_url or seg.get("crosses_cut"):
+            continue
+        inside = [c for c in by_url[url]
+                  if seg["start"] < c < seg["end"]]
+        if inside:
+            straddling.append({
+                "index": index, "source": name,
+                "start": seg["start"], "end": seg["end"],
+                "cuts": inside, "narration": seg["narration"],
+            })
+    return straddling, unchecked
+
+
+def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
+    """把 spec 里的源片全下下来，返回 {名字: 路径}。
+
+    单源 spec 走 `source_url`，键是空串——和 `Segment.source` 的默认值对上，
+    老 spec 一个字都不用改。
+    """
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec["source_url"]}
+    paths: dict[str, Path] = {}
+    for name, url in urls.items():
+        dest = outdir / (f"source_{name}.mp4" if name else "source.mp4")
+        if not dest.is_file():
+            with stage(f"下载源片 {name or '(单源)'}"):
+                dest = download(url, dest)
+        paths[name] = dest
+    return paths
 
 
 # 跟踪裁切 -----------------------------------------------------------------
@@ -1531,8 +1605,20 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[audio] 合上原声 {audio}")
         source = merged
 
-    source_w, source_h = probe_size(source)
+    # 多源：几何必须一致，否则一套裁切窗口套在两种画幅上，剪出来一段满一段不满。
+    # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
+    # 画质问题，而报错能让人当场发现。
+    sizes = {name: probe_size(path) for name, path in sources.items()}
+    if len(set(sizes.values())) > 1:
+        raise ReelError(
+            "多条源片的画幅不一致，裁切几何没法共用：\n  "
+            + "\n  ".join(f"{n or '(单源)'}: {w}×{h}" for n, (w, h) in sizes.items())
+            + "\n换一条同画幅的源片，或者把不一致的那条单独出片。")
+    source_w, source_h = sizes[next(iter(sources))]
+
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
+    # 多源时只能有一个输出帧率，取主源的；**别的源和它不一样就要打出来**——
+    # 那意味着那几段在重采样，不打出来没人知道画面为什么发涩。
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")

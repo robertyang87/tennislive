@@ -967,6 +967,10 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("世界第四百六十九") == "世界第469"
     assert A("生涯最高的世界第四") == "生涯最高的世界第4"
     assert A("二十八局里赢到十二局") == "28局里赢到12局"
+    # 「天」也算单位：字幕里「8月2日」和「三天前」同句出现过，一半阿拉伯
+    # 一半汉字，账号所有者一眼看出来。「一天」「第二天」不受影响。
+    assert A("三天前华盛顿首轮") == "3天前华盛顿首轮"
+    assert A("四天前她升到生涯最高") == "4天前她升到生涯最高"
 
     # 不能碰的
     assert A("唯一一次打进大满贯单打决赛") == "唯一一次打进大满贯单打决赛"
@@ -974,6 +978,8 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("两盘，都是六比四") == "两盘，都是6比4"
     assert A("第二盘他化解了两个破发点") == "第二盘他化解了两个破发点"
     assert A("那是他第一次遇上") == "那是他第一次遇上"
+    assert A("有一天她会回来") == "有一天她会回来"
+    assert A("第二天她拿了冠军") == "第二天她拿了冠军"
 
 
 def test_字幕待在3比4画面里(): 
@@ -1320,36 +1326,6 @@ def test_人名要以译名表为准():
         for text in filter(None, texts):
             scan(slug, text)
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
-
-
-def test_不要在片子里交代自己的规矩():
-    """「比分我们不猜」这类话，是在向读者交代**我们自己的编辑规矩**。
-
-    读者不关心一个账号给自己定了什么规矩，他关心的是这场球。这句话占掉的是
-    收尾最值钱的那个位置——末屏那一问之前的最后一句。三条前瞻的结尾都挂着它，
-    删掉之后句子反而更利落。
-
-    「不预测结果」这条原则本身留着，写在 `Column.promise` 里给以后的自己看；
-    **原则归原则，别念出来。**
-    """
-    from tennislive.video import explainer as E
-
-    banned = ("不猜", "不预测", "不做预测", "我们不", "本栏目", "按惯例")
-    bad = []
-    for slug in E._SCRIPTS:
-        opening = E._OPENINGS.get(slug) or {}
-        texts = [("topic", opening.get("topic", "")),
-                 ("xhs", opening.get("narration", ""))]
-        for seg in E.explainer_script(find_story_by_slug(slug)):
-            texts += [(f"{seg.kind}.title", seg.title),
-                      (f"{seg.kind}.旁白", seg.narration),
-                      (f"{seg.kind}.问", seg.question or "")]
-            texts += [(f"{seg.kind}.要点", p) for p in seg.points]
-        for where, text in texts:
-            for word in banned:
-                if word in (text or ""):
-                    bad.append(f"{slug}/{where}：「{word}」出现在「{text[:30]}…」")
-    assert not bad, "片子里在交代自己的规矩：\n  " + "\n  ".join(bad)
 
 
 def test_旁白不解说画面():

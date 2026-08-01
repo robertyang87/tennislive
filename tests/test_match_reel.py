@@ -763,7 +763,8 @@ def test_推送正文里印文案且只印一遍():
 
     copy = Path("specs/reels/nishikori-shang.xhs.txt").read_text("utf-8").strip()
     title, body_text = split_copy(copy)
-    page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy)
+    page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy,
+                      "", "赛场之上")
     assert page.count(title) == 1
     first = body_text.splitlines()[0]
     assert page.count(first) == 1
@@ -1154,7 +1155,8 @@ def test_推送版式照着知识解说那条且海报铺满():
     import push_reel  # noqa: PLC0415
 
     body = push_reel.build_html("https://x/v.mp4", "https://x/c.html", "导语",
-                                "标题一行\n\n正文一段", "https://x/poster.jpg")
+                                "标题一行\n\n正文一段", "https://x/poster.jpg",
+                                "赛场之上")
     assert "border-top:5px solid #ff2442" in body        # 参照那条红边
     img = body[body.index("<img"):body.index(">", body.index("<img"))]
     assert "width:100%" in img and "padding" not in img, img
@@ -1162,13 +1164,17 @@ def test_推送版式照着知识解说那条且海报铺满():
     # 正文只印一遍
     assert body.count("正文一段") == 1
     # 没有海报时退回无图版，而不是塞一个空 img
-    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
+    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文",
+                                             "", "赛场之上")
 
 
 # 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
 _COLUMNS = {
     "赛场之上": ("cutout", "diagonal", "split", "stack"),   # 讲一场对决 → VS
     "网球有故事": ("solo",),                                 # 讲一个人 → 单人
+    # 赛前前瞻。讲的也是一场对决——**两个人必须同框**，所以和赛场之上共用
+    # VS 那几版；差别在内容（没有赛果，讲的是来路），不在版式。
+    "开球之前": ("cutout", "diagonal", "split", "stack"),
 }
 
 
@@ -1184,6 +1190,12 @@ def test_海报台头只写栏目名():
     「是讲休伊特的儿子的话题，不是赛场之上的内容」时，加一个栏目就得改测试——
     而要守的性质从头到尾只有一条：**药丸里没有账号名**。
     """
+    import re
+
+    doc = Path("docs/columns.md").read_text("utf-8")
+    columns = set(re.findall(r"\|\s*\*\*(.+?)\*\*\s*\|", doc))
+    assert "赛场之上" in columns and "开球之前" in columns, "栏目表没解析出来"
+
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
         assert eyebrow in _COLUMNS, f"{path.name} 的台头是 {eyebrow!r}，不是栏目名"
@@ -2013,3 +2025,139 @@ def test_封面跟着配音走只给网球有故事():
         column = str(spec.get("column") or cover.get("eyebrow") or "")
         if "赛场之上" in column:
             assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
+
+
+def test_多源spec每一段都要说清自己从哪条源片剪(tmp_path):
+    """「开球之前」是多源的常态：比赛还没打，画面只能来自两边各自的比赛。
+
+    郑钦文 VS 塔拉鲁迪那条用了四条源片——两人各自最近的一场，加各自的高光。
+    这时候「这一段从哪条源片剪」就不能有默认值：**猜错了剪出来是另一场比赛的
+    画面，而画面本身不会报错**，只会静静地对不上旁白。所以少写一个 `source`
+    要当场报错，并且把有哪些源列出来。
+
+    单源的老 spec 一个字都不用改：`source_url` 那条路走空串这个键，和
+    `Segment.source` 的默认值对上。
+    """
+    reel = _reel()
+
+    good = tmp_path / "good.json"
+    good.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "sources": {"a": "https://x/a", "b": "https://x/b"},
+        "segments": [{"start": 0, "end": 1, "source": "a"},
+                     {"start": 0, "end": 1, "source": "b"}],
+    }), encoding="utf-8")
+    assert reel.load_spec(good)["sources"]["b"] == "https://x/b"
+
+    for bad_seg, why in (({"start": 0, "end": 1}, "漏写 source"),
+                         ({"start": 0, "end": 1, "source": "c"}, "写了不存在的源")):
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({
+            "slug": "t", "cover": {"versus": {}},
+            "sources": {"a": "https://x/a"},
+            "segments": [bad_seg],
+        }), encoding="utf-8")
+        try:
+            reel.load_spec(bad)
+        except reel.ReelError as exc:
+            assert "sources" in str(exc), f"{why}：报错没说清有哪些源"
+        else:
+            raise AssertionError(f"{why} 应当报错")
+
+    # 单源老 spec 仍然走得通
+    old = tmp_path / "old.json"
+    old.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "source_url": "https://x/one",
+        "segments": [{"start": 0, "end": 1}],
+    }), encoding="utf-8")
+    assert reel.load_spec(old)["source_url"].endswith("one")
+
+    # 两条都不给才算缺
+    empty = tmp_path / "empty.json"
+    empty.write_text(json.dumps({"slug": "t", "cover": {}, "segments": []}),
+                     encoding="utf-8")
+    try:
+        reel.load_spec(empty)
+    except reel.ReelError as exc:
+        assert "sources" in str(exc) and "source_url" in str(exc)
+    else:
+        raise AssertionError("既没有 sources 也没有 source_url，应当报错")
+
+
+def test_每一段都要待在同一个镜头里():
+    """跨场景切点的那一段中途会换镜头，而换过去的那个镜头里常常是另一个人。
+
+    郑钦文那条第一版踩了三处，**渲染一次都没报错**：末屏那句「你定闹钟吗？」
+    压在对手握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；
+    「往回爬」那句前两秒是对手走开的背影；巴黎那段最重的「亚洲的第一枚奥运
+    网球单打金牌」整句落在维基奇身上。画面和旁白对不上不会让 ffmpeg 失败，
+    只会静静地发出去。
+
+    挑段仍然要靠眼睛看缩略图墙，这一条只拦「窗口中途换了镜头而我没看见」。
+    """
+    reel = _reel()
+    probes = [{"url": "u://a", "scene_cuts": [10.0, 20.0]},
+              {"url": "u://b", "scene_cuts": [5.0]}]
+    spec = {
+        "sources": {"a": "u://a", "b": "u://b"},
+        "segments": [
+            {"start": 11.0, "end": 19.0, "source": "a", "narration": "干净"},
+            {"start": 18.0, "end": 22.0, "source": "a", "narration": "跨了"},
+            {"start": 0.0, "end": 9.0, "source": "b", "narration": "也跨了"},
+        ],
+    }
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes)
+    assert unchecked == []
+    assert [b["index"] for b in bad] == [1, 2], "跨切点的段没被抓出来"
+    assert bad[0]["cuts"] == [20.0] and bad[1]["cuts"] == [5.0]
+
+    # 真要跨（两边是同一个人）就显式挂账，别默默跨过去
+    spec["segments"][1]["crosses_cut"] = "两边都是她，只是机位换了"
+    bad, _ = reel.segments_straddling_cuts(spec, probes)
+    assert [b["index"] for b in bad] == [2]
+
+    # **probe 给不全时不许假绿**：零命中和「全都合格」长得一模一样，
+    # 所以没查成的源片要单独报出来（CLAUDE.md：空结果先自证是真空）。
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes[:1])
+    assert unchecked == ["b"], "缺 probe 的源片没有被报出来"
+    assert all(b["source"] == "a" for b in bad)
+
+
+def test_要发的片子必须有小红书文案():
+    """推送那一步 `test -f "$COPY"` 会挡住缺文案的 slug，但那是六分钟之后的事——
+    渲染、合成、拼片全跑完才发现没得发。spec 和文案是一对，缺一个就该在这儿红。
+    """
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        copy = spec.with_suffix(".xhs.txt")
+        assert copy.is_file(), f"{spec.name} 没有配套的 {copy.name}"
+        assert copy.read_text(encoding="utf-8").strip(), f"{copy.name} 是空的"
+
+
+def test_推送卡的台头跟着栏目走():
+    """台头小药丸原来写死「赛场之上」。这个工作流现在也发「开球之前」——
+    标题里的栏目名是对的，卡片上那个药丸却是另一个，两处对不上。
+
+    和「兜底和默认值出事的时候不吭声」同一类：它不报错，只是印错。
+    """
+    sys.path.insert(0, "tools")
+    import push_reel  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    html = push_reel.build_html(
+        "https://v/x.mp4", "https://p/copy.html", "",
+        "标题\n\n正文一段", poster="", column="开球之前")
+    assert "开球之前" in html
+    assert "赛场之上" not in html, "台头还写死着别的栏目名"
+
+    # **不留默认值**：给不出栏目名就该报错。默认一个栏目名，正是
+    # 「同一条推送里两个栏目名」那个错留在原地不吭声的样子。
+    with pytest.raises(TypeError):
+        push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
+                             "标题\n\n正文一段")
+
+    # 标题和药丸要取同一个值，别一个走 column_of、一个另取默认
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    assert "column = args.column or column_of(Path(args.copy))" in src
+    assert "column=column)" in src, "药丸没和标题共用那一个栏目名"
