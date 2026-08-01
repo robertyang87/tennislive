@@ -40,6 +40,12 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
   ⚠️ 这两条视频**没有人工字幕**（`--list-subs` 实测，并拿一条已知有人工字幕的
   片子做过对照，所以这个「没有」是真空不是探测坏了）；而 YouTube 自己的
   `en` 和 `en-orig` 逐词完全一致，是同一份 ASR 换了个名字，对不了。
+- **自动字幕为空的那几秒，和「这里没人说话」长得一模一样。** 上面两道闸比的都是
+  「源说了什么」，谁也不管「源什么都没说」。伊埃拉那条就这么漏了 3.2 秒：主持人
+  把话筒交给她谢菲律宾球迷，她开口了，而 YouTube 的自动字幕在那一段**一个事件
+  都没有**——于是成片上那 3.2 秒是空白，还通过了全部校验。见 `caption_gaps`。
+  ⚠️ **机器只把空档找出来，不判断它是什么**：没人说话、掌声、还是球员换了母语，
+  `small.en` 一律给空白，分不出来。那一档明说出来交给人，别再加模型去猜。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -138,6 +144,85 @@ def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
             if word:
                 out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
     return out
+
+
+# **空档判据**：自动字幕连一个事件都没有的那几秒。阈值 2.0 秒是从真实分布量的，
+# 不是拍的——伊埃拉那条片段里一共只有三个空档：3.24 秒（真漏了，她在说话）、
+# 1.91 秒（两头夹着 `[cheering]` 和 `[applause]`，是掌声）、0.28 秒（事件间的抖动）。
+# 2.0 落在最大的那个和第二个之间。
+CAPTION_GAP_SECS = 2.0
+
+
+def _caption_spans(workdir: Path) -> list[list[float]]:
+    """自动字幕里**有事件**的时间段，重叠的合并掉。
+
+    ⚠️ **噪声标记要算在内**（`[applause]` / `[cheering]`）。切行时它们被
+    `_NOISE` 丢掉是对的——那不是台词；但在这儿它们是**源自己出的声**：
+    「我听见了，只是不是人话」。把它们算成有事件，掌声那一段就不会被误报成
+    空档。判据因此变成一句更硬的话：**这几秒源什么都没说**，不是「这几秒没有词」。
+    """
+    if not (files := sorted(workdir.glob("cap_*.json3"))):
+        return []
+    data = json.loads(files[-1].read_text())
+    spans: list[list[float]] = []
+    for ev in data.get("events", []):
+        text = "".join((s.get("utf8") or "") for s in ev.get("segs") or []).strip()
+        if not text:
+            continue
+        a = ev.get("tStartMs", 0) / 1000
+        spans.append([a, a + ev.get("dDurationMs", 0) / 1000])
+    spans.sort()
+    merged: list[list[float]] = []
+    for a, b in spans:
+        if merged and a <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], b)
+        else:
+            merged.append([a, b])
+    return merged
+
+
+def caption_gaps(spec: dict, workdir: Path) -> list[tuple[float, float]]:
+    """采访区间里，自动字幕**一个事件都没有**的那些空档。
+
+    **为什么要单独查这个**：`verify_transcript` 和 `check_human_quote` 比的都是
+    「源说了什么」，两道闸都对「源什么都没说」视而不见——没有词就没有分歧，
+    分歧率反而更好看。于是空白**静悄悄地通过了全部校验**，和仓库里那一族
+    「兜底出事的时候不吭声」是同一个毛病。
+
+    伊埃拉那条实测：431.64→434.88 三秒二，主持人刚说完「话筒交给你」，
+    她接过话筒对着看台上举菲律宾国旗的球迷开口——**成片上那三秒二是空白**。
+    自动字幕在那一段连 `[applause]` 都没有。
+
+    **这一步只负责把空档找出来，不负责判断它是什么。** 找出来是机器的事
+    （判据摆得出来：源在这几秒里一个事件都没有），判断得人听——没人说话、
+    掌声、或者球员换了母语，机器分不出来。返回的空档要在 spec 的
+    `caption_gaps_ok` 里逐个销账才许出片。
+    """
+    spans = _caption_spans(workdir)
+    lo, hi = spec["start"], spec["end"]
+    gaps = []
+    for prev, cur in zip(spans, spans[1:]):
+        a, b = prev[1], cur[0]
+        a, b = max(a, lo), min(b, hi)
+        if b - a >= CAPTION_GAP_SECS:
+            gaps.append((round(a, 2), round(b, 2)))
+    return gaps
+
+
+def gap_key(a: float, b: float) -> str:
+    """空档在 spec 里的键。**按秒写死**——自动字幕不会变，键就稳定；
+    按序号写的话，前面多一个空档就全体错位，销的账会落到别的空档上。"""
+    return f"{a:.1f}-{b:.1f}"
+
+
+def _unresolved_gaps(spec: dict, gaps: list[tuple[float, float]]) -> list[tuple[float, float]]:
+    """还没销账的空档。销账写进 `caption_gaps_ok`，值写**听过之后的决定**。
+
+    ⚠️ 「销账」的意思是**人听过并作出了决定**，不是「这里没问题」。伊埃拉那条
+    的值写的就是「真漏了」——留着这句判据，比把一个已知的洞抹平有用。
+    """
+    done = set(spec.get("caption_gaps_ok") or {})
+    return [g for g in gaps if gap_key(*g) not in done]
 
 
 # 子句边界。**断行按标点，不按数满多少个字符**——和中文字幕那条规矩同源
@@ -545,10 +630,59 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
     print("\n".join(report))
     print(f"转写分歧 {rate:.1%} → {path}")
+    # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
+    # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
         raise SystemExit(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
             f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。")
+    return path
+
+
+def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
+                     en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
+    """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
+
+    用的是 `verify_transcript` **已经跑完的那一份**（`small.en`，带词时间戳），
+    不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在那份结果里。
+
+    两种结果的含义**不一样，报告里必须分开写**：
+
+    - **有词** → YouTube 漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 是英语专用模型，
+      对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
+      （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
+      **长得一模一样**，机器分不出来——所以这一档一律交给人听，
+      结论写进 `caption_gaps_ok`。
+
+    ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
+    它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
+    """
+    if not gaps:
+        print("自动字幕没有空档。")
+        return None
+    clip0 = spec["start"]
+    report = [f"# 自动字幕的空档：{spec['slug']}", "",
+              f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
+              "第二份 ASR 是 `small.en`（英语专用）。**它什么都没听出来，"
+              "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
+              "分不出来，得人去听。", ""]
+    for a, b in gaps:
+        en_here = [w for t, w in en_words if a <= t <= b]
+        report += [
+            f"## {a - clip0:.1f}–{b - clip0:.1f} 秒（片内，{b - a:.1f} 秒；"
+            f"源片 {_yt_at(spec['url'], a)}）", "",
+            f"- 键：`{gap_key(a, b)}`",
+            f"- 第二份 ASR（small.en）："
+            + (f"`{' '.join(en_here)}`　→ **YouTube 漏了英语，补进 `en_fixed`**"
+               if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
+            f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
+            ""]
+    path = outdir / "caption_gaps.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print("\n".join(report))
+    print(f"空档 {len(gaps)} 处 → {path}")
     return path
 
 
@@ -709,9 +843,25 @@ def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
              "`suspect_ok`（值写一句为什么），别默默留着——"
              "**一个常年挂着的待办和没有待办长得一模一样**。"]
 
+    # **空档单独列一节。** 上面那张表逐行走的是「源说了什么」，走不到
+    # 「源什么都没说」的地方——那几秒在表里根本不占一行，翻一百遍也看不见。
+    gaps = caption_gaps(spec, outdir)
+    ok = spec.get("caption_gaps_ok") or {}
+    tail += ["", f"## 自动字幕的空档（≥{CAPTION_GAP_SECS:.0f} 秒连一个事件都没有）", ""]
+    # 销账那段常常写成好几行（判据要写全），而这里是一条列表项——
+    # 换行会把它折断成一堆游离的段落。压成一行。
+    tail += [f"- **{a - clip0:.1f}–{b - clip0:.1f} 秒**（片内，{b - a:.1f} 秒空白，"
+             f"[跳过去]({_yt_at(spec['url'], a)})）　"
+             + (ok[gap_key(a, b)].replace("\n", "　") if gap_key(a, b) in ok
+                else "**还没销账**")
+             for a, b in gaps] or ["（无）"]
+    tail += ["", "打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。"
+             "结论写进 spec 的 `caption_gaps_ok`（键 "
+             "`起-止`，秒，一位小数）。"]
+
     path = outdir / "review_sheet.md"
     path.write_text("\n".join(head + rows + tail) + "\n", encoding="utf-8")
-    print(f"核对表 {len(lines)} 行、{len(todo)} 处待听 → {path}")
+    print(f"核对表 {len(lines)} 行、{len(todo)} 处待听、{len(gaps)} 处空档 → {path}")
     return path
 
 
@@ -995,6 +1145,11 @@ def main() -> int:
     print(f"字幕 {len(lines)} 组双语 → {ass}")
     # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
     review_sheet(spec, lines, outdir)
+    # **每一步都把没销账的空档喊出来**，不要只在 render 那一步拦。等到出片才知道
+    # 少了三秒，前面配中文、调断行的功夫全是在一份缺了一块的稿子上做的。
+    for a, b in _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+        print(f"⚠️ 空档没销账：片内 {a - spec['start']:.1f}–{b - spec['start']:.1f} 秒"
+              f"（{b - a:.1f} 秒自动字幕是空的）　{_yt_at(spec['url'], a)}")
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
@@ -1016,6 +1171,17 @@ def main() -> int:
                 f"{'、'.join(todo)} 行还挂在 `suspect` 里没销账。\n"
                 "改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`"
                 "（值写一句为什么）。逐行看 review_sheet.md。")
+        # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
+        # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
+        # 没有词就没有分歧，两道旧闸全绿。
+        if holes := _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+            raise SystemExit(
+                f"{args.spec} 有 {len(holes)} 处空档没销账："
+                + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
+                            for a, b in holes) + "。\n"
+                "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
+                "结论写进 spec 的 `caption_gaps_ok`，键是 "
+                + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         print(f"成片 {out}（{size:.1f} MB，{spec['end'] - spec['start']:.1f} 秒）")

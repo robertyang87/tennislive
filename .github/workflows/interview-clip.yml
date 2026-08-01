@@ -127,8 +127,17 @@ jobs:
       #
       # 另有一道**不联网**的闸跟着每个 stage 跑（`check_human_quote`）：拿赛事
       # 官网战报里的人工引语对 ASR。它只覆盖记者抄走的那几句，但**是人转写的**，
-      # 比任何 ASR 都硬。两道闸都在这一步暴露——报告落在
-      # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
+      # 比任何 ASR 都硬。
+      #
+      # 上面两道比的都是「源说了什么」，**谁也不管「源什么都没说」**——伊埃拉
+      # 那条就这么漏了 3.2 秒：她对着菲律宾球迷开口，自动字幕在那一段连一个
+      # 事件都没有，没有词就没有分歧，两道闸全绿。第三道 `caption_gaps` 专查
+      # 空白，`probe_gap_speech` 把第二份 ASR 在那几秒里听到的词摊出来
+      # （**用已经跑完的那一份**，不下第二个模型）。它没听出词来**不等于没人
+      # 说话**——small.en 对着非英语同样是空白，那一档交给人听。
+      #
+      # 三道闸都在这一步暴露——报告落在 output/interviews/<slug>/
+      # {transcript_diff,human_quote_diff,caption_gaps}.md，
       # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
       - name: 转写交叉校验
         if: github.event.inputs.mode != 'push'
