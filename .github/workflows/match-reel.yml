@@ -289,7 +289,11 @@ jobs:
           # （probe wang-pareja 那次）。按后缀删，别按名字列。
           # 同一个漏在 eala-zheng 和 potapova-venus 上又各中一次，一并补上两种
           # 还没见过的：分轨的 webm，和 yt-dlp 的续传记录 .ytdl。
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 "$OUTDIR"/*.part \
+          # **多源之后源片叫 source_<名字>.mp4**（source_zheng.mp4 等），一个都
+          # 不叫 source.mp4，于是四条源片 298 MB 全部躲过清理、被大文件闸拦在
+          # 提交那一步——片子明明渲好了（40 MB），却因为这个没落库。
+          # 这里按前缀删，和上面「按后缀删，别按名字列」是同一条教训。
+          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_*.mp4 "$OUTDIR"/*.part \
             "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
             "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
