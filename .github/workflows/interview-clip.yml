@@ -37,10 +37,30 @@ jobs:
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
       # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
-      - name: 装 yt-dlp
+      # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
+      # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
+      # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
+      - name: 装依赖
         run: |
-          pip install -q "yt-dlp[default]"
+          pip install -q "yt-dlp[default]" playwright
+          python -m playwright install --with-deps chromium
           node --version
+
+      # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
+      - name: 开跑前预检
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import shutil, sys
+          from playwright.sync_api import sync_playwright
+          sys.path.insert(0, "tools")
+          from build_interview_clip import _chromium
+          assert shutil.which("ffmpeg"), "没有 ffmpeg"
+          print("Chromium:", _chromium())
+          from tennislive.render.webcards import _font_css
+          css = _font_css()
+          assert "TL Display SC" in css, "得意黑没内嵌进来，封面标题会退回系统字体"
+          print("字体 CSS", len(css), "字节")
+          PY
 
       # 配了 Secret 就带 cookie 下载。没配也先试一把——公开视频在 runner 的 IP 上
       # 有时候不用 cookie 也下得动，真下不动再回来配。

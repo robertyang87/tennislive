@@ -159,6 +159,76 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path) -
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
+COVER_SECONDS = 1.8      # 和「赛场之上」一致：够读完两行钩子，又不至于让人等
+
+
+def _chromium() -> str:
+    """沙箱和 runner 上 Chromium 的路径都带版本号，playwright 自己找不到。"""
+    import glob
+    for pat in ("/opt/pw-browsers/chromium*/chrome-linux/chrome",
+                str(Path.home() / ".cache/ms-playwright/chromium*/chrome-linux/chrome")):
+        if hit := sorted(glob.glob(pat)):
+            return hit[-1]
+    raise SystemExit("找不到 Chromium。装：python -m playwright install chromium")
+
+
+def build_cover(spec: dict, frame: Path, dest: Path) -> Path:
+    """封面：本场抽一帧 + 文案，**字体走仓库那套**。
+
+    标题用 `TL Display SC`（得意黑），和「赛场之上」的海报是同一支——
+    通过 `webcards._font_css()` 把字体 base64 内嵌进 HTML，所以本地和 CI
+    渲出来一模一样，不依赖系统装了什么。
+
+    底板是**渐变不是实色块**：实色块会在画面上切出一条硬边，
+    渐变让球场自然沉进文字区。0 → .46 → .62。
+    """
+    import base64
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+    from playwright.sync_api import sync_playwright   # noqa: PLC0415
+
+    cov = spec["cover"]
+    b64 = base64.b64encode(frame.read_bytes()).decode()
+    title = "<br>".join(cov["title"])
+    tag = f"{spec.get('column', '赛后开麦')} · {cov.get('tag', '')}".strip(" ·")
+    html = f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
+ font-family:'TL Sans SC',sans-serif;background:#06140f}}
+.bg{{position:absolute;inset:0;background:url(data:image/jpeg;base64,{b64}) center/cover;
+ filter:blur(46px) brightness(.34);transform:scale(1.25)}}
+.shot{{position:absolute;top:{VIDEO_TOP}px;left:0;width:{CANVAS_W}px;height:{VIDEO_H}px;
+ overflow:hidden}}
+.shot img{{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%}}
+.band{{position:absolute;left:0;bottom:0;width:{CANVAS_W}px;height:520px;
+ background:linear-gradient(180deg,rgba(6,20,15,0) 0%,rgba(6,20,15,.46) 16%,
+ rgba(6,20,15,.62) 46%,rgba(6,20,15,.66) 100%);
+ padding:76px 64px 0;display:flex;flex-direction:column}}
+.title{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
+ font-size:74px;line-height:1.22;color:#f4fbf7;letter-spacing:1px;
+ text-shadow:0 4px 26px rgba(0,0,0,.85)}}
+.sub{{margin-top:26px;font-size:38px;color:#cfe3d9;text-shadow:0 2px 16px rgba(0,0,0,.8)}}
+.tag{{margin-top:auto;margin-bottom:56px;display:flex;align-items:center;gap:18px}}
+.tag i{{width:9px;height:38px;background:#74dcc3;border-radius:2px}}
+.tag span{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:32px;
+ color:#74dcc3;letter-spacing:1.5px}}
+</style><div class=bg></div><div class=shot><img src="data:image/jpeg;base64,{b64}"></div>
+<div class=band><div class=title>{title}</div>
+<div class=sub>{cov.get('sub', '')}</div>
+<div class=tag><i></i><span>{tag}</span></div></div>"""
+    page = dest.with_suffix(".html")
+    page.write_text(html, encoding="utf-8")
+    with sync_playwright() as pw:
+        b = pw.chromium.launch(executable_path=_chromium(), args=["--no-sandbox"])
+        pg = b.new_page(viewport={"width": CANVAS_W, "height": CANVAS_H},
+                        device_scale_factor=1)
+        pg.goto(page.as_uri())
+        pg.wait_for_timeout(700)
+        pg.screenshot(path=str(dest))
+        b.close()
+    return dest
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     src = outdir / "source.mp4"
     if not src.exists():
@@ -183,6 +253,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         f"[v]subtitles={ass}:fontsdir=/usr/share/fonts[out]"
     )
+    body = outdir / "_body.mp4"
     subprocess.run(
         ["ffmpeg", "-y", "-ss", str(spec["start"]), "-t", str(dur), "-i", str(src),
          "-filter_complex", chain,
@@ -191,8 +262,37 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          # 而且**它不报错**，只是不生效。
          "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-c:a", "aac", "-b:a", "128k", str(out)],
+         "-r", "25", "-pix_fmt", "yuv420p",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(body)],
         check=True, timeout=1800)
+
+    if not spec.get("cover"):
+        body.replace(out)
+        return out
+
+    frame = outdir / "_cover_frame.jpg"
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    cover_png = build_cover(spec, frame, outdir / "cover.jpg")
+    cover_mp4 = outdir / "_cover.mp4"
+    # **封面这一路也要有音轨**，而且参数要和正片一致——否则 concat 会丢掉
+    # 其中一条流，而它**不报错**，只是成片从某一秒起没声音了。
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-loop", "1", "-t", str(COVER_SECONDS), "-i", str(cover_png),
+         "-f", "lavfi", "-t", str(COVER_SECONDS), "-i", "anullsrc=r=48000:cl=stereo",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
+         "-shortest", str(cover_mp4)], check=True, timeout=600)
+    lst = outdir / "_concat.txt"
+    lst.write_text(f"file '{cover_mp4.name}'\nfile '{body.name}'\n", encoding="utf-8")
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-f", "concat", "-safe", "0", "-i", str(lst),
+                    "-c", "copy", str(out)], check=True, timeout=600)
+    for tmp in (body, cover_mp4, lst, frame):
+        tmp.unlink(missing_ok=True)
     return out
 
 
