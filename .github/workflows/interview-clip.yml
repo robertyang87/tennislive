@@ -1,0 +1,104 @@
+name: interview-clip
+
+# 把 @wta 逐场集锦尾巴上的**场上采访**剪出来，烧中英双语字幕。
+#
+# **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了。实测五个 player
+# client 全废——`web`/`ios`/`web_safari` 报 `Sign in to confirm you're not a
+# bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr` 拿得到格式表
+# 但一取媒体就 403。**但字幕是通的**，所以切行和翻译在本地做完（`--stage subs`
+# 已经把 .ass 提交进仓库了），runner 上只负责下载 + 剪 + 烧。同 match-reel.yml。
+#
+# 用法：dispatch 时给 slug，spec 从 specs/interviews/<slug>.json 读。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "spec 文件名（不带 .json）"
+        required: true
+        default: "eala-svitolina-dc2026-qf"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # `fonts-noto-cjk` 不能漏：少了它 libass 用回退字体，中文那行会变成豆腐块。
+      - name: 装系统依赖
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+
+      # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+      # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
+      # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
+      - name: 装 yt-dlp
+        run: |
+          pip install -q "yt-dlp[default]"
+          node --version
+
+      # 配了 Secret 就带 cookie 下载。没配也先试一把——公开视频在 runner 的 IP 上
+      # 有时候不用 cookie 也下得动，真下不动再回来配。
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "没有配 YT_COOKIES_TXT，裸下试试"
+          fi
+
+      - name: 剪 + 烧字幕
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          if [ -n "$COOKIES" ]; then
+            python - "$SPEC" "$COOKIES" <<'PY'
+          import json, sys, pathlib
+          p = pathlib.Path(sys.argv[1]); d = json.loads(p.read_text())
+          d["cookies"] = sys.argv[2]
+          p.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
+          PY
+          fi
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
+          # **别把 cookie 路径提交进仓库。** 上面那步把它写进了 spec，这里撤掉。
+          git checkout -- "$SPEC" || true
+
+      # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
+      - name: 验成片
+        run: |
+          OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
+          test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
+
+      - name: 提交成片
+        run: |
+          # 源片 50MB+ 不进仓库，只提交成片和字幕。
+          rm -f output/interviews/${{ github.event.inputs.slug }}/source.mp4
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "output/interviews/${{ github.event.inputs.slug }}"
+          git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          git commit -m "interview: ${{ github.event.inputs.slug }} 双语字幕成片"
+          for i in 1 2 3 4; do
+            git pull --rebase origin ${{ github.ref_name }} && \
+              git push origin HEAD:${{ github.ref_name }} && break
+            sleep $((2 ** i))
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ github.event.inputs.slug }}
+          path: output/interviews/${{ github.event.inputs.slug }}/
