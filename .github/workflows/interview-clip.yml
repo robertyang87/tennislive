@@ -16,6 +16,19 @@ on:
         description: "spec 文件名（不带 .json）"
         required: true
         default: "eala-svitolina-dc2026-qf"
+      mode:
+        description: "render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        type: choice
+        options: [render, push]
+        default: render
+      push:
+        description: "出片后推送微信"
+        type: boolean
+        default: false
+      push_lead:
+        description: "推送正文那一句（留空用文案第一行）"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -106,6 +119,7 @@ jobs:
       # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
       # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
       - name: 转写交叉校验
+        if: github.event.inputs.mode != 'push'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
@@ -118,6 +132,7 @@ jobs:
       # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
       # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
       - name: 剪 + 烧字幕
+        if: github.event.inputs.mode != 'push'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
@@ -127,15 +142,55 @@ jobs:
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
       - name: 验成片
+        if: github.event.inputs.mode != 'push'
         run: |
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
           ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
 
+      # **复制页要在提交之前写。** 这一步只落文件，由下面的提交步骤带进仓库；
+      # 真正发微信排在提交之后（GitHub Pages 只服务 main，链接才取得到）。
+      # 这条规矩在别的线上踩过四次，别在这儿再踩第五次。
+      # 对阵 / 比分 / 赛事**从 spec 读**，不做成 dispatch 的输入——手打两遍必分叉。
+      - name: 取推送用的字段
+        id: push_meta
+        if: github.event.inputs.push == 'true'
+        run: |
+          PYTHONPATH=src python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, pathlib
+          d = json.loads(pathlib.Path(
+              f"specs/interviews/{os.environ['SLUG']}.json").read_text(encoding="utf-8"))
+          push = d.get("push") or {}
+          for k in ("matchup", "score", "event"):
+              v = str(push.get(k, "")).strip()
+              if k == "matchup" and not v:
+                  raise SystemExit("spec 的 push.matchup 是空的，推送标题拼不出来")
+              print(f"{k}={v}")
+          PY
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.push == 'true'
+        run: |
+          COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          PYTHONPATH=src python tools/push_reel.py --stage page \
+            --outdir "output/interviews/${{ github.event.inputs.slug }}" \
+            --matchup "${{ steps.push_meta.outputs.matchup }}" \
+            --score "${{ steps.push_meta.outputs.score }}" \
+            --event "${{ steps.push_meta.outputs.event }}" \
+            --copy "$COPY"
+
       - name: 提交成片
         run: |
-          # 源片 50MB+ 不进仓库，只提交成片和字幕。
-          rm -f output/interviews/${{ github.event.inputs.slug }}/source.mp4
+          # **中间物一个都别留。** 只列 `source.mp4` 是不够的——第七趟出片时
+          # 跟着进仓库的还有 `_audio.m4a`（6.6 MB，verify 下的音轨）、
+          # `cover.html`（**12.5 MB**，字体 base64 内嵌进去的那份）、
+          # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
+          # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
+          D="output/interviews/${{ github.event.inputs.slug }}"
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
@@ -146,6 +201,24 @@ jobs:
               git push origin HEAD:${{ github.ref_name }} && break
             sleep $((2 ** i))
           done
+
+      # **「触发成功」不算推了，这一步 success 才算。** 而且它必须排在提交之后：
+      # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉
+      # （`drop_dead_copy_button` 发送前探一次）。这条在别的线上踩过四次。
+      - name: 推送到微信
+        if: github.event.inputs.push == 'true'
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+        run: |
+          COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
+          PYTHONPATH=src python tools/push_reel.py \
+            --outdir "output/interviews/${{ github.event.inputs.slug }}" \
+            --matchup "${{ steps.push_meta.outputs.matchup }}" \
+            --score "${{ steps.push_meta.outputs.score }}" \
+            --event "${{ steps.push_meta.outputs.event }}" \
+            --lead "${{ github.event.inputs.push_lead }}" \
+            --copy "$COPY"
 
       - uses: actions/upload-artifact@v4
         if: always()

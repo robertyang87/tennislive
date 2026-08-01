@@ -471,6 +471,82 @@ def test_这台机器上真的找得到chromium():
     assert "Chromium" in out or "Chrome" in out, f"跑不出版本号：{out!r}"
 
 
+# ---------------------------------------------------------------- 产物 / 自检
+
+# 出片目录里**只许留**这些。别的都是中间物。
+_KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
+_DROP_NAMES = {"cover.html", "whisper.json"}
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_中间物不许进仓库(path):
+    """第七趟出片时跟着进仓库的中间物比成片的三分之一还多。
+
+    工作流原来只 `rm -f source.mp4`，于是 `_audio.m4a`（6.6 MB）、
+    `cover.html`（**12.5 MB**，字体 base64 内嵌的那份）、`whisper.json`
+    全被提交了——**每条片子来一份**。清理清单写「留哪些」比写「删哪些」稳：
+    以后新增一个中间物，这条会红。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    outdir = ROOT / "output" / "interviews" / spec["slug"]
+    if not outdir.exists():
+        pytest.skip("这条还没出过片")
+    bad = [p.name for p in outdir.iterdir()
+           if p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
+           or p.suffix not in _KEEP_SUFFIX]
+    assert not bad, f"{outdir} 里有中间物：{bad}——工作流的清理步骤要跟着加"
+
+
+def test_复制页写在提交之前推送排在提交之后():
+    """**这条规矩在别的线上踩过四次，别在这儿踩第五次。**
+
+    - 复制页排在提交**之后** → 文件只活在 runner 的工作区，推送里那个按钮
+      点开 404（run 30342567879 / 30339377013）
+    - 探链接排在提交**之前** → Pages 那时还取不到，按钮**每次都被摘掉**，
+      连一分钟后本来能用的也一起摘（run 30432435525）
+
+    所以顺序是死的：**写复制页 → 提交 → 推送**。只测行为拦不住位置错，
+    所以这条盯的是**位置**。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    names = [str(s.get("name") or "") for s in wf["jobs"]["render"]["steps"]]
+    at = {k: next(i for i, n in enumerate(names) if k in n)
+          for k in ("写复制页", "提交成片", "推送到微信")}
+    assert at["写复制页"] < at["提交成片"] < at["推送到微信"], names
+
+    # 而且渲染那条路上不许出现推送用的探测（闸装在「发」那一步，不是「渲」那一步）
+    render_step = next(s for s in wf["jobs"]["render"]["steps"]
+                       if "剪 + 烧字幕" in str(s.get("name") or ""))
+    assert "push_reel" not in str(render_step.get("run") or "")
+
+
+def test_封面文件名是push_reel认的那个():
+    """`push_reel.py` 只认 `poster.jpg`。改名等于推送里少一整屏海报，
+    而它**只打印一行提示，不报错**——又一个不吭声的兜底。"""
+    from tools.build_interview_clip import ROOT as _R  # noqa: F401
+    from tools.push_reel import POSTER_NAME
+
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert f'"{POSTER_NAME}"' in src, \
+        f"build_cover 写出来的名字不是 {POSTER_NAME}，push_reel 找不到它"
+
+
+def test_自检脚本从工作流里读pip行不另写一份():
+    """**两处各写一份必分叉**，而分叉的表现是「本地全绿、runner 上 ModuleNotFound」。
+
+    自检脚本存在的意义就是「本地跑一遍工作流会跑的东西」，它要是自己
+    另写一份依赖清单，就变成了「本地跑一遍我以为工作流会跑的东西」。
+    """
+    from tools.interview_clip_selftest import _pip_line
+
+    line = _pip_line()
+    assert line.startswith("pip install"), line
+    assert "-e ." in line, "工作流的 pip 行里没有 -e .，自检读到的是别的行？"
+
+
 # ---------------------------------------------------------------- 工作流依赖
 
 def _run_scripts(workflow: str) -> str:

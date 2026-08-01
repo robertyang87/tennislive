@@ -185,11 +185,16 @@ def column_of(copy_path: Path) -> str:
     if not spec.is_file():
         raise SystemExit(f"找不到 {spec}，取不到栏目名。要么放好 spec，"
                          "要么显式传 --column")
-    eyebrow = str((json.loads(spec.read_text(encoding="utf-8")).get("cover") or {})
-                  .get("eyebrow", "")).strip()
+    doc = json.loads(spec.read_text(encoding="utf-8"))
+    # 两条线把栏目名放在不同字段：赛场之上（`specs/reels/`）写 `cover.eyebrow`
+    # ——海报台头就是从它渲的；赛后开麦（`specs/interviews/`）写顶层 `column`。
+    # **在这儿收口，别让工作流各传一个 `--column`**：命令行上另写一遍，
+    # 就是休伊特那次「海报印网球有故事、标题写赛场之上」的来路。
+    eyebrow = (str((doc.get("cover") or {}).get("eyebrow", "")).strip()
+               or str(doc.get("column", "")).strip())
     if not eyebrow:
-        raise SystemExit(f"{spec} 的 cover.eyebrow 是空的——海报台头印什么，"
-                         "标题就该写什么，这一个值两处共用")
+        raise SystemExit(f"{spec} 里既没有 cover.eyebrow 也没有 column——"
+                         "海报台头印什么，标题就该写什么，这一个值两处共用")
     return eyebrow
 
 
