@@ -2721,3 +2721,81 @@ def test_cover_only排在分段和TTS之前():
             f"cover_only 的早退排在了{why}后面——那些活白干了")
     assert "cover_only: bool = False" in src, "render 没有 cover_only 参数"
     assert '"--cover-only"' in src, "命令行没有 --cover-only"
+
+
+def test_旁白超长的闸排在分段编码之前():
+    """**撞一次这道闸，白编 50–60 秒。**
+
+    它原来排在分段编码之后（TTS 在第 115 行、闸在 141，而 `cut_segment` 循环
+    在 101），可 TTS 只要 6 秒、一个源片像素都不碰。白编的是封面海报 2.6s +
+    抠图 8.4s + **分段编码 47s** + 拼接——而「旁白写长了」本来是改一行文案
+    的事，代价却是一整轮六分钟。
+
+    挪到前面之后同样这条错在开跑后一分半就报出来，而且一次把所有超出的段
+    都列出来（原设计就是如此，别改一段跑一次）。
+    """
+    reel = _reel()
+    body = _render_body(reel)
+    tts = body.index("synthesize(segments")
+    gate = body.index("有旁白比它那一段的画面长")
+    encode = body.index("cut_segment(")
+    assert tts < encode, "TTS 又排到分段编码后面了——撞闸时白编 47 秒"
+    assert gate < encode, "旁白超长那道闸排在分段编码之后"
+
+
+def test_段落不许写过源片末尾(monkeypatch):
+    """**ffmpeg 越界时退出码是 0**，只会安安静静出一段短的。
+
+    而每段旁白按 `seg.length`（spec 里写的长度）算偏移，所以一旦某段被悄悄
+    截短，**它后面每一句解说和字幕都整体错位**——症状是「后半段配音对不上」，
+    人还未必定位得到是哪一段。踩一次至少一整轮六分钟。
+
+    `probe_duration` 本来就在 render 里算了五次，却从来没跟段落比过。
+    这条**真调一次**函数，不是查源码有没有那个名字。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    assert "_check_segments_fit" in _render_body(reel), "render 没接这道检查"
+
+    seg = _seg(reel, 0.0, 5.0)
+    fake = Path("/nowhere/fake.mp4")
+
+    # 5 秒的段配 10 秒的源片：过
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 10.0)
+    reel._check_segments_fit([seg], {"": fake})
+
+    # 同一段配 3 秒的源片：必须炸，而且要说出超了多少
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 3.0)
+    with pytest.raises(reel.ReelError, match="超出"):
+        reel._check_segments_fit([seg], {"": fake})
+
+    # 容差：源片时长有帧级误差，卡太死会误伤最后一段
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 4.98)
+    reel._check_segments_fit([seg], {"": fake})
+
+
+def _render_body(reel) -> str:
+    import inspect  # noqa: PLC0415
+
+    return inspect.getsource(reel.render)
+
+
+def _seg(reel, start: float, end: float):
+    """按 Segment 的真实字段构一段，缺省值从 dataclass 自己拿——
+    字段增删了它跟着走，不用回来改。"""
+    import dataclasses  # noqa: PLC0415
+
+    kwargs = {}
+    for f in dataclasses.fields(reel.Segment):
+        if f.name == "start":
+            kwargs[f.name] = start
+        elif f.name == "end":
+            kwargs[f.name] = end
+        elif f.default is not dataclasses.MISSING:
+            kwargs[f.name] = f.default
+        elif f.default_factory is not dataclasses.MISSING:  # type: ignore[misc]
+            kwargs[f.name] = f.default_factory()  # type: ignore[misc]
+        else:
+            kwargs[f.name] = "" if f.type in ("str", str) else 0
+    return reel.Segment(**kwargs)

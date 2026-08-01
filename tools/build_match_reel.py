@@ -1528,6 +1528,36 @@ def validate_spec(spec: dict) -> list[Segment]:
     return parse_segments(spec, urls, next(iter(urls)))
 
 
+def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
+    """段落不许写过源片的末尾。
+
+    **ffmpeg 越界时退出码是 0。** `-ss`/`-t` 指到片尾之后，它安安静静出一个
+    比要求短的片段——没有报错、没有警告。而每段旁白是按 `seg.length`（spec 里
+    写的长度）算偏移的，所以一旦某段被悄悄截短，**它后面每一句解说和字幕都
+    整体错位**，症状是「后半段配音对不上」，人还未必定位得到是哪一段。
+
+    源片时长 `probe_duration` 本来就在 render 里算了五次，却从来没跟段落比过。
+    比一次是毫秒级的事，而漏掉一次就是一整轮六分钟的重渲加上人反复回看。
+
+    容差 0.05s：源片时长本身有帧级误差，卡太死会误伤最后一段。
+    """
+    durations = {key: probe_duration(path) for key, path in sources.items()}
+    over = []
+    for index, seg in enumerate(segments):
+        limit = durations.get(seg.source)
+        if limit is None or seg.end <= limit + 0.05:
+            continue
+        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s，"
+                    f"而源片{('（' + seg.source + '）') if seg.source else ''}"
+                    f"只有 {limit:.1f}s，超出 {seg.end - limit:.2f}s")
+    if over:
+        raise ReelError(
+            "有段写过了源片的末尾。**ffmpeg 越界不报错，只会悄悄出一段短的**，"
+            "于是它后面每一句旁白和字幕都会整体错位：\n"
+            + "\n".join(over)
+            + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None,
            cover_only: bool = False) -> Path:
@@ -1591,6 +1621,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
+    _check_segments_fit(segments, sources)
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
@@ -1623,26 +1654,15 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "或者把这些段的 track 置为 false（画面退回固定中心）。"
             ) from exc
 
-    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
-    tracks = track_shots(sources, segments, source_w)
-
-    parts: list[Path] = [build_cover(sources, primary, spec,
-                                 outdir / "part_cover.mp4", source_w,
-                                 cover_secs)]
-    for index, seg in enumerate(segments):
-        parts.append(cut_segment(sources[seg.source], seg,
-                                 outdir / f"part_{index:02d}.mp4",
-                                 source_w, tracks.get(index)))
-
-    listing = outdir / "_concat.txt"
-    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
-                       encoding="utf-8")
-    silent = outdir / "_video.mp4"
-    with stage("拼接"):
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "concat", "-safe", "0", "-i", str(listing),
-            "-c", "copy", str(silent))
-
+    # **TTS 和「旁白比画面长」那道闸排在编码之前。**
+    #
+    # 它们原来排在分段编码之后（第 115 行 TTS，闸在 141），而 TTS 只要 6 秒、
+    # 一个源片像素都不碰。撞一次这道闸，白编的是：封面海报 2.6s + 抠图 8.4s
+    # + **分段编码 47s** + 拼接 ≈ 50–60 秒——而这一整趟本来就要 6 分钟，
+    # 于是「旁白写长了」这种改一行文案的事，代价是一整轮。
+    #
+    # 挪到前面之后，同样这条错在**开跑后一分半**就报出来，而且一次把所有
+    # 超出的段都列出来（原来就是这么设计的，见下面的注释）。
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate)
 
@@ -1675,6 +1695,27 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             + "\n".join(over)
             + "\n\n两条出路，选一条：把这几段的旁白删短，或者把画面拉长"
               "（`end` 往后挪，但别越过下一段的 `start`）。")
+
+
+    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
+    tracks = track_shots(sources, segments, source_w)
+
+    parts: list[Path] = [build_cover(sources, primary, spec,
+                                 outdir / "part_cover.mp4", source_w,
+                                 cover_secs)]
+    for index, seg in enumerate(segments):
+        parts.append(cut_segment(sources[seg.source], seg,
+                                 outdir / f"part_{index:02d}.mp4",
+                                 source_w, tracks.get(index)))
+
+    listing = outdir / "_concat.txt"
+    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
+                       encoding="utf-8")
+    silent = outdir / "_video.mp4"
+    with stage("拼接"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "concat", "-safe", "0", "-i", str(listing),
+            "-c", "copy", str(silent))
 
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
