@@ -30,9 +30,16 @@ jobs:
         with:
           python-version: "3.11"
 
-      # `fonts-noto-cjk` 不能漏：少了它 libass 用回退字体，中文那行会变成豆腐块。
+      # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
+      # - `fonts-noto-cjk`：少了它 libass 用回退字体，中文那行变豆腐块
+      # - `fonts-noto-core`：少了它 `Noto Sans` 解析不到，英文那行悄悄换成
+      #   DejaVu——**比 Noto Sans 宽 8%**，切行时量的宽度和渲出来的对不上，
+      #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
+      #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -55,8 +62,12 @@ jobs:
           sys.path.insert(0, "tools")
           from build_interview_clip import _chromium
           import faster_whisper  # noqa: F401
+          from build_interview_clip import _en_width, _zh_width
           assert shutil.which("ffmpeg"), "没有 ffmpeg"
           print("Chromium:", _chromium())
+          # 字体缺了就在这儿炸，不要等切行那一步——两个包漏哪个都不报错，
+          # 只是悄悄换成回退字体，然后行宽全算错
+          print(f"字宽 en={_en_width('respect'):.1f} zh={_zh_width('网球'):.1f}")
           from tennislive.render.webcards import _font_css
           css = _font_css()
           assert "TL Display SC" in css, "得意黑没内嵌进来，封面标题会退回系统字体"

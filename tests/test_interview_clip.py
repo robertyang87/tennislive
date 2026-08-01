@@ -23,7 +23,14 @@ from tools.build_interview_clip import (
     ROOT,
     check_human_quote,
     review_sheet,
+    segment,
+    zh_problems,
+    _LINE_PX,
+    _NO_TAIL,
+    _SENT_END,
     _FILLER,
+    _bare,
+    _en_width,
     _norm_en,
     _quote_span,
     _unresolved_suspects,
@@ -128,6 +135,88 @@ def test_引语一个词都对不上要报错而不是默默放过(tmp_path):
 def test_没写人工引语的spec直接跳过不报错(tmp_path):
     """引语是加料不是必需品——不是每场都有战报抄原话。"""
     assert check_human_quote({"slug": "t"}, _lines(["anything"]), tmp_path) is None
+
+
+# ---------------------------------------------------------------- 断行
+
+def _words(text: str, step: float = 0.4) -> list[tuple[float, str]]:
+    return [(i * step, w) for i, w in enumerate(text.split())]
+
+
+def test_不许把词组劈成两半():
+    """账号所有者：「同一个词或者是意思或者一句话，不要换行或者换页。」
+
+    原来是「数满 62 个字符就断」，于是满篇 `Elina hit some good ／ shots.`、
+    `I think she's ／ made waves`、`thank all your ／ Filipino fans`——
+    字符数对，词组被劈成两半。这条钉的就是那几个真实的失败例。
+    """
+    text = ("I think I was playing really well and of course Elina hit some good "
+            "shots. She was being aggressive, especially in that second set.")
+    lines = segment(_words(text), 0, 999)
+    joined = [ln["en"] for ln in lines]
+    for pair in ("good shots", "was playing", "second set"):
+        assert any(pair in ln for ln in joined), f"「{pair}」被劈开了：{joined}"
+
+
+def test_一行不许收在虚词上():
+    """断点在短语开头**还不够**，上一行还得收得住。
+
+    只管「起得来」会切出 `and you beat your ／ same opponent`——断点确实在
+    短语开头（`same` 前面），可上一行吊在物主代词上，读起来照样是半截。
+    """
+    text = ("Well, Alex congratulations through to the semifinal here. "
+            "The crazy thing is the last semi-final you made was not that long "
+            "ago in Berlin and you beat your same opponent the same score line.")
+    lines = segment(_words(text), 0, 999)
+    for i, ln in enumerate(lines[:-1]):
+        if ln["en"].rstrip().endswith(_SENT_END):
+            continue        # 句子到此为止，收在哪个词上都不算吊
+        assert _bare(ln["en"].split()[-1]) not in _NO_TAIL, \
+            f"第 {i+1} 行吊在虚词上：…{ln['en'][-28:]}"
+
+
+def test_行宽按量出来的算不按字符数():
+    """**超宽不报错，只是被 libass 悄悄折成两行**，折在哪儿没人管。
+
+    这是同一条规矩的隐形版：原来 37 行里有 22 行超宽，看上去一切正常。
+    所以宽度得在切行那一步就卡住，不能指望渲染层。
+    """
+    text = ("about kind of what it takes to sustain this level, both physically "
+            "and mentally, and just the effort you need to have to hang with "
+            "these top players and stay there.")
+    for ln in segment(_words(text), 0, 999):
+        assert _en_width(ln["en"]) <= _LINE_PX, \
+            f"{_en_width(ln['en']):.0f}px 超过 {_LINE_PX}：{ln['en']}"
+
+
+def test_两句话不许压在同一行():
+    """一句一行，停顿靠换行表达。
+
+    试过「极短的句子并进上一行」，切出来是
+    `through to the semifinal here. The crazy Yes.`——没劈开词组，
+    却把两个意思压在了一行，正是同一条规矩的另一面。
+    **例外只有一个**：短到读不完的句子（`Yeah.` 只停 0.32 秒）并进**下一句**，
+    并的是两个完整的句子，不会把谁劈开。
+    """
+    text = "through to the semifinal here. The crazy Yes. round of applause."
+    for ln in segment(_words(text, step=1.5), 0, 999):
+        assert ln["en"].rstrip().rstrip(".?!").count(".") == 0, \
+            f"两句压在一行：{ln['en']}"
+
+
+def test_中文那行也要不超宽不吊在虚词上():
+    """英文的两条规矩，中文一字不差地也要守——它们是同一件事。
+
+    ⚠️ 判据只收**单字虚词**，而且只在这一行不是句尾时才算：
+    `身体上和心理上都是`（都是＝完整的谓语）、`你也是看着她长大的`
+    （是…的 结构）都以虚词收尾却是完整的。**扩大化的判据不吭声**。
+    """
+    lines = [{"en": "and just the effort you need"}, {"en": "to hang with them."}]
+    assert zh_problems(lines, ["还有你必须付出的努力", "才能跟他们周旋"]) == []
+    assert zh_problems(lines, ["还有你必须付出的", "才能跟他们周旋"])
+    assert zh_problems(lines, ["还" * 60, "才能跟他们周旋"])
+    # 句尾那行收在「的」上不算吊
+    assert zh_problems([{"en": "watching her."}], ["我想你也是看着她长大的"]) == []
 
 
 # ---------------------------------------------------------------- 核对表 / 挂账

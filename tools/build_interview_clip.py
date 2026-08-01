@@ -58,6 +58,51 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUTDIR = ROOT / "output" / "interviews"
 
+# 字幕左右各留 64px（ASS 的 MarginL/MarginR），所以一行可用 952px。
+# **宽度要量，不能按字符数估。** 原来按「62 个字符」断行，那在 Noto Sans 40
+# 下是 1200px 上下——22/37 行超宽，libass 按 `WrapStyle: 0` 自动折成两行，
+# **折在哪儿没人管**，于是「不要把一句话换行」这条在看不见的地方又被破了一次。
+_LINE_PX = 1080 - 64 - 64
+
+# libass 认字体名，PIL 认文件路径——两边要指同一个文件，否则量出来的宽度
+# 和渲出来的对不上。踩过：沙箱和 runner 都**没装** `Noto Sans`（只装了
+# `fonts-noto-cjk`），fontconfig 悄悄回退到 DejaVu，两边量出来差 8%。
+# 现在工作流里加了 `fonts-noto-core`，缺了就**报错**而不是回退——
+# 回退不吭声，是这条线上栽过三次的那个毛病。
+_FONT_FILES = {
+    "en": ("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+           "fonts-noto-core"),
+    "zh": ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+           "fonts-noto-cjk"),
+}
+_FONT_SIZE = {"en": 40, "zh": 48}       # 和 _ASS_HEAD 里的 Style 一致
+_FONT_CACHE: dict[str, object] = {}
+
+
+def _measure(kind: str, text: str) -> float:
+    """量一行字画出来有多宽（px）。PIL 的 advance 就是 libass 水平排版用的量。"""
+    if kind not in _FONT_CACHE:
+        from PIL import ImageFont  # noqa: PLC0415
+
+        path, pkg = _FONT_FILES[kind]
+        if not Path(path).exists():
+            raise SystemExit(
+                f"量字幕宽度要 {path}，没装。\n"
+                f"    sudo apt-get install -y {pkg}\n"
+                "**别拿回退字体凑合**：DejaVu 比 Noto Sans 宽 8%，量出来的行宽"
+                "和渲出来的对不上，而这件事不报错。")
+        _FONT_CACHE[kind] = ImageFont.truetype(path, _FONT_SIZE[kind])
+    return _FONT_CACHE[kind].getlength(text)
+
+
+def _en_width(text: str) -> float:
+    return _measure("en", text)
+
+
+def _zh_width(text: str) -> float:
+    return _measure("zh", text)
+
+
 # ASR 的错拼 → 规范拼法。**别沿用 ASR 的写法**，它连球员姓氏都认不准。
 _NAME_FIX = {
     "Alexi": "Alex", "Alexa": "Alexandra Eala", "Ayala": "Eala", "Aala": "Eala",
@@ -95,22 +140,224 @@ def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
     return out
 
 
-def segment(words: list[tuple[float, str]], start: float, end: float) -> list[dict]:
-    """逐词 → 字幕行。断在句末，太长就硬断。"""
-    keep = [(t, _NAME_FIX.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
-    keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
-    lines, cur, at = [], [], keep[0][0] if keep else start
-    for i, (t, w) in enumerate(keep):
-        if not cur:
-            at = t
-        cur.append(w)
-        txt = " ".join(cur)
-        if (w.endswith((".", "?", "!")) and len(txt) > 24) or len(txt) > 62:
-            nxt = keep[i + 1][0] if i + 1 < len(keep) else t + 1.2
-            lines.append({"a": round(at, 2), "b": round(min(nxt, t + 3.0), 2), "en": txt})
+# 子句边界。**断行按标点，不按数满多少个字符**——和中文字幕那条规矩同源
+# （「代表亚洲国家打／进大满贯」是数字数切出来的）。英文这边数字符切出来的是
+# `Elina hit some good ／ shots.`、`I think she's ／ made waves`、
+# `thank all your ／ Filipino fans`：字符数对，词组被劈成两半。
+_CLAUSE_END = (".", "?", "!", ",", ";", ":", "—")
+# 句末：跨过它不许并行（一行一句，停顿靠换行表达）
+_SENT_END = (".", "?", "!")
+# 一个子句还是塞不下时，**只许在这些词前面断**——它们都是短语的开头
+#（介词、连词、关系词、限定词、助动词），断在它们前面不会把词组劈开。
+# 不在这张表里的地方一律不断，所以 `good shots`、`she's made`、
+# `Filipino fans` 之间没有候选点，永远劈不开。
+# ⚠️ **别把代词加进来**：`you` 当主语时是短语开头，当宾语时不是
+#（`beat ／ you`），静态分不出来，加进来就是扩大化。
+_BREAK_BEFORE = frozenset("""
+and or but so because that which who whom whose when where while if
+although though since as than about with without for from in on at to of
+into onto after before during through between among against upon over under
+is are was were be been being am has have had do does did
+will would can could should may might must
+""".split())
+# 限定词是**最差的合法断点**，不是禁区。这条来回试了两次：
+# - 留在正常档 → `and you beat your ／ same opponent`：动词和宾语被劈开
+# - 整个禁掉   → 更糟。那一句宽度上必须切三行，而合法断点只剩三个，
+#   于是 DP 只能在 `your ／ same` 之间**硬断**——把一个名词短语劈成两半，
+#   比断在限定词前面还差
+# 所以放回来，但排在所有词类最后：有连词/介词/助动词可用时永远轮不到它，
+# 真到了「不断就超宽」那一步，`beat ／ your same opponent` 也远好过
+# `beat your ／ same opponent`。反过来一行**收**在限定词上一定是半截，
+# 所以 `_NO_TAIL` 里必须留着它们。
+_DETERMINER = frozenset("the a an my your his her its our their this these those such".split())
+# **一行不许收在虚词上。** 上面那条只管「起得来」，这条管「收得住」——
+# 两条都要，缺了后者就会切出 `and you beat your ／ same opponent`、
+# `she's made waves on ／ and off the tennis court`、
+# `Alex congratulations through ／ to the semifinal`：断点确实在短语开头，
+# 可上一行被吊在了介词/冠词上，读起来照样是半截。
+# ⚠️ 主语代词只进 `_NO_TAIL`，**不进 `_BREAK_BEFORE`**。这两件事不对称：
+# `I` 收在行尾一定是把主语和它的谓语劈开了（`about it but I ／ will
+# definitely think`），但它起一行未必是短语开头（`beat ／ you`）。
+# 只收无歧义的主语（i/he/she/we/they）——`it`/`you`/`her` 当宾语时收在行尾没问题。
+_NO_TAIL = (_BREAK_BEFORE | _DETERMINER
+            | frozenset("not no very just really more most quite".split())
+            | frozenset("i he she we they".split()))
+
+# 断点也分好坏，**不是能断就行**：连词和关系词天生是子句的接缝，介词次之，
+# 限定词和助动词垫底（`and you beat ／ your same opponent` 就是拿限定词
+# 当断点断出来的）。同一档里再按「靠中间」挑。
+_RANK = (
+    frozenset("""and or but so because that which who whom whose when where
+                 while if although though since as than""".split()),
+    frozenset("""about with without for from in on at to of into onto after
+                 before during through between among against upon over
+                 under""".split()),
+)
+
+
+def _bare(word: str) -> str:
+    return word.lower().strip(".,?!;:'\"“”‘’‖")
+
+
+def _rank(word: str) -> int:
+    """断点好坏，越小越好。"""
+    b = _bare(word)
+    return next((r for r, s in enumerate(_RANK) if b in s), len(_RANK))
+
+
+def _phrase_ok(clause: list[tuple[float, str]], i: int) -> bool:
+    """第 i 个词能不能起一行：它自己是短语开头，**且**上一个词收得住。"""
+    return _bare(clause[i][1]) in _BREAK_BEFORE and _bare(clause[i - 1][1]) not in _NO_TAIL
+
+
+def _sentences(keep: list[tuple[float, str]]) -> list[list[tuple[float, str]]]:
+    """切成句子。句号问号感叹号是边界，**说话人换人（`>>`）也是**。
+
+    切到句子为止就够了：句内的逗号交给下面的均衡切分去挑，因为「在哪个逗号
+    上断」得看整句排下来哪种最匀——一路贪心填满会在句尾留下 `so much respect`
+    这种三个词、0.7 秒的碎行。
+    """
+    out: list[list[tuple[float, str]]] = []
+    cur: list[tuple[float, str]] = []
+    for t, raw in keep:
+        if raw.startswith(">>"):
+            if cur:
+                out.append(cur)
+            cur = []
+            raw = raw[2:].strip()
+            if not raw:
+                continue
+            raw = "‖" + raw        # 内部标记：这一句是换了人说的，别往回并
+        cur.append((t, raw))
+        if raw.endswith(_SENT_END):
+            out.append(cur)
             cur = []
     if cur:
-        lines.append({"a": round(at, 2), "b": round(keep[-1][0] + 1.5, 2), "en": " ".join(cur)})
+        out.append(cur)
+    return [c for c in out if c]
+
+
+# 断点好坏（越小越好）：逗号之后 → 连词/关系词 → 介词 → 限定词/助动词 → 硬断。
+# 每差一档罚 0.18 个预算宽，硬断罚 4 个——**贵，但不是不可能**，
+# 否则遇上一串连着的实词就没有解了。
+_RANK_PENALTY = 0.18
+_FORCE_PENALTY = 4.0
+# 一行短于这个就读不完（`Yeah.` 实测 0.32 秒）。整句并进下一句。
+_MIN_LINE_SECS = 0.8
+
+
+def _break_rank(sent: list[tuple[float, str]], i: int) -> int | None:
+    """在第 i 个词前面断有多好。`None`＝这儿不该断（只有实在没别的路才用）。"""
+    if _bare(sent[i - 1][1]) in _NO_TAIL:
+        return None                                   # 上一行会吊在虚词上
+    if sent[i - 1][1].endswith((",", ";", ":", "—")):
+        return 0                                      # 逗号之后，最自然
+    b = _bare(sent[i][1])
+    if b in _DETERMINER:
+        return 1 + len(_RANK) + 1                     # 最差的合法档，见 _DETERMINER
+    if b not in _BREAK_BEFORE:
+        return None
+    return 1 + next((r for r, s in enumerate(_RANK) if b in s), len(_RANK))
+
+
+def _split_wide(sent: list[tuple[float, str]], budget: float,
+                width) -> tuple[list[list[tuple[float, str]]], bool]:
+    """把一句话切成尽量**匀**的几行。返回 (分段, 有没有被迫硬断)。
+
+    贪心（填满头一行、剩下的往后推）会在句尾留碎行，所以这里做一遍
+    最短路：代价 = 每行的空余量² + 断点档次的罚分，在所有合法断法里取最小。
+    末行不罚空余——它短是应该的。
+
+    找不到任何合法断点时才按词边界硬断，并把 `forced` 报上去：
+    **兜底出事的时候要吭声**，否则「断得难看」和「本来就断不开」长得一样。
+    """
+    n = len(sent)
+    if width(_text(sent)) <= budget:
+        return [sent], False
+    inf = float("inf")
+    best, prev, hard = [inf] * (n + 1), [0] * (n + 1), [False] * (n + 1)
+    best[0] = 0.0
+    for j in range(1, n + 1):
+        for i in range(j):
+            if best[i] == inf:
+                continue
+            w = width(_text(sent[i:j]))
+            if w > budget and j - i > 1:
+                continue                               # 太宽；单个词超宽只能认
+            rank = 0 if i == 0 else _break_rank(sent, i)
+            pen = (_FORCE_PENALTY if rank is None else rank * _RANK_PENALTY) * budget
+            slack = 0.0 if j == n else (budget - w) ** 2 / budget
+            if (c := best[i] + slack + pen) < best[j]:
+                best[j], prev[j] = c, i
+                hard[j] = hard[i] or (i > 0 and _break_rank(sent, i) is None)
+    cuts, j = [n], n
+    while j:
+        j = prev[j]
+        cuts.append(j)
+    cuts.reverse()
+    return [sent[a:b] for a, b in zip(cuts, cuts[1:])], hard[n]
+
+
+def _text(clause: list[tuple[float, str]]) -> str:
+    return " ".join(w for _, w in clause).replace("‖", "")
+
+
+def segment(words: list[tuple[float, str]], start: float, end: float,
+            budget: float | None = None, width=None) -> list[dict]:
+    """逐词 → 字幕行。**一行一句，不劈词组，不超宽。**
+
+    三条规矩，顺序就是优先级：
+
+    1. **断在子句边界**（标点、说话人换人）。原来是「数满 62 个字符就断」，
+       于是满篇 `Elina hit some good ／ shots.`
+    2. **一行一句**：跨过句号问号感叹号不并行，停顿靠换行表达。
+       只有极短的句子（≤3 词，`Come on.`）允许并进下一句，否则闪一下就没了
+    3. **宽度按量出来的算**，不按字符数。原来 62 个字符在 Noto Sans 40 下是
+       1200px 上下，而可用宽只有 952——**22/37 行超宽，libass 自动折成两行，
+       折在哪儿没人管**。那是同一个毛病的隐形版：看不见，因为它不报错
+    """
+    budget = _LINE_PX if budget is None else budget
+    width = _en_width if width is None else width
+    keep = [(t, _NAME_FIX.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
+    keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
+    if not keep:
+        return []
+
+    # **一句一行起。** 唯一的例外是短到读不完的句子——`Yeah.` 实测只停 0.32 秒，
+    # 一闪就没，配的中文更是白配。这种整句并进**下一句**（并的是两个完整的句子，
+    # 不会把谁劈开）。试过更宽松的「短句并进上一行」，切出来是
+    # `through to the semifinal here. The crazy Yes.`——把一句话的尾巴和下一句
+    # 压在一行，正是「一句话不要换行换页」的另一面。所以只并整句，且只往后并。
+    sents = _sentences(keep)
+    merged: list[list[tuple[float, str]]] = []
+    for k, sent in enumerate(sents):
+        nxt = sents[k + 1][0][0] if k + 1 < len(sents) else sent[-1][0] + 2.0
+        if (nxt - sent[0][0] < _MIN_LINE_SECS and k + 1 < len(sents)
+                and not sents[k + 1][0][1].startswith("‖")):
+            sents[k + 1] = sent + sents[k + 1]
+            print(f"　并短句：{_text(sent)}（只停 {nxt - sent[0][0]:.2f}s）")
+            continue
+        merged.append(sent)
+
+    packed: list[list[tuple[float, str]]] = []
+    forced_at = []
+    for sent in merged:
+        chunks, forced = _split_wide(sent, budget, width)
+        if forced:
+            forced_at.append(_text(sent)[:52])
+        packed += chunks
+
+    lines = []
+    for i, part in enumerate(packed):
+        nxt = packed[i + 1][0][0] if i + 1 < len(packed) else part[-1][0] + 1.5
+        lines.append({"a": round(part[0][0], 2),
+                      "b": round(min(nxt, part[-1][0] + 3.0), 2),
+                      "en": _text(part)})
+    if forced_at:
+        # 只在成功时出声的检查没法证明它看过——不合格的也要列出来
+        print(f"⚠️ {len(forced_at)} 个子句没有可断的短语开头，按词边界硬断了：")
+        for t in forced_at:
+            print(f"   {t}…")
     return lines
 
 
@@ -153,6 +400,28 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
 
 
+# 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
+# `beat your ／ same opponent` 是同一个毛病，只是换了种语言。
+# ⚠️ **只收单字虚词，而且只在这一行不是句子结尾时才算。**
+# `身体上和心理上都是`（都是＝完整的谓语）、`你也是看着她长大的`（是…的 结构）
+# 都以「虚词」收尾却是完整的——判据宁可窄不可宽，扩大化的判据不吭声。
+_ZH_DANGLE = tuple("的地得和跟与在把被为从对而或让就")
+
+
+def zh_problems(lines: list[dict], zh: list[str]) -> list[str]:
+    """中文那一行的两条硬要求：不超宽、行尾不吊在虚词上。"""
+    bad = []
+    for i, (seg, cn) in enumerate(zip(lines, zh), 1):
+        if (w := _zh_width(cn)) > _LINE_PX:
+            bad.append(f"#{i} 中文超宽 {w:.0f}px（可用 {_LINE_PX}）：{cn}")
+        # 配的英文那行以句号问号收尾 → 这一句到此为止，中文也该是完整的
+        if seg["en"].rstrip().endswith(_SENT_END):
+            continue
+        if cn.rstrip().endswith(_ZH_DANGLE):
+            bad.append(f"#{i} 中文吊在「{cn.rstrip()[-1]}」上，意思被劈成两半：{cn}")
+    return bad
+
+
 def _ts(x: float) -> str:
     x = max(0.0, x)
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
@@ -162,6 +431,8 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path) -
     if len(zh) != len(lines):
         raise SystemExit(f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
                          f"先跑 --stage subs 看切出来几行，再照着补 spec 里的 zh。")
+    if bad := zh_problems(lines, zh):
+        raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
     for seg, cn in zip(lines, zh):
         en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
