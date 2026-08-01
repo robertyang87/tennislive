@@ -543,6 +543,10 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
                       f"`{' '.join(ours[j1:j2]) or '—'}`")
     path = outdir / "transcript_diff.md"
     path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    # **报告要打进日志，不能只落在 artifact 里。** 这一步只有 runner 上跑得动，
+    # 而 artifact 得下载才看得到——沙箱到 github.com 是 403，等于拿不到。
+    # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
+    print("\n".join(report))
     print(f"转写分歧 {rate:.1%} → {path}")
     if rate > TRANSCRIPT_MAX_DISAGREE:
         raise SystemExit(

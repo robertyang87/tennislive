@@ -6,13 +6,13 @@
 |--:|:--|:--|:--|:--|:--|
 | 1 | 0:00.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=293) | Well, Alex congratulations | 亚历克丝 恭喜你 |  |
 | 2 | 0:02.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=295) | through to the semifinal here. | 闯进了这里的半决赛 |  |
-| 3 | 0:03.6 | [▶](https://youtu.be/AiBTDJd_ekQ?t=297) | The crazy Yes. | 太好了 | ⚠️ `The crazy Yes.` 语法不成立——`The crazy` 疑似从下一句 `The crazy thing is` 串过来的重影，实际大概只是 `Yes!`。#4 `round of applause.` 前面多半还漏了 `Give her a` |
+| 3 | 0:03.6 | [▶](https://youtu.be/AiBTDJd_ekQ?t=297) | Yes. | 太好了 | ✏️ 已订正；⚠️ `The crazy Yes.` 语法不成立——`The crazy` 疑似从下一句 `The crazy thing is` 串过来的重影，实际大概只是 `Yes!`。#4 `round of applause.` 前面多半还漏了 `Give her a` |
 | 4 | 0:04.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=298) | round of applause. | 掌声送给她 |  |
 | 5 | 0:05.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=299) | Come on. | 来吧 |  |
 | 6 | 0:13.1 | [▶](https://youtu.be/AiBTDJd_ekQ?t=306) | The crazy thing is the last semi-final you made | 离谱的是 你上一次打进半决赛 |  |
 | 7 | 0:15.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=309) | was not that long ago in Berlin and you beat | 也没过多久 就在柏林 |  |
 | 8 | 0:17.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=311) | your same opponent the same score line. | 对手一样 比分也一模一样 |  |
-| 9 | 0:20.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=314) | What I know it's nuts. | 我知道 这太离谱了 | ⚠️ `What` 是误识；且 `I know, it's nuts` 疑似伊埃拉插话——**说话人归属存疑**，中文现在按她说处理，错了的话中英都要改 |
+| 9 | 0:20.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=314) | What I know it's nuts. | 我知道 这太离谱了 | 👂 账号所有者确认。`What` 疑似主持人的惊讶语气词，`I know, it's nuts` 归属谁听不出来——中文按伊埃拉说处理。**没有第二个源能定它**，所以记成人工确认而不是机器判定。 |
 | 10 | 0:23.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=317) | What is it about playing Elina | 跟斯维托丽娜交手 |  |
 | 11 | 0:25.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=319) | that brings out the best in you | 为什么总能让你打出最好的状态 |  |
 | 12 | 0:26.4 | [▶](https://youtu.be/AiBTDJd_ekQ?t=320) | as such a great player that you have to beat? | 她可是你必须战胜的强手 |  |
@@ -25,10 +25,10 @@
 | 19 | 0:42.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=336) | especially in that second set. | 尤其是第二盘 |  |
 | 20 | 0:44.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=338) | So, I'm really happy that I was able to kind | 所以我很高兴自己 |  |
 | 21 | 0:46.7 | [▶](https://youtu.be/AiBTDJd_ekQ?t=340) | of keep my rhythm. | 大体保持住了节奏 |  |
-| 22 | 0:48.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=342) | What you are learning along the way? | 这一路你学到了什么 | ⚠️ `What you are learning along the way?` 应是 `What are you learning` |
+| 22 | 0:48.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=342) | What are you learning along the way? | 这一路你学到了什么 | ✏️ 已订正；⚠️ `What you are learning along the way?` 应是 `What are you learning` |
 | 23 | 0:50.4 | [▶](https://youtu.be/AiBTDJd_ekQ?t=344) | This is really your first full year on tour | 今年才是你真正完整的巡回赛年 |  |
 | 24 | 0:52.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=346) | after last year, but what is it that you're learning | 那你学到的是什么 |  |
-| 25 | 0:56.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=349) | about yourselves in these moments, | 在这些时刻 关于你自己 | ⚠️ `about yourselves` 应是 `yourself`（问的是她一个人） |
+| 25 | 0:56.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=349) | about yourself in these moments, | 在这些时刻 关于你自己 | ✏️ 已订正；⚠️ `about yourselves` 应是 `yourself`（问的是她一个人） |
 | 26 | 0:57.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=351) | in these types of matches, in this atmosphere? | 在这样的比赛 这样的气氛下 |  |
 | 27 | 1:01.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=354) | Oh, there's so many things | 我学到的东西太多了 |  |
 | 28 | 1:02.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=356) | that I've learned about the tour, about myself, | 关于巡回赛 关于我自己 |  |
@@ -43,7 +43,7 @@
 | 37 | 1:24.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=378) | Now, I know your next opponent, Naomi Osaka, | 你的下一个对手是大坂直美 |  |
 | 38 | 1:33.0 | [▶](https://youtu.be/AiBTDJd_ekQ?t=386) | which is going to be an amazing match | 这一定会是一场精彩的对决 |  |
 | 39 | 1:36.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=390) | between the two of you. | 就在你们两人之间 |  |
-| 40 | 1:38.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=392) | You're all very excited about it. | 大家都很期待 | ⚠️ `You're all very excited` 疑似 `We're all`。中文「大家都很期待」两种都成立，所以这处**只错英文不错中文** |
+| 40 | 1:38.3 | [▶](https://youtu.be/AiBTDJd_ekQ?t=392) | You're all very excited about it. | 大家都很期待 | 👂 账号所有者确认。`You're all` / `We're all` 两种都成立（主持人对全场说 / 主持人代表大家说），中文「大家都很期待」两种都对得上，所以这处不改。 |
 | 41 | 1:40.2 | [▶](https://youtu.be/AiBTDJd_ekQ?t=394) | What are your thoughts about playing Naomi? | 跟大坂直美交手你怎么看 |  |
 | 42 | 1:42.1 | [▶](https://youtu.be/AiBTDJd_ekQ?t=395) | And I'm sure you've grown up also watching her. | 我想你也是看着她长大的 |  |
 | 43 | 1:44.8 | [▶](https://youtu.be/AiBTDJd_ekQ?t=398) | Yes, she is of course such an accomplished player | 是的 她当然是非常有成就的球员 | ✅ 人工引语 |
@@ -63,10 +63,6 @@
 
 ## 还欠着的
 
-- **#3**（0:03.6，[跳过去](https://youtu.be/AiBTDJd_ekQ?t=297)）`The crazy Yes.` 语法不成立——`The crazy` 疑似从下一句 `The crazy thing is` 串过来的重影，实际大概只是 `Yes!`。#4 `round of applause.` 前面多半还漏了 `Give her a`
-- **#9**（0:20.8，[跳过去](https://youtu.be/AiBTDJd_ekQ?t=314)）`What` 是误识；且 `I know, it's nuts` 疑似伊埃拉插话——**说话人归属存疑**，中文现在按她说处理，错了的话中英都要改
-- **#22**（0:48.2，[跳过去](https://youtu.be/AiBTDJd_ekQ?t=342)）`What you are learning along the way?` 应是 `What are you learning`
-- **#25**（0:56.0，[跳过去](https://youtu.be/AiBTDJd_ekQ?t=349)）`about yourselves` 应是 `yourself`（问的是她一个人）
-- **#40**（1:38.3，[跳过去](https://youtu.be/AiBTDJd_ekQ?t=392)）`You're all very excited` 疑似 `We're all`。中文「大家都很期待」两种都成立，所以这处**只错英文不错中文**
+（无）
 
 听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`（值写一句为什么），别默默留着——**一个常年挂着的待办和没有待办长得一模一样**。
