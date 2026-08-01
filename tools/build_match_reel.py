@@ -1272,6 +1272,10 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
 #: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
 #: 把锦织圭的发梢切平了一条，isnet 保住了。
 CUT_MODEL = "isnet-general-use"
+#: 抠出来的东西至少要占裁切框这么大，否则当成「没抠到人」。
+#: 6% 是从已知好素材倒推的：官方半身抠图占 65%，本场人物近景同一量级，
+#: 而抠到一条球拍残影只有百分之几——两者隔着一个数量级，门槛落在中间。
+CUT_MIN_SHARE = 0.06
 
 
 def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
@@ -1322,9 +1326,29 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
             raise ReelError(
                 f"VS {tag} 抠出来是空的：{panel['frame_at']}s 那一帧里没找到人。"
                 "换一帧，或者用 tools/pick_cover_frames.py 重挑。")
+        # **「抠出来是空的」有两种，`getbbox()` 只拦得住一种。** 完全透明它拦得住；
+        # 抠到一条球拍残影、一道边线，bbox 非空，于是**一路绿到底**——render
+        # success、`check_reel_landed` 0 项不合格、海报上人没了。2026-08-01 黄泽林
+        # 那张就是这么出去的（138.14s 那一帧，左格只剩背景和一道白线）。
+        # 又一次「兜底出事的时候不吭声」。
+        #
+        # 判据用**不透明像素占裁切框的比例**：人物近景是一大块，残影是一条线。
+        # 门槛 6% 是从已知好素材倒推的——官方半身抠图 65%，本场近景同一量级，
+        # 中间隔着一个数量级。比例照常打进日志，这样下次调门槛有数可依
+        # （「检查工具要把不合格的也列出来」）。
+        alpha = cut.getchannel("A")
+        opaque = sum(n for v, n in zip(range(256), alpha.histogram()) if v > 16)
+        share = opaque / float(im.size[0] * im.size[1])
+        if share < CUT_MIN_SHARE:
+            raise ReelError(
+                f"VS {tag} 抠出来只有裁切框的 {share:.1%}（要 ≥{CUT_MIN_SHARE:.0%}）"
+                f"——{panel['frame_at']}s 那一帧多半抠到了球拍或边线，不是人。\n"
+                "换一帧（挑**头部和背后背景对比强**的那种），或者退回官方抠图："
+                'top/bottom 写 {"cutout": "assets/players/<...>.png"}。')
         cut = cut.crop(bbox)
         cut.save(out)
-    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}")
+    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}"
+          f"，占裁切框 {share:.1%}")
     raw.unlink(missing_ok=True)
     return str(out)
 
