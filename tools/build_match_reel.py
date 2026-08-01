@@ -319,6 +319,67 @@ def _has_audio(path: Path) -> bool:
     return bool(out.strip())
 
 
+# 峰值低于这个数就当成「没有现场声」。真实的比赛音轨峰值贴近 0 dBFS，
+# 数字静音是 −91；−60 落在两者中间很远的地方，不会误伤录得轻的源片。
+SILENT_PEAK_DB = -60.0
+
+
+def audio_peak_db(path: Path) -> float | None:
+    """源片音轨的峰值响度（dBFS）。**没有音频流返回 None。**
+
+    `_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」——而这两件事
+    在日志上、在 ffprobe 里、在成片的码率上完全一样。wong-brooksby 就栽在这儿：
+    spec 的 `_source` 白纸黑字写着「带原声」，成片里**没有旁白的段落全是数字
+    静音**（按 3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子
+    0/23~0/39），整套 `sidechaincompress` 闪避对它是空转。
+
+    这和 1051 行那条注释记的坑是**同一个形状**——「补位的静音盖住真音轨」，
+    只是这次补位的不是我们，是源片自己。所以判据要量**信号**，不是量**流**。
+
+    124 秒的片子实测 0.81 秒（只解音频），值这个钱。
+    """
+    if not _has_audio(path):
+        return None
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn",
+              "-af", "volumedetect", "-f", "null", os.devnull).stderr
+    found = re.search(r"max_volume:\s*(-?[\d.]+) dB", out)
+    # 量不出来**不能当成静音**（那会把一个探测失败变成一次硬报错），
+    # 但也不能当成正常——返回 None 走「没有音轨」那条路，它自己会出声。
+    return float(found.group(1)) if found else None
+
+
+def require_live_sound(source: Path, spec: dict) -> float | None:
+    """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
+
+    照 `mixed_fps` 那套做**显式认领**。一律放行等于继续出哑片；一律拒绝会把
+    纯视频轨的源片整个挡在门外（网盘那份常常只有视频轨）。认领这一步是让这个
+    取舍**留下判据**，而不是让它悄悄发生。
+
+    原来这两条分支**一句 print 都没有**，于是「源片是哑的」和「源片正常」在
+    日志上完全一样——wong-brooksby 那条整片没有现场声的片子就是这么发出去的。
+    """
+    peak = audio_peak_db(source)
+    if peak is None:
+        print(f"[原声] {source.name} 没有可用音频流")
+    else:
+        print(f"[原声] {source.name} 音轨峰值 {peak:.1f} dBFS")
+    if peak is None or peak < SILENT_PEAK_DB:
+        claimed = str(spec.get("silent_source", "")).strip()
+        if not claimed:
+            raise ReelError(
+                f"{source.name} 没有可用的现场声"
+                + ("（没有音频流）" if peak is None
+                   else f"（峰值 {peak:.1f} dBFS，低于 {SILENT_PEAK_DB:g}，"
+                        "整条轨是数字静音）") + "。\n"
+                "整片会只剩解说，球声和观众声全没有，而闪避那一套会空转。\n"
+                "三条出路：① spec 里写 `source_audio` 指一份单独的音轨合上；"
+                "② 换一个带声音的源片；"
+                "③ 确实只能这样，就在 spec 顶层写 "
+                '`"silent_source": "为什么可以"` 认领下来。')
+        print(f"[原声] 认领哑源片：{claimed}")
+    return peak
+
+
 def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
     """在源片里取**最大的 3:4 窗口**，太小的源片直接拒掉。
 
@@ -1629,6 +1690,17 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                     "-c:a", "aac", "-b:a", "192k", "-shortest", str(merged))
         print(f"[audio] 合上原声 {audio}")
         source = merged
+
+    # **量信号，不量流。** `_has_audio` 只查音频流存不存在，而 wong-brooksby
+    # 的源片**有流、有码率、就是没声音**：成片里没有旁白的段落全是数字静音
+    # （3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子 0/23~0/39），
+    # 而 spec 的 `_source` 写着「带原声」。整套闪避对它是空转，**两条分支都
+    # 不打印**，于是「源片是哑的」和「源片正常」在日志上一模一样。
+    #
+    # 照 `mixed_fps` 那套做**显式认领**：量出来是哑的就报错并给出路，
+    # spec 里写 `silent_source: "为什么可以"` 才放行。一律放行等于继续出哑片，
+    # 一律拒绝会把纯视频轨的源片整个挡在门外——认领这一步是让这个取舍留下判据。
+    require_live_sound(source, spec)
 
     source_w, source_h = probe_size(source)
 

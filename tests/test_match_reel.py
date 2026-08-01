@@ -1923,6 +1923,70 @@ def test_快速预览的开关要在工作流里够得着():
         assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
 
 
+def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
+    """`_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」。
+
+    wong-brooksby 就栽在这儿：spec 的 `_source` 白纸黑字写着「带原声」，而成片
+    里**没有旁白的段落全是数字静音**——按 3 秒一格采样，29 个窗里 12 个低于
+    −70 dB，其余八条片子是 0/23~0/39。整套 `sidechaincompress` 闪避对它空转，
+    **而两条分支都不打印**，「源片是哑的」和「源片正常」在日志上一模一样。
+
+    这和「补位的静音盖住真音轨」是同一个形状，只是这次补位的不是我们，
+    是源片自己。所以判据要量**信号**，不是量**流**——而且必须**真造两个文件
+    量一遍**：`_has_audio` 对哑轨返回的是 True，查源码是查不出这个差别的。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    loud, silent, mute = (tmp_path / n for n in
+                          ("loud.mp4", "silent.mp4", "mute.mp4"))
+    common = ("-f", "lavfi", "-i", "testsrc2=size=160x120:rate=25:duration=3")
+    _ff(*common, "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-shortest", str(loud))
+    # **有音频流，但整条是数字静音**——就是 wong-brooksby 那一种
+    _ff(*common, "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-t", "3", str(silent))
+    _ff(*common, "-c:v", "libx264", "-preset", "ultrafast", "-an", str(mute))
+
+    # ① `_has_audio` 分不出前两个——这正是为什么要另量一次
+    assert reel._has_audio(loud) and reel._has_audio(silent), (
+        "造出来的样本不对：两个都该有音频流")
+    assert not reel._has_audio(mute)
+
+    # ② 量信号就分得出
+    peak = reel.audio_peak_db(loud)
+    assert peak is not None and peak > reel.SILENT_PEAK_DB, f"有声的量成 {peak}"
+    quiet = reel.audio_peak_db(silent)
+    assert quiet is not None and quiet < reel.SILENT_PEAK_DB, (
+        f"数字静音量成 {quiet} dBFS，没落在门槛下面")
+    assert reel.audio_peak_db(mute) is None, "没有音频流该返回 None"
+
+    # ③ 门槛要留够余量：真实比赛音轨峰值贴近 0，别把录得轻的源片误伤
+    assert reel.SILENT_PEAK_DB <= -40, "门槛太靠近正常音量了，会误伤"
+
+    # ④ 闸本身：哑的要报错并**说出路**，认领过的放行，有声的一路畅通
+    import pytest  # noqa: PLC0415
+
+    reel.require_live_sound(loud, {})  # 有声：不该拦
+    for bad in (silent, mute):
+        with pytest.raises(reel.ReelError) as caught:
+            reel.require_live_sound(bad, {})
+        # **报错要说出路，不能只说不行**
+        for way in ("source_audio", "silent_source", "换一个带声音的源片"):
+            assert way in str(caught.value), f"报错没给出路 {way}：{caught.value}"
+        reel.require_live_sound(bad, {"silent_source": "屏录，本来就没有声道"})
+
+
 def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
     """`if:` 里不含状态函数时，GitHub 会**隐式和上 `success()`**。
 
