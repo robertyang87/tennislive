@@ -44,6 +44,8 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
   「源说了什么」，谁也不管「源什么都没说」。伊埃拉那条就这么漏了 3.2 秒：主持人
   把话筒交给她谢菲律宾球迷，她开口了，而 YouTube 的自动字幕在那一段**一个事件
   都没有**——于是成片上那 3.2 秒是空白，还通过了全部校验。见 `caption_gaps`。
+  ⚠️ **机器只把空档找出来，不判断它是什么**：没人说话、掌声、还是球员换了母语，
+  `small.en` 一律给空白，分不出来。那一档明说出来交给人，别再加模型去猜。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -189,10 +191,12 @@ def caption_gaps(spec: dict, workdir: Path) -> list[tuple[float, float]]:
 
     伊埃拉那条实测：431.64→434.88 三秒二，主持人刚说完「话筒交给你」，
     她接过话筒对着看台上举菲律宾国旗的球迷开口——**成片上那三秒二是空白**。
-    自动字幕在那一段连 `[applause]` 都没有，多半是她换成了菲律宾语／他加禄语，
-    而英文 ASR 对着非英语只会给出空白。
+    自动字幕在那一段连 `[applause]` 都没有。
 
-    返回的空档要在 spec 的 `caption_gaps_ok` 里逐个销账才许出片。
+    **这一步只负责把空档找出来，不负责判断它是什么。** 找出来是机器的事
+    （判据摆得出来：源在这几秒里一个事件都没有），判断得人听——没人说话、
+    掌声、或者球员换了母语，机器分不出来。返回的空档要在 spec 的
+    `caption_gaps_ok` 里逐个销账才许出片。
     """
     spans = _caption_spans(workdir)
     lo, hi = spec["start"], spec["end"]
@@ -628,7 +632,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     print(f"转写分歧 {rate:.1%} → {path}")
     # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
     # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
-    probe_gap_speech(spec, caption_gaps(spec, outdir), audio, mine, outdir)
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
         raise SystemExit(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
@@ -636,55 +640,43 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     return path
 
 
-# 探空档用**多语种**模型。主校验那份钉死 `small.en`（英语专用），它对着
-# 他加禄语只会给出空白或胡话——而那正是空档最可能的成因，用它探等于自问自答。
-GAP_WHISPER_MODEL = "small"
-# 切音频时两头各多留一点，免得把第一个和最后一个音节切掉。
-GAP_PAD_SECS = 0.4
-
-
-def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]], audio: Path,
+def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
                      en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
-    """把每个空档单独切出来再听一次，回答「这几秒到底有没有人说话」。
+    """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
 
-    两个源各答一半，都要报：
+    用的是 `verify_transcript` **已经跑完的那一份**（`small.en`，带词时间戳），
+    不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在那份结果里。
 
-    - **英语那份**（`verify_transcript` 已经跑完的 `small.en`）落在这个窗口里的词。
-      有词 → YouTube 漏了，而且漏的是英语；没有 → 要么真没人说话，要么不是英语。
-    - **多语种那份**（`GAP_WHISPER_MODEL`）对着切出来的那几秒重听，连
-      **它判定的语种**一起报出来。伊埃拉那条的空档多半是菲律宾语／他加禄语，
-      只有这一份答得了。
+    两种结果的含义**不一样，报告里必须分开写**：
 
-    ⚠️ 报告要**两种情况都出声**：听出话来要说，什么都没听出来也要说，并把
-    语种和置信度写上。只在「发现漏词」时出声的检查，没法证明它真的听过。
+    - **有词** → YouTube 漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 是英语专用模型，
+      对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
+      （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
+      **长得一模一样**，机器分不出来——所以这一档一律交给人听，
+      结论写进 `caption_gaps_ok`。
+
+    ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
+    它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
     """
     if not gaps:
         print("自动字幕没有空档。")
         return None
-    from faster_whisper import WhisperModel  # noqa: PLC0415
-
-    model = WhisperModel(spec.get("gap_whisper_model", GAP_WHISPER_MODEL),
-                         compute_type="int8")
     clip0 = spec["start"]
     report = [f"# 自动字幕的空档：{spec['slug']}", "",
-              f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", ""]
+              f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
+              "第二份 ASR 是 `small.en`（英语专用）。**它什么都没听出来，"
+              "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
+              "分不出来，得人去听。", ""]
     for a, b in gaps:
-        cut = outdir / f"_gap_{a:.0f}.wav"
-        subprocess.run(
-            ["ffmpeg", "-v", "error", "-y", "-ss", f"{max(a - GAP_PAD_SECS, 0):.2f}",
-             "-t", f"{b - a + 2 * GAP_PAD_SECS:.2f}", "-i", str(audio),
-             "-ac", "1", "-ar", "16000", str(cut)], check=True)
-        segs, info = model.transcribe(str(cut), vad_filter=False)
-        heard = " ".join(s.text.strip() for s in segs).strip()
-        cut.unlink(missing_ok=True)
         en_here = [w for t, w in en_words if a <= t <= b]
         report += [
             f"## {a - clip0:.1f}–{b - clip0:.1f} 秒（片内，{b - a:.1f} 秒；"
             f"源片 {_yt_at(spec['url'], a)}）", "",
             f"- 键：`{gap_key(a, b)}`",
-            f"- 英语 ASR（small.en）：{' '.join(en_here) if en_here else '**什么都没有**'}",
-            f"- 多语种重听：{('`' + heard + '`') if heard else '**什么都没有**'}"
-            f"　语种 `{info.language}`（{info.language_probability:.0%}）",
+            f"- 第二份 ASR（small.en）："
+            + (f"`{' '.join(en_here)}`　→ **YouTube 漏了英语，补进 `en_fixed`**"
+               if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
             f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
             ""]
     path = outdir / "caption_gaps.md"

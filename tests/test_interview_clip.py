@@ -376,6 +376,53 @@ def test_核对表把空档单独列一节(tmp_path):
     assert "**还没销账**" not in body and "全场欢呼" in body
 
 
+def test_探空档不许再加一个多语种模型():
+    """账号所有者定的：**不要多语种。**
+
+    机器分不出「没人说话」和「不是英语」——`small.en` 两种情况都给空白。
+    再加一个大模型也只是把一个需要人复核的空白换成一个需要人复核的猜测，
+    却要多下几百 MB、每趟多跑一遍。
+
+    这条**拦的不是手滑**，是下一次有人重新论证「多语种模型能听出来」。
+    源码文本断言在这儿是对的用法：它防的是「这条规矩别被删掉」，
+    不是「这个功能能跑」（后者由下面那条行为测试管）。
+    """
+    import inspect
+
+    from tools.build_interview_clip import probe_gap_speech
+
+    src = inspect.getsource(probe_gap_speech)
+    assert "WhisperModel" not in src, "探空档又去加载模型了——不要多语种"
+    assert "subprocess" not in src, "探空档又去切音频了——它只该摊已经跑完的那份结果"
+
+
+def test_探空档两种结果都要出声(tmp_path, capsys):
+    """**「没听出来」不等于「没有」，报告里必须分开写。**
+
+    这是这一整条线上最贵的那个混淆：`small.en` 对着非英语给空白，和
+    「这几秒真没人说话」长得一模一样。报告要是只写一句「无」，
+    下一个人读到的就是「确认过了，没人说话」——而那正是漏掉的那 3.2 秒。
+    """
+    from tools.build_interview_clip import probe_gap_speech
+
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 20.0}
+    gaps = [(3.0, 6.0), (10.0, 13.0)]
+    words = [(4.0, "thank"), (4.4, "you"), (4.8, "everyone")]
+    body = probe_gap_speech(spec, gaps, words, tmp_path).read_text(encoding="utf-8")
+    assert "thank you everyone" in body and "en_fixed" in body
+    assert "**什么都没有**" in body
+    # 空白那一档必须把两种可能都摆出来，不能只写「无」
+    assert "没人说话" in body and "不是英语" in body
+
+
+def test_没有空档的时候也要出声(capsys, tmp_path):
+    """只在发现问题时出声的检查，没法证明它真的看过。"""
+    from tools.build_interview_clip import probe_gap_speech
+
+    assert probe_gap_speech({"slug": "t", "start": 0.0}, [], [], tmp_path) is None
+    assert "没有空档" in capsys.readouterr().out
+
+
 def test_真实那条片子只报出该报的那一处():
     """**拿存量验一遍**，别只用合成数据——合成数据验的是「实现符合我的假设」。
 
