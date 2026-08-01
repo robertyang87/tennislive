@@ -21,8 +21,11 @@ from pathlib import Path
 import pytest
 
 from tools.build_interview_clip import (
+    CAPTION_GAP_SECS,
     ROOT,
+    caption_gaps,
     check_human_quote,
+    gap_key,
     review_sheet,
     segment,
     zh_problems,
@@ -31,9 +34,11 @@ from tools.build_interview_clip import (
     _SENT_END,
     _FILLER,
     _bare,
+    _caption_spans,
     _en_width,
     _norm_en,
     _quote_span,
+    _unresolved_gaps,
     _unresolved_suspects,
     _yt_at,
 )
@@ -273,6 +278,119 @@ def test_核对表把还欠着的单独列出来(tmp_path):
     assert "**#2**" in body and "这句听着不对" in body
 
 
+# ------------------------------------------------------- 自动字幕的空档
+
+def _cap(tmp_path: Path, events: list[tuple[float, float, str]]) -> Path:
+    """写一份 json3，`events` 是 (起, 止, 文本)。"""
+    (tmp_path / "cap_x.json3").write_text(json.dumps({"events": [
+        {"tStartMs": int(a * 1000), "dDurationMs": int((b - a) * 1000),
+         "segs": [{"utf8": t}]} for a, b, t in events]}), encoding="utf-8")
+    return tmp_path
+
+
+def test_源什么都没说的那几秒要被认出来(tmp_path):
+    """**这是伊埃拉那条漏掉的 3.2 秒。**
+
+    两道旧闸都拦不住它：`verify_transcript` 比的是两份 ASR 的词对不对得上，
+    `check_human_quote` 比的是战报抄走的那几句——**没有词就没有分歧**，
+    空白反而让分歧率更好看。所以要单独查「源什么都没说」。
+    """
+    _cap(tmp_path, [(0.0, 5.0, "hello there"), (8.4, 12.0, "and we are back")])
+    spec = {"start": 0.0, "end": 12.0}
+    assert caption_gaps(spec, tmp_path) == [(5.0, 8.4)]
+
+
+def test_掌声不算空档(tmp_path):
+    """`[applause]` / `[cheering]` 是**源自己出的声**：「我听见了，只是不是人话」。
+
+    切行时 `_NOISE` 把它们丢掉是对的（那不是台词），但在空档这条判据里
+    它们必须算数——否则每一次鼓掌都会被报成漏词，而**一个天天误报的检查
+    等于没有检查**，下一个人就会开始无脑销账。
+
+    数是真的：伊埃拉那条 302.67→304.58 那 1.9 秒两头正好夹着 `[cheering]`
+    和 `[applause]`。
+    """
+    _cap(tmp_path, [(0.0, 5.0, "thank you"), (5.0, 9.0, "[cheering]"),
+                    (9.0, 12.0, "[applause]"), (12.0, 15.0, "okay")])
+    assert caption_gaps({"start": 0.0, "end": 15.0}, tmp_path) == []
+
+
+def test_空档只看采访区间里的(tmp_path):
+    """集锦前面那十几分钟是打球，没有台词很正常——报出来只是噪音。"""
+    _cap(tmp_path, [(0.0, 2.0, "match point"), (100.0, 104.0, "congratulations"),
+                    (110.0, 114.0, "thank you")])
+    assert caption_gaps({"start": 99.0, "end": 114.0}, tmp_path) == [(104.0, 110.0)]
+
+
+def test_短过阈值的抖动不报(tmp_path):
+    """事件之间零点几秒的缝是编码抖动，不是漏。阈值是从真实分布量出来的。"""
+    _cap(tmp_path, [(0.0, 5.0, "a"), (5.0 + CAPTION_GAP_SECS - 0.1, 9.0, "b")])
+    assert caption_gaps({"start": 0.0, "end": 9.0}, tmp_path) == []
+    _cap(tmp_path, [(0.0, 5.0, "a"), (5.0 + CAPTION_GAP_SECS + 0.1, 9.0, "b")])
+    assert len(caption_gaps({"start": 0.0, "end": 9.0}, tmp_path)) == 1
+
+
+def test_重叠的滚动字幕要先合并(tmp_path):
+    """YouTube 的自动字幕是**滚动窗口**，事件互相重叠、起点不单调。
+
+    不合并就会把「上一条还没结束、下一条已经开始」算成负空档，或者更糟——
+    按事件顺序两两相减，中间夹一条长事件时算出一个凭空的大空档。
+    """
+    _cap(tmp_path, [(0.0, 6.0, "one two three"), (2.0, 8.0, "three four five"),
+                    (4.0, 10.0, "five six seven")])
+    assert _caption_spans(tmp_path) == [[0.0, 10.0]]
+    assert caption_gaps({"start": 0.0, "end": 10.0}, tmp_path) == []
+
+
+def test_空档要销账才放行():
+    """和 `suspect` 同一个形状：**结论必须留在 spec 里**，不能靠人记得。
+
+    ⚠️ 销账的意思是「人听过并作出了决定」，**不是「这里没问题」**——伊埃拉
+    那条销账的值写的就是「真漏了」。把一个已知的洞抹平比留着它更糟。
+    """
+    gaps = [(431.6, 434.9), (12.0, 15.0)]
+    assert _unresolved_gaps({}, gaps) == gaps
+    spec = {"caption_gaps_ok": {"431.6-434.9": "真漏了，她在说菲律宾语"}}
+    assert _unresolved_gaps(spec, gaps) == [(12.0, 15.0)]
+
+
+def test_空档的键按秒写不按序号():
+    """按序号写的话，前面多出一个空档就全体错位，**销的账会落到别的空档上**——
+    而且它不吭声：数量对得上，内容全串了。"""
+    assert gap_key(431.64, 434.88) == "431.6-434.9"
+    assert gap_key(5.0, 8.4) == "5.0-8.4"
+
+
+def test_核对表把空档单独列一节(tmp_path):
+    """逐行那张表走的是「源说了什么」，**走不到「源什么都没说」的地方**——
+    那几秒在表里根本不占一行，翻一百遍也看不见。所以要单独列。"""
+    _cap(tmp_path, [(0.0, 3.0, "one"), (9.0, 12.0, "two")])
+    lines = _lines(["one", "two"])
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 12.0,
+            "zh": ["一", "二"]}
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    assert "## 自动字幕的空档" in body
+    assert "**还没销账**" in body and "3.0–9.0 秒" in body
+    spec["caption_gaps_ok"] = {"3.0-9.0": "听过了：全场欢呼，没人说话"}
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    assert "**还没销账**" not in body and "全场欢呼" in body
+
+
+def test_真实那条片子只报出该报的那一处():
+    """**拿存量验一遍**，别只用合成数据——合成数据验的是「实现符合我的假设」。
+
+    伊埃拉那条的缓存字幕就在仓库里。整段 146 秒里只有一处空档，就是她对
+    菲律宾球迷说话的那 3.2 秒；1.9 秒那个掌声空档不许被报出来。
+    """
+    spec_path = SPECS / "eala-svitolina-dc2026-qf.json"
+    outdir = ROOT / "output" / "interviews" / "eala-svitolina-dc2026-qf"
+    if not spec_path.exists() or not list(outdir.glob("cap_*.json3")):
+        pytest.skip("这条片子的缓存字幕不在（sparse checkout）")
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    assert caption_gaps(spec, outdir) == [(431.64, 434.88)]
+    assert _unresolved_gaps(spec, caption_gaps(spec, outdir)) == []
+
+
 # ---------------------------------------------------------------- spec 本身
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -329,6 +447,25 @@ def test_挂账的行号得真的存在(path):
     assert n, f"{path.name} 挂了账却还没有中文，行号无从校验"
     bad = [k for k in keys if not 1 <= int(k) <= n]
     assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_销掉的空档得真的是空档(path):
+    """销账的键也是手写的，写错了同样**不吭声**——它会安静地指不到任何一个
+    空档，而那个真空档仍然敞着，`--stage render` 却已经放行了。
+
+    和上一条同源：**销账要能被验，不然它只是一句「我看过了」。**
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    if not (ok := spec.get("caption_gaps_ok") or {}):
+        pytest.skip("这条 spec 没有销过空档")
+    outdir = ROOT / "output" / "interviews" / spec["slug"]
+    if not list(outdir.glob("cap_*.json3")):
+        pytest.skip("缓存字幕不在，验不了")
+    real = {gap_key(*g) for g in caption_gaps(spec, outdir)}
+    assert not (stale := sorted(set(ok) - real)), (
+        f"{path.name} 销了 {stale}，但现在的字幕里没有这些空档——"
+        "要么键写错了，要么阈值改过。")
 
 
 # ---------------------------------------------------------------- 下载
