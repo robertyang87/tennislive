@@ -2190,3 +2190,29 @@ def test_推送的文案输入不许留上一条片子的默认值():
     gate = "push=true 必须自己填标题，不许吃默认值"
     assert gate in steps, "缺了「两个都空就别发」那道闸"
     assert steps.index(gate) < steps.index("render — 出成片")
+
+
+def test_复制页打不开时消息本身留得住文案():
+    """复制页走 `github.io`，**那条链路沙箱量不到**（这里探是 200，账号所有者
+    在微信里点开是 404）。所以它只能是加分项，不能是文案唯一的出口。
+
+    正文本来就整段内联，问题出在标题——它原来只活在那个按钮后面。现在大标题
+    底下标一行「长按这一行即可复制」：**不另印一遍**（那是「同一段印两遍」
+    那个老毛病），只是把已经在页面上的那一行标成出口。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    title = "8.1 开球之前 | 郑钦文 vs 塔拉鲁迪"
+    body = "第一段正文。\n\n第二段正文。"
+    html = push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
+                                f"{title}\n\n{body}", "", "开球之前")
+
+    # 标题在，而且**只印一遍**——多印一遍就是那个老毛病
+    assert html.count(title) == 1, "标题印了不止一遍"
+    assert "长按" in html.split(title, 1)[1][:200], (
+        "大标题底下没有「长按可复制」那一行——复制页打不开时标题就没有出口了")
+
+    # 正文也要整段在消息里，别只留一个按钮
+    assert "第一段正文。" in html and "第二段正文。" in html
+    assert "长按整段即可复制" in html
