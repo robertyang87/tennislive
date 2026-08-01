@@ -42,6 +42,10 @@ on:
         description: "probe：每几秒抓一帧"
         required: false
         default: "2"
+      scorebox:
+        description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
+        required: false
+        default: ""
       voice:
         description: "render：解说音色"
         required: false
@@ -314,6 +318,7 @@ jobs:
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
             --every "${{ github.event.inputs.every }}" \
+            --scorebox "${{ github.event.inputs.scorebox }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 

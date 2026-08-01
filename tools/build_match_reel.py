@@ -348,6 +348,56 @@ def audio_peak_db(path: Path) -> float | None:
     return float(found.group(1)) if found else None
 
 
+def point_end_candidates(source: Path, scorebox: str) -> list[float]:
+    """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
+
+    `find_point_ends.py` 一直是**零调用方**：它的 `--video` 指的是源片，而源片
+    渲完就被清理那一步删掉，于是想用它得自己另下一份 400 MB。结果是段尾切错
+    只能靠人在 2 秒一格的缩略图墙上看出来，而账号所有者点名过这件事
+    （「很多球没有播放完成就切到下一个了……让人看的不明不白的」）。
+    wong-brooksby 那三处修正每一处都先付了一趟渲染才发现。
+
+    记分条的位置**没法自动认**（每家转播不一样），所以要人给；不给就跳过，
+    **而且要说为什么**——「没量」和「量出来一个都没有」长得一模一样，
+    这正是「空结果先自证是真空」。
+
+    量出来的数**也要打印分布**：检测不到和方法不成立是两回事，只有把数摆出来
+    才分得清（成片那条「找球场对称轴」的教训就是这么来的）。
+    """
+    if not str(scorebox).strip():
+        print("[死球] 没给 --scorebox（记分条位置每家转播不一样，认不出来），"
+              "这一项跳过。段尾就只能靠缩略图墙用眼睛定。")
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        import find_point_ends as fpe  # noqa: PLC0415
+    except ImportError as exc:  # pragma: no cover - 依赖缺失才会走到
+        print(f"[死球] 取不到 find_point_ends（{exc}），跳过")
+        return []
+    try:
+        box = tuple(int(v) for v in str(scorebox).split(","))
+        if len(box) != 4:
+            raise ValueError(box)
+    except ValueError:
+        raise ReelError(
+            f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
+    with stage("量死球"):
+        rows = fpe.scan(source, box, 0.1)
+        ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
+    print(f"[死球] 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次")
+    if ends:
+        print("  " + " ".join(f"{t:.1f}" for t in ends[:40])
+              + (" …" if len(ends) > 40 else ""))
+    else:
+        # 零命中要能自证：把量到的分布打出来，别让「门槛卡错」和「真的没有」
+        # 长得一样。
+        moved = sorted((r["moved"] for r in rows), reverse=True)[:5]
+        print(f"  一个都没有。门槛 change={fpe.CHANGE} dark={fpe.DARK_SHARE}，"
+              f"实测 moved 最大的几个：{moved}"
+              "——要是这些数都远低于门槛，多半是 box 框错了，不是没有死球")
+    return [round(t, 2) for t in ends]
+
+
 def require_live_sound(source: Path, spec: dict) -> float | None:
     """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
 
@@ -1952,6 +2002,9 @@ def main() -> int:
     p.add_argument("--url", required=True)
     p.add_argument("--outdir", required=True)
     p.add_argument("--every", type=float, default=2.0)
+    p.add_argument("--scorebox", default="",
+                   help="记分条位置 x0,y0,x1,y1（源片像素）。给了就顺手量一遍"
+                        "死球时刻写进 probe.json——趁源片还在，渲完就删了")
 
     r = sub.add_parser("render", help="按 spec 出成片")
     r.add_argument("--spec", required=True)
@@ -1981,10 +2034,20 @@ def main() -> int:
         print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点")
         sheets = contact_sheet(source, outdir, every=args.every)
         captions = fetch_captions(args.url, outdir)
+        # **死球时刻要在源片还在的时候量。** `find_point_ends.py` 一直没有任何
+        # 调用方，而它的 `--video` 指的是源片——源片渲完就删（清理那一步），
+        # 于是想用它得自己另下一份。结果是段尾切错只能靠人在 2 秒一格的缩略图
+        # 墙上看，wong-brooksby 那三处修正（`128.0→132.7`、`143.0→147.7`、
+        # `173.0` 正好切在赛点那一分中间）每一处都先付了一趟渲染才发现。
+        #
+        # 记分条的位置**没法自动认**（每家转播不一样），所以要人给 `--scorebox`；
+        # 不给就跳过，**而且要说为什么**——「没量」和「量出来是空的」长得一样。
+        ends = point_end_candidates(source, args.scorebox)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
-            "scene_cuts": cuts, "sheets": [s.name for s in sheets],
+            "scene_cuts": cuts, "point_ends": ends,
+            "sheets": [s.name for s in sheets],
             "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         print("缩略图墙:", ", ".join(s.name for s in sheets))
