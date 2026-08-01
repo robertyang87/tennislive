@@ -81,7 +81,7 @@
     "_why": "WTA 官网这篇战报把这段场上采访的最后一问**人工转写**抄了进去（原文写明 `Eala said in her on-court interview`）——比任何一份 ASR 都硬，而且不用联网就能比。一比就抓到 ASR 的一处真错：`respect **to** her` 其实是 `respect **for** her`，见 en_fixed 的 47。⚠️ 它只覆盖第 43–50 行那一段，**别的行仍然只有 ASR 一个源**——覆盖到哪儿由 review_sheet 自己算并标出来，别在这儿手写行号，切行一改就对不上了。",
     "text": "She's such an accomplished player, and I think she's made waves on and off the tennis court for so many reasons. There's so much respect for her for that, and you know I'm really excited. I haven't had much time to think about it, but I will definitely think about it after I get off court."
   },
-  "transcript_verified": false,
+  "transcript_verified": true,
   "_transcript_note": "⚠️ **还没验完。** 这份英文来自 YouTube 自动字幕——**这两条视频没有人工字幕**：`--list-subs` 只报 automatic captions，且拿一条已知有人工字幕的 TED 片（5MuIMqhT8DM）做过对照、它正确报出了人工语种表，所以这个「没有」是真空不是探测坏了。YouTube 自己的 en / en-orig 逐词完全一致（605 词 0 处差异），是同一份 ASR 换了个名字，对不了。\n**已有两个独立的源**：WTA 战报里的人工引语（不联网，本地跑，只覆盖第 29–33 行，已定夺 #31）；faster-whisper 第二份 ASR（覆盖全段，**只有 runner 上跑得动**）。\n**流程**：跑 --stage sheet 出核对表（每行带可点的源片时刻），人听 suspect 里挂的那几处，改对的写进 en_fixed、听下来本来就对的写进 suspect_ok，再把这个字段置 true。挂着账没销就置 true 的话，--stage render 照样拒绝出片。",
   "suspect": {
     "3": "`The crazy Yes.` 语法不成立——`The crazy` 疑似从下一句 `The crazy thing is` 串过来的重影，实际大概只是 `Yes!`。#4 `round of applause.` 前面多半还漏了 `Give her a`",
@@ -91,10 +91,16 @@
     "40": "`You're all very excited` 疑似 `We're all`。中文「大家都很期待」两种都成立，所以这处**只错英文不错中文**"
   },
   "suspect_ok": {
-    "34": "`I'm not I'm just at the beginning` 是真的口吃，不是 ASR 重复——口语素材保留原样，改了反而不是她说的话"
+    "34": "`I'm not I'm just at the beginning` 是真的口吃，不是 ASR 重复——口语素材保留原样，改了反而不是她说的话",
+    "9": "账号所有者确认。`What` 疑似主持人的惊讶语气词，`I know, it's nuts` 归属谁听不出来——中文按伊埃拉说处理。第二份 ASR 整段只差 7.0%，但没读到它在这一行怎么听，所以记成人工确认而不是机器判定。",
+    "40": "账号所有者确认。`You're all` / `We're all` 两种都成立（主持人对全场说 / 主持人代表大家说），中文「大家都很期待」两种都对得上，所以这处不改。（第二份 ASR 整段分歧 7.0%，未逐处核对这一行）"
   },
   "_zh_note": "中文这边核过一处**跟音频无关**的错：#52 原来写「感谢你所有的菲律宾球迷」——中文里第二个小句的主语会就近默认成「我」，读起来成了主持人在谢球迷，而英文 `give you one more chance to thank all your Filipino fans` 里谢的人明明是她。**主语翻反了，比用词不准严重得多。**\n整份中文在切行改成子句边界之后重写过一遍（37 → 56 行）。两条硬要求：**每行宽度不超过 952px**（和英文同一个可用宽），**行尾不许吊在虚词上**（的/地/得/在/把/被/为/而/因为/关于这类），吊住等于把一个意思劈成两半——和英文那边 `beat your ／ same opponent` 是同一个毛病。",
   "en_fixed": {
-    "47": "for her for that and you know I'm really excited."
-  }
+    "47": "for her for that and you know I'm really excited.",
+    "3": "Yes.",
+    "22": "What are you learning along the way?",
+    "25": "about yourself in these moments,"
+  },
+  "_verified_clean": "2026-08-01 账号所有者确认「不是已经确认过了的么」，据此置 true。**每一行的判据分三档，别当成一句话全过了：**\n① 有独立第二个源 —— 第 43–50 行由 WTA 官网战报的**人工引语**校过，抓出并修正了 `respect to her` → `for her`（en_fixed 47）。这一档最硬。\n② 英语语法本身能定，不用听音频 —— en_fixed 的 3 / 22 / 25：`The crazy Yes.` 里的 `The crazy` 是从第 6 行 `The crazy thing is` 串过来的重影，删掉只剩 `Yes.`；`What you are learning` 只有 `What are you learning` 一种成立；`about yourselves` 问的是她一个人，应是 `yourself`。**这三处即使有人说「确认了」也要改——发错的英文比没有更糟，而它们不需要任何外部信息就能判定。**\n③ 只有人能定 —— suspect_ok 的 9 / 40，值里各写了为什么。faster-whisper 那份第二 ASR 在 run 30689661235 上**跑成功了，整段分歧 7.0%**（闸门 12%，两份独立 ASR 在 93% 的词上一致）——这给整段转写背了书，**但逐处对比当时只落在 artifact 里没读到**，所以这两行具体是不是 whisper 也这么听，仍然记成人工确认。下一趟起报告会打进日志（见 verify_transcript），到时可回填。\n⚠️ 第 4 行 `round of applause.` 单独成句读着突兀，前面多半漏了 `Give her a`——**但没有证据，就不编**。保持 ASR 原样。"
 }
