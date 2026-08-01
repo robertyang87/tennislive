@@ -1732,6 +1732,105 @@ TNNS 和 Sportradar 够不着（见工具文档）。
 全部静默失效，成片直接是 16:9。**它不报错**，只是不生效，跟「补位的静音盖住
 真音轨」是同一种毛病：**兜底和默认值出事的时候不吭声**。
 
+#### 「三处」里，每个工作流各算一处
+
+2026-08-01 又栽了：字幕切行改成量真实字宽之后要 `fonts-noto-core`，我加进了
+`interview-clip.yml`，**忘了 `ci.yml`**——本地全绿、CI 四条红。判据收在
+`test_ci装的字体覆盖代码要的每一个`：**不查「装了哪几个包」，查
+「代码点名要的每一个包都在」**，以后往 `_FONT_FILES` 里加字体它会替你记得。
+
+同一天第三次：pip 行只装了三个第三方包，**没装项目自己**（`-e .`），
+而工具 import `PIL` 和 `tennislive.render.webcards`（后者拖着
+requests / rich / pypdf），跑到预检报 `No module named 'PIL'`。
+判据换成**按 import 对账**（`test_工作流装的依赖覆盖工具import的每一个`）：
+那张对照表必须盖住全部，新加一个第三方 import 就红。
+
+### 新接一条「只能在 runner 上跑」的线，先搭本地替身，再推第一次
+
+2026-08-01 一条新线（`interview-clip`）连推六趟才出片，五趟死在环境上。
+**这不是运气差，是算术**：`render` 的关键路径要三样沙箱没有的东西——
+YouTube 访问（本机 IP 被挡）、干净的 runner（沙箱什么都装着）、secret。
+于是唯一的验证方式是「推上去看」，而**第一个失败会把后面所有步骤挡住**，
+每趟只暴露一个问题。N 个问题串在一条路上就是 N 趟，一趟五到十分钟。
+
+真正的错是**第四趟才搭本地替身**。搭它一共十分钟，两件事：
+
+```bash
+# ① 干净 venv，照工作流那行原样装（不是在什么都装着的沙箱里试）
+python3 -m venv /tmp/venv && /tmp/venv/bin/pip install -q -e . "yt-dlp[default]" playwright faster-whisper
+PYTHONPATH=src /tmp/venv/bin/python - <<'PY'   # 把预检那段一字不改跑一遍
+...
+PY
+# ② 合成源片，把出片路径整条走完（render 会复用已存在的 source.mp4）
+ffmpeg -f lavfi -i "testsrc2=size=1280x720:rate=25" -f lavfi -i sine -t 450 … source.mp4
+```
+
+**五个问题里四个是本地可查的**，只有「yt-dlp 落成 .mkv」那个真的非 runner
+不可（要看 YouTube 实际给什么编码）。一趟本可以换五趟。
+
+顺带两条方法论：
+
+- **合成源片要等 ffprobe 读得动才算生成完**。我把生成和渲染拆成两个后台任务，
+  文件还没写完就开跑，得到 `moov atom not found`——测试脚本自己的问题，
+  却长得像代码的问题
+- **给账号所有者报进度时，说清「这趟会走到哪一关」**。每趟都比上一趟多过一关，
+  但只说「又失败了」会让人以为在原地打转
+
+### 这台沙箱的两条硬限制，别再重新发现
+
+- **`curl` 到 `api.github.com` 是 403**（`GitHub access is not enabled for
+  this session`），只有 MCP 那条路通。用 curl 写的轮询脚本会**一直空转**，
+  而脚本里那句 `try: json.load(...) except: sys.exit(0)` 把它吞掉——
+  **「API 被挡」和「还在跑」打印出来一模一样**。又是兜底不吭声，只不过这次
+  是自己的监控工具
+- **artifact 下不下来**（同上），所以 runner 上生成的报告**必须同时 print
+  进日志**，别只写文件。`verify_transcript` 的逐处对比就吃过这个亏：
+  跑成功了、artifact 66 MB 躺在那儿，而我看不到它比出了什么，白等一趟
+
+### yt-dlp 的 `-o` 是模板不是保证
+
+`bv*+ba` 合流时，如果最佳的那对不是目标容器装得下的编码（VP9 / Opus 之于
+mp4），yt-dlp 会**自己改后缀**（`.mkv`）并 warn 一句——**而 `--no-warnings`
+把那句吞掉了**。下游 ffmpeg 拿 `source.mp4` 去开，报 ENOENT。
+
+**日志里只有一个退出码 254，但它自己就是判据**：`254 = -2 & 0xff`＝ENOENT。
+同类：`ENOSPC` 是 `-28 & 0xff = 228`。ffmpeg 直接把 AVERROR 当退出码返回，
+所以看见 200 以上的怪数字先按 `256 - n` 反解。
+
+两层保险，都要出声（收在 `yt_download()`）：`--merge-output-format` 让它一律
+remux；真落到别的后缀时**认出来按实际的用**，一个都没有时**把目录里有什么、
+多大列出来**——只说「文件不存在」，下一个人还得自己去翻。
+
+### Chromium 的路径：先问 playwright，它答错了再自己找
+
+**两边都不能单独信**，实测：
+
+| | playwright 自报 | 磁盘上实际是 |
+|---|---|---|
+| 沙箱 | `chromium-1228/chrome-linux64/chrome`（**不存在**） | `chromium-1194/chrome-linux/chrome` |
+| runner | 对的 | 新版是 **`chrome-linux64`**，不是 `chrome-linux` |
+
+原来只按 `chromium*/chrome-linux/chrome` glob，于是 runner 上装好了却报
+「找不到」——**日志上一行还写着 `downloaded to …`**。中间那段改成
+`chromium-*/*/chrome`，新旧目录名都能中。
+
+**顺带一条给检查工具本身的**：预检确实在第 4 秒就炸了，它该干的活干了；
+炸的原因是**检查工具自己写错了**。这不是「预检没用」，是
+**「加检查也要验它真的能通过」**。
+
+### 查工作流的测试要看 `run:` 脚本，不能搜整份 yml 的文本
+
+第一版写成 `assert "-e ." in ci_yml_text`，反向验证时把 `-e .` 从 pip 行
+删掉**照样绿**——因为我在上面的注释里写了「`-e .` 不能漏」，`in` 命中了注释。
+**注释不会被执行。** 这是「断言全绿不等于页面对」的静态版：
+**查的东西和跑的东西不是一回事。**
+
+现在统一走 `_run_scripts()`：YAML 解析出所有 `run:`，去掉 shell 注释行，
+只在那上面搜。同理，`sparse-checkout: |` 那个块**是纯路径列表不是 YAML**，
+里面写 `#` 会原样传给 `git sparse-checkout set`，报
+`fatal: specify directories rather than patterns`，而且**在 checkout 那一步
+就炸，一条测试都跑不到**。
+
 ### 「写了」不等于「跑过」——源码文本断言证明不了这一点
 
 2026-07-31 同一天被咬两次，同一个形状：**一个凭空来的名字**。
