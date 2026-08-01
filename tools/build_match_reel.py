@@ -260,25 +260,40 @@ def _has_audio(path: Path) -> bool:
     return bool(out.strip())
 
 
-def _probe_av_stream_durations(path: Path) -> tuple[float, float]:
-    """Read final video/audio stream durations independently."""
+def _probe_av_stream_timing(path: Path) -> dict[str, float]:
+    """Read coherent start/duration/end metrics for both final streams."""
     raw = run(
         "ffprobe", "-v", "error", "-show_entries",
-        "stream=codec_type,duration", "-of", "json", str(path),
+        "stream=codec_type,start_time,duration", "-of", "json", str(path),
     ).stdout
     streams = json.loads(raw).get("streams") or []
-    durations: dict[str, float] = {}
+    timing: dict[str, float] = {}
     for stream in streams:
         kind = stream.get("codec_type")
+        start = stream.get("start_time")
         duration = stream.get("duration")
-        if kind in {"video", "audio"} and duration not in {None, "N/A"}:
-            durations[kind] = float(duration)
-    missing = sorted({"video", "audio"} - durations.keys())
+        if (kind in {"video", "audio"}
+                and start not in {None, "N/A"}
+                and duration not in {None, "N/A"}):
+            start_number = float(start)
+            duration_number = float(duration)
+            if not math.isfinite(start_number) or not math.isfinite(duration_number):
+                continue
+            timing[f"{kind}_start_seconds"] = start_number
+            timing[f"{kind}_duration_seconds"] = duration_number
+            timing[f"{kind}_end_seconds"] = start_number + duration_number
+    required = {
+        f"{kind}_{field}_seconds"
+        for kind in ("video", "audio")
+        for field in ("start", "duration", "end")
+    }
+    missing = sorted(required - timing.keys())
     if missing:
         raise ReelError(
-            f"最终成片 {path.name} 读不到独立的 {'/'.join(missing)} 时长"
+            f"最终成片 {path.name} 读不到独立的起点、时长和终点："
+            + ", ".join(missing)
         )
-    return durations["video"], durations["audio"]
+    return timing
 
 
 def _audit_final_delivery(final: Path, *, declared_duration: float) -> Path:
@@ -302,14 +317,32 @@ def _audit_final_delivery(final: Path, *, declared_duration: float) -> Path:
     if not isinstance(report.get("joins"), list):
         raise ReelError("audio-qa.json 缺 joins，不能丢掉转场计划只写最终时长")
 
-    video_duration, audio_duration = _probe_av_stream_durations(final)
+    timing = _probe_av_stream_timing(final)
+    video_start = timing["video_start_seconds"]
+    audio_start = timing["audio_start_seconds"]
+    video_duration = timing["video_duration_seconds"]
+    audio_duration = timing["audio_duration_seconds"]
+    video_end = timing["video_end_seconds"]
+    audio_end = timing["audio_end_seconds"]
+    start_delta = abs(video_start - audio_start)
     av_delta = abs(video_duration - audio_duration)
+    end_delta = abs(video_end - audio_end)
     programme_duration = max(video_duration, audio_duration)
     declared_delta = abs(programme_duration - declared_duration)
     problems: list[str] = []
+    if start_delta > FINAL_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"最终 A/V 起点时差 {start_delta:.3f}s > "
+            f"{FINAL_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+    if end_delta > FINAL_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"最终 A/V 终点时差 {end_delta:.3f}s > "
+            f"{FINAL_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
     if av_delta > FINAL_AV_MAX_DELTA_SECONDS:
         problems.append(
-            f"最终 A/V 时差 {av_delta:.3f}s > "
+            f"最终 A/V 时长差 {av_delta:.3f}s > "
             f"{FINAL_AV_MAX_DELTA_SECONDS:.3f}s"
         )
     if declared_delta > FINAL_AV_MAX_DELTA_SECONDS:
@@ -322,9 +355,17 @@ def _audit_final_delivery(final: Path, *, declared_duration: float) -> Path:
         "stage": "final_delivery",
         "status": "fail" if problems else "pass",
         "final_declared_duration_seconds": round(declared_duration, 6),
+        "final_video_start_seconds": round(video_start, 6),
+        "final_audio_start_seconds": round(audio_start, 6),
         "final_video_duration_seconds": round(video_duration, 6),
         "final_audio_duration_seconds": round(audio_duration, 6),
+        "final_video_end_seconds": round(video_end, 6),
+        "final_audio_end_seconds": round(audio_end, 6),
         "final_programme_duration_seconds": round(programme_duration, 6),
+        "av_start_delta_seconds": round(start_delta, 6),
+        "av_duration_delta_seconds": round(av_delta, 6),
+        "av_end_delta_seconds": round(end_delta, 6),
+        # Backward-compatible alias used by older QA consumers.
         "av_delta_seconds": round(av_delta, 6),
         "final_declared_delta_seconds": round(declared_delta, 6),
         "max_av_delta_seconds": FINAL_AV_MAX_DELTA_SECONDS,

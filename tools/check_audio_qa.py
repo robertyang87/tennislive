@@ -16,6 +16,11 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from tennislive.video.audio import (
+    MIN_EFFECTIVE_FADE_SECONDS,
+    NA_AUDIO_EXPECTATIONS,
+)
+
 
 POLICY_VERSION = 1
 MAX_AV_DELTA_SECONDS = 0.05
@@ -27,12 +32,6 @@ JOIN_MODES = {
     "lcut_crossfade",
     "keep",
     "declick",
-}
-NO_AUDIO_REASONS = {"no_audio"}
-AUDIO_NA_REASONS = {
-    "single_continuous_source",
-    "audio_passthrough",
-    "single supplied voiceover has no internal edit boundary",
 }
 
 
@@ -80,8 +79,9 @@ def validate_report(payload: dict[str, Any]) -> None:
         raise AudioQAGateError(
             f"transition_count={transition_count}，但 joins 有 {len(joins)} 条"
         )
-    if _integer(payload.get("hard_cut_count"), "hard_cut_count") != 0:
-        raise AudioQAGateError("交付视频不允许未平滑的硬切")
+    declared_hard_cuts = _integer(
+        payload.get("hard_cut_count"), "hard_cut_count"
+    )
     duration_delta = _number(
         payload.get("duration_delta_seconds"), "duration_delta_seconds"
     )
@@ -92,6 +92,7 @@ def validate_report(payload: dict[str, Any]) -> None:
         )
 
     observed = {mode: 0 for mode in JOIN_MODES}
+    derived_hard_cuts = 0
     boundaries: set[tuple[str, int]] = set()
     for index, row in enumerate(joins):
         if not isinstance(row, dict):
@@ -120,6 +121,28 @@ def validate_report(payload: dict[str, Any]) -> None:
                 raise AudioQAGateError(
                     f"{role} 边界 {boundary} 只能 keep 或至多 30ms de-click"
                 )
+        if mode in {"fade_through_silence", "declick"} and min(
+            fade_out, fade_in
+        ) < MIN_EFFECTIVE_FADE_SECONDS:
+            raise AudioQAGateError(
+                f"joins[{index}] 的 {mode} 两侧淡化都必须至少 "
+                f"{MIN_EFFECTIVE_FADE_SECONDS:.3f}s，不能用零时长或近零时长伪装处理"
+            )
+        if mode == "keep" and row_role not in {"speech", "silence"}:
+            same_continuous_source = (
+                row.get("previous_source") is not None
+                and row.get("previous_source") == row.get("next_source")
+            )
+            if not same_continuous_source:
+                derived_hard_cuts += 1
+
+    if declared_hard_cuts != derived_hard_cuts:
+        raise AudioQAGateError(
+            f"hard_cut_count={declared_hard_cuts}，但 resolved joins 推导为 "
+            f"{derived_hard_cuts}"
+        )
+    if derived_hard_cuts:
+        raise AudioQAGateError("交付视频不允许未平滑的硬切")
 
     count_fields = {
         "lcut_crossfade": "lcut_crossfade_count",
@@ -139,6 +162,10 @@ def validate_report(payload: dict[str, Any]) -> None:
             f"fallback_count={fallback_count}，但 fade_through_silence 有 "
             f"{observed['fade_through_silence']} 条"
         )
+    if fallback_count and not reason.strip():
+        raise AudioQAGateError(
+            "fade_through_silence 是降级路径，必须提供非空 reason"
+        )
 
     layers = payload.get("layers")
     if layers is not None:
@@ -150,8 +177,18 @@ def validate_report(payload: dict[str, Any]) -> None:
             validate_report(layer["audio_qa"])
 
     if status == "not_applicable":
-        if not reason.strip():
-            raise AudioQAGateError("not_applicable 必须说明 reason")
+        if reason not in NA_AUDIO_EXPECTATIONS:
+            rendered = ", ".join(sorted(NA_AUDIO_EXPECTATIONS))
+            raise AudioQAGateError(
+                f"not_applicable reason 必须是受控枚举：{rendered}"
+            )
+        expected_audio = payload.get("expected_audio_stream")
+        required_audio = NA_AUDIO_EXPECTATIONS[reason]
+        if expected_audio != required_audio:
+            raise AudioQAGateError(
+                f"reason={reason} 的 expected_audio_stream 必须是 "
+                f"{required_audio!r}，实为 {expected_audio!r}"
+            )
         if joins or transition_count:
             raise AudioQAGateError("not_applicable 不能同时声明转场")
     elif role in {"music", "ambience", "mixed"} and transition_count:
@@ -189,6 +226,42 @@ def _stream_duration(stream: dict[str, Any]) -> float | None:
     return result if math.isfinite(result) and result >= 0 else None
 
 
+def _stream_start(stream: dict[str, Any]) -> float | None:
+    """Read one stream's real timeline origin, not the container origin."""
+    value = stream.get("start_time")
+    if value not in {None, "N/A"}:
+        try:
+            result = float(value)
+        except (TypeError, ValueError):
+            pass
+        else:
+            if math.isfinite(result):
+                return result
+    start_pts = stream.get("start_pts")
+    time_base = stream.get("time_base")
+    if start_pts in {None, "N/A"} or not isinstance(time_base, str):
+        return None
+    try:
+        numerator, denominator = time_base.split("/", 1)
+        result = float(start_pts) * float(numerator) / float(denominator)
+    except (TypeError, ValueError, ZeroDivisionError):
+        return None
+    return result if math.isfinite(result) else None
+
+
+def _stream_timing(stream: dict[str, Any]) -> dict[str, float] | None:
+    """Return a coherent start/duration/end triple for the same stream."""
+    start = _stream_start(stream)
+    duration = _stream_duration(stream)
+    if start is None or duration is None:
+        return None
+    return {
+        "start_seconds": start,
+        "duration_seconds": duration,
+        "end_seconds": start + duration,
+    }
+
+
 def probe_media(video: Path, *, ffprobe_bin: str = "ffprobe") -> dict[str, Any]:
     if shutil.which(ffprobe_bin) is None:
         raise AudioQAGateError(f"找不到 {ffprobe_bin}")
@@ -199,7 +272,7 @@ def probe_media(video: Path, *, ffprobe_bin: str = "ffprobe") -> dict[str, Any]:
         "-v",
         "error",
         "-show_entries",
-        "stream=codec_type,duration,duration_ts,time_base:format=duration",
+        "stream=codec_type,start_time,start_pts,duration,duration_ts,time_base:format=duration",
         "-of",
         "json",
         str(video),
@@ -220,9 +293,22 @@ def probe_media(video: Path, *, ffprobe_bin: str = "ffprobe") -> dict[str, Any]:
     for kind in ("video", "audio"):
         candidates = [item for item in streams if item.get("codec_type") == kind]
         result[f"has_{kind}"] = bool(candidates)
-        durations = [duration for item in candidates if (duration := _stream_duration(item)) is not None]
-        if durations:
-            result[f"{kind}_duration_seconds"] = max(durations)
+        # Pick one complete stream and keep its timing coherent.  Taking the
+        # longest duration from one stream and the earliest start from another
+        # would manufacture an end point that does not exist in the file.
+        timings = [timing for item in candidates
+                   if (timing := _stream_timing(item)) is not None]
+        if timings:
+            timing = max(timings, key=lambda item: item["duration_seconds"])
+            for field, value in timing.items():
+                result[f"{kind}_{field}"] = value
+        else:
+            # Retain any independently readable duration for a precise error;
+            # delivery validation will still reject a missing start/end.
+            durations = [duration for item in candidates
+                         if (duration := _stream_duration(item)) is not None]
+            if durations:
+                result[f"{kind}_duration_seconds"] = max(durations)
     if not result["has_video"]:
         raise AudioQAGateError(f"最终文件没有视频流：{video}")
     return result
@@ -244,25 +330,84 @@ def validate_delivery(
     if status == "pass" and not has_audio:
         raise AudioQAGateError("报告为 pass，但最终视频没有音频流")
     if status == "not_applicable":
-        if reason in NO_AUDIO_REASONS:
-            if has_audio:
-                raise AudioQAGateError("报告写 no_audio，但最终视频存在音频流")
-            if role != "silence":
-                raise AudioQAGateError("no_audio 的 role 必须是 silence")
-        elif reason in AUDIO_NA_REASONS and not has_audio:
-            raise AudioQAGateError(f"报告写 {reason}，但最终视频没有音频流")
+        expected_audio = NA_AUDIO_EXPECTATIONS[reason]
+        if expected_audio == "not_applicable":
+            raise AudioQAGateError(
+                f"reason={reason} 只适用于没有成片的阶段，不能用来验最终视频"
+            )
+        if expected_audio == "absent" and has_audio:
+            raise AudioQAGateError(
+                f"报告写 {reason} / audio absent，但最终视频存在音频流"
+            )
+        if expected_audio == "present" and not has_audio:
+            raise AudioQAGateError(
+                f"报告写 {reason} / audio present，但最终视频没有音频流"
+            )
+        if reason in {"no_audio", "synthetic_silence"} and role != "silence":
+            raise AudioQAGateError(f"{reason} 的 role 必须是 silence")
+
+    # Always retain the measured final stream evidence in the sidecar payload.
+    # The CLI persists this mutation on both pass and fail, so a red gate still
+    # explains exactly which edge drifted.
+    metric_names = (
+        "video_start_seconds",
+        "audio_start_seconds",
+        "video_duration_seconds",
+        "audio_duration_seconds",
+        "video_end_seconds",
+        "audio_end_seconds",
+    )
+    for name in metric_names:
+        value = media.get(name)
+        if value is not None:
+            payload[f"final_{name}"] = round(float(value), 6)
 
     if has_audio:
-        video_duration = media.get("video_duration_seconds")
-        audio_duration = media.get("audio_duration_seconds")
-        if video_duration is None or audio_duration is None:
-            raise AudioQAGateError("ffprobe 读不到最终视频/音频流的独立时长")
+        required = {
+            name: media.get(name)
+            for name in metric_names
+        }
+        missing = [name for name, value in required.items() if value is None]
+        if missing:
+            raise AudioQAGateError(
+                "ffprobe 读不到最终视频/音频流的独立起点、时长和终点："
+                + ", ".join(missing)
+            )
+        video_start = float(required["video_start_seconds"])
+        audio_start = float(required["audio_start_seconds"])
+        video_duration = float(required["video_duration_seconds"])
+        audio_duration = float(required["audio_duration_seconds"])
+        video_end = float(required["video_end_seconds"])
+        audio_end = float(required["audio_end_seconds"])
+        start_delta = abs(video_start - audio_start)
         av_delta = abs(float(video_duration) - float(audio_duration))
+        end_delta = abs(video_end - audio_end)
+        media.update({
+            "av_start_delta_seconds": start_delta,
+            "av_duration_delta_seconds": av_delta,
+            "av_end_delta_seconds": end_delta,
+        })
+        payload.update({
+            "av_start_delta_seconds": round(start_delta, 6),
+            "av_duration_delta_seconds": round(av_delta, 6),
+            "av_end_delta_seconds": round(end_delta, 6),
+            "max_av_delta_seconds": MAX_AV_DELTA_SECONDS,
+        })
+        if start_delta > MAX_AV_DELTA_SECONDS:
+            raise AudioQAGateError(
+                f"最终 A/V 起点时差 {start_delta:.3f}s，超过 "
+                f"{MAX_AV_DELTA_SECONDS:.3f}s"
+            )
+        if end_delta > MAX_AV_DELTA_SECONDS:
+            raise AudioQAGateError(
+                f"最终 A/V 终点时差 {end_delta:.3f}s，超过 "
+                f"{MAX_AV_DELTA_SECONDS:.3f}s"
+            )
         if av_delta > MAX_AV_DELTA_SECONDS:
             raise AudioQAGateError(
-                f"最终 A/V 时差 {av_delta:.3f}s，超过 {MAX_AV_DELTA_SECONDS:.3f}s"
+                f"最终 A/V 时长差 {av_delta:.3f}s，超过 "
+                f"{MAX_AV_DELTA_SECONDS:.3f}s"
             )
-        media["av_duration_delta_seconds"] = av_delta
 
     expected = payload.get("expected_duration_seconds")
     if expected is None:
@@ -276,6 +421,7 @@ def validate_delivery(
                 f"{MAX_AV_DELTA_SECONDS:.3f}s"
             )
         media["expected_duration_delta_seconds"] = delivery_delta
+        payload["expected_duration_delta_seconds"] = round(delivery_delta, 6)
     return media
 
 
@@ -285,6 +431,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--video", type=Path)
     parser.add_argument("--ffprobe", default="ffprobe")
     args = parser.parse_args(argv)
+    payload: dict[str, Any] | None = None
     try:
         payload = json.loads(args.report.read_text(encoding="utf-8"))
         if not isinstance(payload, dict):
@@ -294,12 +441,28 @@ def main(argv: list[str] | None = None) -> int:
             print(f"audio QA pass: {args.report}")
         else:
             media = validate_delivery(payload, args.video, ffprobe_bin=args.ffprobe)
+            args.report.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
             print(
                 f"audio delivery QA pass: {args.video} "
                 f"(audio={media['has_audio']}, "
-                f"A/V={media.get('av_duration_delta_seconds', 0.0):.3f}s)"
+                f"start={media.get('av_start_delta_seconds', 0.0):.3f}s, "
+                f"end={media.get('av_end_delta_seconds', 0.0):.3f}s)"
             )
     except (OSError, ValueError, AudioQAGateError) as exc:
+        # Timing evidence is most useful when the gate is red.  validate_delivery
+        # mutates only after it has a real ffprobe result; persist that evidence
+        # without turning a report-write failure into a false pass.
+        if payload is not None and args.video is not None:
+            try:
+                args.report.write_text(
+                    json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+            except OSError:
+                pass
         parser.exit(1, f"audio QA failed: {exc}\n")
     return 0
 

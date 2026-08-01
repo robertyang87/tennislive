@@ -104,16 +104,20 @@ def synth_source(dest: Path, seconds: float) -> Path:
 def probe(path: Path) -> dict:
     out = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries",
-         "stream=codec_type,width,height,r_frame_rate,codec_name,sample_rate,channels,duration",
+         "stream=codec_type,width,height,r_frame_rate,codec_name,sample_rate,channels,start_time,duration",
          "-show_entries", "format=duration", "-of", "json", str(path)],
         capture_output=True, text=True, check=True, timeout=120).stdout
     d = json.loads(out)
     v = next(s for s in d["streams"] if s["codec_type"] == "video")
     a = next((s for s in d["streams"] if s["codec_type"] == "audio"), {})
+    vstart, astart = float(v["start_time"]), float(a["start_time"])
+    vdur, adur = float(v["duration"]), float(a["duration"])
     return {"w": v["width"], "h": v["height"], "fps": v["r_frame_rate"],
             "acodec": a.get("codec_name"), "arate": a.get("sample_rate"),
             "ach": a.get("channels"), "dur": float(d["format"]["duration"]),
-            "vdur": float(v["duration"]), "adur": float(a["duration"])}
+            "vstart": vstart, "astart": astart,
+            "vdur": vdur, "adur": adur,
+            "vend": vstart + vdur, "aend": astart + adur}
 
 
 def run(spec_path: Path, venv: Path | None) -> int:
@@ -180,7 +184,13 @@ def run(spec_path: Path, venv: Path | None) -> int:
             bad.append(f"时长：{got['dur']:.2f}s ≠ {want_dur:.2f}s")
         av_delta = abs(got["vdur"] - got["adur"])
         if av_delta > 0.05:
-            bad.append(f"A/V 时差：{av_delta:.3f}s > 0.050s")
+            bad.append(f"A/V 时长差：{av_delta:.3f}s > 0.050s")
+        start_delta = abs(got["vstart"] - got["astart"])
+        if start_delta > 0.05:
+            bad.append(f"A/V 起点时差：{start_delta:.3f}s > 0.050s")
+        end_delta = abs(got["vend"] - got["aend"])
+        if end_delta > 0.05:
+            bad.append(f"A/V 终点时差：{end_delta:.3f}s > 0.050s")
         qa_path = work / "audio-qa.json"
         if not qa_path.exists():
             bad.append("缺 audio-qa.json")
@@ -202,7 +212,12 @@ def run(spec_path: Path, venv: Path | None) -> int:
             print(f"  {'✅' if g == w else '❌'} {n} {g}")
         print(f"  {'✅' if abs(got['dur'] - want_dur) <= 0.05 else '❌'} "
               f"时长 {got['dur']:.2f}s（期望 {want_dur:.2f}s）")
-        print(f"  {'✅' if av_delta <= 0.05 else '❌'} A/V 时差 {av_delta:.3f}s")
+        print(f"  {'✅' if start_delta <= 0.05 else '❌'} "
+              f"A/V 起点时差 {start_delta:.3f}s")
+        print(f"  {'✅' if end_delta <= 0.05 else '❌'} "
+              f"A/V 终点时差 {end_delta:.3f}s")
+        print(f"  {'✅' if av_delta <= 0.05 else '❌'} "
+              f"A/V 时长差 {av_delta:.3f}s")
         print(f"  {'✅' if qa.get('status') in {'pass', 'not_applicable'} else '❌'} "
               "结构化音频 QA")
         if bad:

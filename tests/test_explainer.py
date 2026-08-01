@@ -663,8 +663,16 @@ def test_片头片尾各留一段静音(tmp_path, monkeypatch):
     graph = cmd[cmd.index("-filter_complex") + 1]
     assert "adelay=600:all=1" in graph  # 只有第一段被往后推
     assert graph.count("adelay") == 1
-    assert "apad=pad_dur=1.500" in graph  # 只有最后一段挂了静音
-    assert graph.count("apad") == 1
+    # `pad_dur` 是片尾刻意留出的呼吸，只有最后一段需要；共享拼接层的
+    # `whole_dur` 则是另一份合同——每一段都要补齐自己的声明窗口，防止短音频
+    # 把后续画面、旁白和字幕一起提前。不要再用固定的 apad 总次数把两者混为一谈。
+    assert "apad=pad_dur=1.500" in graph
+    assert graph.count("apad=pad_dur=") == 1
+    for duration in ("10.600", "10.000", "11.500"):
+        assert (
+            f"apad=whole_dur={duration},atrim=duration={duration}" in graph
+        )
+    assert graph.count("apad=whole_dur=") == 3
     # 中间那段没有静音，但仍然要有自己的标签，否则共享音频 concat 接不上。
     assert "[3:a]anull[speech1]" in graph
     assert "[v0][v1][v2]concat=n=3:v=1:a=0[outv]" in graph

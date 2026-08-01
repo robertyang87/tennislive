@@ -56,6 +56,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import subprocess
 import sys
@@ -1245,30 +1246,46 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
            or "（空）"))
 
 
-def _probe_av_durations(path: Path) -> tuple[float, float]:
-    """Return independently measured video/audio stream durations.
+def _probe_av_timing(path: Path) -> dict[str, float]:
+    """Return independently measured start/duration/end stream timing.
 
     The container duration is not enough for this check: an AAC stream can be
-    shorter than the video while the MP4 container still reports the expected
-    total.  A missing per-stream duration is therefore a hard failure instead
-    of silently falling back to the container value.
+    offset or shorter than the video while the MP4 container still reports the
+    expected total.  Missing per-stream timing is therefore a hard failure.
     """
     raw = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries",
-         "stream=codec_type,duration", "-of", "json", str(path)],
+         "stream=codec_type,start_time,duration", "-of", "json", str(path)],
         capture_output=True, text=True, check=True, timeout=120,
     ).stdout
     streams = json.loads(raw).get("streams") or []
-    durations: dict[str, float] = {}
+    timing: dict[str, float] = {}
     for stream in streams:
         kind = stream.get("codec_type")
-        value = stream.get("duration")
-        if kind in {"video", "audio"} and value not in {None, "N/A"}:
-            durations[kind] = float(value)
-    missing = sorted({"video", "audio"} - durations.keys())
+        start = stream.get("start_time")
+        duration = stream.get("duration")
+        if (kind in {"video", "audio"}
+                and start not in {None, "N/A"}
+                and duration not in {None, "N/A"}):
+            start_number = float(start)
+            duration_number = float(duration)
+            if not math.isfinite(start_number) or not math.isfinite(duration_number):
+                continue
+            timing[f"{kind}_start_seconds"] = start_number
+            timing[f"{kind}_duration_seconds"] = duration_number
+            timing[f"{kind}_end_seconds"] = start_number + duration_number
+    required = {
+        f"{kind}_{field}_seconds"
+        for kind in ("video", "audio")
+        for field in ("start", "duration", "end")
+    }
+    missing = sorted(required - timing.keys())
     if missing:
-        raise SystemExit(f"{path.name} 读不到独立的 {'/'.join(missing)} 时长")
-    return durations["video"], durations["audio"]
+        raise SystemExit(
+            f"{path.name} 读不到独立的起点、时长和终点："
+            + ", ".join(missing)
+        )
+    return timing
 
 
 def _write_audio_qa(
@@ -1278,14 +1295,23 @@ def _write_audio_qa(
     graph=None,
 ) -> Path:
     """Write the global audio-policy sidecar and enforce its A/V gate."""
-    video_duration, audio_duration = _probe_av_durations(out)
+    timing = _probe_av_timing(out)
+    video_start = timing["video_start_seconds"]
+    audio_start = timing["audio_start_seconds"]
+    video_duration = timing["video_duration_seconds"]
+    audio_duration = timing["audio_duration_seconds"]
+    video_end = timing["video_end_seconds"]
+    audio_end = timing["audio_end_seconds"]
+    start_delta = abs(video_start - audio_start)
     av_delta = abs(video_duration - audio_duration)
+    end_delta = abs(video_end - audio_end)
     programme_duration = max(video_duration, audio_duration)
     expected_delta = abs(programme_duration - expected_duration)
     if graph is None:
         report = not_applicable_audio_qa(
             audio_role="speech",
-            reason="single continuous interview source; no edit boundary",
+            reason="single_continuous_source",
+            detail="single continuous interview source; no edit boundary",
         )
     else:
         report = audio_qa_for_graph(
@@ -1295,9 +1321,19 @@ def _write_audio_qa(
         )
     join_rows = report["joins"]
     problems: list[str] = []
+    if start_delta > AUDIO_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"A/V 起点时差 {start_delta:.3f}s > "
+            f"{AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+    if end_delta > AUDIO_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"A/V 终点时差 {end_delta:.3f}s > "
+            f"{AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
     if av_delta > AUDIO_AV_MAX_DELTA_SECONDS:
         problems.append(
-            f"A/V 时差 {av_delta:.3f}s > {AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
+            f"A/V 时长差 {av_delta:.3f}s > {AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
         )
     if expected_delta > AUDIO_AV_MAX_DELTA_SECONDS:
         problems.append(
@@ -1315,10 +1351,18 @@ def _write_audio_qa(
         "status": "fail" if problems else report["status"],
         "renderer": "interview_clip",
         "expected_duration_seconds": round(expected_duration, 3),
+        "final_video_start_seconds": round(video_start, 6),
+        "final_audio_start_seconds": round(audio_start, 6),
+        "final_video_end_seconds": round(video_end, 6),
+        "final_audio_end_seconds": round(audio_end, 6),
         "video_duration_seconds": round(video_duration, 3),
         "audio_duration_seconds": round(audio_duration, 3),
+        "final_video_duration_seconds": round(video_duration, 6),
+        "final_audio_duration_seconds": round(audio_duration, 6),
         "programme_duration_seconds": round(programme_duration, 3),
+        "av_start_delta_seconds": round(start_delta, 6),
         "av_duration_delta_seconds": round(av_delta, 3),
+        "av_end_delta_seconds": round(end_delta, 6),
         "expected_duration_delta_seconds": round(expected_delta, 3),
         "max_av_delta_seconds": AUDIO_AV_MAX_DELTA_SECONDS,
         "long_fade_count": sum(

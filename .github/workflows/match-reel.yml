@@ -141,13 +141,12 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # ffmpeg / ffprobe 所有模式都要；**中文字体只有渲染要**（封面和烧字幕）。
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
       # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
       - name: 装 ffmpeg
-        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
-        # subprocess **一个都没出现**，装它白花半分钟。
-        if: github.event.inputs.mode != 'push'
+        # push 虽然不重渲，但必须用 ffprobe 重新量仓库里那份最终 MP4 的
+        # A/V 起点和终点；否则「只推送」会绕过交付硬闸。
         timeout-minutes: 5
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
@@ -225,6 +224,7 @@ jobs:
         if: github.event.inputs.mode == 'push'
         run: |
           REEL="${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+          QA="${{ steps.paths.outputs.outdir }}/audio-qa.json"
           if [ -z "$(git ls-files -- "$REEL")" ]; then
             echo "::error::$REEL 不在这个 commit 里——push 模式只发已经落库的成片。"
             echo "::error::先跑一次 mode=render（push=false），验完再用 mode=push 发。"
@@ -232,6 +232,11 @@ jobs:
             exit 1
           fi
           echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
+          if [ -z "$(git ls-files -- "$QA")" ] || [ ! -s "$QA" ]; then
+            echo "::error::$QA 不在这个 commit 里或为空——不能绕过最终音频质量硬闸。"
+            echo "::error::先用 mode=render 产出并提交 audio-qa.json，再执行 push。"
+            exit 1
+          fi
           test -f "${{ steps.paths.outputs.outdir }}/poster.jpg" || {
             echo "::error::海报不在——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }
 
@@ -366,8 +371,8 @@ jobs:
 
       # **验最终交付物，不只验转场中间片。** 旁白、sidechain、字幕和最终 mux
       # 都在 render 的后半段；只看 `_video.mp4` 会把后半段造成的音轨截短漏掉。
-      - name: render — 最终音频质量硬闸
-        if: github.event.inputs.mode == 'render'
+      - name: render/push — 最终音频质量硬闸
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
         run: |
           OUT="${{ steps.paths.outputs.outdir }}"
           python tools/check_audio_qa.py \

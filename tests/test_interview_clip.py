@@ -1064,7 +1064,14 @@ def test_采访音频QA沿用共享schema并测独立流时长(tmp_path, monkeyp
         audio_role="speech",
         join_overrides={0: clip.AudioJoinPolicy.declick(0.02)},
     )
-    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (3.0, 2.98))
+    monkeypatch.setattr(clip, "_probe_av_timing", lambda _: {
+        "video_start_seconds": 0.0,
+        "audio_start_seconds": 0.01,
+        "video_duration_seconds": 3.0,
+        "audio_duration_seconds": 2.98,
+        "video_end_seconds": 3.0,
+        "audio_end_seconds": 2.99,
+    })
     out = tmp_path / "interview.mp4"
     path = clip._write_audio_qa(out, expected_duration=3.0, graph=graph)
     qa = json.loads(path.read_text(encoding="utf-8"))
@@ -1072,12 +1079,39 @@ def test_采访音频QA沿用共享schema并测独立流时长(tmp_path, monkeyp
     assert qa["role"] == "speech"
     assert qa["transition_count"] == qa["declick_count"] == 1
     assert qa["duration_delta_seconds"] == 0.0
+    assert qa["av_start_delta_seconds"] == 0.01
     assert qa["av_duration_delta_seconds"] == 0.02
+    assert qa["av_end_delta_seconds"] == 0.01
+    assert qa["final_video_start_seconds"] == 0.0
+    assert qa["final_audio_end_seconds"] == 2.99
     assert qa["joins"][0]["mode"] == "declick"
     assert qa["joins"][0]["fade_out"] == qa["joins"][0]["fade_in"] == 0.02
 
 
-def test_采访音频QA拒绝超过五十毫秒的AV视频时差(tmp_path, monkeypatch):
+@pytest.mark.parametrize(
+    ("timing", "message"),
+    [
+        ({
+            "video_start_seconds": 0.0,
+            "audio_start_seconds": 0.08,
+            "video_duration_seconds": 3.0,
+            "audio_duration_seconds": 2.92,
+            "video_end_seconds": 3.0,
+            "audio_end_seconds": 3.0,
+        }, "起点时差"),
+        ({
+            "video_start_seconds": 0.0,
+            "audio_start_seconds": 0.0,
+            "video_duration_seconds": 3.0,
+            "audio_duration_seconds": 2.94,
+            "video_end_seconds": 3.0,
+            "audio_end_seconds": 2.94,
+        }, "终点时差"),
+    ],
+)
+def test_采访音频QA拒绝超过五十毫秒的AV视频边界(
+    tmp_path, monkeypatch, timing, message,
+):
     import tools.build_interview_clip as clip
 
     graph = clip.concat_audio_filter(
@@ -1086,25 +1120,37 @@ def test_采访音频QA拒绝超过五十毫秒的AV视频时差(tmp_path, monke
         audio_role="speech",
         join_overrides={0: clip.AudioJoinPolicy.declick(0.02)},
     )
-    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (3.0, 2.94))
+    monkeypatch.setattr(clip, "_probe_av_timing", lambda _: timing)
     out = tmp_path / "interview.mp4"
-    with pytest.raises(SystemExit, match="A/V 时差"):
+    with pytest.raises(SystemExit, match=message):
         clip._write_audio_qa(out, expected_duration=3.0, graph=graph)
     qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
     assert qa["status"] == "fail"
-    assert qa["av_duration_delta_seconds"] == 0.06
+    assert qa["av_start_delta_seconds"] == pytest.approx(
+        abs(timing["video_start_seconds"] - timing["audio_start_seconds"])
+    )
+    assert qa["av_end_delta_seconds"] == pytest.approx(
+        abs(timing["video_end_seconds"] - timing["audio_end_seconds"])
+    )
 
 
 def test_无封面的连续采访也写明音频QA不适用(tmp_path, monkeypatch):
     import tools.build_interview_clip as clip
 
-    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (2.0, 2.0))
+    monkeypatch.setattr(clip, "_probe_av_timing", lambda _: {
+        "video_start_seconds": 0.0,
+        "audio_start_seconds": 0.0,
+        "video_duration_seconds": 2.0,
+        "audio_duration_seconds": 2.0,
+        "video_end_seconds": 2.0,
+        "audio_end_seconds": 2.0,
+    })
     path = clip._write_audio_qa(tmp_path / "interview.mp4", expected_duration=2.0)
     qa = json.loads(path.read_text(encoding="utf-8"))
     assert qa["status"] == "not_applicable"
     assert qa["role"] == "speech"
     assert qa["transition_count"] == 0
-    assert "single continuous" in qa["reason"]
+    assert qa["reason"] == "single_continuous_source"
 
 # 出片目录里**只许留**这些。别的都是中间物。
 _KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
@@ -1222,13 +1268,13 @@ def test_只推送时不做出片那一堆准备():
     apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
     而真正要跑的那一步只要二十秒。
 
-    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
+    判据：除 ffprobe 交付复验外，出片专用准备步骤都挂 `mode != 'push'`。
     """
     import yaml  # noqa: PLC0415
 
     wf = yaml.safe_load((ROOT / ".github" / "workflows"
                          / "interview-clip.yml").read_text(encoding="utf-8"))
-    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
+    heavy = ("playwright", "faster-whisper", "yt-dlp", "fonts-noto")
     for step in wf["jobs"]["render"]["steps"]:
         run = str(step.get("run") or "")
         if not any(h in run for h in heavy):
@@ -1236,6 +1282,10 @@ def test_只推送时不做出片那一堆准备():
         assert "mode != 'push'" in str(step.get("if", "")), (
             f"步骤「{step.get('name')}」装/用了出片才要的东西，"
             "却没挂 mode != 'push'——只推送的时候它是白跑的")
+    ffmpeg = next(step for step in wf["jobs"]["render"]["steps"]
+                  if "install -y -qq ffmpeg" in str(step.get("run") or ""))
+    assert "mode != 'push'" not in str(ffmpeg.get("if", "")), (
+        "push 必须装 ffprobe 重验已落库成片，不能跳过最终交付硬闸")
 
 
 def test_封面文件名是push_reel认的那个():

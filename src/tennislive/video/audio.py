@@ -8,9 +8,10 @@ silently desynchronise the finished video.
 
 Instead, unrelated sources fade out and back in inside their existing segment
 windows.  This removes abrupt changes between already-mastered source clips
-without moving a single chapter boundary.  A real overlap is available through
-``build_acrossfade_audio_filter`` only when the caller supplies the matching
-video-timeline declaration explicitly.
+without moving a single chapter boundary.  A duration-preserving L-cut is
+available when the caller supplies a legitimate post-cut tail handle.  A plain
+``acrossfade`` remains explicitly unsupported until the repository has one
+auditable helper that builds both the matching video and audio timelines.
 """
 
 from __future__ import annotations
@@ -30,11 +31,22 @@ JoinMode = Literal[
 ]
 AudioRole = Literal["speech", "music", "ambience", "mixed", "silence"]
 SameSourceStrategy = Literal["keep", "declick"]
+NotApplicableReason = Literal[
+    "no_audio",
+    "single_continuous_source",
+    "audio_passthrough",
+    "single_supplied_voiceover",
+    "synthetic_silence",
+    "subtitle_only",
+    "single_continuous_layer",
+    "no_usable_audio_source",
+]
 
 DEFAULT_FADE_OUT = 0.40
 DEFAULT_FADE_IN = 0.30
 DEFAULT_FADE_CURVE = "qsin"
 DEFAULT_DECLICK_SECONDS = 0.02
+MIN_EFFECTIVE_FADE_SECONDS = 0.005
 DEFAULT_SAMPLE_RATE = 48_000
 DEFAULT_CHANNEL_LAYOUT = "stereo"
 LCUT_PEAK_LIMIT = 0.95
@@ -49,6 +61,16 @@ _JOIN_MODES = {
 }
 _SAME_SOURCE_STRATEGIES = {"keep", "declick"}
 _AUDIO_ROLES = {"speech", "music", "ambience", "mixed", "silence"}
+NA_AUDIO_EXPECTATIONS = {
+    "no_audio": "absent",
+    "single_continuous_source": "present",
+    "audio_passthrough": "present",
+    "single_supplied_voiceover": "present",
+    "synthetic_silence": "present",
+    "subtitle_only": "not_applicable",
+    "single_continuous_layer": "present",
+    "no_usable_audio_source": "absent",
+}
 _FADE_CURVES = {
     "tri",
     "qsin",
@@ -129,6 +151,11 @@ class AudioJoinPolicy:
     overlap: float | None = None
 
     def __post_init__(self) -> None:
+        if self.mode == "acrossfade":
+            raise AudioJoinError(
+                "acrossfade is not supported by the repository-wide QA "
+                "contract; use a duration-preserving L-cut with a tail handle"
+            )
         if self.mode not in _JOIN_MODES:
             raise AudioJoinError(f"unknown audio join mode: {self.mode}")
         _nonnegative_finite(self.fade_out, "fade_out")
@@ -144,6 +171,12 @@ class AudioJoinPolicy:
             _positive_finite(self.overlap, "acrossfade overlap")
         elif self.overlap is not None:
             raise AudioJoinError("overlap is only valid for acrossfade")
+        if self.mode in {"fade_through_silence", "declick"}:
+            if min(self.fade_out, self.fade_in) < MIN_EFFECTIVE_FADE_SECONDS:
+                raise AudioJoinError(
+                    f"{self.mode} requires both fades to be at least "
+                    f"{MIN_EFFECTIVE_FADE_SECONDS:.3f}s"
+                )
 
     @classmethod
     def fade_through_silence(
@@ -252,11 +285,11 @@ class AudioConcatFiltergraph:
 
 @dataclass(frozen=True)
 class TimelineDeclaration:
-    """The video timeline that an actual audio overlap must mirror.
+    """Reserved shape for a future audited A/V overlap implementation.
 
-    ``video_overlaps`` has one value per boundary.  Requiring the caller to
-    state both it and the resulting duration prevents an audio-only helper
-    from shortening the programme behind the video editor's back.
+    The current repository contract rejects acrossfade even when this object is
+    supplied; retaining the shape makes that rejection explicit for old callers
+    without silently accepting an audio-only timeline change.
     """
 
     video_overlaps: tuple[float, ...]
@@ -280,7 +313,7 @@ class TimelineDeclaration:
 
 @dataclass(frozen=True)
 class AcrossfadeFiltergraph:
-    """An audio-only overlap graph plus its explicit timeline delta."""
+    """Reserved return shape; no repository-wide acrossfade is currently built."""
 
     filtergraph: str
     audio_label: str
@@ -302,6 +335,16 @@ def audio_qa_for_graph(
             f"audio QA role {role} does not match graph role {graph.audio_role}"
         )
     joins = [asdict(join) for join in graph.joins]
+    fallback_count = sum(
+        join["mode"] == "fade_through_silence" for join in joins
+    )
+    if fallback_count and not reason.strip():
+        raise AudioJoinError(
+            "fade_through_silence fallback requires a non-empty reason"
+        )
+    hard_cut_count = sum(
+        _resolved_join_is_hard_cut(join, role) for join in graph.joins
+    )
     return {
         "policy_version": AUDIO_POLICY_VERSION,
         "status": "pass",
@@ -309,16 +352,14 @@ def audio_qa_for_graph(
         "reason": reason,
         "duration_delta_seconds": graph.duration_delta,
         "transition_count": len(joins),
-        "hard_cut_count": 0,
+        "hard_cut_count": hard_cut_count,
         "lcut_crossfade_count": sum(
             join["mode"] == "lcut_crossfade" for join in joins
         ),
         "fade_through_silence_count": sum(
             join["mode"] == "fade_through_silence" for join in joins
         ),
-        "fallback_count": sum(
-            join["mode"] == "fade_through_silence" for join in joins
-        ),
+        "fallback_count": fallback_count,
         "declick_count": sum(join["mode"] == "declick" for join in joins),
         "keep_count": sum(join["mode"] == "keep" for join in joins),
         "joins": joins,
@@ -328,17 +369,23 @@ def audio_qa_for_graph(
 def not_applicable_audio_qa(
     *,
     audio_role: AudioRole,
-    reason: str,
+    reason: NotApplicableReason,
+    detail: str = "",
 ) -> dict[str, object]:
     """Record why a single-source or no-audio renderer has no edit boundary."""
     role = _audio_role(audio_role)
-    if not reason.strip():
-        raise AudioJoinError("not_applicable audio QA requires a reason")
+    if reason not in NA_AUDIO_EXPECTATIONS:
+        rendered = ", ".join(sorted(NA_AUDIO_EXPECTATIONS))
+        raise AudioJoinError(
+            f"not_applicable reason must be one of: {rendered}"
+        )
     return {
         "policy_version": AUDIO_POLICY_VERSION,
         "status": "not_applicable",
         "role": role,
         "reason": reason,
+        "reason_detail": detail.strip(),
+        "expected_audio_stream": NA_AUDIO_EXPECTATIONS[reason],
         "duration_delta_seconds": 0.0,
         "transition_count": 0,
         "hard_cut_count": 0,
@@ -439,8 +486,8 @@ def concat_av_filter(
         )
         if policy.mode == "acrossfade":
             raise AudioJoinError(
-                "acrossfade changes the programme duration; declare the matching "
-                "video timeline and call build_acrossfade_audio_filter instead"
+                "acrossfade is not supported by the repository-wide QA contract; "
+                "use a duration-preserving L-cut with a tail handle"
             )
         _validate_policy_for_role(role, policy, boundary)
         handle = handles.get(boundary)
@@ -465,6 +512,12 @@ def concat_av_filter(
             fade_out = min(policy.fade_out, previous.duration / 4.0)
             fade_in = min(policy.fade_in, following.duration / 4.0)
             overlap = 0.0
+        _validate_effective_resolved_join(
+            policy.mode,
+            fade_out=fade_out,
+            fade_in=fade_in,
+            boundary=boundary,
+        )
         if handle is not None and policy.mode != "lcut_crossfade":
             raise AudioJoinError(
                 f"boundary {boundary} has a tail handle but is not an L-cut"
@@ -499,6 +552,10 @@ def concat_av_filter(
             "aformat="
             f"sample_fmts=fltp:sample_rates={sample_rate}:"
             f"channel_layouts={channel_layout}",
+            # ``atrim`` never extends a short input.  Pad first, then trim, so
+            # the emitted stream really occupies the declared A/V window and
+            # cannot silently shorten the programme timeline.
+            f"apad=whole_dur={_seconds(segment.duration)}",
             f"atrim=duration={_seconds(segment.duration)}",
             "asetpts=PTS-STARTPTS",
         ]
@@ -619,8 +676,8 @@ def concat_audio_filter(
         )
         if policy.mode == "acrossfade":
             raise AudioJoinError(
-                "acrossfade changes the programme duration; declare the matching "
-                "video timeline and call build_acrossfade_audio_filter instead"
+                "acrossfade is not supported by the repository-wide QA contract; "
+                "use a duration-preserving L-cut with a tail handle"
             )
         _validate_policy_for_role(role, policy, boundary)
         handle = handles.get(boundary)
@@ -645,6 +702,12 @@ def concat_audio_filter(
             fade_out = min(policy.fade_out, previous.duration / 4.0)
             fade_in = min(policy.fade_in, following.duration / 4.0)
             overlap = 0.0
+        _validate_effective_resolved_join(
+            policy.mode,
+            fade_out=fade_out,
+            fade_in=fade_in,
+            boundary=boundary,
+        )
         if handle is not None and policy.mode != "lcut_crossfade":
             raise AudioJoinError(
                 f"boundary {boundary} has a tail handle but is not an L-cut"
@@ -673,6 +736,10 @@ def concat_audio_filter(
             "aformat="
             f"sample_fmts=fltp:sample_rates={sample_rate}:"
             f"channel_layouts={channel_layout}",
+            # Audio-only concat has the same duration contract as A/V concat:
+            # a short stem gets tail silence rather than stealing time from
+            # every downstream narration/subtitle boundary.
+            f"apad=whole_dur={_seconds(segment.duration)}",
             f"atrim=duration={_seconds(segment.duration)}",
             "asetpts=PTS-STARTPTS",
         ]
@@ -739,102 +806,16 @@ def build_acrossfade_audio_filter(
     channel_layout: str = DEFAULT_CHANNEL_LAYOUT,
     output_audio_label: str = "aout",
 ) -> AcrossfadeFiltergraph:
-    """Build a real audio overlap only for an explicitly matching video edit.
+    """Reject audio-only acrossfades until an auditable A/V contract exists.
 
-    This function is intentionally separate from ``concat_av_filter``.  It
-    returns the negative duration delta so callers can assert that narration,
-    subtitles and chapter offsets were rebuilt for the overlapping timeline.
+    Keeping the public function as a hard failure gives older callers a useful
+    migration error instead of silently shortening audio beneath an unchanged
+    video/subtitle timeline.
     """
 
-    items = _coerce_segments(segments)
-    role = _audio_role(audio_role)
-    if len(items) < 2:
-        raise AudioJoinError("acrossfade requires at least two segments")
-    if timeline is None:
-        raise AudioJoinError(
-            "acrossfade requires an explicit matching video TimelineDeclaration"
-        )
-    if len(policies) != len(items) - 1:
-        raise AudioJoinError("acrossfade requires one policy per boundary")
-    if len(timeline.video_overlaps) != len(items) - 1:
-        raise AudioJoinError("video timeline requires one overlap per boundary")
-    if not isinstance(sample_rate, int) or sample_rate <= 0:
-        raise AudioJoinError("sample_rate must be a positive integer")
-    _bare_label(channel_layout)
-    audio_out = _bare_label(output_audio_label)
-
-    overlaps: list[float] = []
-    for boundary, (policy, video_overlap) in enumerate(
-        zip(policies, timeline.video_overlaps)
-    ):
-        _validate_policy_for_role(role, policy, boundary)
-        if policy.mode != "acrossfade" or policy.overlap is None:
-            raise AudioJoinError(
-                f"boundary {boundary} must use an explicit acrossfade policy"
-            )
-        if not math.isclose(
-            policy.overlap, video_overlap, rel_tol=0.0, abs_tol=1e-6
-        ):
-            raise AudioJoinError(
-                f"boundary {boundary} audio overlap does not match video timeline"
-            )
-        if policy.overlap >= min(
-            items[boundary].duration, items[boundary + 1].duration
-        ):
-            raise AudioJoinError(
-                f"boundary {boundary} overlap must be shorter than both segments"
-            )
-        overlaps.append(policy.overlap)
-
-    # Adjacent video transitions must not overlap one another inside a short
-    # middle segment.  Keeping this invariant here also makes the chained audio
-    # graph describe the same edit as a conventional FFmpeg xfade timeline.
-    for index in range(1, len(items) - 1):
-        if overlaps[index - 1] + overlaps[index] >= items[index].duration:
-            raise AudioJoinError(
-                f"overlaps consume middle segment {index}; video timeline is ambiguous"
-            )
-
-    input_duration = math.fsum(segment.duration for segment in items)
-    output_duration = input_duration - math.fsum(overlaps)
-    if not math.isclose(
-        timeline.expected_output_duration,
-        output_duration,
-        rel_tol=0.0,
-        abs_tol=1e-6,
-    ):
-        raise AudioJoinError(
-            "declared video output duration does not match audio acrossfades"
-        )
-
-    filters: list[str] = []
-    for index, segment in enumerate(items):
-        audio_input = _ref(segment.audio_label or f"{index}:a")
-        filters.append(
-            f"{audio_input}aresample={sample_rate},"
-            "aformat="
-            f"sample_fmts=fltp:sample_rates={sample_rate}:"
-            f"channel_layouts={channel_layout},"
-            f"atrim=duration={_seconds(segment.duration)},"
-            f"asetpts=PTS-STARTPTS[ac{index}]"
-        )
-
-    previous = "ac0"
-    for boundary, policy in enumerate(policies):
-        destination = audio_out if boundary == len(policies) - 1 else f"ax{boundary}"
-        filters.append(
-            f"[{previous}][ac{boundary + 1}]"
-            f"acrossfade=d={_seconds(overlaps[boundary])}:"
-            f"c1={policy.curve}:c2={policy.curve}[{destination}]"
-        )
-        previous = destination
-
-    return AcrossfadeFiltergraph(
-        filtergraph=";".join(filters),
-        audio_label=_ref(audio_out),
-        output_duration=output_duration,
-        duration_delta=output_duration - input_duration,
-        overlaps=tuple(overlaps),
+    raise AudioJoinError(
+        "acrossfade is not supported by the repository-wide QA contract; "
+        "use a duration-preserving L-cut with a tail handle"
     )
 
 
@@ -880,6 +861,37 @@ def _validate_policy_for_role(
     )
 
 
+def _validate_effective_resolved_join(
+    mode: JoinMode,
+    *,
+    fade_out: float,
+    fade_in: float,
+    boundary: int,
+) -> None:
+    """Reject fades which become no-ops after short-segment clamping."""
+    if mode not in {"fade_through_silence", "declick"}:
+        return
+    if min(fade_out, fade_in) < MIN_EFFECTIVE_FADE_SECONDS:
+        raise AudioJoinError(
+            f"boundary {boundary}: resolved {mode} fades must both be at least "
+            f"{MIN_EFFECTIVE_FADE_SECONDS:.3f}s; choose a longer segment or an "
+            "explicit safe boundary policy"
+        )
+
+
+def _resolved_join_is_hard_cut(
+    join: ResolvedAudioJoin,
+    role: AudioRole,
+) -> bool:
+    """Derive hard-cut accounting from the actual resolved join plan."""
+    if join.mode != "keep" or role in {"speech", "silence"}:
+        return False
+    return not (
+        join.previous_source is not None
+        and join.previous_source == join.next_source
+    )
+
+
 def _coerce_policy(policy: AudioJoinPolicy | JoinMode) -> AudioJoinPolicy:
     if isinstance(policy, AudioJoinPolicy):
         return policy
@@ -896,7 +908,8 @@ def _coerce_policy(policy: AudioJoinPolicy | JoinMode) -> AudioJoinPolicy:
         )
     if policy == "acrossfade":
         raise AudioJoinError(
-            "acrossfade string is incomplete; use AudioJoinPolicy.acrossfade(...)"
+            "acrossfade is not supported by the repository-wide QA contract; "
+            "use a duration-preserving L-cut with a tail handle"
         )
     raise AudioJoinError(f"unknown audio join mode: {policy}")
 
@@ -954,6 +967,9 @@ __all__ = [
     "DEFAULT_SAMPLE_RATE",
     "DEFAULT_SAME_SOURCE_POLICY",
     "LCUT_PEAK_LIMIT",
+    "MIN_EFFECTIVE_FADE_SECONDS",
+    "NA_AUDIO_EXPECTATIONS",
+    "NotApplicableReason",
     "ResolvedAudioJoin",
     "TimelineDeclaration",
     "audio_qa_for_graph",

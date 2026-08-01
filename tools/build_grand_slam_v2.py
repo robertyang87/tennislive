@@ -497,6 +497,11 @@ Format: Layer, Start, End, Style, Text
                 p["ambient_audio_qa"] = not_applicable_audio_qa(
                     audio_role="ambience",
                     reason=(
+                        "single_continuous_layer"
+                        if p["ambient"]
+                        else "no_usable_audio_source"
+                    ),
+                    detail=(
                         "single continuous fallback ambience bed has no "
                         "internal edit boundary"
                         if p["ambient"]
@@ -516,6 +521,11 @@ Format: Layer, Start, End, Style, Text
             p["ambient_audio_qa"] = not_applicable_audio_qa(
                 audio_role="ambience",
                 reason=(
+                    "single_continuous_layer"
+                    if p["ambient"]
+                    else "no_usable_audio_source"
+                ),
+                detail=(
                     "single continuous ambience bed has no internal edit boundary"
                     if p["ambient"]
                     else "no usable ambience source for this scene"
@@ -565,7 +575,12 @@ Format: Layer, Start, End, Style, Text
             mix_reason = "silent scene has no temporal edit boundary"
         p["mix_audio_qa"] = not_applicable_audio_qa(
             audio_role=mix_role,
-            reason=mix_reason,
+            reason=(
+                "synthetic_silence"
+                if mix_role == "silence"
+                else "single_continuous_layer"
+            ),
+            detail=mix_reason,
         )
         seg_files.append(seg)
     # These files already contain the (soft-edged) ambience underneath TTS.

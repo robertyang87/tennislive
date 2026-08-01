@@ -151,6 +151,50 @@ def test_grand_slam_short_tts_uses_speech_role_and_not_concat_demuxer():
     assert '"-f", "concat"' not in tts_join
     assert "acrossfade" not in tts_join
     assert '"check_audio_qa.py"' in source
+    assert "silence(raw, 0.4)" not in tts_join.split("else:", 1)[0]
+
+
+def test_grand_slam_short_atempo_chain_never_truncates_long_speech():
+    from tools import build_grand_slam_short as short
+
+    assert short._atempo_filters(1.0) == []
+    assert short._atempo_filters(1.8) == ["atempo=1.800000"]
+    assert short._atempo_filters(3.6) == [
+        "atempo=2.000000",
+        "atempo=1.800000",
+    ]
+
+
+def test_grand_slam_short_fails_if_a_spoken_scene_tts_disappears(
+    tmp_path, monkeypatch
+):
+    import pytest
+
+    from tools import build_grand_slam_short as short
+
+    calls = 0
+
+    def synth(_text, dst, *_args):
+        nonlocal calls
+        calls += 1
+        if calls == 1:  # engine probe succeeds
+            Path(dst).write_bytes(b"probe")
+            return
+        raise RuntimeError("provider dropped this sentence")
+
+    monkeypatch.setattr(short, "_piper_model", lambda: None)
+    monkeypatch.setattr(short, "_synth_edge", synth)
+    monkeypatch.setattr(
+        short, "_synth_gtts", lambda *_: (_ for _ in ()).throw(RuntimeError())
+    )
+
+    with pytest.raises(RuntimeError, match="spoken scene 0"):
+        short.try_tts(
+            [{"vo": "这句话不能静默消失。", "dur": 1.0}],
+            {},
+            tmp_path,
+            "ffmpeg",
+        )
 
 
 def test_grand_slam_short_tts_writes_duration_safe_audio_qa(tmp_path, monkeypatch):

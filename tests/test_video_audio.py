@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import shutil
 import subprocess
 from pathlib import Path
@@ -14,7 +15,6 @@ from tennislive.video.audio import (
     DEFAULT_FADE_CURVE,
     DEFAULT_FADE_IN,
     DEFAULT_FADE_OUT,
-    TimelineDeclaration,
     audio_qa_for_graph,
     build_acrossfade_audio_filter,
     concat_audio_filter,
@@ -164,59 +164,15 @@ def test_unused_tail_handle_and_invalid_boundary_are_rejected():
         )
 
 
-def test_default_concat_refuses_real_acrossfade_that_would_shorten_timeline():
-    with pytest.raises(AudioJoinError, match="changes the programme duration"):
-        concat_av_filter(
-            [AVSegment(10.0, "a"), AVSegment(8.0, "b")],
-            audio_role="music",
-            join_overrides={0: AudioJoinPolicy.acrossfade(0.50)},
-        )
-
-
-def test_real_acrossfade_requires_and_reports_matching_video_timeline():
-    segments = [AVSegment(10.0), AVSegment(8.0), AVSegment(6.0)]
-    policies = [
-        AudioJoinPolicy.acrossfade(0.50),
-        AudioJoinPolicy.acrossfade(0.25, curve="hsin"),
-    ]
-    timeline = TimelineDeclaration(
-        video_overlaps=(0.50, 0.25),
-        expected_output_duration=23.25,
-    )
-
-    result = build_acrossfade_audio_filter(
-        segments, policies, audio_role="music", timeline=timeline
-    )
-
-    assert result.output_duration == pytest.approx(23.25)
-    assert result.duration_delta == pytest.approx(-0.75)
-    assert result.overlaps == (0.50, 0.25)
-    assert result.filtergraph.count("acrossfade=") == 2
-    assert "acrossfade=d=0.500:c1=qsin:c2=qsin[ax0]" in result.filtergraph
-    assert "acrossfade=d=0.250:c1=hsin:c2=hsin[aout]" in result.filtergraph
-
-
-def test_real_acrossfade_rejects_missing_or_mismatched_video_timeline():
-    segments = [AVSegment(10.0), AVSegment(8.0)]
-    policies = [AudioJoinPolicy.acrossfade(0.50)]
-
-    with pytest.raises(AudioJoinError, match="explicit matching video"):
+def test_acrossfade_is_explicitly_rejected_until_full_av_qa_exists():
+    with pytest.raises(AudioJoinError, match="repository-wide QA contract"):
+        AudioJoinPolicy.acrossfade(0.50)
+    with pytest.raises(AudioJoinError, match="repository-wide QA contract"):
         build_acrossfade_audio_filter(
-            segments, policies, audio_role="music", timeline=None
-        )
-    with pytest.raises(AudioJoinError, match="does not match video"):
-        build_acrossfade_audio_filter(
-            segments,
-            policies,
+            [AVSegment(10.0), AVSegment(8.0)],
+            [],
             audio_role="music",
-            timeline=TimelineDeclaration((0.40,), 17.60),
-        )
-    with pytest.raises(AudioJoinError, match="output duration"):
-        build_acrossfade_audio_filter(
-            segments,
-            policies,
-            audio_role="music",
-            timeline=TimelineDeclaration((0.50,), 17.60),
+            timeline=None,
         )
 
 
@@ -290,6 +246,39 @@ def test_speech_role_rejects_music_fades_and_long_declicks():
     assert safe.joins[0].fade_out == pytest.approx(0.02)
 
 
+@pytest.mark.parametrize(
+    "policy",
+    [
+        lambda: AudioJoinPolicy.declick(0.0),
+        lambda: AudioJoinPolicy.declick(0.004),
+        lambda: AudioJoinPolicy.fade_through_silence(
+            fade_out=0.004, fade_in=0.30
+        ),
+        lambda: AudioJoinPolicy.fade_through_silence(
+            fade_out=0.40, fade_in=0.0
+        ),
+    ],
+)
+def test_zero_or_sub_5ms_fades_are_not_valid_transition_policies(policy):
+    with pytest.raises(AudioJoinError, match="at least 0.005s"):
+        policy()
+
+
+@pytest.mark.parametrize("audio_only", [False, True])
+def test_short_segment_clamping_cannot_turn_a_fade_into_a_noop(audio_only):
+    builder = concat_audio_filter if audio_only else concat_av_filter
+    with pytest.raises(AudioJoinError, match="resolved.*at least 0.005s"):
+        builder(
+            [AVSegment(0.019, "a"), AVSegment(1.0, "b")],
+            audio_role="mixed",
+        )
+    graph = builder(
+        [AVSegment(0.020, "a"), AVSegment(1.0, "b")],
+        audio_role="mixed",
+    )
+    assert graph.joins[0].fade_out == pytest.approx(0.005)
+
+
 def test_audio_role_is_mandatory_and_validated():
     with pytest.raises(TypeError, match="audio_role"):
         concat_av_filter([AVSegment(1.0)])
@@ -320,11 +309,34 @@ def test_global_audio_qa_schema_covers_pass_and_not_applicable():
         audio_role="mixed", reason="single_continuous_source"
     )
     assert skipped["status"] == "not_applicable"
+    assert skipped["reason"] == "single_continuous_source"
+    assert skipped["expected_audio_stream"] == "present"
     assert skipped["transition_count"] == 0
     assert skipped["fallback_count"] == 0
     assert skipped["joins"] == []
-    with pytest.raises(AudioJoinError, match="requires a reason"):
+    with pytest.raises(AudioJoinError, match="reason must be one of"):
         not_applicable_audio_qa(audio_role="silence", reason="")
+
+
+def test_audio_qa_derives_hard_cuts_from_resolved_joins():
+    graph = concat_audio_filter(
+        [AVSegment(1.0, "a"), AVSegment(1.0, "b")],
+        audio_role="mixed",
+        join_overrides={0: AudioJoinPolicy.keep()},
+    )
+    report = audio_qa_for_graph(
+        graph, audio_role="mixed", reason="deliberate test boundary"
+    )
+    assert report["hard_cut_count"] == 1
+
+
+def test_fallback_qa_requires_a_non_empty_reason():
+    graph = concat_audio_filter(
+        [AVSegment(1.0, "a"), AVSegment(1.0, "b")],
+        audio_role="ambience",
+    )
+    with pytest.raises(AudioJoinError, match="fallback requires a non-empty reason"):
+        audio_qa_for_graph(graph, audio_role="ambience")
 
 
 def test_audio_qa_cannot_relabel_a_graph_after_the_edit():
@@ -372,22 +384,143 @@ def test_global_audio_contract_is_linked_and_covers_every_renderer():
         assert "not_applicable_audio_qa(" in source, relative
 
 
-def test_every_ffmpeg_renderer_declares_audio_qa_and_no_raw_audio_concat_escapes():
-    root = Path(__file__).resolve().parents[1]
-    candidates = list((root / "src").rglob("*.py"))
-    candidates.extend((root / "tools").glob("build_*.py"))
-    renderers = []
-    for path in candidates:
-        source = path.read_text(encoding="utf-8")
-        if "ffmpeg" not in source or path.name in {"audio.py", "cli.py"}:
+_FFMPEG_EXECUTORS = {
+    "call",
+    "check_call",
+    "check_output",
+    "popen",
+    "run",
+    "runner",
+    "system",
+}
+
+
+def _call_leaf(call: ast.Call) -> str:
+    function = call.func
+    if isinstance(function, ast.Name):
+        return function.id.casefold()
+    if isinstance(function, ast.Attribute):
+        return function.attr.casefold()
+    return ""
+
+
+def _names_in(node: ast.AST) -> set[str]:
+    return {item.id for item in ast.walk(node) if isinstance(item, ast.Name)}
+
+
+def _mentions_ffmpeg(node: ast.AST) -> bool:
+    """Inspect executable syntax, not comments or an arbitrary source substring."""
+    for item in ast.walk(node):
+        if isinstance(item, ast.Name) and "ffmpeg" in item.id.casefold():
+            return True
+        if isinstance(item, ast.Attribute) and "ffmpeg" in item.attr.casefold():
+            return True
+        if (
+            isinstance(item, ast.Constant)
+            and isinstance(item.value, str)
+            and "ffmpeg" in item.value.casefold()
+        ):
+            return True
+    return False
+
+
+def _assignment_targets(node: ast.Assign | ast.AnnAssign) -> set[str]:
+    targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+    return {
+        item.id
+        for target in targets
+        for item in ast.walk(target)
+        if isinstance(item, ast.Name)
+    }
+
+
+def _ffmpeg_execution_calls(tree: ast.AST) -> list[ast.Call]:
+    """Find actual process-launch calls, following simple command variables."""
+    tainted: set[str] = set()
+    changed = True
+    while changed:
+        changed = False
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+                continue
+            value = node.value
+            if value is None:
+                continue
+            if not (_mentions_ffmpeg(value) or (_names_in(value) & tainted)):
+                continue
+            for target in _assignment_targets(node):
+                if target not in tainted:
+                    tainted.add(target)
+                    changed = True
+
+    calls = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or _call_leaf(node) not in _FFMPEG_EXECUTORS:
             continue
-        renderers.append(path)
-        assert "audio_qa" in source or "audio-qa" in source, path.relative_to(root)
-        assert "acrossfade=" not in source, path.relative_to(root)
-        assert not __import__("re").search(
-            r"concat=n=[^\n\"']*:a=1", source
-        ), path.relative_to(root)
-    assert renderers, "没有找到任何 FFmpeg renderer，扫描规则失效"
+        if _mentions_ffmpeg(node) or (_names_in(node) & tainted):
+            calls.append(node)
+    return calls
+
+
+def test_every_python_ffmpeg_delivery_renderer_calls_unified_audio_qa():
+    root = Path(__file__).resolve().parents[1]
+    candidates = sorted(
+        [*(root / "src").rglob("*.py"), *(root / "tools").rglob("*.py")]
+    )
+    # These files execute FFmpeg only to inspect media or exercise a synthetic
+    # self-test.  The reason is deliberately next to the path: adding a new
+    # exception must be an explicit review decision, never a filename pattern.
+    diagnostic_allowlist = {
+        "tools/check_crowd_rise.py": "measure crowd-level changes; no delivery MP4",
+        "tools/check_reel_landed.py": "inspect an existing final reel",
+        "tools/find_point_ends.py": "locate candidate point boundaries",
+        "tools/interview_clip_selftest.py": "synthetic renderer self-test only",
+    }
+    known_delivery_renderers = {
+        "src/tennislive/render/video_digest.py",
+        "src/tennislive/video/daily_point.py",
+        "src/tennislive/video/explainer.py",
+        "src/tennislive/video/official.py",
+        "src/tennislive/video/pipeline.py",
+        "tools/build_grand_slam_short.py",
+        "tools/build_grand_slam_v2.py",
+        "tools/build_interview_clip.py",
+        "tools/build_match_reel.py",
+    }
+
+    detected: dict[str, ast.AST] = {}
+    for path in candidates:
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        if not _ffmpeg_execution_calls(tree):
+            continue
+        relative = path.relative_to(root).as_posix()
+        detected[relative] = tree
+
+    assert known_delivery_renderers <= detected.keys(), (
+        "FFmpeg 自动发现器漏掉既有交付入口："
+        + ", ".join(sorted(known_delivery_renderers - detected.keys()))
+    )
+    assert diagnostic_allowlist.keys() <= detected.keys(), (
+        "诊断 allowlist 已过期，应删除不再执行 FFmpeg 的条目："
+        + ", ".join(sorted(diagnostic_allowlist.keys() - detected.keys()))
+    )
+    assert all(reason.strip() for reason in diagnostic_allowlist.values())
+
+    delivery_renderers = set(detected) - diagnostic_allowlist.keys()
+    assert delivery_renderers, "没有找到任何 FFmpeg delivery renderer，扫描规则失效"
+    for relative in sorted(delivery_renderers):
+        tree = detected[relative]
+        calls = {
+            _call_leaf(node)
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Call)
+        }
+        assert calls & {"audio_qa_for_graph", "not_applicable_audio_qa"}, (
+            f"{relative} 执行 FFmpeg 交付，但没有真实调用统一 audio QA；"
+            "注释或只出现 audio_qa 字样不能通过"
+        )
+        # The final report must be materialised, not merely computed and lost.
+        assert "write_text" in calls, f"{relative} 没有把 audio QA sidecar 落盘"
 
 
 @pytest.mark.skipif(
@@ -510,4 +643,52 @@ def test_audio_only_filtergraph_keeps_exact_declared_duration(tmp_path):
         ).stdout.strip()
     )
 
+    assert duration == pytest.approx(0.8, abs=1 / 48_000)
+
+
+@pytest.mark.skipif(
+    shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None,
+    reason="FFmpeg is not installed",
+)
+def test_audio_only_filtergraph_pads_short_stems_to_declared_duration(tmp_path):
+    inputs = []
+    for index, frequency in enumerate((440, 880)):
+        path = tmp_path / f"short-{index}.wav"
+        subprocess.run(
+            [
+                "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+                "-f", "lavfi", "-i",
+                f"sine=frequency={frequency}:sample_rate=48000:duration=0.2",
+                str(path),
+            ],
+            check=True,
+        )
+        inputs.append(path)
+
+    output = tmp_path / "padded.wav"
+    graph = concat_audio_filter(
+        [AVSegment(0.4, "one"), AVSegment(0.4, "two")],
+        audio_role="ambience",
+        channel_layout="mono",
+    )
+    command = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y"]
+    for path in inputs:
+        command.extend(["-i", str(path)])
+    command.extend(
+        ["-filter_complex", graph.filtergraph, "-map", graph.audio_label, str(output)]
+    )
+    subprocess.run(command, check=True)
+    duration = float(
+        subprocess.run(
+            [
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "csv=p=0", str(output),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+    )
+
+    assert graph.output_duration == pytest.approx(0.8)
     assert duration == pytest.approx(0.8, abs=1 / 48_000)

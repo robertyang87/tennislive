@@ -38,6 +38,8 @@ jobs:
           cache: pip
       - name: Install package
         run: pip install -q -e .
+      - name: Install final-media probe
+        run: command -v ffprobe >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
       - name: Push existing package
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
@@ -67,5 +69,8 @@ jobs:
           test -s "${OUT_DIR}/push.html"
           test -s "${OUT_DIR}/xiaohongshu.txt"
           test -n "${PUSHPLUS_TOKEN}"
+          # Push-only/replay is still a delivery path.  Existing videos must
+          # pass the same final-media gate as a freshly rendered package.
+          python tools/check_package_audio_qa.py --dir "${OUT_DIR}"
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish pushplus --dir "${OUT_DIR}"

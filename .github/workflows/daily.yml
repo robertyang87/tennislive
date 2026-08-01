@@ -165,7 +165,7 @@ jobs:
           fi
 
       - uses: actions/setup-python@v5
-        if: steps.guard.outputs.skip != 'true'
+        if: steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true'
         with:
           python-version: "3.11"
           cache: pip
@@ -175,7 +175,7 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
 
       - name: 安装 tennislive
-        if: steps.guard.outputs.skip != 'true'
+        if: steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true'
         run: pip install -q -e ".[webrender,visualqa,dev]"
 
       - name: 缓存 Chromium（HTML 卡片渲染）
@@ -250,17 +250,10 @@ jobs:
       # 日报视频是可选的；一旦生成，每条 MP4 都必须有与自身同名的最终音频
       # 报告。目录里同时可能有静音卡片视频和官方混合原声，不能共用一份报告。
       - name: 每日视频最终音频质量硬闸
-        if: steps.guard.outputs.skip != 'true'
+        if: steps.guard.outputs.skip != 'true' || steps.guard.outputs.push_pending == 'true'
         run: |
-          OUT_DIR="${{ steps.gen.outputs.outdir }}"
-          while IFS= read -r -d '' VIDEO; do
-            REPORT="${VIDEO%.mp4}.audio-qa.json"
-            test -s "$REPORT" || {
-              echo "::error::视频缺少全工程音频 QA：$VIDEO（应有 $REPORT）"
-              exit 1
-            }
-            python tools/check_audio_qa.py --report "$REPORT" --video "$VIDEO"
-          done < <(find "$OUT_DIR" -type f -name '*.mp4' -print0)
+          OUT_DIR="${{ steps.gen.outputs.outdir || steps.guard.outputs.outdir }}"
+          python tools/check_package_audio_qa.py --dir "$OUT_DIR"
 
       - name: Upload digest failure diagnostics
         if: failure() && steps.guard.outputs.skip != 'true'

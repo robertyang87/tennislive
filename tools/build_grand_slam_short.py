@@ -649,6 +649,20 @@ def _synth_piper(text, dst, model):
                    check=True, capture_output=True)
 
 
+def _atempo_filters(ratio: float) -> list[str]:
+    """Split speech acceleration into transparent FFmpeg atempo stages."""
+    if ratio <= 1.0:
+        return []
+    stages: list[str] = []
+    remaining = ratio
+    while remaining > 2.0 + 1e-9:
+        stages.append("atempo=2.000000")
+        remaining /= 2.0
+    if remaining > 1.0 + 1e-9:
+        stages.append(f"atempo={remaining:.6f}")
+    return stages
+
+
 def try_tts(scenes, meta, outdir, ff):
     """生成中文配音（原创解说文案）。优先 edge-tts（音质更好），不可用时回退 gTTS。
     每句按镜头时长对齐：过长则加速，过短则补静音，保证音画同步。"""
@@ -676,7 +690,8 @@ def try_tts(scenes, meta, outdir, ff):
             outdir,
             not_applicable_audio_qa(
                 audio_role="silence",
-                reason="no TTS engine available; rendered a silent review copy",
+                reason="synthetic_silence",
+                detail="no TTS engine available; rendered a silent review copy",
             ),
         )
         return None
@@ -694,14 +709,22 @@ def try_tts(scenes, meta, outdir, ff):
         if vo:
             try:
                 synth(vo, raw)
-            except Exception:
-                silence(raw, 0.4)
+            except Exception as exc:
+                # A spoken scene becoming 0.4 s of silence is not a graceful
+                # fallback: it deletes a sentence while the final A/V duration
+                # gate still looks healthy.  Fail with the exact scene instead.
+                raise RuntimeError(
+                    f"TTS failed for spoken scene {i}: {vo[:24]}"
+                ) from exc
         else:
             silence(raw, 0.4)
         ad = _audio_dur(ff, raw)
         af = []
         if ad > dur > 0:
-            af.append(f"atempo={min(ad / dur, 1.8):.3f}")
+            # Capping atempo and then applying ``-t`` used to cut off the end
+            # whenever speech was >1.8x the scene.  Chained <=2x stages retain
+            # every sample and still land on the declared picture window.
+            af.extend(_atempo_filters(ad / dur))
         af.append("apad")
         fit = tdir / f"f{i:02d}.mp3"
         subprocess.run([ff, "-y", "-i", str(raw), "-af", ",".join(af), "-t", f"{dur:.3f}",
@@ -853,7 +876,8 @@ def main():
         if args.voiceover:
             qa = not_applicable_audio_qa(
                 audio_role="speech",
-                reason="single supplied voiceover has no internal edit boundary",
+                reason="single_supplied_voiceover",
+                detail="single supplied voiceover has no internal edit boundary",
             )
             qa.update(
                 {
@@ -872,7 +896,8 @@ def main():
                 outdir,
                 not_applicable_audio_qa(
                     audio_role="silence",
-                    reason="no voiceover requested; rendered a silent review copy",
+                    reason="synthetic_silence",
+                    detail="no voiceover requested; rendered a silent review copy",
                 ),
             )
 

@@ -76,10 +76,11 @@ def test_只发不重渲要有一条单独的路():
         "push 模式还会重渲一遍"
 
     # push 模式**不装渲染那套**：它不下片、不渲染、不抠图，rembg / opencv /
-    # playwright / yt-dlp / ffmpeg 一个都用不上。装它们不只是白等半分钟——
+    # playwright / yt-dlp 都用不上；但 ffprobe 必须重验已落库成片的 A/V 边界。
+    # 装渲染依赖不只是白等半分钟——
     # 那几个包里任何一个装不上，都会让一条本来只是发消息的 run 挂掉。
     ffmpeg_cond = text.split("- name: 装 ffmpeg", 1)[1].split("run:", 1)[0]
-    assert "mode != 'push'" in ffmpeg_cond, "push 模式还在装 ffmpeg"
+    assert "mode != 'push'" not in ffmpeg_cond, "push 模式没有 ffprobe，最终闸跑不了"
     deps = text.split("- name: 装依赖", 1)[1].split("- name:", 1)[0]
     assert '= "push" ]' in deps and "pip install -q -e ." in deps, \
         "push 模式没有走「只装主依赖」那条分支"
@@ -372,8 +373,8 @@ def test_最终音频审计量交付MP4并保留转场计划(tmp_path, monkeypat
     def fake_run(*args, **_kwargs):
         calls.append(args)
         return type("P", (), {"stdout": json.dumps({"streams": [
-            {"codec_type": "video", "duration": "6.100"},
-            {"codec_type": "audio", "duration": "6.080"},
+            {"codec_type": "video", "start_time": "0.000", "duration": "6.100"},
+            {"codec_type": "audio", "start_time": "0.010", "duration": "6.080"},
         ]})})()
 
     monkeypatch.setattr(reel, "run", fake_run)
@@ -387,6 +388,12 @@ def test_最终音频审计量交付MP4并保留转场计划(tmp_path, monkeypat
     assert qa["status"] == "pass"
     assert qa["final_video_duration_seconds"] == 6.1
     assert qa["final_audio_duration_seconds"] == 6.08
+    assert qa["final_video_start_seconds"] == 0.0
+    assert qa["final_audio_start_seconds"] == 0.01
+    assert qa["final_video_end_seconds"] == 6.1
+    assert qa["final_audio_end_seconds"] == 6.09
+    assert qa["av_start_delta_seconds"] == 0.01
+    assert qa["av_end_delta_seconds"] == 0.01
     assert qa["av_delta_seconds"] == 0.02
     assert qa["final_declared_delta_seconds"] == 0.0
     assert qa["joins"] == joins, "更新最终实测时不能丢掉原来的 join 计划"
@@ -400,19 +407,23 @@ def test_最终音频审计在AV视频或声明时长漂移时落失败报告(
     reel = _reel()
     final = tmp_path / "reel.mp4"
 
-    for video, audio, declared, message in (
-        (6.10, 6.02, 6.10, "A/V 时差"),
-        (6.18, 6.18, 6.10, "相对声明偏差"),
+    for video_start, audio_start, video, audio, declared, message in (
+        (0.00, 0.08, 6.10, 6.02, 6.10, "起点时差"),
+        (0.00, 0.00, 6.10, 6.02, 6.10, "终点时差"),
+        (0.00, 0.00, 6.18, 6.18, 6.10, "相对声明偏差"),
     ):
         (tmp_path / "audio-qa.json").write_text(json.dumps({
             "status": "pass", "role": "mixed", "joins": [{"mode": "keep"}],
         }), encoding="utf-8")
         monkeypatch.setattr(
             reel, "run",
-            lambda *args, _video=video, _audio=audio, **kwargs: type(
+            lambda *args, _vs=video_start, _as=audio_start,
+            _video=video, _audio=audio, **kwargs: type(
                 "P", (), {"stdout": json.dumps({"streams": [
-                    {"codec_type": "video", "duration": str(_video)},
-                    {"codec_type": "audio", "duration": str(_audio)},
+                    {"codec_type": "video", "start_time": str(_vs),
+                     "duration": str(_video)},
+                    {"codec_type": "audio", "start_time": str(_as),
+                     "duration": str(_audio)},
                 ]})}
             )(),
         )

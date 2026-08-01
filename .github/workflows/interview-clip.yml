@@ -49,11 +49,13 @@ jobs:
       #   DejaVu——**比 Noto Sans 宽 8%**，切行时量的宽度和渲出来的对不上，
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
-      - name: 装系统依赖
+      # push 不重渲，但仍须用 ffprobe 重新量仓库里的最终 MP4，不能绕过交付闸。
+      - name: 装 ffmpeg（所有可交付模式）
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 装字体（只有出片要）
         if: github.event.inputs.mode != 'push'
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
+        run: sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -74,13 +76,26 @@ jobs:
           python -m playwright install --with-deps chromium
           node --version
 
-      # **只推送的时候什么重依赖都不需要**：封面已经在仓库里、不转写、不下载、
-      # 不编码，`push_reel.py` 只用 requests 和 tennislive 自己那几个模块。
-      # 原来照样装 apt 字体 + ffmpeg + Chromium + faster-whisper，白等三分钟——
-      # 一个非关键阶段失败之后重跑，不该把前面所有阶段的准备工作再做一遍。
+      # **只推送时仍不装渲染重依赖**：封面已经在仓库里、不转写、不下载、
+      # 不编码；只额外保留上面的 ffprobe，用来复验最终 MP4 的 A/V 边界。
+      # 原来照样装字体 + Chromium + faster-whisper，白等几分钟——一个非关键
+      # 阶段失败后重跑，不该把前面所有渲染准备再做一遍。
       - name: 装依赖（只推送）
         if: github.event.inputs.mode == 'push'
         run: pip install -q -e .
+
+      - name: push 模式先确认成片和音频报告真的在仓库里
+        if: github.event.inputs.mode == 'push'
+        run: |
+          D="output/interviews/${{ github.event.inputs.slug }}"
+          VIDEO="$D/${{ github.event.inputs.slug }}.mp4"
+          QA="$D/audio-qa.json"
+          for FILE in "$VIDEO" "$QA"; do
+            if [ -z "$(git ls-files -- "$FILE")" ] || [ ! -s "$FILE" ]; then
+              echo "::error::$FILE 不在这个 commit 里或为空——push 只能发送已落库且验过的成片。"
+              exit 1
+            fi
+          done
 
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
@@ -162,8 +177,8 @@ jobs:
           PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
-      - name: 验成片
-        if: github.event.inputs.mode != 'push'
+      - name: 验最终交付物（render/push 共用硬闸）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
         run: |
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
