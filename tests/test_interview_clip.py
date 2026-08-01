@@ -497,6 +497,43 @@ def test_中间物不许进仓库(path):
     assert not bad, f"{outdir} 里有中间物：{bad}——工作流的清理步骤要跟着加"
 
 
+def test_复制页写在提交之前推送排在提交之后():
+    """**这条规矩在别的线上踩过四次，别在这儿踩第五次。**
+
+    - 复制页排在提交**之后** → 文件只活在 runner 的工作区，推送里那个按钮
+      点开 404（run 30342567879 / 30339377013）
+    - 探链接排在提交**之前** → Pages 那时还取不到，按钮**每次都被摘掉**，
+      连一分钟后本来能用的也一起摘（run 30432435525）
+
+    所以顺序是死的：**写复制页 → 提交 → 推送**。只测行为拦不住位置错，
+    所以这条盯的是**位置**。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    names = [str(s.get("name") or "") for s in wf["jobs"]["render"]["steps"]]
+    at = {k: next(i for i, n in enumerate(names) if k in n)
+          for k in ("写复制页", "提交成片", "推送到微信")}
+    assert at["写复制页"] < at["提交成片"] < at["推送到微信"], names
+
+    # 而且渲染那条路上不许出现推送用的探测（闸装在「发」那一步，不是「渲」那一步）
+    render_step = next(s for s in wf["jobs"]["render"]["steps"]
+                       if "剪 + 烧字幕" in str(s.get("name") or ""))
+    assert "push_reel" not in str(render_step.get("run") or "")
+
+
+def test_封面文件名是push_reel认的那个():
+    """`push_reel.py` 只认 `poster.jpg`。改名等于推送里少一整屏海报，
+    而它**只打印一行提示，不报错**——又一个不吭声的兜底。"""
+    from tools.build_interview_clip import ROOT as _R  # noqa: F401
+    from tools.push_reel import POSTER_NAME
+
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert f'"{POSTER_NAME}"' in src, \
+        f"build_cover 写出来的名字不是 {POSTER_NAME}，push_reel 找不到它"
+
+
 def test_自检脚本从工作流里读pip行不另写一份():
     """**两处各写一份必分叉**，而分叉的表现是「本地全绿、runner 上 ModuleNotFound」。
 
