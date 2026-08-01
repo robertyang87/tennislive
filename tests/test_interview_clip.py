@@ -368,25 +368,64 @@ def test_下载不到要把目录里有什么列出来(tmp_path, monkeypatch):
     assert "目录里有" in str(e.value)
 
 
-def test_合流一律remux成目标容器(tmp_path, monkeypatch):
-    """加了 `--merge-output-format`，落到别的后缀这件事本身就少发生。
-
-    上面那条兜底仍然留着——**兜底和默认值出事的时候不吭声**，
-    所以两层都要，而且都要出声。
-    """
-    from tools.build_interview_clip import yt_download
-
+def _capture(monkeypatch, dest: Path) -> list:
     import tools.build_interview_clip as clip
 
     cmds: list = []
-    dest = tmp_path / "s.mp4"
-    # 让假的 run 顺手把文件建出来，模拟「下成功了」
     monkeypatch.setattr(clip.subprocess, "run",
                         lambda cmd, **kw: cmds.append(cmd) or dest.write_bytes(b"x"))
-    yt_download("u", dest, "bv*+ba", {})
-    assert cmds, "根本没调 yt-dlp"
+    return cmds
+
+
+def test_要合流才加merge参数纯音轨不加(tmp_path, monkeypatch):
+    """**加保险也要验它对每条路都成立。**
+
+    为了「别留一条没有保险的路」，我把下音频那条也接进了 `yt_download`——
+    于是 `-f ba` → `.m4a` 也被加上 `--merge-output-format m4a`，而 yt-dlp
+    只认视频容器：`error: invalid merge output format "m4a" given`，
+    **一秒退出**，看起来像网络问题。**本来通的那条被我弄坏了。**
+    """
+    from tools.build_interview_clip import yt_download
+
+    vid = tmp_path / "s.mp4"
+    cmds = _capture(monkeypatch, vid)
+    yt_download("u", vid, "bv*[height<=720]+ba/b[height<=720]", {})
     assert "--merge-output-format" in cmds[0]
     assert cmds[0][cmds[0].index("--merge-output-format") + 1] == "mp4"
+
+    aud = tmp_path / "a.m4a"
+    cmds = _capture(monkeypatch, aud)
+    yt_download("u", aud, "ba", {})
+    assert "--merge-output-format" not in cmds[0], \
+        "纯音轨那条路不该合流，加了 yt-dlp 直接报参数非法"
+
+
+def test_拼出来的参数yt_dlp真的认(tmp_path, monkeypatch):
+    """**查产物不查信号**：断言「参数长这样」证明不了 yt-dlp 收得下。
+
+    不联网也能验——不给 URL 跑一遍，yt-dlp 先解析选项再检查 URL：
+    选项合法 → `You must provide at least one URL.`；
+    选项非法 → `invalid merge output format "m4a" given`。两句分得开。
+    """
+    import shutil
+    import subprocess as sp
+
+    from tools.build_interview_clip import yt_download
+
+    if not shutil.which("yt-dlp"):
+        pytest.skip("这台机器没装 yt-dlp")
+    # ⚠️ 真的 `run` 要**先抓在手里**：`_capture` 打的桩落在 subprocess 模块上，
+    # 而这里的 `sp` 是同一个模块对象——不先存下来，等会儿调的是自己的桩，
+    # 拿到一个 int 然后报 `'int' object has no attribute 'stderr'`。
+    real_run = sp.run
+    for name, fmt in (("s.mp4", "bv*+ba"), ("a.m4a", "ba")):
+        dest = tmp_path / name
+        cmds = _capture(monkeypatch, dest)
+        yt_download("u", dest, fmt, {})
+        args = [a for a in cmds[0] if a != "u"]           # 去掉那个假 URL
+        r = real_run(args, capture_output=True, text=True, timeout=120)
+        assert "You must provide at least one URL" in r.stderr, \
+            f"{name} 这组参数 yt-dlp 不认：{r.stderr.strip().splitlines()[-1:]}"
 
 
 # ---------------------------------------------------------------- 找 Chromium
