@@ -475,6 +475,12 @@ def test_这台机器上真的找得到chromium():
 
 # 出片目录里**只许留**这些。别的都是中间物。
 _KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
+# ⚠️ **判据是文件名，不是后缀。** 这个目录里有两个 `.html`，一个是产物一个是垃圾：
+# `copy.html` 是**发出去的东西**（GitHub Pages 就靠它，微信里那三个复制按钮全在
+# 这一页上）；`cover.html` 是渲封面时的中间物，12.5 MB 全是 base64 内嵌的字体。
+# 第一版按后缀判，写的时候目录里只有 `cover.html`，等推送接上、`copy.html`
+# 落进来就误报了——**判据宁可窄不可宽，但「窄」要窄在对的那一维上**。
+_KEEP_NAMES = {"copy.html"}
 _DROP_NAMES = {"cover.html", "whisper.json"}
 
 
@@ -493,7 +499,7 @@ def test_中间物不许进仓库(path):
         pytest.skip("这条还没出过片")
     bad = [p.name for p in outdir.iterdir()
            if p.name in _DROP_NAMES or p.name.startswith(("source.", "_"))
-           or p.suffix not in _KEEP_SUFFIX]
+           or (p.suffix not in _KEEP_SUFFIX and p.name not in _KEEP_NAMES)]
     assert not bad, f"{outdir} 里有中间物：{bad}——工作流的清理步骤要跟着加"
 
 
