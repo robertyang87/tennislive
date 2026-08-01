@@ -112,8 +112,17 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 装中文字体（封面和字幕都要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
+      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      - name: 装 ffmpeg
+        timeout-minutes: 5
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 装中文字体（只有渲染要）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 5
+        run: sudo apt-get install -y -qq fonts-noto-cjk
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
@@ -123,6 +132,7 @@ jobs:
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
       # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
       - name: 缓存抠图模型
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.u2net
@@ -145,12 +155,14 @@ jobs:
           node --version
 
       - name: 缓存 Chromium
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
+        if: github.event.inputs.mode == 'render'
         run: python -m playwright install --with-deps chromium
 
       - name: 算出目录
