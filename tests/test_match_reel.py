@@ -2093,6 +2093,15 @@ def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
     # ③ 门槛要留够余量：真实比赛音轨峰值贴近 0，别把录得轻的源片误伤
     assert reel.SILENT_PEAK_DB <= -40, "门槛太靠近正常音量了，会误伤"
 
+    # ⚠️ 这道闸不许拦住「只出封面」那条快路：封面一个音频样本都不碰，
+    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处废掉。
+    # 和 `_preflight_cutout` 那次同一个错——别把无关的检查塞进它前面。
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    render_body = body[body.index("\ndef render("):]
+    assert render_body.index("if cover_only:") < \
+        render_body.index("require_live_sound(source, spec)"), (
+        "原声那道闸排在「只出封面」之前——封面不碰音频，这一拦就把快速预览废了")
+
     # ④ 闸本身：哑的要报错并**说出路**，认领过的放行，有声的一路畅通
     import pytest  # noqa: PLC0415
 
