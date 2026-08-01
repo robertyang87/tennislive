@@ -561,11 +561,17 @@ def scene_changes(path: Path, threshold: float = 0.35) -> list[float]:
 
 
 def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
-                  columns: int = 6, tile_w: int = 360) -> list[Path]:
+                  columns: int = 6, tile_w: int = 360, crop: str = "",
+                  prefix: str = "contact") -> list[Path]:
     """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
 
     时间码必须烧进画面里——不然看图挑完段，还得数第几格再乘回去，数错一次
     整段就切偏了。
+
+    `crop`（ffmpeg 的 `w:h:x:y`）先裁再缩。**整幅缩到 360 宽时记分条只有几个
+    像素高，比分根本读不出来**——而定段落必须知道每一段是第几局第几分，
+    否则「转折点在不在片子里」就只能靠猜。裁出记分条那一块单独拼一版，
+    同样的机制，放大到能读。
     """
     outdir.mkdir(parents=True, exist_ok=True)
     frames = outdir / "frames"
@@ -577,7 +583,8 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     for index, t in enumerate(stamps):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
-            "-vf", (f"scale={tile_w}:-2,"
+            "-vf", ((f"crop={crop}," if crop else "")
+                    + f"scale={tile_w}:-2,"
                     f"drawtext=text='{t:.1f}s':x=8:y=8:fontsize=26:"
                     f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
             "-q:v", "3", str(frames / f"f{index:03d}.jpg"))
@@ -589,7 +596,7 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
         listing = outdir / f"_sheet{n // per_sheet}.txt"
         listing.write_text("".join(f"file '{p.resolve()}'\n" for p in chunk),
                            encoding="utf-8")
-        sheet = outdir / f"contact_{n // per_sheet:02d}.jpg"
+        sheet = outdir / f"{prefix}_{n // per_sheet:02d}.jpg"
         rows = math.ceil(len(chunk) / columns)
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-f", "concat", "-safe", "0", "-i", str(listing),
@@ -1752,6 +1759,14 @@ def main() -> int:
         cuts = scene_changes(source)
         print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点")
         sheets = contact_sheet(source, outdir, every=args.every)
+        # 记分条单独拼一版，否则整幅缩完读不出比分。位置按源片分辨率推：
+        # 转播把记分条烧在左下，取左边 42%、底部往上 20% 那一块。
+        w, h = probe_size(source)
+        box = f"{w * 42 // 100}:{h * 20 // 100}:0:{h * 78 // 100}"
+        sheets += contact_sheet(source, outdir, every=args.every,
+                                crop=box, prefix="score", columns=4,
+                                tile_w=520)
+        print(f"记分条缩略图墙：crop={box}（源片 {w}x{h}）")
         captions = fetch_captions(args.url, outdir)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
