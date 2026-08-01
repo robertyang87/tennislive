@@ -51,14 +51,23 @@ on:
         required: false
         type: boolean
         default: false
+      # ⚠️ 下面这几个输入**一律不给默认值**。它们装的是「这一条片子的文案」，
+      # 而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，
+      # 而且**不报错**。2026-08-01 郑钦文那条赛前前瞻就是这么发错的：
+      # 标题印着「郑钦文首轮出局」（上一条华盛顿赛报的 summary 默认值），
+      # 而那场球当晚 00:30 才开打。**说了一件没发生的事，微信收不回来。**
+      #
+      # 更阴的一层：**传空串盖不住默认值**。`github.event.inputs.X` 在收到空串时
+      # 退回 default，所以我明明传了 `summary: ""`，用的还是那句旧话。
+      # 唯一可靠的做法是默认值本身就是空的。
       matchup:
-        description: "对阵，进标题：如「锦织圭 vs 商竣程」"
+        description: "对阵，进标题：如「锦织圭 vs 商竣程」。**必填**（push=true 时）"
         required: false
-        default: "伊埃拉 vs 郑钦文"
+        default: ""
       score:
-        description: "赛果，进标题：赢家在前，如「2:1」"
+        description: "赛果，进标题：赢家在前，如「2:1」。**赛前前瞻留空**"
         required: false
-        default: "2:1"
+        default: ""
       event:
         description: "赛事与轮次，进标题。默认留空——加上就太长了，赛事名文案里有"
         required: false
@@ -66,11 +75,11 @@ on:
       summary:
         description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
         required: false
-        default: "郑钦文首轮出局"
+        default: ""
       push_lead:
         description: "推送正文那一句"
         required: false
-        default: "一盘一破在手，之后只再赢下 1 局。全场 8 个破发点保住 2 个，二发得分率 35%，12 记 Ace 全场最多，2 小时 26 分。"
+        default: ""
 
 permissions:
   contents: write
@@ -107,6 +116,22 @@ jobs:
           echo "::error::GitHub Pages 只服务 main——复制页留在分支上永远是 404，"
           echo "::error::推送那一步等不到它就会 exit 1，渲染和轮询全白跑十几分钟。"
           echo "::error::出片但不推送用 push=false；要推送先把 PR 合进 main 再跑。"
+          exit 1
+
+      # **标题里那句话必须是这次填的。** 上一版给 matchup / summary / push_lead
+      # 留了上一条片子的默认值，于是 2026-08-01 郑钦文那条赛前前瞻顶着
+      # 「郑钦文首轮出局」发了出去——那场球当晚 00:30 才开打，**说了一件没发生
+      # 的事**。默认值现在一律为空，但空着发同样不行：标题末尾那一格会是空的。
+      # 所以在这儿拦，第 3 秒就红，别等渲染十分钟之后再发一条错的。
+      - name: push=true 必须自己填标题，不许吃默认值
+        if: >-
+          github.event.inputs.push == 'true'
+          && github.event.inputs.matchup == ''
+          && github.event.inputs.summary == ''
+        run: |
+          echo "::error::push=true 时 matchup 和 summary 至少要填一个——标题末尾那一格靠它。"
+          echo "::error::赛前前瞻填 matchup（如「郑钦文 vs 塔拉鲁迪」）、score 留空；"
+          echo "::error::赛报填 matchup + score，或者用 summary 一句话概括赛果。"
           exit 1
 
       - uses: actions/checkout@v4

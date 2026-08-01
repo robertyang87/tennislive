@@ -2161,3 +2161,32 @@ def test_推送卡的台头跟着栏目走():
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
     assert "column = args.column or column_of(Path(args.copy))" in src
     assert "column=column)" in src, "药丸没和标题共用那一个栏目名"
+
+
+def test_推送的文案输入不许留上一条片子的默认值():
+    """`matchup` / `score` / `summary` / `push_lead` 装的是**这一条片子的文案**，
+    而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，不报错。
+
+    2026-08-01 郑钦文那条赛前前瞻就是这么发错的：标题印着「郑钦文首轮出局」
+    （上一条华盛顿赛报留下的 summary 默认值），而那场球当晚 00:30 才开打。
+    **说了一件没发生的事，微信收不回来。**
+
+    更阴的一层：**传空串盖不住默认值**。`github.event.inputs.X` 收到空串时退回
+    default，所以显式传 `summary: ""` 用的还是那句旧话。唯一可靠的做法是默认值
+    本身就是空的——再加一道「两个都空就别发」的闸，在第 3 秒红，而不是渲染完
+    十分钟之后发出去一条错的。
+    """
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    inputs = doc[True]["workflow_dispatch"]["inputs"]   # `on:` 被 yaml 读成 True
+    for name in ("matchup", "score", "summary", "push_lead"):
+        assert inputs[name].get("default", "") == "", (
+            f"{name} 又带上了默认值 {inputs[name].get('default')!r}——"
+            "那是上一条片子的文案，下一条不填就顶着它发出去")
+
+    # 闸要在 checkout 之前，别等渲染跑完
+    steps = _steps(WORKFLOW.read_text(encoding="utf-8"))
+    gate = "push=true 必须自己填标题，不许吃默认值"
+    assert gate in steps, "缺了「两个都空就别发」那道闸"
+    assert steps.index(gate) < steps.index("render — 出成片")
