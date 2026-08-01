@@ -535,6 +535,15 @@ jobs:
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+          # **钉 commit，别停在 @main。** 同一条片子同一天重渲，海报路径一模一样
+          # （`output/<date>/reel/<slug>/poster.jpg`），而微信的图片缓存是按
+          # **路径**算的——URL 停在 `@main` 的话，第二轮、第三轮推出去的还是
+          # 第一轮那张海报，**而且不吭声**。今天 eala-fernandez 渲了 3 轮、
+          # wang-samsonova 2 轮，正好撞在这上面。
+          # `prepare_image_delivery` 读这个环境变量把 `@main` 换成 `@<sha>`，
+          # 每一版就是一个真正不同的资源。解说片和 push-existing 一直有这一行，
+          # reel 这两条线漏了。
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
