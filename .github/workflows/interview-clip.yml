@@ -161,8 +161,12 @@ jobs:
           d = json.loads(pathlib.Path(
               f"specs/interviews/{os.environ['SLUG']}.json").read_text(encoding="utf-8"))
           push = d.get("push") or {}
-          for k in ("matchup", "score", "event"):
+          for k in ("matchup", "score", "event", "summary", "lead"):
               v = str(push.get(k, "")).strip()
+              # `$GITHUB_OUTPUT` 是一行一个 `k=v`：值里有换行会把后面的行吃掉，
+              # 而且**不报错**，只是下游少拿到几个字段。
+              if "\n" in v:
+                  raise SystemExit(f"push.{k} 里有换行，塞不进 GITHUB_OUTPUT")
               if k == "matchup" and not v:
                   raise SystemExit("spec 的 push.matchup 是空的，推送标题拼不出来")
               print(f"{k}={v}")
@@ -180,6 +184,8 @@ jobs:
             --matchup "${{ steps.push_meta.outputs.matchup }}" \
             --score "${{ steps.push_meta.outputs.score }}" \
             --event "${{ steps.push_meta.outputs.event }}" \
+            --summary "${{ steps.push_meta.outputs.summary }}" \
+            --date "$(TZ=Asia/Shanghai date +%F)" \
             --copy "$COPY"
 
       - name: 提交成片
@@ -217,7 +223,9 @@ jobs:
             --matchup "${{ steps.push_meta.outputs.matchup }}" \
             --score "${{ steps.push_meta.outputs.score }}" \
             --event "${{ steps.push_meta.outputs.event }}" \
-            --lead "${{ github.event.inputs.push_lead }}" \
+            --summary "${{ steps.push_meta.outputs.summary }}" \
+            --date "$(TZ=Asia/Shanghai date +%F)" \
+            --lead "${{ github.event.inputs.push_lead || steps.push_meta.outputs.lead }}" \
             --copy "$COPY"
 
       - uses: actions/upload-artifact@v4
