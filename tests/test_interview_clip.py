@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -375,6 +376,70 @@ def test_这台机器上真的找得到chromium():
 
 # ---------------------------------------------------------------- 工作流依赖
 
+def _run_scripts(workflow: str) -> str:
+    """工作流里**真正会执行的那些 `run:` 脚本**，去掉 shell 注释。
+
+    ⚠️ 别拿整个 yml 的文本去搜关键字。第一版就是这么写的，反向验证时
+    「把 `-e .` 从 pip 行删掉」**照样绿**——因为我在上面的注释里写了
+    「`-e .` 不能漏」，`in` 直接命中了注释。**注释不会被执行。**
+    这是「断言全绿不等于页面对」的静态版：查的东西和跑的东西不是一回事。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / workflow).read_text(encoding="utf-8"))
+    out = []
+    for job in (wf.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            for ln in str(step.get("run") or "").splitlines():
+                if not ln.lstrip().startswith("#"):
+                    out.append(ln)
+    return "\n".join(out)
+
+
+# 工具里的第三方顶层模块 → 装它要往 pip 行里写什么。
+# **这张表要盖住全部**，下面那条测试会拦住漏网的新 import。
+_PROVIDES = {
+    "PIL": "-e .",              # Pillow 是项目自己声明的依赖
+    "tennislive": "-e .",       # 还拖着 requests / rich / pypdf
+    "playwright": "playwright",
+    "faster_whisper": "faster-whisper",
+}
+
+
+def test_工作流装的依赖覆盖工具import的每一个():
+    """**加新能力要同时改三处：代码、工作流的依赖、开跑前的预检。**
+
+    这条规矩一天之内咬了三次，一次比一次靠后：
+
+    1. `fonts-noto-core` 加进了 interview-clip.yml，忘了 ci.yml
+    2. Chromium 找得到了，但 `_chromium()` 按旧目录名 glob
+    3. pip 行只装了三个第三方包，**没装项目自己**——跑到预检报
+       `No module named 'PIL'`
+
+    每次都是「本地装着不等于 CI 装着」：沙箱是长期攒出来的环境，runner 每次
+    都是干净的。所以判据不是「装了哪几个包」，是**工具 import 的每一个都在**，
+    而且这张对照表**必须盖住全部**——新加一个第三方 import 就红，逼你同时
+    改工作流。
+    """
+    import sys
+
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    wf = _run_scripts("interview-clip.yml")
+    mods = set(re.findall(r"^\s*(?:from|import)\s+([A-Za-z_]\w*)", src, re.M))
+    mods -= set(sys.stdlib_module_names) | {"__future__", "build_interview_clip"}
+
+    unknown = mods - set(_PROVIDES)
+    assert not unknown, (
+        f"这些第三方 import 没登记在 _PROVIDES 里：{sorted(unknown)}。"
+        "登记它，并确认 interview-clip.yml 的 pip 行装了它——"
+        "**代码、工作流依赖、开跑前预检，三处一起改。**")
+    for mod in sorted(mods):
+        assert _PROVIDES[mod] in wf, (
+            f"工具 import 了 `{mod}`，但 interview-clip.yml 没装 "
+            f"`{_PROVIDES[mod]}`。跑到预检才会报 ModuleNotFoundError。")
+
+
 def test_ci装的字体覆盖代码要的每一个():
     """**加新能力要同时改三处：代码、工作流的依赖、开跑前的预检。**
 
@@ -387,7 +452,7 @@ def test_ci装的字体覆盖代码要的每一个():
     """
     import tools.build_interview_clip as clip
 
-    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    ci = _run_scripts("ci.yml")
     for kind, (path, pkg) in clip._FONT_FILES.items():
         assert pkg in ci, (
             f"代码量 {kind} 的宽度要 {path}（{pkg}），ci.yml 里没装它。"

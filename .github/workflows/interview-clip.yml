@@ -47,9 +47,15 @@ jobs:
       # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
       # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
       # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
+      # **`-e .` 不能漏**：这个工具 import `PIL`（量字幕宽度）和
+      # `tennislive.render.webcards`（封面字体），后者又拖着 requests / rich /
+      # pypdf 一整串。只装那三个第三方包，跑到预检就是 `No module named 'PIL'`。
+      # 这是同一条规矩在同一天里第三次咬人（前两次是 fonts-noto-core 和
+      # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
+      # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
         run: |
-          pip install -q "yt-dlp[default]" playwright faster-whisper
+          pip install -q -e . "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
           node --version
 
