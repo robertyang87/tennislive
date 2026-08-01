@@ -222,7 +222,7 @@ def _has_audio(path: Path) -> bool:
     return bool(out.strip())
 
 
-def resolve_crop(source_w: int, source_h: int) -> None:
+def resolve_crop(source_w: int, source_h: int, zoom: float = 1.0) -> None:
     """按源片实际高度定 3:4 的裁切窗口，太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
@@ -238,9 +238,20 @@ def resolve_crop(source_w: int, source_h: int) -> None:
             "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
             "或者换一个能拿到 720p 以上的源。"
         )
-    CROP_H = source_h // 2 * 2
+    # **`zoom` 是给「人太小」用的。** 转播主机位架在底线后方高处，3:4 从中间
+    # 裁出来那一条大部分是空球场，两个人被挤到画面最上边和最下边——郑钦文那条
+    # 第一版渲出来就是这样，62 秒那帧几乎是空场。窗口按 zoom 缩小再放大到
+    # 1080×1440，人就回来了，代价是放大倍数变高、画质掉一档。
+    #
+    # 和「竖版卡里的全景取决于拍摄视角，不是原图有多宽」是同一件事，只是搬到
+    # 了视频上：机位越高越远，中间那一竖条越空。
+    CROP_H = int(source_h / zoom) // 2 * 2
     CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
-    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}")
+    if CROP_W > source_w:
+        raise ReelError(f"zoom={zoom} 算出的窗口 {CROP_W} 比源片还宽（{source_w}）")
+    up = 1440 / CROP_H
+    print(f"[裁切] 源片 {source_w}×{source_h} → 3:4 窗口 {CROP_W}×{CROP_H}"
+          f"（zoom {zoom:g}，放大 {up:.2f}×）")
 
 
 def resolve_fps(path: Path) -> tuple[str, float]:
@@ -1000,7 +1011,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         mark = "" if abs(fps - FPS) < 1e-6 else f"  ← 和主源不同，这几段会重采样到 {FPS:g}"
         print(f"源片 {name or '(单源)'}: {source_w}×{source_h} "
               f"{probe_duration(sources[name]):.1f}s {fps:g}fps{mark}")
-    resolve_crop(source_w, source_h)
+    resolve_crop(source_w, source_h, float(spec.get("crop_zoom", 1.0)))
 
     # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
     # 广告板、看台全跟着滑；源片是 25 fps，滑动的静止物最容易看出一格一格。
