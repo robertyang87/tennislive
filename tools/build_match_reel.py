@@ -1501,9 +1501,40 @@ def _preflight_cutout(spec: dict) -> None:
         ) from exc
 
 
+def validate_spec(spec: dict) -> list[Segment]:
+    """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
+
+    这里拦下来的每一类错，原来都要先付一次 392 MB 的下载才报出来：
+    `parse_segments` 排在第 1543 行，而下载在第 1516 行，可它只用 `sources`
+    的**键**去校验段落引用（`{s.source} - set(sources)`），一个下载下来的
+    文件都不碰。段落字段写错、`inset.corner` 写错、缺字段、贴图路径不存在
+    ——四类错误就这么各自值一趟下载。
+
+    今天 eala-fernandez 渲了 3 轮、wang-samsonova 2 轮；最近 30 趟 match-reel
+    合计 211 分钟。**把「渲到一半才发现」变成「第 5 秒报错」是这条线上最便宜
+    的一笔改动。**
+
+    ⚠️ 只做**形状**校验，两类东西**故意不在这儿**：
+
+    - **环境检查**（`_preflight_cutout` 查这台机器有没有 rembg）——那是「这台
+      机器行不行」，不是「这份 spec 对不对」。混进来的话，本地想 dry-run 一下
+      spec 就得先装 176 MB 的抠图模型。它留在 `render()` 里，照旧排在下载之前。
+    - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
+      别塞进来假装也提前了。
+    """
+    urls = spec_sources(spec)
+    if not urls:
+        raise ReelError("spec 里一个源都没有")
+    return parse_segments(spec, urls, next(iter(urls)))
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
-           source_override: Path | None = None) -> Path:
+           source_override: Path | None = None,
+           cover_only: bool = False) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都
+    # 死在第 5 秒，不用等 392 MB 下完。
+    validate_spec(spec)
     _preflight_cutout(spec)
     urls = spec_sources(spec)
     sources: dict[str, Path] = {}
@@ -1533,6 +1564,25 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         source = merged
 
     source_w, source_h = probe_size(source)
+
+    # **只出封面就到此为止。** 封面是全流程返工最多的那一屏（CLAUDE.md 里
+    # 68 行、10 个专门段落，每段都是一轮返工换来的），而它在完整 render 里
+    # **第 63 秒就完成了**，却要等满 6 分钟才看得见（run 30624808733 的时间线：
+    # 10:52:54 开跑 → 10:53:57 封面编码完 → 11:00:15 成片）。
+    #
+    # `build_cover` 不依赖 segments / tracks / TTS / voice——查过，一个都不用。
+    # 所以「下载 → 出海报 → 退出」是干净的一条路，约 20 秒的活。
+    if cover_only:
+        cover = build_cover(sources, primary, spec,
+                            outdir / "part_cover.mp4", source_w)
+        poster = outdir / POSTER_NAME
+        if not poster.is_file():
+            raise ReelError(f"封面渲完了却没有 {POSTER_NAME}")
+        print(f"[封面预览] {poster}（{poster.stat().st_size / 1024:.0f} KB）\n"
+              f"  这一步不出成片。看着对了再跑完整 render。")
+        cover.unlink(missing_ok=True)
+        return poster
+
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
@@ -1767,6 +1817,10 @@ def main() -> int:
     r.add_argument("--source", help="已经下好的源片（跳过下载）")
     r.add_argument("--voice", default="zh-CN-YunxiNeural")
     r.add_argument("--rate", default="+6%")
+    r.add_argument("--dry-run", action="store_true",
+                   help="只校验 spec 的形状，不下载不渲染，秒级返回")
+    r.add_argument("--cover-only", action="store_true",
+                   help="只出封面海报就停（约 20 秒），用来调 cx/scale/focus/box")
 
     args = parser.parse_args()
     outdir = Path(args.outdir)
@@ -1794,9 +1848,19 @@ def main() -> int:
         print("缩略图墙:", ", ".join(s.name for s in sheets))
         return 0
 
-    render(load_spec(Path(args.spec)), outdir,
+    spec = load_spec(Path(args.spec))
+    if args.dry_run:
+        segments = validate_spec(spec)
+        total = sum(s.length for s in segments)
+        print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
+        print("  ⚠️ 只校验了形状。裁切越界、frame_at 超出片长这类要等源片，"
+              "这里查不了。")
+        return 0
+
+    render(spec, outdir,
            voice=args.voice, rate=args.rate,
-           source_override=Path(args.source) if args.source else None)
+           source_override=Path(args.source) if args.source else None,
+           cover_only=args.cover_only)
     return 0
 
 

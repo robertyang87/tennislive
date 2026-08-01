@@ -1475,7 +1475,12 @@ def test_封面停多久跟着配音走():
     assert "def synth_cover(" in reel, "封面那句没有单独合成——它得在渲封面之前就有"
     # 合成排在渲封面之前：反过来的话长度还没算出来，只能又退回常量
     body = reel[reel.index("def render("):]
-    assert body.index("cover_secs = cover_length(") < body.index("build_cover("), (
+    # **盯的是真正接收 `cover_secs` 的那次调用**，不是「第一个 build_cover(」。
+    # `--cover-only` 那条快速预览路径也调 build_cover（拿默认时长渲一张海报
+    # 就退出，海报本来就与时长无关），它排在最前面——按 `index()` 找会撞上它，
+    # 而那是误判：production 那条路照旧先算长度。判据宁可窄，不可宽。
+    production = body.index("cover_secs)]")
+    assert body.index("cover_secs = cover_length(") < production, (
         "封面长度算在渲封面之后——那就只能拿常量渲，等于没改")
     # 定长那条路要出声
     assert "没有配音，定长停" in reel, "退回定长时不吭声，和「配音没合出来」分不开"
@@ -2624,3 +2629,95 @@ def test_海报的裁切中间物一个都不许进仓库():
     for suffix in sorted(images):
         stray = [ln for ln in tracked.splitlines() if ln.endswith(suffix)]
         assert not stray, f"仓库里已经有 {suffix} 的中间物：{stray[:3]}"
+
+
+def test_spec形状校验排在下载之前():
+    """**今天返工的直接来源：错误发现得太晚。**
+
+    `parse_segments` 原来在第 1543 行，而下载源片在第 1516 行——可它只用
+    `sources` 的**键**去校验段落引用（`{s.source} - set(sources)`），一个下载
+    下来的文件都不碰。于是段落字段写错、`inset.corner` 写错、缺字段、贴图路径
+    不存在这四类错，每一类都要先付一次 392 MB 的下载才报出来。
+
+    eala-fernandez 今天渲了 3 轮、wang-samsonova 2 轮；最近 30 趟 match-reel
+    合计 211 分钟。**「渲到一半才发现」变成「第 5 秒报错」是这条线上最便宜的
+    一笔改动。**
+
+    这条盯**位置**：`validate_spec` 和 `_preflight_cutout` 都必须排在下载之前。
+    「只测行为拦不住位置错」——复制页那道闸上已经上过这一课。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def render("):]
+    body = body[:body.index("\ndef ", 1)]
+
+    validate_at = body.index("validate_spec(spec)")
+    preflight_at = body.index("_preflight_cutout(spec)")
+    download_at = body.index("download(url, path)")
+    assert validate_at < download_at, "spec 形状校验排到下载后面了"
+    assert preflight_at < download_at, "缺依赖的预检排到下载后面了"
+
+    # 形状校验里**不许**混进环境检查——否则本地想 dry-run 一下 spec，
+    # 得先装 176 MB 的抠图模型
+    shape = src[src.index("def validate_spec("):]
+    shape = shape[:shape.index("\ndef ", 1)]
+    assert "_preflight_cutout" not in shape.split('"""')[-1], (
+        "validate_spec 里混进了环境检查——那是「这台机器行不行」，"
+        "不是「这份 spec 对不对」")
+
+
+def test_dry_run秒级返回且一个字节都不下载(tmp_path):
+    """**真跑一遍**，喂一个绝对下不动的 URL——它必须照样成功返回。
+
+    这是「写了不等于跑过」：断言 `--dry-run` 这个开关存在，证明不了它没去下载。
+    所以给一个 `http://0.0.0.0/nope.mp4`，能秒回就说明它真的没碰网络。
+    """
+    import json as _json
+    import subprocess as _sp
+    import sys as _sys
+    import time as _time
+
+    spec = _json.loads(Path("specs/reels/wong-lehecka.json").read_text(encoding="utf-8"))
+    spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
+    path = tmp_path / "fake.json"
+    path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    outdir = tmp_path / "out"
+
+    started = _time.perf_counter()
+    proc = _sp.run(
+        [_sys.executable, "tools/build_match_reel.py", "render",
+         "--spec", str(path), "--outdir", str(outdir), "--dry-run"],
+        capture_output=True, text=True, timeout=60)
+    elapsed = _time.perf_counter() - started
+
+    assert proc.returncode == 0, f"dry-run 失败了：{proc.stderr[-400:]}"
+    assert "spec 形状没问题" in proc.stdout, proc.stdout
+    assert elapsed < 20, f"dry-run 花了 {elapsed:.1f}s——它不该碰网络"
+    assert not outdir.exists(), "dry-run 建了 outdir——它什么都不该产"
+
+
+def test_cover_only排在分段和TTS之前():
+    """封面是全流程返工最多的那一屏（CLAUDE.md 里 68 行、10 个专门段落，
+    每段都是一轮返工换来的），而它在完整 render 里**第 63 秒就完成了**，
+    却要等满 6 分钟才看得见——run 30624808733 的时间线：
+    10:52:54 开跑 → 10:53:57 封面编码完 → 11:00:15 成片。
+
+    `build_cover` 不依赖 segments / tracks / TTS / voice（查过，一个都不用），
+    所以「下载 → 出海报 → 退出」是干净的一条路。本地实测 4.3 秒，
+    渲出来的海报打开看过：台头、双抠图、VS 牌、中文名、钩子、比分、级别牌全对。
+
+    这条盯**位置**：早退必须排在 `parse_segments` 和 TTS 之前，否则那些活白干。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def render("):]
+    body = body[:body.index("\ndef ", 1)]
+
+    early_return = body.index("if cover_only:")
+    for later, why in (("parse_segments(spec", "分段解析"),
+                       ("synth_cover(", "封面 TTS"),
+                       ("cut_segment(", "分段编码")):
+        assert early_return < body.index(later), (
+            f"cover_only 的早退排在了{why}后面——那些活白干了")
+    assert "cover_only: bool = False" in src, "render 没有 cover_only 参数"
+    assert '"--cover-only"' in src, "命令行没有 --cover-only"
