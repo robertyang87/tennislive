@@ -507,12 +507,9 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
 
     from faster_whisper import WhisperModel  # noqa: PLC0415
 
-    audio = outdir / "_audio.m4a"
-    if not audio.exists():
-        cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-               "-f", "ba", "-o", str(audio)]
-        cmd += cookie_args(spec)
-        subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
+    # 走同一个下载口：`-o` 是模板不是保证，落到别的后缀要认出来。
+    # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这层保险的路**。
+    audio = yt_download(spec["url"], outdir / "_audio.m4a", "ba", spec)
 
     model = WhisperModel(spec.get("whisper_model", "small.en"), compute_type="int8")
     segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
@@ -852,15 +849,42 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
     return dest
 
 
+def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
+    """下到 `dest`，**下完必须确认它真的在那儿**。返回实际落地的路径。
+
+    `yt-dlp` 的 `-o` 是**模板不是保证**：`bv*+ba` 合流时，如果最佳的那对
+    不是 mp4 装得下的编码（VP9 / Opus），它会**自己改成 `.mkv`** 并 warn
+    一句——而我们开着 `--no-warnings`，那句被吞掉。于是下游 ffmpeg 拿
+    `source.mp4` 去开，报 **ENOENT**，退出码 `-2 & 0xff = 254`，
+    日志里只剩一个数字，而 artifact 里明明躺着 66 MB 的视频。
+
+    两道保险：`--merge-output-format mp4` 让它一律 remux 成 mp4；
+    真落到别的后缀时**把目录里有什么列出来**，别只说「文件不存在」。
+    """
+    if dest.exists():
+        return dest
+    # `yt-dlp[default]` 带 yt-dlp-ejs 才解得开 n challenge；少了它不会报
+    # 「装少了」，而是任何格式选择器都匹配不上。见 match-reel.yml。
+    cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+           "-f", fmt, "--merge-output-format", dest.suffix.lstrip("."),
+           "-o", str(dest), *cookie_args(spec), url]
+    subprocess.run(cmd, check=True, timeout=1800)
+    if dest.exists():
+        return dest
+    # **空结果先自证是真空**：文件没在预期的位置，不等于没下下来。
+    sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
+    if len(sibs) == 1:
+        print(f"⚠️ yt-dlp 落到了 {sibs[0].name}（不是 {dest.name}）——按实际的用")
+        return sibs[0]
+    raise SystemExit(
+        f"下完了但 {dest} 不在。目录里有："
+        + (", ".join(f"{p.name}({p.stat().st_size / 1e6:.1f}MB)" for p in sibs)
+           or "（空）"))
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
-    src = outdir / "source.mp4"
-    if not src.exists():
-        # `yt-dlp[default]` 带 yt-dlp-ejs 才解得开 n challenge；
-        # 少了它不会报「装少了」，而是任何格式选择器都匹配不上。见 match-reel.yml。
-        cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-               "-f", "bv*[height<=720]+ba/b[height<=720]", "-o", str(src)]
-        cmd += cookie_args(spec)
-        subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
+    src = yt_download(spec["url"], outdir / "source.mp4",
+                      "bv*[height<=720]+ba/b[height<=720]", spec)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
