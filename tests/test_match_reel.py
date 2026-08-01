@@ -43,6 +43,46 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
+def test_只发不重渲要有一条单独的路():
+    """**「先验产物再推」意味着推是另一次动作。**
+
+    原来只有 `mode=render` 那一条路带推送，于是「渲完看一眼，没问题再发」
+    要跑两轮 render——而一轮十五分钟（装中文字体 4 分 20 秒、渲片 7 分半），
+    第二轮渲出来的还得再验一次，等于把验证这件事做成了无限循环。
+
+    `mode=push` 跳过下载和渲染，只做「写复制页 → 提交 → 发微信」这三步。
+
+    两条判据缺一不可：
+
+    - **顺序不能变**：复制页仍然要排在提交之前，否则链接 404（这条已经有
+      `test_复制页写在提交之前` 盯着，这里只确认新模式没绕开它）
+    - **前提要在最前面验**：成片必须已经在**这个 commit 里**。查 `git ls-files`
+      而不是 `test -f`——只在工作区里躺着的文件，推送发出去就是 404，
+      复制页在这上面栽过两次
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+
+    assert "options: [probe, render, push, cookies]" in text, "mode 里没有 push"
+
+    for step in ("写复制页", "推送到微信"):
+        i = next(k for k, n in enumerate(names) if step in n)
+        cond = text.split(f"- name: {names[i]}", 1)[1].split("\n", 2)[1]
+        assert "'push'" in cond, f"{step} 这一步在 push 模式下不跑，等于这个模式发不出东西"
+
+    # 渲染那一步**不能**在 push 模式下跑，否则「只发不重渲」名不副实
+    render_cond = text.split("- name: render — 出成片", 1)[1].split("\n", 2)[1]
+    assert "mode == 'render'" in render_cond and "push" not in render_cond, \
+        "push 模式还会重渲一遍"
+
+    guard = next((n for n in names if "push 模式先确认成片" in n), "")
+    assert guard, "push 模式没有前置检查——成片不在时会一路跑到推送才炸"
+    assert names.index(guard) < names.index(
+        next(n for n in names if "写复制页" in n)), "前置检查排在写复制页后面了"
+    assert "git ls-files" in text, (
+        "前置检查用的是 test -f——只在工作区里的文件推出去就是 404")
+
+
 def test_中间物一个都不许进仓库():
     """清理这一步要**盖住**这些文件，而不是**逐字列出**它们。
 
