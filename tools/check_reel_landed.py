@@ -74,7 +74,7 @@ def per_second_db(film: Path) -> list[float]:
     return out
 
 
-def cover_seconds(film: Path) -> float:
+def cover_seconds(film: Path) -> float | None:
     """封面停了多久。
 
     **优先读产物旁边的 `render.json`**：封面配了音之后长度跟着配音走，光看 spec
@@ -88,9 +88,16 @@ def cover_seconds(film: Path) -> float:
         how = "跟着配音" if data.get("cover_narrated") else "定长"
         print(f"封面 {secs:.2f}s（render.json，{how}）")
         return secs
-    print(f"[注意] 没有 render.json，封面按定长 {COVER_SECONDS}s 算。"
-          "这条片子如果封面配了音，下面的片长对比会差出一截——那不是成片的问题")
-    return COVER_SECONDS
+    # **拿不到就跳过片长这一项，不要拿常量硬判。**
+    # 退回常量会在**每一条老片子上**报一个假红：`COVER_SECONDS` 一路从 2.6
+    # 改到 1.8 再到 1.2，而那些片子是按 2.6 渲的，于是差出一个几乎恒定的
+    # 1.40~1.44s——八条老片子全中，而两条带 `render.json` 的一条都不中。
+    # **一条常年红的检查等于没有检查**，它还会把真问题淹掉：这批假红里
+    # 混着的「音轨比画面短」正是今天查出来的那个真缺陷。
+    print(f"[跳过] 没有 render.json，封面停了多久无从得知（定长那会儿是 "
+          f"{COVER_SECONDS}s，但历史上改过几次），**片长这一项不判**。"
+          "其余各项照常——它们不依赖封面时长。")
+    return None
 
 
 def quiet_windows(spec: dict, cover: float) -> list[tuple[float, float, float]]:
@@ -141,11 +148,22 @@ def main() -> int:
     v_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
                      "-show_entries", "stream=duration",
                      "-of", "csv=p=0", str(film)).strip())
-    want = sum(round(float(s["end"]) - float(s["start"]), 3)
-               for s in spec["segments"]) + cover
-    ok = abs(v_dur - want) < 0.5
-    bad += 0 if ok else 1
-    print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s（spec 算出来 {want:.2f}s）")
+    segs = sum(round(float(s["end"]) - float(s["start"]), 3)
+               for s in spec["segments"])
+    if cover is None:
+        # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子
+        # 没记。**从产物自己量**：画面总长减去段落总长就是封面停的那一截——
+        # 比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
+        # 片长那一项当然不能再判了（拿它去验它自己，恒真）。
+        cover = max(0.0, v_dur - segs)
+        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s——"
+              f"封面按两者之差 {cover:.2f}s 算，片长这一项不判")
+    else:
+        want = segs + cover
+        ok = abs(v_dur - want) < 0.5
+        bad += 0 if ok else 1
+        print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s"
+              f"（spec 算出来 {want:.2f}s）")
 
     # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
     # 编码器延迟一路累出来，累到几秒就听得出来了。

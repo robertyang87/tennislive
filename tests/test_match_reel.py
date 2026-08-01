@@ -1923,6 +1923,56 @@ def test_快速预览的开关要在工作流里够得着():
         assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
 
 
+def test_查成片的那个脚本要真的被调用一次():
+    """**`check_reel_landed.py` 写好了，一次都没跑过。**
+
+    `grep -rn check_reel_landed .github/` 零命中。而补跑一遍九条已发的成片，
+    它自己就把今天查出来的两个真缺陷全报了出来：
+
+        「音轨 X，比画面短 N 秒」× 7 条   ← 闪避少了 apad
+        「封面之后还有 38 秒是数字静音」   ← wong-brooksby 的哑源片
+
+    也就是说这两个缺陷本来在发出去之前就该被拦下，只是**没人调它**。
+    工具自己的 docstring 写着「只在成功时出声的检查，没法证明它真的看过」
+    ——一个从来没被调用的检查比那还弱一档。
+
+    位置要**排在提交之前**：提交进 main 之后 `push-reel` 就会把它发到微信，
+    而微信那条消息发出去收不回来。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    jobs = body.split("\njobs:", 1)[1]
+    assert "check_reel_landed.py" in jobs, (
+        "没有任何一步调用 check_reel_landed.py——它就是个没人跑的脚本")
+
+    names = _steps(jobs)
+    check = next(i for i, n in enumerate(names) if "查成片本身" in n)
+    render = next(i for i, n in enumerate(names) if "render — 出成片" in n)
+    commit = next(i for i, n in enumerate(names) if "提交产物" in n)
+    assert render < check < commit, (
+        f"检查排在第 {check} 步，而 render 在 {render}、提交在 {commit}——"
+        "它必须排在渲完之后、提交之前")
+
+
+def test_拿不到封面时长时片长那一项要跳过不要报假红():
+    """**一条常年红的检查等于没有检查**，而且它会把真问题淹掉。
+
+    `COVER_SECONDS` 一路从 2.6 改到 1.8 再到 1.2，而老片子是按 2.6 渲的。
+    读不到 `render.json` 时退回今天这个常量，于是**八条老片子全报**
+    「画面 X（spec 算出来 Y）」，差值几乎恒定在 1.40~1.44s——而两条带
+    `render.json` 的一条都不中。那批假红里混着的「音轨比画面短」正是今天
+    查出来的那个真缺陷，差点被一起当成噪音。
+
+    改法不是调常量（下次再改还会错），是**拿不到就不判这一项**，
+    并且下游要用封面长度的地方**从产物自己量**（画面总长 − 段落总长）。
+    """
+    check = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+    assert "return None" in check, "读不到 render.json 时还在退回常量硬判"
+    assert "片长这一项不判" in check, "跳过了却不说，和「判了但判错」分不开"
+    # 其余各项不许跟着一起跳过——它们不依赖封面时长
+    for keep in ("分辨率", "音轨", "数字静音"):
+        assert keep in check, f"{keep} 这一项没了"
+
+
 def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
     """`_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」。
 
