@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import os
 import re
 import sys
@@ -134,7 +135,7 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
-             event: str = "", summary: str = "") -> str:
+             event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
     末尾那一格有两种写法，按这条片子哪种更说得清选：
@@ -148,9 +149,21 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     整句 `TITLE_MAX`（见 `_fits`）。**讲不完的不要硬塞进标题**——用 `--lead`
     放到正文第一行去详细概括，那儿有的是地方。
     """
-    found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+    # **日期优先用显式给的那个。** 赛场之上的产物按日期分目录
+    # （`output/2026-07-28/reel/…`），所以从路径里解得出来；而「赛后开麦」
+    # 按 slug 存（`output/interviews/<slug>/`）——同一场采访哪天发都可能，
+    # 目录里没有日期是**故意的**，不是漏了。缺日期就报错等于把这条线整个挡在
+    # 门外，所以给一条显式的路：`--date`。
+    if date:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+        found = re.match(r"(\d{4})-(\d{2})-(\d{2})", date)
+    else:
+        found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
-        raise SystemExit(f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…")
+        raise SystemExit(
+            f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…；"
+            "产物不按日期分目录的线（如 output/interviews/<slug>/）请显式传 --date")
     _, month, day = found.groups()
     if summary.strip():
         pair = summary.strip()
@@ -167,6 +180,34 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
         parts.append(event)
     parts.append(pair)
     return _fits(" | ".join(parts))
+
+
+def column_of(copy_path: Path) -> str:
+    """栏目名从 spec 的 `cover.eyebrow` 读，别在命令行上另写一遍。
+
+    **原来这儿默认 `赛场之上`，而工作流一个字都没传**——于是休伊特那条
+    「网球有故事」的片子，海报台头印着网球有故事，微信标题却写赛场之上。
+    同一条推送里两个栏目名，而推送发出去就收不回来。
+
+    这是「栏目决定封面模板」那条的另一半：**栏目只有一个出处**，海报和标题
+    都从它来。读不到就报错——悄悄退回一个默认值，正是上面那个错本身。
+    """
+    slug = copy_path.name.split(".")[0]
+    spec = copy_path.parent / f"{slug}.json"
+    if not spec.is_file():
+        raise SystemExit(f"找不到 {spec}，取不到栏目名。要么放好 spec，"
+                         "要么显式传 --column")
+    doc = json.loads(spec.read_text(encoding="utf-8"))
+    # 两条线把栏目名放在不同字段：赛场之上（`specs/reels/`）写 `cover.eyebrow`
+    # ——海报台头就是从它渲的；赛后开麦（`specs/interviews/`）写顶层 `column`。
+    # **在这儿收口，别让工作流各传一个 `--column`**：命令行上另写一遍，
+    # 就是休伊特那次「海报印网球有故事、标题写赛场之上」的来路。
+    eyebrow = (str((doc.get("cover") or {}).get("eyebrow", "")).strip()
+               or str(doc.get("column", "")).strip())
+    if not eyebrow:
+        raise SystemExit(f"{spec} 里既没有 cover.eyebrow 也没有 column——"
+                         "海报台头印什么，标题就该写什么，这一个值两处共用")
+    return eyebrow
 
 
 def _fits(title: str) -> str:
@@ -196,6 +237,32 @@ def _fits(title: str) -> str:
     return title
 
 
+def cut_at_tags(copy_text: str) -> str:
+    """**文案到 tag 那一行为止，后面的一概不发。**
+
+    账号所有者：「推送的正文复制文案里有不需要的东西，**tag 之后就不要了**」。
+
+    `wong-brooksby.xhs.txt` 末尾挂着一段「素材来源（写给下一个人）」——写给
+    仓库里的下一个人的备注，471 字，跟着正文一起进了微信推送和复制页。而复制页
+    正是账号所有者往小红书粘贴的那个出口，等于把内部备忘发给读者。
+
+    tag 行是小红书文案天然的结尾，判据不用另定：**最后一个 `#` 标签所在的行
+    就是终点**。后面无论写了什么（素材来源、待办、分隔线），都是仓库的事。
+
+    砍掉的**要打印出来**，不能默默吃掉——「兜底出事的时候不吭声」是这个仓库
+    反复踩的那个坑。真有一天正文被误判砍掉，日志里看得见砍了什么。
+    """
+    lines = copy_text.splitlines()
+    last = max((i for i, ln in enumerate(lines)
+                if hashtag_count(ln)), default=-1)
+    if last < 0 or not "\n".join(lines[last + 1:]).strip():
+        return copy_text.strip()
+    dropped = "\n".join(lines[last + 1:]).strip()
+    head = dropped.splitlines()[0][:40]
+    print(f"[文案] tag 之后还有 {len(dropped)} 字，不发：「{head}…」")
+    return "\n".join(lines[:last + 1]).strip()
+
+
 def split_copy(copy_text: str) -> tuple[str, str]:
     """文案的第一行是标题，空一行之后是正文——和 `to_copy_page` 同一套切法。
 
@@ -213,7 +280,7 @@ def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
 
 
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
-               poster: str = "", column: str = "赛场之上") -> str:
+               poster: str, column: str) -> str:
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
@@ -236,9 +303,10 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
       人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
 
-    ⚠️ **台头小药丸要跟着栏目走。** 它原来写死「赛场之上」，而这个工作流现在
-    也发「开球之前」——发出去的卡片会顶着别的栏目名，标题里写的却是对的，
-    两处对不上。和「兜底和默认值出事的时候不吭声」是同一类。
+    ⚠️ **台头小药丸要跟着栏目走，而且不留默认值。** 它原来写死「赛场之上」，
+    而这个工作流现在也发「开球之前」「网球有故事」——卡片会顶着别的栏目名，
+    标题里写的却是对的，同一条推送两个栏目名。给个默认值等于把这个错留在原地
+    不吭声，所以 `column` 是必传的，和 `column_of` 算出来的那一个值共用。
     """
     title, body = split_copy(copy_text)
     pad = "padding:0 16px"
@@ -292,7 +360,9 @@ def main() -> int:
                     help="page=只写复制页（须排在 git commit 之前）；push=发微信")
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
-    ap.add_argument("--column", default="赛场之上", help="栏目名")
+    ap.add_argument("--column", default="",
+                    help="栏目名。默认不传——从 spec 的 cover.eyebrow 读，"
+                         "海报印的是哪个栏目，标题就写哪个")
     ap.add_argument("--matchup", required=True, help="对阵，如「锦织圭 vs 商竣程」")
     ap.add_argument("--score", default="", help="赛果，如「6-7(3) 6-3 6-4」，赢家在前")
     ap.add_argument("--event", default="", help="赛事与轮次，如「华盛顿 ATP500 首轮」")
@@ -300,10 +370,16 @@ def main() -> int:
                     help="一句话概括赛果，给了就顶掉标题末尾的「对阵 + 比分」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
+    ap.add_argument("--date", default="",
+                    help="标题里的日期 YYYY-MM-DD。产物按日期分目录的线不用传"
+                         "（从路径解）；按 slug 存的线（output/interviews/…）必须传")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
-    copy_text = Path(args.copy).read_text(encoding="utf-8").strip()
+    # **两个 stage 共用这一处读**：复制页（`--stage page`）和微信正文
+    # （`--stage push`）必须是同一段字，否则推送里印的和复制页里粘到的对不上。
+    # 所以收口也收在这儿，别在下游各切一次。
+    copy_text = cut_at_tags(Path(args.copy).read_text(encoding="utf-8"))
     if not copy_text:
         raise SystemExit("文案是空的")
     # **正文里的 tag 最多五个**，和知识帖那条线共用同一个上限。
@@ -319,8 +395,11 @@ def main() -> int:
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
     # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
     # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
-    title = headline(outdir, args.column, args.matchup, args.score, args.event,
-                     args.summary)
+    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
+    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
+    column = args.column or column_of(Path(args.copy))
+    title = headline(outdir, column, args.matchup, args.score, args.event,
+                     args.summary, args.date)
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
@@ -355,7 +434,7 @@ def main() -> int:
     else:
         print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
-                      column=args.column)
+                      column=column)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")

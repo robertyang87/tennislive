@@ -803,9 +803,19 @@ def test_unknown_gender_never_counts_toward_a_single_tour_draw():
               and is_main_singles(it) and side(it) == "atp"]
     assert leaked, "这一站本来就是靠混进来的男子条目撑着的，样本没了这条测试就失去意义"
 
+    # **判据是「不许超过女子那批的条数」，不是一个魔数。** 原来写的是
+    # `covered <= 3`——那是按当时库里只有三条女子条目校出来的。@wta 的集锦
+    # 尾巴那批进来之后辛辛那提 WTA 真有了七条女子条目，测试就红了，而它要守的
+    # 性质（男子条目不许进女单分子）**一条都没被破坏**。魔数会随着库长大而失效，
+    # 换成直接比对那批女子条目。
+    female = [it for it in items.values()
+              if (it.get("source") in own or rx.search(haystack(it)))
+              and is_main_singles(it) and side(it) == "wta"]
     row = next(r for r in coverage(items, events)
                if r["zh"] == "辛辛那提公开赛" and r["tour"] == "wta")
-    assert row["covered"] <= 3, f"辛辛那提 WTA 覆盖 {row['covered']} 场，男子条目又混进来了"
+    assert row["covered"] <= len(female), (
+        f"辛辛那提 WTA 覆盖 {row['covered']} 场，而女子条目只有 {len(female)} 条"
+        f"——多出来的只能是那 {len(leaked)} 条男子的混进来了")
     # 被丢掉的数量要报出来——只报命中的，没法证明它真的看过全部
     assert "unknown" in row
 
@@ -1028,3 +1038,118 @@ def test_bilibili_frame_sheet_skips_the_ungenerated_black_cells():
     _, live = sheet(black.getvalue(), Path(tempfile.mkdtemp()) / "b.jpg")
     assert live == 0
     assert DARK > 3, "纯黑格 JPEG 解出来均值 0–3，阈值要在它之上"
+
+
+def test_wta_highlights_carry_the_interview_in_their_tail():
+    """`@wta` 的逐场集锦，长出来的那一截就是赛后场上采访。
+
+    **这是最反直觉的一条，也是把 WTA 那一侧从零救回来的那条。** 源注释里
+    原本白纸黑字写着「深扫 800 条，场上采访 0」——深扫再多也找不到，
+    因为**采访不在标题里，在片子后半段**，要看的是时长不是标题。
+
+    100 条实测，时长分布是干净的双峰：
+
+        285–310 秒   66 条   纯集锦（绝大多数卡在 306–310）
+        ── 空档 ──          310 到 333 之间一条都没有
+        333–648 秒   33 条   集锦 + 赛后场上采访
+
+    逐帧验过：309/310/310 的 75% 处还在比赛里；333 是红色 DC Open 话筒旗、
+    339 是 `WTA TOUR` 黑话筒旗加烧录条 `SARA BEJLEK — ADVANCES TO THE 2ND
+    ROUND`、360/422/447 同样是采访。界划在 320，落在那个 23 秒空档正中间。
+    """
+    from tools.collect_oncourt_interviews import _tail_interview, load_sources
+
+    cfg = next(s for s in load_sources()["sources"]
+               if "youtube.com/@wta" in s["url"].lower())["tail_interview"]
+
+    def hit(secs, title=("Julieta Pareja vs. Xinyu Wang | 2026 Washington, DC "
+                         "Round 1 | WTA Match Highlights")):
+        return _tail_interview({"duration_s": secs, "title": title}, cfg)
+
+    for secs in (285, 306, 309, 310):          # 实测的纯集锦
+        assert not hit(secs), f"{secs} 秒是纯集锦"
+    for secs in (333, 339, 360, 422, 447):     # 实测逐帧确认有采访的
+        assert hit(secs), f"{secs} 秒那条看过帧，尾巴上是采访"
+
+    # **长 ≠ 有尾巴。** 两类会混进来，长的理由完全不同，都要排掉：
+    # 日集锦塞了一整天的比赛——
+    assert not hit(1464, "Day 2 in Memphis with Sonmez, Stephens & more | WTA Match Highlights")
+    assert not hit(1100, "Day 2 in Washington, DC with Eala, Potapova & more | WTA Match Highlights")
+    # 整场录播——**标题结尾照样是 `WTA Match Highlights`**，这条真的被误收进过库，
+    # 6235 秒的辛辛那提决赛。而录播的末尾确实不接采访（时长对账：比比赛还短）。
+    assert not hit(6235, "Iga Świątek vs. Jasmine Paolini Cincinnati Finał Full Match "
+                         "| WTA Match Highlights")
+    assert not hit(6028, "Vekic's First WTA 500 Title | Donna Vekic vs. Emma "
+                         "Raducanu 2026 London Final | WTA Full Match")
+    # 没有时长就不能判——**拿不到不等于不是**，宁可漏也别瞎收
+    assert not hit(None)
+
+
+def test_tail_interview_items_are_marked_so_downstream_knows_to_skip_ahead():
+    """尾巴型条目要带标记：整条片子是集锦，采访在后半段。
+
+    不标的话下游会把它当成一条三分钟的纯采访推出去，人点开看到的是比赛集锦，
+    还得自己找采访从哪儿开始。
+    """
+    import json as _json
+
+    from tools.collect_oncourt_interviews import STORE
+
+    with STORE.open(encoding="utf-8") as fh:
+        items = _json.load(fh)["items"]
+    tails = [v for v in items.values() if v.get("tail_interview")]
+    assert tails, "库里该有尾巴型条目"
+    for v in tails:
+        assert v["kind"] == "oncourt"
+        assert v["duration_s"] >= 320, v["title"]
+        assert "Match Highlights" in v["title"], v["title"]
+
+
+def test_测试用到的第三方包都在dev依赖里():
+    """测试 `import` 的第三方包，必须登记在 `dev` extra 里。
+
+    **本地装着不等于 CI 装着。** `test_match_reel.py` 里那条「渲染专用的依赖
+    不许挂在 probe 路径上」`import yaml` 读工作流，而 `pyyaml` 一直不在
+    `pyproject.toml` 的 dev extra 里——沙箱恰好装着，于是本地 1019 条全绿，
+    CI 干净环境一跑就红。
+
+    这和竖版剪辑线上那三次（playwright、Chromium、cv2）是同一个毛病，
+    只是这次栽在**测试自己的依赖**上，而不是产品代码的。
+
+    只查**测试目录里出现过的**第三方包，不做全仓扫描——产品代码的依赖归
+    `project.dependencies` 和各个 extra 管，混在一起查会把这条判据搞糊。
+    """
+    import re
+    import sys
+
+    root = Path(__file__).resolve().parent.parent
+    text = (root / "pyproject.toml").read_text(encoding="utf-8")
+    declared = set(re.findall(r'"([A-Za-z0-9_.\-]+)[><=\[]', text)) | \
+        set(re.findall(r'"([A-Za-z0-9_.\-]+)"', text))
+    declared = {d.lower().replace("-", "") for d in declared}
+
+    # import 名 → 发行包名，对不上的那几个
+    DIST = {"yaml": "pyyaml", "PIL": "pillow", "cv2": "opencvpythonheadless",
+            "dateutil": "pythondateutil", "bs4": "beautifulsoup4"}
+    missing = []
+    for path in sorted((root / "tests").glob("test_*.py")):
+        src = path.read_text(encoding="utf-8")
+        for mod in set(re.findall(r"^\s*import (\w+)|^\s*from (\w+) import",
+                                  src, re.M)):
+            name = mod[0] or mod[1]
+            if not name or name in sys.stdlib_module_names:
+                continue
+            if name in ("tools", "tennislive", "tests", "pytest", "conftest"):
+                continue
+            # **本地模块不算第三方。** `tools/` 下的脚本是被 sys.path 插进来
+            # 直接 import 的（`import build_match_reel`），名字和第三方包长得
+            # 一模一样。不排掉的话这条判据会报出五条噪音，然后被当成坏判据关掉
+            # ——**扩大化的判据不吭声**，它只会让下一个人不再相信它。
+            if (root / "tools" / f"{name}.py").exists() or \
+                    (root / "src" / name).is_dir():
+                continue
+            if DIST.get(name, name).lower().replace("-", "").replace("_", "") not in declared:
+                missing.append(f"{path.name} import {name}")
+    assert not missing, (
+        "这些测试 import 的包没登记在 pyproject 里——本地装着就看不出来，"
+        f"CI 干净环境必红：{sorted(set(missing))}")

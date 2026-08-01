@@ -6,6 +6,10 @@ name: match-reel
 #                （只提交几张 JPEG 和一个 json，源片 50MB 不进仓库）
 #   mode=render  按 specs/reels/<slug>.json 剪 → 裁 9:16 → 中文解说 → 烧字幕
 #                → 加封面 → 成片提交
+#   mode=push    **成片已经在仓库里**，只写复制页 → 提交 → 发微信。
+#                「先验产物再推」意味着推是**另一次**动作；没有这个模式就得为了
+#                发一条消息把整条片子重渲一遍（一轮十五分钟：装中文字体 4 分 20、
+#                渲片 7 分半），而重渲出来的那一版还得再验一次。
 #   mode=cookies 什么都不产，只验 YouTube 还下不下得动（cookie 会过期）
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
@@ -15,10 +19,10 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        options: [probe, render, cookies]
+        options: [probe, render, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -112,8 +116,20 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 装中文字体（封面和字幕都要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
+      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      - name: 装 ffmpeg
+        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
+        # subprocess **一个都没出现**，装它白花半分钟。
+        if: github.event.inputs.mode != 'push'
+        timeout-minutes: 5
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 装中文字体（只有渲染要）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 5
+        run: sudo apt-get install -y -qq fonts-noto-cjk
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
@@ -121,9 +137,32 @@ jobs:
       # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
       # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
+      # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
+      - name: 缓存抠图模型
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-${{ runner.os }}
+
       - name: 装依赖
         run: |
-          pip install -q -e ".[webrender,visualqa]"
+          # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
+          # playwright、yt-dlp 一个都用不上，装全套只是把失败面铺大：那几个包
+          # 里任何一个装不上，都会让一条**本来只是发消息**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+            pip install -q -e .
+            # 真验一次 push 那条路要的东西，**不许 `|| true`**：装少了要在
+            # 第 5 秒炸，而不是三分钟后死在推送那一步。
+            python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+            echo "push 模式：只装主依赖，推送那条路的 import 已验过"
+            exit 0
+          fi
+          # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
+          # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
+          # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
+          # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
+          pip install -q -e ".[webrender,visualqa,cutout]"
           # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
           # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
           # `n challenge solving failed` + `Only images are available`，
@@ -134,12 +173,14 @@ jobs:
           node --version
 
       - name: 缓存 Chromium
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
+        if: github.event.inputs.mode == 'render'
         run: python -m playwright install --with-deps chromium
 
       - name: 算出目录
@@ -150,12 +191,33 @@ jobs:
           echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
 
+      # push 模式的前提是**成片已经在这个 commit 里**。不在就当场报，别等到
+      # 装完依赖、写完复制页、提交完之后才在推送那一步炸——「让失败发生在
+      # 第 5 秒，不是第 90 秒」。
+      # 查的是 `git ls-files`，不是 `test -f`：只在工作区里躺着的文件，推送
+      # 发出去就是 404（同一个毛病在复制页上踩过两次）。
+      - name: push 模式先确认成片真的在仓库里
+        if: github.event.inputs.mode == 'push'
+        run: |
+          REEL="${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+          if [ -z "$(git ls-files -- "$REEL")" ]; then
+            echo "::error::$REEL 不在这个 commit 里——push 模式只发已经落库的成片。"
+            echo "::error::先跑一次 mode=render（push=false），验完再用 mode=push 发。"
+            git ls-files -- "${{ steps.paths.outputs.outdir }}" || true
+            exit 1
+          fi
+          echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
+          test -f "${{ steps.paths.outputs.outdir }}/poster.jpg" || {
+            echo "::error::海报不在——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }
+
       # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」。第一道解法
       # 是 GVS PO token：yt-dlp 官方推荐的 bgutil provider 起在本机 4416，插件会
       # 自动去取，web/mweb/tv 三档就能过。**起不来不算失败**——起不来就退回 client
       # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
       - name: 起 PO token provider
         id: pot
+        # push 模式不下任何东西——docker pull 那一分钟白等
+        if: github.event.inputs.mode != 'push'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -244,6 +306,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
+      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
+      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
+      # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
+      # 候选墙，不自动写进 spec。
+      # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
+      # 缩略图墙那条老路还在。
+      - name: probe — 封面候选帧
+        if: github.event.inputs.mode == 'probe'
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          python tools/pick_cover_frames.py \
+            --video "$OUT/source.mp4" \
+            --out "$OUT/cover_candidates" \
+            --top 12 || true
+          ls -la "$OUT/cover_candidates" 2>/dev/null || true
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -264,20 +344,12 @@ jobs:
       # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
       # 链接打开 404。**又一次「查信号不查产物」**。
       - name: 写复制页（必须排在提交之前）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
-          # 栏目名以 spec 的 `cover.eyebrow` 为准——**海报台头印的就是它**，
-          # 而且已经有测试拿 docs/columns.md 校验（test_海报台头只写栏目名）。
-          # push_reel 的默认值是「赛场之上」，工作流又没有 column 输入，
-          # 「开球之前」这条线走到这儿会顶着别的栏目名发出去，而且**不报错**。
-          COLUMN=$(python -c "import json,sys;print(json.load(open(sys.argv[1]))['cover']['eyebrow'])" \
-            "specs/reels/${{ github.event.inputs.slug }}.json")
-          echo "栏目：$COLUMN"
           python tools/push_reel.py --stage page \
             --outdir "${{ steps.paths.outputs.outdir }}" \
-            --column "$COLUMN" \
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \
@@ -292,20 +364,24 @@ jobs:
           # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
           # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
           # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
-          # **`.part` 也要删**：yt-dlp 分轨下载留下的 `source.fNNN.mp4.part`
-          # 不叫 source.mp4，躲过了上面那两个名字，10 MB 就这么进了仓库
-          # （probe wang-pareja 那次）。按后缀删，别按名字列。
-          # 同一个漏在 eala-zheng 和 potapova-venus 上又各中一次，一并补上两种
-          # 还没见过的：分轨的 webm，和 yt-dlp 的续传记录 .ytdl。
-          # **多源之后源片叫 source_<名字>.mp4**（source_zheng.mp4 等），一个都
-          # 不叫 source.mp4，于是四条源片 298 MB 全部躲过清理、被大文件闸拦在
-          # 提交那一步——片子明明渲好了（40 MB），却因为这个没落库。
-          # 这里按前缀删，和上面「按后缀删，别按名字列」是同一条教训。
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_*.mp4 "$OUTDIR"/*.part \
-            "$OUTDIR"/source.f*.mp4 "$OUTDIR"/source.f*.m4a \
-            "$OUTDIR"/source.f*.webm "$OUTDIR"/*.ytdl \
+          # **`source*` 一整片删掉，不要逐个列名字。** 这个坑连着栽了四次，
+          # 每次都是同一个形状：源片换了个名字，就从清单里溜过去了。
+          #   1. `source.fNNN.mp4.part`（yt-dlp 分轨下载的半成品，probe wang-pareja）
+          #   2. 同一个漏在 eala-zheng、potapova-venus 上各中一次
+          #   3. 分轨的 `.webm` 和 yt-dlp 的续传记录 `.ytdl`
+          #   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时
+          #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
+          #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
+          # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
+          # `_versus_cut_top.png`。
+          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
+          # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
+          # 那道兜底**，却每探一次就加一份。
+          # 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。
+          rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
             "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
-            "$OUTDIR"/poster.html "$OUTDIR"/_versus_*.jpg
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_* "$OUTDIR"/_subs* \
+            "$OUTDIR"/cover_candidates/cand_*
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
 
@@ -389,23 +465,15 @@ jobs:
       #
       # 「触发成功」不算推了，**这一步 success 才算**。
       - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
-          # 栏目名以 spec 的 `cover.eyebrow` 为准——**海报台头印的就是它**，
-          # 而且已经有测试拿 docs/columns.md 校验（test_海报台头只写栏目名）。
-          # push_reel 的默认值是「赛场之上」，工作流又没有 column 输入，
-          # 「开球之前」这条线走到这儿会顶着别的栏目名发出去，而且**不报错**。
-          COLUMN=$(python -c "import json,sys;print(json.load(open(sys.argv[1]))['cover']['eyebrow'])" \
-            "specs/reels/${{ github.event.inputs.slug }}.json")
-          echo "栏目：$COLUMN"
           python tools/push_reel.py \
             --outdir "${{ steps.paths.outputs.outdir }}" \
-            --column "$COLUMN" \
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \

@@ -209,13 +209,45 @@ beIN 那两家值得注意：**有大量网球内容（45 / 73 条）但一条�
 | YouTube [@tennistv](https://www.youtube.com/@tennistv) | 深扫 800 条 → **0** |
 | 站上 [tennistv.com/library/interviews](https://www.tennistv.com/library/interviews) | 20 条里 **16 条**，逐轮 |
 
-**而且不在付费墙后面。** 页面内嵌 JSON 里有 `entitlement` 字段，实测：
+页面内嵌 JSON 里有 `entitlement` 字段，实测：
 
 | entitlement | 条数 |
 | --- | --- |
 | `free` | 16 |
-| `freemium`（注册即可） | 4 |
+| `freemium` | 4 |
 | `premium` | **0** |
+
+> ⚠️ **原文这里写的是「而且不在付费墙后面」——那句话是错的，已删。**
+> 那是我从 `free` 这个字面推出来的，没验过。见下一节。
+
+### `entitlement: free` ≠ 拿得到视频
+
+被问到「这些能拿到视频么」才去验的，结果和字面相反：
+
+- 页面挂着 **Cleeng**（订阅/付费墙 SDK）和 `pulselive-id` 身份 SDK，
+  播放器是 JS 起的，静态 HTML 里只有一个 `data-entry-id="0_ds2ltvk2"`
+  （Kaltura entry）
+- 拿标准客户端去取，yt-dlp 的 TennisTV 提取器直接回
+  **`This video is only available for registered users.`**
+- 华盛顿 2026 那 10 条实测：9 条 `free`、1 条 `freemium`，**结果一样**
+
+所以 `free` / `freemium` / `premium` 是**他们账号体系内部的档位**，
+不是「匿名可取」。绕开它的做法不做。
+
+**分清楚两件事，别一起否定：**
+
+| | 状态 |
+|---|---|
+| **元数据**（标题、`metadataRound`、时长、`videoType`、赛事） | **照常公开可抓**，采集器这部分不受影响 |
+| **视频文件** | 需要 Tennis TV 账号 |
+
+也就是说：ATP 侧我们能**知道有哪些采访、是哪一轮、多长**，但要看画面得人
+自己开账号。相比之下 WTA 侧那批（`@wta` 集锦尾巴）是完全公开的 YouTube，
+这一点上反而比 ATP 好用。
+
+⚠️ 想用浏览器实地验一次的话：本环境的 Playwright 打 tennistv.com 会
+`ERR_CONNECTION_RESET`（代理层），curl 却是 200——**那是环境限制，
+不是站点拒绝**，别拿它当证据。
 
 内容是 Estoril、Bastad、Kitzbuhel、Gstaad 这些 **ATP 250**，逐轮发
 （`metadataRound` 为 R1/QF/SF/Final），时长 0:56–3:27。
@@ -1584,6 +1616,55 @@ en       English               vtt, srt, ttml, srv3, srv2, srv1, json3
 想练听力就用自动字幕对答案（它更接近真实说的话）；
 想学句式和表达就读 ASAP（它更接近规范英语）。**两个都下，别只下一个。**
 
+### ⚠️ 自动字幕会**听错实词**，不只是留口头语——一份 ASR 不能单独发出去
+
+上面那两条（口头语、`>>`）是**体例问题**，看着就知道要收拾。真正危险的是
+**它听错了但读起来通顺**的那种。伊埃拉 2026 华盛顿八强那条实测：
+
+| 自动字幕 | 实际 | 怎么发现的 |
+|---|---|---|
+| `Alex Ayala` / `Aala` / `Y Alla` / `Alexa` | Alexandra Eala | 一眼 |
+| `Alina Vitilina` / `Switzerina` | Elina Svitolina | 一眼 |
+| `The crazy Yes. round of applause.` | 语法不成立 | 一眼 |
+| `respect **to** her for that` | `respect **for** her` | **看不出来** ← |
+
+最后那条是要害：`respect to her` 读起来毫无破绽，一个介词而已，
+**而这条线发的是英语学习素材**——照着它学的人会把错的记下来。
+
+**先确认有没有人工字幕，再谈交叉校验。** `--list-subs` 实测这两条视频
+（`AiBTDJd_ekQ` / `CuqxOafGdVw`）都只有 automatic captions，报
+`has no subtitles`。⚠️ 这个「没有」要**自证是真空**：拿一条已知有人工字幕的
+TED 片（`5MuIMqhT8DM`）做对照，它正确报出了 `Available subtitles` 和人工语种表
+——探测本身是好的，所以这个负结论是真的。
+
+**YouTube 自己那两条轨对不了。** `en` 和 `en-orig` 实测逐词完全一致
+（605 词，0 处差异）——同一份 ASR 换了个名字，拿它当交叉验证是自欺。
+
+所以第二个源只能自己找，现在有两条，**各有各的边界，别互相顶替**：
+
+| 源 | 覆盖 | 哪儿跑 |
+|---|---|---|
+| faster-whisper 第二份 ASR（`--stage verify`） | **全段** | **只有 runner**——沙箱 IP 被 YouTube 挡了，音频都下不到 |
+| **赛事官网战报里的人工引语**（`human_quote`） | 只有记者抄走的那几句 | 不联网，**本地就能跑** |
+
+第二条是这次新加的，而且立了功——WTA 那篇战报把这段场上采访的最后一问
+**人工转写**抄了进去（原文写着 `Eala said in her on-court interview`），
+一比就抓到了 `to` → `for` 那处。**写战报的人听的是同一段音频，而且是人听的。**
+
+判据分三类，只有前两类算无害（收在 `check_human_quote`）：
+
+- 落在引语区间**之外**的词——印出来的引语本来就是片段，前后不算
+- ASR 有、引语没有的（**删**）——记者顺手删口头语和引入语，正常编辑。
+  **删不能设闸**：引语里少一个词只说明记者删了，推不出 ASR 错在哪
+- 其余（**改**，以及引语有而 ASR 没有的**增**）——两份里必有一份错，
+  **默认不出片**，要么写进 `en_fixed`，要么在 `human_quote_ok` 里显式声明
+
+顺带两条实现上的坑：
+
+- **缩写两边都要展开再比**。战报写 `She's`，ASR 听成 `she is`，那不是分歧
+- **零命中要报错，不能读成「没有分歧」**。抄错场次、抄成发布会而不是场上采访，
+  都会得到零命中——又是「空结果先自证是真空」
+
 ## 九、现成的研究语料库
 
 如果要做量化分析而不是逐条看，不用自己爬：
@@ -1868,3 +1949,149 @@ B 站那套 `x/player/videoshot` 雪碧图是目前唯一能看到「视频结�
 （`Sign in to confirm you're not a bot`），`--flat-playlist` 的列表接口
 仍然通。那种时候拿不到数据是**被限流**，不是「这条视频没有日期」——
 别据此下结论。RSS（`feeds/videos.xml`）在本环境返回 500，也走不通。
+
+## 附五：找 Edimator 的替代者——没找到，但差点得出一个假阴性
+
+Edimator 停更之后 WTA 500 那一侧归零（见附四），去扫一轮有没有别人在做同一件事。
+
+**结论：没有。** 但过程里踩了一脚，值得单记。
+
+### 泛化的查询词搜不到这类号
+
+第一轮用了六组"概念式"措辞——`on-court interview WTA 2026`、
+`post match interview WTA 500 2026`、`interview after 1st round win 2026 WTA`……
+108 条命中，按频道汇总，前排全是已登记的官方号（温网 33、Tennis Channel 25、
+澳网 13…），新面孔只有一堆前瞻/反应号。看着像"确实没有替代者"。
+
+**但这 108 条里一条 Edimator 都没有**——而它库里躺着 158 条，正是要找的那种号。
+
+原因是 **YouTube 搜索按标题字面匹配**，而这类号用自己的固定句式：
+
+    <球员> interview after <轮次> win at <年份> <赛事>
+
+换成这个句式，第一条就是它：
+
+```
+$ yt-dlp --flat-playlist "ytsearch5:interview after 1st round win at 2025 Citi Open"
+  Edimator ||| Emma Raducanu interview after 1st Round win at 2025 Citi Open
+  Edimator ||| Naomi Osaka 大坂 なおみ interview after 1st round win at 2025 Citi Open
+  Edimator ||| Emma Raducanu interview after 2nd round win against Naomi Osaka
+```
+
+所以采集器注释里那句"用搜索反推"要加一条：**查询词照目标的句式写，
+不是照你想找的概念写**；而且**每轮放一个已知非空的对照查询**，
+对照组不出来这一轮的零就不算数。和 B 站那个金丝雀是同一个道理——
+只不过这里骗人的不是限流，是措辞。
+
+### 改对之后：确实没有
+
+同一句式打 2026 华盛顿 / 基茨比厄尔 / 乌马格 / 孟菲斯，70 条命中里
+**符合那个句式的一条都没有**，返回的全是噪音（NBA 选秀、孟菲斯警方通报、
+Denzel Washington、大学篮球赛后发布会）。而对照组在同一轮里照常带出
+Edimator。**这才是"真的没有"该有的样子。**
+
+### 顺带排掉的三个
+
+| 频道 | 为什么不行 |
+|---|---|
+| `QualityShot Tennis` | **照片配音频 + 中插广告**。自动帧 hq3 直接是产品广告（`Serve Smart, Anywhere`），全片没有采访画面；而且引语多是"After Loss"——输球的人没有场上采访，那是发布会音频 |
+| `MSB Rewind` | 4 小时 09 分的整场直播转录（`Washington DC Open Live: Eala vs Zheng`），不是采访片段 |
+| `Talking Tennis` / `TennisLegends` / `RedDust Report` / `Chérie Diaries` / `Tennis News Network` | 解说、反应、二次评论，没有原始画面 |
+
+## 附六：采访一直在 `@wta` 的集锦里——只是不在标题里
+
+账号所有者发来一条链接（`zrLRktfS-q4`），说「这个集锦后面是赛后场上采访，
+是不是一条路」。**是，而且是这一整轮里最大的一条。**
+
+### 「深扫 800 条，场上采访 0」错在哪
+
+那句话是我写的，写了很久。深扫再多也找不到——**因为采访不在标题里，
+在片子后半段**，而我一直在按标题找。
+
+`@wta` 的逐场集锦是**固定格式**的。100 条实测，时长分布是干净的双峰：
+
+| 时长 | 条数 | 是什么 |
+|---|---|---|
+| 285–310 秒 | 66 | 纯集锦（绝大多数卡在 306–310） |
+| **310 → 333 之间** | **0** | ← 空档 |
+| 333–648 秒 | 33 | 集锦 + **赛后场上采访** |
+
+逐帧验过（`hq3`）：
+
+| | 画面 |
+|---|---|
+| 309s Osorio/Hunter | 赛后挥手，比赛画面 |
+| 310s Snigur/Tagger 决赛 | 挥拍中 |
+| **333s** Krueger/Boulter | **场上采访**，红色 DC Open 话筒旗 |
+| **339s** Blinkova/Bejlek | **场上采访**，`WTA TOUR` 黑话筒旗 + 烧录条 `SARA BEJLEK — ADVANCES TO THE 2ND ROUND` |
+| **360s** Pareja/王欣瑜 | **场上采访**，DC Open 话筒旗 |
+| **422s** Joint/Osuigwe | **场上采访**，`WTA TOUR` 话筒旗 |
+| **447s** Fernandez/Eala | **场上采访** |
+
+界划在 **320 秒**，落在那个 23 秒宽空档的正中间。
+
+### 效果
+
+一次全量（扫深 800 → 3000）收进 **268 条**，覆盖率：
+
+| 档次 | 之前 | 现在 |
+|---|---|---|
+| WTA500 | 9% | **24%** |
+| WTA250 | 3% | **13%** |
+| WTA1000 | 9% | **16%** |
+
+### 三个坑
+
+**一、`hq3` 只到 75%，够不着短尾巴。** 353 秒那条在 75% 处仍是比赛画面——
+**那不是反证**，只说明它的采访不足全长四分之一。别拿「帧里没看到」去否定
+时长判据，两者的分辨率不一样。
+
+**二、长 ≠ 有尾巴。** 两类会混进来，长的理由完全不同：
+
+- `Iga Świątek vs. Jasmine Paolini Cincinnati Finał Full Match | WTA Match Highlights`
+  ——6235 秒，**标题结尾照样是 `WTA Match Highlights`**，实际是整场录播。
+  这条真的被误收进过库
+- `Day 2 in Memphis with Sonmez, Stephens & more | WTA Match Highlights`
+  ——1464 秒，塞了一整天的比赛
+
+**别把录播和逐场集锦搞混**：附三量过，录播的末尾**不接**采访（时长比比赛
+本身还短）；接采访的是逐场集锦。
+
+**三、不是每个赢家都有。** 伊拉胜郑钦文那场是 310 秒，没有尾巴。这个判据
+回答的是「这条片子里有没有」，不是「这场比赛做没做」。
+
+### 连带更正两处
+
+- **`depth_exempt` 的理由作废**。原文写「深处 86 条逐批看帧全是发布会和
+  演播室专访，不值得把扫深开到 14000」——**那是按标题判的**。扫深已提到 3000。
+- **B 站那条判定认错了话筒**。我在 10×10 雪碧图（单格约 480×270）上把
+  **DC Open 的赛事话筒旗**看成了「转播商台标牌」，据此拉黑。后来在 WTA 官方
+  集锦的高清帧上一眼就分得出。**话筒这个判据本身是对的，但要在够清楚的画面
+  上用**——雪碧图能分「场上/背景板」，分不了「谁家的话筒」。
+
+### 顺带修好一条会随库长大而失效的测试
+
+`test_unknown_gender_never_counts_toward_a_single_tour_draw` 原来断言
+「辛辛那提 WTA 覆盖 ≤ 3 场」。那个 3 是按当时库里只有三条女子条目校出来的
+**魔数**；集锦尾巴那批进来后真有了七条女子条目，测试就红了，
+而它要守的性质（男子条目不许进女单分子）**一条都没被破坏**。
+改成直接和那批女子条目的条数比对。
+
+### ATP 侧没有这条路——而且原因说得通
+
+拿同一套时长判据打了一遍 ATP 的两个官方频道，逐场集锦摆在一起：
+
+| 频道 | 条数 | 中位 | 最长 | 形态 |
+|---|---|---|---|---|
+| `@atptour` | 102 | **145s** | **194s** | 短集锦，**装不下采访** |
+| `@tennistv` | 63 | 480s | 1005s | 加长集锦 / 每日汇总 |
+| `@wta` | 100 | 310s | 648s | **双峰**，333 起是集锦 + 采访 |
+
+`@atptour` 的非集锦内容全是娱乐向（球员手办、宠物、播客）。`@tennistv` 的长
+条目抽帧三条全是比赛画面（`TennisTV` 台标 + 实时记分条 `COBOLLI/SHELTON`、
+`ZHENG/LANDALUCE`、`MANNARINO/TIEN`），是加长集锦不是采访。
+
+**根本原因是产品结构不同**：ATP 把采访**单独发在 tennistv.com 上**
+（逐轮、40 秒–4 分钟，见第二节），所以不需要往集锦里塞——这也正是 ATP
+覆盖本来就高的原因（ATP500 62%）。WTA 没有这个单独产品，就把采访接在
+集锦尾巴上。**别再拿时长去扫 ATP 频道了。**

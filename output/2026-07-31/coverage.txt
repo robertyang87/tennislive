@@ -1,27 +1,26 @@
 数据源：espn
-总场次：102（赛果 77 / 直播 4 / 赛程 21）
+总场次：101（赛果 89 / 直播 3 / 赛程 9）
 
 数据源健康状态：
 - espn｜正常 · 47 场
 - sofascore｜失败 · SofaScore 全部抓取失败: SofaScore HTTP 403（数据中心 IP 可能被封）; SofaScore HTTP 403（数据中心 IP 可能被封）
-- WTA 官方 OOP · Mubadala DC Open｜正常 · 确切 0 场 / 不早于 1 场（与聚合源一致 0 / 不一致 1，以官方为准） / 场序 0 场 / 待下一版 0 场
-- ATP 官方 OOP · Mifel Tennis Open by Telcel Oppo｜正常 · 确切 2 场 / 不早于 2 场（与聚合源一致 3 / 不一致 1，以官方为准） / 场序 0 场 / 待下一版 0 场
-- 实时选题雷达｜正常 · 70 条信号，命中 46 场比赛
+- ATP 官方 OOP · Mifel Tennis Open by Telcel Oppo｜正常 · 确切 0 场 / 不早于 1 场（与聚合源一致 0 / 不一致 1，以官方为准） / 场序 0 场 / 待下一版 1 场
+- 实时选题雷达｜正常 · 62 条信号，命中 41 场比赛
 - ATP 官方技术统计｜未配置 · 缺少 ATP_PROTENNISLIVE_TOKEN
 - Sportradar 技术统计｜未配置 · 缺少 SPORTRADAR_API_KEY
 - 焦点复盘数据｜降级 · 所有逐场统计源均未命中，使用比分结构复盘
 - 头条技术统计｜正常 · 1 场头条候选已接入逐场统计
 - 外媒观点雷达｜本期无达到多源证据门槛的事件
-- 球员与赛事知识库｜正常 · 2 场接入历史背景
+- 球员与赛事知识库｜本期焦点暂无直接命中的审核档案
 - GitHub Models 数据编辑｜关闭
 - 官方视频雷达｜降级 · GitHub Models translation failed: 410 Client Error: Gone for url: https://models.github.ai/inference/chat/completions
 
 ATP/WTA 巡回赛覆盖：
-- ATP ATP500｜ATP 500｜华盛顿公开赛｜15 场（赛果 13 / 直播 1 / 赛程 1）
-- WTA WTA500｜WTA 500｜华盛顿公开赛｜9 场（赛果 7 / 直播 1 / 赛程 1）
-- ATP ATP250｜ATP 250｜洛斯卡沃斯站｜20 场（赛果 12 / 直播 0 / 赛程 8）
-- WTA WTA250｜WTA 250｜孟菲斯精英赛｜17 场（赛果 15 / 直播 1 / 赛程 1）
+- ATP ATP500｜ATP 500｜华盛顿公开赛｜14 场（赛果 14 / 直播 0 / 赛程 0）
+- WTA WTA500｜WTA 500｜华盛顿公开赛｜9 场（赛果 9 / 直播 0 / 赛程 0）
+- ATP ATP250｜ATP 250｜洛斯卡沃斯站｜21 场（赛果 16 / 直播 3 / 赛程 2）
+- WTA WTA250｜WTA 250｜孟菲斯精英赛｜17 场（赛果 17 / 直播 0 / 赛程 0）
 
 待识别赛事（不影响收录，但需要补级别映射）：
 - WTA｜Axeria Open 2026 powered by Intaro Sport｜14 场
-- WTA｜Odlum Brown VanOpen｜27 场
+- WTA｜Odlum Brown VanOpen｜26 场
