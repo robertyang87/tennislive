@@ -112,7 +112,7 @@ STORIES = (
             ),
         ),
         venue="ATP Stadium Goran Ivanišević · 4,032 席",
-        image=ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        image=ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         image_credit="Silverije / Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://www.croatiaopen.hr/en/tournament/history",
         image_source_url=(
@@ -216,7 +216,7 @@ STORIES = (
             ),
         ),
         venue="Sobeys 球场（多伦多）/ IGA 球场（蒙特利尔）",
-        image=ASSETS / "canada-national-bank-open-stadium.jpg",
+        image=ASSETS / "canada-sobeys-centre-court.jpg",
         image_credit="Raysonho / Wikimedia Commons · CC BY 3.0",
         source_url="https://nationalbankopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:RogersCup2011-2.jpg",
@@ -266,7 +266,7 @@ STORIES = (
             ),
         ),
         venue="Lindner 家族网球中心 · 中央球场 11,435 席",
-        image=ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        image=ASSETS / "cincinnati-centre-court-full.jpg",
         image_credit="RandyFitz / Wikimedia Commons · CC0",
         source_url="https://www.cincinnatiopen.com/history/",
         image_source_url="https://commons.wikimedia.org/wiki/File:Lindner_Family_Tennis_Center_2025.jpg",
@@ -864,7 +864,7 @@ STORIES = (
 
 _STOCK_IMAGES = {
     "umag": (
-        ASSETS / "umag-goran-ivanisevic-stadium.jpg",
+        ASSETS / "umag-goran-ivanisevic-centre-court.jpg",
         "Silverije / Wikimedia Commons · CC BY-SA 4.0",
     ),
     "washington": (
@@ -872,11 +872,11 @@ _STOCK_IMAGES = {
         "Asolsma1988 / Wikimedia Commons · CC0",
     ),
     "canada": (
-        ASSETS / "canada-national-bank-open-stadium.jpg",
+        ASSETS / "canada-sobeys-centre-court.jpg",
         "Raysonho / Wikimedia Commons · CC BY 3.0",
     ),
     "cincinnati": (
-        ASSETS / "cincinnati-lindner-tennis-center.jpg",
+        ASSETS / "cincinnati-centre-court-full.jpg",
         "RandyFitz / Wikimedia Commons · CC0",
     ),
     "usopen": (
@@ -1335,6 +1335,58 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="lucky-loser",
+        title="输了才有的名额",
+        subtitle="网球观察 · 规则篇",
+        identity="幸运落败者：资格赛输了也能进正赛",
+        chips=("规则冷知识", "抽签还是排名", "大满贯 0 人进八强"),
+        hero=(
+            "资格赛最后一轮输掉的人，可以因为正赛有人退出而递补进正赛；"
+            "这个身份叫幸运落败者，卢布列夫和高芙的第一个冠军都是这么来的。"
+        ),
+        facts=(
+            "ATP 7.20 A.1：末轮失利者按资格赛种子排名排序；但**资格赛打完那一刻正赛"
+            "已有空缺**时，排名最高的两人抽签决定，空 N 个位置就抽 N+1 人。"
+            "WTA 2026 规则书 V.A.1.b.vi 的触发条件相同。",
+            "WTA 把三种情形写全（lost, retired, or withdrawn），并加三道闸："
+            "签到、赛会医生检查、正赛不得排在退赛当天；ATP 全本 210 页、123 处提到"
+            "lucky loser，这三条一条都没有，医疗条款反而明写「同一天或之后」皆可。",
+            "至今没有人以幸运落败者身份打进大满贯八强，第四轮是天花板："
+            "1995 温网诺曼、2023 法网阿瓦涅相、2025 澳网利斯、2025 温网谢拉、"
+            "2026 法网德容；利斯那次再赢一场就是史上第一个。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2017-07-23",
+                player="卢布列夫",
+                age="19 岁",
+                headline="「输的那个人是幸运的」",
+                detail=(
+                    "资格赛末轮输掉，因丘里奇退赛递补进正赛，一路赢到决赛，"
+                    "6-4、6-2 击败四号种子洛伦齐，拿下生涯第一个 ATP 冠军；"
+                    "颁奖人是伊万尼塞维奇。他当天在社媒写下 Loser is lucky!"
+                ),
+                source_url="https://www.atptour.com/en/news/rublev-lorenzi-umag-2017-final",
+            ),
+            ChampionMoment(
+                date="2019-10-13",
+                player="高芙",
+                age="15 岁 7 个月",
+                headline="开赛前 15 分钟被叫回球场",
+                detail=(
+                    "资格赛直落两盘负于科尔帕奇后已出局；首轮开打前 15 分钟"
+                    "萨卡里手腕伤退，她递补上场，连赢五场（含头号种子贝尔腾斯），"
+                    "决赛 6-3、1-6、6-2 胜奥斯塔彭科，成为 2004 年以来最年轻的 WTA 冠军。"
+                ),
+                source_url="https://www.wtatennis.com/news/1485527",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 7.20 / WTA 2026 规则书 V.A.1.b / ATP / WTA",
+        image_credit="Merlo de Graia · 卢布列夫本人社媒",
+        source_url="https://en.wikipedia.org/wiki/Lucky_loser",
+    ),
+    _trivia_story(
         slug="roof",
         title="温网屋顶谁说了算",
         subtitle="网球观察 · 规则篇",
@@ -1444,6 +1496,84 @@ STORIES = STORIES + (
         source_label="各届温网维基百科条目",
         image_credit="Wikimedia Commons · CC BY-SA 4.0",
         source_url="https://en.wikipedia.org/wiki/List_of_Wimbledon_ladies%27_singles_champions",
+    ),
+    _trivia_story(
+        slug="thiem-football",
+        # 标题连着品牌语一起进小红书的 20 字上限（`🎾7.26 网球有故事｜` 占 9.5）。
+        # 原来写「美网冠军去踢第八级联赛」是 20.5 字，会被截断——而截掉的正好是
+        # 「联赛」那两个字，读者看到的会是「美网冠军去踢第八级」。砍掉「去」。
+        title="美网冠军踢第八级联赛",
+        subtitle="网球观察 · 退役篇",
+        identity="从大满贯到第八级",
+        # chips[2] 会变成 `founded`，故事卡的时间轴把它抠数字当起点年份用。
+        # 写「第 8 级」抠出来是 8，时间轴就成了 8 → 2020 → 2024。用非数字标签
+        # （和 wildcard、scoring-history 同一套路），起点显示 NOW。
+        chips=("退役之后", "两个 9.13", "第八级"),
+        hero=(
+            "2020 年美网冠军蒂姆 2024 年 10 月退役，2026 年 7 月 15 日在奥地利足协"
+            "重新登记为球员，转会 Badener AC，打第八级的 2. Klasse Triestingtal。"
+        ),
+        facts=(
+            "蒂姆 2026 年 7 月 15 日在奥地利足协完成注册，转入 Badener AC；"
+            "该队打 2. Klasse Triestingtal，是奥地利联赛金字塔的第八级。"
+            "促成转会的是一位已在队中的朋友。",
+            "2025 年 9 月 13 日，他为原队利希滕韦特替补上场 12 分钟后打进一球，"
+            "把比分改写为 3:2——踢球以来第 8 场正式比赛的第一粒进球，"
+            "而那一天正是他在纽约夺得美网五周年。",
+            "Badener AC 1899 年 2 月 19 日成立，是今天下奥地利州最古老的俱乐部，"
+            "1934/35 赛季拿过奥地利业余全国冠军。足球部负责人对他的表态是："
+            "在我们这儿，谁都得自己去争首发。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2020-09-13",
+                player="蒂姆",
+                age="27 岁",
+                headline="0-2 落后翻盘，拿下美网",
+                detail=(
+                    "决赛先丢两盘后连扳三盘，第五盘抢七 8-6 胜兹维列夫，"
+                    "拿到生涯唯一一座大满贯；生涯最高世界第三，17 个巡回赛冠军。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2020_US_Open_%E2%80%93_Men%27s_singles",
+            ),
+            ChampionMoment(
+                date="2024-10-22",
+                player="蒂姆",
+                age="31 岁",
+                headline="维也纳首轮出局，就此退役",
+                detail=(
+                    "主场首轮 6-7(6) 2-6 负于达尔代里，91 分钟；"
+                    "长期的手腕伤让他再没回到从前的水准。"
+                ),
+                source_url="https://www.atptour.com/en/news/darderi-thiem-vienna-2024-tuesday",
+            ),
+            ChampionMoment(
+                date="2026-07-15",
+                player="蒂姆",
+                age="32 岁",
+                headline="在足协登记为球员，转会 Badener AC",
+                detail=(
+                    "打第八级的 2. Klasse Triestingtal；此前两个赛季效力家乡队"
+                    "利希滕韦特，上赛季 10 场 1 球。他同时是自己创办的"
+                    "维也纳小场联赛球队 Ecoballers 的合伙人之一。"
+                ),
+                source_url="https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+            ),
+        ),
+        image_keys=(),
+        # 封面角标不能是年份：这条片子里有两个 9.13，印任何一个都会和另一屏打架。
+        # 用那个非年份的数字——他现在打第几级。
+        hero_marker="第 8 级",
+        source_label="laola1 / NÖN / 奥地利联赛体系",
+        image_credit="GEPA pictures 经 laola1 转载（unverified）",
+        source_url="https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+        evidence_urls=(
+            "https://www.laola1.at/de/red/fussball/unterhaus/nicht-mehr-lichtenwoerth--dominic-thiem-wechselt-fussballverein/",
+            "https://www.atptour.com/en/news/darderi-thiem-vienna-2024-tuesday",
+            "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Ligasystem_in_%C3%96sterreich",
+            "https://de.wikipedia.org/wiki/Badener_AC",
+            "https://sportbusinessmagazin.com/ecoballers-dominic-thiem-amateurfussball/",
+        ),
     ),
     _trivia_story(
         slug="ball-pick",
@@ -1561,7 +1691,7 @@ STORIES = STORIES + (
         ),
         facts=(
             "伊埃拉 2005 年 5 月生，2022 年成为菲律宾首位青少年大满贯单打冠军；"
-            "2025 年迈阿密以外卡身份连胜奥斯塔片科、基斯与斯瓦泰克闯入四强。",
+            "2025 年迈阿密以外卡身份连胜奥斯塔彭科、凯斯与斯瓦泰克闯入四强。",
             "2026 年 7 月 13 日，伊埃拉升至生涯新高世界第 28 位，为菲律宾球员在 WTA 巡回赛的历史最高排名；"
             "本届温网她第三轮再胜斯瓦泰克，首次打进大满贯第二周。",
             "郑钦文 2024 年巴黎奥运会夺得女单金牌，为亚洲首位奥运网球单打冠军；"
@@ -1675,6 +1805,64 @@ STORIES = STORIES + (
         source_label="两人维基百科条目 / WTA 官方赛会信息",
         image_credit="Hameltion · CC BY-SA 4.0 · Wikimedia Commons",
         source_url="https://en.wikipedia.org/wiki/Venus_Williams",
+    ),
+    _trivia_story(
+        slug="wong-lehecka",
+        title="黄泽林16强VS莱赫奇卡",
+        subtitle="赛事前瞻 · ATP 250",
+        identity="世界第 108 对世界第 12",
+        chips=("ATP 250", "16 强", "首次交手"),
+        hero=(
+            "洛斯卡沃斯站 16 强，香港一哥黄泽林对上头号种子莱赫奇卡；"
+            "官方赛程把这场排在中心球场当地时间 18:00 的第一场，两人此前从未交手。"
+        ),
+        facts=(
+            "黄泽林 2004 年 6 月生，2026 年 6 月 8 日升到生涯最高的世界第 108，"
+            "是历来排名最高的香港男子球员；公开赛年代首位打进大满贯正赛、"
+            "首位赢下大满贯正赛、首位打进大满贯第三轮、首位夺得挑战赛冠军的香港男子，"
+            "四项纪录都在他名下。",
+            "莱赫奇卡 2001 年 11 月生，捷克男子头号球员，2026 年 5 月 25 日"
+            "升到生涯最高的世界第 12；同年 3 月以 21 号种子打进迈阿密大师赛决赛，"
+            "那是他生涯第一个大师赛决赛，晋级路上发球局一次未被破，决赛负于辛纳。",
+            "两人的名字此前只在同一张签表上出现过，从未交手；"
+            "本站黄泽林签位不带任何标记，是按排名直接进入正赛，"
+            "首轮 6-3、6-4 击败世界第 266 的布兰奇。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2023-09",
+                player="黄泽林",
+                age="19 岁",
+                headline="杭州亚运会 16 强救 5 个赛点胜吴易昺",
+                detail="6-4、3-6、7-6 淘汰当时世界第 98 的吴易昺，香港球员首次战胜世界前 100。",
+                source_url=(
+                    "https://www.scmp.com/sport/china/article/3235885/"
+                    "asian-games-2023-coleman-wong-upsets-chinas-no-2-wu-yibing-"
+                    "mens-singles-tennis-tournament-nail-biter"
+                ),
+            ),
+            ChampionMoment(
+                date="2025-08",
+                player="黄泽林",
+                age="21 岁",
+                headline="美网从资格赛打进第三轮",
+                detail="以世界第 173 连过三轮资格赛，正赛连胜科瓦切维奇与沃尔顿，"
+                "成为首位打进大满贯第三轮的香港男子。",
+                source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
+            ),
+            ChampionMoment(
+                date="2026-03",
+                player="莱赫奇卡",
+                age="24 岁",
+                headline="迈阿密打进生涯首个大师赛决赛",
+                detail="晋级路上发球局一次未被破发，决赛 4-6、4-6 不敌辛纳。",
+                source_url="https://en.wikipedia.org/wiki/Ji%C5%99%C3%AD_Lehe%C4%8Dka",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / 赛会官方 Order of Play / SCMP",
+        image_credit="Eugene Lee · SCMP",
+        source_url="https://en.wikipedia.org/wiki/Coleman_Wong",
     ),
     _trivia_story(
         slug="masters-format",

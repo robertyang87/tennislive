@@ -1,0 +1,83 @@
+{
+  "date": "2026-07-30",
+  "source_status": {
+    "US Open": "正常 · 1 条",
+    "ATP Tour": "正常 · 10 条",
+    "WTA": "正常 · 12 条",
+    "Roland-Garros": "正常 · 0 条",
+    "Australian Open": "正常 · 1 条",
+    "Wimbledon": "正常 · 0 条",
+    "Top media": "正常 · 7 条",
+    "US": "正常 · 10 条",
+    "AU": "正常 · 10 条",
+    "HK": "正常 · 10 条",
+    "GB": "正常 · 10 条",
+    "微信热文榜": "正常 · 扫 30 条 / 网球 0 条",
+    "抖音热搜": "正常 · 扫 50 条 / 网球 1 条",
+    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
+    "知乎热榜": "正常 · 扫 30 条 / 网球 0 条",
+    "小红书热榜": "正常 · 扫 20 条 / 网球 0 条",
+    "微博热搜": "降级 · ConnectTimeout",
+    "微信指数": "拿不到 · search.weixin.qq.com 无签名返回 {\"code\":-1}，签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」",
+    "小红书官方接口": "拿不到 · edith 域 404、www 域 500，两条都要签名；已改走 UApiPro（主）+ 今日热榜镜像（备）",
+    "微信搜一搜热点词 / 公众号热点话题榜": "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot 一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
+  },
+  "news_signals": 31,
+  "trend_signals": 40,
+  "zh_scanned": 181,
+  "zh_hot": [
+    {
+      "kind": "zh-hot-search",
+      "source": "抖音热搜",
+      "word": "上海大师赛吴宜泽vs墨菲",
+      "rank": 6,
+      "heat": "10544846",
+      "url": "https://www.douyin.com/search/%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%B8%88%E8%B5%9B%E5%90%B4%E5%AE%9C%E6%B3%BDvs%E5%A2%A8%E8%8F%B2",
+      "matched": [
+        "上海大师赛",
+        "大师赛"
+      ],
+      "terms": [
+        "shanghai"
+      ]
+    }
+  ],
+  "zh_near_miss": [],
+  "count": 0,
+  "topics": [],
+  "unmatched_clusters": 2,
+  "unmatched_terms": [
+    {
+      "term": "alex",
+      "clusters": 2
+    },
+    {
+      "term": "roundup",
+      "clusters": 2
+    },
+    {
+      "term": "washington",
+      "clusters": 2
+    },
+    {
+      "term": "alexandra",
+      "clusters": 1
+    },
+    {
+      "term": "beats",
+      "clusters": 1
+    },
+    {
+      "term": "champ",
+      "clusters": 1
+    },
+    {
+      "term": "champion",
+      "clusters": 1
+    },
+    {
+      "term": "defence",
+      "clusters": 1
+    }
+  ]
+}

@@ -149,6 +149,7 @@ jobs:
           # between the old and new brand mark for half an hour.
           BRANCH="${{ github.ref_name }}"
           MSG="content: 知识解说视频 $(basename "$OUTDIR")"
+          python tools/check_staged_file_sizes.py
           git commit -m "$MSG"
           # Backoff has to outlast a whole batch, not one collision. With
           # five tries three seconds apart, a run regenerating alongside six
@@ -165,6 +166,7 @@ jobs:
             git reset --hard "origin/$BRANCH"
             git checkout rendered -- "$OUTDIR"
             git add "$OUTDIR"
+            python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
             sleep $((attempt * 5 + RANDOM % 10))
           done

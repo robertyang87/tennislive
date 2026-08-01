@@ -349,13 +349,20 @@ def cmd_explainer(args) -> int:
         explainer_xiaohongshu,
     )
 
-    from .render.pushmsg import live_copy_page_url, to_copy_page
+    # 只要 to_copy_page：复制页可达性由 `publish pushplus` 在提交之后探，
+    # 不在这儿探。见 drop_dead_copy_button 的注释。
+    from .render.pushmsg import to_copy_page
 
     outdir = Path(args.outdir)
     segments = explainer_script(story)
     xhs_text = explainer_xiaohongshu(story, segments, f"{d.month}.{d.day}")
     (outdir / "xiaohongshu.txt").write_text(xhs_text, encoding="utf-8")
     (outdir / "copy.html").write_text(to_copy_page(xhs_text), encoding="utf-8")
+
+    # 这里**不探**复制页。渲染排在提交之前，那一刻 copy.html 还没进仓库，
+    # Pages 必然取不到——在这儿探等于每次都把按钮拿掉，连 main 上本来能用的
+    # 也一起拿掉（2026-07-29 蒂姆那条推送就是这么少了按钮的，run 30432435525）。
+    # 闸装在 `publish pushplus` 里，那一步跑在提交之后，见 drop_dead_copy_button。
     (outdir / "push.html").write_text(
         explainer_push_html(segments, outdir, date=d, xhs_text=xhs_text),
         encoding="utf-8",
@@ -1571,7 +1578,11 @@ def cmd_publish_wechat(args) -> int:
 
 def cmd_publish_pushplus(args) -> int:
     from .publish.pushplus import PushPlusError, push
-    from .render.pushmsg import pin_asset_revision
+    from .render.pushmsg import (
+        copy_page_fingerprint,
+        drop_dead_copy_button,
+        pin_asset_revision,
+    )
     from .render.terminal import console
 
     d = Path(args.dir)
@@ -1595,6 +1606,20 @@ def cmd_publish_pushplus(args) -> int:
 
     html = re.sub(r"\{\{IMAGE:[^}]+\}\}", "", html)
     html = pin_asset_revision(html, os.environ.get("TENNISLIVE_ASSET_REV", ""))
+    # 发之前探一次复制页，取不到就摘掉那个按钮。**这一步跑在提交之后**，
+    # 所以是唯一能给出真实答案的时刻；渲染那会儿文件还没进仓库，探必然失败。
+    # 装在这里，解说片 / 知识帖 / 赛程包三条线一起护住。
+    # 拿本地 copy.html 的标题当指纹：线上那份必须是**这一版**才放按钮。
+    # 只探可达会漏掉「Pages 上还是旧包」——旧内容照样 200，比死链更难发现。
+    expect = copy_page_fingerprint(d / "copy.html")
+    html, live_copy = drop_dead_copy_button(html, expect=expect)
+    if live_copy:
+        console.print(f"[green]复制页可达且是这一版[/green] {live_copy}")
+    else:
+        console.print(
+            "[yellow]复制页取不到或还是旧版，本次不放该按钮；正文已整段渲染在"
+            "消息里，可长按复制[/yellow]"
+        )
     try:
         push(title, html, asset_dir=d)
     except PushPlusError as e:

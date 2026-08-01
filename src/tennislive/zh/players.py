@@ -164,6 +164,10 @@ PLAYER_ZH: dict[str, str] = {
     "Yibing Wu": "吴易昺",
     "Yi Zhou": "周意",
     "Fajing Sun": "孙发京",
+    # 机器音译只切出一个姓字「卢」，姓本身还写错了：英文维基 Lu Jiajing
+    # 写明是「逯佳境」，排名史（生涯最高 162、2026 年 4 月第 425）与我们
+    # 7 月 27 日快照里的第 417 对得上。卡片上印一个单字姓是坏输出。
+    "Jia-Jing Lu": "逯佳境",
     # ===== WTA =====
     "Aryna Sabalenka": "萨巴伦卡",
     "Iga Swiatek": "斯瓦泰克",
@@ -197,6 +201,9 @@ PLAYER_ZH: dict[str, str] = {
     "Barbora Krejcikova": "克雷吉茨科娃",
     "Veronika Kudermetova": "维罗妮卡·库德梅托娃",
     "Anna Kalinskaya": "卡林斯卡娅",
+    # 表里没有的名字，定下来就要补进来，别只写在稿子里——2026-07-29 写萨姆索诺娃
+    # 2022 年华盛顿夺冠那条时用到，当时 `player_zh("Kaia Kanepi")` 原样返回英文。
+    "Kaia Kanepi": "卡内皮",
     "Leylah Fernandez": "费尔南德斯",
     "Maya Joint": "乔因特",
     "Iva Jovic": "约维奇",
@@ -436,6 +443,24 @@ PLAYER_ZH: dict[str, str] = {
     "Justine Henin": "海宁",
     "Maria Sharapova": "莎拉波娃",
     "Ana Ivanovic": "伊万诺维奇",
+    # 「幸运落败者」那条选题里要念到的人，全部已退役或已改名——**前 500 的快照
+    # 永远同步不到他们**（`update_player_names.py` 只抓现役前 500），所以家在
+    # 这儿，不在 `data/player_name_overrides.json`：那个文件只喂快照生成器。
+    # 译名一律取中文维基条目的姓，写全名的惯例只留给需要区分的人。
+    "Paolo Lorenzi": "洛伦齐",          # 保罗·洛伦齐，2017 乌马格决赛负于卢布列夫
+    "Kiki Bertens": "贝尔腾斯",         # 基基·贝尔腾斯——是「腾」不是「滕」
+    "Andrea Petkovic": "佩特科维奇",
+    "Stefanie Voegele": "沃格勒",       # 史蒂芬妮·沃格勒
+    "Stefanie Vogele": "沃格勒",        # 带变音的写法数据源里两种都出现过
+    "Nicole Vaidisova": "瓦伊迪索娃",   # 妮科莱·瓦伊迪索娃
+    # 同一个人：2019 年林茨时叫 Kozlova，后改姓 Baindl。两个都要认得——
+    # 她先在林茨输给幸运落败者高芙，四年后又在布达佩斯决赛输给幸运落败者
+    # 季莫费耶娃，这条选题里两次都点到她。
+    "Kateryna Kozlova": "科兹洛娃",
+    "Kateryna Baindl": "班德尔",
+    # 1995 年温网以幸运落败者身份打进第四轮的比利时人，男子那边至今的天花板。
+    # 名字**画在示意图上**，「示意图也要扫」那条同样管——不能只写在稿子里。
+    "Dick Norman": "诺曼",
     # 中国线：这几个是本人的名字，不是音译
     "Michael Chang": "张德培",
     "Shuai Peng": "彭帅",

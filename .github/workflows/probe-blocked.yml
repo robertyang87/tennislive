@@ -1,0 +1,97 @@
+name: probe-blocked-sources
+
+# 在 Actions 的出口网络上探那些**沙箱够不到**的源（ATP 全站 403、
+# live-tennis.eu 403、赛事图库的 Cloudflare 人机校验）。
+#
+# 什么都不产、什么都不提交，结论**全打在日志里**——包括探不通的那几条。
+# 只在成功时出声的检查，没法证明它真的看过。
+on:
+  workflow_dispatch:
+    inputs:
+      want:
+        description: "要在正文里找的词，逗号分隔"
+        required: false
+        default: "Coleman Wong,Brooksby"
+      mode:
+        description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
+        required: false
+        default: "http"
+      url:
+        description: "browser 模式要加载的页面（默认 tnnslive.com 首页）"
+        required: false
+        default: ""
+      fetch:
+        description: "browser 模式：过了挑战之后在页面里 fetch 的接口，逗号分隔"
+        required: false
+        default: ""
+      dump:
+        description: "browser 模式：在 fetch 回来的 JSON 里找含这个词的对象"
+        required: false
+        default: ""
+      link:
+        description: "browser 模式：把页面里含这个串的 href 列出来"
+        required: false
+        default: ""
+      audio_url:
+        description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
+        required: false
+        default: ""
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # browser 模式要浏览器。**装在跑之前**，别等跑到一半才报
+      # ModuleNotFoundError——竖版剪辑那条线同一个毛病犯过三次。
+      - name: 装 Chromium（browser 模式才要）
+        if: github.event.inputs.mode == 'browser'
+        run: |
+          pip install -q playwright
+          python -m playwright install --with-deps chromium
+      # audio 模式：YouTube 要 cookie 才下得动（沙箱直接吃 bot 校验），
+      # 所以这一条只能在 runner 上跑。
+      - name: 落 cookies（audio 模式才要）
+        if: github.event.inputs.audio_url != ''
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          # numpy 是算能量包络要的；ffmpeg runner 自带。
+          # 「加能力要同时改三处」——这条线上漏依赖已经是第四次了。
+          pip install -q yt-dlp numpy imageio-ffmpeg
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::warning::没有 YT_COOKIES_TXT，多半会被 bot 校验挡住"
+          fi
+
+      - name: 验观众声
+        if: github.event.inputs.audio_url != ''
+        run: |
+          A=""
+          [ -n "${{ steps.cookies.outputs.path }}" ] && A="--cookies ${{ steps.cookies.outputs.path }}"
+          python tools/check_crowd_rise.py --url "${{ github.event.inputs.audio_url }}" $A
+
+      - name: 探
+        if: github.event.inputs.audio_url == ''
+        run: |
+          ARGS=""
+          IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
+          for w in "${WORDS[@]}"; do ARGS="$ARGS --want \"$w\""; done
+          if [ "${{ github.event.inputs.mode }}" = "browser" ]; then
+            [ -n "${{ github.event.inputs.url }}" ] && ARGS="$ARGS --url '${{ github.event.inputs.url }}'"
+            [ -n "${{ github.event.inputs.dump }}" ] && ARGS="$ARGS --dump '${{ github.event.inputs.dump }}'"
+            [ -n "${{ github.event.inputs.link }}" ] && ARGS="$ARGS --link '${{ github.event.inputs.link }}'"
+            IFS=',' read -ra FS <<< "${{ github.event.inputs.fetch }}"
+            for f in "${FS[@]}"; do [ -n "$f" ] && ARGS="$ARGS --fetch '$f'"; done
+            eval python tools/probe_tnns.py $ARGS
+          else
+            eval python tools/probe_blocked_sources.py $ARGS
+          fi

@@ -60,13 +60,13 @@ on:
         required: false
         default: ""
       summary:
-        description: "一句话概括赛果（顶掉「对阵 + 比分」）：人物 + 结果 + 抓人，**不超过 20 字**"
+        description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
         required: false
-        default: "一盘一破后只赢一局，郑钦文首轮出局"
+        default: "郑钦文首轮出局"
       push_lead:
         description: "推送正文那一句"
         required: false
-        default: "郑钦文一盘一破在手，之后只再赢下一局，华盛顿首轮出局。竖版成片可直接下载。"
+        default: "一盘一破在手，之后只再赢下 1 局。全场 8 个破发点保住 2 个，二发得分率 35%，12 记 Ace 全场最多，2 小时 26 分。"
 
 permissions:
   contents: write
@@ -82,6 +82,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
+      # **`push=true` 只能跑在 main 上，而且要在第一步就拦住。**
+      #
+      # GitHub Pages 只服务 main。复制页提交在特性分支上，那个 URL 永远是 404，
+      # 而 `wait_for_copy_page` 等不到这一版就 `exit 1`——**一个字都不发**。
+      # 这个设计是对的（宁可不发也不发一条带死链的消息），代价是它把失败推到了
+      # 最后：渲片 6 分钟 → 轮询 10 分钟 → 才报错，前面全白跑。
+      # 2026-07-29 大威那条就是这么烧掉一次的（run 30457284612），而
+      # **CLAUDE.md 里白纸黑字记着这个坑**，照样走了进去。
+      #
+      # 判据探得很干净：同一个 Pages 站、同样的路径形状，分支上的 copy.html
+      # 是 404，main 上 wang-pareja 的是 200，差别只有分支。
+      #
+      # 所以在这儿拦：让失败发生在第 5 秒，不是第 16 分钟。要出片不推送就
+      # `push=false`，在分支上随便跑；要推送先把 PR 合进 main。
+      - name: push=true 必须在 main 上
+        if: github.event.inputs.push == 'true' && github.ref_name != 'main'
+        run: |
+          echo "::error::push=true 只能在 main 上跑，当前分支是 ${{ github.ref_name }}。"
+          echo "::error::GitHub Pages 只服务 main——复制页留在分支上永远是 404，"
+          echo "::error::推送那一步等不到它就会 exit 1，渲染和轮询全白跑十几分钟。"
+          echo "::error::出片但不推送用 push=false；要推送先把 PR 合进 main 再跑。"
+          exit 1
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
@@ -89,8 +112,17 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 装中文字体（封面和字幕都要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
+      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      - name: 装 ffmpeg
+        timeout-minutes: 5
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 装中文字体（只有渲染要）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 5
+        run: sudo apt-get install -y -qq fonts-noto-cjk
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
@@ -98,9 +130,21 @@ jobs:
       # visualqa 那份是 opencv：跟踪裁切靠它算帧差质心。**同一个坑第二次**——
       # 跟踪合进来的那次 render 就是在下完源片、合完音之后死在
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
+      # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
+      - name: 缓存抠图模型
+        if: github.event.inputs.mode == 'render'
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use-${{ runner.os }}
+
       - name: 装依赖
         run: |
-          pip install -q -e ".[webrender,visualqa]"
+          # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
+          # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
+          # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
+          # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
+          pip install -q -e ".[webrender,visualqa,cutout]"
           # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
           # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
           # `n challenge solving failed` + `Only images are available`，
@@ -111,12 +155,14 @@ jobs:
           node --version
 
       - name: 缓存 Chromium
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
+        if: github.event.inputs.mode == 'render'
         run: python -m playwright install --with-deps chromium
 
       - name: 算出目录
@@ -221,6 +267,24 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 顺便把封面人物的候选帧也挑出来。**源片只在 runner 上有**——沙箱下不动
+      # YouTube，所以这一步不在这儿做，就只能拿 2 秒一格的缩略图墙用肉眼找正脸，
+      # 而那正是 `pick_cover_frames.py` 要替掉的活。
+      # 挑帧判据（账号所有者定的）：正脸或稍微侧脸、上半身直立、表情读得出。
+      # **挑完仍然要人打开看**：谁是谁、表情对不对题机器判不了，所以这里只出
+      # 候选墙，不自动写进 spec。
+      # 挑不出来**不算失败**（有些集锦通篇没有近景）——`|| true` 让它继续，
+      # 缩略图墙那条老路还在。
+      - name: probe — 封面候选帧
+        if: github.event.inputs.mode == 'probe'
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          python tools/pick_cover_frames.py \
+            --video "$OUT/source.mp4" \
+            --out "$OUT/cover_candidates" \
+            --top 12 || true
+          ls -la "$OUT/cover_candidates" 2>/dev/null || true
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -258,12 +322,56 @@ jobs:
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
-          # _cover.html 是封面那一屏的渲染输入，图以 data URI 内嵌，单个 12 MB，
-          # 之前漏在清单外，每出一版就往仓库里塞一份（和 source_av.mp4 同一个毛病）。
-          rm -f "$OUTDIR"/source.mp4 "$OUTDIR"/source_av.mp4 \
-            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html
+          # _cover.html / poster.html 是封面那一屏的渲染输入，图以 data URI 内嵌，
+          # 单个 12 MB，之前漏在清单外，每出一版就往仓库里塞一份。
+          # **poster.jpg 要留下**：推送正文的第一屏就是它，删了推送里就没有图。
+          # **`source*` 一整片删掉，不要逐个列名字。** 这个坑连着栽了四次，
+          # 每次都是同一个形状：源片换了个名字，就从清单里溜过去了。
+          #   1. `source.fNNN.mp4.part`（yt-dlp 分轨下载的半成品，probe wang-pareja）
+          #   2. 同一个漏在 eala-zheng、potapova-venus 上各中一次
+          #   3. 分轨的 `.webm` 和 yt-dlp 的续传记录 `.ytdl`
+          #   4. **多源之后叫 `source_r1.mp4` / `source_iv.mp4`**——加多源支持时
+          #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
+          #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
+          # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
+          # `_versus_cut_top.png`。
+          # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
+          # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
+          # 那道兜底**，却每探一次就加一份。
+          # 判据在 test_中间物一个都不许进仓库：按 glob 语义验覆盖，不验字面名字。
+          rm -f "$OUTDIR"/source* "$OUTDIR"/*.part "$OUTDIR"/*.ytdl \
+            "$OUTDIR"/voice_*.mp3 "$OUTDIR"/_cover.jpg "$OUTDIR"/_cover.html \
+            "$OUTDIR"/poster.html "$OUTDIR"/_versus_* "$OUTDIR"/_subs* \
+            "$OUTDIR"/cover_candidates/cand_*
           rm -rf "$OUTDIR"/frames
           ls -la "$OUTDIR" || true
+
+          # 兜底：上面那串模式挡住的是**已知**的中间物，挡不住下一个没见过的。
+          # 所以清完再量一次，超过 8 MB 而又不是成片的，一律当成漏网并报错——
+          # 宁可这一步红，也别再往仓库里塞一个没人发现的大文件（推分支吃 413
+          # 就是被 pack 体积撑爆的）。
+          #
+          # **成片按名字放行，不按体积放行。** 第一版给成片卡了个 20 MB 的上限，
+          # 结果第一条片子就被自己拦下来了：那个数是从**解说片**那条线搬来的
+          # （静图幻灯，2 分 56 秒只有 7.7 MB / 365 kb/s），而这条线是真实比赛
+          # 画面、crf 18，实测 3315 / 3517 / 3610 kb/s 三条几乎一样——**体积
+          # 由时长决定**，写死一个字节数等于给片长设了个暗上限。
+          SLUG="${{ github.event.inputs.slug }}"
+          BAD=0
+          while IFS= read -r f; do
+            [ "$(basename "$f")" = "$SLUG.mp4" ] && continue
+            echo "::error::清理之后仍有大文件进仓库：$f（$(stat -c%s "$f") 字节）"
+            BAD=1
+          done < <(find "$OUTDIR" -type f -size +8M)
+          [ "$BAD" = 0 ] || exit 1
+          # 成片自己只报不拦：拦它等于拦片长，而片长是编辑决定的。但**要出声**
+          # ——已发的三条是 29–34 MB，明显跳出这个量级时得有人看见。
+          REEL="$OUTDIR/$SLUG.mp4"
+          if [ -f "$REEL" ]; then
+            SZ=$(stat -c%s "$REEL")
+            echo "成片 $SLUG.mp4：$((SZ/1048576)) MB"
+            [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
+          fi
 
       - name: 上传 artifact
         if: github.event.inputs.mode != 'cookies'
@@ -286,13 +394,29 @@ jobs:
             echo "没有变化"
             exit 0
           fi
-          git commit -m "reel: ${{ github.event.inputs.mode }} ${{ github.event.inputs.slug }}"
-          for i in 1 2 3 4; do
-            git push origin HEAD:${{ github.ref_name }} && break
-            sleep $((2 ** i))
-            git fetch origin ${{ github.ref_name }}
-            git rebase origin/${{ github.ref_name }} || git rebase --abort
+          BRANCH="${{ github.ref_name }}"
+          MSG="reel: ${{ github.event.inputs.mode }} ${{ github.event.inputs.slug }}"
+          python tools/check_staged_file_sizes.py
+          git commit -m "$MSG"
+          # 多条不同 slug 可以并行落库。push 被别的 run 抢先后，只把本条
+          # OUTDIR 重放到最新分支；普通 rebase 遇到同名二进制文件会冲突，
+          # 而 `break` 版循环在重试耗尽后还会错误地继续微信推送。
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本条成片重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            git checkout rendered -- "$OUTDIR"
+            git add "$OUTDIR"
+            python tools/check_staged_file_sizes.py
+            git diff --cached --quiet || git commit -m "$MSG"
+            sleep $((attempt * 5 + RANDOM % 10))
           done
+          echo "::error::连续 10 次推送失败；成片仍在 artifact 中，未发送微信死链"
+          exit 1
 
       # 推送**必须排在提交之后**——正文里的成片链接和复制页链接都指向仓库里的
       # 文件，还没提交上去就是 404。这一段的注释一直写着「推送是最后一步：

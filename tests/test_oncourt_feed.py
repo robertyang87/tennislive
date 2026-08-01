@@ -594,12 +594,12 @@ def test_push_is_called_with_the_real_signature():
     assert "html_content" in kwargs, "没把正文传给 push()，推出去会是空的"
 
 
-def test_the_push_step_does_not_swallow_a_crash():
-    """工作流里推送那一步必须开 `pipefail`，否则 python 崩了也报成功。
+def test_push_failure_is_reported_after_collected_data_is_committed():
+    """推送崩溃要报失败，但不能让已经抓到的数据随 runner 一起消失。
 
     上面那条测试防的是「参数写错」，这条防的是「写错了也看不见」——
-    两道都得有。别的步骤故意写了 `|| true`（搜索和缺口对账失败不该拦住推送），
-    那些不算数，这里只查推送这一步。
+    推送步骤用 pipefail 保留真实 outcome，再允许提交步骤继续；提交完成后
+    重新抛出失败，让 Actions 和告警仍然是红灯。
     """
     from pathlib import Path
 
@@ -608,6 +608,17 @@ def test_the_push_step_does_not_swallow_a_crash():
     step = text.split("筛出关键场次与中国球员，推到微信", 1)[1].split("- name:", 1)[0]
     assert "set -o pipefail" in step, "推送这一步没开 pipefail，崩了会被 tee 吞掉"
     assert "oncourt_feed.py --push" in step, "样本取错了段落，这条测试没在看推送步骤"
+    assert "id: feed" in step
+    assert "continue-on-error: true" in step
+
+    commit_at = text.index("- name: 提交新增条目")
+    rethrow_at = text.index("- name: 推送失败后确认数据已保留并告警")
+    assert commit_at < rethrow_at
+    rethrow = text.split(
+        "推送失败后确认数据已保留并告警", 1
+    )[1].split("- name:", 1)[0]
+    assert "if: steps.feed.outcome == 'failure'" in rethrow
+    assert "exit 1" in rethrow
 
 
 def test_card_shows_chinese_names_from_the_repo_tables():
@@ -620,6 +631,12 @@ def test_card_shows_chinese_names_from_the_repo_tables():
     **标题本身不改**：它是来源的原文，溯源要用，改了就对不上了。中文另起一行。
 
     两边都认不出来就返回空串——**宁可不显示，也不显示错的**。
+
+    ⚠️ 这条也是 `data/tour_calendar_2026.json` 的**顺序守卫**。`zh_line` 用
+    `next(...)` 取第一条匹配上的赛事，而罗马那两条 ATP/WTA 的 `pat` 一模一样
+    ——谁在数组里靠前谁赢。我给 events 排过一次序（按 start, tour），
+    WTA 的罗马跑到前面，男子采访当场变成「罗马公开赛」，就是这条炸的。
+    **新赛事 append 到末尾，不要排序。**
     """
     from tools.oncourt_feed import zh_line
 

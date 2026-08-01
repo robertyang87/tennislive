@@ -124,6 +124,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "没有新内容，跳过提交"
           else
+            python tools/check_staged_file_sizes.py
             git commit -m "content: 知识帖(ad-hoc) $GENERATED_SLUG"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"

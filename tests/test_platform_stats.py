@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import csv
 import importlib.util
+import struct
 import sys
 import zipfile
 from datetime import date, datetime
@@ -78,8 +79,29 @@ def _item(title, day, mp4=None):
             "date": day, "mp4": mp4}
 
 
+def _mp4_with_duration(tmp_path: Path, seconds: int = 120) -> Path:
+    """写一个只含 moov/mvhd 的最小 MP4，避免测试依赖 output/ 历史成片。"""
+    timescale = 1_000
+    mvhd_body = (
+        b"\0\0\0\0"  # version + flags
+        + struct.pack(">IIII", 0, 0, timescale, seconds * timescale)
+    )
+    mvhd = struct.pack(">I4s", 8 + len(mvhd_body), b"mvhd") + mvhd_body
+    moov = struct.pack(">I4s", 8 + len(mvhd), b"moov") + mvhd
+    path = tmp_path / "duration-fixture.mp4"
+    path.write_bytes(moov)
+    return path
+
+
+def _plat(name):
+    """按名字取平台。别用下标——`PLATFORMS` 中间插一条就会把所有位置解构打乱，
+    而且错得很安静：`wx = PLATFORMS[2]` 会静悄悄变成另一家。
+    """
+    return next(p for p in ps.PLATFORMS if p.name == name)
+
+
 def _work(title, when=None, photo=False, platform=None, **values):
-    return ps.Work(platform=platform or ps.PLATFORMS[1], title_raw=title,
+    return ps.Work(platform=platform or _plat("抖音"), title_raw=title,
                    published=when, is_photo=photo, values=values, label=title[:28])
 
 
@@ -156,7 +178,7 @@ def test_体裁按含不含图文判():
 
     枚举平台的写法是走不通的路——每加一家就得补一遍。判「含不含图文」就够。
     """
-    dy = ps.PLATFORMS[1]
+    dy = _plat("抖音")
     rows = [DY_HEAD,
             _dy("视频甲 正文", "2026-07-26 03:33:18", kind="1-3min视频"),
             _dy("视频乙 正文", "2026-07-26 04:40:00", kind="3-5min视频"),
@@ -180,7 +202,7 @@ def test_没有体裁列的平台一律当视频(tmp_path):
 
 
 def test_三家的时间格式都认得():
-    xhs, dy, wx = ps.PLATFORMS
+    xhs, dy, wx = _plat("小红书"), _plat("抖音"), _plat("视频号")
     assert ps.parse_time("2026年07月27日14时52分24秒", xhs.time_formats) == \
         datetime(2026, 7, 27, 14, 52, 24)
     assert ps.parse_time("2026-07-27 14:47:18", dy.time_formats) == \
@@ -291,7 +313,7 @@ def test_曝光一致性自检认得出视频那一列是残缺的(capsys):
     第一次看小红书那张表时差点据此得出「图文分发更好」：图文曝光 24512 比
     视频的 18184 高。其实视频有一路沉浸式自动播放的观看不计入曝光列。
     """
-    xhs = ps.PLATFORMS[0]
+    xhs = _plat("小红书")
     works = [
         _work("图文甲", photo=True, platform=xhs, exposure=2000, plays=200, cover_ctr=0.10),
         _work("图文乙", photo=True, platform=xhs, exposure=1000, plays=105, cover_ctr=0.10),
@@ -311,7 +333,7 @@ def test_平台不给的列要说是平台不给不是没有数据(capsys):
     """空结果先自证是真空。「视频号没有 2s跳出率」和「这个号没人看」在输出里
     长得一模一样，必须由文案分开。
     """
-    wx = ps.PLATFORMS[2]
+    wx = _plat("视频号")
     an.funnel([_work("🎾某条", platform=wx, plays=100, avg_watch=10.0)])
     out = capsys.readouterr().out
     assert "视频号 不给" in out
@@ -319,7 +341,7 @@ def test_平台不给的列要说是平台不给不是没有数据(capsys):
 
 
 def test_漏斗只算视频(capsys):
-    dy = ps.PLATFORMS[1]
+    dy = _plat("抖音")
     recs = an.funnel([
         _work("视频甲", platform=dy, plays=1000, bounce_2s=0.34, retain_5s=0.40,
               true_completion=0.02),
@@ -334,7 +356,7 @@ def test_图文和视频的完播率必须分开算(capsys):
     """图文的「完播」是翻完几张图（真实数据 13.6%～24.2%），视频只有
     0%～9.9%。混在一起算中位会得出「完播率还不错」的假象。
     """
-    dy = ps.PLATFORMS[1]
+    dy = _plat("抖音")
     an.by_kind([
         _work("视频甲", platform=dy, plays=1000, true_completion=0.02, follows=1),
         _work("视频乙", platform=dy, plays=1000, true_completion=0.03, follows=1),
@@ -345,16 +367,14 @@ def test_图文和视频的完播率必须分开算(capsys):
     assert "不可比" in out and "21.0%" in out and "2.5%" in out
 
 
-def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch):
+def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch, tmp_path):
     """0 秒 = 后台还没统计出来（当天刚发的常常这样），不是「没人看」。
 
     算成 0% 会把中位数拖垮：小红书这批里两条今天发的会把中位从 19.5% 压到
     15.5%，而且看不出是数据没到还是片子太差。
     """
-    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
-    if real is None:
-        pytest.skip("output/ 下没有成片可量")
-    xhs = ps.PLATFORMS[0]
+    real = _mp4_with_duration(tmp_path)
+    xhs = _plat("小红书")
     length = ps.mvhd_seconds(real.read_bytes())
     good = _work("🎾有数据的", platform=xhs, plays=1000, avg_watch=length / 4)
     good.item = _item("🎾有数据的", date(2026, 7, 26), real)
@@ -367,11 +387,9 @@ def test_平均播放时长为零的不计入均观看比例(capsys, monkeypatch
     assert "还是 0" in out and "刚发还没数" in out
 
 
-def test_小红书那节要写明真完播率无从得知(capsys, monkeypatch):
-    real = next((_TOOLS.parents[0] / "output").rglob("*.mp4"), None)
-    if real is None:
-        pytest.skip("output/ 下没有成片可量")
-    xhs = ps.PLATFORMS[0]
+def test_小红书那节要写明真完播率无从得知(capsys, monkeypatch, tmp_path):
+    real = _mp4_with_duration(tmp_path)
+    xhs = _plat("小红书")
     w = _work("🎾某条", platform=xhs, plays=1000,
               avg_watch=ps.mvhd_seconds(real.read_bytes()) / 4)
     w.item = _item("🎾某条", date(2026, 7, 26), real)
@@ -399,7 +417,7 @@ def test_全部对上时也要明确说出来(capsys):
 
 def test_相关性剔除刚发的并说明剔了几条(capsys):
     """刚发的播放量天然低，混进去会把系数压平——实测 +0.46 vs +0.77。"""
-    dy = ps.PLATFORMS[1]
+    dy = _plat("抖音")
     works = [_work(f"老{i}", datetime(2026, 7, 20 + i, 3, 0), platform=dy,
                    plays=1000 + i * 100, retain_5s=0.3 + i * 0.02,
                    bounce_2s=0.3, true_completion=0.02, avg_watch=20.0,
@@ -415,7 +433,7 @@ def test_相关性剔除刚发的并说明剔了几条(capsys):
 
 
 def test_相关性样本太少时不出数(capsys):
-    dy = ps.PLATFORMS[1]
+    dy = _plat("抖音")
     works = [_work(f"甲{i}", datetime(2026, 7, 20 + i, 3, 0), platform=dy,
                    plays=100) for i in range(3)]
     an.correlations(works, fresh_hours=24)
@@ -426,7 +444,7 @@ def test_横比只报事实不给某平台更好的结论(capsys):
     """8 条共同内容里抖音赢 4、视频号赢 2、小红书赢 2，连排序都不一样：
     「大师赛为什么变两周」抖音第一 3066、视频号垫底 216。
     """
-    xhs, dy, wx = ps.PLATFORMS
+    xhs, dy, wx = _plat("小红书"), _plat("抖音"), _plat("视频号")
     def mk(plat, title, plays):
         w = _work(title, platform=plat, plays=plays, follows=0)
         w.item = _item(title, date(2026, 7, 26))
@@ -448,7 +466,7 @@ def test_横比只报事实不给某平台更好的结论(capsys):
 
 def test_一家通吃时就不说没有一家更好(capsys):
     """反过来也要对：真的是同一家全赢，那句话就不该印出来。"""
-    xhs, dy = ps.PLATFORMS[0], ps.PLATFORMS[1]
+    xhs, dy = _plat("小红书"), _plat("抖音")
     def mk(plat, title, plays):
         w = _work(title, platform=plat, plays=plays, follows=0)
         w.item = _item(title, date(2026, 7, 26))
@@ -461,7 +479,7 @@ def test_一家通吃时就不说没有一家更好(capsys):
 
 
 def test_没有共同内容时说清楚为什么横比不了(capsys):
-    xhs, dy = ps.PLATFORMS[0], ps.PLATFORMS[1]
+    xhs, dy = _plat("小红书"), _plat("抖音")
     a = _work("甲", platform=xhs, plays=1)
     a.item = _item("甲", date(2026, 7, 26))
     b = _work("乙", platform=dy, plays=1)
@@ -481,3 +499,71 @@ def test_中文列宽按两格算否则表格永远不齐():
     lines = out.splitlines()
     assert len(lines) == 4
     assert len({ps.width(ln) for ln in lines}) == 1
+
+
+def test_抖音的视频数据视图能认出来():
+    """抖音后台还有一个只导 6 列的视图，标题列叫「视频名称」不是「作品名称」。
+
+    它没有真完播率、点赞、涨粉、体裁。认不出来时工具应当明确拒绝（见
+    `test_认不出平台时要说清已知哪几家`），认出来之后不能把缺的列当 0。
+    """
+    head = ["视频名称", "发布时间", "播放量", "5s完播率", "2s跳出率", "平均播放时长"]
+    plat, at = ps.detect([head])
+    assert plat.name == "抖音·视频数据" and at == 0
+    assert plat.has("retain_5s") and plat.has("bounce_2s")
+    for absent in ("true_completion", "likes", "follows", "cover_ctr"):
+        assert not plat.has(absent), f"这个视图不该有 {absent}"
+    assert plat.kind_col is None            # 没有体裁列 → 一律当视频
+
+
+def test_平台不给的指标不许印成零(capsys):
+    """踩过：这个视图没有点赞和涨粉，overview 无条件打印会印成「互动 0　涨粉 0」
+    ——和「真的没人互动」长得一模一样，正是这个工具处处在防的假空值。
+    """
+    dy2 = _plat("抖音·视频数据")
+    an.overview([_work("🎾某条", platform=dy2, plays=1000, avg_watch=20.0,
+                       retain_5s=0.4, bounce_2s=0.33)])
+    out = capsys.readouterr().out
+    assert "播放 1000" in out
+    assert "涨粉 0" not in out and "互动 0" not in out
+    assert "不给" in out and "空着，不是 0" in out
+
+
+def test_没有真完播率时漏斗末行留空而不是印零(capsys):
+    dy2 = _plat("抖音·视频数据")
+    an.funnel([_work(f"🎾第{i}条", platform=dy2, plays=1000, avg_watch=20.0,
+                     retain_5s=0.35, bounce_2s=0.37) for i in range(3)])
+    out = capsys.readouterr().out
+    assert "看到结尾     0 人" not in out and "看到结尾   0 人" not in out
+    assert "这一格空着" in out
+
+
+def test_平台不给的因变量不出相关性那一栏(capsys):
+    """照样算会得出全是 +0.00，看着像「留存和涨粉毫无关系」这个实打实的结论。"""
+    from datetime import datetime
+    dy2 = _plat("抖音·视频数据")
+    works = [_work(f"第{i}条", datetime(2026, 7, 20 + i, 3, 0), platform=dy2,
+                   plays=1000 + i * 100, retain_5s=0.3 + i * 0.02,
+                   bounce_2s=0.3, avg_watch=20.0) for i in range(6)]
+    an.correlations(works, fresh_hours=24)
+    out = capsys.readouterr().out
+    assert "vs 播放" in out
+    assert "vs 涨粉" not in out and "vs 互动" not in out
+
+
+def test_横比表里平台不给的涨粉不许印成零(capsys):
+    """第四处同类的假零值：抖音的「视频数据」视图没有涨粉列，横比表照样印
+    「0 / 0.00」，看着像「这个平台一个粉都没涨」。
+    """
+    xhs, dy2 = _plat("小红书"), _plat("抖音·视频数据")
+    def mk(plat, title, plays, **kw):
+        w = _work(title, platform=plat, plays=plays, **kw)
+        w.item = _item(title, date(2026, 7, 26))
+        return w
+    an.cross_platform([
+        ("小红书", [mk(xhs, "甲", 1000, follows=5), mk(xhs, "乙", 800, follows=3)]),
+        ("抖音·视频数据", [mk(dy2, "甲", 3000), mk(dy2, "乙", 2000)]),
+    ])
+    out = capsys.readouterr().out
+    assert "不给" in out
+    assert "0.00" not in out

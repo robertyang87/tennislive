@@ -1,0 +1,230 @@
+{
+  "edition": "2026-07-30",
+  "policy": "只发布原创摘要；媒体正文、摄影与视频不进入仓库。",
+  "sources": [
+    {
+      "id": "https://www.espn.com/tennis/scoreboard/_/date/20260729",
+      "name": "espn",
+      "url": "https://www.espn.com/tennis/scoreboard/_/date/20260729",
+      "kind": "score-data",
+      "usage": "赛程、赛果、轮次与排名快照"
+    },
+    {
+      "id": "data-context:espn",
+      "name": "espn",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "name": "WTA / 奥运官方档案",
+      "url": "https://www.wtatennis.com/players/328120/qinwen-zheng",
+      "kind": "editorial-evidence",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://mubadalacitidcopen.com/history/",
+      "name": "ATP/WTA 官方资料",
+      "url": "https://mubadalacitidcopen.com/history/",
+      "kind": "editorial-evidence",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "data-context:实时排名与赛程",
+      "name": "实时排名与赛程",
+      "url": "",
+      "kind": "data-context",
+      "usage": "人物背景或赛前看点"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOaFZBMXJXRktuc3ZpS3RKWUZ2Y3ZueGx4b0lwRzZhUlowdHVaUnFVSWJTbC1ySl8xN3A0akRJVEZ3QnZZM2lwMnQyb0VMRVdKSWVWdk9WVldheFB3Tzl4bTNTVWlTVVk5R2p0WGFOSU9IUmpNQUV6OHN5MU5ZRlFTQVhseDBTNVRSNUJaOTdhM0tvLWJOcEU2Z2JibXVFSUdzZ2RnRWQwMktzenY4c0VtQWdVTUtDX0hVdmNtWUtrelQ?oc=5",
+      "name": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOaFZBMXJXRktuc3ZpS3RKWUZ2Y3ZueGx4b0lwRzZhUlowdHVaUnFVSWJTbC1ySl8xN3A0akRJVEZ3QnZZM2lwMnQyb0VMRVdKSWVWdk9WVldheFB3Tzl4bTNTVWlTVVk5R2p0WGFOSU9IUmpNQUV6OHN5MU5ZRlFTQVhseDBTNVRSNUJaOTdhM0tvLWJOcEU2Z2JibXVFSUdzZ2RnRWQwMktzenY4c0VtQWdVTUtDX0hVdmNtWUtrelQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaVprTGN3ZkZ6Mi03M1NjN216MXp3SjhESEVhNXpQeHBaRlpCb3MxOVNWbzZ4bzZnSldjNkZSeDNBNWRoWFhDVHd6N1J0ZVA2aUUxYmx6bTd1cVQxSW41N0JGSHJ2UXRxWV9RRXQxT3h2VnNMd0NCNmtGXzRxNXZqRHRycDdSS2NMc1VWeHdtVEg4OXppYkVwN1g0WU5hNUd4WlcybVZNa29OaUk?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQaVprTGN3ZkZ6Mi03M1NjN216MXp3SjhESEVhNXpQeHBaRlpCb3MxOVNWbzZ4bzZnSldjNkZSeDNBNWRoWFhDVHd6N1J0ZVA2aUUxYmx6bTd1cVQxSW41N0JGSHJ2UXRxWV9RRXQxT3h2VnNMd0NCNmtGXzRxNXZqRHRycDdSS2NMc1VWeHdtVEg4OXppYkVwN1g0WU5hNUd4WlcybVZNa29OaUk?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPQW5uYjlOOHZlTF9wVEY1S3pqZGxyQlpVcjZ0c0Z5ZFAwdEQzSlV1QzItWkhqaHBqMTQ4M3R6blZEM2VsT3M3MkFEUTdFNEdIWTdyS0pfMldNdS1BQk9EbWFFYk1QT3hReGJ6bnZGOW9EaEQyRmRsRk15bkNaaFBzeGJkcGMzSnlsRGxkR1RTb0tBejVMUlF4QWRVdVBMWlg0cTV3U3dvRzR3d3VtanExM3UzbkV6U3Y5aEZtUEs2bzJ3cEREdHc?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPQW5uYjlOOHZlTF9wVEY1S3pqZGxyQlpVcjZ0c0Z5ZFAwdEQzSlV1QzItWkhqaHBqMTQ4M3R6blZEM2VsT3M3MkFEUTdFNEdIWTdyS0pfMldNdS1BQk9EbWFFYk1QT3hReGJ6bnZGOW9EaEQyRmRsRk15bkNaaFBzeGJkcGMzSnlsRGxkR1RTb0tBejVMUlF4QWRVdVBMWlg0cTV3U3dvRzR3d3VtanExM3UzbkV6U3Y5aEZtUEs2bzJ3cEREdHc?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMirgFBVV95cUxObDAxV05DOFR3YjBmcWtzV1BTUjN3cGxPMktIVWNuT25BZVYwellteUZwWnFKN1V6S2UtMXdLMG11eU1VLVFGamczdzJCV0UzSWtaUnFCUTdZYU1NdldudUpCd05IM3ptSS1GVGhVVUt4a0hlWEJkVW93NHNRSzNsWThMNjg5TkVER3JYcVJ3OXppcnBZUUc3VVMyaTRoV0c4clhUaHNzYWZNQ0hHdHc?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxObDAxV05DOFR3YjBmcWtzV1BTUjN3cGxPMktIVWNuT25BZVYwellteUZwWnFKN1V6S2UtMXdLMG11eU1VLVFGamczdzJCV0UzSWtaUnFCUTdZYU1NdldudUpCd05IM3ptSS1GVGhVVUt4a0hlWEJkVW93NHNRSzNsWThMNjg5TkVER3JYcVJ3OXppcnBZUUc3VVMyaTRoV0c4clhUaHNzYWZNQ0hHdHc?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQNW1vU1ppRVAzSXNlNlp2MzdWZ1BYMjFBTkpJY0xnQUVteDIzS3dxamNHTzRaajNrZ0JMaUh2Rnpxd3RfTTRlREgwZVRRNVBuYjEteWNETExQdFpoY0w3UmJtOTVDZzlxV3JacUFZX1cyYmhQQ3dyM0NJT1RsTzl0LWhmY2VXUXVRaUw5SlBYa2FONlQ2c2Z2TVJhM1dickNYWDA5SElwc051OXNYWGNraVl1elJ2THVUQVE?oc=5",
+      "name": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQNW1vU1ppRVAzSXNlNlp2MzdWZ1BYMjFBTkpJY0xnQUVteDIzS3dxamNHTzRaajNrZ0JMaUh2Rnpxd3RfTTRlREgwZVRRNVBuYjEteWNETExQdFpoY0w3UmJtOTVDZzlxV3JacUFZX1cyYmhQQ3dyM0NJT1RsTzl0LWhmY2VXUXVRaUw5SlBYa2FONlQ2c2Z2TVJhM1dickNYWDA5SElwc051OXNYWGNraVl1elJ2THVUQVE?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQd1V2NzVacmtPMThTNkduX0d5WlRibW5HaERfWlpNMVBLN0VMaWwwZ3g2ZXpIWW5FYkVLd0h3SEl6c1E1SmVaZmh2SWpHSEpzeV9aQ1gxelBuQWtucmk3ZENqbjU5SzNpbDl3WXZteS00REgzdUd6dGl6Q0Y3c1dCNlA2YzNIVkFBcnZwVGlybndqQmNUX2pGZHdCRExfRmxMUkhqMGhfUEVhd2VUeHc?oc=5",
+      "name": "The Guardian",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQd1V2NzVacmtPMThTNkduX0d5WlRibW5HaERfWlpNMVBLN0VMaWwwZ3g2ZXpIWW5FYkVLd0h3SEl6c1E1SmVaZmh2SWpHSEpzeV9aQ1gxelBuQWtucmk3ZENqbjU5SzNpbDl3WXZteS00REgzdUd6dGl6Q0Y3c1dCNlA2YzNIVkFBcnZwVGlybndqQmNUX2pGZHdCRExfRmxMUkhqMGhfUEVhd2VUeHc?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQX0hVS0lnVFFyUjdURlh2cF82YmRzOFlMb2o4QnczTnEwQXBHbkpqU2pVem1uUElBWEwwTVR1ZFBCZ3JoVHJhVmxYMFVKMW1nWDhPM2xkVWpGQl91UnQ0cjhuOW1PaE1KZVdlbU1PNWV1SDgwdmxPemQxaFpZaGNsLWYyR2dfT3hZUmhkeGs5d0FBRm1SN0cwZkpmamcxTnZtNVVMT0lscHhJSDZpNDNHNGlNT0NRYlFOUGJkYXAweFhIZk8xQ090VU5aWnNkRW16QlNXbUZfTWlwNkVQb3RSSDNHUlh3RVNXMkpFS01uTEI0VzRnM21VTlN6UWNxNngzUXc?oc=5",
+      "name": "Sky Sports",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQX0hVS0lnVFFyUjdURlh2cF82YmRzOFlMb2o4QnczTnEwQXBHbkpqU2pVem1uUElBWEwwTVR1ZFBCZ3JoVHJhVmxYMFVKMW1nWDhPM2xkVWpGQl91UnQ0cjhuOW1PaE1KZVdlbU1PNWV1SDgwdmxPemQxaFpZaGNsLWYyR2dfT3hZUmhkeGs5d0FBRm1SN0cwZkpmamcxTnZtNVVMT0lscHhJSDZpNDNHNGlNT0NRYlFOUGJkYXAweFhIZk8xQ090VU5aWnNkRW16QlNXbUZfTWlwNkVQb3RSSDNHUlh3RVNXMkpFS01uTEI0VzRnM21VTlN6UWNxNngzUXc?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOTG5Jam1EVHdEWllpdUFxOHBVTjlKMGdCbEllVlpsYTZrcXY3a3ZfWjJhR3VfOS03TjVtMy1CeldJT05aek95cEpRQzNMcFpkRHVfX3J2dTY4aXduTXJjaWlKMTl1VV9KXzh1UW1zaG1yNTNTZGctSjBvbG01dVF0aURXajZaRXBTdWhabWFDai1mbkJlb3dRR3hHMlc4QnU2QjJGTkJnZlFBNXlW?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOTG5Jam1EVHdEWllpdUFxOHBVTjlKMGdCbEllVlpsYTZrcXY3a3ZfWjJhR3VfOS03TjVtMy1CeldJT05aek95cEpRQzNMcFpkRHVfX3J2dTY4aXduTXJjaWlKMTl1VV9KXzh1UW1zaG1yNTNTZGctSjBvbG01dVF0aURXajZaRXBTdWhabWFDai1mbkJlb3dRR3hHMlc4QnU2QjJGTkJnZlFBNXlW?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMidEFVX3lxTE03bDhzRlprajVmNVVicnYtYVQ3U1JyQXNMUEd6c2ZpbGdYZXJFZDJDLVhoOVNnUGRabHN2VTJlQmpwN0t1OUdEdWR0X0tYZTVzWDlPUG1SZlg3OGZrSmY2WUFra3pCV0pibzFXRjA4WlBBNU5h?oc=5",
+      "name": "atptour.com",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE03bDhzRlprajVmNVVicnYtYVQ3U1JyQXNMUEd6c2ZpbGdYZXJFZDJDLVhoOVNnUGRabHN2VTJlQmpwN0t1OUdEdWR0X0tYZTVzWDlPUG1SZlg3OGZrSmY2WUFra3pCV0pibzFXRjA4WlBBNU5h?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPaGFjcC1LeWJjQVFaQW1OTXhQZk1MUy1STVljNXc3aENsbHZVVWpoaXdCcHZ1SjBxU3RzNi1LaG5uVFVlMTNYZEg0S2hDODkySjlQaVh1VVlwbWY1RVZKSmJ3ZVRuc2Ztd0FLc0NtX0JheGtGTkkzOC1jY3V1RS1LOUUydGhEZEtfY1hFd25tWDZwZl9CTTNIQ2FOSGJxR2p4ejdHTC0wV2ZNMkRDUF92OFl0bVN5VGc?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPaGFjcC1LeWJjQVFaQW1OTXhQZk1MUy1STVljNXc3aENsbHZVVWpoaXdCcHZ1SjBxU3RzNi1LaG5uVFVlMTNYZEg0S2hDODkySjlQaVh1VVlwbWY1RVZKSmJ3ZVRuc2Ztd0FLc0NtX0JheGtGTkkzOC1jY3V1RS1LOUUydGhEZEtfY1hFd25tWDZwZl9CTTNIQ2FOSGJxR2p4ejdHTC0wV2ZNMkRDUF92OFl0bVN5VGc?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSUFXTkt2b0FvZ2g1aG1HY2ZRazlhNVBfV2xWT2Z6TlB3dnNHSmFacTAyUEdFbkpCYy14bktJaXhxVEFwYXc2amJCeWFoZW1ST2xKcUx2ZEY3Smc0VGFyb1hsTWNzOGtFSWZBU3BUWFFQODk5LWdVUUJhc2tMYm5CcDZtZUtPMFNJT3Q5TnUtX04xYkZkZWJEWEpYZjZUYkRKSkN1RA?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSUFXTkt2b0FvZ2g1aG1HY2ZRazlhNVBfV2xWT2Z6TlB3dnNHSmFacTAyUEdFbkpCYy14bktJaXhxVEFwYXc2amJCeWFoZW1ST2xKcUx2ZEY3Smc0VGFyb1hsTWNzOGtFSWZBU3BUWFFQODk5LWdVUUJhc2tMYm5CcDZtZUtPMFNJT3Q5TnUtX04xYkZkZWJEWEpYZjZUYkRKSkN1RA?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQZV9JdEVwRDRWMl9lY2w3OVFqUjhXU0dDakQ3d0pfNnV2cnVIWUdfLWIyTFdnX1VGVWlkVl9UNjF3YnpxN1dLT1JOMUJObzlvRE5xWVpjcFpsQkdUNDZjNThGNUMtbFFUbm16SnJVWXItNlFHWlR2cTg4Z2V2TTl3d3IteFhmUXBndzhuYW55M0RCU1FkSlZaNjh4YWZJZlI0QkpvdWI1NkRsN00yT05OYlJ3SFRqSVZzNFE?oc=5",
+      "name": "Tennis.com",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQZV9JdEVwRDRWMl9lY2w3OVFqUjhXU0dDakQ3d0pfNnV2cnVIWUdfLWIyTFdnX1VGVWlkVl9UNjF3YnpxN1dLT1JOMUJObzlvRE5xWVpjcFpsQkdUNDZjNThGNUMtbFFUbm16SnJVWXItNlFHWlR2cTg4Z2V2TTl3d3IteFhmUXBndzhuYW55M0RCU1FkSlZaNjh4YWZJZlI0QkpvdWI1NkRsN00yT05OYlJ3SFRqSVZzNFE?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1PSTN4emV0Mzh5QTZFV1JsSmFfTFo0eF9neVlKT1FzQ2tfTTVDeHVROEpnZVpORVZ0ejlCd3lYSWZWT0tkV3JXQVhORURDaV8za2VJdVk4ZldzQnNWbUlaWmZxUDBMMzN3N3h3MXY4VUsxblFmQzRGZWVDcFNkQQ?oc=5",
+      "name": "atptour.com",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1PSTN4emV0Mzh5QTZFV1JsSmFfTFo0eF9neVlKT1FzQ2tfTTVDeHVROEpnZVpORVZ0ejlCd3lYSWZWT0tkV3JXQVhORURDaV8za2VJdVk4ZldzQnNWbUlaWmZxUDBMMzN3N3h3MXY4VUsxblFmQzRGZWVDcFNkQQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNMWdlRjd3RkRPYkVXandyZV9CSThNOGNfSFUtZmIwa1MtQzFqSDhQWTctNk1LZ3RJZFBFVlN6X1NVMVhDbFUzOWtVUVhRYnBlb0FtTF9lcEZCeE9ncVZBSjVTRkh5ZjA0bkxlRW9Ka1kwTjV4Q0VXcjU2Z2FNVGRud241cFhaWTdrNjVqN2FqdDZnRzZjRHdHVVBRckhSQ0x6U1dfZkVyVFdOWkEtdmp3?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNMWdlRjd3RkRPYkVXandyZV9CSThNOGNfSFUtZmIwa1MtQzFqSDhQWTctNk1LZ3RJZFBFVlN6X1NVMVhDbFUzOWtVUVhRYnBlb0FtTF9lcEZCeE9ncVZBSjVTRkh5ZjA0bkxlRW9Ka1kwTjV4Q0VXcjU2Z2FNVGRud241cFhaWTdrNjVqN2FqdDZnRzZjRHdHVVBRckhSQ0x6U1dfZkVyVFdOWkEtdmp3?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOaHhqYXJtVmRjNjZUbnRUdFpaaG9RZW1LUTFPaUY1bGxqMUM1NlBlNGNGM0xrNlBLSnctbjNfWU45NG5lYVJHNERvNmdqWXo1ZllhdjJrZVhrYzdweEQ5LTB0RjhmMEdIWVN0eTVjRWZVbzVlMFplRGs5YzV1SEdpN1Q0ZWttOFFxbG1XMURjdnRSX09VTFBncS1Ib0ZOa1o4aE5jdnpqV0VrT2cybGhVVXU4TEJFZFVjUUwtYXplQTA?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOaHhqYXJtVmRjNjZUbnRUdFpaaG9RZW1LUTFPaUY1bGxqMUM1NlBlNGNGM0xrNlBLSnctbjNfWU45NG5lYVJHNERvNmdqWXo1ZllhdjJrZVhrYzdweEQ5LTB0RjhmMEdIWVN0eTVjRWZVbzVlMFplRGs5YzV1SEdpN1Q0ZWttOFFxbG1XMURjdnRSX09VTFBncS1Ib0ZOa1o4aE5jdnpqV0VrT2cybGhVVXU4TEJFZFVjUUwtYXplQTA?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQVkRQYlBEaEJQU0NJSjJSZE1TY3h0bk0zVFR4WC0zWW9TVkFNbVlCNGpnRXhPSXBKUWFpNTlHeGNneVQ1Y05lb3piYmpuTllkUTZiSnMtMzdZR1Fka21rekZ1UnJmMzZPWWYyTVhmSmZpcUUweEZnc1I2VjJ6UjZWSU5Xd1ZKS1hYMDFkQTJSeDcxczM1YTY1VXVONm82TERkaHB4S0RyTWpCLTFDcFpIQ0hEZ2RpQQ?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQVkRQYlBEaEJQU0NJSjJSZE1TY3h0bk0zVFR4WC0zWW9TVkFNbVlCNGpnRXhPSXBKUWFpNTlHeGNneVQ1Y05lb3piYmpuTllkUTZiSnMtMzdZR1Fka21rekZ1UnJmMzZPWWYyTVhmSmZpcUUweEZnc1I2VjJ6UjZWSU5Xd1ZKS1hYMDFkQTJSeDcxczM1YTY1VXVONm82TERkaHB4S0RyTWpCLTFDcFpIQ0hEZ2RpQQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5Rc1RjZm1wWTVPY0xGZ2Q4N3VYWDRMOHFGeHc0X3B6cFVzbVdHRHIwVWc4Y1pnaG5WdHpRQlRHRFB5c1J2aVFyUUtpT0RTcl9lUDJhOWhMZnFaOWpoLUhfNEZXSzhlV3RBNVAyRE9n?oc=5",
+      "name": "atptour.com",
+      "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5Rc1RjZm1wWTVPY0xGZ2Q4N3VYWDRMOHFGeHc0X3B6cFVzbVdHRHIwVWc4Y1pnaG5WdHpRQlRHRFB5c1J2aVFyUUtpT0RTcl9lUDJhOWhMZnFaOWpoLUhfNEZXSzhlV3RBNVAyRE9n?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOaTVTeW9BU3o2Y0ZYbFZBWDZEdGNqellpaVBkS3lDNkNWRHRLSnBlYjNJQ3ZjUHdaTF85T29PSTBaaHNhTE9VVUZOckRLQWxYVnBOLTI5bFlIMGRxaEdZX0dva3k2ZGFWNHoxVkJOSTlfNHc3NmNxZ3c2VGRMR0ZjbWxTekQyRzNQM2F2ejd2YWJUY3J0WENlbXNnZHQ?oc=5",
+      "name": "Sky Sports",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOaTVTeW9BU3o2Y0ZYbFZBWDZEdGNqellpaVBkS3lDNkNWRHRLSnBlYjNJQ3ZjUHdaTF85T29PSTBaaHNhTE9VVUZOckRLQWxYVnBOLTI5bFlIMGRxaEdZX0dva3k2ZGFWNHoxVkJOSTlfNHc3NmNxZ3c2VGRMR0ZjbWxTekQyRzNQM2F2ejd2YWJUY3J0WENlbXNnZHQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPeXExeUVXaHVzSWJlMTRhcEowQTF4VXBhWlFKR0pnSnRweExMcnJDT1NHMUlVZ2ItUzBoWmVHYV81MDRsRVJxZld1Q0tET0R0Z1RFbWZCek9VTGdkSC1GUWVjeFMxUFoxY0F4UmwwRC1OVU9WNmdxeDc1SG9peENqQmpicGpsXzFkeVVIaWFsSHJ1bWZfQ3pmZXl5UHQ?oc=5",
+      "name": "Sky Sports",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPeXExeUVXaHVzSWJlMTRhcEowQTF4VXBhWlFKR0pnSnRweExMcnJDT1NHMUlVZ2ItUzBoWmVHYV81MDRsRVJxZld1Q0tET0R0Z1RFbWZCek9VTGdkSC1GUWVjeFMxUFoxY0F4UmwwRC1OVU9WNmdxeDc1SG9peENqQmpicGpsXzFkeVVIaWFsSHJ1bWZfQ3pmZXl5UHQ?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNUmZoVTJnYzZ4c01NNXNiZmVzMFFkQnpyekxrRGdjemxabnlBWk5ZbHM1QnY5NmwzX2xHV244aElkb1lnTnhUc0FvMVppTFZ2UDdybVg1dmM2V1pkN1pFSHNpa2NqNVRoT1ZCNHYtLVZxQ2JvVEpteEkyMk1DM3ZhNUdkei02TmVSSVRj?oc=5",
+      "name": "Sky Sports",
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNUmZoVTJnYzZ4c01NNXNiZmVzMFFkQnpyekxrRGdjemxabnlBWk5ZbHM1QnY5NmwzX2xHV244aElkb1lnTnhUc0FvMVppTFZ2UDdybVg1dmM2V1pkN1pFSHNpa2NqNVRoT1ZCNHYtLVZxQ2JvVEpteEkyMk1DM3ZhNUdkei02TmVSSVRj?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNS2VyYVhja09SUEZVc01DblotWmV3NHNHOXZZa2dUOVl3YTFrQmNfQUd3bUFHWXlpTVd5V0lGQzJpNERKYnVwbmRsSnBaS3FGbXRKR3lMcmFDeGY5TzBETjBEZ3lCamV0Y1JiOU5qQmR5UEN0cGs3azFwTEU5NC1uUlI2a3VrWkk5bnY5MzVwVldYSDFhTHZOR0h1OGhMZkJWSlduTkJCSWw0azhQUkdLbFhLekpOeUR1aXI5ektwdw?oc=5",
+      "name": "WTA Tennis",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNS2VyYVhja09SUEZVc01DblotWmV3NHNHOXZZa2dUOVl3YTFrQmNfQUd3bUFHWXlpTVd5V0lGQzJpNERKYnVwbmRsSnBaS3FGbXRKR3lMcmFDeGY5TzBETjBEZ3lCamV0Y1JiOU5qQmR5UEN0cGs3azFwTEU5NC1uUlI2a3VrWkk5bnY5MzVwVldYSDFhTHZOR0h1OGhMZkJWSlduTkJCSWw0azhQUkdLbFhLekpOeUR1aXI5ektwdw?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQZ0hQTFFzOW03XzhDTVlpb2s3bjBjV0c1alA1RTJnUmUtSGZaNGFBYzhPSFF0RXBoOTFvOHpDY0ZEWVRYdC1DM1VaNktpMENsTzBpRXJUVExLSGpoM1ZUOC1mY0h4SEhPeUhlbzZZc0NJOHNkZ2E3SWc4YU55WjVyUTJ3OA?oc=5",
+      "name": "atptour.com",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQZ0hQTFFzOW03XzhDTVlpb2s3bjBjV0c1alA1RTJnUmUtSGZaNGFBYzhPSFF0RXBoOTFvOHpDY0ZEWVRYdC1DM1VaNktpMENsTzBpRXJUVExLSGpoM1ZUOC1mY0h4SEhPeUhlbzZZc0NJOHNkZ2E3SWc4YU55WjVyUTJ3OA?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://news.google.com/rss/articles/CBMie0FVX3lxTE4xSGFXUG9fQTJDUXVEcmlhZmdnSFU0Zm0xSFc4S2lUSzBKN25yVmxPUVJKYlBtNUFQb0VxcG9wY2RncmVjYmFJUENIejRkVDRtS0pVYUg3ZHVIYWszTVVfZ0Y0bHA1ekgyeHAwU2FyaGN1TUthY2VnZW5Zbw?oc=5",
+      "name": "atptour.com",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE4xSGFXUG9fQTJDUXVEcmlhZmdnSFU0Zm0xSFc4S2lUSzBKN25yVmxPUVJKYlBtNUFQb0VxcG9wY2RncmVjYmFJUENIejRkVDRtS0pVYUg3ZHVIYWszTVVfZ0Y0bHA1ekgyeHAwU2FyaGN1TUthY2VnZW5Zbw?oc=5",
+      "kind": "official-news",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://trends.google.com/trending/rss?geo=US",
+      "name": "Google Trends US",
+      "url": "https://trends.google.com/trending/rss?geo=US",
+      "kind": "search-trend",
+      "usage": "选题热度判断；不直接作为比赛事实"
+    },
+    {
+      "id": "https://www.protennislive.com/posting/2026/7480/op.pdf",
+      "name": "ATP 官方 OOP",
+      "url": "https://www.protennislive.com/posting/2026/7480/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://www.protennislive.com/posting/2026/418/op.pdf",
+      "name": "ATP 官方 OOP",
+      "url": "https://www.protennislive.com/posting/2026/418/op.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    },
+    {
+      "id": "https://wtafiles.wtatennis.com/pdf/draws/2026/1045/OP.pdf",
+      "name": "WTA 官方 OOP",
+      "url": "https://wtafiles.wtatennis.com/pdf/draws/2026/1045/OP.pdf",
+      "kind": "official-order-of-play",
+      "usage": "核验比赛日期、场序与开赛时间性质"
+    }
+  ]
+}

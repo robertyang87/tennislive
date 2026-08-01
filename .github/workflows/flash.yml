@@ -68,6 +68,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "没有新内容"
           else
+            python tools/check_staged_file_sizes.py
             git commit \
               -m "Keep selected tennis content ready for human approval" \
               -m "The content radar generated this review queue at $(date -u +%H:%MZ)." \

@@ -301,6 +301,104 @@ def copy_page_url(day, *, subdir: str = "schedule") -> str:
     return f"{_PAGES}/output/{day.isoformat()}/{subdir}/copy.html"
 
 
+_COPY_BUTTON_RE = re.compile(
+    r'<a\s+href="(?P<url>[^"]*?/copy\.html)"[^>]*>.*?</a>\s*', re.DOTALL
+)
+
+
+def copy_page_fingerprint(path) -> str:
+    """从本地 copy.html 里取一句能认出「是不是这一版」的话。
+
+    用 `<h1>` 那行——它是当天文案的标题（如「7.29 今日赛程 | 王欣瑜战萨姆索诺娃」），
+    换一版内容它必然跟着变，而模板里的固定文字（样式、按钮说明）不会。
+    取不到就返回空串，调用方退回只探可达。
+    """
+    from pathlib import Path
+
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    match = re.search(r"<h1[^>]*>(.*?)</h1>", text, re.DOTALL)
+    if not match:
+        return ""
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", match.group(1))).strip()
+
+
+def drop_dead_copy_button(
+    html_body: str, *, probe=None, attempts: int = 3, delay: float = 20.0,
+    expect: str = "",
+) -> tuple[str, str | None]:
+    """发之前探一次复制页；取不到**或不是这一版**就把那个按钮摘掉。
+
+    **这道闸必须装在「发」那一步，不是「渲」那一步。** 第一版我把
+    `live_copy_page_url` 放进了生成流程，结果每次都把按钮拿掉——因为渲染
+    排在提交之前，那一刻 copy.html 还没进仓库，Pages 当然取不到。安全是
+    安全了，可它同时也让**能用的按钮永远出不来**：2026-07-29 蒂姆那条推送
+    就是这么少了按钮的（run 30432435525）。
+
+    `tennislive publish pushplus` 跑在提交之后，那才是链接真正该可达的时刻。
+    放在这里还有一层好处：解说片、知识帖、赛程包共用同一个出口，一处装闸
+    三条线都护住，不用各自记得调一次。
+
+    **「可达」不等于「是这一版」。** 2026-07-29 那条赛程推送踩了这个：copy.html
+    的新版本只在特性分支上，而 Pages 只服务 main，于是线上那份还是同一天早些
+    时候生成的旧包。探到 200 就把按钮留下了，读者点开看到的是另一批场次——
+    这比死链更糟，死链一眼能看出坏了，旧内容看着完全正常。
+
+    所以给 `expect`（本地 copy.html 的标题，见 `copy_page_fingerprint`）：
+    线上那份必须**包含这句话**才算数。Pages 重新发布要一两分钟，所以照旧
+    重试几次再判——但**判据是内容对上，不是等够时间**。
+
+    返回 (正文, 可达的 URL 或 None)，让调用方能如实打印判断依据——只在
+    成功时出声的检查没法证明它真的看过。
+    """
+    match = _COPY_BUTTON_RE.search(html_body)
+    if not match:
+        return html_body, None
+    url = match.group("url")
+    ok = (
+        _probe_page(url, attempts=attempts, delay=delay, expect=expect)
+        if probe is None
+        else probe(url)
+    )
+    if ok:
+        return html_body, url
+    # 只摘按钮，不动正文：复制页是文案的出口之一，另一个是消息里整段渲染的
+    # 正文（可长按复制）。两个一起丢，这条文案就传不出去了。
+    return _COPY_BUTTON_RE.sub("", html_body, count=1), None
+
+
+def _probe_page(
+    url: str, *, attempts: int = 3, delay: float = 20.0, expect: str = ""
+) -> bool:
+    """200 且 Content-Type 是 text/html 才算数——soft-404 会返回 200。
+
+    给了 `expect` 还要**正文里真的有这句话**：Pages 只服务 main，分支上的新
+    copy.html 上不去，而线上那份旧的照样返回 200，光看状态码分不出来。
+    """
+    import time
+
+    for attempt in range(max(1, attempts)):
+        try:
+            response = requests.get(url, timeout=15)
+            if response.status_code == 200 and "text/html" in (
+                response.headers.get("Content-Type", "").lower()
+            ):
+                if not expect or expect in response.text:
+                    return True
+                # 这一条要出声：它和「取不到」是两种毛病，日志里混成一句就
+                # 永远查不出到底是没发布还是发布了旧版
+                logger.info("复制页是旧版（找不到「%s」）：%s", expect, url)
+            else:
+                logger.info("复制页暂不可达（HTTP %s）：%s", response.status_code, url)
+        except requests.RequestException as e:  # noqa: PERF203
+            logger.info("复制页探测失败：%s", e)
+        if attempt + 1 < attempts:
+            time.sleep(delay)
+    return False
+
+
 def live_copy_page_url(
     day, *, subdir: str = "schedule", attempts: int = 3, delay: float = 20.0
 ) -> str | None:

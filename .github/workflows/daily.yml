@@ -444,6 +444,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "没有新内容，跳过提交"
           else
+            python tools/check_staged_file_sizes.py
             git commit -m "content: 每日速报 $(basename '${{ steps.gen.outputs.outdir }}')"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"
@@ -478,6 +479,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "推送标记已存在，无需重复提交"
           else
+            python tools/check_staged_file_sizes.py
             git commit -m "chore: mark $(basename "$OUT_DIR") as pushed"
             git pull --rebase origin "${{ github.ref_name }}"
             git push origin "${{ github.ref_name }}"

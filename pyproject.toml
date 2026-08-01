@@ -17,11 +17,19 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0"]
+# ruff 是判据不是洁癖：`--select F821`（未定义的名字）。`build_versus_poster`
+# 里 `_cut_person(source, …)` 的 source 从来就不存在，「首选本场抽帧」那条
+# 路一次都没跑起来过；同一天我自己又漏了一个 `seconds`，在 runner 上白跑
+# 五分钟才炸。这两个 py_compile 和 pytest 都看不见，ruff 一秒指出来。
+dev = ["pytest>=7.0", "ruff>=0.6"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
 video = ["yt-dlp>=2026.7.4"]
+# 封面人物「本场抽帧抠图」：从源片抓一帧、抠掉背景。装 extra 别装裸包名——
+# opencv 那次就是随手 `pip install opencv-python-headless` 装到 5.x，
+# `CascadeClassifier` 在 5 里没了，红得和「没装」一模一样。
+cutout = ["rembg[cpu]>=2.0.60"]
 # 竖屏科普样片渲染（Pillow 合成 + 便携版 ffmpeg + 中文配音）
 shortvideo = ["Pillow>=10.0", "imageio-ffmpeg>=0.5", "gTTS>=2.5", "edge-tts>=7.0"]
 
@@ -37,3 +45,8 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff.lint.per-file-ignores]
+# cards.py 的主题色是 `globals().update(_THEMES[...])` 灌进来的——静态看不见，
+# 72 条全是假阳性。**排除写在这儿而不是藏在测试里**，让它是一个看得见的决定。
+"src/tennislive/render/cards.py" = ["F821"]

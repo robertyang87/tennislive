@@ -2,21 +2,24 @@
   {
     "slug": "athens",
     "tournament_aliases": [
-      "athens",
-      "athens open"
+      "athens open",
+      "vanda pharmaceuticals athens",
+      "athens"
     ],
-    "image": "athens-parthenon.jpg",
+    "image": "athens-olympic-tennis-centre.jpg",
     "location": "雅典 · 希腊",
-    "focal_point": "50% 42%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "australian-open",
     "tournament_aliases": [
       "australian open"
     ],
-    "image": "ao-rod-laver-arena.jpg",
+    "image": "ao-rod-laver-bowl.jpg",
     "location": "墨尔本 · 澳大利亚",
-    "focal_point": "50% 45%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "bastad",
@@ -27,28 +30,42 @@
     ],
     "image": "bastad-tennis-stadium.jpg",
     "location": "båstad · 瑞典",
-    "focal_point": "50% 50%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
-    "slug": "canada",
+    "slug": "canada-montreal",
     "tournament_aliases": [
       "canadian open",
       "national bank open",
-      "rogers cup"
+      "rogers cup",
+      "omnium banque nationale"
     ],
-    "image": "canada-national-bank-open-stadium.jpg",
-    "location": "多伦多 / 蒙特利尔 · 加拿大",
-    "focal_point": "50% 50%"
+    "image": "canada-iga-stadium-centre-court.jpg",
+    "location": "蒙特利尔 · 加拿大",
+    "focal_point": "50% 50%",
+    "shot": "centre-court",
+    "host_years": {
+      "ATP": "even",
+      "WTA": "odd"
+    }
   },
   {
-    "slug": "cincinnati",
+    "slug": "canada-toronto",
     "tournament_aliases": [
-      "cincinnati",
-      "western & southern open"
+      "canadian open",
+      "national bank open",
+      "rogers cup",
+      "omnium banque nationale"
     ],
-    "image": "cincinnati-lindner-tennis-center.jpg",
-    "location": "辛辛那提 · 美国",
-    "focal_point": "50% 48%"
+    "image": "canada-sobeys-centre-court.jpg",
+    "location": "多伦多 · 加拿大",
+    "focal_point": "50% 50%",
+    "shot": "centre-court",
+    "host_years": {
+      "ATP": "odd",
+      "WTA": "even"
+    }
   },
   {
     "slug": "estoril",
@@ -58,7 +75,8 @@
     ],
     "image": "estoril-centre-court.jpg",
     "location": "埃斯托里尔 · 葡萄牙",
-    "focal_point": "50% 50%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "gstaad",
@@ -66,9 +84,10 @@
       "gstaad",
       "swiss open"
     ],
-    "image": "gstaad-panorama.jpg",
+    "image": "gstaad-roy-emerson-arena.jpg",
     "location": "格施塔德 · 瑞士",
-    "focal_point": "50% 55%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "hamburg",
@@ -77,9 +96,10 @@
       "hamburg ladies",
       "msc hamburg"
     ],
-    "image": "hamburg-skyline.jpg",
+    "image": "hamburg-rothenbaum-centre-court.jpg",
     "location": "汉堡 · 德国",
-    "focal_point": "50% 44%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "iasi",
@@ -87,19 +107,23 @@
       "iasi",
       "iași"
     ],
-    "image": "iasi-palace-of-culture.jpg",
+    "image": "iasi-ciric-centre-court.jpg",
     "location": "雅西 · 罗马尼亚",
-    "focal_point": "50% 50%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "istanbul",
     "tournament_aliases": [
       "enka open",
+      "istanbul open",
       "istanbul"
     ],
     "image": "istanbul-historical-peninsula.jpg",
     "location": "伊斯坦布尔 · 土耳其",
-    "focal_point": "50% 55%"
+    "focal_point": "50% 50%",
+    "shot": "landmark",
+    "todo": "场地已经查清了，但**这个场地没有碗**。2026 İstanbul Open 是 WTA125，打在 TTF İstanbul Tenis Merkezi 的室外红土上（WTA 官方页 /tournaments/1160/istanbul-125/）——不是 ENKA、也不是 TED Club，那两个是别的赛事。找到了赛事自己的场地照（紫色挡板上 istanbul open logo + WTA125 + TÜRKİYE İŞ BANKASI，自证），但**四周只有铁丝网和挡板，一排看台都没有**，第三条闸门过不了；而且源只有 1200×675，竖切要放大 2.13 倍，渲出来整屏是空红土、两个球员都被切掉，比现在这张老城天际线还差。已翻过：Commons（Enka/Istanbul Cup/TED 三个分类全 0）、atptour.com 的三张 venue 图（全 403）、ttf.org.tr、istanbulchallenger.org、enkaspor.com 媒体库、DDG 三组土耳其语查询。要换就得等到搭临时看台的那几天的现场大图"
   },
   {
     "slug": "kitzbuhel",
@@ -108,18 +132,44 @@
       "kitzbuhel",
       "kitzbühel"
     ],
-    "image": "kitzbuhel-panorama.jpg",
+    "image": "kitzbuhel-centre-court.jpg",
     "location": "基茨比厄尔 · 奥地利",
-    "focal_point": "50% 50%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "los-cabos",
+    "tournament_aliases": [
+      "mifel tennis open",
+      "los cabos",
+      "abierto los cabos"
+    ],
+    "image": "los-cabos-estadio-alejandro-burillo.jpg",
+    "location": "洛斯卡沃斯 · 墨西哥",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "memphis",
+    "tournament_aliases": [
+      "memphis classic",
+      "the memphis classic",
+      "memphis"
+    ],
+    "image": "memphis-leftwich-stadium-court.jpg",
+    "location": "孟菲斯 · 美国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "palermo",
     "tournament_aliases": [
       "palermo"
     ],
-    "image": "palermo-teatro-massimo.jpg",
+    "image": "palermo-country-time-centre-court.jpg",
     "location": "巴勒莫 · 意大利",
-    "focal_point": "50% 48%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "prague",
@@ -127,9 +177,10 @@
       "prague open",
       "livesport prague"
     ],
-    "image": "prague-castle-panorama.jpg",
+    "image": "prague-stvanice-central-court.jpg",
     "location": "布拉格 · 捷克",
-    "focal_point": "50% 45%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "roland-garros",
@@ -140,7 +191,21 @@
     ],
     "image": "rg-philippe-chatrier.jpg",
     "location": "巴黎 · 法国",
-    "focal_point": "38% 40%"
+    "focal_point": "38% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "rome-atv",
+    "tournament_aliases": [
+      "bancomat",
+      "atv bancomat",
+      "antico tiro a volo"
+    ],
+    "image": "rome-atv-tennis-open-courts.jpg",
+    "location": "罗马 · 意大利",
+    "focal_point": "50% 50%",
+    "shot": "landmark",
+    "todo": "已经换成赛事自己的场地（挡板上写着 ATV · ANTICO TIRO A VOLO TENNIS OPEN · ROMA，自证），但**这个俱乐部没有看台**——红土场四周是挡板和照明杆，第三条「看得见看台」过不了。WTA125 在这里搭的是临时座位。要么等到搭台那几天的现场照，要么这一站接受没有碗"
   },
   {
     "slug": "umag",
@@ -149,9 +214,10 @@
       "croatia open",
       "plava laguna"
     ],
-    "image": "umag-goran-ivanisevic-stadium.jpg",
+    "image": "umag-goran-ivanisevic-centre-court.jpg",
     "location": "乌马格 · 克罗地亚",
-    "focal_point": "50% 48%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "us-open",
@@ -161,17 +227,8 @@
     ],
     "image": "usopen-arthur-ashe-stadium.jpg",
     "location": "纽约 · 美国",
-    "focal_point": "50% 50%"
-  },
-  {
-    "slug": "verona",
-    "tournament_aliases": [
-      "bancomat",
-      "verona"
-    ],
-    "image": "verona-arena.jpg",
-    "location": "维罗纳 · 意大利",
-    "focal_point": "50% 50%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "washington",
@@ -183,7 +240,8 @@
     ],
     "image": "washington-fitzgerald-tennis-center.jpg",
     "location": "华盛顿特区 · 美国",
-    "focal_point": "50% 48%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
     "slug": "wimbledon",
@@ -193,28 +251,295 @@
     ],
     "image": "wimbledon-centre-court.jpg",
     "location": "伦敦 · 英国",
-    "focal_point": "42% 52%"
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
-    "slug": "memphis",
+    "slug": "beijing",
     "tournament_aliases": [
-      "memphis classic",
-      "the memphis classic",
-      "memphis"
+      "china open",
+      "beijing"
     ],
-    "image": "memphis-leftwich-tennis-center.jpg",
-    "location": "孟菲斯 · 美国",
-    "focal_point": "50% 52%"
+    "image": "beijing-diamond-court.jpg",
+    "location": "北京 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   },
   {
-    "slug": "los-cabos",
+    "slug": "shanghai",
     "tournament_aliases": [
-      "mifel tennis open",
-      "los cabos",
-      "abierto los cabos"
+      "shanghai"
     ],
-    "image": "los-cabos-estadio-alejandro-burillo.jpg",
-    "location": "洛斯卡沃斯 · 墨西哥",
-    "focal_point": "50% 50%"
+    "image": "shanghai-qizhong-centre-court.jpg",
+    "location": "上海 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "wuhan",
+    "tournament_aliases": [
+      "wuhan"
+    ],
+    "image": "wuhan-optics-valley-centre-court.jpg",
+    "location": "武汉 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "chengdu",
+    "tournament_aliases": [
+      "chengdu"
+    ],
+    "image": "chengdu-centre-court.jpg",
+    "location": "成都 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "hangzhou",
+    "tournament_aliases": [
+      "hangzhou"
+    ],
+    "image": "hangzhou-lotus-centre-court.jpg",
+    "location": "杭州 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "ningbo",
+    "tournament_aliases": [
+      "ningbo"
+    ],
+    "image": "ningbo-centre-court.jpg",
+    "location": "宁波 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "guangzhou",
+    "tournament_aliases": [
+      "guangzhou"
+    ],
+    "image": "guangzhou-centre-court.jpg",
+    "location": "广州 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "winston-salem",
+    "tournament_aliases": [
+      "winston-salem",
+      "winston salem"
+    ],
+    "image": "winston-salem-centre-court.jpg",
+    "location": "温斯顿-塞勒姆 · 美国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "monterrey",
+    "tournament_aliases": [
+      "abierto gnp",
+      "monterrey"
+    ],
+    "image": "monterrey-centre-court.jpg",
+    "location": "蒙特雷 · 墨西哥",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "cincinnati",
+    "tournament_aliases": [
+      "cincinnati",
+      "western & southern open"
+    ],
+    "image": "cincinnati-centre-court-full.jpg",
+    "location": "辛辛那提 · 美国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "guadalajara",
+    "tournament_aliases": [
+      "guadalajara"
+    ],
+    "image": "guadalajara-centre-court.jpg",
+    "location": "瓜达拉哈拉 · 墨西哥",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "sao-paulo",
+    "tournament_aliases": [
+      "sp open",
+      "sao paulo"
+    ],
+    "image": "sao-paulo-centre-court.jpg",
+    "location": "圣保罗 · 巴西",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "seoul",
+    "tournament_aliases": [
+      "korea open",
+      "seoul"
+    ],
+    "image": "seoul-olympic-park-centre-court.jpg",
+    "location": "首尔 · 韩国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "tokyo",
+    "tournament_aliases": [
+      "japan open",
+      "pan pacific",
+      "toray"
+    ],
+    "image": "tokyo-ariake-coliseum.jpg",
+    "location": "东京 · 日本",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "singapore",
+    "tournament_aliases": [
+      "singapore"
+    ],
+    "image": "singapore-centre-court.jpg",
+    "location": "新加坡",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "basel",
+    "tournament_aliases": [
+      "swiss indoors",
+      "basel"
+    ],
+    "image": "basel-st-jakobshalle.jpg",
+    "location": "巴塞尔 · 瑞士",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "vienna",
+    "tournament_aliases": [
+      "erste bank",
+      "vienna"
+    ],
+    "image": "vienna-stadthalle-centre-court.jpg",
+    "location": "维也纳 · 奥地利",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "osaka",
+    "tournament_aliases": [
+      "japan open",
+      "kinoshita"
+    ],
+    "image": "osaka-utsubo-centre-court.jpg",
+    "location": "大阪 · 日本",
+    "focal_point": "50% 50%",
+    "shot": "centre-court",
+    "only_tour": "WTA"
+  },
+  {
+    "slug": "brussels",
+    "tournament_aliases": [
+      "european open",
+      "brussels",
+      "bruxelles"
+    ],
+    "image": "brussels-centre-court.jpg",
+    "location": "布鲁塞尔 · 比利时",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "chennai",
+    "tournament_aliases": [
+      "chennai"
+    ],
+    "image": "chennai-centre-court.jpg",
+    "location": "金奈 · 印度",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "stockholm",
+    "tournament_aliases": [
+      "stockholm"
+    ],
+    "image": "stockholm-centre-court.jpg",
+    "location": "斯德哥尔摩 · 瑞典",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "paris",
+    "tournament_aliases": [
+      "paris masters",
+      "rolex paris",
+      "bercy"
+    ],
+    "image": "paris-centre-court.jpg",
+    "location": "巴黎 · 法国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "hongkong",
+    "tournament_aliases": [
+      "hong kong"
+    ],
+    "image": "hongkong-victoria-park.jpg",
+    "location": "香港 · 中国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "dubai",
+    "tournament_aliases": [
+      "dubai"
+    ],
+    "image": "dubai-centre-court.jpg",
+    "location": "迪拜 · 阿联酋",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "miami",
+    "tournament_aliases": [
+      "miami open",
+      "miami masters"
+    ],
+    "image": "miami-centre-court.jpg",
+    "location": "迈阿密 · 美国",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "madrid",
+    "tournament_aliases": [
+      "madrid"
+    ],
+    "image": "madrid-centre-court.jpg",
+    "location": "马德里 · 西班牙",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
+  },
+  {
+    "slug": "montecarlo",
+    "tournament_aliases": [
+      "monte-carlo",
+      "monte carlo"
+    ],
+    "image": "montecarlo-centre-court.jpg",
+    "location": "蒙特卡洛 · 摩纳哥",
+    "focal_point": "50% 50%",
+    "shot": "centre-court"
   }
 ]

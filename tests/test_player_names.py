@@ -43,6 +43,34 @@ def test_official_media_form_and_feed_aliases_are_resolved():
     assert player_zh("Catherine McNally") == "麦克纳莉"
 
 
+def test_同姓不同人不能靠姓氏兜底混成一个():
+    """**「表里这个姓只有一个人」只说明表里只有一个，不说明是同一个人。**
+
+    2026-07-29 查黄泽林那场时撞出来的：香港有两个姓 Wong 的球员同一天在打，
+    `Coleman Wong`（黄泽林，男，ATP）在表里，`Hong Yi Cody Wong`（女，WTA）
+    不在——姓氏兜底把她也解析成「黄泽林」，错的人还错了性别。
+
+    兜底不能删：ESPN 给黄泽林的写法是 `Chak Lam Coleman Wong`，全名、反序、
+    去中间名三条都匹配不上，正是靠它才认出来的。所以判据要能同时分开三种：
+
+        Chak Lam Coleman Wong  vs  coleman wong    同一个词        → 认
+        Catherine McNally      vs  caty mcnally    昵称，不共用词  → 认
+        Hong Yi Cody Wong      vs  coleman wong    两个人          → 不认
+
+    中间那条是第一版漏掉的：只要求「共用一个词」会把 Catherine 拦掉。按名的
+    公共前缀算就分得开——catherine/caty 共三个字符，cody/coleman 只共两个。
+    """
+    # 认得出来的
+    assert player_zh("Chak Lam Coleman Wong") == "黄泽林"
+    assert player_zh("Coleman Wong") == "黄泽林"
+    assert player_zh("Catherine McNally") == "麦克纳莉"
+    assert player_zh("Caty McNally") == "麦克纳莉"
+    # **认不出来好过认成另一个人**：原样返回英文名
+    for other in ("Hong Yi Cody Wong", "Cody Wong"):
+        assert player_zh(other) == other, (
+            f"{other} 被解析成了 {player_zh(other)}——那是另一个人")
+
+
 def test_official_ranking_text_parsers_require_exact_top_500_coverage():
     from tools.update_player_names import parse_atp_text, parse_wta_text
 

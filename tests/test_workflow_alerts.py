@@ -47,3 +47,43 @@ def test_scheduled_radar_workflows_summarize_empty_runs():
         empty_step = workflow.index("空产摘要")
         # 空产必须把原因写进运行摘要，而不是只留在会过期的日志正文里
         assert "GITHUB_STEP_SUMMARY" in workflow[empty_step:], name
+
+
+def test_external_source_health_is_strict_and_separate_from_pr_ci():
+    ci = _workflow("ci.yml")
+    health = _workflow("source-health.yml")
+
+    # PR 单测必须可重复，不依赖实时比分源；运行时健康由独立定时任务负责。
+    assert "tennislive today" not in ci
+    assert "真实抓取" not in ci
+
+    assert 'cron: "17 */6 * * *"' in health
+    assert "fetch_day(day)" in health
+    assert "source_status" in health
+    assert "if: failure()" in health
+    assert "GITHUB_STEP_SUMMARY" in health
+    assert "pushplus.plus/send" in health
+    # 主探测不能吞失败；只有告警通道自身允许降级为 warning。
+    probe = health.split("- name: 严格检查比分数据源", 1)[1].split("- name:", 1)[0]
+    assert "||" not in probe
+
+
+def test_every_workflow_that_commits_generated_files_has_a_size_gate():
+    """Do not spend a whole run rendering only to have GitHub reject the blob."""
+    workflows = (
+        "assets.yml",
+        "daily.yml",
+        "explainer.yml",
+        "flash.yml",
+        "knowledge-adhoc.yml",
+        "match-reel.yml",
+        "news-radar.yml",
+        "oncourt-interviews.yml",
+        "player-name-sync.yml",
+        "voice-sample.yml",
+        "yesterday-point.yml",
+    )
+    for name in workflows:
+        workflow = _workflow(name)
+        assert "git commit" in workflow, name
+        assert "python tools/check_staged_file_sizes.py" in workflow, name

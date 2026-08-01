@@ -1,6 +1,8 @@
 import html
+import json
 import re
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -460,6 +462,7 @@ _ROSTER = (
     ("克雷吉茨科娃",), ("纳芙拉蒂洛娃",), ("斯特恩斯",), ("弗雷赫",),
     ("莱巴金娜",), ("普利斯科娃",), ("商竣程",), ("锦织圭",),
     ("穆塞蒂",), ("吴易昺",), ("梅德韦杰夫",),
+    ("黄泽林",), ("莱赫奇卡",), ("谢尔顿",), ("卢布列夫",),
 )
 
 
@@ -513,6 +516,82 @@ def test_栏目是登记过的并且赛前片子写清了日期():
         assert re.search(r"\d{1,2}\s*月\s*\d{1,2}\s*日", blob), (
             f"{slug} 在易逝栏目「{name}」里，却没写出比赛日期"
         )
+
+
+def test_赛前片的封面要写清是哪一场():
+    """封面被单独截图转发时，大问题本身说不清「哪一场、几点」。
+
+    账号所有者定的版式：问题下面两行小字，第一行是比赛坐标，第二行是对阵。
+
+        7.30  09:00  ATP250 洛斯卡沃斯  16 强
+        黄泽林  VS  莱赫奇卡
+
+    这一条只管「开球之前」——知识片没有一场比赛可以钉，印上去反而是噪点，
+    所以常青栏目必须**没有**这两行。
+
+    时刻允许缺（三条已发的前瞻当时没记下官方开赛时刻，宁可不印也不猜），
+    日期、赛事、轮次、两个人的名字一个都不能缺：少了任何一样，这两行就
+    回答不了它唯一要回答的问题。名字一律查译名表。
+    """
+    from tennislive.video.explainer import (
+        COLUMNS,
+        _OPENINGS,
+        _slide_html,
+        explainer_column,
+    )
+    from tennislive.zh.players import PLAYER_ZH
+
+    # 判据和 test_人名要以译名表为准 用的是同一份表，外加那份「同一个人的
+    # 另一种叫法」白名单——封面上的名字没有上下文消歧，更不该是手打的。
+    known = set(PLAYER_ZH.values()) | _ON_PURPOSE
+
+    for slug in _SCRIPTED:
+        cover = explainer_script(find_story_by_slug(slug))[0]
+        column = explainer_column(slug)
+        if not COLUMNS[column].perishable:
+            assert not cover.fixture, f"{slug} 是常青栏目「{column}」，封面不该印比赛坐标"
+            continue
+        assert len(cover.fixture) == 2, f"{slug} 的封面缺了那两行小字"
+        spec = _OPENINGS[slug]["fixture"]
+        when, who = cover.fixture
+        assert re.fullmatch(r"\d{1,2}\.\d{1,2}", spec["date"]), (
+            f"{slug} 的比赛日期写法不对：{spec['date']}")
+        for key in ("date", "level", "site", "round"):
+            assert spec.get(key) and str(spec[key]) in when, f"{slug} 的封面小字缺 {key}"
+        home, away = spec["players"]
+        assert who == f"{home}  VS  {away}", f"{slug} 的对阵行版式不对：{who}"
+        for name in (home, away):
+            assert name in known, (
+                f"{slug} 封面上的「{name}」不在译名表里——人名不要手打，"
+                "先查 src/tennislive/zh/")
+        # 渲出来也要真的在卡上，不能只活在数据里。
+        doc = _slide_html(0, cover, column=column)
+        assert when in doc and who in doc, f"{slug} 的封面小字没渲进卡片"
+
+
+def test_赛前片只做巡回赛级别的比赛():
+    """账号所有者定的选题门槛：「**需要巡回赛级别，250 以上**」。
+
+    这条不是排版规矩，是**选题规矩**——它决定哪一场值得做一条片子。低于这个
+    门槛的（WTA 125、挑战赛、ITF）不做：读者认不出赛事，两边的来路也摆不出
+    什么份量。同一条线在今日赛程那边早就有了（`TOUR_LEVELS`，2026-07-28 那天
+    一个罗马尼亚的 WTA 125 混进来，13 场比三个巡回赛级别的赛事加起来还多），
+    这里复用**同一份**名单，免得两处各定一套门槛然后慢慢漂开。
+
+    判据落在封面小字的 `level` 上：那是唯一一处把级别写成机器可读的地方，
+    而且它会印在卡上——门槛和产物是同一个数，改不动其中一个而不动另一个。
+    """
+    from tennislive.render.webcards import TOUR_LEVELS
+    from tennislive.video.explainer import COLUMNS, _OPENINGS, explainer_column
+
+    for slug in _SCRIPTED:
+        column = explainer_column(slug)
+        if not COLUMNS[column].perishable:
+            continue
+        level = (_OPENINGS[slug].get("fixture") or {}).get("level")
+        assert level in TOUR_LEVELS, (
+            f"{slug} 的赛事级别是「{level}」，不在巡回赛级别里。"
+            f"「开球之前」只做 250 及以上，见 TOUR_LEVELS。")
 
 
 def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
@@ -1009,11 +1088,165 @@ def test_成片链接和图片走同一条_CDN():
     assert "@main/" not in pinned
 
 
+def test_每条片子的标签都放满五个():
+    """小红书标签最多五个，**要放满**——账号所有者定的：「最多五个，以后要放满」。
+
+    thiem-football 发出去时只带了三个。原因不是谁写少了，是它在 `_CAPTIONS`
+    里**根本没有条目**，于是 hook 和 tags 一起退回默认，而当时的
+    `_DEFAULT_TAGS` 只有三个。其余 15 条都各自写满了五个——所以光看别的条
+    完全看不出这个洞，直到成品发出去才被一眼看见。
+
+    所以这条测试查的是**渲染出来的那份文案**，不是 `_CAPTIONS` 的字面值：
+    只查表就漏掉了「没有条目 → 走默认」这条路径，正是出问题的那条。
+    兜底那组也一起查，它必须自己就是五个。
+    """
+    from tennislive.video.explainer import _DEFAULT_TAGS, explainer_xiaohongshu
+
+    assert len(_DEFAULT_TAGS) == 5, (
+        f"_DEFAULT_TAGS 只有 {len(_DEFAULT_TAGS)} 个。它是漏写条目时的兜底，"
+        "自己不满五个，那条片子就会无声地少几个标签。")
+
+    for slug in sorted(_SCRIPTED):
+        story = find_story_by_slug(slug)
+        text = explainer_xiaohongshu(story, explainer_script(story), "7.29")
+        tags = [w for w in text.split() if w.startswith("#")]
+        assert len(tags) == 5, (
+            f"{slug} 的文案里有 {len(tags)} 个标签：{' '.join(tags)}\n"
+            "小红书最多五个，要放满——在 _CAPTIONS 里给它写自己的五个。")
+        assert len(set(tags)) == 5, f"{slug} 的标签有重复：{' '.join(tags)}"
+        assert tags[:2] == ["#网球", "#网球时差"], (
+            f"{slug} 前两个标签不是 #网球 #网球时差：{' '.join(tags)}")
+
+
+def test_复制页探不到就不放那个按钮():
+    """GitHub Pages 只服务 main，分支上生成的包点开是 404。
+
+    微信那条消息**发出去就收不回来**，宁可不放按钮。判据是探一次：200 且
+    Content-Type 是 text/html 才算数（soft-404 会返回 200）。
+    """
+    import datetime
+    from pathlib import Path as _Path
+
+    from tennislive.render.pushmsg import drop_dead_copy_button
+    from tennislive.video import explainer as E
+
+    outdir = _Path("output/2026-07-29/explainer/thiem-football")
+    segs = E.explainer_script(find_story_by_slug("thiem-football"))
+    body = E.explainer_push_html(
+        segs, outdir, date=datetime.date(2026, 7, 29), xhs_text="测试文案")
+    assert f"{outdir.as_posix()}/copy.html" in body, "渲染时就该带上复制页链接"
+
+    kept, url = drop_dead_copy_button(body, probe=lambda _u: True)
+    assert url and url.endswith("/copy.html"), "探到了却没报出是哪个 URL"
+    assert "分别复制标题" in kept, "探到了反而把按钮摘了"
+
+    dropped, url = drop_dead_copy_button(body, probe=lambda _u: False)
+    assert url is None
+    assert "copy.html" not in dropped, "探不到时仍然放了复制页按钮——那是个死链"
+    assert "分别复制标题" not in dropped
+    # 摘按钮不能连带把文案弄丢：正文得还在消息里，可以长按复制
+    assert "测试文案" in dropped, "摘按钮的同时把正文也弄丢了，文案就没有出口了"
+    # 别误伤别的按钮：成片链接和图片得原样留着
+    assert "explainer.mp4" in dropped, "把成片链接一起摘掉了"
+    assert dropped.count("slide_0") == body.count("slide_0"), "图片被误伤"
+
+
+def test_复制页可达但内容是旧版时也要摘掉按钮():
+    """「能打开」不等于「是这一版」。
+
+    2026-07-29 那条赛程推送踩了这个：新的 copy.html 只在特性分支上，而
+    **Pages 只服务 main**，于是线上那份还是同一天早些时候生成的旧包。
+    探到 200 就把按钮留下了，读者点开看到的是另一批场次——
+    **这比死链更糟**：死链一眼能看出坏了，旧内容看着完全正常。
+
+    所以判据从「HTTP 200 + text/html」加成「正文里有本地这一版的标题」。
+    """
+    import requests
+
+    from tennislive.render.pushmsg import _probe_page, copy_page_fingerprint
+
+    class _Resp:
+        status_code = 200
+        headers = {"Content-Type": "text/html; charset=utf-8"}
+
+        def __init__(self, text):
+            self.text = text
+
+    live_old = _Resp("<html><h1>7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉</h1></html>")
+    live_new = _Resp("<html><h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1></html>")
+    fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
+
+    with mock.patch.object(requests, "get", return_value=live_old):
+        assert not _probe_page("http://x/copy.html", attempts=1, expect=fresh), (
+            "线上还是旧版，却判成可用——按钮会指向另一批场次")
+        # 不给指纹时退回旧行为：只探可达。老调用方不该被这次改动带崩
+        assert _probe_page("http://x/copy.html", attempts=1)
+
+    with mock.patch.object(requests, "get", return_value=live_new):
+        assert _probe_page("http://x/copy.html", attempts=1, expect=fresh)
+
+    # 指纹取的是 <h1>，不是模板里的固定文字——换一版内容它必须跟着变
+    page = tmp_copy_page("<h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1>")
+    assert copy_page_fingerprint(page) == fresh
+    assert copy_page_fingerprint("/nowhere/copy.html") == "", "取不到时要退回空串"
+
+
+def tmp_copy_page(body: str):
+    import tempfile
+    from pathlib import Path as _P
+
+    path = _P(tempfile.mkdtemp()) / "copy.html"
+    path.write_text(f"<html><body>{body}</body></html>", encoding="utf-8")
+    return path
+
+
+def test_复制页那道闸装在发的那一步不是渲的那一步():
+    """第一版装错了位置，结果每次都把按钮拿掉。
+
+    渲染（`tennislive explainer`）排在提交**之前**，那一刻 copy.html 还没进
+    仓库，Pages 必然取不到——在渲染时探等于给所有推送判死刑，连 main 上本来
+    能用的也一起摘掉。2026-07-29 蒂姆那条推送就是这么少了按钮的
+    （run 30432435525：第 9 步渲染 07:41，第 11 步提交 07:43，第 12 步推送 07:44）。
+
+    `publish pushplus` 跑在提交之后，那才是链接真正该可达的时刻。这条测试
+    盯的是**位置**：生成流程里不许再出现探测调用，否则又会回到那个行为。
+    """
+    import inspect
+
+    from tennislive import cli
+
+    gen = inspect.getsource(cli.cmd_explainer)
+    assert "live_copy_page_url" not in gen, (
+        "生成流程里又探复制页了——那时文件还没提交，必然探不到，"
+        "按钮会被无声摘掉。闸要装在 cmd_publish_pushplus 里。")
+
+    send = inspect.getsource(cli.cmd_publish_pushplus)
+    assert "drop_dead_copy_button" in send, "发送那一步没装这道闸"
+
+
 # 稿子里**故意**用的写法，不在译名表里但也不是笔误。加进来之前先想清楚：
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
     "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
 }
+
+#: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
+#: 测试只查四个字以上。可表里有 210 个两三字的名字，「凯斯」就在里面：我把
+#: Madison Keys 写成「基斯」，写进了王欣瑜那条的旁白和文案，**全绿照过、推到了
+#: 微信**，屏幕上和配音里都是错的。
+#:
+#: 补不了射程，就补记性：**每次真写错一个，就把这一对钉在这儿。** 覆盖面窄，
+#: 但零误报，而且每踩一次就长一条——和这个仓库里其它规矩一样。
+_KNOWN_TYPOS = {
+    "基斯": "凯斯",            # Madison Keys
+    "雷巴金娜": "莱巴金娜",     # Elena Rybakina
+    "里巴金娜": "莱巴金娜",     # 同上，更早的一次
+    "奥斯塔片科": "奥斯塔彭科",  # Jelena Ostapenko
+}
+
+#: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
+#: 短名做子串匹配必然会撞上这种，遮掉比放宽判据好。
+_TYPO_SAFE = ("巴基斯坦",)
 
 
 def test_人名要以译名表为准():
@@ -1042,6 +1275,39 @@ def test_人名要以译名表为准():
         return text
 
     bad = []
+
+    def scan(where: str, text: str) -> None:
+        safe = text
+        for word in _TYPO_SAFE:
+            safe = safe.replace(word, "　" * len(word))
+        for wrong, right in _KNOWN_TYPOS.items():
+            if wrong in safe:
+                bad.append(f"{where}：「{wrong}」写错了，表里是「{right}」")
+        masked = strip_known(text)
+        for name in canon:
+            width = len(name)
+            for i in range(len(masked) - width + 1):
+                window = masked[i:i + width]
+                if not all("一" <= c <= "鿿" or c == "·" for c in window):
+                    continue
+                if sum(a != b for a, b in zip(window, name)) == 1:
+                    bad.append(f"{where}：「{window}」是不是想写「{name}」")
+
+    # **「赛场之上」的 spec 和文案也要扫。** 这条测试原来只看解说片的脚本，
+    # 于是 2026-07-29 我在 `eala-fernandez.xhs.txt` 里把 Rybakina 写成
+    # 「雷巴金娜」（表里是**莱巴金娜**），全绿照过——**同一个名字，第三次写错**，
+    # 前两次是「里巴金娜」和这次。判据早就写好了，只是没指到这批文件上。
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        scan(path.name, path.read_text(encoding="utf-8"))
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        texts = [cover.get("hook", ""), cover.get("winner", ""), cover.get("meta", "")]
+        texts += list((cover.get("versus") or {}).get("names") or [])
+        texts += [s.get("narration", "") for s in spec.get("segments") or []]
+        for text in filter(None, texts):
+            scan(path.name, text)
+
     for slug in E._SCRIPTS:
         opening = E._OPENINGS.get(slug) or {}
         texts = [opening.get("topic", ""), opening.get("narration", "")]
@@ -1052,15 +1318,7 @@ def test_人名要以译名表为准():
             texts += [seg.title, seg.narration, seg.question or "", seg.label,
                       seg.diagram or "", *seg.points]
         for text in filter(None, texts):
-            masked = strip_known(text)
-            for name in canon:
-                width = len(name)
-                for i in range(len(masked) - width + 1):
-                    window = masked[i:i + width]
-                    if not all("一" <= c <= "鿿" or c == "·" for c in window):
-                        continue
-                    if sum(a != b for a, b in zip(window, name)) == 1:
-                        bad.append(f"{slug}：「{window}」是不是想写「{name}」")
+            scan(slug, text)
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
 
 
