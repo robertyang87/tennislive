@@ -57,16 +57,20 @@ _NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
 def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
     """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**"""
     workdir.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        ["yt-dlp", "--no-warnings", "--skip-download", "--write-auto-subs",
-         "--sub-langs", "en", "--sub-format", "json3",
-         "-o", str(workdir / "cap_%(id)s"), url],
-        check=True, capture_output=True, text=True, timeout=300)
-    files = sorted(workdir.glob("cap_*.json3"))
-    if not files:
-        # **空结果先自证是真空**：这条片子可能真没自动字幕，也可能是被限流。
-        raise SystemExit("拿不到自动字幕。先用 --list-subs 确认这条片子有没有，"
-                         "再判断是「没有」还是「被挡了」。")
+    # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
+    # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
+    if not (files := sorted(workdir.glob("cap_*.json3"))):
+        proc = subprocess.run(
+            ["yt-dlp", "--no-warnings", "--skip-download", "--write-auto-subs",
+             "--sub-langs", "en", "--sub-format", "json3",
+             "-o", str(workdir / "cap_%(id)s"), url],
+            capture_output=True, text=True, timeout=300)
+        files = sorted(workdir.glob("cap_*.json3"))
+        if not files:
+            # **空结果先自证是真空**：这条片子可能真没自动字幕，也可能是被限流。
+            raise SystemExit(
+                f"拿不到自动字幕：{(proc.stderr or '').strip().splitlines()[-1:] or '(无 stderr)'}\n"
+                "先用 `yt-dlp --list-subs` 确认这条片子有没有，再判断是「没有」还是「被挡了」。")
     data = json.loads(files[-1].read_text())
     out = []
     for ev in data.get("events", []):
@@ -97,17 +101,39 @@ def segment(words: list[tuple[float, str]], start: float, end: float) -> list[di
     return lines
 
 
-_ASS_HEAD = """[Script Info]
+# 3:4 竖版版式，量出来的（不是拍的）——见 `render` 里的滤镜链：
+#
+#     1080 × 1440 画布
+#       y   0–150   模糊垫底（同一帧放大模糊压暗）
+#       y 150–960   视频，源片横向收边到 4:3 再铺满宽度
+#       y 960–1440  字幕区
+#
+# **为什么收边到 4:3 而不是直接裁 3:4**：直接裁只剩源片 42% 的宽度，
+# 出来是个大头特写——「大头特写不等于有冲击力」，而且话筒旗和烧录的球员
+# 名条会被切掉。不收边（原样 16:9）视频只有 607px 高，空得多。
+# 4:3 是渲出三版摆一起比出来的：主体够大，话筒、`EALA` 名条、看台都在。
+# ⚠️ 代价是她举起的手偶尔会贴到画面边缘。要更保险就把 `CROP_RATIO` 调到 16/9。
+CANVAS_W, CANVAS_H = 1080, 1440
+CROP_RATIO = 4 / 3
+VIDEO_TOP = 150
+VIDEO_H = int(CANVAS_W / CROP_RATIO)          # 810
+
+# 字幕**上锚**（Alignment=8）不贴底：一行和两行要从同一个高度往下长，
+# 贴底的话行数一变位置就跳。MarginV 是距画布顶的距离。
+_EN_TOP = VIDEO_TOP + VIDEO_H + 60            # 1020
+_ZH_TOP = _EN_TOP + 118
+
+_ASS_HEAD = f"""[Script Info]
 ScriptType: v4.00+
-PlayResX: 1280
-PlayResY: 720
+PlayResX: {CANVAS_W}
+PlayResY: {CANVAS_H}
 WrapStyle: 0
 ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,Noto Sans,30,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,2.4,0,2,60,60,72,1
-Style: ZH,Noto Sans CJK SC,34,&H0074DCC3,&H00000000,&H96000000,1,0,0,0,100,100,0,0,1,2.6,0,2,60,60,24,1
+Style: EN,Noto Sans,40,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: ZH,Noto Sans CJK SC,48,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -145,9 +171,25 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
     out = outdir / f"{spec['slug']}.mp4"
     dur = spec["end"] - spec["start"]
+    ratio = spec.get("crop_ratio", CROP_RATIO)
+    vh = int(CANVAS_W / ratio)
+    chain = (
+        # 垫底：同一路画面铺满画布、模糊、压暗。**放大 1.05 再裁**，
+        # 不然模糊到边缘会透出底色。
+        f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
+        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
+        # 前景：横向收边到 crop_ratio，再铺满画布宽度
+        f"[0:v]crop=ih*{ratio}:ih:(iw-ih*{ratio})/2:0,scale={CANVAS_W}:{vh}[fg];"
+        f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
+        f"[v]subtitles={ass}:fontsdir=/usr/share/fonts[out]"
+    )
     subprocess.run(
         ["ffmpeg", "-y", "-ss", str(spec["start"]), "-t", str(dur), "-i", str(src),
-         "-vf", f"subtitles={ass}:fontsdir=/usr/share/fonts",
+         "-filter_complex", chain,
+         # **`-filter_complex` 的输出必须打标签并显式 `-map`。** 不打的话
+         # `-map 0:v:0` 取的是原始流，整个滤镜图被绕过去——成片直接是 16:9，
+         # 而且**它不报错**，只是不生效。
+         "-map", "[out]", "-map", "0:a:0?",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-c:a", "aac", "-b:a", "128k", str(out)],
         check=True, timeout=1800)
