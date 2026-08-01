@@ -75,6 +75,23 @@ def test_只发不重渲要有一条单独的路():
     assert "mode == 'render'" in render_cond and "push" not in render_cond, \
         "push 模式还会重渲一遍"
 
+    # push 模式**不装渲染那套**：它不下片、不渲染、不抠图，rembg / opencv /
+    # playwright / yt-dlp / ffmpeg 一个都用不上。装它们不只是白等半分钟——
+    # 那几个包里任何一个装不上，都会让一条本来只是发消息的 run 挂掉。
+    ffmpeg_cond = text.split("- name: 装 ffmpeg", 1)[1].split("run:", 1)[0]
+    assert "mode != 'push'" in ffmpeg_cond, "push 模式还在装 ffmpeg"
+    deps = text.split("- name: 装依赖", 1)[1].split("- name:", 1)[0]
+    assert '= "push" ]' in deps and "pip install -q -e ." in deps, \
+        "push 模式没有走「只装主依赖」那条分支"
+    # 而且那条分支要**真验一次 import**，不许把失败吞掉——装少了得在第 5 秒炸。
+    # **判据只看代码，不看注释**：第一版没剔注释，结果被工作流里那句解释
+    # 「不许 xx」自己绊倒了——注释里提到一个反模式，不等于用了它。
+    head = deps.split('= "push" ]', 1)[1].split("fi", 1)[0]
+    code = "\n".join(ln for ln in head.splitlines() if not ln.strip().startswith("#"))
+    assert "import requests" in code, "push 分支没有真验一次 import"
+    assert "|| true" not in code and "2>/dev/null" not in code, \
+        "push 分支的依赖检查把失败吞掉了，永远不会红"
+
     guard = next((n for n in names if "push 模式先确认成片" in n), "")
     assert guard, "push 模式没有前置检查——成片不在时会一路跑到推送才炸"
     assert names.index(guard) < names.index(

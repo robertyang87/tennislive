@@ -120,6 +120,9 @@ jobs:
       # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
       # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
       - name: 装 ffmpeg
+        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
+        # subprocess **一个都没出现**，装它白花半分钟。
+        if: github.event.inputs.mode != 'push'
         timeout-minutes: 5
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
@@ -144,6 +147,17 @@ jobs:
 
       - name: 装依赖
         run: |
+          # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
+          # playwright、yt-dlp 一个都用不上，装全套只是把失败面铺大：那几个包
+          # 里任何一个装不上，都会让一条**本来只是发消息**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+            pip install -q -e .
+            # 真验一次 push 那条路要的东西，**不许 `|| true`**：装少了要在
+            # 第 5 秒炸，而不是三分钟后死在推送那一步。
+            python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+            echo "push 模式：只装主依赖，推送那条路的 import 已验过"
+            exit 0
+          fi
           # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
