@@ -932,7 +932,9 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
-    cover_png = build_cover(spec, frame, outdir / "cover.jpg")
+    # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
+    # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
+    cover_png = build_cover(spec, frame, outdir / "poster.jpg")
     cover_mp4 = outdir / "_cover.mp4"
     # **封面这一路也要有音轨**，而且参数要和正片一致——否则 concat 会丢掉
     # 其中一条流，而它**不报错**，只是成片从某一秒起没声音了。
