@@ -50,6 +50,7 @@ jobs:
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
+        if: github.event.inputs.mode != 'push'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
@@ -67,13 +68,23 @@ jobs:
       # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
       # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
+        if: github.event.inputs.mode != 'push'
         run: |
           pip install -q -e . "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
           node --version
 
+      # **只推送的时候什么重依赖都不需要**：封面已经在仓库里、不转写、不下载、
+      # 不编码，`push_reel.py` 只用 requests 和 tennislive 自己那几个模块。
+      # 原来照样装 apt 字体 + ffmpeg + Chromium + faster-whisper，白等三分钟——
+      # 一个非关键阶段失败之后重跑，不该把前面所有阶段的准备工作再做一遍。
+      - name: 装依赖（只推送）
+        if: github.event.inputs.mode == 'push'
+        run: pip install -q -e .
+
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
+        if: github.event.inputs.mode != 'push'
         run: |
           PYTHONPATH=src python - <<'PY'
           import shutil, sys
@@ -96,6 +107,7 @@ jobs:
       # 配了 Secret 就带 cookie 下载。没配也先试一把——公开视频在 runner 的 IP 上
       # 有时候不用 cookie 也下得动，真下不动再回来配。
       - name: 落 cookies（配了 Secret 才有）
+        if: github.event.inputs.mode != 'push'
         id: cookies
         env:
           YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}

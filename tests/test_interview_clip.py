@@ -572,6 +572,33 @@ def test_spec里的推送字段拼得出合格标题(path):
             f"push.{k} 里有换行，塞不进 GITHUB_OUTPUT"
 
 
+def test_只推送时不做出片那一堆准备():
+    """**非关键阶段失败之后重跑，别把前面所有阶段的准备再做一遍。**
+
+    账号所有者：「有些非关键步骤失败了，不要从第一步开始再做，中间能否接上
+    继续做，你要有一定的判断。」
+
+    push 模式什么重依赖都不需要——封面已经在仓库里、不转写、不下载、不编码，
+    `push_reel.py` 只用 requests 和 tennislive 自己那几个模块。原来照样装
+    apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
+    而真正要跑的那一步只要二十秒。
+
+    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
+    for step in wf["jobs"]["render"]["steps"]:
+        run = str(step.get("run") or "")
+        if not any(h in run for h in heavy):
+            continue
+        assert "mode != 'push'" in str(step.get("if", "")), (
+            f"步骤「{step.get('name')}」装/用了出片才要的东西，"
+            "却没挂 mode != 'push'——只推送的时候它是白跑的")
+
+
 def test_封面文件名是push_reel认的那个():
     """`push_reel.py` 只认 `poster.jpg`。改名等于推送里少一整屏海报，
     而它**只打印一行提示，不报错**——又一个不吭声的兜底。"""
