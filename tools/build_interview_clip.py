@@ -161,6 +161,77 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path) -
 
 COVER_SECONDS = 1.8      # 和「赛场之上」一致：够读完两行钩子，又不至于让人等
 
+# 两份转写允许有多少词对不上。**超了就不许出片**——不是警告，是闸。
+# 0.12 是留给标点、口吃、大小写这类无害差异的；语义级的分歧远达不到这个量。
+TRANSCRIPT_MAX_DISAGREE = 0.12
+
+
+def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
+    """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
+
+    **为什么必须做**：这是英语学习素材，发错的英文比没有更糟。而 YouTube 的
+    自动字幕实测错得不轻——`Alexandra Eala` 被写成 `Alex Ayala`/`Aala`/
+    `Y Alla`/`Alexa`，`Elina Svitolina` 被写成 `Alina Vitilina`/`Switzerina`，
+    还有整句语法不成立的（`The crazy Yes. round of applause.`）。
+
+    **YouTube 自己那两条轨对不了。** `en` 和 `en-orig` 实测逐词完全一致
+    （605 词，0 处差异）——是同一份 ASR 换了个名字，拿它当交叉验证是自欺。
+
+    所以第二份得自己跑。判据是**两份都说了同一个词**才算数；对不上的地方
+    列进 `transcript_diff.md`，人去听那几秒。分歧超过 `TRANSCRIPT_MAX_DISAGREE`
+    直接失败，不出片。
+
+    ⚠️ **这一步只能在 runner 上跑**：沙箱的 IP 被 YouTube 挡了，连音频也下不到
+    （`-f ba` 同样报 `Sign in to confirm you're not a bot`）。
+    """
+    import difflib
+
+    from faster_whisper import WhisperModel  # noqa: PLC0415
+
+    audio = outdir / "_audio.m4a"
+    if not audio.exists():
+        cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+               "-f", "ba", "-o", str(audio)]
+        if (ck := spec.get("cookies")) and Path(ck).exists():
+            cmd += ["--cookies", ck]
+        subprocess.run([*cmd, spec["url"]], check=True, timeout=1800)
+
+    model = WhisperModel(spec.get("whisper_model", "small.en"), compute_type="int8")
+    segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
+                               vad_filter=True)
+    mine = [(w.start, w.word.strip()) for s in segs for w in (s.words or [])
+            if spec["start"] <= w.start <= spec["end"]]
+    (outdir / "whisper.json").write_text(
+        json.dumps(mine, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    def norm(text: str) -> list[str]:
+        return [w for w in re.sub(r"[^\w\s']", " ", text.lower()).split() if w]
+
+    theirs = norm(" ".join(seg["en"] for seg in lines))
+    ours = norm(" ".join(w for _, w in mine))
+    sm = difflib.SequenceMatcher(None, theirs, ours, autojunk=False)
+    same = sum(b.size for b in sm.get_matching_blocks())
+    rate = 1 - same / max(len(theirs), 1)
+
+    report = [f"# 转写交叉校验：{spec['slug']}", "",
+              f"- YouTube 自动字幕 **{len(theirs)}** 词",
+              f"- faster-whisper（{spec.get('whisper_model', 'small.en')}）**{len(ours)}** 词",
+              f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
+              "## 分歧逐处（左＝YouTube，右＝Whisper）", ""]
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            continue
+        report.append(f"- `{' '.join(theirs[i1:i2]) or '—'}` → "
+                      f"`{' '.join(ours[j1:j2]) or '—'}`")
+    path = outdir / "transcript_diff.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print(f"转写分歧 {rate:.1%} → {path}")
+    if rate > TRANSCRIPT_MAX_DISAGREE:
+        raise SystemExit(
+            f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。")
+    return path
+
 
 def _chromium() -> str:
     """沙箱和 runner 上 Chromium 的路径都带版本号，playwright 自己找不到。"""
@@ -300,7 +371,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
-    ap.add_argument("--stage", choices=["subs", "render"], default="subs")
+    ap.add_argument("--stage", choices=["subs", "verify", "render"], default="subs")
     args = ap.parse_args()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
@@ -309,6 +380,14 @@ def main() -> int:
     ass = outdir / f"{spec['slug']}.ass"
 
     lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"])
+    # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
+    # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
+    # 那种句子照发出去，这个号的英语素材就没有可信度了。
+    for k, v in (spec.get("en_fixed") or {}).items():
+        idx = int(k) - 1
+        if 0 <= idx < len(lines):
+            lines[idx]["en"] = v
+            lines[idx]["fixed"] = True
     (outdir / "lines.json").write_text(
         json.dumps(lines, ensure_ascii=False, indent=1), encoding="utf-8")
     zh = spec.get("zh") or []
@@ -321,7 +400,19 @@ def main() -> int:
     write_ass(lines, zh, spec["start"], ass)
     print(f"字幕 {len(lines)} 组双语 → {ass}")
 
+    if args.stage == "verify":
+        verify_transcript(spec, lines, outdir)
+        return 0
+
     if args.stage == "render":
+        # **没验过的转写不许出片。** 这不是提醒，是闸：英语素材发错一次，
+        # 赔上的是整条线的可信度。`transcript_verified` 只有在人看过
+        # `transcript_diff.md`、把确认过的写进 `en_fixed` 之后才该置上。
+        if not spec.get("transcript_verified"):
+            raise SystemExit(
+                f"{args.spec} 没有 `transcript_verified: true`。\n"
+                "先跑 --stage verify 出交叉校验报告，逐处核对，把确认过的英文写进 "
+                "`en_fixed`，再置上这个标记。")
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         print(f"成片 {out}（{size:.1f} MB，{spec['end'] - spec['start']:.1f} 秒）")

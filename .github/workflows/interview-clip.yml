@@ -42,7 +42,7 @@ jobs:
       # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
       - name: 装依赖
         run: |
-          pip install -q "yt-dlp[default]" playwright
+          pip install -q "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
           node --version
 
@@ -54,6 +54,7 @@ jobs:
           from playwright.sync_api import sync_playwright
           sys.path.insert(0, "tools")
           from build_interview_clip import _chromium
+          import faster_whisper  # noqa: F401
           assert shutil.which("ffmpeg"), "没有 ffmpeg"
           print("Chromium:", _chromium())
           from tennislive.render.webcards import _font_css
@@ -76,6 +77,18 @@ jobs:
           else
             echo "没有配 YT_COOKIES_TXT，裸下试试"
           fi
+
+      # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
+      # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立），而它自己那两条
+      # 轨（en / en-orig）逐词完全一致，拿来交叉验证是自欺。所以在这儿跑第二份
+      # ASR 对一遍，分歧超过闸门直接失败。
+      - name: 转写交叉校验
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
 
       - name: 剪 + 烧字幕
         env:
