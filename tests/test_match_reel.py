@@ -897,3 +897,77 @@ def test_旁白不能比它那一段的画面长():
     assert "seg.length + 0.12" in src, f"容差要收紧到 0.12s，0.35 拦不住 0.29s 的超出"
     # 字幕收进本段窗口：末尾时刻要被 min(...) 夹住
     assert "min(b, limit)" in src, "字幕没有收进本段窗口"
+
+
+def test_多源spec每一段都要说清自己从哪条源片剪(tmp_path):
+    """「开球之前」是多源的常态：比赛还没打，画面只能来自两边各自的比赛。
+
+    郑钦文 VS 塔拉鲁迪那条用了四条源片——两人各自最近的一场，加各自的高光。
+    这时候「这一段从哪条源片剪」就不能有默认值：**猜错了剪出来是另一场比赛的
+    画面，而画面本身不会报错**，只会静静地对不上旁白。所以少写一个 `source`
+    要当场报错，并且把有哪些源列出来。
+
+    单源的老 spec 一个字都不用改：`source_url` 那条路走空串这个键，和
+    `Segment.source` 的默认值对上。
+    """
+    reel = _reel()
+
+    good = tmp_path / "good.json"
+    good.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "sources": {"a": "https://x/a", "b": "https://x/b"},
+        "segments": [{"start": 0, "end": 1, "source": "a"},
+                     {"start": 0, "end": 1, "source": "b"}],
+    }), encoding="utf-8")
+    assert reel.load_spec(good)["sources"]["b"] == "https://x/b"
+
+    for bad_seg, why in (({"start": 0, "end": 1}, "漏写 source"),
+                         ({"start": 0, "end": 1, "source": "c"}, "写了不存在的源")):
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({
+            "slug": "t", "cover": {"versus": {}},
+            "sources": {"a": "https://x/a"},
+            "segments": [bad_seg],
+        }), encoding="utf-8")
+        try:
+            reel.load_spec(bad)
+        except reel.ReelError as exc:
+            assert "sources" in str(exc), f"{why}：报错没说清有哪些源"
+        else:
+            raise AssertionError(f"{why} 应当报错")
+
+    # 单源老 spec 仍然走得通
+    old = tmp_path / "old.json"
+    old.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "source_url": "https://x/one",
+        "segments": [{"start": 0, "end": 1}],
+    }), encoding="utf-8")
+    assert reel.load_spec(old)["source_url"].endswith("one")
+
+    # 两条都不给才算缺
+    empty = tmp_path / "empty.json"
+    empty.write_text(json.dumps({"slug": "t", "cover": {}, "segments": []}),
+                     encoding="utf-8")
+    try:
+        reel.load_spec(empty)
+    except reel.ReelError as exc:
+        assert "sources" in str(exc) and "source_url" in str(exc)
+    else:
+        raise AssertionError("既没有 sources 也没有 source_url，应当报错")
+
+
+def test_跟踪按源分别算不能跨源接成一个镜头():
+    """`track_shots` 判「两段是同一个没剪断的镜头」用的是「上一段的 end 就是
+    这一段的 start」。跨源比这个数**毫无意义**——两条不同片子里的 74.2 秒
+    不是同一个时刻，接起来就是把 A 片的窗口轨迹按到 B 片上。
+
+    所以 render 里是按源分组各跟各的，再把局部下标映射回全局。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def render("):]
+    assert "for name, path in sources.items():" in body, "跟踪没有按源分组"
+    assert "track_shots(path, [segments[i] for i in mine]" in body, (
+        "跟踪还在拿整份 segments 算，跨源会接成一个镜头")
+    assert "cut_segment(sources[seg.source]" in body, "切片没有按段取自己的源片"

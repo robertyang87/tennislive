@@ -464,6 +464,10 @@ class Segment:
     narration: str
     fit: str = "crop"
     track: bool = True
+    # 这一段从哪条源片上剪。单源的 spec 不写（空串），多源的 spec 必须写，
+    # 值是 `spec["sources"]` 里的键。**「开球之前」是多源的常态**：比赛还没打，
+    # 画面只能来自两边各自最近的比赛和各自的高光，一条片子四条源。
+    source: str = ""
 
     @property
     def length(self) -> float:
@@ -475,7 +479,38 @@ def load_spec(path: Path) -> dict:
     for key in ("segments", "cover"):
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
+    if not spec.get("sources") and not spec.get("source_url"):
+        raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
+    # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
+    # 剪出来是另一场比赛的画面，而且画面本身不会报错，只会静静地对不上旁白。
+    names = set(spec.get("sources") or {})
+    if names:
+        for index, seg in enumerate(spec["segments"]):
+            got = seg.get("source")
+            if got not in names:
+                raise ReelError(
+                    f"第 {index} 段的 source 是 {got!r}，不在 sources 里"
+                    f"（有 {sorted(names)}）。多源 spec 的每一段都必须显式声明来源。")
     return spec
+
+
+def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
+    """把 spec 里的源片全下下来，返回 {名字: 路径}。
+
+    单源 spec 走 `source_url`，键是空串——和 `Segment.source` 的默认值对上，
+    老 spec 一个字都不用改。
+    """
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec["source_url"]}
+    paths: dict[str, Path] = {}
+    for name, url in urls.items():
+        dest = outdir / (f"source_{name}.mp4" if name else "source.mp4")
+        if not dest.is_file():
+            with stage(f"下载源片 {name or '(单源)'}"):
+                dest = download(url, dest)
+        paths[name] = dest
+    return paths
 
 
 # 跟踪裁切 -----------------------------------------------------------------
@@ -925,10 +960,11 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
-    source = source_override or (outdir / "source.mp4")
-    if not source.is_file():
-        with stage("下载源片"):
-            source = download(spec["source_url"], source)
+    if source_override is not None:
+        sources = {"": source_override}
+    else:
+        sources = resolve_sources(spec, outdir)
+    source = sources[next(iter(sources))]   # 主源：封面、帧率、裁切几何都按它定
     # 网盘那份常常只有视频轨（DASH 的自适应流是分开的）。人另外传了 m4a 就在这儿
     # 合上——没有原声的成片只剩解说，球声和观众声全没了，片子会很平。
     audio = spec.get("source_audio")
@@ -943,11 +979,27 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[audio] 合上原声 {audio}")
         source = merged
 
-    source_w, source_h = probe_size(source)
+    # 多源：几何必须一致，否则一套裁切窗口套在两种画幅上，剪出来一段满一段不满。
+    # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
+    # 画质问题，而报错能让人当场发现。
+    sizes = {name: probe_size(path) for name, path in sources.items()}
+    if len(set(sizes.values())) > 1:
+        raise ReelError(
+            "多条源片的画幅不一致，裁切几何没法共用：\n  "
+            + "\n  ".join(f"{n or '(单源)'}: {w}×{h}" for n, (w, h) in sizes.items())
+            + "\n换一条同画幅的源片，或者把不一致的那条单独出片。")
+    source_w, source_h = sizes[next(iter(sources))]
+
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
+    # 多源时只能有一个输出帧率，取主源的；**别的源和它不一样就要打出来**——
+    # 那意味着那几段在重采样，不打出来没人知道画面为什么发涩。
     global FPS, FPS_EXPR
-    FPS_EXPR, FPS = resolve_fps(source)
-    print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
+    rates = {name: resolve_fps(path) for name, path in sources.items()}
+    FPS_EXPR, FPS = rates[next(iter(sources))]
+    for name, (expr, fps) in rates.items():
+        mark = "" if abs(fps - FPS) < 1e-6 else f"  ← 和主源不同，这几段会重采样到 {FPS:g}"
+        print(f"源片 {name or '(单源)'}: {source_w}×{source_h} "
+              f"{probe_duration(sources[name]):.1f}s {fps:g}fps{mark}")
     resolve_crop(source_w, source_h)
 
     # **默认不摇。** 窗口只有源片的 32% 宽，一横摇，画面里本该静止的底线、球网、
@@ -957,7 +1009,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     segments = [Segment(float(s["start"]), float(s["end"]),
                         None if s.get("cx") is None else float(s["cx"]),
                         s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", False)))
+                        str(s.get("fit", "crop")), bool(s.get("track", False)),
+                        str(s.get("source", "")))
                 for s in spec["segments"]]
     total = sum(s.length for s in segments) + COVER_SECONDS
     print(f"{len(segments)} 段，画面共 {total:.1f}s")
@@ -977,12 +1030,24 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "或者把这些段的 track 置为 false（画面退回固定中心）。"
             ) from exc
 
-    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
-    tracks = track_shots(source, segments, source_w)
+    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）。
+    # 多源时**按源分别跟**：`track_shots` 靠「上一段的 end 就是这一段的 start」
+    # 判断两段在源片里是不是同一个没剪断的镜头，跨源比这个数毫无意义——
+    # 两条不同的片子里的 74.2 秒不是同一个时刻。
+    tracks: dict[int, list[tuple[float, int]]] = {}
+    for name, path in sources.items():
+        mine = [i for i, seg in enumerate(segments) if seg.source == name]
+        if not mine:
+            continue
+        got = track_shots(path, [segments[i] for i in mine], source_w)
+        for local, index in enumerate(mine):
+            if local in got:
+                tracks[index] = got[local]
 
     parts: list[Path] = [build_cover(source, spec, outdir / "part_cover.mp4", source_w)]
     for index, seg in enumerate(segments):
-        parts.append(cut_segment(source, seg, outdir / f"part_{index:02d}.mp4",
+        parts.append(cut_segment(sources[seg.source], seg,
+                                 outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index)))
 
     listing = outdir / "_concat.txt"
