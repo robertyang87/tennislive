@@ -1447,6 +1447,20 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 `match-reel.yml` 里对 `unlag` / `audio_envelope` / `check_crowd_rise`
 的引用数必须是 0。
 
+### 源片按巡回赛分：WTA 用官方频道，Tennis TV 是 ATP 那条线
+
+账号所有者：「wta 就是这里啊，tennistv 主要是 atp 的」。
+
+| 巡回赛 | 源片 | 怎么拿 |
+|---|---|---|
+| **WTA** | **WTA 官方 YouTube 频道**的 `Match Highlights` | runner 上带 cookie 直接下，`mode=probe` 给 URL 就行 |
+| **ATP** | Tennis TV（订阅制） | 账号所有者从订阅里取，转存网盘给链接 |
+
+**别把 ATP 的情况套到 WTA 上。** 黄泽林那条要账号所有者手动供片，是因为
+Tennis TV 要订阅、而 YouTube 上的当日合集**漏了那一场**；WTA 这边官方频道
+每场都发单场集锦，是**首选而不是退而求其次**——我问过一句「有没有更完整的」，
+那个问题在 WTA 这条线上不成立。
+
 ### 走势数据从哪儿取：`tools/match_feed.py`
 
 账号所有者：「你要去找到真实的比赛走势数据和每一盘的技术统计对比，然后分析后
