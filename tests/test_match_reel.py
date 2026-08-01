@@ -1923,6 +1923,75 @@ def test_快速预览的开关要在工作流里够得着():
         assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
 
 
+def test_死球时刻要趁源片还在的时候量出来(tmp_path, capsys):
+    """`find_point_ends.py` 一直是**零调用方**——而段尾切错今天已经改过三处。
+
+    `git grep find_point_ends` 只有三处：脚本自己、一条「文件在不在」的断言、
+    以及 wong-brooksby 的 `_editing_why`（那三处修正
+    `128.0→132.7`、`143.0→147.7`、`173.0` 正好切在赛点那一分中间）。
+    **没有任何工作流或代码调用它**，而它的 `--video` 指的是源片——源片渲完
+    就被清理那一步删掉，想用它得自己另下一份 400 MB。于是每一处段尾错都要
+    先付一趟渲染才发现，而账号所有者点名过这件事（「很多球没有播放完成就切
+    到下一个了……让人看的不明不白的」）。
+
+    现在 probe 顺手量一遍写进 `probe.json`（**趁源片还在**）。判据要钉三头：
+
+    1. 记分条位置**没法自动认**，不给就跳过——但要**说为什么**
+    2. 给了就真的量得出来
+    3. 零命中要**自证是真空**：把实测分布打出来，别让「门槛卡错 / box 框错」
+       和「真的没有死球」长得一样（成片那条「找球场对称轴」就是这么栽的）
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    pytest.importorskip("cv2", reason="visualqa extra")
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了"
+
+    # ① 不给就跳过，而且要出声
+    assert reel.point_end_candidates(tmp_path / "nope.mp4", "") == []
+    assert "跳过" in capsys.readouterr().out
+
+    # 写错格式要报错，不许当成「没给」悄悄跳过
+    with pytest.raises(reel.ReelError, match="x0,y0,x1,y1"):
+        reel.point_end_candidates(tmp_path / "nope.mp4", "1,2,3")
+
+    # 造一段 8 秒的片子：左上角那一格每 2 秒翻一次「牌」（黑↔白），
+    # 其余画面一直不动。翻牌 = 死球。
+    flip = tmp_path / "flip.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=gray:s=320x240:r=25:d=8",
+         "-vf", "drawbox=x=0:y=0:w=80:h=60:color=black:t=fill:"
+                "enable='lt(mod(t,4),2)'",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
+         str(flip)], check=True)
+
+    # ② 框住那一格 → 量得出跳变
+    hits = reel.point_end_candidates(flip, "0,0,80,60")
+    assert hits, "翻牌那一格量不出跳变，通路是断的"
+
+    # ③ 框住一直不动的地方 → 零命中，而且把分布打出来自证
+    capsys.readouterr()
+    quiet = reel.point_end_candidates(flip, "200,150,300,230")
+    assert quiet == [], f"不动的区域居然量出 {quiet}"
+    out = capsys.readouterr().out
+    assert "一个都没有" in out and "moved 最大的几个" in out, (
+        f"零命中没有自证是真空，只说了「没有」：{out}")
+    assert "box 框错" in out, "零命中要提示可能是 box 框错，不是没有死球"
+
+    # ④ 而且这条路要在工作流里够得着——和 `--cover-only` 那次一样的坑：
+    # 源片只在 runner 上活过几分钟，开关够不着就等于这条能力不存在
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    head, jobs = body.split("\njobs:", 1)
+    assert "scorebox:" in head, "工作流没有 scorebox 这个输入"
+    assert "--scorebox" in jobs, "probe 那一步没把 scorebox 传下去"
+
+
 def test_查成片的那个脚本要真的被调用一次():
     """**`check_reel_landed.py` 写好了，一次都没跑过。**
 
