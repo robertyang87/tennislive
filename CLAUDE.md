@@ -1251,7 +1251,10 @@ pw.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/
 python3 tools/check_reel_cuts.py specs/reels/<slug>.json output/<date>/reel/*/probe.json
 ```
 
-- **挑段仍然要靠眼睛看缩略图墙**，这一条只拦「窗口中途换了镜头而我没看见」
+- **挑段仍然要靠眼睛看缩略图墙**，这一条只拦「窗口中途换了镜头而我没看见」。
+  **`scene_cuts` 是下限，不是上限**：阈值 0.35 认不出「宽景回合 → 同一场地的
+  中景」这种切换，郑钦文那条源片约 131 秒就漏了一个，于是「她一直带着疼在打」
+  压在对手走开的背影上，而检查器全绿。机检过了仍然要抽帧看
 - 真要跨（两边都是同一个人，只是机位换了）就在那一段写
   `"crosses_cut": "<为什么>"` 显式挂账
 - **probe 给不全时不许假绿**：零命中和「全都合格」长得一模一样，所以没查成的
