@@ -57,7 +57,14 @@
     "_style": "标题走 TL Display SC（得意黑），和「赛场之上」的海报同一支，经 webcards._font_css() 内嵌；副标 TL Sans SC。底板不是实色块，是自上而下 0 → .46 → .62 的渐变——实色块会在画面上切出一条硬边。",
     "tag": "2026 华盛顿八强 · 伊埃拉"
   },
+  "human_quote": {
+    "url": "https://www.wtatennis.com/news/4551496/eala-draws-osaka-in-dc-semis-after-overcoming-svitolina-in-berlin-repeat",
+    "_why": "WTA 官网这篇战报把这段场上采访的最后一问**人工转写**抄了进去（原文写明 `Eala said in her on-court interview`）——比任何一份 ASR 都硬，而且不用联网就能比。一比就抓到 ASR 的一处真错：`respect **to** her` 其实是 `respect **for** her`，见 en_fixed 的 31。⚠️ 它只覆盖第 29–33 行那一段，别的行仍然只有 ASR 一个源。",
+    "text": "She's such an accomplished player, and I think she's made waves on and off the tennis court for so many reasons. There's so much respect for her for that, and you know I'm really excited. I haven't had much time to think about it, but I will definitely think about it after I get off court."
+  },
   "transcript_verified": false,
-  "_transcript_note": "⚠️ **还没验。** 现在这份英文来自 YouTube 自动字幕，逐行看下来至少 6 行可疑，其中 4 行必须改：#2 `The crazy Yes. round of applause.` 整句语法不成立；#5 `What I know it's nuts.` 里 What 是误识、且 I know it's nuts 疑似伊埃拉插话（说话人归属存疑）；#13 `What you are learning along the way?` 应是 What are you learning；#15 yourselves 应是 yourself。另 #22 口吃重复、#32 跨句断点在句中。\n**流程**：runner 上跑 --stage verify（faster-whisper 出第二份 ASR，逐处对），人听那几秒、把确认过的英文写进 en_fixed，再把这个字段置 true。在那之前 --stage render 会直接拒绝出片。",
-  "en_fixed": {}
+  "_transcript_note": "⚠️ **还没验完。** 现在这份英文来自 YouTube 自动字幕（**没有人工字幕**：`--list-subs` 只报 automatic captions，拿一条已知有人工字幕的 TED 片做过对照，探测本身是好的，所以这个「没有」是真的）。逐行看下来至少 6 行可疑，已由 WTA 战报的人工引语定夺 1 行（#31），剩下 5 行仍待人听：#2 `The crazy Yes. round of applause.` 整句语法不成立；#5 `What I know it's nuts.` 里 What 是误识、且 I know it's nuts 疑似伊埃拉插话（说话人归属存疑）；#13 `What you are learning along the way?` 应是 What are you learning；#15 yourselves 应是 yourself；另 #22 口吃重复。\n**流程**：runner 上跑 --stage verify（faster-whisper 出第二份 ASR，逐处对），人听那几秒、把确认过的英文写进 en_fixed，再把这个字段置 true。在那之前 --stage render 会直接拒绝出片。",
+  "en_fixed": {
+    "31": "uh there's so much respect for her for that and you know I'm really"
+  }
 }

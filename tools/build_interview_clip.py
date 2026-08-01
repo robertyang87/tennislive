@@ -28,6 +28,16 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 - **英文保留标点，中文按仓库规矩去标点。** 全站字幕不写标点那条规矩是给
   「屏幕上的停顿靠换页表达」用的；但这里英文是**学习对象本身**，逗号句号
   是它的一部分，去掉等于改素材。中文那行照旧只留 `？！`。
+- **一份 ASR 不能单独发出去。** 上面那条人名错是一眼能看见的；真正危险的是
+  `respect **to** her`（实际是 `for her`）这种**读起来毫无破绽**的听错。
+  这条线发的是英语学习素材，照着错的学的人会把错的记下来。所以有两道闸，
+  **各有各的边界，别互相顶替**：
+  `verify_transcript` 跑第二份 ASR，覆盖全段但只有 runner 上跑得动；
+  `check_human_quote` 比赛事官网战报里的**人工引语**，不联网、本地就能跑，
+  但只覆盖记者抄走的那几句。`to` → `for` 就是后者抓到的。
+  ⚠️ 这两条视频**没有人工字幕**（`--list-subs` 实测，并拿一条已知有人工字幕的
+  片子做过对照，所以这个「没有」是真空不是探测坏了）；而 YouTube 自己的
+  `en` 和 `en-orig` 逐词完全一致，是同一份 ASR 换了个名字，对不了。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -233,6 +243,100 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     return path
 
 
+# 只有这几个词算「记者顺手删掉的口头语」。**别往里加实词**——判据宁可窄不可宽，
+# 把 `well`/`so`/`like` 塞进来，真正的漏词就跟着被放过了。
+_FILLER = {"uh", "um", "erm", "er", "ah", "mm", "hmm", "mhm"}
+# 缩写两边都展开再比：印出来的引语写 `she's`，ASR 听成 `she is`，那不是分歧。
+_EXPAND = {
+    "'s": " is", "'re": " are", "'ve": " have", "'ll": " will", "'d": " would",
+    "'m": " am", "n't": " not",
+}
+
+
+def _norm_en(text: str) -> list[str]:
+    """英文归一化：小写、展开缩写、去标点。两处比对共用同一个口径。"""
+    low = text.lower()
+    for short, long in _EXPAND.items():
+        low = low.replace(short, long)
+    return [w for w in re.sub(r"[^\w\s]", " ", low).split() if w]
+
+
+def check_human_quote(spec: dict, lines: list[dict], outdir: Path) -> Path | None:
+    """拿**赛事官网战报里的人工引语**校 ASR。第二个源，而且不用联网。
+
+    这条是踩出来的：`--stage verify` 那份 faster-whisper 只能在 runner 上跑
+    （沙箱的 IP 被 YouTube 挡了，连音频都下不到），于是「务必检验准确」这件事
+    在本地根本没有着落。而 WTA 自己的战报里就抄着这段场上采访的原话——
+    **人工转写，比任何一份 ASR 都硬**。一比就抓到一处真错：
+
+        ASR  `there's so much respect **to** her for that`
+        WTA  `There's so much respect **for** her for that`
+
+    判据分三类，**只有前两类算无害**：
+
+    - 落在引语区间**之外**的词：印出来的引语本来就是片段，前后不算分歧
+    - ASR 有、引语没有的词（**删**）：记者顺手删口头语和引入语，正常编辑
+    - 其余（**改**、以及引语有而 ASR 没有的**增**）：两份里必有一份错，
+      必须人工定夺——要么写进 `en_fixed`，要么在 `human_quote_ok` 里显式声明
+      「这处是记者写松了」。默认**不出片**。
+
+    ⚠️ 引语只覆盖它抄的那几句。**过了这一关不等于整段都对**——没被引到的行
+    仍然只有 ASR 一个源，得靠 `verify_transcript` 那份 whisper 和人听。
+    """
+    import difflib
+
+    quote = spec.get("human_quote") or {}
+    text = quote.get("text")
+    if not text:
+        return None
+
+    asr = _norm_en(" ".join(seg["en"] for seg in lines))
+    human = _norm_en(text)
+    sm = difflib.SequenceMatcher(None, asr, human, autojunk=False)
+    blocks = [b for b in sm.get_matching_blocks() if b.size]
+    if not blocks:
+        raise SystemExit(
+            f"`human_quote` 在这段转写里一个词都对不上（引语 {len(human)} 词）。"
+            "先确认它抄的是不是同一场同一段——**零命中先怀疑自己的查询词**。")
+    # 只看引语真正覆盖到的那一段，前后不算
+    lo, hi = blocks[0].a, blocks[-1].a + blocks[-1].size
+
+    trimmed, hard = [], []
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal" or i2 <= lo or i1 >= hi:
+            continue
+        left, right = asr[i1:i2], human[j1:j2]
+        if tag == "delete":
+            # **删不设闸。** 引语里少一个词只说明记者删了，推不出 ASR 错在哪；
+            # 而印出来的引语确实会把 `Yes, she is of course` 这种引入语整段拿掉。
+            # 但**要在报告里露出来**：删掉的是口头语还是实词，人一眼能分。
+            kind = "口头语" if all(w in _FILLER for w in left) else "实词"
+            trimmed.append(f"- 删 `{' '.join(left)}`（{kind}）")
+            continue
+        hard.append((" ".join(left) or "—", " ".join(right) or "—"))
+
+    allowed = {tuple(x) for x in (quote.get("human_quote_ok") or spec.get("human_quote_ok") or [])}
+    unresolved = [d for d in hard if d not in allowed]
+
+    report = [f"# 人工引语交叉校验：{spec['slug']}", "",
+              f"- 来源：{quote.get('url', '（没写 url）')}",
+              f"- 引语 **{len(human)}** 词，覆盖 ASR 第 {lo + 1}–{hi} 词", "",
+              "## 必须定夺（左＝ASR，右＝人工引语）", ""]
+    report += [f"- `{a}` → `{b}`" + ("　✅ 已声明" if (a, b) in allowed else "")
+               for a, b in hard] or ["（无）"]
+    report += ["", "## 记者删掉的（正常编辑，不算分歧）", ""] + (trimmed or ["（无）"])
+    path = outdir / "human_quote_diff.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print(f"人工引语校验：{len(hard)} 处待定夺（{len(unresolved)} 处未解决）→ {path}")
+    if unresolved:
+        raise SystemExit(
+            f"ASR 和 {quote.get('url', '人工引语')} 有 {len(unresolved)} 处对不上，"
+            f"**不出片**：\n" + "\n".join(f"  `{a}` → `{b}`" for a, b in unresolved) +
+            f"\n逐处听那几秒：改对的写进 `en_fixed`；确认是记者写松了的，"
+            f"写进 `human_quote_ok`（形如 [[\"to\", \"for\"]]）。详见 {path}")
+    return path
+
+
 def _chromium() -> str:
     """沙箱和 runner 上 Chromium 的路径都带版本号，playwright 自己找不到。"""
     import glob
@@ -390,6 +494,10 @@ def main() -> int:
             lines[idx]["fixed"] = True
     (outdir / "lines.json").write_text(
         json.dumps(lines, ensure_ascii=False, indent=1), encoding="utf-8")
+    # **每一步都过这道闸，不只是 verify。** 它不联网、不要 whisper，本地就能跑，
+    # 而 `verify_transcript` 那份只有 runner 上跑得动——把「有第二个源」这件事
+    # 全押在 runner 上，本地就永远处于「没验过」的状态。
+    check_human_quote(spec, lines, outdir)
     zh = spec.get("zh") or []
     if not zh:
         print(f"切出 {len(lines)} 行英文，spec 里还没有中文。逐行看：\n")

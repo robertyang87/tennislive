@@ -79,9 +79,15 @@ jobs:
           fi
 
       # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
-      # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立），而它自己那两条
-      # 轨（en / en-orig）逐词完全一致，拿来交叉验证是自欺。所以在这儿跑第二份
-      # ASR 对一遍，分歧超过闸门直接失败。
+      # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
+      # 其实是 `for her`），而它自己那两条轨（en / en-orig）逐词完全一致，
+      # 拿来交叉验证是自欺。所以在这儿跑第二份 ASR 对一遍，分歧超过闸门直接失败。
+      #
+      # 另有一道**不联网**的闸跟着每个 stage 跑（`check_human_quote`）：拿赛事
+      # 官网战报里的人工引语对 ASR。它只覆盖记者抄走的那几句，但**是人转写的**，
+      # 比任何 ASR 都硬。两道闸都在这一步暴露——报告落在
+      # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
+      # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
       - name: 转写交叉校验
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
