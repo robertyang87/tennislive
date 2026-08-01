@@ -440,6 +440,60 @@ def test_工作流装的依赖覆盖工具import的每一个():
             f"`{_PROVIDES[mod]}`。跑到预检才会报 ModuleNotFoundError。")
 
 
+def test_每个要下载的步骤都带着cookie():
+    """**cookie 从环境变量走，而且每个下载的步骤都得有。**
+
+    踩到的：`verify` 和 `render` 都要 yt-dlp 下东西，但工作流只在 `render`
+    那一步把 cookie 路径注进 spec（跑完还得 `git checkout --` 撤掉）。于是
+    verify 裸下，yt-dlp 立刻吃 `Sign in to confirm you're not a bot`——
+    **而 cookie 文件明明就在那儿，路径还打在日志的 env 里**。
+
+    判据：凡是 `run:` 里跑 `--stage verify` 或 `--stage render` 的步骤，
+    `env` 里必须有 `COOKIES`。顺带钉住「别再把 secret 写进 spec」。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    seen = 0
+    for job in (wf.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            run = str(step.get("run") or "")
+            if not any(f"--stage {s}" in run for s in ("verify", "render")):
+                continue
+            seen += 1
+            assert "COOKIES" in (step.get("env") or {}), (
+                f"步骤「{step.get('name')}」要下载却没有 COOKIES 环境变量")
+            assert '"cookies"' not in run and "d[\"cookies\"]" not in run, (
+                f"步骤「{step.get('name')}」还在把 cookie 路径写进 spec。"
+                "secret 不该经过仓库里的文件——`cookie_args()` 读环境变量就够了。")
+    assert seen >= 2, f"只找到 {seen} 个下载步骤，verify 和 render 都该算上"
+
+
+def test_没有cookie时要出声不能悄悄裸下(capsys, monkeypatch, tmp_path):
+    """**拿没拿到都要说。**
+
+    没 cookie 时 yt-dlp 未必立刻失败（公开视频在某些 IP 上裸下得动），
+    失败时报的又是 `Sign in to confirm you're not a bot`——和「视频没了」
+    长得一样。不出声就得从头猜。
+    """
+    from tools.build_interview_clip import cookie_args
+
+    monkeypatch.delenv("COOKIES", raising=False)
+    assert cookie_args({}) == []
+    assert "没有 cookie" in capsys.readouterr().out
+
+    ck = tmp_path / "c.txt"
+    ck.write_text("# netscape\n")
+    monkeypatch.setenv("COOKIES", str(ck))
+    assert cookie_args({}) == ["--cookies", str(ck)]
+    assert "带 cookie 下载" in capsys.readouterr().out
+    # spec 里显式给的优先（本地手工跑时用）
+    other = tmp_path / "d.txt"
+    other.write_text("x")
+    assert cookie_args({"cookies": str(other)}) == ["--cookies", str(other)]
+
+
 def test_ci装的字体覆盖代码要的每一个():
     """**加新能力要同时改三处：代码、工作流的依赖、开跑前的预检。**
 
