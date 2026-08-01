@@ -127,8 +127,16 @@ jobs:
       #
       # 另有一道**不联网**的闸跟着每个 stage 跑（`check_human_quote`）：拿赛事
       # 官网战报里的人工引语对 ASR。它只覆盖记者抄走的那几句，但**是人转写的**，
-      # 比任何 ASR 都硬。两道闸都在这一步暴露——报告落在
-      # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
+      # 比任何 ASR 都硬。
+      #
+      # 上面两道比的都是「源说了什么」，**谁也不管「源什么都没说」**——伊埃拉
+      # 那条就这么漏了 3.2 秒：她对着菲律宾球迷开口，自动字幕在那一段连一个
+      # 事件都没有，没有词就没有分歧，两道闸全绿。第三道 `caption_gaps` 专查
+      # 空白，`probe_gap_speech` 再用**多语种**模型把那几秒重听一遍（主校验那份
+      # 是 small.en，英语专用模型对着他加禄语同样只给空白）。
+      #
+      # 三道闸都在这一步暴露——报告落在 output/interviews/<slug>/
+      # {transcript_diff,human_quote_diff,caption_gaps}.md，
       # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
       - name: 转写交叉校验
         if: github.event.inputs.mode != 'push'
@@ -208,7 +216,7 @@ jobs:
           # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
           # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
           D="output/interviews/${{ github.event.inputs.slug }}"
-          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/_gap_*.wav "$D"/cover.html "$D"/whisper.json
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
