@@ -69,6 +69,8 @@ OUTDIR = ROOT / "output" / "interviews"
 # 下是 1200px 上下——22/37 行超宽，libass 按 `WrapStyle: 0` 自动折成两行，
 # **折在哪儿没人管**，于是「不要把一句话换行」这条在看不见的地方又被破了一次。
 _LINE_PX = 1080 - 64 - 64
+# 顶栏两边留得窄一点（48），因为它只有一行、不参与阅读节奏
+_HEAD_PX = 1080 - 48 - 48
 
 # libass 认字体名，PIL 认文件路径——两边要指同一个文件，否则量出来的宽度
 # 和渲出来的对不上。踩过：沙箱和 runner 都**没装** `Noto Sans`（只装了
@@ -80,25 +82,66 @@ _FONT_FILES = {
            "fonts-noto-core"),
     "zh": ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
            "fonts-noto-cjk"),
+    # 顶栏走品牌显示体（得意黑）。**它在仓库里，不是 apt 装的**——`webcards`
+    # 用的是同一支字体的 woff2，而 **libass 读不了 woff2**，所以另存了一份 ttf。
+    "head": (str(ROOT / "assets/fonts/SmileySans-Oblique.ttf"), None),
 }
-_FONT_SIZE = {"en": 40, "zh": 48}       # 和 _ASS_HEAD 里的 Style 一致
+# ASS 的 `Fontname` 要写字体**自己的 family 名**，不是文件名。
+_HEAD_FONT, _ZH_FONT, _EN_FONT = "得意黑", "Noto Sans CJK SC", "Noto Sans"
+
+# ⚠️ **字号只有这一处出处。** 这几个常量既喂 `_measure`（切行时量宽度），
+# 又喂 `_ASS_HEAD`（渲染时的 Style）——写成两处必分叉，而**分叉不吭声**：
+# 后定义的那个赢，改前面那个毫无反应，ruff 的 F811 也拦不住（它只管重复
+# import，不管模块级变量重新赋值）。判据落在 `test_字号只有一处出处`。
+#
+# **两侧的代价完全不一样，别一起调。**
+#
+# **中文那侧几乎免费**：中文是手写的、一行对一行，只受 952px 可用宽约束。
+# 天花板是 68（那时最宽的一行 967px 就超了），64 是上限，62 留一格余量。
+#
+# **英文那侧要花钱**：断行按子句切、子句放不下才拆，字号一大长子句开始被拆，
+# 行数跟着涨，而且**开始出现「收在虚词上」的硬断**——正是仓库里明令禁止的
+# 「把词组劈成两半」。量出来的代价表（伊埃拉那条，146 秒）：
+#
+#     EN   行数   虚词收尾   最短行   平均
+#     40    56       0      0.96s   2.46s   ← 原来
+#     42    59       0      0.32s   2.33s
+#     46    69       1      0.56s   1.99s   ← 现在
+#     52    71       2      0.56s   1.94s
+#     56    77       2      0.48s   1.79s
+#
+# **46 是拿「多一处硬断」换来的**，不是白拿：40 是唯一零硬断的档，往上一定
+# 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
+# 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
+# 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
+_FONT_SIZE = {"en": 46, "zh": 62}
+# 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
+_HEAD_SIZE = {"a": 54, "b": 32}
 _FONT_CACHE: dict[str, object] = {}
 
 
 def _measure(kind: str, text: str) -> float:
     """量一行字画出来有多宽（px）。PIL 的 advance 就是 libass 水平排版用的量。"""
-    if kind not in _FONT_CACHE:
+    return _measure_at(kind, _FONT_SIZE[kind], text)
+
+
+def _measure_at(kind: str, size: int, text: str) -> float:
+    """按**指定字号**量。字幕那两档走 `_measure`（字号取自 `_FONT_SIZE`），
+    顶栏是另一档，直接给字号——**别借字幕的尺子量顶栏**。"""
+    if (key := (kind, size)) not in _FONT_CACHE:
         from PIL import ImageFont  # noqa: PLC0415
 
         path, pkg = _FONT_FILES[kind]
         if not Path(path).exists():
             raise SystemExit(
-                f"量字幕宽度要 {path}，没装。\n"
-                f"    sudo apt-get install -y {pkg}\n"
-                "**别拿回退字体凑合**：DejaVu 比 Noto Sans 宽 8%，量出来的行宽"
+                f"量宽度要 {path}，没有。\n"
+                + (f"    sudo apt-get install -y {pkg}\n" if pkg else
+                   "这一支**在仓库里**（`assets/fonts/`），不是 apt 装的——"
+                   "取不到多半是 checkout 没带上它。\n")
+                + "**别拿回退字体凑合**：DejaVu 比 Noto Sans 宽 8%，量出来的行宽"
                 "和渲出来的对不上，而这件事不报错。")
-        _FONT_CACHE[kind] = ImageFont.truetype(path, _FONT_SIZE[kind])
-    return _FONT_CACHE[kind].getlength(text)
+        _FONT_CACHE[key] = ImageFont.truetype(path, size)
+    return _FONT_CACHE[key].getlength(text)
 
 
 def _en_width(text: str) -> float:
@@ -499,30 +542,19 @@ _BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 # **字号是量出来的。** 原来 40/48，烧帧量下来墨迹只有 29 / 31px 高——
 # 而同样 1440 高的画布上，「赛场之上」那条线的中文字幕是 68 号、墨高 44px。
 # 差 42%，账号所有者一句「字体又太小」。
-# ⚠️ **两侧的代价完全不一样，别一起调。**
+# 字号和顶栏字号在上面「字号只有这一处出处」那一段，别在这儿再写一份。
 #
-# **中文那侧几乎免费**：中文是手写的、一行对一行，只受 952px 可用宽约束。
-# 天花板是 68（那时最宽的一行 967px 就超了），64 是上限，62 留一格余量。
-#
-# **英文那侧要花钱**：断行按子句切、子句放不下才拆，字号一大长子句开始被拆，
-# 行数跟着涨，而且**开始出现「收在虚词上」的硬断**——正是仓库里明令禁止的
-# 「把词组劈成两半」。量出来的代价表（伊埃拉那条，146 秒）：
-#
-#     EN   行数   虚词收尾   最短行   平均
-#     40    56       0      0.96s   2.46s   ← 原来
-#     42    59       0      0.32s   2.33s
-#     46    69       1      0.56s   1.99s   ← 现在
-#     52    71       2      0.56s   1.94s
-#     56    77       2      0.48s   1.79s
-#
-# **46 是拿「多一处硬断」换来的**，不是白拿：40 是唯一零硬断的档，往上一定
-# 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
-# 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
-# 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
-_FONT_SIZE = {"en": 46, "zh": 62}
-# 顶栏两行：主行给赛事和轮次，次行给对阵和「赛后场上采访」。
-_HEAD_SIZE = {"a": 44, "b": 34}
-_HEAD_A_TOP, _HEAD_B_TOP = 30, 88
+# **顶栏走品牌显示体（得意黑），字幕不走。** 账号所有者看完第一版说
+# 「感觉字体很平淡」——顶栏原来是思源黑体加粗，端正但没有性格，和海报上
+# 那支斜体得意黑对不上，两个产物看着不像一家。
+# ⚠️ 只换顶栏：`assets/fonts/ATTRIBUTION.md` 里早写着「display headings…
+# body copy keeps Noto for long-form legibility」——得意黑是**斜体加窄身**，
+# 当标题有劲，一整句字幕读下来就累。渲出来两版比过，这条边界是对的。
+_HEAD_A_TOP, _HEAD_B_TOP = 24, 92
+# 主行前面那道品牌绿竖条。**字形要显式指定字体**：得意黑没有 U+258D，
+# 本地是靠回退到思源黑体才画出来的，而**回退在 runner 上不保证**
+# （「本地装着不等于 CI 装着」）。所以内联写死 `\fn`，不赌 fontconfig。
+_HEAD_MARK = r"{\fnNoto Sans CJK SC\c&H8CDC4A&}▍{\fn" + _HEAD_FONT + r"\c&HFFFFFF&}"
 
 # **两行之间的距离是量出来的，不是拍的。** 原来差 118，烧帧量下来两行之间
 # 有 **89px 纯空白＝中文字高的 2.78 倍**——两行读起来像两块不相干的东西，
@@ -547,10 +579,10 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,Noto Sans,{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
-Style: ZH,Noto Sans CJK SC,{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
-Style: HEADA,Noto Sans CJK SC,{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADB,Noto Sans CJK SC,{_HEAD_SIZE['b']},&H00B2BCA9,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_B_TOP},1
+Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00B2BCA9,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -578,7 +610,16 @@ def header_lines(spec: dict) -> tuple[str, str]:
             "⚠️ 别拿 `push.event` 顶：那个是为了把推送标题压进 20 字位故意留空的。")
     if not (mu := ((spec.get("push") or {}).get("matchup") or "").strip()):
         raise SystemExit(f"{spec['slug']} 缺 `push.matchup`——顶栏第二行没东西可写。")
-    return ev, f"{mu} · 赛后场上采访"
+    a, b = ev, f"{mu} · 赛后场上采访"
+    # **顶栏也要量宽度。** `WrapStyle=0` 会自动折行，一折就压到下面那行上，
+    # 而它**不报错**——赛事名长一点（「2026 加拿大公开赛 WTA1000 女单 1/4 决赛」）
+    # 就够了。两行各自量各自的字体和字号，可用宽是 1080 减两边各 48。
+    for line, kind, size in ((a, "head", _HEAD_SIZE["a"]), (b, "zh", _HEAD_SIZE["b"])):
+        if (w := _measure_at(kind, size, line)) > _HEAD_PX:
+            raise SystemExit(
+                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，会折到下一行上：{line}\n"
+                "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。")
+    return a, b
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -625,7 +666,7 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         # 刷到中段的人没看过封面，而封面只有 1.8 秒。
         a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
         head_a, head_b = header_lines(spec)
-        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
+        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{_HEAD_MARK}{head_a}")
         ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
     for seg, cn in zip(lines, zh):
         en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
@@ -1132,7 +1173,10 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
         f"[0:v]crop=ih*{ratio}:ih:(iw-ih*{ratio})/2:0,scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
-        f"[v]subtitles={ass}:fontsdir=/usr/share/fonts[out]"
+        # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
+        # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
+        # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
+        f"[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
     )
     body = outdir / "_body.mp4"
     subprocess.run(

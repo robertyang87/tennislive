@@ -32,9 +32,13 @@ from tools.build_interview_clip import (
     segment,
     write_ass,
     zh_problems,
+    _ASS_HEAD,
     _BAND_TOP,
     _EN_TOP,
+    _FONT_FILES,
     _FONT_SIZE,
+    _HEAD_FONT,
+    _HEAD_MARK,
     _LINE_PX,
     _ZH_TOP,
     _ts,
@@ -503,6 +507,131 @@ def test_中文字号不许大到让行放不下():
     assert _FONT_SIZE["zh"] <= 64, (
         f"中文字号 {_FONT_SIZE['zh']} 超过 64——952px 的行宽装不下，"
         "写稿的人会被逼着把句子切碎。")
+
+
+def test_字号只有一处出处():
+    """这几个常量既喂 `_measure`（切行量宽度）又喂 `_ASS_HEAD`（渲染 Style）。
+
+    **写成两处必分叉，而且分叉不吭声**——后定义的那个赢，改前面那个毫无反应。
+    这是真踩的：加版式那一版我在文件底下又写了一份 `_FONT_SIZE`，
+    行为碰巧是对的（后面那个是新值），但改上面那个就再也不起作用了。
+
+    **ruff 拦不住**：F811 只管重复 import 和函数重定义，
+    模块级变量重新赋值不在它的范围里。所以只能自己扫。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    for name in ("_FONT_SIZE", "_HEAD_SIZE", "_ZH_GAP", "_EN_TOP", "_LINE_PX"):
+        n = len(re.findall(rf"^{name} *=", src, re.M))
+        assert n == 1, f"`{name}` 在模块里赋了 {n} 次——写成两处必分叉，而且不吭声"
+
+
+def test_顶栏走品牌显示体字幕不走():
+    """账号所有者：「感觉字体很平淡」。顶栏换成得意黑（和海报同一支）。
+
+    ⚠️ **只换顶栏。** `assets/fonts/ATTRIBUTION.md` 里早写着这条边界：
+    display headings 用它，body copy 留给 Noto——得意黑是斜体加窄身，
+    当标题有劲，一整句字幕读下来就累。渲出来两版比过。
+    """
+    styles = {r.split(",")[0].removeprefix("Style: "): r.split(",")
+              for r in _ASS_HEAD.splitlines() if r.startswith("Style: ")}
+    assert styles["HEADA"][1] == "得意黑", "顶栏主行该走品牌显示体"
+    assert styles["EN"][1] == "Noto Sans" and styles["ZH"][1] == "Noto Sans CJK SC", \
+        "字幕不许换成显示体——它是斜体窄身，一整句读下来累"
+    assert styles["EN"][6] == "1", "英文太细会被旁边的粗中文压住，要加粗"
+
+
+def _sfnt_names(path: Path) -> set[str]:
+    """字体 `name` 表里所有的 family 名（nameID 1）。自己解，不引依赖。"""
+    import struct
+
+    raw = path.read_bytes()
+    n_tables = struct.unpack(">H", raw[4:6])[0]
+    for i in range(n_tables):
+        tag, _, off, _ = struct.unpack(">4sIII", raw[12 + 16 * i:28 + 16 * i])
+        if tag != b"name":
+            continue
+        count, str_off = struct.unpack(">HH", raw[off + 2:off + 6])
+        out = set()
+        for j in range(count):
+            pid, eid, _lid, nid, ln, o = struct.unpack(
+                ">HHHHHH", raw[off + 6 + 12 * j:off + 18 + 12 * j])
+            if nid != 1:
+                continue
+            b = raw[off + str_off + o:off + str_off + o + ln]
+            out.add(b.decode("utf-16-be" if (pid, eid) != (1, 0) else "latin-1",
+                             "ignore"))
+        return out
+    return set()
+
+
+def test_品牌字体是libass认得出的那个名字():
+    """`webcards` 用 woff2，**libass 读不了 woff2**，所以另存了一份 ttf。
+
+    ⚠️ **ASS 里的 `Fontname` 只能写「得意黑」，不能写英文名。** 这条是实测出来的，
+    而且反直觉——PIL 报的 family 是 `Smiley Sans`，看起来才是「正规」的那个：
+
+        Fontname            渲出来的 md5
+        得意黑              c80c7f79e9a4   ← 认
+        Smiley Sans         d75e3012a8d0
+        NoSuchFontXYZ       d75e3012a8d0   ← 和上一行**一模一样**
+
+    也就是说写 `Smiley Sans` 和写一个根本不存在的名字**效果完全相同**：
+    libass 静默回退，画面照样出得来，只是不是这支字体。
+
+    复现（CI 里没有 ffmpeg，所以这条只钉名字，渲染验证靠手跑）：
+
+        ffmpeg -f lavfi -i color=c=black:s=1080x200:d=1 \\
+          -vf "subtitles=<ass>:fontsdir=assets/fonts" -frames:v 1 out.png
+    """
+    path = Path(_FONT_FILES["head"][0])
+    assert path.exists() and path.suffix == ".ttf", f"{path} 不在，或者还是 woff2"
+    names = _sfnt_names(path)
+    assert _HEAD_FONT in names, (
+        f"字体声明的 family 名是 {sorted(names)}，里面没有 {_HEAD_FONT!r}——"
+        "换过字体版本？名字对不上就会静默回退。")
+
+
+def test_顶栏那个绿方块不许赌字体回退():
+    """`▍`（U+258D）**得意黑里没有**，本地是靠回退到思源黑体才画出来的。
+
+    「本地装着不等于 CI 装着」——回退链在 runner 上不保证，赌输了画出来是个
+    豆腐块。所以 `_HEAD_MARK` 内联把字体写死，不交给 fontconfig 去猜。
+
+    判据是**拿一个必定没有的码位当对照**：缺字时字体画的是 `.notdef`，
+    而 `.notdef` 对任何缺失字符都长得一样。直接断言「墨迹为空」是错的——
+    实测 `.notdef` 有 32×35 的墨，那正是那个豆腐块。
+    """
+    from PIL import ImageFont
+
+    assert "▍" in _HEAD_MARK
+    assert r"\fnNoto Sans CJK SC" in _HEAD_MARK, "画方块那一段要显式指定字体"
+    head = ImageFont.truetype(_FONT_FILES["head"][0], 40)
+    ink = lambda ch: (m := head.getmask(ch)).size + (bytes(m),)  # noqa: E731
+    notdef = ink("")                          # 私用区，必定没有
+    assert ink("▍") == notdef, (
+        "得意黑现在有 ▍ 这个字形了？那 `_HEAD_MARK` 里的 `\\fn` 可以去掉，"
+        "注释也要跟着改")
+    assert ink("决") != notdef, "对照组：汉字必须画得出来"
+
+
+def test_顶栏太长要报错不许悄悄折行():
+    """`WrapStyle=0` 会自动折行，**一折就压到下面那行上，而且不报错**。
+
+    赛事名长一点就够了——「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」
+    实测 1003px，超过可用的 984px。
+    """
+    spec = {"slug": "t", "push": {"matchup": "甲 vs 乙"},
+            "event": "2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔"}
+    with pytest.raises(SystemExit, match="顶栏"):
+        header_lines(spec)
+
+
+def test_渲染要把仓库的字体目录给libass():
+    """得意黑在仓库里，不在系统字体目录——`fontsdir` 不指过去，libass 找不到它，
+    而且**它不报错**，只是静默换一支字体接着画。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert "fontsdir={ROOT / 'assets/fonts'}" in src, \
+        "render 的 fontsdir 要指向仓库的 assets/fonts"
 
 
 def test_顶栏说清这是哪一场():
@@ -1068,11 +1197,20 @@ def test_ci装的字体覆盖代码要的每一个():
 
     判据不是「装了哪几个包」，是「代码点名要的每一个包都在」——
     以后 `_FONT_FILES` 里加字体，这条会替我记得。
+
+    ⚠️ **`pkg` 是 None 的那些不是漏填**，是**仓库自带**的字体（得意黑）。
+    它们不该出现在 apt 那行，但**必须真的躺在仓库里**——否则同样是静默回退，
+    只是这次怪不到 apt 头上。两种都查，别只查一种。
     """
     import tools.build_interview_clip as clip
 
     ci = _run_scripts("ci.yml")
     for kind, (path, pkg) in clip._FONT_FILES.items():
+        if pkg is None:
+            assert Path(path).exists(), (
+                f"代码量 {kind} 的宽度要 {path}，它该在仓库里却不在——"
+                "是不是只提交了 woff2？libass 读不了 woff2。")
+            continue
         assert pkg in ci, (
             f"代码量 {kind} 的宽度要 {path}（{pkg}），ci.yml 里没装它。"
             "缺了会悄悄回退到别的字体，量出来的行宽和渲出来的对不上。")
