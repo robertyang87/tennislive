@@ -1196,30 +1196,20 @@
       "title": "鹰眼是怎么来的",
       "stage": "visual-preflight",
       "errors": [
-        "ValueError: 知识帖视觉校验失败：有配图的页面必须各使用一张真实主题图片，当前共 1 张，标准为 2 张；explainer 页必须且只能使用一张强相关主题照片",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
         "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
         "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
         "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
       ],
-      "excluded_source_urls": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
+      "excluded_source_urls": [],
       "attempts": [
         {
           "attempt": 1,
-          "stage": "pre-render-qa",
-          "error": "ValueError: 知识帖视觉校验失败：有配图的页面必须各使用一张真实主题图片，当前共 1 张，标准为 2 张；explainer 页必须且只能使用一张强相关主题照片",
-          "excluded_after_attempt": [
-            "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-          ],
-          "newly_excluded": [
-            "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-          ],
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
           "input_domains": [
-            "commons.wikimedia.org",
             "itftennis.com",
             "lequipe.fr",
             "sony.com",
@@ -1269,8 +1259,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -1311,8 +1301,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -1354,7 +1344,7 @@
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
               "status": "ok",
-              "candidate_count": 4
+              "candidate_count": 5
             },
             {
               "page": "story",
@@ -1367,8 +1357,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -1409,8 +1399,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -1507,8 +1497,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -1563,8 +1553,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
-              "status": "empty",
-              "candidate_count": 0
+              "status": "ok",
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -1606,7 +1596,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -1715,6 +1705,8 @@
             }
           ],
           "missing_pages": [
+            "cover",
+            "explainer",
             "story",
             "today"
           ],
@@ -1726,18 +1718,10 @@
               "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
             },
             {
-              "provider": "official-media",
+              "provider": "official-page",
               "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-              "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
+              "status": "error",
+              "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
             },
             {
               "provider": "official-page",
@@ -1793,16 +1777,31 @@
             },
             {
               "page": "cover",
-              "status": "selected",
+              "status": "generated-visual",
+              "reason": "多源检索后无相关性和分辨率同时达标的照片",
+              "query": "Hawk Eye wimbledon tennis",
               "required_event_terms": [],
-              "match_level": "exact-event",
+              "providers": [
+                "curated-editorial",
+                "official-media",
+                "wikimedia-commons",
+                "openverse",
+                "bing-web-image",
+                "official-tennis-archive",
+                "flickr-public",
+                "duckduckgo-web-image"
+              ],
+              "candidate_count": 64,
+              "exact_candidate_count": 1,
+              "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 15,
+                "low-visual-impact-metadata": 13,
                 "subject-or-person-mismatch": 16,
-                "metadata-relevance-below-3": 23,
+                "metadata-relevance-below-3": 20,
                 "duplicate-candidate": 14,
-                "watermarked-stock-library": 1
+                "download-or-resolution-failed": 1
               },
+              "failed_curated_source_urls": [],
               "source_runs": [
                 {
                   "page": "cover",
@@ -1836,8 +1835,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -1878,8 +1877,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -1902,21 +1901,7 @@
                   "status": "empty",
                   "candidate_count": 0
                 }
-              ],
-              "provider": "wikimedia-commons",
-              "source_url": "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-              "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hawk-Eye_at_Wimbledon_%287508887344%29.jpg/1920px-Hawk-Eye_at_Wimbledon_%287508887344%29.jpg",
-              "credit": "Daniel from Galashiels, United Kingdom",
-              "license": "cc by 2.0",
-              "query": "Hawk Eye wimbledon tennis",
-              "relevance": 6,
-              "sha256": "a7399e6b6a882ccbf958f30c679aa11914dbf78f15a1b1a52424338db0cd3fa3",
-              "focus": "50% 38%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "cover-a7399e6b6a88.jpg"
+              ]
             },
             {
               "page": "story",
@@ -1934,16 +1919,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 60,
+              "candidate_count": 55,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 15,
-                "subject-or-person-mismatch": 10,
-                "source-already-used": 1,
+                "low-visual-impact-metadata": 14,
+                "subject-or-person-mismatch": 11,
                 "metadata-relevance-below-3": 20,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 13
+                "duplicate-candidate": 10
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -1966,7 +1949,7 @@
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye 2004 tennis",
                   "status": "ok",
-                  "candidate_count": 4
+                  "candidate_count": 5
                 },
                 {
                   "page": "story",
@@ -1979,8 +1962,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -2021,8 +2004,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -2049,17 +2032,31 @@
             },
             {
               "page": "explainer",
-              "status": "selected",
+              "status": "generated-visual",
+              "reason": "多源检索后无相关性和分辨率同时达标的照片",
+              "query": "Hawk Eye 科技进化 网球冷知识 tennis",
               "required_event_terms": [],
-              "match_level": "exact-event",
+              "providers": [
+                "curated-editorial",
+                "official-media",
+                "wikimedia-commons",
+                "openverse",
+                "bing-web-image",
+                "official-tennis-archive",
+                "flickr-public",
+                "duckduckgo-web-image"
+              ],
+              "candidate_count": 50,
+              "exact_candidate_count": 8,
+              "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 11,
-                "source-already-used": 1,
-                "low-visual-impact-metadata": 8,
-                "metadata-relevance-below-3": 21,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 4
+                "subject-or-person-mismatch": 12,
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 15,
+                "duplicate-candidate": 9,
+                "download-or-resolution-failed": 8
               },
+              "failed_curated_source_urls": [],
               "source_runs": [
                 {
                   "page": "explainer",
@@ -2135,8 +2132,8 @@
                   "page": "explainer",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "explainer",
@@ -2159,21 +2156,7 @@
                   "status": "empty",
                   "candidate_count": 0
                 }
-              ],
-              "provider": "wikimedia-commons",
-              "source_url": "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg",
-              "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hawk_eye.svg/1920px-Hawk_eye.svg.png",
-              "credit": "CNEMIDE / Vectorized by: Ufo karadagli",
-              "license": "cc by-sa 3.0",
-              "query": "Hawk Eye 科技进化 网球冷知识 tennis",
-              "relevance": 6,
-              "sha256": "950f9eac96f436a8285067c0377edc87631c347815e5b22af4d06e5fb23fccf2",
-              "focus": "50% 38%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-950f9eac96f4.png"
+              ]
             },
             {
               "page": "today",
@@ -2195,10 +2178,9 @@
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 18,
-                "duplicate-candidate": 35,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 15
+                "subject-or-person-mismatch": 15,
+                "duplicate-candidate": 34,
+                "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -2234,8 +2216,8 @@
                   "page": "today",
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
-                  "status": "empty",
-                  "candidate_count": 0
+                  "status": "ok",
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -2277,7 +2259,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -2387,106 +2369,13 @@
               ]
             }
           ],
-          "visual_qa": {
-            "schema_version": 1,
-            "status": "fail",
-            "story_slug": "hawkeye",
-            "standards": {
-              "license_policy": "record-only: credit/license are logged (unknown/unverified when missing) and never a fail condition; pre-publish rights review is a human step",
-              "photo_count_max": 64,
-              "photo_source_uniqueness": "same photo/source may appear only once",
-              "page_visual": "every page requires one distinct verified photo",
-              "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
-              "rule_explainer": "topic-specific diagram plus verified photo required",
-              "player_crop": "head-safe object position",
-              "production_labels": "internal generation labels are forbidden",
-              "story_ordinals": "semantic icons replace ordinal markers",
-              "year_markers": "calendar years must use four digits",
-              "canned_story_labels": "fixed teaching-style labels are forbidden",
-              "max_text_block_chars": 82,
-              "max_card_text_chars": 520,
-              "card_size": [
-                1080,
-                1440
-              ],
-              "max_card_bytes": 950000
-            },
-            "photo_uses": 1,
-            "photo_sources": [
-              "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg"
-            ],
-            "resolved_visuals": [
-              {
-                "page": "cover",
-                "file": "output/2026-07-31/knowledge/visuals/cover-a7399e6b6a88.jpg",
-                "source_url": "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-                "credit": "Daniel from Galashiels, United Kingdom",
-                "license": "cc by 2.0",
-                "width": 1920,
-                "height": 1440
-              },
-              {
-                "page": "explainer",
-                "file": "output/2026-07-31/knowledge/visuals/explainer-950f9eac96f4.png",
-                "source_url": "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg",
-                "credit": "CNEMIDE / Vectorized by: Ufo karadagli",
-                "license": "cc by-sa 3.0",
-                "width": 1920,
-                "height": 869
-              }
-            ],
-            "pages": [
-              {
-                "kind": "knowledge",
-                "visual": "verified-photo",
-                "text_chars": 88,
-                "longest_text_block": 21,
-                "photo_count": 1,
-                "photo_sources": [
-                  "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg"
-                ]
-              },
-              {
-                "kind": "story",
-                "visual": "narrative-timeline",
-                "text_chars": 224,
-                "longest_text_block": 48,
-                "photo_count": 0,
-                "photo_sources": []
-              },
-              {
-                "kind": "explainer",
-                "visual": "rule-diagram",
-                "text_chars": 278,
-                "longest_text_block": 33,
-                "photo_count": 0,
-                "photo_sources": []
-              },
-              {
-                "kind": "today",
-                "visual": "history-timeline",
-                "text_chars": 207,
-                "longest_text_block": 29,
-                "photo_count": 0,
-                "photo_sources": []
-              }
-            ],
-            "rendered_cards": [],
-            "errors": [
-              "有配图的页面必须各使用一张真实主题图片，当前共 1 张，标准为 2 张",
-              "explainer 页必须且只能使用一张强相关主题照片"
-            ],
-            "warnings": []
-          }
+          "visual_qa": {}
         },
         {
           "attempt": 2,
           "stage": "visual-preflight",
           "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [
-            "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-          ],
+          "excluded_after_attempt": [],
           "newly_excluded": [],
           "input_domains": [
             "itftennis.com",
@@ -2538,8 +2427,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -2580,8 +2469,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -2636,8 +2525,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -2678,8 +2567,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -2776,8 +2665,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -2833,7 +2722,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -2875,7 +2764,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -2997,18 +2886,10 @@
               "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
             },
             {
-              "provider": "official-media",
+              "provider": "official-page",
               "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_url": "",
-              "credit": "itftennis.com",
-              "license": "官方媒体 · 非商业资讯引用",
-              "status": "reference-only",
-              "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-              "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-              "image_text": " ",
-              "width": 0,
-              "height": 0
+              "status": "error",
+              "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
             },
             {
               "provider": "official-page",
@@ -3078,14 +2959,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 48,
+              "candidate_count": 42,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
-                "subject-or-person-mismatch": 9,
-                "duplicate-candidate": 17,
-                "watermarked-stock-library": 1,
+                "low-visual-impact-metadata": 6,
+                "subject-or-person-mismatch": 12,
+                "duplicate-candidate": 11,
                 "metadata-relevance-below-3": 13
               },
               "failed_curated_source_urls": [],
@@ -3122,8 +3002,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -3164,8 +3044,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -3206,15 +3086,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 44,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
-                "metadata-relevance-below-3": 21,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 8,
-                "subject-or-person-mismatch": 6
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 18,
+                "subject-or-person-mismatch": 8,
+                "duplicate-candidate": 6
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3250,8 +3129,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -3292,8 +3171,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -3334,13 +3213,12 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 41,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
+                "low-visual-impact-metadata": 6,
                 "metadata-relevance-below-3": 17,
-                "watermarked-stock-library": 1,
                 "subject-or-person-mismatch": 7,
                 "duplicate-candidate": 8
               },
@@ -3420,8 +3298,8 @@
                   "page": "explainer",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "explainer",
@@ -3462,14 +3340,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 58,
+              "candidate_count": 56,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 6,
-                "duplicate-candidate": 35,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 16
+                "subject-or-person-mismatch": 3,
+                "duplicate-candidate": 34,
+                "metadata-relevance-below-3": 19
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -3506,7 +3383,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -3548,7 +3425,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -3664,10 +3541,7 @@
           "attempt": 3,
           "stage": "visual-preflight",
           "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [
-            "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-          ],
+          "excluded_after_attempt": [],
           "newly_excluded": [],
           "input_domains": [
             "itftennis.com",
@@ -3719,8 +3593,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -3761,8 +3635,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -3817,8 +3691,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -3859,8 +3733,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -3957,8 +3831,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -4014,7 +3888,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -4056,7 +3930,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -4259,15 +4133,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 48,
+              "candidate_count": 42,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
-                "subject-or-person-mismatch": 10,
-                "duplicate-candidate": 15,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 14
+                "low-visual-impact-metadata": 6,
+                "subject-or-person-mismatch": 11,
+                "duplicate-candidate": 12,
+                "metadata-relevance-below-3": 13
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -4303,8 +4176,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -4345,8 +4218,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -4387,15 +4260,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 44,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
-                "metadata-relevance-below-3": 16,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 13,
-                "subject-or-person-mismatch": 6
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 17,
+                "subject-or-person-mismatch": 7,
+                "duplicate-candidate": 8
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -4431,8 +4303,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -4473,8 +4345,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -4515,15 +4387,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 41,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
+                "low-visual-impact-metadata": 6,
                 "metadata-relevance-below-3": 16,
-                "watermarked-stock-library": 1,
-                "subject-or-person-mismatch": 6,
-                "duplicate-candidate": 10
+                "subject-or-person-mismatch": 7,
+                "duplicate-candidate": 9
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -4601,8 +4472,8 @@
                   "page": "explainer",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "explainer",
@@ -4643,14 +4514,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 58,
+              "candidate_count": 56,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 8,
-                "duplicate-candidate": 32,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 17
+                "subject-or-person-mismatch": 3,
+                "duplicate-candidate": 33,
+                "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -4687,7 +4557,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -4729,7 +4599,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -4845,13 +4715,9 @@
           "attempt": 4,
           "stage": "visual-preflight",
           "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-          "excluded_after_attempt": [
-            "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-          ],
+          "excluded_after_attempt": [],
           "newly_excluded": [],
           "input_domains": [
-            "commons.wikimedia.org",
             "itftennis.com",
             "lequipe.fr",
             "sony.com",
@@ -4901,8 +4767,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -4943,8 +4809,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -4985,8 +4851,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 4
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -4999,8 +4865,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -5027,8 +4893,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 12
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -5041,8 +4907,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -5139,8 +5005,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -5196,7 +5062,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -5237,8 +5103,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
-              "status": "ok",
-              "candidate_count": 2
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -5321,8 +5187,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling tennis",
-              "status": "ok",
-              "candidate_count": 1
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -5348,6 +5214,7 @@
           ],
           "missing_pages": [
             "cover",
+            "explainer",
             "story",
             "today"
           ],
@@ -5440,15 +5307,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 48,
+              "candidate_count": 42,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "low-visual-impact-metadata": 8,
-                "subject-or-person-mismatch": 9,
-                "duplicate-candidate": 16,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 14
+                "low-visual-impact-metadata": 6,
+                "subject-or-person-mismatch": 13,
+                "duplicate-candidate": 8,
+                "metadata-relevance-below-3": 15
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5484,8 +5350,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye wimbledon tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -5526,8 +5392,8 @@
                   "page": "cover",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "cover",
@@ -5568,16 +5434,14 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 60,
+              "candidate_count": 38,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "source-already-used": 2,
-                "subject-or-person-mismatch": 10,
-                "low-visual-impact-metadata": 14,
-                "metadata-relevance-below-3": 22,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 11
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 15,
+                "subject-or-person-mismatch": 7,
+                "duplicate-candidate": 10
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5599,8 +5463,8 @@
                   "page": "story",
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 4
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5613,8 +5477,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye 2004 tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5641,8 +5505,8 @@
                   "page": "story",
                   "provider": "wikimedia-commons",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 12
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5655,8 +5519,8 @@
                   "page": "story",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "story",
@@ -5683,17 +5547,31 @@
             },
             {
               "page": "explainer",
-              "status": "selected",
+              "status": "generated-visual",
+              "reason": "多源检索后无相关性和分辨率同时达标的照片",
+              "query": "Hawk Eye 科技进化 网球冷知识 tennis",
               "required_event_terms": [],
-              "match_level": "exact-event",
+              "providers": [
+                "curated-editorial",
+                "official-media",
+                "wikimedia-commons",
+                "openverse",
+                "bing-web-image",
+                "official-tennis-archive",
+                "flickr-public",
+                "duckduckgo-web-image"
+              ],
+              "candidate_count": 50,
+              "exact_candidate_count": 8,
+              "archive_candidate_count": 0,
               "rejection_counts": {
-                "source-already-used": 2,
-                "subject-or-person-mismatch": 9,
-                "low-visual-impact-metadata": 8,
-                "metadata-relevance-below-3": 15,
-                "watermarked-stock-library": 1,
-                "duplicate-candidate": 12
+                "subject-or-person-mismatch": 11,
+                "low-visual-impact-metadata": 6,
+                "metadata-relevance-below-3": 14,
+                "duplicate-candidate": 11,
+                "download-or-resolution-failed": 8
               },
+              "failed_curated_source_urls": [],
               "source_runs": [
                 {
                   "page": "explainer",
@@ -5769,8 +5647,8 @@
                   "page": "explainer",
                   "provider": "bing-web-image",
                   "query": "Hawk Eye tennis",
-                  "status": "ok",
-                  "candidate_count": 3
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "explainer",
@@ -5793,21 +5671,7 @@
                   "status": "empty",
                   "candidate_count": 0
                 }
-              ],
-              "provider": "wikimedia-commons",
-              "source_url": "https://commons.wikimedia.org/wiki/File:Kodak_Vest_Pocket_Rainbow_Hawk-Eye_(6218962589).jpg",
-              "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kodak_Vest_Pocket_Rainbow_Hawk-Eye_%286218962589%29.jpg/1920px-Kodak_Vest_Pocket_Rainbow_Hawk-Eye_%286218962589%29.jpg",
-              "credit": "Andrew Smith from Seattle, WA, USA",
-              "license": "cc by-sa 2.0",
-              "query": "Hawk Eye 科技进化 网球冷知识 tennis",
-              "relevance": 6,
-              "sha256": "bc29590ae8f0d511f123addaee6b692610547d08c087bb8abd8a3438a5ecf9c3",
-              "focus": "50% 38%",
-              "subject_match": true,
-              "year_match": true,
-              "event_match": true,
-              "person_required": false,
-              "cached_file": "explainer-bc29590ae8f0.jpg"
+              ]
             },
             {
               "page": "today",
@@ -5825,14 +5689,13 @@
                 "flickr-public",
                 "duckduckgo-web-image"
               ],
-              "candidate_count": 71,
+              "candidate_count": 67,
               "exact_candidate_count": 0,
               "archive_candidate_count": 0,
               "rejection_counts": {
-                "subject-or-person-mismatch": 18,
-                "duplicate-candidate": 38,
-                "watermarked-stock-library": 1,
-                "metadata-relevance-below-3": 14
+                "subject-or-person-mismatch": 15,
+                "duplicate-candidate": 32,
+                "metadata-relevance-below-3": 20
               },
               "failed_curated_source_urls": [],
               "source_runs": [
@@ -5869,7 +5732,7 @@
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 wimbledon tennis",
                   "status": "ok",
-                  "candidate_count": 2
+                  "candidate_count": 1
                 },
                 {
                   "page": "today",
@@ -5910,8 +5773,8 @@
                   "page": "today",
                   "provider": "bing-web-image",
                   "query": "electronic line calling 2025 tennis",
-                  "status": "ok",
-                  "candidate_count": 2
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "today",
@@ -5994,8 +5857,8 @@
                   "page": "today",
                   "provider": "bing-web-image",
                   "query": "electronic line calling tennis",
-                  "status": "ok",
-                  "candidate_count": 1
+                  "status": "empty",
+                  "candidate_count": 0
                 },
                 {
                   "page": "today",
@@ -7120,18 +6983,11 @@
     },
     {
       "attempt": 1,
-      "stage": "pre-render-qa",
-      "error": "ValueError: 知识帖视觉校验失败：有配图的页面必须各使用一张真实主题图片，当前共 1 张，标准为 2 张；explainer 页必须且只能使用一张强相关主题照片",
-      "excluded_after_attempt": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
-      "newly_excluded": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
+      "stage": "visual-preflight",
+      "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+      "excluded_after_attempt": [],
+      "newly_excluded": [],
       "input_domains": [
-        "commons.wikimedia.org",
         "itftennis.com",
         "lequipe.fr",
         "sony.com",
@@ -7181,8 +7037,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye wimbledon tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -7223,8 +7079,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -7266,7 +7122,7 @@
           "provider": "wikimedia-commons",
           "query": "Hawk Eye 2004 tennis",
           "status": "ok",
-          "candidate_count": 4
+          "candidate_count": 5
         },
         {
           "page": "story",
@@ -7279,8 +7135,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -7321,8 +7177,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -7419,8 +7275,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -7475,8 +7331,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
-          "status": "empty",
-          "candidate_count": 0
+          "status": "ok",
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -7518,7 +7374,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -7627,6 +7483,8 @@
         }
       ],
       "missing_pages": [
+        "cover",
+        "explainer",
         "story",
         "today"
       ],
@@ -7638,18 +7496,10 @@
           "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
         },
         {
-          "provider": "official-media",
+          "provider": "official-page",
           "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_url": "",
-          "credit": "itftennis.com",
-          "license": "官方媒体 · 非商业资讯引用",
-          "status": "reference-only",
-          "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-          "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_text": " ",
-          "width": 0,
-          "height": 0
+          "status": "error",
+          "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
         },
         {
           "provider": "official-page",
@@ -7705,16 +7555,31 @@
         },
         {
           "page": "cover",
-          "status": "selected",
+          "status": "generated-visual",
+          "reason": "多源检索后无相关性和分辨率同时达标的照片",
+          "query": "Hawk Eye wimbledon tennis",
           "required_event_terms": [],
-          "match_level": "exact-event",
+          "providers": [
+            "curated-editorial",
+            "official-media",
+            "wikimedia-commons",
+            "openverse",
+            "bing-web-image",
+            "official-tennis-archive",
+            "flickr-public",
+            "duckduckgo-web-image"
+          ],
+          "candidate_count": 64,
+          "exact_candidate_count": 1,
+          "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 15,
+            "low-visual-impact-metadata": 13,
             "subject-or-person-mismatch": 16,
-            "metadata-relevance-below-3": 23,
+            "metadata-relevance-below-3": 20,
             "duplicate-candidate": 14,
-            "watermarked-stock-library": 1
+            "download-or-resolution-failed": 1
           },
+          "failed_curated_source_urls": [],
           "source_runs": [
             {
               "page": "cover",
@@ -7748,8 +7613,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -7790,8 +7655,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -7814,21 +7679,7 @@
               "status": "empty",
               "candidate_count": 0
             }
-          ],
-          "provider": "wikimedia-commons",
-          "source_url": "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-          "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Hawk-Eye_at_Wimbledon_%287508887344%29.jpg/1920px-Hawk-Eye_at_Wimbledon_%287508887344%29.jpg",
-          "credit": "Daniel from Galashiels, United Kingdom",
-          "license": "cc by 2.0",
-          "query": "Hawk Eye wimbledon tennis",
-          "relevance": 6,
-          "sha256": "a7399e6b6a882ccbf958f30c679aa11914dbf78f15a1b1a52424338db0cd3fa3",
-          "focus": "50% 38%",
-          "subject_match": true,
-          "year_match": true,
-          "event_match": true,
-          "person_required": false,
-          "cached_file": "cover-a7399e6b6a88.jpg"
+          ]
         },
         {
           "page": "story",
@@ -7846,16 +7697,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 60,
+          "candidate_count": 55,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 15,
-            "subject-or-person-mismatch": 10,
-            "source-already-used": 1,
+            "low-visual-impact-metadata": 14,
+            "subject-or-person-mismatch": 11,
             "metadata-relevance-below-3": 20,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 13
+            "duplicate-candidate": 10
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -7878,7 +7727,7 @@
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
               "status": "ok",
-              "candidate_count": 4
+              "candidate_count": 5
             },
             {
               "page": "story",
@@ -7891,8 +7740,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -7933,8 +7782,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -7961,17 +7810,31 @@
         },
         {
           "page": "explainer",
-          "status": "selected",
+          "status": "generated-visual",
+          "reason": "多源检索后无相关性和分辨率同时达标的照片",
+          "query": "Hawk Eye 科技进化 网球冷知识 tennis",
           "required_event_terms": [],
-          "match_level": "exact-event",
+          "providers": [
+            "curated-editorial",
+            "official-media",
+            "wikimedia-commons",
+            "openverse",
+            "bing-web-image",
+            "official-tennis-archive",
+            "flickr-public",
+            "duckduckgo-web-image"
+          ],
+          "candidate_count": 50,
+          "exact_candidate_count": 8,
+          "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 11,
-            "source-already-used": 1,
-            "low-visual-impact-metadata": 8,
-            "metadata-relevance-below-3": 21,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 4
+            "subject-or-person-mismatch": 12,
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 15,
+            "duplicate-candidate": 9,
+            "download-or-resolution-failed": 8
           },
+          "failed_curated_source_urls": [],
           "source_runs": [
             {
               "page": "explainer",
@@ -8047,8 +7910,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -8071,21 +7934,7 @@
               "status": "empty",
               "candidate_count": 0
             }
-          ],
-          "provider": "wikimedia-commons",
-          "source_url": "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg",
-          "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Hawk_eye.svg/1920px-Hawk_eye.svg.png",
-          "credit": "CNEMIDE / Vectorized by: Ufo karadagli",
-          "license": "cc by-sa 3.0",
-          "query": "Hawk Eye 科技进化 网球冷知识 tennis",
-          "relevance": 6,
-          "sha256": "950f9eac96f436a8285067c0377edc87631c347815e5b22af4d06e5fb23fccf2",
-          "focus": "50% 38%",
-          "subject_match": true,
-          "year_match": true,
-          "event_match": true,
-          "person_required": false,
-          "cached_file": "explainer-950f9eac96f4.png"
+          ]
         },
         {
           "page": "today",
@@ -8107,10 +7956,9 @@
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 18,
-            "duplicate-candidate": 35,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 15
+            "subject-or-person-mismatch": 15,
+            "duplicate-candidate": 34,
+            "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -8146,8 +7994,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
-              "status": "empty",
-              "candidate_count": 0
+              "status": "ok",
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -8189,7 +8037,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -8299,106 +8147,13 @@
           ]
         }
       ],
-      "visual_qa": {
-        "schema_version": 1,
-        "status": "fail",
-        "story_slug": "hawkeye",
-        "standards": {
-          "license_policy": "record-only: credit/license are logged (unknown/unverified when missing) and never a fail condition; pre-publish rights review is a human step",
-          "photo_count_max": 64,
-          "photo_source_uniqueness": "same photo/source may appear only once",
-          "page_visual": "every page requires one distinct verified photo",
-          "non_cover_visual": "distinct exact-event photo; infographic may only be an overlay",
-          "rule_explainer": "topic-specific diagram plus verified photo required",
-          "player_crop": "head-safe object position",
-          "production_labels": "internal generation labels are forbidden",
-          "story_ordinals": "semantic icons replace ordinal markers",
-          "year_markers": "calendar years must use four digits",
-          "canned_story_labels": "fixed teaching-style labels are forbidden",
-          "max_text_block_chars": 82,
-          "max_card_text_chars": 520,
-          "card_size": [
-            1080,
-            1440
-          ],
-          "max_card_bytes": 950000
-        },
-        "photo_uses": 1,
-        "photo_sources": [
-          "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg"
-        ],
-        "resolved_visuals": [
-          {
-            "page": "cover",
-            "file": "output/2026-07-31/knowledge/visuals/cover-a7399e6b6a88.jpg",
-            "source_url": "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-            "credit": "Daniel from Galashiels, United Kingdom",
-            "license": "cc by 2.0",
-            "width": 1920,
-            "height": 1440
-          },
-          {
-            "page": "explainer",
-            "file": "output/2026-07-31/knowledge/visuals/explainer-950f9eac96f4.png",
-            "source_url": "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg",
-            "credit": "CNEMIDE / Vectorized by: Ufo karadagli",
-            "license": "cc by-sa 3.0",
-            "width": 1920,
-            "height": 869
-          }
-        ],
-        "pages": [
-          {
-            "kind": "knowledge",
-            "visual": "verified-photo",
-            "text_chars": 88,
-            "longest_text_block": 21,
-            "photo_count": 1,
-            "photo_sources": [
-              "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg"
-            ]
-          },
-          {
-            "kind": "story",
-            "visual": "narrative-timeline",
-            "text_chars": 224,
-            "longest_text_block": 48,
-            "photo_count": 0,
-            "photo_sources": []
-          },
-          {
-            "kind": "explainer",
-            "visual": "rule-diagram",
-            "text_chars": 278,
-            "longest_text_block": 33,
-            "photo_count": 0,
-            "photo_sources": []
-          },
-          {
-            "kind": "today",
-            "visual": "history-timeline",
-            "text_chars": 207,
-            "longest_text_block": 29,
-            "photo_count": 0,
-            "photo_sources": []
-          }
-        ],
-        "rendered_cards": [],
-        "errors": [
-          "有配图的页面必须各使用一张真实主题图片，当前共 1 张，标准为 2 张",
-          "explainer 页必须且只能使用一张强相关主题照片"
-        ],
-        "warnings": []
-      }
+      "visual_qa": {}
     },
     {
       "attempt": 2,
       "stage": "visual-preflight",
       "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-      "excluded_after_attempt": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
+      "excluded_after_attempt": [],
       "newly_excluded": [],
       "input_domains": [
         "itftennis.com",
@@ -8450,8 +8205,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye wimbledon tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -8492,8 +8247,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -8548,8 +8303,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -8590,8 +8345,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -8688,8 +8443,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -8745,7 +8500,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -8787,7 +8542,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -8909,18 +8664,10 @@
           "reason": "403 Client Error: Forbidden for url: https://www.sony.com/en/SonyInfo/technology/stories/entries/Hawk-Eye/"
         },
         {
-          "provider": "official-media",
+          "provider": "official-page",
           "page_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "source_url": "https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_url": "",
-          "credit": "itftennis.com",
-          "license": "官方媒体 · 非商业资讯引用",
-          "status": "reference-only",
-          "reason": "官方页面未暴露 og:image，仅用于事实与事件核验",
-          "search_text": "  https://www.itftennis.com/media/12242/line-calling.pdf",
-          "image_text": " ",
-          "width": 0,
-          "height": 0
+          "status": "error",
+          "reason": "HTTPSConnectionPool(host='www.itftennis.com', port=443): Read timed out. (read timeout=7)"
         },
         {
           "provider": "official-page",
@@ -8990,14 +8737,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 48,
+          "candidate_count": 42,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
-            "subject-or-person-mismatch": 9,
-            "duplicate-candidate": 17,
-            "watermarked-stock-library": 1,
+            "low-visual-impact-metadata": 6,
+            "subject-or-person-mismatch": 12,
+            "duplicate-candidate": 11,
             "metadata-relevance-below-3": 13
           },
           "failed_curated_source_urls": [],
@@ -9034,8 +8780,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -9076,8 +8822,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -9118,15 +8864,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 44,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
-            "metadata-relevance-below-3": 21,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 8,
-            "subject-or-person-mismatch": 6
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 18,
+            "subject-or-person-mismatch": 8,
+            "duplicate-candidate": 6
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -9162,8 +8907,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -9204,8 +8949,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -9246,13 +8991,12 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 41,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
+            "low-visual-impact-metadata": 6,
             "metadata-relevance-below-3": 17,
-            "watermarked-stock-library": 1,
             "subject-or-person-mismatch": 7,
             "duplicate-candidate": 8
           },
@@ -9332,8 +9076,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -9374,14 +9118,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 58,
+          "candidate_count": 56,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 6,
-            "duplicate-candidate": 35,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 16
+            "subject-or-person-mismatch": 3,
+            "duplicate-candidate": 34,
+            "metadata-relevance-below-3": 19
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -9418,7 +9161,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -9460,7 +9203,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -9576,10 +9319,7 @@
       "attempt": 3,
       "stage": "visual-preflight",
       "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-      "excluded_after_attempt": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
+      "excluded_after_attempt": [],
       "newly_excluded": [],
       "input_domains": [
         "itftennis.com",
@@ -9631,8 +9371,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye wimbledon tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -9673,8 +9413,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -9729,8 +9469,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -9771,8 +9511,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -9869,8 +9609,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -9926,7 +9666,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -9968,7 +9708,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -10171,15 +9911,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 48,
+          "candidate_count": 42,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
-            "subject-or-person-mismatch": 10,
-            "duplicate-candidate": 15,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 14
+            "low-visual-impact-metadata": 6,
+            "subject-or-person-mismatch": 11,
+            "duplicate-candidate": 12,
+            "metadata-relevance-below-3": 13
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -10215,8 +9954,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -10257,8 +9996,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -10299,15 +10038,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 44,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
-            "metadata-relevance-below-3": 16,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 13,
-            "subject-or-person-mismatch": 6
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 17,
+            "subject-or-person-mismatch": 7,
+            "duplicate-candidate": 8
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -10343,8 +10081,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -10385,8 +10123,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -10427,15 +10165,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 41,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
+            "low-visual-impact-metadata": 6,
             "metadata-relevance-below-3": 16,
-            "watermarked-stock-library": 1,
-            "subject-or-person-mismatch": 6,
-            "duplicate-candidate": 10
+            "subject-or-person-mismatch": 7,
+            "duplicate-candidate": 9
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -10513,8 +10250,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -10555,14 +10292,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 58,
+          "candidate_count": 56,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 8,
-            "duplicate-candidate": 32,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 17
+            "subject-or-person-mismatch": 3,
+            "duplicate-candidate": 33,
+            "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -10599,7 +10335,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -10641,7 +10377,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -10757,13 +10493,9 @@
       "attempt": 4,
       "stage": "visual-preflight",
       "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
-      "excluded_after_attempt": [
-        "https://commons.wikimedia.org/wiki/File:Hawk-Eye_at_Wimbledon_(7508887344).jpg",
-        "https://commons.wikimedia.org/wiki/File:Hawk_eye.svg"
-      ],
+      "excluded_after_attempt": [],
       "newly_excluded": [],
       "input_domains": [
-        "commons.wikimedia.org",
         "itftennis.com",
         "lequipe.fr",
         "sony.com",
@@ -10813,8 +10545,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye wimbledon tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -10855,8 +10587,8 @@
           "page": "cover",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "cover",
@@ -10897,8 +10629,8 @@
           "page": "story",
           "provider": "wikimedia-commons",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 4
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -10911,8 +10643,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye 2004 tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -10939,8 +10671,8 @@
           "page": "story",
           "provider": "wikimedia-commons",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 12
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -10953,8 +10685,8 @@
           "page": "story",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "story",
@@ -11051,8 +10783,8 @@
           "page": "explainer",
           "provider": "bing-web-image",
           "query": "Hawk Eye tennis",
-          "status": "ok",
-          "candidate_count": 3
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "explainer",
@@ -11108,7 +10840,7 @@
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 wimbledon tennis",
           "status": "ok",
-          "candidate_count": 2
+          "candidate_count": 1
         },
         {
           "page": "today",
@@ -11149,8 +10881,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "electronic line calling 2025 tennis",
-          "status": "ok",
-          "candidate_count": 2
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -11233,8 +10965,8 @@
           "page": "today",
           "provider": "bing-web-image",
           "query": "electronic line calling tennis",
-          "status": "ok",
-          "candidate_count": 1
+          "status": "empty",
+          "candidate_count": 0
         },
         {
           "page": "today",
@@ -11260,6 +10992,7 @@
       ],
       "missing_pages": [
         "cover",
+        "explainer",
         "story",
         "today"
       ],
@@ -11352,15 +11085,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 48,
+          "candidate_count": 42,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "low-visual-impact-metadata": 8,
-            "subject-or-person-mismatch": 9,
-            "duplicate-candidate": 16,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 14
+            "low-visual-impact-metadata": 6,
+            "subject-or-person-mismatch": 13,
+            "duplicate-candidate": 8,
+            "metadata-relevance-below-3": 15
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11396,8 +11128,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye wimbledon tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -11438,8 +11170,8 @@
               "page": "cover",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "cover",
@@ -11480,16 +11212,14 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 60,
+          "candidate_count": 38,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "source-already-used": 2,
-            "subject-or-person-mismatch": 10,
-            "low-visual-impact-metadata": 14,
-            "metadata-relevance-below-3": 22,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 11
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 15,
+            "subject-or-person-mismatch": 7,
+            "duplicate-candidate": 10
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11511,8 +11241,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 4
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11525,8 +11255,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye 2004 tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11553,8 +11283,8 @@
               "page": "story",
               "provider": "wikimedia-commons",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 12
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11567,8 +11297,8 @@
               "page": "story",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "story",
@@ -11595,17 +11325,31 @@
         },
         {
           "page": "explainer",
-          "status": "selected",
+          "status": "generated-visual",
+          "reason": "多源检索后无相关性和分辨率同时达标的照片",
+          "query": "Hawk Eye 科技进化 网球冷知识 tennis",
           "required_event_terms": [],
-          "match_level": "exact-event",
+          "providers": [
+            "curated-editorial",
+            "official-media",
+            "wikimedia-commons",
+            "openverse",
+            "bing-web-image",
+            "official-tennis-archive",
+            "flickr-public",
+            "duckduckgo-web-image"
+          ],
+          "candidate_count": 50,
+          "exact_candidate_count": 8,
+          "archive_candidate_count": 0,
           "rejection_counts": {
-            "source-already-used": 2,
-            "subject-or-person-mismatch": 9,
-            "low-visual-impact-metadata": 8,
-            "metadata-relevance-below-3": 15,
-            "watermarked-stock-library": 1,
-            "duplicate-candidate": 12
+            "subject-or-person-mismatch": 11,
+            "low-visual-impact-metadata": 6,
+            "metadata-relevance-below-3": 14,
+            "duplicate-candidate": 11,
+            "download-or-resolution-failed": 8
           },
+          "failed_curated_source_urls": [],
           "source_runs": [
             {
               "page": "explainer",
@@ -11681,8 +11425,8 @@
               "page": "explainer",
               "provider": "bing-web-image",
               "query": "Hawk Eye tennis",
-              "status": "ok",
-              "candidate_count": 3
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "explainer",
@@ -11705,21 +11449,7 @@
               "status": "empty",
               "candidate_count": 0
             }
-          ],
-          "provider": "wikimedia-commons",
-          "source_url": "https://commons.wikimedia.org/wiki/File:Kodak_Vest_Pocket_Rainbow_Hawk-Eye_(6218962589).jpg",
-          "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kodak_Vest_Pocket_Rainbow_Hawk-Eye_%286218962589%29.jpg/1920px-Kodak_Vest_Pocket_Rainbow_Hawk-Eye_%286218962589%29.jpg",
-          "credit": "Andrew Smith from Seattle, WA, USA",
-          "license": "cc by-sa 2.0",
-          "query": "Hawk Eye 科技进化 网球冷知识 tennis",
-          "relevance": 6,
-          "sha256": "bc29590ae8f0d511f123addaee6b692610547d08c087bb8abd8a3438a5ecf9c3",
-          "focus": "50% 38%",
-          "subject_match": true,
-          "year_match": true,
-          "event_match": true,
-          "person_required": false,
-          "cached_file": "explainer-bc29590ae8f0.jpg"
+          ]
         },
         {
           "page": "today",
@@ -11737,14 +11467,13 @@
             "flickr-public",
             "duckduckgo-web-image"
           ],
-          "candidate_count": 71,
+          "candidate_count": 67,
           "exact_candidate_count": 0,
           "archive_candidate_count": 0,
           "rejection_counts": {
-            "subject-or-person-mismatch": 18,
-            "duplicate-candidate": 38,
-            "watermarked-stock-library": 1,
-            "metadata-relevance-below-3": 14
+            "subject-or-person-mismatch": 15,
+            "duplicate-candidate": 32,
+            "metadata-relevance-below-3": 20
           },
           "failed_curated_source_urls": [],
           "source_runs": [
@@ -11781,7 +11510,7 @@
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 wimbledon tennis",
               "status": "ok",
-              "candidate_count": 2
+              "candidate_count": 1
             },
             {
               "page": "today",
@@ -11822,8 +11551,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling 2025 tennis",
-              "status": "ok",
-              "candidate_count": 2
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",
@@ -11906,8 +11635,8 @@
               "page": "today",
               "provider": "bing-web-image",
               "query": "electronic line calling tennis",
-              "status": "ok",
-              "candidate_count": 1
+              "status": "empty",
+              "candidate_count": 0
             },
             {
               "page": "today",

@@ -1,0 +1,247 @@
+name: interview-clip
+
+# 把 @wta 逐场集锦尾巴上的**场上采访**剪出来，烧中英双语字幕。
+#
+# **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了。实测五个 player
+# client 全废——`web`/`ios`/`web_safari` 报 `Sign in to confirm you're not a
+# bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr` 拿得到格式表
+# 但一取媒体就 403。**但字幕是通的**，所以切行和翻译在本地做完（`--stage subs`
+# 已经把 .ass 提交进仓库了），runner 上只负责下载 + 剪 + 烧。同 match-reel.yml。
+#
+# 用法：dispatch 时给 slug，spec 从 specs/interviews/<slug>.json 读。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "spec 文件名（不带 .json）"
+        required: true
+        default: "eala-svitolina-dc2026-qf"
+      mode:
+        description: "render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        type: choice
+        options: [render, push]
+        default: render
+      push:
+        description: "出片后推送微信"
+        type: boolean
+        default: false
+      push_lead:
+        description: "推送正文那一句（留空用文案第一行）"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
+      # - `fonts-noto-cjk`：少了它 libass 用回退字体，中文那行变豆腐块
+      # - `fonts-noto-core`：少了它 `Noto Sans` 解析不到，英文那行悄悄换成
+      #   DejaVu——**比 Noto Sans 宽 8%**，切行时量的宽度和渲出来的对不上，
+      #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
+      #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
+      - name: 装系统依赖
+        if: github.event.inputs.mode != 'push'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
+
+      # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+      # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
+      # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
+      # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
+      # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
+      # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
+      # **`-e .` 不能漏**：这个工具 import `PIL`（量字幕宽度）和
+      # `tennislive.render.webcards`（封面字体），后者又拖着 requests / rich /
+      # pypdf 一整串。只装那三个第三方包，跑到预检就是 `No module named 'PIL'`。
+      # 这是同一条规矩在同一天里第三次咬人（前两次是 fonts-noto-core 和
+      # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
+      # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
+      - name: 装依赖
+        if: github.event.inputs.mode != 'push'
+        run: |
+          pip install -q -e . "yt-dlp[default]" playwright faster-whisper
+          python -m playwright install --with-deps chromium
+          node --version
+
+      # **只推送的时候什么重依赖都不需要**：封面已经在仓库里、不转写、不下载、
+      # 不编码，`push_reel.py` 只用 requests 和 tennislive 自己那几个模块。
+      # 原来照样装 apt 字体 + ffmpeg + Chromium + faster-whisper，白等三分钟——
+      # 一个非关键阶段失败之后重跑，不该把前面所有阶段的准备工作再做一遍。
+      - name: 装依赖（只推送）
+        if: github.event.inputs.mode == 'push'
+        run: pip install -q -e .
+
+      # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
+      - name: 开跑前预检
+        if: github.event.inputs.mode != 'push'
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import shutil, sys
+          from playwright.sync_api import sync_playwright
+          sys.path.insert(0, "tools")
+          from build_interview_clip import _chromium
+          import faster_whisper  # noqa: F401
+          from build_interview_clip import _en_width, _zh_width
+          assert shutil.which("ffmpeg"), "没有 ffmpeg"
+          print("Chromium:", _chromium())
+          # 字体缺了就在这儿炸，不要等切行那一步——两个包漏哪个都不报错，
+          # 只是悄悄换成回退字体，然后行宽全算错
+          print(f"字宽 en={_en_width('respect'):.1f} zh={_zh_width('网球'):.1f}")
+          from tennislive.render.webcards import _font_css
+          css = _font_css()
+          assert "TL Display SC" in css, "得意黑没内嵌进来，封面标题会退回系统字体"
+          print("字体 CSS", len(css), "字节")
+          PY
+
+      # 配了 Secret 就带 cookie 下载。没配也先试一把——公开视频在 runner 的 IP 上
+      # 有时候不用 cookie 也下得动，真下不动再回来配。
+      - name: 落 cookies（配了 Secret 才有）
+        if: github.event.inputs.mode != 'push'
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "没有配 YT_COOKIES_TXT，裸下试试"
+          fi
+
+      # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
+      # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
+      # 其实是 `for her`），而它自己那两条轨（en / en-orig）逐词完全一致，
+      # 拿来交叉验证是自欺。所以在这儿跑第二份 ASR 对一遍，分歧超过闸门直接失败。
+      #
+      # 另有一道**不联网**的闸跟着每个 stage 跑（`check_human_quote`）：拿赛事
+      # 官网战报里的人工引语对 ASR。它只覆盖记者抄走的那几句，但**是人转写的**，
+      # 比任何 ASR 都硬。两道闸都在这一步暴露——报告落在
+      # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
+      # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
+      - name: 转写交叉校验
+        if: github.event.inputs.mode != 'push'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
+
+      # cookie 从 `COOKIES` 环境变量走（`cookie_args()` 读它）。
+      # 原来是把路径**写进 spec**、跑完再 `git checkout --` 撤掉——两个毛病：
+      # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
+      # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
+      - name: 剪 + 烧字幕
+        if: github.event.inputs.mode != 'push'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
+
+      # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
+      - name: 验成片
+        if: github.event.inputs.mode != 'push'
+        run: |
+          OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
+          test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
+
+      # **复制页要在提交之前写。** 这一步只落文件，由下面的提交步骤带进仓库；
+      # 真正发微信排在提交之后（GitHub Pages 只服务 main，链接才取得到）。
+      # 这条规矩在别的线上踩过四次，别在这儿再踩第五次。
+      # 对阵 / 比分 / 赛事**从 spec 读**，不做成 dispatch 的输入——手打两遍必分叉。
+      - name: 取推送用的字段
+        id: push_meta
+        if: github.event.inputs.push == 'true'
+        run: |
+          PYTHONPATH=src python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, pathlib
+          d = json.loads(pathlib.Path(
+              f"specs/interviews/{os.environ['SLUG']}.json").read_text(encoding="utf-8"))
+          push = d.get("push") or {}
+          for k in ("matchup", "score", "event", "summary", "lead"):
+              v = str(push.get(k, "")).strip()
+              # `$GITHUB_OUTPUT` 是一行一个 `k=v`：值里有换行会把后面的行吃掉，
+              # 而且**不报错**，只是下游少拿到几个字段。
+              if "\n" in v:
+                  raise SystemExit(f"push.{k} 里有换行，塞不进 GITHUB_OUTPUT")
+              if k == "matchup" and not v:
+                  raise SystemExit("spec 的 push.matchup 是空的，推送标题拼不出来")
+              print(f"{k}={v}")
+          PY
+        env:
+          SLUG: ${{ github.event.inputs.slug }}
+
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.push == 'true'
+        run: |
+          COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          PYTHONPATH=src python tools/push_reel.py --stage page \
+            --outdir "output/interviews/${{ github.event.inputs.slug }}" \
+            --matchup "${{ steps.push_meta.outputs.matchup }}" \
+            --score "${{ steps.push_meta.outputs.score }}" \
+            --event "${{ steps.push_meta.outputs.event }}" \
+            --summary "${{ steps.push_meta.outputs.summary }}" \
+            --date "$(TZ=Asia/Shanghai date +%F)" \
+            --copy "$COPY"
+
+      - name: 提交成片
+        run: |
+          # **中间物一个都别留。** 只列 `source.mp4` 是不够的——第七趟出片时
+          # 跟着进仓库的还有 `_audio.m4a`（6.6 MB，verify 下的音轨）、
+          # `cover.html`（**12.5 MB**，字体 base64 内嵌进去的那份）、
+          # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
+          # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
+          D="output/interviews/${{ github.event.inputs.slug }}"
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "output/interviews/${{ github.event.inputs.slug }}"
+          git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          git commit -m "interview: ${{ github.event.inputs.slug }} 双语字幕成片"
+          for i in 1 2 3 4; do
+            git pull --rebase origin ${{ github.ref_name }} && \
+              git push origin HEAD:${{ github.ref_name }} && break
+            sleep $((2 ** i))
+          done
+
+      # **「触发成功」不算推了，这一步 success 才算。** 而且它必须排在提交之后：
+      # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉
+      # （`drop_dead_copy_button` 发送前探一次）。这条在别的线上踩过四次。
+      - name: 推送到微信
+        if: github.event.inputs.push == 'true'
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+        run: |
+          COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
+          PYTHONPATH=src python tools/push_reel.py \
+            --outdir "output/interviews/${{ github.event.inputs.slug }}" \
+            --matchup "${{ steps.push_meta.outputs.matchup }}" \
+            --score "${{ steps.push_meta.outputs.score }}" \
+            --event "${{ steps.push_meta.outputs.event }}" \
+            --summary "${{ steps.push_meta.outputs.summary }}" \
+            --date "$(TZ=Asia/Shanghai date +%F)" \
+            --lead "${{ github.event.inputs.push_lead || steps.push_meta.outputs.lead }}" \
+            --copy "$COPY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ github.event.inputs.slug }}
+          path: output/interviews/${{ github.event.inputs.slug }}/
