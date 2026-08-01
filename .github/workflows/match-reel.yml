@@ -15,10 +15,20 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；cover=只出封面海报；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        options: [probe, render, cookies]
+        # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏（CLAUDE.md
+        # 里 68 行、10 个专门段落，每段都是一轮返工换来的；spec 注释里
+        # wong-brooksby 记着「0.32/0.40 → 0.33/0.42 → 0.34/0.44」三档、
+        # hewitt 记着 0.60/0.67/0.74 三档，每一档都付过一趟六分钟）。
+        # 而 `build_cover` 不依赖 segments / tracks / TTS / voice——下完源片
+        # 就能出海报，省掉分段编码 + TTS + 成片那四五分钟。
+        # ⚠️ `--cover-only` / `--dry-run` 的 CLI 开关先落地了，而这一行没跟着
+        # 改，于是那两个开关**在唯一能用的那台机器上够不着**（源片只在 runner
+        # 上活过几分钟，沙箱下不动 YouTube）。又一次「写了不等于跑过」，
+        # 只是这次卡在工作流入口。
+        options: [probe, cover, render, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -407,6 +417,23 @@ jobs:
           docker logs bgutil-pot 2>&1 | tail -20 || true
           echo "POT_DOWN=1" >> "$GITHUB_ENV"
 
+      # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 `scale` /
+      # `cx` / `box` 想看效果，走这条，别再付一趟完整 render。
+      # `--cover-only` 里的 `build_cover` 一个 segment / track / TTS 都不碰
+      # （查过），所以「下载 → 出海报 → 退出」是干净的一条路。
+      - name: cover — 只出封面海报
+        if: github.event.inputs.mode == 'cover'
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
+        run: |
+          SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          python tools/build_match_reel.py render --cover-only \
+            --spec "$SPEC" \
+            --outdir "${{ steps.paths.outputs.outdir }}"
+          ls -la "${{ steps.paths.outputs.outdir }}"
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -478,8 +505,17 @@ jobs:
             [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
           fi
 
+      # **`always()` 不能省。** `if:` 里不含状态函数时 GitHub 会隐式和上
+      # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一旦
+      # exit 1（连着栽过四次，最近一次是多源之后源片改名 `source_r1.mp4`，
+      # run 30603686748），**成片明明已经渲完了，却既不上传也不提交**，
+      # 六分钟整趟作废，只能重跑。render 自己失败时同理：`subtitles.ass` /
+      # `poster.jpg` / `part_*.mp4` 全拿不到，只能翻日志猜。
+      #
+      # ⚠️ **位置不能往前挪**：清理那一步先 `rm` 再做体积检查，所以走到这儿
+      # 源片已经删干净了。挪到清理之前会把 392 MB 的源片一起传上去。
       - name: 上传 artifact
-        if: github.event.inputs.mode != 'cookies'
+        if: always() && github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
