@@ -18,10 +18,17 @@ import requests
 
 from ..digest import Digest
 from ..zh import PLAYER_ZH, player_zh
+from .audio import (
+    AVSegment,
+    audio_qa_for_graph,
+    concat_av_filter,
+    not_applicable_audio_qa,
+)
 from .pipeline import (
     GitHubModelsTranslator,
     SubtitleCue,
     VideoPipelineError,
+    probe_has_audio_stream,
     render_srt,
     translate_cues,
 )
@@ -1038,15 +1045,43 @@ def render_wta_video(
                 metadata.playback_url,
             ]
         )
+    audio_transitions: list[dict[str, object]] = []
+    audio_transition_duration_delta = 0.0
+    audio_qa: dict[str, object] | None
     if len(starts) > 1:
-        concat_inputs = "".join(f"[{index}:v][{index}:a]" for index in range(len(starts)))
-        montage = f"{concat_inputs}concat=n={len(starts)}:v=1:a=1[montagev][outa];"
-        video_input = "[montagev]"
-        audio_map = ["-map", "[outa]"]
+        # These inputs retain the official video's mixed programme audio
+        # (court sound, commentary and music).  Route each non-contiguous cut
+        # through the global duration-safe policy: the bed fades out/in inside
+        # its own window, speech is never overlapped, and the 38-second video
+        # and subtitle timeline remains unchanged.
+        montage_graph = concat_av_filter(
+            [
+                AVSegment(
+                    duration=segment_seconds,
+                    source_id=f"{metadata.playback_url}#start={start:.3f}",
+                )
+                for start in starts
+            ],
+            audio_role="mixed",
+        )
+        montage = f"{montage_graph.filtergraph};"
+        video_input = montage_graph.video_label
+        audio_map = ["-map", montage_graph.audio_label]
+        audio_transitions = [asdict(join) for join in montage_graph.joins]
+        audio_transition_duration_delta = montage_graph.duration_delta
+        audio_qa = audio_qa_for_graph(
+            montage_graph,
+            audio_role="mixed",
+            reason="non_contiguous_official_montage_windows",
+        )
     else:
         montage = ""
         video_input = "[0:v]"
         audio_map = ["-map", "0:a?"]
+        # ``0:a?`` is intentionally optional.  Classify the actual rendered
+        # output below; declaring a source continuous before knowing an audio
+        # stream exists turns a silent clip into a false pass-through audit.
+        audio_qa = None
     filters = montage + (
         f"{video_input}split=2[bg][fg];"
         "[bg]scale=1080:1440:force_original_aspect_ratio=increase,"
@@ -1097,6 +1132,23 @@ def render_wta_video(
             ) from fallback_exc
     if not output_path.is_file():
         raise VideoPipelineError("Official video render created no output")
+    if audio_qa is None:
+        has_audio = probe_has_audio_stream(output_path)
+        audio_qa = not_applicable_audio_qa(
+            audio_role="silence" if has_audio is False else "mixed",
+            reason=(
+                "no_audio" if has_audio is False else "single_continuous_source"
+            ),
+        )
+        audio_qa["audio_stream_detected"] = has_audio
+    audio_qa["expected_duration_seconds"] = round(float(clip_seconds), 6)
+    # The daily directory may also contain the silent card-deck video.  Bind
+    # this report to the official MP4 stem so the two audits cannot overwrite
+    # or accidentally validate one another.
+    output_path.with_suffix(".audio-qa.json").write_text(
+        json.dumps(audio_qa, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     audit = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": asdict(metadata.candidate),
@@ -1105,6 +1157,9 @@ def render_wta_video(
         "source_duration_ms": metadata.duration_ms,
         "clip_seconds": clip_seconds,
         "montage_starts_seconds": starts,
+        "audio_transition_duration_delta_seconds": audio_transition_duration_delta,
+        "audio_transitions": audio_transitions,
+        "audio_qa": audio_qa,
         "output": output_path.name,
     }
     (output_dir / "official-video.json").write_text(

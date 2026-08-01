@@ -91,6 +91,12 @@ from tennislive.video.explainer import (  # noqa: E402
     write_subtitles,
 )
 from tennislive.video.subtitle_text import drop_punctuation  # noqa: E402
+from tennislive.video.audio import (  # noqa: E402
+    AVSegment,
+    ConcatFiltergraph,
+    audio_qa_for_graph,
+    concat_av_filter,
+)
 
 # **成片帧率跟着源片走，不要硬定 30。** 这份华盛顿的官方集锦是 25 fps，
 # 而滤镜链里写死 `fps=30`：25 和 30 的比是 5:6，于是每 5 帧就复制一帧，
@@ -167,6 +173,10 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # （69.9s 的画面配 64.3s 的音轨，64.3/69.9 = 0.9196 ≈ 44100/48000）。
 # 它不报错，ffprobe 也只写着「48000」，只有把两个时长摆在一起才看得出来。
 AUDIO_RATE = "48000"
+# **交付片要看独立的视频/音频流，不看容器总时长。** MP4 的 format.duration
+# 正常不代表两条流一样长：旁白钥匙提前 EOF 时，容器照样跟着视频写到最后，
+# 音轨却已经没了。最终字幕、sidechain 和 amix 全封装完之后再过这道闸。
+FINAL_AV_MAX_DELTA_SECONDS = 0.05
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
 # crf 17/preset slow，等于把画质编进一个马上要被重编的文件里。成片那一步的参数
 # 没有跟着降。
@@ -248,6 +258,85 @@ def _has_audio(path: Path) -> bool:
     out = run("ffprobe", "-v", "error", "-select_streams", "a",
               "-show_entries", "stream=index", "-of", "csv=p=0", str(path)).stdout
     return bool(out.strip())
+
+
+def _probe_av_stream_durations(path: Path) -> tuple[float, float]:
+    """Read final video/audio stream durations independently."""
+    raw = run(
+        "ffprobe", "-v", "error", "-show_entries",
+        "stream=codec_type,duration", "-of", "json", str(path),
+    ).stdout
+    streams = json.loads(raw).get("streams") or []
+    durations: dict[str, float] = {}
+    for stream in streams:
+        kind = stream.get("codec_type")
+        duration = stream.get("duration")
+        if kind in {"video", "audio"} and duration not in {None, "N/A"}:
+            durations[kind] = float(duration)
+    missing = sorted({"video", "audio"} - durations.keys())
+    if missing:
+        raise ReelError(
+            f"最终成片 {path.name} 读不到独立的 {'/'.join(missing)} 时长"
+        )
+    return durations["video"], durations["audio"]
+
+
+def _audit_final_delivery(final: Path, *, declared_duration: float) -> Path:
+    """Promote the join plan QA to a measurement of the delivered MP4.
+
+    ``_join_parts`` can prove that its prepared intermediate kept the declared
+    timeline.  It cannot prove that the later TTS/sidechain/amix/subtitle mux
+    kept the audio alive.  This gate therefore runs only after the final MP4
+    exists, retains the original join rows, and measures the two delivered
+    streams rather than ``format.duration``.
+    """
+    if not math.isfinite(declared_duration) or declared_duration <= 0:
+        raise ReelError(f"最终成片声明时长不合法：{declared_duration!r}")
+    qa_path = final.parent / "audio-qa.json"
+    if not qa_path.exists():
+        raise ReelError("最终成片审计前缺 audio-qa.json，转场计划没有落盘")
+    try:
+        report = json.loads(qa_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ReelError(f"读不到转场计划 {qa_path}：{exc}") from exc
+    if not isinstance(report.get("joins"), list):
+        raise ReelError("audio-qa.json 缺 joins，不能丢掉转场计划只写最终时长")
+
+    video_duration, audio_duration = _probe_av_stream_durations(final)
+    av_delta = abs(video_duration - audio_duration)
+    programme_duration = max(video_duration, audio_duration)
+    declared_delta = abs(programme_duration - declared_duration)
+    problems: list[str] = []
+    if av_delta > FINAL_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"最终 A/V 时差 {av_delta:.3f}s > "
+            f"{FINAL_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+    if declared_delta > FINAL_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"最终总时长相对声明偏差 {declared_delta:.3f}s > "
+            f"{FINAL_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+
+    report.update({
+        "stage": "final_delivery",
+        "status": "fail" if problems else "pass",
+        "final_declared_duration_seconds": round(declared_duration, 6),
+        "final_video_duration_seconds": round(video_duration, 6),
+        "final_audio_duration_seconds": round(audio_duration, 6),
+        "final_programme_duration_seconds": round(programme_duration, 6),
+        "av_delta_seconds": round(av_delta, 6),
+        "final_declared_delta_seconds": round(declared_delta, 6),
+        "max_av_delta_seconds": FINAL_AV_MAX_DELTA_SECONDS,
+        "final_delivery_problems": problems,
+    })
+    qa_path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    if problems:
+        raise ReelError("最终成片音频审计失败：" + "；".join(problems))
+    return qa_path
 
 
 def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
@@ -1574,6 +1663,101 @@ def _preflight_cutout(spec: dict) -> None:
         ) from exc
 
 
+def _join_parts(
+    parts: list[Path],
+    durations: list[float],
+    source_ids: list[str],
+    dest: Path,
+) -> ConcatFiltergraph:
+    """拼接画面，同时让音轨走全工程统一的定长转场。
+
+    这里不能再让 concat demuxer 同时带着音轨走：不同剪辑段的环境声、解说声和
+    音乐底一旦在边界直接换轨，听感就是一次硬切。视频仍然可以 ``-c:v copy``
+    无损拼接；音频则由 :mod:`tennislive.video.audio` 在每段自己的时间窗内淡出、
+    淡入，随后再回封装。这样输出时长仍是各段时长之和，已经按这个时间轴排好的
+    旁白和字幕不用重算。
+
+    ``source_ids`` 描述的是一个**连续剪辑窗口**，不是底层文件名。同一条官方
+    集锦里相隔几十秒的两个片段也不是采样连续的，必须给不同 ID，不能因为文件名
+    相同就退化成 20ms 的同源去爆音处理。
+    """
+    if not parts or not (len(parts) == len(durations) == len(source_ids)):
+        raise ReelError("拼接输入、时长和来源标识必须非空且一一对应")
+
+    graph = concat_av_filter(
+        [
+            AVSegment(duration, source_id=source_id)
+            for duration, source_id in zip(durations, source_ids)
+        ],
+        audio_role="mixed",
+    )
+    expected = graph.output_duration
+    listing = dest.with_name("_concat_video.txt")
+    video_only = dest.with_name("_concat_video.mp4")
+    joined_audio = dest.with_name("_concat_audio.m4a")
+    listing.write_text(
+        "ffconcat version 1.0\n"
+        + "".join(
+            f"file '{part.resolve()}'\nduration {duration:.6f}\n"
+            for part, duration in zip(parts, durations)
+        ),
+        encoding="utf-8",
+    )
+    try:
+        # concat demuxer 只准处理画面。`-an` 是一道显式闸门：哪怕以后 part 又多了
+        # 一条音轨，也不能悄悄绕过下面的全局音频转场策略。
+        run(
+            "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "concat", "-safe", "0", "-i", str(listing),
+            "-map", "0:v:0", "-an", "-c:v", "copy",
+            "-t", f"{expected:.6f}", str(video_only),
+        )
+
+        audio_inputs = [item for part in parts for item in ("-i", str(part))]
+        # concat_av_filter 同时声明 A/V 时间线。这里只有音频需要写文件，所以把
+        # 生成的画面输出接到 nullsink；仍由同一个图裁齐每段时长，防 AAC padding
+        # 把下一段（以及后面的旁白 offset）一点点往后推。
+        run(
+            "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            *audio_inputs,
+            "-filter_complex", f"{graph.filtergraph};{graph.video_label}nullsink",
+            "-map", graph.audio_label, "-vn",
+            "-c:a", "aac", "-b:a", "192k", "-ar", AUDIO_RATE,
+            "-t", f"{expected:.6f}", str(joined_audio),
+        )
+        run(
+            "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-i", str(video_only), "-i", str(joined_audio),
+            "-map", "0:v:0", "-map", "1:a:0", "-c", "copy",
+            "-t", f"{expected:.6f}", str(dest),
+        )
+
+        actual = probe_duration(dest)
+        # 视频只能落在帧边界，给一帧加 20ms 的封装余量；超过就是时轴真漂了。
+        tolerance = max(0.05, 1.0 / FPS + 0.02)
+        if abs(actual - expected) > tolerance:
+            raise ReelError(
+                f"音频转场后时轴漂移：应为 {expected:.3f}s，"
+                f"实为 {actual:.3f}s（容差 {tolerance:.3f}s）"
+            )
+        audio_qa = audio_qa_for_graph(
+            graph,
+            audio_role="mixed",
+            reason="non_contiguous_official_highlight_windows",
+        )
+        audio_qa["declared_output_duration_seconds"] = round(expected, 6)
+        audio_qa["measured_output_duration_seconds"] = round(actual, 6)
+        audio_qa["timeline_delta_seconds"] = round(actual - expected, 6)
+        (dest.parent / "audio-qa.json").write_text(
+            json.dumps(audio_qa, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return graph
+    finally:
+        for intermediate in (listing, video_only, joined_audio):
+            intermediate.unlink(missing_ok=True)
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
            source_override: Path | None = None) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
@@ -1669,14 +1853,23 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index)))
 
-    listing = outdir / "_concat.txt"
-    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
-                       encoding="utf-8")
     silent = outdir / "_video.mp4"
     with stage("拼接"):
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "concat", "-safe", "0", "-i", str(listing),
-            "-c", "copy", str(silent))
+        # 封面和每个剪辑窗口都不是采样连续的音源。窗口级 ID 保证即使它们来自
+        # 同一个 source.mp4，也执行全局的定长淡出/淡入，而不是直接换轨。
+        join_graph = _join_parts(
+            parts,
+            [cover_secs, *(seg.length for seg in segments)],
+            [
+                f"cover:{spec.get('slug', 'reel')}",
+                *(
+                    f"{sources[seg.source].resolve()}#"
+                    f"{seg.start:.6f}-{seg.end:.6f}"
+                    for seg in segments
+                ),
+            ],
+            silent,
+        )
 
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate)
@@ -1824,7 +2017,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
 
-    for junk in list(outdir.glob("part_*.mp4")) + [listing, silent, mixed,
+    # **不能只审计 `_video.mp4` 中间片。** TTS、sidechaincompress、amix 和
+    # 字幕封装都发生在它之后；过去片尾现场声被截断，正是中间片完全正常而最终
+    # 音轨提前结束。这里量交付 MP4 的两条独立 stream，失败就不进入清理/提交。
+    _audit_final_delivery(final, declared_duration=join_graph.output_duration)
+
+    for junk in list(outdir.glob("part_*.mp4")) + [silent, mixed,
                                                    outdir / "_cover_frame.jpg"]:
         junk.unlink(missing_ok=True)
     # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——

@@ -12,12 +12,20 @@
 """
 import asyncio
 import json
+import math
 import re
 import subprocess
 import sys
 from pathlib import Path
 
 import edge_tts
+from tennislive.video.audio import (
+    AVSegment,
+    AudioJoinPolicy,
+    audio_qa_for_graph,
+    concat_audio_filter,
+    not_applicable_audio_qa,
+)
 from tennislive.video.subtitle_text import drop_punctuation
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +41,99 @@ VOICE = "zh-CN-YunjianNeural"
 RATE = "+8%"
 ACCENT_ASS = "&H28BEF5&"  # 品牌黄 #F5BE28 的 BGR
 KEYWORDS = ("澳网", "法网", "温网", "美网", "红土", "草地", "硬地", "大满贯")
+
+_AUDIO_QA_MODE_COUNTS = {
+    "lcut_crossfade": "lcut_crossfade_count",
+    "fade_through_silence": "fade_through_silence_count",
+    "declick": "declick_count",
+    "keep": "keep_count",
+}
+
+
+def aggregate_audio_qa_layers(layers):
+    """Merge every audio-edit layer without hiding an earlier boundary.
+
+    The programme has two different timelines worth auditing: source cuts
+    inside a scene's ambience, then the final sequence of scene-sized speech
+    stems.  Keeping only the second graph makes its safe ``keep`` joins appear
+    to prove that the whole film is safe, even if an ambience montage used a
+    hard switch.  This aggregate retains each layer's native QA record and
+    also flattens all joins into repository-wide top-level counters.
+    """
+    if not layers:
+        raise ValueError("audio QA requires at least one layer")
+
+    retained_layers = []
+    flattened_joins = []
+    policy_versions = set()
+    duration_deltas = []
+    hard_cut_count = 0
+    layer_statuses = []
+
+    for layer in layers:
+        layer_id = str(layer["layer_id"])
+        layer_type = str(layer["layer_type"])
+        scene_id = layer.get("scene_id")
+        qa = dict(layer["audio_qa"])
+        joins = [dict(join) for join in qa.get("joins", [])]
+        if int(qa.get("transition_count", -1)) != len(joins):
+            raise ValueError(f"{layer_id}: transition_count does not match joins")
+
+        for mode, count_key in _AUDIO_QA_MODE_COUNTS.items():
+            actual = sum(join.get("mode") == mode for join in joins)
+            if int(qa.get(count_key, -1)) != actual:
+                raise ValueError(f"{layer_id}: {count_key} does not match joins")
+
+        policy_versions.add(int(qa["policy_version"]))
+        duration_deltas.append(float(qa.get("duration_delta_seconds", 0.0)))
+        hard_cut_count += int(qa.get("hard_cut_count", 0))
+        layer_statuses.append(str(qa.get("status", "fail")))
+        retained_layers.append(
+            {
+                "layer_id": layer_id,
+                "layer_type": layer_type,
+                "scene_id": scene_id,
+                "audio_qa": qa,
+            }
+        )
+        for join in joins:
+            flattened_joins.append(
+                {
+                    **join,
+                    "layer_id": layer_id,
+                    "layer_type": layer_type,
+                    "scene_id": scene_id,
+                    "layer_role": qa.get("role"),
+                }
+            )
+
+    if len(policy_versions) != 1:
+        raise ValueError("audio QA layers use different policy versions")
+    duration_delta = math.fsum(duration_deltas)
+    counts = {
+        count_key: sum(join.get("mode") == mode for join in flattened_joins)
+        for mode, count_key in _AUDIO_QA_MODE_COUNTS.items()
+    }
+    statuses_ok = all(status in {"pass", "not_applicable"} for status in layer_statuses)
+    status = (
+        "pass"
+        if statuses_ok and hard_cut_count == 0 and abs(duration_delta) <= 1e-9
+        else "fail"
+    )
+    return {
+        "policy_version": policy_versions.pop(),
+        "status": status,
+        "role": "mixed",
+        "reason": "scene ambience/mix layers plus final speech timeline",
+        "duration_delta_seconds": duration_delta,
+        "transition_count": len(flattened_joins),
+        "hard_cut_count": hard_cut_count,
+        **counts,
+        "fallback_count": counts["fade_through_silence_count"],
+        "joins": flattened_joins,
+        "layer_count": len(retained_layers),
+        "layers": retained_layers,
+    }
 
 
 def synth(text: str, dst: Path):
@@ -212,7 +313,12 @@ def build_broll_video(cuts, total, chrome, dst):
 
 
 def build_scene_ambient(cuts, total, dst):
-    """从各切片抽原声拼成环境音轨（声浪/音乐），失败返回 None。"""
+    """从各切片抽原声拼成环境音轨，并返回这一层的结构化 QA。
+
+    各切片先在自己的时间窗内淡出/淡入，再用滤镜拼接；不能用 concat demuxer
+    直接硬切音乐。每段都会补齐并裁到声明时长，因此这层处理不会移动配音、字幕
+    或下一镜的时间点。
+    """
     segs = []
     fixed = sum(c[2] for c in cuts if c[2])
     flex = [i for i, c in enumerate(cuts) if not c[2]]
@@ -223,20 +329,51 @@ def build_scene_ambient(cuts, total, dst):
         r = subprocess.run(
             ["ffmpeg", "-v", "error", "-y", "-ss", f"{start:.2f}", "-t", f"{d_i:.3f}",
              "-i", str(ROOT / src if not str(src).startswith("/") else src),
-             "-vn", "-ac", "1", "-ar", "48000", str(seg)], capture_output=True)
+             "-vn", "-af", f"apad=whole_dur={d_i:.3f},atrim=duration={d_i:.3f}",
+             "-ac", "1", "-ar", "48000", str(seg)], capture_output=True)
         if r.returncode == 0 and seg.exists() and seg.stat().st_size > 1000:
-            segs.append(seg)
+            # Even two cuts from the same video may be non-contiguous.  Give
+            # each EDL cut its own identity so the global safe default softens
+            # every actual edit instead of guessing continuity from a path.
+            segs.append((seg, d_i, f"{src}:{start:.3f}:{i}"))
     if not segs:
-        return None
-    lst = dst.parent / f"{dst.stem}_amb.txt"
-    lst.write_text("".join(f"file '{s.name}'\n" for s in segs), "utf-8")
+        return None, None
+    graph = concat_audio_filter(
+        [
+            AVSegment(duration, source_id=source_id, audio_label=f"{i}:a")
+            for i, (_, duration, source_id) in enumerate(segs)
+        ],
+        audio_role="ambience",
+        channel_layout="mono",
+        output_audio_label="ambcat",
+    )
     fade = (f"apad=whole_dur={total:.3f},atrim=0:{total:.3f},"
             f"afade=t=in:d=0.6,afade=t=out:st={max(0, total - 0.8):.3f}:d=0.8")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                    "-i", str(lst), "-af", fade,
-                    "-t", f"{total:.3f}", str(dst)],
-                   check=True, cwd=str(dst.parent))
-    return dst
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for seg, _, _ in segs:
+        cmd += ["-i", str(seg)]
+    cmd += [
+        "-filter_complex", f"{graph.filtergraph};{graph.audio_label}{fade}[ambout]",
+        "-map", "[ambout]", "-t", f"{total:.3f}", "-ar", "48000", "-ac", "1",
+        str(dst),
+    ]
+    subprocess.run(cmd, check=True)
+    qa = audio_qa_for_graph(
+        graph,
+        audio_role="ambience",
+        reason="source cuts inside one scene ambience layer",
+    )
+    qa.update(
+        {
+            "segment_count": len(segs),
+            "declared_join_output_duration_seconds": round(
+                graph.output_duration, 6
+            ),
+            "scene_duration_seconds": round(total, 6),
+            "post_join_fit": "pad_then_trim_to_scene_window",
+        }
+    )
+    return dst, qa
 
 
 BED_SRC = "assets/local/broll/wim2026_montage_0-120s.mp4"
@@ -350,11 +487,22 @@ Format: Layer, Start, End, Style, Text
         if cuts:
             chrome = render_chrome(sc)
             build_broll_video(cuts, c, chrome, clip)
-            p["ambient"] = build_scene_ambient(cuts, p["dur"], TMP / f"amb_{k:02d}.wav")
+            p["ambient"], p["ambient_audio_qa"] = build_scene_ambient(
+                cuts, p["dur"], TMP / f"amb_{k:02d}.wav"
+            )
             p["amb_vol"] = 0.55
             if p["ambient"] is None:  # 纯照片切片无原声 → 垫氛围床
                 p["ambient"] = build_bed_ambient(k, p["dur"], TMP / f"bed_{k:02d}.wav")
                 p["amb_vol"] = 0.3
+                p["ambient_audio_qa"] = not_applicable_audio_qa(
+                    audio_role="ambience",
+                    reason=(
+                        "single continuous fallback ambience bed has no "
+                        "internal edit boundary"
+                        if p["ambient"]
+                        else "no usable ambience source for this scene"
+                    ),
+                )
             kind = f"b-roll×{len(cuts)}"
         else:
             subprocess.run(
@@ -365,6 +513,14 @@ Format: Layer, Start, End, Style, Text
             # 静帧镜头也垫氛围床，声音永不硬断
             p["ambient"] = build_bed_ambient(k, p["dur"], TMP / f"bed_{k:02d}.wav")
             p["amb_vol"] = 0.28
+            p["ambient_audio_qa"] = not_applicable_audio_qa(
+                audio_role="ambience",
+                reason=(
+                    "single continuous ambience bed has no internal edit boundary"
+                    if p["ambient"]
+                    else "no usable ambience source for this scene"
+                ),
+            )
             kind = "静帧"
         clips.append(clip)
         print(f"  片段 {k + 1}/{len(plan)} {p['id']} {c:.2f}s [{kind}]")
@@ -386,26 +542,102 @@ Format: Layer, Start, End, Style, Text
                             "-i", str(vo_p), "-filter_complex", fc,
                             "-t", f"{d:.3f}", "-ar", "48000", "-ac", "1",
                             str(seg)], check=True)
+            mix_role = "mixed"
+            mix_reason = "sidechain speech/ambience mix has no temporal edit boundary"
         elif vo_p:
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vo_p),
                             "-af", f"apad=whole_dur={d:.3f}", "-t", f"{d:.3f}",
                             "-ar", "48000", "-ac", "1", str(seg)], check=True)
+            mix_role = "speech"
+            mix_reason = "single speech stem has no temporal edit boundary"
         elif amb:
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(amb),
                             "-af", f"volume=0.7,apad=whole_dur={d:.3f}",
                             "-t", f"{d:.3f}", "-ar", "48000", "-ac", "1",
                             str(seg)], check=True)
+            mix_role = "ambience"
+            mix_reason = "single ambience stem has no temporal edit boundary"
         else:
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
                             "-i", "anullsrc=r=48000:cl=mono", "-t", f"{d:.3f}",
                             str(seg)], check=True)
+            mix_role = "silence"
+            mix_reason = "silent scene has no temporal edit boundary"
+        p["mix_audio_qa"] = not_applicable_audio_qa(
+            audio_role=mix_role,
+            reason=mix_reason,
+        )
         seg_files.append(seg)
-    alist = TMP / "alist.txt"
-    alist.write_text("".join(f"file '{s.name}'\n" for s in seg_files), "utf-8")
+    # These files already contain the (soft-edged) ambience underneath TTS.
+    # Join the exact declared scene windows without fading or overlapping the
+    # speech itself.  A filter concat trims encoder padding deterministically;
+    # the old concat-demuxer/copy path could hard-switch beds and drift.
+    graph = concat_audio_filter(
+        [
+            AVSegment(p["dur"], source_id=f"scene:{p['id']}", audio_label=f"{i}:a")
+            for i, p in enumerate(plan)
+        ],
+        audio_role="speech",
+        join_overrides={
+            i: AudioJoinPolicy.keep() for i in range(len(seg_files) - 1)
+        },
+        channel_layout="mono",
+        output_audio_label="voall",
+    )
+    speech_audio_qa = audio_qa_for_graph(
+        graph,
+        audio_role="speech",
+        reason="scene_ambience_softened_before_speech_keep_join",
+    )
+    speech_audio_qa.update(
+        {
+            "segment_count": len(seg_files),
+            "expected_duration_seconds": round(graph.output_duration, 6),
+        }
+    )
+    audio_layers = []
+    for p in plan:
+        audio_layers.extend(
+            [
+                {
+                    "layer_id": f"scene:{p['id']}:ambience",
+                    "layer_type": "scene_ambience",
+                    "scene_id": p["id"],
+                    "audio_qa": p["ambient_audio_qa"],
+                },
+                {
+                    "layer_id": f"scene:{p['id']}:mix",
+                    "layer_type": "scene_mix",
+                    "scene_id": p["id"],
+                    "audio_qa": p["mix_audio_qa"],
+                },
+            ]
+        )
+    audio_layers.append(
+        {
+            "layer_id": "programme:speech-timeline",
+            "layer_type": "speech_timeline",
+            "scene_id": None,
+            "audio_qa": speech_audio_qa,
+        }
+    )
+    audio_qa = aggregate_audio_qa_layers(audio_layers)
+    audio_qa["expected_duration_seconds"] = round(graph.output_duration, 6)
+    (OUT / "audio-qa.json").write_text(
+        json.dumps(audio_qa, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     voall = TMP / "vo_all.wav"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                    "-i", str(alist), "-c", "copy", str(voall)],
-                   check=True, cwd=str(TMP))
+    cmd = ["ffmpeg", "-v", "error", "-y"]
+    for seg in seg_files:
+        cmd += ["-i", str(seg)]
+    cmd += [
+        "-filter_complex", graph.filtergraph,
+        "-map", graph.audio_label,
+        "-t", f"{graph.output_duration:.3f}",
+        "-ar", "48000", "-ac", "1", str(voall),
+    ]
+    subprocess.run(cmd, check=True)
     vofinal = TMP / "vo_final.wav"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(voall),
                     "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000",
@@ -426,13 +658,25 @@ Format: Layer, Start, End, Style, Text
         acc_d += plan[k]["dur"]
     ass_path = str(ass).replace("'", r"\'")
     fg.append(f"[vx]subtitles=filename='{ass_path}'[vs]")
+    final = OUT / "grand-slam-v2.mp4"
     cmd += ["-filter_complex", ";".join(fg), "-map", "[vs]", "-map", f"{n}:a",
             "-c:v", "libx264", "-preset", "medium", "-crf", "19",
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
-            "-movflags", "+faststart", str(OUT / "grand-slam-v2.mp4")]
+            "-movflags", "+faststart", str(final)]
     print("最终合成（叠化 + 字幕 + 混流）…")
     subprocess.run(cmd, check=True)
-    print(f"完成：{OUT / 'grand-slam-v2.mp4'}  总时长 {total:.1f}s")
+    subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tools" / "check_audio_qa.py"),
+            "--report",
+            str(OUT / "audio-qa.json"),
+            "--video",
+            str(final),
+        ],
+        check=True,
+    )
+    print(f"完成：{final}  总时长 {total:.1f}s")
 
 
 if __name__ == "__main__":

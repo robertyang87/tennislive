@@ -29,6 +29,7 @@ recorded in assets/explainer/<slug>/credits.json, not painted on the frame.
 from __future__ import annotations
 
 import base64
+import dataclasses
 import html
 import json
 import mimetypes
@@ -36,11 +37,17 @@ import os
 import re
 import shutil
 import subprocess
-import dataclasses
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Sequence
+
 from ..cdn import jsdelivr_base
+from .audio import (
+    AudioJoinPolicy,
+    AVSegment,
+    audio_qa_for_graph,
+    concat_audio_filter,
+)
 from .subtitle_text import DROP as SUB_DROP, TRIM as SUB_TRIM, drop_punctuation
 
 # The card/image keeps the brand 3:4 (1080x1440); the video canvas is 9:16
@@ -4164,9 +4171,17 @@ def assemble_explainer_video(
     ffprobe_bin: str = "ffprobe",
     lead_silence: float = LEAD_SILENCE,
     tail_silence: float = TAIL_SILENCE,
+    audio_manifest_path: Path | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
-    """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat."""
+    """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
+
+    Every input stem here is spoken narration.  Speech boundaries therefore
+    use the project-wide ``audio_role="speech"`` contract: keep the stems in
+    sequence, never overlap them, and never apply a music-style fade.  The
+    shared audio helper trims every stem to the declared picture duration, so
+    the audio timeline remains exactly the sum of the slide durations.
+    """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
     if shutil.which(ffmpeg_bin) is None:
@@ -4180,10 +4195,16 @@ def assemble_explainer_video(
     # it takes the head and the tail on the same audio stream.
     head = [lead_silence if i == 0 else 0.0 for i in range(n)]
     tail = [tail_silence if i == n - 1 else 0.0 for i in range(n)]
+    spoken_seconds = [
+        _audio_seconds(Path(audio), ffprobe_bin, runner) for audio in audios
+    ]
+    segment_seconds = [
+        spoken_seconds[i] + head[i] + tail[i] for i in range(n)
+    ]
 
     command = [ffmpeg_bin, "-hide_banner", "-loglevel", "error", "-y"]
     for i, (slide, audio) in enumerate(zip(slides, audios)):
-        seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
+        seconds = segment_seconds[i]
         command.extend(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
@@ -4207,7 +4228,7 @@ def assemble_explainer_video(
                 marks = []
             cues = subtitle_cues(
                 readable(captions[i]),
-                _audio_seconds(Path(audios[i]), ffprobe_bin, runner),
+                spoken_seconds[i],
                 boundaries=marks,
                 offset=head[i],
             )
@@ -4224,11 +4245,29 @@ def assemble_explainer_video(
         if tail[i]:
             steps.append(f"apad=pad_dur={tail[i]:.3f}")
         filters.append(
-            f"[{2 * i + 1}:a]{','.join(steps)}[a{i}]" if steps
-            else f"[{2 * i + 1}:a]anull[a{i}]"
+            f"[{2 * i + 1}:a]{','.join(steps)}[speech{i}]" if steps
+            else f"[{2 * i + 1}:a]anull[speech{i}]"
         )
-    concat_inputs = "".join(f"[v{i}][a{i}]" for i in range(n))
-    filters.append(f"{concat_inputs}concat=n={n}:v=1:a=1[outv][outa]")
+    video_inputs = "".join(f"[v{i}]" for i in range(n))
+    filters.append(f"{video_inputs}concat=n={n}:v=1:a=0[outv]")
+
+    speech_graph = concat_audio_filter(
+        [
+            AVSegment(
+                duration=segment_seconds[i],
+                source_id=f"tts-segment-{i}",
+                audio_label=f"speech{i}",
+            )
+            for i in range(n)
+        ],
+        audio_role="speech",
+        join_overrides={
+            boundary: AudioJoinPolicy.keep() for boundary in range(n - 1)
+        },
+        channel_layout="mono",
+        output_audio_label="outa",
+    )
+    filters.append(speech_graph.filtergraph)
 
     command.extend(
         [
@@ -4263,6 +4302,45 @@ def assemble_explainer_video(
         raise ExplainerVideoError(f"ffmpeg failed: {exc}") from exc
     if not output.is_file():
         raise ExplainerVideoError("ffmpeg completed without creating the explainer video")
+
+    audio_qa = audio_qa_for_graph(
+        speech_graph,
+        audio_role="speech",
+        reason="independent TTS narration stems; speech is never overlapped",
+    )
+    audio_qa.update(
+        {
+            "boundary_policy": "keep",
+            "max_declick_seconds": 0.02,
+            "segment_count": n,
+            "expected_duration_seconds": round(
+                speech_graph.output_duration, 6
+            ),
+        }
+    )
+    # Generated explainers are one-video-per-directory, so the workflow gate
+    # always gets a stable standalone report even though narration.json also
+    # embeds the same record for editorial inspection.
+    (output.parent / "audio-qa.json").write_text(
+        json.dumps(audio_qa, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    if audio_manifest_path is not None:
+        manifest_path = Path(audio_manifest_path)
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            manifest = {}
+        manifest["audio_qa"] = audio_qa
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    elif output.with_suffix(".audio-qa.json") != output.parent / "audio-qa.json":
+        output.with_suffix(".audio-qa.json").write_text(
+            json.dumps(audio_qa, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
     return output
 
 
@@ -4296,7 +4374,7 @@ def generate_explainer_video(
     (outdir / "narration.json").write_text(
         json.dumps(
             {"voice": voice, "rate": rate, "pitch": pitch, "segments": len(audios),
-             "subtitles": True},
+             "subtitles": True, "audio_role": "speech"},
             ensure_ascii=False, indent=2,
         ) + "\n",
         encoding="utf-8",
@@ -4304,6 +4382,7 @@ def generate_explainer_video(
     return assemble_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
+        audio_manifest_path=outdir / "narration.json",
     )
 
 def explainer_push_html(

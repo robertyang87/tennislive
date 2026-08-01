@@ -13,6 +13,7 @@ from tennislive.video.pipeline import (
     load_rights_manifest,
     localize_video,
     parse_srt,
+    probe_has_audio_stream,
     render_srt,
     translate_cues,
 )
@@ -165,6 +166,9 @@ def test_localize_video_without_burn_writes_srt_and_rights_audit(tmp_path):
     localized = outdir / "interview.zh-CN.srt"
     assert "挽救了2个破发点" in localized.read_text(encoding="utf-8")
     assert audit["outputs"]["video"] is None
+    assert audit["audio_qa"]["status"] == "not_applicable"
+    assert audit["audio_qa"]["reason"] == "subtitle_only"
+    assert audit["audio_qa"]["transition_count"] == 0
     assert (outdir / "attribution.txt").read_text(encoding="utf-8") == "Video: Rights holder\n"
     saved_audit = json.loads((outdir / "rights-audit.json").read_text(encoding="utf-8"))
     assert saved_audit["source_sha256"] == hashlib.sha256(video.read_bytes()).hexdigest()
@@ -176,6 +180,10 @@ def test_burn_subtitles_calls_ffmpeg_without_a_shell(tmp_path, monkeypatch):
     output = tmp_path / "localized.mp4"
     commands = []
     monkeypatch.setattr("tennislive.video.pipeline.shutil.which", lambda _: "ffmpeg")
+    monkeypatch.setattr(
+        "tennislive.video.pipeline.probe_has_audio_stream",
+        lambda _path: True,
+    )
 
     def runner(command, check):
         commands.append((command, check))
@@ -187,4 +195,108 @@ def test_burn_subtitles_calls_ffmpeg_without_a_shell(tmp_path, monkeypatch):
     assert command[0] == "ffmpeg"
     assert "-vf" in command
     assert "subtitles=filename=" in command[command.index("-vf") + 1]
+    assert "afade" not in " ".join(command)
+    assert "acrossfade" not in " ".join(command)
     assert all(not isinstance(part, Path) for part in command)
+    audio_qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+    assert audio_qa["status"] == "not_applicable"
+    assert audio_qa["role"] == "mixed"
+    assert audio_qa["reason"] == "audio_passthrough"
+    assert audio_qa["transition_count"] == 0
+    assert audio_qa["audio_stream_detected"] is True
+
+
+def test_burn_subtitles_records_no_audio_without_reusing_render_runner(
+    tmp_path, monkeypatch
+):
+    video, subtitles, _ = _write_inputs(tmp_path)
+    output = tmp_path / "localized.mp4"
+    commands = []
+    monkeypatch.setattr("tennislive.video.pipeline.shutil.which", lambda _: "ffmpeg")
+    monkeypatch.setattr(
+        "tennislive.video.pipeline.probe_has_audio_stream",
+        lambda _path: False,
+    )
+
+    def runner(command, check):
+        commands.append((command, check))
+        output.write_bytes(b"rendered without audio")
+
+    burn_subtitles(video, subtitles, output, runner=runner)
+
+    assert len(commands) == 1
+    audio_qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+    assert audio_qa["status"] == "not_applicable"
+    assert audio_qa["role"] == "silence"
+    assert audio_qa["reason"] == "no_audio"
+    assert audio_qa["transition_count"] == 0
+    assert audio_qa["audio_stream_detected"] is False
+
+
+def test_audio_probe_is_narrow_and_distinguishes_empty_stream_list(
+    tmp_path, monkeypatch
+):
+    video = tmp_path / "rendered.mp4"
+    video.write_bytes(b"video")
+    calls = []
+    monkeypatch.setattr("tennislive.video.pipeline.shutil.which", lambda _: "ffprobe")
+
+    class Completed:
+        stdout = ""
+
+    def runner(command, **kwargs):
+        calls.append((command, kwargs))
+        return Completed()
+
+    assert probe_has_audio_stream(video, runner=runner) is False
+    command, kwargs = calls[0]
+    assert command[command.index("-select_streams") + 1] == "a:0"
+    assert command[command.index("-show_entries") + 1] == "stream=codec_type"
+    assert kwargs == {"check": True, "capture_output": True, "text": True}
+
+    Completed.stdout = "audio\n"
+    assert probe_has_audio_stream(video, runner=runner) is True
+
+
+def test_localize_audit_reuses_burned_video_audio_classification(
+    tmp_path, monkeypatch
+):
+    video, subtitles, rights_path = _write_inputs(tmp_path)
+    outdir = tmp_path / "output"
+    monkeypatch.setattr("tennislive.video.pipeline.shutil.which", lambda _: "ffmpeg")
+
+    def fake_burn(_video, _subtitles, output, **_kwargs):
+        output.write_bytes(b"silent localized video")
+        report = {
+            "policy_version": 1,
+            "status": "not_applicable",
+            "role": "silence",
+            "reason": "no_audio",
+            "duration_delta_seconds": 0.0,
+            "transition_count": 0,
+            "hard_cut_count": 0,
+            "lcut_crossfade_count": 0,
+            "fade_through_silence_count": 0,
+            "declick_count": 0,
+            "keep_count": 0,
+            "joins": [],
+            "audio_stream_detected": False,
+        }
+        (output.parent / "audio-qa.json").write_text(
+            json.dumps(report), encoding="utf-8"
+        )
+        return output
+
+    monkeypatch.setattr("tennislive.video.pipeline.burn_subtitles", fake_burn)
+
+    audit = localize_video(
+        video_path=video,
+        subtitle_path=subtitles,
+        rights_path=rights_path,
+        output_dir=outdir,
+        translator=FakeTranslator(),
+        burn=True,
+    )
+
+    assert audit["audio_qa"]["role"] == "silence"
+    assert audit["audio_qa"]["reason"] == "no_audio"

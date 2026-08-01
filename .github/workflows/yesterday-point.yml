@@ -30,8 +30,15 @@ on:
       - "src/tennislive/video/daily_point.py"
       - "src/tennislive/video/official.py"
       - "src/tennislive/video/pipeline.py"
+      - "src/tennislive/video/audio.py"
+      - "src/tennislive/render/video_digest.py"
       - "src/tennislive/cli.py"
       - "tests/test_daily_point.py"
+      - "tests/test_video_audio.py"
+      - "tests/test_video_digest.py"
+      - "tests/test_video_pipeline.py"
+      - "tests/test_audio_qa_gate.py"
+      - "tools/check_audio_qa.py"
 
 permissions:
   contents: write
@@ -72,7 +79,14 @@ jobs:
           node --version
 
       - name: 校验昨日好球规则
-        run: pytest -q tests/test_daily_point.py tests/test_official_video.py
+        run: >-
+          pytest -q
+          tests/test_video_audio.py
+          tests/test_video_pipeline.py
+          tests/test_audio_qa_gate.py
+          tests/test_video_digest.py
+          tests/test_daily_point.py
+          tests/test_official_video.py
 
       # 配了 YT_COOKIES_TXT 就把它落成文件：官方 YouTube 取播放源时带 cookie 过机器人
       # 验证（机房 IP 上 cookie 是唯一稳定的解）；没配就只能靠 client 梯子碰运气。
@@ -221,6 +235,17 @@ jobs:
             ' "$TMANIFEST" >/dev/null
             test -s "$TDIR/yesterday-point.mp4"
             test -s "$TDIR/yesterday-point.zh-CN.srt"
+            test -s "$TDIR/audio-qa.json"
+            jq -e '
+              .status == "not_applicable" and
+              (.reason == "single_continuous_source" or .reason == "no_audio") and
+              .transition_count == 0 and
+              .hard_cut_count == 0 and
+              (.joins | length) == 0
+            ' "$TDIR/audio-qa.json" >/dev/null
+            python tools/check_audio_qa.py \
+              --report "$TDIR/audio-qa.json" \
+              --video "$TDIR/yesterday-point.mp4"
             test -s "$TDIR/xiaohongshu.txt"
             test -s "$TDIR/copy.html"
             test -s "$TDIR/push.html"

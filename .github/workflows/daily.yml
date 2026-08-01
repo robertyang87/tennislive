@@ -247,6 +247,21 @@ jobs:
           fi
           ls -la "$OUT_DIR"
 
+      # 日报视频是可选的；一旦生成，每条 MP4 都必须有与自身同名的最终音频
+      # 报告。目录里同时可能有静音卡片视频和官方混合原声，不能共用一份报告。
+      - name: 每日视频最终音频质量硬闸
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          OUT_DIR="${{ steps.gen.outputs.outdir }}"
+          while IFS= read -r -d '' VIDEO; do
+            REPORT="${VIDEO%.mp4}.audio-qa.json"
+            test -s "$REPORT" || {
+              echo "::error::视频缺少全工程音频 QA：$VIDEO（应有 $REPORT）"
+              exit 1
+            }
+            python tools/check_audio_qa.py --report "$REPORT" --video "$VIDEO"
+          done < <(find "$OUT_DIR" -type f -name '*.mp4' -print0)
+
       - name: Upload digest failure diagnostics
         if: failure() && steps.guard.outputs.skip != 'true'
         uses: actions/upload-artifact@v4

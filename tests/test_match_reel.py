@@ -285,6 +285,160 @@ def test_合集片子的段尾要躲开下一场的转场卡():
     assert "两场" in spec["_source"], "没写清楚这条源片装着两场比赛"
 
 
+def test_多段成片音频走全局定长转场而不是直接concat(tmp_path, monkeypatch):
+    """赛场剪辑也必须继承全工程音频策略，而且不能为淡化偷偷改时轴。
+
+    这里特意给两个来自同一文件、但时间窗不连续的片段不同 source ID：它们不是
+    采样连续的，边界必须按跨源处理。视频可以无损 concat；该命令一定要带 `-an`，
+    音轨只能从共享 filtergraph 的 `[aout]` 出来。
+    """
+    reel = _reel()
+    calls: list[tuple[str, ...]] = []
+
+    def fake_run(*args, **_kwargs):
+        calls.append(args)
+        return type("P", (), {"stdout": ""})()
+
+    monkeypatch.setattr(reel, "run", fake_run)
+    monkeypatch.setattr(reel, "probe_duration", lambda _path: 6.1)
+    parts = [tmp_path / name for name in ("cover.mp4", "a.mp4", "b.mp4")]
+    for part in parts:
+        part.touch()
+
+    graph = reel._join_parts(
+        parts,
+        [2.6, 1.5, 2.0],
+        ["cover:demo", "source.mp4#10-11.5", "source.mp4#30-32"],
+        tmp_path / "joined.mp4",
+    )
+
+    assert graph.output_duration == 6.1
+    assert graph.duration_delta == 0.0
+    assert [join.mode for join in graph.joins] == [
+        "fade_through_silence",
+        "fade_through_silence",
+    ]
+    video_concat, audio_join, mux = calls
+    assert "concat" in video_concat and "-an" in video_concat
+    assert video_concat[video_concat.index("-map") + 1] == "0:v:0"
+    filtergraph = audio_join[audio_join.index("-filter_complex") + 1]
+    assert "afade=t=out" in filtergraph and "afade=t=in" in filtergraph
+    assert "acrossfade=" not in filtergraph, "直接 acrossfade 会缩短旁白时间轴"
+    assert audio_join[audio_join.index("-map") + 1] == "[aout]"
+    assert mux[mux.index("-c") + 1] == "copy"
+    assert all("6.100000" in command for command in calls)
+    assert not (tmp_path / "_concat_video.txt").exists()
+    audio_qa = json.loads((tmp_path / "audio-qa.json").read_text("utf-8"))
+    assert audio_qa["status"] == "pass"
+    assert audio_qa["role"] == "mixed"
+    assert audio_qa["transition_count"] == 2
+    assert audio_qa["duration_delta_seconds"] == 0.0
+    assert audio_qa["hard_cut_count"] == 0
+
+
+def test_音频转场后的时长漂移会立即失败(tmp_path, monkeypatch):
+    reel = _reel()
+    monkeypatch.setattr(
+        reel,
+        "run",
+        lambda *args, **kwargs: type("P", (), {"stdout": ""})(),
+    )
+    monkeypatch.setattr(reel, "probe_duration", lambda _path: 6.4)
+    parts = [tmp_path / "a.mp4", tmp_path / "b.mp4"]
+    for part in parts:
+        part.touch()
+
+    import pytest  # noqa: PLC0415
+
+    with pytest.raises(reel.ReelError, match="时轴漂移"):
+        reel._join_parts(parts, [3.0, 3.0], ["a", "b"], tmp_path / "joined.mp4")
+
+
+def test_最终音频审计量交付MP4并保留转场计划(tmp_path, monkeypatch):
+    """中间片正常不算完成；要量 TTS/sidechain/amix 之后的两条流。"""
+    reel = _reel()
+    final = tmp_path / "reel.mp4"
+    joins = [{"boundary": 0, "mode": "fade_through_silence",
+              "fade_out": 0.4, "fade_in": 0.3}]
+    (tmp_path / "audio-qa.json").write_text(json.dumps({
+        "status": "pass",
+        "role": "mixed",
+        "reason": "join plan",
+        "transition_count": 1,
+        "joins": joins,
+    }), encoding="utf-8")
+    calls: list[tuple[str, ...]] = []
+
+    def fake_run(*args, **_kwargs):
+        calls.append(args)
+        return type("P", (), {"stdout": json.dumps({"streams": [
+            {"codec_type": "video", "duration": "6.100"},
+            {"codec_type": "audio", "duration": "6.080"},
+        ]})})()
+
+    monkeypatch.setattr(reel, "run", fake_run)
+    path = reel._audit_final_delivery(final, declared_duration=6.1)
+
+    assert path == tmp_path / "audio-qa.json"
+    assert len(calls) == 1 and calls[0][0] == "ffprobe"
+    assert calls[0][-1] == str(final), "审计的必须是最终交付片，不是 _video.mp4"
+    qa = json.loads(path.read_text(encoding="utf-8"))
+    assert qa["stage"] == "final_delivery"
+    assert qa["status"] == "pass"
+    assert qa["final_video_duration_seconds"] == 6.1
+    assert qa["final_audio_duration_seconds"] == 6.08
+    assert qa["av_delta_seconds"] == 0.02
+    assert qa["final_declared_delta_seconds"] == 0.0
+    assert qa["joins"] == joins, "更新最终实测时不能丢掉原来的 join 计划"
+
+
+def test_最终音频审计在AV视频或声明时长漂移时落失败报告(
+    tmp_path, monkeypatch,
+):
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    final = tmp_path / "reel.mp4"
+
+    for video, audio, declared, message in (
+        (6.10, 6.02, 6.10, "A/V 时差"),
+        (6.18, 6.18, 6.10, "相对声明偏差"),
+    ):
+        (tmp_path / "audio-qa.json").write_text(json.dumps({
+            "status": "pass", "role": "mixed", "joins": [{"mode": "keep"}],
+        }), encoding="utf-8")
+        monkeypatch.setattr(
+            reel, "run",
+            lambda *args, _video=video, _audio=audio, **kwargs: type(
+                "P", (), {"stdout": json.dumps({"streams": [
+                    {"codec_type": "video", "duration": str(_video)},
+                    {"codec_type": "audio", "duration": str(_audio)},
+                ]})}
+            )(),
+        )
+        with pytest.raises(reel.ReelError, match=message):
+            reel._audit_final_delivery(final, declared_duration=declared)
+        qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+        assert qa["stage"] == "final_delivery"
+        assert qa["status"] == "fail"
+        assert qa["joins"] == [{"mode": "keep"}]
+        assert qa["final_delivery_problems"], "失败也要把实测证据写进报告"
+
+
+def test_最终音频审计排在TTS混音和字幕封装之后():
+    """防止以后又只在 `_join_parts` 中间片阶段调用审计。"""
+    import inspect  # noqa: PLC0415
+
+    reel = _reel()
+    source = inspect.getsource(reel.render)
+    final_mux = source.index('with stage("烧字幕+成片")')
+    audit = source.index("_audit_final_delivery(")
+    cleanup = source.index("for junk in list(outdir.glob")
+    assert final_mux < audit < cleanup
+    assert "declared_duration=join_graph.output_duration" in source
+    assert "join_graph = _join_parts(" in source
+
+
 def test_收尾不带播出方的片尾():
     """握手镜头放到底，但 185.92 之后是 TennisTV 的 logo 和二维码，不要。"""
     spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))

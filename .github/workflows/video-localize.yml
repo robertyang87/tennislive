@@ -73,6 +73,11 @@ jobs:
             --rights "$RIGHTS_PATH" \
             --outdir output/video-localized \
             $EXTRA
+          FINAL_VIDEO="$(find output/video-localized -maxdepth 1 -type f -name '*.mp4' -print -quit)"
+          test -n "$FINAL_VIDEO" || { echo "::error::没有生成本地化 MP4"; exit 1; }
+          python tools/check_audio_qa.py \
+            --report output/video-localized/audio-qa.json \
+            --video "$FINAL_VIDEO"
 
       - name: 上传成片、字幕与授权审计
         uses: actions/upload-artifact@v4

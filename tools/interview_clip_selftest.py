@@ -104,7 +104,7 @@ def synth_source(dest: Path, seconds: float) -> Path:
 def probe(path: Path) -> dict:
     out = subprocess.run(
         ["ffprobe", "-v", "error", "-show_entries",
-         "stream=codec_type,width,height,r_frame_rate,codec_name,sample_rate,channels",
+         "stream=codec_type,width,height,r_frame_rate,codec_name,sample_rate,channels,duration",
          "-show_entries", "format=duration", "-of", "json", str(path)],
         capture_output=True, text=True, check=True, timeout=120).stdout
     d = json.loads(out)
@@ -112,7 +112,8 @@ def probe(path: Path) -> dict:
     a = next((s for s in d["streams"] if s["codec_type"] == "audio"), {})
     return {"w": v["width"], "h": v["height"], "fps": v["r_frame_rate"],
             "acodec": a.get("codec_name"), "arate": a.get("sample_rate"),
-            "ach": a.get("channels"), "dur": float(d["format"]["duration"])}
+            "ach": a.get("channels"), "dur": float(d["format"]["duration"]),
+            "vdur": float(v["duration"]), "adur": float(a["duration"])}
 
 
 def run(spec_path: Path, venv: Path | None) -> int:
@@ -175,13 +176,35 @@ def run(spec_path: Path, venv: Path | None) -> int:
             ("声道", got["ach"], 2),
         ]
         bad = [f"{n}：{g} ≠ {w}" for n, g, w in checks if g != w]
-        if abs(got["dur"] - want_dur) > 1.0:
+        if abs(got["dur"] - want_dur) > 0.05:
             bad.append(f"时长：{got['dur']:.2f}s ≠ {want_dur:.2f}s")
+        av_delta = abs(got["vdur"] - got["adur"])
+        if av_delta > 0.05:
+            bad.append(f"A/V 时差：{av_delta:.3f}s > 0.050s")
+        qa_path = work / "audio-qa.json"
+        if not qa_path.exists():
+            bad.append("缺 audio-qa.json")
+            qa = {}
+        else:
+            qa = json.loads(qa_path.read_text(encoding="utf-8"))
+            expected_status = "pass" if spec.get("cover") else "not_applicable"
+            if qa.get("status") != expected_status or qa.get("role") != "speech":
+                bad.append(f"音频 QA 不合格：{qa}")
+            if spec.get("cover"):
+                joins = qa.get("joins") or []
+                if len(joins) != 1 or joins[0].get("mode") != "declick":
+                    bad.append(f"封面→人声不是唯一 20ms de-click：{joins}")
+                elif (joins[0].get("fade_out") != 0.02
+                      or joins[0].get("fade_in") != 0.02):
+                    bad.append(f"封面→人声 de-click 不是 20ms：{joins[0]}")
         print("\n—— 查产物 ——")
         for n, g, w in checks:
             print(f"  {'✅' if g == w else '❌'} {n} {g}")
-        print(f"  {'✅' if abs(got['dur'] - want_dur) <= 1.0 else '❌'} "
+        print(f"  {'✅' if abs(got['dur'] - want_dur) <= 0.05 else '❌'} "
               f"时长 {got['dur']:.2f}s（期望 {want_dur:.2f}s）")
+        print(f"  {'✅' if av_delta <= 0.05 else '❌'} A/V 时差 {av_delta:.3f}s")
+        print(f"  {'✅' if qa.get('status') in {'pass', 'not_applicable'} else '❌'} "
+              "结构化音频 QA")
         if bad:
             raise SystemExit("成片不合格：\n  " + "\n  ".join(bad))
         print("\n✅ 整条路走通了。剩下**只有 runner 上才验得了**的两件事："

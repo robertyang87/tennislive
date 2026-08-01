@@ -158,6 +158,10 @@ Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ 
 `rights-audit.json` artifact。授权清单格式与本地命令见
 [`docs/video-localization.md`](docs/video-localization.md)。该工作流没有下载器，也不会绕过平台水印或访问控制。
 
+所有视频入口还共同遵守 [`docs/video-audio-quality.md`](docs/video-audio-quality.md)：
+多段音乐、现场声或官方混合原声不得裸拼；语音不得被长淡化或重叠；转场不得偷偷
+改变画面、旁白和字幕时轴，并须留下结构化音频 QA。
+
 ## 中文化
 
 - 球员译名 300+（`src/tennislive/zh/players.py`，中国球员全覆盖）

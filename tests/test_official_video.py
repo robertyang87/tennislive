@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -649,6 +650,10 @@ def test_render_wta_video_builds_vertical_ffmpeg_command(tmp_path, monkeypatch):
 
     monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
     monkeypatch.setattr("tennislive.video.official.GitHubModelsTranslator", Translator)
+    monkeypatch.setattr(
+        "tennislive.video.official.probe_has_audio_stream",
+        lambda _path: True,
+    )
 
     def runner(command, **kwargs):
         calls.append((command, kwargs))
@@ -753,10 +758,116 @@ def test_champions_reel_render_uses_four_segments(tmp_path, monkeypatch):
     command = calls[0]
     assert command.count("-i") == 4
     filters = command[command.index("-filter_complex") + 1]
+    # Every A/V part is explicitly pinned to its declared 9.5-second window;
+    # this avoids AAC padding and keeps the montage/subtitle timeline at 38s.
+    assert filters.count("trim=duration=9.500") == 8
+    assert filters.count("afade=t=out") == 3
+    assert filters.count("afade=t=in") == 3
+    assert "afade=t=out:st=9.100:d=0.400:curve=qsin" in filters
+    assert "afade=t=in:st=0:d=0.300:curve=qsin" in filters
+    assert "acrossfade" not in filters
     assert "concat=n=4:v=1:a=1" in filters
+    assert "[0:v][0:a][1:v][1:a]" not in filters
     assert "BorderStyle=1" in filters
     assert "BackColour=&H00000000" in filters
     assert "MarginV=28" in filters
+
+    audit = json.loads((tmp_path / "official-video.json").read_text(encoding="utf-8"))
+    assert audit["audio_transition_duration_delta_seconds"] == 0.0
+    assert len(audit["audio_transitions"]) == 3
+    assert {join["mode"] for join in audit["audio_transitions"]} == {
+        "fade_through_silence"
+    }
+    assert all(join["overlap"] == 0.0 for join in audit["audio_transitions"])
+    assert audit["audio_qa"]["status"] == "pass"
+    assert audit["audio_qa"]["role"] == "mixed"
+    assert audit["audio_qa"]["transition_count"] == 3
+    assert audit["audio_qa"]["hard_cut_count"] == 0
+    sidecar = json.loads(
+        (tmp_path / "official-highlight.audio-qa.json").read_text(encoding="utf-8")
+    )
+    assert sidecar == audit["audio_qa"]
+    assert sidecar["expected_duration_seconds"] == 38.0
+    assert sidecar["fallback_count"] == 3
+
+
+def test_single_official_clip_does_not_apply_montage_audio_fades(tmp_path, monkeypatch):
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate("Krejcikova wins Athens", "x"),
+        description="",
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=65_000,
+    )
+    calls = []
+
+    class Translator:
+        def translate(self, cues):
+            return {cue.index: "中文重点" for cue in cues}
+
+    monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
+    monkeypatch.setattr("tennislive.video.official.GitHubModelsTranslator", Translator)
+    monkeypatch.setattr(
+        "tennislive.video.official.probe_has_audio_stream",
+        lambda _path: True,
+    )
+
+    def runner(command, **kwargs):
+        calls.append(command)
+        Path(command[-1]).write_bytes(b"mp4")
+
+    render_wta_video(metadata, tmp_path, runner=runner)
+
+    command = calls[0]
+    filters = command[command.index("-filter_complex") + 1]
+    assert "afade=" not in filters
+    assert "concat=" not in filters
+    assert "0:a?" in command
+    audit = json.loads((tmp_path / "official-video.json").read_text(encoding="utf-8"))
+    assert audit["audio_transitions"] == []
+    assert audit["audio_qa"]["status"] == "not_applicable"
+    assert audit["audio_qa"]["role"] == "mixed"
+    assert audit["audio_qa"]["reason"] == "single_continuous_source"
+    assert audit["audio_qa"]["audio_stream_detected"] is True
+    assert (tmp_path / "official-highlight.audio-qa.json").is_file()
+
+
+def test_single_official_clip_without_audio_is_declared_no_audio(
+    tmp_path, monkeypatch
+):
+    metadata = OfficialVideoMetadata(
+        candidate=OfficialVideoCandidate("Krejcikova wins Athens", "x"),
+        description="",
+        thumbnail_url="",
+        playback_url="https://example.com/master.m3u8",
+        duration_ms=65_000,
+    )
+    calls = []
+
+    class Translator:
+        def translate(self, cues):
+            return {cue.index: "中文重点" for cue in cues}
+
+    monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
+    monkeypatch.setattr("tennislive.video.official.GitHubModelsTranslator", Translator)
+    monkeypatch.setattr(
+        "tennislive.video.official.probe_has_audio_stream",
+        lambda _path: False,
+    )
+
+    def runner(command, **kwargs):
+        calls.append(command)
+        Path(command[-1]).write_bytes(b"silent mp4")
+
+    render_wta_video(metadata, tmp_path, runner=runner)
+
+    assert len(calls) == 1
+    audit = json.loads((tmp_path / "official-video.json").read_text(encoding="utf-8"))
+    assert audit["audio_qa"]["status"] == "not_applicable"
+    assert audit["audio_qa"]["role"] == "silence"
+    assert audit["audio_qa"]["reason"] == "no_audio"
+    assert audit["audio_qa"]["transition_count"] == 0
+    assert audit["audio_qa"]["audio_stream_detected"] is False
 
 
 def test_ytdl_opts_attaches_cookies_and_pot_aware_ladder(tmp_path, monkeypatch):

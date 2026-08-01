@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -25,7 +26,17 @@ def test_digest_video_builds_ffmpeg_command_without_a_shell(tmp_path, monkeypatc
     assert check is True
     assert command[0] == "ffmpeg"
     assert "concat=n=2:v=1:a=0[outv]" in command[command.index("-filter_complex") + 1]
+    assert "-an" in command
+    assert "afade" not in " ".join(command)
+    assert "acrossfade" not in " ".join(command)
     assert all(isinstance(part, str) for part in command)
+    audio_qa_path = output.with_suffix(".audio-qa.json")
+    assert audio_qa_path.name == "daily.audio-qa.json"
+    assert not (output.parent / "audio-qa.json").exists()
+    audio_qa = json.loads(audio_qa_path.read_text(encoding="utf-8"))
+    assert audio_qa["status"] == "not_applicable"
+    assert audio_qa["reason"] == "no_audio"
+    assert audio_qa["transition_count"] == 0
 
 
 def test_digest_video_requires_cards(tmp_path):

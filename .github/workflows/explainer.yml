@@ -112,6 +112,9 @@ jobs:
           # 目录里（提交步骤只 add，不会删），于是仓库里同时躺着新旧两套图——
           # 一条就是 31 MB 的死重量，而且 `git add` 之后谁也看不出哪套是活的。
           rm -f "$OUT_DIR"/slide_*.png
+          python tools/check_audio_qa.py \
+            --report "$OUT_DIR/audio-qa.json" \
+            --video "$OUT_DIR/explainer.mp4"
 
       - name: 上传成片 artifact
         uses: actions/upload-artifact@v4

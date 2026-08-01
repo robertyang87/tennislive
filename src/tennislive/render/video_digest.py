@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 from pathlib import Path
 from typing import Callable, Sequence
+
+from ..video.audio import not_applicable_audio_qa
 
 
 class DigestVideoError(RuntimeError):
@@ -70,4 +73,18 @@ def generate_digest_video(
         raise DigestVideoError(f"ffmpeg failed: {exc}") from exc
     if not output.is_file():
         raise DigestVideoError("ffmpeg completed without creating the digest video")
+    # The card-deck video is intentionally silent (``-an``).  Record that
+    # audio transition QA is inapplicable rather than leaving the pipeline
+    # looking unchecked or adding artificial fades to a nonexistent track.
+    # Unlike the one-video-per-directory renderers, the daily ``video`` folder
+    # may also contain an official clip.  Bind the sidecar to this output stem
+    # so another renderer cannot overwrite or accidentally claim its audit.
+    output.with_suffix(".audio-qa.json").write_text(
+        json.dumps(
+            not_applicable_audio_qa(audio_role="silence", reason="no_audio"),
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return output

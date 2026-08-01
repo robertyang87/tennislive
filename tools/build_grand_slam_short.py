@@ -29,6 +29,16 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from tennislive.video.audio import (  # noqa: E402
+    AudioJoinPolicy,
+    AVSegment,
+    audio_qa_for_graph,
+    concat_audio_filter,
+    not_applicable_audio_qa,
+)
+
 FONTS = ROOT / "assets" / "fonts"
 
 YELLOW = (245, 190, 40)
@@ -597,6 +607,14 @@ def _audio_dur(ff, path):
     return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3)) if m else 0.0
 
 
+def _write_audio_qa(outdir: Path, payload: dict[str, object]) -> None:
+    """Keep the renderer on the repository-wide structured audio-QA schema."""
+    (outdir / "audio-qa.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
 def _synth_edge(text, dst, voice, rate):
     import asyncio
     import ssl
@@ -654,6 +672,13 @@ def try_tts(scenes, meta, outdir, ff):
             print(f"  · {name} 配音不可用（{type(exc).__name__}）")
     if not engine:
         print("  · 无可用 TTS，输出静音；用 captions.srt / narration.txt 自行配音。")
+        _write_audio_qa(
+            outdir,
+            not_applicable_audio_qa(
+                audio_role="silence",
+                reason="no TTS engine available; rendered a silent review copy",
+            ),
+        )
         return None
     print(f"  · 配音引擎：{engine}")
 
@@ -682,12 +707,51 @@ def try_tts(scenes, meta, outdir, ff):
         subprocess.run([ff, "-y", "-i", str(raw), "-af", ",".join(af), "-t", f"{dur:.3f}",
                         "-ar", "44100", str(fit)], check=True, capture_output=True)
         clips.append(fit)
-    lst = tdir / "list.txt"
-    lst.write_text("".join(f"file '{c.name}'\n" for c in clips), encoding="utf-8")
     out = outdir / "voiceover.mp3"
-    subprocess.run([ff, "-y", "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-c:a", "libmp3lame", "-b:a", "192k", str(out)],
-                   check=True, capture_output=True, cwd=str(tdir))
+    command = [ff, "-y"]
+    for clip in clips:
+        command.extend(["-i", str(clip)])
+    speech_graph = concat_audio_filter(
+        [
+            AVSegment(
+                duration=float(scene["dur"]),
+                source_id=f"tts-scene-{index}",
+                audio_label=f"{index}:a",
+            )
+            for index, scene in enumerate(scenes)
+        ],
+        audio_role="speech",
+        join_overrides={
+            boundary: AudioJoinPolicy.keep()
+            for boundary in range(len(clips) - 1)
+        },
+        sample_rate=44_100,
+        channel_layout="mono",
+        output_audio_label="speechout",
+    )
+    command.extend(
+        [
+            "-filter_complex", speech_graph.filtergraph,
+            "-map", speech_graph.audio_label,
+            "-c:a", "libmp3lame", "-b:a", "192k", str(out),
+        ]
+    )
+    subprocess.run(command, check=True, capture_output=True)
+    qa = audio_qa_for_graph(
+        speech_graph,
+        audio_role="speech",
+        reason="scene-level TTS stems; speech boundaries stay sequential",
+    )
+    qa.update(
+        {
+            "boundary_policy": "keep",
+            "max_declick_seconds": 0.02,
+            "segment_count": len(clips),
+            "expected_duration_seconds": round(speech_graph.output_duration, 6),
+            "engine": engine,
+        }
+    )
+    _write_audio_qa(outdir, qa)
     return out
 
 
@@ -761,13 +825,70 @@ def main():
         audio = try_tts(scenes, meta, outdir, ff)
 
     if audio and Path(audio).exists():
-        subprocess.run([ff, "-y", "-i", str(silent), "-i", str(audio), "-c:v", "copy",
-                        "-c:a", "aac", "-b:a", "192k", "-shortest", str(final)],
-                       check=True, capture_output=True)
+        full_speech_graph = concat_audio_filter(
+            [
+                AVSegment(
+                    duration=total,
+                    source_id="full-voiceover",
+                    audio_label="speechin",
+                )
+            ],
+            audio_role="speech",
+            sample_rate=44_100,
+            channel_layout="mono",
+            output_audio_label="speechout",
+        )
+        full_filter = "[1:a]apad[speechin];" + full_speech_graph.filtergraph
+        subprocess.run(
+            [
+                ff, "-y", "-i", str(silent), "-i", str(audio),
+                "-filter_complex", full_filter,
+                "-map", "0:v", "-map", full_speech_graph.audio_label,
+                "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
+                "-t", f"{total:.3f}", str(final),
+            ],
+            check=True,
+            capture_output=True,
+        )
+        if args.voiceover:
+            qa = not_applicable_audio_qa(
+                audio_role="speech",
+                reason="single supplied voiceover has no internal edit boundary",
+            )
+            qa.update(
+                {
+                    "segment_count": 1,
+                    "expected_duration_seconds": round(total, 6),
+                    "delivery_fit": "pad_then_trim_to_picture_timeline",
+                }
+            )
+            _write_audio_qa(outdir, qa)
     else:
         subprocess.run([ff, "-y", "-i", str(silent), "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
                         "-c:v", "copy", "-c:a", "aac", "-t", f"{total:.2f}", "-shortest",
                         str(final)], check=True, capture_output=True)
+        if not (outdir / "audio-qa.json").exists():
+            _write_audio_qa(
+                outdir,
+                not_applicable_audio_qa(
+                    audio_role="silence",
+                    reason="no voiceover requested; rendered a silent review copy",
+                ),
+            )
+
+    # This legacy/manual renderer has no Actions workflow of its own, so it
+    # must enforce the same final-delivery gate before declaring success.
+    subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tools" / "check_audio_qa.py"),
+            "--report",
+            str(outdir / "audio-qa.json"),
+            "--video",
+            str(final),
+        ],
+        check=True,
+    )
 
     write_srt(scenes, outdir / "captions.srt")
     (outdir / "narration.txt").write_text(

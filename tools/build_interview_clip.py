@@ -61,8 +61,19 @@ import subprocess
 import sys
 from pathlib import Path
 
+from tennislive.video.audio import (
+    AVSegment,
+    AudioJoinPolicy,
+    audio_qa_for_graph,
+    concat_audio_filter,
+    not_applicable_audio_qa,
+)
+
 ROOT = Path(__file__).resolve().parent.parent
 OUTDIR = ROOT / "output" / "interviews"
+AUDIO_QA_NAME = "audio-qa.json"
+AUDIO_DECLICK_SECONDS = 0.02
+AUDIO_AV_MAX_DELTA_SECONDS = 0.05
 
 # 字幕左右各留 64px（ASS 的 MarginL/MarginR），所以一行可用 952px。
 # **宽度要量，不能按字符数估。** 原来按「62 个字符」断行，那在 Noto Sans 40
@@ -1234,6 +1245,170 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
            or "（空）"))
 
 
+def _probe_av_durations(path: Path) -> tuple[float, float]:
+    """Return independently measured video/audio stream durations.
+
+    The container duration is not enough for this check: an AAC stream can be
+    shorter than the video while the MP4 container still reports the expected
+    total.  A missing per-stream duration is therefore a hard failure instead
+    of silently falling back to the container value.
+    """
+    raw = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=codec_type,duration", "-of", "json", str(path)],
+        capture_output=True, text=True, check=True, timeout=120,
+    ).stdout
+    streams = json.loads(raw).get("streams") or []
+    durations: dict[str, float] = {}
+    for stream in streams:
+        kind = stream.get("codec_type")
+        value = stream.get("duration")
+        if kind in {"video", "audio"} and value not in {None, "N/A"}:
+            durations[kind] = float(value)
+    missing = sorted({"video", "audio"} - durations.keys())
+    if missing:
+        raise SystemExit(f"{path.name} 读不到独立的 {'/'.join(missing)} 时长")
+    return durations["video"], durations["audio"]
+
+
+def _write_audio_qa(
+    out: Path,
+    *,
+    expected_duration: float,
+    graph=None,
+) -> Path:
+    """Write the global audio-policy sidecar and enforce its A/V gate."""
+    video_duration, audio_duration = _probe_av_durations(out)
+    av_delta = abs(video_duration - audio_duration)
+    programme_duration = max(video_duration, audio_duration)
+    expected_delta = abs(programme_duration - expected_duration)
+    if graph is None:
+        report = not_applicable_audio_qa(
+            audio_role="speech",
+            reason="single continuous interview source; no edit boundary",
+        )
+    else:
+        report = audio_qa_for_graph(
+            graph,
+            audio_role="speech",
+            reason="silent cover to continuous interview speech; 20 ms de-click",
+        )
+    join_rows = report["joins"]
+    problems: list[str] = []
+    if av_delta > AUDIO_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"A/V 时差 {av_delta:.3f}s > {AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+    if expected_delta > AUDIO_AV_MAX_DELTA_SECONDS:
+        problems.append(
+            f"总时长偏差 {expected_delta:.3f}s > "
+            f"{AUDIO_AV_MAX_DELTA_SECONDS:.3f}s"
+        )
+    if any(row["mode"] in {"fade_through_silence", "lcut_crossfade",
+                            "acrossfade"} for row in join_rows):
+        problems.append("采访人声边界出现了长淡化或交叠")
+    if any(max(row["fade_out"], row["fade_in"]) > 0.03
+           for row in join_rows):
+        problems.append("采访人声边界淡化超过 30ms")
+
+    report.update({
+        "status": "fail" if problems else report["status"],
+        "renderer": "interview_clip",
+        "expected_duration_seconds": round(expected_duration, 3),
+        "video_duration_seconds": round(video_duration, 3),
+        "audio_duration_seconds": round(audio_duration, 3),
+        "programme_duration_seconds": round(programme_duration, 3),
+        "av_duration_delta_seconds": round(av_delta, 3),
+        "expected_duration_delta_seconds": round(expected_delta, 3),
+        "max_av_delta_seconds": AUDIO_AV_MAX_DELTA_SECONDS,
+        "long_fade_count": sum(
+            row["mode"] in {"fade_through_silence", "lcut_crossfade",
+                             "acrossfade"}
+            for row in join_rows
+        ),
+        "problems": problems,
+    })
+    path = out.parent / AUDIO_QA_NAME
+    path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    if problems:
+        raise SystemExit("采访音频质量闸失败：" + "；".join(problems))
+    return path
+
+
+def _join_cover_and_body(
+    cover: Path,
+    body: Path,
+    out: Path,
+    *,
+    body_duration: float,
+) -> Path:
+    """Join silent cover to continuous speech without swallowing a syllable.
+
+    ``audio_role='speech'`` is intentionally explicit.  The shared helper
+    rejects music-style fades and overlaps for this role; this boundary gets
+    only the global 20 ms de-click.  The audio graph trims both stems to their
+    declared windows while video stays on the existing lossless concat path,
+    so the programme remains exactly cover + interview without a second H.264
+    generation.
+    """
+    graph = concat_audio_filter(
+        [
+            AVSegment(COVER_SECONDS, source_id="interview-cover-silence"),
+            AVSegment(body_duration, source_id="interview-continuous-speech"),
+        ],
+        audio_role="speech",
+        join_overrides={0: AudioJoinPolicy.declick(AUDIO_DECLICK_SECONDS)},
+    )
+    listing = out.parent / "_interview_video.ffconcat"
+    video_only = out.parent / "_interview_video.mp4"
+    audio_only = out.parent / "_interview_audio.m4a"
+    listing.write_text(
+        "ffconcat version 1.0\n"
+        f"file '{cover.resolve()}'\nduration {COVER_SECONDS:.6f}\n"
+        f"file '{body.resolve()}'\nduration {body_duration:.6f}\n",
+        encoding="utf-8",
+    )
+    try:
+        # The old video concat was already lossless.  Keep that advantage, but
+        # make `-an` an explicit guard so programme audio can only come from
+        # the shared speech-safe graph below.  This avoids a second H.264
+        # generation while still removing the hard audio edit.
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+             "-f", "concat", "-safe", "0", "-i", str(listing),
+             "-map", "0:v:0", "-an", "-c:v", "copy",
+             "-t", f"{graph.output_duration:.6f}", str(video_only)],
+            check=True, timeout=600,
+        )
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+             "-i", str(cover), "-i", str(body),
+             "-filter_complex", graph.filtergraph,
+             "-map", graph.audio_label, "-vn",
+             "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
+             "-t", f"{graph.output_duration:.6f}", str(audio_only)],
+            check=True, timeout=600,
+        )
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+             "-i", str(video_only), "-i", str(audio_only),
+             "-map", "0:v:0", "-map", "1:a:0", "-c", "copy",
+             "-movflags", "+faststart", "-t", f"{graph.output_duration:.6f}",
+             str(out)],
+            check=True, timeout=600,
+        )
+        _write_audio_qa(
+            out,
+            expected_duration=graph.output_duration,
+            graph=graph,
+        )
+    finally:
+        for temporary in (listing, video_only, audio_only):
+            temporary.unlink(missing_ok=True)
+    return out
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=720]+ba/b[height<=720]", spec)
@@ -1269,6 +1444,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
 
     if not spec.get("cover"):
         body.replace(out)
+        _write_audio_qa(out, expected_duration=dur)
         return out
 
     frame = outdir / "_cover_frame.jpg"
@@ -1289,12 +1465,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          "-r", "25", "-pix_fmt", "yuv420p",
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          "-shortest", str(cover_mp4)], check=True, timeout=600)
-    lst = outdir / "_concat.txt"
-    lst.write_text(f"file '{cover_mp4.name}'\nfile '{body.name}'\n", encoding="utf-8")
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-f", "concat", "-safe", "0", "-i", str(lst),
-                    "-c", "copy", str(out)], check=True, timeout=600)
-    for tmp in (body, cover_mp4, lst, frame):
+    _join_cover_and_body(cover_mp4, body, out, body_duration=dur)
+    for tmp in (body, cover_mp4, frame):
         tmp.unlink(missing_ok=True)
     return out
 

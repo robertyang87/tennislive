@@ -1012,6 +1012,100 @@ def test_这台机器上真的找得到chromium():
 
 # ---------------------------------------------------------------- 产物 / 自检
 
+def test_静音封面接采访只走共享speech二十毫秒declick(tmp_path, monkeypatch):
+    """采访开头不能套音乐转场：长 fade 会把第一个音节吞掉。"""
+    import tools.build_interview_clip as clip
+
+    real_concat = clip.concat_audio_filter
+    calls: list[dict] = []
+
+    def guarded_concat(segments, **kwargs):
+        calls.append(kwargs)
+        return real_concat(segments, **kwargs)
+
+    commands: list[list[str]] = []
+    qa_calls: list[dict] = []
+    monkeypatch.setattr(clip, "concat_audio_filter", guarded_concat)
+    monkeypatch.setattr(
+        clip.subprocess, "run", lambda cmd, **kwargs: commands.append(cmd)
+    )
+    monkeypatch.setattr(
+        clip, "_write_audio_qa",
+        lambda out, **kwargs: qa_calls.append(kwargs) or out.parent / "audio-qa.json",
+    )
+
+    clip._join_cover_and_body(
+        tmp_path / "cover.mp4", tmp_path / "body.mp4", tmp_path / "out.mp4",
+        body_duration=2.75,
+    )
+
+    assert len(calls) == 1 and calls[0]["audio_role"] == "speech"
+    policy = calls[0]["join_overrides"][0]
+    assert policy.mode == "declick"
+    assert policy.fade_out == policy.fade_in == 0.02
+    assert len(commands) == 3
+    assert "-an" in commands[0] and "copy" in commands[0]
+    graph = commands[1][commands[1].index("-filter_complex") + 1]
+    assert "acrossfade" not in graph and "amix=" not in graph
+    assert "afade=t=out" in graph and "d=0.020" in graph
+    assert "afade=t=in:st=0:d=0.020" in graph
+    assert qa_calls[0]["graph"].duration_delta == 0.0
+    assert qa_calls[0]["expected_duration"] == pytest.approx(
+        clip.COVER_SECONDS + 2.75
+    )
+
+
+def test_采访音频QA沿用共享schema并测独立流时长(tmp_path, monkeypatch):
+    import tools.build_interview_clip as clip
+
+    graph = clip.concat_audio_filter(
+        [clip.AVSegment(1.0, source_id="cover"),
+         clip.AVSegment(2.0, source_id="speech")],
+        audio_role="speech",
+        join_overrides={0: clip.AudioJoinPolicy.declick(0.02)},
+    )
+    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (3.0, 2.98))
+    out = tmp_path / "interview.mp4"
+    path = clip._write_audio_qa(out, expected_duration=3.0, graph=graph)
+    qa = json.loads(path.read_text(encoding="utf-8"))
+    assert qa["status"] == "pass"
+    assert qa["role"] == "speech"
+    assert qa["transition_count"] == qa["declick_count"] == 1
+    assert qa["duration_delta_seconds"] == 0.0
+    assert qa["av_duration_delta_seconds"] == 0.02
+    assert qa["joins"][0]["mode"] == "declick"
+    assert qa["joins"][0]["fade_out"] == qa["joins"][0]["fade_in"] == 0.02
+
+
+def test_采访音频QA拒绝超过五十毫秒的AV视频时差(tmp_path, monkeypatch):
+    import tools.build_interview_clip as clip
+
+    graph = clip.concat_audio_filter(
+        [clip.AVSegment(1.0, source_id="cover"),
+         clip.AVSegment(2.0, source_id="speech")],
+        audio_role="speech",
+        join_overrides={0: clip.AudioJoinPolicy.declick(0.02)},
+    )
+    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (3.0, 2.94))
+    out = tmp_path / "interview.mp4"
+    with pytest.raises(SystemExit, match="A/V 时差"):
+        clip._write_audio_qa(out, expected_duration=3.0, graph=graph)
+    qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+    assert qa["status"] == "fail"
+    assert qa["av_duration_delta_seconds"] == 0.06
+
+
+def test_无封面的连续采访也写明音频QA不适用(tmp_path, monkeypatch):
+    import tools.build_interview_clip as clip
+
+    monkeypatch.setattr(clip, "_probe_av_durations", lambda _: (2.0, 2.0))
+    path = clip._write_audio_qa(tmp_path / "interview.mp4", expected_duration=2.0)
+    qa = json.loads(path.read_text(encoding="utf-8"))
+    assert qa["status"] == "not_applicable"
+    assert qa["role"] == "speech"
+    assert qa["transition_count"] == 0
+    assert "single continuous" in qa["reason"]
+
 # 出片目录里**只许留**这些。别的都是中间物。
 _KEEP_SUFFIX = {".mp4", ".jpg", ".ass", ".md", ".json", ".json3"}
 # ⚠️ **判据是文件名，不是后缀。** 这个目录里有两个 `.html`，一个是产物一个是垃圾：

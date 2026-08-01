@@ -364,6 +364,16 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # **验最终交付物，不只验转场中间片。** 旁白、sidechain、字幕和最终 mux
+      # 都在 render 的后半段；只看 `_video.mp4` 会把后半段造成的音轨截短漏掉。
+      - name: render — 最终音频质量硬闸
+        if: github.event.inputs.mode == 'render'
+        run: |
+          OUT="${{ steps.paths.outputs.outdir }}"
+          python tools/check_audio_qa.py \
+            --report "$OUT/audio-qa.json" \
+            --video "$OUT/${{ github.event.inputs.slug }}.mp4"
+
       # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
       # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
       # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，

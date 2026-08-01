@@ -617,6 +617,7 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
     assert meta["rate"] == E.DEFAULT_RATE == "+28%"
     assert meta["segments"] == 2
+    assert meta["audio_role"] == "speech"
 
     E.generate_explainer_video(
         find_story_by_slug("zheng-eala"), tmp_path, voice="zh-CN-YunxiNeural")
@@ -664,9 +665,13 @@ def test_片头片尾各留一段静音(tmp_path, monkeypatch):
     assert graph.count("adelay") == 1
     assert "apad=pad_dur=1.500" in graph  # 只有最后一段挂了静音
     assert graph.count("apad") == 1
-    # 中间那段没有静音，但仍然要有自己的标签，否则 concat 接不上。
-    assert "[3:a]anull[a1]" in graph
-    assert "[v0][a0][v1][a1][v2][a2]concat=n=3" in graph
+    # 中间那段没有静音，但仍然要有自己的标签，否则共享音频 concat 接不上。
+    assert "[3:a]anull[speech1]" in graph
+    assert "[v0][v1][v2]concat=n=3:v=1:a=0[outv]" in graph
+    assert "[aj0][aj1][aj2]concat=n=3:v=0:a=1[outa]" in graph
+    # 纯语音不准借用音乐转场：不叠、不长淡出，也就不会吞掉句首句尾。
+    assert "acrossfade" not in graph
+    assert "afade=" not in graph
 
 
 def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch):
@@ -694,6 +699,55 @@ def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch)
     assert cmd[cmd.index("-t") + 1] == "6.100"  # 4 + 0.6 + 1.5
     graph = cmd[cmd.index("-filter_complex") + 1]
     assert "adelay=600:all=1,apad=pad_dur=1.500" in graph
+
+
+def test_纯语音边界走全局keep规则并写结构化qa(tmp_path, monkeypatch):
+    """多段 TTS 只能顺排，QA 要能证明没有音乐式淡化或重叠。"""
+    import json
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "2.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slides = [tmp_path / f"s{i}.png" for i in range(2)]
+    audios = [tmp_path / f"a{i}.mp3" for i in range(2)]
+    for path in slides + audios:
+        path.write_bytes(b"x")
+    manifest = tmp_path / "narration.json"
+    manifest.write_text('{"voice":"test"}\n', encoding="utf-8")
+
+    E.assemble_explainer_video(
+        slides,
+        audios,
+        tmp_path / "out.mp4",
+        runner=runner,
+        audio_manifest_path=manifest,
+    )
+
+    qa = json.loads(manifest.read_text(encoding="utf-8"))["audio_qa"]
+    standalone = json.loads(
+        (tmp_path / "audio-qa.json").read_text(encoding="utf-8")
+    )
+    assert standalone == qa
+    assert qa["status"] == "pass"
+    assert qa["role"] == "speech"
+    assert qa["transition_count"] == qa["keep_count"] == 1
+    assert qa["declick_count"] == qa["lcut_crossfade_count"] == 0
+    assert qa["fade_through_silence_count"] == 0
+    assert qa["duration_delta_seconds"] == 0.0
+    assert qa["expected_duration_seconds"] == 6.1
+    assert qa["joins"][0]["mode"] == "keep"
+    assert qa["joins"][0]["overlap"] == 0.0
+    assert max(qa["joins"][0]["fade_in"], qa["joins"][0]["fade_out"]) <= 0.02
 
 
 def test_同一天可以并存多条片子():

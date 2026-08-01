@@ -168,6 +168,9 @@ jobs:
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
           ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
+          python tools/check_audio_qa.py \
+            --report "output/interviews/${{ github.event.inputs.slug }}/audio-qa.json" \
+            --video "$OUT"
 
       # **复制页要在提交之前写。** 这一步只落文件，由下面的提交步骤带进仓库；
       # 真正发微信排在提交之后（GitHub Pages 只服务 main，链接才取得到）。

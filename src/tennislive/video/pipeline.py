@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Callable, Protocol, Sequence
 
 import requests
+
+from .audio import not_applicable_audio_qa
 from .subtitle_text import drop_punctuation
 
 GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
@@ -500,6 +502,49 @@ def _subtitle_filter(subtitle_path: Path) -> str:
     return f"subtitles=filename='{escaped}':force_style='{style}'"
 
 
+def probe_has_audio_stream(
+    video_path: Path,
+    *,
+    ffprobe_bin: str = "ffprobe",
+    runner: Callable[..., object] = subprocess.run,
+) -> bool | None:
+    """Return whether a rendered video has audio, or ``None`` if indeterminate.
+
+    This deliberately uses a separate narrow ffprobe call instead of the
+    renderer's injected FFmpeg ``runner``.  Render tests commonly provide a
+    one-call double that only writes the requested output file; silently
+    sending a second, different command through it would make those tests lie
+    about the production path.  Callers preserve the conservative legacy
+    classification when probing is unavailable, while a valid rendered file
+    is classified from its actual streams.
+    """
+    video_path = Path(video_path).expanduser().resolve()
+    if shutil.which(ffprobe_bin) is None:
+        return None
+    try:
+        completed = runner(
+            [
+                ffprobe_bin,
+                "-v",
+                "error",
+                "-select_streams",
+                "a:0",
+                "-show_entries",
+                "stream=codec_type",
+                "-of",
+                "csv=p=0",
+                str(video_path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    stdout = str(getattr(completed, "stdout", "") or "").strip()
+    return any(line.strip() == "audio" for line in stdout.splitlines())
+
+
 def burn_subtitles(
     video_path: Path,
     subtitle_path: Path,
@@ -538,6 +583,16 @@ def burn_subtitles(
         raise VideoPipelineError(f"ffmpeg failed: {exc}") from exc
     if not output_path.is_file():
         raise VideoPipelineError("ffmpeg completed without creating the output video")
+    has_audio = probe_has_audio_stream(output_path)
+    audio_qa = not_applicable_audio_qa(
+        audio_role="silence" if has_audio is False else "mixed",
+        reason="no_audio" if has_audio is False else "audio_passthrough",
+    )
+    audio_qa["audio_stream_detected"] = has_audio
+    (output_path.parent / "audio-qa.json").write_text(
+        json.dumps(audio_qa, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     return output_path
 
 
@@ -596,6 +651,21 @@ def localize_video(
             overwrite=overwrite,
         )
 
+    if burn:
+        try:
+            audio_qa = json.loads(
+                (output_dir / "audio-qa.json").read_text(encoding="utf-8")
+            )
+        except (OSError, ValueError) as exc:
+            raise VideoPipelineError(
+                "Burned video is missing its audio QA sidecar"
+            ) from exc
+    else:
+        audio_qa = not_applicable_audio_qa(
+            audio_role="silence",
+            reason="subtitle_only",
+        )
+
     audit: dict[str, object] = {
         "status": "localized",
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -610,6 +680,12 @@ def localize_video(
         },
         "subtitle_cues": len(localized_cues),
         "bilingual": bilingual,
+        # This renderer never edits the programme audio: when ``burn`` is on,
+        # FFmpeg maps it with ``-c:a copy``.  Keep the explicit N/A declaration
+        # in the rights audit as well as the sidecar written by burn_subtitles,
+        # so a no-burn subtitle-only job remains auditable without pretending
+        # that an audio-transition check ran.
+        "audio_qa": audio_qa,
         "notice": "Rights are declared by the operator; this audit is not legal advice.",
     }
     audit_path.write_text(json.dumps(audit, ensure_ascii=False, indent=2), encoding="utf-8")

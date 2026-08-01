@@ -683,6 +683,8 @@ def test_ffmpeg_keeps_full_16_by_9_foreground_without_tracking_crop(
     assert "drawbox" not in filters
     assert "sendcmd" not in filters
     assert "cropdetect" not in filters
+    assert "afade" not in filters
+    assert "acrossfade" not in filters
     assert "-ss" not in command
     assert command.count("-i") == 2
     assert str(daily_point_module.BRAND_ICON_PATH) in command
@@ -713,6 +715,66 @@ def test_render_writes_context_subtitles_and_passes_quality_gate(
     assert "赛果" in subtitle
     assert not (tmp_path / "source-overlay.txt").exists()
     assert calls[0][1]["timeout"] == 300
+    audio_qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+    assert audio_qa["status"] == "not_applicable"
+    assert audio_qa["reason"] == "single_continuous_source"
+    assert audio_qa["transition_count"] == 0
+
+
+def test_render_records_no_audio_without_adding_fades(
+    sample_digest, tmp_path, monkeypatch
+):
+    selection = _selection(sample_digest)
+    calls = []
+    monkeypatch.setattr("tennislive.video.daily_point.shutil.which", lambda _: "ffmpeg")
+
+    def runner(command, **_kwargs):
+        calls.append(command)
+        Path(command[-1]).write_bytes(b"x" * 250_000)
+
+    render_daily_point(
+        selection,
+        tmp_path,
+        runner=runner,
+        prober=lambda _: VideoProbe(
+            1080, 1440, 28.0, 30.0, "h264", 250_000, has_audio=False
+        ),
+    )
+
+    audio_qa = json.loads((tmp_path / "audio-qa.json").read_text(encoding="utf-8"))
+    assert audio_qa["status"] == "not_applicable"
+    assert audio_qa["reason"] == "no_audio"
+    assert audio_qa["transition_count"] == 0
+    assert "afade" not in " ".join(calls[0])
+    assert "acrossfade" not in " ".join(calls[0])
+
+
+def test_probe_records_whether_the_render_has_an_audio_track(tmp_path):
+    output = tmp_path / "point.mp4"
+    output.write_bytes(b"rendered")
+
+    class Completed:
+        stdout = json.dumps(
+            {
+                "format": {"duration": "28.0", "size": "250000"},
+                "streams": [
+                    {
+                        "codec_type": "video",
+                        "codec_name": "h264",
+                        "width": 1080,
+                        "height": 1440,
+                        "r_frame_rate": "30/1",
+                    }
+                ],
+            }
+        )
+
+    probe = daily_point_module.probe_video(
+        output,
+        runner=lambda *_args, **_kwargs: Completed(),
+    )
+
+    assert probe.has_audio is False
 
 
 def test_render_retries_progressive_source_after_hls_failure(
@@ -918,6 +980,10 @@ def test_package_keeps_consensus_sources_only_in_manifest(
     assert manifest["category"] == "point"
     assert manifest["consensus"]["score"] >= 100
     assert manifest["consensus"]["signals"][0]["kind"] == "official-best-designation"
+    assert manifest["audio_qa"]["status"] == "not_applicable"
+    assert manifest["audio_qa"]["reason"] == "single_continuous_source"
+    assert manifest["audio_qa"]["transition_count"] == 0
+    assert manifest["outputs"]["audio_qa"] == "audio-qa.json"
     # The copy's grounding is recorded so any shot claim is auditable against
     # the raw official text rather than taken on trust.
     assert manifest["source_description"] == selection.metadata.description

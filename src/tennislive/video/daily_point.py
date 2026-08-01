@@ -52,6 +52,7 @@ from .official import (
     parse_wta_video_candidates,
     search_official_youtube_candidates,
 )
+from .audio import not_applicable_audio_qa
 from .pipeline import AssOverlay, SubtitleCue, VideoPipelineError, render_ass, render_srt
 from ..cdn import jsdelivr_base
 
@@ -185,6 +186,7 @@ class VideoProbe:
     fps: float
     codec: str
     size_bytes: int
+    has_audio: bool = True
 
 
 def _clean(value: str) -> str:
@@ -1468,6 +1470,10 @@ def probe_video(
             fps=fps,
             codec=str(stream.get("codec_name") or ""),
             size_bytes=int(payload.get("format", {}).get("size") or path.stat().st_size),
+            has_audio=any(
+                item.get("codec_type") == "audio"
+                for item in payload.get("streams", [])
+            ),
         )
     except (TypeError, ValueError, ZeroDivisionError) as exc:
         raise VideoPipelineError("昨日好球 ffprobe 返回字段无效") from exc
@@ -1780,6 +1786,16 @@ def render_daily_point(
         else probe_video(output_path, ffprobe_bin=ffprobe_bin)
     )
     validate_rendered_point(selection, measured)
+    audio_qa = not_applicable_audio_qa(
+        audio_role="mixed" if measured.has_audio else "silence",
+        reason=(
+            "single_continuous_source" if measured.has_audio else "no_audio"
+        ),
+    )
+    (output_dir / "audio-qa.json").write_text(
+        json.dumps(audio_qa, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     return output_path
 
 
@@ -1788,6 +1804,23 @@ def _generate_tour_point(
 ) -> Path:
     """Render one tour's package (video, copy, manifest) into its own subdir."""
     output = render_daily_point(selection, tour_dir)
+    audio_qa_path = tour_dir / "audio-qa.json"
+    if not audio_qa_path.is_file():
+        # Test doubles and alternate render adapters still have to declare the
+        # single-source contract.  The production renderer writes this using
+        # its ffprobe result, including ``no_audio`` for a silent source.
+        audio_qa_path.write_text(
+            json.dumps(
+                not_applicable_audio_qa(
+                    audio_role="mixed",
+                    reason="single_continuous_source",
+                ),
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+    audio_qa = json.loads(audio_qa_path.read_text(encoding="utf-8"))
     copy = point_xiaohongshu_copy(selection, digest.today)
     (tour_dir / "xiaohongshu.txt").write_text(copy, encoding="utf-8")
     from ..render.pushmsg import to_copy_page
@@ -1878,10 +1911,12 @@ def _generate_tour_point(
         "outputs": {
             "video": output.name,
             "subtitles": "yesterday-point.zh-CN.srt",
+            "audio_qa": audio_qa_path.name,
             "copy": "xiaohongshu.txt",
             "copy_page": "copy.html",
             "pushplus": "push.html",
         },
+        "audio_qa": audio_qa,
     }
     (tour_dir / "manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
