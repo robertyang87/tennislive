@@ -38,7 +38,9 @@ from tools.build_interview_clip import (
     _FONT_FILES,
     _FONT_SIZE,
     _HEAD_FONT,
-    _HEAD_MARK,
+    _HEAD_SIZE,
+    header_ass,
+    header_runs,
     _LINE_PX,
     _ZH_TOP,
     _ts,
@@ -541,27 +543,38 @@ def test_顶栏走品牌显示体字幕不走():
 
 
 def _sfnt_names(path: Path) -> set[str]:
-    """字体 `name` 表里所有的 family 名（nameID 1）。自己解，不引依赖。"""
+    """字体 `name` 表里所有的 family 名（nameID 1）。自己解，不引依赖。
+
+    ⚠️ **`.ttc` 是字体集合，不是字体**（思源黑体就是：一份文件里装着
+    SC / TC / JP / KR 好几张脸）。不认集合头的话整份读出来是空的，
+    而空集合和「名字对不上」在断言里长得一模一样。
+    """
     import struct
 
     raw = path.read_bytes()
-    n_tables = struct.unpack(">H", raw[4:6])[0]
-    for i in range(n_tables):
-        tag, _, off, _ = struct.unpack(">4sIII", raw[12 + 16 * i:28 + 16 * i])
-        if tag != b"name":
-            continue
-        count, str_off = struct.unpack(">HH", raw[off + 2:off + 6])
-        out = set()
-        for j in range(count):
-            pid, eid, _lid, nid, ln, o = struct.unpack(
-                ">HHHHHH", raw[off + 6 + 12 * j:off + 18 + 12 * j])
-            if nid != 1:
+    if raw[:4] == b"ttcf":                     # 集合：先取出每一张脸的偏移
+        n = struct.unpack(">I", raw[8:12])[0]
+        heads = struct.unpack(f">{n}I", raw[12:12 + 4 * n])
+    else:
+        heads = (0,)
+    out: set[str] = set()
+    for head in heads:
+        n_tables = struct.unpack(">H", raw[head + 4:head + 6])[0]
+        for i in range(n_tables):
+            tag, _, off, _ = struct.unpack(
+                ">4sIII", raw[head + 12 + 16 * i:head + 28 + 16 * i])
+            if tag != b"name":
                 continue
-            b = raw[off + str_off + o:off + str_off + o + ln]
-            out.add(b.decode("utf-16-be" if (pid, eid) != (1, 0) else "latin-1",
-                             "ignore"))
-        return out
-    return set()
+            count, str_off = struct.unpack(">HH", raw[off + 2:off + 6])
+            for j in range(count):
+                pid, eid, _lid, nid, ln, o = struct.unpack(
+                    ">HHHHHH", raw[off + 6 + 12 * j:off + 18 + 12 * j])
+                if nid != 1:
+                    continue
+                b = raw[off + str_off + o:off + str_off + o + ln]
+                out.add(b.decode("utf-16-be" if (pid, eid) != (1, 0) else "latin-1",
+                                 "ignore"))
+    return out
 
 
 def test_品牌字体是libass认得出的那个名字():
@@ -595,7 +608,7 @@ def test_顶栏那个绿方块不许赌字体回退():
     """`▍`（U+258D）**得意黑里没有**，本地是靠回退到思源黑体才画出来的。
 
     「本地装着不等于 CI 装着」——回退链在 runner 上不保证，赌输了画出来是个
-    豆腐块。所以 `_HEAD_MARK` 内联把字体写死，不交给 fontconfig 去猜。
+    豆腐块。所以每一段都内联写死 `\\fn`，不交给 fontconfig 去猜。
 
     判据是**拿一个必定没有的码位当对照**：缺字时字体画的是 `.notdef`，
     而 `.notdef` 对任何缺失字符都长得一样。直接断言「墨迹为空」是错的——
@@ -603,8 +616,10 @@ def test_顶栏那个绿方块不许赌字体回退():
     """
     from PIL import ImageFont
 
-    assert "▍" in _HEAD_MARK
-    assert r"\fnNoto Sans CJK SC" in _HEAD_MARK, "画方块那一段要显式指定字体"
+    line_a = header_ass({"slug": "t", "event": "某站 1/4 决赛",
+                         "push": {"matchup": "甲 vs 乙"}})[0]
+    assert "▍" in line_a
+    assert line_a.startswith(r"{\r\fnNoto Sans CJK SC"), "画方块那一段要显式指定字体"
     head = ImageFont.truetype(_FONT_FILES["head"][0], 40)
     ink = lambda ch: (m := head.getmask(ch)).size + (bytes(m),)  # noqa: E731
     notdef = ink("")                          # 私用区，必定没有
@@ -646,16 +661,101 @@ def test_顶栏说清这是哪一场():
     assert "伊埃拉 vs 斯维托丽娜" in b and "赛后" in b
 
 
-def test_顶栏不写比分():
-    """**`matchup` 的顺序不保证是胜者在前。**
+def test_顶栏的比分靠winner摆不靠词序():
+    """账号所有者要顶栏带比分。**但「谁 比分 谁」这个写法本身就在说谁赢了。**
 
-    `@wta` 的标题就按签位排——我照着推过一次「标题里在前的是赢家」，推错了
-    （`Zheng Qinwen vs. Clara Tauson` 赢的是 Tauson）。把比分插进两个名字
-    中间等于用词序断言谁赢了，而这个断言站不住。
+    `matchup` 是按签位排的，**不保证胜者在前**——`@wta` 的标题就这样，
+    我照着推过一次「标题里在前的是赢家」，推错了（`Zheng Qinwen vs. Clara
+    Tauson` 赢的是 Tauson）。所以这个断言必须来自数据（`winner`），
+    不能来自排版顺序。
+
+    这里故意让 `winner` 是 `matchup` 里**排在后面**的那个：如果实现偷懒
+    照词序摆，这条立刻红。
     """
-    spec = {"slug": "t", "event": "2026 华盛顿 WTA500 女单八强",
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "斯维托丽娜",
             "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
-    assert all("6-3" not in line and "6-4" not in line for line in header_lines(spec))
+    b = header_lines(spec)[1]
+    assert b.startswith("斯维托丽娜 6-3 6-4 伊埃拉"), b
+
+
+def test_写了比分没写winner不许出片():
+    """空着比错着更难发现：顶栏照词序摆，看着完全正常，只是赢家写反了。"""
+    spec = {"slug": "t", "event": "某站 1/4 决赛",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    with pytest.raises(SystemExit, match="winner"):
+        header_lines(spec)
+
+
+def test_winner必须是matchup里的那两个之一():
+    """两处名字对不上，顶栏会印出一个**没打这场球的人**——而且看着毫无破绽。
+
+    真实的成因是译名：`matchup` 查了译名表写「伊埃拉」，`winner` 手打成
+    「埃亚拉」（那正是这个名字改过的旧译）。
+    """
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "埃亚拉",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    with pytest.raises(SystemExit, match="不在"):
+        header_lines(spec)
+
+
+def test_顶栏每一段都要先复位():
+    """**ASS 的覆盖是粘连的。** 竖条那段设了绿色，下一段不复位的话，
+    后面整行标题跟着变绿——渲出来一眼看见，而**代码里一点异常都没有**。
+
+    真踩过：第一版只写了 `\\fn` 没写 `\\r`，标题整行绿的。
+    判据是每一段都以 `{\\r` 开头，而不是「颜色写对了没有」——后者要逐项
+    列举（颜色、字重、间距、字号…），漏一项就又回到这儿。
+    """
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}}
+    for line in header_ass(spec):
+        segs = [s for s in line.split("{") if s]
+        assert all(s.startswith(r"\r") for s in segs), (
+            f"有段没先复位，前一段的颜色/字号会漏进来：{line}")
+
+
+def test_顶栏量宽度要按每段自己的字号():
+    """比分那段是 `\\fs38` 渲的，拿 32 去量会**少算两成**——闸就成了摆设。
+
+    这条拿一个刚好卡在边上的比分验：按各自字号量会超，按统一字号量不会。
+    """
+    import tools.build_interview_clip as clip
+
+    runs = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                        "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
+    sizes = {size for _, kind, _, size in runs if kind == "num"}
+    assert sizes == {clip._SCORE_PX}, "比分那段要带着它自己的字号，不是顶栏那档"
+    assert clip._SCORE_PX > _HEAD_SIZE["b"], "比分放大了，量的时候就不能按小的量"
+
+
+def test_没有比分时顶栏退回只写对阵():
+    """比分不是必填——没有它，顶栏仍然要能回答「这是哪一场」。"""
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    assert header_lines(spec)[1] == "甲 vs 乙 · 赛后场上采访"
+
+
+def test_ASS里的字体名都是字体自己声明的():
+    """**写错字体名不报错，只是静默换一支字画。**
+
+    实测过两支，而且「正规」的那个名字反而不认：
+
+        得意黑                       ✅    Smiley Sans       ❌（和不存在的字体同一个 md5）
+        Barlow Condensed SemiBold    ✅    BarlowCondensed   ❌
+
+    所以每个 `_ASS_NAME` 都要能在对应字体文件的 `name` 表里找到。
+    ⚠️ 这条**只保证名字是字体声明过的**，不保证 libass 一定挑得中它
+    （`Smiley Sans` 就是声明了但挑不中）——那一层只能靠渲出来比 md5，
+    复现命令写在 `test_品牌字体是libass认得出的那个名字` 里。
+    """
+    import tools.build_interview_clip as clip
+
+    assert set(clip._ASS_NAME) == set(_FONT_FILES), "两张表的键要一一对应"
+    for kind, name in clip._ASS_NAME.items():
+        path = Path(_FONT_FILES[kind][0])
+        if not path.exists():
+            pytest.skip(f"{path} 不在（系统字体没装）")
+        assert name in _sfnt_names(path), (
+            f"ASS 里 {kind} 写的是 {name!r}，但字体声明的是 {sorted(_sfnt_names(path))}")
 
 
 def test_顶栏缺字段要报错而不是印半句():
