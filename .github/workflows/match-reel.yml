@@ -449,6 +449,23 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # **查产物，不查信号。** 这个脚本一直在仓库里，`grep -rn check_reel_landed
+      # .github/` 却是**零命中**——写好了，一次都没跑过。补跑一遍九条已发的成片，
+      # 它自己就把今天查出来的两个真缺陷全报了出来：
+      #   「音轨比画面短 N 秒」×7（闪避那道 apad）
+      #   「封面之后还有 38 秒是数字静音」×1（wong-brooksby 的哑源片）
+      # 也就是说这两个缺陷本来在发出去之前就该被拦下，只是没人调它。
+      #
+      # **拦在提交之前**：提交进 main 之后 push-reel 就会把它发到微信，
+      # 而微信那条消息发出去收不回来。误拦的代价现在很小——上一步的
+      # `always()` 保证成片照样上传，重跑一次即可。
+      - name: 查成片本身合不合格
+        if: github.event.inputs.mode == 'render'
+        run: |
+          python tools/check_reel_landed.py \
+            --slug "${{ github.event.inputs.slug }}" \
+            --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+
       - name: 丢掉不进仓库的中间物
         if: github.event.inputs.mode != 'cookies'
         run: |
