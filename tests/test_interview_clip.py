@@ -22,8 +22,12 @@ import pytest
 from tools.build_interview_clip import (
     ROOT,
     check_human_quote,
+    review_sheet,
     _FILLER,
     _norm_en,
+    _quote_span,
+    _unresolved_suspects,
+    _yt_at,
 )
 
 SPECS = ROOT / "specs" / "interviews"
@@ -126,6 +130,59 @@ def test_没写人工引语的spec直接跳过不报错(tmp_path):
     assert check_human_quote({"slug": "t"}, _lines(["anything"]), tmp_path) is None
 
 
+# ---------------------------------------------------------------- 核对表 / 挂账
+
+def test_可疑行只能靠改或听销账():
+    """**让 `suspect` 是判据，不是注释。**
+
+    写成散文注（「#2 #5 #13 可疑」）的坏处是它不吭声：改完忘了删，下一个人
+    读到的是过时的清单；一条都没改，`transcript_verified` 照样打得上。
+    所以销账只有两条路——改（`en_fixed`）或听过确认没问题（`suspect_ok`）。
+    """
+    spec = {"suspect": {"2": "a", "5": "b", "13": "c"},
+            "en_fixed": {"5": "fixed"}, "suspect_ok": {"13": "听过，本来就对"}}
+    assert _unresolved_suspects(spec) == ["2"]
+    spec["suspect_ok"]["2"] = "也听过了"
+    assert _unresolved_suspects(spec) == []
+
+
+def test_跳转链接的秒数必须是整数():
+    """YouTube 的 `&t=` **不吃小数**——带小数它整个参数忽略，点过去跳回开头。
+
+    而字幕行的起点天然带小数（`297.4`）。这条拦的就是顺手把浮点塞进去。
+    """
+    assert _yt_at("https://www.youtube.com/watch?v=AiBTDJd_ekQ", 297.4) == \
+        "https://youtu.be/AiBTDJd_ekQ?t=297"
+    assert "." not in _yt_at("https://youtu.be/abc123", 12.9).split("t=")[-1]
+
+
+def test_核对表把人工引语覆盖到的行圈出来(tmp_path):
+    """引语只覆盖一段，**表上要看得出覆盖到哪儿为止**。
+
+    看不出的话，「有第二个源」这句话会被读成整段都验过——而实际上只有
+    记者抄走的那几句验过，其余仍然是一份 ASR 说了算。
+    """
+    lines = _lines(["aaa bbb ccc", "ddd eee fff", "ggg hhh iii", "jjj kkk lll"])
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 12.0,
+            "zh": ["一", "二", "三", "四"],
+            "human_quote": {"text": "ddd eee fff ggg hhh iii"}}
+    assert _quote_span(spec, lines) == (2, 3)
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    rows = [r for r in body.splitlines() if r.startswith("| ") and "▶" in r]
+    assert "✅ 人工引语" not in rows[0] and "✅ 人工引语" in rows[1]
+    assert "✅ 人工引语" in rows[2] and "✅ 人工引语" not in rows[3]
+
+
+def test_核对表把还欠着的单独列出来(tmp_path):
+    """**检查工具要把不合格的也列出来。** 只在全绿时出声的表证明不了它看过。"""
+    lines = _lines(["one two", "three four", "five six"])
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 9.0,
+            "zh": ["一", "二", "三"], "suspect": {"2": "这句听着不对"}}
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    assert "## 还欠着的" in body
+    assert "**#2**" in body and "这句听着不对" in body
+
+
 # ---------------------------------------------------------------- spec 本身
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -149,7 +206,7 @@ def test_没验过转写的spec不许标verified(path):
     """`transcript_verified` 是人看完之后手动置的，不能凭「跑过工具」就置上。
 
     工具只出报告，判断是人做的——所以标了 true 的 spec 必须同时有订正
-    或显式声明「一处都不用改」，不能是个空壳。
+    或显式声明「一处都不用改」，不能是个空壳；挂着的可疑行也必须销完账。
     """
     spec = json.loads(path.read_text(encoding="utf-8"))
     if not spec.get("transcript_verified"):
@@ -157,3 +214,26 @@ def test_没验过转写的spec不许标verified(path):
     assert spec.get("en_fixed") or spec.get("_verified_clean"), (
         f"{path.name} 标了 transcript_verified 却没有任何订正记录。"
         "真的一处都不用改，就写 `_verified_clean` 说明是谁在什么时候听的。")
+    assert not _unresolved_suspects(spec), (
+        f"{path.name} 标了 transcript_verified，第 "
+        f"{'、'.join(_unresolved_suspects(spec))} 行却还挂在 suspect 里。")
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_挂账的行号得真的存在(path):
+    """行号是手写的，写错了**不吭声**——它只会安静地指不到任何一行。
+
+    改过切行规则（断句长度、`_NOISE`）之后行数会变，旧行号跟着失准，
+    而那正是「一个常年挂着的待办和没有待办长得一模一样」的由来。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    keys = {*(spec.get("suspect") or {}), *(spec.get("suspect_ok") or {}),
+            *(spec.get("en_fixed") or {})}
+    if not keys:
+        pytest.skip("这条 spec 没有挂账")
+    lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
+    if not lines_path.exists():
+        pytest.skip(f"还没跑过 --stage subs：{lines_path}")
+    n = len(json.loads(lines_path.read_text(encoding="utf-8")))
+    bad = [k for k in keys if not 1 <= int(k) <= n]
+    assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"

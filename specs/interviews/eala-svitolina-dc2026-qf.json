@@ -63,7 +63,17 @@
     "text": "She's such an accomplished player, and I think she's made waves on and off the tennis court for so many reasons. There's so much respect for her for that, and you know I'm really excited. I haven't had much time to think about it, but I will definitely think about it after I get off court."
   },
   "transcript_verified": false,
-  "_transcript_note": "⚠️ **还没验完。** 现在这份英文来自 YouTube 自动字幕（**没有人工字幕**：`--list-subs` 只报 automatic captions，拿一条已知有人工字幕的 TED 片做过对照，探测本身是好的，所以这个「没有」是真的）。逐行看下来至少 6 行可疑，已由 WTA 战报的人工引语定夺 1 行（#31），剩下 6 行仍待人听：#2 `The crazy Yes. round of applause.` 整句语法不成立（`The crazy` 疑似从 #3 串过来的重影）；#5 `What I know it's nuts.` 里 What 是误识、且 I know it's nuts 疑似伊埃拉插话（**说话人归属存疑**，中文现在按她说处理）；#13 `What you are learning along the way?` 应是 What are you learning；#15 yourselves 应是 yourself；#26 `You're all very excited` 疑似 `We're all`（中文「大家都很期待」两种都成立，所以这处只错英文不错中文）；另 #22 是口吃重复，**那是真的口吃，别改**。\n**流程**：runner 上跑 --stage verify（faster-whisper 出第二份 ASR，逐处对），人听那几秒、把确认过的英文写进 en_fixed，再把这个字段置 true。在那之前 --stage render 会直接拒绝出片。",
+  "_transcript_note": "⚠️ **还没验完。** 这份英文来自 YouTube 自动字幕——**这两条视频没有人工字幕**：`--list-subs` 只报 automatic captions，且拿一条已知有人工字幕的 TED 片（5MuIMqhT8DM）做过对照、它正确报出了人工语种表，所以这个「没有」是真空不是探测坏了。YouTube 自己的 en / en-orig 逐词完全一致（605 词 0 处差异），是同一份 ASR 换了个名字，对不了。\n**已有两个独立的源**：WTA 战报里的人工引语（不联网，本地跑，只覆盖第 29–33 行，已定夺 #31）；faster-whisper 第二份 ASR（覆盖全段，**只有 runner 上跑得动**）。\n**流程**：跑 --stage sheet 出核对表（每行带可点的源片时刻），人听 suspect 里挂的那几处，改对的写进 en_fixed、听下来本来就对的写进 suspect_ok，再把这个字段置 true。挂着账没销就置 true 的话，--stage render 照样拒绝出片。",
+  "suspect": {
+    "2": "`The crazy Yes. round of applause.` 整句语法不成立，`The crazy` 疑似从 #3 串过来的重影；实际大概是 `Yes! Round of applause.`",
+    "5": "`What` 是误识；且 `I know, it's nuts` 疑似伊埃拉插话——**说话人归属存疑**，中文现在按她说处理，错了的话中英都要改",
+    "13": "`What you are learning along the way?` 应是 `What are you learning`",
+    "15": "`about yourselves` 应是 `yourself`（问的是她一个人）",
+    "26": "`You're all very excited` 疑似 `We're all`。中文「大家都很期待」两种都成立，所以这处**只错英文不错中文**"
+  },
+  "suspect_ok": {
+    "22": "`I'm not I'm just at the beginning` 是真的口吃，不是 ASR 重复——口语素材保留原样，改了反而不是她说的话"
+  },
   "_zh_note": "中文这边核过一处**跟音频无关**的错：#34 原来写「我再给你一次机会 感谢你所有的菲律宾球迷」——中文里第二个小句的主语会就近默认成「我」，读起来成了主持人在谢球迷，而英文 `give you one more chance to thank all your Filipino fans` 里谢的人明明是她。**主语翻反了，比用词不准严重得多。** 改成「去谢谢你的菲律宾球迷」把动作还给她。\n另：#15/#16 的中文是**故意错位**的——英文 `what is it that you're learning about yourself in these moments,` 的问句落点在前，中文习惯落在后，所以「你对自己有什么新的认识」挪到了 #16。逐行对照学英文的人会觉得对不上，这是知道的取舍，不是漏译。",
   "en_fixed": {
     "31": "uh there's so much respect for her for that and you know I'm really"

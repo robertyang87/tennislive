@@ -5,9 +5,11 @@
 （见 `collect_oncourt_interviews._tail_interview`）。这个工具做后半段——
 把采访那一截剪出来，配双语字幕，交给英语学习那条线用。
 
-分两步，因为**下载只能在 runner 上做**：
+分几步，因为**下载只能在 runner 上做**：
 
     subs    本地就能跑。拉 YouTube 自动字幕 → 切行 → 配 spec 里的中文 → 出 .ass
+    sheet   本地就能跑。出核对表：每行一个可点的源片时刻，人对着听
+    verify  必须在 Actions 上。跑第二份 ASR 交叉校验
     render  必须在 Actions 上。下源片 → 按区间剪 → 烧字幕 → 出 mp4
 
 **为什么下载不能在本地**：沙箱那台机器的 IP 被 YouTube 挡了。实测五个
@@ -41,6 +43,7 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
+    python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage sheet
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage render
 """
 from __future__ import annotations
@@ -337,6 +340,109 @@ def check_human_quote(spec: dict, lines: list[dict], outdir: Path) -> Path | Non
     return path
 
 
+def _yt_at(url: str, seconds: float) -> str:
+    """给一条 YouTube 链接钉上时刻。**要整秒**——`&t=` 不吃小数，带小数它整个忽略。"""
+    vid = url.rsplit("/", 1)[-1].split("v=")[-1].split("&")[0]
+    return f"https://youtu.be/{vid}?t={int(seconds)}"
+
+
+def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
+    """把这段采访的**所有源摊成一张表**，给人对着听。
+
+    在这之前判据散在三个地方：ASR 在 `lines.json`、人工引语的分歧在
+    `human_quote_diff.md`、哪几行可疑写在 spec 的一段散文注里。要核对的人
+    得同时开三个文件，还得自己去 YouTube 上找那几秒在哪。
+
+    表里每行给四样东西：**片内时刻**（对着成片走）、**可点的源片链接**
+    （直接跳到那一秒）、英文、中文，外加这一行的判据是哪来的：
+
+        ✅ 人工引语   赛事官网战报抄过这句，人转写的，最硬
+        ✏️ 已订正     `en_fixed` 里改过，值就是改后的
+        ⚠️ 待听       `suspect` 里挂着账，还没人听
+        👂 听过没问题  `suspect_ok` 里销的账
+
+    ⚠️ **没标记不等于对**，只等于「没人怀疑过它」——ASR 错得最狠的那种
+    正是读起来通顺的（`respect to her`）。这张表是给人干活用的，不是结论。
+    """
+    fixed = {int(k) for k in (spec.get("en_fixed") or {})}
+    suspect = {int(k): v for k, v in (spec.get("suspect") or {}).items()}
+    cleared = {int(k) for k in (spec.get("suspect_ok") or {})}
+    quoted = _quote_span(spec, lines)
+    clip0 = spec["start"]
+
+    head = [f"# 转写核对表：{spec['slug']}", "",
+            f"源片 {spec['url']}　采访段 {clip0:.1f}–{spec['end']:.1f} 秒"
+            f"（共 {len(lines)} 行）", "",
+            "| # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |",
+            "|--:|:--|:--|:--|:--|:--|"]
+    zh = spec.get("zh") or []
+    rows = []
+    for i, seg in enumerate(lines, 1):
+        t = seg["a"] - clip0
+        mark = []
+        if i in fixed:
+            mark.append("✏️ 已订正")
+        if quoted and quoted[0] <= i <= quoted[1]:
+            mark.append("✅ 人工引语")
+        if i in cleared:
+            mark.append(f"👂 {spec['suspect_ok'][str(i)]}")
+        elif i in suspect:
+            mark.append(f"⚠️ {suspect[i]}")
+        cell = lambda s: str(s).replace("|", "\\|")  # noqa: E731
+        rows.append(f"| {i} | {int(t // 60)}:{t % 60:04.1f} | "
+                    f"[▶]({_yt_at(spec['url'], seg['a'])}) | {cell(seg['en'])} | "
+                    f"{cell(zh[i - 1]) if i <= len(zh) else '—'} | {'；'.join(mark)} |")
+
+    todo = sorted(set(suspect) - fixed - cleared)
+    tail = ["", "## 还欠着的", ""]
+    tail += [f"- **#{i}**（{int((lines[i - 1]['a'] - clip0) // 60)}:"
+             f"{(lines[i - 1]['a'] - clip0) % 60:04.1f}，"
+             f"[跳过去]({_yt_at(spec['url'], lines[i - 1]['a'])})）{suspect[i]}"
+             for i in todo if i <= len(lines)] or ["（无）"]
+    tail += ["", "听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 "
+             "`suspect_ok`（值写一句为什么），别默默留着——"
+             "**一个常年挂着的待办和没有待办长得一模一样**。"]
+
+    path = outdir / "review_sheet.md"
+    path.write_text("\n".join(head + rows + tail) + "\n", encoding="utf-8")
+    print(f"核对表 {len(lines)} 行、{len(todo)} 处待听 → {path}")
+    return path
+
+
+def _quote_span(spec: dict, lines: list[dict]) -> tuple[int, int] | None:
+    """人工引语覆盖到第几行到第几行（1 起）。没有引语返回 None。"""
+    import difflib
+
+    if not (text := (spec.get("human_quote") or {}).get("text")):
+        return None
+    human = _norm_en(text)
+    # 逐行累加词数，把词下标换算回行号
+    edges, n = [], 0
+    for seg in lines:
+        n += len(_norm_en(seg["en"]))
+        edges.append(n)
+    asr = _norm_en(" ".join(seg["en"] for seg in lines))
+    blocks = [b for b in difflib.SequenceMatcher(None, asr, human,
+                                                 autojunk=False).get_matching_blocks() if b.size]
+    if not blocks:
+        return None
+    lo, hi = blocks[0].a, blocks[-1].a + blocks[-1].size - 1
+    row = lambda w: next(i for i, e in enumerate(edges, 1) if w < e)  # noqa: E731
+    return row(lo), row(hi)
+
+
+def _unresolved_suspects(spec: dict) -> list[str]:
+    """挂着账没销的可疑行。**让 `suspect` 是判据而不是注释。**
+
+    写成散文注（「#2 #5 #13 可疑」）的坏处是它**不吭声**：改完忘了删，
+    下一个人读到的是过时的清单；一条都没改，标记照样能置上。所以挂账要
+    结构化，销账只有两条路——写进 `en_fixed`（改了），或写进 `suspect_ok`
+    （听过，本来就对，值里写一句为什么）。两条都没走的，不许出片。
+    """
+    fixed, cleared = set(spec.get("en_fixed") or {}), set(spec.get("suspect_ok") or {})
+    return sorted(set(spec.get("suspect") or {}) - fixed - cleared, key=int)
+
+
 def _chromium() -> str:
     """沙箱和 runner 上 Chromium 的路径都带版本号，playwright 自己找不到。"""
     import glob
@@ -475,7 +581,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
-    ap.add_argument("--stage", choices=["subs", "verify", "render"], default="subs")
+    ap.add_argument("--stage", choices=["subs", "sheet", "verify", "render"],
+                    default="subs")
     args = ap.parse_args()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
@@ -507,6 +614,8 @@ def main() -> int:
         return 0
     write_ass(lines, zh, spec["start"], ass)
     print(f"字幕 {len(lines)} 组双语 → {ass}")
+    # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
+    review_sheet(spec, lines, outdir)
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
@@ -521,6 +630,13 @@ def main() -> int:
                 f"{args.spec} 没有 `transcript_verified: true`。\n"
                 "先跑 --stage verify 出交叉校验报告，逐处核对，把确认过的英文写进 "
                 "`en_fixed`，再置上这个标记。")
+        # 标记置上了，可疑行却还挂着账——那说明标记是顺手打的，不是核完打的。
+        if todo := _unresolved_suspects(spec):
+            raise SystemExit(
+                f"{args.spec} 标了 `transcript_verified: true`，但第 "
+                f"{'、'.join(todo)} 行还挂在 `suspect` 里没销账。\n"
+                "改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`"
+                "（值写一句为什么）。逐行看 review_sheet.md。")
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         print(f"成片 {out}（{size:.1f} MB，{spec['end'] - spec['start']:.1f} 秒）")
