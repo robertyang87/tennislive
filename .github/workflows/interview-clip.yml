@@ -228,6 +228,13 @@ jobs:
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+          # **这个仓库的 Pages 构建明显比默认预算慢。** 实测：08:41 的提交能打开，
+          # 08:54 的等了 14 分钟还是 404，而默认预算是 30×20s=10 分钟。
+          # 仓库 1 GB+，每次构建要打包整站，越攒越慢。
+          # 「等不到」和「没等够」长得一模一样，而代价完全不对称——多等只是让
+          # runner 空转，等不够就是整条推送作废。给到 40 分钟。
+          TENNISLIVE_COPYPAGE_ATTEMPTS: "60"
+          TENNISLIVE_COPYPAGE_RETRY_SECONDS: "40"
         run: |
           COPY="specs/interviews/${{ github.event.inputs.slug }}.xhs.txt"
           PYTHONPATH=src python tools/push_reel.py \
