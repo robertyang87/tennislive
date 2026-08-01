@@ -1487,7 +1487,17 @@ def test_封面停多久跟着配音走():
     assert "没有配音，定长停" in reel, "退回定长时不吭声，和「配音没合出来」分不开"
     # 封面那一路要接进混音，标签不能在下游重筛
     assert "voice_labels.append" in reel, "混音的标签又在下游重筛了"
-    assert 'names = "".join(voice_labels)' in reel
+    # 攒起来的标签要**原样**进滤镜图。这一句原来写在 render() 里，闪避那道
+    # `apad` 修完之后整个图抽成了 `duck_filtergraph`，join 跟着搬了进去——
+    # 判据要跟着搬，不是跟着删：它拦的是「下游拿另一个条件重筛一遍」，
+    # 而封面那一路当年就是这么被漏掉的（定义了没人接）。
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as _reel_mod  # noqa: PLC0415
+
+    graph = _reel_mod.duck_filtergraph(["[1:a]adelay=0|0[v0]", "[2:a]x[v1]"],
+                                       ["[v0]", "[v1]"])
+    assert graph.count("[v0]") == 2 and graph.count("[v1]") == 2, (
+        f"攒起来的标签没有全部进滤镜图：{graph}")
     # 长度要记进产物旁边
     assert '"cover_seconds"' in reel, "封面长度没落进 render.json"
     assert "render.json" in check, "检查工具还在拿常量算封面长度"
@@ -1871,6 +1881,85 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
         assert stale not in inputs, (
             f"工作流输入里还挂着「{stale}」——那是上一条片子的内容，"
             "漏传一次就拿另一场球的标题发出去")
+
+
+def test_现场声不许在最后一句话结束时断掉(tmp_path):
+    """**九条已发的成片里七条，结尾 2~4.5 秒完全没有声音。**
+
+    `sidechaincompress` 在 **sidechain 输入结束的那一刻就收口**，于是 `[duck]`
+    只活到最后一句旁白说完，下游 `amix` 跟着收口——整条现场声在那儿断掉：
+
+        eala-fernandez −4.50s   wang-pareja −2.98s   hewitt-washington −2.97s
+        wang-samsonova −2.66s   potapova-venus −2.64s
+        wong-brooksby  −1.98s   eala-zheng     −1.95s
+
+    削掉的正是握手、庆祝、观众声——CLAUDE.md 里「收尾那句要提前起、跨进末屏」
+    保的就是这几秒，也就是整条片子的情绪落点。**而 ffmpeg 不报错**，画面是
+    全长的，成片时长看着完全正常。
+
+    **判据必须真跑一次混音**：造一段 20 秒有声画面 + 一句 7 秒就说完的旁白，
+    拿**生产用的那个滤镜图**（`duck_filtergraph`）过一遍 ffmpeg，然后
+    ① 音轨要跟画面一样长 ② 旁白结束之后那几秒要**真的有声音**（不是 apad
+    补出来的数字静音）。查源码里有没有 `apad` 是拦不住这个的——
+    「写了」不等于「跑过」。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    # 缺 ffmpeg 要红，不许 skip——一条常年跳过的检查和常年红是同一个毛病。
+    # CI 的 apt 那一步装了它（和 match-reel 同一个包）。
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    def _dur(path, stream):
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            check=True, capture_output=True, text=True).stdout.strip()
+        return float(out) if out else 0.0
+
+    bed, voice, mixed = (tmp_path / n for n in
+                         ("bed.mp4", "voice.m4a", "mixed.m4a"))
+    # 20 秒画面 + 20 秒现场声；旁白 7 秒就说完
+    _ff("-f", "lavfi", "-i", "testsrc2=size=320x240:rate=25:duration=20",
+        "-f", "lavfi", "-i", "sine=frequency=300:duration=20",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-shortest", str(bed))
+    _ff("-f", "lavfi", "-i", "sine=frequency=800:duration=7",
+        "-c:a", "aac", str(voice))
+
+    _ff("-i", str(bed), "-i", str(voice), "-filter_complex",
+        reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"]),
+        "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
+        "-c:a", "aac", "-b:a", "192k", "-ar", reel.AUDIO_RATE,
+        "-shortest", str(mixed))
+
+    # ① 音轨要跟画面一样长
+    video, audio = _dur(mixed, "v:0"), _dur(mixed, "a:0")
+    assert abs(video - audio) < 0.3, (
+        f"音轨 {audio:.2f}s 比画面 {video:.2f}s 短了 {video - audio:.2f}s"
+        "——现场声在最后一句旁白结束时就断了")
+
+    # ② 旁白之后那几秒要真的有声音，不是 apad 补出来的数字静音。
+    # 只验「音轨够长」是不够的：补一段静音同样能让 ① 通过。
+    for at in (8, 15):
+        chunk = tmp_path / f"at{at}.wav"
+        _ff("-i", str(mixed), "-ss", str(at), "-t", "1", "-vn",
+            "-c:a", "pcm_s16le", str(chunk))
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(chunk), "-af", "volumedetect",
+             "-f", "null", os.devnull], capture_output=True, text=True).stderr
+        found = re.search(r"mean_volume:\s*(-?[\d.]+) dB", out)
+        assert found, f"量不出 t={at}s 的响度：{out[-300:]}"
+        level = float(found.group(1))
+        assert level > -60, (
+            f"t={at}s（旁白早就说完了）响度 {level} dB——那是数字静音，"
+            "现场声并没有放回来")
 
 
 def _published_reels() -> list[Path]:

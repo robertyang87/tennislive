@@ -167,6 +167,43 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # （69.9s 的画面配 64.3s 的音轨，64.3/69.9 = 0.9196 ≈ 44100/48000）。
 # 它不报错，ffprobe 也只写着「48000」，只有把两个时长摆在一起才看得出来。
 AUDIO_RATE = "48000"
+
+
+def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
+    """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
+
+    **`[vk]apad[vkp]` 那一段不能省，而且不能只当它是个细节。**
+    `sidechaincompress` 在 **sidechain 输入结束的那一刻就收口**，于是 `[duck]`
+    只活到最后一句旁白说完，下游 `amix` 跟着收口——**整条现场声在那儿断掉**。
+
+    九条已发的成片里**七条**结尾 1.95~4.50 秒完全没有声音：
+
+        eala-fernandez −4.50s   wang-pareja −2.98s   hewitt-washington −2.97s
+        wang-samsonova −2.66s   potapova-venus −2.64s
+        wong-brooksby  −1.98s   eala-zheng     −1.95s
+
+    被削掉的正是握手、庆祝、观众声那几秒——CLAUDE.md 里「收尾那句要提前起，
+    从上一段就开始说、跨进末屏」保的就是这几秒，也就是整条片子的情绪落点。
+    **而 ffmpeg 不报错**，成片时长看着也完全正常（画面是全长的），只有把
+    视频流和音频流的时长摆在一起才看得见。又一次「兜底出事的时候不吭声」。
+
+    `apad` 把 sidechain 补静音到无限长，压缩器就跟着 `[bed]` 走完。
+    只补 `[vk]`（喂给压缩器的那一路），`[vm]`（真正听见的那一路）不动。
+
+    抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
+    删了」，防不住「它从来没工作过」。
+    """
+    return (
+        f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
+        f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
+        f"[voice]asplit=2[vk][vm];"
+        f"[vk]apad[vkp];"
+        f"[bed][vkp]sidechaincompress=threshold=0.02:ratio=12:"
+        f"attack=15:release=450:makeup=1[duck];"
+        f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+    )
+
+
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
 # crf 17/preset slow，等于把画质编进一个马上要被重编的文件里。成片那一步的参数
 # 没有跟着降。
@@ -1786,17 +1823,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
             # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
-            chain = ";".join(filters)
-            names = "".join(voice_labels)
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
-                "-filter_complex",
-                f"[0:a]volume={BED_LOUD}[bed];{chain};"
-                f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
-                f"[voice]asplit=2[vk][vm];"
-                f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
-                f"attack=15:release=450:makeup=1[duck];"
-                f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+                "-filter_complex", duck_filtergraph(filters, voice_labels),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
