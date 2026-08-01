@@ -268,8 +268,16 @@ jobs:
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          # 栏目名以 spec 的 `cover.eyebrow` 为准——**海报台头印的就是它**，
+          # 而且已经有测试拿 docs/columns.md 校验（test_海报台头只写栏目名）。
+          # push_reel 的默认值是「赛场之上」，工作流又没有 column 输入，
+          # 「开球之前」这条线走到这儿会顶着别的栏目名发出去，而且**不报错**。
+          COLUMN=$(python -c "import json,sys;print(json.load(open(sys.argv[1]))['cover']['eyebrow'])" \
+            "specs/reels/${{ github.event.inputs.slug }}.json")
+          echo "栏目：$COLUMN"
           python tools/push_reel.py --stage page \
             --outdir "${{ steps.paths.outputs.outdir }}" \
+            --column "$COLUMN" \
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \
@@ -388,8 +396,16 @@ jobs:
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          # 栏目名以 spec 的 `cover.eyebrow` 为准——**海报台头印的就是它**，
+          # 而且已经有测试拿 docs/columns.md 校验（test_海报台头只写栏目名）。
+          # push_reel 的默认值是「赛场之上」，工作流又没有 column 输入，
+          # 「开球之前」这条线走到这儿会顶着别的栏目名发出去，而且**不报错**。
+          COLUMN=$(python -c "import json,sys;print(json.load(open(sys.argv[1]))['cover']['eyebrow'])" \
+            "specs/reels/${{ github.event.inputs.slug }}.json")
+          echo "栏目：$COLUMN"
           python tools/push_reel.py \
             --outdir "${{ steps.paths.outputs.outdir }}" \
+            --column "$COLUMN" \
             --matchup "${{ github.event.inputs.matchup }}" \
             --score "${{ github.event.inputs.score }}" \
             --event "${{ github.event.inputs.event }}" \

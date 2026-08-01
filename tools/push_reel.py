@@ -213,7 +213,7 @@ def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
 
 
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
-               poster: str = "") -> str:
+               poster: str = "", column: str = "赛场之上") -> str:
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
@@ -235,6 +235,10 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
       顶到卡边。用负 margin 抵消内边距在微信里不可靠，**结构上让它没有内边距**
     - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
       人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
+
+    ⚠️ **台头小药丸要跟着栏目走。** 它原来写死「赛场之上」，而这个工作流现在
+    也发「开球之前」——发出去的卡片会顶着别的栏目名，标题里写的却是对的，
+    两处对不上。和「兜底和默认值出事的时候不吭声」是同一类。
     """
     title, body = split_copy(copy_text)
     pad = "padding:0 16px"
@@ -265,7 +269,7 @@ font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
 border-top:5px solid #ff2442;padding:18px 0 22px">
 <div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
 color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
-赛场之上</div>
+{html.escape(column)}</div>
 <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
 margin:10px 0 14px">{html.escape(title)}</div></div>
 {img}
@@ -350,7 +354,8 @@ def main() -> int:
         poster = poster_url(outdir)
     else:
         print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
-    body = build_html(url, copy_url, args.lead, copy_text, poster)
+    body = build_html(url, copy_url, args.lead, copy_text, poster,
+                      column=args.column)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")
