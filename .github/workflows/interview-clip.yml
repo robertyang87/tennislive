@@ -1,0 +1,154 @@
+name: interview-clip
+
+# 把 @wta 逐场集锦尾巴上的**场上采访**剪出来，烧中英双语字幕。
+#
+# **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了。实测五个 player
+# client 全废——`web`/`ios`/`web_safari` 报 `Sign in to confirm you're not a
+# bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr` 拿得到格式表
+# 但一取媒体就 403。**但字幕是通的**，所以切行和翻译在本地做完（`--stage subs`
+# 已经把 .ass 提交进仓库了），runner 上只负责下载 + 剪 + 烧。同 match-reel.yml。
+#
+# 用法：dispatch 时给 slug，spec 从 specs/interviews/<slug>.json 读。
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "spec 文件名（不带 .json）"
+        required: true
+        default: "eala-svitolina-dc2026-qf"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 两个字体包都不能漏，而且**漏了的表现不一样，都不报错**：
+      # - `fonts-noto-cjk`：少了它 libass 用回退字体，中文那行变豆腐块
+      # - `fonts-noto-core`：少了它 `Noto Sans` 解析不到，英文那行悄悄换成
+      #   DejaVu——**比 Noto Sans 宽 8%**，切行时量的宽度和渲出来的对不上，
+      #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
+      #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
+      - name: 装系统依赖
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
+
+      # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+      # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
+      # 匹配不上，看起来像「这个视频没有格式」或者「cookie 过期了」。
+      # **加新能力要同时改三处：代码、这里的依赖、开跑前的预检。** 这条在竖版
+      # 剪辑那条线上连着犯过三次（playwright、Chromium、cv2），每次都是下完源片、
+      # 跑了一分半之后才 ModuleNotFoundError。封面走 HTML 渲染，所以要 playwright。
+      - name: 装依赖
+        run: |
+          pip install -q "yt-dlp[default]" playwright faster-whisper
+          python -m playwright install --with-deps chromium
+          node --version
+
+      # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
+      - name: 开跑前预检
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import shutil, sys
+          from playwright.sync_api import sync_playwright
+          sys.path.insert(0, "tools")
+          from build_interview_clip import _chromium
+          import faster_whisper  # noqa: F401
+          from build_interview_clip import _en_width, _zh_width
+          assert shutil.which("ffmpeg"), "没有 ffmpeg"
+          print("Chromium:", _chromium())
+          # 字体缺了就在这儿炸，不要等切行那一步——两个包漏哪个都不报错，
+          # 只是悄悄换成回退字体，然后行宽全算错
+          print(f"字宽 en={_en_width('respect'):.1f} zh={_zh_width('网球'):.1f}")
+          from tennislive.render.webcards import _font_css
+          css = _font_css()
+          assert "TL Display SC" in css, "得意黑没内嵌进来，封面标题会退回系统字体"
+          print("字体 CSS", len(css), "字节")
+          PY
+
+      # 配了 Secret 就带 cookie 下载。没配也先试一把——公开视频在 runner 的 IP 上
+      # 有时候不用 cookie 也下得动，真下不动再回来配。
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "没有配 YT_COOKIES_TXT，裸下试试"
+          fi
+
+      # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
+      # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
+      # 其实是 `for her`），而它自己那两条轨（en / en-orig）逐词完全一致，
+      # 拿来交叉验证是自欺。所以在这儿跑第二份 ASR 对一遍，分歧超过闸门直接失败。
+      #
+      # 另有一道**不联网**的闸跟着每个 stage 跑（`check_human_quote`）：拿赛事
+      # 官网战报里的人工引语对 ASR。它只覆盖记者抄走的那几句，但**是人转写的**，
+      # 比任何 ASR 都硬。两道闸都在这一步暴露——报告落在
+      # output/interviews/<slug>/{transcript_diff,human_quote_diff}.md，
+      # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
+      - name: 转写交叉校验
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage verify
+
+      - name: 剪 + 烧字幕
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          if [ -n "$COOKIES" ]; then
+            python - "$SPEC" "$COOKIES" <<'PY'
+          import json, sys, pathlib
+          p = pathlib.Path(sys.argv[1]); d = json.loads(p.read_text())
+          d["cookies"] = sys.argv[2]
+          p.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n")
+          PY
+          fi
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage render
+          # **别把 cookie 路径提交进仓库。** 上面那步把它写进了 spec，这里撤掉。
+          git checkout -- "$SPEC" || true
+
+      # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
+      - name: 验成片
+        run: |
+          OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
+          test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
+          ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
+
+      - name: 提交成片
+        run: |
+          # 源片 50MB+ 不进仓库，只提交成片和字幕。
+          rm -f output/interviews/${{ github.event.inputs.slug }}/source.mp4
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "output/interviews/${{ github.event.inputs.slug }}"
+          git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          git commit -m "interview: ${{ github.event.inputs.slug }} 双语字幕成片"
+          for i in 1 2 3 4; do
+            git pull --rebase origin ${{ github.ref_name }} && \
+              git push origin HEAD:${{ github.ref_name }} && break
+            sleep $((2 ** i))
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ github.event.inputs.slug }}
+          path: output/interviews/${{ github.event.inputs.slug }}/
