@@ -303,6 +303,13 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
       人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
 
+    - ⚠️ **复制页打不开的时候，消息本身要留得住文案。** 正文本来就整段内联
+      （「长按整段即可复制」），但**标题只活在那个按钮后面**——账号所有者反馈
+      「文案标题和正文复制按钮打开失败 404」时，正文还在，标题没了。
+      复制页走 `github.io`，那条链路**沙箱量不到**（这里探是 200），所以不能
+      指望它一定通。现在大标题底下加一行「长按这一行即可复制」——**不另印一遍**
+      （那是「同一段印两遍」那个老毛病），只是把已经在页面上的那一行标成出口
+
     ⚠️ **台头小药丸要跟着栏目走，而且不留默认值。** 它原来写死「赛场之上」，
     而这个工作流现在也发「开球之前」「网球有故事」——卡片会顶着别的栏目名，
     标题里写的却是对的，同一条推送两个栏目名。给个默认值等于把这个错留在原地
@@ -339,7 +346,9 @@ border-top:5px solid #ff2442;padding:18px 0 22px">
 color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
 {html.escape(column)}</div>
 <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
-margin:10px 0 14px">{html.escape(title)}</div></div>
+margin:10px 0 4px">{html.escape(title)}</div>
+<div style="color:#7a8580;font-size:12px;margin:0 0 14px">\
+☝️ 标题，长按这一行即可复制</div></div>
 {img}
 <div style="{pad}">
 {lead_el}
