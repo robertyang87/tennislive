@@ -1024,3 +1024,53 @@ def test_每一段都要待在同一个镜头里():
     bad, unchecked = reel.segments_straddling_cuts(spec, probes[:1])
     assert unchecked == ["b"], "缺 probe 的源片没有被报出来"
     assert all(b["source"] == "a" for b in bad)
+
+
+def test_推送的栏目名以spec为准():
+    """`push_reel.py --column` 的默认值是「赛场之上」，而工作流**没有** column
+    输入——「开球之前」这条线走这个工作流发出去，标题会顶着别的栏目名，
+    而且不报错。栏目名 spec 里已经声明了（`_column`），单一出处在那儿。
+
+    这条拦的是「加了新栏目却忘了改推送」——和「加新能力要同时改三处」同一类。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert text.count('--column "$COLUMN"') == 2, (
+        "写复制页和发推送两处都要传栏目名，漏一处就是两个栏目名")
+    assert "['cover']['eyebrow']" in text, (
+        "栏目名没有从 spec 读，等于又拍了一个值")
+
+    # 台头就是栏目名，海报上印的也是它——单一出处，不再另立一个字段
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        got = json.loads(spec.read_text(encoding="utf-8"))["cover"].get("eyebrow")
+        assert got, f"{spec.name} 的 cover 没写 eyebrow"
+
+
+def test_要发的片子必须有小红书文案():
+    """推送那一步 `test -f "$COPY"` 会挡住缺文案的 slug，但那是六分钟之后的事——
+    渲染、合成、拼片全跑完才发现没得发。spec 和文案是一对，缺一个就该在这儿红。
+    """
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        copy = spec.with_suffix(".xhs.txt")
+        assert copy.is_file(), f"{spec.name} 没有配套的 {copy.name}"
+        assert copy.read_text(encoding="utf-8").strip(), f"{copy.name} 是空的"
+
+
+def test_推送卡的台头跟着栏目走():
+    """台头小药丸原来写死「赛场之上」。这个工作流现在也发「开球之前」——
+    标题里的栏目名是对的，卡片上那个药丸却是另一个，两处对不上。
+
+    和「兜底和默认值出事的时候不吭声」同一类：它不报错，只是印错。
+    """
+    sys.path.insert(0, "tools")
+    import push_reel  # noqa: PLC0415
+
+    html = push_reel.build_html(
+        "https://v/x.mp4", "https://p/copy.html", "",
+        "标题\n\n正文一段", poster="", column="开球之前")
+    assert "开球之前" in html
+    assert "赛场之上" not in html, "台头还写死着别的栏目名"
+
+    # 不传就退回默认，老调用一个字不用改
+    old = push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
+                               "标题\n\n正文一段")
+    assert "赛场之上" in old
