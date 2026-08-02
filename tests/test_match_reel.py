@@ -3746,3 +3746,49 @@ def test_推送的文案输入不许留上一条片子的默认值():
     gate = "push=true 必须自己填标题，不许吃默认值"
     assert gate in steps, "缺了「两个都空就别发」那道闸"
     assert steps.index(gate) < steps.index("render — 出成片")
+
+
+def test_查旁白那条路不许碰源片也不许写产物():
+    """**问「哪几段旁白写长了」不该付一条新成片的代价。**
+
+    这道闸比的是「TTS 时长 vs spec 里的段长」，两样都**不需要源片**。可它原来
+    只活在 `render()` 里，于是想知道答案就得跑一趟完整 render——而在**通过**的
+    情况下那一趟会顺手渲出一条新成片并提交。对已经发过的片子，那就是白白往
+    仓库里多塞一个几十 MB 的 blob（`.git` 已经 1.77 GiB）。
+
+    判据钉三头：
+
+    1. 这条路上**不出现下载**（`download(`）——碰了源片就不成立
+    2. 语音落**临时目录**，`output/` 一个字节都不动
+    3. 入口在工作流里**够得着**，而且它不走清理/上传/提交那三步
+       （和 `--cover-only` 那次同一个坑：开关够不着等于这条能力不存在）
+    """
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    body = src[src.index("if args.check_narration:"):src.index("if args.dry_run:")]
+    assert "download(" not in body, "查旁白那条路碰了源片——它不需要"
+    assert "TemporaryDirectory" in body, (
+        "语音没落临时目录——查一次旁白就往 output/ 里写一遍 voice_*.mp3")
+    assert "narration_overruns(" in body, "没有复用那道闸本身，等于另写了一份"
+
+    # 复用的必须是**同一个函数**：render 里也得走它，否则两处判据迟早分叉。
+    # ⚠️ 只切到 `def main(` 为止——切到文件末尾会把上面那个 `check_narration`
+    # 块里的调用也算进来，于是把 render 里的删掉这条也照样绿（第一版就是这样，
+    # 反向验证时才发现）。又一次「判据宁可窄，不可宽」。
+    render_body = src[src.index("\ndef render("):src.index("\ndef main(")]
+    assert "narration_overruns(" in render_body, (
+        "render 没走同一个函数——查出来「装得下」而真渲时又被拦，判据就废了")
+
+    yml = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    head, jobs = yml.split("\njobs:", 1)
+    opts = re.search(r"options: \[(.*?)\]", head).group(1)
+    assert "narration" in [o.strip() for o in opts.split(",")], (
+        f"mode 里够不着 narration：{opts}")
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+    step = [b for b in blocks if "mode == 'narration'" in b]
+    assert len(step) == 1, f"narration 的步骤有 {len(step)} 个"
+    assert "--check-narration" in step[0]
+    # 它什么都不产，所以清理/上传/提交都要放它过
+    for name in ("丢掉不进仓库的中间物", "上传 artifact", "提交产物"):
+        blk = next(b for b in blocks if b.startswith(f"      - name: {name}"))
+        assert "mode != 'narration'" in blk, (
+            f"「{name}」没排除 narration 模式——这条路一个产物都没有")

@@ -1651,6 +1651,31 @@ def cover_length(voice_path: Path | None) -> float:
     return length
 
 
+def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
+    """量每段旁白的真实时长，把**超出自己那一段**的全列出来。
+
+    抽出来是为了让它能**脱离 render 单独跑**（`--check-narration`）：这道闸
+    比的是「TTS 时长 vs spec 里的段长」，**两样都不需要源片**。而想知道一条
+    spec 的哪几段写长了，原来只能跑一趟 render——那会在通过的情况下**顺手渲
+    出一条新成片并提交**，对已经发过的片子就是白白多一个 blob。
+
+    量的是 mp3 的真实时长，不是 `words.json` 的末事件——后者**低估**
+    （wang-samsonova 第 1 段：8.34s vs 9.29s），照它估出来的余量偏乐观。
+    """
+    spoken_of: dict[int, float] = {}
+    over: list[str] = []
+    for index, (seg, (path, _marks)) in enumerate(zip(segments, voices)):
+        if not seg.narration.strip():
+            continue
+        spoken_of[index] = probe_duration(path)
+        if spoken_of[index] > seg.length + 0.12:
+            over.append(f"  第 {index + 1} 段：画面 {seg.length:.1f}s，"
+                        f"旁白 {spoken_of[index]:.2f}s，超出 "
+                        f"{spoken_of[index] - seg.length:.2f}s"
+                        f"　「{seg.narration[:24]}…」")
+    return spoken_of, over
+
+
 def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
                ) -> list[tuple[Path, list[dict]]]:
     # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
@@ -1959,17 +1984,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 实实在在的两行字幕加两个声音（88.7 秒那一帧上看得清清楚楚）。
     # **只要超出一点点就会重叠**，因为下一段是卡着边界起的，所以容差要小；
     # 而且要**一次把所有超出的段都列出来**，别改一段跑一次六分钟。
-    over = []
-    spoken_of: dict[int, float] = {}
-    for index, (seg, (path, _marks)) in enumerate(zip(segments, voices)):
-        if not seg.narration.strip():
-            continue
-        spoken_of[index] = probe_duration(path)
-        if spoken_of[index] > seg.length + 0.12:
-            over.append(f"  第 {index + 1} 段：画面 {seg.length:.1f}s，"
-                        f"旁白 {spoken_of[index]:.2f}s，超出 "
-                        f"{spoken_of[index] - seg.length:.2f}s"
-                        f"　「{seg.narration[:24]}…」")
+    spoken_of, over = narration_overruns(segments, voices)
     if over:
         raise ReelError(
             "有旁白比它那一段的画面长，会和下一段的语音、字幕叠在一起：\n"
@@ -2136,6 +2151,9 @@ def main() -> int:
     r.add_argument("--rate", default="+6%")
     r.add_argument("--dry-run", action="store_true",
                    help="只校验 spec 的形状，不下载不渲染，秒级返回")
+    r.add_argument("--check-narration", action="store_true",
+                   help="只合语音、只报哪几段旁白写长了。**不下源片、不渲染、"
+                        "不写产物**——已经发过的片子拿它查，不会多出一个成片")
     r.add_argument("--cover-only", action="store_true",
                    help="只出封面海报就停（约 20 秒），用来调 cx/scale/focus/box")
 
@@ -2184,6 +2202,34 @@ def main() -> int:
         return 0
 
     spec = load_spec(Path(args.spec))
+    if args.check_narration:
+        # **一个源片字节都不碰。** 这道闸比的是「TTS 时长 vs spec 里的段长」，
+        # 两样都不需要源片；而跑一趟 render 去问同一个问题，在通过的情况下会
+        # 顺手渲出一条新成片并提交——对已经发过的片子就是白多一个 blob。
+        # 语音落**临时目录**，`output/` 一个字节都不动。
+        import tempfile  # noqa: PLC0415
+
+        segments = validate_spec(spec)
+        with tempfile.TemporaryDirectory() as tmp:
+            voices = synthesize(segments, Path(tmp), args.voice, args.rate)
+            spoken, over = narration_overruns(segments, voices)
+        total = sum(s.length for s in segments)
+        print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
+              f"（音色 {args.voice} {args.rate}）")
+        for index, secs in sorted(spoken.items()):
+            room = segments[index].length - secs
+            flag = "超出" if room < -0.12 else ("很紧" if room < 0.3 else "")
+            print(f"  第 {index + 1:>2d} 段 画面 {segments[index].length:5.1f}s "
+                  f"旁白 {secs:5.2f}s 余量 {room:+5.2f}s {flag}")
+        if over:
+            print("\n以下几段会和下一段的语音、字幕叠在一起：")
+            print("\n".join(over))
+            print("\n两条出路：把这几段的旁白删短，或者把画面拉长"
+                  "（`end` 往后挪，但别越过下一段的 `start`）。")
+            return 1
+        print("\n[查旁白] 每段都装得下，这条 spec 渲得过这道闸。")
+        return 0
+
     if args.dry_run:
         segments = validate_spec(spec)
         total = sum(s.length for s in segments)
