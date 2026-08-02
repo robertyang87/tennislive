@@ -3649,6 +3649,37 @@ def test_每一段都要待在同一个镜头里():
     assert all(b["source"] == "a" for b in bad)
 
 
+def test_跨切点检查器对单源的赛场之上也要跑得起来(tmp_path):
+    """上面那条只测了库函数；**检查器本身**对单源的 spec 从来没跑起来过。
+
+    `check_reel_cuts.py` 打印那一行按 `seg['source']` 硬取，而 `source` 只有
+    多源的 spec 才写（采访那条线）。「赛场之上」是单源，段里根本没有这个键——
+    于是它在第一段就 KeyError，**一条都还没查完**。CLAUDE.md 里「每一段都要
+    待在同一个镜头里」那条规矩，对整条赛场之上等于一直没有工具。
+
+    又是「查的东西和跑的东西不是一回事」：库函数全绿（它一直用 `.get`），
+    命令行入口炸——所以这一条走 subprocess，跑真的那个入口。
+    """
+    single = [p for p in sorted(Path("specs/reels").glob("*.json"))
+              if not json.loads(p.read_text(encoding="utf-8")).get("sources")]
+    assert single, "specs/reels 里一条单源的 spec 都没有？那这条测试该改了"
+    spec_path = single[0]
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+
+    probe = tmp_path / "probe.json"
+    probe.write_text(json.dumps({"url": spec["source_url"], "duration": 300.0,
+                                 "scene_cuts": []}), encoding="utf-8")
+    env = {**os.environ, "PYTHONPATH": "tools"}
+    out = subprocess.run([sys.executable, "tools/check_reel_cuts.py",
+                          str(spec_path), str(probe)],
+                         capture_output=True, text=True, env=env)
+    assert out.returncode == 0, f"检查器自己炸了：\n{out.stdout}\n{out.stderr}"
+    # **合格的也要列出来**：只在失败时出声的检查没法证明它真的看过每一段。
+    for index in range(len(spec["segments"])):
+        assert f"第 {index:>2} 段" in out.stdout, \
+            f"第 {index} 段没有被列出来——检查器没查完就返回了"
+
+
 def test_要发的片子必须有小红书文案():
     """推送那一步 `test -f "$COPY"` 会挡住缺文案的 slug，但那是六分钟之后的事——
     渲染、合成、拼片全跑完才发现没得发。spec 和文案是一对，缺一个就该在这儿红。

@@ -58,7 +58,11 @@ def main() -> int:
             mark, tail = "!", f"  显式跨切点：{why}"
         else:
             mark, tail = "✓", ""
-        print(f"  {mark} 第 {index:>2} 段 [{seg['source'] or '单源'}] "
+        # `source` 只有多源的 spec 才写（采访那条线）。「赛场之上」是单源，
+        # 段里根本没有这个键——原来按 `seg['source']` 硬取，于是这个检查器
+        # **对整条赛场之上从来没跑起来过**（KeyError 在第一段就炸）。
+        # 判据落在 `test_跨切点检查器对单源的赛场之上也要跑得起来`。
+        print(f"  {mark} 第 {index:>2} 段 [{seg.get('source') or '单源'}] "
               f"{seg['start']}–{seg['end']}  {seg['narration'][:22]}{tail}")
 
     print()
