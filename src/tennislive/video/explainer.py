@@ -1065,8 +1065,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "而到了二〇二六年这一本，那半句干脆没了；今年反倒新开了两个豁免口，"
             "育儿身份，和连着缺两站以上可以申请抹掉零分，这两条去年一条都没有。"
             "在大家一起退赛的这一年，条文本身比去年松。",
-            "assets/explainer/mandatory-1000/nbo_gate_2025.jpg",
-            "Rosanna U Photography / 加拿大大师赛官方 · 2025 年多伦多站入口",
+            "assets/explainer/mandatory-1000/sobeys_stadium_2025.jpg",
+            "加拿大网球协会官方 · 2025 年加拿大大师赛，多伦多 Sobeys Stadium 中心球场航拍",
             (
                 "去年记 0 今年还是 0 一分不差",
                 "2025 版还写着 停赛下一站",

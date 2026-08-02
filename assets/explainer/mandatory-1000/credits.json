@@ -1,21 +1,5 @@
 {
  "_note": "每张图的赛事/年份取自来源自身的描述与元数据，不靠看图推断；发布时可据此在文案里署名（画面上不烧录来源）。",
- "nbo_gate_2025.jpg": {
-  "subject": "球迷排着队走向加拿大大师赛的 WELCOME 入口门，背景是 Sobeys Stadium 的场馆外墙与赞助牌",
-  "event": "2025 年加拿大大师赛（男子那年在多伦多 Sobeys Stadium）",
-  "artist": "Rosanna U Photography",
-  "license": "赛事官方图，未取得授权；按仓库既有做法照实记录出处",
-  "via": "nationalbankopen.com 官方图床",
-  "page": "https://assets.nationalbankopen.com/production/news/Main-Entrance-2025-NBO-Rosanna-U-Photography.jpg",
-  "_四要素怎么自证": "**文件名由赛事方自己写死**：`Main-Entrance-2025-NBO-<摄影师>`——地点（主入口）、年份（2025）、赛事（NBO）三样都是来源自证，不靠看图推断。画面里的 `Sobeys` 招牌与 `WELCOME` 门也和多伦多站对得上。",
-  "_四道闸门": {
-   "1 精准": "2025 年正是**男子在多伦多**的那一届，也正是辛纳／德约科维奇／阿尔卡拉斯三个人同样缺席的那一届——这一屏讲的就是「去年他们也没来」，时间地点事件全对得上。",
-   "2 在比赛中": "⚠️ **不适用，而且是故意的。** 这一屏的主角不是球员而是**买票进场的人**；「在比赛中」那条闸门管的是拿球员照片讲球员，这里讲的是看台那一侧。",
-   "3 冲击力": "人流、遮阳伞、排队的锥形桶——门开着、人来了，而那一年他们三个没来。落点在这个反差上。",
-   "4 清晰度": "2400×1602，比例 1.498 走信箱式缩放；铺满 1.00x。"
-  },
-  "_亮度": "均值 137.9 / 中位 158 / 暗于 50 占 16.8%。晴天顺光，无暗部问题。"
- },
  "alcaraz_wimbledon_2025.jpg": {
   "subject": "阿尔卡拉斯发球，球在空中，草地上拖着一道长影；全身入镜",
   "event": "2025 温网，对阵斯特鲁夫",
@@ -45,7 +29,8 @@
   "2026 蒙特利尔现场": "**这一站 8 月 1 日才开打**，Commons 上零。赛事官方图床（assets.nationalbankopen.com）开着且文件名自证，但今年蒙特利尔这几张**上传尺寸就是 1200px 级**（`PR-Gael-Monfils-0001` 1200×841、`OBN-2026-Felix-Practice-pre-tournament` 1200×800、`PR-Gabriel-Diallo-0351` / `TA-Alexei-Popyrin-0234` 各 1200×800）；同一个图床上2025 年那张入口图是 2400×1602，所以**不是路径取小了，是这批原本就传得小**。`/photos`、`/gallery` 两个路径 404。ausopen.com 与 atptour.com 的文章页对本环境一律 403 或纯 JS，取不到图。结论：**今天不存在 2026 蒙特利尔的高分辨率自由图**，按「精准优先于清晰」用 1200px 的今年。",
   "Commons 上的辛纳／德约科维奇 2026": "有，但**全是看台业余机位**：`Jannik Sinner vs Clément Tabur at the 2026 Roland Garros` 系列（4000×3000）人只占画面一小块，`Djokovic AO26 R1`（3024×4032）是从看台高处拍的发球、下三分之一全是观众后脑勺，第 3 道闸门都不过。仓库里已有的官方图（AELTC / FFT）比它们高一档，所以走复用。",
   "⚠️ 差点收进来的那张": "`File:Jannik Sinner at 2026 Wimbledon final.jpg`（5472×3648，CC BY-SA 4.0），文件名和说明都写着「Sinner after winning Wimbledon in 2026」——**打开一看他根本不在画面里**，拍的是球童列队和记分牌。第 1 道闸门直接不过。**又一次「判据是打开看，不是看元数据」。**（它的记分牌 `Jannik SINNER (ITA 1) 6 7 6 6 / Alexander ZVEREV (GER 2) 7…` 倒是把这场决赛的比分自证了，留作旁证。）",
-  "Commons 场馆检索": "`National Bank Open Toronto tennis stadium` 总命中 19、`Rogers Cup Montreal centre court` 总命中 235，**打开全是 1900 年代的报纸 PDF**——典型的「非空 ≠ 对题」。加了「标题必须含关键词 + 排除 PDF」之后才筛出真正的场馆图。另：第一轮查询里带了 `filetype:bitmap`，五条查询**全部返回 0**，看起来和「Commons 上没有这个人」一模一样；拿已知非空的口径对了一下才发现是查询词写错了。"
+  "Commons 场馆检索": "`National Bank Open Toronto tennis stadium` 总命中 19、`Rogers Cup Montreal centre court` 总命中 235，**打开全是 1900 年代的报纸 PDF**——典型的「非空 ≠ 对题」。加了「标题必须含关键词 + 排除 PDF」之后才筛出真正的场馆图。另：第一轮查询里带了 `filetype:bitmap`，五条查询**全部返回 0**，看起来和「Commons 上没有这个人」一模一样；拿已知非空的口径对了一下才发现是查询词写错了。",
+  "被换掉那张入口图的原链接": "https://assets.nationalbankopen.com/production/news/Main-Entrance-2025-NBO-Rosanna-U-Photography.jpg（Rosanna U Photography / 加拿大大师赛官方，2400×1602，2025 年多伦多站主入口）。文件名自证时间地点赛事，画质也够，只是**画面里看不出这是网球**——留个链接备查。"
  },
  "_查证": {
   "规则条文（2026 ATP 官方规则书，210 页全本，curl + 浏览器 UA 取得；WebFetch 对 atptour.com 一律 403）": {
@@ -141,5 +126,23 @@
   },
   "_换掉了什么": "原来这一屏用的是 `masters-format/crowd.jpg`（2200×1473，蒙特利尔中心球场满场）——**画面漂亮、场馆也是同一座，但拍摄于 2009 年，比这条片子讲的事早十七年**。账号所有者重申「时间、地点、人物、事件精准匹配是基本要求，分辨率和画质是附加要求」之后按这个顺序换掉：**宁可用 1200px 的今年，不用 2200px 的十七年前。**",
   "_亮度": "均值 181 / 中位 185 / 暗于 50 占 2%。白天顺光，偏亮。"
+ },
+ "sobeys_stadium_2025.jpg": {
+  "subject": "Sobeys Stadium 中心球场航拍：整座碗坐满观众，蓝色球场居中、绿色外区，场上两名球员正在比赛",
+  "event": "2025 年加拿大大师赛（男子那一届在多伦多 Sobeys Stadium）",
+  "artist": "Tennis Canada 官方（文件名 `TC-OBN-2025-DRONE-0298-FINAL-s-RVB`：TC=Tennis Canada，OBN=Omnium Banque Nationale，2025，DRONE）",
+  "license": "赛事官方图，未取得授权；按仓库既有做法照实记录出处",
+  "via": "sobeysstadium.com（Tennis Canada 图床 assets.tenniscanada.com，`Hero-Images/6/6-5-2-Sobeys-Stadium/`）",
+  "page": "https://assets.tenniscanada.com/production/Hero-Images/6/6-5-2-Sobeys-Stadium/TC-OBN-2025-DRONE-0298-FINAL-s-RVB.webp",
+  "_四要素怎么自证": "**画面里赛事方自己把场馆名写着**：放大看碗顶那栋楼的外墙印着 `Sobeys STADIUM`——而 Sobeys Stadium 就是多伦多那座。年份由文件名 `OBN-2025` 给出，目录也挂在 Sobeys-Stadium 名下。⚠️ 光凭 `OBN`（法文赛事名，两座城市共用）分不出城市，**目录名也只是间接信号**（见 CLAUDE.md「官方图库把它挂在这一站名下，不等于拍的是这个场地」）；真正定死它的是画面里那行字，外加**场地配色与已知的多伦多球场一致**：蓝场心 + 绿外区 + 深蓝座椅，与 Commons 上 2008 年同一座球场（当时叫 Rexall Centre，绿区上还印着 `TORONTO`）逐项对得上。",
+  "_四道闸门": {
+   "1 精准": "2025 年、多伦多、加拿大大师赛——正是这一屏讲的「去年那一站」。场上有球员在打，是赛期实拍不是空场。",
+   "2 在比赛中": "⚠️ 这一屏的主角是**赛事和看台**，不是某个球员；碗里坐满人、场上两个人在打，赛事本身就在进行中。",
+   "3 冲击力": "整座碗、上万人、蓝场居中——**一眼看得出是网球场**，这正是换掉上一张的原因（账号所有者：「更能看出是球场的」）。",
+   "4 清晰度": "原图 1584×1080（图床上的最大尺寸，更大的变换路径一律 404），裁后 1328×1080。"
+  },
+  "_裁法": "**横向收边到 1.230（1328×1080），从 x=256 起。** 原图 1.467 走信箱式缩放时球场偏小；收到刚过 `wide = pw/ph >= 1.2` 那条线上方一点点，仍走 contain 不被切，碗在卡上大了约两成。左边切掉的是室内馆和外围球场，碗、看台、`Sobeys STADIUM` 那行字全在框内。",
+  "_换掉了什么": "原来这一屏用的是同一站的入口人流图（`Main-Entrance-2025-NBO-Rosanna-U-Photography.jpg`，2400×1602，赛事官方）。账号所有者：「多伦多的图要换一个，更能看出是球场的，这个感觉有点不太贴切。」——那张画面里只有大门、人群和街道，**看不出是网球赛事**，扫过去像一场市集。已从本目录删除（未被任何一屏引用的图不留在仓库里）；出处记在这儿，以后要讲「买票的人」那类内容可以按原链接重新取。",
+  "_亮度": "均值 90 / 中位 82 / 暗于 50 占 31%。黄昏航拍，看台在阴影里而球场被光打亮，主体在亮处。"
  }
 }
