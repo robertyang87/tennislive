@@ -3454,8 +3454,8 @@ def column_of(slug: str) -> Column:
 _OPENINGS: dict[str, dict] = {
     "entry-deadline": {
         "topic": "报名截止线：名单在六周之前就锁上了",
-        "question": "排名到了，为什么还打资格赛？",
-        "narration": "排名到了，为什么还打资格赛？因为那张名单，在开赛整整六周之前"
+        "question": "排名涨了，为什么用不上？",
+        "narration": "排名涨了，为什么用不上？因为那张名单，在开赛整整六周之前"
                      "就已经锁上了。",
         "gloss": "Entry Deadline = 报名截止线",
         # 封面这张没有任何一屏在用，借不到出处，所以自己写一行。
