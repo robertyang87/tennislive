@@ -6,6 +6,10 @@ name: match-reel
 #                （只提交几张 JPEG 和一个 json，源片 50MB 不进仓库）
 #   mode=render  按 specs/reels/<slug>.json 剪 → 裁 9:16 → 中文解说 → 烧字幕
 #                → 加封面 → 成片提交
+#   mode=push    **成片已经在仓库里**，只写复制页 → 提交 → 发微信。
+#                「先验产物再推」意味着推是**另一次**动作；没有这个模式就得为了
+#                发一条消息把整条片子重渲一遍（一轮十五分钟：装中文字体 4 分 20、
+#                渲片 7 分半），而重渲出来的那一版还得再验一次。
 #   mode=cookies 什么都不产，只验 YouTube 还下不下得动（cookie 会过期）
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
@@ -15,20 +19,15 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；cover=只出封面海报；render=按 spec 出成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；cover=只出封面海报；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏（CLAUDE.md
-        # 里 68 行、10 个专门段落，每段都是一轮返工换来的；spec 注释里
-        # wong-brooksby 记着「0.32/0.40 → 0.33/0.42 → 0.34/0.44」三档、
-        # hewitt 记着 0.60/0.67/0.74 三档，每一档都付过一趟六分钟）。
-        # 而 `build_cover` 不依赖 segments / tracks / TTS / voice——下完源片
-        # 就能出海报，省掉分段编码 + TTS + 成片那四五分钟。
-        # ⚠️ `--cover-only` / `--dry-run` 的 CLI 开关先落地了，而这一行没跟着
-        # 改，于是那两个开关**在唯一能用的那台机器上够不着**（源片只在 runner
-        # 上活过几分钟，沙箱下不动 YouTube）。又一次「写了不等于跑过」，
-        # 只是这次卡在工作流入口。
-        options: [probe, cover, render, cookies]
+        # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏，而
+        # `build_cover` 不依赖 segments / tracks / TTS / voice——下完源片就能
+        # 出海报，省掉分段编码 + TTS + 成片那四五分钟。实测整趟 3 分 19 秒。
+        # ⚠️ `--cover-only` 的 CLI 开关先落地了而这一行没跟着改，于是它在唯一
+        # 能用的那台机器上够不着（源片只在 runner 上活过几分钟）。
+        options: [probe, cover, render, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -57,35 +56,37 @@ on:
         required: false
         default: "+6%"
       push:
-        description: "render 完成后顺手推送到微信（只能在 main 上）。分支上渲的片子合进 main 之后跑 push-reel 就行，不用重渲"
+        description: "render 完成后推送到微信"
         required: false
         type: boolean
         default: false
-      # 下面四项**默认全空，从 spec 读**（`push_reel.push_meta`）：对阵取
-      # `cover.versus.names`、比分取 `cover.result`——海报印的就是这两个值，
-      # 标题没有理由再让人打一遍。`summary` / `lead` 写在 spec 的 `push` 块里。
+      # ⚠️ 下面这几个输入**一律不给默认值**。它们装的是「这一条片子的文案」，
+      # 而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，
+      # 而且**不报错**。2026-08-01 郑钦文那条赛前前瞻就是这么发错的：
+      # 标题印着「郑钦文首轮出局」（上一条华盛顿赛报的 summary 默认值），
+      # 而那场球当晚 00:30 才开打。**说了一件没发生的事，微信收不回来。**
       #
-      # 原来这几项挂着**上一条片子的默认值**（`伊埃拉 vs 郑钦文`、
-      # `郑钦文首轮出局`、一整句郑钦文的数据），漏传一项就拿另一场球的标题
-      # 把这条片子发出去，而微信那条消息发出去就收不回来。
+      # 更阴的一层：**传空串盖不住默认值**。`github.event.inputs.X` 在收到空串时
+      # 退回 default，所以我明明传了 `summary: ""`，用的还是那句旧话。
+      # 唯一可靠的做法是默认值本身就是空的。
       matchup:
-        description: "覆盖对阵（默认取 spec 的 cover.versus.names）"
+        description: "对阵，进标题：如「锦织圭 vs 商竣程」。**必填**（push=true 时）"
         required: false
         default: ""
       score:
-        description: "覆盖赛果（默认取 spec 的 cover.result），赢家在前"
+        description: "赛果，进标题：赢家在前，如「2:1」。**赛前前瞻留空**"
         required: false
         default: ""
       event:
-        description: "赛事与轮次，进标题。一般留空——加上就太长了，赛事名文案里有"
+        description: "赛事与轮次，进标题。默认留空——加上就太长了，赛事名文案里有"
         required: false
         default: ""
       summary:
-        description: "覆盖一句话概括（默认取 spec 的 push.summary）。整句标题不超过 20 个字位"
+        description: "一句话概括赛果（顶掉「对阵 + 比分」）：只留最硬的那个结果。整句标题不超过 20 个字位，讲不完的写进 push_lead"
         required: false
         default: ""
       push_lead:
-        description: "覆盖推送正文那一句（默认取 spec 的 push.lead）"
+        description: "推送正文那一句"
         required: false
         default: ""
 
@@ -117,39 +118,39 @@ jobs:
       #
       # 所以在这儿拦：让失败发生在第 5 秒，不是第 16 分钟。要出片不推送就
       # `push=false`，在分支上随便跑；要推送先把 PR 合进 main。
-      #
-      # **但「合进 main 再跑一遍」不该是重渲一遍。** 一直以来的做法是把整条
-      # match-reel 在 main 上从头再跑一次：run 30623994190 重渲 wong-brooksby，
-      # 出来的 mp4 和 PR #108 里那份差 563 字节（55,028,417 → 55,028,980），
-      # 七分二十二秒的渲染换来一个字节级相同的文件，外加往仓库里再塞一个 55 MB
-      # 的 blob（这正是 .git 涨到 1.77 GiB、每次 checkout 要两分多钟的原因）。
-      # 现在合进 main 之后跑 `push-reel.yml` 就行——它只推送仓库里已经有的那份，
-      # 三分钟，失败了重跑也是三分钟。
       - name: push=true 必须在 main 上
         if: github.event.inputs.push == 'true' && github.ref_name != 'main'
         run: |
           echo "::error::push=true 只能在 main 上跑，当前分支是 ${{ github.ref_name }}。"
           echo "::error::GitHub Pages 只服务 main——复制页留在分支上永远是 404，"
           echo "::error::推送那一步等不到它就会 exit 1，渲染和轮询全白跑十几分钟。"
-          echo "::error::用 push=false 在这个分支上出片，把 PR 合进 main，"
-          echo "::error::然后跑 push-reel 工作流（slug=${{ github.event.inputs.slug }}）——"
-          echo "::error::它推送的就是仓库里这一份，不用重渲。"
+          echo "::error::出片但不推送用 push=false；要推送先把 PR 合进 main 再跑。"
+          exit 1
+
+      # **标题里那句话必须是这次填的。** 上一版给 matchup / summary / push_lead
+      # 留了上一条片子的默认值，于是 2026-08-01 郑钦文那条赛前前瞻顶着
+      # 「郑钦文首轮出局」发了出去——那场球当晚 00:30 才开打，**说了一件没发生
+      # 的事**。默认值现在一律为空，但空着发同样不行：标题末尾那一格会是空的。
+      # 所以在这儿拦，第 3 秒就红，别等渲染十分钟之后再发一条错的。
+      - name: push=true 必须自己填标题，不许吃默认值
+        if: >-
+          github.event.inputs.push == 'true'
+          && github.event.inputs.matchup == ''
+          && github.event.inputs.summary == ''
+        run: |
+          echo "::error::push=true 时 matchup 和 summary 至少要填一个——标题末尾那一格靠它。"
+          echo "::error::赛前前瞻填 matchup（如「郑钦文 vs 塔拉鲁迪」）、score 留空；"
+          echo "::error::赛报填 matchup + score，或者用 summary 一句话概括赛果。"
           exit 1
 
       - uses: actions/checkout@v4
         with:
           # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
-          # checkout 因此每次要 1 分 35 秒到 2 分 44 秒（run 30622667742 /
-          # 30624808733）——而渲染一个字节都用不到别人的成片。稀疏检出把它
-          # 挡在外面，剩下的全部加起来 161 MB。
-          #
-          # cone 模式下**根目录的文件总是带上**（pyproject.toml、CLAUDE.md），
-          # 不用列。本次的 outdir 在「算出目录」那一步再 add 进来——重渲一条
-          # 已有的片子时只取它自己那几十 MB，不取别人的。
-          #
-          # ⚠️ 排除的只有 output/。assets 155 MB 看着也不小，但它是渲染真要读
-          # 的东西（抠图、示意图、字体），少一个就是第 5 分钟才炸的
-          # FileNotFoundError——「加新能力就要同时改三处」那条坑的又一种形状。
+          # checkout 因此每次要 1 分 35 秒到 2 分 44 秒——而渲染一个字节都用不到
+          # 别人的成片。稀疏检出把它挡在外面，剩下的加起来 161 MB。
+          # 本次的 outdir 在「算出目录」那一步再 add 进来。
+          # ⚠️ 排除的**只有** output/。assets 155 MB 是渲染真要读的东西
+          # （抠图、示意图、字体），少一个就是第 5 分钟才炸的 FileNotFoundError。
           sparse-checkout: |
             assets
             data
@@ -164,38 +165,20 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      # **apt 和 pip 一起跑。** 两边装的东西互不相干（apt 装字体和 ffmpeg，
-      # pip 装 Python 包），而串起来是 42s + 25s。丢到后台并行，取长的那个。
-      # 量出来：串行 1:07，并行 0:44 上下。
-      #
-      # ⚠️ **两边都要检退出码。** `wait` 不带参数只等所有后台任务、返回最后
-      # 一个的状态——apt 挂了而 pip 成功，这一步照样绿，然后 render 在第 5
-      # 分钟死在「找不到 ffmpeg」。所以按 PID 分别 wait，谁挂了报谁。
-      - name: 装系统依赖和 Python 依赖（并行）
-        run: |
-          (
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
-          ) > /tmp/apt.log 2>&1 &
-          APT=$!
-          (
-            # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
-            # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
-            # runner 上没有，而且都死在下完 64MB 源片之后。
-            pip install -q -e ".[webrender,visualqa,cutout]"
-            # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
-            # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
-            # `n challenge solving failed` + `Only images are available`，
-            # 于是任何格式选择器都匹配不上，看起来像「这个视频没有格式」。
-            pip install -q "yt-dlp[default]" edge-tts
-          ) > /tmp/pip.log 2>&1 &
-          PIP=$!
-          FAIL=0
-          wait $APT || { echo "::error::apt 装失败"; cat /tmp/apt.log; FAIL=1; }
-          wait $PIP || { echo "::error::pip 装失败"; cat /tmp/pip.log; FAIL=1; }
-          [ "$FAIL" = 0 ] || exit 1
-          ffmpeg -version | head -1
-          node --version
+      # ffmpeg 两种模式都要；**中文字体只有渲染要**（封面和烧字幕）。
+      # 原来合成一步挂在所有模式前面，而 apt 那一步挂死过——probe 因此被一个
+      # 它根本用不到的依赖拖住二十分钟。拆开，并给超时：卡住要失败，不要空转。
+      - name: 装 ffmpeg
+        # push 模式一帧都不碰：`push_reel.py` 那条路里 ffmpeg / ffprobe /
+        # subprocess **一个都没出现**，装它白花半分钟。
+        if: github.event.inputs.mode != 'push'
+        timeout-minutes: 5
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: 装中文字体（只有渲染要）
+        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 5
+        run: sudo apt-get install -y -qq fonts-noto-cjk
 
       # 封面走 HTML 渲染（和知识帖同一套字），所以要 webrender + Chromium。
       # 少了它 render 会死在 ModuleNotFoundError: playwright，而且是在下完
@@ -205,18 +188,48 @@ jobs:
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
       # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
       - name: 缓存抠图模型
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.u2net
           key: rembg-isnet-general-use-${{ runner.os }}
 
+      - name: 装依赖
+        run: |
+          # **push 模式只装主依赖。** 它不下片、不渲染、不抠图——rembg、opencv、
+          # playwright、yt-dlp 一个都用不上，装全套只是把失败面铺大：那几个包
+          # 里任何一个装不上，都会让一条**本来只是发消息**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+            pip install -q -e .
+            # 真验一次 push 那条路要的东西，**不许 `|| true`**：装少了要在
+            # 第 5 秒炸，而不是三分钟后死在推送那一步。
+            python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+            echo "push 模式：只装主依赖，推送那条路的 import 已验过"
+            exit 0
+          fi
+          # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
+          # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
+          # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
+          # （`_preflight_cutout`，排在下载之前），但依赖这一行还是得同一个提交里改。
+          pip install -q -e ".[webrender,visualqa,cutout]"
+          # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
+          # n challenge 要跑一段 JS。少了它不会报「装少了」，而是
+          # `n challenge solving failed` + `Only images are available`，
+          # 于是任何视频格式选择器都匹配不上，看起来像「这个视频没有格式」或者
+          # 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），
+          # 命令行统一带 `--js-runtimes node`。
+          pip install -q "yt-dlp[default]" edge-tts
+          node --version
+
       - name: 缓存 Chromium
+        if: github.event.inputs.mode == 'render'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
+        if: github.event.inputs.mode == 'render'
         run: python -m playwright install --with-deps chromium
 
       - name: 算出目录
@@ -224,14 +237,34 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           SLUG="${{ github.event.inputs.slug }}"
-          OUTDIR="output/$OUT_DATE/reel/$SLUG"
-          echo "outdir=$OUTDIR" >> "$GITHUB_OUTPUT"
+          OUT_DIR="output/$OUT_DATE/reel/$SLUG"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
-          # 上面的稀疏检出把整个 output/ 挡在外面了，本次要写要提交的这一格
-          # 得放进来，否则 `git add` 会说它在 sparse-checkout 之外。
-          # 新目录没有历史 blob 要下；重渲已有的片子才会取它自己那几十 MB。
-          git sparse-checkout add "$OUTDIR"
-          echo "稀疏检出的范围：$(git sparse-checkout list | tr '\n' ' ')"
+          # checkout 把整个 output/ 挡在稀疏范围外了，这儿再把**自己那一格**
+          # 加回来。三种模式都要：render/cover 要往里写，push 要读 mp4 的大小
+          # （超 20 MB 就退 raw）。
+          # ⚠️ 必须排在生成**之前**——`add` 会把 HEAD 上那一版先铺回工作区，
+          # 反过来会拿旧内容盖掉刚生成的。
+          git sparse-checkout add "$OUT_DIR"
+
+      # push 模式的前提是**成片已经在这个 commit 里**。不在就当场报，别等到
+      # 装完依赖、写完复制页、提交完之后才在推送那一步炸——「让失败发生在
+      # 第 5 秒，不是第 90 秒」。
+      # 查的是 `git ls-files`，不是 `test -f`：只在工作区里躺着的文件，推送
+      # 发出去就是 404（同一个毛病在复制页上踩过两次）。
+      - name: push 模式先确认成片真的在仓库里
+        if: github.event.inputs.mode == 'push'
+        run: |
+          REEL="${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
+          if [ -z "$(git ls-files -- "$REEL")" ]; then
+            echo "::error::$REEL 不在这个 commit 里——push 模式只发已经落库的成片。"
+            echo "::error::先跑一次 mode=render（push=false），验完再用 mode=push 发。"
+            git ls-files -- "${{ steps.paths.outputs.outdir }}" || true
+            exit 1
+          fi
+          echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
+          test -f "${{ steps.paths.outputs.outdir }}/poster.jpg" || {
+            echo "::error::海报不在——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }
 
       # YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」。第一道解法
       # 是 GVS PO token：yt-dlp 官方推荐的 bgutil provider 起在本机 4416，插件会
@@ -239,15 +272,23 @@ jobs:
       # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
       - name: 起 PO token provider
         id: pot
+        # push 模式不下任何东西——docker pull 那一分钟白等
+        if: github.event.inputs.mode != 'push'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
           docker run --name bgutil-pot -d -p 4416:4416 \
             brainicism/bgutil-ytdlp-pot-provider
-          # **只管起，不在这儿等。** 容器已经是 `-d`，原地轮询最多 50 秒
-          # 纯粹是空转——而它下一次被用到是在 render 里下载源片那一刻，中间
-          # 还隔着装 Chromium、算目录、写复制页几步。探活挪到 render 之前。
-          echo "up=1" >> "$GITHUB_OUTPUT"
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "provider 起来了（第 ${i} 次探活）"
+              echo "up=1" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
 
       # 配了这个 Secret 就带 cookie 下载，没配就只能靠上面的 PO token + client 梯子。
       - name: 落 cookies（配了 Secret 才有）
@@ -340,92 +381,9 @@ jobs:
             --top 12 || true
           ls -la "$OUT/cover_candidates" 2>/dev/null || true
 
-      # **复制页排在渲染之前，而且当场提交。**
-      #
-      # 它一个字节都不依赖成片——内容只来自 `specs/reels/<slug>.xhs.txt` 和
-      # 从 spec 算出来的标题（`push_reel.py --stage page` 全程没碰过 mp4）。
-      # 可它原来排在渲染**之后**（第 17 步），于是 Pages 要等提交完才开始发布，
-      # 推送那一步只能站在原地等：run 30624808733 的日志是连续 12 次
-      # `HTTP 404`、第 13 次才拿到——**240 秒纯空转，占了整条 run 的四分之一**。
-      #
-      # 挪到渲染前面并单独提交一次，Pages 的发布就和七分二十二秒的渲染并行了，
-      # 等推送那一步跑到时它早就是 200。判据仍然是那行探活日志：改对了，
-      # 「第 1 次探活：已是这一版的内容」应该一次就中。
-      #
-      # 另一半好处是**失败提前**：标题超字数、tag 超五个、spec 少了 push 块
-      # 这类错，现在死在第 3 分钟而不是第 12 分钟。
-      - name: 写复制页（排在渲染之前：它不依赖成片）
-        if: github.event.inputs.mode == 'render'
-        run: |
-          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
-          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
-          mkdir -p "${{ steps.paths.outputs.outdir }}"
-          python tools/push_reel.py --stage page \
-            --outdir "${{ steps.paths.outputs.outdir }}" \
-            --matchup "${{ github.event.inputs.matchup }}" \
-            --score "${{ github.event.inputs.score }}" \
-            --event "${{ github.event.inputs.event }}" \
-            --summary "${{ github.event.inputs.summary }}" \
-            --copy "$COPY"
-
-      # 这一次提交只带 copy.html（成片还没渲出来），所以重放也只重放它。
-      # 分支上照样提交：合进 main 的时候复制页跟着一起进去，之后跑 push-reel
-      # 就完全不用等 Pages——那时它已经发布好几分钟了。
-      - name: 提交复制页（让 Pages 和渲染并行跑）
-        if: github.event.inputs.mode == 'render'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          PAGE="${{ steps.paths.outputs.outdir }}/copy.html"
-          BRANCH="${{ github.ref_name }}"
-          MSG="reel: ${{ github.event.inputs.slug }} 复制页"
-          git add "$PAGE"
-          if git diff --cached --quiet; then
-            echo "复制页没有变化（这一版已经在仓库里了）"
-            exit 0
-          fi
-          git commit -m "$MSG"
-          for attempt in $(seq 1 5); do
-            if git push origin "HEAD:$BRANCH"; then
-              echo "复制页已落库，Pages 开始发布——渲染这就开始，两边并行"
-              exit 0
-            fi
-            echo "push 被拒（第 $attempt 次），把复制页重放到最新的 $BRANCH 上"
-            git fetch origin "$BRANCH"
-            git branch -f staged HEAD
-            git reset --hard "origin/$BRANCH"
-            git checkout staged -- "$PAGE"
-            git add "$PAGE"
-            git diff --cached --quiet || git commit -m "$MSG"
-            sleep $((attempt * 3 + RANDOM % 5))
-          done
-          # 这里**不能 exit 1**：复制页没提上去只是「推送时要多等几分钟」，
-          # 而渲染是这条 run 真正的产物。为它整条作废，代价反了。
-          echo "::warning::复制页没能提前落库，推送那一步会退回原来的等待"
-
-      # PO token provider 的探活收在这儿：容器在前面几步就 `-d` 起来了，
-      # 装 Chromium、写复制页、提交复制页这几步给了它足够的启动时间，
-      # 所以这一探通常一次就中。**起不来不算失败**——退回 client 梯子，
-      # 让下载那一步去报真正的原因。
-      - name: 等 PO token provider 就绪
-        if: github.event.inputs.mode != 'cookies' && steps.pot.outputs.up == '1'
-        id: potwait
-        run: |
-          for i in $(seq 1 25); do
-            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 就绪（第 ${i} 次探活）"
-              exit 0
-            fi
-            sleep 2
-          done
-          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
-          docker logs bgutil-pot 2>&1 | tail -20 || true
-          echo "POT_DOWN=1" >> "$GITHUB_ENV"
-
-      # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 `scale` /
-      # `cx` / `box` 想看效果，走这条，别再付一趟完整 render。
-      # `--cover-only` 里的 `build_cover` 一个 segment / track / TTS 都不碰
-      # （查过），所以「下载 → 出海报 → 退出」是干净的一条路。
+      # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /
+      # box 想看效果走这条，别再付一趟完整 render。实测整趟 3 分 19 秒，
+      # 而且只提交一张 0.3 MB 的海报。
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
@@ -454,16 +412,34 @@ jobs:
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
+      # 复制页**必须写在提交之前**。它由 GitHub Pages 提供，没进仓库就是 404。
+      # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
+      # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
+      # 链接打开 404。**又一次「查信号不查产物」**。
+      # **不挂在 push=true 上。** 分支上 `push=false` 渲的片子也要把复制页
+      # 带进 PR——它跟着成片一起合进 main 之后，Pages 早就发布好了，
+      # 后面那趟 `mode=push` 的 `wait_for_copy_page` 一次就中。挂在
+      # push=true 上的话，复制页只能在推送那一刻才第一次进仓库，Pages
+      # 从零开始发布，推送就得原地等几分钟（run 30624808733：连续 12 次
+      # HTTP 404，第 13 次才中，240 秒纯空转）。
+      # 写它几乎不要钱（一个 HTML），却决定后面那趟推送要不要空等。
+      - name: 写复制页（必须排在提交之前）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
+        run: |
+          COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+          test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
+          python tools/push_reel.py --stage page \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --matchup "${{ github.event.inputs.matchup }}" \
+            --score "${{ github.event.inputs.score }}" \
+            --event "${{ github.event.inputs.event }}" \
+            --summary "${{ github.event.inputs.summary }}" \
+            --copy "$COPY"
+
       # **查产物，不查信号。** 这个脚本一直在仓库里，`grep -rn check_reel_landed
-      # .github/` 却是**零命中**——写好了，一次都没跑过。补跑一遍九条已发的成片，
-      # 它自己就把今天查出来的两个真缺陷全报了出来：
-      #   「音轨比画面短 N 秒」×7（闪避那道 apad）
-      #   「封面之后还有 38 秒是数字静音」×1（wong-brooksby 的哑源片）
-      # 也就是说这两个缺陷本来在发出去之前就该被拦下，只是没人调它。
-      #
-      # **拦在提交之前**：提交进 main 之后 push-reel 就会把它发到微信，
-      # 而微信那条消息发出去收不回来。误拦的代价现在很小——上一步的
-      # `always()` 保证成片照样上传，重跑一次即可。
+      # .github/` 却是零命中——写好了一次都没跑过。补跑九条已发成片，它自己
+      # 就报出了两个真缺陷：「音轨比画面短」×7、「38 秒数字静音」×1。
+      # 拦在提交之前：进了 main，push 那条路就会把它发到微信，而消息收不回来。
       - name: 查成片本身合不合格
         if: github.event.inputs.mode == 'render'
         run: |
@@ -527,15 +503,10 @@ jobs:
             [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
           fi
 
-      # **`always()` 不能省。** `if:` 里不含状态函数时 GitHub 会隐式和上
-      # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一旦
-      # exit 1（连着栽过四次，最近一次是多源之后源片改名 `source_r1.mp4`，
-      # run 30603686748），**成片明明已经渲完了，却既不上传也不提交**，
-      # 六分钟整趟作废，只能重跑。render 自己失败时同理：`subtitles.ass` /
-      # `poster.jpg` / `part_*.mp4` 全拿不到，只能翻日志猜。
-      #
-      # ⚠️ **位置不能往前挪**：清理那一步先 `rm` 再做体积检查，所以走到这儿
-      # 源片已经删干净了。挪到清理之前会把 392 MB 的源片一起传上去。
+      # **`always()` 不能省。** `if:` 不含状态函数时 GitHub 隐式和上
+      # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一
+      # exit 1（栽过四次），**成片明明已经渲完了，却既不上传也不提交**。
+      # ⚠️ 位置不许往前挪：清理是先 rm 再检查，挪到前面会把源片一起传。
       - name: 上传 artifact
         if: always() && github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
@@ -589,18 +560,13 @@ jobs:
       #
       # 「触发成功」不算推了，**这一步 success 才算**。
       - name: 推送到微信（可选）
-        if: github.event.inputs.push == 'true' && github.event.inputs.mode == 'render'
+        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
-          # **钉 commit，别停在 @main。** 同一条片子同一天重渲，海报路径一模一样
-          # （`output/<date>/reel/<slug>/poster.jpg`），而微信的图片缓存是按
-          # **路径**算的——URL 停在 `@main` 的话，第二轮、第三轮推出去的还是
-          # 第一轮那张海报，**而且不吭声**。今天 eala-fernandez 渲了 3 轮、
-          # wang-samsonova 2 轮，正好撞在这上面。
-          # `prepare_image_delivery` 读这个环境变量把 `@main` 换成 `@<sha>`，
-          # 每一版就是一个真正不同的资源。解说片和 push-existing 一直有这一行，
-          # reel 这两条线漏了。
+          # **钉 commit，别停在 @main。** 同一条片子重渲，海报路径一模一样，
+          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话第二轮推出去的
+          # 还是第一轮那张海报，**而且不吭声**。解说片一直有这一行，reel 漏了。
           TENNISLIVE_ASSET_REV: ${{ github.sha }}
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"

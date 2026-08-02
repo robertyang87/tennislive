@@ -345,9 +345,29 @@ def copy_page_fingerprint(path) -> str:
     return re.sub(r"\s+", " ", match.group(1)).strip()
 
 
+#: 探复制页的重试预算。**这两个数是量出来的，不是拍的，别往下调。**
+#:
+#: 原来是 3 次 × 20 秒 = 40 秒，配的注释写着「Pages 重新发布要一两分钟」——
+#: 那句话被 2026-08-02 那次证伪了：成片 16:11:08 提交到 main，16:11:48 探到
+#: 404，一直到 16:2x 才返回 200，**超过 12 分钟**。于是「保护排名」那条推送
+#: 的复制页按钮被摘掉了（run 30707429355），而闸门本身没判错——页面是真的
+#: 还没发布。
+#:
+#: 40 秒对「合并很久之后再推」够用，对「合并完立刻重渲再推」永远不够：
+#: 渲染→提交→探链接全在 50 秒内跑完，Pages 怎么都赶不上。所以真正的毛病是
+#: 预算，不是闸门。12 × 30 秒 = 6 分钟，覆盖今天这次的大半，又留得住
+#: 工作流 25 分钟的超时余量（出片本身只花 5 分钟）。
+#:
+#: 等不到仍然只摘按钮、不拦推送——正文整段渲染在消息里，长按可复制。
+_COPY_PAGE_ATTEMPTS = int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS") or 12)
+_COPY_PAGE_RETRY_SECONDS = float(
+    os.environ.get("TENNISLIVE_COPYPAGE_RETRY_SECONDS") or 30.0
+)
+
+
 def drop_dead_copy_button(
-    html_body: str, *, probe=None, attempts: int = 3, delay: float = 20.0,
-    expect: str = "",
+    html_body: str, *, probe=None, attempts: int | None = None,
+    delay: float | None = None, expect: str = "",
 ) -> tuple[str, str | None]:
     """发之前探一次复制页；取不到**或不是这一版**就把那个按钮摘掉。
 
@@ -378,7 +398,12 @@ def drop_dead_copy_button(
         return html_body, None
     url = match.group("url")
     ok = (
-        _probe_page(url, attempts=attempts, delay=delay, expect=expect)
+        _probe_page(
+            url,
+            attempts=_COPY_PAGE_ATTEMPTS if attempts is None else attempts,
+            delay=_COPY_PAGE_RETRY_SECONDS if delay is None else delay,
+            expect=expect,
+        )
         if probe is None
         else probe(url)
     )

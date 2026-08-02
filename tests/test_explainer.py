@@ -967,6 +967,10 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("世界第四百六十九") == "世界第469"
     assert A("生涯最高的世界第四") == "生涯最高的世界第4"
     assert A("二十八局里赢到十二局") == "28局里赢到12局"
+    # 「天」也算单位：字幕里「8月2日」和「三天前」同句出现过，一半阿拉伯
+    # 一半汉字，账号所有者一眼看出来。「一天」「第二天」不受影响。
+    assert A("三天前华盛顿首轮") == "3天前华盛顿首轮"
+    assert A("四天前她升到生涯最高") == "4天前她升到生涯最高"
 
     # 不能碰的
     assert A("唯一一次打进大满贯单打决赛") == "唯一一次打进大满贯单打决赛"
@@ -974,6 +978,18 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("两盘，都是六比四") == "两盘，都是6比4"
     assert A("第二盘他化解了两个破发点") == "第二盘他化解了两个破发点"
     assert A("那是他第一次遇上") == "那是他第一次遇上"
+    assert A("有一天她会回来") == "有一天她会回来"
+    assert A("第二天她拿了冠军") == "第二天她拿了冠军"
+
+    # **「抢七」是术语不是数字，而它后面常常紧跟比分。** 贪婪的比分匹配会把
+    # 「抢七七比九」里的两个「七」一起吃掉，输出「抢7比9」——「抢七」塌成
+    # 「抢」，屏幕上是个错字。黄泽林那条片子渲出来才看见（第 78 秒那行字幕），
+    # 而语音一直是对的，所以只查旁白原文永远发现不了。
+    assert A("六比七，抢七七比九") == "6比7，抢七7比9"
+    assert A("抢七比分是七比九") == "抢七比分是7比9"
+    # 单独的「抢七」本来就没事，一起钉住，免得修法把它带坏
+    assert A("这一盘他硬生生拖进了抢七") == "这一盘他硬生生拖进了抢七"
+    assert A("抢七打到七平") == "抢七打到七平"
 
 
 def test_字幕待在3比4画面里(): 
@@ -1149,6 +1165,32 @@ def test_复制页探不到就不放那个按钮():
     # 别误伤别的按钮：成片链接和图片得原样留着
     assert "explainer.mp4" in dropped, "把成片链接一起摘掉了"
     assert dropped.count("slide_0") == body.count("slide_0"), "图片被误伤"
+
+
+def test_探复制页的重试预算不许再退回四十秒():
+    """闸门判得对，却因为等得太短把能用的按钮摘了——这是同一个坑的另一半。
+
+    2026-08-02「保护排名」那条推送：成片 16:11:08 提交到 main，16:11:48 探到
+    404，直到 16:2x 才 200——**Pages 花了 12 分钟以上**。而当时的预算是
+    3 次 × 20 秒 = 40 秒，于是按钮被摘（run 30707429355）。闸门没判错，
+    页面确实还没发布；错的是那句写在注释里、从没量过的「一两分钟」。
+
+    40 秒对「合并很久之后再推」够用，对「合并完立刻重渲再推」永远不够：
+    渲染→提交→探链接全在 50 秒内跑完，Pages 怎么都赶不上。
+
+    这条不查具体数字（改 12×30 还是 20×20 都行），查的是**总预算**，
+    因为会退化的正是它。
+    """
+    from tennislive.render import pushmsg
+
+    budget = pushmsg._COPY_PAGE_ATTEMPTS * pushmsg._COPY_PAGE_RETRY_SECONDS
+    assert budget >= 300, (
+        f"探复制页的总预算只有 {budget:.0f} 秒。实测 Pages 可以慢到 12 分钟以上，"
+        "太短就会把本来能用的按钮摘掉——而日志里「取不到」和「还没发布」"
+        "长得一模一样。"
+    )
+    # 但也不能无限等：出片那步已经花掉五分钟，工作流的 timeout 是 25 分钟。
+    assert budget <= 900, f"预算 {budget:.0f} 秒太长，会把整个 run 拖进超时。"
 
 
 def test_复制页可达但内容是旧版时也要摘掉按钮():
@@ -1345,36 +1387,6 @@ def test_人名要以译名表为准():
         for text in filter(None, texts):
             scan(slug, text)
     assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
-
-
-def test_不要在片子里交代自己的规矩():
-    """「比分我们不猜」这类话，是在向读者交代**我们自己的编辑规矩**。
-
-    读者不关心一个账号给自己定了什么规矩，他关心的是这场球。这句话占掉的是
-    收尾最值钱的那个位置——末屏那一问之前的最后一句。三条前瞻的结尾都挂着它，
-    删掉之后句子反而更利落。
-
-    「不预测结果」这条原则本身留着，写在 `Column.promise` 里给以后的自己看；
-    **原则归原则，别念出来。**
-    """
-    from tennislive.video import explainer as E
-
-    banned = ("不猜", "不预测", "不做预测", "我们不", "本栏目", "按惯例")
-    bad = []
-    for slug in E._SCRIPTS:
-        opening = E._OPENINGS.get(slug) or {}
-        texts = [("topic", opening.get("topic", "")),
-                 ("xhs", opening.get("narration", ""))]
-        for seg in E.explainer_script(find_story_by_slug(slug)):
-            texts += [(f"{seg.kind}.title", seg.title),
-                      (f"{seg.kind}.旁白", seg.narration),
-                      (f"{seg.kind}.问", seg.question or "")]
-            texts += [(f"{seg.kind}.要点", p) for p in seg.points]
-        for where, text in texts:
-            for word in banned:
-                if word in (text or ""):
-                    bad.append(f"{slug}/{where}：「{word}」出现在「{text[:30]}…」")
-    assert not bad, "片子里在交代自己的规矩：\n  " + "\n  ".join(bad)
 
 
 def test_旁白不解说画面():

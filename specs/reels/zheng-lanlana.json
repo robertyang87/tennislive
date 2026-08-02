@@ -1,0 +1,195 @@
+{
+  "slug": "zheng-lanlana",
+  "_source": "比赛还没打，所以画面来自四条源片：两人各自最近的一场，加各自的高光。每段的 source 显式声明，见 tools/build_match_reel.py 的多源支持。probe 结果在 output/2026-08-01/reel/zheng-lanlana-{src,hl}-* 下，缩略图墙逐张看过——回合窗口是数出来的，不是猜的。",
+  "_fixture": "北京时间 2026-08-02 00:30，加拿大站（National Bank Open）女单资格赛。郑钦文（世界第 123）VS 塔拉鲁迪（世界第 78）。ESPN 421-2026，两人此前无交手。",
+  "sources": {
+    "zheng": "https://www.youtube.com/watch?v=_z06v_b8bIM",
+    "paris": "https://www.youtube.com/watch?v=DfWrAu8ALPo",
+    "lanlana": "https://www.youtube.com/watch?v=brqf3Ocg6yQ",
+    "ao": "https://www.youtube.com/watch?v=br8VYo6GvQ4"
+  },
+  "_sources_why": {
+    "zheng": "WTA 官方 · 2026 华盛顿首轮 伊埃拉 d. 郑钦文。画面自证：场地印 WASHINGTON D.C.，WTA 记分条，92.5 秒看台上有五星红旗。她最近的一场。",
+    "paris": "Olympic Games 官方 · 2024 巴黎奥运女单决赛。画面自证：PARIS 2024 围板 + 奥运五环 + 红土，郑钦文红色中国队服。用在第 ② 段。",
+    "lanlana": "WTA 官方 · 2026 布拉格 Bartunkova vs 塔拉鲁迪。画面自证：蓝场围板 FLASHSCORE / AGGE，WTA 记分条两个名字。她最近的一场。",
+    "ao": "Australian Open 官方 · 2026 澳网 梅尔滕斯 vs 塔拉鲁迪。画面自证：场地印 MELBOURNE，记分条 MERTENS / TARARUDEE。那是她第一次打进大满贯正赛。"
+  },
+  "cover": {
+    "eyebrow": "开球之前",
+    "hook": "奥运冠军打资格赛\n对面排名比她高",
+    "tier": "WTA 1000",
+    "round": "Q1",
+    "meta": "加拿大站 · 8 月 2 日 00:30",
+    "layout": "cutout",
+    "versus": {
+      "_why": "两格都是 WTA 官方半身抠图，文件名自带 WTA ID（Zheng-Torso_328120 / Tararudee-Torso_329651），人物这一要素由来源自己写死，不靠看图推断。背景从 zheng 那条源片抽一帧底线全场机位。",
+      "split": 0.5,
+      "names": [
+        "郑钦文",
+        "塔拉鲁迪"
+      ],
+      "background": {
+        "frame_at": 126.0,
+        "shot": "wide_court"
+      },
+      "top": {
+        "cutout": "assets/players/wta-328120-zheng-qinwen.png"
+      },
+      "bottom": {
+        "cutout": "assets/players/wta-329651-lanlana-tararudee.png"
+      }
+    }
+  },
+  "segments": [
+    {
+      "start": 60.5,
+      "end": 71.7,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八月二日凌晨，加拿大站，资格赛第一轮。世界第一百二十三，对世界第七十八。排名高的那个，是对面。"
+    },
+    {
+      "start": 91.0,
+      "end": 99.3,
+      "source": "paris",
+      "fit": "crop",
+      "narration": "两年前的这个夏天，她站在巴黎。半决赛赢斯瓦泰克，决赛赢维基奇。"
+    },
+    {
+      "start": 68.6,
+      "end": 72.6,
+      "source": "paris",
+      "fit": "crop",
+      "narration": "亚洲的第一枚奥运网球单打金牌。",
+      "_why": "全片最重的一句，必须落在她自己身上。原来那个窗口（104.5–120.2）里这句正好压在维基奇的中景上。68.6–72.6 是源片里唯一一段纯郑钦文：中国队服、奥运五环背景、连续正反手，六秒里没有第二个人。"
+    },
+    {
+      "start": 117.6,
+      "end": 122.4,
+      "source": "paris",
+      "fit": "crop",
+      "narration": "那一年她二十一岁。从那儿到今天，两年。",
+      "_why": "第一次渲染就卡在这一段：18 个字带 3 个句读，实测只有 3.64 字/秒（旁白 4.94s，画面 4.6s）。短句加句读是最慢的组合——**字数除以 4.4 对这种句子不成立**。删掉「一共」并把窗口拉到 122.4（源片 122.53，到头了）。"
+    },
+    {
+      "start": 122.5,
+      "end": 130.2,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "转折有确切日期：二〇二五年七月十八日，她做了右肘手术。",
+      "_why": "原来一段到底 122.5–132.8，末尾 1.4 秒是伊埃拉走开的背影，而「她一直带着疼在打」正好压在她身上。源片约 131 秒换了镜头，但 probe 的 scene_cuts（阈值 0.35）没记下来——**机检是下限不是上限**，宽景回合切到同一场地的中景它认不出。130.2 收在缩略图墙上还是宽景回合的那一格之前。"
+    },
+    {
+      "start": 19.3,
+      "end": 23.9,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "之前那几个月，她一直带着疼在打。"
+    },
+    {
+      "start": 136.5,
+      "end": 144.3,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "复出是九月的中网，第三轮同一处肘退赛。排名一直在掉。"
+    },
+    {
+      "start": 150.5,
+      "end": 157.8,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "今年法网首轮，她全场只赢下四局，生涯第一次在法网首轮就走人。"
+    },
+    {
+      "start": 157.8,
+      "end": 164.7,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "赢她的那个人叫赫瓦林斯卡，波兰人，当时世界第一百一十四。"
+    },
+    {
+      "start": 76.5,
+      "end": 82.5,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "丢的是排名：跌出前一百，六月一度掉到第一百六十。"
+    },
+    {
+      "start": 108.5,
+      "end": 115.4,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "往回爬是从七月的雅典开始的。她连赢两场，两个月来第一次。"
+    },
+    {
+      "start": 168.5,
+      "end": 177.9,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "那两周她从资格赛一路打进决赛，是史上第一个做到的资格赛球员。所以那场球不丢人。"
+    },
+    {
+      "start": 218.5,
+      "end": 227.4,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八强碰上克雷奇科娃，输了。三天前华盛顿首轮，一比六丢掉决胜盘，输给伊埃拉。"
+    },
+    {
+      "start": 180.5,
+      "end": 184.2,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "所以才有了加拿大站的资格赛。"
+    },
+    {
+      "start": 180.5,
+      "end": 191.9,
+      "source": "lanlana",
+      "fit": "crop",
+      "narration": "对面这位二十二岁，泰国人，叫塔拉鲁迪。四天前她升到生涯最高的世界第七十八，是泰国排名最高的球员。",
+      "cx": 0.5
+    },
+    {
+      "start": 244.5,
+      "end": 255.2,
+      "source": "ao",
+      "fit": "crop",
+      "narration": "今年澳网，她连过三轮资格赛，第一次打进大满贯正赛。她正在往上走。这一场，她没有什么可输的。",
+      "cx": 0.5
+    },
+    {
+      "start": 233.6,
+      "end": 239.8,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "有人说，奥运冠军沦落到打资格赛。沦落这个词用错了。",
+      "_why": "原来是 204.5–210.7，那一段近端是伊埃拉——替郑钦文说的这句话不能压在对手身上。233.6–239.8 近端是她。"
+    },
+    {
+      "start": 117.7,
+      "end": 123.2,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "手术之后的每一场球都是往回爬，比停下强。",
+      "_why": "原来是 115.4–120.4，跨过 115.76 和 117.6 两个切点，前两秒是伊埃拉走开的背影。117.7 起是她自己的面部特写。 末尾拉到 123.2 是为了给旁白留余量，和第 4 段的窗口重 0.7 秒——两段在成片里隔着 80 秒，看不出来。"
+    },
+    {
+      "start": 24.5,
+      "end": 29.3,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "八月二日凌晨，她从资格赛继续出发。",
+      "_why": "本想用 96.3–99.9 她走回底线那几秒（「继续出发」的字面对应），但那只有 3.6 秒，而这句 17 个字按实测语速要 3.9 秒，一定超。24.5–29.3 在 13.96–32.44 那个纯郑钦文的长镜头里，余量够。"
+    },
+    {
+      "start": 49.1,
+      "end": 51.0,
+      "source": "zheng",
+      "fit": "crop",
+      "narration": "你定闹钟吗？",
+      "_why": "末屏。原来这句压在伊埃拉握拳庆祝的近景上（窗口 144.3–150.0 跨过 148.2 的切点）。49.1–51.0 是她站定在赛事背板前看向前方——全片的最后一帧应该是她。"
+    }
+  ],
+  "_crop_zoom_why": "**试过 1.5，退回来了。** 人确实大了一半，但两版摆在一起看：近端球员的腿和脚被切在画面外，字幕正好压在她身上。底线后方高机位的宽景里两个人几乎占满整幅高度（近端最低点约在 0.83，远端最高点约 0.10），往里收一定切掉一个。把上移锚点也算过：要让近端的脚不撞上 0.892 的字幕上锚、又不切远端的头，缩放上限只有 1.14——放大 14%，不值一轮重渲。所以这条源片不写 crop_zoom（默认 1.0）。"
+}

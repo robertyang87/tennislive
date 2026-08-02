@@ -172,8 +172,8 @@ AUDIO_RATE = "48000"
 def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
 
-    **`[vk]apad[vkp]` 那一段不能省，而且不能只当它是个细节。**
-    `sidechaincompress` 在 **sidechain 输入结束的那一刻就收口**，于是 `[duck]`
+    **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
+    `sidechaincompress` **两路里任一路 EOF 就整个结束**，于是 `[duck]`
     只活到最后一句旁白说完，下游 `amix` 跟着收口——**整条现场声在那儿断掉**。
 
     九条已发的成片里**七条**结尾 1.95~4.50 秒完全没有声音：
@@ -188,7 +188,13 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     视频流和音频流的时长摆在一起才看得见。又一次「兜底出事的时候不吭声」。
 
     `apad` 把 sidechain 补静音到无限长，压缩器就跟着 `[bed]` 走完。
-    只补 `[vk]`（喂给压缩器的那一路），`[vm]`（真正听见的那一路）不动。
+    只补 `[vk0]`（喂给压缩器的那一路），`[vm]`（真正听见的那一路）不动。
+    闪避行为一点没变：合成信号实测有旁白时 −38.1 dB、旁白说完 −24.0 dB。
+
+    ⚠️ **这个 bug 被独立发现过两次**（main 上是「伊埃拉那条末段画面 11.5s、
+    旁白 8.8s，成片最后 2.74 秒一点声音都没有，正好是拥抱教练那一下」）。
+    两次的判据完全一样：**把音轨长度和画面长度摆在一起**。抽成函数是为了让
+    判据能真跑一次混音——查源码里有没有 `apad` 防不住「它从来没工作过」。
 
     抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
     删了」，防不住「它从来没工作过」。
@@ -196,9 +202,9 @@ def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
     return (
         f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
         f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
-        f"[voice]asplit=2[vk][vm];"
-        f"[vk]apad[vkp];"
-        f"[bed][vkp]sidechaincompress=threshold=0.02:ratio=12:"
+        f"[voice]asplit=2[vk0][vm];"
+        f"[vk0]apad[vk];"
+        f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
         f"attack=15:release=450:makeup=1[duck];"
         f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
     )
@@ -741,11 +747,17 @@ def scene_changes(path: Path, threshold: float = 0.35) -> list[float]:
 
 
 def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
-                  columns: int = 6, tile_w: int = 360) -> list[Path]:
+                  columns: int = 6, tile_w: int = 360, crop: str = "",
+                  prefix: str = "contact") -> list[Path]:
     """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
 
     时间码必须烧进画面里——不然看图挑完段，还得数第几格再乘回去，数错一次
     整段就切偏了。
+
+    `crop`（ffmpeg 的 `w:h:x:y`）先裁再缩。**整幅缩到 360 宽时记分条只有几个
+    像素高，比分根本读不出来**——而定段落必须知道每一段是第几局第几分，
+    否则「转折点在不在片子里」就只能靠猜。裁出记分条那一块单独拼一版，
+    同样的机制，放大到能读。
     """
     outdir.mkdir(parents=True, exist_ok=True)
     frames = outdir / "frames"
@@ -757,7 +769,8 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     for index, t in enumerate(stamps):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
-            "-vf", (f"scale={tile_w}:-2,"
+            "-vf", ((f"crop={crop}," if crop else "")
+                    + f"scale={tile_w}:-2,"
                     f"drawtext=text='{t:.1f}s':x=8:y=8:fontsize=26:"
                     f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
             "-q:v", "3", str(frames / f"f{index:03d}.jpg"))
@@ -769,7 +782,7 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
         listing = outdir / f"_sheet{n // per_sheet}.txt"
         listing.write_text("".join(f"file '{p.resolve()}'\n" for p in chunk),
                            encoding="utf-8")
-        sheet = outdir / f"contact_{n // per_sheet:02d}.jpg"
+        sheet = outdir / f"{prefix}_{n // per_sheet:02d}.jpg"
         rows = math.ceil(len(chunk) / columns)
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-f", "concat", "-safe", "0", "-i", str(listing),
@@ -887,7 +900,81 @@ def load_spec(path: Path) -> dict:
     for key in ("segments", "cover"):
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
+    if not spec.get("sources") and not spec.get("source_url"):
+        raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
+    # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
+    # 剪出来是另一场比赛的画面，而且画面本身不会报错，只会静静地对不上旁白。
+    names = set(spec.get("sources") or {})
+    if names:
+        for index, seg in enumerate(spec["segments"]):
+            got = seg.get("source")
+            if got not in names:
+                raise ReelError(
+                    f"第 {index} 段的 source 是 {got!r}，不在 sources 里"
+                    f"（有 {sorted(names)}）。多源 spec 的每一段都必须显式声明来源。")
     return spec
+
+
+def segments_straddling_cuts(
+    spec: dict, probes: list[dict],
+) -> tuple[list[dict], list[str]]:
+    """哪几段跨过了源片的场景切点，以及哪几条源片没查成。
+
+    **跨切点＝这一段中途换镜头，而换过去的那个镜头里常常是另一个人。**
+    郑钦文那条第一版踩了三处，一处都没报错：末屏「你定闹钟吗？」压在对手
+    握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；「往回爬」
+    那句前两秒是对手的背影；巴黎那段「亚洲的第一枚奥运网球单打金牌」整句
+    落在维基奇身上。画面和旁白对不上**不会让渲染失败**，只会静静地发出去。
+
+    `probe.json` 里本来就记着 `scene_cuts` 和 `url`，按 url 认源片就能机检——
+    挑段仍然要靠眼睛，这一条只负责拦住「窗口中途换了镜头而我没看见」。
+
+    真要跨（两边都是同一个人时），在这一段写 `"crosses_cut": "<为什么>"`
+    显式挂账，别默默跨过去。
+
+    第二个返回值是**没查成的源片**：probe 没给全时，前一个返回值会是空的，
+    而空的和「全都合格」长得一模一样（CLAUDE.md：空结果先自证是真空）。
+    """
+    by_url = {p.get("url"): list(p.get("scene_cuts") or []) for p in probes}
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec.get("source_url", "")}
+    straddling: list[dict] = []
+    unchecked = sorted(
+        name for name, url in urls.items() if url not in by_url)
+    for index, seg in enumerate(spec["segments"]):
+        name = seg.get("source", "")
+        url = urls.get(name)
+        if url not in by_url or seg.get("crosses_cut"):
+            continue
+        inside = [c for c in by_url[url]
+                  if seg["start"] < c < seg["end"]]
+        if inside:
+            straddling.append({
+                "index": index, "source": name,
+                "start": seg["start"], "end": seg["end"],
+                "cuts": inside, "narration": seg["narration"],
+            })
+    return straddling, unchecked
+
+
+def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
+    """把 spec 里的源片全下下来，返回 {名字: 路径}。
+
+    单源 spec 走 `source_url`，键是空串——和 `Segment.source` 的默认值对上，
+    老 spec 一个字都不用改。
+    """
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": spec["source_url"]}
+    paths: dict[str, Path] = {}
+    for name, url in urls.items():
+        dest = outdir / (f"source_{name}.mp4" if name else "source.mp4")
+        if not dest.is_file():
+            with stage(f"下载源片 {name or '(单源)'}"):
+                dest = download(url, dest)
+        paths[name] = dest
+    return paths
 
 
 # 跟踪裁切 -----------------------------------------------------------------
@@ -1371,6 +1458,10 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
 #: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
 #: 把锦织圭的发梢切平了一条，isnet 保住了。
 CUT_MODEL = "isnet-general-use"
+#: 抠出来的东西至少要占裁切框这么大，否则当成「没抠到人」。
+#: 6% 是从已知好素材倒推的：官方半身抠图占 65%，本场人物近景同一量级，
+#: 而抠到一条球拍残影只有百分之几——两者隔着一个数量级，门槛落在中间。
+CUT_MIN_SHARE = 0.06
 
 
 def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
@@ -1421,9 +1512,29 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
             raise ReelError(
                 f"VS {tag} 抠出来是空的：{panel['frame_at']}s 那一帧里没找到人。"
                 "换一帧，或者用 tools/pick_cover_frames.py 重挑。")
+        # **「抠出来是空的」有两种，`getbbox()` 只拦得住一种。** 完全透明它拦得住；
+        # 抠到一条球拍残影、一道边线，bbox 非空，于是**一路绿到底**——render
+        # success、`check_reel_landed` 0 项不合格、海报上人没了。2026-08-01 黄泽林
+        # 那张就是这么出去的（138.14s 那一帧，左格只剩背景和一道白线）。
+        # 又一次「兜底出事的时候不吭声」。
+        #
+        # 判据用**不透明像素占裁切框的比例**：人物近景是一大块，残影是一条线。
+        # 门槛 6% 是从已知好素材倒推的——官方半身抠图 65%，本场近景同一量级，
+        # 中间隔着一个数量级。比例照常打进日志，这样下次调门槛有数可依
+        # （「检查工具要把不合格的也列出来」）。
+        alpha = cut.getchannel("A")
+        opaque = sum(n for v, n in zip(range(256), alpha.histogram()) if v > 16)
+        share = opaque / float(im.size[0] * im.size[1])
+        if share < CUT_MIN_SHARE:
+            raise ReelError(
+                f"VS {tag} 抠出来只有裁切框的 {share:.1%}（要 ≥{CUT_MIN_SHARE:.0%}）"
+                f"——{panel['frame_at']}s 那一帧多半抠到了球拍或边线，不是人。\n"
+                "换一帧（挑**头部和背后背景对比强**的那种），或者退回官方抠图："
+                'top/bottom 写 {"cutout": "assets/players/<...>.png"}。')
         cut = cut.crop(bbox)
         cut.save(out)
-    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}")
+    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}"
+          f"，占裁切框 {share:.1%}")
     raw.unlink(missing_ok=True)
     return str(out)
 
@@ -1741,16 +1852,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         print(f"[audio] 合上原声 {audio}")
         source = merged
 
-    # **量信号，不量流。** `_has_audio` 只查音频流存不存在，而 wong-brooksby
-    # 的源片**有流、有码率、就是没声音**：成片里没有旁白的段落全是数字静音
-    # （3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子 0/23~0/39），
-    # 而 spec 的 `_source` 写着「带原声」。整套闪避对它是空转，**两条分支都
-    # 不打印**，于是「源片是哑的」和「源片正常」在日志上一模一样。
-    #
-    # 照 `mixed_fps` 那套做**显式认领**：量出来是哑的就报错并给出路，
-    # spec 里写 `silent_source: "为什么可以"` 才放行。一律放行等于继续出哑片，
-    # 一律拒绝会把纯视频轨的源片整个挡在门外——认领这一步是让这个取舍留下判据。
-    source_w, source_h = probe_size(source)
+    # 多源：几何必须一致，否则一套裁切窗口套在两种画幅上，剪出来一段满一段不满。
+    # 这里**宁可报错也不自动缩放**——自动缩放会把「素材选错了」变成一个看不见的
+    # 画质问题，而报错能让人当场发现。
+    sizes = {name: probe_size(path) for name, path in sources.items()}
+    if len(set(sizes.values())) > 1:
+        raise ReelError(
+            "多条源片的画幅不一致，裁切几何没法共用：\n  "
+            + "\n  ".join(f"{n or '(单源)'}: {w}×{h}" for n, (w, h) in sizes.items())
+            + "\n换一条同画幅的源片，或者把不一致的那条单独出片。")
+    source_w, source_h = sizes[next(iter(sources))]
 
     # **只出封面就到此为止。** 封面是全流程返工最多的那一屏（CLAUDE.md 里
     # 68 行、10 个专门段落，每段都是一轮返工换来的），而它在完整 render 里
@@ -1770,13 +1881,20 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         cover.unlink(missing_ok=True)
         return poster
 
+    # **量信号，不量流。** `_has_audio` 只查音频流存不存在，而 wong-brooksby
+    # 的源片**有流、有码率、就是没声音**：成片里没有旁白的段落全是数字静音
+    # （3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子 0/23~0/39），
+    # 而 spec 的 `_source` 写着「带原声」。整套闪避对它是空转，而两条分支都
+    # 不打印，于是「源片是哑的」和「源片正常」在日志上一模一样。
+    #
     # ⚠️ **这道闸排在只出封面那条路的后面。** 封面一个音频样本都不碰，
-    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处（改一档 scale
-    # 就想看一眼）废掉——和 `_preflight_cutout` 那次是同一个错：
-    # **别把跟这条路无关的检查塞进它前面**。
+    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处废掉——和
+    # `_preflight_cutout` 那次是同一个错：别把无关的检查塞进它前面。
     require_live_sound(source, spec)
 
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
+    # 多源时只能有一个输出帧率，取主源的；**别的源和它不一样就要打出来**——
+    # 那意味着那几段在重采样，不打出来没人知道画面为什么发涩。
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
@@ -2037,6 +2155,14 @@ def main() -> int:
         cuts = scene_changes(source)
         print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点")
         sheets = contact_sheet(source, outdir, every=args.every)
+        # 记分条单独拼一版，否则整幅缩完读不出比分。位置按源片分辨率推：
+        # 转播把记分条烧在左下，取左边 42%、底部往上 20% 那一块。
+        w, h = probe_size(source)
+        box = f"{w * 42 // 100}:{h * 20 // 100}:0:{h * 78 // 100}"
+        sheets += contact_sheet(source, outdir, every=args.every,
+                                crop=box, prefix="score", columns=4,
+                                tile_w=520)
+        print(f"记分条缩略图墙：crop={box}（源片 {w}x{h}）")
         captions = fetch_captions(args.url, outdir)
         # **死球时刻要在源片还在的时候量。** `find_point_ends.py` 一直没有任何
         # 调用方，而它的 `--video` 指的是源片——源片渲完就删（清理那一步），

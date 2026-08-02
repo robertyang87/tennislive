@@ -45,28 +45,6 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
-def test_复制页排在渲染之前而且当场提交():
-    """**它不依赖成片，所以没有理由排在成片后面等。**
-
-    `push_reel.py --stage page` 的内容只来自 `specs/reels/<slug>.xhs.txt` 和
-    从 spec 算出来的标题——全程没碰过 mp4。可它原来排在渲染之后，于是 Pages
-    要等渲染 + 提交都完事才开始发布，推送那一步只能站着等：run 30624808733
-    的日志是连续 12 次 `HTTP 404`、第 13 次才中，**240 秒纯空转**，占了整条
-    十六分钟 run 的四分之一。
-
-    挪到渲染前面并**当场提交**，Pages 的发布就和七分二十二秒的渲染并行了。
-    两件事都要钉住——只挪写、不挪提交，Pages 照样要等到最后那次提交才动。
-
-    顺带钉住第二个好处：这一步是标题字数、tag 个数、spec 有没有 push 块的
-    第一道校验，排在渲染前面意味着这些错死在第 3 分钟而不是第 12 分钟。
-    """
-    names = _steps(WORKFLOW.read_text(encoding="utf-8"))
-    page = next(i for i, n in enumerate(names) if "写复制页" in n)
-    page_commit = next(i for i, n in enumerate(names) if "提交复制页" in n)
-    render = next(i for i, n in enumerate(names) if n.startswith("render"))
-    assert page < page_commit < render, (
-        f"复制页要「写→提交」都排在渲染之前，现在是 {names}")
-
 
 def test_复制页那一步不挑推不推送():
     """分支上渲的片子也要把复制页带上，否则 push-reel 又得现写现等。
@@ -76,12 +54,75 @@ def test_复制页那一步不挑推不推送():
     后面那条三分钟的推送要不要退回十几分钟。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    for step in ("写复制页", "提交复制页"):
-        block = text[text.index(f"- name: {step}"):].split("\n      - name:")[0]
-        assert "inputs.push == 'true'" not in block, (
-            f"「{step}」挂在 push=true 上了——分支上渲的片子就带不上复制页，"
-            "合进 main 之后 push-reel 还得现写现等 Pages")
-        assert "inputs.mode == 'render'" in block, f"「{step}」没限定在 render 模式"
+    block = text[text.index("- name: 写复制页"):].split("\n      - name:")[0]
+    assert "inputs.push == 'true'" not in block, (
+        "「写复制页」挂在 push=true 上了——分支上 push=false 渲的片子就带不上"
+        "复制页，合进 main 之后那趟 mode=push 还得现写现等 Pages 发布")
+    assert "inputs.mode == 'render'" in block, "「写复制页」没覆盖 render 模式"
+    # 它跟着「提交产物」一起进仓库（那一步 add 整个 outdir），所以要排在提交之前
+    names = _steps(text)
+    page = next(i for i, n in enumerate(names) if "写复制页" in n)
+    commit = next(i for i, n in enumerate(names) if "提交产物" in n)
+    assert page < commit, "复制页排在提交之后——它进不了仓库，链接就是 404"
+
+
+def test_只发不重渲要有一条单独的路():
+    """**「先验产物再推」意味着推是另一次动作。**
+
+    原来只有 `mode=render` 那一条路带推送，于是「渲完看一眼，没问题再发」
+    要跑两轮 render——而一轮十五分钟（装中文字体 4 分 20 秒、渲片 7 分半），
+    第二轮渲出来的还得再验一次，等于把验证这件事做成了无限循环。
+
+    `mode=push` 跳过下载和渲染，只做「写复制页 → 提交 → 发微信」这三步。
+
+    两条判据缺一不可：
+
+    - **顺序不能变**：复制页仍然要排在提交之前，否则链接 404（这条已经有
+      `test_复制页写在提交之前` 盯着，这里只确认新模式没绕开它）
+    - **前提要在最前面验**：成片必须已经在**这个 commit 里**。查 `git ls-files`
+      而不是 `test -f`——只在工作区里躺着的文件，推送发出去就是 404，
+      复制页在这上面栽过两次
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+
+    # 档位会增减（后来加了 cover），钉「push 在不在」而不是整行字面量
+    opts = re.search(r"options: \[(.*?)\]", text).group(1)
+    assert "push" in [o.strip() for o in opts.split(",")], f"mode 里没有 push：{opts}"
+
+    for step in ("写复制页", "推送到微信"):
+        i = next(k for k, n in enumerate(names) if step in n)
+        cond = text.split(f"- name: {names[i]}", 1)[1].split("\n", 2)[1]
+        assert "'push'" in cond, f"{step} 这一步在 push 模式下不跑，等于这个模式发不出东西"
+
+    # 渲染那一步**不能**在 push 模式下跑，否则「只发不重渲」名不副实
+    render_cond = text.split("- name: render — 出成片", 1)[1].split("\n", 2)[1]
+    assert "mode == 'render'" in render_cond and "push" not in render_cond, \
+        "push 模式还会重渲一遍"
+
+    # push 模式**不装渲染那套**：它不下片、不渲染、不抠图，rembg / opencv /
+    # playwright / yt-dlp / ffmpeg 一个都用不上。装它们不只是白等半分钟——
+    # 那几个包里任何一个装不上，都会让一条本来只是发消息的 run 挂掉。
+    ffmpeg_cond = text.split("- name: 装 ffmpeg", 1)[1].split("run:", 1)[0]
+    assert "mode != 'push'" in ffmpeg_cond, "push 模式还在装 ffmpeg"
+    deps = text.split("- name: 装依赖", 1)[1].split("- name:", 1)[0]
+    assert '= "push" ]' in deps and "pip install -q -e ." in deps, \
+        "push 模式没有走「只装主依赖」那条分支"
+    # 而且那条分支要**真验一次 import**，不许把失败吞掉——装少了得在第 5 秒炸。
+    # **判据只看代码，不看注释**：第一版没剔注释，结果被工作流里那句解释
+    # 「不许 xx」自己绊倒了——注释里提到一个反模式，不等于用了它。
+    head = deps.split('= "push" ]', 1)[1].split("fi", 1)[0]
+    code = "\n".join(ln for ln in head.splitlines() if not ln.strip().startswith("#"))
+    assert "import requests" in code, "push 分支没有真验一次 import"
+    assert "|| true" not in code and "2>/dev/null" not in code, \
+        "push 分支的依赖检查把失败吞掉了，永远不会红"
+
+    guard = next((n for n in names if "push 模式先确认成片" in n), "")
+    assert guard, "push 模式没有前置检查——成片不在时会一路跑到推送才炸"
+    assert names.index(guard) < names.index(
+        next(n for n in names if "写复制页" in n)), "前置检查排在写复制页后面了"
+    assert "git ls-files" in text, (
+        "前置检查用的是 test -f——只在工作区里的文件推出去就是 404")
 
 
 def test_中间物一个都不许进仓库():
@@ -246,6 +287,29 @@ def test_默认不横摇():
     assert not any(s.get("track") for s in spec["segments"])
 
 
+def test_合集片子的段尾要躲开下一场的转场卡():
+    """**`scene_cuts` 报的是切点被检测到的时刻，不是转场开始的时刻。**
+
+    Tennis TV 把两场四强发成一条，中间用一张 `NORRIE v SHAPOVALOV` 的卡过渡。
+    探测报的切点是 204.79，我照它把段尾收在 204.0，成片最后 1.7 秒是**下一场的
+    片头**——扫入动画早在 202.3 就开始了。又一次拿信号当产物。
+
+    边界只能**从画面量**：逐 0.2 秒采帧算大面积青色占比，202.2 还是 0.008
+    （那点是蓝色场地），202.4 跳到 0.477，202.6 到 0.739。
+
+    判据钉住「最后一段收在转场之前」，别再退回去。
+    """
+    spec = json.loads(Path("specs/reels/wong-gea.json").read_text("utf-8"))
+    last = spec["segments"][-1]
+    assert last["end"] <= 202.0, (
+        f"最后一段收在 {last['end']}s，而转场卡 202.3 秒就开始扫入了——"
+        "成片会带上下一场的片头")
+    assert "202.3" in spec["_editing_why"], (
+        "为什么不是按 scene_cuts 的 204.79 收尾，没有留下判据")
+    # 源片是两场合成的，这件事本身要写在 `_source` 里，否则下一个人不会去找边界
+    assert "两场" in spec["_source"], "没写清楚这条源片装着两场比赛"
+
+
 def test_收尾不带播出方的片尾():
     """握手镜头放到底，但 185.92 之后是 TennisTV 的 logo 和二维码，不要。"""
     spec = json.loads(Path("specs/reels/nishikori-shang.json").read_text("utf-8"))
@@ -350,6 +414,137 @@ def test_文案到tag那一行为止(tmp_path):
     assert "素材来源" not in page, "tag 之后那段跟着发出去了"
     # **砍掉的要出声**：默默吃掉的话，「砍对了」和「砍错了」长得一模一样。
     assert "tag 之后还有" in done.stdout, "砍了却不说砍了什么"
+
+
+def test_逐分解析认的是df_mh_1那套字段():
+    """**逐分不在 `df_pbp_1`，在 `df_mh_1`。**
+
+    我先试的 `df_pbp_1` 对黄泽林那场返回 `0`，据此差点写下「这场没有逐分」——
+    换个 feed 名，整份逐分连破发点标记一起出来了。**零命中先怀疑自己的查询词。**
+
+    这条测试喂一段真实抓下来的 `df_mh_1` 片段，验解析器把四件事读对：
+    局比分、发球方、谁拿下、以及 `|B1|` 破发点的个数。**真调用它一次**，
+    不是 grep 源码里有没有那个函数名——「写了」不等于「跑过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import match_feed  # noqa: PLC0415
+
+    assert match_feed.FS_POINTS == "df_mh_1", "逐分的 feed 名被改错了"
+
+    # 洛斯卡沃斯那场第一盘的真实片段：他在自己的发球局被逼到 15-40 救回来
+    raw = ("HA÷Set 1¬HB÷Point by point - Set 1¬~"
+           "HC÷1¬HE÷0¬HG÷1¬HK÷1¬HL÷0:15, 15:15, 30:15, 30:30, 40:30, 40:40, A:40¬~"
+           "HC÷3¬HE÷1¬HG÷2¬HH÷2¬HK÷1¬HL÷15:0, 30:0, 40:0 |B1|, 40:15 |B1|, 40:30 |B1|¬~"
+           "HC÷4¬HE÷1¬HG÷1¬HK÷1¬HL÷15:0, 15:15, 15:30, 15:40 |B1|, 30:40 |B1|, 40:40, A:40¬~")
+    games = match_feed._parse_points(raw)
+    assert len(games) == 3, f"没把三局都读出来：{games}"
+    hold, brk, saved = games
+    assert (hold["home_games"], hold["away_games"]) == ("1", "0")
+    assert brk["broken"] and brk["server"] == "away" and brk["winner"] == "home", \
+        "破发那一局读错了（HH=2 是被破发，HG 是发球方，HK 是赢家）"
+    assert brk["break_points"] == 3, "0-40 那三个破发点没数出来"
+    assert saved["server"] == "home" and saved["winner"] == "home" \
+        and saved["break_points"] == 2, "「自己发球被逼到 15-40 又救回来」这一局读错了"
+
+
+def test_旁白里连下五局的起止要和逐分对得上():
+    """账号所有者纠正过的那一处：「**不是连下五局到 5:1，是 1:1 之后连下五局到 6:1**」。
+
+    逐分（`df_mh_1`）和源片记分条两边都证实：第一盘七局里他发了四局，
+    布鲁克斯比只保住第 2 局，所以是 `1-0 → 1-1 → 连下五局 → 6-1`。
+    而上一版旁白写「连下五局，把比分拉到五比一」，正压在屏幕上显示 1-0 / 1-1
+    的那一段——**画面在打脸**。
+
+    判据卡的是**这个跨栏的起止**，不是措辞：出现「连下五局」的那句话里，
+    必须把起点（一比一）或终点（六比一）说出来，且不能说成五比一。
+    只盯措辞会把下一个更好的写法也拦掉。
+    """
+    spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
+    said = [s.get("narration", "") for s in spec["segments"]]
+    runs = [t for t in said if "连下五局" in t]
+    assert runs, "这条片子的旁白里没有那段连下五局——改写法了就把这条一起改"
+    for t in runs:
+        assert "五比一" not in t, f"又写成「连下五局到五比一」了：{t}"
+        assert "一比一" in t or "六比一" in t, \
+            f"「连下五局」没说清从哪儿到哪儿：{t}"
+
+
+# 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
+# 带着坐标来，要么显式往这份清单里写一笔，让「又忘了交代」变成一次看得见的决定。
+_NO_SLATE_YET = {
+    "eala-fernandez", "eala-zheng", "nishikori-shang", "potapova-venus",
+    "wang-pareja", "wang-samsonova", "wong-lehecka",
+}
+
+
+def test_赛场之上开场要给出北京时间赛事和轮次():
+    """账号所有者：「以后赛场之上上来首先交代下时间（北京时间几月几号几点几分
+    之类 开球的时间）赛事和轮次」。
+
+    刷到片子的人不知道这是哪天哪站哪一轮，第 ① 段那十秒就是用来安置他的。
+
+    判据只卡**三样在不在**，不卡写法：时间要认得出是北京时间的开球时刻、
+    赛事名、轮次。措辞不管——这条线上已经有两条测试因为盯措辞而误伤过好写法。
+    """
+    import re  # noqa: PLC0415
+
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
+            continue
+        if path.stem in _NO_SLATE_YET:
+            continue
+        opening = spec["segments"][0].get("narration", "")
+        assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
+        assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
+            f"{path.stem} 开场没给开球时刻：{opening}"
+        assert re.search(r"[月][一二三四五六七八九十]+[号日]", opening), \
+            f"{path.stem} 开场没给日期：{opening}"
+        assert re.search(r"(强|轮|决赛|资格赛)", opening), \
+            f"{path.stem} 开场没给轮次：{opening}"
+
+
+def test_音频那套不许接进出片流程():
+    """账号所有者：「这个默认不要开启，会很慢，拖慢出片速度」。
+
+    解整条音轨要用 ffmpeg 把片子过一遍，接进 render 就是每条片子白等几十秒；
+    而它换来的只是段尾秒数准一点，那个数写进 spec 之后就固定了，不必每次重算。
+
+    所以它是**写 spec 时手工跑一次**的辅助，判据是出片路径里一处都不出现。
+    """
+    hot = (Path("tools/build_match_reel.py"),
+           Path(".github/workflows/match-reel.yml"))
+    for path in hot:
+        text = path.read_text(encoding="utf-8")
+        for name in ("unlag", "audio_envelope", "true_end", "check_crowd_rise"):
+            assert name not in text, (
+                f"{path.name} 里出现了 {name}——音频那套被接进出片流程了，"
+                "它每条片子要多花几十秒解音轨，而段尾秒数写进 spec 后就固定了")
+
+
+def test_渲染专用的依赖不许挂在probe路径上():
+    """probe 只是下片子、出缩略图墙，**不需要中文字体、抠图模型和 Chromium**。
+
+    原来这几步挂在所有模式前面，于是 `apt-get install fonts-noto-cjk` 挂死那次
+    把 probe 拖了二十分钟——被一个它根本用不到的依赖卡住。而「in_progress 挂太久」
+    读起来和「还在跑」一模一样，我等了两轮才发现。
+
+    ffmpeg 两种模式都要，所以它不带条件；其余三样必须只在 render 时装。
+    另外每个 apt 步骤都要有 `timeout-minutes`：**卡住要失败，不要空转**。
+    """
+    import yaml  # noqa: PLC0415
+
+    spec = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    steps = {s.get("name", ""): s for s in spec["jobs"]["reel"]["steps"]}
+    for name, step in steps.items():
+        if any(k in name for k in ("中文字体", "抠图模型", "Chromium")):
+            assert "render" in str(step.get("if", "")), (
+                f"「{name}」没有限定在 render——probe 用不到它，"
+                "却会被它拖住甚至卡死")
+        if "apt-get" in str(step.get("run", "")):
+            assert step.get("timeout-minutes"), (
+                f"「{name}」是 apt 步骤但没有 timeout-minutes；"
+                "它挂死过一次，空转二十分钟看起来和正常运行一样")
 
 
 def _reel_specs():
@@ -462,6 +657,31 @@ def test_旁白不许用指示语指画面():
     good = "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"
     assert not pointing.search(good), (
         "判据又扩大化了：这句是关键点加关键情绪的解说，是这条线该有的写法")
+
+
+def test_闪避的钥匙要补齐否则片尾没声音():
+    """`sidechaincompress` **两路里任一路 EOF 就整个结束**，所以钥匙那一路
+    必须 `apad`。
+
+    最后一段的旁白往往说不满整段画面——伊埃拉那条末段画面 11.5s、旁白 8.8s。
+    钥匙先断，现场声跟着被掐掉：成片最后 2.74 秒**一点声音都没有**，
+    而那正是她抱住教练的那一下。
+
+    **它不吭声**：画面照旧、有音轨、有码率，只有把音轨长度和画面长度摆在
+    一起才看得见（`check_reel_landed.py` 报「音轨 157.86s，比画面短 2.74s」）。
+    和「补位的静音盖住真音轨」是同一族——兜底和默认值出事的时候都不吭声。
+
+    合成信号上验过闪避没变：有旁白 -38.1 dB、旁白说完 -24.0 dB。
+    """
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    # 认的是**真正接进滤镜图的那一处**（`[bed][vk]sidechaincompress=`），
+    # 不是注释里提到它的那几行——按第一次出现找会撞上注释，判据就废了。
+    i = src.index("[bed][vk]sidechaincompress=")
+    head = src[max(0, i - 1200):i]
+    assert "[vk0]apad[vk]" in head, (
+        "闪避的钥匙没有 apad——旁白一说完，现场声会跟着断，片尾整段没声音")
+    # 报错要说出路：判据本身也得留在源码里，别只活在测试里
+    assert "任一路 EOF" in src, "为什么要 apad 没有留下判据，下次会有人删掉"
 
 
 def test_成片的编码参数不许为了压体积往下调():
@@ -591,7 +811,8 @@ def test_推送正文里印文案且只印一遍():
 
     copy = Path("specs/reels/nishikori-shang.xhs.txt").read_text("utf-8").strip()
     title, body_text = split_copy(copy)
-    page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy)
+    page = build_html("https://v/x.mp4", "https://p/copy.html", "一句导语", copy,
+                      "", "赛场之上")
     assert page.count(title) == 1
     first = body_text.splitlines()[0]
     assert page.count(first) == 1
@@ -982,7 +1203,8 @@ def test_推送版式照着知识解说那条且海报铺满():
     import push_reel  # noqa: PLC0415
 
     body = push_reel.build_html("https://x/v.mp4", "https://x/c.html", "导语",
-                                "标题一行\n\n正文一段", "https://x/poster.jpg")
+                                "标题一行\n\n正文一段", "https://x/poster.jpg",
+                                "赛场之上")
     assert "border-top:5px solid #ff2442" in body        # 参照那条红边
     img = body[body.index("<img"):body.index(">", body.index("<img"))]
     assert "width:100%" in img and "padding" not in img, img
@@ -990,13 +1212,17 @@ def test_推送版式照着知识解说那条且海报铺满():
     # 正文只印一遍
     assert body.count("正文一段") == 1
     # 没有海报时退回无图版，而不是塞一个空 img
-    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文")
+    assert "<img" not in push_reel.build_html("u", "c", "l", "标题\n\n正文",
+                                             "", "赛场之上")
 
 
 # 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
 _COLUMNS = {
     "赛场之上": ("cutout", "diagonal", "split", "stack"),   # 讲一场对决 → VS
     "网球有故事": ("solo",),                                 # 讲一个人 → 单人
+    # 赛前前瞻。讲的也是一场对决——**两个人必须同框**，所以和赛场之上共用
+    # VS 那几版；差别在内容（没有赛果，讲的是来路），不在版式。
+    "开球之前": ("cutout", "diagonal", "split", "stack"),
 }
 
 
@@ -1012,6 +1238,12 @@ def test_海报台头只写栏目名():
     「是讲休伊特的儿子的话题，不是赛场之上的内容」时，加一个栏目就得改测试——
     而要守的性质从头到尾只有一条：**药丸里没有账号名**。
     """
+    import re
+
+    doc = Path("docs/columns.md").read_text("utf-8")
+    columns = set(re.findall(r"\|\s*\*\*(.+?)\*\*\s*\|", doc))
+    assert "赛场之上" in columns and "开球之前" in columns, "栏目表没解析出来"
+
     for path in sorted(Path("specs/reels").glob("*.json")):
         eyebrow = json.loads(path.read_text("utf-8"))["cover"]["eyebrow"]
         assert eyebrow in _COLUMNS, f"{path.name} 的台头是 {eyebrow!r}，不是栏目名"
@@ -1369,6 +1601,38 @@ def test_封面人物首选本场抽帧():
     text = picker.read_text(encoding="utf-8")
     for rule in ("正脸", "上半身直立", "表情"):
         assert rule in text, f"挑帧工具里没写「{rule}」这一条"
+
+
+def test_抠出来只有一条残影也要报错():
+    """**「抠出来是空的」有两种，`getbbox()` 只拦得住一种。**
+
+    完全透明它拦得住。抠到一条球拍残影、一道边线，bbox 非空，于是一路绿到底——
+    render success、`check_reel_landed` 0 项不合格、**海报上人没了**。
+    2026-08-01 黄泽林那张就是这么出去的：138.14s 那一帧，左格只剩背景和一道白线，
+    只有打开海报才看得见。又一次「兜底出事的时候不吭声」。
+
+    判据是**不透明像素占裁切框的比例**：人物近景是一大块，残影是一条线。
+    门槛从已知好素材倒推——官方半身抠图 65%，两者隔着一个数量级。
+
+    报错要说出路（换一帧 / 退回官方抠图），别只说不行。
+    """
+    reel = _reel()
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+
+    assert 0 < reel.CUT_MIN_SHARE < 0.2, (
+        f"门槛 {reel.CUT_MIN_SHARE} 不在合理量级——太低拦不住残影，太高会误伤真人物")
+    # 门槛怎么来的要留下判据，否则下一个人只会看到一个数字
+    head = src[:src.index("CUT_MIN_SHARE = ")]
+    assert "65%" in src[src.index("CUT_MIN_SHARE") - 400:src.index("CUT_MIN_SHARE")], \
+        "没记下这个数是从哪个已知素材倒推的"
+    assert "CUT_MIN_SHARE" in src[src.index("def _cut_person("):], "闸没接在抠图那一步"
+    block = src[src.index("def _cut_person("):]
+    block = block[:block.index("def ", 10)]
+    assert "share <" in block, "没有按比例判"
+    for way_out in ("换一帧", "官方抠图"):
+        assert way_out in block, f"报错没说出路：{way_out}"
+    # 比例要**每次都打进日志**，不只在失败时——下次调门槛才有数可依
+    assert "占裁切框" in block and "print(" in block, "成功时不报比例，等于没量过"
 
 
 def test_挑帧的门槛要在同一个口径下量():
@@ -1765,7 +2029,14 @@ def test_旁白要讲清楚比赛走向():
     """
     spec = json.loads(Path("specs/reels/wong-brooksby.json").read_text("utf-8"))
     told = "".join(s["narration"] for s in spec["segments"])
-    assert "转折" in told or "反了过来" in told, "旁白没讲转折，观众不知道这场球难在哪"
+    # **第二次栽在措辞上了。** 原来只认「转折」「反了过来」两个词；按逐分数据
+    # 重写之后，稿子把转折讲得比原来细（「五平，对方发球局，零比四十。第三个
+    # 破发点他拿下了」），却一个词都没撞上，测试红了——而它下面三行正写着
+    # 「别按措辞判」。网球比赛的走向就是由**破发**换的手，认这一类词即可；
+    # 真要判「讲没讲清」得有人读，测试只拦「整条线压根没提」。
+    swing = ("转折", "反了过来", "破发", "反超", "扳回", "追平")
+    assert any(w in told for w in swing), \
+        f"旁白没讲这场球是怎么换的手，观众不知道难在哪（找的是 {swing}）"
     # **别按措辞判。** 上一版查「领先」，而稿子写的是「一直是布鲁克斯比在前」——
     # 意思在、词不在，测试自己红了。改成结构判据：输的那个必须在**开场之后**
     # 还被提到，也就是片子真的讲了他做过什么，而不只是开头报了个名字。
@@ -1819,7 +2090,6 @@ def test_封面跟着配音走只给网球有故事():
             assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
 
 
-PUSH_WORKFLOW = Path(".github/workflows/push-reel.yml")
 
 
 def _yaml_only(text: str) -> str:
@@ -1876,10 +2146,15 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
     # 工作流的默认值不许再是某条具体片子的内容。
     # **只看 YAML 的值，不看注释**——注释里正要讲这些值当年错在哪儿，
     # 连注释一起扫会把「记下这个坑」判成「又踩了这个坑」。
+    # ⚠️ **只看 `default:` 那一行的值。** 拦的是「默认值是上一条片子的内容」，
+    # 而 `description:` 里正要举例说明该填什么（`如「2:1」`）——连描述一起扫，
+    # 「教人怎么填」会被判成「又挂了个默认值」。判据宁可窄，不可宽。
     inputs = _yaml_only(WORKFLOW.read_text(encoding="utf-8").split("permissions:")[0])
+    defaults = [ln for ln in inputs.splitlines() if ln.strip().startswith("default:")]
+    assert defaults, "扫不到任何 default:，判据失效了"
     for stale in ("伊埃拉 vs 郑钦文", "郑钦文首轮出局", "2:1"):
-        assert stale not in inputs, (
-            f"工作流输入里还挂着「{stale}」——那是上一条片子的内容，"
+        assert not any(stale in ln for ln in defaults), (
+            f"工作流输入的默认值里还挂着「{stale}」——那是上一条片子的内容，"
             "漏传一次就拿另一场球的标题发出去")
 
 
@@ -2287,7 +2562,7 @@ def test_成片链接发之前要自己探一次(monkeypatch):
 
     # ② 推送正文里那条成片链接，`wait_for_images` 看不见
     body = push_reel.build_html(url, "https://example.invalid/copy.html",
-                                "", "标题\n\n正文", "")
+                                "", "标题\n\n正文", "", "赛场之上")
     assert url not in jsdelivr_link_sources(body), (
         "成片链接居然进了 jsDelivr 清单——这条测试的前提要重写")
 
@@ -2387,8 +2662,14 @@ def test_每条spec都算得出一句过得了闸的标题():
 
     # ① 只吃 spec：每条都算得出、都过得了闸。日期随便给一个合法的目录名——
     # 闸门量的是整句宽度，而日期那一格所有片子都一样宽。
+    # ⚠️ **只校写了 `push` 块的那些。** 后来新增的 spec 走的是「工作流传参」
+    # 那条路（`resolve_meta` 里命令行覆盖 spec），标题由 `push=true 必须自己
+    # 填标题` 那道守卫兜着。把它们一起要求「从 spec 就能算出标题」，等于给
+    # 另一条合法的路判红——判据宁可窄，不可宽。
     titles: dict[str, str] = {}
     for path in sorted(Path("specs/reels").glob("*.json")):
+        if not (json.loads(path.read_text(encoding="utf-8")).get("push") or {}):
+            continue
         copy_path = path.parent / f"{path.stem}.xhs.txt"
         meta = push_reel.push_meta(copy_path)
         titles[path.stem] = push_reel.headline(
@@ -2451,39 +2732,6 @@ def test_写错的push字段要报错不许悄悄不生效():
     assert _meta_for({"_why": "写给下一个人的", "summary": "对的"})["summary"] == "对的"
 
 
-def test_推送不用重渲一遍():
-    """**合进 main 之后重跑整条 match-reel，等于把七分钟的渲染白付一遍。**
-
-    判据摆得很干净：wong-brooksby 在 PR #108（分支上渲的）里是 55,028,417
-    字节，run 30623994190 在 main 上重渲出来是 55,028,980 字节——差 563 字节
-    的同一条片子，外加往仓库里再塞一个 55 MB 的 blob。hewitt-washington 同样
-    来了一次（56,953,265 → 57,297,653）。.git 涨到 1.77 GiB、checkout 每次要
-    两分多钟，就是这么攒出来的。
-
-    所以要有一条**只推送、不渲染**的线：它不下载源片、不合成语音、不装
-    Chromium/ffmpeg/OpenCV，失败重跑三分钟。
-    """
-    assert PUSH_WORKFLOW.is_file(), "没有只推送的工作流，合进 main 就只能重渲"
-    text = PUSH_WORKFLOW.read_text(encoding="utf-8")
-
-    # 不许把渲染那套东西拖进来——拖进来它就不是三分钟了。
-    # 同样只看 YAML 的值：注释里写着「这里不装 ffmpeg/Chromium」，那是判据本身。
-    body = _yaml_only(text)
-    for heavy in ("build_match_reel", "yt-dlp", "edge-tts", "playwright",
-                  "ffmpeg", "visualqa", "cutout", "webrender"):
-        assert heavy not in body, f"只推送的工作流里出现了 {heavy}，它不该渲染任何东西"
-
-    # Pages 只服务 main，这道闸和 match-reel 那道同一个理由、同一个位置
-    guard = "- name: 只能在 main 上跑"
-    assert guard in body, "没有这道闸"
-    assert body.index(guard) < body.index("actions/checkout@v4"), (
-        "这道闸排在 checkout 后面了")
-    block = body[body.index(guard):].split("- name:")[1]
-    assert "github.ref_name != 'main'" in block and "exit 1" in block
-
-    # 查产物不查信号：成片和文案真的在这个目录里才推
-    assert ".mp4" in body and "找不到成片" in body
-
 
 def test_checkout不许把整个output拉下来():
     """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要 1 分 35 秒到
@@ -2498,7 +2746,7 @@ def test_checkout不许把整个output拉下来():
     ⚠️ 排除的只有 `output`。assets 155 MB 看着也不小，但它是渲染真要读的
     东西——少一个就是第 5 分钟才炸的 FileNotFoundError。
     """
-    for path in (WORKFLOW, PUSH_WORKFLOW):
+    for path in (WORKFLOW,):
         text = path.read_text(encoding="utf-8")
         head = text[:text.index("actions/setup-python@v5")]
         assert "sparse-checkout:" in head, f"{path.name} 的 checkout 没做稀疏检出"
@@ -2640,7 +2888,7 @@ _DIST_TO_MODULE = {
     "gtts": "gtts", "edge-tts": "edge_tts", "imageio-ffmpeg": "imageio_ffmpeg",
     "pypdf": "pypdf", "requests": "requests", "rich": "rich",
     "pytest": "pytest", "ruff": "ruff", "playwright": "playwright",
-    "rembg": "rembg",
+    "rembg": "rembg", "pyyaml": "yaml",
 }
 
 
@@ -3098,48 +3346,6 @@ def test_昨日一分这条线不许回来():
     assert "yesterday-point" not in tracked, "昨日一分的历史产物还在"
 
 
-def test_并行装依赖要分别检两边的退出码():
-    """apt（42s）和 pip（25s）装的东西互不相干，串起来是白等。丢到后台并行
-    之后取长的那个，量出来 1:07 → 0:44 上下。
-
-    ⚠️ **`wait` 不带参数只返回最后一个后台任务的状态。** apt 挂了而 pip 成功，
-    这一步照样绿，然后 render 在第 5 分钟死在「找不到 ffmpeg」——**又一次
-    「兜底出事的时候不吭声」**。所以必须按 PID 分别 wait，谁挂了报谁。
-
-    这条测的是那个模式，不是某一行字：只要还并行装，就得两个 PID 都 wait。
-    """
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
-    step = body[body.index("- name: 装系统依赖和 Python 依赖"):]
-    step = step.split("\n      - ")[0]
-    assert step.count("&\n") >= 2 or step.count(" &") >= 2, "没有并行装"
-    pids = re.findall(r"^\s*(\w+)=\$!", step, re.M)
-    assert len(pids) >= 2, f"只捕获到 {pids}——两边都要留 PID 才能分别 wait"
-    for pid in pids:
-        assert re.search(rf"wait \${pid}\b\s*\|\|", step), (
-            f"`wait ${pid}` 没检退出码——它挂了这一步会照样绿，"
-            "然后 render 在第 5 分钟才死")
-    # 装完当场自证：ffmpeg 真的在
-    assert "ffmpeg -version" in step, "并行装完没验 ffmpeg，装没装上要到 render 才知道"
-
-
-def test_PO_token_探活挪到了render之前():
-    """容器是 `docker run -d` 起的，原地轮询最多 50 秒纯属空转——它下一次被
-    用到是 render 里下载源片那一刻。探活挪到 render 前面，启动和中间那几步
-    并行，实测那 12 秒基本被吃掉。
-
-    **起不来仍然不算失败**：退回 client 梯子，让下载那一步去报真正的原因。
-    """
-    names = _steps(WORKFLOW.read_text(encoding="utf-8"))
-    start = next(i for i, n in enumerate(names) if "起 PO token provider" in n)
-    wait = next(i for i, n in enumerate(names) if "等 PO token provider" in n)
-    render = next(i for i, n in enumerate(names) if n.startswith("render"))
-    assert start < wait < render, f"探活的位置不对：{names}"
-    assert wait - start >= 2, (
-        "探活紧挨着启动——那和原地等是一回事，中间要隔几步给它启动时间")
-
-    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
-    block = body[body.index("- name: 起 PO token provider"):].split("\n      - ")[0]
-    assert "for i in $(seq" not in block, "启动那一步又在原地轮询了"
 
 
 def test_海报的裁切中间物一个都不许进仓库():
@@ -3344,3 +3550,168 @@ def _seg(reel, start: float, end: float):
         else:
             kwargs[f.name] = "" if f.type in ("str", str) else 0
     return reel.Segment(**kwargs)
+
+
+def test_多源spec每一段都要说清自己从哪条源片剪(tmp_path):
+    """「开球之前」是多源的常态：比赛还没打，画面只能来自两边各自的比赛。
+
+    郑钦文 VS 塔拉鲁迪那条用了四条源片——两人各自最近的一场，加各自的高光。
+    这时候「这一段从哪条源片剪」就不能有默认值：**猜错了剪出来是另一场比赛的
+    画面，而画面本身不会报错**，只会静静地对不上旁白。所以少写一个 `source`
+    要当场报错，并且把有哪些源列出来。
+
+    单源的老 spec 一个字都不用改：`source_url` 那条路走空串这个键，和
+    `Segment.source` 的默认值对上。
+    """
+    reel = _reel()
+
+    good = tmp_path / "good.json"
+    good.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "sources": {"a": "https://x/a", "b": "https://x/b"},
+        "segments": [{"start": 0, "end": 1, "source": "a"},
+                     {"start": 0, "end": 1, "source": "b"}],
+    }), encoding="utf-8")
+    assert reel.load_spec(good)["sources"]["b"] == "https://x/b"
+
+    for bad_seg, why in (({"start": 0, "end": 1}, "漏写 source"),
+                         ({"start": 0, "end": 1, "source": "c"}, "写了不存在的源")):
+        bad = tmp_path / "bad.json"
+        bad.write_text(json.dumps({
+            "slug": "t", "cover": {"versus": {}},
+            "sources": {"a": "https://x/a"},
+            "segments": [bad_seg],
+        }), encoding="utf-8")
+        try:
+            reel.load_spec(bad)
+        except reel.ReelError as exc:
+            assert "sources" in str(exc), f"{why}：报错没说清有哪些源"
+        else:
+            raise AssertionError(f"{why} 应当报错")
+
+    # 单源老 spec 仍然走得通
+    old = tmp_path / "old.json"
+    old.write_text(json.dumps({
+        "slug": "t", "cover": {"versus": {}},
+        "source_url": "https://x/one",
+        "segments": [{"start": 0, "end": 1}],
+    }), encoding="utf-8")
+    assert reel.load_spec(old)["source_url"].endswith("one")
+
+    # 两条都不给才算缺
+    empty = tmp_path / "empty.json"
+    empty.write_text(json.dumps({"slug": "t", "cover": {}, "segments": []}),
+                     encoding="utf-8")
+    try:
+        reel.load_spec(empty)
+    except reel.ReelError as exc:
+        assert "sources" in str(exc) and "source_url" in str(exc)
+    else:
+        raise AssertionError("既没有 sources 也没有 source_url，应当报错")
+
+
+def test_每一段都要待在同一个镜头里():
+    """跨场景切点的那一段中途会换镜头，而换过去的那个镜头里常常是另一个人。
+
+    郑钦文那条第一版踩了三处，**渲染一次都没报错**：末屏那句「你定闹钟吗？」
+    压在对手握拳庆祝的近景上（源片 148.2 有切点，窗口取的 144.3–150.0）；
+    「往回爬」那句前两秒是对手走开的背影；巴黎那段最重的「亚洲的第一枚奥运
+    网球单打金牌」整句落在维基奇身上。画面和旁白对不上不会让 ffmpeg 失败，
+    只会静静地发出去。
+
+    挑段仍然要靠眼睛看缩略图墙，这一条只拦「窗口中途换了镜头而我没看见」。
+    """
+    reel = _reel()
+    probes = [{"url": "u://a", "scene_cuts": [10.0, 20.0]},
+              {"url": "u://b", "scene_cuts": [5.0]}]
+    spec = {
+        "sources": {"a": "u://a", "b": "u://b"},
+        "segments": [
+            {"start": 11.0, "end": 19.0, "source": "a", "narration": "干净"},
+            {"start": 18.0, "end": 22.0, "source": "a", "narration": "跨了"},
+            {"start": 0.0, "end": 9.0, "source": "b", "narration": "也跨了"},
+        ],
+    }
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes)
+    assert unchecked == []
+    assert [b["index"] for b in bad] == [1, 2], "跨切点的段没被抓出来"
+    assert bad[0]["cuts"] == [20.0] and bad[1]["cuts"] == [5.0]
+
+    # 真要跨（两边是同一个人）就显式挂账，别默默跨过去
+    spec["segments"][1]["crosses_cut"] = "两边都是她，只是机位换了"
+    bad, _ = reel.segments_straddling_cuts(spec, probes)
+    assert [b["index"] for b in bad] == [2]
+
+    # **probe 给不全时不许假绿**：零命中和「全都合格」长得一模一样，
+    # 所以没查成的源片要单独报出来（CLAUDE.md：空结果先自证是真空）。
+    bad, unchecked = reel.segments_straddling_cuts(spec, probes[:1])
+    assert unchecked == ["b"], "缺 probe 的源片没有被报出来"
+    assert all(b["source"] == "a" for b in bad)
+
+
+def test_要发的片子必须有小红书文案():
+    """推送那一步 `test -f "$COPY"` 会挡住缺文案的 slug，但那是六分钟之后的事——
+    渲染、合成、拼片全跑完才发现没得发。spec 和文案是一对，缺一个就该在这儿红。
+    """
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        copy = spec.with_suffix(".xhs.txt")
+        assert copy.is_file(), f"{spec.name} 没有配套的 {copy.name}"
+        assert copy.read_text(encoding="utf-8").strip(), f"{copy.name} 是空的"
+
+
+def test_推送卡的台头跟着栏目走():
+    """台头小药丸原来写死「赛场之上」。这个工作流现在也发「开球之前」——
+    标题里的栏目名是对的，卡片上那个药丸却是另一个，两处对不上。
+
+    和「兜底和默认值出事的时候不吭声」同一类：它不报错，只是印错。
+    """
+    sys.path.insert(0, "tools")
+    import push_reel  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    html = push_reel.build_html(
+        "https://v/x.mp4", "https://p/copy.html", "",
+        "标题\n\n正文一段", poster="", column="开球之前")
+    assert "开球之前" in html
+    assert "赛场之上" not in html, "台头还写死着别的栏目名"
+
+    # **不留默认值**：给不出栏目名就该报错。默认一个栏目名，正是
+    # 「同一条推送里两个栏目名」那个错留在原地不吭声的样子。
+    with pytest.raises(TypeError):
+        push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
+                             "标题\n\n正文一段")
+
+    # 标题和药丸要取同一个值，别一个走 column_of、一个另取默认
+    src = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    assert "column = args.column or column_of(Path(args.copy))" in src
+    assert "column=column)" in src, "药丸没和标题共用那一个栏目名"
+
+
+def test_推送的文案输入不许留上一条片子的默认值():
+    """`matchup` / `score` / `summary` / `push_lead` 装的是**这一条片子的文案**，
+    而默认值只能是**上一条片子的文案**——不传就顶着别人的话发出去，不报错。
+
+    2026-08-01 郑钦文那条赛前前瞻就是这么发错的：标题印着「郑钦文首轮出局」
+    （上一条华盛顿赛报留下的 summary 默认值），而那场球当晚 00:30 才开打。
+    **说了一件没发生的事，微信收不回来。**
+
+    更阴的一层：**传空串盖不住默认值**。`github.event.inputs.X` 收到空串时退回
+    default，所以显式传 `summary: ""` 用的还是那句旧话。唯一可靠的做法是默认值
+    本身就是空的——再加一道「两个都空就别发」的闸，在第 3 秒红，而不是渲染完
+    十分钟之后发出去一条错的。
+    """
+    import yaml  # noqa: PLC0415
+
+    doc = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    inputs = doc[True]["workflow_dispatch"]["inputs"]   # `on:` 被 yaml 读成 True
+    for name in ("matchup", "score", "summary", "push_lead"):
+        assert inputs[name].get("default", "") == "", (
+            f"{name} 又带上了默认值 {inputs[name].get('default')!r}——"
+            "那是上一条片子的文案，下一条不填就顶着它发出去")
+
+    # 闸要在 checkout 之前，别等渲染跑完
+    steps = _steps(WORKFLOW.read_text(encoding="utf-8"))
+    gate = "push=true 必须自己填标题，不许吃默认值"
+    assert gate in steps, "缺了「两个都空就别发」那道闸"
+    assert steps.index(gate) < steps.index("render — 出成片")

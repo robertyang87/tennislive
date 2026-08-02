@@ -1335,6 +1335,115 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="protected-ranking",
+        title="保护的不是排名",
+        subtitle="网球观察 · 规则篇",
+        identity="保护排名：它保的是报名，不是排名",
+        chips=("规则冷知识", "连续 26 周", "两截不累加"),
+        hero=(
+            "长期伤停的球员可以用停赛前的旧排名报名，这张凭证 ATP 叫 "
+            "Entry Protection、WTA 叫 Special Ranking；它只管报名，"
+            "不管种子、不管幸运落败者顺位，也不会让真实排名停下来。"
+        ),
+        facts=(
+            "ATP 2026 规则书 IX.F 的正式名是 **Entry Protection**（进赛保护）："
+            "停赛满 6 个月、期间一场不打（含表演赛）才可申请，且明写不得用于种子"
+            "与幸运落败者顺位。",
+            "WTA 2026 规则书 VIII.C 叫 **Special Ranking**，门槛是连续 26 周；"
+            "适用情形比 ATP 多出怀孕与成为父母。种子上两家分叉：WTA 允许复出后"
+            "前 8 站当额外种子，ATP 一律不给。",
+            "26 周必须连续，**不累加**。郑钦文 2025 温网后至 2026 多哈复出之间"
+            "只打过一站中网，把停赛切成 10.7 周加 18.1 周；合计 28.8 周已过门槛，"
+            "两截却各自不够。",
+            "⚠️ 上述推算依据两家规则书条文，不是 WTA 的公开裁定；她是否申请过、"
+            "是否获得过豁免，均无公开记录。",
+        ),
+        # 这两个时刻不是"夺冠瞬间"，是这条规则在她身上落地的两个端点。
+        # ⚠️ 不能留空：moments 为空时文案模板会回退到 `founded`，而 trivia 的
+        # founded 取自 chips，于是拼出「从两截不累加年的…」这种坏句子，
+        # 而且只有把整段渲出来才看得见。lucky-loser 没踩到是因为它有两个 moment。
+        moments=(
+            ChampionMoment(
+                date="2025-09-24",
+                player="郑钦文",
+                age="22 岁",
+                headline="那两场中网",
+                detail=(
+                    "右肘手术两个多月后回到北京，轮空后胜阿朗戈，"
+                    "次战对诺斯科娃中途退赛——一整段停赛被这一站切成两半。"
+                ),
+                source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+            ),
+            ChampionMoment(
+                date="2026-07-17",
+                player="郑钦文",
+                age="23 岁",
+                headline="雅典八强",
+                detail=(
+                    "4-6、4-6 负于克雷吉茨科娃，那是美网正赛直入线锁定前"
+                    "最后的机会；三天后线锁在约前 104，她排在第 123。"
+                ),
+                source_url="https://athens-open.com/gallery/day-7",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 IX.F / WTA 2026 规则书 VIII.C",
+        image_credit="athens-open.com 官方图库",
+        source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+    ),
+    _trivia_story(
+        slug="lucky-loser",
+        title="输了才有的名额",
+        subtitle="网球观察 · 规则篇",
+        identity="幸运落败者：资格赛输了也能进正赛",
+        chips=("规则冷知识", "抽签还是排名", "大满贯 0 人进八强"),
+        hero=(
+            "资格赛最后一轮输掉的人，可以因为正赛有人退出而递补进正赛；"
+            "这个身份叫幸运落败者，卢布列夫和高芙的第一个冠军都是这么来的。"
+        ),
+        facts=(
+            "ATP 7.20 A.1：末轮失利者按资格赛种子排名排序；但**资格赛打完那一刻正赛"
+            "已有空缺**时，排名最高的两人抽签决定，空 N 个位置就抽 N+1 人。"
+            "WTA 2026 规则书 V.A.1.b.vi 的触发条件相同。",
+            "WTA 把三种情形写全（lost, retired, or withdrawn），并加三道闸："
+            "签到、赛会医生检查、正赛不得排在退赛当天；ATP 全本 210 页、123 处提到"
+            "lucky loser，这三条一条都没有，医疗条款反而明写「同一天或之后」皆可。",
+            "至今没有人以幸运落败者身份打进大满贯八强，第四轮是天花板："
+            "1995 温网诺曼、2023 法网阿瓦涅相、2025 澳网利斯、2025 温网谢拉、"
+            "2026 法网德容；利斯那次再赢一场就是史上第一个。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2017-07-23",
+                player="卢布列夫",
+                age="19 岁",
+                headline="「输的那个人是幸运的」",
+                detail=(
+                    "资格赛末轮输掉，因丘里奇退赛递补进正赛，一路赢到决赛，"
+                    "6-4、6-2 击败四号种子洛伦齐，拿下生涯第一个 ATP 冠军；"
+                    "颁奖人是伊万尼塞维奇。他当天在社媒写下 Loser is lucky!"
+                ),
+                source_url="https://www.atptour.com/en/news/rublev-lorenzi-umag-2017-final",
+            ),
+            ChampionMoment(
+                date="2019-10-13",
+                player="高芙",
+                age="15 岁 7 个月",
+                headline="开赛前 15 分钟被叫回球场",
+                detail=(
+                    "资格赛直落两盘负于科尔帕奇后已出局；首轮开打前 15 分钟"
+                    "萨卡里手腕伤退，她递补上场，连赢五场（含头号种子贝尔腾斯），"
+                    "决赛 6-3、1-6、6-2 胜奥斯塔彭科，成为 2004 年以来最年轻的 WTA 冠军。"
+                ),
+                source_url="https://www.wtatennis.com/news/1485527",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 7.20 / WTA 2026 规则书 V.A.1.b / ATP / WTA",
+        image_credit="Merlo de Graia · 卢布列夫本人社媒",
+        source_url="https://en.wikipedia.org/wiki/Lucky_loser",
+    ),
+    _trivia_story(
         slug="roof",
         title="温网屋顶谁说了算",
         subtitle="网球观察 · 规则篇",
