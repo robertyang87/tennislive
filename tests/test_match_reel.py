@@ -3883,7 +3883,24 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
                   tmp_path / "e" / "source.mp4")
     assert len(calls) == 2, "换了 URL 还命中——键不是按 URL 算的"
 
-    # ④ 写不进去只是慢一点，不该让一趟下载成功的 run 变红
+    # ④ **`~` 要展开**——工作流里写的就是 `~/.cache/tennislive-sources`，而
+    # Python 不展开波浪号：`Path("~/…")` 是个**名叫 `~` 的相对目录**，落在仓库
+    # 工作区里，`actions/cache` 找真的 $HOME 自然找不到，于是一个字节都没存过
+    # 而两趟 run 全绿（run 156/158）。**上一版这条判据喂的是绝对路径，
+    # 正好绕过这一半。**
+    monkeypatch.setenv("HOME", str(tmp_path / "home"))
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, "~/.cache/tennislive-sources")
+    calls.clear()
+    reel.download(url, tmp_path / "g" / "source.mp4")
+    assert len(calls) == 1
+    assert not (Path.cwd() / "~").exists(), (
+        "在工作区里造了个名叫 `~` 的目录——波浪号没展开，缓存等于没有")
+    saved = list((tmp_path / "home" / ".cache" / "tennislive-sources").glob("*.mp4"))
+    assert saved, "展开之后该落在真的 $HOME 底下，却没有"
+    reel.download(url, tmp_path / "h" / "source.mp4")
+    assert len(calls) == 1, "`~` 展开之后第二次仍然重下了"
+
+    # ⑤ 写不进去只是慢一点，不该让一趟下载成功的 run 变红
     monkeypatch.setenv(reel._SOURCE_CACHE_ENV, "/proc/nope/nowhere")
     calls.clear()
     capsys.readouterr()

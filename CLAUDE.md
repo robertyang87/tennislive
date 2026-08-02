@@ -399,6 +399,26 @@ PNG 对它是最坏的格式。换成 q86 的 JPEG 是 **3.7 MB（12%）**，同
 配了第二次一个字节都不下、换 URL 不许命中、写不进去不许抛。反向验证两次
 （拆掉命中那一支、把键改成固定名）。
 
+#### ⚠️ `~` 不展开：两趟绿的 run，一个字节都没缓存
+
+工作流里写的是 `TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources`，而
+**Python 不展开波浪号**——`Path("~/…")` 是一个**名叫 `~` 的相对目录**，落在仓库
+工作区里。`actions/cache` 找的是真的 `$HOME/.cache/…`，于是每趟都报
+
+    Path Validation Error: Path(s) specified in the action for caching
+    do(es) not exist, hence no cache is being saved.
+
+**而两趟 run 全是绿的**（156/158），封面那步只快了 14 秒——那 14 秒是别的缓存
+（Chromium、pip）带来的，跟源片一点关系没有。要不是去查「为什么只快 14 秒」，
+这条缓存会一直挂在那儿假装生效。
+
+- **单元测试当时也是绿的**：它喂的是绝对路径 `tmp_path`，正好绕过这一半。
+  凡是「路径从配置来」的判据，**必须喂一次 `~/…`**，那才是真实配置的样子
+- 判据现在钉两头：工作区里不许出现名叫 `~` 的目录、展开之后要落在真的
+  `$HOME` 底下。反向验证过（拿掉 `expanduser()` 当场红）
+- 同一族的还有 `$HOME`、`$RUNNER_TEMP` 这些——**YAML 的 `env:` 值不过 shell**，
+  写进去是什么就是什么
+
 #### ⚠️ 我写的这条注释当场打红了六条测试
 
 上面那段注释里引用了「丢掉不进仓库的中间物」这个步骤名，而六条测试是按
