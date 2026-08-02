@@ -4247,3 +4247,26 @@ def test_复制页打不开时消息本身留得住文案():
     # 正文也要整段在消息里，别只留一个按钮
     assert "第一段正文。" in html and "第二段正文。" in html
     assert "长按整段即可复制" in html
+
+
+def test_赛前前瞻的封面要写清几点开球():
+    """「开球之前」的封面必须写**开赛时刻**——账号所有者定的（首页问题下面的
+    小字：时间、赛事名称、轮次）。这类片子唯一的行动信息就是那个时刻。
+
+    `versus_poster` 原来只有 `tier`/`round` 那条路读 `meta`，写了 `event_badge`
+    的 spec 里那个时刻**静静地不见了**：海报看着是完整的，少的恰恰是那一样。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    head, _, tail = src.partition("if event_badge:")
+    branch = tail.split("else:")[0]
+    assert 'cover.get("meta"' in branch, (
+        "event_badge 那条路没有读 meta——赛前前瞻的开赛时刻会被吞掉")
+
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        cover = json.loads(path.read_text(encoding="utf-8")).get("cover") or {}
+        if str(cover.get("eyebrow", "")).strip() != "开球之前":
+            continue
+        meta = str(cover.get("meta", "")).strip()
+        assert meta, f"{path.name} 是开球之前，封面没写开赛时刻（cover.meta）"
+        assert any(k in meta for k in ("时间", ":", "：")), (
+            f"{path.name} 的 cover.meta 看不出是个时刻：{meta!r}")
