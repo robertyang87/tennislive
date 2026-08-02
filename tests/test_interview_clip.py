@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import re
 from pathlib import Path
@@ -62,6 +63,33 @@ SPECS = ROOT / "specs" / "interviews"
 
 def _specs() -> list[Path]:
     return sorted(SPECS.glob("*.json")) if SPECS.exists() else []
+
+
+def _steps() -> list[dict]:
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    return wf["jobs"]["render"]["steps"]
+
+
+def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
+    """把 `if:` 按给定 inputs 求值一遍。只认这个工作流真正用到的那点语法。
+
+    **按行为查，不按措辞查。** `"mode != 'push'" in expr` 那种写法只能证明
+    有人写了这串字，证明不了 push 那趟真的不跑它——反过来也会把
+    `mode == 'subs'` 这种同样正确的写法误判成红。
+    """
+    if expr in (None, ""):
+        return True                              # 没有 if 就是每趟都跑
+    py = (str(expr)
+          .replace("github.event.inputs.mode", repr(mode))
+          .replace("github.event.inputs.push", repr(push))
+          .replace("&&", " and ").replace("||", " or "))
+    if py.strip() == "always()":
+        return True
+    assert not re.search(r"[a-z_]+\(|github\.", py), f"这个 if 我还不会算：{expr}"
+    return bool(eval(py, {"__builtins__": {}}, {}))  # noqa: S307
 
 
 def _lines(en: list[str]) -> list[dict]:
@@ -1276,20 +1304,39 @@ def test_只推送时不做出片那一堆准备():
     apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
     而真正要跑的那一步只要二十秒。
 
-    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
-    """
-    import yaml  # noqa: PLC0415
+    判据：`mode=push` 那一趟，一个装重依赖的步骤都不许跑。
 
-    wf = yaml.safe_load((ROOT / ".github" / "workflows"
-                         / "interview-clip.yml").read_text(encoding="utf-8"))
-    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
-    for step in wf["jobs"]["render"]["steps"]:
+    ⚠️ **第一版是按字面查的**（`"mode != 'push'" in step["if"]`），加
+    `mode: subs` 的时候它当场误报：取字幕那两步挂的是 `mode == 'subs'`，
+    push 那趟根本不会跑，却因为字面对不上被判红。**查的是措辞不是行为**，
+    和「封面引的话」那条第一版栽的是同一个跟头。现在按 mode 真的求值一遍。
+    """
+    for step in _steps():
         run = str(step.get("run") or "")
-        if not any(h in run for h in heavy):
+        if not any(h in run for h in ("playwright", "faster-whisper",
+                                      "yt-dlp", "ffmpeg", "fonts-noto")):
             continue
-        assert "mode != 'push'" in str(step.get("if", "")), (
+        assert not _if_holds(step.get("if"), mode="push"), (
             f"步骤「{step.get('name')}」装/用了出片才要的东西，"
-            "却没挂 mode != 'push'——只推送的时候它是白跑的")
+            f"而它的条件 {step.get('if')!r} 在 mode=push 那趟仍然成立"
+            "——只推送的时候它是白跑的")
+
+
+def test_每个mode都各干各的活():
+    """三个 mode 各自只跑自己那一段，别互相带着跑。
+
+    `subs` 是 2026-08-02 加的：沙箱连字幕都取不到了，切行只能搬到 runner 上。
+    加之前只有 render 一条路，取个字幕要白装 Chromium + whisper + ffmpeg
+    三分多钟，而且 `zh` 还空着的时候出片那步会空转，整趟红着结束。
+    """
+    stage = {}                                  # mode -> 它跑到的那几个 --stage
+    for mode in ("subs", "render", "push"):
+        stage[mode] = [s.get("name") for s in _steps()
+                       if _if_holds(s.get("if"), mode=mode)
+                       and "--stage" in str(s.get("run") or "")]
+    assert stage["subs"] == ["取字幕切行"], stage["subs"]
+    assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["push"] == [], stage["push"]
 
 
 def test_封面文件名是push_reel认的那个():
@@ -1577,3 +1624,231 @@ def test_封面这道闸真的查到了东西():
                                       .get("cover") or {}).get("_copy_why", "")))
                   for p in _specs())
     assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
+
+
+def test_背景要先去色再压暗():
+    """垫底那层只压暗不去色，会把背景**变得比画面还艳**。
+
+    账号所有者：「伊埃拉的球衣是绿色的，背景虚化之后感觉背景全是绿的，
+    视觉上不太舒服。」量已发的那条成片：边条饱和度 0.68~0.92，而画面本身
+    只有 0.16~0.23——背景比画面艳三到五倍。
+
+    机理是 `brightness` 走**减法**，而饱和度是 `(max-min)/max`：整体减下去
+    分母跟着变小，于是越压越艳。模糊本来就只剩色相，再一压等于把颜色浓缩了
+    铺满全屏；而且它跟着画面变色，12 秒那帧上边条是深蓝、下边条是绿，
+    一屏两个饱和色打架，正撞上「一屏只留一个强调色」。
+
+    两头都要卡：
+    - **去色不够** → 回到「背景全是绿的」
+    - **压得太狠** → 边条接近纯黑，看着像「没铺满的视频」而不是设计过的版面
+      （`sat=.12 bri=-.40` 那档，12 秒上边条量出来是 `[1 1 1]`）
+    """
+    from tools.build_interview_clip import BG_GRADE
+
+    kv = dict(p.split("=") for p in BG_GRADE.removeprefix("eq=").split(":"))
+    assert float(kv["saturation"]) <= 0.35, (
+        f"背景只压暗不去色（{BG_GRADE}）——压暗是减法，会把饱和度顶上去")
+    assert -0.35 <= float(kv["brightness"]) < 0, (
+        f"背景压暗的量越界（{BG_GRADE}）：不压则背景抢戏，压过头边条变成硬黑条")
+
+
+def test_背景调色只有一处出处():
+    """**一个数写两处必分叉。** 滤镜链里再写一个字面量，改常量就没反应了——
+    而它不报错，只是下一个人改错地方。同 `test_字号只有一处出处`。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    assert body.count("BG_GRADE") == 2, "BG_GRADE 该只有一处定义、一处引用"
+    assert "{BG_GRADE}[bg]" in body, "滤镜链没有引用 BG_GRADE"
+    assert "eq=brightness" not in body, "链子里还留着写死的 eq=brightness"
+
+
+def _ytdlp_calls() -> list[ast.List]:
+    """源码里所有 `["yt-dlp", …]` 那样的参数表。"""
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py")
+                     .read_text(encoding="utf-8"))
+    return [n for n in ast.walk(tree)
+            if isinstance(n, ast.List) and n.elts
+            and isinstance(n.elts[0], ast.Constant) and n.elts[0].value == "yt-dlp"]
+
+
+def test_每一次调yt_dlp都带上cookie和JS():
+    """**两处各配一遍必分叉，而分叉的表现是一句指向错误方向的报错。**
+
+    `yt_download` 早就接上了 `COOKIES` 环境变量，`fetch_words` 一直是裸调的
+    ——没有 `--cookies`，也没有 `--js-runtimes node`。长期没暴露，是因为取字幕
+    以前不用登录也过得去。2026-08-02 起 YouTube 把这条路一起挡了，runner 上
+    就出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    读起来像「cookie 过期了」，而真相是**这一步压根没用它**。判据当时就摆在
+    眼前：同一份 cookie 七十分钟前刚下完 189 MB 的源片，**两个结论对不上就
+    说明是我的读法错了**。
+
+    所以判据不写成「fetch_words 里有 cookie_args」——那只防这一个。
+    按 AST 把每一处 yt-dlp 调用都揪出来，以后新加一处照样拦。
+    """
+    calls = _ytdlp_calls()
+    assert len(calls) >= 2, f"只找到 {len(calls)} 处 yt-dlp 调用，AST 大概没解对"
+    for node in calls:
+        flat = [e.value for e in node.elts if isinstance(e, ast.Constant)]
+        starred = [ast.unparse(e.value) for e in node.elts
+                   if isinstance(e, ast.Starred)]
+        where = f"第 {node.lineno} 行那处 yt-dlp 调用"
+        assert "--js-runtimes" in flat, (
+            f"{where}没带 --js-runtimes——少了它解不了 n challenge，"
+            "而报错长得像「这个视频没有格式」")
+        assert any("cookie_args" in s for s in starred), (
+            f"{where}没带 cookie_args——被挡的时候会报「Sign in to confirm "
+            "you're not a bot」，看着像 cookie 过期，其实是压根没传")
+
+
+def test_订正要看穿说话人标记():
+    """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
+
+    演播室那条片子里 `>>` 有 30 处。原来是 `fix.get(w.strip(".,?!"), w)`，
+    于是 `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上——
+    **凡是某个说话人的第一个词，那条订正一律静默失效**。它不报错，只是没生效，
+    而人写了订正就默认它生效了；要等成片烧出来才看得见名字还是错的。
+
+    不能改成「提前把 `>>` 剥掉」：这个标记有用，`_split_sentences` 靠它断
+    「换人说话」。只能让查表看穿它。
+
+    尾标点一并钉住：命中之后原来返回光秃秃的替换词，`'Pigula,'` 的逗号被吃掉
+    ——而逗号是切行的第一依据（先按标点切子句），丢一个就少一个断点。
+    """
+    from tools.build_interview_clip import segment
+
+    words = [(0.5, ">> Alexo."), (1.0, "beat"), (1.5, "Pigula,"), (2.0, "today.")]
+    out = segment(words, 0.0, 9.0, word_fix={"Alexo": "Alex Eala", "Pigula": "Pegula"})
+    en = " ".join(s["en"] for s in out)
+    assert "Alex Eala" in en, f"说话人标记后面那个词没修上：{en}"
+    assert "Alexo" not in en, en
+    assert "Pegula," in en, f"订正把尾标点吃掉了，断句会少一个依据：{en}"
+    assert ">>" not in en, f"说话人标记漏进成品行了：{en}"
+
+
+def test_小红书正文不许超一千字():
+    """账号所有者：「正文超过了 1000 字，然后不能直接复制」。
+
+    小红书正文那一格就是 1000 字上限，超了**粘不进去**——于是推送里那个
+    「复制文案」按钮点了也没用，整条推送的出口等于没有。而它**不报错**：
+    文案照样渲、链接照样发，只有真去粘的人才发现粘不上。
+
+    量出来是采访这条线独有的毛病：赛场之上那十几条正文全在 1000 以内
+    （最长 925），而采访两条是 1161 和 1005——因为采访**把原文整段搬进了
+    正文**。所以正确的修法是提炼，不是放宽这个数。
+
+    闸装在 `split_copy` 里，因为推送正文和复制页共用它——装一处两边都拦得住。
+    """
+    import contextlib
+    import io
+    import sys
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    from push_reel import BODY_MAX, cut_at_tags, split_copy
+
+    # ⚠️ **先把这个数钉住，再拿它去量。** 第一版只写了 `len(body) <= BODY_MAX`
+    # ——反向验证时把上限改成 100000，闸和断言**一起松了**，测试照样绿。
+    # 也就是说它拦得住「文案变长」，拦不住「有人把上限调高」，而后者正是
+    # 超标时最顺手的那个改法。1000 是小红书那一格的**平台限制**，不是我们的
+    # 口味参数：调高它不会让文案粘得进去，只会让这道闸变成摆设。
+    assert BODY_MAX == 1000, (
+        f"BODY_MAX 被改成了 {BODY_MAX}。这是平台定的，不是可调的——"
+        "正文超了要去提炼，不是放宽这个数")
+
+    checked = 0
+    for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
+        with contextlib.redirect_stdout(io.StringIO()):
+            raw = cut_at_tags(f.read_text(encoding="utf-8"))
+        _, body = split_copy(raw)          # 超了它自己就 SystemExit
+        assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
+        checked += 1
+    assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
+
+
+def test_成片太大要走Release而不是撑爆git():
+    """git 单文件硬上限 100 MiB，而这条线的成片能轻松超过。
+
+    上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s）；演播室那条 409 秒
+    按同码率算 **174 MiB**——渲十分钟，然后死在提交那一步。
+    账号所有者定过：「我的基础要求是保证内容和画面质量，文件多大都没关系」
+    「不要砍片长」，所以出路是**换落脚点**（Release 附件，单个 2 GB），
+    不是压码率也不是剪短。
+
+    三件事都要钉，少一件这道兜底就是摆设：
+
+    1. 两条线的门槛必须是**同一个数**——一个数写两处必分叉
+    2. 传完要**把本地那份删掉**，否则 `git add` 照样把它吃进去，
+       Release 白传一趟，提交照样炸
+    3. 这一步必须排在**提交之前**。排在后面的话文件已经进了 index，
+       删不删都晚了——同「复制页那道闸装在发的那一步不是渲的那一步」
+    """
+    import re
+
+    def block(name: str, wf: str) -> str:
+        text = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
+        text = "\n".join(ln for ln in text.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        return text
+
+    iv = block("", "interview-clip.yml")
+    mr = block("", "match-reel.yml")
+    limits = {w: set(re.findall(r"LIMIT=\$\(\((\d+) \* 1024 \* 1024\)\)", t))
+              for w, t in (("interview-clip", iv), ("match-reel", mr))}
+    assert limits["interview-clip"] == limits["match-reel"] != set(), (
+        f"两条线的 Release 门槛对不上：{limits}——一个数写两处必分叉")
+
+    assert "gh release upload" in iv, "采访这条线没有 Release 兜底，成片超 100 MiB 会死在提交那一步"
+    assert re.search(r'rm -f "\$CLIP"', iv), (
+        "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
+    assert iv.index("gh release upload") < iv.index("git commit"), (
+        "Release 那一步排在提交后面了，文件已经进 index，删不删都晚了")
+
+
+def test_分歧率认领要钉在当时那次观测上():
+    """分歧率超闸可以认领，但认领不能变成永久豁免。
+
+    长采访天然会超：这个指标按词比，而 whisper 会把 `um`/`uh`/`you know`/
+    结巴整个丢掉，YouTube 全留着。演播室那条实测 YouTube 1229 词、
+    whisper 1105 词——**光这 124 个词就占 10.1%**，而总分歧才 12.4%。
+    超出闸门的部分几乎全是「whisper 更简」，不是「英文有错」。
+
+    没去改 `TRANSCRIPT_MAX_DISAGREE`：那个数护着所有片子，而沙箱里跑不了
+    whisper（IP 被挡），没法拿存量重新标定——改一个动不了的数等于把所有
+    片子的闸一起放松，还验不了后果。
+
+    四头都要卡：
+    - 不认领 → 拦，**而且报错要说出路**（照抄一行能贴进 spec 的 JSON）
+    - 认领了但实测比认领值还高 → 拦。这是关键的一条：它把认领钉在当时那次
+      观测上，以后真变差了闸会重新响，而不是「认领过一次就永久放行」
+    - 高过天花板 → 拦。那个量级不是虚词能解释的
+    - 认领得当 → 放行
+    """
+    from tools.build_interview_clip import (
+        TRANSCRIPT_DISAGREE_CEILING,
+        _check_disagree_claim,
+    )
+
+    path = ROOT / "x.md"
+    with pytest.raises(SystemExit) as e:
+        _check_disagree_claim({}, 0.124, path)
+    assert "transcript_disagree_ok" in str(e.value), "报错没说出路"
+
+    with pytest.raises(SystemExit, match="比认领的"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.124, "why": "看过"}}, 0.150, path)
+
+    with pytest.raises(SystemExit, match="天花板"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.99, "why": "看过"}},
+            TRANSCRIPT_DISAGREE_CEILING + 0.01, path)
+
+    # 光写个 rate 不写 why 也不算——认领要留下判据，不是填个数
+    with pytest.raises(SystemExit):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.2}}, 0.124, path)
+
+    _check_disagree_claim(
+        {"transcript_disagree_ok": {"rate": 0.124, "why": "逐处看过：差的全是虚词"}},
+        0.124, path)
