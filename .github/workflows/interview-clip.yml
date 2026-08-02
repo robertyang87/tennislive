@@ -5,8 +5,17 @@ name: interview-clip
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了。实测五个 player
 # client 全废——`web`/`ios`/`web_safari` 报 `Sign in to confirm you're not a
 # bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr` 拿得到格式表
-# 但一取媒体就 403。**但字幕是通的**，所以切行和翻译在本地做完（`--stage subs`
-# 已经把 .ass 提交进仓库了），runner 上只负责下载 + 剪 + 烧。同 match-reel.yml。
+# 但一取媒体就 403。
+#
+# ⚠️ **「但字幕是通的」这句 2026-08-02 起不成立了**：现在连 `--list-subs` 都吃
+# 同一个 bot 拦截，两条视频、两种取法一样，是 IP 不是单条视频。所以切行也搬到了
+# runner 上（`mode: subs`），本地只剩「照着日志里的英文写中文」这一段。
+# 这条留着是因为它会再变：哪天沙箱又通了，`--stage subs` 本地照样跑得动。
+#
+# 三个 mode 对应三个阶段，各装各的依赖——**只挑工作不挑准备等于没挑**：
+#   subs   取字幕 + 切行        字体 + yt-dlp                 ~1 分钟
+#   render 下载 + 剪 + 烧 + 封面  再加 ffmpeg/Chromium/whisper   ~9 分钟
+#   push   只发微信             只要 `-e .`                    ~20 秒
 #
 # 用法：dispatch 时给 slug，spec 从 specs/interviews/<slug>.json 读。
 on:
@@ -17,9 +26,9 @@ on:
         required: true
         default: "eala-svitolina-dc2026-qf"
       mode:
-        description: "render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        description: "subs=只取字幕切行｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
         type: choice
-        options: [render, push]
+        options: [subs, render, push]
         default: render
       push:
         description: "出片后推送微信"
@@ -50,7 +59,7 @@ jobs:
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
@@ -68,11 +77,36 @@ jobs:
       # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
       # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         run: |
           pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
           node --version
+
+      # **取字幕这一阶段的准备，比出片少一大半。** 它不下媒体、不转写、不渲封面、
+      # 不编码——只拉自动字幕、切行、量宽度。所以不装 Chromium / faster-whisper /
+      # ffmpeg，省下三分多钟。
+      # **字体两个都要**：切行是按真实字宽切的（`_en_width` / `_zh_width`），
+      # 缺了就直接报错——这一步的产物是行的划分，量错了整条片子的字幕都跟着错。
+      - name: 装依赖（只取字幕）
+        if: github.event.inputs.mode == 'subs'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core
+          pip install -q -e . "yt-dlp[default]"
+
+      - name: 开跑前预检（只取字幕）
+        if: github.event.inputs.mode == 'subs'
+        run: |
+          PYTHONPATH=src python - <<'PY'
+          import sys
+          sys.path.insert(0, "tools")
+          import yt_dlp  # noqa: F401
+          from build_interview_clip import _en_width, _zh_width
+          # 字体缺了就在这儿炸。它不报「装少了」，只是悄悄换回退字体，
+          # 然后行宽全算错——而错的行划分会一路带到成片上。
+          print(f"字宽 en={_en_width('respect'):.1f} zh={_zh_width('网球'):.1f}")
+          PY
 
       # **只推送的时候什么重依赖都不需要**：封面已经在仓库里、不转写、不下载、
       # 不编码，`push_reel.py` 只用 requests 和 tennislive 自己那几个模块。
@@ -84,7 +118,7 @@ jobs:
 
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         run: |
           PYTHONPATH=src python - <<'PY'
           import shutil, sys
@@ -123,6 +157,23 @@ jobs:
             echo "没有配 YT_COOKIES_TXT，裸下试试"
           fi
 
+      # **切行这一步现在也只能在 runner 上跑。** 沙箱原来还取得到字幕（见顶上
+      # 那段注释），2026-08-02 起整个 extractor 都吃 `Sign in to confirm you're
+      # not a bot`——两条视频、两种取法都一样，是 IP 不是单条视频。而 cookie
+      # 只存在 Actions secret 里，所以给「取字幕」单开一个 mode。
+      #
+      # **产物同时 print 进日志**：artifact 在沙箱里下不下来（api.github.com 是
+      # 403），只写文件等于我看不见。`--stage subs` 在 spec 的 `zh` 还空着的时候
+      # 本来就会把切好的每一行逐条打出来，正好是要的那份。
+      - name: 取字幕切行
+        if: github.event.inputs.mode == 'subs'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage subs
+
       # **先验转写，再出片。** 这是英语学习素材，发错的英文比没有更糟。
       # YouTube 的自动字幕实测错得不轻（人名、整句语法不成立、`respect to her`
       # 其实是 `for her`），而它自己那两条轨（en / en-orig）逐词完全一致，
@@ -143,7 +194,7 @@ jobs:
       # {transcript_diff,human_quote_diff,caption_gaps}.md，
       # 失败时看 artifact（下面 `if: always()` 那步会把整个 outdir 传上来）。
       - name: 转写交叉校验
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
@@ -156,7 +207,7 @@ jobs:
       # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
       # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
       - name: 剪 + 烧字幕
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         env:
           COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
@@ -166,7 +217,7 @@ jobs:
 
       # **查产物，不查信号。** 步骤 success 不等于成片存在——探一下文件和时长。
       - name: 验成片
-        if: github.event.inputs.mode != 'push'
+        if: github.event.inputs.mode == 'render'
         run: |
           OUT="output/interviews/${{ github.event.inputs.slug }}/${{ github.event.inputs.slug }}.mp4"
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }

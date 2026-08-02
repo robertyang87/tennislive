@@ -64,6 +64,33 @@ def _specs() -> list[Path]:
     return sorted(SPECS.glob("*.json")) if SPECS.exists() else []
 
 
+def _steps() -> list[dict]:
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    return wf["jobs"]["render"]["steps"]
+
+
+def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
+    """把 `if:` 按给定 inputs 求值一遍。只认这个工作流真正用到的那点语法。
+
+    **按行为查，不按措辞查。** `"mode != 'push'" in expr` 那种写法只能证明
+    有人写了这串字，证明不了 push 那趟真的不跑它——反过来也会把
+    `mode == 'subs'` 这种同样正确的写法误判成红。
+    """
+    if expr in (None, ""):
+        return True                              # 没有 if 就是每趟都跑
+    py = (str(expr)
+          .replace("github.event.inputs.mode", repr(mode))
+          .replace("github.event.inputs.push", repr(push))
+          .replace("&&", " and ").replace("||", " or "))
+    if py.strip() == "always()":
+        return True
+    assert not re.search(r"[a-z_]+\(|github\.", py), f"这个 if 我还不会算：{expr}"
+    return bool(eval(py, {"__builtins__": {}}, {}))  # noqa: S307
+
+
 def _lines(en: list[str]) -> list[dict]:
     return [{"a": i * 3.0, "b": i * 3.0 + 2.8, "en": t} for i, t in enumerate(en)]
 
@@ -1276,20 +1303,39 @@ def test_只推送时不做出片那一堆准备():
     apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
     而真正要跑的那一步只要二十秒。
 
-    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
-    """
-    import yaml  # noqa: PLC0415
+    判据：`mode=push` 那一趟，一个装重依赖的步骤都不许跑。
 
-    wf = yaml.safe_load((ROOT / ".github" / "workflows"
-                         / "interview-clip.yml").read_text(encoding="utf-8"))
-    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
-    for step in wf["jobs"]["render"]["steps"]:
+    ⚠️ **第一版是按字面查的**（`"mode != 'push'" in step["if"]`），加
+    `mode: subs` 的时候它当场误报：取字幕那两步挂的是 `mode == 'subs'`，
+    push 那趟根本不会跑，却因为字面对不上被判红。**查的是措辞不是行为**，
+    和「封面引的话」那条第一版栽的是同一个跟头。现在按 mode 真的求值一遍。
+    """
+    for step in _steps():
         run = str(step.get("run") or "")
-        if not any(h in run for h in heavy):
+        if not any(h in run for h in ("playwright", "faster-whisper",
+                                      "yt-dlp", "ffmpeg", "fonts-noto")):
             continue
-        assert "mode != 'push'" in str(step.get("if", "")), (
+        assert not _if_holds(step.get("if"), mode="push"), (
             f"步骤「{step.get('name')}」装/用了出片才要的东西，"
-            "却没挂 mode != 'push'——只推送的时候它是白跑的")
+            f"而它的条件 {step.get('if')!r} 在 mode=push 那趟仍然成立"
+            "——只推送的时候它是白跑的")
+
+
+def test_每个mode都各干各的活():
+    """三个 mode 各自只跑自己那一段，别互相带着跑。
+
+    `subs` 是 2026-08-02 加的：沙箱连字幕都取不到了，切行只能搬到 runner 上。
+    加之前只有 render 一条路，取个字幕要白装 Chromium + whisper + ffmpeg
+    三分多钟，而且 `zh` 还空着的时候出片那步会空转，整趟红着结束。
+    """
+    stage = {}                                  # mode -> 它跑到的那几个 --stage
+    for mode in ("subs", "render", "push"):
+        stage[mode] = [s.get("name") for s in _steps()
+                       if _if_holds(s.get("if"), mode=mode)
+                       and "--stage" in str(s.get("run") or "")]
+    assert stage["subs"] == ["取字幕切行"], stage["subs"]
+    assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["push"] == [], stage["push"]
 
 
 def test_封面文件名是push_reel认的那个():
