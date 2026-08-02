@@ -1509,3 +1509,71 @@ def test_ci的sparse块里不许有注释():
     for ln in _ci_sparse_block():
         assert "#" not in ln, f"sparse-checkout 块里有注释，会被当成路径：{ln.strip()}"
         assert not set("*?[]\\") & set(ln), f"sparse-checkout 只吃目录名：{ln.strip()}"
+
+
+def _cited_english(text: str) -> list[str]:
+    """从 `_copy_why` 里抠出被当成证据引的英文（连着 4 个词以上才算）。
+
+    三个字两个字的碎片（`aura`、`WTA 500`）不算引语——引一个词证明不了
+    任何东西，而短串在几百词的转写里撞上的概率不低，拿它当判据只会误报。
+    """
+    return [m.group(0).strip() for m in
+            re.finditer(r"[A-Za-z][A-Za-z'’,.\- ]{12,}", text or "")
+            if len(m.group(0).split()) >= 4]
+
+
+def _best_match(quote: str, body: str) -> float:
+    """引语和转写里最像的那一段，按**词**比，返回 0~1。"""
+    import difflib
+    words = re.sub(r"[^a-z0-9 ]", " ", quote.lower()).split()
+    hay = re.sub(r"[^a-z0-9 ]", " ", body.lower()).split()
+    if not words or not hay:
+        return 0.0
+    n = len(words)
+    return max(difflib.SequenceMatcher(None, words, hay[i:i + n]).ratio()
+               for i in range(max(1, len(hay) - n + 1)))
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_封面引的话必须在片子里(path):
+    """封面是成片的头 1.8 秒，它引的话必须真的在这条片子里。
+
+    踩出来的：这条片子换过源（发布会 → 场上采访），封面文案没跟着换。
+    主标还写着「小时候看她的大满贯决赛」、副标「她先说了两个字：气场」，
+    `_copy_why` 引的是 “I remember watching her … her finals in in the
+    Australian Open” 和 “She definitely has aura”——**两句在新素材里
+    一句都没有**。等于拿一个片子里根本不存在的时刻去换点击，而点进来的人
+    永远等不到那一句。
+
+    **查的是证据，不是措辞。** 封面本来就该是概括而不是照抄——
+    「两个月里两次赢她／比分一模一样」一个字都没和中文台词重合，却完全
+    站得住。所以拦的是 `_copy_why` 里引的**英文原话**：那是作者声称的
+    出处，出处必须存在。第一版按中文子串比，把这条已发的好封面判成了红——
+    典型的「判据宁可窄，不可宽」。
+
+    阈值是量出来的，不是拍的：真引的四句 0.86 / 0.92 / 1.00 / 1.00
+    （允许「your same opponent」被引成「the same opponent」这种小改），
+    编的三句 0.27 / 0.46 / 0.50。0.70 落在中间那道空当里。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    cited = _cited_english((spec.get("cover") or {}).get("_copy_why", ""))
+    if not cited:
+        return
+    lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
+    if not lines_path.exists():
+        pytest.skip(f"还没跑过 --stage subs：{lines_path}")
+    body = " ".join(l["en"] for l in json.loads(lines_path.read_text(encoding="utf-8")))
+    for quote in cited:
+        assert (r := _best_match(quote, body)) >= 0.70, (
+            f"{path.name} 的封面注里引了一句片子里没有的话（最像的只有 {r:.2f}）：\n"
+            f"  {quote}\n"
+            "封面引的每一句都要能在 lines.json 里找到。换过源就把封面一起重写；"
+            "要留反面例子当判据，写进 `_copy_history`，那个字段不扫。")
+
+
+def test_封面这道闸真的查到了东西():
+    """零命中和「全都合格」长得一模一样，所以要报出到底查了几句。"""
+    checked = sum(len(_cited_english((json.loads(p.read_text(encoding="utf-8"))
+                                      .get("cover") or {}).get("_copy_why", "")))
+                  for p in _specs())
+    assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
