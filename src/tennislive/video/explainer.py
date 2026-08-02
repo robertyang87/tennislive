@@ -1014,7 +1014,215 @@ _ENTRY_CUTLINE_DIAGRAM = """
 """
 
 
+#: 同一周、同一片大陆的两站，种子表并排。**这一屏要一眼推翻的是「低级别对手更强」**——
+#: ATP250 的 8 号种子比挑战赛的 1 号种子还高 36 位。照片拍不出「一张签表有多深」。
+#: 几何：排名 1 在 x=150，排名 160 在 x=830，即 1 位 = 4.25px。
+_CLIMB_FIELD_DIAGRAM = """
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同一周，两站的种子有多强</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">左边＝排名越高　每条的两端是 1 号种子和 8 号种子</text>
+
+  <text x="60" y="164" fill="#c6f65a" font-size="27" font-weight="800">ATP250 洛斯卡沃斯</text>
+  <line x1="197" y1="196" x2="435" y2="196" stroke="#c6f65a" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="197" cy="196" r="10" fill="#c6f65a"/><circle cx="435" cy="196" r="10" fill="#c6f65a"/>
+  <text x="197" y="234" text-anchor="middle" fill="#c6f65a" font-size="25" font-weight="800">12</text>
+  <text x="435" y="234" text-anchor="middle" fill="#c6f65a" font-size="25" font-weight="800">67</text>
+
+  <text x="60" y="288" fill="#9fb4aa" font-size="27" font-weight="700">挑战赛 125 温哥华</text>
+  <line x1="583" y1="320" x2="783" y2="320" stroke="rgba(231,243,236,.72)" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="583" cy="320" r="10" fill="rgba(231,243,236,.72)"/><circle cx="783" cy="320" r="10" fill="rgba(231,243,236,.72)"/>
+  <text x="583" y="358" text-anchor="middle" fill="#e7f3ec" font-size="25" font-weight="800">103</text>
+  <text x="783" y="358" text-anchor="middle" fill="#e7f3ec" font-size="25" font-weight="800">150</text>
+
+  <line x1="435" y1="180" x2="435" y2="336" stroke="rgba(198,246,90,.45)"
+        stroke-width="3" stroke-dasharray="9 7"/>
+  <line x1="583" y1="180" x2="583" y2="336" stroke="rgba(231,243,236,.35)"
+        stroke-width="3" stroke-dasharray="9 7"/>
+  <text x="509" y="410" text-anchor="middle" fill="#e7f3ec"
+        font-size="27" font-weight="800">差 36 位</text>
+  <text x="509" y="446" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">两条中间没有交叠</text>
+
+  <text x="450" y="512" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">低级别的对手，其实没有更强</text>
+</svg>
+"""
+
+
+#: 兑换率。同样是「赢五场」，在挑战赛换 125 分，而在 ATP250 只要赢两场就有 100。
+#: 这一层是纯算术，照片讲不出来。条越长＝分越多；括号里是要赢几场。
+#: 几何：0–260 分映射到 x 300–830，即 1 分 ≈ 2.04px。
+_CLIMB_POINTS_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同样的力气，换来的分不一样</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">条越长＝分越多　左边括号里是要赢几场</text>
+
+  <text x="60" y="176" fill="#9fb4aa" font-size="26" font-weight="700">挑战赛 125 冠军（赢 5 场）</text>
+  <rect x="300" y="196" width="255" height="52" rx="10" fill="rgba(231,243,236,.30)"/>
+  <text x="573" y="234" fill="#e7f3ec" font-size="29" font-weight="800">125 分</text>
+
+  <text x="60" y="300" fill="#c6f65a" font-size="26" font-weight="800">ATP250 四强（赢 2 场）</text>
+  <rect x="300" y="320" width="204" height="52" rx="10" fill="rgba(198,246,90,.30)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <text x="522" y="358" fill="#c6f65a" font-size="29" font-weight="800">100 分</text>
+
+  <text x="60" y="424" fill="#9fb4aa" font-size="26" font-weight="700">挑战赛输第一轮</text>
+  <rect x="300" y="444" width="6" height="52" rx="3" fill="rgba(231,243,236,.30)"/>
+  <text x="324" y="482" fill="#e7f3ec" font-size="29" font-weight="800">0 分</text>
+</svg>
+"""
+
+
+#: 钱。ATP 从 2024 年起给前 250 设了保底（图上是 2025 年的档），
+#: 而打一年的开销从最省的四万到带教练的二十万。**地板确实修了，只是只够一个人站**——
+#: 这个「够不够」是两条数叠在一起才看得见的，列成文字看不出来。
+#: 几何：0–20 万美元映射到 x 300–830，即 1 万美元 = 26.5px。
+_CLIMB_MONEY_DIAGRAM = """
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">地板修了，只是只够一个人站</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">单位：万美元／年　保底档位为 2025 年口径</text>
+
+  <text x="60" y="176" fill="#c6f65a" font-size="26" font-weight="800">排名 176–250 保底</text>
+  <rect x="300" y="196" width="265" height="52" rx="10" fill="rgba(198,246,90,.30)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <text x="583" y="234" fill="#c6f65a" font-size="29" font-weight="800">10 万</text>
+
+  <text x="60" y="290" fill="#9fb4aa" font-size="26" font-weight="700">最省的一年</text>
+  <rect x="300" y="310" width="106" height="46" rx="9" fill="rgba(231,243,236,.28)"/>
+  <text x="424" y="344" fill="#e7f3ec" font-size="27" font-weight="800">4 万</text>
+
+  <text x="60" y="382" fill="#9fb4aa" font-size="26" font-weight="700">常见开销（不带教练）</text>
+  <rect x="300" y="402" width="186" height="46" rx="9" fill="rgba(231,243,236,.28)"/>
+  <text x="504" y="436" fill="#e7f3ec" font-size="27" font-weight="800">7 万</text>
+
+  <text x="60" y="474" fill="#9fb4aa" font-size="26" font-weight="700">带教练和体能师</text>
+  <rect x="300" y="494" width="530" height="30" rx="8" fill="none"
+        stroke="rgba(231,243,236,.55)" stroke-width="3" stroke-dasharray="12 8"/>
+  <text x="560" y="516" text-anchor="middle" fill="#e7f3ec" font-size="26" font-weight="800">20 万</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "challenger-climb": (
+        (
+            "field",
+            "同一周",
+            "对手其实没有更强",
+            "先把一个直觉拆掉。很多人以为低级别难打，是因为那一档的人更凶。"
+            "七月最后一周有两站同时开打，隔着一千多公里，都是室外硬地：墨西哥的洛斯卡沃斯，"
+            "ATP 二百五十；加拿大的温哥华，挑战赛一百二十五。"
+            "洛斯卡沃斯的一号种子是世界第十二的莱赫奇卡，八号种子是第六十七的沙波瓦洛夫。"
+            "温哥华的一号种子是第一百零三的邦齐，八号种子第一百五十。"
+            "洛斯卡沃斯的八号种子，比温哥华的一号种子还高三十六位，两条线中间没有交叠。"
+            "女子那边同一周也一样：孟菲斯 WTA 二百五十的八号种子是第五十九，"
+            "温哥华 WTA 一百二十五的一号种子是第一百一十。"
+            "所以纸面上，低级别的对手不是更强，是更弱。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "ATP250 种子 12 到 67",
+                "挑战赛 种子 103 到 150",
+                "两条线 中间没有交叠",
+            ),
+            _CLIMB_FIELD_DIAGRAM,
+        ),
+        (
+            "points",
+            "兑换率",
+            "赢五场，换不到赢两场",
+            "那难在哪。先看积分表。挑战赛一百二十五的冠军，要从第一轮赢到最后，"
+            "五场球，一百二十五分。同一周在洛斯卡沃斯，只要赢两场进四强，就是一百分。"
+            "再往下更狠：挑战赛五十的冠军，同样赢五场，五十分；"
+            "而在一千赛赢一场球，也是五十分。"
+            "还有一条写在积分表下面的注：挑战赛、五百赛、二百五十赛，输掉第一轮零分；"
+            "而大满贯和九十六签的一千赛，输第一轮还有十分。"
+            "所以在低级别，你不是赢得少，是同样的力气换回来的东西少。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "挑战赛冠军 赢 5 场 125 分",
+                "ATP250 四强 赢 2 场 100 分",
+                "挑战赛输首轮 0 分",
+            ),
+            _CLIMB_POINTS_DIAGRAM,
+        ),
+        (
+            "door",
+            "那道门",
+            "第 103 名进不去那一站",
+            "第二层是门。邦齐世界第一百零三，在温哥华是一号种子；"
+            "而同一周的洛斯卡沃斯，八号种子已经是第六十七，三张外卡里还有迪米特洛夫。"
+            "第一百零三这个排名，在那一站连正赛都够不着。"
+            "所以「更难」的其实不是温哥华那一站，是你根本进不去洛斯卡沃斯。"
+            "再看看温哥华那张三十二人的签表里都坐着谁：波皮林，世界第一百零四，"
+            "两年前刚拿过蒙特利尔大师赛的冠军，这次靠一张外卡来打挑战赛；"
+            "张之臻，第一百五十八，曾经打到过世界前三十；还有人用保护排名来打这一站。"
+            "往上爬的人和刚掉下来的人，挤在同一张签表里。"
+            "所以打起来不轻松是真的——只是原因不是这一档的人更强。",
+            "assets/explainer/challenger-climb/popyrin_usopen_2023.jpg",
+            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网首轮，波皮林",
+            (
+                "第 103 在温哥华是 1 号种子",
+                "同一周洛斯卡沃斯 进不去正赛",
+                "掉下来的和爬上去的 同一张签表",
+            ),
+        ),
+        (
+            "floor",
+            "地板",
+            "有保底，但只够一个人",
+            "第三层是钱。这里有个反直觉的地方：地板是有的。"
+            "ATP 从二零二四年起有一个叫 Baseline 的保底计划，按二零二五年的档位："
+            "世界前一百保三十万美元，一百零一到一百七十五保二十万，"
+            "一百七十六到二百五十保十万。二零二五年实际补出去两百多万美元。"
+            "住宿也不用自己掏——规则书写着挑战赛必须给正赛球员提供免费房间，"
+            "最少五晚，含早餐，资格赛和幸运落败者也有。"
+            "可是打一年要花多少：最省的走法四万美元，常见的核心开销七万往上，"
+            "带一个教练加一个体能师，能到二十万。"
+            "十万的地板减掉七万，税前剩三万；带教练那一档直接是净亏。"
+            "而规则书那句免费住宿写得很清楚：每位球员一间双床房，"
+            "第三个人住进去的钱，球员自己付。"
+            "地板保住的是「一个人打」，保不住「带一个人打」。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "176–250 保底 10 万美元",
+                "最省 4 万 常见 7 万+",
+                "带教练 20 万 直接净亏",
+            ),
+            _CLIMB_MONEY_DIAGRAM,
+        ),
+        (
+            "gap",
+            "另一半",
+            "女子那边没有这块地板",
+            "最后说一件容易被漏掉的事。二零一三年有过一个被反复引用的数字："
+            "那一年能靠打球收支平衡的男子只有三百三十六人，女子两百五十三人。"
+            "那是十三年前的数，今天不能直接拿来用——因为这项运动自己发现了问题，"
+            "并且动了手：二零二四年，ATP 修了那块地板。"
+            "可女子那边，到今天也没有一个对应的保底收入计划。"
+            "WTA 有的是产假基金，最长十二个月带薪，三百多人符合条件，人人同额——"
+            "那是另一件很重要的事，但它不是收入的下限。"
+            "郑钦文现在世界第一百二十三。同样的排名放在男子那边，"
+            "对应的是那条二十万美元的线。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文负克雷吉茨科娃",
+            (
+                "2013 年 只有 336 男 253 女平衡",
+                "2024 年 ATP 修了地板",
+                "女子 至今没有对应的保底",
+            ),
+            None,
+            "地板只够一个人站的时候，天赋和钱，哪个先用完？",
+        ),
+    ),
     "entry-deadline": (
         (
             "lines",
@@ -3211,6 +3419,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "challenger-climb": {
+        "hook": (
+            "同一周，ATP250 的 8 号种子比挑战赛的 1 号种子还高 36 位——低级别的对手没有更强。\n"
+            "难的是兑换率：挑战赛冠军赢 5 场 125 分，ATP250 赢 2 场就有 100 分。"
+        ),
+        "tags": ("网球", "网球时差", "张之臻", "挑战赛", "网球冷知识"),
+    },
     "entry-deadline": {
         "hook": (
             "2026 美网的正赛名单，7 月 20 日就锁上了——正赛周周一往前推六周。\n"
@@ -3452,6 +3667,19 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "challenger-climb": {
+        "topic": "挑战赛：难的不是对手，是兑换率",
+        "question": "赢五场，不如赢两场？",
+        "narration": "赢五场，不如赢两场？低级别为什么爬不上来——先说结论："
+                     "不是那一档的人更凶。",
+        "gloss": "Challenger = 挑战赛",
+        # 封面这张没有任何一屏在用，借不到出处，自己写一行。
+        # 选张之臻是因为**他就是这条片子的题目**：曾经世界前 30，
+        # 现在第 158，在一站挑战赛里是 9 号种子。照片拍于他还在巡回赛上的
+        # 2023 年美网——反差本身就是内容，卡上的年份写清楚。
+        "image": "assets/explainer/challenger-climb/zhang_usopen_2023.jpg",
+        "credit": "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网首轮，张之臻发球",
+    },
     "entry-deadline": {
         "topic": "报名截止线：名单在六周之前就锁上了",
         "question": "排名涨了，为什么用不上？",
