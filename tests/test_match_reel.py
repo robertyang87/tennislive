@@ -4470,3 +4470,27 @@ def test_屏幕上的数字不许把字吃掉():
         assert arabic_numerals(src) == src, (
             f"{src!r} 被换成了 {arabic_numerals(src)!r}——屏幕上会少字或者写出"
             "一个没写完的数")
+
+
+def test_硬地的地要读四声():
+    """账号所有者 2026-08-02：「『硬地』这里的『地』是读 dì（四声）。配音要记住。」
+
+    「硬」是形容词，合成器就把「地」当成状语助词读成了轻声 de。可这儿它是名词
+    ——硬地、红土、草地是三种场地。这个词在「开球之前」里到处都是（「换到硬地」
+    「第一个硬地决赛」），**不能靠每条片子改一次文案**，所以收在 `speakable`。
+
+    两条断言：换给合成器的那一份要改，**屏幕上那一份不许动**；而且
+    **字数必须一样**——字幕时间轴是按字位从合成那份映射回显示那份的，
+    长度一变整段字幕就漂了（换成「硬场地」就是这么坏的）。
+    """
+    from tennislive.video.explainer import readable, speakable  # noqa: PLC0415
+
+    for line in ("这一周他换到硬地。", "这是她第一个硬地决赛。",
+                 "硬地赛季从这里开始"):
+        said, shown = speakable(line), readable(line)
+        assert "硬地" not in said, (
+            f"{line!r} 交给合成器的还是「硬地」，那个「地」会被读成轻声 de")
+        assert "硬地" in shown, f"{line!r} 屏幕上的那一份被改掉了，只能改配音那份"
+        assert len(said) == len(shown), (
+            f"{line!r} 两份字数不一样（{len(said)} vs {len(shown)}）"
+            "——字幕时间轴按字位映射，长度一变整段就漂")

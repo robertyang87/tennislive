@@ -4220,8 +4220,27 @@ def speakable(text: str) -> str:
     The guard list is what stops 挑战 (challenge, and the Gentlemen's
     trophy) from turning into 选战; those really are tiǎo and are already
     read correctly.
+
+    ### 硬地：地 是 dì，不是轻声的 de
+
+    账号所有者 2026-08-02：「『硬地』这里的『地』是读 dì（四声）。配音要记住。」
+
+    「硬」是形容词，于是合成器把后面的「地」当成了状语助词读成轻声 de
+    （「硬地打」）。可这儿它是名词——硬地、红土、草地，是三种场地。
+    这个词在这条线上到处都是（每条前瞻都要说「换到硬地」「第一个硬地决赛」），
+    所以不能靠每条片子改一次文案。
+
+    没法给 edge-tts 递音标，所以照 挑→选 那套办：**给合成器换一个同音字**，
+    屏幕上仍然是「硬地」。选「帝」而不是「第」，是因为「第」强烈期待后面跟
+    数字（第一、第二），「硬第决赛」这种串会让它顿一下；「帝」是个独立名词。
+    **两边字数一样**，所以按字位算出来的字幕时间轴对两份都成立——这是
+    这套办法能用的前提，换成三个字的词（「硬场地」）就不成立了。
+
+    ⚠️ **这一处只能用耳朵验**：沙箱合不了语音，`words.json` 也不带声调。
+    下一次 render 出来要听一遍那一句。
     """
-    return re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
+    text = re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
+    return text.replace("硬地", "硬帝")
 
 
 def readable(text: str) -> str:

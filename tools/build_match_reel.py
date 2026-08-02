@@ -2220,13 +2220,46 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # ⚠️ **这儿不能再 `-c copy`。** 溶解要两段同时在滤镜图里，所以这一趟
         # 是一次真编码——按中间产物的参数走（`ultrafast`/`crf 12`，见
         # 「中间产物要花的是比特，不是时间」），成片那一步照旧 `slow`/`crf 18`。
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            *[arg for p in parts for arg in ("-i", str(p))],
-            "-filter_complex", dissolve_filtergraph(lengths, SEG_FADE),
-            "-map", "[vout]", "-map", "[aout]",
-            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
-            "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE, str(silent))
+        #
+        # **每一段都要先量一遍再拼。** `cut_segment` 的 `-t` 越界时 ffmpeg
+        # 退出码是 0，只给一段短的；而短了之后 `xfade` 的 offset 就落到流的
+        # 末尾之外，**整条片子会在那个接缝上截断**——2026-08-02 那两趟就是
+        # 这么出来的：段落加起来 114.46s，成片 12.44s，而日志里一个字都没说。
+        # 量一遍是毫秒级的事，漏掉一次就是一整轮六分钟。
+        measured = [probe_duration(p) for p in parts]
+        short = [f"    {p.name} 要 {want:.2f}s，实际只有 {got:.2f}s"
+                 for p, want, got, tail in zip(
+                     parts, lengths, measured,
+                     [SEG_FADE] * (len(parts) - 1) + [0.0])
+                 if got + 0.08 < want + tail]
+        if short:
+            raise ReelError(
+                "有分段比要求的短——多半是它后面那 "
+                f"{SEG_FADE}s 溶解底料取不到（源片到头了）。"
+                "ffmpeg 越界不报错，只给一段短的：\n" + "\n".join(short)
+                + "\n\n把这几段的 `end` 往前收几帧，或者换一条更长的源片。")
+        proc = run("ffmpeg", "-y", "-hide_banner", "-loglevel", "warning",
+                   *[arg for p in parts for arg in ("-i", str(p))],
+                   "-filter_complex", dissolve_filtergraph(lengths, SEG_FADE),
+                   "-map", "[vout]", "-map", "[aout]",
+                   "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+                   "-pix_fmt", "yuv420p",
+                   "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE, str(silent))
+        # **ffmpeg 成功时说的话也要转出来。** `run()` 把 stderr 吃掉了，
+        # 于是滤镜图的抱怨（`xfade` 的 offset 越界这类）一个字都看不见。
+        if proc.stderr.strip():
+            print("  [拼接] ffmpeg 说：" + proc.stderr.strip()[:1200])
+        joined = probe_duration(silent)
+        want_total = sum(lengths)
+        print(f"  [拼接] {len(parts)} 段溶解成 {joined:.2f}s"
+              f"（段落合计 {want_total:.2f}s）")
+        if abs(joined - want_total) > 0.35:
+            raise ReelError(
+                f"拼出来的画面 {joined:.2f}s，而各段加起来是 {want_total:.2f}s。"
+                "**溶解把时间轴弄错了**，而旁白和字幕的偏移全按段长累加，"
+                "照这样出片后半段会整体错位。\n"
+                f"  各段实测：{[round(x, 2) for x in measured]}\n"
+                f"  spec 段长：{[round(x, 2) for x in lengths]}")
 
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
