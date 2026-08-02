@@ -1308,6 +1308,10 @@ def test_复制页那道闸装在发的那一步不是渲的那一步():
 # 表里没有的名字，正确做法是补进 `zh/players.py`，这里只留「同一个人的另一种叫法」。
 _ON_PURPOSE = {
     "维纳斯·威廉姆斯",   # 表里是「大威廉姆斯」；这条片子通篇叫她维纳斯，是写稿的选择
+    # 伊埃拉的名（Alexandra Eala）。下面那条「少一个字」的判据会把它读成
+    # 「亚历山德罗娃」——**两个都是真人，判据分不出来**，只能显式声明。
+    # 它是全部 1106 段存量里唯一一条误报，所以那条判据是收得住的。
+    "亚历山德拉",
 }
 
 #: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
@@ -1322,6 +1326,13 @@ _KNOWN_TYPOS = {
     "雷巴金娜": "莱巴金娜",     # Elena Rybakina
     "里巴金娜": "莱巴金娜",     # 同上，更早的一次
     "奥斯塔片科": "奥斯塔彭科",  # Jelena Ostapenko
+    # 2026-08-02 一天里写错四个人名。四个错各卡在不同的地方，值得分开记：
+    #   蒙菲尔斯 → 孟菲尔斯      等长差一字，判据 ① 抓到了
+    #   科梅萨纳 → 科梅萨尼亚    长度 4/5，判据 ① 抓不到 → 这次补了判据 ②
+    #   波佩林   → 波皮林        三个字，在射程之外 → 只能钉在这儿
+    #   费恩利   → 弗恩利        同上
+    "波佩林": "波皮林",         # Alexei Popyrin
+    "费恩利": "弗恩利",         # Jacob Fearnley
 }
 
 #: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
@@ -1365,12 +1376,36 @@ def test_人名要以译名表为准():
                 bad.append(f"{where}：「{wrong}」写错了，表里是「{right}」")
         masked = strip_known(text)
         for name in canon:
+            # ① 等长、恰好差一个字：「里巴金娜」之于「莱巴金娜」
             width = len(name)
             for i in range(len(masked) - width + 1):
                 window = masked[i:i + width]
                 if not all("一" <= c <= "鿿" or c == "·" for c in window):
                     continue
                 if sum(a != b for a, b in zip(window, name)) == 1:
+                    bad.append(f"{where}：「{window}」是不是想写「{name}」")
+
+            # ② 少一个字、其余至多差一个字：「科梅萨纳」之于「科梅萨尼亚」。
+            #
+            # 2026-08-02 补的。那天四个人名错，判据 ① 只拦住一个——**而我第一反应
+            # 是「补编辑距离 ≤1 的增删」，量完才发现那也拦不住**：科梅萨纳到
+            # 科梅萨尼亚的编辑距离是 **2**（改 纳→尼、再插 亚），不是 1。
+            #
+            # 先试过「共同前缀 ≥3」那种宽判据，全部 1106 段存量上报出 **33 条**，
+            # 全是合法短称或另一个真人（维纳斯 / 克鲁兹 / 亚历山德拉）——判据宁可
+            # 窄不可宽，扩大化的判据不吭声。收窄成这一条之后只剩 1 条误报，
+            # 已声明在 `_ON_PURPOSE` 里。
+            #
+            # 极大 CJK 串试过，不行：中文没有词边界，整句话就是一个串。
+            short = width - 1
+            if short < 4 or "·" in name:
+                continue
+            head = name[:short]
+            for i in range(len(masked) - short + 1):
+                window = masked[i:i + short]
+                if not all("一" <= c <= "鿿" for c in window):
+                    continue
+                if sum(a != b for a, b in zip(window, head)) == 1:
                     bad.append(f"{where}：「{window}」是不是想写「{name}」")
 
     # **「赛场之上」的 spec 和文案也要扫。** 这条测试原来只看解说片的脚本，
