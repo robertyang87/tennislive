@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.2 赛场之上 | 伊埃拉 6-4 6-2 大坂直美</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>21 岁的伊埃拉 6-4 6-2 击败大坂直美，打进生涯第一个 WTA500 决赛。1 小时 18 分钟，两盘各 39 分钟，四届大满贯冠军一盘都没拿到。
+
+📍华盛顿 WTA500 女单四强
+🎾 伊埃拉 6-4 6-2 大坂直美
+⏱ 1 小时 18 分（两盘各 39 分钟）
+
+第一盘是两个人轮流把机会用光的一盘：
+
+1-1 时她先破。30-40，全场第一个破发点，一次就兑现。
+2-1 轮到她自己发球，0-40，大坂三个破发点。她救下三个追到平分——第四个没救住。2-2，回到原点。这也是大坂全场唯一一次破发。
+之后四局谁也没再丢发球局。4-4，大坂发球，又是 0-40，伊埃拉三个破发点又被全部救掉。平分，占先，第四个破发点。这一个，她拿住了。
+5-4 发球胜盘局，40-0，第一个盘点就收下。6-4，39 分钟。
+
+第二盘她上来又破一局。整盘真正拦住过她的只有一局：1-3 大坂发球，那一局打了 14 分，伊埃拉四次拿到破发点，一次都没兑现，大坂 2-3 硬保下来。
+
+代价是那一局用完了大坂剩下的全部。伊埃拉守住自己的发球局，紧接着再破一局，5-2 轮到她发球。40-0，三个赛点，大坂救下两个，第三个没能再救。
+
+数据摆在这儿：
+总得分 62-44（106 分）
+局数 12-6，发球局她守住 8/9（大坂 5/9）
+二发得分率 79%-48%
+破发点 她转化 4/12、化解 3/4；大坂转化 1/4、化解 8/12
+大坂 5 个 ACE 配 5 个双误
+
+这一周她在华盛顿走过来的路：
+首轮 4-6 6-4 6-1 郑钦文
+次轮 6-2 7-6 费尔南德斯
+八强 6-3 6-4 斯维托丽娜
+四强 6-4 6-2 大坂直美
+四场里只有首轮丢过一盘。
+
+她拿下第一盘的时候，转播解说说了一句：硬地决赛，她此前一个都没打进过；500 级决赛，也是第一个。今天两个一起有了。
+
+最后一分落地，她在网前和大坂握了手，转身冲看台挥了挥，然后把脸埋进两只手里。
+
+决赛对佩古拉，北京时间 8 月 3 日 0:00。最后这一场，她拿得下吗？
+
+#网球 #伊埃拉 #大坂直美 #华盛顿 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
