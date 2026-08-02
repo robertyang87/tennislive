@@ -1427,12 +1427,31 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
     layout = str(cover.get("layout", "cutout"))
     eyebrow = str(cover.get("eyebrow", "")).strip()
     if layout == "solo":
-        if eyebrow == "赛场之上":
+        # **赛场之上默认仍然是 VS 模板，但可以按条声明改用 solo。**
+        #
+        # 原来这儿是一刀切「赛场之上一律 VS」。那条规矩要防的是**滑坡**：
+        # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
+        # 顶一下」。防的是「缺图 → 换个 layout 试试」，不是防「编辑上认为
+        # 这一条该用单人封面」。
+        #
+        # 账号所有者 2026-08-02（gea-shapovalov）：「封面就变成他热亚一个人
+        # 捧杯的全景图吧。这样可能更合适一点，而不是说两人对阵的那种头像图了。」
+        # 那一条**两张官方抠图都在手上、VS 海报已经渲出来看过**——不是缺图，
+        # 是编辑判断：这条片子讲的是一个人三年爬上来然后夺冠，不是一场对决。
+        #
+        # 所以闸从「不许」改成「**要留下判据**」：写一句 `_layout_why` 说清楚
+        # 为什么这一条不是对决片。和 `mixed_fps` / `silent_source` / `rank: null`
+        # 一个形状——认领这一步把「想清楚了」和「凑合一下」分开，而**忘了写
+        # 会当场报错**，滑不下去。
+        if eyebrow == "赛场之上" and not str(cover.get("_layout_why", "")).strip():
             raise ReelError(
-                "「赛场之上」的封面一律是 VS 模板：这个栏目讲的是一场对决，"
+                "「赛场之上」默认是 VS 模板：这个栏目通常讲一场对决，"
                 "封面只放一个人就少了一半。\n"
-                "solo 是给讲人的栏目（网球有故事）用的，不是缺图时的兜底——"
-                "缺图去扩检索源，或从本场源片抓一帧。")
+                "**确实要用单人封面，就写一句 `cover._layout_why` 说清楚为什么**"
+                "（这一条讲的是谁、为什么不是对决片）——一句话就行，但必须写。\n"
+                "⚠️ 这个键不是给「缺图」用的。缺图去扩检索源（赛事官方图库 → "
+                "协会/赛事新闻页 → 新闻站/图片社 → Commons/Flickr），"
+                "或从本场源片抓一帧；**拿 solo 顶替缺掉的那一格是滑坡，不是决定**。")
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
             raise ReelError(
