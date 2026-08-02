@@ -791,12 +791,19 @@ def test_去角标的框要按源片真实分辨率换算(tmp_path, monkeypatch)
     assert clip._delogo(Path("x.mp4"), None) == "", "没写 logo_box 就不该加这个滤镜"
 
 
-def test_去角标要排在翻转前面():
-    """框是在**原始朝向**上量的——先翻转再去角标，框就罩到对称的另一边去了，
-    而画面照样出得来：水印还在，另一边多出一块补痕。"""
+def test_去角标的框按成品那一面给():
+    """**`hflip` 在前，`delogo` 在后。**
+
+    反过来也能跑（把框的 x 镜像一下就是），但那样代码里的坐标系和人看到的
+    对不上：下一个人从渲出来的画面上重新量框，量的一定是成品那一面。
+    两个坐标系并存而且**不吭声**——框放错一面，水印还在、对称的另一边多出
+    一块补痕，画面照样出得来。
+    """
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    chain = src[src.index('f"[0:v]{logo}'):src.index('[fg];"')]
-    assert chain.index("{logo}") < chain.index("{flip}"), "delogo 要排在 hflip 前面"
+    chain = src[src.index('f"[0:v]{flip}'):src.index('[fg];"')]
+    assert chain.index("{flip}") < chain.index("{logo}"), "hflip 要排在 delogo 前面"
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert grab.index("hflip") < grab.index("_delogo"), "抽封面帧那一步顺序也要一致"
 
 
 def test_裁角标只动纵向不动版式几何():

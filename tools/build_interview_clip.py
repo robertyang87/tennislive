@@ -1275,7 +1275,11 @@ def _delogo(src: Path, box: list[float] | None) -> str:
 
     ⚠️ 框**不能贴到画面边**：插值要从框外一圈取样，贴边就没得取。往里收 1 像素。
 
-    ⚠️ 顺序：`delogo` 要排在 `hflip` **前面**——框是在原始朝向上量的。
+    ⚠️ **顺序：`hflip` 在前，`delogo` 在后**，框按**成品的朝向**给。
+    反过来也能跑（把框的 x 镜像一下就是），但坐标系会和人看到的对不上：
+    下一个人从渲出来的画面上重新量框，量的一定是成品那一面。
+    两个坐标系并存而且**不吭声**——框放错一面，水印还在、对称的另一边多出
+    一块补痕，画面照样出得来。所以只留一个坐标系：**你看到的那一面**。
     """
     if not box:
         return ""
@@ -1331,7 +1335,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
         f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]{logo}{flip}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
@@ -1360,8 +1364,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (_delogo(src, spec.get("logo_box"))
-                            + ("hflip," if spec.get("mirrored") else "")
+                    "-vf", (("hflip," if spec.get("mirrored") else "")
+                            + _delogo(src, spec.get("logo_box"))
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
                                          float(spec.get("crop_keep_top", 1.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
