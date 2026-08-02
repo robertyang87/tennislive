@@ -175,8 +175,11 @@ jobs:
         timeout-minutes: 5
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
-      - name: 装中文字体（只有渲染要）
-        if: github.event.inputs.mode == 'render'
+      # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
+      # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
+      # 「加新能力就要同时改三处」的第 N 次。
+      - name: 装中文字体（渲染和封面都要）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         timeout-minutes: 5
         run: sudo apt-get install -y -qq fonts-noto-cjk
 
@@ -188,7 +191,7 @@ jobs:
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
       # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
       - name: 缓存抠图模型
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache@v4
         with:
           path: ~/.u2net
@@ -222,14 +225,14 @@ jobs:
           node --version
 
       - name: 缓存 Chromium
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: python -m playwright install --with-deps chromium
 
       # **同一条源片会被下两到三次**：probe 一次、cover 一次、render 一次——
