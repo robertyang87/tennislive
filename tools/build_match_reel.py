@@ -167,9 +167,22 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
 # 比画面跳更刺耳。
 #
-# 0.18 秒是「化开了」和「拖沓」之间那一档：段长最短的一段 4.0 秒，两头各 0.18
-# 只占 9%，看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，
-# 每句话自己有起止，淡它等于把开头几个字吞掉。
+# ⚠️ **第一版把它做成了「每段各自淡到黑再淡回来」，于是每个接缝中间都有一帧
+# 全黑**——账号所有者的原话：「接缝画面的时候有轻微的闪烁」。量出来一点都不含糊，
+# jodar-fritz 18 个接缝挨个采样，最黑的五个平均亮度 `0.0`（62.191s 那一帧是
+# 整幅纯黑），谷值平均 8.3。**淡入淡出不等于淡到黑**：两段之间要的是**溶解**
+# （前一段直接化进后一段），中间一帧黑都不许有。
+#
+# 现在的做法：每个 part 都比它在成片里占的时间**多切 `SEG_FADE` 秒**（多出来的
+# 是源片的自然延续，从来没单独播过），拼接那一步用 `xfade`/`acrossfade` 把这
+# 多出来的一段吃掉。于是**每一段在成片里仍然正好是 `seg.length` 秒**，旁白和
+# 字幕的偏移一个字都不用改——这一条是故意的，见 `dissolve_filtergraph` 的
+# 长度账。**最后一段不留尾巴**，所以总长仍然是 Σ seg.length，`check_reel_landed`
+# 那句「画面总长 − 段落总长 ＝ 封面」照旧成立。
+#
+# 0.18 秒是「化开了」和「拖沓」之间那一档：段长最短的一段 4.0 秒，占 4.5%，
+# 看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，每句话自己
+# 有起止，淡它等于把开头几个字吞掉。
 SEG_FADE = 0.18
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
@@ -177,6 +190,48 @@ SEG_FADE = 0.18
 # （69.9s 的画面配 64.3s 的音轨，64.3/69.9 = 0.9196 ≈ 44100/48000）。
 # 它不报错，ffprobe 也只写着「48000」，只有把两个时长摆在一起才看得出来。
 AUDIO_RATE = "48000"
+
+
+def dissolve_filtergraph(lengths: list[float], fade: float) -> str:
+    """把各段**溶解**着接起来的滤镜图（画面 `xfade`，现场声 `acrossfade`）。
+
+    ### 长度账——这是这个函数存在的全部理由
+
+    每个 part 文件都比它在成片里占的时间多 `fade` 秒（`cut_segment` 的 `tail`），
+    **最后一段除外**。`xfade` 的输出长度是 `A + B - fade`，所以：
+
+        acc₁ = (L₀+f) + (L₁+f) − f = L₀ + L₁ + f
+        acc₂ = acc₁   + (L₂+f) − f = L₀ + L₁ + L₂ + f
+        …
+        accₙ = acc    +  Lₙ    − f = Σ Lᵢ          ← 末段没尾巴，那个 f 正好被吃掉
+
+    也就是**总长和硬切时一模一样**，每一段的起点也一模一样。旁白的 `adelay`、
+    字幕的 cue、`render.json` 里「画面总长 − 段落总长 ＝ 封面」那条恒等式，
+    因此一处都不用改。要是给末段也留尾巴，总长会多出 `fade` 秒——那就得在
+    别处补一刀 `-t`，而**一个数写两处必分叉**。
+
+    `offset` 是溶解在**当前累积流**上开始的时刻，累积流的时间轴就是成片时间轴，
+    所以它正是这一段的起点 Σ_{j<k} Lⱼ。
+
+    `acrossfade` 没有 offset——它一律咬住前一路的**末尾**，而前一路的末尾正好
+    是同一个窗口（accₖ 末尾 = Σ Lⱼ + f），两边对得上。
+    """
+    n = len(lengths)
+    if n == 1:
+        return "[0:v]null[vout];[0:a]anull[aout]"
+    vparts, aparts = [], []
+    vprev, aprev, offset = "[0:v]", "[0:a]", 0.0
+    for i in range(1, n):
+        offset += lengths[i - 1]
+        vout = "[vout]" if i == n - 1 else f"[vx{i}]"
+        aout = "[aout]" if i == n - 1 else f"[ax{i}]"
+        vparts.append(f"{vprev}[{i}:v]xfade=transition=fade:"
+                      f"duration={fade}:offset={offset:.3f}{vout}")
+        # `c1`/`c2` 都用三角曲线：默认那组是等功率的，两条现场声（球场底噪）
+        # 叠在一起会在中间鼓一下——底噪不相干，等功率补的那一块是白给的。
+        aparts.append(f"{aprev}[{i}:a]acrossfade=d={fade}:c1=tri:c2=tri{aout}")
+        vprev, aprev = vout, aout
+    return ";".join(vparts + aparts)
 
 
 def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
@@ -1028,8 +1083,8 @@ def load_spec(path: Path) -> dict:
 
 def segments_straddling_cuts(
     spec: dict, probes: list[dict],
-) -> tuple[list[dict], list[str]]:
-    """哪几段跨过了源片的场景切点，以及哪几条源片没查成。
+) -> tuple[list[dict], list[str], list[dict]]:
+    """哪几段跨过了源片的场景切点、哪几条源片没查成、哪几段的溶解底料跨了切点。
 
     **跨切点＝这一段中途换镜头，而换过去的那个镜头里常常是另一个人。**
     郑钦文那条第一版踩了三处，一处都没报错：末屏「你定闹钟吗？」压在对手
@@ -1051,22 +1106,44 @@ def segments_straddling_cuts(
     if not urls:
         urls = {"": spec.get("source_url", "")}
     straddling: list[dict] = []
+    tail_cuts: list[dict] = []
     unchecked = sorted(
         name for name, url in urls.items() if url not in by_url)
+    last = len(spec["segments"]) - 1
     for index, seg in enumerate(spec["segments"]):
         name = seg.get("source", "")
         url = urls.get(name)
         if url not in by_url or seg.get("crosses_cut"):
             continue
-        inside = [c for c in by_url[url]
-                  if seg["start"] < c < seg["end"]]
+        # **溶解的底料也要查，但它和「段中途换镜头」不是一回事，别混成一档。**
+        # 除末段外，每一段还要多切 `SEG_FADE` 秒当下一个接缝的底
+        # （见 `dissolve_filtergraph`）。那几秒跨了切点，溶解里会**多叠进一个
+        # 镜头**——而它是半透明、只有一两帧，和「整句旁白压在另一个人身上」
+        # 差着量级。
+        #
+        # 分开报是因为**合成一档会把强的那条判据弄钝**：段体跨切点的出路是
+        # 写 `crosses_cut` 认领，而尾巴跨切点在实拍素材上很常见（窗口本来就
+        # 该切在源片自己的镜头边界上，于是切点就落在末尾一两帧之后）。
+        # 一档的话，人会为了压掉尾巴那条噪音去写 `crosses_cut`，顺手把段体
+        # 那条真检查一起关掉。
+        inside = [c for c in by_url[url] if seg["start"] < c < seg["end"]]
         if inside:
             straddling.append({
                 "index": index, "source": name,
                 "start": seg["start"], "end": seg["end"],
                 "cuts": inside, "narration": seg["narration"],
             })
-    return straddling, unchecked
+        elif index != last:
+            ghost = [c for c in by_url[url]
+                     if seg["end"] <= c < seg["end"] + SEG_FADE]
+            if ghost:
+                tail_cuts.append({
+                    "index": index, "source": name, "end": seg["end"],
+                    "cuts": ghost,
+                    # 切点落在溶解的哪个位置：越靠后，叠进来的那一层越淡
+                    "opacity": max(0.0, 1 - (min(ghost) - seg["end"]) / SEG_FADE),
+                })
+    return straddling, unchecked, tail_cuts
 
 
 def resolve_sources(spec: dict, outdir: Path) -> dict[str, Path]:
@@ -1301,8 +1378,13 @@ def _overlay_chain(base: str, ins: dict) -> str:
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
-                path: list[tuple[float, int]] | None = None) -> Path:
+                path: list[tuple[float, int]] | None = None,
+                tail: float = 0.0) -> Path:
     """切一段、裁成 3:4、放大到 1080×1440。
+
+    `tail` 是留给**下一个接缝**的溶解料：多切这么几秒源片的自然延续，
+    拼接那一步的 `xfade` 正好把它吃掉（见 `dissolve_filtergraph`）。
+    所以这一段在成片里占的仍然是 `seg.length`，不是 `seg.length + tail`。
 
     `-ss` 放在 `-i` **前面**是关键帧级的快速定位，落点可能偏几百毫秒；放在
     后面才是精确定位。高光片段一秒都不能偏，所以用精确定位（慢一点无所谓）。
@@ -1367,10 +1449,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     extra_in = ([] if has_audio else
                 ["-f", "lavfi", "-i",
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
-    # 画面两头各化开 SEG_FADE 秒。**加在 `chain` 末尾**（缩放之后），
-    # 这样淡的是最终画面，不是裁切前的源片。
-    fade = (f",fade=t=in:st=0:d={SEG_FADE}"
-            f",fade=t=out:st={max(0.0, seg.length - SEG_FADE):.3f}:d={SEG_FADE}")
+    # ⚠️ **这儿不许再出现 `fade=`。** 淡入淡出收在拼接那一步的 `xfade`：
+    # 在这儿淡是「各自淡到黑」，接缝中间必然有一帧全黑（量过，见 SEG_FADE）。
     with stage("分段编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
@@ -1392,19 +1472,15 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             "-ss", f"{seg.start:.3f}", "-i", str(source), *inset_in, *extra_in,
             # 时长而不是 `-to`：`-ss` 变成输入选项之后输出时间轴从 0 起算，
             # 再写 `-to seg.end` 会把整段截没。
-            "-t", f"{seg.length:.3f}",
+            "-t", f"{seg.length + tail:.3f}",
             # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
             # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
             "-filter_complex",
             _overlay_chain(
-                (chain + fade + "[base]") if seg.fit == "contain"
-                else f"[0:v]{chain}{fade}[base]", ins),
+                (chain + "[base]") if seg.fit == "contain"
+                else f"[0:v]{chain}[base]", ins),
             "-shortest", "-map", "[vout]",
             "-map", "0:a:0" if has_audio else f"{null_idx}:a:0",
-            # 现场声跟着画面一起化开。补位静音那一路淡了也没差别，所以不分叉。
-            "-af", (f"afade=t=in:st=0:d={SEG_FADE},"
-                    f"afade=t=out:st={max(0.0, seg.length - SEG_FADE):.3f}"
-                    f":d={SEG_FADE}"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
             # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
@@ -1417,7 +1493,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
 
 
 def build_cover(sources: dict[str, Path], primary: str, spec: dict,
-                dest: Path, source_w: int, seconds: float = COVER_SECONDS) -> Path:
+                dest: Path, source_w: int, seconds: float = COVER_SECONDS,
+                *, tail: float = 0.0) -> Path:
     """封面：**一律走「赛场之上」的固定海报模板**（`tools/versus_poster.py`）。
 
     账号所有者定的：「以后『赛场之上』封面海报都用新的模板方案。」所以这里
@@ -1476,7 +1553,8 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
                 "格式：cover.portrait = {image | frame_at, source, "
                 "focus, focus_y, zoom, fit}\n"
                 "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
-        return build_versus_poster(sources, primary, cover, dest, seconds)
+        return build_versus_poster(sources, primary, cover, dest, seconds,
+                                   tail=tail)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -1488,11 +1566,18 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
             "格式：cover.versus = {split, names: [上, 下], "
             "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}\n"
             "讲一个人的栏目（网球有故事）用 `layout: \"solo\"` + cover.portrait。")
-    return build_versus_poster(sources, primary, cover, dest, seconds)
+    # ⚠️ **`tail` 两条出路都要带上。** `build_cover` 有两个 return，上面那个是
+    # solo、这个是 VS——而「赛场之上」「开球之前」走的都是这一个。第一版只改了
+    # 上面那个，于是封面片段没有多切 0.18s，`xfade` 的 offset 正好落在它的末尾，
+    # 整条溶解链塌掉：成片 12.44s，段落加起来 114.46s（run 30752134514）。
+    # 同一对函数（build_cover → build_versus_poster）栽的第三次。
+    return build_versus_poster(sources, primary, cover, dest, seconds,
+                               tail=tail)
 
 
 def build_versus_poster(sources: dict[str, Path], primary: str,
-                        cover: dict, dest: Path, seconds: float = COVER_SECONDS) -> Path:
+                        cover: dict, dest: Path, seconds: float = COVER_SECONDS,
+                        *, tail: float = 0.0) -> Path:
     """「赛场之上」的固定海报，版式在 `tools/versus_poster.py` 里定死。
 
     **这是栏目的固定封面，不是这一条片子的一次性设计。** 以前是在这儿现拼一张
@@ -1590,7 +1675,7 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
     column = str(cover.get("eyebrow", "")).strip() or "赛场之上"
     print(f"    [封面] {column}海报 {layout} → {poster.name}")
-    return _still_to_clip(poster, dest, seconds)
+    return _still_to_clip(poster, dest, seconds + tail)
 
 
 #: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
@@ -1962,16 +2047,24 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
     比一次是毫秒级的事，而漏掉一次就是一整轮六分钟的重渲加上人反复回看。
 
     容差 0.05s：源片时长本身有帧级误差，卡太死会误伤最后一段。
+
+    ⚠️ **除了末段，每一段还要多留 `SEG_FADE` 秒**：溶解的底料是这一段之后的
+    自然延续（见 `dissolve_filtergraph`）。取不到那几秒时 ffmpeg 照样退出码 0，
+    只是给一段短的，然后 `xfade` 的 offset 落到流的末尾之外——**画面在这个
+    接缝上会停住**，而这一整族毛病的共同点就是不吭声。末段不留尾巴，所以它
+    仍然可以贴着源片末尾结束。
     """
     durations = {key: probe_duration(path) for key, path in sources.items()}
     over = []
     for index, seg in enumerate(segments):
         limit = durations.get(seg.source)
-        if limit is None or seg.end <= limit + 0.05:
+        need = seg.end + (0.0 if index == len(segments) - 1 else SEG_FADE)
+        if limit is None or need <= limit + 0.05:
             continue
-        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s，"
-                    f"而源片{('（' + seg.source + '）') if seg.source else ''}"
-                    f"只有 {limit:.1f}s，超出 {seg.end - limit:.2f}s")
+        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
+                    f"（溶解还要往后多取 {need - seg.end:.2f}s）"
+                    f"，而源片{('（' + seg.source + '）') if seg.source else ''}"
+                    f"只有 {limit:.1f}s，超出 {need - limit:.2f}s")
     if over:
         raise ReelError(
             "有段写过了源片的末尾。**ffmpeg 越界不报错，只会悄悄出一段短的**，"
@@ -2134,22 +2227,64 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
 
+    # **每一段都多切 SEG_FADE 秒留给下一个接缝，最后一段不留**——长度账见
+    # `dissolve_filtergraph`。多出来的那几秒从来不单独播，它只在溶解里当底。
+    lengths = [cover_secs] + [seg.length for seg in segments]
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
-                                 cover_secs)]
+                                 cover_secs, tail=SEG_FADE)]
     for index, seg in enumerate(segments):
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
-                                 source_w, tracks.get(index)))
+                                 source_w, tracks.get(index),
+                                 tail=0.0 if index == len(segments) - 1
+                                 else SEG_FADE))
 
-    listing = outdir / "_concat.txt"
-    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
-                       encoding="utf-8")
     silent = outdir / "_video.mp4"
     with stage("拼接"):
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "concat", "-safe", "0", "-i", str(listing),
-            "-c", "copy", str(silent))
+        # ⚠️ **这儿不能再 `-c copy`。** 溶解要两段同时在滤镜图里，所以这一趟
+        # 是一次真编码——按中间产物的参数走（`ultrafast`/`crf 12`，见
+        # 「中间产物要花的是比特，不是时间」），成片那一步照旧 `slow`/`crf 18`。
+        #
+        # **每一段都要先量一遍再拼。** `cut_segment` 的 `-t` 越界时 ffmpeg
+        # 退出码是 0，只给一段短的；而短了之后 `xfade` 的 offset 就落到流的
+        # 末尾之外，**整条片子会在那个接缝上截断**——2026-08-02 那两趟就是
+        # 这么出来的：段落加起来 114.46s，成片 12.44s，而日志里一个字都没说。
+        # 量一遍是毫秒级的事，漏掉一次就是一整轮六分钟。
+        measured = [probe_duration(p) for p in parts]
+        short = [f"    {p.name} 要 {want:.2f}s，实际只有 {got:.2f}s"
+                 for p, want, got, tail in zip(
+                     parts, lengths, measured,
+                     [SEG_FADE] * (len(parts) - 1) + [0.0])
+                 if got + 0.08 < want + tail]
+        if short:
+            raise ReelError(
+                "有分段比要求的短——多半是它后面那 "
+                f"{SEG_FADE}s 溶解底料取不到（源片到头了）。"
+                "ffmpeg 越界不报错，只给一段短的：\n" + "\n".join(short)
+                + "\n\n把这几段的 `end` 往前收几帧，或者换一条更长的源片。")
+        proc = run("ffmpeg", "-y", "-hide_banner", "-loglevel", "warning",
+                   *[arg for p in parts for arg in ("-i", str(p))],
+                   "-filter_complex", dissolve_filtergraph(lengths, SEG_FADE),
+                   "-map", "[vout]", "-map", "[aout]",
+                   "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+                   "-pix_fmt", "yuv420p",
+                   "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE, str(silent))
+        # **ffmpeg 成功时说的话也要转出来。** `run()` 把 stderr 吃掉了，
+        # 于是滤镜图的抱怨（`xfade` 的 offset 越界这类）一个字都看不见。
+        if proc.stderr.strip():
+            print("  [拼接] ffmpeg 说：" + proc.stderr.strip()[:1200])
+        joined = probe_duration(silent)
+        want_total = sum(lengths)
+        print(f"  [拼接] {len(parts)} 段溶解成 {joined:.2f}s"
+              f"（段落合计 {want_total:.2f}s）")
+        if abs(joined - want_total) > 0.35:
+            raise ReelError(
+                f"拼出来的画面 {joined:.2f}s，而各段加起来是 {want_total:.2f}s。"
+                "**溶解把时间轴弄错了**，而旁白和字幕的偏移全按段长累加，"
+                "照这样出片后半段会整体错位。\n"
+                f"  各段实测：{[round(x, 2) for x in measured]}\n"
+                f"  spec 段长：{[round(x, 2) for x in lengths]}")
 
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
@@ -2247,7 +2382,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
 
-    for junk in list(outdir.glob("part_*.mp4")) + [listing, silent, mixed,
+    for junk in list(outdir.glob("part_*.mp4")) + [silent, mixed,
+                                                   outdir / "_concat.txt",
                                                    outdir / "_cover_frame.jpg"]:
         junk.unlink(missing_ok=True)
     # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——

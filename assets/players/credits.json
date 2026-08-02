@@ -208,5 +208,25 @@
     "size": "268x602（原图 379x603，去掉透明边）",
     "note": "atptour.com 全站 403，图从赛事域名的镜像取；全身抠图，用的时候要 crop",
     "checked": "2026-08-02。两道判据都过了：① 77992 字节，md5 与占位剪影 zzzz 的 14382 字节完全不同，不是那张通用人形；② **拿本场画面认的人**——把它和洛斯卡沃斯决赛 332.5 秒那格近景（他刚破发回 3-3）并排比过，红金色头发、脸型、浅色眼睛都对得上。\n⚠️ 赛事站的 /en/players 和 /en/media/news 里都 grep 不到 `players/<slug>/<id>/` 这种路径，所以 ID 不是从页面拿的，是猜的之后**用画面反过来验的**——顺序反了但判据是硬的。"
+  },
+  "atp-j0dz-rafael-jodar.png": {
+    "title": "霍达尔 official ATP gladiator cutout (transparent PNG)",
+    "license": "ATP 官方图库 · 非商业资讯引用",
+    "artist": "ATP Tour",
+    "page": "https://www.atptour.com/en/players/rafael-jodar/j0dz/overview",
+    "url": "https://www.mubadaladcopen.com/-/media/alias/player-gladiator-image/j0dz",
+    "player": "霍达尔",
+    "atp_id": "j0dz",
+    "note": "379×603 全身抠图。⚠️ **ATP 对不存在的 ID 也返回 200 + image/png**，给的是一张灰色人形占位剪影（14382 字节）。这两张都和它比过 md5：j0dz 72074 字节 aa1b0678…、fb98 54080 字节 5d3a2000…、占位 8abb3dc9…，三个各不相同。打开看过：橙色 adidas 球衣加白帽，正脸。"
+  },
+  "atp-fb98-taylor-fritz.png": {
+    "title": "弗里茨 official ATP gladiator cutout (transparent PNG)",
+    "license": "ATP 官方图库 · 非商业资讯引用",
+    "artist": "ATP Tour",
+    "page": "https://www.atptour.com/en/players/taylor-fritz/fb98/overview",
+    "url": "https://www.mubadaladcopen.com/-/media/alias/player-gladiator-image/fb98",
+    "player": "弗里茨",
+    "atp_id": "fb98",
+    "note": "379×603 全身抠图。打开看过：薄荷绿 BOSS 球衣加白发带，正脸。和霍达尔那张橙色对比强，同框好分辨。"
   }
 }
