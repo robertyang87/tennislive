@@ -4328,10 +4328,32 @@ def arabic_numerals(text: str) -> str:
         value = _num_value(run)
         if value is None:
             return m.group(0)
+        if nxt == "几":
+            # 「十几岁」「二十几场」是**约数**，不是数。按数字写出来是「10几岁」
+            # ——屏幕上看着像个没写完的数，账号所有者反馈「有些字幕没有补全」，
+            # 这是其中一处（jodar-fritz 第 16 条）。
+            return m.group(0)
         if before == "第" and len(run) == 1:
             return m.group(0)          # 第一次 / 第二盘 / 第三轮，序数留中文
         if set(run) & _STRUCTURED:
             return value + nxt         # 十九、三十六、四百六十九
+        if len(run) > 1:
+            # **裸数字连成一串，不读成一个数。** 中文里除了年份没人这么写，
+            # 而年份那一轮在上面已经单独处理过了。
+            #
+            # 这一条是 docstring 第一段（「多字的串也必须含十/百/千」）一直
+            # 缺的那半个实现，代价是**一个字被吃掉**：「生涯唯一一个巡回赛
+            # 决赛」里的「一一」被 `_num_value` 读成 1，配上后面的「个」就成了
+            # 「生涯唯1个」——正好是那条规矩举的「唯一一次」的例子，只是量词
+            # 换了一个字就漏了过去。已经发出去的 eala-pegula 第 12 条字幕就是
+            # 这个样子。
+            return m.group(0)
+        if run == "一" and nxt == "号" and text[m.end():m.end() + 1] == "种":
+            # 「一号种子」要和同一条片子里的「7号种子」「3号种子」写成一路。
+            # 半中半洋是这个仓库记过的老毛病（「北京时间8月三号零点」）。
+            # 卡死在「一号种」三个字上，是为了不误伤「统一号召」这类词——
+            # 裸的「一」在别处一律不碰，见下一条。
+            return value + nxt
         if run in ("一", "两"):
             return m.group(0)          # 一场首轮、两盘，都不是在数数
         if nxt and nxt in _NUM_UNITS:

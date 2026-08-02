@@ -23,7 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from build_match_reel import segments_straddling_cuts  # noqa: E402
+from build_match_reel import SEG_FADE, segments_straddling_cuts  # noqa: E402
 
 
 def main() -> int:
@@ -45,7 +45,7 @@ def main() -> int:
             print(f"  ·  {name or '(单源)'}  {len(probe.get('scene_cuts') or [])}"
                   f" 个切点，时长 {probe.get('duration', 0):.1f}s")
 
-    straddling, unchecked = segments_straddling_cuts(spec, probes)
+    straddling, unchecked, tail_cuts = segments_straddling_cuts(spec, probes)
     print()
     for index, seg in enumerate(spec["segments"]):
         hit = next((b for b in straddling if b["index"] == index), None)
@@ -56,6 +56,12 @@ def main() -> int:
             mark, tail = "?", "  没查"
         elif why:
             mark, tail = "!", f"  显式跨切点：{why}"
+        elif any(t["index"] == index for t in tail_cuts):
+            # 溶解的底料跨了切点：多叠进来一个镜头，但只有一两帧、而且是半透明。
+            # 和段体跨切点差着量级，所以只提示，不判红。
+            hit = next(t for t in tail_cuts if t["index"] == index)
+            mark, tail = "~", (f"  溶解底料跨切点 {hit['cuts']}"
+                               f"（叠进来那一层 {hit['opacity']:.0%} 起，渐隐）")
         else:
             mark, tail = "✓", ""
         # `source` 只有多源的 spec 才写（采访那条线）。「赛场之上」是单源，
@@ -66,6 +72,11 @@ def main() -> int:
               f"{seg['start']}–{seg['end']}  {seg['narration'][:22]}{tail}")
 
     print()
+    if tail_cuts:
+        print(f"{len(tail_cuts)} 段的**溶解底料**跨了切点（记号 ~）：段尾之后那"
+              f"{SEG_FADE}s 是下一个接缝的底，源片在那儿换了镜头，于是溶解里会"
+              "多叠进一两帧。窗口切在源片自己的镜头边界上时这很常见，"
+              "**不判红**——真看出来了就把 end 往前收几帧。")
     if unchecked:
         print(f"没查成的源片：{unchecked}（probe 不全，上面的结论不完整）")
     if straddling:
