@@ -2881,7 +2881,7 @@ def resolve_match_cover_visual(
     # 曾经短暂把它当"其它来源全空时的最后兜底"，但那是错的：真正的空池兜底是
     # cards.py 的 branded_fallback（本地已核验人物照 / 品牌封面），画面干净且
     # 不会误导，优先级必须高于带文字的拼接缩略图。_atp_official_cover_candidates
-    # 保留给非封面场景（如昨日好球的视频线索）使用。
+    # 保留给非封面场景使用。
 
     candidates: list[tuple[object, str, dict, dict, int, bool, bool]] = []
     participants = [*match.home, *match.away]

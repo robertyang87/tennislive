@@ -306,11 +306,31 @@ _COPY_BUTTON_RE = re.compile(
 )
 
 
+#: 复制页里**当期标题**所在的那一格。指纹必须取这里，不能取 `<h1>`。
+_COPY_TITLE_RE = re.compile(
+    r'<textarea id="title"[^>]*>(.*?)</textarea>', re.DOTALL
+)
+
+
 def copy_page_fingerprint(path) -> str:
     """从本地 copy.html 里取一句能认出「是不是这一版」的话。
 
-    用 `<h1>` 那行——它是当天文案的标题（如「7.29 今日赛程 | 王欣瑜战萨姆索诺娃」），
-    换一版内容它必然跟着变，而模板里的固定文字（样式、按钮说明）不会。
+    取 `<textarea id="title">` 里那句——它是**当期文案的标题**
+    （如「7.29 今日赛程 | 王欣瑜战萨姆索诺娃」），换一版必然跟着变。
+
+    ⚠️ **原来取的是 `<h1>`，而模板里 `<h1>` 写死是「贴图发布文案」**——
+    一个常量。于是这个函数对任何一天的复制页都返回同一句话，
+    `drop_dead_copy_button(expect=...)` 里那句 `expect in response.text`
+    **恒真**：线上还是上一版的内容，闸照样放行。
+
+    这正是 CLAUDE.md 里用翻车换来的那条规矩本身：「**「可达」不等于
+    「是这一版」**……读者点开看到的是另一批场次——这比死链更糟，
+    死链一眼能看出坏了，旧内容看着完全正常」。**规矩写对了，实现是空的。**
+
+    判据落在 `test_复制页指纹必须能区分两版`：两份不同文案的指纹必须不同，
+    而且必须真的出现在渲出来的页面里（否则探活永远匹配不上，闸从放行恒真
+    变成拦截恒真——那是另一头的坏）。
+
     取不到就返回空串，调用方退回只探可达。
     """
     from pathlib import Path
@@ -319,15 +339,35 @@ def copy_page_fingerprint(path) -> str:
         text = Path(path).read_text(encoding="utf-8")
     except OSError:
         return ""
-    match = re.search(r"<h1[^>]*>(.*?)</h1>", text, re.DOTALL)
+    match = _COPY_TITLE_RE.search(text)
     if not match:
         return ""
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", match.group(1))).strip()
+    return re.sub(r"\s+", " ", match.group(1)).strip()
+
+
+#: 探复制页的重试预算。**这两个数是量出来的，不是拍的，别往下调。**
+#:
+#: 原来是 3 次 × 20 秒 = 40 秒，配的注释写着「Pages 重新发布要一两分钟」——
+#: 那句话被 2026-08-02 那次证伪了：成片 16:11:08 提交到 main，16:11:48 探到
+#: 404，一直到 16:2x 才返回 200，**超过 12 分钟**。于是「保护排名」那条推送
+#: 的复制页按钮被摘掉了（run 30707429355），而闸门本身没判错——页面是真的
+#: 还没发布。
+#:
+#: 40 秒对「合并很久之后再推」够用，对「合并完立刻重渲再推」永远不够：
+#: 渲染→提交→探链接全在 50 秒内跑完，Pages 怎么都赶不上。所以真正的毛病是
+#: 预算，不是闸门。12 × 30 秒 = 6 分钟，覆盖今天这次的大半，又留得住
+#: 工作流 25 分钟的超时余量（出片本身只花 5 分钟）。
+#:
+#: 等不到仍然只摘按钮、不拦推送——正文整段渲染在消息里，长按可复制。
+_COPY_PAGE_ATTEMPTS = int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS") or 12)
+_COPY_PAGE_RETRY_SECONDS = float(
+    os.environ.get("TENNISLIVE_COPYPAGE_RETRY_SECONDS") or 30.0
+)
 
 
 def drop_dead_copy_button(
-    html_body: str, *, probe=None, attempts: int = 3, delay: float = 20.0,
-    expect: str = "",
+    html_body: str, *, probe=None, attempts: int | None = None,
+    delay: float | None = None, expect: str = "",
 ) -> tuple[str, str | None]:
     """发之前探一次复制页；取不到**或不是这一版**就把那个按钮摘掉。
 
@@ -358,7 +398,12 @@ def drop_dead_copy_button(
         return html_body, None
     url = match.group("url")
     ok = (
-        _probe_page(url, attempts=attempts, delay=delay, expect=expect)
+        _probe_page(
+            url,
+            attempts=_COPY_PAGE_ATTEMPTS if attempts is None else attempts,
+            delay=_COPY_PAGE_RETRY_SECONDS if delay is None else delay,
+            expect=expect,
+        )
         if probe is None
         else probe(url)
     )

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.2 赛后开麦 | 伊埃拉胜大坂直美</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>赢完大坂直美，主持人问她这一刻意味着什么。
+她说：我还在状态里，我不觉得这事儿结束了。
+
+📍华盛顿 WTA500 半决赛
+🎾 伊埃拉 6-4 6-2 大坂直美
+🎤 赛后场上采访全程，中英双语字幕
+
+I&#x27;m still locked in. Like, I don&#x27;t think it&#x27;s over yet.
+（我还在状态里，感觉这事儿还没结束）
+
+主持人当场接了一句：
+
+It&#x27;s over. It&#x27;s over.
+（结束了，已经结束了）
+
+她这才补上：那就还剩一场吧。
+
+这不是谦虚。问她赢下这样一位对手意味着什么，她把原因说了出来：
+
+Could never count her out.
+（你永远不能把她当成已经赢了）
+
+I had to be so locked in, and I made it a point to be so locked in,
+which is why until now I&#x27;m still in that mode.
+（我必须非常专注，而且是刻意让自己一直绷着，所以到现在我都还没出那个状态）
+
+I need time to let it sink in.
+（我需要一点时间才消化得了）
+
+大坂直美四座大满贯，伊埃拉 2005 年生。而这是伊埃拉的第一个 WTA500 决赛——
+主持人开口第一句问候之后，说的就是这个。
+
+场边的大屏上挂着菲律宾国旗。主持人说，这一整周，她毫无疑问是这片场地上
+最受欢迎的球员——话说到一半被欢呼盖了过去，等了四秒才重新说完。她的回答是：
+
+This tournament doesn&#x27;t deserve anything than the best fans.
+（这样的赛事，配得上最好的球迷）
+
+最后问她第二天的决赛怎么打——对手佩古拉，去年迈阿密三盘险胜过她：
+
+I&#x27;ll have to ask my coach. He&#x27;ll know best. No, I&#x27;m joking.
+（那我得问我教练，他最清楚。开玩笑的）
+
+I&#x27;m in the final for a reason. She is such an amazing player also for a reason.
+（我能站在决赛里是有原因的，她那么出色同样是有原因的）
+
+这段采访里值得抄下来的几句：
+
+I&#x27;m still locked in 我还在状态里
+let it sink in 让它慢慢消化
+could never count her out 永远不能把她当成已经赢了
+share the court with her 和她同场
+I&#x27;m in the final for a reason 我进决赛是有原因的
+
+这几句里，你最想背下来的是哪一句？
+
+#网球 #伊埃拉 #大坂直美 #网球英语 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

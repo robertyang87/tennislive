@@ -11,7 +11,23 @@ name: knowledge-adhoc
 # （tournament_story_candidates），按当日真实赛事/球员热度与时效性排序
 # 候选，逐个尝试配图，配图不达标就自动换下一个候选，直到成功或候选
 # 耗尽——不需要人工挑一个 slug 再试错。
+#
+# ## 2026-07-31：每日网球知识从 daily 里分出来，落在这条线上
+#
+# 账号所有者：「**所以要分开啊**。昨日赛果和今日赛程都要拿掉了，**其他的
+# 可以保留**」。日报（`daily.yml`）连同昨日赛果、今日赛程一起删了，而知识帖
+# 一直是搭它顺风车出的（同一趟 `tennislive digest`，分两条 PushPlus 推）。
+#
+# 分出来几乎不用改代码：这条工作流跑的 `cmd_knowledge_adhoc` 用的就是同一个
+# `generate_knowledge_package`，而且**本来就支持 slug 留空自动选题**（按当日
+# 赛事/球员热度排序、配图不达标自动换候选）。定时触发时
+# `github.event.inputs.slug` 是空的，正好走自动选题那条路。
+#
+# 时刻 00:37 UTC = 08:37 北京时间。**避开 :00/:30**——GitHub 定时任务在整点
+# 半点最容易被延迟或丢弃，这是 daily 当年留下的经验。
 on:
+  schedule:
+    - cron: "37 0 * * *"   # 08:37 北京时间：每日网球知识
   workflow_dispatch:
     inputs:
       slug:
@@ -46,6 +62,20 @@ jobs:
       TENNISLIVE_VISUAL_EXPANDED_SOURCES: ${{ vars.TENNISLIVE_VISUAL_EXPANDED_SOURCES || 'on' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半到三分钟。
+          # 本次要写的那一格在算出目录之后 `git sparse-checkout add` 回来——
+          # **两半都要有**：只写这一半，`git add "$OUTDIR"` 会说路径在稀疏
+          # 范围之外，只警告、退出码 0，产物静默丢掉。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -75,6 +105,10 @@ jobs:
           OUT_DATE=$(python -c "from tennislive.timeutil import parse_date_arg; print(parse_date_arg('$DATE_ARG').isoformat())")
           OUT_DIR="output/$OUT_DATE/knowledge_adhoc"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # 进 cone 排在生成之前：`sparse-checkout add` 会把 HEAD 上那一版
+          # 先铺回工作区，铺完再生成才是对的顺序（反过来会拿旧内容盖掉新的）。
+          # 重放循环里的 `git checkout rendered -- "$OUTDIR"` 也要它在 cone 里。
+          git sparse-checkout add "$OUT_DIR"
           rm -rf "$OUT_DIR"
           tennislive knowledge-adhoc \
             --slug "${{ github.event.inputs.slug }}" \

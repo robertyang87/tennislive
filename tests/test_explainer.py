@@ -991,6 +991,19 @@ def test_字幕里的数字用阿拉伯数字():
     assert A("这一盘他硬生生拖进了抢七") == "这一盘他硬生生拖进了抢七"
     assert A("抢七打到七平") == "抢七打到七平"
 
+    # **日期不许半中半洋。** 「号」和「点」原来不在量词表里，于是「八月二号」
+    # 只换掉前半截，屏幕上是「8月二号」；「凌晨三点五十分」出来是「3点」没换、
+    # 「50分」换了。两处都出现在伊埃拉对大坂那条片子最要紧的两句上——开球时刻
+    # 和决赛时刻——而它**不报错**：换算成功了，只是换了一半。
+    assert A("北京时间八月二号凌晨三点五十分") == "北京时间8月2号凌晨3点50分"
+    assert A("北京时间八月三号零点") == "北京时间8月3号0点"
+    assert A("三号种子大坂直美") == "3号种子大坂直美"
+    # 「点」不能误伤：这几个词里的「点」前面不是数字，或者压在裸「一/两」的豁免上
+    assert A("三个破发点她全救了") == "3个破发点她全救了"
+    assert A("四十比零，三个赛点") == "40比0，3个赛点"
+    assert A("差一点就破了") == "差一点就破了"
+    assert A("两点之间") == "两点之间"
+
 
 def test_字幕待在3比4画面里(): 
     """两头都有 UI，所以字幕必须待在**卡片内部**，而不是画布的边条里。
@@ -1167,6 +1180,32 @@ def test_复制页探不到就不放那个按钮():
     assert dropped.count("slide_0") == body.count("slide_0"), "图片被误伤"
 
 
+def test_探复制页的重试预算不许再退回四十秒():
+    """闸门判得对，却因为等得太短把能用的按钮摘了——这是同一个坑的另一半。
+
+    2026-08-02「保护排名」那条推送：成片 16:11:08 提交到 main，16:11:48 探到
+    404，直到 16:2x 才 200——**Pages 花了 12 分钟以上**。而当时的预算是
+    3 次 × 20 秒 = 40 秒，于是按钮被摘（run 30707429355）。闸门没判错，
+    页面确实还没发布；错的是那句写在注释里、从没量过的「一两分钟」。
+
+    40 秒对「合并很久之后再推」够用，对「合并完立刻重渲再推」永远不够：
+    渲染→提交→探链接全在 50 秒内跑完，Pages 怎么都赶不上。
+
+    这条不查具体数字（改 12×30 还是 20×20 都行），查的是**总预算**，
+    因为会退化的正是它。
+    """
+    from tennislive.render import pushmsg
+
+    budget = pushmsg._COPY_PAGE_ATTEMPTS * pushmsg._COPY_PAGE_RETRY_SECONDS
+    assert budget >= 300, (
+        f"探复制页的总预算只有 {budget:.0f} 秒。实测 Pages 可以慢到 12 分钟以上，"
+        "太短就会把本来能用的按钮摘掉——而日志里「取不到」和「还没发布」"
+        "长得一模一样。"
+    )
+    # 但也不能无限等：出片那步已经花掉五分钟，工作流的 timeout 是 25 分钟。
+    assert budget <= 900, f"预算 {budget:.0f} 秒太长，会把整个 run 拖进超时。"
+
+
 def test_复制页可达但内容是旧版时也要摘掉按钮():
     """「能打开」不等于「是这一版」。
 
@@ -1188,8 +1227,20 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
         def __init__(self, text):
             self.text = text
 
-    live_old = _Resp("<html><h1>7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉</h1></html>")
-    live_new = _Resp("<html><h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1></html>")
+    # ⚠️ **两边都用真的 `to_copy_page()` 渲，不许手搓假页面。**
+    #
+    # 这条测试原来喂的是自己写的 `<html><h1>标题</h1></html>`，于是它证明的是
+    # 「函数能从 h1 里抠字」，而不是「真页面的 h1 是当期标题」——**而真模板里
+    # `<h1>` 写死是「贴图发布文案」**（`pushmsg.py` 的 `<h1>贴图发布文案</h1>`）。
+    # 结果：指纹对任何一天都返回同一句话，`expect in response.text` **恒真**，
+    # 这道闸从上线那天起就没拦过任何东西，而测试一直是绿的。
+    #
+    # 又一次「断言全绿不等于页面对」，而这次的根子是**判据喂了假产物**。
+    from tennislive.render.pushmsg import to_copy_page
+
+    old_page = to_copy_page("7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n正文甲")
+    new_page = to_copy_page("7.29 今日赛程 | 王欣瑜战萨姆索诺娃\n\n正文乙")
+    live_old, live_new = _Resp(old_page), _Resp(new_page)
     fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
 
     with mock.patch.object(requests, "get", return_value=live_old):
@@ -1201,9 +1252,22 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     with mock.patch.object(requests, "get", return_value=live_new):
         assert _probe_page("http://x/copy.html", attempts=1, expect=fresh)
 
-    # 指纹取的是 <h1>，不是模板里的固定文字——换一版内容它必须跟着变
-    page = tmp_copy_page("<h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1>")
-    assert copy_page_fingerprint(page) == fresh
+    # 指纹必须**能区分两版**，而且必须真的出现在渲出来的页面里——
+    # 取不到会让闸从「放行恒真」翻到「拦截恒真」，那是另一头的坏。
+    import tempfile
+    from pathlib import Path as _Path
+
+    fingerprints = []
+    for text, page in (("甲", old_page), ("乙", new_page)):
+        path = _Path(tempfile.mkdtemp()) / "copy.html"
+        path.write_text(page, encoding="utf-8")
+        fp = copy_page_fingerprint(path)
+        assert fp, f"{text} 版取不到指纹"
+        assert fp in page, f"{text} 版的指纹「{fp}」不在页面里，探活永远匹配不上"
+        fingerprints.append(fp)
+    assert fingerprints[0] != fingerprints[1], (
+        f"两版内容完全不同，指纹却一样（{fingerprints[0]}）——这道闸是恒真的")
+    assert fingerprints[1] == fresh
     assert copy_page_fingerprint("/nowhere/copy.html") == "", "取不到时要退回空串"
 
 
@@ -1382,18 +1446,25 @@ def test_栏目名不能只活在代码里():
     for name in COLUMNS:
         assert name in doc, f"COLUMNS 里的「{name}」没有写进 docs/columns.md"
 
-    # 各生产线自带的栏目名常量（解说视频之外的那些线不共用 COLUMNS）
+    # 各生产线自带的栏目名（解说视频之外的那些线不共用 COLUMNS）。
+    #
+    # 原来这里扫的是 `_COLUMN_LABEL` 常量，而它只存在于「昨日一分」那条线；
+    # 2026-07-31 那条线整个拿掉之后，扫描结果为空，这个判据自己的自检
+    # （`assert labels`）当场报「判据失效了」——**它设计对了**，主语没了就出声，
+    # 而不是变成一条恒真的断言。
+    #
+    # 换成还活着的主语：竖版短片的栏目名写在每条 spec 的 `cover.eyebrow` 里，
+    # 海报台头和微信标题都从它来（见 `push_reel.column_of`）。
+    import json  # noqa: PLC0415
+
     labels = {
-        path.name: match
-        for path in Path("src/tennislive").rglob("*.py")
-        for match in re.findall(
-            r'^_COLUMN_LABEL\s*=\s*["\'](.+?)["\']',
-            path.read_text(encoding="utf-8"),
-            re.MULTILINE,
-        )
+        path.name: str((json.loads(path.read_text(encoding="utf-8")).get("cover")
+                        or {}).get("eyebrow", "")).strip()
+        for path in sorted(Path("specs/reels").glob("*.json"))
     }
-    assert labels, "没扫到任何 _COLUMN_LABEL，判据失效了"
+    assert labels, "没扫到任何 spec 的栏目名，判据失效了"
     for source, name in labels.items():
+        assert name, f"{source} 的 cover.eyebrow 是空的"
         assert name in doc, f"{source} 的栏目名「{name}」没有写进 docs/columns.md"
 
 
@@ -1439,10 +1510,10 @@ def test_字幕里不写标点():
 def test_去标点这条规矩是全站的不是解说片专属():
     """账号所有者补的那句：「字幕要应用到全局里。」
 
-    先只改了解说片，于是「昨日一分」「视频本地化」「大满贯竖版 v2」三条线
+    先只改了解说片，于是「视频本地化」「大满贯竖版 v2」等线
     还在往画面上烧逗号句号。同一个账号出去的片子，字幕两种样子。
 
-    规矩和实现收在 `video/subtitle_text.py`，四条线共用；这条测试盯的是
+    规矩和实现收在 `video/subtitle_text.py`，写 ASS 的几条路径共用；这条测试盯的是
     「每条写 ASS 的路径都真的过了这一道」，而不是某一条的输出长什么样。
     """
     import inspect

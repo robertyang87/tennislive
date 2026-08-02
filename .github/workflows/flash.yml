@@ -4,8 +4,23 @@ name: content-radar
 # 赛前焦点。每日最多一条赛果和一条预告，避免低价值高频刷屏。
 on:
   schedule:
-    # 全天每小时的 07/27/47 分运行，避开整点高峰。
-    - cron: "7,27,47 * * * *"
+    # **2026-07-31：从 72 次/天降到 6 次/天。**
+    #
+    # 量出来的账：run 30643007873 全程 3 分 44 秒，其中 checkout 3 分 02 秒
+    # （81%），而「自动选题并生成」只用了 **3 秒**。而产出是每天雷打不动
+    # 1 个包（就是日限）——12 天的队列目录一天一个，一个不多。
+    # 即时赛果那一半停掉之后只剩赛前焦点，**上限就是 1 个/天**，
+    # 也就是 71/72 趟是空跑，每趟还要装一遍 Chromium。
+    #
+    # **间隔按发布窗口算，不是拍的**：`preview_candidates` 收的是赛前
+    # 45–210 分钟的对阵，窗口宽 165 分钟。要保证一场都不漏，间隔得 ≤165 分钟
+    # （≈10 次/天）；这里选 4 小时（6 次/天），中间留 75 分钟的缝——
+    # **因为日限本来就是 1 个**，漏掉几场不影响「今天挑出一条」，
+    # 而选出来的那条仍然是它见过的里面分最高的。
+    #
+    # 分钟避开 :00/:30（GitHub 在整点半点最容易延迟或丢弃），也避开
+    # news-radar 用的 :13。
+    - cron: "23 1,5,9,13,17,21 * * *"   # 北京 09:23 / 13:23 / 17:23 / 21:23 / 01:23 / 05:23
   workflow_dispatch: {}
 
 permissions:
@@ -31,6 +46,21 @@ jobs:
       TENNISLIVE_FONT_BOLD: assets/fonts/NotoSansSC-Bold-sub.ttf
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** 这条一天跑 72 趟，而它每趟只干 3 秒的活：
+          # run 30643007873 全程 3 分 44 秒，其中 checkout 占 **3 分 02 秒（81%）**，
+          # 「自动选题并生成」只用了 3 秒。HEAD 上 output/ 就有 1.36 GB，
+          # 而这条只写当天那一格。
+          #
+          # 本次要写的那一格在「算出今天的目录」那一步 add 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -49,6 +79,15 @@ jobs:
       - name: 安装 Chromium
         run: python -m playwright install --with-deps chromium
 
+      - name: 算出今天的目录并放进稀疏范围
+        run: |
+          # 日期用 `beijing_today()` 算，和 `cmd_content` 写 `output/<today>/queue/`
+          # 用的是**同一个函数**——拿 shell 的 `date` 另算一次，跨零点那一趟就会
+          # 对不上，而对不上的表现是「git add 什么也没暂存」，不报错。
+          DATE=$(python -c "from tennislive.timeutil import beijing_today; print(beijing_today())")
+          git sparse-checkout add "output/$DATE"
+          echo "今天是 $DATE，稀疏范围：$(git sparse-checkout list | tr '\n' ' ')"
+
       - name: 自动选题并生成完整内容包
         id: generate
         run: |
@@ -64,7 +103,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/ data/
+          # **必须带 `--sparse`。** 稀疏检出之后，裸的 `git add output/` 对
+          # cone 外的路径只打一句警告（"will not be updated in the index"）
+          # 然后**退出码 0**——接着 `git diff --cached --quiet` 说「没有新内容」，
+          # 这一轮的产物就这么静默丢了。合成仓库上验过两种写法。
+          git add --sparse output/ data/
           if git diff --cached --quiet; then
             echo "没有新内容"
           else

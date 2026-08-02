@@ -44,7 +44,16 @@ def test_preview_candidates_use_lead_window_score_and_dedupe():
     assert [match.match_id for match in picks] == ["preview"]
 
 
-def test_content_selector_prefers_one_result_per_run():
+def test_即时赛果停掉之后同样的候选只会选出赛前焦点():
+    """这条原来叫 `..._prefers_one_result_per_run`，断言的是「result 优先」。
+
+    **2026-07-31 那个前提没了**：账号所有者「即时赛果推送也不要了」，
+    `RESULT_DAILY_LIMIT` 归零。同样喂进一个刚完赛的热点和一个赛前焦点，
+    现在只该出赛前焦点——`result` 那一路名额是 0，一条都取不进去。
+
+    改成记录新行为而不是删掉：这两路的取舍是内容雷达的核心，
+    留一条能看出「现在是什么样」的测试比留一片空白强。
+    """
     now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
     result = make_match(
         home_name="Qinwen Zheng",
@@ -58,9 +67,11 @@ def test_content_selector_prefers_one_result_per_run():
 
     picks = select_content([_preview(now), result], now=now)
 
-    assert [(pick.kind, pick.match.match_id) for pick in picks] == [
-        ("result", "result"),
-    ]
+    kinds = [(pick.kind, pick.match.match_id) for pick in picks]
+    assert not [k for k in kinds if k[0] == "result"], (
+        f"即时赛果又被选出来了：{kinds}")
+    assert kinds == [("preview", "preview")], (
+        f"赛前焦点那一半是「其他的可以保留」，不该跟着一起没：{kinds}")
 
 
 def test_content_selector_respects_legacy_dedupe_and_daily_cap():

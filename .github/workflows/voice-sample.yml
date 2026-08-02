@@ -21,6 +21,18 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把整个 output/ 拉下来**（1.36 GB）。产物目录是固定的 `output/voice-samples`，
+          # 所以直接列进稀疏范围，不用另算日期再 add。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
+            output/voice-samples
 
       - uses: actions/setup-python@v5
         with:

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -181,14 +180,3 @@ def test_strict_cover_uses_truthful_branded_fallback_when_no_photo(
     assert report["status"] == "branded_fallback"
     assert report["fallback_reason"] == "no-qualified-photo"
     assert report["render_binding"]["status"] == "bound"
-
-
-def test_daily_workflow_never_swallows_digest_failure_and_checks_card_binding():
-    workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
-
-    assert 'exit "$CODE"' in workflow
-    assert "continuing so generated materials are not lost" not in workflow
-    assert "grep -q '^\\[FATAL\\]'" in workflow
-    assert '.render_binding.status == "bound"' in workflow
-    assert '.render_binding.card_file == "cards/card_00_cover.jpg"' in workflow
-    assert 'sha256sum "$COVER_CARD"' in workflow

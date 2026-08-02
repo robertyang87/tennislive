@@ -1335,6 +1335,173 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="mandatory-1000",
+        title="强制赛为什么可以不去",
+        subtitle="网球观察 · 规则篇",
+        identity="缺席一站大师赛，账单是多少",
+        chips=("规则与代价", "ATP 大师赛", "2026 蒙特利尔"),
+        hero=(
+            "辛纳把 2026 年打过的五个大师赛全赢了，第六个没去；"
+            "德约科维奇和阿尔卡拉斯也不在蒙特利尔的签表上。"
+            "大师赛是强制的，ATP 规则书写着处罚自动生效、不可申诉——"
+            "可这三个人去年在多伦多也没打，那一站记的同样是 0。"
+        ),
+        facts=(
+            "辛纳把 2026 年打过的五个大师赛全赢了：印第安维尔斯、迈阿密、蒙特卡洛、"
+            "马德里、罗马。**史上第一个赢下赛季前四站的人**，也是第一个五连冠。"
+            "7 月 12 日他温网卫冕，20 天后蒙特利尔开打，签表上没有他。",
+            "2026 ATP 规则书第八章：从大师赛正赛退赛**一律记一次排名处罚**，"
+            "原话是 `Ranking penalties are automatic and cannot be appealed`。"
+            "**ATP 500 可以靠推广活动、停赛 30 天或育儿身份豁免免掉，大师赛不行。**",
+            "第二笔在奖金池（大师赛＋年终总决赛共 2153.7 万美元）：缺 1 站扣 25%，"
+            "缺 2 站 50%，缺 3 站 75%，缺 4 站清零。**到场做推广能把 25% 减到 12.5%，"
+            "但规则书同一段写死了它不解除排名处罚**，且最多赎回 20 万美元。",
+            "去年加拿大站在多伦多，三个人同样缺席。排名是 52 周滚动的，"
+            "**今年这个 0 顶掉去年那个 0——排名上一分不差。**",
+            "唯一的出口在 9.03 Note 3：**连着缺两个或以上的强制赛**，大师赛、大满贯、"
+            "年终总决赛都算，可向医疗委员会申请抹掉最多 3 个零分。"
+            "阿尔卡拉斯手腕伤缺了法网、温网，够得着；辛纳只缺这一站，且已报名辛辛那提。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24", player="辛纳", age="24 岁",
+                headline="赛前一周退出蒙特利尔",
+                detail=(
+                    "「我们认为把健康放在第一位是正确的决定。」"
+                    "德约科维奇同日退赛；阿尔卡拉斯因右手腕伤本就不在名单上。"
+                ),
+                source_url="https://www.cbc.ca/lite/story/9.7282909",
+            ),
+            ChampionMoment(
+                date="2026-08-01", player="兹维列夫", age="29 岁",
+                headline="顶替成为头号种子",
+                detail=(
+                    "蒙特利尔 8 月 1 日开打，法网冠军兹维列夫升为头号种子，"
+                    "阿利亚西姆第二——加拿大选手史上最高种子位。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="AELTC / Joel Marklund · wimbledon.com 官方图",
+        source_label="ATP 2026 官方规则书 / CBC",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        evidence_urls=(
+            "https://www.cbc.ca/lite/story/9.7282909",
+            "https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+        ),
+    ),
+    _trivia_story(
+        slug="comeback-middle",
+        title="中段长得一模一样",
+        subtitle="网球观察 · 人物篇",
+        identity="同一台手术，两个相反的结局",
+        chips=("伤病与复出", "同一个部位", "当时分不出来"),
+        hero=(
+            "德约科维奇 2018 年 2 月做右肘手术，那个春天跌到世界第 22；"
+            "锦织圭 2019 年 10 月做右肘手术，世界第 8。前者五个月后拿下温网，"
+            "后者再没回到前列——而在中段那几个月，两条路长得一模一样。"
+        ),
+        facts=(
+            "德约科维奇 2018 年 2 月手术后连败：印第安维尔斯 2 轮负**世界第 109 位**"
+            "的丹尼尔太郎，巴塞罗那负克利赞，马德里负埃德蒙德后跌至第 18，"
+            "罗马之后第 22——**上一次跌出前 20 是 2006 年 10 月**。",
+            "五个月后他拿下温网（决赛 6-2 6-2 7-6 胜安德森），同年再夺美网"
+            "（6-3 7-6 6-3 胜德尔波特罗），年底重回世界第一。",
+            "锦织圭 2019 年 10 月做右肘手术清除两块骨刺，当时世界第 8、生涯最高第 4，"
+            "停赛 10 个月。**2021 年他一度打进法网 16 强、东京奥运八强、华盛顿四强**，"
+            "看起来正在回来；2022 年 1 月左髋手术报销整季，2023 年 6 月才重返巡回赛。",
+            "分岔不在肘：德约科维奇身上只有那一处伤，锦织圭在此之后还有新冠、"
+            "肩伤与髋部手术。**中段无法预判**——这是这条故事唯一的结论。",
+            "郑钦文 2025 年 7 月右肘手术，术前一个月世界第 4；一年之后排名第 123，2026 年 8 月 1 日多伦多资格赛首轮出局。**她正走在那一段里。**",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2018-05-19",
+                player="德约科维奇",
+                age="30 岁",
+                headline="跌出前 20",
+                detail=(
+                    "罗马大师赛四强负于纳达尔后，世界排名跌至第 22，"
+                    "是他自 2006 年 10 月以来第一次跌出前 20。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+            ChampionMoment(
+                date="2018-07-15",
+                player="德约科维奇",
+                age="31 岁",
+                headline="温网夺冠",
+                detail=(
+                    "手术后第五个月，决赛 6-2、6-2、7-6(3) 击败安德森，"
+                    "拿下两年来第一个大满贯；同年美网再胜德尔波特罗，年底重回世界第一。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+        ),
+        image_keys=(),
+        source_label="Wikipedia 2018 Djokovic season / ESPN / The Japan Times",
+        source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+        image_credit="Carine06 · Wikimedia Commons · CC BY-SA 2.0",
+    ),
+    _trivia_story(
+        slug="protected-ranking",
+        title="保护的不是排名",
+        subtitle="网球观察 · 规则篇",
+        identity="保护排名：它保的是报名，不是排名",
+        chips=("规则冷知识", "连续 26 周", "两截不累加"),
+        hero=(
+            "长期伤停的球员可以用停赛前的旧排名报名，这张凭证 ATP 叫 "
+            "Entry Protection、WTA 叫 Special Ranking；它只管报名，"
+            "不管种子、不管幸运落败者顺位，也不会让真实排名停下来。"
+        ),
+        facts=(
+            "ATP 2026 规则书 IX.F 的正式名是 **Entry Protection**（进赛保护）："
+            "停赛满 6 个月、期间一场不打（含表演赛）才可申请，且明写不得用于种子"
+            "与幸运落败者顺位。",
+            "WTA 2026 规则书 VIII.C 叫 **Special Ranking**，门槛是连续 26 周；"
+            "适用情形比 ATP 多出怀孕与成为父母。种子上两家分叉：WTA 允许复出后"
+            "前 8 站当额外种子，ATP 一律不给。",
+            "26 周必须连续，**不累加**。郑钦文 2025 温网后至 2026 多哈复出之间"
+            "只打过一站中网，把停赛切成 10.7 周加 18.1 周；合计 28.8 周已过门槛，"
+            "两截却各自不够。",
+            "⚠️ 上述推算依据两家规则书条文，不是 WTA 的公开裁定；她是否申请过、"
+            "是否获得过豁免，均无公开记录。",
+        ),
+        # 这两个时刻不是"夺冠瞬间"，是这条规则在她身上落地的两个端点。
+        # ⚠️ 不能留空：moments 为空时文案模板会回退到 `founded`，而 trivia 的
+        # founded 取自 chips，于是拼出「从两截不累加年的…」这种坏句子，
+        # 而且只有把整段渲出来才看得见。lucky-loser 没踩到是因为它有两个 moment。
+        moments=(
+            ChampionMoment(
+                date="2025-09-24",
+                player="郑钦文",
+                age="22 岁",
+                headline="那两场中网",
+                detail=(
+                    "右肘手术两个多月后回到北京，轮空后胜阿朗戈，"
+                    "次战对诺斯科娃中途退赛——一整段停赛被这一站切成两半。"
+                ),
+                source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+            ),
+            ChampionMoment(
+                date="2026-07-17",
+                player="郑钦文",
+                age="23 岁",
+                headline="雅典八强",
+                detail=(
+                    "4-6、4-6 负于克雷吉茨科娃，那是美网正赛直入线锁定前"
+                    "最后的机会；三天后线锁在约前 104，她排在第 123。"
+                ),
+                source_url="https://athens-open.com/gallery/day-7",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 IX.F / WTA 2026 规则书 VIII.C",
+        image_credit="athens-open.com 官方图库",
+        source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+    ),
+    _trivia_story(
         slug="lucky-loser",
         title="输了才有的名额",
         subtitle="网球观察 · 规则篇",

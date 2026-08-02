@@ -40,6 +40,12 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
   ⚠️ 这两条视频**没有人工字幕**（`--list-subs` 实测，并拿一条已知有人工字幕的
   片子做过对照，所以这个「没有」是真空不是探测坏了）；而 YouTube 自己的
   `en` 和 `en-orig` 逐词完全一致，是同一份 ASR 换了个名字，对不了。
+- **自动字幕为空的那几秒，和「这里没人说话」长得一模一样。** 上面两道闸比的都是
+  「源说了什么」，谁也不管「源什么都没说」。伊埃拉那条就这么漏了 3.2 秒：主持人
+  把话筒交给她谢菲律宾球迷，她开口了，而 YouTube 的自动字幕在那一段**一个事件
+  都没有**——于是成片上那 3.2 秒是空白，还通过了全部校验。见 `caption_gaps`。
+  ⚠️ **机器只把空档找出来，不判断它是什么**：没人说话、掌声、还是球员换了母语，
+  `small.en` 一律给空白，分不出来。那一档明说出来交给人，别再加模型去猜。
 
 用法：
     python tools/build_interview_clip.py --spec specs/interviews/<slug>.json --stage subs
@@ -63,6 +69,8 @@ OUTDIR = ROOT / "output" / "interviews"
 # 下是 1200px 上下——22/37 行超宽，libass 按 `WrapStyle: 0` 自动折成两行，
 # **折在哪儿没人管**，于是「不要把一句话换行」这条在看不见的地方又被破了一次。
 _LINE_PX = 1080 - 64 - 64
+# 顶栏两边留得窄一点（48），因为它只有一行、不参与阅读节奏
+_HEAD_PX = 1080 - 48 - 48
 
 # libass 认字体名，PIL 认文件路径——两边要指同一个文件，否则量出来的宽度
 # 和渲出来的对不上。踩过：沙箱和 runner 都**没装** `Noto Sans`（只装了
@@ -74,25 +82,81 @@ _FONT_FILES = {
            "fonts-noto-core"),
     "zh": ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
            "fonts-noto-cjk"),
+    # 顶栏走品牌显示体（得意黑）。**它在仓库里，不是 apt 装的**——`webcards`
+    # 用的是同一支字体的 woff2，而 **libass 读不了 woff2**，所以另存了一份 ttf。
+    "head": (str(ROOT / "assets/fonts/SmileySans-Oblique.ttf"), None),
+    # 比分走 Barlow Condensed，和卡片上的比分同一支（见 webcards 的模块注）。
+    "num": (str(ROOT / "assets/fonts/BarlowCondensed-SemiBold.ttf"), None),
 }
-_FONT_SIZE = {"en": 40, "zh": 48}       # 和 _ASS_HEAD 里的 Style 一致
+# ASS 的 `Fontname` 要写字体**自己声明的名字**，而且**只有某些名字算数**。
+# 两支都实测过（渲一小段，和一个不存在的字体名比 md5，一样就是没认出来）：
+#
+#     得意黑                       ✅        Smiley Sans                ❌ 回退
+#     Barlow Condensed SemiBold    ✅        BarlowCondensed            ❌ 回退
+#     Barlow Condensed             ✅（但挑到别的字重）
+#
+# **回退不报错**，画面照样出得来，只是不是那支字体。判据见 `test_ASS 里的字体名…`。
+_ASS_NAME = {
+    "en": "Noto Sans",
+    "zh": "Noto Sans CJK SC",
+    "head": "得意黑",
+    "num": "Barlow Condensed SemiBold",
+}
+_HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["en"]
+
+# ⚠️ **字号只有这一处出处。** 这几个常量既喂 `_measure`（切行时量宽度），
+# 又喂 `_ASS_HEAD`（渲染时的 Style）——写成两处必分叉，而**分叉不吭声**：
+# 后定义的那个赢，改前面那个毫无反应，ruff 的 F811 也拦不住（它只管重复
+# import，不管模块级变量重新赋值）。判据落在 `test_字号只有一处出处`。
+#
+# **两侧的代价完全不一样，别一起调。**
+#
+# **中文那侧几乎免费**：中文是手写的、一行对一行，只受 952px 可用宽约束。
+# 天花板是 68（那时最宽的一行 967px 就超了），64 是上限，62 留一格余量。
+#
+# **英文那侧要花钱**：断行按子句切、子句放不下才拆，字号一大长子句开始被拆，
+# 行数跟着涨，而且**开始出现「收在虚词上」的硬断**——正是仓库里明令禁止的
+# 「把词组劈成两半」。量出来的代价表（伊埃拉那条，146 秒）：
+#
+#     EN   行数   虚词收尾   最短行   平均
+#     40    56       0      0.96s   2.46s   ← 原来
+#     42    59       0      0.32s   2.33s
+#     46    69       1      0.56s   1.99s   ← 现在
+#     52    71       2      0.56s   1.94s
+#     56    77       2      0.48s   1.79s
+#
+# **46 是拿「多一处硬断」换来的**，不是白拿：40 是唯一零硬断的档，往上一定
+# 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
+# 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
+# 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
+_FONT_SIZE = {"en": 46, "zh": 62}
+# 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
+_HEAD_SIZE = {"a": 54, "b": 32}
 _FONT_CACHE: dict[str, object] = {}
 
 
 def _measure(kind: str, text: str) -> float:
     """量一行字画出来有多宽（px）。PIL 的 advance 就是 libass 水平排版用的量。"""
-    if kind not in _FONT_CACHE:
+    return _measure_at(kind, _FONT_SIZE[kind], text)
+
+
+def _measure_at(kind: str, size: int, text: str) -> float:
+    """按**指定字号**量。字幕那两档走 `_measure`（字号取自 `_FONT_SIZE`），
+    顶栏是另一档，直接给字号——**别借字幕的尺子量顶栏**。"""
+    if (key := (kind, size)) not in _FONT_CACHE:
         from PIL import ImageFont  # noqa: PLC0415
 
         path, pkg = _FONT_FILES[kind]
         if not Path(path).exists():
             raise SystemExit(
-                f"量字幕宽度要 {path}，没装。\n"
-                f"    sudo apt-get install -y {pkg}\n"
-                "**别拿回退字体凑合**：DejaVu 比 Noto Sans 宽 8%，量出来的行宽"
+                f"量宽度要 {path}，没有。\n"
+                + (f"    sudo apt-get install -y {pkg}\n" if pkg else
+                   "这一支**在仓库里**（`assets/fonts/`），不是 apt 装的——"
+                   "取不到多半是 checkout 没带上它。\n")
+                + "**别拿回退字体凑合**：DejaVu 比 Noto Sans 宽 8%，量出来的行宽"
                 "和渲出来的对不上，而这件事不报错。")
-        _FONT_CACHE[kind] = ImageFont.truetype(path, _FONT_SIZE[kind])
-    return _FONT_CACHE[kind].getlength(text)
+        _FONT_CACHE[key] = ImageFont.truetype(path, size)
+    return _FONT_CACHE[key].getlength(text)
 
 
 def _en_width(text: str) -> float:
@@ -112,15 +176,32 @@ _NAME_FIX = {
 _NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
 
 
-def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
-    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**"""
+def fetch_words(url: str, workdir: Path,
+                spec: dict | None = None) -> list[tuple[float, str]]:
+    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**
+
+    **cookie 和 JS runtime 两样都要带，和 `yt_download` 一模一样。**
+    原来这儿是裸调的——没有 `--cookies`、也没有 `--js-runtimes node`。
+    长期没暴露，是因为取字幕以前不用登录也过得去；2026-08-02 起 YouTube 把
+    这条路一起挡了，于是 runner 上出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    看起来像「cookie 过期了」，其实是**这一步压根没用它**。判据摆在眼前：
+    同一份 cookie 七十分钟前刚下完 189 MB 的源片。**两处各配一遍必分叉**——
+    `yt_download` 那边接上了环境变量，这边漏了，而漏的表现是一句
+    指向完全错误方向的报错。
+    """
     workdir.mkdir(parents=True, exist_ok=True)
     # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
     # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
     if not (files := sorted(workdir.glob("cap_*.json3"))):
         proc = subprocess.run(
-            ["yt-dlp", "--no-warnings", "--skip-download", "--write-auto-subs",
+            ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+             "--skip-download", "--write-auto-subs",
              "--sub-langs", "en", "--sub-format", "json3",
+             *cookie_args(spec or {}),
              "-o", str(workdir / "cap_%(id)s"), url],
             capture_output=True, text=True, timeout=300)
         files = sorted(workdir.glob("cap_*.json3"))
@@ -138,6 +219,118 @@ def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
             if word:
                 out.append(((base + seg.get("tOffsetMs", 0)) / 1000, word))
     return out
+
+
+# **空档判据**：自动字幕连一个事件都没有的那几秒。阈值 2.0 秒是从真实分布量的，
+# 不是拍的——伊埃拉那条片段里一共只有三个空档：3.24 秒（真漏了，她在说话）、
+# 1.91 秒（两头夹着 `[cheering]` 和 `[applause]`，是掌声）、0.28 秒（事件间的抖动）。
+# 2.0 落在最大的那个和第二个之间。
+CAPTION_GAP_SECS = 2.0
+
+# 垫底那层的调色。**先去色再压暗，不能只压暗。**
+#
+# 原来是光秃秃一个 `eq=brightness=-0.34`。账号所有者反馈：「伊埃拉的球衣是绿色的，
+# 背景虚化之后感觉背景全是绿的，视觉上不太舒服。」量出来问题比看上去更硬：
+#
+#     边条饱和度 0.68~0.92，而画面本身只有 0.16~0.23 —— 背景比画面艳三到五倍
+#
+# 机理是 `brightness` 走的是**减法**，而饱和度是 `(max-min)/max`：整体减下去
+# 分母跟着变小，于是**越压越艳**。模糊本来就把明暗细节抹平、只剩下色相，
+# 再这么一压，等于「把颜色浓缩了铺满全屏」。
+#
+# 而且它**跟着画面变色**：12 秒那帧背后是蓝色广告板，上边条就成了深蓝
+# （`[5 2 70]`，色差 67/255），下边条同时是绿的——一屏两个饱和色互相打架，
+# 她那件荧光绿球衣反而淹在里面。正好撞上「一屏只留一个强调色」。
+#
+# 三档都渲出来比过（`sat` / `bri` / 全片最重的一处色差）：
+#
+#     现在   —      -0.34    67/255   上蓝下绿，色相跟着画面摆
+#     选它   0.15   -0.30    21/255   两条都退成中性暗色，绿球衣成了唯一的饱和色
+#     太狠   0.12   -0.40     8/255   边条接近纯黑，看着像「没铺满的视频」
+#
+# ⚠️ **别拿 HSV 饱和度当判据**：近黑像素上它失真（`sat=0.25` 那档读数仍是 0.95）。
+# 量绝对色差 `max-min`，那才是眼睛在暗背景上看见的东西。
+#
+# ⚠️ 上表里「现在」那一行是从**已发的成片**上量的，是实测；另两行是本地模拟——
+# 拿成片的画面区当输入重跑同一串滤镜。真正的垫底层取的是**整幅 16:9 源片**，
+# 裁法不同，但调色是逐像素的，所以比出来的档位成立、绝对值会有出入。
+#
+# 封面那层（`.bg` 的 `filter:blur(46px) brightness(.34)`）**不用跟着改**：
+# CSS 的 brightness 是**乘法**，不会把饱和度顶上去。量过已发的海报，
+# 纯 `.bg` 那条色差 12/255，本来就是中性的。
+BG_GRADE = "eq=saturation=0.15:brightness=-0.30"
+
+
+def _caption_spans(workdir: Path) -> list[list[float]]:
+    """自动字幕里**有事件**的时间段，重叠的合并掉。
+
+    ⚠️ **噪声标记要算在内**（`[applause]` / `[cheering]`）。切行时它们被
+    `_NOISE` 丢掉是对的——那不是台词；但在这儿它们是**源自己出的声**：
+    「我听见了，只是不是人话」。把它们算成有事件，掌声那一段就不会被误报成
+    空档。判据因此变成一句更硬的话：**这几秒源什么都没说**，不是「这几秒没有词」。
+    """
+    if not (files := sorted(workdir.glob("cap_*.json3"))):
+        return []
+    data = json.loads(files[-1].read_text())
+    spans: list[list[float]] = []
+    for ev in data.get("events", []):
+        text = "".join((s.get("utf8") or "") for s in ev.get("segs") or []).strip()
+        if not text:
+            continue
+        a = ev.get("tStartMs", 0) / 1000
+        spans.append([a, a + ev.get("dDurationMs", 0) / 1000])
+    spans.sort()
+    merged: list[list[float]] = []
+    for a, b in spans:
+        if merged and a <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], b)
+        else:
+            merged.append([a, b])
+    return merged
+
+
+def caption_gaps(spec: dict, workdir: Path) -> list[tuple[float, float]]:
+    """采访区间里，自动字幕**一个事件都没有**的那些空档。
+
+    **为什么要单独查这个**：`verify_transcript` 和 `check_human_quote` 比的都是
+    「源说了什么」，两道闸都对「源什么都没说」视而不见——没有词就没有分歧，
+    分歧率反而更好看。于是空白**静悄悄地通过了全部校验**，和仓库里那一族
+    「兜底出事的时候不吭声」是同一个毛病。
+
+    伊埃拉那条实测：431.64→434.88 三秒二，主持人刚说完「话筒交给你」，
+    她接过话筒对着看台上举菲律宾国旗的球迷开口——**成片上那三秒二是空白**。
+    自动字幕在那一段连 `[applause]` 都没有。
+
+    **这一步只负责把空档找出来，不负责判断它是什么。** 找出来是机器的事
+    （判据摆得出来：源在这几秒里一个事件都没有），判断得人听——没人说话、
+    掌声、或者球员换了母语，机器分不出来。返回的空档要在 spec 的
+    `caption_gaps_ok` 里逐个销账才许出片。
+    """
+    spans = _caption_spans(workdir)
+    lo, hi = spec["start"], spec["end"]
+    gaps = []
+    for prev, cur in zip(spans, spans[1:]):
+        a, b = prev[1], cur[0]
+        a, b = max(a, lo), min(b, hi)
+        if b - a >= CAPTION_GAP_SECS:
+            gaps.append((round(a, 2), round(b, 2)))
+    return gaps
+
+
+def gap_key(a: float, b: float) -> str:
+    """空档在 spec 里的键。**按秒写死**——自动字幕不会变，键就稳定；
+    按序号写的话，前面多一个空档就全体错位，销的账会落到别的空档上。"""
+    return f"{a:.1f}-{b:.1f}"
+
+
+def _unresolved_gaps(spec: dict, gaps: list[tuple[float, float]]) -> list[tuple[float, float]]:
+    """还没销账的空档。销账写进 `caption_gaps_ok`，值写**听过之后的决定**。
+
+    ⚠️ 「销账」的意思是**人听过并作出了决定**，不是「这里没问题」。伊埃拉那条
+    的值写的就是「真漏了」——留着这句判据，比把一个已知的洞抹平有用。
+    """
+    done = set(spec.get("caption_gaps_ok") or {})
+    return [g for g in gaps if gap_key(*g) not in done]
 
 
 # 子句边界。**断行按标点，不按数满多少个字符**——和中文字幕那条规矩同源
@@ -328,7 +521,8 @@ def _text(clause: list[tuple[float, str]]) -> str:
 
 
 def segment(words: list[tuple[float, str]], start: float, end: float,
-            budget: float | None = None, width=None) -> list[dict]:
+            budget: float | None = None, width=None,
+            word_fix: dict[str, str] | None = None) -> list[dict]:
     """逐词 → 字幕行。**一行一句，不劈词组，不超宽。**
 
     三条规矩，顺序就是优先级：
@@ -340,10 +534,42 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     3. **宽度按量出来的算**，不按字符数。原来 62 个字符在 Noto Sans 40 下是
        1200px 上下，而可用宽只有 952——**22/37 行超宽，libass 自动折成两行，
        折在哪儿没人管**。那是同一个毛病的隐形版：看不见，因为它不报错
+
+    `word_fix` 是**逐词的订正，在切行之前生效**，和切行之后的 `en_fixed` 分工
+    不同，别互相顶替：
+
+    - **ASR 把两个词并成一个** → 走 `word_fix`。实测 `wasulations`＝
+      `was` + `Congratulations`。这种错**必须在切行前修**：词并错了，行怎么排
+      都排不下——照原样修进 `en_fixed`，那一行量出来 1150px，超出可用宽两成，
+      而 libass 会**默默折行**压到中文那一行上
+    - **整行读起来不对** → 走 `en_fixed`。它替换的是成品行，不动分词
     """
     budget = _LINE_PX if budget is None else budget
     width = _en_width if width is None else width
-    keep = [(t, _NAME_FIX.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
+    fix = {**_NAME_FIX, **(word_fix or {})}
+
+    def _fix(w: str) -> str:
+        """查订正表要**看穿说话人标记**，还要**把尾标点留住**。
+
+        自动字幕给每个说话人的第一个词加了 `>>` 前缀（这条片子里 30 处），
+        而这个标记有用——`_split_sentences` 靠它断「换人说话」。所以不能提前
+        剥掉，只能让查表看穿它。原来是 `fix.get(w.strip(".,?!"), w)`，于是
+        `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上：
+        **凡是某个说话人的第一个词，word_fix 一律静默失效**。
+        它不报错，只是那条订正没生效——而我写了订正就默认它生效了。
+
+        尾标点同理：`'Pigula,'` 命中后原来返回的是光秃秃的 `Pegula`，
+        **逗号被吃掉**。而逗号是切行的依据（先按标点切子句），
+        丢一个就少一个断点。
+        """
+        mark, bare = (">>", w[2:].strip()) if w.startswith(">>") else ("", w)
+        core = bare.strip(".,?!")
+        if core not in fix or not core:
+            return w
+        tail = bare[bare.rindex(core) + len(core):]
+        return f"{mark} {fix[core]}{tail}" if mark else f"{fix[core]}{tail}"
+
+    keep = [(t, _fix(w)) for t, w in words if start <= t <= end]
     keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
     if not keep:
         return []
@@ -400,22 +626,42 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
 # ⚠️ 代价是她举起的手偶尔会贴到画面边缘。要更保险就把 `CROP_RATIO` 调到 16/9。
 CANVAS_W, CANVAS_H = 1080, 1440
 CROP_RATIO = 4 / 3
+# 顶栏。**原来这 150px 是空的**——账号所有者：「建议顶部文字说明当前是什么
+# 比赛的赛后采访，不然好多人不知道背景」。刷到中段的人只看见一个人在说话，
+# 不知道这是哪一站、哪一轮、谁跟谁。封面那一屏答得了，但它只出现 1.8 秒，
+# 而**滑进来的人根本没看过封面**。
 VIDEO_TOP = 150
 VIDEO_H = int(CANVAS_W / CROP_RATIO)          # 810
+_BAND_TOP = VIDEO_TOP + VIDEO_H               # 960，字幕带的上沿
 
 # 字幕**上锚**（Alignment=8）不贴底：一行和两行要从同一个高度往下长，
 # 贴底的话行数一变位置就跳。MarginV 是距画布顶的距离。
 #
+# **字号是量出来的。** 原来 40/48，烧帧量下来墨迹只有 29 / 31px 高——
+# 而同样 1440 高的画布上，「赛场之上」那条线的中文字幕是 68 号、墨高 44px。
+# 差 42%，账号所有者一句「字体又太小」。
+# 字号和顶栏字号在上面「字号只有这一处出处」那一段，别在这儿再写一份。
+#
+# **顶栏走品牌显示体（得意黑），字幕不走。** 账号所有者看完第一版说
+# 「感觉字体很平淡」——顶栏原来是思源黑体加粗，端正但没有性格，和海报上
+# 那支斜体得意黑对不上，两个产物看着不像一家。
+# ⚠️ 只换顶栏：`assets/fonts/ATTRIBUTION.md` 里早写着「display headings…
+# body copy keeps Noto for long-form legibility」——得意黑是**斜体加窄身**，
+# 当标题有劲，一整句字幕读下来就累。渲出来两版比过，这条边界是对的。
+_HEAD_A_TOP, _HEAD_B_TOP = 24, 92
+
 # **两行之间的距离是量出来的，不是拍的。** 原来差 118，烧帧量下来两行之间
 # 有 **89px 纯空白＝中文字高的 2.78 倍**——两行读起来像两块不相干的东西，
 # 而它们本该是同一句话的两种语言。渲了 43/47/51 三档摆一起比：
 # 43（14px，0.44 倍）挤，51（22px，0.69 倍）松，**47（18px，0.56 倍）**正好。
-# 改字号要重量：这个数是「字号 40/48 下的墨迹间距」，不能按比例推。
-_ZH_GAP = 47
-# 收拢之后整对会往上缩 70px，所以顶端跟着下移 40，**让这一对的视觉中心
-# 留在原来的位置**（原 1029–1179 中心 1104，现 1069–1148 中心 1108）。
-# 不再往下挪：下面那条 480px 的背景带是留给 app 的点赞列和底部文案区的。
-_EN_TOP = VIDEO_TOP + VIDEO_H + 100           # 1060
+# 改字号要重量：47 是「40/48 下」的数，46/62 下重量出来是 **53**（22px，0.55 倍）。
+_ZH_GAP = 53
+# **这一对要落在字幕带的正中，不能贴着视频挂。** 原来 `_EN_TOP` 是
+# 「视频下沿 + 100」，于是墨迹落在 1069–1147：上面空 109，**下面空 293**。
+# 账号所有者说的「下面字幕空间太大」就是这 293——不是带子太宽，是字全堆在
+# 上半截，下半截整片空着。居中之后两头各 190 左右，同样一条带子不再显得空。
+# 1141 是烧帧量出来的：墨迹落在 1152–1249，上空 192 / 下空 191。
+_EN_TOP = 1141
 _ZH_TOP = _EN_TOP + _ZH_GAP
 
 _ASS_HEAD = f"""[Script Info]
@@ -427,12 +673,117 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: EN,Noto Sans,40,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
-Style: ZH,Noto Sans CJK SC,48,&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
+Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
+Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
+Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00B2BCA9,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
+
+
+_MARK_COLOUR = r"\c&H8CDC4A&"
+# 比分那一段：提亮 + 稍微放大。Barlow Condensed 是窄身，同字号下墨迹比汉字矮，
+# 不放大会显得比旁边的名字小一号。38 是渲出来比的（32 偏小，44 就开始抢戏）。
+_SCORE_PX = 38
+_SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
+
+
+def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
+    """顶栏两行，**拆成一段一段**：`(文本, 字体 kind, 颜色覆盖或 "")`。
+
+    量宽度和渲染走**同一份**——这两件事分成两个函数写过一版，正是
+    「同一个东西写两处必分叉」那条。这里只有这一处出处。
+
+    账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道
+    背景。」要答的是：哪一站哪一轮、谁跟谁打成什么样、这是什么。
+
+    - 第一行 `event` —— 赛事＋级别＋轮次。**它和 `push.event` 不是一回事**：
+      那个为了把推送标题压进 20 字位是**故意留空的**，这儿没有长度限制。
+    - 第二行 `winner 比分 loser · 赛后场上采访`。
+
+    ⚠️ **比分要靠 `winner` 摆，不许靠 `matchup` 的词序猜。** `matchup` 是按
+    签位写的，**不保证胜者在前**（`@wta` 的标题就这样，我照着推过一次，
+    推错了）。「伊埃拉 6-3 6-4 斯维托丽娜」这种写法本身就在说谁赢了——
+    这个断言必须来自数据，不能来自排版顺序。所以 `winner` 是必填，而且必须
+    是 `matchup` 里的一个名字。
+    """
+    slug = spec.get("slug", "?")
+    if not (ev := (spec.get("event") or "").strip()):
+        raise SystemExit(
+            f"{slug} 缺 `event`——顶栏第一行没东西可写。\n"
+            "写赛事＋级别＋轮次，例如「2026 华盛顿 WTA500 1/4 决赛」。\n"
+            "⚠️ 别拿 `push.event` 顶：那个是为了把推送标题压进 20 字位故意留空的。")
+    push = spec.get("push") or {}
+    if not (mu := (push.get("matchup") or "").strip()):
+        raise SystemExit(f"{slug} 缺 `push.matchup`——顶栏第二行没东西可写。")
+    # **采访是什么性质，跟着源走，不写死。** 默认是场上采访（这条线的本分），
+    # 但**「场上」不是永远拿得到**：伊埃拉 6-3 6-4 赢大坂直美那场，WTA 官方
+    # 集锦没接采访、转播区那条不在场上、另外两条是发布会和博主口播——四个源
+    # 都自证过。账号所有者定了用转播区那条，那顶栏就必须**照实说**：
+    # 印着「场上」而画面是演播区，是拿版式撒谎。
+    kind = (spec.get("interview_kind") or "赛后场上采访").strip()
+    sides = [s.strip() for s in re.split(r"\bvs\.?\b", mu) if s.strip()]
+    line_b = [(f"{mu} · {kind}", "zh", "", _HEAD_SIZE["b"])]
+    if (score := (push.get("score") or "").strip()):
+        if not (win := (spec.get("winner") or "").strip()):
+            raise SystemExit(
+                f"{slug} 写了 `push.score` 却没写 `winner`。\n"
+                "顶栏要印「谁 比分 谁」，而 `matchup` 是按签位排的，"
+                "**不保证胜者在前**——照着词序摆等于用排版断言谁赢了。\n"
+                f"把赢的那个名字写进顶层 `winner`（这场是 {sides} 里的一个）。")
+        if win not in sides:
+            raise SystemExit(
+                f"{slug} 的 `winner`「{win}」不在 `push.matchup`「{mu}」里（拆出 {sides}）。\n"
+                "两处名字要对得上，否则顶栏会印出一个没打这场球的人。")
+        lose = next(s for s in sides if s != win)
+        line_b = [(f"{win} ", "zh", "", _HEAD_SIZE["b"]),
+                  (score, "num", _SCORE_TAGS, _SCORE_PX),
+                  (f" {lose} · {kind}", "zh", "", _HEAD_SIZE["b"])]
+    return ([("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
+             (ev, "head", "", _HEAD_SIZE["a"])], line_b)
+
+
+def header_lines(spec: dict) -> tuple[str, str]:
+    """顶栏两行的**纯文本**（不带那道竖条），顺带量宽度。
+
+    **`WrapStyle=0` 会自动折行，一折就压到下面那行上，而且不报错**——赛事名
+    长一点（「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」）就够了。
+    每一段按**它自己那支字体**量，比分那段是窄身的 Barlow，按中文的尺子量
+    会高估三成。可用宽是 1080 减两边各 48。
+    """
+    out = []
+    for runs in header_runs(spec):
+        # **按每一段自己的字号量。** 比分那段是 `\fs38` 渲的，拿 32 去量会
+        # 少算两成——闸就成了摆设，而溢出照样不报错。
+        w = sum(_measure_at(kind, size, text) for text, kind, _, size in runs)
+        text = "".join(t for t, _, _, _ in runs if t != "▍")
+        if w > _HEAD_PX:
+            raise SystemExit(
+                f"顶栏这行 {w:.0f}px，超过可用的 {_HEAD_PX}px，会折到下一行上：{text}\n"
+                "把 `event` 写短一点（赛事＋级别＋轮次就够，别再加国别、场地）。")
+        out.append(text)
+    return out[0], out[1]
+
+
+def header_ass(spec: dict) -> tuple[str, str]:
+    """顶栏两行的 ASS 文本，逐段带上 `\\fn` 和颜色。
+
+    ⚠️ **每一段都显式写 `\\fn`，不靠 fontconfig 回退。** 那道竖条 `▍`
+    （U+258D）得意黑里就没有，本地是回退到思源黑体才画出来的，
+    而**回退在 runner 上不保证**（「本地装着不等于 CI 装着」）。
+
+    ⚠️ **每一段都要先 `\\r`。** ASS 的覆盖是**粘连的**——竖条那段设了绿色，
+    不复位的话后面整行标题跟着变绿。渲出来一眼看见，而**它不报错**。
+    `\\r` 是「回到本 Style 的默认值」，比逐项写回去稳（颜色、字重、间距
+    以后加了哪一项都不用记得跟着复位）。
+    """
+    return tuple(
+        "".join(rf"{{\r\fn{_ASS_NAME[kind]}{tags}}}{text}"
+                for text, kind, tags, _ in runs)
+        for runs in header_runs(spec)
+    )
 
 
 # 中文行尾吊在这些字上，就是把一个意思劈成两半——和英文那边
@@ -462,13 +813,37 @@ def _ts(x: float) -> str:
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
 
 
-def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path) -> None:
+def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
+              spec: dict | None = None) -> None:
     if len(zh) != len(lines):
-        raise SystemExit(f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
-                         f"先跑 --stage subs 看切出来几行，再照着补 spec 里的 zh。")
+        raise SystemExit(
+            f"中文 {len(zh)} 行、英文 {len(lines)} 行，对不上。"
+            f"先跑 --stage subs 看切出来几行，再照着补 spec 里的 zh。\n"
+            "⚠️ 改过字幕字号也会走到这儿：断行按子句切、放不下才拆，"
+            "字号一大长子句开始被拆，行数就变了。**`en_fixed` 的行号跟着失准，"
+            "得照新的行重挂一遍**。")
+    # **英文也要量。** 原来这道闸只查中文——于是 `en_fixed` 里一行订正写长了
+    # （实测 1150px，超出可用宽两成）**一路畅通**，libass 到渲染时默默折行，
+    # 压到中文那一行上。切行时量过的是 ASR 原文，订正之后没人再量一次。
+    if wide := [f"#{i} 英文超宽 {_en_width(seg['en']):.0f}px（可用 {_LINE_PX}）："
+                f"{seg['en']}" for i, seg in enumerate(lines, 1)
+                if _en_width(seg["en"]) > _LINE_PX]:
+        raise SystemExit(
+            "英文字幕过不了：\n  " + "\n  ".join(wide)
+            + "\n⚠️ 多半是 `en_fixed` 把一行改长了。**词被 ASR 并在一起的那种错要走"
+            " `word_fix`**（切行之前逐词修，行会自己重排），`en_fixed` 只适合"
+            "「这一行读起来不对」而长度不变的订正。")
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
+    if spec is not None:
+        # 顶栏一直挂着：整条片子从头到尾都要能回答「这是哪一场」。
+        # 刷到中段的人没看过封面，而封面只有 1.8 秒。
+        a, b = _ts(0.0), _ts(lines[-1]["b"] - clip_start)
+        header_lines(spec)                    # 先过宽度闸
+        head_a, head_b = header_ass(spec)
+        ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
+        ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
     for seg, cn in zip(lines, zh):
         en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
         a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
@@ -545,10 +920,105 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 于是「跑成功了」和「我知道它比出了什么」之间差了一整趟往返。
     print("\n".join(report))
     print(f"转写分歧 {rate:.1%} → {path}")
+    # 空档单独探一次。**放在分歧率之前**：分歧率超标会抛，而空档那份报告
+    # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
+    probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
+        _check_disagree_claim(spec, rate, path)
+    return path
+
+
+# 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
+TRANSCRIPT_DISAGREE_CEILING = 0.18
+
+
+def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+    """分歧率超闸时，**允许显式认领**，但认领要留下判据。
+
+    照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
+    一律放行又回到「兜底出事的时候不吭声」。认领这一步是让这个取舍留下判据。
+
+    **为什么长采访会超**：这个指标按词比，而 whisper 会把 `um` / `uh` /
+    `you know` / 结巴重复整个丢掉，YouTube 全留着。演播室那条实测
+    YouTube 1229 词、whisper 1105 词——**光是这 124 个词就占 10.1%**，
+    而总分歧才 12.4%。也就是说超出闸门的部分几乎全是「whisper 更简」，
+    不是「英文有错」。片子越长、越口语，这个偏差越大。
+
+    **没有去改 `TRANSCRIPT_MAX_DISAGREE`**：那个数护着所有片子，
+    而沙箱里跑不了 whisper（IP 被 YouTube 挡），没法拿存量重新标定。
+    改一个动不了的数，等于把所有片子的闸一起放松，还验不了后果。
+
+    认领要写清两样，缺一不可：
+
+    - `rate`：**当时量到的那个数**。它把认领钉在这一次的观测上——
+      以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
+      不写这个的话，「认领过一次」就成了永久豁免
+    - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+    """
+    claim = spec.get("transcript_disagree_ok") or {}
+    declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
+    if not (isinstance(declared, int | float) and why):
         raise SystemExit(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
-            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。")
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
+            "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
+            "把虚词丢了），就在 spec 里显式认领：\n"
+            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+    if rate > declared:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
+            "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
+    if rate > TRANSCRIPT_DISAGREE_CEILING:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
+          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
+
+
+def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
+                     en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
+    """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
+
+    用的是 `verify_transcript` **已经跑完的那一份**（`small.en`，带词时间戳），
+    不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在那份结果里。
+
+    两种结果的含义**不一样，报告里必须分开写**：
+
+    - **有词** → YouTube 漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 是英语专用模型，
+      对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
+      （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
+      **长得一模一样**，机器分不出来——所以这一档一律交给人听，
+      结论写进 `caption_gaps_ok`。
+
+    ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
+    它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
+    """
+    if not gaps:
+        print("自动字幕没有空档。")
+        return None
+    clip0 = spec["start"]
+    report = [f"# 自动字幕的空档：{spec['slug']}", "",
+              f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
+              "第二份 ASR 是 `small.en`（英语专用）。**它什么都没听出来，"
+              "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
+              "分不出来，得人去听。", ""]
+    for a, b in gaps:
+        en_here = [w for t, w in en_words if a <= t <= b]
+        report += [
+            f"## {a - clip0:.1f}–{b - clip0:.1f} 秒（片内，{b - a:.1f} 秒；"
+            f"源片 {_yt_at(spec['url'], a)}）", "",
+            f"- 键：`{gap_key(a, b)}`",
+            f"- 第二份 ASR（small.en）："
+            + (f"`{' '.join(en_here)}`　→ **YouTube 漏了英语，补进 `en_fixed`**"
+               if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
+            f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
+            ""]
+    path = outdir / "caption_gaps.md"
+    path.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print("\n".join(report))
+    print(f"空档 {len(gaps)} 处 → {path}")
     return path
 
 
@@ -709,9 +1179,25 @@ def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
              "`suspect_ok`（值写一句为什么），别默默留着——"
              "**一个常年挂着的待办和没有待办长得一模一样**。"]
 
+    # **空档单独列一节。** 上面那张表逐行走的是「源说了什么」，走不到
+    # 「源什么都没说」的地方——那几秒在表里根本不占一行，翻一百遍也看不见。
+    gaps = caption_gaps(spec, outdir)
+    ok = spec.get("caption_gaps_ok") or {}
+    tail += ["", f"## 自动字幕的空档（≥{CAPTION_GAP_SECS:.0f} 秒连一个事件都没有）", ""]
+    # 销账那段常常写成好几行（判据要写全），而这里是一条列表项——
+    # 换行会把它折断成一堆游离的段落。压成一行。
+    tail += [f"- **{a - clip0:.1f}–{b - clip0:.1f} 秒**（片内，{b - a:.1f} 秒空白，"
+             f"[跳过去]({_yt_at(spec['url'], a)})）　"
+             + (ok[gap_key(a, b)].replace("\n", "　") if gap_key(a, b) in ok
+                else "**还没销账**")
+             for a, b in gaps] or ["（无）"]
+    tail += ["", "打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。"
+             "结论写进 spec 的 `caption_gaps_ok`（键 "
+             "`起-止`，秒，一位小数）。"]
+
     path = outdir / "review_sheet.md"
     path.write_text("\n".join(head + rows + tail) + "\n", encoding="utf-8")
-    print(f"核对表 {len(lines)} 行、{len(todo)} 处待听 → {path}")
+    print(f"核对表 {len(lines)} 行、{len(todo)} 处待听、{len(gaps)} 处空档 → {path}")
     return path
 
 
@@ -894,6 +1380,84 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
            or "（空）"))
 
 
+def logo_mask(src: Path, box: list[float], dest: Path, mirrored: bool = False,
+              samples: int = 12, thresh: int = 170, dilate: int = 3) -> Path:
+    """按**笔画**做掩膜，不是罩一个矩形。给 ffmpeg 的 `removelogo` 用。
+
+    做法来自 `jinwyp/VideoWatermarkerRemover`（`cv2.inpaint` + 采样几帧取阈值），
+    但补的那一步换成 ffmpeg 内置的 `removelogo`——省掉一整趟解码/重编码。
+
+    **为什么不用 `delogo`**：它把整个矩形抹平再从框边缘横向插值，
+    **笔画之间那些原始像素也一起毁了**，留下一条竖纹带。按笔画补只动那几笔，
+    字缝里的球场、广告板原样保留。
+
+    掩膜怎么来：在框里采 `samples` 帧，各自取亮于 `thresh` 的像素，**逐帧取交集**
+    ——水印是唯一每一帧都亮在同一个位置的东西，背景（观众、球场、记分条）
+    会动，交完就只剩笔画。再膨胀一圈盖住抗锯齿的边。
+
+    ⚠️ **掩膜要和成品同一个朝向**：`mirrored` 时先把帧翻过来再算，
+    这样 `removelogo` 排在 `hflip` **后面**，和 `logo_box` 的坐标系一致。掩膜和滤镜链的朝向对不上，水印会原样留着而对称的另一边
+    多出一块补痕——**画面照样出得来**。
+    """
+    import cv2  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+
+    cap = cv2.VideoCapture(str(src))
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
+    iw = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    ih = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fx, fy, fw, fh = box
+    x0, y0 = max(0, round(iw * fx)), max(0, round(ih * fy))
+    x1, y1 = min(iw, round(iw * (fx + fw))), min(ih, round(ih * (fy + fh)))
+    acc = None
+    for k in range(samples):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(total * (k + 0.5) / samples))
+        ok, frame = cap.read()
+        if not ok:
+            continue
+        if mirrored:
+            frame = cv2.flip(frame, 1)
+        gray = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
+        hit = (gray > thresh).astype(np.uint8)
+        acc = hit if acc is None else (acc & hit)
+    cap.release()
+    if acc is None:
+        raise SystemExit(f"读不出 {src} 的帧，做不了水印掩膜")
+    acc = cv2.dilate(acc, np.ones((3, 3), np.uint8), iterations=dilate) * 255
+    mask = np.zeros((ih, iw), np.uint8)
+    mask[y0:y1, x0:x1] = acc
+    # `removelogo` 要求掩膜**不能贴边**（插值得从标记外一圈取样），而且非空
+    mask[0, :] = mask[-1, :] = mask[:, 0] = mask[:, -1] = 0
+    covered = int((mask > 0).sum())
+    if not covered:
+        raise SystemExit(
+            f"水印掩膜是空的：框 {box} 里没有连续 {samples} 帧都亮于 {thresh} 的像素。\n"
+            "要么框位置不对，要么这个水印不是亮字——**空掩膜和「没有水印」长得一样**，"
+            "所以这儿直接报错，不静默放行。")
+    cv2.imwrite(str(dest), mask)
+    print(f"水印掩膜：源片 {iw}x{ih}，框 x{x0}-{x1} y{y0}-{y1}，"
+          f"笔画像素 {covered}（占框 {covered / max(1, (x1 - x0) * (y1 - y0)):.1%}）→ {dest}")
+    return dest
+
+
+def _crop_expr(ratio: float, keep: float = 1.0) -> str:
+    """裁切窗口。`keep` 是**从顶上往下保留多少**（1.0 ＝ 整幅）。
+
+    加它是为了**把角标裁掉**：伊埃拉那条场上采访只有一个转载有，画面右下角
+    盖着上传者的水印（翻转之后到左下角）。量出来它横向占 x 0.669–0.925，
+    翻转后 0.075–0.331，而 4:3 居中裁切保留的是 0.125–0.875——**几何上没有
+    一个 4:3 窗口能同时避开它和保住主体**，横着躲不掉。
+
+    但它贴着画面最底，**竖着裁得掉**：保留上 86% 就干净了（渲出来比过
+    100% / 86% / 82% 三档），而裁掉的那一条是球场地面，人一点没动。
+    窗口仍然是 `ratio`，只是整体变小，再缩放回同样的输出尺寸——**版式的
+    几何一个数都不用改**。
+    """
+    h = f"ih*{keep:g}"
+    w = f"ih*{ratio * keep:.6f}"
+    return f"crop={w}:{h}:(iw-{w})/2:0"
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=720]+ba/b[height<=720]", spec)
@@ -901,15 +1465,29 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
     vh = int(CANVAS_W / ratio)
+    # **有的转载会把画面左右翻转**——那是绕开版权识别的做法，而且它**不报错**：
+    # 画面看着挺正常，只有场地上的字是反的（`EALA` 成了 `AJA3`、菲律宾国旗
+    # 三角朝反边）。这条线烧的是英文字幕，画面上再挂一排反着的英文，
+    # 读者一眼就看出不对。翻回来的判据是**场地上的字读不读得通**，
+    # 不是「看着顺不顺眼」——左右翻转的人脸和球场，肉眼分不出来。
+    logo = ""
+    if box := spec.get("logo_box"):
+        m = logo_mask(src, box, outdir / "_logo_mask.png", bool(spec.get("mirrored")))
+        logo = f"removelogo=filename={m},"
+    flip = "hflip," if spec.get("mirrored") else ""
+    keep = float(spec.get("crop_keep_top", 1.0))
     chain = (
         # 垫底：同一路画面铺满画布、模糊、压暗。**放大 1.05 再裁**，
         # 不然模糊到边缘会透出底色。
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
-        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
+        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,{BG_GRADE}[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]crop=ih*{ratio}:ih:(iw-ih*{ratio})/2:0,scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}{logo}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
-        f"[v]subtitles={ass}:fontsdir=/usr/share/fonts[out]"
+        # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
+        # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
+        # 一个目录，不是替换。验过：只给这个目录，中文照样渲得出来。
+        f"[v]subtitles={ass}:fontsdir={ROOT / 'assets/fonts'}[out]"
     )
     body = outdir / "_body.mp4"
     subprocess.run(
@@ -929,8 +1507,13 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         return out
 
     frame = outdir / "_cover_frame.jpg"
+    # ⚠️ **封面这一帧不走上面那条滤镜链**，`mirrored` 得在这儿再翻一次——
+    # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
+                                         float(spec.get("crop_keep_top", 1.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
@@ -969,7 +1552,8 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
-    lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"])
+    lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
+                    word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
     # 那种句子照发出去，这个号的英语素材就没有可信度了。
@@ -991,10 +1575,15 @@ def main() -> int:
             print(f"{i:2d}. {seg['a']:7.1f}  {seg['en']}")
         print(f"\n把 {len(lines)} 行中文按顺序填进 {args.spec} 的 zh 数组里再跑一次。")
         return 0
-    write_ass(lines, zh, spec["start"], ass)
+    write_ass(lines, zh, spec["start"], ass, spec)
     print(f"字幕 {len(lines)} 组双语 → {ass}")
     # 核对表每次都出：它是人干活时看的那一份，落后于 spec 就没用了。
     review_sheet(spec, lines, outdir)
+    # **每一步都把没销账的空档喊出来**，不要只在 render 那一步拦。等到出片才知道
+    # 少了三秒，前面配中文、调断行的功夫全是在一份缺了一块的稿子上做的。
+    for a, b in _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+        print(f"⚠️ 空档没销账：片内 {a - spec['start']:.1f}–{b - spec['start']:.1f} 秒"
+              f"（{b - a:.1f} 秒自动字幕是空的）　{_yt_at(spec['url'], a)}")
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
@@ -1016,6 +1605,17 @@ def main() -> int:
                 f"{'、'.join(todo)} 行还挂在 `suspect` 里没销账。\n"
                 "改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`"
                 "（值写一句为什么）。逐行看 review_sheet.md。")
+        # **空档也要销账。** 上面那条闸盯的是「源说错了」，这条盯的是
+        # 「源什么都没说」——伊埃拉那条 3.2 秒的空白就是从这个缝里漏出去的：
+        # 没有词就没有分歧，两道旧闸全绿。
+        if holes := _unresolved_gaps(spec, caption_gaps(spec, outdir)):
+            raise SystemExit(
+                f"{args.spec} 有 {len(holes)} 处空档没销账："
+                + "、".join(f"{a - spec['start']:.1f}–{b - spec['start']:.1f} 秒（片内）"
+                            for a, b in holes) + "。\n"
+                "打开源片听这几秒：有人说话就是漏了，掌声／欢呼就不是。"
+                "结论写进 spec 的 `caption_gaps_ok`，键是 "
+                + "、".join(f"`{gap_key(a, b)}`" for a, b in holes) + "。")
         out = render(spec, ass, outdir)
         size = out.stat().st_size / 1e6
         print(f"成片 {out}（{size:.1f} MB，{spec['end'] - spec['start']:.1f} 秒）")

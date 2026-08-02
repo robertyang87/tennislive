@@ -12,6 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
+          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
+          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
+          #
+          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
+          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
+          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

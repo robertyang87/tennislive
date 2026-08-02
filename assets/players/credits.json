@@ -158,5 +158,55 @@
     "player": "塔拉鲁迪",
     "wta_id": 329651,
     "self_evident": "文件名 Tararudee-Torso_329651.png 自带 WTA ID 329651，人物这一要素由来源自己写死"
+  },
+  "wta-330332-alexandra-eala.png": {
+    "title": "伊埃拉 official WTA torso cutout (transparent PNG)",
+    "license": "WTA 官方图库 · 非商业资讯引用",
+    "artist": "WTA",
+    "page": "https://www.wtatennis.com/players/330332/alexandra-eala",
+    "url": "https://photoresources.wtatennis.com/photo-resources/2026/04/08/c6734b36-e108-4c6f-b3c5-8337d5ae93dd/Eala-Torso_330332.png?width=3000",
+    "player": "伊埃拉",
+    "wta_id": 330332,
+    "self_evident": "文件名 Eala-Torso_330332.png 自带 WTA ID 330332，人物这一要素由来源自己写死",
+    "size": "957x1600（原图 3000x2813，裁到包围盒后缩放）",
+    "checked": "2026-08-02 渲在深绿底上打开看过：笑着的半身，紫蓝 Nike 连衣裙，胸前 Globe / BPI 赞助标，抠图边缘干净",
+    "note": "2026-07-31 下载，当时那条片子的封面走的是本场抽帧，所以入库了却没用上，credits 也漏了——2026-08-02 补记"
+  },
+  "wta-319998-naomi-osaka.png": {
+    "title": "大坂直美 official WTA torso cutout (transparent PNG)",
+    "license": "WTA 官方图库 · 非商业资讯引用",
+    "artist": "WTA",
+    "page": "https://www.wtatennis.com/players/319998/naomi-osaka",
+    "url": "https://photoresources.wtatennis.com/photo-resources/2026/04/08/8bbf347c-157b-46ad-8aae-9e3a60eb0be2/Osaka-Torso_319998.png?width=3000",
+    "player": "大坂直美",
+    "wta_id": 319998,
+    "self_evident": "文件名 Osaka-Torso_319998.png 自带 WTA ID 319998，人物这一要素由来源自己写死",
+    "size": "1057x1600（原图 3000x2813，裁到包围盒后缩放）",
+    "checked": "2026-08-02 渲在深绿底上打开看过：平视的半身，荧光黄豹纹连衣裙，抠图边缘干净",
+    "head_share": "Haar 正面脸框量出来脸高占不透明高 24.2%（伊埃拉那张 22.5%）——所以 eala-osaka 那张海报把伊埃拉裁到 0.93 让两颗头一样大，这张不裁"
+  },
+  "atp-g0ix-arthur-gea.png": {
+    "title": "热亚 official ATP gladiator cutout (transparent PNG)",
+    "license": "ATP 官方图库 · 非商业资讯引用",
+    "artist": "ATP Tour",
+    "page": "https://www.atptour.com/en/players/arthur-gea/g0ix/overview",
+    "url": "https://www.mubadaladcopen.com/-/media/alias/player-gladiator-image/g0ix",
+    "player": "热亚",
+    "atp_id": "g0ix",
+    "size": "370x595（原图 379x603，去掉透明边）",
+    "note": "atptour.com 全站 403，图从赛事域名的镜像取；全身抠图，用的时候要 crop",
+    "checked": "2026-08-01 打开看过：握拳、表情凶，浅蓝 Lacoste polo——正是他这场四强穿的那一套。84889 字节，和占位剪影 zzzz 的 14382 字节 md5 完全不同，不是占位图"
+  },
+  "atp-su55-denis-shapovalov.png": {
+    "title": "沙波瓦洛夫 official ATP gladiator cutout (transparent PNG)",
+    "license": "ATP 官方图库 · 非商业资讯引用",
+    "artist": "ATP Tour",
+    "page": "https://www.atptour.com/en/players/denis-shapovalov/su55/overview",
+    "url": "https://www.mubadaladcopen.com/-/media/alias/player-gladiator-image/su55",
+    "player": "沙波瓦洛夫",
+    "atp_id": "su55",
+    "size": "268x602（原图 379x603，去掉透明边）",
+    "note": "atptour.com 全站 403，图从赛事域名的镜像取；全身抠图，用的时候要 crop",
+    "checked": "2026-08-02。两道判据都过了：① 77992 字节，md5 与占位剪影 zzzz 的 14382 字节完全不同，不是那张通用人形；② **拿本场画面认的人**——把它和洛斯卡沃斯决赛 332.5 秒那格近景（他刚破发回 3-3）并排比过，红金色头发、脸型、浅色眼睛都对得上。\n⚠️ 赛事站的 /en/players 和 /en/media/news 里都 grep 不到 `players/<slug>/<id>/` 这种路径，所以 ID 不是从页面拿的，是猜的之后**用画面反过来验的**——顺序反了但判据是硬的。"
   }
 }
