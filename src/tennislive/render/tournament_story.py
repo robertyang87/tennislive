@@ -1335,6 +1335,61 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="challenger-climb",
+        title="难的不是对手",
+        subtitle="网球观察 · 规则篇",
+        identity="低级别为什么爬不上来",
+        chips=("规则与代价", "挑战赛", "2026"),
+        hero=(
+            "同一周，ATP250 洛斯卡沃斯的 8 号种子（第 67）比挑战赛温哥华的"
+            "1 号种子（第 103）还高 36 位——**低级别的对手并没有更强**。"
+            "难的是兑换率、那道门，和一块只够一个人站的地板。"
+        ),
+        facts=(
+            "同一周、同一片大陆、同样的室外硬地：**ATP250 洛斯卡沃斯的种子从第 12 到第 67，"
+            "挑战赛 125 温哥华的种子从第 103 到第 150**，两条线中间没有交叠。"
+            "女子那边同样 32 签，WTA250 孟菲斯的 8 号种子第 59，WTA125 温哥华的 1 号种子第 110。",
+            "**兑换率**：挑战赛 125 冠军要赢 5 场，125 分；ATP250 赢 2 场进四强，100 分。"
+            "挑战赛 50 的冠军（赢 5 场）50 分，等于在 1000 赛赢一场球。"
+            "**挑战赛／500／250 输第一轮零分**，而大满贯和 96 签的 1000 赛输第一轮还有 10 分。",
+            "**那道门**：邦齐世界第 103，在温哥华是 1 号种子；同一周的洛斯卡沃斯，"
+            "8 号种子已经是第 67。**第 103 这个排名在那一站连正赛都够不着**——"
+            "「更难」的不是这一站，是你进不去另一站。",
+            "温哥华那张 32 人签表里坐着：波皮林（第 104，两年前的蒙特利尔大师赛冠军，靠外卡来打）、"
+            "张之臻（第 158，曾进世界前 30），还有人用保护排名来打。"
+            "**往上爬的人和刚掉下来的人挤在同一张签表里。**",
+            "ATP 从 2024 年起给前 250 设了收入下限，2025 年的档位是前 100 保 30 万美元、"
+            "101–175 保 20 万、176–250 保 10 万，那一年补出去 200 多万；"
+            "挑战赛还必须提供免费住宿。**但一年开销最省 4 万、常见 7 万+、带教练加体能师 20 万**"
+            "——规则书写的是「每位球员一间双床房」，教练住进去自己付。"
+            "**而女子那边至今没有对应的保底收入计划。**",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-27", player="邦齐", age="—",
+                headline="第 103 名的两种身份",
+                detail=(
+                    "同一周，他在温哥华挑战赛是 1 号种子；"
+                    "在洛斯卡沃斯 ATP250，这个排名连正赛都进不去。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2026_Odlum_Brown_Vancouver_Open",
+            ),
+            ChampionMoment(
+                date="2024-01-01", player="ATP", age="—",
+                headline="Baseline 保底计划上线",
+                detail=(
+                    "给前 250 位设收入下限，2025 年补出去 200 多万美元。"
+                    "而 2013 年，能靠打球收支平衡的男子只有 336 人。"
+                ),
+                source_url="https://www.atptour.com/en/news/baseline-financial-security-programme-august-2023",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_label="ATP 2026 官方规则书 / 赛事签表",
+        source_url="https://en.wikipedia.org/wiki/2026_Odlum_Brown_Vancouver_Open",
+    ),
+    _trivia_story(
         slug="entry-deadline",
         title="名单六周前就锁上了",
         subtitle="网球观察 · 规则篇",
