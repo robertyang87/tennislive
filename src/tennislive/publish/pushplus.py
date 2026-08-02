@@ -425,7 +425,19 @@ def push(
             f"PushPlus {PUSH_ATTEMPTS} 次都没发出去（{last}）。"
             "前面等复制页、成片、图片都成功了，卡在最后这一步——重跑即可。")
     # **流水号要记下来。** `code == 200` 只保证 **PushPlus 收下了**，不保证
-    # 微信真的推到了手机上。真出现「接口成功但人没收到」时，没有流水号就
-    # 什么都查不了——这条 CLAUDE.md 里记过，一直没做。
-    logger.info("PushPlus 推送成功（图片通道：%s，流水号：%s）",
-                image_provider, data.get("data") or "未返回")
+    # 微信真的推到了手机上。2026-08-02 热亚那条就是这样：第 29 步 success、
+    # 日志写着「已推送」，账号所有者问了两次「推微信了么」——而我手上一条
+    # 可查的东西都没有。返回体里的 `data` 就是这条消息的流水号，PushPlus
+    # 拿它查投递状态。
+    #
+    # ⚠️ **用 print 不用 logger。** 这个模块的 logger 在工作流里**没有配
+    # handler**，`logger.info` 一个字都不会出现在日志里——上一版那句
+    # 「PushPlus 推送成功（图片通道：…）」**从来没被人看见过**，连图片走的
+    # 哪条通道都没人知道。又一次「不吭声」，而且不吭声的正是那条本该出声的
+    # 记录。判据 `test_推送成功要把流水号打进日志` 断言的是 **stdout**，
+    # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
+    print(f"[PushPlus] 收下了：流水号 {data.get('data') or '(返回体里没有)'}"
+          f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
+    print(f"[PushPlus] ⚠️ 这只代表接口收下。要查微信有没有真的送达，用流水号问："
+          f"https://www.pushplus.plus/api/send/queryMessage?token=<TOKEN>&id="
+          f"{data.get('data') or '<流水号>'}")
