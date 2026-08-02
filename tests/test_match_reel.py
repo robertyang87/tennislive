@@ -3805,6 +3805,28 @@ def test_轮次要写半决赛不写四强():
     assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
 
 
+def test_重放不许把已经删掉的成片救活():
+    """push 撞车之后的重放路径**只加不减**，于是走了 Release、已经 `rm` 掉的
+    成片会被 `reset --hard` 从 origin 上放回来，再也删不掉。
+
+    run 30727483963 的日志把这件事写得清清楚楚：第一次提交是对的——
+    `delete mode 100644 output/…/eala-osaka.mp4`；push 撞车（另一条提交先到），
+    重放之后那条 delete 没了。结果仓库里躺着 2 分 39 秒的旧片，而真正发出去的
+    是 Release 上 3 分 53 秒的那一版。**两个地址两条片子，谁也没说哪个是哪个。**
+
+    `git checkout <ref> -- <dir>` 只恢复 ref 里**存在**的文件，不会删掉 ref 里
+    没有的——所以重放前要先把这个目录清空。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = text[text.index("push 被拒（第 $attempt 次）"):]
+    block = block[:block.index("sleep $((attempt")]
+    assert 'rm -rf "$OUTDIR"' in block, (
+        "重放之前没清空 outdir——`git checkout <ref> -- <dir>` 不会删文件，"
+        "上一句 reset --hard 放回来的旧成片会一直留着")
+    assert block.index('rm -rf "$OUTDIR"') < block.index("git checkout rendered"), \
+        "清空要排在 checkout 之前，否则等于什么都没做"
+
+
 def test_片长不设上限但要说清这一版走哪条路(tmp_path):
     """账号所有者 2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
     没关系」「不要砍片长」「我怕故事讲解不完整」。
