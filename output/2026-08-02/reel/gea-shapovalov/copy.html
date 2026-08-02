@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.2 赛场之上 | 热亚 6-3 6-4 沙波瓦洛夫</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>这一周之前，热亚的巡回赛生涯一共赢过 3 场球。这一周他赢了 5 场，最后一场 6-3 6-4 击败卫冕冠军沙波瓦洛夫，拿到生涯第一个 ATP 冠军。21 岁，这站赛会历史上最年轻的冠军。
+
+📍洛斯卡沃斯 ATP250 决赛
+🎾 热亚 6-3 6-4 沙波瓦洛夫
+⏱ 1 小时 30 分
+
+他是怎么走到这儿的：
+
+2023 年转职业，那年年底在希腊连着四站进决赛、拿三个冠军，第一次进世界前 500——一年上升了 1000 位。
+2026 年 1 月 努美阿拿下生涯第一个挑战赛冠军，第一次进前 200。
+下一周 澳网资格赛出线，正赛首轮以世界第 198 击败 17 号种子莱赫奇卡，那是他第一场大满贯胜利；次轮五盘负于瓦林卡。
+2 月 蒙彼利埃拿外卡打进第一个巡回赛 1/4 决赛。
+5 月 法网外卡，首轮负于哈恰诺夫，那场球他打到一半病了。
+7 月 27 日 生涯新高，世界第 127。
+
+然后是这一周。他不是种子，从第一轮打起：
+
+第一轮 6-4 6-7 6-2 权纯雨 —— 2 小时 41 分，11 个破发点救下 8 个
+第二轮 0-6 6-4 6-0 郑瑞 —— 首盘 30 分钟被剃光头，第三盘 24 分钟剃了回去
+1/4 决赛 6-7 6-4 6-0 三号种子塞伦多洛 —— 首盘抢七打了 1 小时 22 分，第三盘 30 分钟 6-0
+半决赛 7-6 6-3 黄泽林
+决赛 6-3 6-4 沙波瓦洛夫
+
+五场里三场打进决胜盘，在场上一共待了 10 小时 38 分。
+
+决赛他面对 7 个破发点，救下 6 个。唯一没救住的那个在第二盘 3-2，被破成 3-3；下一局他立刻破了回去。5-4 时 40-0 三个冠军点，第一个就结束了比赛。
+
+颁奖礼上他说：「我不知道这一周要怎么赢。我只是每天都很高兴——再赢一场，再赢一场，再赢一场。」
+
+周一，他的排名从 127 升到 81。一周之内，两次生涯新高。下一个呢？
+
+#网球 #热亚 #ATP #洛斯卡沃斯 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
