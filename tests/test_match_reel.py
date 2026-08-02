@@ -1252,7 +1252,9 @@ def test_推送版式照着知识解说那条且海报铺满():
 
 # 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
 _COLUMNS = {
-    "赛场之上": ("cutout", "diagonal", "split", "stack"),   # 讲一场对决 → VS
+    # 通常讲一场对决 → VS；**要用 solo 必须写 `_layout_why`**（见
+    # test_栏目和封面模板要配对）。账号所有者 2026-08-02 给 gea-shapovalov 定的。
+    "赛场之上": ("cutout", "diagonal", "split", "stack", "solo"),
     "网球有故事": ("solo",),                                 # 讲一个人 → 单人
     # 赛前前瞻。讲的也是一场对决——**两个人必须同框**，所以和赛场之上共用
     # VS 那几版；差别在内容（没有赛果，讲的是来路），不在版式。
@@ -1305,6 +1307,15 @@ def test_栏目和封面模板要配对():
         assert cover.get("layout") in allowed, (
             f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
             f"写的是 {cover.get('layout')!r}")
+        if cover.get("layout") == "solo" and cover["eyebrow"] == "赛场之上":
+            # **不是解禁，是要求留下判据。** 防的是「缺图 → 换个 layout 试试」，
+            # 不是防「编辑上认为这一条该用单人封面」——后者账号所有者
+            # 2026-08-02 明确要过一次（gea-shapovalov：「封面就变成他热亚
+            # 一个人捧杯的全景图吧……而不是说两人对阵的那种头像图了」），
+            # 而那一条两张官方抠图都在手上、VS 海报已经渲出来看过。
+            assert str(cover.get("_layout_why", "")).strip(), (
+                f"{path.name} 是赛场之上用 solo，要写一句 `cover._layout_why` "
+                "说清楚为什么这一条不是对决片")
         if cover.get("layout") == "solo":
             # 单人海报讲的是一个人：主角、他的照片，**而且不许印赛果**——
             # 「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先说结局。
@@ -1344,6 +1355,13 @@ def test_赛场之上不许退回单人封面():
             "portrait": {"image": "x.jpg"}}
     with pytest.raises(reel.ReelError, match="VS 模板"):
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": solo},
+                         Path("y.mp4"), 1920)
+    # **写了判据就放行**（账号所有者 2026-08-02 给 gea-shapovalov 定的）。
+    # 反向验证这一支真的走过去了：它必须**越过栏目那道闸**、死在后面别的
+    # 地方——只断言「不抛 VS 模板」证明不了这个，那句话改一个字就假绿。
+    declared = {**solo, "_layout_why": "这一条讲的是一个人的来路，不是一场对决"}
+    with pytest.raises(reel.ReelError, match="frame_at 超出|找不到|ffmpeg|封面"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": declared},
                          Path("y.mp4"), 1920)
     # 反面锚点：换成讲人的栏目就该放行（这儿只验它不再拦，渲染另有判据）
     with pytest.raises(reel.ReelError, match="portrait"):
@@ -3809,17 +3827,29 @@ def test_封面上每个球员都要有国旗和即时排名():
     import versus_poster  # noqa: PLC0415
 
     missing = {}
+    checked = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
         if path.name in _LEGACY_NO_FLAG:
             continue
-        versus = ((json.loads(path.read_text(encoding="utf-8")).get("cover") or {})
-                  .get("versus") or {})
+        cover = json.loads(path.read_text(encoding="utf-8")).get("cover") or {}
+        # **单人封面没有名条**（`_solo_body` 只有照片 + 药丸 + 钩子，
+        # 一个球员名都不印），所以「名字旁边加国旗和排名」这条规矩管不到它。
+        # 账号所有者的原话本来就是「**对阵**的同时在后面括号里面加上排名」。
+        # 判据宁可窄，不可宽：扫到 solo 上只会逼下一个人往一张没有名字的
+        # 海报里塞两个查不到用处的字段。
+        if cover.get("layout") == "solo":
+            continue
+        versus = cover.get("versus") or {}
+        checked += 1
         for side in ("top", "bottom"):
             panel = versus.get(side) or {}
             gaps = [k for k in ("country", "rank") if k not in panel]
             if gaps:
                 missing.setdefault(path.name, []).append(f"{side} 缺 {gaps}")
     assert not missing, f"封面缺国旗/排名：{missing}"
+    # **判据自己的判据**：上面那两个 `continue` 一旦写宽（比如把整族 spec
+    # 都跳过），这条测试会变成一盏恒真的绿灯而不出声。
+    assert checked >= 1, "一条对阵封面都没校到——是不是跳过的条件写宽了？"
 
     # 行为：给全了就渲出「旗 + 名 +（排名）」
     html = versus_poster._name_html("伊埃拉", {"country": "PHI", "rank": 28}, "t")
