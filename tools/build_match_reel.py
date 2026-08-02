@@ -167,11 +167,86 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # （69.9s 的画面配 64.3s 的音轨，64.3/69.9 = 0.9196 ≈ 44100/48000）。
 # 它不报错，ffprobe 也只写着「48000」，只有把两个时长摆在一起才看得出来。
 AUDIO_RATE = "48000"
+
+
+def duck_filtergraph(filters: list[str], voice_labels: list[str]) -> str:
+    """闪避的滤镜图：没人说话时现场声开到 `BED_LOUD`，解说一进来就压下去。
+
+    **`[vk0]apad[vk]` 那一段不能省，而且不能只当它是个细节。**
+    `sidechaincompress` **两路里任一路 EOF 就整个结束**，于是 `[duck]`
+    只活到最后一句旁白说完，下游 `amix` 跟着收口——**整条现场声在那儿断掉**。
+
+    九条已发的成片里**七条**结尾 1.95~4.50 秒完全没有声音：
+
+        eala-fernandez −4.50s   wang-pareja −2.98s   hewitt-washington −2.97s
+        wang-samsonova −2.66s   potapova-venus −2.64s
+        wong-brooksby  −1.98s   eala-zheng     −1.95s
+
+    被削掉的正是握手、庆祝、观众声那几秒——CLAUDE.md 里「收尾那句要提前起，
+    从上一段就开始说、跨进末屏」保的就是这几秒，也就是整条片子的情绪落点。
+    **而 ffmpeg 不报错**，成片时长看着也完全正常（画面是全长的），只有把
+    视频流和音频流的时长摆在一起才看得见。又一次「兜底出事的时候不吭声」。
+
+    `apad` 把 sidechain 补静音到无限长，压缩器就跟着 `[bed]` 走完。
+    只补 `[vk0]`（喂给压缩器的那一路），`[vm]`（真正听见的那一路）不动。
+    闪避行为一点没变：合成信号实测有旁白时 −38.1 dB、旁白说完 −24.0 dB。
+
+    ⚠️ **这个 bug 被独立发现过两次**（main 上是「伊埃拉那条末段画面 11.5s、
+    旁白 8.8s，成片最后 2.74 秒一点声音都没有，正好是拥抱教练那一下」）。
+    两次的判据完全一样：**把音轨长度和画面长度摆在一起**。抽成函数是为了让
+    判据能真跑一次混音——查源码里有没有 `apad` 防不住「它从来没工作过」。
+
+    抽成函数是为了让判据能**真跑一次混音**：查源码文本的断言只能防「有人把它
+    删了」，防不住「它从来没工作过」。
+    """
+    return (
+        f"[0:a]volume={BED_LOUD}[bed];{';'.join(filters)};"
+        f"{''.join(voice_labels)}amix=inputs={len(filters)}:normalize=0[voice];"
+        f"[voice]asplit=2[vk0][vm];"
+        f"[vk0]apad[vk];"
+        f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
+        f"attack=15:release=450:makeup=1[duck];"
+        f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]"
+    )
+
+
 # 分段和封面都是**中间产物**：拼完之后整片还要以 crf 18 重编一次。在这里编到
 # crf 17/preset slow，等于把画质编进一个马上要被重编的文件里。成片那一步的参数
 # 没有跟着降。
-PART_PRESET = "medium"
-PART_CRF = "20"
+#
+# **中间产物要花的是比特，不是时间。** 这一版从 medium/crf 20 换成
+# ultrafast/crf 12，方向看着反直觉（preset 更快、crf 更低），但两件事各管各的：
+# preset 决定编码器**花多少时间**去找省比特的编法，crf 决定**留多少画质**。
+# 中间段马上要被重编，省下来的比特一点用都没有——它唯一的作用是别把画质
+# 提前丢掉。所以把 preset 推到最快、crf 压到很低：又快又更保真。
+#
+# 量出来的（10 秒 1080×1440/60fps 素材，四核，和沙箱同规格）：
+#
+#     中间段 preset/crf   中间编码   最终成片 SSIM   最终 PSNR
+#     medium   / 20        14.73s      0.993110      47.09   ← 改前
+#     veryfast / 18         7.33s      0.992667      46.43
+#     ultrafast/ 16         2.76s      0.992025      47.22
+#     ultrafast/ 12         2.92s      0.993212      48.01   ← 改后，又快又更像
+#     （上界：不经中间段直接 slow/crf18   0.995223      49.52）
+#
+# **5 倍快，而且最终成片比改前更接近源片**。runner 上分段编码那一栏是
+# 176.7s（run 30624808733），按同样的比例落到 47s 上下。
+#
+# 解码 + 滤镜的地板是 2.10s/10s，也就是说改完之后编码本身只再加 2.4s——
+# 再往这个方向推没有多少可省的了，下一个大头是成片那一步，而那一步不许动。
+#
+# 代价是中间段变大：同样 10 秒从 6.3 MB 涨到 38.5 MB。90 秒的片子于是多占
+# ~700 MB（分段 ~350 MB，`-c copy` 拼出来的 `_video.mp4` 又是同样一份），
+# 加上 392 MB 的源片，峰值 1.2 GB 上下——runner 有十几 GB 空余，吃得下。
+# 它们在 `render` 末尾全被删掉（`part_*.mp4` / `_video.mp4` 那一行），
+# 一个都不会进仓库；工作流那道「超过 8 MB 又不是成片就报错」的兜底也照旧
+# 拦得住，真有一天忘了删，它会红。
+#
+# ⚠️ **两个调用点必须用同一组参数**（分段和封面），否则 `concat` + `-c copy`
+# 会把两种流参数拼在一起。所以这两个常量在 `cut_segment` 和 `build_cover`
+# 里都用，别只改一处。
+PART_PRESET = "ultrafast"
+PART_CRF = "12"
 
 # 成片那一步的参数。**不要为了压体积动它们。**
 #
@@ -248,6 +323,117 @@ def _has_audio(path: Path) -> bool:
     out = run("ffprobe", "-v", "error", "-select_streams", "a",
               "-show_entries", "stream=index", "-of", "csv=p=0", str(path)).stdout
     return bool(out.strip())
+
+
+# 峰值低于这个数就当成「没有现场声」。真实的比赛音轨峰值贴近 0 dBFS，
+# 数字静音是 −91；−60 落在两者中间很远的地方，不会误伤录得轻的源片。
+SILENT_PEAK_DB = -60.0
+
+
+def audio_peak_db(path: Path) -> float | None:
+    """源片音轨的峰值响度（dBFS）。**没有音频流返回 None。**
+
+    `_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」——而这两件事
+    在日志上、在 ffprobe 里、在成片的码率上完全一样。wong-brooksby 就栽在这儿：
+    spec 的 `_source` 白纸黑字写着「带原声」，成片里**没有旁白的段落全是数字
+    静音**（按 3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子
+    0/23~0/39），整套 `sidechaincompress` 闪避对它是空转。
+
+    这和 1051 行那条注释记的坑是**同一个形状**——「补位的静音盖住真音轨」，
+    只是这次补位的不是我们，是源片自己。所以判据要量**信号**，不是量**流**。
+
+    124 秒的片子实测 0.81 秒（只解音频），值这个钱。
+    """
+    if not _has_audio(path):
+        return None
+    out = run("ffmpeg", "-hide_banner", "-i", str(path), "-vn",
+              "-af", "volumedetect", "-f", "null", os.devnull).stderr
+    found = re.search(r"max_volume:\s*(-?[\d.]+) dB", out)
+    # 量不出来**不能当成静音**（那会把一个探测失败变成一次硬报错），
+    # 但也不能当成正常——返回 None 走「没有音轨」那条路，它自己会出声。
+    return float(found.group(1)) if found else None
+
+
+def point_end_candidates(source: Path, scorebox: str) -> list[float]:
+    """量一遍死球时刻，写进 `probe.json`——**趁源片还在**。
+
+    `find_point_ends.py` 一直是**零调用方**：它的 `--video` 指的是源片，而源片
+    渲完就被清理那一步删掉，于是想用它得自己另下一份 400 MB。结果是段尾切错
+    只能靠人在 2 秒一格的缩略图墙上看出来，而账号所有者点名过这件事
+    （「很多球没有播放完成就切到下一个了……让人看的不明不白的」）。
+    wong-brooksby 那三处修正每一处都先付了一趟渲染才发现。
+
+    记分条的位置**没法自动认**（每家转播不一样），所以要人给；不给就跳过，
+    **而且要说为什么**——「没量」和「量出来一个都没有」长得一模一样，
+    这正是「空结果先自证是真空」。
+
+    量出来的数**也要打印分布**：检测不到和方法不成立是两回事，只有把数摆出来
+    才分得清（成片那条「找球场对称轴」的教训就是这么来的）。
+    """
+    if not str(scorebox).strip():
+        print("[死球] 没给 --scorebox（记分条位置每家转播不一样，认不出来），"
+              "这一项跳过。段尾就只能靠缩略图墙用眼睛定。")
+        return []
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        import find_point_ends as fpe  # noqa: PLC0415
+    except ImportError as exc:  # pragma: no cover - 依赖缺失才会走到
+        print(f"[死球] 取不到 find_point_ends（{exc}），跳过")
+        return []
+    try:
+        box = tuple(int(v) for v in str(scorebox).split(","))
+        if len(box) != 4:
+            raise ValueError(box)
+    except ValueError:
+        raise ReelError(
+            f"--scorebox 要写成 x0,y0,x1,y1（源片像素），给的是「{scorebox}」")
+    with stage("量死球"):
+        rows = fpe.scan(source, box, 0.1)
+        ends = fpe.point_ends(rows, fpe.CHANGE, fpe.DARK_SHARE, fpe.MERGE)
+    print(f"[死球] 采样 {len(rows)} 点，记分条跳变 {len(ends)} 次")
+    if ends:
+        print("  " + " ".join(f"{t:.1f}" for t in ends[:40])
+              + (" …" if len(ends) > 40 else ""))
+    else:
+        # 零命中要能自证：把量到的分布打出来，别让「门槛卡错」和「真的没有」
+        # 长得一样。
+        moved = sorted((r["moved"] for r in rows), reverse=True)[:5]
+        print(f"  一个都没有。门槛 change={fpe.CHANGE} dark={fpe.DARK_SHARE}，"
+              f"实测 moved 最大的几个：{moved}"
+              "——要是这些数都远低于门槛，多半是 box 框错了，不是没有死球")
+    return [round(t, 2) for t in ends]
+
+
+def require_live_sound(source: Path, spec: dict) -> float | None:
+    """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
+
+    照 `mixed_fps` 那套做**显式认领**。一律放行等于继续出哑片；一律拒绝会把
+    纯视频轨的源片整个挡在门外（网盘那份常常只有视频轨）。认领这一步是让这个
+    取舍**留下判据**，而不是让它悄悄发生。
+
+    原来这两条分支**一句 print 都没有**，于是「源片是哑的」和「源片正常」在
+    日志上完全一样——wong-brooksby 那条整片没有现场声的片子就是这么发出去的。
+    """
+    peak = audio_peak_db(source)
+    if peak is None:
+        print(f"[原声] {source.name} 没有可用音频流")
+    else:
+        print(f"[原声] {source.name} 音轨峰值 {peak:.1f} dBFS")
+    if peak is None or peak < SILENT_PEAK_DB:
+        claimed = str(spec.get("silent_source", "")).strip()
+        if not claimed:
+            raise ReelError(
+                f"{source.name} 没有可用的现场声"
+                + ("（没有音频流）" if peak is None
+                   else f"（峰值 {peak:.1f} dBFS，低于 {SILENT_PEAK_DB:g}，"
+                        "整条轨是数字静音）") + "。\n"
+                "整片会只剩解说，球声和观众声全没有，而闪避那一套会空转。\n"
+                "三条出路：① spec 里写 `source_audio` 指一份单独的音轨合上；"
+                "② 换一个带声音的源片；"
+                "③ 确实只能这样，就在 spec 顶层写 "
+                '`"silent_source": "为什么可以"` 认领下来。')
+        print(f"[原声] 认领哑源片：{claimed}")
+    return peak
 
 
 def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
@@ -1574,9 +1760,70 @@ def _preflight_cutout(spec: dict) -> None:
         ) from exc
 
 
+def validate_spec(spec: dict) -> list[Segment]:
+    """**只看 spec，不碰源片**——所以它能在开跑的第一秒跑完。
+
+    这里拦下来的每一类错，原来都要先付一次 392 MB 的下载才报出来：
+    `parse_segments` 排在第 1543 行，而下载在第 1516 行，可它只用 `sources`
+    的**键**去校验段落引用（`{s.source} - set(sources)`），一个下载下来的
+    文件都不碰。段落字段写错、`inset.corner` 写错、缺字段、贴图路径不存在
+    ——四类错误就这么各自值一趟下载。
+
+    今天 eala-fernandez 渲了 3 轮、wang-samsonova 2 轮；最近 30 趟 match-reel
+    合计 211 分钟。**把「渲到一半才发现」变成「第 5 秒报错」是这条线上最便宜
+    的一笔改动。**
+
+    ⚠️ 只做**形状**校验，两类东西**故意不在这儿**：
+
+    - **环境检查**（`_preflight_cutout` 查这台机器有没有 rembg）——那是「这台
+      机器行不行」，不是「这份 spec 对不对」。混进来的话，本地想 dry-run 一下
+      spec 就得先装 176 MB 的抠图模型。它留在 `render()` 里，照旧排在下载之前。
+    - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
+      别塞进来假装也提前了。
+    """
+    urls = spec_sources(spec)
+    if not urls:
+        raise ReelError("spec 里一个源都没有")
+    return parse_segments(spec, urls, next(iter(urls)))
+
+
+def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
+    """段落不许写过源片的末尾。
+
+    **ffmpeg 越界时退出码是 0。** `-ss`/`-t` 指到片尾之后，它安安静静出一个
+    比要求短的片段——没有报错、没有警告。而每段旁白是按 `seg.length`（spec 里
+    写的长度）算偏移的，所以一旦某段被悄悄截短，**它后面每一句解说和字幕都
+    整体错位**，症状是「后半段配音对不上」，人还未必定位得到是哪一段。
+
+    源片时长 `probe_duration` 本来就在 render 里算了五次，却从来没跟段落比过。
+    比一次是毫秒级的事，而漏掉一次就是一整轮六分钟的重渲加上人反复回看。
+
+    容差 0.05s：源片时长本身有帧级误差，卡太死会误伤最后一段。
+    """
+    durations = {key: probe_duration(path) for key, path in sources.items()}
+    over = []
+    for index, seg in enumerate(segments):
+        limit = durations.get(seg.source)
+        if limit is None or seg.end <= limit + 0.05:
+            continue
+        over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s，"
+                    f"而源片{('（' + seg.source + '）') if seg.source else ''}"
+                    f"只有 {limit:.1f}s，超出 {seg.end - limit:.2f}s")
+    if over:
+        raise ReelError(
+            "有段写过了源片的末尾。**ffmpeg 越界不报错，只会悄悄出一段短的**，"
+            "于是它后面每一句旁白和字幕都会整体错位：\n"
+            + "\n".join(over)
+            + "\n\n把 `end` 收回片长以内，或者换一条更长的源片。")
+
+
 def render(spec: dict, outdir: Path, *, voice: str, rate: str,
-           source_override: Path | None = None) -> Path:
+           source_override: Path | None = None,
+           cover_only: bool = False) -> Path:
     outdir.mkdir(parents=True, exist_ok=True)
+    # **先只看 spec，再看这台机器。** 两样都在下载之前，形状错和缺依赖都
+    # 死在第 5 秒，不用等 392 MB 下完。
+    validate_spec(spec)
     _preflight_cutout(spec)
     urls = spec_sources(spec)
     sources: dict[str, Path] = {}
@@ -1616,6 +1863,35 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             + "\n换一条同画幅的源片，或者把不一致的那条单独出片。")
     source_w, source_h = sizes[next(iter(sources))]
 
+    # **只出封面就到此为止。** 封面是全流程返工最多的那一屏（CLAUDE.md 里
+    # 68 行、10 个专门段落，每段都是一轮返工换来的），而它在完整 render 里
+    # **第 63 秒就完成了**，却要等满 6 分钟才看得见（run 30624808733 的时间线：
+    # 10:52:54 开跑 → 10:53:57 封面编码完 → 11:00:15 成片）。
+    #
+    # `build_cover` 不依赖 segments / tracks / TTS / voice——查过，一个都不用。
+    # 所以「下载 → 出海报 → 退出」是干净的一条路，约 20 秒的活。
+    if cover_only:
+        cover = build_cover(sources, primary, spec,
+                            outdir / "part_cover.mp4", source_w)
+        poster = outdir / POSTER_NAME
+        if not poster.is_file():
+            raise ReelError(f"封面渲完了却没有 {POSTER_NAME}")
+        print(f"[封面预览] {poster}（{poster.stat().st_size / 1024:.0f} KB）\n"
+              f"  这一步不出成片。看着对了再跑完整 render。")
+        cover.unlink(missing_ok=True)
+        return poster
+
+    # **量信号，不量流。** `_has_audio` 只查音频流存不存在，而 wong-brooksby
+    # 的源片**有流、有码率、就是没声音**：成片里没有旁白的段落全是数字静音
+    # （3 秒一格采样，29 个窗里 12 个低于 −70 dB；其余八条片子 0/23~0/39），
+    # 而 spec 的 `_source` 写着「带原声」。整套闪避对它是空转，而两条分支都
+    # 不打印，于是「源片是哑的」和「源片正常」在日志上一模一样。
+    #
+    # ⚠️ **这道闸排在只出封面那条路的后面。** 封面一个音频样本都不碰，
+    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处废掉——和
+    # `_preflight_cutout` 那次是同一个错：别把无关的检查塞进它前面。
+    require_live_sound(source, spec)
+
     # 成片帧率跟着源片走。硬定 30 而源片是 25，就是每 5 帧补一帧，一秒卡五次。
     # 多源时只能有一个输出帧率，取主源的；**别的源和它不一样就要打出来**——
     # 那意味着那几段在重采样，不打出来没人知道画面为什么发涩。
@@ -1626,6 +1902,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
+    _check_segments_fit(segments, sources)
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
@@ -1658,26 +1935,15 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "或者把这些段的 track 置为 false（画面退回固定中心）。"
             ) from exc
 
-    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
-    tracks = track_shots(sources, segments, source_w)
-
-    parts: list[Path] = [build_cover(sources, primary, spec,
-                                 outdir / "part_cover.mp4", source_w,
-                                 cover_secs)]
-    for index, seg in enumerate(segments):
-        parts.append(cut_segment(sources[seg.source], seg,
-                                 outdir / f"part_{index:02d}.mp4",
-                                 source_w, tracks.get(index)))
-
-    listing = outdir / "_concat.txt"
-    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
-                       encoding="utf-8")
-    silent = outdir / "_video.mp4"
-    with stage("拼接"):
-        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "concat", "-safe", "0", "-i", str(listing),
-            "-c", "copy", str(silent))
-
+    # **TTS 和「旁白比画面长」那道闸排在编码之前。**
+    #
+    # 它们原来排在分段编码之后（第 115 行 TTS，闸在 141），而 TTS 只要 6 秒、
+    # 一个源片像素都不碰。撞一次这道闸，白编的是：封面海报 2.6s + 抠图 8.4s
+    # + **分段编码 47s** + 拼接 ≈ 50–60 秒——而这一整趟本来就要 6 分钟，
+    # 于是「旁白写长了」这种改一行文案的事，代价是一整轮。
+    #
+    # 挪到前面之后，同样这条错在**开跑后一分半**就报出来，而且一次把所有
+    # 超出的段都列出来（原来就是这么设计的，见下面的注释）。
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate)
 
@@ -1710,6 +1976,27 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             + "\n".join(over)
             + "\n\n两条出路，选一条：把这几段的旁白删短，或者把画面拉长"
               "（`end` 往后挪，但别越过下一段的 `start`）。")
+
+
+    # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
+    tracks = track_shots(sources, segments, source_w)
+
+    parts: list[Path] = [build_cover(sources, primary, spec,
+                                 outdir / "part_cover.mp4", source_w,
+                                 cover_secs)]
+    for index, seg in enumerate(segments):
+        parts.append(cut_segment(sources[seg.source], seg,
+                                 outdir / f"part_{index:02d}.mp4",
+                                 source_w, tracks.get(index)))
+
+    listing = outdir / "_concat.txt"
+    listing.write_text("".join(f"file '{p.resolve()}'\n" for p in parts),
+                       encoding="utf-8")
+    silent = outdir / "_video.mp4"
+    with stage("拼接"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "concat", "-safe", "0", "-i", str(listing),
+            "-c", "copy", str(silent))
 
     # 每段解说落在它那一段的**开头**，字幕跟着同一个偏移
     cues: list[tuple[float, float, str]] = []
@@ -1780,26 +2067,9 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             # 闪避，不是一路压死：没人说话的时候现场声开到 BED_LOUD，解说一进来
             # sidechaincompress 把它压下去，说完再放开。之前是全程一个固定音量——
             # 要么盖住解说，要么整条片子的球声都听不见，两头不讨好。
-            chain = ";".join(filters)
-            names = "".join(voice_labels)
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-i", str(silent), *mix_inputs,
-                "-filter_complex",
-                f"[0:a]volume={BED_LOUD}[bed];{chain};"
-                f"{names}amix=inputs={len(filters)}:normalize=0[voice];"
-                f"[voice]asplit=2[vk0][vm];"
-                # **`apad` 不能省。** `sidechaincompress` 两路里**任一路 EOF
-                # 就整个结束**——旁白在最后一段里往往说不满（伊埃拉那条末段
-                # 画面 11.5s、旁白 8.8s），于是钥匙那一路先断，现场声跟着被
-                # 一起掐掉：成片最后 2.74 秒**一点声音都没有**，正好是拥抱教练
-                # 那一下。它不报错，画面照旧，只有把音轨长度和画面长度摆在一起
-                # 才看得见（`check_reel_landed.py` 那条「音轨比画面短」）。
-                # 补成无限长之后，这一路由 `[bed]` 定长度，闪避行为一点没变：
-                # 合成信号实测有旁白时 -38.1 dB、旁白说完 -24.0 dB。
-                f"[vk0]apad[vk];"
-                f"[bed][vk]sidechaincompress=threshold=0.02:ratio=12:"
-                f"attack=15:release=450:makeup=1[duck];"
-                f"[duck][vm]amix=inputs=2:normalize=0:dropout_transition=0[out]",
+                "-filter_complex", duck_filtergraph(filters, voice_labels),
                 # 这一步只是把解说混进现场声，产物是个 m4a——画面在这儿是
                 # 拿来给 `-shortest` 定长度的，**必须 copy**。原来没写 `-c:v`，
                 # 默认动作是把整条 1080×1920 重新 x264 编一遍，编完写进 m4a、
@@ -1854,6 +2124,9 @@ def main() -> int:
     p.add_argument("--url", required=True)
     p.add_argument("--outdir", required=True)
     p.add_argument("--every", type=float, default=2.0)
+    p.add_argument("--scorebox", default="",
+                   help="记分条位置 x0,y0,x1,y1（源片像素）。给了就顺手量一遍"
+                        "死球时刻写进 probe.json——趁源片还在，渲完就删了")
 
     r = sub.add_parser("render", help="按 spec 出成片")
     r.add_argument("--spec", required=True)
@@ -1861,6 +2134,10 @@ def main() -> int:
     r.add_argument("--source", help="已经下好的源片（跳过下载）")
     r.add_argument("--voice", default="zh-CN-YunxiNeural")
     r.add_argument("--rate", default="+6%")
+    r.add_argument("--dry-run", action="store_true",
+                   help="只校验 spec 的形状，不下载不渲染，秒级返回")
+    r.add_argument("--cover-only", action="store_true",
+                   help="只出封面海报就停（约 20 秒），用来调 cx/scale/focus/box")
 
     args = parser.parse_args()
     outdir = Path(args.outdir)
@@ -1887,18 +2164,38 @@ def main() -> int:
                                 tile_w=520)
         print(f"记分条缩略图墙：crop={box}（源片 {w}x{h}）")
         captions = fetch_captions(args.url, outdir)
+        # **死球时刻要在源片还在的时候量。** `find_point_ends.py` 一直没有任何
+        # 调用方，而它的 `--video` 指的是源片——源片渲完就删（清理那一步），
+        # 于是想用它得自己另下一份。结果是段尾切错只能靠人在 2 秒一格的缩略图
+        # 墙上看，wong-brooksby 那三处修正（`128.0→132.7`、`143.0→147.7`、
+        # `173.0` 正好切在赛点那一分中间）每一处都先付了一趟渲染才发现。
+        #
+        # 记分条的位置**没法自动认**（每家转播不一样），所以要人给 `--scorebox`；
+        # 不给就跳过，**而且要说为什么**——「没量」和「量出来是空的」长得一样。
+        ends = point_end_candidates(source, args.scorebox)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
-            "scene_cuts": cuts, "sheets": [s.name for s in sheets],
+            "scene_cuts": cuts, "point_ends": ends,
+            "sheets": [s.name for s in sheets],
             "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         print("缩略图墙:", ", ".join(s.name for s in sheets))
         return 0
 
-    render(load_spec(Path(args.spec)), outdir,
+    spec = load_spec(Path(args.spec))
+    if args.dry_run:
+        segments = validate_spec(spec)
+        total = sum(s.length for s in segments)
+        print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
+        print("  ⚠️ 只校验了形状。裁切越界、frame_at 超出片长这类要等源片，"
+              "这里查不了。")
+        return 0
+
+    render(spec, outdir,
            voice=args.voice, rate=args.rate,
-           source_override=Path(args.source) if args.source else None)
+           source_override=Path(args.source) if args.source else None,
+           cover_only=args.cover_only)
     return 0
 
 

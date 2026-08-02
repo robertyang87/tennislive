@@ -14,6 +14,8 @@
 """
 
 import json
+import inspect
+import os
 import re
 import subprocess
 import sys
@@ -43,6 +45,27 @@ def test_复制页写在提交之前():
     assert "--stage page" in text
 
 
+
+def test_复制页那一步不挑推不推送():
+    """分支上渲的片子也要把复制页带上，否则 push-reel 又得现写现等。
+
+    渲染那次不写复制页，它就只能在推送那一刻才第一次进仓库——Pages 从零开始
+    发布，又是四分钟的原地等待。写它几乎不要钱（一个 HTML 文件），而它决定了
+    后面那条三分钟的推送要不要退回十几分钟。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    block = text[text.index("- name: 写复制页"):].split("\n      - name:")[0]
+    assert "inputs.push == 'true'" not in block, (
+        "「写复制页」挂在 push=true 上了——分支上 push=false 渲的片子就带不上"
+        "复制页，合进 main 之后那趟 mode=push 还得现写现等 Pages 发布")
+    assert "inputs.mode == 'render'" in block, "「写复制页」没覆盖 render 模式"
+    # 它跟着「提交产物」一起进仓库（那一步 add 整个 outdir），所以要排在提交之前
+    names = _steps(text)
+    page = next(i for i, n in enumerate(names) if "写复制页" in n)
+    commit = next(i for i, n in enumerate(names) if "提交产物" in n)
+    assert page < commit, "复制页排在提交之后——它进不了仓库，链接就是 404"
+
+
 def test_只发不重渲要有一条单独的路():
     """**「先验产物再推」意味着推是另一次动作。**
 
@@ -63,7 +86,9 @@ def test_只发不重渲要有一条单独的路():
     text = WORKFLOW.read_text(encoding="utf-8")
     names = _steps(text)
 
-    assert "options: [probe, render, push, cookies]" in text, "mode 里没有 push"
+    # 档位会增减（后来加了 cover），钉「push 在不在」而不是整行字面量
+    opts = re.search(r"options: \[(.*?)\]", text).group(1)
+    assert "push" in [o.strip() for o in opts.split(",")], f"mode 里没有 push：{opts}"
 
     for step in ("写复制页", "推送到微信"):
         i = next(k for k, n in enumerate(names) if step in n)
@@ -1715,13 +1740,28 @@ def test_封面停多久跟着配音走():
     assert "def synth_cover(" in reel, "封面那句没有单独合成——它得在渲封面之前就有"
     # 合成排在渲封面之前：反过来的话长度还没算出来，只能又退回常量
     body = reel[reel.index("def render("):]
-    assert body.index("cover_secs = cover_length(") < body.index("build_cover("), (
+    # **盯的是真正接收 `cover_secs` 的那次调用**，不是「第一个 build_cover(」。
+    # `--cover-only` 那条快速预览路径也调 build_cover（拿默认时长渲一张海报
+    # 就退出，海报本来就与时长无关），它排在最前面——按 `index()` 找会撞上它，
+    # 而那是误判：production 那条路照旧先算长度。判据宁可窄，不可宽。
+    production = body.index("cover_secs)]")
+    assert body.index("cover_secs = cover_length(") < production, (
         "封面长度算在渲封面之后——那就只能拿常量渲，等于没改")
     # 定长那条路要出声
     assert "没有配音，定长停" in reel, "退回定长时不吭声，和「配音没合出来」分不开"
     # 封面那一路要接进混音，标签不能在下游重筛
     assert "voice_labels.append" in reel, "混音的标签又在下游重筛了"
-    assert 'names = "".join(voice_labels)' in reel
+    # 攒起来的标签要**原样**进滤镜图。这一句原来写在 render() 里，闪避那道
+    # `apad` 修完之后整个图抽成了 `duck_filtergraph`，join 跟着搬了进去——
+    # 判据要跟着搬，不是跟着删：它拦的是「下游拿另一个条件重筛一遍」，
+    # 而封面那一路当年就是这么被漏掉的（定义了没人接）。
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as _reel_mod  # noqa: PLC0415
+
+    graph = _reel_mod.duck_filtergraph(["[1:a]adelay=0|0[v0]", "[2:a]x[v1]"],
+                                       ["[v0]", "[v1]"])
+    assert graph.count("[v0]") == 2 and graph.count("[v1]") == 2, (
+        f"攒起来的标签没有全部进滤镜图：{graph}")
     # 长度要记进产物旁边
     assert '"cover_seconds"' in reel, "封面长度没落进 render.json"
     assert "render.json" in check, "检查工具还在拿常量算封面长度"
@@ -2048,6 +2088,1468 @@ def test_封面跟着配音走只给网球有故事():
         column = str(spec.get("column") or cover.get("eyebrow") or "")
         if "赛场之上" in column:
             assert not cover.get("narration"), f"{path.name} 是赛场之上，封面不该配音"
+
+
+
+
+def _yaml_only(text: str) -> str:
+    """去掉整行注释。
+
+    工作流里的注释是这个仓库记教训的地方，正文里必然写着当年那些错值
+    （`伊埃拉 vs 郑钦文`）和不该装的东西（ffmpeg）。连注释一起扫，
+    「把坑记下来」就会被判成「又踩了这个坑」——判据宁可窄，不可宽。
+    """
+    return "\n".join(ln for ln in text.splitlines()
+                      if not ln.lstrip().startswith("#"))
+
+
+def test_推送元数据从spec读工作流不许挂上一条片子的默认值():
+    """**对阵和比分本来就在 spec 里**，标题没有理由让人再打一遍。
+
+    海报的两个名字读 `cover.versus.names`，比分读 `cover.result`——而工作流
+    一直让人在 `--matchup "黄泽林 vs 布鲁克斯比" --score "6-1 7-5"` 里把同样
+    两件事再敲一遍。这就是 `column_of` 那条注释讲的「栏目只有一个出处」，
+    在这两项上一直没做。
+
+    两处写的代价不是抽象的：这几个输入的默认值挂的是**上一条片子的**
+    （`伊埃拉 vs 郑钦文`、`郑钦文首轮出局`），漏传一项就拿另一场球的标题把
+    这条片子发出去——而微信那条消息发出去就收不回来。
+
+    还有一层，复制页和微信正文现在分在两次 run 里跑，
+    `wait_for_copy_page(expect=title)` 要求两次算出**同一句标题**：
+    从 spec 读必然相同，靠人两次都敲对不必然。
+
+    判据是「算出来的标题和已经发出去的那句一模一样」，不是「代码里有那个函数」
+    ——查源码文本的断言只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # 两条已发的片子，一条 VS 版式一条 solo，标题要原样重现
+    for slug, outdir, want in (
+        ("wong-brooksby", "output/2026-07-31/reel/wong-brooksby",
+         "7.31 赛场之上 | 黄泽林首进ATP四强"),
+        ("hewitt-washington", "output/2026-07-31/reel/hewitt-washington",
+         "7.31 网球有故事 | 休伊特之子做了那个动作"),
+    ):
+        copy_path = Path(f"specs/reels/{slug}.xhs.txt")
+        meta = push_reel.push_meta(copy_path)
+        got = push_reel.headline(Path(outdir), push_reel.column_of(copy_path),
+                                 meta["matchup"], meta["score"], meta["event"],
+                                 meta["summary"])
+        assert got == want, f"{slug} 从 spec 算出来的标题是「{got}」，发出去的是「{want}」"
+
+    # 没写 push 块的老 spec 也要能算出对阵——它是从 cover 来的，不靠新字段
+    old = push_reel.push_meta(Path("specs/reels/wong-lehecka.xhs.txt"))
+    assert old["matchup"] == "黄泽林 vs 莱赫奇卡" and old["score"] == "1-6 6-3 6-4"
+
+    # 工作流的默认值不许再是某条具体片子的内容。
+    # **只看 YAML 的值，不看注释**——注释里正要讲这些值当年错在哪儿，
+    # 连注释一起扫会把「记下这个坑」判成「又踩了这个坑」。
+    # ⚠️ **只看 `default:` 那一行的值。** 拦的是「默认值是上一条片子的内容」，
+    # 而 `description:` 里正要举例说明该填什么（`如「2:1」`）——连描述一起扫，
+    # 「教人怎么填」会被判成「又挂了个默认值」。判据宁可窄，不可宽。
+    inputs = _yaml_only(WORKFLOW.read_text(encoding="utf-8").split("permissions:")[0])
+    defaults = [ln for ln in inputs.splitlines() if ln.strip().startswith("default:")]
+    assert defaults, "扫不到任何 default:，判据失效了"
+    for stale in ("伊埃拉 vs 郑钦文", "郑钦文首轮出局", "2:1"):
+        assert not any(stale in ln for ln in defaults), (
+            f"工作流输入的默认值里还挂着「{stale}」——那是上一条片子的内容，"
+            "漏传一次就拿另一场球的标题发出去")
+
+
+def test_快速预览的开关要在工作流里够得着():
+    """**`--cover-only` 落地了，但工作流的 `mode` 里没有它，等于零。**
+
+    源片只在 runner 上活过几分钟（沙箱下不动 YouTube），所以「能用的那台机器
+    上没有开关，有开关的那台机器上没有源片」。又一次「写了不等于跑过」，
+    只是这次卡在工作流入口而不是函数里。
+
+    封面是全流程返工最多的那一屏：spec 注释里 wong-brooksby 记着
+    `0.32/0.40 → 0.33/0.42 → 0.34/0.44` 三档、hewitt 记着 0.60/0.67/0.74，
+    每一档在没有这条快路之前都要付一趟完整 render。
+
+    判据两头都要钉：**入口够得着**（options 里有 cover），
+    **而且那条路真的短**（不跑分段/TTS/推送）——只钉前者的话，
+    有人把 cover 那一步写成完整 render 也照样绿。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    head, jobs = body.split("\njobs:", 1)
+
+    assert "cover" in head[head.index("options:"):head.index("options:") + 80], (
+        "mode 的 options 里没有 cover——`--cover-only` 在唯一能用的那台机器上"
+        "够不着")
+
+    # `_steps` 给的是步骤**名**，这儿要的是步骤**体**，所以另切一次
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+    cover_steps = [b for b in blocks if "mode == 'cover'" in b]
+    assert len(cover_steps) == 1, f"cover 模式的步骤有 {len(cover_steps)} 个"
+    step = cover_steps[0]
+    assert "--cover-only" in step, "cover 那一步没传 --cover-only，那就是完整 render"
+    for heavy in ("push_reel.py", "--voice", "--rate"):
+        assert heavy not in step, (
+            f"cover 那一步还在做 {heavy}——它只该下源片、出海报、退出")
+
+    # 推送那一步不许被 cover 模式触发：海报不是成片
+    push_steps = [b for b in blocks
+                  if "push_reel.py" in b and "--stage page" not in b]
+    assert push_steps, "找不到推送那一步，判据失效了"
+    for block in push_steps:
+        assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
+
+
+def test_死球时刻要趁源片还在的时候量出来(tmp_path, capsys):
+    """`find_point_ends.py` 一直是**零调用方**——而段尾切错今天已经改过三处。
+
+    `git grep find_point_ends` 只有三处：脚本自己、一条「文件在不在」的断言、
+    以及 wong-brooksby 的 `_editing_why`（那三处修正
+    `128.0→132.7`、`143.0→147.7`、`173.0` 正好切在赛点那一分中间）。
+    **没有任何工作流或代码调用它**，而它的 `--video` 指的是源片——源片渲完
+    就被清理那一步删掉，想用它得自己另下一份 400 MB。于是每一处段尾错都要
+    先付一趟渲染才发现，而账号所有者点名过这件事（「很多球没有播放完成就切
+    到下一个了……让人看的不明不白的」）。
+
+    现在 probe 顺手量一遍写进 `probe.json`（**趁源片还在**）。判据要钉三头：
+
+    1. 记分条位置**没法自动认**，不给就跳过——但要**说为什么**
+    2. 给了就真的量得出来
+    3. 零命中要**自证是真空**：把实测分布打出来，别让「门槛卡错 / box 框错」
+       和「真的没有死球」长得一样（成片那条「找球场对称轴」就是这么栽的）
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    pytest.importorskip("cv2", reason="visualqa extra")
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了"
+
+    # ① 不给就跳过，而且要出声
+    assert reel.point_end_candidates(tmp_path / "nope.mp4", "") == []
+    assert "跳过" in capsys.readouterr().out
+
+    # 写错格式要报错，不许当成「没给」悄悄跳过
+    with pytest.raises(reel.ReelError, match="x0,y0,x1,y1"):
+        reel.point_end_candidates(tmp_path / "nope.mp4", "1,2,3")
+
+    # 造一段 8 秒的片子：左上角那一格每 2 秒翻一次「牌」（黑↔白），
+    # 其余画面一直不动。翻牌 = 死球。
+    flip = tmp_path / "flip.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=gray:s=320x240:r=25:d=8",
+         "-vf", "drawbox=x=0:y=0:w=80:h=60:color=black:t=fill:"
+                "enable='lt(mod(t,4),2)'",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
+         str(flip)], check=True)
+
+    # ② 框住那一格 → 量得出跳变
+    hits = reel.point_end_candidates(flip, "0,0,80,60")
+    assert hits, "翻牌那一格量不出跳变，通路是断的"
+
+    # ③ 框住一直不动的地方 → 零命中，而且把分布打出来自证
+    capsys.readouterr()
+    quiet = reel.point_end_candidates(flip, "200,150,300,230")
+    assert quiet == [], f"不动的区域居然量出 {quiet}"
+    out = capsys.readouterr().out
+    assert "一个都没有" in out and "moved 最大的几个" in out, (
+        f"零命中没有自证是真空，只说了「没有」：{out}")
+    assert "box 框错" in out, "零命中要提示可能是 box 框错，不是没有死球"
+
+    # ④ 而且这条路要在工作流里够得着——和 `--cover-only` 那次一样的坑：
+    # 源片只在 runner 上活过几分钟，开关够不着就等于这条能力不存在
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    head, jobs = body.split("\njobs:", 1)
+    assert "scorebox:" in head, "工作流没有 scorebox 这个输入"
+    assert "--scorebox" in jobs, "probe 那一步没把 scorebox 传下去"
+
+
+def test_查成片的那个脚本要真的被调用一次():
+    """**`check_reel_landed.py` 写好了，一次都没跑过。**
+
+    `grep -rn check_reel_landed .github/` 零命中。而补跑一遍九条已发的成片，
+    它自己就把今天查出来的两个真缺陷全报了出来：
+
+        「音轨 X，比画面短 N 秒」× 7 条   ← 闪避少了 apad
+        「封面之后还有 38 秒是数字静音」   ← wong-brooksby 的哑源片
+
+    也就是说这两个缺陷本来在发出去之前就该被拦下，只是**没人调它**。
+    工具自己的 docstring 写着「只在成功时出声的检查，没法证明它真的看过」
+    ——一个从来没被调用的检查比那还弱一档。
+
+    位置要**排在提交之前**：提交进 main 之后 `push-reel` 就会把它发到微信，
+    而微信那条消息发出去收不回来。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    jobs = body.split("\njobs:", 1)[1]
+    assert "check_reel_landed.py" in jobs, (
+        "没有任何一步调用 check_reel_landed.py——它就是个没人跑的脚本")
+
+    names = _steps(jobs)
+    check = next(i for i, n in enumerate(names) if "查成片本身" in n)
+    render = next(i for i, n in enumerate(names) if "render — 出成片" in n)
+    commit = next(i for i, n in enumerate(names) if "提交产物" in n)
+    assert render < check < commit, (
+        f"检查排在第 {check} 步，而 render 在 {render}、提交在 {commit}——"
+        "它必须排在渲完之后、提交之前")
+
+
+def test_拿不到封面时长时片长那一项要跳过不要报假红():
+    """**一条常年红的检查等于没有检查**，而且它会把真问题淹掉。
+
+    `COVER_SECONDS` 一路从 2.6 改到 1.8 再到 1.2，而老片子是按 2.6 渲的。
+    读不到 `render.json` 时退回今天这个常量，于是**八条老片子全报**
+    「画面 X（spec 算出来 Y）」，差值几乎恒定在 1.40~1.44s——而两条带
+    `render.json` 的一条都不中。那批假红里混着的「音轨比画面短」正是今天
+    查出来的那个真缺陷，差点被一起当成噪音。
+
+    改法不是调常量（下次再改还会错），是**拿不到就不判这一项**，
+    并且下游要用封面长度的地方**从产物自己量**（画面总长 − 段落总长）。
+    """
+    check = Path("tools/check_reel_landed.py").read_text(encoding="utf-8")
+    assert "return None" in check, "读不到 render.json 时还在退回常量硬判"
+    assert "片长这一项不判" in check, "跳过了却不说，和「判了但判错」分不开"
+    # 其余各项不许跟着一起跳过——它们不依赖封面时长
+    for keep in ("分辨率", "音轨", "数字静音"):
+        assert keep in check, f"{keep} 这一项没了"
+
+
+def test_源片没有现场声要出声不能默默出一条哑片(tmp_path):
+    """`_has_audio` 只查**流存不存在**，查不出「有流但是数字静音」。
+
+    wong-brooksby 就栽在这儿：spec 的 `_source` 白纸黑字写着「带原声」，而成片
+    里**没有旁白的段落全是数字静音**——按 3 秒一格采样，29 个窗里 12 个低于
+    −70 dB，其余八条片子是 0/23~0/39。整套 `sidechaincompress` 闪避对它空转，
+    **而两条分支都不打印**，「源片是哑的」和「源片正常」在日志上一模一样。
+
+    这和「补位的静音盖住真音轨」是同一个形状，只是这次补位的不是我们，
+    是源片自己。所以判据要量**信号**，不是量**流**——而且必须**真造两个文件
+    量一遍**：`_has_audio` 对哑轨返回的是 True，查源码是查不出这个差别的。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    loud, silent, mute = (tmp_path / n for n in
+                          ("loud.mp4", "silent.mp4", "mute.mp4"))
+    common = ("-f", "lavfi", "-i", "testsrc2=size=160x120:rate=25:duration=3")
+    _ff(*common, "-f", "lavfi", "-i", "sine=frequency=440:duration=3",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-shortest", str(loud))
+    # **有音频流，但整条是数字静音**——就是 wong-brooksby 那一种
+    _ff(*common, "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-t", "3", str(silent))
+    _ff(*common, "-c:v", "libx264", "-preset", "ultrafast", "-an", str(mute))
+
+    # ① `_has_audio` 分不出前两个——这正是为什么要另量一次
+    assert reel._has_audio(loud) and reel._has_audio(silent), (
+        "造出来的样本不对：两个都该有音频流")
+    assert not reel._has_audio(mute)
+
+    # ② 量信号就分得出
+    peak = reel.audio_peak_db(loud)
+    assert peak is not None and peak > reel.SILENT_PEAK_DB, f"有声的量成 {peak}"
+    quiet = reel.audio_peak_db(silent)
+    assert quiet is not None and quiet < reel.SILENT_PEAK_DB, (
+        f"数字静音量成 {quiet} dBFS，没落在门槛下面")
+    assert reel.audio_peak_db(mute) is None, "没有音频流该返回 None"
+
+    # ③ 门槛要留够余量：真实比赛音轨峰值贴近 0，别把录得轻的源片误伤
+    assert reel.SILENT_PEAK_DB <= -40, "门槛太靠近正常音量了，会误伤"
+
+    # ⚠️ 这道闸不许拦住「只出封面」那条快路：封面一个音频样本都不碰，
+    # 拿「源片是哑的」去拦一次快速预览，等于把这条路的用处废掉。
+    # 和 `_preflight_cutout` 那次同一个错——别把无关的检查塞进它前面。
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    render_body = body[body.index("\ndef render("):]
+    assert render_body.index("if cover_only:") < \
+        render_body.index("require_live_sound(source, spec)"), (
+        "原声那道闸排在「只出封面」之前——封面不碰音频，这一拦就把快速预览废了")
+
+    # ④ 闸本身：哑的要报错并**说出路**，认领过的放行，有声的一路畅通
+    import pytest  # noqa: PLC0415
+
+    reel.require_live_sound(loud, {})  # 有声：不该拦
+    for bad in (silent, mute):
+        with pytest.raises(reel.ReelError) as caught:
+            reel.require_live_sound(bad, {})
+        # **报错要说出路，不能只说不行**
+        for way in ("source_audio", "silent_source", "换一个带声音的源片"):
+            assert way in str(caught.value), f"报错没给出路 {way}：{caught.value}"
+        reel.require_live_sound(bad, {"silent_source": "屏录，本来就没有声道"})
+
+
+def test_渲完的成片不许因为清理那一步失败而整趟丢掉():
+    """`if:` 里不含状态函数时，GitHub 会**隐式和上 `success()`**。
+
+    「丢掉不进仓库的中间物」末尾有个体积兜底会 `exit 1`（连着栽过四次，最近
+    一次是多源之后源片改名 `source_r1.mp4`，run 30603686748）。那一刻**成片
+    已经渲完了**，可上传和提交都被跳过——六分钟整趟作废，只能重跑。
+
+    判据两头都要钉：
+
+    - 上传要带 `always()`，否则前面一红它就不跑
+    - 而且**位置不许往前挪**：清理那一步先 `rm` 再做体积检查，所以走到上传
+      时源片已经删干净了。挪到清理之前，392 MB 的源片会一起传上去——
+      「修好」的方向反了一样是坏的
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    jobs = body.split("\njobs:", 1)[1]
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+
+    upload = [b for b in blocks if "actions/upload-artifact" in b]
+    assert len(upload) == 1, f"上传 artifact 的步骤有 {len(upload)} 个"
+    assert "always()" in upload[0], (
+        "上传 artifact 没带 always()——清理那一步的体积兜底一 exit 1，"
+        "渲完的成片就既不上传也不提交，整趟白跑")
+
+    names = _steps(jobs)
+    clean = next(i for i, n in enumerate(names) if "丢掉不进仓库的中间物" in n)
+    up = next(i for i, n in enumerate(names) if "上传 artifact" in n)
+    assert clean < up, (
+        "上传排在清理之前——那会把 392 MB 的源片一起传上去")
+
+
+def test_现场声不许在最后一句话结束时断掉(tmp_path):
+    """**九条已发的成片里七条，结尾 2~4.5 秒完全没有声音。**
+
+    `sidechaincompress` 在 **sidechain 输入结束的那一刻就收口**，于是 `[duck]`
+    只活到最后一句旁白说完，下游 `amix` 跟着收口——整条现场声在那儿断掉：
+
+        eala-fernandez −4.50s   wang-pareja −2.98s   hewitt-washington −2.97s
+        wang-samsonova −2.66s   potapova-venus −2.64s
+        wong-brooksby  −1.98s   eala-zheng     −1.95s
+
+    削掉的正是握手、庆祝、观众声——CLAUDE.md 里「收尾那句要提前起、跨进末屏」
+    保的就是这几秒，也就是整条片子的情绪落点。**而 ffmpeg 不报错**，画面是
+    全长的，成片时长看着完全正常。
+
+    **判据必须真跑一次混音**：造一段 20 秒有声画面 + 一句 7 秒就说完的旁白，
+    拿**生产用的那个滤镜图**（`duck_filtergraph`）过一遍 ffmpeg，然后
+    ① 音轨要跟画面一样长 ② 旁白结束之后那几秒要**真的有声音**（不是 apad
+    补出来的数字静音）。查源码里有没有 `apad` 是拦不住这个的——
+    「写了」不等于「跑过」。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    # 缺 ffmpeg 要红，不许 skip——一条常年跳过的检查和常年红是同一个毛病。
+    # CI 的 apt 那一步装了它（和 match-reel 同一个包）。
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
+
+    def _dur(path, stream):
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            check=True, capture_output=True, text=True).stdout.strip()
+        return float(out) if out else 0.0
+
+    bed, voice, mixed = (tmp_path / n for n in
+                         ("bed.mp4", "voice.m4a", "mixed.m4a"))
+    # 20 秒画面 + 20 秒现场声；旁白 7 秒就说完
+    _ff("-f", "lavfi", "-i", "testsrc2=size=320x240:rate=25:duration=20",
+        "-f", "lavfi", "-i", "sine=frequency=300:duration=20",
+        "-c:v", "libx264", "-preset", "ultrafast", "-c:a", "aac",
+        "-shortest", str(bed))
+    _ff("-f", "lavfi", "-i", "sine=frequency=800:duration=7",
+        "-c:a", "aac", str(voice))
+
+    _ff("-i", str(bed), "-i", str(voice), "-filter_complex",
+        reel.duck_filtergraph(["[1:a]adelay=0|0[v0]"], ["[v0]"]),
+        "-map", "0:v:0", "-map", "[out]", "-c:v", "copy",
+        "-c:a", "aac", "-b:a", "192k", "-ar", reel.AUDIO_RATE,
+        "-shortest", str(mixed))
+
+    # ① 音轨要跟画面一样长
+    video, audio = _dur(mixed, "v:0"), _dur(mixed, "a:0")
+    assert abs(video - audio) < 0.3, (
+        f"音轨 {audio:.2f}s 比画面 {video:.2f}s 短了 {video - audio:.2f}s"
+        "——现场声在最后一句旁白结束时就断了")
+
+    # ② 旁白之后那几秒要真的有声音，不是 apad 补出来的数字静音。
+    # 只验「音轨够长」是不够的：补一段静音同样能让 ① 通过。
+    for at in (8, 15):
+        chunk = tmp_path / f"at{at}.wav"
+        _ff("-i", str(mixed), "-ss", str(at), "-t", "1", "-vn",
+            "-c:a", "pcm_s16le", str(chunk))
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(chunk), "-af", "volumedetect",
+             "-f", "null", os.devnull], capture_output=True, text=True).stderr
+        found = re.search(r"mean_volume:\s*(-?[\d.]+) dB", out)
+        assert found, f"量不出 t={at}s 的响度：{out[-300:]}"
+        level = float(found.group(1))
+        assert level > -60, (
+            f"t={at}s（旁白早就说完了）响度 {level} dB——那是数字静音，"
+            "现场声并没有放回来")
+
+
+def _published_reels() -> list[Path]:
+    """仓库里已发的成片目录——**CI 上是空的，这是正常的**。
+
+    `ci.yml` 的稀疏检出从来不含 `output/`（一 GB 多的公开产物存档），所以任何
+    读产物的测试在 CI 上都会拿到空列表。**空列表不等于「没有成片」**，
+    它等于「这台机器没把产物拉下来」——两者长得一模一样，正是这个仓库反复
+    踩的那个坑，我 2026-08-01 又踩了一次（run 30707236335：`只校到 0 条`）。
+
+    所以读产物的断言一律**当加餐**：核心判据必须只吃 `specs/`，在 CI 上真的
+    跑起来；产物在的时候（本地沙箱）再多验一层。写成 `skip` 是不行的——
+    一条常年跳过的检查和常年红是同一个毛病。
+    """
+    return sorted(Path("output").glob("*/reel/*"))
+
+
+def test_成片链接发之前要自己探一次(monkeypatch):
+    """**那个 ▶ 按钮是这条推送的全部，而它从来没有被校验过。**
+
+    `pushplus.wait_for_images` 只校 `<img>` 和 **jsDelivr 域名**的 `<a>`
+    （`jsdelivr_link_sources`）。而成片超过 20 MB 就退回
+    `raw.githubusercontent.com`——仓库里十条成片 28~54 MB，**十条全超**。
+    也就是说那条 jsDelivr 分支在真实数据上一次都没走到过，成片链接等于裸奔。
+    又一次「兜底出事的时候不吭声」。
+
+    复制页取不到时只摘按钮、正文照发；**成片取不到必须整条不发**——文案没了
+    还有正文，片子没了这条推送就没有内容了。
+
+    判据分三层，缺一层都可能变成假绿：
+    1. 存量成片确实全都超 20 MB（否则「从来没校验过」这句话不成立）
+    2. `wait_for_images` 拿到推送正文时，成片那条链接确实不在它的清单里
+    3. 探不到就 `SystemExit`，探得到就放行
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    from tennislive.publish.pushplus import jsdelivr_link_sources  # noqa: PLC0415
+
+    # ① 超过 20 MB 的成片一律退回 raw——这是「校验从来没生效过」的前提。
+    # 拿一个稀疏文件量，不依赖 `output/`（CI 上它不在，见 `_published_reels`）。
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        big = Path(tmp) / "x.mp4"
+        big.touch()
+        os.truncate(big, push_reel.JSDELIVR_MAX_BYTES + 1)
+        url = push_reel.video_url(big.parent, big.name)
+    assert url.startswith("https://raw.githubusercontent.com/"), url
+
+    # 产物在的时候（本地沙箱）再验一层：**存量十条真的一条都没进 jsDelivr**
+    reels = [p / f"{p.name}.mp4" for p in _published_reels()]
+    reels = [p for p in reels if p.is_file()]
+    if reels:
+        small = [p for p in reels
+                 if p.stat().st_size <= push_reel.JSDELIVR_MAX_BYTES]
+        assert not small, (
+            "有成片能走 jsDelivr 了——那 `wait_for_images` 对它是管用的，"
+            f"这条测试的前提要重写：{[p.name for p in small]}")
+
+    # ② 推送正文里那条成片链接，`wait_for_images` 看不见
+    body = push_reel.build_html(url, "https://example.invalid/copy.html",
+                                "", "标题\n\n正文", "", "赛场之上")
+    assert url not in jsdelivr_link_sources(body), (
+        "成片链接居然进了 jsDelivr 清单——这条测试的前提要重写")
+
+    # ③ 探不到就整条不发，探得到就放行
+    class _Resp:
+        def __init__(self, code):
+            self.status_code = code
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(push_reel.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(push_reel.requests, "get", lambda *a, **k: _Resp(404))
+    with pytest.raises(SystemExit, match="取不到"):
+        push_reel.wait_for_video(url, attempts=2, delay=0)
+    monkeypatch.setattr(push_reel.requests, "get", lambda *a, **k: _Resp(206))
+    push_reel.wait_for_video(url, attempts=1, delay=0)
+
+    # ④ 而且这道闸要真的装在发送那一步上，不是写了个函数没人调
+    source = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    stage = source[source.index("url = video_url(outdir, name)"):]
+    assert stage.index("wait_for_video(") < stage.index("push(title"), (
+        "wait_for_video 没排在 push 之前——「写了」不等于「跑过」")
+
+
+def _poster_name_order(cover: dict, names: list) -> list:
+    """海报的赛果那一行**实际印出来**的名字顺序。
+
+    不是读 `winner` 再自己推一遍——那样两边会用同一个假设，一起错。
+    直接调 `versus_poster._result_block`（渲海报走的就是它），把标签剥掉，
+    按名字在文本里出现的先后排。新写法（`winner` + `result`）和老写法
+    （一整句 `score`）都走得通，因为量的是**印出来的那句**。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    text = re.sub(r"<[^>]+>", "", versus_poster._result_block(cover, names))
+    seen = [(text.index(n), n) for n in names if n in text]
+    return [n for _, n in sorted(seen)]
+
+
+def test_标题里的赛果顺序要和海报印的一样():
+    """**海报说谁赢，标题就得说谁赢。**
+
+    `versus.names` 是**版式顺序**（上格/下格），不是赛果顺序。海报的赛果行按
+    `cover.winner` 排（`versus_poster._result_block`：`loser = 另一个名字`），
+    而 `headline` 把比分插在两个名字中间——这个栏目的规矩是**赢家在前**。
+    两边各读各的，就会在同一条推送里说反：
+
+    - `wang-samsonova`：`names[0]` 是王欣瑜，`winner` 是萨姆索诺娃。
+      海报印「萨姆索诺娃 6-2 6-2 王欣瑜」，标题算出来是「王欣瑜 vs 萨姆索诺娃」
+    - `eala-zheng` / `nishikori-shang`（老写法，只有一整句 `cover.score`）：
+      海报印「伊埃拉 4-6 6-4 6-1 郑钦文」，标题算出来是「郑钦文 vs 伊埃拉」
+      ——**比分整个丢了，而且赢家写反了**
+
+    而微信那条消息发出去就收不回来。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    checked = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        names = [str(n).strip() for n in
+                 ((cover.get("versus") or {}).get("names") or []) if str(n).strip()]
+        printed = _poster_name_order(cover, names)
+        if len(printed) < 2:  # solo 版式、或这条片子的封面不印赛果
+            continue
+        matchup = push_reel.push_meta(path.parent / f"{path.stem}.xhs.txt")["matchup"]
+        assert matchup == " vs ".join(printed), (
+            f"{path.stem}：海报印的是「{' '.join(printed)}」，"
+            f"标题算出来是「{matchup}」——同一条推送里两种赛果")
+        checked += 1
+    # **判据自己也要有判据**：主语没了要出声，别变成一条恒真的绿灯。
+    assert checked >= 7, f"只校到 {checked} 条印赛果的 spec，判据失效了"
+
+
+def test_每条spec都算得出一句过得了闸的标题():
+    """**每条 spec 都要能算出标题，而且当场就过闸**——不能等到重推那一刻才炸。
+
+    `headline` 有两道闸（末尾那格 13 字、整句 20 字位）。缺 `push.summary` 时
+    它退回「对阵 + 比分」，而那一句往往更长：`萨姆索诺娃 6-2 6-2 王欣瑜`
+    加上日期和栏目是 20.5 字位，顶破闸门直接 `SystemExit`。也就是说
+    **一条没写 summary 的 spec，重推时是在 runner 上才报错的**。
+
+    这条测试只吃 `specs/`，所以它在 CI 上真的跑得起来（见 `_published_reels`：
+    `output/` 从来不在 CI 的稀疏检出里）。产物在的时候再多验一层：
+    算出来的那一句要和**已经发出去的那一句**逐字相同。
+
+    比的是每个 slug **最新的那一份**：`nishikori-shang` 在 7.28 发过一版
+    30 字位的长标题（那时标题闸还不存在），7.29 重发时已经收成了短的。
+    拿被顶替掉的那一版当判据，等于要求今天的代码去重现一个已经改掉的错。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    # ① 只吃 spec：每条都算得出、都过得了闸。日期随便给一个合法的目录名——
+    # 闸门量的是整句宽度，而日期那一格所有片子都一样宽。
+    # ⚠️ **只校写了 `push` 块的那些。** 后来新增的 spec 走的是「工作流传参」
+    # 那条路（`resolve_meta` 里命令行覆盖 spec），标题由 `push=true 必须自己
+    # 填标题` 那道守卫兜着。把它们一起要求「从 spec 就能算出标题」，等于给
+    # 另一条合法的路判红——判据宁可窄，不可宽。
+    titles: dict[str, str] = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        if not (json.loads(path.read_text(encoding="utf-8")).get("push") or {}):
+            continue
+        copy_path = path.parent / f"{path.stem}.xhs.txt"
+        meta = push_reel.push_meta(copy_path)
+        titles[path.stem] = push_reel.headline(
+            Path("output/2026-07-31/reel") / path.stem,
+            push_reel.column_of(copy_path), meta["matchup"], meta["score"],
+            meta["event"], meta["summary"])
+    assert len(titles) >= 9, f"只校到 {len(titles)} 条 spec，判据失效了"
+
+    # ② 产物在的时候（本地沙箱）再验一层：和已经发出去的那句逐字相同
+    latest: dict[str, Path] = {}
+    for outdir in _published_reels():
+        if (outdir / "copy.html").is_file():
+            latest[outdir.name] = outdir  # 按日期升序，留最后一份
+    for slug, outdir in sorted(latest.items()):
+        copy_path = Path(f"specs/reels/{slug}.xhs.txt")
+        if not copy_path.is_file():  # 已停产的片子，spec 不在了
+            continue
+        want = re.search(r'<textarea id="title"[^>]*>(.*?)</textarea>',
+                         (outdir / "copy.html").read_text(encoding="utf-8"),
+                         re.DOTALL).group(1).strip()
+        meta = push_reel.push_meta(copy_path)
+        got = push_reel.headline(outdir, push_reel.column_of(copy_path),
+                                 meta["matchup"], meta["score"], meta["event"],
+                                 meta["summary"])
+        assert got == want, (
+            f"{slug}：从 spec 算出来的是「{got}」，已经发出去的是「{want}」")
+
+
+def test_写错的push字段要报错不许悄悄不生效():
+    """`sumary` 写漏一个 m，标题就悄悄退回「对阵 + 比分」——而那和「这条片子
+    本来就没写 summary」长得一模一样。**兜底出事的时候不吭声**是这个仓库
+    反复踩的那个坑，所以认不出来的字段一律报错。
+
+    `_` 开头的是写给下一个人的备注（仓库里到处都是 `_why`），不算字段。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    import tempfile  # noqa: PLC0415
+
+    # 存量 spec 里的 push 块都得认得出来，每条都要真跑一遍
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        push_reel.push_meta(path.parent / f"{path.stem}.xhs.txt")
+
+    def _meta_for(push_block):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "x.json").write_text(json.dumps(
+                {"cover": {"eyebrow": "赛场之上",
+                           "versus": {"names": ["甲", "乙"]}},
+                 "push": push_block}, ensure_ascii=False), encoding="utf-8")
+            (root / "x.xhs.txt").write_text("标题\n\n正文", encoding="utf-8")
+            return push_reel.push_meta(root / "x.xhs.txt")
+
+    with pytest.raises(SystemExit, match="认不出来的字段"):
+        _meta_for({"sumary": "打错了"})
+    # 备注不算字段，也不能被当成值灌进去
+    assert _meta_for({"_why": "写给下一个人的", "summary": "对的"})["summary"] == "对的"
+
+
+
+def test_checkout不许把整个output拉下来():
+    """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要 1 分 35 秒到
+    2 分 44 秒（run 30622667742 / 30624808733）——而渲染一个字节都用不到
+    别人的成片。
+
+    稀疏检出把它挡在外面，剩下的全部加起来 161 MB。本次的 outdir 由
+    「算出目录」那一步 `git sparse-checkout add` 进来（新目录没有历史 blob
+    要下；重渲已有的片子才取它自己那几十 MB）。**两半都要在**：只写
+    `sparse-checkout` 不 add，`git add "$OUTDIR"` 会被判在稀疏范围之外。
+
+    ⚠️ 排除的只有 `output`。assets 155 MB 看着也不小，但它是渲染真要读的
+    东西——少一个就是第 5 分钟才炸的 FileNotFoundError。
+    """
+    for path in (WORKFLOW,):
+        text = path.read_text(encoding="utf-8")
+        head = text[:text.index("actions/setup-python@v5")]
+        assert "sparse-checkout:" in head, f"{path.name} 的 checkout 没做稀疏检出"
+        listed = head[head.index("sparse-checkout:"):]
+        assert "\n            output\n" not in listed, (
+            f"{path.name} 把整个 output/ 列进了稀疏范围，1.36 GB 又要下一遍")
+        assert "git sparse-checkout add" in text, (
+            f"{path.name} 没把本次的 outdir 加进稀疏范围，git add 会被判在范围之外")
+
+    # 渲染要读的那几个目录一个都不能少
+    text = WORKFLOW.read_text(encoding="utf-8")
+    listed = text[text.index("sparse-checkout:"):text.index("- uses: actions/setup-python")]
+    for needed in ("assets", "data", "specs", "src", "tools"):
+        assert f"\n            {needed}\n" in listed, (
+            f"稀疏检出漏了 {needed}/——渲染读它，少了就是第 5 分钟才炸")
+
+
+def test_中间段的编码参数要往快里调不是往省比特里调():
+    """**中间产物要花的是比特，不是时间。**
+
+    分段和封面拼完之后整片还要以 `slow`/`crf 18` 重编一次，所以中间段省下来的
+    比特一点用都没有——它唯一的作用是别把画质提前丢掉。preset 决定编码器花
+    多少**时间**去找省比特的编法，crf 决定留多少**画质**，两件事各管各的：
+    preset 推到最快、crf 压到很低，就是又快又更保真。
+
+    量出来的（10 秒 1080×1440/60fps 素材，四核）：
+
+        medium   / crf 20   14.73s   最终 SSIM 0.993110 / PSNR 47.09  ← 改前
+        ultrafast/ crf 12    2.92s   最终 SSIM 0.993212 / PSNR 48.01  ← 改后
+
+    **5 倍快，而且最终成片比改前更接近源片。** 这条测试拦的不是手滑，是下一次
+    有人照着「preset 越慢画质越好」的直觉，把它改回 medium/slow——那会把
+    runner 上的分段编码从 ~47s 拉回 176.7s，换来一个更差的成片。
+
+    成片那一步（`FINAL_*`）不在这条的管辖范围，那儿由
+    `test_成片的编码参数不许为了压体积往下调` 守着。
+    """
+    reel = _reel()
+    fast = ("ultrafast", "superfast", "veryfast")
+    assert reel.PART_PRESET in fast, (
+        f"中间段 preset 被改成了 {reel.PART_PRESET}。它是马上要被重编的临时文件，"
+        "在这儿花时间找省比特的编法是白花——量过：medium 慢 5 倍，成片还更差。")
+    assert int(reel.PART_CRF) <= 14, (
+        f"中间段 crf 被推到了 {reel.PART_CRF}。快 preset + 高 crf 是两头都丢："
+        "既没省时间，又把画质提前丢在一个临时文件里。")
+    # 成片那一步一个字都不许跟着动
+    assert reel.FINAL_PRESET == "slow" and reel.FINAL_CRF == "18", (
+        "改中间段不许连累成片——省时间要从中间产物上省，不能从交出去的那一份上省")
+
+
+def _checkout_block(text: str) -> str | None:
+    """切出 `- uses: actions/checkout` 那一步（含它的 `with:`）。
+
+    **不用 PyYAML。** 这个文件里其他扫工作流的判据（`_steps`、`_yaml_only`）
+    一直是按文本切的，而 yaml 不是这个仓库的依赖——为一条断言加一个运行时
+    依赖，代价比收益大。第一版真加了 `import yaml`，沙箱里装着、CI 里没有，
+    于是 CI 红：**又一次「本地装着不等于 CI 装着」**（run 30648727062）。
+    """
+    # **先去掉整行注释。** 注释里正写着「原来这儿写着 `fetch-depth: 0`」，
+    # 连注释一起扫会把「把坑记下来」判成「又踩了这个坑」——同一个错这一天
+    # 犯了三次（工作流输入的旧默认值、push-reel 里的 ffmpeg、这里）。
+    lines = _yaml_only(text).splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("      - uses:") and "checkout" in line:
+            block = [line]
+            for nxt in lines[i + 1:]:
+                if nxt.startswith("      - "):
+                    break
+                block.append(nxt)
+            return "\n".join(block)
+    return None
+
+
+def test_不碰产物的工作流不许把output拉下来():
+    """HEAD 上 `output/` 就有 1.36 GB，checkout 因此每次要一分半上下
+    （daily 量到 1:31，match-reel 2:44）——**而多数工作流一个字节都不碰它**。
+
+    这条按「这条工作流碰不碰 `output/`」自动分类，不维护白名单：
+
+    - **提都不提的**：必须稀疏检出，且不需要 `sparse-checkout add`
+    - **要写产物的**：稀疏之后得把自己那一格 add 回来，那是每条各自的活，
+      这条只要求「要么两半都有，要么老老实实全量」——**半个是最坏的情况**，
+      `git add` 会说路径在稀疏范围之外，而那是在跑完之后才炸
+
+    顺带钉住 `fetch-depth`：`0` 是把 1.77 GiB 的完整历史全拉下来。
+    `player-name-sync` 原来就是这样，而它唯一的 git 读操作是
+    `git diff -- <被跟踪的文件>`——工作区对 HEAD，一条历史都不需要。
+    """
+    workflows = sorted(Path(".github/workflows").glob("*.yml"))
+    assert workflows, "找不到工作流"
+    for path in workflows:
+        text = path.read_text(encoding="utf-8")
+        block = _checkout_block(text)
+        if block is None:
+            continue
+        sparse = "sparse-checkout:" in block
+
+        assert not re.search(r"fetch-depth:\s*0\b", block), (
+            f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
+            "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
+
+        # 三处收窄，全是「判据宁可窄，不可宽」当场踩出来的：
+        # 1. 连注释一起扫——注释里正写着「别把 output/ 拉下来」，于是被判成
+        #    「写产物」，然后要求它 add 一个它根本不写的目录
+        # 2. 按整份文本扫——`ci.yml` 的 `paths-ignore: output/**` 是**触发
+        #    条件**，不是产物路径。只看 `jobs:` 以后
+        # 3. 裸的 `"output/" in body`——`probe.yml` 写的是 **`probe-output/`**，
+        #    从中间匹配上了。要词边界
+        body = _yaml_only(text)
+        body = body[body.index("\njobs:"):] if "\njobs:" in body else body
+        writes_output = re.search(r"(?<![\w-])output/", body) is not None
+
+        if not writes_output:
+            assert sparse, (
+                f"{path.name} 一个字节都不碰 output/，却做了全量 checkout——"
+                "白等一分半。照 assets.yml 那段加稀疏检出。")
+            assert "git sparse-checkout add" not in body, (
+                f"{path.name} 不写产物，不该 add 任何 output 目录")
+        elif sparse:
+            # 把产物那一格弄进 cone 有两种写法，都算数：
+            # - 目录要按日期／slug 算 → `git sparse-checkout add "$OUT_DIR"`
+            # - 目录是固定的（`output/voice-samples`）→ 直接列进 sparse-checkout
+            listed_statically = re.search(
+                r"\n\s+output/\S+", block[block.index("sparse-checkout:"):])
+            assert "git sparse-checkout add" in body or listed_statically, (
+                f"{path.name} 做了稀疏检出却没把自己那一格弄进 cone——"
+                "`git add` 只会警告并退出 0，产物静默丢掉，而那是跑完之后才发现。")
+
+        # 排除的必须只有 output：assets 155 MB 看着也不小，但渲染真要读它
+        if sparse:
+            listed = block[block.index("sparse-checkout:"):]
+            assert "\n            output\n" not in listed, (
+                f"{path.name} 把 output/ 列进了稀疏范围，1.36 GB 又要下一遍")
+
+
+# pip 包名 → import 名。只列这个仓库真用到的那几个，别去猜没用到的。
+_DIST_TO_MODULE = {
+    "pillow": "PIL", "opencv-python-headless": "cv2", "yt-dlp": "yt_dlp",
+    "gtts": "gtts", "edge-tts": "edge_tts", "imageio-ffmpeg": "imageio_ffmpeg",
+    "pypdf": "pypdf", "requests": "requests", "rich": "rich",
+    "pytest": "pytest", "ruff": "ruff", "playwright": "playwright",
+    "rembg": "rembg", "pyyaml": "yaml",
+}
+
+
+def test_测试里不许import没声明的包():
+    """**本地装着不等于 CI 装着。** 沙箱是长期攒出来的环境，runner 每次都是
+    干净的——这个文件里一度写了 `import yaml`，沙箱里绿、CI 里
+    `ModuleNotFoundError`，整条 PR 红（run 30648727062）。
+
+    判据不是「别 import yaml」（那种写法拦不住下一个包，而且我自己那句
+    docstring 就把它误伤了一次）：**扫 AST 里真正的 import 语句**，每个
+    顶层模块名必须是标准库、`pyproject` 声明过的依赖、或者本仓库自己的模块。
+
+    工作流的判据一律按文本切（`_steps` / `_yaml_only` / `_checkout_block`），
+    别为一条断言把 PyYAML 拖进依赖。
+    """
+    import ast  # noqa: PLC0415
+    import sys as _sys  # noqa: PLC0415
+
+    declared = set()
+    for line in Path("pyproject.toml").read_text(encoding="utf-8").splitlines():
+        for hit in re.findall(r'"([A-Za-z0-9_.\-]+)\s*(?:\[[^\]]*\])?\s*[><=!]', line):
+            declared.add(_DIST_TO_MODULE.get(hit.lower(), hit.lower().replace("-", "_")))
+
+    local = {p.stem for p in Path("tools").glob("*.py")}
+    local |= {p.stem for p in Path("src/tennislive").glob("*.py")}
+    # `tests/` 下的也算本地——`conftest` 就是（`make_match` 那个共用夹具）。
+    local |= {p.stem for p in Path("tests").glob("*.py")}
+    local |= {"tennislive", "tests"}
+    allowed = set(_sys.stdlib_module_names) | declared | local
+
+    tree = ast.parse(Path("tests/test_match_reel.py").read_text(encoding="utf-8"))
+    used = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            used |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            used.add(node.module.split(".")[0])
+
+    stray = sorted(used - allowed)
+    assert not stray, (
+        f"这些包 import 了却没在 pyproject 里声明：{stray}。\n"
+        "沙箱里装着不代表 runner 上有——CI 会 ModuleNotFoundError。\n"
+        "要么加进 pyproject 的某个 extra，要么换个不用它的写法"
+        "（扫工作流按文本切，见 _checkout_block）。")
+    # 反过来也验一下：这个判据真的认得出 stdlib 和本地模块，不是恒真
+    assert {"json", "pathlib"} <= allowed and "push_reel" in allowed
+
+
+def test_稀疏检出之后git_add要带sparse():
+    """**裸的 `git add output/` 在稀疏模式下只警告、退出码 0。**
+
+    合成仓库上验过：cone 外的路径，`git add output/` 打一句
+    "The following paths ... will not be updated in the index"，然后**成功退出**。
+    接着 `git diff --cached --quiet` 说「没有变化」，工作流打印「没有新内容」
+    正常结束——**这一轮的产物就这么静默丢了**。
+
+    和「兜底出事的时候不吭声」是同一种病，只是这次兜底的是 git 自己。
+    所以凡是整棵 `git add output/` 的，必须带 `--sparse`；按目录 add 的
+    （`git add "$OUTDIR"`）靠上一条测试保证那一格在 cone 里。
+    """
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        if "sparse-checkout:" not in body:
+            continue
+        for line in body.splitlines():
+            stripped = line.strip()
+            if not stripped.startswith("git add "):
+                continue
+            # 只管整棵 output/ 那种；`git add "$OUTDIR"` 由稀疏范围保证
+            if re.search(r"git add\s+(--sparse\s+)?output/\s", stripped + " "):
+                assert "--sparse" in stripped, (
+                    f"{path.name}：`{stripped}` 在稀疏模式下什么也不会暂存，"
+                    "而且退出码是 0——产物会静默丢掉。要带 --sparse。")
+
+
+def test_读产物的步骤不能排在sparse_add前面():
+    """**稀疏检出把 `output/` 挡在外面之后，「读它」和「它不存在」长得一模一样。**
+
+    `daily.yml` 的幂等检查（备份班次用）就踩在这上面：它在 checkout 之后立刻
+    `[ -f "$OUT_DIR/digest.json" ]` 判断今天是不是已经生成过。目录不在工作区，
+    这些判断**全是假**，`CONTENT_READY` 永远 false——幂等检查永远不跳过，
+    备份班次会把当天内容重新生成、微信**重复推一遍**。而它不报错，
+    看起来只是「今天又跑了一次」。
+
+    所以这条按行号盯顺序：任何读 `$OUT_DIR` / `output/` 的判断，都必须排在
+    把它加进稀疏范围之后。判据是行号，不是「有没有」——「只测行为拦不住
+    位置错」这一课在复制页那道闸上已经上过一次。
+    """
+    reads = re.compile(r'\$\{?(OUT_DIR|OUTDIR|RADAR_DIR)\b|(?<![\w-])output/')
+    tests = re.compile(r'\[\s*-[fdse]\s|test\s+-[fdse]\s')
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        text = path.read_text(encoding="utf-8")
+        if "sparse-checkout:" not in text:
+            continue
+        code = [(i, ln) for i, ln in enumerate(text.splitlines())
+                if not ln.lstrip().startswith("#")]
+        # 固定目录直接列进 cone 的，从第一行起就在范围内
+        if any(ln.strip().startswith("output/") for _, ln in code[:45]):
+            continue
+        add_at = next((i for i, ln in code if "sparse-checkout add" in ln), None)
+        if add_at is None:
+            continue
+        early = [(i + 1, ln.strip()) for i, ln in code
+                 if i < add_at and reads.search(ln) and tests.search(ln)]
+        assert not early, (
+            f"{path.name} 在把产物目录加进稀疏范围之前就去读它了：{early[:2]}\n"
+            "目录不在工作区，这些判断全是假的，而且不报错。")
+
+
+def test_日报这条线不许回来():
+    """**2026-07-31 账号所有者停掉了日报**：「不要日报了，都说过了，日报的形式
+    太落后了，**任务重且没收益没人愿意深入看**」。
+
+    所以 `daily.yml` 整个删掉了，不是停掉定时——我上一版只摘了触发器还回头
+    问了一遍知识帖要不要留，被指出「都说过了」。**对方重申过的事就是决定，
+    别再拿它去换一次确认。**
+
+    连带删掉的：
+    - 三条只为 daily.yml 存在的守卫测试（纪念日告警、封面闸门顺序、失败不吞）
+      ——主语没了，留着就是常年红
+    - `push-existing.yml` 的 `main` / `knowledge` 两个 scope 和盯
+      `output/**/knowledge/**` 的 push 触发——日报停产后没人再产它们
+
+    **没删的**：`tennislive digest` 命令还在（`probe.yml` 拿它做数据源覆盖率
+    探测，`--no-cards`），卡片渲染器还在（解说片 / 赛程包 / 知识帖共用）。
+    停的是这个栏目，不是底下那套工具。
+
+    要恢复日报，从 git 历史里把 `daily.yml` 取回来，**并且改掉这条测试**——
+    让它是一次看得见的决定。
+    """
+    assert not Path(".github/workflows/daily.yml").exists(), (
+        "daily.yml 又回来了。账号所有者 2026-07-31 明确停掉了日报"
+        "（「任务重且没收益没人愿意深入看」）——要恢复请连这条测试一起改。")
+    # 别再有第二条工作流去产日报那个包（output/<date>/push.html 那一份）
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        assert "tennislive digest" not in body or "--no-cards" in body, (
+            f"{path.name} 又在出带卡片图的日报包了——digest 现在只留给 "
+            "probe.yml 做覆盖率探测（--no-cards）")
+
+
+
+def test_即时赛果推送已经停掉():
+    """**2026-07-31：「即时赛果推送也不要了」。**
+
+    内容雷达（`flash.yml`）一天两种产出，各占一个名额：`result` 是刚完赛的
+    高价值比赛（即时赛果），`preview` 是赛前焦点。停的**只有前者**——同一句话
+    里还有「其他的可以保留」，赛前焦点不是赛果。
+
+    判据落在名额本身而不是工作流：`select_content` 按名额取，`RESULT_DAILY_LIMIT`
+    是 0 就一条都取不进去。改回 1 要连这条测试一起改。
+
+    **真调一次，不查源码文本**——「写了」不等于「跑过」。
+    """
+    from datetime import UTC, datetime  # noqa: PLC0415
+
+    from tennislive.content_ops import (  # noqa: PLC0415
+        PREVIEW_DAILY_LIMIT,
+        RESULT_DAILY_LIMIT,
+        select_content,
+    )
+
+    assert RESULT_DAILY_LIMIT == 0, (
+        "即时赛果推送又开回来了。账号所有者 2026-07-31 停掉了它——"
+        "要恢复请连这条测试一起改。")
+    assert PREVIEW_DAILY_LIMIT >= 1, "赛前焦点是「其他的可以保留」那一半，别一起关了"
+
+    # 喂一场刚完赛的重点比赛进去，确认它一条都取不出来。
+    # 用 conftest 的 make_match，别自己搓一个——模型改了它会跟着改。
+    from datetime import timedelta  # noqa: PLC0415
+
+    from conftest import make_match  # noqa: PLC0415
+
+    from tennislive.render.hotspot import (  # noqa: PLC0415
+        HOTSPOT_THRESHOLD,
+        hotspot_score,
+    )
+
+    from tennislive.timeutil import BEIJING  # noqa: PLC0415
+
+    now = datetime(2026, 7, 31, 20, 0, tzinfo=BEIJING)
+    just_finished = make_match(start_utc=now.astimezone(UTC) - timedelta(hours=2))
+    # **排名要补上。** `make_match` 的默认值只给了 seed，`hotspot_score` 算出来
+    # 是 49，而门槛是 50——差一分。第一版就栽在这儿：把开关拧回 1 重新跑，
+    # 这场球**照样一条都选不出来**，于是下面这句断言是恒真的，等于没测。
+    # 反向验证救回来的，又一次「断言全绿不等于页面对」。
+    just_finished.home[0].rank = 1
+    just_finished.away[0].rank = 2
+    assert hotspot_score(just_finished) >= HOTSPOT_THRESHOLD, (
+        f"这场球只有 {hotspot_score(just_finished)} 分，够不着热点门槛 "
+        f"{HOTSPOT_THRESHOLD}——那下面那句断言就白写了")
+
+    picks = select_content([just_finished], now=now, state={})
+    assert not [p for p in picks if p.kind == "result"], (
+        f"刚完赛的重点比赛还是被选成了即时赛果：{picks}")
+
+
+def test_今日赛程没有发布出口了():
+    """**2026-07-31：「昨日赛果和今日赛程都要拿掉了」。**
+
+    昨日赛果随 `daily.yml` 一起删了。今日赛程（赛程包）的生成器
+    （`tennislive schedule` → `output/<date>/schedule`）**没有任何工作流会自动
+    跑它**，它唯一的发布出口是 `push-existing.yml` 的 `schedule` scope——
+    删掉那个 scope，这个栏目就发不出去了。
+
+    生成器和它那一整套判据（跨日窗口、`NEXT_DAY_CUTOFF_HOUR`、按组轮流收口）
+    **故意留着**：那些教训写在 CLAUDE.md 里，代码是它的判据。停的是发布，
+    不是把知识铲掉。
+    """
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        assert "tennislive schedule" not in body, (
+            f"{path.name} 又在自动产今日赛程了")
+        assert '/schedule"' not in body and "= \"schedule\"" not in body, (
+            f"{path.name} 又给今日赛程开了发布出口")
+
+
+def test_每日网球知识分出来单独跑():
+    """**「所以要分开啊……其他的可以保留」。**
+
+    知识帖一直搭日报的顺风车（同一趟 `tennislive digest`，分两条 PushPlus 推），
+    所以我第一版把 daily 整个删掉时，它跟着一起没了。账号所有者纠正的正是这个：
+    **要拿掉的是昨日赛果和今日赛程，不是 daily 干的每一件事。**
+
+    分出来几乎不用改代码——`knowledge-adhoc.yml` 跑的就是同一个
+    `generate_knowledge_package`，而且本来就支持 slug 留空自动选题。缺的只是
+    一个定时。
+    """
+    text = Path(".github/workflows/knowledge-adhoc.yml").read_text(encoding="utf-8")
+    body = _yaml_only(text)
+    assert "schedule:" in body and "cron:" in body, (
+        "knowledge-adhoc 没有定时——每日网球知识就断了")
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minute, hour = cron.split()[0], cron.split()[1]
+    assert minute not in ("0", "30"), (
+        f"定时落在 :{minute}——GitHub 在整点半点最容易延迟或丢弃，"
+        "这是 daily 当年留下的经验")
+    # 推送那一步不能被定时触发挡住（schedule 事件下 inputs.push 是空的）
+    push_block = text[text.index("- name: PushPlus 推送到微信"):]
+    assert "inputs.push != 'false'" in push_block, (
+        "推送条件改了——定时触发时 inputs.push 是空的，别写成 == 'true'")
+
+
+def test_查赛果的命令留着卡片和推送不留():
+    """**2026-07-31：「可以用命令查赛果，但没必要做卡片图然后推送微信了」。**
+
+    这条把边界划在**产物**上，不是划在功能上：
+
+    | 命令 | 干什么 | 处置 |
+    |---|---|---|
+    | `today` / `schedule` / `results` / `live` | 终端里列出来给人看 | ✅ 留 |
+    | `flash`（即时战报） | 检测热点 → 渲赛果卡 → 推微信 | ❌ 删 |
+    | `schedule-cards`（今日赛程卡） | 渲赛程卡 → 写 push.html → 推微信 | ❌ 删 |
+    | `publish flash` | 发已提交的热点包 | ❌ 删别名 |
+
+    ⚠️ **`flash-card` 不是赛果卡，别删错。** 它渲的是**场外快讯卡**
+    （`render/flashcard.py`，带敏感话题闸门），配的是 `flash-radar` 那条线——
+    那条线是「其他的可以保留」里的。我差一点按名字把它一起删了：
+    名字里都有 flash，一个是即时战报（赛果），一个是场外快讯（新闻）。
+
+    `cmd_publish_flash` 这个**函数**留着——`publish content`（内容雷达的
+    赛前焦点）还在用它，删掉的只是 `flash` 那个 channel 别名。
+    """
+    from tennislive import cli  # noqa: PLC0415
+
+    for gone in ("cmd_flash", "cmd_schedule_cards"):
+        assert not hasattr(cli, gone), (
+            f"{gone} 又回来了——它渲卡片并推微信，2026-07-31 停掉了")
+    # 查询那几条必须还在
+    for keep in ("cmd_today", "cmd_day"):
+        assert hasattr(cli, keep), f"{keep} 不见了——「可以用命令查赛果」这半边丢了"
+    # 场外快讯那条线一个零件都不许少
+    assert hasattr(cli, "cmd_flash_card"), (
+        "cmd_flash_card 被删了——它是场外快讯卡，不是赛果卡，属于要保留的那条线")
+    from tennislive.render import flashcard  # noqa: PLC0415
+
+    assert hasattr(flashcard, "generate_flash_card")
+    # 赛果卡的渲染器该没有了
+    from tennislive.render import cards  # noqa: PLC0415
+
+    assert not hasattr(cards, "generate_flash_card"), (
+        "赛果卡渲染器又回来了（render.cards.generate_flash_card）")
+    # publish content 还得能用
+    assert hasattr(cli, "cmd_publish_flash"), (
+        "cmd_publish_flash 被连坐删了——publish content（赛前焦点）还在用它")
+
+
+def test_日报生成器换成了只出覆盖率的命令():
+    """**`tennislive digest` 删了，`tennislive coverage` 顶上。**
+
+    `probe.yml` 原来跑 `tennislive digest --no-cards` 只为拿一张
+    `coverage.txt`——**为了一张覆盖率报告跑一整套日报**。日报停产之后把这段
+    抽成自己的命令：抓一天数据、写一张报告，就这些。
+
+    钉两头：`digest` 不许回来，`coverage` 必须在，而且 probe 那条线要接上。
+    """
+    from tennislive import cli  # noqa: PLC0415
+
+    assert not hasattr(cli, "cmd_digest"), "日报生成器又回来了"
+    assert hasattr(cli, "cmd_coverage"), (
+        "覆盖率命令没了——probe.yml 的数据源探测就断了")
+
+    # **真跑一遍，别只断言符号存在。** 第一版就只写了上面那句 hasattr，
+    # 而命令本身是坏的：`fetch_day` 给的是 `DailyData`，`coverage_report`
+    # 要的是 `Digest`，一上 runner 就 AttributeError（run 30653131605）。
+    # 「写了」不等于「跑过」——查符号的断言只能防「有人把它删了」。
+    import argparse  # noqa: PLC0415
+    import tempfile  # noqa: PLC0415
+    from datetime import date  # noqa: PLC0415
+
+    from conftest import make_match  # noqa: PLC0415
+
+    import tennislive.digest as digest_mod  # noqa: PLC0415
+    from tennislive.digest import Digest  # noqa: PLC0415
+
+    fake = Digest(today=date(2026, 7, 31), results=[make_match()],
+                  live=[], schedule=[], source="espn")
+    real = digest_mod.build_digest
+    digest_mod.build_digest = lambda *a, **k: fake
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            rc = cli.cmd_coverage(argparse.Namespace(
+                date="2026-07-31", source="auto", outdir=tmp))
+            written = Path(tmp) / "2026-07-31" / "coverage.txt"
+            assert rc == 0 and written.is_file() and written.read_text(
+                encoding="utf-8").strip(), "coverage 命令跑不出报告"
+    finally:
+        digest_mod.build_digest = real
+
+    probe = _yaml_only(
+        Path(".github/workflows/probe.yml").read_text(encoding="utf-8"))
+    assert "tennislive coverage" in probe and "tennislive digest" not in probe, (
+        "probe.yml 还在用 tennislive digest")
+
+
+def test_停产栏目的历史产物清掉了活栏目一个不动():
+    """**删产物要按栏目分，和停产那次是同一条。**
+
+    我一开始把整个 `output/`（1.33 GB）当成「历史日报产物」报给账号所有者——
+    **错得离谱**：日报本体加上它带的知识帖、赛程包、即时战报一共只有 148 MB，
+    剩下 1.18 GB 是解说片（576M）、成片（440M）这些**还在用的栏目**，
+    而它们的链接挂在**已经发出去的微信消息里**，删了就是把老消息变成死链。
+
+    所以判据钉的是「活栏目还在」，不是「output 变小了」。
+
+    ⚠️ **粒度是「这条线还有没有产物」，不是逐个文件。** 反向验证过：删掉
+    reel 的一个 mp4 它不红，把 reel 整个目录拿掉才红。它拦的是「一次清理
+    把整条线扫了」，不是手滑删一个文件。
+    """
+    live = ("reel", "explainer", "queue", "knowledge_adhoc", "flash_radar")
+    tracked = subprocess.run(
+        ["git", "ls-files", "--", "output"],
+        capture_output=True, text=True, check=True).stdout.splitlines()
+    for name in live:
+        assert any(f"/{name}/" in p for p in tracked), (
+            f"output/ 里 {name} 的产物没了——那条线还在用，"
+            "链接挂在已发出去的消息里")
+    # 停产的四类不许再有。**判据要锚在日期目录正下方**——裸的 `"/cards/" in p`
+    # 会把 `output/<date>/queue/<pick>/cards/`（内容雷达自己的卡片，活的）
+    # 一起扫进去。同一天第五次「判据扫得太宽」，这次是路径。
+    for dead in ("cards", "knowledge", "schedule", "flash", "video"):
+        stale = [p for p in tracked
+                 if re.match(rf"output/\d{{4}}-\d\d-\d\d/{dead}/", p)]
+        assert not stale, f"停产栏目 {dead} 的历史产物还在：{stale[:3]}"
+    # 日期目录正下方的散件（wechat.md / xiaohongshu.txt 那些）也该没了
+    loose = [p for p in tracked
+             if re.match(r"output/\d{4}-\d\d-\d\d/[^/]+$", p)]
+    assert not loose, f"日报包的散件还在：{loose[:3]}"
+
+
+def test_内容雷达的间隔要按发布窗口算():
+    """**72 次/天换来 1 个包。**
+
+    run 30643007873 全程 3 分 44 秒，checkout 占 3 分 02 秒（81%），而真正
+    「自动选题并生成」只用了 **3 秒**。产出是每天雷打不动 1 个（就是日限），
+    即时赛果停掉后只剩赛前焦点——**上限就是 1 个/天**。
+
+    间隔不是拍的：`preview_candidates` 收赛前 45–210 分钟的对阵，窗口宽
+    165 分钟。这条测试钉住「间隔和窗口是一起算的」——改窗口就得回来看间隔，
+    别让它们各走各的。
+    """
+    from tennislive.content_ops import preview_candidates  # noqa: PLC0415
+
+    sig = inspect.signature(preview_candidates)
+    window = (sig.parameters["max_lead_minutes"].default
+              - sig.parameters["min_lead_minutes"].default)
+    assert window == 165, f"发布窗口改成了 {window} 分钟——间隔要跟着重算"
+
+    body = _yaml_only(Path(".github/workflows/flash.yml").read_text(encoding="utf-8"))
+    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
+    minute, hours = cron.split()[0], cron.split()[1]
+    assert "," in hours or hours.startswith("*/"), (
+        f"内容雷达又变成每小时跑了：{cron}")
+    per_day = len(hours.split(","))
+    assert per_day <= 8, (
+        f"内容雷达一天 {per_day} 次——日限只有 1 个包，多跑的都是空转")
+    assert minute not in ("0", "30"), "定时落在整点半点，GitHub 最容易延迟或丢弃"
+    # 间隔要匀，别六次全挤在半天里
+    hs = sorted(int(h) for h in hours.split(","))
+    gaps = [(b - a) for a, b in zip(hs, hs[1:])] + [24 - hs[-1] + hs[0]]
+    assert max(gaps) - min(gaps) <= 1, f"班次间隔不匀：{gaps}"
+
+
+def test_没有下游在读的定时任务不许一直跑():
+    """**采集了没人读，和空跑是一回事。**
+
+    - `oncourt-interviews`：`data/oncourt_interviews.json` 攒到 4551 条，
+      而除了 oncourt 自己那套采集工具，**没有任何代码 import 它**
+    - `player-name-sync`：六月至今译名表只变过一次，还是人手改的
+
+    两条都摘掉定时、留手动。这条测试拦的是「顺手把 cron 加回来」——
+    要恢复，先给它找个下游，或者把这条测试一起改。
+    """
+    for name in ("oncourt-interviews", "player-name-sync"):
+        body = _yaml_only(
+            Path(f".github/workflows/{name}.yml").read_text(encoding="utf-8"))
+        head = body.split("\njobs:")[0]
+        assert "schedule:" not in head, (
+            f"{name} 又挂上定时了——它的产出没有下游在读（2026-07-31 停的）")
+        assert "workflow_dispatch:" in head, f"{name} 的手动入口不能一起摘掉"
+
+
+def test_昨日一分这条线不许回来():
+    """**2026-07-31：「昨日一分全功能拿掉」。**
+
+    停之前查过根因，不是频次问题：skip 诊断里十个检索源有五个直接 error
+    （全是 YouTube 系，和 match-reel 那条「机房 IP 被挡」同一个病），唯一能
+    拿到候选的 Tennis TV 卡在缺 `TENNISTV_JWT`——**11 天 66 趟只出 3 条片**。
+    出路是接源不是降频，账号所有者选了整条拿掉。
+
+    删掉的：工作流、`tennislive point` 命令、`video/daily_point.py`（1937 行）、
+    `tests/test_daily_point.py`（57 条）、`test_cli` 里三条、历史产物 45 个文件。
+
+    **没删的**：`video/pipeline.py` 的 `render_ass` 和 `subtitle_text.py`——
+    视频本地化那条线还在用。停的是栏目，不是底下那套工具。
+    """
+    assert not Path(".github/workflows/yesterday-point.yml").exists()
+    assert not Path("src/tennislive/video/daily_point.py").exists()
+    assert not Path("tests/test_daily_point.py").exists()
+
+    from tennislive import cli  # noqa: PLC0415
+
+    assert not hasattr(cli, "cmd_yesterday_point"), "昨日一分的命令又回来了"
+
+    # 共用的字幕/ASS 那套要还在——视频本地化靠它
+    from tennislive.video import pipeline  # noqa: PLC0415
+    from tennislive.video.subtitle_text import drop_punctuation  # noqa: PLC0415
+
+    assert hasattr(pipeline, "render_ass") and callable(drop_punctuation), (
+        "把共用的字幕工具一起删了——视频本地化那条线还在用")
+
+    # 历史产物也清了
+    tracked = subprocess.run(["git", "ls-files", "--", "output"],
+                             capture_output=True, text=True, check=True).stdout
+    assert "yesterday-point" not in tracked, "昨日一分的历史产物还在"
+
+
+
+
+def test_海报的裁切中间物一个都不许进仓库():
+    """`versus_poster.py` 把裁切/抠图/淡出的中间物**存在原图旁边**
+    （`image.with_suffix(...)`），而原图在 `assets/players/` 里是被跟踪的
+    ——中间物只要没被 gitignore 挡住，就会跟着一起被 `git add` 进仓库。
+
+    **判据自己推导，不维护名单。** `.gitignore` 原来手写着 `.crop.jpg` 和
+    `.crop.png`，而同一条链上的第三个 `_fade_cut_sides` 存的是
+    `X.crop.png` → `X.crop.faded.png`，`*.crop.png` 匹配不上它，于是两张
+    中间物躺在 `assets/players/` 里等着被提交。逐个列名字挡不住下一个——
+    和 outdir 里 `source*` 那个坑连栽四次是同一个形状。
+
+    所以这条扫源码里真正的 `with_suffix("...")`，每个图片后缀都必须被
+    `.gitignore` 挡住。**加一个新的中间物后缀就会红**，逼你同时改 gitignore。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    suffixes = set(re.findall(r'with_suffix\(\s*"(\.[a-z.]+)"\s*\)', src))
+    images = {s for s in suffixes if s.endswith((".png", ".jpg", ".jpeg"))}
+    assert images, "没扫到任何图片中间物，判据失效了"
+
+    ignored = [ln.strip() for ln in Path(".gitignore").read_text(encoding="utf-8")
+               .splitlines() if ln.strip() and not ln.startswith("#")]
+    for suffix in sorted(images):
+        assert f"*{suffix}" in ignored, (
+            f"`with_suffix(\"{suffix}\")` 存的中间物落在原图旁边，"
+            f"而 .gitignore 里没有 `*{suffix}`——它会跟着 assets/ 一起进仓库")
+
+    # 反过来：这些中间物此刻真的一个都不在索引里
+    tracked = subprocess.run(["git", "ls-files"], capture_output=True,
+                             text=True, check=True).stdout
+    for suffix in sorted(images):
+        stray = [ln for ln in tracked.splitlines() if ln.endswith(suffix)]
+        assert not stray, f"仓库里已经有 {suffix} 的中间物：{stray[:3]}"
+
+
+def test_spec形状校验排在下载之前():
+    """**今天返工的直接来源：错误发现得太晚。**
+
+    `parse_segments` 原来在第 1543 行，而下载源片在第 1516 行——可它只用
+    `sources` 的**键**去校验段落引用（`{s.source} - set(sources)`），一个下载
+    下来的文件都不碰。于是段落字段写错、`inset.corner` 写错、缺字段、贴图路径
+    不存在这四类错，每一类都要先付一次 392 MB 的下载才报出来。
+
+    eala-fernandez 今天渲了 3 轮、wang-samsonova 2 轮；最近 30 趟 match-reel
+    合计 211 分钟。**「渲到一半才发现」变成「第 5 秒报错」是这条线上最便宜的
+    一笔改动。**
+
+    这条盯**位置**：`validate_spec` 和 `_preflight_cutout` 都必须排在下载之前。
+    「只测行为拦不住位置错」——复制页那道闸上已经上过这一课。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def render("):]
+    body = body[:body.index("\ndef ", 1)]
+
+    validate_at = body.index("validate_spec(spec)")
+    preflight_at = body.index("_preflight_cutout(spec)")
+    download_at = body.index("download(url, path)")
+    assert validate_at < download_at, "spec 形状校验排到下载后面了"
+    assert preflight_at < download_at, "缺依赖的预检排到下载后面了"
+
+    # 形状校验里**不许**混进环境检查——否则本地想 dry-run 一下 spec，
+    # 得先装 176 MB 的抠图模型
+    shape = src[src.index("def validate_spec("):]
+    shape = shape[:shape.index("\ndef ", 1)]
+    assert "_preflight_cutout" not in shape.split('"""')[-1], (
+        "validate_spec 里混进了环境检查——那是「这台机器行不行」，"
+        "不是「这份 spec 对不对」")
+
+
+def test_dry_run秒级返回且一个字节都不下载(tmp_path):
+    """**真跑一遍**，喂一个绝对下不动的 URL——它必须照样成功返回。
+
+    这是「写了不等于跑过」：断言 `--dry-run` 这个开关存在，证明不了它没去下载。
+    所以给一个 `http://0.0.0.0/nope.mp4`，能秒回就说明它真的没碰网络。
+    """
+    import json as _json
+    import subprocess as _sp
+    import sys as _sys
+    import time as _time
+
+    spec = _json.loads(Path("specs/reels/wong-lehecka.json").read_text(encoding="utf-8"))
+    spec["source_url"] = "http://0.0.0.0/绝对下不动.mp4"
+    path = tmp_path / "fake.json"
+    path.write_text(_json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+    outdir = tmp_path / "out"
+
+    started = _time.perf_counter()
+    proc = _sp.run(
+        [_sys.executable, "tools/build_match_reel.py", "render",
+         "--spec", str(path), "--outdir", str(outdir), "--dry-run"],
+        capture_output=True, text=True, timeout=60)
+    elapsed = _time.perf_counter() - started
+
+    assert proc.returncode == 0, f"dry-run 失败了：{proc.stderr[-400:]}"
+    assert "spec 形状没问题" in proc.stdout, proc.stdout
+    assert elapsed < 20, f"dry-run 花了 {elapsed:.1f}s——它不该碰网络"
+    assert not outdir.exists(), "dry-run 建了 outdir——它什么都不该产"
+
+
+def test_cover_only排在分段和TTS之前():
+    """封面是全流程返工最多的那一屏（CLAUDE.md 里 68 行、10 个专门段落，
+    每段都是一轮返工换来的），而它在完整 render 里**第 63 秒就完成了**，
+    却要等满 6 分钟才看得见——run 30624808733 的时间线：
+    10:52:54 开跑 → 10:53:57 封面编码完 → 11:00:15 成片。
+
+    `build_cover` 不依赖 segments / tracks / TTS / voice（查过，一个都不用），
+    所以「下载 → 出海报 → 退出」是干净的一条路。本地实测 4.3 秒，
+    渲出来的海报打开看过：台头、双抠图、VS 牌、中文名、钩子、比分、级别牌全对。
+
+    这条盯**位置**：早退必须排在 `parse_segments` 和 TTS 之前，否则那些活白干。
+    """
+    reel = _reel()
+    src = Path(reel.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def render("):]
+    body = body[:body.index("\ndef ", 1)]
+
+    early_return = body.index("if cover_only:")
+    for later, why in (("parse_segments(spec", "分段解析"),
+                       ("synth_cover(", "封面 TTS"),
+                       ("cut_segment(", "分段编码")):
+        assert early_return < body.index(later), (
+            f"cover_only 的早退排在了{why}后面——那些活白干了")
+    assert "cover_only: bool = False" in src, "render 没有 cover_only 参数"
+    assert '"--cover-only"' in src, "命令行没有 --cover-only"
+
+
+def test_旁白超长的闸排在分段编码之前():
+    """**撞一次这道闸，白编 50–60 秒。**
+
+    它原来排在分段编码之后（TTS 在第 115 行、闸在 141，而 `cut_segment` 循环
+    在 101），可 TTS 只要 6 秒、一个源片像素都不碰。白编的是封面海报 2.6s +
+    抠图 8.4s + **分段编码 47s** + 拼接——而「旁白写长了」本来是改一行文案
+    的事，代价却是一整轮六分钟。
+
+    挪到前面之后同样这条错在开跑后一分半就报出来，而且一次把所有超出的段
+    都列出来（原设计就是如此，别改一段跑一次）。
+    """
+    reel = _reel()
+    body = _render_body(reel)
+    tts = body.index("synthesize(segments")
+    gate = body.index("有旁白比它那一段的画面长")
+    encode = body.index("cut_segment(")
+    assert tts < encode, "TTS 又排到分段编码后面了——撞闸时白编 47 秒"
+    assert gate < encode, "旁白超长那道闸排在分段编码之后"
+
+
+def test_段落不许写过源片末尾(monkeypatch):
+    """**ffmpeg 越界时退出码是 0**，只会安安静静出一段短的。
+
+    而每段旁白按 `seg.length`（spec 里写的长度）算偏移，所以一旦某段被悄悄
+    截短，**它后面每一句解说和字幕都整体错位**——症状是「后半段配音对不上」，
+    人还未必定位得到是哪一段。踩一次至少一整轮六分钟。
+
+    `probe_duration` 本来就在 render 里算了五次，却从来没跟段落比过。
+    这条**真调一次**函数，不是查源码有没有那个名字。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    assert "_check_segments_fit" in _render_body(reel), "render 没接这道检查"
+
+    seg = _seg(reel, 0.0, 5.0)
+    fake = Path("/nowhere/fake.mp4")
+
+    # 5 秒的段配 10 秒的源片：过
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 10.0)
+    reel._check_segments_fit([seg], {"": fake})
+
+    # 同一段配 3 秒的源片：必须炸，而且要说出超了多少
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 3.0)
+    with pytest.raises(reel.ReelError, match="超出"):
+        reel._check_segments_fit([seg], {"": fake})
+
+    # 容差：源片时长有帧级误差，卡太死会误伤最后一段
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: 4.98)
+    reel._check_segments_fit([seg], {"": fake})
+
+
+def _render_body(reel) -> str:
+    import inspect  # noqa: PLC0415
+
+    return inspect.getsource(reel.render)
+
+
+def _seg(reel, start: float, end: float):
+    """按 Segment 的真实字段构一段，缺省值从 dataclass 自己拿——
+    字段增删了它跟着走，不用回来改。"""
+    import dataclasses  # noqa: PLC0415
+
+    kwargs = {}
+    for f in dataclasses.fields(reel.Segment):
+        if f.name == "start":
+            kwargs[f.name] = start
+        elif f.name == "end":
+            kwargs[f.name] = end
+        elif f.default is not dataclasses.MISSING:
+            kwargs[f.name] = f.default
+        elif f.default_factory is not dataclasses.MISSING:  # type: ignore[misc]
+            kwargs[f.name] = f.default_factory()  # type: ignore[misc]
+        else:
+            kwargs[f.name] = "" if f.type in ("str", str) else 0
+    return reel.Segment(**kwargs)
 
 
 def test_多源spec每一段都要说清自己从哪条源片剪(tmp_path):

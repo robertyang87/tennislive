@@ -11,7 +11,19 @@ from .timeutil import BEIJING
 from .zh.terms import round_zh
 
 PREVIEW_THRESHOLD = 38
-RESULT_DAILY_LIMIT = 1
+# **即时赛果推送停了（2026-07-31）。** 账号所有者：「即时赛果推送也不要了」。
+#
+# 这两个名额本来一天各一条：`result` 是刚完赛的高价值比赛（即时赛果），
+# `preview` 是赛前焦点。停的只有前者——账号所有者同一句话里说「其他的可以
+# 保留」，赛前焦点不是赛果，留着。
+#
+# **改这个数就够了，不用动工作流**：`select_content` 按名额取，`result_slots`
+# 算出来是 0，`hotspot_candidates` 那一轮一条都取不进去，`preview` 照常。
+# 内容雷达（flash.yml）于是变成「只发赛前焦点」。
+#
+# 要恢复改回 1，**并且改掉 test_即时赛果推送已经停掉**——让它是一次看得见
+# 的决定，别哪天悄悄回来。
+RESULT_DAILY_LIMIT = 0
 PREVIEW_DAILY_LIMIT = 1
 RUN_LIMIT = 1
 

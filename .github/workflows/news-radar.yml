@@ -26,6 +26,18 @@ jobs:
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半到三分钟。这条一天两趟。
+          # 本次要写的那一格在下面 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -52,6 +64,10 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          DATE=$(python -c "from tennislive.timeutil import beijing_today; print(beijing_today())")
+          # 进 cone 要排在生成**之前**：`sparse-checkout add` 会把 HEAD 上
+          # 那一版先铺回工作区，铺完再生成才是对的顺序。
+          git sparse-checkout add "output/$DATE"
           tennislive flash-radar --outdir output
 
       - name: 提炼选题候选（新闻钩子 + 底下的常青线）
@@ -65,7 +81,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/
+          git add --sparse output/
           if git diff --cached --quiet; then
             echo "没有新的场外候选"
           else
