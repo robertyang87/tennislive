@@ -63,6 +63,9 @@ JSDELIVR_MAX_BYTES = 20 * 1024 * 1024
 TITLE_MAX = 20
 # 末尾那一格自己还有个上限，比整句更紧：前面的日期和栏目已经占掉七个多字位。
 SUMMARY_MAX = 13
+# 小红书正文那一格的硬上限。超了**粘不进去**，复制页的按钮点了也没用。
+# 不是编辑口味，是平台定的——要长就去提炼，别来改这个数。
+BODY_MAX = 1000
 # 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
 # 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
 POSTER_NAME = "poster.jpg"
@@ -456,11 +459,27 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     """文案的第一行是标题，空一行之后是正文——和 `to_copy_page` 同一套切法。
 
     两处必须用同一套，否则推送里印的和复制页里复制到的会不是同一段。
+
+    **正文卡在 `BODY_MAX` 字。** 账号所有者：「之前你给的那个文案里的正文
+    超过了 1000 字，然后不能直接复制」——小红书那一格就是 1000 字上限，
+    超了**粘不进去**，于是复制页那个按钮点了也没用，整条推送的出口等于没有。
+
+    闸装在这儿是因为**两条路共用它**：推送正文印的和复制页里复制到的，
+    切法必须是同一套（见上）。装一处，两边都拦得住。
+
+    ⚠️ 这不是编辑口味，是平台的硬限制。真要长，办法是**提炼**不是放宽——
+    见 `docs/post-match-interview-sources.md`「文案分两段」那节。
     """
     lines = copy_text.splitlines()
     title = lines[0].strip() if lines else ""
     start = 2 if len(lines) > 1 and not lines[1].strip() else 1
-    return title, "\n".join(lines[start:]).strip()
+    body = "\n".join(lines[start:]).strip()
+    if len(body) > BODY_MAX:
+        raise SystemExit(
+            f"小红书正文 {len(body)} 字，超过 {BODY_MAX} 字上限，粘不进去。\n"
+            "别放宽这个数——它是平台定的。把原文整段搬进正文正是超标的原因：\n"
+            "前面写提炼过的要点、总结和给读者的启发，后面只留最值得抄的那几句原话。")
+    return title, body
 
 
 def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:

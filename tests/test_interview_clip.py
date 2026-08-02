@@ -1727,3 +1727,42 @@ def test_订正要看穿说话人标记():
     assert "Alexo" not in en, en
     assert "Pegula," in en, f"订正把尾标点吃掉了，断句会少一个依据：{en}"
     assert ">>" not in en, f"说话人标记漏进成品行了：{en}"
+
+
+def test_小红书正文不许超一千字():
+    """账号所有者：「正文超过了 1000 字，然后不能直接复制」。
+
+    小红书正文那一格就是 1000 字上限，超了**粘不进去**——于是推送里那个
+    「复制文案」按钮点了也没用，整条推送的出口等于没有。而它**不报错**：
+    文案照样渲、链接照样发，只有真去粘的人才发现粘不上。
+
+    量出来是采访这条线独有的毛病：赛场之上那十几条正文全在 1000 以内
+    （最长 925），而采访两条是 1161 和 1005——因为采访**把原文整段搬进了
+    正文**。所以正确的修法是提炼，不是放宽这个数。
+
+    闸装在 `split_copy` 里，因为推送正文和复制页共用它——装一处两边都拦得住。
+    """
+    import contextlib
+    import io
+    import sys
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    from push_reel import BODY_MAX, cut_at_tags, split_copy
+
+    # ⚠️ **先把这个数钉住，再拿它去量。** 第一版只写了 `len(body) <= BODY_MAX`
+    # ——反向验证时把上限改成 100000，闸和断言**一起松了**，测试照样绿。
+    # 也就是说它拦得住「文案变长」，拦不住「有人把上限调高」，而后者正是
+    # 超标时最顺手的那个改法。1000 是小红书那一格的**平台限制**，不是我们的
+    # 口味参数：调高它不会让文案粘得进去，只会让这道闸变成摆设。
+    assert BODY_MAX == 1000, (
+        f"BODY_MAX 被改成了 {BODY_MAX}。这是平台定的，不是可调的——"
+        "正文超了要去提炼，不是放宽这个数")
+
+    checked = 0
+    for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
+        with contextlib.redirect_stdout(io.StringIO()):
+            raw = cut_at_tags(f.read_text(encoding="utf-8"))
+        _, body = split_copy(raw)          # 超了它自己就 SystemExit
+        assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
+        checked += 1
+    assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
