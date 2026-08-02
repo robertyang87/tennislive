@@ -3340,37 +3340,30 @@ def test_停产栏目的历史产物清掉了活栏目一个不动():
     assert not loose, f"日报包的散件还在：{loose[:3]}"
 
 
-def test_内容雷达的间隔要按发布窗口算():
-    """**72 次/天换来 1 个包。**
+def test_停掉的定时不许自己回来():
+    """**2026-08-02：账号所有者「这两个任务停掉吧，不需要了」。**
 
-    run 30643007873 全程 3 分 44 秒，checkout 占 3 分 02 秒（81%），而真正
-    「自动选题并生成」只用了 **3 秒**。产出是每天雷打不动 1 个（就是日限），
-    即时赛果停掉后只剩赛前焦点——**上限就是 1 个/天**。
+    停的是**定时**，不是这两条线的代码——`workflow_dispatch` 都留着，
+    随时能手动跑一趟。所以这条测试只钉两件事：cron 不许回来、手动入口不许
+    一起被摘掉。
 
-    间隔不是拍的：`preview_candidates` 收赛前 45–210 分钟的对阵，窗口宽
-    165 分钟。这条测试钉住「间隔和窗口是一起算的」——改窗口就得回来看间隔，
-    别让它们各走各的。
+    ⚠️ 这条替掉的是 `test_内容雷达的间隔要按发布窗口算`（钉 6 次/天那个
+    cron 是不是按 165 分钟的发布窗口算出来的）。**主语没了就得换判据**：
+    cron 一删，那条测试的 `re.search(...).group(1)` 当场 `AttributeError`
+    ——一条常年红的检查和一条常年跳过的检查是同一个毛病。
+
+    定时归零之后，`preview_candidates` 那 165 分钟的窗口只在手动跑的那一趟
+    里起作用，不再需要一个间隔去配它。要恢复定时，得连这条测试一起改——
+    那时**间隔仍然要按窗口重算**，别照抄当年那行 cron。
     """
-    from tennislive.content_ops import preview_candidates  # noqa: PLC0415
-
-    sig = inspect.signature(preview_candidates)
-    window = (sig.parameters["max_lead_minutes"].default
-              - sig.parameters["min_lead_minutes"].default)
-    assert window == 165, f"发布窗口改成了 {window} 分钟——间隔要跟着重算"
-
-    body = _yaml_only(Path(".github/workflows/flash.yml").read_text(encoding="utf-8"))
-    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
-    minute, hours = cron.split()[0], cron.split()[1]
-    assert "," in hours or hours.startswith("*/"), (
-        f"内容雷达又变成每小时跑了：{cron}")
-    per_day = len(hours.split(","))
-    assert per_day <= 8, (
-        f"内容雷达一天 {per_day} 次——日限只有 1 个包，多跑的都是空转")
-    assert minute not in ("0", "30"), "定时落在整点半点，GitHub 最容易延迟或丢弃"
-    # 间隔要匀，别六次全挤在半天里
-    hs = sorted(int(h) for h in hours.split(","))
-    gaps = [(b - a) for a, b in zip(hs, hs[1:])] + [24 - hs[-1] + hs[0]]
-    assert max(gaps) - min(gaps) <= 1, f"班次间隔不匀：{gaps}"
+    for name in ("flash", "news-radar"):
+        body = _yaml_only(
+            Path(f".github/workflows/{name}.yml").read_text(encoding="utf-8"))
+        head = body.split("\njobs:")[0]
+        assert "schedule:" not in head, (
+            f"{name} 的定时又回来了——2026-08-02 账号所有者停掉的")
+        assert "workflow_dispatch:" in head, (
+            f"{name} 停的是定时，手动入口不能一起摘掉")
 
 
 def test_没有下游在读的定时任务不许一直跑():
