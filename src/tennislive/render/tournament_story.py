@@ -1335,6 +1335,63 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="mandatory-1000",
+        title="强制赛为什么可以不去",
+        subtitle="网球观察 · 规则篇",
+        identity="缺席一站大师赛，账单是多少",
+        chips=("规则与代价", "ATP 大师赛", "2026 蒙特利尔"),
+        hero=(
+            "辛纳把 2026 年打过的五个大师赛全赢了，第六个没去；"
+            "德约科维奇和阿尔卡拉斯也不在蒙特利尔的签表上。"
+            "大师赛是强制的，ATP 规则书写着处罚自动生效、不可申诉——"
+            "可这三个人去年在多伦多也没打，那一站记的同样是 0。"
+        ),
+        facts=(
+            "辛纳把 2026 年打过的五个大师赛全赢了：印第安维尔斯、迈阿密、蒙特卡洛、"
+            "马德里、罗马。**史上第一个赢下赛季前四站的人**，也是第一个五连冠。"
+            "7 月 12 日他温网卫冕，20 天后蒙特利尔开打，签表上没有他。",
+            "2026 ATP 规则书第八章：从大师赛正赛退赛**一律记一次排名处罚**，"
+            "原话是 `Ranking penalties are automatic and cannot be appealed`。"
+            "**ATP 500 可以靠推广活动、停赛 30 天或育儿身份豁免免掉，大师赛不行。**",
+            "第二笔在奖金池（大师赛＋年终总决赛共 2153.7 万美元）：缺 1 站扣 25%，"
+            "缺 2 站 50%，缺 3 站 75%，缺 4 站清零。**到场做推广能把 25% 减到 12.5%，"
+            "但规则书同一段写死了它不解除排名处罚**，且最多赎回 20 万美元。",
+            "去年加拿大站在多伦多，三个人同样缺席。排名是 52 周滚动的，"
+            "**今年这个 0 顶掉去年那个 0——排名上一分不差。**",
+            "唯一的出口在 9.03 Note 3：**连着缺两个或以上的强制赛**，大师赛、大满贯、"
+            "年终总决赛都算，可向医疗委员会申请抹掉最多 3 个零分。"
+            "阿尔卡拉斯手腕伤缺了法网、温网，够得着；辛纳只缺这一站，且已报名辛辛那提。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24", player="辛纳", age="24 岁",
+                headline="赛前一周退出蒙特利尔",
+                detail=(
+                    "「我们认为把健康放在第一位是正确的决定。」"
+                    "德约科维奇同日退赛；阿尔卡拉斯因右手腕伤本就不在名单上。"
+                ),
+                source_url="https://www.cbc.ca/lite/story/9.7282909",
+            ),
+            ChampionMoment(
+                date="2026-08-01", player="兹维列夫", age="29 岁",
+                headline="顶替成为头号种子",
+                detail=(
+                    "蒙特利尔 8 月 1 日开打，法网冠军兹维列夫升为头号种子，"
+                    "阿利亚西姆第二——加拿大选手史上最高种子位。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="AELTC / Joel Marklund · wimbledon.com 官方图",
+        source_label="ATP 2026 官方规则书 / CBC",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        evidence_urls=(
+            "https://www.cbc.ca/lite/story/9.7282909",
+            "https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+        ),
+    ),
+    _trivia_story(
         slug="comeback-middle",
         title="中段长得一模一样",
         subtitle="网球观察 · 人物篇",
