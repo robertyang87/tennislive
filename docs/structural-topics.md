@@ -392,3 +392,36 @@ $100,000 的地板减掉 $70,000 的核心开销，税前剩三万；
 
 - **2026 年 Baseline 的档位**（上面是 2025 口径）
 - **「336 / 251 收支平衡」的原始出处与年份**，核不到就不用
+
+### 2026-08-02 五补：动手前那两样补齐了
+
+#### 1. 2026 年的 Baseline 档位——**查不到明文，按 2025 口径写并标注**
+
+ATP 官网（`atptour.com/en/news/...`）对本环境一律 403，带浏览器 UA 的 curl 也是。
+从二手镜像拿到的原话只有一句：
+
+> `The Baseline program will continue in 2026 after providing more than
+> $2 million of support in 2025 to secure minimum-income thresholds for
+> Top 250 players, as well as supporting younger athletes and those
+> returning from injury.`
+
+**能确认的**：这个计划 2026 年继续，2025 年补了 200 多万美元。
+**确认不了的**：2026 年的三档具体金额。
+→ 片子里写「2025 年的档位」并把年份说出来，**不冒充今年**。
+
+#### 2. 「336 男 / 253 女收支平衡」——**是 2013 年的数，不能当今天用**
+
+查到原始口径：`The break even point on the combined singles and doubles
+earnings list ... was 336 for men and 253 for women **in 2013**`。
+
+**十三年前的数。** 而且更要命的是：**2024 年 ATP 才设了 Baseline 那块地板**——
+拿 2013 年的数去讲 2026 年的处境，正好踩上本仓库那条
+「判历史事件要用当年那本规则书」的反面。
+
+→ **不当现状用。** 但它可以当**对照**，而且这么用反而更有力：
+
+> 2013 年，能靠打球收支平衡的男子只有 **336 人**。
+> 2024 年起，ATP 给前 250 设了地板。
+> ——**这项运动自己发现了问题，并且动了手。**
+
+这一笔让片子不至于变成单向的抱怨：地板确实修了，问题是**地板只够一个人站**。
