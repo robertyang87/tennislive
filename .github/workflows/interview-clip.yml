@@ -70,7 +70,7 @@ jobs:
       - name: 装依赖
         if: github.event.inputs.mode != 'push'
         run: |
-          pip install -q -e . "yt-dlp[default]" playwright faster-whisper
+          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
           node --version
 
@@ -92,6 +92,9 @@ jobs:
           sys.path.insert(0, "tools")
           from build_interview_clip import _chromium
           import faster_whisper  # noqa: F401
+          # 去水印的掩膜要 cv2（`logo_mask`）。装 extra 别装裸包名——
+          # opencv 5.x 里 `CascadeClassifier` 没了，pyproject 钉着 <5
+          import cv2; assert hasattr(cv2, "inpaint")
           from build_interview_clip import _en_width, _zh_width
           assert shutil.which("ffmpeg"), "没有 ffmpeg"
           print("Chromium:", _chromium())
@@ -217,7 +220,12 @@ jobs:
           # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
           # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
           D="output/interviews/${{ github.event.inputs.slug }}"
-          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
+          # ⚠️ **清理清单里的名字会过时。** 封面从 `cover.jpg` 改叫 `poster.jpg` 之后，
+          # 它旁边那份内嵌字体的 HTML 就叫 `poster.html`（**12.4 MB**），
+          # 而这一行还写着 `cover.html`——于是它跟着进了仓库。所以按后缀清，
+          # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
+          find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"

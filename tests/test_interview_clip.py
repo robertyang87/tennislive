@@ -728,6 +728,154 @@ def test_顶栏量宽度要按每段自己的字号():
     assert clip._SCORE_PX > _HEAD_SIZE["b"], "比分放大了，量的时候就不能按小的量"
 
 
+def test_并成一个词的ASR错要在切行之前修(tmp_path):
+    """**`word_fix` 和 `en_fixed` 分工不同，不能互相顶替。**
+
+    实测：ASR 把 `was` 和 `Congratulations` 听成了一个词 `wasulations`。
+    词都并错了，行怎么排都排不下——照原样修进 `en_fixed`，那一行量出来
+    **1150px**，超出可用宽 952 两成，而 libass 会**默默折行**压到中文那行上。
+
+    放进 `word_fix` 之后，切行拿到的是拆开的词，行自己重排。
+    """
+    words = [(0.0, "while"), (0.5, "I"), (1.0, "wasulations"),
+             (1.5, "not"), (2.0, "just"), (2.5, "on"), (3.0, "making.")]
+    plain = segment(words, 0.0, 5.0)
+    fixed = segment(words, 0.0, 5.0, word_fix={"wasulations": "was here. Congratulations,"})
+    assert "wasulations" in " ".join(s["en"] for s in plain)
+    assert "wasulations" not in " ".join(s["en"] for s in fixed)
+    assert "was here. Congratulations," in " ".join(s["en"] for s in fixed)
+    # 拆开之后成了两句，切行会跟着多出一行——**行号会变**，挂账要重挂
+    assert len(fixed) > len(plain)
+
+
+def test_英文也要过宽度闸(tmp_path):
+    """原来这道闸**只查中文**——于是 `en_fixed` 里一行订正写长了一路畅通，
+    到渲染时 libass 默默折行，压到中文那一行上。
+
+    切行时量的是 ASR 原文，**订正之后没人再量一次**。这条补的就是那一次。
+    """
+    long_en = "while I was here. Congratulations, not just on making your second career"
+    assert _en_width(long_en) > _LINE_PX, "这条测试要一行真的超宽才有意义"
+    with pytest.raises(SystemExit, match="英文超宽"):
+        write_ass(_lines([long_en, "short one."]), ["一", "二"], 0.0, tmp_path / "t.ass")
+
+
+def test_翻转和裁角标要作用到封面帧上():
+    """**封面帧不走那条滤镜链**——它是单独一条 `ffmpeg -ss … -frames:v 1`。
+
+    两处都漏过就是「片子是正的、封面是反的」「片子没水印、海报上有」，
+    而**两张图分开看都正常**，只有摆在一起才看得出来。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert "hflip" in grab, "抽封面帧那一步没跟着翻转"
+    assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
+
+
+def _clip(path: Path, mark: bool = True, n: int = 10) -> Path:
+    """造一段测试片：背景每帧都在动，标记固定不动。
+
+    **不用 ffmpeg，也不 import numpy**——ci.yml 的测试 job 没装 ffmpeg
+    （那是出片工作流才装的），而 numpy 不在 dev 依赖里。两样都会让本地全绿、
+    CI 必红，正是「三处一起改」那条反复咬人的地方。
+    PIL 画帧 → 存 PNG → `cv2.imread` 读成数组喂 `VideoWriter`，两样都绕开了。
+    """
+    import cv2
+    from PIL import Image, ImageDraw
+
+    W, H = 320, 180
+    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 24, (W, H))
+    tmp = path.with_suffix(".png")
+    for i in range(n):
+        im = Image.new("RGB", (W, H))
+        d = ImageDraw.Draw(im)
+        for x in range(W):                       # 背景：一条每帧平移的渐变
+            d.line([(x, 0), (x, H)], fill=((x * 3 + i * 40) % 256, 90, 140))
+        if mark:                                 # 标记：每帧都在同一个位置
+            d.rectangle([20, 140, 140, 148], fill=(255, 255, 255))
+        im.save(tmp)
+        vw.write(cv2.imread(str(tmp)))
+    vw.release()
+    tmp.unlink(missing_ok=True)
+    return path
+
+
+def test_去水印按笔画补不按矩形抹(tmp_path):
+    """**`removelogo` 只动掩膜标出来的那几笔，`delogo` 抹掉整个矩形。**
+
+    delogo 从框边缘横向插值，**笔画之间那些原始像素也一起毁了**，留下一条
+    竖纹带；按笔画补，字缝里的球场、广告板原样保留。
+
+    掩膜的判据是「每一帧都亮在同一个位置」——水印是唯一这样的东西，
+    背景会动（`testsrc2` 一直在动），逐帧取交集就只剩笔画。
+    """
+    import cv2
+
+    from tools.build_interview_clip import logo_mask
+
+    clip = _clip(tmp_path / "c.mp4")
+    m = logo_mask(clip, [0.03, 0.72, 0.55, 0.16], tmp_path / "m.png")
+    mask = cv2.imread(str(m), cv2.IMREAD_GRAYSCALE)
+    on = mask > 0
+    assert on.any(), "掩膜是空的"
+    # **只该是笔画，不是整个框**：框占画面 0.55*0.16 ≈ 8.8%，笔画远小于它
+    assert on.mean() < 0.088 * 0.75, f"掩膜盖了 {on.mean():.1%}，像是把整个框都涂了"
+    assert not on[0].any() and not on[:, 0].any(), "掩膜贴到画面边了，插值取不到样"
+
+
+def test_掩膜空了要报错不许静默放行(tmp_path):
+    """**空掩膜和「这儿没有水印」长得一模一样。**
+
+    框写错位置、或者水印不是亮字，都会得到空掩膜——静默放行的话
+    `removelogo` 什么也不做，成片带着水印发出去，而每一步都是 success。
+    """
+    from tools.build_interview_clip import logo_mask
+
+    dark = _clip(tmp_path / "d.mp4", mark=False)
+    with pytest.raises(SystemExit, match="掩膜是空的"):
+        logo_mask(dark, [0.1, 0.7, 0.5, 0.2], tmp_path / "m.png")
+
+
+def test_去水印排在翻转后面():
+    """掩膜是在**成品那一面**算的（`logo_mask` 的 `mirrored` 会先把帧翻过来），
+    所以 `removelogo` 必须排在 `hflip` 后面。
+
+    对不上的话水印原样留着、对称的另一边多出一块补痕——**画面照样出得来**。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    chain = src[src.index('f"[0:v]{flip}'):src.index('[fg];"')]
+    assert chain.index("{flip}") < chain.index("{logo}"), "hflip 要排在 removelogo 前面"
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert grab.index("hflip") < grab.index("logo"), "抽封面帧那一步顺序也要一致"
+
+
+def test_裁角标只动纵向不动版式几何():
+    """`crop_keep_top` 把窗口整体缩小再缩放回同样的输出尺寸——**版式的几何
+    一个数都不用改**。这条钉住那个不变量：窗口的宽高比永远还是 `ratio`。
+    """
+    import re
+
+    import tools.build_interview_clip as clip
+
+    for keep in (1.0, 0.85, 0.7):
+        m = re.match(r"crop=ih\*([\d.]+):ih\*([\d.]+):", clip._crop_expr(4 / 3, keep))
+        w, h = float(m.group(1)), float(m.group(2))
+        assert abs(w / h - 4 / 3) < 1e-4, f"keep={keep} 把窗口的宽高比改了"
+        assert abs(h - keep) < 1e-9
+
+
+def test_采访是不是在场上跟着源走():
+    """**印着「场上」而画面是演播区，是拿版式撒谎。**
+
+    伊埃拉 6-4 6-2 赢大坂直美那场，四个源都自证过：WTA 官方集锦没接采访、
+    Tennis Channel 那条在转播区、另两条是发布会和博主口播。账号所有者定了
+    用转播区那条，顶栏就得照实说。
+    """
+    base = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    assert header_lines(base)[1].endswith("赛后场上采访"), "默认仍是场上"
+    assert header_lines({**base, "interview_kind": "赛后采访"})[1].endswith("赛后采访")
+
+
 def test_没有比分时顶栏退回只写对阵():
     """比分不是必填——没有它，顶栏仍然要能回答「这是哪一场」。"""
     spec = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
@@ -1165,7 +1313,9 @@ def test_自检脚本从工作流里读pip行不另写一份():
 
     line = _pip_line()
     assert line.startswith("pip install"), line
-    assert "-e ." in line, "工作流的 pip 行里没有 -e .，自检读到的是别的行？"
+    # `-e .` 也可能带 extra（`-e ".[visualqa]"`），两种写法都算装了项目自己
+    assert re.search(r'-e "?\.', line), \
+        "工作流的 pip 行里没装项目自己（-e .），自检读到的是别的行？"
 
 
 # ---------------------------------------------------------------- 工作流依赖
@@ -1198,6 +1348,12 @@ _PROVIDES = {
     "tennislive": "-e .",       # 还拖着 requests / rich / pypdf
     "playwright": "playwright",
     "faster_whisper": "faster-whisper",
+    # 去水印的掩膜要 cv2（`logo_mask`）。**装 extra 别装裸包名**——
+    # `pyproject` 把 opencv 钉在 `>=4.10,<5`，5.x 里 `CascadeClassifier` 没了
+    "cv2": '-e ".[visualqa]"',
+    # `logo_mask` 里跟 cv2 一起用，靠 opencv 带进来；测试那边刻意不 import 它
+    # （dev 依赖里没有），所以只在这张表登记
+    "numpy": '-e ".[visualqa]"',
 }
 
 
@@ -1353,3 +1509,71 @@ def test_ci的sparse块里不许有注释():
     for ln in _ci_sparse_block():
         assert "#" not in ln, f"sparse-checkout 块里有注释，会被当成路径：{ln.strip()}"
         assert not set("*?[]\\") & set(ln), f"sparse-checkout 只吃目录名：{ln.strip()}"
+
+
+def _cited_english(text: str) -> list[str]:
+    """从 `_copy_why` 里抠出被当成证据引的英文（连着 4 个词以上才算）。
+
+    三个字两个字的碎片（`aura`、`WTA 500`）不算引语——引一个词证明不了
+    任何东西，而短串在几百词的转写里撞上的概率不低，拿它当判据只会误报。
+    """
+    return [m.group(0).strip() for m in
+            re.finditer(r"[A-Za-z][A-Za-z'’,.\- ]{12,}", text or "")
+            if len(m.group(0).split()) >= 4]
+
+
+def _best_match(quote: str, body: str) -> float:
+    """引语和转写里最像的那一段，按**词**比，返回 0~1。"""
+    import difflib
+    words = re.sub(r"[^a-z0-9 ]", " ", quote.lower()).split()
+    hay = re.sub(r"[^a-z0-9 ]", " ", body.lower()).split()
+    if not words or not hay:
+        return 0.0
+    n = len(words)
+    return max(difflib.SequenceMatcher(None, words, hay[i:i + n]).ratio()
+               for i in range(max(1, len(hay) - n + 1)))
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_封面引的话必须在片子里(path):
+    """封面是成片的头 1.8 秒，它引的话必须真的在这条片子里。
+
+    踩出来的：这条片子换过源（发布会 → 场上采访），封面文案没跟着换。
+    主标还写着「小时候看她的大满贯决赛」、副标「她先说了两个字：气场」，
+    `_copy_why` 引的是 “I remember watching her … her finals in in the
+    Australian Open” 和 “She definitely has aura”——**两句在新素材里
+    一句都没有**。等于拿一个片子里根本不存在的时刻去换点击，而点进来的人
+    永远等不到那一句。
+
+    **查的是证据，不是措辞。** 封面本来就该是概括而不是照抄——
+    「两个月里两次赢她／比分一模一样」一个字都没和中文台词重合，却完全
+    站得住。所以拦的是 `_copy_why` 里引的**英文原话**：那是作者声称的
+    出处，出处必须存在。第一版按中文子串比，把这条已发的好封面判成了红——
+    典型的「判据宁可窄，不可宽」。
+
+    阈值是量出来的，不是拍的：真引的四句 0.86 / 0.92 / 1.00 / 1.00
+    （允许「your same opponent」被引成「the same opponent」这种小改），
+    编的三句 0.27 / 0.46 / 0.50。0.70 落在中间那道空当里。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    cited = _cited_english((spec.get("cover") or {}).get("_copy_why", ""))
+    if not cited:
+        return
+    lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
+    if not lines_path.exists():
+        pytest.skip(f"还没跑过 --stage subs：{lines_path}")
+    body = " ".join(l["en"] for l in json.loads(lines_path.read_text(encoding="utf-8")))
+    for quote in cited:
+        assert (r := _best_match(quote, body)) >= 0.70, (
+            f"{path.name} 的封面注里引了一句片子里没有的话（最像的只有 {r:.2f}）：\n"
+            f"  {quote}\n"
+            "封面引的每一句都要能在 lines.json 里找到。换过源就把封面一起重写；"
+            "要留反面例子当判据，写进 `_copy_history`，那个字段不扫。")
+
+
+def test_封面这道闸真的查到了东西():
+    """零命中和「全都合格」长得一模一样，所以要报出到底查了几句。"""
+    checked = sum(len(_cited_english((json.loads(p.read_text(encoding="utf-8"))
+                                      .get("cover") or {}).get("_copy_why", "")))
+                  for p in _specs())
+    assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
