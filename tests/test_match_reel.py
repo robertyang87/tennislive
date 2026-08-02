@@ -3740,6 +3740,71 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
         "预检只认仓库那条，走 Release 的片子会被判成没渲"
 
 
+# 规矩定下来**之前**已经发出去的九个文件。已发的片子不为了措辞重渲
+# （那条规矩在别处），所以它们挂在这儿——**只许减不许加**：新写的 spec 要么
+# 用新叫法，要么显式把自己加进来，让「又用了强字」变成一次看得见的决定。
+_LEGACY_QUALIFIER_NAMES = {
+    "eala-svitolina.json", "wong-brooksby.json", "wong-gea.json",
+    "zheng-lanlana.json", "eala-fernandez.xhs.txt", "eala-svitolina.xhs.txt",
+    "wong-brooksby.xhs.txt", "wong-gea.xhs.txt", "zheng-lanlana.xhs.txt",
+}
+
+
+def test_轮次要写半决赛不写四强():
+    """账号所有者 2026-08-02：「以后不要用四强八强之类的，国内通常用半决赛
+    1／4 决赛 1/8 决赛之类的。再往前就第几轮好了」。
+
+    「四强」「八强」是港台和赛事方的说法，国内观众看的是**半决赛 / 1/4 决赛 /
+    1/8 决赛**，再往前直接说第几轮。这不是同义词替换的洁癖：叫法不对，读者要多
+    想一步「四强是打到哪一步」，而这条片子的封面只有一行字的位置。
+
+    **只查会发出去的字段**——旁白、封面上印的字、推送那几栏、小红书文案。
+    `_source` / `_why` / `_match` 这些是写给下一个人看的注解，里面正引着账号
+    所有者那句原话，连它一起扫就会把「把规矩记下来」判成「又违反了规矩」——
+    同一个错在这个仓库里犯过三次（工作流输入的旧默认值、push-reel 里的 ffmpeg、
+    查 `-e .` 那条）。
+    """
+    import re  # noqa: PLC0415
+
+    bad = re.compile(r"[四八]强|十六强|三十二强|(?<!\d)(?:16|32|64)\s*强")
+
+    def outward(spec: dict):
+        for seg in spec.get("segments") or []:
+            yield seg.get("narration", "")
+        for key, value in (spec.get("cover") or {}).items():
+            if key.startswith("_"):
+                continue
+            for item in ([value] if isinstance(value, str)
+                         else list(value.values()) if isinstance(value, dict)
+                         else []):
+                if isinstance(item, str):
+                    yield item
+                elif isinstance(item, list):
+                    yield from (x for x in item if isinstance(x, str))
+        for key, value in (spec.get("_push") or {}).items():
+            if not key.startswith("_") and isinstance(value, str):
+                yield value
+
+    offenders = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_QUALIFIER_NAMES}
+    assert not fresh, (
+        f"这些地方还在写强字轮次：{fresh}。"
+        "改成 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」。")
+    # **清单只许减不许加**：修好一个就从上面删掉一个，别让它变成一张许可证
+    assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
+
+
 def test_片长不设上限但要说清这一版走哪条路(tmp_path):
     """账号所有者 2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
     没关系」「不要砍片长」「我怕故事讲解不完整」。
