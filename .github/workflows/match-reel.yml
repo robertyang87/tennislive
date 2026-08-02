@@ -508,7 +508,9 @@ jobs:
           #   eala-svitolina 81.9 MiB / 158.0s = 4348 kb/s
           #   wong-gea       80.2 MiB / 155.8s = 4318 kb/s
           #   eala-osaka 初版 104.0 MiB / 185.2s = 4712 kb/s   ← 进不了仓库
-          # 片长的闸已经前移到 `load_spec`（MAX_REEL_SECONDS ≈ 169 秒），
+          #   eala-osaka 剪短后 94.5 MiB / 158.8s = 4990 kb/s（剪短之后码率反而更高：
+          #     砍掉的是全片最静的那一段，留下的全是高动量的关键分）
+          # 片长的闸已经前移到 `load_spec`（MAX_REEL_SECONDS ≈ 165 秒 / 98 MiB），
           # 写 spec 的那一刻就红，不用等渲完。
           SLUG="${{ github.event.inputs.slug }}"
           BAD=0
