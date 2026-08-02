@@ -220,7 +220,12 @@ jobs:
           # `whisper.json`。三样加起来比成片的三分之一还多，而且每条片子来一份。
           # 判据落在 `test_中间物不许进仓库`：出片目录里只许留下面这几种。
           D="output/interviews/${{ github.event.inputs.slug }}"
-          rm -f "$D"/source.* "$D"/_audio.* "$D"/cover.html "$D"/whisper.json
+          # ⚠️ **清理清单里的名字会过时。** 封面从 `cover.jpg` 改叫 `poster.jpg` 之后，
+          # 它旁边那份内嵌字体的 HTML 就叫 `poster.html`（**12.4 MB**），
+          # 而这一行还写着 `cover.html`——于是它跟着进了仓库。所以按后缀清，
+          # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
+          find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
+          rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"

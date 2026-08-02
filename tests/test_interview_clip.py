@@ -772,14 +772,31 @@ def test_翻转和裁角标要作用到封面帧上():
     assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
 
 
-def _clip(path: Path, extra: str = "", seconds: float = 0.5) -> Path:
-    """造一段测试片。**用 ffmpeg 造，不用 numpy**——测试里 import numpy 会被
-    `test_测试用到的第三方包都在dev依赖里` 拦下：本地装着看不出来，CI 必红。"""
-    import subprocess as sp
+def _clip(path: Path, mark: bool = True, n: int = 10) -> Path:
+    """造一段测试片：背景每帧都在动，标记固定不动。
 
-    sp.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
-            "-i", f"testsrc2=size=320x180:rate=24:duration={seconds}",
-            "-vf", extra or "null", "-pix_fmt", "yuv420p", str(path)], check=True)
+    **不用 ffmpeg，也不 import numpy**——ci.yml 的测试 job 没装 ffmpeg
+    （那是出片工作流才装的），而 numpy 不在 dev 依赖里。两样都会让本地全绿、
+    CI 必红，正是「三处一起改」那条反复咬人的地方。
+    PIL 画帧 → 存 PNG → `cv2.imread` 读成数组喂 `VideoWriter`，两样都绕开了。
+    """
+    import cv2
+    from PIL import Image, ImageDraw
+
+    W, H = 320, 180
+    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 24, (W, H))
+    tmp = path.with_suffix(".png")
+    for i in range(n):
+        im = Image.new("RGB", (W, H))
+        d = ImageDraw.Draw(im)
+        for x in range(W):                       # 背景：一条每帧平移的渐变
+            d.line([(x, 0), (x, H)], fill=((x * 3 + i * 40) % 256, 90, 140))
+        if mark:                                 # 标记：每帧都在同一个位置
+            d.rectangle([20, 140, 140, 148], fill=(255, 255, 255))
+        im.save(tmp)
+        vw.write(cv2.imread(str(tmp)))
+    vw.release()
+    tmp.unlink(missing_ok=True)
     return path
 
 
@@ -796,8 +813,7 @@ def test_去水印按笔画补不按矩形抹(tmp_path):
 
     from tools.build_interview_clip import logo_mask
 
-    clip = _clip(tmp_path / "c.mp4",
-                 "drawbox=x=20:y=140:w=120:h=8:color=white@1.0:t=fill")
+    clip = _clip(tmp_path / "c.mp4")
     m = logo_mask(clip, [0.03, 0.72, 0.55, 0.16], tmp_path / "m.png")
     mask = cv2.imread(str(m), cv2.IMREAD_GRAYSCALE)
     on = mask > 0
@@ -815,7 +831,7 @@ def test_掩膜空了要报错不许静默放行(tmp_path):
     """
     from tools.build_interview_clip import logo_mask
 
-    dark = _clip(tmp_path / "d.mp4", "geq=0:128:128")
+    dark = _clip(tmp_path / "d.mp4", mark=False)
     with pytest.raises(SystemExit, match="掩膜是空的"):
         logo_mask(dark, [0.1, 0.7, 0.5, 0.2], tmp_path / "m.png")
 
