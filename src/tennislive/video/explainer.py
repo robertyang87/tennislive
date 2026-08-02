@@ -856,7 +856,249 @@ _MIDDLE_SAME_DIAGRAM = """
 """
 
 
+#: 老规矩里的「打够了就可以少打」——2022 版 ATP 规则书 1.08，逐字：
+#: `A player's number of ATP Tour Masters 1000 commitment tournaments shall be
+#: reduced by one (1) tournament for reaching each of the following milestones:
+#: 600 matches / 12 years of service / 30 years of age`，接着一句
+#: `If all three (3) conditions are met then the player has a complete exemption`。
+#: **注意最后一档不是 8−3＝5，是直接归零**——这个跳跃是文字列不出来的，
+#: 三根条一比就看见：前两档只少一站，第三档整条空掉。
+#: 几何：横轴 0–8 站映射到 x 250–810，即 1 站 = 70px。
+_EXEMPTION_LADDER_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">打够了，就可以少打</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">三条里程碑：正赛 600 场　服务 12 年　年满 30 岁</text>
+
+  <text x="250" y="136" fill="#9fb4aa" font-size="24" font-weight="700">本来要打的 8 站</text>
+
+  <text x="60" y="196" fill="#9fb4aa" font-size="28" font-weight="700">达成 1 条</text>
+  <rect x="250" y="154" width="500" height="62" rx="10" fill="rgba(231,243,236,.08)"
+        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
+  <rect x="250" y="154" width="438" height="62" rx="10" fill="rgba(231,243,236,.32)"/>
+  <text x="870" y="196" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">7 站</text>
+
+  <text x="60" y="294" fill="#9fb4aa" font-size="28" font-weight="700">达成 2 条</text>
+  <rect x="250" y="252" width="500" height="62" rx="10" fill="rgba(231,243,236,.08)"
+        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
+  <rect x="250" y="252" width="375" height="62" rx="10" fill="rgba(231,243,236,.32)"/>
+  <text x="870" y="294" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">6 站</text>
+
+  <text x="60" y="392" fill="#c6f65a" font-size="28" font-weight="800">三条全占</text>
+  <rect x="250" y="350" width="500" height="62" rx="10" fill="none"
+        stroke="#c6f65a" stroke-width="3" stroke-dasharray="12 9"/>
+  <text x="870" y="392" text-anchor="end" fill="#c6f65a"
+        font-size="30" font-weight="800">0 站</text>
+
+  <text x="450" y="470" text-anchor="middle" fill="#9fb4aa"
+        font-size="25" font-weight="700">2023 年起 ATP 取消了这套，只有 2022 年底前挣到的人还留着</text>
+  <text x="450" y="532" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">可它管的是「用不用报名」</text>
+</svg>
+"""
+
+
+#: 缺席强制大师赛的奖金池扣减阶梯（ATP 2026 规则书 1.08.H.1.f 的那张表）。
+#: 照片拍不出「罚了多少」，而这条片子的全部落点就是那个数。
+#: 深色＝无论如何都要扣的，浅色＝到场做推广活动能拿回来的——规则书给的三档是
+#: 缺 1 站 25%→12.5%（做 1 次）、缺 2 站 50%→25%（做 2 次）、缺 3 站 75%→50%，
+#: 缺 4 站及以上一律 100% 且没有减免。**浅色那截越往下越短，到第四行归零**，
+#: 这一层「越躲越买不回来」是文字列不出来的，画出来才一眼看见。
+#: 几何：横轴 0–100% 映射到 x 210–730，即 1% = 5.2px。
+_MANDATORY_BILL_DIAGRAM = """
+<svg viewBox="0 0 900 570" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">缺席强制赛，奖金池扣多少</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">深色＝一定要扣的　浅色＝到场做推广能拿回来的</text>
+
+  <text x="60" y="212" fill="#9fb4aa" font-size="28" font-weight="700">缺 1 站</text>
+  <rect x="210" y="170" width="65" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="275" y="170" width="65" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="212" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−25%</text>
+
+  <text x="60" y="296" fill="#9fb4aa" font-size="28" font-weight="700">缺 2 站</text>
+  <rect x="210" y="254" width="130" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="340" y="254" width="130" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="296" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−50%</text>
+
+  <text x="60" y="380" fill="#9fb4aa" font-size="28" font-weight="700">缺 3 站</text>
+  <rect x="210" y="338" width="260" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="470" y="338" width="130" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="380" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−75%</text>
+
+  <text x="60" y="464" fill="#9fb4aa" font-size="28" font-weight="700">缺 4 站</text>
+  <rect x="210" y="422" width="520" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <text x="870" y="464" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−100%</text>
+
+  <text x="450" y="548" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">排名那一笔记 0，推广活动一分赎不回</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "mandatory-1000": (
+        (
+            "now",
+            "这一周",
+            "五个大师赛全赢，第六个没去",
+            "先看这一周。八月一号，加拿大大师赛在蒙特利尔开打，签表上没有辛纳，"
+            "没有德约科维奇，也没有阿尔卡拉斯——男子网球最大的三个名字，一个都不在。"
+            "辛纳今年把打过的每一个大师赛都赢了：印第安维尔斯、迈阿密、蒙特卡洛、"
+            "马德里、罗马，五个，一个不落。他是网球史上第一个赢下赛季前四站大师赛的人，"
+            "也是第一个拿到五连冠的。三周前他刚在温网卫冕。第六个大师赛，他没去。"
+            "五月的法网次轮，他在场上抽了筋——那是这套赛程压在身上的分量。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上",
+            (
+                "2026 五个大师赛 他五个全赢",
+                "第六个 蒙特利尔 他没去",
+                "图为 5 月法网次轮 他抽了筋",
+            ),
+        ),
+        (
+            "rule",
+            "规则书",
+            "自动，而且不可申诉",
+            "不去要付什么。大师赛是强制的，一年八站，规则书里管这叫 Mandatory。"
+            "二〇二六年 ATP 官方规则书第八章写着：从大师赛正赛退赛的球员，"
+            "一律记一次排名处罚——原话是，处罚自动生效，而且不可申诉。"
+            "这里有个差别很多人搞反了：五百赛是有出路的，完成推广活动、"
+            "停赛满三十天、或者符合育儿身份豁免，都能把这次处罚拿掉；"
+            "大师赛这几条一条都没有。伤病本身也免不掉它。"
+            "德约科维奇今年三十九岁。七月的温网，他和阿利亚西姆在八强打了五小时"
+            "十五分钟，是这项赛事历史上最长的一场八强战；他赢了，然后成为公开赛"
+            "年代第二年长的温网四强，只排在一九七四年的罗斯沃尔后面。"
+            "这样一个人，也没去蒙特利尔。",
+            "assets/explainer/masters-format/djokovic.jpg",
+            "AELTC / Jon Super · 2026 年 7 月 8 日，温网八强，德约科维奇胜阿利亚西姆后",
+            (
+                "大师赛 一年 8 站 强制",
+                "原话 自动 不可申诉",
+                "39 岁打进温网四强 他也没去",
+            ),
+        ),
+        (
+            "waiver",
+            "老规矩",
+            "打够了，就可以少打",
+            "那有没有人可以不打。有——但那是一套已经取消了的老规矩。"
+            "二〇二二年版规则书第一点零八条写着三条里程碑：正赛单打满六百场、"
+            "十二年服务、年满三十岁，都以承诺年一月一号为准；每达成一条，"
+            "强制大师赛就少打一站。三条全占，条文的原话是完全豁免——"
+            "注意这一档不是八减三等于五，是直接归零，一站都不用打。"
+            "服务年的算法也写死了：第一个打满十二站有积分赛事的自然年，算第一年。"
+            "后来 ATP 把这套换成了现在的奖金池扣减制，二〇二二年十二月三十一号"
+            "之后就不再发新的；在那之前已经挣到、并且选择保留的人，"
+            "继续按二〇二二年那本书走。德约科维奇按这三条早就够了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "600 场 12 年 30 岁 各减一站",
+                "三条全占 直接归零",
+                "2023 年起取消 老人还留着",
+            ),
+            _EXEMPTION_LADDER_DIAGRAM,
+        ),
+        (
+            "list",
+            "名单",
+            "它管的是报不报名，不管报了不去",
+            "那为什么这次救不了他。因为豁免管的是「你用不用报名」，"
+            "不管「你报了名又不去」。规则书第九章第三节，承诺球员和非承诺球员"
+            "两段里写着同一句话：一旦你被接受进正赛——直入、资格赛出线、"
+            "特殊豁免、幸运落败者，或者接受了一张外卡——这一站的成绩就计入排名，"
+            "不管你打没打。同一段还给出唯一的出口：从来没在原始报名名单上的那一站，"
+            "不记零，而是让你其他成绩多算一个。"
+            "阿尔卡拉斯今年一月还在墨尔本举奖杯，之后右手腕伤了，法网、温网、"
+            "蒙特利尔，他一站的名单都没进过——所以这些站在他排名里不记零。"
+            "辛纳和德约科维奇都在蒙特利尔的报名名单上，然后退了赛。"
+            "想省下那个零，得一开始就别报。",
+            "assets/explainer/mandatory-1000/alcaraz_ao_2026.jpg",
+            "Tensionado · Wikimedia Commons · CC0 · 2026 年 1 月，阿尔卡拉斯澳网夺冠",
+            (
+                "被接受进正赛 打没打都记",
+                "没进过名单 那一站不记 0",
+                "阿尔卡拉斯没报 辛纳德约报了",
+            ),
+        ),
+        (
+            "bill",
+            "账单",
+            "一共三笔，最疼的那笔赎不回",
+            "那具体是哪几笔。第一笔是排名：那一站记零分，这一笔不可赎回。"
+            "第二笔是奖金池：大师赛和年终总决赛共用一个两千一百五十万美元的固定奖金池，"
+            "缺一站扣百分之二十五，缺两站扣一半，缺三站扣四分之三，缺四站以上清零。"
+            "这一笔可以赎——到现场做一次推广活动，扣减从百分之二十五减到十二点五。"
+            "但规则书在同一段里写死了：推广活动不解除排名处罚，而且最多只能赎回二十万美元。"
+            "第三笔是罚款，只罚周五截止之后才退的，他们提前一周就说了，这一笔是零。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "排名 记 0 不可赎",
+                "奖金池 缺 1 站 −25%",
+                "到场做推广 减到 −12.5%",
+            ),
+            _MANDATORY_BILL_DIAGRAM,
+        ),
+        (
+            "zero",
+            "多伦多",
+            "这个零，顶掉去年那个零",
+            "那这个零有多疼。去年的加拿大站在多伦多，这三个人也都没去，那一站记的也是零。"
+            "而世界排名是五十二周滚动的：今年这一站的成绩顶掉去年这一站的成绩，"
+            "零顶掉零——这次的排名处罚落在辛纳身上，一分不差。"
+            "不过判去年那次，得用去年那本书。二〇二五年版的规则书里，这一条后面"
+            "还跟着半句：并且停赛下一站大师赛。那半句在实际操作里可以申诉掉——"
+            "辛纳去年退了多伦多，照样打了辛辛那提，还打进决赛。"
+            "而到了二〇二六年这一本，那半句干脆没了；今年反倒新开了两个豁免口，"
+            "育儿身份，和连着缺两站以上可以申请抹掉零分，这两条去年一条都没有。"
+            "在大家一起退赛的这一年，条文本身比去年松。",
+            "assets/explainer/mandatory-1000/sobeys_stadium_2025.jpg",
+            "加拿大网球协会官方 · 2025 年加拿大大师赛，多伦多 Sobeys Stadium 中心球场航拍",
+            (
+                "去年记 0 今年还是 0 一分不差",
+                "2025 版还写着 停赛下一站",
+                "2026 版这半句没了",
+            ),
+        ),
+        (
+            "stand",
+            "另一个 39 岁",
+            "一个用掉外卡来了，一个撤了名字",
+            "加拿大人是做过努力的。去年那站在温网结束后两周就开打，今年他们把开赛"
+            "推到了三周之后，就是为了给球员留出恢复的时间，赛事方原本预计今年的"
+            "退赛会少一些。结果一样。赛事总监泰特罗在声明里说：我们尊重他们的决定，"
+            "也理解在这样的赛程下，球员的健康必须放在第一位；但这几年退赛的频率，"
+            "对这项运动来说是个更大的问题——大师赛是巡回赛的旗舰，"
+            "球迷理应看到世界上最好的球员在场上。"
+            "这一站还来了另一个三十九岁的人。孟菲尔斯，世界第二百二十六，"
+            "今年是他的告别赛季，靠一张外卡进的正赛，第十五次打加拿大站。"
+            "他说，能最后一次回来，我很高兴。"
+            "两个同岁的人，一个用掉一张外卡来了，一个把名字从签表上撤了。"
+            "这不是谁对谁错——是「强制」这两个字，标错了价。",
+            "assets/explainer/mandatory-1000/monfils_montreal_2026.jpg",
+            "加拿大大师赛官方 · 2026 年 8 月，蒙特利尔，孟菲尔斯抵达赛场",
+            (
+                "今年推到温网后 3 周 还是没来",
+                "孟菲尔斯 39 岁 世界第 226",
+                "告别赛季 靠外卡进正赛",
+            ),
+            None,
+            "是罚得太轻，还是这两周本来就太长？",
+        ),
+    ),
     "comeback-middle": (
         (
             "knife",
@@ -2819,7 +3061,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
-    "comeback-middle": {
+    "mandatory-1000": {
+        "hook": (
+            "辛纳今年把打过的五个大师赛全赢了，第六个没去——大师赛是强制的。\n"
+            "ATP 规则书写着：处罚自动生效、不可申诉。可算下来，那一笔是零。"
+        ),
+        "tags": ("网球", "网球时差", "辛纳", "大师赛", "网球冷知识"),
+    },    "comeback-middle": {
         "hook": (
             "同一个部位、几乎同一台手术，一个五个月后拿了温网，一个再没回去。\n"
             "而在中段那几个月，两条路长得一模一样——郑钦文现在正走在那一段里。"
@@ -3047,6 +3295,18 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "mandatory-1000": {
+        "topic": "强制赛：不去的代价，是一个可以算出来的数",
+        "question": "强制赛，为什么可以不去？",
+        "narration": "强制赛，为什么可以不去？规则书写着自动生效、不可申诉——"
+                     "可算下来，那一笔罚在世界第一身上是零。",
+        "gloss": "Zero-Pointer = 罚成零分",
+        # 封面这张没有任何一屏在用，借不到出处，所以自己写一行。
+        # 选它是因为**原图 1121×1495 正好 3:4**，铺满 1.0x，一个像素的垫层都不用；
+        # 而且它就是这条片子的起点：三周前他在这儿举起奖杯，这一周他没去蒙特利尔。
+        "image": "assets/explainer/ten-champions/sinner.jpg",
+        "credit": "AELTC / Joel Marklund · 2026 年 7 月 12 日，辛纳温网卫冕",
+    },
     "comeback-middle": {
         "topic": "中段：谁回得来，当时看不出来",
         "question": "伤好了打不出来，是低谷还是终点？",
