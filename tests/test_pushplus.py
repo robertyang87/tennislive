@@ -252,3 +252,107 @@ def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
     assert jsdelivr_host() == DEFAULT_JSDELIVR_HOST
     monkeypatch.setenv("TENNISLIVE_JSDELIVR_HOST", "")
     assert jsdelivr_host() == DEFAULT_JSDELIVR_HOST
+
+
+def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
+    """**走到这一步之前已经串着等了三轮**：复制页最长 10 分钟、成片 2 分钟、
+    图片 5 分钟。而这个 POST 才是唯一真正发消息的动作——原来它**一次重试都
+    没有**，一次网络抖动就把前面十几分钟全废掉。
+
+    更荒唐的是 `_upload_image`（传图片，失败了还能退回 jsDelivr）**反而有**
+    重试循环：**保护了不重要的那一步，没保护唯一重要的那一步。**
+
+    ⚠️ **但只重试「没送到」。** `code != 200` 是 PushPlus 明确拒绝（token 错、
+    内容超限），重发只会把同一条错误消息发很多次——而微信那条消息发出去
+    收不回来。判据把这两支分开验。
+    """
+    import requests as _rq
+
+    from tennislive.publish import pushplus
+
+    monkeypatch.setattr(pushplus.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(pushplus, "wait_for_images", lambda *_a, **_k: None)
+    monkeypatch.setattr(pushplus, "prepare_image_delivery",
+                        lambda html, **_k: (html, "none"))
+    monkeypatch.setenv("PUSHPLUS_TOKEN", "t")
+
+    class _Resp:
+        def __init__(self, code=200, status=200):
+            self.status_code = status
+            self._code = code
+
+        def json(self):
+            return {"code": self._code, "data": "流水号-123"}
+
+    # ① 前两次网络抖动，第三次成功 → 发出去了，而且只发了一次成功的
+    calls = []
+
+    def _flaky(*_a, **_k):
+        calls.append(1)
+        if len(calls) < 3:
+            raise _rq.ConnectionError("boom")
+        return _Resp()
+
+    monkeypatch.setattr(pushplus.requests, "post", _flaky)
+    pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == 3, f"抖动了两次却没重试到成功：{len(calls)}"
+
+    # ② 5xx 也算「没送到」，要重试
+    calls.clear()
+
+    def _five(*_a, **_k):
+        calls.append(1)
+        return _Resp(status=503) if len(calls) < 2 else _Resp()
+
+    monkeypatch.setattr(pushplus.requests, "post", _five)
+    pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == 2, "5xx 没有重试"
+
+    # ③ **服务端明确拒绝：只发一次，不许重发**
+    calls.clear()
+    monkeypatch.setattr(pushplus.requests, "post",
+                        lambda *_a, **_k: (calls.append(1), _Resp(code=903))[1])
+    with pytest.raises(pushplus.PushPlusError, match="推送失败"):
+        pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == 1, (
+        f"被拒绝还重发了 {len(calls)} 次——那是往微信里灌同一条错误消息")
+
+    # ④ 一直不通：报错要说清楚卡在哪一步，别让人以为是内容的问题
+    calls.clear()
+
+    def _dead(*_a, **_k):
+        calls.append(1)
+        raise _rq.ConnectionError("boom")
+
+    monkeypatch.setattr(pushplus.requests, "post", _dead)
+    with pytest.raises(pushplus.PushPlusError, match="都没发出去"):
+        pushplus.push("标题", "<p>正文</p>")
+    assert len(calls) == pushplus.PUSH_ATTEMPTS
+
+
+def test_推送成功要记下流水号(monkeypatch, caplog):
+    """`code == 200` 只保证 **PushPlus 收下了**，不保证微信推到了手机上。
+
+    真出现「接口成功但人没收到」时，没有流水号就什么都查不了——这条
+    CLAUDE.md 里记过，一直没做。
+    """
+    import logging
+
+    from tennislive.publish import pushplus
+
+    monkeypatch.setattr(pushplus, "wait_for_images", lambda *_a, **_k: None)
+    monkeypatch.setattr(pushplus, "prepare_image_delivery",
+                        lambda html, **_k: (html, "none"))
+    monkeypatch.setenv("PUSHPLUS_TOKEN", "t")
+
+    class _Resp:
+        status_code = 200
+
+        def json(self):
+            return {"code": 200, "data": "abc123-流水号"}
+
+    monkeypatch.setattr(pushplus.requests, "post", lambda *_a, **_k: _Resp())
+    with caplog.at_level(logging.INFO):
+        pushplus.push("标题", "<p>正文</p>")
+    assert "abc123-流水号" in caplog.text, (
+        f"成功那行没记流水号，出问题时无从查起：{caplog.text}")
