@@ -176,15 +176,32 @@ _NAME_FIX = {
 _NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
 
 
-def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
-    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**"""
+def fetch_words(url: str, workdir: Path,
+                spec: dict | None = None) -> list[tuple[float, str]]:
+    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**
+
+    **cookie 和 JS runtime 两样都要带，和 `yt_download` 一模一样。**
+    原来这儿是裸调的——没有 `--cookies`、也没有 `--js-runtimes node`。
+    长期没暴露，是因为取字幕以前不用登录也过得去；2026-08-02 起 YouTube 把
+    这条路一起挡了，于是 runner 上出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    看起来像「cookie 过期了」，其实是**这一步压根没用它**。判据摆在眼前：
+    同一份 cookie 七十分钟前刚下完 189 MB 的源片。**两处各配一遍必分叉**——
+    `yt_download` 那边接上了环境变量，这边漏了，而漏的表现是一句
+    指向完全错误方向的报错。
+    """
     workdir.mkdir(parents=True, exist_ok=True)
     # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
     # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
     if not (files := sorted(workdir.glob("cap_*.json3"))):
         proc = subprocess.run(
-            ["yt-dlp", "--no-warnings", "--skip-download", "--write-auto-subs",
+            ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+             "--skip-download", "--write-auto-subs",
              "--sub-langs", "en", "--sub-format", "json3",
+             *cookie_args(spec or {}),
              "-o", str(workdir / "cap_%(id)s"), url],
             capture_output=True, text=True, timeout=300)
         files = sorted(workdir.glob("cap_*.json3"))
@@ -209,6 +226,39 @@ def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
 # 1.91 秒（两头夹着 `[cheering]` 和 `[applause]`，是掌声）、0.28 秒（事件间的抖动）。
 # 2.0 落在最大的那个和第二个之间。
 CAPTION_GAP_SECS = 2.0
+
+# 垫底那层的调色。**先去色再压暗，不能只压暗。**
+#
+# 原来是光秃秃一个 `eq=brightness=-0.34`。账号所有者反馈：「伊埃拉的球衣是绿色的，
+# 背景虚化之后感觉背景全是绿的，视觉上不太舒服。」量出来问题比看上去更硬：
+#
+#     边条饱和度 0.68~0.92，而画面本身只有 0.16~0.23 —— 背景比画面艳三到五倍
+#
+# 机理是 `brightness` 走的是**减法**，而饱和度是 `(max-min)/max`：整体减下去
+# 分母跟着变小，于是**越压越艳**。模糊本来就把明暗细节抹平、只剩下色相，
+# 再这么一压，等于「把颜色浓缩了铺满全屏」。
+#
+# 而且它**跟着画面变色**：12 秒那帧背后是蓝色广告板，上边条就成了深蓝
+# （`[5 2 70]`，色差 67/255），下边条同时是绿的——一屏两个饱和色互相打架，
+# 她那件荧光绿球衣反而淹在里面。正好撞上「一屏只留一个强调色」。
+#
+# 三档都渲出来比过（`sat` / `bri` / 全片最重的一处色差）：
+#
+#     现在   —      -0.34    67/255   上蓝下绿，色相跟着画面摆
+#     选它   0.15   -0.30    21/255   两条都退成中性暗色，绿球衣成了唯一的饱和色
+#     太狠   0.12   -0.40     8/255   边条接近纯黑，看着像「没铺满的视频」
+#
+# ⚠️ **别拿 HSV 饱和度当判据**：近黑像素上它失真（`sat=0.25` 那档读数仍是 0.95）。
+# 量绝对色差 `max-min`，那才是眼睛在暗背景上看见的东西。
+#
+# ⚠️ 上表里「现在」那一行是从**已发的成片**上量的，是实测；另两行是本地模拟——
+# 拿成片的画面区当输入重跑同一串滤镜。真正的垫底层取的是**整幅 16:9 源片**，
+# 裁法不同，但调色是逐像素的，所以比出来的档位成立、绝对值会有出入。
+#
+# 封面那层（`.bg` 的 `filter:blur(46px) brightness(.34)`）**不用跟着改**：
+# CSS 的 brightness 是**乘法**，不会把饱和度顶上去。量过已发的海报，
+# 纯 `.bg` 那条色差 12/255，本来就是中性的。
+BG_GRADE = "eq=saturation=0.15:brightness=-0.30"
 
 
 def _caption_spans(workdir: Path) -> list[list[float]]:
@@ -1362,7 +1412,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 垫底：同一路画面铺满画布、模糊、压暗。**放大 1.05 再裁**，
         # 不然模糊到边缘会透出底色。
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
-        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
+        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,{BG_GRADE}[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
         f"[0:v]{flip}{logo}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
@@ -1434,7 +1484,7 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
-    lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"],
+    lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
                     word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），

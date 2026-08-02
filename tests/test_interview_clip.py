@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import re
 from pathlib import Path
@@ -1623,3 +1624,81 @@ def test_封面这道闸真的查到了东西():
                                       .get("cover") or {}).get("_copy_why", "")))
                   for p in _specs())
     assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
+
+
+def test_背景要先去色再压暗():
+    """垫底那层只压暗不去色，会把背景**变得比画面还艳**。
+
+    账号所有者：「伊埃拉的球衣是绿色的，背景虚化之后感觉背景全是绿的，
+    视觉上不太舒服。」量已发的那条成片：边条饱和度 0.68~0.92，而画面本身
+    只有 0.16~0.23——背景比画面艳三到五倍。
+
+    机理是 `brightness` 走**减法**，而饱和度是 `(max-min)/max`：整体减下去
+    分母跟着变小，于是越压越艳。模糊本来就只剩色相，再一压等于把颜色浓缩了
+    铺满全屏；而且它跟着画面变色，12 秒那帧上边条是深蓝、下边条是绿，
+    一屏两个饱和色打架，正撞上「一屏只留一个强调色」。
+
+    两头都要卡：
+    - **去色不够** → 回到「背景全是绿的」
+    - **压得太狠** → 边条接近纯黑，看着像「没铺满的视频」而不是设计过的版面
+      （`sat=.12 bri=-.40` 那档，12 秒上边条量出来是 `[1 1 1]`）
+    """
+    from tools.build_interview_clip import BG_GRADE
+
+    kv = dict(p.split("=") for p in BG_GRADE.removeprefix("eq=").split(":"))
+    assert float(kv["saturation"]) <= 0.35, (
+        f"背景只压暗不去色（{BG_GRADE}）——压暗是减法，会把饱和度顶上去")
+    assert -0.35 <= float(kv["brightness"]) < 0, (
+        f"背景压暗的量越界（{BG_GRADE}）：不压则背景抢戏，压过头边条变成硬黑条")
+
+
+def test_背景调色只有一处出处():
+    """**一个数写两处必分叉。** 滤镜链里再写一个字面量，改常量就没反应了——
+    而它不报错，只是下一个人改错地方。同 `test_字号只有一处出处`。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    assert body.count("BG_GRADE") == 2, "BG_GRADE 该只有一处定义、一处引用"
+    assert "{BG_GRADE}[bg]" in body, "滤镜链没有引用 BG_GRADE"
+    assert "eq=brightness" not in body, "链子里还留着写死的 eq=brightness"
+
+
+def _ytdlp_calls() -> list[ast.List]:
+    """源码里所有 `["yt-dlp", …]` 那样的参数表。"""
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py")
+                     .read_text(encoding="utf-8"))
+    return [n for n in ast.walk(tree)
+            if isinstance(n, ast.List) and n.elts
+            and isinstance(n.elts[0], ast.Constant) and n.elts[0].value == "yt-dlp"]
+
+
+def test_每一次调yt_dlp都带上cookie和JS():
+    """**两处各配一遍必分叉，而分叉的表现是一句指向错误方向的报错。**
+
+    `yt_download` 早就接上了 `COOKIES` 环境变量，`fetch_words` 一直是裸调的
+    ——没有 `--cookies`，也没有 `--js-runtimes node`。长期没暴露，是因为取字幕
+    以前不用登录也过得去。2026-08-02 起 YouTube 把这条路一起挡了，runner 上
+    就出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    读起来像「cookie 过期了」，而真相是**这一步压根没用它**。判据当时就摆在
+    眼前：同一份 cookie 七十分钟前刚下完 189 MB 的源片，**两个结论对不上就
+    说明是我的读法错了**。
+
+    所以判据不写成「fetch_words 里有 cookie_args」——那只防这一个。
+    按 AST 把每一处 yt-dlp 调用都揪出来，以后新加一处照样拦。
+    """
+    calls = _ytdlp_calls()
+    assert len(calls) >= 2, f"只找到 {len(calls)} 处 yt-dlp 调用，AST 大概没解对"
+    for node in calls:
+        flat = [e.value for e in node.elts if isinstance(e, ast.Constant)]
+        starred = [ast.unparse(e.value) for e in node.elts
+                   if isinstance(e, ast.Starred)]
+        where = f"第 {node.lineno} 行那处 yt-dlp 调用"
+        assert "--js-runtimes" in flat, (
+            f"{where}没带 --js-runtimes——少了它解不了 n challenge，"
+            "而报错长得像「这个视频没有格式」")
+        assert any("cookie_args" in s for s in starred), (
+            f"{where}没带 cookie_args——被挡的时候会报「Sign in to confirm "
+            "you're not a bot」，看着像 cookie 过期，其实是压根没传")
