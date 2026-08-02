@@ -772,6 +772,33 @@ def test_翻转和裁角标要作用到封面帧上():
     assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
 
 
+def test_去角标的框要按源片真实分辨率换算(tmp_path, monkeypatch):
+    """**`delogo` 只吃整数，不吃表达式**（`x=w*0.655` 直接报 Invalid argument），
+    而源片分辨率不保证——下的是 `bv*[height<=720]`，拿不到 720p 就更小。
+
+    写死像素等于赌分辨率：同一个框在 1280×720 上罩住水印，在 640×360 上
+    会罩到画面外去，而 **ffmpeg 只会报一句 Invalid argument**，看着像别的毛病。
+    """
+    import tools.build_interview_clip as clip
+
+    class Fake:
+        stdout = "1280x720\n"
+    monkeypatch.setattr(clip.subprocess, "run", lambda *a, **k: Fake())
+    expr = clip._delogo(Path("x.mp4"), [0.652, 0.812, 0.292, 0.112])
+    assert expr == "delogo=x=835:y=585:w=374:h=81,", expr
+    assert all(p.isdigit() for p in re.findall(r"[xywh]=(\S+?)[:,]", expr)), \
+        "delogo 的参数必须是整数"
+    assert clip._delogo(Path("x.mp4"), None) == "", "没写 logo_box 就不该加这个滤镜"
+
+
+def test_去角标要排在翻转前面():
+    """框是在**原始朝向**上量的——先翻转再去角标，框就罩到对称的另一边去了，
+    而画面照样出得来：水印还在，另一边多出一块补痕。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    chain = src[src.index('f"[0:v]{logo}'):src.index('[fg];"')]
+    assert chain.index("{logo}") < chain.index("{flip}"), "delogo 要排在 hflip 前面"
+
+
 def test_裁角标只动纵向不动版式几何():
     """`crop_keep_top` 把窗口整体缩小再缩放回同样的输出尺寸——**版式的几何
     一个数都不用改**。这条钉住那个不变量：窗口的宽高比永远还是 `ratio`。

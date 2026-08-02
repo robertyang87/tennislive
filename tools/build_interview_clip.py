@@ -1262,6 +1262,36 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
            or "（空）"))
 
 
+def _delogo(src: Path, box: list[float] | None) -> str:
+    """去掉画面上固定位置的角标。`box` 是 `[x, y, w, h]`，**按比例给**。
+
+    **为什么不用裁的**：裁掉一条能让它不出现，但那是拿画面换干净——账号所有者
+    「最好不要用摆设的方式处理水印」。`delogo` 是按框边缘往里插值补回来，
+    画面一个像素不丢。
+
+    ⚠️ **它只吃整数，不吃表达式**（`x=w*0.655` 直接报 Invalid argument），
+    而源片分辨率不保证（下的是 `bv*[height<=720]`，拿不到 720p 就更小）。
+    所以要先 ffprobe 出真实宽高再换算——写死像素等于赌分辨率。
+
+    ⚠️ 框**不能贴到画面边**：插值要从框外一圈取样，贴边就没得取。往里收 1 像素。
+
+    ⚠️ 顺序：`delogo` 要排在 `hflip` **前面**——框是在原始朝向上量的。
+    """
+    if not box:
+        return ""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x", str(src)],
+        capture_output=True, text=True, check=True, timeout=120).stdout.strip()
+    iw, ih = (int(v) for v in out.split("x")[:2])
+    fx, fy, fw, fh = box
+    x, y = max(1, round(iw * fx)), max(1, round(ih * fy))
+    w, h = round(iw * fw), round(ih * fh)
+    w, h = min(w, iw - x - 1), min(h, ih - y - 1)
+    print(f"去角标：源片 {iw}x{ih}，框 x={x} y={y} w={w} h={h}")
+    return f"delogo=x={x}:y={y}:w={w}:h={h},"
+
+
 def _crop_expr(ratio: float, keep: float = 1.0) -> str:
     """裁切窗口。`keep` 是**从顶上往下保留多少**（1.0 ＝ 整幅）。
 
@@ -1292,6 +1322,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 三角朝反边）。这条线烧的是英文字幕，画面上再挂一排反着的英文，
     # 读者一眼就看出不对。翻回来的判据是**场地上的字读不读得通**，
     # 不是「看着顺不顺眼」——左右翻转的人脸和球场，肉眼分不出来。
+    logo = _delogo(src, spec.get("logo_box"))
     flip = "hflip," if spec.get("mirrored") else ""
     keep = float(spec.get("crop_keep_top", 1.0))
     chain = (
@@ -1300,7 +1331,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
         f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]{flip}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{logo}{flip}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
@@ -1329,7 +1360,8 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "")
+                    "-vf", (_delogo(src, spec.get("logo_box"))
+                            + ("hflip," if spec.get("mirrored") else "")
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
                                          float(spec.get("crop_keep_top", 1.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
