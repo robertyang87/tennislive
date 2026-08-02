@@ -1702,3 +1702,28 @@ def test_每一次调yt_dlp都带上cookie和JS():
         assert any("cookie_args" in s for s in starred), (
             f"{where}没带 cookie_args——被挡的时候会报「Sign in to confirm "
             "you're not a bot」，看着像 cookie 过期，其实是压根没传")
+
+
+def test_订正要看穿说话人标记():
+    """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
+
+    演播室那条片子里 `>>` 有 30 处。原来是 `fix.get(w.strip(".,?!"), w)`，
+    于是 `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上——
+    **凡是某个说话人的第一个词，那条订正一律静默失效**。它不报错，只是没生效，
+    而人写了订正就默认它生效了；要等成片烧出来才看得见名字还是错的。
+
+    不能改成「提前把 `>>` 剥掉」：这个标记有用，`_split_sentences` 靠它断
+    「换人说话」。只能让查表看穿它。
+
+    尾标点一并钉住：命中之后原来返回光秃秃的替换词，`'Pigula,'` 的逗号被吃掉
+    ——而逗号是切行的第一依据（先按标点切子句），丢一个就少一个断点。
+    """
+    from tools.build_interview_clip import segment
+
+    words = [(0.5, ">> Alexo."), (1.0, "beat"), (1.5, "Pigula,"), (2.0, "today.")]
+    out = segment(words, 0.0, 9.0, word_fix={"Alexo": "Alex Eala", "Pigula": "Pegula"})
+    en = " ".join(s["en"] for s in out)
+    assert "Alex Eala" in en, f"说话人标记后面那个词没修上：{en}"
+    assert "Alexo" not in en, en
+    assert "Pegula," in en, f"订正把尾标点吃掉了，断句会少一个依据：{en}"
+    assert ">>" not in en, f"说话人标记漏进成品行了：{en}"

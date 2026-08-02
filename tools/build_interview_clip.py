@@ -547,7 +547,29 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     budget = _LINE_PX if budget is None else budget
     width = _en_width if width is None else width
     fix = {**_NAME_FIX, **(word_fix or {})}
-    keep = [(t, fix.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
+
+    def _fix(w: str) -> str:
+        """查订正表要**看穿说话人标记**，还要**把尾标点留住**。
+
+        自动字幕给每个说话人的第一个词加了 `>>` 前缀（这条片子里 30 处），
+        而这个标记有用——`_split_sentences` 靠它断「换人说话」。所以不能提前
+        剥掉，只能让查表看穿它。原来是 `fix.get(w.strip(".,?!"), w)`，于是
+        `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上：
+        **凡是某个说话人的第一个词，word_fix 一律静默失效**。
+        它不报错，只是那条订正没生效——而我写了订正就默认它生效了。
+
+        尾标点同理：`'Pigula,'` 命中后原来返回的是光秃秃的 `Pegula`，
+        **逗号被吃掉**。而逗号是切行的依据（先按标点切子句），
+        丢一个就少一个断点。
+        """
+        mark, bare = (">>", w[2:].strip()) if w.startswith(">>") else ("", w)
+        core = bare.strip(".,?!")
+        if core not in fix or not core:
+            return w
+        tail = bare[bare.rindex(core) + len(core):]
+        return f"{mark} {fix[core]}{tail}" if mark else f"{fix[core]}{tail}"
+
+    keep = [(t, _fix(w)) for t, w in words if start <= t <= end]
     keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
     if not keep:
         return []
