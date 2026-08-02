@@ -162,6 +162,15 @@ POSTER_NAME = "poster.jpg"
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
+# 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
+# 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
+# 比画面跳更刺耳。
+#
+# 0.18 秒是「化开了」和「拖沓」之间那一档：段长最短的一段 4.0 秒，两头各 0.18
+# 只占 9%，看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，
+# 每句话自己有起止，淡它等于把开头几个字吞掉。
+SEG_FADE = 0.18
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -1358,6 +1367,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     extra_in = ([] if has_audio else
                 ["-f", "lavfi", "-i",
                  f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}"])
+    # 画面两头各化开 SEG_FADE 秒。**加在 `chain` 末尾**（缩放之后），
+    # 这样淡的是最终画面，不是裁切前的源片。
+    fade = (f",fade=t=in:st=0:d={SEG_FADE}"
+            f",fade=t=out:st={max(0.0, seg.length - SEG_FADE):.3f}:d={SEG_FADE}")
     with stage("分段编码"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             # `-ss` 放在 `-i` **前面**（输入寻址）。这里原来放在后面，理由写的是
@@ -1384,10 +1397,14 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
             "-filter_complex",
             _overlay_chain(
-                (chain + "[base]") if seg.fit == "contain"
-                else f"[0:v]{chain}[base]", ins),
+                (chain + fade + "[base]") if seg.fit == "contain"
+                else f"[0:v]{chain}{fade}[base]", ins),
             "-shortest", "-map", "[vout]",
             "-map", "0:a:0" if has_audio else f"{null_idx}:a:0",
+            # 现场声跟着画面一起化开。补位静音那一路淡了也没差别，所以不分叉。
+            "-af", (f"afade=t=in:st=0:d={SEG_FADE},"
+                    f"afade=t=out:st={max(0.0, seg.length - SEG_FADE):.3f}"
+                    f":d={SEG_FADE}"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
             # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
