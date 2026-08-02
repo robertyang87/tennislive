@@ -657,8 +657,17 @@ jobs:
             git fetch origin "$BRANCH"
             git branch -f rendered HEAD
             git reset --hard "origin/$BRANCH"
+            # **先把这个目录清空再放回来。** `git checkout <ref> -- <dir>` 只会
+            # 恢复 ref 里**存在**的文件，不会删掉 ref 里没有的——而上一句
+            # `reset --hard` 刚把 origin/main 上那份旧成片放了回来。于是走了
+            # Release 的那一版明明已经 `rm` 掉、第一次提交也确实带着
+            # `delete mode ... eala-osaka.mp4`，重放一次就**被救活了**
+            # （run 30727483963：第一次提交对，push 撞车，重放之后那条 delete
+            # 没了，仓库里留下 2 分 39 秒的旧片，而真片子在 Release 上）。
+            # 「陈图留在仓库里，看着像本期的一部分」——同一个毛病换了个入口。
+            rm -rf "$OUTDIR"
             git checkout rendered -- "$OUTDIR"
-            git add "$OUTDIR"
+            git add -A "$OUTDIR"
             python tools/check_staged_file_sizes.py
             git diff --cached --quiet || git commit -m "$MSG"
             sleep $((attempt * 5 + RANDOM % 10))

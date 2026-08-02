@@ -1095,6 +1095,13 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
 - **`concurrency: group` 写死一个名字**：GitHub 每组只留一个 pending，新的一来就取消旧的。一口气发七个，只活下来第一个和最后一个。分组名要带 slug
 - **提交时重放整棵 `output/`**：为了避开二进制 rebase 冲突，重试时用 `git checkout <本 run 的 HEAD> -- output/` 把成片放回去 —— 这会把**其他选题**一起退回到本 run 开跑时的样子。八个一起跑就变成来回覆盖，发布出去的卡片在新旧 logo 之间闪了半小时
 
+**重放只加不减，会把已经删掉的东西救活。** `git checkout <ref> -- <dir>` 只恢复
+ref 里**存在**的文件，不会删掉 ref 里没有的；而重放前那句 `reset --hard origin/main`
+刚把旧成片放了回来。走了 Release（成片不进 git）的那一版，第一次提交明明带着
+`delete mode … eala-osaka.mp4`，push 撞车重放一次就没了——仓库里留着 2 分 39 秒的
+旧片，真片子在 Release 上，**两个地址两条片子，谁也没说哪个是哪个**
+（run 30727483963）。重放前先 `rm -rf "$OUTDIR"`，`git add` 用 `-A`。
+
 所以：提交、add、重放、diff，每一步都限定在本次的 `outdir` 上。顺带一提，`git pull --rebase` 处理不了 mp4/png，撞上就是渲染全做完之后 exit 1，而且**失败的 run 会把上一版成片原地留着，仓库看起来是满的**。
 
 ## 图片：时间、地点、人物
