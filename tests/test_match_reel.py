@@ -4494,3 +4494,44 @@ def test_硬地的地要读四声():
         assert len(said) == len(shown), (
             f"{line!r} 两份字数不一样（{len(said)} vs {len(shown)}）"
             "——字幕时间轴按字位映射，长度一变整段就漂")
+
+
+def test_封面那一路的溶解底料不许在委托链上掉队():
+    """`build_cover` 有**两个** return，两个都委托给 `build_versus_poster`：
+    上面那个是 solo（网球有故事），下面那个是 VS（赛场之上／开球之前）。
+
+    加 `tail`（溶解底料）时只改了上面那个，于是**这两个栏目的封面片段没有多切
+    那 0.18 秒**。`xfade` 的 offset 正好落在封面流的末尾，整条溶解链塌掉：
+
+        段落加起来 114.46s，成片 12.44s（run 30752134514 / 30752131692）
+
+    而 `ruff --select F821` 抓不到——`tail` 在 `build_cover` 的作用域里是有定义
+    的，只是没往下传，被调方悄悄用了默认值 0.0。**同一对函数栽的第三次**
+    （前两次是 `seconds` 和 `_cut_person` 的 `source`）。
+
+    所以判据盯**每一个** return：`build_cover` 里凡是调 `build_versus_poster`
+    的，都必须把 `tail` 带上。参数一多、出路一多，`replace(..., 1)` 这种改法
+    就会挑错一个。
+    """
+    reel = _reel()
+    body = inspect.getsource(reel.build_cover)
+    calls = [line for line in body.splitlines()
+             if "build_versus_poster(" in line and not line.lstrip().startswith("#")]
+    assert len(calls) >= 2, (
+        f"`build_cover` 里只找到 {len(calls)} 处 build_versus_poster 调用，"
+        "判据失效了——出路变了就回来重写这条")
+    # 调用是跨行的，所以按「从调用处到该 return 结束」整块看
+    blocks = re.findall(r"build_versus_poster\((?:[^()]|\([^()]*\))*\)", body)
+    assert len(blocks) == len(calls), "有调用跨行跨得更狠，正则没框住"
+    for block in blocks:
+        assert "tail=" in block, (
+            "`build_cover` 有一条 return 没把 `tail` 传下去：\n  "
+            + " ".join(block.split())
+            + "\n封面片段就会少切那几秒溶解底料，xfade 的 offset 落到流的末尾，"
+              "整条片子在第一个接缝上截断——而 ffmpeg 一个字都不说")
+
+    # 被调方真的用它：signature 里有，而且用在了传给 _still_to_clip 的时长上
+    poster = inspect.getsource(reel.build_versus_poster)
+    assert "tail: float" in poster, "`build_versus_poster` 没有收 tail 的口子"
+    assert "seconds + tail" in poster, (
+        "`build_versus_poster` 收了 tail 却没用在时长上——签名对了，实现是空的")

@@ -1535,7 +1535,7 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
                 "focus, focus_y, zoom, fit}\n"
                 "四道闸门照旧；四类源都拿不到本场的，就从本场源片抓一帧。")
         return build_versus_poster(sources, primary, cover, dest, seconds,
-                               tail=tail)
+                                   tail=tail)
     if not cover.get("versus"):
         raise ReelError(
             "封面缺 `cover.versus`：赛场之上的封面一律走固定海报模板，"
@@ -1547,7 +1547,13 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
             "格式：cover.versus = {split, names: [上, 下], "
             "top: {image, focus, focus_y, zoom, fit}, bottom: {…}}\n"
             "讲一个人的栏目（网球有故事）用 `layout: \"solo\"` + cover.portrait。")
-    return build_versus_poster(sources, primary, cover, dest, seconds)
+    # ⚠️ **`tail` 两条出路都要带上。** `build_cover` 有两个 return，上面那个是
+    # solo、这个是 VS——而「赛场之上」「开球之前」走的都是这一个。第一版只改了
+    # 上面那个，于是封面片段没有多切 0.18s，`xfade` 的 offset 正好落在它的末尾，
+    # 整条溶解链塌掉：成片 12.44s，段落加起来 114.46s（run 30752134514）。
+    # 同一对函数（build_cover → build_versus_poster）栽的第三次。
+    return build_versus_poster(sources, primary, cover, dest, seconds,
+                               tail=tail)
 
 
 def build_versus_poster(sources: dict[str, Path], primary: str,
