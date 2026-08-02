@@ -760,6 +760,33 @@ def test_英文也要过宽度闸(tmp_path):
         write_ass(_lines([long_en, "short one."]), ["一", "二"], 0.0, tmp_path / "t.ass")
 
 
+def test_翻转和裁角标要作用到封面帧上():
+    """**封面帧不走那条滤镜链**——它是单独一条 `ffmpeg -ss … -frames:v 1`。
+
+    两处都漏过就是「片子是正的、封面是反的」「片子没水印、海报上有」，
+    而**两张图分开看都正常**，只有摆在一起才看得出来。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert "hflip" in grab, "抽封面帧那一步没跟着翻转"
+    assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
+
+
+def test_裁角标只动纵向不动版式几何():
+    """`crop_keep_top` 把窗口整体缩小再缩放回同样的输出尺寸——**版式的几何
+    一个数都不用改**。这条钉住那个不变量：窗口的宽高比永远还是 `ratio`。
+    """
+    import re
+
+    import tools.build_interview_clip as clip
+
+    for keep in (1.0, 0.85, 0.7):
+        m = re.match(r"crop=ih\*([\d.]+):ih\*([\d.]+):", clip._crop_expr(4 / 3, keep))
+        w, h = float(m.group(1)), float(m.group(2))
+        assert abs(w / h - 4 / 3) < 1e-4, f"keep={keep} 把窗口的宽高比改了"
+        assert abs(h - keep) < 1e-9
+
+
 def test_采访是不是在场上跟着源走():
     """**印着「场上」而画面是演播区，是拿版式撒谎。**
 
