@@ -3230,6 +3230,23 @@ ffmpeg -f lavfi -i "testsrc2=size=1280x720:rate=25" -f lavfi -i sine -t 450 … 
 - **给账号所有者报进度时，说清「这趟会走到哪一关」**。每趟都比上一趟多过一关，
   但只说「又失败了」会让人以为在原地打转
 
+### 查 PR 的 CI 别用 `get_status`：那张表在这个仓库恒空
+
+`pull_request_read method=get_status` 查的是**老的 Commit Statuses API**，而这个
+仓库的 CI 结果全在 **Check Runs** 里。于是它永远返回
+
+    {"state": "pending", "total_count": 0}
+
+——**和「CI 还没起来」长得一模一样**。PR #144 上量过：两个 run 10:19–10:20 就
+`completed/success` 了，10:33 再查 `get_status` 仍然是 `pending / 0`。照它判会
+一直等一个不会到来的绿灯，或者误报成还在跑。
+
+判据要拿 run 本身：`actions_list method=list_workflow_runs resource_id=ci.yml`
+按分支过滤，看 `status/conclusion`。⚠️ 它给每条 run 塞一整份 repository 元数据
+（三条就 400 KB，直接超上下文），所以**落到文件再用脚本挑字段**，别直接读返回值。
+
+又一次「空结果先自证是真空」，只是这次空的是查询用的那张表。
+
 ### 这台沙箱的两条硬限制，别再重新发现
 
 - **`curl` 到 `api.github.com` 是 403**（`GitHub access is not enabled for
