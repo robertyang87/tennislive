@@ -242,6 +242,11 @@ jobs:
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+          # **钉 commit，别停在 @main。** 同一条采访重渲，海报路径一模一样，
+          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话第二轮推出去的
+          # 还是第一轮那张图，**而且不吭声**。reel 那两条线漏过同一个，
+          # 这条线也漏了。
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
           # **这个仓库的 Pages 构建明显比默认预算慢。** 实测：08:41 的提交能打开，
           # 08:54 的等了 14 分钟还是 404，而默认预算是 30×20s=10 分钟。
           # 仓库 1 GB+，每次构建要打包整站，越攒越慢。
