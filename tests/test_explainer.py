@@ -1385,6 +1385,11 @@ def test_人名要以译名表为准():
         texts = [cover.get("hook", ""), cover.get("winner", ""), cover.get("meta", "")]
         texts += list((cover.get("versus") or {}).get("names") or [])
         texts += [s.get("narration", "") for s in spec.get("segments") or []]
+        # **推送那几栏也要扫。** `push.summary` / `push.lead` 是微信标题和正文
+        # 第一行，发出去收不回来，而它们原来一个字都没被查过——名字写错在这儿
+        # 和写在旁白里一样会发出去。`_` 开头的是注解，不扫。
+        texts += [v for k, v in (spec.get("push") or {}).items()
+                  if not k.startswith("_") and isinstance(v, str)]
         for text in filter(None, texts):
             scan(path.name, text)
 
