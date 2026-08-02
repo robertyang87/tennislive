@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>🎾8.2 网球有故事｜难的不是对手</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>同一周，ATP250 的 8 号种子比挑战赛的 1 号种子还高 36 位——低级别的对手没有更强。
+难的是兑换率：挑战赛冠军赢 5 场 125 分，ATP250 赢 2 场就有 100 分。
+
+1️⃣ 同一周：对手其实没有更强
+· ATP250 种子 12 到 67
+· 挑战赛 种子 103 到 150
+· 两条线 中间没有交叠
+
+2️⃣ 兑换率：赢五场，换不到赢两场
+· 挑战赛冠军 赢 5 场 125 分
+· ATP250 四强 赢 2 场 100 分
+· 挑战赛输首轮 0 分
+
+3️⃣ 那道门：第 103 名进不去那一站
+· 第 103 在温哥华是 1 号种子
+· 同一周洛斯卡沃斯 进不去正赛
+· 掉下来的和爬上去的 同一张签表
+
+4️⃣ 地板：有保底，但只够一个人
+· 176–250 保底 10 万美元
+· 最省 4 万 常见 7 万+
+· 带教练 20 万 直接净亏
+
+5️⃣ 另一半：女子那边没有这块地板
+· 2013 年 只有 336 男 253 女平衡
+· 2024 年 ATP 修了地板
+· 女子 至今没有对应的保底
+
+💬 留个答案
+地板只够一个人站的时候，天赋和钱，哪个先用完？
+
+这里是 @网球时差｜网球有故事。
+
+#网球 #网球时差 #张之臻 #挑战赛 #网球冷知识</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
