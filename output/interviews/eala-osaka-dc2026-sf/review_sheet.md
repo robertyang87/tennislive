@@ -1,6 +1,6 @@
 # 转写核对表：eala-osaka-dc2026-sf
 
-源片 https://www.youtube.com/watch?v=ysRhuIpEvv8　采访段 0.0–168.0 秒（共 78 行）
+源片 https://www.youtube.com/watch?v=ysRhuIpEvv8　采访段 0.0–168.0 秒（共 79 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
@@ -33,7 +33,7 @@
 | 27 | 0:55.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=55) | to to beat someone like her? | 对你到底意味着什么 |  |
 | 28 | 0:57.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=57) | Yeah, like I said, it's such an honor | 就像我说的 这是莫大的荣幸 |  |
 | 29 | 0:59.2 | [▶](https://youtu.be/ysRhuIpEvv8?t=59) | to to share the court with her, but I think, | 能和她同场 但我想 |  |
-| 30 | 1:02.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=62) | you know, it's with I guess just the way I | 我猜跟我今天怎么面对这场球有关 |  |
+| 30 | 1:02.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=62) | you know, it's with I guess just the way I | 我猜跟我怎么面对这场球有关 |  |
 | 31 | 1:05.8 | [▶](https://youtu.be/ysRhuIpEvv8?t=65) | approach today's match. | 那种方式 |  |
 | 32 | 1:07.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=67) | Um, could never count her out, | 你永远不能把她当成已经赢了 |  |
 | 33 | 1:09.5 | [▶](https://youtu.be/ysRhuIpEvv8?t=69) | you know, and and like I said, | 而且我刚才也说了 |  |
@@ -65,23 +65,24 @@
 | 59 | 2:10.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=130) | So you know | 所以你知道 |  |
 | 60 | 2:11.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=131) | this tournament doesn't deserve anything | 这样的赛事配得上 |  |
 | 61 | 2:13.5 | [▶](https://youtu.be/ysRhuIpEvv8?t=133) | than the best fans. | 最好的球迷 |  |
-| 62 | 2:15.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=135) | So the final Jessica Pegula she has won | 那么决赛对手是佩古拉 她拿过 |  |
-| 63 | 2:20.2 | [▶](https://youtu.be/ysRhuIpEvv8?t=140) | this tournament before many years ago. | 这站的冠军 很多年前了 |  |
-| 64 | 2:21.9 | [▶](https://youtu.be/ysRhuIpEvv8?t=141) | You played her last year, | 你去年跟她打过 |  |
-| 65 | 2:23.2 | [▶](https://youtu.be/ysRhuIpEvv8?t=143) | a phenomenal three- set match in Miami. | 在迈阿密 一场精彩的三盘大战 |  |
-| 66 | 2:26.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=146) | She just got you there. | 她在那儿险胜了你 |  |
-| 67 | 2:27.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=147) | What can you do tomorrow to change | 明天你能做点什么 |  |
-| 68 | 2:29.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=149) | that around? | 把结果掉过来 |  |
-| 69 | 2:31.0 | [▶](https://youtu.be/ysRhuIpEvv8?t=150) | H I'll have to ask my coach. | 那我得问我的教练 |  |
-| 70 | 2:34.9 | [▶](https://youtu.be/ysRhuIpEvv8?t=154) | He'll know best. | 他最清楚 |  |
-| 71 | 2:35.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=155) | No, I'm joking. | 开玩笑的 |  |
-| 72 | 2:36.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=156) | But um yeah, | 不过说正经的话 |  |
-| 73 | 2:37.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=157) | I think I just have to trust myself. | 我想我只需要相信自己 |  |
-| 74 | 2:39.8 | [▶](https://youtu.be/ysRhuIpEvv8?t=159) | Uh I'm in the final for a reason. | 我能站在决赛里是有原因的 |  |
-| 75 | 2:42.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=162) | She is such an amazing player also | 她也是一位非常出色的球员 |  |
-| 76 | 2:45.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=165) | for a reason. | 同样是有原因的 |  |
-| 77 | 2:46.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=166) | So I think it's going | 所以我觉得这会是 |  |
-| 78 | 2:46.8 | [▶](https://youtu.be/ysRhuIpEvv8?t=166) | to be a really good match. | 一场很好的比赛 |  |
+| 62 | 2:15.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=135) | So the final Jessica Pegula, | 那么决赛对手是佩古拉 |  |
+| 63 | 2:19.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=139) | she has won this tournament | 她拿过这站的冠军 |  |
+| 64 | 2:20.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=140) | before many years ago. | 很多年前了 |  |
+| 65 | 2:21.9 | [▶](https://youtu.be/ysRhuIpEvv8?t=141) | You played her last year, | 你去年跟她打过 |  |
+| 66 | 2:23.2 | [▶](https://youtu.be/ysRhuIpEvv8?t=143) | a phenomenal three- set match in Miami. | 在迈阿密 一场精彩的三盘大战 |  |
+| 67 | 2:26.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=146) | She just got you there. | 她在那儿险胜了你 |  |
+| 68 | 2:27.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=147) | What can you do tomorrow to change | 明天你能做点什么 |  |
+| 69 | 2:29.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=149) | that around? | 把结果掉过来 |  |
+| 70 | 2:31.0 | [▶](https://youtu.be/ysRhuIpEvv8?t=150) | H I'll have to ask my coach. | 那我得问我的教练 |  |
+| 71 | 2:34.9 | [▶](https://youtu.be/ysRhuIpEvv8?t=154) | He'll know best. | 他最清楚 |  |
+| 72 | 2:35.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=155) | No, I'm joking. | 开玩笑的 |  |
+| 73 | 2:36.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=156) | But um yeah, | 不过说正经的话 |  |
+| 74 | 2:37.7 | [▶](https://youtu.be/ysRhuIpEvv8?t=157) | I think I just have to trust myself. | 我想我只需要相信自己 |  |
+| 75 | 2:39.8 | [▶](https://youtu.be/ysRhuIpEvv8?t=159) | Uh I'm in the final for a reason. | 我能站在决赛里是有原因的 |  |
+| 76 | 2:42.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=162) | She is such an amazing player also | 她也是一位非常出色的球员 |  |
+| 77 | 2:45.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=165) | for a reason. | 同样是有原因的 |  |
+| 78 | 2:46.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=166) | So I think it's going | 所以我觉得这会是 |  |
+| 79 | 2:46.8 | [▶](https://youtu.be/ysRhuIpEvv8?t=166) | to be a really good match. | 一场很好的比赛 |  |
 
 ## 还欠着的
 

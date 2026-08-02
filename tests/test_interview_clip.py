@@ -531,11 +531,22 @@ def test_两行之间的空白要跟着字号重新量():
 def test_中文字号不许大到让行放不下():
     """中文那侧的天花板是 952px 可用宽。
 
-    **68 号就有行超出**（伊埃拉那条最宽的一行 967px），所以 64 是上限。
-    这条拦的是「中文那侧几乎免费」被读成「随便调」。
+    ⚠️ **这条原来写死 ≤64，而那个数已经过期了。** 它当时的理由是「68 号就有
+    行超出」——确实如此，但超的只有 2 行；2026-08-02 把那 2 行改短之后
+    68 就装得下了，于是这个常量从「实测上限」变成了「一个记着旧观测的数」。
+    一个会过期的名单和一条常年红的检查是同一个毛病。
+
+    重量之后（每一档的最宽一行都是同一句，`今年才是你真正完整的巡回赛年`）：
+
+        zh=64  最宽 896px   超宽 0 行
+        zh=68  最宽 952px   超宽 0 行   ← 正好顶到可用宽，一点余量都没有
+        zh=70  最宽 980px   超宽 6 行
+
+    **68 是上限而不是舒服的选择**：最宽那行正好等于预算，再长一个字就破。
+    真正逐行去量的判据是 `test_字号涨了不许撑破已有的行`；这条只拦「往上飘」。
     """
-    assert _FONT_SIZE["zh"] <= 64, (
-        f"中文字号 {_FONT_SIZE['zh']} 超过 64——952px 的行宽装不下，"
+    assert _FONT_SIZE["zh"] <= 68, (
+        f"中文字号 {_FONT_SIZE['zh']} 超过 68——952px 的行宽装不下（70 号会破 6 行），"
         "写稿的人会被逼着把句子切碎。")
 
 
@@ -1852,3 +1863,67 @@ def test_分歧率认领要钉在当时那次观测上():
     _check_disagree_claim(
         {"transcript_disagree_ok": {"rate": 0.124, "why": "逐处看过：差的全是虚词"}},
         0.124, path)
+
+
+def test_字号涨了不许撑破已有的行():
+    """**字号不是想涨就能涨的**，它由可用宽和已有的行共同决定。
+
+    2026-08-02 把中文从 62 提到 68（中文是主读行，英文是原文参照，
+    62/46 = 1.35 两行几乎一样重，68/46 = 1.48 层级才立住）。
+
+    能涨多少是量出来的：中文 62→68 只有 2 行超宽（手写的，普遍偏短，有余量），
+    **而英文 46→50 就有 22 行超**——英文行是切行算法按 `_LINE_PX` 排满的，
+    一放大必然大面积溢出。所以英文钉死在 46，要动它得先动切行的宽度预算。
+
+    这条测试就是那个算式：谁再想调字号，它会当场把代价报出来。
+    """
+    import json as _json
+
+    from tools.build_interview_clip import _FONT_CACHE, _LINE_PX, _zh_width
+
+    _FONT_CACHE.clear()
+    over, checked = [], 0
+    for path in _specs():
+        spec = _json.loads(path.read_text(encoding="utf-8"))
+        for i, line in enumerate(spec.get("zh") or [], 1):
+            checked += 1
+            if (w := _zh_width(line)) > _LINE_PX:
+                over.append(f"{path.stem} #{i} {w:.0f}px（可用 {_LINE_PX}）：{line}")
+    assert checked >= 100, f"只量到 {checked} 行中文，判据大概没找对目录"
+    assert not over, "字号撑破了这些行，要么把字号调回去，要么把这些行改短：\n" + "\n".join(over)
+
+
+def test_缩略图墙每一格都要标出秒数():
+    """**没有秒数就没法拿它挑封面**——那就退回「听转写猜一个数」。
+
+    封面是唯一决定人点不点的那一屏，而沙箱下不了媒体：以前挑 `frame_at`
+    只能猜，渲完十分钟打开看，不对就重渲一趟。storyboard 几百 KB、不用
+    ffmpeg，在取字幕那一趟顺手就拿到了。
+
+    yt-dlp 在沙箱里跑不了（IP 被挡），所以这里只测拿到格子之后的那一半：
+    **拼图和标秒数**。下载那一半靠 runner 上第一次真跑暴露，
+    而它是**加速不是闸**——拿不到就打印原因往下走。
+    """
+    from PIL import Image
+
+    from tools.build_interview_clip import _tile_sheet
+
+    tiles = [Image.new("RGB", (160, 90), (i * 20 % 256, 60, 90)) for i in range(9)]
+    dest = _tile_sheet(tiles, step=1.91, cols=3, dest=ROOT / "_t.jpg")
+    try:
+        assert dest.exists() and dest.stat().st_size > 0
+        sheet = Image.open(dest)
+        # 3 列 9 格 → 3 行；每格还要留一条写秒数的地方，所以比 90×3 高
+        assert sheet.width >= 160 * 3, sheet.size
+        assert sheet.height > 90 * 3, f"没给秒数留位置：{sheet.size}"
+    finally:
+        dest.unlink(missing_ok=True)
+
+
+def test_缩略图墙只在取字幕那一趟出():
+    """出片那趟不该再下一次——它已经有源片了，而且那趟最贵。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    call = body.index("storyboard_sheet(spec[")
+    guard = body.rindex('args.stage == "subs"', 0, call)
+    assert call - guard < 300, "缩略图墙没挂在 subs 那一档上"
