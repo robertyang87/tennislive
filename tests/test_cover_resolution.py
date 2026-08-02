@@ -67,6 +67,40 @@ def _fill(slug: str) -> float:
     return chk.fill_factor(path)
 
 
+def _two_x_slugs() -> list[str]:
+    """铺满 ≥2.0x 的片子——「按 2 倍图当基准也仍然合格」的那些。"""
+    return sorted(s for s in _SCRIPTS if _fill(s) / 2 >= chk.FLOOR)
+
+
+def _two_x_budget() -> tuple[int, int]:
+    """(已用, 上限)。上限由 `doubled * 5 <= len(_SCRIPTS)` 反解。"""
+    return len(_two_x_slugs()), len(_SCRIPTS) // 5
+
+
+def _envelope() -> str:
+    """换封面图时的**完整窗口**，两头都说。
+
+    2026-08-02 为一张封面来回改了三轮，每一轮只知道自己撞了哪一条：
+    0.95x 撞地板 → 换成 2.10x 的裁图 → 撞「2 倍图不是基准」那条反例 →
+    才明白正解是**故意降到 1.85x**。三条闸互相拉扯，而报错一次只说一头，
+    于是每一轮都要先渲一次才知道下一头在哪。
+
+    这个函数只在报错时求值（assert 的消息是惰性的），所以那 23 次读图
+    不会落在正常那条路上。
+    """
+    used, cap = _two_x_budget()
+    room = cap - used
+    tail = (
+        f"还剩 {room} 个名额" if room > 0
+        else "已经满了，再来一张 ≥2x 的会把那条反例判红"
+    )
+    return (
+        f"窗口两头：下界 {chk.CARD_W}x{chk.CARD_H}（铺满 {chk.FLOOR:.2f}x）；"
+        f"上界别越过 {2 * chk.FLOOR:.2f}x——「2 倍图不是基准」那条反例的预算"
+        f"现在是 {used}/{cap}，{tail}。"
+    )
+
+
 @pytest.mark.parametrize("slug", sorted(_SCRIPTS))
 def test_封面图不许被放大(slug):
     """原图比显示区域小，等于一上来就在插值。这和推不推近无关，是底线。"""
@@ -78,7 +112,7 @@ def test_封面图不许被放大(slug):
         return
     assert got >= chk.FLOOR, (
         f"{slug} 的封面图只有 {got:.2f}x，铺满卡片就得放大 {1 / got:.0%}。\n"
-        f"换一张至少 {chk.CARD_W}x{chk.CARD_H} 的原图，"
+        f"{_envelope()}\n"
         f"或者把它加进 _UNDERSIZED 并说明为什么只能用这张。")
 
 
@@ -104,7 +138,8 @@ def test_基准是成片里的卡片不是二倍截图():
     """
     assert (chk.CARD_W, chk.CARD_H) == (1080, 1440)
     # 反过来验：按 2 倍图算的话，绝大多数都会跌破底线——说明基准选错会全红
-    doubled = sum(1 for s in _SCRIPTS if _fill(s) / 2 >= chk.FLOOR)
+    over = _two_x_slugs()
+    doubled = len(over)
     # 上限按**比例**写，不写死个数。原来是 `<= 1`，那个 1 是按当时 15 条片子
     # 标出来的；thiem-football 的封面是 4103x3336 的捧杯原图（铺满倍数 2.32），
     # 一加进来就变成 2 条，测试红了——而它红的不是「基准选错了」，是
@@ -113,7 +148,11 @@ def test_基准是成片里的卡片不是二倍截图():
     # 两成这条线仍然把反例撑得住：多数不合格才说明基准选错会全红。
     assert doubled * 5 <= len(_SCRIPTS), (
         f"按 2 倍图当基准时仍有 {doubled}/{len(_SCRIPTS)} 条合格，超过两成——"
-        "这个反例撑不住了，回去确认基准是不是真的该用 1080x1440。")
+        "这个反例撑不住了，回去确认基准是不是真的该用 1080x1440。\n"
+        f"越过 {2 * chk.FLOOR:.2f}x 的是：{'、'.join(over)}。\n"
+        "刚换过封面的话多半就是新加的那张。**它不是错**，只是把这条反例挤爆了；"
+        f"把它缩到 {2 * chk.FLOOR:.2f}x 以下即可——"
+        "不该为了让一张图更大，去拆一条用来自证基准的判据。")
 
 
 def test_能推近的片子是算出来的不是手写的():
