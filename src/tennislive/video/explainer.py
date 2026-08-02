@@ -790,7 +790,185 @@ _PR_GAP_DIAGRAM = """
 """
 
 
+#: 手术之后那个春天，德约科维奇的排名一路往下。照片拍不出「排名」，
+#: 而这条片子的第一段全靠这个数字的分量——12 年来第一次跌出前 20。
+_MIDDLE_FALL_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">手术之后的那个春天</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">他的世界排名，2018 年 2 月到 5 月</text>
+
+  <polyline points="120,160 300,160 300,250 520,250 520,340 780,340"
+            fill="none" stroke="#c6f65a" stroke-width="7"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="120" cy="160" r="11" fill="#c6f65a"/>
+  <circle cx="300" cy="250" r="11" fill="#c6f65a"/>
+  <circle cx="520" cy="340" r="11" fill="#c6f65a"/>
+  <circle cx="780" cy="340" r="13" fill="#c6f65a"/>
+
+  <text x="120" y="140" fill="#e7f3ec" font-size="29" font-weight="800">第 14</text>
+  <text x="300" y="300" fill="#e7f3ec" font-size="29" font-weight="800">第 18</text>
+  <text x="540" y="392" fill="#e7f3ec" font-size="29" font-weight="800">第 22</text>
+
+  <text x="120" y="440" fill="#9fb4aa" font-size="26" font-weight="700">2 月动刀</text>
+  <text x="272" y="440" fill="#9fb4aa" font-size="26" font-weight="700">马德里</text>
+  <text x="492" y="440" fill="#9fb4aa" font-size="26" font-weight="700">罗马</text>
+
+  <text x="450" y="496" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">上一次跌出前 20，是 2006 年 10 月</text>
+</svg>
+"""
+
+#: 两条轨迹并排。这是整条片子的论点，而且**没有任何一张照片能表达**——
+#: 它要同时呈现两个人、四年时间，以及「中段重叠」这件事本身。
+#: 一屏一个强调色：回来的那条给品牌绿，没回来的那条留中性白。
+_MIDDLE_SAME_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">两条路，前半段一模一样</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">横轴＝手术之后过了多久</text>
+
+  <rect x="96" y="126" width="212" height="286" rx="14"
+        fill="rgba(231,243,236,.10)" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+  <text x="202" y="176" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">这一段</text>
+  <text x="202" y="214" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">分不出来</text>
+
+  <polyline points="120,340 200,398 292,376 470,254 700,220 812,220"
+            fill="none" stroke="#c6f65a" stroke-width="7"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="612" y="166" fill="#c6f65a" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="612" y="202" fill="#c6f65a" font-size="26" font-weight="700">拿了温网</text>
+
+  <polyline points="120,340 200,398 294,380 434,326 566,356 700,414 812,420"
+            fill="none" stroke="rgba(231,243,236,.62)" stroke-width="7"
+            stroke-dasharray="14 10" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="640" y="326" fill="#e7f3ec" font-size="30" font-weight="800">锦织圭</text>
+  <text x="640" y="362" fill="#9fb4aa" font-size="26" font-weight="700">再没回去</text>
+
+  <text x="112" y="466" fill="#9fb4aa" font-size="26" font-weight="700">动刀</text>
+  <text x="424" y="466" fill="#9fb4aa" font-size="26" font-weight="700">半年</text>
+  <text x="676" y="466" fill="#9fb4aa" font-size="26" font-weight="700">三四年</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "comeback-middle": (
+        (
+            "knife",
+            "动刀",
+            "三十岁的德约科维奇，决定开刀",
+            "先看二〇一八年一月。德约科维奇在澳网第四轮输给郑泫，那是他肘伤"
+            "反复之后的第一次复出，打得很挣扎。半个月后他做了一个决定：动刀。"
+            "手术在二月，动的是右肘。那之前他已经因为这个肘停了半年，"
+            "整个二〇一七年下半年都没打。",
+            "assets/explainer/comeback-middle/djokovic_ao_2018.jpg",
+            "Joshua Sadli · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 1 月 15 日，墨尔本",
+            (
+                "2017 下半年 停了半年",
+                "2018 年 2 月 右肘手术",
+                "手术前已是 12 座大满贯",
+            ),
+        ),
+        (
+            "spring",
+            "那个春天",
+            "输给世界第 109，跌出前 20",
+            "然后是那个春天。三月印第安维尔斯，他第二轮输给世界第一百零九位的"
+            "丹尼尔太郎；四月巴塞罗那，第二轮输给克利赞；五月马德里，第二轮输给"
+            "埃德蒙德，排名跌到第十八，是十二年来最低。罗马之后再跌到第二十二——"
+            "上一次跌出前二十，还是二〇〇六年十月。六月法网八强，他输给了"
+            "世界第七十二位的切基纳托。那时候几乎所有人都认为，他回不来了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "印第安维尔斯 负世界第 109",
+                "马德里之后 跌到第 18",
+                "罗马之后 第 22",
+            ),
+            _MIDDLE_FALL_DIAGRAM,
+        ),
+        (
+            "five-months",
+            "五个月后",
+            "德约科维奇拿了温网，又拿美网",
+            "手术之后第五个月，温网决赛，他六比二、六比二、七比六击败安德森，"
+            "那是他两年来第一个大满贯。两个月后美网决赛，六比三、七比六、六比三"
+            "击败德尔波特罗。同一年年底，他回到世界第一。从跌出前二十到重回第一，"
+            "中间隔了七个月。",
+            "assets/explainer/comeback-middle/djokovic_usopen_2018.jpg",
+            "Carine06 · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 8 月 28 日，美网",
+            (
+                "温网决赛 6-2 6-2 7-6",
+                "美网决赛 6-3 7-6 6-3",
+                "同年年底 重回世界第 1",
+            ),
+        ),
+        (
+            "another",
+            "另一个春天",
+            "同一个部位，几乎同一台手术",
+            "现在换一个人。二〇一九年十月，锦织圭做了右肘手术，清掉两块骨刺——"
+            "和德约科维奇同一个部位，几乎同一台手术。他当时世界排名第八，"
+            "生涯最高到过第四，打进过美网决赛。这台手术让他停了十个月。"
+            "复出前他感染了新冠，复出后又伤了肩。",
+            "assets/explainer/shang-nishikori/nishi_2014.jpg",
+            "Tennis.jp 现场报道 · 2014 年美网男单决赛，锦织圭",
+            (
+                "2019 年 10 月 清两块骨刺",
+                "手术时 世界第 8",
+                "停了 10 个月",
+            ),
+        ),
+        (
+            "same",
+            "中段",
+            "锦织圭也曾看起来要回来了",
+            "关键在后面。二〇二一年，锦织圭打进法网第四轮、东京奥运会八强、"
+            "华盛顿四强——那是他两年来第一个巡回赛四强，看起来真的要回来了。"
+            "奥运八强那场的对手，正是德约科维奇：六比二、六比〇，七十一分钟。"
+            "两条路在那天碰了一下，然后各走各的。半年后锦织圭做了左髋手术，"
+            "整个二〇二二赛季报销，直到二〇二三年六月才重返巡回赛，再没回到前列。"
+            "所以分岔不在肘：德约科维奇身上只有那一处，而锦织圭那之后还有新冠、"
+            "肩伤、髋部手术。两个春天摆在一起看，前半段真的一模一样——"
+            "当时谁也分不出来，包括他们自己。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2021 年 奥运八强 负德约科维奇",
+                "2022 年 1 月 左髋手术",
+                "分岔不在肘 在肘之外",
+            ),
+            _MIDDLE_SAME_DIAGRAM,
+        ),
+        # 落到一个**正在发生**的例子上。账号所有者定的口径：**只陈述事实和现状**，
+        # 不给判断、不给倾向——因为这条片子的全部结论就是「中段判断不了」，
+        # 那么对一个还在中段里的人下判断，等于自己拆自己的台。
+        (
+            "now",
+            "这一年",
+            "一年之后，郑钦文在打资格赛",
+            "最后说一个正在发生的。二〇二五年七月，郑钦文做了右肘手术，"
+            "清掉一块压迫神经的游离碎骨。手术之前一个月，她的世界排名是第四，"
+            "生涯最高。到二〇二六年八月，整整一年过去，她排在第一百二十三位。"
+            "八月一日，多伦多资格赛首轮，她三比六、四比六输给世界第七十八位的"
+            "塔拉鲁迪——那是她二〇二三年一月以来第一次打资格赛。"
+            "以上就是全部的事实。她在哪一段，现在没有人知道。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文",
+            (
+                "2025 年 7 月 右肘手术",
+                "术前第 4 一年后第 123",
+                "8 月 1 日 资格赛首轮出局",
+            ),
+            None,
+            "一年过去了，你觉得郑钦文还能打回来吗？",
+        ),
+    ),
     "protected-ranking": (
         (
             "now",
@@ -2641,6 +2819,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "comeback-middle": {
+        "hook": (
+            "同一个部位、几乎同一台手术，一个五个月后拿了温网，一个再没回去。\n"
+            "而在中段那几个月，两条路长得一模一样——郑钦文现在正走在那一段里。"
+        ),
+        "tags": ("网球", "网球时差", "德约科维奇", "郑钦文", "网球冷知识"),
+    },
     "protected-ranking": {
         "hook": (
             "「保护排名」这四个字翻拧了——ATP 规则书里它叫 Entry Protection，进赛保护。\n"
@@ -2862,6 +3047,14 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "comeback-middle": {
+        "topic": "中段：谁回得来，当时看不出来",
+        "question": "伤好了打不出来，是低谷还是终点？",
+        "narration": "伤好了打不出来，这是低谷，还是终点？"
+                     "有两个人给过完全相反的答案，而当时谁也分不出来。",
+        "image": "assets/explainer/comeback-middle/djokovic_ao_2018.jpg",
+        "credit": "Joshua Sadli · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 1 月 15 日，墨尔本",
+    },
     "protected-ranking": {
         "topic": "保护排名：它保的是报名，不是排名",
         "question": "不打球，排名为什么还在掉？",
