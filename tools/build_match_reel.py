@@ -68,6 +68,7 @@ import json
 import math
 import os
 import re
+import hashlib
 import shutil
 import subprocess
 import sys
@@ -684,6 +685,54 @@ def _ladder() -> list[tuple[str, list[str]]]:
     return _PLAIN + _POT_FIRST
 
 
+# 下过的源片存哪儿。**空着就是旧行为**（每次都重下），工作流把它指到一个
+# `actions/cache` 的目录上。
+_SOURCE_CACHE_ENV = "TENNISLIVE_SOURCE_CACHE"
+
+
+def _cached_source(url: str, suffix: str) -> Path | None:
+    """这条 URL 在缓存里的位置。没配缓存目录就返回 None（走旧行为）。
+
+    **同一条源片会被下两到三次**：probe 一次、cover 一次、render 一次——中间
+    「丢掉不进仓库的中间物」那一步把它删了，而它本来就不进仓库。实测一个
+    70 MB 的源片要下 **100.86 秒**（YouTube 限速，不是带宽问题），而 render
+    整步才 198 秒——**一半的时间花在重下同一个文件上**。
+
+    键取 URL 的哈希：YouTube 的同一条 URL 内容不会变，所以缓存永远是对的；
+    换了 URL 自然是另一个键。缓存目录在 `~` 底下，清理那一步只碰 `outdir`，
+    碰不到它。
+    """
+    root = os.environ.get(_SOURCE_CACHE_ENV, "").strip()
+    if not root:
+        return None
+    # ⚠️ **`~` 要自己展开。** 工作流里写的是 `~/.cache/tennislive-sources`，
+    # 而 Python **不展开波浪号**——`Path("~/…")` 是一个**名叫 `~` 的相对目录**，
+    # 落在仓库工作区里。`actions/cache` 找的是真的 `$HOME/.cache/…`，于是
+    # 每趟都报 `Path Validation Error: ... do(es) not exist`，**一个字节都没存过**，
+    # 而两趟 run 全是绿的（run 156/158）。
+    # 单元测试当时也是绿的——它喂的是绝对路径 `tmp_path`，正好绕过这一半。
+    return (Path(root).expanduser()
+            / f"{hashlib.sha1(url.encode()).hexdigest()[:16]}{suffix}")
+
+
+def _keep_source(url: str, src: Path) -> None:
+    """把刚下好的源片留一份进缓存，下一趟就不用再等一百秒。
+
+    **存不进去不算失败**（磁盘满、目录没建起来）——它只是个加速，
+    不该让一趟已经下载成功的 run 因为缓存写失败而红。但**要出声**，
+    否则「缓存没生效」和「缓存生效了」在日志上一样。
+    """
+    cached = _cached_source(url, src.suffix or ".mp4")
+    if cached is None or cached.is_file():
+        return
+    try:
+        cached.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, cached)
+        print(f"[缓存] 存了一份，下一趟不用重下（{cached.name}）")
+    except OSError as exc:
+        print(f"[缓存] 存不进去，下一趟还要重下：{exc}")
+
+
 def download(url: str, dest: Path) -> Path:
     """取**最高清晰度**：先试 1080p 的 avc1（码率最高的那档），退到 bestvideo。
 
@@ -693,6 +742,12 @@ def download(url: str, dest: Path) -> Path:
     dest.parent.mkdir(parents=True, exist_ok=True)
     if dest.is_file() and dest.stat().st_size > 0:
         print(f"[skip] 已有 {dest}")
+        return dest
+
+    cached = _cached_source(url, dest.suffix or ".mp4")
+    if cached is not None and cached.is_file() and cached.stat().st_size > 0:
+        shutil.copy2(cached, dest)
+        print(f"[缓存] 命中，没有重下（{dest.stat().st_size / 1e6:.1f} MB）")
         return dest
 
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
@@ -712,6 +767,7 @@ def download(url: str, dest: Path) -> Path:
                 "直链回的是 HTML 不是视频——网盘多半还是「仅限受邀者」，"
                 "改成「知道链接的任何人」再试")
         print(f"[ok] 直链下到 {dest.stat().st_size / 1e6:.1f} MB")
+        _keep_source(url, dest)
         return dest
 
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
@@ -754,6 +810,7 @@ def download(url: str, dest: Path) -> Path:
                 continue
             print(f"[ok] {label} 下到了 {width}×{height}，"
                   f"{dest.stat().st_size / 1e6:.1f} MB")
+            _keep_source(url, dest)
             return dest
         reason = " | ".join(
             line.strip() for line in (proc.stderr or "").splitlines()
