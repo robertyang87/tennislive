@@ -176,15 +176,32 @@ _NAME_FIX = {
 _NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
 
 
-def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
-    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**"""
+def fetch_words(url: str, workdir: Path,
+                spec: dict | None = None) -> list[tuple[float, str]]:
+    """拉自动字幕，返回 [(秒, 词)]。**用 json3，理由见模块注释。**
+
+    **cookie 和 JS runtime 两样都要带，和 `yt_download` 一模一样。**
+    原来这儿是裸调的——没有 `--cookies`、也没有 `--js-runtimes node`。
+    长期没暴露，是因为取字幕以前不用登录也过得去；2026-08-02 起 YouTube 把
+    这条路一起挡了，于是 runner 上出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    看起来像「cookie 过期了」，其实是**这一步压根没用它**。判据摆在眼前：
+    同一份 cookie 七十分钟前刚下完 189 MB 的源片。**两处各配一遍必分叉**——
+    `yt_download` 那边接上了环境变量，这边漏了，而漏的表现是一句
+    指向完全错误方向的报错。
+    """
     workdir.mkdir(parents=True, exist_ok=True)
     # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
     # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
     if not (files := sorted(workdir.glob("cap_*.json3"))):
         proc = subprocess.run(
-            ["yt-dlp", "--no-warnings", "--skip-download", "--write-auto-subs",
+            ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+             "--skip-download", "--write-auto-subs",
              "--sub-langs", "en", "--sub-format", "json3",
+             *cookie_args(spec or {}),
              "-o", str(workdir / "cap_%(id)s"), url],
             capture_output=True, text=True, timeout=300)
         files = sorted(workdir.glob("cap_*.json3"))
@@ -209,6 +226,39 @@ def fetch_words(url: str, workdir: Path) -> list[tuple[float, str]]:
 # 1.91 秒（两头夹着 `[cheering]` 和 `[applause]`，是掌声）、0.28 秒（事件间的抖动）。
 # 2.0 落在最大的那个和第二个之间。
 CAPTION_GAP_SECS = 2.0
+
+# 垫底那层的调色。**先去色再压暗，不能只压暗。**
+#
+# 原来是光秃秃一个 `eq=brightness=-0.34`。账号所有者反馈：「伊埃拉的球衣是绿色的，
+# 背景虚化之后感觉背景全是绿的，视觉上不太舒服。」量出来问题比看上去更硬：
+#
+#     边条饱和度 0.68~0.92，而画面本身只有 0.16~0.23 —— 背景比画面艳三到五倍
+#
+# 机理是 `brightness` 走的是**减法**，而饱和度是 `(max-min)/max`：整体减下去
+# 分母跟着变小，于是**越压越艳**。模糊本来就把明暗细节抹平、只剩下色相，
+# 再这么一压，等于「把颜色浓缩了铺满全屏」。
+#
+# 而且它**跟着画面变色**：12 秒那帧背后是蓝色广告板，上边条就成了深蓝
+# （`[5 2 70]`，色差 67/255），下边条同时是绿的——一屏两个饱和色互相打架，
+# 她那件荧光绿球衣反而淹在里面。正好撞上「一屏只留一个强调色」。
+#
+# 三档都渲出来比过（`sat` / `bri` / 全片最重的一处色差）：
+#
+#     现在   —      -0.34    67/255   上蓝下绿，色相跟着画面摆
+#     选它   0.15   -0.30    21/255   两条都退成中性暗色，绿球衣成了唯一的饱和色
+#     太狠   0.12   -0.40     8/255   边条接近纯黑，看着像「没铺满的视频」
+#
+# ⚠️ **别拿 HSV 饱和度当判据**：近黑像素上它失真（`sat=0.25` 那档读数仍是 0.95）。
+# 量绝对色差 `max-min`，那才是眼睛在暗背景上看见的东西。
+#
+# ⚠️ 上表里「现在」那一行是从**已发的成片**上量的，是实测；另两行是本地模拟——
+# 拿成片的画面区当输入重跑同一串滤镜。真正的垫底层取的是**整幅 16:9 源片**，
+# 裁法不同，但调色是逐像素的，所以比出来的档位成立、绝对值会有出入。
+#
+# 封面那层（`.bg` 的 `filter:blur(46px) brightness(.34)`）**不用跟着改**：
+# CSS 的 brightness 是**乘法**，不会把饱和度顶上去。量过已发的海报，
+# 纯 `.bg` 那条色差 12/255，本来就是中性的。
+BG_GRADE = "eq=saturation=0.15:brightness=-0.30"
 
 
 def _caption_spans(workdir: Path) -> list[list[float]]:
@@ -497,7 +547,29 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     budget = _LINE_PX if budget is None else budget
     width = _en_width if width is None else width
     fix = {**_NAME_FIX, **(word_fix or {})}
-    keep = [(t, fix.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
+
+    def _fix(w: str) -> str:
+        """查订正表要**看穿说话人标记**，还要**把尾标点留住**。
+
+        自动字幕给每个说话人的第一个词加了 `>>` 前缀（这条片子里 30 处），
+        而这个标记有用——`_split_sentences` 靠它断「换人说话」。所以不能提前
+        剥掉，只能让查表看穿它。原来是 `fix.get(w.strip(".,?!"), w)`，于是
+        `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上：
+        **凡是某个说话人的第一个词，word_fix 一律静默失效**。
+        它不报错，只是那条订正没生效——而我写了订正就默认它生效了。
+
+        尾标点同理：`'Pigula,'` 命中后原来返回的是光秃秃的 `Pegula`，
+        **逗号被吃掉**。而逗号是切行的依据（先按标点切子句），
+        丢一个就少一个断点。
+        """
+        mark, bare = (">>", w[2:].strip()) if w.startswith(">>") else ("", w)
+        core = bare.strip(".,?!")
+        if core not in fix or not core:
+            return w
+        tail = bare[bare.rindex(core) + len(core):]
+        return f"{mark} {fix[core]}{tail}" if mark else f"{fix[core]}{tail}"
+
+    keep = [(t, _fix(w)) for t, w in words if start <= t <= end]
     keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
     if not keep:
         return []
@@ -852,10 +924,56 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
     probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
+        _check_disagree_claim(spec, rate, path)
+    return path
+
+
+# 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
+TRANSCRIPT_DISAGREE_CEILING = 0.18
+
+
+def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+    """分歧率超闸时，**允许显式认领**，但认领要留下判据。
+
+    照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
+    一律放行又回到「兜底出事的时候不吭声」。认领这一步是让这个取舍留下判据。
+
+    **为什么长采访会超**：这个指标按词比，而 whisper 会把 `um` / `uh` /
+    `you know` / 结巴重复整个丢掉，YouTube 全留着。演播室那条实测
+    YouTube 1229 词、whisper 1105 词——**光是这 124 个词就占 10.1%**，
+    而总分歧才 12.4%。也就是说超出闸门的部分几乎全是「whisper 更简」，
+    不是「英文有错」。片子越长、越口语，这个偏差越大。
+
+    **没有去改 `TRANSCRIPT_MAX_DISAGREE`**：那个数护着所有片子，
+    而沙箱里跑不了 whisper（IP 被 YouTube 挡），没法拿存量重新标定。
+    改一个动不了的数，等于把所有片子的闸一起放松，还验不了后果。
+
+    认领要写清两样，缺一不可：
+
+    - `rate`：**当时量到的那个数**。它把认领钉在这一次的观测上——
+      以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
+      不写这个的话，「认领过一次」就成了永久豁免
+    - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+    """
+    claim = spec.get("transcript_disagree_ok") or {}
+    declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
+    if not (isinstance(declared, int | float) and why):
         raise SystemExit(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
-            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。")
-    return path
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
+            "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
+            "把虚词丢了），就在 spec 里显式认领：\n"
+            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+    if rate > declared:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
+            "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
+    if rate > TRANSCRIPT_DISAGREE_CEILING:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
+          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
 
 
 def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
@@ -1362,7 +1480,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         # 垫底：同一路画面铺满画布、模糊、压暗。**放大 1.05 再裁**，
         # 不然模糊到边缘会透出底色。
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
-        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
+        f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,{BG_GRADE}[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
         f"[0:v]{flip}{logo}{_crop_expr(ratio, keep)},scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
@@ -1434,7 +1552,7 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
-    lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"],
+    lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
                     word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
