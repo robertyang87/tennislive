@@ -1269,13 +1269,19 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     dur = spec["end"] - spec["start"]
     ratio = spec.get("crop_ratio", CROP_RATIO)
     vh = int(CANVAS_W / ratio)
+    # **有的转载会把画面左右翻转**——那是绕开版权识别的做法，而且它**不报错**：
+    # 画面看着挺正常，只有场地上的字是反的（`EALA` 成了 `AJA3`、菲律宾国旗
+    # 三角朝反边）。这条线烧的是英文字幕，画面上再挂一排反着的英文，
+    # 读者一眼就看出不对。翻回来的判据是**场地上的字读不读得通**，
+    # 不是「看着顺不顺眼」——左右翻转的人脸和球场，肉眼分不出来。
+    flip = "hflip," if spec.get("mirrored") else ""
     chain = (
         # 垫底：同一路画面铺满画布、模糊、压暗。**放大 1.05 再裁**，
         # 不然模糊到边缘会透出底色。
         f"[0:v]scale={CANVAS_W}:{CANVAS_H}:force_original_aspect_ratio=increase,"
         f"crop={CANVAS_W}:{CANVAS_H},gblur=sigma=40,eq=brightness=-0.34[bg];"
         # 前景：横向收边到 crop_ratio，再铺满画布宽度
-        f"[0:v]crop=ih*{ratio}:ih:(iw-ih*{ratio})/2:0,scale={CANVAS_W}:{vh}[fg];"
+        f"[0:v]{flip}crop=ih*{ratio}:ih:(iw-ih*{ratio})/2:0,scale={CANVAS_W}:{vh}[fg];"
         f"[bg][fg]overlay=0:{VIDEO_TOP}[v];"
         # `fontsdir` 指向**仓库里的字体目录**（得意黑的 ttf 在那儿）。
         # 系统字体照旧走 fontconfig，思源黑体不受影响——`fontsdir` 是**追加**
@@ -1300,8 +1306,11 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         return out
 
     frame = outdir / "_cover_frame.jpg"
+    # ⚠️ **封面这一帧不走上面那条滤镜链**，`mirrored` 得在这儿再翻一次——
+    # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    *(["-vf", "hflip"] if spec.get("mirrored") else []),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
     # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
     # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
