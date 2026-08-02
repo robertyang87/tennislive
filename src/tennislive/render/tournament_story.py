@@ -1335,6 +1335,59 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="entry-deadline",
+        title="名单六周前就锁上了",
+        subtitle="网球观察 · 规则篇",
+        identity="报名截止线：只认那一天的排名",
+        chips=("规则与代价", "报名截止", "2026 美网"),
+        hero=(
+            "2026 美网的正赛名单是 7 月 20 日锁上的——正赛周周一往前推六周。"
+            "那天男子的直入线在第 101、女子在第 102；"
+            "之后你涨多少跌多少，这张名单一个字都不改。"
+        ),
+        facts=(
+            "条文写在两本规则书里，三条线长短不一样：**大满贯正赛提前 6 周、"
+            "巡回赛正赛 4 周、资格赛 3 周**。WTA 2026 第三节原话是 `Main Draw Entry "
+            "Deadlines for Grand Slams are six (6) weeks prior to the Monday of the week "
+            "in which each event's Main Draw starts`；ATP 7.03 写成天数（28 天 / 21 天），算下来一样。",
+            "2026 美网正赛 8 月 30 日开打，正赛周周一是 8 月 31 日，"
+            "往前推六周正是 **7 月 20 日**。资格赛 8 月 24 日开打——"
+            "**从锁名单到开赛，中间隔着整整六周的比赛。**",
+            "那天男子直入线落在第 101，最后一个直入的是科梅萨尼亚；女子的线在第 102。"
+            "**郑钦文第 123，差 22 位；德雷珀第 147，差 46 位**——"
+            "德雷珀今年只打了 13 场巡回赛正赛（手臂伤缺澳网、法网前伤膝、温网再缺席）。",
+            "线右边也有人进得去：**男子全场只有 3 人靠保护排名进正赛，商竣程是其中之一**，女子那边 5 人。"
+            "保护排名不是外卡，它只是那张用旧排名报名的凭证。",
+            "**同一条线，两个中国球员落在两边**：商竣程拿着凭证进了正赛，"
+            "郑钦文因为去年九月硬撑着打了中网那两场、把停赛切成两截而够不上，"
+            "只能靠外卡或资格赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-20", player="科梅萨尼亚", age="—",
+                headline="最后一个直入的人",
+                detail=(
+                    "美东下午 5 点名单锁上，世界第 101 的他是男子最后一个"
+                    "直接进入正赛的球员。"
+                ),
+                source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+            ),
+            ChampionMoment(
+                date="2026-07-20", player="商竣程", age="20 岁",
+                headline="用保护排名够着了那条线",
+                detail=(
+                    "男子签表里只有三个人靠保护排名进正赛，他是其中之一；"
+                    "同一天，郑钦文只有真实排名第 123 可用。"
+                ),
+                source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+            ),
+        ),
+        image_keys=(),
+        image_credit="香港网球公开赛官方",
+        source_label="WTA / ATP 2026 官方规则书 · 美网报名名单",
+        source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+    ),
+    _trivia_story(
         slug="mandatory-1000",
         title="强制赛为什么可以不去",
         subtitle="网球观察 · 规则篇",

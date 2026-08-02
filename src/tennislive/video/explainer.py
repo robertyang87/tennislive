@@ -947,7 +947,157 @@ _MANDATORY_BILL_DIAGRAM = """
 """
 
 
+#: 三条报名截止线。条文写在两本规则书里（WTA 2026 第三节、ATP 2026 的 7.03），
+#: 大满贯六周、巡回赛正赛四周、资格赛三周——**条越长＝要提前越久报名**。
+#: 照片拍不出「一条画在六周之前的线」，而这条片子的全部落点就是那条线。
+#: 几何：赛事周周一钉在 x=800，往左每周 90px。
+_ENTRY_DEADLINE_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">名单在开赛前多久就定了</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">条越长＝要提前越久报名</text>
+
+  <text x="60" y="176" fill="#c6f65a" font-size="28" font-weight="800">大满贯正赛</text>
+  <rect x="260" y="140" width="540" height="54" rx="10" fill="rgba(198,246,90,.26)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <text x="272" y="176" fill="#c6f65a" font-size="30" font-weight="800">6 周</text>
+
+  <text x="60" y="266" fill="#9fb4aa" font-size="28" font-weight="700">巡回赛正赛</text>
+  <rect x="440" y="230" width="360" height="54" rx="10" fill="rgba(231,243,236,.28)"/>
+  <text x="452" y="266" fill="#e7f3ec" font-size="30" font-weight="800">4 周</text>
+
+  <text x="60" y="356" fill="#9fb4aa" font-size="28" font-weight="700">资格赛</text>
+  <rect x="530" y="320" width="270" height="54" rx="10" fill="rgba(231,243,236,.28)"/>
+  <text x="542" y="356" fill="#e7f3ec" font-size="30" font-weight="800">3 周</text>
+
+  <line x1="800" y1="120" x2="800" y2="394" stroke="#e7f3ec" stroke-width="3"/>
+  <text x="800" y="112" text-anchor="end" fill="#9fb4aa"
+        font-size="24" font-weight="700">赛事周周一</text>
+
+  <text x="450" y="472" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">之后涨的用不上，跌的也不还</text>
+</svg>
+"""
+
+
+#: 2026 美网那张名单在 7 月 20 日那天的样子。一条排名轴、一道直入线、三个点——
+#: 「差了 22 位」和「差了 46 位」这种距离感，文字列不出来，画出来一眼就看见。
+#: 几何：排名 1 在 x=180，排名 160 在 x=820，即 1 位 = 4.025px。
+_ENTRY_CUTLINE_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">7 月 20 日那天的男子名单</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">虚线左边直入正赛，右边不在名单上</text>
+
+  <line x1="180" y1="250" x2="820" y2="250" stroke="rgba(231,243,236,.30)" stroke-width="4"/>
+  <text x="180" y="300" text-anchor="middle" fill="#9fb4aa" font-size="24" font-weight="700">第 1</text>
+
+  <line x1="582" y1="150" x2="582" y2="330" stroke="#c6f65a"
+        stroke-width="4" stroke-dasharray="11 8"/>
+  <text x="582" y="138" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">直入线 101</text>
+
+  <circle cx="582" cy="250" r="12" fill="#c6f65a"/>
+  <text x="560" y="300" text-anchor="end" fill="#e7f3ec" font-size="24" font-weight="700">科梅萨尼亚</text>
+
+  <circle cx="671" cy="250" r="12" fill="rgba(231,243,236,.72)"/>
+  <text x="671" y="358" text-anchor="middle" fill="#e7f3ec" font-size="26" font-weight="800">郑钦文 123</text>
+
+  <circle cx="768" cy="250" r="12" fill="rgba(231,243,236,.72)"/>
+  <text x="768" y="300" text-anchor="middle" fill="#e7f3ec" font-size="26" font-weight="800">德雷珀 147</text>
+
+  <text x="450" y="440" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">名单只认这一天的排名</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "entry-deadline": (
+        (
+            "lines",
+            "那一天",
+            "美网的名单，七月二十号就锁上了",
+            "先看一个日期。二〇二六年美网的正赛名单，不是开赛前定的，是七月二十号定的。"
+            "条文写在规则书里：大满贯正赛的报名截止，是正赛开始那一周的周一往前推六周。"
+            "美网正赛八月三十号开打，正赛周的周一是八月三十一号，往前推六周，正好是七月二十号，"
+            "那天美东下午五点名单锁上。"
+            "这条线不是一根，是三根：巡回赛的正赛提前四周，资格赛提前三周。"
+            "ATP 那本写成天数——正赛二十八天，资格赛二十一天，算下来一模一样。"
+            "而美网的资格赛八月二十四号才开打。也就是说，从锁名单到打球，中间隔着整整六周的比赛。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "大满贯正赛 提前 6 周",
+                "巡回赛正赛 4 周 资格赛 3 周",
+                "美网锁在 7 月 20 日",
+            ),
+            _ENTRY_DEADLINE_DIAGRAM,
+        ),
+        (
+            "cut",
+            "直入线",
+            "男子第 101，女子第 102",
+            "那天的名单长什么样。男子的直入线落在第一百零一位，最后一个直接进正赛的是"
+            "阿根廷人科梅萨尼亚，世界第一百零一；女子的线在第一百零二。"
+            "线右边的名字里有两个我们熟悉的：郑钦文，世界第一百二十三，差二十二位；"
+            "德雷珀，世界第一百四十七，差四十六位。"
+            "德雷珀今年只打了十三场巡回赛正赛——手臂伤缺了澳网，法网前伤了膝盖，"
+            "伊斯特本复出打进四强，然后手臂又把温网缺掉了。"
+            "这里有个反直觉的地方：他就算在蒙特利尔和辛辛那提连赢，八月底排名回到一百以内，"
+            "那张名单也不会为他改一个字。他还是得打资格赛，或者等一张外卡。"
+            "之后涨的用不上，跌的也不还——这条线只认那一天的那个数。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "男子直入线 101 女子 102",
+                "郑钦文 123 差 22 位",
+                "德雷珀 147 差 46 位",
+            ),
+            _ENTRY_CUTLINE_DIAGRAM,
+        ),
+        (
+            "pass",
+            "有凭证的",
+            "商竣程够着了那条线",
+            "但线右边也不是没人进得去。那张名单上，男子有三个人是靠保护排名进的正赛，"
+            "商竣程是其中之一——全场就三个。女子那边有五个。"
+            "保护排名不是外卡，它是那张用旧排名报名的凭证：真实排名该掉照掉，"
+            "但报名的时候可以拿它去够那条线。我们上一期讲过这套规则，"
+            "商竣程是真正用上了它的那个人。",
+            "assets/explainer/shang-nishikori/shang_ao2026.jpg",
+            "美联社 · 2026 年 1 月 19 日，澳网首轮，商竣程正手击球",
+            (
+                "男子靠保护排名进的 3 人",
+                "商竣程是其中之一",
+                "女子那边 5 人",
+            ),
+        ),
+        (
+            "fail",
+            "够不上的",
+            "同一条线的另一边",
+            "郑钦文没有这张凭证。规则要求连续停赛二十六周，而她去年九月硬撑着打了中网那两场，"
+            "把一整段停赛切成了两截，两截各自都不够。"
+            "所以七月二十号那天，她只有一个真实排名可用，一百二十三。"
+            "于是同一条线上，两个中国球员落在了两边：一个拿着凭证进了正赛，"
+            "一个要靠外卡或者资格赛。"
+            "这条线不讲道理，也不讲人情，它只认那一天的那个数。"
+            "而画这条线的理由其实很实在：赛事要提前排签表、订机票、卖门票，"
+            "总得有个时刻说「就这些人了」。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文负克雷吉茨科娃",
+            (
+                "26 周必须是连着的一段",
+                "她那两截各自都不够",
+                "7 月 20 日 只有真实排名可用",
+            ),
+            None,
+            "一条画在六周之前的线，该不该为伤病让一步？",
+        ),
+    ),
     "mandatory-1000": (
         (
             "now",
@@ -3061,6 +3211,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "entry-deadline": {
+        "hook": (
+            "2026 美网的正赛名单，7 月 20 日就锁上了——正赛周周一往前推六周。\n"
+            "男子直入线第 101，女子第 102；之后涨的用不上，跌的也不还。"
+        ),
+        "tags": ("网球", "网球时差", "商竣程", "郑钦文", "网球冷知识"),
+    },
     "mandatory-1000": {
         "hook": (
             "辛纳今年把打过的五个大师赛全赢了，第六个没去——大师赛是强制的。\n"
@@ -3295,6 +3452,18 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "entry-deadline": {
+        "topic": "报名截止线：名单在六周之前就锁上了",
+        "question": "排名涨了，为什么用不上？",
+        "narration": "排名涨了，为什么用不上？因为那张名单，在开赛整整六周之前"
+                     "就已经锁上了。",
+        "gloss": "Entry Deadline = 报名截止线",
+        # 封面这张没有任何一屏在用，借不到出处，所以自己写一行。
+        # 选它是因为**原图 1023×1365 正好 3:4**，铺满 1.0x，零垫层零虚化；
+        # 而商竣程正是这条片子里「用凭证够着了那条线」的那个人。
+        "image": "assets/explainer/entry-deadline/us_open_court_34.jpg",
+        "credit": "美网官方 · 亚瑟·阿什球场（原图 4032×3024，居中裁为 3:4）",
+    },
     "mandatory-1000": {
         "topic": "强制赛：不去的代价，是一个可以算出来的数",
         "question": "强制赛，为什么可以不去？",
