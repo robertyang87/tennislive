@@ -2201,7 +2201,9 @@ def test_快速预览的开关要在工作流里够得着():
 
     # `_steps` 给的是步骤**名**，这儿要的是步骤**体**，所以另切一次
     blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
-    cover_steps = [b for b in blocks if "mode == 'cover'" in b]
+    # 认**步骤名**，不是「条件里提到 cover」——装依赖那几步现在也放行 cover，
+    # 按条件筛会一次筛出五个。判据宁可窄，不可宽。
+    cover_steps = [b for b in blocks if b.startswith("      - name: cover")]
     assert len(cover_steps) == 1, f"cover 模式的步骤有 {len(cover_steps)} 个"
     step = cover_steps[0]
     assert "--cover-only" in step, "cover 那一步没传 --cover-only，那就是完整 render"
@@ -2215,6 +2217,18 @@ def test_快速预览的开关要在工作流里够得着():
     assert push_steps, "找不到推送那一步，判据失效了"
     for block in push_steps:
         assert "mode == 'render'" in block, "推送那一步没钉死在 render 上"
+
+    # ⚠️ **「入口够得着」和「路够短」都对，它还是会红**——这一版就是这么栽的
+    # （run 155）：封面走 HTML 渲染 + 抠图，要 Chromium、中文字体、rembg 模型，
+    # 而这三步当时都钉在 `mode == 'render'` 上，cover 一个都拿不到。下载花了
+    # 五十秒，然后死在渲染那一刻。**「加新能力就要同时改三处」的第 N 次。**
+    #
+    # 所以第三头：这条路要用的东西，它自己得拿得到。
+    for dep in ("装中文字体", "缓存抠图模型", "缓存 Chromium", "装 Chromium"):
+        blk = next(b for b in blocks if b.startswith(f"      - name: {dep}"))
+        assert "'cover'" in blk, (
+            f"「{dep}」没放行 cover——封面是 HTML 渲染 + 抠图，这一样都不能少，"
+            "而它会在下完源片之后才死")
 
 
 def test_死球时刻要趁源片还在的时候量出来(tmp_path, capsys):
