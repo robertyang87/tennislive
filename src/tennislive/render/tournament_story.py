@@ -1335,6 +1335,58 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="comeback-middle",
+        title="中段长得一模一样",
+        subtitle="网球观察 · 人物篇",
+        identity="同一台手术，两个相反的结局",
+        chips=("伤病与复出", "同一个部位", "当时分不出来"),
+        hero=(
+            "德约科维奇 2018 年 2 月做右肘手术，那个春天跌到世界第 22；"
+            "锦织圭 2019 年 10 月做右肘手术，世界第 8。前者五个月后拿下温网，"
+            "后者再没回到前列——而在中段那几个月，两条路长得一模一样。"
+        ),
+        facts=(
+            "德约科维奇 2018 年 2 月手术后连败：印第安维尔斯 2 轮负**世界第 109 位**"
+            "的丹尼尔太郎，巴塞罗那负克利赞，马德里负埃德蒙德后跌至第 18，"
+            "罗马之后第 22——**上一次跌出前 20 是 2006 年 10 月**。",
+            "五个月后他拿下温网（决赛 6-2 6-2 7-6 胜安德森），同年再夺美网"
+            "（6-3 7-6 6-3 胜德尔波特罗），年底重回世界第一。",
+            "锦织圭 2019 年 10 月做右肘手术清除两块骨刺，当时世界第 8、生涯最高第 4，"
+            "停赛 10 个月。**2021 年他一度打进法网 16 强、东京奥运八强、华盛顿四强**，"
+            "看起来正在回来；2022 年 1 月左髋手术报销整季，2023 年 6 月才重返巡回赛。",
+            "分岔不在肘：德约科维奇身上只有那一处伤，锦织圭在此之后还有新冠、"
+            "肩伤与髋部手术。**中段无法预判**——这是这条故事唯一的结论。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2018-05-19",
+                player="德约科维奇",
+                age="30 岁",
+                headline="跌出前 20",
+                detail=(
+                    "罗马大师赛四强负于纳达尔后，世界排名跌至第 22，"
+                    "是他自 2006 年 10 月以来第一次跌出前 20。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+            ChampionMoment(
+                date="2018-07-15",
+                player="德约科维奇",
+                age="31 岁",
+                headline="温网夺冠",
+                detail=(
+                    "手术后第五个月，决赛 6-2、6-2、7-6(3) 击败安德森，"
+                    "拿下两年来第一个大满贯；同年美网再胜德尔波特罗，年底重回世界第一。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+        ),
+        image_keys=(),
+        source_label="Wikipedia 2018 Djokovic season / ESPN / The Japan Times",
+        source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+        image_credit="Carine06 · Wikimedia Commons · CC BY-SA 2.0",
+    ),
+    _trivia_story(
         slug="protected-ranking",
         title="保护的不是排名",
         subtitle="网球观察 · 规则篇",
