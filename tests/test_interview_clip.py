@@ -728,6 +728,50 @@ def test_顶栏量宽度要按每段自己的字号():
     assert clip._SCORE_PX > _HEAD_SIZE["b"], "比分放大了，量的时候就不能按小的量"
 
 
+def test_并成一个词的ASR错要在切行之前修(tmp_path):
+    """**`word_fix` 和 `en_fixed` 分工不同，不能互相顶替。**
+
+    实测：ASR 把 `was` 和 `Congratulations` 听成了一个词 `wasulations`。
+    词都并错了，行怎么排都排不下——照原样修进 `en_fixed`，那一行量出来
+    **1150px**，超出可用宽 952 两成，而 libass 会**默默折行**压到中文那行上。
+
+    放进 `word_fix` 之后，切行拿到的是拆开的词，行自己重排。
+    """
+    words = [(0.0, "while"), (0.5, "I"), (1.0, "wasulations"),
+             (1.5, "not"), (2.0, "just"), (2.5, "on"), (3.0, "making.")]
+    plain = segment(words, 0.0, 5.0)
+    fixed = segment(words, 0.0, 5.0, word_fix={"wasulations": "was here. Congratulations,"})
+    assert "wasulations" in " ".join(s["en"] for s in plain)
+    assert "wasulations" not in " ".join(s["en"] for s in fixed)
+    assert "was here. Congratulations," in " ".join(s["en"] for s in fixed)
+    # 拆开之后成了两句，切行会跟着多出一行——**行号会变**，挂账要重挂
+    assert len(fixed) > len(plain)
+
+
+def test_英文也要过宽度闸(tmp_path):
+    """原来这道闸**只查中文**——于是 `en_fixed` 里一行订正写长了一路畅通，
+    到渲染时 libass 默默折行，压到中文那一行上。
+
+    切行时量的是 ASR 原文，**订正之后没人再量一次**。这条补的就是那一次。
+    """
+    long_en = "while I was here. Congratulations, not just on making your second career"
+    assert _en_width(long_en) > _LINE_PX, "这条测试要一行真的超宽才有意义"
+    with pytest.raises(SystemExit, match="英文超宽"):
+        write_ass(_lines([long_en, "short one."]), ["一", "二"], 0.0, tmp_path / "t.ass")
+
+
+def test_采访是不是在场上跟着源走():
+    """**印着「场上」而画面是演播区，是拿版式撒谎。**
+
+    伊埃拉 6-4 6-2 赢大坂直美那场，四个源都自证过：WTA 官方集锦没接采访、
+    Tennis Channel 那条在转播区、另两条是发布会和博主口播。账号所有者定了
+    用转播区那条，顶栏就得照实说。
+    """
+    base = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    assert header_lines(base)[1].endswith("赛后场上采访"), "默认仍是场上"
+    assert header_lines({**base, "interview_kind": "赛后采访"})[1].endswith("赛后采访")
+
+
 def test_没有比分时顶栏退回只写对阵():
     """比分不是必填——没有它，顶栏仍然要能回答「这是哪一场」。"""
     spec = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}

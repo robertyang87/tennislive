@@ -471,7 +471,8 @@ def _text(clause: list[tuple[float, str]]) -> str:
 
 
 def segment(words: list[tuple[float, str]], start: float, end: float,
-            budget: float | None = None, width=None) -> list[dict]:
+            budget: float | None = None, width=None,
+            word_fix: dict[str, str] | None = None) -> list[dict]:
     """逐词 → 字幕行。**一行一句，不劈词组，不超宽。**
 
     三条规矩，顺序就是优先级：
@@ -483,10 +484,20 @@ def segment(words: list[tuple[float, str]], start: float, end: float,
     3. **宽度按量出来的算**，不按字符数。原来 62 个字符在 Noto Sans 40 下是
        1200px 上下，而可用宽只有 952——**22/37 行超宽，libass 自动折成两行，
        折在哪儿没人管**。那是同一个毛病的隐形版：看不见，因为它不报错
+
+    `word_fix` 是**逐词的订正，在切行之前生效**，和切行之后的 `en_fixed` 分工
+    不同，别互相顶替：
+
+    - **ASR 把两个词并成一个** → 走 `word_fix`。实测 `wasulations`＝
+      `was` + `Congratulations`。这种错**必须在切行前修**：词并错了，行怎么排
+      都排不下——照原样修进 `en_fixed`，那一行量出来 1150px，超出可用宽两成，
+      而 libass 会**默默折行**压到中文那一行上
+    - **整行读起来不对** → 走 `en_fixed`。它替换的是成品行，不动分词
     """
     budget = _LINE_PX if budget is None else budget
     width = _en_width if width is None else width
-    keep = [(t, _NAME_FIX.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
+    fix = {**_NAME_FIX, **(word_fix or {})}
+    keep = [(t, fix.get(w.strip(".,?!"), w)) for t, w in words if start <= t <= end]
     keep = [(t, w) for t, w in keep if not _NOISE.match(w)]
     if not keep:
         return []
@@ -635,8 +646,14 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
     push = spec.get("push") or {}
     if not (mu := (push.get("matchup") or "").strip()):
         raise SystemExit(f"{slug} 缺 `push.matchup`——顶栏第二行没东西可写。")
+    # **采访是什么性质，跟着源走，不写死。** 默认是场上采访（这条线的本分），
+    # 但**「场上」不是永远拿得到**：伊埃拉 6-3 6-4 赢大坂直美那场，WTA 官方
+    # 集锦没接采访、转播区那条不在场上、另外两条是发布会和博主口播——四个源
+    # 都自证过。账号所有者定了用转播区那条，那顶栏就必须**照实说**：
+    # 印着「场上」而画面是演播区，是拿版式撒谎。
+    kind = (spec.get("interview_kind") or "赛后场上采访").strip()
     sides = [s.strip() for s in re.split(r"\bvs\.?\b", mu) if s.strip()]
-    line_b = [(f"{mu} · 赛后场上采访", "zh", "", _HEAD_SIZE["b"])]
+    line_b = [(f"{mu} · {kind}", "zh", "", _HEAD_SIZE["b"])]
     if (score := (push.get("score") or "").strip()):
         if not (win := (spec.get("winner") or "").strip()):
             raise SystemExit(
@@ -651,7 +668,7 @@ def header_runs(spec: dict) -> tuple[list[tuple[str, str, str]], ...]:
         lose = next(s for s in sides if s != win)
         line_b = [(f"{win} ", "zh", "", _HEAD_SIZE["b"]),
                   (score, "num", _SCORE_TAGS, _SCORE_PX),
-                  (f" {lose} · 赛后场上采访", "zh", "", _HEAD_SIZE["b"])]
+                  (f" {lose} · {kind}", "zh", "", _HEAD_SIZE["b"])]
     return ([("▍", "zh", _MARK_COLOUR, _HEAD_SIZE["a"]),
              (ev, "head", "", _HEAD_SIZE["a"])], line_b)
 
@@ -733,6 +750,17 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
             "⚠️ 改过字幕字号也会走到这儿：断行按子句切、放不下才拆，"
             "字号一大长子句开始被拆，行数就变了。**`en_fixed` 的行号跟着失准，"
             "得照新的行重挂一遍**。")
+    # **英文也要量。** 原来这道闸只查中文——于是 `en_fixed` 里一行订正写长了
+    # （实测 1150px，超出可用宽两成）**一路畅通**，libass 到渲染时默默折行，
+    # 压到中文那一行上。切行时量过的是 ASR 原文，订正之后没人再量一次。
+    if wide := [f"#{i} 英文超宽 {_en_width(seg['en']):.0f}px（可用 {_LINE_PX}）："
+                f"{seg['en']}" for i, seg in enumerate(lines, 1)
+                if _en_width(seg["en"]) > _LINE_PX]:
+        raise SystemExit(
+            "英文字幕过不了：\n  " + "\n  ".join(wide)
+            + "\n⚠️ 多半是 `en_fixed` 把一行改长了。**词被 ASR 并在一起的那种错要走"
+            " `word_fix`**（切行之前逐词修，行会自己重排），`en_fixed` 只适合"
+            "「这一行读起来不对」而长度不变的订正。")
     if bad := zh_problems(lines, zh):
         raise SystemExit("中文字幕过不了：\n  " + "\n  ".join(bad))
     ev = []
@@ -1312,7 +1340,8 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
-    lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"])
+    lines = segment(fetch_words(spec["url"], outdir), spec["start"], spec["end"],
+                    word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
     # ASR 会把整句说得语法不成立（`The crazy Yes. round of applause.`），
     # 那种句子照发出去，这个号的英语素材就没有可信度了。
