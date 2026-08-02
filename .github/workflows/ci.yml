@@ -54,7 +54,8 @@ jobs:
       - name: 安装中文字体和 ffmpeg（卡片图 / 字宽 / 混音测试需要）
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core \
+            fonts-noto-color-emoji ffmpeg
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，
