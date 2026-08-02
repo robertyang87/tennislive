@@ -36,6 +36,11 @@ jobs:
     timeout-minutes: 20
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # 没有它，`prepare_image_delivery` 悄悄退回 jsDelivr：`wait_for_images`
+      # 最多轮询 20×15s = 5 分钟，轮满还取不到就整条推送取消。走同一条路的
+      # 另外五条工作流一直配着，只有这条从上线起漏了。
+      # 判据：test_走图床那条路的工作流都要配SECRET_KEY
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
       WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
       WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
       WECHAT_API_PROXY: ${{ secrets.WECHAT_API_PROXY }}
