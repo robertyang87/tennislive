@@ -1796,7 +1796,7 @@ def test_封面停多久跟着配音走():
     # `--cover-only` 那条快速预览路径也调 build_cover（拿默认时长渲一张海报
     # 就退出，海报本来就与时长无关），它排在最前面——按 `index()` 找会撞上它，
     # 而那是误判：production 那条路照旧先算长度。判据宁可窄，不可宽。
-    production = body.index("cover_secs)]")
+    production = body.index("cover_secs, tail=")
     assert body.index("cover_secs = cover_length(") < production, (
         "封面长度算在渲封面之后——那就只能拿常量渲，等于没改")
     # 定长那条路要出声
@@ -3713,21 +3713,42 @@ def test_每一段都要待在同一个镜头里():
             {"start": 0.0, "end": 9.0, "source": "b", "narration": "也跨了"},
         ],
     }
-    bad, unchecked = reel.segments_straddling_cuts(spec, probes)
+    bad, unchecked, tails = reel.segments_straddling_cuts(spec, probes)
     assert unchecked == []
     assert [b["index"] for b in bad] == [1, 2], "跨切点的段没被抓出来"
     assert bad[0]["cuts"] == [20.0] and bad[1]["cuts"] == [5.0]
+    assert tails == [], "这三段的段尾之后没有切点，不该报溶解底料"
 
     # 真要跨（两边是同一个人）就显式挂账，别默默跨过去
     spec["segments"][1]["crosses_cut"] = "两边都是她，只是机位换了"
-    bad, _ = reel.segments_straddling_cuts(spec, probes)
+    bad, _, _ = reel.segments_straddling_cuts(spec, probes)
     assert [b["index"] for b in bad] == [2]
 
     # **probe 给不全时不许假绿**：零命中和「全都合格」长得一模一样，
     # 所以没查成的源片要单独报出来（CLAUDE.md：空结果先自证是真空）。
-    bad, unchecked = reel.segments_straddling_cuts(spec, probes[:1])
+    bad, unchecked, _ = reel.segments_straddling_cuts(spec, probes[:1])
     assert unchecked == ["b"], "缺 probe 的源片没有被报出来"
     assert all(b["source"] == "a" for b in bad)
+
+    # **溶解的底料单独报，不并进上面那一档。** 段尾之后 SEG_FADE 秒是下一个
+    # 接缝的底，那几秒跨了切点只是溶解里多叠进一两帧半透明的画面，和「整句
+    # 旁白压在另一个人身上」差着量级。并成一档的后果是可预见的：为了压掉
+    # 这条噪音去写 `crosses_cut`，把段体那条真检查一起关掉。
+    near = {
+        "sources": {"a": "u://a"},
+        "segments": [
+            {"start": 11.0, "end": 19.95, "source": "a", "narration": "尾巴跨了"},
+            {"start": 11.0, "end": 12.0, "source": "a", "narration": "末段不留尾巴"},
+        ],
+    }
+    bad, _, tails = reel.segments_straddling_cuts(near, probes)
+    assert bad == [], "尾巴跨切点不该判成段体跨切点"
+    assert [t["index"] for t in tails] == [0], "溶解底料跨切点没被报出来"
+    assert tails[0]["cuts"] == [20.0]
+    # 末段不多切，所以它后面有没有切点都不算
+    near["segments"] = [near["segments"][0]]
+    _, _, tails = reel.segments_straddling_cuts(near, probes)
+    assert tails == [], "末段没有尾巴，不该报"
 
 
 def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
@@ -4300,3 +4321,247 @@ def test_赛前前瞻的封面要写清几点开球():
         assert meta, f"{path.name} 是开球之前，封面没写开赛时刻（cover.meta）"
         assert any(k in meta for k in ("时间", ":", "：")), (
             f"{path.name} 的 cover.meta 看不出是个时刻：{meta!r}")
+
+
+def test_接缝要溶解不许淡到黑(tmp_path):
+    """**淡入淡出不等于淡到黑。**
+
+    第一版把账号所有者要的转场做成了「每段各自淡到黑再淡回来」，于是每个接缝
+    中间都有一小段全黑。已发的 jodar-fritz 18 个接缝挨个采样，最黑的五个平均
+    亮度 `0.0`（62.191s 那一帧是整幅纯黑），谷值平均 8.3——账号所有者看到的
+    「接缝画面的时候有轻微的闪烁」就是它。
+
+    要的是**溶解**：前一段直接化进后一段，中间一帧黑都不许有。
+
+    四条断言，缺一不可，都反向验证过（反向的记录在提交说明里）：
+
+    1. **总长不许变。** 溶解会吃掉时间，而旁白的 `adelay`、字幕的 cue、
+       `check_reel_landed` 那句「画面总长 − 段落总长 ＝ 封面」全按
+       `seg.length` 累加。所以每段多切 `SEG_FADE` 秒当底料、末段不留——
+       长度账见 `dissolve_filtergraph`。这一条要是破了，症状是**后半段配音
+       整体错位**，而 ffmpeg 一声不吭
+    2. **接缝上不许变黑。** 拿三段纯色真跑一次滤镜图，量接缝前后的亮度：
+       溶解的话红→绿此消彼长，亮度基本不动；淡到黑会掉到 0
+    3. **声音也不许掉到静音。** 老写法的 `afade` 两头各淡一次，接缝正中是真
+       静音；`acrossfade` 是此消彼长
+    4. 另加一条盯**位置**的：`cut_segment` 里不许再出现 `fade=`。只测行为
+       拦不住「有人又把淡入淡出搬回每一段自己身上」——那正是这次的错法
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    fade = reel.SEG_FADE
+    # 三段纯色：末段不留尾巴，前两段各多切 fade 秒
+    plan = [("red", 4.0, fade), ("green", 3.0, fade), ("blue", 5.0, 0.0)]
+    parts = []
+    for i, (colour, length, tail) in enumerate(plan):
+        part = tmp_path / f"p{i}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y",
+             "-f", "lavfi", "-i",
+             f"color=c={colour}:s=320x426:r=25:d={length + tail + 1}",
+             "-f", "lavfi", "-i",
+             f"sine=frequency={300 + 200 * i}:sample_rate={reel.AUDIO_RATE}",
+             "-t", f"{length + tail:.3f}",
+             "-c:v", "libx264", "-preset", "ultrafast", "-crf", "12",
+             "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", reel.AUDIO_RATE,
+             str(part)], check=True)
+        parts.append(part)
+
+    lengths = [length for _, length, _ in plan]
+    film = tmp_path / "film.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         *[a for p in parts for a in ("-i", str(p))],
+         "-filter_complex", reel.dissolve_filtergraph(lengths, fade),
+         "-map", "[vout]", "-map", "[aout]",
+         "-c:v", "libx264", "-preset", "ultrafast", "-crf", "12",
+         "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", reel.AUDIO_RATE,
+         str(film)], check=True)
+
+    def _dur(stream):
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(film)],
+            check=True, capture_output=True, text=True).stdout.strip()
+        return float(out.rstrip(","))
+
+    # ① 总长不许变
+    want = sum(lengths)
+    assert abs(_dur("v:0") - want) < 0.08, (
+        f"溶解之后画面 {_dur('v:0'):.2f}s，而各段加起来是 {want:.2f}s"
+        "——每一段在成片里占的时间必须和 seg.length 一样，"
+        "否则后面每一句旁白和字幕都整体错位")
+
+    # ② 接缝上不许变黑
+    seam = lengths[0]
+    lows = []
+    for step in range(9):
+        moment = seam - 0.02 + step * (fade / 6)
+        shot = tmp_path / "f.png"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{moment:.3f}",
+                        "-i", str(film), "-frames:v", "1", str(shot)],
+                       check=True)
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(shot), "-vf",
+             "format=gray,signalstats,metadata=print:key=lavfi.signalstats.YAVG",
+             "-f", "null", "-"], capture_output=True, text=True).stderr
+        got = re.search(r"YAVG=(\S+)", out)
+        assert got, "量不到亮度"
+        lows.append((moment, float(got.group(1))))
+    floor = min(v for _, v in lows)
+    assert floor > 40, (
+        f"接缝上掉到了 {floor:.1f} 亮度——这是淡到黑，不是溶解。"
+        f"逐帧：{[(round(t, 3), round(v, 1)) for t, v in lows]}")
+
+    # ③ 声音也不许掉到静音
+    peaks = []
+    for step in range(7):
+        moment = seam - 0.05 + step * (fade / 5)
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-ss", f"{moment:.3f}", "-i", str(film),
+             "-t", "0.05", "-af", "volumedetect", "-f", "null", "-"],
+            capture_output=True, text=True).stderr
+        got = re.search(r"max_volume: (\S+)", out)
+        assert got, "量不到音量"
+        peaks.append(float(got.group(1)))
+    assert max(peaks) - min(peaks) < 6.0 and min(peaks) > -40, (
+        f"接缝上现场声掉下去了：{peaks}——acrossfade 是此消彼长，"
+        "两头各淡一次才会在正中变成静音")
+
+    # ④ 闸装在拼接那一步，不是装在每一段自己身上
+    #
+    # ⚠️ **先去掉注释行再扫。** 第一版直接扫源码，被我自己写在 `cut_segment`
+    # 里那句「这儿不许再出现 `fade=`」判成违规——注释正是这个仓库记教训的地方，
+    # 连注释一起扫，「把坑记下来」会被读成「又踩了这个坑」。同一个形状本文件
+    # 里已经犯过四次。
+    body = "\n".join(
+        line for line in inspect.getsource(reel.cut_segment).splitlines()
+        if not line.lstrip().startswith("#"))
+    assert "fade=" not in body, (
+        "`cut_segment` 里又出现了 `fade=`——在每一段自己身上淡就是「各自淡到黑」，"
+        "接缝中间必然有一帧全黑。转场收在拼接那一步的 dissolve_filtergraph")
+
+
+def test_屏幕上的数字不许把字吃掉():
+    """账号所有者：「有些字幕没有补全」。
+
+    已发的两条片子里各有一处，都是 `arabic_numerals` 换算换错了：
+
+        eala-pegula 第 12 条   生涯唯一一个巡回赛决赛 → 「生涯唯1个巡回赛决赛」
+        jodar-fritz 第 16 条   上一个十几岁走到这一步 → 「上一个10几岁…」
+
+    第一处**真的少了一个字**：「一一」被 `_num_value` 读成 1，配上量词就把两个
+    字压成一个。这正是那个函数 docstring 第一段举的「唯一一次」，只是量词从
+    「次」换成「个」就漏了过去——**规矩写对了，实现是空的**。第二处是把约数
+    当成了数。
+
+    顺带把「一号种子」也归到数字那一路：同一条片子里有「7号种子」「3号种子」，
+    只有它是中文，半中半洋（老账：「北京时间8月三号零点」）。
+
+    下半张表是**不许被误伤的**——判据宁可窄，不可宽。
+    """
+    from tennislive.video.explainer import arabic_numerals  # noqa: PLC0415
+
+    要改的 = [
+        ("现在轮到一号种子", "现在轮到1号种子"),
+        ("本站一号种子", "本站1号种子"),
+    ]
+    不许动的 = [
+        "生涯唯一一个巡回赛决赛",      # ← 少字的那一处
+        "唯一一次拿到冠军",
+        "上一个十几岁就走到这一步的",   # ← 约数的那一处
+        "二十几场比赛",
+        "统一号召大家",                # 「一号」不是每次都是号码
+        "一场首轮",
+        "第四轮两盘落后",
+        "他是家里第四个",
+        "有一点点慢",
+    ]
+    还要照旧转的 = [
+        ("七号种子费尔南德斯", "7号种子费尔南德斯"),
+        ("二〇二四年美网亚军", "2024年美网亚军"),
+        ("世界第一百四十的外卡", "世界第140的外卡"),
+        ("十九岁", "19岁"),
+        ("先输一比六", "先输1比6"),
+        ("抢七七比九", "抢七7比9"),
+        ("四百六十九块", "469块"),
+        ("整场他只让对手拿到四局", "整场他只让对手拿到4局"),
+    ]
+    for src, want in 要改的 + 还要照旧转的:
+        assert arabic_numerals(src) == want, (
+            f"{src!r} 换算成了 {arabic_numerals(src)!r}，应该是 {want!r}")
+    for src in 不许动的:
+        assert arabic_numerals(src) == src, (
+            f"{src!r} 被换成了 {arabic_numerals(src)!r}——屏幕上会少字或者写出"
+            "一个没写完的数")
+
+
+def test_硬地的地要读四声():
+    """账号所有者 2026-08-02：「『硬地』这里的『地』是读 dì（四声）。配音要记住。」
+
+    「硬」是形容词，合成器就把「地」当成状语助词读成了轻声 de。可这儿它是名词
+    ——硬地、红土、草地是三种场地。这个词在「开球之前」里到处都是（「换到硬地」
+    「第一个硬地决赛」），**不能靠每条片子改一次文案**，所以收在 `speakable`。
+
+    两条断言：换给合成器的那一份要改，**屏幕上那一份不许动**；而且
+    **字数必须一样**——字幕时间轴是按字位从合成那份映射回显示那份的，
+    长度一变整段字幕就漂了（换成「硬场地」就是这么坏的）。
+    """
+    from tennislive.video.explainer import readable, speakable  # noqa: PLC0415
+
+    for line in ("这一周他换到硬地。", "这是她第一个硬地决赛。",
+                 "硬地赛季从这里开始"):
+        said, shown = speakable(line), readable(line)
+        assert "硬地" not in said, (
+            f"{line!r} 交给合成器的还是「硬地」，那个「地」会被读成轻声 de")
+        assert "硬地" in shown, f"{line!r} 屏幕上的那一份被改掉了，只能改配音那份"
+        assert len(said) == len(shown), (
+            f"{line!r} 两份字数不一样（{len(said)} vs {len(shown)}）"
+            "——字幕时间轴按字位映射，长度一变整段就漂")
+
+
+def test_封面那一路的溶解底料不许在委托链上掉队():
+    """`build_cover` 有**两个** return，两个都委托给 `build_versus_poster`：
+    上面那个是 solo（网球有故事），下面那个是 VS（赛场之上／开球之前）。
+
+    加 `tail`（溶解底料）时只改了上面那个，于是**这两个栏目的封面片段没有多切
+    那 0.18 秒**。`xfade` 的 offset 正好落在封面流的末尾，整条溶解链塌掉：
+
+        段落加起来 114.46s，成片 12.44s（run 30752134514 / 30752131692）
+
+    而 `ruff --select F821` 抓不到——`tail` 在 `build_cover` 的作用域里是有定义
+    的，只是没往下传，被调方悄悄用了默认值 0.0。**同一对函数栽的第三次**
+    （前两次是 `seconds` 和 `_cut_person` 的 `source`）。
+
+    所以判据盯**每一个** return：`build_cover` 里凡是调 `build_versus_poster`
+    的，都必须把 `tail` 带上。参数一多、出路一多，`replace(..., 1)` 这种改法
+    就会挑错一个。
+    """
+    reel = _reel()
+    body = inspect.getsource(reel.build_cover)
+    calls = [line for line in body.splitlines()
+             if "build_versus_poster(" in line and not line.lstrip().startswith("#")]
+    assert len(calls) >= 2, (
+        f"`build_cover` 里只找到 {len(calls)} 处 build_versus_poster 调用，"
+        "判据失效了——出路变了就回来重写这条")
+    # 调用是跨行的，所以按「从调用处到该 return 结束」整块看
+    blocks = re.findall(r"build_versus_poster\((?:[^()]|\([^()]*\))*\)", body)
+    assert len(blocks) == len(calls), "有调用跨行跨得更狠，正则没框住"
+    for block in blocks:
+        assert "tail=" in block, (
+            "`build_cover` 有一条 return 没把 `tail` 传下去：\n  "
+            + " ".join(block.split())
+            + "\n封面片段就会少切那几秒溶解底料，xfade 的 offset 落到流的末尾，"
+              "整条片子在第一个接缝上截断——而 ffmpeg 一个字都不说")
+
+    # 被调方真的用它：signature 里有，而且用在了传给 _still_to_clip 的时长上
+    poster = inspect.getsource(reel.build_versus_poster)
+    assert "tail: float" in poster, "`build_versus_poster` 没有收 tail 的口子"
+    assert "seconds + tail" in poster, (
+        "`build_versus_poster` 收了 tail 却没用在时长上——签名对了，实现是空的")

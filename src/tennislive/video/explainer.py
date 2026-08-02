@@ -4448,8 +4448,27 @@ def speakable(text: str) -> str:
     The guard list is what stops 挑战 (challenge, and the Gentlemen's
     trophy) from turning into 选战; those really are tiǎo and are already
     read correctly.
+
+    ### 硬地：地 是 dì，不是轻声的 de
+
+    账号所有者 2026-08-02：「『硬地』这里的『地』是读 dì（四声）。配音要记住。」
+
+    「硬」是形容词，于是合成器把后面的「地」当成了状语助词读成轻声 de
+    （「硬地打」）。可这儿它是名词——硬地、红土、草地，是三种场地。
+    这个词在这条线上到处都是（每条前瞻都要说「换到硬地」「第一个硬地决赛」），
+    所以不能靠每条片子改一次文案。
+
+    没法给 edge-tts 递音标，所以照 挑→选 那套办：**给合成器换一个同音字**，
+    屏幕上仍然是「硬地」。选「帝」而不是「第」，是因为「第」强烈期待后面跟
+    数字（第一、第二），「硬第决赛」这种串会让它顿一下；「帝」是个独立名词。
+    **两边字数一样**，所以按字位算出来的字幕时间轴对两份都成立——这是
+    这套办法能用的前提，换成三个字的词（「硬场地」）就不成立了。
+
+    ⚠️ **这一处只能用耳朵验**：沙箱合不了语音，`words.json` 也不带声调。
+    下一次 render 出来要听一遍那一句。
     """
-    return re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
+    text = re.sub(r"挑(?![战衅拨逗剔眉])", "选", readable(text))
+    return text.replace("硬地", "硬帝")
 
 
 def readable(text: str) -> str:
@@ -4556,10 +4575,32 @@ def arabic_numerals(text: str) -> str:
         value = _num_value(run)
         if value is None:
             return m.group(0)
+        if nxt == "几":
+            # 「十几岁」「二十几场」是**约数**，不是数。按数字写出来是「10几岁」
+            # ——屏幕上看着像个没写完的数，账号所有者反馈「有些字幕没有补全」，
+            # 这是其中一处（jodar-fritz 第 16 条）。
+            return m.group(0)
         if before == "第" and len(run) == 1:
             return m.group(0)          # 第一次 / 第二盘 / 第三轮，序数留中文
         if set(run) & _STRUCTURED:
             return value + nxt         # 十九、三十六、四百六十九
+        if len(run) > 1:
+            # **裸数字连成一串，不读成一个数。** 中文里除了年份没人这么写，
+            # 而年份那一轮在上面已经单独处理过了。
+            #
+            # 这一条是 docstring 第一段（「多字的串也必须含十/百/千」）一直
+            # 缺的那半个实现，代价是**一个字被吃掉**：「生涯唯一一个巡回赛
+            # 决赛」里的「一一」被 `_num_value` 读成 1，配上后面的「个」就成了
+            # 「生涯唯1个」——正好是那条规矩举的「唯一一次」的例子，只是量词
+            # 换了一个字就漏了过去。已经发出去的 eala-pegula 第 12 条字幕就是
+            # 这个样子。
+            return m.group(0)
+        if run == "一" and nxt == "号" and text[m.end():m.end() + 1] == "种":
+            # 「一号种子」要和同一条片子里的「7号种子」「3号种子」写成一路。
+            # 半中半洋是这个仓库记过的老毛病（「北京时间8月三号零点」）。
+            # 卡死在「一号种」三个字上，是为了不误伤「统一号召」这类词——
+            # 裸的「一」在别处一律不碰，见下一条。
+            return value + nxt
         if run in ("一", "两"):
             return m.group(0)          # 一场首轮、两盘，都不是在数数
         if nxt and nxt in _NUM_UNITS:
