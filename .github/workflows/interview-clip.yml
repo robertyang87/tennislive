@@ -222,6 +222,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
           git diff --cached --quiet && { echo "没有变化"; exit 0; }
+          # **体积闸**：渲完一整趟才被 GitHub 拒收（推分支吃 HTTP 413）是最贵
+          # 的失败方式，而这个仓库的 .git 已经 1.77 GiB。判据自动推导——凡是
+          # `git commit` 的工作流都要有这一行（`test_every_workflow_that_
+          # commits_generated_files_has_a_size_gate`），不维护白名单。
+          python tools/check_staged_file_sizes.py
           git commit -m "interview: ${{ github.event.inputs.slug }} 双语字幕成片"
           for i in 1 2 3 4; do
             git pull --rebase origin ${{ github.ref_name }} && \

@@ -19,10 +19,15 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；cover=只出封面海报；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
-        options: [probe, render, push, cookies]
+        # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏，而
+        # `build_cover` 不依赖 segments / tracks / TTS / voice——下完源片就能
+        # 出海报，省掉分段编码 + TTS + 成片那四五分钟。实测整趟 3 分 19 秒。
+        # ⚠️ `--cover-only` 的 CLI 开关先落地了而这一行没跟着改，于是它在唯一
+        # 能用的那台机器上够不着（源片只在 runner 上活过几分钟）。
+        options: [probe, cover, render, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -36,6 +41,10 @@ on:
         description: "probe：每几秒抓一帧"
         required: false
         default: "2"
+      scorebox:
+        description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
+        required: false
+        default: ""
       voice:
         description: "render：解说音色"
         required: false
@@ -135,6 +144,21 @@ jobs:
           exit 1
 
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要 1 分 35 秒到 2 分 44 秒——而渲染一个字节都用不到
+          # 别人的成片。稀疏检出把它挡在外面，剩下的加起来 161 MB。
+          # 本次的 outdir 在「算出目录」那一步再 add 进来。
+          # ⚠️ 排除的**只有** output/。assets 155 MB 是渲染真要读的东西
+          # （抠图、示意图、字体），少一个就是第 5 分钟才炸的 FileNotFoundError。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -213,8 +237,15 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           SLUG="${{ github.event.inputs.slug }}"
-          echo "outdir=output/$OUT_DATE/reel/$SLUG" >> "$GITHUB_OUTPUT"
+          OUT_DIR="output/$OUT_DATE/reel/$SLUG"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          # checkout 把整个 output/ 挡在稀疏范围外了，这儿再把**自己那一格**
+          # 加回来。三种模式都要：render/cover 要往里写，push 要读 mp4 的大小
+          # （超 20 MB 就退 raw）。
+          # ⚠️ 必须排在生成**之前**——`add` 会把 HEAD 上那一版先铺回工作区，
+          # 反过来会拿旧内容盖掉刚生成的。
+          git sparse-checkout add "$OUT_DIR"
 
       # push 模式的前提是**成片已经在这个 commit 里**。不在就当场报，别等到
       # 装完依赖、写完复制页、提交完之后才在推送那一步炸——「让失败发生在
@@ -328,6 +359,7 @@ jobs:
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
             --every "${{ github.event.inputs.every }}" \
+            --scorebox "${{ github.event.inputs.scorebox }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
 
@@ -349,6 +381,22 @@ jobs:
             --top 12 || true
           ls -la "$OUT/cover_candidates" 2>/dev/null || true
 
+      # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /
+      # box 想看效果走这条，别再付一趟完整 render。实测整趟 3 分 19 秒，
+      # 而且只提交一张 0.3 MB 的海报。
+      - name: cover — 只出封面海报
+        if: github.event.inputs.mode == 'cover'
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
+        run: |
+          SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          python tools/build_match_reel.py render --cover-only \
+            --spec "$SPEC" \
+            --outdir "${{ steps.paths.outputs.outdir }}"
+          ls -la "${{ steps.paths.outputs.outdir }}"
+
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
@@ -368,8 +416,15 @@ jobs:
       # 之前这一句藏在推送那一步里，而推送排在提交之后——文件只活在 runner 的
       # 工作区，从来没被 commit 过：run 30342567879 推送步骤 success，
       # 链接打开 404。**又一次「查信号不查产物」**。
+      # **不挂在 push=true 上。** 分支上 `push=false` 渲的片子也要把复制页
+      # 带进 PR——它跟着成片一起合进 main 之后，Pages 早就发布好了，
+      # 后面那趟 `mode=push` 的 `wait_for_copy_page` 一次就中。挂在
+      # push=true 上的话，复制页只能在推送那一刻才第一次进仓库，Pages
+      # 从零开始发布，推送就得原地等几分钟（run 30624808733：连续 12 次
+      # HTTP 404，第 13 次才中，240 秒纯空转）。
+      # 写它几乎不要钱（一个 HTML），却决定后面那趟推送要不要空等。
       - name: 写复制页（必须排在提交之前）
-        if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }
@@ -380,6 +435,17 @@ jobs:
             --event "${{ github.event.inputs.event }}" \
             --summary "${{ github.event.inputs.summary }}" \
             --copy "$COPY"
+
+      # **查产物，不查信号。** 这个脚本一直在仓库里，`grep -rn check_reel_landed
+      # .github/` 却是零命中——写好了一次都没跑过。补跑九条已发成片，它自己
+      # 就报出了两个真缺陷：「音轨比画面短」×7、「38 秒数字静音」×1。
+      # 拦在提交之前：进了 main，push 那条路就会把它发到微信，而消息收不回来。
+      - name: 查成片本身合不合格
+        if: github.event.inputs.mode == 'render'
+        run: |
+          python tools/check_reel_landed.py \
+            --slug "${{ github.event.inputs.slug }}" \
+            --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
 
       - name: 丢掉不进仓库的中间物
         if: github.event.inputs.mode != 'cookies'
@@ -437,8 +503,12 @@ jobs:
             [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
           fi
 
+      # **`always()` 不能省。** `if:` 不含状态函数时 GitHub 隐式和上
+      # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一
+      # exit 1（栽过四次），**成片明明已经渲完了，却既不上传也不提交**。
+      # ⚠️ 位置不许往前挪：清理是先 rm 再检查，挪到前面会把源片一起传。
       - name: 上传 artifact
-        if: github.event.inputs.mode != 'cookies'
+        if: always() && github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
@@ -494,6 +564,10 @@ jobs:
         env:
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+          # **钉 commit，别停在 @main。** 同一条片子重渲，海报路径一模一样，
+          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话第二轮推出去的
+          # 还是第一轮那张海报，**而且不吭声**。解说片一直有这一行，reel 漏了。
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
         run: |
           COPY="specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
           test -f "$COPY" || { echo "::error::找不到 $COPY"; exit 1; }

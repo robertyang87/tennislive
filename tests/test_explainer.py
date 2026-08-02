@@ -1214,8 +1214,20 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
         def __init__(self, text):
             self.text = text
 
-    live_old = _Resp("<html><h1>7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉</h1></html>")
-    live_new = _Resp("<html><h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1></html>")
+    # ⚠️ **两边都用真的 `to_copy_page()` 渲，不许手搓假页面。**
+    #
+    # 这条测试原来喂的是自己写的 `<html><h1>标题</h1></html>`，于是它证明的是
+    # 「函数能从 h1 里抠字」，而不是「真页面的 h1 是当期标题」——**而真模板里
+    # `<h1>` 写死是「贴图发布文案」**（`pushmsg.py` 的 `<h1>贴图发布文案</h1>`）。
+    # 结果：指纹对任何一天都返回同一句话，`expect in response.text` **恒真**，
+    # 这道闸从上线那天起就没拦过任何东西，而测试一直是绿的。
+    #
+    # 又一次「断言全绿不等于页面对」，而这次的根子是**判据喂了假产物**。
+    from tennislive.render.pushmsg import to_copy_page
+
+    old_page = to_copy_page("7.29 今日赛程 | 郑钦文凌晨1点战伊埃拉\n\n正文甲")
+    new_page = to_copy_page("7.29 今日赛程 | 王欣瑜战萨姆索诺娃\n\n正文乙")
+    live_old, live_new = _Resp(old_page), _Resp(new_page)
     fresh = "7.29 今日赛程 | 王欣瑜战萨姆索诺娃"
 
     with mock.patch.object(requests, "get", return_value=live_old):
@@ -1227,9 +1239,22 @@ def test_复制页可达但内容是旧版时也要摘掉按钮():
     with mock.patch.object(requests, "get", return_value=live_new):
         assert _probe_page("http://x/copy.html", attempts=1, expect=fresh)
 
-    # 指纹取的是 <h1>，不是模板里的固定文字——换一版内容它必须跟着变
-    page = tmp_copy_page("<h1>7.29 今日赛程 | 王欣瑜战萨姆索诺娃</h1>")
-    assert copy_page_fingerprint(page) == fresh
+    # 指纹必须**能区分两版**，而且必须真的出现在渲出来的页面里——
+    # 取不到会让闸从「放行恒真」翻到「拦截恒真」，那是另一头的坏。
+    import tempfile
+    from pathlib import Path as _Path
+
+    fingerprints = []
+    for text, page in (("甲", old_page), ("乙", new_page)):
+        path = _Path(tempfile.mkdtemp()) / "copy.html"
+        path.write_text(page, encoding="utf-8")
+        fp = copy_page_fingerprint(path)
+        assert fp, f"{text} 版取不到指纹"
+        assert fp in page, f"{text} 版的指纹「{fp}」不在页面里，探活永远匹配不上"
+        fingerprints.append(fp)
+    assert fingerprints[0] != fingerprints[1], (
+        f"两版内容完全不同，指纹却一样（{fingerprints[0]}）——这道闸是恒真的")
+    assert fingerprints[1] == fresh
     assert copy_page_fingerprint("/nowhere/copy.html") == "", "取不到时要退回空串"
 
 
@@ -1408,18 +1433,25 @@ def test_栏目名不能只活在代码里():
     for name in COLUMNS:
         assert name in doc, f"COLUMNS 里的「{name}」没有写进 docs/columns.md"
 
-    # 各生产线自带的栏目名常量（解说视频之外的那些线不共用 COLUMNS）
+    # 各生产线自带的栏目名（解说视频之外的那些线不共用 COLUMNS）。
+    #
+    # 原来这里扫的是 `_COLUMN_LABEL` 常量，而它只存在于「昨日一分」那条线；
+    # 2026-07-31 那条线整个拿掉之后，扫描结果为空，这个判据自己的自检
+    # （`assert labels`）当场报「判据失效了」——**它设计对了**，主语没了就出声，
+    # 而不是变成一条恒真的断言。
+    #
+    # 换成还活着的主语：竖版短片的栏目名写在每条 spec 的 `cover.eyebrow` 里，
+    # 海报台头和微信标题都从它来（见 `push_reel.column_of`）。
+    import json  # noqa: PLC0415
+
     labels = {
-        path.name: match
-        for path in Path("src/tennislive").rglob("*.py")
-        for match in re.findall(
-            r'^_COLUMN_LABEL\s*=\s*["\'](.+?)["\']',
-            path.read_text(encoding="utf-8"),
-            re.MULTILINE,
-        )
+        path.name: str((json.loads(path.read_text(encoding="utf-8")).get("cover")
+                        or {}).get("eyebrow", "")).strip()
+        for path in sorted(Path("specs/reels").glob("*.json"))
     }
-    assert labels, "没扫到任何 _COLUMN_LABEL，判据失效了"
+    assert labels, "没扫到任何 spec 的栏目名，判据失效了"
     for source, name in labels.items():
+        assert name, f"{source} 的 cover.eyebrow 是空的"
         assert name in doc, f"{source} 的栏目名「{name}」没有写进 docs/columns.md"
 
 
@@ -1465,10 +1497,10 @@ def test_字幕里不写标点():
 def test_去标点这条规矩是全站的不是解说片专属():
     """账号所有者补的那句：「字幕要应用到全局里。」
 
-    先只改了解说片，于是「昨日一分」「视频本地化」「大满贯竖版 v2」三条线
+    先只改了解说片，于是「视频本地化」「大满贯竖版 v2」等线
     还在往画面上烧逗号句号。同一个账号出去的片子，字幕两种样子。
 
-    规矩和实现收在 `video/subtitle_text.py`，四条线共用；这条测试盯的是
+    规矩和实现收在 `video/subtitle_text.py`，写 ASS 的几条路径共用；这条测试盯的是
     「每条写 ASS 的路径都真的过了这一道」，而不是某一条的输出长什么样。
     """
     import inspect

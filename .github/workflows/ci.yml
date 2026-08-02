@@ -47,10 +47,14 @@ jobs:
       # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
       # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
       # 判据落在 `test_ci装的字体覆盖代码要的每一个`。
-      - name: 安装中文字体（卡片图测试需要）
+      #
+      # ffmpeg 是给 `test_现场声不许在最后一句话结束时断掉` 用的：闪避那道闸
+      # 只有**真跑一次混音**才验得出来（查源码里有没有 `apad` 拦不住「它从来
+      # 没工作过」）。那个 bug 在九条已发的成片里中了七条，值这十几秒。
+      - name: 安装中文字体和 ffmpeg（卡片图 / 字宽 / 混音测试需要）
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，

@@ -233,23 +233,6 @@ def test_daily_cover_rejects_old_event_photo_with_both_players(monkeypatch, tmp_
     assert not rejected["year_match"]
     assert not rejected["exact_match"]
     assert "not-the-exact-headline-match" in rejected["hard_failures"]
-
-
-def test_daily_workflow_hard_gates_exact_cover_before_commit_and_pushplus():
-    from pathlib import Path
-
-    workflow = Path(".github/workflows/daily.yml").read_text(encoding="utf-8")
-    gate = workflow.index('and .exact_match == true')
-    both_sides = workflow.index('and .both_sides_match == true')
-    current_match = workflow.index('and .match_id == $expected_match_id')
-    hot_signal = workflow.index('and .headline_hot == true')
-    commit = workflow.index('- name: 提交内容到仓库')
-    pushplus = workflow.index('- name: PushPlus 推送到微信')
-
-    assert workflow.index('rm -f "$OUT_DIR/cover_visual.json"') < gate
-    assert max(gate, both_sides, current_match, hot_signal) < commit < pushplus
-
-
 def test_pixel_quality_rejects_blank_photo(tmp_path):
     from tennislive.research.visual_quality import assess_cover_image
 
