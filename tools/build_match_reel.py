@@ -668,7 +668,14 @@ def _cached_source(url: str, suffix: str) -> Path | None:
     root = os.environ.get(_SOURCE_CACHE_ENV, "").strip()
     if not root:
         return None
-    return Path(root) / f"{hashlib.sha1(url.encode()).hexdigest()[:16]}{suffix}"
+    # ⚠️ **`~` 要自己展开。** 工作流里写的是 `~/.cache/tennislive-sources`，
+    # 而 Python **不展开波浪号**——`Path("~/…")` 是一个**名叫 `~` 的相对目录**，
+    # 落在仓库工作区里。`actions/cache` 找的是真的 `$HOME/.cache/…`，于是
+    # 每趟都报 `Path Validation Error: ... do(es) not exist`，**一个字节都没存过**，
+    # 而两趟 run 全是绿的（run 156/158）。
+    # 单元测试当时也是绿的——它喂的是绝对路径 `tmp_path`，正好绕过这一半。
+    return (Path(root).expanduser()
+            / f"{hashlib.sha1(url.encode()).hexdigest()[:16]}{suffix}")
 
 
 def _keep_source(url: str, src: Path) -> None:
