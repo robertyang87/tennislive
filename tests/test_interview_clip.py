@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 import re
 from pathlib import Path
@@ -21,19 +22,38 @@ from pathlib import Path
 import pytest
 
 from tools.build_interview_clip import (
+    CANVAS_H,
+    CAPTION_GAP_SECS,
     ROOT,
+    caption_gaps,
     check_human_quote,
+    gap_key,
+    header_lines,
     review_sheet,
     segment,
+    write_ass,
     zh_problems,
+    _ASS_HEAD,
+    _BAND_TOP,
+    _EN_TOP,
+    _FONT_FILES,
+    _FONT_SIZE,
+    _HEAD_FONT,
+    _HEAD_SIZE,
+    header_ass,
+    header_runs,
     _LINE_PX,
+    _ZH_TOP,
+    _ts,
     _NO_TAIL,
     _SENT_END,
     _FILLER,
     _bare,
+    _caption_spans,
     _en_width,
     _norm_en,
     _quote_span,
+    _unresolved_gaps,
     _unresolved_suspects,
     _yt_at,
 )
@@ -43,6 +63,33 @@ SPECS = ROOT / "specs" / "interviews"
 
 def _specs() -> list[Path]:
     return sorted(SPECS.glob("*.json")) if SPECS.exists() else []
+
+
+def _steps() -> list[dict]:
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    return wf["jobs"]["render"]["steps"]
+
+
+def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
+    """把 `if:` 按给定 inputs 求值一遍。只认这个工作流真正用到的那点语法。
+
+    **按行为查，不按措辞查。** `"mode != 'push'" in expr` 那种写法只能证明
+    有人写了这串字，证明不了 push 那趟真的不跑它——反过来也会把
+    `mode == 'subs'` 这种同样正确的写法误判成红。
+    """
+    if expr in (None, ""):
+        return True                              # 没有 if 就是每趟都跑
+    py = (str(expr)
+          .replace("github.event.inputs.mode", repr(mode))
+          .replace("github.event.inputs.push", repr(push))
+          .replace("&&", " and ").replace("||", " or "))
+    if py.strip() == "always()":
+        return True
+    assert not re.search(r"[a-z_]+\(|github\.", py), f"这个 if 我还不会算：{expr}"
+    return bool(eval(py, {"__builtins__": {}}, {}))  # noqa: S307
 
 
 def _lines(en: list[str]) -> list[dict]:
@@ -273,6 +320,655 @@ def test_核对表把还欠着的单独列出来(tmp_path):
     assert "**#2**" in body and "这句听着不对" in body
 
 
+# ------------------------------------------------------- 自动字幕的空档
+
+def _cap(tmp_path: Path, events: list[tuple[float, float, str]]) -> Path:
+    """写一份 json3，`events` 是 (起, 止, 文本)。"""
+    (tmp_path / "cap_x.json3").write_text(json.dumps({"events": [
+        {"tStartMs": int(a * 1000), "dDurationMs": int((b - a) * 1000),
+         "segs": [{"utf8": t}]} for a, b, t in events]}), encoding="utf-8")
+    return tmp_path
+
+
+def test_源什么都没说的那几秒要被认出来(tmp_path):
+    """**这是伊埃拉那条漏掉的 3.2 秒。**
+
+    两道旧闸都拦不住它：`verify_transcript` 比的是两份 ASR 的词对不对得上，
+    `check_human_quote` 比的是战报抄走的那几句——**没有词就没有分歧**，
+    空白反而让分歧率更好看。所以要单独查「源什么都没说」。
+    """
+    _cap(tmp_path, [(0.0, 5.0, "hello there"), (8.4, 12.0, "and we are back")])
+    spec = {"start": 0.0, "end": 12.0}
+    assert caption_gaps(spec, tmp_path) == [(5.0, 8.4)]
+
+
+def test_掌声不算空档(tmp_path):
+    """`[applause]` / `[cheering]` 是**源自己出的声**：「我听见了，只是不是人话」。
+
+    切行时 `_NOISE` 把它们丢掉是对的（那不是台词），但在空档这条判据里
+    它们必须算数——否则每一次鼓掌都会被报成漏词，而**一个天天误报的检查
+    等于没有检查**，下一个人就会开始无脑销账。
+
+    数是真的：伊埃拉那条 302.67→304.58 那 1.9 秒两头正好夹着 `[cheering]`
+    和 `[applause]`。
+    """
+    _cap(tmp_path, [(0.0, 5.0, "thank you"), (5.0, 9.0, "[cheering]"),
+                    (9.0, 12.0, "[applause]"), (12.0, 15.0, "okay")])
+    assert caption_gaps({"start": 0.0, "end": 15.0}, tmp_path) == []
+
+
+def test_空档只看采访区间里的(tmp_path):
+    """集锦前面那十几分钟是打球，没有台词很正常——报出来只是噪音。"""
+    _cap(tmp_path, [(0.0, 2.0, "match point"), (100.0, 104.0, "congratulations"),
+                    (110.0, 114.0, "thank you")])
+    assert caption_gaps({"start": 99.0, "end": 114.0}, tmp_path) == [(104.0, 110.0)]
+
+
+def test_短过阈值的抖动不报(tmp_path):
+    """事件之间零点几秒的缝是编码抖动，不是漏。阈值是从真实分布量出来的。"""
+    _cap(tmp_path, [(0.0, 5.0, "a"), (5.0 + CAPTION_GAP_SECS - 0.1, 9.0, "b")])
+    assert caption_gaps({"start": 0.0, "end": 9.0}, tmp_path) == []
+    _cap(tmp_path, [(0.0, 5.0, "a"), (5.0 + CAPTION_GAP_SECS + 0.1, 9.0, "b")])
+    assert len(caption_gaps({"start": 0.0, "end": 9.0}, tmp_path)) == 1
+
+
+def test_重叠的滚动字幕要先合并(tmp_path):
+    """YouTube 的自动字幕是**滚动窗口**，事件互相重叠、起点不单调。
+
+    不合并就会把「上一条还没结束、下一条已经开始」算成负空档，或者更糟——
+    按事件顺序两两相减，中间夹一条长事件时算出一个凭空的大空档。
+    """
+    _cap(tmp_path, [(0.0, 6.0, "one two three"), (2.0, 8.0, "three four five"),
+                    (4.0, 10.0, "five six seven")])
+    assert _caption_spans(tmp_path) == [[0.0, 10.0]]
+    assert caption_gaps({"start": 0.0, "end": 10.0}, tmp_path) == []
+
+
+def test_空档要销账才放行():
+    """和 `suspect` 同一个形状：**结论必须留在 spec 里**，不能靠人记得。
+
+    ⚠️ 销账的意思是「人听过并作出了决定」，**不是「这里没问题」**——伊埃拉
+    那条销账的值写的就是「真漏了」。把一个已知的洞抹平比留着它更糟。
+    """
+    gaps = [(431.6, 434.9), (12.0, 15.0)]
+    assert _unresolved_gaps({}, gaps) == gaps
+    spec = {"caption_gaps_ok": {"431.6-434.9": "真漏了，她在说菲律宾语"}}
+    assert _unresolved_gaps(spec, gaps) == [(12.0, 15.0)]
+
+
+def test_空档的键按秒写不按序号():
+    """按序号写的话，前面多出一个空档就全体错位，**销的账会落到别的空档上**——
+    而且它不吭声：数量对得上，内容全串了。"""
+    assert gap_key(431.64, 434.88) == "431.6-434.9"
+    assert gap_key(5.0, 8.4) == "5.0-8.4"
+
+
+def test_核对表把空档单独列一节(tmp_path):
+    """逐行那张表走的是「源说了什么」，**走不到「源什么都没说」的地方**——
+    那几秒在表里根本不占一行，翻一百遍也看不见。所以要单独列。"""
+    _cap(tmp_path, [(0.0, 3.0, "one"), (9.0, 12.0, "two")])
+    lines = _lines(["one", "two"])
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 12.0,
+            "zh": ["一", "二"]}
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    assert "## 自动字幕的空档" in body
+    assert "**还没销账**" in body and "3.0–9.0 秒" in body
+    spec["caption_gaps_ok"] = {"3.0-9.0": "听过了：全场欢呼，没人说话"}
+    body = review_sheet(spec, lines, tmp_path).read_text(encoding="utf-8")
+    assert "**还没销账**" not in body and "全场欢呼" in body
+
+
+def test_探空档不许再加一个多语种模型():
+    """账号所有者定的：**不要多语种。**
+
+    机器分不出「没人说话」和「不是英语」——`small.en` 两种情况都给空白。
+    再加一个大模型也只是把一个需要人复核的空白换成一个需要人复核的猜测，
+    却要多下几百 MB、每趟多跑一遍。
+
+    这条**拦的不是手滑**，是下一次有人重新论证「多语种模型能听出来」。
+    源码文本断言在这儿是对的用法：它防的是「这条规矩别被删掉」，
+    不是「这个功能能跑」（后者由下面那条行为测试管）。
+    """
+    import inspect
+
+    from tools.build_interview_clip import probe_gap_speech
+
+    src = inspect.getsource(probe_gap_speech)
+    assert "WhisperModel" not in src, "探空档又去加载模型了——不要多语种"
+    assert "subprocess" not in src, "探空档又去切音频了——它只该摊已经跑完的那份结果"
+
+
+def test_探空档两种结果都要出声(tmp_path, capsys):
+    """**「没听出来」不等于「没有」，报告里必须分开写。**
+
+    这是这一整条线上最贵的那个混淆：`small.en` 对着非英语给空白，和
+    「这几秒真没人说话」长得一模一样。报告要是只写一句「无」，
+    下一个人读到的就是「确认过了，没人说话」——而那正是漏掉的那 3.2 秒。
+    """
+    from tools.build_interview_clip import probe_gap_speech
+
+    spec = {"slug": "t", "url": "https://youtu.be/x", "start": 0.0, "end": 20.0}
+    gaps = [(3.0, 6.0), (10.0, 13.0)]
+    words = [(4.0, "thank"), (4.4, "you"), (4.8, "everyone")]
+    body = probe_gap_speech(spec, gaps, words, tmp_path).read_text(encoding="utf-8")
+    assert "thank you everyone" in body and "en_fixed" in body
+    assert "**什么都没有**" in body
+    # 空白那一档必须把两种可能都摆出来，不能只写「无」
+    assert "没人说话" in body and "不是英语" in body
+
+
+def test_没有空档的时候也要出声(capsys, tmp_path):
+    """只在发现问题时出声的检查，没法证明它真的看过。"""
+    from tools.build_interview_clip import probe_gap_speech
+
+    assert probe_gap_speech({"slug": "t", "start": 0.0}, [], [], tmp_path) is None
+    assert "没有空档" in capsys.readouterr().out
+
+
+def test_真实那条片子只报出该报的那一处():
+    """**拿存量验一遍**，别只用合成数据——合成数据验的是「实现符合我的假设」。
+
+    伊埃拉那条的缓存字幕就在仓库里。整段 146 秒里只有一处空档，就是她对
+    菲律宾球迷说话的那 3.2 秒；1.9 秒那个掌声空档不许被报出来。
+    """
+    spec_path = SPECS / "eala-svitolina-dc2026-qf.json"
+    outdir = ROOT / "output" / "interviews" / "eala-svitolina-dc2026-qf"
+    if not spec_path.exists() or not list(outdir.glob("cap_*.json3")):
+        pytest.skip("这条片子的缓存字幕不在（sparse checkout）")
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    assert caption_gaps(spec, outdir) == [(431.64, 434.88)]
+    assert _unresolved_gaps(spec, caption_gaps(spec, outdir)) == []
+
+
+# ---------------------------------------------------------------- 版式
+
+# 墨迹相对字号的比例，**烧真帧量出来的**（不是字体表里的 ascent/descent）：
+# 40/48 那版量到 EN 墨高 29、ZH 墨高 31，46/62 这版量到 34 / 40。
+_INK_TOP = 0.21                      # 墨迹上沿离 MarginV 多远
+_INK_H = {"en": 0.74, "zh": 0.645}   # 墨高
+
+
+def _ink(kind: str, margin_v: int) -> tuple[float, float]:
+    fs = _FONT_SIZE[kind]
+    top = margin_v + _INK_TOP * fs
+    return top, top + _INK_H[kind] * fs
+
+
+def test_字幕这一对要落在字幕带的正中():
+    """账号所有者：「下面字幕空间太大」。
+
+    **不是带子太宽，是字全堆在上半截。** 原来 `_EN_TOP` 写成「视频下沿 + 100」，
+    墨迹落在 1069–1147：上面空 109，**下面空 293**——同一条 480px 的带子，
+    一头挤一头空，看起来就是「下面一大片没用」。
+
+    这条拦的是**改了字号却没重新算位置**：字号一变，墨块高度跟着变，
+    还钉在老的 `_EN_TOP` 上就会重新偏到一头去，而**它不报错**。
+    """
+    en_top, en_bot = _ink("en", _EN_TOP)
+    zh_top, zh_bot = _ink("zh", _ZH_TOP)
+    above, below = en_top - _BAND_TOP, CANVAS_H - zh_bot
+    assert abs(above - below) <= 40, (
+        f"字幕没落在带子中间：上空 {above:.0f}px、下空 {below:.0f}px。"
+        f"改过字号就要重新量 `_EN_TOP`（当前 {_EN_TOP}）。")
+    assert en_bot < zh_top, "英文和中文的墨迹叠在一起了"
+
+
+def test_两行之间的空白要跟着字号重新量():
+    """`_ZH_GAP` 是**墨迹间距**，不是字号的比例——40/48 下是 47，46/62 下是 53。
+
+    按比例推会得到 47×62/48 = 61，渲出来两行就散开了。目标区间是
+    「中文墨高的 0.45–0.70 倍」，量出来 0.56 正好（43 挤、51 松，比过三档）。
+    """
+    _, en_bot = _ink("en", _EN_TOP)
+    zh_top, zh_bot = _ink("zh", _ZH_TOP)
+    white = zh_top - en_bot
+    ratio = white / (zh_bot - zh_top)
+    assert 0.45 <= ratio <= 0.70, (
+        f"两行之间空白 {white:.0f}px ＝ 中文墨高的 {ratio:.2f} 倍，"
+        "超出 0.45–0.70。改字号要重新量 `_ZH_GAP`。")
+
+
+def test_中文字号不许大到让行放不下():
+    """中文那侧的天花板是 952px 可用宽。
+
+    **68 号就有行超出**（伊埃拉那条最宽的一行 967px），所以 64 是上限。
+    这条拦的是「中文那侧几乎免费」被读成「随便调」。
+    """
+    assert _FONT_SIZE["zh"] <= 64, (
+        f"中文字号 {_FONT_SIZE['zh']} 超过 64——952px 的行宽装不下，"
+        "写稿的人会被逼着把句子切碎。")
+
+
+def test_字号只有一处出处():
+    """这几个常量既喂 `_measure`（切行量宽度）又喂 `_ASS_HEAD`（渲染 Style）。
+
+    **写成两处必分叉，而且分叉不吭声**——后定义的那个赢，改前面那个毫无反应。
+    这是真踩的：加版式那一版我在文件底下又写了一份 `_FONT_SIZE`，
+    行为碰巧是对的（后面那个是新值），但改上面那个就再也不起作用了。
+
+    **ruff 拦不住**：F811 只管重复 import 和函数重定义，
+    模块级变量重新赋值不在它的范围里。所以只能自己扫。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    for name in ("_FONT_SIZE", "_HEAD_SIZE", "_ZH_GAP", "_EN_TOP", "_LINE_PX"):
+        n = len(re.findall(rf"^{name} *=", src, re.M))
+        assert n == 1, f"`{name}` 在模块里赋了 {n} 次——写成两处必分叉，而且不吭声"
+
+
+def test_顶栏走品牌显示体字幕不走():
+    """账号所有者：「感觉字体很平淡」。顶栏换成得意黑（和海报同一支）。
+
+    ⚠️ **只换顶栏。** `assets/fonts/ATTRIBUTION.md` 里早写着这条边界：
+    display headings 用它，body copy 留给 Noto——得意黑是斜体加窄身，
+    当标题有劲，一整句字幕读下来就累。渲出来两版比过。
+    """
+    styles = {r.split(",")[0].removeprefix("Style: "): r.split(",")
+              for r in _ASS_HEAD.splitlines() if r.startswith("Style: ")}
+    assert styles["HEADA"][1] == "得意黑", "顶栏主行该走品牌显示体"
+    assert styles["EN"][1] == "Noto Sans" and styles["ZH"][1] == "Noto Sans CJK SC", \
+        "字幕不许换成显示体——它是斜体窄身，一整句读下来累"
+    assert styles["EN"][6] == "1", "英文太细会被旁边的粗中文压住，要加粗"
+
+
+def _sfnt_names(path: Path) -> set[str]:
+    """字体 `name` 表里所有的 family 名（nameID 1）。自己解，不引依赖。
+
+    ⚠️ **`.ttc` 是字体集合，不是字体**（思源黑体就是：一份文件里装着
+    SC / TC / JP / KR 好几张脸）。不认集合头的话整份读出来是空的，
+    而空集合和「名字对不上」在断言里长得一模一样。
+    """
+    import struct
+
+    raw = path.read_bytes()
+    if raw[:4] == b"ttcf":                     # 集合：先取出每一张脸的偏移
+        n = struct.unpack(">I", raw[8:12])[0]
+        heads = struct.unpack(f">{n}I", raw[12:12 + 4 * n])
+    else:
+        heads = (0,)
+    out: set[str] = set()
+    for head in heads:
+        n_tables = struct.unpack(">H", raw[head + 4:head + 6])[0]
+        for i in range(n_tables):
+            tag, _, off, _ = struct.unpack(
+                ">4sIII", raw[head + 12 + 16 * i:head + 28 + 16 * i])
+            if tag != b"name":
+                continue
+            count, str_off = struct.unpack(">HH", raw[off + 2:off + 6])
+            for j in range(count):
+                pid, eid, _lid, nid, ln, o = struct.unpack(
+                    ">HHHHHH", raw[off + 6 + 12 * j:off + 18 + 12 * j])
+                if nid != 1:
+                    continue
+                b = raw[off + str_off + o:off + str_off + o + ln]
+                out.add(b.decode("utf-16-be" if (pid, eid) != (1, 0) else "latin-1",
+                                 "ignore"))
+    return out
+
+
+def test_品牌字体是libass认得出的那个名字():
+    """`webcards` 用 woff2，**libass 读不了 woff2**，所以另存了一份 ttf。
+
+    ⚠️ **ASS 里的 `Fontname` 只能写「得意黑」，不能写英文名。** 这条是实测出来的，
+    而且反直觉——PIL 报的 family 是 `Smiley Sans`，看起来才是「正规」的那个：
+
+        Fontname            渲出来的 md5
+        得意黑              c80c7f79e9a4   ← 认
+        Smiley Sans         d75e3012a8d0
+        NoSuchFontXYZ       d75e3012a8d0   ← 和上一行**一模一样**
+
+    也就是说写 `Smiley Sans` 和写一个根本不存在的名字**效果完全相同**：
+    libass 静默回退，画面照样出得来，只是不是这支字体。
+
+    复现（CI 里没有 ffmpeg，所以这条只钉名字，渲染验证靠手跑）：
+
+        ffmpeg -f lavfi -i color=c=black:s=1080x200:d=1 \\
+          -vf "subtitles=<ass>:fontsdir=assets/fonts" -frames:v 1 out.png
+    """
+    path = Path(_FONT_FILES["head"][0])
+    assert path.exists() and path.suffix == ".ttf", f"{path} 不在，或者还是 woff2"
+    names = _sfnt_names(path)
+    assert _HEAD_FONT in names, (
+        f"字体声明的 family 名是 {sorted(names)}，里面没有 {_HEAD_FONT!r}——"
+        "换过字体版本？名字对不上就会静默回退。")
+
+
+def test_顶栏那个绿方块不许赌字体回退():
+    """`▍`（U+258D）**得意黑里没有**，本地是靠回退到思源黑体才画出来的。
+
+    「本地装着不等于 CI 装着」——回退链在 runner 上不保证，赌输了画出来是个
+    豆腐块。所以每一段都内联写死 `\\fn`，不交给 fontconfig 去猜。
+
+    判据是**拿一个必定没有的码位当对照**：缺字时字体画的是 `.notdef`，
+    而 `.notdef` 对任何缺失字符都长得一样。直接断言「墨迹为空」是错的——
+    实测 `.notdef` 有 32×35 的墨，那正是那个豆腐块。
+    """
+    from PIL import ImageFont
+
+    line_a = header_ass({"slug": "t", "event": "某站 1/4 决赛",
+                         "push": {"matchup": "甲 vs 乙"}})[0]
+    assert "▍" in line_a
+    assert line_a.startswith(r"{\r\fnNoto Sans CJK SC"), "画方块那一段要显式指定字体"
+    head = ImageFont.truetype(_FONT_FILES["head"][0], 40)
+    ink = lambda ch: (m := head.getmask(ch)).size + (bytes(m),)  # noqa: E731
+    notdef = ink("")                          # 私用区，必定没有
+    assert ink("▍") == notdef, (
+        "得意黑现在有 ▍ 这个字形了？那 `_HEAD_MARK` 里的 `\\fn` 可以去掉，"
+        "注释也要跟着改")
+    assert ink("决") != notdef, "对照组：汉字必须画得出来"
+
+
+def test_顶栏太长要报错不许悄悄折行():
+    """`WrapStyle=0` 会自动折行，**一折就压到下面那行上，而且不报错**。
+
+    赛事名长一点就够了——「2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔」
+    实测 1003px，超过可用的 984px。
+    """
+    spec = {"slug": "t", "push": {"matchup": "甲 vs 乙"},
+            "event": "2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔"}
+    with pytest.raises(SystemExit, match="顶栏"):
+        header_lines(spec)
+
+
+def test_渲染要把仓库的字体目录给libass():
+    """得意黑在仓库里，不在系统字体目录——`fontsdir` 不指过去，libass 找不到它，
+    而且**它不报错**，只是静默换一支字体接着画。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert "fontsdir={ROOT / 'assets/fonts'}" in src, \
+        "render 的 fontsdir 要指向仓库的 assets/fonts"
+
+
+def test_顶栏说清这是哪一场():
+    """账号所有者：「顶部文字说明当前是什么比赛的赛后采访，不然好多人不知道背景」。
+
+    刷到中段的人没看过封面（而封面只有 1.8 秒），画面上只有一个人在说话。
+    """
+    spec = {"slug": "t", "event": "2026 华盛顿 WTA500 女单八强",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜"}}
+    a, b = header_lines(spec)
+    assert a == "2026 华盛顿 WTA500 女单八强"
+    assert "伊埃拉 vs 斯维托丽娜" in b and "赛后" in b
+
+
+def test_顶栏的比分靠winner摆不靠词序():
+    """账号所有者要顶栏带比分。**但「谁 比分 谁」这个写法本身就在说谁赢了。**
+
+    `matchup` 是按签位排的，**不保证胜者在前**——`@wta` 的标题就这样，
+    我照着推过一次「标题里在前的是赢家」，推错了（`Zheng Qinwen vs. Clara
+    Tauson` 赢的是 Tauson）。所以这个断言必须来自数据（`winner`），
+    不能来自排版顺序。
+
+    这里故意让 `winner` 是 `matchup` 里**排在后面**的那个：如果实现偷懒
+    照词序摆，这条立刻红。
+    """
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "斯维托丽娜",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    b = header_lines(spec)[1]
+    assert b.startswith("斯维托丽娜 6-3 6-4 伊埃拉"), b
+
+
+def test_写了比分没写winner不许出片():
+    """空着比错着更难发现：顶栏照词序摆，看着完全正常，只是赢家写反了。"""
+    spec = {"slug": "t", "event": "某站 1/4 决赛",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    with pytest.raises(SystemExit, match="winner"):
+        header_lines(spec)
+
+
+def test_winner必须是matchup里的那两个之一():
+    """两处名字对不上，顶栏会印出一个**没打这场球的人**——而且看着毫无破绽。
+
+    真实的成因是译名：`matchup` 查了译名表写「伊埃拉」，`winner` 手打成
+    「埃亚拉」（那正是这个名字改过的旧译）。
+    """
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "埃亚拉",
+            "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
+    with pytest.raises(SystemExit, match="不在"):
+        header_lines(spec)
+
+
+def test_顶栏每一段都要先复位():
+    """**ASS 的覆盖是粘连的。** 竖条那段设了绿色，下一段不复位的话，
+    后面整行标题跟着变绿——渲出来一眼看见，而**代码里一点异常都没有**。
+
+    真踩过：第一版只写了 `\\fn` 没写 `\\r`，标题整行绿的。
+    判据是每一段都以 `{\\r` 开头，而不是「颜色写对了没有」——后者要逐项
+    列举（颜色、字重、间距、字号…），漏一项就又回到这儿。
+    """
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}}
+    for line in header_ass(spec):
+        segs = [s for s in line.split("{") if s]
+        assert all(s.startswith(r"\r") for s in segs), (
+            f"有段没先复位，前一段的颜色/字号会漏进来：{line}")
+
+
+def test_顶栏量宽度要按每段自己的字号():
+    """比分那段是 `\\fs38` 渲的，拿 32 去量会**少算两成**——闸就成了摆设。
+
+    这条拿一个刚好卡在边上的比分验：按各自字号量会超，按统一字号量不会。
+    """
+    import tools.build_interview_clip as clip
+
+    runs = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                        "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
+    sizes = {size for _, kind, _, size in runs if kind == "num"}
+    assert sizes == {clip._SCORE_PX}, "比分那段要带着它自己的字号，不是顶栏那档"
+    assert clip._SCORE_PX > _HEAD_SIZE["b"], "比分放大了，量的时候就不能按小的量"
+
+
+def test_并成一个词的ASR错要在切行之前修(tmp_path):
+    """**`word_fix` 和 `en_fixed` 分工不同，不能互相顶替。**
+
+    实测：ASR 把 `was` 和 `Congratulations` 听成了一个词 `wasulations`。
+    词都并错了，行怎么排都排不下——照原样修进 `en_fixed`，那一行量出来
+    **1150px**，超出可用宽 952 两成，而 libass 会**默默折行**压到中文那行上。
+
+    放进 `word_fix` 之后，切行拿到的是拆开的词，行自己重排。
+    """
+    words = [(0.0, "while"), (0.5, "I"), (1.0, "wasulations"),
+             (1.5, "not"), (2.0, "just"), (2.5, "on"), (3.0, "making.")]
+    plain = segment(words, 0.0, 5.0)
+    fixed = segment(words, 0.0, 5.0, word_fix={"wasulations": "was here. Congratulations,"})
+    assert "wasulations" in " ".join(s["en"] for s in plain)
+    assert "wasulations" not in " ".join(s["en"] for s in fixed)
+    assert "was here. Congratulations," in " ".join(s["en"] for s in fixed)
+    # 拆开之后成了两句，切行会跟着多出一行——**行号会变**，挂账要重挂
+    assert len(fixed) > len(plain)
+
+
+def test_英文也要过宽度闸(tmp_path):
+    """原来这道闸**只查中文**——于是 `en_fixed` 里一行订正写长了一路畅通，
+    到渲染时 libass 默默折行，压到中文那一行上。
+
+    切行时量的是 ASR 原文，**订正之后没人再量一次**。这条补的就是那一次。
+    """
+    long_en = "while I was here. Congratulations, not just on making your second career"
+    assert _en_width(long_en) > _LINE_PX, "这条测试要一行真的超宽才有意义"
+    with pytest.raises(SystemExit, match="英文超宽"):
+        write_ass(_lines([long_en, "short one."]), ["一", "二"], 0.0, tmp_path / "t.ass")
+
+
+def test_翻转和裁角标要作用到封面帧上():
+    """**封面帧不走那条滤镜链**——它是单独一条 `ffmpeg -ss … -frames:v 1`。
+
+    两处都漏过就是「片子是正的、封面是反的」「片子没水印、海报上有」，
+    而**两张图分开看都正常**，只有摆在一起才看得出来。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert "hflip" in grab, "抽封面帧那一步没跟着翻转"
+    assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
+
+
+def _clip(path: Path, mark: bool = True, n: int = 10) -> Path:
+    """造一段测试片：背景每帧都在动，标记固定不动。
+
+    **不用 ffmpeg，也不 import numpy**——ci.yml 的测试 job 没装 ffmpeg
+    （那是出片工作流才装的），而 numpy 不在 dev 依赖里。两样都会让本地全绿、
+    CI 必红，正是「三处一起改」那条反复咬人的地方。
+    PIL 画帧 → 存 PNG → `cv2.imread` 读成数组喂 `VideoWriter`，两样都绕开了。
+    """
+    import cv2
+    from PIL import Image, ImageDraw
+
+    W, H = 320, 180
+    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 24, (W, H))
+    tmp = path.with_suffix(".png")
+    for i in range(n):
+        im = Image.new("RGB", (W, H))
+        d = ImageDraw.Draw(im)
+        for x in range(W):                       # 背景：一条每帧平移的渐变
+            d.line([(x, 0), (x, H)], fill=((x * 3 + i * 40) % 256, 90, 140))
+        if mark:                                 # 标记：每帧都在同一个位置
+            d.rectangle([20, 140, 140, 148], fill=(255, 255, 255))
+        im.save(tmp)
+        vw.write(cv2.imread(str(tmp)))
+    vw.release()
+    tmp.unlink(missing_ok=True)
+    return path
+
+
+def test_去水印按笔画补不按矩形抹(tmp_path):
+    """**`removelogo` 只动掩膜标出来的那几笔，`delogo` 抹掉整个矩形。**
+
+    delogo 从框边缘横向插值，**笔画之间那些原始像素也一起毁了**，留下一条
+    竖纹带；按笔画补，字缝里的球场、广告板原样保留。
+
+    掩膜的判据是「每一帧都亮在同一个位置」——水印是唯一这样的东西，
+    背景会动（`testsrc2` 一直在动），逐帧取交集就只剩笔画。
+    """
+    import cv2
+
+    from tools.build_interview_clip import logo_mask
+
+    clip = _clip(tmp_path / "c.mp4")
+    m = logo_mask(clip, [0.03, 0.72, 0.55, 0.16], tmp_path / "m.png")
+    mask = cv2.imread(str(m), cv2.IMREAD_GRAYSCALE)
+    on = mask > 0
+    assert on.any(), "掩膜是空的"
+    # **只该是笔画，不是整个框**：框占画面 0.55*0.16 ≈ 8.8%，笔画远小于它
+    assert on.mean() < 0.088 * 0.75, f"掩膜盖了 {on.mean():.1%}，像是把整个框都涂了"
+    assert not on[0].any() and not on[:, 0].any(), "掩膜贴到画面边了，插值取不到样"
+
+
+def test_掩膜空了要报错不许静默放行(tmp_path):
+    """**空掩膜和「这儿没有水印」长得一模一样。**
+
+    框写错位置、或者水印不是亮字，都会得到空掩膜——静默放行的话
+    `removelogo` 什么也不做，成片带着水印发出去，而每一步都是 success。
+    """
+    from tools.build_interview_clip import logo_mask
+
+    dark = _clip(tmp_path / "d.mp4", mark=False)
+    with pytest.raises(SystemExit, match="掩膜是空的"):
+        logo_mask(dark, [0.1, 0.7, 0.5, 0.2], tmp_path / "m.png")
+
+
+def test_去水印排在翻转后面():
+    """掩膜是在**成品那一面**算的（`logo_mask` 的 `mirrored` 会先把帧翻过来），
+    所以 `removelogo` 必须排在 `hflip` 后面。
+
+    对不上的话水印原样留着、对称的另一边多出一块补痕——**画面照样出得来**。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    chain = src[src.index('f"[0:v]{flip}'):src.index('[fg];"')]
+    assert chain.index("{flip}") < chain.index("{logo}"), "hflip 要排在 removelogo 前面"
+    grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
+    assert grab.index("hflip") < grab.index("logo"), "抽封面帧那一步顺序也要一致"
+
+
+def test_裁角标只动纵向不动版式几何():
+    """`crop_keep_top` 把窗口整体缩小再缩放回同样的输出尺寸——**版式的几何
+    一个数都不用改**。这条钉住那个不变量：窗口的宽高比永远还是 `ratio`。
+    """
+    import re
+
+    import tools.build_interview_clip as clip
+
+    for keep in (1.0, 0.85, 0.7):
+        m = re.match(r"crop=ih\*([\d.]+):ih\*([\d.]+):", clip._crop_expr(4 / 3, keep))
+        w, h = float(m.group(1)), float(m.group(2))
+        assert abs(w / h - 4 / 3) < 1e-4, f"keep={keep} 把窗口的宽高比改了"
+        assert abs(h - keep) < 1e-9
+
+
+def test_采访是不是在场上跟着源走():
+    """**印着「场上」而画面是演播区，是拿版式撒谎。**
+
+    伊埃拉 6-4 6-2 赢大坂直美那场，四个源都自证过：WTA 官方集锦没接采访、
+    Tennis Channel 那条在转播区、另两条是发布会和博主口播。账号所有者定了
+    用转播区那条，顶栏就得照实说。
+    """
+    base = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    assert header_lines(base)[1].endswith("赛后场上采访"), "默认仍是场上"
+    assert header_lines({**base, "interview_kind": "赛后采访"})[1].endswith("赛后采访")
+
+
+def test_没有比分时顶栏退回只写对阵():
+    """比分不是必填——没有它，顶栏仍然要能回答「这是哪一场」。"""
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    assert header_lines(spec)[1] == "甲 vs 乙 · 赛后场上采访"
+
+
+def test_ASS里的字体名都是字体自己声明的():
+    """**写错字体名不报错，只是静默换一支字画。**
+
+    实测过两支，而且「正规」的那个名字反而不认：
+
+        得意黑                       ✅    Smiley Sans       ❌（和不存在的字体同一个 md5）
+        Barlow Condensed SemiBold    ✅    BarlowCondensed   ❌
+
+    所以每个 `_ASS_NAME` 都要能在对应字体文件的 `name` 表里找到。
+    ⚠️ 这条**只保证名字是字体声明过的**，不保证 libass 一定挑得中它
+    （`Smiley Sans` 就是声明了但挑不中）——那一层只能靠渲出来比 md5，
+    复现命令写在 `test_品牌字体是libass认得出的那个名字` 里。
+    """
+    import tools.build_interview_clip as clip
+
+    assert set(clip._ASS_NAME) == set(_FONT_FILES), "两张表的键要一一对应"
+    for kind, name in clip._ASS_NAME.items():
+        path = Path(_FONT_FILES[kind][0])
+        if not path.exists():
+            pytest.skip(f"{path} 不在（系统字体没装）")
+        assert name in _sfnt_names(path), (
+            f"ASS 里 {kind} 写的是 {name!r}，但字体声明的是 {sorted(_sfnt_names(path))}")
+
+
+def test_顶栏缺字段要报错而不是印半句():
+    """空着比错着更难发现：顶栏印出「 · 赛后场上采访」，看着像设计如此。"""
+    for spec in ({"slug": "t", "push": {"matchup": "甲 vs 乙"}},
+                 {"slug": "t", "event": "某站某轮"}):
+        with pytest.raises(SystemExit):
+            header_lines(spec)
+
+
+def test_顶栏从头挂到尾(tmp_path):
+    """顶栏不是开场卡：**整条片子任何一帧都要能回答「这是哪一场」。**"""
+    lines = _lines(["one two", "three four"])
+    spec = {"slug": "t", "event": "某站八强", "push": {"matchup": "甲 vs 乙"},
+            "zh": ["一", "二"]}
+    path = tmp_path / "t.ass"
+    write_ass(lines, spec["zh"], 0.0, path, spec)
+    body = path.read_text(encoding="utf-8")
+    head = [r for r in body.splitlines() if r.startswith("Dialogue") and "HEAD" in r]
+    assert len(head) == 2, "顶栏该有两行"
+    assert all(",0:00:00.00," in r for r in head), "顶栏要从第 0 秒就在"
+    end = _ts(lines[-1]["b"])
+    assert all(end in r for r in head), f"顶栏要挂到最后一行结束（{end}）"
+
+
+def test_改字号会让行号失准要在报错里说出来(tmp_path):
+    """`en_fixed` 的键是行号。**字号一改断行就变，行号跟着失准**——而它不吭声：
+    键还在范围内，订正只是悄悄落到了别的行上。
+
+    这里唯一能拦住的地方就是「中文行数和英文行数对不上」那道闸，
+    所以它的报错必须把这个成因说出来，不能只说「对不上」。
+    """
+    with pytest.raises(SystemExit) as e:
+        write_ass(_lines(["a b", "c d", "e f"]), ["一", "二"], 0.0, tmp_path / "t.ass")
+    assert "字号" in str(e.value) and "en_fixed" in str(e.value)
+
+
 # ---------------------------------------------------------------- spec 本身
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
@@ -329,6 +1025,25 @@ def test_挂账的行号得真的存在(path):
     assert n, f"{path.name} 挂了账却还没有中文，行号无从校验"
     bad = [k for k in keys if not 1 <= int(k) <= n]
     assert not bad, f"{path.name} 里的行号 {bad} 超出了实际的 {n} 行"
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_销掉的空档得真的是空档(path):
+    """销账的键也是手写的，写错了同样**不吭声**——它会安静地指不到任何一个
+    空档，而那个真空档仍然敞着，`--stage render` 却已经放行了。
+
+    和上一条同源：**销账要能被验，不然它只是一句「我看过了」。**
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    if not (ok := spec.get("caption_gaps_ok") or {}):
+        pytest.skip("这条 spec 没有销过空档")
+    outdir = ROOT / "output" / "interviews" / spec["slug"]
+    if not list(outdir.glob("cap_*.json3")):
+        pytest.skip("缓存字幕不在，验不了")
+    real = {gap_key(*g) for g in caption_gaps(spec, outdir)}
+    assert not (stale := sorted(set(ok) - real)), (
+        f"{path.name} 销了 {stale}，但现在的字幕里没有这些空档——"
+        "要么键写错了，要么阈值改过。")
 
 
 # ---------------------------------------------------------------- 下载
@@ -589,20 +1304,39 @@ def test_只推送时不做出片那一堆准备():
     apt 字体 + ffmpeg + Chromium + faster-whisper，**白等三分钟**，
     而真正要跑的那一步只要二十秒。
 
-    判据：出片专用的准备步骤必须都挂着 `mode != 'push'`。
-    """
-    import yaml  # noqa: PLC0415
+    判据：`mode=push` 那一趟，一个装重依赖的步骤都不许跑。
 
-    wf = yaml.safe_load((ROOT / ".github" / "workflows"
-                         / "interview-clip.yml").read_text(encoding="utf-8"))
-    heavy = ("playwright", "faster-whisper", "yt-dlp", "ffmpeg", "fonts-noto")
-    for step in wf["jobs"]["render"]["steps"]:
+    ⚠️ **第一版是按字面查的**（`"mode != 'push'" in step["if"]`），加
+    `mode: subs` 的时候它当场误报：取字幕那两步挂的是 `mode == 'subs'`，
+    push 那趟根本不会跑，却因为字面对不上被判红。**查的是措辞不是行为**，
+    和「封面引的话」那条第一版栽的是同一个跟头。现在按 mode 真的求值一遍。
+    """
+    for step in _steps():
         run = str(step.get("run") or "")
-        if not any(h in run for h in heavy):
+        if not any(h in run for h in ("playwright", "faster-whisper",
+                                      "yt-dlp", "ffmpeg", "fonts-noto")):
             continue
-        assert "mode != 'push'" in str(step.get("if", "")), (
+        assert not _if_holds(step.get("if"), mode="push"), (
             f"步骤「{step.get('name')}」装/用了出片才要的东西，"
-            "却没挂 mode != 'push'——只推送的时候它是白跑的")
+            f"而它的条件 {step.get('if')!r} 在 mode=push 那趟仍然成立"
+            "——只推送的时候它是白跑的")
+
+
+def test_每个mode都各干各的活():
+    """三个 mode 各自只跑自己那一段，别互相带着跑。
+
+    `subs` 是 2026-08-02 加的：沙箱连字幕都取不到了，切行只能搬到 runner 上。
+    加之前只有 render 一条路，取个字幕要白装 Chromium + whisper + ffmpeg
+    三分多钟，而且 `zh` 还空着的时候出片那步会空转，整趟红着结束。
+    """
+    stage = {}                                  # mode -> 它跑到的那几个 --stage
+    for mode in ("subs", "render", "push"):
+        stage[mode] = [s.get("name") for s in _steps()
+                       if _if_holds(s.get("if"), mode=mode)
+                       and "--stage" in str(s.get("run") or "")]
+    assert stage["subs"] == ["取字幕切行"], stage["subs"]
+    assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
+    assert stage["push"] == [], stage["push"]
 
 
 def test_封面文件名是push_reel认的那个():
@@ -626,7 +1360,9 @@ def test_自检脚本从工作流里读pip行不另写一份():
 
     line = _pip_line()
     assert line.startswith("pip install"), line
-    assert "-e ." in line, "工作流的 pip 行里没有 -e .，自检读到的是别的行？"
+    # `-e .` 也可能带 extra（`-e ".[visualqa]"`），两种写法都算装了项目自己
+    assert re.search(r'-e "?\.', line), \
+        "工作流的 pip 行里没装项目自己（-e .），自检读到的是别的行？"
 
 
 # ---------------------------------------------------------------- 工作流依赖
@@ -659,6 +1395,12 @@ _PROVIDES = {
     "tennislive": "-e .",       # 还拖着 requests / rich / pypdf
     "playwright": "playwright",
     "faster_whisper": "faster-whisper",
+    # 去水印的掩膜要 cv2（`logo_mask`）。**装 extra 别装裸包名**——
+    # `pyproject` 把 opencv 钉在 `>=4.10,<5`，5.x 里 `CascadeClassifier` 没了
+    "cv2": '-e ".[visualqa]"',
+    # `logo_mask` 里跟 cv2 一起用，靠 opencv 带进来；测试那边刻意不 import 它
+    # （dev 依赖里没有），所以只在这张表登记
+    "numpy": '-e ".[visualqa]"',
 }
 
 
@@ -758,11 +1500,20 @@ def test_ci装的字体覆盖代码要的每一个():
 
     判据不是「装了哪几个包」，是「代码点名要的每一个包都在」——
     以后 `_FONT_FILES` 里加字体，这条会替我记得。
+
+    ⚠️ **`pkg` 是 None 的那些不是漏填**，是**仓库自带**的字体（得意黑）。
+    它们不该出现在 apt 那行，但**必须真的躺在仓库里**——否则同样是静默回退，
+    只是这次怪不到 apt 头上。两种都查，别只查一种。
     """
     import tools.build_interview_clip as clip
 
     ci = _run_scripts("ci.yml")
     for kind, (path, pkg) in clip._FONT_FILES.items():
+        if pkg is None:
+            assert Path(path).exists(), (
+                f"代码量 {kind} 的宽度要 {path}，它该在仓库里却不在——"
+                "是不是只提交了 woff2？libass 读不了 woff2。")
+            continue
         assert pkg in ci, (
             f"代码量 {kind} 的宽度要 {path}（{pkg}），ci.yml 里没装它。"
             "缺了会悄悄回退到别的字体，量出来的行宽和渲出来的对不上。")
@@ -805,3 +1556,299 @@ def test_ci的sparse块里不许有注释():
     for ln in _ci_sparse_block():
         assert "#" not in ln, f"sparse-checkout 块里有注释，会被当成路径：{ln.strip()}"
         assert not set("*?[]\\") & set(ln), f"sparse-checkout 只吃目录名：{ln.strip()}"
+
+
+def _cited_english(text: str) -> list[str]:
+    """从 `_copy_why` 里抠出被当成证据引的英文（连着 4 个词以上才算）。
+
+    三个字两个字的碎片（`aura`、`WTA 500`）不算引语——引一个词证明不了
+    任何东西，而短串在几百词的转写里撞上的概率不低，拿它当判据只会误报。
+    """
+    return [m.group(0).strip() for m in
+            re.finditer(r"[A-Za-z][A-Za-z'’,.\- ]{12,}", text or "")
+            if len(m.group(0).split()) >= 4]
+
+
+def _best_match(quote: str, body: str) -> float:
+    """引语和转写里最像的那一段，按**词**比，返回 0~1。"""
+    import difflib
+    words = re.sub(r"[^a-z0-9 ]", " ", quote.lower()).split()
+    hay = re.sub(r"[^a-z0-9 ]", " ", body.lower()).split()
+    if not words or not hay:
+        return 0.0
+    n = len(words)
+    return max(difflib.SequenceMatcher(None, words, hay[i:i + n]).ratio()
+               for i in range(max(1, len(hay) - n + 1)))
+
+
+@pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
+def test_封面引的话必须在片子里(path):
+    """封面是成片的头 1.8 秒，它引的话必须真的在这条片子里。
+
+    踩出来的：这条片子换过源（发布会 → 场上采访），封面文案没跟着换。
+    主标还写着「小时候看她的大满贯决赛」、副标「她先说了两个字：气场」，
+    `_copy_why` 引的是 “I remember watching her … her finals in in the
+    Australian Open” 和 “She definitely has aura”——**两句在新素材里
+    一句都没有**。等于拿一个片子里根本不存在的时刻去换点击，而点进来的人
+    永远等不到那一句。
+
+    **查的是证据，不是措辞。** 封面本来就该是概括而不是照抄——
+    「两个月里两次赢她／比分一模一样」一个字都没和中文台词重合，却完全
+    站得住。所以拦的是 `_copy_why` 里引的**英文原话**：那是作者声称的
+    出处，出处必须存在。第一版按中文子串比，把这条已发的好封面判成了红——
+    典型的「判据宁可窄，不可宽」。
+
+    阈值是量出来的，不是拍的：真引的四句 0.86 / 0.92 / 1.00 / 1.00
+    （允许「your same opponent」被引成「the same opponent」这种小改），
+    编的三句 0.27 / 0.46 / 0.50。0.70 落在中间那道空当里。
+    """
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    cited = _cited_english((spec.get("cover") or {}).get("_copy_why", ""))
+    if not cited:
+        return
+    lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
+    if not lines_path.exists():
+        pytest.skip(f"还没跑过 --stage subs：{lines_path}")
+    body = " ".join(l["en"] for l in json.loads(lines_path.read_text(encoding="utf-8")))
+    for quote in cited:
+        assert (r := _best_match(quote, body)) >= 0.70, (
+            f"{path.name} 的封面注里引了一句片子里没有的话（最像的只有 {r:.2f}）：\n"
+            f"  {quote}\n"
+            "封面引的每一句都要能在 lines.json 里找到。换过源就把封面一起重写；"
+            "要留反面例子当判据，写进 `_copy_history`，那个字段不扫。")
+
+
+def test_封面这道闸真的查到了东西():
+    """零命中和「全都合格」长得一模一样，所以要报出到底查了几句。"""
+    checked = sum(len(_cited_english((json.loads(p.read_text(encoding="utf-8"))
+                                      .get("cover") or {}).get("_copy_why", "")))
+                  for p in _specs())
+    assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
+
+
+def test_背景要先去色再压暗():
+    """垫底那层只压暗不去色，会把背景**变得比画面还艳**。
+
+    账号所有者：「伊埃拉的球衣是绿色的，背景虚化之后感觉背景全是绿的，
+    视觉上不太舒服。」量已发的那条成片：边条饱和度 0.68~0.92，而画面本身
+    只有 0.16~0.23——背景比画面艳三到五倍。
+
+    机理是 `brightness` 走**减法**，而饱和度是 `(max-min)/max`：整体减下去
+    分母跟着变小，于是越压越艳。模糊本来就只剩色相，再一压等于把颜色浓缩了
+    铺满全屏；而且它跟着画面变色，12 秒那帧上边条是深蓝、下边条是绿，
+    一屏两个饱和色打架，正撞上「一屏只留一个强调色」。
+
+    两头都要卡：
+    - **去色不够** → 回到「背景全是绿的」
+    - **压得太狠** → 边条接近纯黑，看着像「没铺满的视频」而不是设计过的版面
+      （`sat=.12 bri=-.40` 那档，12 秒上边条量出来是 `[1 1 1]`）
+    """
+    from tools.build_interview_clip import BG_GRADE
+
+    kv = dict(p.split("=") for p in BG_GRADE.removeprefix("eq=").split(":"))
+    assert float(kv["saturation"]) <= 0.35, (
+        f"背景只压暗不去色（{BG_GRADE}）——压暗是减法，会把饱和度顶上去")
+    assert -0.35 <= float(kv["brightness"]) < 0, (
+        f"背景压暗的量越界（{BG_GRADE}）：不压则背景抢戏，压过头边条变成硬黑条")
+
+
+def test_背景调色只有一处出处():
+    """**一个数写两处必分叉。** 滤镜链里再写一个字面量，改常量就没反应了——
+    而它不报错，只是下一个人改错地方。同 `test_字号只有一处出处`。"""
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    assert body.count("BG_GRADE") == 2, "BG_GRADE 该只有一处定义、一处引用"
+    assert "{BG_GRADE}[bg]" in body, "滤镜链没有引用 BG_GRADE"
+    assert "eq=brightness" not in body, "链子里还留着写死的 eq=brightness"
+
+
+def _ytdlp_calls() -> list[ast.List]:
+    """源码里所有 `["yt-dlp", …]` 那样的参数表。"""
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py")
+                     .read_text(encoding="utf-8"))
+    return [n for n in ast.walk(tree)
+            if isinstance(n, ast.List) and n.elts
+            and isinstance(n.elts[0], ast.Constant) and n.elts[0].value == "yt-dlp"]
+
+
+def test_每一次调yt_dlp都带上cookie和JS():
+    """**两处各配一遍必分叉，而分叉的表现是一句指向错误方向的报错。**
+
+    `yt_download` 早就接上了 `COOKIES` 环境变量，`fetch_words` 一直是裸调的
+    ——没有 `--cookies`，也没有 `--js-runtimes node`。长期没暴露，是因为取字幕
+    以前不用登录也过得去。2026-08-02 起 YouTube 把这条路一起挡了，runner 上
+    就出现了这么一幕：
+
+        已写入 cookies（25 行）                       ← cookie 明明有
+        拿不到自动字幕：Sign in to confirm you're not a bot
+
+    读起来像「cookie 过期了」，而真相是**这一步压根没用它**。判据当时就摆在
+    眼前：同一份 cookie 七十分钟前刚下完 189 MB 的源片，**两个结论对不上就
+    说明是我的读法错了**。
+
+    所以判据不写成「fetch_words 里有 cookie_args」——那只防这一个。
+    按 AST 把每一处 yt-dlp 调用都揪出来，以后新加一处照样拦。
+    """
+    calls = _ytdlp_calls()
+    assert len(calls) >= 2, f"只找到 {len(calls)} 处 yt-dlp 调用，AST 大概没解对"
+    for node in calls:
+        flat = [e.value for e in node.elts if isinstance(e, ast.Constant)]
+        starred = [ast.unparse(e.value) for e in node.elts
+                   if isinstance(e, ast.Starred)]
+        where = f"第 {node.lineno} 行那处 yt-dlp 调用"
+        assert "--js-runtimes" in flat, (
+            f"{where}没带 --js-runtimes——少了它解不了 n challenge，"
+            "而报错长得像「这个视频没有格式」")
+        assert any("cookie_args" in s for s in starred), (
+            f"{where}没带 cookie_args——被挡的时候会报「Sign in to confirm "
+            "you're not a bot」，看着像 cookie 过期，其实是压根没传")
+
+
+def test_订正要看穿说话人标记():
+    """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
+
+    演播室那条片子里 `>>` 有 30 处。原来是 `fix.get(w.strip(".,?!"), w)`，
+    于是 `'>> Alexo.'` 查出来是 `'>> Alexo'`，跟表里的 `Alexo` 对不上——
+    **凡是某个说话人的第一个词，那条订正一律静默失效**。它不报错，只是没生效，
+    而人写了订正就默认它生效了；要等成片烧出来才看得见名字还是错的。
+
+    不能改成「提前把 `>>` 剥掉」：这个标记有用，`_split_sentences` 靠它断
+    「换人说话」。只能让查表看穿它。
+
+    尾标点一并钉住：命中之后原来返回光秃秃的替换词，`'Pigula,'` 的逗号被吃掉
+    ——而逗号是切行的第一依据（先按标点切子句），丢一个就少一个断点。
+    """
+    from tools.build_interview_clip import segment
+
+    words = [(0.5, ">> Alexo."), (1.0, "beat"), (1.5, "Pigula,"), (2.0, "today.")]
+    out = segment(words, 0.0, 9.0, word_fix={"Alexo": "Alex Eala", "Pigula": "Pegula"})
+    en = " ".join(s["en"] for s in out)
+    assert "Alex Eala" in en, f"说话人标记后面那个词没修上：{en}"
+    assert "Alexo" not in en, en
+    assert "Pegula," in en, f"订正把尾标点吃掉了，断句会少一个依据：{en}"
+    assert ">>" not in en, f"说话人标记漏进成品行了：{en}"
+
+
+def test_小红书正文不许超一千字():
+    """账号所有者：「正文超过了 1000 字，然后不能直接复制」。
+
+    小红书正文那一格就是 1000 字上限，超了**粘不进去**——于是推送里那个
+    「复制文案」按钮点了也没用，整条推送的出口等于没有。而它**不报错**：
+    文案照样渲、链接照样发，只有真去粘的人才发现粘不上。
+
+    量出来是采访这条线独有的毛病：赛场之上那十几条正文全在 1000 以内
+    （最长 925），而采访两条是 1161 和 1005——因为采访**把原文整段搬进了
+    正文**。所以正确的修法是提炼，不是放宽这个数。
+
+    闸装在 `split_copy` 里，因为推送正文和复制页共用它——装一处两边都拦得住。
+    """
+    import contextlib
+    import io
+    import sys
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    from push_reel import BODY_MAX, cut_at_tags, split_copy
+
+    # ⚠️ **先把这个数钉住，再拿它去量。** 第一版只写了 `len(body) <= BODY_MAX`
+    # ——反向验证时把上限改成 100000，闸和断言**一起松了**，测试照样绿。
+    # 也就是说它拦得住「文案变长」，拦不住「有人把上限调高」，而后者正是
+    # 超标时最顺手的那个改法。1000 是小红书那一格的**平台限制**，不是我们的
+    # 口味参数：调高它不会让文案粘得进去，只会让这道闸变成摆设。
+    assert BODY_MAX == 1000, (
+        f"BODY_MAX 被改成了 {BODY_MAX}。这是平台定的，不是可调的——"
+        "正文超了要去提炼，不是放宽这个数")
+
+    checked = 0
+    for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
+        with contextlib.redirect_stdout(io.StringIO()):
+            raw = cut_at_tags(f.read_text(encoding="utf-8"))
+        _, body = split_copy(raw)          # 超了它自己就 SystemExit
+        assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
+        checked += 1
+    assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
+
+
+def test_成片太大要走Release而不是撑爆git():
+    """git 单文件硬上限 100 MiB，而这条线的成片能轻松超过。
+
+    上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s）；演播室那条 409 秒
+    按同码率算 **174 MiB**——渲十分钟，然后死在提交那一步。
+    账号所有者定过：「我的基础要求是保证内容和画面质量，文件多大都没关系」
+    「不要砍片长」，所以出路是**换落脚点**（Release 附件，单个 2 GB），
+    不是压码率也不是剪短。
+
+    三件事都要钉，少一件这道兜底就是摆设：
+
+    1. 两条线的门槛必须是**同一个数**——一个数写两处必分叉
+    2. 传完要**把本地那份删掉**，否则 `git add` 照样把它吃进去，
+       Release 白传一趟，提交照样炸
+    3. 这一步必须排在**提交之前**。排在后面的话文件已经进了 index，
+       删不删都晚了——同「复制页那道闸装在发的那一步不是渲的那一步」
+    """
+    import re
+
+    def block(name: str, wf: str) -> str:
+        text = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
+        text = "\n".join(ln for ln in text.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        return text
+
+    iv = block("", "interview-clip.yml")
+    mr = block("", "match-reel.yml")
+    limits = {w: set(re.findall(r"LIMIT=\$\(\((\d+) \* 1024 \* 1024\)\)", t))
+              for w, t in (("interview-clip", iv), ("match-reel", mr))}
+    assert limits["interview-clip"] == limits["match-reel"] != set(), (
+        f"两条线的 Release 门槛对不上：{limits}——一个数写两处必分叉")
+
+    assert "gh release upload" in iv, "采访这条线没有 Release 兜底，成片超 100 MiB 会死在提交那一步"
+    assert re.search(r'rm -f "\$CLIP"', iv), (
+        "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
+    assert iv.index("gh release upload") < iv.index("git commit"), (
+        "Release 那一步排在提交后面了，文件已经进 index，删不删都晚了")
+
+
+def test_分歧率认领要钉在当时那次观测上():
+    """分歧率超闸可以认领，但认领不能变成永久豁免。
+
+    长采访天然会超：这个指标按词比，而 whisper 会把 `um`/`uh`/`you know`/
+    结巴整个丢掉，YouTube 全留着。演播室那条实测 YouTube 1229 词、
+    whisper 1105 词——**光这 124 个词就占 10.1%**，而总分歧才 12.4%。
+    超出闸门的部分几乎全是「whisper 更简」，不是「英文有错」。
+
+    没去改 `TRANSCRIPT_MAX_DISAGREE`：那个数护着所有片子，而沙箱里跑不了
+    whisper（IP 被挡），没法拿存量重新标定——改一个动不了的数等于把所有
+    片子的闸一起放松，还验不了后果。
+
+    四头都要卡：
+    - 不认领 → 拦，**而且报错要说出路**（照抄一行能贴进 spec 的 JSON）
+    - 认领了但实测比认领值还高 → 拦。这是关键的一条：它把认领钉在当时那次
+      观测上，以后真变差了闸会重新响，而不是「认领过一次就永久放行」
+    - 高过天花板 → 拦。那个量级不是虚词能解释的
+    - 认领得当 → 放行
+    """
+    from tools.build_interview_clip import (
+        TRANSCRIPT_DISAGREE_CEILING,
+        _check_disagree_claim,
+    )
+
+    path = ROOT / "x.md"
+    with pytest.raises(SystemExit) as e:
+        _check_disagree_claim({}, 0.124, path)
+    assert "transcript_disagree_ok" in str(e.value), "报错没说出路"
+
+    with pytest.raises(SystemExit, match="比认领的"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.124, "why": "看过"}}, 0.150, path)
+
+    with pytest.raises(SystemExit, match="天花板"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.99, "why": "看过"}},
+            TRANSCRIPT_DISAGREE_CEILING + 0.01, path)
+
+    # 光写个 rate 不写 why 也不算——认领要留下判据，不是填个数
+    with pytest.raises(SystemExit):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.2}}, 0.124, path)
+
+    _check_disagree_claim(
+        {"transcript_disagree_ok": {"rate": 0.124, "why": "逐处看过：差的全是虚词"}},
+        0.124, path)

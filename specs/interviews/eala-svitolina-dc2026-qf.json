@@ -64,6 +64,10 @@
     "伊埃拉"
   ],
   "column": "赛后开麦",
+  "event": "2026 华盛顿 WTA500 1/4 决赛",
+  "winner": "伊埃拉",
+  "_winner_why": "顶栏要印「谁 比分 谁」，而 `push.matchup` 是按签位排的、**不保证胜者在前**（`@wta` 的标题就这样，我照着推过一次推错了）。所以赢家必须是**写下来的数据**，不是排版顺序推出来的。名字要和 `matchup` 里的一字不差——查译名表，别手打（`player_zh('Alexandra Eala')` 是「伊埃拉」，旧译「埃亚拉」写进去会被闸拦住）。",
+  "_event_why": "顶栏第一行。⚠️ **和 `push.event` 不是一回事**：那个为了把推送标题压进 20 字位是故意留空的，这儿没有长度限制，写全。\n⚠️ **轮次写「1/4 决赛」不写「八强」**（账号所有者 2026-08-01 纠正）——「八强」说的是打进这一轮的那八个人，「1/4 决赛」说的才是这一场比赛本身，顶栏要答的是后者。\n⚠️ **这条 spec 的 `zh` 和 `en_fixed` 是按旧字号（EN 40）那版 56 行写的。** 字号改成 EN 46 之后断行变成 69 行，`--stage subs` 会在「中文 56 行、英文 69 行对不上」那道闸停住，`en_fixed` 的行号也跟着失准。已发的那一版不重渲（账号所有者：「不补了」），所以这里不重排中文；真要重跑这条，先按 69 行重写 `zh`、按新行号重挂 `en_fixed`。",
   "cover": {
     "frame_at": 337.0,
     "_why": "她举双手谢场那一格：红色 DC Open 话筒旗（自证是官方场上采访）、烧录的 EALA 名条（自证是谁）、满场观众和球场（自证在哪儿）、双手举起在笑（有情绪）——四要素在同一帧里，不用另外交代。比她说话的中景强。",
@@ -80,6 +84,9 @@
     "url": "https://www.wtatennis.com/news/4551496/eala-draws-osaka-in-dc-semis-after-overcoming-svitolina-in-berlin-repeat",
     "_why": "WTA 官网这篇战报把这段场上采访的最后一问**人工转写**抄了进去（原文写明 `Eala said in her on-court interview`）——比任何一份 ASR 都硬，而且不用联网就能比。一比就抓到 ASR 的一处真错：`respect **to** her` 其实是 `respect **for** her`，见 en_fixed 的 47。⚠️ 它只覆盖第 43–50 行那一段，**别的行仍然只有 ASR 一个源**——覆盖到哪儿由 review_sheet 自己算并标出来，别在这儿手写行号，切行一改就对不上了。\n⚠️ **补记**：faster-whisper 在这一处也听的是 `to`（见 transcript_diff 的 `for → to`）。也就是说**两份 ASR 都听 `to`，只有 WTA 战报的人工转写写 `for`**。保留 `for her`——赛事官方的人工转写 + 标准英语搭配，两条都指向它；但记明白这不是「机器纠错」，是**人工源压过了两份机器**。",
     "text": "She's such an accomplished player, and I think she's made waves on and off the tennis court for so many reasons. There's so much respect for her for that, and you know I'm really excited. I haven't had much time to think about it, but I will definitely think about it after I get off court."
+  },
+  "caption_gaps_ok": {
+    "431.6-434.9": "⚠️ **这一处是真漏了，不是「没问题」。** 片内 137.8–141.1 秒：主持人刚说完「话筒交给你」，镜头切到看台上举菲律宾国旗的球迷，她接过话筒开口——而成片上这 3.2 秒一个字幕都没有。逐帧看过：140.4 秒和 141.4 秒她嘴是张开的，明确在说话（`gapwall2` 那组截图）。\n**为什么两道旧闸都没拦住**：YouTube 的自动字幕在这一段连一个事件都没有（不只是没有词，`[applause]` / `[cheering]` 也没有），而 `verify_transcript` 比的是「两份 ASR 说的词对不对得上」、`check_human_quote` 比的是「战报抄走的那几句」——**没有词就没有分歧，空白反而让分歧率更好看**。第二份 ASR 也钉死在 `small.en`，英语专用模型对着非英语同样只给空白。\n**很可能是她换成了菲律宾语／他加禄语**（这一段的对象就是菲律宾球迷）——但**这是推断，没有证据**：`small.en` 在这几秒里也是空白，而「没人说话」和「不是英语」在它这儿长得一模一样。**不上多语种模型去猜**（账号所有者：「不要多语种」）；真要补这一句，是人听完再决定。\n**已发出去的那一版（run 30692608579）带着这个洞，账号所有者定了不补**（2026-08-01：「不补了」）——补它要重渲重推微信，而微信那条消息已经发出去了，收不回来。所以这里销的账是「知道、看过、决定不动」，**不是「这里没问题」**。闸已经装上，下一条片子再出现空白会当场被拦。"
   },
   "transcript_verified": true,
   "_transcript_note": "⚠️ **还没验完。** 这份英文来自 YouTube 自动字幕——**这两条视频没有人工字幕**：`--list-subs` 只报 automatic captions，且拿一条已知有人工字幕的 TED 片（5MuIMqhT8DM）做过对照、它正确报出了人工语种表，所以这个「没有」是真空不是探测坏了。YouTube 自己的 en / en-orig 逐词完全一致（605 词 0 处差异），是同一份 ASR 换了个名字，对不了。\n**已有两个独立的源**：WTA 战报里的人工引语（不联网，本地跑，只覆盖第 29–33 行，已定夺 #31）；faster-whisper 第二份 ASR（覆盖全段，**只有 runner 上跑得动**）。\n**流程**：跑 --stage sheet 出核对表（每行带可点的源片时刻），人听 suspect 里挂的那几处，改对的写进 en_fixed、听下来本来就对的写进 suspect_ok，再把这个字段置 true。挂着账没销就置 true 的话，--stage render 照样拒绝出片。",

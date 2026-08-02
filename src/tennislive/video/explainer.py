@@ -717,7 +717,587 @@ _LUCKY_LOSER_WALL_DIAGRAM = """
 """
 
 
+#: 「保护排名」到底替你做什么、不替你做什么。这件事没有任何一张照片能表达——
+#: 它是一张权限表，不是一个瞬间。两栏对照，只给"能用"那一栏上品牌绿。
+_PR_SCOPE_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">它替你报名，别的一概不管</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝可以用它　空格＝一律按真实排名</text>
+
+  <text x="245" y="156" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">能用</text>
+  <text x="655" y="156" text-anchor="middle" fill="#9fb4aa"
+        font-size="30" font-weight="800">不能用</text>
+
+  <rect x="70" y="182" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="230" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名正赛</text>
+  <rect x="70" y="272" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="320" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名资格赛</text>
+  <rect x="70" y="362" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="410" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">特殊豁免位</text>
+
+  <rect x="480" y="182" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="230" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">种子</text>
+  <rect x="480" y="272" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="320" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">幸运落败者顺位</text>
+  <rect x="480" y="362" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="410" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">你的世界排名</text>
+
+  <text x="450" y="490" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">ATP 规则书原话：for Entry, Not Seeding</text>
+</svg>
+"""
+
+#: 26 周为什么不能拆。两截各自量、各自不够，而合计比门槛还多——
+#: 这个"加起来够了却一分不算"只有并排画出来才一眼看得懂。
+#: 横轴 0–32 周映射到 x 150–780，即 1 周 ≈ 19.7px；26 周落在 x=662。
+_PR_GAP_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="48" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">26 周必须是连着的一段</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">虚线＝门槛　中网那两场把它切成了两截</text>
+
+  <text x="60" y="162" fill="#9fb4aa" font-size="27" font-weight="700">温网结束 → 中网复出</text>
+  <rect x="60" y="180" width="211" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="291" y="236" fill="#e7f3ec" font-size="30" font-weight="800">10.7 周</text>
+
+  <text x="60" y="322" fill="#9fb4aa" font-size="27" font-weight="700">中网结束 → 多哈复出</text>
+  <rect x="60" y="340" width="357" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="437" y="396" fill="#e7f3ec" font-size="30" font-weight="800">18.1 周</text>
+
+  <line x1="572" y1="150" x2="572" y2="446" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="572" y="484" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">26 周</text>
+
+  <text x="450" y="538" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">两截加起来 28.8 周，一分不算</text>
+</svg>
+"""
+
+
+#: 手术之后那个春天，德约科维奇的排名一路往下。照片拍不出「排名」，
+#: 而这条片子的第一段全靠这个数字的分量——12 年来第一次跌出前 20。
+_MIDDLE_FALL_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">手术之后的那个春天</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">他的世界排名，2018 年 2 月到 5 月</text>
+
+  <polyline points="120,160 300,160 300,250 520,250 520,340 780,340"
+            fill="none" stroke="#c6f65a" stroke-width="7"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="120" cy="160" r="11" fill="#c6f65a"/>
+  <circle cx="300" cy="250" r="11" fill="#c6f65a"/>
+  <circle cx="520" cy="340" r="11" fill="#c6f65a"/>
+  <circle cx="780" cy="340" r="13" fill="#c6f65a"/>
+
+  <text x="120" y="140" fill="#e7f3ec" font-size="29" font-weight="800">第 14</text>
+  <text x="300" y="300" fill="#e7f3ec" font-size="29" font-weight="800">第 18</text>
+  <text x="540" y="392" fill="#e7f3ec" font-size="29" font-weight="800">第 22</text>
+
+  <text x="120" y="440" fill="#9fb4aa" font-size="26" font-weight="700">2 月动刀</text>
+  <text x="272" y="440" fill="#9fb4aa" font-size="26" font-weight="700">马德里</text>
+  <text x="492" y="440" fill="#9fb4aa" font-size="26" font-weight="700">罗马</text>
+
+  <text x="450" y="496" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">上一次跌出前 20，是 2006 年 10 月</text>
+</svg>
+"""
+
+#: 两条轨迹并排。这是整条片子的论点，而且**没有任何一张照片能表达**——
+#: 它要同时呈现两个人、四年时间，以及「中段重叠」这件事本身。
+#: 一屏一个强调色：回来的那条给品牌绿，没回来的那条留中性白。
+_MIDDLE_SAME_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">两条路，前半段一模一样</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">横轴＝手术之后过了多久</text>
+
+  <rect x="96" y="126" width="212" height="286" rx="14"
+        fill="rgba(231,243,236,.10)" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+  <text x="202" y="176" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">这一段</text>
+  <text x="202" y="214" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">分不出来</text>
+
+  <polyline points="120,340 200,398 292,376 470,254 700,220 812,220"
+            fill="none" stroke="#c6f65a" stroke-width="7"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="612" y="166" fill="#c6f65a" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="612" y="202" fill="#c6f65a" font-size="26" font-weight="700">拿了温网</text>
+
+  <polyline points="120,340 200,398 294,380 434,326 566,356 700,414 812,420"
+            fill="none" stroke="rgba(231,243,236,.62)" stroke-width="7"
+            stroke-dasharray="14 10" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="640" y="326" fill="#e7f3ec" font-size="30" font-weight="800">锦织圭</text>
+  <text x="640" y="362" fill="#9fb4aa" font-size="26" font-weight="700">再没回去</text>
+
+  <text x="112" y="466" fill="#9fb4aa" font-size="26" font-weight="700">动刀</text>
+  <text x="424" y="466" fill="#9fb4aa" font-size="26" font-weight="700">半年</text>
+  <text x="676" y="466" fill="#9fb4aa" font-size="26" font-weight="700">三四年</text>
+</svg>
+"""
+
+
+#: 老规矩里的「打够了就可以少打」——2022 版 ATP 规则书 1.08，逐字：
+#: `A player's number of ATP Tour Masters 1000 commitment tournaments shall be
+#: reduced by one (1) tournament for reaching each of the following milestones:
+#: 600 matches / 12 years of service / 30 years of age`，接着一句
+#: `If all three (3) conditions are met then the player has a complete exemption`。
+#: **注意最后一档不是 8−3＝5，是直接归零**——这个跳跃是文字列不出来的，
+#: 三根条一比就看见：前两档只少一站，第三档整条空掉。
+#: 几何：横轴 0–8 站映射到 x 250–810，即 1 站 = 70px。
+_EXEMPTION_LADDER_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">打够了，就可以少打</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">三条里程碑：正赛 600 场　服务 12 年　年满 30 岁</text>
+
+  <text x="250" y="136" fill="#9fb4aa" font-size="24" font-weight="700">本来要打的 8 站</text>
+
+  <text x="60" y="196" fill="#9fb4aa" font-size="28" font-weight="700">达成 1 条</text>
+  <rect x="250" y="154" width="500" height="62" rx="10" fill="rgba(231,243,236,.08)"
+        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
+  <rect x="250" y="154" width="438" height="62" rx="10" fill="rgba(231,243,236,.32)"/>
+  <text x="870" y="196" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">7 站</text>
+
+  <text x="60" y="294" fill="#9fb4aa" font-size="28" font-weight="700">达成 2 条</text>
+  <rect x="250" y="252" width="500" height="62" rx="10" fill="rgba(231,243,236,.08)"
+        stroke="rgba(231,243,236,.22)" stroke-width="2"/>
+  <rect x="250" y="252" width="375" height="62" rx="10" fill="rgba(231,243,236,.32)"/>
+  <text x="870" y="294" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">6 站</text>
+
+  <text x="60" y="392" fill="#c6f65a" font-size="28" font-weight="800">三条全占</text>
+  <rect x="250" y="350" width="500" height="62" rx="10" fill="none"
+        stroke="#c6f65a" stroke-width="3" stroke-dasharray="12 9"/>
+  <text x="870" y="392" text-anchor="end" fill="#c6f65a"
+        font-size="30" font-weight="800">0 站</text>
+
+  <text x="450" y="470" text-anchor="middle" fill="#9fb4aa"
+        font-size="25" font-weight="700">2023 年起 ATP 取消了这套，只有 2022 年底前挣到的人还留着</text>
+  <text x="450" y="532" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">可它管的是「用不用报名」</text>
+</svg>
+"""
+
+
+#: 缺席强制大师赛的奖金池扣减阶梯（ATP 2026 规则书 1.08.H.1.f 的那张表）。
+#: 照片拍不出「罚了多少」，而这条片子的全部落点就是那个数。
+#: 深色＝无论如何都要扣的，浅色＝到场做推广活动能拿回来的——规则书给的三档是
+#: 缺 1 站 25%→12.5%（做 1 次）、缺 2 站 50%→25%（做 2 次）、缺 3 站 75%→50%，
+#: 缺 4 站及以上一律 100% 且没有减免。**浅色那截越往下越短，到第四行归零**，
+#: 这一层「越躲越买不回来」是文字列不出来的，画出来才一眼看见。
+#: 几何：横轴 0–100% 映射到 x 210–730，即 1% = 5.2px。
+_MANDATORY_BILL_DIAGRAM = """
+<svg viewBox="0 0 900 570" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">缺席强制赛，奖金池扣多少</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">深色＝一定要扣的　浅色＝到场做推广能拿回来的</text>
+
+  <text x="60" y="212" fill="#9fb4aa" font-size="28" font-weight="700">缺 1 站</text>
+  <rect x="210" y="170" width="65" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="275" y="170" width="65" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="212" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−25%</text>
+
+  <text x="60" y="296" fill="#9fb4aa" font-size="28" font-weight="700">缺 2 站</text>
+  <rect x="210" y="254" width="130" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="340" y="254" width="130" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="296" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−50%</text>
+
+  <text x="60" y="380" fill="#9fb4aa" font-size="28" font-weight="700">缺 3 站</text>
+  <rect x="210" y="338" width="260" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <rect x="470" y="338" width="130" height="62" rx="10" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.30)" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="380" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−75%</text>
+
+  <text x="60" y="464" fill="#9fb4aa" font-size="28" font-weight="700">缺 4 站</text>
+  <rect x="210" y="422" width="520" height="62" rx="10" fill="rgba(231,243,236,.30)"/>
+  <text x="870" y="464" text-anchor="end" fill="#e7f3ec"
+        font-size="30" font-weight="800">−100%</text>
+
+  <text x="450" y="548" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">排名那一笔记 0，推广活动一分赎不回</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "mandatory-1000": (
+        (
+            "now",
+            "这一周",
+            "五个大师赛全赢，第六个没去",
+            "先看这一周。八月一号，加拿大大师赛在蒙特利尔开打，签表上没有辛纳，"
+            "没有德约科维奇，也没有阿尔卡拉斯——男子网球最大的三个名字，一个都不在。"
+            "辛纳今年把打过的每一个大师赛都赢了：印第安维尔斯、迈阿密、蒙特卡洛、"
+            "马德里、罗马，五个，一个不落。他是网球史上第一个赢下赛季前四站大师赛的人，"
+            "也是第一个拿到五连冠的。三周前他刚在温网卫冕。第六个大师赛，他没去。"
+            "五月的法网次轮，他在场上抽了筋——那是这套赛程压在身上的分量。",
+            "assets/explainer/masters-format/sinner.jpg",
+            "FFT / Roland-Garros 官方 · 2026 年 5 月 28 日，法网次轮，辛纳抽筋后独自站在场上",
+            (
+                "2026 五个大师赛 他五个全赢",
+                "第六个 蒙特利尔 他没去",
+                "图为 5 月法网次轮 他抽了筋",
+            ),
+        ),
+        (
+            "rule",
+            "规则书",
+            "自动，而且不可申诉",
+            "不去要付什么。大师赛是强制的，一年八站，规则书里管这叫 Mandatory。"
+            "二〇二六年 ATP 官方规则书第八章写着：从大师赛正赛退赛的球员，"
+            "一律记一次排名处罚——原话是，处罚自动生效，而且不可申诉。"
+            "这里有个差别很多人搞反了：五百赛是有出路的，完成推广活动、"
+            "停赛满三十天、或者符合育儿身份豁免，都能把这次处罚拿掉；"
+            "大师赛这几条一条都没有。伤病本身也免不掉它。"
+            "德约科维奇今年三十九岁。七月的温网，他和阿利亚西姆在八强打了五小时"
+            "十五分钟，是这项赛事历史上最长的一场八强战；他赢了，然后成为公开赛"
+            "年代第二年长的温网四强，只排在一九七四年的罗斯沃尔后面。"
+            "这样一个人，也没去蒙特利尔。",
+            "assets/explainer/masters-format/djokovic.jpg",
+            "AELTC / Jon Super · 2026 年 7 月 8 日，温网八强，德约科维奇胜阿利亚西姆后",
+            (
+                "大师赛 一年 8 站 强制",
+                "原话 自动 不可申诉",
+                "39 岁打进温网四强 他也没去",
+            ),
+        ),
+        (
+            "waiver",
+            "老规矩",
+            "打够了，就可以少打",
+            "那有没有人可以不打。有——但那是一套已经取消了的老规矩。"
+            "二〇二二年版规则书第一点零八条写着三条里程碑：正赛单打满六百场、"
+            "十二年服务、年满三十岁，都以承诺年一月一号为准；每达成一条，"
+            "强制大师赛就少打一站。三条全占，条文的原话是完全豁免——"
+            "注意这一档不是八减三等于五，是直接归零，一站都不用打。"
+            "服务年的算法也写死了：第一个打满十二站有积分赛事的自然年，算第一年。"
+            "后来 ATP 把这套换成了现在的奖金池扣减制，二〇二二年十二月三十一号"
+            "之后就不再发新的；在那之前已经挣到、并且选择保留的人，"
+            "继续按二〇二二年那本书走。德约科维奇按这三条早就够了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "600 场 12 年 30 岁 各减一站",
+                "三条全占 直接归零",
+                "2023 年起取消 老人还留着",
+            ),
+            _EXEMPTION_LADDER_DIAGRAM,
+        ),
+        (
+            "list",
+            "名单",
+            "它管的是报不报名，不管报了不去",
+            "那为什么这次救不了他。因为豁免管的是「你用不用报名」，"
+            "不管「你报了名又不去」。规则书第九章第三节，承诺球员和非承诺球员"
+            "两段里写着同一句话：一旦你被接受进正赛——直入、资格赛出线、"
+            "特殊豁免、幸运落败者，或者接受了一张外卡——这一站的成绩就计入排名，"
+            "不管你打没打。同一段还给出唯一的出口：从来没在原始报名名单上的那一站，"
+            "不记零，而是让你其他成绩多算一个。"
+            "阿尔卡拉斯今年一月还在墨尔本举奖杯，之后右手腕伤了，法网、温网、"
+            "蒙特利尔，他一站的名单都没进过——所以这些站在他排名里不记零。"
+            "辛纳和德约科维奇都在蒙特利尔的报名名单上，然后退了赛。"
+            "想省下那个零，得一开始就别报。",
+            "assets/explainer/mandatory-1000/alcaraz_ao_2026.jpg",
+            "Tensionado · Wikimedia Commons · CC0 · 2026 年 1 月，阿尔卡拉斯澳网夺冠",
+            (
+                "被接受进正赛 打没打都记",
+                "没进过名单 那一站不记 0",
+                "阿尔卡拉斯没报 辛纳德约报了",
+            ),
+        ),
+        (
+            "bill",
+            "账单",
+            "一共三笔，最疼的那笔赎不回",
+            "那具体是哪几笔。第一笔是排名：那一站记零分，这一笔不可赎回。"
+            "第二笔是奖金池：大师赛和年终总决赛共用一个两千一百五十万美元的固定奖金池，"
+            "缺一站扣百分之二十五，缺两站扣一半，缺三站扣四分之三，缺四站以上清零。"
+            "这一笔可以赎——到现场做一次推广活动，扣减从百分之二十五减到十二点五。"
+            "但规则书在同一段里写死了：推广活动不解除排名处罚，而且最多只能赎回二十万美元。"
+            "第三笔是罚款，只罚周五截止之后才退的，他们提前一周就说了，这一笔是零。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "排名 记 0 不可赎",
+                "奖金池 缺 1 站 −25%",
+                "到场做推广 减到 −12.5%",
+            ),
+            _MANDATORY_BILL_DIAGRAM,
+        ),
+        (
+            "zero",
+            "多伦多",
+            "这个零，顶掉去年那个零",
+            "那这个零有多疼。去年的加拿大站在多伦多，这三个人也都没去，那一站记的也是零。"
+            "而世界排名是五十二周滚动的：今年这一站的成绩顶掉去年这一站的成绩，"
+            "零顶掉零——这次的排名处罚落在辛纳身上，一分不差。"
+            "不过判去年那次，得用去年那本书。二〇二五年版的规则书里，这一条后面"
+            "还跟着半句：并且停赛下一站大师赛。那半句在实际操作里可以申诉掉——"
+            "辛纳去年退了多伦多，照样打了辛辛那提，还打进决赛。"
+            "而到了二〇二六年这一本，那半句干脆没了；今年反倒新开了两个豁免口，"
+            "育儿身份，和连着缺两站以上可以申请抹掉零分，这两条去年一条都没有。"
+            "在大家一起退赛的这一年，条文本身比去年松。",
+            "assets/explainer/mandatory-1000/sobeys_stadium_2025.jpg",
+            "加拿大网球协会官方 · 2025 年加拿大大师赛，多伦多 Sobeys Stadium 中心球场航拍",
+            (
+                "去年记 0 今年还是 0 一分不差",
+                "2025 版还写着 停赛下一站",
+                "2026 版这半句没了",
+            ),
+        ),
+        (
+            "stand",
+            "另一个 39 岁",
+            "一个用掉外卡来了，一个撤了名字",
+            "加拿大人是做过努力的。去年那站在温网结束后两周就开打，今年他们把开赛"
+            "推到了三周之后，就是为了给球员留出恢复的时间，赛事方原本预计今年的"
+            "退赛会少一些。结果一样。赛事总监泰特罗在声明里说：我们尊重他们的决定，"
+            "也理解在这样的赛程下，球员的健康必须放在第一位；但这几年退赛的频率，"
+            "对这项运动来说是个更大的问题——大师赛是巡回赛的旗舰，"
+            "球迷理应看到世界上最好的球员在场上。"
+            "这一站还来了另一个三十九岁的人。孟菲尔斯，世界第二百二十六，"
+            "今年是他的告别赛季，靠一张外卡进的正赛，第十五次打加拿大站。"
+            "他说，能最后一次回来，我很高兴。"
+            "两个同岁的人，一个用掉一张外卡来了，一个把名字从签表上撤了。"
+            "这不是谁对谁错——是「强制」这两个字，标错了价。",
+            "assets/explainer/mandatory-1000/monfils_montreal_2026.jpg",
+            "加拿大大师赛官方 · 2026 年 8 月，蒙特利尔，孟菲尔斯抵达赛场",
+            (
+                "今年推到温网后 3 周 还是没来",
+                "孟菲尔斯 39 岁 世界第 226",
+                "告别赛季 靠外卡进正赛",
+            ),
+            None,
+            "是罚得太轻，还是这两周本来就太长？",
+        ),
+    ),
+    "comeback-middle": (
+        (
+            "knife",
+            "动刀",
+            "三十岁的德约科维奇，决定开刀",
+            "先看二〇一八年一月。德约科维奇在澳网第四轮输给郑泫，那是他肘伤"
+            "反复之后的第一次复出，打得很挣扎。半个月后他做了一个决定：动刀。"
+            "手术在二月，动的是右肘。那之前他已经因为这个肘停了半年，"
+            "整个二〇一七年下半年都没打。",
+            "assets/explainer/comeback-middle/djokovic_ao_2018.jpg",
+            "Joshua Sadli · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 1 月 15 日，墨尔本",
+            (
+                "2017 下半年 停了半年",
+                "2018 年 2 月 右肘手术",
+                "手术前已是 12 座大满贯",
+            ),
+        ),
+        (
+            "spring",
+            "那个春天",
+            "输给世界第 109，跌出前 20",
+            "然后是那个春天。三月印第安维尔斯，他第二轮输给世界第一百零九位的"
+            "丹尼尔太郎；四月巴塞罗那，第二轮输给克利赞；五月马德里，第二轮输给"
+            "埃德蒙德，排名跌到第十八，是十二年来最低。罗马之后再跌到第二十二——"
+            "上一次跌出前二十，还是二〇〇六年十月。六月法网八强，他输给了"
+            "世界第七十二位的切基纳托。那时候几乎所有人都认为，他回不来了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "印第安维尔斯 负世界第 109",
+                "马德里之后 跌到第 18",
+                "罗马之后 第 22",
+            ),
+            _MIDDLE_FALL_DIAGRAM,
+        ),
+        (
+            "five-months",
+            "五个月后",
+            "德约科维奇拿了温网，又拿美网",
+            "手术之后第五个月，温网决赛，他六比二、六比二、七比六击败安德森，"
+            "那是他两年来第一个大满贯。两个月后美网决赛，六比三、七比六、六比三"
+            "击败德尔波特罗。同一年年底，他回到世界第一。从跌出前二十到重回第一，"
+            "中间隔了七个月。",
+            "assets/explainer/comeback-middle/djokovic_usopen_2018.jpg",
+            "Carine06 · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 8 月 28 日，美网",
+            (
+                "温网决赛 6-2 6-2 7-6",
+                "美网决赛 6-3 7-6 6-3",
+                "同年年底 重回世界第 1",
+            ),
+        ),
+        (
+            "another",
+            "另一个春天",
+            "同一个部位，几乎同一台手术",
+            "现在换一个人。二〇一九年十月，锦织圭做了右肘手术，清掉两块骨刺——"
+            "和德约科维奇同一个部位，几乎同一台手术。他当时世界排名第八，"
+            "生涯最高到过第四，打进过美网决赛。这台手术让他停了十个月。"
+            "复出前他感染了新冠，复出后又伤了肩。",
+            "assets/explainer/shang-nishikori/nishi_2014.jpg",
+            "Tennis.jp 现场报道 · 2014 年美网男单决赛，锦织圭",
+            (
+                "2019 年 10 月 清两块骨刺",
+                "手术时 世界第 8",
+                "停了 10 个月",
+            ),
+        ),
+        (
+            "same",
+            "中段",
+            "锦织圭也曾看起来要回来了",
+            "关键在后面。二〇二一年，锦织圭打进法网第四轮、东京奥运会八强、"
+            "华盛顿四强——那是他两年来第一个巡回赛四强，看起来真的要回来了。"
+            "奥运八强那场的对手，正是德约科维奇：六比二、六比〇，七十一分钟。"
+            "两条路在那天碰了一下，然后各走各的。半年后锦织圭做了左髋手术，"
+            "整个二〇二二赛季报销，直到二〇二三年六月才重返巡回赛，再没回到前列。"
+            "所以分岔不在肘：德约科维奇身上只有那一处，而锦织圭那之后还有新冠、"
+            "肩伤、髋部手术。两个春天摆在一起看，前半段真的一模一样——"
+            "当时谁也分不出来，包括他们自己。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "2021 年 奥运八强 负德约科维奇",
+                "2022 年 1 月 左髋手术",
+                "分岔不在肘 在肘之外",
+            ),
+            _MIDDLE_SAME_DIAGRAM,
+        ),
+        # 落到一个**正在发生**的例子上。账号所有者定的口径：**只陈述事实和现状**，
+        # 不给判断、不给倾向——因为这条片子的全部结论就是「中段判断不了」，
+        # 那么对一个还在中段里的人下判断，等于自己拆自己的台。
+        (
+            "now",
+            "这一年",
+            "一年之后，郑钦文在打资格赛",
+            "最后说一个正在发生的。二〇二五年七月，郑钦文做了右肘手术，"
+            "清掉一块压迫神经的游离碎骨。手术之前一个月，她的世界排名是第四，"
+            "生涯最高。到二〇二六年八月，整整一年过去，她排在第一百二十三位。"
+            "八月一日，多伦多资格赛首轮，她三比六、四比六输给世界第七十八位的"
+            "塔拉鲁迪——那是她二〇二三年一月以来第一次打资格赛。"
+            "以上就是全部的事实。她在哪一段，现在没有人知道。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文",
+            (
+                "2025 年 7 月 右肘手术",
+                "术前第 4 一年后第 123",
+                "8 月 1 日 资格赛首轮出局",
+            ),
+            None,
+            "一年过去了，你觉得郑钦文还能打回来吗？",
+        ),
+    ),
+    "protected-ranking": (
+        (
+            "now",
+            "一年之后",
+            "世界第 123，够不上美网那条线",
+            "先看现在。郑钦文的世界排名是第一百二十三。美网正赛的直入线七月二十号"
+            "锁定，大约在前一百零四，她差了将近二十位。七月十七号雅典站八强，"
+            "四比六、四比六负于克雷吉茨科娃，那是锁线之前最后的机会。十天后她"
+            "出现在华盛顿的签表里，靠的是一张外卡。而一年前的六月，她是世界第四。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文负克雷吉茨科娃",
+            (
+                "世界第 123 生涯最高第 4",
+                "美网直入线 约前 104",
+                "华盛顿那张签表 靠外卡",
+            ),
+        ),
+        (
+            "scope",
+            "保护什么",
+            "它替你报名，不替你保排名",
+            "伤停这么久，规则里不是有保护排名吗。有，但这四个字翻拧了。"
+            "ATP 规则书正文里它的名字是 Entry Protection，进赛保护。"
+            "它给你的是一张用来报名的旧排名：报正赛、报资格赛、占特殊豁免位，都算数。"
+            "剩下的一概不管——不算种子，不算幸运落败者的顺位，更不会让你的世界排名"
+            "停下来。规则书自己有一行标题，写着 for Entry, Not Seeding。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "英文叫 Entry Protection",
+                "报名能用 那个旧排名",
+                "真实排名 该掉照掉",
+            ),
+            _PR_SCOPE_DIAGRAM,
+        ),
+        (
+            "threshold",
+            "门槛",
+            "先得彻底停下来，26 周",
+            "那她为什么没有这张凭证。因为门槛在前面：WTA 要求连续二十六周不参加"
+            "任何比赛，ATP 那边写的是六个月，而且两家都把表演赛算在里头。"
+            "二十六周就是半年——你得整整半年一场都不打，才够得着它。",
+            "assets/explainer/zheng-eala/zheng_clay.jpg",
+            "账号所有者提供 · 郑钦文反手随挥",
+            (
+                "WTA 连续 26 周",
+                "ATP 6 个月",
+                "表演赛也算在里头",
+            ),
+        ),
+        (
+            "gap",
+            "断在哪",
+            "28.8 周，却一分不算",
+            "她停了多久。温网之后到二月复出多哈，中间只打过一站：二零二五年九月的"
+            "中网，两场球，第二场对诺斯科娃还中途退了赛。就是这一站，把一整段停赛"
+            "切成了两半——前面十点七周，后面十八点一周。两截加起来二十八点八周，"
+            "比门槛还多出两周多。可条文只认连着的一段，两截各自都不够。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "中网只打了 2 场",
+                "前段 10.7 周 后段 18.1 周",
+                "合计 28.8 周 一分不算",
+            ),
+            _PR_GAP_DIAGRAM,
+        ),
+        (
+            "cost",
+            "代价",
+            "它保护的是彻底停下来的人",
+            "把条文一条条对下来，她够不上这张凭证。所以过去这一年，排名一路往下，"
+            "没有任何机制替她刹住。有一点要说清楚：她本人到底申请过没有、"
+            "有没有拿到过豁免，都没有公开记录，上面这些是照着规则算出来的。"
+            "但规则本身写得很直白——它保护彻底停下来的人。九月硬撑着打的那两场，"
+            "一年后的价码是美网正赛的一个位置。",
+            "assets/explainer/wildcard/zheng_athens_2026.jpg",
+            "athens-open.com 官方图库 Day 5 · 2026 雅典站第二轮，郑钦文正手击球",
+            (
+                "按条文算 她够不上",
+                "排名一路掉 没有刹车",
+                "价码是一个正赛名额",
+            ),
+            None,
+            "硬撑着打完那两场，和彻底停满半年，换你会怎么选？",
+        ),
+    ),
     "lucky-loser": (
         (
             "this-week",
@@ -2481,6 +3061,26 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "mandatory-1000": {
+        "hook": (
+            "辛纳今年把打过的五个大师赛全赢了，第六个没去——大师赛是强制的。\n"
+            "ATP 规则书写着：处罚自动生效、不可申诉。可算下来，那一笔是零。"
+        ),
+        "tags": ("网球", "网球时差", "辛纳", "大师赛", "网球冷知识"),
+    },    "comeback-middle": {
+        "hook": (
+            "同一个部位、几乎同一台手术，一个五个月后拿了温网，一个再没回去。\n"
+            "而在中段那几个月，两条路长得一模一样——郑钦文现在正走在那一段里。"
+        ),
+        "tags": ("网球", "网球时差", "德约科维奇", "郑钦文", "网球冷知识"),
+    },
+    "protected-ranking": {
+        "hook": (
+            "「保护排名」这四个字翻拧了——ATP 规则书里它叫 Entry Protection，进赛保护。\n"
+            "它替你报名，一个字都不保你的排名，而且只保护彻底停下来的人。"
+        ),
+        "tags": ("网球", "网球时差", "郑钦文", "保护排名", "网球冷知识"),
+    },
     "lucky-loser": {
         "hook": (
             "资格赛输掉的人，可以因为别人退赛递补进正赛——这个身份叫幸运落败者。\n"
@@ -2695,6 +3295,38 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "mandatory-1000": {
+        "topic": "强制赛：不去的代价，是一个可以算出来的数",
+        "question": "强制赛，为什么可以不去？",
+        "narration": "强制赛，为什么可以不去？规则书写着自动生效、不可申诉——"
+                     "可算下来，那一笔罚在世界第一身上是零。",
+        "gloss": "Zero-Pointer = 罚成零分",
+        # 封面这张没有任何一屏在用，借不到出处，所以自己写一行。
+        # 选它是因为**原图 1121×1495 正好 3:4**，铺满 1.0x，一个像素的垫层都不用；
+        # 而且它就是这条片子的起点：三周前他在这儿举起奖杯，这一周他没去蒙特利尔。
+        "image": "assets/explainer/ten-champions/sinner.jpg",
+        "credit": "AELTC / Joel Marklund · 2026 年 7 月 12 日，辛纳温网卫冕",
+    },
+    "comeback-middle": {
+        "topic": "中段：谁回得来，当时看不出来",
+        "question": "伤好了打不出来，是低谷还是终点？",
+        "narration": "伤好了打不出来，这是低谷，还是终点？"
+                     "有两个人给过完全相反的答案，而当时谁也分不出来。",
+        "image": "assets/explainer/comeback-middle/djokovic_ao_2018.jpg",
+        "credit": "Joshua Sadli · Wikimedia Commons · CC BY-SA 2.0 · 2018 年 1 月 15 日，墨尔本",
+    },
+    "protected-ranking": {
+        "topic": "保护排名：它保的是报名，不是排名",
+        "question": "不打球，排名为什么还在掉？",
+        "narration": "不打球，排名为什么还在掉？那个叫「保护排名」的东西，"
+                     "一个字都没保住排名。",
+        "gloss": "PR = Protected Ranking",
+        "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
+        # 封面这张没有任何一屏在用，所以借不到出处，必须自己写一行。
+        # 选它是因为**原图 1184×1579 正好 3:4**，铺满 1.096x，一个像素的垫层都不用
+        # ——上一条片子的封面顶部虚化占了 15.6%，这条是 0。
+        "credit": "账号所有者提供 · 郑钦文回望球员席",
+    },
     "lucky-loser": {
         "topic": "幸运落败者：输了才有的名额",
         "question": "资格赛输了，怎么还在正赛？",
@@ -3460,7 +4092,13 @@ _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # 一半阿拉伯一半汉字，账号所有者一眼看出来（「文案里的数字都用阿拉伯数字」）。
 # 「一天」不受影响——`一` 有单独的放行规则（「唯一一次」「一场首轮」那条），
 # 「有一天」「一天到晚」照旧不转。
-_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周"
+# **「号」和「点」少一个，日期就会写成半中半洋。** 2026-08-02 那条片子的
+# 收尾字幕印的是「北京时间8月三号零点」——「八月」换成了数字，「三号」没换，
+# 开场那句同样是「8月二号凌晨三点50分」。都出现在这条片子最要紧的两句上
+# （开球时刻和决赛时刻），而它**不报错**：转换成功了，只是转了一半。
+# 「点」不会误伤：「破发点」「赛点」里的「点」前面不是数字；「一点」「两点」
+# 落在裸「一/两」那条豁免上。「号」顺带把「三号种子」也变成「3号种子」，那是对的。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点"
 _STRUCTURED = set("十百千")
 
 

@@ -1,0 +1,148 @@
+{
+ "_note": "每张图的赛事/年份取自来源自身的描述与元数据，不靠看图推断；发布时可据此在文案里署名（画面上不烧录来源）。",
+ "alcaraz_wimbledon_2025.jpg": {
+  "subject": "阿尔卡拉斯发球，球在空中，草地上拖着一道长影；全身入镜",
+  "event": "2025 温网，对阵斯特鲁夫",
+  "date": "2025-07-04（Commons 的 DateTimeOriginal，17:06）",
+  "artist": "12121343A",
+  "license": "CC BY-SA 4.0",
+  "via": "Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Carlos_Alcaraz_serving_while_playing_Jan-Lennard_Struff_(Wimbledon_2025).jpg",
+  "_四要素怎么自证": "**来源自己写死了**：文件名与图片说明都是 `Carlos Alcaraz serving while playing Jan-Lennard Struff (Wimbledon 2025)`，EXIF 日期 2025-07-04 与该届温网首周吻合。",
+  "_四道闸门": {
+   "1 精准": "来源说明 + EXIF 双写死。⚠️ **是 2025 年温网，不是 2026**——2026 年这站他因右手腕伤缺席，正是这一屏要讲的事，所以卡上的要点写明「图为 2025 温网」，不拿它冒充今年。",
+   "2 在比赛中": "发球中，球在空中，脚已离地。是击球瞬间，不是分与分之间。",
+   "3 冲击力": "草地上那道长影把整个动作又画了一遍；不是大头特写。",
+   "4 清晰度": "原图 5472×3080。"
+  },
+  "_裁法": "**横向收边到 1.230（3788×3080），再缩到 2400×1951。** 原图 16:9 铺在卡上要走信箱式缩放，主体偏小；收到刚过 `wide = pw/ph >= 1.2` 那条线上方一点点，仍走 contain 不被切，但比 16:9 窄了三成、主体大了约 44%。球、影子、发球线全在框内。判据见 CLAUDE.md「还有第四条出路：收边到刚好过 1.2 的门槛」。",
+  "_亮度": "均值 129.8 / 中位 141 / 暗于 50 占 9.1%。"
+ },
+ "_复用的图": {
+  "masters-format/sinner.jpg": "第 ① 屏。FFT / Roland-Garros 官方，2026-05-28，法网次轮辛纳抽筋后独自站在场上。**它讲的是「这套赛程压在身上的分量」，不冒充蒙特利尔**——卡上的要点写明「图为 5 月法网次轮」。⚠️ 亮度均值 32.0 / 中位 19 / 暗于 50 占 78.0%，是全套里最暗的一张；暗的是看台与阴影，主体在亮处（白帽、浅色球衣、橙色红土），已渲出来看过。",
+  "masters-format/djokovic.jpg": "第 ② 屏。AELTC / Jon Super，2026-07-08，温网**八强**胜阿利亚西姆后握拳庆祝——那场打了 5 小时 15 分，是温网史上最长的八强战。这一屏讲「他也没去蒙特利尔」，用的正是他赢下这场、随后成为公开赛年代第二年长温网四强的画面。⚠️ 图是八强那一场，但他**赢了**这场进了四强；卡上的要点写的是「39 岁打进温网四强」，两者不冲突，出处那一行照实写「温网八强」。",
+  "masters-format/crowd.jpg": "第 ⑥ 屏。Sorin Nechita / Wikimedia Commons，蒙特利尔中心球场满场（2009 年罗杰斯杯四强日，Tsonga–Murray）。⚠️ **是 2009 年的旧照片**，用它是因为这一屏讲的是「球迷理应看到最好的球员」而画面主体是**这座球场的看台本身**（当年叫 Uniprix Stadium，现在叫 Stade IGA，同一座）。年份写进卡上的出处。",
+  "ten-champions/sinner.jpg": "封面。AELTC / Joel Marklund，2026-07-12，辛纳温网卫冕捧杯。**原图 1121×1495 正好 3:4，铺满 1.0x，零垫层零虚化**。这一屏讲的正是「三周前他在这儿举起奖杯」——属于「夺冠时捧杯优先于击球中」那条例外。",
+  "_为什么不复制进本目录": "四张的 credits 都写在原目录，复制过来只会多一份逐字节相同的死重量（lucky-loser 那次复制了一份克鲁兹·休伊特，最后又删了）。在 `_SCRIPTS` 里直接引用原路径。"
+ },
+ "_探空的源": {
+  "2026 蒙特利尔现场": "**这一站 8 月 1 日才开打**，Commons 上零。赛事官方图床（assets.nationalbankopen.com）开着且文件名自证，但今年蒙特利尔这几张**上传尺寸就是 1200px 级**（`PR-Gael-Monfils-0001` 1200×841、`OBN-2026-Felix-Practice-pre-tournament` 1200×800、`PR-Gabriel-Diallo-0351` / `TA-Alexei-Popyrin-0234` 各 1200×800）；同一个图床上2025 年那张入口图是 2400×1602，所以**不是路径取小了，是这批原本就传得小**。`/photos`、`/gallery` 两个路径 404。ausopen.com 与 atptour.com 的文章页对本环境一律 403 或纯 JS，取不到图。结论：**今天不存在 2026 蒙特利尔的高分辨率自由图**，按「精准优先于清晰」用 1200px 的今年。",
+  "Commons 上的辛纳／德约科维奇 2026": "有，但**全是看台业余机位**：`Jannik Sinner vs Clément Tabur at the 2026 Roland Garros` 系列（4000×3000）人只占画面一小块，`Djokovic AO26 R1`（3024×4032）是从看台高处拍的发球、下三分之一全是观众后脑勺，第 3 道闸门都不过。仓库里已有的官方图（AELTC / FFT）比它们高一档，所以走复用。",
+  "⚠️ 差点收进来的那张": "`File:Jannik Sinner at 2026 Wimbledon final.jpg`（5472×3648，CC BY-SA 4.0），文件名和说明都写着「Sinner after winning Wimbledon in 2026」——**打开一看他根本不在画面里**，拍的是球童列队和记分牌。第 1 道闸门直接不过。**又一次「判据是打开看，不是看元数据」。**（它的记分牌 `Jannik SINNER (ITA 1) 6 7 6 6 / Alexander ZVEREV (GER 2) 7…` 倒是把这场决赛的比分自证了，留作旁证。）",
+  "Commons 场馆检索": "`National Bank Open Toronto tennis stadium` 总命中 19、`Rogers Cup Montreal centre court` 总命中 235，**打开全是 1900 年代的报纸 PDF**——典型的「非空 ≠ 对题」。加了「标题必须含关键词 + 排除 PDF」之后才筛出真正的场馆图。另：第一轮查询里带了 `filetype:bitmap`，五条查询**全部返回 0**，看起来和「Commons 上没有这个人」一模一样；拿已知非空的口径对了一下才发现是查询词写错了。",
+  "被换掉那张入口图的原链接": "https://assets.nationalbankopen.com/production/news/Main-Entrance-2025-NBO-Rosanna-U-Photography.jpg（Rosanna U Photography / 加拿大大师赛官方，2400×1602，2025 年多伦多站主入口）。文件名自证时间地点赛事，画质也够，只是**画面里看不出这是网球**——留个链接备查。"
+ },
+ "_查证": {
+  "规则条文（2026 ATP 官方规则书，210 页全本，curl + 浏览器 UA 取得；WebFetch 对 atptour.com 一律 403）": {
+   "排名处罚": "第八章 D.2 `ATP Tour Masters 1000`：`Any player withdrawing from the main draw shall have a ranking penalty assessed... **Ranking penalties are automatic and cannot be appealed** unless they meet the criteria for Parental Status exemption or replacement due to consecutive Masters 1000 withdrawals as outlined in section 9.03.`",
+   "500 赛才有的出路": "同章 D.1 `ATP Tour 500`：`Players shall not have the ranking penalty assessed if they complete the requirements for \"promotional activities\"; are out of competition for 30 days; meet the criteria for Parental Status exemption, or the withdrawal complied with the requirements for an on-site withdrawal.` —— **这四条大师赛一条都没有**，这正是媒体普遍讲反的地方（见下）。",
+   "奖金池": "1.08.H：大师赛＋年终总决赛固定奖金池 USD $21,537,813，分给标准榜前 30。1.08.H.1.f 的表：缺 1 站 −25%、缺 2 站 −50%、缺 3 站 −75%、缺 4 站及以上 −100%；做 1 次现场推广分别降到 12.5% / 37.5% / 62.5%，做 2 次降到 —— / 25% / 50%，缺 4 站以上两档都还是 100%。上限 `In no event shall a player recoup more than USD $200,000`。",
+   "推广活动救不了排名": "1.08.H.1.e：`On-site promotional activities for withdrawn players are applicable for relief of fines and bonus pool reduction... but **shall not provide relief for the ranking penalty** and shall count as a missed event.`",
+   "非直入不算缺席": "1.08.H.1.d：`Any player who is not a direct acceptance to a mandatory ATP Tour Masters 1000 event shall not have that event count as a missed event.` —— 辛纳与德约科维奇**都在报名名单上**（CBC 原文 `both players were included on the entry list`），所以这一条对他们不适用。",
+   "唯一的出口": "9.03 Note 3：`Players who are out of competition for **two or more consecutive** mandatory Masters 1000s, Grand Slam events or ATP Finals can replace up to three (3) Masters 1000 zero-pointers... Players must submit application to Medical Committee to be eligible to replace zero-pointers.` 另 Note 1：`Commitment players who are unable to fulfill their commitment, are not eligible to appeal the ranking penalty.`",
+   "迟退罚款": "第八章 B.1.a.bb：只罚**美东周五上午 10 点截止之后**才退的（前十球员首次 $20,000），且 C.1 规定罚款全额返还给赛事。辛纳与德约科维奇 7 月 24 日就宣布退赛、赛事 8 月 1 日开打，**不落在这一档里**，所以片子说「这一笔是零」。"
+  },
+  "⚠️ 媒体普遍讲反的那一条": "多家报道写成「按 ATP 规则，有伤病理由就能免罚退出强制大师赛」。**规则书不是这么写的**：那四条出路（推广活动／停赛 30 天／育儿身份／现场退赛）挂在 **ATP 500** 名下；大师赛那一条只留了育儿身份豁免和 9.03 两个口子，**单纯的伤病并不免掉排名处罚**。片子里这一句是照条文写的，不是照报道写的。",
+  "赛事与人": {
+   "2026 蒙特利尔": "8 月 1—13 日，IGA Stadium（Stade IGA / 旧称 Uniprix Stadium，Jarry 公园内）。男子在蒙特利尔、女子在多伦多。",
+   "退赛": "CBC / 加拿大新闻社 2026-07-24：`World No. 1 Jannik Sinner and 24-time Grand Slam champion Novak Djokovic have withdrawn`，两人**都在报名名单上**；阿尔卡拉斯 `had already been left off the player list as he continues to recover from a right wrist injury that forced him to miss the French Open and Wimbledon`。维基的退赛表把辛纳／德约科维奇／布勃利克记作 `Schedule change`，阿尔卡拉斯记作 `Right wrist injury`。",
+   "辛纳原话": "`After carefully considering all the factors together with my team, we have made the difficult decision to withdraw from Montreal. It is never easy to miss such an important event, but we believe this is the right decision to prioritize my health.`（Tennis Canada 发布）",
+   "赛事总监原话": "Valérie Tétreault（NBO tournament director）：`We are obviously very disappointed... especially after they also withdrew from last year's tournament in Toronto. We respect their decisions and understand that, with such a demanding schedule, players' health must remain the priority. That said, we believe the frequency of these last-minute withdrawals in the last few years raises a broader issue for our sport. **Masters 1000 events are among the flagship tournaments on the tour, and fans rightfully expect to see the world's best compete.**` 另称已在与 ATP 商谈，要 `ensure this matter receives serious consideration`。译名表里没有她（那张表管球员），片中写「泰特罗」。",
+   "推后一周": "CBC 同篇：`Tournament officials had expected fewer withdrawals this year, with the event starting three weeks after the All England Club finals` —— 去年是 `the 12-day tournament began just two weeks after Wimbledon`。2025 年多伦多 7 月 26 日开打，温网决赛 7 月 13 日（13 天）；2026 年蒙特利尔 8 月 1 日开打，温网决赛 7 月 12 日（20 天）。",
+   "去年也缺席": "CBC 同篇：`Sinner, Djokovic and Alcaraz — the three biggest draws in men's tennis — also missed last year's event in Toronto`。2025-07-20 CBC 另一篇记下当时的理由：辛纳温网摔伤右肘、德约科维奇腹股沟、阿尔卡拉斯称赛期离温网决赛太近（德雷珀同期也退了）。",
+   "顶替的种子": "兹维列夫成为头号种子，阿利亚西姆第二 —— `the highest-seeded Canadian in the tournament's history`。"
+  },
+  "辛纳 2026": {
+   "五个大师赛全赢": "印第安维尔斯（胜梅德韦杰夫）、迈阿密（胜莱赫奇卡）、蒙特卡洛（胜阿尔卡拉斯）、马德里（6-1 6-2 胜兹维列夫）、罗马（6-4 6-4 胜鲁德）。英文维基马德里那页原话：`Sinner became the first man to win all the first four ATP Masters 1000 events of a season, as well as the first to win five consecutive Masters 1000 titles.`",
+   "温网卫冕": "2026-07-12 决赛 6-7(7) 7-6(2) 6-3 6-4 胜兹维列夫，第二个温网、第五座大满贯。",
+   "世界第一": "2026 ATP Tour 页：7,950 分，年内 6 冠 6 亚。",
+   "五月抽筋": "2026-05-28 法网次轮对塔布尔；图为 FFT 官方对该场两篇报道的头图（沿用 masters-format 那条的考证）。",
+   "_「0 顶 0」这句怎么来的": "他 2025 年也从多伦多退赛（伤肘），按第八章 D.2 记一次排名处罚＝那一站 0 分；而 9.03 Note 3 的抹零要「连着缺两个以上强制赛」，**他 2025 年打了辛辛那提**（一路进决赛、0-5 时因病退赛），所以不够条件、那个 0 留下了。排名是 52 周滚动的，2026 年这一站的成绩顶掉 2025 年同一站的成绩 —— 0 顶 0，净变化为零。⚠️ **这是按公开条文与公开赛程算出来的**，ATP 没有逐人公布排名处罚台账；片子里说的是「算下来」，不是「ATP 宣布」。"
+  },
+  "阿尔卡拉斯": {
+   "2026-01": "澳网夺冠（决赛胜德约科维奇）",
+   "右手腕伤": "缺席 2026 法网与温网（CBC 2026-07-24），并未进入蒙特利尔报名名单",
+   "_为什么说他「够得着」": "法网＋温网是**连着两个强制赛**（9.03 Note 3 明写大满贯也算），条件成立。⚠️ **他到底有没有向医疗委员会提出申请、有没有获批，没有公开记录**——片子里说的是「够得着这个条件」，不是「已经抹掉了」。"
+  },
+  "德约科维奇 2026": {
+   "1 月": "澳网决赛负阿尔卡拉斯",
+   "7 月温网": "八强 7-6(12) 3-6 6-4 6-4 胜阿利亚西姆，**5 小时 15 分，是温网史上最长的一场八强战**（图即此场）；四强 4-6 4-6 4-6 负辛纳。**39 岁又 49 天，公开赛年代第二年长的温网四强，只排在 1974 年的罗斯沃尔后面。**（英文维基 `2026 Wimbledon Championships – Men's singles`）",
+   "年龄": "1987 年 5 月生，2026 年 8 月为 39 岁",
+   "_改过的一处": "初稿写的是「七月温网还打到八强」——**他其实赢了那场八强、进了四强**，写成八强等于把他的成绩说小了。照片本身就是那场八强的胜利瞬间，一查就露馅。顺带把「最长八强战」和「第二年长四强」两个纪录补了进去，这两条比原句有力得多。"
+  },
+  "必须标注的边界": [
+   "**「代价是零」说的是排名那一笔，不是全部。** 奖金池那 25% 是真金白银（固定池 2153.7 万，前 30 名分），片子里三笔分开讲，没有把它抹掉。",
+   "**片子没有说球员做错了。** 辛纳的原话是把健康放在第一位，2025 年他确有肘伤、2026 年 5 月法网次轮确实抽筋；立场落在「『强制』这两个字标错了价」，不落在指责谁。这一条是「文案的两条要求，有先后」的直接应用——重话要站在条文和赛程上。",
+   "**「日程调整」是维基退赛表的登记项，不是 ATP 的正式表述。** 辛纳与德约科维奇本人的声明都没写具体伤病，片中不替他们断定有没有伤。",
+   "赛事总监的话是从 Tennis Canada 新闻稿经 CBC 转述的英文原文译出，非中文原声。",
+   "**蒙特卡洛不是强制赛。** 片子说辛纳「今年打过的五个大师赛全赢」（含蒙特卡洛），又说「大师赛一年八站强制」——这两句不矛盾：九站大师赛里只有蒙特卡洛不强制。他今年赢下的强制站是印第安维尔斯、迈阿密、马德里、罗马四站，剩下的强制站是加拿大、辛辛那提、上海、巴黎。",
+   "**「条文比去年松」是两本规则书逐条比出来的，不是推测**；但**不能读成「所以他们才敢退」**——退赛动机没有任何公开依据，片子里没有这句因果，只并列了两个可核的事实。"
+  ],
+  "⚠️ 按当年那本规则书重判了一遍": {
+   "为什么要重判": "账号所有者：「历史的事件需要用历史的规则去评判，而不要用新的修改后的规则去评判历史事件。」初稿里「他去年在多伦多也记了个零」这句，引的判据是 **2026 版**第八章 D.2——那是拿今年的书去判去年的事。把 2025 版全本（`2025-rulebook_16jan.pdf`，206 页，curl + 浏览器 UA）拉下来逐条比过。",
+   "结论：零那一层没变": "2025 版第八章同一条：`ATP Tour Masters 1000. Any player withdrawing from the main draw shall have a ranking penalty assessed...`——**排名处罚 2025 年同样是自动的**，所以「去年那一站记的也是零」成立。9.03 里那句 `Once a player is accepted in the main draw... whether or not he participates` 在 2025 版里同样出现两处（承诺／非承诺球员各一），所以「上了名单就得记」在两年里都成立。",
+   "但有三处真的变了": {
+    "停赛": "2025 版那一条后面还跟着半句 **`and be suspended from a subsequent ATP Tour Masters 1000 event`**；**2026 版全书搜不到这半句**（0 处）。⚠️ 那半句在实际操作里可以申诉掉——1.09.B 有申诉庭，而辛纳 2025 年退了多伦多之后照打辛辛那提、还打进决赛，可见没有被执行。片子里两头都说了：条文上有，实际能申诉掉，今年干脆不写了。",
+    "育儿身份豁免": "2025 版全书 **0 处**，2026 版 6 处。**这是 2026 年新加的**，不能拿它去解释 2025 年的任何事。",
+    "连缺两站可申请抹零（9.03 Note 3）": "2025 版搜 `out of competition for two or more consecutive` **0 处**，2026 版有。同样是新加的。⚠️ 初稿曾有一屏专讲这一条并用它解释阿尔卡拉斯，已删——除了它是新规之外，「有没有向医疗委员会申请」本身也没有公开记录。",
+    "500 赛的出路": "2025 版是「推广活动／停赛 30 天／现场退赛」三条，2026 版多了「育儿身份豁免」一条。片子里讲的是 2026 年的事，用 2026 版那四条。"
+   },
+   "奖金池的年份也对上了": "2025 年的池子是 USD $21,012,500（见 `25rulebook-changesmay202025.pdf`，当年编号 1.07 H），2026 年是 $21,537,813（2026 版 1.08 H）。片子讲的是今年，用今年那个数。",
+   "这条规矩已写进 CLAUDE.md": "「判历史事件要用当年那本规则书」一节，连同历年全本的取法（atptour.com 的 `/-/media/files/rulebook/<年>/`，WebFetch 403、curl + 浏览器 UA 能过，文件名逐年不同）。"
+  }
+ },
+ "alcaraz_ao_2026.jpg": {
+  "subject": "阿尔卡拉斯手捧诺曼·布鲁克斯挑战杯站在球场上，背景是墨尔本满场看台与颁奖背板",
+  "event": "2026 澳网男单夺冠（决赛胜德约科维奇）",
+  "date": "2026-02-01（Commons 元数据）",
+  "artist": "Tensionado",
+  "license": "CC0",
+  "via": "Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:AO_2026_Alcaraz_campe%C3%B3n.jpg",
+  "_四要素怎么自证": "来源说明写死 `Alcaraz campeón Open Australia 2026`；画面里的诺曼·布鲁克斯挑战杯与颁奖背板和该届澳网对得上。",
+  "_四道闸门": {
+   "1 精准": "这一屏的旁白原话是「阿尔卡拉斯今年一月还在墨尔本举奖杯，之后右手腕伤了」——**时间（2026 年 1 月）、地点（墨尔本）、人物、事件（澳网夺冠）四样都对着这句话**。这是**换掉 2025 温网那张的理由**：那张更锐（2400×1951）但讲的是另一年另一站，与这一屏的句子对不上。",
+   "2 在比赛中": "⚠️ 走的是「夺冠时捧杯优先于击球中」那条例外，而这一屏讲的正是他夺冠。",
+   "3 冲击力": "奖杯在手、在前景占了一大块，不是大头特写。",
+   "4 清晰度": "⚠️ **1156×1068，是全套里最软的一张**，而且看得出是转播截帧。比例 1.082 < 1.2 走 cover，要放大约 1.35 倍。**这是一次明写的取舍：精准优先于清晰**（同 shang-nishikori 那张 682×1024 的处理）。"
+  },
+  "_为什么不用更锐的那张": "同目录下 `alcaraz_wimbledon_2025.jpg`（2400×1951，发球中，CC BY-SA 4.0）画质高一档，但它是 **2025 年温网**——这一屏一个字都没讲 2025 年，用它就是「看着像就行」。四要素闸门排在清晰度前面，所以留着不用，不删，供以后讲 2025 的片子取用。",
+  "_亮度": "⚠️ 均值 52 / 中位 28 / 暗于 50 占 65%。夜场颁奖，暗的是看台和背板，**主体（人、奖杯、浅绿外套）在追光下**——和 comeback-middle 那张德约白衣压深底是同一种情形。已渲出来看过。",
+  "_裁法": "**裁成正好 3:4（801×1068），从右边取。** 原图 1156×1068 的左半边是路易威登那口赞助箱和 `VICTORY TRAVELS IN LOUIS VUITTON` 的大字——渲出来整屏读起来像广告，第 3 道闸门不过。贴右边裁掉之后奖杯回到画面中心，箱子只剩左沿一条。3:4 之后铺满零垫层，但**放大约 1.35 倍**，是全套里最软的一屏。"
+ },
+ "monfils_montreal_2026.jpg": {
+  "subject": "孟菲尔斯背着球包穿过看台通道走向球场，两侧是空着的蓝色座椅",
+  "event": "2026 加拿大大师赛（蒙特利尔，IGA Stadium，8 月 1—13 日）",
+  "artist": "加拿大大师赛官方（Tennis Canada）",
+  "license": "赛事官方图，未取得授权；按仓库既有做法照实记录出处",
+  "via": "nationalbankopen.com 官方图床",
+  "page": "https://assets.nationalbankopen.com/production/news/PR-Gael-Monfils-0001.jpg",
+  "_四要素怎么自证": "挂在赛事官方站 2026 年蒙特利尔外卡与「Monfils Lands in Montreal for NBO Farewell」两篇报道下，`PR-Gael-Monfils-0001` 由赛事方自己命名。",
+  "_四道闸门": {
+   "1 精准": "**时间就是这一站正在进行的这几天**，地点蒙特利尔，人物孟菲尔斯，事件抵达赛场。这一屏讲的就是「另一个 39 岁的人来了」。",
+   "2 在比赛中": "⚠️ 不是比赛画面，是抵达赛场。**这一屏的主语是「他来了」这个动作本身**，不是他的球技；两侧空着的蓝椅子正好把「谁没来」压在画面里，不用一个字。",
+   "3 冲击力": "落点在反差：同岁的两个人，一个背着包走进来，一个把名字撤了。",
+   "4 清晰度": "⚠️ **1200×841，比例 1.427 走信箱式缩放，铺满 1.0x，不放大但也没有余量**。这是今天能拿到的 2026 蒙特利尔最大的一张（见 `_探空的源`）。"
+  },
+  "_换掉了什么": "原来这一屏用的是 `masters-format/crowd.jpg`（2200×1473，蒙特利尔中心球场满场）——**画面漂亮、场馆也是同一座，但拍摄于 2009 年，比这条片子讲的事早十七年**。账号所有者重申「时间、地点、人物、事件精准匹配是基本要求，分辨率和画质是附加要求」之后按这个顺序换掉：**宁可用 1200px 的今年，不用 2200px 的十七年前。**",
+  "_亮度": "均值 181 / 中位 185 / 暗于 50 占 2%。白天顺光，偏亮。"
+ },
+ "sobeys_stadium_2025.jpg": {
+  "subject": "Sobeys Stadium 中心球场航拍：整座碗坐满观众，蓝色球场居中、绿色外区，场上两名球员正在比赛",
+  "event": "2025 年加拿大大师赛（男子那一届在多伦多 Sobeys Stadium）",
+  "artist": "Tennis Canada 官方（文件名 `TC-OBN-2025-DRONE-0298-FINAL-s-RVB`：TC=Tennis Canada，OBN=Omnium Banque Nationale，2025，DRONE）",
+  "license": "赛事官方图，未取得授权；按仓库既有做法照实记录出处",
+  "via": "sobeysstadium.com（Tennis Canada 图床 assets.tenniscanada.com，`Hero-Images/6/6-5-2-Sobeys-Stadium/`）",
+  "page": "https://assets.tenniscanada.com/production/Hero-Images/6/6-5-2-Sobeys-Stadium/TC-OBN-2025-DRONE-0298-FINAL-s-RVB.webp",
+  "_四要素怎么自证": "**画面里赛事方自己把场馆名写着**：放大看碗顶那栋楼的外墙印着 `Sobeys STADIUM`——而 Sobeys Stadium 就是多伦多那座。年份由文件名 `OBN-2025` 给出，目录也挂在 Sobeys-Stadium 名下。⚠️ 光凭 `OBN`（法文赛事名，两座城市共用）分不出城市，**目录名也只是间接信号**（见 CLAUDE.md「官方图库把它挂在这一站名下，不等于拍的是这个场地」）；真正定死它的是画面里那行字，外加**场地配色与已知的多伦多球场一致**：蓝场心 + 绿外区 + 深蓝座椅，与 Commons 上 2008 年同一座球场（当时叫 Rexall Centre，绿区上还印着 `TORONTO`）逐项对得上。",
+  "_四道闸门": {
+   "1 精准": "2025 年、多伦多、加拿大大师赛——正是这一屏讲的「去年那一站」。场上有球员在打，是赛期实拍不是空场。",
+   "2 在比赛中": "⚠️ 这一屏的主角是**赛事和看台**，不是某个球员；碗里坐满人、场上两个人在打，赛事本身就在进行中。",
+   "3 冲击力": "整座碗、上万人、蓝场居中——**一眼看得出是网球场**，这正是换掉上一张的原因（账号所有者：「更能看出是球场的」）。",
+   "4 清晰度": "原图 1584×1080（图床上的最大尺寸，更大的变换路径一律 404），裁后 1328×1080。"
+  },
+  "_裁法": "**横向收边到 1.230（1328×1080），从 x=256 起。** 原图 1.467 走信箱式缩放时球场偏小；收到刚过 `wide = pw/ph >= 1.2` 那条线上方一点点，仍走 contain 不被切，碗在卡上大了约两成。左边切掉的是室内馆和外围球场，碗、看台、`Sobeys STADIUM` 那行字全在框内。",
+  "_换掉了什么": "原来这一屏用的是同一站的入口人流图（`Main-Entrance-2025-NBO-Rosanna-U-Photography.jpg`，2400×1602，赛事官方）。账号所有者：「多伦多的图要换一个，更能看出是球场的，这个感觉有点不太贴切。」——那张画面里只有大门、人群和街道，**看不出是网球赛事**，扫过去像一场市集。已从本目录删除（未被任何一屏引用的图不留在仓库里）；出处记在这儿，以后要讲「买票的人」那类内容可以按原链接重新取。",
+  "_亮度": "均值 90 / 中位 82 / 暗于 50 占 31%。黄昏航拍，看台在阴影里而球场被光打亮，主体在亮处。"
+ }
+}

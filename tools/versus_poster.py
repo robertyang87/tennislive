@@ -190,6 +190,56 @@ def _cutout_geometry(cx: float, seam: float) -> float:
     return seam * VIDEO_H - dx * math.tan(math.radians(SEAM_ANGLE))
 
 
+def _flag(code: str) -> str:
+    """国旗 emoji。认 IOC 三字码、ISO2、英文国名（`country_flag` 三种都兼容）。"""
+    import sys as _sys  # noqa: PLC0415
+    _sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+    from tennislive.zh.countries import country_flag  # noqa: PLC0415
+    return country_flag(code)
+
+
+def _name_html(name: str, meta: dict, where: str) -> str:
+    """封面上的一个人：**国旗 + 中文名 +（即时世界排名）**。
+
+    账号所有者 2026-08-02：「以后封面上所有球员的名字旁边要加上他的国旗，
+    对阵的同时在后面括号里面加上他的即时的世界排名」。
+
+    两样都是**必填**，因为这两个错的失败方式都不吭声：漏了国旗，海报看着
+    只是「少了点东西」；漏了排名，读者没法判断这场胜利有多重。
+
+    `rank` 允许显式写 `null`——意思是「查过，他没有排名」（资格赛外卡、
+    刚复出、掉出榜单）。和 `mixed_fps` / `silent_source` 一样，**认领这一步
+    是让「查过没有」和「忘了填」分开**：漏写会报错，写 null 会渲成只有国旗
+    和名字，并且在日志里出声。
+
+    排名用 0.6em 的小字压在名字后面：同字号并排会跟名字抢，而它是注脚不是主语。
+    """
+    code = str(meta.get("country") or "").strip()
+    if not code:
+        raise SystemExit(
+            f"{where} 缺 `country`：封面上每个球员的名字旁边都要有国旗。\n"
+            "写 IOC 三字码就行（PHI / JPN / CHN），"
+            "src/tennislive/zh/countries.py 里 ISO2 和英文名也认。\n"
+            "查不到就去比赛数据源取：ESPN 的 competitor.athlete.flag.href "
+            "末尾就是 IOC 码（…/countries/500/phi.png）。")
+    flag = _flag(code)
+    if not flag:
+        raise SystemExit(
+            f"{where} 的 country={code!r} 没认出国旗——"
+            "对一遍 src/tennislive/zh/countries.py 里的 IOC 表。")
+    if "rank" not in meta:
+        raise SystemExit(
+            f"{where} 缺 `rank`：对阵要在名字后面的括号里给出即时世界排名。\n"
+            "查过确实没有排名（资格赛、掉出榜单）就显式写 \"rank\": null——"
+            "**别省掉这个键**，省掉之后「查过没有」和「忘了填」长得一模一样。\n"
+            "取数：PYTHONPATH=src python3 tools/lookup_player_meta.py \"<英文名>\"")
+    rank = meta["rank"]
+    if rank is None:
+        print(f"[封面] {name} 声明了没有世界排名（rank: null），括号省略")
+        return f'<span class="who"><b>{flag}</b>{name}</span>'
+    return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
+
+
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     """cutout 版式：背景是本场视频的全场机位，两个官方抠图站在斜线上。"""
     bg = versus.get("background") or {}
@@ -244,7 +294,8 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
             f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'
             f'<div class="nm" style="top:{seam * 100:.1f}%">'
-            f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>'
+            f'{_name_html(names[0], versus["top"], "versus.top")}<i></i>'
+            f'{_name_html(names[1], versus["bottom"], "versus.bottom")}</div>'
             f'<div class="vs" style="top:{vs_y:.1f}%">VS</div>')
     extra = ("".join(css) + """
 .bg{position:absolute;inset:0;background-repeat:no-repeat}
@@ -647,11 +698,14 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
         # stack：名字压在各自那一格，其余版式名字并排在 VS 两侧
         if layout == "stack":
             name_els = (
-                f'<div class="na n-a" style="top:{seam - 12:.1f}%">{names[0]}</div>'
-                f'<div class="na n-b" style="top:{seam + 5:.1f}%">{names[1]}</div>')
+                f'<div class="na n-a" style="top:{seam - 12:.1f}%">'
+                f'{_name_html(names[0], top, "versus.top")}</div>'
+                f'<div class="na n-b" style="top:{seam + 5:.1f}%">'
+                f'{_name_html(names[1], bottom, "versus.bottom")}</div>')
         else:
             name_els = (f'<div class="nm" style="top:{seam:.1f}%">'
-                        f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>')
+                        f'{_name_html(names[0], top, "versus.top")}<i></i>'
+                        f'{_name_html(names[1], bottom, "versus.bottom")}</div>')
         body = (f'<div class="p p-a"></div><div class="p p-b"></div>{seam_el}'
                 f'<div class="shade"></div>{name_els}{badge}')
 
@@ -689,6 +743,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   padding:0 66px;font-family:'TL Display SC','TL Sans SC',sans-serif;
   font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}}
 .nm i{{flex:1}}
+/* **国旗 + 名字 +（即时世界排名）**（账号所有者 2026-08-02 定的）。
+   排名压到 0.6em 并且降一档亮度：同字号并排会跟名字抢，而它是注脚不是主语。
+   量过版心：1080 减两边 66px 是 948px，「🇯🇵 大坂直美（13）」约 458px、
+   「🇵🇭 伊埃拉（28）」约 396px，加起来 854px，还剩 94px。再往上加字
+   （比如「世界第 13」）就会顶出边。 */
+.who{{display:inline-flex;align-items:baseline;white-space:nowrap}}
+.who b{{font-weight:400;margin-right:.22em}}
+.who em{{font-style:normal;font-size:.6em;opacity:.82;margin-left:.02em}}
 .na{{position:absolute;left:66px;z-index:4;font-size:62px;color:{TEXT};
   font-family:'TL Display SC','TL Sans SC',sans-serif;
   text-shadow:0 4px 26px rgba(0,0,0,.75)}}
