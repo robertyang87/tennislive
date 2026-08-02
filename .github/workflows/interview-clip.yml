@@ -223,6 +223,70 @@ jobs:
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
           ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
 
+      # **超过 95 MiB 的成片不进 git，走 Release 附件。**
+      #
+      # 这条线原来没有这一半，而它迟早会咬人：git 单文件硬上限 100 MiB，
+      # 上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s），**演播室这条 409 秒
+      # 按同码率算 174 MiB**——渲十分钟，然后死在提交那一步。
+      #
+      # 门槛 95 而不是 100，留 5 MiB 给「估得不准」。95 以下照旧进仓库，
+      # jsDelivr / raw 那条链路一个字没动。走了 Release 就**把本地那份删掉**，
+      # 让清理和提交步骤根本看不见它；链接写进 `render.json`，
+      # `push_reel.video_url()` 本来就优先读它（那一半早就是通用的）。
+      #
+      # 为什么是 Release 而不是 LFS：LFS 免费额度只有 1 GB/月流量，而且
+      # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
+      # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
+      - name: 成片太大就发到 Release（不进 git）
+        if: github.event.inputs.mode == 'render'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          OUTDIR="output/interviews/$SLUG"
+          CLIP="$OUTDIR/$SLUG.mp4"
+          LIMIT=$((95 * 1024 * 1024))
+          SZ=$(stat -c%s "$CLIP")
+          if [ "$SZ" -le "$LIMIT" ]; then
+            echo "成片 $((SZ/1048576)) MiB，不到 95 MiB —— 照旧进仓库"
+            exit 0
+          fi
+          TAG="interview-$SLUG"
+          echo "成片 $((SZ/1048576)) MiB 超过 95 MiB —— 发到 Release $TAG"
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "赛后开麦 · $SLUG" \
+                 --notes "双语字幕成片。超过 git 的 100 MiB 单文件上限，改走 Release 附件。"
+          gh release upload "$TAG" "$CLIP" --clobber
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4"
+          # **传完自己探一次**：Release 的 CDN 有几秒传播延迟，探不到就别写链接
+          # ——写了等于把一个 404 发到微信，而消息发出去收不回来。
+          # ⚠️ 循环体最后一句不许写成 `[ A ] || [ B ] && break`：整条 AND-OR
+          # 列表为假时 `bash -e` 会直接把这一步杀掉，看着像「探活失败」，
+          # 其实是第一次没中就退出了。用 if。
+          for i in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = "206" ] || [ "$CODE" = "200" ]; then break; fi
+            echo "第 $i 次探活 $CODE，5s 后重试"
+            sleep 5
+          done
+          [ "$CODE" = "206" ] || [ "$CODE" = "200" ] || {
+            echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1; }
+          echo "Release 附件可取：$URL"
+          python - "$OUTDIR/render.json" "$URL" "$SZ" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          path, url, size = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3])
+          # 这条线原来不写 render.json，所以要允许它还不存在
+          data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+          data["video_url"] = url
+          data["video_bytes"] = size
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+          print("render.json 记下 video_url")
+          PY
+          rm -f "$CLIP"
+
       # **复制页要在提交之前写。** 这一步只落文件，由下面的提交步骤带进仓库；
       # 真正发微信排在提交之后（GitHub Pages 只服务 main，链接才取得到）。
       # 这条规矩在别的线上踩过四次，别在这儿再踩第五次。

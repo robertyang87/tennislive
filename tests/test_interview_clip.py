@@ -1766,3 +1766,42 @@ def test_小红书正文不许超一千字():
         assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
         checked += 1
     assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
+
+
+def test_成片太大要走Release而不是撑爆git():
+    """git 单文件硬上限 100 MiB，而这条线的成片能轻松超过。
+
+    上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s）；演播室那条 409 秒
+    按同码率算 **174 MiB**——渲十分钟，然后死在提交那一步。
+    账号所有者定过：「我的基础要求是保证内容和画面质量，文件多大都没关系」
+    「不要砍片长」，所以出路是**换落脚点**（Release 附件，单个 2 GB），
+    不是压码率也不是剪短。
+
+    三件事都要钉，少一件这道兜底就是摆设：
+
+    1. 两条线的门槛必须是**同一个数**——一个数写两处必分叉
+    2. 传完要**把本地那份删掉**，否则 `git add` 照样把它吃进去，
+       Release 白传一趟，提交照样炸
+    3. 这一步必须排在**提交之前**。排在后面的话文件已经进了 index，
+       删不删都晚了——同「复制页那道闸装在发的那一步不是渲的那一步」
+    """
+    import re
+
+    def block(name: str, wf: str) -> str:
+        text = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
+        text = "\n".join(ln for ln in text.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        return text
+
+    iv = block("", "interview-clip.yml")
+    mr = block("", "match-reel.yml")
+    limits = {w: set(re.findall(r"LIMIT=\$\(\((\d+) \* 1024 \* 1024\)\)", t))
+              for w, t in (("interview-clip", iv), ("match-reel", mr))}
+    assert limits["interview-clip"] == limits["match-reel"] != set(), (
+        f"两条线的 Release 门槛对不上：{limits}——一个数写两处必分叉")
+
+    assert "gh release upload" in iv, "采访这条线没有 Release 兜底，成片超 100 MiB 会死在提交那一步"
+    assert re.search(r'rm -f "\$CLIP"', iv), (
+        "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
+    assert iv.index("gh release upload") < iv.index("git commit"), (
+        "Release 那一步排在提交后面了，文件已经进 index，删不删都晚了")
