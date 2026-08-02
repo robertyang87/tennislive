@@ -1262,38 +1262,64 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
            or "（空）"))
 
 
-def _delogo(src: Path, box: list[float] | None) -> str:
-    """去掉画面上固定位置的角标。`box` 是 `[x, y, w, h]`，**按比例给**。
+def logo_mask(src: Path, box: list[float], dest: Path, mirrored: bool = False,
+              samples: int = 12, thresh: int = 170, dilate: int = 3) -> Path:
+    """按**笔画**做掩膜，不是罩一个矩形。给 ffmpeg 的 `removelogo` 用。
 
-    **为什么不用裁的**：裁掉一条能让它不出现，但那是拿画面换干净——账号所有者
-    「最好不要用摆设的方式处理水印」。`delogo` 是按框边缘往里插值补回来，
-    画面一个像素不丢。
+    做法来自 `jinwyp/VideoWatermarkerRemover`（`cv2.inpaint` + 采样几帧取阈值），
+    但补的那一步换成 ffmpeg 内置的 `removelogo`——省掉一整趟解码/重编码。
 
-    ⚠️ **它只吃整数，不吃表达式**（`x=w*0.655` 直接报 Invalid argument），
-    而源片分辨率不保证（下的是 `bv*[height<=720]`，拿不到 720p 就更小）。
-    所以要先 ffprobe 出真实宽高再换算——写死像素等于赌分辨率。
+    **为什么不用 `delogo`**：它把整个矩形抹平再从框边缘横向插值，
+    **笔画之间那些原始像素也一起毁了**，留下一条竖纹带。按笔画补只动那几笔，
+    字缝里的球场、广告板原样保留。
 
-    ⚠️ 框**不能贴到画面边**：插值要从框外一圈取样，贴边就没得取。往里收 1 像素。
+    掩膜怎么来：在框里采 `samples` 帧，各自取亮于 `thresh` 的像素，**逐帧取交集**
+    ——水印是唯一每一帧都亮在同一个位置的东西，背景（观众、球场、记分条）
+    会动，交完就只剩笔画。再膨胀一圈盖住抗锯齿的边。
 
-    ⚠️ **顺序：`hflip` 在前，`delogo` 在后**，框按**成品的朝向**给。
-    反过来也能跑（把框的 x 镜像一下就是），但坐标系会和人看到的对不上：
-    下一个人从渲出来的画面上重新量框，量的一定是成品那一面。
-    两个坐标系并存而且**不吭声**——框放错一面，水印还在、对称的另一边多出
-    一块补痕，画面照样出得来。所以只留一个坐标系：**你看到的那一面**。
+    ⚠️ **掩膜要和成品同一个朝向**：`mirrored` 时先把帧翻过来再算，
+    这样 `removelogo` 排在 `hflip` **后面**，和 `logo_box` 的坐标系一致。掩膜和滤镜链的朝向对不上，水印会原样留着而对称的另一边
+    多出一块补痕——**画面照样出得来**。
     """
-    if not box:
-        return ""
-    out = subprocess.run(
-        ["ffprobe", "-v", "error", "-select_streams", "v:0",
-         "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x", str(src)],
-        capture_output=True, text=True, check=True, timeout=120).stdout.strip()
-    iw, ih = (int(v) for v in out.split("x")[:2])
+    import cv2  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+
+    cap = cv2.VideoCapture(str(src))
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
+    iw = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    ih = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fx, fy, fw, fh = box
-    x, y = max(1, round(iw * fx)), max(1, round(ih * fy))
-    w, h = round(iw * fw), round(ih * fh)
-    w, h = min(w, iw - x - 1), min(h, ih - y - 1)
-    print(f"去角标：源片 {iw}x{ih}，框 x={x} y={y} w={w} h={h}")
-    return f"delogo=x={x}:y={y}:w={w}:h={h},"
+    x0, y0 = max(0, round(iw * fx)), max(0, round(ih * fy))
+    x1, y1 = min(iw, round(iw * (fx + fw))), min(ih, round(ih * (fy + fh)))
+    acc = None
+    for k in range(samples):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(total * (k + 0.5) / samples))
+        ok, frame = cap.read()
+        if not ok:
+            continue
+        if mirrored:
+            frame = cv2.flip(frame, 1)
+        gray = cv2.cvtColor(frame[y0:y1, x0:x1], cv2.COLOR_BGR2GRAY)
+        hit = (gray > thresh).astype(np.uint8)
+        acc = hit if acc is None else (acc & hit)
+    cap.release()
+    if acc is None:
+        raise SystemExit(f"读不出 {src} 的帧，做不了水印掩膜")
+    acc = cv2.dilate(acc, np.ones((3, 3), np.uint8), iterations=dilate) * 255
+    mask = np.zeros((ih, iw), np.uint8)
+    mask[y0:y1, x0:x1] = acc
+    # `removelogo` 要求掩膜**不能贴边**（插值得从标记外一圈取样），而且非空
+    mask[0, :] = mask[-1, :] = mask[:, 0] = mask[:, -1] = 0
+    covered = int((mask > 0).sum())
+    if not covered:
+        raise SystemExit(
+            f"水印掩膜是空的：框 {box} 里没有连续 {samples} 帧都亮于 {thresh} 的像素。\n"
+            "要么框位置不对，要么这个水印不是亮字——**空掩膜和「没有水印」长得一样**，"
+            "所以这儿直接报错，不静默放行。")
+    cv2.imwrite(str(dest), mask)
+    print(f"水印掩膜：源片 {iw}x{ih}，框 x{x0}-{x1} y{y0}-{y1}，"
+          f"笔画像素 {covered}（占框 {covered / max(1, (x1 - x0) * (y1 - y0)):.1%}）→ {dest}")
+    return dest
 
 
 def _crop_expr(ratio: float, keep: float = 1.0) -> str:
@@ -1326,7 +1352,10 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 三角朝反边）。这条线烧的是英文字幕，画面上再挂一排反着的英文，
     # 读者一眼就看出不对。翻回来的判据是**场地上的字读不读得通**，
     # 不是「看着顺不顺眼」——左右翻转的人脸和球场，肉眼分不出来。
-    logo = _delogo(src, spec.get("logo_box"))
+    logo = ""
+    if box := spec.get("logo_box"):
+        m = logo_mask(src, box, outdir / "_logo_mask.png", bool(spec.get("mirrored")))
+        logo = f"removelogo=filename={m},"
     flip = "hflip," if spec.get("mirrored") else ""
     keep = float(spec.get("crop_keep_top", 1.0))
     chain = (
@@ -1364,8 +1393,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "")
-                            + _delogo(src, spec.get("logo_box"))
+                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
                             + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
                                          float(spec.get("crop_keep_top", 1.0)))),
                     "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)

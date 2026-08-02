@@ -772,38 +772,65 @@ def test_翻转和裁角标要作用到封面帧上():
     assert "_crop_expr" in grab, "抽封面帧那一步没跟着裁角标"
 
 
-def test_去角标的框要按源片真实分辨率换算(tmp_path, monkeypatch):
-    """**`delogo` 只吃整数，不吃表达式**（`x=w*0.655` 直接报 Invalid argument），
-    而源片分辨率不保证——下的是 `bv*[height<=720]`，拿不到 720p 就更小。
+def _clip(path: Path, extra: str = "", seconds: float = 0.5) -> Path:
+    """造一段测试片。**用 ffmpeg 造，不用 numpy**——测试里 import numpy 会被
+    `test_测试用到的第三方包都在dev依赖里` 拦下：本地装着看不出来，CI 必红。"""
+    import subprocess as sp
 
-    写死像素等于赌分辨率：同一个框在 1280×720 上罩住水印，在 640×360 上
-    会罩到画面外去，而 **ffmpeg 只会报一句 Invalid argument**，看着像别的毛病。
+    sp.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+            "-i", f"testsrc2=size=320x180:rate=24:duration={seconds}",
+            "-vf", extra or "null", "-pix_fmt", "yuv420p", str(path)], check=True)
+    return path
+
+
+def test_去水印按笔画补不按矩形抹(tmp_path):
+    """**`removelogo` 只动掩膜标出来的那几笔，`delogo` 抹掉整个矩形。**
+
+    delogo 从框边缘横向插值，**笔画之间那些原始像素也一起毁了**，留下一条
+    竖纹带；按笔画补，字缝里的球场、广告板原样保留。
+
+    掩膜的判据是「每一帧都亮在同一个位置」——水印是唯一这样的东西，
+    背景会动（`testsrc2` 一直在动），逐帧取交集就只剩笔画。
     """
-    import tools.build_interview_clip as clip
+    import cv2
 
-    class Fake:
-        stdout = "1280x720\n"
-    monkeypatch.setattr(clip.subprocess, "run", lambda *a, **k: Fake())
-    expr = clip._delogo(Path("x.mp4"), [0.652, 0.812, 0.292, 0.112])
-    assert expr == "delogo=x=835:y=585:w=374:h=81,", expr
-    assert all(p.isdigit() for p in re.findall(r"[xywh]=(\S+?)[:,]", expr)), \
-        "delogo 的参数必须是整数"
-    assert clip._delogo(Path("x.mp4"), None) == "", "没写 logo_box 就不该加这个滤镜"
+    from tools.build_interview_clip import logo_mask
+
+    clip = _clip(tmp_path / "c.mp4",
+                 "drawbox=x=20:y=140:w=120:h=8:color=white@1.0:t=fill")
+    m = logo_mask(clip, [0.03, 0.72, 0.55, 0.16], tmp_path / "m.png")
+    mask = cv2.imread(str(m), cv2.IMREAD_GRAYSCALE)
+    on = mask > 0
+    assert on.any(), "掩膜是空的"
+    # **只该是笔画，不是整个框**：框占画面 0.55*0.16 ≈ 8.8%，笔画远小于它
+    assert on.mean() < 0.088 * 0.75, f"掩膜盖了 {on.mean():.1%}，像是把整个框都涂了"
+    assert not on[0].any() and not on[:, 0].any(), "掩膜贴到画面边了，插值取不到样"
 
 
-def test_去角标的框按成品那一面给():
-    """**`hflip` 在前，`delogo` 在后。**
+def test_掩膜空了要报错不许静默放行(tmp_path):
+    """**空掩膜和「这儿没有水印」长得一模一样。**
 
-    反过来也能跑（把框的 x 镜像一下就是），但那样代码里的坐标系和人看到的
-    对不上：下一个人从渲出来的画面上重新量框，量的一定是成品那一面。
-    两个坐标系并存而且**不吭声**——框放错一面，水印还在、对称的另一边多出
-    一块补痕，画面照样出得来。
+    框写错位置、或者水印不是亮字，都会得到空掩膜——静默放行的话
+    `removelogo` 什么也不做，成片带着水印发出去，而每一步都是 success。
+    """
+    from tools.build_interview_clip import logo_mask
+
+    dark = _clip(tmp_path / "d.mp4", "geq=0:128:128")
+    with pytest.raises(SystemExit, match="掩膜是空的"):
+        logo_mask(dark, [0.1, 0.7, 0.5, 0.2], tmp_path / "m.png")
+
+
+def test_去水印排在翻转后面():
+    """掩膜是在**成品那一面**算的（`logo_mask` 的 `mirrored` 会先把帧翻过来），
+    所以 `removelogo` 必须排在 `hflip` 后面。
+
+    对不上的话水印原样留着、对称的另一边多出一块补痕——**画面照样出得来**。
     """
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     chain = src[src.index('f"[0:v]{flip}'):src.index('[fg];"')]
-    assert chain.index("{flip}") < chain.index("{logo}"), "hflip 要排在 delogo 前面"
+    assert chain.index("{flip}") < chain.index("{logo}"), "hflip 要排在 removelogo 前面"
     grab = src[src.index('frame = outdir / "_cover_frame.jpg"'):src.index("build_cover(spec, frame")]
-    assert grab.index("hflip") < grab.index("_delogo"), "抽封面帧那一步顺序也要一致"
+    assert grab.index("hflip") < grab.index("logo"), "抽封面帧那一步顺序也要一致"
 
 
 def test_裁角标只动纵向不动版式几何():
@@ -1270,7 +1297,9 @@ def test_自检脚本从工作流里读pip行不另写一份():
 
     line = _pip_line()
     assert line.startswith("pip install"), line
-    assert "-e ." in line, "工作流的 pip 行里没有 -e .，自检读到的是别的行？"
+    # `-e .` 也可能带 extra（`-e ".[visualqa]"`），两种写法都算装了项目自己
+    assert re.search(r'-e "?\.', line), \
+        "工作流的 pip 行里没装项目自己（-e .），自检读到的是别的行？"
 
 
 # ---------------------------------------------------------------- 工作流依赖
@@ -1303,6 +1332,12 @@ _PROVIDES = {
     "tennislive": "-e .",       # 还拖着 requests / rich / pypdf
     "playwright": "playwright",
     "faster_whisper": "faster-whisper",
+    # 去水印的掩膜要 cv2（`logo_mask`）。**装 extra 别装裸包名**——
+    # `pyproject` 把 opencv 钉在 `>=4.10,<5`，5.x 里 `CascadeClassifier` 没了
+    "cv2": '-e ".[visualqa]"',
+    # `logo_mask` 里跟 cv2 一起用，靠 opencv 带进来；测试那边刻意不 import 它
+    # （dev 依赖里没有），所以只在这张表登记
+    "numpy": '-e ".[visualqa]"',
 }
 
 
