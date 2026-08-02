@@ -3649,6 +3649,44 @@ def test_每一段都要待在同一个镜头里():
     assert all(b["source"] == "a" for b in bad)
 
 
+def test_片长超了要在写spec那一刻就红不是渲完才红(tmp_path):
+    """成片进不了仓库的那条线，**判据在写 spec 的那一刻就算得出来**。
+
+    2026-08-02 伊埃拉对大坂那条第一版排了 3 分 04 秒，渲染跑满五分钟、artifact
+    传完 112 MB，**落库那一步才被 `check_staged_file_sizes.py` 拦下**——GitHub
+    单文件硬上限 100 MiB，104.0 MiB 进不去（run 30725160625）。一整趟白跑，
+    而 `sum(end - start)` 一秒钟就能算出这件事。
+
+    这是「让失败发生在第 5 秒，不是第 90 秒」的又一例。上限本身是量出来的，
+    不是拍的：见 `MAX_REEL_SECONDS` 上面那段实测码率。
+    """
+    reel = _reel()
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        seconds, mib = reel.reel_length_verdict(spec)
+        assert seconds <= reel.MAX_REEL_SECONDS, (
+            f"{path.name} 的成片 {seconds:.1f}s ≈ {mib:.0f} MiB，"
+            f"超过 {reel.MAX_REEL_SECONDS:.0f}s 的上限——渲出来也进不了仓库")
+
+    # **闸要真的装在 load_spec 上**，不是只有一个算函数在旁边待着：
+    # 上面那圈循环全绿，而渲染路径不调用它的话，下一条超长的 spec 照样渲五分钟。
+    long_spec = {
+        "source_url": "u://x",
+        "cover": {},
+        "segments": [{"start": 0.0, "end": reel.MAX_REEL_SECONDS + 30,
+                      "narration": "太长了"}],
+    }
+    import pytest  # noqa: PLC0415
+
+    tmp = tmp_path / "toolong.json"
+    tmp.write_text(json.dumps(long_spec, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(reel.ReelError) as err:
+        reel.load_spec(tmp)
+    # **报错要说出路**：只说「太长了」的话，下一个人的第一反应就是去调 crf。
+    assert "砍片长" in str(err.value)
+    assert "FINAL_CRF" in str(err.value), "报错没写「不许动画质」这条出路"
+
+
 def test_跨切点检查器对单源的赛场之上也要跑得起来(tmp_path):
     """上面那条只测了库函数；**检查器本身**对单源的 spec 从来没跑起来过。
 

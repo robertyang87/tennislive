@@ -262,6 +262,37 @@ PART_CRF = "12"
 FINAL_PRESET = "slow"
 FINAL_CRF = "18"
 
+# **GitHub 的单文件硬上限 100 MiB，换算过来就是这条线的片长上限。**
+#
+# 2026-08-02 伊埃拉对大坂那条第一版排了 3 分 04 秒，渲出来 **104.0 MiB**，
+# 落库那一步被 `check_staged_file_sizes.py` 拦下（run 30725160625）——**渲染
+# 五分钟全白跑**，片子只剩在 artifact 里。而这件事在写 spec 的那一刻就算得出来。
+#
+# 实测码率（3:4 画幅、crf 18、真实比赛画面，都是从仓库里的成片量的）：
+#   eala-svitolina    81.9 MiB / 158.0s = 4348 kb/s
+#   wong-gea          80.2 MiB / 155.8s = 4318 kb/s
+#   eala-osaka 第一版 104.0 MiB / 185.2s = 4712 kb/s   ← 被 100 MiB 拦下
+#
+# ⚠️ 底下那句注释里的 3315 / 3517 / 3779 kb/s 是 **9:16 时代**的数，
+# 换成 3:4 之后窗口从 608px 宽变成 810px，码率高了三成。我就是照着旧数排的段。
+#
+# 按最坏的那条 4712 kb/s 算，100 MiB 只够 178 秒；再留 5% 给码率波动，
+# 上限落在 **169 秒**。超了就**砍片长**——`FINAL_CRF` 一个字都不许动
+# （判据在 test_成片的编码参数不许为了压体积往下调）。
+GITHUB_FILE_LIMIT_MIB = 100
+MEASURED_REEL_KBPS = 4712
+REEL_SIZE_HEADROOM = 0.95
+MAX_REEL_SECONDS = (GITHUB_FILE_LIMIT_MIB * 1024 * 1024 * 8 / 1000
+                    / MEASURED_REEL_KBPS * REEL_SIZE_HEADROOM)
+
+
+def reel_length_verdict(spec: dict) -> tuple[float, float]:
+    """(这条 spec 的成片时长, 估出来的 MiB)。不判断，只算——调用方决定怎么办。"""
+    seconds = sum(float(s["end"]) - float(s["start"])
+                  for s in spec.get("segments") or ())
+    seconds += COVER_SECONDS
+    return seconds, seconds * MEASURED_REEL_KBPS * 1000 / 8 / 1024 / 1024
+
 
 class ReelError(RuntimeError):
     pass
@@ -912,6 +943,21 @@ def load_spec(path: Path) -> dict:
                 raise ReelError(
                     f"第 {index} 段的 source 是 {got!r}，不在 sources 里"
                     f"（有 {sorted(names)}）。多源 spec 的每一段都必须显式声明来源。")
+    # **片长在这儿就拦住，别等渲完五分钟再被落库那一步拦。**
+    # 这条判据是算出来的，不是拍的：见 MAX_REEL_SECONDS 上面那段。
+    seconds, mib = reel_length_verdict(spec)
+    if seconds > MAX_REEL_SECONDS:
+        raise ReelError(
+            f"这条 spec 的成片是 {seconds:.1f} 秒（{int(seconds // 60)} 分 "
+            f"{int(seconds % 60)} 秒），按实测 {MEASURED_REEL_KBPS} kb/s 约 "
+            f"{mib:.0f} MiB——**超过 GitHub 单文件 {GITHUB_FILE_LIMIT_MIB} MiB "
+            f"的硬上限**，渲出来也进不了仓库。\n"
+            f"上限是 {MAX_REEL_SECONDS:.0f} 秒。请**砍片长**："
+            "先删掉没有戏剧作用的整段（统计段、过场段），"
+            "再把每一段的窗口收到「旁白 + 1.5 秒余量」，转折点那几段一秒别让。\n"
+            "**不许改 FINAL_CRF 去换体积**——账号所有者定的：片长可以商量，画质不商量。")
+    print(f"[片长] {seconds:.1f}s，估 {mib:.0f} MiB"
+          f"（上限 {MAX_REEL_SECONDS:.0f}s / {GITHUB_FILE_LIMIT_MIB} MiB）")
     return spec
 
 
