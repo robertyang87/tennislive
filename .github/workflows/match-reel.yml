@@ -175,8 +175,11 @@ jobs:
         timeout-minutes: 5
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
-      - name: 装中文字体（只有渲染要）
-        if: github.event.inputs.mode == 'render'
+      # ⚠️ **`cover` 也要**：封面走 HTML 渲染（和知识帖同一套字），少了中文字体
+      # 出来的是豆腐块。加 cover 档那次漏了这三步，run 155 就是这么红的——
+      # 「加新能力就要同时改三处」的第 N 次。
+      - name: 装中文字体（渲染和封面都要）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         timeout-minutes: 5
         run: sudo apt-get install -y -qq fonts-noto-cjk
 
@@ -188,7 +191,7 @@ jobs:
       # `ModuleNotFoundError: No module named 'cv2'`（run 30334177432）。
       # 抠图模型 176MB，第一次跑要现下。缓存住，否则每条片子都等一遍。
       - name: 缓存抠图模型
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache@v4
         with:
           path: ~/.u2net
@@ -222,15 +225,29 @@ jobs:
           node --version
 
       - name: 缓存 Chromium
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
 
       - name: 装 Chromium
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: python -m playwright install --with-deps chromium
+
+      # **同一条源片会被下两到三次**：probe 一次、cover 一次、render 一次——
+      # 中间「丢掉不进仓库的中间物」把它删了，而它本来就不进仓库。实测一个
+      # 70 MB 的源片要下 **100.86 秒**（YouTube 限速，不是带宽），而 render
+      # 整步才 198 秒——**一半时间花在重下同一个文件上**。
+      # 键按 slug 走：一条片子的源片 URL 写死在 spec 里，不会变。
+      # ⚠️ 缓存目录在 `~` 底下，清理那一步只碰 outdir，碰不到它。
+      - name: 缓存源片（同一条片子只下一次）
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-${{ github.event.inputs.slug }}-${{ hashFiles(format('specs/reels/{0}.json', github.event.inputs.slug)) }}
+          restore-keys: reel-src-${{ github.event.inputs.slug }}-
 
       - name: 算出目录
         id: paths
@@ -369,6 +386,7 @@ jobs:
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
@@ -417,6 +435,7 @@ jobs:
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
@@ -430,6 +449,7 @@ jobs:
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
