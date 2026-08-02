@@ -1,0 +1,176 @@
+{
+  "slug": "jodar-fritz",
+  "_source": "比赛还没打，所以画面来自三条源片：霍达尔今年红土上的那场标志性胜利、他本周的八强、以及弗里茨本周的八强。三条都是官方集锦，都 1920×1080、25fps。每段的 source 显式声明。",
+  "_fixture": "北京时间 2026-08-03 02:30，华盛顿（Mubadala Citi DC Open，ATP500）男单决赛。霍达尔（世界第 24，非种子）VS 弗里茨（世界第 10，3 号种子）。ESPN ATP 20260802，两人此前无交手。",
+  "sources": {
+    "dc": "https://www.youtube.com/watch?v=IcBa9lSoUsY",
+    "clay": "https://www.youtube.com/watch?v=mD17F_32cYs",
+    "fritz": "https://www.youtube.com/watch?v=kDmeVgz1pS8"
+  },
+  "_sources_why": {
+    "dc": "ATP 官方 · 2026 华盛顿 1/4 决赛 霍达尔 d. 穆塞蒂。画面自证：记分条 JODAR / MUSETTI，ATP 角标，MUBADALA 围板。霍达尔穿白、穆塞蒂穿酒红，好分辨。⚠️ 124.2 秒之后是片尾订阅卡，一秒都不能用。",
+    "clay": "TennisTV（ATP 官方）· 2026 马德里第二轮 霍达尔 d. 德米纳尔。画面自证：红土、MADRID 围板、记分条 JODAR / DE MINAUR。这是他生涯第一次赢下前十的人，也是这条片子「从红土长出来」那一拍的画面。",
+    "fritz": "ATP 官方 · 2026 华盛顿 1/4 决赛 弗里茨 d. 米切尔森。画面自证：场地印 WASHINGTON D.C.，记分条 FRITZ / MICHELSEN。弗里茨戴白发带。"
+  },
+  "cover": {
+    "eyebrow": "开球之前",
+    "hook": "十九岁，红土上长出来\n决赛对世界第十",
+    "meta": "华盛顿站 · 决赛 · 北京时间 8 月 3 日 02:30",
+    "event_badge": {
+      "tour": "ATP",
+      "level": "500",
+      "text": "华盛顿站 · 决赛"
+    },
+    "layout": "cutout",
+    "versus": {
+      "_why": "两格都是**本场／本周抽帧抠图**，同一档来源、同一种景别（仓库规矩：要么都用抠图要么都不用；人物首选本场抽帧，服装贴近这场球）。⚠️ 霍达尔那条源片的候选墙里 8 张有 7 张是**穆塞蒂**（酒红）——人脸检测不认人是谁，是打开看才认出来的，只有 105.52 秒那张白衣的是他。脸 433px / 316px，同一量级。",
+      "split": 0.5,
+      "names": [
+        "霍达尔",
+        "弗里茨"
+      ],
+      "background": {
+        "frame_at": 60.0,
+        "shot": "wide_court"
+      },
+      "top": {
+        "frame_at": 105.52,
+        "source": "dc"
+      },
+      "bottom": {
+        "frame_at": 101.77,
+        "source": "fritz"
+      }
+    }
+  },
+  "segments": [
+    {
+      "start": 54.0,
+      "end": 65.0,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "北京时间八月三号凌晨两点半，华盛顿，ATP 五百，男单决赛。霍达尔，对弗里茨。"
+    },
+    {
+      "start": 65.0,
+      "end": 73.0,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "霍达尔十九岁，西班牙人，这一站他没有种子。"
+    },
+    {
+      "start": 73.0,
+      "end": 85.0,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "去年最后一天他才决定转职业。在那之前，他在弗吉尼亚大学一边读书一边打球。"
+    },
+    {
+      "start": 11.0,
+      "end": 20.0,
+      "source": "clay",
+      "fit": "crop",
+      "narration": "今年四月，摩洛哥，红土。他拿下生涯第一个 ATP 冠军。"
+    },
+    {
+      "start": 20.5,
+      "end": 31.5,
+      "source": "clay",
+      "fit": "crop",
+      "narration": "四月底，马德里，第二轮碰上世界第八德米纳尔。"
+    },
+    {
+      "start": 33.0,
+      "end": 43.0,
+      "source": "clay",
+      "fit": "crop",
+      "narration": "整场他只让对手拿到四局。那是他第一次赢下一个前十的人。"
+    },
+    {
+      "start": 51.9,
+      "end": 71.3,
+      "source": "clay",
+      "fit": "crop",
+      "narration": "五月，罗马，八强。上一个十几岁就打进罗马八强的，是二〇〇七年的德约科维奇；上一个同赛季进马德里和罗马八强的少年，是二〇〇五年的纳达尔。"
+    },
+    {
+      "start": 25.0,
+      "end": 36.5,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "法网首轮他只丢五局，是二〇〇五年德约科维奇之后，法网首秀丢局最少的一个。",
+      "_why": "这一句讲的是法网，但**画面不能用法网**——手里只有马德里和华盛顿两条源片，硬找一条法网的会让源片再多一条、再多一轮 probe。这里用 dc 的 24.5–37.3 那个镜头，是霍达尔自己的特写和近景，讲他的事、看着他，不算错位。"
+    },
+    {
+      "start": 86.0,
+      "end": 96.5,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "第四轮两盘落后，他翻了回来，第一次打进大满贯八强。"
+    },
+    {
+      "start": 95.2,
+      "end": 104.2,
+      "source": "clay",
+      "fit": "crop",
+      "narration": "输给他的卡雷尼奥·布斯塔说：他很快就能和卡洛斯、扬尼克掰手腕。",
+      "_why": "这一段是他在马德里赢下德米纳尔之后的镜头（95–104 秒是庆祝和网前握手）。⚠️ 这条源片 111 秒之后是片尾订阅卡，不能碰。"
+    },
+    {
+      "start": 49.9,
+      "end": 53.9,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "这一周他换到硬地。"
+    },
+    {
+      "start": 96.8,
+      "end": 103.1,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "首轮淘汰八号种子菲尔斯，次轮过锦织圭。"
+    },
+    {
+      "start": 103.3,
+      "end": 111.1,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "八强先输一比六，然后连下两盘，拿下四号种子穆塞蒂。"
+    },
+    {
+      "start": 0.5,
+      "end": 12.0,
+      "source": "fritz",
+      "fit": "crop",
+      "narration": "对面弗里茨，二十八岁，世界第十，本站三号种子。"
+    },
+    {
+      "start": 23.0,
+      "end": 40.0,
+      "source": "fritz",
+      "fit": "crop",
+      "narration": "十个巡回赛冠军，二〇二四年美网亚军，同一年的年终总决赛也是亚军。他父亲和母亲都打过职业网球，母亲进过 WTA 前十。"
+    },
+    {
+      "start": 111.3,
+      "end": 120.7,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "他叫拉法。但不是因为纳达尔，他父亲、祖父、曾祖父都叫拉法尔。"
+    },
+    {
+      "start": 40.5,
+      "end": 47.8,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "他是家里第四个。让他开始打球的，倒真的是纳达尔。"
+    },
+    {
+      "start": 17.3,
+      "end": 24.4,
+      "source": "dc",
+      "fit": "crop",
+      "narration": "十九岁的西班牙人，能不能拿下第一个五百级冠军？"
+    }
+  ]
+}
