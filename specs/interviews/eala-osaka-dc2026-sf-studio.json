@@ -260,5 +260,19 @@
     "sub": "问她那是什么感觉　她先说了两个字：气场",
     "tag": "2026 华盛顿半决赛 · 伊埃拉",
     "_copy_why": "两句都是这条片子里的原话，`lines.json` 里挨着排：\n第 23 行 `Yes, she does. She definitely has aura.`——主持人问她「面对她的力量、还有她的气场，是什么感觉」，她第一句就认了这个词。\n第 27~29 行 `I remember watching her, you know, her finals in in the Australian Open and also in the US Open.`\n主标压的就是这层落差：小时候在电视上看的人，今天在网对面被自己赢了。\n\n⚠️ **这两句有过一段来历，记在这儿免得下一个人重走**：它们本来被写进了**场上采访**那一条的封面，而那条片子里根本没有——文案是照着这段演播室采访写的，换源之后没跟着改。那次是错的，这次是对的，**因为源变了**。判据就是 `test_封面引的话必须在片子里`。"
-  }
+  },
+  "transcript_disagree_ok": {
+    "rate": 0.124,
+    "why": "逐处看过 82 项分歧（run 30732031023 的日志里有全份）。**超出闸门的部分几乎全是「whisper 更简」**：YouTube 1229 词、whisper 1105 词，光这 124 个词就占 10.1%，而总分歧 12.4%——差的全是 `um` / `uh` / `you know` / 结巴重复，whisper 丢掉、YouTube 留着。\n实质分歧只有八处，每一处这边都是对的：`pegula`→whisper 听成 pagula、`alex eala`→alexie allo、`low key`→loki、`train of thought`→jane；另有 `in to/into`、`us/u s`、`100/hundred percent`、`semifinal/semi final` 这类同义写法。**没有一处影响发出去的英文。**"
+  },
+  "suspect_ok": {
+    "1": "**是他加禄语，不是静音——这一点第二份 ASR 反过来证明了**：`small.en` 把开头整段塌缩成一个 `i've`，正是它对非英语的表现。\n⚠️ 但**拼法是我按上下文推的，没有他加禄语母语者核过**：主持人下一句自己说「他们教了我几个他加禄语的词」，她随即用 salamat 回应，所以 `Binabati kita`（我恭喜你）站得住。中文字幕只写「恭喜你」——不替他把不确定的拼写坐实。",
+    "2": "同上，`Salamat, salamat`（谢谢）。中文只写「谢谢 谢谢」。",
+    "200": "**两份 ASR 在这儿是一致的**（difflib 没报差异），所以不改英文——我听不到音轨，两边都这么听就没有理由推翻。\n它读起来确实不成句（`but more than that old.`），紧接着就是主持人接话，多半是她话说了一半被接走了。中文按「但不止于此」处理——**只译得到的那半句**，不替她把后半句补出来。"
+  },
+  "caption_gaps_ok": {
+    "406.1-408.7": "**不是漏内容，是 YouTube 把时间戳标晚了。** 第二份 ASR 在这 2.6 秒里听到的是 `Our`，而 YouTube 第 207 行本来就是 `Our final is set in DC`（标在 408.7 秒）——同一个词，早了 2.6 秒。\n所以这一句的**内容一个字都没丢**，只是字幕会比人开口晚两秒半出现。它是主持人对着镜头的收尾，全片最后一句，代价很小；为它去手改时间轴反而会和后面几行挤在一起。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-02 在 run 30732031023 上跑的 `--stage verify`，逐处核过：\n① 82 项分歧全看过，实质的八处这边都对（见 `transcript_disagree_ok.why`）；\n② 三处待听全部销账，其中开头两句他加禄语的拼法**明确标注为未经母语者核对**；\n③ 唯一那处空档查实是时间戳滞后，不是漏词。\n⚠️ 我听不到音轨（沙箱下不了媒体），所有判断都基于两份 ASR 的交叉比对 + 上下文。"
 }

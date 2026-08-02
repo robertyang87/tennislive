@@ -4,8 +4,9 @@
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
-| 1 | 0:01.7 | [▶](https://youtu.be/7b_5zcFn19o?t=9) | uh binabatita. | 恭喜你 | ⚠️ `uh binabatita.` —— 他加禄语，ASR 拼不出来。按标准拼法应是 `Binabati kita`（我恭喜你），但**我不懂他加禄语也听不到音轨**，是从上下文推的。 |
-| 2 | 0:03.6 | [▶](https://youtu.be/7b_5zcFn19o?t=11) | Oh, salamai salama. | 谢谢 谢谢 | ⚠️ `Oh, salamai salama.` —— 同上，应是 `Salamat, salamat`（谢谢）。 |
+| 1 | 0:01.7 | [▶](https://youtu.be/7b_5zcFn19o?t=9) | uh binabatita. | 恭喜你 | 👂 **是他加禄语，不是静音——这一点第二份 ASR 反过来证明了**：`small.en` 把开头整段塌缩成一个 `i've`，正是它对非英语的表现。
+⚠️ 但**拼法是我按上下文推的，没有他加禄语母语者核过**：主持人下一句自己说「他们教了我几个他加禄语的词」，她随即用 salamat 回应，所以 `Binabati kita`（我恭喜你）站得住。中文字幕只写「恭喜你」——不替他把不确定的拼写坐实。 |
+| 2 | 0:03.6 | [▶](https://youtu.be/7b_5zcFn19o?t=11) | Oh, salamai salama. | 谢谢 谢谢 | 👂 同上，`Salamat, salamat`（谢谢）。中文只写「谢谢 谢谢」。 |
 | 3 | 0:05.7 | [▶](https://youtu.be/7b_5zcFn19o?t=13) | They've been teaching me a couple | 他们教了我几个 |  |
 | 4 | 0:06.7 | [▶](https://youtu.be/7b_5zcFn19o?t=14) | of Tagalog words | 他加禄语的词 | ✏️ 已订正 |
 | 5 | 0:07.7 | [▶](https://youtu.be/7b_5zcFn19o?t=15) | while I was. Congratulations not just | 趁我在这儿 恭喜你 不只是 |  |
@@ -203,7 +204,8 @@
 | 197 | 6:16.6 | [▶](https://youtu.be/7b_5zcFn19o?t=384) | I feel like these people, | 我觉得这些人 |  |
 | 198 | 6:18.6 | [▶](https://youtu.be/7b_5zcFn19o?t=386) | they're they're here with me | 他们在这儿陪着我 |  |
 | 199 | 6:20.2 | [▶](https://youtu.be/7b_5zcFn19o?t=388) | and and of course they're here for me, | 当然也是为我而来 |  |
-| 200 | 6:22.2 | [▶](https://youtu.be/7b_5zcFn19o?t=390) | but more than that old. | 但不止于此 | ⚠️ `but more than that old.` —— 语法不成立，多半是 `but more than that, though`；后面紧跟着一个 5.4 秒的空档，可能这一句本来就没录全。 |
+| 200 | 6:22.2 | [▶](https://youtu.be/7b_5zcFn19o?t=390) | but more than that old. | 但不止于此 | 👂 **两份 ASR 在这儿是一致的**（difflib 没报差异），所以不改英文——我听不到音轨，两边都这么听就没有理由推翻。
+它读起来确实不成句（`but more than that old.`），紧接着就是主持人接话，多半是她话说了一半被接走了。中文按「但不止于此」处理——**只译得到的那半句**，不替她把后半句补出来。 |
 | 201 | 6:27.6 | [▶](https://youtu.be/7b_5zcFn19o?t=395) | Um, | 那么 |  |
 | 202 | 6:28.1 | [▶](https://youtu.be/7b_5zcFn19o?t=396) | congratulations on a groundbreaking win | 恭喜你拿下这场里程碑式的胜利 |  |
 | 203 | 6:30.3 | [▶](https://youtu.be/7b_5zcFn19o?t=398) | and we look forward to seeing you | 我们期待明天看到你 |  |
@@ -217,14 +219,12 @@
 
 ## 还欠着的
 
-- **#1**（0:01.7，[跳过去](https://youtu.be/7b_5zcFn19o?t=9)）`uh binabatita.` —— 他加禄语，ASR 拼不出来。按标准拼法应是 `Binabati kita`（我恭喜你），但**我不懂他加禄语也听不到音轨**，是从上下文推的。
-- **#2**（0:03.6，[跳过去](https://youtu.be/7b_5zcFn19o?t=11)）`Oh, salamai salama.` —— 同上，应是 `Salamat, salamat`（谢谢）。
-- **#200**（6:22.2，[跳过去](https://youtu.be/7b_5zcFn19o?t=390)）`but more than that old.` —— 语法不成立，多半是 `but more than that, though`；后面紧跟着一个 5.4 秒的空档，可能这一句本来就没录全。
+（无）
 
 听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`（值写一句为什么），别默默留着——**一个常年挂着的待办和没有待办长得一模一样**。
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **398.1–400.7 秒**（片内，2.6 秒空白，[跳过去](https://youtu.be/7b_5zcFn19o?t=406)）　**还没销账**
+- **398.1–400.7 秒**（片内，2.6 秒空白，[跳过去](https://youtu.be/7b_5zcFn19o?t=406)）　**不是漏内容，是 YouTube 把时间戳标晚了。** 第二份 ASR 在这 2.6 秒里听到的是 `Our`，而 YouTube 第 207 行本来就是 `Our final is set in DC`（标在 408.7 秒）——同一个词，早了 2.6 秒。　所以这一句的**内容一个字都没丢**，只是字幕会比人开口晚两秒半出现。它是主持人对着镜头的收尾，全片最后一句，代价很小；为它去手改时间轴反而会和后面几行挤在一起。
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。

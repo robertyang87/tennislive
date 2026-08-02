@@ -1805,3 +1805,50 @@ def test_成片太大要走Release而不是撑爆git():
         "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
     assert iv.index("gh release upload") < iv.index("git commit"), (
         "Release 那一步排在提交后面了，文件已经进 index，删不删都晚了")
+
+
+def test_分歧率认领要钉在当时那次观测上():
+    """分歧率超闸可以认领，但认领不能变成永久豁免。
+
+    长采访天然会超：这个指标按词比，而 whisper 会把 `um`/`uh`/`you know`/
+    结巴整个丢掉，YouTube 全留着。演播室那条实测 YouTube 1229 词、
+    whisper 1105 词——**光这 124 个词就占 10.1%**，而总分歧才 12.4%。
+    超出闸门的部分几乎全是「whisper 更简」，不是「英文有错」。
+
+    没去改 `TRANSCRIPT_MAX_DISAGREE`：那个数护着所有片子，而沙箱里跑不了
+    whisper（IP 被挡），没法拿存量重新标定——改一个动不了的数等于把所有
+    片子的闸一起放松，还验不了后果。
+
+    四头都要卡：
+    - 不认领 → 拦，**而且报错要说出路**（照抄一行能贴进 spec 的 JSON）
+    - 认领了但实测比认领值还高 → 拦。这是关键的一条：它把认领钉在当时那次
+      观测上，以后真变差了闸会重新响，而不是「认领过一次就永久放行」
+    - 高过天花板 → 拦。那个量级不是虚词能解释的
+    - 认领得当 → 放行
+    """
+    from tools.build_interview_clip import (
+        TRANSCRIPT_DISAGREE_CEILING,
+        _check_disagree_claim,
+    )
+
+    path = ROOT / "x.md"
+    with pytest.raises(SystemExit) as e:
+        _check_disagree_claim({}, 0.124, path)
+    assert "transcript_disagree_ok" in str(e.value), "报错没说出路"
+
+    with pytest.raises(SystemExit, match="比认领的"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.124, "why": "看过"}}, 0.150, path)
+
+    with pytest.raises(SystemExit, match="天花板"):
+        _check_disagree_claim(
+            {"transcript_disagree_ok": {"rate": 0.99, "why": "看过"}},
+            TRANSCRIPT_DISAGREE_CEILING + 0.01, path)
+
+    # 光写个 rate 不写 why 也不算——认领要留下判据，不是填个数
+    with pytest.raises(SystemExit):
+        _check_disagree_claim({"transcript_disagree_ok": {"rate": 0.2}}, 0.124, path)
+
+    _check_disagree_claim(
+        {"transcript_disagree_ok": {"rate": 0.124, "why": "逐处看过：差的全是虚词"}},
+        0.124, path)

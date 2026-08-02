@@ -924,10 +924,56 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 恰恰是这一趟最贵的产出（要下音频、要跑模型），抛之前先把它印出来。
     probe_gap_speech(spec, caption_gaps(spec, outdir), mine, outdir)
     if rate > TRANSCRIPT_MAX_DISAGREE:
+        _check_disagree_claim(spec, rate, path)
+    return path
+
+
+# 认领最多只能拉到这儿。再高就不是「虚词多」能解释的了，必然有整段对不上。
+TRANSCRIPT_DISAGREE_CEILING = 0.18
+
+
+def _check_disagree_claim(spec: dict, rate: float, path: Path) -> None:
+    """分歧率超闸时，**允许显式认领**，但认领要留下判据。
+
+    照 `mixed_fps` / `silent_source` 那套：一律红会把长采访整个挡在门外，
+    一律放行又回到「兜底出事的时候不吭声」。认领这一步是让这个取舍留下判据。
+
+    **为什么长采访会超**：这个指标按词比，而 whisper 会把 `um` / `uh` /
+    `you know` / 结巴重复整个丢掉，YouTube 全留着。演播室那条实测
+    YouTube 1229 词、whisper 1105 词——**光是这 124 个词就占 10.1%**，
+    而总分歧才 12.4%。也就是说超出闸门的部分几乎全是「whisper 更简」，
+    不是「英文有错」。片子越长、越口语，这个偏差越大。
+
+    **没有去改 `TRANSCRIPT_MAX_DISAGREE`**：那个数护着所有片子，
+    而沙箱里跑不了 whisper（IP 被 YouTube 挡），没法拿存量重新标定。
+    改一个动不了的数，等于把所有片子的闸一起放松，还验不了后果。
+
+    认领要写清两样，缺一不可：
+
+    - `rate`：**当时量到的那个数**。它把认领钉在这一次的观测上——
+      以后真的变差了（比如换了源、加了段落），实测超过认领值，闸重新响。
+      不写这个的话，「认领过一次」就成了永久豁免
+    - `why`：为什么这些分歧不影响发出去的英文。逐处看过才写得出来
+    """
+    claim = spec.get("transcript_disagree_ok") or {}
+    declared, why = claim.get("rate"), str(claim.get("why") or "").strip()
+    if not (isinstance(declared, int | float) and why):
         raise SystemExit(
             f"两份转写对不上 {rate:.1%}，超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}。"
-            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。")
-    return path
+            f"**不出片。** 逐处看 {path}，把确认过的写进 spec 的 `en_fixed`。\n"
+            "逐处看完、确认剩下的分歧不影响发出去的英文（长采访多半是 whisper "
+            "把虚词丢了），就在 spec 里显式认领：\n"
+            f'  "transcript_disagree_ok": {{"rate": {rate:.3f}, "why": "逐处看过：……"}}')
+    if rate > declared:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 比认领的 {declared:.1%} 还高——认领是钉在当时那次观测上的，"
+            "现在变差了。重新逐处看过再更新 `transcript_disagree_ok.rate`。")
+    if rate > TRANSCRIPT_DISAGREE_CEILING:
+        raise SystemExit(
+            f"分歧 {rate:.1%} 超过认领的天花板 {TRANSCRIPT_DISAGREE_CEILING:.0%}。"
+            "这个量级不是虚词能解释的，必然有整段对不上——认领挡不住，去查源。")
+    print(f"[转写] 分歧 {rate:.1%} 超过闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}，"
+          f"但 spec 里认领了（≤{declared:.1%}）：{why[:60]}…")
 
 
 def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
