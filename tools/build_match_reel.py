@@ -272,18 +272,28 @@ FINAL_CRF = "18"
 #   eala-svitolina    81.9 MiB / 158.0s = 4348 kb/s
 #   wong-gea          80.2 MiB / 155.8s = 4318 kb/s
 #   eala-osaka 第一版 104.0 MiB / 185.2s = 4712 kb/s   ← 被 100 MiB 拦下
+#   eala-osaka 剪短后  94.5 MiB / 158.8s = **4990 kb/s**
+#
+# ⚠️ **剪短之后码率反而更高。** 砍掉的那一段是全片最静的（第二盘开局的普通
+# 回合），留下的全是高动量的关键分，平均动量上去了。所以「按当前码率线性外推」
+# 会低估——第一版按 4712 估这一版是 89 MiB，实际 94.5 MiB。常量取**实测最高**
+# 的那一条，别取平均。
 #
 # ⚠️ 底下那句注释里的 3315 / 3517 / 3779 kb/s 是 **9:16 时代**的数，
 # 换成 3:4 之后窗口从 608px 宽变成 810px，码率高了三成。我就是照着旧数排的段。
 #
-# 按最坏的那条 4712 kb/s 算，100 MiB 只够 178 秒；再留 5% 给码率波动，
-# 上限落在 **169 秒**。超了就**砍片长**——`FINAL_CRF` 一个字都不许动
+# 按最坏的那条 4990 kb/s 算，100 MiB 只够 168 秒。留 2 MiB 给下一个新高，
+# 闸设在 **98 MiB ≈ 165 秒**。超了就**砍片长**——`FINAL_CRF` 一个字都不许动
 # （判据在 test_成片的编码参数不许为了压体积往下调）。
+#
+# ⚠️ **别把余量留得太狠。** 我第一版拿 5% 当余量，上限成了 160 秒，
+# 当场把**已经发出去、实际只有 81.9 MiB** 的 eala-svitolina 判成不合格——
+# 「判据宁可窄，不可宽」：拦住一条本来能过的片子，比放过一条更糟，
+# 因为下一个人会照着这个假上限去砍内容。
 GITHUB_FILE_LIMIT_MIB = 100
-MEASURED_REEL_KBPS = 4712
-REEL_SIZE_HEADROOM = 0.95
-MAX_REEL_SECONDS = (GITHUB_FILE_LIMIT_MIB * 1024 * 1024 * 8 / 1000
-                    / MEASURED_REEL_KBPS * REEL_SIZE_HEADROOM)
+MEASURED_REEL_KBPS = 4990
+REEL_SIZE_BUDGET_MIB = 98
+MAX_REEL_SECONDS = REEL_SIZE_BUDGET_MIB * 1024 * 1024 * 8 / 1000 / MEASURED_REEL_KBPS
 
 
 def reel_length_verdict(spec: dict) -> tuple[float, float]:
@@ -952,7 +962,7 @@ def load_spec(path: Path) -> dict:
             f"{int(seconds % 60)} 秒），按实测 {MEASURED_REEL_KBPS} kb/s 约 "
             f"{mib:.0f} MiB——**超过 GitHub 单文件 {GITHUB_FILE_LIMIT_MIB} MiB "
             f"的硬上限**，渲出来也进不了仓库。\n"
-            f"上限是 {MAX_REEL_SECONDS:.0f} 秒。请**砍片长**："
+            f"上限是 {MAX_REEL_SECONDS:.0f} 秒（{REEL_SIZE_BUDGET_MIB} MiB）。请**砍片长**："
             "先删掉没有戏剧作用的整段（统计段、过场段），"
             "再把每一段的窗口收到「旁白 + 1.5 秒余量」，转折点那几段一秒别让。\n"
             "**不许改 FINAL_CRF 去换体积**——账号所有者定的：片长可以商量，画质不商量。")
