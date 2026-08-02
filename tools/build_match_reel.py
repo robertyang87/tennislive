@@ -1874,6 +1874,24 @@ def cover_length(voice_path: Path | None) -> float:
     return length
 
 
+# 一段画面里最多允许多少秒没人在说话。
+#
+# 账号所有者 2026-08-02：「不是补全的问题，我是说有些没有字幕了，给漏掉了」
+# 「利用完整区域，整个里面去读一下」。按时间轴通读，jodar-fritz **68.7s /
+# 185.4s（37%）屏幕上没有字**——不是字幕丢了，是那几秒没人在说话，集中在每段
+# 后半截（短句配了长窗口）。
+#
+# **门槛卡「最长的一段空白」，不卡总占比。** 1~3 秒的空是句子之间正常的换气，
+# 填满反而赶；难受的是一段连着 5~6 秒什么都没有。量出来的分布很干净：
+#
+#     补之前 jodar   最长一段 6.44s，>4s 的有 5 段
+#     补之后 jodar   最长一段 2.89s，>3s 的 0 段
+#     eala-pegula    最长一段 2.99s，>3s 的 0 段
+#
+# 4.0s 落在 2.99 和 5.03 之间，两头都不贴边。
+MAX_SILENT_GAP = 4.0
+
+
 def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
     """量每段旁白的真实时长，把**超出自己那一段**的全列出来。
 
@@ -1897,6 +1915,33 @@ def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
                         f"{spoken_of[index] - seg.length:.2f}s"
                         f"　「{seg.narration[:24]}…」")
     return spoken_of, over
+
+
+def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
+    """反过来的那一半：哪几段**空得太久**。
+
+    和 `narration_overruns` 量的是**同一个数**，只是看另一头——余量为负是旁白
+    写长了，余量太大是这一段大半时间没人在说话。这个数一直印在
+    `mode=narration` 的输出里（「余量 +6.44s」），只是被当成「还很宽裕」读了，
+    **没有人把它读成「这里有六秒半的哑场」**。
+
+    所以这一条不要新数据、不要新一趟渲染：`mode=narration` 1 分 45 秒跑完就能
+    回答，而它以前只回答一半。
+
+    没有旁白的段不算——那是**故意**留给现场声的（见「有原声的片子：说话时压，
+    不说话时放开」），不是忘了写。
+    """
+    idle: list[str] = []
+    for index, seg in enumerate(segments):
+        if index not in spoken_of:
+            continue                      # 整段没有旁白：留给现场声，故意的
+        gap = seg.length - spoken_of[index]
+        if gap > MAX_SILENT_GAP:
+            idle.append(f"  第 {index + 1} 段：画面 {seg.length:.1f}s，"
+                        f"旁白只说了 {spoken_of[index]:.2f}s，"
+                        f"**{gap:.2f}s 没人在说话**"
+                        f"　「{seg.narration[:24]}…」")
+    return idle
 
 
 def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
@@ -2223,6 +2268,22 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             + "\n\n两条出路，选一条：把这几段的旁白删短，或者把画面拉长"
               "（`end` 往后挪，但别越过下一段的 `start`）。")
 
+    # **同一个数的另一头：哪几段大半时间没人在说话。** 排在这儿是因为它和上面
+    # 那道闸用的是同一批 TTS 时长，一个源片都不用碰——而下面就要开始编码了，
+    # 在这之前红掉省的是整趟渲染。
+    idle_total = sum(max(0.0, segments[i].length - v) for i, v in spoken_of.items())
+    total_secs = sum(seg.length for seg in segments)
+    print(f"[查哑场] 没人说话合计 {idle_total:.1f}s / {total_secs:.1f}s"
+          f"（{idle_total / total_secs:.0%}），门槛：单段不超过 {MAX_SILENT_GAP}s")
+    idle = silent_stretches(segments, spoken_of)
+    if idle:
+        raise ReelError(
+            "有几段大半时间屏幕上没有字——**不是字幕丢了，是没人在说话**：\n"
+            + "\n".join(idle)
+            + "\n\n两条出路：把这几段的旁白补长（事实从 spec 已有的事实出处里取），"
+              "或者把窗口收短（`end` 往前挪）。"
+              "\n⚠️ 1~3 秒的空是句子之间正常的换气，别填——门槛卡的是"
+              f" {MAX_SILENT_GAP}s 以上的整段哑场。")
 
     # 跟踪要**先整条镜头跟完再切**，所以排在切片之前统一算（见 track_shots）
     tracks = track_shots(sources, segments, source_w)
@@ -2492,16 +2553,33 @@ def main() -> int:
               f"（音色 {args.voice} {args.rate}）")
         for index, secs in sorted(spoken.items()):
             room = segments[index].length - secs
-            flag = "超出" if room < -0.12 else ("很紧" if room < 0.3 else "")
+            flag = ("超出" if room < -0.12 else "很紧" if room < 0.3
+                    else "**哑场**" if room > MAX_SILENT_GAP else "")
             print(f"  第 {index + 1:>2d} 段 画面 {segments[index].length:5.1f}s "
                   f"旁白 {secs:5.2f}s 余量 {room:+5.2f}s {flag}")
+        # **同一个数的另一头也要报。** 余量为负是旁白写长了，余量太大是这一段
+        # 大半时间没人在说话——这个数一直印在上面那一行里，只是从来没人把它
+        # 读成「哑场」。整片的占比也印出来：只在超标时出声的检查证明不了它看过。
+        idle_total = sum(max(0.0, segments[i].length - v) for i, v in spoken.items())
+        idle = silent_stretches(segments, spoken)
+        print(f"\n[查哑场] 没人说话合计 {idle_total:.1f}s / {total:.1f}s"
+              f"（{idle_total / total:.0%}），单段最长 "
+              f"{max((segments[i].length - v for i, v in spoken.items()), default=0):.2f}s"
+              f"（门槛 {MAX_SILENT_GAP}s）")
+        if idle:
+            print("\n以下几段大半时间屏幕上没有字——不是字幕丢了，是没人在说话：")
+            print("\n".join(idle))
+            print("\n两条出路：把这几段的旁白补长（事实从 spec 的事实出处里取），"
+                  "或者把窗口收短（`end` 往前挪）。"
+                  "\n⚠️ 1~3 秒的空是句子之间正常的换气，别填。")
         if over:
             print("\n以下几段会和下一段的语音、字幕叠在一起：")
             print("\n".join(over))
             print("\n两条出路：把这几段的旁白删短，或者把画面拉长"
                   "（`end` 往后挪，但别越过下一段的 `start`）。")
+        if over or idle:
             return 1
-        print("\n[查旁白] 每段都装得下，这条 spec 渲得过这道闸。")
+        print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")
         return 0
 
     if args.dry_run:

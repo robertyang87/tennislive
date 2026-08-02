@@ -3942,7 +3942,11 @@ def test_轮次要写半决赛不写四强():
                     yield item
                 elif isinstance(item, list):
                     yield from (x for x in item if isinstance(x, str))
-        for key, value in (spec.get("_push") or {}).items():
+        # ⚠️ **这儿原来读的是 `_push`，而 push_reel 读的是 `push`。**
+        # `_` 开头的按本仓库的约定是写给下一个人的注解，只有三条 spec 有；
+        # 真正会发进微信的 `push.summary` / `push.lead` 有十一条，**一条都没被
+        # 扫到**。docstring 明明写着「推送那几栏」——判据的主语错了，而它绿着。
+        for key, value in (spec.get("push") or {}).items():
             if not key.startswith("_") and isinstance(value, str):
                 yield value
 
@@ -4119,11 +4123,14 @@ def test_推送的文案输入不许留上一条片子的默认值():
             f"{name} 又带上了默认值 {inputs[name].get('default')!r}——"
             "那是上一条片子的文案，下一条不填就顶着它发出去")
 
-    # 闸要在 checkout 之前，别等渲染跑完
-    steps = _steps(WORKFLOW.read_text(encoding="utf-8"))
-    gate = "push=true 必须自己填标题，不许吃默认值"
-    assert gate in steps, "缺了「两个都空就别发」那道闸"
-    assert steps.index(gate) < steps.index("render — 出成片")
+    # ⚠️ **不许再要求「命令行上至少填一个」。** 原来有一道这样的闸，而
+    # matchup / summary / lead 的正确出处是 spec（对阵从 cover.versus.names 算，
+    # 其余写在 push 块里）。那道闸等于强制手打，而**手打的字任何测试都看不见**
+    # ——2026-08-02 我就在输入里把「十九岁」打成了「九岁」。
+    yaml_only = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    assert "inputs.matchup == ''" not in yaml_only, (
+        "又要求在命令行上填标题了——那会逼着人手打 spec 该带的字，"
+        "而手打的字不过任何一条内容测试")
 
 
 def test_查旁白那条路不许碰源片也不许写产物():
@@ -4565,3 +4572,112 @@ def test_封面那一路的溶解底料不许在委托链上掉队():
     assert "tail: float" in poster, "`build_versus_poster` 没有收 tail 的口子"
     assert "seconds + tail" in poster, (
         "`build_versus_poster` 收了 tail 却没用在时长上——签名对了，实现是空的")
+
+
+def test_推送的标题和正文出处是spec不是命令行():
+    """`matchup` / `summary` / `lead` 的出处是 spec，不是工作流输入。
+
+    2026-08-02 我在工作流输入里手打推送正文，把「十九岁的霍达尔」打成
+    「**九岁**的霍达尔」，还把「8 号种子 / 四号种子」混着写——在微信发出去之前
+    取消了那趟 run 才没出事。
+
+    **根子不是手滑，是那句话没有judge能看见它**：写进 spec 的字会被
+    `test_轮次要写半决赛不写四强`（推送那几栏）和 `test_人名要以译名表为准`
+    扫到；敲在 workflow_dispatch 输入里的字，**一条测试都过不了**，直接进微信。
+
+    所以判据钉三样：
+
+    1. 对阵**算得出来**，不用填——`push_meta` 从 `cover.versus.names` 拼
+    2. 每条**已经推送过**的 spec 都要自带 `summary` 或 `lead`，否则下次推它
+       又得手打
+    3. 两样都没有时 `resolve_meta` 要**抛错并说清去补哪个字段**，别静静发一条
+       标题末尾空着的消息
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from push_reel import push_meta, resolve_meta  # noqa: PLC0415
+    from types import SimpleNamespace  # noqa: PLC0415
+
+    checked = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        if not ((spec.get("cover") or {}).get("versus") or {}).get("names"):
+            continue          # solo 版式（网球有故事）算不出对阵，靠 summary
+        meta = push_meta(path)
+        assert meta["matchup"], (
+            f"{path.name} 有 cover.versus.names 却算不出对阵——"
+            "那就只能在命令行上手打，而手打的字不过任何一条内容测试")
+        checked += 1
+    assert checked >= 10, f"只校到 {checked} 条 spec，判据失效了"
+
+    # 两样都没有 → 必须抛错，而且要说清去补哪儿
+    import tempfile  # noqa: PLC0415
+
+    with tempfile.TemporaryDirectory() as tmp:
+        fake = Path(tmp) / "x.json"
+        fake.write_text(json.dumps({"cover": {"eyebrow": "赛场之上"}}),
+                        encoding="utf-8")
+        args = SimpleNamespace(matchup="", score="", event="", summary="", lead="")
+        try:
+            resolve_meta(Path(tmp) / "x.copy.html", args)
+        except SystemExit as exc:
+            assert "summary" in str(exc), (
+                f"报错没说去补哪个字段：{exc}")
+        else:
+            raise AssertionError("spec 里什么都没有，还是算出了标题——这条会发出"
+                                 "一条末尾空着的消息")
+
+
+def test_一段里不许有整段的哑场():
+    """账号所有者 2026-08-02：「不是补全的问题，我是说有些没有字幕了，给漏掉了」
+    「利用完整区域，整个里面去读一下」。
+
+    按时间轴通读已发的成片：**jodar-fritz 68.7s / 185.4s（37%）屏幕上没有字**。
+    不是字幕丢了——**是那几秒没人在说话**，集中在每段后半截（短句配了长窗口）。
+
+    最刺眼的一点：**这个数一直印在 `mode=narration` 的输出里**（「余量 +6.44s」），
+    只是被当成「还很宽裕」读了，没有人把它读成「这里有六秒半的哑场」。
+    所以这一条不需要新数据、不需要新一趟渲染，只需要**把同一个数的另一头也判一次**。
+
+    门槛卡「单段最长」，不卡总占比——1~3 秒是句子之间正常的换气，填满反而赶。
+    分布很干净，4.0s 两头都不贴边：
+
+        补之前 jodar   最长一段 6.44s，>4s 的有 5 段
+        补之后 jodar   最长一段 2.89s
+        eala-pegula    最长一段 2.99s
+
+    没有旁白的段**不算**：那是故意留给现场声的（「有原声的片子：说话时压，
+    不说话时放开」），不是忘了写。
+    """
+    reel = _reel()
+    from types import SimpleNamespace  # noqa: PLC0415
+
+    def seg(length, narration="一句话"):
+        return SimpleNamespace(length=length, narration=narration)
+
+    # ① 已发那一版的真实数字必须被拦下来
+    was = [seg(11.0), seg(11.5), seg(17.0), seg(10.5), seg(10.0)]
+    spoken = {0: 4.56, 1: 5.18, 2: 11.68, 3: 5.47, 4: 5.71}
+    caught = reel.silent_stretches(was, spoken)
+    assert len(caught) == 5, (
+        f"补之前那五段哑场只抓到 {len(caught)} 段——门槛松了")
+    assert "6.4" in caught[0], f"报错里没写清楚空了多久：{caught[0]}"
+
+    # ② 补之后的真实数字必须放行（门槛不能收得太狠）
+    now = [seg(11.0), seg(8.0), seg(12.0), seg(9.0)]
+    assert reel.silent_stretches(
+        now, {0: 8.37, 1: 6.08, 2: 9.89, 3: 5.70}) == [], (
+        "补完之后（单段最长 3.30s）被误判成哑场——1~3 秒是正常换气")
+
+    # ③ 整段没有旁白的不算：那是故意留给现场声的
+    assert reel.silent_stretches([seg(20.0, "")], {}) == [], (
+        "整段没有旁白的被判成哑场了——那是留给现场声的，不是忘了写")
+
+    # ④ 闸要**排在编码之前**：它用的是 TTS 时长，一个源片都不用碰，
+    #    在这之前红掉省的是整趟渲染。
+    body = "\n".join(
+        line for line in inspect.getsource(reel.render).splitlines()
+        if not line.lstrip().startswith("#"))
+    assert "silent_stretches(" in body, "render 里没接这道闸"
+    assert body.index("silent_stretches(") < body.index("cut_segment("), (
+        "哑场那道闸排在分段编码之后了——它一个源片都不用碰，"
+        "应该和「旁白超长」那道一起排在编码之前")
