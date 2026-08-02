@@ -2965,7 +2965,11 @@ def _trivia_topic_score(story: TournamentStory, digest: Digest) -> float:
 
     # 相关新闻本身也是热点：命中选题关键词的官方/媒体新闻，即使没有绑定到
     # 当日任何一场比赛，也应把该选题顶上来（例如某球员退役公告、某项纪录被
-    # 打破、某条规则改革见报）。全局信号池由 cmd_digest 从趋势雷达写入。
+    # 打破、某条规则改革见报）。
+    # ⚠️ 这个全局池原来由 `cmd_digest` 从趋势雷达写入，而 cmd_digest 在
+    # 2026-07-31 随日报一起删了——**现在没有任何调用方填它**，这一段恒为空。
+    # 代码留着是因为它本身是对的（谁填谁受益）；要它重新起作用得先决定
+    # 知识帖这条路要不要自己去抓趋势，那是口径选择不是修 bug。
     news_pool = getattr(digest, "trend_signals", None) or []
     news_signal = 0.0
     for signal in news_pool:
@@ -3004,19 +3008,30 @@ def story_selection_evidence(story: TournamentStory, digest: Digest) -> dict:
 
     prior = _TRIVIA_VIRAL_PRIOR.get(story.slug, 0.0)
     topic_score = _trivia_topic_score(story, digest)
+    matches = digest.results + digest.live + digest.schedule
+    signal_count = sum(len(match.trend_signals) for match in matches)
+    heat_total = float(sum(match.media_heat + match.search_heat for match in matches))
+    # 说清楚是哪一支在排序。`media_heat` / `search_heat` / `trend_signals`
+    # 只有 apply_trend_signals() 会写，而它只挂在 `tennislive content` 上；
+    # 知识帖这条路不跑它，于是这三维恒为空——**兜底那一支 100% 命中，
+    # 而原来的话术说的是「信号优先」**。两句写死成一句的时候，
+    # 「今天没有信号」和「这条路从不看信号」在台账上长得一模一样，
+    # 2026-08-02 金满贯那次就是这么混过去的（trend_signal_count 记着 0，
+    # 而 basis 还写着 live signals first，没人看得出差别在哪）。
     evidence.update(
         {
             "selection_basis": (
                 "live media/search signals first; intrinsic curiosity and "
                 "shareability provide the no-signal fallback"
+                if signal_count or heat_total
+                else "no media/search signals attached on this path; ranked on "
+                "match context, intrinsic curiosity, shareability and cooldown"
             ),
             "viral_prior": prior,
             "topic_score": topic_score,
             "live_relevance_score": max(0.0, topic_score - prior),
-            "trend_signal_count": sum(
-                len(match.trend_signals)
-                for match in digest.results + digest.live + digest.schedule
-            ),
+            "trend_signal_count": signal_count,
+            "media_search_heat": heat_total,
         }
     )
     return evidence

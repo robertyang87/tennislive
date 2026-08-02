@@ -2021,6 +2021,49 @@ def test_story_selection_evidence_records_viral_and_live_signals(sample_digest):
     assert "selection_basis" in evidence
 
 
+def test_没有媒体搜索信号时台账要说自己走的是兜底那一支(sample_digest):
+    """「今天没有信号」和「这条路从不看信号」不许在台账上长成一个样子。
+
+    `media_heat` / `search_heat` / `trend_signals` 只有 `apply_trend_signals()`
+    会写，而它只挂在 `tennislive content` 上。知识帖走的是 `knowledge-adhoc`，
+    从不调它——于是**兜底那一支 100% 命中**，而 basis 一直印着「信号优先」。
+
+    2026-08-02 金满贯那次推送的 story.json 里，`trend_signal_count: 0` 和
+    「live media/search signals first」并排躺着，没人能从台账上看出哪一支在
+    排序。又一次「兜底出事的时候不吭声」。
+    """
+    from tennislive.render.tournament_story import STORIES, story_selection_evidence
+
+    story = next(s for s in STORIES if s.slug == "longest-match")
+    matches = sample_digest.results + sample_digest.live + sample_digest.schedule
+    for match in matches:
+        match.trend_signals = []
+        match.media_heat = 0
+        match.search_heat = 0
+
+    quiet = story_selection_evidence(story, sample_digest)
+    assert quiet["trend_signal_count"] == 0
+    assert quiet["media_search_heat"] == 0
+    assert "signals first" not in quiet["selection_basis"]
+    assert "no media/search signals" in quiet["selection_basis"]
+
+    # 判据自己的判据：证明那句话在有信号时**真的会出现**，否则上面那两条
+    # 断言恒真——开关拧回去也一样绿，和没写一个样。
+    assert matches, "sample_digest 里一场比赛都没有，这条测试的主语没了"
+    matches[0].media_heat = 12
+    loud = story_selection_evidence(story, sample_digest)
+    assert loud["media_search_heat"] == 12
+    assert "signals first" in loud["selection_basis"]
+
+    # 另一半也要单独验：热度为 0 但挂着 trend_signals 时同样算「有信号」。
+    matches[0].media_heat = 0
+    matches[0].trend_signals = [{"source": "x", "title": "y"}]
+    signalled = story_selection_evidence(story, sample_digest)
+    assert signalled["media_search_heat"] == 0
+    assert signalled["trend_signal_count"] == 1
+    assert "signals first" in signalled["selection_basis"]
+
+
 def test_knowledge_titles_are_specific_and_fit_xiaohongshu(sample_digest):
     from tennislive.render.knowledge import knowledge_copy, knowledge_title
     from tennislive.render.tournament_story import STORIES
