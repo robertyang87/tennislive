@@ -17,6 +17,18 @@ jobs:
           # output/ is the public delivery archive and is currently over 1 GB.
           # Unit tests need source, workflow contracts, data and curated assets,
           # but must not download every previously published card/video.
+          #
+          # 例外是 output/interviews：「赛后开麦」那条线的转写产物
+          #（lines.json / .ass / 核对表，几百 KB）。少了它 test_interview_clip
+          # 里的 spec 测试**永远 skip**——而「一个常年不变的 skip 数字和一个
+          # 常年不变的 fail 数字一样，都是没人真的看过」。
+          # ⚠️ 成片 mp4 也落在这个目录下，等条数多起来要改成非 cone 模式按
+          # 后缀挑，别让 CI 每次拉几十兆。
+          #
+          # ⚠️⚠️ **这个块是纯路径列表，不是 YAML**——里面写 `#` 不会被当注释，
+          # 会原样传给 `git sparse-checkout set`，报
+          # `fatal: specify directories rather than patterns`。说明只能写在
+          # 块外面（就是这儿）。判据落在 `test_ci的sparse块里不许有注释`。
           sparse-checkout: |
             .github
             assets
@@ -26,15 +38,23 @@ jobs:
             src
             tests
             tools
+            output/interviews
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
+      # `fonts-noto-core` 不是可选项：字幕切行要**量** Noto Sans 的实际字宽，
+      # 少了它 fontconfig 悄悄回退到 DejaVu（宽 8%），量出来的行宽和渲出来的
+      # 对不上。代码里缺字体直接报错不回退，所以漏装这个包 CI 会红而不是假绿。
+      # 判据落在 `test_ci装的字体覆盖代码要的每一个`。
+      #
       # ffmpeg 是给 `test_现场声不许在最后一句话结束时断掉` 用的：闪避那道闸
       # 只有**真跑一次混音**才验得出来（查源码里有没有 `apad` 拦不住「它从来
       # 没工作过」）。那个 bug 在九条已发的成片里中了七条，值这十几秒。
-      - name: 安装中文字体和 ffmpeg（卡片图 / 混音测试需要）
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk ffmpeg
+      - name: 安装中文字体和 ffmpeg（卡片图 / 字宽 / 混音测试需要）
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
       - name: 安装依赖
         run: pip install -q -e ".[dev,webrender,visualqa]"
       # 与 daily.yml 同环境：装上 Chromium 测真实 HTML 渲染路径，

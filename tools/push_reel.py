@@ -174,7 +174,7 @@ def wait_for_video(url: str, *, attempts: int = 8, delay: float = 15.0,
 
 
 def headline(outdir: Path, column: str, matchup: str, score: str = "",
-             event: str = "", summary: str = "") -> str:
+             event: str = "", summary: str = "", date: str = "") -> str:
     """`7.28 赛场之上 | 华盛顿 ATP500 首轮 | 锦织圭 2:1 商竣程`。
 
     末尾那一格有两种写法，按这条片子哪种更说得清选：
@@ -188,9 +188,21 @@ def headline(outdir: Path, column: str, matchup: str, score: str = "",
     整句 `TITLE_MAX`（见 `_fits`）。**讲不完的不要硬塞进标题**——用 `--lead`
     放到正文第一行去详细概括，那儿有的是地方。
     """
-    found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
+    # **日期优先用显式给的那个。** 赛场之上的产物按日期分目录
+    # （`output/2026-07-28/reel/…`），所以从路径里解得出来；而「赛后开麦」
+    # 按 slug 存（`output/interviews/<slug>/`）——同一场采访哪天发都可能，
+    # 目录里没有日期是**故意的**，不是漏了。缺日期就报错等于把这条线整个挡在
+    # 门外，所以给一条显式的路：`--date`。
+    if date:
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise SystemExit(f"--date 要写成 YYYY-MM-DD，收到 {date!r}")
+        found = re.match(r"(\d{4})-(\d{2})-(\d{2})", date)
+    else:
+        found = _DATE_IN_PATH.search(f"/{outdir.as_posix()}/")
     if not found:
-        raise SystemExit(f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…")
+        raise SystemExit(
+            f"从 {outdir} 里取不到日期，目录该长成 output/YYYY-MM-DD/…；"
+            "产物不按日期分目录的线（如 output/interviews/<slug>/）请显式传 --date")
     _, month, day = found.groups()
     if summary.strip():
         pair = summary.strip()
@@ -347,10 +359,16 @@ def column_of(copy_path: Path) -> str:
     这是「栏目决定封面模板」那条的另一半：**栏目只有一个出处**，海报和标题
     都从它来。读不到就报错——悄悄退回一个默认值，正是上面那个错本身。
     """
-    eyebrow = str((spec_of(copy_path).get("cover") or {})
-                  .get("eyebrow", "")).strip()
+    doc = spec_of(copy_path)
+    # 两条线把栏目名放在不同字段：赛场之上（`specs/reels/`）写 `cover.eyebrow`
+    # ——海报台头就是从它渲的；赛后开麦（`specs/interviews/`）写顶层 `column`。
+    # **在这儿收口，别让工作流各传一个 `--column`**：命令行上另写一遍，
+    # 就是休伊特那次「海报印网球有故事、标题写赛场之上」的来路。
+    eyebrow = (str((doc.get("cover") or {}).get("eyebrow", "")).strip()
+               or str(doc.get("column", "")).strip())
     if not eyebrow:
-        raise SystemExit(f"{copy_path} 对应 spec 的 cover.eyebrow 是空的——"
+        raise SystemExit(f"{copy_path} 对应的 spec 里既没有 cover.eyebrow "
+                         "也没有 column——"
                          "海报台头印什么，标题就该写什么，这一个值两处共用")
     return eyebrow
 
@@ -425,7 +443,7 @@ def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
 
 
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
-               poster: str = "") -> str:
+               poster: str, column: str) -> str:
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
@@ -447,6 +465,11 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
       顶到卡边。用负 margin 抵消内边距在微信里不可靠，**结构上让它没有内边距**
     - **同一段只印一遍**。以前正文印一遍、灰底复制块又印一遍，字符串断言全过，
       人一看整页才发现。「分开复制」交给复制页——微信里放不了能点的 JS 按钮
+
+    ⚠️ **台头小药丸要跟着栏目走，而且不留默认值。** 它原来写死「赛场之上」，
+    而这个工作流现在也发「开球之前」「网球有故事」——卡片会顶着别的栏目名，
+    标题里写的却是对的，同一条推送两个栏目名。给个默认值等于把这个错留在原地
+    不吭声，所以 `column` 是必传的，和 `column_of` 算出来的那一个值共用。
     """
     title, body = split_copy(copy_text)
     pad = "padding:0 16px"
@@ -477,7 +500,7 @@ font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
 border-top:5px solid #ff2442;padding:18px 0 22px">
 <div style="{pad}"><div style="display:inline-block;background-color:#e7f5ea;\
 color:#087747;font-size:12px;font-weight:bold;padding:4px 8px;border-radius:4px">\
-赛场之上</div>
+{html.escape(column)}</div>
 <div style="font-size:23px;line-height:1.38;font-weight:800;color:#102d23;\
 margin:10px 0 14px">{html.escape(title)}</div></div>
 {img}
@@ -515,6 +538,9 @@ def main() -> int:
                     help="一句话概括赛果，给了就顶掉标题末尾的「对阵 + 比分」")
     ap.add_argument("--lead", default="", help="正文那一句")
     ap.add_argument("--copy", required=True, help="小红书文案文件")
+    ap.add_argument("--date", default="",
+                    help="标题里的日期 YYYY-MM-DD。产物按日期分目录的线不用传"
+                         "（从路径解）；按 slug 存的线（output/interviews/…）必须传")
     args = ap.parse_args()
 
     outdir = Path(args.outdir)
@@ -537,10 +563,15 @@ def main() -> int:
     # **就是这条帖子的标题**：微信通知栏、推送正文顶部、复制页那一格，三处同一句。
     # 代价是它比小红书 20 字的上限长，发小红书时要自己删短；文案里原来那句钩子
     # 退成正文第一行。这是口径选择，不是 bug——问过了，选的就是这样。
+    # **算一次，两处共用。** 标题走 column_of、药丸另取一个默认值，就又回到了
+    # 「同一条推送里两个栏目名」——那正是 column_of 要修的那个错。
+    column = args.column or column_of(Path(args.copy))
+    # 而对阵/比分/概括的出处是 **spec**，命令行只作覆盖（`resolve_meta`）：
+    # 工作流那几个输入曾经挂着上一条片子的默认值，漏传一项就拿另一场球的
+    # 标题发出去。
     meta = resolve_meta(Path(args.copy), args)
-    title = headline(outdir, args.column or column_of(Path(args.copy)),
-                     meta["matchup"], meta["score"], meta["event"],
-                     meta["summary"])
+    title = headline(outdir, column, meta["matchup"], meta["score"],
+                     meta["event"], meta["summary"], args.date)
     copy_text = f"{title}\n\n{copy_text}"
     page = outdir / "copy.html"
     copy_url = copy_page_url(outdir)
@@ -580,7 +611,8 @@ def main() -> int:
         poster = poster_url(outdir)
     else:
         print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
-    body = build_html(url, copy_url, args.lead, copy_text, poster)
+    body = build_html(url, copy_url, args.lead, copy_text, poster,
+                      column=column)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")

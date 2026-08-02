@@ -119,6 +119,11 @@ class ExplainerSegment:
     # 这两行把比赛坐标钉在同一屏上。由 `_fixture_lines()` 从结构化字段拼出来，
     # 不手写，免得日期和轮次在几处各写各的。
     fixture: tuple[str, ...] = ()
+    # 封面大标题底下的一行小字，用来给标题里的缩写或行话当场作注。
+    # 和 `fixture` 分开是因为那一路被钉死给「开球之前」了（常青栏目的封面
+    # 不该印比赛坐标），而作注这件事和赛前片没关系。
+    # **加在最后**：`_SCRIPTS` 里的 beat 是按位置解包的，插中间会整体错位。
+    gloss: str = ""
 
 
 # Original, labelled schematic for the "how Hawk-Eye works" beat — clearly a
@@ -629,7 +634,342 @@ _DRAW_SPLIT_DIAGRAM = """
 </svg>
 """
 
+# 「空出来的位置给谁」——**照片讲不清的那一类**：它是一条按时刻分岔的流程，
+# 不是一个能被拍下来的瞬间。两条路的判据是同一个时刻（资格赛打完那一刻正赛空没空），
+# 所以画成一条主干往下分叉。一屏一个强调色：只有「抽签」那一支给品牌绿。
+_LUCKY_LOSER_PICK_DIAGRAM = """
+<svg viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">资格赛打完那一刻，正赛空没空</text>
+
+  <path d="M450 70 L450 150 M210 150 L690 150 M210 150 L210 190 M690 150 L690 190"
+        stroke="#9fb4aa" stroke-width="4" fill="none"/>
+
+  <text x="210" y="232" text-anchor="middle" fill="#9fb4aa"
+        font-size="28" font-weight="700">还没空出来</text>
+  <text x="690" y="232" text-anchor="middle" fill="#c6f65a"
+        font-size="28" font-weight="700">已经空着了</text>
+  <text x="210" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">按排名排队</text>
+  <text x="690" y="282" text-anchor="middle" fill="#e7f3ec"
+        font-size="33" font-weight="800">前两名抽签</text>
+
+  <rect x="96"  y="316" width="228" height="54" rx="10" fill="rgba(231,243,236,.34)"/>
+  <rect x="96"  y="384" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <rect x="96"  y="452" width="228" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="rgba(231,243,236,.30)" stroke-width="1.5"/>
+  <text x="210" y="552" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">排最前的那个进</text>
+
+  <rect x="576" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <rect x="698" y="316" width="106" height="54" rx="10" fill="rgba(231,243,236,.12)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <path d="M629 378 L690 430 M751 378 L690 430" stroke="#9fb4aa"
+        stroke-width="3" fill="none" stroke-dasharray="7 7"/>
+  <rect x="637" y="436" width="106" height="54" rx="10" fill="#c6f65a"/>
+  <text x="690" y="552" text-anchor="middle" fill="#c6f65a"
+        font-size="27" font-weight="700">抽中的那个进</text>
+</svg>
+"""
+
+# 「大满贯七轮，第四轮到顶」——同样拍不出来：它是一个**没有发生过**的纪录。
+# 条上一个字都不写（轮次标在条的上一行），一屏一个强调色。
+_LUCKY_LOSER_WALL_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">大满贯打七轮，他们最远只到第四轮</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝有人到过　空格＝至今没有人</text>
+
+  <g fill="#9fb4aa" font-size="26" font-weight="700" text-anchor="middle">
+    <text x="118" y="186">首轮</text>
+    <text x="228" y="186">2 轮</text>
+    <text x="338" y="186">3 轮</text>
+    <text x="448" y="186">4 轮</text>
+    <text x="562" y="186">8 强</text>
+    <text x="672" y="186">4 强</text>
+    <text x="782" y="186">决赛</text>
+  </g>
+
+  <rect x="68"  y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="178" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="288" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="398" y="206" width="100" height="88" rx="12" fill="#c6f65a"/>
+  <rect x="512" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="622" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <rect x="732" y="206" width="100" height="88" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+
+  <line x1="505" y1="190" x2="505" y2="310" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="505" y="352" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">这条线还没人越过</text>
+
+  <text x="450" y="430" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">摸到第 4 轮的：1995 诺曼 · 2023 阿瓦涅相</text>
+  <text x="450" y="472" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">2025 利斯 · 2025 谢拉 · 2026 德容</text>
+</svg>
+"""
+
+
+#: 「保护排名」到底替你做什么、不替你做什么。这件事没有任何一张照片能表达——
+#: 它是一张权限表，不是一个瞬间。两栏对照，只给"能用"那一栏上品牌绿。
+_PR_SCOPE_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">它替你报名，别的一概不管</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">绿色＝可以用它　空格＝一律按真实排名</text>
+
+  <text x="245" y="156" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">能用</text>
+  <text x="655" y="156" text-anchor="middle" fill="#9fb4aa"
+        font-size="30" font-weight="800">不能用</text>
+
+  <rect x="70" y="182" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="230" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名正赛</text>
+  <rect x="70" y="272" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="320" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">报名资格赛</text>
+  <rect x="70" y="362" width="350" height="76" rx="12" fill="#c6f65a"/>
+  <text x="245" y="410" text-anchor="middle" fill="#0d2a1c"
+        font-size="29" font-weight="800">特殊豁免位</text>
+
+  <rect x="480" y="182" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="230" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">种子</text>
+  <rect x="480" y="272" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="320" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">幸运落败者顺位</text>
+  <rect x="480" y="362" width="350" height="76" rx="12" fill="rgba(231,243,236,.10)"
+        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
+  <text x="655" y="410" text-anchor="middle" fill="#e7f3ec"
+        font-size="29" font-weight="800">你的世界排名</text>
+
+  <text x="450" y="490" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">ATP 规则书原话：for Entry, Not Seeding</text>
+</svg>
+"""
+
+#: 26 周为什么不能拆。两截各自量、各自不够，而合计比门槛还多——
+#: 这个"加起来够了却一分不算"只有并排画出来才一眼看得懂。
+#: 横轴 0–32 周映射到 x 150–780，即 1 周 ≈ 19.7px；26 周落在 x=662。
+_PR_GAP_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="48" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">26 周必须是连着的一段</text>
+  <text x="450" y="92" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">虚线＝门槛　中网那两场把它切成了两截</text>
+
+  <text x="60" y="162" fill="#9fb4aa" font-size="27" font-weight="700">温网结束 → 中网复出</text>
+  <rect x="60" y="180" width="211" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="291" y="236" fill="#e7f3ec" font-size="30" font-weight="800">10.7 周</text>
+
+  <text x="60" y="322" fill="#9fb4aa" font-size="27" font-weight="700">中网结束 → 多哈复出</text>
+  <rect x="60" y="340" width="357" height="86" rx="12" fill="rgba(231,243,236,.18)"
+        stroke="rgba(231,243,236,.38)" stroke-width="2"/>
+  <text x="437" y="396" fill="#e7f3ec" font-size="30" font-weight="800">18.1 周</text>
+
+  <line x1="572" y1="150" x2="572" y2="446" stroke="#e7f3ec"
+        stroke-width="4" stroke-dasharray="10 8"/>
+  <text x="572" y="484" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">26 周</text>
+
+  <text x="450" y="538" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">两截加起来 28.8 周，一分不算</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    "protected-ranking": (
+        (
+            "now",
+            "一年之后",
+            "世界第 123，够不上美网那条线",
+            "先看现在。郑钦文的世界排名是第一百二十三。美网正赛的直入线七月二十号"
+            "锁定，大约在前一百零四，她差了将近二十位。七月十七号雅典站八强，"
+            "四比六、四比六负于克雷吉茨科娃，那是锁线之前最后的机会。十天后她"
+            "出现在华盛顿的签表里，靠的是一张外卡。而一年前的六月，她是世界第四。",
+            "assets/explainer/protected-ranking/zheng_athens_qf_2026.jpg",
+            "athens-open.com 官方图库 Day 7 · 2026 雅典站八强，郑钦文负克雷吉茨科娃",
+            (
+                "世界第 123 生涯最高第 4",
+                "美网直入线 约前 104",
+                "华盛顿那张签表 靠外卡",
+            ),
+        ),
+        (
+            "scope",
+            "保护什么",
+            "它替你报名，不替你保排名",
+            "伤停这么久，规则里不是有保护排名吗。有，但这四个字翻拧了。"
+            "ATP 规则书正文里它的名字是 Entry Protection，进赛保护。"
+            "它给你的是一张用来报名的旧排名：报正赛、报资格赛、占特殊豁免位，都算数。"
+            "剩下的一概不管——不算种子，不算幸运落败者的顺位，更不会让你的世界排名"
+            "停下来。规则书自己有一行标题，写着 for Entry, Not Seeding。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "英文叫 Entry Protection",
+                "报名能用 那个旧排名",
+                "真实排名 该掉照掉",
+            ),
+            _PR_SCOPE_DIAGRAM,
+        ),
+        (
+            "threshold",
+            "门槛",
+            "先得彻底停下来，26 周",
+            "那她为什么没有这张凭证。因为门槛在前面：WTA 要求连续二十六周不参加"
+            "任何比赛，ATP 那边写的是六个月，而且两家都把表演赛算在里头。"
+            "二十六周就是半年——你得整整半年一场都不打，才够得着它。",
+            "assets/explainer/zheng-eala/zheng_clay.jpg",
+            "账号所有者提供 · 郑钦文反手随挥",
+            (
+                "WTA 连续 26 周",
+                "ATP 6 个月",
+                "表演赛也算在里头",
+            ),
+        ),
+        (
+            "gap",
+            "断在哪",
+            "28.8 周，却一分不算",
+            "她停了多久。温网之后到二月复出多哈，中间只打过一站：二零二五年九月的"
+            "中网，两场球，第二场对诺斯科娃还中途退了赛。就是这一站，把一整段停赛"
+            "切成了两半——前面十点七周，后面十八点一周。两截加起来二十八点八周，"
+            "比门槛还多出两周多。可条文只认连着的一段，两截各自都不够。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "中网只打了 2 场",
+                "前段 10.7 周 后段 18.1 周",
+                "合计 28.8 周 一分不算",
+            ),
+            _PR_GAP_DIAGRAM,
+        ),
+        (
+            "cost",
+            "代价",
+            "它保护的是彻底停下来的人",
+            "把条文一条条对下来，她够不上这张凭证。所以过去这一年，排名一路往下，"
+            "没有任何机制替她刹住。有一点要说清楚：她本人到底申请过没有、"
+            "有没有拿到过豁免，都没有公开记录，上面这些是照着规则算出来的。"
+            "但规则本身写得很直白——它保护彻底停下来的人。九月硬撑着打的那两场，"
+            "一年后的价码是美网正赛的一个位置。",
+            "assets/explainer/wildcard/zheng_athens_2026.jpg",
+            "athens-open.com 官方图库 Day 5 · 2026 雅典站第二轮，郑钦文正手击球",
+            (
+                "按条文算 她够不上",
+                "排名一路掉 没有刹车",
+                "价码是一个正赛名额",
+            ),
+            None,
+            "硬撑着打完那两场，和彻底停满半年，换你会怎么选？",
+        ),
+    ),
+    "lucky-loser": (
+        (
+            "this-week",
+            "这一周",
+            "那场资格赛，托米奇一分都没打",
+            "先看这一周。洛斯卡沃斯的资格赛最后一轮，托米奇因为肠胃问题弃权，"
+            "一分都没打，这一站对他来说本来就结束了。可几个小时后正赛有人退出，"
+            "空出一个位置，按规则那个位置归他。三天后，他 6-2、6-4 赢了世界第二十六的"
+            "哈恰诺夫，那是他七年来最大的一场胜利。同一周华盛顿也有一个："
+            "资格赛最后一轮，斯瓦伊达在第三盘 0 比 2 时中途退出，输给了十七岁的"
+            "克鲁兹·休伊特——几天后他同样出现在正赛签表里。让他们站上那片场地的身份，"
+            "规则里叫幸运落败者。",
+            "assets/explainer/lucky-loser/tomic_los_cabos_2026.jpg",
+            "Tennis TV / @abiertoloscabos · 2026 洛斯卡沃斯，托米奇对哈恰诺夫",
+            (
+                "资格赛末轮 他弃权了",
+                "递补进正赛 赢下世界第 26",
+                "同一周 华盛顿也有一个",
+            ),
+        ),
+        (
+            "how",
+            "空位给谁",
+            "多数时候按排名，有时候要抽签",
+            "空出来的位置给谁，分两种情况。多数时候很简单：最后一轮输掉的那批人里，"
+            "排名最高的先补进去。但有一种要抽签——如果资格赛还没打完，正赛的位置"
+            "就已经空着了，那么排名最高的两个人抽签决定，谁抽到谁进；空出两个位置，"
+            "就是三个人一起抽。为什么要多这一道？想一下就明白：位置已经空在那儿，"
+            "补位又完全按排名，那排名最高的那个人最后一轮赢也进、输也进，"
+            "这场球认不认真都一样。抽签把它掰回来——输了不再是稳进，只是有机会。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "一般 排名最高的先补",
+                "位置早空着 就要抽签",
+                "抽签让输球重新有代价",
+            ),
+            _LUCKY_LOSER_PICK_DIAGRAM,
+        ),
+        (
+            "rublev",
+            "第一个冠军",
+            "「输的那个人，是幸运的」",
+            "这个身份能走多远？2017 年乌马格，卢布列夫资格赛最后一轮输了，"
+            "丘里奇退赛，他补了进去——然后一路赢到决赛，6-4、6-2 击败四号种子洛伦齐，"
+            "拿下十九岁那年生涯第一个冠军，颁奖的是伊万尼塞维奇。当天他自己在社媒上"
+            "只写了一句：输的那个人是幸运的，我赢下了第一个 ATP 冠军。",
+            "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+            "Merlo de Graia · 卢布列夫本人社媒 2017-07-24 · 乌马格夺冠",
+            (
+                "2017 乌马格 资格赛末轮输掉",
+                "递补进正赛 一路赢到夺冠",
+                "19 岁 生涯第一个冠军",
+            ),
+        ),
+        (
+            "gauff",
+            "被叫回来",
+            "开赛前十五分钟，高芙回到球场",
+            "两年后的林茨更夸张。高芙资格赛直落两盘输给科尔帕奇，本来已经出局。"
+            "首轮开打前十五分钟，萨卡里手腕伤退，已经收拾东西的她被叫了回来。"
+            "接下来她连赢五场，包括头号种子贝尔腾斯，决赛 6-3、1-6、6-2 击败"
+            "奥斯塔彭科。十五岁七个月，2004 年以来最年轻的 WTA 冠军，也是历史上"
+            "第三个以这个身份夺冠的女子球员。",
+            "assets/explainer/lucky-loser/gauff_linz_2019_trophy.jpg",
+            "wtatennis.com 官方图 · 2019 林茨决赛，高芙夺冠",
+            (
+                "资格赛已经输了 直落两盘",
+                "萨卡里伤退 赛前 15 分钟顶上",
+                "15 岁 7 个月 拿下冠军",
+            ),
+        ),
+        (
+            "wall",
+            "到不了第五场",
+            "但大满贯，没人走过第四轮",
+            "不过有一堵墙，到今天还没人撞开。大满贯要赢七场才拿冠军，而靠这个身份"
+            "进来的人，一个都没打进过八强——第四轮就是尽头。摸到过那儿的没几个："
+            "1995 年温网的诺曼，2023 年法网的阿瓦涅相，2025 年澳网的利斯，"
+            "同年温网的谢拉，还有今年法网的德容。利斯那次最接近，再赢一场"
+            "就是史上第一个。她没赢下来。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "至今 0 人打进大满贯八强",
+                "第 4 轮就是天花板",
+                "利斯 2025 澳网 差一场",
+            ),
+            _LUCKY_LOSER_WALL_DIAGRAM,
+            "如果名额早就空着，最后一轮那场球，你还会拼吗？",
+        ),
+    ),
     "hawkeye": (
         (
             "human",
@@ -2301,6 +2641,20 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "protected-ranking": {
+        "hook": (
+            "「保护排名」这四个字翻拧了——ATP 规则书里它叫 Entry Protection，进赛保护。\n"
+            "它替你报名，一个字都不保你的排名，而且只保护彻底停下来的人。"
+        ),
+        "tags": ("网球", "网球时差", "郑钦文", "保护排名", "网球冷知识"),
+    },
+    "lucky-loser": {
+        "hook": (
+            "资格赛输掉的人，可以因为别人退赛递补进正赛——这个身份叫幸运落败者。\n"
+            "卢布列夫和高芙的第一个冠军，都是这么来的。"
+        ),
+        "tags": ("网球", "网球时差", "幸运落败者", "卢布列夫", "网球冷知识"),
+    },
     "hawkeye": {
         "hook": (
             "一颗球压没压线，网球用了一百年才把这句话从人眼交给摄像机。\n"
@@ -2463,30 +2817,26 @@ COLUMNS: dict[str, Column] = {
     "开球之前": Column(
         name="开球之前",
         promise="一场还没开打的比赛，把两边这几年的来路摆在一起；不预测结果。",
-        # 「不预测结果」是**编辑原则**，写给以后的自己看；
-        # 别把它写进旁白或卡上——「比分我们不猜」这类话是在
-        # 交代自己的规矩，读者不关心，白占一句的位置。
         perishable=True,
     ),
-    # 和「开球之前」成对：两个名字都指一个**时刻**，不是一段时间——第一分之前，
-    # 和网前那一握之后。收尾的握手是网球独有的，别的项目吹哨响铃就散了。
+    # 一度还有 First Serve / Second Serve 两个英文栏目（专收「讲一个人」的片子），
+    # 以及「握手之后」（一场刚打完的比赛对两个人各意味着什么）。三个都撤了，
+    # 理由是同一条：**五个栏目读者记不住**。栏目是承诺，多一个就薄一分。
     #
-    # 这里一度还有 First Serve / Second Serve 两个英文栏目，专收「讲一个人」的片子
-    # （第一次被记住 / 又一次被记住）。设计得挺整齐，还是撤了，理由只有一条但够硬：
-    # **五个栏目读者记不住**。栏目是承诺，多一个就薄一分；一个号能让人记住的承诺
-    # 就两三个。撤掉时没有任何片子挂在它们名下，所以是干净的。
+    # 「握手之后」撤得最干净——**名下一条片子都没有**。它和「赛场之上」的界线本来
+    # 按握手划（后者管比赛本身，它管这场对两个人的意义），但一年下来没有一条片子
+    # 真的需要那条界线：想讲意义的时候，把意义讲进「赛场之上」的配音里就够了，
+    # 读者并不需要为此多记一个名字。
     #
-    # 那类片子现在去哪儿：夺冠、复出、告别本身都是一场刚打完的比赛，归「握手之后」，
-    # 只是讲的重心往前推到他这些年。真到了「三条都塞不进去」的那天再重开，
+    # 那类片子现在去哪儿：夺冠、复出、告别本身都是一场刚打完的比赛，归「赛场之上」，
+    # 只是配音的重心往前推到他这些年。真到了「塞不进去」的那天再重开，
     # 设计和取舍都在 git 历史里，不用重想一遍。
-    "握手之后": Column(
-        name="握手之后",
-        promise="一场刚打完的比赛，讲清它到底发生了什么、对两个人各意味着什么。",
-        # 复盘不会过期：「谁赢了这场」明年也还成立。所以它不吃「必须写出比赛
-        # 日期」那条硬要求——但仍然该写，理由不同：复盘会在几天后被翻出来转，
-        # 读者要知道说的是哪一场。那是约定，不是测试。
-        perishable=False,
-    ),
+    #
+    # ⚠️ **「赛场之上」和「赛后开麦」不在这个表里**：这个表只管解说视频卡面上印的
+    # 台头，那两条是另外的生产线（集锦视频 / 采访视频），台头在各自的渲染里。
+    # 全账号的栏目总表在 docs/columns.md。**加栏目要两处一起改**——曾经因为
+    # push_reel.py 的默认值和这里对不上，休伊特那条片子海报印「网球有故事」、
+    # 微信标题却写「赛场之上」。
 }
 
 DEFAULT_COLUMN = "网球有故事"
@@ -2512,6 +2862,25 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "protected-ranking": {
+        "topic": "保护排名：它保的是报名，不是排名",
+        "question": "不打球，排名为什么还在掉？",
+        "narration": "不打球，排名为什么还在掉？那个叫「保护排名」的东西，"
+                     "一个字都没保住排名。",
+        "gloss": "PR = Protected Ranking",
+        "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
+        # 封面这张没有任何一屏在用，所以借不到出处，必须自己写一行。
+        # 选它是因为**原图 1184×1579 正好 3:4**，铺满 1.096x，一个像素的垫层都不用
+        # ——上一条片子的封面顶部虚化占了 15.6%，这条是 0。
+        "credit": "账号所有者提供 · 郑钦文回望球员席",
+    },
+    "lucky-loser": {
+        "topic": "幸运落败者：输了才有的名额",
+        "question": "资格赛输了，怎么还在正赛？",
+        "narration": "资格赛输了，怎么还在正赛？他自己管这叫——输的那个人，是幸运的。",
+        "gloss": "LL = Lucky Loser",
+        "image": "assets/explainer/lucky-loser/rublev_umag_2017_trophy.jpg",
+    },
     "hawkeye": {
         "topic": "鹰眼的来历：源于一次误判",
         "question": "球压没压线，到底谁说了算？",
@@ -2770,6 +3139,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         diagram="",
         question="",
         fixture=_fixture_lines(spec),
+        gloss=spec.get("gloss", ""),
     )
 
 
@@ -2996,6 +3366,11 @@ def _slide_html(
     # 封面那两行小字（只有「开球之前」有）：第一行是比赛坐标，第二行是对阵。
     # 排在大问题下面，字号压到问题的三分之一上下——它是给「这到底是哪一场」
     # 兜底的，不是来抢封面的。
+    gloss_html = (
+        f'<div class="gloss">{html.escape(segment.gloss)}</div>'
+        if segment.gloss
+        else ""
+    )
     fixture_html = (
         '<div class="fixture">'
         + "".join(
@@ -3114,6 +3489,10 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .ask{{align-self:stretch;margin-top:2px;font-family:'TL Display SC','TL Sans SC',sans-serif;
  font-size:38px;font-weight:400;line-height:1.3;color:#c6f65a;
  text-shadow:0 3px 14px rgba(0,0,0,.7);}}
+/* 封面标题底下那行注。它是**注**不是副标题：字号压到标题的三分之一上下，
+   颜色比标题淡一档，别把观众的眼睛从大问题上拽走。 */
+.gloss{{align-self:flex-start;margin-top:-2px;font-size:34px;font-weight:700;
+ letter-spacing:1px;color:#cfe6d8;text-shadow:0 2px 12px rgba(0,0,0,.85);}}
 /* 赛前片的封面小字。两行之间用一道细线分开，而不是靠间距——封面底下就是
    照片，间距在深浅不一的画面上读不出「这两行是一组」。 */
 .fixture{{align-self:flex-start;display:flex;flex-direction:column;gap:12px;
@@ -3127,7 +3506,7 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 <div class="slide{cover_cls}">{hero}<div class="bar"></div>
 <div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines"><span class="brand">网球时差 · {html.escape(column)}</span>{topic_html}</div></div></div>
 <div class="copy">{chip_html}
-<div class="title">{html.escape(segment.title)}</div>{fixture_html}{points_html}{question_html}{tail_html}</div>
+<div class="title">{html.escape(segment.title)}</div>{gloss_html}{fixture_html}{points_html}{question_html}{tail_html}</div>
 </div></body></html>"""
 
 
@@ -3255,7 +3634,12 @@ _DIGIT = {"〇": "0", "零": "0", "一": "1", "二": "2", "三": "3", "四": "4"
           "五": "5", "六": "6", "七": "7", "八": "8", "九": "9"}
 _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # 数字后面跟着这些字，说明它是在数东西，屏幕上写成阿拉伯数字更好读。
-_NUM_UNITS = "年月日岁个位局盘场记座枚块届轮周"
+#
+# **「天」是后加的**：字幕里同一句会同时出现「8月2日」和「三天前」，
+# 一半阿拉伯一半汉字，账号所有者一眼看出来（「文案里的数字都用阿拉伯数字」）。
+# 「一天」不受影响——`一` 有单独的放行规则（「唯一一次」「一场首轮」那条），
+# 「有一天」「一天到晚」照旧不转。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周"
 _STRUCTURED = set("十百千")
 
 
@@ -3297,8 +3681,14 @@ def arabic_numerals(text: str) -> str:
     # 四位年份：一九八九、二〇二四。它们不含十/百/千，只能靠「后面跟着年」认出来。
     text = re.sub(rf"([{''.join(_DIGIT)}]{{4}})(?=年|赛季|届)", year, text)
     # 比分照数字写：六比四 → 6比4。
+    # **`(?<!抢)` 不能省。** 「抢七」是个术语不是数字，而它后面常常紧跟比分：
+    # 「抢七七比九」里贪婪的 `[NUM]+` 会把两个「七」一起吃掉，输出「抢7比9」——
+    # 「抢七」塌成「抢」，屏幕上成了一个错字。加上这个后顾断言之后，第一个
+    # 「七」不参与匹配，得到「抢七7比9」。
+    # 单独的「抢七」本来就不受影响（`one()` 那一轮看见后面不是量词就不动它），
+    # 所以这个 bug 只在**紧跟比分**时出现——踩到之前它一直是隐形的。
     text = re.sub(
-        rf"([{''.join(_NUM_CHARS)}]+)比([{''.join(_NUM_CHARS)}]+)",
+        rf"(?<!抢)([{''.join(_NUM_CHARS)}]+)比([{''.join(_NUM_CHARS)}]+)",
         lambda m: f"{_num_value(m.group(1)) or m.group(1)}比"
                   f"{_num_value(m.group(2)) or m.group(2)}",
         text,
