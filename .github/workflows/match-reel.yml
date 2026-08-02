@@ -130,19 +130,20 @@ jobs:
       # **标题里那句话必须是这次填的。** 上一版给 matchup / summary / push_lead
       # 留了上一条片子的默认值，于是 2026-08-01 郑钦文那条赛前前瞻顶着
       # 「郑钦文首轮出局」发了出去——那场球当晚 00:30 才开打，**说了一件没发生
-      # 的事**。默认值现在一律为空，但空着发同样不行：标题末尾那一格会是空的。
-      # 所以在这儿拦，第 3 秒就红，别等渲染十分钟之后再发一条错的。
-      - name: push=true 必须自己填标题，不许吃默认值
-        if: >-
-          github.event.inputs.push == 'true'
-          && github.event.inputs.matchup == ''
-          && github.event.inputs.summary == ''
-        run: |
-          echo "::error::push=true 时 matchup 和 summary 至少要填一个——标题末尾那一格靠它。"
-          echo "::error::赛前前瞻填 matchup（如「郑钦文 vs 塔拉鲁迪」）、score 留空；"
-          echo "::error::赛报填 matchup + score，或者用 summary 一句话概括赛果。"
-          exit 1
-
+      # 的事**。默认值因此一律为空，那一条现在钉在
+      # `test_推送的文案输入不许留上一条片子的默认值` 上。
+      #
+      # ⚠️ **这儿原来还有一道「两个都空就别发」的闸，已经拆掉。** 它要求
+      # `matchup` 或 `summary` 至少在**命令行**上填一个——而这两样的正确出处是
+      # spec：对阵从 `cover.versus.names` 算，`summary` / `lead` 写在 `push` 块里
+      # （`push_reel.push_meta`）。于是那道闸把「照规矩做」变成了「必须手打」，
+      # 而手打的字**任何测试都看不见**：2026-08-02 我在输入里把「十九岁」打成
+      # 「九岁」，是在发出去之前取消了那趟 run 才没出事。
+      #
+      # 现在这两样写进 spec，就同时被 `test_轮次要写半决赛不写四强` 和
+      # `test_人名要以译名表为准` 扫到。spec 里也没有的那种情况由
+      # `push_reel.resolve_meta` 抛出来（判据见 test_标题末尾那一格空着就别发），
+      # 报错里写着该去补哪个字段。
       - uses: actions/checkout@v4
         with:
           # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
