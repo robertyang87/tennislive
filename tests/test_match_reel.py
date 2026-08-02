@@ -4681,3 +4681,93 @@ def test_一段里不许有整段的哑场():
     assert body.index("silent_stretches(") < body.index("cut_segment("), (
         "哑场那道闸排在分段编码之后了——它一个源片都不用碰，"
         "应该和「旁白超长」那道一起排在编码之前")
+
+
+# 发在这条规矩之前的那一条，**只许减不许加**。它是那次翻车的现场，留着当锚点：
+# eala-svitolina 12 段里 7 段在报幕（58%），读者的原话是
+# 「她发球，她接发。。。她发球，她接发。她发球，对面接发。。。」——几乎是原文引用。
+#
+# ⚠️ **名单里只有它一条，是量出来的，不是估的。** 我一开始按一个更宽的正则
+# （把「他的发球局」也算上）以为 eala-osaka 35%、wong-gea 30% 也超标，顺手写进
+# 了名单——`_BOARD_LEGACY` 那条自检当场报「wong-gea 已经不超标了」。
+# **豁免名单也要自证它豁免的是真的超标**，否则拦的是空气。
+_BOARD_LEGACY = {"eala-svitolina"}
+
+# 一条片子里最多多少段可以提「谁在发球」。
+#
+# **卡的是密度，不是单次出现**——单次往往是有信息的：「轮到自己发球，三十比
+# 四十——帕雷哈的第二个盘点」讲的是**保发被逼到悬崖**，和「没能兑现破发点」
+# 完全是两回事。第一版我禁了任何一次出现，当场误伤这句好台词。
+#
+# 量出来两档分得很开，25% 落在中间不贴边：
+#
+#     ❌ eala-svitolina 58%（7/12）
+#     ✅ wong-gea 20%   wang-pareja 11%   gea-shapovalov 6%   最近三条 0%
+_BOARD_SHARE_MAX = 0.25
+
+
+def test_旁白不许把每一局都念一遍():
+    """**「轮到她发球」这类话，记分牌上一直写着——一段两段是信息，半条片子是流水账。**
+
+    小红书读者 2026-08-02 的评论：「她发球，她接发。。。她发球，她接发。
+    她发球，对面接发。。。😂😂😂😂」，底下跟着一句「这解说，，」。量下来
+    他没夸张——`eala-svitolina` **12 段里 7 段（58%）**在报谁发球。
+
+    这和已经被禁的「画面里是」是**同一族**：把观众已经看见的东西再指一遍，
+    只不过那条指的是画面，这条指的是**烧在画面上的记分条**。
+
+    ⚠️ **卡密度不卡单次，是踩出来的。** 第一版禁了任何一次出现，当场误伤
+    `wang-pareja` 那句「轮到自己发球，三十比四十——帕雷哈的第二个盘点」——
+    在**自己的发球局**被逼到盘点，和「破发点没兑现」是两件事，说清楚是有信息的。
+    又一次「判据宁可窄，不可宽」。
+
+    ⚠️ **这条也不禁比分。** CLAUDE.md 早就救回过「5-6 落后，三个盘点她一个也
+    没让」——比分在那儿是**制造张力**的手段。
+
+    ⚠️ **它拦不住「平淡」本身。** 顺序、有没有立场、钩子留没留，都是编辑判断，
+    机械挡不住（见 CLAUDE.md「最硬的那个事实放第 ① 屏」那条为什么故意没有
+    测试）。这条只拦一种**能量出来**的坏：把每一局按顺序念一遍。
+
+    根子记在 CLAUDE.md：仓库里「旁白要把比赛走向讲清楚」被我执行成了「把每一局
+    念一遍」。**走向是四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），
+    不是九局流水。
+    """
+    announce = re.compile(
+        r"轮到.{0,4}发球"
+        r"|自己的?发球局"
+        r"|对面的?发球局"
+        r"|对面发球(?!局)"
+        r"|(?:紧接着|下一局|这一局)[^。；]{0,6}发球局")
+    bad = []
+    for slug, spec in sorted(_reel_specs().items()):
+        if slug in _BOARD_LEGACY:
+            continue
+        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
+        if len(segs) < 5:
+            continue
+        hit = [s for s in segs
+               if announce.search((s.get("narration") or "")
+                                  + (s.get("quote") or ""))]
+        share = len(hit) / len(segs)
+        if share > _BOARD_SHARE_MAX:
+            bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
+                       f"「谁在发球」，第一处 @{hit[0]['start']}")
+    assert not bad, (
+        "旁白把每一局按顺序念了一遍——记分条上一直写着，说了等于没说：\n  "
+        + "\n  ".join(bad)
+        + "\n\n走向讲**四个点**（谁领先 → 谁追上 → 转折在哪 → 怎么收），"
+          "不是每一局都交代一次开球权。")
+
+    # 反面锚点：这些必须**过**——比分和保发是制造张力的手段，不是报幕
+    for keeper in ("五比六落后，三个盘点她一个也没让",
+                   "先输一比六，再掀翻头号种子",
+                   "赛点，黄泽林在二区发出内角 Ace。球落地，他放下球拍，双手掩面。"):
+        assert not announce.search(keeper), f"误伤了一句好台词：{keeper}"
+
+    # 判据自己的判据：三条 legacy 必须真的超标，否则这条测试拦的是空气
+    for slug in _BOARD_LEGACY:
+        spec = _reel_specs()[slug]
+        segs = [s for s in spec["segments"] if (s.get("narration") or "").strip()]
+        hit = sum(1 for s in segs if announce.search(s.get("narration") or ""))
+        assert hit / len(segs) > _BOARD_SHARE_MAX, (
+            f"{slug} 已经不超标了，把它从 _BOARD_LEGACY 里去掉")
