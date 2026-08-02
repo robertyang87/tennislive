@@ -252,17 +252,33 @@ jobs:
       # 第 5 秒，不是第 90 秒」。
       # 查的是 `git ls-files`，不是 `test -f`：只在工作区里躺着的文件，推送
       # 发出去就是 404（同一个毛病在复制页上踩过两次）。
-      - name: push 模式先确认成片真的在仓库里
+      # 成片有两条落脚点：≤95 MiB 进仓库，超了走 Release 附件（链接记在
+      # render.json 的 `video_url` 里）。**两条都要认**——只认仓库那条的话，
+      # 走了 Release 的片子会在这儿被判成「还没渲」，而它其实好好地在那儿。
+      - name: push 模式先确认成片真的落地了
         if: github.event.inputs.mode == 'push'
         run: |
-          REEL="${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
-          if [ -z "$(git ls-files -- "$REEL")" ]; then
-            echo "::error::$REEL 不在这个 commit 里——push 模式只发已经落库的成片。"
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          REEL="$OUTDIR/${{ github.event.inputs.slug }}.mp4"
+          URL=$(python -c "
+          import json, pathlib, sys
+          p = pathlib.Path('$OUTDIR/render.json')
+          print(json.loads(p.read_text()).get('video_url', '') if p.is_file() else '')
+          ")
+          if [ -n "$URL" ]; then
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" != "206" ] && [ "$CODE" != "200" ]; then
+              echo "::error::render.json 记着 $URL，但探不到（$CODE）"; exit 1
+            fi
+            echo "成片在 Release 上：$URL"
+          elif [ -z "$(git ls-files -- "$REEL")" ]; then
+            echo "::error::$REEL 既不在这个 commit 里，render.json 也没有 video_url。"
             echo "::error::先跑一次 mode=render（push=false），验完再用 mode=push 发。"
-            git ls-files -- "${{ steps.paths.outputs.outdir }}" || true
+            git ls-files -- "$OUTDIR" || true
             exit 1
+          else
+            echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
           fi
-          echo "成片在仓库里：$REEL（$(stat -c%s "$REEL") 字节）"
           test -f "${{ steps.paths.outputs.outdir }}/poster.jpg" || {
             echo "::error::海报不在——推送第一屏就是它，没有它只剩两个按钮"; exit 1; }
 
@@ -461,6 +477,77 @@ jobs:
             --slug "${{ github.event.inputs.slug }}" \
             --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
 
+      # **超过 100 MiB 的成片改走 GitHub Release，不进 git。**
+      #
+      # 账号所有者定的：「我的基础要求是保证内容和画面质量，文件多大都没关系」
+      # 「不要砍片长」。而 git 这条路有个**服务端硬拒**的 100 MiB 上限——
+      # 2026-08-02 那条 3 分 04 秒的片子渲出来 104 MiB，push 被拒，五分钟白跑。
+      #
+      # 三条路比过：
+      #   Git LFS       免费额度 1 GB 存储 + **1 GB/月流量**，一条片子一百多 MB，
+      #                 一次推送很多人同时下载就能把月流量打光（超出计费）；
+      #                 而且 `raw.githubusercontent.com` 对 LFS 文件返回的是
+      #                 **指针文本不是视频**，微信里那个 ▶ 按钮直接坏掉
+      #   外部对象存储   要另一套密钥和账单，为一条片子不值当
+      #   **Release 附件**  单个 2 GB，公开仓库下载不计流量额度，链接稳定
+      #                 （302 到 release-assets.githubusercontent.com，和现在
+      #                 >20 MB 时走的 raw 是同一个量级的链路）。顺带仓库不再
+      #                 每天胖一百多 MB
+      #
+      # **门槛设在 95 MiB 而不是 100**：留 5 MiB 给「估得不准」。95 MiB 以下
+      # 照旧进仓库，jsDelivr / raw 那条链路一个字没动——存量十几条片子的链接
+      # 不受影响。
+      #
+      # 走了 Release 就**把本地那份删掉**，让下面的清理和提交步骤根本看不见它；
+      # 链接写进 render.json，`push_reel.py` 优先读它。
+      - name: 成片太大就发到 Release（不进 git）
+        if: github.event.inputs.mode == 'render'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          SLUG="${{ github.event.inputs.slug }}"
+          REEL="$OUTDIR/$SLUG.mp4"
+          LIMIT=$((95 * 1024 * 1024))
+          SZ=$(stat -c%s "$REEL")
+          if [ "$SZ" -le "$LIMIT" ]; then
+            echo "成片 $((SZ/1048576)) MiB，不到 95 MiB —— 照旧进仓库"
+            exit 0
+          fi
+          TAG="reel-$SLUG"
+          echo "成片 $((SZ/1048576)) MiB 超过 95 MiB —— 发到 Release $TAG"
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "赛场之上 · $SLUG" \
+                 --notes "竖版成片。超过 git 的 100 MiB 单文件上限，改走 Release 附件。"
+          gh release upload "$TAG" "$REEL" --clobber
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4"
+          # **传完要自己探一次**：Release 的 CDN 有几秒的传播延迟，探不到就别写
+          # 链接——写了等于把一个 404 发到微信，而消息发出去收不回来。
+          # ⚠️ 循环体最后一句不许写成 `[ A ] || [ B ] && break`：整条 AND-OR
+          # 列表为假时 `bash -e` 会**直接把这一步杀掉**，看起来像「探活失败」，
+          # 其实是第一次没中就退出了。用 if。
+          for i in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = "206" ] || [ "$CODE" = "200" ]; then break; fi
+            echo "第 $i 次探活 $CODE，5s 后重试"
+            sleep 5
+          done
+          [ "$CODE" = "206" ] || [ "$CODE" = "200" ] || {
+            echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1; }
+          echo "Release 附件可取：$URL"
+          python - "$OUTDIR/render.json" "$URL" "$SZ" <<'PY'
+          import json, sys
+          from pathlib import Path
+          path, url, size = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3])
+          data = json.loads(path.read_text(encoding="utf-8"))
+          data["video_url"] = url
+          data["video_bytes"] = size
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+          print("render.json 记下 video_url")
+          PY
+          rm -f "$REEL"
+
       - name: 丢掉不进仓库的中间物
         if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         run: |
@@ -510,8 +597,9 @@ jobs:
           #   eala-osaka 初版 104.0 MiB / 185.2s = 4712 kb/s   ← 进不了仓库
           #   eala-osaka 剪短后 94.5 MiB / 158.8s = 4990 kb/s（剪短之后码率反而更高：
           #     砍掉的是全片最静的那一段，留下的全是高动量的关键分）
-          # 片长的闸已经前移到 `load_spec`（MAX_REEL_SECONDS ≈ 165 秒 / 98 MiB），
-          # 写 spec 的那一刻就红，不用等渲完。
+          # **片长不设上限**（账号所有者：「不要砍片长」「文件多大都没关系」）。
+          # 超过 95 MiB 的成片走上面那一步的 Release 附件，不进 git；
+          # `load_spec` 在写 spec 那一刻就把估算和走哪条路打进日志。
           SLUG="${{ github.event.inputs.slug }}"
           BAD=0
           while IFS= read -r f; do

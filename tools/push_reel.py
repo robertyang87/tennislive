@@ -68,8 +68,34 @@ SUMMARY_MAX = 13
 POSTER_NAME = "poster.jpg"
 
 
+def released_video_url(outdir: Path) -> str:
+    """成片如果大到进不了 git，它在 Release 上——链接记在 `render.json` 里。
+
+    **git 有个 100 MiB 的服务端硬上限**，而账号所有者定的是「保证内容和画面
+    质量，文件多大都没关系」「不要砍片长」。所以超过 95 MiB 的成片改传 GitHub
+    Release 附件（单个 2 GB），工作流把链接写进 `render.json`，这儿优先读它。
+
+    **不能靠「仓库里有没有这个 mp4」来判断走哪条路**：走了 Release 之后本地
+    那份就删了，按文件大小算链接会直接 `FileNotFoundError`；而更坏的一种是
+    算出一个 raw 链接发出去——那个路径上根本没有文件，微信里是个 404。
+    """
+    meta = outdir / "render.json"
+    if not meta.is_file():
+        return ""
+    try:
+        url = str(json.loads(meta.read_text(encoding="utf-8")).get("video_url") or "")
+    except json.JSONDecodeError:
+        return ""
+    if url:
+        print(f"[链接] 成片走 Release 附件：{url}")
+    return url
+
+
 def video_url(outdir: Path, name: str) -> str:
-    """成片链接：够小走 jsDelivr（国内快），超 20 MB 只能回 raw。"""
+    """成片链接：够小走 jsDelivr（国内快），超 20 MB 回 raw，超 95 MiB 走 Release。"""
+    released = released_video_url(outdir)
+    if released:
+        return released
     size = (outdir / name).stat().st_size
     path = f"{outdir.as_posix()}/{name}"
     if size <= JSDELIVR_MAX_BYTES:
@@ -587,21 +613,23 @@ def main() -> int:
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
         return 0
 
+    # 走了 Release 的片子**不在仓库里**，所以先问 render.json 再找文件。
+    released = released_video_url(outdir)
     name = args.video
-    if not name:
+    if not name and not released:
         mp4s = sorted(p.name for p in outdir.glob("*.mp4"))
         if len(mp4s) != 1:
             raise SystemExit(f"{outdir} 里有 {len(mp4s)} 个 mp4，用 --video 指明是哪个")
         name = mp4s[0]
-    if not (outdir / name).is_file():
-        raise SystemExit(f"找不到成片 {outdir / name}")
+    if not released and not (outdir / str(name)).is_file():
+        raise SystemExit(f"找不到成片 {outdir / str(name)}")
     if not page.is_file():
         raise SystemExit(f"{page} 不在——先跑一次 --stage page，且要排在提交之前")
 
     # 查产物，不查信号：Pages 真的把它发出来了才发微信。
     wait_for_copy_page(copy_url, title)
 
-    url = video_url(outdir, name)
+    url = released or video_url(outdir, str(name))
     wait_for_video(url)
     # 海报没进仓库就别硬塞一个链接进去——那就是「推送正文里的每个链接，
     # 指向的文件都必须在推送之前进仓库」那条踩过两次的规矩。缺了就退回无图版，

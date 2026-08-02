@@ -494,7 +494,16 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
             continue
         if path.stem in _NO_SLATE_YET:
             continue
-        opening = spec["segments"][0].get("narration", "")
+        # **不再要求它必须是第 0 段。** 账号所有者 2026-08-02 定了冷开场：
+        # 「还是走之前先出获胜后的动作和表情，然后再介绍比赛过程」——坐标于是
+        # 挪到了冷开场之后。要守住的是「刷到的人在前 40 秒内知道这是哪天哪站
+        # 哪一轮」，不是「它必须是第一句」。
+        opening, used = "", 0.0
+        for seg in spec["segments"]:
+            if used >= 40.0:
+                break
+            opening += seg.get("narration", "")
+            used += float(seg["end"]) - float(seg["start"])
         assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
         assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
             f"{path.stem} 开场没给开球时刻：{opening}"
@@ -881,6 +890,8 @@ def test_复制页探活要认内容不能只认200(monkeypatch):
     """**只查 200 是不够的**：这个 URL 上一版就存在，Pages 还没重新发布时照样
     立刻返回 200，探活一次就过、推送照发，人点开复制到的还是上一版的标题和正文
     （2026-07-28 真出过）。「打得开」是信号，「内容是这一版」才是产物。"""
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -1180,6 +1191,8 @@ def test_海报进仓库且推送第一屏是它():
     于是推送里一张图都没有，只有两个按钮。
     """
     reel = _reel()
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -1199,6 +1212,8 @@ def test_推送版式照着知识解说那条且海报铺满():
     所以白卡的左右内边距**拆开写**——文字块各自带 `padding:0 16px`，海报单独
     一行顶到卡边。用负 margin 去抵消内边距在微信里不可靠，结构上让它没有内边距。
     """
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -1822,6 +1837,8 @@ def test_栏目名从spec读不要在命令行上另写一遍():
     """
     import pytest  # noqa: PLC0415
 
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -2122,6 +2139,8 @@ def test_推送元数据从spec读工作流不许挂上一条片子的默认值(
     判据是「算出来的标题和已经发出去的那句一模一样」，不是「代码里有那个函数」
     ——查源码文本的断言只能防「有人把它删了」，防不住「它从来没工作过」。
     """
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -2534,6 +2553,8 @@ def test_成片链接发之前要自己探一次(monkeypatch):
     """
     import pytest  # noqa: PLC0415
 
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -2583,7 +2604,10 @@ def test_成片链接发之前要自己探一次(monkeypatch):
 
     # ④ 而且这道闸要真的装在发送那一步上，不是写了个函数没人调
     source = Path("tools/push_reel.py").read_text(encoding="utf-8")
-    stage = source[source.index("url = video_url(outdir, name)"):]
+    # 锚点跟着代码走：走 Release 的片子链接来自 render.json，这一行现在是
+    # `url = released or video_url(...)`。锚字符串写死过一次，改代码就红——
+    # 那不是「测试拦住了 bug」，是测试自己在挡路。取最短的稳定前缀。
+    stage = source[source.index("url = released or video_url("):]
     assert stage.index("wait_for_video(") < stage.index("push(title"), (
         "wait_for_video 没排在 push 之前——「写了」不等于「跑过」")
 
@@ -2620,6 +2644,8 @@ def test_标题里的赛果顺序要和海报印的一样():
 
     而微信那条消息发出去就收不回来。
     """
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -2657,6 +2683,8 @@ def test_每条spec都算得出一句过得了闸的标题():
     30 字位的长标题（那时标题闸还不存在），7.29 重发时已经收成了短的。
     拿被顶替掉的那一版当判据，等于要求今天的代码去重现一个已经改掉的错。
     """
+    import yaml  # noqa: PLC0415
+
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
 
@@ -2706,6 +2734,8 @@ def test_写错的push字段要报错不许悄悄不生效():
     `_` 开头的是写给下一个人的备注（仓库里到处都是 `_why`），不算字段。
     """
     import pytest  # noqa: PLC0415
+
+    import yaml  # noqa: PLC0415
 
     sys.path.insert(0, str(Path("tools").resolve()))
     import push_reel  # noqa: PLC0415
@@ -3649,42 +3679,104 @@ def test_每一段都要待在同一个镜头里():
     assert all(b["source"] == "a" for b in bad)
 
 
-def test_片长超了要在写spec那一刻就红不是渲完才红(tmp_path):
-    """成片进不了仓库的那条线，**判据在写 spec 的那一刻就算得出来**。
+def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
+    """账号所有者：「我的基础要求是保证内容和画面质量，文件多大都没关系」
+    「不要砍片长」。
 
-    2026-08-02 伊埃拉对大坂那条第一版排了 3 分 04 秒，渲染跑满五分钟、artifact
-    传完 112 MB，**落库那一步才被 `check_staged_file_sizes.py` 拦下**——GitHub
-    单文件硬上限 100 MiB，104.0 MiB 进不去（run 30725160625）。一整趟白跑，
-    而 `sum(end - start)` 一秒钟就能算出这件事。
+    而 git 有个 **100 MiB 的服务端硬拒**，绕不过去。所以超过 95 MiB 的成片改传
+    GitHub Release 附件（单个 2 GB，公开仓库下载不计流量额度），链接写进
+    `render.json`，推送那一步优先读它。
 
-    这是「让失败发生在第 5 秒，不是第 90 秒」的又一例。上限本身是量出来的，
-    不是拍的：见 `MAX_REEL_SECONDS` 上面那段实测码率。
+    这条盯三件事，每一件都出过同类的错：
+
+    1. **`push_reel` 要认 Release 那条链接。** 走了 Release 之后本地那份 mp4
+       就删了，按文件大小算链接会直接炸；更坏的一种是算出一个 raw 链接发出去
+       ——那个路径上根本没有文件，微信里是个 404，而消息收不回来。
+    2. **上传要排在提交之前**，删本地文件也是。排在之后的话，那 100 多 MiB
+       会先被 `git add` 吃进去，push 照样被拒——「闸装在哪一步」那条。
+    3. **两条落脚点都要认。** `mode=push` 的预检只认仓库那条的话，走了 Release
+       的片子会被判成「还没渲」。
+    """
+    import yaml  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    outdir = tmp_path / "output" / "2026-08-02" / "reel" / "x"
+    outdir.mkdir(parents=True)
+    (outdir / "render.json").write_text(json.dumps({
+        "film_seconds": 220.0,
+        "video_url": "https://github.com/o/r/releases/download/reel-x/x.mp4",
+    }), encoding="utf-8")
+    # 本地那份 mp4 **不存在**——走了 Release 就是这个状态
+    assert push_reel.released_video_url(outdir).endswith("/x.mp4")
+    assert push_reel.video_url(outdir, "x.mp4") == push_reel.released_video_url(outdir), \
+        "video_url 没有优先用 Release 那条链接"
+
+    # 没写 video_url 的（存量的十几条片子）照旧按仓库路径算，一个字都别动
+    (outdir / "render.json").write_text(json.dumps({"film_seconds": 100.0}),
+                                        encoding="utf-8")
+    (outdir / "x.mp4").write_bytes(b"0" * (30 * 1024 * 1024))
+    assert "raw.githubusercontent.com" in push_reel.video_url(outdir, "x.mp4")
+
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+    release = next(i for i, n in enumerate(names) if n.startswith("成片太大"))
+    clean = next(i for i, n in enumerate(names) if n.startswith("丢掉不进仓库"))
+    commit = next(i for i, n in enumerate(names) if n.startswith("提交产物"))
+    assert release < clean < commit, \
+        f"上传 Release 排在了提交之后（{release} / {clean} / {commit}）"
+
+    spec = yaml.safe_load(text)
+    steps = {s.get("name", ""): s for s in spec["jobs"]["reel"]["steps"]}
+    step = next(s for n, s in steps.items() if n.startswith("成片太大"))
+    assert "gh release upload" in step["run"]
+    assert 'rm -f "$REEL"' in step["run"], \
+        "传完没把本地那份删掉，它还会被 git add 吃进去"
+    assert step.get("if") == "github.event.inputs.mode == 'render'"
+
+    pre = next(s for n, s in steps.items() if n.startswith("push 模式先确认"))
+    assert "video_url" in pre["run"], \
+        "预检只认仓库那条，走 Release 的片子会被判成没渲"
+
+
+def test_片长不设上限但要说清这一版走哪条路(tmp_path):
+    """账号所有者 2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
+    没关系」「不要砍片长」「我怕故事讲解不完整」。
+
+    **所以这条不许再拦人。** 它的前一版按 git 的 100 MiB 硬上限反推出一个片长
+    上限并直接报错——那正好把账号所有者要的东西挡在门外，而且更早的一版余量
+    留太狠，当场把已经发出去、实际只有 81.9 MiB 的 eala-svitolina 判成不合格。
+    「判据宁可窄，不可宽」在这儿的极端形式是：**这个判据根本不该存在**，
+    100 MiB 是 git 的限制，不是内容的限制，换一条路（Release 附件）就没了。
+
+    留下来的只有「出声」：两条落脚点的链接长得完全不一样（raw vs
+    releases/download），日志里不写就只能靠猜。
     """
     reel = _reel()
-    for path in sorted(Path("specs/reels").glob("*.json")):
-        spec = json.loads(path.read_text(encoding="utf-8"))
-        seconds, mib = reel.reel_length_verdict(spec)
-        assert seconds <= reel.MAX_REEL_SECONDS, (
-            f"{path.name} 的成片 {seconds:.1f}s ≈ {mib:.0f} MiB，"
-            f"超过 {reel.MAX_REEL_SECONDS:.0f}s 的上限——渲出来也进不了仓库")
 
-    # **闸要真的装在 load_spec 上**，不是只有一个算函数在旁边待着：
-    # 上面那圈循环全绿，而渲染路径不调用它的话，下一条超长的 spec 照样渲五分钟。
     long_spec = {
         "source_url": "u://x",
         "cover": {},
-        "segments": [{"start": 0.0, "end": reel.MAX_REEL_SECONDS + 30,
-                      "narration": "太长了"}],
+        "segments": [{"start": 0.0, "end": 400.0, "narration": "很长"}],
     }
-    import pytest  # noqa: PLC0415
-
-    tmp = tmp_path / "toolong.json"
+    tmp = tmp_path / "long.json"
     tmp.write_text(json.dumps(long_spec, ensure_ascii=False), encoding="utf-8")
-    with pytest.raises(reel.ReelError) as err:
-        reel.load_spec(tmp)
-    # **报错要说出路**：只说「太长了」的话，下一个人的第一反应就是去调 crf。
-    assert "砍片长" in str(err.value)
-    assert "FINAL_CRF" in str(err.value), "报错没写「不许动画质」这条出路"
+    # **不许抛**——四百秒是编辑的决定，不是错误
+    spec = reel.load_spec(tmp)
+    seconds, mib = reel.reel_length_verdict(spec)
+    assert seconds > 400 and mib > reel.REPO_INLINE_MIB
+
+    # 每条 spec 都要算得出来，而且要报清楚走哪条路
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        s, m = reel.reel_length_verdict(json.loads(path.read_text(encoding="utf-8")))
+        assert s > 0 and m > 0, path.name
+
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    body = src[src.index("def load_spec("):src.index("def segments_straddling_cuts(")]
+    assert "REPO_INLINE_MIB" in body, "load_spec 没报这一版走哪条路"
+    assert "raise ReelError" not in body.split("[片长]")[0].split("reel_length_verdict")[-1], \
+        "片长又变成一道闸了——账号所有者明说过不要砍片长"
 
 
 def test_跨切点检查器对单源的赛场之上也要跑得起来(tmp_path):
