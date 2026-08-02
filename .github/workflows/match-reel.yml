@@ -232,6 +232,20 @@ jobs:
         if: github.event.inputs.mode == 'render'
         run: python -m playwright install --with-deps chromium
 
+      # **同一条源片会被下两到三次**：probe 一次、cover 一次、render 一次——
+      # 中间「丢掉不进仓库的中间物」把它删了，而它本来就不进仓库。实测一个
+      # 70 MB 的源片要下 **100.86 秒**（YouTube 限速，不是带宽），而 render
+      # 整步才 198 秒——**一半时间花在重下同一个文件上**。
+      # 键按 slug 走：一条片子的源片 URL 写死在 spec 里，不会变。
+      # ⚠️ 缓存目录在 `~` 底下，清理那一步只碰 outdir，碰不到它。
+      - name: 缓存源片（同一条片子只下一次）
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tennislive-sources
+          key: reel-src-${{ github.event.inputs.slug }}-${{ hashFiles(format('specs/reels/{0}.json', github.event.inputs.slug)) }}
+          restore-keys: reel-src-${{ github.event.inputs.slug }}-
+
       - name: 算出目录
         id: paths
         run: |
@@ -353,6 +367,7 @@ jobs:
       - name: probe — 下载 + 缩略图墙
         if: github.event.inputs.mode == 'probe'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
@@ -401,6 +416,7 @@ jobs:
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |
@@ -414,6 +430,7 @@ jobs:
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
+          TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
         run: |

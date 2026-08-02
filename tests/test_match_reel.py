@@ -34,6 +34,25 @@ def _steps(text: str) -> list[str]:
     ]
 
 
+def _step_block(name: str, text: str | None = None) -> str:
+    """取某一步自己那一段——**先去掉整行注释，再锚在步骤头上**。
+
+    两个坑都真踩过：
+
+    1. **按裸的步骤名切会先命中注释**。工作流的注释正是这个仓库记教训的地方，
+       正文里必然引用别的步骤名（「中间『丢掉不进仓库的中间物』把它删了」）——
+       于是 `text.index("丢掉不进仓库的中间物")` 切到的是一段注释，
+       抽不出任何 `rm` 模式，六条测试一起红。
+    2. **锚对了还要切对**：从 `- name:` 开始切、再按 `- name:` 分割，
+       会在第 0 位截断，拿到一个空串。要按整行头 `\n      - name:` 切。
+    """
+    body = _yaml_only(text if text is not None else
+                      WORKFLOW.read_text(encoding="utf-8"))
+    head = f"      - name: {name}"
+    start = body.index(head)
+    return body[start:].split("\n      - name:", 1)[0]
+
+
 def test_复制页写在提交之前():
     text = WORKFLOW.read_text(encoding="utf-8")
     names = _steps(text)
@@ -54,7 +73,7 @@ def test_复制页那一步不挑推不推送():
     后面那条三分钟的推送要不要退回十几分钟。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    block = text[text.index("- name: 写复制页"):].split("\n      - name:")[0]
+    block = _step_block("写复制页（必须排在提交之前）", text)
     assert "inputs.push == 'true'" not in block, (
         "「写复制页」挂在 push=true 上了——分支上 push=false 渲的片子就带不上"
         "复制页，合进 main 之后那趟 mode=push 还得现写现等 Pages 发布")
@@ -140,7 +159,7 @@ def test_中间物一个都不许进仓库():
     """
     text = WORKFLOW.read_text(encoding="utf-8")
     # 从这一步的名字切到下一步的 `- name:`，只看它自己那段
-    cleanup = text[text.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    cleanup = _step_block("丢掉不进仓库的中间物", text)
 
     # 抽出 rm -f 那几行里的模式，去掉 "$OUTDIR"/ 前缀和续行符
     pats = re.findall(r'"\$OUTDIR"/(\S+)', cleanup)
@@ -191,7 +210,7 @@ def test_清理之后还有大文件要报错退出():
     产物看起来一切正常。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    cleanup = text[text.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    cleanup = _step_block("丢掉不进仓库的中间物", text)
     assert "find" in cleanup and "-size +8M" in cleanup, "清理之后没有再量一次大小"
     assert "::error::" in cleanup, "查出漏网只是打印，没有出声——这种检查证明不了它看过"
     assert "exit 1" in cleanup, "报了错却不退出，等于没拦"
@@ -766,7 +785,7 @@ def test_push只能在main上而且要第一步就拦():
     assert guard in text, "没有这道闸"
 
     # 条件要同时卡住「要推送」和「不在 main」，少一个都拦错人
-    block = text[text.index(guard):].split("- name:")[0]
+    block = _step_block(guard, text)
     assert "github.event.inputs.push == 'true'" in block
     assert "github.ref_name != 'main'" in block
     assert "exit 1" in block, "报了错却不退出，等于没拦"
@@ -793,11 +812,11 @@ def test_cookies模式不产任何产物():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert "mode == 'cookies'" in text
     for step in ("丢掉不进仓库的中间物", "上传 artifact", "提交产物"):
-        block = text[text.index(step):].split("- name:")[0]
+        block = _step_block(step, text)
         assert "mode != 'cookies'" in block, step
     # 必须**真下媒体流**再看字节数：不带 cookie 也拿得到标题和格式表，
     # 只查「命令有没有报错」会把「被挡住」读成「可用」
-    check = text[text.index("cookies — 只验"):].split("- name:")[0]
+    check = _step_block("cookies — 只验", text)
     assert "--download-sections" in check
     assert "stat -c%s" in check and "exit 1" in check
 
@@ -826,7 +845,7 @@ def test_yt_dlp装default才解得了n_challenge():
     「这个视频没有格式」或者「cookie 过期了」。第一次跑 cookies 模式就栽在这上面。"""
     text = WORKFLOW.read_text(encoding="utf-8")
     assert '"yt-dlp[default]"' in text
-    check = text[text.index("cookies — 只验"):].split("- name:")[0]
+    check = _step_block("cookies — 只验", text)
     # 报错要分因：撞机器人验证 / 解不了 challenge，是两件事
     assert "n challenge solving failed" in check
     assert "not a bot" in check
@@ -1185,7 +1204,7 @@ def test_海报进仓库且推送第一屏是它():
 
     assert reel.POSTER_NAME == push_reel.POSTER_NAME == "poster.jpg"
     text = WORKFLOW.read_text(encoding="utf-8")
-    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    clean = _step_block("丢掉不进仓库的中间物", text)
     rm = " ".join(line for line in clean.splitlines()
                   if not line.strip().startswith("#"))
     assert "poster.html" in rm, "渲染输入（十几 MB 的 data URI）没被清掉"
@@ -1379,7 +1398,7 @@ def test_下载残留不进仓库():
     按**后缀**删才拦得住。
     """
     text = WORKFLOW.read_text(encoding="utf-8")
-    clean = text.split("丢掉不进仓库的中间物", 1)[1].split("- name:", 1)[0]
+    clean = _step_block("丢掉不进仓库的中间物", text)
     assert '"$OUTDIR"/*.part' in clean, "yt-dlp 的 .part 残留没被清掉"
     for path in Path("output").rglob("*.part"):
         raise AssertionError(f"仓库里还有下载残留：{path}")
@@ -1705,7 +1724,7 @@ def test_挑帧要在probe那一步跑并且整帧不进仓库():
     clean = next(i for i, n in enumerate(steps) if "丢掉不进仓库的中间物" in n)
     assert probe < picks < clean, f"挑帧要排在下载之后、清理之前：{steps}"
 
-    cleanup = flow[flow.index("丢掉不进仓库的中间物"):].split("- name:")[0]
+    cleanup = _step_block("丢掉不进仓库的中间物", flow)
     pats = re.findall(r'"\$OUTDIR"/(\S+)', cleanup)
     pats = [p.rstrip("\\").strip() for p in pats if p.strip()]
     assert any(fnmatch("cover_candidates/cand_00_t12.5.jpg", p) for p in pats), (
@@ -3792,3 +3811,88 @@ def test_查旁白那条路不许碰源片也不许写产物():
         blk = next(b for b in blocks if b.startswith(f"      - name: {name}"))
         assert "mode != 'narration'" in blk, (
             f"「{name}」没排除 narration 模式——这条路一个产物都没有")
+
+
+def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
+    """**一半的 render 时间花在重下同一个文件上。**
+
+    同一条源片会被下两到三次：probe 一次、cover 一次、render 一次——中间
+    「丢掉不进仓库的中间物」把它删了，而它本来就不进仓库。实测一个 70 MB 的
+    源片要下 **100.86 秒**（YouTube 限速，不是带宽），而 render 整步才 198 秒。
+
+    判据要**真走一遍 `download()`**，不是查源码里有没有那个函数：
+
+    1. 没配缓存目录 → 旧行为，该下还得下
+    2. 配了 → 第一次下完存一份，第二次**一个字节都不再下**
+    3. 换一条 URL → 不许命中（键是 URL 的哈希，不是「有没有缓存」）
+    4. 缓存写不进去**不算失败**（它只是个加速），但要出声
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    calls: list[str] = []
+
+    def _fake_ytdlp(args, **kw):
+        # 冒充 yt-dlp：把 `-o` 指的那个文件造出来
+        calls.append(args[-1])
+        out = Path(args[args.index("-o") + 1])
+        out.write_bytes(b"\0" * 2048)
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    import subprocess  # noqa: PLC0415
+
+    monkeypatch.setattr(reel.shutil, "which", lambda _n: "/usr/bin/yt-dlp")
+    monkeypatch.setattr(reel.subprocess, "run", _fake_ytdlp)
+    monkeypatch.setattr(reel, "probe_size", lambda _p: (1920, 1080))
+    url = "https://www.youtube.com/watch?v=AAAAAAAAAAA"
+
+    # ① 没配缓存目录：两次都要下
+    monkeypatch.delenv(reel._SOURCE_CACHE_ENV, raising=False)
+    reel.download(url, tmp_path / "a" / "source.mp4")
+    reel.download(url, tmp_path / "b" / "source.mp4")
+    assert len(calls) == 2, f"没配缓存却只下了 {len(calls)} 次"
+
+    # ② 配上：第一次下、第二次命中
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(tmp_path / "cache"))
+    calls.clear()
+    reel.download(url, tmp_path / "c" / "source.mp4")
+    assert len(calls) == 1, "第一次就该真下"
+    assert "存了一份" in capsys.readouterr().out
+    reel.download(url, tmp_path / "d" / "source.mp4")
+    assert len(calls) == 1, "第二次又下了一遍——缓存没生效"
+    hit = capsys.readouterr().out
+    assert "命中" in hit, f"命中了却不出声：{hit}"
+    assert (tmp_path / "d" / "source.mp4").stat().st_size == 2048, "命中但文件是空的"
+
+    # ③ 换 URL 不许命中
+    reel.download(url.replace("AAAAAAAAAAA", "BBBBBBBBBBB"),
+                  tmp_path / "e" / "source.mp4")
+    assert len(calls) == 2, "换了 URL 还命中——键不是按 URL 算的"
+
+    # ④ 写不进去只是慢一点，不该让一趟下载成功的 run 变红
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, "/proc/nope/nowhere")
+    calls.clear()
+    capsys.readouterr()
+    reel.download(url, tmp_path / "f" / "source.mp4")   # 不许抛
+    assert len(calls) == 1
+    assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
+
+
+def test_缓存源片的开关要在工作流里够得着():
+    """和 `--cover-only` 那次同一个坑：代码里加了，工作流没接上等于没有。
+
+    三条要源片的路（probe / cover / render）都得拿到缓存目录，而
+    push / narration 两条**根本不碰源片**，不该为它们恢复缓存。
+    """
+    body = _yaml_only(WORKFLOW.read_text(encoding="utf-8"))
+    jobs = body.split("\njobs:", 1)[1]
+    blocks = re.split(r"\n(?=      - (?:name|uses):)", jobs)
+
+    cache = [b for b in blocks if "tennislive-sources" in b and "actions/cache" in b]
+    assert len(cache) == 1, f"缓存源片那一步有 {len(cache)} 个"
+    for skip in ("'push'", "'narration'"):
+        assert skip in cache[0], f"{skip} 那条路不碰源片，不该恢复缓存"
+
+    for name in ("probe — 下载", "cover — 只出封面海报", "render — 出成片"):
+        blk = next(b for b in blocks if b.startswith(f"      - name: {name}"))
+        assert "TENNISLIVE_SOURCE_CACHE" in blk, f"「{name}」没拿到缓存目录"
