@@ -3783,6 +3783,83 @@ _LEGACY_QUALIFIER_NAMES = {
 }
 
 
+# 规矩定下来**之前**已经发出去的封面。已发的片子不为了这个重渲，所以它们
+# 挂在这儿——**只许减不许加**。
+_LEGACY_NO_FLAG = {
+    "eala-fernandez.json", "eala-svitolina.json", "eala-zheng.json",
+    "hewitt-washington.json", "nishikori-shang.json", "potapova-venus.json",
+    "wang-pareja.json", "wang-samsonova.json", "wong-brooksby.json",
+    "wong-gea.json", "wong-lehecka.json", "zheng-lanlana.json",
+}
+
+
+def test_封面上每个球员都要有国旗和即时排名():
+    """账号所有者 2026-08-02：「以后封面上所有球员的名字旁边要加上他的国旗，
+    对阵的同时在后面括号里面加上他的即时的世界排名」。
+
+    两样都必填，因为**漏掉的失败方式都不吭声**：没有国旗，海报看着只是「少了点
+    什么」；没有排名，读者没法判断这场胜利有多重——伊埃拉赢大坂，是 28 赢 13，
+    不是随便两个人。
+
+    `rank` 允许显式 `null`＝「查过，他没有排名」（资格赛、掉出榜单）。
+    和 `mixed_fps` / `silent_source` 一样：**认领这一步把「查过没有」和「忘了填」
+    分开**，漏写这个键会报错，写 null 会渲成只有国旗和名字并且在日志里出声。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    missing = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        if path.name in _LEGACY_NO_FLAG:
+            continue
+        versus = ((json.loads(path.read_text(encoding="utf-8")).get("cover") or {})
+                  .get("versus") or {})
+        for side in ("top", "bottom"):
+            panel = versus.get(side) or {}
+            gaps = [k for k in ("country", "rank") if k not in panel]
+            if gaps:
+                missing.setdefault(path.name, []).append(f"{side} 缺 {gaps}")
+    assert not missing, f"封面缺国旗/排名：{missing}"
+
+    # 行为：给全了就渲出「旗 + 名 +（排名）」
+    html = versus_poster._name_html("伊埃拉", {"country": "PHI", "rank": 28}, "t")
+    assert "\U0001F1F5\U0001F1ED" in html, "国旗没渲出来"
+    assert "（28）" in html, "排名没进括号"
+    # 显式 null：只有旗和名，不报错
+    assert "（" not in versus_poster._name_html("某人", {"country": "PHI", "rank": None}, "t")
+    # 漏写：两个键各自都要报错，而且要说清出路
+    import pytest  # noqa: PLC0415
+
+    with pytest.raises(SystemExit, match="country"):
+        versus_poster._name_html("某人", {"rank": 1}, "versus.top")
+    with pytest.raises(SystemExit) as err:
+        versus_poster._name_html("某人", {"country": "PHI"}, "versus.top")
+    assert "null" in str(err.value), "报错没说「查过没有就写 null」这条出路"
+
+
+def test_渲海报的工作流都要装emoji字体():
+    """**缺了 emoji 字体不报错。** Chromium 回退到没有旗帜字形的字体，
+    🇵🇭 渲成两个方框或者裸的「PH」两个字母，海报照样出得来、工作流照样绿。
+
+    判据不数包名，**按「谁渲海报」自动推**：凡是 run 脚本里出现
+    `versus_poster` / `build_match_reel` 的工作流，apt 行就必须带
+    `fonts-noto-color-emoji`。这样以后多一条出海报的线，它会替人记得。
+    """
+    import re  # noqa: PLC0415
+
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        text = path.read_text(encoding="utf-8")
+        runs = "\n".join(re.findall(r"^\s*run:\s*\|?(.*(?:\n(?:\s{2,}).*)*)",
+                                    text, re.M))
+        runs = "\n".join(ln for ln in runs.splitlines()
+                          if not ln.lstrip().startswith("#"))
+        if not any(k in runs for k in ("versus_poster", "build_match_reel.py")):
+            continue
+        assert "fonts-noto-color-emoji" in runs, (
+            f"{path.name} 渲海报却没装 fonts-noto-color-emoji——"
+            "国旗会悄悄变成方框，而这一步不会红")
+
+
 def test_轮次要写半决赛不写四强():
     """账号所有者 2026-08-02：「以后不要用四强八强之类的，国内通常用半决赛
     1／4 决赛 1/8 决赛之类的。再往前就第几轮好了」。
