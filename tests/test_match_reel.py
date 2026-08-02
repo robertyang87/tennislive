@@ -4221,3 +4221,52 @@ def test_缓存源片的开关要在工作流里够得着():
     for name in ("probe — 下载", "cover — 只出封面海报", "render — 出成片"):
         blk = next(b for b in blocks if b.startswith(f"      - name: {name}"))
         assert "TENNISLIVE_SOURCE_CACHE" in blk, f"「{name}」没拿到缓存目录"
+
+
+def test_复制页打不开时消息本身留得住文案():
+    """复制页走 `github.io`，**那条链路沙箱量不到**（这里探是 200，账号所有者
+    在微信里点开是 404）。所以它只能是加分项，不能是文案唯一的出口。
+
+    正文本来就整段内联，问题出在标题——它原来只活在那个按钮后面。现在大标题
+    底下标一行「长按这一行即可复制」：**不另印一遍**（那是「同一段印两遍」
+    那个老毛病），只是把已经在页面上的那一行标成出口。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    title = "8.1 开球之前 | 郑钦文 vs 塔拉鲁迪"
+    body = "第一段正文。\n\n第二段正文。"
+    html = push_reel.build_html("https://v/x.mp4", "https://p/copy.html", "",
+                                f"{title}\n\n{body}", "", "开球之前")
+
+    # 标题在，而且**只印一遍**——多印一遍就是那个老毛病
+    assert html.count(title) == 1, "标题印了不止一遍"
+    assert "长按" in html.split(title, 1)[1][:200], (
+        "大标题底下没有「长按可复制」那一行——复制页打不开时标题就没有出口了")
+
+    # 正文也要整段在消息里，别只留一个按钮
+    assert "第一段正文。" in html and "第二段正文。" in html
+    assert "长按整段即可复制" in html
+
+
+def test_赛前前瞻的封面要写清几点开球():
+    """「开球之前」的封面必须写**开赛时刻**——账号所有者定的（首页问题下面的
+    小字：时间、赛事名称、轮次）。这类片子唯一的行动信息就是那个时刻。
+
+    `versus_poster` 原来只有 `tier`/`round` 那条路读 `meta`，写了 `event_badge`
+    的 spec 里那个时刻**静静地不见了**：海报看着是完整的，少的恰恰是那一样。
+    """
+    src = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+    head, _, tail = src.partition("if event_badge:")
+    branch = tail.split("else:")[0]
+    assert 'cover.get("meta"' in branch, (
+        "event_badge 那条路没有读 meta——赛前前瞻的开赛时刻会被吞掉")
+
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        cover = json.loads(path.read_text(encoding="utf-8")).get("cover") or {}
+        if str(cover.get("eyebrow", "")).strip() != "开球之前":
+            continue
+        meta = str(cover.get("meta", "")).strip()
+        assert meta, f"{path.name} 是开球之前，封面没写开赛时刻（cover.meta）"
+        assert any(k in meta for k in ("时间", ":", "：")), (
+            f"{path.name} 的 cover.meta 看不出是个时刻：{meta!r}")

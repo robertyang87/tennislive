@@ -619,11 +619,18 @@ def _result_block(cover: dict, names: list) -> str:
             "<svg ", '<svg class="tour-logo" aria-hidden="true" ', 1)
         level = html.escape(str(event_badge.get("level", "")).strip())
         text = html.escape(str(event_badge.get("text", "")).strip())
+        # **`meta` 要和 badge 并存，不能被它吞掉。** 「开球之前」是赛前前瞻，
+        # 封面必须写清**几点开球**（账号所有者定的：首页问题下面小字加时间、
+        # 赛事、轮次）。原来只有 tier/round 那条路读 `meta`，写了 event_badge
+        # 的 spec 里那个时刻就**静静地不见了**——海报看着完整，少的那样东西
+        # 恰好是这类片子唯一的行动信息。
+        meta = html.escape(str(cover.get("meta", "")).strip())
         footer = (
             '<div class="eventline">'
             f'<span class="tourmark">{logo}<b>{level}</b></span>'
             f'<span class="eventtext">{text}</span>'
-            "</div>"
+            + (f'<span class="eventtext">{meta}</span>' if meta else "")
+            + "</div>"
         )
     else:
         pills = "".join(f'<span class="pill">{p}</span>'
