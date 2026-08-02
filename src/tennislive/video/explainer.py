@@ -840,12 +840,14 @@ _MIDDLE_SAME_DIAGRAM = """
   <polyline points="120,340 200,398 292,376 470,254 700,220 812,220"
             fill="none" stroke="#c6f65a" stroke-width="7"
             stroke-linejoin="round" stroke-linecap="round"/>
-  <text x="676" y="198" fill="#c6f65a" font-size="28" font-weight="800">拿了温网</text>
+  <text x="612" y="166" fill="#c6f65a" font-size="30" font-weight="800">德约科维奇</text>
+  <text x="612" y="202" fill="#c6f65a" font-size="26" font-weight="700">拿了温网</text>
 
   <polyline points="120,340 200,398 294,380 434,326 566,356 700,414 812,420"
             fill="none" stroke="rgba(231,243,236,.62)" stroke-width="7"
             stroke-dasharray="14 10" stroke-linejoin="round" stroke-linecap="round"/>
-  <text x="672" y="392" fill="#9fb4aa" font-size="28" font-weight="800">再没回去</text>
+  <text x="640" y="326" fill="#e7f3ec" font-size="30" font-weight="800">锦织圭</text>
+  <text x="640" y="362" fill="#9fb4aa" font-size="26" font-weight="700">再没回去</text>
 
   <text x="112" y="466" fill="#9fb4aa" font-size="26" font-weight="700">动刀</text>
   <text x="424" y="466" fill="#9fb4aa" font-size="26" font-weight="700">半年</text>
