@@ -5,7 +5,7 @@
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
 | 1 | 0:00.6 | [▶](https://youtu.be/ysRhuIpEvv8?t=0) | Congratulations. | 恭喜你 |  |
-| 2 | 0:01.5 | [▶](https://youtu.be/ysRhuIpEvv8?t=1) | Your first ever WTA 500 final. | 你生涯第一个 WTA 500 决赛 | ✏️ 已订正；👂 按正确写法去掉多出来的那个 `500`。这处不用听音频就能定：`first ever WTA 500 final` 只有一种成立的读法。 |
+| 2 | 0:01.5 | [▶](https://youtu.be/ysRhuIpEvv8?t=1) | Your first ever WTA 500 final. | 你生涯第一个 WTA 500 决赛 | ✏️ 已订正；👂 去掉多出来的那个 `500`。⚠️ **whisper 在这儿也多出一个 500**——两份 ASR 都有两个，主持人多半是真的说秃噜了。保留一个是编辑取舍（发出去的英文要是能照着学的那一份），不是「机器听错了」。见 `_verified_clean` 第 ④ 条。 |
 | 3 | 0:11.4 | [▶](https://youtu.be/ysRhuIpEvv8?t=11) | I got so many things to talk to you | 我有一大堆问题想问你 |  |
 | 4 | 0:12.9 | [▶](https://youtu.be/ysRhuIpEvv8?t=12) | about, but you were just looking up | 但你刚才一直抬头看大屏 |  |
 | 5 | 0:14.1 | [▶](https://youtu.be/ysRhuIpEvv8?t=14) | at that big board and watching the emotion | 看着那一刻的情绪 |  |
@@ -91,6 +91,6 @@
 
 ## 自动字幕的空档（≥2 秒连一个事件都没有）
 
-- **92.2–96.6 秒**（片内，4.4 秒空白，[跳过去](https://youtu.be/ysRhuIpEvv8?t=92)）　**全场欢呼，不是漏词。** 三条判据都指向它：　① 空档两头紧挨着 `[cheering]` 标记（89.08 那条是 `[cheering] week`，96.56 那条是 `all week you have been [cheering]`）——源自己在说「我听见了，只是不是人话」；　② **主持人把同一句重说了一遍**：空档前是 `What about the support here? All`，空档后是 `all week you have been`。被掌声打断、等完再重起一句，是这个句式的典型；　③ 他问的内容本身就是「这一周的球迷支持」，菲律宾球迷这一周坐满看台，喊起来正常。　⚠️ 这是**听过判据之后的决定**，不是「这里没问题」。runner 上那趟 `--stage verify` 会再报一次 `small.en` 在这几秒里听到了什么——它要是听出词来，就是我判错了，回来改。
+- **92.2–96.6 秒**（片内，4.4 秒空白，[跳过去](https://youtu.be/ysRhuIpEvv8?t=92)）　**全场欢呼，不是漏词——而且这次有画面为证。** storyboard 里那几秒（89.8 / 91.7 秒）镜头切到了看台，一个球迷举着手写牌：`ALEX / You Make Us Proud / TO BE / PINOY!`；93.6 秒起切回她，闭着嘴在笑，话筒不在她嘴边。主持人正问到「这一周的支持」，镜头给了这块牌子，全场炸了，他等完才把那句重说一遍（空档前 `All`、空档后 `all week you have been`）。两头还各挂着一个 `[cheering]` 标记。　⚠️ 账号所有者猜「估计是菲律宾当地语言」——**画面不支持这个读法**（那几秒她没在说话），但「非英语」这一层机器判不了：`small.en` 对着他加禄语同样是空白，而这条线定了不上多语种。runner 上那趟 verify 会再报一次它在这几秒听到了什么；真要确认有没有人说菲律宾语，得有人听。
 
 打开源片听这几秒：**有人说话就是漏了**，掌声／欢呼就不是。结论写进 spec 的 `caption_gaps_ok`（键 `起-止`，秒，一位小数）。
