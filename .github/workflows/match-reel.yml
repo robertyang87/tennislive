@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "probe=下载并出缩略图墙；cover=只出封面海报；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
+        description: "probe=下载并出缩略图墙；cover=只出封面海报；narration=只查旁白装不装得下；render=按 spec 出成片；push=只推已落库的成片；cookies=只验 YouTube 还能不能下"
         required: true
         type: choice
         # **`cover` 是给返工用的。** 封面是全流程返工最多的那一屏，而
@@ -27,7 +27,7 @@ on:
         # 出海报，省掉分段编码 + TTS + 成片那四五分钟。实测整趟 3 分 19 秒。
         # ⚠️ `--cover-only` 的 CLI 开关先落地了而这一行没跟着改，于是它在唯一
         # 能用的那台机器上够不着（源片只在 runner 上活过几分钟）。
-        options: [probe, cover, render, push, cookies]
+        options: [probe, cover, narration, render, push, cookies]
         default: probe
       slug:
         description: "片子 slug，决定目录名与 spec 文件名"
@@ -384,6 +384,20 @@ jobs:
       # 只下源片 + 出海报就停：不分段、不合语音、不编码。改一档 scale / cx /
       # box 想看效果走这条，别再付一趟完整 render。实测整趟 3 分 19 秒，
       # 而且只提交一张 0.3 MB 的海报。
+      # 只合语音、只报哪几段旁白写长了。**不下源片、不渲染、不写产物**——
+      # 已经发过的片子拿它查，不会多出一个成片。跑一趟 render 去问同一个问题，
+      # 在通过的情况下会顺手渲出一条新成片并提交。
+      - name: narration — 只查旁白装不装得下
+        if: github.event.inputs.mode == 'narration'
+        run: |
+          SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
+          test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
+          python tools/build_match_reel.py render --check-narration \
+            --spec "$SPEC" \
+            --voice "${{ github.event.inputs.voice }}" \
+            --rate "${{ github.event.inputs.rate }}" \
+            --outdir "${{ steps.paths.outputs.outdir }}"
+
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
@@ -448,7 +462,7 @@ jobs:
             --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
 
       - name: 丢掉不进仓库的中间物
-        if: github.event.inputs.mode != 'cookies'
+        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 源片 50MB 上下，逐帧图几百张——都不进仓库，只留缩略图墙和成片。
@@ -518,7 +532,7 @@ jobs:
       # exit 1（栽过四次），**成片明明已经渲完了，却既不上传也不提交**。
       # ⚠️ 位置不许往前挪：清理是先 rm 再检查，挪到前面会把源片一起传。
       - name: 上传 artifact
-        if: always() && github.event.inputs.mode != 'cookies'
+        if: always() && github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         uses: actions/upload-artifact@v4
         with:
           name: reel-${{ github.event.inputs.slug }}-${{ github.run_number }}
@@ -526,7 +540,7 @@ jobs:
           retention-days: 14
 
       - name: 提交产物
-        if: github.event.inputs.mode != 'cookies'
+        if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
