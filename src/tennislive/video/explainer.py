@@ -3964,8 +3964,8 @@ _OPENINGS: dict[str, dict] = {
         # 选双脚离地那一帧：这条片子讲的是「额度」，而额度买来的正是**站上场**
         # 这件事本身。照片是 2023 年美网，年份写在卡上——他现在的处境是 2026 年的，
         # 但 Commons 上他 2025 年之后的比赛照一张都没有（探过，见 credits）。
-        "image": "assets/explainer/pr-allowance/shang_usopen_2023_leap.jpg",
-        "credit": "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，商竣程双脚离地救球",
+        "image": "assets/explainer/pr-allowance/stephens_usopen_2017_lift.jpg",
+        "credit": "WTA 官方图库 · 2017 年 9 月 9 日美网女单决赛，斯蒂芬斯举起奖杯",
     },
     "challenger-climb": {
         "topic": "挑战赛：难的不是对手，是兑换率",
