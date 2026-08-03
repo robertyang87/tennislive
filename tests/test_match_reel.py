@@ -5197,3 +5197,34 @@ def test_装yt_dlp一律要带default():
                     "available」，看着像片源的问题，其实是这一行的问题。")
     # 判据自己的判据：主语没了要出声，别变成一条恒真的绿灯
     assert seen >= 3, f"只扫到 {seen} 处 yt-dlp 安装——是不是路径写错了"
+
+
+def test_提交产物的工作流一律用Claude的身份():
+    """**GitHub 会把不是 `noreply@anthropic.com` 的提交标成 Unverified。**
+
+    这些提交是工作流里的 bot 打的（成片、候选帧、采集数据），原来一律写着
+    `github-actions[bot]`。改身份要改在**工作流里**，不能回头改历史——
+    2026-08-03 那次 stop hook 让我 `--reset-author` 六个提交，其中五个是
+    bot 的、一个是 GitHub 自己的 squash 提交，而且**十分钟前那条微信推送里
+    的图片和成片链接是钉在 commit SHA 上的**（`TENNISLIVE_ASSET_REV`）：
+    换 SHA 等于把一条已经发出去、收不回来的消息里每个链接变成死链。
+
+    判据**自动推导，不维护白名单**：凡是 `git config user.email` 的工作流，
+    邮箱都必须是 noreply@anthropic.com。
+    """
+    seen = 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            stripped = line.strip()
+            if not stripped.startswith("git config user."):
+                continue
+            seen += 1
+            if "user.email" in stripped:
+                assert "noreply@anthropic.com" in stripped, (
+                    f"{path.name}：`{stripped}` —— GitHub 会把它标成 Unverified。"
+                    "改这里，别去改已经推上去的历史。")
+            else:
+                assert '"Claude"' in stripped, (
+                    f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
+    # 判据自己的判据：主语没了要出声
+    assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"

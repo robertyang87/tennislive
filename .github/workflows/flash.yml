@@ -105,8 +105,8 @@ jobs:
 
       - name: 提交内容包与状态
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           # **必须带 `--sparse`。** 稀疏检出之后，裸的 `git add output/` 对
           # cone 外的路径只打一句警告（"will not be updated in the index"）
           # 然后**退出码 0**——接着 `git diff --cached --quiet` 说「没有新内容」，
