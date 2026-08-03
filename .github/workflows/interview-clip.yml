@@ -341,8 +341,8 @@ jobs:
           # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
           find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
           rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
           git diff --cached --quiet && { echo "没有变化"; exit 0; }
           # **体积闸**：渲完一整趟才被 GitHub 拒收（推分支吃 HTTP 413）是最贵

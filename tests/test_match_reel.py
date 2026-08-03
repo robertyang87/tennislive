@@ -5306,3 +5306,69 @@ def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
     assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
     assert CENTRE not in cleared, (
         "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")
+
+
+def test_装yt_dlp一律要带default():
+    """**`pip install yt-dlp` 少了 `[default]`，报出来是「这条片子没有格式」。**
+
+    `[default]` 带的是 `yt-dlp-ejs`——解 YouTube 的 n challenge 要跑一段 JS。
+    少了它 yt-dlp **不会说「装少了」**：格式表里只剩故事板，于是任何选择器
+    （连 `worst`）都匹配不上，报的是 `Requested format is not available`。
+
+    **它长得和「片源只有 DRM」一模一样，而我照着后者写下了结论。**
+    frame-grab 头两趟（run 30791003879 / 30791363067）八个 client 全红，
+    我据此在调研文档里写「卡在片源，不是卡在管线」——方向反了，是那条
+    `pip install -q -e . yt-dlp` 漏了 `[default]`。而 match-reel.yml 里
+    那句注释早就把这个坑写清楚了：**新工作流没继承旧工作流的前提**，
+    又一次「加新能力就要同时改三处」。
+
+    判据**自动推导，不维护白名单**（和「凡是 `git commit` 的工作流都要有
+    体积闸」同一个形状）：凡是 `pip install` 里出现 yt-dlp 的，都要带
+    `[default]`。就算某条线只取元数据，带上它也没有代价——而漏掉它的代价
+    是一趟看起来完全合理的错误结论。
+    """
+    seen = 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            if "pip install" not in line or "yt-dlp" not in line:
+                continue
+            seen += 1
+            for token in re.findall(r'"?yt-dlp[^"\s]*"?', line):
+                assert "[default]" in token, (
+                    f"{path.name}：`{line.strip()}` 装的是裸的 yt-dlp。"
+                    "少了 [default] 就没有 yt-dlp-ejs，n challenge 解不了，"
+                    "格式表只剩故事板——报出来是「Requested format is not "
+                    "available」，看着像片源的问题，其实是这一行的问题。")
+    # 判据自己的判据：主语没了要出声，别变成一条恒真的绿灯
+    assert seen >= 3, f"只扫到 {seen} 处 yt-dlp 安装——是不是路径写错了"
+
+
+def test_提交产物的工作流一律用Claude的身份():
+    """**GitHub 会把不是 `noreply@anthropic.com` 的提交标成 Unverified。**
+
+    这些提交是工作流里的 bot 打的（成片、候选帧、采集数据），原来一律写着
+    `github-actions[bot]`。改身份要改在**工作流里**，不能回头改历史——
+    2026-08-03 那次 stop hook 让我 `--reset-author` 六个提交，其中五个是
+    bot 的、一个是 GitHub 自己的 squash 提交，而且**十分钟前那条微信推送里
+    的图片和成片链接是钉在 commit SHA 上的**（`TENNISLIVE_ASSET_REV`）：
+    换 SHA 等于把一条已经发出去、收不回来的消息里每个链接变成死链。
+
+    判据**自动推导，不维护白名单**：凡是 `git config user.email` 的工作流，
+    邮箱都必须是 noreply@anthropic.com。
+    """
+    seen = 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            stripped = line.strip()
+            if not stripped.startswith("git config user."):
+                continue
+            seen += 1
+            if "user.email" in stripped:
+                assert "noreply@anthropic.com" in stripped, (
+                    f"{path.name}：`{stripped}` —— GitHub 会把它标成 Unverified。"
+                    "改这里，别去改已经推上去的历史。")
+            else:
+                assert '"Claude"' in stripped, (
+                    f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
+    # 判据自己的判据：主语没了要出声
+    assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"

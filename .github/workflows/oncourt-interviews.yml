@@ -79,7 +79,9 @@ jobs:
           cache: pip
 
       - name: 安装 yt-dlp
-        run: pip install -q "yt-dlp>=2026.7.4"
+        # `[default]` 带 yt-dlp-ejs，解 n challenge 要它；少了它格式表只剩
+        # 故事板，而 yt-dlp 不会说「装少了」。见 match-reel.yml 那条注释。
+        run: pip install -q "yt-dlp[default]>=2026.7.4"
 
       - name: 采集
         run: |
@@ -163,8 +165,8 @@ jobs:
             exit 0
           fi
           n=$(python -c "import json;print(len(json.load(open('data/oncourt_interviews.json'))['items']))")
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add data/oncourt_interviews.json data/oncourt_feed_sent.json
           python tools/check_staged_file_sizes.py
           git commit -m "data: 场上赛后采访采集（累计 ${n} 条）"

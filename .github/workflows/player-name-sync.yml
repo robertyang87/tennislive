@@ -55,8 +55,8 @@ jobs:
             echo "排名与译名快照无变化"
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add src/tennislive/zh/player_names_top500.json data/player_name_review_queue.json
           python tools/check_staged_file_sizes.py
           git commit -m "data: sync top-500 Chinese player names [skip ci]"

@@ -505,7 +505,7 @@ def test_canada_picks_the_city_that_actually_hosts_that_tour_that_year():
 # 赛历上已经有中心球场图的站数。**只许升不许降**——和 LANDMARK_BUDGET 一样，
 # 是给"悄悄退步"装的铃：别名写错、credits 掉字段、host_years 写反，
 # 都会让某一站从有图变成没图，而卡片只是安静地退回通用底，不报错。
-VENUE_COVERAGE_FLOOR = 58
+VENUE_COVERAGE_FLOOR = 107
 
 
 def test_calendar_coverage_only_goes_up():
@@ -609,3 +609,130 @@ def test_japan_events_do_not_borrow_each_others_city():
         if got is None or got.slug != expected:
             wrong.append(f"{name}（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
     assert not wrong, "日本三站互相串了城市：\n" + "\n".join(wrong)
+
+
+def test_stuttgart_events_do_not_share_one_venue():
+    """斯图加特两站在**两个场馆**，一张图不许同时命中。
+
+    - 4 月 WTA500「Porsche Tennis Grand Prix」在 **Porsche-Arena**，室内红土
+    - 6 月 ATP250「Boss Open」在 **TC Weissenhof**，室外草地
+
+    同城、同名（赛历里中文都叫「斯图加特公开赛」）、不同场馆、连场地类型都不同。
+    和东京／大阪那对是同一类，只是那对是「同名不同城」，这对是「同城不同馆」。
+
+    这条测试现在是**预防性**的：两站都还没有图，所以都返回 None，测试通过。
+    它拦的是下一次——谁按 `stuttgart` 这个别名加一张图，就会同时套住两站，
+    于是 6 月的草地赛事印出一张室内红土馆。**别名要写赛事名，不是城市名**：
+    WTA 那站认 `porsche`，ATP 那站认 `boss open`，真要共用城市别名就得配
+    `only_tour`（见 `_specificity`）。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour, month: int):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, 20, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    wta = venue_asset_for_match(_m("Porsche Tennis Grand Prix", Tour.WTA, 4))
+    atp = venue_asset_for_match(_m("Boss Open", Tour.ATP, 6))
+    if wta is None and atp is None:
+        return  # 两站都还没有图，还没到会出错的时候
+    assert not (wta and atp and wta.slug == atp.slug), (
+        f"斯图加特两站套上了同一张图（{wta.slug}）——"
+        "4 月 WTA 在 Porsche-Arena（室内红土），6 月 ATP 在 Weissenhof（室外草地），"
+        "是两个场馆。别名按赛事名写（porsche / boss open），或配 only_tour")
+
+
+def test_queens_gives_the_atp_and_wta_events_their_own_picture():
+    """女王俱乐部同一座中心球场办两站，但**画面里的字不一样**。
+
+    2025 年起男女两站都叫 `HSBC Championships`，赛历里 WTA 那条的 en 还写着
+    `Queen's Club Championships`——而真实 feed 给哪一个名字**不由我们决定**。
+    所以这里不能靠赛事名分，只能靠 `only_tour`：ATP 那张场地前场刷着
+    `ATP TOUR`，WTA 那张围板写着 `WTA 500`，各归各的。
+
+    判据要**两个名字 × 两条巡回赛四种组合都对**：只测「HSBC + ATP」会漏掉
+    feed 把 WTA 那站也叫成 HSBC 的情况，而那正是最可能发生的一种。
+    """
+    from datetime import datetime, timezone
+
+    from tennislive.models import Match, MatchStatus, Player, Tour, Tournament
+    from tennislive.render.venue_assets import venue_asset_for_match
+
+    def _m(name: str, tour: Tour):
+        return Match(
+            match_id="x", tour=tour,
+            tournament=Tournament(name=name, tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, 6, 16, tzinfo=timezone.utc), sets=[], winner=None,
+        )
+
+    wrong = []
+    for name in ("HSBC Championships", "Queen's Club Championships"):
+        for tour, expected in ((Tour.ATP, "queens-atp"), (Tour.WTA, "queens-wta")):
+            got = venue_asset_for_match(_m(name, tour))
+            if got is None or got.slug != expected:
+                wrong.append(
+                    f"「{name}」（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
+    assert not wrong, "女王俱乐部两站没有各用各的图：\n" + "\n".join(wrong)
+
+
+def test_off_ledger_events_with_a_fixed_venue_still_have_a_picture():
+    """不算进覆盖率 ≠ 不用有图。
+
+    团体赛和年终总决赛被排除在覆盖率之外（账号所有者给的清单是
+    250 / 500 / 1000 + 大满贯），我据此在 `SKIP_TIERS` 的注释里写了一句
+    「团体赛和年终总决赛没有固定主场馆」——**对团体赛成立，对年终不成立**。
+    都灵、吉达签的是多年合同，比利·简·金杯定在深圳，戴维斯杯决赛圈 2026 在
+    博洛尼亚。于是这七条一起从视野里消失，而 ATP 年终是全年最大的赛事之一，
+    卡片一直在用通用底。
+
+    真正没有固定主场的只有联合杯（珀斯／悉尼两城轮流）和拉沃尔杯（每年换国家），
+    它们不在 `FIXED_VENUE_OFF_LEDGER` 里。
+
+    这条拦的是同一个毛病再来一次：**「没算进分母」不能顺手变成「看不见」**。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    missing = [f"{r['zh']}（{r['loc']}）" for r in module.off_ledger(2026)
+               if r["fixed"] and r["shot"] != "centre-court"]
+    assert not missing, (
+        "这些赛事的场馆是定死的，却没有中心球场图：" + "、".join(missing) +
+        "。它们不算进覆盖率，但照样会出现在日报里")
+
+
+def test_off_ledger_roster_matches_the_calendar():
+    """`FIXED_VENUE_OFF_LEDGER` 里的名字要在赛历上真的存在。
+
+    它是按赛事名硬写的一张清单，赛历改名（比如 WTA 年终从利雅得搬到印第安
+    维尔斯、`en` 跟着变）之后，这里的旧名字就变成一条**永远命不中的死条目**，
+    而上面那条测试会因此静默通过——又是「空结果 ≠ 不存在」。
+    """
+    import importlib.util
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    tool = root / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    names = {e.get("en") for e in json.loads(
+        (root / "data" / "tour_calendar_2026.json").read_text(encoding="utf-8"))["events"]}
+    orphans = sorted(module.FIXED_VENUE_OFF_LEDGER - names)
+    assert not orphans, f"FIXED_VENUE_OFF_LEDGER 里这些名字赛历上没有：{orphans}"
