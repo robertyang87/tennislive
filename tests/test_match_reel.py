@@ -5117,3 +5117,48 @@ def test_dry_run要把装不下的旁白当场报出来(tmp_path):
     bad = dry_run(blown)
     assert bad.returncode == 1, f"撑长了还是绿的：\n{bad.stdout}"
     assert "装不下" in bad.stdout, bad.stdout
+
+
+def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
+    """账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+
+    「铺满」本来就成立（solo 是 `background-size:cover`，照片顶到四边、没有垫层）；
+    让实拍看起来发虚的是盖在整幅上的 `.scrim`——它的第二道 radial 在**画面正中**
+    压 58% 的暗，一张真实照片被洗成一层背景板。
+
+    ⚠️ **不许直接改那个默认值。** 那段 CSS 是从解说片的 cover 屏整段抄过来的，
+    源码注释写着「一个数都没动，各调各的就会慢慢漂开」。所以做成**按条声明**
+    （`cover.scrim: "clear"`），没声明的片子和解说片仍然是同一个样子。
+
+    判据三头，缺一头都可能变成假绿：
+
+    1. 关掉的**只有正中那一道**——上下两头必须留着，台头压在顶上、钩子压在
+       中间偏下，浅色字压在浅色画面上会没。
+    2. **默认仍然带中心暗角**（不声明的片子不受影响）。
+    3. **这个开关真的接在 `_solo_body` 上**——只测 `_scrim_css` 证明不了海报
+       读了它。这是这个仓库反复栽的「写了不等于跑过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    CENTRE = "radial-gradient(128% 40% at 50% 50%"
+    TOP_BOTTOM = "linear-gradient(180deg,rgba(6,28,20,.62)"
+
+    assert CENTRE in vp._scrim_css(False), "默认那一版没有中心暗角了"
+    assert CENTRE not in vp._scrim_css(True), "clear 没有关掉中心暗角"
+    for flag in (False, True):
+        assert TOP_BOTTOM in vp._scrim_css(flag), (
+            "上下两头的渐变被一起关掉了——台头和钩子会压在浅色画面上看不见")
+
+    # ③ 真走一遍 `_solo_body`：声明了就不带，没声明就带
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1920, 1080), (90, 120, 90)).save(photo)
+    base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+            "portrait": {"image": str(photo)}}
+    _, plain = vp._solo_body(dict(base))
+    _, cleared = vp._solo_body({**base, "scrim": "clear"})
+    assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
+    assert CENTRE not in cleared, (
+        "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")
