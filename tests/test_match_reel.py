@@ -4764,3 +4764,401 @@ def test_旁白不许把每一局都念一遍():
         hit = sum(1 for s in segs if announce.search(s.get("narration") or ""))
         assert hit / len(segs) > _BOARD_SHARE_MAX, (
             f"{slug} 已经不超标了，把它从 _BOARD_LEGACY 里去掉")
+
+
+# 离线估旁白长度 ------------------------------------------------------------
+# 判据的样本从**已发的成片**里取：每一段旁白的真实秒数就是闸自己量到的那个数
+# （`narration_overruns` 拿 mp3 时长），而它落在 `subtitles.ass` 里——这一段的
+# 最后一条字幕正好收在「本段起点 + 旁白时长」上。
+#
+# ⚠️ 不用 `voice_NN.words.json` 的末事件：那是**词末**，比 mp3 短一个固定的
+# 0.83 秒（从 9 条片子 121 段反解出来，min 0.800 / 中位 0.829 / max 0.851），
+# 照它标定会把整条模型往短里拉。
+
+
+def _ass_cues(path: Path) -> list[tuple[float, float]]:
+    def sec(t: str) -> float:
+        h, m, s = t.split(":")
+        return int(h) * 3600 + int(m) * 60 + float(s)
+
+    return [(sec(f[1]), sec(f[2]))
+            for f in (line.split(",", 9)
+                      for line in path.read_text("utf-8").splitlines()
+                      if line.startswith("Dialogue:"))]
+
+
+def _measured_narration() -> list[tuple[str, int, int, int, float]]:
+    """`[(slug, 段序号, 字数, 句读数, 实测秒数)]`，取自已发成片。
+
+    **CI 上是空的**（`output/` 不在稀疏检出里），所以它只当加餐——核心判据是
+    下面那张冻结下来的表。
+    """
+    reel = _reel()
+    out: list[tuple[str, int, int, int, float]] = []
+    for rj_path in sorted(Path("output").glob("*/reel/*/render.json")):
+        outdir = rj_path.parent
+        spec_path = Path(f"specs/reels/{outdir.name}.json")
+        ass = outdir / "subtitles.ass"
+        if not spec_path.is_file() or not ass.is_file():
+            continue
+        spec = json.loads(spec_path.read_text("utf-8"))
+        cues = _ass_cues(ass)
+        render_json = json.loads(rj_path.read_text("utf-8"))
+        offset = render_json["cover_seconds"]
+        # 2026-08-02 之后渲的片子把闸自己量到的秒数直接记进了 `render.json`，
+        # 不用再从字幕反解。老片子没有这一项，退回反解。
+        recorded = render_json.get("narration_seconds") or {}
+        if recorded:
+            for key, secs in recorded.items():
+                seg = (spec.get("segments") or [])[int(key)]
+                body = "".join(c for c in str(seg.get("narration", ""))
+                               if c not in reel._SPEECH_QUIET)
+                punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
+                out.append((outdir.name, int(key), len(body) - punct, punct,
+                            round(float(secs), 2)))
+            continue
+        for index, seg in enumerate(spec.get("segments") or []):
+            length = float(seg["end"]) - float(seg["start"])
+            text = str(seg.get("narration", "")).strip()
+            words = outdir / f"voice_{index:02d}.words.json"
+            start, offset = offset, offset + length
+            inside = [c for c in cues if start - 0.01 <= c[0] < start + length - 0.01]
+            if not text or not words.is_file() or not inside:
+                continue
+            # **按内容认领，不按序号。** 跨次重渲的目录里留着旧的 voice 文件，
+            # 只比个数会被骗过去（CLAUDE.md 记过；这一轮真剔掉了 9 段）。
+            events = json.loads(words.read_text("utf-8"))
+            joined = "".join(e["text"] for e in events).replace(" ", "")
+            plain = "".join(c for c in text
+                            if c not in reel._SPEECH_PUNCT + reel._SPEECH_QUIET)
+            spoken = max(c[1] for c in inside) - start
+            # 字幕被收进本段窗口，贴着段尾的那些量出来是截断值，不是旁白长度
+            if not events or joined != plain or spoken >= length - 0.02:
+                continue
+            body = "".join(c for c in text if c not in reel._SPEECH_QUIET)
+            punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
+            out.append((outdir.name, index, len(body) - punct, punct,
+                        round(spoken, 2)))
+    return out
+
+
+# 从上面那套办法里挑出来冻结的一份，按字数从短到长铺开（2.95s ~ 17.57s）。
+# **这一份必须留在测试里**：`output/` 在 CI 上不存在，判据的主语没了就会变成
+# 一盏恒真的绿灯——2026-08-01 那次「只校到 0 条」就是这么来的。
+_SPEECH_FIXTURE = [
+    ("gea-shapovalov", 0, 8, 3, 2.95),
+    ("eala-pegula", 12, 13, 2, 3.48),
+    ("eala-pegula", 7, 18, 3, 5.02),
+    ("wong-brooksby", 2, 20, 3, 5.33),
+    ("eala-pegula", 9, 23, 4, 6.41),
+    ("jodar-fritz", 16, 25, 5, 6.70),
+    ("eala-pegula", 0, 29, 6, 7.87),
+    ("jodar-fritz", 0, 32, 6, 8.21),
+    ("jodar-fritz", 6, 35, 5, 8.54),
+    ("hewitt-washington", 9, 39, 5, 9.92),
+    ("zheng-lanlana", 14, 43, 5, 10.15),
+    ("gea-shapovalov", 6, 50, 8, 11.18),
+    ("gea-shapovalov", 3, 60, 9, 13.90),
+    ("gea-shapovalov", 4, 81, 10, 17.57),
+    # 两头的极端也要在表里——**样本不带尾巴，误差带子就没法自证不虚高**。
+    # 121 段里最偏的就这两条（−1.27 / +1.42）。
+    ("gea-shapovalov", 5, 67, 10, 14.40),
+    ("wong-gea", 3, 42, 9, 12.67),
+]
+
+
+def test_离线估旁白长度要对得上真产物():
+    """`speech_seconds` 的系数是从已发成片拟合的，不是拍的。
+
+    CLAUDE.md 里那条「`字数 × 0.23 + 句读 × 0.25`，再留 0.3 秒余量」错得有
+    方向：长段估得太长（gea-shapovalov 第 5 段 91 字估 21.4s、实测 16.7s），
+    短段估得太短。照它排段，长段白留五秒空白，短段要等六分钟的 render 才知道
+    装不下。
+
+    这条测试钉两件事：
+
+    1. **系数真的对得上实测**——每一段的误差都在 `SPEECH_EST_ERR` 以内，
+       而且中位数贴近 0（宽带子谁都过得了，得证明它是准的不是松的）。
+    2. **`SPEECH_EST_ERR` 不许比实测误差还小**——它是 dry-run 判「估得再乐观
+       也装不下」的那把尺，写小了就会把好 spec 判红。
+    """
+    reel = _reel()
+
+    def check(rows, where):
+        errs = [secs - reel.speech_seconds("一" * chars + "，" * punct)
+                for _slug, _i, chars, punct, secs in rows]
+        worst = max(abs(e) for e in errs)
+        assert worst <= reel.SPEECH_EST_ERR, (
+            f"{where}：最坏一段差 {worst:.2f}s，超过声明的误差 "
+            f"±{reel.SPEECH_EST_ERR}s。要么改系数，要么把这个数调大——"
+            "但别只调大，那等于把这道闸松掉")
+        mid = sorted(errs)[len(errs) // 2]
+        assert abs(mid) <= 0.4, (
+            f"{where}：误差中位数 {mid:+.2f}s，模型整体偏了。"
+            "系数要重新拟合，不是把误差带子放宽")
+        return worst
+
+    assert len(_SPEECH_FIXTURE) >= 12, "冻结的样本太少，判据失效了"
+    worst = check(_SPEECH_FIXTURE, "冻结样本")
+    # 误差带子也不许虚高：写成 10 秒谁都过得了，那道闸就等于没装
+    assert reel.SPEECH_EST_ERR <= worst + 0.5, (
+        f"SPEECH_EST_ERR={reel.SPEECH_EST_ERR} 比实测最坏 {worst:.2f}s 宽出太多，"
+        "dry-run 那道闸会形同虚设")
+
+    # 加餐：产物在的时候（本地沙箱）拿全量再验一遍。CI 上这里是空的，正常。
+    live = _measured_narration()
+    if live:
+        assert len(live) >= 60, f"只取到 {len(live)} 段实测，八成是取法错了"
+        check(live, f"已发成片 {len(live)} 段")
+
+
+def test_估体积的码率只许按实测往上调():
+    """`MEASURED_REEL_KBPS` 是**估走哪条路**用的，低估的方向是危险的那一头。
+
+    4990 是按 25 fps 那批片子量的。gea-shapovalov 的源片 59.94 fps，按 4990
+    估出来 147 MiB、实际 **168.4 MiB**——低估 14%。贴着 95 MiB 的片子会被估成
+    「进仓库」，然后在 `git push` 那一刻才被服务端拒（100 MiB 硬上限），
+    五分钟白跑（run 30725160625）。
+
+    所以这个常量只许按实测往上调。这条拦的不是手滑，是下一次有人为了让某条
+    片子「看起来能进仓库」把它调回去。
+    """
+    reel = _reel()
+    assert reel.MEASURED_REEL_KBPS >= 5698, (
+        f"MEASURED_REEL_KBPS={reel.MEASURED_REEL_KBPS}，低于实测最高的 "
+        "5698 kb/s（gea-shapovalov：168.4 MiB / 247.9s，源片 59.94 fps）")
+
+    # 加餐：每条已发成片的实测码率都不许超过这个常量
+    checked = 0
+    for rj_path in sorted(Path("output").glob("*/reel/*/render.json")):
+        data = json.loads(rj_path.read_text("utf-8"))
+        size, secs = data.get("video_bytes"), data.get("film_seconds")
+        if not size or not secs:
+            continue
+        checked += 1
+        kbps = size * 8 / secs / 1000
+        assert kbps <= reel.MEASURED_REEL_KBPS, (
+            f"{rj_path.parent.name} 实测 {kbps:.0f} kb/s，比常量还高——"
+            "常量要取实测最高的那一条，见它上面那段注释")
+    if checked:
+        print(f"[加餐] 拿 {checked} 条成片的实测码率对过")
+
+
+def test_真字段表要盖住每条spec里出现过的字段():
+    """`_REAL_FIELDS` 不许靠人记着维护。
+
+    它是「拿掉下划线正好是个真字段」那道闸的主语。少一个名字，那道闸对这个
+    字段就是哑的——而**一个会过期的名单和一条常年红的检查是同一个毛病**。
+    所以判据从 `specs/reels/*.json` 里实际出现过的字段自动推：新写一个字段
+    就必须同时挂进这张表。
+    """
+    reel = _reel()
+    seen: dict[str, set[str]] = {"spec": set(), "cover": set(), "segment": set()}
+    for spec in _reel_specs().values():
+        seen["spec"] |= set(spec)
+        seen["cover"] |= set(spec.get("cover") or {})
+        for seg in spec.get("segments") or []:
+            seen["segment"] |= set(seg)
+    for level, names in seen.items():
+        real = {n for n in names if not n.startswith("_")}
+        missing = sorted(real - set(reel._REAL_FIELDS[level]))
+        assert not missing, (
+            f"`_REAL_FIELDS[{level!r}]` 少了 {missing}——这几个字段写成 "
+            f"`_xxx` 时不会被拦住，会静静地不生效")
+        assert real, f"{level} 一个字段都没扫到，判据失效了"
+
+
+def test_下划线开头的字段名等于没写(tmp_path):
+    """`_push` 这种键**整整对了一个月**，因为退路刚好给出了对的答案。
+
+    `push_meta` 读的是 `push`，而 spec 里写的是 `_push`——`_` 开头一律当注解，
+    读都不读。没有 `summary` 时标题退回「对阵 + 比分」，而那一句正是
+    `cover.versus.names` + `cover.result` 拼出来的，看起来完全正常。是换成
+    单人封面、退路一空，标题当场变成 `8.2 赛场之上 | ` 才把它抖出来。
+
+    ⚠️ 判据要窄：`_inset` 在 `hewitt-washington` 第 3 段是**真的注解**（就贴在
+    真的 `inset` 旁边，写的是为什么压左上角）。所以只认**值是个对象**的那种。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+
+    def spec_with(**extra):
+        return {"cover": {}, "segments": [{"start": 0, "end": 1}],
+                "source_url": "u", **extra}
+
+    with pytest.raises(reel.ReelError, match="`_push`"):
+        reel._reject_underscored_fields(spec_with(_push={"summary": "x"}))
+    with pytest.raises(reel.ReelError, match="`_versus`"):
+        reel._reject_underscored_fields(
+            spec_with(cover={"_versus": {"names": ["a", "b"]}}))
+    with pytest.raises(reel.ReelError, match="`_inset`"):
+        reel._reject_underscored_fields(
+            {"cover": {}, "source_url": "u",
+             "segments": [{"start": 0, "end": 1, "_inset": {"image": "x"}}]})
+
+    # 反过来：这三种都是仓库里真实存在的注解写法，一个都不许被判红
+    reel._reject_underscored_fields(spec_with(_source="这条源片是官方集锦"))
+    reel._reject_underscored_fields(spec_with(_push_why="为什么这么写标题"))
+    reel._reject_underscored_fields(
+        {"cover": {}, "source_url": "u",
+         "segments": [{"start": 0, "end": 1, "inset": {"image": "x"},
+                       "_inset": "为什么把角标压在左上角"}]})
+
+    # **而且这道闸真的接在 `load_spec` 上。** 上面那些只证明函数会抛错；
+    # 反向验证时把 `load_spec` 里那一句调用整个拆掉，六条测试**全绿**——
+    # 又一次「写了不等于跑过」。所以这里真走一遍读 spec 的那条路。
+    path = tmp_path / "spec.json"
+    path.write_text(json.dumps(
+        {"cover": {}, "segments": [{"start": 0, "end": 1}], "source_url": "u",
+         "_push": {"summary": "x"}}, ensure_ascii=False), "utf-8")
+    with pytest.raises(reel.ReelError, match="`_push`"):
+        reel.load_spec(path)
+
+    # 而且每条已有的 spec 现在都得过——三条踩了这个坑的已经改掉了
+    for slug, spec in _reel_specs().items():
+        try:
+            reel._reject_underscored_fields(spec)
+        except reel.ReelError as exc:  # pragma: no cover - 出错时要说是哪条
+            raise AssertionError(f"{slug}: {exc}") from None
+
+
+def test_疑似切点要趁源片还在的时候量出来():
+    """0.35 那个门槛认不出「同一场地、同一机位」的换镜头。
+
+    gea-shapovalov 那次很直白：474.5 秒他还穿着白 polo 在场上，476.5 秒已经
+    换上蓝外套在捧杯——**中间必然有一刀**，而 `scene_cuts` 只报了 473.07 和
+    482.67。挑段的时候只能靠人在缩略图墙上看出来。
+
+    所以另出一份低门槛的候选写进 `probe.json`。三件事都要钉：
+
+    1. **门槛真的更低**，否则它和 `scene_cuts` 是同一份。
+    2. **不并进 `scene_cuts`**——那是判据（存量 spec 的 `crosses_cut` 照着它
+       挂账），这是线索。混在一起等于把一批想清楚的声明变成噪音。
+    3. **趁源片还在的时候量**。源片渲完就删（清理那一步），事后想查得自己
+       再下一份几百 MB——`find_point_ends.py` 就是这么零调用方了一个月的。
+    """
+    reel = _reel()
+    assert reel.LOOSE_CUT_THRESHOLD < reel.CUT_THRESHOLD
+
+    src = inspect.getsource(reel.main)
+    probe = src[src.index('if args.mode == "probe"'):src.index("spec = load_spec")]
+    assert "scene_cuts_loose" in probe, "probe.json 里没有这一份"
+    assert "LOOSE_CUT_THRESHOLD" in probe, (
+        "疑似切点没有在 probe 里量——源片渲完就删，事后再下一份就是几百 MB")
+    assert "abs(t - c)" in probe, (
+        "疑似切点没有把已经在 `scene_cuts` 里的那些排掉，两份会重复")
+
+    # 判据那一份只认 `scene_cuts`，线索不许漏进去
+    straddle = inspect.getsource(reel.segments_straddling_cuts)
+    assert "scene_cuts_loose" not in straddle, (
+        "跨切点那道判据读到了疑似切点——线索当判据用，会把一批合法的段判红")
+
+
+def test_每条spec的旁白都还估得下():
+    """**每条 spec 都要现在还渲得出来**，不只是发的那天渲得出来。
+
+    `wong-lehecka` 第 10 段就是这么坏掉的：成片 7.30 发出去，之后为了「收尾要
+    落在一问上」把那一问补进旁白，字数从 22 涨到 48，**没有再渲过**。于是这条
+    spec 从那天起就渲不出来了——真闸（TTS）要跑一趟 render 才出声，而没人再渲
+    它，所以它一直躺在仓库里假装是好的。
+
+    改 spec 不重渲是常事（措辞、注解、规矩追认），所以这条要**每次 CI 都跑**。
+    它只吃 `specs/` 和 `tools/`，不联网、不碰产物。
+    """
+    reel = _reel()
+    broken: list[str] = []
+    checked = 0
+    for slug, spec in _reel_specs().items():
+        for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
+            checked += 1
+            if room < -reel.SPEECH_EST_ERR:
+                broken.append(f"{slug} 第 {index + 1} 段：画面 "
+                              f"{spec['segments'][index]['end'] - spec['segments'][index]['start']:.1f}s"
+                              f"，估旁白 {secs:.2f}s")
+    assert checked >= 100, f"只估到 {checked} 段，判据失效了"
+    assert not broken, (
+        "这几段的旁白比自己那段画面长（离线估，已经扣掉 "
+        f"±{reel.SPEECH_EST_ERR}s 的误差）：\n  " + "\n  ".join(broken))
+
+
+def test_dry_run要把装不下的旁白当场报出来(tmp_path):
+    """**旁白写长了不该等六分钟的 render，也不该等 TTS。**
+
+    `--check-narration` 要合语音（联网、一分半），`render` 更是八到十一分钟。
+    而「这段话装不装得下」离线就能估个八九不离十——误差 ±1.5s，够回答
+    「估得再乐观也装不下」这一种问题。
+
+    两个方向都验：真 spec 要过，把一段旁白撑长要当场报错并 `exit 1`。
+    """
+    reel_path = Path("tools/build_match_reel.py")
+    spec_path = Path("specs/reels/gea-shapovalov.json")
+    spec = json.loads(spec_path.read_text("utf-8"))
+
+    def dry_run(data) -> subprocess.CompletedProcess:
+        path = tmp_path / "spec.json"
+        path.write_text(json.dumps(data, ensure_ascii=False), "utf-8")
+        return subprocess.run(
+            [sys.executable, str(reel_path), "render", "--spec", str(path),
+             "--outdir", str(tmp_path / "out"), "--dry-run"],
+            capture_output=True, text=True, check=False)
+
+    ok = dry_run(spec)
+    assert ok.returncode == 0, f"真 spec 没过 dry-run：\n{ok.stdout}\n{ok.stderr}"
+    assert "[估旁白]" in ok.stdout, "dry-run 没有报旁白余量"
+
+    # 反过来：把最短的那一段撑长，必须当场红
+    blown = json.loads(json.dumps(spec))
+    index = min((i for i, s in enumerate(blown["segments"])
+                 if str(s.get("narration", "")).strip()),
+                key=lambda i: float(blown["segments"][i]["end"])
+                - float(blown["segments"][i]["start"]))
+    blown["segments"][index]["narration"] = "这句话写得很长，" * 12
+    bad = dry_run(blown)
+    assert bad.returncode == 1, f"撑长了还是绿的：\n{bad.stdout}"
+    assert "装不下" in bad.stdout, bad.stdout
+
+
+def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
+    """账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+
+    「铺满」本来就成立（solo 是 `background-size:cover`，照片顶到四边、没有垫层）；
+    让实拍看起来发虚的是盖在整幅上的 `.scrim`——它的第二道 radial 在**画面正中**
+    压 58% 的暗，一张真实照片被洗成一层背景板。
+
+    ⚠️ **不许直接改那个默认值。** 那段 CSS 是从解说片的 cover 屏整段抄过来的，
+    源码注释写着「一个数都没动，各调各的就会慢慢漂开」。所以做成**按条声明**
+    （`cover.scrim: "clear"`），没声明的片子和解说片仍然是同一个样子。
+
+    判据三头，缺一头都可能变成假绿：
+
+    1. 关掉的**只有正中那一道**——上下两头必须留着，台头压在顶上、钩子压在
+       中间偏下，浅色字压在浅色画面上会没。
+    2. **默认仍然带中心暗角**（不声明的片子不受影响）。
+    3. **这个开关真的接在 `_solo_body` 上**——只测 `_scrim_css` 证明不了海报
+       读了它。这是这个仓库反复栽的「写了不等于跑过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    CENTRE = "radial-gradient(128% 40% at 50% 50%"
+    TOP_BOTTOM = "linear-gradient(180deg,rgba(6,28,20,.62)"
+
+    assert CENTRE in vp._scrim_css(False), "默认那一版没有中心暗角了"
+    assert CENTRE not in vp._scrim_css(True), "clear 没有关掉中心暗角"
+    for flag in (False, True):
+        assert TOP_BOTTOM in vp._scrim_css(flag), (
+            "上下两头的渐变被一起关掉了——台头和钩子会压在浅色画面上看不见")
+
+    # ③ 真走一遍 `_solo_body`：声明了就不带，没声明就带
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1920, 1080), (90, 120, 90)).save(photo)
+    base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+            "portrait": {"image": str(photo)}}
+    _, plain = vp._solo_body(dict(base))
+    _, cleared = vp._solo_body({**base, "scrim": "clear"})
+    assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
+    assert CENTRE not in cleared, (
+        "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")

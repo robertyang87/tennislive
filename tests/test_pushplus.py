@@ -5,6 +5,7 @@ from unittest.mock import Mock
 import pytest
 import requests
 
+from tennislive.publish import pushplus
 from tennislive.publish.pushplus import (
     PushPlusError,
     image_sources,
@@ -330,29 +331,30 @@ def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
     assert len(calls) == pushplus.PUSH_ATTEMPTS
 
 
-def test_推送成功要记下流水号(monkeypatch, caplog):
-    """`code == 200` 只保证 **PushPlus 收下了**，不保证微信推到了手机上。
+def test_推送成功要把流水号打进日志(monkeypatch, capsys):
+    """**`code == 200` 只说明 PushPlus 收下了，不说明微信送到了人手机上。**
 
-    真出现「接口成功但人没收到」时，没有流水号就什么都查不了——这条
-    CLAUDE.md 里记过，一直没做。
+    2026-08-02 热亚那条：第 29 步 success、日志写着「已推送」，账号所有者
+    问了两次「推微信了么」——而我手上**一条可查的东西都没有**，因为返回体
+    整个被丢掉了，只留下一句没有主语的「推送成功」。
+
+    返回体的 `data` 就是这条消息的流水号，PushPlus 拿它查投递状态。判据钉两头：
+    流水号要出现在 **stdout**（不是 `logger`——这个模块的 logger 在工作流里
+    没有 handler，`logger.info` 一个字都不会出现，上一版那句「图片通道」
+    就从来没被人看见过），而且要**明说「这只代表接口收下」**，别让下一个人
+    再把它读成「送达了」。
     """
-    import logging
-
-    from tennislive.publish import pushplus
-
-    monkeypatch.setattr(pushplus, "wait_for_images", lambda *_a, **_k: None)
     monkeypatch.setattr(pushplus, "prepare_image_delivery",
-                        lambda html, **_k: (html, "none"))
-    monkeypatch.setenv("PUSHPLUS_TOKEN", "t")
+                        Mock(return_value=("<p>hi</p>", "jsdelivr")))
+    monkeypatch.setattr(pushplus, "wait_for_images", Mock())
+    monkeypatch.setattr(requests, "post", Mock(return_value=Mock(
+        status_code=200,
+        json=Mock(return_value={"code": 200, "msg": "请求成功",
+                                "data": "abc123def456"}))))
 
-    class _Resp:
-        status_code = 200
+    pushplus.push("标题", "<p>hi</p>", token="t")
 
-        def json(self):
-            return {"code": 200, "data": "abc123-流水号"}
-
-    monkeypatch.setattr(pushplus.requests, "post", lambda *_a, **_k: _Resp())
-    with caplog.at_level(logging.INFO):
-        pushplus.push("标题", "<p>正文</p>")
-    assert "abc123-流水号" in caplog.text, (
-        f"成功那行没记流水号，出问题时无从查起：{caplog.text}")
+    out = capsys.readouterr().out
+    assert "abc123def456" in out, f"流水号没进日志：{out!r}"
+    # 反面：不许只说「成功」就完事——那正是这次查不下去的原因
+    assert "只代表接口收下" in out, f"没说清 200 意味着什么：{out!r}"
