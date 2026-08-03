@@ -36,11 +36,28 @@ from tennislive.render.venue_assets import venue_asset_for_match  # noqa: E402
 CALENDAR = ROOT / "data" / "tour_calendar_2026.json"
 MANIFEST = ROOT / "data" / "venue_assets.json"
 
-# 不算进覆盖率的：团体赛和年终总决赛没有固定主场馆；125 不在账号所有者定的
-# 范围里（他给的清单只含 250 / 500 / 1000 + 大满贯）。
+# 不算进覆盖率的几档。**「不算进分母」不等于「不用有图」**——这两件事我混过一次，
+# 于是七条团体／年终就这么从视野里消失了，卡片一直在用通用底。
+#
+# ⚠️ 我原来在这儿写的理由是「团体赛和年终总决赛没有固定主场馆」。
+# **对团体赛成立，对年终总决赛不成立**：都灵、吉达是签了多年的固定场馆，
+# 比利·简·金杯也定在深圳。真正没有固定主场的只有联合杯（珀斯／悉尼两城）
+# 和拉沃尔杯（每年换国家）。
+#
+# 排除在分母外仍然对——账号所有者给的清单是 250 / 500 / 1000 + 大满贯——
+# 但它们**会出现在日报里**（ATP 年终是全年最大的赛事之一），所以下面单列一节
+# 报出来，别让「没算」再变成「看不见」。
+#
 # ⚠️ 125 这一档要单独排除，不能靠「manifest 里没有就算了」——伊斯坦布尔和
 # 罗马 ATV 这两条恰好就是 125，留在分母里会让覆盖率永远差两站。
 SKIP_TIERS = {"团体", "年终", "WTA125", "ATP125"}
+
+# 这几条虽然不算进覆盖率，但场馆是定死的，**必须有图**。
+# 联合杯（两座城市轮流）和拉沃尔杯（每年换国家）不在此列。
+FIXED_VENUE_OFF_LEDGER = {
+    "Nitto ATP Finals", "WTA Finals Indian Wells",
+    "Next Gen ATP Finals", "Billie Jean King Cup Finals", "Davis Cup Finals",
+}
 
 # 已经翻到底、确实拿不到的站——**写在这里是为了别再重跑一遍**。
 # 「缺」有两种：一种是还没去找，一种是找过了拿不到，两者在输出里长得一模一样，
@@ -132,6 +149,43 @@ def survey(year: int = 2026) -> list[dict]:
     return out
 
 
+def off_ledger(year: int = 2026) -> list[dict]:
+    """分母外那几档——**单独报出来，别让「没算」变成「看不见」**。"""
+    events = json.loads(CALENDAR.read_text(encoding="utf-8"))["events"]
+    shots = {row["slug"]: row.get("shot") for row in
+             json.loads(MANIFEST.read_text(encoding="utf-8"))}
+    out = []
+    for event in events:
+        if event.get("tier") not in {"团体", "年终"}:
+            continue
+        asset = venue_asset_for_match(_match_for(event, year))
+        out.append({
+            "start": event.get("start", ""), "tier": event.get("tier", ""),
+            "zh": event.get("zh", ""), "en": event.get("en", ""),
+            "loc": event.get("loc", ""), "slug": asset.slug if asset else None,
+            "shot": shots.get(asset.slug) if asset else None,
+            "fixed": event.get("en") in FIXED_VENUE_OFF_LEDGER,
+        })
+    out.sort(key=lambda r: r["start"])
+    return out
+
+
+def _report_off_ledger(year: int) -> None:
+    rows = off_ledger(year)
+    if not rows:
+        return
+    print("\n不算进覆盖率的团体赛与年终总决赛（它们照样会出现在日报里）：")
+    for r in rows:
+        flag = "✅" if r["shot"] == "centre-court" else ("⚠️ 兜底" if r["slug"] else "❌ 缺")
+        why = "" if r["fixed"] else "   ← 场馆每年换，本来就没有固定主场"
+        print(f"  {r['start']}  {r['tier']:<6} {flag:<8} {r['zh'][:20]:<22}"
+              f" {r['loc'][:14]:<16} {r['slug'] or ''}{why}")
+    bad = [r for r in rows if r["fixed"] and r["shot"] != "centre-court"]
+    if bad:
+        print("  ⚠️ 上面这几条场馆是**定死的**，应该有图：" +
+              "、".join(r["zh"] for r in bad))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--missing", action="store_true", help="只列没有场馆图的")
@@ -156,6 +210,9 @@ def main() -> int:
         print("\n已查明拿不到的站（别再重找，换环境或等赛事打完再说）：")
         for r in gaps:
             print(f"  · {r['zh']}：{KNOWN_GAPS[r['en']]}")
+
+    if not args.since:
+        _report_off_ledger(args.year)
 
     total = len(rows)
     ok = sum(1 for r in rows if r["shot"] == "centre-court")

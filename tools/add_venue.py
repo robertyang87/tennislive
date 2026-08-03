@@ -139,7 +139,33 @@ def main() -> int:
     module.write_attribution(ASSETS)
 
     print(f"入库 {args.slug} <- {name} {img.size}")
+    _warn_if_shell_ate_backticks(args.title, args.note, args.comment)
     return _report_landing(args.slug)
+
+
+def _warn_if_shell_ate_backticks(*texts: str) -> None:
+    """反引号被 bash 当成命令替换执行掉了——**踩过两次**，两次都没当场发现。
+
+    在 shell 里写 `--note "…别名不写裸的 \\`atp finals\\`…"`，bash 会去执行
+    `atp finals` 并把整段替换成它的输出（空），于是入库的是
+    「别名不写裸的 ——它是  的子串」。脚本本身收到的就是这个残缺串，
+    **没法从参数里看出反引号存在过**，只能认它留下的疤：空的强调对
+    （`****`）和被吃空之后多出来的连续空格。
+
+    只提醒，不拦——误报的代价只是多看一眼，漏报的代价是错的出处进了仓库。
+    """
+    scars = []
+    for text in texts:
+        if not text:
+            continue
+        if "****" in text or "** **" in text:
+            scars.append("空的强调对（`****`）")
+        if "  " in text.replace("\n", " "):
+            scars.append("连续两个空格")
+    if scars:
+        print("  ⚠️ 文案里有反引号被 shell 吃掉的痕迹（" + "、".join(sorted(set(scars))) + "）。"
+              "\n     bash 会执行 `…` 里的内容并把整段替换成它的输出。"
+              "\n     去 assets/venues/credits.json 里核一眼，写出处**别用反引号**。")
 
 
 def _report_landing(slug: str) -> int:
