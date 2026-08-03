@@ -137,9 +137,24 @@ def main(argv: list[str] | None = None) -> int:
     video = download(args.url, outdir)
     frames = sample(video, outdir, args.every, args.width)
     contact_sheet(frames, outdir / "contact.jpg")
-    # 源片不进仓库——几十上百 MB，而帧才是产物
-    video.unlink(missing_ok=True)
-    print(f"[清理] 删掉源片 {video.name}；留下 {len(frames)} 帧 + 联系表")
+    # 源片不进仓库——几十上百 MB，而帧才是产物。
+    #
+    # ⚠️ **要按 `source.*` 扫，不能只删 `video` 那一个文件名。** 2026-08-03
+    # 抽 `u2DJ5-OhJaY` 时 yt-dlp 留下了一个 `source.f137.mp4.part`（DASH 分流
+    # 下载的残留），而 `video` 指的是合流之后的 `source.mp4`——于是那 9.6 MB
+    # 的残片被 `git add --sparse` 一起提交进了仓库。**帧一张不少、日志一句
+    # 不响**，是 `test_下载残留不进仓库` 事后才把它抓出来的，而那时它已经
+    # 推上去了。又一次「兜底出事的时候不吭声」。
+    #
+    # 删了什么要**列出来**：只说「删掉源片」的话，多删少删长得一模一样。
+    leftovers = sorted(p for p in outdir.glob("source.*") if p.is_file())
+    for path in leftovers:
+        size = path.stat().st_size
+        path.unlink()
+        print(f"[清理] 删掉 {path.name}（{size / 1048576:.1f} MB）")
+    if not leftovers:
+        print("[清理] 没有要删的源片——⚠️ 这不正常，下载那一步应该留下 source.*")
+    print(f"[清理] 留下 {len(frames)} 帧 + 联系表")
     return 0
 
 

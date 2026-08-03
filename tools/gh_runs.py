@@ -46,11 +46,36 @@ def _secs(a: str | None, b: str | None) -> str:
     return f"{total // 60}:{total % 60:02d}"
 
 
+def _unwrap(payload):
+    """剥掉 MCP 的 content-block 信封。
+
+    超上下文时落盘的不再是裸 payload，而是 `[{"type": "text", "text": "<json 串>"}]`
+    ——真正的返回体是那个**字符串**。这个脚本的全部用途就是解析这种文件，
+    而它 2026-08-03 在这个形状上直接 `AttributeError: 'list' object has no
+    attribute 'get'`：**报的是 Python 的类型错，不是「格式不认识」**，
+    看起来像脚本坏了，而不是像喂错了东西。
+
+    两种形状都认，认不出就原样退回去，让下游那句「顶层键是什么」去报。
+    """
+    if isinstance(payload, list):
+        for block in payload:
+            if isinstance(block, dict) and isinstance(block.get("text"), str):
+                try:
+                    return _unwrap(json.loads(block["text"]))
+                except ValueError:
+                    continue
+    return payload
+
+
 def _runs(payload: dict) -> list[dict]:
+    if not isinstance(payload, dict):
+        return []
     return payload.get("workflow_runs") or []
 
 
 def _jobs(payload: dict) -> list[dict]:
+    if not isinstance(payload, dict):
+        return []
     outer = payload.get("jobs")
     if isinstance(outer, dict):
         return outer.get("jobs") or []
@@ -67,7 +92,7 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     try:
-        payload = json.loads(Path(args.path).read_text(encoding="utf-8"))
+        payload = _unwrap(json.loads(Path(args.path).read_text(encoding="utf-8")))
     except (OSError, ValueError) as exc:
         print(f"读不出来：{exc}", file=sys.stderr)
         return 2
@@ -76,7 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     if not runs and not jobs:
         # 空结果先自证是真空：把顶层键报出来，别只说「没有」——喂错文件和
         # 「真的一条都没有」长得一模一样。
-        print(f"这个文件里既没有 workflow_runs 也没有 jobs。顶层键：{sorted(payload)}",
+        shape = sorted(payload) if isinstance(payload, dict) else type(payload).__name__
+        print(f"这个文件里既没有 workflow_runs 也没有 jobs。顶层：{shape}",
               file=sys.stderr)
         return 2
 
