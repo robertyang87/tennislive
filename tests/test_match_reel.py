@@ -530,12 +530,23 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
         # 「还是走之前先出获胜后的动作和表情，然后再介绍比赛过程」——坐标于是
         # 挪到了冷开场之后。要守住的是「刷到的人在前 40 秒内知道这是哪天哪站
         # 哪一轮」，不是「它必须是第一句」。
+        # **原声冷开场不占这四十秒。** 账号所有者 2026-08-03 把开场定成「最后
+        # 一个球落地后的状态」，并要求「不要剪切掉原来英文解说的完整配音和
+        # 画面」——`eala-pegula-final` 的开场是**六十七秒的转播原声**，
+        # 一句中文旁白都没有。
+        # 这条规矩要守的是「**我们一开口**就先安置观众」，不是「片子开始四十秒
+        # 内」：没有旁白的那几段，观众听见的是现场和解说，本来就没有我们可以
+        # 放坐标的地方。所以从**第一句中文旁白**起算。
+        segs = spec["segments"]
+        first = next((i for i, s in enumerate(segs)
+                      if str(s.get("narration", "")).strip()), len(segs))
         opening, used = "", 0.0
-        for seg in spec["segments"]:
+        for seg in segs[first:]:
             if used >= 40.0:
                 break
             opening += seg.get("narration", "")
             used += float(seg["end"]) - float(seg["start"])
+        assert opening.strip(), f"{path.stem} 整条片子一句中文旁白都没有"
         assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
         assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
             f"{path.stem} 开场没给开球时刻：{opening}"
@@ -4924,8 +4935,26 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
         # 不用再从字幕反解。老片子没有这一项，退回反解。
         recorded = render_json.get("narration_seconds") or {}
         if recorded:
+            segs = spec.get("segments") or []
+            # ⚠️ **产物可能是上一版的，而且「序号还在」比「序号越界」更坏。**
+            # 改 spec 不重渲是常事（措辞、注解、规矩追认、重排段落）。
+            # `eala-pegula-final` 从 14 段重排成 8 段时，越界的那几个会 IndexError
+            # ——那还算出声；**没越界的那几个会静默指到另一段身上**，于是这条
+            # 测试报「最坏一段差 6.63s」，看起来像模型不准，其实是产物对错了人。
+            # 又一次「voice 文件要按内容认领，不按序号」，只是换到了 render.json。
+            #
+            # `render.json` 自己记着渲的时候那份 spec 的画面总长，拿它对一下就
+            # 能自证是不是同一版。对不上就**整个 outdir 跳过并出声**——这一段
+            # 本来就是加餐，核心判据是下面那张冻结的样本表。
+            spec_secs = round(sum(float(s["end"]) - float(s["start"])
+                                  for s in segs), 2)
+            was = round(float(render_json.get("segments_seconds", -1)), 2)
+            if abs(was - spec_secs) > 0.05:
+                print(f"  [跳过] {outdir.name} 的产物是上一版的："
+                      f"渲的时候画面 {was}s，现在的 spec 是 {spec_secs}s")
+                continue
             for key, secs in recorded.items():
-                seg = (spec.get("segments") or [])[int(key)]
+                seg = segs[int(key)]
                 body = "".join(c for c in str(seg.get("narration", ""))
                                if c not in reel._SPEECH_QUIET)
                 punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)

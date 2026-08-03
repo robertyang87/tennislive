@@ -1058,31 +1058,64 @@ def _quote_cues(raw: object) -> tuple[str, ...]:
     """
     if not isinstance(raw, list):
         return ()
-    return tuple(t for t in (str(x).strip() for x in raw) if t)
+    out = []
+    for x in raw:
+        if isinstance(x, dict):
+            out.append({"at": float(x["at"]), "text": str(x["text"]).strip()})
+        elif str(x).strip():
+            out.append(str(x).strip())
+    return tuple(out)
 
 
 def _quote_text(raw: object) -> str:
     """互斥判断和「这一段有没有原声字幕」都只看真假，所以列表拼成一段就够。"""
     if isinstance(raw, list):
-        return " ".join(_quote_cues(raw))
+        return " ".join(x["text"] if isinstance(x, dict) else x
+                        for x in _quote_cues(raw))
     return str(raw).strip()
 
 
-def explicit_quote_cues(lines: tuple[str, ...] | list[str], span: float,
+def explicit_quote_cues(lines: tuple, span: float,
                         offset: float) -> list[tuple[float, float, str]]:
-    """按条声明的原声字幕：时长按各条的字数摊到整段上。
+    """按条声明的原声字幕。两种写法，可以混着用：
 
-    ⚠️ 元素里的 `\\n` 不在这儿处理——`render_ass` 里那句
-    `drop_punctuation(cue.text).replace("\\n", "\\\\N")` 早就把它变成 ASS 的
-    换行了。上锚（`Alignment=8`）保证多一行是**往下**长，离底边仍然够远。
+    - `"上英\\n下中"` —— 时长按各条的字数摊到整段上（短段够用）
+    - `{"at": 段内秒数, "text": "上英\\n下中"}` —— **钉在真实时刻上**
+
+    ⚠️ **一整段几十秒的原声必须用 `at`。** 按字数摊的前提是「说话密度均匀」，
+    而真实解说有停顿、有留白：夺冠那一段 67 秒里十几条，摊出来能差好几秒，
+    字幕比人先开口或者慢半拍——比不同步更糟的是**它看起来像同步**。
+    `at` 直接从 `probe.json` 旁边那份 `captions.txt` 的时间戳减去段起点。
+
+    末条的结束时间收在段尾；中间每条收在下一条的开头（解说是连着说的，
+    留空档反而会闪）。
+
+    ⚠️ 元素里的换行是「这一条排两行」——`explainer.write_subtitles` 按行分别
+    过 `_ass_text` 再用 ASS 换行符拼。上锚保证多一行是**往下**长。
     """
-    weights = [max(1, len(t.replace("\n", ""))) for t in lines]
-    total = sum(weights)
+    stamped = [t for t in lines if isinstance(t, dict)]
+    if stamped and len(stamped) != len(lines):
+        raise ReelError(
+            "同一段的 quote 里不许一半写 `at` 一半不写：混着用的话，没写的那些"
+            "要按字数摊，摊的范围又被写了 `at` 的那些切碎，出来的时刻没人能预料。")
     out: list[tuple[float, float, str]] = []
+    if stamped:
+        at_list = [float(t["at"]) for t in stamped]
+        bad = [a for a in at_list if not 0 <= a < span]
+        if bad:
+            raise ReelError(f"quote 的 `at` 超出这一段（0–{span:.2f}s）：{bad}")
+        for index, item in enumerate(stamped):
+            start = offset + at_list[index]
+            end = (offset + at_list[index + 1]) if index + 1 < len(stamped) \
+                else offset + span
+            out.append((start, end, readable(str(item["text"]))))
+        return out
+    weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
+    total = sum(weights)
     at = offset
     for text, weight in zip(lines, weights):
         dur = span * weight / total
-        out.append((at, at + dur, readable(text)))
+        out.append((at, at + dur, readable(str(text))))
         at += dur
     return out
 
