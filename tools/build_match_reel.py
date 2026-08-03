@@ -832,13 +832,32 @@ def download(url: str, dest: Path) -> Path:
         if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
             dest.unlink(missing_ok=True)
             raise ReelError(f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}")
-        head = dest.read_bytes()[:64]
-        if head[:15].lower().startswith(b"<!doctype html") or b"<html" in head.lower():
+        # **「下到了」不等于「下到的是视频」**，而这条路原来只看**前 64 字节**
+        # 里有没有 `<!doctype html` / `<html`。Brightcove 的播放页
+        # （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`）
+        # 正是这么溜过去的：0.3 MB 的网页被当成源片收下，`_keep_source` 还把它
+        # **存进了缓存**，ffprobe 到下一步才报 `Invalid data found`
+        # （run 30838371382）。缓存把这个坏结果固化了——同一条 URL 再跑一趟会
+        # 直接命中它，于是「换个参数重试」永远重现同一个错。
+        #
+        # 判据换成「ffprobe 读不读得出一路视频流」。**yt-dlp 那条路早就在用
+        # `probe_size` 把关了**（它甚至还量高度防 360p），只有直链这条没有。
+        size_mb = dest.stat().st_size / 1e6
+        try:
+            width, height = probe_size(dest)
+        except (ReelError, ValueError):
+            head = dest.read_bytes()[:400].lower()
+            looks_html = b"<html" in head or b"<!doctype" in head
             dest.unlink(missing_ok=True)
             raise ReelError(
-                "直链回的是 HTML 不是视频——网盘多半还是「仅限受邀者」，"
-                "改成「知道链接的任何人」再试")
-        print(f"[ok] 直链下到 {dest.stat().st_size / 1e6:.1f} MB")
+                f"直链下到 {size_mb:.1f} MB，但 ffprobe 读不出视频流"
+                f"{'（内容是 HTML）' if looks_html else ''}：{url[:120]}\n"
+                "两种常见情况：\n"
+                "  ① 网盘还是「仅限受邀者」——改成「知道链接的任何人」再试；\n"
+                "  ② 给的是**播放页**不是直链（Brightcove 之类的 index.html）——"
+                "这类要交给 yt-dlp，curl 只会把网页存下来。"
+            ) from None
+        print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
         _keep_source(url, dest)
         return dest
 
