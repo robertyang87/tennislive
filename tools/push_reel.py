@@ -263,6 +263,35 @@ def spec_of(copy_path: Path) -> dict:
 # 推送元数据里能从 spec 自己算出来的那几项，命令行只作覆盖。
 _META_FIELDS = ("matchup", "score", "event", "summary", "lead")
 
+# `push` 块里除了上面那五项文案字段，还认一个开关。**它不进 `meta`**：
+# meta 装的是「标题和正文里的字」，`auto` 说的是「合进 main 之后要不要自己发」，
+# 两回事，混进去会跟着走 `resolve_meta` 的命令行覆盖循环。
+_PUSH_FLAGS = ("auto",)
+
+
+def push_is_auto(copy_path: Path) -> bool:
+    """这条片子允不允许「合进 main 就自动发微信」。
+
+    **默认是不允许**，要在 spec 的 `push` 块里写 `"auto": true` 显式认领——
+    和 `mixed_fps` / `silent_source` / `rank: null` 一个形状：认领这一步把
+    「想清楚了」和「凑合一下」分开。微信那条消息发出去收不回来，所以这个
+    开关的默认方向只能是关。
+
+    ⚠️ **写错类型要报错，不许悄悄当成假。** `"auto": "true"`（字符串）
+    在 Python 里是真值，而 `is True` 判它是假——两种处理都说得通，但
+    「悄悄不发」和「这条本来就没开」长得一模一样，又是一次不吭声的兜底。
+    """
+    block = (spec_of(copy_path).get("push") or {})
+    if "auto" not in block:
+        return False
+    value = block["auto"]
+    if not isinstance(value, bool):
+        raise SystemExit(
+            f"{copy_path.name.split('.')[0]} 的 push.auto 写成了 {value!r}——"
+            "它只能是 true 或 false（JSON 的布尔量，不带引号）。\n"
+            "写成字符串会被判成「没开」，而那和「本来就没开」长得一模一样。")
+    return value
+
 
 def _legacy_result(cover: dict, names: list) -> tuple[list, str] | None:
     """老写法的赛果：`cover.score` 是一整句「赢家 比分 输家」。
@@ -347,12 +376,15 @@ def push_meta(copy_path: Path) -> dict:
     # `_` 开头的是写给下一个人的备注（仓库里到处都是 `_why`），不是字段。
     # 认不出来的字段要报错：写成 `sumary` 悄悄不生效，标题就退回「对阵 + 比分」，
     # 而那和「这条片子本来就没写 summary」长得一模一样。
-    unknown = {k for k in block if not k.startswith("_")} - set(_META_FIELDS)
+    unknown = ({k for k in block if not k.startswith("_")}
+               - set(_META_FIELDS) - set(_PUSH_FLAGS))
     if unknown:
         raise SystemExit(f"spec 的 push 块里有认不出来的字段：{sorted(unknown)}\n"
-                         f"只认这几项：{list(_META_FIELDS)}")
+                         f"只认这几项：{list(_META_FIELDS + _PUSH_FLAGS)}")
+    # 开关不进 meta：`auto` 是「要不要自动发」，不是标题里的字。
+    # 混进去会被 `resolve_meta` 当成一项文案去找同名的命令行参数。
     meta.update({k: str(v).strip() for k, v in block.items()
-                 if not k.startswith("_")})
+                 if not k.startswith("_") and k not in _PUSH_FLAGS})
     return meta
 
 
