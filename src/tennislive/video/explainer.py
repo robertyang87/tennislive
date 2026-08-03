@@ -1336,8 +1336,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "七月二十七号华盛顿，商竣程复出第一场，对锦织圭，三盘打了两个多小时，"
             "中间还叫了一次医疗暂停，最后七比六、三比六、四比六输掉。"
             "那一站，额度照扣。",
-            "assets/explainer/pr-allowance/shang_usopen_2023_backhand.jpg",
-            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，商竣程反手击球",
+            "assets/explainer/pr-allowance/shang_washington_2026_set3.jpg",
+            "ATP Tour 官方集锦画面 · 2026 年 7 月 27 日华盛顿首轮，"
+            "商竣程决胜盘 3-5，记分条自证赛事与比分",
             (
                 "外卡和直入 不占额度",
                 "进了签表 就算一站",
@@ -1425,8 +1426,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "剩下的还得自己打。次轮他对十号种子卢布列夫。"
             "他还说了后面的计划：辛辛那提、一站挑战赛，然后美网。"
             "生涯最高第四十七，那是二〇二四年十月的事。",
-            "assets/explainer/pr-allowance/shang_washington_2023_serve.jpg",
-            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年华盛顿站，商竣程准备发球",
+            "assets/explainer/pr-allowance/shang_montreal_2026_r1.jpg",
+            "Tennis Canada 官方集锦画面 · 2026 年 8 月 2 日蒙特利尔正赛首轮，"
+            "商竣程第二盘握拳，记分条自证赛事与比分",
             (
                 "8 月 2 日蒙特利尔 6-3 6-3",
                 "伤停后第一胜 上一胜在 1 月",
