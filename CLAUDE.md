@@ -3749,6 +3749,46 @@ jodar-fritz 十九段解出来是：
 `nishikori` / `shang` / `handshake` 等九个猜测全是 `200 + text/html`，而已知存在的
 图返回 `image/jpeg`。**只看状态码会把「不存在」读成「存在」——要看 Content-Type。**
 
+#### 场馆全景先试这一条：`tournament-images` 是**全站共享**的，不是各站各自的
+
+    /-/media/images/atp-tournaments/tournament-images/<slug>_tournimage_<年>.jpg
+
+这是赛事的主视觉，**十有八九就是中心球场全景**（新闻图那一档全是球员动作）。
+关键在「共享」：路径不带站点前缀，所以**任一能出网的 ATP 赛事域名都能代取别站的**。
+休斯顿自己不是 Sitecore 站，是拿 `dallasopen.com` 代取到的；罗马、哈雷、斯图加特、
+马略卡同理。年份要一个个试（2018–2027），一站往往只有一两年有。
+
+一轮探下来的产出：罗马 Campo Centrale、哈雷 OWL Arena、斯图加特 Weissenhof、
+马略卡、休斯顿 River Oaks、德雷海滩 —— 六站，一条路径。
+
+⚠️ **年份要跟场馆对得上**。里昂 2018 那张是 Parc de la Tête d'Or，而 2026 起搬去
+LDLC Arena——同一个 slug，**不是同一个场馆**。搬过家的站，旧年份的主视觉是陷阱。
+
+**WTA 那边的对应物是赛事页的主视觉**，取法：
+
+    https://www.wtatennis.com/tournament/<id>/<城市 slug>/<年>
+      → 页面里那张 photoresources.wtatennis.com/.../<id>-<名字>.jpg
+
+`<id>` 从 `api.wtatennis.com/tennis/tournaments/?from=&to=` 里拿（⚠️ 年份只认
+`from`/`to`，写 `year=2026` 会被**静默忽略**并返回 1971 年的数据）。这个接口
+**没有图片字段**，图只能从赛事页取。URL 上**只传 `width`**——传 `height` 是裁图。
+柏林（Steffi-Graf-Stadion 满场，横幅上写着场馆名）和梅里达都是这么拿到的。
+
+⚠️ **slug 传空会落到通用页**，而通用页返回一整套赞助商 logo——四个赛事的图集
+**一模一样**。这是「非空 ≠ 对题」的典型：数字很好看，内容全是别人的 logo。
+判据就是拿两站的结果比一比，完全相同就说明落错了页。
+
+⚠️ **扫图的正则一律带 `re.I`**。拉巴特那张主视觉是 `1005-Rabat.**JPG**`（大写），
+我按 `\.(jpg|jpeg|png|webp)` 不带 `re.I` 匹配，于是扫出来是「这站没有主视觉」——
+和真的没有长得一模一样。又一次「空结果先自证是真空」，只是这回真空是我自己造的。
+
+顺带另一条同类的：**LTA 的 `/siteassets/events/<场馆>/` 是按场馆分的图库**
+（女王、伊斯本、诺丁汉、伯明翰、伊尔克利）。女王那张 6000×4000 的
+`hsbc-queens-centre-court.jpg` 挂在**天气预报页**上，首页和票务页都扫不到——
+要顺着站内链接翻深一层。URL 上的 `?width=`／`?height=` 只是显示参数，
+**去掉就是原图**（DOM 报的 1600×960 其实是 3075×2051）。
+WordPress 同理：`-scaled` 后缀是缩过的，去掉才是原图（4000×2667 → 5457×3638）。
+
 ### 加新能力就要同时改三处：代码、工作流的依赖、开跑前的预检
 
 竖版剪辑那条线上，**同一类错误连着犯了三次**，每次都是「本地能跑，runner 上缺依赖」：

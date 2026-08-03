@@ -12,6 +12,28 @@ runner 的出口 IP 不一样，这几处可能通。**通不通本身就是结�
 没法证明它真的看过。
 
     python tools/probe_blocked_sources.py --want "Coleman Wong" --want Brooksby
+
+**探图**（场馆图那条线用）：给 `--url` 就换成自定义目标，给 `--save DIR`
+就把取到的图片存下来（工作流会当 artifact 传出来），每张打出真实尺寸。
+
+    python tools/probe_blocked_sources.py --save out/ \\
+        --url "https://ktf.kz/_images/photoalbum/366_1749034030_1.jpg"
+
+为什么要这个：场馆图那条线攒了一堆「本环境取不到」，各有各的挡法——
+阿拉木图的官方相册在 ktf.kz，出口网关给它的证书链验不过
+（curl / urllib / Chromium 三条路都是 CERTIFICATE_VERIFY_FAILED）；
+霍巴特官网被 Cloudflare 挡（标题 `CNAME Cross-User Banned`）；
+`atptour.com` 全站 403。runner 的出口不一样，**通不通本身就是结论**。
+
+⚠️ 2026-07-31 第一次拿场馆图这条线跑出来的结论，**和我的预期相反，记下来**：
+runner 上 `atptour.com`（索引页和赛事页）、霍巴特官网**仍然 403**，
+ktf.kz 两张仍然连不上（`ERR URLError`）。同一次跑里里约那张对照图
+200 + 2048x929 取到了，所以不是工具坏了。
+
+所以「换个出口就能过」这个假设**对这三处都不成立**：403 那两处是按 UA／
+机器人规则挡的（换 IP 没用），ktf.kz 则是从两个完全不同的网络都到不了。
+**每加一条「本环境取不到」的记录之前，先用这个工具证一次**——
+别把「我这儿取不到」直接写成「换个环境就有」。
 """
 
 from __future__ import annotations
@@ -55,19 +77,55 @@ def fetch(url: str, timeout: int = 30) -> tuple[str, str, bytes]:
         return f"ERR {type(exc).__name__}", "?", b""
 
 
+def _report_image(body: bytes, url: str, save_dir: str) -> None:
+    """图片这一档报**真实尺寸**，不是字节数。
+
+    踩过的两个坑都只有解码之后才看得出来：soft-404 会返回 200 + 一张
+    错误页（`Content-Type: text/html`），而有些站返回的「图」其实是
+    几十字节的占位符。所以取到 body 还要真的解码一次。
+    """
+    from pathlib import Path
+
+    name = url.split("?")[0].rstrip("/").split("/")[-1] or "image"
+    try:
+        from io import BytesIO
+
+        from PIL import Image
+
+        im = Image.open(BytesIO(body))
+        print(f"    图片 {im.size[0]}x{im.size[1]} {im.format}")
+    except Exception as exc:                              # noqa: BLE001
+        print(f"    ⚠️ 取到 {len(body)} 字节但**解不出图片**（{type(exc).__name__}）"
+              "——多半是 soft-404 或占位符，不是照片")
+        return
+    if save_dir:
+        out = Path(save_dir)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / name).write_bytes(body)
+        print(f"    存下 {out / name}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--want", action="append", default=[],
                     help="要在正文里找的词，找到就把上下文打出来")
+    ap.add_argument("--url", action="append", default=[],
+                    help="自定义目标，可给多次；给了就**不再探默认那五条**")
+    ap.add_argument("--save", default="",
+                    help="把取到的图片存进这个目录（工作流当 artifact 传出来）")
     args = ap.parse_args()
     wants = args.want or ["Coleman Wong", "Brooksby"]
+    targets = [(u, u) for u in args.url] if args.url else TARGETS
 
-    for label, url in TARGETS:
+    for label, url in targets:
         status, ctype, body = fetch(url)
         print(f"\n=== {label}")
         print(f"    {url}")
         print(f"    {status}  {ctype}  {len(body)} 字节")
         if not body:
+            continue
+        if "image/" in ctype:
+            _report_image(body, url, args.save)
             continue
         text = body.decode("utf-8", "ignore")
         # Cloudflare 的挑战页会返回 200，光看状态码分不出来
