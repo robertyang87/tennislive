@@ -118,8 +118,8 @@ jobs:
       - name: 提交候选帧
         run: |
           OUTDIR="${{ steps.paths.outputs.outdir }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           # 稀疏模式下裸的 git add 只警告、退出码 0，产物会静默丢掉
           git add --sparse "$OUTDIR"
           python tools/check_staged_file_sizes.py

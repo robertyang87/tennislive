@@ -1197,10 +1197,16 @@ def test_探复制页的重试预算不许再退回四十秒():
     from tennislive.render import pushmsg
 
     budget = pushmsg._COPY_PAGE_ATTEMPTS * pushmsg._COPY_PAGE_RETRY_SECONDS
-    assert budget >= 300, (
-        f"探复制页的总预算只有 {budget:.0f} 秒。实测 Pages 可以慢到 12 分钟以上，"
-        "太短就会把本来能用的按钮摘掉——而日志里「取不到」和「还没发布」"
-        "长得一模一样。"
+    # ⚠️ **这条断言原来写死 300 秒，而它自己的 docstring 就说「实测可以慢到
+    # 12 分钟以上」——于是 12×30=360 轻松过关，按钮照样永远等不到。**
+    # 判据比它引用的那个数还松，等于没装。现在从实测常量推，改不动一头
+    # 不改另一头：`MEASURED_PAGES_BUILD_SECONDS` 是量出来最慢的那次成功构建。
+    floor = pushmsg.MEASURED_PAGES_BUILD_SECONDS
+    assert budget >= floor, (
+        f"探复制页的总预算只有 {budget:.0f} 秒，而实测 Pages 建一次站要 "
+        f"{floor:.0f} 秒（这个仓库 output/ 一 GB 多，每次重建整站）。"
+        "窗口短于发布时间＝那颗按钮永远出不来，而且**不会报错**——"
+        "日志里「取不到」和「还没发布」长得一模一样。"
     )
     # 但也不能无限等：出片那步已经花掉五分钟，工作流的 timeout 是 25 分钟。
     assert budget <= 900, f"预算 {budget:.0f} 秒太长，会把整个 run 拖进超时。"

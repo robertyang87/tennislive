@@ -140,8 +140,8 @@ jobs:
 
       - name: 提交成片到仓库
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           OUTDIR="${{ steps.gen.outputs.outdir }}"
           git add "$OUTDIR"
           if git diff --cached --quiet; then
