@@ -1,0 +1,89 @@
+{
+  "_note": "「保护排名能用几次」。条文是这条片子的主语，照片只是让人看见那个人。授权按账号所有者指示不作检索闸门，许可与出处照实记；闸门是「这张能不能证明它那一屏说的事」。",
+  "_查证": {
+    "这一条为什么要记": "落点是一句从条文推出来的算术（他现在用的是不是冻结后的余额），必须留下推导，否则下次没人能复核，也会有人重跑一遍同样的检索。完整调研见 docs/pr-allowance-research.md。",
+    "规则原文": {
+      "出处": "ATP 2026 官方规则书 IX.F Entry Protection，PDF 第 136 页（印刷页码 270–271）。⚠️ 2025 版（p132）逐字比对过，四条全同——所以讲 2025 年的事不用换一本书判。",
+      "3.a 额度": "停赛 ≥6 个月且 <12 个月：`the first nine (9) singles ... tournaments that the player competes in using the entry protection (excluding wild cards and entries as a direct acceptance with his current position in the PIF ATP Rankings) or for the period up to nine (9) months beginning with the first tennis event, including Special Events – Exhibitions, that the player competes in, whichever occurs first`",
+      "3.b 更长的一档": "≥12 个月：12 站 / 12 个月，同样 whichever occurs first。Note：`once the player is included in the draw or accepts prize money as an on-site withdrawal, the event shall count`；联合杯不占额度",
+      "3.c 大满贯": "`The use of a protected ranking to enter the singles and/or doubles of a Grand Slam event is limited to once per Grand Slam event.`",
+      "4 时效": "自原始最后一场起 3 年内必须激活，逾期作废",
+      "5 冻结": "`Re-injury Protection`：复出后再伤可申请冻结 9/12 个月的上限；需再停 ≥3 个月且申请在此期间提交；复出时站数和周数原样保留；最多两次；服兵役那一路不适用。Note：3 个月=13 周，6 个月=26 周，9 个月=39 周，12 个月=52 周",
+      "Case 框": "用 PR 进签表后退赛、改用外卡进同一站 → 不计入额度"
+    },
+    "商竣程的时间线": "tennisexplorer 逐场核过。2025-01-13 澳网 1R 负达维多维奇·福基纳（第一次停赛前最后一场）→ 右脚第五跖骨手术 → 缺席法网、放弃温网 → 2025-07-28 多伦多 1R 负达克沃斯（复出，钟从这天起走）→ 辛辛那提/美网/成都/北京/上海(3R,胜哈恰诺夫)/UTS/澳门 → 2026-01 香港八强负布勃利克、澳网 1R 胜巴蒂斯塔·阿古特 2R 负范德赞德舒尔普 → 2026-02-16 多哈、02-24 迪拜均负梅德韦杰夫（第二次停赛前最后一场）→ 停 5 个月 → 2026-07-27 华盛顿 1R 7-6(3) 3-6 4-6 负锦织圭，中途医疗暂停 → 2026-08-02 蒙特利尔正赛 1R 6-3 6-3 胜巴列霍，1 小时 21 分。现世界第 270，生涯最高第 47（2024-10-21）。",
+    "算术": "第一次停赛 2025-01-13 → 07-28 约 6 个半月，落进「6–12 个月 → 9 站或 9 个月」那一档。9 个月＝39 周，从 2025-07-28 起算到 2026-04-27 走完。第二次只停了 5 个月（02-24 → 07-27），够不上重新申请的 6 个月门槛，但**超过冻结要求的 3 个月**；钟到 2026-02-24 约走了 30 周，39 周里还剩约 9 周。",
+    "必须标注的边界": "⚠️ 他本人有没有提交冻结申请、ATP 有没有批准，**没有公开记录**。中文报道只说「凭借保护排名获得正赛席位」，没说是新的一次还是冻结后的余额。片子第 4 屏的旁白显式写了这一层（「都没有公开记录，上面这些是照着条文算出来的」），和 protected-ranking 那条对郑钦文的处理一致。",
+    "和已有选题的分界": "`protected-ranking` 讲的是**它保的是报名不是排名**（主角郑钦文，落点是 26 周连续期被中网两场球切断）。这条讲**额度**：几站、几个月、能不能续。两条不重叠。",
+    "踩到的坑": [
+      "ATP 官网的规则书 PDF 现在吃 Cloudflare 挑战（curl 带浏览器 UA 也是 403 「Just a moment...」，Chromium 走代理是 ERR_CONNECTION_RESET）。**PDF 早就下在暂存目录里了**——先在本地找一遍比重下便宜。",
+      "Commons 连续取图会 429，要退避重试；一次取五张必挂。",
+      "**`Shang Juncheng (2024 DC Open) 01.jpg` 元数据全对，打开是场外摆拍的大头照**（毛巾搭肩对镜头笑），第 2、3 道闸门双双不过。又一次「判据是打开看，不是看元数据」。"
+    ]
+  },
+  "_探过但没有的": "商竣程 2025 年之后的比赛照，Commons 全站为零（20 张全是 2023–2024）。华盛顿赛事站媒体库能访问但没有他的图（首轮就输了，没有文章）；蒙特利尔官网图床 assets.nationalbankopen.com 可访问，但命名不规律（`AC-`/`PR-`/`OBN-` 混用），猜不出来。所以这条片子的照片全部是 2023 年的，**年份一律写在卡上**。",
+  "shang_usopen_2023_leap.jpg": {
+    "source": "Wikimedia Commons",
+    "file": "Shang Juncheng (2023 US Open) 04.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Shang_Juncheng_(2023_US_Open)_04.jpg",
+    "description": "商竣程双脚离地反手救球，球在身前，球拍完整入框，背景是美网赞助商 CHASE 的广告板。用作封面：这条片子讲的是「额度」，而额度买来的正是**站上场**这件事本身。原图 4000×6000（2:3），裁成 3:4——切掉的 640px 里只有 64px 从顶上走，其余从底下收，**留白留在人头顶那一侧**。缩到 2000×2667＝铺满 1.85x：**故意没有用满 3.70x**，越过 2.0x 会挤爆「2 倍图不是基准」那条反例的预算（现在 3/4），而不该为了让一张图更大去拆一条用来自证基准的判据。",
+    "date": "2023-08-24",
+    "author": "Wikimedia Commons 用户上传，见文件页署名",
+    "licence": "CC BY-SA 4.0"
+  },
+  "shang_usopen_2023_backhand.jpg": {
+    "source": "Wikimedia Commons",
+    "file": "Shang Juncheng (2023 US Open) 06.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Shang_Juncheng_(2023_US_Open)_06.jpg",
+    "description": "商竣程反手击球，球正在拍面上，**背景广告板上「US Open」四个字清晰可读——画面自己点明了赛事**，不靠看图推断。用在「进了签表就扣掉一站」那一屏：那一屏讲的是打没打、赢没赢都要扣，配一张正在打球的画面。原图 4000×6000 裁 3:4 后缩到 1600×2133。",
+    "date": "2023-08-24",
+    "author": "Wikimedia Commons 用户上传，见文件页署名",
+    "licence": "CC BY-SA 4.0"
+  },
+  "shang_washington_2023_ready.jpg": {
+    "source": "Wikimedia Commons",
+    "file": "Juncheng Shang (2023 DC Open) 01.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Juncheng_Shang_(2023_DC_Open)_01.jpg",
+    "description": "商竣程在底线分腿垫步准备接发，全身入框。⚠️ 这是 **2023 年**的华盛顿站（DC Open），**不是**他 2026 年 7 月复出的那一站——两站同名，卡上写的年份是 2023，旁白也不拿它当 2026 的证据。用在「为了够到它，他放弃了温网」那一屏：那一屏讲的是一个等待的决定，一张站着准备的画面比击球更贴。原图 4000×6000 裁 3:4 后缩到 1600×2133。",
+    "date": "2023-07-29",
+    "author": "Wikimedia Commons 用户上传，见文件页署名",
+    "licence": "CC BY-SA 4.0"
+  },
+  "shang_washington_2023_serve.jpg": {
+    "source": "Wikimedia Commons",
+    "file": "Juncheng Shang (2023 DC Open) 07.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Juncheng_Shang_(2023_DC_Open)_07.jpg",
+    "description": "商竣程手里攥着球，准备发球，场边椅子和毛巾在景深里。⚠️ 同样是 **2023 年**华盛顿站，不是 2026。用在收尾「世界第 270，站在大师赛正赛里」那一屏：那一屏说的是「凭证把他送进来，剩下的还得自己打」——一个准备发球的动作正是「接下来靠自己」。原图 4000×6000 裁 3:4 后缩到 1600×2133（从顶上多收了一些，把上方空白的挡板压掉）。",
+    "date": "2023-07-31",
+    "author": "Wikimedia Commons 用户上传，见文件页署名",
+    "licence": "CC BY-SA 4.0"
+  },
+  "_示意图": "三张，都是「照片讲不清」那一类，不是「找不到照片」的退路。①`_PR_ALLOWANCE_DIAGRAM`：两个上限并排倒计时——站数用格子（数得出来），月数用横条（时间是连续的），照片没法表达「两个计时器同时在走」。②`_PR_FREEZE_DIAGRAM`：一根钟中间被挖掉一段，「按暂停」这个动作文字排不出来。 ③`_PR_USE_DIAGRAM`：三件能做、两件不能做——**照片没法表达一条禁令**，所以画；能做的给强调色，不能做的压成中性并划一道斜杠。",
+  "stephens_usopen_2017_trophy.jpg": {
+    "source": "The Canadian Press / 经 CNN 2017-09-09 决赛报道转载",
+    "file": "170909181104-sloane-stephens-us-open-final-05.jpg",
+    "page": "https://www.cnn.com/2017/09/09/tennis/us-open-final-madison-keys-sloane-stephens",
+    "description": "斯蒂芬斯举起美网女单奖杯。**四要素由文件名自证**：`170909` 就是 2017 年 9 月 9 日女单决赛日；更硬的是**奖杯自己作证**——杯身刻着 UNITED STATES OPEN CHAMPION / WOMEN'S SINGLES 和历届冠军名（考特、比利·简·金、埃弗特）。**用作封面**（账号所有者定：「建议用捧杯的做封面」）——这条片子问「能用几次」，而这张就是那个问题最极端的答案：第 957 名，用它拿了大满贯。铺满 1.24x，在 FLOOR 之上、2 倍反例线之下，不动那个预算。⚠️ 裁法踩过一次坑：第一版按 3:4 裁**把奖杯左边切掉一块**，改成只从右侧收掉空背景、比例留 1.233 走信箱式缩放（>1.2 那道门槛，故意不卡在 1.200 上），整个奖杯和人都保住。原图 4979×3319，落库 2200×1784。⚠️ 为什么不是 Commons：斯蒂芬斯在 Commons 上 40 张**一张捧杯的都没有**，`2017 US Open (tennis)` 分类只有 11 个文件也没有，USTA 那篇年度回顾的图路径已失效（404）。三个源全空，第四个源一次就中——过不了闸门是换源的信号。",
+    "date": "2017-09-09",
+    "author": "unknown（通讯社图，转载页未标注摄影师）",
+    "licence": "unverified — 未取得授权；按账号所有者指示使用，发布前由人工判断"
+  },
+  "stephens_usopen_2018_forehand.jpg": {
+    "source": "Wikimedia Commons",
+    "file": "Sloane Stephens – defending champion (31289785378).jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Sloane_Stephens_%E2%80%93_defending_champion_(31289785378).jpg",
+    "description": "斯蒂芬斯正手随挥，全身入框，蓝场绿边。**文件标题里的 `defending champion` 自证它指的就是 2017 年那个冠军**——2018 年她是以卫冕冠军身份回到美网的。用在「第 957 名，用它拿了大满贯」那一屏（捧杯照挪去做封面之后）。原图 1839×2431，裁 3:4 后缩到 1600×2133，铺满 1.69x。⚠️ 卡上写的年份是 2018，旁白讲的是 2017，两者不冲突：这一屏说的是「她拿了那个冠军」，而这张照片是那个身份的直接证据。",
+    "date": "2018-08-27",
+    "author": "Wikimedia Commons 用户上传，见文件页署名",
+    "licence": "CC BY-SA 2.0"
+  },
+  "stephens_usopen_2017_lift.jpg": {
+    "source": "WTA 官方图库（photoresources.wtatennis.com），经 wtatennis.com 2017 决赛报道",
+    "file": "EKBLraTP.jpg",
+    "page": "https://www.wtatennis.com/news/1416581/sloane-stephens-wins-2017-us-open-in-stellar-display",
+    "description": "斯蒂芬斯双手举起美网女单奖杯，背景是亚瑟·阿什球场颁奖时挂的美国国旗。**用作封面**（账号所有者：「建议用捧杯的做封面」「只是图片要去找一张更合适的」）。⚠️ 换掉的那张 `stephens_usopen_2017_trophy.jpg` 被判「人像有点大」——**机制是封面走 cover 铺满模式，横图被硬裁成 3:4 等于再放大一次**，同一张图在信箱式缩放的内页很好看，到封面就成大头。这张源图更宽（3983×2655）且主体更小，裁 3:4 之后**奖杯占了左半幅顶到底，成了视觉落点，人退到右边**——正是 CLAUDE.md「捧杯不等于奖杯占满一屏」要的那个样子。四要素自证：**杯身刻名清晰可读**（VIRGINIA WADE / STEFI GRAF / SERENA WILLIAMS / KIM CLIJSTERS / VENUS WILLIAMS / HENIN-HARDENNE，最后一行到 2014），这串名字本身就是这一屏的内容——第 957 名的人要把名字刻进这里。裁 3:4 缩到 2000×2667，铺满 1.84x（低于 2 倍反例线，不动那个预算）。",
+    "date": "2017-09-09",
+    "author": "unknown（WTA 图库未标注摄影师）",
+    "licence": "unverified — 未取得授权；按账号所有者指示使用，发布前由人工判断"
+  }
+}
