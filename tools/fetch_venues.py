@@ -159,6 +159,96 @@ VENUES = [
     ("madrid-centre-court.jpg", None, None),
     # 蒙特卡洛：官网 montecarlotennismasters.com 开着 wp-json（rolexmontecarlomasters.mc 那个域名本环境不通），搜索词用法语
     ("montecarlo-centre-court.jpg", None, None),
+    # 斯海尔托亨博斯：libema-open.nl 开着 wp-json，搜索词用荷兰语；ATP250 与 WTA250 共用
+    ("denbosch-centre-court.jpg", None, None),
+    # 鹿特丹：官网非 WP，图在 /files/images/<年>/，渲染首页拿路径；DOM 尺寸是缩略的，原图更大
+    ("rotterdam-centre-court.jpg", None, None),
+    # 布里斯班：Tennis Australia 的 Adobe DM 图床（tennis.com.au/adobe/dynamicmedia/deliver/），width= 可调；源图 1200×800 封顶
+    ("brisbane-centre-court.jpg", None, None),
+    # 阿德莱德：同布里斯班，走 Tennis Australia 的 Adobe DM；WTA500 与 ATP250 共用
+    ("adelaide-centre-court.jpg", None, None),
+    # 奥克兰：asbclassic.co.nz 走 ATP Sitecore，/-/media/sites/tournaments/auckland/news/ 下有 finals-stadium-generic；ATP250 与 WTA250 共用
+    ("auckland-centre-court.jpg", None, None),
+    # 慕尼黑：bmwopen.de 开着 wp-json（747 项），搜 center court 直接中
+    ("munich-centre-court.jpg", None, None),
+    # 里约：rioopen.com 走 ATP Sitecore，vistageral.jpg 直接挂在 sites/tournaments/rio/ 根下
+    ("rio-centre-court.jpg", None, None),
+    # 蒙彼利埃：官网从 opensuddefrance.com 改名到 openoccitanie.com，wp-json 在新域名上
+    ("montpellier-centre-court.jpg", None, None),
+    # 巴塞罗那：curl 403 但 Playwright 渲染能过（按 UA 挡的）；ATP Sitecore
+    ("barcelona-centre-court.jpg", None, None),
+    # 多哈：赛事官网全部不通，走 WTA 赛事页 hero（photoresources.wtatennis.com）；WTA1000 与 ATP500 共用
+    ("doha-centre-court.jpg", None, None),
+    # 印第安维尔斯：官网是 DatoCMS、/media 页没有场馆图，走 WTA 赛事页 hero；Commons 那张是 Pacific Life Open 年代的，别用
+    ("indianwells-centre-court.jpg", None, None),
+    # charleston：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("charleston-centre-court.jpg", None, None),
+    # bogota：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("bogota-centre-court.jpg", None, None),
+    # ostrava：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("ostrava-centre-court.jpg", None, None),
+    # linz：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("linz-centre-court.jpg", None, None),
+    # rouen：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("rouen-centre-court.jpg", None, None),
+    # strasbourg：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("strasbourg-centre-court.jpg", None, None),
+    # nottingham：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("nottingham-centre-court.jpg", None, None),
+    # badhomburg：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("badhomburg-centre-court.jpg", None, None),
+    # hobart：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("hobart-centre-court.jpg", None, None),
+    # abudhabi：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("abudhabi-centre-court.jpg", None, None),
+    # cluj：WTA 赛事页 hero（数字 id 从 api.wtatennis.com 取）
+    ("cluj-centre-court.jpg", None, None),
+    # 女王俱乐部 ATP500：LTA 官网 /siteassets/events/hsbc/ 的 6000x4000 原图，底线后方沿长轴
+    ("queens-club-centre-court-atp.jpg", None, None),
+    # 女王俱乐部 WTA500：同一座中心球场，取 WTA 那一届的画面（围板 WTA 500）
+    ("queens-club-centre-court-wta.jpg", None, None),
+    # 伊斯本 ATP250 + WTA250：LTA 官网 /siteassets/events/eastbourne/，底线后方沿长轴，整个碗都在
+    ("eastbourne-devonshire-park-centre-court.jpg", None, None),
+    # 德雷海滩 ATP250：官网媒体库 2026-2027-press，夜场全景，近端远端看台都在
+    ("delray-beach-stadium-centre-court.jpg", None, None),
+    # 休斯顿 ATP250：ATP 赛事主视觉，红土 + 绿顶看台，focal 左移到 30% 让球场成为落点
+    ("houston-river-oaks-centre-court.jpg", None, None),
+    # 马略卡 ATP250：ATP 赛事主视觉，顶部收 160px 去掉空天
+    ("mallorca-country-club-centre-court.jpg", None, None),
+    # 达拉斯 ATP500：Ford Center 网球布置的实拍，底线后方沿长轴
+    ("dallas-ford-center-centre-court.jpg", None, None),
+    # 罗马 ATP1000 + WTA1000：ATP 赛事主视觉，Campo Centrale 满场
+    ("rome-foro-italico-centre-court.jpg", None, None),
+    # 哈雷 ATP500：ATP 赛事主视觉，OWL Arena 开顶满场
+    ("halle-owl-arena-centre-court.jpg", None, None),
+    # 斯图加特 ATP250：ATP 赛事主视觉，Weissenhof 草地；别名按赛事名写，别用城市名
+    ("stuttgart-weissenhof-centre-court.jpg", None, None),
+    # 布宜诺斯艾利斯 ATP250：ATP 赛事主视觉，Vilas 中央球场满场
+    ("buenos-aires-vilas-centre-court.jpg", None, None),
+    # 圣地亚哥 ATP250：ATP 赛事主视觉的 -sunset 变体，满场夜赛
+    ("santiago-centre-court.jpg", None, None),
+    # 斯图加特 WTA500：Porsche-Arena 室内红土；别名按赛事名写，别用城市名
+    ("stuttgart-porsche-arena-centre-court.jpg", None, None),
+    # 布加勒斯特 ATP250：赛事域名上的 stadium shot，红土满场
+    ("bucharest-centre-court.jpg", None, None),
+    # 柏林 WTA500：WTA 官方主视觉，Steffi-Graf-Stadion 满场
+    ("berlin-steffi-graf-stadion-centre-court.jpg", None, None),
+    # 梅里达 WTA500：WTA 官方主视觉，紫色硬地满场
+    ("merida-centre-court.jpg", None, None),
+    # 奥斯汀 WTA250：新闻站的赛报配图，主看台球场满场
+    ("austin-westwood-centre-court.jpg", None, None),
+    # 阿卡普尔科 ATP500：Arena GNP 夜间航拍（垂直视角，非标准样例，见 credits 的 note）
+    ("acapulco-arena-gnp-centre-court.jpg", None, None),
+    # 日内瓦 ATP250：新闻站的现场照，从近端看台拍，整个碗都在
+    ("geneva-eaux-vives-centre-court.jpg", None, None),
+    # ATP 年终总决赛：Inalpi Arena 满场；年终三站的场馆是定死的，之前被我按「团体赛没有固定主场」一并排除了
+    ("turin-inalpi-arena-centre-court.jpg", None, None),
+    # 新生代总决赛：吉达球场全景（空场，见 credits 的 note）；年终三站的场馆是定死的
+    ("jeddah-nextgen-centre-court.jpg", None, None),
+    # 戴维斯杯决赛圈：Unipol Arena 满场。2026 在博洛尼亚（官网横幅 Final 8 in Bologna），赛历原先写的西班牙是错的
+    ("bologna-unipol-arena-centre-court.jpg", None, None),
+    # 比利·简·金杯决赛圈：深圳湾满场（官网证实 2026 仍在深圳，hosts China）
+    ("shenzhen-bay-bjk-cup-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -304,6 +394,276 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "shenzhen-bay-bjk-cup-centre-court.jpg": {
+        "title": "深圳湾体育中心比利·简·金杯布置，满场，记分牌写着 ITALY / CHINA, P.R.（PAOLINI 对 WANG），环形 LED 是 GAINBRIDGE，场地上刷着 BILLIE JEAN KING Cup",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "供应商案例页转载（摄影师未署名）",
+        "page": "https://www.uphos.com/data/watermark/main/ueditor/20250918/68cbf5434eebd.jpg",
+    },
+    "bologna-unipol-arena-centre-court.jpg": {
+        "title": "博洛尼亚 Unipol Arena 戴维斯杯布置，满场，环形挡板写着 DAVIS CUP FINALS 与 THE WORLD CUP OF TENNIS，场地前场刷着 DAVIS CUP，看台上有意大利国旗",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "Bologna Welcome 官方旅游站转载（摄影师未署名）",
+        "page": "https://static.bolognawelcome.com/immagini/1f/83/e8/d2/20230330171216_landscape_16_9_desktop.jpg",
+    },
+    "jeddah-nextgen-centre-court.jpg": {
+        "title": "吉达新生代总决赛球场，红光打亮的环形看台，吊屏写着 NEXT GEN ATP FINALS，环形 LED 是 I AM NEXT，浅蓝场地前场刷着 JEDDAH",
+        "license": "unverified · ATP 官方图，经赛事域名 nextgenatpfinals.com 取得",
+        "artist": "ATP 官方图（摄影师未署名）",
+        "page": "https://www.nextgenatpfinals.com/-/media/images/news/2023/11/29/16/31/stadium-shot-jeddah-2023.jpg",
+    },
+    "turin-inalpi-arena-centre-court.jpg": {
+        "title": "都灵 Inalpi Arena 满场，环形 LED 与吊屏写满 Nitto ATP FINALS，看台一角标着 TORINO，浅蓝球场上一位球员正在发球",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/nitto-atp-finals_tournimage_2024.jpg",
+    },
+    "geneva-eaux-vives-centre-court.jpg": {
+        "title": "日内瓦 Parc des Eaux-Vives 中心球场，红土，远端挡板写着 GONET BANQUIERS 1845、球网上是 ATP TOUR，侧板 GONET GENEVA OPEN 与 Tribune de Genève，背后是园中的木屋与瑞士旗",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（Le Dauphiné Libéré，摄影师未署名）",
+        "page": "https://cdn-s-www.ledauphine.com/images/90D9B0F5-04B0-4F1B-B541-6D32555F8DD9/NW_raw/le-court-central.jpg",
+    },
+    "acapulco-arena-gnp-centre-court.jpg": {
+        "title": "阿卡普尔科 Arena GNP Seguros 夜间航拍，八边形主球场，场地中央铺着墨西哥国旗，四周看台环绕",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（摄影师未署名）",
+        "page": "https://chihuahuaaldia.com/wp-content/uploads/2025/10/abierto-mexicano-de-tenis-2025.jpg",
+    },
+    "austin-westwood-centre-court.jpg": {
+        "title": "奥斯汀 Westwood Country Club 主看台球场满场，绿色硬地，挡板写着 ATX OPEN 与 WTA 250，围板 WTATENNIS.COM，近端远端看台都在",
+        "license": "unverified · 新闻站转载，作者未署名",
+        "artist": "新闻站转载（Hearst 图床，摄影师未署名）",
+        "page": "https://s.hdnux.com/photos/01/63/40/25/30278996/3/1920x0.jpg",
+    },
+    "merida-centre-court.jpg": {
+        "title": "梅里达中心球场黄昏满场，紫色硬地前场刷着 MÉRIDA，近端远端看台都在画面里",
+        "license": "unverified · WTA 官方图库 photoresources.wtatennis.com",
+        "artist": "WTA 官方赛事主视觉（摄影师未署名）",
+        "page": "https://www.wtatennis.com/tournament/2085/merida/2026",
+    },
+    "berlin-steffi-graf-stadion-centre-court.jpg": {
+        "title": "柏林 Steffi-Graf-Stadion 草地中心球场满场，远端看台横幅写着 STEFFI-GRAF-STADION 与 BERLIN TENNIS OPEN，左侧标着 WTA 500",
+        "license": "unverified · WTA 官方图库 photoresources.wtatennis.com",
+        "artist": "WTA 官方赛事主视觉（摄影师未署名）",
+        "page": "https://www.wtatennis.com/tournament/2012/berlin/2026",
+    },
+    "bucharest-centre-court.jpg": {
+        "title": "布加勒斯特中央球场满场，红土，远端看台顶上写着 ROMANIA，围板是 ȚIRIAC OPEN，球网上是 ATP TOUR",
+        "license": "unverified · ATP 官方图，经赛事域名 tiriacopen.ro 取得",
+        "artist": "ATP 官方图（摄影师未署名）",
+        "page": "https://www.tiriacopen.ro/-/media/images/news/2024/04/21/12/16/bucharest-2024-stadium-shot-2.jpg",
+    },
+    "stuttgart-porsche-arena-centre-court.jpg": {
+        "title": "斯图加特 Porsche-Arena 室内红土中心球场，场地前场刷着 STUTTGART，围板 porsche-tennis.com，大屏是 Świątek 对 Raducanu 与 WTA 500",
+        "license": "unverified · 赛事主办方官方图，转载站未署名",
+        "artist": "Porsche 赛事官方图（摄影师未署名，经 sport-s.de 转载）",
+        "page": "https://sport-s.de/wp-content/uploads/2024/06/Porsche-Tennis-Totale.jpg",
+    },
+    "santiago-centre-court.jpg": {
+        "title": "圣地亚哥中央球场夜场满场，红土，灯柱亮着，远处是安第斯山与圣地亚哥城区",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/santiago_tournimage_2020-sunset.jpg",
+    },
+    "buenos-aires-vilas-centre-court.jpg": {
+        "title": "布宜诺斯艾利斯草地网球俱乐部 Guillermo Vilas 中央球场满场，红土，近端远端看台与灯柱都在画面里",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/buenosaires_tournimage_2019.jpg",
+    },
+    "stuttgart-weissenhof-centre-court.jpg": {
+        "title": "斯图加特 TC Weissenhof 草地中心球场满场，挡板写着 BOSS，侧板写着 TC Weissenhof 与 Region Stuttgart",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/stuttgart_tournimage_2022.jpg",
+    },
+    "halle-owl-arena-centre-court.jpg": {
+        "title": "哈雷 OWL Arena 中心球场满场，开顶状态，环形挡板写着 TERRA WORTMANN OPEN 与 owlarena-world.de",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/halle_tournimage_2023.jpg",
+    },
+    "rome-foro-italico-centre-court.jpg": {
+        "title": "福罗意大利中央球场（Campo Centrale）满场，从底线后方沿长轴拍，记分牌写着 F. VERDASCO / R. NADAL，围板是 Internazionali 的赞助带",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/rome_tournimage_2019.jpg",
+    },
+    "dallas-ford-center-centre-court.jpg": {
+        "title": "弗里斯科 Ford Center at The Star 主球场，从底线后方高处沿长轴拍，挡板写着 DALLAS OPEN 与 ATP 500，记分牌是 PAUL / OPELKA，场地前场刷着 DALLAS",
+        "license": "unverified · 赛事官网媒体库 dallasopen.com",
+        "artist": "赛事官方图（摄影师未署名）",
+        "page": "https://www.dallasopen.com/-/media/images/news/2026/01/12/02/39/dallas-2026-prize-money-image.jpg",
+    },
+    "mallorca-country-club-centre-court.jpg": {
+        "title": "圣蓬萨 Mallorca Country Club 中心球场满场，草地两端看台都在，围板写着 MALLORCA，背后是松林覆盖的山坡",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://mallorcachampionships.com/-/media/images/atp-tournaments/tournament-images/mallorca_tournimage_2022.jpg",
+    },
+    "houston-river-oaks-centre-court.jpg": {
+        "title": "River Oaks 乡村俱乐部主球场满场，绿色顶棚看台与裁判塔，围板写着冠名商 FAYEZ SAROFIM & CO.，旗杆上是美国旗与得州旗",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/houston_tournimage_2019.jpg",
+    },
+    "delray-beach-stadium-centre-court.jpg": {
+        "title": "德雷海滩网球中心主看台球场夜场满场，场地刷着 ATP TOUR，记分牌写着 PAUL / TIEN 与 ATP 250",
+        "license": "unverified · 赛事官网媒体库 delraybeachopen.com",
+        "artist": "赛事官方图（摄影师未署名）",
+        "page": "https://www.delraybeachopen.com/",
+    },
+    "eastbourne-devonshire-park-centre-court.jpg": {
+        "title": "德文郡公园中心球场满场，挡网写着 EASTBOURNE、围板写着 Rothesay INTERNATIONAL，背景是伊斯本的教堂尖顶与维多利亚式排屋",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/",
+    },
+    "queens-club-centre-court-wta.jpg": {
+        "title": "女王俱乐部中心球场满场，围板写着 HSBC CHAMPIONSHIPS 与 WTA 500，草地上刷着 LONDON",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/",
+    },
+    "queens-club-centre-court-atp.jpg": {
+        "title": "女王俱乐部中心球场（安迪·穆雷球场）满场，场地前场刷着 ATP TOUR，围板写着 HSBC CHAMPIONSHIPS，左侧为俱乐部红砖会所",
+        "license": "unverified · 赛事主办方 LTA 官网图库",
+        "artist": "LTA 官方图（摄影师未署名）",
+        "page": "https://www.lta.org.uk/fan-zone/international/hsbc-championships/weather-forecast/",
+    },
+    "cluj-centre-court.jpg": {
+        "title": "BT Arena 中心球场 · 室内紫色场地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/cdcb778a-237c-4075-820e-f5e4762863e2/2050-Cluj.jpg",
+    },
+    "abudhabi-centre-court.jpg": {
+        "title": "扎耶德体育城网球中心中心球场 · 满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/20/cbae0b62-ac90-4b4f-8c15-4acdb35ea037/2088-Abu-Dhabi.jpg",
+    },
+    "hobart-centre-court.jpg": {
+        "title": "Domain 网球中心中心球场 · 满场，背景是霍巴特的山",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1ead324-0027-4f5b-a4d4-489b562639ea/1050-Hobart.jpg",
+    },
+    "badhomburg-centre-court.jpg": {
+        "title": "Bad Homburg 中心球场 · 草地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/5023f41c-baec-4531-b585-260d8d468f3f/2017-Bad-Homburg-Open-2.jpg",
+    },
+    "nottingham-centre-court.jpg": {
+        "title": "诺丁汉网球中心中心球场 · 草地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/16/0b899ba9-b477-48ea-9e9e-5cb6aeb30699/1080_bg_Nottingham-min.jpg",
+    },
+    "strasbourg-centre-court.jpg": {
+        "title": "Tennis Club de Strasbourg 中心球场 · 红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/05/12/ffbc5331-cbef-4d6a-8f6d-3a0c93eefa0e/406-Strasbourg.jpg",
+    },
+    "rouen-centre-court.jpg": {
+        "title": "Kindarena 中心球场 · 室内红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/05/02/45da6924-0e65-40ec-b971-04b2806da1f8/2066-Rouen.png",
+    },
+    "linz-centre-court.jpg": {
+        "title": "TipsArena Linz 中心球场 · 室内紫色场地满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/5b8f9a8e-bc19-4019-8e7a-f8a5ccd60071/528-Linz.jpg",
+    },
+    "ostrava-centre-court.jpg": {
+        "title": "Ostravar Aréna 中心球场 · 室内满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/05/29/1c78195c-5e01-4cfd-9c6b-c8b3fba080c4/1054-Ostrava-Background.jpg",
+    },
+    "bogota-centre-court.jpg": {
+        "title": "Centro de Alto Rendimiento 中心球场 · 红土满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2026/06/03/55ee0af0-08ca-4764-96e3-21b366d4bfae/Tournament-background-894-Bogota-new.png",
+    },
+    "charleston-centre-court.jpg": {
+        "title": "Credit One Stadium 中心球场 · 满场",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/1588de8d-8dcd-449f-99a9-e0e2eb688e40/804-Charleston.JPG",
+    },
+    "indianwells-centre-court.jpg": {
+        "title": "印第安维尔斯网球花园 1 号球场 · 满场，场地前场刷着 INDIAN WELLS",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/04/28/d1b371b4-11cf-4c25-99dc-a3b8bcaa06e4/609-BNP-Paribas-Open.jpg",
+    },
+    "doha-centre-court.jpg": {
+        "title": "哈利法国际网球场中心球场 · 夜场满场，背景是多哈天际线",
+        "license": "unverified · WTA 官方媒体库",
+        "artist": "photoresources.wtatennis.com 官方图库",
+        "page": "https://photoresources.wtatennis.com/photo-resources/2025/10/16/31b8cefd-8f3d-4180-949d-be019385cdd6/1003_bg_Qatar_Doha-min.jpg",
+    },
+    "barcelona-centre-court.jpg": {
+        "title": "皇家巴塞罗那网球俱乐部 拉法·纳达尔球场 · 红土满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "barcelonaopenbancsabadell.com 官方图库",
+        "page": "https://www.barcelonaopenbancsabadell.com/-/media/images/news/2026/04/13/19/29/barcelona-2026-results.jpg",
+    },
+    "montpellier-centre-court.jpg": {
+        "title": "Sud de France Arena 中心球场 · 满场（粉蓝双色场地）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "openoccitanie.com 官方图库",
+        "page": "https://www.openoccitanie.com/wp-content/uploads/2025/01/sdf-arena-pleine-scaled.jpg",
+    },
+    "rio-centre-court.jpg": {
+        "title": "瓜加·库尔滕球场（Jockey Club）· 红土满场，背景是里约的山",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "rioopen.com 官方图库",
+        "page": "https://www.rioopen.com/-/media/sites/tournaments/rio/vistageral.jpg",
+    },
+    "munich-centre-court.jpg": {
+        "title": "MTTC Iphitos 中心球场 · 红土满场（BMW Open）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "bmwopen.de 官方图库",
+        "page": "https://www.bmwopen.de/wp-content/uploads/2025/04/Center-Court.jpg",
+    },
+    "auckland-centre-court.jpg": {
+        "title": "ASB 网球中心中心球场 · 满场，场地上写着 AUCKLAND / TĀMAKI MAKAURAU",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "asbclassic.co.nz 官方图库",
+        "page": "https://www.asbclassic.co.nz/-/media/sites/tournaments/auckland/news/finals-stadium-generic.jpg",
+    },
+    "adelaide-centre-court.jpg": {
+        "title": "纪念大道公园中心球场 · 满场，场地前场刷着 ADELAIDE",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Tennis Australia 官方图库",
+        "page": "https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--c42ebf2c-6c1d-4667-aba1-21221d7a24b4/adelaide-summer-of-tennis-court.jpg",
+    },
+    "brisbane-centre-court.jpg": {
+        "title": "帕特·拉夫特球场（昆士兰网球中心）· 满场",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Tennis Australia 官方图库",
+        "page": "https://www.tennis.com.au/adobe/dynamicmedia/deliver/dm-aid--29ecf2d2-3d24-4378-a734-13a92a329a35/brisbane-international-pat-rafter-arena.jpg",
+    },
+    "rotterdam-centre-court.jpg": {
+        "title": "鹿特丹 Ahoy 中心球场 · 满场，从高处俯瞰整个碗",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "Alyssa van Heyst / abnamro-open.nl 官方图库",
+        "page": "https://www.abnamro-open.nl/files/images/2027/AAO_260215_Alyssa%20van%20Heyst_3545.jpg",
+    },
+    "denbosch-centre-court.jpg": {
+        "title": "Autotron 中心球场 · 草地，满场（利贝马公开赛）",
+        "license": "unverified · 赛事官方媒体库",
+        "artist": "libema-open.nl 官方图库",
+        "page": "https://libema-open.nl/wp-content/uploads/2025/06/Libema_250612_2862-scaled.jpg",
+    },
     "montecarlo-centre-court.jpg": {
         "title": "蒙特卡洛乡村俱乐部雷尼尔三世球场 · 满场，背景是地中海",
         "license": "unverified · 赛事官方媒体库",

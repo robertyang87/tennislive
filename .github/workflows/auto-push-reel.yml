@@ -1,0 +1,158 @@
+name: auto-push-reel
+
+# **合进 main 就自动发微信**，省掉「合完还要记得回来点一次 dispatch」。
+#
+# 出片和发消息本来就是两次动作：分支上 `push=false` 渲片（6~14 分钟），
+# 合进 main 之后只推不渲。实测那一趟 **43 秒**（run 30755226229：checkout 14s
+# → 装依赖 7s → 写复制页 0s → 提交 0s → **发微信 7s**，render/cover/probe
+# 全 skip，ffmpeg/Chromium/抠图模型/源片一个都不装）。43 秒不值得再优化，
+# 真正的成本是人的往返。
+#
+# ⚠️ **默认什么都不会发。** 要开，在 `specs/reels/<slug>.json` 的 `push` 块里
+# 加一行 `"auto": true`；没这一行的片子，这条工作流看一眼就跳过并说明原因。
+# 四道闸（路径形状 / 显式认领 / 没推过 / 一趟最多一条）全在
+# `tools/auto_push_gate.py` 里——写进 YAML 就测不了了。
+#
+# **为什么必须是 main**：GitHub Pages 只服务 main，复制页留在分支上永远是
+# 404；而成片链接钉在 commit sha 上，未合并的 commit 有被 GC 的风险，
+# 微信里那个 ▶ 按钮会变死链。消息发出去收不回来。
+on:
+  push:
+    branches: [main]
+    # 只盯 render.json：它是「这条片子渲完了」的产物。盯 mp4 会漏掉走
+    # Release 的那些（超 95 MiB 的成片不进 git，链接记在 render.json 里）。
+    paths:
+      - "output/*/reel/*/render.json"
+
+permissions:
+  contents: write
+
+# 同一条片子只留一个在跑。**不许 cancel-in-progress**：取消一个已经发出
+# POST 的 run，只会让「发没发出去」变成未知，而 pushed.json 那一笔可能没记上。
+concurrency:
+  group: auto-push-reel
+  cancel-in-progress: false
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # 没有它，`prepare_image_delivery` 悄悄退回 jsDelivr：轮询最多 5 分钟，
+      # 取不到就整条推送取消。判据：test_走图床那条路的工作流都要配SECRET_KEY
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 只取 HEAD 和它的父提交：算「这次改了哪些文件」要 diff 一次，
+          # 而拉整部历史是 1.77 GiB。
+          fetch-depth: 2
+          # output/ 有 1.36 GB，这条只需要自己那一格——在「挑出该发的那一条」
+          # 之后 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            .github
+            specs
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # 这条路不下源片、不合语音、不编码，所以不装 ffmpeg / Chromium / 抠图模型。
+      # 装全套只会把失败面铺大：那几个包里任何一个装不上，都会让一条**本来
+      # 只是发消息**的 run 挂掉。
+      - name: 装依赖
+        run: |
+          pip install -q -e .
+          # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，
+          # 而不是三分钟后死在推送那一步。
+          python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+
+      - name: 挑出该自动发的那一条
+        id: gate
+        run: |
+          # **拿 `HEAD^` 比，别拿 `github.event.before`。** 这是浅克隆
+          # （fetch-depth: 2），`before` 那个 sha 可能根本不在本地——`git diff`
+          # 会失败，而失败在这儿的表现是「这次没有该发的片子」，**和真的没有
+          # 长得一模一样**，一条该发的推送就这么静默消失了。
+          # 这个仓库是 squash 合并，`HEAD^` 就是合并前的 main，深度 2 保证有。
+          CHANGED=$(git diff --name-only HEAD^ HEAD -- 'output/*/reel/*/render.json')
+          if [ -z "$CHANGED" ]; then
+            echo "[自动推送] 这次没有动到任何 render.json。"
+            exit 0
+          fi
+          # shellcheck disable=SC2086
+          python tools/auto_push_gate.py --changed $CHANGED
+
+      - name: 把这一格放进稀疏范围
+        if: steps.gate.outputs.found == 'true'
+        run: git sparse-checkout add "${{ steps.gate.outputs.outdir }}"
+
+      # 复制页在分支上渲的时候就写好并跟着 PR 进了 main，这一步通常写出**一模
+      # 一样**的内容、什么都不用提交。留着它是为了「算出来的和已发的一致」——
+      # 真不一致（有人改了文案没重渲）就在这儿补上，而不是发一条对不上的消息。
+      - name: 写复制页（必须排在提交之前）
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          python tools/push_reel.py --stage page \
+            --outdir "${{ steps.gate.outputs.outdir }}" \
+            --copy "specs/reels/${{ steps.gate.outputs.slug }}.xhs.txt"
+
+      - name: 复制页有变化就先提交
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          if git diff --cached --quiet; then
+            echo "复制页和仓库里那份一致，不用提交"
+          else
+            python tools/check_staged_file_sizes.py
+            git commit -m "reel: 自动推送前补齐复制页 ${{ steps.gate.outputs.slug }}"
+            git pull --rebase origin main
+            git push origin main
+          fi
+
+      - name: 推送到微信
+        if: steps.gate.outputs.found == 'true'
+        env:
+          # **钉 commit，别停在 @main。** 同一条片子重渲，海报路径一模一样，
+          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话推出去的还是
+          # 上一版那张海报，而且不吭声。
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
+        run: |
+          python tools/push_reel.py \
+            --outdir "${{ steps.gate.outputs.outdir }}" \
+            --copy "specs/reels/${{ steps.gate.outputs.slug }}.xhs.txt"
+
+      # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
+      # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
+      # 记不进去也不算这一趟失败（消息已经发了），但要红出来让人看见。
+      - name: 记下已经推送过
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          python tools/auto_push_gate.py \
+            --record "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          python tools/check_staged_file_sizes.py
+          git commit -m "reel: ${{ steps.gate.outputs.slug }} 已自动推送"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: 失败时告警
+        if: failure()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## ⚠️ 自动推送失败"
+            echo ""
+            echo "- slug：\`${{ steps.gate.outputs.slug }}\`"
+            echo "- 运行日志：$RUN_URL"
+            echo "- ⚠️ **先看日志确认微信到底发出去没有**：失败在推送之前是安全的，"
+            echo "  失败在「记下已经推送过」那一步则消息已经发了，别再手动补一次。"
+          } >> "$GITHUB_STEP_SUMMARY"

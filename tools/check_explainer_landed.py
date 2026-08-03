@@ -31,6 +31,8 @@ from __future__ import annotations
 
 import argparse
 import io
+import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
@@ -44,7 +46,10 @@ REPO = Path(__file__).resolve().parents[1]
 def _outdir_date() -> str:
     return datetime.now(timezone(timedelta(hours=8))).date().isoformat()
 
-TEXT_SUFFIXES = (".txt", ".html", ".json", ".md")
+# ⚠️ `.ass` 是 2026-08-03 补的：字幕**就是烧在画面上的那行字**，是「这一版
+# 落没落库」最直接的证据，而它以前一直不在这张表里——查一句只出现在字幕里的
+# 话，报出来是「★ 一个文件都没有」，和「没落库」一模一样。
+TEXT_SUFFIXES = (".txt", ".html", ".json", ".md", ".ass")
 # 取哪一条横带：上下各留出一截，避开页眉和底部文字块。
 BAND = (0.05, 0.55, 0.95, 0.80)
 TOLERANCE = 0.02  # 网格距离，不是色差
@@ -98,7 +103,28 @@ def main() -> int:
         return 2
 
     # 把目录里所有文本读成一份，记住每句话是在哪个文件里命中的。
-    texts = {n: _git(args.ref, f"{outdir}/{n}").decode("utf-8", "replace")
+    #
+    # ⚠️ **`.ass` 要先剥掉 `{...}` 样式标签再搜。** 字幕里的数字单独套一档
+    # 更大的字号（`世界第{\fs78}15{\fs68}`，见 CLAUDE.md「数字和汉字看着不像
+    # 一家」），于是**标签夹在词中间**，裸的子串搜索必然搜不到——
+    # 2026-08-03 查 special-exempt 时「世界第 15」明明烧在画面上，
+    # 这里报的却是「★ 一个文件都没有」。**那和「这一版没落库」长得一模一样**，
+    # 而这个脚本存在的全部理由就是回答后面那个问题。
+    def _searchable(name: str, raw: str) -> str:
+        if name.endswith(".ass"):
+            return re.sub(r"\{[^{}]*\}", "", raw)
+        if name.endswith(".words.json"):
+            # 词边界事件是**按词切开的**（`"世界"`,`"第十五"`），整句在原始
+            # JSON 里根本不连续。拼回去才搜得到——这是旁白**念出来**的那一份，
+            # 和字幕那一份不同（字幕过了 `arabic_numerals`：念「第十五」，
+            # 屏幕上是「第 15」）。两份都留着，才分得清是文案错还是渲染错。
+            try:
+                return raw + "\n" + "".join(e.get("text", "") for e in json.loads(raw))
+            except (ValueError, AttributeError, TypeError):
+                return raw
+        return raw
+
+    texts = {n: _searchable(n, _git(args.ref, f"{outdir}/{n}").decode("utf-8", "replace"))
              for n in names if n.endswith(TEXT_SUFFIXES)}
     bad = 0
     for phrase in args.says:
