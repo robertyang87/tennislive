@@ -832,13 +832,32 @@ def download(url: str, dest: Path) -> Path:
         if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
             dest.unlink(missing_ok=True)
             raise ReelError(f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}")
-        head = dest.read_bytes()[:64]
-        if head[:15].lower().startswith(b"<!doctype html") or b"<html" in head.lower():
+        # **「下到了」不等于「下到的是视频」**，而这条路原来只看**前 64 字节**
+        # 里有没有 `<!doctype html` / `<html`。Brightcove 的播放页
+        # （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`）
+        # 正是这么溜过去的：0.3 MB 的网页被当成源片收下，`_keep_source` 还把它
+        # **存进了缓存**，ffprobe 到下一步才报 `Invalid data found`
+        # （run 30838371382）。缓存把这个坏结果固化了——同一条 URL 再跑一趟会
+        # 直接命中它，于是「换个参数重试」永远重现同一个错。
+        #
+        # 判据换成「ffprobe 读不读得出一路视频流」。**yt-dlp 那条路早就在用
+        # `probe_size` 把关了**（它甚至还量高度防 360p），只有直链这条没有。
+        size_mb = dest.stat().st_size / 1e6
+        try:
+            width, height = probe_size(dest)
+        except (ReelError, ValueError):
+            head = dest.read_bytes()[:400].lower()
+            looks_html = b"<html" in head or b"<!doctype" in head
             dest.unlink(missing_ok=True)
             raise ReelError(
-                "直链回的是 HTML 不是视频——网盘多半还是「仅限受邀者」，"
-                "改成「知道链接的任何人」再试")
-        print(f"[ok] 直链下到 {dest.stat().st_size / 1e6:.1f} MB")
+                f"直链下到 {size_mb:.1f} MB，但 ffprobe 读不出视频流"
+                f"{'（内容是 HTML）' if looks_html else ''}：{url[:120]}\n"
+                "两种常见情况：\n"
+                "  ① 网盘还是「仅限受邀者」——改成「知道链接的任何人」再试；\n"
+                "  ② 给的是**播放页**不是直链（Brightcove 之类的 index.html）——"
+                "这类要交给 yt-dlp，curl 只会把网页存下来。"
+            ) from None
+        print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
         _keep_source(url, dest)
         return dest
 
@@ -1007,6 +1026,14 @@ class Segment:
     # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
     # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
     quote: str = ""
+    # **`quote` 写成列表时，每一条就是一条字幕**，断句权交回写 spec 的人；
+    # 元素里的换行渲成两行（上英下中）。
+    #
+    # 为什么要这一档：原声段拿不到词边界，退路是「按字数等比铺满整段」，
+    # 断句靠标点自动切。中英双语过不了这一关——自动切会把英文句子劈开，
+    # 也不知道哪一行该和哪一行配成一对。
+    # 账号所有者 2026-08-03：「前面夺冠庆祝的部分全用英文原声配中英文字幕」。
+    quote_cues: tuple[str, ...] = ()
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1021,6 +1048,76 @@ class Segment:
     @property
     def length(self) -> float:
         return round(self.end - self.start, 3)
+
+
+def _quote_cues(raw: object) -> tuple[str, ...]:
+    """`quote` 写成列表时，**每一条就是一条字幕**（元素里的换行渲成两行）。
+
+    写成字符串时返回空元组 —— 走原来那条「按标点自动切、按字数等比铺满」的路，
+    存量 spec 一个字都不用改。
+    """
+    if not isinstance(raw, list):
+        return ()
+    out = []
+    for x in raw:
+        if isinstance(x, dict):
+            out.append({"at": float(x["at"]), "text": str(x["text"]).strip()})
+        elif str(x).strip():
+            out.append(str(x).strip())
+    return tuple(out)
+
+
+def _quote_text(raw: object) -> str:
+    """互斥判断和「这一段有没有原声字幕」都只看真假，所以列表拼成一段就够。"""
+    if isinstance(raw, list):
+        return " ".join(x["text"] if isinstance(x, dict) else x
+                        for x in _quote_cues(raw))
+    return str(raw).strip()
+
+
+def explicit_quote_cues(lines: tuple, span: float,
+                        offset: float) -> list[tuple[float, float, str]]:
+    """按条声明的原声字幕。两种写法，可以混着用：
+
+    - `"上英\\n下中"` —— 时长按各条的字数摊到整段上（短段够用）
+    - `{"at": 段内秒数, "text": "上英\\n下中"}` —— **钉在真实时刻上**
+
+    ⚠️ **一整段几十秒的原声必须用 `at`。** 按字数摊的前提是「说话密度均匀」，
+    而真实解说有停顿、有留白：夺冠那一段 67 秒里十几条，摊出来能差好几秒，
+    字幕比人先开口或者慢半拍——比不同步更糟的是**它看起来像同步**。
+    `at` 直接从 `probe.json` 旁边那份 `captions.txt` 的时间戳减去段起点。
+
+    末条的结束时间收在段尾；中间每条收在下一条的开头（解说是连着说的，
+    留空档反而会闪）。
+
+    ⚠️ 元素里的换行是「这一条排两行」——`explainer.write_subtitles` 按行分别
+    过 `_ass_text` 再用 ASS 换行符拼。上锚保证多一行是**往下**长。
+    """
+    stamped = [t for t in lines if isinstance(t, dict)]
+    if stamped and len(stamped) != len(lines):
+        raise ReelError(
+            "同一段的 quote 里不许一半写 `at` 一半不写：混着用的话，没写的那些"
+            "要按字数摊，摊的范围又被写了 `at` 的那些切碎，出来的时刻没人能预料。")
+    out: list[tuple[float, float, str]] = []
+    if stamped:
+        at_list = [float(t["at"]) for t in stamped]
+        bad = [a for a in at_list if not 0 <= a < span]
+        if bad:
+            raise ReelError(f"quote 的 `at` 超出这一段（0–{span:.2f}s）：{bad}")
+        for index, item in enumerate(stamped):
+            start = offset + at_list[index]
+            end = (offset + at_list[index + 1]) if index + 1 < len(stamped) \
+                else offset + span
+            out.append((start, end, readable(str(item["text"]))))
+        return out
+    weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
+    total = sum(weights)
+    at = offset
+    for text, weight in zip(lines, weights):
+        dur = span * weight / total
+        out.append((at, at + dur, readable(str(text))))
+        at += dur
+    return out
 
 
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
@@ -1043,7 +1140,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         s.get("narration", "").strip(),
                         str(s.get("fit", "crop")), bool(s.get("track", False)),
                         str(s.get("source", primary)),
-                        s.get("quote", "").strip(),
+                        _quote_text(s.get("quote", "")),
+                        _quote_cues(s.get("quote", "")),
                         s.get("inset") or None)
                 for s in spec["segments"]]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
@@ -2507,8 +2605,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         if seg.quote:
             # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
             # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
-            cues.extend(subtitle_cues(readable(seg.quote), seg.length,
-                                      offset=offset))
+            if seg.quote_cues:
+                cues.extend(explicit_quote_cues(seg.quote_cues, seg.length,
+                                                offset))
+            else:
+                cues.extend(subtitle_cues(readable(seg.quote), seg.length,
+                                          offset=offset))
         elif seg.narration.strip():
             spoken = spoken_of[index]
             mix_inputs.extend(["-i", str(path)])
@@ -2743,13 +2845,42 @@ def main() -> int:
             for index, secs, room in est:
                 flag = ("← 估得再乐观也装不下" if room < -SPEECH_EST_ERR
                         else ("← 悬，跑一次 mode=narration"
-                              if room < SPEECH_EST_ERR else ""))
+                              if room < SPEECH_EST_ERR
+                              else ("← **哑场**，这一段大半时间没人说话"
+                                    if room > MAX_SILENT_GAP else
+                                    ("← 偏空，悬" if room > MAX_SILENT_GAP
+                                     - SPEECH_EST_ERR else ""))))
                 print(f"  第 {index + 1:>2d} 段 画面 "
                       f"{segments[index].length:5.1f}s 估旁白 {secs:5.2f}s "
                       f"余量 {room:+5.2f}s {flag}")
             sure = [i for i, _s, room in est if room < -SPEECH_EST_ERR]
             tight = [i for i, _s, room in est
                      if -SPEECH_EST_ERR <= room < SPEECH_EST_ERR]
+            # **余量是同一个数的两头，这条离线估原来只看了一头。**
+            # `eala-pegula-final` 第 6 段 dry-run 报「余量 +4.71s」——那一行
+            # 我读成了「装得下，很好」，六分钟之后 render 里那道哑场闸才红：
+            # 「画面 13.1s，旁白只说了 8.83s，4.27s 没人在说话」。
+            # **它一直印在那儿，只是没被读成「太空」。**
+            # ⚠️ **这儿拿点估值直接跟门槛比，不减误差带子。** 第一版我写的是
+            # `room - SPEECH_EST_ERR > MAX_SILENT_GAP`（「估得再保守也超」），
+            # 那要 room > 5.5s 才报——而真闸红在 4.27s，照样漏。
+            # 离线估的**中位误差贴近 0**（`test_离线估旁白长度要对得上真产物`
+            # 钉着这一条），所以点估值就是最好的猜测，和真闸同一个口径；
+            # 落在 `门槛 ± 误差` 里的标「偏空，悬」，让人去跑 mode=narration。
+            #
+            # ⚠️ **只警告，不 `return 1`。** 第一版让它红，当场把已发的
+            # `gea-shapovalov`（18 段）也判红了——那条片子当年是过了真闸的。
+            # 真闸用**真语音**，离线估在这一头偏保守（本例估 4.71s、实测
+            # 4.27s），拿它当硬闸会把一批好 spec 挡在门外，而**一条常年红的
+            # 检查和没有检查是同一个毛病**。它的职责是让人早点看见，不是拍板。
+            idle = [i for i, _s, room in est if room > MAX_SILENT_GAP]
+            if idle:
+                print(f"\n第 {[i + 1 for i in idle]} 段**估出来就是哑场**"
+                      f"（单段门槛 {MAX_SILENT_GAP}s，估的误差 ±{SPEECH_EST_ERR}s）："
+                      "render 里那道闸**可能**会红——它用真语音量，"
+                      "离线估在这一头偏保守。先跑一次 mode=narration。\n"
+                      "两条出路：把旁白补长（事实从 spec 已有的事实出处里取），"
+                      "或者把窗口收短（`end` 往前挪）。")
             if sure:
                 print(f"\n第 {[i + 1 for i in sure]} 段一定装不下：这几段删短，"
                       "或者把画面拉长（`end` 往后挪，别越过下一段的 `start`）。")
