@@ -3103,6 +3103,50 @@ def test_读产物的步骤不能排在sparse_add前面():
             "目录不在工作区，这些判断全是假的，而且不报错。")
 
 
+def test_Pages只发复制页不发整个仓库():
+    """Pages 发布的内容里**只许有 html**——其余 2.25 GB 一个字节都不该进去。
+
+    量出来的构成（2026-08-03，`output/` 2.26 GB / 2902 个文件）：
+
+        mp4  1367.8 MB (60.6%)   png 480.5 MB (21.3%)   jpg 399.1 MB (17.7%)
+        html   0.66 MB (0.03%)  ← Pages 真正要服务的只有这个
+
+    图片和视频走 jsDelivr / raw，Pages 用不到；它们被卷进来只是因为 Pages
+    默认发布整个仓库。账单落在推送上——冠军版那条**推送步骤 6 分 44 秒，
+    其中 6 分半在等 Pages 重建**，而真正发微信只要几秒。
+
+    这条钉三样：
+
+    1. **只收 html**——收集那一步的 `find` 多选一类，就把那 2.25 GB 搬回去了
+    2. **路径原样**（`_site/$f`，不是 `basename`）——URL 就是路径，改一个字符，
+       已经发出去的微信链接全死，**而那些消息收不回来**
+    3. **一个页面都没收到时必须红**。稀疏模式写错会得到空的 `_site`，而把空站
+       部署上去是**清空整站**——它和部署成功在日志上长得一模一样
+    """
+    path = Path(".github/workflows/pages.yml")
+    assert path.exists(), (
+        "pages.yml 没了。Pages 会退回「发布整个仓库」，"
+        "于是每次推送又要为 2.26 GB 的重建等 6~12 分钟。")
+    body = _yaml_only(path.read_text(encoding="utf-8"))
+
+    # ⚠️ 第一版这儿写的是 `... or ".html" in body`——**恒真**（body 里当然有
+    # `.html`）。查「收集那一步的 find 到底选了什么」才是真判据。
+    picked = re.findall(r"find\s+output\s+-name\s+'([^']+)'", body)
+    assert picked == ["*.html"], (
+        f"收复制页的 find 必须只选 html，拿到 {picked}——"
+        "多选一类就把那 2.25 GB 的一部分搬回 Pages 了")
+
+    assert 'cp "$f" "_site/$f"' in body, (
+        "复制页的路径必须原样保留：URL 就是路径，改了等于把已发出去的微信链接弄死。")
+    assert "basename" not in body, "拍平目录会改掉 URL"
+
+    assert re.search(r'"\$n" -eq 0', body), (
+        "没有「一个页面都没收到就红」的闸。稀疏模式写错会得到空的 _site，"
+        "而把空站部署上去是**清空整站**——它和部署成功长得一模一样。")
+    assert "touch _site/.nojekyll" in body, (
+        "少了 .nojekyll，Jekyll 会逐个文件处理一遍")
+
+
 def test_日报这条线不许回来():
     """**2026-07-31 账号所有者停掉了日报**：「不要日报了，都说过了，日报的形式
     太落后了，**任务重且没收益没人愿意深入看**」。
