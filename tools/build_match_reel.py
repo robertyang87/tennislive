@@ -1083,7 +1083,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
              "subtitle_top"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "meta", "narration",
               "portrait", "portrait_above", "result", "round", "score",
-              "split", "sub", "subject", "tier", "topic", "versus", "winner"),
+              "scrim", "split", "sub", "subject", "tier", "topic", "versus",
+              "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
                 "narration", "quote", "source", "start", "track"),
 }
