@@ -79,6 +79,7 @@ from tennislive.render.tournament_story import find_story_by_slug
 from tennislive.video.explainer import (
     LEAD_SILENCE,
     TAIL_SILENCE,
+    _OPENINGS,
     _SCRIPTS,
     explainer_column,
     explainer_script,
@@ -248,6 +249,79 @@ def test_封面第一句要在决定窗口里说完(slug):
         f"{slug} 封面第一句 {got} 字 ≈ {got / SPEECH_RATE + LEAD_SILENCE:.1f} 秒，"
         f"超出 {HOOK_SECONDS} 秒的决定窗口（上限 {HOOK_BUDGET} 字）。\n"
         f"把第一句砍短，把交代挪到第二句——前 5 秒决定 62% 的人走不走。")
+
+
+#: 封面那一问排不进一行、退回两行的片子。**只许减不许加。**
+#:
+#: 退回两行本身不是坏事——`text-wrap:balance` 至少保证两行长度接近。坏的是
+#: 中文没有词边界，浏览器可以在任意两个汉字之间断，于是两行版**必然**在某处
+#: 把一个词劈开：「排名到了，为什么还打资格赛？」断成了「…为什 / 么…」。
+#: 所以新片子要么排得进一行，要么显式把自己加进这份名单——让「又断成两行」
+#: 变成一次看得见的决定，而不是渲出来才发现。
+_COVER_TWO_LINES = {
+    "comeback-middle",   # 伤好了打不出来，是低谷还是终点？
+    "thiem-football",    # 美网冠军退役两年后，在哪儿比赛？
+    "zheng-eala",        # 三年前钦文赢了那个人，这次呢？
+    "venus-potapova",    # 46 岁了，维纳斯为什么还在打？
+    "wildcard",          # 签表里名字旁的 WC，是谁给的？
+}
+
+
+def _cover_one_line_px(question: str) -> int:
+    """这一问排成一行时字号会是多少——**调生产用的那个算式**，不另写一套。"""
+    from tennislive.video.explainer import (
+        W, _COVER_WIDTH_MARGIN, _cover_title_em,
+    )
+
+    return int((W - 140) * _COVER_WIDTH_MARGIN / _cover_title_em(question))
+
+
+@pytest.mark.parametrize("slug", sorted(_OPENINGS))
+def test_封面那一问要能排进一行(slug):
+    """`HOOK_BUDGET` 管的是**几秒说得完**，不管**一行排得下**——两个不同的量。
+
+    2026-08-02 我把这两件事当成了一件：「排名到了，为什么还打资格赛？」14 个字，
+    远在 27 字的首句预算之内，于是我以为没问题；渲出来断成了「为什 / 么」。
+    量了才知道**卡的根本不是字数**——存量里 16 字的封面问题有四条都排得进一行，
+    因为它们含半角字符；而那条 14 个字全是全角，反而更宽。
+
+    机制早就有（`_COVER_MIN_ONE_LINE_PX`：装得下就一行，装不下才退两行），
+    缺的只是一条在渲之前出声的判据。那条断掉的算出来是 82px，就差 84 这道线
+    两个像素——而这两个像素只有把片子渲出来才看得见。
+    """
+    question = (_OPENINGS.get(slug) or {}).get("question")
+    if not question:
+        return
+    from tennislive.video.explainer import _COVER_MIN_ONE_LINE_PX
+
+    got = _cover_one_line_px(question)
+    if slug in _COVER_TWO_LINES:
+        return
+    assert got >= _COVER_MIN_ONE_LINE_PX, (
+        f"{slug} 的封面问题「{question}」排一行只能到 {got}px，"
+        f"低于 {_COVER_MIN_ONE_LINE_PX}px，会退回两行并在词中间断开。\n"
+        f"要么把它改短（每少一个全角字约多 {got // max(len(question) - 1, 1)}px），"
+        f"要么显式加进 _COVER_TWO_LINES 并说明为什么可以。")
+
+
+def test_两行名单只能变短而且每条都要真的排不进一行():
+    """判据自己的判据。
+
+    没有下半段的话，这份名单会**慢慢变成一条恒真的绿灯**：谁改短了标题却忘了
+    把 slug 摘掉，那条就永远豁免着，下次真超了也不出声。
+    """
+    from tennislive.video.explainer import _COVER_MIN_ONE_LINE_PX
+
+    assert _COVER_TWO_LINES, "名单空了？那这条判据的主语没了"
+    stale = {
+        slug for slug in _COVER_TWO_LINES
+        if _cover_one_line_px((_OPENINGS.get(slug) or {}).get("question") or "")
+        >= _COVER_MIN_ONE_LINE_PX
+    }
+    assert not stale, (
+        f"{'、'.join(sorted(stale))} 的封面问题已经排得进一行了，"
+        f"从 _COVER_TWO_LINES 里删掉。")
+    assert len(_COVER_TWO_LINES) <= 5, "两行的片子只许减不许加"
 
 
 def test_首句超窗名单只能变短():
