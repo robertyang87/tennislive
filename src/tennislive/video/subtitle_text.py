@@ -8,7 +8,7 @@
 |---|---|
 | 知识解说片 | `video/explainer.py` 的 `_sub_display` |
 | 竖版剪辑（用真实比赛画面） | 同上，`tools/build_match_reel.py` 直接调 `subtitle_cues` |
-| 昨日一分 / 视频本地化 | `video/pipeline.py` 的 `render_ass` |
+| 视频本地化 | `video/pipeline.py` 的 `render_ass` |
 | 大满贯竖版 v2 | `tools/build_grand_slam_v2.py` |
 
 **只留 `？` 和 `！`**：换页表达得了停顿，表达不了「这是一问」——末屏那一问

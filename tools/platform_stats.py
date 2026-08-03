@@ -127,6 +127,19 @@ PLATFORMS = (
         },
     ),
     Platform(
+        # 抖音后台还有一个「视频数据」视图，只导 6 列：标题列叫`视频名称`（不是
+        # `作品名称`），而且**没有真完播率、点赞、涨粉、体裁**。它是留存那三列的
+        # 精简版，别和上面那份混为一谈——报告里凡是它给不出的指标都要明说是
+        # 「这个视图不给」，不能印成 0。
+        name="抖音·视频数据", title_col="视频名称", time_col="发布时间",
+        title_carries_body=True,
+        time_formats=("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M"),
+        fields={
+            "plays": "播放量", "avg_watch": "平均播放时长",
+            "retain_5s": "5s完播率", "bounce_2s": "2s跳出率",
+        },
+    ),
+    Platform(
         # 视频号只给日期不给时刻，所以 `--fresh-hours` 在这家上按天生效。
         name="视频号", title_col="视频描述", time_col="发布时间",
         title_carries_body=True,

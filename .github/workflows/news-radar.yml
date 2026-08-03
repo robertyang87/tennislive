@@ -1,13 +1,21 @@
 name: news-radar
 
-# 场外网球新闻雷达：每天扫描两次，自动把"非比赛"的场外新闻（退役复出、
-# 规则赛制、人事组织、装备科技、荣誉名人堂、场外趣闻）筛成快讯卡候选，
-# 推到微信供人工挑选。比赛新闻归日报，不在此重复；敏感话题不入队、转人工。
+# 场外网球新闻雷达：把"非比赛"的场外新闻（退役复出、规则赛制、人事组织、
+# 装备科技、荣誉名人堂、场外趣闻）筛成快讯卡候选，推到微信供人工挑选。
+# 敏感话题不入队、转人工。
+#
+# （原来写着「每天扫描两次」「比赛新闻归日报」——两句都过期了：定时
+# 2026-08-02 停了，日报 2026-07-31 停产。**带数字的注释会过期，
+# 而它过期的时候不吭声。**）
 # 候选只用新闻源已有的真实字段成草稿；时间/地点/人物/事件由人工补全后再发。
 on:
-  schedule:
-    - cron: "13 1 * * *"    # 09:13 北京时间
-    - cron: "13 13 * * *"   # 21:13 北京时间
+  # **2026-08-02：定时停掉，只留手动。** 账号所有者：「这两个任务停掉吧，
+  # 不需要了」（另一条是 content-radar）。
+  #
+  # 停的是**定时**，不是这条线的代码：扫描、候选队列、快讯卡、选题候选照旧，
+  # `workflow_dispatch` 随时能跑一趟。原来是每天两趟（北京 09:13 / 21:13）。
+  #
+  # 判据：test_停掉的定时不许自己回来
   workflow_dispatch: {}
 
 permissions:
@@ -26,6 +34,18 @@ jobs:
       TENNISLIVE_THEME: ${{ vars.TENNISLIVE_THEME || 'dark' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半到三分钟。这条一天两趟。
+          # 本次要写的那一格在下面 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -52,6 +72,10 @@ jobs:
         run: |
           OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          DATE=$(python -c "from tennislive.timeutil import beijing_today; print(beijing_today())")
+          # 进 cone 要排在生成**之前**：`sparse-checkout add` 会把 HEAD 上
+          # 那一版先铺回工作区，铺完再生成才是对的顺序。
+          git sparse-checkout add "output/$DATE"
           tennislive flash-radar --outdir output
 
       - name: 提炼选题候选（新闻钩子 + 底下的常青线）
@@ -63,9 +87,9 @@ jobs:
 
       - name: 提交候选队列到仓库
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add --sparse output/
           if git diff --cached --quiet; then
             echo "没有新的场外候选"
           else

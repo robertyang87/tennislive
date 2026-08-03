@@ -1,14 +1,13 @@
 """定时工作流的开关与告警规则（CLAUDE.md：规则要落成测试）。
 
-2026-07-25 审查确认的两类静默故障：
-- daily.yml 把视频开关硬编码成字面量 'off'，仓库设置里无法打开，
-  07-24 起视频"静默消失"；
-- flash.yml / news-radar.yml 失败与空产零告警，诊断只存在于会过期的
-  Actions 日志里。
+2026-07-25 审查确认的静默故障：flash.yml / news-radar.yml 失败与空产零告警，
+诊断只存在于会过期的 Actions 日志里。
 
-yesterday-point.yml 的告警由独立改造负责，不在本文件覆盖。
+（另一条「daily.yml 把视频开关硬编码成 'off'」随日报 2026-07-31 停产一起删了。）
+
 """
 
+import re
 from pathlib import Path
 
 
@@ -16,20 +15,16 @@ def _workflow(name: str) -> str:
     return (Path(".github/workflows") / name).read_text(encoding="utf-8")
 
 
-def test_daily_video_switches_use_repo_vars_with_default_on():
-    workflow = _workflow("daily.yml")
+def _yaml_only(text: str) -> str:
+    """去掉整行注释。
 
-    assert (
-        "TENNISLIVE_DAILY_VIDEO: ${{ vars.TENNISLIVE_DAILY_VIDEO || 'on' }}"
-        in workflow
+    工作流的注释正是这个仓库记教训的地方，正文里必然写着当年那些错值和
+    步骤名——连注释一起扫，「把坑记下来」会被判成「又踩了这个坑」。
+    反过来同样坏：注释里出现 `PUSHPLUS_SECRET_KEY` 会让漏配的工作流假绿。
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.lstrip().startswith("#")
     )
-    assert (
-        "TENNISLIVE_OFFICIAL_VIDEO: ${{ vars.TENNISLIVE_OFFICIAL_VIDEO || 'on' }}"
-        in workflow
-    )
-    # 不允许退回成无法从仓库 Variables 打开的硬编码字面量
-    assert "TENNISLIVE_DAILY_VIDEO: 'off'" not in workflow
-    assert "TENNISLIVE_OFFICIAL_VIDEO: 'off'" not in workflow
 
 
 def test_scheduled_radar_workflows_alert_on_failure():
@@ -69,21 +64,58 @@ def test_external_source_health_is_strict_and_separate_from_pr_ci():
 
 
 def test_every_workflow_that_commits_generated_files_has_a_size_gate():
-    """Do not spend a whole run rendering only to have GitHub reject the blob."""
-    workflows = (
-        "assets.yml",
-        "daily.yml",
-        "explainer.yml",
-        "flash.yml",
-        "knowledge-adhoc.yml",
-        "match-reel.yml",
-        "news-radar.yml",
-        "oncourt-interviews.yml",
-        "player-name-sync.yml",
-        "voice-sample.yml",
-        "yesterday-point.yml",
-    )
-    for name in workflows:
-        workflow = _workflow(name)
-        assert "git commit" in workflow, name
-        assert "python tools/check_staged_file_sizes.py" in workflow, name
+    """跑完一整趟再被 GitHub 拒收，是最贵的一种失败。
+
+    **判据自己推导，不维护白名单。** 原来这里手写着十一个文件名，daily.yml
+    停产删掉之后它当场变成 FileNotFoundError——**一个会过期的名单，和一条
+    常年红的检查是同一个毛病**。现在改成「凡是 `git commit` 的工作流都要有
+    这道闸」，新加工作流自动被覆盖。
+
+    加这条推导的当天就抓到一个：我自己新写的 `push-reel.yml` 漏了闸。
+    """
+    committers = [
+        path for path in sorted(Path(".github/workflows").glob("*.yml"))
+        if "git commit" in path.read_text(encoding="utf-8")
+    ]
+    assert len(committers) >= 8, f"只找到 {len(committers)} 条会提交的工作流，判据可能失效了"
+    for path in committers:
+        assert "python tools/check_staged_file_sizes.py" in path.read_text(
+            encoding="utf-8"), (
+            f"{path.name} 会 git commit 却没有体积闸——"
+            "渲完一整趟才被 GitHub 拒收是最贵的失败")
+
+
+# 走 Python 那条推送路（`prepare_image_delivery`）的两个入口。
+# 只认这两个，是因为图床分支只在它们底下：news-radar / source-health 是
+# 裸 curl 发纯文字告警，没有 `<img>`，配这个 Secret 一点用都没有。
+_PUSHPLUS_IMAGE_ENTRIES = re.compile(r"tennislive publish |push_reel\.py")
+
+
+def test_走图床那条路的工作流都要配SECRET_KEY():
+    """漏配不报错，只是悄悄退回 jsDelivr——慢，而且会整条不发。
+
+    `prepare_image_delivery` 有两条分支：配了 `PUSHPLUS_SECRET_KEY` 就走
+    PushPlus 自己的图床（上传完当场可取）；没配就退回 jsDelivr，然后
+    `wait_for_images` 最多轮询 20×15s = **5 分钟**，轮满还取不到就
+    `PushPlusError` **整条推送取消**。也就是说漏配的代价不只是慢，是
+    「这一轮内容白生成」。
+
+    而两条分支的日志长得差不多，所以它一直没被发现：flash.yml（内容雷达的
+    赛前焦点，跑 `tennislive publish content`）从上线起就没配，而同样走这条
+    路的另外五条工作流全配了。
+
+    **判据自己推导，不维护白名单**（见上一条：一个会过期的名单和一条常年红的
+    检查是同一个毛病）。新加一条走 `tennislive publish` / `push_reel.py` 的
+    工作流，它自动被盖住。
+    """
+    users = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        if _PUSHPLUS_IMAGE_ENTRIES.search(body):
+            users.append((path.name, body))
+
+    assert len(users) >= 6, f"只找到 {len(users)} 条走图床的工作流，判据可能失效了"
+    for name, body in users:
+        assert "PUSHPLUS_SECRET_KEY" in body, (
+            f"{name} 会走 PushPlus 图床却没配 PUSHPLUS_SECRET_KEY——"
+            "会悄悄退回 jsDelivr，轮询 5 分钟，取不到就整条不发")

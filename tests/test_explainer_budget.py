@@ -41,12 +41,18 @@
 快的那批就是落了 `narration.json`（`rate: +22%`）的那批。所以预算按**当前
 这一档**算，不按两簇的中位——用中位会把预算放宽两成，而新片子全按快的渲。
 
-**`SPEECH_RATE` 现在是估的，不是量的。** 6.1 是在 `rate: +22%` 上量出来的
-（实测 5.70–6.25，中位约 6.0）；TTS 默认语速已经提到 `+28%`，真实字/秒会
-再高约 5%。保持 6.1 的后果是**预算偏保守**——536 字的片子会比 90 秒略短，
-这是安全的方向。等第一条按 `+28%` 渲的成片落库，用
-`tools/mp4_duration.py` 反推一次，把这个常数换成实测值。别按比例推：上一次
-换语速时两簇之间差了两成，比例推会推歪。
+`+28%` 那一档已经量过了，`SPEECH_RATE` 是实测值不是估的。按落库成片
+（`narration.json` 里记着当时用的 rate）反推：
+
+    +22%   n=6   5.69 – 6.13   中位 5.98
+    +28%   n=3   6.11 – 6.80   中位 6.38   ← 现在这一档
+
+**换语速之后必须重量，别按比例推。** 从 +22% 到 +28%，SSML 参数只涨了 4.9%，
+实测字/秒涨了 6.7%；而更早那次换档，两簇之间差了两成。比例推每次都推歪。
+
+`+28%` 这一档只有三条（6.11 / 6.38 / 6.80），极差 11%，所以这个数还会动。
+再多几条成片就重量一次——量法：找 `output/**/narration.json` 里 rate 对得上的，
+`字数 ÷ (mp4 时长 − 首尾静音)`，取中位。
 
 字数换秒数只在 ±5% 内可信，所以下面的闸门写的是**字数**（可执行），秒数只
 作为它的注解。
@@ -73,15 +79,16 @@ from tennislive.render.tournament_story import find_story_by_slug
 from tennislive.video.explainer import (
     LEAD_SILENCE,
     TAIL_SILENCE,
+    _OPENINGS,
     _SCRIPTS,
     explainer_column,
     explainer_script,
     speakable,
 )
 
-# 字/秒。在 `rate: +22%` 上量出来的；TTS 现在是 `+28%`，所以这是个偏保守的
-# 估计，等新成片落库要重新量。见模块开头。
-SPEECH_RATE = 6.1
+# 字/秒，在 `rate: +28%`（当前档）的三条成片上量出来的中位。见模块开头。
+# 换语速就要重量，别按比例推。
+SPEECH_RATE = 6.4
 
 BUDGET_SECONDS = 90
 # 首尾静音不走旁白，要从预算里扣掉。
@@ -91,6 +98,10 @@ NARRATION_BUDGET = round((BUDGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * SPEECH
 HOOK_SECONDS = 5.0
 HOOK_BUDGET = round((HOOK_SECONDS - LEAD_SILENCE) * SPEECH_RATE)
 
+# yellow-ball 出过名单，但不是因为有人改短了它：语速常数从 6.1 校准到实测的
+# 6.4 之后，90 秒对应的字数从 536 涨到 563，它那 538 字（≈85 秒）就落到线下了。
+# 判定本身是对的——按当前语速它确实不到 90 秒。
+#
 # 祖父名单：立预算之前就存在的片子，**不要求它们达标**（老片子不回头重排）。
 # 唯一的约束是不许继续变长。哪条真的被改短到达标了，就从这里删掉。
 #
@@ -110,7 +121,6 @@ _OVER_BUDGET = {
     "hawkeye": 681,
     "wimbledon-whites": 671,
     "queue": 660,
-    "yellow-ball": 546,
 }
 
 # 封面第一句超出决定窗口的。两条都是「开球之前」——这个格式开场要交代对阵、
@@ -241,6 +251,79 @@ def test_封面第一句要在决定窗口里说完(slug):
         f"把第一句砍短，把交代挪到第二句——前 5 秒决定 62% 的人走不走。")
 
 
+#: 封面那一问排不进一行、退回两行的片子。**只许减不许加。**
+#:
+#: 退回两行本身不是坏事——`text-wrap:balance` 至少保证两行长度接近。坏的是
+#: 中文没有词边界，浏览器可以在任意两个汉字之间断，于是两行版**必然**在某处
+#: 把一个词劈开：「排名到了，为什么还打资格赛？」断成了「…为什 / 么…」。
+#: 所以新片子要么排得进一行，要么显式把自己加进这份名单——让「又断成两行」
+#: 变成一次看得见的决定，而不是渲出来才发现。
+_COVER_TWO_LINES = {
+    "comeback-middle",   # 伤好了打不出来，是低谷还是终点？
+    "thiem-football",    # 美网冠军退役两年后，在哪儿比赛？
+    "zheng-eala",        # 三年前钦文赢了那个人，这次呢？
+    "venus-potapova",    # 46 岁了，维纳斯为什么还在打？
+    "wildcard",          # 签表里名字旁的 WC，是谁给的？
+}
+
+
+def _cover_one_line_px(question: str) -> int:
+    """这一问排成一行时字号会是多少——**调生产用的那个算式**，不另写一套。"""
+    from tennislive.video.explainer import (
+        W, _COVER_WIDTH_MARGIN, _cover_title_em,
+    )
+
+    return int((W - 140) * _COVER_WIDTH_MARGIN / _cover_title_em(question))
+
+
+@pytest.mark.parametrize("slug", sorted(_OPENINGS))
+def test_封面那一问要能排进一行(slug):
+    """`HOOK_BUDGET` 管的是**几秒说得完**，不管**一行排得下**——两个不同的量。
+
+    2026-08-02 我把这两件事当成了一件：「排名到了，为什么还打资格赛？」14 个字，
+    远在 27 字的首句预算之内，于是我以为没问题；渲出来断成了「为什 / 么」。
+    量了才知道**卡的根本不是字数**——存量里 16 字的封面问题有四条都排得进一行，
+    因为它们含半角字符；而那条 14 个字全是全角，反而更宽。
+
+    机制早就有（`_COVER_MIN_ONE_LINE_PX`：装得下就一行，装不下才退两行），
+    缺的只是一条在渲之前出声的判据。那条断掉的算出来是 82px，就差 84 这道线
+    两个像素——而这两个像素只有把片子渲出来才看得见。
+    """
+    question = (_OPENINGS.get(slug) or {}).get("question")
+    if not question:
+        return
+    from tennislive.video.explainer import _COVER_MIN_ONE_LINE_PX
+
+    got = _cover_one_line_px(question)
+    if slug in _COVER_TWO_LINES:
+        return
+    assert got >= _COVER_MIN_ONE_LINE_PX, (
+        f"{slug} 的封面问题「{question}」排一行只能到 {got}px，"
+        f"低于 {_COVER_MIN_ONE_LINE_PX}px，会退回两行并在词中间断开。\n"
+        f"要么把它改短（每少一个全角字约多 {got // max(len(question) - 1, 1)}px），"
+        f"要么显式加进 _COVER_TWO_LINES 并说明为什么可以。")
+
+
+def test_两行名单只能变短而且每条都要真的排不进一行():
+    """判据自己的判据。
+
+    没有下半段的话，这份名单会**慢慢变成一条恒真的绿灯**：谁改短了标题却忘了
+    把 slug 摘掉，那条就永远豁免着，下次真超了也不出声。
+    """
+    from tennislive.video.explainer import _COVER_MIN_ONE_LINE_PX
+
+    assert _COVER_TWO_LINES, "名单空了？那这条判据的主语没了"
+    stale = {
+        slug for slug in _COVER_TWO_LINES
+        if _cover_one_line_px((_OPENINGS.get(slug) or {}).get("question") or "")
+        >= _COVER_MIN_ONE_LINE_PX
+    }
+    assert not stale, (
+        f"{'、'.join(sorted(stale))} 的封面问题已经排得进一行了，"
+        f"从 _COVER_TWO_LINES 里删掉。")
+    assert len(_COVER_TWO_LINES) <= 5, "两行的片子只许减不许加"
+
+
 def test_首句超窗名单只能变短():
     fixed = {s: v for s, v in _HOOK_TOO_LONG.items()
              if s in _SCRIPTS and _hook(s) <= HOOK_BUDGET}
@@ -268,7 +351,7 @@ def test_预算是按当前语速算的不是两簇的中位():
     取两簇的中位（约 5.5）会把预算放宽两成，而新片子全按快的那档渲——
     等于给了一个永远兑现不了的预算。
     """
-    assert 5.8 <= SPEECH_RATE <= 6.3, "语速常数要落在实测区间里"
+    assert 6.1 <= SPEECH_RATE <= 6.8, "语速常数要落在 +28% 那一档的实测区间里"
     # 90 秒预算换算回来要和实测对得上
-    assert 520 <= NARRATION_BUDGET <= 545
+    assert 545 <= NARRATION_BUDGET <= 600
     assert 25 <= HOOK_BUDGET <= 30

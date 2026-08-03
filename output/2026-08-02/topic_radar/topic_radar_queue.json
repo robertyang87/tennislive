@@ -1,0 +1,87 @@
+{
+  "date": "2026-08-02",
+  "source_status": {
+    "Wimbledon": "正常 · 1 条",
+    "Roland-Garros": "正常 · 0 条",
+    "WTA": "正常 · 12 条",
+    "US Open": "正常 · 1 条",
+    "ATP Tour": "正常 · 12 条",
+    "Australian Open": "正常 · 0 条",
+    "Top media": "正常 · 9 条",
+    "US": "正常 · 10 条",
+    "HK": "正常 · 10 条",
+    "GB": "正常 · 10 条",
+    "AU": "正常 · 10 条",
+    "微信热文榜": "正常 · 扫 30 条 / 网球 0 条",
+    "微博热搜": "正常 · 扫 51 条 / 网球 0 条",
+    "抖音热搜": "正常 · 扫 50 条 / 网球 0 条",
+    "知乎热榜": "正常 · 扫 30 条 / 网球 1 条",
+    "小红书热榜": "正常 · 扫 20 条 / 网球 0 条",
+    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
+    "微信指数": "拿不到 · search.weixin.qq.com 无签名返回 {\"code\":-1}，签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」",
+    "小红书官方接口": "拿不到 · edith 域 404、www 域 500，两条都要签名；已改走 UApiPro（主）+ 今日热榜镜像（备）",
+    "微信搜一搜热点词 / 公众号热点话题榜": "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot 一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
+  },
+  "news_signals": 35,
+  "trend_signals": 40,
+  "zh_scanned": 232,
+  "zh_hot": [
+    {
+      "kind": "zh-hot-search",
+      "source": "知乎热榜（第三方聚合，非官方接口）",
+      "word": "2026 年 wta1000 多伦多站资格赛，郑钦文 0：2 不敌塔拉鲁德无缘正赛，怎么评价女王郑钦文的表现？",
+      "rank": 26,
+      "heat": "58 万热度",
+      "url": "https://www.zhihu.com/question/2067079336692278119",
+      "matched": [
+        "wta",
+        "郑钦文",
+        "鲁德"
+      ],
+      "terms": [
+        "casper",
+        "qinwen",
+        "ruud",
+        "zheng"
+      ]
+    }
+  ],
+  "zh_near_miss": [],
+  "count": 0,
+  "topics": [],
+  "unmatched_clusters": 4,
+  "unmatched_terms": [
+    {
+      "term": "draws",
+      "clusters": 2
+    },
+    {
+      "term": "final",
+      "clusters": 2
+    },
+    {
+      "term": "know",
+      "clusters": 2
+    },
+    {
+      "term": "washington",
+      "clusters": 2
+    },
+    {
+      "term": "2026",
+      "clusters": 1
+    },
+    {
+      "term": "500",
+      "clusters": 1
+    },
+    {
+      "term": "against",
+      "clusters": 1
+    },
+    {
+      "term": "alex",
+      "clusters": 1
+    }
+  ]
+}

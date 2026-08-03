@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.1 开球之前 | 郑钦文 vs 塔拉鲁迪</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>北京时间 8 月 2 日 00:30，加拿大站资格赛第一轮，郑钦文对塔拉鲁迪。世界第 123 对世界第 78——排名高的那个，是对面。
+
+📍 加拿大站 WTA1000 女单资格赛 第一轮
+🎾 郑钦文 VS 塔拉鲁迪（泰国）
+⏰ 北京时间 8 月 2 日 00:30
+
+两年前的这个夏天，她站在巴黎。半决赛赢斯瓦泰克，决赛赢维基奇，亚洲的第一枚奥运网球单打金牌。那一年她 21 岁。
+
+从那儿到今天，两年。
+
+转折有确切日期：2025 年 7 月 18 日，右肘手术。之前那几个月，她一直带着疼在打。复出是 9 月的中网，第三轮同一处肘，退赛。排名开始往下掉，而且没停。
+
+今年法网首轮，她全场只赢下 4 局，生涯第一次在法网首轮就走人。赢她的那个人叫赫瓦林斯卡，波兰人，当时世界第 114——那两周她从资格赛一路打进决赛，是罗兰加洛斯历史上第一个做到这件事的资格赛球员。所以那场球不丢人。
+
+丢的是排名：跌出前 100，6 月一度掉到第 160。
+
+往回爬是从 7 月的雅典开始的。她连赢两场，两个月来第一次；八强碰上克雷奇科娃，输了。7 月 29 日华盛顿首轮，4-6 6-4 1-6，输给伊埃拉。
+
+所以才有了加拿大站的资格赛。
+
+对面这位 22 岁，泰国人，叫塔拉鲁迪。7 月 27 日她升到生涯最高的世界第 78，是泰国排名最高的球员。今年澳网，她连过 3 轮资格赛，第一次打进大满贯正赛。她正在往上走，这一场没有什么可输的。两人此前没有交手记录。
+
+有人说，奥运冠军沦落到打资格赛。
+
+沦落这个词用错了。手术之后的每一场球都是往回爬，爬到哪儿都比停下强。8 月 2 日凌晨，她从资格赛继续出发。
+
+你定闹钟吗？
+
+#网球 #郑钦文 #塔拉鲁迪 #加拿大站 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

@@ -162,3 +162,41 @@ def test_review_queue_is_non_blocking_and_only_contains_provisional_names():
     assert queue["blocking"] is False
     assert {entry["name_en"] for entry in queue["entries"]} == expected
     assert "Learner Tien" not in expected
+
+
+def test_带重音的拼法要认得出是同一个人():
+    """**同一个人换个拼法就掉回英文名，而且不吭声。**
+
+    `player_zh("Gaël Monfils")` 原样返回 `Gaël Monfils`，
+    `player_zh("Gael Monfils")` 给「孟菲尔斯」——卡片上就是一个英文名混在
+    一排中文名里，看着像「这个人表里没有」，和真的没有长得一模一样。
+
+    2026-08-01 查洛斯卡沃斯四强时撞到：对手 `Arthur Géa` 是法国人，维基
+    条目标题带重音；ESPN 恰好给的是不带重音的写法，**纯属运气**。
+
+    折叠同时作用在建索引和查询两边，所以它只把「查不到」变成「查得到」。
+
+    ⚠️ `đ` 要折成 `dj` 而不是 `d`：塞尔维亚语的拉丁转写就是这么写的
+    （`Đoković` → `Djokovic`，表里正是后者）。折成 `d` 得到 `dokovic`，
+    照样查不到——**一个改一半的折叠比不折更难发现**，因为它看起来已经修过了。
+    """
+    from tennislive.zh import player_zh
+
+    pairs = [
+        ("Gael Monfils", "Gaël Monfils"),
+        ("Felix Auger-Aliassime", "Félix Auger-Aliassime"),
+        ("Arthur Gea", "Arthur Géa"),
+        ("Novak Djokovic", "Novak Đoković"),
+    ]
+    for plain, accented in pairs:
+        zh = player_zh(plain)
+        assert zh != plain, f"{plain} 本来就查不到，这条测试的前提不成立"
+        assert player_zh(accented) == zh, (
+            f"{accented} 没解析成 {zh}，而是 {player_zh(accented)}——"
+            "带重音的拼法掉回了英文名")
+
+    # 反面：折叠不许把本来查得到的改掉
+    for name, expect in (("Zheng Qinwen", "郑钦文"),
+                         ("Chak Lam Coleman Wong", "黄泽林"),
+                         ("Elina Svitolina", "斯维托丽娜")):
+        assert player_zh(name) == expect, f"{name} 被折叠改坏了"

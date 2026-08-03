@@ -17,6 +17,23 @@ jobs:
       RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
+          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
+          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
+          #
+          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
+          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
+          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -30,13 +47,12 @@ jobs:
         shell: bash
         run: python tools/probe_rapidapi_tennis.py
 
-      - name: 生成无图片探测包
+      # 原来这一步是 `tennislive digest --no-cards`——**为了一张覆盖率报告，
+      # 跑一整套日报**。日报 2026-07-31 停产，覆盖率报告抽成了自己的命令。
+      - name: 出数据源与赛事覆盖报告
         shell: bash
         run: |
-          tennislive digest --date today --outdir probe-output --no-cards
-          REPORT=$(find probe-output -name coverage.txt -print -quit)
-          echo "===== 数据源与赛事覆盖 ====="
-          cat "$REPORT"
+          tennislive coverage --date today --outdir probe-output
 
       - name: 上传探测报告
         uses: actions/upload-artifact@v4

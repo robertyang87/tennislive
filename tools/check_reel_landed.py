@@ -3,7 +3,7 @@
 
 「做完了」不看信号看产物——不查提交信息、不查路径变没变，把成片解开量三样：
 
-    1. 分辨率必须 1080×1920（裁切/缩放一旦被绕过去，成片就是 16:9）
+    1. 分辨率必须是成片画布本身（裁切/缩放一旦被绕过去，成片就是 16:9）
     2. **没有解说的那几段，现场声不能是数字静音**。踩过：补位的 anullsrc 无条件
        生效，把真音轨盖了，成片量出来 -91 dB——有音轨、有码率、就是没声音，
        波形之外看不出来
@@ -22,12 +22,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
 
-# 封面时长，和 build_match_reel.COVER_SECONDS 对齐（那 2.6 秒本来就是静音）
-COVER_SECONDS = 2.6
+# 成片画布。**赛场之上从 9:16 改成 3:4 之后这儿漏改了**，于是每跑一次都报
+# 「分辨率 1080×1440，要 1080×1920」——一条常年红的检查等于没有检查。
+# 判据钉在 test_检查工具认的画布要和成片的画布是同一个，免得再分叉一次。
+VIDEO_W, VIDEO_H = 1080, 1440
+# 封面**没有配音时**的定长，和 build_match_reel.COVER_SECONDS 对齐。
+# 有配音的封面跟着配音走，长度算不出来——render 会把它记进 render.json，
+# 见 cover_seconds()。
+COVER_SECONDS = 1.2
 # 纯数字静音在 volumedetect 里是 -91 dB。真现场声（球声、观众）远高于此，
 # 门槛放在 -60：宽到不会误报，又能拦住「静音盖住真音轨」
 SILENCE_FLOOR_DB = -60.0
@@ -67,10 +74,36 @@ def per_second_db(film: Path) -> list[float]:
     return out
 
 
-def quiet_windows(spec: dict) -> list[tuple[float, float, float]]:
+def cover_seconds(film: Path) -> float | None:
+    """封面停了多久。
+
+    **优先读产物旁边的 `render.json`**：封面配了音之后长度跟着配音走，光看 spec
+    算不出来。读不到才退回定长——而且**要出声说退了**，不然「拿常量猜错了」和
+    「片长真的不对」在输出里长得一模一样，正是这个脚本本身要拦的那种错。
+    """
+    meta = film.parent / "render.json"
+    if meta.is_file():
+        data = json.loads(meta.read_text(encoding="utf-8"))
+        secs = float(data["cover_seconds"])
+        how = "跟着配音" if data.get("cover_narrated") else "定长"
+        print(f"封面 {secs:.2f}s（render.json，{how}）")
+        return secs
+    # **拿不到就跳过片长这一项，不要拿常量硬判。**
+    # 退回常量会在**每一条老片子上**报一个假红：`COVER_SECONDS` 一路从 2.6
+    # 改到 1.8 再到 1.2，而那些片子是按 2.6 渲的，于是差出一个几乎恒定的
+    # 1.40~1.44s——八条老片子全中，而两条带 `render.json` 的一条都不中。
+    # **一条常年红的检查等于没有检查**，它还会把真问题淹掉：这批假红里
+    # 混着的「音轨比画面短」正是今天查出来的那个真缺陷。
+    print(f"[跳过] 没有 render.json，封面停了多久无从得知（定长那会儿是 "
+          f"{COVER_SECONDS}s，但历史上改过几次），**片长这一项不判**。"
+          "其余各项照常——它们不依赖封面时长。")
+    return None
+
+
+def quiet_windows(spec: dict, cover: float) -> list[tuple[float, float, float]]:
     """没有解说的段落在成片时间轴上的 [(起, 长, 源片起点)]。"""
     out: list[tuple[float, float, float]] = []
-    t = COVER_SECONDS
+    t = cover
     for seg in spec["segments"]:
         length = round(float(seg["end"]) - float(seg["start"]), 3)
         if not str(seg.get("narration", "")).strip():
@@ -100,6 +133,7 @@ def main() -> int:
         return 1
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
+    cover = cover_seconds(film)
 
     bad = 0
 
@@ -107,18 +141,29 @@ def main() -> int:
               "-show_entries", "stream=width,height",
               "-of", "csv=p=0:s=x", str(film)).strip().split("x")[:2]
     w, h = int(size[0]), int(size[1])
-    ok = (w, h) == (1080, 1920)
+    ok = (w, h) == (VIDEO_W, VIDEO_H)
     bad += 0 if ok else 1
-    print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 1080×1920）")
+    print(f"[{'ok' if ok else '不合格'}] 分辨率 {w}×{h}（要 {VIDEO_W}×{VIDEO_H}）")
 
     v_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
                      "-show_entries", "stream=duration",
                      "-of", "csv=p=0", str(film)).strip())
-    want = sum(round(float(s["end"]) - float(s["start"]), 3)
-               for s in spec["segments"]) + COVER_SECONDS
-    ok = abs(v_dur - want) < 0.5
-    bad += 0 if ok else 1
-    print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s（spec 算出来 {want:.2f}s）")
+    segs = sum(round(float(s["end"]) - float(s["start"]), 3)
+               for s in spec["segments"])
+    if cover is None:
+        # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子
+        # 没记。**从产物自己量**：画面总长减去段落总长就是封面停的那一截——
+        # 比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
+        # 片长那一项当然不能再判了（拿它去验它自己，恒真）。
+        cover = max(0.0, v_dur - segs)
+        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s——"
+              f"封面按两者之差 {cover:.2f}s 算，片长这一项不判")
+    else:
+        want = segs + cover
+        ok = abs(v_dur - want) < 0.5
+        bad += 0 if ok else 1
+        print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s"
+              f"（spec 算出来 {want:.2f}s）")
 
     # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
     # 编码器延迟一路累出来，累到几秒就听得出来了。
@@ -136,15 +181,19 @@ def main() -> int:
         bar = "#" * max(0, int((db + 60) / 2)) if db > -90 else ""
         print(f"  {i:3d}s {db:6.1f} {bar}")
 
+    # 「封面之后」从这一秒起算。整秒里只要压着一点封面就跳过——封面本来就是
+    # 静音，算进来是必然误报。**这个起点只能有一个**：原来上面按常量算、下面
+    # 写死 `levels[3:]`，封面一改长度两处就分叉。
+    after = math.ceil(cover) + 1
     dead = [i for i, db in enumerate(levels)
-            if db <= SILENCE_FLOOR_DB and i >= int(COVER_SECONDS) + 1]
+            if db <= SILENCE_FLOOR_DB and i >= after]
     if dead:
         bad += 1
         print(f"\n[不合格] 封面之后还有 {len(dead)} 秒是数字静音：{dead}")
     else:
-        print(f"\n[ok] 封面之后没有数字静音（最低 {min(levels[3:]):.1f} dB）")
+        print(f"\n[ok] 封面之后没有数字静音（最低 {min(levels[after:]):.1f} dB）")
 
-    windows = quiet_windows(spec)
+    windows = quiet_windows(spec, cover)
     if not windows:
         print("[注意] 这条 spec 每段都有旁白，没有纯现场声的窗口可单独验")
     for start, length, src in windows:
