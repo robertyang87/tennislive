@@ -1349,6 +1349,40 @@ def test_只推送时不做出片那一堆准备():
             "——只推送的时候它是白跑的")
 
 
+def test_把产物那一格加回稀疏范围要排在跑工具之前():
+    """`git sparse-checkout add` **会把 HEAD 上那一版先铺回工作区**。
+
+    排在生成之后，就是拿旧内容盖掉刚渲出来的成片——而它不报错。
+    （CLAUDE.md「把产物那一格弄回 cone」那一节记的就是这个。）
+
+    另一头同样致命：这一步要是根本不跑，`git add "$OUTDIR"` 会说路径在稀疏
+    范围之外，**只警告、退出码 0**，产物静默丢掉，跑完才发现。那一头由
+    `test_不碰产物的工作流不许把output拉下来` 钉住。
+
+    ⚠️ 既有那条 `test_读产物的步骤不能排在sparse_add前面` **覆盖不到这条线**：
+    它认的是 `[ -f "$OUT_DIR/..." ]` 这种 shell 判断，而这条工作流读写产物
+    的是 Python 工具。反向验证时把 add 挪到「转写交叉校验」后面，那条照样绿
+    ——所以另立这一条，按**步骤序号**判。
+    """
+    steps = _steps()
+    names = [s.get("name") or (s.get("uses") or "?") for s in steps]
+    add_at = next((i for i, s in enumerate(steps)
+                   if "git sparse-checkout add" in _step_run(s)), None)
+    assert add_at is not None, (
+        "interview-clip 没把自己那一格加回稀疏范围。"
+        f"步骤依次是：{names}")
+
+    uses_tool = [i for i, s in enumerate(steps)
+                 if "build_interview_clip.py" in _step_run(s)
+                 or "push_reel.py" in _step_run(s)]
+    assert uses_tool, "没有一步在跑工具？那这条工作流在干什么"
+    assert add_at < min(uses_tool), (
+        f"`git sparse-checkout add` 排在第 {add_at + 1} 步（{names[add_at]}），"
+        f"而第 {min(uses_tool) + 1} 步（{names[min(uses_tool)]}）就开始跑工具了。"
+        "add 会把 HEAD 那一版铺回工作区，排在生成之后＝拿旧内容盖掉刚渲的，"
+        "而且不报错。")
+
+
 def test_每个mode都各干各的活():
     """三个 mode 各自只跑自己那一段，别互相带着跑。
 

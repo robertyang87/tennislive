@@ -47,6 +47,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** 它有 2.26 GB，而这条工作流只碰自己那一格。
+          # 实测代价：2026-08-03 那趟 `mode=push` 的 checkout **3 分 12 秒**，
+          # 而它真正要跑的活只需要 requests 一个包、7 秒。
+          #
+          # 本次要写的那一格在下一步 `git sparse-checkout add` 回来——
+          # **两半都要有**：只写这一半，`git add "$OUTDIR"` 会说路径在稀疏
+          # 范围之外，只警告、退出码 0，**产物静默丢掉**，而那是跑完之后才发现。
+          #
+          # ⚠️ 排除的**只有** output：assets 一百多兆看着也不小，但烧字幕要读
+          # `assets/fonts`（得意黑的 ttf），少一个就是第 5 分钟才炸的
+          # FileNotFoundError。cone 模式下根目录的文件总是带上。
+          sparse-checkout: |
+            .github
+            assets
+            data
+            specs
+            src
+            tools
+
+      # 必须排在**所有读写 output 的步骤之前**。目录不在工作区时，
+      # `[ -f ... ]` 这类判断全是假的，而且不报错。
+      - name: 把本次那一格加回稀疏范围
+        run: |
+          set -o pipefail
+          OUT="output/interviews/${{ github.event.inputs.slug }}"
+          git sparse-checkout add "$OUT"
+          echo "$OUT：$(ls -1 "$OUT" 2>/dev/null | wc -l) 个文件已在工作区"
 
       - uses: actions/setup-python@v5
         with:
