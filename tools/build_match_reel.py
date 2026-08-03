@@ -1026,6 +1026,14 @@ class Segment:
     # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
     # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
     quote: str = ""
+    # **`quote` 写成列表时，每一条就是一条字幕**，断句权交回写 spec 的人；
+    # 元素里的换行渲成两行（上英下中）。
+    #
+    # 为什么要这一档：原声段拿不到词边界，退路是「按字数等比铺满整段」，
+    # 断句靠标点自动切。中英双语过不了这一关——自动切会把英文句子劈开，
+    # 也不知道哪一行该和哪一行配成一对。
+    # 账号所有者 2026-08-03：「前面夺冠庆祝的部分全用英文原声配中英文字幕」。
+    quote_cues: tuple[str, ...] = ()
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1040,6 +1048,43 @@ class Segment:
     @property
     def length(self) -> float:
         return round(self.end - self.start, 3)
+
+
+def _quote_cues(raw: object) -> tuple[str, ...]:
+    """`quote` 写成列表时，**每一条就是一条字幕**（元素里的换行渲成两行）。
+
+    写成字符串时返回空元组 —— 走原来那条「按标点自动切、按字数等比铺满」的路，
+    存量 spec 一个字都不用改。
+    """
+    if not isinstance(raw, list):
+        return ()
+    return tuple(t for t in (str(x).strip() for x in raw) if t)
+
+
+def _quote_text(raw: object) -> str:
+    """互斥判断和「这一段有没有原声字幕」都只看真假，所以列表拼成一段就够。"""
+    if isinstance(raw, list):
+        return " ".join(_quote_cues(raw))
+    return str(raw).strip()
+
+
+def explicit_quote_cues(lines: tuple[str, ...] | list[str], span: float,
+                        offset: float) -> list[tuple[float, float, str]]:
+    """按条声明的原声字幕：时长按各条的字数摊到整段上。
+
+    ⚠️ 元素里的 `\\n` 不在这儿处理——`render_ass` 里那句
+    `drop_punctuation(cue.text).replace("\\n", "\\\\N")` 早就把它变成 ASS 的
+    换行了。上锚（`Alignment=8`）保证多一行是**往下**长，离底边仍然够远。
+    """
+    weights = [max(1, len(t.replace("\n", ""))) for t in lines]
+    total = sum(weights)
+    out: list[tuple[float, float, str]] = []
+    at = offset
+    for text, weight in zip(lines, weights):
+        dur = span * weight / total
+        out.append((at, at + dur, readable(text)))
+        at += dur
+    return out
 
 
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
@@ -1062,7 +1107,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         s.get("narration", "").strip(),
                         str(s.get("fit", "crop")), bool(s.get("track", False)),
                         str(s.get("source", primary)),
-                        s.get("quote", "").strip(),
+                        _quote_text(s.get("quote", "")),
+                        _quote_cues(s.get("quote", "")),
                         s.get("inset") or None)
                 for s in spec["segments"]]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
@@ -2526,8 +2572,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         if seg.quote:
             # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
             # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
-            cues.extend(subtitle_cues(readable(seg.quote), seg.length,
-                                      offset=offset))
+            if seg.quote_cues:
+                cues.extend(explicit_quote_cues(seg.quote_cues, seg.length,
+                                                offset))
+            else:
+                cues.extend(subtitle_cues(readable(seg.quote), seg.length,
+                                          offset=offset))
         elif seg.narration.strip():
             spoken = spoken_of[index]
             mix_inputs.extend(["-i", str(path)])

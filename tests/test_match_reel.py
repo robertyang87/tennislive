@@ -25,6 +25,19 @@ from pathlib import Path
 WORKFLOW = Path(".github/workflows/match-reel.yml")
 
 
+
+def _quote_str(raw) -> str:
+    """`quote` 现在也可以写成**按条声明**的列表（中英双语字幕，一条一行）。
+
+    扫 spec 的判据一律先过这儿：老写法是一个字符串，新写法是 `list[str]`，
+    而**两种都是要发出去的字**，规矩一视同仁。
+    第一版这两处直接 `s.get("quote") or ""`，喂进 `re.search` 当场 TypeError。
+    """
+    if isinstance(raw, list):
+        return " ".join(str(x) for x in raw)
+    return str(raw or "")
+
+
 def _steps(text: str) -> list[str]:
     """按 `      - name:` 切出步骤名，顺序即执行顺序。"""
     return [
@@ -675,7 +688,7 @@ def test_旁白不许用指示语指画面():
     for slug, spec in _reel_specs().items():
         for seg in spec["segments"]:
             # 原声段的中文字幕（`quote`）也是我们写的，一样受这条管
-            for text in (seg.get("narration") or "", seg.get("quote") or ""):
+            for text in (seg.get("narration") or "", _quote_str(seg.get("quote"))):
                 m = pointing.search(text)
                 if m:
                     bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
@@ -4801,7 +4814,7 @@ def test_旁白不许把每一局都念一遍():
             continue
         hit = [s for s in segs
                if announce.search((s.get("narration") or "")
-                                  + (s.get("quote") or ""))]
+                                  + _quote_str(s.get("quote")))]
         share = len(hit) / len(segs)
         if share > _BOARD_SHARE_MAX:
             bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
