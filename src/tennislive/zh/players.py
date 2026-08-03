@@ -178,6 +178,7 @@ PLAYER_ZH: dict[str, str] = {
     "Amanda Anisimova": "阿尼西莫娃",
     "Mirra Andreeva": "米拉·安德烈耶娃",
     "Madison Keys": "凯斯",
+    "Sloane Stephens": "斯蒂芬斯",
     "Jasmine Paolini": "保利尼",
     "Ekaterina Alexandrova": "亚历山德罗娃",
     "Karolina Muchova": "穆霍娃",
