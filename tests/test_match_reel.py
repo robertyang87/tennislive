@@ -4254,6 +4254,67 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch):
+    """**「下到了」不等于「下到的是视频」，而坏结果会被缓存固化。**
+
+    run 30838371382：`source_url` 给的是 Brightcove 的播放页
+    （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`），
+    直链那条路 curl 下来 **0.3 MB 的网页**，打印「[ok] 直链下到 0.3 MB」，
+    `_keep_source` 还把它**存进了缓存**，一直到下一步 ffprobe 才报
+    `Invalid data found`。于是「换个参数重跑」永远重现同一个错——
+    因为重跑第一件事就是命中那个坏缓存。
+
+    老判据只看**前 64 字节**里有没有 `<!doctype html` / `<html`，
+    所以这条测试喂的网页**故意不以 `<!doctype` 开头、前 64 字节里也没有
+    `<html`** —— 那正是漏过去的那种形状。
+
+    判据必须**真造两个文件、真跑一遍 `download()`**：查源码里有没有 probe
+    只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg") or not _shutil.which("ffprobe"):
+        raise AssertionError(
+            "这条测试要 ffmpeg/ffprobe（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    # ① 播放页：不以 `<!doctype` 开头，前 64 字节里也没有 `<html`
+    page = tmp_path / "index.html"
+    page.write_text("\n<!-- Brightcove player bootstrap -->\n" + " " * 90
+                    + "\n<html><body>player</body></html>\n", encoding="utf-8")
+    assert b"<html" not in page.read_bytes()[:64], "这个 fixture 没重现老判据的漏洞"
+
+    # ② 一个真视频，用来反向验证这道闸没有把好的也拦掉
+    real = tmp_path / "real.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i",
+                    "testsrc2=size=320x240:rate=25", "-t", "1",
+                    "-pix_fmt", "yuv420p", str(real), "-y"], check=True)
+
+    cache = tmp_path / "cache"
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(cache))
+
+    with pytest.raises(reel.ReelError) as err:
+        reel.download(f"file://{page}", tmp_path / "out1.mp4")
+    msg = str(err.value)
+    assert "ffprobe 读不出视频流" in msg, f"报错没说清楚是什么问题：{msg}"
+    # **报错要说出路**，而且要盖住这次真正的原因（播放页 ≠ 直链）
+    assert "yt-dlp" in msg and "播放页" in msg, f"报错没给出路：{msg}"
+    assert not (tmp_path / "out1.mp4").exists(), "坏文件没删干净"
+    assert not list(cache.glob("*")), (
+        "网页被存进了缓存——下一趟会直接命中它，「重跑」永远重现同一个错")
+
+    # ③ 反向：真视频要过，而且要进缓存（别把闸装成一律不放行）
+    got = reel.download(f"file://{real}", tmp_path / "out2.mp4")
+    assert got.is_file() and got.stat().st_size > 0
+    assert len(list(cache.glob("*"))) == 1, "真视频没被缓存下来"
+
+
 def test_缓存源片的开关要在工作流里够得着():
     """和 `--cover-only` 那次同一个坑：代码里加了，工作流没接上等于没有。
 
