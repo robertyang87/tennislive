@@ -86,9 +86,19 @@ from tennislive.video.explainer import (
     speakable,
 )
 
-# 字/秒，在 `rate: +28%`（当前档）的三条成片上量出来的中位。见模块开头。
-# 换语速就要重量，别按比例推。
-SPEECH_RATE = 6.4
+# 字/秒。**2026-08-03 语速从 +28% 降到 +10%**（账号所有者：「语速太快了」），
+# 这个数跟着重量了一次：special-exempt 同一份 1129 字旁白，同一天两版成片——
+#
+#     +28%   170.0s   6.72 字/秒
+#     +10%   212.3s   5.37 字/秒
+#
+# **2026-08-03 定在 +22%**（账号所有者：「以后就用 +22」）。那一档本来就是本仓库
+# 量得最扎实的：n=6，5.69–6.13，**中位 5.98**——直接用它，不从别的档折算。
+#
+# ⚠️ 又一次证明模块开头那句「别按比例推」：按 1.10/1.28 折算是 5.78，实测 5.37，
+# 差 8%。⚠️ 这一档目前**只有一条成片**（上面那批是 n=3 的中位），所以这个数
+# 还会动；再多几条就按同样的量法重取中位。
+SPEECH_RATE = 5.98
 
 BUDGET_SECONDS = 90
 # 首尾静音不走旁白，要从预算里扣掉。
@@ -345,13 +355,38 @@ def test_知识解说那一栏的首句本来就都在窗口内():
         f"那 {HOOK_BUDGET} 字这个上限就该重新量，而不是让大家去改稿。")
 
 
-def test_预算是按当前语速算的不是两簇的中位():
-    """语速变过：老片子 4.93–5.10 字/秒，当前这一档 5.82–6.25。
+#: 每一档 SSML 语速下**实测**的字/秒区间。加一档就要先渲一条片子量出来，
+#: 别按比例填——从 +28% 的 6.72 按 1.10/1.28 折算是 5.78，实测 5.37，差 8%。
+_MEASURED = {
+    "+22%": (5.69, 6.13),   # n=6
+    "+28%": (6.11, 6.80),   # n=3
+    "+10%": (5.20, 5.60),   # n=1（special-exempt 2026-08-03，实测 5.37）
+}
 
-    取两簇的中位（约 5.5）会把预算放宽两成，而新片子全按快的那档渲——
-    等于给了一个永远兑现不了的预算。
+
+def test_预算是按当前语速算的不是两簇的中位():
+    """语速变过好几次：老片子 4.93–5.10 字/秒，+22% 那批 5.69–6.13，+28% 那批 6.11–6.80。
+
+    取几簇的中位会把预算放宽两成，而新片子全按当前那一档渲——等于给了一个
+    永远兑现不了的预算。
+
+    ⚠️ **区间挂在 `DEFAULT_RATE` 上，不是写死一个数。** 原来这里硬编码
+    `6.1 <= SPEECH_RATE <= 6.8`（+28% 那一档），2026-08-03 把语速降到 +10%
+    时它当场红——**红得对，但它说不出该改成多少**。现在按当前那一档查表：
+    改了 `DEFAULT_RATE` 而没重量，这条会指名说「+X% 这一档还没量过」。
+    这才是模块开头那句「换语速之后必须重量」的判据本身。
     """
-    assert 6.1 <= SPEECH_RATE <= 6.8, "语速常数要落在 +28% 那一档的实测区间里"
+    from tennislive.video.explainer import DEFAULT_RATE
+
+    assert DEFAULT_RATE in _MEASURED, (
+        f"{DEFAULT_RATE} 这一档还没量过。渲一条片子，按 "
+        f"「字数 ÷（片长 − 首尾静音）」取值，填进 _MEASURED 再改 SPEECH_RATE。")
+    lo, hi = _MEASURED[DEFAULT_RATE]
+    assert lo <= SPEECH_RATE <= hi, (
+        f"SPEECH_RATE={SPEECH_RATE} 不在 {DEFAULT_RATE} 那一档的实测区间 "
+        f"{lo}–{hi} 里——换语速就要重量，别沿用上一档的数。")
     # 90 秒预算换算回来要和实测对得上
-    assert 545 <= NARRATION_BUDGET <= 600
-    assert 25 <= HOOK_BUDGET <= 30
+    assert round((BUDGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * lo) <= NARRATION_BUDGET
+    assert NARRATION_BUDGET <= round((BUDGET_SECONDS - LEAD_SILENCE - TAIL_SILENCE) * hi)
+    assert round((HOOK_SECONDS - LEAD_SILENCE) * lo) <= HOOK_BUDGET
+    assert HOOK_BUDGET <= round((HOOK_SECONDS - LEAD_SILENCE) * hi)
