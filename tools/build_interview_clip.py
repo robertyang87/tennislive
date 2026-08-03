@@ -55,6 +55,7 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import re
 import subprocess
@@ -129,7 +130,18 @@ _HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["
 # 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
 # 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
 # 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
-_FONT_SIZE = {"en": 46, "zh": 62}
+# **中英不是一档，中文要明显更大。** 中文是主读行，英文是原文参照。
+#
+# 62/46 = 1.35 时两行几乎一样重，眼睛不知道先读哪个；68/46 = 1.48 层级才立住。
+#
+# ⚠️ **能涨多少是量出来的，不是拍的**，而且中英的余量差得很远：
+#
+#     中文  62→68  只有 2 行超宽（手写的，普遍偏短，有余量）
+#     英文  46→50  22 行超宽（切行算法按 952px 排满，一放大必然大面积溢出）
+#
+# 所以英文钉死在 46。**要动它就得先动切行的宽度预算**，那是另一件事。
+# 改这两个数之前先跑一遍 `test_字号涨了不许撑破已有的行`。
+_FONT_SIZE = {"en": 46, "zh": 68}
 # 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
 _HEAD_SIZE = {"a": 54, "b": 32}
 _FONT_CACHE: dict[str, object] = {}
@@ -174,6 +186,95 @@ _NAME_FIX = {
 }
 # 非语音标记，切行之前先丢掉
 _NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
+
+
+def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
+                     cols: int = 6) -> Path | None:
+    """把 YouTube 的 storyboard 拼成一张带秒数的缩略图墙，**给挑封面用**。
+
+    **为什么值得做**：封面是唯一决定人点不点的那一屏，而沙箱下不了媒体——
+    以前挑 `cover.frame_at` 只能靠听转写猜一个秒数，渲完十分钟再打开看，
+    不对就重渲。演播室那条的 60.0 秒就是这么盲挑的（碰巧挑对了）。
+    storyboard 只有几百 KB、不用 ffmpeg，在取字幕那一趟顺手就拿到了。
+
+    **这是加速不是闸**：拿不到就打印原因往下走，不许因为它失败挡住切行。
+    但**要出声**——「没拿到」和「拿到了」在日志上必须长得不一样。
+    """
+    try:
+        meta = json.loads(subprocess.run(
+            ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
+             *cookie_args(spec or {}), url],
+            capture_output=True, text=True, timeout=180, check=True).stdout)
+    except Exception as exc:                      # noqa: BLE001
+        print(f"⚠️ 缩略图墙：取不到视频信息（{type(exc).__name__}），跳过——挑封面还得靠猜")
+        return None
+    # storyboard 的格式 id 以 sb 开头，`rows`/`columns` 是每张大图里的格子数
+    sbs = [f for f in meta.get("formats") or []
+           if str(f.get("format_id", "")).startswith("sb") and f.get("fragments")]
+    if not sbs:
+        print("⚠️ 缩略图墙：这条片子没有 storyboard，跳过")
+        return None
+    sb = max(sbs, key=lambda f: (f.get("width") or 0))
+    dest = workdir / "_sb.mhtml"
+    try:
+        subprocess.run(["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+                        "-f", sb["format_id"], "-o", str(dest),
+                        *cookie_args(spec or {}), url],
+                       capture_output=True, text=True, timeout=300, check=True)
+        tiles = _mhtml_tiles(dest, int(sb.get("rows") or 0), int(sb.get("columns") or 0))
+    except Exception as exc:                      # noqa: BLE001
+        print(f"⚠️ 缩略图墙：下载或解析失败（{type(exc).__name__}: {exc}），跳过")
+        return None
+    finally:
+        dest.unlink(missing_ok=True)
+    if not tiles:
+        print("⚠️ 缩略图墙：一格都没解出来，跳过")
+        return None
+    step = float(meta.get("duration") or 0) / max(len(tiles), 1)
+    out = _tile_sheet(tiles, step, cols, workdir / "storyboard.jpg")
+    print(f"缩略图墙 {len(tiles)} 格、每格 {step:.1f} 秒 → {out}")
+    return out
+
+
+def _mhtml_tiles(path: Path, rows: int, columns: int) -> list:
+    """从 yt-dlp 落的 mhtml 里切出每一格。**格子数按 rows×columns 切**。"""
+    import email
+    from PIL import Image  # noqa: PLC0415
+
+    msg = email.message_from_bytes(path.read_bytes())
+    tiles = []
+    for part in msg.walk():
+        if not str(part.get_content_type()).startswith("image/"):
+            continue
+        sheet = Image.open(io.BytesIO(part.get_payload(decode=True))).convert("RGB")
+        r, c = rows or 1, columns or 1
+        tw, th = sheet.width // c, sheet.height // r
+        for iy in range(r):
+            for ix in range(c):
+                tile = sheet.crop((ix * tw, iy * th, (ix + 1) * tw, (iy + 1) * th))
+                # 末尾那几格常常是纯黑的填充，别混进来当候选
+                if sum(tile.resize((8, 8)).convert("L").getdata()) > 8 * 8 * 6:
+                    tiles.append(tile)
+    return tiles
+
+
+def _tile_sheet(tiles: list, step: float, cols: int, dest: Path) -> Path:
+    """拼成一张图，每格左上角烧上它的秒数——**没有秒数就没法用它挑封面**。"""
+    from PIL import Image, ImageDraw  # noqa: PLC0415
+
+    tw, th = tiles[0].size
+    pad, lab = 4, 16
+    rows = (len(tiles) + cols - 1) // cols
+    sheet = Image.new("RGB", (cols * (tw + pad) + pad,
+                              rows * (th + lab + pad) + pad), (18, 20, 18))
+    d = ImageDraw.Draw(sheet)
+    for i, t in enumerate(tiles):
+        x = pad + (i % cols) * (tw + pad)
+        y = pad + (i // cols) * (th + lab + pad)
+        d.text((x + 1, y), f"{i * step:.1f}s", fill=(150, 220, 190))
+        sheet.paste(t, (x, y + lab))
+    sheet.save(dest, quality=88)
+    return dest
 
 
 def fetch_words(url: str, workdir: Path,
@@ -1552,6 +1653,9 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
+    if args.stage == "subs":
+        # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
+        storyboard_sheet(spec["url"], outdir, spec)
     lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
                     word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
