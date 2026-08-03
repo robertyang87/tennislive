@@ -79,7 +79,9 @@ jobs:
           cache: pip
 
       - name: 安装 yt-dlp
-        run: pip install -q "yt-dlp>=2026.7.4"
+        # `[default]` 带 yt-dlp-ejs，解 n challenge 要它；少了它格式表只剩
+        # 故事板，而 yt-dlp 不会说「装少了」。见 match-reel.yml 那条注释。
+        run: pip install -q "yt-dlp[default]>=2026.7.4"
 
       - name: 采集
         run: |

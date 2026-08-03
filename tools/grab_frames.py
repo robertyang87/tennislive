@@ -61,7 +61,7 @@ def download(url: str, outdir: Path) -> Path:
     tried: list[str] = []
     for label, extra in ladder:
         proc = subprocess.run(
-            [binary, *base, "-f", "bv*[height>=720]+ba/bv*+ba/b",
+            [binary, *base, "-f", "bv*[height>=720]+ba/bv*+ba/b*/b/worst",
              "--merge-output-format", "mp4",
              "-o", str(outdir / "source.%(ext)s"), url, *cookies, *extra],
             capture_output=True, text=True)
@@ -73,8 +73,14 @@ def download(url: str, outdir: Path) -> Path:
             return got[0]
         tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
         tried.append(f"  {label}: {tail[0][:110]}")
-    # 空结果要自证是真空：把每一档失败的原因都列出来，别只说「下不动」
-    raise SystemExit("所有 client 都没下动：\n" + "\n".join(tried))
+    # 空结果要自证是真空：把每一档失败的原因都列出来，别只说「下不动」。
+    # 而 `Requested format is not available` 这一支尤其要**把实际有哪些格式打出来**——
+    # 「片子只有 DRM 格式」和「我的选择器写错了」报出来一模一样，不列格式分不出。
+    print("所有 client 都没下动：\n" + "\n".join(tried), file=sys.stderr)
+    print("\n[诊断] 服务端到底给了哪些格式：", file=sys.stderr)
+    subprocess.run([binary, *base, "--list-formats", url, *cookies],
+                   check=False)
+    raise SystemExit(1)
 
 
 def sample(video: Path, outdir: Path, every: float, width: int) -> list[Path]:
