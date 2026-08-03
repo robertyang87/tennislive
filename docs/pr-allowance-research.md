@@ -318,3 +318,28 @@ Graham Hughes 那张**雨天封场**（1400×958，赛事日期自证），但�
 | ④ 代价 | **没打**：放弃温网、手术、等满 6 个月 | 底线接发准备 | 康复、场外、或那年温网他缺席的场面——**恰恰不该在场上** |
 
 ⑥（夺冠→捧杯）和 ⑧（赢下复出首胜→击球或庆祝）本来就对得上，不动。
+
+## 十三、抽帧工具做好了，但卡在「新工作流必须先进 main」
+
+`tools/grab_frames.py` + `.github/workflows/frame-grab.yml` 已经写好推上分支
+（`ce3b56f`），复用 match-reel 的 PO token provider + `YT_COOKIES_TXT`，
+产物提交进仓库（沙箱下不动 artifact）。
+
+⚠️ **触发返回 404**：`workflow_dispatch` 要求工作流文件**已经在默认分支上**，
+特性分支上的新工作流 dispatch 不了。所以要么先把 PR #156 合进 main，
+要么单独把这个工作流文件推到 main——**后者需要账号所有者明确授权**
+（约定是不许推别的分支）。
+
+合并之后要跑的那一趟：
+
+    workflow: frame-grab
+    ref:      main
+    url:      https://www.youtube.com/watch?v=D4sX0sngnyo
+              （Tennis Canada 官方，131 秒，2026-08-02 蒙特利尔首轮
+               商竣程 6-3 6-3 胜巴列霍——四要素由频道和标题自证）
+    slug:     shang-montreal-2026
+    every:    2      → 约 66 张候选帧
+    width:    1600
+
+跑完 `git pull`，**先看 `contact.jpg` 联系表**再决定打开哪几张。
+挑帧仍然要过四道闸门，第一道尤其：这一屏讲的事，画面对不对得上。
