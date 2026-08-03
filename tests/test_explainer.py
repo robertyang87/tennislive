@@ -615,7 +615,10 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
-    assert meta["rate"] == E.DEFAULT_RATE == "+28%"
+    # 只钉「记下来的就是实际用的那一档」。**具体是哪一档不在这儿钉死**——
+    # 那个数由 test_explainer_budget 的 `_MEASURED` 管着，而且它连带要求
+    # 换档必须重量。两处都写死的话，改语速要动三个地方，必分叉。
+    assert meta["rate"] == E.DEFAULT_RATE
     assert meta["segments"] == 2
 
     E.generate_explainer_video(
