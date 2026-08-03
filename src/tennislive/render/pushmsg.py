@@ -359,10 +359,33 @@ def copy_page_fingerprint(path) -> str:
 #: 工作流 25 分钟的超时余量（出片本身只花 5 分钟）。
 #:
 #: 等不到仍然只摘按钮、不拦推送——正文整段渲染在消息里，长按可复制。
-_COPY_PAGE_ATTEMPTS = int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS") or 12)
+# **这个数是从实测的 Pages 构建时长倒推的，不是拍的。**
+#
+# 2026-08-03 那条解说片推送没有复制按钮，日志里连探 12 次全是 404，然后按兜底
+# 摘掉了按钮（run 30800394939）。查下来不是「今天 Pages 慢」，是**窗口结构性地
+# 短于发布时间**：这个仓库 `output/` 一 GB 多，Pages 每次重建整站，实测
+#
+#     0cfe168  5:50 success      89f34a1  7:14 success
+#     7c90993  8:12 cancelled    42764e0  9:30 cancelled
+#
+# 而 12 × 30s 只有 **5.5 分钟**——比最快的那次还短。也就是说这条线上那颗按钮
+# 几乎不可能等到，而它每次都「安静地」退回无按钮版，看起来和「Pages 恰好慢了」
+# 一模一样。⚠️ 又一次「兜底出事的时候不吭声」。
+#
+# 26 次 × 30 秒 ＝ **12.5 分钟**，盖住实测最慢的那次（9:30）还留三分钟余量。
+# 探到就立刻返回，所以典型代价仍是 6–8 分钟，不是 12.5。
+#
+# ⚠️ **同一趟 run 里提交两次会把前一次的 Pages 构建取消掉**（上表里两条
+# cancelled 就是这么来的）。所以「把复制页挪到渲染前面单独提交」那条对
+# match-reel 有效的办法，对解说片**无效**——它生成和推送在同一趟 run 里，
+# 成片那次提交会把复制页那次的构建掐掉重来。真正的杠杆是把站点变小。
+_COPY_PAGE_ATTEMPTS = int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS") or 26)
 _COPY_PAGE_RETRY_SECONDS = float(
     os.environ.get("TENNISLIVE_COPYPAGE_RETRY_SECONDS") or 30.0
 )
+#: 实测最慢的一次成功构建（`42764e0`，9 分 30 秒）。等待窗口不许比它短——
+#: 短了那颗按钮就永远出不来，而且不会报错。判据在 test_pushmsg 里。
+MEASURED_PAGES_BUILD_SECONDS = 570.0
 
 
 def drop_dead_copy_button(

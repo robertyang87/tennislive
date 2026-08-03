@@ -659,8 +659,8 @@ jobs:
       - name: 提交产物
         if: github.event.inputs.mode != 'narration' && github.event.inputs.mode != 'cookies'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           # 只 add 本次的目录：一起 add output/ 会把别的选题的成片一并重放，
           # 并行跑的时候会来回覆盖（explainer 那条线上踩过）
