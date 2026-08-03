@@ -419,3 +419,86 @@ ATP 取停赛后头三个月均值）。
 > 交给这些球员当前所在赛事的监督；监督要**逐个联系**，问他有没有兴趣。
 
 **名额不是自己掉下来的，是有人拿着名单挨个打电话。**
+
+---
+
+## 十二、✅ WTA 规则书找到了，而且它比 ATP 更贴这条选题
+
+**位置**（记下来，别再猜）：`wtatennis.com` **首页**上挂着 `/wta-rules`，
+那一页里有 PDF 直链：
+
+```
+https://photoresources.wtatennis.com/wta/document/2026/07/07/
+  743ac5e7-b7ba-4a70-ac30-7ba7ec47555c/2026-WTA-Rulebook-6-26-2026-.pdf
+```
+
+3.8 MB / 575 页。条文在 **Section V — Tournament Draws and Scheduling,
+vii. Special Exempt Spots，p70–71**。
+
+⚠️ **我猜的五个路径全部 404**（`/rulebook`、`/rules`、`/about/rulebook`、
+`/-/media/files/rulebook/...`、`api.wtatennis.com/tennis/rulebook`），
+而真路径就挂在首页导航里。**五个 404 只证明我猜错了，不证明它不存在**——
+又一次「空结果先自证是真空」。
+
+### 12.1 定义与名额（p70）
+
+> **One (1) Special Exempt Spot shall be held at each WTA Tournament**
+> (excluding WTA 125 Tournaments that occur during the second week of
+> WTA 1000 Mandatory Tournaments or Grand Slams).
+>
+> A "Special Exempt Spot" is a singles Main Draw spot reserved for a singles
+> player who is **unable to compete in the Qualifying** of a WTA Tournament
+> **in which she entered by the entry deadline and has been accepted as a
+> direct acceptance by the Qualifying Sign-In Deadline** … **because she is
+> still competing in a Qualified Singles Event.**
+
+「合格单打赛事」＝**前一周**的赛事，按对照表：
+
+| 本站 | 合格赛事 |
+|---|---|
+| WTA 1000 强制赛 | WTA 1000 强制赛或大满贯 |
+| WTA 500 | WTA 500（含联合杯**）、1000 强制赛、大满贯 |
+| WTA 250 | WTA 250、500（含联合杯**）、1000 强制赛、大满贯 |
+| WTA 125* | 再往下同理 |
+
+### 12.2 ⭐ 资格条款里明写着「天气」（p71）
+
+> A player who is still competing at the Qualifying Sign-In deadline will only
+> be eligible … if:
+> **(i) she is in the finals** at the Qualified Singles Event;
+> **(ii) she wins her match** at the Qualified Singles Event; or
+> **(iii) her match is re-scheduled to be on the first day of Qualifying at the
+> Special Exempt Tournament due to weather** or other unforeseen circumstances.
+>
+> Matches scheduled and played on the Qualifying Sign-In day which **finish
+> past midnight** will not be considered as being played on the first day of
+> Qualifying.
+
+**两处比 ATP 更直接**：
+
+- ATP 是靠「starting **or resuming** a match」的定义**间接**盖住雨；
+  **WTA 把 weather 写进了资格条款本身**
+- **第 (i) 条：进了决赛就够格，不用赢**。而 ATP 那边 9 点还没打完的话
+  「只有赢了才够格」
+
+**佩古拉和伊埃拉那晚正好同时命中 (i) 和 (iii)**——她们在决赛里，
+而那场决赛因天气被改期。
+
+### 12.3 选人、承诺、名额去向（p71）
+
+- 多于一人够格：按**上一周的 WTA 单打排名**（或用于报名的 Special Ranking）排，
+  **排名最高的先选**
+- **一旦被选中，她就承诺参加该赛事**，受全部临时退赛规则和罚则约束——拿了不能反悔
+- 资格赛还没开始时，被选中的人退赛、或以自己的 WTA 排名作为直接入围进了正赛，
+  **下一个够格的人递补**
+
+### 12.4 ⚠️ 引条文时不许互换的一处措辞
+
+| | 怎么写的 |
+|---|---|
+| **ATP** | 必须是「his current ranking … **would not have otherwise qualified him as a direct acceptance**」——**本来直接入围不了**的人 |
+| **WTA** | 她「entered by the entry deadline and **has been accepted as a direct acceptance by the Qualifying Sign-In Deadline**」——**资格赛的直接入围者** |
+
+实际效果一样（两边说的都是「需要打资格赛的那档人」），但**引原文时别互换**。
+这跟 `protected-ranking` 那条踩过的坑是同一族：WTA 取停赛前最后一站入榜那刻的
+排名，ATP 取停赛后头三个月均值。
