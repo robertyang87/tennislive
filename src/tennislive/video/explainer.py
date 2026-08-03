@@ -1206,6 +1206,48 @@ _PR_FREEZE_DIAGRAM = """
 
 #: 「能用来干嘛」那一屏。三件能做、两件不能做——**照片没法表达一条禁令**，
 #: 所以画。左右两栏对照，能做的给强调色，不能做的压成中性并划一道斜杠。
+#: 「代价」那一屏。这一屏讲的是**他没打**——而没打是拍不出来的：
+#: 一张空球场证明不了「本可以站上去的人选择了不站」。CLAUDE.md 那条
+#: 「示意图的触发条件是照片讲不清，不是照片找不到」，这里是最干净的一例。
+#:
+#: 画出来才看得见的那件事：**整届温网（6.30–7.13）正好占满这段等待的最后 13 天。**
+#: 六个月满在 7 月 13 日，而温网决赛也是 7 月 13 日——他要是打了，
+#: 断的是终点线前的最后十三天。日期两头都核过（维基 2025 温网 30 June – 13 July）。
+_PR_BLANK_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">温网开赛那天，他还差 13 天</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">门槛：连续 6 个月不打任何比赛，表演赛也算</text>
+
+  <text x="615" y="156" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">法网 5.25</text>
+  <text x="615" y="188" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">缺席</text>
+  <line x1="615" y1="204" x2="615" y2="248" stroke="#9fb4aa" stroke-width="3"/>
+
+  <text x="784" y="156" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">温网 6.30</text>
+  <text x="784" y="188" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">他能打，没打</text>
+  <line x1="784" y1="204" x2="784" y2="248" stroke="#c6f65a" stroke-width="3"/>
+
+  <rect x="90" y="248" width="720" height="52" rx="10" fill="rgba(231,243,236,.18)"/>
+  <rect x="758" y="248" width="52" height="52" rx="10" fill="rgba(198,246,90,.85)"/>
+
+  <text x="90" y="346" fill="#9fb4aa" font-size="26" font-weight="700">2025.1.13</text>
+  <text x="90" y="378" fill="#9fb4aa" font-size="26" font-weight="700">澳网首轮，停赛前最后一场</text>
+  <text x="810" y="346" text-anchor="end" fill="#e7f3ec"
+        font-size="26" font-weight="800">7.13</text>
+  <text x="810" y="378" text-anchor="end" fill="#e7f3ec"
+        font-size="26" font-weight="800">六个月满</text>
+
+  <text x="450" y="446" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">整届温网，正好压在最后 13 天里</text>
+</svg>
+"""
+
+
 _PR_USE_DIAGRAM = """
 <svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
@@ -1294,8 +1336,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "七月二十七号华盛顿，商竣程复出第一场，对锦织圭，三盘打了两个多小时，"
             "中间还叫了一次医疗暂停，最后七比六、三比六、四比六输掉。"
             "那一站，额度照扣。",
-            "assets/explainer/pr-allowance/shang_usopen_2023_backhand.jpg",
-            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，商竣程反手击球",
+            "assets/explainer/pr-allowance/shang_washington_2026_set3.jpg",
+            "ATP Tour 官方集锦画面 · 2026 年 7 月 27 日华盛顿首轮，"
+            "商竣程决胜盘 3-5，记分条自证赛事与比分",
             (
                 "外卡和直入 不占额度",
                 "进了签表 就算一站",
@@ -1309,20 +1352,23 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "为了够到它，先放弃一站温网",
             "凭证不是白给的。门槛写在同一节的第一款：连续六个月不参加任何比赛，"
             "表演赛也算在内。也就是说，你想拿到它，得先把空白拉得更长。"
-            "二〇二五年一月澳网首轮之后，商竣程做了右脚第五跖骨的手术，"
-            "医生取出碎骨、切断了一半肌腱。恢复不到位，他缺席法网；"
-            "而那年温网，他其实站得上场——但打了，六个月就凑不满，凭证就没了。"
-            "他选择不打。七月二十八号多伦多，他回来了，首轮输给达克沃斯。"
+            "二〇二五年一月十三号，澳网首轮，那是他停赛前的最后一场。"
+            "之后是右脚第五跖骨的手术，医生取出碎骨、切断了一半肌腱。"
+            "恢复不到位，他缺席法网；而那年温网，他其实站得上场。"
+            "把日子摆出来就知道这一刀有多贴身：六个月满，是七月十三号；"
+            "而温网六月三十号开赛，七月十三号决赛——整届温网，正好压在最后十三天里。"
+            "打，凭证就没了；不打，就得看着它整整两周从眼前过去。他选择不打。"
+            "七月二十八号多伦多，他回来了，首轮输给达克沃斯。"
             "而九个月那个上限，条文算的是「复出后打的第一场比赛」——"
             "所以倒计时从这天起走，哪怕这一站他首轮就输了。",
-            "assets/explainer/pr-allowance/shang_washington_2023_ready.jpg",
-            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年华盛顿站，商竣程接发",
+            "",
+            "示意图 · 网球时差绘制",
             (
                 "门槛 连续 6 个月不比赛",
-                "表演赛 也算在里头",
-                "2025 温网 他能打，没打",
+                "六个月满 2025.7.13",
+                "而温网 6.30 开赛，7.13 决赛",
             ),
-            "",
+            _PR_BLANK_DIAGRAM,
         ),
         (
             "freeze",
@@ -1380,8 +1426,9 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "剩下的还得自己打。次轮他对十号种子卢布列夫。"
             "他还说了后面的计划：辛辛那提、一站挑战赛，然后美网。"
             "生涯最高第四十七，那是二〇二四年十月的事。",
-            "assets/explainer/pr-allowance/shang_washington_2023_serve.jpg",
-            "Wikimedia Commons · CC BY-SA 4.0 · 2023 年华盛顿站，商竣程准备发球",
+            "assets/explainer/pr-allowance/shang_montreal_2026_r1.jpg",
+            "Tennis Canada 官方集锦画面 · 2026 年 8 月 2 日蒙特利尔正赛首轮，"
+            "商竣程第二盘握拳，记分条自证赛事与比分",
             (
                 "8 月 2 日蒙特利尔 6-3 6-3",
                 "伤停后第一胜 上一胜在 1 月",
