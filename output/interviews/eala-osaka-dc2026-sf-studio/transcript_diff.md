@@ -1,0 +1,91 @@
+# 转写交叉校验：eala-osaka-dc2026-sf-studio
+
+- YouTube 自动字幕 **1229** 词
+- faster-whisper（small.en）**1105** 词
+- **对不上 12.4%**（闸门 12%）
+
+## 分歧逐处（左＝YouTube，右＝Whisper）
+
+- `uh binabatita oh salamai salama they've` → `i've`
+- `tagalog` → `tag along`
+- `congratulations` → `doing it`
+- `uh` → `—`
+- `um` → `—`
+- `in to` → `into`
+- `because i` → `—`
+- `but` → `—`
+- `um` → `—`
+- `um` → `—`
+- `i did i` → `—`
+- `you know her` → `—`
+- `in` → `—`
+- `us` → `u s`
+- `um` → `—`
+- `to` → `—`
+- `yeah` → `yes`
+- `what` → `—`
+- `uh it` → `—`
+- `um` → `—`
+- `100` → `hundred percent`
+- `the the` → `—`
+- `strokes` → `stroke`
+- `that` → `—`
+- `in` → `—`
+- `what what's` → `—`
+- `and i you know` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `i` → `—`
+- `um` → `—`
+- `you know` → `—`
+- `um` → `—`
+- `yeah` → `—`
+- `joan` → `juan`
+- `just` → `—`
+- `what he has` → `—`
+- `and` → `—`
+- `oh joan` → `johan`
+- `he's uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `low key` → `loki`
+- `i i` → `i'll`
+- `um` → `—`
+- `and` → `—`
+- `you're` → `—`
+- `um` → `—`
+- `pegula` → `pagula`
+- `semifinal` → `semi final`
+- `uh` → `—`
+- `i'm` → `—`
+- `i've` → `—`
+- `uh what's the` → `—`
+- `okay` → `—`
+- `um` → `—`
+- `you know same` → `—`
+- `um` → `—`
+- `you know improvement is not a linear it's` → `improvement's`
+- `and` → `—`
+- `you know what you know what i mean it it` → `—`
+- `got to feel like you you've got to you` → `—`
+- `i` → `—`
+- `it's i don't know i think um` → `—`
+- `train` → `jane`
+- `do you no` → `—`
+- `um` → `—`
+- `you know` → `—`
+- `but um` → `—`
+- `but yeah` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `and` → `—`
+- `um` → `—`
+- `keeps me grounded you know` → `there's`
+- `and you know` → `—`
+- `they're` → `—`
+- `and` → `—`
+- `—` → `you're`
+- `um` → `—`
+- `jess` → `jesse`
+- `alex eala` → `alexie allo`
+- `dc` → `d c`

@@ -178,6 +178,7 @@ PLAYER_ZH: dict[str, str] = {
     "Amanda Anisimova": "阿尼西莫娃",
     "Mirra Andreeva": "米拉·安德烈耶娃",
     "Madison Keys": "凯斯",
+    "Sloane Stephens": "斯蒂芬斯",
     "Jasmine Paolini": "保利尼",
     "Ekaterina Alexandrova": "亚历山德罗娃",
     "Karolina Muchova": "穆霍娃",
@@ -443,6 +444,37 @@ PLAYER_ZH: dict[str, str] = {
     "Justine Henin": "海宁",
     "Maria Sharapova": "莎拉波娃",
     "Ana Ivanovic": "伊万诺维奇",
+    # 「幸运落败者」那条选题里要念到的人，全部已退役或已改名——**前 500 的快照
+    # 永远同步不到他们**（`update_player_names.py` 只抓现役前 500），所以家在
+    # 这儿，不在 `data/player_name_overrides.json`：那个文件只喂快照生成器。
+    # 译名一律取中文维基条目的姓，写全名的惯例只留给需要区分的人。
+    "Paolo Lorenzi": "洛伦齐",          # 保罗·洛伦齐，2017 乌马格决赛负于卢布列夫
+    "Kiki Bertens": "贝尔腾斯",         # 基基·贝尔腾斯——是「腾」不是「滕」
+    "Andrea Petkovic": "佩特科维奇",
+    "Stefanie Voegele": "沃格勒",       # 史蒂芬妮·沃格勒
+    "Stefanie Vogele": "沃格勒",        # 带变音的写法数据源里两种都出现过
+    "Nicole Vaidisova": "瓦伊迪索娃",   # 妮科莱·瓦伊迪索娃
+    # 同一个人：2019 年林茨时叫 Kozlova，后改姓 Baindl。两个都要认得——
+    # 她先在林茨输给幸运落败者高芙，四年后又在布达佩斯决赛输给幸运落败者
+    # 季莫费耶娃，这条选题里两次都点到她。
+    "Kateryna Kozlova": "科兹洛娃",
+    "Kateryna Baindl": "班德尔",
+    # 1995 年温网以幸运落败者身份打进第四轮的比利时人，男子那边至今的天花板。
+    # 名字**画在示意图上**，「示意图也要扫」那条同样管——不能只写在稿子里。
+    "Dick Norman": "诺曼",
+    # 「中段长得一模一样」那条要念到的四个人，德约科维奇 2018 年那半年的对手。
+    # 同样进不了前 500 快照（安德森、郑泫、克利赞都已退役，埃德蒙德早不在榜），
+    # 所以家也在这儿。
+    "Kevin Anderson": "安德森",         # 2018 温网决赛负于德约科维奇
+    "Hyeon Chung": "郑泫",              # 정현，韩国人，2018 澳网第四轮淘汰德约科维奇
+    "Martin Klizan": "克利赞",          # 2018 巴塞罗那第二轮淘汰德约科维奇
+    "Kyle Edmund": "埃德蒙德",          # 2018 马德里第二轮淘汰德约科维奇
+    # 现在不打球、但会以别的身份出现在稿子里的前球员。补进来的理由和球员一样：
+    # 写稿时凡是外国人名先查这张表，查不到就会现编——这一条是加拿大大师赛
+    # 赛事总监（前 WTA 球员，生涯最高第 112 位），mandatory-1000 那条要引她的话。
+    "Valerie Tetreault": "泰特罗",
+    "Valérie Tétreault": "泰特罗",
+    "Ken Rosewall": "罗斯沃尔",           # 1974 年温网四强，公开赛年代最年长的那个纪录
     # 中国线：这几个是本人的名字，不是音译
     "Michael Chang": "张德培",
     "Shuai Peng": "彭帅",

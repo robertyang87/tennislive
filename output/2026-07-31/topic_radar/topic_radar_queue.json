@@ -1,34 +1,98 @@
 {
   "date": "2026-07-31",
   "source_status": {
-    "ATP Tour": "正常 · 7 条",
-    "Wimbledon": "正常 · 1 条",
-    "WTA": "正常 · 9 条",
-    "Australian Open": "正常 · 0 条",
-    "Roland-Garros": "正常 · 0 条",
+    "ATP Tour": "正常 · 8 条",
     "US Open": "正常 · 0 条",
-    "Top media": "正常 · 13 条",
+    "Roland-Garros": "正常 · 0 条",
+    "Wimbledon": "正常 · 1 条",
+    "Australian Open": "正常 · 0 条",
+    "WTA": "正常 · 12 条",
+    "Top media": "正常 · 11 条",
     "US": "正常 · 10 条",
     "AU": "正常 · 10 条",
-    "GB": "正常 · 10 条",
     "HK": "正常 · 10 条",
-    "微信热文榜": "正常 · 扫 2 条 / 网球 0 条",
-    "微博热搜": "正常 · 扫 50 条 / 网球 0 条",
-    "抖音热搜": "正常 · 扫 50 条 / 网球 0 条",
+    "GB": "正常 · 10 条",
+    "微信热文榜": "正常 · 扫 30 条 / 网球 0 条",
+    "微博热搜": "正常 · 扫 51 条 / 网球 0 条",
+    "抖音热搜": "正常 · 扫 50 条 / 网球 1 条",
     "知乎热榜": "正常 · 扫 30 条 / 网球 0 条",
-    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
     "小红书热榜": "正常 · 扫 20 条 / 网球 0 条",
+    "百度热搜": "正常 · 扫 51 条 / 网球 1 条",
     "微信指数": "拿不到 · search.weixin.qq.com 无签名返回 {\"code\":-1}，签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」",
     "小红书官方接口": "拿不到 · edith 域 404、www 域 500，两条都要签名；已改走 UApiPro（主）+ 今日热榜镜像（备）",
     "微信搜一搜热点词 / 公众号热点话题榜": "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot 一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
   },
-  "news_signals": 30,
+  "news_signals": 32,
   "trend_signals": 40,
-  "zh_scanned": 203,
-  "zh_hot": [],
+  "zh_scanned": 232,
+  "zh_hot": [
+    {
+      "kind": "zh-hot-search",
+      "source": "抖音热搜",
+      "word": "吴宜泽无缘上海大师赛决赛",
+      "rank": 2,
+      "heat": "12036171",
+      "url": "https://www.douyin.com/search/%E5%90%B4%E5%AE%9C%E6%B3%BD%E6%97%A0%E7%BC%98%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%B8%88%E8%B5%9B%E5%86%B3%E8%B5%9B",
+      "matched": [
+        "上海大师赛",
+        "大师赛"
+      ],
+      "terms": [
+        "shanghai"
+      ]
+    },
+    {
+      "kind": "zh-hot-search",
+      "source": "百度热搜（第三方聚合，非官方接口）",
+      "word": "吴宜泽无缘斯诺克上海大师赛决赛",
+      "rank": 11,
+      "heat": "6947101",
+      "url": "https://www.baidu.com/s?wd=%E5%90%B4%E5%AE%9C%E6%B3%BD%E6%97%A0%E7%BC%98%E6%96%AF%E8%AF%BA%E5%85%8B%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%B8%88%E8%B5%9B%E5%86%B3%E8%B5%9B&sa=fyb_news&rsv_dl=fyb_news",
+      "matched": [
+        "上海大师赛",
+        "大师赛"
+      ],
+      "terms": [
+        "shanghai"
+      ]
+    }
+  ],
   "zh_near_miss": [],
   "count": 0,
   "topics": [],
-  "unmatched_clusters": 0,
-  "unmatched_terms": []
+  "unmatched_clusters": 3,
+  "unmatched_terms": [
+    {
+      "term": "challenge",
+      "clusters": 2
+    },
+    {
+      "term": "champ",
+      "clusters": 2
+    },
+    {
+      "term": "defending",
+      "clusters": 2
+    },
+    {
+      "term": "finals",
+      "clusters": 2
+    },
+    {
+      "term": "alexandra",
+      "clusters": 1
+    },
+    {
+      "term": "arthur",
+      "clusters": 1
+    },
+    {
+      "term": "beating",
+      "clusters": 1
+    },
+    {
+      "term": "bernard",
+      "clusters": 1
+    }
+  ]
 }

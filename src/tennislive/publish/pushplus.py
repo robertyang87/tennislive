@@ -88,12 +88,32 @@ def _response_json(response: requests.Response, action: str) -> dict:
     return payload
 
 
+# 发消息那个 POST 的重试预算。**只覆盖「没送到」**（网络异常、5xx），
+# `code != 200` 是服务端明确拒绝，不重发。
+PUSH_ATTEMPTS = 4
+PUSH_RETRY_SECONDS = 5.0
+
+
 def _access_key(token: str, secret_key: str, timeout: int) -> str:
-    response = requests.post(
-        ACCESS_KEY_URL,
-        json={"token": token, "secretKey": secret_key},
-        timeout=timeout,
-    )
+    """取图床的 AccessKey。**网络抖动要重试**——它排在发消息之前，
+    一次失败就把整条推送带走，而这一步跟内容对不对没有任何关系。"""
+    last = ""
+    for attempt in range(PUSH_ATTEMPTS):
+        try:
+            response = requests.post(
+                ACCESS_KEY_URL,
+                json={"token": token, "secretKey": secret_key},
+                timeout=timeout,
+            )
+            break
+        except requests.RequestException as exc:
+            last = f"{type(exc).__name__}: {exc}"
+            logger.warning("取 AccessKey 第 %d/%d 次失败（%s）",
+                           attempt + 1, PUSH_ATTEMPTS, last)
+            if attempt + 1 < PUSH_ATTEMPTS:
+                time.sleep(PUSH_RETRY_SECONDS)
+    else:
+        raise PushPlusError(f"取 PushPlus AccessKey {PUSH_ATTEMPTS} 次都失败：{last}")
     payload = _response_json(response, "获取 PushPlus AccessKey")
     if payload.get("code") != 200 or not (payload.get("data") or {}).get(
         "accessKey"
@@ -358,20 +378,66 @@ def push(
         timeout=timeout,
     )
     wait_for_images(html_content)
-    resp = requests.post(
-        URL,
-        json={
-            "token": token,
-            "title": title[:100],
-            "content": html_content,
-            "template": "html",
-        },
-        timeout=timeout,
-    )
-    try:
-        data = resp.json()
-    except ValueError as e:
-        raise PushPlusError(f"PushPlus 返回异常: HTTP {resp.status_code}") from e
-    if data.get("code") != 200:
-        raise PushPlusError(f"PushPlus 推送失败: {data}")
-    logger.info("PushPlus 推送成功（图片通道：%s）", image_provider)
+    # **这一步必须重试。** 走到这儿之前已经串着等了三轮：复制页最长 10 分钟、
+    # 成片 2 分钟、图片 5 分钟——而**这个 POST 才是唯一真正发消息的动作**，
+    # 原来一次网络抖动就把前面十几分钟全废掉。更荒唐的是 `_upload_image`
+    # （传图片，失败了还能退回 jsDelivr）**反而有**重试循环：
+    # **保护了不重要的那一步，没保护唯一重要的那一步。**
+    #
+    # ⚠️ **只重试「没送到」，不重试「送到了但被拒」。** 网络异常和 HTTP 5xx
+    # 说明服务端多半没收下，重发是安全的；而 `code != 200` 是 PushPlus 明确
+    # 拒绝（token 错、内容超限），重发只会把同一条错误消息发很多次——
+    # 微信那条消息发出去收不回来，宁可一次都不发。
+    data: dict = {}
+    last = ""
+    for attempt in range(PUSH_ATTEMPTS):
+        try:
+            resp = requests.post(
+                URL,
+                json={
+                    "token": token,
+                    "title": title[:100],
+                    "content": html_content,
+                    "template": "html",
+                },
+                timeout=timeout,
+            )
+            if resp.status_code >= 500:
+                last = f"HTTP {resp.status_code}"
+            else:
+                try:
+                    data = resp.json()
+                except ValueError as e:
+                    raise PushPlusError(
+                        f"PushPlus 返回异常: HTTP {resp.status_code}") from e
+                if data.get("code") != 200:
+                    # 服务端明确拒绝：重发只会发出很多条一样的错误消息
+                    raise PushPlusError(f"PushPlus 推送失败: {data}")
+                break
+        except requests.RequestException as exc:
+            last = f"{type(exc).__name__}: {exc}"
+        logger.warning("PushPlus 第 %d/%d 次没发出去（%s），%.0fs 后重试",
+                       attempt + 1, PUSH_ATTEMPTS, last, PUSH_RETRY_SECONDS)
+        if attempt + 1 < PUSH_ATTEMPTS:
+            time.sleep(PUSH_RETRY_SECONDS)
+    else:
+        raise PushPlusError(
+            f"PushPlus {PUSH_ATTEMPTS} 次都没发出去（{last}）。"
+            "前面等复制页、成片、图片都成功了，卡在最后这一步——重跑即可。")
+    # **流水号要记下来。** `code == 200` 只保证 **PushPlus 收下了**，不保证
+    # 微信真的推到了手机上。2026-08-02 热亚那条就是这样：第 29 步 success、
+    # 日志写着「已推送」，账号所有者问了两次「推微信了么」——而我手上一条
+    # 可查的东西都没有。返回体里的 `data` 就是这条消息的流水号，PushPlus
+    # 拿它查投递状态。
+    #
+    # ⚠️ **用 print 不用 logger。** 这个模块的 logger 在工作流里**没有配
+    # handler**，`logger.info` 一个字都不会出现在日志里——上一版那句
+    # 「PushPlus 推送成功（图片通道：…）」**从来没被人看见过**，连图片走的
+    # 哪条通道都没人知道。又一次「不吭声」，而且不吭声的正是那条本该出声的
+    # 记录。判据 `test_推送成功要把流水号打进日志` 断言的是 **stdout**，
+    # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
+    print(f"[PushPlus] 收下了：流水号 {data.get('data') or '(返回体里没有)'}"
+          f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
+    print(f"[PushPlus] ⚠️ 这只代表接口收下。要查微信有没有真的送达，用流水号问："
+          f"https://www.pushplus.plus/api/send/queryMessage?token=<TOKEN>&id="
+          f"{data.get('data') or '<流水号>'}")

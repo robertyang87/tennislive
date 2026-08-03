@@ -100,6 +100,58 @@ CUT_VS_Y = 0.40            # VS 圆压在两人胸口高度，不在脚下
 CUT_SINK = -36
 # 半身抠图截在腰上，硬边一眼看得出来，所以底部这一段淡出去。
 CUT_FADE = "mask-image:linear-gradient(180deg,#000 80%,transparent 99%)"
+#: 侧边被切断时那一条淡出的宽度（占抠图宽的比例）。
+#: **官方棚拍抠图用不上**——那种图人物四周本来就有空白，边是人自己的轮廓。
+#: 本场抽帧不一样：近景里人比画框大，抠出来的 alpha 直接贴到画框侧边，
+#: 于是留下一条**笔直的竖边**。人物大到溢出画布时看不见（黄泽林 0.48 那版
+#: 就是这么藏掉的），一旦收小就露出来，一眼看出是抠图裁的。
+#: 6% 是渲出来比的：3% 还能看出硬边，10% 手臂开始像化掉。
+CUT_SIDE_FADE = 0.06
+
+
+def _fade_cut_sides(image: Path) -> Path:
+    """被画框切断的那一侧，把 alpha 抹成一条渐变。
+
+    只淡**真被切断**的那一侧：人物自己的轮廓不该被淡掉，所以先量 alpha 有没有
+    贴到左/右边界。贴到了就是画框切的，没贴到就是他自己的边。
+
+    **烤进 PNG，不用 CSS 遮罩。** 先写的是
+    `mask-image: <底部渐变>, <侧边渐变>` 加 `mask-composite:intersect`，
+    渲出来一点变化都没有——多层遮罩的合成在这条渲染路径上不生效，而且
+    **它不报错**，只是安静地什么也不做。烤进 alpha 是能量的：
+    `_fade_cut_sides` 之后左边两列的最大 alpha 应该是 0。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    im = Image.open(image).convert("RGBA")
+    alpha = im.getchannel("A")
+    w, h = im.size
+    left = alpha.crop((0, 0, 2, h)).getextrema()[1] > 24
+    right = alpha.crop((w - 2, 0, w, h)).getextrema()[1] > 24
+    if not (left or right):
+        return image
+    span = max(2, round(w * CUT_SIDE_FADE))
+    ramp = Image.new("L", (w, 1), 255)
+    px = ramp.load()
+    for x in range(span):
+        v = round(255 * x / span)
+        if left:
+            px[x, 0] = min(px[x, 0], v)
+        if right:
+            px[w - 1 - x, 0] = min(px[w - 1 - x, 0], v)
+    im.putalpha(Image.fromarray(
+        (_np().asarray(alpha, dtype=_np().float32)
+         * _np().asarray(ramp.resize((w, h)), dtype=_np().float32) / 255
+         ).astype("uint8")))
+    out = image.with_suffix(".faded.png")
+    im.save(out)
+    return out
+
+
+def _np():
+    import numpy  # noqa: PLC0415
+
+    return numpy
 
 
 def _cut_crop(image: Path, box) -> Path:
@@ -136,6 +188,56 @@ def _cutout_geometry(cx: float, seam: float) -> float:
     """
     dx = (cx - 0.5) * VIDEO_W
     return seam * VIDEO_H - dx * math.tan(math.radians(SEAM_ANGLE))
+
+
+def _flag(code: str) -> str:
+    """国旗 emoji。认 IOC 三字码、ISO2、英文国名（`country_flag` 三种都兼容）。"""
+    import sys as _sys  # noqa: PLC0415
+    _sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+    from tennislive.zh.countries import country_flag  # noqa: PLC0415
+    return country_flag(code)
+
+
+def _name_html(name: str, meta: dict, where: str) -> str:
+    """封面上的一个人：**国旗 + 中文名 +（即时世界排名）**。
+
+    账号所有者 2026-08-02：「以后封面上所有球员的名字旁边要加上他的国旗，
+    对阵的同时在后面括号里面加上他的即时的世界排名」。
+
+    两样都是**必填**，因为这两个错的失败方式都不吭声：漏了国旗，海报看着
+    只是「少了点东西」；漏了排名，读者没法判断这场胜利有多重。
+
+    `rank` 允许显式写 `null`——意思是「查过，他没有排名」（资格赛外卡、
+    刚复出、掉出榜单）。和 `mixed_fps` / `silent_source` 一样，**认领这一步
+    是让「查过没有」和「忘了填」分开**：漏写会报错，写 null 会渲成只有国旗
+    和名字，并且在日志里出声。
+
+    排名用 0.6em 的小字压在名字后面：同字号并排会跟名字抢，而它是注脚不是主语。
+    """
+    code = str(meta.get("country") or "").strip()
+    if not code:
+        raise SystemExit(
+            f"{where} 缺 `country`：封面上每个球员的名字旁边都要有国旗。\n"
+            "写 IOC 三字码就行（PHI / JPN / CHN），"
+            "src/tennislive/zh/countries.py 里 ISO2 和英文名也认。\n"
+            "查不到就去比赛数据源取：ESPN 的 competitor.athlete.flag.href "
+            "末尾就是 IOC 码（…/countries/500/phi.png）。")
+    flag = _flag(code)
+    if not flag:
+        raise SystemExit(
+            f"{where} 的 country={code!r} 没认出国旗——"
+            "对一遍 src/tennislive/zh/countries.py 里的 IOC 表。")
+    if "rank" not in meta:
+        raise SystemExit(
+            f"{where} 缺 `rank`：对阵要在名字后面的括号里给出即时世界排名。\n"
+            "查过确实没有排名（资格赛、掉出榜单）就显式写 \"rank\": null——"
+            "**别省掉这个键**，省掉之后「查过没有」和「忘了填」长得一模一样。\n"
+            "取数：PYTHONPATH=src python3 tools/lookup_player_meta.py \"<英文名>\"")
+    rank = meta["rank"]
+    if rank is None:
+        print(f"[封面] {name} 声明了没有世界排名（rank: null），括号省略")
+        return f'<span class="who"><b>{flag}</b>{name}</span>'
+    return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
 
 
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
@@ -180,11 +282,20 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
         bottom = _cutout_geometry(cx, seam) + sink
         css.append(f".c-{side}{{left:{cx * 100:.2f}%;top:{bottom - h:.0f}px;"
                    f"height:{h:.0f}px}}")
+        # **谁压住谁**：`front: true` 的那个画在上面。两个人叠在一起时，赢的
+        # 那个在前是这类海报的常规读法——前后关系本身就在说结果。
+        # 压到 2（而不是把前面那个抬到 4）是因为名字那一层是 4、VS 圆牌是 5：
+        # 抬上去会盖住名字，而名字是这张卡在信息流里唯一能被扫到的东西。
+        # 用 `img.c-x` 提一档特异性，否则后面 `.cut{z-index:3}` 会把它盖回去。
+        if not panel.get("front"):
+            css.append(f"img.c-{side}{{z-index:2}}")
+        src = _fade_cut_sides(src)   # 被画框切断的侧边淡出，否则是一条笔直的竖边
         imgs.append(f'<img class="cut c-{side}" src="{_data_uri(src)}">')
     body = (f'<div class="bg"></div><div class="shade cutshade"></div>{"".join(imgs)}'
             f'<div class="seam" style="top:{seam * 100:.1f}%"></div>'
             f'<div class="nm" style="top:{seam * 100:.1f}%">'
-            f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>'
+            f'{_name_html(names[0], versus["top"], "versus.top")}<i></i>'
+            f'{_name_html(names[1], versus["bottom"], "versus.bottom")}</div>'
             f'<div class="vs" style="top:{vs_y:.1f}%">VS</div>')
     extra = ("".join(css) + """
 .bg{position:absolute;inset:0;background-repeat:no-repeat}
@@ -196,6 +307,170 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
   rgba(4,18,13,.70) 64%,rgba(4,18,13,.94) 78%)}
 .cut{position:absolute;transform:translateX(-50%);z-index:3;
   filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));""" + CUT_FADE + "}")
+    return body, extra
+
+
+def _scrim_css(clear: bool) -> str:
+    """盖在照片上的那层暗。
+
+    **上下两头一定要留**：台头压在顶上、钩子压在中间偏下，浅色字压在浅色画面上
+    就没了。**能关掉的只有正中那道 radial**——它是给「文字正好压在主体上」准备的，
+    代价是把整张实拍洗淡一档。
+    """
+    top_bottom = ("linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,"
+                  "rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,"
+                  "rgba(6,28,20,.58) 100%)")
+    centre = ("radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,"
+              "rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)")
+    layers = top_bottom if clear else f"{top_bottom},{centre}"
+    return f".scrim{{position:absolute;inset:0;background:{layers}}}"
+
+
+def _solo_body(cover: dict) -> tuple[str, str]:
+    """`solo`：**「网球有故事」的封面版式**——照片铺满整幅，钩子压在正中。
+
+    这不是我另拟的一套。这个栏目在知识贴／解说片那条线上早就有固定封面
+    （`src/tennislive/video/explainer.py` 的 cover 屏、`webcards.py` 的
+    `knowledge-cover`），账号所有者 2026-07-31 指出剪辑线这版**不是那个版式**。
+    所以照着搬：同一个 1080×1440 画幅、同一条顶部彩条、同一组品牌行、
+    同一颗品牌绿药丸、同一档标题字号和阴影。
+
+    和「赛场之上」的 VS 海报的差别只在讲什么：
+
+    - 赛场之上讲一**场对决** → 两格 + 中缝 + VS 圆牌 + 两个名字 + 赛果行
+    - 网球有故事讲一**个人** → 一张照片铺满 + 一颗药丸 + 一句钩子，
+      **底下什么都不加**
+
+    ⚠️ 三条硬约定，都是账号所有者当场指出来的：
+
+    1. **底下那一行去掉**。原来印着「ATP 500 · 17 岁 · 2026 华盛顿」——
+       赛果那一行本来就该去（它是最后一拍），级别／年龄／赛事这三颗药丸
+       同样不属于这个栏目的封面：知识贴那十三条封面上一颗都没有
+    2. **照片铺满，不留垫层**（`background-size:cover`）。上一版走
+       `fit: width` + 上下垫模糊，等于把 3:4 的画幅让掉一半
+    3. **要全身、要看得见球场**。铺满意味着 16:9 的横素材横向只剩中间
+       42%，所以素材本身必须是竖着能站住的一张——半身特写铺满就是一张脸
+
+    ⚠️ **赛场之上仍然只能用 VS 模板**，判据在 test_封面只有海报模板一条路。
+    """
+    art = cover.get("portrait") or {}
+    if not art.get("image"):
+        raise SystemExit(
+            "solo 版式要 `cover.portrait.image`：这条片子主角的一张实拍。\n"
+            "四道闸门照旧（时间地点人物对得上 / 在比赛中 / 有冲击力 / 够清晰）；"
+            "四类源都拿不到本场的，就从本场源片抓一帧（portrait.frame_at）。\n"
+            "**要全身、要看得见是球场**——照片铺满整幅，半身特写铺满就是一张脸。")
+    src = _precrop(Path(art["image"]), art)
+    uri = _data_uri(src)
+    focus = float(art.get("focus", 0.5)) * 100
+    focus_y = float(art.get("focus_y", 0.5)) * 100
+    zoom = float(art.get("zoom", 1.0)) * 100
+    # **上下叠一张的变体**：`cover.portrait_above` 有图时，画幅分成两格，
+    # 上格是另一个人、下格是主角，中间一道品牌绿。
+    #
+    # 这是给「这条片子讲的就是两个人做同一件事」用的——休伊特那条的父子同一个
+    # 庆祝动作。Tennis TV 自己发过同一个构图（标题 THE HEWITT CELEBRATION），
+    # 那张**不能直接用**（带他们的台标和横幅，把别人的包装摆在我们台头下面），
+    # 但构图是对的：**上下并排比左右并排好**，因为竖版画幅本来就是上下长。
+    #
+    # 和「赛场之上」的 VS 海报不是一回事：VS 讲的是两个人**对打**，这里讲的是
+    # 两个人**做同一件事**，所以没有中缝斜切、没有 VS 圆牌、没有两个名字并列，
+    # 只有一道平直的分界线。
+    #
+    # **两格都不挂名条**（账号所有者 2026-07-31：「这里名字没必要」）。理由站得住：
+    # 台头那行已经写着「十七岁的休伊特，和那个没有名字的动作」，钩子写着
+    # 「他做了父亲的那个动作」——谁是父亲、谁是儿子，字已经说完了，名条只是
+    # 在两张脸上各压一块黑。
+    above = cover.get("portrait_above") or {}
+    icon = Path("assets/logo/brand/icon.png")
+    icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
+                 if icon.is_file() else "")
+    topic = str(cover.get("topic", "")).strip()
+    # **正中那道暗角是可以关掉的。** 下面那层 `.scrim` 是从解说片的 cover 屏
+    # 整段抄过来的（两条线出去的封面必须一个样），它的第二道 radial 在画面
+    # **正中**压 58% 的暗——文字压在中间时那是必要的对比度，可素材本身够暗、
+    # 或者账号所有者要「照片就是照片」时，它会把一张实拍洗成一层背景板。
+    # 账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+    # 所以**按条声明**（`cover.scrim: "clear"`），不去动那个共用的默认值——
+    # 各调各的就会慢慢漂开，那正是这段注释原本要防的。
+    clear_scrim = str(cover.get("scrim", "")).strip().lower() == "clear"
+    lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
+    hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
+    # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
+    # 约占一个字号的宽，写死 96px 时 10 个字就是 960px——**顶出去自动折行**，
+    # 而钩子本来已经手写好了断行，再折一次就多出一个孤行。
+    title_px = min(96, int(940 / max((len(ln) for ln in lines), default=1)))
+    column = html.escape(str(cover.get("eyebrow", "网球有故事")))
+    if above:
+        if not above.get("image"):
+            raise SystemExit("portrait_above 要 `image`：上格那个人的一张实拍。")
+        asrc = _precrop(Path(above["image"]), above)
+        split = float(cover.get("split", 0.47)) * 100
+        hero = (f'<div class="hero hero-a"></div><div class="hero hero-b"></div>'
+                f'<div class="hseam" style="top:{split:.1f}%"></div>')
+        stack_css = (
+            f".hero-a{{bottom:{100 - split:.1f}%;"
+            f"background-image:url('{_data_uri(asrc)}');background-size:cover;"
+            f"background-position:{float(above.get('focus', .5)) * 100:.1f}% "
+            f"{float(above.get('focus_y', .5)) * 100:.1f}%}}"
+            f"\n.hero-b{{top:{split:.1f}%;"
+            f"background-image:url('{uri}');background-size:cover;"
+            f"background-position:{focus:.1f}% {focus_y:.1f}%}}")
+    else:
+        hero = '<div class="hero"></div>'
+        stack_css = ""
+    body = (
+        f'{hero}<div class="scrim"></div><div class="bar"></div>'
+        f'<div class="head"><div class="brandwrap">{icon_html}'
+        f'<div class="brandlines"><span class="brand">网球时差 · {column}</span>'
+        + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
+        + f'</div></div></div>'
+        f'<div class="storycopy"><span class="kicker">{column}</span>'
+        f'<div class="storytitle">{hook}</div></div>')
+    solo_bg = "" if above else (
+        f"background-image:url('{uri}');background-size:cover;"
+        + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
+        + f"background-position:{focus:.1f}% {focus_y:.1f}%")
+    extra = (
+        # 照片铺满。`zoom` 留着给「人在画面里太小」的素材再推一档，默认 1.0。
+        f".hero{{position:absolute;inset:0;background-repeat:no-repeat;"
+        f"{solo_bg}}}" + stack_css
+        # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
+        # 封面必须是同一个样子，各调各的就会慢慢漂开。
+        + """
+__SCRIM__
+.bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
+ background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}
+.head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
+ align-items:center;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.brandwrap{display:flex;align-items:center;gap:14px}
+.brandlines{display:flex;flex-direction:column;gap:2px}
+.brand-icon{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55))}
+.brand{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:38px;
+ font-weight:400;letter-spacing:1px;color:#f4fbf7}
+.topic{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#dcefe4;letter-spacing:1px;
+ text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}
+.storycopy{position:absolute;left:70px;right:70px;top:50%;
+ transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;
+ gap:34px;align-items:flex-start}
+.hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
+ transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
+.kicker{align-self:flex-start;background:#c6f65a;color:#062018;font-size:30px;
+ font-weight:800;letter-spacing:4px;padding:11px 26px;border-radius:999px}
+.storytitle{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
+ 0 0 60px rgba(6,28,20,.7)}
+"""
+        .replace("__SCRIM__", _scrim_css(clear_scrim))
+        + f".storytitle{{font-size:{title_px}px}}"
+        # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
+        # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
+        # 追加在最后，同特异性下后写的赢。
+        + (".storycopy{top:auto;bottom:96px;transform:none;gap:26px}"
+           if above else ""))
     return body, extra
 
 
@@ -334,17 +609,25 @@ def _result_block(cover: dict, names: list) -> str:
     品牌绿，不引入第二个强调色（一屏最多一个强调色）。
 
     老的 `score` / `sub` 两个字段继续认，斜切那两条已发布的片子不受影响。
+
+    **赛果那一行可以整行不要**（只给 `tier` / `round` / `meta`，不给 `result`）。
+    「赛场之上」讲的是一场对决，赛果就是标题；**网球有故事讲的是一个人**，
+    把「德米纳尔 6-2 6-3 克鲁兹·休伊特」印在封面上等于**先把结局说了**——
+    休伊特那条六拍的结构里，比分是第 5 拍，而第 5 拍恰恰是「片子不能停在
+    这儿」的那一拍。封面剧透完，后面五拍就没人看了。
     """
-    if not cover.get("result"):
+    result = str(cover.get("result") or "")
+    event_badge = cover.get("event_badge") or {}
+    has_footer = bool(event_badge or cover.get("tier")
+                      or cover.get("round") or cover.get("meta"))
+    if not result and not has_footer:
         return (f'<div class="score">{cover.get("score", "")}</div>'
                 f'<div class="sub">{cover.get("sub", "")}</div>')
     winner = str(cover.get("winner", "")).strip()
     loser = next((n for n in names if str(n).strip() != winner), "")
-    result = str(cover["result"])
     # 三盘的比分比两盘长一截（「6-7(3) 6-3 6-4」比「7-6(3) 6-3」多四个字位），
     # 加上两个名字会顶出 948px 的可用宽度。长了就降一档，别让它折行。
     sets_px = 62 if len(result) <= 11 else 54
-    event_badge = cover.get("event_badge") or {}
     if event_badge:
         tour = str(event_badge.get("tour", "")).strip().lower()
         if tour not in {"atp", "wta"}:
@@ -356,11 +639,18 @@ def _result_block(cover: dict, names: list) -> str:
             "<svg ", '<svg class="tour-logo" aria-hidden="true" ', 1)
         level = html.escape(str(event_badge.get("level", "")).strip())
         text = html.escape(str(event_badge.get("text", "")).strip())
+        # **`meta` 要和 badge 并存，不能被它吞掉。** 「开球之前」是赛前前瞻，
+        # 封面必须写清**几点开球**（账号所有者定的：首页问题下面小字加时间、
+        # 赛事、轮次）。原来只有 tier/round 那条路读 `meta`，写了 event_badge
+        # 的 spec 里那个时刻就**静静地不见了**——海报看着完整，少的那样东西
+        # 恰好是这类片子唯一的行动信息。
+        meta = html.escape(str(cover.get("meta", "")).strip())
         footer = (
             '<div class="eventline">'
             f'<span class="tourmark">{logo}<b>{level}</b></span>'
             f'<span class="eventtext">{text}</span>'
-            "</div>"
+            + (f'<span class="eventtext">{meta}</span>' if meta else "")
+            + "</div>"
         )
     else:
         pills = "".join(f'<span class="pill">{p}</span>'
@@ -371,6 +661,8 @@ def _result_block(cover: dict, names: list) -> str:
             + (f'<span class="mtx">{meta}</span>' if meta else "")
             + "</div>"
         )
+    if not result:
+        return footer
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
@@ -386,22 +678,39 @@ def build(spec: dict, layout: str, out: Path) -> Path:
 
 def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     """把一个 `cover` 段落渲成 1080×1440 的海报。`build_match_reel` 直接调它。"""
-    versus = cover["versus"]
-    top, bottom = versus["top"], versus["bottom"]
-    # 名字是模板的一部分，不是可选装饰：只有两张脸的 VS 卡等于让人猜这是谁打谁，
-    # 而中文名是这条片子在信息流里唯一能被扫到的东西。
-    # **一律以译名表为准**（`src/tennislive/zh/player_names_top500.json` 优先），
-    # 别手打——莱巴金娜、奥斯塔彭科都是这么错出去的。
-    names = versus.get("names") or []
-    if len(names) != 2 or not all(str(n).strip() for n in names):
-        raise SystemExit(
-            "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
-            "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
+    # **`solo` 是给「讲一个人」的片子用的，不是 VS 的降级。**
+    #
+    # 账号所有者 2026-07-31：休伊特那条「是讲休伊特的儿子的话题，不是赛场之上的
+    # 内容」「所以封面只有休伊特儿子照片」——栏目是**网球有故事**，只是这次用
+    # 视频呈现。VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决，
+    # 套在讲人的片子上，等于让读者去猜这是谁打谁。
+    #
+    # ⚠️ **赛场之上仍然只能用 VS 模板**——那条规矩没变，判据在
+    # `test_封面只有海报模板一条路`。solo 认的是别的栏目。
+    if layout == "solo":
+        names = [str(cover.get("subject", "")).strip()]
+        if not names[0]:
+            raise SystemExit(
+                "solo 版式要 `cover.subject`：这条片子讲的是谁（中文名）。\n"
+                "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
+    else:
+        versus = cover["versus"]
+        top, bottom = versus["top"], versus["bottom"]
+        # 名字是模板的一部分，不是可选装饰：只有两张脸的 VS 卡等于让人猜这是谁
+        # 打谁，而中文名是这条片子在信息流里唯一能被扫到的东西。
+        # **一律以译名表为准**，别手打——莱巴金娜、奥斯塔彭科都是这么错的。
+        names = versus.get("names") or []
+        if len(names) != 2 or not all(str(n).strip() for n in names):
+            raise SystemExit(
+                "赛场之上的海报要两个人的中文名：versus.names = [上格, 下格]。\n"
+                "名字查 src/tennislive/zh/player_names_top500.json，别手打。")
 
     hook = "".join(f"<div>{line.strip()}</div>"
                    for line in str(cover.get("hook", "")).split("\n") if line.strip())
 
-    if layout == "cutout":
+    if layout == "solo":
+        body, panels = _solo_body(cover)
+    elif layout == "cutout":
         body, panels = _cutout_body(cover, versus, names)
     else:
         # 斜切的两块交界处压一条品牌绿的细边——**没有这条边，两张照片会像没对齐的
@@ -416,13 +725,25 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
         # stack：名字压在各自那一格，其余版式名字并排在 VS 两侧
         if layout == "stack":
             name_els = (
-                f'<div class="na n-a" style="top:{seam - 12:.1f}%">{names[0]}</div>'
-                f'<div class="na n-b" style="top:{seam + 5:.1f}%">{names[1]}</div>')
+                f'<div class="na n-a" style="top:{seam - 12:.1f}%">'
+                f'{_name_html(names[0], top, "versus.top")}</div>'
+                f'<div class="na n-b" style="top:{seam + 5:.1f}%">'
+                f'{_name_html(names[1], bottom, "versus.bottom")}</div>')
         else:
             name_els = (f'<div class="nm" style="top:{seam:.1f}%">'
-                        f'<span>{names[0]}</span><i></i><span>{names[1]}</span></div>')
+                        f'{_name_html(names[0], top, "versus.top")}<i></i>'
+                        f'{_name_html(names[1], bottom, "versus.bottom")}</div>')
         body = (f'<div class="p p-a"></div><div class="p p-b"></div>{seam_el}'
                 f'<div class="shade"></div>{name_els}{badge}')
+
+    # **solo 自带整块文案，不再接 VS 那一套。** VS 的尾巴是「台头药丸 + 钩子 +
+    # 赛果行」；网球有故事的封面版式里，台头在顶部的品牌行里、钩子压在正中，
+    # **底下什么都不加**——赛果是最后一拍，级别／年龄／赛事那三颗药丸也不属于
+    # 这个栏目的封面（知识贴那十三条封面上一颗都没有）。
+    tail = "" if layout == "solo" else (
+        f'<div class="top">{cover.get("eyebrow", "")}</div>'
+        f'<div class="copy"><div class="hook">{hook}</div>'
+        f'{_result_block(cover, names)}</div>')
 
     html = f"""<!doctype html><meta charset="utf-8"><style>
 {_font_css()}
@@ -449,6 +770,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   padding:0 66px;font-family:'TL Display SC','TL Sans SC',sans-serif;
   font-size:62px;color:{TEXT};text-shadow:0 4px 26px rgba(0,0,0,.75)}}
 .nm i{{flex:1}}
+/* **国旗 + 名字 +（即时世界排名）**（账号所有者 2026-08-02 定的）。
+   排名压到 0.6em 并且降一档亮度：同字号并排会跟名字抢，而它是注脚不是主语。
+   量过版心：1080 减两边 66px 是 948px，「🇯🇵 大坂直美（13）」约 458px、
+   「🇵🇭 伊埃拉（28）」约 396px，加起来 854px，还剩 94px。再往上加字
+   （比如「世界第 13」）就会顶出边。 */
+.who{{display:inline-flex;align-items:baseline;white-space:nowrap}}
+.who b{{font-weight:400;margin-right:.22em}}
+.who em{{font-style:normal;font-size:.6em;opacity:.82;margin-left:.02em}}
 .na{{position:absolute;left:66px;z-index:4;font-size:62px;color:{TEXT};
   font-family:'TL Display SC','TL Sans SC',sans-serif;
   text-shadow:0 4px 26px rgba(0,0,0,.75)}}
@@ -473,6 +802,9 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}
 .meta{{margin-top:20px;display:flex;align-items:center;gap:14px}}
+/* 没有赛果那一行时（网球有故事），药丸直接顶着钩子，20px 太紧——那 20px
+   本来是接在 `.res` 的 28px 下面的。 */
+.hook+.meta,.hook+.eventline{{margin-top:34px}}
 .eventline{{margin-top:20px;display:flex;align-items:center;gap:22px}}
 .tourmark{{height:48px;min-width:158px;border:2px solid {BRAND};
   border-radius:999px;color:{BRAND};display:inline-flex;align-items:center;
@@ -487,10 +819,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .mtx{{font-size:30px;color:{DIM};letter-spacing:2px}}
 </style>
 {body}
-<div class="top">{cover.get('eyebrow', '')}</div>
-<div class="copy"><div class="hook">{hook}</div>
-{_result_block(cover, names)}</div>"""
+{tail}"""
 
+    return _render_html(html, out)
+
+
+def _render_html(html: str, out: Path) -> Path:
+    """把一段 HTML 渲成 1080×1440 的 JPEG。solo 和 VS 两条版式共用这一段，
+    免得浏览器查找的那串兜底路径在两处各写一遍、改一处漏一处。"""
     page = out.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
@@ -526,11 +862,12 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
     return out
 
 
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--spec", required=True)
     ap.add_argument("--layout", default="cutout",
-                    choices=("cutout", "diagonal", "split", "stack"))
+                    choices=("cutout", "diagonal", "split", "stack", "solo"))
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))

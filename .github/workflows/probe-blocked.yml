@@ -13,33 +13,122 @@ on:
         required: false
         default: "Coleman Wong,Brooksby"
       urls:
-        description: "自定义目标 URL，逗号分隔（给了就不探默认那五条）。图片会存成 artifact"
+        description: "http 模式：自定义目标 URL，逗号分隔（给了就不探默认那五条）。图片会存成 artifact"
+        required: false
+        default: ""
+      mode:
+        description: "http=urllib 探那几个固定源；browser=用 Chromium 探 TNNS"
+        required: false
+        default: "http"
+      url:
+        description: "browser 模式要加载的页面（默认 tnnslive.com 首页）"
+        required: false
+        default: ""
+      fetch:
+        description: "browser 模式：过了挑战之后在页面里 fetch 的接口，逗号分隔"
+        required: false
+        default: ""
+      dump:
+        description: "browser 模式：在 fetch 回来的 JSON 里找含这个词的对象"
+        required: false
+        default: ""
+      link:
+        description: "browser 模式：把页面里含这个串的 href 列出来"
+        required: false
+        default: ""
+      audio_url:
+        description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
         required: false
         default: ""
 
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半上下（daily 那条量到 1:31，match-reel 2:44），
+          # 而**这条工作流一个字节都不碰 output/**。稀疏检出把它挡在外面，
+          # 剩下的全部加起来 161 MB。cone 模式下根目录的文件总是带上。
+          #
+          # ⚠️ 这里没有 `git sparse-checkout add`——因为它不写产物。会写
+          # `output/` 的那几条要在算出目录之后把自己那一格 add 回来，
+          # 见 match-reel.yml。照抄这一段之前先确认你这条真的不写产物。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: 装 Pillow（图片这一档要解码才报得出真实尺寸）
+      # 图片这一档要解码才报得出真实尺寸——soft-404 会返回 200 加一张错误页，
+      # 只看状态码分不出来。
+      - name: 装 Pillow（http 模式探图要）
+        if: github.event.inputs.mode != 'browser' && github.event.inputs.audio_url == ''
         run: pip install -q pillow
+      # browser 模式要浏览器。**装在跑之前**，别等跑到一半才报
+      # ModuleNotFoundError——竖版剪辑那条线同一个毛病犯过三次。
+      - name: 装 Chromium（browser 模式才要）
+        if: github.event.inputs.mode == 'browser'
+        run: |
+          pip install -q playwright
+          python -m playwright install --with-deps chromium
+      # audio 模式：YouTube 要 cookie 才下得动（沙箱直接吃 bot 校验），
+      # 所以这一条只能在 runner 上跑。
+      - name: 落 cookies（audio 模式才要）
+        if: github.event.inputs.audio_url != ''
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          # numpy 是算能量包络要的；ffmpeg runner 自带。
+          # 「加能力要同时改三处」——这条线上漏依赖已经是第四次了。
+          # `[default]` 带 yt-dlp-ejs（解 n challenge 的那一环）。这条线正是
+          # 判「是不是被挡了」的，少了它会把「我装少了」误报成「片子被挡」。
+          pip install -q "yt-dlp[default]" numpy imageio-ffmpeg
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::warning::没有 YT_COOKIES_TXT，多半会被 bot 校验挡住"
+          fi
+
+      - name: 验观众声
+        if: github.event.inputs.audio_url != ''
+        run: |
+          A=""
+          [ -n "${{ steps.cookies.outputs.path }}" ] && A="--cookies ${{ steps.cookies.outputs.path }}"
+          python tools/check_crowd_rise.py --url "${{ github.event.inputs.audio_url }}" $A
+
       - name: 探
+        if: github.event.inputs.audio_url == ''
         run: |
           ARGS=""
           IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
           for w in "${WORDS[@]}"; do [ -n "$w" ] && ARGS="$ARGS --want \"$w\""; done
-          IFS=',' read -ra URLS <<< "${{ github.event.inputs.urls }}"
-          for u in "${URLS[@]}"; do [ -n "$u" ] && ARGS="$ARGS --url \"$u\""; done
-          eval python tools/probe_blocked_sources.py --save probe_out $ARGS
+          if [ "${{ github.event.inputs.mode }}" = "browser" ]; then
+            [ -n "${{ github.event.inputs.url }}" ] && ARGS="$ARGS --url '${{ github.event.inputs.url }}'"
+            [ -n "${{ github.event.inputs.dump }}" ] && ARGS="$ARGS --dump '${{ github.event.inputs.dump }}'"
+            [ -n "${{ github.event.inputs.link }}" ] && ARGS="$ARGS --link '${{ github.event.inputs.link }}'"
+            IFS=',' read -ra FS <<< "${{ github.event.inputs.fetch }}"
+            for f in "${FS[@]}"; do [ -n "$f" ] && ARGS="$ARGS --fetch '$f'"; done
+            eval python tools/probe_tnns.py $ARGS
+          else
+            IFS=',' read -ra URLS <<< "${{ github.event.inputs.urls }}"
+            for u in "${URLS[@]}"; do [ -n "$u" ] && ARGS="$ARGS --url \"$u\""; done
+            eval python tools/probe_blocked_sources.py --save probe_out $ARGS
+          fi
       # 取到的图要能拿回来看——**光有日志里的尺寸没法过那四道闸门**，
       # 精准/在比赛中/冲击力/清晰度全都得打开看。
       - name: 把取到的图传出来
-        if: always()
+        if: always() && github.event.inputs.mode != 'browser' && github.event.inputs.audio_url == ''
         uses: actions/upload-artifact@v4
         with:
           name: probe-images

@@ -27,7 +27,16 @@ output/grand-slam-vertical-v2/_work/
 # 找图时下载的候选，看完即弃
 tools/broll/
 
-# 海报模板的裁切中间物：`_precrop` 存 .crop.jpg，`_cut_crop` 存 .crop.png
-# （抠图要保 alpha，所以走 PNG）。两个都落在原图旁边，渲完即弃，别进仓库。
+# 海报模板的裁切中间物，全都落在原图旁边、渲完即弃，别进仓库：
+#   `_precrop`        → .crop.jpg
+#   `_cut_crop`       → .crop.png（抠图要保 alpha，所以走 PNG）
+#   `_fade_cut_sides` → .faded.png（侧边淡出，接在 .crop.png 后面）
+#
+# ⚠️ **第三个是漏掉之后补的。** 上面这段注释原来只列了前两个，而
+# `_fade_cut_sides` 存的是 `X.crop.png` → `X.crop.faded.png`——`*.crop.png`
+# 匹配不上它，于是两张 127 KB / 94 KB 的中间物躺在 assets/players/ 里等着被提交。
+# **同一条链上逐个列名字，就是挡不住下一个**——和 outdir 里 `source*` 那个坑
+# 连栽四次是同一个形状。判据落在 test_海报的裁切中间物一个都不许进仓库。
 *.crop.jpg
 *.crop.png
+*.faded.png

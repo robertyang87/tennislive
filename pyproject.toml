@@ -17,7 +17,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0"]
+# ruff 是判据不是洁癖：`--select F821`（未定义的名字）。`build_versus_poster`
+# 里 `_cut_person(source, …)` 的 source 从来就不存在，「首选本场抽帧」那条
+# 路一次都没跑起来过；同一天我自己又漏了一个 `seconds`，在 runner 上白跑
+# 五分钟才炸。这两个 py_compile 和 pytest 都看不见，ruff 一秒指出来。
+# pyyaml 是给**读工作流 YAML 的测试**用的（`test_match_reel.py` 里那条
+# 「渲染专用的依赖不许挂在 probe 路径上」）。它一度不在这儿，而沙箱里恰好
+# 装着，于是本地全绿、CI 红——**本地装着不等于 CI 装着**，这条在竖版剪辑线上
+# 已经栽过三次（playwright、Chromium、cv2），这次栽在测试依赖上。
+# 判据落在 `test_测试用到的第三方包都在dev依赖里`。
+dev = ["pytest>=7.0", "ruff>=0.6", "pyyaml>=6.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
@@ -41,3 +50,8 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff.lint.per-file-ignores]
+# cards.py 的主题色是 `globals().update(_THEMES[...])` 灌进来的——静态看不见，
+# 72 条全是假阳性。**排除写在这儿而不是藏在测试里**，让它是一个看得见的决定。
+"src/tennislive/render/cards.py" = ["F821"]

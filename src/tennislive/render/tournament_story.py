@@ -1335,6 +1335,392 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="pr-allowance",
+        title="它能用几次",
+        subtitle="网球观察 · 规则篇",
+        identity="保护排名的额度",
+        chips=("规则与代价", "保护排名", "2026"),
+        hero=(
+            "保护排名不是一张年卡。ATP 规则书写着：停赛 6–12 个月给 **9 站或 9 个月**，"
+            "停满 12 个月给 12 站或 12 个月——**两个上限同时在倒计时，谁先到算谁**。"
+            "而进了签表就扣掉一站，不看输赢。"
+        ),
+        facts=(
+            "**ATP 规则书第九章 F 节**（2026 版第 136 页，2025 版逐字相同）："
+            "停赛满 6 个月不足 12 个月，保护排名给 **9 站或 9 个月**；满 12 个月给 12 站或 12 个月。"
+            "中间那个「或」不是二选一，**是两个上限并排走，谁先到谁算数**。"
+            "另有一条：每个大满贯只能用它进一次。",
+            "**九站怎么算**：条文原话是「用保护排名参赛的头九站」，"
+            "括号里排除了拿外卡进的和按真实排名直入的——那两种不占额度。"
+            "但只要名字进了签表，这一站就扣掉，**不看输赢**；"
+            "在赛地退赛并领了奖金，同样算一站。",
+            "**门槛要先付一笔更长的空白**：连续 6 个月不参加任何比赛，表演赛也算。"
+            "2025 年 1 月澳网首轮之后，商竣程做了右脚第五跖骨手术，取碎骨、切断一半肌腱。"
+            "他缺席法网；**那年温网他站得上场，但打了就凑不满 6 个月**——他没打。"
+            "7 月 28 日多伦多复出，首轮负于达克沃斯，那口钟从这一天开始走。",
+            "**钟可以按暂停**。规则书第五款「再伤保护」：复出后再次受伤可申请冻结剩余的站数和周数，"
+            "条件是这次至少停满 3 个月且申请要在这期间交上去，复出时剩多少还是多少，最多冻两次。"
+            "2026 年 2 月迪拜之后，商竣程的脚伤又犯了，一停 5 个月，时间上正好越过那道门槛。"
+            "⚠️ 他有没有提交申请、ATP 有没有批，没有公开记录，这一层是照条文算出来的。",
+            "**8 月 2 日蒙特利尔大师赛正赛首轮，他 6-3 6-3 赢了巴列霍**，用时 1 小时 21 分——"
+            "伤停后的第一场胜利，上一次赢球还要追到 1 月 19 日的澳网。"
+            "**世界第 270 出现在一站大师赛的正赛里**，那就是这张凭证在做的事："
+            "把他从报名这一关送进来，剩下的还得自己打。次轮对 10 号种子卢布列夫。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2025-07-28", player="商竣程", age="20 岁",
+                headline="为了这张凭证，他放弃了温网",
+                detail=(
+                    "手术后恢复不到位缺席法网；温网他站得上场，"
+                    "但打了就凑不满连续 6 个月，保护排名就没了。"
+                    "多伦多复出首轮负于达克沃斯——那口 9 个月的钟，从这天起走。"
+                ),
+                source_url="https://www.atptour.com/en/scores/archive/toronto/421/2025/results",
+            ),
+            ChampionMoment(
+                date="2026-08-02", player="商竣程", age="21 岁",
+                headline="世界第 270，站在大师赛正赛里",
+                detail=(
+                    "蒙特利尔首轮 6-3 6-3 胜巴列霍，1 小时 21 分，"
+                    "伤停后第一胜。生涯最高第 47 是 2024 年 10 月的事。"
+                ),
+                source_url="https://www.nationalbankopen.com/en/",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 IX.F Entry Protection",
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_url="https://www.atptour.com/en/players/rulebook",
+    ),
+    _trivia_story(
+        slug="challenger-climb",
+        title="难的不是对手",
+        subtitle="网球观察 · 规则篇",
+        identity="低级别为什么爬不上来",
+        chips=("规则与代价", "挑战赛", "2026"),
+        hero=(
+            "同一周，ATP250 洛斯卡沃斯的 8 号种子（第 67）比挑战赛温哥华的"
+            "1 号种子（第 103）还高 36 位——**低级别的对手并没有更强**。"
+            "难的是兑换率、那道门，和一块只够一个人站的地板。"
+        ),
+        facts=(
+            "同一周、同一片大陆、同样的室外硬地：**ATP250 洛斯卡沃斯的种子从第 12 到第 67，"
+            "挑战赛 125 温哥华的种子从第 103 到第 150**，两条线中间没有交叠。"
+            "女子那边同样 32 签，WTA250 孟菲斯的 8 号种子第 59，WTA125 温哥华的 1 号种子第 110。",
+            "**兑换率**：挑战赛 125 冠军要赢 5 场，125 分；ATP250 赢 2 场进四强，100 分。"
+            "挑战赛 50 的冠军（赢 5 场）50 分，等于在 1000 赛赢一场球。"
+            "**挑战赛／500／250 输第一轮零分**，而大满贯和 96 签的 1000 赛输第一轮还有 10 分。",
+            "**那道门**：邦齐世界第 103，在温哥华是 1 号种子；同一周的洛斯卡沃斯，"
+            "8 号种子已经是第 67。**第 103 这个排名在那一站连正赛都够不着**——"
+            "「更难」的不是这一站，是你进不去另一站。",
+            "温哥华那张 32 人签表里坐着：波皮林（第 104，两年前的蒙特利尔大师赛冠军，靠外卡来打）、"
+            "张之臻（第 158，曾进世界前 30），还有人用保护排名来打。"
+            "**往上爬的人和刚掉下来的人挤在同一张签表里。**",
+            "ATP 从 2024 年起给前 250 设了收入下限，2025 年的档位是前 100 保 30 万美元、"
+            "101–175 保 20 万、176–250 保 10 万，那一年补出去 200 多万；"
+            "挑战赛还必须提供免费住宿。**但一年开销最省 4 万、常见 7 万+、带教练加体能师 20 万**"
+            "——规则书写的是「每位球员一间双床房」，教练住进去自己付。"
+            "**而女子那边至今没有对应的保底收入计划。**",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-27", player="邦齐", age="—",
+                headline="第 103 名的两种身份",
+                detail=(
+                    "同一周，他在温哥华挑战赛是 1 号种子；"
+                    "在洛斯卡沃斯 ATP250，这个排名连正赛都进不去。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2026_Odlum_Brown_Vancouver_Open",
+            ),
+            ChampionMoment(
+                date="2024-01-01", player="ATP", age="—",
+                headline="Baseline 保底计划上线",
+                detail=(
+                    "给前 250 位设收入下限，2025 年补出去 200 多万美元。"
+                    "而 2013 年，能靠打球收支平衡的男子只有 336 人。"
+                ),
+                source_url="https://www.atptour.com/en/news/baseline-financial-security-programme-august-2023",
+            ),
+        ),
+        image_keys=(),
+        image_credit="Wikimedia Commons · CC BY-SA 4.0",
+        source_label="ATP 2026 官方规则书 / 赛事签表",
+        source_url="https://en.wikipedia.org/wiki/2026_Odlum_Brown_Vancouver_Open",
+    ),
+    _trivia_story(
+        slug="entry-deadline",
+        title="名单六周前就锁上了",
+        subtitle="网球观察 · 规则篇",
+        identity="报名截止线：只认那一天的排名",
+        chips=("规则与代价", "报名截止", "2026 美网"),
+        hero=(
+            "2026 美网的正赛名单是 7 月 20 日锁上的——正赛周周一往前推六周。"
+            "那天男子的直入线在第 101、女子在第 102；"
+            "之后你涨多少跌多少，这张名单一个字都不改。"
+        ),
+        facts=(
+            "条文写在两本规则书里，三条线长短不一样：**大满贯正赛提前 6 周、"
+            "巡回赛正赛 4 周、资格赛 3 周**。WTA 2026 第三节原话是 `Main Draw Entry "
+            "Deadlines for Grand Slams are six (6) weeks prior to the Monday of the week "
+            "in which each event's Main Draw starts`；ATP 7.03 写成天数（28 天 / 21 天），算下来一样。",
+            "2026 美网正赛 8 月 30 日开打，正赛周周一是 8 月 31 日，"
+            "往前推六周正是 **7 月 20 日**。资格赛 8 月 24 日开打——"
+            "**从锁名单到开赛，中间隔着整整六周的比赛。**",
+            "那天男子直入线落在第 101，最后一个直入的是科梅萨尼亚；女子的线在第 102。"
+            "**郑钦文第 123，差 22 位；德雷珀第 147，差 46 位**——"
+            "德雷珀今年只打了 13 场巡回赛正赛（手臂伤缺澳网、法网前伤膝、温网再缺席）。",
+            "线右边也有人进得去：**男子全场只有 3 人靠保护排名进正赛，商竣程是其中之一**，女子那边 5 人。"
+            "保护排名不是外卡，它只是那张用旧排名报名的凭证。",
+            "**同一条线，两个中国球员落在两边**：商竣程拿着凭证进了正赛，"
+            "郑钦文因为去年九月硬撑着打了中网那两场、把停赛切成两截而够不上，"
+            "只能靠外卡或资格赛。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-20", player="科梅萨尼亚", age="—",
+                headline="最后一个直入的人",
+                detail=(
+                    "美东下午 5 点名单锁上，世界第 101 的他是男子最后一个"
+                    "直接进入正赛的球员。"
+                ),
+                source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+            ),
+            ChampionMoment(
+                date="2026-07-20", player="商竣程", age="20 岁",
+                headline="用保护排名够着了那条线",
+                detail=(
+                    "男子签表里只有三个人靠保护排名进正赛，他是其中之一；"
+                    "同一天，郑钦文只有真实排名第 123 可用。"
+                ),
+                source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+            ),
+        ),
+        image_keys=(),
+        image_credit="香港网球公开赛官方",
+        source_label="WTA / ATP 2026 官方规则书 · 美网报名名单",
+        source_url="https://www.puntodebreak.com/en/2026/07/22/the-us-open-2026-gets-underway-surprises-among-the-registered-tennis-players",
+    ),
+    _trivia_story(
+        slug="mandatory-1000",
+        title="强制赛为什么可以不去",
+        subtitle="网球观察 · 规则篇",
+        identity="缺席一站大师赛，账单是多少",
+        chips=("规则与代价", "ATP 大师赛", "2026 蒙特利尔"),
+        hero=(
+            "辛纳把 2026 年打过的五个大师赛全赢了，第六个没去；"
+            "德约科维奇和阿尔卡拉斯也不在蒙特利尔的签表上。"
+            "大师赛是强制的，ATP 规则书写着处罚自动生效、不可申诉——"
+            "可这三个人去年在多伦多也没打，那一站记的同样是 0。"
+        ),
+        facts=(
+            "辛纳把 2026 年打过的五个大师赛全赢了：印第安维尔斯、迈阿密、蒙特卡洛、"
+            "马德里、罗马。**史上第一个赢下赛季前四站的人**，也是第一个五连冠。"
+            "7 月 12 日他温网卫冕，20 天后蒙特利尔开打，签表上没有他。",
+            "2026 ATP 规则书第八章：从大师赛正赛退赛**一律记一次排名处罚**，"
+            "原话是 `Ranking penalties are automatic and cannot be appealed`。"
+            "**ATP 500 可以靠推广活动、停赛 30 天或育儿身份豁免免掉，大师赛不行。**",
+            "第二笔在奖金池（大师赛＋年终总决赛共 2153.7 万美元）：缺 1 站扣 25%，"
+            "缺 2 站 50%，缺 3 站 75%，缺 4 站清零。**到场做推广能把 25% 减到 12.5%，"
+            "但规则书同一段写死了它不解除排名处罚**，且最多赎回 20 万美元。",
+            "去年加拿大站在多伦多，三个人同样缺席。排名是 52 周滚动的，"
+            "**今年这个 0 顶掉去年那个 0——排名上一分不差。**",
+            "唯一的出口在 9.03 Note 3：**连着缺两个或以上的强制赛**，大师赛、大满贯、"
+            "年终总决赛都算，可向医疗委员会申请抹掉最多 3 个零分。"
+            "阿尔卡拉斯手腕伤缺了法网、温网，够得着；辛纳只缺这一站，且已报名辛辛那提。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-07-24", player="辛纳", age="24 岁",
+                headline="赛前一周退出蒙特利尔",
+                detail=(
+                    "「我们认为把健康放在第一位是正确的决定。」"
+                    "德约科维奇同日退赛；阿尔卡拉斯因右手腕伤本就不在名单上。"
+                ),
+                source_url="https://www.cbc.ca/lite/story/9.7282909",
+            ),
+            ChampionMoment(
+                date="2026-08-01", player="兹维列夫", age="29 岁",
+                headline="顶替成为头号种子",
+                detail=(
+                    "蒙特利尔 8 月 1 日开打，法网冠军兹维列夫升为头号种子，"
+                    "阿利亚西姆第二——加拿大选手史上最高种子位。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+            ),
+        ),
+        image_keys=(),
+        image_credit="AELTC / Joel Marklund · wimbledon.com 官方图",
+        source_label="ATP 2026 官方规则书 / CBC",
+        source_url="https://www.atptour.com/-/media/files/rulebook/2026/2026-rulebook_19dec25.pdf",
+        evidence_urls=(
+            "https://www.cbc.ca/lite/story/9.7282909",
+            "https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+        ),
+    ),
+    _trivia_story(
+        slug="comeback-middle",
+        title="中段长得一模一样",
+        subtitle="网球观察 · 人物篇",
+        identity="同一台手术，两个相反的结局",
+        chips=("伤病与复出", "同一个部位", "当时分不出来"),
+        hero=(
+            "德约科维奇 2018 年 2 月做右肘手术，那个春天跌到世界第 22；"
+            "锦织圭 2019 年 10 月做右肘手术，世界第 8。前者五个月后拿下温网，"
+            "后者再没回到前列——而在中段那几个月，两条路长得一模一样。"
+        ),
+        facts=(
+            "德约科维奇 2018 年 2 月手术后连败：印第安维尔斯 2 轮负**世界第 109 位**"
+            "的丹尼尔太郎，巴塞罗那负克利赞，马德里负埃德蒙德后跌至第 18，"
+            "罗马之后第 22——**上一次跌出前 20 是 2006 年 10 月**。",
+            "五个月后他拿下温网（决赛 6-2 6-2 7-6 胜安德森），同年再夺美网"
+            "（6-3 7-6 6-3 胜德尔波特罗），年底重回世界第一。",
+            "锦织圭 2019 年 10 月做右肘手术清除两块骨刺，当时世界第 8、生涯最高第 4，"
+            "停赛 10 个月。**2021 年他一度打进法网 16 强、东京奥运八强、华盛顿四强**，"
+            "看起来正在回来；2022 年 1 月左髋手术报销整季，2023 年 6 月才重返巡回赛。",
+            "分岔不在肘：德约科维奇身上只有那一处伤，锦织圭在此之后还有新冠、"
+            "肩伤与髋部手术。**中段无法预判**——这是这条故事唯一的结论。",
+            "郑钦文 2025 年 7 月右肘手术，术前一个月世界第 4；一年之后排名第 123，2026 年 8 月 1 日多伦多资格赛首轮出局。**她正走在那一段里。**",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2018-05-19",
+                player="德约科维奇",
+                age="30 岁",
+                headline="跌出前 20",
+                detail=(
+                    "罗马大师赛四强负于纳达尔后，世界排名跌至第 22，"
+                    "是他自 2006 年 10 月以来第一次跌出前 20。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+            ChampionMoment(
+                date="2018-07-15",
+                player="德约科维奇",
+                age="31 岁",
+                headline="温网夺冠",
+                detail=(
+                    "手术后第五个月，决赛 6-2、6-2、7-6(3) 击败安德森，"
+                    "拿下两年来第一个大满贯；同年美网再胜德尔波特罗，年底重回世界第一。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+            ),
+        ),
+        image_keys=(),
+        source_label="Wikipedia 2018 Djokovic season / ESPN / The Japan Times",
+        source_url="https://en.wikipedia.org/wiki/2018_Novak_Djokovic_tennis_season",
+        image_credit="Carine06 · Wikimedia Commons · CC BY-SA 2.0",
+    ),
+    _trivia_story(
+        slug="protected-ranking",
+        title="保护的不是排名",
+        subtitle="网球观察 · 规则篇",
+        identity="保护排名：它保的是报名，不是排名",
+        chips=("规则冷知识", "连续 26 周", "两截不累加"),
+        hero=(
+            "长期伤停的球员可以用停赛前的旧排名报名，这张凭证 ATP 叫 "
+            "Entry Protection、WTA 叫 Special Ranking；它只管报名，"
+            "不管种子、不管幸运落败者顺位，也不会让真实排名停下来。"
+        ),
+        facts=(
+            "ATP 2026 规则书 IX.F 的正式名是 **Entry Protection**（进赛保护）："
+            "停赛满 6 个月、期间一场不打（含表演赛）才可申请，且明写不得用于种子"
+            "与幸运落败者顺位。",
+            "WTA 2026 规则书 VIII.C 叫 **Special Ranking**，门槛是连续 26 周；"
+            "适用情形比 ATP 多出怀孕与成为父母。种子上两家分叉：WTA 允许复出后"
+            "前 8 站当额外种子，ATP 一律不给。",
+            "26 周必须连续，**不累加**。郑钦文 2025 温网后至 2026 多哈复出之间"
+            "只打过一站中网，把停赛切成 10.7 周加 18.1 周；合计 28.8 周已过门槛，"
+            "两截却各自不够。",
+            "⚠️ 上述推算依据两家规则书条文，不是 WTA 的公开裁定；她是否申请过、"
+            "是否获得过豁免，均无公开记录。",
+        ),
+        # 这两个时刻不是"夺冠瞬间"，是这条规则在她身上落地的两个端点。
+        # ⚠️ 不能留空：moments 为空时文案模板会回退到 `founded`，而 trivia 的
+        # founded 取自 chips，于是拼出「从两截不累加年的…」这种坏句子，
+        # 而且只有把整段渲出来才看得见。lucky-loser 没踩到是因为它有两个 moment。
+        moments=(
+            ChampionMoment(
+                date="2025-09-24",
+                player="郑钦文",
+                age="22 岁",
+                headline="那两场中网",
+                detail=(
+                    "右肘手术两个多月后回到北京，轮空后胜阿朗戈，"
+                    "次战对诺斯科娃中途退赛——一整段停赛被这一站切成两半。"
+                ),
+                source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+            ),
+            ChampionMoment(
+                date="2026-07-17",
+                player="郑钦文",
+                age="23 岁",
+                headline="雅典八强",
+                detail=(
+                    "4-6、4-6 负于克雷吉茨科娃，那是美网正赛直入线锁定前"
+                    "最后的机会；三天后线锁在约前 104，她排在第 123。"
+                ),
+                source_url="https://athens-open.com/gallery/day-7",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 IX.F / WTA 2026 规则书 VIII.C",
+        image_credit="athens-open.com 官方图库",
+        source_url="https://www.wtatennis.com/players/328120/qinwen-zheng",
+    ),
+    _trivia_story(
+        slug="lucky-loser",
+        title="输了才有的名额",
+        subtitle="网球观察 · 规则篇",
+        identity="幸运落败者：资格赛输了也能进正赛",
+        chips=("规则冷知识", "抽签还是排名", "大满贯 0 人进八强"),
+        hero=(
+            "资格赛最后一轮输掉的人，可以因为正赛有人退出而递补进正赛；"
+            "这个身份叫幸运落败者，卢布列夫和高芙的第一个冠军都是这么来的。"
+        ),
+        facts=(
+            "ATP 7.20 A.1：末轮失利者按资格赛种子排名排序；但**资格赛打完那一刻正赛"
+            "已有空缺**时，排名最高的两人抽签决定，空 N 个位置就抽 N+1 人。"
+            "WTA 2026 规则书 V.A.1.b.vi 的触发条件相同。",
+            "WTA 把三种情形写全（lost, retired, or withdrawn），并加三道闸："
+            "签到、赛会医生检查、正赛不得排在退赛当天；ATP 全本 210 页、123 处提到"
+            "lucky loser，这三条一条都没有，医疗条款反而明写「同一天或之后」皆可。",
+            "至今没有人以幸运落败者身份打进大满贯八强，第四轮是天花板："
+            "1995 温网诺曼、2023 法网阿瓦涅相、2025 澳网利斯、2025 温网谢拉、"
+            "2026 法网德容；利斯那次再赢一场就是史上第一个。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2017-07-23",
+                player="卢布列夫",
+                age="19 岁",
+                headline="「输的那个人是幸运的」",
+                detail=(
+                    "资格赛末轮输掉，因丘里奇退赛递补进正赛，一路赢到决赛，"
+                    "6-4、6-2 击败四号种子洛伦齐，拿下生涯第一个 ATP 冠军；"
+                    "颁奖人是伊万尼塞维奇。他当天在社媒写下 Loser is lucky!"
+                ),
+                source_url="https://www.atptour.com/en/news/rublev-lorenzi-umag-2017-final",
+            ),
+            ChampionMoment(
+                date="2019-10-13",
+                player="高芙",
+                age="15 岁 7 个月",
+                headline="开赛前 15 分钟被叫回球场",
+                detail=(
+                    "资格赛直落两盘负于科尔帕奇后已出局；首轮开打前 15 分钟"
+                    "萨卡里手腕伤退，她递补上场，连赢五场（含头号种子贝尔腾斯），"
+                    "决赛 6-3、1-6、6-2 胜奥斯塔彭科，成为 2004 年以来最年轻的 WTA 冠军。"
+                ),
+                source_url="https://www.wtatennis.com/news/1485527",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 7.20 / WTA 2026 规则书 V.A.1.b / ATP / WTA",
+        image_credit="Merlo de Graia · 卢布列夫本人社媒",
+        source_url="https://en.wikipedia.org/wiki/Lucky_loser",
+    ),
+    _trivia_story(
         slug="roof",
         title="温网屋顶谁说了算",
         subtitle="网球观察 · 规则篇",
@@ -2638,7 +3024,20 @@ def _trivia_topic_score(story: TournamentStory, digest: Digest) -> float:
 
     # 相关新闻本身也是热点：命中选题关键词的官方/媒体新闻，即使没有绑定到
     # 当日任何一场比赛，也应把该选题顶上来（例如某球员退役公告、某项纪录被
-    # 打破、某条规则改革见报）。全局信号池由 cmd_digest 从趋势雷达写入。
+    # 打破、某条规则改革见报）。
+    # ⚠️ 这个全局池原来由 `cmd_digest` 从趋势雷达写入，而 cmd_digest 在
+    # 2026-07-31 随日报一起删了——**现在没有任何调用方填它**，这一段恒为空。
+    # 代码留着是因为它本身是对的（谁填谁受益）。
+    #
+    # **2026-08-02 账号所有者定了：不接。** 知识帖是常青内容不是新闻；而真正
+    # 影响中国观众的那点当日相关性，不吃趋势信号的三条规则已经抓到了——选题词
+    # 命中当天赛事/球员名、有中国球员上场 +42、出现五盘或长盘 +38。为一条每天
+    # 只出一条、现在跑得稳的线加联网依赖（选题那一刻要抓 feed，慢且会抖）
+    # 不划算。所以这一段**是故意空着的，不是漏了**。
+    #
+    # ⚠️ 哪天改主意，别选「让内容雷达把信号落盘、知识帖读那个文件」那条路——
+    # 它看着最省事，但正是 golden-slam 那个 bug 的形状：一条线写、另一条线读
+    # 同一份状态，出事的时候两边都觉得自己没错。要接就让这条线自己去抓。
     news_pool = getattr(digest, "trend_signals", None) or []
     news_signal = 0.0
     for signal in news_pool:
@@ -2677,19 +3076,30 @@ def story_selection_evidence(story: TournamentStory, digest: Digest) -> dict:
 
     prior = _TRIVIA_VIRAL_PRIOR.get(story.slug, 0.0)
     topic_score = _trivia_topic_score(story, digest)
+    matches = digest.results + digest.live + digest.schedule
+    signal_count = sum(len(match.trend_signals) for match in matches)
+    heat_total = float(sum(match.media_heat + match.search_heat for match in matches))
+    # 说清楚是哪一支在排序。`media_heat` / `search_heat` / `trend_signals`
+    # 只有 apply_trend_signals() 会写，而它只挂在 `tennislive content` 上；
+    # 知识帖这条路不跑它，于是这三维恒为空——**兜底那一支 100% 命中，
+    # 而原来的话术说的是「信号优先」**。两句写死成一句的时候，
+    # 「今天没有信号」和「这条路从不看信号」在台账上长得一模一样，
+    # 2026-08-02 金满贯那次就是这么混过去的（trend_signal_count 记着 0，
+    # 而 basis 还写着 live signals first，没人看得出差别在哪）。
     evidence.update(
         {
             "selection_basis": (
                 "live media/search signals first; intrinsic curiosity and "
                 "shareability provide the no-signal fallback"
+                if signal_count or heat_total
+                else "no media/search signals attached on this path; ranked on "
+                "match context, intrinsic curiosity, shareability and cooldown"
             ),
             "viral_prior": prior,
             "topic_score": topic_score,
             "live_relevance_score": max(0.0, topic_score - prior),
-            "trend_signal_count": sum(
-                len(match.trend_signals)
-                for match in digest.results + digest.live + digest.schedule
-            ),
+            "trend_signal_count": signal_count,
+            "media_search_heat": heat_total,
         }
     )
     return evidence

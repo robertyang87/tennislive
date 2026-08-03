@@ -61,6 +61,20 @@ jobs:
       PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** HEAD 上它就有 1.36 GB（.git 1.77 GiB），
+          # checkout 因此每次要一分半到三分钟。
+          # 本次要写的那一格在算出目录之后 `git sparse-checkout add` 回来——
+          # **两半都要有**：只写这一半，`git add "$OUTDIR"` 会说路径在稀疏
+          # 范围之外，只警告、退出码 0，产物静默丢掉。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
 
       - uses: actions/setup-python@v5
         with:
@@ -95,6 +109,10 @@ jobs:
           if [ -z "$SLUG" ]; then SLUG="hawkeye"; fi
           OUT_DIR="output/$OUT_DATE/explainer/$SLUG"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # 进 cone 排在生成之前：`sparse-checkout add` 会把 HEAD 上那一版
+          # 先铺回工作区，铺完再生成才是对的顺序（反过来会拿旧内容盖掉新的）。
+          # 重放循环里的 `git checkout rendered -- "$OUTDIR"` 也要它在 cone 里。
+          git sparse-checkout add "$OUT_DIR"
           # if-blocks, not `[ -n "$V" ] && ARGS+=(...)`: this step runs under
           # `bash -e`, where a top-level AND-list whose test fails aborts the
           # whole step.
@@ -122,8 +140,8 @@ jobs:
 
       - name: 提交成片到仓库
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           OUTDIR="${{ steps.gen.outputs.outdir }}"
           git add "$OUTDIR"
           if git diff --cached --quiet; then
