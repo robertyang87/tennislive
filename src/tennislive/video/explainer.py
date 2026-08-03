@@ -1360,8 +1360,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "史上第一个用保护排名拿到大满贯的球员。"
             "她那一档给十二站，她只花掉五站。"
             "还有一件事：她当年也是脚。",
-            "assets/explainer/pr-allowance/stephens_usopen_2017_trophy.jpg",
-            "The Canadian Press / 媒体转载 · 2017 年 9 月 9 日美网女单决赛，斯蒂芬斯捧杯",
+            "assets/explainer/pr-allowance/stephens_usopen_2018_forehand.jpg",
+            "Wikimedia Commons · CC BY-SA 2.0 · 2018 年美网，斯蒂芬斯以卫冕冠军身份出战",
             (
                 "2017 美网 复出后第 5 站",
                 "赛季初世界第 957",
@@ -3964,8 +3964,8 @@ _OPENINGS: dict[str, dict] = {
         # 选双脚离地那一帧：这条片子讲的是「额度」，而额度买来的正是**站上场**
         # 这件事本身。照片是 2023 年美网，年份写在卡上——他现在的处境是 2026 年的，
         # 但 Commons 上他 2025 年之后的比赛照一张都没有（探过，见 credits）。
-        "image": "assets/explainer/pr-allowance/shang_usopen_2023_leap.jpg",
-        "credit": "Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，商竣程双脚离地救球",
+        "image": "assets/explainer/pr-allowance/stephens_usopen_2017_trophy.jpg",
+        "credit": "The Canadian Press 经媒体转载 · 2017 年 9 月 9 日美网女单决赛，斯蒂芬斯捧杯",
     },
     "challenger-climb": {
         "topic": "挑战赛：难的不是对手，是兑换率",
