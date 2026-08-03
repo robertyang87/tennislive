@@ -2845,13 +2845,42 @@ def main() -> int:
             for index, secs, room in est:
                 flag = ("← 估得再乐观也装不下" if room < -SPEECH_EST_ERR
                         else ("← 悬，跑一次 mode=narration"
-                              if room < SPEECH_EST_ERR else ""))
+                              if room < SPEECH_EST_ERR
+                              else ("← **哑场**，这一段大半时间没人说话"
+                                    if room > MAX_SILENT_GAP else
+                                    ("← 偏空，悬" if room > MAX_SILENT_GAP
+                                     - SPEECH_EST_ERR else ""))))
                 print(f"  第 {index + 1:>2d} 段 画面 "
                       f"{segments[index].length:5.1f}s 估旁白 {secs:5.2f}s "
                       f"余量 {room:+5.2f}s {flag}")
             sure = [i for i, _s, room in est if room < -SPEECH_EST_ERR]
             tight = [i for i, _s, room in est
                      if -SPEECH_EST_ERR <= room < SPEECH_EST_ERR]
+            # **余量是同一个数的两头，这条离线估原来只看了一头。**
+            # `eala-pegula-final` 第 6 段 dry-run 报「余量 +4.71s」——那一行
+            # 我读成了「装得下，很好」，六分钟之后 render 里那道哑场闸才红：
+            # 「画面 13.1s，旁白只说了 8.83s，4.27s 没人在说话」。
+            # **它一直印在那儿，只是没被读成「太空」。**
+            # ⚠️ **这儿拿点估值直接跟门槛比，不减误差带子。** 第一版我写的是
+            # `room - SPEECH_EST_ERR > MAX_SILENT_GAP`（「估得再保守也超」），
+            # 那要 room > 5.5s 才报——而真闸红在 4.27s，照样漏。
+            # 离线估的**中位误差贴近 0**（`test_离线估旁白长度要对得上真产物`
+            # 钉着这一条），所以点估值就是最好的猜测，和真闸同一个口径；
+            # 落在 `门槛 ± 误差` 里的标「偏空，悬」，让人去跑 mode=narration。
+            #
+            # ⚠️ **只警告，不 `return 1`。** 第一版让它红，当场把已发的
+            # `gea-shapovalov`（18 段）也判红了——那条片子当年是过了真闸的。
+            # 真闸用**真语音**，离线估在这一头偏保守（本例估 4.71s、实测
+            # 4.27s），拿它当硬闸会把一批好 spec 挡在门外，而**一条常年红的
+            # 检查和没有检查是同一个毛病**。它的职责是让人早点看见，不是拍板。
+            idle = [i for i, _s, room in est if room > MAX_SILENT_GAP]
+            if idle:
+                print(f"\n第 {[i + 1 for i in idle]} 段**估出来就是哑场**"
+                      f"（单段门槛 {MAX_SILENT_GAP}s，估的误差 ±{SPEECH_EST_ERR}s）："
+                      "render 里那道闸**可能**会红——它用真语音量，"
+                      "离线估在这一头偏保守。先跑一次 mode=narration。\n"
+                      "两条出路：把旁白补长（事实从 spec 已有的事实出处里取），"
+                      "或者把窗口收短（`end` 往前挪）。")
             if sure:
                 print(f"\n第 {[i + 1 for i in sure]} 段一定装不下：这几段删短，"
                       "或者把画面拉长（`end` 往后挪，别越过下一段的 `start`）。")
