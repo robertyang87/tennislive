@@ -683,3 +683,56 @@ def test_queens_gives_the_atp_and_wta_events_their_own_picture():
                 wrong.append(
                     f"「{name}」（{tour.value}）-> {got.slug if got else None}，应为 {expected}")
     assert not wrong, "女王俱乐部两站没有各用各的图：\n" + "\n".join(wrong)
+
+
+def test_off_ledger_events_with_a_fixed_venue_still_have_a_picture():
+    """不算进覆盖率 ≠ 不用有图。
+
+    团体赛和年终总决赛被排除在覆盖率之外（账号所有者给的清单是
+    250 / 500 / 1000 + 大满贯），我据此在 `SKIP_TIERS` 的注释里写了一句
+    「团体赛和年终总决赛没有固定主场馆」——**对团体赛成立，对年终不成立**。
+    都灵、吉达签的是多年合同，比利·简·金杯定在深圳，戴维斯杯决赛圈 2026 在
+    博洛尼亚。于是这七条一起从视野里消失，而 ATP 年终是全年最大的赛事之一，
+    卡片一直在用通用底。
+
+    真正没有固定主场的只有联合杯（珀斯／悉尼两城轮流）和拉沃尔杯（每年换国家），
+    它们不在 `FIXED_VENUE_OFF_LEDGER` 里。
+
+    这条拦的是同一个毛病再来一次：**「没算进分母」不能顺手变成「看不见」**。
+    """
+    import importlib.util
+    from pathlib import Path
+
+    tool = Path(__file__).resolve().parents[1] / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    missing = [f"{r['zh']}（{r['loc']}）" for r in module.off_ledger(2026)
+               if r["fixed"] and r["shot"] != "centre-court"]
+    assert not missing, (
+        "这些赛事的场馆是定死的，却没有中心球场图：" + "、".join(missing) +
+        "。它们不算进覆盖率，但照样会出现在日报里")
+
+
+def test_off_ledger_roster_matches_the_calendar():
+    """`FIXED_VENUE_OFF_LEDGER` 里的名字要在赛历上真的存在。
+
+    它是按赛事名硬写的一张清单，赛历改名（比如 WTA 年终从利雅得搬到印第安
+    维尔斯、`en` 跟着变）之后，这里的旧名字就变成一条**永远命不中的死条目**，
+    而上面那条测试会因此静默通过——又是「空结果 ≠ 不存在」。
+    """
+    import importlib.util
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    tool = root / "tools" / "check_venue_coverage.py"
+    spec = importlib.util.spec_from_file_location("check_venue_coverage", tool)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    names = {e.get("en") for e in json.loads(
+        (root / "data" / "tour_calendar_2026.json").read_text(encoding="utf-8"))["events"]}
+    orphans = sorted(module.FIXED_VENUE_OFF_LEDGER - names)
+    assert not orphans, f"FIXED_VENUE_OFF_LEDGER 里这些名字赛历上没有：{orphans}"

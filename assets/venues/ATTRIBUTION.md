@@ -137,6 +137,15 @@ the photographs are not otherwise altered.
 - Note: 自证：那道拱形钢架看台顶棚是这个场地独有的。这一批十一站都是从 **WTA 赛事页的 hero** 拿的（photoresources.wtatennis.com），赛事页要用数字 id 访问，id 从 api.wtatennis.com 的 tournaments 接口按 from/to 取 2026 年那批。URL 上的 height 是裁切参数，只给 width 才是完整图。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `bologna-unipol-arena-centre-court.jpg`
+
+- Title: 博洛尼亚 Unipol Arena 戴维斯杯布置，满场，环形挡板写着 DAVIS CUP FINALS 与 THE WORLD CUP OF TENNIS，场地前场刷着 DAVIS CUP，看台上有意大利国旗
+- Author: Bologna Welcome 官方旅游站转载（摄影师未署名）
+- Source: https://static.bolognawelcome.com/immagini/1f/83/e8/d2/20230330171216_landscape_16_9_desktop.jpg
+- License: unverified · 转载，作者未署名
+- Note: 别名只认 davis cup finals，**不认裸的 davis cup**——资格赛和小组赛全年在几十个城市打，套上这张就会给别人的主场印出博洛尼亚。同源更大的没有：去掉 _landscape_16_9_desktop 后缀反而是 1200x800
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `brisbane-centre-court.jpg`
 
 - Title: 帕特·拉夫特球场（昆士兰网球中心）· 满场
@@ -404,6 +413,15 @@ the photographs are not otherwise altered.
 - Author: Hunanuk
 - Source: https://commons.wikimedia.org/wiki/File%3AHistorical_peninsula_and_modern_skyline_of_Istanbul.jpg
 - License: CC0
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `jeddah-nextgen-centre-court.jpg`
+
+- Title: 吉达新生代总决赛球场，红光打亮的环形看台，吊屏写着 NEXT GEN ATP FINALS，环形 LED 是 I AM NEXT，浅蓝场地前场刷着 JEDDAH
+- Author: ATP 官方图（摄影师未署名）
+- Source: https://www.nextgenatpfinals.com/-/media/images/news/2023/11/29/16/31/stadium-shot-jeddah-2023.jpg
+- License: unverified · ATP 官方图，经赛事域名 nextgenatpfinals.com 取得
+- Note: 这张是**开赛前的空场**（看台一个人没有），过不了「在比赛中」那一关。用它是因为这一站官方渠道只有它一张全景：nextgenatpfinals.com 首页只有 6 张 media、/en/media/news 是 404，赛事图集里的都是球员特写和握手。整个碗、场馆标识、场地上的 JEDDAH 都在画面里。**找到有观众的就换掉**
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `kitzbuhel-centre-court.jpg`
@@ -675,6 +693,15 @@ the photographs are not otherwise altered.
 - License: unverified · 新闻站转载，作者未署名
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
+## `shenzhen-bay-bjk-cup-centre-court.jpg`
+
+- Title: 深圳湾体育中心比利·简·金杯布置，满场，记分牌写着 ITALY / CHINA, P.R.（PAOLINI 对 WANG），环形 LED 是 GAINBRIDGE，场地上刷着 BILLIE JEAN KING Cup
+- Author: 供应商案例页转载（摄影师未署名）
+- Source: https://www.uphos.com/data/watermark/main/ueditor/20250918/68cbf5434eebd.jpg
+- License: unverified · 转载，作者未署名
+- Note: 别名只认带 finals 的写法，**不认裸的 billie jean king cup**——资格赛和分区赛全年在各地打。这张是看台上的手持拍摄，比官方图软一点，但它是唯一一张深圳这一届的满场全景
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
 ## `singapore-centre-court.jpg`
 
 - Title: Kallang Tennis Hub 中心球场（场地前场刷着 SINGAPORE，室内，两侧蓝色看台与顶棚桁架都在竖切里）
@@ -727,6 +754,15 @@ the photographs are not otherwise altered.
 - Source: https://cdn-ak.f.st-hatena.com/images/fotolife/e/epokopoko/20200405/20200405173255.jpg
 - License: unverified · 转载，作者未署名
 - Note: ⚠️ 东京有两站共用有明：9 月的 ATP500 木下集团日本公开赛，和 10 月的 WTA500 东丽泛太平洋公开赛。别名两边都收。10 月大阪那站是另一个场馆（靱公园），不要被「Kinoshita Group Japan Open」这个同名冠名骗过去
+- Changes: resized and cropped by the card renderer; no semantic alteration
+
+## `turin-inalpi-arena-centre-court.jpg`
+
+- Title: 都灵 Inalpi Arena 满场，环形 LED 与吊屏写满 Nitto ATP FINALS，看台一角标着 TORINO，浅蓝球场上一位球员正在发球
+- Author: ATP 官方赛事主视觉（摄影师未署名）
+- Source: https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/nitto-atp-finals_tournimage_2024.jpg
+- License: unverified · ATP 官方图，经赛事域名镜像取得
+- Note: ⚠️ 亮度数字看着不合格（均值 24.9 / 中位 10 / 89% 暗于 50），但打开看是刻意压暗的场馆 + 打亮的球场：主体（球场、LED、看台人群）全在亮部，和「逆光剪影、人脸在暗部」那一类不是一回事。数字是筛子不是判据。别名不写裸的 atp finals——它是 next gen atp finals 的子串，会把新生代总决赛也套进都灵。
 - Changes: resized and cropped by the card renderer; no semantic alteration
 
 ## `umag-goran-ivanisevic-centre-court.jpg`

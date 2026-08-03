@@ -241,6 +241,14 @@ VENUES = [
     ("acapulco-arena-gnp-centre-court.jpg", None, None),
     # 日内瓦 ATP250：新闻站的现场照，从近端看台拍，整个碗都在
     ("geneva-eaux-vives-centre-court.jpg", None, None),
+    # ATP 年终总决赛：Inalpi Arena 满场；年终三站的场馆是定死的，之前被我按「团体赛没有固定主场」一并排除了
+    ("turin-inalpi-arena-centre-court.jpg", None, None),
+    # 新生代总决赛：吉达球场全景（空场，见 credits 的 note）；年终三站的场馆是定死的
+    ("jeddah-nextgen-centre-court.jpg", None, None),
+    # 戴维斯杯决赛圈：Unipol Arena 满场。2026 在博洛尼亚（官网横幅 Final 8 in Bologna），赛历原先写的西班牙是错的
+    ("bologna-unipol-arena-centre-court.jpg", None, None),
+    # 比利·简·金杯决赛圈：深圳湾满场（官网证实 2026 仍在深圳，hosts China）
+    ("shenzhen-bay-bjk-cup-centre-court.jpg", None, None),
     # 主球场／主场馆（优先用这一类）
     # 华盛顿：File:FitzGerald Tennis Center.jpg 拍的确实是本站场馆，但构图不行
     # ——左上角一大块深色顶棚压掉小半屏，看台缩成一条，整页铺开看不出是球场。
@@ -386,6 +394,30 @@ VENUES = [
 # 授权不做检索闸门（见 CLAUDE.md）：来源 URL 全程记录，许可名缺失就写
 # unverified，发布前的权利判断由人工检验环节负责。
 OFFICIAL_VENUES = {
+    "shenzhen-bay-bjk-cup-centre-court.jpg": {
+        "title": "深圳湾体育中心比利·简·金杯布置，满场，记分牌写着 ITALY / CHINA, P.R.（PAOLINI 对 WANG），环形 LED 是 GAINBRIDGE，场地上刷着 BILLIE JEAN KING Cup",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "供应商案例页转载（摄影师未署名）",
+        "page": "https://www.uphos.com/data/watermark/main/ueditor/20250918/68cbf5434eebd.jpg",
+    },
+    "bologna-unipol-arena-centre-court.jpg": {
+        "title": "博洛尼亚 Unipol Arena 戴维斯杯布置，满场，环形挡板写着 DAVIS CUP FINALS 与 THE WORLD CUP OF TENNIS，场地前场刷着 DAVIS CUP，看台上有意大利国旗",
+        "license": "unverified · 转载，作者未署名",
+        "artist": "Bologna Welcome 官方旅游站转载（摄影师未署名）",
+        "page": "https://static.bolognawelcome.com/immagini/1f/83/e8/d2/20230330171216_landscape_16_9_desktop.jpg",
+    },
+    "jeddah-nextgen-centre-court.jpg": {
+        "title": "吉达新生代总决赛球场，红光打亮的环形看台，吊屏写着 NEXT GEN ATP FINALS，环形 LED 是 I AM NEXT，浅蓝场地前场刷着 JEDDAH",
+        "license": "unverified · ATP 官方图，经赛事域名 nextgenatpfinals.com 取得",
+        "artist": "ATP 官方图（摄影师未署名）",
+        "page": "https://www.nextgenatpfinals.com/-/media/images/news/2023/11/29/16/31/stadium-shot-jeddah-2023.jpg",
+    },
+    "turin-inalpi-arena-centre-court.jpg": {
+        "title": "都灵 Inalpi Arena 满场，环形 LED 与吊屏写满 Nitto ATP FINALS，看台一角标着 TORINO，浅蓝球场上一位球员正在发球",
+        "license": "unverified · ATP 官方图，经赛事域名镜像取得",
+        "artist": "ATP 官方赛事主视觉（摄影师未署名）",
+        "page": "https://dallasopen.com/-/media/images/atp-tournaments/tournament-images/nitto-atp-finals_tournimage_2024.jpg",
+    },
     "geneva-eaux-vives-centre-court.jpg": {
         "title": "日内瓦 Parc des Eaux-Vives 中心球场，红土，远端挡板写着 GONET BANQUIERS 1845、球网上是 ATP TOUR，侧板 GONET GENEVA OPEN 与 Tribune de Genève，背后是园中的木屋与瑞士旗",
         "license": "unverified · 新闻站转载，作者未署名",
