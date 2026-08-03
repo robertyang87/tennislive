@@ -138,3 +138,70 @@
 中间还掉出一个谁也没设计过的礼物——**人民星期日**。
 
 末屏那一问的雏形：**顶棚 1.8 亿美元；没有顶棚的那些站，赶表的成本是谁在付？**
+
+---
+
+## 六、⭐ 「前一站还没打完，下一站已经开始了」——条文给这件事起了名字
+
+账号所有者追问：「有没有因为前一站还没打完、下一站开始了，比如可能是低排名
+选手？」**有，而且不是个案——ATP 规则书为它设了一整节：`7.10 Special Exempts`
+（特殊豁免，SE）。** 而「低排名」那一半，字面写在资格条款里。
+
+### 6.1 资格（2026 规则书 7.10.A，p84）
+
+> A player is eligible to receive a special exempt into the singles main draw of
+> **the following week's tournament** … if he is **unable to compete in that
+> qualifying competition because he is still competing on the date the
+> qualifying competition begins in another qualified event**, and **his current
+> ranking … would not have otherwise qualified him as a direct acceptance**.
+>
+> In addition, a player who is **still playing a match at 9 p.m. local time at
+> the qualifying site**, is eligible **only if he wins that match**.
+
+术语表（p176）：
+
+> **Special Exempt**: Player accepted into the main draw who was still competing
+> in the singles event of another qualified event at the time of this event's
+> qualifying. **Player may not have been accepted as a direct acceptance.**
+
+**这条规则就是为那种球员设的**：强到这周还没被淘汰，却又没高到能免掉下周的
+资格赛。排名高的人用不上它——他本来就直接进正赛。**这一层是账号所有者猜中的。**
+
+⚠️ SE 不是无限的：正赛里只留 **0–2 个** SE 名额（挑战赛 32 签是
+`0-2 Special Exempts`，p82）。
+
+### 6.2 四个判例框，一个比一个具体（p85–86）
+
+| 判例 | 裁决 |
+|---|---|
+| **资格赛开始前夜，他 9 点还没打完** | **正赛那个 SE 名额空着等他的结果**。资格赛签表照常 9 点抽，「**除非等他一小时是审慎的**」 |
+| **他 9:15 输了，打电话要一张资格赛外卡** | **可以给**——外卡属于赛事，只要签表还没抽、而且不因为他的行程要求特殊排期 |
+| **他的球打过了午夜呢？** | **不算。**「在那一天比赛」的定义是「**作为那一天（通常是周六）赛程的一部分开始或恢复一场比赛**」——判据是**排没排进那一天的赛程**，不是钟点 |
+| **周四赢了八强就能要 SE 吗？**（赛事周六决赛） | **不能。** 必须是**资格赛开始那天真的有球要打** |
+
+⭐ 那句「**或恢复**（or resuming）」正好盖住华盛顿这种情形：一场被雨中断、
+次日恢复的比赛**算数**。
+
+### 6.3 一个一小时的抉择（p86）
+
+> 已经被下周巡回赛资格赛（周日开打）接受的球员，能不能同时考虑一个挑战赛的
+> SE？**可以，但他必须在周五赢下比赛后的一小时之内决定**：接挑战赛的正赛，
+> 还是留在巡回赛的资格赛名单上。选了前者，他会被从资格赛里撤下，
+> 撤出理由写作「**still competing**」。
+
+**赢完球，一小时内二选一。** 而这两条路的尽头完全不同：一个是级别更低但
+直接进正赛，一个是级别更高但还要从资格赛打起。
+
+### 6.4 由此定的选题方向
+
+这一节比原来那条「雨把赛程压垮」更好，因为它有**人**：
+
+- 冲突的主语不是赛事，是**一个必须打资格赛的球员**
+- 他的处境完全由排名决定——**排名高的人根本不会遇到这件事**
+- 每一条判据都是可查的条文，不用靠形容词煽情
+- 而钩子（华盛顿决赛被劈成两天）和落点（「或恢复」那三个字）严丝合缝
+
+⚠️ **还缺一个真实的例子。** 条文和判例都齐了，但没有一个「某某某某年靠 SE
+进了正赛」的实例。要找的话，方向是赛事签表里标着 `SE` 的那一行——
+ATP 官网 403，但**赛事镜像域名的签表页值得试**（见 CLAUDE.md「ATP 总站封，
+赛事域名镜像着同一批图」）。
