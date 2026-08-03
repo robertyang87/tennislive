@@ -310,6 +310,22 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+def _scrim_css(clear: bool) -> str:
+    """盖在照片上的那层暗。
+
+    **上下两头一定要留**：台头压在顶上、钩子压在中间偏下，浅色字压在浅色画面上
+    就没了。**能关掉的只有正中那道 radial**——它是给「文字正好压在主体上」准备的，
+    代价是把整张实拍洗淡一档。
+    """
+    top_bottom = ("linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,"
+                  "rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,"
+                  "rgba(6,28,20,.58) 100%)")
+    centre = ("radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,"
+              "rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)")
+    layers = top_bottom if clear else f"{top_bottom},{centre}"
+    return f".scrim{{position:absolute;inset:0;background:{layers}}}"
+
+
 def _solo_body(cover: dict) -> tuple[str, str]:
     """`solo`：**「网球有故事」的封面版式**——照片铺满整幅，钩子压在正中。
 
@@ -370,6 +386,14 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
                  if icon.is_file() else "")
     topic = str(cover.get("topic", "")).strip()
+    # **正中那道暗角是可以关掉的。** 下面那层 `.scrim` 是从解说片的 cover 屏
+    # 整段抄过来的（两条线出去的封面必须一个样），它的第二道 radial 在画面
+    # **正中**压 58% 的暗——文字压在中间时那是必要的对比度，可素材本身够暗、
+    # 或者账号所有者要「照片就是照片」时，它会把一张实拍洗成一层背景板。
+    # 账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+    # 所以**按条声明**（`cover.scrim: "clear"`），不去动那个共用的默认值——
+    # 各调各的就会慢慢漂开，那正是这段注释原本要防的。
+    clear_scrim = str(cover.get("scrim", "")).strip().lower() == "clear"
     lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
     hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
     # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
@@ -414,12 +438,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
         # 封面必须是同一个样子，各调各的就会慢慢漂开。
         + """
-.scrim{position:absolute;inset:0;background:
- linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
-  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
-  rgba(6,28,20,.58) 100%),
- radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,
-  rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)}
+__SCRIM__
 .bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}
 .head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
@@ -445,6 +464,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7)}
 """
+        .replace("__SCRIM__", _scrim_css(clear_scrim))
         + f".storytitle{{font-size:{title_px}px}}"
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
