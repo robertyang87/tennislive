@@ -4328,6 +4328,47 @@ def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkey
     assert len(list(cache.glob("*"))) == 1, "真视频没被缓存下来"
 
 
+def test_双语字幕要真的排成两行(tmp_path):
+    """**换行是「这一条排两行」，不是一个空格。**
+
+    中英双语的原声字幕（`quote` 写成列表）靠元素里的换行分上英下中。
+    第一版我拿 `pipeline.render_ass` 验的——**那是另一个写入器**：成片走的是
+    `explainer.write_subtitles`（Style `TL`，带逐词字号标签），而它当时写着
+    `shown.replace(chr(10), ' ')`，把换行压成空格。渲出来长的那两条靠
+    `WrapStyle=0` 自动折**碰巧**断在中英之间，短的干脆不断——同一条片子里
+    两种样子，而且断点由宽度决定，不由作者决定。
+    **又一次「查的东西和跑的东西不是一回事」。**
+
+    ⚠️ 也不能直接把 ASS 的换行符写进文本：`_ass_text` 会把它后面那个 N 当成
+    一个拉丁词、包上字号标签，画面上多出一个字母 N。所以要**按行分别过
+    `_ass_text` 再拼**。
+
+    判据真写一份 ASS 出来读，钉两头：双行的要有换行符、**单行的一个字节都不许
+    变**（存量的解说片和赛场之上都走这个写入器）。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import write_subtitles  # noqa: PLC0415
+
+    nl = chr(92) + "N"          # ASS 的换行符，写成字面量免得被当转义
+    path = write_subtitles(
+        [(0.0, 3.0, "A first ever tour title\n生涯第一个巡回赛冠军"),
+         (3.0, 5.0, "普通单行字幕")],
+        tmp_path / "s.ass", height=1440)
+    rows = [line for line in path.read_text("utf-8").splitlines()
+            if line.startswith("Dialogue")]
+    assert len(rows) == 2
+
+    assert nl in rows[0], f"双语那条没排成两行：{rows[0]}"
+    head, _, tail = rows[0].partition(nl)
+    assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
+        f"英文和中文没落在各自那一行：{rows[0]}"
+    assert chr(92) + "{" not in rows[0], \
+        f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
+
+    assert rows[1].endswith(",普通单行字幕"), \
+        f"单行的输出变了，会连累解说片那条线：{rows[1]}"
+
+
 def test_缓存源片的开关要在工作流里够得着():
     """和 `--cover-only` 那次同一个坑：代码里加了，工作流没接上等于没有。
 
