@@ -615,7 +615,10 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
-    assert meta["rate"] == E.DEFAULT_RATE == "+28%"
+    # 只钉「记下来的就是实际用的那一档」。**具体是哪一档不在这儿钉死**——
+    # 那个数由 test_explainer_budget 的 `_MEASURED` 管着，而且它连带要求
+    # 换档必须重量。两处都写死的话，改语速要动三个地方，必分叉。
+    assert meta["rate"] == E.DEFAULT_RATE
     assert meta["segments"] == 2
 
     E.generate_explainer_video(
@@ -1581,3 +1584,64 @@ def test_去标点这条规矩是全站的不是解说片专属():
     assert drop_punctuation("他说过一句话：我其实还想继续打。") == "他说过一句话 我其实还想继续打"
     assert drop_punctuation("郑钦文 6-4、7-5 取胜，晋级八强。") == "郑钦文 6-4 7-5 取胜 晋级八强"
     assert drop_punctuation("上一行，好\n下一行。真的吗？") == "上一行 好\n下一行 真的吗？"
+
+def test_字幕一行不许横跨两句话():
+    """账号所有者 2026-08-03：「字幕也要保持断句的完整性，不要多也不要少。」
+
+    切行本来就有「一个子句就是一行」的规矩，但合并短句那一支**根本不看隔开
+    它们的是句号还是逗号**——于是「流程是这样的。本周三、周四」并成一行，
+    「官方宣布顺延到周一。而那时候」并成一行：**两句不同的话挤在同一屏，
+    而且后半句还是半截的**，读者会把两件事读成一件。
+
+    句内（逗号、顿号）合并是好的：空格把停顿显出来，读起来仍是一句话。
+    跨句合并是坏的。唯一的例外是那一片短到独自成行也读不到（≤2 字）——
+    那时候一闪而过比共一行更糟，让可读性的地板赢。
+
+    ⚠️ 这里**不逐条扫已发的片子**：它们的旁白按老规矩写，句号两边本来就有
+    大量短片段，扫它们只会得到一份要人维护的豁免名单（「一个会过期的名单和
+    一条常年红的检查是同一个毛病」）。测的是**机制**。
+    """
+    from tennislive.video.explainer import subtitle_lines
+
+    # 两句都够长：绝不能并成一行
+    text = "官方宣布顺延到周一。而那时候，加拿大站的资格赛两天前就打完了。"
+    lines = [l for _, _, l in subtitle_lines(text)]
+    for line in lines:
+        assert "顺延到周一" not in line or "而那时候" not in line, (
+            f"跨句并成了一行：{line}")
+
+    # ≤2 字的那一支：短到独自成行会一闪而过，允许并
+    text2 = "他站得上场，但打了就凑不满六个月。他没打。多伦多复出首轮输球。"
+    merged = [l for _, _, l in subtitle_lines(text2) if "没打" in l]
+    assert merged, "「他没打」这三个字整个不见了？"
+    assert all(len(l) >= 3 for _, _, l in subtitle_lines(text2)), (
+        "还是留下了会一闪而过的短行")
+
+
+def test_特殊豁免那条的字幕行行都是完整子句():
+    """新写的片子要真的达标——上一条测机制，这一条测**这条片子**。
+
+    只钉 special-exempt：它是按这条规矩重排过标点的那一条，也是判据的样本。
+    盯死三个数，任何一个回涨都说明标点或切行退化了。
+    """
+    import re
+
+    from tennislive.video.explainer import _OPENINGS, _SCRIPTS, speakable, subtitle_lines
+    from tennislive.video.explainer import _sub_display
+
+    segs = [_OPENINGS["special-exempt"]["narration"]] + [
+        s[3] for s in _SCRIPTS["special-exempt"]]
+    total = cross = split = short = 0
+    norm = lambda x: re.sub(r"[，。；：？！——、\s]", "", _sub_display(x))  # noqa: E731
+    for raw in segs:
+        text = speakable(raw)
+        sents = [x for x in re.split(r"(?<=[。！？；…])", text) if x.strip()]
+        for a, b, line in subtitle_lines(text):
+            total += 1
+            cross += not any(norm(line) in norm(s) for s in sents)
+            split += not re.search(r"[，。；：？！、—]", text[a:b])
+            short += len(line) < 3
+    assert total > 100, f"只切出 {total} 行？判据的主语没了"
+    assert (cross, split, short) == (0, 0, 0), (
+        f"{total} 行里：横跨两句 {cross} 行、子句被劈开 {split} 行、太短 {short} 行")
+
