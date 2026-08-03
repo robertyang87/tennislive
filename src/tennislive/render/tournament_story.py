@@ -1335,6 +1335,68 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Tennis_ball",
     ),
     _trivia_story(
+        slug="special-exempt",
+        title="整站只有一个",
+        subtitle="网球观察 · 规则篇",
+        identity="特殊豁免",
+        chips=("规则与代价", "特殊豁免", "2026"),
+        hero=(
+            "上一站还没打完，下一站的资格赛已经开始了——这道二选一，规则给它留了"
+            "**一个位置**，叫特殊豁免。**大师赛 1 个，500 赛 1 个**，"
+            "250 赛和挑战赛各 2 个。"
+        ),
+        facts=(
+            "**ATP 规则书 §7.10**（2026 版 p85–86）：特殊豁免发给"
+            "「因为还在上一站比赛、所以无法参加本站资格赛」的球员。"
+            "所谓「还在比赛」，条文的定义是**在资格赛签表公布那天的赛程里"
+            "开始或者恢复一场比赛**——⚠️ **「或恢复」这三个字才是雨天那一支**，"
+            "ATP 全文没有出现「天气」这个词。",
+            # ⚠️ 长引注不能顶在最前面：卡片按 40 字切，而
+            # 「（WTA 官方规则书 Section V vii Special Exempt Spots）」里一个断句
+            # 标点都没有，于是那一刀正好落在半句里（test_knowledge_card_facts_
+            # never_hard_truncate_mid_clause 抓到的就是这个）。出处挪到句子中段。
+            "**WTA 那本把天气写进了条文**，ATP 那本没有。"
+            "WTA 官方规则书 Section V vii 写着：她的比赛**因天气**被改期到资格赛第一天，"
+            "就够格；而且另有一条更松的——**只要进了决赛就够格，不用赢**。"
+            "两场决赛分属两个协会，别混着讲。",
+            "**拿到它有一道一小时的线**：球员关系部门在本周三、周四把下周可能够格的人"
+            "列成表，交给他们当前所在赛事的监督挨个联系；而球员**赢下那场决定性的比赛之后"
+            "一小时之内**必须联系监督或球员关系部门确认接受，否则从名单上拿掉。",
+            "**中国球员用过**：2024 年上海大师赛，布云朝克特拿到的外卡"
+            "**后来被改成了特殊豁免，理由是他在北京还没打完**。"
+            "那一周他在中网胜商竣程拿下生涯首个 ATP 500 级别胜利，"
+            "爆冷 6 号种子穆塞蒂进 1/4 决赛，再掀翻 4 号种子、世界第 6 的卢布列夫，"
+            "成为第一个在这一级别打进半决赛的中国男子球员。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-02", player="华盛顿", age="ATP/WTA 500",
+                headline="两场决赛，一场都没打完",
+                detail=(
+                    "男单弗里茨对霍达尔、女单佩古拉对伊埃拉，双双被雨顺延到周一。"
+                    "而加拿大站的资格赛决胜轮 8 月 1–2 日就打完了，正赛首轮已到第三天。"
+                    "这四个人的排名都够直接进正赛——**没被困住的原因不是运气**。"
+                ),
+                source_url="https://www.mubadaladcopen.com/en/wta-news/4552345/"
+                           "live-updates-alexandra-eala-jessica-pegula-washington-dc-final-weather-delay",
+            ),
+            ChampionMoment(
+                date="2025-07-28", player="卡佐", age="22 岁",
+                headline="靠那一个位置，打进生涯第一个决赛",
+                detail=(
+                    "上一周格施塔德打进生涯首个巡回赛半决赛、重回前 100；"
+                    "下一周以特殊豁免进基茨比厄尔正赛，连胜三场进生涯首个巡回赛决赛，"
+                    "7 月 28 日回到前 75。决赛再负布勃利克——连续两周输给同一个人。"
+                ),
+                source_url="https://en.wikipedia.org/wiki/Arthur_Cazaux",
+            ),
+        ),
+        image_keys=(),
+        source_label="ATP 2026 官方规则书 §7.10 Special Exempts",
+        image_credit="Tennis TV 官方集锦画面",
+        source_url="https://www.atptour.com/en/players/rulebook",
+    ),
+    _trivia_story(
         slug="pr-allowance",
         title="它能用几次",
         subtitle="网球观察 · 规则篇",

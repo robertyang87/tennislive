@@ -1284,7 +1284,382 @@ _PR_USE_DIAGRAM = """
 """
 
 
+#: 「同一场雨，两个城市的日程对不上」——**照片讲不了这件事**：一张雨的照片
+#: 只能说华盛顿下雨了，说不了「而加拿大那边资格赛已经打完」。跨城市、跨日期的
+#: 关系正是「照片讲不清」那一档（跟保护排名那条的「温网正好压在最后 13 天」同族）。
+#: 日期是北京时间，四天的场次数由 `fetch_day` 核过（见 docs/rain-delay-research.md 第七节）。
+_SE_CHAIN_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同一场雨，两个城市的日程对不上</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">北京时间</text>
+
+  <g text-anchor="middle" fill="#9fb4aa" font-size="27" font-weight="700">
+    <text x="255" y="132">8 月 1 日</text>
+    <text x="427" y="132">8 月 2 日</text>
+    <text x="599" y="132">8 月 3 日</text>
+    <text x="771" y="132">8 月 4 日</text>
+  </g>
+
+  <text x="40" y="200" fill="#e7f3ec" font-size="28" font-weight="800">华盛顿</text>
+  <g font-size="26" font-weight="700" text-anchor="middle" fill="#e7f3ec">
+    <rect x="180" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="255" y="198">半决赛</text>
+    <rect x="352" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="427" y="198">决赛遇雨</text>
+    <rect x="524" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="599" y="198">还没打完</text>
+    <rect x="696" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="771" y="198">周一补打</text>
+  </g>
+
+  <text x="40" y="352" fill="#e7f3ec" font-size="28" font-weight="800">加拿大站</text>
+  <g font-size="26" font-weight="700" text-anchor="middle">
+    <rect x="180" y="310" width="150" height="64" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="255" y="350" fill="#c6f65a">资格赛</text>
+    <rect x="352" y="310" width="150" height="64" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="427" y="350" fill="#c6f65a">资格赛</text>
+    <rect x="524" y="310" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="599" y="350" fill="#e7f3ec">正赛首轮</text>
+    <rect x="696" y="310" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="771" y="350" fill="#e7f3ec">正赛首轮</text>
+  </g>
+
+  <path d="M180 288 L180 268 L502 268 L502 288" stroke="#c6f65a"
+        stroke-width="3" fill="none"/>
+  <text x="341" y="256" text-anchor="middle" fill="#c6f65a"
+        font-size="25" font-weight="700">这两天打完，过期不补</text>
+
+  <text x="450" y="442" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">还在华盛顿打的人，赶不上加拿大的资格赛</text>
+</svg>
+"""
+
+
+#: 「一个位置」——留出来的席位拍不出来。96 是大师赛正赛的签表人数，
+#: 一格一个名额、只有一格是亮的，「整站只有一个」这句话就不用读者做除法。
+#: ⚠️ 故意不画「直接入围/资格赛/外卡各多少」——那几个数没核到，
+#: 而画上去就是替签表声明了一件没核过的事。
+_SE_SLOT_DIAGRAM = """
+<svg viewBox="0 0 900 490" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">大师赛九十六个正赛名额</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">一格＝一个名额　亮的那格＝特殊豁免</text>
+
+  <g fill="rgba(231,243,236,.20)">
+    <rect x="69"  y="120" width="42" height="34" rx="6"/>
+    <rect x="117" y="120" width="42" height="34" rx="6"/>
+    <rect x="165" y="120" width="42" height="34" rx="6"/>
+    <rect x="213" y="120" width="42" height="34" rx="6"/>
+    <rect x="261" y="120" width="42" height="34" rx="6"/>
+    <rect x="309" y="120" width="42" height="34" rx="6"/>
+    <rect x="357" y="120" width="42" height="34" rx="6"/>
+    <rect x="405" y="120" width="42" height="34" rx="6"/>
+    <rect x="453" y="120" width="42" height="34" rx="6"/>
+    <rect x="501" y="120" width="42" height="34" rx="6"/>
+    <rect x="549" y="120" width="42" height="34" rx="6"/>
+    <rect x="597" y="120" width="42" height="34" rx="6"/>
+    <rect x="645" y="120" width="42" height="34" rx="6"/>
+    <rect x="693" y="120" width="42" height="34" rx="6"/>
+    <rect x="741" y="120" width="42" height="34" rx="6"/>
+    <rect x="789" y="120" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="162" width="42" height="34" rx="6"/>
+    <rect x="117" y="162" width="42" height="34" rx="6"/>
+    <rect x="165" y="162" width="42" height="34" rx="6"/>
+    <rect x="213" y="162" width="42" height="34" rx="6"/>
+    <rect x="261" y="162" width="42" height="34" rx="6"/>
+    <rect x="309" y="162" width="42" height="34" rx="6"/>
+    <rect x="357" y="162" width="42" height="34" rx="6"/>
+    <rect x="405" y="162" width="42" height="34" rx="6"/>
+    <rect x="453" y="162" width="42" height="34" rx="6"/>
+    <rect x="501" y="162" width="42" height="34" rx="6"/>
+    <rect x="549" y="162" width="42" height="34" rx="6"/>
+    <rect x="597" y="162" width="42" height="34" rx="6"/>
+    <rect x="645" y="162" width="42" height="34" rx="6"/>
+    <rect x="693" y="162" width="42" height="34" rx="6"/>
+    <rect x="741" y="162" width="42" height="34" rx="6"/>
+    <rect x="789" y="162" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="204" width="42" height="34" rx="6"/>
+    <rect x="117" y="204" width="42" height="34" rx="6"/>
+    <rect x="165" y="204" width="42" height="34" rx="6"/>
+    <rect x="213" y="204" width="42" height="34" rx="6"/>
+    <rect x="261" y="204" width="42" height="34" rx="6"/>
+    <rect x="309" y="204" width="42" height="34" rx="6"/>
+    <rect x="357" y="204" width="42" height="34" rx="6"/>
+    <rect x="405" y="204" width="42" height="34" rx="6"/>
+    <rect x="501" y="204" width="42" height="34" rx="6"/>
+    <rect x="549" y="204" width="42" height="34" rx="6"/>
+    <rect x="597" y="204" width="42" height="34" rx="6"/>
+    <rect x="645" y="204" width="42" height="34" rx="6"/>
+    <rect x="693" y="204" width="42" height="34" rx="6"/>
+    <rect x="741" y="204" width="42" height="34" rx="6"/>
+    <rect x="789" y="204" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="246" width="42" height="34" rx="6"/>
+    <rect x="117" y="246" width="42" height="34" rx="6"/>
+    <rect x="165" y="246" width="42" height="34" rx="6"/>
+    <rect x="213" y="246" width="42" height="34" rx="6"/>
+    <rect x="261" y="246" width="42" height="34" rx="6"/>
+    <rect x="309" y="246" width="42" height="34" rx="6"/>
+    <rect x="357" y="246" width="42" height="34" rx="6"/>
+    <rect x="405" y="246" width="42" height="34" rx="6"/>
+    <rect x="453" y="246" width="42" height="34" rx="6"/>
+    <rect x="501" y="246" width="42" height="34" rx="6"/>
+    <rect x="549" y="246" width="42" height="34" rx="6"/>
+    <rect x="597" y="246" width="42" height="34" rx="6"/>
+    <rect x="645" y="246" width="42" height="34" rx="6"/>
+    <rect x="693" y="246" width="42" height="34" rx="6"/>
+    <rect x="741" y="246" width="42" height="34" rx="6"/>
+    <rect x="789" y="246" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="288" width="42" height="34" rx="6"/>
+    <rect x="117" y="288" width="42" height="34" rx="6"/>
+    <rect x="165" y="288" width="42" height="34" rx="6"/>
+    <rect x="213" y="288" width="42" height="34" rx="6"/>
+    <rect x="261" y="288" width="42" height="34" rx="6"/>
+    <rect x="309" y="288" width="42" height="34" rx="6"/>
+    <rect x="357" y="288" width="42" height="34" rx="6"/>
+    <rect x="405" y="288" width="42" height="34" rx="6"/>
+    <rect x="453" y="288" width="42" height="34" rx="6"/>
+    <rect x="501" y="288" width="42" height="34" rx="6"/>
+    <rect x="549" y="288" width="42" height="34" rx="6"/>
+    <rect x="597" y="288" width="42" height="34" rx="6"/>
+    <rect x="645" y="288" width="42" height="34" rx="6"/>
+    <rect x="693" y="288" width="42" height="34" rx="6"/>
+    <rect x="741" y="288" width="42" height="34" rx="6"/>
+    <rect x="789" y="288" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="330" width="42" height="34" rx="6"/>
+    <rect x="117" y="330" width="42" height="34" rx="6"/>
+    <rect x="165" y="330" width="42" height="34" rx="6"/>
+    <rect x="213" y="330" width="42" height="34" rx="6"/>
+    <rect x="261" y="330" width="42" height="34" rx="6"/>
+    <rect x="309" y="330" width="42" height="34" rx="6"/>
+    <rect x="357" y="330" width="42" height="34" rx="6"/>
+    <rect x="405" y="330" width="42" height="34" rx="6"/>
+    <rect x="453" y="330" width="42" height="34" rx="6"/>
+    <rect x="501" y="330" width="42" height="34" rx="6"/>
+    <rect x="549" y="330" width="42" height="34" rx="6"/>
+    <rect x="597" y="330" width="42" height="34" rx="6"/>
+    <rect x="645" y="330" width="42" height="34" rx="6"/>
+    <rect x="693" y="330" width="42" height="34" rx="6"/>
+    <rect x="741" y="330" width="42" height="34" rx="6"/>
+    <rect x="789" y="330" width="42" height="34" rx="6"/>
+  </g>
+
+  <rect x="453" y="204" width="42" height="34" rx="6" fill="#c6f65a"/>
+
+  <text x="450" y="416" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">整站就这一个</text>
+  <text x="450" y="466" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">500 赛也是 1 个　250 赛和挑战赛 2 个</text>
+</svg>
+"""
+
+
+#: 「认不认雨」——两本规则书的条文差别，照片没有语法去表达。
+#: 左边给强调色，因为这一屏的落点是「WTA 那本把天气写进了条文」。
+_SE_BOOKS_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同一件事，两本规则书写得不一样</text>
+
+  <text x="250" y="110" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">WTA</text>
+  <rect x="60" y="130" width="380" height="284" rx="14"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="250" y="186" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">条文原文里就有</text>
+  <text x="250" y="242" text-anchor="middle" fill="#c6f65a"
+        font-size="40" font-weight="800">因天气</text>
+  <line x1="110" y1="282" x2="390" y2="282" stroke="rgba(198,246,90,.45)" stroke-width="2"/>
+  <text x="250" y="330" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">而且</text>
+  <text x="250" y="382" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">进了决赛就够格</text>
+
+  <text x="650" y="110" text-anchor="middle" fill="#9fb4aa"
+        font-size="32" font-weight="800">ATP</text>
+  <rect x="460" y="130" width="380" height="284" rx="14" fill="rgba(231,243,236,.14)"/>
+  <text x="650" y="186" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">全文找不到</text>
+  <text x="650" y="242" text-anchor="middle" fill="#9fb4aa"
+        font-size="40" font-weight="800">天气</text>
+  <line x1="520" y1="282" x2="780" y2="282" stroke="rgba(159,180,170,.4)" stroke-width="2"/>
+  <text x="650" y="330" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">靠这个定义兜住</text>
+  <text x="650" y="382" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">开始或恢复一场比赛</text>
+
+  <text x="450" y="484" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">两场决赛分属两个协会，条文不能混着讲</text>
+</svg>
+"""
+
+
+#: 「一小时」——一段倒计时拍不出来。**两条按同一把尺子画**：赛事那头准备两天
+#: （48 小时 = 576px，12px/小时），球员这头只有 1 小时 = 12px。那道细缝就是论点，
+#: 所以不许为了「看得清」把它画粗——那样就成了「条形图上写字」那一类的谎。
+_SE_HOUR_DIAGRAM = """
+<svg viewBox="0 0 900 502" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">那头准备两天，你这头只有一小时</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">两条按同一把尺子画</text>
+
+  <text x="60" y="162" fill="#9fb4aa" font-size="27" font-weight="700">赛事那头</text>
+  <rect x="60" y="182" width="576" height="60" rx="10" fill="rgba(231,243,236,.28)"/>
+  <text x="656" y="224" fill="#e7f3ec" font-size="36" font-weight="800">48 小时</text>
+  <text x="60" y="284" fill="#9fb4aa" font-size="26" font-weight="700">周三、周四列名单，监督挨个联系</text>
+
+  <text x="60" y="376" fill="#c6f65a" font-size="27" font-weight="800">你这头</text>
+  <rect x="60" y="396" width="12" height="60" rx="3" fill="#c6f65a"/>
+  <path d="M82 426 L640 426" stroke="rgba(198,246,90,.45)" stroke-width="2"
+        fill="none" stroke-dasharray="8 8"/>
+  <text x="656" y="438" fill="#c6f65a" font-size="36" font-weight="800">1 小时</text>
+  <text x="60" y="498" fill="#9fb4aa" font-size="26" font-weight="700">赢下那场决定性的球之后</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 特殊豁免。⚠️ 片子里出现的每个人都是真的，每件事都真发生过——
+    # 账号所有者 2026-08-03：「不要用写这些假设，普通人看不懂，就用实际举例。」
+    # 上一版写过一张「如果决赛里有个低排名球员会怎样」的推演表，整张删了。
+    "special-exempt": (
+        (
+            "day",
+            "那一天",
+            "两场决赛，一场都没打完",
+            "八月二号，华盛顿下了一整天雨。男单决赛弗里茨对霍达尔，"
+            "女单决赛佩古拉对伊埃拉——两场决赛，一场都没打完。"
+            "女单那场中断时佩古拉六比四、一比二领先；晚上九点零六分，官方宣布顺延到周一。"
+            "而那时候，加拿大站的资格赛两天前就打完了，正赛第一轮已经打到第三天。"
+            # ⚠️ 霍达尔写 15。`lookup_player_meta`（ESPN 榜单）报的 24 是**上一周
+            # 的快照**——账号所有者 2026-08-03 确认「现在他的排名是 15，24 是上周的」，
+            # 和维基那条「Highest/Current No. 15 (3 August 2026)」对得上。
+            # 上一版为了绕开这个分歧写了「世界前二十五」，那是**把两个源对半退成
+            # 一个范围**——分歧的正解是查清哪个新，不是取一个两边都成立的说法。
+            "这四个人没事：佩古拉世界第三，伊埃拉第二十八，弗里茨是三号种子，"
+            "霍达尔十九岁、世界第十五，刚打进生涯第一个五百赛决赛。"
+            "他们的排名都够直接进正赛，不需要去打任何资格赛。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 2 日 两场决赛都没打完",
+                "顺延到周一 当地中午恢复",
+                "而加拿大站 资格赛两天前已结束",
+            ),
+            _SE_CHAIN_DIAGRAM,
+        ),
+        (
+            "slot",
+            "一个位置",
+            "不用打资格赛，直接进正赛",
+            "那换一个排名低一档、必须先过资格赛的人呢。"
+            "他会被这场雨卡在两个城市之间：上一站还没打完，下一站的资格赛已经开始了。"
+            "规则给这件事留了一个位置，叫特殊豁免——正赛里一个专门留出来的席位，"
+            "发给那个因为还在上一站比赛、所以来不了资格赛的人。"
+            "整站赛事只有一个。大师赛一个，五百赛一个，"
+            "只有二百五十赛和挑战赛给两个。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "特殊豁免 正赛里留出的一个席位",
+                "发给谁 还在上一站打，来不了资格赛",
+                "有几个 大师赛和 500 赛各 1 个",
+            ),
+            _SE_SLOT_DIAGRAM,
+        ),
+        (
+            "rain",
+            "认不认雨",
+            "WTA 那本，把「天气」写进了条文",
+            "那雨算不算数。两本规则书写得不一样。"
+            "WTA 那本直接写进了资格条款：她的比赛因为天气被改期到资格赛第一天，就够格。"
+            "而且还有一条更松的——只要她进了决赛，够格，不用赢。"
+            "ATP 那本没有写天气这个词，它绕了一圈："
+            "所谓还在比赛，定义是在那一天的赛程里开始或者恢复一场比赛。"
+            "恢复两个字，正好把被雨中断、次日接着打的情形盖住了。"
+            "两场决赛分属两个协会，条文不一样，别混着讲。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "WTA 条文里直接写着「因天气」",
+                "而且 进了决赛就够格，不用赢",
+                "ATP 靠「或恢复一场比赛」的定义",
+            ),
+            _SE_BOOKS_DIAGRAM,
+        ),
+        (
+            "bu",
+            "中国球员",
+            "上海那张外卡，后来改成了豁免",
+            "这条规则中国球员用过。二〇二四年上海大师赛，"
+            "布云朝克特拿到的是一张外卡——后来被改成了特殊豁免，"
+            "理由白纸黑字写着：他在北京还没打完。"
+            "而那个北京是这样的：他先赢了商竣程，拿下生涯第一个五百赛级别的胜利；"
+            "接着爆冷六号种子穆塞蒂，打进生涯第一个五百赛 1/4 决赛；"
+            "再掀翻四号种子、世界第六的卢布列夫，拿下生涯第一个前十胜。"
+            "他成了第一个在这个级别打进半决赛的中国男子球员。",
+            "assets/explainer/special-exempt/bu_beijing_2024_qf.jpg",
+            "Tennis TV 官方集锦画面 · 2024 年中国公开赛，布云朝克特对卢布列夫",
+            (
+                "2024 上海 外卡改成特殊豁免",
+                "理由 他在北京还没打完",
+                "那个北京 胜卢布列夫，首进半决赛",
+            ),
+            "",
+        ),
+        (
+            "hour",
+            "一小时",
+            "赢了球，六十分钟内要打这个电话",
+            "拿到它没有那么容易。流程是这样的：球员关系部门在本周三、周四"
+            "就把下周可能够格的人列成一张表，交给他们当前所在赛事的监督，"
+            "监督再挨个联系，问他有没有兴趣。"
+            "而球员这一头有一道很硬的线——赢下那场决定性的比赛之后，"
+            "一小时之内必须联系监督或者球员关系部门确认接受。"
+            "没打这个电话，就从名单上拿掉。"
+            "那一小时里他刚打完一场球。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "周三周四 名单列出来，挨个打电话",
+                "赢球之后 1 小时内必须确认接受",
+                "没确认 从名单上拿掉",
+            ),
+            _SE_HOUR_DIAGRAM,
+        ),
+        (
+            "cazaux",
+            "最好的一次",
+            "靠这一个位置，打进生涯第一个决赛",
+            "那这个位置能换来什么。二〇二五年七月，卡佐在格施塔德打进生涯第一个"
+            "巡回赛半决赛，第二轮赢了四号种子埃切维里，半决赛输给二号种子布勃利克，"
+            "七月二十一号重回世界前一百。"
+            "下一周，他就是靠特殊豁免进的基茨比厄尔正赛。"
+            "第二轮赢七号种子科梅萨尼亚，1/4 决赛赢斯特鲁夫，半决赛赢同胞林德克内希——"
+            "生涯第一个巡回赛决赛。七月二十八号，他回到了前七十五。"
+            "决赛他又输给了布勃利克，连续两周输给同一个人。"
+            "十月他拿下济南公开赛冠军，第一次进入世界前六十。",
+            "assets/explainer/special-exempt/cazaux_kitzbuhel_2025_sf.jpg",
+            "Tennis TV 官方集锦画面 · 2025 年基茨比厄尔半决赛，卡佐对林德克内希",
+            (
+                "上一周 格施塔德半决赛，重回前 100",
+                "下一周 靠豁免进正赛，打进决赛",
+                "两周之后 世界第 75",
+            ),
+            "",
+            "整站只留一个位置。第二个赶不上的人呢？",
+        ),
+    ),
     "pr-allowance": (
         (
             "count",
@@ -3747,6 +4122,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "special-exempt": {
+        "hook": (
+            "华盛顿两场决赛被雨推到周一，而加拿大站的资格赛两天前就打完了。\n"
+            "规则给这件事留了一个位置叫特殊豁免——大师赛和 500 赛，整站只有一个。"
+        ),
+        "tags": ("网球", "网球时差", "布云朝克特", "特殊豁免", "网球冷知识"),
+    },
     "pr-allowance": {
         "hook": (
             "保护排名不是年卡：停 6–12 个月给 9 站或 9 个月，两个上限同时倒计时。\n"
@@ -4002,6 +4384,24 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "special-exempt": {
+        "topic": "特殊豁免：整站只留一个位置",
+        # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数：
+        # 「上一站还没打完，下一站怎么办？」只有 77px，会在词中间断成两行。
+        # 这一句 89px。见 test_封面那一问要能排进一行。
+        "question": "雨没停，下一站还赶得上吗？",
+        "narration": "雨没停，下一站还赶得上吗？规则给这件事留了一个位置，整站只有一个。",
+        "gloss": "Special Exempt = 特殊豁免",
+        # ⚠️ **封面不用抽帧。** 一开始挂的是第 ⑥ 屏那张 1920×1080 的集锦帧，
+        # 而封面要铺满 1080×1440 的 3:4——横帧裁完只有 810×1080，**得放大 133%**，
+        # `test_封面图不许被放大` 当场判红。CLAUDE.md 那条「封面用真实照片，
+        # 不要从视频里抽帧……封面又是唯一决定人点不点的那一屏」说的就是这个。
+        # 换成 Commons 上 4000×6000 的原图，裁 3:4 之后还剩 1.85 倍余量。
+        # 年份和这条片子讲的 2025 不同，所以写在署名里（照 pr-allowance 的做法：
+        # 封面那张任何一屏都不用，借不到出处，自己写一行）。
+        "image": "assets/explainer/special-exempt/cazaux_usopen_2023_forehand.jpg",
+        "credit": "Hameltion / Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，卡佐正手伸展",
+    },
     "pr-allowance": {
         "topic": "保护排名：9 站或 9 个月，先到先算",
         "question": "保护排名，能用几次？",
