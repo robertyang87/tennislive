@@ -25,6 +25,19 @@ from pathlib import Path
 WORKFLOW = Path(".github/workflows/match-reel.yml")
 
 
+
+def _quote_str(raw) -> str:
+    """`quote` 现在也可以写成**按条声明**的列表（中英双语字幕，一条一行）。
+
+    扫 spec 的判据一律先过这儿：老写法是一个字符串，新写法是 `list[str]`，
+    而**两种都是要发出去的字**，规矩一视同仁。
+    第一版这两处直接 `s.get("quote") or ""`，喂进 `re.search` 当场 TypeError。
+    """
+    if isinstance(raw, list):
+        return " ".join(str(x) for x in raw)
+    return str(raw or "")
+
+
 def _steps(text: str) -> list[str]:
     """按 `      - name:` 切出步骤名，顺序即执行顺序。"""
     return [
@@ -517,12 +530,23 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
         # 「还是走之前先出获胜后的动作和表情，然后再介绍比赛过程」——坐标于是
         # 挪到了冷开场之后。要守住的是「刷到的人在前 40 秒内知道这是哪天哪站
         # 哪一轮」，不是「它必须是第一句」。
+        # **原声冷开场不占这四十秒。** 账号所有者 2026-08-03 把开场定成「最后
+        # 一个球落地后的状态」，并要求「不要剪切掉原来英文解说的完整配音和
+        # 画面」——`eala-pegula-final` 的开场是**六十七秒的转播原声**，
+        # 一句中文旁白都没有。
+        # 这条规矩要守的是「**我们一开口**就先安置观众」，不是「片子开始四十秒
+        # 内」：没有旁白的那几段，观众听见的是现场和解说，本来就没有我们可以
+        # 放坐标的地方。所以从**第一句中文旁白**起算。
+        segs = spec["segments"]
+        first = next((i for i, s in enumerate(segs)
+                      if str(s.get("narration", "")).strip()), len(segs))
         opening, used = "", 0.0
-        for seg in spec["segments"]:
+        for seg in segs[first:]:
             if used >= 40.0:
                 break
             opening += seg.get("narration", "")
             used += float(seg["end"]) - float(seg["start"])
+        assert opening.strip(), f"{path.stem} 整条片子一句中文旁白都没有"
         assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
         assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
             f"{path.stem} 开场没给开球时刻：{opening}"
@@ -675,7 +699,7 @@ def test_旁白不许用指示语指画面():
     for slug, spec in _reel_specs().items():
         for seg in spec["segments"]:
             # 原声段的中文字幕（`quote`）也是我们写的，一样受这条管
-            for text in (seg.get("narration") or "", seg.get("quote") or ""):
+            for text in (seg.get("narration") or "", _quote_str(seg.get("quote"))):
                 m = pointing.search(text)
                 if m:
                     bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
@@ -4254,6 +4278,108 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch):
+    """**「下到了」不等于「下到的是视频」，而坏结果会被缓存固化。**
+
+    run 30838371382：`source_url` 给的是 Brightcove 的播放页
+    （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`），
+    直链那条路 curl 下来 **0.3 MB 的网页**，打印「[ok] 直链下到 0.3 MB」，
+    `_keep_source` 还把它**存进了缓存**，一直到下一步 ffprobe 才报
+    `Invalid data found`。于是「换个参数重跑」永远重现同一个错——
+    因为重跑第一件事就是命中那个坏缓存。
+
+    老判据只看**前 64 字节**里有没有 `<!doctype html` / `<html`，
+    所以这条测试喂的网页**故意不以 `<!doctype` 开头、前 64 字节里也没有
+    `<html`** —— 那正是漏过去的那种形状。
+
+    判据必须**真造两个文件、真跑一遍 `download()`**：查源码里有没有 probe
+    只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg") or not _shutil.which("ffprobe"):
+        raise AssertionError(
+            "这条测试要 ffmpeg/ffprobe（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    # ① 播放页：不以 `<!doctype` 开头，前 64 字节里也没有 `<html`
+    page = tmp_path / "index.html"
+    page.write_text("\n<!-- Brightcove player bootstrap -->\n" + " " * 90
+                    + "\n<html><body>player</body></html>\n", encoding="utf-8")
+    assert b"<html" not in page.read_bytes()[:64], "这个 fixture 没重现老判据的漏洞"
+
+    # ② 一个真视频，用来反向验证这道闸没有把好的也拦掉
+    real = tmp_path / "real.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i",
+                    "testsrc2=size=320x240:rate=25", "-t", "1",
+                    "-pix_fmt", "yuv420p", str(real), "-y"], check=True)
+
+    cache = tmp_path / "cache"
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(cache))
+
+    with pytest.raises(reel.ReelError) as err:
+        reel.download(f"file://{page}", tmp_path / "out1.mp4")
+    msg = str(err.value)
+    assert "ffprobe 读不出视频流" in msg, f"报错没说清楚是什么问题：{msg}"
+    # **报错要说出路**，而且要盖住这次真正的原因（播放页 ≠ 直链）
+    assert "yt-dlp" in msg and "播放页" in msg, f"报错没给出路：{msg}"
+    assert not (tmp_path / "out1.mp4").exists(), "坏文件没删干净"
+    assert not list(cache.glob("*")), (
+        "网页被存进了缓存——下一趟会直接命中它，「重跑」永远重现同一个错")
+
+    # ③ 反向：真视频要过，而且要进缓存（别把闸装成一律不放行）
+    got = reel.download(f"file://{real}", tmp_path / "out2.mp4")
+    assert got.is_file() and got.stat().st_size > 0
+    assert len(list(cache.glob("*"))) == 1, "真视频没被缓存下来"
+
+
+def test_双语字幕要真的排成两行(tmp_path):
+    """**换行是「这一条排两行」，不是一个空格。**
+
+    中英双语的原声字幕（`quote` 写成列表）靠元素里的换行分上英下中。
+    第一版我拿 `pipeline.render_ass` 验的——**那是另一个写入器**：成片走的是
+    `explainer.write_subtitles`（Style `TL`，带逐词字号标签），而它当时写着
+    `shown.replace(chr(10), ' ')`，把换行压成空格。渲出来长的那两条靠
+    `WrapStyle=0` 自动折**碰巧**断在中英之间，短的干脆不断——同一条片子里
+    两种样子，而且断点由宽度决定，不由作者决定。
+    **又一次「查的东西和跑的东西不是一回事」。**
+
+    ⚠️ 也不能直接把 ASS 的换行符写进文本：`_ass_text` 会把它后面那个 N 当成
+    一个拉丁词、包上字号标签，画面上多出一个字母 N。所以要**按行分别过
+    `_ass_text` 再拼**。
+
+    判据真写一份 ASS 出来读，钉两头：双行的要有换行符、**单行的一个字节都不许
+    变**（存量的解说片和赛场之上都走这个写入器）。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import write_subtitles  # noqa: PLC0415
+
+    nl = chr(92) + "N"          # ASS 的换行符，写成字面量免得被当转义
+    path = write_subtitles(
+        [(0.0, 3.0, "A first ever tour title\n生涯第一个巡回赛冠军"),
+         (3.0, 5.0, "普通单行字幕")],
+        tmp_path / "s.ass", height=1440)
+    rows = [line for line in path.read_text("utf-8").splitlines()
+            if line.startswith("Dialogue")]
+    assert len(rows) == 2
+
+    assert nl in rows[0], f"双语那条没排成两行：{rows[0]}"
+    head, _, tail = rows[0].partition(nl)
+    assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
+        f"英文和中文没落在各自那一行：{rows[0]}"
+    assert chr(92) + "{" not in rows[0], \
+        f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
+
+    assert rows[1].endswith(",普通单行字幕"), \
+        f"单行的输出变了，会连累解说片那条线：{rows[1]}"
+
+
 def test_缓存源片的开关要在工作流里够得着():
     """和 `--cover-only` 那次同一个坑：代码里加了，工作流没接上等于没有。
 
@@ -4740,7 +4866,7 @@ def test_旁白不许把每一局都念一遍():
             continue
         hit = [s for s in segs
                if announce.search((s.get("narration") or "")
-                                  + (s.get("quote") or ""))]
+                                  + _quote_str(s.get("quote")))]
         share = len(hit) / len(segs)
         if share > _BOARD_SHARE_MAX:
             bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
@@ -4809,8 +4935,26 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
         # 不用再从字幕反解。老片子没有这一项，退回反解。
         recorded = render_json.get("narration_seconds") or {}
         if recorded:
+            segs = spec.get("segments") or []
+            # ⚠️ **产物可能是上一版的，而且「序号还在」比「序号越界」更坏。**
+            # 改 spec 不重渲是常事（措辞、注解、规矩追认、重排段落）。
+            # `eala-pegula-final` 从 14 段重排成 8 段时，越界的那几个会 IndexError
+            # ——那还算出声；**没越界的那几个会静默指到另一段身上**，于是这条
+            # 测试报「最坏一段差 6.63s」，看起来像模型不准，其实是产物对错了人。
+            # 又一次「voice 文件要按内容认领，不按序号」，只是换到了 render.json。
+            #
+            # `render.json` 自己记着渲的时候那份 spec 的画面总长，拿它对一下就
+            # 能自证是不是同一版。对不上就**整个 outdir 跳过并出声**——这一段
+            # 本来就是加餐，核心判据是下面那张冻结的样本表。
+            spec_secs = round(sum(float(s["end"]) - float(s["start"])
+                                  for s in segs), 2)
+            was = round(float(render_json.get("segments_seconds", -1)), 2)
+            if abs(was - spec_secs) > 0.05:
+                print(f"  [跳过] {outdir.name} 的产物是上一版的："
+                      f"渲的时候画面 {was}s，现在的 spec 是 {spec_secs}s")
+                continue
             for key, secs in recorded.items():
-                seg = (spec.get("segments") or [])[int(key)]
+                seg = segs[int(key)]
                 body = "".join(c for c in str(seg.get("narration", ""))
                                if c not in reel._SPEECH_QUIET)
                 punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
