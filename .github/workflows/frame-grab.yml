@@ -49,10 +49,19 @@ jobs:
       - name: 安装依赖
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-          pip install -q -e . yt-dlp
+          # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
+          # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
+          # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，
+          # 报出来是 `Requested format is not available`——看起来像「这条片子
+          # 只有 DRM」。头两趟 run（30791003879 / 30791363067）八个 client
+          # 全红，我据此写下「卡在片源」，方向反了。JS 运行时用 runner 自带的
+          # node，命令行统一带 `--js-runtimes node`（在 YTDLP_BASE 里）。
+          pip install -q -e . "yt-dlp[default]"
+          node --version
 
       # 起不来不算失败——退回 client 梯子，让下载那一步去报真正的原因。
       - name: 起 PO token provider
+        id: pot
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -60,7 +69,8 @@ jobs:
             brainicism/bgutil-ytdlp-pot-provider
           for i in $(seq 1 25); do
             if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 ${i} 次探活）"; exit 0
+              echo "provider 起来了（第 ${i} 次探活）"
+              echo "up=1" >> "$GITHUB_OUTPUT"; exit 0
             fi
             sleep 2
           done
@@ -94,6 +104,9 @@ jobs:
       - name: 抽帧
         env:
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          # 起来了就让 POT 那三档排在前面（`_ladder()` 按这个变量决定顺序）。
+          # 不设的话八档照跑，只是把最可能成的那几档排到了最后。
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
           PYTHONPATH: src
         run: |
           python tools/grab_frames.py "${{ github.event.inputs.url }}" \
