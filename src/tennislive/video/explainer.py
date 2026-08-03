@@ -4935,9 +4935,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V) -> Path:
+    # **换行是「这一条要排两行」，不是一个空格。** 原来这儿写的是
+    # `shown.replace(chr(10), ' ')`，于是中英双语那种「上英下中」的字幕被压成
+    # 一行，只能靠 `WrapStyle=0` 自动折——折点落在最后一个装得下的空格上，
+    # 长的碰巧断在中英之间，短的干脆不断，同一条片子里两种样子。
+    #
+    # ⚠️ **不能直接把 `\\N` 写进文本里**：`_ass_text` 会把 `N` 当成一个拉丁词，
+    # 包上 `{\\fs78}`，`\\N` 就成了 `\\{\\fs78}N{\\fs68}`，画面上多出一个字母 N。
+    # 所以要**按行分别过 `_ass_text`，再用 `\\N` 拼**。
+    #
+    # 单行的 cue 一个字节都不变（`split("\\n")` 只有一段），所以解说片那条线
+    # 不受影响——存量里 `subtitle_cues` 产出的每一条本来就是一行。
     lines = [
         f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
-        f"{_ass_text(shown.replace(chr(10), ' '))}"
+        + r"\N".join(_ass_text(row) for row in shown.split("\n"))
         for start, end, shown in cues
     ]
     path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
