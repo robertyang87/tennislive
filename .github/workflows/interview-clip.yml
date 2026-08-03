@@ -341,6 +341,12 @@ jobs:
           # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
           find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
           rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
+          # 缩略图墙是**写 spec 时的工作台**，不是产物：挑完 `cover.frame_at`
+          # 就没用了，而它一张 1.8 MB——这个仓库的 `output/` 已经 1.3 GB，
+          # 每条片子再塞一张，代价会加在此后每一条工作流的 checkout 上。
+          # 要看就本地 `--stage subs` 重生成（几百 KB 的 storyboard，不用 ffmpeg）；
+          # 挑帧的理由留在 spec 的 `cover._why` 里，那才是持久的那一份。
+          rm -f "$D"/storyboard.jpg
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"

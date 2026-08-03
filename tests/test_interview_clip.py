@@ -73,6 +73,22 @@ def _steps() -> list[dict]:
     return wf["jobs"]["render"]["steps"]
 
 
+def _step_run(step: dict) -> str:
+    """一个步骤**真正会执行的**那几行，去掉整行的 shell 注释。
+
+    ⚠️ **工作流的注释正是这个仓库记教训的地方**，正文里必然写着当年那些坑
+    （「这里不装 ffmpeg」「本地 `--stage subs` 重生成」）。连注释一起扫，
+    「把坑记下来」会被判成「又踩了这个坑」——同一个形状这个仓库犯过五次，
+    `_run_scripts()` 早就为此去过注释，而按 `_steps()` 逐步扫的这几条没跟上。
+
+    真栽了一次：提交那一步的清理注释里写了 `ffmpeg` 和 `--stage subs`，
+    于是它被判成「装了出片才要的东西」外加「跑在 subs 那一档」，两条一起红。
+    判据宁可窄，不可宽。
+    """
+    return "\n".join(ln for ln in str(step.get("run") or "").splitlines()
+                     if not ln.lstrip().startswith("#"))
+
+
 def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
     """把 `if:` 按给定 inputs 求值一遍。只认这个工作流真正用到的那点语法。
 
@@ -1323,7 +1339,7 @@ def test_只推送时不做出片那一堆准备():
     和「封面引的话」那条第一版栽的是同一个跟头。现在按 mode 真的求值一遍。
     """
     for step in _steps():
-        run = str(step.get("run") or "")
+        run = _step_run(step)                    # 去掉注释再扫，见 `_step_run`
         if not any(h in run for h in ("playwright", "faster-whisper",
                                       "yt-dlp", "ffmpeg", "fonts-noto")):
             continue
@@ -1344,7 +1360,7 @@ def test_每个mode都各干各的活():
     for mode in ("subs", "render", "push"):
         stage[mode] = [s.get("name") for s in _steps()
                        if _if_holds(s.get("if"), mode=mode)
-                       and "--stage" in str(s.get("run") or "")]
+                       and "--stage" in _step_run(s)]
     assert stage["subs"] == ["取字幕切行"], stage["subs"]
     assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
     assert stage["push"] == [], stage["push"]
@@ -1908,7 +1924,7 @@ def test_缩略图墙每一格都要标出秒数():
 
     from tools.build_interview_clip import _tile_sheet
 
-    tiles = [Image.new("RGB", (160, 90), (i * 20 % 256, 60, 90)) for i in range(9)]
+    tiles = [(i, Image.new("RGB", (160, 90), (i * 20 % 256, 60, 90))) for i in range(9)]
     dest = _tile_sheet(tiles, step=1.91, cols=3, dest=ROOT / "_t.jpg")
     try:
         assert dest.exists() and dest.stat().st_size > 0
@@ -1918,6 +1934,116 @@ def test_缩略图墙每一格都要标出秒数():
         assert sheet.height > 90 * 3, f"没给秒数留位置：{sheet.size}"
     finally:
         dest.unlink(missing_ok=True)
+
+
+def test_噪声标记要看穿说话人标记():
+    """`[applause]` 不是台词，可它带上 `>>` 之后就漏进字幕了。
+
+    自动字幕把 `>>` 和后面那个词并成一个 token，换人说话时的掌声于是是
+    `>> [applause]` 而不是 `[applause]`——裸的 `^\\[.*\\]$` 匹配不上。
+    冠军致辞那条切出来的第 19 行就是光秃秃的「[applause]」，**它会作为一行
+    字幕烧在画面上**。
+
+    和 `test_订正要看穿说话人标记` 是同一个 token 形状咬的第二次，只是
+    **后果反过来**：那次是订正悄悄不生效（不吭声），这次是把一个非台词
+    印在脸上（很吵，但要渲出来才看得见）。
+
+    反面锚点：`[inaudible] she said` 这种**标记后面还有台词**的不许被丢掉，
+    否则「判据宁可窄，不可宽」又要犯一次。
+    """
+    from tools.build_interview_clip import _NOISE, segment
+
+    for noise in (">> [applause]", "[applause]", ">> [cheering]", ">>", "&gt;&gt;"):
+        assert _NOISE.match(noise), f"{noise!r} 该被当成噪声丢掉"
+    for real in ("Good", ">> Good", "[inaudible] she said"):
+        assert not _NOISE.match(real), f"{real!r} 是台词，不许丢"
+
+    words = [(0.5, ">> So"), (1.0, "thank"), (1.5, "you."),
+             (2.0, ">> [applause]"), (5.0, ">> Um,"), (5.5, "yeah.")]
+    en = " ".join(s["en"] for s in segment(words, 0.0, 9.0))
+    assert "applause" not in en.lower(), f"噪声标记漏进字幕了：{en}"
+    assert "thank you." in en and "yeah." in en, f"把台词一起丢了：{en}"
+
+
+def test_缩略图墙的秒数不许自己摊():
+    """秒数要按 storyboard 自己的帧率算，**不能拿「片长 ÷ 存活格数」去摊**。
+
+    两个坑叠在一起，冠军致辞那条同时踩了：
+
+    ① **最后一张 sheet 是残的。** 这条片子的 sb0 前四张 800×450（5×5），
+       第五张只有 **800×180**（5×2，装最后 10 帧）。照声明的 5 行硬切，等于
+       把它切成 25 条 160×36 的碎条——拼出来是一排「上半截有画面、下半截全黑」
+       的格子，**看起来像片尾卡，其实是切错了**。
+    ② 碎条大多不是纯黑，于是滤黑之后还剩 121 格（真实是 108）。步长摊成
+       4.42 秒，而 YouTube 报的 fps=0.2019 说的是 **4.95 秒一格**。
+
+    错了 12%，**而且不吭声**：标签照印、图照出。判据是拿另一条时间轴对——
+    按摊出来的秒数，她**跪地庆祝在 221 秒**，而记分牌上的赛点在 232 秒：
+    庆祝早于赛点，不可能。乘回 1.121 正好落在 247.8 秒那句
+    `It's Eala's. Magical moment.` 上。
+
+    这张图唯一的用途就是挑 `cover.frame_at`，所以骗的正是它要干的那件事。
+    """
+    import email.mime.image
+    import email.mime.multipart
+    import io as _io
+
+    from PIL import Image
+
+    from tools.build_interview_clip import _mhtml_tiles
+
+    # ⚠️ **黑格要有一个落在中间**，不能只放在末尾。真实数据的黑格都在最后
+    # （5×5×4 + 8 帧），而那种情况下「按原位编号」和「按存活第几个编号」
+    # **算出来一模一样**——拿它当 fixture，序号那条断言就是恒真的。
+    # 第一版就是这么写的：把实现退回 `len(tiles)` 重跑，测试照样绿。
+    # 中间那一格黑（画面淡入淡出就会有）才让两种编号分叉。
+    blanks = {7, 33, 34}                            # 中间一格 + 末尾两格
+
+    def sheet(rows: int, base: int) -> bytes:
+        im = Image.new("RGB", (160 * 5, 90 * rows))
+        for iy in range(rows):
+            for ix in range(5):
+                idx = base + iy * 5 + ix
+                rgb = (0, 0, 0) if idx in blanks else (40 + idx % 200, 90, 60)
+                im.paste(Image.new("RGB", (160, 90), rgb), (ix * 160, iy * 90))
+        buf = _io.BytesIO()
+        im.save(buf, "JPEG")
+        return buf.getvalue()
+
+    msg = email.mime.multipart.MIMEMultipart()
+    for rows, base in ((5, 0), (2, 25)):           # 一张满的 + 一张残的
+        msg.attach(email.mime.image.MIMEImage(sheet(rows, base), "jpeg"))
+    path = ROOT / "_sb_test.mhtml"
+    path.write_bytes(msg.as_bytes())
+    try:
+        tiles = _mhtml_tiles(path, rows=5, columns=5, tile_w=160, tile_h=90)
+    finally:
+        path.unlink(missing_ok=True)
+
+    want = [i for i in range(35) if i not in blanks]
+    assert [t.size for _, t in tiles] == [(160, 90)] * len(want), (
+        "残 sheet 被按整格网格硬切了——切出来的是碎条，不是缩略图："
+        f"{sorted({t.size for _, t in tiles})}")
+    assert [i for i, _ in tiles] == want, (
+        "序号不是原位：丢掉中间那格黑的之后，后面每一格的时刻都会往前挪，"
+        f"而标签看起来一样权威。拿到的是 {[i for i, _ in tiles]}")
+
+    # 步长的出处：`fps` 优先，按格数摊只能是退路。
+    # **真调一次函数**——查源码文本的断言防得住「有人把它删了」，
+    # 防不住「条件写反了」（第一版就是那么写的，把 `fps > 0` 改成
+    # `fps < 0` 照样绿）。喂的是当时真实的那组数。
+    from tools.build_interview_clip import storyboard_step
+
+    sb0 = {"fps": 0.20186915887850468}              # 这条片子 sb0 报的
+    dur, buggy_n = 534.84, 121                      # 碎条没滤干净时的格数
+    step, shared = storyboard_step(sb0, dur, buggy_n)
+    assert not shared, "报了 fps 还去摊"
+    assert abs(step - 4.954) < 0.01, f"步长该是 1/fps＝4.954 秒，拿到 {step:.3f}"
+    assert abs(step - dur / buggy_n) > 0.4, (
+        f"步长跟「片长÷格数」（{dur / buggy_n:.3f}）一样——那正是错了 12% 的那个数")
+
+    fallback, shared = storyboard_step({}, dur, 108)
+    assert shared and abs(fallback - dur / 108) < 0.01, "没有 fps 时要退回摊，并且说出来"
 
 
 def test_缩略图墙只在取字幕那一趟出():

@@ -184,8 +184,17 @@ _NAME_FIX = {
     "Alexi": "Alex", "Alexa": "Alexandra Eala", "Ayala": "Eala", "Aala": "Eala",
     "Alina": "Elina", "Vitilina": "Svitolina", "Switzerina": "Svitolina",
 }
-# 非语音标记，切行之前先丢掉
-_NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
+# 非语音标记，切行之前先丢掉。
+#
+# ⚠️ **要看穿说话人标记。** 自动字幕会把 `>>` 和后面那个词并成一个 token，于是
+# 换人说话时的掌声是 `>> [applause]` 而不是 `[applause]`——裸的 `^\[.*\]$`
+# 匹配不上，那一句就作为**一行字幕**渲到画面上（冠军致辞那条切出来的第 19 行
+# 就是光秃秃的「[applause]」）。
+#
+# 和 `word_fix` 看不穿 `>>` 那次是同一个形状，只是**后果反过来**：那次是订正
+# 悄悄不生效（不吭声），这次是把一个非台词印在脸上（很吵，但要渲出来才看得见）。
+# 同一个 token 形状咬了两次，所以这里也照 `_fix()` 的办法先把标记摘掉再判。
+_NOISE = re.compile(r"^(?:>>|&gt;&gt;)?\s*(?:\[.*\])?$")
 
 
 def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
@@ -221,7 +230,8 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
                         "-f", sb["format_id"], "-o", str(dest),
                         *cookie_args(spec or {}), url],
                        capture_output=True, text=True, timeout=300, check=True)
-        tiles = _mhtml_tiles(dest, int(sb.get("rows") or 0), int(sb.get("columns") or 0))
+        tiles = _mhtml_tiles(dest, int(sb.get("rows") or 0), int(sb.get("columns") or 0),
+                             int(sb.get("width") or 0), int(sb.get("height") or 0))
     except Exception as exc:                      # noqa: BLE001
         print(f"⚠️ 缩略图墙：下载或解析失败（{type(exc).__name__}: {exc}），跳过")
         return None
@@ -230,48 +240,104 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     if not tiles:
         print("⚠️ 缩略图墙：一格都没解出来，跳过")
         return None
-    step = float(meta.get("duration") or 0) / max(len(tiles), 1)
+    # **步长取 YouTube 自己给的 `fps`，不要拿「片长 ÷ 存活格数」去摊。**
+    #
+    # 摊出来的数在 `eala-pegula-dc2026-final` 上错了 12%：sb0 报 fps=0.2019
+    #（＝4.95 秒一格、全片 108 格），而滤黑之后还剩 121 格，摊成 4.42 秒一格。
+    # 于是每一格的标签都往前挪，越到后面差越多——她**跪地庆祝**被标成 221 秒，
+    # 而记分牌上的赛点在 232 秒：庆祝早于赛点，不可能。乘回 1.121 正好落在
+    # 247.8 秒那句 `It's Eala's. Magical moment.` 上。
+    #
+    # ⚠️ 这个错**不吭声**：标签照印、图照出，只有拿另一条时间轴（自动字幕）
+    # 对一次才看得出来。而它骗的正是这张图唯一的用途——挑 `cover.frame_at`。
+    dur = float(meta.get("duration") or 0)
+    step, shared = storyboard_step(sb, dur, len(tiles))
+    if shared:
+        print("⚠️ 缩略图墙：storyboard 没报 fps，退回按格数摊——秒数可能偏早，挑封面时拿字幕对一下")
     out = _tile_sheet(tiles, step, cols, workdir / "storyboard.jpg")
-    print(f"缩略图墙 {len(tiles)} 格、每格 {step:.1f} 秒 → {out}")
+    last = tiles[-1][0] * step
+    print(f"缩略图墙 {len(tiles)} 格、每格 {step:.2f} 秒（末格 {last:.1f}s／片长 {dur:.1f}s）→ {out}")
+    if dur and last > dur + step:
+        print(f"⚠️ 末格 {last:.1f}s 超出片长 {dur:.1f}s——多半是黑格没滤干净，秒数不可信")
     return out
 
 
-def _mhtml_tiles(path: Path, rows: int, columns: int) -> list:
-    """从 yt-dlp 落的 mhtml 里切出每一格。**格子数按 rows×columns 切**。"""
+def storyboard_step(sb: dict, duration: float, n_tiles: int) -> tuple[float, bool]:
+    """一格代表几秒。返回 `(步长, 是不是退回按格数摊了)`。
+
+    **优先用 storyboard 自己报的 `fps`，别拿「片长 ÷ 存活格数」去摊。**
+
+    摊出来的数在 `eala-pegula-dc2026-final` 上错了 12%：sb0 报 fps=0.2019
+    （＝4.95 秒一格、全片 108 格），而残 sheet 切出来的碎条大多不是纯黑，
+    滤完还剩 121 格，摊成 4.42 秒一格。于是每一格的标签都往前挪，越到后面
+    差越多——她**跪地庆祝**被标成 221 秒，而记分牌上的赛点在 232 秒：庆祝
+    早于赛点，不可能。乘回 1.121 正好落在 247.8 秒那句
+    `It's Eala's. Magical moment.` 上。
+
+    ⚠️ 这个错**不吭声**：标签照印、图照出，只有拿另一条时间轴（自动字幕）
+    对一次才看得出来。而它骗的正是这张图唯一的用途——挑 `cover.frame_at`。
+
+    抽成函数是为了**判据能真调它一次**：留在 `storyboard_sheet` 里就只能靠
+    查源码文本，而那种断言防得住「有人把它删了」，防不住「条件写反了」。
+    """
+    fps = float(sb.get("fps") or 0)
+    if fps > 0:
+        return 1.0 / fps, False
+    return duration / max(n_tiles, 1), True
+
+
+def _mhtml_tiles(path: Path, rows: int, columns: int,
+                 tile_w: int = 0, tile_h: int = 0) -> list:
+    """从 yt-dlp 落的 mhtml 里切出每一格，返回 `(原位序号, 图)`。
+
+    ⚠️ **格子大小按 `tile_w`/`tile_h` 算，行数按这张 sheet 自己的高度算——
+    不能拿 `rows` 去除。** 最后一张 sheet 常常是**残的**：这条片子的 sb0 前四张
+    都是 800×450（5×5），第五张只有 **800×180**（5×2，装最后 10 帧）。照 5 行硬切
+    等于把它切成 25 条 160×36 的碎条，拼出来就是一排「上半截有画面、下半截全黑」
+    的格子——**看起来像片尾卡，其实是切错了**。
+
+    ⚠️ **序号必须是它在整条 storyboard 里的原位，不能是「存活下来的第几个」。**
+    滤掉黑格之后重新编号的话，后面每一格的时刻都会往前挪，而**标签看起来一样权威**。
+    """
     import email
     from PIL import Image  # noqa: PLC0415
 
     msg = email.message_from_bytes(path.read_bytes())
-    tiles = []
+    tiles, base = [], 0
+    r, c = rows or 1, columns or 1
     for part in msg.walk():
         if not str(part.get_content_type()).startswith("image/"):
             continue
         sheet = Image.open(io.BytesIO(part.get_payload(decode=True))).convert("RGB")
-        r, c = rows or 1, columns or 1
-        tw, th = sheet.width // c, sheet.height // r
-        for iy in range(r):
-            for ix in range(c):
+        tw = tile_w or sheet.width // c
+        th = tile_h or sheet.height // r
+        for iy in range(max(1, sheet.height // th)):
+            for ix in range(max(1, sheet.width // tw)):
                 tile = sheet.crop((ix * tw, iy * th, (ix + 1) * tw, (iy + 1) * th))
                 # 末尾那几格常常是纯黑的填充，别混进来当候选
                 if sum(tile.resize((8, 8)).convert("L").getdata()) > 8 * 8 * 6:
-                    tiles.append(tile)
+                    tiles.append((base + iy * c + ix, tile))
+        base += r * c            # 步进按**声明的**整格网格走，残 sheet 也不例外
     return tiles
 
 
 def _tile_sheet(tiles: list, step: float, cols: int, dest: Path) -> Path:
-    """拼成一张图，每格左上角烧上它的秒数——**没有秒数就没法用它挑封面**。"""
+    """拼成一张图，每格左上角烧上它的秒数——**没有秒数就没法用它挑封面**。
+
+    `tiles` 是 `(原位序号, 图)`，秒数按**原位序号**算，不按摆放位置算。
+    """
     from PIL import Image, ImageDraw  # noqa: PLC0415
 
-    tw, th = tiles[0].size
+    tw, th = tiles[0][1].size
     pad, lab = 4, 16
     rows = (len(tiles) + cols - 1) // cols
     sheet = Image.new("RGB", (cols * (tw + pad) + pad,
                               rows * (th + lab + pad) + pad), (18, 20, 18))
     d = ImageDraw.Draw(sheet)
-    for i, t in enumerate(tiles):
-        x = pad + (i % cols) * (tw + pad)
-        y = pad + (i // cols) * (th + lab + pad)
-        d.text((x + 1, y), f"{i * step:.1f}s", fill=(150, 220, 190))
+    for slot, (idx, t) in enumerate(tiles):
+        x = pad + (slot % cols) * (tw + pad)
+        y = pad + (slot // cols) * (th + lab + pad)
+        d.text((x + 1, y), f"{idx * step:.1f}s", fill=(150, 220, 190))
         sheet.paste(t, (x, y + lab))
     sheet.save(dest, quality=88)
     return dest
