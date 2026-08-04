@@ -207,6 +207,23 @@ def test_apt一律走重试包装不许裸调():
                 wrapped += 1
 
     assert wrapped >= 12, f"只找到 {wrapped} 处 apt_retry，判据可能失效了"
+
+    # ⚠️ **单次超时不许收得比「正常值」还紧。**
+    # 第一版写 3 × 100 秒，当场把 CI 弄红（run 30880649692）：三次全跑满 100 秒
+    # 被杀——也就是 apt **一直在推进、只是慢**。那个 100 秒是按「正常 18~53 秒」
+    # 拍的，而那是**另一条工作流**的数；`ci.yml` 这一步正常 25~34 秒，镜像变慢时
+    # 能到 100 秒以上仍在干活。**把「慢」误判成「挂死」，重试就从救场变成三倍浪费。**
+    # 所以钉住：单次至少 150 秒（实测正常值的 4~6 倍），而且总时长要留在步骤超时以内。
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        for m in re.finditer(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", body):
+            tries, per = len(m.group(1).split()), int(m.group(2))
+            assert per >= 150, (
+                f"{path.name} 的 apt 单次超时只有 {per} 秒——"
+                "比实测的「慢但在推进」还紧，会把慢误判成挂死")
+            assert tries * (per + 10) <= 6 * 60, (
+                f"{path.name} 的 apt 重试总时长 {tries * (per + 10)} 秒，"
+                "超过了步骤的 6 分钟超时——那道兜底的闸就废了")
     assert not naked, (
         "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
         + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")

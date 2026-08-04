@@ -183,14 +183,21 @@ jobs:
           # （run 30878555571），而正常只要 **18~53 秒**，重跑那趟 34 秒就过了。
           # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
           # 一半**：卡住的正确处置是换一次重试，不是整趟失败。
-          # 3 × (100s + 10s) = 5.5 分，仍在步骤的 6 分钟超时以内，闸还在。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
           apt_retry() {
-            for i in 1 2 3; do
-              sudo timeout 100 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或失败）：$*"
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
               sleep 10
             done
-            echo "::error::apt 三次都没成功：$*"
+            echo "::error::apt 两次都没成功：$*"
             return 1
           }
           apt_retry apt-get update -qq
@@ -214,14 +221,21 @@ jobs:
           # （run 30878555571），而正常只要 **18~53 秒**，重跑那趟 34 秒就过了。
           # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
           # 一半**：卡住的正确处置是换一次重试，不是整趟失败。
-          # 3 × (100s + 10s) = 5.5 分，仍在步骤的 6 分钟超时以内，闸还在。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
           apt_retry() {
-            for i in 1 2 3; do
-              sudo timeout 100 "$@" && return 0
-              echo "::warning::apt 第 $i 次没跑完（卡住或失败）：$*"
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
               sleep 10
             done
-            echo "::error::apt 三次都没成功：$*"
+            echo "::error::apt 两次都没成功：$*"
             return 1
           }
           apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji
@@ -357,7 +371,7 @@ jobs:
             brainicism/bgutil-ytdlp-pot-provider
           for i in $(seq 1 25); do
             if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
-              echo "provider 起来了（第 ${i} 次探活）"
+              echo "provider 起来了（第 $           次探活）"
               echo "up=1" >> "$GITHUB_OUTPUT"
               exit 0
             fi
