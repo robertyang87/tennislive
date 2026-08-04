@@ -36,33 +36,91 @@ def _mod(name: str):
     return __import__(name)
 
 
-def test_本地发布不许自己点发布():
-    """`publish_hint` 只许用来确认「走到了」，一次都不许点。
+def test_发布只能走核对过的那一条路():
+    """点发布的地方**只许有一处**，而且它必须先核对页面上的内容。
 
-    这是整个脚本唯一一条不可逆的动作——发出去的东西收不回来，而且是给陌生人
-    看的。CLAUDE.md 里「推微信不用再问」那条**不覆盖这儿**：那条免掉的是
-    「这条已经验过的片子要不要发」，不是免掉「机器可以替人按下发布」。
+    2026-08-04 账号所有者：「那可以直接点击发帖么」——所以「绝不自己点发布」
+    那条规矩让位了。**但让位的是「谁来按」，不是「按之前要不要核对」。**
 
-    判据走 AST 而不是扫文本：`page.locator(plat.publish_hint).first.click()`
-    跨行写照样要拦得住，而按行扫会漏。反向验证：把那一行加回去，这条当场红。
+    停在发布按钮前买的从来不是那个点击动作，是**有人确认过三个格子真的填对了**。
+    那部分可以用机器做：`verify_filled` 把页面上真实的标题和正文读回来跟清单比。
+    标题填空了、正文被截断了、视频还在转码——这几种在页面上长得都很正常，
+    只有读回来才分得出来。又一次「查产物不查信号」。
+
+    所以判据从「一次都不许点」换成「只能从那一条核对过的路上点」。
     """
-    tree = ast.parse(TOOL.read_text(encoding="utf-8"))
     src = TOOL.read_text(encoding="utf-8")
-    clicked = []
-    for node in ast.walk(tree):
-        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-                and node.func.attr == "click"):
-            chain = ast.get_source_segment(src, node.func.value) or ""
-            if "publish_hint" in chain:
-                clicked.append(f"line {node.lineno}: {chain[:80]}")
-    assert not clicked, (
-        "发布按钮被点了：\n  " + "\n  ".join(clicked)
-        + "\n这个脚本的终点是「填好，停下」。要改这条规矩，先去问账号所有者。")
+    tree = ast.parse(src)
 
-    # 判据自己也要有判据：`publish_hint` 得真的被用到了（拿去 wait_for），
-    # 否则把这个字段整个删掉，上面那条也是绿的——一条恒真的检查等于没有检查。
-    assert "publish_hint" in src, "publish_hint 没人用了，这条判据成了恒真的绿灯"
-    assert "wait_for" in src, "没有任何一处在等发布按钮出现，那「停在按钮前」是空话"
+    # ⚠️ **按调用链扫是不够的，而且错在危险的那一头。**
+    # `_click_publish` 里写的是
+    #     btn = page.locator(plat.publish_hint).first
+    #     btn.click()
+    # 按 `.click()` 的接收方扫，源码片段只有 `btn`，看不到 `publish_hint`——
+    # 于是老那条「一次都不许点」会**在代码真的会发布的情况下报绿**。
+    # 改成按**函数作用域**判：函数体里同时出现 `publish_hint` 和 `.click()`
+    # 就算「这个函数会点发布」。
+    clickers = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        body = ast.get_source_segment(src, node) or ""
+        if "publish_hint" in body and ".click()" in body:
+            clickers.append(node.name)
+    assert clickers == ["_click_publish"], (
+        f"会点发布的函数是 {clickers}——只许 `_click_publish` 一个，"
+        "而且它必须先核对")
+
+    # 那一处必须先核对，而且核对不过要 return，不是打一行日志就往下走
+    gate = src[src.index("def _click_publish("):src.index("def _click_draft(")]
+    assert gate.index("verify_filled(") < gate.index("btn.click()"), (
+        "先点了再核对——那时候已经发出去了")
+    assert "return False" in gate[:gate.index("btn.click()")], (
+        "核对不过没有 return，会继续往下点")
+
+
+def test_发布不是默认行为():
+    """默认必须停在按钮前。**不可逆的动作不许是默认值。**"""
+    src = TOOL.read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    for node in ast.walk(tree):
+        if (isinstance(node, ast.Call)
+                and getattr(node.func, "attr", "") == "add_argument"
+                and any(getattr(a, "value", None) == "--publish" for a in node.args)):
+            kw = {k.arg: k.value for k in node.keywords}
+            assert getattr(kw.get("action"), "value", "") == "store_true", (
+                "--publish 不是 store_true，默认值可能不是 False")
+            break
+    else:
+        raise AssertionError("没有 --publish 这个开关，这条判据的主语没了")
+
+    # 函数签名那一头也要默认关着——工作流/别的调用方可能绕过 argparse。
+    mod = _mod("publish_local")
+    import inspect  # noqa: PLC0415
+
+    sig = inspect.signature(mod.publish_one)
+    assert sig.parameters["publish"].default is False, "publish_one 默认就在发"
+    assert sig.parameters["draft"].default is False
+
+
+def test_发布和存草稿是互斥的():
+    """两个终点性质不同，**不许猜**——猜错的那一半收不回来。"""
+    src = TOOL.read_text(encoding="utf-8")
+    assert "--publish 和 --draft 只能选一个" in src, "没拦同时给两个开关"
+
+
+def test_核对正文只比开头一段():
+    """全文比必然误报，而**一个天天误报的闸等于没有闸**。
+
+    平台的编辑器会把 `#话题` 变成药丸、把长文折叠，尾部本来就读不全；
+    开头那一段是纯散文，取得回来也最能证明「粘的是这一版」。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    body = src[src.index("def verify_filled("):src.index("def _click_publish(")]
+    assert "[:120]" in body, "正文比的不是开头一段"
+    assert "_norm(" in body, "没有归一化——空白重排会让逐字节比必然失败"
+    # 标题反过来要**整句**比：它短，而且是最容易被受控组件吃掉的那一格。
+    assert '_norm(manifest["title"])' in body, "标题没有整句比"
 
 
 def test_登录态目录要展开波浪号():
@@ -458,23 +516,21 @@ def test_点存草稿之前要读一遍按钮上的字():
         "先点了再检查——那时候已经晚了")
 
 
-def test_draft那条路不许绕过发布按钮那道确认():
-    """`--draft` 点的是存草稿，**publish_hint 那颗一次都不许点**。
+def test_draft那条路不许顺手把片子发出去():
+    """`--draft` 点的是存草稿，**不许走到 `_click_publish`**。
 
-    这条和 `test_本地发布不许自己点发布` 是同一条规矩的两半：那条查的是
-    「有没有 .click() 挂在 publish_hint 上」，这条查的是加了草稿这条路之后
-    那个结论还成立——**加新能力最容易的失手就是给它开一个绕过老闸的后门**。
+    加新能力最容易的失手就是给它开一个绕过老闸的后门：草稿这条路要是掉进
+    发布分支，人以为存了草稿、实际发出去了，而且不会有人告诉他。
     """
     src = TOOL.read_text(encoding="utf-8")
-    tree = ast.parse(src)
-    for node in ast.walk(tree):
-        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
-                and node.func.attr == "click"):
-            chain = ast.get_source_segment(src, node.func.value) or ""
-            assert "publish_hint" not in chain, (
-                f"line {node.lineno} 点了发布按钮：{chain[:80]}")
-    # 而 draft 这条路必须真的存在，否则这条判据是恒真的绿灯。
-    assert "def _click_draft(" in src and "--draft" in src
+    draft = src[src.index("def _click_draft("):src.index("def publish_one(")]
+    assert "_click_publish" not in draft, "存草稿那条路里出现了发布"
+    assert "publish_hint" not in draft, "存草稿那条路碰了发布按钮的选择器"
+
+    # 而分发那一处：publish 和 draft 必须是**互斥的分支**，不是两句顺序执行。
+    one = src[src.index("def publish_one("):src.index("def doctor(")]
+    assert "elif draft:" in one, (
+        "publish 和 draft 不是 if/elif——顺序执行的话 --publish 会先发再存草稿")
 
 
 def test_网页草稿不同步手机App这件事要说出来():

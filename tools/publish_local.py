@@ -441,6 +441,94 @@ def _fill(page, plat: Platform, selector: str, value: str, what: str) -> None:
 _NEVER_CLICK = ("发布", "发表", "立即", "公开", "提交审核")
 
 
+def _norm(text: str) -> str:
+    """比对用的归一化：去掉空白。
+
+    平台的编辑器会把换行、空格重排（话题变成蓝色药丸的时候尤其），所以逐字节比
+    必然误报。去掉空白之后剩下的字必须一模一样——那才是「填进去的和要填的是
+    同一段」。
+    """
+    return "".join(str(text or "").split())
+
+
+def verify_filled(page, plat: Platform, manifest: dict) -> list[str]:
+    """把页面上**真实的**标题和正文读回来，跟清单比。返回对不上的地方。
+
+    这是 `--publish` 的全部依据。「停在发布按钮前让人扫一眼」买的不是那个点击
+    动作，是**有人确认过三个格子真的填对了**——而那才是可以用机器做的部分：
+
+    - 标题框空着 / 只填进去一半（`type()` 被页面的受控组件吃掉）
+    - 正文粘成了一坨或者被截断（各平台的字数限制不一样）
+    - 视频还在转码，发布按钮却已经可点
+
+    这几种**在页面上长得都很正常**，只有把内容读回来才分得出来。
+    又一次「查产物不查信号」：填进去了是信号，读回来一致才是产物。
+
+    ⚠️ **正文比的是前 120 个字，不是全文。** 平台会把 `#话题` 变成药肩、
+    把长文折叠，尾部本来就取不全；而开头这一段是纯散文，取得回来也最能证明
+    「粘的是这一版」。全文比必然误报，而**一个天天误报的闸等于没有闸**。
+    """
+    bad: list[str] = []
+
+    try:
+        got = page.locator(plat.title_box).first.input_value()
+    except Exception:  # noqa: BLE001 - 有的平台标题是 contenteditable
+        try:
+            got = page.locator(plat.title_box).first.inner_text()
+        except Exception as exc:  # noqa: BLE001
+            return [f"读不回标题（{type(exc).__name__}）"]
+    if _norm(got) != _norm(manifest["title"]):
+        bad.append(f"标题对不上\n      要填 {manifest['title']!r}\n"
+                   f"      实际 {got!r}")
+
+    try:
+        body = page.locator(plat.body_box).first.inner_text()
+    except Exception as exc:  # noqa: BLE001
+        return bad + [f"读不回正文（{type(exc).__name__}）"]
+    head = _norm(manifest["body"])[:120]
+    if head and head not in _norm(body):
+        bad.append(f"正文对不上（比的是开头 120 字）\n"
+                   f"      要填 {manifest['body'][:60]!r}…\n"
+                   f"      实际 {body[:60]!r}…")
+    return bad
+
+
+def _click_publish(page, plat: Platform, manifest: dict) -> bool:
+    """**核对过才发。** 这是这个脚本唯一一个不可逆的动作。
+
+    `--publish` 是账号所有者显式要的（2026-08-04：「那可以直接点击发帖么」），
+    所以「绝不自己点发布」那条规矩在**有这个开关的时候**让位——但让位的是
+    「谁来按」，不是「按之前要不要核对」。核对现在由 `verify_filled` 做：
+    它读回页面上真实的标题和正文，对不上就一个字都不发。
+
+    ⚠️ **对不上时停下，不是「尽力发一下」。** 发出去的东西收不回来，而这三个
+    选择器到今天为止一次都没在真页面上跑过——「填对了」和「填空了」在页面上
+    长得一样，只有读回来才分得出来。
+    """
+    bad = verify_filled(page, plat, manifest)
+    if bad:
+        _shot(page, plat, "verify-failed")
+        print(f"  [核对] ❌ {plat.name} 页面上的内容和清单对不上，**不发**：")
+        for item in bad:
+            print(f"      {item}")
+        print("      页面开着，你自己看一眼；把截图发我改选择器。")
+        return False
+    print(f"  [核对] ✅ 标题和正文都和清单一致")
+
+    try:
+        btn = page.locator(plat.publish_hint).first
+        btn.wait_for(state="visible", timeout=FIELD_TIMEOUT_MS)
+        label = (btn.inner_text() or "").strip()
+    except Exception:  # noqa: BLE001
+        _shot(page, plat, "no-publish-button")
+        print(f"  [发布] 没找到发布按钮（{plat.publish_hint}）。页面开着，你自己点。")
+        return False
+
+    btn.click()
+    print(f"  [发布] 点了「{label}」——**这一步收不回来了**")
+    return True
+
+
 def _click_draft(page, plat: Platform) -> bool:
     """点「存草稿」。**点之前先读一遍按钮上的字。**
 
@@ -480,7 +568,7 @@ def _click_draft(page, plat: Platform) -> bool:
 
 
 def publish_one(ctx, plat: Platform, manifest: dict, video: Path,
-                draft: bool = False) -> bool:
+                draft: bool = False, publish: bool = False) -> bool:
     """填一个平台，**停在发布按钮前**。返回是不是走到了那一步。"""
     print(f"\n▶ {plat.name}")
     page = ctx.new_page()
@@ -522,7 +610,10 @@ def publish_one(ctx, plat: Platform, manifest: dict, video: Path,
         print("  [就绪] 没等到发布按钮。多半是视频还在转码（大片子要几分钟），"
               "页面开着，转完自己就出来了。")
 
-    if draft:
+    if publish:
+        # **唯一不可逆的分支。** 核对不过就不发，页面留着让人处理。
+        _click_publish(page, plat, manifest)
+    elif draft:
         # 存草稿这一步**要出声说存没存上**：存上了人在外面才找得到，
         # 没存上而以为存上了，是这条路唯一会让人白跑一趟的失败方式。
         if _click_draft(page, plat):
@@ -632,6 +723,10 @@ def main() -> int:
                     help="只发这个平台，可重复。默认三个都发")
     ap.add_argument("--login", choices=sorted(PLATFORMS),
                     help="扫码登录这个平台并把登录态存下来")
+    # ⚠️ 这是唯一一个会把内容推给陌生人的开关，**而且收不回来**。
+    # 默认关着；开了也要先过 `verify_filled` 那道回读核对。
+    ap.add_argument("--publish", action="store_true",
+                    help="核对无误后直接点发布（不可逆）。默认停在按钮前")
     ap.add_argument("--draft", action="store_true",
                     help="填完点「存草稿」（人不在电脑旁时用），"
                          "之后用手机浏览器开创作后台发。默认停在发布按钮前")
@@ -659,6 +754,9 @@ def main() -> int:
         ap.error("要么 --login <平台>，要么 --slug <片子>")
     if args.date and not args.remote:
         ap.error("--date 只配 --remote 用；本地那条路按清单自己找")
+    if args.publish and args.draft:
+        # 两个终点互斥。**不许猜**——猜错的那一半是不可逆的。
+        ap.error("--publish 和 --draft 只能选一个：一个把片子发出去，一个存草稿")
 
     video: Path | None = None
     if args.remote:
@@ -706,14 +804,18 @@ def main() -> int:
             ctx = browser.new_context(
                 storage_state=str(STATE_DIR / f"{plat.key}.json"))
             try:
-                if publish_one(ctx, plat, manifest, video, args.draft):
+                if publish_one(ctx, plat, manifest, video, args.draft,
+                               args.publish):
                     ready.append(plat.name)
             except SystemExit as exc:
                 # 一个平台坏了不该把另外两个也停掉——填好的那些还等着人点。
                 print(f"  ❌ {exc}")
         print(f"\n{'=' * 60}")
         print(f"填好了：{'、'.join(ready) or '一个都没有'}")
-        if args.draft:
+        if args.publish:
+            print("以上平台**已经发出去了**（核对通过的那些）。核对没过的没发，"
+                  "页面还开着。")
+        elif args.draft:
             print("已尽量存进各平台的**网页**草稿箱，一个都没点发布。\n"
                   "⚠️ 网页草稿和手机 App 的草稿箱是两个存储——人在外面要用\n"
                   "   手机浏览器开创作后台（creator.xiaohongshu.com / \n"
