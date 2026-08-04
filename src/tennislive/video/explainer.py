@@ -1611,11 +1611,15 @@ def _academy_span_diagram() -> str:
     defs, art = [], []
     for x, name, meta, key, up in people:
         cy = 130 if up else 372
+        # ⚠️ clipPath 放 defs，**<image> 必须放在正文里**——`<defs>` 里的内容
+        # 不渲染。上一版靠 `<use href="#i…">` 引用它，改成一上一下时我把 <use>
+        # 删了、<image> 却留在 defs 里，于是五个圈全是空的，而 SVG 不报任何错。
+        # 又一次「兜底出事的时候不吭声」，只是这次不吭声的是 SVG 本身。
         defs.append(f'<clipPath id="c{key}"><circle cx="{x}" cy="{cy}" r="40"/></clipPath>')
-        defs.append(f'<image href="{uri(key)}" x="{x-40}" y="{cy-40}" width="80" height="80" '
-                    f'clip-path="url(#c{key})"/>')
         ny, my = (198, 222) if up else (306, 330)
         art.append(
+            f'<image href="{uri(key)}" x="{x-40}" y="{cy-40}" width="80" height="80" '
+            f'preserveAspectRatio="xMidYMid slice" clip-path="url(#c{key})"/>'
             f'<circle cx="{x}" cy="{cy}" r="40" fill="none" stroke="#c6f65a" stroke-width="3"/>'
             f'<text x="{x}" y="{ny}" text-anchor="middle" fill="#e7f3ec" font-size="24" '
             f'font-weight="800">{name}</text>'
@@ -1630,20 +1634,20 @@ def _academy_span_diagram() -> str:
         + "<defs>" + "".join(defs) + "</defs>"
         + '<text x="450" y="40" text-anchor="middle" fill="#e7f3ec" font-size="33" '
           'font-weight="800">他们哪一年到的学院</text>'
-        + f'<line x1="50" y1="{AXIS}" x2="820" y2="{AXIS}" '
+        + f'<line x1="50" y1="{AXIS}" x2="860" y2="{AXIS}" '
           'stroke="rgba(231,243,236,.28)" stroke-width="3"/>'
         + "".join(art)
-        + f'<circle cx="700" cy="{AXIS}" r="8" fill="rgba(231,243,236,.34)"/>'
-        + '<text x="700" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+        + f'<circle cx="660" cy="{AXIS}" r="8" fill="rgba(231,243,236,.34)"/>'
+        + '<text x="660" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
           'font-weight="800">西埃拉</text>'
-        + '<text x="700" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+        + '<text x="660" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
           'font-weight="700">2025 · 21 岁</text>'
-        + f'<circle cx="820" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
+        + f'<circle cx="830" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
           'stroke-width="2" stroke-dasharray="4 4"/>'
-        + '<text x="820" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+        + '<text x="830" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
           'font-weight="800">科尔涅娃</text>'
-        + '<text x="820" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
-          'font-weight="700">哪年去的没查到</text>'
+        + '<text x="830" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">没查到</text>'
         + '<text x="450" y="452" text-anchor="middle" fill="#e7f3ec" font-size="27" '
           'font-weight="800">同一年到的两个人，一个 13 岁，一个 19 岁</text>'
         + '<text x="450" y="486" text-anchor="middle" fill="#9fb4aa" font-size="23" '
