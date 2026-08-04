@@ -2568,12 +2568,44 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
     return out
 
 
-def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
-               ) -> list[tuple[Path, list[dict]]]:
+def column_base_style(spec: dict) -> str:
+    """这条片子的**基调**风格，按栏目来；顺带把判断依据打进日志。
+
+    账号所有者 2026-08-04 问「以后所有配音都能自适应情绪么？」——**按文本自动
+    判情绪不做**（判错了不吭声，还会把「机器猜的」伪装成「你想清楚了」），
+    **按栏目定基调可以做，因为栏目是已知的、情绪不是**。
+
+    ⚠️ **没有 Azure 就没有基调**，而且必须说出来。硬套的话，`tts_one` 会对
+    **每一段**抛「这一段要 voice.style，而它只有 Azure 那条路有」——一个本来
+    只是「音色朴素一点」的降级会变成整条片子渲不出来。
+    """
+    column = str(spec.get("column")
+                 or (spec.get("cover") or {}).get("eyebrow") or "").strip()
+    if not azure_tts.available():
+        print(f"[配音] 没有 Azure，栏目「{column or '—'}」不套基调"
+              f"（{azure_tts.why_unavailable()}）")
+        return ""
+    style = azure_tts.base_style_for(column)
+    if not style:
+        print(f"[配音] 栏目「{column or '—'}」没登记基调，逐段按 spec 走"
+              f"（已登记：{'、'.join(azure_tts.COLUMN_BASE_STYLE)}）")
+    return style
+
+
+def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
+               base_style: str = "") -> list[tuple[Path, list[dict]]]:
     # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
     # 是个合法的形态（先看画面剪得对不对，再配音）
     if not any(seg.narration.strip() for seg in segments):
         return [(outdir / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+
+    if base_style:
+        # **两个数一起报**：只说基调是什么，看不出它到底盖住了几段；
+        # 只说覆盖了几段，又不知道其余那些是什么调。
+        overridden = sum(1 for s in segments if s.narration.strip() and s.voice_style)
+        plain = sum(1 for s in segments if s.narration.strip()) - overridden
+        print(f"[配音] 基调 {base_style}：{plain} 段用它，"
+              f"{overridden} 段在 spec 里各自覆盖")
 
     out: list[tuple[Path, list[dict]]] = []
     for index, seg in enumerate(segments):
@@ -2581,10 +2613,13 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
         if not seg.narration.strip():
             out.append((path, []))
             continue
+        # **段级永远赢。** 基调只填空位——「王欣瑜那条的第 7 段要 excited」
+        # 是编辑判断，不能被一个按栏目算出来的默认值盖掉。
         out.append((path, tts_one(seg.narration, path, voice,
                                   seg.voice_rate or rate,
                                   seg.voice_pitch or "+0Hz",
-                                  seg.voice_style, seg.voice_styledegree,
+                                  seg.voice_style or base_style,
+                                  seg.voice_styledegree,
                                   seg.voice_lead_pause)))
     return out
 
@@ -2874,7 +2909,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 挪到前面之后，同样这条错在**开跑后一分半**就报出来，而且一次把所有
     # 超出的段都列出来（原来就是这么设计的，见下面的注释）。
     with stage("TTS 合成"):
-        voices = synthesize(segments, outdir, voice, rate)
+        voices = synthesize(segments, outdir, voice, rate,
+                            column_base_style(spec))
 
     # **旁白比画面长，就不是「注意」，是错的。**
     #
@@ -3225,7 +3261,8 @@ def main() -> int:
 
         segments = validate_spec(spec)
         with tempfile.TemporaryDirectory() as tmp:
-            voices = synthesize(segments, Path(tmp), args.voice, args.rate)
+            voices = synthesize(segments, Path(tmp), args.voice, args.rate,
+                                column_base_style(spec))
             spoken, over = narration_overruns(segments, voices)
             splits = _word_splits(spec, segments, voices)
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个

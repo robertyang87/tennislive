@@ -6075,3 +6075,84 @@ def test_韵律报告要认得出哪几段带风格():
     assert len(call) - len(call.lstrip()) >= 12, (
         f"prosody_report 调用的缩进是 {len(call) - len(call.lstrip())} 格，"
         "说明它在临时目录那个 with 外面——那时语音已经删了")
+
+
+def test_栏目基调只填空位不许盖掉段级风格():
+    """账号所有者 2026-08-04：「以后所有配音都能自适应情绪么？」
+
+    分三层，只做第三层：
+
+    | | 做不做 | 为什么 |
+    |---|---|---|
+    | 每段都能带风格 | ✅ 已经能 | 额度够（已发 21 条 8352 字，F0 免费 50 万字符/月） |
+    | **按文本自动判情绪** | ❌ **不做** | 判错了不吭声，还会把「机器猜的」伪装成「你想清楚了」 |
+    | **按栏目定基调** | ✅ 做 | **栏目是已知的，情绪不是** |
+
+    ⚠️ 基调**只填空位**：段级 `voice.style` 是编辑判断（「第 7 段要 excited」），
+    一个按栏目算出来的默认值不许盖掉它。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+    from tennislive.video import azure_tts
+
+    # ① 基调必须是**服务端实测通过**的风格，不能是随手写的名字——
+    #    ⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功，只是没有情绪
+    assert set(azure_tts.COLUMN_BASE_STYLE.values()) <= set(azure_tts.KNOWN_STYLES)
+    # ② 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
+    suspect = {"narration-relaxed", "serious", "angry", "disgruntled", "cheerful"}
+    assert not (set(azure_tts.COLUMN_BASE_STYLE.values()) & suspect), (
+        "这几个风格实测时长和基线几乎一样，别拿来当整条片子的基调")
+    # ③ 登记过的栏目要真的在 spec 里出现过——一张会过期的表和一条常年红的
+    #    检查是同一个毛病
+    used = {str((json.loads(p.read_text("utf-8")).get("cover") or {})
+                .get("eyebrow") or "")
+            for p in Path("specs/reels").glob("*.json")}
+    stale = set(azure_tts.COLUMN_BASE_STYLE) - used
+    assert not stale, f"{sorted(stale)} 这些栏目在 specs 里根本不存在"
+    assert azure_tts.base_style_for("没这个栏目") == ""
+
+    # ④ 段级永远赢：给基调，带 style 的那段必须还是自己的
+    seen: list[str] = []
+
+    def fake_tts(text, path, voice, rate, pitch="+0Hz", style="",
+                 styledegree="", lead_pause=0.0):
+        seen.append(style)
+        path.write_bytes(b"x")
+        return []
+
+    segs = [
+        reel.Segment(start=0.0, end=6.0, cx=None, narration="没写风格的一段。"),
+        reel.Segment(start=6.0, end=12.0, cx=None, narration="写了风格的一段。",
+                     voice_style="sports-commentary-excited"),
+    ]
+    import tempfile
+    orig = reel.tts_one
+    reel.tts_one = fake_tts
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            reel.synthesize(segs, Path(tmp), "v", "+6%", base_style="sports-commentary")
+    finally:
+        reel.tts_one = orig
+    assert seen == ["sports-commentary", "sports-commentary-excited"], (
+        f"基调应该只填空位、段级永远赢，实际拿到 {seen}")
+
+
+def test_没有Azure的时候不许硬套基调():
+    """⚠️ 硬套的话 `tts_one` 会对**每一段**抛「这一段要 voice.style」——
+
+    一个本来只是「音色朴素一点」的降级，会变成整条片子渲不出来。
+    而且「没配基调」和「配了但没生效」长得一模一样，所以两条路都要打日志。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+
+    spec = {"cover": {"eyebrow": "赛场之上"}}
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    body = src[src.index("def column_base_style("):src.index("def synthesize(")]
+    assert "azure_tts.available()" in body and "return \"\"" in body, (
+        "没有 Azure 的时候必须返回空基调")
+    assert "print(" in body and "why_unavailable" in body, (
+        "两条路都要出声——「没配基调」和「配了但没生效」长得一模一样")
+    assert reel.column_base_style(spec) == "" or reel.azure_tts.available()

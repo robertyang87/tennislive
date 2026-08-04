@@ -59,6 +59,31 @@ KNOWN_STYLES = (
     "disgruntled", "cheerful",
 )
 
+# 栏目的**基调**。账号所有者 2026-08-04 问「以后所有配音都能自适应情绪么？」，
+# 答案分三层：每段都能带风格（额度够——已发 21 条合计 8352 字，F0 免费额度
+# 50 万字符/月）；**按文本自动判情绪不做**（判错了不吭声，而且它会把「机器猜的」
+# 伪装成「你想清楚了」，和 `mixed_fps` / `silent_source` / `rank: null` 是同一族）；
+# **按栏目定基调可以做，因为栏目是已知的，情绪不是**。
+#
+# 它顺带修掉一个真问题：王欣瑜那条 11 段里只有 3 段带风格，落差全堆在交界处。
+# 有了基调就是「基调 ＋ 三个重音」，而不是「三个人轮流念」。
+#
+# ⚠️ **这两个是十个里时长真的变了的那一档。** 另外五个
+# （narration-relaxed / serious / angry / disgruntled / cheerful）实测时长和
+# 基线几乎一样——「服务端认」不等于「听起来对」，别把它们设成基调。
+# ⚠️ **表里没有的栏目不给基调，而且要出声**：「没配基调」和「配了但没生效」
+# 长得一模一样，这个仓库为这种沉默栽过很多次。
+COLUMN_BASE_STYLE = {
+    "赛场之上": "sports-commentary",        # 一场对决的赛报
+    "网球有故事": "documentary-narration",  # 讲一个人的来路
+}
+
+
+def base_style_for(column: str) -> str:
+    """这个栏目的基调风格；没登记就返回空串（调用方负责出声）。"""
+    return COLUMN_BASE_STYLE.get((column or "").strip(), "")
+
+
 _ENV_KEY = "AZURE_SPEECH_KEY"
 _ENV_REGION = "AZURE_SPEECH_REGION"
 
