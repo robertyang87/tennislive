@@ -1289,6 +1289,114 @@ def tmp_copy_page(body: str):
     return path
 
 
+def test_探活命中也要出声而且要报第几次(caplog):
+    """命中那一路原来一个字都不打——于是「第 1 次就中」在日志里是**零行**。
+
+    这是「只在失败时出声的检查没法证明它真的看过」的镜像版，而且更阴：
+
+        第 1 次就中     零行
+        探七次才中     六行 404，**没有任何一行说「后来中了」**
+        这一步没跑     零行  ← 和第一种一模一样
+
+    2026-08-04 我把「下条片子推送时看一眼是不是第 1 次就中」写进了 CLAUDE.md，
+    引用的那句日志 `第 1 次探活：已是这一版的内容` **当时根本不存在**——
+    判据引用了一个不存在的产物，正是这一轮要终结的那个毛病。
+
+    报第几次不是装饰，它有判据：实测 dispatch 到部署完 19 秒
+    （`MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS`）、探活间隔 30 秒，
+    所以**正常就该是第 1 次**。第 2 次以上要当信号查，不是「Pages 今天慢」。
+    """
+    import logging
+
+    import requests
+
+    from tennislive.render.pushmsg import (
+        MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS,
+        _probe_page,
+    )
+
+    class _Resp:
+        status_code = 200
+        headers = {"Content-Type": "text/html; charset=utf-8"}
+        text = "<html>正文</html>"
+
+    class _Miss:
+        status_code = 404
+        headers = {"Content-Type": "text/html"}
+        text = ""
+
+    # ① 第 1 次就中：必须出声，而且说得出「第 1 次」
+    with caplog.at_level(logging.INFO, logger="tennislive.render.pushmsg"), \
+            mock.patch.object(requests, "get", return_value=_Resp()):
+        assert _probe_page("http://x/copy.html", attempts=3, delay=0)
+    hit = [r for r in caplog.records if "探活命中" in r.getMessage()]
+    assert hit, (
+        "命中之后一个字都没打——「第 1 次就中」和「这一步压根没跑」"
+        "在日志里长得一模一样")
+    assert "第 1 次" in hit[0].getMessage(), hit[0].getMessage()
+
+    # ② 前两次不可达、第 3 次才中：要报出 3，而且要说明「本该是 1」，
+    #    否则读日志的人得回头翻 CLAUDE.md 才知道这是异常
+    caplog.clear()
+    with caplog.at_level(logging.INFO, logger="tennislive.render.pushmsg"), \
+            mock.patch.object(requests, "get",
+                              side_effect=[_Miss(), _Miss(), _Resp()]):
+        assert _probe_page("http://x/copy.html", attempts=3, delay=0)
+    late = [r for r in caplog.records if "探活" in r.getMessage()
+            and "命中" in r.getMessage()]
+    assert late, "探了三次才中，却没有任何一行说它后来中了"
+    msg = late[0].getMessage()
+    assert "第 3 次" in msg, msg
+    assert late[0].levelno >= logging.WARNING, (
+        f"第 3 次才中是异常，不该用 info 混在正常输出里：{msg}")
+    assert f"{MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS:.0f}" in msg, (
+        f"没把「本该多快」写进日志，读的人还得回头查常量：{msg}")
+
+
+def test_每条探活路径都要报第几次():
+    """自己推导，不维护白名单——第三条探活路径出现时它会替人记得。
+
+    判据是结构性的：**凡是接 `attempts` 又真的 `requests.get` 的函数**，
+    都是一条探活路径，都必须调 `_say_probe_hit`。手写名单会在有人新加一条
+    探活时静默失效，而那正是这次出问题的形状（`live_copy_page_url` 和
+    `_probe_page` 各写各的，其中一条忘了出声也没人知道）。
+    """
+    import ast
+    import inspect
+
+    from tennislive.render import pushmsg
+
+    tree = ast.parse(inspect.getsource(pushmsg))
+
+    def _calls(node, dotted: str) -> bool:
+        want = dotted.split(".")[-1]
+        for sub in ast.walk(node):
+            if not isinstance(sub, ast.Call):
+                continue
+            fn = sub.func
+            if isinstance(fn, ast.Attribute) and fn.attr == want:
+                return True
+            if isinstance(fn, ast.Name) and fn.id == want:
+                return True
+        return False
+
+    probes = [
+        node for node in ast.walk(tree)
+        if isinstance(node, ast.FunctionDef)
+        and any(a.arg == "attempts"
+                for a in list(node.args.args) + list(node.args.kwonlyargs))
+        and _calls(node, "requests.get")
+    ]
+    names = sorted(n.name for n in probes)
+    # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯
+    assert len(names) >= 2, f"探活路径少于两条，判据多半失效了：{names}"
+
+    missing = [n.name for n in probes if not _calls(n, "_say_probe_hit")]
+    assert not missing, (
+        f"这些探活路径命中之后不出声：{missing}——"
+        "「第 1 次就中」和「这一步没跑」会长得一模一样")
+
+
 def test_复制页那道闸装在发的那一步不是渲的那一步():
     """第一版装错了位置，结果每次都把按钮拿掉。
 

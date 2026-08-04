@@ -399,6 +399,16 @@ _COPY_PAGE_RETRY_SECONDS = float(
 #: 这个数**故意不按 #168 之后的 20~27 秒往下调**：它是安全下界，不是当前耗时。
 MEASURED_PAGES_BUILD_SECONDS = 570.0
 
+#: 端到端实测：`trigger_pages_build()` 点下去到 Pages 部署完成有多少秒。
+#: 2026-08-04 06:41Z 量的（selftest run 30884872530 → pages run 30884890108，
+#: dispatch 06:41:32 → deploy 完 06:41:51）。
+#:
+#: **它不是超时，是判据**：探活间隔 30 秒，19 < 30 意味着**第 1 次探活就该中**。
+#: 探了两次以上说明这条链上还有别的没接上（点没点动、提交排在探活后面、
+#: 指纹取错了那一格），**别当成「Pages 今天慢」放过去**——那正是它藏了一个月
+#: 的方式。日志里那句 `复制页第 N 次探活命中` 就是给这个判据用的。
+MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS = 19.0
+
 #: Pages 部署那条工作流。**主线才有意义**——Pages 只服务 main。
 _PAGES_WORKFLOW = "pages.yml"
 
@@ -583,6 +593,23 @@ def drop_dead_copy_button(
     return _COPY_BUTTON_RE.sub("", html_body, count=1), None
 
 
+def _say_probe_hit(nth: int, url: str) -> None:
+    """探活命中时如实报第几次——两条探活路径共用，别各写一遍再对不上。
+
+    第 1 次是预期（实测 19 秒 < 30 秒的探活间隔）；第 2 次以上把预期一并打出来，
+    好让读日志的人当场知道这是个异常，而不用回头翻 CLAUDE.md 才想起来该是 1。
+    """
+    if nth <= 1:
+        logger.info("复制页第 1 次探活命中：已是这一版的内容 %s", url)
+        return
+    logger.warning(
+        "复制页第 %d 次探活才命中：%s——实测点一下到部署完只要 %.0f 秒，"
+        "而探活间隔 %.0f 秒，正常应该第 1 次就中。这条链上多半还有别的没接上"
+        "（点没点动、提交排在探活后面、指纹取错了那一格），别当成「Pages 今天慢」",
+        nth, url, MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS, _COPY_PAGE_RETRY_SECONDS,
+    )
+
+
 def _probe_page(
     url: str, *, attempts: int = 3, delay: float = 20.0, expect: str = ""
 ) -> bool:
@@ -590,6 +617,15 @@ def _probe_page(
 
     给了 `expect` 还要**正文里真的有这句话**：Pages 只服务 main，分支上的新
     copy.html 上不去，而线上那份旧的照样返回 200，光看状态码分不出来。
+
+    ⚠️ **命中那一路也要出声，而且要报第几次。** 原来它只在失败时打日志，
+    命中直接 `return True`——于是「第 1 次就中」在日志里是**零行**，
+    和「这一步压根没跑」长得一模一样。而「探了七次才中」只是多六行 404，
+    没有任何一行说「后来中了」。
+
+    报第几次是有判据的：`MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS` 实测 19 秒、
+    探活间隔 30 秒，所以**正常就该是第 1 次**。第 2 次以上要当成信号查，
+    不是「Pages 今天慢」。
     """
     import time
 
@@ -604,6 +640,7 @@ def _probe_page(
                 response.headers.get("Content-Type", "").lower()
             ):
                 if not expect or expect in response.text:
+                    _say_probe_hit(attempt + 1, url)
                     return True
                 # 这一条要出声：它和「取不到」是两种毛病，日志里混成一句就
                 # 永远查不出到底是没发布还是发布了旧版
@@ -634,6 +671,7 @@ def live_copy_page_url(
             if response.status_code == 200 and "text/html" in (
                 response.headers.get("Content-Type", "").lower()
             ):
+                _say_probe_hit(attempt + 1, url)
                 return url
             logger.info("复制页暂不可达（HTTP %s）：%s", response.status_code, url)
         except requests.RequestException as e:  # noqa: PERF203
