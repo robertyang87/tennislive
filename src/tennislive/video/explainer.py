@@ -1601,9 +1601,10 @@ _ACADEMY_SPAN_DIAGRAM = """
   <circle cx="675" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
   <circle cx="760" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
 
-  <text x="80"  y="252" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">伊埃拉</text>
+  <text x="80"  y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">伊埃拉</text>
   <text x="80"  y="222" text-anchor="middle" fill="#9fb4aa" font-size="22" font-weight="700">住了七年</text>
-  <text x="165" y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">兰达卢塞</text>
+  <text x="175" y="256" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">兰达卢塞</text>
+  <line x1="165" y1="268" x2="165" y2="288" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
   <text x="420" y="252" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">黄泽林</text>
   <text x="590" y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">鲁德</text>
   <text x="590" y="222" text-anchor="middle" fill="#9fb4aa" font-size="22" font-weight="700">已是职业球员</text>
