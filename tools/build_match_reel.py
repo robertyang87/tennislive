@@ -2346,6 +2346,136 @@ def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
     return spoken_of, over
 
 
+# 情绪风格听着「过不过头」，不必只靠耳朵 -----------------------------------
+# 2026-08-04 账号所有者问「成片音轨听着行不行——这个怎么评判？」，随后又
+# 「我现在不方便听啊，你能帮分析选择么」。**「听着行不行」拆得开**：音高、
+# 响度、语速三样都能量，只有音色和自然度量不了。这个函数报前三样。
+#
+# ⚠️ **一定要量原始语音，不能量成片。** 第一版拿混音后的 mp4 量，基线那条
+# （fritz-jodar，edge-tts）**七段全部「散」**——现场声把自相关污染了，可信
+# 0/7。而这里拿的是 `synthesize()` 刚落下的 mp3，一个现场声像素都没有。
+#
+# ⚠️ **自相关基频最容易犯倍频错误**（把 200 Hz 读成 100 或 400），而且它
+# **不吭声**。所以每一行都带四分位距：分布**紧**才是真的，散成两坨的那个数
+# 不作数，报告里明写出来，别让读的人拿一个坏数去下结论。
+_F0_SR = 16000
+_F0_LO_HZ, _F0_HI_HZ = 70, 350
+# 四分位距超过中位数这个比例就判为「散」。0.45 是拿存量量出来的：带风格那两段
+# 是 0.18~0.24，而被现场声污染的那些一律 0.6 以上，两档分得很开。
+_F0_SPREAD_BAD = 0.45
+
+
+def voice_prosody(path: Path) -> dict | None:
+    """量一条语音的基频和响度。量不了就返回 `None`，**不猜**。"""
+    try:
+        import numpy as np  # noqa: PLC0415
+    except ImportError:
+        return None
+    raw = subprocess.run(
+        ["ffmpeg", "-v", "quiet", "-i", str(path), "-ac", "1",
+         "-ar", str(_F0_SR), "-f", "s16le", "-"],
+        capture_output=True, check=False).stdout
+    if not raw:
+        return None
+    x = np.frombuffer(raw, "<i2").astype(np.float32) / 32768.0
+    n, hop = int(0.040 * _F0_SR), int(0.010 * _F0_SR)
+    frames = [x[i:i + n] for i in range(0, max(0, len(x) - n), hop)]
+    if not frames:
+        return None
+    rms = np.array([float(np.sqrt((f ** 2).mean())) for f in frames])
+    # 只取有声帧：静音段的自相关是噪声，混进来会把中位数拖歪
+    thr = max(float(np.median(rms)) * 0.5, 1e-4)
+    lo, hi = int(_F0_SR / _F0_HI_HZ), int(_F0_SR / _F0_LO_HZ)
+    pitches = []
+    for frame, level in zip(frames, rms):
+        if level < thr:
+            continue
+        frame = frame - frame.mean()
+        auto = np.correlate(frame, frame, "full")[len(frame) - 1:]
+        if auto[0] <= 0:
+            continue
+        auto = auto / auto[0]
+        seg = auto[lo:hi]
+        if not len(seg):
+            continue
+        # **取第一个够高的峰，不取全局最大**——全局最大常落在倍频下方，
+        # 于是一把男声会被读成半个八度以下，而那个数看起来完全正常。
+        peak = next((i + lo for i in range(1, len(seg) - 1)
+                     if seg[i] > seg[i - 1] and seg[i] >= seg[i + 1]
+                     and seg[i] > 0.35), None)
+        if peak is None:
+            best = int(np.argmax(seg))
+            if seg[best] <= 0.30:
+                continue
+            peak = best + lo
+        pitches.append(_F0_SR / peak)
+    if len(pitches) < 12:
+        return None
+    arr = np.array(pitches)
+    voiced = rms[rms >= thr]
+    q1, q3 = (float(np.percentile(arr, 25)), float(np.percentile(arr, 75)))
+    median = float(np.median(arr))
+    return {"f0": median, "q1": q1, "q3": q3,
+            "trusted": (q3 - q1) < median * _F0_SPREAD_BAD,
+            "db": float(20 * math.log10(max(float(np.sqrt((voiced ** 2).mean())),
+                                            1e-6)))}
+
+
+def prosody_report(segments, voices, spoken_of: dict[int, float]) -> list[str]:
+    """逐段报音高／响度／语速，并把**带风格的和不带的**摆在一起比。
+
+    这是「情绪弧做出来没有」和「有没有做过头」唯一不用耳朵的答案。
+    ⚠️ 它答不了**音色自不自然**——那一项没有仪器，只能听。报告末尾明写这句，
+    免得一张全绿的表被读成「已经验过了」。
+    """
+    lines = ["", "[查韵律] 逐段音高／响度／语速（量的是**原始语音**，没有现场声）",
+             f"{'段':>4}  {'风格':<26} {'字/秒':>6} {'基频Hz':>7} "
+             f"{'四分位':>13} {'响度dB':>7}"]
+    rows: list[tuple[int, str, float, dict | None]] = []
+    for index, seg in enumerate(segments):
+        if index not in spoken_of:
+            continue
+        # ⚠️ `Segment` 上是**平铺的四个字段**，不是一个 `voice` 字典。
+        # 第一版写成 `seg.voice`＋`hasattr` 兜底——每段都取到空串，
+        # 「带风格」那一组永远是空的，**而且不报错**。
+        style = seg.voice_style
+        rate = seg.voice_rate
+        tag = f"{style}{' ' + rate if rate else ''}"
+        chars = len([c for c in seg.narration if c.strip()])
+        cps = chars / spoken_of[index] if spoken_of[index] else 0.0
+        info = voice_prosody(voices[index][0])
+        rows.append((index, style, cps, info))
+        if info is None:
+            lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} "
+                         f"{'量不了':>7}（有声帧太少或缺 numpy／ffmpeg）")
+            continue
+        flag = "" if info["trusted"] else "  ⚠️散，这个数不作数"
+        lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} {info['f0']:>7.1f} "
+                     f"{info['q1']:>6.1f}–{info['q3']:<6.1f} {info['db']:>7.1f}{flag}")
+
+    styled = [r for r in rows if r[1]]
+    plain = [r for r in rows if not r[1]]
+    if styled and plain:
+        def band(items, key):
+            vals = [key(r) for r in items if key(r) is not None]
+            return (min(vals), max(vals)) if vals else None
+        f0 = lambda r: r[3]["f0"] if r[3] and r[3]["trusted"] else None   # noqa: E731
+        db = lambda r: r[3]["db"] if r[3] else None                        # noqa: E731
+        cps = lambda r: r[2]                                              # noqa: E731
+        lines.append("")
+        for name, items in (("带风格", styled), ("不带风格", plain)):
+            f, d, c = band(items, f0), band(items, db), band(items, cps)
+            lines.append(
+                f"  {name:<5} {len(items):>2} 段 ｜ 基频 "
+                + (f"{f[0]:.0f}–{f[1]:.0f} Hz" if f else "全部不可信")
+                + (f" ｜ 响度 {d[0]:.1f}–{d[1]:.1f} dB" if d else "")
+                + f" ｜ 语速 {c[0]:.2f}–{c[1]:.2f} 字/秒")
+        lines.append("  ⚠️ **响度**是判「吵不吵」的那一维：风格拉高音高不等于"
+                     "拉高音量，两个要分开看。")
+    lines.append("  ⚠️ 这张表答不了**音色自不自然**——那一项没有仪器，只能听。")
+    return lines
+
+
 def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
     """反过来的那一半：哪几段**空得太久**。
 
@@ -3118,6 +3248,9 @@ def main() -> int:
             print("\n两条出路：把这几段的旁白删短，或者把画面拉长"
                   "（`end` 往后挪，但别越过下一段的 `start`）。")
         _print_word_splits(splits)
+        # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
+        # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
+        print("\n".join(prosody_report(segments, voices, spoken)))
         if over or idle:
             return 1
         print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")

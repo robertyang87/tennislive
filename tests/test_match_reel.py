@@ -6024,3 +6024,45 @@ def test_旁白里的分不许读成分钟():
     assert not stale, (
         f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
         "这张表只许减不许加")
+
+
+def test_韵律报告要认得出哪几段带风格():
+    """账号所有者 2026-08-04：「成片音轨听着行不行——这个怎么评判？」
+
+    「听着行不行」拆得开：音高、响度、语速三样能量，音色和自然度不能。
+    `prosody_report` 报前三样，并把**带风格的和不带的**摆在一起比——这是
+    「情绪弧做出来没有 / 有没有做过头」唯一不用耳朵的答案。
+
+    ⚠️ 这条测试拦的是一个**会静默失效**的写法：第一版取的是 `seg.voice`
+    （一个不存在的字段）加 `hasattr` 兜底，于是每段都取到空串，
+    「带风格」那一组永远是空的，**报告照样出得来、一个字的错都不报**。
+    又一次「签名对了、实现是空的」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+
+    segs = [
+        reel.Segment(start=0.0, end=6.0, cx=None, narration="第一段没有风格。"),
+        reel.Segment(start=6.0, end=12.0, cx=None, narration="第二段很激动。",
+                     voice_style="sports-commentary-excited"),
+    ]
+    voices = [(Path("/nonexistent-0.mp3"), []), (Path("/nonexistent-1.mp3"), [])]
+    lines = reel.prosody_report(segs, voices, {0: 5.0, 1: 5.0})
+    body = "\n".join(lines)
+
+    # 风格名必须真的出现在报告里——取错字段的话这里是空的
+    assert "sports-commentary-excited" in body, (
+        "报告里没有风格名，多半是取错了字段"
+        "（`Segment` 上是平铺的 `voice_style`，不是 `voice` 字典）")
+    # 量不了要**说量不了**，不许猜一个数出来
+    assert "量不了" in body, "文件不存在时应当明说量不了，而不是给一个编的数"
+    # 音色那一句不能省：一张全绿的表不许被读成「已经验过了」
+    assert "音色" in body and "只能听" in body
+
+    # 位置：这个报告必须真的接在查旁白那条路上。**只测行为拦不住没接线**
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    head = src.index("if args.check_narration:")
+    assert "prosody_report(" in src[head:head + 4000], (
+        "`mode=narration` 那条路上没有调用 prosody_report——"
+        "语音只在那一刻还在临时目录里，错过就只能去量混了现场声的成片")
