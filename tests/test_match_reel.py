@@ -4483,7 +4483,7 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
-def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch):
+def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch, capsys):
     """**「下到了」不等于「下到的是视频」，而坏结果会被缓存固化。**
 
     run 30838371382：`source_url` 给的是 Brightcove 的播放页
@@ -4530,6 +4530,7 @@ def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkey
 
     with pytest.raises(reel.ReelError) as err:
         reel.download(f"file://{page}", tmp_path / "out1.mp4")
+    printed = capsys.readouterr().out
     msg = str(err.value)
     assert "ffprobe 读不出视频流" in msg, f"报错没说清楚是什么问题：{msg}"
     # ⚠️ **出路要代码自己走，不是写在报错里让人去走。**
@@ -4542,9 +4543,17 @@ def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkey
     # 现在 curl 拿到的东西读不出视频流就**当场退回 yt-dlp**。按结果分路，
     # 不按域名分路——一张「哪些站是播放页」的名单会过期，
     # 而「ffprobe 读不读得出视频流」这个判据永远新鲜。
-    assert "yt-dlp" in msg, f"没退回 yt-dlp：{msg}"
-    assert "player client" in msg, (
-        f"报错里看不出它真的试过 yt-dlp——只说「读不出视频流」证明不了退路走过：{msg}")
+    # ⚠️ **判据要挑两种环境都成立的那个。** 第一版断言报错里有 `player client`
+    # （yt-dlp 逐档试完的那句），本地绿、**CI 红**——CI 上根本没装 yt-dlp
+    # （同一份日志里就有一条 `这台机器没装 yt-dlp` 的 skip），退路走到一半就
+    # 停在「找不到 yt-dlp」。又一次「本地装着不等于 CI 装着」。
+    #
+    # 而 `"yt-dlp" in msg` 单独也**证明不了**退路走过：老版本那句
+    # 「这类要交给 yt-dlp」里同样有这四个字。真正只在退路上出现的是那行 stdout。
+    assert "改交给 yt-dlp 再试一次" in printed, (
+        f"没退回 yt-dlp（老版本会直接抛错，根本不试）：{printed!r}")
+    assert "player client" in msg or "找不到 yt-dlp" in msg, (
+        f"退路走了一半就丢了线索：{msg}")
     assert not (tmp_path / "out1.mp4").exists(), "坏文件没删干净"
     assert not list(cache.glob("*")), (
         "网页被存进了缓存——下一趟会直接命中它，「重跑」永远重现同一个错")
