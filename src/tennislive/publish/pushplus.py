@@ -319,21 +319,8 @@ def prepare_image_delivery(
     configured_access_key = os.environ.get("PUSHPLUS_ACCESS_KEY", "").strip()
     provider = "jsdelivr"
     if root and (secret_key or configured_access_key):
-        # PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
-        # （/doc/function/image.html 的「使用限制」）。账号所有者 2026-08-04
-        # 认领过这个取舍：换来的是发之前不用等 jsDelivr 回源。
-        #
-        # **但它必须写进日志。** 微信那条消息发出去收不回来，海报到期就变裂图，
-        # 而那是一个月之后的事——两条通道当天的日志长得一模一样。将来有人查
-        # 「这条老推送的图怎么裂了」，答案得在当天的日志里，而不是靠他重新
-        # 把这一整节推理一遍。
-        logger.warning(
-            "图片走 PushPlus 图床：官方限制 30 天后自动删除，"
-            "这条推送的图到期会变裂图（已认领的取舍，换发送前不必等回源）。"
-            "要改回永久可取就清掉 PUSHPLUS_SECRET_KEY / PUSHPLUS_ACCESS_KEY。"
-        )
         try:
-            return _pushplus_bed_delivery(
+            delivered = _pushplus_bed_delivery(
                 html_content,
                 sources,
                 root,
@@ -341,7 +328,7 @@ def prepare_image_delivery(
                 secret_key=secret_key,
                 configured_access_key=configured_access_key,
                 timeout=timeout,
-            ), "pushplus"
+            )
         except PushPlusError as exc:
             # **图床只是个优化，不是这条推送的内容。** 它换来的仅仅是「发之前
             # 不必等 jsDelivr 回源」，而下面那条退路更耐久（钉 commit、永久可取）。
@@ -369,6 +356,29 @@ def prepare_image_delivery(
                 exc,
             )
             provider = "jsdelivr-fallback"
+        else:
+            # PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
+            # （/doc/function/image.html 的「使用限制」）。账号所有者 2026-08-04
+            # 认领过这个取舍：换来的是发之前不用等 jsDelivr 回源。
+            #
+            # **但它必须写进日志。** 微信那条消息发出去收不回来，海报到期就变裂图，
+            # 而那是一个月之后的事——两条通道当天的日志长得一模一样。将来有人查
+            # 「这条老推送的图怎么裂了」，答案得在当天的日志里，而不是靠他重新
+            # 把这一整节推理一遍。
+            #
+            # ⚠️ **位置就是判据的一半：它只能在图真的传上去之后说。** 上一版
+            # 写在 `try` 前面（也就是「配了 key 就喊」），于是 2026-08-04
+            # 王欣瑜那趟推送的日志里，这句和紧接着那句退回贴在一起：图明明钉在
+            # commit 上永久可取，日志却说「到期会变裂图」。而这句话存在的**全部
+            # 理由**就是给一个月后来查「这图怎么裂了」的人看的——在一条图永久的
+            # run 上喊 30 天，正好把他引到错的答案上，比不吭声更坏。
+            # 判据落在 `test_退回jsDelivr那趟不许还喊30天会删图`。
+            logger.warning(
+                "图片走 PushPlus 图床：官方限制 30 天后自动删除，"
+                "这条推送的图到期会变裂图（已认领的取舍，换发送前不必等回源）。"
+                "要改回永久可取就清掉 PUSHPLUS_SECRET_KEY / PUSHPLUS_ACCESS_KEY。"
+            )
+            return delivered, "pushplus"
 
     return _jsdelivr_delivery(html_content, sources, root), provider
 

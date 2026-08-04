@@ -278,6 +278,52 @@ def test_走pushplus图床要先说清楚30天会删图(tmp_path, monkeypatch, c
     assert not [r for r in caplog.records if "30 天" in r.message]
 
 
+def test_退回jsDelivr那趟不许还喊30天会删图(tmp_path, monkeypatch, caplog):
+    """上一条钉了「走成了要说」和「没配过不许吵」，**漏了中间那一头**：
+    配了 key、但图床把我拒了。
+
+    2026-08-04 王欣瑜那趟推送（run 30906741325）就掉在这儿，两行贴在一起：
+
+        图片走 PushPlus 图床：官方限制 30 天后自动删除，这条推送的图到期会变裂图
+        PushPlus 图床用不了（…请求未授权），本次退回 jsDelivr
+        …图片通道 jsdelivr-fallback
+
+    那条片子的图**钉在 commit 上、永久可取**，一天都不会少。而这句告警存在的
+    全部理由就是给一个月后来查「这条老推送的图怎么裂了」的人看的——在一条图
+    永久的 run 上喊 30 天，**正好把他引到错的答案上**，比不吭声更坏。
+
+    根因是位置：上一版写在 `try` 前面，也就是「配了 key 就喊」，而真正该问的
+    是「图有没有真的传上去」。又一次「查产物，不查信号」。
+    """
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
+    # 喂线上那趟真收到的响应（code 401），别手搓异常——手搓证明不了
+    # 真实失败长什么样。
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": 401, "msg": "请求未授权"})),
+    )
+    html = ('<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+            'tennislive@abc123/output/2026-07-23/cards/cover.jpg">')
+
+    # ⚠️ **必须收在 WARNING**。那句告警就是 WARNING，收在 ERROR 上它根本进不了
+    #    caplog——断言会恒真，而恒真的判据和没有判据是同一个毛病。
+    with caplog.at_level(logging.WARNING, logger="tennislive.publish.pushplus"):
+        rendered, provider = prepare_image_delivery(
+            html, asset_dir=tmp_path, token="token")
+
+    assert provider == "jsdelivr-fallback"
+    assert "abc1234" in rendered, "退回之后图片没钉到 commit 上，那才真该喊会裂"
+    said = "\n".join(r.getMessage() for r in caplog.records)
+    assert "退回 jsDelivr" in said, f"连退回都没说，这条测试的前提就没成立：{said!r}"
+    assert "30 天" not in said, (
+        f"图钉在 commit 上永久可取，日志却还在喊 30 天会删图：{said!r}")
+
+
 def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, caplog):
     """图床是**优化**，不是这条推送的内容——它用不了就退回 jsDelivr，别否决推送。
 
