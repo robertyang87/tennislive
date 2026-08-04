@@ -838,6 +838,7 @@ def download(url: str, dest: Path) -> Path:
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
     # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
     # 传到网盘，再把直链给我们。
+    direct_failed = ""
     if "youtube.com" not in url and "youtu.be" not in url:
         proc = subprocess.run(
             ["curl", "-sSL", "--fail", "-o", str(dest), url],
@@ -862,21 +863,29 @@ def download(url: str, dest: Path) -> Path:
             head = dest.read_bytes()[:400].lower()
             looks_html = b"<html" in head or b"<!doctype" in head
             dest.unlink(missing_ok=True)
-            raise ReelError(
+            # ⚠️ **这里原来直接抛错，而错误正文写着「这类要交给 yt-dlp」**——
+            # 也就是说出路已经写出来了，只是**让人去走，代码自己不走**。
+            # 张帅那条就撞在这儿：`players.brightcove.net/…/index.html?videoId=…`
+            # 不含 youtube，于是走 curl 拿回 0.3 MB 网页，render 第 12 秒就红
+            # （run 30875896980）——而同一条 URL 交给 yt-dlp 一次就下来了。
+            #
+            # **按结果分路，不按域名分路。** 维护一张「哪些站是播放页」的名单
+            # 会过期，而过期的名单和一条常年红的检查是同一个毛病；
+            # 「curl 下到的东西 ffprobe 读不出视频流」这个判据永远新鲜。
+            direct_failed = (
                 f"直链下到 {size_mb:.1f} MB，但 ffprobe 读不出视频流"
-                f"{'（内容是 HTML）' if looks_html else ''}：{url[:120]}\n"
-                "两种常见情况：\n"
-                "  ① 网盘还是「仅限受邀者」——改成「知道链接的任何人」再试；\n"
-                "  ② 给的是**播放页**不是直链（Brightcove 之类的 index.html）——"
-                "这类要交给 yt-dlp，curl 只会把网页存下来。"
-            ) from None
-        print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
-        _keep_source(url, dest)
-        return dest
+                f"{'（内容是 HTML）' if looks_html else ''}")
+            print(f"[直链] {direct_failed}，改交给 yt-dlp 再试一次")
+        else:
+            print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
+            _keep_source(url, dest)
+            return dest
 
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
     if not binary:
-        raise ReelError("找不到 yt-dlp")
+        raise ReelError(
+            f"{direct_failed}，而且找不到 yt-dlp" if direct_failed
+            else "找不到 yt-dlp")
     # **编码是偏好，不是硬条件。** 原来第一档写死 `vcodec^=avc1` + `ext=m4a`：
     # YouTube 的高清一律是分离流，而 1080p 那几档常常是 VP9/AV1(webm)。某个
     # player client 列出来的格式表不全时（PO token / n challenge 那一环没打通
@@ -925,7 +934,8 @@ def download(url: str, dest: Path) -> Path:
         dest.unlink(missing_ok=True)
 
     raise ReelError(
-        f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
+        (f"{direct_failed}；退回 yt-dlp 之后，" if direct_failed else "")
+        + f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
         + "\n  ".join(failures)
         + "\n\n如果全是 “Sign in to confirm you’re not a bot”，那是**这台机器的 IP "
         "被 YouTube 挡了**，不是视频的问题：把一份登录过的 cookies.txt 存成仓库 "

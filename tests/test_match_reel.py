@@ -4532,8 +4532,19 @@ def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkey
         reel.download(f"file://{page}", tmp_path / "out1.mp4")
     msg = str(err.value)
     assert "ffprobe 读不出视频流" in msg, f"报错没说清楚是什么问题：{msg}"
-    # **报错要说出路**，而且要盖住这次真正的原因（播放页 ≠ 直链）
-    assert "yt-dlp" in msg and "播放页" in msg, f"报错没给出路：{msg}"
+    # ⚠️ **出路要代码自己走，不是写在报错里让人去走。**
+    #
+    # 老版本在这儿直接抛错，正文写着「这类要交给 yt-dlp」——出路已经写出来了，
+    # 只是没人走。张帅那条就撞在这儿：`players.brightcove.net/…/index.html`
+    # 不含 youtube，走 curl 拿回 0.3 MB 网页，render 第 12 秒就红
+    # （run 30875896980）；而同一条 URL 交给 yt-dlp 一次就下来了。
+    #
+    # 现在 curl 拿到的东西读不出视频流就**当场退回 yt-dlp**。按结果分路，
+    # 不按域名分路——一张「哪些站是播放页」的名单会过期，
+    # 而「ffprobe 读不读得出视频流」这个判据永远新鲜。
+    assert "yt-dlp" in msg, f"没退回 yt-dlp：{msg}"
+    assert "player client" in msg, (
+        f"报错里看不出它真的试过 yt-dlp——只说「读不出视频流」证明不了退路走过：{msg}")
     assert not (tmp_path / "out1.mp4").exists(), "坏文件没删干净"
     assert not list(cache.glob("*")), (
         "网页被存进了缓存——下一趟会直接命中它，「重跑」永远重现同一个错")
