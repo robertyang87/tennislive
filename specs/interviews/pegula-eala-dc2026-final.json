@@ -127,5 +127,7 @@
   "caption_gaps_ok": {
     "31.5-36.0": "**掌声，不是漏词。** 两头都是自动字幕自己出的噪声标记：29.5 秒 `[applause and cheering] [applause]`，36.4 秒她才接着说 `I would like to go ahead and thank my coach`。\n她刚讲完恭喜伊埃拉那一整段（收在 `All the best to you and your team and your coach.`），全场鼓掌——致辞里每谢完一段就鼓一次，这是最标准的形状。\n⚠️ **我没听音轨**（沙箱下不了媒体，403），这是从字幕两头的标记推的。",
     "63.6-66.8": "**同上**：61.6 秒 `[applause] [applause]`，67.4 秒她接着说 `I would like to thank Mubadala`。\n她刚谢完自己的团队，掌声起来，等落下再谢赛事方。\n⚠️ 同样没听音轨。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-04 在 run 30870782100 上跑的 `--stage verify`：\n① **转写分歧 6.5%（YouTube 570 词 / whisper small.en 539 词），在 12% 闸门以内**——三条里最低的一条；\n② **0 处待听**；两处空档就是我写在 `caption_gaps_ok` 里的那两处掌声，闸认了；\n③ 十八处分歧逐条看过，**一处实质错误都没有，所以这条不需要 `en_fixed`**。\n\n**几处值得记一笔的：**\n- `best to you and your team and your coach i would like to` → `—`：whisper 一口气丢了十二个词，而**丢的位置正好就是 31.5–36.0 那段掌声的两头**。这反过来印证了那处是掌声不是漏词——两份 ASR 在同一个位置各自失手，形状是对得上的。YouTube 那份完整，中文第 15–17 行照它写。\n- `hitting` → `headings`：`my hitting partner Mark and Spencer`（陪练），**取 YouTube**，small.en 听岔。\n- `mubadala` → `nuvadala`：赞助商名，同上。\n- `overtime` → `over time`：**只是分词不同，读音一样**，两份其实是一致的。这句正是封面副标那句。\n- `confirm` → `confirmed`：只差时态。\n- ⚠️ `christina` → `kristina`：一位赛事工作人员的名字，两份 ASR 拼法不同。**中文两种拼法都译作「克里斯蒂娜」，所以不影响成片**；但也就是说这个名字的**拼写**我没有第三方来源核过，不要拿这条片子当它的出处。\n\n其余全是 `um`／`i`／`a`／`to`／`took off` 这类虚词。\n\n⚠️ **我听不到音轨**（沙箱下不了媒体，403），以上全部基于两份 ASR 的交叉比对。\n⚠️ 切行时 3 个子句按词边界硬断（`I don't know I I don't know how much more…` 等），**都是她自己重复的口头语**，不是漏字。"
 }
