@@ -46,6 +46,9 @@ on:
 
 permissions:
   contents: write
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
 
 jobs:
   knowledge-adhoc:
@@ -177,3 +180,5 @@ jobs:
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

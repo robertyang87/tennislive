@@ -387,6 +387,70 @@ _COPY_PAGE_RETRY_SECONDS = float(
 #: 短了那颗按钮就永远出不来，而且不会报错。判据在 test_pushmsg 里。
 MEASURED_PAGES_BUILD_SECONDS = 570.0
 
+#: Pages 部署那条工作流。**主线才有意义**——Pages 只服务 main。
+_PAGES_WORKFLOW = "pages.yml"
+
+
+def trigger_pages_build(*, ref: str = "main", timeout: int = 15) -> bool:
+    """让 Pages 重新发布。**工作流自己提交的那次 push 不会触发它。**
+
+    2026-08-04 挖出来的静默回归。判据是 `pages.yml` 从上线到出事的**全部**
+    四趟运行记录：
+
+        #1  workflow_dispatch  我手动跑的第一趟
+        #2  push               **真人合并 PR #166**      ← 唯一自动触发的
+        #3  workflow_dispatch  工作流提交的佩古拉复制页    ← 手动补的
+        #4  workflow_dispatch  工作流提交的伊埃拉复制页    ← 手动补的
+
+    两次由推送流程自己 commit + push 的复制页，**一次都没触发部署**。原因是
+    GitHub 明文规定：用仓库自带的 `GITHUB_TOKEN` 推上去的 push **不会创建新的
+    workflow run**（防递归），而复制页正是工作流自己推的。
+
+    #168 之前 Pages 走的是「从分支部署」——那不是工作流，谁推都重建，所以这条
+    路一直通（只是慢，整站一两 GB 要六到九分钟）。换成 Actions 部署之后，
+    **触发器写对了，可它对这条唯一重要的路径是空的**。
+
+    ⚠️ **症状是「慢」不是「错」，所以它能藏住**：探活一直 404，探满
+    `_COPY_PAGE_ATTEMPTS` 次（40 分钟）之后静静摘掉按钮、正文照发。伊埃拉那条
+    连吃七次 404，我手动 dispatch 一次之后**第 8 次立刻中**——那就是判据。
+    又一次「兜底出事的时候不吭声」。
+
+    **`workflow_dispatch` 正是那条禁令明文列出的例外**（和 `repository_dispatch`
+    一起），所以主动点一下就能绕过去，不用另配 PAT。
+    ⚠️ 但「文档这么说」不等于「跑通了」：真正的判据是跑一趟真推送之后，
+    `pages.yml` 里出现一条 **`actor=github-actions[bot]`** 的运行记录。
+
+    **点不动不算失败**（探活那道闸还在，最坏是摘掉按钮），**但必须出声**——
+    否则「没点成」和「点成了」在日志上长得一模一样，而这正是这个 bug 藏了
+    一整天的原因。
+    """
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if not token:
+        logger.info("[Pages] 没有 GITHUB_TOKEN，不主动触发部署——"
+                 "复制页要等别的 push 才会发布，探活可能一直 404")
+        return False
+    repo = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    url = (f"https://api.github.com/repos/{repo}/actions/"
+           f"workflows/{_PAGES_WORKFLOW}/dispatches")
+    try:
+        r = requests.post(
+            url, json={"ref": ref}, timeout=timeout,
+            headers={"Authorization": f"Bearer {token}",
+                     "Accept": "application/vnd.github+json",
+                     "X-GitHub-Api-Version": "2022-11-28"})
+    except requests.RequestException as exc:
+        logger.warning("[Pages] 触发部署失败（%s: %s）——复制页可能迟迟发不出来",
+                    type(exc).__name__, exc)
+        return False
+    if r.status_code == 204:
+        logger.info("[Pages] 已请求重新发布（%s @ %s）", _PAGES_WORKFLOW, ref)
+        return True
+    # 403 多半是工作流少了 `actions: write`；404 是文件名或 ref 不对。
+    logger.warning("[Pages] 触发部署被拒：HTTP %s %s——"
+                "工作流要有 `permissions: actions: write` 并传 GITHUB_TOKEN",
+                r.status_code, (r.text or "")[:200])
+    return False
+
 
 def drop_dead_copy_button(
     html_body: str, *, probe=None, attempts: int | None = None,
@@ -446,6 +510,10 @@ def _probe_page(
     copy.html 上不去，而线上那份旧的照样返回 200，光看状态码分不出来。
     """
     import time
+
+    # **先点一下部署，再开始探。** 工作流自己提交的 push 不会触发 Pages，
+    # 不点的话这个循环注定探满全程再摘按钮——见 `trigger_pages_build`。
+    trigger_pages_build()
 
     for attempt in range(max(1, attempts)):
         try:
