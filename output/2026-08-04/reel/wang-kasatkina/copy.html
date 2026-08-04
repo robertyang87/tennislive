@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.4 赛场之上 | 王欣瑜两次差一个发球局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第二盘 6-5，第三盘 5-3。两次她都只差自己一个发球局，比赛就结束了。
+
+两局都没保住。
+
+多伦多 WTA1000 女单第一轮，北京时间 8 月 4 日上午九点开球。王欣瑜，世界第 41；卡萨金娜，世界第 61。
+
+⸻
+
+开局像是要一小时结束战斗。
+
+第一盘 29 分钟。46 个小分里她拿走 29 个；卡萨金娜的三个发球局只守住一个，一发赢一半，二发只赢三分之一——发球局打起来像在接发球。6-1。
+
+⸻
+
+第二盘她一点没停。前五局又破了三次，4-1。
+
+镜头给了她一个近景。那是这段集锦里最后一次只有她一个人。
+
+离胜利只剩两局。
+
+然后连丢四局，4-5。
+
+5-5 之后她再破一次，6-5。第一盘已经拿下，这一局保住就是 6-1 7-5，比赛结束。
+
+那一局，她一分没拿到。
+
+抢七 5-7，输掉。
+
+⸻
+
+第三盘她又爬到 5-3，还是一局就能结束比赛。三个破发点，救下两个，第三个没救住。
+
+接下来四局，一局没赢。
+
+⸻
+
+📍 多伦多 WTA1000 女单第一轮，北京时间 8 月 4 日 09:00
+🎾 卡萨金娜 1-6 7-6(5) 7-5 王欣瑜
+⏱ 2 小时 25 分钟（分盘 29 / 59 / 57 分钟）
+📊 数据（王欣瑜在前）：总得分 104-99 ｜ 总局数 17-14
+　　发球局 9/16 对 7/15 ｜ 接发局 8/15 对 7/16
+　　破发点兑现 8/17 对 7/11 ｜ 面对破发点救下 4/11 对 9/17
+
+⸻
+
+她赢了更多的分，也赢了更多的局。
+
+网球不按分数算，按局算；而局也不是均匀的——一场球里总有两三局，比其余二十几局加起来都重。今天那两局，都是她自己的发球局。
+
+#网球 #王欣瑜 #WTA #多伦多 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

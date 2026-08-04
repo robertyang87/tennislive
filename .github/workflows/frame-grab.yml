@@ -1,0 +1,163 @@
+name: frame-grab
+
+# 从一条 YouTube 视频里抽候选帧，用来给某一屏配图。
+#
+# 为什么要有这条：YouTube 对机房 IP 一律「Sign in to confirm you're not a bot」，
+# 沙箱里 yt-dlp 拿到 403 或 DRM 报错。runner 上有整套解法（bgutil PO token
+# provider + YT_COOKIES_TXT），match-reel 一直在用——这条复用同一套。
+#
+# 产物**提交进仓库**而不是走 artifact：这个沙箱下不动 artifact
+# （api.github.com 是 403），帧只能进仓库才看得到。
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "YouTube 链接（只用赛事官方或球员官方频道的片子）"
+        required: true
+      slug:
+        description: "落到 output/<日期>/frames/<slug>/"
+        required: true
+      every:
+        description: "每几秒抽一帧"
+        default: "2"
+      width:
+        description: "帧宽（像素）"
+        default: "1600"
+
+permissions:
+  contents: write
+
+jobs:
+  grab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # output/ 在 HEAD 上就有 1 GB 多，不稀疏检出的话光 checkout 就两分钟。
+          # 本次的 outdir 由下面「算目录」那一步 add 回来。
+          sparse-checkout: |
+            /*
+            !output
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装依赖
+        timeout-minutes: 6
+        run: |
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
+          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
+          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq ffmpeg
+          # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
+          # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
+          # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，
+          # 报出来是 `Requested format is not available`——看起来像「这条片子
+          # 只有 DRM」。头两趟 run（30791003879 / 30791363067）八个 client
+          # 全红，我据此写下「卡在片源」，方向反了。JS 运行时用 runner 自带的
+          # node，命令行统一带 `--js-runtimes node`（在 YTDLP_BASE 里）。
+          pip install -q -e . "yt-dlp[default]"
+          node --version
+
+      # 起不来不算失败——退回 client 梯子，让下载那一步去报真正的原因。
+      - name: 起 PO token provider
+        id: pot
+        continue-on-error: true
+        run: |
+          pip install -q bgutil-ytdlp-pot-provider
+          docker run --name bgutil-pot -d -p 4416:4416 \
+            brainicism/bgutil-ytdlp-pot-provider
+          for i in $(seq 1 25); do
+            if curl -sf http://127.0.0.1:4416/ping >/dev/null; then
+              echo "provider 起来了（第 $           次探活）"
+              echo "up=1" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+            sleep 2
+          done
+          echo "::warning::PO token provider 50 秒内没起来，退回 client 梯子"
+          docker logs bgutil-pot 2>&1 | tail -20 || true
+
+      - name: 落 cookies（配了 Secret 才有）
+        id: cookies
+        env:
+          YT_COOKIES_TXT: ${{ secrets.YT_COOKIES_TXT }}
+        run: |
+          if [ -n "$YT_COOKIES_TXT" ]; then
+            printf '%s' "$YT_COOKIES_TXT" > "$RUNNER_TEMP/yt-cookies.txt"
+            echo "path=$RUNNER_TEMP/yt-cookies.txt" >> "$GITHUB_OUTPUT"
+            echo "已写入 cookies（$(wc -l < "$RUNNER_TEMP/yt-cookies.txt") 行）"
+          else
+            echo "::notice::未配置 YT_COOKIES_TXT，只能靠 PO token + client 梯子"
+          fi
+
+      # ⚠️ 要排在抽帧**之前**：sparse-checkout add 会把 HEAD 上那一版先铺回
+      # 工作区，反过来会拿旧内容盖掉刚生成的。
+      - name: 算目录
+        id: paths
+        run: |
+          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+          OUT_DIR="output/$OUT_DATE/frames/${{ github.event.inputs.slug }}"
+          echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          git sparse-checkout add "$OUT_DIR" || true
+          mkdir -p "$OUT_DIR"
+
+      - name: 抽帧
+        env:
+          YT_COOKIES: ${{ steps.cookies.outputs.path }}
+          # 起来了就让 POT 那三档排在前面（`_ladder()` 按这个变量决定顺序）。
+          # 不设的话八档照跑，只是把最可能成的那几档排到了最后。
+          YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
+          PYTHONPATH: src
+        run: |
+          python tools/grab_frames.py "${{ github.event.inputs.url }}" \
+            -o "${{ steps.paths.outputs.outdir }}" \
+            --every "${{ github.event.inputs.every }}" \
+            --width "${{ github.event.inputs.width }}"
+          ls -la "${{ steps.paths.outputs.outdir }}" | head -20
+
+      - name: 提交候选帧
+        run: |
+          OUTDIR="${{ steps.paths.outputs.outdir }}"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # 稀疏模式下裸的 git add 只警告、退出码 0，产物会静默丢掉
+          git add --sparse "$OUTDIR"
+          python tools/check_staged_file_sizes.py
+          git diff --cached --quiet && { echo "没有新内容"; exit 0; }
+          git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
+          for attempt in $(seq 1 5); do
+            git push origin "HEAD:${{ github.ref_name }}" && exit 0
+            git fetch origin "${{ github.ref_name }}"
+            git branch -f grabbed HEAD
+            git reset --hard "origin/${{ github.ref_name }}"
+            rm -rf "$OUTDIR"
+            git checkout grabbed -- "$OUTDIR"
+            git add --sparse "$OUTDIR"
+            git diff --cached --quiet || git commit -m "frames: ${{ github.event.inputs.slug }} 候选帧"
+            sleep $((attempt * 5 + RANDOM % 10))
+          done
+          echo "::error::连续 5 次推送失败"; exit 1

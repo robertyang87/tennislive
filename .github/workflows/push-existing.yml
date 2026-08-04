@@ -25,14 +25,23 @@ on:
         type: choice
         options:
           - grand-slam
+          - explainer
         default: grand-slam
+      slug:
+        description: "scope=explainer 时的选题 slug"
+        required: false
+        default: ""
 
 permissions:
   contents: read
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
 
 jobs:
   push-existing:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,10 +59,12 @@ jobs:
         run: pip install -q -e .
       - name: Push existing package
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           INPUT_DATE: ${{ inputs.date }}
           INPUT_SCOPE: ${{ inputs.scope }}
+          INPUT_SLUG: ${{ inputs.slug }}
           # Fresh GitHub Pages assets can take several minutes to propagate.
           TENNISLIVE_PUSHPLUS_IMAGE_SETTLE_SECONDS: '20'
           TENNISLIVE_PUSHPLUS_IMAGE_ATTEMPTS: '20'
@@ -63,6 +74,20 @@ jobs:
           SCOPE="${INPUT_SCOPE:-grand-slam}"
           if [ "$SCOPE" = "grand-slam" ]; then
             OUT_DIR="output/grand-slam-vertical-v2"
+          elif [ "$SCOPE" = "explainer" ]; then
+            # **只发，不重渲。** 解说片那条线生成和推送在同一趟 run 里，
+            # 想补发一次（比如上一次复制按钮没等到 Pages）就得整条重跑：
+            # 三分钟重渲一遍一模一样的片子，还往仓库里再塞一个 mp4 blob。
+            # 而重跑还会**新起一个提交**，把正在跑的 Pages 构建取消掉重来——
+            # 等于把好不容易发布好的复制页又推远一个构建周期。
+            #
+            # 这条路一个字节都不生成、不提交，所以 Pages 上已经发布好的那份
+            # copy.html 原样可用，`drop_dead_copy_button` 第一次探就中。
+            # 形状照抄 match-reel 的 `push-reel`（CLAUDE.md「拆成两条线」那节）。
+            if [ -z "$INPUT_SLUG" ]; then
+              echo "::error::scope=explainer 要给 slug（如 pr-allowance）"; exit 1
+            fi
+            OUT_DIR="output/$DATE/explainer/$INPUT_SLUG"
           else
             echo "::error::认不出来的 scope「$SCOPE」。日报和每日知识已于"
             echo "::error::2026-07-31 停产，main / knowledge 两个 scope 已删。"

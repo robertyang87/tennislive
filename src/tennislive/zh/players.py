@@ -178,6 +178,7 @@ PLAYER_ZH: dict[str, str] = {
     "Amanda Anisimova": "阿尼西莫娃",
     "Mirra Andreeva": "米拉·安德烈耶娃",
     "Madison Keys": "凯斯",
+    "Sloane Stephens": "斯蒂芬斯",
     "Jasmine Paolini": "保利尼",
     "Ekaterina Alexandrova": "亚历山德罗娃",
     "Karolina Muchova": "穆霍娃",
@@ -443,6 +444,12 @@ PLAYER_ZH: dict[str, str] = {
     "Justine Henin": "海宁",
     "Maria Sharapova": "莎拉波娃",
     "Ana Ivanovic": "伊万诺维奇",
+    # 「纳达尔学院」那条选题要念到的三个**非球员**。他们不在任何一份前 500 快照里
+    # （教练和退役球员都不在），所以家在这儿。⚠️ 三个都写**全名**：
+    # 「鲁德」在表里已经是卡斯珀·鲁德，父子同姓，只写姓会指错人；「纳达尔」同理。
+    "Christian Ruud": "克里斯蒂安·鲁德",   # 卡斯珀·鲁德的父亲，至今是他的主教练
+    "Toni Nadal": "托尼·纳达尔",           # 纳达尔的叔叔兼启蒙教练，学院院长
+    "Carlos Moya": "卡洛斯·莫亚",          # 前世界第一，学院技术总监
     # 「幸运落败者」那条选题里要念到的人，全部已退役或已改名——**前 500 的快照
     # 永远同步不到他们**（`update_player_names.py` 只抓现役前 500），所以家在
     # 这儿，不在 `data/player_name_overrides.json`：那个文件只喂快照生成器。

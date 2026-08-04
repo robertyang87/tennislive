@@ -25,6 +25,19 @@ from pathlib import Path
 WORKFLOW = Path(".github/workflows/match-reel.yml")
 
 
+
+def _quote_str(raw) -> str:
+    """`quote` 现在也可以写成**按条声明**的列表（中英双语字幕，一条一行）。
+
+    扫 spec 的判据一律先过这儿：老写法是一个字符串，新写法是 `list[str]`，
+    而**两种都是要发出去的字**，规矩一视同仁。
+    第一版这两处直接 `s.get("quote") or ""`，喂进 `re.search` 当场 TypeError。
+    """
+    if isinstance(raw, list):
+        return " ".join(str(x) for x in raw)
+    return str(raw or "")
+
+
 def _steps(text: str) -> list[str]:
     """按 `      - name:` 切出步骤名，顺序即执行顺序。"""
     return [
@@ -517,14 +530,29 @@ def test_赛场之上开场要给出北京时间赛事和轮次():
         # 「还是走之前先出获胜后的动作和表情，然后再介绍比赛过程」——坐标于是
         # 挪到了冷开场之后。要守住的是「刷到的人在前 40 秒内知道这是哪天哪站
         # 哪一轮」，不是「它必须是第一句」。
+        # **原声冷开场不占这四十秒。** 账号所有者 2026-08-03 把开场定成「最后
+        # 一个球落地后的状态」，并要求「不要剪切掉原来英文解说的完整配音和
+        # 画面」——`eala-pegula-final` 的开场是**六十七秒的转播原声**，
+        # 一句中文旁白都没有。
+        # 这条规矩要守的是「**我们一开口**就先安置观众」，不是「片子开始四十秒
+        # 内」：没有旁白的那几段，观众听见的是现场和解说，本来就没有我们可以
+        # 放坐标的地方。所以从**第一句中文旁白**起算。
+        segs = spec["segments"]
+        first = next((i for i, s in enumerate(segs)
+                      if str(s.get("narration", "")).strip()), len(segs))
         opening, used = "", 0.0
-        for seg in spec["segments"]:
+        for seg in segs[first:]:
             if used >= 40.0:
                 break
             opening += seg.get("narration", "")
             used += float(seg["end"]) - float(seg["start"])
+        assert opening.strip(), f"{path.stem} 整条片子一句中文旁白都没有"
         assert "北京时间" in opening, f"{path.stem} 开场没说是北京时间：{opening}"
-        assert re.search(r"[一二三四五六七八九十〇零百]+\s*[点时]", opening), \
+        # ⚠️ **`两` 必须在这个字集里。** 两点钟中文只说「两点」，没人说「二点」——
+        # 而第一版的字集里只有「二」，于是「凌晨两点十分」被判成**没给开球时刻**。
+        # 这是一条**假阴性**：它不会告诉你「我拦错了」，只会逼下一个人把对的
+        # 写法改成错的（判据宁可窄，不可宽——但窄不等于漏掉唯一正确的那个写法）。
+        assert re.search(r"[一二三四五六七八九十两〇零百]+\s*[点时]", opening), \
             f"{path.stem} 开场没给开球时刻：{opening}"
         assert re.search(r"[月][一二三四五六七八九十]+[号日]", opening), \
             f"{path.stem} 开场没给日期：{opening}"
@@ -675,7 +703,7 @@ def test_旁白不许用指示语指画面():
     for slug, spec in _reel_specs().items():
         for seg in spec["segments"]:
             # 原声段的中文字幕（`quote`）也是我们写的，一样受这条管
-            for text in (seg.get("narration") or "", seg.get("quote") or ""):
+            for text in (seg.get("narration") or "", _quote_str(seg.get("quote"))):
                 m = pointing.search(text)
                 if m:
                     bad.append(f"{slug} @{seg['start']}: …{m.group(0)}…")
@@ -1252,8 +1280,10 @@ def test_推送版式照着知识解说那条且海报铺满():
 
 # 剪辑线上跑的栏目。台头那颗药丸写的就是它，而**栏目决定封面模板**。
 _COLUMNS = {
-    # 通常讲一场对决 → VS；**要用 solo 必须写 `_layout_why`**（见
-    # test_栏目和封面模板要配对）。账号所有者 2026-08-02 给 gea-shapovalov 定的。
+    # ⚠️ **2026-08-04 起一律 solo。** 账号所有者：「以后都用 solo 版做
+    # 『赛场之上』封面」「中间标题下面写上比分（带双方国旗）」。
+    # VS 那几版留在表里**只为了已发的十几条**（`_LEGACY_VS_COVERS`）——
+    # 新写的 spec 要退回 VS 必须写 `_layout_why`，见 test_栏目和封面模板要配对。
     "赛场之上": ("cutout", "diagonal", "split", "stack", "solo"),
     "网球有故事": ("solo",),                                 # 讲一个人 → 单人
     # 赛前前瞻。讲的也是一场对决——**两个人必须同框**，所以和赛场之上共用
@@ -1287,38 +1317,54 @@ def test_海报台头只写栏目名():
         assert "·" not in eyebrow, f"{path.name} 的台头是一串，不是一个栏目名"
 
 
+# 2026-08-04 那条「标题下面写上比分（带双方国旗）」之前，已经用 solo 发出去的
+# 「赛场之上」。**这些不重渲**——微信那条消息发出去收不回来，为封面上多一行字
+# 重跑一趟六分钟的 render 换不到任何东西。
+#
+# ⚠️ **只许减不许加。** 下面 `test_栏目和封面模板要配对` 里有自检：表里每个 slug
+# 都必须真的存在、真的是赛场之上的 solo、而且真的没写 result——写错一个名字，
+# 豁免就成了一盏恒真的绿灯。
+_LEGACY_SOLO_NO_SCORE = frozenset({
+    "eala-pegula-final", "fritz-jodar-final", "gea-shapovalov", "shang-vallejo",
+})
+
+
 def test_栏目和封面模板要配对():
-    """**「赛场之上」仍然只能用 VS 模板**，`solo` 不是它缺图时的兜底。
+    """**「赛场之上」从 2026-08-04 起一律用 solo**，退回 VS 才要写判据。
 
-    账号所有者 2026-07-31 给的是**新增一个栏目**（「当前对话历史都是网球有故事
-    的话题」「只是这次网球有故事的主题要用视频方式呈现」），不是给赛场之上
-    松绑。这两件事很容易混：单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，
-    就会「先用 solo 顶一下」——正是 `test_封面只有海报模板一条路` 拦的那个滑坡，
-    只是换了个滑法。
+    ⚠️ **这条规矩当天整个翻了个面。** 账号所有者：「**以后都用 solo 版做
+    「赛场之上」封面**」「中间标题下面写上比分（带双方国旗）」。
 
-    所以配对写死在两处，缺一不可：
+    老规矩（赛场之上一律 VS、用 solo 要认领）防的是**滑坡**：单人海报一旦能渲，
+    下次哪条对决片子凑不齐两张照片就会「先用 solo 顶一下」。**那个滑坡现在
+    不存在了**——solo 本来就是默认，没什么可省的。而反方向的滑坡冒出来了：
+    有人手头正好有两张抠图，就顺手退回 VS，栏目的封面于是又变成两种样子。
+    所以闸原样翻面：**非 solo 要写 `_layout_why`**。
+
+    配对写死在两处，缺一不可：
 
     - spec 里（这一条）——已发布的片子不会悄悄漂
     - `build_cover` 里——**新写的 spec 也拦得住**，判据在下面那条
     """
+    reel = _reel()
+    legacy = reel._LEGACY_VS_COVERS
+    checked_new = 0
     for path in sorted(Path("specs/reels").glob("*.json")):
-        cover = json.loads(path.read_text("utf-8"))["cover"]
+        spec = json.loads(path.read_text("utf-8"))
+        cover = spec["cover"]
         allowed = _COLUMNS[cover["eyebrow"]]
         assert cover.get("layout") in allowed, (
             f"{path.name}：{cover['eyebrow']} 只能用 {allowed}，"
             f"写的是 {cover.get('layout')!r}")
-        if cover.get("layout") == "solo" and cover["eyebrow"] == "赛场之上":
-            # **不是解禁，是要求留下判据。** 防的是「缺图 → 换个 layout 试试」，
-            # 不是防「编辑上认为这一条该用单人封面」——后者账号所有者
-            # 2026-08-02 明确要过一次（gea-shapovalov：「封面就变成他热亚
-            # 一个人捧杯的全景图吧……而不是说两人对阵的那种头像图了」），
-            # 而那一条两张官方抠图都在手上、VS 海报已经渲出来看过。
-            assert str(cover.get("_layout_why", "")).strip(), (
-                f"{path.name} 是赛场之上用 solo，要写一句 `cover._layout_why` "
-                "说清楚为什么这一条不是对决片")
+        if cover["eyebrow"] == "赛场之上" and cover.get("layout") != "solo":
+            # 2026-08-04 之前发出去的那一批不动（微信那条消息收不回来），
+            # 之后新写的要么 solo、要么写一句为什么退回 VS。
+            if spec.get("slug") not in legacy:
+                checked_new += 1
+                assert str(cover.get("_layout_why", "")).strip(), (
+                    f"{path.name} 是赛场之上却没用 solo，要写一句 "
+                    "`cover._layout_why` 说清楚为什么退回 VS 版式")
         if cover.get("layout") == "solo":
-            # 单人海报讲的是一个人：主角、他的照片，**而且不许印赛果**——
-            # 「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先说结局。
             assert cover.get("subject"), f"{path.name} 的 solo 封面没写 subject"
             assert (cover.get("portrait") or {}).get("image") or \
                 (cover.get("portrait") or {}).get("frame_at") is not None, \
@@ -1336,38 +1382,167 @@ def test_栏目和封面模板要配对():
                 # 名条只是在两张脸上各压一块黑。判据跟着改成**不许有名条**。
                 assert "name" not in above, (
                     f"{path.name} 的上格又挂上名条了——账号所有者定过不要")
+            # ⚠️ **印不印赛果按栏目分，不按 layout 分。**
+            #
+            # 老规矩是「solo 一律不印赛果」，理由是休伊特那条六拍里比分是第 5 拍，
+            # 印在封面上等于先说结局。**那条理由没被推翻，只是不管赛场之上了**：
+            # 账号所有者 2026-08-04 要求这个栏目「中间标题下面写上比分（带双方
+            # 国旗）」——赛场之上讲的是一场对决，赛果本来就是标题（VS 版式一直
+            # 在印），而网球有故事讲的是一个人。
+            if cover["eyebrow"] == "网球有故事":
+                assert not cover.get("result"), (
+                    f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
+                    "那是最后一拍，印在封面上等于先把结局说了")
+            elif cover["eyebrow"] == "赛场之上" and \
+                    spec.get("slug") not in _LEGACY_SOLO_NO_SCORE:
+                assert cover.get("result"), (
+                    f"{path.name} 是赛场之上的 solo 封面，要在标题底下印比分"
+                    "（`cover.result`）——账号所有者 2026-08-04 定的")
+                pair = cover.get("matchup") or []
+                assert len(pair) == 2, (
+                    f"{path.name} 的 solo 封面要 `cover.matchup` 给出对阵双方，"
+                    "比分那一行要带双方国旗")
+                for who in pair:
+                    assert str(who.get("name", "")).strip(), \
+                        f"{path.name} 的 matchup 少了名字"
+                    assert str(who.get("country", "")).strip(), (
+                        f"{path.name} 的 {who.get('name')} 缺 country——"
+                        "比分那一行每个名字旁边都要有国旗")
+                    assert "rank" in who, (
+                        f"{path.name} 的 {who.get('name')} 缺 rank；"
+                        "查过确实没有就显式写 null，别省掉这个键")
+                names = [str(w["name"]).strip() for w in pair]
+                assert str(cover.get("winner", "")).strip() in names, (
+                    f"{path.name} 的 cover.winner 不在 matchup 里——"
+                    "赛果行赢家在前，对不上就会把输的那个写成赢家")
+    # **这张豁免表自己也要有判据。** 写错一个 slug，豁免就成了一盏恒真的绿灯：
+    # 表里那个名字谁也不匹配，而真正该被拦的那条 spec 照样溜过去。
+    slugs = {json.loads(p.read_text("utf-8")).get("slug")
+             for p in Path("specs/reels").glob("*.json")}
+    assert legacy <= slugs, f"豁免表里有不存在的 slug：{legacy - slugs}"
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        if spec.get("slug") in legacy:
+            assert spec["cover"].get("layout") != "solo", (
+                f"{path.name} 已经改成 solo 了，把它从 _LEGACY_VS_COVERS 里删掉"
+                "——这张表只许减不许加")
+    assert legacy <= slugs, f"豁免表里有不存在的 slug：{legacy - slugs}"
+    assert _LEGACY_SOLO_NO_SCORE <= slugs, \
+        f"没有比分那张豁免表里有不存在的 slug：{_LEGACY_SOLO_NO_SCORE - slugs}"
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        if spec.get("slug") in _LEGACY_SOLO_NO_SCORE:
+            cover = spec["cover"]
+            assert cover["eyebrow"] == "赛场之上" and cover.get("layout") == "solo", (
+                f"{path.name} 不是赛场之上的 solo，不该在没有比分那张豁免表里")
             assert not cover.get("result"), (
-                f"{path.name} 是讲人的片子，封面印了赛果 {cover['result']!r}——"
-                "那是最后一拍，印在封面上等于先把结局说了")
+                f"{path.name} 已经写上比分了，把它从 _LEGACY_SOLO_NO_SCORE 删掉"
+                "——这张表只许减不许加")
+    assert checked_new or legacy, "判据失效了：一条赛场之上的 spec 都没扫到"
 
 
-def test_赛场之上不许退回单人封面():
+def test_赛场之上的封面一律用solo():
     """上一条钉的是已发布的 spec，这一条钉的是**代码**：新写一个 spec 也拦得住。
 
     只钉 spec 的话，判据只在「有人把它写进仓库」之后才生效——而滑坡发生在
-    渲染那一刻（缺图 → 换个 layout 试试 → 出片了 → 才提交）。闸要装在出片
-    那一步，和「复制页那道闸装在发的那一步不是渲的那一步」是同一条。
+    渲染那一刻（手头正好有两张抠图 → 换个 layout 试试 → 出片了 → 才提交）。
+    闸要装在出片那一步，和「复制页那道闸装在发的那一步不是渲的那一步」同理。
+
+    ⚠️ 方向和 2026-08-04 之前是**反的**：那时拦的是「退回单人封面」，
+    现在拦的是「退回 VS 版式」。账号所有者：「以后都用 solo 版做『赛场之上』封面」。
     """
     import pytest  # noqa: PLC0415
 
     reel = _reel()
-    solo = {"eyebrow": "赛场之上", "layout": "solo", "subject": "谁",
-            "portrait": {"image": "x.jpg"}}
-    with pytest.raises(reel.ReelError, match="VS 模板"):
-        reel.build_cover({"": Path("x.mp4")}, "", {"cover": solo},
+    vs = {"eyebrow": "赛场之上", "layout": "cutout",
+          "versus": {"names": ["甲", "乙"], "top": {}, "bottom": {}}}
+    with pytest.raises(reel.ReelError, match="一律用 solo"):
+        reel.build_cover({"": Path("x.mp4")}, "", {"cover": vs},
                          Path("y.mp4"), 1920)
-    # **写了判据就放行**（账号所有者 2026-08-02 给 gea-shapovalov 定的）。
-    # 反向验证这一支真的走过去了：它必须**越过栏目那道闸**、死在后面别的
-    # 地方——只断言「不抛 VS 模板」证明不了这个，那句话改一个字就假绿。
-    declared = {**solo, "_layout_why": "这一条讲的是一个人的来路，不是一场对决"}
-    with pytest.raises(reel.ReelError, match="frame_at 超出|找不到|ffmpeg|封面"):
+    # **写了判据就放行。** 反向验证这一支真的走过去了：它必须**越过栏目那道
+    # 闸**、死在后面别的地方——只断言「不抛『一律用 solo』」证明不了这个，
+    # 那句话改一个字就假绿。
+    declared = {**vs, "_layout_why": "这一条两个人的戏份一样重，退回 VS"}
+    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
         reel.build_cover({"": Path("x.mp4")}, "", {"cover": declared},
                          Path("y.mp4"), 1920)
-    # 反面锚点：换成讲人的栏目就该放行（这儿只验它不再拦，渲染另有判据）
+    # **老片子按 slug 豁免**，同样要验它真的越过了栏目那道闸。
+    with pytest.raises(reel.ReelError, match="frame_at|找不到|ffmpeg|封面|图"):
+        reel.build_cover({"": Path("x.mp4")}, "",
+                         {"slug": "wong-gea", "cover": vs}, Path("y.mp4"), 1920)
+    # 反面锚点：solo 就该放行（这儿只验它不再拦，渲染另有判据）
     with pytest.raises(reel.ReelError, match="portrait"):
         reel.build_cover({"": Path("x.mp4")}, "",
-                         {"cover": {"eyebrow": "网球有故事", "layout": "solo"}},
+                         {"cover": {"eyebrow": "赛场之上", "layout": "solo"}},
                          Path("y.mp4"), 1920)
+
+
+def test_赛场之上的比分行要带双方国旗():
+    """标题底下那一行：**国旗 + 名字（排名） 比分 国旗 + 名字（排名）**。
+
+    账号所有者 2026-08-04：「中间标题下面写上比分（带双方国旗）」。
+
+    **真渲一次 HTML**，不查源码文本——查源码只能防「有人把它删了」，
+    防不住「它从来没工作过」（这个仓库栽过：`_cut_person` 引了一个不存在的
+    名字，测试断言 `"def _cut_person(" in reel` 照样绿，功能整天是坏的）。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+    base = {"eyebrow": "赛场之上", "hook": "钩子", "winner": "张帅",
+            "result": "6-4 6-1",
+            "matchup": [{"name": "张帅", "country": "CHN", "rank": 57},
+                        {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]}
+    html = vp._solo_score_html(base)
+    assert "🇨🇳" in html and "🇰🇿" in html, f"国旗没渲出来：{html}"
+    text = re.sub(r"<[^>]+>", "", html)
+    assert "6-4" in text and "6-1" in text, f"盘分没渲出来：{html}"
+    # **赢家在前**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
+    # wang-samsonova 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
+    # 「王欣瑜 vs 萨姆索诺娃」——比分夹在中间，等于声称输的那个人赢了。
+    assert text.index("张帅") < text.index("6-4") < text.index("普汀塞娃")
+    flipped = {**base, "winner": "普汀塞娃"}
+    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html(flipped))
+    assert h2.index("普汀塞娃") < h2.index("6-4") < h2.index("张帅"), \
+        "换了赢家，赛果行的顺序没跟着换"
+
+    # ---- 每盘赢的那个数字给品牌黄、输的给灰（账号所有者 2026-08-04）----
+    # ⚠️ **判据是那一盘里谁的局数大，不是谁在前**。整场的赢家排在左边，
+    # 而第一盘可能是另一个人赢的——按位置上色会把「1-6」涂反。
+    mixed = vp._sets_html("1-6 7-6(5) 7-5")
+    assert '<span class="setlose">1</span>' in mixed, \
+        f"第一盘前面那个 1 是赢家输掉的局数，该置灰：{mixed}"
+    assert '<span class="setwin">6</span>' in mixed, \
+        f"第一盘是 6 赢的，该给品牌黄：{mixed}"
+    # 抢七小分：跟在输家那个数后面，单独一个小号 span
+    assert '<span class="tb">5</span>' in mixed, f"抢七小分没渲出来：{mixed}"
+    assert re.sub(r"<[^>]+>", "", mixed) == "1-67-657-5"
+    # 反向：认不出来的原样输出，不猜（退赛写法、老 spec 里的整句）
+    assert '<span class="setplain">ret.</span>' in vp._sets_html("2-1 ret.")
+    # 判据自己的判据：没有小分时不许凭空长出一个 `.tb`
+    assert 'class="tb"' not in vp._sets_html("6-4 6-1")
+    # 排名跟着名字走，不是另起一行
+    assert "57" in html and "81" in html
+    # 没有 result 就整行不要——网球有故事照旧一个像素都不变
+    assert vp._solo_score_html({**base, "result": ""}) == ""
+    # 缺国别 / 缺排名 / winner 对不上，三样都要当场报错，不许悄悄少印
+    with pytest.raises(SystemExit, match="country"):
+        vp._solo_score_html({**base, "matchup": [
+            {"name": "张帅", "rank": 57},
+            {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]})
+    with pytest.raises(SystemExit, match="rank"):
+        vp._solo_score_html({**base, "matchup": [
+            {"name": "张帅", "country": "CHN"},
+            {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]})
+    with pytest.raises(SystemExit, match="winner"):
+        vp._solo_score_html({**base, "winner": "别人"})
+    # **而且它真的接在 solo 的正文里**——上面那些只证明函数好用，
+    # 证明不了有人调它。`_solo_body` 里少写一处，海报就悄悄没有比分行。
+    body, _ = vp._solo_body({**base, "subject": "张帅",
+                             "portrait": {"image": "assets/logo/brand/icon.png"}})
+    assert "storyscore" in body and "🇨🇳" in body, \
+        "比分行没接进 solo 的正文——查函数好用防不住「没人调它」"
 
 
 def test_商竣程那格是本场真实照片不是抽帧():
@@ -2679,6 +2854,33 @@ def _poster_name_order(cover: dict, names: list) -> list:
     return [n for _, n in sorted(seen)]
 
 
+def test_solo封面的对阵名字也要能算出来():
+    """2026-08-04 起「赛场之上」一律 solo，而 solo **没有 `versus`**。
+
+    `push_meta` 原来只从 `cover.versus.names` 取两个名字。不跟着改的话，
+    solo 那批 spec 的 `matchup` 会是**空字符串，而且不报错**——有 `summary`
+    的时候 `headline` 根本不看 matchup，于是它会一直「正常」，直到哪条 spec
+    忘了写 summary 才现形（CLAUDE.md 记着这个坑：退路一空，标题当场变成
+    `8.2 赛场之上 | `）。
+
+    所以判据要**把 summary 拿掉**再看——留着 summary 测，这条恒绿。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    meta = push_reel.push_meta(Path("specs/reels/zhang-putintseva.xhs.txt"))
+    assert meta["matchup"] == "张帅 vs 普汀塞娃", (
+        f"solo 封面算不出对阵：{meta['matchup']!r}——"
+        "`push_meta` 只认 versus.names 的话，这里会是空的")
+    # **赢家在前。** `matchup` 是版式顺序，`winner` 才是赛果顺序。
+    title = push_reel.headline(Path("output/x/reel/zhang-putintseva"), "赛场之上",
+                               meta["matchup"], meta["score"], meta["event"],
+                               "", "2026-08-04")
+    assert title.index("张帅") < title.index("6-4") < title.index("普汀塞娃"), (
+        f"退路里的赛果顺序反了：{title}——"
+        "比分夹在两个名字中间，顺序错就是在声称输的那个人赢了")
+
+
 def test_标题里的赛果顺序要和海报印的一样():
     """**海报说谁赢，标题就得说谁赢。**
 
@@ -3077,6 +3279,50 @@ def test_读产物的步骤不能排在sparse_add前面():
         assert not early, (
             f"{path.name} 在把产物目录加进稀疏范围之前就去读它了：{early[:2]}\n"
             "目录不在工作区，这些判断全是假的，而且不报错。")
+
+
+def test_Pages只发复制页不发整个仓库():
+    """Pages 发布的内容里**只许有 html**——其余 2.25 GB 一个字节都不该进去。
+
+    量出来的构成（2026-08-03，`output/` 2.26 GB / 2902 个文件）：
+
+        mp4  1367.8 MB (60.6%)   png 480.5 MB (21.3%)   jpg 399.1 MB (17.7%)
+        html   0.66 MB (0.03%)  ← Pages 真正要服务的只有这个
+
+    图片和视频走 jsDelivr / raw，Pages 用不到；它们被卷进来只是因为 Pages
+    默认发布整个仓库。账单落在推送上——冠军版那条**推送步骤 6 分 44 秒，
+    其中 6 分半在等 Pages 重建**，而真正发微信只要几秒。
+
+    这条钉三样：
+
+    1. **只收 html**——收集那一步的 `find` 多选一类，就把那 2.25 GB 搬回去了
+    2. **路径原样**（`_site/$f`，不是 `basename`）——URL 就是路径，改一个字符，
+       已经发出去的微信链接全死，**而那些消息收不回来**
+    3. **一个页面都没收到时必须红**。稀疏模式写错会得到空的 `_site`，而把空站
+       部署上去是**清空整站**——它和部署成功在日志上长得一模一样
+    """
+    path = Path(".github/workflows/pages.yml")
+    assert path.exists(), (
+        "pages.yml 没了。Pages 会退回「发布整个仓库」，"
+        "于是每次推送又要为 2.26 GB 的重建等 6~12 分钟。")
+    body = _yaml_only(path.read_text(encoding="utf-8"))
+
+    # ⚠️ 第一版这儿写的是 `... or ".html" in body`——**恒真**（body 里当然有
+    # `.html`）。查「收集那一步的 find 到底选了什么」才是真判据。
+    picked = re.findall(r"find\s+output\s+-name\s+'([^']+)'", body)
+    assert picked == ["*.html"], (
+        f"收复制页的 find 必须只选 html，拿到 {picked}——"
+        "多选一类就把那 2.25 GB 的一部分搬回 Pages 了")
+
+    assert 'cp "$f" "_site/$f"' in body, (
+        "复制页的路径必须原样保留：URL 就是路径，改了等于把已发出去的微信链接弄死。")
+    assert "basename" not in body, "拍平目录会改掉 URL"
+
+    assert re.search(r'"\$n" -eq 0', body), (
+        "没有「一个页面都没收到就红」的闸。稀疏模式写错会得到空的 _site，"
+        "而把空站部署上去是**清空整站**——它和部署成功长得一模一样。")
+    assert "touch _site/.nojekyll" in body, (
+        "少了 .nojekyll，Jekyll 会逐个文件处理一遍")
 
 
 def test_日报这条线不许回来():
@@ -4254,6 +4500,211 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_只扫一段时切点要换算回源片的绝对秒数(tmp_path):
+    """`probe --from/--to`：**`-ss` 放在 `-i` 前面，`pts_time` 会从 0 重新起算。**
+
+    不把 `start` 加回去的话，切点全部往前偏移 `start` 秒——而它**不报错**，
+    只会让照着 probe.json 排的每一段都切在错的地方。
+
+    为什么要能只扫一段：WTA 的单场集锦**不是每场都发**，Day N 合集才是全覆盖的
+    （王欣瑜对卡萨金娜那场只在 61 分钟的 Day 2 合集里，章节
+    `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍缩略图墙会出七十多张、
+    绝大多数是别人的比赛。
+
+    判据**真造一段视频、真跑一次 `scene_changes`**：造一个第 10 秒换色的片子，
+    只扫 5–15 秒那一段，报出来必须是 ~10 而不是 ~5。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg"):
+        raise AssertionError(
+            "这条测试要 ffmpeg（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    clip = tmp_path / "two.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=navy:s=320x240:r=25:d=10",
+         "-f", "lavfi", "-i", "color=c=orange:s=320x240:r=25:d=10",
+         "-filter_complex", "[0:v][1:v]concat=n=2:v=1[v]", "-map", "[v]",
+         "-pix_fmt", "yuv420p", str(clip)], check=True)
+
+    whole = reel.scene_changes(clip)
+    assert any(9.5 <= t <= 10.5 for t in whole), f"整片都没认出那一刀：{whole}"
+
+    part = reel.scene_changes(clip, start=5.0, stop=15.0)
+    assert part, "只扫 5–15 秒反而一个切点都没有"
+    assert any(9.5 <= t <= 10.5 for t in part), (
+        f"切点没换算回绝对秒数：{part}——`-ss` 在 `-i` 前面时 pts_time 从 0 起算，"
+        "不把 start 加回去，每一段都会切偏 start 秒，而且不报错")
+    assert not any(t < 5.0 for t in part), f"区间外的切点漏进来了：{part}"
+
+
+def test_横摇的段也要有裁切中心():
+    """`track: true` 的段 `cx` 不许留 `None`——`cut_segment` 无条件先算兜底的 x。
+
+    run 30877075310：第 11 段写了 `track: true`，分段编码跑到它才炸
+
+        x = int(round(seg.cx * source_w - CROP_W / 2))
+        TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'
+
+    前面十段全白编了。真因是 `track_shots` 里那句 `not s.track`——**只给不摇的
+    段填 `cx`**。而 `cut_segment` 里那个 `x` 是给「拿不到 path 时」兜底用的，
+    它排在 `if path:` **前面**，所以摇不摇都会被求值。
+
+    ⚠️ **存量九条 spec 一条都没用过 `track`**，所以这条路从「自动定心改成固定
+    中心」那天起就是坏的，一直没人踩到——又一次「写了不等于跑过」：那次改动
+    只保证了它自己走的那条路，另一条路的前提被顺手拿掉了，**而且不报错**，
+    因为根本没有输入会走到那儿。
+
+    判据**真跑一遍 `track_shots`**（跟踪那一步打桩，不碰源片）：查源码里有没有
+    `not s.track` 只能防「有人把它加回来」，防不住下一次换个写法再漏一遍。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    segs = [reel.Segment(start=0.0, end=5.0, cx=None, narration="甲",
+                         source="main", track=False),
+            reel.Segment(start=5.0, end=10.0, cx=None, narration="乙",
+                         source="main", track=True)]
+    assert all(s.cx is None for s in segs), "fixture 前提变了：cx 默认不再是 None"
+    # 跟踪那一步要解码源片，这儿只验 cx 有没有被填——打桩成「跟不出路径」，
+    # 那正是兜底的 x 唯一真的会被用到的情形。
+    reel.track_run = lambda *a, **k: []
+    reel.track_shots({"main": Path("nope.mp4")}, segs, 1280)
+    for i, s in enumerate(segs):
+        assert s.cx is not None, (
+            f"第 {i + 1} 段（track={s.track}）的 cx 是 None——"
+            "cut_segment 里那个兜底的 x 会当场 TypeError")
+        assert 0.0 <= s.cx <= 1.0, s.cx
+
+
+def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch, capsys):
+    """**「下到了」不等于「下到的是视频」，而坏结果会被缓存固化。**
+
+    run 30838371382：`source_url` 给的是 Brightcove 的播放页
+    （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`），
+    直链那条路 curl 下来 **0.3 MB 的网页**，打印「[ok] 直链下到 0.3 MB」，
+    `_keep_source` 还把它**存进了缓存**，一直到下一步 ffprobe 才报
+    `Invalid data found`。于是「换个参数重跑」永远重现同一个错——
+    因为重跑第一件事就是命中那个坏缓存。
+
+    老判据只看**前 64 字节**里有没有 `<!doctype html` / `<html`，
+    所以这条测试喂的网页**故意不以 `<!doctype` 开头、前 64 字节里也没有
+    `<html`** —— 那正是漏过去的那种形状。
+
+    判据必须**真造两个文件、真跑一遍 `download()`**：查源码里有没有 probe
+    只能防「有人把它删了」，防不住「它从来没工作过」。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg") or not _shutil.which("ffprobe"):
+        raise AssertionError(
+            "这条测试要 ffmpeg/ffprobe（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    # ① 播放页：不以 `<!doctype` 开头，前 64 字节里也没有 `<html`
+    page = tmp_path / "index.html"
+    page.write_text("\n<!-- Brightcove player bootstrap -->\n" + " " * 90
+                    + "\n<html><body>player</body></html>\n", encoding="utf-8")
+    assert b"<html" not in page.read_bytes()[:64], "这个 fixture 没重现老判据的漏洞"
+
+    # ② 一个真视频，用来反向验证这道闸没有把好的也拦掉
+    real = tmp_path / "real.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i",
+                    "testsrc2=size=320x240:rate=25", "-t", "1",
+                    "-pix_fmt", "yuv420p", str(real), "-y"], check=True)
+
+    cache = tmp_path / "cache"
+    monkeypatch.setenv(reel._SOURCE_CACHE_ENV, str(cache))
+
+    with pytest.raises(reel.ReelError) as err:
+        reel.download(f"file://{page}", tmp_path / "out1.mp4")
+    printed = capsys.readouterr().out
+    msg = str(err.value)
+    assert "ffprobe 读不出视频流" in msg, f"报错没说清楚是什么问题：{msg}"
+    # ⚠️ **出路要代码自己走，不是写在报错里让人去走。**
+    #
+    # 老版本在这儿直接抛错，正文写着「这类要交给 yt-dlp」——出路已经写出来了，
+    # 只是没人走。张帅那条就撞在这儿：`players.brightcove.net/…/index.html`
+    # 不含 youtube，走 curl 拿回 0.3 MB 网页，render 第 12 秒就红
+    # （run 30875896980）；而同一条 URL 交给 yt-dlp 一次就下来了。
+    #
+    # 现在 curl 拿到的东西读不出视频流就**当场退回 yt-dlp**。按结果分路，
+    # 不按域名分路——一张「哪些站是播放页」的名单会过期，
+    # 而「ffprobe 读不读得出视频流」这个判据永远新鲜。
+    # ⚠️ **判据要挑两种环境都成立的那个。** 第一版断言报错里有 `player client`
+    # （yt-dlp 逐档试完的那句），本地绿、**CI 红**——CI 上根本没装 yt-dlp
+    # （同一份日志里就有一条 `这台机器没装 yt-dlp` 的 skip），退路走到一半就
+    # 停在「找不到 yt-dlp」。又一次「本地装着不等于 CI 装着」。
+    #
+    # 而 `"yt-dlp" in msg` 单独也**证明不了**退路走过：老版本那句
+    # 「这类要交给 yt-dlp」里同样有这四个字。真正只在退路上出现的是那行 stdout。
+    assert "改交给 yt-dlp 再试一次" in printed, (
+        f"没退回 yt-dlp（老版本会直接抛错，根本不试）：{printed!r}")
+    assert "player client" in msg or "找不到 yt-dlp" in msg, (
+        f"退路走了一半就丢了线索：{msg}")
+    assert not (tmp_path / "out1.mp4").exists(), "坏文件没删干净"
+    assert not list(cache.glob("*")), (
+        "网页被存进了缓存——下一趟会直接命中它，「重跑」永远重现同一个错")
+
+    # ③ 反向：真视频要过，而且要进缓存（别把闸装成一律不放行）
+    got = reel.download(f"file://{real}", tmp_path / "out2.mp4")
+    assert got.is_file() and got.stat().st_size > 0
+    assert len(list(cache.glob("*"))) == 1, "真视频没被缓存下来"
+
+
+def test_双语字幕要真的排成两行(tmp_path):
+    """**换行是「这一条排两行」，不是一个空格。**
+
+    中英双语的原声字幕（`quote` 写成列表）靠元素里的换行分上英下中。
+    第一版我拿 `pipeline.render_ass` 验的——**那是另一个写入器**：成片走的是
+    `explainer.write_subtitles`（Style `TL`，带逐词字号标签），而它当时写着
+    `shown.replace(chr(10), ' ')`，把换行压成空格。渲出来长的那两条靠
+    `WrapStyle=0` 自动折**碰巧**断在中英之间，短的干脆不断——同一条片子里
+    两种样子，而且断点由宽度决定，不由作者决定。
+    **又一次「查的东西和跑的东西不是一回事」。**
+
+    ⚠️ 也不能直接把 ASS 的换行符写进文本：`_ass_text` 会把它后面那个 N 当成
+    一个拉丁词、包上字号标签，画面上多出一个字母 N。所以要**按行分别过
+    `_ass_text` 再拼**。
+
+    判据真写一份 ASS 出来读，钉两头：双行的要有换行符、**单行的一个字节都不许
+    变**（存量的解说片和赛场之上都走这个写入器）。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import write_subtitles  # noqa: PLC0415
+
+    nl = chr(92) + "N"          # ASS 的换行符，写成字面量免得被当转义
+    path = write_subtitles(
+        [(0.0, 3.0, "A first ever tour title\n生涯第一个巡回赛冠军"),
+         (3.0, 5.0, "普通单行字幕")],
+        tmp_path / "s.ass", height=1440)
+    rows = [line for line in path.read_text("utf-8").splitlines()
+            if line.startswith("Dialogue")]
+    assert len(rows) == 2
+
+    assert nl in rows[0], f"双语那条没排成两行：{rows[0]}"
+    head, _, tail = rows[0].partition(nl)
+    assert "title" in head and "生涯第一个巡回赛冠军" in tail, \
+        f"英文和中文没落在各自那一行：{rows[0]}"
+    assert chr(92) + "{" not in rows[0], \
+        f"换行符被当成拉丁词包了字号标签，画面上会多出个 N：{rows[0]}"
+
+    assert rows[1].endswith(",普通单行字幕"), \
+        f"单行的输出变了，会连累解说片那条线：{rows[1]}"
+
+
 def test_缓存源片的开关要在工作流里够得着():
     """和 `--cover-only` 那次同一个坑：代码里加了，工作流没接上等于没有。
 
@@ -4740,7 +5191,7 @@ def test_旁白不许把每一局都念一遍():
             continue
         hit = [s for s in segs
                if announce.search((s.get("narration") or "")
-                                  + (s.get("quote") or ""))]
+                                  + _quote_str(s.get("quote")))]
         share = len(hit) / len(segs)
         if share > _BOARD_SHARE_MAX:
             bad.append(f"{slug}：{len(hit)}/{len(segs)} 段（{share:.0%}）在报"
@@ -4764,3 +5215,863 @@ def test_旁白不许把每一局都念一遍():
         hit = sum(1 for s in segs if announce.search(s.get("narration") or ""))
         assert hit / len(segs) > _BOARD_SHARE_MAX, (
             f"{slug} 已经不超标了，把它从 _BOARD_LEGACY 里去掉")
+
+
+# 离线估旁白长度 ------------------------------------------------------------
+# 判据的样本从**已发的成片**里取：每一段旁白的真实秒数就是闸自己量到的那个数
+# （`narration_overruns` 拿 mp3 时长），而它落在 `subtitles.ass` 里——这一段的
+# 最后一条字幕正好收在「本段起点 + 旁白时长」上。
+#
+# ⚠️ 不用 `voice_NN.words.json` 的末事件：那是**词末**，比 mp3 短一个固定的
+# 0.83 秒（从 9 条片子 121 段反解出来，min 0.800 / 中位 0.829 / max 0.851），
+# 照它标定会把整条模型往短里拉。
+
+
+def _ass_cues(path: Path) -> list[tuple[float, float]]:
+    def sec(t: str) -> float:
+        h, m, s = t.split(":")
+        return int(h) * 3600 + int(m) * 60 + float(s)
+
+    return [(sec(f[1]), sec(f[2]))
+            for f in (line.split(",", 9)
+                      for line in path.read_text("utf-8").splitlines()
+                      if line.startswith("Dialogue:"))]
+
+
+def _measured_narration() -> list[tuple[str, int, int, int, float]]:
+    """`[(slug, 段序号, 字数, 句读数, 实测秒数)]`，取自已发成片。
+
+    **CI 上是空的**（`output/` 不在稀疏检出里），所以它只当加餐——核心判据是
+    下面那张冻结下来的表。
+    """
+    reel = _reel()
+    out: list[tuple[str, int, int, int, float]] = []
+    for rj_path in sorted(Path("output").glob("*/reel/*/render.json")):
+        outdir = rj_path.parent
+        spec_path = Path(f"specs/reels/{outdir.name}.json")
+        ass = outdir / "subtitles.ass"
+        if not spec_path.is_file() or not ass.is_file():
+            continue
+        spec = json.loads(spec_path.read_text("utf-8"))
+        cues = _ass_cues(ass)
+        render_json = json.loads(rj_path.read_text("utf-8"))
+        offset = render_json["cover_seconds"]
+        # 2026-08-02 之后渲的片子把闸自己量到的秒数直接记进了 `render.json`，
+        # 不用再从字幕反解。老片子没有这一项，退回反解。
+        recorded = render_json.get("narration_seconds") or {}
+        if recorded:
+            segs = spec.get("segments") or []
+            # ⚠️ **产物可能是上一版的，而且「序号还在」比「序号越界」更坏。**
+            # 改 spec 不重渲是常事（措辞、注解、规矩追认、重排段落）。
+            # `eala-pegula-final` 从 14 段重排成 8 段时，越界的那几个会 IndexError
+            # ——那还算出声；**没越界的那几个会静默指到另一段身上**，于是这条
+            # 测试报「最坏一段差 6.63s」，看起来像模型不准，其实是产物对错了人。
+            # 又一次「voice 文件要按内容认领，不按序号」，只是换到了 render.json。
+            #
+            # `render.json` 自己记着渲的时候那份 spec 的画面总长，拿它对一下就
+            # 能自证是不是同一版。对不上就**整个 outdir 跳过并出声**——这一段
+            # 本来就是加餐，核心判据是下面那张冻结的样本表。
+            spec_secs = round(sum(float(s["end"]) - float(s["start"])
+                                  for s in segs), 2)
+            was = round(float(render_json.get("segments_seconds", -1)), 2)
+            if abs(was - spec_secs) > 0.05:
+                print(f"  [跳过] {outdir.name} 的产物是上一版的："
+                      f"渲的时候画面 {was}s，现在的 spec 是 {spec_secs}s")
+                continue
+            for key, secs in recorded.items():
+                seg = segs[int(key)]
+                body = "".join(c for c in str(seg.get("narration", ""))
+                               if c not in reel._SPEECH_QUIET)
+                punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
+                out.append((outdir.name, int(key), len(body) - punct, punct,
+                            round(float(secs), 2)))
+            continue
+        for index, seg in enumerate(spec.get("segments") or []):
+            length = float(seg["end"]) - float(seg["start"])
+            text = str(seg.get("narration", "")).strip()
+            words = outdir / f"voice_{index:02d}.words.json"
+            start, offset = offset, offset + length
+            inside = [c for c in cues if start - 0.01 <= c[0] < start + length - 0.01]
+            if not text or not words.is_file() or not inside:
+                continue
+            # **按内容认领，不按序号。** 跨次重渲的目录里留着旧的 voice 文件，
+            # 只比个数会被骗过去（CLAUDE.md 记过；这一轮真剔掉了 9 段）。
+            events = json.loads(words.read_text("utf-8"))
+            joined = "".join(e["text"] for e in events).replace(" ", "")
+            plain = "".join(c for c in text
+                            if c not in reel._SPEECH_PUNCT + reel._SPEECH_QUIET)
+            spoken = max(c[1] for c in inside) - start
+            # 字幕被收进本段窗口，贴着段尾的那些量出来是截断值，不是旁白长度
+            if not events or joined != plain or spoken >= length - 0.02:
+                continue
+            body = "".join(c for c in text if c not in reel._SPEECH_QUIET)
+            punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
+            out.append((outdir.name, index, len(body) - punct, punct,
+                        round(spoken, 2)))
+    return out
+
+
+# 从上面那套办法里挑出来冻结的一份，按字数从短到长铺开（2.95s ~ 17.57s）。
+# **这一份必须留在测试里**：`output/` 在 CI 上不存在，判据的主语没了就会变成
+# 一盏恒真的绿灯——2026-08-01 那次「只校到 0 条」就是这么来的。
+_SPEECH_FIXTURE = [
+    ("gea-shapovalov", 0, 8, 3, 2.95),
+    ("eala-pegula", 12, 13, 2, 3.48),
+    ("eala-pegula", 7, 18, 3, 5.02),
+    ("wong-brooksby", 2, 20, 3, 5.33),
+    ("eala-pegula", 9, 23, 4, 6.41),
+    ("jodar-fritz", 16, 25, 5, 6.70),
+    ("eala-pegula", 0, 29, 6, 7.87),
+    ("jodar-fritz", 0, 32, 6, 8.21),
+    ("jodar-fritz", 6, 35, 5, 8.54),
+    ("hewitt-washington", 9, 39, 5, 9.92),
+    ("zheng-lanlana", 14, 43, 5, 10.15),
+    ("gea-shapovalov", 6, 50, 8, 11.18),
+    ("gea-shapovalov", 3, 60, 9, 13.90),
+    ("gea-shapovalov", 4, 81, 10, 17.57),
+    # 两头的极端也要在表里——**样本不带尾巴，误差带子就没法自证不虚高**。
+    # 121 段里最偏的就这两条（−1.27 / +1.42）。
+    ("gea-shapovalov", 5, 67, 10, 14.40),
+    ("wong-gea", 3, 42, 9, 12.67),
+]
+
+
+def test_离线估旁白长度要对得上真产物():
+    """`speech_seconds` 的系数是从已发成片拟合的，不是拍的。
+
+    CLAUDE.md 里那条「`字数 × 0.23 + 句读 × 0.25`，再留 0.3 秒余量」错得有
+    方向：长段估得太长（gea-shapovalov 第 5 段 91 字估 21.4s、实测 16.7s），
+    短段估得太短。照它排段，长段白留五秒空白，短段要等六分钟的 render 才知道
+    装不下。
+
+    这条测试钉两件事：
+
+    1. **系数真的对得上实测**——每一段的误差都在 `SPEECH_EST_ERR` 以内，
+       而且中位数贴近 0（宽带子谁都过得了，得证明它是准的不是松的）。
+    2. **`SPEECH_EST_ERR` 不许比实测误差还小**——它是 dry-run 判「估得再乐观
+       也装不下」的那把尺，写小了就会把好 spec 判红。
+    """
+    reel = _reel()
+
+    def check(rows, where):
+        errs = [secs - reel.speech_seconds("一" * chars + "，" * punct)
+                for _slug, _i, chars, punct, secs in rows]
+        worst = max(abs(e) for e in errs)
+        assert worst <= reel.SPEECH_EST_ERR, (
+            f"{where}：最坏一段差 {worst:.2f}s，超过声明的误差 "
+            f"±{reel.SPEECH_EST_ERR}s。要么改系数，要么把这个数调大——"
+            "但别只调大，那等于把这道闸松掉")
+        mid = sorted(errs)[len(errs) // 2]
+        assert abs(mid) <= 0.4, (
+            f"{where}：误差中位数 {mid:+.2f}s，模型整体偏了。"
+            "系数要重新拟合，不是把误差带子放宽")
+        return worst
+
+    assert len(_SPEECH_FIXTURE) >= 12, "冻结的样本太少，判据失效了"
+    worst = check(_SPEECH_FIXTURE, "冻结样本")
+    # 误差带子也不许虚高：写成 10 秒谁都过得了，那道闸就等于没装
+    assert reel.SPEECH_EST_ERR <= worst + 0.5, (
+        f"SPEECH_EST_ERR={reel.SPEECH_EST_ERR} 比实测最坏 {worst:.2f}s 宽出太多，"
+        "dry-run 那道闸会形同虚设")
+
+    # 加餐：产物在的时候（本地沙箱）拿全量再验一遍。CI 上这里是空的，正常。
+    live = _measured_narration()
+    if live:
+        assert len(live) >= 60, f"只取到 {len(live)} 段实测，八成是取法错了"
+        check(live, f"已发成片 {len(live)} 段")
+
+
+def test_估体积的码率只许按实测往上调():
+    """`MEASURED_REEL_KBPS` 是**估走哪条路**用的，低估的方向是危险的那一头。
+
+    4990 是按 25 fps 那批片子量的。gea-shapovalov 的源片 59.94 fps，按 4990
+    估出来 147 MiB、实际 **168.4 MiB**——低估 14%。贴着 95 MiB 的片子会被估成
+    「进仓库」，然后在 `git push` 那一刻才被服务端拒（100 MiB 硬上限），
+    五分钟白跑（run 30725160625）。
+
+    所以这个常量只许按实测往上调。这条拦的不是手滑，是下一次有人为了让某条
+    片子「看起来能进仓库」把它调回去。
+    """
+    reel = _reel()
+    assert reel.MEASURED_REEL_KBPS >= 5698, (
+        f"MEASURED_REEL_KBPS={reel.MEASURED_REEL_KBPS}，低于实测最高的 "
+        "5698 kb/s（gea-shapovalov：168.4 MiB / 247.9s，源片 59.94 fps）")
+
+    # 加餐：每条已发成片的实测码率都不许超过这个常量
+    checked = 0
+    for rj_path in sorted(Path("output").glob("*/reel/*/render.json")):
+        data = json.loads(rj_path.read_text("utf-8"))
+        size, secs = data.get("video_bytes"), data.get("film_seconds")
+        if not size or not secs:
+            continue
+        checked += 1
+        kbps = size * 8 / secs / 1000
+        assert kbps <= reel.MEASURED_REEL_KBPS, (
+            f"{rj_path.parent.name} 实测 {kbps:.0f} kb/s，比常量还高——"
+            "常量要取实测最高的那一条，见它上面那段注释")
+    if checked:
+        print(f"[加餐] 拿 {checked} 条成片的实测码率对过")
+
+
+def test_真字段表要盖住每条spec里出现过的字段():
+    """`_REAL_FIELDS` 不许靠人记着维护。
+
+    它是「拿掉下划线正好是个真字段」那道闸的主语。少一个名字，那道闸对这个
+    字段就是哑的——而**一个会过期的名单和一条常年红的检查是同一个毛病**。
+    所以判据从 `specs/reels/*.json` 里实际出现过的字段自动推：新写一个字段
+    就必须同时挂进这张表。
+    """
+    reel = _reel()
+    seen: dict[str, set[str]] = {"spec": set(), "cover": set(), "segment": set()}
+    for spec in _reel_specs().values():
+        seen["spec"] |= set(spec)
+        seen["cover"] |= set(spec.get("cover") or {})
+        for seg in spec.get("segments") or []:
+            seen["segment"] |= set(seg)
+    for level, names in seen.items():
+        real = {n for n in names if not n.startswith("_")}
+        missing = sorted(real - set(reel._REAL_FIELDS[level]))
+        assert not missing, (
+            f"`_REAL_FIELDS[{level!r}]` 少了 {missing}——这几个字段写成 "
+            f"`_xxx` 时不会被拦住，会静静地不生效")
+        assert real, f"{level} 一个字段都没扫到，判据失效了"
+
+
+def test_下划线开头的字段名等于没写(tmp_path):
+    """`_push` 这种键**整整对了一个月**，因为退路刚好给出了对的答案。
+
+    `push_meta` 读的是 `push`，而 spec 里写的是 `_push`——`_` 开头一律当注解，
+    读都不读。没有 `summary` 时标题退回「对阵 + 比分」，而那一句正是
+    `cover.versus.names` + `cover.result` 拼出来的，看起来完全正常。是换成
+    单人封面、退路一空，标题当场变成 `8.2 赛场之上 | ` 才把它抖出来。
+
+    ⚠️ 判据要窄：`_inset` 在 `hewitt-washington` 第 3 段是**真的注解**（就贴在
+    真的 `inset` 旁边，写的是为什么压左上角）。所以只认**值是个对象**的那种。
+    """
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+
+    def spec_with(**extra):
+        return {"cover": {}, "segments": [{"start": 0, "end": 1}],
+                "source_url": "u", **extra}
+
+    with pytest.raises(reel.ReelError, match="`_push`"):
+        reel._reject_underscored_fields(spec_with(_push={"summary": "x"}))
+    with pytest.raises(reel.ReelError, match="`_versus`"):
+        reel._reject_underscored_fields(
+            spec_with(cover={"_versus": {"names": ["a", "b"]}}))
+    with pytest.raises(reel.ReelError, match="`_inset`"):
+        reel._reject_underscored_fields(
+            {"cover": {}, "source_url": "u",
+             "segments": [{"start": 0, "end": 1, "_inset": {"image": "x"}}]})
+
+    # 反过来：这三种都是仓库里真实存在的注解写法，一个都不许被判红
+    reel._reject_underscored_fields(spec_with(_source="这条源片是官方集锦"))
+    reel._reject_underscored_fields(spec_with(_push_why="为什么这么写标题"))
+    reel._reject_underscored_fields(
+        {"cover": {}, "source_url": "u",
+         "segments": [{"start": 0, "end": 1, "inset": {"image": "x"},
+                       "_inset": "为什么把角标压在左上角"}]})
+
+    # **而且这道闸真的接在 `load_spec` 上。** 上面那些只证明函数会抛错；
+    # 反向验证时把 `load_spec` 里那一句调用整个拆掉，六条测试**全绿**——
+    # 又一次「写了不等于跑过」。所以这里真走一遍读 spec 的那条路。
+    path = tmp_path / "spec.json"
+    path.write_text(json.dumps(
+        {"cover": {}, "segments": [{"start": 0, "end": 1}], "source_url": "u",
+         "_push": {"summary": "x"}}, ensure_ascii=False), "utf-8")
+    with pytest.raises(reel.ReelError, match="`_push`"):
+        reel.load_spec(path)
+
+    # 而且每条已有的 spec 现在都得过——三条踩了这个坑的已经改掉了
+    for slug, spec in _reel_specs().items():
+        try:
+            reel._reject_underscored_fields(spec)
+        except reel.ReelError as exc:  # pragma: no cover - 出错时要说是哪条
+            raise AssertionError(f"{slug}: {exc}") from None
+
+
+def test_疑似切点要趁源片还在的时候量出来():
+    """0.35 那个门槛认不出「同一场地、同一机位」的换镜头。
+
+    gea-shapovalov 那次很直白：474.5 秒他还穿着白 polo 在场上，476.5 秒已经
+    换上蓝外套在捧杯——**中间必然有一刀**，而 `scene_cuts` 只报了 473.07 和
+    482.67。挑段的时候只能靠人在缩略图墙上看出来。
+
+    所以另出一份低门槛的候选写进 `probe.json`。三件事都要钉：
+
+    1. **门槛真的更低**，否则它和 `scene_cuts` 是同一份。
+    2. **不并进 `scene_cuts`**——那是判据（存量 spec 的 `crosses_cut` 照着它
+       挂账），这是线索。混在一起等于把一批想清楚的声明变成噪音。
+    3. **趁源片还在的时候量**。源片渲完就删（清理那一步），事后想查得自己
+       再下一份几百 MB——`find_point_ends.py` 就是这么零调用方了一个月的。
+    """
+    reel = _reel()
+    assert reel.LOOSE_CUT_THRESHOLD < reel.CUT_THRESHOLD
+
+    src = inspect.getsource(reel.main)
+    probe = src[src.index('if args.mode == "probe"'):src.index("spec = load_spec")]
+    assert "scene_cuts_loose" in probe, "probe.json 里没有这一份"
+    assert "LOOSE_CUT_THRESHOLD" in probe, (
+        "疑似切点没有在 probe 里量——源片渲完就删，事后再下一份就是几百 MB")
+    assert "abs(t - c)" in probe, (
+        "疑似切点没有把已经在 `scene_cuts` 里的那些排掉，两份会重复")
+
+    # 判据那一份只认 `scene_cuts`，线索不许漏进去
+    straddle = inspect.getsource(reel.segments_straddling_cuts)
+    assert "scene_cuts_loose" not in straddle, (
+        "跨切点那道判据读到了疑似切点——线索当判据用，会把一批合法的段判红")
+
+
+def test_每条spec的旁白都还估得下():
+    """**每条 spec 都要现在还渲得出来**，不只是发的那天渲得出来。
+
+    `wong-lehecka` 第 10 段就是这么坏掉的：成片 7.30 发出去，之后为了「收尾要
+    落在一问上」把那一问补进旁白，字数从 22 涨到 48，**没有再渲过**。于是这条
+    spec 从那天起就渲不出来了——真闸（TTS）要跑一趟 render 才出声，而没人再渲
+    它，所以它一直躺在仓库里假装是好的。
+
+    改 spec 不重渲是常事（措辞、注解、规矩追认），所以这条要**每次 CI 都跑**。
+    它只吃 `specs/` 和 `tools/`，不联网、不碰产物。
+    """
+    reel = _reel()
+    broken: list[str] = []
+    checked = 0
+    for slug, spec in _reel_specs().items():
+        for index, secs, room in reel.narration_estimates(reel.validate_spec(spec)):
+            checked += 1
+            if room < -reel.SPEECH_EST_ERR:
+                broken.append(f"{slug} 第 {index + 1} 段：画面 "
+                              f"{spec['segments'][index]['end'] - spec['segments'][index]['start']:.1f}s"
+                              f"，估旁白 {secs:.2f}s")
+    assert checked >= 100, f"只估到 {checked} 段，判据失效了"
+    assert not broken, (
+        "这几段的旁白比自己那段画面长（离线估，已经扣掉 "
+        f"±{reel.SPEECH_EST_ERR}s 的误差）：\n  " + "\n  ".join(broken))
+
+
+def test_dry_run要把装不下的旁白当场报出来(tmp_path):
+    """**旁白写长了不该等六分钟的 render，也不该等 TTS。**
+
+    `--check-narration` 要合语音（联网、一分半），`render` 更是八到十一分钟。
+    而「这段话装不装得下」离线就能估个八九不离十——误差 ±1.5s，够回答
+    「估得再乐观也装不下」这一种问题。
+
+    两个方向都验：真 spec 要过，把一段旁白撑长要当场报错并 `exit 1`。
+    """
+    reel_path = Path("tools/build_match_reel.py")
+    spec_path = Path("specs/reels/gea-shapovalov.json")
+    spec = json.loads(spec_path.read_text("utf-8"))
+
+    def dry_run(data) -> subprocess.CompletedProcess:
+        path = tmp_path / "spec.json"
+        path.write_text(json.dumps(data, ensure_ascii=False), "utf-8")
+        return subprocess.run(
+            [sys.executable, str(reel_path), "render", "--spec", str(path),
+             "--outdir", str(tmp_path / "out"), "--dry-run"],
+            capture_output=True, text=True, check=False)
+
+    ok = dry_run(spec)
+    assert ok.returncode == 0, f"真 spec 没过 dry-run：\n{ok.stdout}\n{ok.stderr}"
+    assert "[估旁白]" in ok.stdout, "dry-run 没有报旁白余量"
+
+    # 反过来：把最短的那一段撑长，必须当场红
+    blown = json.loads(json.dumps(spec))
+    index = min((i for i, s in enumerate(blown["segments"])
+                 if str(s.get("narration", "")).strip()),
+                key=lambda i: float(blown["segments"][i]["end"])
+                - float(blown["segments"][i]["start"]))
+    blown["segments"][index]["narration"] = "这句话写得很长，" * 12
+    bad = dry_run(blown)
+    assert bad.returncode == 1, f"撑长了还是绿的：\n{bad.stdout}"
+    assert "装不下" in bad.stdout, bad.stdout
+
+
+def test_单人封面的暗角可以按条关掉但两头要留(tmp_path):
+    """账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+
+    「铺满」本来就成立（solo 是 `background-size:cover`，照片顶到四边、没有垫层）；
+    让实拍看起来发虚的是盖在整幅上的 `.scrim`——它的第二道 radial 在**画面正中**
+    压 58% 的暗，一张真实照片被洗成一层背景板。
+
+    ⚠️ **不许直接改那个默认值。** 那段 CSS 是从解说片的 cover 屏整段抄过来的，
+    源码注释写着「一个数都没动，各调各的就会慢慢漂开」。所以做成**按条声明**
+    （`cover.scrim: "clear"`），没声明的片子和解说片仍然是同一个样子。
+
+    判据三头，缺一头都可能变成假绿：
+
+    1. 关掉的**只有正中那一道**——上下两头必须留着，台头压在顶上、钩子压在
+       中间偏下，浅色字压在浅色画面上会没。
+    2. **默认仍然带中心暗角**（不声明的片子不受影响）。
+    3. **这个开关真的接在 `_solo_body` 上**——只测 `_scrim_css` 证明不了海报
+       读了它。这是这个仓库反复栽的「写了不等于跑过」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    CENTRE = "radial-gradient(128% 40% at 50% 50%"
+    TOP_BOTTOM = "linear-gradient(180deg,rgba(6,28,20,.62)"
+
+    assert CENTRE in vp._scrim_css(False), "默认那一版没有中心暗角了"
+    assert CENTRE not in vp._scrim_css(True), "clear 没有关掉中心暗角"
+    for flag in (False, True):
+        assert TOP_BOTTOM in vp._scrim_css(flag), (
+            "上下两头的渐变被一起关掉了——台头和钩子会压在浅色画面上看不见")
+
+    # ③ 真走一遍 `_solo_body`：声明了就不带，没声明就带
+    from PIL import Image  # noqa: PLC0415
+
+    photo = tmp_path / "p.jpg"
+    Image.new("RGB", (1920, 1080), (90, 120, 90)).save(photo)
+    base = {"eyebrow": "赛场之上", "subject": "某人", "hook": "一行钩子",
+            "portrait": {"image": str(photo)}}
+    _, plain = vp._solo_body(dict(base))
+    _, cleared = vp._solo_body({**base, "scrim": "clear"})
+    assert CENTRE in plain, "不声明 scrim 的封面丢了中心暗角"
+    assert CENTRE not in cleared, (
+        "`cover.scrim: \"clear\"` 没接进 `_solo_body`——开关写了但海报没读")
+
+
+def test_装yt_dlp一律要带default():
+    """**`pip install yt-dlp` 少了 `[default]`，报出来是「这条片子没有格式」。**
+
+    `[default]` 带的是 `yt-dlp-ejs`——解 YouTube 的 n challenge 要跑一段 JS。
+    少了它 yt-dlp **不会说「装少了」**：格式表里只剩故事板，于是任何选择器
+    （连 `worst`）都匹配不上，报的是 `Requested format is not available`。
+
+    **它长得和「片源只有 DRM」一模一样，而我照着后者写下了结论。**
+    frame-grab 头两趟（run 30791003879 / 30791363067）八个 client 全红，
+    我据此在调研文档里写「卡在片源，不是卡在管线」——方向反了，是那条
+    `pip install -q -e . yt-dlp` 漏了 `[default]`。而 match-reel.yml 里
+    那句注释早就把这个坑写清楚了：**新工作流没继承旧工作流的前提**，
+    又一次「加新能力就要同时改三处」。
+
+    判据**自动推导，不维护白名单**（和「凡是 `git commit` 的工作流都要有
+    体积闸」同一个形状）：凡是 `pip install` 里出现 yt-dlp 的，都要带
+    `[default]`。就算某条线只取元数据，带上它也没有代价——而漏掉它的代价
+    是一趟看起来完全合理的错误结论。
+    """
+    seen = 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            if "pip install" not in line or "yt-dlp" not in line:
+                continue
+            seen += 1
+            for token in re.findall(r'"?yt-dlp[^"\s]*"?', line):
+                assert "[default]" in token, (
+                    f"{path.name}：`{line.strip()}` 装的是裸的 yt-dlp。"
+                    "少了 [default] 就没有 yt-dlp-ejs，n challenge 解不了，"
+                    "格式表只剩故事板——报出来是「Requested format is not "
+                    "available」，看着像片源的问题，其实是这一行的问题。")
+    # 判据自己的判据：主语没了要出声，别变成一条恒真的绿灯
+    assert seen >= 3, f"只扫到 {seen} 处 yt-dlp 安装——是不是路径写错了"
+
+
+def test_提交产物的工作流一律用Claude的身份():
+    """**GitHub 会把不是 `noreply@anthropic.com` 的提交标成 Unverified。**
+
+    这些提交是工作流里的 bot 打的（成片、候选帧、采集数据），原来一律写着
+    `github-actions[bot]`。改身份要改在**工作流里**，不能回头改历史——
+    2026-08-03 那次 stop hook 让我 `--reset-author` 六个提交，其中五个是
+    bot 的、一个是 GitHub 自己的 squash 提交，而且**十分钟前那条微信推送里
+    的图片和成片链接是钉在 commit SHA 上的**（`TENNISLIVE_ASSET_REV`）：
+    换 SHA 等于把一条已经发出去、收不回来的消息里每个链接变成死链。
+
+    判据**自动推导，不维护白名单**：凡是 `git config user.email` 的工作流，
+    邮箱都必须是 noreply@anthropic.com。
+    """
+    seen = 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            stripped = line.strip()
+            if not stripped.startswith("git config user."):
+                continue
+            seen += 1
+            if "user.email" in stripped:
+                assert "noreply@anthropic.com" in stripped, (
+                    f"{path.name}：`{stripped}` —— GitHub 会把它标成 Unverified。"
+                    "改这里，别去改已经推上去的历史。")
+            else:
+                assert '"Claude"' in stripped, (
+                    f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
+    # 判据自己的判据：主语没了要出声
+    assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"
+
+
+def test_Azure那条路的词边界要和edge_tts同一个单位():
+    """字幕整条线读的是 `{offset, duration, text}`，而 **edge-tts 给的是
+    100 纳秒**为单位的整数。Azure SDK 的 `audio_offset` 同样是 100ns 的 tick，
+    但 `duration` 在新版里是 `timedelta`、老版是毫秒整数——**不换算的话字幕
+    会整体错位，而且不报错**。
+
+    这条测试**真调一次换算函数**，不查源码文本：查源码只能防「有人把它删了」，
+    防不住「它从来没工作过」（`_cut_person` 那次引了一个不存在的名字，
+    `assert "def _cut_person(" in reel` 照样绿，功能整天是坏的）。
+    """
+    import datetime  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    # timedelta（新版 SDK）：0.5 秒 = 5,000,000 个 100ns
+    assert azure_tts._ticks(datetime.timedelta(seconds=0.5)) == 5_000_000
+    # 毫秒整数（老版 SDK）：500 毫秒 = 同一个数
+    assert azure_tts._ticks(500) == 5_000_000
+    # 认不出来的记 0，不猜（字幕只用 offset 排序，duration 缺了不致命）
+    assert azure_tts._ticks(None) == 0
+
+
+def test_拼错的风格名要在写spec时就拦下来():
+    """⚠️ **Azure 对拼错的 `style` 是静默忽略的**——合成照样成功、时长照样正常，
+    只是没有情绪。而「拼错了」和「这个风格听起来本来就平」**在成片上一模一样**，
+    等于又一个「兜底出事的时候不吭声」。
+
+    所以判据装在**写 spec 的那一刻**（`_seg_voice`），不等到听成片。那十个
+    名字是 2026-08-04 在 runner 上逐个问过的（run 30892017944，10/10 通过），
+    不是从文档抄的——文档列的是**语音的能力表**，不是**定价层的权限表**。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    assert azure_tts.check_styles(["sports-commentary-excited"]) == []
+    assert azure_tts.check_styles(["sports_commentary_excited"]) == \
+        ["sports_commentary_excited"], "下划线写法要被拦住"
+    assert azure_tts.check_styles(["excited"]) == ["excited"]
+    # 判据自己的判据：这张表不许空，否则它对任何名字都放行
+    assert len(azure_tts.KNOWN_STYLES) == 10
+
+
+def test_要了情绪风格却没配Azure必须报错不许悄悄退回():
+    """**悄悄退回 edge-tts 等于发一条和 spec 说的不一样的片子，而且不吭声。**
+
+    Edge 免费端点对 `mstts:express-as` 和 `<break/>` 一律拒绝（实测
+    run 30884267406，四个风格全被拒）；Azure F0 十个全过（run 30892017944）。
+    所以 spec 里写了 `style` / `lead_pause` 就是**明确要了 Azure 那条路**，
+    这时候没有 key 只有两条出路：去掉这两个键，或者配好再渲。**不能是第三条**。
+
+    ⚠️ 判据要**真跑一次 `tts_one`**（把 Azure 判成不可用），不是查源码里
+    有没有那个 `raise`。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    real = azure_tts.available
+    azure_tts.available = lambda: False
+    try:
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz",
+                         style="sports-commentary-excited")
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz", lead_pause=0.5)
+    finally:
+        azure_tts.available = real
+    # 反面锚点：**只调语速音高的照旧走 edge-tts**，不许被这道闸误伤
+    assert not Path("/tmp/never-written.mp3").exists(), \
+        "报错之前不许已经写出音频"
+
+
+def test_整段全单字要被报出来():
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    2026-08-04 账号所有者问「切分词和短句，以及多音字等等，F0 能解决么？」。
+    不能：F0 只量音高。切词的判据一直在手上（`words.json` 的 `text` 就是合成器
+    自己报的切词），可**那道闸只保护人名**（出处是 spec 的 `cover.matchup`）。
+    王欣瑜那条手工扫出 6 处切错的，**一个人名都没有**，闸一声没吭。
+
+    ⚠️ **第一版还写了一条「同词两切」，拿存量验完撤掉了。** 那条判据是
+    「这一段是一个词、那一段被切开，合成器自己的两次输出打架」——不用维护词表，
+    看着很漂亮。实测 15 条片子：wong-gea 10 段报 7 处、zheng-lanlana 20 段报
+    7 处，而**报出来的几乎全是读音没变的**（`六 ｜ 比 ｜ 三` 照样念 liù bǐ sān）。
+    全套里真有歧义的只有 `二 ｜ 发`（fā / fà）一处。**一条天天误报的检查等于
+    没有检查。**
+
+    这条测试同时钉住那个撤除：判据里不许再出现跨段比对。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import explainer  # noqa: PLC0415
+
+    hit = explainer.all_single_char_segments(
+        [(9, "抢七输掉了。", ["抢", "七", "输", "掉", "了"])])
+    assert any("第 10 段" in s for s in hit), f"没认出全单字：{hit}"
+
+    # ⚠️ 三条反面锚点，判据宁可窄不可宽：
+    # ① 三个 token 以下不算——「六比一。」本来就没上下文可用
+    assert not explainer.all_single_char_segments(
+        [(0, "六比一。", ["六", "比", "一"])]), "三个字的短句不该报"
+    # ② 有一个多字 token 就不算
+    assert not explainer.all_single_char_segments(
+        [(0, "盘点。二十九分钟。", ["盘点", "二十九", "分", "钟"])]), \
+        "有多字 token 的不该报"
+    # ③ **撤掉的那条不许自己回来**：跨段比对一出现，误报就跟着回来
+    body = inspect.getsource(explainer.all_single_char_segments)
+    assert "token_spans" not in body, \
+        "又在跨段比对了——那条判据实测误报率过半，撤掉是量出来的决定"
+
+
+def test_全单字那条判据在真产物上不误报():
+    """判据要拿**真渲染器的输出**验，不能只喂手搓的 token 列表。
+
+    上一条撤掉的「同词两切」就是这么倒的：单元测试里两段 fixture 一验就绿，
+    拿存量 15 条片子一跑，误报占了一半以上的段。**加判据之前先拿存量验一遍。**
+
+    ⚠️ **主语在 `output/` 里，而 CI 的稀疏检出不含它**——所以核心断言放在上面
+    那条（只吃 `src/`），这条是**加餐**：产物在的时候（本地沙箱）多验一层，
+    不在就跳过那一段。但**整条测试不许 skip**，一条常年跳过的检查和常年红是
+    同一个毛病。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from tennislive.video.explainer import all_single_char_segments  # noqa: PLC0415
+    from build_match_reel import speakable  # noqa: PLC0415
+
+    checked = noisy = 0
+    for words in sorted(Path("output").glob("*/reel/*/voice_00.words.json")):
+        outdir = words.parent
+        spec = Path("specs/reels") / f"{outdir.name}.json"
+        if not spec.is_file():
+            continue
+        data = json.loads(spec.read_text("utf-8"))
+        segs = []
+        for i, seg in enumerate(data.get("segments") or []):
+            text = (seg.get("narration") or "").strip()
+            path = outdir / f"voice_{i:02d}.words.json"
+            if not text or not path.is_file():
+                continue
+            marks = json.loads(path.read_text("utf-8"))
+            toks = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
+            if toks:
+                segs.append((i, speakable(text), toks))
+        if len(segs) < 3:
+            continue
+        hits = all_single_char_segments(segs)
+        # 判据不是「一条都不报」——真有问题就该报。拦的是**淹没式误报**：
+        # 一条片子报出四分之一以上的段，人就不看它了。实测存量全部远低于这个数
+        # （15 条片子里只有 1 条命中 1 段）。
+        assert len(hits) <= max(1, len(segs) // 4), (
+            f"{outdir.name}：{len(segs)} 段报了 {len(hits)} 处，太吵了\n{hits}")
+        noisy += len(hits)
+        checked += 1
+
+    # 产物不在就只验上面那条；在的话至少要真校到一条，别变成恒真的绿灯
+    if Path("output").is_dir() and list(Path("output").glob("*/reel/*")):
+        assert checked >= 5, f"有成片目录却只校到 {checked} 条——主语找错了"
+
+
+def test_成片要记下是哪条路配的音():
+    """`tts_one` 是「Azure 可用就**整条片子**都走 Azure」。
+
+    所以同一份 spec、同一个 `narration_voice`，配了 key 之前和之后合出来的
+    **不是同一条音轨**——而那个字段两边一模一样，光看产物分不出来。解说片那条线
+    早有 `tools/check_explainer_voice.py` 读产物里的 `narration.json`
+    （CLAUDE.md：查产物，不查信号），这条线一直漏着。
+
+    ⚠️ **`voiced_by` 第一版打印「[不合格]」却不计进末尾那个总数**，末行仍然说
+    「共 0 项不合格」——正是这个脚本自己要拦的那种不一致。所以判据钉的是
+    **返回值**，不是它印了什么。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    import tempfile  # noqa: PLC0415
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        film = out / "x.mp4"                       # 不用真存在，只用它的 parent
+        styled = {"segments": [{"voice": {"style": "sad", "_why": "崩"}}]}
+        plain = {"segments": [{"voice": {"rate": "-3%", "_why": "慢一点"}}]}
+
+        def meta(**kw):
+            (out / "render.json").write_text(json.dumps(kw), encoding="utf-8")
+
+        # ① spec 要了风格，成片却是 edge 配的 → **风格一个都没生效**，要计一项
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, styled) == 1
+
+        # ② 同一份 spec、Azure 配的 → 正常
+        meta(narration_backend="azure")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ③ 没要风格的走 edge-tts 是**正当的**（没配 key 就该退回），不许误伤
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, plain) == 0
+
+        # ④ 老片子没记这个字段 → 跳过，不许当成不合格（那会变成一条常年红）
+        meta(narration_voice="zh-CN-YunjianNeural")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ⑤ 连 render.json 都没有 → 同样跳过
+        (out / "render.json").unlink()
+        assert chk.voiced_by(film, styled) == 0
+
+    # **它真的被接进总数里**：只测函数拦不住「算出来了没人用」，
+    # 而那正是这条测试要防的第一版毛病
+    body = inspect.getsource(chk.main)
+    assert re.search(r"bad\s*=\s*voiced_by\(", body), \
+        "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
+
+
+def test_屏幕上的次也要写成数字而分发强成不许写():
+    """同一行里两种写法，是「转了一半」——和「北京时间8月三号零点」同一个毛病。
+
+    2026-08-04 抽帧看见 `前5局又破了三次 4比1`：三个数都是在数数，「局」和
+    「比」转了，「次」没转，因为 `_NUM_UNITS` 里漏了它。
+
+    ⚠️ **同一轮扫存量时另外几个字必须不转**，所以这条测试两头都钉：
+
+    | | | |
+    |---|---|---|
+    | 「三分之一」 | 加「分」就成 **「3分之一」** | 分数不是数数 |
+    | 「一发」「二发」 | 术语 | 加「发」就成「2发」 |
+    | 「四强」「三成」 | 术语／约数 | |
+    | 「十七分」→「17分」 | **本来就转** | 走「含十百千」那条，不靠这张表 |
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import arabic_numerals  # noqa: PLC0415
+
+    for raw, want in (("前五局又破了三次", "前5局又破了3次"),
+                      ("来回打了三次平分", "来回打了3次平分"),
+                      ("连续七次交手", "连续7次交手")):
+        assert arabic_numerals(raw) == want, f"{raw} → {arabic_numerals(raw)}"
+
+    # 反面锚点：这些一个字都不许动
+    for raw in ("三分之一", "一发", "二发", "四强", "三成", "七成",
+                "唯一一次", "第一次", "一次", "两次",
+                "依次", "其次", "层次", "档次", "多次", "这次", "首次"):
+        assert arabic_numerals(raw) == raw, f"{raw} 被误伤成 {arabic_numerals(raw)}"
+
+    # 「十七分」不靠量词表——它走「含十百千」那条，别为它去加「分」
+    assert arabic_numerals("只赢了十七分") == "只赢了17分"
+
+
+# 「分」在这个栏目里有三个意思，而**只有一个会被误读**。
+# 账号所有者 2026-08-04：「『15 分之后结束』，可能会给人误导，以为打了 15 分钟，
+# 其实是打了 15 point」，随后又划清了边界：「得分 71 比 64，只差 7 分。这个 ok，
+# 没啥歧义，但 15 分后结束这一局类似的说话可能会有歧义」。
+#
+# 判据因此**不是「出现了 N 分」**，是「**这个 N 分的意思有没有被钉住**」：
+#
+# | | 例 | 为什么 |
+# |---|---|---|
+# | ✅ 放行 | 赢了十七分 / 拿到六十二分 / 只差七分 / 连拿四分 | **分钟不能「赢」也不能「拿」**，动词把它钉死了 |
+# | ✅ 放行 | 一小时三十四分 / 上午十点三十五分 / 二十九分钟 | 前面有小时、点，或者后面有钟 |
+# | ✅ 放行 | 那一局，**一**分没拿到 / 赢下最后**一**分 | 单数的那一分，说的是场上正在打的一分 |
+# | ❌ 拦 | **打了十四分** / **十五分之后** / **最后十分** / 那一局，十三分 | 换成分钟读一样通顺 |
+#
+# ⚠️ **「一」必须排除**，不然「赢下最后一分」这种好句子会被误伤——第一版就是
+# 这么来的，16 处里 4 处是它。判据宁可窄，不可宽。
+_AMBIGUOUS_POINT = (
+    (r"打了\s*[二三四五六七八九十百千两〇零0-9][二三四五六七八九十百千两〇零0-9]*\s*分(?!钟)",
+     "打了N分"),
+    (r"(?<![一])[二三四五六七八九十百千两〇零0-9]+\s*分\s*(?:之?后)", "N分之后"),
+    (r"最后\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?!钟)", "最后N分"),
+    (r"局[，,]\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?![钟里])", "那一局，N分"),
+)
+
+# 规矩之前发出去的六条，**只许减不许加**。已发的片子不为措辞重渲——而且它们的
+# `copy.html` 已经提交进 main，改 xhs 会打红「算出来的和已经发出去的一模一样」
+# 那道判据。
+_LEGACY_AMBIGUOUS_POINT = {
+    "eala-osaka", "eala-svitolina", "eala-zheng",
+    "fritz-jodar-final", "shang-vallejo", "wong-gea",
+}
+
+
+def test_旁白里的分不许读成分钟():
+    """见上面那张表。改法是账号所有者给的：**用「几次平分」说**。
+
+    「这一局打了十四分」→「这一局来回打了四次平分」——既不歧义，又比一个抽象的
+    点数有画面。这条片子第 5 段本来就是这么写的（「四比一之后那一局，来回打了
+    三次平分」），所以不是新发明，是把已经在用的写法立成规矩。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+
+    offenders: dict[str, list[str]] = {}
+    checked = 0
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        data = json.loads(spec.read_text("utf-8"))
+        texts = [str(s.get("narration") or "") for s in data.get("segments") or []]
+        copy = Path(f"specs/reels/{spec.stem}.xhs.txt")
+        if copy.is_file():
+            texts.append(copy.read_text("utf-8"))
+        checked += 1
+        for text in texts:
+            for pattern, name in _AMBIGUOUS_POINT:
+                for m in re.finditer(pattern, text):
+                    offenders.setdefault(spec.stem, []).append(
+                        f"[{name}] {m.group(0)}")
+
+    # 判据自己的判据：主语不许为空，否则这条测试是一盏恒真的绿灯
+    assert checked >= 15, f"只扫到 {checked} 条 spec——目录写错了？"
+
+    fresh = {k: v for k, v in offenders.items()
+             if k not in _LEGACY_AMBIGUOUS_POINT}
+    assert not fresh, (
+        "这些「N 分」换成「N 分钟」读一样通顺，读者分不出是点数还是时间：\n"
+        + "\n".join(f"  {k}: {' / '.join(v)}" for k, v in fresh.items())
+        + "\n改法（账号所有者定的）：**用「几次平分」说**——"
+        "「这一局打了十四分」→「这一局来回打了四次平分」。\n"
+        "写不成平分就写「N 个小分」；说的要真是时间就写「N 分钟」。")
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 一个写错的名字就是一盏
+    # 永远亮着的绿灯——这个仓库为它栽过。
+    stale = _LEGACY_AMBIGUOUS_POINT - set(offenders)
+    assert not stale, (
+        f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
+        "这张表只许减不许加")
+
+
+def test_韵律报告要认得出哪几段带风格():
+    """账号所有者 2026-08-04：「成片音轨听着行不行——这个怎么评判？」
+
+    「听着行不行」拆得开：音高、响度、语速三样能量，音色和自然度不能。
+    `prosody_report` 报前三样，并把**带风格的和不带的**摆在一起比——这是
+    「情绪弧做出来没有 / 有没有做过头」唯一不用耳朵的答案。
+
+    ⚠️ 这条测试拦的是一个**会静默失效**的写法：第一版取的是 `seg.voice`
+    （一个不存在的字段）加 `hasattr` 兜底，于是每段都取到空串，
+    「带风格」那一组永远是空的，**报告照样出得来、一个字的错都不报**。
+    又一次「签名对了、实现是空的」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+
+    segs = [
+        reel.Segment(start=0.0, end=6.0, cx=None, narration="第一段没有风格。"),
+        reel.Segment(start=6.0, end=12.0, cx=None, narration="第二段很激动。",
+                     voice_style="sports-commentary-excited"),
+    ]
+    voices = [(Path("/nonexistent-0.mp3"), []), (Path("/nonexistent-1.mp3"), [])]
+    lines = reel.prosody_report(segs, voices, {0: 5.0, 1: 5.0})
+    body = "\n".join(lines)
+
+    # 风格名必须真的出现在报告里——取错字段的话这里是空的
+    assert "sports-commentary-excited" in body, (
+        "报告里没有风格名，多半是取错了字段"
+        "（`Segment` 上是平铺的 `voice_style`，不是 `voice` 字典）")
+    # 量不了要**说量不了**，不许猜一个数出来
+    assert "量不了" in body, "文件不存在时应当明说量不了，而不是给一个编的数"
+    # 音色那一句不能省：一张全绿的表不许被读成「已经验过了」
+    assert "音色" in body and "只能听" in body
+
+    # 位置：这个报告必须真的接在查旁白那条路上。**只测行为拦不住没接线**
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    head = src.index("if args.check_narration:")
+    region = src[head:head + 4000]
+    assert "prosody_report(" in region, (
+        "`mode=narration` 那条路上没有调用 prosody_report——"
+        "语音只在那一刻还在临时目录里，错过就只能去量混了现场声的成片")
+    # ⚠️ **而且要在 `with tempfile.TemporaryDirectory()` 里面。** 第一版印在
+    # 外面，语音早被删了，十一段全报「文件不在」（run 30901516117）——
+    # 调用接上了、位置错了，**而报告照样出得来**。缩进就是判据：
+    # `with` 里是 12 格，外面是 8 格。
+    call = next(ln for ln in region.splitlines() if "prosody_report(segments" in ln)
+    assert len(call) - len(call.lstrip()) >= 12, (
+        f"prosody_report 调用的缩进是 {len(call) - len(call.lstrip())} 格，"
+        "说明它在临时目录那个 with 外面——那时语音已经删了")

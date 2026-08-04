@@ -1109,6 +1109,580 @@ _CLIMB_MONEY_DIAGRAM = """
 """
 
 
+#: 保护排名的额度表。两档、四个数，而**关键是那个「或」**——两个上限同时在倒计时，
+#: 谁先到算谁。照片没法表达「两个计时器并排跑」，所以画。
+#: 几何：两档各占一行，站数用格子（数得出来），月数用一根横条（时间是连续的）。
+_PR_ALLOWANCE_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">停多久，给多少</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">两个上限同时在走，谁先到算谁</text>
+
+  <text x="52" y="168" fill="#9fb4aa" font-size="27" font-weight="700">停 6–12 个月</text>
+  <g fill="rgba(198,246,90,.30)" stroke="#c6f65a" stroke-width="2">
+    <rect x="270" y="140" width="34" height="38" rx="6"/>
+    <rect x="312" y="140" width="34" height="38" rx="6"/>
+    <rect x="354" y="140" width="34" height="38" rx="6"/>
+    <rect x="396" y="140" width="34" height="38" rx="6"/>
+    <rect x="438" y="140" width="34" height="38" rx="6"/>
+    <rect x="480" y="140" width="34" height="38" rx="6"/>
+    <rect x="522" y="140" width="34" height="38" rx="6"/>
+    <rect x="564" y="140" width="34" height="38" rx="6"/>
+    <rect x="606" y="140" width="34" height="38" rx="6"/>
+  </g>
+  <text x="660" y="168" fill="#c6f65a" font-size="30" font-weight="800">9 站</text>
+  <text x="52" y="232" fill="#9fb4aa" font-size="27" font-weight="700">或者</text>
+  <rect x="270" y="204" width="370" height="38" rx="10" fill="rgba(198,246,90,.30)"
+        stroke="#c6f65a" stroke-width="2"/>
+  <text x="660" y="232" fill="#c6f65a" font-size="30" font-weight="800">9 个月</text>
+
+  <line x1="52" y1="286" x2="848" y2="286" stroke="rgba(231,243,236,.22)" stroke-width="2"/>
+
+  <text x="52" y="356" fill="#9fb4aa" font-size="27" font-weight="700">停 12 个月以上</text>
+  <g fill="rgba(231,243,236,.26)">
+    <rect x="270" y="328" width="34" height="38" rx="6"/>
+    <rect x="312" y="328" width="34" height="38" rx="6"/>
+    <rect x="354" y="328" width="34" height="38" rx="6"/>
+    <rect x="396" y="328" width="34" height="38" rx="6"/>
+    <rect x="438" y="328" width="34" height="38" rx="6"/>
+    <rect x="480" y="328" width="34" height="38" rx="6"/>
+    <rect x="522" y="328" width="34" height="38" rx="6"/>
+    <rect x="564" y="328" width="34" height="38" rx="6"/>
+    <rect x="606" y="328" width="34" height="38" rx="6"/>
+    <rect x="648" y="328" width="34" height="38" rx="6"/>
+    <rect x="690" y="328" width="34" height="38" rx="6"/>
+    <rect x="732" y="328" width="34" height="38" rx="6"/>
+  </g>
+  <text x="786" y="356" fill="#e7f3ec" font-size="30" font-weight="800">12 站</text>
+  <text x="52" y="420" fill="#9fb4aa" font-size="27" font-weight="700">或者</text>
+  <rect x="270" y="392" width="496" height="38" rx="10" fill="rgba(231,243,236,.26)"/>
+  <text x="786" y="420" fill="#e7f3ec" font-size="30" font-weight="800">12 个月</text>
+
+  <text x="450" y="492" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">每个大满贯，还只能用一次</text>
+</svg>
+"""
+
+
+#: 商竣程那两段空白，以及中间那次「冻结」。这一屏要讲的是**时间被按了暂停**——
+#: 一根从左走到右的钟，中间挖掉一段。文字排不出「挖掉」这个动作，所以画。
+#: 几何：2025-07-28 复出在 x=110，39 周走完在 x=790，即 1 周 ≈ 17.4px。
+_PR_FREEZE_DIAGRAM = """
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">那 9 个月的钟，可以按暂停</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">再伤停满 3 个月，剩下的原样留着</text>
+
+  <text x="110" y="160" fill="#9fb4aa" font-size="24" font-weight="700">复出</text>
+  <text x="110" y="188" fill="#e7f3ec" font-size="26" font-weight="800">2025.7</text>
+  <rect x="110" y="210" width="412" height="46" rx="10" fill="rgba(231,243,236,.26)"/>
+  <text x="316" y="296" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">走掉约 30 周</text>
+
+  <rect x="530" y="210" width="120" height="46" rx="10" fill="none"
+        stroke="#c6f65a" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="590" y="160" text-anchor="middle" fill="#c6f65a"
+        font-size="24" font-weight="700">再伤，冻结</text>
+  <text x="590" y="188" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">2026.2</text>
+  <text x="590" y="296" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">停 5 个月</text>
+
+  <rect x="658" y="210" width="132" height="46" rx="10" fill="rgba(231,243,236,.26)"/>
+  <text x="790" y="160" text-anchor="end" fill="#9fb4aa" font-size="24" font-weight="700">接着走</text>
+  <text x="790" y="188" text-anchor="end" fill="#e7f3ec" font-size="26" font-weight="800">2026.7</text>
+  <text x="724" y="296" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">还剩约 9 周</text>
+
+  <text x="450" y="392" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">最多冻两次</text>
+  <text x="450" y="452" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">而那三年的总时效，一天都不会停</text>
+</svg>
+"""
+
+
+#: 「能用来干嘛」那一屏。三件能做、两件不能做——**照片没法表达一条禁令**，
+#: 所以画。左右两栏对照，能做的给强调色，不能做的压成中性并划一道斜杠。
+#: 「代价」那一屏。这一屏讲的是**他没打**——而没打是拍不出来的：
+#: 一张空球场证明不了「本可以站上去的人选择了不站」。CLAUDE.md 那条
+#: 「示意图的触发条件是照片讲不清，不是照片找不到」，这里是最干净的一例。
+#:
+#: 画出来才看得见的那件事：**整届温网（6.30–7.13）正好占满这段等待的最后 13 天。**
+#: 六个月满在 7 月 13 日，而温网决赛也是 7 月 13 日——他要是打了，
+#: 断的是终点线前的最后十三天。日期两头都核过（维基 2025 温网 30 June – 13 July）。
+_PR_BLANK_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">温网开赛那天，他还差 13 天</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">门槛：连续 6 个月不打任何比赛，表演赛也算</text>
+
+  <text x="615" y="156" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">法网 5.25</text>
+  <text x="615" y="188" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">缺席</text>
+  <line x1="615" y1="204" x2="615" y2="248" stroke="#9fb4aa" stroke-width="3"/>
+
+  <text x="784" y="156" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">温网 6.30</text>
+  <text x="784" y="188" text-anchor="middle" fill="#c6f65a"
+        font-size="26" font-weight="800">他能打，没打</text>
+  <line x1="784" y1="204" x2="784" y2="248" stroke="#c6f65a" stroke-width="3"/>
+
+  <rect x="90" y="248" width="720" height="52" rx="10" fill="rgba(231,243,236,.18)"/>
+  <rect x="758" y="248" width="52" height="52" rx="10" fill="rgba(198,246,90,.85)"/>
+
+  <text x="90" y="346" fill="#9fb4aa" font-size="26" font-weight="700">2025.1.13</text>
+  <text x="90" y="378" fill="#9fb4aa" font-size="26" font-weight="700">澳网首轮，停赛前最后一场</text>
+  <text x="810" y="346" text-anchor="end" fill="#e7f3ec"
+        font-size="26" font-weight="800">7.13</text>
+  <text x="810" y="378" text-anchor="end" fill="#e7f3ec"
+        font-size="26" font-weight="800">六个月满</text>
+
+  <text x="450" y="446" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">整届温网，正好压在最后 13 天里</text>
+</svg>
+"""
+
+
+_PR_USE_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">它只管进门，不管座次</text>
+
+  <text x="60" y="120" fill="#c6f65a" font-size="28" font-weight="800">能用来</text>
+  <g font-size="27" font-weight="700" fill="#e7f3ec">
+    <rect x="60" y="140" width="360" height="52" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="80" y="174" fill="#c6f65a">进正赛</text>
+    <rect x="60" y="204" width="360" height="52" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="80" y="238" fill="#c6f65a">进资格赛</text>
+    <rect x="60" y="268" width="360" height="52" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="80" y="302" fill="#c6f65a">占特殊豁免位</text>
+  </g>
+
+  <text x="480" y="120" fill="#9fb4aa" font-size="28" font-weight="800">不能用来</text>
+  <g font-size="27" font-weight="700">
+    <rect x="480" y="140" width="360" height="52" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="500" y="174" fill="#9fb4aa">当种子</text>
+    <line x1="496" y1="166" x2="824" y2="166" stroke="rgba(159,180,170,.75)" stroke-width="2"/>
+    <rect x="480" y="204" width="360" height="52" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="500" y="238" fill="#9fb4aa">排幸运落败者顺位</text>
+    <line x1="496" y1="230" x2="824" y2="230" stroke="rgba(159,180,170,.75)" stroke-width="2"/>
+  </g>
+
+  <text x="450" y="392" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">这个数＝停赛后头 3 个月排名的平均值</text>
+  <text x="450" y="446" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">抽签还是按你真实的排名摆</text>
+</svg>
+"""
+
+
+#: 「同一场雨，两个城市的日程对不上」——**照片讲不了这件事**：一张雨的照片
+#: 只能说华盛顿下雨了，说不了「而加拿大那边资格赛已经打完」。跨城市、跨日期的
+#: 关系正是「照片讲不清」那一档（跟保护排名那条的「温网正好压在最后 13 天」同族）。
+#: 日期是北京时间，四天的场次数由 `fetch_day` 核过（见 docs/rain-delay-research.md 第七节）。
+_SE_CHAIN_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同一场雨，两个城市的日程对不上</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">北京时间</text>
+
+  <g text-anchor="middle" fill="#9fb4aa" font-size="27" font-weight="700">
+    <text x="255" y="132">8 月 1 日</text>
+    <text x="427" y="132">8 月 2 日</text>
+    <text x="599" y="132">8 月 3 日</text>
+    <text x="771" y="132">8 月 4 日</text>
+  </g>
+
+  <text x="40" y="200" fill="#e7f3ec" font-size="28" font-weight="800">华盛顿</text>
+  <g font-size="26" font-weight="700" text-anchor="middle" fill="#e7f3ec">
+    <rect x="180" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="255" y="198">半决赛</text>
+    <rect x="352" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="427" y="198">决赛遇雨</text>
+    <rect x="524" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="599" y="198">还没打完</text>
+    <rect x="696" y="158" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="771" y="198">周一补打</text>
+  </g>
+
+  <text x="40" y="352" fill="#e7f3ec" font-size="28" font-weight="800">加拿大站</text>
+  <g font-size="26" font-weight="700" text-anchor="middle">
+    <rect x="180" y="310" width="150" height="64" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="255" y="350" fill="#c6f65a">资格赛</text>
+    <rect x="352" y="310" width="150" height="64" rx="10" fill="rgba(198,246,90,.26)"
+          stroke="#c6f65a" stroke-width="2"/>
+    <text x="427" y="350" fill="#c6f65a">资格赛</text>
+    <rect x="524" y="310" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="599" y="350" fill="#e7f3ec">正赛首轮</text>
+    <rect x="696" y="310" width="150" height="64" rx="10" fill="rgba(231,243,236,.16)"/>
+    <text x="771" y="350" fill="#e7f3ec">正赛首轮</text>
+  </g>
+
+  <path d="M180 288 L180 268 L502 268 L502 288" stroke="#c6f65a"
+        stroke-width="3" fill="none"/>
+  <text x="341" y="256" text-anchor="middle" fill="#c6f65a"
+        font-size="25" font-weight="700">这两天打完，过期不补</text>
+
+  <text x="450" y="442" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">还在华盛顿打的人，赶不上加拿大的资格赛</text>
+</svg>
+"""
+
+
+#: 「一个位置」——留出来的席位拍不出来。96 是大师赛正赛的签表人数，
+#: 一格一个名额、只有一格是亮的，「整站只有一个」这句话就不用读者做除法。
+#: ⚠️ 故意不画「直接入围/资格赛/外卡各多少」——那几个数没核到，
+#: 而画上去就是替签表声明了一件没核过的事。
+_SE_SLOT_DIAGRAM = """
+<svg viewBox="0 0 900 490" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">大师赛九十六个正赛名额</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">一格＝一个名额　亮的那格＝特殊豁免</text>
+
+  <g fill="rgba(231,243,236,.20)">
+    <rect x="69"  y="120" width="42" height="34" rx="6"/>
+    <rect x="117" y="120" width="42" height="34" rx="6"/>
+    <rect x="165" y="120" width="42" height="34" rx="6"/>
+    <rect x="213" y="120" width="42" height="34" rx="6"/>
+    <rect x="261" y="120" width="42" height="34" rx="6"/>
+    <rect x="309" y="120" width="42" height="34" rx="6"/>
+    <rect x="357" y="120" width="42" height="34" rx="6"/>
+    <rect x="405" y="120" width="42" height="34" rx="6"/>
+    <rect x="453" y="120" width="42" height="34" rx="6"/>
+    <rect x="501" y="120" width="42" height="34" rx="6"/>
+    <rect x="549" y="120" width="42" height="34" rx="6"/>
+    <rect x="597" y="120" width="42" height="34" rx="6"/>
+    <rect x="645" y="120" width="42" height="34" rx="6"/>
+    <rect x="693" y="120" width="42" height="34" rx="6"/>
+    <rect x="741" y="120" width="42" height="34" rx="6"/>
+    <rect x="789" y="120" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="162" width="42" height="34" rx="6"/>
+    <rect x="117" y="162" width="42" height="34" rx="6"/>
+    <rect x="165" y="162" width="42" height="34" rx="6"/>
+    <rect x="213" y="162" width="42" height="34" rx="6"/>
+    <rect x="261" y="162" width="42" height="34" rx="6"/>
+    <rect x="309" y="162" width="42" height="34" rx="6"/>
+    <rect x="357" y="162" width="42" height="34" rx="6"/>
+    <rect x="405" y="162" width="42" height="34" rx="6"/>
+    <rect x="453" y="162" width="42" height="34" rx="6"/>
+    <rect x="501" y="162" width="42" height="34" rx="6"/>
+    <rect x="549" y="162" width="42" height="34" rx="6"/>
+    <rect x="597" y="162" width="42" height="34" rx="6"/>
+    <rect x="645" y="162" width="42" height="34" rx="6"/>
+    <rect x="693" y="162" width="42" height="34" rx="6"/>
+    <rect x="741" y="162" width="42" height="34" rx="6"/>
+    <rect x="789" y="162" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="204" width="42" height="34" rx="6"/>
+    <rect x="117" y="204" width="42" height="34" rx="6"/>
+    <rect x="165" y="204" width="42" height="34" rx="6"/>
+    <rect x="213" y="204" width="42" height="34" rx="6"/>
+    <rect x="261" y="204" width="42" height="34" rx="6"/>
+    <rect x="309" y="204" width="42" height="34" rx="6"/>
+    <rect x="357" y="204" width="42" height="34" rx="6"/>
+    <rect x="405" y="204" width="42" height="34" rx="6"/>
+    <rect x="501" y="204" width="42" height="34" rx="6"/>
+    <rect x="549" y="204" width="42" height="34" rx="6"/>
+    <rect x="597" y="204" width="42" height="34" rx="6"/>
+    <rect x="645" y="204" width="42" height="34" rx="6"/>
+    <rect x="693" y="204" width="42" height="34" rx="6"/>
+    <rect x="741" y="204" width="42" height="34" rx="6"/>
+    <rect x="789" y="204" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="246" width="42" height="34" rx="6"/>
+    <rect x="117" y="246" width="42" height="34" rx="6"/>
+    <rect x="165" y="246" width="42" height="34" rx="6"/>
+    <rect x="213" y="246" width="42" height="34" rx="6"/>
+    <rect x="261" y="246" width="42" height="34" rx="6"/>
+    <rect x="309" y="246" width="42" height="34" rx="6"/>
+    <rect x="357" y="246" width="42" height="34" rx="6"/>
+    <rect x="405" y="246" width="42" height="34" rx="6"/>
+    <rect x="453" y="246" width="42" height="34" rx="6"/>
+    <rect x="501" y="246" width="42" height="34" rx="6"/>
+    <rect x="549" y="246" width="42" height="34" rx="6"/>
+    <rect x="597" y="246" width="42" height="34" rx="6"/>
+    <rect x="645" y="246" width="42" height="34" rx="6"/>
+    <rect x="693" y="246" width="42" height="34" rx="6"/>
+    <rect x="741" y="246" width="42" height="34" rx="6"/>
+    <rect x="789" y="246" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="288" width="42" height="34" rx="6"/>
+    <rect x="117" y="288" width="42" height="34" rx="6"/>
+    <rect x="165" y="288" width="42" height="34" rx="6"/>
+    <rect x="213" y="288" width="42" height="34" rx="6"/>
+    <rect x="261" y="288" width="42" height="34" rx="6"/>
+    <rect x="309" y="288" width="42" height="34" rx="6"/>
+    <rect x="357" y="288" width="42" height="34" rx="6"/>
+    <rect x="405" y="288" width="42" height="34" rx="6"/>
+    <rect x="453" y="288" width="42" height="34" rx="6"/>
+    <rect x="501" y="288" width="42" height="34" rx="6"/>
+    <rect x="549" y="288" width="42" height="34" rx="6"/>
+    <rect x="597" y="288" width="42" height="34" rx="6"/>
+    <rect x="645" y="288" width="42" height="34" rx="6"/>
+    <rect x="693" y="288" width="42" height="34" rx="6"/>
+    <rect x="741" y="288" width="42" height="34" rx="6"/>
+    <rect x="789" y="288" width="42" height="34" rx="6"/>
+
+    <rect x="69"  y="330" width="42" height="34" rx="6"/>
+    <rect x="117" y="330" width="42" height="34" rx="6"/>
+    <rect x="165" y="330" width="42" height="34" rx="6"/>
+    <rect x="213" y="330" width="42" height="34" rx="6"/>
+    <rect x="261" y="330" width="42" height="34" rx="6"/>
+    <rect x="309" y="330" width="42" height="34" rx="6"/>
+    <rect x="357" y="330" width="42" height="34" rx="6"/>
+    <rect x="405" y="330" width="42" height="34" rx="6"/>
+    <rect x="453" y="330" width="42" height="34" rx="6"/>
+    <rect x="501" y="330" width="42" height="34" rx="6"/>
+    <rect x="549" y="330" width="42" height="34" rx="6"/>
+    <rect x="597" y="330" width="42" height="34" rx="6"/>
+    <rect x="645" y="330" width="42" height="34" rx="6"/>
+    <rect x="693" y="330" width="42" height="34" rx="6"/>
+    <rect x="741" y="330" width="42" height="34" rx="6"/>
+    <rect x="789" y="330" width="42" height="34" rx="6"/>
+  </g>
+
+  <rect x="453" y="204" width="42" height="34" rx="6" fill="#c6f65a"/>
+
+  <text x="450" y="416" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">整站就这一个</text>
+  <text x="450" y="466" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">500 赛也是 1 个　250 赛和挑战赛 2 个</text>
+</svg>
+"""
+
+
+#: 「认不认雨」——两本规则书的条文差别，照片没有语法去表达。
+#: 左边给强调色，因为这一屏的落点是「WTA 那本把天气写进了条文」。
+_SE_BOOKS_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同一件事，两本规则书写得不一样</text>
+
+  <text x="250" y="110" text-anchor="middle" fill="#c6f65a"
+        font-size="32" font-weight="800">WTA</text>
+  <rect x="60" y="130" width="380" height="284" rx="14"
+        fill="rgba(198,246,90,.16)" stroke="#c6f65a" stroke-width="2"/>
+  <text x="250" y="186" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">条文原文里就有</text>
+  <text x="250" y="242" text-anchor="middle" fill="#c6f65a"
+        font-size="40" font-weight="800">因天气</text>
+  <line x1="110" y1="282" x2="390" y2="282" stroke="rgba(198,246,90,.45)" stroke-width="2"/>
+  <text x="250" y="330" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">而且</text>
+  <text x="250" y="382" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">进了决赛就够格</text>
+
+  <text x="650" y="110" text-anchor="middle" fill="#9fb4aa"
+        font-size="32" font-weight="800">ATP</text>
+  <rect x="460" y="130" width="380" height="284" rx="14" fill="rgba(231,243,236,.14)"/>
+  <text x="650" y="186" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">全文找不到</text>
+  <text x="650" y="242" text-anchor="middle" fill="#9fb4aa"
+        font-size="40" font-weight="800">天气</text>
+  <line x1="520" y1="282" x2="780" y2="282" stroke="rgba(159,180,170,.4)" stroke-width="2"/>
+  <text x="650" y="330" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">靠这个定义兜住</text>
+  <text x="650" y="382" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">开始或恢复一场比赛</text>
+
+  <text x="450" y="484" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">两场决赛分属两个协会，条文不能混着讲</text>
+</svg>
+"""
+
+
+#: 「一小时」——一段倒计时拍不出来。**两条按同一把尺子画**：赛事那头准备两天
+#: （48 小时 = 576px，12px/小时），球员这头只有 1 小时 = 12px。那道细缝就是论点，
+#: 所以不许为了「看得清」把它画粗——那样就成了「条形图上写字」那一类的谎。
+_SE_HOUR_DIAGRAM = """
+<svg viewBox="0 0 900 502" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">那头准备两天，你这头只有一小时</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">两条按同一把尺子画</text>
+
+  <text x="60" y="162" fill="#9fb4aa" font-size="27" font-weight="700">赛事那头</text>
+  <rect x="60" y="182" width="576" height="60" rx="10" fill="rgba(231,243,236,.28)"/>
+  <text x="656" y="224" fill="#e7f3ec" font-size="36" font-weight="800">48 小时</text>
+  <text x="60" y="284" fill="#9fb4aa" font-size="26" font-weight="700">周三、周四列名单，监督挨个联系</text>
+
+  <text x="60" y="376" fill="#c6f65a" font-size="27" font-weight="800">你这头</text>
+  <rect x="60" y="396" width="12" height="60" rx="3" fill="#c6f65a"/>
+  <path d="M82 426 L640 426" stroke="rgba(198,246,90,.45)" stroke-width="2"
+        fill="none" stroke-dasharray="8 8"/>
+  <text x="656" y="438" fill="#c6f65a" font-size="36" font-weight="800">1 小时</text>
+  <text x="60" y="498" fill="#9fb4aa" font-size="26" font-weight="700">赢下那场决定性的球之后</text>
+</svg>
+"""
+
+
+_ACADEMY_COUNT_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同时进前一百的学院球员</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">一格＝一个人　亮的那格＝八月三日新增</text>
+
+  <text x="90" y="168" fill="#9fb4aa" font-size="28" font-weight="700">6 月 9 日</text>
+  <g fill="rgba(231,243,236,.22)">
+    <rect x="300" y="140" width="60" height="44" rx="8"/>
+    <rect x="368" y="140" width="60" height="44" rx="8"/>
+    <rect x="436" y="140" width="60" height="44" rx="8"/>
+    <rect x="504" y="140" width="60" height="44" rx="8"/>
+    <rect x="572" y="140" width="60" height="44" rx="8"/>
+    <rect x="640" y="140" width="60" height="44" rx="8"/>
+  </g>
+  <text x="740" y="172" fill="#e7f3ec" font-size="32" font-weight="800">6</text>
+  <text x="300" y="222" fill="#9fb4aa" font-size="26" font-weight="700">学院发公告：史上第一次</text>
+
+  <line x1="300" y1="266" x2="820" y2="266" stroke="rgba(231,243,236,.18)" stroke-width="2"/>
+
+  <text x="90" y="336" fill="#9fb4aa" font-size="28" font-weight="700">8 月 3 日</text>
+  <g fill="rgba(231,243,236,.22)">
+    <rect x="300" y="308" width="60" height="44" rx="8"/>
+    <rect x="368" y="308" width="60" height="44" rx="8"/>
+    <rect x="436" y="308" width="60" height="44" rx="8"/>
+    <rect x="504" y="308" width="60" height="44" rx="8"/>
+    <rect x="572" y="308" width="60" height="44" rx="8"/>
+    <rect x="640" y="308" width="60" height="44" rx="8"/>
+  </g>
+  <rect x="708" y="308" width="60" height="44" rx="8" fill="#c6f65a"/>
+  <text x="800" y="340" fill="#c6f65a" font-size="32" font-weight="800">7</text>
+  <text x="300" y="390" fill="#e7f3ec" font-size="26" font-weight="700">黄泽林进前一百　八周之后</text>
+
+  <text x="450" y="444" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">第七个是我们按学院自己的口径数的</text>
+</svg>
+"""
+
+
+# ⚠️ **轴上每一个名字都从译名表取，一个都不许手打**（`_zh()`）。
+#   上一版七个名字是手敲进去的，于是 `Solana Sierra` 被写成「西埃拉」——
+#   而 `players.py` 里一直写着**谢拉**。它躲过了 `test_人名要以译名表为准`：
+#   那条判据**只查四个字以上**的近似串（三个字的窗口会撞上普通词），
+#   而「谢拉」两个字、「西埃拉」三个字，两头都够不着。
+#   判据宁可窄不可宽是对的，**所以另一头要堵在源头**：名字不手打就不会写错。
+# ⚠️ 同一批还查出「科尔涅耶娃」（表里是**科尔涅娃**）。两个错都是同一个原因：
+#   我照着中文维基敲，没调 `player_zh()`。CLAUDE.md 早写着「判断改没改对，
+#   不要看文件内容，直接调 player_zh()」——这次连查都没查。
+# ⚠️ 上一版那句注释还写着「西埃拉查不到中文源」——**表里一直有**。
+#   又一次「空结果先自证是真空」，而这次的空结果是我根本没去查。
+# ⚠️ 中文维基那页把伊埃拉写成「亚历克莎·埃亚拉」——**别照抄**。仓库早就把
+#   埃亚拉改成伊埃拉了，译名表说了算。
+# ⚠️ **科尔涅娃到学院的年纪根本没查到**，所以她不站在轴上，单独摆在右边打问号
+#   （虚线圈）。把「没查到」画出来，比把她悄悄漏掉诚实。
+def _academy_span_diagram() -> str:
+    """入校时间轴，头像**一上一下落在轴两侧**，各自站在自己真实的年份位置上。
+
+    ⚠️ 横轴是**入校那一年**，不是入校年纪。原来按年纪排，伊埃拉 13 岁排最左，
+    读起来就是「她最早来的」——**而最早的是穆纳尔（2017）**。账号所有者点出来的。
+
+    ⚠️ 上一版是「头像等距排一行 + 引线指回真实年份」，因为挨着放会叠。
+    账号所有者：「头像可以一上一下在时间轴两侧」——**一上一下把横向空间翻倍**，
+    相邻两个人分居轴的两侧就不会碰，于是头像可以直接站在真实位置上，
+    引线整个不需要了。**能不decouple就不decouple**。
+
+    年份并进每人的标签（「2018 · 13 岁」），省掉单独一行年份刻度。
+
+    头像出处见 assets/explainer/nadal-academy/faces/credits.json。
+    """
+    import base64
+
+    from ..zh import player_zh as _zh
+
+    root = _REPO / "assets/explainer/nadal-academy/faces"
+    def uri(name: str) -> str:
+        return "data:image/jpeg;base64," + base64.b64encode(
+            (root / f"{name}.jpg").read_bytes()).decode()
+
+    AXIS = 248
+    # (真实年份位置 x, 英文名, 年份·年纪, 文件名, 在轴上方?)
+    #
+    # ⚠️ 兰达卢塞那个年份是**推的**：他 2006 年生，「14 岁去的」只见二手转述，
+    #   哪一年没核到。所以标签写「2020 前后」而不是「2020」——
+    #   轴按年份排之后，一个没核过的年份会被读成核过的。
+    people = [
+        (90,  "Jaume Munar",      "2017 · 20 岁",      "munar",     True),
+        (170, "Alexandra Eala",   "2018 · 13 岁",      "eala",      False),
+        (250, "Casper Ruud",      "2018 · 19 岁",      "ruud",      True),
+        (350, "Martin Landaluce", "2020 前后 · 14 岁", "landaluce", False),
+        (430, "Coleman Wong",     "2021 · 17 岁",      "wong",      True),
+    ]
+    defs, art = [], []
+    for x, name_en, meta, key, up in people:
+        name = _zh(name_en)
+        cy = 130 if up else 372
+        # ⚠️ clipPath 放 defs，**<image> 必须放在正文里**——`<defs>` 里的内容
+        # 不渲染。上一版靠 `<use href="#i…">` 引用它，改成一上一下时我把 <use>
+        # 删了、<image> 却留在 defs 里，于是五个圈全是空的，而 SVG 不报任何错。
+        # 又一次「兜底出事的时候不吭声」，只是这次不吭声的是 SVG 本身。
+        defs.append(f'<clipPath id="c{key}"><circle cx="{x}" cy="{cy}" r="40"/></clipPath>')
+        ny, my = (198, 222) if up else (306, 330)
+        art.append(
+            f'<image href="{uri(key)}" x="{x-40}" y="{cy-40}" width="80" height="80" '
+            f'preserveAspectRatio="xMidYMid slice" clip-path="url(#c{key})"/>'
+            f'<circle cx="{x}" cy="{cy}" r="40" fill="none" stroke="#c6f65a" stroke-width="3"/>'
+            f'<text x="{x}" y="{ny}" text-anchor="middle" fill="#e7f3ec" font-size="24" '
+            f'font-weight="800">{name}</text>'
+            f'<text x="{x}" y="{my}" text-anchor="middle" fill="#c6f65a" font-size="21" '
+            f'font-weight="800">{meta}</text>'
+            f'<line x1="{x}" y1="{cy + (40 if up else -40)}" x2="{x}" '
+            f'y2="{AXIS - 12 if up else AXIS + 12}" stroke="rgba(231,243,236,.22)" stroke-width="2"/>'
+            f'<circle cx="{x}" cy="{AXIS}" r="9" fill="#c6f65a"/>'
+        )
+    return (
+        '<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">'
+        + "<defs>" + "".join(defs) + "</defs>"
+        + '<text x="450" y="40" text-anchor="middle" fill="#e7f3ec" font-size="33" '
+          'font-weight="800">他们哪一年到的学院</text>'
+        + f'<line x1="50" y1="{AXIS}" x2="860" y2="{AXIS}" '
+          'stroke="rgba(231,243,236,.28)" stroke-width="3"/>'
+        + "".join(art)
+        + f'<circle cx="660" cy="{AXIS}" r="8" fill="rgba(231,243,236,.34)"/>'
+        + '<text x="660" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          f'font-weight="800">{_zh("Solana Sierra")}</text>'
+        + '<text x="660" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">2025 · 21 岁</text>'
+        + f'<circle cx="830" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
+          'stroke-width="2" stroke-dasharray="4 4"/>'
+        + '<text x="830" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          f'font-weight="800">{_zh("Alina Korneeva")}</text>'
+        + '<text x="830" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">没查到</text>'
+        + '<text x="450" y="452" text-anchor="middle" fill="#e7f3ec" font-size="27" '
+          'font-weight="800">同一年到的两个人，一个 13 岁，一个 19 岁</text>'
+        + '<text x="450" y="486" text-anchor="middle" fill="#9fb4aa" font-size="23" '
+          'font-weight="700">公告里都算「学院培养的」</text>'
+        + "</svg>"
+    )
+
+
+_ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
+
+
+# 合进 main 就自动推微信的选题，**默认一条都没有**。
+#
+# ⚠️ 认领这一步把「想清楚了」和「凑合一下」分开，和 `mixed_fps` / `silent_source`
+# 一个形状。竖版短片那条线把它写在 spec 的 `push.auto` 里，而解说片的脚本活在
+# 代码里、没有 per-slug 的 JSON 可写，所以认领落在这儿。
+#
+# ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
+# 而微信那条消息发出去收不回来。
+AUTO_PUSH_SLUGS: frozenset[str] = frozenset()
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # ⚠️ 这条和 `shang-nishikori` 讲的是同一个人，**不许重讲那条已经讲过的**：
     # 五个月的空白、生涯最高第 47、成都夺冠那一周，那条片子都铺开讲过了。
@@ -1205,6 +1779,512 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             # 这一问接回第 ④ 屏那个具体的事实（两年前他把卢布列夫逼到三盘），
             # 开的是另一扇门：那一次成立，这一次还成不成立。
             "两年前他逼出了第三盘。这一次，你觉得他能打几盘？",
+        ),
+    ),
+    # 纳达尔学院。引子是学院自己 2026-06-09 那份「六人同时进前 100」的公告，
+    # 而它八周就过时了。⚠️ 详讲四个、七个都上时间轴——账号所有者 2026-08-04：
+    # 「只讲最出名的就好」「没关系啊，可以出现在时间轴，只是不展开讲而已」。
+    # 边界划在「展开不展开」，不是「出不出现」：跨度要靠点多才看得出来。
+    "nadal-academy": (
+        (
+            "cause",
+            "那份公告",
+            "六个人，八周之后不对了",
+            "二零二六年六月九号，一所网球学院发了一份公告。"
+            "史上第一次，同时有六名学院培养的球员，进入 ATP 和 WTA 前一百。"
+            "六个人，来自六个国家。"
+            # ⚠️ 这句是全片的支点，而且是点开原文确认过的：那篇公告通篇没有定义
+            # developed at the Academy 是什么意思，也没分「住了七年的」和「来集训一周的」。
+            "公告里没有说，什么叫学院培养的。"
+            "八周之后，这个数字不对了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "6 月 9 日 学院宣布六人同时进前 100",
+                "史上第一次 公告里这么写",
+                "八周之后 这个数字不对了",
+            ),
+            _ACADEMY_COUNT_DIAGRAM,
+        ),
+        (
+            "cause",
+            "同一个周一",
+            "两个第一，隔着半个地球",
+            "八月三号，星期一。"
+            # ⚠️ 取**官方排名**第 91，不取实时排名第 90。两者是两个口径不是两个版本：
+            # 实时是 7/31 打进半决赛当下的，官方是这个周一更新的。而「第一个进前 100
+            # 的香港人」本来就是按官方榜说的。
+            "那天更新的 ATP 排名里，黄泽林排第九十一。"
+            "一九七三年有排名以来，代表中国香港进前一百的，他是第一个。"
+            "同一个周一，华盛顿的女单决赛因为下雨，拖到这天才打完。"
+            "伊埃拉逆转佩古拉，四比六、六比四、六比零。"
+            # ⚠️ 措辞：账号所有者 2026-08-04 确认「生涯首冠，应该是 WTA 巡回赛级别的」。
+            # 她此前有两个 WTA125（瓜达拉哈拉、伯明翰），但那是低于巡回赛的独立一档，
+            # 不计进这本账——英文媒体也这么分。
+            "生涯首冠，也是菲律宾的第一个 WTA 巡回赛冠军。"
+            "两个第一，隔着半个地球。"
+            "而这两个人，出自同一所学校。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 3 日 黄泽林进 ATP 前 100",
+                "同一个周一 伊埃拉拿下生涯首冠",
+                "同一所学校 马略卡岛，马纳科尔",
+            ),
+            _ACADEMY_COUNT_DIAGRAM,
+        ),
+        # ⚠️ 时间轴**单独占一屏，而且排在四个人前面**。账号所有者 2026-08-04：
+        # 「时间轴是介绍整个概况的，要单独放前面，后面每一页介绍具体球员，
+        # 要配对应的球员图片」。上一版是四屏共用同一张轴当背景板——四个人的
+        # 故事各讲各的，底下却一直是同一张图，等于四屏里有三屏没有自己的画面。
+        # 现在分工是：**这一屏给概况（一张轴），后面每屏给一个人（一张他的照片）**。
+        (
+            "mechanism",
+            "一条轴",
+            "七个人，哪一年到的",
+            "先把七个人摆到一条轴上。"
+            # ⚠️ 横轴是入校年份不是入校年纪，这一句必须说出口。账号所有者：
+            # 「不然很多人以为伊埃拉先入校」——按年纪排，13 岁的她排最左。
+            "横轴是他们哪一年到的学院，不是他们几岁。"
+            "最早的是穆纳尔，二零一七年。"
+            "第二年来了两个人，伊埃拉和鲁德。"
+            "兰达卢塞是二零二零年前后，黄泽林二零二一年。"
+            "谢拉最晚，二零二五年。"
+            "科尔涅娃哪一年到的，我们没查到。"
+            "到的时候几岁，写在名字下面。"
+            "从十三岁到二十一岁都有。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "横轴 哪一年到的，不是几岁",
+                "最早 穆纳尔，2017 年",
+                "跨度 到的时候 13 岁到 21 岁",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "十三岁",
+            "伊埃拉从马尼拉搬过去，一住七年",
+            "伊埃拉是十三岁去的。"
+            "那年她在法国赢了一站世界少年赛，学院的人主动找上门。"
+            "他们给了她一份奖学金。"
+            "她从马尼拉搬到马略卡岛，一住七年。"
+            "二零二三年毕业，典礼上的主礼嘉宾是斯瓦泰克。"
+            "她管那个地方叫第二个家。"
+            # 落点接回 ② 屏那座奖杯，但**不重复那几个事实**（冠军、对手、比分
+            # 都在 ② 说过了）——只把两头连起来。
+            "八月三号举起的那座奖杯，是从那次搬家开始的。",
+            "assets/explainer/nadal-academy/eala_washington_2026_trophy.jpg",
+            "WTA 官方图（经学院官网分发）· 2026-08-03 华盛顿女单决赛，伊埃拉夺冠后举杯",
+            (
+                "13 岁 从马尼拉搬到马略卡岛",
+                "奖学金 学院主动找上门",
+                "住了七年 2023 年毕业",
+            ),
+            "",
+        ),
+        (
+            "mechanism",
+            "十四岁",
+            "兰达卢塞从马德里去，两年后拿美网青少年冠军",
+            "兰达卢塞去的时候十四岁，从马德里。"
+            "两年之后，他拿下美网青少年男单冠军。"
+            "二零二三年二月，他是青少年世界第一。"
+            "转成职业之后，他爬得没有那么快。"
+            # ⚠️ 只说来源说过的：学院那篇的标题就是「在迈阿密爆发 ＋ 生涯最好排名」。
+            # 「当时的」三个字不能省——六月那份公告里他已经是第 58，比三月还高，
+            # 写成「生涯新高」会变成一句今天不成立的话。
+            "今年三月的迈阿密，是他这一年最好的一段。"
+            "打完那一站，他的排名到了当时的生涯新高。",
+            "assets/explainer/nadal-academy/landaluce_miami_2026.jpg",
+            "纳达尔学院官网 · 2026 年 3 月迈阿密大师赛，兰达卢塞赢球后",
+            (
+                "14 岁 从马德里搬过去",
+                "16 岁 美网青少年男单冠军",
+                "今年三月 迈阿密，当时的生涯新高",
+            ),
+            "",
+        ),
+        (
+            "mechanism",
+            "十七岁",
+            "黄泽林跟父母说，不去西班牙就成不了职业球员",
+            "黄泽林去的时候十七岁。"
+            "他跟父母说，不去西班牙，他成不了职业球员。"
+            # ⚠️ 这个细节是全片最好的一个，值得留。它把两条线接起来：
+            # 八月三号那两个「第一」，其实是同一间宿舍里出来的。
+            "他刚到那年，帮他适应的人是伊埃拉。"
+            "今年七月底的洛斯卡沃斯，他掀翻了头号种子莱赫奇卡。"
+            "那是当时的世界第十二，也是他生涯最大的一场胜绩。"
+            "再赢一场，他打进生涯第一个巡回赛半决赛。",
+            "assets/explainer/nadal-academy/wong_los_cabos_2026.jpg",
+            "南华早报 · 2026 年 7 月洛斯卡沃斯 Mifel Tennis Open，黄泽林在场上",
+            (
+                "17 岁 不去西班牙就成不了职业球员",
+                "刚到那年 是伊埃拉帮他适应的",
+                "今年七月 胜莱赫奇卡，首进半决赛",
+            ),
+            "",
+        ),
+        (
+            "mechanism",
+            "十九岁",
+            "鲁德去的时候，已经是职业球员",
+            "鲁德到马纳科尔那年，十九岁。"
+            "那时候他已经是职业球员了。"
+            # ⚠️ 父子同姓，所以这儿必须写全名。译名表里「鲁德」是卡斯珀·鲁德，
+            # 只写姓会指错人——而这一段的全部重量就在「父亲还是他主教练」这句上。
+            "他父亲克里斯蒂安·鲁德打过职业，最高世界第三十九。"
+            "到今天，父亲还是他的主教练。"
+            "他不是去被人培养的。他是把那儿当基地。"
+            "挪威一年里能在室外打球的日子有限，网球的底子也薄。"
+            # 今年四月他确实回学院备战马德里（学院官网 2026-04-16 那篇）。
+            # ⚠️ 不写「这块场地」「画面里」这类指示语——那是在解说画面。
+            "今年四月，他还回学院练球，准备去马德里卫冕。"
+            "现在他世界第十四，打过三次大满贯决赛。",
+            "assets/explainer/nadal-academy/ruud_academy_2026.jpg",
+            "纳达尔学院官网 · 2026-04-16，鲁德在学院红土场上备战马德里",
+            (
+                "19 岁 去的时候已经是职业球员",
+                "他的主教练 父亲克里斯蒂安·鲁德，至今",
+                "不是去被培养 是把那儿当基地",
+            ),
+            "",
+        ),
+        (
+            "today",
+            "同一栏",
+            "十三岁和十九岁，写在一起",
+            "所以那份公告里的六个人，是这样凑起来的。"
+            # ⚠️ 「同一年」是把轴按入校年份重排之后才掉出来的：伊埃拉 2018 年去，
+            # 鲁德 2018 年 9 月去。按年纪排的那一版看不见这件事——而它正是全片的论点。
+            # ⚠️ 现在它在轴那一屏已经说过了，所以这儿是**回指**不是**通报**：
+            # 再宣布一次「他们是同一年到的」会读成重复，而把这两个人放回去对照，
+            # 才是那条轴真正要说的话。
+            "回到二零一八年到的那两个人。"
+            "一个十三岁，拿着奖学金，住了七年。"
+            "一个十九岁，带着自己的父亲去落脚。"
+            "在那张表上，他们是同一栏。"
+            "学院培养的，这五个字没有定义。"
+            "八月三号之后，这一栏又多了一个人。"
+            "那么，十三岁去和二十一岁去，能算同一所学校教出来的吗？",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "同一年到的 伊埃拉 13 岁，鲁德 19 岁",
+                "一个拿奖学金住了七年 一个带着父亲来落脚",
+                "同一栏 「学院培养的」没有定义",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+            "十三岁去和二十一岁去，能算同一所学校教出来的吗？",
+        ),
+    ),
+    # 特殊豁免。⚠️ 片子里出现的每个人都是真的，每件事都真发生过——
+    # 账号所有者 2026-08-03：「不要用写这些假设，普通人看不懂，就用实际举例。」
+    # 上一版写过一张「如果决赛里有个低排名球员会怎样」的推演表，整张删了。
+    "special-exempt": (
+        (
+            "day",
+            "那一天",
+            "两场决赛，一场都没打完",
+            "八月二号，华盛顿下了一整天雨。"
+            "男单决赛，弗里茨对霍达尔。女单决赛，佩古拉对伊埃拉。"
+            "两场决赛，一场都没打完。"
+            # ⚠️ 原来写「佩古拉六比四、一比二领先」——**错的**。比分记法是佩古拉在前，
+            # `6-4、1-2` 是「赢了第一盘，第二盘一比二落后」，写成「领先」等于说她两盘都领先。
+            "中断的时候，佩古拉拿下了第一盘，六比四；第二盘打到一比二。"
+            "晚上九点零六分，官方宣布顺延到周一。"
+            "而那时候，加拿大站的资格赛两天前就打完了。正赛第一轮，已经打到第三天。"
+            # ⚠️ 霍达尔写 15。`lookup_player_meta`（ESPN 榜单）报的 24 是**上一周
+            # 的快照**——账号所有者 2026-08-03 确认「现在他的排名是 15，24 是上周的」，
+            # 和维基那条「Highest/Current No. 15 (3 August 2026)」对得上。
+            # 上一版为了绕开这个分歧写了「世界前二十五」，那是**把两个源对半退成
+            # 一个范围**——分歧的正解是查清哪个新，不是取一个两边都成立的说法。
+            "这四个人没事。佩古拉世界第三，伊埃拉第二十八。弗里茨是三号种子。"
+            "霍达尔十九岁，世界第十五，刚打进生涯第一个五百赛决赛。"
+            "他们的排名都够直接进正赛，不需要去打任何资格赛。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 2 日 两场决赛都没打完",
+                "顺延到周一 当地中午恢复",
+                "而加拿大站 资格赛两天前已结束",
+            ),
+            _SE_CHAIN_DIAGRAM,
+        ),
+        (
+            "slot",
+            "一个位置",
+            "不用打资格赛，直接进正赛",
+            "那换一个人呢。排名低一档，必须先打资格赛的那种。"
+            # ⚠️ 「被这场雨卡在」被切成 `雨卡｜在`。换成主动句，「雨」后面跟「会」就不黏了。
+            "这场雨会把他卡在两个城市之间。"
+            "上一站还没打完，下一站的资格赛已经开始了。"
+            "规则给这件事留了一个位置，叫特殊豁免。"
+            "正赛里专门留出来的一个席位。发给谁？"
+            "发给那个还在上一站打球、赶不上这一站资格赛的人。"
+            "一站赛事，只有一个。大师赛一个，五百赛一个。"
+            "只有二百五十赛和挑战赛，给两个。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "特殊豁免 正赛里留出的一个席位",
+                "发给谁 还在上一站打，来不了资格赛",
+                "有几个 大师赛和 500 赛各 1 个",
+            ),
+            _SE_SLOT_DIAGRAM,
+        ),
+        (
+            "rain",
+            "认不认雨",
+            "WTA 那本，把「天气」写进了条文",
+            # ⚠️ 「两本规则书写得不一样」被切成 `规则｜书写｜得`——**「书写」念成 shūxiě，
+            # 意思全变**。逗号把边界钉死，这儿本来也该停。
+            "那雨算不算数。两本规则书，写得不一样。"
+            "WTA 那本，直接写进了资格条款。"
+            "她的比赛因为天气改期，撞上资格赛第一天，就够格。"
+            "而且还有一条更松的——只要进了决赛，够格，不用赢。"
+            "ATP 那本，没写天气这两个字。它绕了一圈。"
+            "所谓还在比赛，指的是那一天的赛程里，开始或者恢复一场比赛。"
+            # ⚠️ 原来写「恢复。就这两个字，…」——配音上是个好节拍，但「恢复」只有两个字，
+            # 不跨句合并之后它自己占一行，会一闪而过（test_字幕里不写标点 抓到）。
+            # **短子句利于停顿、却低于字幕最短行**，这两头要一起满足。
+            "恢复这两个字，正好把被雨中断、次日接着打的情形盖住了。"
+            "两场决赛归两个协会管，条文不一样，别混着讲。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "WTA 条文里直接写着「因天气」",
+                "而且 进了决赛就够格，不用赢",
+                "ATP 靠「或恢复一场比赛」的定义",
+            ),
+            _SE_BOOKS_DIAGRAM,
+        ),
+        (
+            "bu",
+            "中国球员",
+            "上海那张外卡，后来改成了豁免",
+            "这条规则，中国球员用过。"
+            "二〇二四年上海大师赛，布云朝克特拿到的是一张外卡。"
+            "后来改成了特殊豁免，理由白纸黑字写着：他在北京还没打完。"
+            "而那个北京是这样的。"
+            "他先赢了商竣程，拿下生涯第一个五百赛级别的胜利；"
+            "接着爆冷六号种子穆塞蒂，打进生涯第一个五百赛 1/4 决赛；"
+            # ⚠️ 「第一个前十胜」被切成 `前｜十胜`——「十胜」是个假词。摊开写。
+            "再掀翻四号种子、世界第六的卢布列夫，生涯第一次赢下世界前十。"
+            # 长定语后置：「第一个在这个级别打进半决赛的中国男子球员」念起来 23 字
+            # 一口气，把主语挪到句末就断得开了。
+            "这个级别打进半决赛的中国男子球员，他是第一个。",
+            "assets/explainer/special-exempt/bu_beijing_2024_qf.jpg",
+            "Tennis TV 官方集锦画面 · 2024 年中国公开赛，布云朝克特对卢布列夫",
+            (
+                "2024 上海 外卡改成特殊豁免",
+                "理由 他在北京还没打完",
+                "那个北京 胜卢布列夫，首进半决赛",
+            ),
+            "",
+        ),
+        (
+            "hour",
+            "一小时",
+            "赢了球，六十分钟内要打这个电话",
+            "拿到它没有那么容易。流程是这样的。"
+            "本周三、周四，球员关系部门先列一张表，把下周可能够格的人都写上。"
+            "表交给这些人当前所在赛事的监督，监督再挨个联系，问他有没有兴趣。"
+            "而球员这一头，有一道很硬的线。"
+            "赢下那场决定性的比赛之后，一小时之内，"
+            "必须联系监督或者球员关系部门，确认接受。"
+            "没打这个电话，就从名单上拿掉。"
+            "那一小时里，他刚打完一场球。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "周三周四 名单列出来，挨个打电话",
+                "赢球之后 1 小时内必须确认接受",
+                "没确认 从名单上拿掉",
+            ),
+            _SE_HOUR_DIAGRAM,
+        ),
+        (
+            "cazaux",
+            "最好的一次",
+            "靠这一个位置，打进生涯第一个决赛",
+            "那这个位置能换来什么。"
+            "二〇二五年七月，卡佐在格施塔德，打进生涯第一个巡回赛半决赛。"
+            "第二轮赢了四号种子埃切维里，半决赛输给二号种子布勃利克。"
+            "七月二十一号，他重回世界前一百。"
+            # ⚠️ 原来写「靠特殊豁免进的基茨比厄尔正赛」，切出来是 `豁免进` 和
+            # `基茨｜比｜厄尔｜正｜赛`——「进」黏进「豁免」，赛事名被劈成三段、
+            # 中间那个「比」独立成词。给名字两边留逗号，动词挪走。
+            "下一周到了基茨比厄尔，他进正赛靠的就是特殊豁免。"
+            "第二轮赢了七号种子科梅萨尼亚，1/4 决赛赢了斯特鲁夫，"
+            "半决赛赢了同胞林德克内希。生涯第一个巡回赛决赛。"
+            "七月二十八号，他回到了前七十五。"
+            "决赛他又输给了布勃利克。连续两周，输给同一个人。"
+            "十月他拿下济南公开赛冠军，第一次进入世界前六十。",
+            "assets/explainer/special-exempt/cazaux_kitzbuhel_2025_sf.jpg",
+            "Tennis TV 官方集锦画面 · 2025 年基茨比厄尔半决赛，卡佐对林德克内希",
+            (
+                "上一周 格施塔德半决赛，重回前 100",
+                "下一周 靠豁免进正赛，打进决赛",
+                "两周之后 世界第 75",
+            ),
+            "",
+            "整站只留一个位置。第二个赶不上的人呢？",
+        ),
+    ),
+    "pr-allowance": (
+        (
+            "count",
+            "答案",
+            "九站，或者九个月",
+            "先给答案。ATP 规则书第九章 F 节写得很具体：停赛六个月以上、不满十二个月，"
+            "保护排名给你九站，或者九个月；停满十二个月以上，给十二站或者十二个月。"
+            "注意中间那个「或者」——它不是让你二选一，是两个上限同时在倒计时，"
+            "谁先到算谁。九站还没用完，九个月到了，凭证一样作废。"
+            "另外还有一条：每个大满贯只能用它进一次。"
+            "所以这不是一张年卡，是一张按次数和按天数同时计费的票。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "6–12 个月 9 站或 9 个月",
+                "12 个月以上 12 站或 12 个月",
+                "两个上限 谁先到算谁",
+            ),
+            _PR_ALLOWANCE_DIAGRAM,
+        ),
+        (
+            "use",
+            "能干嘛",
+            "它只管进门，不管座次",
+            "那这张凭证到底能用来做什么。条文列了三件：进正赛、进资格赛、"
+            "占特殊豁免位。就这三件，一件不多。"
+            "紧接着的一句是禁止：不能用来定种子，也不能用来排幸运落败者的顺位。"
+            "换句话说，它把你放进签表，然后就撒手了——你还是那个第二百七十位，"
+            "抽签时按真实排名摆，第一轮就可能撞上头号种子。"
+            "还有一层容易搞错：这个数不是你受伤那天的排名，"
+            "而是停赛之后头三个月排名的平均值。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "能用 正赛 资格赛 特殊豁免",
+                "不能用 种子 幸运落败者顺位",
+                "数值 停赛后头 3 个月的均值",
+            ),
+            _PR_USE_DIAGRAM,
+        ),
+        (
+            "burn",
+            "怎么烧",
+            "进了签表，就扣掉一站",
+            "那九站怎么算。规则书那一行的原文是「用保护排名参赛的头九站」，"
+            "括号里特意排除了两种：拿外卡进的，和按当时真实排名直接入围的，都不占额度。"
+            "但反过来更要命——只要你的名字进了签表，这一站就扣掉了，不看输赢。"
+            "条文里还补了一句：在赛地退赛并领了奖金，同样算一站。"
+            "七月二十七号华盛顿，商竣程复出第一场，对锦织圭，三盘打了两个多小时，"
+            "中间还叫了一次医疗暂停，最后七比六、三比六、四比六输掉。"
+            "那一站，额度照扣。",
+            "assets/explainer/pr-allowance/shang_washington_2026_set3.jpg",
+            "ATP Tour 官方集锦画面 · 2026 年 7 月 27 日华盛顿首轮，"
+            "商竣程决胜盘 3-5，记分条自证赛事与比分",
+            (
+                "外卡和直入 不占额度",
+                "进了签表 就算一站",
+                "赛地退赛领奖金 也算",
+            ),
+            "",
+        ),
+        (
+            "price",
+            "代价",
+            "为了够到它，先放弃一站温网",
+            "凭证不是白给的。门槛写在同一节的第一款：连续六个月不参加任何比赛，"
+            "表演赛也算在内。也就是说，你想拿到它，得先把空白拉得更长。"
+            "二〇二五年一月十三号，澳网首轮，那是他停赛前的最后一场。"
+            "之后是右脚第五跖骨的手术，医生取出碎骨、切断了一半肌腱。"
+            "恢复不到位，他缺席法网；而那年温网，他其实站得上场。"
+            "把日子摆出来就知道这一刀有多贴身：六个月满，是七月十三号；"
+            "而温网六月三十号开赛，七月十三号决赛——整届温网，正好压在最后十三天里。"
+            "打，凭证就没了；不打，就得看着它整整两周从眼前过去。他选择不打。"
+            "七月二十八号多伦多，他回来了，首轮输给达克沃斯。"
+            "而九个月那个上限，条文算的是「复出后打的第一场比赛」——"
+            "所以倒计时从这天起走，哪怕这一站他首轮就输了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "门槛 连续 6 个月不比赛",
+                "六个月满 2025.7.13",
+                "而温网 6.30 开赛，7.13 决赛",
+            ),
+            _PR_BLANK_DIAGRAM,
+        ),
+        (
+            "freeze",
+            "暂停键",
+            "再伤一次，剩下的能冻住",
+            "钟走到一半又伤了怎么办。规则书第五款叫再伤保护：复出之后再次受伤，"
+            "可以申请把剩下的站数和周数冻结起来，条件是这次至少要停满三个月，"
+            "而且申请要在这三个月里交上去。复出时，冻结那一刻还剩多少，就还是多少。"
+            "最多冻两次。二〇二六年二月迪拜之后，商竣程的脚伤又犯了，一停五个月——"
+            "从时间上看，这正好越过了三个月那道门槛。"
+            "但暂停键按不住最外面那口钟：条文另有一条三年总时效，从停赛前最后一场算起，三年内不激活就作废。"
+            "规则书里专门有个案例框写这个——冻结之后剩下的周数越过三年线的，不许延用。"
+            "所以冻的是站数和月数，不是那三年。"
+            "不过有一层要说清楚：他本人有没有提交这份申请、ATP 有没有批，"
+            "都没有公开记录，上面这些是照着条文算出来的。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "再停满 3 个月 可申请冻结",
+                "最多 冻两次 剩多少还是多少",
+                "⚠️ 冻不住 那 3 年总时效",
+            ),
+            _PR_FREEZE_DIAGRAM,
+        ),
+        (
+            "record",
+            "最好的一次",
+            "第 957 名，用它拿了大满贯",
+            "那靠这张凭证，能打出多好的成绩。答案比想象的极端。"
+            "二〇一七年一月，斯蒂芬斯做了脚部手术，停赛十一个月；"
+            "五月开始训练，温网复出，用的就是保护排名。"
+            "美网系列赛开始时，她的世界排名是第九百五十七。"
+            "多伦多四强、辛辛那提四强，排名一路冲到第八十三；"
+            "而美网，是她复出后的第五站——六比三、六比零击败凯斯，捧起了奖杯。"
+            "史上第一个用保护排名拿到大满贯的球员。"
+            "她那一档给十二站，她只花掉五站。"
+            "还有一件事：她当年也是脚。",
+            "assets/explainer/pr-allowance/stephens_usopen_2017_trophy.jpg",
+            "The Canadian Press 经媒体转载 · 2017 年 9 月 9 日美网女单决赛，斯蒂芬斯捧杯",
+            (
+                "2017 美网 复出后第 5 站",
+                "赛季初世界第 957",
+                "史上第一个用 PR 拿大满贯",
+            ),
+            "",
+        ),
+        (
+            "now",
+            "此刻",
+            "世界第 270，站在大师赛正赛里",
+            "八月二号，蒙特利尔大师赛正赛首轮，商竣程六比三、六比三赢了巴列霍，"
+            "一小时二十一分钟。这是他伤停之后的第一场胜利——上一次赢球，还要追到一月十九号的澳网。"
+            "他现在的世界排名是第二百七十，而这是一站大师赛的正赛。"
+            "两个数放在一起就能看出那张凭证在做什么：它把他从报名这一关送进来，"
+            "剩下的还得自己打。次轮他对十号种子卢布列夫。"
+            "他还说了后面的计划：辛辛那提、一站挑战赛，然后美网。"
+            "生涯最高第四十七，那是二〇二四年十月的事。",
+            "assets/explainer/pr-allowance/shang_montreal_2026_r1.jpg",
+            "Tennis Canada 官方集锦画面 · 2026 年 8 月 2 日蒙特利尔正赛首轮，"
+            "商竣程第二盘握拳，记分条自证赛事与比分",
+            (
+                "8 月 2 日蒙特利尔 6-3 6-3",
+                "伤停后第一胜 上一胜在 1 月",
+                "世界第 270 生涯最高第 47",
+            ),
+            "",
+            "伤没好利索就上场，额度照扣——那到底该不该上？",
         ),
     ),
     "challenger-climb": (
@@ -3516,6 +4596,27 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "nadal-academy": {
+        "hook": (
+            "纳达尔学院宣布「史上第一次六人同时进前 100」，八周之后这个数字就不对了——\n"
+            "第七个是黄泽林。而七个人到那儿时，从 13 岁到 21 岁都有。"
+        ),
+        "tags": ("网球", "网球时差", "黄泽林", "纳达尔学院", "伊埃拉"),
+    },
+    "special-exempt": {
+        "hook": (
+            "华盛顿两场决赛被雨推到周一，而加拿大站的资格赛两天前就打完了。\n"
+            "规则给这件事留了一个位置叫特殊豁免——大师赛和 500 赛，整站只有一个。"
+        ),
+        "tags": ("网球", "网球时差", "布云朝克特", "特殊豁免", "网球冷知识"),
+    },
+    "pr-allowance": {
+        "hook": (
+            "保护排名不是年卡：停 6–12 个月给 9 站或 9 个月，两个上限同时倒计时。\n"
+            "而且进了签表就扣一站，不看输赢——商竣程为了够到它，放弃了 2025 年的温网。"
+        ),
+        "tags": ("网球", "网球时差", "商竣程", "保护排名", "网球冷知识"),
+    },
     "challenger-climb": {
         "hook": (
             "同一周，ATP250 的 8 号种子比挑战赛的 1 号种子还高 36 位——低级别的对手没有更强。\n"
@@ -3789,6 +4890,59 @@ _OPENINGS: dict[str, dict] = {
         # 所以出处自己写一行。素材授权见 assets/explainer/shang-rublev/credits.json。
         "image": "assets/explainer/shang-rublev/cover.jpg",
         "credit": "网球时差绘制 · ATP 官方棚拍抠图 + 2026 年 8 月 2 日蒙特利尔 IGA 球场（加拿大通讯社）",
+    },
+    "nadal-academy": {
+        # ⚠️ 原来写「纳达尔学院：七个人，七条来时路」——账号所有者 2026-08-04
+        # 一句「这里文案太普通了」。毛病是它在**描述格式**（几个人、几条路），
+        # 不是在讲事实，读者一个字的信息都拿不到。换成片子的落点本身：
+        # 「差八岁」是 21−13 算出来的——但账号所有者又退回来一次：「这个文案也不太好，
+        # 需要体现出纳达尔学院的厉害之处」。对的，**台头是门面，该先把厉害亮出来**，
+        # 我那句一上来就在挑刺。现在亮的是这条线上最硬的成绩：同时七个人在世界前一百。
+        # ⚠️ 想过写「一个小镇，七个世界前一百」（马纳科尔才四万人，反差最大），
+        # **不能用**——会被读成「七个人都是这个小镇出的」，而他们来自马尼拉、香港、
+        # 奥斯陆。第一是精准，第二才是引爆。
+        # 顺带：门面亮成绩、片子再把这五个字拆开，两者不冲突——正是「最硬的那个
+        # 事实放第 ① 屏」，先给人看的理由，再给人想的东西。
+        "topic": "纳达尔学院：同时七个世界前一百",
+        # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数。见 test_封面那一问要能排进一行。
+        "question": "六个人的纪录，八周就破了？",
+        "narration": "六个人的纪录，八周就破了？而破它的那个人，来自中国香港。",
+        "gloss": "Rafa Nadal Academy = 拉法·纳达尔学院",
+        # ⚠️ 封面不用抽帧，也不用学院的场地照——这条片子讲的是**人怎么来的**，
+        # 场地照讲不了这件事。首选伊埃拉华盛顿捧杯（8/3 那天，且捧杯优先于击球中），
+        # 尺寸要够裁 1080×1440 而不放大。见 assets/explainer/nadal-academy/credits.json。
+        "image": "assets/explainer/nadal-academy/eala_washington_2026_final.jpg",
+        "credit": "Getty Images / WTA 官方图库 · 2026 年 8 月 3 日华盛顿女单决赛，伊埃拉夺冠后庆祝",
+    },
+    "special-exempt": {
+        "topic": "特殊豁免：整站只留一个位置",
+        # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数：
+        # 「上一站还没打完，下一站怎么办？」只有 77px，会在词中间断成两行。
+        # 这一句 89px。见 test_封面那一问要能排进一行。
+        "question": "雨没停，下一站还赶得上吗？",
+        "narration": "雨没停，下一站还赶得上吗？规则给这件事留了一个位置，整站只有一个。",
+        "gloss": "Special Exempt = 特殊豁免",
+        # ⚠️ **封面不用抽帧。** 一开始挂的是第 ⑥ 屏那张 1920×1080 的集锦帧，
+        # 而封面要铺满 1080×1440 的 3:4——横帧裁完只有 810×1080，**得放大 133%**，
+        # `test_封面图不许被放大` 当场判红。CLAUDE.md 那条「封面用真实照片，
+        # 不要从视频里抽帧……封面又是唯一决定人点不点的那一屏」说的就是这个。
+        # 换成 Commons 上 4000×6000 的原图，裁 3:4 之后还剩 1.85 倍余量。
+        # 年份和这条片子讲的 2025 不同，所以写在署名里（照 pr-allowance 的做法：
+        # 封面那张任何一屏都不用，借不到出处，自己写一行）。
+        "image": "assets/explainer/special-exempt/cazaux_usopen_2023_forehand.jpg",
+        "credit": "Hameltion / Wikimedia Commons · CC BY-SA 4.0 · 2023 年美网，卡佐正手伸展",
+    },
+    "pr-allowance": {
+        "topic": "保护排名：9 站或 9 个月，先到先算",
+        "question": "保护排名，能用几次？",
+        "narration": "保护排名，能用几次？答案不是一个数，是两个上限同时在倒计时。",
+        "gloss": "Entry Protection = 保护排名",
+        # 封面这张没有任何一屏在用，借不到出处，自己写一行。
+        # 选双脚离地那一帧：这条片子讲的是「额度」，而额度买来的正是**站上场**
+        # 这件事本身。照片是 2023 年美网，年份写在卡上——他现在的处境是 2026 年的，
+        # 但 Commons 上他 2025 年之后的比赛照一张都没有（探过，见 credits）。
+        "image": "assets/explainer/pr-allowance/stephens_usopen_2017_lift.jpg",
+        "credit": "WTA 官方图库 · 2017 年 9 月 9 日美网女单决赛，斯蒂芬斯举起奖杯",
     },
     "challenger-climb": {
         "topic": "挑战赛：难的不是对手，是兑换率",
@@ -4594,6 +5748,131 @@ def speakable(text: str) -> str:
     return text.replace("硬地", "硬帝")
 
 
+def token_spans(text: str, tokens: Sequence[str]) -> list[tuple[int, int, str]]:
+    """每个 token 在原文里的 `[起, 止)`。
+
+    ⚠️ **位置要 `find`，不能靠累加长度。** 边界事件里不含标点（122 个字的旁白
+    只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个坑单独写过一条判据。
+    """
+    out: list[tuple[int, int, str]] = []
+    cursor = 0
+    for tok in tokens:
+        at = text.find(tok, cursor)
+        if at < 0:                      # 合成器报了原文里没有的串，跳过不猜
+            continue
+        out.append((at, at + len(tok), tok))
+        cursor = at + len(tok)
+    return out
+
+
+def all_single_char_segments(
+    segments: Sequence[tuple[int, str, Sequence[str]]],
+) -> list[str]:
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    ## 为什么只剩这一条
+
+    `word_split_report` 只保护**人名**（出处是 spec 的 `cover.matchup`）。
+    2026-08-04 王欣瑜那条片子手工扫了一遍 `｜`，抓出 6 处切错的，**一个人名
+    都没有**，全是术语和动词（`二 ｜ 发`、`接发 ｜ 球`、`连 ｜ 丢四局`、
+    `三个 ｜ 破发 ｜ 点`、`没救 ｜ 下来`、`抢 ｜ 七 ｜ 输 ｜ 掉 ｜ 了`）——
+    闸一声没吭。
+
+    第一版补了两条判据，其中「**同词两切**」（这一段是一个词、那一段被切开，
+    合成器自己的两次输出打架）看起来很漂亮，**而且不用维护词表**。
+    ⚠️ **拿存量 15 条片子验了一遍，它不成立**：
+
+        wong-gea       10 段报 7 处   两 ｜ 个 · 第一 ｜ 次 · 一 ｜ 比 ｜ 四 …
+        zheng-lanlana  20 段报 7 处   资格 ｜ 赛 · 两 ｜ 年 · 加拿大 ｜ 站 …
+        eala-svitolina 12 段报 5 处   追 ｜ 平 · 轮 ｜ 到 · 第一 ｜ 盘 …
+
+    **报出来的几乎全是读音一个字都没变的**——`六比三` 切成 `六 ｜ 比 ｜ 三`
+    照样念 liù bǐ sān。全套里真正有歧义的只有 `二 ｜ 发`（fā / fà）一处。
+    **一条天天误报的检查等于没有检查**，所以撤掉，只留下面这条。
+
+    真正要判「读音对不对」得拿**音素**，而词边界只给字符串——那条路在
+    `tools/probe_azure_phoneme.py` 里探。在它有结论之前，剩下的靠人扫一眼
+    那行 `｜`：**这是故意的**，做成硬闸的下场是有人为了让它变绿去改一句本来
+    很好的台词（见 `_print_word_splits` 的 docstring）。
+
+    Args:
+        segments: `[(段序号, speakable 之后的原文, token 列表), …]`。
+
+    Returns:
+        给人看的中文句子，一段一条。
+    """
+    # 四个以下不算——一句「六比一。」本来就没有上下文可用，报出来是噪音。
+    # 实测：存量 15 条片子、上百段，只有王欣瑜第 10 段「抢七输掉了」中招。
+    return [
+        f"第 {index + 1} 段整段都是单字：{' ｜ '.join(tokens)}"
+        for index, _, tokens in segments
+        if len(tokens) >= 4 and all(len(t) == 1 for t in tokens)
+    ]
+
+
+def word_split_report(
+    text: str, marks: Sequence[dict], protect: Sequence[str],
+) -> tuple[str, list[str], list[str]]:
+    """把合成器自己报的切词摊开，并指出**跨过专名边界**的那几处。
+
+    账号所有者 2026-08-03 提过一次「连在一起的词不要分开，本来分开的两个词
+    不要连读在一起」，CLAUDE.md 记了做法——把 `voice_NN.words.json` 的 `text`
+    用 `｜` 串起来打印，切错的地方一眼就看见。**但那是手工的**：要先渲一趟
+    完整成片（六分钟、还多一个几十 MB 的 blob），再自己去翻 json。
+
+    而 `mode=narration` 那道闸**本来就把每一段合成了一遍**，边界事件就在手上。
+    所以这份报告是白捡的：一分半，不下源片，不写产物。
+
+    三件事分开报，因为它们的可修性完全不同：
+
+    | | 例子 | 怎么办 |
+    |---|---|---|
+    | **跨专名边界** | `佩古 ｜ 拉六 ｜ 比 ｜ 四` —— `拉六` 一半是名字一半是数字 | **改**：名字前后加逗号，或者动词后面加「了」把它撑开 |
+    | 专名内部切开 | `布勃利 ｜ 克` | **不用改**：每个字的读音不变，只是重音偏，标点也插不进名字中间 |
+    | 其余 | —— | 人自己扫一眼那行 `｜` |
+
+    ⚠️ **判据是「有没有一个 token 骑在专名的边界上」，不是「专名是不是一个
+    token」。** 后者会把上表第二行也报出来，而那一类改不了——**一条天天误报的
+    检查等于没有检查**。
+
+    ⚠️ **token 的位置要在原文里 `find`，不能靠累加长度。** 边界事件里不含标点
+    （122 个字的旁白只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个
+    坑单独写过一条判据。
+
+    Args:
+        text: 真正喂给合成器的那份（`speakable()` 之后），不是屏幕上那份。
+        marks: WordBoundary 事件，每条至少有 `text`。
+        protect: 不许被切开的词，通常是这条片子里出现的中文人名。
+
+    Returns:
+        `(用 ｜ 串起来的 token 流, 跨边界的问题, 名字内部被切开的)`
+    """
+    tokens = [str(m.get("text", "")).strip() for m in marks]
+    tokens = [t for t in tokens if t]
+    line = " ｜ ".join(tokens)
+    spans = token_spans(text, tokens)
+
+    crossing: list[str] = []
+    inside: list[str] = []
+    for name in dict.fromkeys(n for n in protect if n and n in text):
+        start = text.find(name)
+        while start >= 0:
+            end = start + len(name)
+            covering = [s for s in spans if s[0] < end and s[1] > start]
+            for a, b, tok in covering:
+                if a < start or b > end:
+                    extra = tok.replace(text[max(a, start):min(b, end)], "", 1)
+                    crossing.append(
+                        f"「{name}」被 `{tok}` 骑在边界上（多带了「{extra}」）")
+            if len(covering) > 1 and all(
+                    a >= start and b <= end for a, b, _ in covering):
+                inside.append(
+                    f"「{name}」被切成 {' ｜ '.join(t for _, _, t in covering)}"
+                    "（读音不变，通常不用改）")
+            start = text.find(name, end)
+    return line, crossing, inside
+
+
 def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 
@@ -4637,7 +5916,17 @@ _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # （开球时刻和决赛时刻），而它**不报错**：转换成功了，只是转了一半。
 # 「点」不会误伤：「破发点」「赛点」里的「点」前面不是数字；「一点」「两点」
 # 落在裸「一/两」那条豁免上。「号」顺带把「三号种子」也变成「3号种子」，那是对的。
-_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点"
+# **「次」也是量词，漏了它就同一行里两种写法。** 2026-08-04 抽帧看见
+# 「前5局又破了三次 4比1」——三个数都是在数数，「局」和「比」转了，「次」没转。
+# 和上面「北京时间8月三号零点」是同一个毛病：转换成功了，只是转了一半。
+# 拿存量 314 条语料验过，11 处全是真的数数（4次拿到破发 / 5次平分 / 3次都是
+# 亚军 / 6次都没保住 / 交手3次），「一次」「两次」落在裸「一/两」那条豁免上，
+# 「唯一一次」落在「多字裸串不读成一个数」那条上，「依次」「其次」「层次」
+# 前面不是数字。
+# ⚠️ **只补「次」，别顺手补「分」「发」「强」「成」**——同一轮扫出来的那几个
+# 必须不转：「三分之一」会变成「3分之一」，而「一发」「二发」「四强」是术语
+# 不是数数。「十七分」本来就转，走的是「含十百千」那条，不靠这张表。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次"
 _STRUCTURED = set("十百千")
 
 
@@ -4862,13 +6151,43 @@ def subtitle_lines(text: str) -> list[tuple[int, int, str]]:
     #
     #    唯一还合并的情形：短到会一闪而过的那种（「WC」「签表里」两三个字，
     #    时间轴最短只给 0.4 秒）。往后并一行，中间用空格——空格不是标点。
+    #
+    # ⚠️ **但绝不跨句号合并。** 上面那句「句号夹在中间的行到处都是」正是要防的
+    #    东西，而这里原来只看「够不够短、装不装得下」，**根本不看隔开它们的是
+    #    句号还是逗号**——于是「流程是这样的。本周三、周四」并成一行，
+    #    「确认接受。没打这个电话」并成一行：**两句不同的话挤在同一屏**。
+    #    账号所有者 2026-08-03：「字幕也要保持断句的完整性，不要多也不要少。」
+    #
+    #    句内（逗号、顿号）合并是好的——空格把停顿显出来，读起来仍是一句话；
+    #    跨句合并是坏的，因为读者会把两件事读成一件。
+    def _crosses_sentence(prev_end: int, nxt_start: int) -> bool:
+        """上一行的末尾到下一句的开头之间，隔着句号那一档的硬断吗。"""
+        return any(ch in _SUB_HARD_BREAK for ch in text[max(prev_end - 1, 0):nxt_start])
+
+    # 唯一的例外：那一片短到**独自成行也读不到**（少于 3 个字，正是
+    # `test_字幕里不写标点` 那条守卫的地板，时间轴最短只给 0.4 秒）。
+    # 两条规矩真打架时让地板赢——「WC」「不打」「球员」这种两字句独占一屏会闪，
+    # 比和邻句共一行更糟。而「而那时候」这种 4 个字的**句首片段**不在例外里，
+    # 它正是账号所有者指出的那种「多了」：读者会看到半句话。
+    _MERGE_ACROSS_SENTENCE_MAX = 2
+
     lines: list[tuple[int, int]] = []
     for a, b in pieces:
         too_short = (
             _sub_len(text[a:b]) < _SUB_MIN                      # 这一句太短
             or (lines and _sub_len(text[lines[-1][0]:lines[-1][1]]) < _SUB_MIN)
         )                                                       # 上一行太短
-        if lines and too_short and shown_width(lines[-1][0], b) <= _SUB_MAX:
+        if (
+            lines
+            and too_short
+            and shown_width(lines[-1][0], b) <= _SUB_MAX
+            and (
+                not _crosses_sentence(lines[-1][1], a)
+                or min(_sub_len(text[a:b]),
+                       _sub_len(text[lines[-1][0]:lines[-1][1]]))
+                <= _MERGE_ACROSS_SENTENCE_MAX
+            )
+        ):
             lines[-1] = (lines[-1][0], b)
         else:
             lines.append((a, b))
@@ -5058,9 +6377,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def write_subtitles(cues: Sequence[tuple[float, float, str]], path: Path,
                     *, height: int = VIDEO_H,
                     margin_v: int = _ASS_MARGIN_V) -> Path:
+    # **换行是「这一条要排两行」，不是一个空格。** 原来这儿写的是
+    # `shown.replace(chr(10), ' ')`，于是中英双语那种「上英下中」的字幕被压成
+    # 一行，只能靠 `WrapStyle=0` 自动折——折点落在最后一个装得下的空格上，
+    # 长的碰巧断在中英之间，短的干脆不断，同一条片子里两种样子。
+    #
+    # ⚠️ **不能直接把 `\\N` 写进文本里**：`_ass_text` 会把 `N` 当成一个拉丁词，
+    # 包上 `{\\fs78}`，`\\N` 就成了 `\\{\\fs78}N{\\fs68}`，画面上多出一个字母 N。
+    # 所以要**按行分别过 `_ass_text`，再用 `\\N` 拼**。
+    #
+    # 单行的 cue 一个字节都不变（`split("\\n")` 只有一段），所以解说片那条线
+    # 不受影响——存量里 `subtitle_cues` 产出的每一条本来就是一行。
     lines = [
         f"Dialogue: 0,{_ass_stamp(start)},{_ass_stamp(end)},TL,,0,0,0,,"
-        f"{_ass_text(shown.replace(chr(10), ' '))}"
+        + r"\N".join(_ass_text(row) for row in shown.split("\n"))
         for start, end, shown in cues
     ]
     path.write_text(_ass_header(height, margin_v) + "\n".join(lines) + "\n",
@@ -5081,13 +6411,25 @@ def _filter_path(path: Path) -> str:
 # because nobody can hear a parameter. Both stay parameters so a deck can be
 # re-voiced without touching a script.
 DEFAULT_VOICE = "zh-CN-YunjianNeural"
-# +14% 起步，+22% 用了一批，现在 +28%。往上调是编辑决定，不是调参：三个平台的
-# 平均播放时长是 13–21 秒，快一点等于同样的注意力里多装一句话。再往上会开始
-# 吃字（云健在 +35% 上的爆破音会糊），所以停在这儿。
+# +14% 起步 → +22% 用了一批 → +28% → 2026-08-03 降到 +10% → **定在 +22%**。
 #
-# 改这个数会连带改片长：`tests/test_explainer_budget.py` 里的字数预算是拿成片
-# 反推出来的「字/秒」，换了语速就得重新量，别按比例推。
-DEFAULT_RATE = "+28%"
+# 往上那几档的理由是「三个平台的平均播放时长 13–21 秒，快一点等于同样的注意力
+# 里多装一句话」。**账号所有者 2026-08-03 听完 special-exempt 那条：「语速太快了」**
+# ——往下调和往上调一样是编辑决定，不是调参。
+#
+# 实测（同一条片子、同一份 1129 字旁白，拿成片反推）：
+#
+#     +28%   170.0s   6.72 字/秒   ← 落在既往 +28% 三条实测的上沿（6.11/6.38/6.80）
+#     +10%   212.3s   5.37 字/秒
+#     +22%   —— 这一档早有 n=6 的实测，5.69–6.13，中位 5.98   ← 现在这一档
+#
+# ⚠️ **按比例推会推歪**：从 6.72 按 1.10/1.28 折算是 5.78，实测 5.37，差 8%。
+# `tests/test_explainer_budget.py` 开头那句「换语速之后必须重量」又应验一次。
+# 回到 +22% 不用重新猜——那一档是本仓库量得最扎实的一档（六条成片）。
+#
+# 改这个数会连带改片长：那个测试里的字数预算是拿成片反推出来的「字/秒」，
+# 换了语速就得重新量，两处要一起改（一个数写两处必分叉）。
+DEFAULT_RATE = "+22%"
 DEFAULT_PITCH = "+0Hz"
 
 

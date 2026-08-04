@@ -56,6 +56,7 @@ import html
 import json
 import math
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -240,6 +241,110 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
 
 
+_SET_RE = re.compile(r"^(\d{1,2})-(\d{1,2})(?:\((\d{1,2})\))?$")
+
+
+def _sets_html(result: str) -> str:
+    """一行盘分：**每一盘里赢的那个数字给品牌黄，输的给灰**，抢七小分跟在后面。
+
+    账号所有者 2026-08-04：「每盘的比分里，赢的一方是黄色，输的一方是灰色」
+    「抢七的比分里加上小分」。
+
+    在这之前整串 `1-6 7-6(5) 7-5` 是**一个颜色**，于是「谁赢了哪一盘」要读者
+    自己比大小。这条片子恰恰讲的是「她赢了第一盘、两次差一局」——盘分本身
+    就是故事，一个颜色等于把它压平了。
+
+    ⚠️ **判据是那一盘里谁的局数大，不是谁赢了整场。** 赢家在前是**整场**的
+    顺序（`cover.winner`），而每一盘可能是另一个人赢的——`1-6` 里前面那个 1
+    是赢家在第一盘输掉的局数。按「谁在前」上色会把第一盘涂反。
+
+    ⚠️ **小分写进 `result` 字符串**（`7-6(5)`），不另开字段：盘分只有一个出处，
+    `push_reel` 的标题、复制页、海报读的是同一串。写两处必分叉。
+
+    ⚠️ **认不出来的原样输出**，不猜。老 spec 里有「6-4 6-1」这种没小分的，
+    也有整句「伊埃拉 4-6 6-4 6-1 郑钦文」那种（走 `cover.score` 另一条路）；
+    退赛写法（`2-1 ret.`）同样落到这条退路上，只是不上色，不会渲错。
+    """
+    out = []
+    for token in result.split():
+        m = _SET_RE.match(token)
+        if not m:
+            out.append(f'<span class="setplain">{html.escape(token)}</span>')
+            continue
+        left, right, tb = m.group(1), m.group(2), m.group(3)
+        lcls = "setwin" if int(left) > int(right) else "setlose"
+        rcls = "setwin" if int(right) > int(left) else "setlose"
+        out.append(
+            f'<span class="set"><span class="{lcls}">{left}</span>'
+            f'<span class="setdash">-</span>'
+            f'<span class="{rcls}">{right}</span>'
+            + (f'<span class="tb">{tb}</span>' if tb else "")
+            + "</span>")
+    return "".join(out)
+
+
+def _solo_score_html(cover: dict) -> str:
+    """solo 封面里，标题底下那一行赛果：**国旗 + 名字 + 比分 + 国旗 + 名字**。
+
+    账号所有者 2026-08-04：「以后都用 solo 版做『赛场之上』封面」「**中间标题
+    下面写上比分（带双方国旗）**」。
+
+    在这之前 solo 是**不印赛果**的，理由写在 `_result_block` 里：休伊特那条
+    「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先把结局说了。
+    **那条理由没有被推翻，只是不管这个栏目了**——
+
+    | 栏目 | 封面印不印赛果 |
+    |---|---|
+    | 网球有故事 | **不印**。讲一个人，比分是最后一拍，剧透完就没人看了 |
+    | 赛场之上 | **印**。讲一场对决，赛果本来就是标题（VS 版式一直在印） |
+
+    所以判据是**有没有 `result`**，不是 layout（和 `_result_block` 那条
+    「赛果那一行可以整行不要」同一个形状）：写了就渲，没写就整行不要。
+    网球有故事照旧什么都不写，一个像素都不变。
+
+    ⚠️ **赢家在前。** `matchup` 是版式顺序，`winner` 才是赛果顺序——
+    `wang-samsonova` 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
+    「王欣瑜 vs 萨姆索诺娃」，比分夹在中间，等于**声称输的那个人赢了**。
+    这里从 `winner` 挑出赢家排在左边，另一个排右边。
+
+    ⚠️ **国旗和排名都从 `matchup` 里读**，走的是和 VS 名条同一个
+    `_name_html`——一处出错两处一起红，不会两边各写一遍再对不上。
+    """
+    result = str(cover.get("result") or "").strip()
+    if not result:
+        return ""
+    pair = cover.get("matchup") or []
+    if len(pair) != 2 or not all(str(p.get("name", "")).strip() for p in pair):
+        raise SystemExit(
+            "solo 封面写了 `result`，就要 `cover.matchup` 给出对阵双方：\n"
+            '  "matchup": [{"name": "张帅", "country": "CHN", "rank": 57},\n'
+            '              {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]\n'
+            "账号所有者 2026-08-04：「中间标题下面写上比分（带双方国旗）」。\n"
+            "名字查 src/tennislive/zh/player_names_top500.json，别手打；"
+            "国别取 ESPN 的 competitor.athlete.flag.href 末尾那个 IOC 码。")
+    winner = str(cover.get("winner", "")).strip()
+    if not winner:
+        raise SystemExit(
+            "solo 封面写了 `result`，就要 `cover.winner`：赛果行**赢家在前**。\n"
+            "不写的话顺序只能按 matchup 排，而 matchup 是版式顺序不是赛果顺序——"
+            "wang-samsonova 那次就是这么把输的那个人写成赢家的。")
+    win = next((p for p in pair if str(p.get("name", "")).strip() == winner), None)
+    if win is None:
+        raise SystemExit(
+            f"cover.winner={winner!r} 不在 cover.matchup 的两个名字里"
+            f"（{[p.get('name') for p in pair]}）——对一遍译名表，别手打。")
+    lose = next(p for p in pair if p is not win)
+    # 比分长了降一档，别让它折行——和 `_result_block` 用同一组数。
+    sets_px = 54 if len(result) <= 11 else 46
+    return (
+        '<div class="storyscore">'
+        + _name_html(str(win["name"]).strip(), win, "cover.matchup[赢家]")
+        + f'<span class="sets" style="font-size:{sets_px}px">'
+          f'{_sets_html(result)}</span>'
+        + _name_html(str(lose["name"]).strip(), lose, "cover.matchup[输家]")
+        + "</div>")
+
+
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     """cutout 版式：背景是本场视频的全场机位，两个官方抠图站在斜线上。"""
     bg = versus.get("background") or {}
@@ -310,6 +415,22 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+def _scrim_css(clear: bool) -> str:
+    """盖在照片上的那层暗。
+
+    **上下两头一定要留**：台头压在顶上、钩子压在中间偏下，浅色字压在浅色画面上
+    就没了。**能关掉的只有正中那道 radial**——它是给「文字正好压在主体上」准备的，
+    代价是把整张实拍洗淡一档。
+    """
+    top_bottom = ("linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,"
+                  "rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,"
+                  "rgba(6,28,20,.58) 100%)")
+    centre = ("radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,"
+              "rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)")
+    layers = top_bottom if clear else f"{top_bottom},{centre}"
+    return f".scrim{{position:absolute;inset:0;background:{layers}}}"
+
+
 def _solo_body(cover: dict) -> tuple[str, str]:
     """`solo`：**「网球有故事」的封面版式**——照片铺满整幅，钩子压在正中。
 
@@ -335,7 +456,10 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     3. **要全身、要看得见球场**。铺满意味着 16:9 的横素材横向只剩中间
        42%，所以素材本身必须是竖着能站住的一张——半身特写铺满就是一张脸
 
-    ⚠️ **赛场之上仍然只能用 VS 模板**，判据在 test_封面只有海报模板一条路。
+    ⚠️ **2026-08-04 起赛场之上也走这个版式**（账号所有者：「以后都用 solo 版做
+    「赛场之上」封面」）。差别只剩一条：赛场之上要在标题底下印带国旗的赛果
+    （`_solo_score_html`），网球有故事**底下什么都不加**——那条「不印赛果」的
+    理由（比分是最后一拍，印上去等于先说结局）对讲人的片子照旧成立。
     """
     art = cover.get("portrait") or {}
     if not art.get("image"):
@@ -370,6 +494,14 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     icon_html = (f'<img class="brand-icon" src="{_data_uri(icon)}" alt="">'
                  if icon.is_file() else "")
     topic = str(cover.get("topic", "")).strip()
+    # **正中那道暗角是可以关掉的。** 下面那层 `.scrim` 是从解说片的 cover 屏
+    # 整段抄过来的（两条线出去的封面必须一个样），它的第二道 radial 在画面
+    # **正中**压 58% 的暗——文字压在中间时那是必要的对比度，可素材本身够暗、
+    # 或者账号所有者要「照片就是照片」时，它会把一张实拍洗成一层背景板。
+    # 账号所有者 2026-08-03：「不要虚化背景，铺满全 3:4 的画」。
+    # 所以**按条声明**（`cover.scrim: "clear"`），不去动那个共用的默认值——
+    # 各调各的就会慢慢漂开，那正是这段注释原本要防的。
+    clear_scrim = str(cover.get("scrim", "")).strip().lower() == "clear"
     lines = [ln.strip() for ln in str(cover.get("hook", "")).split("\n") if ln.strip()]
     hook = "".join(f"<div>{html.escape(ln)}</div>" for ln in lines)
     # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
@@ -402,7 +534,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
         + f'</div></div></div>'
         f'<div class="storycopy"><span class="kicker">{column}</span>'
-        f'<div class="storytitle">{hook}</div></div>')
+        f'<div class="storytitle">{hook}</div>{_solo_score_html(cover)}</div>')
     solo_bg = "" if above else (
         f"background-image:url('{uri}');background-size:cover;"
         + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
@@ -414,12 +546,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
         # 封面必须是同一个样子，各调各的就会慢慢漂开。
         + """
-.scrim{position:absolute;inset:0;background:
- linear-gradient(180deg,rgba(6,28,20,.62) 0%,rgba(6,28,20,.16) 17%,
-  rgba(6,28,20,.08) 32%,rgba(6,28,20,.08) 66%,rgba(6,28,20,.22) 84%,
-  rgba(6,28,20,.58) 100%),
- radial-gradient(128% 40% at 50% 50%,rgba(6,28,20,.58) 0%,
-  rgba(6,28,20,.30) 58%,rgba(6,28,20,0) 100%)}
+__SCRIM__
 .bar{position:absolute;top:0;left:0;right:0;height:12px;z-index:5;
  background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%)}
 .head{position:absolute;top:44px;left:70px;right:70px;z-index:5;display:flex;
@@ -444,7 +571,26 @@ def _solo_body(cover: dict) -> tuple[str, str]:
  line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7)}
+/* 标题底下那一行赛果。`.storycopy` 是 column flex 且 gap 34px，所以这一行
+   自己不用再加 margin——加了就和钩子之间多出一截，看着像两块东西。 */
+.storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
+ font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:44px;
+ font-weight:400;color:#f4fbf7;
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
+.storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
+ font-weight:700;color:#c6f65a;letter-spacing:1px}
+/* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给灰**（账号所有者 2026-08-04）。
+   颜色只有这一个强调色——`#c6f65a` 就是台标球身那个黄绿，不引入第二种。
+   `.setdash` 和 `.tb` 都压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
+.set{display:inline-block;margin-right:.42em}
+.set:last-child{margin-right:0}
+.setwin{color:#c6f65a}
+.setlose{color:#93a79c}
+.setdash{color:#93a79c;margin:0 .04em}
+.tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
+.setplain{color:#c6f65a;margin-right:.42em}
 """
+        .replace("__SCRIM__", _scrim_css(clear_scrim))
         + f".storytitle{{font-size:{title_px}px}}"
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
@@ -646,7 +792,7 @@ def _result_block(cover: dict, names: list) -> str:
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
-        + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
+        + f'<span class="sets" style="font-size:{sets_px}px">{_sets_html(result)}</span>'
         + (f'<span class="lose">{loser}</span>' if loser else "")
         + "</div>"
         + footer)
@@ -665,8 +811,9 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     # 视频呈现。VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决，
     # 套在讲人的片子上，等于让读者去猜这是谁打谁。
     #
-    # ⚠️ **赛场之上仍然只能用 VS 模板**——那条规矩没变，判据在
-    # `test_封面只有海报模板一条路`。solo 认的是别的栏目。
+    # ⚠️ **2026-08-04 起赛场之上也用 solo**（账号所有者：「以后都用 solo 版做
+    # 「赛场之上」封面」），闸翻到了 `build_match_reel.build_cover`：**非 solo**
+    # 才要写 `cover._layout_why`。判据在 `test_赛场之上的封面一律用solo`。
     if layout == "solo":
         names = [str(cover.get("subject", "")).strip()]
         if not names[0]:
@@ -778,6 +925,17 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
+/* 盘分上色，和 solo 那张共用同一套类名（账号所有者 2026-08-04：
+   「每盘的比分里，赢的一方是黄色，输的一方是灰色」「抢七的比分里加上小分」）。
+   ⚠️ **两张海报的样式表是两份**，只改一份的话另一份会把 span 原样渲成一个色，
+   看起来「没生效」而不是报错。 */
+.set{{display:inline-block;margin-right:.42em}}
+.set:last-child{{margin-right:0}}
+.setwin{{color:{BRAND}}}
+.setlose{{color:#93a79c}}
+.setdash{{color:#93a79c;margin:0 .04em}}
+.tb{{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}}
+.setplain{{color:{BRAND};margin-right:.42em}}
 /* 输的一方**要写，但置灰**：这一行是赛果，少一个人就不成句；灰是层次，不是删除 */
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}

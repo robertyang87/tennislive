@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.3 赛场之上 | 商竣程 195 天后首胜</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>商竣程 6-3 6-3 击败世界第 65 的巴列霍，拿下蒙特利尔 ATP1000 首轮。这是他 195 天以来的第一场胜利——上一次赢球还是 1 月 19 日的澳网首轮。
+
+📍蒙特利尔 ATP1000 男单第一轮
+🎾 商竣程 6-3 6-3 巴列霍
+⏱ 1 小时 22 分（第一盘 34 分，第二盘 48 分）
+
+先说他是从哪儿来的。
+
+2 月 24 日迪拜输给梅德韦杰夫之后，他的名字从赛程表上消失了 5 个月。脚伤。7 月 27 日华盛顿复出，首轮输给锦织圭。中间四连败，世界排名从生涯最高的第 47 位掉到第 270 位，这一站是靠受保护排名进的正赛。
+
+比赛是这么走的：
+
+开场第一局巴列霍就 40-15 领先，被连拿 4 分破掉。第一盘 34 分钟，6-3 收下，最后一局的破发点也是盘点。
+
+第二盘反了过来。商竣程自己的发球局 15-40 丢掉，巴列霍再保发，0-2 落后。
+
+**转折在第 4 局。**
+
+这一局打了 20 分。巴列霍一共拿到 6 个局点——6 次只差一分就能把这局收进口袋——一个都没保住。商竣程回破，2-2。
+
+之后是 3-4 那一局：巴列霍又是 40-15 领先，3 个破发点，第三个丢掉了发球局。5-3。最后一局 40-0，三个赛点，第一个就落地。
+
+数据摆在这儿：
+总得分 67-48（115 分）
+局数 12-6
+一发得分率 81%-66%，二发 73%-42%
+破发点 他转化 4/7；巴列霍化解 3/7
+非受迫失误 24-38，双误 2-5
+
+一发进球率 64%-48%，这是这场球最直接的那条线：巴列霍全场只有不到一半的一发进区，二发得分率 42%，于是那 7 个破发点里有 4 个成了。
+
+商竣程 21 岁，左手持拍，生涯最高排到过世界第 47 位。今年 1 月他在香港站打进 1/4 决赛、在澳网首轮击败过巴蒂斯塔·阿古特。然后是伤。
+
+195 天里，他大概听过很多次「什么时候能回来」。今天这一场没有回答那个问题，它只回答了更小的一个：还能不能赢一场。
+
+下一轮对世界第 10 的卢布列夫。
+
+生涯最高第 47 位。从 270 爬回去，要多久？
+
+#网球 #商竣程 #ATP #蒙特利尔 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

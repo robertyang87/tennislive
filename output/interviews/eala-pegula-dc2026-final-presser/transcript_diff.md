@@ -1,0 +1,80 @@
+# 转写交叉校验：eala-pegula-dc2026-final-presser
+
+- YouTube 自动字幕 **1068** 词
+- faster-whisper（small.en）**997** 词
+- **对不上 7.7%**（闸门 12%）
+
+## 分歧逐处（左＝YouTube，右＝Whisper）
+
+- `um` → `—`
+- `like` → `—`
+- `uh` → `—`
+- `jess said` → `just that`
+- `mhm um` → `—`
+- `it` → `—`
+- `um` → `—`
+- `un` → `—`
+- `and` → `—`
+- `uh` → `—`
+- `was` → `—`
+- `um` → `—`
+- `i don't` → `—`
+- `at` → `—`
+- `um` → `—`
+- `and and` → `—`
+- `how` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `—` → `great`
+- `and` → `—`
+- `like` → `—`
+- `and` → `—`
+- `yeah` → `—`
+- `collapsed` → `collapse`
+- `o` → `—`
+- `and` → `—`
+- `i` → `—`
+- `um` → `—`
+- `to` → `—`
+- `lot a` → `—`
+- `uh` → `—`
+- `so` → `—`
+- `kind of` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `um` → `—`
+- `yeah` → `—`
+- `um` → `—`
+- `—` → `it's`
+- `you're` → `—`
+- `um` → `—`
+- `like` → `—`
+- `i` → `—`
+- `and` → `—`
+- `is` → `this`
+- `and` → `—`
+- `and` → `—`
+- `and` → `—`
+- `i` → `—`
+- `yeah` → `—`
+- `you` → `i`
+- `and one or two` → `—`
+- `and` → `in`
+- `do` → `have`
+- `have` → `had`
+- `and` → `—`
+- `this week` → `—`
+- `it was` → `—`
+- `um` → `—`
+- `every` → `—`
+- `i'm` → `—`
+- `—` → `i'm`
+- `any other questions` → `—`
+- `um` → `—`
+- `it` → `—`
+- `um` → `—`
+- `and` → `—`
+- `i` → `—`
+- `okay` → `—`

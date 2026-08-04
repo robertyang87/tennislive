@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.4 赛后开麦 | 伊埃拉首冠赛后发布会</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>场上她谢了一整圈人，坐下来第一句是「首先这是我自己的」
+
+📍华盛顿 WTA500 决赛 · 赛后新闻发布会
+🎾 伊埃拉 4-6 6-4 6-0 佩古拉
+🎤 全程中英双语字幕
+
+场上那三分半，她从头谢到尾——对手、家人、团队、医疗组、赛事、菲律宾同胞。
+走下场坐进发布厅，记者问：这个成就对你个人、对那么多人，各意味着什么？
+
+她第一句是：首先，这是我自己的成就。
+
+这段六分钟里有三件场上没讲的事。
+
+① 那 24 小时
+决赛因为雨拆成两天打。她说：我大概热身了一千次。
+被问到重新开打后为什么像换了个人，她的答案很朴素——
+把上半场学到的东西记住，下半场尽量用上。
+
+② 赛点落地的那一秒
+她瘫倒在地上。记者问那一刻在想什么，她说：我整个人是懵的。
+然后补了一句更具体的：最后那几分我真的很紧张，
+一直想把这些紧张变成把球打好、变成把脚动起来。
+
+③ 她怎么谈这个冠军
+不是「我为国家拿到了什么」，而是先认下它属于自己，再说它意味着什么。
+一个 21 岁的人在最容易被架起来的时刻，先把脚放回地上。
+
+值得抄下来的几句：
+
+I&#x27;m over the moon.
+我高兴坏了
+
+I&#x27;ve warmed up like a thousand times.
+我大概热身了一千次
+
+I kind of just blacked out.
+我整个人是懵的
+
+First and foremost, it&#x27;s an achievement for myself.
+首先 这是我自己的成就
+
+These things kind of creep up on you.
+这些事就是会悄悄找上你
+
+顺带说一句她这一周的签表：第一轮郑钦文、然后费尔南德斯、斯维托丽娜、大坂直美，
+决赛佩古拉。奥运冠军和 1 号种子都在里面。
+
+场上那条捧杯致辞我们发过了，这是她坐下来的版本。
+一个刚拿到首冠的人，先讲对手、再讲团队，最后才讲自己——你觉得这是性格，还是练出来的？
+
+#网球 #伊埃拉 #佩古拉 #网球英语 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

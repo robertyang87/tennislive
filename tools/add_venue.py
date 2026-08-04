@@ -139,7 +139,80 @@ def main() -> int:
     module.write_attribution(ASSETS)
 
     print(f"入库 {args.slug} <- {name} {img.size}")
-    return 0
+    _warn_if_shell_ate_backticks(args.title, args.note, args.comment)
+    return _report_landing(args.slug)
+
+
+def _warn_if_shell_ate_backticks(*texts: str) -> None:
+    """反引号被 bash 当成命令替换执行掉了——**踩过两次**，两次都没当场发现。
+
+    在 shell 里写 `--note "…别名不写裸的 \\`atp finals\\`…"`，bash 会去执行
+    `atp finals` 并把整段替换成它的输出（空），于是入库的是
+    「别名不写裸的 ——它是  的子串」。脚本本身收到的就是这个残缺串，
+    **没法从参数里看出反引号存在过**，只能认它留下的疤：空的强调对
+    （`****`）和被吃空之后多出来的连续空格。
+
+    只提醒，不拦——误报的代价只是多看一眼，漏报的代价是错的出处进了仓库。
+    """
+    scars = []
+    for text in texts:
+        if not text:
+            continue
+        if "****" in text or "** **" in text:
+            scars.append("空的强调对（`****`）")
+        if "  " in text.replace("\n", " "):
+            scars.append("连续两个空格")
+    if scars:
+        print("  ⚠️ 文案里有反引号被 shell 吃掉的痕迹（" + "、".join(sorted(set(scars))) + "）。"
+              "\n     bash 会执行 `…` 里的内容并把整段替换成它的输出。"
+              "\n     去 assets/venues/credits.json 里核一眼，写出处**别用反引号**。")
+
+
+def _report_landing(slug: str) -> int:
+    """入库之后**回头问一句**：赛历上真的有站命中它吗？
+
+    别名写错不会报错，只是悄悄不生效——休斯顿那次别名写成
+    `clay court championships`，而赛历里的名字是 `U.S. Men's Clay Court Chps.`，
+    根本不是子串。文件、manifest、credits、fetch_venues 四处全都写对了，
+    `add_venue` 打印「入库成功」，覆盖率却一动没动。
+    这和「查产物不查信号」是同一条：**「写进去了」是信号，「有站命中」才是产物。**
+
+    走的是渲染时真正那条路（`venue_asset_for_match`），不是比对字符串。
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "src"))
+    from datetime import datetime, timezone
+
+    from tennislive.models import (Match, MatchStatus, Player,  # noqa: E402
+                                   Tour, Tournament)
+    from tennislive.render.venue_assets import (  # noqa: E402
+        load_venue_assets, venue_asset_for_match)
+
+    load_venue_assets.cache_clear()
+    calendar = json.loads((ROOT / "data" / "tour_calendar_2026.json")
+                          .read_text(encoding="utf-8"))["events"]
+    landed = []
+    for event in calendar:
+        month, day = (int(x) for x in str(event.get("start", "01-01")).split("-")[:2])
+        tour = Tour.WTA if str(event.get("tour")) == "wta" else Tour.ATP
+        match = Match(
+            match_id="add-venue", tour=tour,
+            tournament=Tournament(name=str(event.get("en") or ""), tour=tour),
+            home=[Player(name="A")], away=[Player(name="B")],
+            status=MatchStatus.SCHEDULED, round_name="R32", discipline="Singles",
+            start_utc=datetime(2026, month, day, 12, tzinfo=timezone.utc),
+            sets=[], winner=None)
+        got = venue_asset_for_match(match)
+        if got is not None and got.slug == slug:
+            landed.append(f"{event.get('start')} {event.get('tier')} {event.get('zh')}")
+    if landed:
+        print("  赛历上命中 " + str(len(landed)) + " 站：" + "；".join(landed))
+        return 0
+    print(f"  ⚠️ **赛历上一站都没命中 {slug}**——别名多半对不上赛事名。"
+          f"\n     赛历里的写法要自己去 data/tour_calendar_2026.json 的 `en` 看，"
+          f"\n     别按城市名或想当然的全称写（休斯顿那站叫 "
+          f"`U.S. Men's Clay Court Chps.`，不是 `...Championships`）。")
+    return 1
 
 
 if __name__ == "__main__":

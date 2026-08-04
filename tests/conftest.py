@@ -8,6 +8,26 @@ from tennislive.digest import Digest
 from tennislive.models import Match, MatchStatus, Player, SetScore, Tour, Tournament
 
 
+@pytest.fixture(autouse=True)
+def _no_ambient_github_token(monkeypatch):
+    """单元测试一律看不见环境里的 `GITHUB_TOKEN` / `GH_TOKEN`。
+
+    ⚠️ 2026-08-04 抖出来的：`_probe_page` 会先调 `trigger_pages_build()`，
+    而那个函数**只在环境里有 token 的时候**才真的发请求。沙箱里两个变量都
+    有、CI 里没有——于是同一条测试在两个地方跑的是**两条不同的路**，而且
+    本地那条会悄悄打一次 `api.github.com`（在这个沙箱里恒 403）。
+
+    单元测试碰外网本身就不对；更坏的是**它不吭声**：两边都绿，直到有人往
+    那条路上加一行代码，才发现有一半的测试从来没被这些断言覆盖过。
+
+    这和「本地装着不等于 CI 装着」是一家的，只是这次差的不是依赖，是**环境
+    变量**。要用 token 的测试自己 `monkeypatch.setenv`——autouse 先跑、测试
+    体后跑，显式给的那份必然盖过这里。
+    """
+    for name in ("GITHUB_TOKEN", "GH_TOKEN"):
+        monkeypatch.delenv(name, raising=False)
+
+
 def make_match(
     home_name="Jannik Sinner",
     away_name="Novak Djokovic",

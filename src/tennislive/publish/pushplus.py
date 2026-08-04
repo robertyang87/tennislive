@@ -94,6 +94,37 @@ PUSH_ATTEMPTS = 4
 PUSH_RETRY_SECONDS = 5.0
 
 
+# PushPlus 官方返回码表（`/doc/guide/code.html`）里跟开放接口有关的那几个。
+#
+# **只打印 msg 是不够的：这几个码是几件完全不同的事，出路也完全不同**，
+# 而它们的中文写得非常像——「请求未授权」和「请求IP未授权」并排放着，
+# 读起来都像「你的凭据不对」，实际一个是后台开关没开、一个是白名单。
+#
+# 2026-08-04 纳达尔学院那趟拿到的是 **401**，而我当时在日志里写的是
+# 「通常是 PUSHPLUS_SECRET_KEY 失效或会员到期」——**两头都错**：令牌无效是
+# 903，付费问题是 888。我从「/send 用同一个 token 成功了，所以不是 token 错」
+# 推到了「那就是会员到期」，中间那一步是凭空多出来的（CLAUDE.md：
+# 「排除了 A 和 B」不等于「就是 C」）。码表就在官网上，查一次的事。
+_ACCESS_KEY_HINTS = {
+    401: (
+        "开放接口功能没启用。它**默认就是禁用的**，要在 PushPlus 后台"
+        "「开发设置」里手动打开（官方原话：默认是禁用状态，需要用户手动的"
+        "在开发设置中开启）"
+    ),
+    403: (
+        "请求 IP 不在安全 IP 白名单里。⚠️ GitHub Actions runner 的出口 IP "
+        "每趟都不一样，白名单这条路对 CI 基本无解"
+    ),
+    903: (
+        "PUSHPLUS_TOKEN 不对，或者给的是「消息token」——getAccessKey 只认"
+        "用户token（官方参数说明写着「不支持消息token」）"
+    ),
+    888: "积分不足，需要充值",
+    905: "账户未进行实名认证",
+    900: "请求次数过多，账号被限流",
+}
+
+
 def _access_key(token: str, secret_key: str, timeout: int) -> str:
     """取图床的 AccessKey。**网络抖动要重试**——它排在发消息之前，
     一次失败就把整条推送带走，而这一步跟内容对不对没有任何关系。"""
@@ -118,7 +149,12 @@ def _access_key(token: str, secret_key: str, timeout: int) -> str:
     if payload.get("code") != 200 or not (payload.get("data") or {}).get(
         "accessKey"
     ):
-        raise PushPlusError(f"获取 PushPlus AccessKey 失败: {payload.get('msg')}")
+        code = payload.get("code")
+        hint = _ACCESS_KEY_HINTS.get(code, "")
+        raise PushPlusError(
+            f"获取 PushPlus AccessKey 失败: code={code} {payload.get('msg')}"
+            + (f"——{hint}" if hint else "")
+        )
     return str(payload["data"]["accessKey"])
 
 
@@ -207,6 +243,64 @@ def _pages_image_url(source: str, revision: str) -> str | None:
     return f"{jsdelivr_base(repository, pinned_revision)}/{output_path}"
 
 
+def _pushplus_bed_delivery(
+    html_content: str,
+    sources: list[str],
+    root: Path,
+    *,
+    token: str,
+    secret_key: str,
+    configured_access_key: str,
+    timeout: int,
+) -> str:
+    """把消息里的图片传到 PushPlus 自己的图床，返回改写后的 HTML。"""
+    access_key = (
+        _access_key(token, secret_key, timeout)
+        if secret_key
+        else configured_access_key
+    )
+    upload_url, upload_token = _upload_credentials(access_key, timeout)
+    replacements: dict[str, str] = {}
+    for source in sources:
+        local_path = _local_image_path(source, root)
+        if local_path is None:
+            continue
+        replacements[source] = _upload_image(
+            local_path,
+            upload_url=upload_url,
+            upload_token=upload_token,
+            timeout=timeout,
+        )
+    if len(replacements) != len(sources):
+        raise PushPlusError("PushPlus 原生图床未覆盖全部消息图片")
+    for source, replacement in replacements.items():
+        html_content = html_content.replace(source, replacement)
+    return html_content
+
+
+def _jsdelivr_delivery(
+    html_content: str, sources: list[str], root: Path | None
+) -> str:
+    """退回钉在 commit 上的 jsDelivr／raw 链接，返回改写后的 HTML。
+
+    **每一张都要映射得上**，缺一张就整条不发——半张图的推送发出去收不回来。
+    """
+    revision = os.environ.get("TENNISLIVE_ASSET_REV", "main")
+    replacements: dict[str, str] = {}
+    for source in sources:
+        local_path = _local_image_path(source, root) if root else None
+        pages_url = _pages_image_url(source, revision)
+        if local_path is not None and pages_url:
+            replacements[source] = pages_url
+    if len(replacements) != len(sources):
+        raise PushPlusError(
+            "消息图片无法映射到稳定图床，已取消本次推送"
+        )
+    for source, replacement in replacements.items():
+        html_content = html_content.replace(source, replacement)
+    return html_content
+
+
 def prepare_image_delivery(
     html_content: str,
     *,
@@ -223,46 +317,60 @@ def prepare_image_delivery(
     root = Path(asset_dir) if asset_dir else None
     secret_key = os.environ.get("PUSHPLUS_SECRET_KEY", "").strip()
     configured_access_key = os.environ.get("PUSHPLUS_ACCESS_KEY", "").strip()
+    provider = "jsdelivr"
     if root and (secret_key or configured_access_key):
-        access_key = (
-            _access_key(token, secret_key, timeout)
-            if secret_key
-            else configured_access_key
+        # PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
+        # （/doc/function/image.html 的「使用限制」）。账号所有者 2026-08-04
+        # 认领过这个取舍：换来的是发之前不用等 jsDelivr 回源。
+        #
+        # **但它必须写进日志。** 微信那条消息发出去收不回来，海报到期就变裂图，
+        # 而那是一个月之后的事——两条通道当天的日志长得一模一样。将来有人查
+        # 「这条老推送的图怎么裂了」，答案得在当天的日志里，而不是靠他重新
+        # 把这一整节推理一遍。
+        logger.warning(
+            "图片走 PushPlus 图床：官方限制 30 天后自动删除，"
+            "这条推送的图到期会变裂图（已认领的取舍，换发送前不必等回源）。"
+            "要改回永久可取就清掉 PUSHPLUS_SECRET_KEY / PUSHPLUS_ACCESS_KEY。"
         )
-        upload_url, upload_token = _upload_credentials(access_key, timeout)
-        replacements: dict[str, str] = {}
-        for source in sources:
-            local_path = _local_image_path(source, root)
-            if local_path is None:
-                continue
-            replacements[source] = _upload_image(
-                local_path,
-                upload_url=upload_url,
-                upload_token=upload_token,
+        try:
+            return _pushplus_bed_delivery(
+                html_content,
+                sources,
+                root,
+                token=token,
+                secret_key=secret_key,
+                configured_access_key=configured_access_key,
                 timeout=timeout,
+            ), "pushplus"
+        except PushPlusError as exc:
+            # **图床只是个优化，不是这条推送的内容。** 它换来的仅仅是「发之前
+            # 不必等 jsDelivr 回源」，而下面那条退路更耐久（钉 commit、永久可取）。
+            # 让一个优化的鉴权失败把**唯一真正发消息的那一步**带走，是这个仓库
+            # 记过的那个形状的反面：「保护了不重要的那一步，没保护唯一重要的那
+            # 一步」——这里更糟，不重要的那一步直接**否决**了重要的那一步。
+            # 2026-08-04 纳达尔学院那趟就是这么死的（run 30903125364）：片子渲完、
+            # 提交完、复制页第 1 次探活就命中，最后死在「获取 AccessKey：请求未授权」。
+            #
+            # 退回是安全的：`_jsdelivr_delivery` 自己重做一遍全覆盖检查，
+            # 之后 `wait_for_images` 还会逐张探活——发不出半张图的消息。
+            #
+            # ⚠️ **通道名必须分得出是哪一种 jsdelivr。** 「没配过所以走这条」和
+            # 「图床把我拒了所以走这条」在旧口径下都打印 `jsdelivr`，于是一个
+            # 坏掉的付费订阅和一个从没开过的功能长得一模一样——正是「兜底出事
+            # 的时候不吭声」。
+            # ⚠️ **这里不许再自己猜原因。** 上一版在这句里写死了「通常是
+            # PUSHPLUS_SECRET_KEY 失效或会员到期」——而真实的码是 401
+            # （开放接口没启用），令牌无效是 903、付费问题是 888，两头都猜错了。
+            # 原因由 `_ACCESS_KEY_HINTS` 按码给出，这里只负责把它原样带出来。
+            logger.error(
+                "PushPlus 图床用不了（%s），本次退回 jsDelivr：图片改为钉在 "
+                "commit 上的永久链接，代价是发送前要等回源。"
+                "返回码含义见 pushplus.plus/doc/guide/code.html。",
+                exc,
             )
-        if len(replacements) != len(sources):
-            raise PushPlusError(
-                "PushPlus 原生图床未覆盖全部消息图片，已取消本次推送"
-            )
-        for source, replacement in replacements.items():
-            html_content = html_content.replace(source, replacement)
-        return html_content, "pushplus"
+            provider = "jsdelivr-fallback"
 
-    revision = os.environ.get("TENNISLIVE_ASSET_REV", "main")
-    replacements = {}
-    for source in sources:
-        local_path = _local_image_path(source, root) if root else None
-        pages_url = _pages_image_url(source, revision)
-        if local_path is not None and pages_url:
-            replacements[source] = pages_url
-    if len(replacements) != len(sources):
-        raise PushPlusError(
-            "消息图片无法映射到稳定图床，已取消本次推送"
-        )
-    for source, replacement in replacements.items():
-        html_content = html_content.replace(source, replacement)
-    return html_content, "jsdelivr"
+    return _jsdelivr_delivery(html_content, sources, root), provider
 
 
 def wait_for_images(
@@ -425,7 +533,19 @@ def push(
             f"PushPlus {PUSH_ATTEMPTS} 次都没发出去（{last}）。"
             "前面等复制页、成片、图片都成功了，卡在最后这一步——重跑即可。")
     # **流水号要记下来。** `code == 200` 只保证 **PushPlus 收下了**，不保证
-    # 微信真的推到了手机上。真出现「接口成功但人没收到」时，没有流水号就
-    # 什么都查不了——这条 CLAUDE.md 里记过，一直没做。
-    logger.info("PushPlus 推送成功（图片通道：%s，流水号：%s）",
-                image_provider, data.get("data") or "未返回")
+    # 微信真的推到了手机上。2026-08-02 热亚那条就是这样：第 29 步 success、
+    # 日志写着「已推送」，账号所有者问了两次「推微信了么」——而我手上一条
+    # 可查的东西都没有。返回体里的 `data` 就是这条消息的流水号，PushPlus
+    # 拿它查投递状态。
+    #
+    # ⚠️ **用 print 不用 logger。** 这个模块的 logger 在工作流里**没有配
+    # handler**，`logger.info` 一个字都不会出现在日志里——上一版那句
+    # 「PushPlus 推送成功（图片通道：…）」**从来没被人看见过**，连图片走的
+    # 哪条通道都没人知道。又一次「不吭声」，而且不吭声的正是那条本该出声的
+    # 记录。判据 `test_推送成功要把流水号打进日志` 断言的是 **stdout**，
+    # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
+    print(f"[PushPlus] 收下了：流水号 {data.get('data') or '(返回体里没有)'}"
+          f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
+    print(f"[PushPlus] ⚠️ 这只代表接口收下。要查微信有没有真的送达，用流水号问："
+          f"https://www.pushplus.plus/api/send/queryMessage?token=<TOKEN>&id="
+          f"{data.get('data') or '<流水号>'}")

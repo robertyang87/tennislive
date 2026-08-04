@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import logging
 from unittest.mock import Mock
 
 import pytest
 import requests
 
+from tennislive.publish import pushplus
 from tennislive.publish.pushplus import (
     PushPlusError,
     image_sources,
@@ -12,6 +14,18 @@ from tennislive.publish.pushplus import (
     prepare_image_delivery,
     wait_for_images,
 )
+
+
+class _FakeResponse:
+    """PushPlus 的接口一律 HTTP 200，真正的结果在 body 的 `code` 里。"""
+
+    def __init__(self, payload: dict, status: int = 200) -> None:
+        self._payload = payload
+        self.status_code = status
+        self.ok = 200 <= status < 400
+
+    def json(self) -> dict:
+        return self._payload
 
 
 def test_image_sources_keeps_unique_remote_images_in_order():
@@ -213,6 +227,167 @@ def test_prepare_image_delivery_uploads_every_card_to_pushplus(
     upload.assert_called_once()
 
 
+def test_走pushplus图床要先说清楚30天会删图(tmp_path, monkeypatch, caplog):
+    """这条路是**认领过**的（账号所有者 2026-08-04：图一个月后失效可以接受），
+    但它必须把代价写进日志。
+
+    PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
+    （`/doc/function/image.html` 的「使用限制」），而微信那条消息发出去
+    收不回来也改不了——满月之后那条推送的海报变裂图。
+
+    要命处在于**这一切一个月后才现形**，当天两条通道的日志长得一模一样。
+    将来有人查「这条老推送的图怎么裂了」，答案得在当天的日志里躺着，
+    而不是靠他重新把这一整节推理一遍。
+
+    判据只钉「说没说」，不钉措辞——但那个数字和那个变量名得在，
+    不然下一个人读到的只是一句没有出处、也没有出路的抱怨。
+    """
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._access_key", Mock(return_value="access"))
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._upload_credentials",
+        Mock(return_value=("https://upload.example/", "upload-token")))
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._upload_image",
+        Mock(return_value="https://pic.pushplus.plus/1/cover.jpg@p"))
+    html = ('<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+            'tennislive@abc123/output/2026-07-23/cards/cover.jpg">')
+
+    with caplog.at_level(logging.WARNING, logger="tennislive.publish.pushplus"):
+        _, provider = prepare_image_delivery(
+            html, asset_dir=tmp_path, token="token")
+    assert provider == "pushplus"
+    said = "\n".join(r.message for r in caplog.records)
+    assert "30 天" in said, f"走了会删图的那条路却没出声：{said!r}"
+    assert "PUSHPLUS_SECRET_KEY" in said, "没说怎么改回永久可取——留了个没出路的告警"
+
+    # 反过来：默认那条路**不许**吵。一条恒真的告警和没有告警一样没用，
+    # 而且它会把真正该看见的那次淹掉。
+    caplog.clear()
+    monkeypatch.delenv("PUSHPLUS_SECRET_KEY")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
+    with caplog.at_level(logging.WARNING, logger="tennislive.publish.pushplus"):
+        _, provider = prepare_image_delivery(
+            html, asset_dir=tmp_path, token="token")
+    assert provider == "jsdelivr"
+    assert not [r for r in caplog.records if "30 天" in r.message]
+
+
+def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, caplog):
+    """图床是**优化**，不是这条推送的内容——它用不了就退回 jsDelivr，别否决推送。
+
+    2026-08-04 纳达尔学院那趟就是这么死的（run 30903125364）：片子渲完 2 分 20 秒、
+    提交进 main、复制页第 1 次探活就命中，最后死在
+    `获取 PushPlus AccessKey 失败: 请求未授权`——**一条已经做好的片子，
+    因为一个可有可无的加速通道没鉴权成功，一个字都没发出去。**
+
+    这是仓库里那条「保护了不重要的那一步，没保护唯一重要的那一步」的反面，
+    而且更糟：不重要的那一步直接**否决**了重要的那一步。
+
+    退回是安全的，两道闸还在：`_jsdelivr_delivery` 自己重做全覆盖检查（见下半段），
+    发送前 `wait_for_images` 还会逐张探活。
+    """
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
+    # ⚠️ **不手搓那个异常。** 手搓只能证明「接住异常之后会退回」，证明不了
+    #    真实失败长什么样、码和出路有没有真的走到日志里。这里让真的
+    #    `_access_key` 跑一遍，喂它线上那趟收到的那个响应（code 401）。
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": 401, "msg": "请求未授权"})),
+    )
+    html = ('<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+            'tennislive@abc123/output/2026-07-23/cards/cover.jpg">')
+
+    with caplog.at_level(logging.ERROR, logger="tennislive.publish.pushplus"):
+        rendered, provider = prepare_image_delivery(
+            html, asset_dir=tmp_path, token="token")
+
+    # ① 没抛，而且图片真的改写成了钉 commit 的永久链接
+    assert "abc1234" in rendered, f"退回之后图片没钉到 commit 上：{rendered!r}"
+
+    # ② **通道名要分得出是哪一种 jsdelivr。** 「从没配过」和「图床把我拒了」
+    #    都打印 `jsdelivr` 的话，一个坏掉的付费订阅和一个没开过的功能长得
+    #    一模一样——正是「兜底出事的时候不吭声」。
+    assert provider == "jsdelivr-fallback", (
+        f"退回之后通道名仍是 {provider!r}，看不出图床出过事")
+
+    # ③ 出声，而且要说得出**是哪个码**和**该去干什么**
+    said = "\n".join(r.getMessage() for r in caplog.records)
+    assert "退回 jsDelivr" in said, f"悄悄退回了：{said!r}"
+    assert "code=401" in said, f"没把返回码带出来，只有一句中文谁也查不了：{said!r}"
+    assert "开发设置" in said, f"没说该去干什么——留了个没出路的告警：{said!r}"
+    # ⚠️ 反面锚点：**不许再自己猜原因**。上一版这句写死了「PUSHPLUS_SECRET_KEY
+    #    失效或会员到期」，而 401 两样都不是（令牌无效是 903、付费是 888）。
+    assert "会员到期" not in said, f"又在按猜的原因写诊断：{said!r}"
+
+    # ④ 退回**不等于放行**：映射不上的图片仍然整条不发。
+    #    少了这一条，上面那个 try/except 就成了「出事就凑合发」。
+    with pytest.raises(PushPlusError):
+        prepare_image_delivery(
+            '<img src="https://example.com/not-in-this-repo.jpg">',
+            asset_dir=tmp_path,
+            token="token",
+        )
+
+
+@pytest.mark.parametrize(
+    "code, msg, must_say",
+    [
+        # 官方码表 pushplus.plus/doc/guide/code.html。这四条的中文写得非常像，
+        # 而出路完全不同——只转发 msg 的话，读日志的人分不出该去干哪件事。
+        (401, "请求未授权", "开发设置"),
+        (403, "请求IP未授权", "白名单"),
+        (903, "无效的用户令牌", "消息token"),
+        (888, "积分不足", "充值"),
+    ],
+)
+def test_取AccessKey失败要报出是哪个码和该去干什么(monkeypatch, code, msg, must_say):
+    """「请求未授权」和「请求IP未授权」并排放着，读起来都像「你的凭据不对」。
+
+    实际一个是**后台开关没开**（401），一个是**IP 白名单**（403）；
+    而「令牌无效」是 903、「要付钱」是 888——**四件事，四条出路**。
+
+    2026-08-04 我就是只看了 msg，然后从「/send 用同一个 token 成功了」
+    推出「那就是会员到期」写进日志——令牌无效和付费问题的码都不是 401，
+    两头都猜错了。码表就在官网上。
+    """
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": code, "msg": msg})),
+    )
+    with pytest.raises(PushPlusError) as caught:
+        pushplus._access_key("token", "secret", timeout=1)
+
+    said = str(caught.value)
+    assert f"code={code}" in said, f"没报出返回码，出了事没法查表：{said!r}"
+    assert must_say in said, f"code={code} 没说出路：{said!r}"
+
+
+def test_取AccessKey认不出的码也要把码带出来(monkeypatch):
+    """码表会长，认不出的码**不许吞掉**——把数字带出来，人还能自己查。
+
+    只打印 msg 的话，一个没见过的码和一个见过的码长得一模一样。
+    """
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": 4242, "msg": "天知道"})),
+    )
+    with pytest.raises(PushPlusError) as caught:
+        pushplus._access_key("token", "secret", timeout=1)
+    assert "code=4242" in str(caught.value)
+    assert "天知道" in str(caught.value)
+
+
 def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
     """镜像主机名换掉之后，两处按 `cdn.jsdelivr.net` 写死的判据会**悄悄失效**。
 
@@ -330,29 +505,30 @@ def test_发消息那个POST要重试但被拒绝时不许重发(monkeypatch):
     assert len(calls) == pushplus.PUSH_ATTEMPTS
 
 
-def test_推送成功要记下流水号(monkeypatch, caplog):
-    """`code == 200` 只保证 **PushPlus 收下了**，不保证微信推到了手机上。
+def test_推送成功要把流水号打进日志(monkeypatch, capsys):
+    """**`code == 200` 只说明 PushPlus 收下了，不说明微信送到了人手机上。**
 
-    真出现「接口成功但人没收到」时，没有流水号就什么都查不了——这条
-    CLAUDE.md 里记过，一直没做。
+    2026-08-02 热亚那条：第 29 步 success、日志写着「已推送」，账号所有者
+    问了两次「推微信了么」——而我手上**一条可查的东西都没有**，因为返回体
+    整个被丢掉了，只留下一句没有主语的「推送成功」。
+
+    返回体的 `data` 就是这条消息的流水号，PushPlus 拿它查投递状态。判据钉两头：
+    流水号要出现在 **stdout**（不是 `logger`——这个模块的 logger 在工作流里
+    没有 handler，`logger.info` 一个字都不会出现，上一版那句「图片通道」
+    就从来没被人看见过），而且要**明说「这只代表接口收下」**，别让下一个人
+    再把它读成「送达了」。
     """
-    import logging
-
-    from tennislive.publish import pushplus
-
-    monkeypatch.setattr(pushplus, "wait_for_images", lambda *_a, **_k: None)
     monkeypatch.setattr(pushplus, "prepare_image_delivery",
-                        lambda html, **_k: (html, "none"))
-    monkeypatch.setenv("PUSHPLUS_TOKEN", "t")
+                        Mock(return_value=("<p>hi</p>", "jsdelivr")))
+    monkeypatch.setattr(pushplus, "wait_for_images", Mock())
+    monkeypatch.setattr(requests, "post", Mock(return_value=Mock(
+        status_code=200,
+        json=Mock(return_value={"code": 200, "msg": "请求成功",
+                                "data": "abc123def456"}))))
 
-    class _Resp:
-        status_code = 200
+    pushplus.push("标题", "<p>hi</p>", token="t")
 
-        def json(self):
-            return {"code": 200, "data": "abc123-流水号"}
-
-    monkeypatch.setattr(pushplus.requests, "post", lambda *_a, **_k: _Resp())
-    with caplog.at_level(logging.INFO):
-        pushplus.push("标题", "<p>正文</p>")
-    assert "abc123-流水号" in caplog.text, (
-        f"成功那行没记流水号，出问题时无从查起：{caplog.text}")
+    out = capsys.readouterr().out
+    assert "abc123def456" in out, f"流水号没进日志：{out!r}"
+    # 反面：不许只说「成功」就完事——那正是这次查不下去的原因
+    assert "只代表接口收下" in out, f"没说清 200 意味着什么：{out!r}"

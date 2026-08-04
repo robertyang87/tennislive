@@ -615,7 +615,10 @@ def test_成片旁边记下用的是哪个声音(tmp_path, monkeypatch):
     E.generate_explainer_video(find_story_by_slug("zheng-eala"), tmp_path)
     meta = json.loads((tmp_path / "narration.json").read_text(encoding="utf-8"))
     assert meta["voice"] == E.DEFAULT_VOICE == "zh-CN-YunjianNeural"
-    assert meta["rate"] == E.DEFAULT_RATE == "+28%"
+    # 只钉「记下来的就是实际用的那一档」。**具体是哪一档不在这儿钉死**——
+    # 那个数由 test_explainer_budget 的 `_MEASURED` 管着，而且它连带要求
+    # 换档必须重量。两处都写死的话，改语速要动三个地方，必分叉。
+    assert meta["rate"] == E.DEFAULT_RATE
     assert meta["segments"] == 2
 
     E.generate_explainer_video(
@@ -1197,10 +1200,16 @@ def test_探复制页的重试预算不许再退回四十秒():
     from tennislive.render import pushmsg
 
     budget = pushmsg._COPY_PAGE_ATTEMPTS * pushmsg._COPY_PAGE_RETRY_SECONDS
-    assert budget >= 300, (
-        f"探复制页的总预算只有 {budget:.0f} 秒。实测 Pages 可以慢到 12 分钟以上，"
-        "太短就会把本来能用的按钮摘掉——而日志里「取不到」和「还没发布」"
-        "长得一模一样。"
+    # ⚠️ **这条断言原来写死 300 秒，而它自己的 docstring 就说「实测可以慢到
+    # 12 分钟以上」——于是 12×30=360 轻松过关，按钮照样永远等不到。**
+    # 判据比它引用的那个数还松，等于没装。现在从实测常量推，改不动一头
+    # 不改另一头：`MEASURED_PAGES_BUILD_SECONDS` 是量出来最慢的那次成功构建。
+    floor = pushmsg.MEASURED_PAGES_BUILD_SECONDS
+    assert budget >= floor, (
+        f"探复制页的总预算只有 {budget:.0f} 秒，而实测 Pages 建一次站要 "
+        f"{floor:.0f} 秒（这个仓库 output/ 一 GB 多，每次重建整站）。"
+        "窗口短于发布时间＝那颗按钮永远出不来，而且**不会报错**——"
+        "日志里「取不到」和「还没发布」长得一模一样。"
     )
     # 但也不能无限等：出片那步已经花掉五分钟，工作流的 timeout 是 25 分钟。
     assert budget <= 900, f"预算 {budget:.0f} 秒太长，会把整个 run 拖进超时。"
@@ -1278,6 +1287,114 @@ def tmp_copy_page(body: str):
     path = _P(tempfile.mkdtemp()) / "copy.html"
     path.write_text(f"<html><body>{body}</body></html>", encoding="utf-8")
     return path
+
+
+def test_探活命中也要出声而且要报第几次(caplog):
+    """命中那一路原来一个字都不打——于是「第 1 次就中」在日志里是**零行**。
+
+    这是「只在失败时出声的检查没法证明它真的看过」的镜像版，而且更阴：
+
+        第 1 次就中     零行
+        探七次才中     六行 404，**没有任何一行说「后来中了」**
+        这一步没跑     零行  ← 和第一种一模一样
+
+    2026-08-04 我把「下条片子推送时看一眼是不是第 1 次就中」写进了 CLAUDE.md，
+    引用的那句日志 `第 1 次探活：已是这一版的内容` **当时根本不存在**——
+    判据引用了一个不存在的产物，正是这一轮要终结的那个毛病。
+
+    报第几次不是装饰，它有判据：实测 dispatch 到部署完 19 秒
+    （`MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS`）、探活间隔 30 秒，
+    所以**正常就该是第 1 次**。第 2 次以上要当信号查，不是「Pages 今天慢」。
+    """
+    import logging
+
+    import requests
+
+    from tennislive.render.pushmsg import (
+        MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS,
+        _probe_page,
+    )
+
+    class _Resp:
+        status_code = 200
+        headers = {"Content-Type": "text/html; charset=utf-8"}
+        text = "<html>正文</html>"
+
+    class _Miss:
+        status_code = 404
+        headers = {"Content-Type": "text/html"}
+        text = ""
+
+    # ① 第 1 次就中：必须出声，而且说得出「第 1 次」
+    with caplog.at_level(logging.INFO, logger="tennislive.render.pushmsg"), \
+            mock.patch.object(requests, "get", return_value=_Resp()):
+        assert _probe_page("http://x/copy.html", attempts=3, delay=0)
+    hit = [r for r in caplog.records if "探活命中" in r.getMessage()]
+    assert hit, (
+        "命中之后一个字都没打——「第 1 次就中」和「这一步压根没跑」"
+        "在日志里长得一模一样")
+    assert "第 1 次" in hit[0].getMessage(), hit[0].getMessage()
+
+    # ② 前两次不可达、第 3 次才中：要报出 3，而且要说明「本该是 1」，
+    #    否则读日志的人得回头翻 CLAUDE.md 才知道这是异常
+    caplog.clear()
+    with caplog.at_level(logging.INFO, logger="tennislive.render.pushmsg"), \
+            mock.patch.object(requests, "get",
+                              side_effect=[_Miss(), _Miss(), _Resp()]):
+        assert _probe_page("http://x/copy.html", attempts=3, delay=0)
+    late = [r for r in caplog.records if "探活" in r.getMessage()
+            and "命中" in r.getMessage()]
+    assert late, "探了三次才中，却没有任何一行说它后来中了"
+    msg = late[0].getMessage()
+    assert "第 3 次" in msg, msg
+    assert late[0].levelno >= logging.WARNING, (
+        f"第 3 次才中是异常，不该用 info 混在正常输出里：{msg}")
+    assert f"{MEASURED_PAGES_DISPATCH_TO_LIVE_SECONDS:.0f}" in msg, (
+        f"没把「本该多快」写进日志，读的人还得回头查常量：{msg}")
+
+
+def test_每条探活路径都要报第几次():
+    """自己推导，不维护白名单——第三条探活路径出现时它会替人记得。
+
+    判据是结构性的：**凡是接 `attempts` 又真的 `requests.get` 的函数**，
+    都是一条探活路径，都必须调 `_say_probe_hit`。手写名单会在有人新加一条
+    探活时静默失效，而那正是这次出问题的形状（`live_copy_page_url` 和
+    `_probe_page` 各写各的，其中一条忘了出声也没人知道）。
+    """
+    import ast
+    import inspect
+
+    from tennislive.render import pushmsg
+
+    tree = ast.parse(inspect.getsource(pushmsg))
+
+    def _calls(node, dotted: str) -> bool:
+        want = dotted.split(".")[-1]
+        for sub in ast.walk(node):
+            if not isinstance(sub, ast.Call):
+                continue
+            fn = sub.func
+            if isinstance(fn, ast.Attribute) and fn.attr == want:
+                return True
+            if isinstance(fn, ast.Name) and fn.id == want:
+                return True
+        return False
+
+    probes = [
+        node for node in ast.walk(tree)
+        if isinstance(node, ast.FunctionDef)
+        and any(a.arg == "attempts"
+                for a in list(node.args.args) + list(node.args.kwonlyargs))
+        and _calls(node, "requests.get")
+    ]
+    names = sorted(n.name for n in probes)
+    # 判据自己的判据：主语没了要出声，而不是变成一条恒真的绿灯
+    assert len(names) >= 2, f"探活路径少于两条，判据多半失效了：{names}"
+
+    missing = [n.name for n in probes if not _calls(n, "_say_probe_hit")]
+    assert not missing, (
+        f"这些探活路径命中之后不出声：{missing}——"
+        "「第 1 次就中」和「这一步没跑」会长得一模一样")
 
 
 def test_复制页那道闸装在发的那一步不是渲的那一步():
@@ -1575,3 +1692,379 @@ def test_去标点这条规矩是全站的不是解说片专属():
     assert drop_punctuation("他说过一句话：我其实还想继续打。") == "他说过一句话 我其实还想继续打"
     assert drop_punctuation("郑钦文 6-4、7-5 取胜，晋级八强。") == "郑钦文 6-4 7-5 取胜 晋级八强"
     assert drop_punctuation("上一行，好\n下一行。真的吗？") == "上一行 好\n下一行 真的吗？"
+
+def test_字幕一行不许横跨两句话():
+    """账号所有者 2026-08-03：「字幕也要保持断句的完整性，不要多也不要少。」
+
+    切行本来就有「一个子句就是一行」的规矩，但合并短句那一支**根本不看隔开
+    它们的是句号还是逗号**——于是「流程是这样的。本周三、周四」并成一行，
+    「官方宣布顺延到周一。而那时候」并成一行：**两句不同的话挤在同一屏，
+    而且后半句还是半截的**，读者会把两件事读成一件。
+
+    句内（逗号、顿号）合并是好的：空格把停顿显出来，读起来仍是一句话。
+    跨句合并是坏的。唯一的例外是那一片短到独自成行也读不到（≤2 字）——
+    那时候一闪而过比共一行更糟，让可读性的地板赢。
+
+    ⚠️ 这里**不逐条扫已发的片子**：它们的旁白按老规矩写，句号两边本来就有
+    大量短片段，扫它们只会得到一份要人维护的豁免名单（「一个会过期的名单和
+    一条常年红的检查是同一个毛病」）。测的是**机制**。
+    """
+    from tennislive.video.explainer import subtitle_lines
+
+    # 两句都够长：绝不能并成一行
+    text = "官方宣布顺延到周一。而那时候，加拿大站的资格赛两天前就打完了。"
+    lines = [l for _, _, l in subtitle_lines(text)]
+    for line in lines:
+        assert "顺延到周一" not in line or "而那时候" not in line, (
+            f"跨句并成了一行：{line}")
+
+    # ≤2 字的那一支：短到独自成行会一闪而过，允许并
+    text2 = "他站得上场，但打了就凑不满六个月。他没打。多伦多复出首轮输球。"
+    merged = [l for _, _, l in subtitle_lines(text2) if "没打" in l]
+    assert merged, "「他没打」这三个字整个不见了？"
+    assert all(len(l) >= 3 for _, _, l in subtitle_lines(text2)), (
+        "还是留下了会一闪而过的短行")
+
+
+def test_特殊豁免那条的字幕行行都是完整子句():
+    """新写的片子要真的达标——上一条测机制，这一条测**这条片子**。
+
+    只钉 special-exempt：它是按这条规矩重排过标点的那一条，也是判据的样本。
+    盯死三个数，任何一个回涨都说明标点或切行退化了。
+    """
+    import re
+
+    from tennislive.video.explainer import _OPENINGS, _SCRIPTS, speakable, subtitle_lines
+    from tennislive.video.explainer import _sub_display
+
+    segs = [_OPENINGS["special-exempt"]["narration"]] + [
+        s[3] for s in _SCRIPTS["special-exempt"]]
+    total = cross = split = short = 0
+    norm = lambda x: re.sub(r"[，。；：？！——、\s]", "", _sub_display(x))  # noqa: E731
+    for raw in segs:
+        text = speakable(raw)
+        sents = [x for x in re.split(r"(?<=[。！？；…])", text) if x.strip()]
+        for a, b, line in subtitle_lines(text):
+            total += 1
+            cross += not any(norm(line) in norm(s) for s in sents)
+            split += not re.search(r"[，。；：？！、—]", text[a:b])
+            short += len(line) < 3
+    assert total > 100, f"只切出 {total} 行？判据的主语没了"
+    assert (cross, split, short) == (0, 0, 0), (
+        f"{total} 行里：横跨两句 {cross} 行、子句被劈开 {split} 行、太短 {short} 行")
+
+
+
+# ---------------------------------------------------------------- Pages 触发
+#
+# 2026-08-04：`pages.yml` 从上线到出事一共跑过四趟，**只有真人合并 PR 那趟是
+# push 自动触发的**；两次由推送流程自己 commit + push 的复制页一次都没触发。
+# 根因是 `GITHUB_TOKEN` 推的 push 不创建 workflow run（GitHub 防递归）。
+# 症状是「慢」不是「错」：探活探满 40 分钟，然后静静把按钮摘掉。
+
+def _fake_post(calls, status=204):
+    def post(url, **kw):
+        calls.append((url, kw))
+        return type("R", (), {"status_code": status, "text": ""})()
+    return post
+
+
+def _fake_runs(*snapshots):
+    """按顺序返回每次「查运行列表」看到的东西。
+
+    每份是 `[(id, actor, event), …]`，`None` 表示这次读不到（HTTP 500）。
+    用完之后停在最后一份——确认循环会查很多次。
+    """
+    seen = []
+
+    def get(url, **kw):
+        seen.append(url)
+        runs = snapshots[min(len(seen) - 1, len(snapshots) - 1)]
+        if runs is None:
+            return type("R", (), {"status_code": 500, "text": "",
+                                  "json": lambda self: {}})()
+        payload = {"workflow_runs": [
+            {"id": rid, "actor": {"login": actor}, "event": event}
+            for rid, actor, event in runs]}
+        return type("R", (), {"status_code": 200, "text": "",
+                              "json": lambda self, p=payload: p})()
+
+    return get
+
+
+def test_触发Pages要真发出那个dispatch(monkeypatch):
+    """204 才算点动了，而且要打到 `pages.yml` 的 dispatches 上。"""
+    from tennislive.render import pushmsg
+
+    calls = []
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "someone/repo")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post(calls))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(1, "someone", "push")],                       # 点之前
+        [(2, "github-actions[bot]", "workflow_dispatch"),
+         (1, "someone", "push")],                       # 点之后，多了一条
+    ))
+    assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    (url, kw), = calls
+    assert url == ("https://api.github.com/repos/someone/repo/actions/"
+                   "workflows/pages.yml/dispatches"), url
+    assert kw["json"] == {"ref": "main"}, "Pages 只服务 main，别按当前分支点"
+    assert kw["headers"]["Authorization"] == "Bearer t0ken"
+
+
+def test_点不动Pages不许静默(monkeypatch, caplog):
+    """点不动**不算失败**（探活那道闸还在），但必须出声。
+
+    「没点成」和「点成了」在日志上长得一样，正是这个 bug 藏了一整天的原因。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([], status=403))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs([]))
+    with caplog.at_level(logging.WARNING):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False
+    assert "403" in caplog.text and "actions: write" in caplog.text
+
+    caplog.clear()
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False
+    assert "GITHUB_TOKEN" in caplog.text
+
+
+def test_点完要确认真的出现了一条新的运行记录(monkeypatch, caplog):
+    """**204 是信号，运行记录才是产物。**
+
+    `dispatches` 返回 204 只保证 GitHub 收下了请求：工作流被停用、
+    `pages.yml` 不在默认分支上、ref 指到没有这个文件的地方，都会收下之后
+    什么也不发生。2026-08-04 那两条「看起来自动触发了」的记录其实是我手动
+    补的，而日志里两者一模一样——所以现在要把 **run id 和 actor** 打出来。
+
+    ⚠️ 顺带钉住「**比变化量，别比内容特征**」：下面第二档的基线里**本来就
+    有**一条 `workflow_dispatch`，如果按「最近有没有 workflow_dispatch」判，
+    它一上来就为真，这道确认等于没装。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([]))
+
+    # ① 真的多出来一条 → True，而且 id 和 actor 都要落进日志
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(7, "robertyang87", "workflow_dispatch")],
+        [(8, "github-actions[bot]", "workflow_dispatch"),
+         (7, "robertyang87", "workflow_dispatch")],
+    ))
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    assert "8" in caplog.text and "github-actions[bot]" in caplog.text, (
+        "确认到了却没把 run id 和 actor 打出来——"
+        "而 actor 正是「这段代码点的」和「有人手动补的」之间唯一的区别")
+
+    # ② 收下了但什么也没发生 → False，而且要出声
+    caplog.clear()
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(7, "robertyang87", "workflow_dispatch")]))   # 前后一模一样
+    with caplog.at_level(logging.WARNING):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False, (
+            "没有新的运行记录却报成功了——那正是这条修复要防的「写了没跑过」")
+    assert "204" in caplog.text
+
+
+def test_读不到运行列表不算确认过(monkeypatch, caplog):
+    """「查不了」和「没跑起来」处置相反，日志里不许混成一句。
+
+    读不到基线就没法比集合差，这时**不能**把「看见一条旧 run」当成确认——
+    那是「非空结果 ≠ 对题」。所以直接说「这一趟确认不了」，返回 True
+    （POST 确实成功了，别把它误报成失败去吓下一个人）。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([]))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(None))
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    assert "确认不了" in caplog.text, "读不到列表却装作确认过了"
+    assert "github-actions" not in caplog.text, (
+        "没确认过就不该报出 actor——那会让人以为验过了")
+
+
+def test_触发要排在探活之前不是之后():
+    """**只测行为拦不住位置错。**
+
+    排在探活之后等于没装：那时循环已经探满全程、按钮已经摘掉了。仓库里
+    「闸装在发的那一步不是渲的那一步」是同一个形状——那次三档行为全对、
+    全绿，按钮照样每次消失。
+    """
+    import inspect
+
+    from tennislive.render import pushmsg
+
+    reel = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    for src, where in (
+        (inspect.getsource(pushmsg._probe_page), "pushmsg._probe_page"),
+        (reel.split("def wait_for_copy_page")[1].split("\ndef ")[0],
+         "push_reel.wait_for_copy_page"),
+    ):
+        assert "trigger_pages_build()" in src, f"{where} 没触发 Pages 部署"
+        assert src.index("trigger_pages_build()") < src.index("for attempt"), (
+            f"{where} 把触发排在了探活循环**之后**——那时按钮早就摘掉了")
+
+
+#: 探复制页的那两个函数。谁（间接）调用它们，谁就要能点动 Pages。
+_COPY_PAGE_PROBES = {"drop_dead_copy_button", "wait_for_copy_page"}
+
+
+def _funcs_calling(tree, names: set[str]) -> set[str]:
+    """模块里哪些顶层函数调用了 `names` 里的任何一个。
+
+    **用 AST 不用正则**：`push_reel.py` 的 docstring 里提了三次
+    `wait_for_copy_page`，真正的调用只有一处；正则分不出这个差别，而这个
+    仓库的注释正是记教训的地方，必然会提到被测的那个名字。
+    """
+    import ast
+
+    hit = set()
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Call):
+                name = getattr(sub.func, "id", None) or getattr(
+                    sub.func, "attr", None)
+                if name in names:
+                    hit.add(node.name)
+    return hit
+
+
+def _probing_entry_points() -> list[str]:
+    """从代码推出「哪些命令行入口会走到探复制页」，不手写清单。"""
+    import ast
+
+    tools = sorted(
+        p.name for p in Path("tools").glob("*.py")
+        if _funcs_calling(ast.parse(p.read_text(encoding="utf-8")),
+                          _COPY_PAGE_PROBES))
+
+    cli_src = Path("src/tennislive/cli.py").read_text(encoding="utf-8")
+    probing = _funcs_calling(ast.parse(cli_src), _COPY_PAGE_PROBES)
+    # `if args.channel == "pushplus": return cmd_publish_pushplus(args)`
+    channels = sorted({
+        chan for chan, fn in re.findall(
+            r'args\.channel\s*==\s*"([^"]+)"[^\n]*\n\s*return\s+(\w+)\(', cli_src)
+        if fn in probing})
+
+    # **判据自己也要有判据**：主语没了它要出声，而不是变成一条恒真的绿灯。
+    assert tools, "一个 tools 脚本都没查到会探复制页——判据失效了"
+    assert channels, "一个 publish channel 都没查到会探复制页——判据失效了"
+    return ([re.escape(t) for t in tools]
+            + [rf"publish\s+{re.escape(c)}" for c in channels])
+
+
+def test_会发微信的工作流都要能触发Pages():
+    """判据自己推导，不维护白名单。
+
+    凡是跑 `push_reel.py` 或 `tennislive publish pushplus` 的工作流都会走到
+    探复制页那条路，所以都要：`permissions: actions: write`（才点得动
+    workflow_dispatch）+ 那一步拿得到 token。少一样就退回「探满 40 分钟再摘
+    按钮」，**而它不报错**。
+
+    ⚠️ 扫之前先去掉整行注释——工作流的注释正是这个仓库记教训的地方，
+    连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
+
+    ⚠️ **第一版写的是 `push_reel\\.py|publish\\s+pushplus`——那是一张伪装成
+    推导的白名单。** 它把「哪些入口会探复制页」的答案硬编码成了两种拼法，
+    于是 `publish content`（内容雷达）到底算不算，全靠写测试的人当时记得。
+    这次核下来它**碰巧**是对的（`cmd_publish_flash` 直接推图文，根本没有
+    复制页），可「碰巧对」和「真的接上了」长得一模一样，而且前者会一直绿。
+    现在从代码推：拿 AST 找出真正调用探活那两个函数的入口，再顺着
+    `args.channel` 的分发表倒推出 channel 名。以后哪个入口新接上探活，
+    这条会替人记得。
+    """
+    import yaml
+
+    need = re.compile("|".join(_probing_entry_points()))
+    checked = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        perms = spec.get("permissions") or {}
+        for job in (spec.get("jobs") or {}).values():
+            for step in job.get("steps") or []:
+                run = "\n".join(
+                    line for line in str(step.get("run") or "").splitlines()
+                    if not line.lstrip().startswith("#"))
+                if not need.search(run):
+                    continue
+                env = step.get("env") or {}
+                checked.append(f"{path.name}「{step.get('name')}」")
+                assert perms.get("actions") == "write", (
+                    f"{path.name} 会发微信却没有 `actions: write`——"
+                    "点不动 pages.yml，复制页只能等别的 push 才发布")
+                assert "GITHUB_TOKEN" in env or "GH_TOKEN" in env, (
+                    f"{path.name}「{step.get('name')}」拿不到 token，"
+                    "`trigger_pages_build` 会直接跳过")
+    assert len(checked) >= 9, f"只校到 {len(checked)} 处，判据可能失效了"
+
+
+def test_验证Pages那条路要够得着而且不发微信():
+    """**「写了」和「跑通了」之间，不该隔着一条要发微信才能走的路。**
+
+    #173 那个修复的判据是「`pages.yml` 里出现一条 `actor=github-actions[bot]`
+    的运行记录」，可它只在**真推送**的时候才走到——而真推送会发微信，那条
+    消息发出去收不回来。于是这个修复在仓库里躺了一整天，状态是「写了，
+    没跑过」，而它看起来和「修好了」一模一样。
+
+    `pages-selftest.yml` 把验证从发布里拆出来。三头都要钉：
+
+    - **入口够得着**（工作流在，手动能跑）
+    - **那条路真的短**——不出片、不发微信。只钉入口的话，有人把它写成一趟
+      完整推送也照样绿（`--cover-only` 那次就是这么栽的）
+    - **工具自己查一遍产物**，不只信 `trigger_pages_build()` 的返回值。
+      判据和被判的东西是同一个来源，就什么也证明不了
+    """
+    import yaml
+
+    path = Path(".github/workflows/pages-selftest.yml")
+    assert path.exists(), (
+        "验证 Pages 触发的入口没了——那条修复又只能等真推送才验得了")
+    spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+    # YAML 1.1 把裸的 `on:` 读成布尔 True
+    triggers = spec.get("on") or spec.get(True) or {}
+    assert "workflow_dispatch" in triggers, "手动入口没了，这条就跑不起来"
+    assert (spec.get("permissions") or {}).get("actions") == "write", (
+        "没有 `actions: write` 就点不动 pages.yml——这条自检自己会失败")
+
+    runs, envs = [], {}
+    for job in (spec.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            runs.append("\n".join(
+                line for line in str(step.get("run") or "").splitlines()
+                if not line.lstrip().startswith("#")))
+            envs.update(step.get("env") or {})
+    body = "\n".join(runs)
+    assert "GITHUB_TOKEN" in envs, (
+        "拿不到 token，`trigger_pages_build` 会直接跳过——这条自检等于空转")
+    assert "check_pages_trigger.py" in body, "没跑那个自检工具"
+    for banned in ("push_reel.py", "tennislive publish", "ffmpeg",
+                   "playwright", "yt-dlp"):
+        assert banned not in body, (
+            f"pages-selftest 里出现了 {banned}——这条路只该点一下 Pages，"
+            "不出片也不发微信。它一旦变长，就又没人愿意跑它了")
+
+    tool = Path("tools/check_pages_trigger.py").read_text(encoding="utf-8")
+    assert tool.count("pages_runs(") >= 2, (
+        "自检工具没有自己前后各查一遍运行列表——只信函数的返回值，"
+        "等于拿判据去证明判据")
+    assert "expect_actor" in tool and "github-actions[bot]" in tool, (
+        "没有校 actor。而 actor 正是「这段代码点的」和「有人手动补的」之间"
+        "唯一的区别——2026-08-04 那两条看起来自动触发的记录就是手动补的")
