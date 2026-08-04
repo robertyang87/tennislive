@@ -11,11 +11,14 @@
   "cover.jpg": {
     "source": "网球时差绘制（tools/versus_poster.py，cutout 版式）",
     "page": "assets/explainer/shang-rublev/cover_poster.json",
-    "description": "封面 VS 海报，1080×1440。两格是 ATP 官方棚拍抠图（assets/players/atp-s0re-shang-juncheng.png / atp-re44-andrey-rublev.png），背景是同目录的 mtl_rain_2026.jpg 虚化压暗。名字旁边的国旗和括号里的排名按账号所有者 2026-08-02 定的规矩渲。**crop 是算出来的不是试出来的**：按各自「头顶→脖子最窄处」占全图高度的比例反推（商竣程 138/603、卢布列夫 151/603），取头占裁切区 32%，于是 0.715 / 0.782——两颗头在海报上一样大。⚠️ 试过去掉钩子和页脚当纯 hero 图，底部空出一大块反而不成立，所以用完整那版。⚠️ ATP 对不存在的 ID 也返回 200 + image/png（14382 字节的灰色人形占位剪影），卢布列夫这张 62285 字节、md5 e916c053，和占位图比过、也打开看过：蓝色 F-Swiss 球衣、卷发、正脸；商竣程那张是橙色 Nike polo 加白帽——一橙一蓝，同框好分辨。",
+    "description": "封面 VS 海报，1080×1440，当解说片封面卡的 hero 图。两格是 ATP 官方棚拍抠图（assets/players/atp-s0re-shang-juncheng.png / atp-re44-andrey-rublev.png），背景是同目录的 mtl_rain_2026.jpg 虚化压暗。spec 在同目录的 cover_poster.json。\n\n⚠️ **海报和封面卡各画一套字，会撞。** 第一版直接把完整海报（带钩子、台头药丸、ATP1000 页脚）塞进来，渲出来台头/赛事/轮次/开赛时间**全印了两遍**，而且卡片自己那句问句正好盖住海报的国旗和排名那一行。所以这张是**只留画面**的版本：`hook` 和 `eyebrow` 置空、不给 `event_badge` / `meta`——文案、赛事名、轮次、开赛时间一律由封面卡的 `_OPENINGS[...]['question']` 和 `fixture` 出，一处一份。\n\n几何是**渲出来对着卡片调的，不是拍的**：卡片自己的字占 38%~65%（药丸、问句、两行 fixture），所以海报的内容必须收进上三分之一。`split` 0.325（斜切缝＝名字行）、两格 `scale` 0.245 → 抠图顶端落在 8%，正好在台头底下；名字行落在 32.5%，在药丸上方。中间试过 0.44/0.375（名字被问句压住）和 0.36/0.42（两个人的头被切掉，**抠图是吊在缝上往上长的**，抬缝就是抬人）。\n\n**crop 是算出来的不是试出来的**：按各自「头顶→脖子最窄处」占全图高度反推（商竣程 138/603、卢布列夫 151/603），取头占裁切区 32% → 0.715 / 0.782；两格 `scale` 相同，所以两颗头在卡上一样大。\n\n⚠️ ATP 对不存在的 ID 也返回 200 + image/png（14382 字节的灰色人形占位剪影）。卢布列夫这张 62285 字节、md5 e916c053，和占位图比过 md5 也打开看过：蓝色 F-Swiss 球衣、卷发、正脸；商竣程那张是橙色 Nike polo 加白帽——一橙一蓝，同框好分辨。",
     "date": "2026-08-04",
     "author": "网球时差",
     "licence": "合成图 · 素材授权见本文件其余各条",
-    "size": [1080, 1440]
+    "size": [
+      1080,
+      1440
+    ]
   },
   "mtl_rain_2026.jpg": {
     "source": "The Canadian Press",
@@ -24,7 +27,10 @@
     "date": "2026-08-02",
     "author": "unknown（加通社未在图上标注摄影师）",
     "licence": "unverified — 非商业资讯引用，发布前由人工判断",
-    "size": [1400, 958]
+    "size": [
+      1400,
+      958
+    ]
   },
   "shang_usopen_2023.jpg": {
     "source": "Wikimedia Commons",
@@ -33,7 +39,10 @@
     "date": "2023-08",
     "author": "Hameltion",
     "licence": "CC BY-SA 4.0",
-    "size": [1080, 1440]
+    "size": [
+      1080,
+      1440
+    ]
   },
   "rublev_usopen_2023.jpg": {
     "source": "Wikimedia Commons",
@@ -42,7 +51,10 @@
     "date": "2023-08-29",
     "author": "Hameltion",
     "licence": "CC BY-SA 4.0",
-    "size": [1080, 1440]
+    "size": [
+      1080,
+      1440
+    ]
   },
   "_borrowed": {
     "../shang-nishikori/shang_ao2026.jpg": "不复制一份，直接引原路径（署名见那个目录的 credits.json）。这一屏讲的正是「上一场胜利是一月十九日的澳网首轮」，而这张的图注写的就是那一天那一场——图和话是同一件事，不是拿一张对得上人的照片顶上。",
