@@ -11,7 +11,7 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure, compare]
+        options: [sample, ssml, azure, compare, phoneme]
         default: sample
 
 permissions:
@@ -91,6 +91,16 @@ jobs:
           AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: python tools/probe_azure_tts.py
+
+      # 多音字唯一能自动查的那条路：viseme 事件里有没有音素、<phoneme> 能不能
+      # 把读音钉死。词边界只给字符串，「一发」读 fā 还是 fà 在 text 字段里
+      # 长得一模一样——又一个「不吭声」。
+      - name: 探 Azure 的音素（多音字）
+        if: github.event.inputs.mode == 'phoneme'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: python tools/probe_azure_phoneme.py
 
       # 同一段真旁白两版并排——**判据是打开听**，时长表证明不了情绪。
       - name: 两版并排（edge vs Azure）
