@@ -6098,12 +6098,19 @@ def test_栏目基调只填空位不许盖掉段级风格():
 
     # ① 基调必须是**服务端实测通过**的风格，不能是随手写的名字——
     #    ⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功，只是没有情绪
-    styles = {v[0] for v in azure_tts.COLUMN_BASE_STYLE.values()}
+    # ⚠️ **空串是「实测之后决定不设」**，不是漏填——它和「根本没登记」处置一样
+    # 但说法必须不一样，靠 `is_registered()` 分开
+    live = {k: v for k, v in azure_tts.COLUMN_BASE_STYLE.items() if v[0]}
+    styles = {v[0] for v in live.values()}
     assert styles <= set(azure_tts.KNOWN_STYLES)
-    # ⚠️ 满档太重（实测抬 50% 音高），基调一律要显式写 degree
-    assert all(v[1] for v in azure_tts.COLUMN_BASE_STYLE.values()), (
+    # ⚠️ 满档太重（实测抬 50% 音高），设了基调就要显式写 degree
+    assert all(v[1] for v in live.values()), (
         "基调必须显式写 styledegree——默认 1.0 实测把八段从 115–128 Hz "
         "抬到 184–188，那不是基调是换了个人念")
+    assert azure_tts.is_registered("赛场之上") and not azure_tts.base_style_for("赛场之上")[0], (
+        "赛场之上是**登记过的「不设」**（三趟实测），不许退化成「没登记」——"
+        "那样日志会说「漏了」，而它是想清楚的")
+    assert not azure_tts.is_registered("没这个栏目")
     # ② 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
     suspect = {"narration-relaxed", "serious", "angry", "disgruntled", "cheerful"}
     assert not (styles & suspect), (

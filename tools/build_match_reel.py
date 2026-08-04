@@ -2587,8 +2587,12 @@ def column_base_style(spec: dict) -> tuple[str, str]:
         return "", ""
     style, degree = azure_tts.base_style_for(column)
     if not style:
-        print(f"[配音] 栏目「{column or '—'}」没登记基调，逐段按 spec 走"
-              f"（已登记：{'、'.join(azure_tts.COLUMN_BASE_STYLE)}）")
+        # ⚠️ **两种空的处置一样，说法必须不一样**：一种是想清楚了，
+        # 一种是还没想过。混成一句就等于把「实测之后决定不设」抹成了「漏了」。
+        why = ("实测之后决定不设（见 azure_tts.COLUMN_BASE_STYLE 上面那张表）"
+               if azure_tts.is_registered(column)
+               else f"没登记（已登记：{'、'.join(azure_tts.COLUMN_BASE_STYLE)}）")
+        print(f"[配音] 栏目「{column or '—'}」{why}，逐段按 spec 走")
     return style, degree
 
 
