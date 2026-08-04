@@ -11,7 +11,7 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure]
+        options: [sample, ssml, azure, compare]
         default: sample
 
 permissions:
@@ -92,12 +92,20 @@ jobs:
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: python tools/probe_azure_tts.py
 
+      # 同一段真旁白两版并排——**判据是打开听**，时长表证明不了情绪。
+      - name: 两版并排（edge vs Azure）
+        if: github.event.inputs.mode == 'compare'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: python tools/compare_tts.py output/voice-samples
+
       - name: 合成语音样本
         if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
-        if: github.event.inputs.mode == 'sample'
+        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
