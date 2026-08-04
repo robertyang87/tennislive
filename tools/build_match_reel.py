@@ -157,6 +157,19 @@ COVER_TAIL = 0.25
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
 POSTER_NAME = "poster.jpg"
+# 2026-08-04 之前发出去的「赛场之上」封面，走的是 VS 版式（cutout / diagonal）。
+# 那天账号所有者把这个栏目的封面改成一律 solo，**这些不重渲**：微信那条消息
+# 发出去收不回来，为版式重跑一遍六分钟的 render 换不到任何东西。
+#
+# ⚠️ **只许减不许加。** 加一个名字进来就等于让一条新片子绕过新规矩，而它
+# 不会报错——正是这张表要防的事。判据在
+# `test_赛场之上的封面一律用solo`（这张表里的每个 slug 都必须真的是老片子，
+# 而且必须真的是非 solo——写错一个名字，豁免就成了一盏恒真的绿灯）。
+_LEGACY_VS_COVERS = frozenset({
+    "eala-fernandez", "eala-osaka", "eala-svitolina", "potapova-venus",
+    "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
+    "wong-lehecka",
+})
 # contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
@@ -825,6 +838,7 @@ def download(url: str, dest: Path) -> Path:
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
     # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
     # 传到网盘，再把直链给我们。
+    direct_failed = ""
     if "youtube.com" not in url and "youtu.be" not in url:
         proc = subprocess.run(
             ["curl", "-sSL", "--fail", "-o", str(dest), url],
@@ -849,21 +863,29 @@ def download(url: str, dest: Path) -> Path:
             head = dest.read_bytes()[:400].lower()
             looks_html = b"<html" in head or b"<!doctype" in head
             dest.unlink(missing_ok=True)
-            raise ReelError(
+            # ⚠️ **这里原来直接抛错，而错误正文写着「这类要交给 yt-dlp」**——
+            # 也就是说出路已经写出来了，只是**让人去走，代码自己不走**。
+            # 张帅那条就撞在这儿：`players.brightcove.net/…/index.html?videoId=…`
+            # 不含 youtube，于是走 curl 拿回 0.3 MB 网页，render 第 12 秒就红
+            # （run 30875896980）——而同一条 URL 交给 yt-dlp 一次就下来了。
+            #
+            # **按结果分路，不按域名分路。** 维护一张「哪些站是播放页」的名单
+            # 会过期，而过期的名单和一条常年红的检查是同一个毛病；
+            # 「curl 下到的东西 ffprobe 读不出视频流」这个判据永远新鲜。
+            direct_failed = (
                 f"直链下到 {size_mb:.1f} MB，但 ffprobe 读不出视频流"
-                f"{'（内容是 HTML）' if looks_html else ''}：{url[:120]}\n"
-                "两种常见情况：\n"
-                "  ① 网盘还是「仅限受邀者」——改成「知道链接的任何人」再试；\n"
-                "  ② 给的是**播放页**不是直链（Brightcove 之类的 index.html）——"
-                "这类要交给 yt-dlp，curl 只会把网页存下来。"
-            ) from None
-        print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
-        _keep_source(url, dest)
-        return dest
+                f"{'（内容是 HTML）' if looks_html else ''}")
+            print(f"[直链] {direct_failed}，改交给 yt-dlp 再试一次")
+        else:
+            print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
+            _keep_source(url, dest)
+            return dest
 
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
     if not binary:
-        raise ReelError("找不到 yt-dlp")
+        raise ReelError(
+            f"{direct_failed}，而且找不到 yt-dlp" if direct_failed
+            else "找不到 yt-dlp")
     # **编码是偏好，不是硬条件。** 原来第一档写死 `vcodec^=avc1` + `ext=m4a`：
     # YouTube 的高清一律是分离流，而 1080p 那几档常常是 VP9/AV1(webm)。某个
     # player client 列出来的格式表不全时（PO token / n challenge 那一环没打通
@@ -912,7 +934,8 @@ def download(url: str, dest: Path) -> Path:
         dest.unlink(missing_ok=True)
 
     raise ReelError(
-        f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
+        (f"{direct_failed}；退回 yt-dlp 之后，" if direct_failed else "")
+        + f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
         + "\n  ".join(failures)
         + "\n\n如果全是 “Sign in to confirm you’re not a bot”，那是**这台机器的 IP "
         "被 YouTube 挡了**，不是视频的问题：把一份登录过的 cookies.txt 存成仓库 "
@@ -1179,10 +1202,10 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
              "subtitle_top"),
-    "cover": ("event_badge", "eyebrow", "hook", "layout", "meta", "narration",
-              "portrait", "portrait_above", "result", "round", "score",
-              "scrim", "split", "sub", "subject", "tier", "topic", "versus",
-              "winner"),
+    "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
+              "narration", "portrait", "portrait_above", "result", "round",
+              "score", "scrim", "split", "sub", "subject", "tier", "topic",
+              "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
                 "narration", "quote", "source", "start", "track"),
 }
@@ -1507,12 +1530,23 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     # 3:4 之后窗口占源片 41.3% 宽（9:16 时只有 32%），对中的余量本来就宽裕。
     # **可预期比「聪明」要紧**：读者的直觉就是等比裁切，行为得对得上。
     # 个别段要另定，spec 里显式给 `cx`——那是人看着缩略图墙定的，说了算。
-    fixed = [s for s in segments
-             if not s.track and s.fit != "contain" and s.cx is None]
+    # ⚠️ **摇的段也要填 `cx`。** 这里原来写着 `not s.track`——只给不摇的段填，
+    # 于是 `track: true` 的段 `cx` 留着 `None`，而 `cut_segment` **无条件先算**
+    # 一个兜底的 `x = seg.cx * source_w - CROP_W/2`，当场
+    # `TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'`
+    # （run 30877075310，分段编码到第 11 段才炸，前面十段全白编）。
+    #
+    # **存量九条 spec 一条都没用过 `track`**，所以这条路从「自动定心改成固定
+    # 中心」那天起就是坏的，一直没人踩到——又一次「写了不等于跑过」：
+    # 那次改动只保证了它走的那条路，另一条路的前提被顺手拿掉了。
+    #
+    # 摇的段有 `path` 时用不上这个值；**拿不到 path 时它就是兜底**，见下面。
+    fixed = [s for s in segments if s.fit != "contain" and s.cx is None]
     for seg in fixed:
         seg.cx = 0.5
-    if fixed:
-        print(f"    [fixed] {len(fixed)} 段不摇，窗口取源片正中 cx=0.500")
+    still = [s for s in fixed if not s.track]
+    if still:
+        print(f"    [fixed] {len(still)} 段不摇，窗口取源片正中 cx=0.500")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -1600,6 +1634,13 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
         else:
+            # **声明了要摇却没拿到路径**，是退回固定中心——但要出声。
+            # 不吭声的话，「跟踪抽帧失败」和「本来就不摇」在日志上一模一样，
+            # 而这一段之所以写 `track: true`，正是因为固定中心装不下主体。
+            if seg.track:
+                print(f"    [track] ⚠️ {seg.start:.1f}s 段声明了 track 但没跟出"
+                      f"路径，退回固定中心 cx={seg.cx:.3f}——"
+                      "主体如果在横向移动，这一段的构图要自己看一眼")
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
@@ -1686,37 +1727,40 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
 
     账号所有者 2026-07-31 定的：休伊特那条「是讲休伊特的儿子的话题，不是
     赛场之上的内容」「所以封面只有休伊特儿子照片」。反过来那条**没有松**：
-    赛场之上仍然只能用 VS 模板，solo 不是它缺图时的兜底。
+    ⚠️ **2026-08-04 又翻了回来**：账号所有者「以后都用 solo 版做「赛场之上」
+    封面」，于是 solo 成了默认，**退回 VS 才要写 `_layout_why`**。下面那段
+    注释记着这次翻面的完整理由。
     """
     cover = spec["cover"]
     layout = str(cover.get("layout", "cutout"))
     eyebrow = str(cover.get("eyebrow", "")).strip()
+    # ⚠️ **闸在 2026-08-04 整个反过来了。**
+    #
+    # 账号所有者：「**以后都用 solo 版做「赛场之上」封面**」「中间标题下面
+    # 写上比分（带双方国旗）」。所以 solo 成了这个栏目的默认，VS 反过来成了
+    # 需要认领的那一支。
+    #
+    # 老规矩（「赛场之上一律 VS，solo 要写 `_layout_why`」）要防的是**滑坡**：
+    # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
+    # 顶一下」。**那个滑坡现在不存在了**——solo 本来就是默认，没什么可省的。
+    # 而反方向的滑坡出现了：有人手头正好有两张抠图，就顺手退回 VS，栏目的
+    # 封面于是又变成两种样子。所以闸原样翻个面：**非 solo 要写 `_layout_why`**。
+    #
+    # 已发的十几条 VS 封面不动（`_LEGACY_VS_COVERS`，只许减不许加）——
+    # 微信那条消息发出去收不回来，为版式重渲没有意义。
+    if layout != "solo" and eyebrow == "赛场之上" \
+            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
+            and not str(cover.get("_layout_why", "")).strip():
+        raise ReelError(
+            "「赛场之上」的封面从 2026-08-04 起一律用 solo："
+            "账号所有者「以后都用 solo 版做『赛场之上』封面」。\n"
+            f"这条 spec 写的是 layout={layout!r}。\n"
+            "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
+            "赛果写在 `cover.result` + `cover.matchup`，"
+            "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
+            "**确实要退回 VS 版式，就写一句 `cover._layout_why` 说清楚为什么**"
+            "——一句话就行，但必须写；不写就是手滑，不是决定。")
     if layout == "solo":
-        # **赛场之上默认仍然是 VS 模板，但可以按条声明改用 solo。**
-        #
-        # 原来这儿是一刀切「赛场之上一律 VS」。那条规矩要防的是**滑坡**：
-        # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
-        # 顶一下」。防的是「缺图 → 换个 layout 试试」，不是防「编辑上认为
-        # 这一条该用单人封面」。
-        #
-        # 账号所有者 2026-08-02（gea-shapovalov）：「封面就变成他热亚一个人
-        # 捧杯的全景图吧。这样可能更合适一点，而不是说两人对阵的那种头像图了。」
-        # 那一条**两张官方抠图都在手上、VS 海报已经渲出来看过**——不是缺图，
-        # 是编辑判断：这条片子讲的是一个人三年爬上来然后夺冠，不是一场对决。
-        #
-        # 所以闸从「不许」改成「**要留下判据**」：写一句 `_layout_why` 说清楚
-        # 为什么这一条不是对决片。和 `mixed_fps` / `silent_source` / `rank: null`
-        # 一个形状——认领这一步把「想清楚了」和「凑合一下」分开，而**忘了写
-        # 会当场报错**，滑不下去。
-        if eyebrow == "赛场之上" and not str(cover.get("_layout_why", "")).strip():
-            raise ReelError(
-                "「赛场之上」默认是 VS 模板：这个栏目通常讲一场对决，"
-                "封面只放一个人就少了一半。\n"
-                "**确实要用单人封面，就写一句 `cover._layout_why` 说清楚为什么**"
-                "（这一条讲的是谁、为什么不是对决片）——一句话就行，但必须写。\n"
-                "⚠️ 这个键不是给「缺图」用的。缺图去扩检索源（赛事官方图库 → "
-                "协会/赛事新闻页 → 新闻站/图片社 → Commons/Flickr），"
-                "或从本场源片抓一帧；**拿 solo 顶替缺掉的那一格是滑坡，不是决定**。")
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
             raise ReelError(
