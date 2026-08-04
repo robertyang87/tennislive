@@ -1,0 +1,51 @@
+name: pages-selftest
+
+# 只干一件事：在 runner 上真跑一趟 `trigger_pages_build()`，看 `pages.yml`
+# 会不会出现一条 **`actor=github-actions[bot]`** 的运行记录。
+#
+# **为什么要单独开一条。** 那个修复（#173）的判据只有在**真推送**的时候才走
+# 得到，而真推送会发微信——「验一下」和「发一条收不回来的消息」被绑在了一起。
+# 于是它在仓库里躺了一天，状态一直是「写了，没跑过」。这条把验证从发布里拆
+# 出来，代价是 40 秒的机器时间。
+#
+# ⚠️ 副作用只有一个：Pages 真的会重新发布一次（实测 20~27 秒，幂等）。
+# **不发微信、不出片、不提交、不碰 output/。**
+#
+# ⚠️ 只留 `workflow_dispatch`，不给它定时——它不产出任何东西，定时跑等于每天
+# 白点两次 Pages。要验的时候手动跑一趟就够了。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # 点 `pages.yml` 的 workflow_dispatch 要它；顺带读运行列表来确认真跑起来了
+  # （`write` 含读）。
+  actions: write
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 这条只读代码，一个产物都不碰。
+          sparse-checkout: |
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 装依赖
+        # 只要 `requests`，它在主依赖里。不装 ffmpeg / Chromium / 字体——
+        # 这条路一帧画面都不渲。
+        run: pip install -q -e .
+
+      - name: 点一下 Pages，并确认它真的跑起来了
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tools/check_pages_trigger.py
