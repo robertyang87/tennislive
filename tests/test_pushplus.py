@@ -216,17 +216,19 @@ def test_prepare_image_delivery_uploads_every_card_to_pushplus(
 
 
 def test_走pushplus图床要先说清楚30天会删图(tmp_path, monkeypatch, caplog):
-    """这条分支**默认走不到**，走到了必须出声。
+    """这条路是**认领过**的（账号所有者 2026-08-04：图一个月后失效可以接受），
+    但它必须把代价写进日志。
 
     PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
     （`/doc/function/image.html` 的「使用限制」），而微信那条消息发出去
-    收不回来也改不了——满月之后每一条历史推送的海报一起变裂图。
-    退路那条钉在 commit sha 上指向仓库，git 里的东西不会消失。
+    收不回来也改不了——满月之后那条推送的海报变裂图。
 
-    也就是说这个「优化」的代价要**一个月后**才现形：日志上它和正常那条
-    长得一模一样。这个仓库里那类不吭声的兜底已经栽过太多次，所以这里
-    宁可吵一句。判据只钉「说没说」，不钉措辞——但那两个数字得在，
-    不然下一个人读到的只是一句没有判据的抱怨。
+    要命处在于**这一切一个月后才现形**，当天两条通道的日志长得一模一样。
+    将来有人查「这条老推送的图怎么裂了」，答案得在当天的日志里躺着，
+    而不是靠他重新把这一整节推理一遍。
+
+    判据只钉「说没说」，不钉措辞——但那个数字和那个变量名得在，
+    不然下一个人读到的只是一句没有出处、也没有出路的抱怨。
     """
     cards = tmp_path / "cards"
     cards.mkdir()
@@ -249,7 +251,7 @@ def test_走pushplus图床要先说清楚30天会删图(tmp_path, monkeypatch, c
     assert provider == "pushplus"
     said = "\n".join(r.message for r in caplog.records)
     assert "30 天" in said, f"走了会删图的那条路却没出声：{said!r}"
-    assert "PUSHPLUS_SECRET_KEY" in said, "没说怎么退回去——报错要说出路"
+    assert "PUSHPLUS_SECRET_KEY" in said, "没说怎么改回永久可取——留了个没出路的告警"
 
     # 反过来：默认那条路**不许**吵。一条恒真的告警和没有告警一样没用，
     # 而且它会把真正该看见的那次淹掉。
