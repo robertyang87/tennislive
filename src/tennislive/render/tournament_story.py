@@ -2039,6 +2039,49 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
     ),
     _trivia_story(
+        slug="shang-rublev",
+        title="商竣程第二轮VS卢布列夫",
+        subtitle="赛事前瞻 · ATP 1000",
+        identity="195 天来第一场胜利之后",
+        chips=("ATP 1000", "第二轮", "第二次交手"),
+        hero=(
+            "商竣程在蒙特利尔首轮 6-3、6-3 击败巴列霍，那是他自 1 月澳网首轮以来的第一场胜利；"
+            "第二轮对手是赛会 10 号种子卢布列夫，两人上一次交手是 2024 年 1 月香港站半决赛，"
+            "18 岁的商竣程逼出第三盘后落败。"
+        ),
+        facts=(
+            "商竣程 2005 年 2 月生，生涯最高世界第 47（2024 年 10 月），本周世界第 281；"
+            "右脚伤病连续两个赛季拿走他的上半季，2026 年 2 月迪拜站后停赛五个月，"
+            "7 月 27 日华盛顿首轮复出负于锦织圭。",
+            "2026 年 8 月 2 日蒙特利尔首轮，商竣程 6-3、6-3 胜巴列霍，用时 1 小时 21 分，"
+            "全场只被拿到一个破发点；他是当天第一个也是唯一一个赢下首轮的人，随后大雨中断比赛。",
+            "卢布列夫 1997 年 10 月生，生涯 18 个 ATP 单打冠军，2021 年 9 月排到生涯最高世界第 5；"
+            "2026 年 7 月 19 日在巴斯塔德夺得本赛季首冠，距上一个冠军已隔一年多。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2024-01",
+                player="卢布列夫",
+                age="26 岁",
+                headline="香港半决赛，三盘胜商竣程",
+                detail="两人至今唯一一次交手，卢布列夫打满三盘取胜；当时商竣程刚满 18 岁。",
+                source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+            ),
+            ChampionMoment(
+                date="2026-08",
+                player="商竣程",
+                age="21 岁",
+                headline="蒙特利尔首轮 6-3、6-3 胜巴列霍",
+                detail="自 1 月 19 日澳网首轮之后的第一场胜利，中间隔了 195 天和一次五个月的伤停。",
+                source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+            ),
+        ),
+        image_keys=(),
+        source_label="两人维基百科条目 / ATP 官方赛会信息",
+        image_credit="Wikimedia Commons / 加拿大通讯社",
+        source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
+    ),
+    _trivia_story(
         slug="venus-potapova",
         title="维纳斯首轮VS波塔波娃",
         subtitle="赛事前瞻 · WTA 500",

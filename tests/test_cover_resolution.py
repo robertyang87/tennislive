@@ -160,9 +160,9 @@ def test_能推近的片子是算出来的不是手写的():
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
     eligible = [s for s in sorted(_SCRIPTS) if _fill(s) / chk.PUSH >= chk.FLOOR]
-    # 当前这批：不够推的有 8 条（3 张本来就在放大 + 5 张够铺满推不动）。
+    # 当前这批：不够推的有 9 条（3 张本来就在放大 + 6 张够铺满推不动）。
     # 加选题会动这个数——它跟着实际分辨率走，不是另维护的名单。
-    assert len(eligible) == len(_SCRIPTS) - 8
+    assert len(eligible) == len(_SCRIPTS) - 9
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
@@ -192,8 +192,13 @@ def test_够铺满但推不动的要能被单独认出来():
     # **原图正好 3:4**，所以铺满 1.00x、一个像素的垫层都不用——和 lucky-loser
     # 那次「拿推近的余量换掉顶部虚化」是同一个取舍，只不过这张天生就不用垫。
     # 同一张图两条片子在用，落在这一档是必然的，不是谁换了图。
+    # shang-rublev 的封面不是照片，是 tools/versus_poster.py 渲出来的 VS 海报
+    # （两人官方抠图 + 国旗 + 即时排名），**渲染器的输出就是 1080×1440**，
+    # 所以铺满 1.00x、推不动是必然的，跟素材够不够清晰无关：想让它推得动，
+    # 只能把海报渲成更大的画布，而画布尺寸是版式定死的那一部分。
     assert static_only == {
-        "lucky-loser", "mandatory-1000", "queue", "ten-champions", "wildcard"
+        "lucky-loser", "mandatory-1000", "queue", "shang-rublev",
+        "ten-champions", "wildcard",
     }, (
         f"够铺满但推不动的这一档变了：现在是 {sorted(static_only)}。"
         f"确认是换了图还是改了 PUSH，再更新这条。")
