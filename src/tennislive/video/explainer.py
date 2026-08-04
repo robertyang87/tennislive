@@ -1580,44 +1580,54 @@ _ACADEMY_COUNT_DIAGRAM = """
 _ACADEMY_SPAN_DIAGRAM = """
 <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
   <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
-        font-size="36" font-weight="800">他们到学院那年，多大</text>
+        font-size="36" font-weight="800">他们哪一年到的学院</text>
   <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
-        font-size="26" font-weight="700">同一份公告里的七个人</text>
+        font-size="26" font-weight="700">横轴＝入校那一年　名字底下＝当时多大</text>
 
-  <line x1="80" y1="300" x2="760" y2="300" stroke="rgba(231,243,236,.28)" stroke-width="3"/>
-  <g fill="#9fb4aa" font-size="24" font-weight="700" text-anchor="middle">
-    <text x="80"  y="344">13</text>
-    <text x="165" y="344">14</text>
-    <text x="420" y="344">17</text>
-    <text x="590" y="344">19</text>
-    <text x="675" y="344">20</text>
-    <text x="760" y="344">21</text>
+  <line x1="80" y1="300" x2="800" y2="300" stroke="rgba(231,243,236,.28)" stroke-width="3"/>
+  <g fill="#9fb4aa" font-size="23" font-weight="700" text-anchor="middle">
+    <text x="121" y="344">2017</text>
+    <text x="193" y="344">2018</text>
+    <text x="326" y="344">2020</text>
+    <text x="408" y="344">2021</text>
+    <text x="757" y="344">2025</text>
   </g>
 
-  <circle cx="80"  cy="300" r="15" fill="#c6f65a"/>
-  <circle cx="165" cy="300" r="15" fill="#c6f65a"/>
-  <circle cx="420" cy="300" r="15" fill="#c6f65a"/>
-  <circle cx="590" cy="300" r="15" fill="#c6f65a"/>
-  <circle cx="675" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
-  <circle cx="760" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
+  <circle cx="121" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
+  <circle cx="162" cy="300" r="15" fill="#c6f65a"/>
+  <circle cx="224" cy="300" r="15" fill="#c6f65a"/>
+  <circle cx="326" cy="300" r="15" fill="#c6f65a"/>
+  <circle cx="408" cy="300" r="15" fill="#c6f65a"/>
+  <circle cx="757" cy="300" r="11" fill="rgba(231,243,236,.34)"/>
 
-  <text x="80"  y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">伊埃拉</text>
-  <text x="80"  y="222" text-anchor="middle" fill="#9fb4aa" font-size="22" font-weight="700">住了七年</text>
-  <text x="175" y="256" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">兰达卢塞</text>
-  <line x1="165" y1="268" x2="165" y2="288" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
-  <text x="420" y="252" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">黄泽林</text>
-  <text x="590" y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">鲁德</text>
-  <text x="590" y="222" text-anchor="middle" fill="#9fb4aa" font-size="22" font-weight="700">已是职业球员</text>
+  <text x="121" y="262" text-anchor="middle" fill="#9fb4aa" font-size="21" font-weight="700">20 岁</text>
 
-  <text x="855" y="252" text-anchor="middle" fill="#9fb4aa" font-size="30" font-weight="800">?</text>
+  <text x="150" y="190" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">伊埃拉</text>
+  <text x="150" y="220" text-anchor="middle" fill="#c6f65a" font-size="23" font-weight="800">13 岁</text>
+  <line x1="162" y1="234" x2="162" y2="284" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+
+  <text x="248" y="128" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">鲁德</text>
+  <text x="248" y="158" text-anchor="middle" fill="#c6f65a" font-size="23" font-weight="800">19 岁</text>
+  <line x1="224" y1="172" x2="224" y2="284" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+
+  <text x="326" y="228" text-anchor="middle" fill="#e7f3ec" font-size="26" font-weight="800">兰达卢塞</text>
+  <text x="326" y="258" text-anchor="middle" fill="#c6f65a" font-size="22" font-weight="800">14 岁</text>
+
+  <text x="408" y="128" text-anchor="middle" fill="#e7f3ec" font-size="27" font-weight="800">黄泽林</text>
+  <text x="408" y="158" text-anchor="middle" fill="#c6f65a" font-size="23" font-weight="800">17 岁</text>
+  <line x1="408" y1="172" x2="408" y2="284" stroke="rgba(231,243,236,.30)" stroke-width="2"/>
+
+  <text x="757" y="262" text-anchor="middle" fill="#9fb4aa" font-size="21" font-weight="700">21 岁</text>
+
+  <text x="855" y="262" text-anchor="middle" fill="#9fb4aa" font-size="28" font-weight="800">?</text>
   <circle cx="855" cy="300" r="11" fill="none"
           stroke="rgba(231,243,236,.34)" stroke-width="2" stroke-dasharray="4 4"/>
-  <text x="855" y="344" text-anchor="middle" fill="#9fb4aa" font-size="20" font-weight="700">没查到</text>
+  <text x="855" y="344" text-anchor="middle" fill="#9fb4aa" font-size="19" font-weight="700">没查到</text>
 
-  <text x="450" y="430" text-anchor="middle" fill="#e7f3ec"
-        font-size="28" font-weight="800">十三岁到二十一岁，都叫「学院培养的」</text>
-  <text x="450" y="470" text-anchor="middle" fill="#9fb4aa"
-        font-size="24" font-weight="700">公告里没写这五个字是什么意思</text>
+  <text x="450" y="424" text-anchor="middle" fill="#e7f3ec"
+        font-size="28" font-weight="800">同一年到的两个人，一个 13 岁，一个 19 岁</text>
+  <text x="450" y="464" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">公告里都算「学院培养的」</text>
 </svg>
 """
 
@@ -1741,8 +1751,11 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "同一栏",
             "十三岁和十九岁，写在一起",
             "所以那份公告里的六个人，是这样凑起来的。"
-            "一个十三岁拿着奖学金住了七年。"
-            "一个十九岁带着自己的父亲去落脚。"
+            # ⚠️ 「同一年」是把轴按入校年份重排之后才掉出来的：伊埃拉 2018 年去，
+            # 鲁德 2018 年 9 月去。按年纪排的那一版看不见这件事——而它正是全片的论点。
+            "伊埃拉和鲁德，是同一年到的。"
+            "一个十三岁，拿着奖学金，住了七年。"
+            "一个十九岁，带着自己的父亲去落脚。"
             "在那张表上，他们是同一栏。"
             "学院培养的，这五个字没有定义。"
             "八月三号之后，这一栏又多了一个人。"
@@ -1750,8 +1763,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "",
             "示意图 · 网球时差绘制",
             (
-                "13 岁 拿奖学金，住了七年",
-                "19 岁 带着自己的父亲去落脚",
+                "同一年到的 伊埃拉 13 岁，鲁德 19 岁",
+                "一个拿奖学金住了七年 一个带着父亲来落脚",
                 "同一栏 「学院培养的」没有定义",
             ),
             _ACADEMY_SPAN_DIAGRAM,
