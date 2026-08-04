@@ -1578,75 +1578,75 @@ _ACADEMY_COUNT_DIAGRAM = """
 # ⚠️ 中文维基那页把伊埃拉写成「亚历克莎·埃亚拉」——**别照抄**。仓库早就把
 #   埃亚拉改成伊埃拉了，译名表说了算。
 def _academy_span_diagram() -> str:
-    """入校时间轴，点上是本人的官方头像。
+    """入校时间轴，头像**一上一下落在轴两侧**，各自站在自己真实的年份位置上。
 
     ⚠️ 横轴是**入校那一年**，不是入校年纪。原来按年纪排，伊埃拉 13 岁排最左，
     读起来就是「她最早来的」——**而最早的是穆纳尔（2017）**。账号所有者点出来的。
 
-    ⚠️ 头像**等距排一行、各自引线到自己真实的年份位置**，不直接压在轴上：
-    穆纳尔 2017 和伊埃拉 2018 在轴上只隔 82px，头像挨着放必然叠。
-    引线按年份单调排列所以不会交叉，版面松了而轴仍然诚实。
+    ⚠️ 上一版是「头像等距排一行 + 引线指回真实年份」，因为挨着放会叠。
+    账号所有者：「头像可以一上一下在时间轴两侧」——**一上一下把横向空间翻倍**，
+    相邻两个人分居轴的两侧就不会碰，于是头像可以直接站在真实位置上，
+    引线整个不需要了。**能不decouple就不decouple**。
 
-    头像出处见 assets/explainer/nadal-academy/faces/credits.json：四男是 ATP
-    官方头像（赛事域名镜像，总站 403），伊埃拉裁自仓库里那张 WTA 官方抠图
-    （wta-330332，id 与 WTA API 查到的一致）。
+    年份并进每人的标签（「2018 · 13 岁」），省掉单独一行年份刻度。
+
+    头像出处见 assets/explainer/nadal-academy/faces/credits.json。
     """
     import base64
 
-    root = Path(__file__).resolve().parents[3] / "assets/explainer/nadal-academy/faces"
+    root = _REPO / "assets/explainer/nadal-academy/faces"
     def uri(name: str) -> str:
-        raw = (root / f"{name}.jpg").read_bytes()
-        return "data:image/jpeg;base64," + base64.b64encode(raw).decode()
+        return "data:image/jpeg;base64," + base64.b64encode(
+            (root / f"{name}.jpg").read_bytes()).decode()
 
-    # (头像位置, 真实年份位置, 名字, 年纪, 文件名)
+    AXIS = 248
+    # (真实年份位置 x, 名字, 年份·年纪, 文件名, 在轴上方?)
     people = [
-        (90,  80,  "穆纳尔",   "20 岁", "munar"),
-        (235, 162, "伊埃拉",   "13 岁", "eala"),
-        (380, 224, "鲁德",     "19 岁", "ruud"),
-        (525, 326, "兰达卢塞", "14 岁", "landaluce"),
-        (670, 408, "黄泽林",   "17 岁", "wong"),
+        (90,  "穆纳尔",   "2017 · 20 岁", "munar",     True),
+        (170, "伊埃拉",   "2018 · 13 岁", "eala",      False),
+        (250, "鲁德",     "2018 · 19 岁", "ruud",      True),
+        (350, "兰达卢塞", "2020 · 14 岁", "landaluce", False),
+        (430, "黄泽林",   "2021 · 17 岁", "wong",      True),
     ]
     defs, art = [], []
-    for ax, tx, name, age, key in people:
-        defs.append(f'<clipPath id="c{key}"><circle cx="{ax}" cy="150" r="46"/></clipPath>')
-        defs.append(f'<image id="i{key}" href="{uri(key)}" x="{ax-46}" y="104" '
-                    f'width="92" height="92" clip-path="url(#c{key})"/>')
+    for x, name, meta, key, up in people:
+        cy = 130 if up else 372
+        defs.append(f'<clipPath id="c{key}"><circle cx="{x}" cy="{cy}" r="40"/></clipPath>')
+        defs.append(f'<image href="{uri(key)}" x="{x-40}" y="{cy-40}" width="80" height="80" '
+                    f'clip-path="url(#c{key})"/>')
+        ny, my = (198, 222) if up else (306, 330)
         art.append(
-            f'<use href="#i{key}"/>'
-            f'<circle cx="{ax}" cy="150" r="46" fill="none" stroke="#c6f65a" stroke-width="3"/>'
-            f'<text x="{ax}" y="230" text-anchor="middle" fill="#e7f3ec" '
-            f'font-size="25" font-weight="800">{name}</text>'
-            f'<text x="{ax}" y="260" text-anchor="middle" fill="#c6f65a" '
-            f'font-size="23" font-weight="800">{age}</text>'
-            f'<line x1="{ax}" y1="272" x2="{tx}" y2="318" '
-            f'stroke="rgba(231,243,236,.30)" stroke-width="2"/>'
-            f'<circle cx="{tx}" cy="330" r="13" fill="#c6f65a"/>'
+            f'<circle cx="{x}" cy="{cy}" r="40" fill="none" stroke="#c6f65a" stroke-width="3"/>'
+            f'<text x="{x}" y="{ny}" text-anchor="middle" fill="#e7f3ec" font-size="24" '
+            f'font-weight="800">{name}</text>'
+            f'<text x="{x}" y="{my}" text-anchor="middle" fill="#c6f65a" font-size="21" '
+            f'font-weight="800">{meta}</text>'
+            f'<line x1="{x}" y1="{cy + (40 if up else -40)}" x2="{x}" '
+            f'y2="{AXIS - 12 if up else AXIS + 12}" stroke="rgba(231,243,236,.22)" stroke-width="2"/>'
+            f'<circle cx="{x}" cy="{AXIS}" r="9" fill="#c6f65a"/>'
         )
     return (
         '<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">'
         + "<defs>" + "".join(defs) + "</defs>"
-        + '<text x="450" y="42" text-anchor="middle" fill="#e7f3ec" font-size="34" '
+        + '<text x="450" y="40" text-anchor="middle" fill="#e7f3ec" font-size="33" '
           'font-weight="800">他们哪一年到的学院</text>'
-        + '<text x="450" y="80" text-anchor="middle" fill="#9fb4aa" font-size="24" '
-          'font-weight="700">横轴＝入校那一年　名字底下＝当时多大</text>'
-        + '<line x1="60" y1="330" x2="800" y2="330" stroke="rgba(231,243,236,.28)" stroke-width="3"/>'
+        + f'<line x1="50" y1="{AXIS}" x2="820" y2="{AXIS}" '
+          'stroke="rgba(231,243,236,.28)" stroke-width="3"/>'
         + "".join(art)
-        + '<circle cx="757" cy="330" r="10" fill="rgba(231,243,236,.34)"/>'
-        + '<text x="757" y="306" text-anchor="middle" fill="#9fb4aa" font-size="20" '
-          'font-weight="700">21 岁</text>'
-        + '<g fill="#9fb4aa" font-size="22" font-weight="700" text-anchor="middle">'
-          '<text x="80" y="372">2017</text><text x="193" y="372">2018</text>'
-          '<text x="326" y="372">2020</text><text x="408" y="372">2021</text>'
-          '<text x="757" y="372">2025</text></g>'
-        + '<circle cx="855" cy="330" r="10" fill="none" stroke="rgba(231,243,236,.34)" '
+        + f'<circle cx="700" cy="{AXIS}" r="8" fill="rgba(231,243,236,.34)"/>'
+        + '<text x="700" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          'font-weight="800">西埃拉</text>'
+        + '<text x="700" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">2025 · 21 岁</text>'
+        + f'<circle cx="820" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
           'stroke-width="2" stroke-dasharray="4 4"/>'
-        + '<text x="855" y="306" text-anchor="middle" fill="#9fb4aa" font-size="26" '
-          'font-weight="800">?</text>'
-        + '<text x="855" y="372" text-anchor="middle" fill="#9fb4aa" font-size="18" '
-          'font-weight="700">没查到</text>'
-        + '<text x="450" y="432" text-anchor="middle" fill="#e7f3ec" font-size="27" '
+        + '<text x="820" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          'font-weight="800">科尔涅耶娃</text>'
+        + '<text x="820" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">哪年去的没查到</text>'
+        + '<text x="450" y="452" text-anchor="middle" fill="#e7f3ec" font-size="27" '
           'font-weight="800">同一年到的两个人，一个 13 岁，一个 19 岁</text>'
-        + '<text x="450" y="470" text-anchor="middle" fill="#9fb4aa" font-size="23" '
+        + '<text x="450" y="486" text-anchor="middle" fill="#9fb4aa" font-size="23" '
           'font-weight="700">公告里都算「学院培养的」</text>'
         + "</svg>"
     )
