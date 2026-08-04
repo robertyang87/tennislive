@@ -4483,6 +4483,45 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_横摇的段也要有裁切中心():
+    """`track: true` 的段 `cx` 不许留 `None`——`cut_segment` 无条件先算兜底的 x。
+
+    run 30877075310：第 11 段写了 `track: true`，分段编码跑到它才炸
+
+        x = int(round(seg.cx * source_w - CROP_W / 2))
+        TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'
+
+    前面十段全白编了。真因是 `track_shots` 里那句 `not s.track`——**只给不摇的
+    段填 `cx`**。而 `cut_segment` 里那个 `x` 是给「拿不到 path 时」兜底用的，
+    它排在 `if path:` **前面**，所以摇不摇都会被求值。
+
+    ⚠️ **存量九条 spec 一条都没用过 `track`**，所以这条路从「自动定心改成固定
+    中心」那天起就是坏的，一直没人踩到——又一次「写了不等于跑过」：那次改动
+    只保证了它自己走的那条路，另一条路的前提被顺手拿掉了，**而且不报错**，
+    因为根本没有输入会走到那儿。
+
+    判据**真跑一遍 `track_shots`**（跟踪那一步打桩，不碰源片）：查源码里有没有
+    `not s.track` 只能防「有人把它加回来」，防不住下一次换个写法再漏一遍。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    segs = [reel.Segment(start=0.0, end=5.0, cx=None, narration="甲",
+                         source="main", track=False),
+            reel.Segment(start=5.0, end=10.0, cx=None, narration="乙",
+                         source="main", track=True)]
+    assert all(s.cx is None for s in segs), "fixture 前提变了：cx 默认不再是 None"
+    # 跟踪那一步要解码源片，这儿只验 cx 有没有被填——打桩成「跟不出路径」，
+    # 那正是兜底的 x 唯一真的会被用到的情形。
+    reel.track_run = lambda *a, **k: []
+    reel.track_shots({"main": Path("nope.mp4")}, segs, 1280)
+    for i, s in enumerate(segs):
+        assert s.cx is not None, (
+            f"第 {i + 1} 段（track={s.track}）的 cx 是 None——"
+            "cut_segment 里那个兜底的 x 会当场 TypeError")
+        assert 0.0 <= s.cx <= 1.0, s.cx
+
+
 def test_直链下到的网页不许当成源片还存进缓存(tmp_path, monkeypatch, capsys):
     """**「下到了」不等于「下到的是视频」，而坏结果会被缓存固化。**
 

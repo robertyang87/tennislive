@@ -1530,12 +1530,23 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     # 3:4 之后窗口占源片 41.3% 宽（9:16 时只有 32%），对中的余量本来就宽裕。
     # **可预期比「聪明」要紧**：读者的直觉就是等比裁切，行为得对得上。
     # 个别段要另定，spec 里显式给 `cx`——那是人看着缩略图墙定的，说了算。
-    fixed = [s for s in segments
-             if not s.track and s.fit != "contain" and s.cx is None]
+    # ⚠️ **摇的段也要填 `cx`。** 这里原来写着 `not s.track`——只给不摇的段填，
+    # 于是 `track: true` 的段 `cx` 留着 `None`，而 `cut_segment` **无条件先算**
+    # 一个兜底的 `x = seg.cx * source_w - CROP_W/2`，当场
+    # `TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'`
+    # （run 30877075310，分段编码到第 11 段才炸，前面十段全白编）。
+    #
+    # **存量九条 spec 一条都没用过 `track`**，所以这条路从「自动定心改成固定
+    # 中心」那天起就是坏的，一直没人踩到——又一次「写了不等于跑过」：
+    # 那次改动只保证了它走的那条路，另一条路的前提被顺手拿掉了。
+    #
+    # 摇的段有 `path` 时用不上这个值；**拿不到 path 时它就是兜底**，见下面。
+    fixed = [s for s in segments if s.fit != "contain" and s.cx is None]
     for seg in fixed:
         seg.cx = 0.5
-    if fixed:
-        print(f"    [fixed] {len(fixed)} 段不摇，窗口取源片正中 cx=0.500")
+    still = [s for s in fixed if not s.track]
+    if still:
+        print(f"    [fixed] {len(still)} 段不摇，窗口取源片正中 cx=0.500")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -1623,6 +1634,13 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
         else:
+            # **声明了要摇却没拿到路径**，是退回固定中心——但要出声。
+            # 不吭声的话，「跟踪抽帧失败」和「本来就不摇」在日志上一模一样，
+            # 而这一段之所以写 `track: true`，正是因为固定中心装不下主体。
+            if seg.track:
+                print(f"    [track] ⚠️ {seg.start:.1f}s 段声明了 track 但没跟出"
+                      f"路径，退回固定中心 cx={seg.cx:.3f}——"
+                      "主体如果在横向移动，这一段的构图要自己看一眼")
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
