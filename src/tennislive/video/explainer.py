@@ -1767,8 +1767,11 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "商竣程赛前说得很直接：对手现在的能力在他之上。"
             "可两年前那三盘是真的，三周前那个冠军也是真的——"
             "北京时间八月五日凌晨，两个都在往回爬的人碰在一起。",
-            "assets/explainer/shang-rublev/shang_usopen_2023.jpg",
-            "Wikimedia Commons · Hameltion · CC BY-SA 4.0 · 2023 年美网资格赛次轮，商竣程",
+            # ⚠️ 原来配的是商竣程的照片——而这一屏的标题是「卢布列夫也在往回爬」，
+            # **图和话对不上**（账号所有者当场看出来）。换成卢布列夫本人，
+            # 而且换的是正手：第 ③ 屏已经是反手，同一个人两屏不能长一样。
+            "assets/explainer/shang-rublev/rublev_forehand_2023.jpg",
+            "Wikimedia Commons · Hameltion · CC BY-SA 4.0 · 2023 年美网首轮，卢布列夫",
             (
                 "7.19 巴斯塔德，一年多来首冠",
                 "本赛季至今唯一的冠军",
@@ -5589,7 +5592,18 @@ body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;}}
 .cover .title{{white-space:normal;text-wrap:balance;line-height:1.24;font-weight:400;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7);}}
-.cover .copy{{bottom:auto;top:50%;transform:translateY(-50%);gap:34px;}}
+/* ⚠️ 这段注释**会被渲进 HTML**，所以里面一个日期都不许出现。
+   `test_知识卡右上角不写日期` 扫的是渲出来的整页（知识片是常青的，右上角
+   不打日期），年份串一写进注释就当场打红。我连着栽了两次：第一次写了日期，
+   第二次在解释「不许写日期」的时候把那个串原样引了一遍。**注释不是自由区**。
+
+   账号所有者的要求：「这个文案移到底部，类似之前『赛场之上』的双人封面」。
+   原来是 `top:50%` 垂直居中——那让问句和 fixture 横在画面正中，**正好压在
+   人脸/人像那一带**；VS 封面尤其明显，两个人的名字行被问句盖掉一半。
+   「赛场之上」的海报早就定死了这条：**一句钩子压在下三分之一，上面整片留给人脸**
+   （见 tools/versus_poster.py 的模块 docstring）。封面卡现在跟它对齐，
+   回到 `.copy` 那个基准的贴底锚点，不再单独覆盖。 */
+.cover .copy{{gap:34px;}}
 /* The cover used to sit under a flat 62-78% wash, which made every deck
    open on the same dark green rectangle with a photo faintly behind it —
    the one frame that has to stop a thumb was the least visible. Darken
