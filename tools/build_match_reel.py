@@ -2365,23 +2365,32 @@ _F0_LO_HZ, _F0_HI_HZ = 70, 350
 _F0_SPREAD_BAD = 0.45
 
 
-def voice_prosody(path: Path) -> dict | None:
-    """量一条语音的基频和响度。量不了就返回 `None`，**不猜**。"""
+def voice_prosody(path: Path) -> dict | str:
+    """量一条语音的基频和响度。量不了就返回**一句说明为什么**，不返回裸的 None。
+
+    ⚠️ 第一版返回 `None`，报告里印一句「量不了（有声帧太少或缺 numpy／ffmpeg）」
+    ——十一段全是这一句，而那三个原因**出路完全不同**（装包 / 修命令 / 换素材）。
+    一个笼统的解释盖住一个具体的 bug，这个仓库栽过很多次。现在每一条都自己说。
+    """
     try:
         import numpy as np  # noqa: PLC0415
-    except ImportError:
-        return None
-    raw = subprocess.run(
-        ["ffmpeg", "-v", "quiet", "-i", str(path), "-ac", "1",
+    except ImportError as exc:
+        return f"没装 numpy（{exc}）"
+    if not path.is_file():
+        return f"文件不在：{path}"
+    proc = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1",
          "-ar", str(_F0_SR), "-f", "s16le", "-"],
-        capture_output=True, check=False).stdout
+        capture_output=True, check=False)
+    raw = proc.stdout
     if not raw:
-        return None
+        err = (proc.stderr or b"").decode("utf-8", "replace").strip()[:160]
+        return f"ffmpeg 解不出音频（码 {proc.returncode}）{(' ' + err) if err else ''}"
     x = np.frombuffer(raw, "<i2").astype(np.float32) / 32768.0
     n, hop = int(0.040 * _F0_SR), int(0.010 * _F0_SR)
     frames = [x[i:i + n] for i in range(0, max(0, len(x) - n), hop)]
     if not frames:
-        return None
+        return f"音频太短：{len(x) / _F0_SR:.2f}s"
     rms = np.array([float(np.sqrt((f ** 2).mean())) for f in frames])
     # 只取有声帧：静音段的自相关是噪声，混进来会把中位数拖歪
     thr = max(float(np.median(rms)) * 0.5, 1e-4)
@@ -2410,7 +2419,8 @@ def voice_prosody(path: Path) -> dict | None:
             peak = best + lo
         pitches.append(_F0_SR / peak)
     if len(pitches) < 12:
-        return None
+        return (f"有声帧太少：{len(frames)} 帧里只有 {len(pitches)} 帧定得出基频"
+                f"（门槛 12）")
     arr = np.array(pitches)
     voiced = rms[rms >= thr]
     q1, q3 = (float(np.percentile(arr, 25)), float(np.percentile(arr, 75)))
@@ -2444,10 +2454,10 @@ def prosody_report(segments, voices, spoken_of: dict[int, float]) -> list[str]:
         chars = len([c for c in seg.narration if c.strip()])
         cps = chars / spoken_of[index] if spoken_of[index] else 0.0
         info = voice_prosody(voices[index][0])
-        rows.append((index, style, cps, info))
-        if info is None:
+        rows.append((index, style, cps, info if isinstance(info, dict) else None))
+        if not isinstance(info, dict):
             lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} "
-                         f"{'量不了':>7}（有声帧太少或缺 numpy／ffmpeg）")
+                         f"{'量不了':>7}　{info}")
             continue
         flag = "" if info["trusted"] else "  ⚠️散，这个数不作数"
         lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} {info['f0']:>7.1f} "
