@@ -224,6 +224,19 @@ def prepare_image_delivery(
     secret_key = os.environ.get("PUSHPLUS_SECRET_KEY", "").strip()
     configured_access_key = os.environ.get("PUSHPLUS_ACCESS_KEY", "").strip()
     if root and (secret_key or configured_access_key):
+        # PushPlus 官方图床「图片有效期为 30 天，到期后将自动删除」
+        # （/doc/function/image.html 的「使用限制」）。账号所有者 2026-08-04
+        # 认领过这个取舍：换来的是发之前不用等 jsDelivr 回源。
+        #
+        # **但它必须写进日志。** 微信那条消息发出去收不回来，海报到期就变裂图，
+        # 而那是一个月之后的事——两条通道当天的日志长得一模一样。将来有人查
+        # 「这条老推送的图怎么裂了」，答案得在当天的日志里，而不是靠他重新
+        # 把这一整节推理一遍。
+        logger.warning(
+            "图片走 PushPlus 图床：官方限制 30 天后自动删除，"
+            "这条推送的图到期会变裂图（已认领的取舍，换发送前不必等回源）。"
+            "要改回永久可取就清掉 PUSHPLUS_SECRET_KEY / PUSHPLUS_ACCESS_KEY。"
+        )
         access_key = (
             _access_key(token, secret_key, timeout)
             if secret_key
