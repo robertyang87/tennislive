@@ -176,3 +176,37 @@ def test_每条工作流都要有超时且apt那一步单独有():
     assert not no_step, (
         f"这些 apt 步骤没有 timeout-minutes：{no_step}。"
         "实测同一步能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候不吭声")
+
+
+def test_apt一律走重试包装不许裸调():
+    """**硬超时只做对了一半。**
+
+    2026-08-04 两小时内 apt 卡了两次：一次静静烧 **13 分 42 秒**（那时没有闸），
+    一次被 `timeout-minutes: 6` 掐掉（run 30878555571）——而正常只要
+    **18~53 秒**，重跑那趟 34 秒就过了。
+
+    也就是说硬超时把「静静烧半小时」换成了「6 分钟红掉、要人重跑」。方向对，
+    但卡住的正确处置是**换一次重试**，不是整趟失败：镜像抽风是它那头的事，
+    不该变成我们这头的一次红。
+
+    所以裸的 `sudo apt-get` 一律不许出现，要走 `apt_retry`
+    （每次 100 秒超时、最多三次、共 5.5 分钟——仍在步骤的 6 分钟超时以内，
+    那道闸还在兜底）。
+
+    ⚠️ 扫之前先去掉整行注释：工作流的注释正是这个仓库记教训的地方，正文里
+    必然写着当年那些错写法，连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
+    """
+    naked, wrapped = [], 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            if "apt-get" not in line:
+                continue
+            if "sudo apt-get" in line:
+                naked.append(f"{path.name}: {line.strip()[:60]}")
+            elif "apt_retry apt-get" in line:
+                wrapped += 1
+
+    assert wrapped >= 12, f"只找到 {wrapped} 处 apt_retry，判据可能失效了"
+    assert not naked, (
+        "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
+        + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")

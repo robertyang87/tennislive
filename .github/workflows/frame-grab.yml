@@ -49,7 +49,23 @@ jobs:
       - name: 安装依赖
         timeout-minutes: 6
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
+          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
+          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
+          # 3 × (100s + 10s) = 5.5 分，仍在步骤的 6 分钟超时以内，闸还在。
+          apt_retry() {
+            for i in 1 2 3; do
+              sudo timeout 100 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或失败）：$*"
+              sleep 10
+            done
+            echo "::error::apt 三次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq ffmpeg
           # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的
           # n challenge 要跑一段 JS。少了它 yt-dlp **不报「装少了」**，而是
           # 格式表里只剩故事板，于是任何选择器（连 `worst`）都匹配不上，
