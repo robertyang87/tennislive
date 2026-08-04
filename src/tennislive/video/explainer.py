@@ -5625,6 +5625,77 @@ def speakable(text: str) -> str:
     return text.replace("硬地", "硬帝")
 
 
+def word_split_report(
+    text: str, marks: Sequence[dict], protect: Sequence[str],
+) -> tuple[str, list[str], list[str]]:
+    """把合成器自己报的切词摊开，并指出**跨过专名边界**的那几处。
+
+    账号所有者 2026-08-03 提过一次「连在一起的词不要分开，本来分开的两个词
+    不要连读在一起」，CLAUDE.md 记了做法——把 `voice_NN.words.json` 的 `text`
+    用 `｜` 串起来打印，切错的地方一眼就看见。**但那是手工的**：要先渲一趟
+    完整成片（六分钟、还多一个几十 MB 的 blob），再自己去翻 json。
+
+    而 `mode=narration` 那道闸**本来就把每一段合成了一遍**，边界事件就在手上。
+    所以这份报告是白捡的：一分半，不下源片，不写产物。
+
+    三件事分开报，因为它们的可修性完全不同：
+
+    | | 例子 | 怎么办 |
+    |---|---|---|
+    | **跨专名边界** | `佩古 ｜ 拉六 ｜ 比 ｜ 四` —— `拉六` 一半是名字一半是数字 | **改**：名字前后加逗号，或者动词后面加「了」把它撑开 |
+    | 专名内部切开 | `布勃利 ｜ 克` | **不用改**：每个字的读音不变，只是重音偏，标点也插不进名字中间 |
+    | 其余 | —— | 人自己扫一眼那行 `｜` |
+
+    ⚠️ **判据是「有没有一个 token 骑在专名的边界上」，不是「专名是不是一个
+    token」。** 后者会把上表第二行也报出来，而那一类改不了——**一条天天误报的
+    检查等于没有检查**。
+
+    ⚠️ **token 的位置要在原文里 `find`，不能靠累加长度。** 边界事件里不含标点
+    （122 个字的旁白只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个
+    坑单独写过一条判据。
+
+    Args:
+        text: 真正喂给合成器的那份（`speakable()` 之后），不是屏幕上那份。
+        marks: WordBoundary 事件，每条至少有 `text`。
+        protect: 不许被切开的词，通常是这条片子里出现的中文人名。
+
+    Returns:
+        `(用 ｜ 串起来的 token 流, 跨边界的问题, 名字内部被切开的)`
+    """
+    tokens = [str(m.get("text", "")).strip() for m in marks]
+    tokens = [t for t in tokens if t]
+    line = " ｜ ".join(tokens)
+
+    spans: list[tuple[int, int, str]] = []
+    cursor = 0
+    for tok in tokens:
+        at = text.find(tok, cursor)
+        if at < 0:                      # 合成器报了原文里没有的串，跳过不猜
+            continue
+        spans.append((at, at + len(tok), tok))
+        cursor = at + len(tok)
+
+    crossing: list[str] = []
+    inside: list[str] = []
+    for name in dict.fromkeys(n for n in protect if n and n in text):
+        start = text.find(name)
+        while start >= 0:
+            end = start + len(name)
+            covering = [s for s in spans if s[0] < end and s[1] > start]
+            for a, b, tok in covering:
+                if a < start or b > end:
+                    extra = tok.replace(text[max(a, start):min(b, end)], "", 1)
+                    crossing.append(
+                        f"「{name}」被 `{tok}` 骑在边界上（多带了「{extra}」）")
+            if len(covering) > 1 and all(
+                    a >= start and b <= end for a, b, _ in covering):
+                inside.append(
+                    f"「{name}」被切成 {' ｜ '.join(t for _, _, t in covering)}"
+                    "（读音不变，通常不用改）")
+            start = text.find(name, end)
+    return line, crossing, inside
+
+
 def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 

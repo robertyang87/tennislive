@@ -88,6 +88,8 @@ from tennislive.video.explainer import (  # noqa: E402
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
     readable,
+    speakable,
+    word_split_report,
     subtitle_cues,
     write_subtitles,
 )
@@ -1079,6 +1081,18 @@ class Segment:
     # 也不知道哪一行该和哪一行配成一对。
     # 账号所有者 2026-08-03：「前面夺冠庆祝的部分全用英文原声配中英文字幕」。
     quote_cues: tuple[str, ...] = ()
+    # **这一段的语速 / 音高**，空＝跟全片的默认值走。
+    #
+    # 为什么只有这两个旋钮：2026-08-04 在 runner 上实测过一遍这条免费端点
+    # （`tools/probe_tts_ssml.py`，run 30884267406）——`<break/>` 和
+    # `<mstts:express-as style=...>`（sad / sports-commentary-excited /
+    # narration-relaxed / cheerful 四个都试了）**服务端一律拒绝**，
+    # 情绪风格那条路要付费的 Azure Speech 才有。**认的只剩 prosody**：
+    # 同一句话 −20%/−8Hz 是 8.59 秒、+6% 是 6.50 秒、+25%/+12Hz 是 5.52 秒。
+    #
+    # 所以「多渲染情绪」在这条线上唯一能拧的就是它，而原来**全片只有一个值**。
+    voice_rate: str = ""
+    voice_pitch: str = ""
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1165,6 +1179,54 @@ def explicit_quote_cues(lines: tuple, span: float,
     return out
 
 
+_RATE_RE = re.compile(r"^[+-]\d{1,3}%$")
+_PITCH_RE = re.compile(r"^[+-]\d{1,3}Hz$")
+
+
+def _seg_voice(raw: dict, index: int) -> tuple[str, str]:
+    """一段自己的语速 / 音高。没写就返回两个空串（跟全片默认值走）。
+
+    写法：`"voice": {"rate": "-8%", "pitch": "-6Hz", "_why": "这一段是崩盘"}`
+
+    **`_why` 是必填的**，和 `mixed_fps` / `silent_source` / `cover._layout_why`
+    一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。语速这东西改一个
+    数就能改，最容易被用来「让这段刚好装得下」——而那是剪窗口该干的事，
+    不是配音该干的事。逼着写一句为什么，就能在下一个人读 spec 的时候看出来
+    这是编辑决定还是凑数。
+
+    ⚠️ **格式要卡死**：`rate` 是 `+12%` / `-8%`，`pitch` 是 `+6Hz` / `-6Hz`。
+    写成 `-8`（漏了百分号）edge-tts 会抛 `Invalid rate`，而那一刻已经在
+    render 里跑了几分钟——`mode=narration` 才 90 秒，让它死在这儿。
+    """
+    voice = raw.get("voice")
+    if voice is None:
+        return "", ""
+    if not isinstance(voice, dict):
+        raise ReelError(f"第 {index + 1} 段的 `voice` 要写成对象，"
+                        '例如 {"rate": "-8%", "pitch": "-6Hz", "_why": "..."}')
+    extra = sorted(set(voice) - {"rate", "pitch", "_why"})
+    if extra:
+        raise ReelError(f"第 {index + 1} 段的 `voice` 只认 rate / pitch / _why，"
+                        f"多了 {extra}")
+    rate = str(voice.get("rate", "") or "").strip()
+    pitch = str(voice.get("pitch", "") or "").strip()
+    if not rate and not pitch:
+        raise ReelError(f"第 {index + 1} 段写了 `voice` 却没给 rate 或 pitch")
+    if rate and not _RATE_RE.match(rate):
+        raise ReelError(f"第 {index + 1} 段的 `voice.rate` 要写成 `+12%` / `-8%`，"
+                        f"现在是 `{rate}`")
+    if pitch and not _PITCH_RE.match(pitch):
+        raise ReelError(f"第 {index + 1} 段的 `voice.pitch` 要写成 `+6Hz` / "
+                        f"`-6Hz`，现在是 `{pitch}`")
+    if not str(voice.get("_why", "") or "").strip():
+        raise ReelError(
+            f"第 {index + 1} 段改了语速/音高却没写 `voice._why`。\n"
+            "这一步要认领：语速改一个数就能让一段「刚好装得下」，而那是剪窗口\n"
+            "该干的事。写一句为什么（「这一段是崩盘，降速降调」），下一个人才\n"
+            "分得出这是编辑决定还是凑数。")
+    return rate, pitch
+
+
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -1187,8 +1249,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         str(s.get("source", primary)),
                         _quote_text(s.get("quote", "")),
                         _quote_cues(s.get("quote", "")),
+                        _seg_voice(s, i)[0], _seg_voice(s, i)[1],
                         s.get("inset") or None)
-                for s in spec["segments"]]
+                for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
     gone = [(i, f) for i, f in gone if not f or not Path(f).is_file()]
@@ -1229,7 +1292,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scrim", "split", "sub", "subject", "tier", "topic",
               "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "narration", "quote", "source", "start", "track"),
+                "narration", "quote", "source", "start", "track", "voice"),
 }
 
 
@@ -2031,7 +2094,8 @@ def _chromium() -> str:
     raise ReelError("找不到 chromium")
 
 
-def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
+def tts_one(text: str, path: Path, voice: str, rate: str,
+             pitch: str = "+0Hz") -> list[dict]:
     """合一条语音，落盘并返回词边界。
 
     抽出来是因为**封面也要配音**了：封面那句得在渲封面之前就合出来——封面停多久
@@ -2045,7 +2109,8 @@ def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
         marks: list[dict] = []
         with path.open("wb") as fh:
             stream = edge_tts.Communicate(
-                text, voice, rate=rate, boundary="WordBoundary").stream()
+                text, voice, rate=rate, pitch=pitch,
+                boundary="WordBoundary").stream()
             async for chunk in stream:
                 if chunk.get("type") == "audio" and chunk.get("data"):
                     fh.write(chunk["data"])
@@ -2127,6 +2192,78 @@ def cover_length(voice_path: Path | None) -> float:
 #
 # 4.0s 落在 2.99 和 5.03 之间，两头都不贴边。
 MAX_SILENT_GAP = 4.0
+
+
+def _protected_names(spec: dict) -> list[str]:
+    """这条片子里不许被切开的专名：封面上印的那两个中文名 + 主角。
+
+    出处只有 spec 一处（`cover.matchup` / `cover.subject`），**不另维护名单**——
+    一个要靠人记着更新的名单，和一条常年红的检查是同一个毛病。
+    """
+    cover = spec.get("cover") or {}
+    names = [str(p.get("name", "")).strip()
+             for p in (cover.get("matchup") or []) if isinstance(p, dict)]
+    names.append(str(cover.get("subject", "")).strip())
+    for side in ("top", "bottom"):
+        who = (cover.get("versus") or {}).get(side) or {}
+        if isinstance(who, dict):
+            names.append(str(who.get("name", "")).strip())
+    # 两个字的名字太容易撞上普通词（「王」「张」），跟译名表那条一个道理
+    return [n for n in dict.fromkeys(names) if len(n) >= 3]
+
+
+def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list]]:
+    """每段问一次合成器「你把这句话切成了哪些词」。
+
+    ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
+    写的那份。拿原文去 find token，「硬地」那种替换过的字一个都对不上。
+    """
+    out = []
+    names = _protected_names(spec)
+    for index, seg in enumerate(segments):
+        text = (seg.narration or "").strip()
+        if not text or index >= len(voices):
+            continue
+        marks = voices[index][1]
+        if not marks:
+            continue
+        line, crossing, inside = word_split_report(speakable(text), marks, names)
+        out.append((index, line, crossing, inside))
+    return out
+
+
+def _print_word_splits(splits) -> None:
+    """把切词摊开印进日志。**不拦，只报。**
+
+    为什么不做成闸：跨边界这一类确实该改，但改法是重写句子（加逗号、换句式），
+    是个编辑判断；而「专名内部切开」压根改不了。做成硬闸的下场是有人为了让它
+    变绿去改一句本来很好的台词——和「判据宁可窄，不可宽」是同一条。
+    """
+    if not splits:
+        print("\n[查切词] 这条 spec 没有拿到词边界（合成器没报，或者没有旁白）。"
+              "\n  ⚠️ 空不等于没问题——拿一段已知有旁白的 spec 对一次再下结论。")
+        return
+    crossing = [(i, c) for i, _, c, _ in splits if c]
+    inside = [(i, x) for i, _, _, x in splits if x]
+    print(f"\n[查切词] 合成器自己报的切词，{len(splits)} 段：")
+    for index, line, _, _ in splits:
+        print(f"  第 {index + 1:>2d} 段  {line}")
+    if crossing:
+        print("\n⚠️ 有 token 骑在人名的边界上——念出来会把名字和邻字连读成一个"
+              "不存在的词：")
+        for index, items in crossing:
+            for item in items:
+                print(f"  第 {index + 1:>2d} 段  {item}")
+        print("  改法：名字前后加逗号，或者动词后面加「了」把它撑开"
+              "（「赢斯特鲁夫」→「赢了斯特鲁夫」）。")
+    if inside:
+        print("\n（下面这些是人名内部被切开，每个字的读音不变，一般不用管）")
+        for index, items in inside:
+            for item in items:
+                print(f"  第 {index + 1:>2d} 段  {item}")
+    if not crossing:
+        print("\n[查切词] 没有 token 骑在人名边界上。"
+              "其余的切法要自己扫一眼上面那几行 `｜`。")
 
 
 def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
@@ -2249,7 +2386,9 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
         if not seg.narration.strip():
             out.append((path, []))
             continue
-        out.append((path, tts_one(seg.narration, path, voice, rate)))
+        out.append((path, tts_one(seg.narration, path, voice,
+                                  seg.voice_rate or rate,
+                                  seg.voice_pitch or "+0Hz")))
     return out
 
 
@@ -2884,6 +3023,7 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as tmp:
             voices = synthesize(segments, Path(tmp), args.voice, args.rate)
             spoken, over = narration_overruns(segments, voices)
+            splits = _word_splits(spec, segments, voices)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}）")
@@ -2913,8 +3053,10 @@ def main() -> int:
             print("\n".join(over))
             print("\n两条出路：把这几段的旁白删短，或者把画面拉长"
                   "（`end` 往后挪，但别越过下一段的 `start`）。")
+        _print_word_splits(splits)
         if over or idle:
             return 1
+        _print_word_splits(splits)
         print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")
         return 0
 
