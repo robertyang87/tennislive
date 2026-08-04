@@ -1,0 +1,13 @@
+{
+  "_what": "第 ⑥ 屏年龄轴上的小头像。账号所有者 2026-08-04：「时间线上最好用他们的头像缩小上标注上」「用他们在 atp 或者 wta 官网头像，只截取大头部分」。",
+  "_source_pattern": "ATP 官方头像入口是 /-/media/alias/player-headshot/<球员ID>。⚠️ atptour.com 总站对本环境 403，但**赛事自己的域名镜像同一批图**（这里用的是 mubadaladcopen.com），CLAUDE.md 早记过这条。",
+  "wong.jpg":      {"who": "黄泽林",   "atp_id": "W0BH", "source": "ATP 官方头像", "ok": true},
+  "munar.jpg":     {"who": "穆纳尔",   "atp_id": "MU94", "source": "ATP 官方头像", "ok": true},
+  "ruud.jpg":      {"who": "鲁德",     "atp_id": "RH16", "source": "ATP 官方头像", "ok": true},
+  "landaluce.jpg": {"who": "兰达卢塞", "atp_id": "L0IL", "source": "ATP 官方头像", "ok": true,
+    "_trap": "⚠️ 我先猜的 ID 是 L0BM，返回的是**通用人形占位剪影**——HTTP 200、Content-Type image/png，和真头像长得一样。判据是**颜色数**：剪影只有 2 色，真头像 243~256 色。真 ID 是 L0IL。CLAUDE.md 记过 WTA 那边同样的占位剪影坑。"},
+  "eala.jpg": {"who": "伊埃拉", "source": "⚠️ 不是官网头像", "ok": false,
+    "_status": "现在这张是从 assets 里那张 WTA 官方决赛图裁的头（人脸检测定位），**闭眼张嘴在喊**——三张 ATP 官方头像是中性正脸，四个摆在一起她最认不出来，不齐整。",
+    "_todo": "要 WTA 官网头像。已知：她的 WTA player id 是 **330332**（api.wtatennis.com/tennis/players/?name=Eala 查到，顺带生日 2005-05-23，印证片子里的「21 岁」）。试过两条路都不通——球员页是 JS 渲染扒不到、photoresources 的 headshots 直链 403。下一步换赛事域名镜像那条路试（ATP 就是这么绕过 403 的）。"},
+  "_missing": "西埃拉、科尔涅耶娃（科尔涅耶娃 WTA id 335384）还没取。她们在轴上只是无名的点，优先级低于四个详讲的。"
+}
