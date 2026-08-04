@@ -7,6 +7,12 @@ name: voice-sample
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
+        type: choice
+        options: [sample, ssml]
+        default: sample
 
 permissions:
   contents: write
@@ -68,10 +74,18 @@ jobs:
           apt_retry apt-get update -qq
           apt_retry apt-get install -y -qq ffmpeg
 
+      # 探一遍免费端点认哪些 SSML（break / express-as / prosody）。报告直接
+      # print 进日志——这台沙箱下不了 artifact，写文件等于白跑。
+      - name: 探 SSML 支持范围
+        if: github.event.inputs.mode == 'ssml'
+        run: python tools/probe_tts_ssml.py
+
       - name: 合成语音样本
+        if: github.event.inputs.mode != 'ssml'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
+        if: github.event.inputs.mode != 'ssml'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
