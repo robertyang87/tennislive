@@ -2953,6 +2953,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "film_seconds": round(probe_duration(final), 3),
         "narration_voice": voice,
         "narration_rate": rate,
+        # **哪条路配的音要记进产物**，不能靠「工作流当时配没配 key」去推。
+        # `tts_one` 是「Azure 可用就整条片子都走 Azure」，所以同一份 spec、
+        # 同一个 voice 名字，在配了 key 之前和之后合出来的**不是同一条音轨**——
+        # 而 `narration_voice` 两边一模一样，光看它分不出来。解说片那条线早有
+        # `check_explainer_voice.py` 读产物里的 `narration.json` 而不是从工作流
+        # 参数推（CLAUDE.md：查产物，不查信号），这条线一直漏着。
+        "narration_backend": "azure" if azure_tts.available() else "edge-tts",
         "narration_seconds": {str(i): round(v, 3)
                               for i, v in sorted(spoken_of.items())},
     }, ensure_ascii=False, indent=2), encoding="utf-8")
