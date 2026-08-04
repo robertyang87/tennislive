@@ -3228,6 +3228,10 @@ def main() -> int:
             voices = synthesize(segments, Path(tmp), args.voice, args.rate)
             spoken, over = narration_overruns(segments, voices)
             splits = _word_splits(spec, segments, voices)
+            # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
+            # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
+            # 和 `_word_splits` 一样：里面算，外面印。
+            prosody = prosody_report(segments, voices, spoken)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}）")
@@ -3260,7 +3264,7 @@ def main() -> int:
         _print_word_splits(splits)
         # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
         # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
-        print("\n".join(prosody_report(segments, voices, spoken)))
+        print("\n".join(prosody))
         if over or idle:
             return 1
         print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")

@@ -6063,6 +6063,15 @@ def test_韵律报告要认得出哪几段带风格():
     # 位置：这个报告必须真的接在查旁白那条路上。**只测行为拦不住没接线**
     src = Path("tools/build_match_reel.py").read_text("utf-8")
     head = src.index("if args.check_narration:")
-    assert "prosody_report(" in src[head:head + 4000], (
+    region = src[head:head + 4000]
+    assert "prosody_report(" in region, (
         "`mode=narration` 那条路上没有调用 prosody_report——"
         "语音只在那一刻还在临时目录里，错过就只能去量混了现场声的成片")
+    # ⚠️ **而且要在 `with tempfile.TemporaryDirectory()` 里面。** 第一版印在
+    # 外面，语音早被删了，十一段全报「文件不在」（run 30901516117）——
+    # 调用接上了、位置错了，**而报告照样出得来**。缩进就是判据：
+    # `with` 里是 12 格，外面是 8 格。
+    call = next(ln for ln in region.splitlines() if "prosody_report(segments" in ln)
+    assert len(call) - len(call.lstrip()) >= 12, (
+        f"prosody_report 调用的缩进是 {len(call) - len(call.lstrip())} 格，"
+        "说明它在临时目录那个 with 外面——那时语音已经删了")
