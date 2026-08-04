@@ -2027,6 +2027,72 @@ concat 的边界削掉，听着像卡了一下）。
 **按球员 ID 永远拿得到**。`diagonal` / `split` / `stack` 三版留着，斜切那道品牌绿
 中缝让接缝成为设计的一部分（平分那版中缝是硬横线，看着像两张图没对齐）。
 
+#### ⭐ 官方头像／抠图上哪儿拿（2026-08-04 记，别再重新踩一遍）
+
+账号所有者：「**把这个获取方式记录下来，以免以后忘了**」。
+
+**ATP（男）——有公开入口：**
+
+    https://<任一ATP赛事域名>/-/media/alias/player-headshot/<球员ID>
+
+- **ID 从球员页 URL 拿**：`atptour.com/en/players/<slug>/<ID>/overview`
+  （黄泽林 `W0BH`、穆纳尔 `MU94`、鲁德 `RH16`、兰达卢塞 `L0IL`）
+- ⚠️ **`atptour.com` 总站对本环境 403，赛事自己的域名镜像同一批**
+  （实测 `mubadaladcopen.com` 通）——和上面「ATP 总站封，赛事域名镜像着同一批图」
+  是同一条
+- 出来的是 **300×300 PNG，透明底**，正好当小头像
+
+##### ⚠️ ID 猜错时返回的是**占位剪影**，而它和真头像长得一模一样
+
+`HTTP 200`、`Content-Type: image/png`、同样 300×300——**只看状态码和类型分不出来**。
+我先按 `L0BM` 猜兰达卢塞，拿到的就是那个灰色人形。
+
+**判据是颜色数，一行就能判**：
+
+```python
+len(np.unique(np.asarray(im.convert("RGB")).reshape(-1,3), axis=0))
+# 占位剪影 2 色 ｜ 真头像 243~256 色
+```
+
+这跟本文件里 WTA `player-gladiator-image` 返回通用剪影是同一个坑，只是换了个门。
+**比肉眼快，而且能写进脚本。**
+
+**WTA（女）——没有公开头像接口，但仓库里已经有抠图：**
+
+    assets/players/wta-<WTA_ID>-<slug>.png
+
+那是 VS 海报用的**官方抠图**（透明底半身像），`eala-osaka` 那条片子用的就是它。
+探过的四条外部路径**全不通**，别再试：
+
+| 路径 | 结果 |
+|---|---|
+| ATP 那个 `player-headshot` 别名喂 WTA id | ❌ 返回占位剪影（4729 字节） |
+| `api.wtatennis.com/tennis/players/<id>` | ❌ 有 id / 国别 / 生日，**没有图片字段** |
+| `…/players/<id>/profile` | ❌ 404 |
+| `photoresources…/players/headshots/<id>.png` | ❌ 403 |
+
+**WTA id 怎么查**（这个接口有用，只是没有图）：
+
+    https://api.wtatennis.com/tennis/players/?pageSize=5&name=Eala
+    → {"id": 330332, "countryCode": "PHI", "dateOfBirth": "2005-05-23"}
+
+⚠️ 顺带：那个 `dateOfBirth` 可以**用来核年龄**——伊埃拉 2005-05-23，
+所以 2026-08-03 她是 21 岁，片子里写的对得上。
+
+##### 从抠图裁头像：按 alpha 找头顶，别用人脸检测
+
+抠图是透明底，**不透明区域的最上沿就是头顶**，几何上就能定位：
+
+```python
+ys, xs = np.where(np.asarray(im)[..., 3] > 40)
+top = ys.min()                      # 头顶
+w_head = int((xs.max() - xs.min()) * 0.52)   # 肩宽的一半略多
+```
+
+⚠️ **人脸检测在这一步是错的工具**：同一天拿 Haar 去裁一张 6000×4000 的实拍，
+**零命中**；缩到 1000 宽仍是 0（戴帽子、脸在阴影里）。而抠图的 alpha 通道
+100% 可靠、不用调参。**又一次「空结果先自证是真空」——先换工具，别先怀疑没有脸。**
+
 #### 没有官方抠图，就退回照片版——别拿头像凑
 
 **「永远拿得到」有例外。** 大威 2026-07-29 这条就撞上了：WTA 球员页搜 `Torso`
