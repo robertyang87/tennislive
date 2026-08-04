@@ -4644,7 +4644,11 @@ def column_of(slug: str) -> Column:
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
     "nadal-academy": {
-        "topic": "纳达尔学院：七个人，七条来时路",
+        # ⚠️ 原来写「纳达尔学院：七个人，七条来时路」——账号所有者 2026-08-04
+        # 一句「这里文案太普通了」。毛病是它在**描述格式**（几个人、几条路），
+        # 不是在讲事实，读者一个字的信息都拿不到。换成片子的落点本身：
+        # 「差八岁」是 21−13 算出来的，具体、可核，而且自己带着一个问题。
+        "topic": "同样是学院培养的，年纪差八岁",
         # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数。见 test_封面那一问要能排进一行。
         "question": "六个人的纪录，八周就破了？",
         "narration": "六个人的纪录，八周就破了？而破它的那个人，来自中国香港。",
