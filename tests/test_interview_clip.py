@@ -2087,3 +2087,47 @@ def test_缩略图墙只在取字幕那一趟出():
     call = body.index("storyboard_sheet(spec[")
     guard = body.rindex('args.stage == "subs"', 0, call)
     assert call - guard < 300, "缩略图墙没挂在 subs 那一档上"
+
+
+def test_缩略图墙两头都不许进仓库():
+    """缩略图墙是**挑封面用的草稿**，runner 和本地两头都要挡住。
+
+    这条规矩原来只写在了 runner 那一半：「丢掉不进仓库的中间物」里有
+    `rm -f "$D"/storyboard.jpg`。可**本地** `--stage subs` 生成的那一份
+    没有任何东西管它——2026-08-04 一张 617 KB 的图就这么躺在
+    `output/interviews/pegula-eala-dc2026-final/` 里等着被 `git add` 吃进去，
+    是 stop hook 报「有未跟踪文件」才发现的。
+
+    又是「两处各配一遍必分叉」。所以两头一起钉：
+
+    - `.gitignore` 要有一条能匹配上它的规则（**真跑一次 `git check-ignore`**，
+      不是查文件里有没有这串字——`output/**/storyboard.jpg` 写成
+      `output/*/storyboard.jpg` 同样能通过文本断言，却匹配不上真实路径）
+    - 工作流那条 `rm` 不许被删掉（本地忽略了，runner 上还是会生成一份，
+      而 runner 那边 `git add <目录>` 吃的是索引不是 .gitignore 之外的判断）
+
+    ⚠️ 顺带钉住**仓库里现在一张都没有**——防的是「规则加上了，可之前
+    已经提交进去的那些还在」，那种情况下这条测试会假绿。
+    """
+    import subprocess  # noqa: PLC0415
+
+    probe = "output/interviews/__probe__/storyboard.jpg"
+    r = subprocess.run(["git", "check-ignore", "-q", probe],
+                       cwd=ROOT, capture_output=True)
+    assert r.returncode == 0, (
+        f".gitignore 没挡住 {probe}——本地 `--stage subs` 生成的缩略图墙"
+        "会被 `git add` 吃进仓库（一张就是六百多 KB）")
+
+    step = next((s for s in _steps() if "storyboard.jpg" in _step_run(s)), None)
+    assert step is not None, (
+        "工作流里没有一步删 storyboard.jpg。**本地忽略了不等于 runner 上安全**："
+        "runner 那边是 `git add <目录>`，走的是索引")
+    assert re.search(r"rm\s+-f\b[^\n]*storyboard\.jpg", _step_run(step)), (
+        f"步骤「{step.get('name')}」提到了 storyboard.jpg，但不是在删它")
+
+    tracked = subprocess.run(["git", "ls-files", "output/**/storyboard.jpg"],
+                             cwd=ROOT, capture_output=True, text=True).stdout.split()
+    assert not tracked, (
+        f"仓库里已经躺着 {len(tracked)} 张缩略图墙：{tracked[:3]}。"
+        "加规则挡不住已经提交进去的——要 `git rm --cached` 一遍，"
+        "否则这条测试对它们是绿的")

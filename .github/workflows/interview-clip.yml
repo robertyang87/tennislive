@@ -45,6 +45,7 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -87,6 +88,7 @@ jobs:
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
+        timeout-minutes: 6
         if: github.event.inputs.mode == 'render'
         run: |
           sudo apt-get update -qq
@@ -117,6 +119,7 @@ jobs:
       # **字体两个都要**：切行是按真实字宽切的（`_en_width` / `_zh_width`），
       # 缺了就直接报错——这一步的产物是行的划分，量错了整条片子的字幕都跟着错。
       - name: 装依赖（只取字幕）
+        timeout-minutes: 6
         if: github.event.inputs.mode == 'subs'
         run: |
           sudo apt-get update -qq
