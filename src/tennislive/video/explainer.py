@@ -1571,9 +1571,9 @@ _ACADEMY_COUNT_DIAGRAM = """
 # ⚠️ 轴上标不标名字，卡在译名上，不卡在版面上：
 #   · 四个展开讲的都在译名表里（伊埃拉／兰达卢塞／黄泽林／鲁德），标名字
 #   · 穆纳尔中文维基学院页写「豪梅·穆纳尔」，但表里没有——**只标年纪不标名**
-#   · 西埃拉查不到中文源；科尔涅耶娃两个源两种写法（维基「阿林娜·科尔涅耶娃」／
+#   · 西埃拉查不到中文源；科尔涅娃两个源两种写法（维基「阿林娜·科尔涅娃」／
 #     百度「阿丽娜·科尔涅娃」）——同样不标名
-#   · **科尔涅耶娃到学院的年纪根本没查到**，所以她不在轴上，单独standing在右边打问号。
+#   · **科尔涅娃到学院的年纪根本没查到**，所以她不在轴上，单独standing在右边打问号。
 #     把「没查到」画出来，比把她悄悄漏掉诚实（CLAUDE.md：空结果先自证是真空）
 # ⚠️ 中文维基那页把伊埃拉写成「亚历克莎·埃亚拉」——**别照抄**。仓库早就把
 #   埃亚拉改成伊埃拉了，译名表说了算。
@@ -1641,7 +1641,7 @@ def _academy_span_diagram() -> str:
         + f'<circle cx="820" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
           'stroke-width="2" stroke-dasharray="4 4"/>'
         + '<text x="820" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
-          'font-weight="800">科尔涅耶娃</text>'
+          'font-weight="800">科尔涅娃</text>'
         + '<text x="820" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
           'font-weight="700">哪年去的没查到</text>'
         + '<text x="450" y="452" text-anchor="middle" fill="#e7f3ec" font-size="27" '
