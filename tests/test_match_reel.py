@@ -5914,3 +5914,36 @@ def test_成片要记下是哪条路配的音():
     body = inspect.getsource(chk.main)
     assert re.search(r"bad\s*=\s*voiced_by\(", body), \
         "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
+
+
+def test_屏幕上的次也要写成数字而分发强成不许写():
+    """同一行里两种写法，是「转了一半」——和「北京时间8月三号零点」同一个毛病。
+
+    2026-08-04 抽帧看见 `前5局又破了三次 4比1`：三个数都是在数数，「局」和
+    「比」转了，「次」没转，因为 `_NUM_UNITS` 里漏了它。
+
+    ⚠️ **同一轮扫存量时另外几个字必须不转**，所以这条测试两头都钉：
+
+    | | | |
+    |---|---|---|
+    | 「三分之一」 | 加「分」就成 **「3分之一」** | 分数不是数数 |
+    | 「一发」「二发」 | 术语 | 加「发」就成「2发」 |
+    | 「四强」「三成」 | 术语／约数 | |
+    | 「十七分」→「17分」 | **本来就转** | 走「含十百千」那条，不靠这张表 |
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import arabic_numerals  # noqa: PLC0415
+
+    for raw, want in (("前五局又破了三次", "前5局又破了3次"),
+                      ("来回打了三次平分", "来回打了3次平分"),
+                      ("连续七次交手", "连续7次交手")):
+        assert arabic_numerals(raw) == want, f"{raw} → {arabic_numerals(raw)}"
+
+    # 反面锚点：这些一个字都不许动
+    for raw in ("三分之一", "一发", "二发", "四强", "三成", "七成",
+                "唯一一次", "第一次", "一次", "两次",
+                "依次", "其次", "层次", "档次", "多次", "这次", "首次"):
+        assert arabic_numerals(raw) == raw, f"{raw} 被误伤成 {arabic_numerals(raw)}"
+
+    # 「十七分」不靠量词表——它走「含十百千」那条，别为它去加「分」
+    assert arabic_numerals("只赢了十七分") == "只赢了17分"
