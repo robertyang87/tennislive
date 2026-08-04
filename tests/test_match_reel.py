@@ -6094,27 +6094,52 @@ def test_栏目基调只填空位不许盖掉段级风格():
     sys.path.insert(0, str(Path("tools").resolve()))
     sys.path.insert(0, str(Path("src").resolve()))
     import build_match_reel as reel
+    import pytest  # noqa: PLC0415
     from tennislive.video import azure_tts
 
     # ① 基调必须是**服务端实测通过**的风格，不能是随手写的名字——
     #    ⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功，只是没有情绪
     # ⚠️ **空串是「实测之后决定不设」**，不是漏填——它和「根本没登记」处置一样
     # 但说法必须不一样，靠 `is_registered()` 分开
-    live = {k: v for k, v in azure_tts.COLUMN_BASE_STYLE.items() if v[0]}
-    styles = {v[0] for v in live.values()}
-    assert styles <= set(azure_tts.KNOWN_STYLES)
-    # ⚠️ 满档太重（实测抬 50% 音高），设了基调就要显式写 degree
-    assert all(v[1] for v in live.values()), (
-        "基调必须显式写 styledegree——默认 1.0 实测把八段从 115–128 Hz "
-        "抬到 184–188，那不是基调是换了个人念")
+    def _vet(table: dict[str, tuple[str, str]]) -> None:
+        """基调表的三条规矩。抽出来是因为**现在表里一条活的都没有**——
+        直接写成断言的话它们会恒真，而一条恒真的检查和没有检查是同一个毛病。"""
+        live = {k: v for k, v in table.items() if v[0]}
+        styles = {v[0] for v in live.values()}
+        assert styles <= set(azure_tts.KNOWN_STYLES), (
+            f"{sorted(styles - set(azure_tts.KNOWN_STYLES))} 不在实测通过的表里"
+            "——⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功只是没有情绪")
+        # ⚠️ 满档太重（实测抬 50% 音高），设了基调就要显式写 degree
+        assert all(v[1] for v in live.values()), (
+            "基调必须显式写 styledegree——默认 1.0 实测把八段从 115–128 Hz "
+            "抬到 184–188，那不是基调是换了个人念")
+        # 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
+        suspect = {"narration-relaxed", "serious", "angry", "disgruntled",
+                   "cheerful"}
+        assert not (styles & suspect), (
+            "这几个风格实测时长和基线几乎一样，别拿来当整条片子的基调")
+
+    _vet(azure_tts.COLUMN_BASE_STYLE)
+    # ⚠️ **判据自己的判据。** 2026-08-04 之后两个栏目都是「不设」，上面那三条
+    # 于是一条都咬不到东西。拿三个**故意写坏**的表各喂一次，证明它们还活着——
+    # 不然这段检查会在表被重新填上的那天悄悄放行。
+    for bad, hint in (
+        ({"x": ("no-such-style", "0.5")}, "拼错的风格名"),
+        ({"x": ("documentary-narration", "")}, "没写 styledegree"),
+        ({"x": ("cheerful", "0.5")}, "时长和基线几乎一样的那五个"),
+    ):
+        with pytest.raises(AssertionError):
+            _vet(bad)
+
     assert azure_tts.is_registered("赛场之上") and not azure_tts.base_style_for("赛场之上")[0], (
         "赛场之上是**登记过的「不设」**（三趟实测），不许退化成「没登记」——"
         "那样日志会说「漏了」，而它是想清楚的")
+    # ⚠️ 网球有故事同理：它是**账号所有者听完撤掉的**（2026-08-04「不要改成那种
+    # 情绪化的，还用原来的那种配音」），不是没人顾上。退化成「没登记」就把一个
+    # 听过之后的决定抹成了「漏了」。
+    assert azure_tts.is_registered("网球有故事") and not azure_tts.base_style_for("网球有故事")[0], (
+        "网球有故事是**登记过的「不设」**，见 azure_tts 里那段注")
     assert not azure_tts.is_registered("没这个栏目")
-    # ② 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
-    suspect = {"narration-relaxed", "serious", "angry", "disgruntled", "cheerful"}
-    assert not (styles & suspect), (
-        "这几个风格实测时长和基线几乎一样，别拿来当整条片子的基调")
     # ③ 登记过的栏目要真的在 spec 里出现过——一张会过期的表和一条常年红的
     #    检查是同一个毛病
     used = {str((json.loads(p.read_text("utf-8")).get("cover") or {})
@@ -6173,3 +6198,90 @@ def test_没有Azure的时候不许硬套基调():
     assert "print(" in body and "why_unavailable" in body, (
         "两条路都要出声——「没配基调」和「配了但没生效」长得一模一样")
     assert reel.column_base_style(spec) == ("", "") or reel.azure_tts.available()
+
+
+def test_情绪风格要写谁听过不是写为什么想用():
+    """⚠️ **量得出来的三维，没有一维在量「糙不糙」。**
+
+    2026-08-04：王欣瑜那条的第 7/9/10 段上了 excited / sad / depressed。理由写得
+    很足，还配了三维实测——基频 219.2 Hz、响度 −24.2 dB、语速 5.38 字每秒——我据此
+    论证「不吵、不快、只是高」并建议发。账号所有者听完的原话是
+    **「配音真的是太粗细了，还是不要改成那种情绪化的，还用原来的那种配音」**。
+
+    那三个数都量对了。**它们只是都不在量音色自不自然**，而那正是唯一要紧的那一维。
+    所以 `_why`（为什么想用）不够，得有 `_heard`（谁听过、听下来怎么样）——和
+    `mixed_fps` / `silent_source` / `rank: null` 一个形状：认领这一步把
+    「听下来行」和「量下来应该行」分开。
+
+    ⚠️ 只管 `style`。`rate` / `pitch` / `lead_pause` 不改音色，`_why` 管得住。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel
+    import pytest  # noqa: PLC0415
+
+    def seg(**voice):
+        return {"start": 0.0, "end": 9.0, "narration": "随便一句。",
+                "voice": voice}
+
+    # ① 有 style 没 _heard → 报错，而且要说出两条不改音色的出路
+    with pytest.raises(reel.ReelError) as err:
+        reel._seg_voice(seg(style="sad", _why="崩盘那一段"), 0)
+    msg = str(err.value)
+    assert "_heard" in msg
+    for way in ("断句", "气口", "lead_pause"):
+        assert way in msg, f"报错要指出「{way}」这条不改音色的路，现在只有：{msg}"
+
+    # ② 写了 _heard 就放行
+    assert reel._seg_voice(
+        seg(style="sad", _why="崩盘", _heard="账号所有者 8/4 听过，可以"), 0
+    )[2] == "sad"
+
+    # ③ ⚠️ 反向：不带 style 的不受这道闸管——扩大化的判据不吭声，它只会让
+    #    下一个人把「降个速」也当成要听一遍的事
+    assert reel._seg_voice(seg(rate="-10%", _why="落点，慢下来"), 0)[0] == "-10%"
+    assert reel._seg_voice(seg(lead_pause=0.4, _why="进第二盘留口气"), 0)[4] == 0.4
+
+    # ④ 存量里凡是写了 style 的，都得有 _heard——这条测试要有主语
+    styled = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        for i, s in enumerate(json.loads(path.read_text("utf-8")).get("segments", [])):
+            voice = s.get("voice") or {}
+            if str(voice.get("style", "") or "").strip():
+                styled += 1
+                assert str(voice.get("_heard", "") or "").strip(), (
+                    f"{path.name} 第 {i + 1} 段写了 style 却没有 _heard")
+    # ⚠️ 这里**不要求 styled > 0**：现在全仓库一条都没有（都撤了），而那正是
+    #    这条规矩想要的状态。①②③ 已经直接喂函数验过，主语不在存量上。
+
+
+def test_气口要算进旁白的离线估():
+    """⚠️ `lead_pause` 占的是**同一个窗口**的时间，不算进去就是一条乐观的估。
+
+    `speech_seconds()` 只看文本，而 `lead_pause` 是段首那个真 `<break>`。不加的话
+    这条离线估**正好乐观 `lead_pause` 秒**，然后在六分钟之后的真 render 里才炸——
+    又是「兜底出事的时候不吭声」，只不过这次不吭声的是估算本身。
+
+    ⚠️ 加在 `narration_estimates` 而不是 `speech_seconds`：后者的系数是拿**已发
+    成片**拟合并钉住的（`test_离线估旁白长度要对得上真产物`），掺进段级参数就没法
+    再和那批产物对账了。这条测试连**加在哪一层**一起钉。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel
+    import pytest  # noqa: PLC0415
+
+    text = "然后她连丢四局。"
+    plain = reel.Segment(start=0.0, end=9.0, cx=None, narration=text)
+    winded = reel.Segment(start=0.0, end=9.0, cx=None, narration=text,
+                          voice_lead_pause=0.6)
+    (_, a, room_a), = reel.narration_estimates([plain])
+    (_, b, room_b), = reel.narration_estimates([winded])
+    assert b - a == pytest.approx(0.6, abs=1e-6), (
+        f"气口没算进去：带 0.6s lead_pause 估出来 {b}，不带是 {a}")
+    assert room_a - room_b == pytest.approx(0.6, abs=1e-6), "余量也要跟着缩"
+
+    # ⚠️ 层次：`speech_seconds` 必须还是「纯文本进、秒数出」
+    assert reel.speech_seconds(text) == pytest.approx(a, abs=1e-6), (
+        "`speech_seconds` 不许自己去读段级参数——它的系数是拿已发成片拟合的")
+    import inspect as _inspect
+    assert list(_inspect.signature(reel.speech_seconds).parameters) == ["text"], (
+        "`speech_seconds` 只该收文本；气口加在 `narration_estimates` 那一层")

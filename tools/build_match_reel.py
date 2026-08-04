@@ -1215,7 +1215,8 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
     if not isinstance(voice, dict):
         raise ReelError(f"第 {index + 1} 段的 `voice` 要写成对象，"
                         '例如 {"rate": "-8%", "pitch": "-6Hz", "_why": "..."}')
-    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause", "_why"}
+    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause",
+               "_why", "_heard"}
     extra = sorted(set(voice) - allowed)
     if extra:
         raise ReelError(f"第 {index + 1} 段的 `voice` 只认 "
@@ -1249,6 +1250,27 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
             "这一步要认领：语速改一个数就能让一段「刚好装得下」，而那是剪窗口\n"
             "该干的事。写一句为什么（「这一段是崩盘，降速降调」），下一个人才\n"
             "分得出这是编辑决定还是凑数。")
+    # ⚠️ **情绪风格要写「谁听过」，而不只是「为什么想用」。**
+    #
+    # 2026-08-04：王欣瑜那条的第 7/9/10 段上了 excited / sad / depressed，理由
+    # 写得很足，还配了三维实测（基频 219.2 Hz、响度 −24.2 dB、语速 5.38 字每秒），
+    # 我据此判断「不吵、不快、只是高」并建议发。账号所有者听完的原话是
+    # **「配音真的是太粗细了，还是不要改成那种情绪化的」**。
+    #
+    # **那三个数都量对了，只是没有一个在量「糙不糙」**——音色自不自然是耳朵的
+    # 事，韵律表答不了。所以这道闸要的不是更多推理（`_why` 已经管那个了），
+    # 是一句**有人真的听过**。和 `mixed_fps` / `silent_source` / `rank: null`
+    # 一个形状：认领这一步把「听下来行」和「量下来应该行」分开。
+    if style and not str(voice.get("_heard", "") or "").strip():
+        raise ReelError(
+            f"第 {index + 1} 段用了 `voice.style={style}`，却没写 `voice._heard`。\n"
+            "⚠️ **情绪风格只能靠耳朵验收，量不出来。** 2026-08-04 栽过一次：\n"
+            "三段风格配着基频/响度/语速三维实测发了出去，账号所有者听完说\n"
+            "「太粗细了……不要改成那种情绪化的」——那三个数都对，只是没有一个\n"
+            "在量「糙不糙」。\n"
+            "`_heard` 写谁听的、听下来怎么样（「账号所有者 8/4 听过，可以」）。\n"
+            "没听过就别写 `style`：情绪要么交给**断句**（标点，见 CLAUDE.md），\n"
+            "要么交给**气口**（`lead_pause`，真 `<break>`）——这两样不改音色。")
     return rate, pitch, style, degree, lead
 
 
@@ -2559,11 +2581,21 @@ def speech_seconds(text: str) -> float:
 
 
 def narration_estimates(segments) -> list[tuple[int, float, float]]:
-    """`[(段序号, 估出来的旁白秒数, 余量)]`，只给有旁白的段。"""
+    """`[(段序号, 估出来的旁白秒数, 余量)]`，只给有旁白的段。
+
+    ⚠️ **`lead_pause` 要算进去。** 它是段首那个真 `<break>`，占的是**同一个窗口**
+    的时间，而 `speech_seconds()` 只看文本——不加的话这条离线估会**正好乐观
+    `lead_pause` 秒**，然后在六分钟之后的真 render 里才炸。又是「兜底出事的时候
+    不吭声」，只不过这次不吭声的是估算本身。
+
+    加在这一层而不是 `speech_seconds()` 里：那个函数的系数是拿**已发成片**拟合
+    并钉住的（`test_离线估旁白长度要对得上真产物`），它必须保持「纯文本进、秒数
+    出」，掺进段级参数就没法再和那批产物对账了。
+    """
     out: list[tuple[int, float, float]] = []
     for index, seg in enumerate(segments):
         if seg.narration.strip():
-            secs = speech_seconds(seg.narration)
+            secs = speech_seconds(seg.narration) + seg.voice_lead_pause
             out.append((index, secs, seg.length - secs))
     return out
 
