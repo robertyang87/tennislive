@@ -73,15 +73,23 @@ KNOWN_STYLES = (
 # 基线几乎一样——「服务端认」不等于「听起来对」，别把它们设成基调。
 # ⚠️ **表里没有的栏目不给基调，而且要出声**：「没配基调」和「配了但没生效」
 # 长得一模一样，这个仓库为这种沉默栽过很多次。
+# ⚠️ **带 `styledegree`，因为满档下得太重。** 2026-08-04 在王欣瑜那条上实测
+# （run 30901860950 → 30908370179，同一条 spec 只加基调）：满档 1.0 把八段
+# 不带风格的从 **115–128 Hz 抬到 184–188**、语速快 8~10%（第 4 段 5.77 字/秒，
+# 比存量最快的 5.24 还快）。**那不是「基调」，是换了个人在念。**
+# 而且接缝没消掉只是挪了位置：原来 6→7 差 91 Hz，满档之后 8→9 差 79、9→10 差 95。
 COLUMN_BASE_STYLE = {
-    "赛场之上": "sports-commentary",        # 一场对决的赛报
-    "网球有故事": "documentary-narration",  # 讲一个人的来路
+    "赛场之上": ("sports-commentary", "0.5"),        # 一场对决的赛报
+    "网球有故事": ("documentary-narration", "0.5"),  # 讲一个人的来路
 }
 
 
-def base_style_for(column: str) -> str:
-    """这个栏目的基调风格；没登记就返回空串（调用方负责出声）。"""
-    return COLUMN_BASE_STYLE.get((column or "").strip(), "")
+def base_style_for(column: str) -> tuple[str, str]:
+    """这个栏目的基调 `(风格, styledegree)`；没登记就 `("", "")`。
+
+    调用方负责出声——「没配基调」和「配了但没生效」长得一模一样。
+    """
+    return COLUMN_BASE_STYLE.get((column or "").strip(), ("", ""))
 
 
 _ENV_KEY = "AZURE_SPEECH_KEY"

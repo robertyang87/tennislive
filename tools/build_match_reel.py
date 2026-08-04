@@ -2568,7 +2568,7 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
     return out
 
 
-def column_base_style(spec: dict) -> str:
+def column_base_style(spec: dict) -> tuple[str, str]:
     """这条片子的**基调**风格，按栏目来；顺带把判断依据打进日志。
 
     账号所有者 2026-08-04 问「以后所有配音都能自适应情绪么？」——**按文本自动
@@ -2584,16 +2584,17 @@ def column_base_style(spec: dict) -> str:
     if not azure_tts.available():
         print(f"[配音] 没有 Azure，栏目「{column or '—'}」不套基调"
               f"（{azure_tts.why_unavailable()}）")
-        return ""
-    style = azure_tts.base_style_for(column)
+        return "", ""
+    style, degree = azure_tts.base_style_for(column)
     if not style:
         print(f"[配音] 栏目「{column or '—'}」没登记基调，逐段按 spec 走"
               f"（已登记：{'、'.join(azure_tts.COLUMN_BASE_STYLE)}）")
-    return style
+    return style, degree
 
 
 def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
-               base_style: str = "") -> list[tuple[Path, list[dict]]]:
+               base_style: str = "", base_degree: str = ""
+               ) -> list[tuple[Path, list[dict]]]:
     # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
     # 是个合法的形态（先看画面剪得对不对，再配音）
     if not any(seg.narration.strip() for seg in segments):
@@ -2604,8 +2605,8 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
         # 只说覆盖了几段，又不知道其余那些是什么调。
         overridden = sum(1 for s in segments if s.narration.strip() and s.voice_style)
         plain = sum(1 for s in segments if s.narration.strip()) - overridden
-        print(f"[配音] 基调 {base_style}：{plain} 段用它，"
-              f"{overridden} 段在 spec 里各自覆盖")
+        print(f"[配音] 基调 {base_style}（styledegree {base_degree or '1.0'}）："
+              f"{plain} 段用它，{overridden} 段在 spec 里各自覆盖")
 
     out: list[tuple[Path, list[dict]]] = []
     for index, seg in enumerate(segments):
@@ -2619,7 +2620,11 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
                                   seg.voice_rate or rate,
                                   seg.voice_pitch or "+0Hz",
                                   seg.voice_style or base_style,
-                                  seg.voice_styledegree,
+                                  # ⚠️ **degree 要跟着 style 一起走。** 段级风格
+                                  # 配基调的 degree 是张冠李戴——「excited 但只用
+                                  # 五成力」不是任何人想清楚过的东西。
+                                  seg.voice_styledegree if seg.voice_style
+                                  else base_degree,
                                   seg.voice_lead_pause)))
     return out
 
@@ -2910,7 +2915,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 超出的段都列出来（原来就是这么设计的，见下面的注释）。
     with stage("TTS 合成"):
         voices = synthesize(segments, outdir, voice, rate,
-                            column_base_style(spec))
+                            *column_base_style(spec))
 
     # **旁白比画面长，就不是「注意」，是错的。**
     #
@@ -3262,7 +3267,7 @@ def main() -> int:
         segments = validate_spec(spec)
         with tempfile.TemporaryDirectory() as tmp:
             voices = synthesize(segments, Path(tmp), args.voice, args.rate,
-                                column_base_style(spec))
+                                *column_base_style(spec))
             spoken, over = narration_overruns(segments, voices)
             splits = _word_splits(spec, segments, voices)
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个

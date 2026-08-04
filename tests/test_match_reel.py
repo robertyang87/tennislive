@@ -6098,10 +6098,15 @@ def test_栏目基调只填空位不许盖掉段级风格():
 
     # ① 基调必须是**服务端实测通过**的风格，不能是随手写的名字——
     #    ⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功，只是没有情绪
-    assert set(azure_tts.COLUMN_BASE_STYLE.values()) <= set(azure_tts.KNOWN_STYLES)
+    styles = {v[0] for v in azure_tts.COLUMN_BASE_STYLE.values()}
+    assert styles <= set(azure_tts.KNOWN_STYLES)
+    # ⚠️ 满档太重（实测抬 50% 音高），基调一律要显式写 degree
+    assert all(v[1] for v in azure_tts.COLUMN_BASE_STYLE.values()), (
+        "基调必须显式写 styledegree——默认 1.0 实测把八段从 115–128 Hz "
+        "抬到 184–188，那不是基调是换了个人念")
     # ② 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
     suspect = {"narration-relaxed", "serious", "angry", "disgruntled", "cheerful"}
-    assert not (set(azure_tts.COLUMN_BASE_STYLE.values()) & suspect), (
+    assert not (styles & suspect), (
         "这几个风格实测时长和基线几乎一样，别拿来当整条片子的基调")
     # ③ 登记过的栏目要真的在 spec 里出现过——一张会过期的表和一条常年红的
     #    检查是同一个毛病
@@ -6110,14 +6115,16 @@ def test_栏目基调只填空位不许盖掉段级风格():
             for p in Path("specs/reels").glob("*.json")}
     stale = set(azure_tts.COLUMN_BASE_STYLE) - used
     assert not stale, f"{sorted(stale)} 这些栏目在 specs 里根本不存在"
-    assert azure_tts.base_style_for("没这个栏目") == ""
+    assert azure_tts.base_style_for("没这个栏目") == ("", "")
 
     # ④ 段级永远赢：给基调，带 style 的那段必须还是自己的
     seen: list[str] = []
+    degrees: list[str] = []
 
     def fake_tts(text, path, voice, rate, pitch="+0Hz", style="",
                  styledegree="", lead_pause=0.0):
         seen.append(style)
+        degrees.append(styledegree)
         path.write_bytes(b"x")
         return []
 
@@ -6131,11 +6138,14 @@ def test_栏目基调只填空位不许盖掉段级风格():
     reel.tts_one = fake_tts
     try:
         with tempfile.TemporaryDirectory() as tmp:
-            reel.synthesize(segs, Path(tmp), "v", "+6%", base_style="sports-commentary")
+            reel.synthesize(segs, Path(tmp), "v", "+6%",
+                            base_style="sports-commentary", base_degree="0.5")
     finally:
         reel.tts_one = orig
     assert seen == ["sports-commentary", "sports-commentary-excited"], (
         f"基调应该只填空位、段级永远赢，实际拿到 {seen}")
+    # ⚠️ **degree 要跟着 style 走**：段级风格配基调的 degree 是张冠李戴
+    assert degrees == ["0.5", ""], f"degree 没跟着 style 走，实际 {degrees}"
 
 
 def test_没有Azure的时候不许硬套基调():
@@ -6151,8 +6161,8 @@ def test_没有Azure的时候不许硬套基调():
     spec = {"cover": {"eyebrow": "赛场之上"}}
     src = Path("tools/build_match_reel.py").read_text("utf-8")
     body = src[src.index("def column_base_style("):src.index("def synthesize(")]
-    assert "azure_tts.available()" in body and "return \"\"" in body, (
+    assert "azure_tts.available()" in body and 'return "", ""' in body, (
         "没有 Azure 的时候必须返回空基调")
     assert "print(" in body and "why_unavailable" in body, (
         "两条路都要出声——「没配基调」和「配了但没生效」长得一模一样")
-    assert reel.column_base_style(spec) == "" or reel.azure_tts.available()
+    assert reel.column_base_style(spec) == ("", "") or reel.azure_tts.available()
