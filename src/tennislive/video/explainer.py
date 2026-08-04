@@ -1659,6 +1659,17 @@ def _academy_span_diagram() -> str:
 _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 
 
+# 合进 main 就自动推微信的选题，**默认一条都没有**。
+#
+# ⚠️ 认领这一步把「想清楚了」和「凑合一下」分开，和 `mixed_fps` / `silent_source`
+# 一个形状。竖版短片那条线把它写在 spec 的 `push.auto` 里，而解说片的脚本活在
+# 代码里、没有 per-slug 的 JSON 可写，所以认领落在这儿。
+#
+# ⚠️ 加进来之前先问一句：这条片子**验过了吗**。加进来之后它就不再经过人的手，
+# 而微信那条消息发出去收不回来。
+AUTO_PUSH_SLUGS: frozenset[str] = frozenset()
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 纳达尔学院。引子是学院自己 2026-06-09 那份「六人同时进前 100」的公告，
     # 而它八周就过时了。⚠️ 详讲四个、七个都上时间轴——账号所有者 2026-08-04：
