@@ -266,6 +266,62 @@ def test_走pushplus图床要先说清楚30天会删图(tmp_path, monkeypatch, c
     assert not [r for r in caplog.records if "30 天" in r.message]
 
 
+def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, caplog):
+    """图床是**优化**，不是这条推送的内容——它用不了就退回 jsDelivr，别否决推送。
+
+    2026-08-04 纳达尔学院那趟就是这么死的（run 30903125364）：片子渲完 2 分 20 秒、
+    提交进 main、复制页第 1 次探活就命中，最后死在
+    `获取 PushPlus AccessKey 失败: 请求未授权`——**一条已经做好的片子，
+    因为一个可有可无的加速通道没鉴权成功，一个字都没发出去。**
+
+    这是仓库里那条「保护了不重要的那一步，没保护唯一重要的那一步」的反面，
+    而且更糟：不重要的那一步直接**否决**了重要的那一步。
+
+    退回是安全的，两道闸还在：`_jsdelivr_delivery` 自己重做全覆盖检查（见下半段），
+    发送前 `wait_for_images` 还会逐张探活。
+    """
+    cards = tmp_path / "cards"
+    cards.mkdir()
+    (cards / "cover.jpg").write_bytes(b"image")
+    monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus._access_key",
+        Mock(side_effect=PushPlusError("获取 PushPlus AccessKey 失败: 请求未授权")),
+    )
+    html = ('<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
+            'tennislive@abc123/output/2026-07-23/cards/cover.jpg">')
+
+    with caplog.at_level(logging.ERROR, logger="tennislive.publish.pushplus"):
+        rendered, provider = prepare_image_delivery(
+            html, asset_dir=tmp_path, token="token")
+
+    # ① 没抛，而且图片真的改写成了钉 commit 的永久链接
+    assert "abc1234" in rendered, f"退回之后图片没钉到 commit 上：{rendered!r}"
+
+    # ② **通道名要分得出是哪一种 jsdelivr。** 「从没配过」和「图床把我拒了」
+    #    都打印 `jsdelivr` 的话，一个坏掉的付费订阅和一个没开过的功能长得
+    #    一模一样——正是「兜底出事的时候不吭声」。
+    assert provider == "jsdelivr-fallback", (
+        f"退回之后通道名仍是 {provider!r}，看不出图床出过事")
+
+    # ③ 出声，而且要说得出原因和出路
+    said = "\n".join(r.getMessage() for r in caplog.records)
+    assert "退回 jsDelivr" in said, f"悄悄退回了：{said!r}"
+    assert "请求未授权" in said, f"没把图床报的原因带出来：{said!r}"
+    assert "PUSHPLUS_SECRET_KEY" in said, "没说该去查什么——留了个没出路的告警"
+
+    # ④ 退回**不等于放行**：映射不上的图片仍然整条不发。
+    #    少了这一条，上面那个 try/except 就成了「出事就凑合发」。
+    with pytest.raises(PushPlusError):
+        prepare_image_delivery(
+            '<img src="https://example.com/not-in-this-repo.jpg">',
+            asset_dir=tmp_path,
+            token="token",
+        )
+
+
 def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
     """镜像主机名换掉之后，两处按 `cdn.jsdelivr.net` 写死的判据会**悄悄失效**。
 
