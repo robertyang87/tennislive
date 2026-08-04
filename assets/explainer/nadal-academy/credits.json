@@ -1,0 +1,57 @@
+{
+  "_what": "封面一张 ＋ 四个详讲球员各一张。账号所有者 2026-08-04：「时间轴是介绍整个概况的，要单独放前面，后面每一页介绍具体球员，要配对应的球员图片」「配的照片最好是每个人的今年高光时刻」。",
+  "_四道闸门怎么过的": "① 精准：四张里三张由**画面里烧死的元素**自证，不靠图注（伊埃拉：球场上刷着 WASHINGTON ＋ 场边 MUBADALA ＋ 看台菲律宾国旗；黄泽林：同源同一身球衣的另一张背后写着 Mifel＝Mifel Tennis Open；鲁德：挡风网上整幅 RAFA NADAL ACADEMY by Movistar）。兰达卢塞那张只有来源声明，档次低一级，单独记在它自己那条里。② 在比赛中：四张都在球场上，没有一张是发布会／走廊／看台。③ 冲击力：四张全是情绪落点（举杯／双臂张开／吼出来／击球中），不是大头特写。④ 清晰度：最小的 1639px 宽，卡片 1080 宽一律缩不放大。",
+  "_横向收边到刚好过1.2": "三张横图收到 1.23~1.45——`wide = pw/ph >= 1.2` 上方一点点，所以仍走 contain 不被切，但主体比原图大一圈。这是 CLAUDE.md 那条「『填满』和『留黑边』不是只有两档，中间这一档往往最好」。伊埃拉那张是竖的（0.80），走 cover 铺满，不收边。",
+  "eala_washington_2026_trophy.jpg": {
+    "source": "Rafa Nadal Academy 官网（图注自署 Foto: WTA）",
+    "source_url": "https://www.rafanadalacademy.com/wp-content/uploads/2026/08/EALA.jpeg",
+    "author": "WTA（经学院官网分发；摄影师姓名未给出）",
+    "license": "unverified",
+    "what": "2026-08-03 华盛顿 Mubadala DC Open 女单决赛，伊埃拉逆转佩古拉夺冠后单手举起奖杯，看台上有人展开菲律宾国旗",
+    "_why_this_one": "第 2 道闸门那个例外**这次成立了**——「捧杯优先级比击球中高，如果有捧杯的话」。上一版 credits 写的是「WTA 赛报页和赛事官网都没找到捧杯照」，那句话的真实含义只是「那两个源上没有」。学院官网转载了 WTA 的这张。又一次「某一个源上没有 ≠ 不存在」。",
+    "_why_not_too_close": "「捧杯」不等于「奖杯占满一屏」。这张是全身远景：奖杯在最高处、人在中间、脚下写着 WASHINGTON——奖杯是视觉落点，但没有近到只剩一张脸和半个杯（克里斯特尔斯那次踩过）。",
+    "_trap": "⚠️ 学院文章页上挂的是 `EALA-e1785826561746.jpeg`，**1638×986 的横向裁切版**——WordPress 的 `-e<时间戳>` 后缀就是「被裁过」。去掉后缀取 `EALA.jpeg` 才是 **1639×2048 的竖版原图**，多出来的正是举杯的手臂和脚下那行 WASHINGTON。媒体接口的 `media_details` 报的是裁过那份的尺寸，照它判会以为 1638×986 就是天花板。"
+  },
+  "landaluce_miami_2026.jpg": {
+    "source": "Rafa Nadal Academy 官网，文章《Martín Landaluce explota en el Miami Open y consigue la mejor clasificación ATP de su carrera》(2026-03-30) 的题图",
+    "source_url": "https://www.rafanadalacademy.com/wp-content/uploads/2026/03/COC_0694-scaled-1.jpg",
+    "author": "未署名（学院官网转载）",
+    "license": "unverified",
+    "what": "2026 年 3 月迈阿密大师赛，兰达卢塞赢球后双臂张开、双手握拳、闭眼仰头",
+    "crop": "原图 2560×1705（1.50），横向居中收到 2097×1705（1.23）。收边只从两侧走，一个像素都没动上下——他张开的双臂横跨大半幅，上下收会切掉手。",
+    "_brightness": "整幅灰度均值 51.9、中位 42、暗于 50 的像素 58.4%——**这三个数会骗人**。压低它们的是背景的黑色脚手架和阴影看台，而**主体本人在阳光下**。CLAUDE.md 那条量亮度的判据防的是逆光剪影（人自己落在暗部），不是背景暗。所以最后一步仍然是打开看。",
+    "_verification": "⚠️ **这一张只有来源声明，没有画面自证**，四张里最弱的一档。学院把它用作迈阿密那篇的题图、上传于 2026/03，但文件名 `COC_0694` 是相机原始名，画面里没有任何赛事标识。按 CLAUDE.md「官方图库把它挂在这一站名下，不等于拍的是这个场地」，写进片子的事实（迈阿密、生涯最高排名）出自文章正文，不出自这张图。"
+  },
+  "wong_los_cabos_2026.jpg": {
+    "source": "南华早报 SCMP，报道《Hongkonger Coleman Wong's dream run at ATP event comes to an end with semi-final loss》",
+    "source_url": "https://cdn.i-scmp.com/sites/default/files/d8/images/canvas/2026/08/01/492275f6-6efe-4aac-a604-d4f3888c9649_3434ea0e.jpg",
+    "author": "未署名（SCMP 转载，通讯社图）",
+    "license": "unverified",
+    "what": "2026 年 7 月底洛斯卡沃斯 Mifel Tennis Open，黄泽林在场上吼出来",
+    "crop": "原图 4095×2730（1.50），横向收到 3358×2730（1.23），中心略偏左跟着人走；再整体缩到 2400×1951 入库——卡片 1080 宽、2× 渲染就是 2160 像素，信箱缩放的横图最多只用得到 2160，3358 是白塞进仓库的字节。",
+    "_verification": "同一篇里另有一张他的正手击球（3762×2508），背后广告板上写着 **Mifel**＝Mifel Tennis Open by Telcel Oppo，也就是洛斯卡沃斯站；两张**同一身球衣**（白衣＋酒红领＋EFG），所以这一张的赛事由那一张钉住。选吼这张而不是击球那张，是因为它更大更亮（灰度均值 148 vs 110）、人占画面更多，而这一屏讲的是他闯出来那一周，不是某一记球。",
+    "_why_not_the_academy_poster": "⚠️ 学院官网为他进前 100 单独发过一篇，题图 `Coleman-Top-100.jpg` 2000×2500 看着很像照片——**打开是设计稿**：烧着 WELCOME TO THE TOP 100 的大字、学院 logo、两层人像叠化。他五月九江夺冠那篇的 `Coleman.jpeg` 同样是海报（CHAMPION／JIUJIANG 2026）。学院给球员里程碑发的一律是社媒海报，不是照片。**「非空 ≠ 可用」，而且这次不可用的原因是它根本不是照片。**",
+    "_trap": "⚠️ 那个 SCMP 页面上一起扒下来的还有曼城训练、看台人群、乒乓球台——同一页其它文章的缩略图。按 URL 批量下必混进来，判据只能是打开看。"
+  },
+  "ruud_academy_2026.jpg": {
+    "source": "Rafa Nadal Academy 官网，文章《Casper Ruud prepara en la Rafa Nadal Academy la defensa de su corona en el Mutua Madrid Open》(2026-04-16)",
+    "source_url": "https://www.rafanadalacademy.com/wp-content/uploads/2026/04/RNA_160426_Entreno-Casper_005-scaled-e1776343639430.jpg",
+    "author": "Rafa Nadal Academy（学院自己的摄影，文件名 RNA_160426 就是拍摄日 2026-04-16）",
+    "license": "unverified",
+    "what": "2026-04-16，鲁德在纳达尔学院的红土场上反手击球，身后挡风网整幅写着 RAFA NADAL ACADEMY by Movistar",
+    "crop": "原图 2560×1306（1.96，太扁，信箱缩放之后人只剩细细一条），横向收到 1894×1306（1.45），中心偏右跟着人走——**把整幅 RAFA NADAL ACADEMY 留在框内**，那行字就是这一屏的论据。",
+    "_why_not_a_2026_highlight": "⚠️ 这是四张里唯一一张**不是当年高光时刻**的，是有意的，两条理由：①**他 2026 没有高光可选**——全年零冠，最好成绩是罗马大师赛亚军，三个大满贯分别止步第四轮、第四轮、首轮，四月还一度跌出前二十（第 25）。②**这一屏的论点就是这张照片**：他不是去被培养的，是把那儿当基地——一张他在学院球场上练球、身后写着学院名的照片，正是那句话本身。CLAUDE.md：「画面里能自证的元素比任何『看着像』都值钱」。真找到罗马决赛的实拍可以再换，但换掉会丢掉挡风网那行字。",
+    "_probed": "罗马那条路探到底了：赛事官网 internazionalibnlditalia.com 不是 WordPress（wp-json 返回 HTML，soft-404），学院官网从 2025-09 到今天一篇罗马的都没有，ATP 总站 403、赛事域名镜像只服务自己那一站的 /en/news/，而 /-/media/images/tournaments-news/<站>/2026/<人>-1920.jpg 猜的两条都是 soft-404（**返回 text/html 的 404 页，只看状态码全是 200**）。"
+  },
+  "eala_washington_2026_final.jpg": {
+    "source": "WTA 官方图库 photoresources.wtatennis.com",
+    "source_url": "https://photoresources.wtatennis.com/photo-resources/2026/08/03/d00fd07a-7953-4c37-81db-620427f64c16/GettyImages-2288643508.jpg",
+    "author": "Getty Images（经 WTA 官方图库分发；摄影师姓名未在文件名或页面上给出）",
+    "license": "unverified",
+    "what": "2026-08-03 华盛顿 Mubadala DC Open 女单决赛，伊埃拉逆转佩古拉夺冠后握拳庆祝",
+    "_role": "**封面**。她自己那一屏用的是同一场的举杯照（见上），两张不是同一张——同一条片子里封面和内页撞同一张图，等于白占一屏。",
+    "_four_gates": "① 精准：时间地点人物三样都由来源自证（WTA 官方赛报页、2026/08/03 路径、决赛当天）。② 在比赛中：赛点后的场上庆祝，人在球场上、球拍在手。③ 冲击力：完整的握拳＋球拍，脸在框内。④ 清晰度：2400×1600，裁 3:4 后 1200×1600，封面 1080 宽只需缩到 0.9 倍，不放大。",
+    "_why_not_the_other_one": "同页还有一张 Eala-F-Scott-Taetsch.jpg（出处更干净：WTA 自己命名、带摄影师名）。**裁 3:4 之后她张开的双臂被切掉了**，而那一帧的全部意思就在双臂上；这张的握拳＋球拍是完整的，而且更亮（灰度均值 124 vs 105，暗于 50 的像素 8.8% vs 21%）。判据是两版裁出来摆一起看，不是按比例推。",
+    "_trap": "⚠️ 同一页上还有一张 GettyImages-2288794938.jpg，日期同为 2026/08/03——**打开是另一个人在孟菲斯站捧杯**（场边写着 TENNIS MEMPHIS）。光看文件名和日期必用错。又一次「非空 ≠ 对题」「打开看过再用」。"
+  }
+}

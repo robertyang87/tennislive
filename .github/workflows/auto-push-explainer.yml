@@ -1,0 +1,140 @@
+name: auto-push-explainer
+
+# **合进 main 就自动发微信**，省掉「合完还要记得回来点一次 dispatch」。
+# 和 `auto-push-reel.yml` 是同一套形状，只不过管的是解说片这条线。
+#
+# 出片和发消息本来就是两次动作：分支上 `push=false` 渲片（3 分钟上下），
+# 合进 main 之后**只推不渲**。实测那一趟 **1 分 02 秒**
+# （run 30894962272：checkout → 装依赖 9s → 推送 35s）。
+#
+# ⚠️ **默认什么都不会发。** 要开，把 slug 加进
+# `src/tennislive/video/explainer.py` 的 `AUTO_PUSH_SLUGS`。
+# 竖版短片那条线把认领写在 spec 的 `push.auto` 里，而**解说片的脚本活在代码
+# 里、没有 per-slug 的 JSON 可写**，所以认领落在那个常量上。形状没变。
+#
+# 四道闸（路径形状 / 显式认领 / 没推过 / 一趟最多一条）全在
+# `tools/auto_push_explainer_gate.py` 里——写进 YAML 就测不了了。
+#
+# **为什么必须是 main**：GitHub Pages 只服务 main，复制页留在分支上永远是
+# 404。2026-08-04 那条片子就是先合并才推成的，日志里那句
+# 「复制页可达且是这一版」只有在 main 上才出得来。消息发出去收不回来。
+on:
+  push:
+    branches: [main]
+    # 只盯 narration.json：它是渲染器在**成片出来之后**写的那份元数据
+    # （记着 voice / rate）。盯 mp4 会被「改一个字也重新落一份二进制」带偏。
+    paths:
+      - "output/*/explainer/*/narration.json"
+
+permissions:
+  contents: write
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
+
+# 同一条片子只留一个在跑。**不许 cancel-in-progress**：取消一个已经发出
+# POST 的 run，只会让「发没发出去」变成未知，而 pushed.json 那一笔可能没记上。
+concurrency:
+  group: auto-push-explainer
+  cancel-in-progress: false
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # 没有它，`prepare_image_delivery` 悄悄退回 jsDelivr：轮询最多 5 分钟，
+      # 取不到就整条推送取消。判据：test_走图床那条路的工作流都要配SECRET_KEY
+      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 只取 HEAD 和它的父提交：算「这次改了哪些文件」要 diff 一次，
+          # 而拉整部历史是 1.77 GiB。
+          fetch-depth: 2
+          # output/ 很大，这条只需要自己那一格——在「挑出该发的那一条」
+          # 之后 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            .github
+            assets
+            src
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # 这条路不渲卡、不合语音、不编码，所以不装 ffmpeg / Chromium / 字体。
+      # 装全套只会把失败面铺大：那几个包里任何一个装不上，都会让一条**本来
+      # 只是发消息**的 run 挂掉。
+      - name: 装依赖
+        run: |
+          pip install -q -e .
+          # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，
+          # 而不是一分钟后死在推送那一步。
+          python -c "import requests, tennislive.publish.pushplus, tennislive.render.pushmsg"
+
+      - name: 挑出该自动发的那一条
+        id: gate
+        run: |
+          # **拿 `HEAD^` 比，别拿 `github.event.before`。** 这是浅克隆
+          # （fetch-depth: 2），`before` 那个 sha 可能根本不在本地——`git diff`
+          # 会失败，而失败在这儿的表现是「这次没有该发的片子」，**和真的没有
+          # 长得一模一样**，一条该发的推送就这么静默消失了。
+          # 这个仓库是 squash 合并，`HEAD^` 就是合并前的 main，深度 2 保证有。
+          CHANGED=$(git diff --name-only HEAD^ HEAD -- 'output/*/explainer/*/narration.json')
+          if [ -z "$CHANGED" ]; then
+            echo "[自动推送] 这次没有动到任何 narration.json。"
+            exit 0
+          fi
+          # shellcheck disable=SC2086
+          PYTHONPATH=src python tools/auto_push_explainer_gate.py --changed $CHANGED
+
+      - name: 把这一格放进稀疏范围
+        if: steps.gate.outputs.found == 'true'
+        run: git sparse-checkout add "${{ steps.gate.outputs.outdir }}"
+
+      - name: 推送到微信
+        if: steps.gate.outputs.found == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          # **钉 commit，别停在 @main。** 同一条片子重渲，卡片路径一模一样，
+          # 而微信的图片缓存按**路径**算——URL 停在 @main 的话推出去的还是
+          # 上一版那些卡，而且不吭声。
+          TENNISLIVE_ASSET_REV: ${{ github.sha }}
+        run: |
+          tennislive publish pushplus --dir "${{ steps.gate.outputs.outdir }}"
+
+      # **发完必须记一笔，而且必须进仓库。** 这是「已经发过」的唯一判据——
+      # 「工作流跑成功过」证明不了消息发出去了，而重发就是让人再收一条一样的。
+      # ⚠️ **这一步必须排在「推送到微信」之后。** 反过来的话，推送失败会留下
+      # 一个「已经发过」的假标记，这条片子从此再也发不出去，而且不吭声。
+      - name: 记下已经推送过
+        if: steps.gate.outputs.found == 'true'
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          python tools/auto_push_explainer_gate.py \
+            --record "${{ steps.gate.outputs.outdir }}" \
+            --run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --now "$(date -u +%FT%TZ)"
+          git add --sparse "${{ steps.gate.outputs.outdir }}"
+          python tools/check_staged_file_sizes.py
+          git commit -m "explainer: ${{ steps.gate.outputs.slug }} 已自动推送"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: 失败时告警
+        if: failure()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## ⚠️ 解说片自动推送失败"
+            echo ""
+            echo "- slug：\`${{ steps.gate.outputs.slug }}\`"
+            echo "- 运行日志：$RUN_URL"
+            echo "- ⚠️ **先看日志确认微信到底发出去没有**：失败在推送之前是安全的，"
+            echo "  失败在「记下已经推送过」那一步则消息已经发了，别再手动补一次。"
+          } >> "$GITHUB_STEP_SUMMARY"

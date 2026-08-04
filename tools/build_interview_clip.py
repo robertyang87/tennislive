@@ -55,6 +55,7 @@ not a bot`，`tv` 报 `This video is DRM protected`，默认的 `android vr`
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import re
 import subprocess
@@ -129,7 +130,18 @@ _HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["
 # 破一条。选它是因为英文是这条线的**学习对象本身**，压在 29px 墨高上等于
 # 只给中文看；而那一处硬断 `_split_wide` 自己会 warn 出来，看得见。
 # 再往上（52+）多破一条、平均每行掉到 1.9 秒，不值。
-_FONT_SIZE = {"en": 46, "zh": 62}
+# **中英不是一档，中文要明显更大。** 中文是主读行，英文是原文参照。
+#
+# 62/46 = 1.35 时两行几乎一样重，眼睛不知道先读哪个；68/46 = 1.48 层级才立住。
+#
+# ⚠️ **能涨多少是量出来的，不是拍的**，而且中英的余量差得很远：
+#
+#     中文  62→68  只有 2 行超宽（手写的，普遍偏短，有余量）
+#     英文  46→50  22 行超宽（切行算法按 952px 排满，一放大必然大面积溢出）
+#
+# 所以英文钉死在 46。**要动它就得先动切行的宽度预算**，那是另一件事。
+# 改这两个数之前先跑一遍 `test_字号涨了不许撑破已有的行`。
+_FONT_SIZE = {"en": 46, "zh": 68}
 # 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
 _HEAD_SIZE = {"a": 54, "b": 32}
 _FONT_CACHE: dict[str, object] = {}
@@ -172,8 +184,163 @@ _NAME_FIX = {
     "Alexi": "Alex", "Alexa": "Alexandra Eala", "Ayala": "Eala", "Aala": "Eala",
     "Alina": "Elina", "Vitilina": "Svitolina", "Switzerina": "Svitolina",
 }
-# 非语音标记，切行之前先丢掉
-_NOISE = re.compile(r"^\[.*\]$|^&gt;&gt;$|^>>$")
+# 非语音标记，切行之前先丢掉。
+#
+# ⚠️ **要看穿说话人标记。** 自动字幕会把 `>>` 和后面那个词并成一个 token，于是
+# 换人说话时的掌声是 `>> [applause]` 而不是 `[applause]`——裸的 `^\[.*\]$`
+# 匹配不上，那一句就作为**一行字幕**渲到画面上（冠军致辞那条切出来的第 19 行
+# 就是光秃秃的「[applause]」）。
+#
+# 和 `word_fix` 看不穿 `>>` 那次是同一个形状，只是**后果反过来**：那次是订正
+# 悄悄不生效（不吭声），这次是把一个非台词印在脸上（很吵，但要渲出来才看得见）。
+# 同一个 token 形状咬了两次，所以这里也照 `_fix()` 的办法先把标记摘掉再判。
+_NOISE = re.compile(r"^(?:>>|&gt;&gt;)?\s*(?:\[.*\])?$")
+
+
+def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
+                     cols: int = 6) -> Path | None:
+    """把 YouTube 的 storyboard 拼成一张带秒数的缩略图墙，**给挑封面用**。
+
+    **为什么值得做**：封面是唯一决定人点不点的那一屏，而沙箱下不了媒体——
+    以前挑 `cover.frame_at` 只能靠听转写猜一个秒数，渲完十分钟再打开看，
+    不对就重渲。演播室那条的 60.0 秒就是这么盲挑的（碰巧挑对了）。
+    storyboard 只有几百 KB、不用 ffmpeg，在取字幕那一趟顺手就拿到了。
+
+    **这是加速不是闸**：拿不到就打印原因往下走，不许因为它失败挡住切行。
+    但**要出声**——「没拿到」和「拿到了」在日志上必须长得不一样。
+    """
+    try:
+        meta = json.loads(subprocess.run(
+            ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
+             *cookie_args(spec or {}), url],
+            capture_output=True, text=True, timeout=180, check=True).stdout)
+    except Exception as exc:                      # noqa: BLE001
+        print(f"⚠️ 缩略图墙：取不到视频信息（{type(exc).__name__}），跳过——挑封面还得靠猜")
+        return None
+    # storyboard 的格式 id 以 sb 开头，`rows`/`columns` 是每张大图里的格子数
+    sbs = [f for f in meta.get("formats") or []
+           if str(f.get("format_id", "")).startswith("sb") and f.get("fragments")]
+    if not sbs:
+        print("⚠️ 缩略图墙：这条片子没有 storyboard，跳过")
+        return None
+    sb = max(sbs, key=lambda f: (f.get("width") or 0))
+    dest = workdir / "_sb.mhtml"
+    try:
+        subprocess.run(["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+                        "-f", sb["format_id"], "-o", str(dest),
+                        *cookie_args(spec or {}), url],
+                       capture_output=True, text=True, timeout=300, check=True)
+        tiles = _mhtml_tiles(dest, int(sb.get("rows") or 0), int(sb.get("columns") or 0),
+                             int(sb.get("width") or 0), int(sb.get("height") or 0))
+    except Exception as exc:                      # noqa: BLE001
+        print(f"⚠️ 缩略图墙：下载或解析失败（{type(exc).__name__}: {exc}），跳过")
+        return None
+    finally:
+        dest.unlink(missing_ok=True)
+    if not tiles:
+        print("⚠️ 缩略图墙：一格都没解出来，跳过")
+        return None
+    # **步长取 YouTube 自己给的 `fps`，不要拿「片长 ÷ 存活格数」去摊。**
+    #
+    # 摊出来的数在 `eala-pegula-dc2026-final` 上错了 12%：sb0 报 fps=0.2019
+    #（＝4.95 秒一格、全片 108 格），而滤黑之后还剩 121 格，摊成 4.42 秒一格。
+    # 于是每一格的标签都往前挪，越到后面差越多——她**跪地庆祝**被标成 221 秒，
+    # 而记分牌上的赛点在 232 秒：庆祝早于赛点，不可能。乘回 1.121 正好落在
+    # 247.8 秒那句 `It's Eala's. Magical moment.` 上。
+    #
+    # ⚠️ 这个错**不吭声**：标签照印、图照出，只有拿另一条时间轴（自动字幕）
+    # 对一次才看得出来。而它骗的正是这张图唯一的用途——挑 `cover.frame_at`。
+    dur = float(meta.get("duration") or 0)
+    step, shared = storyboard_step(sb, dur, len(tiles))
+    if shared:
+        print("⚠️ 缩略图墙：storyboard 没报 fps，退回按格数摊——秒数可能偏早，挑封面时拿字幕对一下")
+    out = _tile_sheet(tiles, step, cols, workdir / "storyboard.jpg")
+    last = tiles[-1][0] * step
+    print(f"缩略图墙 {len(tiles)} 格、每格 {step:.2f} 秒（末格 {last:.1f}s／片长 {dur:.1f}s）→ {out}")
+    if dur and last > dur + step:
+        print(f"⚠️ 末格 {last:.1f}s 超出片长 {dur:.1f}s——多半是黑格没滤干净，秒数不可信")
+    return out
+
+
+def storyboard_step(sb: dict, duration: float, n_tiles: int) -> tuple[float, bool]:
+    """一格代表几秒。返回 `(步长, 是不是退回按格数摊了)`。
+
+    **优先用 storyboard 自己报的 `fps`，别拿「片长 ÷ 存活格数」去摊。**
+
+    摊出来的数在 `eala-pegula-dc2026-final` 上错了 12%：sb0 报 fps=0.2019
+    （＝4.95 秒一格、全片 108 格），而残 sheet 切出来的碎条大多不是纯黑，
+    滤完还剩 121 格，摊成 4.42 秒一格。于是每一格的标签都往前挪，越到后面
+    差越多——她**跪地庆祝**被标成 221 秒，而记分牌上的赛点在 232 秒：庆祝
+    早于赛点，不可能。乘回 1.121 正好落在 247.8 秒那句
+    `It's Eala's. Magical moment.` 上。
+
+    ⚠️ 这个错**不吭声**：标签照印、图照出，只有拿另一条时间轴（自动字幕）
+    对一次才看得出来。而它骗的正是这张图唯一的用途——挑 `cover.frame_at`。
+
+    抽成函数是为了**判据能真调它一次**：留在 `storyboard_sheet` 里就只能靠
+    查源码文本，而那种断言防得住「有人把它删了」，防不住「条件写反了」。
+    """
+    fps = float(sb.get("fps") or 0)
+    if fps > 0:
+        return 1.0 / fps, False
+    return duration / max(n_tiles, 1), True
+
+
+def _mhtml_tiles(path: Path, rows: int, columns: int,
+                 tile_w: int = 0, tile_h: int = 0) -> list:
+    """从 yt-dlp 落的 mhtml 里切出每一格，返回 `(原位序号, 图)`。
+
+    ⚠️ **格子大小按 `tile_w`/`tile_h` 算，行数按这张 sheet 自己的高度算——
+    不能拿 `rows` 去除。** 最后一张 sheet 常常是**残的**：这条片子的 sb0 前四张
+    都是 800×450（5×5），第五张只有 **800×180**（5×2，装最后 10 帧）。照 5 行硬切
+    等于把它切成 25 条 160×36 的碎条，拼出来就是一排「上半截有画面、下半截全黑」
+    的格子——**看起来像片尾卡，其实是切错了**。
+
+    ⚠️ **序号必须是它在整条 storyboard 里的原位，不能是「存活下来的第几个」。**
+    滤掉黑格之后重新编号的话，后面每一格的时刻都会往前挪，而**标签看起来一样权威**。
+    """
+    import email
+    from PIL import Image  # noqa: PLC0415
+
+    msg = email.message_from_bytes(path.read_bytes())
+    tiles, base = [], 0
+    r, c = rows or 1, columns or 1
+    for part in msg.walk():
+        if not str(part.get_content_type()).startswith("image/"):
+            continue
+        sheet = Image.open(io.BytesIO(part.get_payload(decode=True))).convert("RGB")
+        tw = tile_w or sheet.width // c
+        th = tile_h or sheet.height // r
+        for iy in range(max(1, sheet.height // th)):
+            for ix in range(max(1, sheet.width // tw)):
+                tile = sheet.crop((ix * tw, iy * th, (ix + 1) * tw, (iy + 1) * th))
+                # 末尾那几格常常是纯黑的填充，别混进来当候选
+                if sum(tile.resize((8, 8)).convert("L").getdata()) > 8 * 8 * 6:
+                    tiles.append((base + iy * c + ix, tile))
+        base += r * c            # 步进按**声明的**整格网格走，残 sheet 也不例外
+    return tiles
+
+
+def _tile_sheet(tiles: list, step: float, cols: int, dest: Path) -> Path:
+    """拼成一张图，每格左上角烧上它的秒数——**没有秒数就没法用它挑封面**。
+
+    `tiles` 是 `(原位序号, 图)`，秒数按**原位序号**算，不按摆放位置算。
+    """
+    from PIL import Image, ImageDraw  # noqa: PLC0415
+
+    tw, th = tiles[0][1].size
+    pad, lab = 4, 16
+    rows = (len(tiles) + cols - 1) // cols
+    sheet = Image.new("RGB", (cols * (tw + pad) + pad,
+                              rows * (th + lab + pad) + pad), (18, 20, 18))
+    d = ImageDraw.Draw(sheet)
+    for slot, (idx, t) in enumerate(tiles):
+        x = pad + (slot % cols) * (tw + pad)
+        y = pad + (slot // cols) * (th + lab + pad)
+        d.text((x + 1, y), f"{idx * step:.1f}s", fill=(150, 220, 190))
+        sheet.paste(t, (x, y + lab))
+    sheet.save(dest, quality=88)
+    return dest
 
 
 def fetch_words(url: str, workdir: Path,
@@ -1458,6 +1625,31 @@ def _crop_expr(ratio: float, keep: float = 1.0) -> str:
     return f"crop={w}:{h}:(iw-{w})/2:0"
 
 
+def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
+    """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
+
+    抽出来是**独立的一个函数**，不是复制一份进快速预览——这个仓库为
+    「同一件事写两处」栽过两次（`_still_to_clip` 那对函数，一次是加参数没跟着
+    委托链改到底、一次是一个函数两个 return 只改了一个）。两处必分叉，
+    而分叉的表现是「预览看着对、成片里不对」，最难查。
+
+    ⚠️ **封面这一帧不走正片那条滤镜链**，`mirrored` 得在这儿再翻一次——
+    漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
+    """
+    frame = outdir / "_cover_frame.jpg"
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
+                                         float(spec.get("crop_keep_top", 1.0)))),
+                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
+    # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
+    poster = build_cover(spec, frame, outdir / "poster.jpg")
+    frame.unlink(missing_ok=True)
+    return poster
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=720]+ba/b[height<=720]", spec)
@@ -1506,18 +1698,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         body.replace(out)
         return out
 
-    frame = outdir / "_cover_frame.jpg"
-    # ⚠️ **封面这一帧不走上面那条滤镜链**，`mirrored` 得在这儿再翻一次——
-    # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
-                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
-                                         float(spec.get("crop_keep_top", 1.0)))),
-                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
-    # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
-    # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
-    cover_png = build_cover(spec, frame, outdir / "poster.jpg")
+    cover_png = cover_poster(spec, src, outdir, logo)
     cover_mp4 = outdir / "_cover.mp4"
     # **封面这一路也要有音轨**，而且参数要和正片一致——否则 concat 会丢掉
     # 其中一条流，而它**不报错**，只是成片从某一秒起没声音了。
@@ -1534,7 +1715,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
                     "-c", "copy", str(out)], check=True, timeout=600)
-    for tmp in (body, cover_mp4, lst, frame):
+    for tmp in (body, cover_mp4, lst):
         tmp.unlink(missing_ok=True)
     return out
 
@@ -1543,7 +1724,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
-    ap.add_argument("--stage", choices=["subs", "sheet", "verify", "render"],
+    ap.add_argument("--stage",
+                    choices=["subs", "sheet", "verify", "cover", "render"],
                     default="subs")
     args = ap.parse_args()
 
@@ -1552,6 +1734,9 @@ def main() -> int:
     outdir.mkdir(parents=True, exist_ok=True)
     ass = outdir / f"{spec['slug']}.ass"
 
+    if args.stage == "subs":
+        # **挑封面用的**：只在取字幕这一趟出，出片那趟不重复下
+        storyboard_sheet(spec["url"], outdir, spec)
     lines = segment(fetch_words(spec["url"], outdir, spec), spec["start"], spec["end"],
                     word_fix=spec.get("word_fix"))
     # **人工订正压在 ASR 之上。** 键是行号（1 起），值是核对过的英文。
@@ -1587,6 +1772,33 @@ def main() -> int:
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
+        return 0
+
+    if args.stage == "cover":
+        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
+        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
+        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
+        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
+        #
+        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
+        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
+        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
+        if not spec.get("cover"):
+            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
+        src = yt_download(spec["url"], outdir / "source.mp4",
+                          "bv*[height<=720]+ba/b[height<=720]", spec)
+        logo = ""
+        if box := spec.get("logo_box"):
+            logo = ("removelogo=filename="
+                    + str(logo_mask(src, box, outdir / "_logo_mask.png",
+                                    bool(spec.get("mirrored")))) + ",")
+        poster = cover_poster(spec, src, outdir, logo)
+        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
+        src.unlink(missing_ok=True)
+        (outdir / "_logo_mask.png").unlink(missing_ok=True)
+        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
+              f"\n**没有出片**：确认好看再跑 `--stage render`，"
+              f"这样一条片子只往仓库里塞一个 mp4。")
         return 0
 
     if args.stage == "render":

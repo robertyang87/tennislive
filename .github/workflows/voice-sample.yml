@@ -7,6 +7,12 @@ name: voice-sample
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
+        type: choice
+        options: [sample, ssml, azure, compare, phoneme]
+        default: sample
 
 permissions:
   contents: write
@@ -40,17 +46,79 @@ jobs:
           cache: pip
 
       - name: 安装 edge-tts + ffmpeg
+        timeout-minutes: 6
         run: |
           pip install -q edge-tts
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          # Azure 那条路要 SDK 才拿得到词边界（REST 接口不给）——而字幕整条线
+          # 就建立在词边界上。只在 mode=azure 时用得到，装着不碍别的模式。
+          pip install -q azure-cognitiveservices-speech
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
+          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
+          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq ffmpeg
+
+      # 探一遍免费端点认哪些 SSML（break / express-as / prosody）。报告直接
+      # print 进日志——这台沙箱下不了 artifact，写文件等于白跑。
+      - name: 探 SSML 支持范围
+        if: github.event.inputs.mode == 'ssml'
+        run: python tools/probe_tts_ssml.py
+
+      # F0 免费层到底给不给情绪风格和 <break>，只能量。要两个 secret；
+      # 没配就自己报出来并退出，不装作探过。
+      - name: 探 Azure 的风格和停顿
+        if: github.event.inputs.mode == 'azure'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: python tools/probe_azure_tts.py
+
+      # 多音字唯一能自动查的那条路：viseme 事件里有没有音素、<phoneme> 能不能
+      # 把读音钉死。词边界只给字符串，「一发」读 fā 还是 fà 在 text 字段里
+      # 长得一模一样——又一个「不吭声」。
+      - name: 探 Azure 的音素（多音字）
+        if: github.event.inputs.mode == 'phoneme'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: python tools/probe_azure_phoneme.py
+
+      # 同一段真旁白两版并排——**判据是打开听**，时长表证明不了情绪。
+      - name: 两版并排（edge vs Azure）
+        if: github.event.inputs.mode == 'compare'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+        run: python tools/compare_tts.py output/voice-samples
 
       - name: 合成语音样本
+        if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
+        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
           git add output/voice-samples
           if git diff --cached --quiet; then
             echo "样本没有变化"
