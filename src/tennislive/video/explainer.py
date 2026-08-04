@@ -1528,7 +1528,276 @@ _SE_HOUR_DIAGRAM = """
 """
 
 
+_ACADEMY_COUNT_DIAGRAM = """
+<svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">同时进前一百的学院球员</text>
+  <text x="450" y="88" text-anchor="middle" fill="#9fb4aa"
+        font-size="26" font-weight="700">一格＝一个人　亮的那格＝八月三日新增</text>
+
+  <text x="90" y="168" fill="#9fb4aa" font-size="28" font-weight="700">6 月 9 日</text>
+  <g fill="rgba(231,243,236,.22)">
+    <rect x="300" y="140" width="60" height="44" rx="8"/>
+    <rect x="368" y="140" width="60" height="44" rx="8"/>
+    <rect x="436" y="140" width="60" height="44" rx="8"/>
+    <rect x="504" y="140" width="60" height="44" rx="8"/>
+    <rect x="572" y="140" width="60" height="44" rx="8"/>
+    <rect x="640" y="140" width="60" height="44" rx="8"/>
+  </g>
+  <text x="740" y="172" fill="#e7f3ec" font-size="32" font-weight="800">6</text>
+  <text x="300" y="222" fill="#9fb4aa" font-size="26" font-weight="700">学院发公告：史上第一次</text>
+
+  <line x1="300" y1="266" x2="820" y2="266" stroke="rgba(231,243,236,.18)" stroke-width="2"/>
+
+  <text x="90" y="336" fill="#9fb4aa" font-size="28" font-weight="700">8 月 3 日</text>
+  <g fill="rgba(231,243,236,.22)">
+    <rect x="300" y="308" width="60" height="44" rx="8"/>
+    <rect x="368" y="308" width="60" height="44" rx="8"/>
+    <rect x="436" y="308" width="60" height="44" rx="8"/>
+    <rect x="504" y="308" width="60" height="44" rx="8"/>
+    <rect x="572" y="308" width="60" height="44" rx="8"/>
+    <rect x="640" y="308" width="60" height="44" rx="8"/>
+  </g>
+  <rect x="708" y="308" width="60" height="44" rx="8" fill="#c6f65a"/>
+  <text x="800" y="340" fill="#c6f65a" font-size="32" font-weight="800">7</text>
+  <text x="300" y="390" fill="#e7f3ec" font-size="26" font-weight="700">黄泽林进前一百　八周之后</text>
+
+  <text x="450" y="444" text-anchor="middle" fill="#9fb4aa"
+        font-size="24" font-weight="700">第七个是我们按学院自己的口径数的</text>
+</svg>
+"""
+
+
+# ⚠️ 轴上标不标名字，卡在译名上，不卡在版面上：
+#   · 四个展开讲的都在译名表里（伊埃拉／兰达卢塞／黄泽林／鲁德），标名字
+#   · 穆纳尔中文维基学院页写「豪梅·穆纳尔」，但表里没有——**只标年纪不标名**
+#   · 西埃拉查不到中文源；科尔涅娃两个源两种写法（维基「阿林娜·科尔涅娃」／
+#     百度「阿丽娜·科尔涅娃」）——同样不标名
+#   · **科尔涅娃到学院的年纪根本没查到**，所以她不在轴上，单独standing在右边打问号。
+#     把「没查到」画出来，比把她悄悄漏掉诚实（CLAUDE.md：空结果先自证是真空）
+# ⚠️ 中文维基那页把伊埃拉写成「亚历克莎·埃亚拉」——**别照抄**。仓库早就把
+#   埃亚拉改成伊埃拉了，译名表说了算。
+def _academy_span_diagram() -> str:
+    """入校时间轴，头像**一上一下落在轴两侧**，各自站在自己真实的年份位置上。
+
+    ⚠️ 横轴是**入校那一年**，不是入校年纪。原来按年纪排，伊埃拉 13 岁排最左，
+    读起来就是「她最早来的」——**而最早的是穆纳尔（2017）**。账号所有者点出来的。
+
+    ⚠️ 上一版是「头像等距排一行 + 引线指回真实年份」，因为挨着放会叠。
+    账号所有者：「头像可以一上一下在时间轴两侧」——**一上一下把横向空间翻倍**，
+    相邻两个人分居轴的两侧就不会碰，于是头像可以直接站在真实位置上，
+    引线整个不需要了。**能不decouple就不decouple**。
+
+    年份并进每人的标签（「2018 · 13 岁」），省掉单独一行年份刻度。
+
+    头像出处见 assets/explainer/nadal-academy/faces/credits.json。
+    """
+    import base64
+
+    root = _REPO / "assets/explainer/nadal-academy/faces"
+    def uri(name: str) -> str:
+        return "data:image/jpeg;base64," + base64.b64encode(
+            (root / f"{name}.jpg").read_bytes()).decode()
+
+    AXIS = 248
+    # (真实年份位置 x, 名字, 年份·年纪, 文件名, 在轴上方?)
+    people = [
+        (90,  "穆纳尔",   "2017 · 20 岁", "munar",     True),
+        (170, "伊埃拉",   "2018 · 13 岁", "eala",      False),
+        (250, "鲁德",     "2018 · 19 岁", "ruud",      True),
+        (350, "兰达卢塞", "2020 · 14 岁", "landaluce", False),
+        (430, "黄泽林",   "2021 · 17 岁", "wong",      True),
+    ]
+    defs, art = [], []
+    for x, name, meta, key, up in people:
+        cy = 130 if up else 372
+        # ⚠️ clipPath 放 defs，**<image> 必须放在正文里**——`<defs>` 里的内容
+        # 不渲染。上一版靠 `<use href="#i…">` 引用它，改成一上一下时我把 <use>
+        # 删了、<image> 却留在 defs 里，于是五个圈全是空的，而 SVG 不报任何错。
+        # 又一次「兜底出事的时候不吭声」，只是这次不吭声的是 SVG 本身。
+        defs.append(f'<clipPath id="c{key}"><circle cx="{x}" cy="{cy}" r="40"/></clipPath>')
+        ny, my = (198, 222) if up else (306, 330)
+        art.append(
+            f'<image href="{uri(key)}" x="{x-40}" y="{cy-40}" width="80" height="80" '
+            f'preserveAspectRatio="xMidYMid slice" clip-path="url(#c{key})"/>'
+            f'<circle cx="{x}" cy="{cy}" r="40" fill="none" stroke="#c6f65a" stroke-width="3"/>'
+            f'<text x="{x}" y="{ny}" text-anchor="middle" fill="#e7f3ec" font-size="24" '
+            f'font-weight="800">{name}</text>'
+            f'<text x="{x}" y="{my}" text-anchor="middle" fill="#c6f65a" font-size="21" '
+            f'font-weight="800">{meta}</text>'
+            f'<line x1="{x}" y1="{cy + (40 if up else -40)}" x2="{x}" '
+            f'y2="{AXIS - 12 if up else AXIS + 12}" stroke="rgba(231,243,236,.22)" stroke-width="2"/>'
+            f'<circle cx="{x}" cy="{AXIS}" r="9" fill="#c6f65a"/>'
+        )
+    return (
+        '<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">'
+        + "<defs>" + "".join(defs) + "</defs>"
+        + '<text x="450" y="40" text-anchor="middle" fill="#e7f3ec" font-size="33" '
+          'font-weight="800">他们哪一年到的学院</text>'
+        + f'<line x1="50" y1="{AXIS}" x2="860" y2="{AXIS}" '
+          'stroke="rgba(231,243,236,.28)" stroke-width="3"/>'
+        + "".join(art)
+        + f'<circle cx="660" cy="{AXIS}" r="8" fill="rgba(231,243,236,.34)"/>'
+        + '<text x="660" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          'font-weight="800">西埃拉</text>'
+        + '<text x="660" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">2025 · 21 岁</text>'
+        + f'<circle cx="830" cy="{AXIS}" r="8" fill="none" stroke="rgba(231,243,236,.34)" '
+          'stroke-width="2" stroke-dasharray="4 4"/>'
+        + '<text x="830" y="306" text-anchor="middle" fill="#9fb4aa" font-size="21" '
+          'font-weight="800">科尔涅娃</text>'
+        + '<text x="830" y="330" text-anchor="middle" fill="#9fb4aa" font-size="19" '
+          'font-weight="700">没查到</text>'
+        + '<text x="450" y="452" text-anchor="middle" fill="#e7f3ec" font-size="27" '
+          'font-weight="800">同一年到的两个人，一个 13 岁，一个 19 岁</text>'
+        + '<text x="450" y="486" text-anchor="middle" fill="#9fb4aa" font-size="23" '
+          'font-weight="700">公告里都算「学院培养的」</text>'
+        + "</svg>"
+    )
+
+
+_ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 纳达尔学院。引子是学院自己 2026-06-09 那份「六人同时进前 100」的公告，
+    # 而它八周就过时了。⚠️ 详讲四个、七个都上时间轴——账号所有者 2026-08-04：
+    # 「只讲最出名的就好」「没关系啊，可以出现在时间轴，只是不展开讲而已」。
+    # 边界划在「展开不展开」，不是「出不出现」：跨度要靠点多才看得出来。
+    "nadal-academy": (
+        (
+            "cause",
+            "那份公告",
+            "六个人，八周之后不对了",
+            "二零二六年六月九号，一所网球学院发了一份公告。"
+            "史上第一次，同时有六名学院培养的球员，进入 ATP 和 WTA 前一百。"
+            "六个人，来自六个国家。"
+            # ⚠️ 这句是全片的支点，而且是点开原文确认过的：那篇公告通篇没有定义
+            # developed at the Academy 是什么意思，也没分「住了七年的」和「来集训一周的」。
+            "公告里没有说，什么叫学院培养的。"
+            "八周之后，这个数字不对了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "6 月 9 日 学院宣布六人同时进前 100",
+                "史上第一次 公告里这么写",
+                "八周之后 这个数字不对了",
+            ),
+            _ACADEMY_COUNT_DIAGRAM,
+        ),
+        (
+            "cause",
+            "同一个周一",
+            "两个第一，隔着半个地球",
+            "八月三号，星期一。"
+            # ⚠️ 取**官方排名**第 91，不取实时排名第 90。两者是两个口径不是两个版本：
+            # 实时是 7/31 打进半决赛当下的，官方是这个周一更新的。而「第一个进前 100
+            # 的香港人」本来就是按官方榜说的。
+            "那天更新的 ATP 排名里，黄泽林排第九十一。"
+            "一九七三年有排名以来，代表中国香港进前一百的，他是第一个。"
+            "同一个周一，华盛顿的女单决赛因为下雨，拖到这天才打完。"
+            "伊埃拉逆转佩古拉，四比六、六比四、六比零。"
+            # ⚠️ 措辞：账号所有者 2026-08-04 确认「生涯首冠，应该是 WTA 巡回赛级别的」。
+            # 她此前有两个 WTA125（瓜达拉哈拉、伯明翰），但那是低于巡回赛的独立一档，
+            # 不计进这本账——英文媒体也这么分。
+            "生涯首冠，也是菲律宾的第一个 WTA 巡回赛冠军。"
+            "两个第一，隔着半个地球。"
+            "而这两个人，出自同一所学校。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "8 月 3 日 黄泽林进 ATP 前 100",
+                "同一个周一 伊埃拉拿下生涯首冠",
+                "同一所学校 马略卡岛，马纳科尔",
+            ),
+            _ACADEMY_COUNT_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "十三岁",
+            "伊埃拉从马尼拉搬过去，一住七年",
+            "伊埃拉是十三岁去的。"
+            "那年她在法国赢了一站世界少年赛，学院的人主动找上门。"
+            "他们给了她一份奖学金。"
+            "她从马尼拉搬到马略卡岛，一住七年。"
+            "二零二三年毕业，典礼上的主礼嘉宾是斯瓦泰克。"
+            "她管那个地方叫第二个家。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "13 岁 从马尼拉搬到马略卡岛",
+                "奖学金 学院主动找上门",
+                "住了七年 2023 年毕业",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "十四岁和十七岁",
+            "一个从马德里，一个从香港",
+            "兰达卢塞去的时候十四岁，从马德里。"
+            "两年之后，他拿下美网青少年男单冠军。"
+            "黄泽林去的时候十七岁。"
+            "他跟父母说，不去西班牙，他成不了职业球员。"
+            # ⚠️ 这个细节是全片最好的一个，值得留。它把两条线接起来：
+            # 八月三号那两个「第一」，其实是同一间宿舍里出来的。
+            "他刚到那年，帮他适应的人是伊埃拉。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "兰达卢塞 14 岁去，16 岁拿美网青少年冠军",
+                "黄泽林 17 岁去，不去就成不了职业球员",
+                "刚到那年 是伊埃拉帮他适应的",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "十九岁",
+            "鲁德去的时候，已经是职业球员",
+            "鲁德到马纳科尔那年，十九岁。"
+            "那时候他已经是职业球员了。"
+            # ⚠️ 父子同姓，所以这儿必须写全名。译名表里「鲁德」是卡斯珀·鲁德，
+            # 只写姓会指错人——而这一段的全部重量就在「父亲还是他主教练」这句上。
+            "他父亲克里斯蒂安·鲁德打过职业，最高世界第三十九。"
+            "到今天，父亲还是他的主教练。"
+            "他不是去被人培养的。他是把那儿当基地。"
+            "挪威一年里能在室外打球的日子有限，网球的底子也薄。"
+            "现在他世界第十四，打过三次大满贯决赛。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "19 岁 去的时候已经是职业球员",
+                "他的主教练 父亲克里斯蒂安·鲁德，至今",
+                "不是去被培养 是把那儿当基地",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+        ),
+        (
+            "today",
+            "同一栏",
+            "十三岁和十九岁，写在一起",
+            "所以那份公告里的六个人，是这样凑起来的。"
+            # ⚠️ 「同一年」是把轴按入校年份重排之后才掉出来的：伊埃拉 2018 年去，
+            # 鲁德 2018 年 9 月去。按年纪排的那一版看不见这件事——而它正是全片的论点。
+            "伊埃拉和鲁德，是同一年到的。"
+            "一个十三岁，拿着奖学金，住了七年。"
+            "一个十九岁，带着自己的父亲去落脚。"
+            "在那张表上，他们是同一栏。"
+            "学院培养的，这五个字没有定义。"
+            "八月三号之后，这一栏又多了一个人。"
+            "那么，十三岁去和二十一岁去，能算同一所学校教出来的吗？",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "同一年到的 伊埃拉 13 岁，鲁德 19 岁",
+                "一个拿奖学金住了七年 一个带着父亲来落脚",
+                "同一栏 「学院培养的」没有定义",
+            ),
+            _ACADEMY_SPAN_DIAGRAM,
+            "十三岁去和二十一岁去，能算同一所学校教出来的吗？",
+        ),
+    ),
     # 特殊豁免。⚠️ 片子里出现的每个人都是真的，每件事都真发生过——
     # 账号所有者 2026-08-03：「不要用写这些假设，普通人看不懂，就用实际举例。」
     # 上一版写过一张「如果决赛里有个低排名球员会怎样」的推演表，整张删了。
@@ -4145,6 +4414,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "nadal-academy": {
+        "hook": (
+            "纳达尔学院宣布「史上第一次六人同时进前 100」，八周之后这个数字就不对了——\n"
+            "第七个是黄泽林。而七个人到那儿时，从 13 岁到 21 岁都有。"
+        ),
+        "tags": ("网球", "网球时差", "黄泽林", "纳达尔学院", "伊埃拉"),
+    },
     "special-exempt": {
         "hook": (
             "华盛顿两场决赛被雨推到周一，而加拿大站的资格赛两天前就打完了。\n"
@@ -4407,6 +4683,29 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "nadal-academy": {
+        # ⚠️ 原来写「纳达尔学院：七个人，七条来时路」——账号所有者 2026-08-04
+        # 一句「这里文案太普通了」。毛病是它在**描述格式**（几个人、几条路），
+        # 不是在讲事实，读者一个字的信息都拿不到。换成片子的落点本身：
+        # 「差八岁」是 21−13 算出来的——但账号所有者又退回来一次：「这个文案也不太好，
+        # 需要体现出纳达尔学院的厉害之处」。对的，**台头是门面，该先把厉害亮出来**，
+        # 我那句一上来就在挑刺。现在亮的是这条线上最硬的成绩：同时七个人在世界前一百。
+        # ⚠️ 想过写「一个小镇，七个世界前一百」（马纳科尔才四万人，反差最大），
+        # **不能用**——会被读成「七个人都是这个小镇出的」，而他们来自马尼拉、香港、
+        # 奥斯陆。第一是精准，第二才是引爆。
+        # 顺带：门面亮成绩、片子再把这五个字拆开，两者不冲突——正是「最硬的那个
+        # 事实放第 ① 屏」，先给人看的理由，再给人想的东西。
+        "topic": "纳达尔学院：同时七个世界前一百",
+        # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数。见 test_封面那一问要能排进一行。
+        "question": "六个人的纪录，八周就破了？",
+        "narration": "六个人的纪录，八周就破了？而破它的那个人，来自中国香港。",
+        "gloss": "Rafa Nadal Academy = 拉法·纳达尔学院",
+        # ⚠️ 封面不用抽帧，也不用学院的场地照——这条片子讲的是**人怎么来的**，
+        # 场地照讲不了这件事。首选伊埃拉华盛顿捧杯（8/3 那天，且捧杯优先于击球中），
+        # 尺寸要够裁 1080×1440 而不放大。见 assets/explainer/nadal-academy/credits.json。
+        "image": "assets/explainer/nadal-academy/eala_washington_2026_final.jpg",
+        "credit": "Getty Images / WTA 官方图库 · 2026 年 8 月 3 日华盛顿女单决赛，伊埃拉夺冠后庆祝",
+    },
     "special-exempt": {
         "topic": "特殊豁免：整站只留一个位置",
         # ⚠️ 卡的是**排一行的像素宽**（≥84px），不是字数：
