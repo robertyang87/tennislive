@@ -5862,3 +5862,55 @@ def test_全单字那条判据在真产物上不误报():
     # 产物不在就只验上面那条；在的话至少要真校到一条，别变成恒真的绿灯
     if Path("output").is_dir() and list(Path("output").glob("*/reel/*")):
         assert checked >= 5, f"有成片目录却只校到 {checked} 条——主语找错了"
+
+
+def test_成片要记下是哪条路配的音():
+    """`tts_one` 是「Azure 可用就**整条片子**都走 Azure」。
+
+    所以同一份 spec、同一个 `narration_voice`，配了 key 之前和之后合出来的
+    **不是同一条音轨**——而那个字段两边一模一样，光看产物分不出来。解说片那条线
+    早有 `tools/check_explainer_voice.py` 读产物里的 `narration.json`
+    （CLAUDE.md：查产物，不查信号），这条线一直漏着。
+
+    ⚠️ **`voiced_by` 第一版打印「[不合格]」却不计进末尾那个总数**，末行仍然说
+    「共 0 项不合格」——正是这个脚本自己要拦的那种不一致。所以判据钉的是
+    **返回值**，不是它印了什么。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    import tempfile  # noqa: PLC0415
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        film = out / "x.mp4"                       # 不用真存在，只用它的 parent
+        styled = {"segments": [{"voice": {"style": "sad", "_why": "崩"}}]}
+        plain = {"segments": [{"voice": {"rate": "-3%", "_why": "慢一点"}}]}
+
+        def meta(**kw):
+            (out / "render.json").write_text(json.dumps(kw), encoding="utf-8")
+
+        # ① spec 要了风格，成片却是 edge 配的 → **风格一个都没生效**，要计一项
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, styled) == 1
+
+        # ② 同一份 spec、Azure 配的 → 正常
+        meta(narration_backend="azure")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ③ 没要风格的走 edge-tts 是**正当的**（没配 key 就该退回），不许误伤
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, plain) == 0
+
+        # ④ 老片子没记这个字段 → 跳过，不许当成不合格（那会变成一条常年红）
+        meta(narration_voice="zh-CN-YunjianNeural")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ⑤ 连 render.json 都没有 → 同样跳过
+        (out / "render.json").unlink()
+        assert chk.voiced_by(film, styled) == 0
+
+    # **它真的被接进总数里**：只测函数拦不住「算出来了没人用」，
+    # 而那正是这条测试要防的第一版毛病
+    body = inspect.getsource(chk.main)
+    assert re.search(r"bad\s*=\s*voiced_by\(", body), \
+        "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
