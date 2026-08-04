@@ -2131,3 +2131,72 @@ def test_缩略图墙两头都不许进仓库():
         f"仓库里已经躺着 {len(tracked)} 张缩略图墙：{tracked[:3]}。"
         "加规则挡不住已经提交进去的——要 `git rm --cached` 一遍，"
         "否则这条测试对它们是绿的")
+
+
+def test_只出海报那一档要够得着而且真的短():
+    """**开关落在 CLI 里不算落地，工作流够不着就等于零。**
+
+    `match-reel` 的 `--dry-run` / `--cover-only` 就是这么白做的：加进 CLI 的
+    那个提交没动工作流的 `mode`，而源片只在 runner 上活过几分钟——
+    「能用的那台机器上没有开关，有开关的那台机器上没有源片」。
+
+    这一档存在的理由是账：2026-08-04 一晚渲了五趟，**四趟是为了换封面**，
+    每趟六分钟外加一个 50~70 MB 的永久 blob，而真正变的只有第一帧。
+    量过：`.git` 6.4 GB 里 2.9 GiB 是同一路径的旧版本。
+    所以两头都要钉：**入口够得着** + **那条路真的短**。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    on = wf.get("on") or wf[True]      # YAML 1.1 把裸的 on 解析成布尔 True
+    options = on["workflow_dispatch"]["inputs"]["mode"]["options"]
+    assert "cover" in options, f"工作流的 mode 只有 {options}——CLI 加了也够不着"
+
+    step, = [s for s in _steps() if s.get("name") == "只出海报（不出片）"]
+    assert step.get("if") == "github.event.inputs.mode == 'cover'"
+    run = _step_run(step)
+    assert "--stage cover" in run, "那一步没跑 `--stage cover`"
+    # **短**的判据是它不碰这几样：碰了就说明有人把它写成了完整 render
+    for banned in ("--stage render", "--stage verify", "push_reel.py",
+                   "faster_whisper"):
+        assert banned not in run, (
+            f"「只出海报」那一步出现了 `{banned}`——它就不短了，"
+            "这一档的全部意义是不出片、不往仓库里塞 mp4")
+
+
+def test_出海报只有一份实现():
+    """`render` 和 `--stage cover` 必须走**同一个** `cover_poster`。
+
+    复制一份进快速预览，分叉的表现是「预览看着对、成片里不对」——最难查的
+    那一类。这个仓库为 `_still_to_clip` 那对函数栽过两次：一次加参数没跟着
+    委托链改到底，一次是一个函数两个 return 只改了一个。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src.count("def cover_poster(") == 1, "cover_poster 有不止一份定义"
+    assert src.count('"-frames:v", "1"') == 1, (
+        "抽封面帧那句 ffmpeg 出现了不止一次——多半是复制了一份进 cover 那一档")
+    body = src.split("def render(")[1]
+    assert "cover_poster(spec, src, outdir" in body, (
+        "render 没有走 cover_poster，两处必分叉")
+
+
+def test_出海报那一档不许被出片的闸挡住():
+    """挑封面排在转写核对**之前**——拿出片的闸挡它，等于逼人先把校验走完
+    才能看一眼封面，而那正是这一档要省掉的那六分钟。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    cover = src.split('if args.stage == "cover":')[1].split(
+        'if args.stage == "render":')[0]
+    # ⚠️ **先去掉整行注释再扫。** 这一档的注释里正写着「不设
+    # `transcript_verified` 那几道闸」——连注释一起扫，「把理由记下来」会被
+    # 判成「又挂上了那道闸」。写这条测试时当场被自己的注释误伤了一次，
+    # 而这个形状这个仓库已经犯过五次（`_step_run` 的 docstring 记着）。
+    cover = "\n".join(ln for ln in cover.splitlines()
+                      if not ln.lstrip().startswith("#"))
+    for gate in ("transcript_verified", "_unresolved_suspects",
+                 "_unresolved_gaps"):
+        assert gate not in cover, f"cover 那一档挂着出片的闸 `{gate}`"
+    # 反过来：出片那一档必须仍然挂着，别为了放行 cover 把它一起拆了
+    render_stage = src.split('if args.stage == "render":')[1]
+    assert "transcript_verified" in render_stage, "出片那道闸没了"

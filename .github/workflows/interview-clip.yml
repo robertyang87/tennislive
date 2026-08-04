@@ -26,9 +26,9 @@ on:
         required: true
         default: "eala-svitolina-dc2026-qf"
       mode:
-        description: "subs=只取字幕切行｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        description: "subs=只取字幕切行｜cover=只出海报不出片｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
         type: choice
-        options: [subs, render, push]
+        options: [subs, cover, render, push]
         default: render
       push:
         description: "出片后推送微信"
@@ -92,7 +92,7 @@ jobs:
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
         timeout-minutes: 6
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
           # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
@@ -125,7 +125,7 @@ jobs:
       # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
       # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
@@ -182,7 +182,7 @@ jobs:
 
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           PYTHONPATH=src python - <<'PY'
           import shutil, sys
@@ -270,6 +270,16 @@ jobs:
       # 原来是把路径**写进 spec**、跑完再 `git checkout --` 撤掉——两个毛病：
       # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
       # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
+      # **只出海报，不出片。** 2026-08-04 一晚渲了五趟，四趟是为了换封面——
+      # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有第一帧。
+      # 走这一档：下源片 → 抽帧 → 渲海报 → 删源片，**一个 mp4 都不产生**。
+      - name: 只出海报（不出片）
+        if: github.event.inputs.mode == 'cover'
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover
+
       - name: 剪 + 烧字幕
         if: github.event.inputs.mode == 'render'
         env:
@@ -302,7 +312,7 @@ jobs:
       # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
       # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
       - name: 成片太大就发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
