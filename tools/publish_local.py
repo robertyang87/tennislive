@@ -448,6 +448,75 @@ def publish_one(ctx, plat: Platform, manifest: dict, video: Path) -> bool:
     return True
 
 
+def doctor() -> int:
+    """这台机器齐不齐——**在传视频之前问，不是传到一半才问**。
+
+    第一次在一台新机器上跑，失败点几乎都在环境上（没装 playwright、Chromium
+    没下、系统 Python 装不了包）。这些错各有各的出路，而它们混在真正的填表
+    流程里报出来时，人分不清是「环境没配好」还是「平台改版了」。
+
+    ⚠️ **每一项都真的做一次，不查版本号。** 「装了 playwright」和「Chromium
+    真的能起来」是两回事——`pip show` 过了而浏览器起不来，是这台机器上最常见
+    的一种，而它只有在真 launch 一次的时候才现形。
+    """
+    import platform as _plat  # noqa: PLC0415
+
+    print(f"机器   {_plat.system()} {_plat.machine()}  Python {_plat.python_version()}")
+    ok = True
+
+    try:
+        import requests  # noqa: PLC0415, F401
+
+        print("requests   ✅")
+    except ImportError:
+        ok = False
+        print("requests   ❌ 没装 → pip install requests")
+
+    try:
+        from playwright.sync_api import sync_playwright  # noqa: PLC0415
+    except ImportError:
+        print("playwright ❌ 没装 → pip install playwright")
+        print("\n⚠️ macOS 上如果 pip 报 externally-managed-environment，"
+              "别加 --break-system-packages，建个 venv：\n"
+              "     python3 -m venv .venv && source .venv/bin/activate")
+        return 1
+    print("playwright ✅")
+
+    # **真起一次浏览器，而且按真发片那样起（`headless=False`）。**
+    #
+    # ⚠️ 第一版验的是 `headless=True`，那是**查的东西和跑的东西不是一回事**：
+    # 新版 playwright 的无头模式走的是单独的 chromium-headless-shell，
+    # 和填表用的那个不是同一个可执行文件。验 headless 过了、真发片起不来
+    # ——而那时候视频已经在传了。会闪一下窗口，这个代价买的是「验的就是要跑的」。
+    try:
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=False)
+            ver = browser.version
+            browser.close()
+        print(f"Chromium   ✅ {ver}（按真发片那样起的，有头）")
+    except Exception as exc:  # noqa: BLE001
+        ok = False
+        first = str(exc).splitlines()[0][:120]
+        print(f"Chromium   ❌ 起不来：{first}")
+        print("           → playwright install chromium")
+        if "Executable doesn't exist" not in first:
+            # 装是装了但起不来，多半是没有显示环境（SSH、纯终端）。
+            # 这条线要人看着点发布，本来就得在有桌面的机器上跑。
+            print("           装是装了的话，看看是不是没有桌面环境——"
+                  "这个脚本要你看着点发布，跑不了纯终端")
+
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    for plat in PLATFORMS.values():
+        state = STATE_DIR / f"{plat.key}.json"
+        mark = "✅ 有登录态" if state.is_file() else "—  还没登录"
+        print(f"{plat.name:<6} {mark}"
+              + ("" if state.is_file() else f" → --login {plat.key}"))
+
+    print("\n" + ("环境齐了。" if ok else "上面 ❌ 的先补上。")
+          + "登录态可以边用边扫，缺哪个补哪个。")
+    return 0 if ok else 1
+
+
 def do_login(plat: Platform) -> int:
     """开一个有头浏览器让人扫码，扫完把登录态存下来。"""
     from playwright.sync_api import sync_playwright  # noqa: PLC0415
@@ -476,6 +545,8 @@ def main() -> int:
                     help="只发这个平台，可重复。默认三个都发")
     ap.add_argument("--login", choices=sorted(PLATFORMS),
                     help="扫码登录这个平台并把登录态存下来")
+    ap.add_argument("--doctor", action="store_true",
+                    help="先验这台机器齐不齐：playwright / Chromium / 登录态")
     ap.add_argument("--dry-run", action="store_true",
                     help="不开浏览器，只打印会填什么")
     ap.add_argument("--video", help="成片路径。默认按清单找；走了 Release 的要自己下")
@@ -490,6 +561,8 @@ def main() -> int:
     ap.add_argument("--ref", default="main", help="从哪个分支/标签取，默认 main")
     args = ap.parse_args()
 
+    if args.doctor:
+        return doctor()
     if args.login:
         return do_login(PLATFORMS[args.login])
     if not args.slug:

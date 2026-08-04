@@ -376,3 +376,40 @@ def test_清单里的链接一律钉main不跟着分支走(tmp_path, monkeypatch
     monkeypatch.setattr(push, "BRANCH", "another-branch")
     assert "another-branch" in push.video_url(outdir, "demo.mp4"), (
         "video_url 已经不看 BRANCH 了——这条判据的前提没了，得重写")
+
+
+def test_doctor验的启动方式要和真发片一样():
+    """`--doctor` 起浏览器的方式必须和 `main` 里真发片那次一模一样。
+
+    第一版 doctor 验的是 `headless=True`，而填表走的是 `headless=False`。
+    **新版 playwright 的无头模式是另一个可执行文件**（chromium-headless-shell），
+    实测报错路径都不同：
+
+        headless=True   .../chromium_headless_shell-1234/chrome-headless-shell-…
+        headless=False  .../chromium-1234/chrome-linux64/chrome
+
+    所以验 headless 过了、真发片起不来是可能的——**而那时候视频已经在传了**。
+    又一次「查的东西和跑的东西不是一回事」。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    modes = re.findall(r"chromium\.launch\(headless=(\w+)", src)
+    assert modes, "没有任何一处起 Chromium——doctor 和发片流程都该有"
+    assert set(modes) == {"False"}, (
+        f"起 Chromium 的方式不一致：{modes}。doctor 验的必须是发片真用的那种，"
+        "否则它会在「验过了」的情况下放行一台起不来浏览器的机器")
+
+
+def test_doctor把三件事分开报():
+    """装了包、下了浏览器、有登录态——**三件事的出路完全不同**。
+
+    混成一句「环境没配好」，人得自己一件件试。这和「登录态过期和平台改版要
+    分开报」是同一条，只是挪到了开跑之前。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    body = src[src.index("def doctor("):src.index("def do_login(")]
+    assert "pip install requests" in body, "没说 requests 怎么装"
+    assert "pip install playwright" in body, "没说 playwright 怎么装"
+    assert "playwright install chromium" in body, "没说 Chromium 怎么下"
+    assert "--login" in body, "没说登录态怎么补"
+    # macOS 的老坑：系统 Python 装不了包，而报错本身不会说该建 venv。
+    assert "venv" in body, "没给 macOS 那条 externally-managed 的出路"
