@@ -220,5 +220,7 @@
     "sub": "赛点落地那一刻她整个人是懵的　这一周她连过奥运冠军和 1 号种子",
     "tag": "2026 华盛顿决赛 · 伊埃拉",
     "_copy_why": "**这条片子和已发的场上致辞是对照关系，封面就压在这个对照上。**\n场上那三分半她从头谢到尾——对手、家人、团队、医疗组、赛事、菲律宾同胞；坐进发布厅被问「这个成就对你个人、对那么多人各意味着什么」，她第一句是“first and foremost, it's an achievement for myself. It's a personal achievement.”\n副标那半句也在片子里：问她赛点落地瘫倒在地那一刻在想什么，她说 “I was so nervous and I kind of just blacked out.”\n「连过奥运冠军和 1 号种子」是**拿签表核的**，不是听记者说的：R1 郑钦文（巴黎奥运女单金牌）、F 佩古拉（1 号种子）。"
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-04 在 run 30869965868 上跑的 `--stage verify`：\n① **转写分歧 7.7%（YouTube 1068 词 / whisper small.en 997 词），在 12% 闸门以内**，所以不需要 `transcript_disagree_ok` 认领；\n② **0 处待听、0 处空档**——这条是发布厅，一屋子人轮流说话，没有掌声打断，跟颁奖礼那两条正好相反；\n③ 七十几处分歧逐条看过，实质的只有三处，另有四处我在切完行之后自己抓到的写进了 `en_fixed`。\n\n**三处实质分歧的判法：**\n- `jess said` → `just that`：**取 YouTube**。记者是在引佩古拉在自己发布会上的话（“Jess said it was basically like two different matches”），而 `small.en` 把人名听成虚词是它的典型失手；同一个记者下一问里又说了一次 `Jess's first title`（那处我已订正进 `en_fixed`），前后自洽。\n- `collapsed` → `collapse`：只差时态，问的是赛点落地她瘫倒在地那一刻，中文「瘫倒在地上」两边都成立。\n- `any other questions` / `and one or two` / `this week` → `—`：主持人半离麦的调度语，whisper 整段丢掉。**丢的一方是它，不是 YouTube**——这一族在发布会素材里很常见。\n\n其余全是 `um`／`uh`／`and`／`like`／`i`／`yeah` 这类虚词，以及 `is→this`、`you→i`、`and→in`、`do→have`、`have→had` 五处单个功能词，没有一处改变意思。\n\n⚠️ **我听不到音轨**（沙箱下不了媒体，403），以上判断全部基于两份 ASR 的交叉比对 + 上下文 + 拿签表核过的事实。\n⚠️ 切行时有 2 个子句没有可断的短语开头、按词边界硬断了（`They really stuck it out and and…` / `It's an incredible milestone for me and and…`）——两句都在宽度以内，只是断点不在短语头上，**不是漏字**。"
 }
