@@ -5947,3 +5947,80 @@ def test_屏幕上的次也要写成数字而分发强成不许写():
 
     # 「十七分」不靠量词表——它走「含十百千」那条，别为它去加「分」
     assert arabic_numerals("只赢了十七分") == "只赢了17分"
+
+
+# 「分」在这个栏目里有三个意思，而**只有一个会被误读**。
+# 账号所有者 2026-08-04：「『15 分之后结束』，可能会给人误导，以为打了 15 分钟，
+# 其实是打了 15 point」，随后又划清了边界：「得分 71 比 64，只差 7 分。这个 ok，
+# 没啥歧义，但 15 分后结束这一局类似的说话可能会有歧义」。
+#
+# 判据因此**不是「出现了 N 分」**，是「**这个 N 分的意思有没有被钉住**」：
+#
+# | | 例 | 为什么 |
+# |---|---|---|
+# | ✅ 放行 | 赢了十七分 / 拿到六十二分 / 只差七分 / 连拿四分 | **分钟不能「赢」也不能「拿」**，动词把它钉死了 |
+# | ✅ 放行 | 一小时三十四分 / 上午十点三十五分 / 二十九分钟 | 前面有小时、点，或者后面有钟 |
+# | ✅ 放行 | 那一局，**一**分没拿到 / 赢下最后**一**分 | 单数的那一分，说的是场上正在打的一分 |
+# | ❌ 拦 | **打了十四分** / **十五分之后** / **最后十分** / 那一局，十三分 | 换成分钟读一样通顺 |
+#
+# ⚠️ **「一」必须排除**，不然「赢下最后一分」这种好句子会被误伤——第一版就是
+# 这么来的，16 处里 4 处是它。判据宁可窄，不可宽。
+_AMBIGUOUS_POINT = (
+    (r"打了\s*[二三四五六七八九十百千两〇零0-9][二三四五六七八九十百千两〇零0-9]*\s*分(?!钟)",
+     "打了N分"),
+    (r"(?<![一])[二三四五六七八九十百千两〇零0-9]+\s*分\s*(?:之?后)", "N分之后"),
+    (r"最后\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?!钟)", "最后N分"),
+    (r"局[，,]\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?![钟里])", "那一局，N分"),
+)
+
+# 规矩之前发出去的六条，**只许减不许加**。已发的片子不为措辞重渲——而且它们的
+# `copy.html` 已经提交进 main，改 xhs 会打红「算出来的和已经发出去的一模一样」
+# 那道判据。
+_LEGACY_AMBIGUOUS_POINT = {
+    "eala-osaka", "eala-svitolina", "eala-zheng",
+    "fritz-jodar-final", "shang-vallejo", "wong-gea",
+}
+
+
+def test_旁白里的分不许读成分钟():
+    """见上面那张表。改法是账号所有者给的：**用「几次平分」说**。
+
+    「这一局打了十四分」→「这一局来回打了四次平分」——既不歧义，又比一个抽象的
+    点数有画面。这条片子第 5 段本来就是这么写的（「四比一之后那一局，来回打了
+    三次平分」），所以不是新发明，是把已经在用的写法立成规矩。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+
+    offenders: dict[str, list[str]] = {}
+    checked = 0
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        data = json.loads(spec.read_text("utf-8"))
+        texts = [str(s.get("narration") or "") for s in data.get("segments") or []]
+        copy = Path(f"specs/reels/{spec.stem}.xhs.txt")
+        if copy.is_file():
+            texts.append(copy.read_text("utf-8"))
+        checked += 1
+        for text in texts:
+            for pattern, name in _AMBIGUOUS_POINT:
+                for m in re.finditer(pattern, text):
+                    offenders.setdefault(spec.stem, []).append(
+                        f"[{name}] {m.group(0)}")
+
+    # 判据自己的判据：主语不许为空，否则这条测试是一盏恒真的绿灯
+    assert checked >= 15, f"只扫到 {checked} 条 spec——目录写错了？"
+
+    fresh = {k: v for k, v in offenders.items()
+             if k not in _LEGACY_AMBIGUOUS_POINT}
+    assert not fresh, (
+        "这些「N 分」换成「N 分钟」读一样通顺，读者分不出是点数还是时间：\n"
+        + "\n".join(f"  {k}: {' / '.join(v)}" for k, v in fresh.items())
+        + "\n改法（账号所有者定的）：**用「几次平分」说**——"
+        "「这一局打了十四分」→「这一局来回打了四次平分」。\n"
+        "写不成平分就写「N 个小分」；说的要真是时间就写「N 分钟」。")
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 一个写错的名字就是一盏
+    # 永远亮着的绿灯——这个仓库为它栽过。
+    stale = _LEGACY_AMBIGUOUS_POINT - set(offenders)
+    assert not stale, (
+        f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
+        "这张表只许减不许加")
