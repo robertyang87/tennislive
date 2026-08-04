@@ -100,6 +100,48 @@ def cover_seconds(film: Path) -> float | None:
     return None
 
 
+def voiced_by(film: Path, spec: dict) -> int:
+    """这条片子是**哪条路**配的音——读产物，不从工作流参数推。
+
+    `tts_one` 是「Azure 可用就整条片子都走 Azure」，所以同一份 spec、同一个
+    `narration_voice`，配了 key 之前和之后合出来的**不是同一条音轨**——而那个
+    字段两边一模一样，光看它分不出来。解说片那条线早有
+    `tools/check_explainer_voice.py` 读产物里的 `narration.json`，这条线漏着。
+
+    走哪条路本身**不判合格不合格**，只报：两条都是正当的（没配 key 就该退回
+    edge-tts），要拦的是「不知道这条是谁配的」。但 spec 里写了 `voice.style`
+    却配成了 edge-tts 是**真错**——那种情况 `tts_one` 本该在合成时就报错，
+    走到这儿说明那道闸破了。
+
+    ⚠️ **那一条要计进末尾的总数。** 只 print 一句「[不合格]」而末行仍然说
+    「共 0 项不合格」，正是这个脚本自己要拦的那种不一致。
+
+    Returns:
+        不合格的项数（0 或 1）。
+    """
+    meta = film.parent / "render.json"
+    if not meta.is_file():
+        print("[跳过] 没有 render.json，配音走的哪条路无从得知")
+        return 0
+    data = json.loads(meta.read_text(encoding="utf-8"))
+    backend = data.get("narration_backend")
+    if not backend:
+        print("[跳过] render.json 里没记 narration_backend"
+              "（这条片子渲在补上这个字段之前）")
+        return 0
+    styles = sorted({str((s.get("voice") or {}).get("style", "")).strip()
+                     for s in spec.get("segments") or []
+                     if (s.get("voice") or {}).get("style")})
+    print(f"配音 {backend}"
+          + (f"，情绪风格 {' / '.join(styles)}" if styles else "，无情绪风格"))
+    if styles and backend != "azure":
+        print("[不合格] spec 里写了 `voice.style`，成片却是 "
+              f"{backend} 配的——**风格一个都没生效**，而它和「这个风格本来就平」"
+              "在成片上一模一样")
+        return 1
+    return 0
+
+
 def quiet_windows(spec: dict, cover: float) -> list[tuple[float, float, float]]:
     """没有解说的段落在成片时间轴上的 [(起, 长, 源片起点)]。"""
     out: list[tuple[float, float, float]] = []
@@ -135,7 +177,7 @@ def main() -> int:
     print(f"成片 {film}（{film.stat().st_size / 1e6:.1f} MB）")
     cover = cover_seconds(film)
 
-    bad = 0
+    bad = voiced_by(film, spec)
 
     size = sh("ffprobe", "-v", "error", "-select_streams", "v:0",
               "-show_entries", "stream=width,height",

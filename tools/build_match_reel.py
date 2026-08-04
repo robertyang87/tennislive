@@ -79,6 +79,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
     CARD_TOP,
@@ -88,6 +89,9 @@ from tennislive.video.explainer import (  # noqa: E402
     _ASS_MARGIN_H,
     _ASS_MARGIN_V,
     readable,
+    speakable,
+    all_single_char_segments,
+    word_split_report,
     subtitle_cues,
     write_subtitles,
 )
@@ -956,20 +960,38 @@ CUT_THRESHOLD = 0.35
 LOOSE_CUT_THRESHOLD = 0.12
 
 
-def scene_changes(path: Path, threshold: float = CUT_THRESHOLD) -> list[float]:
+def scene_changes(path: Path, threshold: float = CUT_THRESHOLD, *,
+                  start: float = 0.0, stop: float | None = None) -> list[float]:
+    """切点。`start`/`stop` 给了就**只在那一段里找**，返回值仍是源片的绝对秒数。
+
+    为什么要能只看一段：WTA 的单场集锦不是每场都发，**Day N 合集才是全覆盖的**
+    （王欣瑜对卡萨金娜那场就只在 61 分钟的 Day 2 合集里，章节
+    `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍要几分钟，
+    而且缩略图墙会出七十多张、全是别人的比赛。
+
+    ⚠️ **`-ss` 放在 `-i` 前面是输入寻址，`pts_time` 会从 0 重新起算**，
+    所以要把 `start` 加回去——不加的话切点全部偏移，而它**不会报错**，
+    只会让每一段都切在错的地方。
+    """
+    seek = []
+    if start:
+        seek += ["-ss", f"{start:.2f}"]
+    if stop is not None:
+        seek += ["-t", f"{max(0.0, stop - start):.2f}"]
     proc = subprocess.run(
-        ["ffmpeg", "-hide_banner", "-i", str(path),
+        ["ffmpeg", "-hide_banner", *seek, "-i", str(path),
          "-filter:v", f"select='gt(scene,{threshold})',showinfo",
          "-f", "null", "-"],
         capture_output=True, text=True,
     )
-    return [round(float(m), 2)
+    return [round(float(m) + start, 2)
             for m in re.findall(r"pts_time:([0-9.]+)", proc.stderr or "")]
 
 
 def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
                   columns: int = 6, tile_w: int = 360, crop: str = "",
-                  prefix: str = "contact") -> list[Path]:
+                  prefix: str = "contact", start: float = 0.0,
+                  stop: float | None = None) -> list[Path]:
     """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
 
     时间码必须烧进画面里——不然看图挑完段，还得数第几格再乘回去，数错一次
@@ -986,7 +1008,11 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     for old in frames.glob("*.jpg"):
         old.unlink()
     duration = probe_duration(path)
-    stamps = [round(t, 2) for t in _frange(0.5, duration, every)]
+    # 只看一段时，缩略图仍然烧**源片的绝对秒数**——挑段的人照着它写 spec，
+    # 换算一次就是一次切偏的机会。
+    lo = start + 0.5
+    hi = duration if stop is None else min(stop, duration)
+    stamps = [round(t, 2) for t in _frange(lo, hi, every)]
     for index, t in enumerate(stamps):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
@@ -1057,6 +1083,27 @@ class Segment:
     # 也不知道哪一行该和哪一行配成一对。
     # 账号所有者 2026-08-03：「前面夺冠庆祝的部分全用英文原声配中英文字幕」。
     quote_cues: tuple[str, ...] = ()
+    # **这一段的语速 / 音高**，空＝跟全片的默认值走。
+    #
+    # 为什么只有这两个旋钮：2026-08-04 在 runner 上实测过一遍这条免费端点
+    # （`tools/probe_tts_ssml.py`，run 30884267406）——`<break/>` 和
+    # `<mstts:express-as style=...>`（sad / sports-commentary-excited /
+    # narration-relaxed / cheerful 四个都试了）**服务端一律拒绝**，
+    # 情绪风格那条路要付费的 Azure Speech 才有。**认的只剩 prosody**：
+    # 同一句话 −20%/−8Hz 是 8.59 秒、+6% 是 6.50 秒、+25%/+12Hz 是 5.52 秒。
+    #
+    # 所以「多渲染情绪」在这条线上唯一能拧的就是它，而原来**全片只有一个值**。
+    voice_rate: str = ""
+    voice_pitch: str = ""
+    # 下面三样**只有 Azure 那条路认**（`AZURE_SPEECH_KEY` 配了才走）。
+    # 2026-08-04 在 runner 上实测：Edge 免费端点对 `mstts:express-as` 和
+    # `<break/>` 一律拒绝，Azure F0 十个风格全过、break 也生效
+    # （run 30884267406 / 30892017944）。
+    # ⚠️ **写了这几样却没配 key 要报错，不许悄悄退回** ——那等于发一条和
+    # spec 说的不一样的片子，而且不吭声。
+    voice_style: str = ""
+    voice_styledegree: str = ""
+    voice_lead_pause: float = 0.0
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1143,6 +1190,68 @@ def explicit_quote_cues(lines: tuple, span: float,
     return out
 
 
+_RATE_RE = re.compile(r"^[+-]\d{1,3}%$")
+_PITCH_RE = re.compile(r"^[+-]\d{1,3}Hz$")
+
+
+def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
+    """一段自己的语速 / 音高。没写就返回两个空串（跟全片默认值走）。
+
+    写法：`"voice": {"rate": "-8%", "pitch": "-6Hz", "_why": "这一段是崩盘"}`
+
+    **`_why` 是必填的**，和 `mixed_fps` / `silent_source` / `cover._layout_why`
+    一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。语速这东西改一个
+    数就能改，最容易被用来「让这段刚好装得下」——而那是剪窗口该干的事，
+    不是配音该干的事。逼着写一句为什么，就能在下一个人读 spec 的时候看出来
+    这是编辑决定还是凑数。
+
+    ⚠️ **格式要卡死**：`rate` 是 `+12%` / `-8%`，`pitch` 是 `+6Hz` / `-6Hz`。
+    写成 `-8`（漏了百分号）edge-tts 会抛 `Invalid rate`，而那一刻已经在
+    render 里跑了几分钟——`mode=narration` 才 90 秒，让它死在这儿。
+    """
+    voice = raw.get("voice")
+    if voice is None:
+        return "", "", "", "", 0.0
+    if not isinstance(voice, dict):
+        raise ReelError(f"第 {index + 1} 段的 `voice` 要写成对象，"
+                        '例如 {"rate": "-8%", "pitch": "-6Hz", "_why": "..."}')
+    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause", "_why"}
+    extra = sorted(set(voice) - allowed)
+    if extra:
+        raise ReelError(f"第 {index + 1} 段的 `voice` 只认 "
+                        f"{' / '.join(sorted(allowed))}，多了 {extra}")
+    rate = str(voice.get("rate", "") or "").strip()
+    pitch = str(voice.get("pitch", "") or "").strip()
+    style = str(voice.get("style", "") or "").strip()
+    degree = str(voice.get("styledegree", "") or "").strip()
+    lead = float(voice.get("lead_pause", 0) or 0)
+    if not any((rate, pitch, style, lead)):
+        raise ReelError(f"第 {index + 1} 段写了 `voice` 却一项都没给")
+    bad_style = azure_tts.check_styles([style])
+    if bad_style:
+        raise ReelError(
+            f"第 {index + 1} 段的 `voice.style` 是 `{style}`，不在实测通过的表里。\n"
+            "⚠️ **拼错的风格名 Azure 是静默忽略的**——合成照样成功，只是没有情绪，"
+            "而「拼错了」和「这个风格本来就平」在成片上一模一样。\n"
+            f"认的十个：{' / '.join(azure_tts.KNOWN_STYLES)}")
+    if lead and not 0 < lead <= 2.0:
+        raise ReelError(f"第 {index + 1} 段的 `voice.lead_pause` 要在 0~2 秒之间，"
+                        f"现在是 {lead}")
+    if rate and not _RATE_RE.match(rate):
+        raise ReelError(f"第 {index + 1} 段的 `voice.rate` 要写成 `+12%` / `-8%`，"
+                        f"现在是 `{rate}`")
+    if pitch and not _PITCH_RE.match(pitch):
+        raise ReelError(f"第 {index + 1} 段的 `voice.pitch` 要写成 `+6Hz` / "
+                        f"`-6Hz`，现在是 `{pitch}`")
+    if not str(voice.get("_why", "") or "").strip():
+        raise ReelError(
+            f"第 {index + 1} 段改了语速/音高却没写 `voice._why`。\n"
+            "这一步要认领：语速改一个数就能让一段「刚好装得下」，而那是剪窗口\n"
+            "该干的事。写一句为什么（「这一段是崩盘，降速降调」），下一个人才\n"
+            "分得出这是编辑决定还是凑数。")
+    return rate, pitch, style, degree, lead
+
+
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     """spec 的 `segments` → `Segment` 列表，顺带把两条互斥/引用的规矩拦在这儿。
 
@@ -1165,8 +1274,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         str(s.get("source", primary)),
                         _quote_text(s.get("quote", "")),
                         _quote_cues(s.get("quote", "")),
+                        *_seg_voice(s, i),
                         s.get("inset") or None)
-                for s in spec["segments"]]
+                for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
     gone = [(i, f) for i, f in gone if not f or not Path(f).is_file()]
@@ -1207,7 +1317,7 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scrim", "split", "sub", "subject", "tier", "topic",
               "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "narration", "quote", "source", "start", "track"),
+                "narration", "quote", "source", "start", "track", "voice"),
 }
 
 
@@ -2009,12 +2119,34 @@ def _chromium() -> str:
     raise ReelError("找不到 chromium")
 
 
-def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
+def tts_one(text: str, path: Path, voice: str, rate: str,
+             pitch: str = "+0Hz", style: str = "", styledegree: str = "",
+             lead_pause: float = 0.0) -> list[dict]:
     """合一条语音，落盘并返回词边界。
 
     抽出来是因为**封面也要配音**了：封面那句得在渲封面之前就合出来——封面停多久
     由它的长度决定（见 `cover_length`），不能等到 `synthesize()` 那一步。
     """
+    # **配了 Azure 就走 Azure。** 同一把嗓子（`zh-CN-YunjianNeural`），多出
+    # 十个情绪风格和真 `<break>`——两条路 2026-08-04 在 runner 上并排探过
+    # （run 30884267406 / 30892017944）。词边界单位已经在 `azure_tts` 里对齐到
+    # 100ns，字幕那条线一个字不用改。
+    if azure_tts.available():
+        print(f"[TTS] Azure（风格 {style or '无'}）")
+        return azure_tts.synthesize(
+            text, path, voice=voice, rate=rate, pitch=pitch, style=style,
+            styledegree=styledegree, lead_pause=lead_pause)
+    # ⚠️ **spec 明确要了情绪风格却没有 Azure，必须报错**：悄悄退回 edge-tts
+    # 等于发一条和 spec 说的不一样的片子，而且不吭声——这个仓库最常见的那种坏。
+    if style or lead_pause:
+        raise ReelError(
+            f"这一段要 `voice.style={style or '—'}` / `lead_pause="
+            f"{lead_pause or '—'}`，而它们**只有 Azure 那条路有**"
+            f"（Edge 免费端点对 express-as 和 break 一律拒绝，实测 run "
+            f"30884267406）。\n当前不可用：{azure_tts.why_unavailable()}\n"
+            "两条出路：把这两个键从 spec 里去掉（退回只调语速音高），"
+            "或者配好 AZURE_SPEECH_KEY / AZURE_SPEECH_REGION 再渲。")
+
     import asyncio
 
     import edge_tts
@@ -2023,7 +2155,8 @@ def tts_one(text: str, path: Path, voice: str, rate: str) -> list[dict]:
         marks: list[dict] = []
         with path.open("wb") as fh:
             stream = edge_tts.Communicate(
-                text, voice, rate=rate, boundary="WordBoundary").stream()
+                text, voice, rate=rate, pitch=pitch,
+                boundary="WordBoundary").stream()
             async for chunk in stream:
                 if chunk.get("type") == "audio" and chunk.get("data"):
                     fh.write(chunk["data"])
@@ -2107,6 +2240,87 @@ def cover_length(voice_path: Path | None) -> float:
 MAX_SILENT_GAP = 4.0
 
 
+def _protected_names(spec: dict) -> list[str]:
+    """这条片子里不许被切开的专名：封面上印的那两个中文名 + 主角。
+
+    出处只有 spec 一处（`cover.matchup` / `cover.subject`），**不另维护名单**——
+    一个要靠人记着更新的名单，和一条常年红的检查是同一个毛病。
+    """
+    cover = spec.get("cover") or {}
+    names = [str(p.get("name", "")).strip()
+             for p in (cover.get("matchup") or []) if isinstance(p, dict)]
+    names.append(str(cover.get("subject", "")).strip())
+    for side in ("top", "bottom"):
+        who = (cover.get("versus") or {}).get(side) or {}
+        if isinstance(who, dict):
+            names.append(str(who.get("name", "")).strip())
+    # 两个字的名字太容易撞上普通词（「王」「张」），跟译名表那条一个道理
+    return [n for n in dict.fromkeys(names) if len(n) >= 3]
+
+
+def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str, list]]:
+    """每段问一次合成器「你把这句话切成了哪些词」。
+
+    ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
+    写的那份。拿原文去 find token，「硬地」那种替换过的字一个都对不上。
+    """
+    out = []
+    names = _protected_names(spec)
+    for index, seg in enumerate(segments):
+        text = (seg.narration or "").strip()
+        if not text or index >= len(voices):
+            continue
+        marks = voices[index][1]
+        if not marks:
+            continue
+        spoken = speakable(text)
+        line, crossing, inside = word_split_report(spoken, marks, names)
+        tokens = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
+        out.append((index, line, crossing, inside, spoken, tokens))
+    return out
+
+
+def _print_word_splits(splits) -> None:
+    """把切词摊开印进日志。**不拦，只报。**
+
+    为什么不做成闸：跨边界这一类确实该改，但改法是重写句子（加逗号、换句式），
+    是个编辑判断；而「专名内部切开」压根改不了。做成硬闸的下场是有人为了让它
+    变绿去改一句本来很好的台词——和「判据宁可窄，不可宽」是同一条。
+    """
+    if not splits:
+        print("\n[查切词] 这条 spec 没有拿到词边界（合成器没报，或者没有旁白）。"
+              "\n  ⚠️ 空不等于没问题——拿一段已知有旁白的 spec 对一次再下结论。")
+        return
+    crossing = [(i, c) for i, _, c, _, _, _ in splits if c]
+    inside = [(i, x) for i, _, _, x, _, _ in splits if x]
+    singles = all_single_char_segments(
+        [(i, text, toks) for i, _, _, _, text, toks in splits])
+    print(f"\n[查切词] 合成器自己报的切词，{len(splits)} 段：")
+    for index, line, _, _, _, _ in splits:
+        print(f"  第 {index + 1:>2d} 段  {line}")
+    if singles:
+        print("\n⚠️ 整段每个 token 都是一个字，说明切词器没拿到上下文，"
+              "这几段读音风险最高：")
+        for item in singles:
+            print(f"  {item}")
+    if crossing:
+        print("\n⚠️ 有 token 骑在人名的边界上——念出来会把名字和邻字连读成一个"
+              "不存在的词：")
+        for index, items in crossing:
+            for item in items:
+                print(f"  第 {index + 1:>2d} 段  {item}")
+        print("  改法：名字前后加逗号，或者动词后面加「了」把它撑开"
+              "（「赢斯特鲁夫」→「赢了斯特鲁夫」）。")
+    if inside:
+        print("\n（下面这些是人名内部被切开，每个字的读音不变，一般不用管）")
+        for index, items in inside:
+            for item in items:
+                print(f"  第 {index + 1:>2d} 段  {item}")
+    if not crossing:
+        print("\n[查切词] 没有 token 骑在人名边界上。"
+              "其余的切法要自己扫一眼上面那几行 `｜`。")
+
+
 def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
     """量每段旁白的真实时长，把**超出自己那一段**的全列出来。
 
@@ -2130,6 +2344,146 @@ def narration_overruns(segments, voices) -> tuple[dict, list[str]]:
                         f"{spoken_of[index] - seg.length:.2f}s"
                         f"　「{seg.narration[:24]}…」")
     return spoken_of, over
+
+
+# 情绪风格听着「过不过头」，不必只靠耳朵 -----------------------------------
+# 2026-08-04 账号所有者问「成片音轨听着行不行——这个怎么评判？」，随后又
+# 「我现在不方便听啊，你能帮分析选择么」。**「听着行不行」拆得开**：音高、
+# 响度、语速三样都能量，只有音色和自然度量不了。这个函数报前三样。
+#
+# ⚠️ **一定要量原始语音，不能量成片。** 第一版拿混音后的 mp4 量，基线那条
+# （fritz-jodar，edge-tts）**七段全部「散」**——现场声把自相关污染了，可信
+# 0/7。而这里拿的是 `synthesize()` 刚落下的 mp3，一个现场声像素都没有。
+#
+# ⚠️ **自相关基频最容易犯倍频错误**（把 200 Hz 读成 100 或 400），而且它
+# **不吭声**。所以每一行都带四分位距：分布**紧**才是真的，散成两坨的那个数
+# 不作数，报告里明写出来，别让读的人拿一个坏数去下结论。
+_F0_SR = 16000
+_F0_LO_HZ, _F0_HI_HZ = 70, 350
+# 四分位距超过中位数这个比例就判为「散」。0.45 是拿存量量出来的：带风格那两段
+# 是 0.18~0.24，而被现场声污染的那些一律 0.6 以上，两档分得很开。
+_F0_SPREAD_BAD = 0.45
+
+
+def voice_prosody(path: Path) -> dict | str:
+    """量一条语音的基频和响度。量不了就返回**一句说明为什么**，不返回裸的 None。
+
+    ⚠️ 第一版返回 `None`，报告里印一句「量不了（有声帧太少或缺 numpy／ffmpeg）」
+    ——十一段全是这一句，而那三个原因**出路完全不同**（装包 / 修命令 / 换素材）。
+    一个笼统的解释盖住一个具体的 bug，这个仓库栽过很多次。现在每一条都自己说。
+    """
+    try:
+        import numpy as np  # noqa: PLC0415
+    except ImportError as exc:
+        return f"没装 numpy（{exc}）"
+    if not path.is_file():
+        return f"文件不在：{path}"
+    proc = subprocess.run(
+        ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1",
+         "-ar", str(_F0_SR), "-f", "s16le", "-"],
+        capture_output=True, check=False)
+    raw = proc.stdout
+    if not raw:
+        err = (proc.stderr or b"").decode("utf-8", "replace").strip()[:160]
+        return f"ffmpeg 解不出音频（码 {proc.returncode}）{(' ' + err) if err else ''}"
+    x = np.frombuffer(raw, "<i2").astype(np.float32) / 32768.0
+    n, hop = int(0.040 * _F0_SR), int(0.010 * _F0_SR)
+    frames = [x[i:i + n] for i in range(0, max(0, len(x) - n), hop)]
+    if not frames:
+        return f"音频太短：{len(x) / _F0_SR:.2f}s"
+    rms = np.array([float(np.sqrt((f ** 2).mean())) for f in frames])
+    # 只取有声帧：静音段的自相关是噪声，混进来会把中位数拖歪
+    thr = max(float(np.median(rms)) * 0.5, 1e-4)
+    lo, hi = int(_F0_SR / _F0_HI_HZ), int(_F0_SR / _F0_LO_HZ)
+    pitches = []
+    for frame, level in zip(frames, rms):
+        if level < thr:
+            continue
+        frame = frame - frame.mean()
+        auto = np.correlate(frame, frame, "full")[len(frame) - 1:]
+        if auto[0] <= 0:
+            continue
+        auto = auto / auto[0]
+        seg = auto[lo:hi]
+        if not len(seg):
+            continue
+        # **取第一个够高的峰，不取全局最大**——全局最大常落在倍频下方，
+        # 于是一把男声会被读成半个八度以下，而那个数看起来完全正常。
+        peak = next((i + lo for i in range(1, len(seg) - 1)
+                     if seg[i] > seg[i - 1] and seg[i] >= seg[i + 1]
+                     and seg[i] > 0.35), None)
+        if peak is None:
+            best = int(np.argmax(seg))
+            if seg[best] <= 0.30:
+                continue
+            peak = best + lo
+        pitches.append(_F0_SR / peak)
+    if len(pitches) < 12:
+        return (f"有声帧太少：{len(frames)} 帧里只有 {len(pitches)} 帧定得出基频"
+                f"（门槛 12）")
+    arr = np.array(pitches)
+    voiced = rms[rms >= thr]
+    q1, q3 = (float(np.percentile(arr, 25)), float(np.percentile(arr, 75)))
+    median = float(np.median(arr))
+    return {"f0": median, "q1": q1, "q3": q3,
+            "trusted": (q3 - q1) < median * _F0_SPREAD_BAD,
+            "db": float(20 * math.log10(max(float(np.sqrt((voiced ** 2).mean())),
+                                            1e-6)))}
+
+
+def prosody_report(segments, voices, spoken_of: dict[int, float]) -> list[str]:
+    """逐段报音高／响度／语速，并把**带风格的和不带的**摆在一起比。
+
+    这是「情绪弧做出来没有」和「有没有做过头」唯一不用耳朵的答案。
+    ⚠️ 它答不了**音色自不自然**——那一项没有仪器，只能听。报告末尾明写这句，
+    免得一张全绿的表被读成「已经验过了」。
+    """
+    lines = ["", "[查韵律] 逐段音高／响度／语速（量的是**原始语音**，没有现场声）",
+             f"{'段':>4}  {'风格':<26} {'字/秒':>6} {'基频Hz':>7} "
+             f"{'四分位':>13} {'响度dB':>7}"]
+    rows: list[tuple[int, str, float, dict | None]] = []
+    for index, seg in enumerate(segments):
+        if index not in spoken_of:
+            continue
+        # ⚠️ `Segment` 上是**平铺的四个字段**，不是一个 `voice` 字典。
+        # 第一版写成 `seg.voice`＋`hasattr` 兜底——每段都取到空串，
+        # 「带风格」那一组永远是空的，**而且不报错**。
+        style = seg.voice_style
+        rate = seg.voice_rate
+        tag = f"{style}{' ' + rate if rate else ''}"
+        chars = len([c for c in seg.narration if c.strip()])
+        cps = chars / spoken_of[index] if spoken_of[index] else 0.0
+        info = voice_prosody(voices[index][0])
+        rows.append((index, style, cps, info if isinstance(info, dict) else None))
+        if not isinstance(info, dict):
+            lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} "
+                         f"{'量不了':>7}　{info}")
+            continue
+        flag = "" if info["trusted"] else "  ⚠️散，这个数不作数"
+        lines.append(f"{index + 1:>4}  {tag:<26} {cps:>6.2f} {info['f0']:>7.1f} "
+                     f"{info['q1']:>6.1f}–{info['q3']:<6.1f} {info['db']:>7.1f}{flag}")
+
+    styled = [r for r in rows if r[1]]
+    plain = [r for r in rows if not r[1]]
+    if styled and plain:
+        def band(items, key):
+            vals = [key(r) for r in items if key(r) is not None]
+            return (min(vals), max(vals)) if vals else None
+        f0 = lambda r: r[3]["f0"] if r[3] and r[3]["trusted"] else None   # noqa: E731
+        db = lambda r: r[3]["db"] if r[3] else None                        # noqa: E731
+        cps = lambda r: r[2]                                              # noqa: E731
+        lines.append("")
+        for name, items in (("带风格", styled), ("不带风格", plain)):
+            f, d, c = band(items, f0), band(items, db), band(items, cps)
+            lines.append(
+                f"  {name:<5} {len(items):>2} 段 ｜ 基频 "
+                + (f"{f[0]:.0f}–{f[1]:.0f} Hz" if f else "全部不可信")
+                + (f" ｜ 响度 {d[0]:.1f}–{d[1]:.1f} dB" if d else "")
+                + f" ｜ 语速 {c[0]:.2f}–{c[1]:.2f} 字/秒")
+        lines.append("  ⚠️ **响度**是判「吵不吵」的那一维：风格拉高音高不等于"
+                     "拉高音量，两个要分开看。")
+    lines.append("  ⚠️ 这张表答不了**音色自不自然**——那一项没有仪器，只能听。")
+    return lines
 
 
 def silent_stretches(segments, spoken_of: dict[int, float]) -> list[str]:
@@ -2227,7 +2581,11 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
         if not seg.narration.strip():
             out.append((path, []))
             continue
-        out.append((path, tts_one(seg.narration, path, voice, rate)))
+        out.append((path, tts_one(seg.narration, path, voice,
+                                  seg.voice_rate or rate,
+                                  seg.voice_pitch or "+0Hz",
+                                  seg.voice_style, seg.voice_styledegree,
+                                  seg.voice_lead_pause)))
     return out
 
 
@@ -2735,6 +3093,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         "film_seconds": round(probe_duration(final), 3),
         "narration_voice": voice,
         "narration_rate": rate,
+        # **哪条路配的音要记进产物**，不能靠「工作流当时配没配 key」去推。
+        # `tts_one` 是「Azure 可用就整条片子都走 Azure」，所以同一份 spec、
+        # 同一个 voice 名字，在配了 key 之前和之后合出来的**不是同一条音轨**——
+        # 而 `narration_voice` 两边一模一样，光看它分不出来。解说片那条线早有
+        # `check_explainer_voice.py` 读产物里的 `narration.json` 而不是从工作流
+        # 参数推（CLAUDE.md：查产物，不查信号），这条线一直漏着。
+        "narration_backend": "azure" if azure_tts.available() else "edge-tts",
         "narration_seconds": {str(i): round(v, 3)
                               for i, v in sorted(spoken_of.items())},
     }, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -2756,6 +3121,13 @@ def main() -> int:
     p.add_argument("--url", required=True)
     p.add_argument("--outdir", required=True)
     p.add_argument("--every", type=float, default=2.0)
+    # **只看源片的一段。** WTA 的单场集锦不是每场都发，Day N 合集才是全覆盖的
+    # ——整片扫一遍不但慢，缩略图墙还会出七十多张、绝大多数是别人的比赛。
+    # 缩略图上烧的仍是**源片绝对秒数**，spec 里的窗口直接照抄，不用换算。
+    p.add_argument("--from", dest="clip_from", default="",
+                   help="只看源片的这一段（秒）。合集里取一场时用")
+    p.add_argument("--to", dest="clip_to", default="",
+                   help="同上，区间的终点（秒）")
     p.add_argument("--scorebox", default="",
                    help="记分条位置 x0,y0,x1,y1（源片像素）。给了就顺手量一遍"
                         "死球时刻写进 probe.json——趁源片还在，渲完就删了")
@@ -2787,10 +3159,21 @@ def main() -> int:
         # 能不能和已有的那条一起剪」要等到 render 跑六分钟之后才知道。
         # 探测的作用就是把这种问题提前，别让它藏到最后一步。
         fps_expr, fps = resolve_fps(source)
-        cuts = scene_changes(source)
+        # **只看一段。** WTA 的单场集锦不是每场都发，**Day N 合集才是全覆盖的**
+        # ——王欣瑜对卡萨金娜那场就只在 61 分钟的 Day 2 合集里（章节
+        # `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍不但慢，缩略图墙
+        # 还会出七十多张、绝大多数是别人的比赛，挑段等于大海捞针。
+        clip_from = float(args.clip_from or 0.0)
+        clip_to = float(args.clip_to) if args.clip_to else None
+        if clip_from or clip_to is not None:
+            print(f"[区间] 只看 {clip_from:.1f}–"
+                  f"{(clip_to if clip_to is not None else duration):.1f}s"
+                  "（缩略图上烧的仍是源片绝对秒数）")
+        cuts = scene_changes(source, start=clip_from, stop=clip_to)
         # **低门槛那一份也趁源片还在的时候量。** 和死球时刻同一个道理：源片
         # 渲完就删，事后想查得自己再下一份几百 MB。
-        loose = [t for t in scene_changes(source, LOOSE_CUT_THRESHOLD)
+        loose = [t for t in scene_changes(source, LOOSE_CUT_THRESHOLD,
+                                          start=clip_from, stop=clip_to)
                  if all(abs(t - c) > 0.05 for c in cuts)]
         print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点"
               f"，另有 {len(loose)} 个疑似切点（门槛 {LOOSE_CUT_THRESHOLD}）")
@@ -2798,14 +3181,15 @@ def main() -> int:
             print("  疑似切点（**线索不是判据**：落在你要取的窗口里就去缩略图墙"
                   "上看一眼，别直接拿它当切点）：\n    "
                   + " ".join(f"{t:.2f}" for t in loose))
-        sheets = contact_sheet(source, outdir, every=args.every)
+        sheets = contact_sheet(source, outdir, every=args.every,
+                               start=clip_from, stop=clip_to)
         # 记分条单独拼一版，否则整幅缩完读不出比分。位置按源片分辨率推：
         # 转播把记分条烧在左下，取左边 42%、底部往上 20% 那一块。
         w, h = probe_size(source)
         box = f"{w * 42 // 100}:{h * 20 // 100}:0:{h * 78 // 100}"
         sheets += contact_sheet(source, outdir, every=args.every,
                                 crop=box, prefix="score", columns=4,
-                                tile_w=520)
+                                tile_w=520, start=clip_from, stop=clip_to)
         print(f"记分条缩略图墙：crop={box}（源片 {w}x{h}）")
         captions = fetch_captions(args.url, outdir)
         # **死球时刻要在源片还在的时候量。** `find_point_ends.py` 一直没有任何
@@ -2821,6 +3205,10 @@ def main() -> int:
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
             "scene_cuts": cuts, "scene_cuts_loose": loose, "point_ends": ends,
+            # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
+            # 「切点少」和「只扫了一段」长得一模一样**。
+            "clip_from": clip_from or None,
+            "clip_to": clip_to,
             "sheets": [s.name for s in sheets],
             "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -2839,6 +3227,11 @@ def main() -> int:
         with tempfile.TemporaryDirectory() as tmp:
             voices = synthesize(segments, Path(tmp), args.voice, args.rate)
             spoken, over = narration_overruns(segments, voices)
+            splits = _word_splits(spec, segments, voices)
+            # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
+            # 块就被删——第一版印在外面，十一段全报「文件不在」（run 30901516117）。
+            # 和 `_word_splits` 一样：里面算，外面印。
+            prosody = prosody_report(segments, voices, spoken)
         total = sum(s.length for s in segments)
         print(f"[查旁白] {len(spoken)} 段有旁白，画面共 {total:.1f}s"
               f"（音色 {args.voice} {args.rate}）")
@@ -2868,6 +3261,10 @@ def main() -> int:
             print("\n".join(over))
             print("\n两条出路：把这几段的旁白删短，或者把画面拉长"
                   "（`end` 往后挪，但别越过下一段的 `start`）。")
+        _print_word_splits(splits)
+        # **风格做出来没有、有没有做过头**，报在这儿——语音还在临时目录里，
+        # 这一刻是唯一能干净量到它的时候（成片混了现场声，量出来不可信）。
+        print("\n".join(prosody))
         if over or idle:
             return 1
         print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")

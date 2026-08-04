@@ -1496,15 +1496,32 @@ def test_赛场之上的比分行要带双方国旗():
                         {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]}
     html = vp._solo_score_html(base)
     assert "🇨🇳" in html and "🇰🇿" in html, f"国旗没渲出来：{html}"
-    assert "6-4 6-1" in html
+    text = re.sub(r"<[^>]+>", "", html)
+    assert "6-4" in text and "6-1" in text, f"盘分没渲出来：{html}"
     # **赢家在前**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
     # wang-samsonova 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
     # 「王欣瑜 vs 萨姆索诺娃」——比分夹在中间，等于声称输的那个人赢了。
-    assert html.index("张帅") < html.index("6-4") < html.index("普汀塞娃")
+    assert text.index("张帅") < text.index("6-4") < text.index("普汀塞娃")
     flipped = {**base, "winner": "普汀塞娃"}
-    h2 = vp._solo_score_html(flipped)
+    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html(flipped))
     assert h2.index("普汀塞娃") < h2.index("6-4") < h2.index("张帅"), \
         "换了赢家，赛果行的顺序没跟着换"
+
+    # ---- 每盘赢的那个数字给品牌黄、输的给灰（账号所有者 2026-08-04）----
+    # ⚠️ **判据是那一盘里谁的局数大，不是谁在前**。整场的赢家排在左边，
+    # 而第一盘可能是另一个人赢的——按位置上色会把「1-6」涂反。
+    mixed = vp._sets_html("1-6 7-6(5) 7-5")
+    assert '<span class="setlose">1</span>' in mixed, \
+        f"第一盘前面那个 1 是赢家输掉的局数，该置灰：{mixed}"
+    assert '<span class="setwin">6</span>' in mixed, \
+        f"第一盘是 6 赢的，该给品牌黄：{mixed}"
+    # 抢七小分：跟在输家那个数后面，单独一个小号 span
+    assert '<span class="tb">5</span>' in mixed, f"抢七小分没渲出来：{mixed}"
+    assert re.sub(r"<[^>]+>", "", mixed) == "1-67-657-5"
+    # 反向：认不出来的原样输出，不猜（退赛写法、老 spec 里的整句）
+    assert '<span class="setplain">ret.</span>' in vp._sets_html("2-1 ret.")
+    # 判据自己的判据：没有小分时不许凭空长出一个 `.tb`
+    assert 'class="tb"' not in vp._sets_html("6-4 6-1")
     # 排名跟着名字走，不是另起一行
     assert "57" in html and "81" in html
     # 没有 result 就整行不要——网球有故事照旧一个像素都不变
@@ -4483,6 +4500,50 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_只扫一段时切点要换算回源片的绝对秒数(tmp_path):
+    """`probe --from/--to`：**`-ss` 放在 `-i` 前面，`pts_time` 会从 0 重新起算。**
+
+    不把 `start` 加回去的话，切点全部往前偏移 `start` 秒——而它**不报错**，
+    只会让照着 probe.json 排的每一段都切在错的地方。
+
+    为什么要能只扫一段：WTA 的单场集锦**不是每场都发**，Day N 合集才是全覆盖的
+    （王欣瑜对卡萨金娜那场只在 61 分钟的 Day 2 合集里，章节
+    `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍缩略图墙会出七十多张、
+    绝大多数是别人的比赛。
+
+    判据**真造一段视频、真跑一次 `scene_changes`**：造一个第 10 秒换色的片子，
+    只扫 5–15 秒那一段，报出来必须是 ~10 而不是 ~5。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg"):
+        raise AssertionError(
+            "这条测试要 ffmpeg（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    clip = tmp_path / "two.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=navy:s=320x240:r=25:d=10",
+         "-f", "lavfi", "-i", "color=c=orange:s=320x240:r=25:d=10",
+         "-filter_complex", "[0:v][1:v]concat=n=2:v=1[v]", "-map", "[v]",
+         "-pix_fmt", "yuv420p", str(clip)], check=True)
+
+    whole = reel.scene_changes(clip)
+    assert any(9.5 <= t <= 10.5 for t in whole), f"整片都没认出那一刀：{whole}"
+
+    part = reel.scene_changes(clip, start=5.0, stop=15.0)
+    assert part, "只扫 5–15 秒反而一个切点都没有"
+    assert any(9.5 <= t <= 10.5 for t in part), (
+        f"切点没换算回绝对秒数：{part}——`-ss` 在 `-i` 前面时 pts_time 从 0 起算，"
+        "不把 start 加回去，每一段都会切偏 start 秒，而且不报错")
+    assert not any(t < 5.0 for t in part), f"区间外的切点漏进来了：{part}"
+
+
 def test_横摇的段也要有裁切中心():
     """`track: true` 的段 `cx` 不许留 `None`——`cut_segment` 无条件先算兜底的 x。
 
@@ -5636,3 +5697,381 @@ def test_提交产物的工作流一律用Claude的身份():
                     f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
     # 判据自己的判据：主语没了要出声
     assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"
+
+
+def test_Azure那条路的词边界要和edge_tts同一个单位():
+    """字幕整条线读的是 `{offset, duration, text}`，而 **edge-tts 给的是
+    100 纳秒**为单位的整数。Azure SDK 的 `audio_offset` 同样是 100ns 的 tick，
+    但 `duration` 在新版里是 `timedelta`、老版是毫秒整数——**不换算的话字幕
+    会整体错位，而且不报错**。
+
+    这条测试**真调一次换算函数**，不查源码文本：查源码只能防「有人把它删了」，
+    防不住「它从来没工作过」（`_cut_person` 那次引了一个不存在的名字，
+    `assert "def _cut_person(" in reel` 照样绿，功能整天是坏的）。
+    """
+    import datetime  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    # timedelta（新版 SDK）：0.5 秒 = 5,000,000 个 100ns
+    assert azure_tts._ticks(datetime.timedelta(seconds=0.5)) == 5_000_000
+    # 毫秒整数（老版 SDK）：500 毫秒 = 同一个数
+    assert azure_tts._ticks(500) == 5_000_000
+    # 认不出来的记 0，不猜（字幕只用 offset 排序，duration 缺了不致命）
+    assert azure_tts._ticks(None) == 0
+
+
+def test_拼错的风格名要在写spec时就拦下来():
+    """⚠️ **Azure 对拼错的 `style` 是静默忽略的**——合成照样成功、时长照样正常，
+    只是没有情绪。而「拼错了」和「这个风格听起来本来就平」**在成片上一模一样**，
+    等于又一个「兜底出事的时候不吭声」。
+
+    所以判据装在**写 spec 的那一刻**（`_seg_voice`），不等到听成片。那十个
+    名字是 2026-08-04 在 runner 上逐个问过的（run 30892017944，10/10 通过），
+    不是从文档抄的——文档列的是**语音的能力表**，不是**定价层的权限表**。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    assert azure_tts.check_styles(["sports-commentary-excited"]) == []
+    assert azure_tts.check_styles(["sports_commentary_excited"]) == \
+        ["sports_commentary_excited"], "下划线写法要被拦住"
+    assert azure_tts.check_styles(["excited"]) == ["excited"]
+    # 判据自己的判据：这张表不许空，否则它对任何名字都放行
+    assert len(azure_tts.KNOWN_STYLES) == 10
+
+
+def test_要了情绪风格却没配Azure必须报错不许悄悄退回():
+    """**悄悄退回 edge-tts 等于发一条和 spec 说的不一样的片子，而且不吭声。**
+
+    Edge 免费端点对 `mstts:express-as` 和 `<break/>` 一律拒绝（实测
+    run 30884267406，四个风格全被拒）；Azure F0 十个全过（run 30892017944）。
+    所以 spec 里写了 `style` / `lead_pause` 就是**明确要了 Azure 那条路**，
+    这时候没有 key 只有两条出路：去掉这两个键，或者配好再渲。**不能是第三条**。
+
+    ⚠️ 判据要**真跑一次 `tts_one`**（把 Azure 判成不可用），不是查源码里
+    有没有那个 `raise`。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    real = azure_tts.available
+    azure_tts.available = lambda: False
+    try:
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz",
+                         style="sports-commentary-excited")
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz", lead_pause=0.5)
+    finally:
+        azure_tts.available = real
+    # 反面锚点：**只调语速音高的照旧走 edge-tts**，不许被这道闸误伤
+    assert not Path("/tmp/never-written.mp3").exists(), \
+        "报错之前不许已经写出音频"
+
+
+def test_整段全单字要被报出来():
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    2026-08-04 账号所有者问「切分词和短句，以及多音字等等，F0 能解决么？」。
+    不能：F0 只量音高。切词的判据一直在手上（`words.json` 的 `text` 就是合成器
+    自己报的切词），可**那道闸只保护人名**（出处是 spec 的 `cover.matchup`）。
+    王欣瑜那条手工扫出 6 处切错的，**一个人名都没有**，闸一声没吭。
+
+    ⚠️ **第一版还写了一条「同词两切」，拿存量验完撤掉了。** 那条判据是
+    「这一段是一个词、那一段被切开，合成器自己的两次输出打架」——不用维护词表，
+    看着很漂亮。实测 15 条片子：wong-gea 10 段报 7 处、zheng-lanlana 20 段报
+    7 处，而**报出来的几乎全是读音没变的**（`六 ｜ 比 ｜ 三` 照样念 liù bǐ sān）。
+    全套里真有歧义的只有 `二 ｜ 发`（fā / fà）一处。**一条天天误报的检查等于
+    没有检查。**
+
+    这条测试同时钉住那个撤除：判据里不许再出现跨段比对。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import explainer  # noqa: PLC0415
+
+    hit = explainer.all_single_char_segments(
+        [(9, "抢七输掉了。", ["抢", "七", "输", "掉", "了"])])
+    assert any("第 10 段" in s for s in hit), f"没认出全单字：{hit}"
+
+    # ⚠️ 三条反面锚点，判据宁可窄不可宽：
+    # ① 三个 token 以下不算——「六比一。」本来就没上下文可用
+    assert not explainer.all_single_char_segments(
+        [(0, "六比一。", ["六", "比", "一"])]), "三个字的短句不该报"
+    # ② 有一个多字 token 就不算
+    assert not explainer.all_single_char_segments(
+        [(0, "盘点。二十九分钟。", ["盘点", "二十九", "分", "钟"])]), \
+        "有多字 token 的不该报"
+    # ③ **撤掉的那条不许自己回来**：跨段比对一出现，误报就跟着回来
+    body = inspect.getsource(explainer.all_single_char_segments)
+    assert "token_spans" not in body, \
+        "又在跨段比对了——那条判据实测误报率过半，撤掉是量出来的决定"
+
+
+def test_全单字那条判据在真产物上不误报():
+    """判据要拿**真渲染器的输出**验，不能只喂手搓的 token 列表。
+
+    上一条撤掉的「同词两切」就是这么倒的：单元测试里两段 fixture 一验就绿，
+    拿存量 15 条片子一跑，误报占了一半以上的段。**加判据之前先拿存量验一遍。**
+
+    ⚠️ **主语在 `output/` 里，而 CI 的稀疏检出不含它**——所以核心断言放在上面
+    那条（只吃 `src/`），这条是**加餐**：产物在的时候（本地沙箱）多验一层，
+    不在就跳过那一段。但**整条测试不许 skip**，一条常年跳过的检查和常年红是
+    同一个毛病。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from tennislive.video.explainer import all_single_char_segments  # noqa: PLC0415
+    from build_match_reel import speakable  # noqa: PLC0415
+
+    checked = noisy = 0
+    for words in sorted(Path("output").glob("*/reel/*/voice_00.words.json")):
+        outdir = words.parent
+        spec = Path("specs/reels") / f"{outdir.name}.json"
+        if not spec.is_file():
+            continue
+        data = json.loads(spec.read_text("utf-8"))
+        segs = []
+        for i, seg in enumerate(data.get("segments") or []):
+            text = (seg.get("narration") or "").strip()
+            path = outdir / f"voice_{i:02d}.words.json"
+            if not text or not path.is_file():
+                continue
+            marks = json.loads(path.read_text("utf-8"))
+            toks = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
+            if toks:
+                segs.append((i, speakable(text), toks))
+        if len(segs) < 3:
+            continue
+        hits = all_single_char_segments(segs)
+        # 判据不是「一条都不报」——真有问题就该报。拦的是**淹没式误报**：
+        # 一条片子报出四分之一以上的段，人就不看它了。实测存量全部远低于这个数
+        # （15 条片子里只有 1 条命中 1 段）。
+        assert len(hits) <= max(1, len(segs) // 4), (
+            f"{outdir.name}：{len(segs)} 段报了 {len(hits)} 处，太吵了\n{hits}")
+        noisy += len(hits)
+        checked += 1
+
+    # 产物不在就只验上面那条；在的话至少要真校到一条，别变成恒真的绿灯
+    if Path("output").is_dir() and list(Path("output").glob("*/reel/*")):
+        assert checked >= 5, f"有成片目录却只校到 {checked} 条——主语找错了"
+
+
+def test_成片要记下是哪条路配的音():
+    """`tts_one` 是「Azure 可用就**整条片子**都走 Azure」。
+
+    所以同一份 spec、同一个 `narration_voice`，配了 key 之前和之后合出来的
+    **不是同一条音轨**——而那个字段两边一模一样，光看产物分不出来。解说片那条线
+    早有 `tools/check_explainer_voice.py` 读产物里的 `narration.json`
+    （CLAUDE.md：查产物，不查信号），这条线一直漏着。
+
+    ⚠️ **`voiced_by` 第一版打印「[不合格]」却不计进末尾那个总数**，末行仍然说
+    「共 0 项不合格」——正是这个脚本自己要拦的那种不一致。所以判据钉的是
+    **返回值**，不是它印了什么。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import check_reel_landed as chk  # noqa: PLC0415
+
+    import tempfile  # noqa: PLC0415
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        film = out / "x.mp4"                       # 不用真存在，只用它的 parent
+        styled = {"segments": [{"voice": {"style": "sad", "_why": "崩"}}]}
+        plain = {"segments": [{"voice": {"rate": "-3%", "_why": "慢一点"}}]}
+
+        def meta(**kw):
+            (out / "render.json").write_text(json.dumps(kw), encoding="utf-8")
+
+        # ① spec 要了风格，成片却是 edge 配的 → **风格一个都没生效**，要计一项
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, styled) == 1
+
+        # ② 同一份 spec、Azure 配的 → 正常
+        meta(narration_backend="azure")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ③ 没要风格的走 edge-tts 是**正当的**（没配 key 就该退回），不许误伤
+        meta(narration_backend="edge-tts")
+        assert chk.voiced_by(film, plain) == 0
+
+        # ④ 老片子没记这个字段 → 跳过，不许当成不合格（那会变成一条常年红）
+        meta(narration_voice="zh-CN-YunjianNeural")
+        assert chk.voiced_by(film, styled) == 0
+
+        # ⑤ 连 render.json 都没有 → 同样跳过
+        (out / "render.json").unlink()
+        assert chk.voiced_by(film, styled) == 0
+
+    # **它真的被接进总数里**：只测函数拦不住「算出来了没人用」，
+    # 而那正是这条测试要防的第一版毛病
+    body = inspect.getsource(chk.main)
+    assert re.search(r"bad\s*=\s*voiced_by\(", body), \
+        "voiced_by 的返回值没有接进 bad——又是「算出来了没人用」"
+
+
+def test_屏幕上的次也要写成数字而分发强成不许写():
+    """同一行里两种写法，是「转了一半」——和「北京时间8月三号零点」同一个毛病。
+
+    2026-08-04 抽帧看见 `前5局又破了三次 4比1`：三个数都是在数数，「局」和
+    「比」转了，「次」没转，因为 `_NUM_UNITS` 里漏了它。
+
+    ⚠️ **同一轮扫存量时另外几个字必须不转**，所以这条测试两头都钉：
+
+    | | | |
+    |---|---|---|
+    | 「三分之一」 | 加「分」就成 **「3分之一」** | 分数不是数数 |
+    | 「一发」「二发」 | 术语 | 加「发」就成「2发」 |
+    | 「四强」「三成」 | 术语／约数 | |
+    | 「十七分」→「17分」 | **本来就转** | 走「含十百千」那条，不靠这张表 |
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import arabic_numerals  # noqa: PLC0415
+
+    for raw, want in (("前五局又破了三次", "前5局又破了3次"),
+                      ("来回打了三次平分", "来回打了3次平分"),
+                      ("连续七次交手", "连续7次交手")):
+        assert arabic_numerals(raw) == want, f"{raw} → {arabic_numerals(raw)}"
+
+    # 反面锚点：这些一个字都不许动
+    for raw in ("三分之一", "一发", "二发", "四强", "三成", "七成",
+                "唯一一次", "第一次", "一次", "两次",
+                "依次", "其次", "层次", "档次", "多次", "这次", "首次"):
+        assert arabic_numerals(raw) == raw, f"{raw} 被误伤成 {arabic_numerals(raw)}"
+
+    # 「十七分」不靠量词表——它走「含十百千」那条，别为它去加「分」
+    assert arabic_numerals("只赢了十七分") == "只赢了17分"
+
+
+# 「分」在这个栏目里有三个意思，而**只有一个会被误读**。
+# 账号所有者 2026-08-04：「『15 分之后结束』，可能会给人误导，以为打了 15 分钟，
+# 其实是打了 15 point」，随后又划清了边界：「得分 71 比 64，只差 7 分。这个 ok，
+# 没啥歧义，但 15 分后结束这一局类似的说话可能会有歧义」。
+#
+# 判据因此**不是「出现了 N 分」**，是「**这个 N 分的意思有没有被钉住**」：
+#
+# | | 例 | 为什么 |
+# |---|---|---|
+# | ✅ 放行 | 赢了十七分 / 拿到六十二分 / 只差七分 / 连拿四分 | **分钟不能「赢」也不能「拿」**，动词把它钉死了 |
+# | ✅ 放行 | 一小时三十四分 / 上午十点三十五分 / 二十九分钟 | 前面有小时、点，或者后面有钟 |
+# | ✅ 放行 | 那一局，**一**分没拿到 / 赢下最后**一**分 | 单数的那一分，说的是场上正在打的一分 |
+# | ❌ 拦 | **打了十四分** / **十五分之后** / **最后十分** / 那一局，十三分 | 换成分钟读一样通顺 |
+#
+# ⚠️ **「一」必须排除**，不然「赢下最后一分」这种好句子会被误伤——第一版就是
+# 这么来的，16 处里 4 处是它。判据宁可窄，不可宽。
+_AMBIGUOUS_POINT = (
+    (r"打了\s*[二三四五六七八九十百千两〇零0-9][二三四五六七八九十百千两〇零0-9]*\s*分(?!钟)",
+     "打了N分"),
+    (r"(?<![一])[二三四五六七八九十百千两〇零0-9]+\s*分\s*(?:之?后)", "N分之后"),
+    (r"最后\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?!钟)", "最后N分"),
+    (r"局[，,]\s*[二三四五六七八九十百千两〇零0-9]+\s*分(?![钟里])", "那一局，N分"),
+)
+
+# 规矩之前发出去的六条，**只许减不许加**。已发的片子不为措辞重渲——而且它们的
+# `copy.html` 已经提交进 main，改 xhs 会打红「算出来的和已经发出去的一模一样」
+# 那道判据。
+_LEGACY_AMBIGUOUS_POINT = {
+    "eala-osaka", "eala-svitolina", "eala-zheng",
+    "fritz-jodar-final", "shang-vallejo", "wong-gea",
+}
+
+
+def test_旁白里的分不许读成分钟():
+    """见上面那张表。改法是账号所有者给的：**用「几次平分」说**。
+
+    「这一局打了十四分」→「这一局来回打了四次平分」——既不歧义，又比一个抽象的
+    点数有画面。这条片子第 5 段本来就是这么写的（「四比一之后那一局，来回打了
+    三次平分」），所以不是新发明，是把已经在用的写法立成规矩。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+
+    offenders: dict[str, list[str]] = {}
+    checked = 0
+    for spec in sorted(Path("specs/reels").glob("*.json")):
+        data = json.loads(spec.read_text("utf-8"))
+        texts = [str(s.get("narration") or "") for s in data.get("segments") or []]
+        copy = Path(f"specs/reels/{spec.stem}.xhs.txt")
+        if copy.is_file():
+            texts.append(copy.read_text("utf-8"))
+        checked += 1
+        for text in texts:
+            for pattern, name in _AMBIGUOUS_POINT:
+                for m in re.finditer(pattern, text):
+                    offenders.setdefault(spec.stem, []).append(
+                        f"[{name}] {m.group(0)}")
+
+    # 判据自己的判据：主语不许为空，否则这条测试是一盏恒真的绿灯
+    assert checked >= 15, f"只扫到 {checked} 条 spec——目录写错了？"
+
+    fresh = {k: v for k, v in offenders.items()
+             if k not in _LEGACY_AMBIGUOUS_POINT}
+    assert not fresh, (
+        "这些「N 分」换成「N 分钟」读一样通顺，读者分不出是点数还是时间：\n"
+        + "\n".join(f"  {k}: {' / '.join(v)}" for k, v in fresh.items())
+        + "\n改法（账号所有者定的）：**用「几次平分」说**——"
+        "「这一局打了十四分」→「这一局来回打了四次平分」。\n"
+        "写不成平分就写「N 个小分」；说的要真是时间就写「N 分钟」。")
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 一个写错的名字就是一盏
+    # 永远亮着的绿灯——这个仓库为它栽过。
+    stale = _LEGACY_AMBIGUOUS_POINT - set(offenders)
+    assert not stale, (
+        f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
+        "这张表只许减不许加")
+
+
+def test_韵律报告要认得出哪几段带风格():
+    """账号所有者 2026-08-04：「成片音轨听着行不行——这个怎么评判？」
+
+    「听着行不行」拆得开：音高、响度、语速三样能量，音色和自然度不能。
+    `prosody_report` 报前三样，并把**带风格的和不带的**摆在一起比——这是
+    「情绪弧做出来没有 / 有没有做过头」唯一不用耳朵的答案。
+
+    ⚠️ 这条测试拦的是一个**会静默失效**的写法：第一版取的是 `seg.voice`
+    （一个不存在的字段）加 `hasattr` 兜底，于是每段都取到空串，
+    「带风格」那一组永远是空的，**报告照样出得来、一个字的错都不报**。
+    又一次「签名对了、实现是空的」。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+
+    segs = [
+        reel.Segment(start=0.0, end=6.0, cx=None, narration="第一段没有风格。"),
+        reel.Segment(start=6.0, end=12.0, cx=None, narration="第二段很激动。",
+                     voice_style="sports-commentary-excited"),
+    ]
+    voices = [(Path("/nonexistent-0.mp3"), []), (Path("/nonexistent-1.mp3"), [])]
+    lines = reel.prosody_report(segs, voices, {0: 5.0, 1: 5.0})
+    body = "\n".join(lines)
+
+    # 风格名必须真的出现在报告里——取错字段的话这里是空的
+    assert "sports-commentary-excited" in body, (
+        "报告里没有风格名，多半是取错了字段"
+        "（`Segment` 上是平铺的 `voice_style`，不是 `voice` 字典）")
+    # 量不了要**说量不了**，不许猜一个数出来
+    assert "量不了" in body, "文件不存在时应当明说量不了，而不是给一个编的数"
+    # 音色那一句不能省：一张全绿的表不许被读成「已经验过了」
+    assert "音色" in body and "只能听" in body
+
+    # 位置：这个报告必须真的接在查旁白那条路上。**只测行为拦不住没接线**
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    head = src.index("if args.check_narration:")
+    region = src[head:head + 4000]
+    assert "prosody_report(" in region, (
+        "`mode=narration` 那条路上没有调用 prosody_report——"
+        "语音只在那一刻还在临时目录里，错过就只能去量混了现场声的成片")
+    # ⚠️ **而且要在 `with tempfile.TemporaryDirectory()` 里面。** 第一版印在
+    # 外面，语音早被删了，十一段全报「文件不在」（run 30901516117）——
+    # 调用接上了、位置错了，**而报告照样出得来**。缩进就是判据：
+    # `with` 里是 12 格，外面是 8 格。
+    call = next(ln for ln in region.splitlines() if "prosody_report(segments" in ln)
+    assert len(call) - len(call.lstrip()) >= 12, (
+        f"prosody_report 调用的缩进是 {len(call) - len(call.lstrip())} 格，"
+        "说明它在临时目录那个 with 外面——那时语音已经删了")

@@ -5625,6 +5625,131 @@ def speakable(text: str) -> str:
     return text.replace("硬地", "硬帝")
 
 
+def token_spans(text: str, tokens: Sequence[str]) -> list[tuple[int, int, str]]:
+    """每个 token 在原文里的 `[起, 止)`。
+
+    ⚠️ **位置要 `find`，不能靠累加长度。** 边界事件里不含标点（122 个字的旁白
+    只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个坑单独写过一条判据。
+    """
+    out: list[tuple[int, int, str]] = []
+    cursor = 0
+    for tok in tokens:
+        at = text.find(tok, cursor)
+        if at < 0:                      # 合成器报了原文里没有的串，跳过不猜
+            continue
+        out.append((at, at + len(tok), tok))
+        cursor = at + len(tok)
+    return out
+
+
+def all_single_char_segments(
+    segments: Sequence[tuple[int, str, Sequence[str]]],
+) -> list[str]:
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    ## 为什么只剩这一条
+
+    `word_split_report` 只保护**人名**（出处是 spec 的 `cover.matchup`）。
+    2026-08-04 王欣瑜那条片子手工扫了一遍 `｜`，抓出 6 处切错的，**一个人名
+    都没有**，全是术语和动词（`二 ｜ 发`、`接发 ｜ 球`、`连 ｜ 丢四局`、
+    `三个 ｜ 破发 ｜ 点`、`没救 ｜ 下来`、`抢 ｜ 七 ｜ 输 ｜ 掉 ｜ 了`）——
+    闸一声没吭。
+
+    第一版补了两条判据，其中「**同词两切**」（这一段是一个词、那一段被切开，
+    合成器自己的两次输出打架）看起来很漂亮，**而且不用维护词表**。
+    ⚠️ **拿存量 15 条片子验了一遍，它不成立**：
+
+        wong-gea       10 段报 7 处   两 ｜ 个 · 第一 ｜ 次 · 一 ｜ 比 ｜ 四 …
+        zheng-lanlana  20 段报 7 处   资格 ｜ 赛 · 两 ｜ 年 · 加拿大 ｜ 站 …
+        eala-svitolina 12 段报 5 处   追 ｜ 平 · 轮 ｜ 到 · 第一 ｜ 盘 …
+
+    **报出来的几乎全是读音一个字都没变的**——`六比三` 切成 `六 ｜ 比 ｜ 三`
+    照样念 liù bǐ sān。全套里真正有歧义的只有 `二 ｜ 发`（fā / fà）一处。
+    **一条天天误报的检查等于没有检查**，所以撤掉，只留下面这条。
+
+    真正要判「读音对不对」得拿**音素**，而词边界只给字符串——那条路在
+    `tools/probe_azure_phoneme.py` 里探。在它有结论之前，剩下的靠人扫一眼
+    那行 `｜`：**这是故意的**，做成硬闸的下场是有人为了让它变绿去改一句本来
+    很好的台词（见 `_print_word_splits` 的 docstring）。
+
+    Args:
+        segments: `[(段序号, speakable 之后的原文, token 列表), …]`。
+
+    Returns:
+        给人看的中文句子，一段一条。
+    """
+    # 四个以下不算——一句「六比一。」本来就没有上下文可用，报出来是噪音。
+    # 实测：存量 15 条片子、上百段，只有王欣瑜第 10 段「抢七输掉了」中招。
+    return [
+        f"第 {index + 1} 段整段都是单字：{' ｜ '.join(tokens)}"
+        for index, _, tokens in segments
+        if len(tokens) >= 4 and all(len(t) == 1 for t in tokens)
+    ]
+
+
+def word_split_report(
+    text: str, marks: Sequence[dict], protect: Sequence[str],
+) -> tuple[str, list[str], list[str]]:
+    """把合成器自己报的切词摊开，并指出**跨过专名边界**的那几处。
+
+    账号所有者 2026-08-03 提过一次「连在一起的词不要分开，本来分开的两个词
+    不要连读在一起」，CLAUDE.md 记了做法——把 `voice_NN.words.json` 的 `text`
+    用 `｜` 串起来打印，切错的地方一眼就看见。**但那是手工的**：要先渲一趟
+    完整成片（六分钟、还多一个几十 MB 的 blob），再自己去翻 json。
+
+    而 `mode=narration` 那道闸**本来就把每一段合成了一遍**，边界事件就在手上。
+    所以这份报告是白捡的：一分半，不下源片，不写产物。
+
+    三件事分开报，因为它们的可修性完全不同：
+
+    | | 例子 | 怎么办 |
+    |---|---|---|
+    | **跨专名边界** | `佩古 ｜ 拉六 ｜ 比 ｜ 四` —— `拉六` 一半是名字一半是数字 | **改**：名字前后加逗号，或者动词后面加「了」把它撑开 |
+    | 专名内部切开 | `布勃利 ｜ 克` | **不用改**：每个字的读音不变，只是重音偏，标点也插不进名字中间 |
+    | 其余 | —— | 人自己扫一眼那行 `｜` |
+
+    ⚠️ **判据是「有没有一个 token 骑在专名的边界上」，不是「专名是不是一个
+    token」。** 后者会把上表第二行也报出来，而那一类改不了——**一条天天误报的
+    检查等于没有检查**。
+
+    ⚠️ **token 的位置要在原文里 `find`，不能靠累加长度。** 边界事件里不含标点
+    （122 个字的旁白只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个
+    坑单独写过一条判据。
+
+    Args:
+        text: 真正喂给合成器的那份（`speakable()` 之后），不是屏幕上那份。
+        marks: WordBoundary 事件，每条至少有 `text`。
+        protect: 不许被切开的词，通常是这条片子里出现的中文人名。
+
+    Returns:
+        `(用 ｜ 串起来的 token 流, 跨边界的问题, 名字内部被切开的)`
+    """
+    tokens = [str(m.get("text", "")).strip() for m in marks]
+    tokens = [t for t in tokens if t]
+    line = " ｜ ".join(tokens)
+    spans = token_spans(text, tokens)
+
+    crossing: list[str] = []
+    inside: list[str] = []
+    for name in dict.fromkeys(n for n in protect if n and n in text):
+        start = text.find(name)
+        while start >= 0:
+            end = start + len(name)
+            covering = [s for s in spans if s[0] < end and s[1] > start]
+            for a, b, tok in covering:
+                if a < start or b > end:
+                    extra = tok.replace(text[max(a, start):min(b, end)], "", 1)
+                    crossing.append(
+                        f"「{name}」被 `{tok}` 骑在边界上（多带了「{extra}」）")
+            if len(covering) > 1 and all(
+                    a >= start and b <= end for a, b, _ in covering):
+                inside.append(
+                    f"「{name}」被切成 {' ｜ '.join(t for _, _, t in covering)}"
+                    "（读音不变，通常不用改）")
+            start = text.find(name, end)
+    return line, crossing, inside
+
+
 def readable(text: str) -> str:
     """旁白照着念出来的样子——给字幕用，不给 TTS 用。
 
@@ -5668,7 +5793,17 @@ _NUM_CHARS = set(_DIGIT) | {"十", "百", "千", "两"}
 # （开球时刻和决赛时刻），而它**不报错**：转换成功了，只是转了一半。
 # 「点」不会误伤：「破发点」「赛点」里的「点」前面不是数字；「一点」「两点」
 # 落在裸「一/两」那条豁免上。「号」顺带把「三号种子」也变成「3号种子」，那是对的。
-_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点"
+# **「次」也是量词，漏了它就同一行里两种写法。** 2026-08-04 抽帧看见
+# 「前5局又破了三次 4比1」——三个数都是在数数，「局」和「比」转了，「次」没转。
+# 和上面「北京时间8月三号零点」是同一个毛病：转换成功了，只是转了一半。
+# 拿存量 314 条语料验过，11 处全是真的数数（4次拿到破发 / 5次平分 / 3次都是
+# 亚军 / 6次都没保住 / 交手3次），「一次」「两次」落在裸「一/两」那条豁免上，
+# 「唯一一次」落在「多字裸串不读成一个数」那条上，「依次」「其次」「层次」
+# 前面不是数字。
+# ⚠️ **只补「次」，别顺手补「分」「发」「强」「成」**——同一轮扫出来的那几个
+# 必须不转：「三分之一」会变成「3分之一」，而「一发」「二发」「四强」是术语
+# 不是数数。「十七分」本来就转，走的是「含十百千」那条，不靠这张表。
+_NUM_UNITS = "年月日天岁个位局盘场记座枚块届轮周号点次"
 _STRUCTURED = set("十百千")
 
 
