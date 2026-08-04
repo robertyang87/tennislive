@@ -47,6 +47,7 @@ jobs:
           python-version: "3.11"
 
       - name: 安装依赖
+        timeout-minutes: 6
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           # **`[default]` 不是可选的**：它才带 `yt-dlp-ejs`，而解 YouTube 的

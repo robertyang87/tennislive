@@ -119,3 +119,60 @@ def test_走图床那条路的工作流都要配SECRET_KEY():
         assert "PUSHPLUS_SECRET_KEY" in body, (
             f"{name} 会走 PushPlus 图床却没配 PUSHPLUS_SECRET_KEY——"
             "会悄悄退回 jsDelivr，轮询 5 分钟，取不到就整条不发")
+
+
+def test_每条工作流都要有超时且apt那一步单独有():
+    """卡住要失败，不要空转——而 GitHub 的默认是**烧六小时**。
+
+    2026-08-04 实测：`interview-clip` 的「装系统依赖」这一步（就三个包，
+    `fonts-noto-cjk fonts-noto-core ffmpeg`）在同一天四趟里分别花了
+    **18 秒 / 53 秒 / 13 分 42 秒 / 18 秒**。同一个工作流、同一份包列表、
+    二十分钟之内——所以卡的不是我们，是那台 runner 上的 apt 镜像。
+
+    但代价是我们的：那一趟 `timeout-minutes` 一个都没有（job 级也没有），
+    于是它就那么静静地烧了十三分半。**而 `-qq` 把 apt 的输出全吞了**，
+    日志里一个字都没有——「卡住」和「正常在装」长得一模一样，又一次
+    「兜底出事的时候不吭声」。
+
+    ⚠️ **这条规矩本来就有，只是只管一个文件。**
+    `test_渲染专用的依赖不许挂在probe路径上` 的 docstring 里写着
+    「`apt-get install fonts-noto-cjk` 挂死那次把 probe 拖了二十分钟」
+    ——**一模一样的故障，一模一样的结论**，可那条测试 `WORKFLOW` 只指
+    `match-reel.yml`。于是 match-reel 补上了，另外七条一条都没有。
+    这就是本仓库的老形状：「规矩只写在了其中一半」（storyboard.jpg 那条同一天
+    刚犯过）。所以这条**扫全部工作流，不维护白名单**。
+
+    两层各管各的：
+    - **job 级**：兜住整趟，防「默认 360 分钟」
+    - **步骤级**：apt 是已知会挂的那一步，让它快速失败而不是拖垮整趟
+    """
+    import yaml  # noqa: PLC0415
+
+    paths = sorted(Path(".github/workflows").glob("*.yml"))
+    assert len(paths) >= 15, f"只扫到 {len(paths)} 条工作流，判据可能失效了"
+
+    no_job, no_step, apt_seen = [], [], 0
+    for path in paths:
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for job_name, job in (spec.get("jobs") or {}).items():
+            if not job.get("timeout-minutes"):
+                no_job.append(f"{path.name}:{job_name}")
+            for step in job.get("steps") or []:
+                # 只看**真正会跑的**那几行，注释里提到 apt 不算——工作流的注释
+                # 正是这个仓库记教训的地方，连它一起扫会把「把坑记下来」判成
+                # 「又踩了这个坑」。同一个错这个仓库犯过五次。
+                run = "\n".join(ln for ln in str(step.get("run") or "").splitlines()
+                                if not ln.lstrip().startswith("#"))
+                if "apt-get" not in run:
+                    continue
+                apt_seen += 1
+                if not step.get("timeout-minutes"):
+                    no_step.append(f"{path.name}「{step.get('name')}」")
+
+    assert apt_seen >= 7, f"只找到 {apt_seen} 个 apt 步骤，判据可能失效了"
+    assert not no_job, (
+        f"这些 job 没有 timeout-minutes：{no_job}。"
+        "GitHub 的默认是 360 分钟——卡住会烧六小时，而且看起来和「还在跑」一样")
+    assert not no_step, (
+        f"这些 apt 步骤没有 timeout-minutes：{no_step}。"
+        "实测同一步能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候不吭声")

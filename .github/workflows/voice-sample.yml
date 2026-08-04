@@ -40,6 +40,7 @@ jobs:
           cache: pip
 
       - name: 安装 edge-tts + ffmpeg
+        timeout-minutes: 6
         run: |
           pip install -q edge-tts
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
