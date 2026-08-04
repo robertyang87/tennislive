@@ -413,3 +413,85 @@ def test_doctor把三件事分开报():
     assert "--login" in body, "没说登录态怎么补"
     # macOS 的老坑：系统 Python 装不了包，而报错本身不会说该建 venv。
     assert "venv" in body, "没给 macOS 那条 externally-managed 的出路"
+
+
+def test_存草稿的按钮不许和发布按钮是同一个():
+    """`--draft` 会**点** `draft_hint`。它要是指到发布按钮上，就是自动发布。
+
+    存草稿和发布的性质完全不同：草稿留在自己账号里、不对任何人可见；
+    发布是把一条没人看过的片子推给陌生人，而且**收不回来**。所以
+    「绝不自己点发布」那条规矩没有松动——松动的只是「存草稿也算发布」这个
+    误解。
+
+    ⚠️ 这三个 `draft_hint` 我**验不了**（要有登录态的国内机器），所以判据钉两层：
+    这条是静态的（两个选择器不许相同、不许互相包含），运行时 `_click_draft`
+    还会读一遍按钮上的字再决定点不点。
+    """
+    mod = _mod("publish_local")
+    for plat in mod.PLATFORMS.values():
+        if not plat.draft_hint:
+            continue
+        assert plat.draft_hint != plat.publish_hint, (
+            f"{plat.name} 的存草稿和发布是同一个选择器——--draft 会把片子发出去")
+        # 互相包含也不行：`has-text('发')` 会同时选中「发布」和「转发」。
+        assert plat.publish_hint not in plat.draft_hint, (
+            f"{plat.name} 的 draft_hint 包住了 publish_hint：{plat.draft_hint}")
+        for word in mod._NEVER_CLICK:
+            assert word not in plat.draft_hint, (
+                f"{plat.name} 的存草稿选择器里出现了「{word}」：{plat.draft_hint}\n"
+                "存草稿的按钮上不该有这种字，出现了多半是抄错了发布按钮")
+
+
+def test_点存草稿之前要读一遍按钮上的字():
+    """静态判据挡不住「平台改版之后 draft_hint 恰好选中了发布按钮」。
+
+    那种情况下选择器字面上仍然写着「存草稿」，而页面上那个位置换成了别的按钮
+    ——**只有读按钮自己的文字才分得出来**。又一次「查产物不查信号」：
+    选择器是信号，按钮上的字才是产物。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    body = src[src.index("def _click_draft("):src.index("def publish_one(")]
+    assert "inner_text" in body, "点之前没读按钮上的字"
+    assert "_NEVER_CLICK" in body, "没拿禁用词表复核"
+    # 顺序要对：先读、先判，最后才点。
+    assert body.index("_NEVER_CLICK") < body.index("btn.click()"), (
+        "先点了再检查——那时候已经晚了")
+
+
+def test_draft那条路不许绕过发布按钮那道确认():
+    """`--draft` 点的是存草稿，**publish_hint 那颗一次都不许点**。
+
+    这条和 `test_本地发布不许自己点发布` 是同一条规矩的两半：那条查的是
+    「有没有 .click() 挂在 publish_hint 上」，这条查的是加了草稿这条路之后
+    那个结论还成立——**加新能力最容易的失手就是给它开一个绕过老闸的后门**。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    for node in ast.walk(tree):
+        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                and node.func.attr == "click"):
+            chain = ast.get_source_segment(src, node.func.value) or ""
+            assert "publish_hint" not in chain, (
+                f"line {node.lineno} 点了发布按钮：{chain[:80]}")
+    # 而 draft 这条路必须真的存在，否则这条判据是恒真的绿灯。
+    assert "def _click_draft(" in src and "--draft" in src
+
+
+def test_网页草稿不同步手机App这件事要说出来():
+    """**网页草稿和手机 App 的草稿箱是两个存储。**
+
+    账号所有者要草稿箱正是为了「人在外面用手机发」，而手机 App 里根本看不到
+    网页存的草稿——不说清楚，他会在 App 里找一个不存在的东西，然后以为脚本
+    没存上。出路是手机浏览器开创作后台。
+
+    这条查的是**脚本自己会不会说**，不是文档里写没写——人跑脚本的时候不看文档。
+    """
+    src = TOOL.read_text(encoding="utf-8")
+    mod = _mod("publish_local")
+    assert "手机 App 里看不到" in src or "手机 App" in src, "没提手机 App 看不到这回事"
+    assert "手机浏览器" in src, "没给「人在外面怎么发」的出路"
+    # 三个平台里至少小红书和抖音要在 notes 里各自说一遍——收尾那段是统一说的，
+    # 但人可能只发一个平台，那时候只看得到这个平台的 notes。
+    said = [p.name for p in mod.PLATFORMS.values()
+            if any("App" in n or "手机浏览器" in n for n in p.notes)]
+    assert len(said) >= 2, f"只有 {said} 在自己的注记里提了这件事"

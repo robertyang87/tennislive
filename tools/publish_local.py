@@ -29,6 +29,15 @@
     # 不开浏览器，只看会填什么（改文案之后先跑这个）
     python tools/publish_local.py --slug zhang-putintseva --dry-run
 
+    # 人不在电脑旁：填完点「存草稿」，之后在外面用手机发
+    python tools/publish_local.py --slug zhang-putintseva --draft
+
+⚠️ **网页草稿和手机 App 的草稿箱是两个存储，不互通。** 网页上存的草稿，
+手机 App 的草稿箱里**看不到**——三个平台都这样。所以「在外面发」的路径是
+**用手机浏览器开创作后台**（`creator.xiaohongshu.com` /
+`creator.douyin.com` →「内容管理」→「草稿箱」/ `channels.weixin.qq.com`），
+在那儿点发布。不说清楚的话，人会在 App 里找一个不存在的东西。
+
 **不用克隆仓库也能跑。** `.git` 3.7 GB + `output/` 2.5 GB，为了发一条片子拉六个 G
 是荒唐的。`--remote` 直接从 GitHub 取清单、把成片下到本地缓存：
 
@@ -42,9 +51,15 @@
 三条硬规矩
 ----------
 
-- **绝不自己点发布。** 这个脚本填完就停，`_PUBLISH_HINT` 里那个选择器只用来
-  确认「走到了」，一次都不点。微信那条消息发出去收不回来，这三个平台同理，
-  而且发出去的是给陌生人看的。要改这一条得先改 `test_本地发布不许自己点发布`。
+- **绝不自己点发布。** `publish_hint` 那颗按钮只用来确认「走到了」，一次都不点。
+  微信那条消息发出去收不回来，这三个平台同理，而且发出去的是给陌生人看的。
+  要改这一条得先改 `test_本地发布不许自己点发布`。
+
+  ⚠️ **`--draft` 不是这条规矩的例外。** 存草稿点的是 `draft_hint`，而草稿留在
+  自己账号里、不对任何人可见——和「把一条没人看过的片子推给陌生人」是两回事。
+  两个选择器不许撞（`test_存草稿的按钮不许和发布按钮是同一个`），而且
+  **点之前还要读一遍按钮上的字**：那三个 `draft_hint` 我验不了，万一平台改版
+  之后它选中了发布按钮，静态判据看不出来，只有按钮自己的文字看得出来。
 - **每一步都出声，成功失败都出声。** CLAUDE.md 那条「只在成功时出声的检查，
   没法证明它真的看过」的镜像版同样成立——只在失败时出声的脚本，没法证明它
   成功过。所以每一格填完都打印一行。
@@ -112,6 +127,14 @@ class Platform:
     body_box: str
     # 发布按钮。**只用来确认走到了，一次都不点。**
     publish_hint: str
+    # 存草稿按钮。`--draft` 会**点**它——存草稿不是发布，内容留在自己账号里，
+    # 不对任何人可见，所以它和 `publish_hint` 的性质完全不同。
+    #
+    # ⚠️ **绝不能和 `publish_hint` 指到同一个按钮上。** 那样 `--draft` 就成了
+    # 「自动发布」，而发出去的东西收不回来。判据
+    # `test_存草稿的按钮不许和发布按钮是同一个` 钉住这一条，运行时
+    # `_click_draft` 还会再验一次按钮上的字。
+    draft_hint: str = ""
     # 这个平台标题的字数上限（小红书字位：全角 1、半角 0.5）。0 表示没量过。
     title_max: float = 0
     notes: list[str] = field(default_factory=list)
@@ -131,12 +154,15 @@ PLATFORMS: dict[str, Platform] = {
         title_box="input[placeholder*='标题']",
         body_box="div[contenteditable='true']",
         publish_hint="button:has-text('发布')",
+        draft_hint="button:has-text('存草稿')",
         # `push_reel._fits` 已经按这个数卡过整句了，所以这儿只是复核。
         title_max=20,
         notes=[
             "正文粘进去之后 `#话题` 不一定会自动变成话题——要变成蓝色的那种，"
             "得在编辑器里点一下候选。填完自己看一眼。",
-            "存草稿和定时发布都在发布按钮旁边，按需要自己点。",
+            "⚠️ 网页存的草稿**手机 App 里看不到**（两个存储互不相通）。"
+            "人在外面就用手机浏览器开 creator.xiaohongshu.com，"
+            "在草稿箱里发。",
         ],
     ),
     # 抖音：creator.douyin.com 可以传视频存草稿。它的前端类名是随机的，
@@ -151,10 +177,12 @@ PLATFORMS: dict[str, Platform] = {
         title_box="input[placeholder*='作品标题']",
         body_box="div[contenteditable='true']",
         publish_hint="button:has-text('发布')",
+        draft_hint="button:has-text('存草稿')",
         notes=[
             "抖音把标题和正文合成一格的时候有过好几版——真填进去看一眼是不是"
             "两格都吃到了字。",
-            "「存草稿」按钮在发布按钮左边。",
+            "⚠️ 网页草稿**不自动同步到手机 App**。人在外面用手机浏览器开 "
+            "creator.douyin.com →「内容管理」→「草稿箱」发。",
         ],
     ),
     # 视频号：登录态绑微信扫码，过期比另外两个勤。
@@ -168,6 +196,9 @@ PLATFORMS: dict[str, Platform] = {
         title_box="input[placeholder*='概括视频主要内容']",
         body_box="div[contenteditable='true']",
         publish_hint="button:has-text('发表')",
+        # 视频号这颗最没把握：可能是「保存草稿」也可能是「暂存」。
+        # 匹配不上只是存不成（会报出来），不会误点发表。
+        draft_hint="button:has-text('保存草稿'), button:has-text('暂存')",
         notes=[
             "视频号的「标题」其实是短标题（6~16 字），描述另有一格——"
             "这条线的标题是 20 字位，可能要手动收一下。",
@@ -404,7 +435,52 @@ def _fill(page, plat: Platform, selector: str, value: str, what: str) -> None:
         ) from exc
 
 
-def publish_one(ctx, plat: Platform, manifest: dict, video: Path) -> bool:
+# 按钮上出现这些字，就**不许点**——不管它是被哪个选择器选中的。
+# 这是给 `--draft` 的最后一道保险：那三个 `draft_hint` 我在沙箱里验不了，
+# 万一某个平台改版之后它匹配到了发布按钮，点下去的东西收不回来。
+_NEVER_CLICK = ("发布", "发表", "立即", "公开", "提交审核")
+
+
+def _click_draft(page, plat: Platform) -> bool:
+    """点「存草稿」。**点之前先读一遍按钮上的字。**
+
+    存草稿和发布是两回事：草稿留在自己账号里、不对任何人可见，所以点它不违反
+    「绝不自己点发布」。但这三个选择器我**验不了**（要有登录态的国内机器），
+    而「选择器选错了」和「选对了」在点下去之前长得一模一样——点错的代价是
+    把一条没人看过的片子发给陌生人。
+
+    所以除了 `test_存草稿的按钮不许和发布按钮是同一个` 那条静态判据，
+    运行时再验一次**按钮自己的文字**：出现「发布」「发表」这类字就不点，
+    改成停在那儿让人自己处理。**宁可存不上，不可发出去。**
+    """
+    if not plat.draft_hint:
+        print(f"  [草稿] {plat.name} 没配存草稿的选择器，停在页面上，你自己点")
+        return False
+    try:
+        btn = page.locator(plat.draft_hint).first
+        btn.wait_for(state="visible", timeout=FIELD_TIMEOUT_MS)
+    except Exception:  # noqa: BLE001
+        _shot(page, plat, "no-draft-button")
+        print(f"  [草稿] 没找到存草稿按钮（{plat.draft_hint}）。"
+              "页面开着，你自己点一下；顺便把截图发我改选择器。")
+        return False
+
+    label = (btn.inner_text() or "").strip()
+    bad = [w for w in _NEVER_CLICK if w in label]
+    if bad:
+        _shot(page, plat, "draft-looks-like-publish")
+        print(f"  [草稿] ⚠️ 选中的按钮写着「{label}」，含 {bad}——**不点**。\n"
+              f"         这多半是 {plat.name} 改版了，draft_hint 选到了发布按钮。\n"
+              "         页面开着，你自己看着办；把截图发我改选择器。")
+        return False
+
+    btn.click()
+    print(f"  [草稿] 点了「{label}」")
+    return True
+
+
+def publish_one(ctx, plat: Platform, manifest: dict, video: Path,
+                draft: bool = False) -> bool:
     """填一个平台，**停在发布按钮前**。返回是不是走到了那一步。"""
     print(f"\n▶ {plat.name}")
     page = ctx.new_page()
@@ -434,15 +510,26 @@ def publish_one(ctx, plat: Platform, manifest: dict, video: Path) -> bool:
     _fill(page, plat, plat.title_box, manifest["title"], "标题")
     _fill(page, plat, plat.body_box, manifest["body"], "正文")
 
-    # 走到发布按钮就停。**只确认它在，不点。**
+    # 等发布按钮出现——它是「视频转码完了、这一页可以收尾了」的信号。
+    # **只等，不点。**
     try:
         page.locator(plat.publish_hint).first.wait_for(
             state="visible", timeout=UPLOAD_TIMEOUT_MS)
-        print(f"  [就绪] 已停在「{plat.name}」的发布按钮前——你自己看一眼再点。")
+        ready = True
     except Exception:  # noqa: BLE001
+        ready = False
         _shot(page, plat, "no-publish-button")
-        print(f"  [就绪] 没等到发布按钮。多半是视频还在转码（大片子要几分钟），"
-              f"页面开着，转完自己就出来了。")
+        print("  [就绪] 没等到发布按钮。多半是视频还在转码（大片子要几分钟），"
+              "页面开着，转完自己就出来了。")
+
+    if draft:
+        # 存草稿这一步**要出声说存没存上**：存上了人在外面才找得到，
+        # 没存上而以为存上了，是这条路唯一会让人白跑一趟的失败方式。
+        if _click_draft(page, plat):
+            print(f"  [草稿] 已存进「{plat.name}」的网页草稿箱。"
+                  "⚠️ 手机 App 里看不到，要用手机浏览器开创作后台发。")
+    elif ready:
+        print(f"  [就绪] 已停在「{plat.name}」的发布按钮前——你自己看一眼再点。")
     for note in plat.notes:
         print(f"  · {note}")
     return True
@@ -545,6 +632,9 @@ def main() -> int:
                     help="只发这个平台，可重复。默认三个都发")
     ap.add_argument("--login", choices=sorted(PLATFORMS),
                     help="扫码登录这个平台并把登录态存下来")
+    ap.add_argument("--draft", action="store_true",
+                    help="填完点「存草稿」（人不在电脑旁时用），"
+                         "之后用手机浏览器开创作后台发。默认停在发布按钮前")
     ap.add_argument("--doctor", action="store_true",
                     help="先验这台机器齐不齐：playwright / Chromium / 登录态")
     ap.add_argument("--dry-run", action="store_true",
@@ -616,14 +706,20 @@ def main() -> int:
             ctx = browser.new_context(
                 storage_state=str(STATE_DIR / f"{plat.key}.json"))
             try:
-                if publish_one(ctx, plat, manifest, video):
+                if publish_one(ctx, plat, manifest, video, args.draft):
                     ready.append(plat.name)
             except SystemExit as exc:
                 # 一个平台坏了不该把另外两个也停掉——填好的那些还等着人点。
                 print(f"  ❌ {exc}")
         print(f"\n{'=' * 60}")
         print(f"填好了：{'、'.join(ready) or '一个都没有'}")
-        print("三个页面都开着，**一个都没点发布**。你自己扫一眼再点。")
+        if args.draft:
+            print("已尽量存进各平台的**网页**草稿箱，一个都没点发布。\n"
+                  "⚠️ 网页草稿和手机 App 的草稿箱是两个存储——人在外面要用\n"
+                  "   手机浏览器开创作后台（creator.xiaohongshu.com / \n"
+                  "   creator.douyin.com / channels.weixin.qq.com）在那儿发。")
+        else:
+            print("三个页面都开着，**一个都没点发布**。你自己扫一眼再点。")
         input("全都发完了就按回车关掉浏览器 > ")
         browser.close()
     return 0 if ready else 1
