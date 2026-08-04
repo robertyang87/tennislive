@@ -153,28 +153,14 @@ def _title_and_body(push, outdir: Path, copy_path: Path):
     return column, f"{title}\n\n{text}"
 
 
-# 发在「正文闸量对了」之前、正文超过 1000 字的那几条。**只许减不许加。**
-#
-# ⚠️ 它们不是「写长了没人管」，是**闸量错了段落**：`test_小红书正文不许超一千字`
-# 量的是原始文件（第一行钩子当标题、其余当正文），而真发出去时 `headline` 拼在
-# 最前面，**钩子退成正文第一行**——少算的正是那一行。wong-gea 因此在 2026-08-01
-# 带着 1021 字发了出去，那个复制按钮点了粘不进小红书。
-#
-# 已发的片子不为措辞重发（同 CLAUDE.md 对 `eala-osaka` 的处置：补上等于让今天
-# 算出来的和当时发出去的那条对不上）。要清掉这一条，就去把那份文案提炼到
-# 1000 字以内——**不是放宽 BODY_MAX**，那是平台定的。
-_OVERLONG_LEGACY = {"wong-gea"}
-
-
-def _legacy_is_still_overlong(push, copy_path: Path) -> bool:
-    """豁免表自检：表里每个 slug 必须**真的还超标**。
-
-    写错一个名字，豁免就成了一盏恒真的绿灯——CLAUDE.md 里两张豁免表
-    （`_LEGACY_VS_COVERS` / `_LEGACY_SOLO_NO_SCORE`）都钉了这一条。
-    """
-    text = push.cut_at_tags(copy_path.read_text(encoding="utf-8"))
-    body = "\n".join(f"T\n\n{text}".splitlines()[2:]).strip()
-    return len(body) > push.BODY_MAX
+# 豁免表和「真发出去的是哪一段」都收在 `conftest.py`——`test_小红书正文不许
+# 超一千字` 和这个文件共用同一份。**两处各写一份必分叉**，而分叉的后果是
+# 一边豁免了一边没豁免，然后有人去改文案迁就那条红的。
+from conftest import (  # noqa: E402
+    OVERLONG_LEGACY as _OVERLONG_LEGACY,
+    assert_legacy_still_overlong as _assert_legacy_overlong,
+    shipped_body as _shipped_body,
+)
 
 
 def _specs_with_push_block():
@@ -213,9 +199,8 @@ def test_发布包清单和复制页是同一段字(tmp_path):
     for copy_path in _specs_with_push_block():
         slug = copy_path.name.split(".")[0]
         if slug in _OVERLONG_LEGACY:
-            assert _legacy_is_still_overlong(push, copy_path), (
-                f"{slug} 已经不超标了——把它从 _OVERLONG_LEGACY 里删掉。"
-                "留着就是一盏恒真的绿灯")
+            raw = push.cut_at_tags(copy_path.read_text(encoding="utf-8"))
+            _assert_legacy_overlong(slug, _shipped_body(raw), push.BODY_MAX)
             continue
         outdir = _fake_outdir(tmp_path / slug, slug)
         column, copy_text = _title_and_body(push, outdir, copy_path)
@@ -248,9 +233,8 @@ def test_清单里的话题就是正文里的那几个(tmp_path):
     for copy_path in _specs_with_push_block():
         slug = copy_path.name.split(".")[0]
         if slug in _OVERLONG_LEGACY:
-            assert _legacy_is_still_overlong(push, copy_path), (
-                f"{slug} 已经不超标了——把它从 _OVERLONG_LEGACY 里删掉。"
-                "留着就是一盏恒真的绿灯")
+            raw = push.cut_at_tags(copy_path.read_text(encoding="utf-8"))
+            _assert_legacy_overlong(slug, _shipped_body(raw), push.BODY_MAX)
             continue
         outdir = _fake_outdir(tmp_path / slug, slug)
         column, copy_text = _title_and_body(push, outdir, copy_path)
@@ -360,3 +344,35 @@ def test_清单那条路不许碰Pages():
     # 判据自己的判据：这几个名字得真的还在 push_reel 里，否则这条是恒真的绿灯。
     for probe in ("wait_for_copy_page", "wait_for_video", "trigger_pages_build"):
         assert probe in src, f"{probe} 没了——这条判据的主语变了，得重写"
+
+
+def test_清单里的链接一律钉main不跟着分支走(tmp_path, monkeypatch):
+    """`--stage manifest` 跑在渲染那一步，**那时候还在特性分支上**。
+
+    `video_url` / `poster_url` 默认跟 `GITHUB_REF_NAME` 走——对推送那条路是对的
+    （它必须在 main 上跑），但清单跟着走就会 baked in 一个
+    `.../claude-xxx/output/...`：合并之后分支一删，链接全 404。
+
+    **这个错几天后才发作，而且发作时看起来像「GitHub 挂了」。** 清单本来就是给
+    「合并之后」用的（本地脚本默认从 main 取），所以 main 是唯一说得通的值。
+
+    反向验证：把那两处的 `"main"` 拿掉，这条当场红。
+    """
+    push = _mod("push_reel")
+    monkeypatch.setattr(push, "BRANCH", "claude/some-feature-branch")
+
+    outdir = _fake_outdir(tmp_path, "demo")
+    manifest = push.build_manifest(outdir, "标题", "正文", "赛场之上", "demo.mp4")
+
+    for what, url in (("成片", manifest["video"]["url"]),
+                      ("封面", manifest["poster"]["url"])):
+        assert "some-feature-branch" not in url, (
+            f"{what}链接跟着分支走了：{url}\n"
+            "合并之后分支一删就是 404，而那要过几天才发作")
+        assert "/main/" in url or "@main/" in url, f"{what}链接没钉在 main 上：{url}"
+
+    # 判据自己的判据：`BRANCH` 得真的还在被 `video_url` 用着，否则这条测的是
+    # 一个已经不存在的行为——那时候它是绿的，而清单可能正跟着别的东西跑。
+    monkeypatch.setattr(push, "BRANCH", "another-branch")
+    assert "another-branch" in push.video_url(outdir, "demo.mp4"), (
+        "video_url 已经不看 BRANCH 了——这条判据的前提没了，得重写")

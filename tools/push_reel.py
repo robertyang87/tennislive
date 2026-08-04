@@ -102,17 +102,21 @@ def released_video_url(outdir: Path) -> str:
     return url
 
 
-def video_url(outdir: Path, name: str) -> str:
-    """成片链接：够小走 jsDelivr（国内快），超 20 MB 回 raw，超 95 MiB 走 Release。"""
+def video_url(outdir: Path, name: str, branch: str = "") -> str:
+    """成片链接：够小走 jsDelivr（国内快），超 20 MB 回 raw，超 95 MiB 走 Release。
+
+    `branch` 默认跟当前 ref 走（推送那条路必须在 main 上跑，所以那儿就是 main）。
+    **发布包清单要显式传 `main`**——见 `build_manifest` 里那段。
+    """
     released = released_video_url(outdir)
     if released:
         return released
     size = (outdir / name).stat().st_size
     path = f"{outdir.as_posix()}/{name}"
     if size <= JSDELIVR_MAX_BYTES:
-        return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{path}"
+        return f"https://cdn.jsdelivr.net/gh/{REPO}@{branch or BRANCH}/{path}"
     print(f"[链接] 成片 {size / 1e6:.1f} MB 超过 jsDelivr 的 20 MB 上限，改用 raw")
-    return f"https://raw.githubusercontent.com/{REPO}/{BRANCH}/{path}"
+    return f"https://raw.githubusercontent.com/{REPO}/{branch or BRANCH}/{path}"
 
 
 def copy_page_url(outdir: Path) -> str:
@@ -544,9 +548,10 @@ def split_copy(copy_text: str) -> tuple[str, str]:
     return title, body
 
 
-def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
+def poster_url(outdir: Path, name: str = POSTER_NAME, branch: str = "") -> str:
     """封面海报的图片链接。海报只有几百 KB，稳走 jsDelivr。"""
-    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
+    return (f"https://cdn.jsdelivr.net/gh/{REPO}@{branch or BRANCH}"
+            f"/{outdir.as_posix()}/{name}")
 
 
 def build_manifest(outdir: Path, title: str, body: str, column: str,
@@ -568,6 +573,15 @@ def build_manifest(outdir: Path, title: str, body: str, column: str,
     ⚠️ **`hashtags` 是从正文里摘出来的，不是另写一份。** 有的平台话题要单独填一格，
     但正文里那几个 `#` 必须和它是同一批——两处写迟早对不上，而读者看到的是
     正文那份。
+
+    ⚠️ **链接一律钉 `main`，不跟当前 ref 走。** `video_url` / `poster_url`
+    默认用 `BRANCH`（＝`GITHUB_REF_NAME`），对推送那条路是对的——它必须在 main
+    上跑。**但清单是在渲染那一步写的，那时候还在特性分支上**，跟着 ref 走就会
+    baked in 一个 `.../claude-xxx/output/...`：合并之后分支一删，链接全 404。
+
+    这个错**几天后才发作**，而且发作时看起来像「GitHub 挂了」——正是这个仓库
+    反复记的那一类。清单本来就是给「合并之后」用的（本地脚本默认从 main 取），
+    所以 main 是唯一说得通的值。
     """
     poster = outdir / POSTER_NAME
     released = released_video_url(outdir)
@@ -585,13 +599,13 @@ def build_manifest(outdir: Path, title: str, body: str, column: str,
             # 仓库相对路径。走了 Release 的片子这儿是空的——**不是漏了**，
             # 是那份本地文件按设计已经删掉了。
             "path": local.as_posix() if local.is_file() else "",
-            "url": released or video_url(outdir, video_name),
+            "url": released or video_url(outdir, video_name, "main"),
             "released": bool(released),
         },
         "poster": {
             "name": POSTER_NAME,
             "path": poster.as_posix() if poster.is_file() else "",
-            "url": poster_url(outdir) if poster.is_file() else "",
+            "url": poster_url(outdir, branch="main") if poster.is_file() else "",
         },
         "copy_page": copy_page_url(outdir),
     }

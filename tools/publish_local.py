@@ -29,6 +29,16 @@
     # 不开浏览器，只看会填什么（改文案之后先跑这个）
     python tools/publish_local.py --slug zhang-putintseva --dry-run
 
+**不用克隆仓库也能跑。** `.git` 3.7 GB + `output/` 2.5 GB，为了发一条片子拉六个 G
+是荒唐的。`--remote` 直接从 GitHub 取清单、把成片下到本地缓存：
+
+    # 只要这一个文件 + pip install requests playwright
+    python publish_local.py --slug zhang-putintseva --remote
+
+这个脚本**模块级只 import 标准库**，就是为了这条路：`requests` 和
+`tennislive.render.xiaohongshu` 都在用到的那一刻才 import，缺了也只是少一项
+字数提示，不影响填表。
+
 三条硬规矩
 ----------
 
@@ -187,8 +197,16 @@ def load_manifest(slug: str, root: Path) -> dict:
                 "补一次：PYTHONPATH=src python3 tools/push_reel.py --stage manifest \\\n"
                 f"          --outdir {dirs[-1]} --copy specs/reels/{slug}.xhs.txt")
         known = sorted(p.parent.name for p in root.glob("output/*/reel/*/publish.json"))
+        if not known:
+            # 一条都没有，多半根本不在仓库里跑——**别只说「找不到」**，
+            # 那会让人以为片子不存在，而实际上只是走错了路。
+            raise SystemExit(
+                f"{root} 底下一个发布包都没有——这儿看着不是仓库根目录。\n"
+                "  不想克隆整个仓库（.git 3.7 GB + output 2.5 GB）就走远端那条：\n"
+                f"    python {Path(__file__).name} --slug {slug} --remote\n"
+                f"  在仓库里跑就用 --root 指对地方。")
         raise SystemExit(
-            f"找不到 {slug} 的发布包。现有的：{'、'.join(known) or '一个都没有'}")
+            f"找不到 {slug} 的发布包。现有的：{'、'.join(known)}")
     if len(hits) > 1:
         print(f"[清单] {slug} 有 {len(hits)} 份，取最新的 {hits[-1].parent.parent.parent.name}")
     doc = json.loads(hits[-1].read_text(encoding="utf-8"))
@@ -236,18 +254,121 @@ def describe(manifest: dict, video: Path | None) -> None:
     print(f"{'-' * 60}")
     print(manifest["body"])
     print(f"{'=' * 60}\n")
+    width = _xhs_width(manifest["title"])
     for plat in PLATFORMS.values():
-        if plat.title_max:
-            width = _xhs_width(manifest["title"])
-            flag = "" if width <= plat.title_max else f"  ⚠️ 超 {plat.title_max} 字位"
-            print(f"  {plat.name}：标题 {width:g} 字位{flag}")
+        if not plat.title_max:
+            continue
+        if width is None:
+            # 量不了要**说**，别装作量过了。
+            print(f"  {plat.name}：标题字数没量（这台机器上没有 tennislive 包，"
+                  f"上限 {plat.title_max} 字位，自己看一眼）")
+            continue
+        flag = "" if width <= plat.title_max else f"  ⚠️ 超 {plat.title_max} 字位"
+        print(f"  {plat.name}：标题 {width:g} 字位{flag}")
 
 
-def _xhs_width(text: str) -> float:
-    """小红书字位：全角 1、半角 0.5。和 `push_reel._fits` 是同一把尺。"""
-    from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+def _xhs_width(text: str) -> float | None:
+    """小红书字位：全角 1、半角 0.5。和 `push_reel._fits` 是同一把尺。
 
+    ⚠️ **拿不到就返回 None，别自己估一个。** `--remote` 那条路上只有这一个
+    脚本文件，`tennislive` 根本不在 sys.path 上。这时候随手写个「非 ASCII 算 1、
+    其余算 0.5」看着差不多，可它和真尺子的差别不会有人发现——而这一格的
+    全部作用就是提前告诉你「标题超了」。**一把不准的尺子比没有尺子糟**：
+    没有尺子你会去看一眼，不准的尺子会让你以为量过了。
+    """
+    try:
+        from tennislive.render.xiaohongshu import xhs_title_len  # noqa: PLC0415
+    except ImportError:
+        return None
     return xhs_title_len(text)
+
+
+# 清单和成片在 GitHub 上的位置。公开仓库，raw 不用鉴权。
+_RAW = "https://raw.githubusercontent.com/{repo}/{ref}/{path}"
+_DEFAULT_REPO = "robertyang87/tennislive"
+
+# `--remote` 下下来的成片存这儿。按 slug 存，重跑不重下——几十 MB 的东西
+# 没必要下第二次（同 `build_match_reel` 那条源片缓存的道理）。
+CACHE_DIR = Path("~/.tennislive-publish/videos").expanduser()
+
+
+# 倒着探多少天。片子基本是当天或隔天发，探到就停，所以典型代价是一两次
+# HEAD；这个数只决定「找不到」时放弃得多快。
+_LOOKBACK_DAYS = 60
+
+
+def _find_date(repo: str, slug: str, ref: str) -> str:
+    """这条片子在哪个日期目录下——**只探 raw，不碰 `api.github.com`**。
+
+    第一版是问 API 要 `output/` 的目录列表。那条路更"正规"，但它多了两个
+    脆弱点，而**收益只是省几次 HEAD**：API 有未鉴权限流（每小时 60 次），
+    而且不是所有环境都够得着（这个仓库的沙箱对 `api.github.com` 恒 403，
+    对 `raw.githubusercontent.com` 是 200）。
+
+    **不猜今天就完事**：片子常常隔天才发，猜一次错的结果是 404，而 404
+    报出来像「这条片子不存在」。所以从今天倒着探，探到为止。
+    """
+    import datetime as _dt  # noqa: PLC0415
+
+    import requests  # noqa: PLC0415
+
+    today = _dt.date.today()
+    for back in range(_LOOKBACK_DAYS):
+        date = (today - _dt.timedelta(days=back)).isoformat()
+        url = _RAW.format(
+            repo=repo, ref=ref, path=f"output/{date}/reel/{slug}/publish.json")
+        probe = requests.head(url, timeout=30, allow_redirects=True)
+        if probe.status_code == 200:
+            print(f"[远端] {slug} 在 {date}（倒着探了 {back + 1} 次）")
+            return date
+    raise SystemExit(
+        f"往回 {_LOOKBACK_DAYS} 天都没找到 {slug} 的 publish.json。\n"
+        "  三种可能，处置不同：\n"
+        "    1. 这一版还没合进 main——清单是随产物提交的，合并前只在 PR 分支上\n"
+        f"    2. 比 {_LOOKBACK_DAYS} 天还早——直接给日期：--date YYYY-MM-DD\n"
+        "    3. slug 拼错了——对一下 specs/reels/ 底下的文件名")
+
+
+def fetch_remote(slug: str, date: str, repo: str, ref: str) -> tuple[dict, Path]:
+    """从 GitHub 取清单，把成片下到本地缓存。返回 (清单, 成片路径)。"""
+    import requests  # noqa: PLC0415
+
+    date = date or _find_date(repo, slug, ref)
+    url = _RAW.format(
+        repo=repo, ref=ref, path=f"output/{date}/reel/{slug}/publish.json")
+    resp = requests.get(url, timeout=30)
+    if resp.status_code != 200:
+        raise SystemExit(f"取不到清单（HTTP {resp.status_code}）：{url}")
+    manifest = resp.json()
+    manifest["_manifest_path"] = url
+
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    dest = CACHE_DIR / f"{slug}-{date}-{manifest['video']['name']}"
+    if dest.is_file():
+        print(f"[成片] 缓存里已经有了：{dest}（{dest.stat().st_size / 1e6:.1f} MB）")
+        return manifest, dest
+
+    # **边下边写，别整个读进内存**：成片能到一百多 MB。
+    # 而且**先下到 .part 再改名**——下一半断了留下的半个文件，和下完的
+    # 那个长得一模一样，下次直接拿去发就是发了半条片子。
+    src = manifest["video"]["url"]
+    print(f"[成片] 下载 {src}")
+    part = dest.with_suffix(dest.suffix + ".part")
+    with requests.get(src, stream=True, timeout=300) as r:
+        if r.status_code != 200:
+            raise SystemExit(f"下不动成片（HTTP {r.status_code}）：{src}")
+        total = int(r.headers.get("content-length") or 0)
+        done = 0
+        with part.open("wb") as fh:
+            for chunk in r.iter_content(1 << 20):
+                fh.write(chunk)
+                done += len(chunk)
+                if total:
+                    print(f"\r  {done / 1e6:.1f} / {total / 1e6:.1f} MB", end="")
+        print()
+    part.rename(dest)
+    print(f"[成片] 存到 {dest}")
+    return manifest, dest
 
 
 def _shot(page, plat: Platform, tag: str) -> Path:
@@ -359,21 +480,45 @@ def main() -> int:
                     help="不开浏览器，只打印会填什么")
     ap.add_argument("--video", help="成片路径。默认按清单找；走了 Release 的要自己下")
     ap.add_argument("--root", default=".", help="仓库根目录")
+    ap.add_argument("--remote", action="store_true",
+                    help="不用克隆仓库：从 GitHub 取清单、把成片下到本地缓存")
+    ap.add_argument("--date", default="",
+                    help="配 --remote 用，YYYY-MM-DD。不给就问 GitHub 自己找")
+    ap.add_argument("--repo", default=_DEFAULT_REPO, help="owner/repo")
+    # 默认 main：清单是随产物提交的，合并之后才在 main 上。想从还没合并的
+    # 分支上发就显式给 --ref。
+    ap.add_argument("--ref", default="main", help="从哪个分支/标签取，默认 main")
     args = ap.parse_args()
 
     if args.login:
         return do_login(PLATFORMS[args.login])
     if not args.slug:
         ap.error("要么 --login <平台>，要么 --slug <片子>")
-
-    root = Path(args.root).resolve()
-    manifest = load_manifest(args.slug, root)
+    if args.date and not args.remote:
+        ap.error("--date 只配 --remote 用；本地那条路按清单自己找")
 
     video: Path | None = None
-    if not args.dry_run:
-        video = Path(args.video).expanduser() if args.video else resolve_video(manifest, root)
-        if not video.is_file():
-            raise SystemExit(f"成片不在：{video}")
+    if args.remote:
+        # 远端那条路把清单和成片一次取齐，`--dry-run` 也只取清单不下片子。
+        if args.dry_run:
+            import requests  # noqa: PLC0415
+
+            date = args.date or _find_date(args.repo, args.slug, args.ref)
+            url = _RAW.format(repo=args.repo, ref=args.ref,
+                              path=f"output/{date}/reel/{args.slug}/publish.json")
+            manifest = requests.get(url, timeout=30).json()
+        else:
+            manifest, video = fetch_remote(args.slug, args.date, args.repo,
+                                           args.ref)
+    else:
+        root = Path(args.root).resolve()
+        manifest = load_manifest(args.slug, root)
+        if not args.dry_run:
+            video = (Path(args.video).expanduser() if args.video
+                     else resolve_video(manifest, root))
+
+    if video is not None and not video.is_file():
+        raise SystemExit(f"成片不在：{video}")
 
     describe(manifest, video)
     if args.dry_run:
