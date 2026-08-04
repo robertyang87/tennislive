@@ -94,6 +94,37 @@ PUSH_ATTEMPTS = 4
 PUSH_RETRY_SECONDS = 5.0
 
 
+# PushPlus 官方返回码表（`/doc/guide/code.html`）里跟开放接口有关的那几个。
+#
+# **只打印 msg 是不够的：这几个码是几件完全不同的事，出路也完全不同**，
+# 而它们的中文写得非常像——「请求未授权」和「请求IP未授权」并排放着，
+# 读起来都像「你的凭据不对」，实际一个是后台开关没开、一个是白名单。
+#
+# 2026-08-04 纳达尔学院那趟拿到的是 **401**，而我当时在日志里写的是
+# 「通常是 PUSHPLUS_SECRET_KEY 失效或会员到期」——**两头都错**：令牌无效是
+# 903，付费问题是 888。我从「/send 用同一个 token 成功了，所以不是 token 错」
+# 推到了「那就是会员到期」，中间那一步是凭空多出来的（CLAUDE.md：
+# 「排除了 A 和 B」不等于「就是 C」）。码表就在官网上，查一次的事。
+_ACCESS_KEY_HINTS = {
+    401: (
+        "开放接口功能没启用。它**默认就是禁用的**，要在 PushPlus 后台"
+        "「开发设置」里手动打开（官方原话：默认是禁用状态，需要用户手动的"
+        "在开发设置中开启）"
+    ),
+    403: (
+        "请求 IP 不在安全 IP 白名单里。⚠️ GitHub Actions runner 的出口 IP "
+        "每趟都不一样，白名单这条路对 CI 基本无解"
+    ),
+    903: (
+        "PUSHPLUS_TOKEN 不对，或者给的是「消息token」——getAccessKey 只认"
+        "用户token（官方参数说明写着「不支持消息token」）"
+    ),
+    888: "积分不足，需要充值",
+    905: "账户未进行实名认证",
+    900: "请求次数过多，账号被限流",
+}
+
+
 def _access_key(token: str, secret_key: str, timeout: int) -> str:
     """取图床的 AccessKey。**网络抖动要重试**——它排在发消息之前，
     一次失败就把整条推送带走，而这一步跟内容对不对没有任何关系。"""
@@ -118,7 +149,12 @@ def _access_key(token: str, secret_key: str, timeout: int) -> str:
     if payload.get("code") != 200 or not (payload.get("data") or {}).get(
         "accessKey"
     ):
-        raise PushPlusError(f"获取 PushPlus AccessKey 失败: {payload.get('msg')}")
+        code = payload.get("code")
+        hint = _ACCESS_KEY_HINTS.get(code, "")
+        raise PushPlusError(
+            f"获取 PushPlus AccessKey 失败: code={code} {payload.get('msg')}"
+            + (f"——{hint}" if hint else "")
+        )
     return str(payload["data"]["accessKey"])
 
 
@@ -322,11 +358,14 @@ def prepare_image_delivery(
             # 「图床把我拒了所以走这条」在旧口径下都打印 `jsdelivr`，于是一个
             # 坏掉的付费订阅和一个从没开过的功能长得一模一样——正是「兜底出事
             # 的时候不吭声」。
+            # ⚠️ **这里不许再自己猜原因。** 上一版在这句里写死了「通常是
+            # PUSHPLUS_SECRET_KEY 失效或会员到期」——而真实的码是 401
+            # （开放接口没启用），令牌无效是 903、付费问题是 888，两头都猜错了。
+            # 原因由 `_ACCESS_KEY_HINTS` 按码给出，这里只负责把它原样带出来。
             logger.error(
                 "PushPlus 图床用不了（%s），本次退回 jsDelivr：图片改为钉在 "
                 "commit 上的永久链接，代价是发送前要等回源。"
-                "图床是收费/会员服务，「请求未授权」通常是 "
-                "PUSHPLUS_SECRET_KEY 失效或会员到期。",
+                "返回码含义见 pushplus.plus/doc/guide/code.html。",
                 exc,
             )
             provider = "jsdelivr-fallback"
