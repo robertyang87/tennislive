@@ -1625,6 +1625,31 @@ def _crop_expr(ratio: float, keep: float = 1.0) -> str:
     return f"crop={w}:{h}:(iw-{w})/2:0"
 
 
+def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
+    """从源片抽一帧渲成 `poster.jpg`。**`render` 和 `--stage cover` 共用这一份。**
+
+    抽出来是**独立的一个函数**，不是复制一份进快速预览——这个仓库为
+    「同一件事写两处」栽过两次（`_still_to_clip` 那对函数，一次是加参数没跟着
+    委托链改到底、一次是一个函数两个 return 只改了一个）。两处必分叉，
+    而分叉的表现是「预览看着对、成片里不对」，最难查。
+
+    ⚠️ **封面这一帧不走正片那条滤镜链**，`mirrored` 得在这儿再翻一次——
+    漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
+    """
+    frame = outdir / "_cover_frame.jpg"
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
+                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
+                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
+                                         float(spec.get("crop_keep_top", 1.0)))),
+                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
+    # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
+    # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
+    poster = build_cover(spec, frame, outdir / "poster.jpg")
+    frame.unlink(missing_ok=True)
+    return poster
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=720]+ba/b[height<=720]", spec)
@@ -1673,18 +1698,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
         body.replace(out)
         return out
 
-    frame = outdir / "_cover_frame.jpg"
-    # ⚠️ **封面这一帧不走上面那条滤镜链**，`mirrored` 得在这儿再翻一次——
-    # 漏了就是「片子是正的、封面是反的」，而它**不报错**：两张图分开看都正常。
-    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                    "-ss", str(spec["cover"]["frame_at"]), "-i", str(src),
-                    "-vf", (("hflip," if spec.get("mirrored") else "") + logo
-                            + _crop_expr(spec.get("crop_ratio", CROP_RATIO),
-                                         float(spec.get("crop_keep_top", 1.0)))),
-                    "-frames:v", "1", "-q:v", "2", str(frame)], check=True, timeout=300)
-    # **叫 `poster.jpg`，不叫 `cover.jpg`**：`push_reel.py` 只认这个名字，
-    # 改名等于推送里少一整屏海报，而它**只会打印一行提示，不报错**。
-    cover_png = build_cover(spec, frame, outdir / "poster.jpg")
+    cover_png = cover_poster(spec, src, outdir, logo)
     cover_mp4 = outdir / "_cover.mp4"
     # **封面这一路也要有音轨**，而且参数要和正片一致——否则 concat 会丢掉
     # 其中一条流，而它**不报错**，只是成片从某一秒起没声音了。
@@ -1701,7 +1715,7 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
                     "-c", "copy", str(out)], check=True, timeout=600)
-    for tmp in (body, cover_mp4, lst, frame):
+    for tmp in (body, cover_mp4, lst):
         tmp.unlink(missing_ok=True)
     return out
 
@@ -1710,7 +1724,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--spec", required=True)
-    ap.add_argument("--stage", choices=["subs", "sheet", "verify", "render"],
+    ap.add_argument("--stage",
+                    choices=["subs", "sheet", "verify", "cover", "render"],
                     default="subs")
     args = ap.parse_args()
 
@@ -1757,6 +1772,33 @@ def main() -> int:
 
     if args.stage == "verify":
         verify_transcript(spec, lines, outdir)
+        return 0
+
+    if args.stage == "cover":
+        # **只出海报，不出片。** 2026-08-04 一晚上渲了五趟，**四趟是为了换封面**——
+        # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有
+        # 第一帧。量过：`.git` 6.4 GB 里 **2.9 GiB 是同一路径的旧版本**，
+        # 也就是这类返工的废料（`wong-gea.mp4` 存了 7 版、`official-highlight.mp4` 18 版）。
+        #
+        # **不设 `transcript_verified` 那几道闸**：它们防的是「发出一条错的片子」，
+        # 而这一步什么都不发——挑封面本来就该排在转写核对**之前**，
+        # 挡在这儿只会逼人为了看一眼封面先把校验走完。
+        if not spec.get("cover"):
+            raise SystemExit(f"{args.spec} 没有 `cover` 块，没什么可预览的。")
+        src = yt_download(spec["url"], outdir / "source.mp4",
+                          "bv*[height<=720]+ba/b[height<=720]", spec)
+        logo = ""
+        if box := spec.get("logo_box"):
+            logo = ("removelogo=filename="
+                    + str(logo_mask(src, box, outdir / "_logo_mask.png",
+                                    bool(spec.get("mirrored")))) + ",")
+        poster = cover_poster(spec, src, outdir, logo)
+        # 源片不进仓库，也没必要留着——它是这一步唯一的大文件。
+        src.unlink(missing_ok=True)
+        (outdir / "_logo_mask.png").unlink(missing_ok=True)
+        print(f"封面 {poster}（{spec['cover']['frame_at']} 秒那一帧）"
+              f"\n**没有出片**：确认好看再跑 `--stage render`，"
+              f"这样一条片子只往仓库里塞一个 mp4。")
         return 0
 
     if args.stage == "render":
