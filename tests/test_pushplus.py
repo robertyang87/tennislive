@@ -16,6 +16,18 @@ from tennislive.publish.pushplus import (
 )
 
 
+class _FakeResponse:
+    """PushPlus 的接口一律 HTTP 200，真正的结果在 body 的 `code` 里。"""
+
+    def __init__(self, payload: dict, status: int = 200) -> None:
+        self._payload = payload
+        self.status_code = status
+        self.ok = 200 <= status < 400
+
+    def json(self) -> dict:
+        return self._payload
+
+
 def test_image_sources_keeps_unique_remote_images_in_order():
     html = (
         '<img src="https://cdn.example/a.png">'
@@ -286,9 +298,12 @@ def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, ca
     monkeypatch.setenv("PUSHPLUS_SECRET_KEY", "secret")
     monkeypatch.setenv("GITHUB_REPOSITORY", "robertyang87/tennislive")
     monkeypatch.setenv("TENNISLIVE_ASSET_REV", "abc1234")
+    # ⚠️ **不手搓那个异常。** 手搓只能证明「接住异常之后会退回」，证明不了
+    #    真实失败长什么样、码和出路有没有真的走到日志里。这里让真的
+    #    `_access_key` 跑一遍，喂它线上那趟收到的那个响应（code 401）。
     monkeypatch.setattr(
-        "tennislive.publish.pushplus._access_key",
-        Mock(side_effect=PushPlusError("获取 PushPlus AccessKey 失败: 请求未授权")),
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": 401, "msg": "请求未授权"})),
     )
     html = ('<img src="https://cdn.jsdelivr.net/gh/robertyang87/'
             'tennislive@abc123/output/2026-07-23/cards/cover.jpg">')
@@ -306,11 +321,14 @@ def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, ca
     assert provider == "jsdelivr-fallback", (
         f"退回之后通道名仍是 {provider!r}，看不出图床出过事")
 
-    # ③ 出声，而且要说得出原因和出路
+    # ③ 出声，而且要说得出**是哪个码**和**该去干什么**
     said = "\n".join(r.getMessage() for r in caplog.records)
     assert "退回 jsDelivr" in said, f"悄悄退回了：{said!r}"
-    assert "请求未授权" in said, f"没把图床报的原因带出来：{said!r}"
-    assert "PUSHPLUS_SECRET_KEY" in said, "没说该去查什么——留了个没出路的告警"
+    assert "code=401" in said, f"没把返回码带出来，只有一句中文谁也查不了：{said!r}"
+    assert "开发设置" in said, f"没说该去干什么——留了个没出路的告警：{said!r}"
+    # ⚠️ 反面锚点：**不许再自己猜原因**。上一版这句写死了「PUSHPLUS_SECRET_KEY
+    #    失效或会员到期」，而 401 两样都不是（令牌无效是 903、付费是 888）。
+    assert "会员到期" not in said, f"又在按猜的原因写诊断：{said!r}"
 
     # ④ 退回**不等于放行**：映射不上的图片仍然整条不发。
     #    少了这一条，上面那个 try/except 就成了「出事就凑合发」。
@@ -320,6 +338,54 @@ def test_图床鉴权失败不许把整条推送带走(tmp_path, monkeypatch, ca
             asset_dir=tmp_path,
             token="token",
         )
+
+
+@pytest.mark.parametrize(
+    "code, msg, must_say",
+    [
+        # 官方码表 pushplus.plus/doc/guide/code.html。这四条的中文写得非常像，
+        # 而出路完全不同——只转发 msg 的话，读日志的人分不出该去干哪件事。
+        (401, "请求未授权", "开发设置"),
+        (403, "请求IP未授权", "白名单"),
+        (903, "无效的用户令牌", "消息token"),
+        (888, "积分不足", "充值"),
+    ],
+)
+def test_取AccessKey失败要报出是哪个码和该去干什么(monkeypatch, code, msg, must_say):
+    """「请求未授权」和「请求IP未授权」并排放着，读起来都像「你的凭据不对」。
+
+    实际一个是**后台开关没开**（401），一个是**IP 白名单**（403）；
+    而「令牌无效」是 903、「要付钱」是 888——**四件事，四条出路**。
+
+    2026-08-04 我就是只看了 msg，然后从「/send 用同一个 token 成功了」
+    推出「那就是会员到期」写进日志——令牌无效和付费问题的码都不是 401，
+    两头都猜错了。码表就在官网上。
+    """
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": code, "msg": msg})),
+    )
+    with pytest.raises(PushPlusError) as caught:
+        pushplus._access_key("token", "secret", timeout=1)
+
+    said = str(caught.value)
+    assert f"code={code}" in said, f"没报出返回码，出了事没法查表：{said!r}"
+    assert must_say in said, f"code={code} 没说出路：{said!r}"
+
+
+def test_取AccessKey认不出的码也要把码带出来(monkeypatch):
+    """码表会长，认不出的码**不许吞掉**——把数字带出来，人还能自己查。
+
+    只打印 msg 的话，一个没见过的码和一个见过的码长得一模一样。
+    """
+    monkeypatch.setattr(
+        "tennislive.publish.pushplus.requests.post",
+        Mock(return_value=_FakeResponse({"code": 4242, "msg": "天知道"})),
+    )
+    with pytest.raises(PushPlusError) as caught:
+        pushplus._access_key("token", "secret", timeout=1)
+    assert "code=4242" in str(caught.value)
+    assert "天知道" in str(caught.value)
 
 
 def test_换镜像之后校验和钉版本都还认得出jsDelivr(monkeypatch):
