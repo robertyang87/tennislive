@@ -92,6 +92,9 @@ on:
 
 permissions:
   contents: write
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
 
 # 同一条片子只留一个在跑——并行两个 run 会互相覆盖 output/ 里的成片。
 # 分组名带 slug，不同片子互不影响。
@@ -497,6 +500,8 @@ jobs:
       # .github/` 却是零命中——写好了一次都没跑过。补跑九条已发成片，它自己
       # 就报出了两个真缺陷：「音轨比画面短」×7、「38 秒数字静音」×1。
       # 拦在提交之前：进了 main，push 那条路就会把它发到微信，而消息收不回来。
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: 查成片本身合不合格
         if: github.event.inputs.mode == 'render'
         run: |
@@ -712,6 +717,7 @@ jobs:
       - name: 推送到微信（可选）
         if: github.event.inputs.push == 'true' && (github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push')
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           # **钉 commit，别停在 @main。** 同一条片子重渲，海报路径一模一样，
