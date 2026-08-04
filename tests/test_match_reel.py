@@ -5697,3 +5697,81 @@ def test_提交产物的工作流一律用Claude的身份():
                     f"{path.name}：`{stripped}` 的提交者名字应该是 Claude")
     # 判据自己的判据：主语没了要出声
     assert seen >= 20, f"只扫到 {seen} 行 git config user.*——路径写错了吗"
+
+
+def test_Azure那条路的词边界要和edge_tts同一个单位():
+    """字幕整条线读的是 `{offset, duration, text}`，而 **edge-tts 给的是
+    100 纳秒**为单位的整数。Azure SDK 的 `audio_offset` 同样是 100ns 的 tick，
+    但 `duration` 在新版里是 `timedelta`、老版是毫秒整数——**不换算的话字幕
+    会整体错位，而且不报错**。
+
+    这条测试**真调一次换算函数**，不查源码文本：查源码只能防「有人把它删了」，
+    防不住「它从来没工作过」（`_cut_person` 那次引了一个不存在的名字，
+    `assert "def _cut_person(" in reel` 照样绿，功能整天是坏的）。
+    """
+    import datetime  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    # timedelta（新版 SDK）：0.5 秒 = 5,000,000 个 100ns
+    assert azure_tts._ticks(datetime.timedelta(seconds=0.5)) == 5_000_000
+    # 毫秒整数（老版 SDK）：500 毫秒 = 同一个数
+    assert azure_tts._ticks(500) == 5_000_000
+    # 认不出来的记 0，不猜（字幕只用 offset 排序，duration 缺了不致命）
+    assert azure_tts._ticks(None) == 0
+
+
+def test_拼错的风格名要在写spec时就拦下来():
+    """⚠️ **Azure 对拼错的 `style` 是静默忽略的**——合成照样成功、时长照样正常，
+    只是没有情绪。而「拼错了」和「这个风格听起来本来就平」**在成片上一模一样**，
+    等于又一个「兜底出事的时候不吭声」。
+
+    所以判据装在**写 spec 的那一刻**（`_seg_voice`），不等到听成片。那十个
+    名字是 2026-08-04 在 runner 上逐个问过的（run 30892017944，10/10 通过），
+    不是从文档抄的——文档列的是**语音的能力表**，不是**定价层的权限表**。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    assert azure_tts.check_styles(["sports-commentary-excited"]) == []
+    assert azure_tts.check_styles(["sports_commentary_excited"]) == \
+        ["sports_commentary_excited"], "下划线写法要被拦住"
+    assert azure_tts.check_styles(["excited"]) == ["excited"]
+    # 判据自己的判据：这张表不许空，否则它对任何名字都放行
+    assert len(azure_tts.KNOWN_STYLES) == 10
+
+
+def test_要了情绪风格却没配Azure必须报错不许悄悄退回():
+    """**悄悄退回 edge-tts 等于发一条和 spec 说的不一样的片子，而且不吭声。**
+
+    Edge 免费端点对 `mstts:express-as` 和 `<break/>` 一律拒绝（实测
+    run 30884267406，四个风格全被拒）；Azure F0 十个全过（run 30892017944）。
+    所以 spec 里写了 `style` / `lead_pause` 就是**明确要了 Azure 那条路**，
+    这时候没有 key 只有两条出路：去掉这两个键，或者配好再渲。**不能是第三条**。
+
+    ⚠️ 判据要**真跑一次 `tts_one`**（把 Azure 判成不可用），不是查源码里
+    有没有那个 `raise`。
+    """
+    import pytest  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    real = azure_tts.available
+    azure_tts.available = lambda: False
+    try:
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz",
+                         style="sports-commentary-excited")
+        with pytest.raises(reel.ReelError, match="只有 Azure"):
+            reel.tts_one("一句话", Path("/tmp/never-written.mp3"),
+                         "zh-CN-YunjianNeural", "+6%", "+0Hz", lead_pause=0.5)
+    finally:
+        azure_tts.available = real
+    # 反面锚点：**只调语速音高的照旧走 edge-tts**，不许被这道闸误伤
+    assert not Path("/tmp/never-written.mp3").exists(), \
+        "报错之前不许已经写出音频"

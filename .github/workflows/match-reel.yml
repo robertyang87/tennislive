@@ -291,6 +291,10 @@ jobs:
           # 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），
           # 命令行统一带 `--js-runtimes node`。
           pip install -q "yt-dlp[default]" edge-tts
+          # Azure 那条路要 SDK 才拿得到词边界（REST 接口不给），而字幕整条线
+          # 就建立在词边界上。没配 key 的时候装着也不碍事——`azure_tts.available()`
+          # 两样都查，缺一样就退回 edge-tts。
+          pip install -q azure-cognitiveservices-speech
           node --version
 
       - name: 缓存 Chromium
@@ -494,6 +498,9 @@ jobs:
       # 在通过的情况下会顺手渲出一条新成片并提交。
       - name: narration — 只查旁白装不装得下
         if: github.event.inputs.mode == 'narration'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
@@ -506,6 +513,8 @@ jobs:
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
@@ -520,6 +529,8 @@ jobs:
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}

@@ -79,6 +79,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
     CARD_TOP,
@@ -1093,6 +1094,15 @@ class Segment:
     # 所以「多渲染情绪」在这条线上唯一能拧的就是它，而原来**全片只有一个值**。
     voice_rate: str = ""
     voice_pitch: str = ""
+    # 下面三样**只有 Azure 那条路认**（`AZURE_SPEECH_KEY` 配了才走）。
+    # 2026-08-04 在 runner 上实测：Edge 免费端点对 `mstts:express-as` 和
+    # `<break/>` 一律拒绝，Azure F0 十个风格全过、break 也生效
+    # （run 30884267406 / 30892017944）。
+    # ⚠️ **写了这几样却没配 key 要报错，不许悄悄退回** ——那等于发一条和
+    # spec 说的不一样的片子，而且不吭声。
+    voice_style: str = ""
+    voice_styledegree: str = ""
+    voice_lead_pause: float = 0.0
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1183,7 +1193,7 @@ _RATE_RE = re.compile(r"^[+-]\d{1,3}%$")
 _PITCH_RE = re.compile(r"^[+-]\d{1,3}Hz$")
 
 
-def _seg_voice(raw: dict, index: int) -> tuple[str, str]:
+def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
     """一段自己的语速 / 音高。没写就返回两个空串（跟全片默认值走）。
 
     写法：`"voice": {"rate": "-8%", "pitch": "-6Hz", "_why": "这一段是崩盘"}`
@@ -1200,18 +1210,32 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str]:
     """
     voice = raw.get("voice")
     if voice is None:
-        return "", ""
+        return "", "", "", "", 0.0
     if not isinstance(voice, dict):
         raise ReelError(f"第 {index + 1} 段的 `voice` 要写成对象，"
                         '例如 {"rate": "-8%", "pitch": "-6Hz", "_why": "..."}')
-    extra = sorted(set(voice) - {"rate", "pitch", "_why"})
+    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause", "_why"}
+    extra = sorted(set(voice) - allowed)
     if extra:
-        raise ReelError(f"第 {index + 1} 段的 `voice` 只认 rate / pitch / _why，"
-                        f"多了 {extra}")
+        raise ReelError(f"第 {index + 1} 段的 `voice` 只认 "
+                        f"{' / '.join(sorted(allowed))}，多了 {extra}")
     rate = str(voice.get("rate", "") or "").strip()
     pitch = str(voice.get("pitch", "") or "").strip()
-    if not rate and not pitch:
-        raise ReelError(f"第 {index + 1} 段写了 `voice` 却没给 rate 或 pitch")
+    style = str(voice.get("style", "") or "").strip()
+    degree = str(voice.get("styledegree", "") or "").strip()
+    lead = float(voice.get("lead_pause", 0) or 0)
+    if not any((rate, pitch, style, lead)):
+        raise ReelError(f"第 {index + 1} 段写了 `voice` 却一项都没给")
+    bad_style = azure_tts.check_styles([style])
+    if bad_style:
+        raise ReelError(
+            f"第 {index + 1} 段的 `voice.style` 是 `{style}`，不在实测通过的表里。\n"
+            "⚠️ **拼错的风格名 Azure 是静默忽略的**——合成照样成功，只是没有情绪，"
+            "而「拼错了」和「这个风格本来就平」在成片上一模一样。\n"
+            f"认的十个：{' / '.join(azure_tts.KNOWN_STYLES)}")
+    if lead and not 0 < lead <= 2.0:
+        raise ReelError(f"第 {index + 1} 段的 `voice.lead_pause` 要在 0~2 秒之间，"
+                        f"现在是 {lead}")
     if rate and not _RATE_RE.match(rate):
         raise ReelError(f"第 {index + 1} 段的 `voice.rate` 要写成 `+12%` / `-8%`，"
                         f"现在是 `{rate}`")
@@ -1224,7 +1248,7 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str]:
             "这一步要认领：语速改一个数就能让一段「刚好装得下」，而那是剪窗口\n"
             "该干的事。写一句为什么（「这一段是崩盘，降速降调」），下一个人才\n"
             "分得出这是编辑决定还是凑数。")
-    return rate, pitch
+    return rate, pitch, style, degree, lead
 
 
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
@@ -1249,7 +1273,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         str(s.get("source", primary)),
                         _quote_text(s.get("quote", "")),
                         _quote_cues(s.get("quote", "")),
-                        _seg_voice(s, i)[0], _seg_voice(s, i)[1],
+                        *_seg_voice(s, i),
                         s.get("inset") or None)
                 for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
@@ -2095,12 +2119,33 @@ def _chromium() -> str:
 
 
 def tts_one(text: str, path: Path, voice: str, rate: str,
-             pitch: str = "+0Hz") -> list[dict]:
+             pitch: str = "+0Hz", style: str = "", styledegree: str = "",
+             lead_pause: float = 0.0) -> list[dict]:
     """合一条语音，落盘并返回词边界。
 
     抽出来是因为**封面也要配音**了：封面那句得在渲封面之前就合出来——封面停多久
     由它的长度决定（见 `cover_length`），不能等到 `synthesize()` 那一步。
     """
+    # **配了 Azure 就走 Azure。** 同一把嗓子（`zh-CN-YunjianNeural`），多出
+    # 十个情绪风格和真 `<break>`——两条路 2026-08-04 在 runner 上并排探过
+    # （run 30884267406 / 30892017944）。词边界单位已经在 `azure_tts` 里对齐到
+    # 100ns，字幕那条线一个字不用改。
+    if azure_tts.available():
+        print(f"[TTS] Azure（风格 {style or '无'}）")
+        return azure_tts.synthesize(
+            text, path, voice=voice, rate=rate, pitch=pitch, style=style,
+            styledegree=styledegree, lead_pause=lead_pause)
+    # ⚠️ **spec 明确要了情绪风格却没有 Azure，必须报错**：悄悄退回 edge-tts
+    # 等于发一条和 spec 说的不一样的片子，而且不吭声——这个仓库最常见的那种坏。
+    if style or lead_pause:
+        raise ReelError(
+            f"这一段要 `voice.style={style or '—'}` / `lead_pause="
+            f"{lead_pause or '—'}`，而它们**只有 Azure 那条路有**"
+            f"（Edge 免费端点对 express-as 和 break 一律拒绝，实测 run "
+            f"30884267406）。\n当前不可用：{azure_tts.why_unavailable()}\n"
+            "两条出路：把这两个键从 spec 里去掉（退回只调语速音高），"
+            "或者配好 AZURE_SPEECH_KEY / AZURE_SPEECH_REGION 再渲。")
+
     import asyncio
 
     import edge_tts
@@ -2388,7 +2433,9 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
             continue
         out.append((path, tts_one(seg.narration, path, voice,
                                   seg.voice_rate or rate,
-                                  seg.voice_pitch or "+0Hz")))
+                                  seg.voice_pitch or "+0Hz",
+                                  seg.voice_style, seg.voice_styledegree,
+                                  seg.voice_lead_pause)))
     return out
 
 
