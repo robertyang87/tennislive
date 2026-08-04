@@ -956,20 +956,38 @@ CUT_THRESHOLD = 0.35
 LOOSE_CUT_THRESHOLD = 0.12
 
 
-def scene_changes(path: Path, threshold: float = CUT_THRESHOLD) -> list[float]:
+def scene_changes(path: Path, threshold: float = CUT_THRESHOLD, *,
+                  start: float = 0.0, stop: float | None = None) -> list[float]:
+    """切点。`start`/`stop` 给了就**只在那一段里找**，返回值仍是源片的绝对秒数。
+
+    为什么要能只看一段：WTA 的单场集锦不是每场都发，**Day N 合集才是全覆盖的**
+    （王欣瑜对卡萨金娜那场就只在 61 分钟的 Day 2 合集里，章节
+    `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍要几分钟，
+    而且缩略图墙会出七十多张、全是别人的比赛。
+
+    ⚠️ **`-ss` 放在 `-i` 前面是输入寻址，`pts_time` 会从 0 重新起算**，
+    所以要把 `start` 加回去——不加的话切点全部偏移，而它**不会报错**，
+    只会让每一段都切在错的地方。
+    """
+    seek = []
+    if start:
+        seek += ["-ss", f"{start:.2f}"]
+    if stop is not None:
+        seek += ["-t", f"{max(0.0, stop - start):.2f}"]
     proc = subprocess.run(
-        ["ffmpeg", "-hide_banner", "-i", str(path),
+        ["ffmpeg", "-hide_banner", *seek, "-i", str(path),
          "-filter:v", f"select='gt(scene,{threshold})',showinfo",
          "-f", "null", "-"],
         capture_output=True, text=True,
     )
-    return [round(float(m), 2)
+    return [round(float(m) + start, 2)
             for m in re.findall(r"pts_time:([0-9.]+)", proc.stderr or "")]
 
 
 def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
                   columns: int = 6, tile_w: int = 360, crop: str = "",
-                  prefix: str = "contact") -> list[Path]:
+                  prefix: str = "contact", start: float = 0.0,
+                  stop: float | None = None) -> list[Path]:
     """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
 
     时间码必须烧进画面里——不然看图挑完段，还得数第几格再乘回去，数错一次
@@ -986,7 +1004,11 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     for old in frames.glob("*.jpg"):
         old.unlink()
     duration = probe_duration(path)
-    stamps = [round(t, 2) for t in _frange(0.5, duration, every)]
+    # 只看一段时，缩略图仍然烧**源片的绝对秒数**——挑段的人照着它写 spec，
+    # 换算一次就是一次切偏的机会。
+    lo = start + 0.5
+    hi = duration if stop is None else min(stop, duration)
+    stamps = [round(t, 2) for t in _frange(lo, hi, every)]
     for index, t in enumerate(stamps):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
@@ -2756,6 +2778,13 @@ def main() -> int:
     p.add_argument("--url", required=True)
     p.add_argument("--outdir", required=True)
     p.add_argument("--every", type=float, default=2.0)
+    # **只看源片的一段。** WTA 的单场集锦不是每场都发，Day N 合集才是全覆盖的
+    # ——整片扫一遍不但慢，缩略图墙还会出七十多张、绝大多数是别人的比赛。
+    # 缩略图上烧的仍是**源片绝对秒数**，spec 里的窗口直接照抄，不用换算。
+    p.add_argument("--from", dest="clip_from", default="",
+                   help="只看源片的这一段（秒）。合集里取一场时用")
+    p.add_argument("--to", dest="clip_to", default="",
+                   help="同上，区间的终点（秒）")
     p.add_argument("--scorebox", default="",
                    help="记分条位置 x0,y0,x1,y1（源片像素）。给了就顺手量一遍"
                         "死球时刻写进 probe.json——趁源片还在，渲完就删了")
@@ -2787,10 +2816,21 @@ def main() -> int:
         # 能不能和已有的那条一起剪」要等到 render 跑六分钟之后才知道。
         # 探测的作用就是把这种问题提前，别让它藏到最后一步。
         fps_expr, fps = resolve_fps(source)
-        cuts = scene_changes(source)
+        # **只看一段。** WTA 的单场集锦不是每场都发，**Day N 合集才是全覆盖的**
+        # ——王欣瑜对卡萨金娜那场就只在 61 分钟的 Day 2 合集里（章节
+        # `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍不但慢，缩略图墙
+        # 还会出七十多张、绝大多数是别人的比赛，挑段等于大海捞针。
+        clip_from = float(args.clip_from or 0.0)
+        clip_to = float(args.clip_to) if args.clip_to else None
+        if clip_from or clip_to is not None:
+            print(f"[区间] 只看 {clip_from:.1f}–"
+                  f"{(clip_to if clip_to is not None else duration):.1f}s"
+                  "（缩略图上烧的仍是源片绝对秒数）")
+        cuts = scene_changes(source, start=clip_from, stop=clip_to)
         # **低门槛那一份也趁源片还在的时候量。** 和死球时刻同一个道理：源片
         # 渲完就删，事后想查得自己再下一份几百 MB。
-        loose = [t for t in scene_changes(source, LOOSE_CUT_THRESHOLD)
+        loose = [t for t in scene_changes(source, LOOSE_CUT_THRESHOLD,
+                                          start=clip_from, stop=clip_to)
                  if all(abs(t - c) > 0.05 for c in cuts)]
         print(f"源片 {w}×{h} @ {fps_expr}，{duration:.1f}s，检出 {len(cuts)} 个切点"
               f"，另有 {len(loose)} 个疑似切点（门槛 {LOOSE_CUT_THRESHOLD}）")
@@ -2798,14 +2838,15 @@ def main() -> int:
             print("  疑似切点（**线索不是判据**：落在你要取的窗口里就去缩略图墙"
                   "上看一眼，别直接拿它当切点）：\n    "
                   + " ".join(f"{t:.2f}" for t in loose))
-        sheets = contact_sheet(source, outdir, every=args.every)
+        sheets = contact_sheet(source, outdir, every=args.every,
+                               start=clip_from, stop=clip_to)
         # 记分条单独拼一版，否则整幅缩完读不出比分。位置按源片分辨率推：
         # 转播把记分条烧在左下，取左边 42%、底部往上 20% 那一块。
         w, h = probe_size(source)
         box = f"{w * 42 // 100}:{h * 20 // 100}:0:{h * 78 // 100}"
         sheets += contact_sheet(source, outdir, every=args.every,
                                 crop=box, prefix="score", columns=4,
-                                tile_w=520)
+                                tile_w=520, start=clip_from, stop=clip_to)
         print(f"记分条缩略图墙：crop={box}（源片 {w}x{h}）")
         captions = fetch_captions(args.url, outdir)
         # **死球时刻要在源片还在的时候量。** `find_point_ends.py` 一直没有任何
@@ -2821,6 +2862,10 @@ def main() -> int:
             "url": args.url, "width": w, "height": h, "duration": duration,
             "fps": fps_expr, "fps_value": round(fps, 3),
             "scene_cuts": cuts, "scene_cuts_loose": loose, "point_ends": ends,
+            # 只看了一段就记下来——**下一个人拿 probe.json 排窗口时，
+            # 「切点少」和「只扫了一段」长得一模一样**。
+            "clip_from": clip_from or None,
+            "clip_to": clip_to,
             "sheets": [s.name for s in sheets],
             "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -4483,6 +4483,50 @@ def test_同一条源片不许下第二次(tmp_path, monkeypatch, capsys):
     assert "存不进去" in capsys.readouterr().out, "存不进去要出声，别悄悄退回重下"
 
 
+def test_只扫一段时切点要换算回源片的绝对秒数(tmp_path):
+    """`probe --from/--to`：**`-ss` 放在 `-i` 前面，`pts_time` 会从 0 重新起算。**
+
+    不把 `start` 加回去的话，切点全部往前偏移 `start` 秒——而它**不报错**，
+    只会让照着 probe.json 排的每一段都切在错的地方。
+
+    为什么要能只扫一段：WTA 的单场集锦**不是每场都发**，Day N 合集才是全覆盖的
+    （王欣瑜对卡萨金娜那场只在 61 分钟的 Day 2 合集里，章节
+    `2371–2553  X. Wang Vs. D. Kasatkina`）。整片扫一遍缩略图墙会出七十多张、
+    绝大多数是别人的比赛。
+
+    判据**真造一段视频、真跑一次 `scene_changes`**：造一个第 10 秒换色的片子，
+    只扫 5–15 秒那一段，报出来必须是 ~10 而不是 ~5。
+    """
+    import shutil as _shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    if not _shutil.which("ffmpeg"):
+        raise AssertionError(
+            "这条测试要 ffmpeg（ci.yml 里装了）。"
+            "**不许 skip**——一条常年跳过的检查和常年红是同一个毛病")
+
+    clip = tmp_path / "two.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=navy:s=320x240:r=25:d=10",
+         "-f", "lavfi", "-i", "color=c=orange:s=320x240:r=25:d=10",
+         "-filter_complex", "[0:v][1:v]concat=n=2:v=1[v]", "-map", "[v]",
+         "-pix_fmt", "yuv420p", str(clip)], check=True)
+
+    whole = reel.scene_changes(clip)
+    assert any(9.5 <= t <= 10.5 for t in whole), f"整片都没认出那一刀：{whole}"
+
+    part = reel.scene_changes(clip, start=5.0, stop=15.0)
+    assert part, "只扫 5–15 秒反而一个切点都没有"
+    assert any(9.5 <= t <= 10.5 for t in part), (
+        f"切点没换算回绝对秒数：{part}——`-ss` 在 `-i` 前面时 pts_time 从 0 起算，"
+        "不把 start 加回去，每一段都会切偏 start 秒，而且不报错")
+    assert not any(t < 5.0 for t in part), f"区间外的切点漏进来了：{part}"
+
+
 def test_横摇的段也要有裁切中心():
     """`track: true` 的段 `cx` 不许留 `None`——`cut_segment` 无条件先算兜底的 x。
 

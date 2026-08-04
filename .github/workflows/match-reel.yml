@@ -41,6 +41,18 @@ on:
         description: "probe：每几秒抓一帧"
         required: false
         default: "2"
+      clip_from:
+        # **合集里取一场时用。** WTA 的单场集锦不是每场都发，Day N 合集才是
+        # 全覆盖的（王欣瑜对卡萨金娜只在 61 分钟的 Day 2 合集里，章节
+        # 2371–2553）。不给区间的话缩略图墙会出七十多张、全是别人的比赛。
+        # ⚠️ 缩略图上烧的仍是**源片绝对秒数**，spec 里的窗口直接照抄。
+        description: "probe：只看源片的这一段（秒）；合集里取一场时用"
+        required: false
+        default: ""
+      clip_to:
+        description: "probe：区间终点（秒）"
+        required: false
+        default: ""
       scorebox:
         description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
         required: false
@@ -450,6 +462,8 @@ jobs:
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
             --every "${{ github.event.inputs.every }}" \
+            --from "${{ github.event.inputs.clip_from }}" \
+            --to "${{ github.event.inputs.clip_to }}" \
             --scorebox "${{ github.event.inputs.scorebox }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
