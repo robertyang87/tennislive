@@ -1496,15 +1496,32 @@ def test_赛场之上的比分行要带双方国旗():
                         {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]}
     html = vp._solo_score_html(base)
     assert "🇨🇳" in html and "🇰🇿" in html, f"国旗没渲出来：{html}"
-    assert "6-4 6-1" in html
+    text = re.sub(r"<[^>]+>", "", html)
+    assert "6-4" in text and "6-1" in text, f"盘分没渲出来：{html}"
     # **赢家在前**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
     # wang-samsonova 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
     # 「王欣瑜 vs 萨姆索诺娃」——比分夹在中间，等于声称输的那个人赢了。
-    assert html.index("张帅") < html.index("6-4") < html.index("普汀塞娃")
+    assert text.index("张帅") < text.index("6-4") < text.index("普汀塞娃")
     flipped = {**base, "winner": "普汀塞娃"}
-    h2 = vp._solo_score_html(flipped)
+    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html(flipped))
     assert h2.index("普汀塞娃") < h2.index("6-4") < h2.index("张帅"), \
         "换了赢家，赛果行的顺序没跟着换"
+
+    # ---- 每盘赢的那个数字给品牌黄、输的给灰（账号所有者 2026-08-04）----
+    # ⚠️ **判据是那一盘里谁的局数大，不是谁在前**。整场的赢家排在左边，
+    # 而第一盘可能是另一个人赢的——按位置上色会把「1-6」涂反。
+    mixed = vp._sets_html("1-6 7-6(5) 7-5")
+    assert '<span class="setlose">1</span>' in mixed, \
+        f"第一盘前面那个 1 是赢家输掉的局数，该置灰：{mixed}"
+    assert '<span class="setwin">6</span>' in mixed, \
+        f"第一盘是 6 赢的，该给品牌黄：{mixed}"
+    # 抢七小分：跟在输家那个数后面，单独一个小号 span
+    assert '<span class="tb">5</span>' in mixed, f"抢七小分没渲出来：{mixed}"
+    assert re.sub(r"<[^>]+>", "", mixed) == "1-67-657-5"
+    # 反向：认不出来的原样输出，不猜（退赛写法、老 spec 里的整句）
+    assert '<span class="setplain">ret.</span>' in vp._sets_html("2-1 ret.")
+    # 判据自己的判据：没有小分时不许凭空长出一个 `.tb`
+    assert 'class="tb"' not in vp._sets_html("6-4 6-1")
     # 排名跟着名字走，不是另起一行
     assert "57" in html and "81" in html
     # 没有 result 就整行不要——网球有故事照旧一个像素都不变
