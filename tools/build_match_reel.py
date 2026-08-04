@@ -3056,7 +3056,6 @@ def main() -> int:
         _print_word_splits(splits)
         if over or idle:
             return 1
-        _print_word_splits(splits)
         print("\n[查旁白] 每段都装得下、也没有哑场，这条 spec 渲得过这道闸。")
         return 0
 
