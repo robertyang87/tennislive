@@ -240,6 +240,68 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
 
 
+def _solo_score_html(cover: dict) -> str:
+    """solo 封面里，标题底下那一行赛果：**国旗 + 名字 + 比分 + 国旗 + 名字**。
+
+    账号所有者 2026-08-04：「以后都用 solo 版做『赛场之上』封面」「**中间标题
+    下面写上比分（带双方国旗）**」。
+
+    在这之前 solo 是**不印赛果**的，理由写在 `_result_block` 里：休伊特那条
+    「德米纳尔 6-2 6-3」是六拍里的第 5 拍，印在封面上等于先把结局说了。
+    **那条理由没有被推翻，只是不管这个栏目了**——
+
+    | 栏目 | 封面印不印赛果 |
+    |---|---|
+    | 网球有故事 | **不印**。讲一个人，比分是最后一拍，剧透完就没人看了 |
+    | 赛场之上 | **印**。讲一场对决，赛果本来就是标题（VS 版式一直在印） |
+
+    所以判据是**有没有 `result`**，不是 layout（和 `_result_block` 那条
+    「赛果那一行可以整行不要」同一个形状）：写了就渲，没写就整行不要。
+    网球有故事照旧什么都不写，一个像素都不变。
+
+    ⚠️ **赢家在前。** `matchup` 是版式顺序，`winner` 才是赛果顺序——
+    `wang-samsonova` 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
+    「王欣瑜 vs 萨姆索诺娃」，比分夹在中间，等于**声称输的那个人赢了**。
+    这里从 `winner` 挑出赢家排在左边，另一个排右边。
+
+    ⚠️ **国旗和排名都从 `matchup` 里读**，走的是和 VS 名条同一个
+    `_name_html`——一处出错两处一起红，不会两边各写一遍再对不上。
+    """
+    result = str(cover.get("result") or "").strip()
+    if not result:
+        return ""
+    pair = cover.get("matchup") or []
+    if len(pair) != 2 or not all(str(p.get("name", "")).strip() for p in pair):
+        raise SystemExit(
+            "solo 封面写了 `result`，就要 `cover.matchup` 给出对阵双方：\n"
+            '  "matchup": [{"name": "张帅", "country": "CHN", "rank": 57},\n'
+            '              {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]\n'
+            "账号所有者 2026-08-04：「中间标题下面写上比分（带双方国旗）」。\n"
+            "名字查 src/tennislive/zh/player_names_top500.json，别手打；"
+            "国别取 ESPN 的 competitor.athlete.flag.href 末尾那个 IOC 码。")
+    winner = str(cover.get("winner", "")).strip()
+    if not winner:
+        raise SystemExit(
+            "solo 封面写了 `result`，就要 `cover.winner`：赛果行**赢家在前**。\n"
+            "不写的话顺序只能按 matchup 排，而 matchup 是版式顺序不是赛果顺序——"
+            "wang-samsonova 那次就是这么把输的那个人写成赢家的。")
+    win = next((p for p in pair if str(p.get("name", "")).strip() == winner), None)
+    if win is None:
+        raise SystemExit(
+            f"cover.winner={winner!r} 不在 cover.matchup 的两个名字里"
+            f"（{[p.get('name') for p in pair]}）——对一遍译名表，别手打。")
+    lose = next(p for p in pair if p is not win)
+    # 比分长了降一档，别让它折行——和 `_result_block` 用同一组数。
+    sets_px = 54 if len(result) <= 11 else 46
+    return (
+        '<div class="storyscore">'
+        + _name_html(str(win["name"]).strip(), win, "cover.matchup[赢家]")
+        + f'<span class="sets" style="font-size:{sets_px}px">'
+          f'{html.escape(result)}</span>'
+        + _name_html(str(lose["name"]).strip(), lose, "cover.matchup[输家]")
+        + "</div>")
+
+
 def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     """cutout 版式：背景是本场视频的全场机位，两个官方抠图站在斜线上。"""
     bg = versus.get("background") or {}
@@ -351,7 +413,10 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     3. **要全身、要看得见球场**。铺满意味着 16:9 的横素材横向只剩中间
        42%，所以素材本身必须是竖着能站住的一张——半身特写铺满就是一张脸
 
-    ⚠️ **赛场之上仍然只能用 VS 模板**，判据在 test_封面只有海报模板一条路。
+    ⚠️ **2026-08-04 起赛场之上也走这个版式**（账号所有者：「以后都用 solo 版做
+    「赛场之上」封面」）。差别只剩一条：赛场之上要在标题底下印带国旗的赛果
+    （`_solo_score_html`），网球有故事**底下什么都不加**——那条「不印赛果」的
+    理由（比分是最后一拍，印上去等于先说结局）对讲人的片子照旧成立。
     """
     art = cover.get("portrait") or {}
     if not art.get("image"):
@@ -426,7 +491,7 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         + (f'<span class="topic">{html.escape(topic)}</span>' if topic else "")
         + f'</div></div></div>'
         f'<div class="storycopy"><span class="kicker">{column}</span>'
-        f'<div class="storytitle">{hook}</div></div>')
+        f'<div class="storytitle">{hook}</div>{_solo_score_html(cover)}</div>')
     solo_bg = "" if above else (
         f"background-image:url('{uri}');background-size:cover;"
         + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
@@ -463,6 +528,14 @@ __SCRIM__
  line-height:1.24;font-weight:400;color:#f4fbf7;white-space:nowrap;
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 6px 30px rgba(0,0,0,.85),
  0 0 60px rgba(6,28,20,.7)}
+/* 标题底下那一行赛果。`.storycopy` 是 column flex 且 gap 34px，所以这一行
+   自己不用再加 margin——加了就和钩子之间多出一截，看着像两块东西。 */
+.storyscore{display:flex;align-items:baseline;gap:20px;white-space:nowrap;
+ font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:44px;
+ font-weight:400;color:#f4fbf7;
+ text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
+.storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
+ font-weight:700;color:#c6f65a;letter-spacing:1px}
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         + f".storytitle{{font-size:{title_px}px}}"
@@ -685,8 +758,9 @@ def build_poster(cover: dict, out: Path, layout: str = "diagonal") -> Path:
     # 视频呈现。VS 那套（两格 + 中缝 + VS 圆牌 + 两个名字）讲的是一场对决，
     # 套在讲人的片子上，等于让读者去猜这是谁打谁。
     #
-    # ⚠️ **赛场之上仍然只能用 VS 模板**——那条规矩没变，判据在
-    # `test_封面只有海报模板一条路`。solo 认的是别的栏目。
+    # ⚠️ **2026-08-04 起赛场之上也用 solo**（账号所有者：「以后都用 solo 版做
+    # 「赛场之上」封面」），闸翻到了 `build_match_reel.build_cover`：**非 solo**
+    # 才要写 `cover._layout_why`。判据在 `test_赛场之上的封面一律用solo`。
     if layout == "solo":
         names = [str(cover.get("subject", "")).strip()]
         if not names[0]:

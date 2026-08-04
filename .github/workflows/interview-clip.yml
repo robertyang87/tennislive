@@ -26,9 +26,9 @@ on:
         required: true
         default: "eala-svitolina-dc2026-qf"
       mode:
-        description: "subs=只取字幕切行｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
+        description: "subs=只取字幕切行｜cover=只出海报不出片｜render=出片（可同时推送）｜push=只推送已在仓库里的成片"
         type: choice
-        options: [subs, render, push]
+        options: [subs, cover, render, push]
         default: render
       push:
         description: "出片后推送微信"
@@ -41,12 +41,44 @@ on:
 
 permissions:
   contents: write
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
 
 jobs:
   render:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来。** 它有 2.26 GB，而这条工作流只碰自己那一格。
+          # 实测代价：2026-08-03 那趟 `mode=push` 的 checkout **3 分 12 秒**，
+          # 而它真正要跑的活只需要 requests 一个包、7 秒。
+          #
+          # 本次要写的那一格在下一步 `git sparse-checkout add` 回来——
+          # **两半都要有**：只写这一半，`git add "$OUTDIR"` 会说路径在稀疏
+          # 范围之外，只警告、退出码 0，**产物静默丢掉**，而那是跑完之后才发现。
+          #
+          # ⚠️ 排除的**只有** output：assets 一百多兆看着也不小，但烧字幕要读
+          # `assets/fonts`（得意黑的 ttf），少一个就是第 5 分钟才炸的
+          # FileNotFoundError。cone 模式下根目录的文件总是带上。
+          sparse-checkout: |
+            .github
+            assets
+            data
+            specs
+            src
+            tools
+
+      # 必须排在**所有读写 output 的步骤之前**。目录不在工作区时，
+      # `[ -f ... ]` 这类判断全是假的，而且不报错。
+      - name: 把本次那一格加回稀疏范围
+        run: |
+          set -o pipefail
+          OUT="output/interviews/${{ github.event.inputs.slug }}"
+          git sparse-checkout add "$OUT"
+          echo "$OUT：$(ls -1 "$OUT" 2>/dev/null | wc -l) 个文件已在工作区"
 
       - uses: actions/setup-python@v5
         with:
@@ -59,10 +91,33 @@ jobs:
       #   于是精心算好的「一行不超宽」在 runner 上失效。切行那步现在缺字体
       #   直接报错（不回退），所以这一行漏了会在第 5 秒就炸，不是第 90 秒
       - name: 装系统依赖
-        if: github.event.inputs.mode == 'render'
+        timeout-minutes: 6
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
+          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
+          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-core ffmpeg
 
       # **`yt-dlp` 要装 `[default]`**，它才带 `yt-dlp-ejs`——解 YouTube 的
       # n challenge 要跑一段 JS。少了它不会报「装少了」，而是任何格式选择器都
@@ -77,7 +132,7 @@ jobs:
       # Chromium 的路径）。判据落在 `test_工作流装的依赖覆盖工具import的每一个`：
       # 工具里新加一个第三方 import，那条测试会红到你把它登记进来为止。
       - name: 装依赖
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
           python -m playwright install --with-deps chromium
@@ -89,10 +144,33 @@ jobs:
       # **字体两个都要**：切行是按真实字宽切的（`_en_width` / `_zh_width`），
       # 缺了就直接报错——这一步的产物是行的划分，量错了整条片子的字幕都跟着错。
       - name: 装依赖（只取字幕）
+        timeout-minutes: 6
         if: github.event.inputs.mode == 'subs'
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-core
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——
+          # 一次静静烧了 **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6`
+          # 掐掉（run 30878555571），而正常只要 **18~53 秒**。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。重跑那趟 34 秒就过了。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq fonts-noto-cjk fonts-noto-core
           pip install -q -e . "yt-dlp[default]"
 
       - name: 开跑前预检（只取字幕）
@@ -118,7 +196,7 @@ jobs:
 
       # 让失败发生在第 5 秒，不是第 90 秒：用到什么就先 import 一次。
       - name: 开跑前预检
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           PYTHONPATH=src python - <<'PY'
           import shutil, sys
@@ -206,6 +284,16 @@ jobs:
       # 原来是把路径**写进 spec**、跑完再 `git checkout --` 撤掉——两个毛病：
       # 上一步 verify 拿不到（那段注入只在这一步），而且 secret 的路径会短暂
       # 落到仓库里的文件上。现在两步都只靠环境变量，那套动作整个删了。
+      # **只出海报，不出片。** 2026-08-04 一晚渲了五趟，四趟是为了换封面——
+      # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有第一帧。
+      # 走这一档：下源片 → 抽帧 → 渲海报 → 删源片，**一个 mp4 都不产生**。
+      - name: 只出海报（不出片）
+        if: github.event.inputs.mode == 'cover'
+        run: |
+          set -o pipefail
+          SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
+          PYTHONPATH=src python tools/build_interview_clip.py --spec "$SPEC" --stage cover
+
       - name: 剪 + 烧字幕
         if: github.event.inputs.mode == 'render'
         env:
@@ -238,7 +326,7 @@ jobs:
       # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
       # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
       - name: 成片太大就发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render'
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -326,6 +414,8 @@ jobs:
             --summary "${{ steps.push_meta.outputs.summary }}" \
             --date "$(TZ=Asia/Shanghai date +%F)" \
             --copy "$COPY"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: 提交成片
         run: |
@@ -341,6 +431,12 @@ jobs:
           # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
           find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
           rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
+          # 缩略图墙是**写 spec 时的工作台**，不是产物：挑完 `cover.frame_at`
+          # 就没用了，而它一张 1.8 MB——这个仓库的 `output/` 已经 1.3 GB，
+          # 每条片子再塞一张，代价会加在此后每一条工作流的 checkout 上。
+          # 要看就本地 `--stage subs` 重生成（几百 KB 的 storyboard，不用 ffmpeg）；
+          # 挑帧的理由留在 spec 的 `cover._why` 里，那才是持久的那一份。
+          rm -f "$D"/storyboard.jpg
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
           git add "output/interviews/${{ github.event.inputs.slug }}"
@@ -363,6 +459,7 @@ jobs:
       - name: 推送到微信
         if: github.event.inputs.push == 'true'
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           # **钉 commit，别停在 @main。** 同一条采访重渲，海报路径一模一样，

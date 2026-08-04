@@ -119,3 +119,111 @@ def test_走图床那条路的工作流都要配SECRET_KEY():
         assert "PUSHPLUS_SECRET_KEY" in body, (
             f"{name} 会走 PushPlus 图床却没配 PUSHPLUS_SECRET_KEY——"
             "会悄悄退回 jsDelivr，轮询 5 分钟，取不到就整条不发")
+
+
+def test_每条工作流都要有超时且apt那一步单独有():
+    """卡住要失败，不要空转——而 GitHub 的默认是**烧六小时**。
+
+    2026-08-04 实测：`interview-clip` 的「装系统依赖」这一步（就三个包，
+    `fonts-noto-cjk fonts-noto-core ffmpeg`）在同一天四趟里分别花了
+    **18 秒 / 53 秒 / 13 分 42 秒 / 18 秒**。同一个工作流、同一份包列表、
+    二十分钟之内——所以卡的不是我们，是那台 runner 上的 apt 镜像。
+
+    但代价是我们的：那一趟 `timeout-minutes` 一个都没有（job 级也没有），
+    于是它就那么静静地烧了十三分半。**而 `-qq` 把 apt 的输出全吞了**，
+    日志里一个字都没有——「卡住」和「正常在装」长得一模一样，又一次
+    「兜底出事的时候不吭声」。
+
+    ⚠️ **这条规矩本来就有，只是只管一个文件。**
+    `test_渲染专用的依赖不许挂在probe路径上` 的 docstring 里写着
+    「`apt-get install fonts-noto-cjk` 挂死那次把 probe 拖了二十分钟」
+    ——**一模一样的故障，一模一样的结论**，可那条测试 `WORKFLOW` 只指
+    `match-reel.yml`。于是 match-reel 补上了，另外七条一条都没有。
+    这就是本仓库的老形状：「规矩只写在了其中一半」（storyboard.jpg 那条同一天
+    刚犯过）。所以这条**扫全部工作流，不维护白名单**。
+
+    两层各管各的：
+    - **job 级**：兜住整趟，防「默认 360 分钟」
+    - **步骤级**：apt 是已知会挂的那一步，让它快速失败而不是拖垮整趟
+    """
+    import yaml  # noqa: PLC0415
+
+    paths = sorted(Path(".github/workflows").glob("*.yml"))
+    assert len(paths) >= 15, f"只扫到 {len(paths)} 条工作流，判据可能失效了"
+
+    no_job, no_step, apt_seen = [], [], 0
+    for path in paths:
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for job_name, job in (spec.get("jobs") or {}).items():
+            if not job.get("timeout-minutes"):
+                no_job.append(f"{path.name}:{job_name}")
+            for step in job.get("steps") or []:
+                # 只看**真正会跑的**那几行，注释里提到 apt 不算——工作流的注释
+                # 正是这个仓库记教训的地方，连它一起扫会把「把坑记下来」判成
+                # 「又踩了这个坑」。同一个错这个仓库犯过五次。
+                run = "\n".join(ln for ln in str(step.get("run") or "").splitlines()
+                                if not ln.lstrip().startswith("#"))
+                if "apt-get" not in run:
+                    continue
+                apt_seen += 1
+                if not step.get("timeout-minutes"):
+                    no_step.append(f"{path.name}「{step.get('name')}」")
+
+    assert apt_seen >= 7, f"只找到 {apt_seen} 个 apt 步骤，判据可能失效了"
+    assert not no_job, (
+        f"这些 job 没有 timeout-minutes：{no_job}。"
+        "GitHub 的默认是 360 分钟——卡住会烧六小时，而且看起来和「还在跑」一样")
+    assert not no_step, (
+        f"这些 apt 步骤没有 timeout-minutes：{no_step}。"
+        "实测同一步能从 18 秒变成 13 分 42 秒，而 `-qq` 让它卡的时候不吭声")
+
+
+def test_apt一律走重试包装不许裸调():
+    """**硬超时只做对了一半。**
+
+    2026-08-04 两小时内 apt 卡了两次：一次静静烧 **13 分 42 秒**（那时没有闸），
+    一次被 `timeout-minutes: 6` 掐掉（run 30878555571）——而正常只要
+    **18~53 秒**，重跑那趟 34 秒就过了。
+
+    也就是说硬超时把「静静烧半小时」换成了「6 分钟红掉、要人重跑」。方向对，
+    但卡住的正确处置是**换一次重试**，不是整趟失败：镜像抽风是它那头的事，
+    不该变成我们这头的一次红。
+
+    所以裸的 `sudo apt-get` 一律不许出现，要走 `apt_retry`
+    （每次 100 秒超时、最多三次、共 5.5 分钟——仍在步骤的 6 分钟超时以内，
+    那道闸还在兜底）。
+
+    ⚠️ 扫之前先去掉整行注释：工作流的注释正是这个仓库记教训的地方，正文里
+    必然写着当年那些错写法，连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
+    """
+    naked, wrapped = [], 0
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        for line in _yaml_only(path.read_text(encoding="utf-8")).splitlines():
+            if "apt-get" not in line:
+                continue
+            if "sudo apt-get" in line:
+                naked.append(f"{path.name}: {line.strip()[:60]}")
+            elif "apt_retry apt-get" in line:
+                wrapped += 1
+
+    assert wrapped >= 12, f"只找到 {wrapped} 处 apt_retry，判据可能失效了"
+
+    # ⚠️ **单次超时不许收得比「正常值」还紧。**
+    # 第一版写 3 × 100 秒，当场把 CI 弄红（run 30880649692）：三次全跑满 100 秒
+    # 被杀——也就是 apt **一直在推进、只是慢**。那个 100 秒是按「正常 18~53 秒」
+    # 拍的，而那是**另一条工作流**的数；`ci.yml` 这一步正常 25~34 秒，镜像变慢时
+    # 能到 100 秒以上仍在干活。**把「慢」误判成「挂死」，重试就从救场变成三倍浪费。**
+    # 所以钉住：单次至少 150 秒（实测正常值的 4~6 倍），而且总时长要留在步骤超时以内。
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        body = _yaml_only(path.read_text(encoding="utf-8"))
+        for m in re.finditer(r"for i in ([\d ]+); do\n\s*sudo timeout (\d+) ", body):
+            tries, per = len(m.group(1).split()), int(m.group(2))
+            assert per >= 150, (
+                f"{path.name} 的 apt 单次超时只有 {per} 秒——"
+                "比实测的「慢但在推进」还紧，会把慢误判成挂死")
+            assert tries * (per + 10) <= 6 * 60, (
+                f"{path.name} 的 apt 重试总时长 {tries * (per + 10)} 秒，"
+                "超过了步骤的 6 分钟超时——那道兜底的闸就废了")
+    assert not naked, (
+        "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
+        + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")

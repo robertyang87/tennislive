@@ -73,6 +73,22 @@ def _steps() -> list[dict]:
     return wf["jobs"]["render"]["steps"]
 
 
+def _step_run(step: dict) -> str:
+    """一个步骤**真正会执行的**那几行，去掉整行的 shell 注释。
+
+    ⚠️ **工作流的注释正是这个仓库记教训的地方**，正文里必然写着当年那些坑
+    （「这里不装 ffmpeg」「本地 `--stage subs` 重生成」）。连注释一起扫，
+    「把坑记下来」会被判成「又踩了这个坑」——同一个形状这个仓库犯过五次，
+    `_run_scripts()` 早就为此去过注释，而按 `_steps()` 逐步扫的这几条没跟上。
+
+    真栽了一次：提交那一步的清理注释里写了 `ffmpeg` 和 `--stage subs`，
+    于是它被判成「装了出片才要的东西」外加「跑在 subs 那一档」，两条一起红。
+    判据宁可窄，不可宽。
+    """
+    return "\n".join(ln for ln in str(step.get("run") or "").splitlines()
+                     if not ln.lstrip().startswith("#"))
+
+
 def _if_holds(expr, *, mode: str, push: str = "false") -> bool:
     """把 `if:` 按给定 inputs 求值一遍。只认这个工作流真正用到的那点语法。
 
@@ -1323,7 +1339,7 @@ def test_只推送时不做出片那一堆准备():
     和「封面引的话」那条第一版栽的是同一个跟头。现在按 mode 真的求值一遍。
     """
     for step in _steps():
-        run = str(step.get("run") or "")
+        run = _step_run(step)                    # 去掉注释再扫，见 `_step_run`
         if not any(h in run for h in ("playwright", "faster-whisper",
                                       "yt-dlp", "ffmpeg", "fonts-noto")):
             continue
@@ -1331,6 +1347,40 @@ def test_只推送时不做出片那一堆准备():
             f"步骤「{step.get('name')}」装/用了出片才要的东西，"
             f"而它的条件 {step.get('if')!r} 在 mode=push 那趟仍然成立"
             "——只推送的时候它是白跑的")
+
+
+def test_把产物那一格加回稀疏范围要排在跑工具之前():
+    """`git sparse-checkout add` **会把 HEAD 上那一版先铺回工作区**。
+
+    排在生成之后，就是拿旧内容盖掉刚渲出来的成片——而它不报错。
+    （CLAUDE.md「把产物那一格弄回 cone」那一节记的就是这个。）
+
+    另一头同样致命：这一步要是根本不跑，`git add "$OUTDIR"` 会说路径在稀疏
+    范围之外，**只警告、退出码 0**，产物静默丢掉，跑完才发现。那一头由
+    `test_不碰产物的工作流不许把output拉下来` 钉住。
+
+    ⚠️ 既有那条 `test_读产物的步骤不能排在sparse_add前面` **覆盖不到这条线**：
+    它认的是 `[ -f "$OUT_DIR/..." ]` 这种 shell 判断，而这条工作流读写产物
+    的是 Python 工具。反向验证时把 add 挪到「转写交叉校验」后面，那条照样绿
+    ——所以另立这一条，按**步骤序号**判。
+    """
+    steps = _steps()
+    names = [s.get("name") or (s.get("uses") or "?") for s in steps]
+    add_at = next((i for i, s in enumerate(steps)
+                   if "git sparse-checkout add" in _step_run(s)), None)
+    assert add_at is not None, (
+        "interview-clip 没把自己那一格加回稀疏范围。"
+        f"步骤依次是：{names}")
+
+    uses_tool = [i for i, s in enumerate(steps)
+                 if "build_interview_clip.py" in _step_run(s)
+                 or "push_reel.py" in _step_run(s)]
+    assert uses_tool, "没有一步在跑工具？那这条工作流在干什么"
+    assert add_at < min(uses_tool), (
+        f"`git sparse-checkout add` 排在第 {add_at + 1} 步（{names[add_at]}），"
+        f"而第 {min(uses_tool) + 1} 步（{names[min(uses_tool)]}）就开始跑工具了。"
+        "add 会把 HEAD 那一版铺回工作区，排在生成之后＝拿旧内容盖掉刚渲的，"
+        "而且不报错。")
 
 
 def test_每个mode都各干各的活():
@@ -1344,7 +1394,7 @@ def test_每个mode都各干各的活():
     for mode in ("subs", "render", "push"):
         stage[mode] = [s.get("name") for s in _steps()
                        if _if_holds(s.get("if"), mode=mode)
-                       and "--stage" in str(s.get("run") or "")]
+                       and "--stage" in _step_run(s)]
     assert stage["subs"] == ["取字幕切行"], stage["subs"]
     assert stage["render"] == ["转写交叉校验", "剪 + 烧字幕"], stage["render"]
     assert stage["push"] == [], stage["push"]
@@ -1908,7 +1958,7 @@ def test_缩略图墙每一格都要标出秒数():
 
     from tools.build_interview_clip import _tile_sheet
 
-    tiles = [Image.new("RGB", (160, 90), (i * 20 % 256, 60, 90)) for i in range(9)]
+    tiles = [(i, Image.new("RGB", (160, 90), (i * 20 % 256, 60, 90))) for i in range(9)]
     dest = _tile_sheet(tiles, step=1.91, cols=3, dest=ROOT / "_t.jpg")
     try:
         assert dest.exists() and dest.stat().st_size > 0
@@ -1920,6 +1970,116 @@ def test_缩略图墙每一格都要标出秒数():
         dest.unlink(missing_ok=True)
 
 
+def test_噪声标记要看穿说话人标记():
+    """`[applause]` 不是台词，可它带上 `>>` 之后就漏进字幕了。
+
+    自动字幕把 `>>` 和后面那个词并成一个 token，换人说话时的掌声于是是
+    `>> [applause]` 而不是 `[applause]`——裸的 `^\\[.*\\]$` 匹配不上。
+    冠军致辞那条切出来的第 19 行就是光秃秃的「[applause]」，**它会作为一行
+    字幕烧在画面上**。
+
+    和 `test_订正要看穿说话人标记` 是同一个 token 形状咬的第二次，只是
+    **后果反过来**：那次是订正悄悄不生效（不吭声），这次是把一个非台词
+    印在脸上（很吵，但要渲出来才看得见）。
+
+    反面锚点：`[inaudible] she said` 这种**标记后面还有台词**的不许被丢掉，
+    否则「判据宁可窄，不可宽」又要犯一次。
+    """
+    from tools.build_interview_clip import _NOISE, segment
+
+    for noise in (">> [applause]", "[applause]", ">> [cheering]", ">>", "&gt;&gt;"):
+        assert _NOISE.match(noise), f"{noise!r} 该被当成噪声丢掉"
+    for real in ("Good", ">> Good", "[inaudible] she said"):
+        assert not _NOISE.match(real), f"{real!r} 是台词，不许丢"
+
+    words = [(0.5, ">> So"), (1.0, "thank"), (1.5, "you."),
+             (2.0, ">> [applause]"), (5.0, ">> Um,"), (5.5, "yeah.")]
+    en = " ".join(s["en"] for s in segment(words, 0.0, 9.0))
+    assert "applause" not in en.lower(), f"噪声标记漏进字幕了：{en}"
+    assert "thank you." in en and "yeah." in en, f"把台词一起丢了：{en}"
+
+
+def test_缩略图墙的秒数不许自己摊():
+    """秒数要按 storyboard 自己的帧率算，**不能拿「片长 ÷ 存活格数」去摊**。
+
+    两个坑叠在一起，冠军致辞那条同时踩了：
+
+    ① **最后一张 sheet 是残的。** 这条片子的 sb0 前四张 800×450（5×5），
+       第五张只有 **800×180**（5×2，装最后 10 帧）。照声明的 5 行硬切，等于
+       把它切成 25 条 160×36 的碎条——拼出来是一排「上半截有画面、下半截全黑」
+       的格子，**看起来像片尾卡，其实是切错了**。
+    ② 碎条大多不是纯黑，于是滤黑之后还剩 121 格（真实是 108）。步长摊成
+       4.42 秒，而 YouTube 报的 fps=0.2019 说的是 **4.95 秒一格**。
+
+    错了 12%，**而且不吭声**：标签照印、图照出。判据是拿另一条时间轴对——
+    按摊出来的秒数，她**跪地庆祝在 221 秒**，而记分牌上的赛点在 232 秒：
+    庆祝早于赛点，不可能。乘回 1.121 正好落在 247.8 秒那句
+    `It's Eala's. Magical moment.` 上。
+
+    这张图唯一的用途就是挑 `cover.frame_at`，所以骗的正是它要干的那件事。
+    """
+    import email.mime.image
+    import email.mime.multipart
+    import io as _io
+
+    from PIL import Image
+
+    from tools.build_interview_clip import _mhtml_tiles
+
+    # ⚠️ **黑格要有一个落在中间**，不能只放在末尾。真实数据的黑格都在最后
+    # （5×5×4 + 8 帧），而那种情况下「按原位编号」和「按存活第几个编号」
+    # **算出来一模一样**——拿它当 fixture，序号那条断言就是恒真的。
+    # 第一版就是这么写的：把实现退回 `len(tiles)` 重跑，测试照样绿。
+    # 中间那一格黑（画面淡入淡出就会有）才让两种编号分叉。
+    blanks = {7, 33, 34}                            # 中间一格 + 末尾两格
+
+    def sheet(rows: int, base: int) -> bytes:
+        im = Image.new("RGB", (160 * 5, 90 * rows))
+        for iy in range(rows):
+            for ix in range(5):
+                idx = base + iy * 5 + ix
+                rgb = (0, 0, 0) if idx in blanks else (40 + idx % 200, 90, 60)
+                im.paste(Image.new("RGB", (160, 90), rgb), (ix * 160, iy * 90))
+        buf = _io.BytesIO()
+        im.save(buf, "JPEG")
+        return buf.getvalue()
+
+    msg = email.mime.multipart.MIMEMultipart()
+    for rows, base in ((5, 0), (2, 25)):           # 一张满的 + 一张残的
+        msg.attach(email.mime.image.MIMEImage(sheet(rows, base), "jpeg"))
+    path = ROOT / "_sb_test.mhtml"
+    path.write_bytes(msg.as_bytes())
+    try:
+        tiles = _mhtml_tiles(path, rows=5, columns=5, tile_w=160, tile_h=90)
+    finally:
+        path.unlink(missing_ok=True)
+
+    want = [i for i in range(35) if i not in blanks]
+    assert [t.size for _, t in tiles] == [(160, 90)] * len(want), (
+        "残 sheet 被按整格网格硬切了——切出来的是碎条，不是缩略图："
+        f"{sorted({t.size for _, t in tiles})}")
+    assert [i for i, _ in tiles] == want, (
+        "序号不是原位：丢掉中间那格黑的之后，后面每一格的时刻都会往前挪，"
+        f"而标签看起来一样权威。拿到的是 {[i for i, _ in tiles]}")
+
+    # 步长的出处：`fps` 优先，按格数摊只能是退路。
+    # **真调一次函数**——查源码文本的断言防得住「有人把它删了」，
+    # 防不住「条件写反了」（第一版就是那么写的，把 `fps > 0` 改成
+    # `fps < 0` 照样绿）。喂的是当时真实的那组数。
+    from tools.build_interview_clip import storyboard_step
+
+    sb0 = {"fps": 0.20186915887850468}              # 这条片子 sb0 报的
+    dur, buggy_n = 534.84, 121                      # 碎条没滤干净时的格数
+    step, shared = storyboard_step(sb0, dur, buggy_n)
+    assert not shared, "报了 fps 还去摊"
+    assert abs(step - 4.954) < 0.01, f"步长该是 1/fps＝4.954 秒，拿到 {step:.3f}"
+    assert abs(step - dur / buggy_n) > 0.4, (
+        f"步长跟「片长÷格数」（{dur / buggy_n:.3f}）一样——那正是错了 12% 的那个数")
+
+    fallback, shared = storyboard_step({}, dur, 108)
+    assert shared and abs(fallback - dur / 108) < 0.01, "没有 fps 时要退回摊，并且说出来"
+
+
 def test_缩略图墙只在取字幕那一趟出():
     """出片那趟不该再下一次——它已经有源片了，而且那趟最贵。"""
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
@@ -1927,3 +2087,116 @@ def test_缩略图墙只在取字幕那一趟出():
     call = body.index("storyboard_sheet(spec[")
     guard = body.rindex('args.stage == "subs"', 0, call)
     assert call - guard < 300, "缩略图墙没挂在 subs 那一档上"
+
+
+def test_缩略图墙两头都不许进仓库():
+    """缩略图墙是**挑封面用的草稿**，runner 和本地两头都要挡住。
+
+    这条规矩原来只写在了 runner 那一半：「丢掉不进仓库的中间物」里有
+    `rm -f "$D"/storyboard.jpg`。可**本地** `--stage subs` 生成的那一份
+    没有任何东西管它——2026-08-04 一张 617 KB 的图就这么躺在
+    `output/interviews/pegula-eala-dc2026-final/` 里等着被 `git add` 吃进去，
+    是 stop hook 报「有未跟踪文件」才发现的。
+
+    又是「两处各配一遍必分叉」。所以两头一起钉：
+
+    - `.gitignore` 要有一条能匹配上它的规则（**真跑一次 `git check-ignore`**，
+      不是查文件里有没有这串字——`output/**/storyboard.jpg` 写成
+      `output/*/storyboard.jpg` 同样能通过文本断言，却匹配不上真实路径）
+    - 工作流那条 `rm` 不许被删掉（本地忽略了，runner 上还是会生成一份，
+      而 runner 那边 `git add <目录>` 吃的是索引不是 .gitignore 之外的判断）
+
+    ⚠️ 顺带钉住**仓库里现在一张都没有**——防的是「规则加上了，可之前
+    已经提交进去的那些还在」，那种情况下这条测试会假绿。
+    """
+    import subprocess  # noqa: PLC0415
+
+    probe = "output/interviews/__probe__/storyboard.jpg"
+    r = subprocess.run(["git", "check-ignore", "-q", probe],
+                       cwd=ROOT, capture_output=True)
+    assert r.returncode == 0, (
+        f".gitignore 没挡住 {probe}——本地 `--stage subs` 生成的缩略图墙"
+        "会被 `git add` 吃进仓库（一张就是六百多 KB）")
+
+    step = next((s for s in _steps() if "storyboard.jpg" in _step_run(s)), None)
+    assert step is not None, (
+        "工作流里没有一步删 storyboard.jpg。**本地忽略了不等于 runner 上安全**："
+        "runner 那边是 `git add <目录>`，走的是索引")
+    assert re.search(r"rm\s+-f\b[^\n]*storyboard\.jpg", _step_run(step)), (
+        f"步骤「{step.get('name')}」提到了 storyboard.jpg，但不是在删它")
+
+    tracked = subprocess.run(["git", "ls-files", "output/**/storyboard.jpg"],
+                             cwd=ROOT, capture_output=True, text=True).stdout.split()
+    assert not tracked, (
+        f"仓库里已经躺着 {len(tracked)} 张缩略图墙：{tracked[:3]}。"
+        "加规则挡不住已经提交进去的——要 `git rm --cached` 一遍，"
+        "否则这条测试对它们是绿的")
+
+
+def test_只出海报那一档要够得着而且真的短():
+    """**开关落在 CLI 里不算落地，工作流够不着就等于零。**
+
+    `match-reel` 的 `--dry-run` / `--cover-only` 就是这么白做的：加进 CLI 的
+    那个提交没动工作流的 `mode`，而源片只在 runner 上活过几分钟——
+    「能用的那台机器上没有开关，有开关的那台机器上没有源片」。
+
+    这一档存在的理由是账：2026-08-04 一晚渲了五趟，**四趟是为了换封面**，
+    每趟六分钟外加一个 50~70 MB 的永久 blob，而真正变的只有第一帧。
+    量过：`.git` 6.4 GB 里 2.9 GiB 是同一路径的旧版本。
+    所以两头都要钉：**入口够得着** + **那条路真的短**。
+    """
+    import yaml  # noqa: PLC0415
+
+    wf = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "interview-clip.yml").read_text(encoding="utf-8"))
+    on = wf.get("on") or wf[True]      # YAML 1.1 把裸的 on 解析成布尔 True
+    options = on["workflow_dispatch"]["inputs"]["mode"]["options"]
+    assert "cover" in options, f"工作流的 mode 只有 {options}——CLI 加了也够不着"
+
+    step, = [s for s in _steps() if s.get("name") == "只出海报（不出片）"]
+    assert step.get("if") == "github.event.inputs.mode == 'cover'"
+    run = _step_run(step)
+    assert "--stage cover" in run, "那一步没跑 `--stage cover`"
+    # **短**的判据是它不碰这几样：碰了就说明有人把它写成了完整 render
+    for banned in ("--stage render", "--stage verify", "push_reel.py",
+                   "faster_whisper"):
+        assert banned not in run, (
+            f"「只出海报」那一步出现了 `{banned}`——它就不短了，"
+            "这一档的全部意义是不出片、不往仓库里塞 mp4")
+
+
+def test_出海报只有一份实现():
+    """`render` 和 `--stage cover` 必须走**同一个** `cover_poster`。
+
+    复制一份进快速预览，分叉的表现是「预览看着对、成片里不对」——最难查的
+    那一类。这个仓库为 `_still_to_clip` 那对函数栽过两次：一次加参数没跟着
+    委托链改到底，一次是一个函数两个 return 只改了一个。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    assert src.count("def cover_poster(") == 1, "cover_poster 有不止一份定义"
+    assert src.count('"-frames:v", "1"') == 1, (
+        "抽封面帧那句 ffmpeg 出现了不止一次——多半是复制了一份进 cover 那一档")
+    body = src.split("def render(")[1]
+    assert "cover_poster(spec, src, outdir" in body, (
+        "render 没有走 cover_poster，两处必分叉")
+
+
+def test_出海报那一档不许被出片的闸挡住():
+    """挑封面排在转写核对**之前**——拿出片的闸挡它，等于逼人先把校验走完
+    才能看一眼封面，而那正是这一档要省掉的那六分钟。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    cover = src.split('if args.stage == "cover":')[1].split(
+        'if args.stage == "render":')[0]
+    # ⚠️ **先去掉整行注释再扫。** 这一档的注释里正写着「不设
+    # `transcript_verified` 那几道闸」——连注释一起扫，「把理由记下来」会被
+    # 判成「又挂上了那道闸」。写这条测试时当场被自己的注释误伤了一次，
+    # 而这个形状这个仓库已经犯过五次（`_step_run` 的 docstring 记着）。
+    cover = "\n".join(ln for ln in cover.splitlines()
+                      if not ln.lstrip().startswith("#"))
+    for gate in ("transcript_verified", "_unresolved_suspects",
+                 "_unresolved_gaps"):
+        assert gate not in cover, f"cover 那一档挂着出片的闸 `{gate}`"
+    # 反过来：出片那一档必须仍然挂着，别为了放行 cover 把它一起拆了
+    render_stage = src.split('if args.stage == "render":')[1]
+    assert "transcript_verified" in render_stage, "出片那道闸没了"

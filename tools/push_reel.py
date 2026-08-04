@@ -49,7 +49,11 @@ from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
 )
-from tennislive.render.pushmsg import _PAGES, to_copy_page  # noqa: E402
+from tennislive.render.pushmsg import (  # noqa: E402
+    _PAGES,
+    to_copy_page,
+    trigger_pages_build,
+)
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 # 日期从 outdir 里取（output/YYYY-MM-DD/...），别另传一个参数——两处日期
@@ -138,6 +142,10 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
         "TENNISLIVE_COPYPAGE_RETRY_SECONDS", delay))))
     want = html.escape(expect.strip())
     last = ""
+    # **先点一下部署，再开始探。** 工作流自己 commit + push 的复制页**不会**
+    # 触发 Pages（`GITHUB_TOKEN` 推的 push 不创建 workflow run），不点的话
+    # 这个循环注定探满全程——见 `trigger_pages_build` 里那张运行记录表。
+    trigger_pages_build()
     for attempt in range(attempts):
         try:
             response = requests.get(url, timeout=timeout,
@@ -340,8 +348,26 @@ def push_meta(copy_path: Path) -> dict:
     """
     spec = spec_of(copy_path)
     cover = spec.get("cover") or {}
+    # **两个出处，`matchup` 优先。** 2026-08-04 起「赛场之上」一律 solo，
+    # 而 solo 没有 `versus`——两个名字改挂在 `cover.matchup` 上（封面标题
+    # 底下那行带国旗的赛果就是从它渲的）。
+    #
+    # ⚠️ 这一改**必须做**，不是顺手。CLAUDE.md 记着同一个坑：换成单人封面之后
+    # 「solo 没有 versus 也没有 result，退路一空，标题当场变成 `8.2 赛场之上 | `」。
+    # 现在 solo 有 result 了，可名字仍然只从 `versus.names` 取——**对阵会是空的，
+    # 而且不报错**：有 `summary` 的时候 `headline` 根本不看 matchup，
+    # 于是它会一直「正常」，直到哪条 spec 忘了写 summary 才现形。
     names = [str(n).strip() for n in
              ((cover.get("versus") or {}).get("names") or []) if str(n).strip()]
+    if not names:
+        names = [str(p.get("name", "")).strip()
+                 for p in (cover.get("matchup") or [])
+                 if str(p.get("name", "")).strip()]
+        # `matchup` 是版式顺序，`winner` 才是赛果顺序——赢家排前面，
+        # 否则标题会把输的那个写成赢家（wang-samsonova 那次的老账）。
+        winner = str(cover.get("winner", "")).strip()
+        if winner in names:
+            names.sort(key=lambda n: n != winner)
     score = str(cover.get("result") or "").strip()
     winner = str(cover.get("winner") or "").strip()
 

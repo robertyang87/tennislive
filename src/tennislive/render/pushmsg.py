@@ -379,13 +379,159 @@ def copy_page_fingerprint(path) -> str:
 # cancelled 就是这么来的）。所以「把复制页挪到渲染前面单独提交」那条对
 # match-reel 有效的办法，对解说片**无效**——它生成和推送在同一趟 run 里，
 # 成片那次提交会把复制页那次的构建掐掉重来。真正的杠杆是把站点变小。
+#
+# ⚠️ **上面那张表是「整站发布」时代的数，#168 之后已经不成立了。**
+# 那之后 `pages.yml` 只收 `output/**/*.html`（0.66 MB，站点的 0.03%），
+# 2026-08-04 实测两趟成功构建：
+#
+#     run 30875246633  27 秒      run 30875537112  20 秒
+#
+# **少了一个数量级。** 窗口没跟着收——收窄是危险的那一头（探不到就永远没有
+# 按钮，而且不报错），而探到就立刻返回，所以留着宽窗口的代价是 0。
+# 记在这儿是因为「带数字的注释会过期，而它过期的时候不吭声」：下一个人读到
+# 5:50~9:30 会以为这条线还是那么慢，然后去优化一个已经没了的问题。
 _COPY_PAGE_ATTEMPTS = int(os.environ.get("TENNISLIVE_COPYPAGE_ATTEMPTS") or 26)
 _COPY_PAGE_RETRY_SECONDS = float(
     os.environ.get("TENNISLIVE_COPYPAGE_RETRY_SECONDS") or 30.0
 )
-#: 实测最慢的一次成功构建（`42764e0`，9 分 30 秒）。等待窗口不许比它短——
-#: 短了那颗按钮就永远出不来，而且不会报错。判据在 test_pushmsg 里。
+#: 整站发布时代实测最慢的一次成功构建（`42764e0`，9 分 30 秒）。等待窗口不许
+#: 比它短——短了那颗按钮就永远出不来，而且不会报错。判据在 test_explainer 里。
+#: 这个数**故意不按 #168 之后的 20~27 秒往下调**：它是安全下界，不是当前耗时。
 MEASURED_PAGES_BUILD_SECONDS = 570.0
+
+#: Pages 部署那条工作流。**主线才有意义**——Pages 只服务 main。
+_PAGES_WORKFLOW = "pages.yml"
+
+
+def _gh_headers(token: str) -> dict[str, str]:
+    return {"Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"}
+
+
+def pages_runs(
+    token: str, repo: str, *, per_page: int = 5, timeout: int = 15
+) -> list[tuple[int, str, str]] | None:
+    """最近几条 `pages.yml` 的运行记录：`(id, actor, event)`，新的在前。
+
+    **读不到返回 `None`，一条都没有返回 `[]`**——两者必须分开。合成一档的话
+    「查不了」会被读成「没跑起来」，而这两件事的处置正好相反。
+    """
+    url = (f"https://api.github.com/repos/{repo}/actions/"
+           f"workflows/{_PAGES_WORKFLOW}/runs?per_page={per_page}")
+    try:
+        r = requests.get(url, timeout=timeout, headers=_gh_headers(token))
+        if r.status_code != 200:
+            logger.info("[Pages] 读运行列表失败：HTTP %s", r.status_code)
+            return None
+        runs = r.json().get("workflow_runs") or []
+    except (requests.RequestException, ValueError) as exc:
+        logger.info("[Pages] 读运行列表失败（%s: %s）", type(exc).__name__, exc)
+        return None
+    return [(int(run["id"]),
+             str((run.get("actor") or {}).get("login") or "?"),
+             str(run.get("event") or "?"))
+            for run in runs if run.get("id") is not None]
+
+
+def trigger_pages_build(
+    *, ref: str = "main", timeout: int = 15, confirm_seconds: float = 25.0
+) -> bool:
+    """让 Pages 重新发布。**工作流自己提交的那次 push 不会触发它。**
+
+    2026-08-04 挖出来的静默回归。判据是 `pages.yml` 从上线到出事的**全部**
+    四趟运行记录：
+
+        #1  workflow_dispatch  我手动跑的第一趟
+        #2  push               **真人合并 PR #166**      ← 唯一自动触发的
+        #3  workflow_dispatch  工作流提交的佩古拉复制页    ← 手动补的
+        #4  workflow_dispatch  工作流提交的伊埃拉复制页    ← 手动补的
+
+    两次由推送流程自己 commit + push 的复制页，**一次都没触发部署**。原因是
+    GitHub 明文规定：用仓库自带的 `GITHUB_TOKEN` 推上去的 push **不会创建新的
+    workflow run**（防递归），而复制页正是工作流自己推的。
+
+    #168 之前 Pages 走的是「从分支部署」——那不是工作流，谁推都重建，所以这条
+    路一直通（只是慢，整站一两 GB 要六到九分钟）。换成 Actions 部署之后，
+    **触发器写对了，可它对这条唯一重要的路径是空的**。
+
+    ⚠️ **症状是「慢」不是「错」，所以它能藏住**：探活一直 404，探满
+    `_COPY_PAGE_ATTEMPTS` 次（26 × 30s ＝ 12.5 分钟）之后静静摘掉按钮、
+    正文照发。伊埃拉那条连吃七次 404，我手动 dispatch 一次之后**第 8 次立刻
+    中**——那就是判据。又一次「兜底出事的时候不吭声」。
+
+    **`workflow_dispatch` 正是那条禁令明文列出的例外**（和 `repository_dispatch`
+    一起），所以主动点一下就能绕过去，不用另配 PAT。
+    ⚠️ **但「文档这么说」不等于「跑通了」，而 204 也不等于「跑起来了」。**
+    `dispatches` 那个接口返回的 204 只保证 **GitHub 收下了这个请求**——
+    工作流被停用、`pages.yml` 不在默认分支上、ref 指到没有这个文件的地方，
+    都可能收下之后什么也不发生。**这正是「查产物，不查信号」**：信号是
+    204，产物是**一条真的运行记录**。所以现在点完还要回头确认它出现了，
+    并把 **run id 和 actor** 一起打进日志。
+
+    判据是 `actor`：`github-actions[bot]` 才说明**是这段代码点的**；
+    写着人名就说明那趟是有人手动补的（2026-08-04 那两条就是我补的，
+    而它们看起来和自动触发一模一样）。
+
+    ⚠️ **比「新东西出现」要比变化量，别比内容特征**——这里比的是 run id
+    的集合差，不是时间戳也不是「最近有没有一条 workflow_dispatch」。
+    后者当前就成立，循环一上来就为真。
+
+    **点不动不算失败**（探活那道闸还在，最坏是摘掉按钮），**但必须出声**——
+    否则「没点成」和「点成了」在日志上长得一模一样，而这正是这个 bug 藏了
+    一整天的原因。
+    """
+    import time
+
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if not token:
+        logger.info("[Pages] 没有 GITHUB_TOKEN，不主动触发部署——"
+                    "复制页要等别的 push 才会发布，探活可能一直 404")
+        return False
+    repo = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
+    # 点之前先记下已经有哪些 run，等下拿集合差认出新的那条。
+    before = pages_runs(token, repo, timeout=timeout)
+    known = {rid for rid, _, _ in before} if before is not None else None
+
+    url = (f"https://api.github.com/repos/{repo}/actions/"
+           f"workflows/{_PAGES_WORKFLOW}/dispatches")
+    try:
+        r = requests.post(url, json={"ref": ref}, timeout=timeout,
+                          headers=_gh_headers(token))
+    except requests.RequestException as exc:
+        logger.warning("[Pages] 触发部署失败（%s: %s）——复制页可能迟迟发不出来",
+                       type(exc).__name__, exc)
+        return False
+    if r.status_code != 204:
+        # 403 多半是工作流少了 `actions: write`；404 是文件名或 ref 不对。
+        logger.warning("[Pages] 触发部署被拒：HTTP %s %s——"
+                       "工作流要有 `permissions: actions: write` 并传 GITHUB_TOKEN",
+                       r.status_code, (r.text or "")[:200])
+        return False
+
+    if known is None:
+        # 读不到基线就没法比集合差。**说出来**，别让「没确认」混进「确认了」。
+        logger.info("[Pages] 已请求重新发布（%s @ %s）——读不到运行列表，"
+                    "这一趟确认不了它有没有真的跑起来", _PAGES_WORKFLOW, ref)
+        return True
+
+    deadline = time.monotonic() + confirm_seconds
+    while True:
+        for rid, actor, event in pages_runs(token, repo, timeout=timeout) or []:
+            if rid in known:
+                continue
+            logger.info("[Pages] 已触发重新发布：run %s，actor=%s，event=%s",
+                        rid, actor, event)
+            return True
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(2.0)
+    logger.warning(
+        "[Pages] dispatch 收下了（204），但 %.0f 秒内没出现新的运行记录——"
+        "204 只保证请求被接受，不保证它跑起来（工作流被停用？`%s` 不在 %s 上？）。"
+        "复制页多半要探满全程才摘按钮",
+        confirm_seconds, _PAGES_WORKFLOW, ref)
+    return False
 
 
 def drop_dead_copy_button(
@@ -446,6 +592,10 @@ def _probe_page(
     copy.html 上不去，而线上那份旧的照样返回 200，光看状态码分不出来。
     """
     import time
+
+    # **先点一下部署，再开始探。** 工作流自己提交的 push 不会触发 Pages，
+    # 不点的话这个循环注定探满全程再摘按钮——见 `trigger_pages_build`。
+    trigger_pages_build()
 
     for attempt in range(max(1, attempts)):
         try:

@@ -40,3 +40,11 @@ tools/broll/
 *.crop.jpg
 *.crop.png
 *.faded.png
+
+# 缩略图墙：**本地挑封面用的草稿，不进仓库。**
+# runner 那头在「丢掉不进仓库的中间物」里 `rm -f "$D"/storyboard.jpg`，
+# 可**本地** `--stage subs` 生成的那一份没有任何东西管它——于是一张 617 KB
+# 的图躺在 outdir 里等着被 `git add` 吃进去。
+# 又是「两处各配一遍必分叉」：规矩只写在了 runner 那一半。
+# 判据落在 test_缩略图墙两头都不许进仓库（.gitignore 和工作流的 rm 都要在）。
+output/**/storyboard.jpg

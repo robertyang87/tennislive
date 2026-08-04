@@ -1645,3 +1645,318 @@ def test_特殊豁免那条的字幕行行都是完整子句():
     assert (cross, split, short) == (0, 0, 0), (
         f"{total} 行里：横跨两句 {cross} 行、子句被劈开 {split} 行、太短 {short} 行")
 
+
+
+# ---------------------------------------------------------------- Pages 触发
+#
+# 2026-08-04：`pages.yml` 从上线到出事一共跑过四趟，**只有真人合并 PR 那趟是
+# push 自动触发的**；两次由推送流程自己 commit + push 的复制页一次都没触发。
+# 根因是 `GITHUB_TOKEN` 推的 push 不创建 workflow run（GitHub 防递归）。
+# 症状是「慢」不是「错」：探活探满 40 分钟，然后静静把按钮摘掉。
+
+def _fake_post(calls, status=204):
+    def post(url, **kw):
+        calls.append((url, kw))
+        return type("R", (), {"status_code": status, "text": ""})()
+    return post
+
+
+def _fake_runs(*snapshots):
+    """按顺序返回每次「查运行列表」看到的东西。
+
+    每份是 `[(id, actor, event), …]`，`None` 表示这次读不到（HTTP 500）。
+    用完之后停在最后一份——确认循环会查很多次。
+    """
+    seen = []
+
+    def get(url, **kw):
+        seen.append(url)
+        runs = snapshots[min(len(seen) - 1, len(snapshots) - 1)]
+        if runs is None:
+            return type("R", (), {"status_code": 500, "text": "",
+                                  "json": lambda self: {}})()
+        payload = {"workflow_runs": [
+            {"id": rid, "actor": {"login": actor}, "event": event}
+            for rid, actor, event in runs]}
+        return type("R", (), {"status_code": 200, "text": "",
+                              "json": lambda self, p=payload: p})()
+
+    return get
+
+
+def test_触发Pages要真发出那个dispatch(monkeypatch):
+    """204 才算点动了，而且要打到 `pages.yml` 的 dispatches 上。"""
+    from tennislive.render import pushmsg
+
+    calls = []
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "someone/repo")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post(calls))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(1, "someone", "push")],                       # 点之前
+        [(2, "github-actions[bot]", "workflow_dispatch"),
+         (1, "someone", "push")],                       # 点之后，多了一条
+    ))
+    assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    (url, kw), = calls
+    assert url == ("https://api.github.com/repos/someone/repo/actions/"
+                   "workflows/pages.yml/dispatches"), url
+    assert kw["json"] == {"ref": "main"}, "Pages 只服务 main，别按当前分支点"
+    assert kw["headers"]["Authorization"] == "Bearer t0ken"
+
+
+def test_点不动Pages不许静默(monkeypatch, caplog):
+    """点不动**不算失败**（探活那道闸还在），但必须出声。
+
+    「没点成」和「点成了」在日志上长得一样，正是这个 bug 藏了一整天的原因。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([], status=403))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs([]))
+    with caplog.at_level(logging.WARNING):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False
+    assert "403" in caplog.text and "actions: write" in caplog.text
+
+    caplog.clear()
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False
+    assert "GITHUB_TOKEN" in caplog.text
+
+
+def test_点完要确认真的出现了一条新的运行记录(monkeypatch, caplog):
+    """**204 是信号，运行记录才是产物。**
+
+    `dispatches` 返回 204 只保证 GitHub 收下了请求：工作流被停用、
+    `pages.yml` 不在默认分支上、ref 指到没有这个文件的地方，都会收下之后
+    什么也不发生。2026-08-04 那两条「看起来自动触发了」的记录其实是我手动
+    补的，而日志里两者一模一样——所以现在要把 **run id 和 actor** 打出来。
+
+    ⚠️ 顺带钉住「**比变化量，别比内容特征**」：下面第二档的基线里**本来就
+    有**一条 `workflow_dispatch`，如果按「最近有没有 workflow_dispatch」判，
+    它一上来就为真，这道确认等于没装。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([]))
+
+    # ① 真的多出来一条 → True，而且 id 和 actor 都要落进日志
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(7, "robertyang87", "workflow_dispatch")],
+        [(8, "github-actions[bot]", "workflow_dispatch"),
+         (7, "robertyang87", "workflow_dispatch")],
+    ))
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    assert "8" in caplog.text and "github-actions[bot]" in caplog.text, (
+        "确认到了却没把 run id 和 actor 打出来——"
+        "而 actor 正是「这段代码点的」和「有人手动补的」之间唯一的区别")
+
+    # ② 收下了但什么也没发生 → False，而且要出声
+    caplog.clear()
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(
+        [(7, "robertyang87", "workflow_dispatch")]))   # 前后一模一样
+    with caplog.at_level(logging.WARNING):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is False, (
+            "没有新的运行记录却报成功了——那正是这条修复要防的「写了没跑过」")
+    assert "204" in caplog.text
+
+
+def test_读不到运行列表不算确认过(monkeypatch, caplog):
+    """「查不了」和「没跑起来」处置相反，日志里不许混成一句。
+
+    读不到基线就没法比集合差，这时**不能**把「看见一条旧 run」当成确认——
+    那是「非空结果 ≠ 对题」。所以直接说「这一趟确认不了」，返回 True
+    （POST 确实成功了，别把它误报成失败去吓下一个人）。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([]))
+    monkeypatch.setattr(pushmsg.requests, "get", _fake_runs(None))
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build(confirm_seconds=0) is True
+    assert "确认不了" in caplog.text, "读不到列表却装作确认过了"
+    assert "github-actions" not in caplog.text, (
+        "没确认过就不该报出 actor——那会让人以为验过了")
+
+
+def test_触发要排在探活之前不是之后():
+    """**只测行为拦不住位置错。**
+
+    排在探活之后等于没装：那时循环已经探满全程、按钮已经摘掉了。仓库里
+    「闸装在发的那一步不是渲的那一步」是同一个形状——那次三档行为全对、
+    全绿，按钮照样每次消失。
+    """
+    import inspect
+
+    from tennislive.render import pushmsg
+
+    reel = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    for src, where in (
+        (inspect.getsource(pushmsg._probe_page), "pushmsg._probe_page"),
+        (reel.split("def wait_for_copy_page")[1].split("\ndef ")[0],
+         "push_reel.wait_for_copy_page"),
+    ):
+        assert "trigger_pages_build()" in src, f"{where} 没触发 Pages 部署"
+        assert src.index("trigger_pages_build()") < src.index("for attempt"), (
+            f"{where} 把触发排在了探活循环**之后**——那时按钮早就摘掉了")
+
+
+#: 探复制页的那两个函数。谁（间接）调用它们，谁就要能点动 Pages。
+_COPY_PAGE_PROBES = {"drop_dead_copy_button", "wait_for_copy_page"}
+
+
+def _funcs_calling(tree, names: set[str]) -> set[str]:
+    """模块里哪些顶层函数调用了 `names` 里的任何一个。
+
+    **用 AST 不用正则**：`push_reel.py` 的 docstring 里提了三次
+    `wait_for_copy_page`，真正的调用只有一处；正则分不出这个差别，而这个
+    仓库的注释正是记教训的地方，必然会提到被测的那个名字。
+    """
+    import ast
+
+    hit = set()
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Call):
+                name = getattr(sub.func, "id", None) or getattr(
+                    sub.func, "attr", None)
+                if name in names:
+                    hit.add(node.name)
+    return hit
+
+
+def _probing_entry_points() -> list[str]:
+    """从代码推出「哪些命令行入口会走到探复制页」，不手写清单。"""
+    import ast
+
+    tools = sorted(
+        p.name for p in Path("tools").glob("*.py")
+        if _funcs_calling(ast.parse(p.read_text(encoding="utf-8")),
+                          _COPY_PAGE_PROBES))
+
+    cli_src = Path("src/tennislive/cli.py").read_text(encoding="utf-8")
+    probing = _funcs_calling(ast.parse(cli_src), _COPY_PAGE_PROBES)
+    # `if args.channel == "pushplus": return cmd_publish_pushplus(args)`
+    channels = sorted({
+        chan for chan, fn in re.findall(
+            r'args\.channel\s*==\s*"([^"]+)"[^\n]*\n\s*return\s+(\w+)\(', cli_src)
+        if fn in probing})
+
+    # **判据自己也要有判据**：主语没了它要出声，而不是变成一条恒真的绿灯。
+    assert tools, "一个 tools 脚本都没查到会探复制页——判据失效了"
+    assert channels, "一个 publish channel 都没查到会探复制页——判据失效了"
+    return ([re.escape(t) for t in tools]
+            + [rf"publish\s+{re.escape(c)}" for c in channels])
+
+
+def test_会发微信的工作流都要能触发Pages():
+    """判据自己推导，不维护白名单。
+
+    凡是跑 `push_reel.py` 或 `tennislive publish pushplus` 的工作流都会走到
+    探复制页那条路，所以都要：`permissions: actions: write`（才点得动
+    workflow_dispatch）+ 那一步拿得到 token。少一样就退回「探满 40 分钟再摘
+    按钮」，**而它不报错**。
+
+    ⚠️ 扫之前先去掉整行注释——工作流的注释正是这个仓库记教训的地方，
+    连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
+
+    ⚠️ **第一版写的是 `push_reel\\.py|publish\\s+pushplus`——那是一张伪装成
+    推导的白名单。** 它把「哪些入口会探复制页」的答案硬编码成了两种拼法，
+    于是 `publish content`（内容雷达）到底算不算，全靠写测试的人当时记得。
+    这次核下来它**碰巧**是对的（`cmd_publish_flash` 直接推图文，根本没有
+    复制页），可「碰巧对」和「真的接上了」长得一模一样，而且前者会一直绿。
+    现在从代码推：拿 AST 找出真正调用探活那两个函数的入口，再顺着
+    `args.channel` 的分发表倒推出 channel 名。以后哪个入口新接上探活，
+    这条会替人记得。
+    """
+    import yaml
+
+    need = re.compile("|".join(_probing_entry_points()))
+    checked = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        perms = spec.get("permissions") or {}
+        for job in (spec.get("jobs") or {}).values():
+            for step in job.get("steps") or []:
+                run = "\n".join(
+                    line for line in str(step.get("run") or "").splitlines()
+                    if not line.lstrip().startswith("#"))
+                if not need.search(run):
+                    continue
+                env = step.get("env") or {}
+                checked.append(f"{path.name}「{step.get('name')}」")
+                assert perms.get("actions") == "write", (
+                    f"{path.name} 会发微信却没有 `actions: write`——"
+                    "点不动 pages.yml，复制页只能等别的 push 才发布")
+                assert "GITHUB_TOKEN" in env or "GH_TOKEN" in env, (
+                    f"{path.name}「{step.get('name')}」拿不到 token，"
+                    "`trigger_pages_build` 会直接跳过")
+    assert len(checked) >= 9, f"只校到 {len(checked)} 处，判据可能失效了"
+
+
+def test_验证Pages那条路要够得着而且不发微信():
+    """**「写了」和「跑通了」之间，不该隔着一条要发微信才能走的路。**
+
+    #173 那个修复的判据是「`pages.yml` 里出现一条 `actor=github-actions[bot]`
+    的运行记录」，可它只在**真推送**的时候才走到——而真推送会发微信，那条
+    消息发出去收不回来。于是这个修复在仓库里躺了一整天，状态是「写了，
+    没跑过」，而它看起来和「修好了」一模一样。
+
+    `pages-selftest.yml` 把验证从发布里拆出来。三头都要钉：
+
+    - **入口够得着**（工作流在，手动能跑）
+    - **那条路真的短**——不出片、不发微信。只钉入口的话，有人把它写成一趟
+      完整推送也照样绿（`--cover-only` 那次就是这么栽的）
+    - **工具自己查一遍产物**，不只信 `trigger_pages_build()` 的返回值。
+      判据和被判的东西是同一个来源，就什么也证明不了
+    """
+    import yaml
+
+    path = Path(".github/workflows/pages-selftest.yml")
+    assert path.exists(), (
+        "验证 Pages 触发的入口没了——那条修复又只能等真推送才验得了")
+    spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+    # YAML 1.1 把裸的 `on:` 读成布尔 True
+    triggers = spec.get("on") or spec.get(True) or {}
+    assert "workflow_dispatch" in triggers, "手动入口没了，这条就跑不起来"
+    assert (spec.get("permissions") or {}).get("actions") == "write", (
+        "没有 `actions: write` 就点不动 pages.yml——这条自检自己会失败")
+
+    runs, envs = [], {}
+    for job in (spec.get("jobs") or {}).values():
+        for step in job.get("steps") or []:
+            runs.append("\n".join(
+                line for line in str(step.get("run") or "").splitlines()
+                if not line.lstrip().startswith("#")))
+            envs.update(step.get("env") or {})
+    body = "\n".join(runs)
+    assert "GITHUB_TOKEN" in envs, (
+        "拿不到 token，`trigger_pages_build` 会直接跳过——这条自检等于空转")
+    assert "check_pages_trigger.py" in body, "没跑那个自检工具"
+    for banned in ("push_reel.py", "tennislive publish", "ffmpeg",
+                   "playwright", "yt-dlp"):
+        assert banned not in body, (
+            f"pages-selftest 里出现了 {banned}——这条路只该点一下 Pages，"
+            "不出片也不发微信。它一旦变长，就又没人愿意跑它了")
+
+    tool = Path("tools/check_pages_trigger.py").read_text(encoding="utf-8")
+    assert tool.count("pages_runs(") >= 2, (
+        "自检工具没有自己前后各查一遍运行列表——只信函数的返回值，"
+        "等于拿判据去证明判据")
+    assert "expect_actor" in tool and "github-actions[bot]" in tool, (
+        "没有校 actor。而 actor 正是「这段代码点的」和「有人手动补的」之间"
+        "唯一的区别——2026-08-04 那两条看起来自动触发的记录就是手动补的")

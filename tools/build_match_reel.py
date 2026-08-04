@@ -157,6 +157,19 @@ COVER_TAIL = 0.25
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
 POSTER_NAME = "poster.jpg"
+# 2026-08-04 之前发出去的「赛场之上」封面，走的是 VS 版式（cutout / diagonal）。
+# 那天账号所有者把这个栏目的封面改成一律 solo，**这些不重渲**：微信那条消息
+# 发出去收不回来，为版式重跑一遍六分钟的 render 换不到任何东西。
+#
+# ⚠️ **只许减不许加。** 加一个名字进来就等于让一条新片子绕过新规矩，而它
+# 不会报错——正是这张表要防的事。判据在
+# `test_赛场之上的封面一律用solo`（这张表里的每个 slug 都必须真的是老片子，
+# 而且必须真的是非 solo——写错一个名字，豁免就成了一盏恒真的绿灯）。
+_LEGACY_VS_COVERS = frozenset({
+    "eala-fernandez", "eala-osaka", "eala-svitolina", "potapova-venus",
+    "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
+    "wong-lehecka",
+})
 # contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
@@ -825,6 +838,7 @@ def download(url: str, dest: Path) -> Path:
     # 不是 YouTube 就是一个普通直链（网盘、赛事站…），curl 一下就完了。
     # 这条路是被逼出来的：YouTube 对这台机器和 runner 都封着，人只能自己下好
     # 传到网盘，再把直链给我们。
+    direct_failed = ""
     if "youtube.com" not in url and "youtu.be" not in url:
         proc = subprocess.run(
             ["curl", "-sSL", "--fail", "-o", str(dest), url],
@@ -832,19 +846,46 @@ def download(url: str, dest: Path) -> Path:
         if proc.returncode != 0 or not dest.is_file() or dest.stat().st_size == 0:
             dest.unlink(missing_ok=True)
             raise ReelError(f"直链下载失败（{url[:90]}）：{(proc.stderr or '')[-300:]}")
-        head = dest.read_bytes()[:64]
-        if head[:15].lower().startswith(b"<!doctype html") or b"<html" in head.lower():
+        # **「下到了」不等于「下到的是视频」**，而这条路原来只看**前 64 字节**
+        # 里有没有 `<!doctype html` / `<html`。Brightcove 的播放页
+        # （`players.brightcove.net/<账号>/<player>/index.html?videoId=…`）
+        # 正是这么溜过去的：0.3 MB 的网页被当成源片收下，`_keep_source` 还把它
+        # **存进了缓存**，ffprobe 到下一步才报 `Invalid data found`
+        # （run 30838371382）。缓存把这个坏结果固化了——同一条 URL 再跑一趟会
+        # 直接命中它，于是「换个参数重试」永远重现同一个错。
+        #
+        # 判据换成「ffprobe 读不读得出一路视频流」。**yt-dlp 那条路早就在用
+        # `probe_size` 把关了**（它甚至还量高度防 360p），只有直链这条没有。
+        size_mb = dest.stat().st_size / 1e6
+        try:
+            width, height = probe_size(dest)
+        except (ReelError, ValueError):
+            head = dest.read_bytes()[:400].lower()
+            looks_html = b"<html" in head or b"<!doctype" in head
             dest.unlink(missing_ok=True)
-            raise ReelError(
-                "直链回的是 HTML 不是视频——网盘多半还是「仅限受邀者」，"
-                "改成「知道链接的任何人」再试")
-        print(f"[ok] 直链下到 {dest.stat().st_size / 1e6:.1f} MB")
-        _keep_source(url, dest)
-        return dest
+            # ⚠️ **这里原来直接抛错，而错误正文写着「这类要交给 yt-dlp」**——
+            # 也就是说出路已经写出来了，只是**让人去走，代码自己不走**。
+            # 张帅那条就撞在这儿：`players.brightcove.net/…/index.html?videoId=…`
+            # 不含 youtube，于是走 curl 拿回 0.3 MB 网页，render 第 12 秒就红
+            # （run 30875896980）——而同一条 URL 交给 yt-dlp 一次就下来了。
+            #
+            # **按结果分路，不按域名分路。** 维护一张「哪些站是播放页」的名单
+            # 会过期，而过期的名单和一条常年红的检查是同一个毛病；
+            # 「curl 下到的东西 ffprobe 读不出视频流」这个判据永远新鲜。
+            direct_failed = (
+                f"直链下到 {size_mb:.1f} MB，但 ffprobe 读不出视频流"
+                f"{'（内容是 HTML）' if looks_html else ''}")
+            print(f"[直链] {direct_failed}，改交给 yt-dlp 再试一次")
+        else:
+            print(f"[ok] 直链下到 {size_mb:.1f} MB，{width}×{height}")
+            _keep_source(url, dest)
+            return dest
 
     binary = shutil.which("yt-dlp") or shutil.which("yt_dlp")
     if not binary:
-        raise ReelError("找不到 yt-dlp")
+        raise ReelError(
+            f"{direct_failed}，而且找不到 yt-dlp" if direct_failed
+            else "找不到 yt-dlp")
     # **编码是偏好，不是硬条件。** 原来第一档写死 `vcodec^=avc1` + `ext=m4a`：
     # YouTube 的高清一律是分离流，而 1080p 那几档常常是 VP9/AV1(webm)。某个
     # player client 列出来的格式表不全时（PO token / n challenge 那一环没打通
@@ -893,7 +934,8 @@ def download(url: str, dest: Path) -> Path:
         dest.unlink(missing_ok=True)
 
     raise ReelError(
-        f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
+        (f"{direct_failed}；退回 yt-dlp 之后，" if direct_failed else "")
+        + f"{len(failures)} 种 player client 都下不下来（{url}）。逐条原因：\n  "
         + "\n  ".join(failures)
         + "\n\n如果全是 “Sign in to confirm you’re not a bot”，那是**这台机器的 IP "
         "被 YouTube 挡了**，不是视频的问题：把一份登录过的 cookies.txt 存成仓库 "
@@ -1007,6 +1049,14 @@ class Segment:
     # （这一段本来就没人配音），字幕按字数等比分配到整段时长上——拿不到
     # 词边界时本来就是这么退的，不完美，但绝不能因此整段没字幕。
     quote: str = ""
+    # **`quote` 写成列表时，每一条就是一条字幕**，断句权交回写 spec 的人；
+    # 元素里的换行渲成两行（上英下中）。
+    #
+    # 为什么要这一档：原声段拿不到词边界，退路是「按字数等比铺满整段」，
+    # 断句靠标点自动切。中英双语过不了这一关——自动切会把英文句子劈开，
+    # 也不知道哪一行该和哪一行配成一对。
+    # 账号所有者 2026-08-03：「前面夺冠庆祝的部分全用英文原声配中英文字幕」。
+    quote_cues: tuple[str, ...] = ()
     # **角标**：一张 PNG 压在这一段的角上，画面不中断。
     #
     # 比整屏切一张静图好在**两件事同时在画面上**。休伊特那条讲的是儿子做了
@@ -1021,6 +1071,76 @@ class Segment:
     @property
     def length(self) -> float:
         return round(self.end - self.start, 3)
+
+
+def _quote_cues(raw: object) -> tuple[str, ...]:
+    """`quote` 写成列表时，**每一条就是一条字幕**（元素里的换行渲成两行）。
+
+    写成字符串时返回空元组 —— 走原来那条「按标点自动切、按字数等比铺满」的路，
+    存量 spec 一个字都不用改。
+    """
+    if not isinstance(raw, list):
+        return ()
+    out = []
+    for x in raw:
+        if isinstance(x, dict):
+            out.append({"at": float(x["at"]), "text": str(x["text"]).strip()})
+        elif str(x).strip():
+            out.append(str(x).strip())
+    return tuple(out)
+
+
+def _quote_text(raw: object) -> str:
+    """互斥判断和「这一段有没有原声字幕」都只看真假，所以列表拼成一段就够。"""
+    if isinstance(raw, list):
+        return " ".join(x["text"] if isinstance(x, dict) else x
+                        for x in _quote_cues(raw))
+    return str(raw).strip()
+
+
+def explicit_quote_cues(lines: tuple, span: float,
+                        offset: float) -> list[tuple[float, float, str]]:
+    """按条声明的原声字幕。两种写法，可以混着用：
+
+    - `"上英\\n下中"` —— 时长按各条的字数摊到整段上（短段够用）
+    - `{"at": 段内秒数, "text": "上英\\n下中"}` —— **钉在真实时刻上**
+
+    ⚠️ **一整段几十秒的原声必须用 `at`。** 按字数摊的前提是「说话密度均匀」，
+    而真实解说有停顿、有留白：夺冠那一段 67 秒里十几条，摊出来能差好几秒，
+    字幕比人先开口或者慢半拍——比不同步更糟的是**它看起来像同步**。
+    `at` 直接从 `probe.json` 旁边那份 `captions.txt` 的时间戳减去段起点。
+
+    末条的结束时间收在段尾；中间每条收在下一条的开头（解说是连着说的，
+    留空档反而会闪）。
+
+    ⚠️ 元素里的换行是「这一条排两行」——`explainer.write_subtitles` 按行分别
+    过 `_ass_text` 再用 ASS 换行符拼。上锚保证多一行是**往下**长。
+    """
+    stamped = [t for t in lines if isinstance(t, dict)]
+    if stamped and len(stamped) != len(lines):
+        raise ReelError(
+            "同一段的 quote 里不许一半写 `at` 一半不写：混着用的话，没写的那些"
+            "要按字数摊，摊的范围又被写了 `at` 的那些切碎，出来的时刻没人能预料。")
+    out: list[tuple[float, float, str]] = []
+    if stamped:
+        at_list = [float(t["at"]) for t in stamped]
+        bad = [a for a in at_list if not 0 <= a < span]
+        if bad:
+            raise ReelError(f"quote 的 `at` 超出这一段（0–{span:.2f}s）：{bad}")
+        for index, item in enumerate(stamped):
+            start = offset + at_list[index]
+            end = (offset + at_list[index + 1]) if index + 1 < len(stamped) \
+                else offset + span
+            out.append((start, end, readable(str(item["text"]))))
+        return out
+    weights = [max(1, len(str(t).replace("\n", ""))) for t in lines]
+    total = sum(weights)
+    at = offset
+    for text, weight in zip(lines, weights):
+        dur = span * weight / total
+        out.append((at, at + dur, readable(str(text))))
+        at += dur
+    return out
 
 
 def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
@@ -1043,7 +1163,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         s.get("narration", "").strip(),
                         str(s.get("fit", "crop")), bool(s.get("track", False)),
                         str(s.get("source", primary)),
-                        s.get("quote", "").strip(),
+                        _quote_text(s.get("quote", "")),
+                        _quote_cues(s.get("quote", "")),
                         s.get("inset") or None)
                 for s in spec["segments"]]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
@@ -1081,10 +1202,10 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
              "subtitle_top"),
-    "cover": ("event_badge", "eyebrow", "hook", "layout", "meta", "narration",
-              "portrait", "portrait_above", "result", "round", "score",
-              "scrim", "split", "sub", "subject", "tier", "topic", "versus",
-              "winner"),
+    "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
+              "narration", "portrait", "portrait_above", "result", "round",
+              "score", "scrim", "split", "sub", "subject", "tier", "topic",
+              "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
                 "narration", "quote", "source", "start", "track"),
 }
@@ -1409,12 +1530,23 @@ def track_shots(sources: dict[str, Path], segments: list["Segment"],
     # 3:4 之后窗口占源片 41.3% 宽（9:16 时只有 32%），对中的余量本来就宽裕。
     # **可预期比「聪明」要紧**：读者的直觉就是等比裁切，行为得对得上。
     # 个别段要另定，spec 里显式给 `cx`——那是人看着缩略图墙定的，说了算。
-    fixed = [s for s in segments
-             if not s.track and s.fit != "contain" and s.cx is None]
+    # ⚠️ **摇的段也要填 `cx`。** 这里原来写着 `not s.track`——只给不摇的段填，
+    # 于是 `track: true` 的段 `cx` 留着 `None`，而 `cut_segment` **无条件先算**
+    # 一个兜底的 `x = seg.cx * source_w - CROP_W/2`，当场
+    # `TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'`
+    # （run 30877075310，分段编码到第 11 段才炸，前面十段全白编）。
+    #
+    # **存量九条 spec 一条都没用过 `track`**，所以这条路从「自动定心改成固定
+    # 中心」那天起就是坏的，一直没人踩到——又一次「写了不等于跑过」：
+    # 那次改动只保证了它走的那条路，另一条路的前提被顺手拿掉了。
+    #
+    # 摇的段有 `path` 时用不上这个值；**拿不到 path 时它就是兜底**，见下面。
+    fixed = [s for s in segments if s.fit != "contain" and s.cx is None]
     for seg in fixed:
         seg.cx = 0.5
-    if fixed:
-        print(f"    [fixed] {len(fixed)} 段不摇，窗口取源片正中 cx=0.500")
+    still = [s for s in fixed if not s.track]
+    if still:
+        print(f"    [fixed] {len(still)} 段不摇，窗口取源片正中 cx=0.500")
     for members in runs:
         start = segments[members[0]].start
         end = segments[members[-1]].end
@@ -1502,6 +1634,13 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
         else:
+            # **声明了要摇却没拿到路径**，是退回固定中心——但要出声。
+            # 不吭声的话，「跟踪抽帧失败」和「本来就不摇」在日志上一模一样，
+            # 而这一段之所以写 `track: true`，正是因为固定中心装不下主体。
+            if seg.track:
+                print(f"    [track] ⚠️ {seg.start:.1f}s 段声明了 track 但没跟出"
+                      f"路径，退回固定中心 cx={seg.cx:.3f}——"
+                      "主体如果在横向移动，这一段的构图要自己看一眼")
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
                      f"fps={FPS_EXPR},setsar=1")
@@ -1588,37 +1727,40 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
 
     账号所有者 2026-07-31 定的：休伊特那条「是讲休伊特的儿子的话题，不是
     赛场之上的内容」「所以封面只有休伊特儿子照片」。反过来那条**没有松**：
-    赛场之上仍然只能用 VS 模板，solo 不是它缺图时的兜底。
+    ⚠️ **2026-08-04 又翻了回来**：账号所有者「以后都用 solo 版做「赛场之上」
+    封面」，于是 solo 成了默认，**退回 VS 才要写 `_layout_why`**。下面那段
+    注释记着这次翻面的完整理由。
     """
     cover = spec["cover"]
     layout = str(cover.get("layout", "cutout"))
     eyebrow = str(cover.get("eyebrow", "")).strip()
+    # ⚠️ **闸在 2026-08-04 整个反过来了。**
+    #
+    # 账号所有者：「**以后都用 solo 版做「赛场之上」封面**」「中间标题下面
+    # 写上比分（带双方国旗）」。所以 solo 成了这个栏目的默认，VS 反过来成了
+    # 需要认领的那一支。
+    #
+    # 老规矩（「赛场之上一律 VS，solo 要写 `_layout_why`」）要防的是**滑坡**：
+    # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
+    # 顶一下」。**那个滑坡现在不存在了**——solo 本来就是默认，没什么可省的。
+    # 而反方向的滑坡出现了：有人手头正好有两张抠图，就顺手退回 VS，栏目的
+    # 封面于是又变成两种样子。所以闸原样翻个面：**非 solo 要写 `_layout_why`**。
+    #
+    # 已发的十几条 VS 封面不动（`_LEGACY_VS_COVERS`，只许减不许加）——
+    # 微信那条消息发出去收不回来，为版式重渲没有意义。
+    if layout != "solo" and eyebrow == "赛场之上" \
+            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
+            and not str(cover.get("_layout_why", "")).strip():
+        raise ReelError(
+            "「赛场之上」的封面从 2026-08-04 起一律用 solo："
+            "账号所有者「以后都用 solo 版做『赛场之上』封面」。\n"
+            f"这条 spec 写的是 layout={layout!r}。\n"
+            "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
+            "赛果写在 `cover.result` + `cover.matchup`，"
+            "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
+            "**确实要退回 VS 版式，就写一句 `cover._layout_why` 说清楚为什么**"
+            "——一句话就行，但必须写；不写就是手滑，不是决定。")
     if layout == "solo":
-        # **赛场之上默认仍然是 VS 模板，但可以按条声明改用 solo。**
-        #
-        # 原来这儿是一刀切「赛场之上一律 VS」。那条规矩要防的是**滑坡**：
-        # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
-        # 顶一下」。防的是「缺图 → 换个 layout 试试」，不是防「编辑上认为
-        # 这一条该用单人封面」。
-        #
-        # 账号所有者 2026-08-02（gea-shapovalov）：「封面就变成他热亚一个人
-        # 捧杯的全景图吧。这样可能更合适一点，而不是说两人对阵的那种头像图了。」
-        # 那一条**两张官方抠图都在手上、VS 海报已经渲出来看过**——不是缺图，
-        # 是编辑判断：这条片子讲的是一个人三年爬上来然后夺冠，不是一场对决。
-        #
-        # 所以闸从「不许」改成「**要留下判据**」：写一句 `_layout_why` 说清楚
-        # 为什么这一条不是对决片。和 `mixed_fps` / `silent_source` / `rank: null`
-        # 一个形状——认领这一步把「想清楚了」和「凑合一下」分开，而**忘了写
-        # 会当场报错**，滑不下去。
-        if eyebrow == "赛场之上" and not str(cover.get("_layout_why", "")).strip():
-            raise ReelError(
-                "「赛场之上」默认是 VS 模板：这个栏目通常讲一场对决，"
-                "封面只放一个人就少了一半。\n"
-                "**确实要用单人封面，就写一句 `cover._layout_why` 说清楚为什么**"
-                "（这一条讲的是谁、为什么不是对决片）——一句话就行，但必须写。\n"
-                "⚠️ 这个键不是给「缺图」用的。缺图去扩检索源（赛事官方图库 → "
-                "协会/赛事新闻页 → 新闻站/图片社 → Commons/Flickr），"
-                "或从本场源片抓一帧；**拿 solo 顶替缺掉的那一格是滑坡，不是决定**。")
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
             raise ReelError(
@@ -2507,8 +2649,12 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         if seg.quote:
             # 原声段：没有语音可对齐，按字数等比铺满整段。**行数不能太多**，
             # 否则每行只剩一瞬——一段 12 秒的采访塞 60 字就是这样。
-            cues.extend(subtitle_cues(readable(seg.quote), seg.length,
-                                      offset=offset))
+            if seg.quote_cues:
+                cues.extend(explicit_quote_cues(seg.quote_cues, seg.length,
+                                                offset))
+            else:
+                cues.extend(subtitle_cues(readable(seg.quote), seg.length,
+                                          offset=offset))
         elif seg.narration.strip():
             spoken = spoken_of[index]
             mix_inputs.extend(["-i", str(path)])
@@ -2743,13 +2889,42 @@ def main() -> int:
             for index, secs, room in est:
                 flag = ("← 估得再乐观也装不下" if room < -SPEECH_EST_ERR
                         else ("← 悬，跑一次 mode=narration"
-                              if room < SPEECH_EST_ERR else ""))
+                              if room < SPEECH_EST_ERR
+                              else ("← **哑场**，这一段大半时间没人说话"
+                                    if room > MAX_SILENT_GAP else
+                                    ("← 偏空，悬" if room > MAX_SILENT_GAP
+                                     - SPEECH_EST_ERR else ""))))
                 print(f"  第 {index + 1:>2d} 段 画面 "
                       f"{segments[index].length:5.1f}s 估旁白 {secs:5.2f}s "
                       f"余量 {room:+5.2f}s {flag}")
             sure = [i for i, _s, room in est if room < -SPEECH_EST_ERR]
             tight = [i for i, _s, room in est
                      if -SPEECH_EST_ERR <= room < SPEECH_EST_ERR]
+            # **余量是同一个数的两头，这条离线估原来只看了一头。**
+            # `eala-pegula-final` 第 6 段 dry-run 报「余量 +4.71s」——那一行
+            # 我读成了「装得下，很好」，六分钟之后 render 里那道哑场闸才红：
+            # 「画面 13.1s，旁白只说了 8.83s，4.27s 没人在说话」。
+            # **它一直印在那儿，只是没被读成「太空」。**
+            # ⚠️ **这儿拿点估值直接跟门槛比，不减误差带子。** 第一版我写的是
+            # `room - SPEECH_EST_ERR > MAX_SILENT_GAP`（「估得再保守也超」），
+            # 那要 room > 5.5s 才报——而真闸红在 4.27s，照样漏。
+            # 离线估的**中位误差贴近 0**（`test_离线估旁白长度要对得上真产物`
+            # 钉着这一条），所以点估值就是最好的猜测，和真闸同一个口径；
+            # 落在 `门槛 ± 误差` 里的标「偏空，悬」，让人去跑 mode=narration。
+            #
+            # ⚠️ **只警告，不 `return 1`。** 第一版让它红，当场把已发的
+            # `gea-shapovalov`（18 段）也判红了——那条片子当年是过了真闸的。
+            # 真闸用**真语音**，离线估在这一头偏保守（本例估 4.71s、实测
+            # 4.27s），拿它当硬闸会把一批好 spec 挡在门外，而**一条常年红的
+            # 检查和没有检查是同一个毛病**。它的职责是让人早点看见，不是拍板。
+            idle = [i for i, _s, room in est if room > MAX_SILENT_GAP]
+            if idle:
+                print(f"\n第 {[i + 1 for i in idle]} 段**估出来就是哑场**"
+                      f"（单段门槛 {MAX_SILENT_GAP}s，估的误差 ±{SPEECH_EST_ERR}s）："
+                      "render 里那道闸**可能**会红——它用真语音量，"
+                      "离线估在这一头偏保守。先跑一次 mode=narration。\n"
+                      "两条出路：把旁白补长（事实从 spec 已有的事实出处里取），"
+                      "或者把窗口收短（`end` 往前挪）。")
             if sure:
                 print(f"\n第 {[i + 1 for i in sure]} 段一定装不下：这几段删短，"
                       "或者把画面拉长（`end` 往后挪，别越过下一段的 `start`）。")

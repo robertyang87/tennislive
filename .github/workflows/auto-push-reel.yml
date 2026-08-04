@@ -26,6 +26,9 @@ on:
 
 permissions:
   contents: write
+  # 触发 `pages.yml` 重新发布复制页——工作流自己提交的 push
+  # **不会**创建 workflow run，见 `trigger_pages_build`。
+  actions: write
 
 # 同一条片子只留一个在跑。**不许 cancel-in-progress**：取消一个已经发出
 # POST 的 run，只会让「发没发出去」变成未知，而 pushed.json 那一笔可能没记上。
@@ -100,6 +103,8 @@ jobs:
           python tools/push_reel.py --stage page \
             --outdir "${{ steps.gate.outputs.outdir }}" \
             --copy "specs/reels/${{ steps.gate.outputs.slug }}.xhs.txt"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: 复制页有变化就先提交
         if: steps.gate.outputs.found == 'true'
@@ -119,6 +124,7 @@ jobs:
       - name: 推送到微信
         if: steps.gate.outputs.found == 'true'
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           # **钉 commit，别停在 @main。** 同一条片子重渲，海报路径一模一样，
           # 而微信的图片缓存按**路径**算——URL 停在 @main 的话推出去的还是
           # 上一版那张海报，而且不吭声。
