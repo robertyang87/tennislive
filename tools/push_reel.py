@@ -49,7 +49,11 @@ from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
 )
-from tennislive.render.pushmsg import _PAGES, to_copy_page  # noqa: E402
+from tennislive.render.pushmsg import (  # noqa: E402
+    _PAGES,
+    to_copy_page,
+    trigger_pages_build,
+)
 
 REPO = os.environ.get("GITHUB_REPOSITORY", "robertyang87/tennislive")
 # 日期从 outdir 里取（output/YYYY-MM-DD/...），别另传一个参数——两处日期
@@ -138,6 +142,10 @@ def wait_for_copy_page(url: str, expect: str = "", *, attempts: int = 30,
         "TENNISLIVE_COPYPAGE_RETRY_SECONDS", delay))))
     want = html.escape(expect.strip())
     last = ""
+    # **先点一下部署，再开始探。** 工作流自己 commit + push 的复制页**不会**
+    # 触发 Pages（`GITHUB_TOKEN` 推的 push 不创建 workflow run），不点的话
+    # 这个循环注定探满全程——见 `trigger_pages_build` 里那张运行记录表。
+    trigger_pages_build()
     for attempt in range(attempts):
         try:
             response = requests.get(url, timeout=timeout,

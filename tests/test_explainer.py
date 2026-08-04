@@ -1645,3 +1645,114 @@ def test_特殊豁免那条的字幕行行都是完整子句():
     assert (cross, split, short) == (0, 0, 0), (
         f"{total} 行里：横跨两句 {cross} 行、子句被劈开 {split} 行、太短 {short} 行")
 
+
+
+# ---------------------------------------------------------------- Pages 触发
+#
+# 2026-08-04：`pages.yml` 从上线到出事一共跑过四趟，**只有真人合并 PR 那趟是
+# push 自动触发的**；两次由推送流程自己 commit + push 的复制页一次都没触发。
+# 根因是 `GITHUB_TOKEN` 推的 push 不创建 workflow run（GitHub 防递归）。
+# 症状是「慢」不是「错」：探活探满 40 分钟，然后静静把按钮摘掉。
+
+def _fake_post(calls, status=204):
+    def post(url, **kw):
+        calls.append((url, kw))
+        return type("R", (), {"status_code": status, "text": ""})()
+    return post
+
+
+def test_触发Pages要真发出那个dispatch(monkeypatch):
+    """204 才算点动了，而且要打到 `pages.yml` 的 dispatches 上。"""
+    from tennislive.render import pushmsg
+
+    calls = []
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "someone/repo")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post(calls))
+    assert pushmsg.trigger_pages_build() is True
+    (url, kw), = calls
+    assert url == ("https://api.github.com/repos/someone/repo/actions/"
+                   "workflows/pages.yml/dispatches"), url
+    assert kw["json"] == {"ref": "main"}, "Pages 只服务 main，别按当前分支点"
+    assert kw["headers"]["Authorization"] == "Bearer t0ken"
+
+
+def test_点不动Pages不许静默(monkeypatch, caplog):
+    """点不动**不算失败**（探活那道闸还在），但必须出声。
+
+    「没点成」和「点成了」在日志上长得一样，正是这个 bug 藏了一整天的原因。
+    """
+    import logging
+
+    from tennislive.render import pushmsg
+
+    monkeypatch.setenv("GITHUB_TOKEN", "t0ken")
+    monkeypatch.setattr(pushmsg.requests, "post", _fake_post([], status=403))
+    with caplog.at_level(logging.WARNING):
+        assert pushmsg.trigger_pages_build() is False
+    assert "403" in caplog.text and "actions: write" in caplog.text
+
+    caplog.clear()
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GH_TOKEN", raising=False)
+    with caplog.at_level(logging.INFO):
+        assert pushmsg.trigger_pages_build() is False
+    assert "GITHUB_TOKEN" in caplog.text
+
+
+def test_触发要排在探活之前不是之后():
+    """**只测行为拦不住位置错。**
+
+    排在探活之后等于没装：那时循环已经探满全程、按钮已经摘掉了。仓库里
+    「闸装在发的那一步不是渲的那一步」是同一个形状——那次三档行为全对、
+    全绿，按钮照样每次消失。
+    """
+    import inspect
+
+    from tennislive.render import pushmsg
+
+    reel = Path("tools/push_reel.py").read_text(encoding="utf-8")
+    for src, where in (
+        (inspect.getsource(pushmsg._probe_page), "pushmsg._probe_page"),
+        (reel.split("def wait_for_copy_page")[1].split("\ndef ")[0],
+         "push_reel.wait_for_copy_page"),
+    ):
+        assert "trigger_pages_build()" in src, f"{where} 没触发 Pages 部署"
+        assert src.index("trigger_pages_build()") < src.index("for attempt"), (
+            f"{where} 把触发排在了探活循环**之后**——那时按钮早就摘掉了")
+
+
+def test_会发微信的工作流都要能触发Pages():
+    """判据自己推导，不维护白名单。
+
+    凡是跑 `push_reel.py` 或 `tennislive publish pushplus` 的工作流都会走到
+    探复制页那条路，所以都要：`permissions: actions: write`（才点得动
+    workflow_dispatch）+ 那一步拿得到 token。少一样就退回「探满 40 分钟再摘
+    按钮」，**而它不报错**。
+
+    ⚠️ 扫之前先去掉整行注释——工作流的注释正是这个仓库记教训的地方，
+    连它一起扫会把「把坑记下来」判成「又踩了这个坑」。
+    """
+    import yaml
+
+    need = re.compile(r"push_reel\.py|publish\s+pushplus")
+    checked = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        perms = spec.get("permissions") or {}
+        for job in (spec.get("jobs") or {}).values():
+            for step in job.get("steps") or []:
+                run = "\n".join(
+                    line for line in str(step.get("run") or "").splitlines()
+                    if not line.lstrip().startswith("#"))
+                if not need.search(run):
+                    continue
+                env = step.get("env") or {}
+                checked.append(f"{path.name}「{step.get('name')}」")
+                assert perms.get("actions") == "write", (
+                    f"{path.name} 会发微信却没有 `actions: write`——"
+                    "点不动 pages.yml，复制页只能等别的 push 才发布")
+                assert "GITHUB_TOKEN" in env or "GH_TOKEN" in env, (
+                    f"{path.name}「{step.get('name')}」拿不到 token，"
+                    "`trigger_pages_build` 会直接跳过")
+    assert len(checked) >= 9, f"只校到 {len(checked)} 处，判据可能失效了"
