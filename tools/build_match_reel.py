@@ -90,6 +90,7 @@ from tennislive.video.explainer import (  # noqa: E402
     _ASS_MARGIN_V,
     readable,
     speakable,
+    all_single_char_segments,
     word_split_report,
     subtitle_cues,
     write_subtitles,
@@ -2257,7 +2258,7 @@ def _protected_names(spec: dict) -> list[str]:
     return [n for n in dict.fromkeys(names) if len(n) >= 3]
 
 
-def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list]]:
+def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list, str, list]]:
     """每段问一次合成器「你把这句话切成了哪些词」。
 
     ⚠️ **喂进去的必须是 `speakable()` 之后那份**——合成器念的是它，不是 spec 里
@@ -2272,8 +2273,10 @@ def _word_splits(spec, segments, voices) -> list[tuple[int, str, list, list]]:
         marks = voices[index][1]
         if not marks:
             continue
-        line, crossing, inside = word_split_report(speakable(text), marks, names)
-        out.append((index, line, crossing, inside))
+        spoken = speakable(text)
+        line, crossing, inside = word_split_report(spoken, marks, names)
+        tokens = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
+        out.append((index, line, crossing, inside, spoken, tokens))
     return out
 
 
@@ -2288,11 +2291,18 @@ def _print_word_splits(splits) -> None:
         print("\n[查切词] 这条 spec 没有拿到词边界（合成器没报，或者没有旁白）。"
               "\n  ⚠️ 空不等于没问题——拿一段已知有旁白的 spec 对一次再下结论。")
         return
-    crossing = [(i, c) for i, _, c, _ in splits if c]
-    inside = [(i, x) for i, _, _, x in splits if x]
+    crossing = [(i, c) for i, _, c, _, _, _ in splits if c]
+    inside = [(i, x) for i, _, _, x, _, _ in splits if x]
+    singles = all_single_char_segments(
+        [(i, text, toks) for i, _, _, _, text, toks in splits])
     print(f"\n[查切词] 合成器自己报的切词，{len(splits)} 段：")
-    for index, line, _, _ in splits:
+    for index, line, _, _, _, _ in splits:
         print(f"  第 {index + 1:>2d} 段  {line}")
+    if singles:
+        print("\n⚠️ 整段每个 token 都是一个字，说明切词器没拿到上下文，"
+              "这几段读音风险最高：")
+        for item in singles:
+            print(f"  {item}")
     if crossing:
         print("\n⚠️ 有 token 骑在人名的边界上——念出来会把名字和邻字连读成一个"
               "不存在的词：")

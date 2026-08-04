@@ -5775,3 +5775,90 @@ def test_要了情绪风格却没配Azure必须报错不许悄悄退回():
     # 反面锚点：**只调语速音高的照旧走 edge-tts**，不许被这道闸误伤
     assert not Path("/tmp/never-written.mp3").exists(), \
         "报错之前不许已经写出音频"
+
+
+def test_整段全单字要被报出来():
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    2026-08-04 账号所有者问「切分词和短句，以及多音字等等，F0 能解决么？」。
+    不能：F0 只量音高。切词的判据一直在手上（`words.json` 的 `text` 就是合成器
+    自己报的切词），可**那道闸只保护人名**（出处是 spec 的 `cover.matchup`）。
+    王欣瑜那条手工扫出 6 处切错的，**一个人名都没有**，闸一声没吭。
+
+    ⚠️ **第一版还写了一条「同词两切」，拿存量验完撤掉了。** 那条判据是
+    「这一段是一个词、那一段被切开，合成器自己的两次输出打架」——不用维护词表，
+    看着很漂亮。实测 15 条片子：wong-gea 10 段报 7 处、zheng-lanlana 20 段报
+    7 处，而**报出来的几乎全是读音没变的**（`六 ｜ 比 ｜ 三` 照样念 liù bǐ sān）。
+    全套里真有歧义的只有 `二 ｜ 发`（fā / fà）一处。**一条天天误报的检查等于
+    没有检查。**
+
+    这条测试同时钉住那个撤除：判据里不许再出现跨段比对。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video import explainer  # noqa: PLC0415
+
+    hit = explainer.all_single_char_segments(
+        [(9, "抢七输掉了。", ["抢", "七", "输", "掉", "了"])])
+    assert any("第 10 段" in s for s in hit), f"没认出全单字：{hit}"
+
+    # ⚠️ 三条反面锚点，判据宁可窄不可宽：
+    # ① 三个 token 以下不算——「六比一。」本来就没上下文可用
+    assert not explainer.all_single_char_segments(
+        [(0, "六比一。", ["六", "比", "一"])]), "三个字的短句不该报"
+    # ② 有一个多字 token 就不算
+    assert not explainer.all_single_char_segments(
+        [(0, "盘点。二十九分钟。", ["盘点", "二十九", "分", "钟"])]), \
+        "有多字 token 的不该报"
+    # ③ **撤掉的那条不许自己回来**：跨段比对一出现，误报就跟着回来
+    body = inspect.getsource(explainer.all_single_char_segments)
+    assert "token_spans" not in body, \
+        "又在跨段比对了——那条判据实测误报率过半，撤掉是量出来的决定"
+
+
+def test_全单字那条判据在真产物上不误报():
+    """判据要拿**真渲染器的输出**验，不能只喂手搓的 token 列表。
+
+    上一条撤掉的「同词两切」就是这么倒的：单元测试里两段 fixture 一验就绿，
+    拿存量 15 条片子一跑，误报占了一半以上的段。**加判据之前先拿存量验一遍。**
+
+    ⚠️ **主语在 `output/` 里，而 CI 的稀疏检出不含它**——所以核心断言放在上面
+    那条（只吃 `src/`），这条是**加餐**：产物在的时候（本地沙箱）多验一层，
+    不在就跳过那一段。但**整条测试不许 skip**，一条常年跳过的检查和常年红是
+    同一个毛病。
+    """
+    sys.path.insert(0, str(Path("src").resolve()))
+    sys.path.insert(0, str(Path("tools").resolve()))
+    from tennislive.video.explainer import all_single_char_segments  # noqa: PLC0415
+    from build_match_reel import speakable  # noqa: PLC0415
+
+    checked = noisy = 0
+    for words in sorted(Path("output").glob("*/reel/*/voice_00.words.json")):
+        outdir = words.parent
+        spec = Path("specs/reels") / f"{outdir.name}.json"
+        if not spec.is_file():
+            continue
+        data = json.loads(spec.read_text("utf-8"))
+        segs = []
+        for i, seg in enumerate(data.get("segments") or []):
+            text = (seg.get("narration") or "").strip()
+            path = outdir / f"voice_{i:02d}.words.json"
+            if not text or not path.is_file():
+                continue
+            marks = json.loads(path.read_text("utf-8"))
+            toks = [t for t in (str(m.get("text", "")).strip() for m in marks) if t]
+            if toks:
+                segs.append((i, speakable(text), toks))
+        if len(segs) < 3:
+            continue
+        hits = all_single_char_segments(segs)
+        # 判据不是「一条都不报」——真有问题就该报。拦的是**淹没式误报**：
+        # 一条片子报出四分之一以上的段，人就不看它了。实测存量全部远低于这个数
+        # （15 条片子里只有 1 条命中 1 段）。
+        assert len(hits) <= max(1, len(segs) // 4), (
+            f"{outdir.name}：{len(segs)} 段报了 {len(hits)} 处，太吵了\n{hits}")
+        noisy += len(hits)
+        checked += 1
+
+    # 产物不在就只验上面那条；在的话至少要真校到一条，别变成恒真的绿灯
+    if Path("output").is_dir() and list(Path("output").glob("*/reel/*")):
+        assert checked >= 5, f"有成片目录却只校到 {checked} 条——主语找错了"

@@ -5625,6 +5625,68 @@ def speakable(text: str) -> str:
     return text.replace("硬地", "硬帝")
 
 
+def token_spans(text: str, tokens: Sequence[str]) -> list[tuple[int, int, str]]:
+    """每个 token 在原文里的 `[起, 止)`。
+
+    ⚠️ **位置要 `find`，不能靠累加长度。** 边界事件里不含标点（122 个字的旁白
+    只有 109 条事件），累加会越往后偏得越多——字幕那条线为这个坑单独写过一条判据。
+    """
+    out: list[tuple[int, int, str]] = []
+    cursor = 0
+    for tok in tokens:
+        at = text.find(tok, cursor)
+        if at < 0:                      # 合成器报了原文里没有的串，跳过不猜
+            continue
+        out.append((at, at + len(tok), tok))
+        cursor = at + len(tok)
+    return out
+
+
+def all_single_char_segments(
+    segments: Sequence[tuple[int, str, Sequence[str]]],
+) -> list[str]:
+    """整段每个 token 都是一个字——切词器完全没拿到上下文，读音风险最高。
+
+    ## 为什么只剩这一条
+
+    `word_split_report` 只保护**人名**（出处是 spec 的 `cover.matchup`）。
+    2026-08-04 王欣瑜那条片子手工扫了一遍 `｜`，抓出 6 处切错的，**一个人名
+    都没有**，全是术语和动词（`二 ｜ 发`、`接发 ｜ 球`、`连 ｜ 丢四局`、
+    `三个 ｜ 破发 ｜ 点`、`没救 ｜ 下来`、`抢 ｜ 七 ｜ 输 ｜ 掉 ｜ 了`）——
+    闸一声没吭。
+
+    第一版补了两条判据，其中「**同词两切**」（这一段是一个词、那一段被切开，
+    合成器自己的两次输出打架）看起来很漂亮，**而且不用维护词表**。
+    ⚠️ **拿存量 15 条片子验了一遍，它不成立**：
+
+        wong-gea       10 段报 7 处   两 ｜ 个 · 第一 ｜ 次 · 一 ｜ 比 ｜ 四 …
+        zheng-lanlana  20 段报 7 处   资格 ｜ 赛 · 两 ｜ 年 · 加拿大 ｜ 站 …
+        eala-svitolina 12 段报 5 处   追 ｜ 平 · 轮 ｜ 到 · 第一 ｜ 盘 …
+
+    **报出来的几乎全是读音一个字都没变的**——`六比三` 切成 `六 ｜ 比 ｜ 三`
+    照样念 liù bǐ sān。全套里真正有歧义的只有 `二 ｜ 发`（fā / fà）一处。
+    **一条天天误报的检查等于没有检查**，所以撤掉，只留下面这条。
+
+    真正要判「读音对不对」得拿**音素**，而词边界只给字符串——那条路在
+    `tools/probe_azure_phoneme.py` 里探。在它有结论之前，剩下的靠人扫一眼
+    那行 `｜`：**这是故意的**，做成硬闸的下场是有人为了让它变绿去改一句本来
+    很好的台词（见 `_print_word_splits` 的 docstring）。
+
+    Args:
+        segments: `[(段序号, speakable 之后的原文, token 列表), …]`。
+
+    Returns:
+        给人看的中文句子，一段一条。
+    """
+    # 四个以下不算——一句「六比一。」本来就没有上下文可用，报出来是噪音。
+    # 实测：存量 15 条片子、上百段，只有王欣瑜第 10 段「抢七输掉了」中招。
+    return [
+        f"第 {index + 1} 段整段都是单字：{' ｜ '.join(tokens)}"
+        for index, _, tokens in segments
+        if len(tokens) >= 4 and all(len(t) == 1 for t in tokens)
+    ]
+
+
 def word_split_report(
     text: str, marks: Sequence[dict], protect: Sequence[str],
 ) -> tuple[str, list[str], list[str]]:
@@ -5665,15 +5727,7 @@ def word_split_report(
     tokens = [str(m.get("text", "")).strip() for m in marks]
     tokens = [t for t in tokens if t]
     line = " ｜ ".join(tokens)
-
-    spans: list[tuple[int, int, str]] = []
-    cursor = 0
-    for tok in tokens:
-        at = text.find(tok, cursor)
-        if at < 0:                      # 合成器报了原文里没有的串，跳过不猜
-            continue
-        spans.append((at, at + len(tok), tok))
-        cursor = at + len(tok)
+    spans = token_spans(text, tokens)
 
     crossing: list[str] = []
     inside: list[str] = []
