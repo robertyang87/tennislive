@@ -4651,8 +4651,8 @@ _OPENINGS: dict[str, dict] = {
         # ⚠️ 封面不用抽帧，也不用学院的场地照——这条片子讲的是**人怎么来的**，
         # 场地照讲不了这件事。首选伊埃拉华盛顿捧杯（8/3 那天，且捧杯优先于击球中），
         # 尺寸要够裁 1080×1440 而不放大。见 assets/explainer/nadal-academy/credits.json。
-        "image": "assets/explainer/nadal-academy/eala_usopen_2024.jpg",
-        "credit": "Hameltion / Wikimedia Commons · CC BY-SA 4.0 · 2024 年美网，伊埃拉",
+        "image": "assets/explainer/nadal-academy/eala_washington_2026_final.jpg",
+        "credit": "Getty Images / WTA 官方图库 · 2026 年 8 月 3 日华盛顿女单决赛，伊埃拉夺冠后庆祝",
     },
     "special-exempt": {
         "topic": "特殊豁免：整站只留一个位置",
