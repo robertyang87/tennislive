@@ -4516,8 +4516,23 @@ ffmpeg -f lavfi -i "testsrc2=size=1280x720:rate=25" -f lavfi -i sine -t 450 … 
 判据要拿 run 本身：`actions_list method=list_workflow_runs resource_id=ci.yml`
 按分支过滤，看 `status/conclusion`。⚠️ 它给每条 run 塞一整份 repository 元数据
 （三条就 400 KB，直接超上下文），所以**落到文件再用脚本挑字段**，别直接读返回值。
+⚠️ **`per_page` 对它没用**：2026-08-04 传 `per_page=2` 照样吐 **414,475 字符**。
 
 又一次「空结果先自证是真空」，只是这次空的是查询用的那张表。
+
+**轮询 CI 用 `get_check_run`，几百字节。** 三个接口的实测开销差了三个数量级：
+
+| 接口 | 一次要多少 | 什么时候用 |
+|---|---|---|
+| `list_workflow_runs` | **400 KB+**（`per_page` 无效） | 只在**不知道 run id** 时用一次，落文件挑字段 |
+| `list_workflow_jobs` | 几 KB | 要看**卡在哪一步**（带每步起止时刻） |
+| **`get_check_run`**（要 `checkRunId`） | **几百字节** | **反复轮询「跑完没有」** |
+
+`checkRunId` 从 `list_workflow_jobs` 的 `jobs[].id` 拿（那个 id 同时是
+job id 和 check run id）。所以顺序是：列表拿一次 run id → jobs 拿一次
+check run id → 之后一路 `get_check_run` 轮询。
+⚠️ 参数名是 **`checkRunId`** 不是 `check_run_id`，写错只报一句
+「owner, repo, and checkRunId are required」，看着像少传了 owner。
 
 ### 这台沙箱的两条硬限制，别再重新发现
 
