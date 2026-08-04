@@ -894,6 +894,24 @@ jobs:
             [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
           fi
 
+      # 发布包清单：本地那台机器（`tools/publish_local.py`）读它往三个平台的
+      # 发布页里填。**位置有讲究，两头都卡死**：
+      #
+      #   排在渲染之后 —— 它要知道成片有多大（>20 MB 回 raw、>95 MiB 走
+      #                   Release），而那要等成片真的出来
+      #   排在提交之前 —— 它自己也要进仓库，不然本地 git pull 之后读不到，
+      #                   和「复制页写在提交步骤里、文件一次都没被 commit 过」
+      #                   是同一个坑（run 30342567879）
+      #
+      # ⚠️ 也必须排在 Release 那一步**之后**：走了 Release 的片子本地已经删了，
+      # 清单要写的是那条 Release 链接而不是一个不存在的仓库路径。
+      - name: 写发布包清单（渲染之后、提交之前）
+        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'push'
+        run: |
+          PYTHONPATH=src python tools/push_reel.py --stage manifest \
+            --outdir "${{ steps.paths.outputs.outdir }}" \
+            --copy "specs/reels/${{ github.event.inputs.slug }}.xhs.txt"
+
       # **`always()` 不能省。** `if:` 不含状态函数时 GitHub 隐式和上
       # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一
       # exit 1（栽过四次），**成片明明已经渲完了，却既不上传也不提交**。

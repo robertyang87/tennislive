@@ -2168,6 +2168,17 @@ def test_会发微信的工作流都要能触发Pages():
                     if not line.lstrip().startswith("#"))
                 if not need.search(run):
                     continue
+                # ⚠️ **按脚本名推曾经够用，现在不够了。** `push_reel.py` 多了一档
+                # `--stage manifest`（只写发布包清单给本地那台机器读），它在
+                # `wait_for_copy_page` 之前就 return 了——**一次探活都不走**，
+                # 自然也不需要 token 和 `actions: write`。
+                #
+                # 这**不是白名单**：「manifest 那条路碰不到 Pages」由
+                # `test_清单那条路不许碰Pages` 从源码推出来钉住，哪天它真接上了
+                # 探活，那条会先红。判据宁可窄，不可宽——给一个不探活的步骤发
+                # token，等于让「这一步会探复制页」这句话变成假的。
+                if "--stage manifest" in run:
+                    continue
                 env = step.get("env") or {}
                 checked.append(f"{path.name}「{step.get('name')}」")
                 assert perms.get("actions") == "write", (

@@ -1853,11 +1853,34 @@ def test_小红书正文不许超一千字():
         f"BODY_MAX 被改成了 {BODY_MAX}。这是平台定的，不是可调的——"
         "正文超了要去提炼，不是放宽这个数")
 
+    # ⚠️ **量的必须是真发出去的那一段。** 第一版直接 `split_copy(raw)`——把文件
+    # 第一行的钩子当成标题、其余当成正文。可 `push_reel.main` 会把算好的标题
+    # 拼到最前面（`copy_text = f"{title}\n\n{copy_text}"`），**钩子于是退成正文
+    # 第一行**，复制页和推送正文里的 body 都含着它。少算的正是那一行。
+    #
+    # 代价是真的：`wong-gea` 按老口径 990 字、判据全绿，实际发出去 **1021 字**，
+    # 那一格粘不进小红书——复制按钮点了没用，这条推送的出口等于没有
+    # （2026-08-01，`output/2026-08-01/reel/wong-gea/copy.html` 里那份就是 1021）。
+    # 又一次「查的东西和跑的东西不是一回事」。
+    from conftest import (  # noqa: PLC0415
+        OVERLONG_LEGACY,
+        assert_legacy_still_overlong,
+        shipped_body,
+    )
+
     checked = 0
     for f in sorted((ROOT / "specs").glob("*/*.xhs.txt")):
         with contextlib.redirect_stdout(io.StringIO()):
             raw = cut_at_tags(f.read_text(encoding="utf-8"))
-        _, body = split_copy(raw)          # 超了它自己就 SystemExit
+        body = shipped_body(raw)
+        slug = f.name.split(".")[0]
+        if slug in OVERLONG_LEGACY:
+            assert_legacy_still_overlong(slug, body, BODY_MAX)
+            continue
+        # `split_copy` 自己也要走一遍——它才是装闸的那处，而上面量的是同一段字。
+        with contextlib.redirect_stdout(io.StringIO()):
+            _, gated = split_copy(f"T\n\n{raw}")
+        assert gated == body, f"{f.name}：判据量的和闸拦的不是同一段"
         assert len(body) <= BODY_MAX, f"{f.name} 正文 {len(body)} 字"
         checked += 1
     assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"

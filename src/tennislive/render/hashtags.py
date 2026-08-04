@@ -9,8 +9,18 @@ MAX_HASHTAGS = 5
 _HASHTAG_RE = re.compile(r"(?<!\w)#[^\s#]+")
 
 
+def hashtags(text: str) -> list[str]:
+    """正文里的话题标签，按出现顺序。
+
+    有的平台把话题单独列一格（发布页要一个个点选），所以清单里要能拿到这份列表。
+    **但它必须是从正文里摘的，不是另写一份**——两处写迟早对不上，而读者看到的是
+    正文那份。`hashtag_count` 走的也是这条正则，一处改两处跟着变。
+    """
+    return _HASHTAG_RE.findall(text)
+
+
 def hashtag_count(text: str) -> int:
-    return len(_HASHTAG_RE.findall(text))
+    return len(hashtags(text))
 
 
 def limit_hashtags(text: str, limit: int = MAX_HASHTAGS) -> str:

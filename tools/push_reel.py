@@ -48,6 +48,7 @@ from tennislive.publish.pushplus import push  # noqa: E402
 from tennislive.render.hashtags import (  # noqa: E402
     MAX_HASHTAGS,
     hashtag_count,
+    hashtags as _hashtags,
 )
 from tennislive.render.pushmsg import (  # noqa: E402
     _PAGES,
@@ -73,6 +74,9 @@ BODY_MAX = 1000
 # 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
 # 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
 POSTER_NAME = "poster.jpg"
+# 发布包清单。本地那台机器（见 `tools/publish_local.py`）只读它，不碰 spec——
+# 标题和正文怎么算出来的是这个文件的事，那边只管往三个平台的发布页里填。
+MANIFEST_NAME = "publish.json"
 
 
 def released_video_url(outdir: Path) -> str:
@@ -545,6 +549,54 @@ def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
     return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
 
 
+def build_manifest(outdir: Path, title: str, body: str, column: str,
+                   video_name: str) -> dict:
+    """一条片子发出去要的全部东西，落成机器可读的一份清单。
+
+    **它不算任何新东西。** 标题走 `headline`、正文走 `split_copy`、成片链接走
+    `video_url` / `released_video_url`——和微信推送、复制页用的是同一套函数。
+    这一条是这个文件的全部要点：`push_meta` 那段注释讲的「一个数写两处必分叉」
+    在这儿同样成立，而这次的两处是**微信**和**三个平台的发布页**。真让它们各算
+    一遍，迟早出现「微信标题说张帅赢了、小红书标题说普汀塞娃赢了」——
+    `wang-samsonova` 那次海报和标题说反赛果，就是同一个形状。
+
+    ⚠️ **`video.path` 可能不存在。** 超过 95 MiB 的成片走 Release 附件，本地那份
+    渲完就删了（见 `released_video_url`）。所以两个字段都记：消费方**先看
+    `path` 在不在**，不在就下 `url`。**别按文件大小去猜走了哪条路**——走了
+    Release 之后本地文件已经没了，`stat()` 会直接炸。
+
+    ⚠️ **`hashtags` 是从正文里摘出来的，不是另写一份。** 有的平台话题要单独填一格，
+    但正文里那几个 `#` 必须和它是同一批——两处写迟早对不上，而读者看到的是
+    正文那份。
+    """
+    poster = outdir / POSTER_NAME
+    released = released_video_url(outdir)
+    local = outdir / video_name
+    return {
+        # 这一版的 slug 和日期，本地脚本用来认领「这是哪一条」。
+        "slug": outdir.name,
+        "date": _DATE_IN_PATH.search(f"/{outdir.as_posix()}/").group(0).strip("/"),
+        "column": column,
+        "title": title,
+        "body": body,
+        "hashtags": _hashtags(body),
+        "video": {
+            "name": video_name,
+            # 仓库相对路径。走了 Release 的片子这儿是空的——**不是漏了**，
+            # 是那份本地文件按设计已经删掉了。
+            "path": local.as_posix() if local.is_file() else "",
+            "url": released or video_url(outdir, video_name),
+            "released": bool(released),
+        },
+        "poster": {
+            "name": POSTER_NAME,
+            "path": poster.as_posix() if poster.is_file() else "",
+            "url": poster_url(outdir) if poster.is_file() else "",
+        },
+        "copy_page": copy_page_url(outdir),
+    }
+
+
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
                poster: str, column: str) -> str:
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
@@ -631,8 +683,10 @@ word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--stage", choices=("page", "push"), default="push",
-                    help="page=只写复制页（须排在 git commit 之前）；push=发微信")
+    ap.add_argument("--stage", choices=("page", "manifest", "push"), default="push",
+                    help="page=只写复制页（须排在 git commit 之前）；"
+                         "manifest=写发布包清单（排在渲染之后、提交之前）；"
+                         "push=发微信")
     ap.add_argument("--outdir", required=True, help="成片所在目录（仓库相对路径）")
     ap.add_argument("--video", default=None, help="成片文件名，默认取目录里唯一的 mp4")
     ap.add_argument("--column", default="",
@@ -709,6 +763,31 @@ def main() -> int:
         name = mp4s[0]
     if not released and not (outdir / str(name)).is_file():
         raise SystemExit(f"找不到成片 {outdir / str(name)}")
+    # 走了 Release 的片子本地没有文件，文件名只能问那条链接自己要——
+    # **别按 slug 拼**，那是在猜一个产物真正的名字。
+    if not name:
+        name = released.rsplit("/", 1)[-1]
+
+    if args.stage == "manifest":
+        title_text, body_text = split_copy(copy_text)
+        manifest = build_manifest(outdir, title_text, body_text, column, str(name))
+        path = outdir / MANIFEST_NAME
+        path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8")
+        # 两条分支都要出声。成片走 Release 的时候本地没有 mp4，而
+        # 「本地没有」和「渲染失败了」在清单里长得一模一样——不说出来，
+        # 下游那台机器就得自己猜为什么 path 是空的。
+        where = "Release 附件（本地不留）" if manifest["video"]["released"] \
+            else f"仓库里的 {manifest['video']['path']}"
+        print(f"已写发布包清单：{path}\n"
+              f"  标题 {title_text}\n"
+              f"  正文 {len(body_text)} 字，话题 {len(manifest['hashtags'])} 个\n"
+              f"  成片 {where}\n"
+              "  这一步要排在渲染之后、git commit 之前——它得知道成片有多大，"
+              "而它自己也要进仓库。")
+        return 0
+
     if not page.is_file():
         raise SystemExit(f"{page} 不在——先跑一次 --stage page，且要排在提交之前")
 
