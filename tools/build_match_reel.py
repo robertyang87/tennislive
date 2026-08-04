@@ -157,6 +157,19 @@ COVER_TAIL = 0.25
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
 POSTER_NAME = "poster.jpg"
+# 2026-08-04 之前发出去的「赛场之上」封面，走的是 VS 版式（cutout / diagonal）。
+# 那天账号所有者把这个栏目的封面改成一律 solo，**这些不重渲**：微信那条消息
+# 发出去收不回来，为版式重跑一遍六分钟的 render 换不到任何东西。
+#
+# ⚠️ **只许减不许加。** 加一个名字进来就等于让一条新片子绕过新规矩，而它
+# 不会报错——正是这张表要防的事。判据在
+# `test_赛场之上的封面一律用solo`（这张表里的每个 slug 都必须真的是老片子，
+# 而且必须真的是非 solo——写错一个名字，豁免就成了一盏恒真的绿灯）。
+_LEGACY_VS_COVERS = frozenset({
+    "eala-fernandez", "eala-osaka", "eala-svitolina", "potapova-venus",
+    "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
+    "wong-lehecka",
+})
 # contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
 # 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
 CONTAIN_KEEP = 0.62
@@ -1179,10 +1192,10 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
              "subtitle_top"),
-    "cover": ("event_badge", "eyebrow", "hook", "layout", "meta", "narration",
-              "portrait", "portrait_above", "result", "round", "score",
-              "scrim", "split", "sub", "subject", "tier", "topic", "versus",
-              "winner"),
+    "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
+              "narration", "portrait", "portrait_above", "result", "round",
+              "score", "scrim", "split", "sub", "subject", "tier", "topic",
+              "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
                 "narration", "quote", "source", "start", "track"),
 }
@@ -1686,37 +1699,40 @@ def build_cover(sources: dict[str, Path], primary: str, spec: dict,
 
     账号所有者 2026-07-31 定的：休伊特那条「是讲休伊特的儿子的话题，不是
     赛场之上的内容」「所以封面只有休伊特儿子照片」。反过来那条**没有松**：
-    赛场之上仍然只能用 VS 模板，solo 不是它缺图时的兜底。
+    ⚠️ **2026-08-04 又翻了回来**：账号所有者「以后都用 solo 版做「赛场之上」
+    封面」，于是 solo 成了默认，**退回 VS 才要写 `_layout_why`**。下面那段
+    注释记着这次翻面的完整理由。
     """
     cover = spec["cover"]
     layout = str(cover.get("layout", "cutout"))
     eyebrow = str(cover.get("eyebrow", "")).strip()
+    # ⚠️ **闸在 2026-08-04 整个反过来了。**
+    #
+    # 账号所有者：「**以后都用 solo 版做「赛场之上」封面**」「中间标题下面
+    # 写上比分（带双方国旗）」。所以 solo 成了这个栏目的默认，VS 反过来成了
+    # 需要认领的那一支。
+    #
+    # 老规矩（「赛场之上一律 VS，solo 要写 `_layout_why`」）要防的是**滑坡**：
+    # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
+    # 顶一下」。**那个滑坡现在不存在了**——solo 本来就是默认，没什么可省的。
+    # 而反方向的滑坡出现了：有人手头正好有两张抠图，就顺手退回 VS，栏目的
+    # 封面于是又变成两种样子。所以闸原样翻个面：**非 solo 要写 `_layout_why`**。
+    #
+    # 已发的十几条 VS 封面不动（`_LEGACY_VS_COVERS`，只许减不许加）——
+    # 微信那条消息发出去收不回来，为版式重渲没有意义。
+    if layout != "solo" and eyebrow == "赛场之上" \
+            and str(spec.get("slug", "")) not in _LEGACY_VS_COVERS \
+            and not str(cover.get("_layout_why", "")).strip():
+        raise ReelError(
+            "「赛场之上」的封面从 2026-08-04 起一律用 solo："
+            "账号所有者「以后都用 solo 版做『赛场之上』封面」。\n"
+            f"这条 spec 写的是 layout={layout!r}。\n"
+            "改成 `\"layout\": \"solo\"` + `cover.portrait`（本场源片抓一帧就行），"
+            "赛果写在 `cover.result` + `cover.matchup`，"
+            "会渲成标题底下那一行「🇨🇳 张帅（57） 6-4 6-1 🇰🇿 普汀塞娃（81）」。\n"
+            "**确实要退回 VS 版式，就写一句 `cover._layout_why` 说清楚为什么**"
+            "——一句话就行，但必须写；不写就是手滑，不是决定。")
     if layout == "solo":
-        # **赛场之上默认仍然是 VS 模板，但可以按条声明改用 solo。**
-        #
-        # 原来这儿是一刀切「赛场之上一律 VS」。那条规矩要防的是**滑坡**：
-        # 单人海报一旦能渲，下次哪条对决片子凑不齐两张照片，就会「先用 solo
-        # 顶一下」。防的是「缺图 → 换个 layout 试试」，不是防「编辑上认为
-        # 这一条该用单人封面」。
-        #
-        # 账号所有者 2026-08-02（gea-shapovalov）：「封面就变成他热亚一个人
-        # 捧杯的全景图吧。这样可能更合适一点，而不是说两人对阵的那种头像图了。」
-        # 那一条**两张官方抠图都在手上、VS 海报已经渲出来看过**——不是缺图，
-        # 是编辑判断：这条片子讲的是一个人三年爬上来然后夺冠，不是一场对决。
-        #
-        # 所以闸从「不许」改成「**要留下判据**」：写一句 `_layout_why` 说清楚
-        # 为什么这一条不是对决片。和 `mixed_fps` / `silent_source` / `rank: null`
-        # 一个形状——认领这一步把「想清楚了」和「凑合一下」分开，而**忘了写
-        # 会当场报错**，滑不下去。
-        if eyebrow == "赛场之上" and not str(cover.get("_layout_why", "")).strip():
-            raise ReelError(
-                "「赛场之上」默认是 VS 模板：这个栏目通常讲一场对决，"
-                "封面只放一个人就少了一半。\n"
-                "**确实要用单人封面，就写一句 `cover._layout_why` 说清楚为什么**"
-                "（这一条讲的是谁、为什么不是对决片）——一句话就行，但必须写。\n"
-                "⚠️ 这个键不是给「缺图」用的。缺图去扩检索源（赛事官方图库 → "
-                "协会/赛事新闻页 → 新闻站/图片社 → Commons/Flickr），"
-                "或从本场源片抓一帧；**拿 solo 顶替缺掉的那一格是滑坡，不是决定**。")
         if not (cover.get("portrait") or {}).get("image") and \
                 (cover.get("portrait") or {}).get("frame_at") is None:
             raise ReelError(
