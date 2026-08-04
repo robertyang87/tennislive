@@ -56,6 +56,7 @@ import html
 import json
 import math
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -240,6 +241,48 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
 
 
+_SET_RE = re.compile(r"^(\d{1,2})-(\d{1,2})(?:\((\d{1,2})\))?$")
+
+
+def _sets_html(result: str) -> str:
+    """一行盘分：**每一盘里赢的那个数字给品牌黄，输的给灰**，抢七小分跟在后面。
+
+    账号所有者 2026-08-04：「每盘的比分里，赢的一方是黄色，输的一方是灰色」
+    「抢七的比分里加上小分」。
+
+    在这之前整串 `1-6 7-6(5) 7-5` 是**一个颜色**，于是「谁赢了哪一盘」要读者
+    自己比大小。这条片子恰恰讲的是「她赢了第一盘、两次差一局」——盘分本身
+    就是故事，一个颜色等于把它压平了。
+
+    ⚠️ **判据是那一盘里谁的局数大，不是谁赢了整场。** 赢家在前是**整场**的
+    顺序（`cover.winner`），而每一盘可能是另一个人赢的——`1-6` 里前面那个 1
+    是赢家在第一盘输掉的局数。按「谁在前」上色会把第一盘涂反。
+
+    ⚠️ **小分写进 `result` 字符串**（`7-6(5)`），不另开字段：盘分只有一个出处，
+    `push_reel` 的标题、复制页、海报读的是同一串。写两处必分叉。
+
+    ⚠️ **认不出来的原样输出**，不猜。老 spec 里有「6-4 6-1」这种没小分的，
+    也有整句「伊埃拉 4-6 6-4 6-1 郑钦文」那种（走 `cover.score` 另一条路）；
+    退赛写法（`2-1 ret.`）同样落到这条退路上，只是不上色，不会渲错。
+    """
+    out = []
+    for token in result.split():
+        m = _SET_RE.match(token)
+        if not m:
+            out.append(f'<span class="setplain">{html.escape(token)}</span>')
+            continue
+        left, right, tb = m.group(1), m.group(2), m.group(3)
+        lcls = "setwin" if int(left) > int(right) else "setlose"
+        rcls = "setwin" if int(right) > int(left) else "setlose"
+        out.append(
+            f'<span class="set"><span class="{lcls}">{left}</span>'
+            f'<span class="setdash">-</span>'
+            f'<span class="{rcls}">{right}</span>'
+            + (f'<span class="tb">{tb}</span>' if tb else "")
+            + "</span>")
+    return "".join(out)
+
+
 def _solo_score_html(cover: dict) -> str:
     """solo 封面里，标题底下那一行赛果：**国旗 + 名字 + 比分 + 国旗 + 名字**。
 
@@ -297,7 +340,7 @@ def _solo_score_html(cover: dict) -> str:
         '<div class="storyscore">'
         + _name_html(str(win["name"]).strip(), win, "cover.matchup[赢家]")
         + f'<span class="sets" style="font-size:{sets_px}px">'
-          f'{html.escape(result)}</span>'
+          f'{_sets_html(result)}</span>'
         + _name_html(str(lose["name"]).strip(), lose, "cover.matchup[输家]")
         + "</div>")
 
@@ -536,6 +579,16 @@ __SCRIM__
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
 .storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
  font-weight:700;color:#c6f65a;letter-spacing:1px}
+/* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给灰**（账号所有者 2026-08-04）。
+   颜色只有这一个强调色——`#c6f65a` 就是台标球身那个黄绿，不引入第二种。
+   `.setdash` 和 `.tb` 都压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
+.set{display:inline-block;margin-right:.42em}
+.set:last-child{margin-right:0}
+.setwin{color:#c6f65a}
+.setlose{color:#93a79c}
+.setdash{color:#93a79c;margin:0 .04em}
+.tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
+.setplain{color:#c6f65a;margin-right:.42em}
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         + f".storytitle{{font-size:{title_px}px}}"
@@ -739,7 +792,7 @@ def _result_block(cover: dict, names: list) -> str:
     return (
         '<div class="res">'
         + (f'<span class="win">{winner}</span>' if winner else "")
-        + f'<span class="sets" style="font-size:{sets_px}px">{result}</span>'
+        + f'<span class="sets" style="font-size:{sets_px}px">{_sets_html(result)}</span>'
         + (f'<span class="lose">{loser}</span>' if loser else "")
         + "</div>"
         + footer)
@@ -872,6 +925,17 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
   color:{TEXT};text-shadow:0 4px 22px rgba(0,0,0,.6)}}
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
+/* 盘分上色，和 solo 那张共用同一套类名（账号所有者 2026-08-04：
+   「每盘的比分里，赢的一方是黄色，输的一方是灰色」「抢七的比分里加上小分」）。
+   ⚠️ **两张海报的样式表是两份**，只改一份的话另一份会把 span 原样渲成一个色，
+   看起来「没生效」而不是报错。 */
+.set{{display:inline-block;margin-right:.42em}}
+.set:last-child{{margin-right:0}}
+.setwin{{color:{BRAND}}}
+.setlose{{color:#93a79c}}
+.setdash{{color:#93a79c;margin:0 .04em}}
+.tb{{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}}
+.setplain{{color:{BRAND};margin-right:.42em}}
 /* 输的一方**要写，但置灰**：这一行是赛果，少一个人就不成句；灰是层次，不是删除 */
 .lose{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:46px;
   color:{DIM}}}

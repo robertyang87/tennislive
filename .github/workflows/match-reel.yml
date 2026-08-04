@@ -41,6 +41,18 @@ on:
         description: "probe：每几秒抓一帧"
         required: false
         default: "2"
+      clip_from:
+        # **合集里取一场时用。** WTA 的单场集锦不是每场都发，Day N 合集才是
+        # 全覆盖的（王欣瑜对卡萨金娜只在 61 分钟的 Day 2 合集里，章节
+        # 2371–2553）。不给区间的话缩略图墙会出七十多张、全是别人的比赛。
+        # ⚠️ 缩略图上烧的仍是**源片绝对秒数**，spec 里的窗口直接照抄。
+        description: "probe：只看源片的这一段（秒）；合集里取一场时用"
+        required: false
+        default: ""
+      clip_to:
+        description: "probe：区间终点（秒）"
+        required: false
+        default: ""
       scorebox:
         description: "probe：记分条位置 x0,y0,x1,y1（源片像素）；给了就顺手量死球时刻"
         required: false
@@ -279,6 +291,10 @@ jobs:
           # 「cookie 过期了」。JS 运行时用 runner 自带的 node（≥22），
           # 命令行统一带 `--js-runtimes node`。
           pip install -q "yt-dlp[default]" edge-tts
+          # Azure 那条路要 SDK 才拿得到词边界（REST 接口不给），而字幕整条线
+          # 就建立在词边界上。没配 key 的时候装着也不碍事——`azure_tts.available()`
+          # 两样都查，缺一样就退回 edge-tts。
+          pip install -q azure-cognitiveservices-speech
           node --version
 
       - name: 缓存 Chromium
@@ -450,6 +466,8 @@ jobs:
           python tools/build_match_reel.py probe \
             --url "${{ github.event.inputs.url }}" \
             --every "${{ github.event.inputs.every }}" \
+            --from "${{ github.event.inputs.clip_from }}" \
+            --to "${{ github.event.inputs.clip_to }}" \
             --scorebox "${{ github.event.inputs.scorebox }}" \
             --outdir "${{ steps.paths.outputs.outdir }}"
           ls -la "${{ steps.paths.outputs.outdir }}"
@@ -480,6 +498,9 @@ jobs:
       # 在通过的情况下会顺手渲出一条新成片并提交。
       - name: narration — 只查旁白装不装得下
         if: github.event.inputs.mode == 'narration'
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: |
           SPEC="specs/reels/${{ github.event.inputs.slug }}.json"
           test -f "$SPEC" || { echo "::error::找不到 $SPEC"; exit 1; }
@@ -492,6 +513,8 @@ jobs:
       - name: cover — 只出封面海报
         if: github.event.inputs.mode == 'cover'
         env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
@@ -506,6 +529,8 @@ jobs:
       - name: render — 出成片
         if: github.event.inputs.mode == 'render'
         env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
           TENNISLIVE_SOURCE_CACHE: ~/.cache/tennislive-sources
           YT_COOKIES: ${{ steps.cookies.outputs.path }}
           YT_POT_PROVIDER: ${{ steps.pot.outputs.up }}
