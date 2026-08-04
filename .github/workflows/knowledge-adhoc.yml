@@ -87,7 +87,31 @@ jobs:
 
       - name: 安装中文字体（卡片图需要）
         timeout-minutes: 6
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+        run: |
+          # ⚠️ apt 镜像会抽风，而且不是偶发：2026-08-04 两小时内两次——一次静静烧了
+          # **13 分 42 秒**（那时没有闸），一次被 `timeout-minutes: 6` 掐掉
+          # （run 30878555571），而正常只要 **18~53 秒**，重跑那趟 34 秒就过了。
+          # 硬超时只把「静静烧半小时」换成「6 分钟红掉、要人重跑」——**方向对了但停在
+          # 一半**：卡住的正确处置是换一次重试，不是整趟失败。
+          # ⚠️ **第一版写的是 3 × 100 秒，当场把 CI 弄红了**（run 30880649692）：
+          # 三次全跑满 100 秒被杀，也就是 apt **一直在推进、只是慢**，不是挂死。
+          # 那个 100 秒是按「正常 18~53 秒」拍的，而那是**另一条工作流**的数——
+          # ci.yml 这一步正常 25~34 秒，镜像变慢时能到 100 秒以上仍在干活。
+          # **把「慢」误判成「挂死」，重试就从救场变成了三倍的浪费。**
+          # 现在 2 × (150s + 10s) = 5.3 分，仍在步骤的 6 分钟超时以内。
+          # 每次都留 150 秒（正常值的 4~6 倍），只有真挂死才会两次都吃满。
+          apt_retry() {
+            for i in 1 2; do
+              sudo timeout 150 "$@" && return 0
+              echo "::warning::apt 第 $i 次没跑完（卡住或超时）：$*"
+              sudo dpkg --configure -a || true   # 上一次被 SIGTERM 打断可能留下半装状态
+              sleep 10
+            done
+            echo "::error::apt 两次都没成功：$*"
+            return 1
+          }
+          apt_retry apt-get update -qq
+          apt_retry apt-get install -y -qq fonts-noto-cjk
 
       - name: 安装 tennislive
         run: pip install -q -e ".[webrender,visualqa]"
