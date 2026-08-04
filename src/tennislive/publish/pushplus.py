@@ -224,6 +224,17 @@ def prepare_image_delivery(
     secret_key = os.environ.get("PUSHPLUS_SECRET_KEY", "").strip()
     configured_access_key = os.environ.get("PUSHPLUS_ACCESS_KEY", "").strip()
     if root and (secret_key or configured_access_key):
+        # ⚠️ 这条分支**默认走不到**，而且是故意的：PushPlus 官方图床
+        # 「图片有效期为 30 天，到期后将自动删除」（/doc/function/image.html）。
+        # 微信那条消息发出去收不回来也改不了，所以走这条路等于给每一条历史
+        # 推送的海报设一个月的保质期。退路那条钉在 commit sha 上，git 里的
+        # 东西不会消失——**慢一点的那条才是对的**。
+        # 真有人配上了就说清楚，别让后果一个月之后才现形。
+        logger.warning(
+            "图片走 PushPlus 图床：官方限制**30 天后自动删除**，"
+            "这条推送的图到期会变裂图。要长期可取就清掉 "
+            "PUSHPLUS_SECRET_KEY / PUSHPLUS_ACCESS_KEY，退回 jsDelivr。"
+        )
         access_key = (
             _access_key(token, secret_key, timeout)
             if secret_key
