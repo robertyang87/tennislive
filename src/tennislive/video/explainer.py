@@ -6861,9 +6861,19 @@ def assemble_explainer_video(
     ffprobe_bin: str = "ffprobe",
     lead_silence: float = LEAD_SILENCE,
     tail_silence: float = TAIL_SILENCE,
+    outro: Path | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
-    """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat."""
+    """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
+
+    `outro` 是片尾品牌页那一段（`outro_page.render_clip` 出的 1080×1440 带
+    音轨的 mp4）。它和幻灯片走**同一条 scale+pad 链**——因为片尾卡就是 3:4，
+    和这条线每一屏的卡一个尺寸（判据 `test_片尾卡的画幅要和几条线的卡对得上`）。
+
+    ⚠️ **片尾不排字幕**：那一页上印着「网球时差」和那句解释，口播说的每个字
+    画面上都有（唯一的例外是「关注」二字，它是动作号召不是信息）。判据在
+    `test_片尾口播说的话画面上要印得全`。
+    """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
     if shutil.which(ffmpeg_bin) is None:
@@ -6885,6 +6895,10 @@ def assemble_explainer_video(
             ["-loop", "1", "-t", f"{seconds:.3f}", "-i", str(Path(slide).resolve())]
         )
         command.extend(["-i", str(Path(audio).resolve())])
+    if outro is not None:
+        # 片尾是**真视频**（自带动效和口播），不是 `-loop 1` 的静图，
+        # 所以这儿不给 `-t`：它自己多长就播多长。
+        command.extend(["-i", str(Path(outro).resolve())])
 
     filters = []
     for i in range(n):
@@ -6924,8 +6938,23 @@ def assemble_explainer_video(
             f"[{2 * i + 1}:a]{','.join(steps)}[a{i}]" if steps
             else f"[{2 * i + 1}:a]anull[a{i}]"
         )
-    concat_inputs = "".join(f"[v{i}][a{i}]" for i in range(n))
-    filters.append(f"{concat_inputs}concat=n={n}:v=1:a=1[outv][outa]")
+    beats = n
+    if outro is not None:
+        # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
+        # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
+        # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
+        vi = 2 * n
+        filters.append(
+            f"[{vi}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
+            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"setsar=1,fps=30,format=yuv420p[v{n}]"
+        )
+        # 音轨要**重采样到和旁白同一个规格**：concat 要求各路参数一致，
+        # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
+        filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
+        beats = n + 1
+    concat_inputs = "".join(f"[v{i}][a{i}]" for i in range(beats))
+    filters.append(f"{concat_inputs}concat=n={beats}:v=1:a=1[outv][outa]")
 
     command.extend(
         [
@@ -6998,10 +7027,45 @@ def generate_explainer_video(
         ) + "\n",
         encoding="utf-8",
     )
+    outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
     return assemble_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
+        outro=outro,
     )
+
+
+def _build_outro_clip(
+    outdir: Path, *, voice: str, rate: str, pitch: str,
+) -> Path | None:
+    """片尾品牌页那一段。**渲不出来就返回 None，不要把整条片子带崩。**
+
+    账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的口播」——
+    这条线上覆盖的是「每日网球知识」「网球有故事」「开球之前」三个栏目。
+
+    ⚠️ **失败要出声。** 缺 Chromium、缺 ffmpeg、TTS 连不上，都只是让这条片子
+    少一页片尾，不该让整条知识帖出不来（它每天 08:37 定时在产）。但**默默少
+    一页和正常出片长得一模一样**，所以两条路都打日志——这个仓库里「兜底出事
+    的时候不吭声」已经栽过太多次。
+    """
+    from ..render.webcards import _chromium_executable  # noqa: PLC0415
+    from . import outro_page  # noqa: PLC0415  （避免和本模块成环）
+
+    try:
+        # 合口播 + 渲页 + 出片段这一整套在 `outro_page.build_with_voice` 里，
+        # **三条线共用**。这儿只负责给这条线自己的编码参数——
+        # **照抄成片那一步**，concat 只认第一个文件的流参数，差一项就拼出坏流。
+        clip = outro_page.build_with_voice(
+            outdir, chromium=_chromium_executable(), dest=outdir / "_outro.mp4",
+            fps=30.0, audio_rate="24000", preset="slow", crf="26",
+            audio_bitrate="64k", audio_channels=1,
+            voice=voice, rate=rate, pitch=pitch,
+        )
+    except Exception as exc:  # noqa: BLE001 - 片尾不该拖垮整条片子
+        print(f"[片尾] 渲不出来，这条片子没有片尾：{exc}")
+        return None
+    print(f"[片尾] {clip.name}（{_audio_seconds(clip, 'ffprobe', subprocess.run):.2f}s）")
+    return clip
 
 def explainer_push_html(
     segments: Sequence[ExplainerSegment],

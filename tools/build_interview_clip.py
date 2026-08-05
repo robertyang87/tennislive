@@ -1796,8 +1796,25 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2", str(body)],
         check=True, timeout=1800)
 
+    # 片尾品牌页。账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的
+    # 口播」——这条线（赛后开麦）是最后接上的一条。
+    #
+    # ⚠️ **参数要和正片逐项一致**：这条线走 `concat` demuxer + `-c copy`，
+    # 那是最挑的一条路——帧率、采样率、**声道数**差一项就静默丢流，成片从某一
+    # 秒起没声音，而 ffmpeg 不报错（封面那一路的注释里已经为同一件事记过一次）。
+    outro = _build_outro(outdir)
+
     if not spec.get("cover"):
-        body.replace(out)
+        if outro is None:
+            body.replace(out)
+            return out
+        lst = outdir / "_concat.txt"
+        lst.write_text(f"file '{body.name}'\nfile '{outro.name}'\n", encoding="utf-8")
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        "-f", "concat", "-safe", "0", "-i", str(lst),
+                        "-c", "copy", str(out)], check=True, timeout=600)
+        for tmp in (body, outro, lst):
+            tmp.unlink(missing_ok=True)
         return out
 
     cover_png = cover_poster(spec, src, outdir, logo)
@@ -1813,13 +1830,43 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
          "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
          "-shortest", str(cover_mp4)], check=True, timeout=600)
     lst = outdir / "_concat.txt"
-    lst.write_text(f"file '{cover_mp4.name}'\nfile '{body.name}'\n", encoding="utf-8")
+    names = [cover_mp4.name, body.name] + ([outro.name] if outro else [])
+    lst.write_text("".join(f"file '{n}'\n" for n in names), encoding="utf-8")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
                     "-c", "copy", str(out)], check=True, timeout=600)
-    for tmp in (body, cover_mp4, lst):
-        tmp.unlink(missing_ok=True)
+    for tmp in (body, cover_mp4, lst, outro):
+        if tmp is not None:
+            tmp.unlink(missing_ok=True)
     return out
+
+
+def _build_outro(outdir: Path) -> Path | None:
+    """片尾品牌页那一段。**渲不出来就返回 None，不要把整条片子带崩。**
+
+    ⚠️ 参数逐项抄正片那一步（`-preset medium -crf 20 -r 25`，音频
+    `aac 128k 48000 stereo`）——`concat` demuxer + `-c copy` 对流参数最挑，
+    差一项就静默丢流。
+
+    ⚠️ **这条线原来没有 TTS**（它是英文原声 + 中英字幕），口播是为片尾新引进
+    来的。所以 edge-tts 连不上时只是少一页，不该让整条片子出不来——但两条路
+    都要出声，默默少一页和正常出片长得一模一样。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+    try:
+        from tennislive.render.webcards import _chromium_executable
+        from tennislive.video import outro_page
+
+        clip = outro_page.build_with_voice(
+            outdir, chromium=_chromium_executable(), dest=outdir / "_outro.mp4",
+            fps=25.0, audio_rate="48000", preset="medium", crf="20",
+            audio_bitrate="128k", audio_channels=2,
+        )
+    except Exception as exc:  # noqa: BLE001 - 片尾不该拖垮整条片子
+        print(f"[片尾] 渲不出来，这条片子没有片尾：{exc}")
+        return None
+    print(f"[片尾] {clip.name}")
+    return clip
 
 
 def main() -> int:
