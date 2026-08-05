@@ -14,7 +14,12 @@ name: match-reel
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
 # 一取媒体就 403；真 Chromium 打开播放页直接是「detected unusual traffic」。
-# edge-tts 同理。所以下载和合成都只能在 runner 上做。
+# ⚠️ **「edge-tts 同理」这半句 2026-08-05 证伪了。** 它报的是
+# `CERTIFICATE_VERIFY_FAILED`，不是被挡——沙箱出网走一个做 TLS 拦截的代理，
+# 而 edge-tts 认 certifi 自带的根证书。挂上代理的 CA 当场就通
+# （`tennislive.localca`，CLI 入口自动调，runner 上是 no-op）。
+# 所以**只有下载**非 runner 不可；合语音在本地就能做，`--check-narration`
+# 实测 29 秒。同理封面：本地渲海报走 `tools/render_cover_local.py`，7 秒。
 on:
   workflow_dispatch:
     inputs:
@@ -300,6 +305,23 @@ jobs:
             echo "push 模式：只装主依赖，推送那条路的 import 已验过"
             exit 0
           fi
+          # **narration 也只装它用得上的那点。** 它不下片、不渲染、不抠图——
+          # rembg（176 MB 模型的那个包）、opencv、playwright、yt-dlp 一个都用不上。
+          # 装全套是 31 秒，而整趟 narration 才 1 分 37 秒；而且和 push 模式同理，
+          # 那几个包里任何一个装不上，都会让一条**只是查旁白长度**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "narration" ]; then
+            pip install -q -e .
+            # ⚠️ **numpy 不能省**，虽然缺了它不报错。`voice_prosody` 用它量音高，
+            # 没有就整张表退成十一行「量不了」——而这条 run 的产物**就是那张表**
+            # （「风格做出来没有、有没有做过头，报在这儿」）。在干净 venv 里照这
+            # 一行原样装一遍才看见的，沙箱里它一直装着。
+            pip install -q edge-tts azure-cognitiveservices-speech numpy
+            # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，
+            # 而不是一分半之后死在合语音那一步。
+            python -c "import edge_tts, numpy, tennislive.video.azure_tts"
+            echo "narration 模式：只装合语音要的，查旁白那条路的 import 已验过"
+            exit 0
+          fi
           # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
@@ -399,8 +421,16 @@ jobs:
       # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
       - name: 起 PO token provider
         id: pot
-        # push 模式不下任何东西——docker pull 那一分钟白等
-        if: github.event.inputs.mode != 'push'
+        # push 模式不下任何东西——docker pull 那一分钟白等。
+        # **narration 同理，而且更明显**：那道闸比的是「TTS 时长 vs spec 里的
+        # 段长」，两样都不需要源片（`--check-narration` 的注释里写着「一个源片
+        # 字节都不碰」）。它却一直在这儿等 PO token provider 起来——实测 11 秒，
+        # 而整趟 narration 只有 1 分 37 秒。又一次「加新能力时新入口没继承前提」：
+        # narration 这一档是后加的，这行 `if` 没跟着改。
+        # 判据在 `test_不下源片的模式不许等PO_token`。
+        if: >-
+          github.event.inputs.mode != 'push'
+          && github.event.inputs.mode != 'narration'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -690,7 +720,18 @@ jobs:
           #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
           #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
           # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
-          # `_versus_cut_top.png`。
+          # `_versus_cut_top.png`。现在它只剩抠之前那张原帧（`_versus_raw_*`）。
+          #
+          # ⚠️ **`cover_src/` 是产物，不是中间物——别顺手加进这串 rm。**
+          # 抓下来的帧和抠好的人存在那儿并**跟着提交**，为的是让封面返工能在
+          # 沙箱里本地渲（`tools/render_cover_local.py`，实测 6.9 秒），
+          # 不必为一行 CSS 上一趟 runner。量出来的账：shang-rublev 那 98 分钟里
+          # 有 31 分钟全花在封面上，而三趟里帧一次都没变。
+          # 代价是每条片子多 0.1~3 MB（同目录下的成片是 40~95 MB）。
+          # 这是**认领过的取舍**，判据在 `test_封面素材要留在仓库里`。
+          # 下面 `rm -f "$OUTDIR"/...` 都不带 `-r` 且只作用在根上，碰不到它；
+          # 而末尾那个「超过 8 MB 就报错」的兜底是**递归**的，所以它仍然管得住
+          # 「有人往 cover_src 里塞了个大文件」。
           # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
           # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
           # 那道兜底**，却每探一次就加一份。

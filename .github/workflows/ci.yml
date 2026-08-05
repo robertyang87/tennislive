@@ -1,11 +1,32 @@
 name: ci
 
 on:
+  # ⚠️ **`push` 收在 main 上。** 原来它不限分支，于是一条开着 PR 的特性分支
+  # 每推一次会起**两趟一模一样的 CI**（`push` 一趟、`pull_request` 一趟）——
+  # 2026-08-05 那半小时里成对出现，run 2338/2339、2335/2336、2333/2334…
+  # 每趟 4 分 10 秒。分支上的把关由 `pull_request` 那趟做，一趟就够。
+  #
+  # 它省的**不是墙钟**（两趟本来就并行），是 Actions 分钟数和并发位——
+  # 而并发位被占满时，排在后面的 `match-reel` 就要排队等，那才吃墙钟。
   push:
+    branches: [main]
     paths-ignore:
       - "output/**"
       - "*.md"
   pull_request:
+
+# **同一个 PR 上，新的一推就把旧的那趟掐掉。**
+#
+# 之前一趟都不掐：那半小时里推了十来次，于是十来趟 CI 同时在跑，而**只有最新
+# 那趟算数**。代价有两头——并发位被自己占着，以及「现在到底该看哪一趟」
+# 变成一个要人去猜的问题（CLAUDE.md 里「查 PR 的 CI 别用 get_status」那一节，
+# 记的就是这个判断被搞错的时候什么样）。
+#
+# ⚠️ **main 上不许掐。** 那儿每个提交都要有自己的一趟绿——掐掉等于让一个
+# 从没跑过测试的提交留在主干上，而且不吭声。
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
 
 jobs:
   test:

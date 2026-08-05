@@ -14,6 +14,11 @@ dependencies = [
     "rich>=13.0",
     "Pillow>=10.0",
     "pypdf>=5.0",
+    # `tennislive.localca` **直接** import 它（要合并根证书，好让本地也能合语音）。
+    # 它一直靠 requests 传递地装进来——而传递依赖是别人的实现细节，
+    # requests 哪天换掉它，我们这条路就静默炸在一句 ImportError 上。
+    # 自己 import 的就自己声明，判据在 `test_测试里不许import没声明的包`。
+    "certifi>=2024.2.2",
 ]
 
 [project.optional-dependencies]
