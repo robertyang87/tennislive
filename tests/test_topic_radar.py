@@ -57,26 +57,109 @@ def test_撞不上角度就不猜():
     assert leftover_terms(leftover), "要报出高频词，否则不知道该补什么角度"
 
 
-def test_已发过的选题标出来并排到后面():
+def test_作证的单位是标题不是同一个词():
+    """⚠️ 第一版要求**同一个触发词**出现在两条标题上，于是漏掉一整条角度。
+
+    2026-08-05 真实数据，华盛顿决赛因雨推迟：
+
+        Eala, Pegula Washington DC championship **suspended** to Monday
+        Washington final **delayed** ... due to **rain**
+
+    两条都在讲天气，**却没有任何一个词同时出现在两条上**——不同媒体本来就用
+    suspended / delayed / postponed 说同一件事。按词数就判成「撞不上」，
+    而**撞不上和「今天没有这类新闻」长得一模一样**。
+
+    这条钉两头：真该撞的要撞上，**而它当初防的那个误判仍然拦得住**。
+    """
+    rain = [
+        _h("Eala, Pegula Washington DC championship suspended to Monday", "WTA Tennis"),
+        _h("Washington final delayed until Monday due to rain", "ATP Tour"),
+    ]
+    got = match_angle(rain)
+    assert got is not None and got.slug == "roof-and-weather", (
+        "两条标题各自为「天气」作证，只是用词不同"
+    )
+
+    # ↓ 老 docstring 里那个它专门要防的误判：并错的簇，只有第一条带 mixed/doubles。
+    #   新规则下第二条一个触发词都没有 → 只有一条作证 → 照旧不算。
+    miscluster = [
+        _h("US Open Mixed Doubles entries revealed", "US Open"),
+        _h("Shelton looks ahead to the 2026 season", "ATP Tour"),
+    ]
+    assert match_angle(miscluster) is None, "并错的簇不许因为一条标题就叠上角度"
+
+
+def test_退赛和天气的说法要收全():
+    """英文媒体说同一件事有好几种写法，少一个词就少一条证据。
+
+    两条都是 2026-08-05 真实漏掉的：拉杜卡努那簇两条标题写的都是
+    `to **miss** US Open`，而表里当时只有 withdraw/pullout/skip 这一族。
+    """
+    miss = [
+        _h("Raducanu to miss US Open to continue recovery", "BBC Sport"),
+        _h("Emma Raducanu to miss US Open with leg injury", "The Guardian"),
+    ]
+    got = match_angle(miss)
+    assert got is not None and got.slug == "withdrawal-deadline"
+
+    # ⚠️ `out` 故意没收：太宽（`knocked out` / `out of form`），判据宁可窄。
+    #    这条钉住那个决定——有人图省事加上去，它会当场红。
+    knocked = [
+        _h("Sinner knocked out in Montreal third round", "ATP Tour"),
+        _h("Alcaraz knocked out by Rublev in Montreal", "BBC Sport"),
+    ]
+    assert match_angle(knocked) is None, "`knocked out` 不是退赛，别把 out 收进触发词"
+
+
+def test_已发角度的账本要真的对得上角度表():
+    """⚠️ 这条防的是「标记恒空」——而恒空和「这些角度都还没做过」长得一样。
+
+    2026-08-05 查出来：仓库里已经发过 29 条解说片（含 protected-ranking、
+    special-exempt、shot-clock、hawkeye、roof、lucky-loser…），而账本里记的
+    是**另一套命名**，于是 `known_done_on` 几乎永远是空的——简报会把三周前
+    做过的角度当新鲜的推出来。
+
+    判据是**交集不许太小**（「判据自己也要有判据」）：写错名字的记录不会报错，
+    只会让这个交集悄悄缩回 0。
+    """
+    slugs = {a.slug for a in ANGLES}
+    marked = {k for k in published_topics() if k in slugs}
+    assert len(marked) >= 8, (
+        f"账本里只有 {len(marked)} 条对得上角度表——"
+        "「这条做过没有」这个标记基本是死的，八成是 slug 写成了解说片那套命名"
+    )
+    for key in marked:
+        assert published_topics()[key][:4].isdigit(), f"{key} 的值要是发布日期"
+
+
+def test_已发过的选题标出来并排到后面(tmp_path):
     """账本撞上就标「做过」，别让同一条隔一周再冒出来一次。
 
     仍然返回它——今年的新闻可能值得做续集，但要让人一眼看见做过。
+
+    ⚠️ **账本自带，不读仓库里那份。** 第一版直接用 `published_topics()`，
+    它的前提是「wildcard 做过、protected-ranking 没做过」；2026-08-05 把账本
+    按实际发过的解说片补齐之后 protected-ranking 也成了已做，**这条测试的
+    主语当场没了**（两条都已做，排序无从比起）。判据要自带它比较的那两端，
+    别挂在一份会变的产物账本上。
     """
+    ledger = tmp_path / "state.json"
+    ledger.write_text(json.dumps({"wildcard": "2026-07-28"}), encoding="utf-8")
     news = [
         _h("Kyrgios handed Wimbledon wild card by AELTC", "ATP Tour"),
         _h("AELTC confirms Kyrgios wild card for Wimbledon", "ESPN"),
         _h("Draper to undergo surgery after arm injury", "BBC"),
         _h("Draper surgery confirmed, injury rules him out for months", "Sky Sports"),
     ]
-    topics, _ = distil_topics(news, state_path=None)
+    topics, _ = distil_topics(news, state_path=ledger)
     labels = [t.angle.slug for t in topics]
     assert "wildcard" in labels and "protected-ranking" in labels
-    # wildcard 2026-07-28 已发，应当排在没做过的那条后面
-    done = published_topics()
-    if "wildcard" in done:
-        assert labels.index("wildcard") > labels.index("protected-ranking")
-        wc = next(t for t in topics if t.angle.slug == "wildcard")
-        assert wc.published_on == done["wildcard"]
+    # 做过的那条要排在没做过的后面
+    assert labels.index("wildcard") > labels.index("protected-ranking")
+    wc = next(t for t in topics if t.angle.slug == "wildcard")
+    assert wc.published_on == "2026-07-28"
+    pr = next(t for t in topics if t.angle.slug == "protected-ranking")
+    assert not pr.published_on, "这份账本里没记它，就不该标成做过"
 
 
 def test_空产要能分清是没热点还是没角度():
