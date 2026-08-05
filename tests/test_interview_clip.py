@@ -2421,6 +2421,8 @@ def test_交叉校验报告里第一份是谁要照实写():
     assert 'spec["asr_model"]' in body or "spec['asr_model']" in body, \
         "报告没有按 spec 的 asr_model 决定第一份叫什么"
     assert '"YouTube 自动字幕"' in body, "退路（真是 YouTube 那条）没了"
+
+
 def test_采访片的片尾要和正片拼得起来(tmp_path):
     """**真跑一次 `-c copy` 的 concat。**
 
@@ -2499,3 +2501,50 @@ def test_采访片两条路都要接片尾():
         "少一页和本来就没有长得一模一样")
     # 片尾渲不出来时两条路都要能退回去，不能把整条片子带崩
     assert "outro is None" in nocover, "没封面那条路没处理片尾渲不出来的情况"
+
+
+def test_顶栏次行要在虚化背景上读得出来():
+    """账号所有者 2026-08-05：「顶部的小字，灰色的看不太清，改成可以看清楚的」。
+
+    原来是 **32 号 / `#a9bcb2` / 没有描边**。`#a9bcb2` 不是随便挑的——它正是
+    CLAUDE.md 里登记的「次级灰绿」。**但那套色是为深绿实色卡定的**，而顶栏压
+    的是**虚化过的比赛画面**：底色一路在变，同一个灰绿在亮的地方就糊掉了。
+    调色板的适用前提换了，颜色本身却照搬了过来。
+
+    所以三样一起改，缺一个都不够：**字号**（32→38，太小的字先输在笔画上）、
+    **提亮**（`#a9bcb2`→`#d5e2db`）、**描边**（0→1.5，实色卡不需要它，
+    变化的背景需要）。⚠️ 比分那段跟着从 38 提到 44——它是**故意比基准大一档**
+    的强调，基准提上去而它不动，这个层级就被压平了（`test_顶栏量宽度要按每段
+    自己的字号` 当场抓住了这一点）。
+
+    这里钉的是**不许退回去**，不是钉死具体数值：三条判据各自摆出方向。
+    """
+    import tools.build_interview_clip as clip
+
+    head = clip._ASS_HEAD
+    b = [ln for ln in head.splitlines() if ln.startswith("Style: HEADB,")]
+    assert len(b) == 1, f"HEADB 样式不是一条：{b}"
+    fields = b[0].split(",")
+
+    # ① 字号只许涨不许缩。宽度有余量（实测最宽的一条 815/984px），缩回去
+    #    只会把「看不清」原样带回来
+    assert clip._HEAD_SIZE["b"] >= 38, (
+        f"顶栏次行缩回了 {clip._HEAD_SIZE['b']} 号——账号所有者指出过看不清")
+
+    # ② 必须有描边。背景是**变化的画面**不是实色卡，没有描边时字在亮处会消失。
+    #    ⚠️ Outline 是第 **15** 位不是 16——`split(",")` 之后 `Style: HEADB`
+    #    整个算第 0 位，后面每一项都跟着挪一位。第一版按 16 取，读到的是
+    #    Shadow（0），于是这条断言当场把**已经改好**的样式判成没描边。
+    outline = float(fields[15])
+    assert outline > 0, "顶栏次行没有描边——压在虚化画面上，亮的地方会读不出来"
+
+    # ③ 颜色不许再暗回去。ASS 是 &H00BBGGRR，比一比亮度就够
+    #    （CLAUDE.md 记过反例：一度用到 `#7f958a`，反馈就是「文字有点模糊」）
+    raw = fields[3].strip().lstrip("&H").rstrip("&")
+    bb, gg, rr = (int(raw[-6:-4], 16), int(raw[-4:-2], 16), int(raw[-2:], 16))
+    lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb
+    old = 0.2126 * 0xA9 + 0.7152 * 0xBC + 0.0722 * 0xB2      # #a9bcb2
+    assert lum > old, f"顶栏次行的颜色比原来那版还暗（{lum:.0f} ≤ {old:.0f}）"
+
+    # ④ 比分仍然要比基准大一档——不然强调就没了
+    assert clip._SCORE_PX > clip._HEAD_SIZE["b"], "比分不再比基准大，强调被压平了"
