@@ -22,6 +22,8 @@ import sys
 from fnmatch import fnmatch
 from pathlib import Path
 
+import pytest
+
 WORKFLOW = Path(".github/workflows/match-reel.yml")
 
 
@@ -3885,6 +3887,107 @@ def test_spec形状校验排在下载之前():
     assert "_preflight_cutout" not in shape.split('"""')[-1], (
         "validate_spec 里混进了环境检查——那是「这台机器行不行」，"
         "不是「这份 spec 对不对」")
+
+
+def test_dry_run要拿probe查选段(tmp_path):
+    """选段的机械判据全在 probe.json 里躺着，而 dry-run 原来不看它。
+
+    代价是量过的：wong-brooksby 那三处段尾修正**每一处都先付了一趟渲染才
+    发现**；郑钦文那条三处跨镜头**渲染一次都没报错**，直接发了出去。
+    又一次「工具写出来了、判据算出来了，就是没人在该用的时候用它」——
+    `point_ends` 在这之前是**零消费者**。
+
+    ⚠️ **按源片 URL 认领 probe，不按 slug 或日期。** 同一条 spec 会跨多个
+    日期目录重跑，而 probe.json 自己记着它探的是哪条 URL——那才是内容身份。
+    按 slug 认会在换了源片地址之后静静命中**别的片子**的切点，而那不报错。
+    """
+    reel = _reel()
+    spec = {
+        "slug": "t", "source_url": "https://x.invalid/a.mp4",
+        "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"}],
+    }
+    probe = {"url": "https://x.invalid/a.mp4", "duration": 30.0,
+             "scene_cuts": [15.0], "point_ends": []}
+    other = {"url": "https://x.invalid/OTHER.mp4", "duration": 30.0,
+             "scene_cuts": [11.0, 12.0, 13.0], "point_ends": []}
+
+    def _probes(_spec):
+        return {probe["url"]: probe}, []
+
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    monkey = pytest.MonkeyPatch()
+    try:
+        monkey.setattr(reel, "probes_for_spec", _probes)
+        segs = reel.parse_segments(spec, {"": Path("x")}, "")
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            hard = reel.probe_dry_run(spec, segs)
+        out = buf.getvalue()
+        assert hard is False, "跨切点不是硬闸——它会把一批已发的好 spec 挡在门外"
+        assert "15.00s 换了镜头" in out, f"没报出中途换镜头：{out}"
+
+        # **写过源片末尾才是硬的**：ffmpeg 越界不报错，只给一段短的，
+        # 而后面每一句旁白和字幕都跟着整体错位。
+        long_spec = {**spec, "segments": [
+            {"start": 10.0, "end": 44.0, "narration": "一句话"}]}
+        segs = reel.parse_segments(long_spec, {"": Path("x")}, "")
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            assert reel.probe_dry_run(long_spec, segs) is True
+        assert "超出源片末尾" in buf.getvalue()
+
+        # **一份都没认领上要出声**——空结果先自证是真空。
+        monkey.setattr(reel, "probes_for_spec", lambda _s: ({}, [""]))
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            reel.probe_dry_run(spec, segs)
+        assert "都没认领上" in buf.getvalue(), "没 probe 却和「全都合格」长得一样"
+    finally:
+        monkey.undo()
+
+    # 认领必须按 URL：喂一份**别的 URL** 的 probe，不许拿它的切点来判
+    assert reel.probes_for_spec({"source_url": other["url"]})[0].keys() != {
+        probe["url"]}, "按 URL 认领的口径不对"
+
+
+def test_窗口对齐源片镜头边界不算中途换镜头():
+    """⚠️ **这个容差是量出来的，不是拍的。**
+
+    20 条已发 spec、72 处未声明的跨切点，按「离最近那条边界多远」排开是
+    0.01 / 0.02×4 / 0.03 / 0.04×3 / 0.05 / 0.07 / 0.08 / 0.10 / 0.12，
+    然后跳到 0.16。前面那一簇是 0~3 帧（25 fps 一帧 0.04s）——那正是
+    CLAUDE.md 说该做的事：「窗口本来就该切在源片自己的镜头边界上」。
+
+    不滤掉它们的话，报告里一半是噪音，而**人会为了压掉噪音去写
+    `crosses_cut`，顺手把真检查一起关掉**。
+    """
+    reel = _reel()
+    assert 0.12 < reel.CUT_EDGE_TOL < 0.16, (
+        f"容差 {reel.CUT_EDGE_TOL} 不在量出来的那道缝里（0.12~0.16）")
+
+    spec = {"slug": "t", "source_url": "u",
+            "segments": [{"start": 10.0, "end": 20.0, "narration": "话"}]}
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    def _run(cuts):
+        monkey = pytest.MonkeyPatch()
+        monkey.setattr(reel, "probes_for_spec", lambda _s: (
+            {"u": {"url": "u", "duration": 99.0, "scene_cuts": cuts,
+                   "point_ends": []}}, []))
+        buf = io.StringIO()
+        try:
+            with redirect_stdout(buf):
+                reel.probe_dry_run(spec, segs)
+        finally:
+            monkey.undo()
+        return buf.getvalue()
+
+    assert "换了镜头" not in _run([10.02, 19.98]), "贴着边界的切点被当成中途换镜头"
+    assert "换了镜头" in _run([15.0]), "真的中途换镜头没报出来"
 
 
 def test_dry_run秒级返回且一个字节都不下载(tmp_path):
