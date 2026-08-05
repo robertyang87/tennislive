@@ -639,6 +639,85 @@ def test_旁白里连下五局的起止要和逐分对得上():
             f"「连下五局」没说清从哪儿到哪儿：{t}"
 
 
+# 冷开场取自源片**前这么多秒**就算「随手取了集锦的开头」。20 秒是从三条真实的
+# 冷开场之间那道缝里取的：`shang-rublev` 111.6、`zhang-ostapenko` 158.8，
+# 而出事的 `chwalinska-gibson` 是 2.6——两档差着一个数量级，20 落在缝里。
+_COLD_OPEN_HEAD_SECONDS = 20.0
+
+# 这条的冷开场取自源片开头，发在「开场三格的顺序」这条规矩之前——**它就是把这条
+# 规矩换来的那一条**。已发的片子不为版式重渲，所以挂账而不是改。
+# **只许减不许加**：新片子要么把爆点放第一格，要么在那一段写 `_head_open_why`
+# 认领一句，让「又随手取了开头」变成一次看得见的决定。
+_LEGACY_COLD_OPEN_FROM_HEAD = {
+    "chwalinska-gibson",
+}
+
+
+def _cold_open(spec):
+    """返回冷开场那一段（第 1 段没有旁白也没有 quote），不是冷开场就返回 None。
+
+    ⚠️ 判「有没有旁白」要连 `quote` 一起看：原声段不配旁白但**有字幕有人声**，
+    那不是冷开场。`eala-pegula-final` 的开场是六十七秒的转播原声。
+    """
+    segs = spec.get("segments") or []
+    if not segs:
+        return None
+    first = segs[0]
+    if str(first.get("narration", "")).strip() or first.get("quote"):
+        return None
+    return first
+
+
+def test_冷开场不许随手取源片开头():
+    """账号所有者 2026-08-05：「**以后都按这个顺序来吧**」——画面爆点 → 落点 →
+    坐标。
+
+    「最强的那一格」是判断题，**故意没有完整的测试**（和「最硬的那个事实放第 ①
+    屏」同一个理由）。这条只拦一种**能量出来**的坏：官方集锦按时间顺序剪，
+    开头就是比赛的开头、戏剧性最低的那一格，而爆点几乎必然靠后。
+
+    真有例外（有些集锦开头就是最后一球的预告片段）就写 `_head_open_why` 认领。
+    """
+    checked = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text("utf-8"))
+        first = _cold_open(spec)
+        if first is None:
+            continue
+        checked += 1
+        if float(first.get("start", 0.0)) >= _COLD_OPEN_HEAD_SECONDS:
+            continue
+        if path.stem in _LEGACY_COLD_OPEN_FROM_HEAD:
+            continue
+        assert str(first.get("_head_open_why", "")).strip(), (
+            f"{path.stem} 的冷开场取自源片第 {first.get('start')} 秒——那是集锦的"
+            f"开头，也就是这场球戏剧性最低的一格。爆点（最后一球／赛点落地／捧杯／"
+            f"那个拥抱）在集锦里几乎必然靠后。真要用开头就写一句 `_head_open_why` "
+            f"说清楚为什么它是全片最强的那一格。"
+        )
+    assert checked >= 3, f"判据失效了：一条冷开场都没扫到（{checked}）"
+
+
+def test_挂账的冷开场清单只许减不许加():
+    """名单里每个 slug 都必须**真的存在、而且真的还是老样子**。
+
+    写错一个名字，那条豁免就成了一盏恒真的绿灯——本文件里两张豁免表
+    （`_LEGACY_VS_COVERS` / `_LEGACY_SOLO_NO_SCORE`）都为这个配了自检。
+    """
+    for slug in sorted(_LEGACY_COLD_OPEN_FROM_HEAD):
+        path = Path("specs/reels") / f"{slug}.json"
+        assert path.is_file(), f"{slug} 这条 spec 已经没了，把它从挂账清单里删掉"
+        first = _cold_open(json.loads(path.read_text("utf-8")))
+        assert first is not None, f"{slug} 的第 1 段已经不是冷开场了，可以销账"
+        assert float(first.get("start", 0.0)) < _COLD_OPEN_HEAD_SECONDS, (
+            f"{slug} 的冷开场已经不取自源片开头了（{first.get('start')}s），"
+            f"把它从挂账清单里删掉"
+        )
+        assert not str(first.get("_head_open_why", "")).strip(), (
+            f"{slug} 已经写了 `_head_open_why` 认领，不用再挂账"
+        )
+
+
 # 这七条发在「开场先给坐标」这条规矩之前。**只许减不许加**——加新片子要么
 # 带着坐标来，要么显式往这份清单里写一笔，让「又忘了交代」变成一次看得见的决定。
 _NO_SLATE_YET = {
