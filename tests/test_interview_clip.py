@@ -2234,3 +2234,190 @@ def test_出海报那一档不许被出片的闸挡住():
     # 反过来：出片那一档必须仍然挂着，别为了放行 cover 把它一起拆了
     render_stage = src.split('if args.stage == "render":')[1]
     assert "transcript_verified" in render_stage, "出片那道闸没了"
+
+
+# ── 第二个源：Tennis TV ──────────────────────────────────────────────
+#
+# 2026-08-05 商竣程那条起，这条线不再只有 `@wta` 的 YouTube 集锦一个源。
+# 起因是**结构性的**：ATP 男子的场上采访不上 YouTube。蒙特利尔那一站扫遍
+# ATP Tour / Tennis TV / 赛事官方（深扫 90 条）/ Tennis Channel / 三个专搬
+# 采访的频道 / 五组英法查询词，一条都没有；而**同一组查询词在多伦多（女子）
+# 那边有**——所以这不是「没搜到」，是这一站男子不公开发。
+#
+# 下面这几条钉的是：接第二个源之后，原来那些「反正是 YouTube」的假设不许
+# 悄悄失效。
+
+
+def test_判是不是YouTube要按主机名():
+    """⚠️ **不许按字符串里有没有 `youtube` 判。**
+
+    `https://example.com/?ref=youtube.com` 会从中间匹配上，于是一条根本不是
+    YouTube 的源会被当成 YouTube——然后去拉一个不存在的自动字幕轨，报出来的
+    错指向完全错误的方向。判据宁可窄，不可宽。
+    """
+    from tools.build_interview_clip import is_youtube
+
+    for url in ("https://www.youtube.com/watch?v=abc",
+                "https://youtube.com/watch?v=abc",
+                "https://youtu.be/abc",
+                "https://m.youtube.com/watch?v=abc"):
+        assert is_youtube(url), url
+    for url in ("https://www.tennistv.com/videos/4554084/montreal-2026-r2-shang-interview",
+                "https://example.com/?ref=youtube.com",
+                "https://notyoutube.com/watch?v=abc",
+                "https://tennis-tv.vod.streamamg.com/x.m3u8"):
+        assert not is_youtube(url), url
+
+
+def test_只有TennisTV那条要解析别的源原样传过去(monkeypatch):
+    """`media_url` 是**页面地址 → 真能下的地址**那一步，只对 Tennis TV 生效。
+
+    反面同样重要：YouTube 和任何别的地址必须**原样返回**，一旦顺手把它们也
+    塞进解析器，这条线上跑了半年的六条 spec 会一起坏掉。
+    """
+    from tools import build_interview_clip as m
+
+    called = []
+
+    def _fake(candidate, **kw):
+        called.append(candidate.url)
+        return type("M", (), {"playback_url": "https://cdn.example/x.m3u8",
+                              "duration_ms": 74000})()
+
+    monkeypatch.setattr(
+        "tennislive.video.official.fetch_tennistv_video_metadata", _fake)
+
+    yt = "https://www.youtube.com/watch?v=abc"
+    assert m.media_url(yt) == yt
+    assert m.media_url("https://cdn.example/already.m3u8") == \
+        "https://cdn.example/already.m3u8"
+    assert not called, f"非 Tennis TV 的地址也去解析了：{called}"
+
+    tt = "https://www.tennistv.com/videos/4554084/montreal-2026-r2-shang-interview"
+    assert m.media_url(tt) == "https://cdn.example/x.m3u8"
+    assert called == [tt]
+
+
+def test_下载那一步真的走了解析(monkeypatch, tmp_path):
+    """**只测 `media_url` 自己对拦不住位置错**：它写出来了、`yt_download` 不调，
+    行为测试照样绿，而出片那一步会拿页面地址去喂 yt-dlp，报
+    `This video is only available for registered users`——一句指向
+    「cookie 过期了」的错，而真相是这条路根本没接上。
+    """
+    from tools import build_interview_clip as m
+
+    seen = {}
+
+    def _fake_run(cmd, **kw):
+        seen["url"] = cmd[-1]
+        (tmp_path / "s.mp4").write_bytes(b"x")
+        return type("P", (), {"returncode": 0})()
+
+    monkeypatch.setattr(m, "media_url", lambda u: f"RESOLVED::{u}")
+    monkeypatch.setattr(m.subprocess, "run", _fake_run)
+    m.yt_download("https://www.tennistv.com/videos/1/x", tmp_path / "s.mp4",
+                  "b", {})
+    assert seen["url"] == "RESOLVED::https://www.tennistv.com/videos/1/x", \
+        "yt_download 没走 media_url，页面地址直接喂给了 yt-dlp"
+
+
+def test_非YouTube的源不许编一条带时刻的YouTube链接():
+    """核对表是**给人对着听的那一张表**，链接指错地方比没有链接坏得多。
+
+    原来是无条件按 `/` 切最后一段当 video id：喂一条 Tennis TV 地址进去会拼出
+    `https://youtu.be/montreal-2026-r2-shang-interview?t=17`——**看着能点，
+    点开是 404**。又一次「喊错了是主动给出一个错答案」。
+    """
+    from tools.build_interview_clip import _yt_at
+
+    assert _yt_at("https://www.youtube.com/watch?v=abc", 17.4) == \
+        "https://youtu.be/abc?t=17"
+    out = _yt_at("https://www.tennistv.com/videos/4554084/x-interview", 17.4)
+    assert "youtu" not in out, f"给非 YouTube 的源编了 YouTube 链接：{out}"
+    assert "17.4" in out and out.startswith("https://www.tennistv.com/"), out
+
+
+def test_非YouTube的源没有自动字幕轨要说清楚而不是去拉(monkeypatch, tmp_path):
+    """只有 YouTube 有自动字幕轨。对别的源调 yt-dlp 只会拿到一句方向完全错误的
+    报错（Tennis TV 报的是「只对注册用户开放」，读起来像 cookie 过期）。
+
+    而**真相是这条路根本不存在**，第一份转写得自己跑 ASR——报错要把这条出路
+    说出来，还要提醒 `asr_model` 那道闸（见下一条）。
+    """
+    from tools import build_interview_clip as m
+
+    monkeypatch.setattr(m.subprocess, "run",
+                        lambda *a, **k: pytest.fail("不该去拉自动字幕"))
+    with pytest.raises(SystemExit) as e:
+        m.fetch_words("https://www.tennistv.com/videos/1/x", tmp_path, {})
+    said = str(e.value)
+    assert "不是 YouTube" in said
+    assert "ASR" in said and "cap_" in said, f"没说出路：{said}"
+    assert "asr_model" in said, f"没提醒第二份 ASR 那道闸：{said}"
+
+
+def test_第二份ASR必须换个模型否则那道闸是空的(monkeypatch, tmp_path):
+    """⚠️ **这是接第二个源之后最容易空掉的一道闸。**
+
+    `verify_transcript` 原来的前提是「第一份来自 YouTube 的 ASR，第二份是
+    faster-whisper」——两边天然不同。而非 YouTube 的源没有自动字幕轨，
+    **第一份也是 whisper 跑的**；这时候不检查的话，同一个模型跑两遍必然逐词
+    一致，分歧率恒为 0%，报告一片绿，**而它什么都没验证**。
+
+    仓库里 `en` / `en-orig` 那次记的就是这个形状：同一份 ASR 换个名字，拿它
+    当交叉验证是自欺。
+    """
+    from tools import build_interview_clip as m
+
+    spec = {"slug": "x", "url": "https://www.tennistv.com/videos/1/x",
+            "start": 0, "end": 10, "asr_model": "small.en",
+            "whisper_model": "small.en"}
+    with pytest.raises(SystemExit) as e:
+        m.verify_transcript(spec, [], tmp_path)
+    assert "同一个模型跑两遍" in str(e.value)
+
+    # 反过来：换了模型就不该被这道闸拦住。**用哨兵，别靠「反正会抛点什么」**——
+    # 那样这半条断言在装了 faster-whisper 的机器和没装的机器上走的是两条路
+    # （一条死在下载、一条死在 import），而这个仓库栽过「同一条测试在两个地方
+    # 跑的是两条不同的路」。
+    spec["whisper_model"] = "medium.en"
+    monkeypatch.setattr(m, "yt_download",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("到下载了")))
+    with pytest.raises(Exception) as e2:
+        m.verify_transcript(spec, [], tmp_path)
+    assert "同一个模型跑两遍" not in str(e2.value), \
+        "换了模型还被拦，这道闸拦宽了"
+
+
+def test_换模型那道闸要排在导入whisper之前():
+    """⚠️ **只测行为拦不住位置错，而这一处的位置错只在 CI 上现形。**
+
+    那道闸查的是 spec 的形状，一个模型都不用加载。第一版把它写在
+    `from faster_whisper import WhisperModel` **后面**——于是在任何没装
+    faster-whisper 的机器上它根本走不到，而那正是 CI 那台：本地全绿，
+    CI 报 `No module named 'faster_whisper'`（PR #198，run 30980157757）。
+
+    这是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验
+    前面**，否则失败发生在第 90 秒而不是第 5 秒，而且挡住的是判据本身。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def verify_transcript(")[1].split("\ndef ")[0]
+    gate = body.index("同一个模型跑两遍")
+    imp = body.index("from faster_whisper import")
+    assert gate < imp, (
+        "换模型那道闸排在 `from faster_whisper import` 后面——"
+        "没装这个包的机器（CI 就是）永远走不到它")
+
+
+def test_交叉校验报告里第一份是谁要照实写():
+    """报告的标签原来写死是「YouTube 自动字幕」。接进 Tennis TV 之后第一份其实
+    是本地跑的 ASR——标签再写 YouTube 就是**主动给出一个错答案**：将来有人回头
+    查这份报告，会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def verify_transcript(")[1].split("\ndef ")[0]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert 'spec["asr_model"]' in body or "spec['asr_model']" in body, \
+        "报告没有按 spec 的 asr_model 决定第一份叫什么"
+    assert '"YouTube 自动字幕"' in body, "退路（真是 YouTube 那条）没了"

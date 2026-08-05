@@ -1,0 +1,119 @@
+{
+  "slug": "shang-rublev-mtl2026-r2",
+  "_note": "商竣程 7-5 4-6 7-6 挽救五个赛点胜卢布列夫（10 号种子），2026 蒙特利尔 ATP1000 第二轮。**这是这条线上第一条 ATP 的片子**，源和以往六条都不一样，来路见 `_source_why`。",
+  "url": "https://www.tennistv.com/videos/4554084/montreal-2026-r2-shang-interview",
+  "source_title": "Shang: 'Priority is to be healthy' | Montreal 2026 R2",
+  "_source_why": "ATP 男子的场上采访**结构性地不上 YouTube**。扫过：ATP Tour 频道、Tennis TV 频道、赛事官方频道（Tennis Canada / National Bank Open，深扫 90 条）、Tennis Channel、三个专搬场上采访的频道、五组英法查询词、三条集锦各自的自动字幕末尾——全是集锦和发布会。决定性对照：**同一组查询词，多伦多（女子 #NBO26）有场上采访，蒙特利尔（男子 #OBN26）任何球员都没有**，所以这不是「没搜到商竣程」，是这一站男子不公开发。\n真正的源在 Tennis TV，而这一条 `data-entitlement=\"free\"`（页面上写着），用仓库自己的 `video/official.fetch_tennistv_video_metadata` 走它公开的 entitlement 接口就解得开，不需要登录、不需要订阅。解出来 74.0 秒、1280×720、25fps。",
+  "start": 0.8,
+  "end": 69.3,
+  "_range_why": "首词 1.42 秒，末词 68.40 秒（`Thank you`）。**70.0 秒起是 Tennis TV 的片尾卡**——量出来的：69 秒那帧平均亮度 134.7，70 秒掉到 9.4。end 取 69.3 留一口气又不碰片尾。",
+  "column": "赛后开麦",
+  "event": "2026 蒙特利尔 ATP1000 第二轮",
+  "winner": "商竣程",
+  "_winner_why": "顶栏要印「谁 比分 谁」。赢家是**写下来的数据**，不从排版顺序推——而这条片子里它还有第二重自证：15 秒那条角标烧在画面上，`JUNCHENG SHANG 🇨🇳 DEFEATED RUBLEV 7-5 4-6 7-6`。中文名查译名表。",
+  "asr_model": "small.en",
+  "whisper_model": "medium.en",
+  "_asr_why": "⚠️ **这条源没有任何现成字幕**（不是 YouTube，没有自动字幕轨），所以第一份转写就是 ASR 自己跑的 `small.en`。\n于是 `verify_transcript` 那道闸的前提变了：它原本比的是「YouTube 的 ASR vs faster-whisper」，在这里两边会变成同一个模型——**同一份 ASR 换个名字，拿它当交叉验证是自欺**（仓库里 `en` / `en-orig` 那次记过）。所以 `whisper_model` 必须和 `asr_model` 不同：第二份用 `medium.en`，权重不同才算独立的一次听。\n实测两份 **223 / 224 词**，只差两处（`a good champion` 的冠词、`amazing too` 的 too），其余逐词一致。",
+  "word_fix": {
+    "Andre": "Andrey",
+    "Andre,": "Andrey,"
+  },
+  "_word_fix_why": "两份 ASR 都把 `Andrey` 听成 `Andre`（法语拼法），而 ATP 官网战报的人工转写写的是 `Andrey`——人名一律按规范拼法校回来，和伊埃拉那条的 `Alex Ayala` 是同一类。⚠️ `Jerry` **不是错的**：商竣程的英文名就是 Jerry Shang，主持人全程这么叫他，别去「改正」成 Juncheng。",
+  "human_quote": {
+    "url": "https://www.atptour.com/en/news/montreal-2026-tuesday-report",
+    "_why": "ATP 官网这篇周二战报把这段场上采访的第一问**人工转写**抄了进去，是这条片子的第二个独立源，而且是**人工的**——比两份 ASR 都硬。一比就抓到三处，见 `suspect` / `suspect_ok`。\n⚠️ 它只覆盖第一段回答，别的行仍然只有两份 ASR。覆盖到哪儿由 review_sheet 自己算，别在这儿手写行号。",
+    "text": "Andrey is a great friend, a great competitor and a good champion. It is a pleasure to share the court with him since the last time we played in Hong Kong. But more happily, I'm healthy. I'm definitely playing my best tennis and just happy to be in Montreal."
+  },
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-05 销账。**三个源，分三档，别当成一句话全过了：**\n\n① **人工转写**（最硬）——ATP 官网战报抄走了第一段回答，逐词比过，4 处分歧全部定夺完，判据逐条写在 `_fix_why` 里。\n\n② **第二份 ASR**——`--stage verify` 跑 `medium.en`，**对不上 1.8%**（闸门 12%），报出来的 3 处正是 ① 已经处理掉的那两件事（`Andrey` 的拼法、第 17 行补的 `in`），没有新问题。⚠️ 这一档能成立的前提是**两份模型不同**：这条源没有 YouTube 自动字幕，第一份也是 whisper 跑的，同一个模型跑两遍分歧率恒为 0——闸装在 `verify_transcript` 里（`asr_model` == `whisper_model` 直接拒绝）。\n\n③ **第三趟定向重听**——四处争议各自切出那几秒，`medium.en` 关 VAD、beam 10 再听一遍，用来分清「机器漏词」和「记者清理」。\n\n⚠️ **只有第一段回答有 ① 那一档**。后面主持人第二问和他第二段回答只有两份 ASR，虽然逐词一致，仍然是两台机器——真要抬杠，那几行的强度低于前面。\n⚠️ **`caption_gaps` 对这条源是恒空的**：那道闸查的是「自动字幕连一个事件都没有的几秒」，而这里的『字幕』是我们自己跑的 ASR，它对静音段本来就不产事件。所以「0 处空档」这句在这条线上**不构成证据**，别把它读成「全片都有人在说话」。",
+  "human_quote_ok": [
+    [
+      "—",
+      "and"
+    ],
+    [
+      "since",
+      "the"
+    ],
+    [
+      "100",
+      "definitely"
+    ]
+  ],
+  "_fix_why": "四处分歧的定夺，**每处都摆判据，别只写「听过了」**。第三趟是把争议那几秒单独切出来重听（关 VAD、beam 10），下面的「三读」指 `small.en` 全片 / `medium.en` 全片 / `medium.en` 单段。\n\n① `— → and a`（第 9 行）**改 ASR**。三读里 `medium.en` 两次都听到 `a`（`a great competitor, a good champion`），只有 `small.en` 把冠词吞了——而 `competitor good champion` 语法不成立，属于「不听音频也能定」那一档。至于 ATP 多出来的 `and`：单段重听给出的是 `a good champion **on the courts and** it's a pleasure`，而校验报告自己列着「记者删了 `on the courts and`」——**那个 and 是记者删掉半句之后挪过来接的**，不是他在这儿说的。\n\n② `since → the`（第 12 行）**保留 ASR**。`since since last time` 三读全都听成两遍，是真的口吃，不是 ASR 重影。口语素材保留原样是这条线的规矩（伊埃拉那条的 `I'm not I'm just at the beginning` 同理）；ATP 写成 `since the last time` 是清理。\n\n③ `100 → definitely`（第 15 行）**保留 ASR**。三读分别是 `100 %` / `100 %` / `hundred percent`，三次都听到这个词；ATP 的 `definitely` 是记者换的说法。**机器在这儿听到的是具体内容，不是漏词**，所以机器说了算。\n\n④ `— → in`（第 17 行）**改成人工引语的写法**。这一处三读都没听到 `in`，但它是个不重读的虚词，正是 ASR 最容易漏的那一类；而 ATP 的人工转写有它，`to be Montreal` 语法也不成立。**这条线发的是英语学习素材，印一个漏掉的介词等于教错**——仓库里 `yourselves` → `yourself` 那次就是这么定的（人压过机器，但要记明白机器不同意）。⚠️ 这一处是四处里最不确定的一个：ATP 这段引语明显做过清理（删了 `on the courts and`、`really`、`again`，还把口吃并了），所以它的 `in` 也可能是编辑加的。要推翻就推翻这一条，别动另外三条。",
+  "en_fixed": {
+    "2": "over to the bench. You just dropped",
+    "4": "for a little while. What's going",
+    "9": "He's a great competitor, a good champion",
+    "10": "on the courts, and it's a pleasure",
+    "14": "but more happily, I'm healthy.",
+    "15": "I'm 100% playing my best tennis",
+    "17": "to be in Montreal playing healthy",
+    "25": "and stay healthy. But again,",
+    "27": "about being a top player. Andrey, Andrey, he",
+    "31": "to get my level back. Just again super happy",
+    "34": "and if I can win some matches,",
+    "35": "that'll be amazing too"
+  },
+  "zh": [
+    "杰瑞 恭喜你",
+    "刚才你回到座位那会儿",
+    "低着头 盯着球场",
+    "看了好一阵子",
+    "打完这两小时 45 分钟",
+    "你脑子里在想什么？",
+    "嗯 首先我想说",
+    "安德烈是很好的朋友",
+    "他是很强的对手 也是位好冠军",
+    "能在球场上再一次",
+    "跟他同场 是件愉快的事",
+    "上一次 上一次我们交手",
+    "还是在香港",
+    "但更让我高兴的是 我健康了",
+    "我百分百打出了最好的网球",
+    "也真的很开心",
+    "能来到蒙特利尔 身体健康",
+    "重新打得开心",
+    "这样一场胜利",
+    "对你意味着什么 对信心呢？",
+    "它又能告诉你什么",
+    "关于你现在处在什么水平？",
+    "嗯 我知道 我的网球还在那儿",
+    "只是得 得把它从身体里打出来",
+    "还要保持健康 不过话说回来",
+    "这就是 这就是最关键的一点",
+    "想成为顶尖球员 安德烈 安德烈",
+    "他做到了 而且他全年都在打",
+    "所以这一点",
+    "是我得向顶尖球员学的东西",
+    "好把状态找回来 再说一次",
+    "我真的很高兴自己健康",
+    "这是第一位的事",
+    "如果还能赢下几场球",
+    "那就再好不过了",
+    "杰瑞",
+    "非常感谢",
+    "谢谢"
+  ],
+  "_zh_note": "38 行一一对应英文那 38 行。三条硬要求：**每行不超过 952px**（和英文同一个可用宽）、**行尾不许吊在虚词上**（的/地/在/而/关于这类，吊住等于把一个意思劈成两半）、**中文不写标点，只留 `？！`**（停顿靠空格和换页表达，这是全站的规矩；英文那行相反——英文是学习对象本身，标点是它的一部分）。\n⚠️ **`杰瑞` 不是译错。** 商竣程的英文名就是 Jerry Shang，主持人全程这么叫他；换成「商竣程」等于把现场那句称呼改掉。同理第 8 行的 `安德烈` 是卢布列夫的名（first name），他俩是朋友，说的就是名不是姓——译名表里的「卢布列夫」是姓，用在这儿反而生分。\n⚠️ 第 12、24、26、27 行的重复是**他真的口吃**（三读都听到两遍），中文照着重复，不许顺手抹平——抹平了就不是他说的话。",
+  "cover": {
+    "frame_at": 65.7,
+    "_why": "他说完最后一句、笑开的那一格。四要素在同一帧里自证：ATP MASTERS 1000 的话筒旗（**官方场上采访的判据就在话筒上**——转播商举的是自家台标牌）、身后 BANQUE NATIONALE / ROGERS 的场边板和满场观众（在哪儿、在场上）、他本人（是谁），加上笑（有情绪）。\n⚠️ 没挑 15 秒那格：那儿有条烧死的角标 `JUNCHENG SHANG DEFEATED RUBLEV 7-5 4-6 7-6`，自证力最强，但它压在画面下三分之一，正好和封面标题打架。角标的证据价值已经写进 `_winner_why` 了，不必再占封面。",
+    "title": [
+      "五个赛点 他一个没给",
+      "掀翻 10 号种子"
+    ],
+    "sub": "赛后第一句 他说的不是胜利　是健康",
+    "_copy_why": "主标是硬事实：卢布列夫在决胜盘 5-3 领先、并在他的发球局上手握五个赛点，全被他救了下来（ATP 官网周二战报是这么写的，见 `human_quote.url`）。副标是这段采访自己的落点——他两次把话头拐回健康：第 14 行「但更让我高兴的是 我健康了」、第 33 行「这是第一位的事」；Tennis TV 给这条片子取的标题也正是这个意思。\n⚠️ **这一段里不写英文原句**：`test_封面引的话必须在片子里` 会把封面注里的英文当成「封面引用」去片子里找，而战报那句和片名都不在这 74 秒里，写进来就是一条查无实据的引用。要引就引片子里的行（上面那两处中文对应的是第 14、33 行）。",
+    "tag": "2026 蒙特利尔 ATP1000 第二轮 · 商竣程"
+  },
+  "push": {
+    "_why": "推送标题的字段**只有这一个出处**，写在 dispatch 的输入上等于每次手打，手打两遍必分叉。栏目名走 `column_of()` 读顶层的 `column`。\n`event` 留空是**算出来的**：标题上限 20 字位，「8.5 赛后开麦 | 」就占掉 7.5，再塞「蒙特利尔第二轮」就写不下正事了。赛事和轮次放在 `lead` 和海报台头上，那儿有的是地方。",
+    "matchup": "商竣程 vs 卢布列夫",
+    "score": "7-5 4-6 7-6(5)",
+    "event": "",
+    "summary": "商竣程掀翻卢布列夫",
+    "lead": "2026 蒙特利尔 ATP1000 第二轮，7-5 4-6 7-6(5)。决胜盘被 10 号种子手握五个赛点，他一个没给——赛后场上采访全程 74 秒，中英双语字幕。"
+  },
+  "_en_fixed_why": "两类，分开看：\n\n**内容订正**（有第二个源或语法本身能定）：第 9 行补冠词、第 17 行补 `in`、第 35 行 `amazing to` → `amazing too`（`medium.en` 听到的是 `too`，而 `amazing to` 接下一行的 `Jerry.` 语法不成立——那是主持人换人说话了）。\n\n**句读补齐**：ASR 不打句号，于是 `over to the bench You just dropped` 这种一句变两句的地方全连着。仓库的规矩是「英文保留标点，因为**英文是学习对象本身**」——那就得把它补全，不然学的人读到的是一段没有句子边界的流水。只补**明显换句**的那几处，不改措辞、不改口吃（第 12、24、26 行的重复一个字都没动）。"
+}
