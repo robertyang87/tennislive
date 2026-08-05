@@ -46,6 +46,13 @@ ROOT = Path(__file__).resolve().parents[3]
 # （`test_片尾卡的画幅要和几条线的卡对得上`），不靠 import 保证。
 VIDEO_W, VIDEO_H = 1080, 1440
 
+# 片尾母版。**在的话每条片子从它转码（1.9s），不在就现渲（14.4s）。**
+# 生成：`PYTHONPATH=src python3 tools/build_outro_master.py`
+#
+# 放 `assets/` 不放 `output/`：它是**资产**不是某一天的产物，而且 CI 的稀疏
+# 检出把 output 挡在外面（「测试不许拿 output 当判据的主语」那条）。
+MASTER = ROOT / "assets/brand/outro_master.mp4"
+
 BRAND = "#c6f65a"      # 品牌绿（台标球身那个黄绿）
 INK = "#04120d"        # 深底
 TEXT = "#f4fbf7"
@@ -207,6 +214,7 @@ def render_clip(
     preset: str,
     crf: str,
     audio_bitrate: str = "160k",
+    audio_channels: int = 1,
     tail: float = 0.0,
     voice: Path | None = None,
     layers: dict[str, Path] | None = None,
@@ -264,8 +272,9 @@ def render_clip(
         args += ["-i", str(voice)]
         graph += f";[{audio_idx}:a]apad,atrim=0:{total:.3f},asetpts=PTS-STARTPTS[aout]"
     else:
+        layout = "stereo" if audio_channels == 2 else "mono"
         args += ["-f", "lavfi", "-i",
-                 f"anullsrc=channel_layout=stereo:sample_rate={audio_rate}"]
+                 f"anullsrc=channel_layout={layout}:sample_rate={audio_rate}"]
         graph += f";[{audio_idx}:a]atrim=0:{total:.3f}[aout]"
 
     args += ["-filter_complex", graph,
@@ -273,7 +282,89 @@ def render_clip(
              "-t", f"{total:.3f}",
              "-c:v", "libx264", "-preset", preset, "-crf", crf,
              "-pix_fmt", "yuv420p",
+             # ⚠️ **声道数也要跟调用方一致。** 采访片走 `concat` demuxer +
+             # `-c copy`，那条路对流参数最挑：帧率、采样率、**声道数**差一项
+             # 就静默丢流，成片从某一秒起没声音，而 ffmpeg 不报错。
              "-c:a", "aac", "-b:a", audio_bitrate, "-ar", audio_rate,
+             "-ac", str(audio_channels),
+             "-r", str(fps_expr),
              str(dest)]
     run(args, check=True)
     return dest
+
+
+def build_with_voice(
+    outdir: Path,
+    *,
+    chromium: str,
+    dest: Path,
+    fps: float,
+    audio_rate: str,
+    preset: str,
+    crf: str,
+    audio_bitrate: str,
+    fps_expr: str | None = None,
+    audio_channels: int = 1,
+    voice: str | None = None,
+    rate: str | None = None,
+    pitch: str | None = None,
+) -> Path:
+    """合口播 → 渲页 → 出片尾片段。**三条生产线共用这一份。**
+
+    片尾停多久由**口播**决定，但不短于动效自己要的下限（`min_length`）——
+    换嗓子或改动效节奏时两头都不会被截断。
+
+    ⚠️ **编码参数一项都不能省，而且要和调用方的成片逐项一致。** 解说片是
+    `concat` filter、采访片是 `concat` demuxer + `-c copy`，后者尤其严格：
+    帧率、采样率、声道数差一项就静默丢流，成片从某一秒起没声音，**而它不报错**
+    （采访片那条注释里已经为封面记过一次这个坑）。
+
+    ⚠️ **合到单独的子目录。** `synthesize_narration` 按索引命名
+    （`voice_00.mp3`），和正片同一个目录会**盖掉第一屏的旁白**——盖掉之后成片
+    照样出得来，只是第一屏说了片尾的话。
+    """
+    import subprocess  # noqa: PLC0415
+
+    from .explainer import (  # noqa: PLC0415
+        DEFAULT_PITCH, DEFAULT_RATE, DEFAULT_VOICE, ExplainerSegment,
+        _audio_seconds, synthesize_narration,
+    )
+
+    # **母版在的话就从它转码，不重渲。** 账号所有者 2026-08-05：「就做好一个
+    # 带口播的视频段，每次都拼接到最后不行么？」——实测每条片子渲一遍要
+    # 14.38 秒（渲页 7.58 ＋ 编码 5.88 ＋ TTS 0.92），转码只要 1.9 秒。
+    #
+    # 比省时间更硬的理由是**一致性**：每次重新跑 edge-tts，服务端合成的输出
+    # 可能有微小差异，而「强化记忆」靠的正是每条片子结尾一模一样的那一下。
+    #
+    # ⚠️ 中间这一步转码**省不掉**：三条线的帧率/采样率/声道数不一样，
+    # `concat` 差一项就静默丢流。母版按上界存（60fps / 48000 stereo / crf 12），
+    # 往下转无损失，往上补不出信息。
+    if MASTER.is_file():
+        subprocess.run(
+            ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(MASTER),
+             "-r", str(fps_expr or int(fps)),
+             "-c:v", "libx264", "-preset", preset, "-crf", crf, "-pix_fmt", "yuv420p",
+             "-c:a", "aac", "-b:a", audio_bitrate, "-ar", audio_rate,
+             "-ac", str(audio_channels), str(dest)],
+            check=True)
+        return dest
+
+    # 母版不在就现渲一份（第一次生成母版本身走的就是这条路）。
+    # ⚠️ **要出声**：默默多花 12 秒和正常出片长得一模一样。
+    print("[片尾] 没有母版，这条片子现渲一份（约 14 秒）；"
+          "跑一次 tools/build_outro_master.py 就不用每次渲了")
+    spoken = synthesize_narration(
+        [ExplainerSegment(kind="outro", label="片尾", title="", narration=NARRATION)],
+        outdir / "_outro_voice",
+        voice=voice or DEFAULT_VOICE,
+        rate=rate or DEFAULT_RATE,
+        pitch=pitch or DEFAULT_PITCH,
+    )[0]
+    secs = max(_audio_seconds(spoken, "ffprobe", subprocess.run) + TAIL, min_length())
+    return render_clip(
+        outdir, secs,
+        fps_expr=fps_expr or str(int(fps)), fps=fps, chromium=chromium, dest=dest,
+        audio_rate=audio_rate, preset=preset, crf=crf,
+        audio_bitrate=audio_bitrate, audio_channels=audio_channels, voice=spoken,
+    )

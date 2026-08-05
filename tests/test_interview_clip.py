@@ -2421,3 +2421,81 @@ def test_交叉校验报告里第一份是谁要照实写():
     assert 'spec["asr_model"]' in body or "spec['asr_model']" in body, \
         "报告没有按 spec 的 asr_model 决定第一份叫什么"
     assert '"YouTube 自动字幕"' in body, "退路（真是 YouTube 那条）没了"
+def test_采访片的片尾要和正片拼得起来(tmp_path):
+    """**真跑一次 `-c copy` 的 concat。**
+
+    这条线走 `concat` demuxer + `-c copy`，是三条线里对流参数最挑的一条：
+    帧率、采样率、**声道数**差一项就静默丢流，成片从某一秒起没声音，
+    **而 ffmpeg 不报错**（封面那一路的注释里已经为同一件事记过一次）。
+
+    喂现成的 PNG 当层（`layers=`），所以不碰 Chromium 也不合语音，CI 上跑得起来。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    layers = {}
+    for name in ["base"] + [k for k, *_ in outro_page.LAYERS]:
+        f = tmp_path / f"{name}.png"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+             f"color=c=gray:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
+             "-frames:v", "1", "-pix_fmt", "rgba", str(f)], check=True)
+        layers[name] = f
+
+    # 片尾：参数照 `_build_outro` 传的那一组
+    outro = outro_page.render_clip(
+        tmp_path, 4.0, fps_expr="25", fps=25.0, chromium="",
+        dest=tmp_path / "_outro.mp4", audio_rate="48000", preset="medium",
+        crf="20", audio_bitrate="128k", audio_channels=2, layers=layers)
+
+    # 「正片」：参数照 `render()` 里那一组
+    body = tmp_path / "body.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         "-f", "lavfi", "-i", "color=c=navy:s=1080x1440:r=25",
+         "-f", "lavfi", "-i", "sine=frequency=200:sample_rate=48000",
+         "-t", "6", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k",
+         "-ar", "48000", "-ac", "2", str(body)], check=True)
+
+    lst = tmp_path / "cc.txt"
+    lst.write_text(f"file '{body.name}'\nfile '{outro.name}'\n", encoding="utf-8")
+    joined = tmp_path / "joined.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                    "-i", str(lst), "-c", "copy", str(joined)], check=True)
+
+    def _dur(stream):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(joined)],
+            check=True, capture_output=True,
+            text=True).stdout.strip().rstrip(","))
+
+    assert abs(_dur("v:0") - 10.0) < 0.3, (
+        f"拼出来只有 {_dur('v:0'):.2f}s，要的是 6+4=10s——片尾的流参数和正片对不上")
+    # **音轨也要在**：`-c copy` 参数不匹配时会丢掉其中一条流，而它不报错
+    assert abs(_dur("a:0") - _dur("v:0")) < 0.4, (
+        f"音轨 {_dur('a:0'):.2f}s vs 画面 {_dur('v:0'):.2f}s——concat 丢了一条流")
+
+
+def test_采访片两条路都要接片尾():
+    """有封面和没封面是两条不同的出片路径，**片尾两条都要接上**。
+
+    没封面那条原来直接 `body.replace(out)` 就返回了，一次 concat 都不做——
+    只改有封面那条的话，没有封面的片子会悄悄少一页片尾，
+    而它和「本来就没有片尾」长得一模一样。
+    """
+    src = Path("tools/build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def render(")[1].split("\ndef ")[0]
+
+    assert "_build_outro(" in body, "render() 里没有调片尾"
+    nocover = body.split('if not spec.get("cover"):')[1].split("cover_png =")[0]
+    assert "outro" in nocover, (
+        "没有封面那条路没接片尾——那条路直接 replace 返回，"
+        "少一页和本来就没有长得一模一样")
+    # 片尾渲不出来时两条路都要能退回去，不能把整条片子带崩
+    assert "outro is None" in nocover, "没封面那条路没处理片尾渲不出来的情况"

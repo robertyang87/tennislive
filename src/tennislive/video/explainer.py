@@ -7052,32 +7052,19 @@ def _build_outro_clip(
     from . import outro_page  # noqa: PLC0415  （避免和本模块成环）
 
     try:
-        # ⚠️ **合到单独的子目录里。** `synthesize_narration` 按索引命名
-        # （`voice_00.mp3`），和正片同一个目录就会**盖掉第一屏的旁白**——
-        # 而盖掉之后成片照样出得来，只是第一屏说了片尾的话。
-        voice_dir = outdir / "_outro_voice"
-        spoken = synthesize_narration(
-            [ExplainerSegment(kind="outro", label="片尾", title="",
-                              narration=outro_page.NARRATION)],
-            voice_dir, voice=voice, rate=rate, pitch=pitch,
-        )[0]
-        secs = _audio_seconds(spoken, "ffprobe", subprocess.run) + outro_page.TAIL
-        # 片尾停多久由口播决定，但不短于动效自己要的那个下限——取 max，
-        # 换嗓子或改动效节奏时两头都不会被截断（和剪辑片那条同一个道理）。
-        secs = max(secs, outro_page.min_length())
-        clip = outro_page.render_clip(
-            outdir, secs,
-            fps_expr="30", fps=30.0, chromium=_chromium_executable(),
-            dest=outdir / "_outro.mp4",
-            # **编码参数照抄成片那一步**：concat 只认第一个文件的流参数，
-            # 差一项就拼出坏流，而它不报错。
-            audio_rate="24000", preset="slow", crf="26",
-            audio_bitrate="64k", voice=spoken,
+        # 合口播 + 渲页 + 出片段这一整套在 `outro_page.build_with_voice` 里，
+        # **三条线共用**。这儿只负责给这条线自己的编码参数——
+        # **照抄成片那一步**，concat 只认第一个文件的流参数，差一项就拼出坏流。
+        clip = outro_page.build_with_voice(
+            outdir, chromium=_chromium_executable(), dest=outdir / "_outro.mp4",
+            fps=30.0, audio_rate="24000", preset="slow", crf="26",
+            audio_bitrate="64k", audio_channels=1,
+            voice=voice, rate=rate, pitch=pitch,
         )
     except Exception as exc:  # noqa: BLE001 - 片尾不该拖垮整条片子
         print(f"[片尾] 渲不出来，这条片子没有片尾：{exc}")
         return None
-    print(f"[片尾] {clip.name}（{secs:.2f}s，口播 + 动效取长的那个）")
+    print(f"[片尾] {clip.name}（{_audio_seconds(clip, 'ffprobe', subprocess.run):.2f}s）")
     return clip
 
 def explainer_push_html(

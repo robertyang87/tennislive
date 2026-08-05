@@ -7469,3 +7469,75 @@ def test_盘点赛点谁救的必须写出来():
         "「面对…救下」主语没变，不该拦")
     assert not _flag("她拿到三个破发点，一个都没兑现。", ["她"]), (
         "「拿到…兑现」主语没变，不该拦")
+def test_有母版就不许再渲一遍(tmp_path, monkeypatch):
+    """账号所有者 2026-08-05：「就做好一个带口播的视频段，每次都拼接到最后
+    不行么？」——对的，实测账（沙箱，一条片子付一遍）：
+
+        TTS 0.92s ＋ 渲页 7.58s ＋ 编码 5.88s ＝ **14.38s**
+        从母版转码                              ＝ **1.1~2.5s**
+
+    比省时间更硬的理由是**一致性**：每次重新跑 edge-tts，服务端合成的输出可能
+    有微小差异，而「强化记忆」靠的正是每条片子结尾一模一样的那一下。
+
+    所以这条判据钉的是「母版在的时候，Chromium 和 TTS 一次都不许被碰」——
+    **省时间的全部来源就是这两样没跑**。只验产物出来了的话，一个偷偷还在渲
+    Chromium 的实现照样绿，而它慢 12 秒且不吭声。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    assert outro_page.MASTER.is_file(), (
+        f"母版不在：{outro_page.MASTER}——跑一次 "
+        "PYTHONPATH=src python3 tools/build_outro_master.py 并把它提交上去")
+
+    touched = []
+    monkeypatch.setattr(outro_page, "render_layers",
+                        lambda *a, **k: touched.append("chromium"))
+    monkeypatch.setattr(outro_page, "render_clip",
+                        lambda *a, **k: touched.append("render_clip"))
+
+    dest = tmp_path / "o.mp4"
+    outro_page.build_with_voice(
+        tmp_path, chromium="", dest=dest, fps=25.0, audio_rate="48000",
+        preset="ultrafast", crf="26", audio_bitrate="128k", audio_channels=2)
+
+    assert not touched, (
+        f"母版在，却还是走了 {touched}——那条路要 14.4 秒，"
+        "而从母版转码只要 2 秒")
+    assert dest.is_file(), "母版那条路没出片"
+
+    # 转出来的参数要真的是要的那一组（`-c copy` 的 concat 对这个最挑）
+    info = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=r_frame_rate,sample_rate,channels", "-of", "csv=p=0", str(dest)],
+        check=True, capture_output=True, text=True).stdout
+    assert "25/1" in info, f"帧率没转对：{info}"
+    assert "48000" in info, f"采样率没转对：{info}"
+
+
+def test_母版要按上界存():
+    """母版的帧率/采样率必须**不低于**任何一条线要的那一档。
+
+    转码只能往下走：60→25 是抽帧，25→60 是插帧（动效会顿）；
+    48000→24000 无损失，24000→48000 补不出信息。所以母版按上界存，
+    **改任何一条线的参数时这条会替人记得回来看一眼**。
+    """
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    assert outro_page.MASTER.is_file(), "母版不在"
+    fps_s, rate_s = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=r_frame_rate,sample_rate", "-of", "csv=p=0", str(outro_page.MASTER)],
+        check=True, capture_output=True, text=True).stdout.split()
+    num, den = (fps_s.rstrip(",").split("/") + ["1"])[:2]
+    fps = float(num) / float(den)
+    rate = int(rate_s.rstrip(",").split(",")[0])
+
+    # 三条线各自要的那一档（改这儿就要重跑 build_outro_master.py）
+    assert fps >= 60, f"母版只有 {fps}fps，而剪辑片有 60fps 的源片——插帧会顿"
+    assert rate >= 48000, f"母版只有 {rate}Hz，而采访片要 48000——升采样补不出信息"
