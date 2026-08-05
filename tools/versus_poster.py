@@ -213,21 +213,42 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     是让「查过没有」和「忘了填」分开**：漏写会报错，写 null 会渲成只有国旗
     和名字，并且在日志里出声。
 
+    ⚠️ **`country` 也允许显式写 `null`，意思是「查过，他没有国旗」。**
+    中立身份的球员就是这样：2026-08-05 卢布列夫那条查下来，**ATP 自己的
+    排名表里他是唯一一个名字后面没有国家缩写的**（同页 Musetti (ITA)、
+    Ruud (NOR)、Jódar (ESP) 都有），flashscore 给的国别字段也是 `World`。
+    这种情况下印俄罗斯旗，等于替这项运动做了一个它自己没做的声明；而随手
+    找个「中立旗」emoji 又不存在。所以留空，并且**在日志里出声**。
+
+    ⚠️ 和 `rank` 一样，**键不许省**：省掉之后「查过是中立身份」和「忘了填」
+    长得一模一样，而这个仓库为这种沉默栽过太多次。
+
     排名用 0.6em 的小字压在名字后面：同字号并排会跟名字抢，而它是注脚不是主语。
     """
-    code = str(meta.get("country") or "").strip()
-    if not code:
+    if "country" not in meta:
         raise SystemExit(
             f"{where} 缺 `country`：封面上每个球员的名字旁边都要有国旗。\n"
             "写 IOC 三字码就行（PHI / JPN / CHN），"
             "src/tennislive/zh/countries.py 里 ISO2 和英文名也认。\n"
             "查不到就去比赛数据源取：ESPN 的 competitor.athlete.flag.href "
-            "末尾就是 IOC 码（…/countries/500/phi.png）。")
-    flag = _flag(code)
-    if not flag:
-        raise SystemExit(
-            f"{where} 的 country={code!r} 没认出国旗——"
-            "对一遍 src/tennislive/zh/countries.py 里的 IOC 表。")
+            "末尾就是 IOC 码（…/countries/500/phi.png）。\n"
+            "**中立身份**（ATP/WTA 官方榜单里名字后面本来就没有国家的）"
+            '显式写 "country": null——别省掉这个键。')
+    if meta["country"] is None:
+        print(f"[封面] {name} 声明了没有国旗（country: null，中立身份），旗位省略")
+        flag = ""
+    else:
+        code = str(meta["country"] or "").strip()
+        if not code:
+            raise SystemExit(
+                f"{where} 的 `country` 是空字符串。查过确实没有国旗（中立身份）"
+                '就写 null，别写 ""——空串和手滑写漏长得一模一样。')
+        flag = _flag(code)
+        if not flag:
+            raise SystemExit(
+                f"{where} 的 country={code!r} 没认出国旗——"
+                "对一遍 src/tennislive/zh/countries.py 里的 IOC 表。")
+        flag = f"<b>{flag}</b>"
     if "rank" not in meta:
         raise SystemExit(
             f"{where} 缺 `rank`：对阵要在名字后面的括号里给出即时世界排名。\n"
@@ -237,8 +258,8 @@ def _name_html(name: str, meta: dict, where: str) -> str:
     rank = meta["rank"]
     if rank is None:
         print(f"[封面] {name} 声明了没有世界排名（rank: null），括号省略")
-        return f'<span class="who"><b>{flag}</b>{name}</span>'
-    return f'<span class="who"><b>{flag}</b>{name}<em>（{int(rank)}）</em></span>'
+        return f'<span class="who">{flag}{name}</span>'
+    return f'<span class="who">{flag}{name}<em>（{int(rank)}）</em></span>'
 
 
 _SET_RE = re.compile(r"^(\d{1,2})-(\d{1,2})(?:\((\d{1,2})\))?$")

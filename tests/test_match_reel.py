@@ -1405,9 +1405,18 @@ def test_栏目和封面模板要配对():
                 for who in pair:
                     assert str(who.get("name", "")).strip(), \
                         f"{path.name} 的 matchup 少了名字"
-                    assert str(who.get("country", "")).strip(), (
+                    # ⚠️ `country` 和 `rank` 一样：**键不许省，但可以显式写
+                    # null**。null 的意思是「查过，他没有国旗」——中立身份的
+                    # 球员就是这样（卢布列夫：ATP 自己的排名表里只有他名字后面
+                    # 没有国家缩写，flashscore 的国别字段也是 `World`）。
+                    # 省掉这个键的话，「查过是中立」和「忘了填」长得一模一样。
+                    assert "country" in who, (
                         f"{path.name} 的 {who.get('name')} 缺 country——"
-                        "比分那一行每个名字旁边都要有国旗")
+                        "比分那一行每个名字旁边都要有国旗；中立身份显式写 null")
+                    assert who["country"] is None or \
+                        str(who["country"]).strip(), (
+                        f"{path.name} 的 {who.get('name')} 的 country 是空串——"
+                        '查过确实没有就写 null，别写 ""')
                     assert "rank" in who, (
                         f"{path.name} 的 {who.get('name')} 缺 rank；"
                         "查过确实没有就显式写 null，别省掉这个键")
@@ -6285,3 +6294,51 @@ def test_气口要算进旁白的离线估():
     import inspect as _inspect
     assert list(_inspect.signature(reel.speech_seconds).parameters) == ["text"], (
         "`speech_seconds` 只该收文本；气口加在 `narration_estimates` 那一层")
+
+
+def test_中立身份的球员可以显式声明没有国旗():
+    """⚠️ **`country: null` 是「查过，他没有国旗」，不是「忘了填」。**
+
+    2026-08-05 卢布列夫那条查下来：**ATP 自己的排名表里，他是唯一一个名字后面
+    没有国家缩写的**（同一页 Musetti (ITA)、Ruud (NOR)、Jódar (ESP) 都有），
+    flashscore 给的国别字段也是 `World`。他是中立身份。
+
+    印俄罗斯旗等于**替这项运动做了一个它自己没做的声明**；而「中立旗」这个
+    emoji 并不存在。所以留空——但必须**显式认领并且出声**，和
+    `rank: null` / `mixed_fps` / `silent_source` 一个形状。
+
+    ⚠️ 键不许省：省掉之后「查过是中立身份」和「手滑漏了」长得一模一样。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import pytest  # noqa: PLC0415
+    import versus_poster as vp
+
+    # ① 中立：渲得出来，而且**不留空的 <b></b>**（那会在旗位留一块空白）
+    out = vp._name_html("卢布列夫", {"country": None, "rank": 16}, "t")
+    assert "卢布列夫" in out and "（16）" in out
+    assert "<b>" not in out, f"中立不该留空的旗位标签，实际 {out}"
+
+    # ② 正常那条不许被带坏
+    ok = vp._name_html("商竣程", {"country": "CHN", "rank": 270}, "t")
+    assert "<b>🇨🇳</b>" in ok and "（270）" in ok
+
+    # ③ 省掉键 → 报错，**而且要指出 null 这条出路**（报错要说出路）
+    with pytest.raises(SystemExit) as err:
+        vp._name_html("x", {"rank": 1}, "t")
+    assert "null" in str(err.value) and "中立" in str(err.value)
+
+    # ④ ⚠️ 空串**不等于** null：前者是手滑，后者是认领过的。两支要分开
+    with pytest.raises(SystemExit) as err2:
+        vp._name_html("x", {"country": "", "rank": 1}, "t")
+    assert "空字符串" in str(err2.value)
+
+    # ⑤ 认了国旗但写错码，照旧要红（别把这道闸一起放宽了）
+    with pytest.raises(SystemExit):
+        vp._name_html("x", {"country": "ZZZ", "rank": 1}, "t")
+
+    # ⑥ 出声：走中立那支必须打日志——不然「中立」和「渲丢了」看不出区别
+    src = Path("tools/versus_poster.py").read_text("utf-8")
+    body = src[src.index("def _name_html("):src.index("_SET_RE")]
+    assert "country: null" in body and "print(" in body, (
+        "走中立那条路要在日志里出声")
