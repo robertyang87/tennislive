@@ -94,7 +94,11 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+# `tools` 自己也要在 path 上：被当模块 import 时（测试里）脚本目录不会自动
+# 进来，而片尾那一页是同目录的兄弟模块。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import outro_page  # noqa: E402
 from tennislive import localca  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.explainer import (  # noqa: E402
@@ -174,6 +178,23 @@ MIN_SOURCE_H = 700
 COVER_SECONDS = 1.2
 # 说完之后留的那口气。贴着最后一个字切，末尾辅音会被 concat 的边界削掉。
 COVER_TAIL = 0.25
+
+# ── 片尾品牌页 ────────────────────────────────────────────────────────────
+# 账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的口播」
+# 「**要突出「网球时差」**」「**给大家强化记忆**」「最后最好有一个动效出来这一屏」。
+#
+# **这句话全站只有一个出处。** 写进每条 spec 的话，二十几条里迟早有一条被改
+# 成别的措辞，而那正是「强化记忆」最怕的事——记忆靠的是每条片子结尾**一模一样**
+# 的那一下。同理它也不该由命令行传（`push` 那几个字段栽过这个跟头：工作流的
+# 默认值挂着上一条片子的，漏传一项就拿另一场球的标题发出去）。
+#
+# ⚠️ **屏幕上印的那句是它的后半截**（`outro_page.TAGLINE`），前面多出来的
+# 「关注网球时差」正是屏幕最大那四个字加一个动作——所以 outro 不另排字幕，
+# 见 `render()` 里那段注释。改这句就要同时看一眼那张页面还盖不盖得住。
+OUTRO_NARRATION = "关注网球时差，你睡着的那些球，我替你看完。"
+# 口播说完之后留的那口气，和封面同一个道理（`COVER_TAIL`）。片尾更要留够——
+# 它是整条片子的最后一帧，贴着最后一个字切会像被掐断。
+OUTRO_TAIL = 0.45
 # 封面海报**要进仓库**：推送正文的第一屏就是它（布局照着知识解说那条推送来），
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
@@ -2384,6 +2405,75 @@ def cover_length(voice_path: Path | None) -> float:
     return length
 
 
+def synth_outro(outdir: Path, voice: str, rate: str) -> tuple[Path, list[dict]]:
+    """片尾那句口播。**文本是常量，不从 spec 读**——见 `OUTRO_NARRATION`。
+
+    和封面那句一样要**排在渲页面之前**：片尾停多久由它的长度决定
+    （`outro_length`），不能等到 `synthesize()` 那一步。
+    """
+    path = outdir / "voice_outro.mp3"
+    with stage("片尾配音"):
+        marks = tts_one(OUTRO_NARRATION, path, voice, rate)
+    return path, marks
+
+
+def outro_length(voice_path: Path) -> float:
+    """片尾停多久：口播说完 + `OUTRO_TAIL`，但**不短于动效自己要的那个下限**。
+
+    两个数都可能是较大的那个，所以取 max 而不是选一个：
+    - 口播 ~3.4s + 0.45s 尾 = 3.85s
+    - 动效（最后一层 1.50s 起、淡 0.55s、再停 0.9s）= 2.95s
+
+    换一把嗓子或改语速，口播那头会变；改动效节奏，另一头会变。**取 max 才
+    两头都不会被截断**——写死一个数的话，其中一头一变就会悄悄切掉尾巴，
+    而 ffmpeg 对这种越界从来不吭声。
+    """
+    spoken = probe_duration(voice_path)
+    spoken_need = round(spoken + OUTRO_TAIL, 3)
+    motion_need = outro_page.min_length()
+    length = round(max(spoken_need, motion_need), 3)
+    who = "口播" if spoken_need >= motion_need else "动效"
+    print(f"[片尾] 口播 {spoken:.2f}s + 尾 {OUTRO_TAIL}s = {spoken_need:.2f}s，"
+          f"动效要 {motion_need:.2f}s → 取 {who} 的 {length:.2f}s")
+    return length
+
+
+def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
+    """渲片尾品牌页并合成动效，出一个 part_*.mp4。
+
+    静音轨是**占位**，和 `_still_to_clip` 同一个道理：口播在最后混音那一步按
+    `adelay` 叠上去。这儿要是塞进真音频，就是「补位的静音盖住真音轨」那个
+    老毛病的镜像版。
+
+    ⚠️ **编码参数必须和分段、封面完全一致**（`PART_PRESET`/`PART_CRF`/
+    `AUDIO_RATE`/`FPS_EXPR`）——`concat` 那一步只认第一个文件的流参数，
+    差一项就会拼出坏流，而它不报错。
+    """
+    total = seconds + tail
+    with stage("片尾渲染"):
+        layers = outro_page.render_layers(outdir, _chromium())
+    with stage("片尾编码"):
+        args = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-loop", "1", "-t", f"{total:.3f}", "-i", str(layers["base"])]
+        for key, *_ in outro_page.LAYERS:
+            args += ["-loop", "1", "-t", f"{total:.3f}", "-i", str(layers[key])]
+        args += ["-f", "lavfi", "-i",
+                 f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+                 "-filter_complex",
+                 outro_page.motion_filter(total, FPS_EXPR, FPS),
+                 "-map", "[vout]", "-map", f"{len(outro_page.LAYERS) + 1}:a",
+                 "-t", f"{total:.3f}",
+                 "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+                 "-pix_fmt", "yuv420p",
+                 "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+                 str(outdir / "part_outro.mp4")]
+        run(*args)
+    dest = outdir / "part_outro.mp4"
+    print(f"[片尾] {dest.name} {probe_duration(dest):.2f}s"
+          f"（含 {tail}s 溶解底料）")
+    return dest
+
+
 # 一段画面里最多允许多少秒没人在说话。
 #
 # 账号所有者 2026-08-02：「不是补全的问题，我是说有些没有字幕了，给漏掉了」
@@ -2937,17 +3027,23 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
 
     容差 0.05s：源片时长本身有帧级误差，卡太死会误伤最后一段。
 
-    ⚠️ **除了末段，每一段还要多留 `SEG_FADE` 秒**：溶解的底料是这一段之后的
-    自然延续（见 `dissolve_filtergraph`）。取不到那几秒时 ffmpeg 照样退出码 0，
+    ⚠️ **每一段都要多留 `SEG_FADE` 秒**：溶解的底料是这一段之后的自然延续
+    （见 `dissolve_filtergraph`）。取不到那几秒时 ffmpeg 照样退出码 0，
     只是给一段短的，然后 `xfade` 的 offset 落到流的末尾之外——**画面在这个
-    接缝上会停住**，而这一整族毛病的共同点就是不吭声。末段不留尾巴，所以它
-    仍然可以贴着源片末尾结束。
+    接缝上会停住**，而这一整族毛病的共同点就是不吭声。
+
+    ⚠️ **这里原来写着「末段不留尾巴，所以它可以贴着源片末尾结束」，
+    2026-08-05 片尾页接上之后那句话就不成立了**——末段是片尾页，最后一个
+    *分段* 后面跟着的是它，同样要溶解，同样要底料。少算这 0.18 秒的后果不是
+    报错，是最后一个接缝上画面停住。**同一个假设写在两处（这道闸和切分段的
+    循环），改一处就会分叉**，判据钉在
+    `test_片尾接上之后每个分段都要留溶解底料`。
     """
     durations = {key: probe_duration(path) for key, path in sources.items()}
     over = []
     for index, seg in enumerate(segments):
         limit = durations.get(seg.source)
-        need = seg.end + (0.0 if index == len(segments) - 1 else SEG_FADE)
+        need = seg.end + SEG_FADE
         if limit is None or need <= limit + 0.05:
             continue
         over.append(f"  第 {index + 1} 段：{seg.start:.1f}–{seg.end:.1f}s"
@@ -3051,8 +3147,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 封面那句先合出来——**封面停多久由它决定**，所以排在渲封面之前。
     cover_voice, cover_marks = synth_cover(spec, outdir, voice, rate)
     cover_secs = cover_length(cover_voice)
-    total = sum(s.length for s in segments) + cover_secs
-    print(f"{len(segments)} 段，画面共 {total:.1f}s")
+    # 片尾那句同理：**片尾停多久由它决定**（`outro_length`），所以也要排在
+    # 渲那一页之前。两句都在这儿合掉，TTS 一共 6 秒上下、一个源片像素都不碰
+    # ——「TTS 和旁白超长那道闸，挪到编码之前」是同一个道理。
+    outro_voice, outro_marks = synth_outro(outdir, voice, rate)
+    outro_secs = outro_length(outro_voice)
+    total = sum(s.length for s in segments) + cover_secs + outro_secs
+    print(f"{len(segments)} 段，画面共 {total:.1f}s"
+          f"（含封面 {cover_secs:.2f}s、片尾 {outro_secs:.2f}s）")
     if total > 120:
         print(f"[注意] 超过两分钟（{total:.1f}s），按要求应当再砍")
 
@@ -3135,7 +3237,14 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
     # **每一段都多切 SEG_FADE 秒留给下一个接缝，最后一段不留**——长度账见
     # `dissolve_filtergraph`。多出来的那几秒从来不单独播，它只在溶解里当底。
-    lengths = [cover_secs] + [seg.length for seg in segments]
+    #
+    # ⚠️ **片尾页接上之后，「最后一段」换人了。** 末段不留尾巴的规则是
+    # `dissolve_filtergraph` 的长度账要求的（末段那个 f 正好被吃掉，总长才等于
+    # Σ Lᵢ）。片尾页排在所有分段之后，所以现在**每一个分段都要留尾巴**，
+    # 不留的那个是片尾页。写死 `index == len(segments) - 1` 会让最后一个分段
+    # 少 0.18 秒底料，溶解就落到流的末尾之外——2026-08-02 那两趟
+    # 「段落 114.46s、成片 12.44s」正是这么来的，**而日志里一个字都不会说**。
+    lengths = [cover_secs] + [seg.length for seg in segments] + [outro_secs]
     parts: list[Path] = [build_cover(sources, primary, spec,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
@@ -3143,8 +3252,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index),
-                                 tail=0.0 if index == len(segments) - 1
-                                 else SEG_FADE))
+                                 tail=SEG_FADE))
+    parts.append(build_outro(outdir, outro_secs, tail=0.0))
 
     silent = outdir / "_video.mp4"
     with stage("拼接"):
@@ -3250,6 +3359,23 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 if a < limit)
         offset += seg.length
 
+    # **片尾那句口播接在所有分段之后。** `offset` 走到这儿正好是
+    # cover_secs + Σ seg.length，也就是片尾页的起点——和 `lengths` 用的是同一份
+    # 累加，不另算一遍。
+    #
+    # ⚠️ **片尾不排字幕，这是有判据的，不是漏了。** 封面那条规矩说的是
+    # 「念的就是画面上印的那句，就别再排一行字幕；判据是**一不一样**」。
+    # 片尾页上印着「网球时差」四个大字 + 「你睡着的那些球，我替你看完」，
+    # 而口播是「关注网球时差，你睡着的那些球，我替你看完。」——多出来的
+    # 「关注」二字之外，**每个字都已经在屏幕上了，而且比字幕大得多**。
+    # 再排一行字幕只会压在那句小字上，把这一页弄脏。
+    # 「静音刷是默认状态」这条在这儿是满足的：静音的人照样读得到全部信息。
+    mix_inputs.extend(["-i", str(outro_voice)])
+    filters.append(f"[{len(mix_inputs)//2}:a]adelay={int(offset*1000)}|"
+                   f"{int(offset*1000)}[voutro]")
+    voice_labels.append("[voutro]")
+    print(f"[片尾] 口播落在 {offset:.2f}s，画面上已印着同样的话，不另排字幕")
+
     margin_v = int(spec.get("subtitle_top", _REEL_MARGIN_V))
     ass = write_subtitles(cues, outdir / "subtitles.ass",
                           height=VIDEO_H, margin_v=margin_v)
@@ -3292,9 +3418,13 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
 
-    for junk in list(outdir.glob("part_*.mp4")) + [silent, mixed,
-                                                   outdir / "_concat.txt",
-                                                   outdir / "_cover_frame.jpg"]:
+    # 片尾那几张分层 PNG 和它们的 HTML 也是中间物：每条片子渲出来都一模一样
+    # （版式是常量），留在 outdir 里只会给每条片子多塞半兆进仓库。
+    for junk in (list(outdir.glob("part_*.mp4"))
+                 + list(outdir.glob("_outro_*.png"))
+                 + list(outdir.glob("_outro_*.html"))
+                 + [silent, mixed, outdir / "_concat.txt",
+                    outdir / "_cover_frame.jpg"]):
         junk.unlink(missing_ok=True)
     # **封面停多久要记下来。** 它现在跟着配音走，光看 spec 算不出来——
     # `check_reel_landed.py` 拿它对片长，没有这份就只能拿常量猜，而猜错的样子
@@ -3306,6 +3436,11 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     (outdir / "render.json").write_text(json.dumps({
         "cover_seconds": round(cover_secs, 3),
         "cover_narrated": cover_voice is not None,
+        # **片尾也跟着口播走，光看 spec 同样算不出来**（那句话是常量，但它有多长
+        # 取决于音色和语速）。`check_reel_landed.py` 拿「画面总长 − 段落总长
+        # − 片尾 ＝ 封面」对片长，少了这一项那条恒等式会**恒假**，而一条常年红的
+        # 检查和没有检查是同一个毛病。
+        "outro_seconds": round(outro_secs, 3),
         "segments_seconds": round(sum(s.length for s in segments), 3),
         "film_seconds": round(probe_duration(final), 3),
         "narration_voice": voice,
