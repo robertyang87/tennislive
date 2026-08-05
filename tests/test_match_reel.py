@@ -66,6 +66,44 @@ def _step_block(name: str, text: str | None = None) -> str:
     return body[start:].split("\n      - name:", 1)[0]
 
 
+def test_只给mode等于push不给push等于true要当场报错():
+    """⚠️ **两个开关管同一件事，只拨一个 run 照样绿。**
+
+    `mode=push` 的唯一目的就是发微信（工作流开头写着「成片已经在仓库里，
+    只写复制页 → 提交 → 发微信」），可真正发消息那一步的 `if:` 认的是
+    `inputs.push`。2026-08-05 我只传了 `mode=push`：run 30969384140
+    **27 秒跑完、绿的**——写了复制页、提交说「没有变化」、收工，
+    微信一个字都没发。
+
+    **它和「发出去了」长得一模一样**：conclusion 是 success，日志里没有
+    任何一行说「本次没有推送」——被跳过的步骤根本不进日志。又一次
+    「兜底出事的时候不吭声」，只不过这次不吭声的是一个 `skipped`。
+
+    判据钉两头，缺一头都不算：
+
+    1. **闸存在**，而且拦的正是 `mode=push` + `push!=true` 这个组合
+    2. **它排在真正干活之前**——排在后面的话，那一趟仍然会先跑一遍
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    names = _steps(text)
+    guard = next((i for i, n in enumerate(names)
+                  if "mode=push 就必须 push=true" in n), None)
+    assert guard is not None, (
+        "没有这道闸：只传 mode=push 的那趟会绿着回来，什么都没发")
+
+    block = _step_block("mode=push 就必须 push=true", text)
+    cond = block.split("run:", 1)[0]
+    assert "inputs.mode == 'push'" in cond and "inputs.push != 'true'" in cond, (
+        f"闸的条件不对，拦不住那个组合：{cond}")
+    assert "exit 1" in block, "闸不 exit 1 等于只打了一行字"
+
+    # **位置**：要排在写复制页 / 提交 / 推送之前，否则白跑一趟才报
+    page = next(i for i, n in enumerate(names) if "写复制页" in n)
+    assert guard < page, (
+        f"闸排在第 {guard} 步、写复制页在第 {page} 步——"
+        "排在后面的话那一趟照样先干一遍活")
+
+
 def test_复制页写在提交之前():
     text = WORKFLOW.read_text(encoding="utf-8")
     names = _steps(text)
@@ -4134,6 +4172,107 @@ def test_封面上每个球员都要有国旗和即时排名():
     with pytest.raises(SystemExit) as err:
         versus_poster._name_html("某人", {"country": "PHI"}, "versus.top")
     assert "null" in str(err.value), "报错没说「查过没有就写 null」这条出路"
+
+
+def _rank_claims(text: str) -> list[int]:
+    """把一段文案里**声称的排名**抠出来（阿拉伯和汉字都认）。
+
+    ⚠️ **只认「世界第N」「世界排名N」「排名…N」这三种说法**，别放宽：
+
+    - `第N号种子` / `N号种子` 是**种子序号不是排名**。卢布列夫在蒙特利尔是
+      十号种子、世界第十六——两个数都对，混成一件事就成了假话
+    - 「第一次打进四强」「两个盘点」里的数跟排名无关，扫进来只会误伤
+
+    判据宁可窄，不可宽：扩大化的判据不吭声，它不会说「我拦错了」，
+    只会让下一个人把对的写法改成错的。
+    """
+    import re  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("src").resolve()))
+    from tennislive.video.explainer import _num_value  # noqa: PLC0415
+
+    out: list[int] = []
+    # 「排名」和数字之间允许隔一个动词（掉到 / 升到 / 来到 / 是），
+    # 但**不允许隔任意字符**——隔开了就未必还在说同一件事
+    pat = re.compile(r"(?:世界第|世界排名|排名(?:掉到|升到|来到|是)?)"
+                     r"\s*([0-9]+|[一二三四五六七八九十百千两]+)")
+    for m in pat.finditer(text):
+        run = m.group(1)
+        if run.isdigit():
+            out.append(int(run))
+            continue
+        value = _num_value(run)
+        # 读不出来（比如「排名最高」被切到「高」）就跳过，别猜
+        if value is not None:
+            out.append(int(value))
+    return out
+
+
+def test_钩子和文案里写的排名要和matchup对得上():
+    """账号所有者 2026-08-05：「主要是封面选图和文案要**贴近比赛事实**，
+    且有吸引力」。
+
+    这条测的是**前半句里能量出来的那一半**：钩子和推送文案里写的排名，必须
+    和 `cover.matchup` / `cover.versus` 里登记的那个数一样。后半句「有吸引力」
+    是判断题，故意没有测试——理由写在 CLAUDE.md 里。
+
+    **这不是假想的风险，是当天差点发出去的错**：查卢布列夫排名时我读的是
+    维基百科榜单里的**变化列**，得出「世界第九」，而他是**第十六**。
+    海报的名条从 `matchup` 渲，钩子是手写的——**两个出处**，于是那一版海报
+    会在同一张图上把同一个人写成两个名次，而**渲染、质检、全量测试一律不出声**。
+
+    ⚠️ 只校**登记过排名**的那些 spec。老片子（`_LEGACY_NO_FLAG` 那一批）
+    连 `matchup` 都没有，没有基准可比——**跳过它们不等于放过**：新写的封面
+    从 2026-08-02 起一律要填国旗和排名，所以这道闸对以后每一条都成立。
+
+    ⚠️ **只扫钩子和 `push.summary`，不扫 `lead` 和小红书正文。** 第一版把四个
+    出口一起扫了，当场四条全红——**四条全是误伤**：伊埃拉正文里的「世界第 140」
+    是 2025 年迈阿密那一周的她，霍达尔正文里的「世界第 8」是德米纳尔，张帅
+    `lead` 里的「五百九十五」是 2024 年夏天。
+
+    分界不是「哪个字段更重要」，是**这句话有没有地方放上下文**：钩子 27 字、
+    `summary` 20 字位，塞不下第三个人也塞不下年份，所以里面的排名**必然**是
+    这两个人的当期名次；正文有几百字，同一个说法在那儿完全可以是三年前的。
+    又一次「判据宁可窄，不可宽」——扫宽了它不会说「我拦错了」。
+    """
+    checked = 0
+    bad: dict[str, str] = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        registered: set[int] = set()
+        for who in cover.get("matchup") or []:
+            if isinstance(who, dict) and isinstance(who.get("rank"), int):
+                registered.add(who["rank"])
+        versus = cover.get("versus") or {}
+        for side in ("top", "bottom"):
+            panel = versus.get(side) or {}
+            if isinstance(panel.get("rank"), int):
+                registered.add(panel["rank"])
+        if not registered:
+            continue
+
+        push = spec.get("push") or {}
+        texts = {"cover.hook": str(cover.get("hook", "")),
+                 "push.summary": str(push.get("summary", ""))}
+        for where, text in texts.items():
+            for claimed in _rank_claims(text):
+                checked += 1
+                if claimed not in registered:
+                    bad[f"{path.name}:{where}"] = (
+                        f"写着世界第 {claimed}，而 matchup 登记的是 "
+                        f"{sorted(registered)}")
+    assert not bad, f"钩子/文案里的排名和 matchup 对不上：{bad}"
+    # **判据自己的判据。** 上面两个 `continue` 一旦写宽，或者 `_rank_claims`
+    # 的正则写死，这条测试会变成一盏恒真的绿灯——而它拦的正是「不吭声」那一类。
+    assert checked >= 1, "一处排名都没校到——是不是跳过的条件或正则写宽了？"
+
+    # 抠取本身要正反都对：认得出该认的，也不许把种子序号当排名
+    assert _rank_claims("他掀翻了世界第十六") == [16]
+    assert _rank_claims("排名掉到两百七十") == [270]
+    assert _rank_claims("落后一盘，隔夜掀翻世界第 3") == [3]
+    assert _rank_claims("这一站的十号种子卢布列夫") == [], "种子序号被当成了排名"
+    assert _rank_claims("第一次打进四强，两个盘点都救了") == []
 
 
 def test_渲海报的工作流都要装emoji字体():
