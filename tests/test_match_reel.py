@@ -5444,6 +5444,210 @@ def test_接缝要溶解不许淡到黑(tmp_path):
         "接缝中间必然有一帧全黑。转场收在拼接那一步的 dissolve_filtergraph")
 
 
+def test_片尾接上之后每个分段都要留溶解底料(tmp_path):
+    """账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的口播」。
+
+    **片尾页接在所有分段之后，于是「最后一段」换人了。**
+    `dissolve_filtergraph` 的长度账要求**只有末段不留尾巴**（末段那个 f 正好
+    被吃掉，总长才等于 Σ Lᵢ）。加片尾之前末段是最后一个分段，加之后是片尾页。
+
+    要是还写着 `tail=0.0 if index == len(segments) - 1`，最后一个分段就少
+    `SEG_FADE` 秒底料，`xfade` 的 offset 落到流的末尾之外——**整条片子在那个
+    接缝上截断**。2026-08-02 那两趟就是这么来的：段落加起来 114.46s、
+    成片 12.44s，**而日志里一个字都没说**。
+
+    两条断言：
+
+    1. **盯位置**：切分段那个循环里不许再出现「最后一段不留尾巴」的条件。
+       只测行为拦不住这个错法——真跑一遍长度账是拿纯色跑的，它不知道
+       生产代码给每一段传了什么 tail。
+    2. **真跑一次长度账**：cover + 两段 + 片尾，四个 part 走一遍生产用的
+       `dissolve_filtergraph`，总长必须等于 Σ lengths。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    # ① 盯位置：那个「末段不留」的条件必须已经从分段循环里拿掉
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    body = "\n".join(line for line in src.splitlines()
+                     if not line.lstrip().startswith("#"))
+    assert "0.0 if index == len(segments) - 1" not in body, (
+        "切分段的循环里还写着「最后一个分段不留溶解底料」——片尾页接上之后，"
+        "末段是片尾不是分段。这么写最后一个分段会少 "
+        f"{reel.SEG_FADE}s 底料，xfade 的 offset 落到流末尾之外，"
+        "整条片子在那个接缝上截断，而 ffmpeg 不报错")
+    assert "parts.append(build_outro(" in body, "片尾页没有接进 parts"
+    # 片尾必须是**最后**一个 part：长度账全靠这个顺序
+    assert body.index("parts.append(build_outro(") > body.index(
+        "parts.append(cut_segment("), (
+        "片尾页要排在所有分段之后——它是末段，长度账按这个顺序算")
+
+    # ② 真跑一次长度账
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    fade = reel.SEG_FADE
+    # cover 1.2s + 两段 + 片尾 3.85s，**只有片尾不留尾巴**
+    plan = [("red", 1.2, fade), ("green", 3.0, fade),
+            ("blue", 2.5, fade), ("gray", 3.85, 0.0)]
+    parts = []
+    for i, (colour, length, tail) in enumerate(plan):
+        part = tmp_path / f"q{i}.mp4"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y",
+             "-f", "lavfi", "-i",
+             f"color=c={colour}:s=320x426:r=25:d={length + tail + 1}",
+             "-f", "lavfi", "-i",
+             f"sine=frequency={300 + 150 * i}:sample_rate={reel.AUDIO_RATE}",
+             "-t", f"{length + tail:.3f}",
+             "-c:v", "libx264", "-preset", "ultrafast", "-crf", "12",
+             "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", reel.AUDIO_RATE,
+             str(part)], check=True)
+        parts.append(part)
+
+    lengths = [length for _, length, _ in plan]
+    film = tmp_path / "with_outro.mp4"
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y",
+         *[a for p in parts for a in ("-i", str(p))],
+         "-filter_complex", reel.dissolve_filtergraph(lengths, fade),
+         "-map", "[vout]", "-map", "[aout]",
+         "-c:v", "libx264", "-preset", "ultrafast", "-crf", "12",
+         "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", reel.AUDIO_RATE,
+         str(film)], check=True)
+    got = float(subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=duration", "-of", "csv=p=0", str(film)],
+        check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+    want = sum(lengths)
+    assert abs(got - want) < 0.08, (
+        f"接上片尾之后画面 {got:.2f}s，而各段加起来是 {want:.2f}s——"
+        "长度账破了，后面每一句旁白和字幕都会整体错位")
+
+
+def test_片尾的动效每一层都要按时出现(tmp_path):
+    """账号所有者 2026-08-05：「最后最好有一个动效出来这一屏」。
+
+    **真跑一遍生产用的那个滤镜图**，量每一层在自己该出现的时刻之前是不是还没
+    出现、之后是不是出来了。查源码里有没有 `fade=` 只能防「有人把它删了」，
+    防不住「它从来没工作过」——这个仓库里「签名对了、实现是空的」是常客。
+
+    ⚠️ 拿**纯色块**当层，不渲真页面：这条判据要在 CI 上跑得起来，而 CI 上
+    没有 Chromium 也没有品牌字体。它验的是滤镜图的时序，不是版式好不好看。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import outro_page  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    secs, fps = 3.85, 25
+    # 底层纯黑，三层各是一条横带，落在互不重叠的高度上——这样量某一条带的
+    # 亮度就等于量那一层出没出来。
+    base = tmp_path / "base.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+                    f"color=c=black:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
+                    "-frames:v", "1", str(base)], check=True)
+    bands = {}
+    layer_files = []
+    for i, (key, st, dur, _rise) in enumerate(outro_page.LAYERS):
+        y0 = 200 + i * 300
+        bands[key] = (y0, y0 + 160, st, dur)
+        f = tmp_path / f"l{i}.png"
+        # 透明底 + 一条白带
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+             f"color=c=black@0.0:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
+             "-vf", f"drawbox=x=0:y={y0}:w={outro_page.VIDEO_W}:h=160:"
+                    "c=white@1.0:t=fill",
+             "-frames:v", "1", "-pix_fmt", "rgba", str(f)], check=True)
+        layer_files.append(f)
+
+    film = tmp_path / "outro.mp4"
+    args = ["ffmpeg", "-v", "error", "-y",
+            "-loop", "1", "-t", f"{secs}", "-i", str(base)]
+    for f in layer_files:
+        args += ["-loop", "1", "-t", f"{secs}", "-i", str(f)]
+    args += ["-filter_complex", outro_page.motion_filter(secs, str(fps), float(fps)),
+             "-map", "[vout]", "-c:v", "libx264", "-preset", "ultrafast",
+             "-crf", "12", "-pix_fmt", "yuv420p", str(film)]
+    subprocess.run(args, check=True)
+
+    def band_brightness(moment: float, y0: int, y1: int) -> float:
+        shot = tmp_path / "s.png"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{moment:.3f}",
+                        "-i", str(film), "-frames:v", "1", str(shot)], check=True)
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(shot), "-vf",
+             f"crop={outro_page.VIDEO_W}:{y1 - y0}:0:{y0},"
+             "format=gray,signalstats,metadata=print:key=lavfi.signalstats.YAVG",
+             "-f", "null", "-"], capture_output=True, text=True).stderr
+        got = re.search(r"YAVG=(\S+)", out)
+        assert got, f"量不到 {moment}s 的亮度"
+        return float(got.group(1))
+
+    for key, (y0, y1, st, dur) in bands.items():
+        # 入场之前：还没出来（留 0.06s 余量给取帧的量化误差）
+        before = band_brightness(max(0.0, st - 0.10), y0, y1)
+        # 淡完之后：出来了
+        after = band_brightness(min(secs - 0.05, st + dur + 0.25), y0, y1)
+        assert before < 12, (
+            f"「{key}」层在 {st}s 之前就已经出现了（亮度 {before:.1f}）——"
+            "淡入没生效，那一层从第 0 帧就是满的")
+        assert after > 90, (
+            f"「{key}」层淡完之后还没出来（亮度 {after:.1f}）——"
+            "这一层根本没被合进去，或者 fade 把 alpha 弄反了")
+        assert after - before > 60, (
+            f"「{key}」层前后差得太小（{before:.1f} → {after:.1f}），淡入没在动")
+
+
+def test_片尾口播说的话画面上要印得全():
+    """**片尾不排字幕，这个决定的前提必须钉住。**
+
+    封面那条规矩说的是「念的就是画面上印的那句，就别再排一行字幕；
+    判据是**一不一样**」。片尾走的是同一条：屏幕上有「网球时差」四个大字
+    加那句小字，把口播的每个字都覆盖住了，所以不排字幕——静音刷的人照样
+    读得到全部信息。
+
+    **要是有人改了口播文案、让它说出画面上没有的东西，这条就必须红**，
+    否则「不排字幕」会从一个想清楚的决定，悄悄变成一次信息丢失，
+    而它不会报错（静音的人拿不到那句话，我们也看不出来）。
+
+    这就是「判据自己也要有判据」：断言某个东西可以不做之前，
+    先证明不做它的前提还成立。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    import outro_page  # noqa: PLC0415
+
+    spoken = reel.OUTRO_NARRATION
+    printed = outro_page.TAGLINE
+    # 画面上还有品牌名那四个大字
+    on_screen = printed + "网球时差"
+
+    # **唯一认领的例外：「关注」。** 它是动作号召，不是信息——这一页的存在
+    # 本身就是关注入口（台标 + 品牌名 + @handle 都在画面上），少了这两个字
+    # 静音的人不会丢掉任何事实。和 `mixed_fps` / `silent_source` / `rank: null`
+    # 一个形状：**认领这一步把「想清楚了」和「凑合一下」分开**。
+    # 白名单只许减不许加——多认领一个词，就是多一句静音的人听不见的话。
+    allowed = "关注"
+    leftover = [ch for ch in spoken
+                if ch not in on_screen and ch not in allowed
+                and ch not in "，。！？、 "]
+    assert not leftover, (
+        f"片尾口播里这些字画面上没有：{''.join(sorted(set(leftover)))}\n"
+        f"  口播：{spoken}\n  画面：{printed} ＋「网球时差」\n"
+        f"  已认领可以不印的只有：{allowed}\n"
+        "片尾不排字幕的前提是「说的每个字画面上都印着」。要么把文案改回去，"
+        "要么给片尾也排字幕（那就要重新排版，小字那行会被压住）")
+    assert printed in spoken, (
+        f"画面上印的那句「{printed}」不在口播里——两处对不上，"
+        "读者听到的和看到的会是两句话")
+
+
 def test_屏幕上的数字不许把字吃掉():
     """账号所有者：「有些字幕没有补全」。
 
