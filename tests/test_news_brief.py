@@ -16,14 +16,23 @@
 外加两条这个仓库的老账：**退化要出声**、**判据宁可窄不可宽**。
 """
 
+import json
 from pathlib import Path
+
+import pytest
 
 from tennislive.render.newsbrief import render_brief_html
 from tennislive.research.brief import (
-    DEFAULT_MODEL,
+    DEEPSEEK_URL,
+    _DEEP_SCHEMA,
+    _TRANSLATE_SCHEMA,
+    KEY_HINT,
+    PROVIDERS,
+    REQUEST_TIMEOUT,
     Chat,
     build_brief,
     drop_navigation,
+    json_shape_hint,
 )
 from tennislive.research.glossary import build_glossary, glossary_lines
 
@@ -232,22 +241,28 @@ def test_没深挖的那些也要给中译标题():
 
 
 def test_没配密钥这件事要出声不能默默退回英文():
-    """没配 token 的简报没有中译也没有要点，而它看起来和「今天新闻少」一样。
+    """没配密钥的简报没有中译也没有要点，而它看起来和「今天新闻少」一样。
 
     ⚠️ **两种情形分开验，因为它们由不同的那句话兜着**。第一版只验了「有热点」
-    那种，而那时 `translate_titles` 自己也会写一句带 token 名字的 note——
+    那种，而那时 `translate_titles` 自己也会写一句带密钥名字的 note——
     于是把 `build_brief` 里那句整个拆掉，**测试照样绿**。零热点那天没有标题
     要译，那句就是唯一的出声点，也正是最需要它的那天（什么都没有的简报）。
+
+    ⚠️ **两个密钥名都要报出来**。只说 ANTHROPIC 的话，手上只有 DeepSeek 的人
+    读到的是「我要去申请一个 Anthropic 的密钥」——而他其实什么都不缺。
     """
+    for name in ("DEEPSEEK_API_KEY", "ANTHROPIC_API_KEY"):
+        assert name in KEY_HINT, "两条通道都要在「没配」那句话里报出来"
+
     with_stories = build_brief("2026-08-05", news=_DRAPER, chat=_Stub(ready=False))
-    assert any("ANTHROPIC_API_KEY" in n for n in with_stories.notes)
-    assert "ANTHROPIC_API_KEY" in render_brief_html(with_stories)
+    assert any(KEY_HINT in n for n in with_stories.notes)
+    assert KEY_HINT in render_brief_html(with_stories)
 
     empty = build_brief("2026-08-05", news=[], chat=_Stub(ready=False))
-    assert any("ANTHROPIC_API_KEY" in n for n in empty.notes), (
-        "一条热点都没有的那天，没配 token 这件事就没人说了"
+    assert any(KEY_HINT in n for n in empty.notes), (
+        "一条热点都没有的那天，没配密钥这件事就没人说了"
     )
-    assert "ANTHROPIC_API_KEY" in render_brief_html(empty)
+    assert KEY_HINT in render_brief_html(empty)
 
 
 def test_译名表要进prompt不许让模型自己译人名():
@@ -417,11 +432,14 @@ def test_发出去的那次调用要带schema和模型():
     client = _FakeClient(_Response('{"title_zh": "标题", "points": ["一条"],'
                                    ' "why": "", "angle": ""}'))
     chat = Chat(client=client)
+    # 喂进来的 client 是 Anthropic SDK 的形状，它自己就声明了走哪条通道
+    assert chat.provider.name == "anthropic"
+
     out = chat.ask("系统提示", "正文", schema={"type": "object"})
 
     assert out == {"title_zh": "标题", "points": ["一条"], "why": "", "angle": ""}
     (call,) = client.messages.calls
-    assert call["model"] == DEFAULT_MODEL == "claude-opus-5"
+    assert call["model"] == PROVIDERS["anthropic"].default_model == "claude-opus-5"
     # 形状交给 API 保证，不是靠 prompt 里写「只返回 JSON」再自己兜
     assert call["output_config"]["format"]["type"] == "json_schema"
     assert call["output_config"]["format"]["schema"] == {"type": "object"}
@@ -431,6 +449,179 @@ def test_发出去的那次调用要带schema和模型():
     # 这几个参数在 Opus 5 上会 400，别让它们混进来
     for banned in ("temperature", "top_p", "top_k"):
         assert banned not in call, f"{banned} 在 Opus 5 上会 400"
+
+
+# ---------------------------------------------------------------------------
+# 七之二、DeepSeek 那条通道
+# ---------------------------------------------------------------------------
+class _FakeResponse:
+    def __init__(self, payload, status=200, text=""):
+        self._payload = payload
+        self.status_code = status
+        self.text = text or json.dumps(payload, ensure_ascii=False)
+
+    def json(self):
+        return self._payload
+
+
+class _FakePost:
+    """记下 `requests.post` 收到的参数。"""
+
+    def __init__(self, payload, *, status=200, text=""):
+        self._payload = payload
+        self._status = status
+        self._text = text
+        self.calls: list[dict] = []
+
+    def __call__(self, url, **kwargs):
+        self.calls.append({"url": url, **kwargs})
+        return _FakeResponse(self._payload, self._status, self._text)
+
+
+def _content(text):
+    return {"choices": [{"message": {"content": text}}]}
+
+
+def test_DeepSeek那次调用要带json模式和形状例子而且关掉思考():
+    """账号所有者 2026-08-05：「我没有这个〔ANTHROPIC_API_KEY〕，deepseek 的可以用么」。
+
+    ⚠️ **这条通道保证不了形状**，所以官方文档那三条要求缺一不可：
+    `response_format` 要设、prompt 里要出现 json 这个词**并且给一个例子**、
+    `max_tokens` 要够（不然 JSON 会从中间截断）。三条各自钉一句。
+    """
+    post = _FakePost(_content('{"title_zh": "标题", "points": ["一条"]}'))
+    chat = Chat(provider="deepseek", api_key="k", post=post)
+    out = chat.ask("系统提示", "正文", schema=_DEEP_SCHEMA)
+
+    assert out == {"title_zh": "标题", "points": ["一条"]}
+    (call,) = post.calls
+    assert call["url"] == DEEPSEEK_URL
+    assert call["headers"]["Authorization"] == "Bearer k"
+    assert call["timeout"] == REQUEST_TIMEOUT
+
+    body = call["json"]
+    assert body["model"] == PROVIDERS["deepseek"].default_model
+    assert body["response_format"] == {"type": "json_object"}
+    assert body["max_tokens"] >= 1000, "给小了 JSON 会从中间截断，而那不报错"
+    # ⚠️ **思考默认是开的**（v4 两个型号都是），而 max_tokens 卡的是总和。
+    # 翻译和抽取用不上思考，关掉之后 Opus 5 上栽过的那个坑就不存在了。
+    assert body["thinking"] == {"type": "disabled"}
+
+    system = body["messages"][0]["content"]
+    assert "系统提示" in system, "内容口径那段被形状提示挤掉了"
+    assert "json" in system, "DeepSeek 官方要求：prompt 里必须出现 json 这个词"
+    assert "title_zh" in system, "官方还要求给一个例子，而例子要从 schema 现渲"
+
+
+def test_形状例子是从schema现渲的不是手写第二份():
+    """一份 schema 两处用。手写第二份必分叉，而分叉那天模型会照旧形状回——
+    **解析不报错**，只是字段对不上，退化成「模型没给出要点」。"""
+    hint = json_shape_hint(_DEEP_SCHEMA)
+    example = json.loads(hint.split("\n")[-1])
+    assert sorted(example) == sorted(_DEEP_SCHEMA["properties"]), (
+        "例子里的字段要跟着 schema 走，往 schema 里加一个字段它就该跟着出现"
+    )
+    assert isinstance(example["points"], list), "数组字段要渲成数组"
+
+    nested = json.loads(json_shape_hint(_TRANSLATE_SCHEMA).split("\n")[-1])
+    assert nested == {"items": [{"id": 0, "zh": "字符串"}]}, "嵌套的形状也要渲对"
+
+
+def test_DeepSeek报错和空正文都要出声(caplog):
+    """两条降级路径都要返回 None 并说清卡在哪。
+
+    ⚠️ 空正文那条是**官方文档自己记着的已知问题**（「the API may occasionally
+    return empty content」）。不单独出声的话，它和「模型答不上来」长得一模一样。
+
+    ⚠️ caplog 收在 WARNING——那两句告警就是 WARNING，收在 ERROR 上根本进不了
+    caplog（本仓库栽过一次：坏代码 + 错档位，测试照样绿）。
+    """
+    refused = Chat(
+        provider="deepseek",
+        api_key="k",
+        post=_FakePost({}, status=402, text='{"error":{"message":"余额不足"}}'),
+    )
+    with caplog.at_level("WARNING"):
+        assert refused.ask("s", "u", schema=_DEEP_SCHEMA) is None
+    # 状态码和响应体都要在，只报一个码等于让下一个人再跑一趟才知道为什么
+    assert any("402" in r.getMessage() for r in caplog.records)
+    assert any("余额不足" in r.getMessage() for r in caplog.records)
+
+    caplog.clear()
+    empty = Chat(provider="deepseek", api_key="k", post=_FakePost(_content("")))
+    with caplog.at_level("WARNING"):
+        assert empty.ask("s", "u", schema=_DEEP_SCHEMA) is None
+    assert any("空正文" in r.getMessage() for r in caplog.records)
+
+
+def test_不许改走DeepSeek的Anthropic兼容端点():
+    """看着能让两条路共用一个 SDK，**而它废掉的正好是形状保证**。
+
+    官方文档写明两件事，两件都是静默的：`output_config` 只支持 `effort`
+    （`format` 那半截收下就忽略），模型名不认识就自动映射成
+    `deepseek-v4-flash`。所以判据钉在 URL 上。
+
+    ⚠️ **扫之前要去掉整行注释**——上面那段教训就写在 `brief.py` 的注释里，
+    连注释一起扫会把「把坑记下来」判成「又踩了这个坑」。这个仓库犯过五次。
+    """
+    source = Path("src/tennislive/research/brief.py").read_text(encoding="utf-8")
+    code = "\n".join(
+        line for line in source.splitlines() if not line.lstrip().startswith("#")
+    )
+    assert "api.deepseek.com/anthropic" not in code
+    assert "/chat/completions" in code
+
+
+# ---------------------------------------------------------------------------
+# 七之三、选哪条通道是显式的，而且要说出来
+# ---------------------------------------------------------------------------
+def test_选哪条通道由密钥决定而且可以显式指定():
+    assert Chat(env={"DEEPSEEK_API_KEY": "d"}).provider.name == "deepseek"
+    assert Chat(env={"ANTHROPIC_API_KEY": "a"}).provider.name == "anthropic"
+
+    both = {"DEEPSEEK_API_KEY": "d", "ANTHROPIC_API_KEY": "a"}
+    assert Chat(env=both).provider.name == "deepseek", "两个都配走 DeepSeek"
+    forced = Chat(env={**both, "TENNISLIVE_BRIEF_PROVIDER": "anthropic"})
+    assert forced.provider.name == "anthropic", "显式指定要盖过密钥的顺序"
+
+    assert not Chat(env={}).ready, "一个都没配就不该 ready"
+
+
+def test_通道名写错要当场报错不许静静换一条():
+    """⚠️ 环境里**有一个能用的密钥**，所以静静退回另一条通道完全看不出来——
+    日志上和「他本来就想用这条」一模一样，而跑完整份简报的是另一个模型。"""
+    with pytest.raises(ValueError, match="deepsek"):
+        Chat(env={"TENNISLIVE_BRIEF_PROVIDER": "deepsek", "DEEPSEEK_API_KEY": "d"})
+
+
+def test_显式给空密钥不许落回环境变量():
+    """`Chat(api_key="")` 是显式的「没有密钥」。
+
+    落回环境变量的话，同一条测试在沙箱（有密钥）和 CI（没有）上走的是两条路，
+    **而两边都绿**——本仓库为这个专门写过一条 autouse fixture。
+    """
+    assert not Chat(api_key="", env={"DEEPSEEK_API_KEY": "d"}).ready
+
+
+def test_跑了哪条通道要写进产物():
+    """和「图片通道 pushplus / jsdelivr」同一条：判据是**走了哪条**，
+    不是「配了什么」。一个月后有人问「这份简报的要点是谁写的」，
+    答案要在当天的产物里。"""
+    chat = _Stub(_deep_reply)
+    brief = build_brief(
+        "2026-08-05", news=_DRAPER, chat=chat, fetch=_ok_fetch, deep=1
+    )
+    assert f"模型通道 {chat.channel}" in brief.notes
+    assert chat.model in chat.channel and chat.provider.name in chat.channel
+    assert f"模型通道 {chat.channel}" in render_brief_html(brief)
+
+
+def test_两个模型密钥都要传进工作流():
+    """⚠️ 扫之前先去掉整行注释：新加的那段注释里两个名字都写着，
+    连注释一起扫会制造**假绿**——漏传一个照样过。"""
+    body = _yaml_only(_workflow("news-brief.yml"))
+    for name in ("DEEPSEEK_API_KEY", "ANTHROPIC_API_KEY"):
+        assert name + ": ${{ secrets." + name + " }}" in body, f"{name} 没传进去"
 
 
 def test_模型拒绝或抛异常都不许把整份简报带下去(caplog):

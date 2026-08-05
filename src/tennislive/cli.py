@@ -392,7 +392,7 @@ def cmd_brief(args) -> int:
 
     from .render.newsbrief import render_brief_html
     from .render.terminal import console
-    from .research.brief import Chat, build_brief
+    from .research.brief import KEY_HINT, Chat, build_brief
     from .research.newsfeeds import fetch_readable_news
     from .research.topic_radar import previous_slugs
     from .research.trends import fetch_trend_signals
@@ -417,11 +417,15 @@ def cmd_brief(args) -> int:
     status.update(zh.status)
 
     chat = Chat()
-    if not chat.ready:
-        # **默认那条不许悄悄走。** 没有 token 时这份简报没有中译也没有要点，
+    if chat.ready:
+        # 走了哪条通道要当场说出来：两条通道的产物长得一样，日志里不写
+        # 就只能靠回忆当时哪个密钥配着。
+        console.print(f"[dim]模型通道 {chat.channel}[/dim]")
+    else:
+        # **默认那条不许悄悄走。** 没有密钥时这份简报没有中译也没有要点，
         # 而它看起来和「今天新闻少」一模一样。
         console.print(
-            "[yellow]没配 ANTHROPIC_API_KEY：本次没有中译也没有要点，"
+            f"[yellow]没配 {KEY_HINT}：本次没有中译也没有要点，"
             "简报退回「只有英文标题和热度」。[/yellow]"
         )
 

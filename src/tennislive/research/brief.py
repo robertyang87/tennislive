@@ -44,6 +44,8 @@ import re
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
+import requests
+
 from .article import fetch_article, readable_url
 from .glossary import build_glossary, glossary_lines
 from .topic_radar import (
@@ -67,10 +69,12 @@ logger = logging.getLogger(__name__)
 #
 # 也就是**它正在退役**。接着它等于让「中译」和「要点」这两件事在上线当天
 # 就静默失效——而失效的样子是「今天没有要点」，和「今天新闻少」长得一模一样。
-DEFAULT_MODEL = "claude-opus-5"
 
 # 返回形状交给 API 保证，不靠 prompt 里写「只返回 JSON」再自己 try/except。
 # 结构化输出在 Opus 5 上是支持的，省掉一整类「模型多说了一句话导致解析失败」。
+# ⚠️ DeepSeek 那条路**保证不了形状**，所以它另有一套：schema 仍然是这两份，
+# 只是渲成一段「形状必须长这样」的提示塞进 prompt（`json_shape_hint`）——
+# **一份 schema 两处用，别手写第二份**（「一个数写两处必分叉」）。
 _TRANSLATE_SCHEMA = {
     "type": "object",
     "properties": {
@@ -149,18 +153,125 @@ def drop_navigation(signals: Sequence[dict]) -> tuple[list[dict], list[dict]]:
 
 
 # ---------------------------------------------------------------------------
-# 模型层
+# 模型层：两条通道，跑了哪条要说出来
 # ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class Provider:
+    """一条模型通道。`schema_enforced` 决定形状靠谁保证。"""
+
+    name: str
+    env: str            # 密钥的环境变量名
+    default_model: str
+    schema_enforced: bool
+    why: str            # 打进日志用的一句话，说清这条路凭什么
+
+
+# **DeepSeek 排在前面，因为账号所有者手上是这个**（2026-08-05：
+# 「我没有这个〔ANTHROPIC_API_KEY〕，deepseek 的可以用么」）。两个都配了
+# 就走 DeepSeek，要反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`。
+PROVIDERS: dict[str, Provider] = {
+    "deepseek": Provider(
+        name="deepseek",
+        env="DEEPSEEK_API_KEY",
+        default_model="deepseek-v4-pro",
+        schema_enforced=False,
+        why="OpenAI 格式端点 + json_object 模式；形状靠 prompt 里那段 schema 例子",
+    ),
+    "anthropic": Provider(
+        name="anthropic",
+        env="ANTHROPIC_API_KEY",
+        default_model="claude-opus-5",
+        schema_enforced=True,
+        why="官方 SDK，形状由 output_config.format 的 json_schema 保证",
+    ),
+}
+
+# 两个都没配时说给人听的那句。**列全两个**——只报一个，另一个就等于不存在。
+KEY_HINT = "DEEPSEEK_API_KEY 或 ANTHROPIC_API_KEY"
+
+# ⚠️ **不走 DeepSeek 的 Anthropic 兼容端点**（`https://api.deepseek.com/anthropic`），
+# 哪怕那样能让两条路共用一个 SDK、改动最小。官方文档写明了两件事，**两件都是
+# 静默的**：
+#
+#   · `output_config` **只支持 `effort`**——也就是 `format` 那半截（json_schema）
+#     会被收下然后忽略。schema 保证凭空消失，而调用方一个字都收不到
+#   · 传一个它不认识的模型名，后端**自动映射成 `deepseek-v4-flash`**——
+#     模型名写错不报错，只是悄悄换一个模型跑完
+#
+# 两条都是这个仓库里「兜底出事的时候不吭声」的标准形状，而第一条正好废掉
+# 这条线唯一的形状保证。OpenAI 格式那条路的 `response_format: json_object`
+# 是文档明写支持的（「guarantees the message the model generates is valid JSON」），
+# 所以走它——而且它**一个新依赖都不用装**，`requests` 本来就是主依赖。
+DEEPSEEK_URL = "https://api.deepseek.com/chat/completions"
+
+# 一次请求最多等多久。**这个数是算出来的**：深挖默认全挖，`limit=12` 条热点
+# 各一次调用，加一次标题中译，最坏 13 次；工作流 `timeout-minutes: 20`，
+# 13 × 60s = 13 分钟，还留得下 checkout 和装依赖。关掉思考之后单次实际只要
+# 十几秒，60 秒是「挂死了」的闸，不是常态——**别按典型耗时往下调**，
+# 「把慢误判成挂死」这个仓库栽过（apt 重试那次）。
+REQUEST_TIMEOUT = 60
+
+
+def _pick_provider(env: dict) -> Provider:
+    """选一条通道。**选错要报错，不许静静地换一条。**"""
+    forced = (env.get("TENNISLIVE_BRIEF_PROVIDER") or "").strip().lower()
+    if forced:
+        if forced not in PROVIDERS:
+            # 拼错了就当场报错。退回另一条通道等于用一个不是他要的模型
+            # 跑完整份简报，而日志上和「他本来就想用这条」一模一样。
+            raise ValueError(
+                f"TENNISLIVE_BRIEF_PROVIDER={forced!r} 不认识，"
+                f"只有 {'/'.join(PROVIDERS)}"
+            )
+        return PROVIDERS[forced]
+    for provider in PROVIDERS.values():
+        if (env.get(provider.env) or "").strip():
+            return provider
+    # 一个都没配：仍然要给一个 Provider（`ready` 为假，只用来取名字），
+    # 而「没配」这件事由 `KEY_HINT` 把两个名字都说出来。
+    return PROVIDERS["deepseek"]
+
+
+def _skeleton(node: dict):
+    """把 JSON Schema 渲成一个「长这样」的例子。
+
+    DeepSeek 的 json_object 模式官方要求两件事：prompt 里出现 json 这个词，
+    **并且给一个例子**。例子从 schema 现渲——手写第二份必分叉，而分叉的那天
+    模型会照着旧形状回，解析不报错，只是字段对不上。
+    """
+    kind = node.get("type")
+    if kind == "object":
+        return {k: _skeleton(v) for k, v in (node.get("properties") or {}).items()}
+    if kind == "array":
+        return [_skeleton(node.get("items") or {"type": "string"})]
+    if kind in ("integer", "number"):
+        return 0
+    if kind == "boolean":
+        return False
+    return "字符串"
+
+
+def json_shape_hint(schema: dict) -> str:
+    """给保证不了形状的通道用的那段提示。"""
+    return (
+        "只输出一个 json 对象，不要写解释，不要用代码块包起来。"
+        "形状必须和下面这个例子一模一样，只把值换成真实内容：\n"
+        + json.dumps(_skeleton(schema), ensure_ascii=False)
+    )
+
+
 class Chat:
-    """翻译和提炼要点这一步，走 Anthropic 官方 SDK。
+    """翻译和提炼要点这一步。两条通道二选一，见 `PROVIDERS`。
 
     ⚠️ **没有密钥不抛异常**，`ready` 为假、`ask` 返回 `None`，让调用方退回
     纯标题模式**并出声**。抛的话，一次密钥没配就把整份简报废掉——而简报里
     「几家在报、中文热搜撞上什么、原文链接」这些本来都不需要模型。
 
-    ⚠️ **`max_tokens` 要留出思考的量。** Opus 5 默认开着思考，而
-    `max_tokens` 卡的是「思考 + 正文」的总和；按正文长度卡会在中途截断，
-    症状是要点少一条或者最后一句话没写完。
+    ⚠️ **`max_tokens` 和思考的关系，两条通道都咬过一次。** Opus 5 默认开着
+    思考，而 `max_tokens` 卡的是「思考 + 正文」的总和；DeepSeek v4 两个型号
+    **同样默认开思考**。Anthropic 那条留足额度（4000），DeepSeek 那条直接
+    `thinking: disabled`——翻译和抽取不需要思考，关掉之后 `max_tokens` 才
+    只算正文，那个坑就不存在了。
     """
 
     def __init__(
@@ -168,16 +279,50 @@ class Chat:
         *,
         api_key: str | None = None,
         model: str | None = None,
+        provider: str | None = None,
         client: object | None = None,
+        post=None,
+        env: dict | None = None,
     ) -> None:
-        self.api_key = (api_key or os.environ.get("ANTHROPIC_API_KEY", "")).strip()
-        self.model = model or os.environ.get("TENNISLIVE_BRIEF_MODEL", DEFAULT_MODEL)
+        environ = os.environ if env is None else env
+        if provider:
+            if provider not in PROVIDERS:
+                raise ValueError(f"没有 {provider!r} 这条通道，只有 {'/'.join(PROVIDERS)}")
+            self.provider = PROVIDERS[provider]
+        elif client is not None:
+            # 喂进来的 client 是 Anthropic SDK 那个形状（`.messages.create`），
+            # 所以它自己就声明了走哪条路。
+            self.provider = PROVIDERS["anthropic"]
+        else:
+            self.provider = _pick_provider(environ)
+        # ⚠️ `api_key=""` 是**显式的「没有密钥」**，不许落回环境变量。
+        # 原来写的是 `api_key or environ.get(...)`，于是环境里有密钥时
+        # `Chat(api_key="")` 会突然变成 ready——测试在沙箱和 CI 上跑的是
+        # 两条路，而两边都绿（本仓库栽过一次，见 conftest 那条 autouse）。
+        raw = api_key if api_key is not None else environ.get(self.provider.env, "")
+        self.api_key = (raw or "").strip()
+        self.model = (
+            model
+            or (environ.get("TENNISLIVE_BRIEF_MODEL") or "").strip()
+            or self.provider.default_model
+        )
         self._client = client
+        self._post = post
 
     @property
     def ready(self) -> bool:
         return bool(self.api_key or self._client is not None)
 
+    @property
+    def channel(self) -> str:
+        """打进日志和推送底部的那一行：**跑的到底是哪条**。
+
+        和 `prepare_image_delivery` 那句「图片通道 pushplus / jsdelivr」
+        同一个形状——判据不是「配了什么」，是「走了哪条」。
+        """
+        return f"{self.provider.name} · {self.model}"
+
+    # -- Anthropic ---------------------------------------------------------
     def _anthropic(self):
         if self._client is None:
             import anthropic  # 延迟导入：没配密钥的那条路不该要求装这个包
@@ -185,6 +330,67 @@ class Chat:
             self._client = anthropic.Anthropic(api_key=self.api_key)
         return self._client
 
+    def _ask_anthropic(self, system, user, *, schema, max_tokens) -> dict | None:
+        response = self._anthropic().messages.create(
+            model=self.model,
+            max_tokens=max_tokens,
+            system=system,
+            # 提炼要点是抽取型任务，`low` 在 Opus 5 上足够而且便宜得多。
+            output_config={
+                "effort": "low",
+                "format": {"type": "json_schema", "schema": schema},
+            },
+            messages=[{"role": "user", "content": user}],
+        )
+        if response.stop_reason == "refusal":
+            logger.warning("模型拒绝了这一条，跳过")
+            return None
+        return json.loads(next((b.text for b in response.content if b.type == "text"), ""))
+
+    # -- DeepSeek ----------------------------------------------------------
+    def _ask_deepseek(self, system, user, *, schema, max_tokens) -> dict | None:
+        send = self._post or requests.post
+        response = send(
+            DEEPSEEK_URL,
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": self.model,
+                "messages": [
+                    # 形状保证不了，就把 schema 渲成例子一起发过去。
+                    {"role": "system", "content": system + "\n" + json_shape_hint(schema)},
+                    {"role": "user", "content": user},
+                ],
+                "max_tokens": max_tokens,
+                "response_format": {"type": "json_object"},
+                # ⚠️ **思考默认是开的**（v4 两个型号都是）。翻译和抽取用不上，
+                # 关掉之后 `max_tokens` 只算正文，也省一大截 token。
+                "thinking": {"type": "disabled"},
+            },
+            timeout=REQUEST_TIMEOUT,
+        )
+        if response.status_code >= 400:
+            # 把响应体带上：4xx 的原因（密钥错、余额不足、模型名不对）全写在
+            # 里面，只报一个状态码等于让下一个人再跑一趟才知道为什么。
+            logger.warning(
+                "DeepSeek 拒了这次请求：HTTP %s %s",
+                response.status_code,
+                str(response.text)[:300],
+            )
+            return None
+        payload = response.json()
+        choices = payload.get("choices") or [{}]
+        text = str((choices[0].get("message") or {}).get("content") or "").strip()
+        if not text:
+            # 官方文档自己记着这个已知问题（「the API may occasionally return
+            # empty content」）。不单独出声的话，它和「模型答不上来」长得一样。
+            logger.warning("DeepSeek 返回了空正文（官方已知问题），本次跳过")
+            return None
+        return json.loads(text)
+
+    # -- 对外 --------------------------------------------------------------
     def ask(
         self,
         system: str,
@@ -193,39 +399,27 @@ class Chat:
         schema: dict,
         max_tokens: int = 4000,
     ) -> dict | None:
-        """问一次，拿一个**符合 schema** 的对象。失败返回 None 并打日志，不抛。
-
-        形状由 `output_config.format` 保证，不靠在 prompt 里写「只返回 JSON」
-        再自己 try/except——那一路会把「模型多说了一句话」变成一次静默降级。
-        """
+        """问一次，拿一个符合 `schema` 的对象。失败返回 None 并打日志，不抛。"""
         if not self.ready:
             return None
         try:
-            response = self._anthropic().messages.create(
-                model=self.model,
-                max_tokens=max_tokens,
-                system=system,
-                # 提炼要点是抽取型任务，`low` 在 Opus 5 上足够而且便宜得多。
-                output_config={
-                    "effort": "low",
-                    "format": {"type": "json_schema", "schema": schema},
-                },
-                messages=[{"role": "user", "content": user}],
-            )
-            if response.stop_reason == "refusal":
-                logger.warning("模型拒绝了这一条，跳过")
-                return None
-            text = next((b.text for b in response.content if b.type == "text"), "")
-            data = json.loads(text)
+            if self.provider.schema_enforced:
+                data = self._ask_anthropic(
+                    system, user, schema=schema, max_tokens=max_tokens
+                )
+            else:
+                data = self._ask_deepseek(
+                    system, user, schema=schema, max_tokens=max_tokens
+                )
             return data if isinstance(data, dict) else None
         except Exception as exc:  # noqa: BLE001
             logger.warning("模型这一步没成：%s: %s", type(exc).__name__, exc)
             return None
 
 
-# 返回形状由 `output_config.format` 的 schema 保证，所以这两段**只讲内容口径**，
-# 不再写「只返回 JSON」——那句话在结构化输出下是多余的，而多余的格式指令会占掉
-# 本来该用来说清编辑口径的位置。
+# 这两段**只讲内容口径**，一个字都不谈返回格式——格式那半截由 `ask()` 按通道
+# 自己接上去（Anthropic 走 schema，DeepSeek 走 `json_shape_hint` 渲出来的例子）。
+# 分开写是为了**别在两条通道上各维护一份格式指令**：口径改一次，两条一起改。
 _TRANSLATE_SYSTEM = (
     "你是中文体育媒体的编辑。把英文网球新闻标题译成简体中文：准确、简短、"
     "像中文标题而不是逐字直译；保留人名、赛事名、比分和数字，"
@@ -259,7 +453,7 @@ def translate_titles(
     if not titles:
         return {}, "没有要译的标题"
     if not chat.ready:
-        return {}, "没配 ANTHROPIC_API_KEY，标题保持英文原样"
+        return {}, f"没配 {KEY_HINT}，标题保持英文原样"
     glossary = glossary_lines(build_glossary(list(titles)))
     out: dict[int, str] = {}
     for start in range(0, len(titles), batch):
@@ -441,7 +635,7 @@ def deepen(
         story.note = f"没读到正文，只列标题（{why}）"
         return story
     if not chat.ready:
-        story.note = "没配 ANTHROPIC_API_KEY，读到了正文但没法提炼要点"
+        story.note = f"没配 {KEY_HINT}，读到了正文但没法提炼要点"
         return story
     glossary = glossary_lines(build_glossary([h.get("title", "") for h in story.headlines]))
     data = chat.ask(
@@ -531,9 +725,15 @@ def build_brief(
     stories.sort(key=lambda s: -s.heat.score)
     stories = stories[:limit]
 
-    if not talker.ready:
+    # **跑了哪条通道要写进产物**，不是「配了什么」。和「图片通道 pushplus /
+    # jsdelivr」同一条：一个月后有人问「这份简报的要点是谁写的」，答案要在
+    # 当天的产物里，而不是靠回忆当时哪个 secret 配着。
+    if talker.ready:
+        logger.info("模型通道 %s", talker.channel)
+        brief.notes.append(f"模型通道 {talker.channel}")
+    else:
         brief.notes.append(
-            "没配 ANTHROPIC_API_KEY：这份简报只有英文标题和热度，"
+            f"没配 {KEY_HINT}：这份简报只有英文标题和热度，"
             "没有中译也没有要点。配好之后重跑一次就有了。"
         )
 

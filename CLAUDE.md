@@ -2324,6 +2324,9 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
 简报改走 **Anthropic 官方 SDK**（`ANTHROPIC_API_KEY`，`pip install -e ".[brief]"`）。
 ⚠️ **`video-localize.yml` 的字幕翻译还在那个退役端点上，是另一笔没还的账。**
 
+⚠️ **默认通道后来换成了 DeepSeek**（账号所有者手上是这个），下一节；
+这一节讲的三条对 Anthropic 那条通道照旧成立。
+
 三个用法上的点，都写进了判据（`test_发出去的那次调用要带schema和模型`）：
 
 - **形状交给 `output_config.format` 的 json_schema**，不靠在 prompt 里写
@@ -2333,6 +2336,68 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
   卡的是**思考 + 正文的总和**；按正文长度卡（1200）会在中途截断，
   症状是要点少一条或最后一句没写完，**不报错**
 - ⚠️ **`temperature` / `top_p` / `top_k` 在 Opus 5 上会 400**，别让它们混进来
+
+### ⭐ 换成 DeepSeek：兼容端点看着最省事，而它废掉的正好是唯一的保证
+
+账号所有者 2026-08-05：「**我没有这个〔ANTHROPIC_API_KEY〕，deepseek 的可以用么**」。
+
+可以。而这一节记的是**怎么接**——因为最省事的那条路是错的。
+
+DeepSeek 有两个入口，我的第一反应是走第二个（`base_url` 一改，SDK 都不用换）：
+
+| 入口 | 格式 | |
+|---|---|---|
+| `api.deepseek.com/chat/completions` | OpenAI | **现在走这条** |
+| `api.deepseek.com/anthropic` | Anthropic | ❌ 见下 |
+
+官方文档在兼容端点那页写明了两件事，**两件都是静默的**：
+
+- **`output_config` 只支持 `effort`**——也就是 `format` 那半截（json_schema）
+  **收下然后忽略**。而 `output_config.format` 正是上一节写的「形状交给 API 保证」
+  的全部内容，走这条路它凭空消失，调用方一个字都收不到
+- **传一个它不认识的模型名，后端自动映射成 `deepseek-v4-flash`**——模型名写错
+  不报错，只是悄悄换一个模型把整份简报跑完
+
+两条都是「兜底出事的时候不吭声」的标准形状。而 OpenAI 格式那条路的
+`response_format: {"type": "json_object"}` 是文档明写支持的
+（「guarantees the message the model generates is valid JSON」），
+**而且一个新依赖都不用装**（`requests` 是主依赖，`[brief]` 那个 extra 只给
+Anthropic 那条路）。判据 `test_不许改走DeepSeek的Anthropic兼容端点` 钉在 URL 上，
+⚠️ 扫之前要**去掉整行注释**——上面这段教训就写在 `brief.py` 的注释里。
+
+四个用法上的点：
+
+- **`json_object` 模式官方要求三条，缺一条都不行**：`response_format` 要设、
+  **prompt 里要出现 `json` 这个词并且给一个例子**、`max_tokens` 要够
+  （不然 JSON 从中间截断）。少了第二条，官方文档说模型会「生成无尽的空白
+  直到打满 token」
+- ⚠️ **那个例子从 schema 现渲**（`json_shape_hint` + `_skeleton`），不手写第二份。
+  一份 schema 两条通道共用——手写必分叉，而分叉那天模型照旧形状回，
+  **解析不报错**，只是字段对不上，退化成「模型没给出要点」
+- ⚠️ **`thinking` 默认是开的**（v4 两个型号都是），所以 Opus 5 上那个
+  「`max_tokens` 卡的是思考+正文」的坑在这儿一模一样。翻译和抽取用不上思考，
+  直接 `{"type": "disabled"}`——关掉之后 `max_tokens` 只算正文，坑就不存在了
+- ⚠️ **官方自己记着「偶尔返回空正文」**。不单独出声的话，它和「模型答不上来」
+  长得一模一样。`logger.warning` 里点名这是已知问题，4xx 那支**要把响应体带上**
+  （余额不足、密钥错、模型名不对全写在里面，只报一个状态码等于让下一个人
+  再跑一趟才知道为什么）
+
+**选哪条通道要说出来，而且写错要报错。** 和「图片通道 pushplus / jsdelivr」
+同一条：`brief.json` 的 notes 和推送正文底部都印着 `模型通道 deepseek · deepseek-v4-pro`
+——一个月后有人问「这份简报的要点是谁写的」，答案在当天的产物里。
+⚠️ `TENNISLIVE_BRIEF_PROVIDER` 拼错**当场 `ValueError`**，不退回另一条：
+环境里往往有一个能用的密钥，静静换一条通道在日志上和「他本来就想用这条」
+一模一样，而跑完整份简报的是另一个模型。
+
+⚠️ **`Chat(api_key="")` 是显式的「没有密钥」，不许落回环境变量。** 原来写的是
+`api_key or os.environ.get(...)`，于是环境里有密钥时它会突然变成 ready——
+测试在沙箱和 CI 上走两条路而两边都绿。顺手把这两个密钥加进了 `conftest.py`
+那条 autouse fixture（它本来只挡 `GITHUB_TOKEN`）。
+
+⚠️ **这条通道没有真跑过。** 沙箱里没有 DeepSeek 密钥，所以钉住的是
+**发出去的那次请求长什么样**（假 `post`，和 Anthropic 那条的假 client 同一个
+手法），不是「它真的回了一份好要点」。第一趟真 run 要看日志里那行
+`模型通道 deepseek · …`，以及 `brief.json` 里 `points` 是不是真有内容。
 
 ### ⚠️ 「拒绝但带着半截文本」——只有这一种情况那道闸才是活的
 

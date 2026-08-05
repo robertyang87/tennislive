@@ -140,9 +140,25 @@ Variables（非敏感）：`WECHAT_MODE` = `off`（默认，只生成文件）/ 
 JS 包装页，正文永远抓不到；发布方原生 RSS 源少但链接是真地址。两路一起进聚类，
 同一件事自然并成一簇。详见 `research/newsfeeds.py`。
 
-⚠️ **中译和要点要 `ANTHROPIC_API_KEY`**（`pip install -e ".[brief]"`）。
-没配不会让它失败，简报退回「只有英文标题和热度」，并在推送正文底部照实写出来——
-每一层退化都出声，不静默降级。
+⚠️ **中译和要点要一个模型密钥，两条通道二选一**：
+
+| 通道 | 密钥 | 默认模型 | 要装什么 |
+|---|---|---|---|
+| **DeepSeek**（默认） | `DEEPSEEK_API_KEY` | `deepseek-v4-pro` | **什么都不用装**，走 OpenAI 格式的 HTTP |
+| Anthropic | `ANTHROPIC_API_KEY` | `claude-opus-5` | `pip install -e ".[brief]"` |
+
+两个都配走 DeepSeek，要反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`；
+换模型用 `TENNISLIVE_BRIEF_MODEL`。**跑了哪条会写进 `brief.json` 的 notes
+和推送正文底部**——判据是「走了哪条」，不是「配了什么」。
+
+两个都没配不会让它失败，简报退回「只有英文标题和热度」，并在推送正文底部照实
+写出来——每一层退化都出声，不静默降级。
+
+⚠️ **不要改走 DeepSeek 的 Anthropic 兼容端点**（`/anthropic`），哪怕那样两条路
+能共用一个 SDK：官方文档写明 `output_config` 只支持 `effort`（`format` 里的
+json_schema **收下就忽略**），而且不认识的模型名会**自动映射成
+`deepseek-v4-flash`**。两条都不报错。判据在
+`test_不许改走DeepSeek的Anthropic兼容端点`。
 
 定时**没有开**（2026-08-02 停的，改内容形态没有推翻那个决定），手动
 `workflow_dispatch` 跑一趟。

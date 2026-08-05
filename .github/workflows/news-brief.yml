@@ -41,11 +41,17 @@ jobs:
     timeout-minutes: 20
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-      # 中译和要点都靠它。⚠️ **不是 `GITHUB_MODELS_TOKEN`**：那个端点
-      # 2026-08-05 实测返回 410 `github_models_retirement_brownout`，
-      # 正在退役（`video-localize.yml` 还挂在上面，是另一笔账）。
-      # 没配它不会让这条工作流失败：简报退回「只有英文标题和热度」，
+      # 中译和要点靠这两个**二选一**，配哪个走哪个（都配了走 DeepSeek，
+      # 要反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`）。跑了哪条会写进
+      # `brief.json` 的 notes 和推送正文底部——「配了什么」不是判据，
+      # 「走了哪条」才是。
+      #
+      # ⚠️ **不是 `GITHUB_MODELS_TOKEN`**：那个端点 2026-08-05 实测返回 410
+      # `github_models_retirement_brownout`，正在退役（`video-localize.yml`
+      # 还挂在上面，是另一笔账）。
+      # 两个都没配不会让这条工作流失败：简报退回「只有英文标题和热度」，
       # 并在推送正文底部照实写出来（见 `Brief.notes`）。
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     steps:
       - uses: actions/checkout@v4
@@ -69,6 +75,10 @@ jobs:
       - name: 安装 tennislive
         # 只要主依赖 + 简报那一个 extra：简报是纯文字 HTML，不渲卡片，
         # 所以不装 webrender、不装 Chromium、不装中文字体。
+        #
+        # `[brief]` 里只有 anthropic SDK。**走 DeepSeek 那条路一个新依赖都
+        # 不用装**（`requests` 是主依赖），照装是为了两个密钥哪个配着都能跑，
+        # 代价是几秒钟。
         run: pip install -q -e ".[brief]"
 
       - name: 生成今日简报

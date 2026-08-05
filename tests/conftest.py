@@ -24,7 +24,16 @@ def _no_ambient_github_token(monkeypatch):
     变量**。要用 token 的测试自己 `monkeypatch.setenv`——autouse 先跑、测试
     体后跑，显式给的那份必然盖过这里。
     """
-    for name in ("GITHUB_TOKEN", "GH_TOKEN"):
+    for name in (
+        "GITHUB_TOKEN",
+        "GH_TOKEN",
+        # 简报那条线同一个形状：`Chat()` 不给 api_key 时会去读这两个，
+        # 环境里恰好有一个，`ready` 就从假变真，走的是另一条分支。
+        "DEEPSEEK_API_KEY",
+        "ANTHROPIC_API_KEY",
+        "TENNISLIVE_BRIEF_PROVIDER",
+        "TENNISLIVE_BRIEF_MODEL",
+    ):
         monkeypatch.delenv(name, raising=False)
 
 
