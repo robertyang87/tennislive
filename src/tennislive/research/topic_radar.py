@@ -124,7 +124,12 @@ class Angle:
 ANGLES: tuple[Angle, ...] = (
     Angle(
         "withdrawal-deadline", "退赛与截止日",
-        ("withdraw", "withdrawal", "withdraws", "pullout", "pullouts", "skip", "skips"),
+        # ⚠️ `miss` / `misses` 是 2026-08-05 补的：拉杜卡努退美网那一簇，两条
+        # 标题写的都是 `to **miss** US Open`，而表里只有 withdraw/pullout/skip
+        # 这一族——**整条角度就这么漏掉了**。英文媒体说退赛最常用的其实是 miss。
+        # 没收 `out`：那个词太宽（`out of form` / `knocked out`），判据宁可窄。
+        ("withdraw", "withdrawal", "withdraws", "pullout", "pullouts",
+         "skip", "skips", "miss", "misses"),
         "赛前退赛有截止日和罚则，过了线才退、和赛前一周退，处理完全不同；"
         "大满贯还有「打完首轮才算出场」那条拿钱的规矩。",
         "ATP/WTA 官方规则手册的 Withdrawal 一章；大满贯规则书 Z 节",
@@ -137,6 +142,20 @@ ANGLES: tuple[Angle, ...] = (
         "能不能用在种子上——规则写得很细，而观众只看到「他回来了」。",
         "ATP/WTA 规则手册 Protected/Special Ranking 一节",
         "伤停一年的人，凭什么还能直接进正赛？",
+    ),
+    Angle(
+        # 2026-08-05 补：这条我们**已经做过片子**（`special-exempt`，卡佐靠它
+        # 打进生涯第一个决赛；布云朝克特上海那张外卡也是改成特殊豁免的，理由
+        # 白纸黑字写着「他在北京还没打完」），而角度表里一直没有它。
+        # ⚠️ 老实说它**不常触发**：英文标题很少直接写 special exempt，多半只写
+        # 「进正赛」。留着是因为漏一条已经做过的常青线本身就是表在漂——
+        # 真正靠它被发现的机会，在模型那半边（`angle` 字段）。
+        "special-exempt", "特殊豁免",
+        ("exempt", "exempts", "exemption", "exemptions"),
+        "上一站还没打完、赶不上下一站资格赛的人，可以拿「特殊豁免」直接进"
+        "正赛或资格赛正签——它不是外卡（赛事说了算），是规则自动给的补位。",
+        "ATP 规则手册 Special Exempt 一节；已发选题 special-exempt",
+        "他上一站还在打，怎么就直接进了下一站正赛？",
     ),
     Angle(
         "wildcard", "外卡",
@@ -200,7 +219,11 @@ ANGLES: tuple[Angle, ...] = (
     ),
     Angle(
         "roof-and-weather", "屋顶与天气",
-        ("roof", "rain", "weather", "suspended", "delay", "curfew"),
+        # `delayed` / `postponed` / `rained` 是 2026-08-05 补的：表里只有 `delay`，
+        # 而 `_WORD` 是按整词切的，`delayed` 匹配不上 `delay`。同一件事各家写法
+        # 不同（suspended / delayed / postponed），少一个词就少一条证据。
+        ("roof", "rain", "rained", "weather", "suspended", "delay", "delayed",
+         "postponed", "curfew"),
         "关屋顶只有两种情况写在规则里：下雨、光线不足。"
         "打到一半关顶，对场上两个人并不对称。",
         "已发选题 roof；温网 Order of Play 规程",
@@ -406,22 +429,39 @@ def cluster_headlines(signals: list[dict], *, min_sources: int = 2) -> list[list
 def match_angle(headlines: list[dict], *, min_headlines: int = 2) -> Angle | None:
     """一簇新闻撞哪条角度。撞不上返回 None——**不猜**。
 
-    触发词要在**这一簇里至少两条标题**上出现，不是「组里任何一处出现过」。
-    差别很大：「US Open Mixed Doubles entries」+「Shelton on 2026 season」
-    并成一簇之后，只有第一条带 mixed / doubles，按「任何一处」就会判成
-    「混双改制」——而那一簇本身就是并错的，角度再一叠，错上加错。
+    要求是**这一簇里至少两条标题各自为这条角度作证**，不是「组里任何一处
+    出现过」。差别很大：「US Open Mixed Doubles entries」+「Shelton on 2026
+    season」并成一簇之后，只有第一条带 mixed / doubles，按「任何一处」就会
+    判成「混双改制」——而那一簇本身就是并错的，角度再一叠，错上加错。
+
+    ⚠️ **作证的单位是「标题」，不是「同一个词」。** 第一版要求**同一个触发词**
+    出现在两条标题上，于是 2026-08-05 那条因雨推迟的决赛整个漏掉：
+
+        WTA Tennis  Eala, Pegula Washington DC championship **suspended** to Monday
+        ATP Tour    Washington final **delayed** ... due to **rain**
+
+    两条标题都在讲天气，可**没有任何一个词同时出现在两条上**——不同媒体本来
+    就会用 suspended / delayed / postponed 说同一件事。按词数就把一条明摆着的
+    角度判成了「撞不上」，而**撞不上和「今天没有这类新闻」长得一模一样**。
+
+    改成按标题数之后，上面那个误判的例子照旧拦得住（第二条标题一个触发词都
+    没有 → 只有一条作证 → 不算）。拿 2026-08-05 九簇真数据比过：只有这一条
+    从「撞不上」变成「屋顶与天气」，其余八条一条没变——**没有误伤**。
     """
     per_title = [set(_WORD.findall(_fold(str(h.get("title") or "")))) for h in headlines]
     need = min(min_headlines, len(per_title))
-    best, best_hits = None, 0
+    best, best_key = None, (0, 0)
     for angle in ANGLES:
-        hits = 0
-        for trigger in angle.triggers:
-            seen = sum(1 for words in per_title if trigger in words)
-            if seen >= need:
-                hits += 1
-        if hits > best_hits:
-            best, best_hits = angle, hits
+        words = set(angle.triggers)
+        # **数「有几条标题为这条角度作证」，不是「同一个词出现了几次」**。
+        titles = sum(1 for found in per_title if found & words)
+        if titles < need:
+            continue
+        # 排序再看命中了几个不同的触发词——两条角度都够两条标题时，
+        # 词面证据多的那条更可信。
+        key = (titles, len({t for t in angle.triggers if any(t in f for f in per_title)}))
+        if key > best_key:
+            best, best_key = angle, key
     return best
 
 
