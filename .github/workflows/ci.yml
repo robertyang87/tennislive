@@ -121,8 +121,39 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
+          # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
+          # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，
+          # 下一趟每条都要重下一遍。2026-08-05 往 pyproject 里加 certifi 和
+          # pytest-xdist 时当场撞上（run 30973785219 卡在「安装 Chromium」）。
+          #
+          # `restore-keys` 就够：主键没中就退到上一份，Chromium 已经在盘上，
+          # `playwright install` 是个空操作；真换了 playwright 版本它会自己去下
+          # 对的那一版，所以退旧缓存也不会拿错。这比另起一步去算版本号便宜，
+          # 而且不用动步骤顺序。判据在 `test_Chromium缓存都要有restore_keys`。
+          restore-keys: playwright-chromium-${{ runner.os }}-
       - name: 安装 Chromium
-        run: python -m playwright install --with-deps chromium
+        timeout-minutes: 9
+        run: |
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
+          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
+          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
+          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
+          #
+          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
+          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
+          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
+          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              sleep 15
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
       # **并行跑。** 实测（同为 4 核）：单线程 161.7s → `-n auto` 78.9s，**2.05×**，
       # 而 CI 排在每次合并前面，所以这 80 秒是实打实压在发片周期上的。
       #
