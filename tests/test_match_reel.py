@@ -4205,6 +4205,45 @@ def test_装Chromium不许没有超时和重试():
         f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
 
 
+def test_装Chromium重试之前要等dpkg锁():
+    """⚠️ **第一次超时会毒死第二次**，所以「重试」原来根本没重试成。
+
+    `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get 活着**
+    并攥着 `/var/lib/dpkg/lock-frontend`。run 31003290962 的日志一清二楚：
+
+        12:01:21  装 Chromium 第 1 次没跑完        ← 240 秒被杀
+        12:01:36  E: Could not get lock ... held by process 4285 (apt-get)
+        12:01:53  装 Chromium 两次都没成功         ← 第 2 次只活了 2 秒
+
+    也就是说那次 `sleep 15` 之后的重试是**必然失败**的，而它看起来和
+    「apt 真的挂了」一模一样。上一条判据（超时 + 重试）当时是绿的——
+    **两头都装了，中间那一环是空的。**
+
+    所以这条钉的是：重试之前必须**等锁真的松开**，不许拿 `sleep` 猜。
+
+    ⚠️ 判据**自己推导，不维护白名单**：凡是有那个重试循环的工作流都算。
+    """
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        body = "\n".join(lines)
+        if "playwright install" not in body:
+            continue
+        checked[path.name] = True
+        assert "pgrep -x apt-get" in body and "pgrep -x dpkg" in body, (
+            f"{path.name} 装 Chromium 的重试没有等 dpkg 锁——"
+            "第一次超时留下的 apt-get 会把第二次两秒钟毒死")
+        # 循环体里不许只剩一个裸 sleep 当等待手段
+        loop = body.split("装 Chromium 第", 1)
+        assert len(loop) > 1, f"{path.name} 找不到那条重试的告警行"
+        after = loop[1].split("done", 1)[0]
+        assert "pw_wait_apt" in after, (
+            f"{path.name} 重试之间没调等锁那一步（拿 sleep 猜等于没等）")
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
+
+
 def test_Chromium缓存都要有restore_keys():
     """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
 

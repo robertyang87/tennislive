@@ -2416,10 +2416,9 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
 - **加新源的判据不是 200**：还要 item 数 > 0、link 是发布方域名、
   而且 `fetch_article` 真能解出段落。三条缺一条就是又一个哑源
 
-### ⚠️ GitHub Models 正在退役——`video-localize` 还挂在上面
+### ⚠️ GitHub Models 正在退役——两个消费者都清干净了（2026-08-05）
 
-这条线一开始接的是 `models.github.ai/inference`（`ai_editorial.py` 和
-`video/pipeline.py` 的字幕翻译器至今都在用）。2026-08-05 实测：
+这条线一开始接的是 `models.github.ai/inference`。2026-08-05 实测：
 
     HTTP 410  {"error":{"code":"github_models_retirement_brownout", …}}
 
@@ -2427,7 +2426,31 @@ UTC——每天 **16:00 UTC 之后两者差一天**。查 `output/2026-07-26/...
 静默失效，而失效的样子是「今天没有要点」——和「今天新闻少」一模一样。
 
 简报改走 **Anthropic 官方 SDK**（`ANTHROPIC_API_KEY`，`pip install -e ".[brief]"`）。
-⚠️ **`video-localize.yml` 的字幕翻译还在那个退役端点上，是另一笔没还的账。**
+
+全仓库一共两个消费者，当天一起清掉：
+
+| 谁 | 怎么处置 |
+|---|---|
+| `video/pipeline.py` 的字幕翻译器 | 换成 `ChatTranslator`，走**和简报同一个** `research.brief.Chat` |
+| `render/ai_editorial.py` | **删掉**——它唯一的消费者是日报，而日报 2026-07-31 停产，零调用方 |
+
+⚠️ **它坏起来的样子不是「端点没了」，是一句「翻译失败」**：`raise_for_status`
+把 410 变成 `... translation failed: 410 Client Error`，读到的人第一反应是去查
+网络或 token。所以判据拦的是「有人照着旧代码又接一次」
+（`test_不许再指向已退役的GitHub_Models端点`，两头都钉：代码里不许有那个 host、
+工作流里不许再配 `GITHUB_MODELS_TOKEN`）。
+
+⚠️ **那条判据必须用 AST，不能按文本扫。** 这个 URL 正写在 `pipeline.py` 的
+docstring 和好几处注释里——那是记教训的地方。按文本扫，「把坑记下来」会被判成
+「又踩了这个坑」（同一个错这个仓库犯过五次）。注释根本不进 AST，再把 docstring
+摘掉就够了。反向验证的第 ② 项专门验这一头：**只在注释里提那个 URL，必须是绿的**。
+
+⚠️ **字幕和标题中译共用 schema，但「少了一条」的口径相反**，别照抄：
+
+| | 少了一条 |
+|---|---|
+| 标题中译（`translate_titles`） | **不填**，照旧显示英文原标题——半句机翻比原文更难读 |
+| 字幕（`ChatTranslator`） | **报错**——烧进画面的字幕缺一条就是一段没有字幕的画面 |
 
 ⚠️ **默认通道后来换成了 DeepSeek**（账号所有者手上是这个），下一节；
 这一节讲的三条对 Anthropic 那条通道照旧成立。
