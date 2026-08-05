@@ -479,7 +479,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           # **钉 commit，别停在 @main。** 同一条采访重渲，海报路径一模一样，
           # 而微信的图片缓存按**路径**算——URL 停在 @main 的话第二轮推出去的
           # 还是第一轮那张图，**而且不吭声**。reel 那两条线漏过同一个，

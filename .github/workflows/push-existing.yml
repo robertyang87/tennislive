@@ -61,7 +61,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-          PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
           INPUT_DATE: ${{ inputs.date }}
           INPUT_SCOPE: ${{ inputs.scope }}
           INPUT_SLUG: ${{ inputs.slug }}

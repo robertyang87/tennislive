@@ -44,9 +44,15 @@ jobs:
     timeout-minutes: 20
     env:
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-      # 没有它，`prepare_image_delivery` 悄悄退回 jsDelivr：轮询最多 5 分钟，
-      # 取不到就整条推送取消。判据：test_走图床那条路的工作流都要配SECRET_KEY
-      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
+      # ⚠️ **PUSHPLUS_SECRET_KEY 是故意不配的**（账号所有者 2026-08-05：
+      # 「如果没有任何用途的话，拿掉吧」）。配上它就走 PushPlus 自己的图床，
+      # 而那条路：①**图片 30 天后自动删**，老推送到期变裂图；②要会员/收费；
+      # ③开放接口**默认禁用**，得去后台手动开，开完还有一道**安全 IP 白名单**
+      # ——而 GitHub runner 的出口 IP 每趟都不一样，那条路对 CI 基本无解。
+      # 实测（2026-08-04 run 30903125364）：配着它反而每趟先吃一个
+      # `code=401 请求未授权`，再退回 jsDelivr。
+      # 不配 = 直接走 jsDelivr，图片**钉在 commit 上、永久可取**，严格更好。
+      # 判据：test_不许再给工作流配PUSHPLUS_SECRET_KEY
     steps:
       - uses: actions/checkout@v4
         with:
