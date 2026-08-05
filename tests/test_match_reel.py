@@ -1405,9 +1405,18 @@ def test_栏目和封面模板要配对():
                 for who in pair:
                     assert str(who.get("name", "")).strip(), \
                         f"{path.name} 的 matchup 少了名字"
-                    assert str(who.get("country", "")).strip(), (
+                    # ⚠️ `country` 和 `rank` 一样：**键不许省，但可以显式写
+                    # null**。null 的意思是「查过，他没有国旗」——中立身份的
+                    # 球员就是这样（卢布列夫：ATP 自己的排名表里只有他名字后面
+                    # 没有国家缩写，flashscore 的国别字段也是 `World`）。
+                    # 省掉这个键的话，「查过是中立」和「忘了填」长得一模一样。
+                    assert "country" in who, (
                         f"{path.name} 的 {who.get('name')} 缺 country——"
-                        "比分那一行每个名字旁边都要有国旗")
+                        "比分那一行每个名字旁边都要有国旗；中立身份显式写 null")
+                    assert who["country"] is None or \
+                        str(who["country"]).strip(), (
+                        f"{path.name} 的 {who.get('name')} 的 country 是空串——"
+                        '查过确实没有就写 null，别写 ""')
                     assert "rank" in who, (
                         f"{path.name} 的 {who.get('name')} 缺 rank；"
                         "查过确实没有就显式写 null，别省掉这个键")
@@ -6075,3 +6084,261 @@ def test_韵律报告要认得出哪几段带风格():
     assert len(call) - len(call.lstrip()) >= 12, (
         f"prosody_report 调用的缩进是 {len(call) - len(call.lstrip())} 格，"
         "说明它在临时目录那个 with 外面——那时语音已经删了")
+
+
+def test_栏目基调只填空位不许盖掉段级风格():
+    """账号所有者 2026-08-04：「以后所有配音都能自适应情绪么？」
+
+    分三层，只做第三层：
+
+    | | 做不做 | 为什么 |
+    |---|---|---|
+    | 每段都能带风格 | ✅ 已经能 | 额度够（已发 21 条 8352 字，F0 免费 50 万字符/月） |
+    | **按文本自动判情绪** | ❌ **不做** | 判错了不吭声，还会把「机器猜的」伪装成「你想清楚了」 |
+    | **按栏目定基调** | ✅ 做 | **栏目是已知的，情绪不是** |
+
+    ⚠️ 基调**只填空位**：段级 `voice.style` 是编辑判断（「第 7 段要 excited」），
+    一个按栏目算出来的默认值不许盖掉它。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+    import pytest  # noqa: PLC0415
+    from tennislive.video import azure_tts
+
+    # ① 基调必须是**服务端实测通过**的风格，不能是随手写的名字——
+    #    ⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功，只是没有情绪
+    # ⚠️ **空串是「实测之后决定不设」**，不是漏填——它和「根本没登记」处置一样
+    # 但说法必须不一样，靠 `is_registered()` 分开
+    def _vet(table: dict[str, tuple[str, str]]) -> None:
+        """基调表的三条规矩。抽出来是因为**现在表里一条活的都没有**——
+        直接写成断言的话它们会恒真，而一条恒真的检查和没有检查是同一个毛病。"""
+        live = {k: v for k, v in table.items() if v[0]}
+        styles = {v[0] for v in live.values()}
+        assert styles <= set(azure_tts.KNOWN_STYLES), (
+            f"{sorted(styles - set(azure_tts.KNOWN_STYLES))} 不在实测通过的表里"
+            "——⚠️ 拼错的风格名 Azure 是**静默忽略**的，合成照样成功只是没有情绪")
+        # ⚠️ 满档太重（实测抬 50% 音高），设了基调就要显式写 degree
+        assert all(v[1] for v in live.values()), (
+            "基调必须显式写 styledegree——默认 1.0 实测把八段从 115–128 Hz "
+            "抬到 184–188，那不是基调是换了个人念")
+        # 那五个「时长和基线几乎一样」的不许当基调（服务端认 ≠ 听起来对）
+        suspect = {"narration-relaxed", "serious", "angry", "disgruntled",
+                   "cheerful"}
+        assert not (styles & suspect), (
+            "这几个风格实测时长和基线几乎一样，别拿来当整条片子的基调")
+
+    _vet(azure_tts.COLUMN_BASE_STYLE)
+    # ⚠️ **判据自己的判据。** 2026-08-04 之后两个栏目都是「不设」，上面那三条
+    # 于是一条都咬不到东西。拿三个**故意写坏**的表各喂一次，证明它们还活着——
+    # 不然这段检查会在表被重新填上的那天悄悄放行。
+    for bad, hint in (
+        ({"x": ("no-such-style", "0.5")}, "拼错的风格名"),
+        ({"x": ("documentary-narration", "")}, "没写 styledegree"),
+        ({"x": ("cheerful", "0.5")}, "时长和基线几乎一样的那五个"),
+    ):
+        with pytest.raises(AssertionError):
+            _vet(bad)
+
+    assert azure_tts.is_registered("赛场之上") and not azure_tts.base_style_for("赛场之上")[0], (
+        "赛场之上是**登记过的「不设」**（三趟实测），不许退化成「没登记」——"
+        "那样日志会说「漏了」，而它是想清楚的")
+    # ⚠️ 网球有故事同理：它是**账号所有者听完撤掉的**（2026-08-04「不要改成那种
+    # 情绪化的，还用原来的那种配音」），不是没人顾上。退化成「没登记」就把一个
+    # 听过之后的决定抹成了「漏了」。
+    assert azure_tts.is_registered("网球有故事") and not azure_tts.base_style_for("网球有故事")[0], (
+        "网球有故事是**登记过的「不设」**，见 azure_tts 里那段注")
+    assert not azure_tts.is_registered("没这个栏目")
+    # ③ 登记过的栏目要真的在 spec 里出现过——一张会过期的表和一条常年红的
+    #    检查是同一个毛病
+    used = {str((json.loads(p.read_text("utf-8")).get("cover") or {})
+                .get("eyebrow") or "")
+            for p in Path("specs/reels").glob("*.json")}
+    stale = set(azure_tts.COLUMN_BASE_STYLE) - used
+    assert not stale, f"{sorted(stale)} 这些栏目在 specs 里根本不存在"
+    assert azure_tts.base_style_for("没这个栏目") == ("", "")
+
+    # ④ 段级永远赢：给基调，带 style 的那段必须还是自己的
+    seen: list[str] = []
+    degrees: list[str] = []
+
+    def fake_tts(text, path, voice, rate, pitch="+0Hz", style="",
+                 styledegree="", lead_pause=0.0):
+        seen.append(style)
+        degrees.append(styledegree)
+        path.write_bytes(b"x")
+        return []
+
+    segs = [
+        reel.Segment(start=0.0, end=6.0, cx=None, narration="没写风格的一段。"),
+        reel.Segment(start=6.0, end=12.0, cx=None, narration="写了风格的一段。",
+                     voice_style="sports-commentary-excited"),
+    ]
+    import tempfile
+    orig = reel.tts_one
+    reel.tts_one = fake_tts
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            reel.synthesize(segs, Path(tmp), "v", "+6%",
+                            base_style="sports-commentary", base_degree="0.5")
+    finally:
+        reel.tts_one = orig
+    assert seen == ["sports-commentary", "sports-commentary-excited"], (
+        f"基调应该只填空位、段级永远赢，实际拿到 {seen}")
+    # ⚠️ **degree 要跟着 style 走**：段级风格配基调的 degree 是张冠李戴
+    assert degrees == ["0.5", ""], f"degree 没跟着 style 走，实际 {degrees}"
+
+
+def test_没有Azure的时候不许硬套基调():
+    """⚠️ 硬套的话 `tts_one` 会对**每一段**抛「这一段要 voice.style」——
+
+    一个本来只是「音色朴素一点」的降级，会变成整条片子渲不出来。
+    而且「没配基调」和「配了但没生效」长得一模一样，所以两条路都要打日志。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import build_match_reel as reel
+
+    spec = {"cover": {"eyebrow": "赛场之上"}}
+    src = Path("tools/build_match_reel.py").read_text("utf-8")
+    body = src[src.index("def column_base_style("):src.index("def synthesize(")]
+    assert "azure_tts.available()" in body and 'return "", ""' in body, (
+        "没有 Azure 的时候必须返回空基调")
+    assert "print(" in body and "why_unavailable" in body, (
+        "两条路都要出声——「没配基调」和「配了但没生效」长得一模一样")
+    assert reel.column_base_style(spec) == ("", "") or reel.azure_tts.available()
+
+
+def test_情绪风格要写谁听过不是写为什么想用():
+    """⚠️ **量得出来的三维，没有一维在量「糙不糙」。**
+
+    2026-08-04：王欣瑜那条的第 7/9/10 段上了 excited / sad / depressed。理由写得
+    很足，还配了三维实测——基频 219.2 Hz、响度 −24.2 dB、语速 5.38 字每秒——我据此
+    论证「不吵、不快、只是高」并建议发。账号所有者听完的原话是
+    **「配音真的是太粗细了，还是不要改成那种情绪化的，还用原来的那种配音」**。
+
+    那三个数都量对了。**它们只是都不在量音色自不自然**，而那正是唯一要紧的那一维。
+    所以 `_why`（为什么想用）不够，得有 `_heard`（谁听过、听下来怎么样）——和
+    `mixed_fps` / `silent_source` / `rank: null` 一个形状：认领这一步把
+    「听下来行」和「量下来应该行」分开。
+
+    ⚠️ 只管 `style`。`rate` / `pitch` / `lead_pause` 不改音色，`_why` 管得住。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel
+    import pytest  # noqa: PLC0415
+
+    def seg(**voice):
+        return {"start": 0.0, "end": 9.0, "narration": "随便一句。",
+                "voice": voice}
+
+    # ① 有 style 没 _heard → 报错，而且要说出两条不改音色的出路
+    with pytest.raises(reel.ReelError) as err:
+        reel._seg_voice(seg(style="sad", _why="崩盘那一段"), 0)
+    msg = str(err.value)
+    assert "_heard" in msg
+    for way in ("断句", "气口", "lead_pause"):
+        assert way in msg, f"报错要指出「{way}」这条不改音色的路，现在只有：{msg}"
+
+    # ② 写了 _heard 就放行
+    assert reel._seg_voice(
+        seg(style="sad", _why="崩盘", _heard="账号所有者 8/4 听过，可以"), 0
+    )[2] == "sad"
+
+    # ③ ⚠️ 反向：不带 style 的不受这道闸管——扩大化的判据不吭声，它只会让
+    #    下一个人把「降个速」也当成要听一遍的事
+    assert reel._seg_voice(seg(rate="-10%", _why="落点，慢下来"), 0)[0] == "-10%"
+    assert reel._seg_voice(seg(lead_pause=0.4, _why="进第二盘留口气"), 0)[4] == 0.4
+
+    # ④ 存量里凡是写了 style 的，都得有 _heard——这条测试要有主语
+    styled = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        for i, s in enumerate(json.loads(path.read_text("utf-8")).get("segments", [])):
+            voice = s.get("voice") or {}
+            if str(voice.get("style", "") or "").strip():
+                styled += 1
+                assert str(voice.get("_heard", "") or "").strip(), (
+                    f"{path.name} 第 {i + 1} 段写了 style 却没有 _heard")
+    # ⚠️ 这里**不要求 styled > 0**：现在全仓库一条都没有（都撤了），而那正是
+    #    这条规矩想要的状态。①②③ 已经直接喂函数验过，主语不在存量上。
+
+
+def test_气口要算进旁白的离线估():
+    """⚠️ `lead_pause` 占的是**同一个窗口**的时间，不算进去就是一条乐观的估。
+
+    `speech_seconds()` 只看文本，而 `lead_pause` 是段首那个真 `<break>`。不加的话
+    这条离线估**正好乐观 `lead_pause` 秒**，然后在六分钟之后的真 render 里才炸——
+    又是「兜底出事的时候不吭声」，只不过这次不吭声的是估算本身。
+
+    ⚠️ 加在 `narration_estimates` 而不是 `speech_seconds`：后者的系数是拿**已发
+    成片**拟合并钉住的（`test_离线估旁白长度要对得上真产物`），掺进段级参数就没法
+    再和那批产物对账了。这条测试连**加在哪一层**一起钉。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel
+    import pytest  # noqa: PLC0415
+
+    text = "然后她连丢四局。"
+    plain = reel.Segment(start=0.0, end=9.0, cx=None, narration=text)
+    winded = reel.Segment(start=0.0, end=9.0, cx=None, narration=text,
+                          voice_lead_pause=0.6)
+    (_, a, room_a), = reel.narration_estimates([plain])
+    (_, b, room_b), = reel.narration_estimates([winded])
+    assert b - a == pytest.approx(0.6, abs=1e-6), (
+        f"气口没算进去：带 0.6s lead_pause 估出来 {b}，不带是 {a}")
+    assert room_a - room_b == pytest.approx(0.6, abs=1e-6), "余量也要跟着缩"
+
+    # ⚠️ 层次：`speech_seconds` 必须还是「纯文本进、秒数出」
+    assert reel.speech_seconds(text) == pytest.approx(a, abs=1e-6), (
+        "`speech_seconds` 不许自己去读段级参数——它的系数是拿已发成片拟合的")
+    import inspect as _inspect
+    assert list(_inspect.signature(reel.speech_seconds).parameters) == ["text"], (
+        "`speech_seconds` 只该收文本；气口加在 `narration_estimates` 那一层")
+
+
+def test_中立身份的球员可以显式声明没有国旗():
+    """⚠️ **`country: null` 是「查过，他没有国旗」，不是「忘了填」。**
+
+    2026-08-05 卢布列夫那条查下来：**ATP 自己的排名表里，他是唯一一个名字后面
+    没有国家缩写的**（同一页 Musetti (ITA)、Ruud (NOR)、Jódar (ESP) 都有），
+    flashscore 给的国别字段也是 `World`。他是中立身份。
+
+    印俄罗斯旗等于**替这项运动做了一个它自己没做的声明**；而「中立旗」这个
+    emoji 并不存在。所以留空——但必须**显式认领并且出声**，和
+    `rank: null` / `mixed_fps` / `silent_source` 一个形状。
+
+    ⚠️ 键不许省：省掉之后「查过是中立身份」和「手滑漏了」长得一模一样。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    sys.path.insert(0, str(Path("src").resolve()))
+    import pytest  # noqa: PLC0415
+    import versus_poster as vp
+
+    # ① 中立：渲得出来，而且**不留空的 <b></b>**（那会在旗位留一块空白）
+    out = vp._name_html("卢布列夫", {"country": None, "rank": 16}, "t")
+    assert "卢布列夫" in out and "（16）" in out
+    assert "<b>" not in out, f"中立不该留空的旗位标签，实际 {out}"
+
+    # ② 正常那条不许被带坏
+    ok = vp._name_html("商竣程", {"country": "CHN", "rank": 270}, "t")
+    assert "<b>🇨🇳</b>" in ok and "（270）" in ok
+
+    # ③ 省掉键 → 报错，**而且要指出 null 这条出路**（报错要说出路）
+    with pytest.raises(SystemExit) as err:
+        vp._name_html("x", {"rank": 1}, "t")
+    assert "null" in str(err.value) and "中立" in str(err.value)
+
+    # ④ ⚠️ 空串**不等于** null：前者是手滑，后者是认领过的。两支要分开
+    with pytest.raises(SystemExit) as err2:
+        vp._name_html("x", {"country": "", "rank": 1}, "t")
+    assert "空字符串" in str(err2.value)
+
+    # ⑤ 认了国旗但写错码，照旧要红（别把这道闸一起放宽了）
+    with pytest.raises(SystemExit):
+        vp._name_html("x", {"country": "ZZZ", "rank": 1}, "t")
+
+    # ⑥ 出声：走中立那支必须打日志——不然「中立」和「渲丢了」看不出区别
+    src = Path("tools/versus_poster.py").read_text("utf-8")
+    body = src[src.index("def _name_html("):src.index("_SET_RE")]
+    assert "country: null" in body and "print(" in body, (
+        "走中立那条路要在日志里出声")
