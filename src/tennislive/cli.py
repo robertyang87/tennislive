@@ -374,6 +374,102 @@ def cmd_explainer(args) -> int:
     return 0
 
 
+def cmd_brief(args) -> int:
+    """**一份简报，一条推送。**
+
+    这条命令替掉的是原来那两条微信（「场外网球快讯候选」＋「今日选题候选」）。
+    它们的毛病不是各自做得不好，是**合起来仍然读不出内容**：一条是 8 条英文
+    标题加链接，另一条大多数日子是空的。
+
+    现在一趟做完：扫信号 → 摘掉官网导航页 → 聚簇 → 按热度排 → 前 N 条抓正文
+    出中文要点 → 其余至少给中译标题 → 渲一份 HTML。
+
+    ⚠️ **空产也要写出产物**。一条热点都没有的日子，`brief.json` 里的
+    `source_status` / `notes` / `dropped_nav` 才是当天唯一能查的东西——
+    「今天没热点」和「抓取全挂了」在推送正文里长得一模一样。
+    """
+    import dataclasses as _dc
+
+    from .render.newsbrief import render_brief_html
+    from .render.terminal import console
+    from .research.brief import KEY_HINT, Chat, build_brief
+    from .research.newsfeeds import fetch_readable_news
+    from .research.topic_radar import previous_slugs
+    from .research.trends import fetch_trend_signals
+    from .research.zh_trends import fetch_zh_hot
+
+    d = parse_date_arg(args.date)
+    signals, status = fetch_trend_signals()
+    signal_dicts = [_dc.asdict(s) for s in signals]
+    # 官方新闻那一路才是选题来源；大众热搜（足球运动员、流行歌手）只当热度
+    # 加成，混进簇里只会把它搅乱——这条口径和原来的 topic-radar 一致。
+    news = [s for s in signal_dicts if str(s.get("kind") or "") == "official-news"]
+    trends_only = [s for s in signal_dicts if str(s.get("kind") or "") == "search-trend"]
+    # ⚠️ **发现和阅读是两路**。上面那一路走 Google News，覆盖广（含 ATP/WTA
+    # 官网）但链接是读不了的包装页；这一路是发布方原生 RSS，源少但链接是
+    # 真地址、正文抓得到。两路一起进聚类，同一件事自然并成一簇——于是那一簇
+    # 既有官网标题撑热度，又有一条读得到的链接供深挖。详见 newsfeeds.py。
+    readable, readable_status = fetch_readable_news()
+    news.extend(readable)
+    status.update(readable_status)
+    zh = fetch_zh_hot()
+    zh_dicts = [h.as_dict() for h in zh.hits]
+    status.update(zh.status)
+
+    chat = Chat()
+    if chat.ready:
+        # 走了哪条通道要当场说出来：两条通道的产物长得一样，日志里不写
+        # 就只能靠回忆当时哪个密钥配着。
+        console.print(f"[dim]模型通道 {chat.channel}[/dim]")
+    else:
+        # **默认那条不许悄悄走。** 没有密钥时这份简报没有中译也没有要点，
+        # 而它看起来和「今天新闻少」一模一样。
+        console.print(
+            f"[yellow]没配 {KEY_HINT}：本次没有中译也没有要点，"
+            "简报退回「只有英文标题和热度」。[/yellow]"
+        )
+
+    brief = build_brief(
+        d.isoformat(),
+        news=news,
+        trend_signals=trends_only,
+        zh_signals=zh_dicts,
+        zh_scanned=zh.scanned,
+        source_status=status,
+        prev_slugs=previous_slugs(Path(args.outdir), d.isoformat(), back=args.persist_days),
+        deep=args.deep,
+        limit=args.max,
+        min_sources=args.min_sources,
+        chat=chat,
+    )
+
+    outdir = Path(args.outdir) / d.isoformat() / "brief"
+    outdir.mkdir(parents=True, exist_ok=True)
+    _dump_json(brief.as_dict(), outdir / "brief.json")
+    (outdir / "brief_push.html").write_text(render_brief_html(brief), encoding="utf-8")
+
+    console.print(
+        f"[cyan]新闻 {brief.news_count} 条（摘掉导航页 {len(brief.dropped_nav)} 条）"
+        f" → 热点 {len(brief.stories)} 个，深挖 {len(brief.deep_stories)} 个[/cyan]"
+    )
+    console.print(
+        f"[cyan]中文平台扫了 {zh.scanned} 条 → 网球相关 {len(zh_dicts)} 条[/cyan]"
+    )
+    for story in brief.stories:
+        mark = "深" if story.deep else "浅"
+        console.print(
+            f"  [{mark}] {story.title_zh or story.headlines[0].get('title', '')}"
+            f"　{story.heat.outlets} 家 · 分 {story.heat.score}"
+            + (f" · {story.note}" if story.note else "")
+        )
+    # 退化和失败逐条打出来：读日志的人不该再去翻 JSON 才知道今天缺了什么。
+    for note in brief.notes:
+        console.print(f"[yellow]· {note}[/yellow]")
+    if not brief.stories:
+        console.print("[yellow]今天没有聚成簇的热点——先看 brief.json 的 source_status[/yellow]")
+    return 0
+
+
 def cmd_topic_radar(args) -> int:
     """把今天扫来的新闻**提炼成选题**（不是快讯）。
 
@@ -1012,8 +1108,36 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     sp = sub.add_parser(
+        "brief",
+        help="网球热点简报：扫新闻 → 聚热点 → 抓正文出中文要点 → 一份 HTML（一条推送）",
+    )
+    sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
+    sp.add_argument("--outdir", default="output", help="输出根目录（默认 output/）")
+    sp.add_argument("--max", type=int, default=12, help="简报里最多列几个热点（默认 12）")
+    sp.add_argument(
+        "--deep",
+        type=int,
+        default=0,
+        help="深挖几个（抓正文出中文要点）。**0 = 全部，默认**；给 N 就按热度取前 N 条",
+    )
+    sp.add_argument(
+        "--min-sources",
+        dest="min_sources",
+        type=int,
+        default=2,
+        help="几家在报才算一个热点（默认 2；同一家发两条不算两家）",
+    )
+    sp.add_argument(
+        "--persist-days",
+        dest="persist_days",
+        type=int,
+        default=1,
+        help="往前看几天判断「连着第几天在报」（默认 1）",
+    )
+
+    sp = sub.add_parser(
         "topic-radar",
-        help="把今天的新闻提炼成选题候选（新闻钩子 + 底下的常青线），不是快讯",
+        help="[底层工具] 只出选题候选队列，不推送；日常走 brief",
     )
     sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出根目录（默认 output/）")
@@ -1035,7 +1159,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser(
         "flash-radar",
-        help="自动扫描场外网球新闻，筛出可发候选进待发队列（比赛新闻归日报，敏感转人工）",
+        help="[底层工具] 只出场外快讯候选队列与草稿卡，不推送；日常走 brief",
     )
     sp.add_argument("--date", default="today", help="日期（北京时间，默认 today）")
     sp.add_argument("--outdir", default="output", help="输出根目录（默认 output/）")
@@ -1123,6 +1247,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_knowledge_adhoc(args)
     if args.command == "flash-card":
         return cmd_flash_card(args)
+    if args.command == "brief":
+        return cmd_brief(args)
     if args.command == "topic-radar":
         return cmd_topic_radar(args)
     if args.command == "flash-radar":

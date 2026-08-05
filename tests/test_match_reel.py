@@ -3750,11 +3750,19 @@ def test_停掉的定时不许自己回来():
     cron 一删，那条测试的 `re.search(...).group(1)` 当场 `AttributeError`
     ——一条常年红的检查和一条常年跳过的检查是同一个毛病。
 
-    定时归零之后，`preview_candidates` 那 165 分钟的窗口只在手动跑的那一趟
-    里起作用，不再需要一个间隔去配它。要恢复定时，得连这条测试一起改——
-    那时**间隔仍然要按窗口重算**，别照抄当年那行 cron。
+    定时归零之后，`preview_candidates` 的窗口只在手动跑的那一趟里起作用，
+    不再需要一个间隔去配它。⚠️ 而 2026-08-05 那个窗口从 165 分钟放宽到了
+    **48 小时**（「排期出来就决定」），所以「间隔要比窗口窄」这个约束现在
+    基本不咬人了。要恢复定时，得连这条测试一起改——那时**按新窗口重算**，
+    别照抄当年那行 cron，也别照抄那个 165。
     """
-    for name in ("flash", "news-radar"):
+    # ⚠️ `news-radar` 2026-08-05 改名成 `news-brief`（两条推送合成一条）。
+    # **改的是内容形态，不是那个「停掉定时」的决定**，所以它照旧受这条管。
+    # 手写文件名的名单会在改名当天变成 FileNotFoundError——这个仓库在
+    # `test_every_workflow_that_commits_generated_files_has_a_size_gate`
+    # 上已经栽过一次，那次的解法是改成自动推导。这儿推导不出来（「哪几条
+    # 是被停掉的」不写在文件里），所以名单留着，但改名时必须一起改。
+    for name in ("flash", "news-brief"):
         body = _yaml_only(
             Path(f".github/workflows/{name}.yml").read_text(encoding="utf-8"))
         head = body.split("\njobs:")[0]

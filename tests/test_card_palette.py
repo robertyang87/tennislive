@@ -60,9 +60,12 @@ def _luma(rgb: tuple[int, int, int]) -> float:
 def test_daily_is_the_card_palette_and_is_not_the_shared_theme_switch(monkeypatch):
     """日报卡的配色和 TENNISLIVE_THEME 解耦。
 
-    TENNISLIVE_THEME 是 daily / knowledge-adhoc / explainer / flash /
-    news-radar 五个 workflow 共用的一个变量，且都显式写成 'dark'。跟着它走
-    的话，日报卡提淡底色会把知识贴和科普视频一起提淡。
+    TENNISLIVE_THEME 是 knowledge-adhoc / explainer / flash 这几个**要渲卡片**
+    的 workflow 共用的一个变量，且都显式写成 'dark'。跟着它走的话，日报卡
+    提淡底色会把知识贴和科普视频一起提淡。
+
+    （原来这儿还列着 daily 和 news-radar：daily 2026-07-31 停产；news-radar
+    2026-08-05 变成 news-brief 之后**一张图都不渲**，那个变量跟着删了。）
     """
     monkeypatch.delenv("TENNISLIVE_CARD_PALETTE", raising=False)
     monkeypatch.setenv("TENNISLIVE_THEME", "dark")
