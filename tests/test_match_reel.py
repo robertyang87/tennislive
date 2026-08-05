@@ -5658,16 +5658,23 @@ def test_片尾的动效每一层都要按时出现(tmp_path):
 
     ⚠️ 拿**纯色块**当层，不渲真页面：这条判据要在 CI 上跑得起来，而 CI 上
     没有 Chromium 也没有品牌字体。它验的是滤镜图的时序，不是版式好不好看。
+
+    ⚠️ **必须按 30fps 跑，不能用 25。** 静图输入不给 `-framerate` 时 ffmpeg
+    按 25fps 解 `-loop 1`，而 `zoompan` 输出标的是目标帧率——帧数不够，画面
+    就缩成 `total × 25/fps`。**fps 恰好是 25 时两者相等，这个 bug 完全看不见**：
+    第一版就是拿 25 跑的，绿得很干净，而真跑一次解说片（30fps）当场量到
+    画面 3.57s、音轨 4.29s。判据的参数选在「恰好掩盖缺陷」的那一档上，
+    和没有判据是一回事。
     """
     import shutil  # noqa: PLC0415
     import subprocess  # noqa: PLC0415
 
     sys.path.insert(0, str(Path("tools").resolve()))
-    import outro_page  # noqa: PLC0415
+    from tennislive.video import outro_page  # noqa: PLC0415
 
     assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
 
-    secs, fps = 3.85, 25
+    secs, fps = 3.85, 30
     # 底层纯黑，三层各是一条横带，落在互不重叠的高度上——这样量某一条带的
     # 亮度就等于量那一层出没出来。
     base = tmp_path / "base.png"
@@ -5691,13 +5698,24 @@ def test_片尾的动效每一层都要按时出现(tmp_path):
 
     film = tmp_path / "outro.mp4"
     args = ["ffmpeg", "-v", "error", "-y",
-            "-loop", "1", "-t", f"{secs}", "-i", str(base)]
+            "-framerate", str(fps), "-loop", "1", "-t", f"{secs}", "-i", str(base)]
     for f in layer_files:
-        args += ["-loop", "1", "-t", f"{secs}", "-i", str(f)]
+        args += ["-framerate", str(fps), "-loop", "1", "-t", f"{secs}", "-i", str(f)]
     args += ["-filter_complex", outro_page.motion_filter(secs, str(fps), float(fps)),
              "-map", "[vout]", "-c:v", "libx264", "-preset", "ultrafast",
              "-crf", "12", "-pix_fmt", "yuv420p", str(film)]
     subprocess.run(args, check=True)
+
+    # ① **画面必须真有那么长。** 少给 `-framerate` 时它会缩成 total×25/fps，
+    # 而 ffmpeg 不报错——真跑解说片时量到画面 3.57s、音轨 4.29s 就是这个。
+    got = float(subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=duration", "-of", "csv=p=0", str(film)],
+        check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+    assert abs(got - secs) < 0.12, (
+        f"片尾画面 {got:.2f}s，要的是 {secs:.2f}s——"
+        f"差 {secs / got if got else 0:.3f} 倍。静图输入少了 `-framerate`，"
+        "帧数按 25fps 铺、时长按目标帧率标，画面就比音轨短一截")
 
     def band_brightness(moment: float, y0: int, y1: int) -> float:
         shot = tmp_path / "s.png"
@@ -5727,6 +5745,95 @@ def test_片尾的动效每一层都要按时出现(tmp_path):
             f"「{key}」层前后差得太小（{before:.1f} → {after:.1f}），淡入没在动")
 
 
+def test_片尾片段的画面要和它自己要的一样长(tmp_path):
+    """**真调一次 `render_clip`**，量它出来的画面有多长。
+
+    ⚠️ 这条是补上一条判据的漏洞的。`test_片尾的动效每一层都要按时出现` 验的是
+    `motion_filter`（滤镜图），而真出问题的地方在 `render_clip` 拼的那串
+    **ffmpeg 参数**里——静图输入少了 `-framerate`，ffmpeg 就按 25fps 铺
+    `-loop 1`，而 `zoompan` 输出标的是目标帧率，画面于是缩成 `total×25/fps`。
+
+    实测（解说片，30fps，目标 4.29s）：**画面 3.57s，音轨 4.29s。**
+    ffmpeg 不报错，成片能出来，只是最后 0.72 秒没有画面。
+
+    而那条老判据**抓不到它**：测试自己拼命令行、自己带了 `-framerate`，
+    把生产代码里的两处全拿掉照样绿。查的东西和跑的东西不是一回事。
+
+    喂现成的 PNG 当层（`layers=`），所以这条不碰 Chromium，CI 上跑得起来。
+
+    ⚠️ **必须按 30fps 跑**：fps 恰好是 25 时 `total×25/fps == total`，
+    这个 bug 完全看不见。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+
+    layers = {}
+    for name in ["base"] + [k for k, *_ in outro_page.LAYERS]:
+        f = tmp_path / f"{name}.png"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+             f"color=c=gray:s={outro_page.VIDEO_W}x{outro_page.VIDEO_H}",
+             "-frames:v", "1", "-pix_fmt", "rgba", str(f)], check=True)
+        layers[name] = f
+
+    want, fps = 4.29, 30
+    dest = outro_page.render_clip(
+        tmp_path, want,
+        fps_expr=str(fps), fps=float(fps), chromium="", dest=tmp_path / "o.mp4",
+        audio_rate="24000", preset="ultrafast", crf="26",
+        audio_bitrate="64k", layers=layers,
+    )
+    got = float(subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=duration", "-of", "csv=p=0", str(dest)],
+        check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+    assert abs(got - want) < 0.12, (
+        f"片尾画面 {got:.2f}s，要的是 {want:.2f}s（差 {want / got if got else 0:.3f} "
+        f"倍，25/{fps} = {25 / fps:.3f}）——静图输入少了 `-framerate`，"
+        "帧数按 25fps 铺、时长按目标帧率标，画面就比音轨短一截，而 ffmpeg 不报错")
+
+
+def test_片尾卡的画幅要和几条线的卡对得上():
+    """片尾页搬进 `src/tennislive/video/` 之后，画幅是**另写的一份**。
+
+    原来它 `from versus_poster import VIDEO_W, VIDEO_H`，import 本身就保证了
+    一致。搬进包里之后这条路断了，两头都不能走：
+
+    - `explainer` 稍后要反过来用这个模块，import 回去就**成环**
+    - `versus_poster` 在 `tools/` 里，而 `src` 不该依赖 `tools`
+
+    所以一致性从「import 保证」降级成了「另写一份」，**必须有判据接上**——
+    否则哪天有人改了海报画幅，片尾会静静地变形或者留黑边，而这一族毛病的
+    共同点就是不吭声。
+
+    三处必须相等：
+    - `outro_page.VIDEO_W/VIDEO_H` —— 片尾卡
+    - `versus_poster.VIDEO_W/VIDEO_H` —— 剪辑片的整幅画布（3:4）
+    - `explainer.VIDEO_W` × `explainer.CARD_H` —— 解说片那张 3:4 的卡
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+    from tennislive.video import explainer, outro_page  # noqa: PLC0415
+
+    assert (outro_page.VIDEO_W, outro_page.VIDEO_H) == (
+        versus_poster.VIDEO_W, versus_poster.VIDEO_H), (
+        f"片尾卡 {outro_page.VIDEO_W}×{outro_page.VIDEO_H} 和剪辑片画布 "
+        f"{versus_poster.VIDEO_W}×{versus_poster.VIDEO_H} 对不上——"
+        "片尾接进成片会变形或留黑边")
+    assert (outro_page.VIDEO_W, outro_page.VIDEO_H) == (
+        explainer.VIDEO_W, explainer.CARD_H), (
+        f"片尾卡 {outro_page.VIDEO_W}×{outro_page.VIDEO_H} 和解说片那张 3:4 的卡 "
+        f"{explainer.VIDEO_W}×{explainer.CARD_H} 对不上——"
+        "片尾在解说片里 pad 到 9:16 时会和别的屏不一样大")
+    # 3:4 本身也钉住：上面两条都对、但三处一起改错了比例，仍然是坏的
+    assert outro_page.VIDEO_W * 4 == outro_page.VIDEO_H * 3, (
+        f"片尾卡不是 3:4（{outro_page.VIDEO_W}×{outro_page.VIDEO_H}）")
+
+
 def test_片尾口播说的话画面上要印得全():
     """**片尾不排字幕，这个决定的前提必须钉住。**
 
@@ -5744,7 +5851,7 @@ def test_片尾口播说的话画面上要印得全():
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import build_match_reel as reel  # noqa: PLC0415
-    import outro_page  # noqa: PLC0415
+    from tennislive.video import outro_page  # noqa: PLC0415
 
     spoken = reel.OUTRO_NARRATION
     printed = outro_page.TAGLINE

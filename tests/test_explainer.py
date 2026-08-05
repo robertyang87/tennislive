@@ -744,6 +744,124 @@ def test_只有一屏时片头片尾都加在同一段上(tmp_path, monkeypatch)
     assert "adelay=600:all=1,apad=pad_dur=1.500" in graph
 
 
+def test_解说片的片尾要接进concat(tmp_path, monkeypatch):
+    """账号所有者 2026-08-05：「每个视频最后都加一页并配上关注的口播」，
+    随后补的「**开球之前也要加**」——这条线一次覆盖三个栏目（每日网球知识 /
+    网球有故事 / 开球之前）。
+
+    这条只验**滤镜图接对了**（快、不碰 ffmpeg）：片尾要占 concat 的最后一格，
+    索引不能和幻灯片的输入撞，而且**不给它排字幕**（那一页上印着口播的每个字）。
+    真拼出来对不对，交给下面那条真跑 ffmpeg 的。
+    """
+    from pathlib import Path as _Path
+
+    from tennislive.video import explainer as E
+
+    calls: list[list[str]] = []
+
+    def runner(cmd, **kw):
+        calls.append(list(cmd))
+        if "ffprobe" in cmd[0]:
+            return type("R", (), {"stdout": "4.000\n"})()
+        _Path(cmd[-1]).write_bytes(b"mp4")
+        return type("R", (), {"stdout": ""})()
+
+    monkeypatch.setattr(E.shutil, "which", lambda *_: "/usr/bin/ffmpeg")
+    slides = [tmp_path / f"s{i}.png" for i in range(2)]
+    audios = [tmp_path / f"a{i}.mp3" for i in range(2)]
+    outro = tmp_path / "_outro.mp4"
+    for p in [*slides, *audios, outro]:
+        p.write_bytes(b"x")
+
+    E.assemble_explainer_video(slides, audios, tmp_path / "out.mp4",
+                               captions=["第一屏", "第二屏"],
+                               outro=outro, runner=runner)
+    graph = calls[-1][calls[-1].index("-filter_complex") + 1]
+
+    # 幻灯片占 0..3（两屏各一图一音），片尾是第 4 个输入
+    assert "[4:v]scale=" in graph, f"片尾没接进滤镜图：{graph}"
+    assert "[4:a]aresample" in graph, "片尾的音轨没接上——成片最后会没声音"
+    # 片尾占 concat 的最后一格
+    assert "[v0][a0][v1][a1][v2][a2]concat=n=3" in graph, (
+        f"片尾没排在 concat 的最后一格：{graph}")
+    # **不给片尾排字幕**：那一页上印着口播说的每个字
+    outro_chain = [c for c in graph.split(";") if c.startswith("[4:v]")][0]
+    assert "subtitles" not in outro_chain, (
+        "片尾不该排字幕——那一页上印着「网球时差」和那句解释，"
+        "再排一行只会压在小字上")
+
+    # 反向：不给 outro 就只有两格，一个字都不该多
+    calls.clear()
+    E.assemble_explainer_video(slides, audios, tmp_path / "out2.mp4",
+                               captions=["第一屏", "第二屏"], runner=runner)
+    graph2 = calls[-1][calls[-1].index("-filter_complex") + 1]
+    assert "concat=n=2" in graph2 and "[4:v]" not in graph2
+
+
+def test_解说片接上片尾之后成片真的变长(tmp_path):
+    """**真跑一次 ffmpeg。** 上面那条查的是滤镜图字符串，而查字符串只能防
+    「有人把它删了」，防不住「它从来没工作过」——这个仓库里「签名对了、实现是
+    空的」是常客（`_cut_person(source, …)` 那次整整一天没人发现）。
+
+    ⚠️ 片尾用**纯色 mp4** 造，不渲真页面：这条判据要在 CI 上跑得起来，而 CI
+    上没有 Chromium 也连不上 TTS。它验的是「接上去之后成片真的长了那么多、
+    而且音轨没断」，不是那一页好不好看。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    # 两屏：3:4 的卡 + 各 2 秒旁白
+    slides, audios = [], []
+    for i, colour in enumerate(("red", "green")):
+        s = tmp_path / f"s{i}.png"
+        _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+              f"color=c={colour}:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+        a = tmp_path / f"a{i}.mp3"
+        _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+              "sine=frequency=440:sample_rate=24000", "-t", "2.0",
+              "-ac", "1", str(a)])
+        slides.append(s)
+        audios.append(a)
+
+    # 片尾：3 秒纯色 + 正弦音，参数照 render_clip 出来的那份
+    outro = tmp_path / "_outro.mp4"
+    _run(["ffmpeg", "-v", "error", "-y",
+          "-f", "lavfi", "-i", f"color=c=blue:s={E.VIDEO_W}x{E.CARD_H}:r=30",
+          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+          "-t", "3.0", "-c:v", "libx264", "-preset", "ultrafast",
+          "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+          str(outro)])
+
+    def _dur(path, stream):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+
+    plain = E.assemble_explainer_video(slides, audios, tmp_path / "plain.mp4")
+    withx = E.assemble_explainer_video(slides, audios, tmp_path / "withx.mp4",
+                                       outro=outro)
+
+    grew = _dur(withx, "v:0") - _dur(plain, "v:0")
+    assert abs(grew - 3.0) < 0.25, (
+        f"接上 3 秒的片尾之后成片只长了 {grew:.2f}s——片尾没真的拼进去，"
+        "或者被 concat 截掉了")
+
+    # **音轨也要跟着长。** 只验画面会被一段无声的片尾骗过去——
+    # 「音轨比画面短」这个毛病在剪辑片那条线上骗过七条已发的成片。
+    assert abs(_dur(withx, "a:0") - _dur(withx, "v:0")) < 0.35, (
+        f"音轨 {_dur(withx, 'a:0'):.2f}s 和画面 {_dur(withx, 'v:0'):.2f}s 对不上"
+        "——片尾那一段没有声音")
+
+
 def test_同一天可以并存多条片子():
     """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 

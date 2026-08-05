@@ -26,22 +26,25 @@ overlay 的 x 恒为 0、只有 y 随时间动——位置由 CSS 布局说了�
 """
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-for _p in (ROOT / "src", ROOT / "tools"):
-    # `tools` 也要进来：`versus_poster` 是同目录的兄弟模块，而这个文件被
-    # 当模块 import 时（测试里）脚本目录不会自动进 sys.path。
-    if str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
+from tennislive.render.webcards import _font_css
+from tennislive.video.explainer import _data_uri
 
-from tennislive.render.webcards import _font_css  # noqa: E402
-from tennislive.video.explainer import _data_uri  # noqa: E402
+# 仓库根：src/tennislive/video/outro_page.py → parents[3]
+ROOT = Path(__file__).resolve().parents[3]
 
-# 画幅跟成片同一个：3:4。**从 versus_poster 引，不另写一份**——海报、成片、
-# 片尾三处画幅必须一致，写三遍必分叉。
-from versus_poster import VIDEO_H, VIDEO_W  # noqa: E402
+# 片尾卡的画幅：**3:4，和几条线的卡是同一个尺寸**。
+#
+# 它同时要等于 `versus_poster.VIDEO_W/VIDEO_H`（剪辑片的整幅画布）和
+# `explainer.VIDEO_W` × `explainer.CARD_H`（解说片那张 3:4 的卡，再 pad 到
+# 9:16）。三处必须一致，否则片尾接进去要么变形要么留黑边。
+#
+# ⚠️ **这儿另写了一份，不是从那两处 import 的**——`explainer` 稍后要反过来
+# 用这个模块，import 回去就成环；而 `versus_poster` 在 `tools/` 里，
+# `src` 不该依赖它。所以一致性交给判据钉
+# （`test_片尾卡的画幅要和几条线的卡对得上`），不靠 import 保证。
+VIDEO_W, VIDEO_H = 1080, 1440
 
 BRAND = "#c6f65a"      # 品牌绿（台标球身那个黄绿）
 INK = "#04120d"        # 深底
@@ -52,6 +55,20 @@ ICON = ROOT / "assets/logo/brand/icon-512.png"
 # 屏幕上印的那句。**口播比它多一句「关注网球时差」**，而那六个字正是屏幕上
 # 最大的那四个字加动作——所以 outro 不另排字幕，见 `build_match_reel` 那头。
 TAGLINE = "你睡着的那些球，我替你看完"
+
+# 片尾那句口播。**全站只有这一个出处**（剪辑片、解说片、采访片共用）。
+#
+# 写进每条 spec 或者让每条生产线各写一份的话，几条线之间迟早分叉——而
+# 「强化记忆」最怕的正是这个：记忆靠的是每条片子结尾**一模一样**的那一下。
+#
+# ⚠️ 屏幕上印的是它的后半截（`TAGLINE`），前面多出来的「关注网球时差」正是
+# 屏幕最大那四个字加一个动作——所以片尾不另排字幕。改这句就要同时看一眼那张
+# 页面还盖不盖得住，判据在 `test_片尾口播说的话画面上要印得全`。
+NARRATION = "关注网球时差，你睡着的那些球，我替你看完。"
+
+# 口播说完之后留的那口气。片尾是整条片子的最后一帧，贴着最后一个字切会像
+# 被掐断，所以比封面那档（0.25s）留得多一点。
+TAIL = 0.45
 HANDLE = "@网球时差 · TENNIS JETLAG"
 
 # 每层的入场时刻、淡入时长、上浮量。**顺序就是口播的节奏**：
@@ -176,3 +193,87 @@ def motion_filter(secs: float, fps_expr: str, fps: float) -> str:
                  f"d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
                  f"s={VIDEO_W}x{VIDEO_H}:fps={fps_expr},setsar=1[vout]")
     return ";".join(parts)
+
+
+def render_clip(
+    outdir: Path,
+    seconds: float,
+    *,
+    fps_expr: str,
+    fps: float,
+    chromium: str,
+    dest: Path,
+    audio_rate: str,
+    preset: str,
+    crf: str,
+    audio_bitrate: str = "160k",
+    tail: float = 0.0,
+    voice: Path | None = None,
+    layers: dict[str, Path] | None = None,
+    runner=None,
+) -> Path:
+    """渲片尾页 + 合动效，出一个 mp4 片段。**两条生产线共用这一份。**
+
+    `voice` 给了就把口播混进去（解说片那条要自带音轨，它是一次编码直接出片，
+    没有后续的混音步骤）；不给就铺一路静音占位（剪辑片那条要，口播在
+    `duck_filtergraph` 那一步统一 `adelay` 叠上去）。
+
+    ⚠️ **编码参数由调用方传，不在这儿定死。** 两条线的成片参数不一样
+    （剪辑片的分段是 `ultrafast`/`crf 12` 的中间产物，解说片按静图调），
+    而片尾必须和它要拼进去的那条流**完全一致**——`concat` 只认第一个文件的
+    流参数，差一项就拼出坏流，**而它不报错**。
+
+    ⚠️ `setsar` 已经写在 `motion_filter` 里了（不能在外面加 `-vf`，
+    `-vf` 和 `-filter_complex` 同时给 ffmpeg 会拒绝）。
+
+    `layers` 是给**判据**留的口子：喂几张现成的 PNG 进来，这个函数就不碰
+    Chromium，于是「ffmpeg 参数拼对没有」能在 CI 上真跑一次。
+    ⚠️ 这不是可有可无的方便——第一版的判据只测 `motion_filter`（滤镜图），
+    而 `-framerate` 那个 bug 在**这个函数**里，测试自己拼命令行、自己带了
+    `-framerate`，于是把生产代码里的两处全拿掉它照样绿。
+    **查的东西和跑的东西不是一回事。**
+    """
+    import subprocess  # noqa: PLC0415
+
+    run = runner or subprocess.run
+    total = seconds + tail
+    if layers is None:
+        layers = render_layers(outdir, chromium)
+
+    # ⚠️ **每个静图输入都要 `-framerate`。** 不给的话 ffmpeg 按 **25fps** 解
+    # `-loop 1`，而 `zoompan` 的输出标的是目标帧率——帧数不够，成片时长就缩成
+    # `total × 25/fps`。实测：目标 4.29s、fps=30，出来的画面只有 **3.57s**，
+    # 音轨却是整 4.29s，**画面比音轨短 0.72 秒**。
+    #
+    # 它照例不报错，只出一段短的；而且**只在 fps ≠ 25 时发作**——剪辑片那条
+    # 线的源片正好多是 25fps，所以它一直是对的，换一条 30 或 60fps 的源片就中。
+    # 判据在 `test_片尾的动效每一层都要按时出现`（那条特意按 30fps 跑）。
+    args = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-framerate", str(fps_expr),
+            "-loop", "1", "-t", f"{total:.3f}", "-i", str(layers["base"])]
+    for key, *_ in LAYERS:
+        args += ["-framerate", str(fps_expr),
+                 "-loop", "1", "-t", f"{total:.3f}", "-i", str(layers[key])]
+
+    graph = motion_filter(total, fps_expr, fps)
+    audio_idx = len(LAYERS) + 1
+    if voice is not None:
+        # 口播比画面短时要补静音到整段长——否则 `-shortest` 之外的那一截没有
+        # 音频，concat 到成片里就是一段无声（「补位的静音盖住真音轨」的镜像：
+        # 这次是**没有**补位，画面走完了音轨先断）。
+        args += ["-i", str(voice)]
+        graph += f";[{audio_idx}:a]apad,atrim=0:{total:.3f},asetpts=PTS-STARTPTS[aout]"
+    else:
+        args += ["-f", "lavfi", "-i",
+                 f"anullsrc=channel_layout=stereo:sample_rate={audio_rate}"]
+        graph += f";[{audio_idx}:a]atrim=0:{total:.3f}[aout]"
+
+    args += ["-filter_complex", graph,
+             "-map", "[vout]", "-map", "[aout]",
+             "-t", f"{total:.3f}",
+             "-c:v", "libx264", "-preset", preset, "-crf", crf,
+             "-pix_fmt", "yuv420p",
+             "-c:a", "aac", "-b:a", audio_bitrate, "-ar", audio_rate,
+             str(dest)]
+    run(args, check=True)
+    return dest

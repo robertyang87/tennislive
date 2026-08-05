@@ -94,12 +94,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-# `tools` 自己也要在 path 上：被当模块 import 时（测试里）脚本目录不会自动
-# 进来，而片尾那一页是同目录的兄弟模块。
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import outro_page  # noqa: E402
 from tennislive import localca  # noqa: E402
+from tennislive.video import outro_page  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
@@ -188,13 +185,11 @@ COVER_TAIL = 0.25
 # 的那一下。同理它也不该由命令行传（`push` 那几个字段栽过这个跟头：工作流的
 # 默认值挂着上一条片子的，漏传一项就拿另一场球的标题发出去）。
 #
-# ⚠️ **屏幕上印的那句是它的后半截**（`outro_page.TAGLINE`），前面多出来的
-# 「关注网球时差」正是屏幕最大那四个字加一个动作——所以 outro 不另排字幕，
-# 见 `render()` 里那段注释。改这句就要同时看一眼那张页面还盖不盖得住。
-OUTRO_NARRATION = "关注网球时差，你睡着的那些球，我替你看完。"
-# 口播说完之后留的那口气，和封面同一个道理（`COVER_TAIL`）。片尾更要留够——
-# 它是整条片子的最后一帧，贴着最后一个字切会像被掐断。
-OUTRO_TAIL = 0.45
+# ⚠️ **这两个值的出处在 `outro_page`，不在这儿**——解说片那条线（每日网球知识
+# / 网球有故事 / 开球之前）也要用同一句同一档，各写一份必分叉，而
+# 「强化记忆」最怕的就是几条线的结尾不一样。这儿只是取个短名字。
+OUTRO_NARRATION = outro_page.NARRATION
+OUTRO_TAIL = outro_page.TAIL
 # 封面海报**要进仓库**：推送正文的第一屏就是它（布局照着知识解说那条推送来），
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
@@ -2449,26 +2444,21 @@ def build_outro(outdir: Path, seconds: float, tail: float = 0.0) -> Path:
     `AUDIO_RATE`/`FPS_EXPR`）——`concat` 那一步只认第一个文件的流参数，
     差一项就会拼出坏流，而它不报错。
     """
-    total = seconds + tail
     with stage("片尾渲染"):
-        layers = outro_page.render_layers(outdir, _chromium())
-    with stage("片尾编码"):
-        args = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                "-loop", "1", "-t", f"{total:.3f}", "-i", str(layers["base"])]
-        for key, *_ in outro_page.LAYERS:
-            args += ["-loop", "1", "-t", f"{total:.3f}", "-i", str(layers[key])]
-        args += ["-f", "lavfi", "-i",
-                 f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
-                 "-filter_complex",
-                 outro_page.motion_filter(total, FPS_EXPR, FPS),
-                 "-map", "[vout]", "-map", f"{len(outro_page.LAYERS) + 1}:a",
-                 "-t", f"{total:.3f}",
-                 "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
-                 "-pix_fmt", "yuv420p",
-                 "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
-                 str(outdir / "part_outro.mp4")]
-        run(*args)
-    dest = outdir / "part_outro.mp4"
+        # **动效合成和解说片共用 `outro_page.render_clip`。** 两条线的编码参数
+        # 不一样（这儿是中间产物的 `ultrafast`/`crf 12`，解说片按静图调），
+        # 所以参数由调用方传——片尾必须和它要拼进去的那条流完全一致。
+        #
+        # 这条线**不把口播混进片段**：它在 `duck_filtergraph` 那一步和其他
+        # 旁白一起 `adelay` 叠上去，闪避才管得到。
+        dest = outro_page.render_clip(
+            outdir, seconds,
+            fps_expr=FPS_EXPR, fps=FPS, chromium=_chromium(),
+            dest=outdir / "part_outro.mp4",
+            audio_rate=AUDIO_RATE, preset=PART_PRESET, crf=PART_CRF,
+            tail=tail,
+            runner=lambda args, **kw: run(*args),
+        )
     print(f"[片尾] {dest.name} {probe_duration(dest):.2f}s"
           f"（含 {tail}s 溶解底料）")
     return dest
