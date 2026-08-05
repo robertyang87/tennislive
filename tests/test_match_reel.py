@@ -4285,9 +4285,21 @@ def test_段落不许写过源片末尾(monkeypatch):
     with pytest.raises(reel.ReelError, match="超出"):
         reel._check_segments_fit([seg], {"": fake})
 
-    # 容差：源片时长有帧级误差，卡太死会误伤最后一段
-    monkeypatch.setattr(reel, "probe_duration", lambda _p: 4.98)
+    # 容差：源片时长有帧级误差，卡太死会误伤贴着片尾的那一段。
+    #
+    # ⚠️ **基准是 `end + SEG_FADE`，不是 `end`。** 这里原来喂 4.98——那时
+    # 「末段不留溶解底料」，单段就是末段，所以 5.0 秒的段配 4.98 秒的源片刚好
+    # 落在容差里。2026-08-05 片尾品牌页接上之后**每个分段后面都跟着东西**
+    # （下一段，或者片尾页），所以每段都要那 `SEG_FADE` 秒底料，需求变成 5.18。
+    # 这条断言的**前提变了，不是它写错了**——跟着改基准，容差本身照旧验。
+    need = 5.0 + reel.SEG_FADE
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.02)
     reel._check_segments_fit([seg], {"": fake})
+
+    # 而超出容差的那一头仍然要炸：差 0.2s 已经够 xfade 落到流末尾之外
+    monkeypatch.setattr(reel, "probe_duration", lambda _p: need - 0.2)
+    with pytest.raises(reel.ReelError, match="超出"):
+        reel._check_segments_fit([seg], {"": fake})
 
 
 def _render_body(reel) -> str:

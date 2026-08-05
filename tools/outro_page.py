@@ -115,6 +115,12 @@ def render_layers(outdir: Path, chromium: str) -> dict[str, Path]:
     """
     from playwright.sync_api import sync_playwright
 
+    # ⚠️ **要 `resolve()`。** `Path.as_uri()` 对相对路径直接抛
+    # `ValueError: relative path can't be expressed as a file URI`。生产里
+    # outdir 是工作流传进来的绝对路径，所以这条路踩不到——本地跑一次就炸了。
+    # 和「`~` 不展开：两趟绿的 run，一个字节都没缓存」是同一族：**路径从外面
+    # 传进来的，就要在自己这头兜住**。
+    outdir = outdir.resolve()
     outdir.mkdir(parents=True, exist_ok=True)
     paths: dict[str, Path] = {}
     with sync_playwright() as p:
