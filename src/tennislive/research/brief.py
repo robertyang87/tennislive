@@ -75,7 +75,7 @@ logger = logging.getLogger(__name__)
 # ⚠️ DeepSeek 那条路**保证不了形状**，所以它另有一套：schema 仍然是这两份，
 # 只是渲成一段「形状必须长这样」的提示塞进 prompt（`json_shape_hint`）——
 # **一份 schema 两处用，别手写第二份**（「一个数写两处必分叉」）。
-_TRANSLATE_SCHEMA = {
+TRANSLATE_SCHEMA = {
     "type": "object",
     "properties": {
         "items": {
@@ -556,7 +556,7 @@ def translate_titles(
         data = chat.ask(
             _TRANSLATE_SYSTEM + ("\n" + glossary if glossary else ""),
             json.dumps(payload, ensure_ascii=False),
-            schema=_TRANSLATE_SCHEMA,
+            schema=TRANSLATE_SCHEMA,
             max_tokens=4000,
         )
         if not data:

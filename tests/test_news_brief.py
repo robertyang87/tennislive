@@ -25,7 +25,7 @@ from tennislive.render.newsbrief import render_brief_html
 from tennislive.research.brief import (
     DEEPSEEK_URL,
     _DEEP_SCHEMA,
-    _TRANSLATE_SCHEMA,
+    TRANSLATE_SCHEMA,
     KEY_HINT,
     PROVIDERS,
     REQUEST_TIMEOUT,
@@ -596,7 +596,7 @@ def test_形状例子是从schema现渲的不是手写第二份():
     )
     assert isinstance(example["points"], list), "数组字段要渲成数组"
 
-    nested = json.loads(json_shape_hint(_TRANSLATE_SCHEMA).split("\n")[-1])
+    nested = json.loads(json_shape_hint(TRANSLATE_SCHEMA).split("\n")[-1])
     assert nested == {"items": [{"id": 0, "zh": "字符串"}]}, "嵌套的形状也要渲对"
 
 

@@ -993,10 +993,10 @@ def cmd_publish_flash(args) -> int:
 
 def cmd_video(args) -> int:
     """Translate local, rights-cleared subtitles and optionally burn them."""
-    from .video import GitHubModelsTranslator, VideoPipelineError, localize_video
+    from .video import ChatTranslator, VideoPipelineError, localize_video
 
     try:
-        translator = GitHubModelsTranslator(model=args.model)
+        translator = ChatTranslator(model=args.model)
         audit = localize_video(
             video_path=Path(args.video),
             subtitle_path=Path(args.subtitles),

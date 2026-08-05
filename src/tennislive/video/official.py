@@ -19,7 +19,7 @@ import requests
 from ..digest import Digest
 from ..zh import PLAYER_ZH, player_zh
 from .pipeline import (
-    GitHubModelsTranslator,
+    ChatTranslator,
     SubtitleCue,
     VideoPipelineError,
     render_srt,
@@ -1002,7 +1002,7 @@ def render_wta_video(
         raise VideoPipelineError(f"ffmpeg executable not found: {ffmpeg_bin}")
     localized = _curated_chinese_cues(metadata, clip_seconds)
     if localized is None:
-        translator = GitHubModelsTranslator()
+        translator = ChatTranslator()
         localized = translate_cues(_source_cues(metadata, clip_seconds), translator)
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)

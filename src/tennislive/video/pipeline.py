@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import re
 import shutil
 import subprocess
@@ -17,11 +16,10 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Callable, Protocol, Sequence
 
-import requests
+from ..research.brief import TRANSLATE_SCHEMA, Chat, KEY_HINT
+from ..research.glossary import build_glossary, glossary_lines
 from .subtitle_text import drop_punctuation
 
-GITHUB_MODELS_ENDPOINT = "https://models.github.ai/inference/chat/completions"
-DEFAULT_MODEL = "openai/gpt-4.1"
 RIGHTS_BASES = {
     "owned",
     "licensed",
@@ -385,19 +383,6 @@ def load_rights_manifest(
     return manifest
 
 
-def _json_content(content: str) -> dict[str, object]:
-    content = content.strip()
-    if content.startswith("```"):
-        content = re.sub(r"^```(?:json)?\s*|\s*```$", "", content)
-    try:
-        parsed = json.loads(content)
-    except json.JSONDecodeError as exc:
-        raise VideoPipelineError("Translation model returned invalid JSON") from exc
-    if not isinstance(parsed, dict):
-        raise VideoPipelineError("Translation model did not return a JSON object")
-    return parsed
-
-
 def _validate_translation(cue: SubtitleCue, translated: object) -> str:
     if not isinstance(translated, str):
         raise VideoPipelineError(f"Missing translation for subtitle cue {cue.index}")
@@ -416,66 +401,93 @@ def _validate_translation(cue: SubtitleCue, translated: object) -> str:
     return cleaned
 
 
-class GitHubModelsTranslator:
-    """Translate subtitle batches through GitHub Models with strict JSON output."""
+_SUBTITLE_SYSTEM = (
+    "你是专业网球字幕编辑。把每条字幕准确、简洁地译成简体中文；"
+    "保留人名、比分、数字和网球术语，**不补充原文没有的事实**。"
+    "每条按输入的 id 对应回去，一条都不能少。"
+)
+
+
+class ChatTranslator:
+    """字幕翻译。走和热点简报**同一条**模型通道（`research.brief.Chat`）。
+
+    ⚠️ **原来这儿是 `GitHubModelsTranslator`，打的是
+    `models.github.ai/inference`——那个端点 2026-08-05 实测返回 HTTP 410
+    `github_models_retirement_brownout`，正在退役。**
+
+    它坏起来的样子是「今天翻译失败」，不是「这个端点没了」：`raise_for_status`
+    把 410 变成一句 `GitHub Models translation failed: 410 Client Error`，
+    而读到它的人第一反应是去查网络或 token。热点简报那条线 2026-08-05 已经
+    因此换过一次通道，字幕这条是同一笔账的另一半。
+
+    和标题中译（`translate_titles`）**共用 schema，但失败口径相反**：
+
+    | | 少了一条 |
+    |---|---|
+    | 标题中译 | **不填**，照旧显示英文原标题——半句机翻比原文更难读 |
+    | 字幕 | **报错**——烧进画面的字幕缺一条就是一段没有字幕的画面 |
+
+    所以这儿一条都不许漏，`_validate_translation` 逐条把关（要有中文、
+    数字不许变）。
+    """
 
     def __init__(
         self,
         *,
-        token: str | None = None,
+        chat: "Chat | None" = None,
         model: str | None = None,
-        timeout: int = 45,
-        post: Callable[..., object] | None = None,
         batch_size: int = 60,
     ) -> None:
-        self.token = (token or os.environ.get("GITHUB_MODELS_TOKEN", "")).strip()
-        if not self.token:
-            raise VideoPipelineError("GITHUB_MODELS_TOKEN is required for subtitle translation")
-        self.model = model or os.environ.get("GITHUB_MODELS_MODEL", DEFAULT_MODEL)
-        self.timeout = timeout
-        self.post = post or requests.post
+        self.chat = chat or Chat(model=model)
+        if not self.chat.ready:
+            # 报错要说出路（本仓库老账：「报错要说出路，不能只说不行」）。
+            raise VideoPipelineError(
+                f"字幕翻译要配 {KEY_HINT} 之一。"
+                "⚠️ 不是 GITHUB_MODELS_TOKEN——那个端点已经退役（HTTP 410）。"
+            )
         self.batch_size = max(1, batch_size)
+
+    @property
+    def channel(self) -> str:
+        """跑的是哪条通道。落进审计产物，别让「这批字幕谁译的」变成回忆题。"""
+        return self.chat.channel
 
     def translate(self, cues: Sequence[SubtitleCue]) -> dict[int, str]:
         translated: dict[int, str] = {}
+        # **译名不交给模型判断**（CLAUDE.md）：模型会把 Rybakina 译成
+        # 「里巴金娜」而表里是「莱巴金娜」，而且每次译法还可能不一样。
+        # 先扫出这批字幕里认识的人名赛事名，当硬约束塞进 prompt。
+        glossary = glossary_lines(build_glossary([cue.text for cue in cues]))
+        system = _SUBTITLE_SYSTEM + ("\n" + glossary if glossary else "")
         for offset in range(0, len(cues), self.batch_size):
             batch = cues[offset : offset + self.batch_size]
             payload = [{"id": cue.index, "text": cue.text} for cue in batch]
-            try:
-                response = self.post(
-                    GITHUB_MODELS_ENDPOINT,
-                    headers={
-                        "Authorization": f"Bearer {self.token}",
-                        "Accept": "application/vnd.github+json",
-                        "Content-Type": "application/json",
-                        "X-GitHub-Api-Version": "2022-11-28",
-                    },
-                    json={
-                        "model": self.model,
-                        "temperature": 0.1,
-                        "max_tokens": 4000,
-                        "messages": [
-                            {
-                                "role": "system",
-                                "content": (
-                                    "你是专业网球字幕编辑。把每条字幕准确、简洁地译成简体中文；"
-                                    "保留人名、比分、数字和网球术语，不补充原文没有的事实。"
-                                    "只返回JSON对象，键为输入id的字符串，值为译文。"
-                                ),
-                            },
-                            {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
-                        ],
-                    },
-                    timeout=self.timeout,
+            data = self.chat.ask(
+                system,
+                json.dumps(payload, ensure_ascii=False),
+                schema=TRANSLATE_SCHEMA,
+                max_tokens=4000,
+            )
+            if not data:
+                # `Chat.ask` 解析不出来返回 None（它自己已经打了日志）。这儿
+                # 要把**是哪一批**说出来——一整条片子的字幕报「翻译失败」，
+                # 不说清哪几条就只能整条重跑。
+                raise VideoPipelineError(
+                    f"字幕翻译失败：模型没返回可用结果（cue "
+                    f"{batch[0].index}~{batch[-1].index}，共 {len(batch)} 条）。"
+                    f"批次太大被截断的话，把 batch_size 调小于 {self.batch_size} 再试。"
                 )
-                response.raise_for_status()
-                data = response.json()
-                content = data["choices"][0]["message"]["content"]
-            except (requests.RequestException, KeyError, TypeError, ValueError) as exc:
-                raise VideoPipelineError(f"GitHub Models translation failed: {exc}") from exc
-            parsed = _json_content(content)
+            got: dict[int, str] = {}
+            for row in data.get("items") or []:
+                if not isinstance(row, dict):
+                    continue
+                try:
+                    idx = int(row.get("id"))
+                except (TypeError, ValueError):
+                    continue
+                got[idx] = str(row.get("zh") or "")
             for cue in batch:
-                translated[cue.index] = _validate_translation(cue, parsed.get(str(cue.index)))
+                translated[cue.index] = _validate_translation(cue, got.get(cue.index))
         return translated
 
 

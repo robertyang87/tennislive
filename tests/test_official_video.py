@@ -648,7 +648,7 @@ def test_render_wta_video_builds_vertical_ffmpeg_command(tmp_path, monkeypatch):
             return {cue.index: "中文重点" for cue in cues}
 
     monkeypatch.setattr("tennislive.video.official.shutil.which", lambda _: "ffmpeg")
-    monkeypatch.setattr("tennislive.video.official.GitHubModelsTranslator", Translator)
+    monkeypatch.setattr("tennislive.video.official.ChatTranslator", Translator)
 
     def runner(command, **kwargs):
         calls.append((command, kwargs))
