@@ -1037,9 +1037,34 @@ def scene_changes(path: Path, threshold: float = CUT_THRESHOLD, *,
             for m in re.findall(r"pts_time:([0-9.]+)", proc.stderr or "")]
 
 
+#: 缩略图墙的版式。**「第几秒落在第几格」是从这几个数反推的**
+#: （`tools/preview_segments_local.py` 靠它把某一段的窗口切出来给人看），
+#: 所以它们只能有**一处出处**——写两处必分叉，而分叉的样子是
+#: 「预览里画的不是你选的那一段」：不报错、看着完全正常。
+SHEET_ROWS = 5
+SHEET_PAD = 6                 # tile 滤镜的 padding（帧与帧之间，四周没有）
+SHEET_COLUMNS = 6
+SHEET_BG = "0x11221b"
+#: 第一格不取第 0 秒——开头常是黑场或台标。反推时要把这半秒加回去。
+SHEET_LEAD = 0.5
+
+
+def sheet_stamps(duration: float, *, every: float = 2.0,
+                 start: float = 0.0, stop: float | None = None) -> list[float]:
+    """缩略图墙上每一格烧的那个秒数，按顺序。
+
+    **抽出来是为了让反推和生成走同一条路。** 反推（「12.5 秒在第几张第几格」）
+    如果自己另算一遍 `start + 0.5 + n * every`，那就是同一个公式的第二份拷贝，
+    而它对不上的时候不吭声。
+    """
+    lo = start + SHEET_LEAD
+    hi = duration if stop is None else min(stop, duration)
+    return [round(t, 2) for t in _frange(lo, hi, every)]
+
+
 def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
-                  columns: int = 6, tile_w: int = 360, crop: str = "",
-                  prefix: str = "contact", start: float = 0.0,
+                  columns: int = SHEET_COLUMNS, tile_w: int = 360,
+                  crop: str = "", prefix: str = "contact", start: float = 0.0,
                   stop: float | None = None) -> list[Path]:
     """每 `every` 秒抓一帧，烧上时间码，拼成几张缩略图墙。
 
@@ -1059,9 +1084,7 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     duration = probe_duration(path)
     # 只看一段时，缩略图仍然烧**源片的绝对秒数**——挑段的人照着它写 spec，
     # 换算一次就是一次切偏的机会。
-    lo = start + 0.5
-    hi = duration if stop is None else min(stop, duration)
-    stamps = [round(t, 2) for t in _frange(lo, hi, every)]
+    stamps = sheet_stamps(duration, every=every, start=start, stop=stop)
     for index, t in enumerate(stamps):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{t:.2f}", "-i", str(path), "-frames:v", "1",
@@ -1071,7 +1094,7 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
                     f"fontcolor=white:box=1:boxcolor=black@0.65:boxborderw=6"),
             "-q:v", "3", str(frames / f"f{index:03d}.jpg"))
     sheets: list[Path] = []
-    per_sheet = columns * 5
+    per_sheet = columns * SHEET_ROWS
     picked = sorted(frames.glob("*.jpg"))
     for n in range(0, len(picked), per_sheet):
         chunk = picked[n:n + per_sheet]
@@ -1082,7 +1105,8 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
         rows = math.ceil(len(chunk) / columns)
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-f", "concat", "-safe", "0", "-i", str(listing),
-            "-filter_complex", f"tile={columns}x{rows}:padding=6:color=0x11221b",
+            "-filter_complex",
+            f"tile={columns}x{rows}:padding={SHEET_PAD}:color={SHEET_BG}",
             "-frames:v", "1", "-q:v", "3", str(sheet))
         listing.unlink()
         sheets.append(sheet)
@@ -2805,27 +2829,39 @@ def speech_seconds(text: str) -> float:
 POINT_TAIL = 1.2
 
 
-def probes_for_spec(spec: dict) -> tuple[dict[str, dict], list[str]]:
-    """按**源片 URL** 认领已落库的 probe.json。返回 (url→probe, 没查成的源键)。
+def claim_probes(spec: dict) -> tuple[dict[str, tuple[Path, dict]], list[str]]:
+    """按**源片 URL** 认领已落库的 probe.json。返回 (url→(目录, probe), 没查成的源键)。
 
     ⚠️ **按 URL 认，不按 slug 或日期认。** 同一条 spec 会跨多个日期目录重跑，
     而 `probe.json` 自己记着它探的是哪条 URL——那才是内容身份。
     按 slug 认会在换了源片地址之后静静命中一份**别的片子**的切点，
     而那种错不报错（同一个坑源片缓存和 voice 文件都栽过）。
+
+    **目录也要返回**：缩略图墙（`contact_*.jpg`）就躺在 `probe.json` 旁边，
+    而 `preview_segments_local.py` 要去那儿取图。让它自己再 glob 一遍等于把
+    这段认领逻辑抄第二份——两份必分叉，分叉的样子是「预览用的是 A 的切点、
+    B 的画面」。
     """
     urls = dict(spec.get("sources") or {})
     if not urls:
         urls = {"": str(spec.get("source_url", ""))}
-    found: dict[str, dict] = {}
+    found: dict[str, tuple[Path, dict]] = {}
     for path in sorted(Path("output").glob("*/reel/*/probe.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue                      # 坏的就当没有，别把 dry-run 带崩
         if data.get("url") in urls.values():
-            found[str(data["url"])] = data        # 后来的（日期靠后）覆盖先来的
+            # 后来的（日期靠后）覆盖先来的
+            found[str(data["url"])] = (path.parent, data)
     missing = sorted(name for name, url in urls.items() if url not in found)
     return found, missing
+
+
+def probes_for_spec(spec: dict) -> tuple[dict[str, dict], list[str]]:
+    """`claim_probes` 的老口径：只要 probe 本身，不要目录。"""
+    found, missing = claim_probes(spec)
+    return {url: data for url, (_dir, data) in found.items()}, missing
 
 
 #: 切点离段落边界多近就算「窗口对齐了源片自己的镜头边界」，不算中途换镜头。
@@ -3719,6 +3755,11 @@ def main() -> int:
             "clip_from": clip_from or None,
             "clip_to": clip_to,
             "sheets": [s.name for s in sheets],
+            # **抓帧的间隔要记下来。** 「第几秒落在第几格」全靠它反推，而它原来
+            # 只活在命令行里（`--every`，默认 2）——存量全是默认值，所以读不到
+            # 时退 2.0 是对的，但那是**碰巧对**：哪天有人 probe 时给了 `--every 1`，
+            # 预览就会稳稳地画错一段，而且不吭声。
+            "every": args.every,
             "captions": captions.name if captions else None,
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         print("缩略图墙:", ", ".join(s.name for s in sheets))
@@ -3877,6 +3918,16 @@ def main() -> int:
                       "（或本地 `render --check-narration`，要能联网）")
             else:
                 print("\n[估旁白] 每段都留着一个误差以上的余量，估得再保守也装得下。")
+        # **这条命令查的是数，查不了画面。** 「这一段配的话和画面搭不搭」
+        # 「近端是谁」——只有眼睛判得了，而判它要的东西（缩略图墙）**也已经
+        # 提交进仓库了**。不在这儿指一句的话，下一个人仍然会去渲一趟四分钟的
+        # 成片再看：这个仓库里「工具写出来了、就是没人在该用的时候用它」
+        # 已经栽过三次（find_point_ends 零调用方、check_reel_landed 零调用方、
+        # probe.json 的 scene_cuts 零消费者）。
+        print(f"\n[看画面] 这一条只查数。要看**每一段窗口里到底是什么画面**："
+              f"\n  PYTHONPATH=src python3 tools/preview_segments_local.py "
+              f"--slug {Path(args.spec).stem}"
+              "\n  （本地，几秒钟；改了哪几段就 `--seg 3,7` 只看那几段）")
         # **选段那几条硬伤也要让退出码认账。** 只打印不返回非零的话，
         # 「查出来了」和「没问题」在调用方眼里一模一样——而这条命令的用处
         # 就是在写 spec 那一刻把返工挡住。
