@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.5 网球有故事 | 月亮姐赫瓦林斯卡</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>十九岁那年，她停赛了。
+
+她在社交媒体上说，自己得了严重的抑郁症——从 2019 年底就开始了。
+
+⸻
+
+中文球迷叫她「月亮姐」——月亮球，又高又转的那种。她个子不高，打不穿别人，于是把球一个个吊回去让对手失误。她自己的说法是：这套打法「对别人来说很烦人」。
+
+⸻
+
+回到巡回赛之后，她的排名是 114。
+
+今年法网，她得从资格赛打起，赢三场才进正赛。进去之后：赢郑钦文，赢 23 号种子梅尔滕斯，赢萨卡里，赢卡林斯卡娅，赢施奈德。
+
+**法网历史上，从来没有一个资格赛球员打进过决赛。** 整个大满贯里上一个是 2021 年美网的拉杜卡努。
+
+决赛她输了。但两周之内，排名从 114 冲到 21——生涯最高，第一次进世界前 25。
+
+⸻
+
+法网之后是温网：她拿的是外卡，却被排成 20 号种子——公开赛年代只有三个人这样，前两个是辛吉斯和施尼德。然后是昨天，多伦多，第一场就走，5-7、1-6。
+
+⸻
+
+她的红土和硬地差多少？先看总账（2025 年 1 月至今，91 场）：
+
+　　红土　42 胜 20 负　68%
+　　硬地　15 胜 9 负　　62%
+　　草地　0 胜 2 负　　 0%
+
+只差 6 个点。照这个数，「她硬地不行」不成立。
+
+⸻
+
+但拆到级别，答案就翻过来了。
+
+巡回赛这一级她硬地 6 胜 4 负，**那 6 场全部来自资格赛**，对手排在 115 到 455 位。2025 年澳网她连过三轮资格赛，正赛首轮 **6-0 6-1** 被尼迈尔打穿。
+
+**巡回赛正赛的硬地胜场：零。**
+
+红土上同一段时间，42 胜 20 负、三个冠军、一个法网决赛；大满贯正赛红土 10 胜 2 负。
+
+⸻
+
+草地 0 胜 2 负。但今年温网首轮她 6-2、5-2 领先、手里握着赛点——那一分她滑倒扭伤右脚踝。**那场不该算进「打法不适应」，它是伤病。**
+
+两个提醒：样本只到 2025 年 1 月（她 2021–2023 基本没打）；红土那 42 胜里有 26 场在 WTA125，对手池和硬地不是一回事。
+
+所以这句话成不成立，取决于你问的是胜率还是正赛：**一个说没问题，一个说一场没赢过。**
+
+⸻
+
+一个刚从抑郁症里走回来的人，用一套「很烦人」的打法在四个月里把排名推高了九十位。二十四岁，这套打法才刚被人看见。
+
+她能走多远？
+
+#赫瓦林斯卡 #月亮姐 #WTA #法网 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
