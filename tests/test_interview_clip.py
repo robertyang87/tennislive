@@ -2628,7 +2628,7 @@ def test_落点卡引一句他没说过的话要当场报错():
     import tools.build_interview_clip as clip
 
     base = {
-        "slug": "fake-x", "start": 0.0, "end": 60.0, "cover": {"frame_at": 1},
+        "slug": "fake-x", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
         "zh": ["但更让我高兴的是 我健康了", "我百分百打出了最好的网球"],
         "takeaway": {
             "open": {"point": "「但更让我高兴的是，我健康了」",
@@ -2655,14 +2655,14 @@ def test_自有画面占比不够要当场报错():
     spec = {
         "slug": "fake-long", "start": 0.0, "end": 217.0, "cover": {"frame_at": 1},
         "zh": ["我健康了"],
-        "takeaway": {"open": {"point": "「我健康了」"},
-                     "close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+        "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
     }
     with pytest.raises(SystemExit, match="简易加工"):
         clip.check_takeaway(spec)
 
     # 反过来：同一张卡，原声剪到 60 秒就过得去——证明这条闸拦的是**占比**，
-    # 不是「凡是长片子都拦」
+    # 不是「凡是长片子都拦」。⚠️ 这两头都要验：只验前一头的话，一个
+    # 恒真的闸（比如门槛写成 99%）也能过
     spec["end"] = 60.0
     clip.check_takeaway(spec)
 
@@ -2762,3 +2762,111 @@ def test_提炼工具要把没说的词也打出来():
                if ln.strip().startswith("团队/家人") and "一次都没提" in ln]
     assert flagged, ("他一个字没提团队/家人，报告里却没有那一行——"
                      f"没说的词没被打出来，而那一节是这个工具的全部价值\n{rep}")
+
+
+def test_落点卡是可选的收尾卡是必须的():
+    """账号所有者 2026-08-05：「我建议还是不要前面卡，后面卡片可以留着」。
+
+    落点卡挡在原声前面是在**跟封面抢开头那 5 秒**（抖音 5 秒内走掉 62%，
+    而封面本来就是钩子）。判断放到看完之后。
+
+    `open` 的代码路径留着——真遇到「不先说一句就看不懂」的采访还用得上——
+    但**它不能是必填**，否则每条 spec 都得写一张不该有的卡。
+    """
+    import tools.build_interview_clip as clip
+
+    spec = {
+        "slug": "fake-o", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
+        "zh": ["我健康了"],
+        "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+    }
+    clip.check_takeaway(spec)                       # 没有 open：不许报
+
+    del spec["takeaway"]["close"]
+    with pytest.raises(SystemExit):                 # 没有 close：必须报
+        clip.check_takeaway(spec)
+
+
+def test_解读卡要有配音而且卡停多久跟着配音走():
+    """账号所有者 2026-08-05：「但要有配音」。
+
+    加它的理由**不是信息增量**（平台明写着「简易配音」不算），是**死寂**：
+    量过没配音那版，前 10.8 秒峰值 **−91 dB**，也就是数字静音，而那正好压在
+    抖音 5 秒内走掉 62% 的地方。对照组同一条片子：原声 −10.4、片尾口播 −12.2。
+
+    钉两头：**真的合了语音**，而且**长度是从语音算的**，不是在 spec 里另写
+    一个数（写两处必分叉，分叉的样子是「最后一句没念完就切走」）。
+    """
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    body = src.split("def _takeaway_segments(")[1].split("\ndef ")[0]
+    code = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "_takeaway_voice(" in code, "解读卡没有口播"
+    assert "_audio_seconds(" in code, (
+        "卡的长度不是从语音算的——在别处另写一个数，两处必分叉，"
+        "而分叉的样子是「最后一句还没念完就切走了」")
+    # 合不出来要退回静音卡并出声，不能把整条片子带崩
+    assert "takeaway_seconds(" in code, "语音合不出来时没有退路"
+
+
+def test_念出来的那份不许多一个句号():
+    """`他其实在说什么？` 后面再加一个 `。`，TTS 会真的在那儿停一下。
+
+    第一版无条件补句号，念出来是「他其实在说什么？。」。
+    """
+    import tools.build_interview_clip as clip
+
+    assert clip._takeaway_speech({"point": "他谈的不是赢球。",
+                                  "ask": "他其实在说什么？"}).endswith("？")
+    assert clip._takeaway_speech({"point": "他谈的不是赢球"}).endswith("。")
+    # 引号在语音里不发音，去掉只是让 TTS 别在那儿停
+    assert "「" not in clip._takeaway_speech({"point": "「我健康了」"})
+
+
+def test_卡上的字有上限():
+    """账号所有者 2026-08-05：「提炼下卡片内容快速过」。
+
+    **做成闸不做成建议**——「写短一点」这种话拦不住下一次写长。
+    """
+    import tools.build_interview_clip as clip
+
+    spec = {
+        "slug": "fake-c", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
+        "zh": ["我健康了"],
+        "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+    }
+    clip.check_takeaway(spec)
+    spec["takeaway"]["close"]["point"] = "他" * (clip.TAKEAWAY_MAX_CHARS + 1)
+    with pytest.raises(SystemExit, match="提炼"):
+        clip.check_takeaway(spec)
+
+
+def test_会合语音的工具入口都要挂本地CA():
+    """这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 的根证书。
+
+    **判据自己推导，不维护白名单**：凡是会走到 `synthesize_narration` 的工具，
+    `main()` 里都必须调 `trust_local_proxy_ca`。runner 上它是 no-op。
+
+    来路：`build_interview_clip` 在解读卡之前**一个字都不合语音**（片尾走的是
+    母版转码），所以从来没挂过。加口播时它是「同时要改的第三处」——而它报出来
+    的样子是 `CERTIFICATE_VERIFY_FAILED`，被退路吞成一句「口播合不出来」，
+    **看起来像 edge-tts 挂了**。
+    """
+    import ast
+
+    guilty = []
+    for p in sorted(Path("tools").glob("*.py")):
+        src = p.read_text("utf-8")
+        tree = ast.parse(src)
+        names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)} | {
+            n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+        imported = {a.name for n in ast.walk(tree)
+                    if isinstance(n, ast.ImportFrom) for a in n.names}
+        if "synthesize_narration" not in (names | imported):
+            continue
+        if "trust_local_proxy_ca" not in names:
+            guilty.append(p.name)
+    assert not guilty, (
+        f"这几个工具会合语音，却没挂代理 CA：{guilty}\n"
+        "沙箱里它们会吃 CERTIFICATE_VERIFY_FAILED，而退路会把它吞成"
+        "「合不出来」——看起来像 edge-tts 挂了")
