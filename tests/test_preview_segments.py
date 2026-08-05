@@ -277,3 +277,42 @@ def test_格高要从长宽比算不许从墙高反解(tmp_path):
     assert grid.tile_h == 202 and grid.tiles == 12
     px = grid.tile(11).resize((1, 1), Image.BOX).getpixel((0, 0))
     assert max(abs(a - b) for a, b in zip(px, _color(11))) < 12
+
+
+def test_重探一遍不许留下上一趟的缩略图墙(tmp_path):
+    """⚠️ 拼图那步是**按序号覆盖**的，所以上一趟出得多就会留下尾巴。
+
+    `deminaur-hewitt` / `hewitt-interview` 就是这么坏的（`contact_00` 两行、
+    `01~08` 五行，两趟不同 `--every` 的产物摞在一起）。混着的目录里，两趟的
+    图**看起来一模一样**——都是网球缩略图、都烧着时间码，谁也认不出来。
+
+    后果不只是机器读错：**人翻缩略图墙挑段时，翻到的也是上一趟的画面。**
+
+    ⚠️ **真跑一遍 ffmpeg**。查源码里有没有那句 `unlink` 只能防「有人把它删了」，
+    防不住「它从来没工作过」——这个仓库为这个区别栽过。
+    """
+    import subprocess
+
+    video = tmp_path / "src.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "testsrc2=size=320x180:rate=10:duration=5",
+         "-pix_fmt", "yuv420p", str(video)], check=True)
+
+    out = tmp_path / "out"
+    out.mkdir()
+    stale = [out / "contact_01.jpg", out / "contact_07.jpg"]
+    other = out / "score_03.jpg"          # 另一个 prefix，**不许被顺手清掉**
+    for p in [*stale, other]:
+        p.write_text("上一趟留下的", encoding="utf-8")
+
+    sheets = reel.contact_sheet(video, out, every=2.0)      # 3 格 → 1 张
+
+    assert [p.name for p in sheets] == ["contact_00.jpg"]
+    left = sorted(p.name for p in stale if p.exists())
+    assert not left, (
+        f"上一趟的墙还在：{left}。下一个人挑段时会翻到上一趟的画面，"
+        "而两趟的图长得一模一样，没有任何东西会告诉他。")
+    assert other.exists(), (
+        "把 score_* 也清掉了——`contact` 和 `score` 是两次独立调用，"
+        "互相清就是把对方刚写好的删了")
