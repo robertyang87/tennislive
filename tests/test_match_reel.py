@@ -6104,7 +6104,11 @@ def _ass_cues(path: Path) -> list[tuple[float, float]]:
         h, m, s = t.split(":")
         return int(h) * 3600 + int(m) * 60 + float(s)
 
-    return [(sec(f[1]), sec(f[2]))
+    def shown(raw: str) -> str:
+        """字幕那一格真正画出来的字：去掉 `{\\fs78}` 这类覆盖标签和换行。"""
+        return re.sub(r"\{[^}]*\}", "", raw).replace("\\N", "").strip()
+
+    return [(sec(f[1]), sec(f[2]), shown(f[9]))
             for f in (line.split(",", 9)
                       for line in path.read_text("utf-8").splitlines()
                       if line.startswith("Dialogue:"))]
@@ -6150,12 +6154,41 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
                 print(f"  [跳过] {outdir.name} 的产物是上一版的："
                       f"渲的时候画面 {was}s，现在的 spec 是 {spec_secs}s")
                 continue
+            # ⚠️ **画面总长对得上，不等于说的是同一句话。** 2026-08-05 我按
+            # 读者反馈改了 `shang-rublev` 第 9、10 段的措辞——**窗口一个字节
+            # 没动**，所以上面那道「渲的时候画面几秒」的自证一路放行，而
+            # `narration_seconds` 记的还是旧稿的秒数，这条测试当场报
+            # 「最坏一段差 2.13s」，看起来像模型不准。
+            #
+            # `subtitles.ass` 里存着**真正念出去的那句话**，拿它按内容认领——
+            # 和下面那条路（`words.json` 的 `joined != plain`）是同一个办法，
+            # 只是这一支之前漏了。**「碰巧对」和「真的接上了」长得一模一样。**
+            starts, acc = {}, float(offset)
+            for index, seg in enumerate(segs):
+                starts[index] = acc
+                acc += float(seg["end"]) - float(seg["start"])
             for key, secs in recorded.items():
-                seg = segs[int(key)]
-                body = "".join(c for c in str(seg.get("narration", ""))
-                               if c not in reel._SPEECH_QUIET)
+                index = int(key)
+                seg = segs[index]
+                text = str(seg.get("narration", ""))
+                plain = "".join(c for c in text if c not in
+                                reel._SPEECH_PUNCT + reel._SPEECH_QUIET)
+                head = starts[index]
+                span = float(seg["end"]) - float(seg["start"])
+                said = "".join(c[2] for c in cues
+                               if head - 0.01 <= c[0] < head + span - 0.01)
+                said = "".join(c for c in said if c not in
+                               reel._SPEECH_PUNCT + reel._SPEECH_QUIET + " ")
+                # 字幕把汉字数字换成了阿拉伯数字，所以比不了逐字——比长度就够：
+                # 改措辞必然改字数，而这正是要拦的那一类
+                if said and abs(len(said) - len(plain)) > max(4, len(plain) // 6):
+                    print(f"  [跳过] {outdir.name} 第 {index + 1} 段的产物是"
+                          f"上一版的：字幕里念的 {len(said)} 字，"
+                          f"现在的 spec 是 {len(plain)} 字")
+                    continue
+                body = "".join(c for c in text if c not in reel._SPEECH_QUIET)
                 punct = sum(1 for c in body if c in reel._SPEECH_PUNCT)
-                out.append((outdir.name, int(key), len(body) - punct, punct,
+                out.append((outdir.name, index, len(body) - punct, punct,
                             round(float(secs), 2)))
             continue
         for index, seg in enumerate(spec.get("segments") or []):
@@ -7255,3 +7288,77 @@ def test_文案的闸要在dry_run里就报不许等渲完():
             f"tag 超标了却没红（退出码 {bad.returncode}）：{bad.stdout[-300:]}")
     finally:
         copy.write_text(original, encoding="utf-8")
+
+
+def test_盘点赛点谁救的必须写出来():
+    """⚠️ **第一条真实读者反馈换来的判据。**
+
+    小红书评论（2026-08-05，商竣程那条）：「**什么叫 三个盘点都没救下来**」。
+
+    我写的是——旁白第 9 段「卢布列夫要到三个盘点。」第 10 段「三个都没能救
+    下来。」**主语中途换了人，而且跨了一次镜头切换**。中文承前省略主语，
+    读者只能把「没救下来」接成卢布列夫，而**那不通**：盘点是他自己拿到的，
+    他没有什么可救。
+
+    判据落在**「点」前面那个动词**上，这一条是机械的：
+
+    | 写法 | 救的是谁 | |
+    |---|---|---|
+    | 他**面对** 7 个破发点，救下 6 个（`gea-shapovalov`） | 同一个人 | ✅ 不用重写主语 |
+    | 卢布列夫**拿到**三个盘点，都没救下来 | **另一个人** | ❌ 必须写出来 |
+
+    「拿到 / 要到 / 得到 / 握有」的点是**他自己的**，救它的必然是对手；
+    「面对 / 面临」的点才是他自己要救的。所以只扫前一类。
+
+    ⚠️ **只扫「救 / 保住」，不扫「兑现」**：兑现自己拿到的点，主语没变，
+    `chwalinska-gibson` 那句「赫瓦林斯卡拿到三个破发点——一个都没兑现」是对的。
+    第一版把「面对…救下」也扫进来，当场误伤 `gea-shapovalov`——
+    又一次「判据宁可窄，不可宽」。
+    """
+    own = re.compile(r"(要到|拿到|得到|握有)[^。！？\n]{0,12}?"
+                     r"([一二三四五六七八九十\d]+)\s*个?(盘点|赛点|破发点)")
+    save = re.compile(r"(救|保住)")
+    bad, checked = [], 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        names = [w.get("name", "") for w in (cover.get("matchup") or [])
+                 if isinstance(w, dict)]
+        names += [cover.get("subject", ""), cover.get("winner", "")]
+        versus = cover.get("versus") or {}
+        for side in ("top", "bottom"):
+            names += list((versus.get(side) or {}).get("names") or [])
+        names = [n for n in names if n]
+        text = "".join(s.get("narration", "") for s in spec["segments"])
+        copy = path.with_suffix(".xhs.txt")
+        if copy.is_file():
+            text += "\n" + copy.read_text(encoding="utf-8")
+        for m in own.finditer(text):
+            checked += 1
+            after = text[m.end():m.end() + 26]
+            hit = save.search(after)
+            if hit and not any(n in after[:hit.start()] for n in names):
+                bad.append(f"{path.stem}: …{m.group(0)}｜{after[:26]}…")
+    assert not bad, (
+        "「拿到 N 个盘点」之后接「救/保住」，中间没有写出是谁在救——"
+        "读者会把主语接成拿到点的那个人：\n  " + "\n  ".join(bad))
+    # **判据自己的判据**：正则一旦写死，这条会变成恒真的绿灯
+    assert checked >= 1, "一处「拿到 N 个盘点」都没扫到——正则是不是写宽/写死了？"
+
+    # 行为：正反两个方向
+    def _flag(text: str, names: list[str]) -> bool:
+        for m in own.finditer(text):
+            after = text[m.end():m.end() + 26]
+            hit = save.search(after)
+            if hit and not any(n in after[:hit.start()] for n in names):
+                return True
+        return False
+
+    who = ["商竣程", "卢布列夫"]
+    assert _flag("卢布列夫拿到三个盘点。三个都没能救下来。", who), "该拦的没拦住"
+    assert not _flag("卢布列夫拿到三个盘点。三个商竣程一个都没保住。", who), (
+        "写出主语了还拦，误伤")
+    assert not _flag("他面对七个破发点，救下六个。", who), (
+        "「面对…救下」主语没变，不该拦")
+    assert not _flag("她拿到三个破发点，一个都没兑现。", ["她"]), (
+        "「拿到…兑现」主语没变，不该拦")
