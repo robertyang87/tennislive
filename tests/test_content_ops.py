@@ -147,3 +147,50 @@ def test_即时赛果那一半没跟着一起放开():
     两件事别混——放开日限的时候顺手把它一起开了，就是替对方改了他没说的事。
     """
     assert RESULT_DAILY_LIMIT == 0
+
+
+def test_排期一出来就能选不用等到快开赛():
+    """账号所有者 2026-08-05：「赛前焦点补位 最好是在日程排期出来后就决定，
+    不要等到快开赛了」。
+
+    原来的上界 210 分钟是**给一天 72 趟的定时排的**（窗口比轮询间隔宽就不漏）。
+    定时归零之后它的作用整个反过来：手动跑一趟只看得见未来三个半小时，
+    **明天的签表全在视野之外**。
+
+    判据挑的是**明天那一场**——它在老窗口外、新窗口内，所以这条测试只有
+    上界真的放开了才会绿。
+    """
+    now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
+    tomorrow = _preview(now)
+    tomorrow.match_id = "tomorrow"
+    tomorrow.start_utc = now + timedelta(hours=20)   # 老窗口 210 分钟之外
+
+    picks = preview_candidates([tomorrow], now=now)
+
+    assert [m.match_id for m in picks] == ["tomorrow"], (
+        "排期已经出来（start_utc 有值）却选不进来——上界又把明天挡在外面了"
+    )
+
+
+def test_来不及做完的那几场仍然不选():
+    """⚠️ 下界 45 分钟**不是**「等到快开赛」，是「还来得及把包做完发出去」。
+
+    放开上界的时候顺手把下界一起去掉，就会选中十分钟后开赛的比赛——
+    渲 4~5 张卡要几分钟，做完人也来不及发。两个边界管的是两件事。
+    """
+    now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
+    too_soon = _preview(now)
+    too_soon.match_id = "too-soon"
+    too_soon.start_utc = now + timedelta(minutes=10)
+
+    assert preview_candidates([too_soon], now=now) == []
+
+
+def test_没排期的不算候选():
+    """「排期出来了没有」这个判据，在数据里就是 `start_utc` 有没有值。"""
+    now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
+    undated = _preview(now)
+    undated.match_id = "no-time"
+    undated.start_utc = None
+
+    assert preview_candidates([undated], now=now) == []
