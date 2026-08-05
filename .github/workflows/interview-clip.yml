@@ -135,7 +135,25 @@ jobs:
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
         run: |
           pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
-          python -m playwright install --with-deps chromium
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
+          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
+          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
+          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
+          #
+          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
+          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
+          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
+          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              sleep 15
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
           node --version
 
       # **取字幕这一阶段的准备，比出片少一大半。** 它不下媒体、不转写、不渲封面、

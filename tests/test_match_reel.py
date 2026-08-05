@@ -3974,6 +3974,77 @@ def _excluded_modes(step: str) -> set[str]:
     return set(re.findall(r"inputs\.mode\s*!=\s*'([a-z-]+)'", head))
 
 
+def test_装Chromium不许没有超时和重试():
+    """`playwright install --with-deps` 里的 `--with-deps` **会跑 apt**。
+
+    而这个仓库的 apt 会抽风——CLAUDE.md 里记着「一次静静烧了 13 分 42 秒」。
+    那条教训当时只套在显式的 `apt-get` 步骤上，**漏了这一处**：八条工作流都调
+    它，没有一条设超时或重试，于是任何一条都能一路烧到 job 的预算用完。
+    run 30973785219 就是这么死的——卡在这一步 13 分钟，其余步骤全在 1 分钟内
+    跑完，而日志上一个字都没说。
+
+    两头都要：**超时**（不然它能烧到 job 预算见底），**加一次重试**
+    （CLAUDE.md：「硬超时只把『静静烧半小时』换成『红掉、要人重跑』——
+    方向对了但停在一半」）。
+
+    ⚠️ 超时的数**别调小**：正常 5~60 秒，但第一版 apt 重试写 3×100 秒当场把
+    CI 弄红了，因为 apt 一直在推进、只是慢。**把「慢」误判成「挂死」，
+    重试就从救场变成三倍的浪费。**
+    """
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        for i, ln in enumerate(lines):
+            if "playwright install" not in ln:
+                continue
+            timed = re.search(r"timeout\s+(\d+)\s+python -m playwright install", ln)
+            assert timed, (
+                f"{path.name} 第 {i + 1} 行装 Chromium 没有超时——"
+                f"apt 一抽风它就烧到 job 预算见底：{ln.strip()}")
+            assert int(timed.group(1)) >= 180, (
+                f"{path.name} 的超时只有 {timed.group(1)} 秒，太紧。"
+                "正常 5~60 秒，但 apt 慢起来会被误判成挂死——"
+                "重试于是从救场变成三倍的浪费")
+            back = "\n".join(lines[max(0, i - 12):i])
+            assert re.search(r"for\s+i\s+in\s+1\s+2", back), (
+                f"{path.name} 装 Chromium 有超时但没有重试——"
+                "卡住的正确处置是换一次重试，不是整趟失败")
+            checked[path.name] = True
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
+
+
+def test_Chromium缓存都要有restore_keys():
+    """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
+
+    决定装哪个 Chromium 的只有 playwright 的版本，可那个键是整份文件的哈希——
+    加一个依赖、改一行注释，六条工作流的 150 MB Chromium 缓存同时失效，
+    下一趟每条都要重下一遍。2026-08-05 往 pyproject 里加 certifi 和 pytest-xdist
+    时当场撞上（run 30973785219 卡在「安装 Chromium」）。
+
+    `restore-keys` 就够：主键没中就退到上一份，Chromium 已经在盘上，
+    `playwright install` 是个空操作；真换了 playwright 版本它会自己去下对的那
+    一版，所以退旧缓存也不会拿错。比另起一步算版本号便宜，也不用动步骤顺序。
+
+    **判据自己推导，不维护名单**：凡是缓存 Chromium 的工作流都要有。
+    以后多一条出海报／渲卡片的线，它会替人记得。
+    """
+    hits = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        text = path.read_text(encoding="utf-8")
+        body = "\n".join(ln for ln in text.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        if "playwright-chromium-" not in body:
+            continue
+        hits[path.name] = "restore-keys: playwright-chromium-" in body
+    assert hits, "一条缓存 Chromium 的工作流都没扫到，判据的主语没了"
+    missing = sorted(n for n, ok in hits.items() if not ok)
+    assert not missing, (
+        f"这几条缓存了 Chromium 却没有 restore-keys：{missing}。"
+        "改一次 pyproject 就要重下一遍 150 MB，而它只表现为「今天怎么慢了点」。")
+
+
 def test_源片缓存的键要按URL算():
     """两层缓存的口径必须一致，否则外层每趟都白传一份 50~70 MB。
 
