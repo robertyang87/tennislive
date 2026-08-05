@@ -1081,6 +1081,20 @@ def contact_sheet(path: Path, outdir: Path, *, every: float = 2.0,
     frames.mkdir(exist_ok=True)
     for old in frames.glob("*.jpg"):
         old.unlink()
+    # ⚠️ **上一趟写下的墙也要清掉，不能只清 frames/。**
+    #
+    # 这一步是**按序号覆盖**（`{prefix}_00.jpg`、`_01.jpg`…），所以上一趟出得多、
+    # 这一趟出得少时，多出来那几张会原样留在目录里——于是同一个目录里混着两趟的
+    # 产物，**而它们看起来一模一样**（都是网球缩略图、都烧着时间码）。
+    #
+    # 已经这么坏掉两个目录：`deminaur-hewitt` 和 `hewitt-interview` 的
+    # `contact_00` 是两行、`01~08` 是五行，两趟不同 `--every` 的产物摞在一起。
+    # 后果不只是机器读错——**人翻缩略图墙挑段时，翻到的也是上一趟的画面**。
+    #
+    # 只清自己这个 prefix：`contact` 和 `score` 是两次独立调用，互相清掉就是
+    # 把对方刚写好的删了。
+    for old in outdir.glob(f"{prefix}_*.jpg"):
+        old.unlink()
     duration = probe_duration(path)
     # 只看一段时，缩略图仍然烧**源片的绝对秒数**——挑段的人照着它写 spec，
     # 换算一次就是一次切偏的机会。
