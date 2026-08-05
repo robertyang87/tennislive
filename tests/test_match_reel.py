@@ -4085,6 +4085,44 @@ def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys)
         raise AssertionError("配错了路径却不吭声")
 
 
+def test_探代理CA不许把CLI带崩(monkeypatch):
+    """⚠️ **`Path.is_file()` 会抛，不是只返回 False。**
+
+    它只吞 ENOENT / ENOTDIR / EBADF / ELOOP 那几类，**不吞 EACCES**——而 runner
+    上跑测试的用户根本进不去 `/root`，于是 `os.stat('/root/.ccr/ca-bundle.crt')`
+    抛的是 `PermissionError`。
+
+    而这个探测排在 `main()` 的**第一行**，所以它一抛就是**每一次 CLI 调用都崩**：
+    整条 match-reel 会死在还没解析参数的时候。CI 当场逮到（run 30971701644，
+    两条 dry-run 测试红在 `PermissionError: '/root/.ccr/ca-bundle.crt'`）——
+    也就是说这个「本地跑得好好的」改动，会在 runner 上打爆所有出片。
+
+    **探一个「众所周知的位置」失败就等于这台机器没有它**，任何 OSError 都一样：
+    这条路只是猜，猜不中是常态。显式配的那条不同，那儿配错了要报（见上一条）。
+
+    ⚠️ 判据不能靠 `chmod 000` 造场景——沙箱里跑测试的是 root，而 **root 绕过
+    权限检查**，那样造出来的「不可读」在这儿是可读的，测试会因为错误的原因变绿。
+    所以直接让 `is_file` 抛，那才是 runner 上真实发生的事。
+    """
+    from tennislive import localca  # noqa: PLC0415
+
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_WELL_KNOWN", ("/root/.ccr/ca-bundle.crt",))
+    monkeypatch.delenv("TENNISLIVE_EXTRA_CA", raising=False)
+
+    real = Path.is_file
+
+    def boom(self):
+        if str(self).startswith("/root/"):
+            raise PermissionError(13, "Permission denied")
+        return real(self)
+
+    monkeypatch.setattr(Path, "is_file", boom)
+    assert localca.trust_local_proxy_ca() is None, (
+        "探不到就该当成「这台机器没有」，不许把异常抛给调用方——"
+        "它排在 main() 第一行，抛一次就是所有 CLI 调用全崩")
+
+
 def test_旁白超长的闸排在分段编码之前():
     """**撞一次这道闸，白编 50–60 秒。**
 
