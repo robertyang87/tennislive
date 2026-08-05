@@ -193,7 +193,7 @@ _HEAD_FONT, _ZH_FONT, _EN_FONT = _ASS_NAME["head"], _ASS_NAME["zh"], _ASS_NAME["
 # 改这两个数之前先跑一遍 `test_字号涨了不许撑破已有的行`。
 _FONT_SIZE = {"en": 46, "zh": 68}
 # 顶栏两行：主行给赛事和轮次（品牌显示体），次行给对阵和「赛后场上采访」。
-_HEAD_SIZE = {"a": 54, "b": 32}
+_HEAD_SIZE = {"a": 54, "b": 38}
 _FONT_CACHE: dict[str, object] = {}
 
 
@@ -911,7 +911,7 @@ Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold
 Style: EN,{_EN_FONT},{_FONT_SIZE['en']},&H00FFFFFF,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_EN_TOP},1
 Style: ZH,{_ZH_FONT},{_FONT_SIZE['zh']},&H0074DCC3,&H00000000,&H00000000,1,0,0,0,100,100,0,0,1,0,0,8,64,64,{_ZH_TOP},1
 Style: HEADA,{_HEAD_FONT},{_HEAD_SIZE['a']},&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,48,48,{_HEAD_A_TOP},1
-Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00B2BCA9,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,48,48,{_HEAD_B_TOP},1
+Style: HEADB,{_ZH_FONT},{_HEAD_SIZE['b']},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,48,48,{_HEAD_B_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -921,7 +921,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 _MARK_COLOUR = r"\c&H8CDC4A&"
 # 比分那一段：提亮 + 稍微放大。Barlow Condensed 是窄身，同字号下墨迹比汉字矮，
 # 不放大会显得比旁边的名字小一号。38 是渲出来比的（32 偏小，44 就开始抢戏）。
-_SCORE_PX = 38
+_SCORE_PX = 44
 _SCORE_TAGS = rf"\c&HFFFFFF&\fs{_SCORE_PX}"
 
 
