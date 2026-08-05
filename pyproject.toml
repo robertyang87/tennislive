@@ -37,6 +37,12 @@ dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
+# 热点简报的中译 + 要点提炼（`tennislive brief`）。
+# ⚠️ **走 DeepSeek 那条通道不需要装这个 extra**：它是 OpenAI 格式的 HTTP 调用，
+# `requests` 本来就是主依赖。这里只有 Anthropic 那条路要的官方 SDK。
+# ⚠️ 别退回 GitHub Models：那个端点 2026-08-05 实测返回 410
+# `github_models_retirement_brownout`，正在退役。详见 research/brief.py 的注释。
+brief = ["anthropic>=0.69"]
 video = ["yt-dlp>=2026.7.4"]
 # 封面人物「本场抽帧抠图」：从源片抓一帧、抠掉背景。装 extra 别装裸包名——
 # opencv 那次就是随手 `pip install opencv-python-headless` 装到 5.x，

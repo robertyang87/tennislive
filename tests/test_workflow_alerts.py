@@ -1,6 +1,7 @@
 """定时工作流的开关与告警规则（CLAUDE.md：规则要落成测试）。
 
 2026-07-25 审查确认的静默故障：flash.yml / news-radar.yml 失败与空产零告警，
+（news-radar 2026-08-05 改名 news-brief：两条推送合成一条，告警要求不变。）
 诊断只存在于会过期的 Actions 日志里。
 
 （另一条「daily.yml 把视频开关硬编码成 'off'」随日报 2026-07-31 停产一起删了。）
@@ -28,7 +29,7 @@ def _yaml_only(text: str) -> str:
 
 
 def test_scheduled_radar_workflows_alert_on_failure():
-    for name in ("flash.yml", "news-radar.yml"):
+    for name in ("flash.yml", "news-brief.yml"):
         workflow = _workflow(name)
         failure_step = workflow.index("if: failure()")
         # 失败告警必须同时具备：PushPlus 主动推送 + 运行摘要兜底
@@ -37,7 +38,7 @@ def test_scheduled_radar_workflows_alert_on_failure():
 
 
 def test_scheduled_radar_workflows_summarize_empty_runs():
-    for name in ("flash.yml", "news-radar.yml"):
+    for name in ("flash.yml", "news-brief.yml"):
         workflow = _workflow(name)
         empty_step = workflow.index("空产摘要")
         # 空产必须把原因写进运行摘要，而不是只留在会过期的日志正文里
@@ -86,7 +87,7 @@ def test_every_workflow_that_commits_generated_files_has_a_size_gate():
 
 
 # 走 Python 那条推送路（`prepare_image_delivery`）的两个入口。
-# 只认这两个，是因为图床分支只在它们底下：news-radar / source-health 是
+# 只认这两个，是因为图床分支只在它们底下：news-brief / source-health 是
 # 裸 curl 发纯文字告警，没有 `<img>`，配这个 Secret 一点用都没有。
 _PUSHPLUS_IMAGE_ENTRIES = re.compile(r"tennislive publish |push_reel\.py")
 

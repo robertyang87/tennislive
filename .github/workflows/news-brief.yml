@@ -1,0 +1,176 @@
+name: news-brief
+
+# 网球热点简报：扫新闻 → 聚热点 → 抓正文出中文要点 → **一条**微信。
+#
+# 这条工作流原来叫 news-radar，一趟发**两条**微信：
+#   「场外网球快讯候选」——8 条英文标题 + 链接
+#   「今日选题候选」——撞上人工角度表的簇，2026-08-02 实测 0 个
+# 账号所有者的原话：「目前推送的内容还有两块，英文媒体一份中文一份，
+# 而且也看不到具体内容……合并成一个做推送，英文的话要有对应的中文翻译，
+# 主要能深入挖掘热点」。
+#
+# 于是三件事一起改了：合成一条、英文一律带中译、前几条抓正文出中文要点。
+# 判据在 tests/test_news_brief.py。
+#
+# ⚠️ **这条不再装 Chromium 和中文字体**。原来装它们是为了渲 flash-radar 的
+# 草稿卡（`draft_00.jpg`），而简报是纯 HTML 文字消息，一张图都不出——
+# 那两步白烧一分半。要出快讯卡走 `tennislive flash-card`，它自己会装。
+on:
+  # **定时仍然不开。** 2026-08-02 账号所有者：「这两个任务停掉吧，不需要了」，
+  # 那个决定针对的是「无人值守地一天两趟」，这次改的是**内容形态**，不是
+  # 那个决定——所以照旧只留手动，要恢复定时是加一行 cron 的事。
+  #
+  # 判据：test_停掉的定时不许自己回来
+  workflow_dispatch:
+    inputs:
+      deep:
+        description: "深挖几条（抓正文出中文要点）。0 = 全部（默认）"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-brief
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      # 中译和要点靠这两个**二选一**，配哪个走哪个（都配了走 DeepSeek，
+      # 要反过来用 `TENNISLIVE_BRIEF_PROVIDER=anthropic`）。跑了哪条会写进
+      # `brief.json` 的 notes 和推送正文底部——「配了什么」不是判据，
+      # 「走了哪条」才是。
+      #
+      # ⚠️ **不是 `GITHUB_MODELS_TOKEN`**：那个端点 2026-08-05 实测返回 410
+      # `github_models_retirement_brownout`，正在退役（`video-localize.yml`
+      # 还挂在上面，是另一笔账）。
+      # 两个都没配不会让这条工作流失败：简报退回「只有英文标题和热度」，
+      # 并在推送正文底部照实写出来（见 `Brief.notes`）。
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # **别把 output/ 拉下来**（HEAD 上 1.36 GB，checkout 要一分半到三分钟）。
+          # 本次要写的那一格在下面 `git sparse-checkout add` 回来。
+          sparse-checkout: |
+            assets
+            data
+            docs
+            specs
+            src
+            tests
+            tools
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装 tennislive
+        # 只要主依赖 + 简报那一个 extra：简报是纯文字 HTML，不渲卡片，
+        # 所以不装 webrender、不装 Chromium、不装中文字体。
+        #
+        # `[brief]` 里只有 anthropic SDK。**走 DeepSeek 那条路一个新依赖都
+        # 不用装**（`requests` 是主依赖），照装是为了两个密钥哪个配着都能跑，
+        # 代价是几秒钟。
+        run: pip install -q -e ".[brief]"
+
+      - name: 生成今日简报
+        id: brief
+        run: |
+          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+          echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
+          DATE=$(python -c "from tennislive.timeutil import beijing_today; print(beijing_today())")
+          # 进 cone 要排在生成**之前**：`sparse-checkout add` 会把 HEAD 上
+          # 那一版先铺回工作区，铺完再生成才是对的顺序（反过来会拿旧内容
+          # 盖掉刚生成的）。
+          git sparse-checkout add "output/$DATE"
+          tennislive brief --outdir output --deep "${{ inputs.deep || '0' }}"
+
+      - name: 提交简报到仓库
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # **必须带 `--sparse`**：稀疏检出之后，裸的 `git add output/` 对
+          # cone 外的路径只打一句警告然后退出码 0，这一轮的产物静默丢掉。
+          git add --sparse output/
+          if git diff --cached --quiet; then
+            echo "没有新的简报"
+          else
+            python tools/check_staged_file_sizes.py
+            git commit -m "content: 网球热点简报 ${{ steps.brief.outputs.date }}"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin "${{ github.ref_name }}"
+          fi
+
+      - name: 推送简报到微信
+        # **整条工作流只有这一次推送。** 原来这儿是两步（快讯候选 + 选题候选），
+        # 合并的全部意义就在于这里只剩一条。判据：test_一天只发一条推送
+        if: env.PUSHPLUS_TOKEN != ''
+        continue-on-error: true
+        run: |
+          FILE="output/${{ steps.brief.outputs.date }}/brief/brief_push.html"
+          if [ ! -s "$FILE" ]; then
+            echo "::error::简报正文没写出来，本次不推送"
+            exit 1
+          fi
+          BODY="$(jq -nc \
+            --arg t "$PUSHPLUS_TOKEN" \
+            --arg title "网球热点简报 · ${{ steps.brief.outputs.date }}" \
+            --rawfile c "$FILE" \
+            '{token:$t,title:$title,content:$c,template:"html"}')"
+          RESP="$(curl -s -m 30 -X POST https://www.pushplus.plus/send \
+            -H "Content-Type: application/json" -d "$BODY")"
+          # 流水号要记进日志：`code == 200` 只保证 PushPlus 收下了，不保证
+          # 微信推到了手机上。真出现「接口成功但人没收到」，没有流水号什么
+          # 都查不了。
+          echo "PushPlus 返回：$RESP"
+
+      - name: 空产摘要（跑成功但没有热点时写明原因）
+        # 空产不是失败，但也不能静默：把扫到多少、聚出几个、每条退化的原因
+        # 留在运行摘要里，否则诊断只存在于会过期的日志正文。
+        if: success()
+        run: |
+          JSON="output/${{ steps.brief.outputs.date }}/brief/brief.json"
+          {
+            echo "## 今日简报"
+            echo ""
+            if [ -s "$JSON" ]; then
+              jq -r '"- 新闻 " + (.news_count|tostring) + " 条 → 热点 "
+                     + (.count|tostring) + " 个，深挖 " + (.deep|tostring) + " 个"' "$JSON"
+              jq -r '"- 中文平台扫了 " + (.zh_scanned|tostring) + " 条"' "$JSON"
+              jq -r '(.notes // [])[] | "- " + .' "$JSON"
+              jq -r '(.source_status // {}) | to_entries[] |
+                "- 信号源 " + .key + "：" + (.value|tostring)' "$JSON"
+            else
+              echo "- 连 brief.json 都没写出来，请看『生成今日简报』步骤日志。"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 运行失败时告警（PushPlus + 运行摘要）
+        # 无人值守时，任何一步失败都主动通知，而不是只留一封 GitHub 邮件。
+        if: failure()
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "## ⚠️ 热点简报运行失败"
+            echo ""
+            echo "- news-brief 本次运行失败，今天这份简报可能缺产。"
+            echo "- 运行日志：$RUN_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PUSHPLUS_TOKEN" ]; then
+            BODY="$(jq -nc --arg u "$RUN_URL" \
+              '{title:"⚠️ 热点简报运行失败",
+                content:("news-brief 本次运行失败，今天这份简报可能缺产。请查看：<a href=\"" + $u + "\">运行日志</a>"),
+                template:"html"}')"
+            curl -s -m 20 -X POST https://www.pushplus.plus/send \
+              -H "Content-Type: application/json" \
+              -d "$(jq -nc --argjson b "$BODY" --arg t "$PUSHPLUS_TOKEN" '$b + {token:$t}')" \
+              || true
+          fi
