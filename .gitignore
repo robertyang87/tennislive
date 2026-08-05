@@ -48,3 +48,9 @@ tools/broll/
 # 又是「两处各配一遍必分叉」：规矩只写在了 runner 那一半。
 # 判据落在 test_缩略图墙两头都不许进仓库（.gitignore 和工作流的 rm 都要在）。
 output/**/storyboard.jpg
+
+# 本地预览产物：看一眼就丢。**`output/` 本身是要提交的**，所以这两样不挡的话，
+# 某次 `git add output/<日期>/reel/<slug>` 就会把它们一起带进去——而仓库里
+# 多一张「本地渲的封面」和多一张真产物，下一个人分不出来哪张是发出去的那张。
+output/**/poster_local.jpg
+output/**/segments_local_*.jpg
