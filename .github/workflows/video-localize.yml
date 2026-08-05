@@ -29,7 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      GITHUB_MODELS_TOKEN: ${{ secrets.GITHUB_MODELS_TOKEN }}
+      # ⚠️ **不是 `GITHUB_MODELS_TOKEN`。** 这条线原来打
+      # `models.github.ai/inference`，那个端点 2026-08-05 实测返回 HTTP 410
+      # `github_models_retirement_brownout`——正在退役。热点简报那条线当天
+      # 已经换到 DeepSeek，字幕翻译现在走**同一个 `research.brief.Chat`**，
+      # 所以密钥也是同一对（两条通道二选一，见 `PROVIDERS`）。
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,7 +57,11 @@ jobs:
           cache: pip
 
       - name: 安装项目
-        run: pip install -e .
+        # `[brief]` 装的是 Anthropic SDK。DeepSeek 那条通道只要 `requests`
+        # （主依赖），可**只配 ANTHROPIC_API_KEY 的话** `Chat` 会走另一条路，
+        # 而那个 import 是延迟的——不装就在翻译那一步才炸，而翻译排在
+        # checkout、校验路径之后。判据：test_做视频中文化的工作流要配模型密钥
+        run: pip install -e ".[brief]"
 
       - name: 校验输入只指向仓库内文件
         env:

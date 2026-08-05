@@ -134,7 +134,10 @@ jobs:
           restore-keys: playwright-chromium-${{ runner.os }}-
 
       - name: 安装 Chromium
-        timeout-minutes: 9
+        # 10 而不是 9：等 dpkg 锁最多再花 60 秒（见下面 pw_wait_apt），
+        # 而 2×240 秒本来就贴着 9 分钟。第 2 次眼看要成却被步骤预算
+        # 掐掉，和「装不上」长得一模一样。
+        timeout-minutes: 10
         run: |
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
@@ -145,11 +148,33 @@ jobs:
           # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
           # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
           # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          # ⚠️ **第一次超时会毒死第二次，所以重试之前必须等 dpkg 锁松开。**
+          # `timeout` 杀掉的是 `playwright install` 那层壳，**它派生的 apt-get
+          # 活了下来并攥着 `/var/lib/dpkg/lock-frontend`**。run 31003290962 的
+          # 日志一清二楚：第 1 次 240 秒被杀，15 秒后第 2 次**两秒**就死在
+          # `held by process 4285 (apt-get)`——也就是说「重试」根本没重试成，
+          # 它只是第一次超时的一个必然后果。
+          #
+          # ⚠️ 用 `pgrep -x`（**按可执行名精确匹配**），不是 `pgrep -f`。
+          # CLAUDE.md 里那条「`until ! pgrep -f 'X'` 会匹配到它自己」说的就是
+          # `-f` 扫整条命令行；这个循环跑在 bash 里，名字对不上 apt-get/dpkg，
+          # 不会把自己数进去。也不用 fuser/lsof——runner 上不保证装着。
+          pw_wait_apt() {
+            for _ in $(seq 1 12); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 60 秒 dpkg 锁还没松开，硬着头皮再试一次"
+          }
           pw_retry() {
             for i in 1 2; do
               timeout 240 python -m playwright install --with-deps chromium && return 0
               echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
-              sleep 15
+              # 等锁，别拿 sleep 猜。顺带：被杀掉那次已经把一部分包下进了
+              # /var/cache/apt/archives，所以第 2 次是接着下，不是从头来。
+              pw_wait_apt
             done
             echo "::error::装 Chromium 两次都没成功"
             return 1

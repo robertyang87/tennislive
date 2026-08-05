@@ -17,8 +17,11 @@
 
 ## 运行
 
+字幕翻译走和热点简报**同一条**模型通道（`research.brief.Chat`），两条二选一：
+
 ```bash
-export GITHUB_MODELS_TOKEN=github_pat_xxx
+export DEEPSEEK_API_KEY=sk-xxx        # 默认这条
+# 或者 export ANTHROPIC_API_KEY=sk-ant-xxx
 
 tennislive video \
   --video incoming/interview.mp4 \
@@ -30,6 +33,10 @@ tennislive video \
 默认生成简体中文字幕、带硬字幕的 MP4 与 `rights-audit.json`。系统需要 `ffmpeg` 可执行
 文件；加 `--no-burn` 只生成 SRT 和授权审计，加 `--bilingual` 生成原文/中文双语字幕。
 重复生成时需显式加 `--overwrite`。
+
+⚠️ **`GITHUB_MODELS_TOKEN` 作废了。** 这条线原来打 `models.github.ai/inference`，
+那个端点 2026-08-05 实测返回 HTTP 410 `github_models_retirement_brownout`。
+留着旧变量不会报「端点没了」，只会在某天变成一句「翻译失败」。
 
 输出目录：
 
