@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from tennislive.content_ops import (
     PREVIEW_DAILY_LIMIT,
+    RESULT_DAILY_LIMIT,
     preview_candidates,
     prune_state,
     select_content,
@@ -111,3 +112,38 @@ def test_prune_state_retains_only_recent_entries():
         "result:ATP:new": "2026-07-19",
         "preview:WTA:edge": "2026-07-05",
     }
+
+
+def test_赛前焦点不再限制每天一条():
+    """账号所有者 2026-08-05：「不要限制只有一条」。
+
+    那个 1 是**冷启动期的频控**（playbook：「避免低粉阶段高频刷屏」），
+    挡的是「今天已经发过一条了」，不是「这条不值得发」。编辑闸另有其人，
+    没动：`PREVIEW_THRESHOLD = 38` 和 45–210 分钟的发布窗口。
+
+    ⚠️ 判据钉的是**一轮能取出多条**，不是那两个常量等于几——盯常量的话，
+    以后有人把 `RUN_LIMIT` 调回 1 而 `PREVIEW_DAILY_LIMIT` 留着 10，
+    测试照样绿，而实际又变回一天一条。**两个数任意一个卡住都会红。**
+    """
+    now = datetime(2026, 7, 19, 12, tzinfo=timezone.utc)
+    previews = []
+    for index in range(3):
+        match = _preview(now)
+        match.match_id = f"preview-{index}"
+        previews.append(match)
+
+    picks = select_content(previews, now=now, state={})
+
+    assert len(picks) == 3, (
+        f"一轮只取出了 {len(picks)} 条——PREVIEW_DAILY_LIMIT 或 RUN_LIMIT 又把它卡住了"
+    )
+    assert all(pick.kind == "preview" for pick in picks)
+
+
+def test_即时赛果那一半没跟着一起放开():
+    """「不要限制只有一条」说的是赛前焦点的日限，不是把赛果推送开回来。
+
+    赛果那一半是 2026-07-31 另一个明确决定（「即时赛果推送也不要了」），
+    两件事别混——放开日限的时候顺手把它一起开了，就是替对方改了他没说的事。
+    """
+    assert RESULT_DAILY_LIMIT == 0

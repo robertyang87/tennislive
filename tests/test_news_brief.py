@@ -464,3 +464,49 @@ def test_没配密钥就不该去构造SDK客户端():
     chat = Chat(api_key="")
     assert not chat.ready
     assert chat.ask("s", "u", schema={"type": "object"}) is None
+
+
+# ---------------------------------------------------------------------------
+# 八、深挖不按名次砍
+# ---------------------------------------------------------------------------
+_TWO_STORIES = _news(
+    ("ATP Tour", "Draper withdraws from Washington with elbow injury", "https://a/1"),
+    ("Sky Sports", "Draper withdraws citing elbow injury before US Open", "https://b/1"),
+    ("BBC Sport", "Rybakina eases past Ostapenko in Montreal opener", "https://c/1"),
+    ("ESPN", "Rybakina downs Ostapenko at the Montreal opener", "https://d/1"),
+)
+
+
+def test_默认全部深挖不按名次砍():
+    """账号所有者 2026-08-05：「不要限制只有一条」。
+
+    第一版按 `stories[:5]` 砍，那是**版面判断替编辑判断做了决定**——
+    排第 6 的没被深挖，不是因为它不值得，只是因为它排第 6。
+    """
+    brief = build_brief(
+        "2026-08-05", news=_TWO_STORIES, chat=_Stub(_deep_reply), fetch=_ok_fetch
+    )
+    assert len(brief.stories) == 2, "这批数据本来就该聚出两簇，判据的前提没了"
+    assert all(s.deep for s in brief.stories), "默认应该全挖，不该按名次砍"
+
+
+def test_给了deep就按热度取前几条():
+    """收口的能力要留着——`--deep N` 仍然按热度取前 N 条。"""
+    brief = build_brief(
+        "2026-08-05", news=_TWO_STORIES, chat=_Stub(_deep_reply),
+        fetch=_ok_fetch, deep=1,
+    )
+    assert [s.deep for s in brief.stories] == [True, False]
+
+
+def test_deep等于0不许被切片吃成一条都不挖():
+    """⚠️ `stories[:0]` 是空列表——如果用切片表达「不限」，会一条都不挖，
+    而那和「今天没有热点」长得一模一样。所以必须显式分支。"""
+    from tennislive.research.brief import DEFAULT_DEEP
+
+    assert DEFAULT_DEEP == 0, "0 是「全部」的哨兵值"
+    brief = build_brief(
+        "2026-08-05", news=_TWO_STORIES, chat=_Stub(_deep_reply),
+        fetch=_ok_fetch, deep=0,
+    )
+    assert sum(1 for s in brief.stories if s.deep) == 2

@@ -24,9 +24,9 @@ on:
   workflow_dispatch:
     inputs:
       deep:
-        description: "深挖几条（抓正文出中文要点，其余只译标题）"
+        description: "深挖几条（抓正文出中文要点）。0 = 全部（默认）"
         required: false
-        default: "5"
+        default: "0"
 
 permissions:
   contents: write
@@ -81,7 +81,7 @@ jobs:
           # 那一版先铺回工作区，铺完再生成才是对的顺序（反过来会拿旧内容
           # 盖掉刚生成的）。
           git sparse-checkout add "output/$DATE"
-          tennislive brief --outdir output --deep "${{ inputs.deep || '5' }}"
+          tennislive brief --outdir output --deep "${{ inputs.deep || '0' }}"
 
       - name: 提交简报到仓库
         run: |

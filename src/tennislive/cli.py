@@ -1113,8 +1113,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument(
         "--deep",
         type=int,
-        default=5,
-        help="深挖几个（抓正文出中文要点，默认 5；其余只给中译标题）",
+        default=0,
+        help="深挖几个（抓正文出中文要点）。**0 = 全部，默认**；给 N 就按热度取前 N 条",
     )
     sp.add_argument(
         "--min-sources",
