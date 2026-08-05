@@ -61,9 +61,59 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTDIR = ROOT / "output" / "interviews"
+
+# **这条线原来只认一个源**：`@wta` 的逐场集锦（YouTube）。2026-08-05 商竣程那条
+# 起多了第二个——Tennis TV，因为 **ATP 男子的场上采访结构性地不上 YouTube**：
+# 蒙特利尔那一站扫遍 ATP Tour / Tennis TV / 赛事官方 / Tennis Channel / 三个专搬
+# 采访的频道，一条都没有；而同一组查询词在多伦多（女子）那边有。
+#
+# 判「是不是 YouTube」要**按主机名**，不是按字符串里有没有 `youtube`——
+# 一条 `https://example.com/?ref=youtube.com` 会从中间匹配上。
+_TENNISTV_HOST = "tennistv.com"
+
+
+def is_youtube(url: str) -> bool:
+    """这条源是不是 YouTube。自动字幕、故事板、`?t=` 时刻链接都只有它有。"""
+    host = urlparse(url).netloc.lower().removeprefix("www.")
+    return host == "youtube.com" or host == "youtu.be" or host.endswith(
+        (".youtube.com", ".youtu.be"))
+
+
+def media_url(url: str) -> str:
+    """把 spec 里的**页面地址**换成 yt-dlp 真下得动的那个地址。
+
+    Tennis TV 的页面地址 yt-dlp 直接下会报 `This video is only available for
+    registered users`；但仓库自己的 `video/official` 早写好了走它**公开的
+    entitlement 接口**那条路——`data-entitlement="free"` 的条目（页面上写着）
+    不用登录、不用订阅就解得出 HLS。别再往这个函数里塞账号密码。
+
+    ⚠️ **解析必须在下载那一刻做，不能把解出来的地址钉进 spec。** manifest 带
+    令牌、会过期，钉进去就是一条今天能用明天 403 的死链——而它失败的样子和
+    「这条片子被下架了」一模一样。
+    """
+    if _TENNISTV_HOST not in urlparse(url).netloc.lower():
+        return url
+    # 这两个只有 Tennis TV 这条路要，放在函数里 import：其余几步（切行、核对表、
+    # 出封面）不该因为多了一个源就多拖一个包。
+    from tennislive.video.official import (  # noqa: PLC0415
+        OfficialVideoCandidate,
+        fetch_tennistv_video_metadata,
+    )
+
+    meta = fetch_tennistv_video_metadata(
+        OfficialVideoCandidate(title="", url=url, tour="ATP"))
+    playback = str(getattr(meta, "playback_url", "") or "")
+    if not playback.startswith("https://"):
+        raise SystemExit(
+            f"Tennis TV 没给出 HLS：{url}\n"
+            "这条多半不是免费条目——打开页面看 `data-entitlement`，"
+            "写着 `free` 才走得通这条路。")
+    print(f"[源] Tennis TV 解出 HLS（{getattr(meta, 'duration_ms', 0) / 1000:.1f} 秒）")
+    return playback
 
 # 字幕左右各留 64px（ASS 的 MarginL/MarginR），所以一行可用 952px。
 # **宽度要量，不能按字符数估。** 原来按「62 个字符」断行，那在 Noto Sans 40
@@ -209,6 +259,13 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     **这是加速不是闸**：拿不到就打印原因往下走，不许因为它失败挡住切行。
     但**要出声**——「没拿到」和「拿到了」在日志上必须长得不一样。
     """
+    if not is_youtube(url):
+        # storyboard 是 YouTube 独有的。对别的源试一遍要白等一次网络往返，
+        # 而且报出来的是「取不到视频信息」——听着像「今天网不好」，
+        # 其实是**这条路本来就不存在**。说清楚哪一种。
+        print("⚠️ 缩略图墙：这条源不是 YouTube，没有 storyboard 这回事，跳过"
+              "——挑封面用 `--stage cover` 渲一张出来看")
+        return None
     try:
         meta = json.loads(subprocess.run(
             ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
@@ -364,6 +421,17 @@ def fetch_words(url: str, workdir: Path,
     # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
     # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
     if not (files := sorted(workdir.glob("cap_*.json3"))):
+        if not is_youtube(url):
+            # **只有 YouTube 有自动字幕轨。** 对着别的源调 yt-dlp 只会拿到一句
+            # 指向完全错误方向的报错（Tennis TV 报的是「只对注册用户开放」，
+            # 读起来像 cookie 过期），而真相是这条路**根本不存在**。
+            raise SystemExit(
+                f"{url} 不是 YouTube，没有自动字幕轨可拉。\n"
+                f"这条源的第一份转写得自己跑 ASR，按 json3 的形状写到 "
+                f"{workdir}/cap_*.json3（`events[].tStartMs` + `segs[].utf8`，"
+                f"换说话人的第一个词前面加 `>> `），再跑一次。\n"
+                f"⚠️ 这么做的 spec 必须写 `asr_model`：`verify_transcript` 那道闸"
+                f"要靠它保证第二份 ASR 换了个模型——同一个模型跑两遍是自欺。")
         proc = subprocess.run(
             ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
              "--skip-download", "--write-auto-subs",
@@ -1045,6 +1113,24 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     ⚠️ **这一步只能在 runner 上跑**：沙箱的 IP 被 YouTube 挡了，连音频也下不到
     （`-f ba` 同样报 `Sign in to confirm you're not a bot`）。
     """
+    # ⚠️ **第二份 ASR 必须换个模型，否则这道闸是空的。**
+    # 原来的前提是「第一份来自 YouTube 的 ASR，第二份是 faster-whisper」，
+    # 两边天然不同。而非 YouTube 的源没有自动字幕轨，第一份**也是 whisper 跑的**
+    # （spec 里的 `asr_model`）——这时候不检查的话，同一个模型跑两遍必然逐词一致，
+    # 分歧率 0%，报告一片绿，而它什么都没验证。
+    # 仓库里 `en` / `en-orig` 那次记的就是这个形状：**同一份 ASR 换个名字，
+    # 拿它当交叉验证是自欺。**
+    second = spec.get("whisper_model", "small.en")
+    if spec.get("asr_model") and second == spec["asr_model"]:
+        raise SystemExit(
+            f"`whisper_model` 和 `asr_model` 都是 {second}——同一个模型跑两遍不是"
+            "交叉验证，分歧率会恒为 0。第二份换一个（比如 `medium.en`）再跑。")
+
+    # ⚠️ **上面那道闸只查 spec 的形状，所以必须排在这两个 import 前面。**
+    # 第一版写在后面，于是在**任何没装 faster-whisper 的机器上它根本走不到**
+    # ——而那正是 CI 那台（PR #198 的 run 30980157757：本地绿、CI 报
+    # `No module named 'faster_whisper'`）。又一次「本地装着不等于 CI 装着」，
+    # 也是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验前面。**
     import difflib
 
     from faster_whisper import WhisperModel  # noqa: PLC0415
@@ -1070,11 +1156,18 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     same = sum(b.size for b in sm.get_matching_blocks())
     rate = 1 - same / max(len(theirs), 1)
 
+    # **第一份是谁，要照实写。** 这条线原来只有一个源，所以这儿写死了「YouTube
+    # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
+    # 标签再写 YouTube 就是**主动给出一个错答案**——将来有人回头查这份报告，
+    # 会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
+    first = (f"ASR（{spec['asr_model']}）" if spec.get("asr_model")
+             else "YouTube 自动字幕")
     report = [f"# 转写交叉校验：{spec['slug']}", "",
-              f"- YouTube 自动字幕 **{len(theirs)}** 词",
-              f"- faster-whisper（{spec.get('whisper_model', 'small.en')}）**{len(ours)}** 词",
+              f"- 第一份：{first} **{len(theirs)}** 词",
+              f"- 第二份：faster-whisper（{spec.get('whisper_model', 'small.en')}）"
+              f"**{len(ours)}** 词",
               f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
-              "## 分歧逐处（左＝YouTube，右＝Whisper）", ""]
+              f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         if tag == "equal":
             continue
@@ -1284,7 +1377,15 @@ def check_human_quote(spec: dict, lines: list[dict], outdir: Path) -> Path | Non
 
 
 def _yt_at(url: str, seconds: float) -> str:
-    """给一条 YouTube 链接钉上时刻。**要整秒**——`&t=` 不吃小数，带小数它整个忽略。"""
+    """给一条 YouTube 链接钉上时刻。**要整秒**——`&t=` 不吃小数，带小数它整个忽略。
+
+    ⚠️ **非 YouTube 的源不许套这个模板。** 原来是无条件按 `/` 切最后一段当 video
+    id，喂一条 Tennis TV 地址进去会拼出 `https://youtu.be/montreal-2026-r2-shang-
+    interview?t=17`——一条**看着能点、点开是 404** 的链接。核对表就是给人对着听的
+    那张表，链接指错地方比没有链接坏得多（「喊错了是主动给出一个错答案」）。
+    """
+    if not is_youtube(url):
+        return f"{url}（片内 {seconds:.1f} 秒）"
     vid = url.rsplit("/", 1)[-1].split("v=")[-1].split("&")[0]
     return f"https://youtu.be/{vid}?t={int(seconds)}"
 
@@ -1532,7 +1633,8 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     # 函数，结果**把本来通的那条弄坏了**——加保险也要验它对每条路都成立。
     if "+" in fmt and (ext := dest.suffix.lstrip(".")) in _MERGE_CONTAINERS:
         cmd += ["--merge-output-format", ext]
-    cmd.append(url)
+    # **页面地址不一定就是下载地址。** Tennis TV 那条要先解一次，见 `media_url`。
+    cmd.append(media_url(url))
     subprocess.run(cmd, check=True, timeout=1800)
     if dest.exists():
         return dest
