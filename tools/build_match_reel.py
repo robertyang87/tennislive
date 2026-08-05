@@ -2810,6 +2810,169 @@ def speech_seconds(text: str) -> float:
     return chars * SPEECH_PER_CHAR + punct * SPEECH_PER_PUNCT + SPEECH_TAIL
 
 
+#: 死球之后留给结果和反应的尾巴（`find_point_ends.py --tail` 的默认值）。
+#: 段尾落在死球**之前**，观众就不知道这一分归谁——而那是回合镜头唯一的作用。
+POINT_TAIL = 1.2
+
+
+def probes_for_spec(spec: dict) -> tuple[dict[str, dict], list[str]]:
+    """按**源片 URL** 认领已落库的 probe.json。返回 (url→probe, 没查成的源键)。
+
+    ⚠️ **按 URL 认，不按 slug 或日期认。** 同一条 spec 会跨多个日期目录重跑，
+    而 `probe.json` 自己记着它探的是哪条 URL——那才是内容身份。
+    按 slug 认会在换了源片地址之后静静命中一份**别的片子**的切点，
+    而那种错不报错（同一个坑源片缓存和 voice 文件都栽过）。
+    """
+    urls = dict(spec.get("sources") or {})
+    if not urls:
+        urls = {"": str(spec.get("source_url", ""))}
+    found: dict[str, dict] = {}
+    for path in sorted(Path("output").glob("*/reel/*/probe.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue                      # 坏的就当没有，别把 dry-run 带崩
+        if data.get("url") in urls.values():
+            found[str(data["url"])] = data        # 后来的（日期靠后）覆盖先来的
+    missing = sorted(name for name, url in urls.items() if url not in found)
+    return found, missing
+
+
+#: 切点离段落边界多近就算「窗口对齐了源片自己的镜头边界」，不算中途换镜头。
+#:
+#: **量出来的**：20 条已发 spec、72 处未声明的跨切点，按「离最近那条边界多远」
+#: 排开是 0.01 / 0.02×4 / 0.03 / 0.04×3 / 0.05 / 0.07 / 0.08 / 0.10 / 0.12，
+#: 然后跳到 0.16。前面那一簇是 0~3 帧（25 fps 一帧 0.04s）——那正是
+#: CLAUDE.md 说该做的事（「窗口本来就该切在源片自己的镜头边界上」）。
+#: 0.15 落在 0.12 和 0.16 中间那道缝里。
+CUT_EDGE_TOL = 0.15
+
+
+def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
+    """拿已落库的 probe.json 查选段。返回 True 表示**有硬错**。
+
+    | 查什么 | 出处 | 硬不硬 |
+    |---|---|---|
+    | 段落／`frame_at` 写过源片末尾 | `duration` | **硬** |
+    | 段体跨镜头切点又没写 `crosses_cut` | `scene_cuts` | 只报，**按离边界多远排序** |
+    | 溶解底料跨切点 | 同上 | 只报 |
+    | 段尾切在一分打完之前 | `point_ends` | 只报 |
+
+    ⚠️ **只有第一条是硬的，而这是量出来之后改的。**
+    我本来把「跨切点」也做成了硬闸——拿 20 条已发 spec 一扫，**10 条会红，
+    72 处跨切点**（去掉边界对齐那 18 处还剩 54 处，从 0.16s 一直连到 8.28s）。
+    那不是闸，是墙：这些片子都是审过发出去的，而 CLAUDE.md 明写着跨切点有时
+    就是对的（两边都是同一个人，只是机位换了）。**做成硬闸的下场是可预见的**
+    ——下一个人给所有段写上 `crosses_cut` 把它按掉，而那**正好毁掉它唯一想拦
+    的那种情况**（整句旁白压在另一个人身上）。
+    「一条常年红的检查和没有检查是同一个毛病」，而这条比那还糟一档。
+
+    ⚠️ **死球那条同理不能做成硬闸。** `point_ends` 是**下限不是上限**——不给
+    `--scorebox` 就是空的，检出也会漏（记分条会滞后、镜头切走时整块消失）。
+
+    ⚠️ **一份都没查成要出声**，别让「没有 probe」和「全都合格」长得一样。
+    """
+    probes, missing = probes_for_spec(spec)
+    if not probes:
+        print("\n[查选段] **一份 probe.json 都没认领上**——这一段没查。\n"
+              "  probe 把切点、死球、片长都算好并提交进仓库了，按源片 URL 认领；"
+              "认不上多半是还没跑过 probe，或者 spec 里的 `source_url` 换过了。")
+        return False
+    print(f"\n[查选段] 认领到 {len(probes)} 份 probe.json"
+          + (f"，**没查成的源：{missing}**" if missing else ""))
+
+    hard: list[str] = []
+    soft: list[str] = []
+    urls = dict(spec.get("sources") or {}) or {"": str(spec.get("source_url", ""))}
+
+    # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
+    #    短的，而后面每一句旁白和字幕都跟着整体错位。
+    for index, seg in enumerate(segments):
+        probe = probes.get(urls.get(seg.source, ""))
+        if not probe or not probe.get("duration"):
+            continue
+        dur = float(probe["duration"])
+        if seg.end > dur + 0.05:
+            hard.append(f"  第 {index + 1} 段 end={seg.end:.2f}s "
+                        f"超出源片末尾（{dur:.2f}s）")
+    for tag, spot in _cover_frame_spots(spec):
+        probe = probes.get(urls.get(str(spot.get("source", "")), ""))
+        if probe and probe.get("duration") \
+                and float(spot["frame_at"]) > float(probe["duration"]):
+            hard.append(f"  封面 {tag} 的 frame_at={spot['frame_at']}s "
+                        f"超出源片末尾（{probe['duration']}s）")
+
+    # ② 跨镜头切点。复用 render 那条路用的同一个函数——写两处必分叉。
+    #    **按「离最近那条边界多远」排序**：越靠段落中间越可疑，靠边的那些
+    #    是窗口对齐了源片自己的镜头边界（`CUT_EDGE_TOL`），根本不该提。
+    straddling, tail_cuts, unchecked = segments_straddling_cuts(
+        spec, list(probes.values()))
+    mid: list[tuple[float, str]] = []
+    for hit in straddling:
+        for cut in hit["cuts"]:
+            edge = min(cut - hit["start"], hit["end"] - cut)
+            if edge < CUT_EDGE_TOL:
+                continue                 # 窗口对齐镜头边界，这是对的做法
+            mid.append((edge, f"  第 {hit['index'] + 1:>2} 段 "
+                              f"{hit['start']:.2f}–{hit['end']:.2f}s 里第 "
+                              f"{cut:.2f}s 换了镜头（离最近的边界 {edge:.2f}s）"
+                              f"：「{str(hit['narration'])[:22]}…」"))
+    for hit in tail_cuts:
+        soft.append(f"  第 {hit['index'] + 1} 段的溶解底料跨了切点"
+                    f"（段尾 {hit['end']:.2f}s 之后 {SEG_FADE}s 内）")
+
+    # ③ 段尾切在一分打完之前——**只报不拦**，理由见 docstring。
+    for index, seg in enumerate(segments):
+        probe = probes.get(urls.get(seg.source, ""))
+        ends = [float(t) for t in (probe or {}).get("point_ends") or []]
+        cut_mid = [t for t in ends if seg.end < t <= seg.end + POINT_TAIL * 2.5]
+        if cut_mid:
+            soft.append(
+                f"  第 {index + 1} 段 end={seg.end:.2f}s 像是切在一分打完之前"
+                f"（最近的死球在 {min(cut_mid):.2f}s）——观众看不出这分归谁")
+
+    if mid:
+        mid.sort(reverse=True)          # 越靠中间越可疑，排前面
+        print(f"\n[查选段] {len(mid)} 处窗口中途换了镜头（**只报不拦**，"
+              f"离边界不到 {CUT_EDGE_TOL}s 的已经滤掉——那是窗口对齐了源片自己的"
+              "镜头边界，本来就该那样）。越靠段落中间越可疑，按这个排的：")
+        print("\n".join(line for _e, line in mid[:8]))
+        if len(mid) > 8:
+            print(f"  …另有 {len(mid) - 8} 处更靠边的")
+        print("  拿缩略图墙对一眼：两边还是同一个人就没事，写一句 "
+              "`\"crosses_cut\": \"<为什么>\"` 挂账；"
+              "**换了人就是整句旁白压在别人身上**，那要改窗口。")
+    if soft:
+        print("\n[查选段] 另外这几条也只报不拦：")
+        print("\n".join(soft))
+    if unchecked:
+        print(f"  ⚠️ 这几条源片的切点没查成：{unchecked}")
+    if hard:
+        print("\n[查选段] 下面这些**过不去**——"
+              "ffmpeg 的 `-ss`/`-t` 越界不报错，只安安静静出一段短的，"
+              "而后面每一句旁白和字幕都跟着整体错位：")
+        print("\n".join(hard))
+        print("  把 `end` 往前收，或者换一条更长的源片。")
+        return True
+    print("  选段这一层没有硬伤（片长）。**挑段仍然要看缩略图墙**——"
+          "「近端是谁」「情绪对不对题」机器判不了。")
+    return False
+
+
+def _cover_frame_spots(spec: dict) -> list[tuple[str, dict]]:
+    """封面里所有要从源片抓帧的格子：`(标签, 那一格)`。"""
+    cover = spec.get("cover") or {}
+    out: list[tuple[str, dict]] = []
+    if (cover.get("portrait") or {}).get("frame_at") is not None:
+        out.append(("portrait", cover["portrait"]))
+    versus = cover.get("versus") or {}
+    for key in ("background", "top", "bottom"):
+        spot = versus.get(key) or {}
+        if spot.get("frame_at") is not None:
+            out.append((key, spot))
+    return out
+
+
 def narration_estimates(segments) -> list[tuple[int, float, float]]:
     """`[(段序号, 估出来的旁白秒数, 余量)]`，只给有旁白的段。
 
@@ -3631,8 +3794,17 @@ def main() -> int:
         segments = validate_spec(spec)
         total = sum(s.length for s in segments)
         print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
-        print("  ⚠️ 只校验了形状。裁切越界、frame_at 超出片长这类要等源片，"
-              "这里查不了。")
+        # **选段的机械判据全在 probe.json 里躺着，而这儿原来不看它。**
+        #
+        # 这句注释原来写的是「裁切越界、frame_at 超出片长这类要等源片，这里
+        # 查不了」——**过期了**：probe 把 `duration` / `scene_cuts` /
+        # `point_ends` 都算好并**提交进仓库**了，源片早就不必在场。
+        #
+        # 代价是量过的：wong-brooksby 那三处段尾修正（`128.0→132.7`、
+        # `143.0→147.7`、`173.0` 正好切在赛点那一分中间）**每一处都先付了一趟
+        # 渲染才发现**；郑钦文那条三处跨镜头**渲染一次都没报错**，直接发了出去。
+        # 又一次「工具写出来了、判据算出来了、就是没人在该用的时候用它」。
+        hard = probe_dry_run(spec, segments)
         # **文案也在这儿校一遍。** 它的两道闸（正文 ≤1000 字、tag ≤5 个）原来
         # 只活在 `push_reel.py --stage page` 里，而那一步排在 **render 之后**
         # ——2026-08-05 `chwalinska-gibson` 那趟 6 个 tag，**渲完两分半才报**
@@ -3715,7 +3887,10 @@ def main() -> int:
                       "（或本地 `render --check-narration`，要能联网）")
             else:
                 print("\n[估旁白] 每段都留着一个误差以上的余量，估得再保守也装得下。")
-        return 0
+        # **选段那几条硬伤也要让退出码认账。** 只打印不返回非零的话，
+        # 「查出来了」和「没问题」在调用方眼里一模一样——而这条命令的用处
+        # 就是在写 spec 那一刻把返工挡住。
+        return 1 if hard else 0
 
     render(spec, outdir,
            voice=args.voice, rate=args.rate,
