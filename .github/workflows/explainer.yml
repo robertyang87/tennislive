@@ -61,7 +61,6 @@ jobs:
       # 不用动代码；填错域名会被代码挡掉并退回默认，不会发出裂图。
       TENNISLIVE_JSDELIVR_HOST: ${{ vars.TENNISLIVE_JSDELIVR_HOST }}
       PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-      PUSHPLUS_SECRET_KEY: ${{ secrets.PUSHPLUS_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:

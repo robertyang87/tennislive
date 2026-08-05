@@ -91,22 +91,30 @@ def test_every_workflow_that_commits_generated_files_has_a_size_gate():
 _PUSHPLUS_IMAGE_ENTRIES = re.compile(r"tennislive publish |push_reel\.py")
 
 
-def test_走图床那条路的工作流都要配SECRET_KEY():
-    """漏配不报错，只是悄悄退回 jsDelivr——慢，而且会整条不发。
+def test_不许再给工作流配PUSHPLUS_SECRET_KEY():
+    """⚠️ **这条判据 2026-08-05 整个翻了个面。** 原来它要求每条走图床的工作流
+    都配上 `PUSHPLUS_SECRET_KEY`；现在要求**一条都不许配**。
 
-    `prepare_image_delivery` 有两条分支：配了 `PUSHPLUS_SECRET_KEY` 就走
-    PushPlus 自己的图床（上传完当场可取）；没配就退回 jsDelivr，然后
-    `wait_for_images` 最多轮询 20×15s = **5 分钟**，轮满还取不到就
-    `PushPlusError` **整条推送取消**。也就是说漏配的代价不只是慢，是
-    「这一轮内容白生成」。
+    账号所有者 2026-08-05：「如果没有任何用途的话，拿掉吧」。
 
-    而两条分支的日志长得差不多，所以它一直没被发现：flash.yml（内容雷达的
-    赛前焦点，跑 `tennislive publish content`）从上线起就没配，而同样走这条
-    路的另外五条工作流全配了。
+    翻面的理由是那条路真的走了一趟之后才看清的（run 30903125364，纳达尔学院）：
 
-    **判据自己推导，不维护白名单**（见上一条：一个会过期的名单和一条常年红的
-    检查是同一个毛病）。新加一条走 `tennislive publish` / `push_reel.py` 的
-    工作流，它自动被盖住。
+        获取 PushPlus AccessKey 失败: code=401 请求未授权
+
+    官方码表说 401 ＝「排查**开放接口功能是否启用**」，而开放接口
+    **默认就是禁用的**，要去后台手动开；开完还有一道**安全 IP 白名单**，
+    而 GitHub runner 的出口 IP 每趟都不一样——**那条路对 CI 基本无解**。
+    就算全部打通，图床还有两条硬限制：**图片 30 天后自动删**（老推送到期变
+    裂图）、**收费/会员**。
+
+    而不配它走的 jsDelivr 退路，图片**钉在 commit 上、永久可取**——
+    除了「发送前要等回源」这一点，每一维都更好。
+
+    ⚠️ 原来那条判据的前提是「配了就能用」。前提没了，判据就得跟着翻，
+    **不能留着一条要求配一个用不了的密钥的检查**。
+
+    判据仍然**自己推导，不维护白名单**：凡是走 `tennislive publish` /
+    `push_reel.py` 那条路的工作流都被扫到，新加一条自动盖住。
     """
     users = []
     for path in sorted(Path(".github/workflows").glob("*.yml")):
@@ -114,11 +122,20 @@ def test_走图床那条路的工作流都要配SECRET_KEY():
         if _PUSHPLUS_IMAGE_ENTRIES.search(body):
             users.append((path.name, body))
 
+    # ⚠️ 这一句是**判据自己的判据**。主语没了（比如有人改了那个正则、
+    # 或者把这些工作流删光），下面那个循环会一条都不跑，
+    # 于是这条检查变成一盏恒真的绿灯。
     assert len(users) >= 6, f"只找到 {len(users)} 条走图床的工作流，判据可能失效了"
+
     for name, body in users:
-        assert "PUSHPLUS_SECRET_KEY" in body, (
-            f"{name} 会走 PushPlus 图床却没配 PUSHPLUS_SECRET_KEY——"
-            "会悄悄退回 jsDelivr，轮询 5 分钟，取不到就整条不发")
+        for key in ("PUSHPLUS_SECRET_KEY", "PUSHPLUS_ACCESS_KEY"):
+            assert key not in body, (
+                f"{name} 又配上了 {key}。这个密钥**是故意不配的**：\n"
+                "  · 开放接口默认禁用，要去 PushPlus 后台手动开（401 就是这个）\n"
+                "  · 开完还有安全 IP 白名单，而 GitHub runner 的 IP 每趟都变\n"
+                "  · 图床的图 30 天后自动删，老推送到期变裂图\n"
+                "不配它走 jsDelivr，图片钉在 commit 上永久可取。\n"
+                "真要改回去，先把上面三条解决掉，再连这条判据一起改。")
 
 
 def test_每条工作流都要有超时且apt那一步单独有():
