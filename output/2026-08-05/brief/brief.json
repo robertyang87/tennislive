@@ -1,0 +1,585 @@
+{
+  "date": "2026-08-05",
+  "news_count": 72,
+  "zh_scanned": 231,
+  "source_status": {
+    "Roland-Garros": "正常 · 0 条",
+    "Wimbledon": "正常 · 0 条",
+    "Australian Open": "正常 · 0 条",
+    "ATP Tour": "正常 · 12 条",
+    "WTA": "正常 · 10 条",
+    "US Open": "正常 · 0 条",
+    "US": "正常 · 10 条",
+    "AU": "正常 · 10 条",
+    "Top media": "正常 · 6 条",
+    "HK": "正常 · 10 条",
+    "GB": "正常 · 10 条",
+    "Sky Sports": "正常 · 20 条",
+    "The Guardian": "正常 · 5 条",
+    "BBC Sport": "正常 · 6 条",
+    "Tennis Majors": "正常 · 16 条",
+    "微信热文榜": "正常 · 扫 30 条 / 网球 0 条",
+    "微博热搜": "正常 · 扫 50 条 / 网球 0 条",
+    "知乎热榜": "正常 · 扫 30 条 / 网球 0 条",
+    "抖音热搜": "正常 · 扫 50 条 / 网球 0 条",
+    "百度热搜": "正常 · 扫 51 条 / 网球 0 条",
+    "小红书热榜": "正常 · 扫 20 条 / 网球 0 条",
+    "微信指数": "拿不到 · search.weixin.qq.com 无签名返回 {\"code\":-1}，签名要从微信小程序里取；且它是「给词查数」，回答不了「今天什么热」",
+    "小红书官方接口": "拿不到 · edith 域 404、www 域 500，两条都要签名；已改走 UApiPro（主）+ 今日热榜镜像（备）",
+    "微信搜一搜热点词 / 公众号热点话题榜": "拿不到 · 只有付费接口（聚合数据卖的是话题榜，无 key 返回「错误的请求KEY」；百度千帆 401）。免费那几家都没有微信：UApiPro 的 weixin/wechat/wxhot 一律 invalid hotboard type，DailyHotApi 公开支持列表里也没有"
+  },
+  "dropped_nav": [
+    "What is the Montreal tennis schedule?",
+    "What were the Montreal tennis results?",
+    "What were the Washington tennis results?"
+  ],
+  "notes": [
+    "模型通道 deepseek · deepseek-v4-pro",
+    "标题中译：译成 1/1 条"
+  ],
+  "deep": 8,
+  "count": 9,
+  "stories": [
+    {
+      "title_zh": "Draper蒙特利尔站复出落泪出局",
+      "deep": true,
+      "points": [
+        "德雷珀在蒙特利尔站首轮6-3、2-6、6-2负于阿特马内。",
+        "这是他自温网退赛后首次参赛，第三盘情绪失控流泪。",
+        "第三盘德雷珀发球时速骤降，疑似左臂伤势复发。",
+        "他获辛辛那提站外卡，但此战后美网前景存疑。"
+      ],
+      "why": "英国男网名将德雷珀复出即遭重挫，伤势牵动其赛季前景。",
+      "angle": "从德雷珀反复受伤看现代网球高强度对球员身体的消耗。",
+      "note": "读了 3 篇原文",
+      "known_angle": {
+        "slug": "protected-ranking",
+        "label": "保护排名",
+        "evergreen": "长期伤停的人复出时用「保护排名」进签表，它能用几次、管多久、能不能用在种子上——规则写得很细，而观众只看到「他回来了」。",
+        "source": "ATP/WTA 规则手册 Protected/Special Ranking 一节",
+        "question": "伤停一年的人，凭什么还能直接进正赛？",
+        "done_on": ""
+      },
+      "sources": [
+        "ATP Tour",
+        "BBC Sport",
+        "Sky Sports",
+        "Tennis Majors",
+        "The Guardian"
+      ],
+      "heat": {
+        "outlets": 5,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 56
+      },
+      "headlines": [
+        {
+          "title": "Jack Draper in tears amid injury concern during defeat to Terence Atmane on return to action in Montreal",
+          "source": "Sky Sports",
+          "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOLURxNktpTEpud0VJOWxTT3JpMS0zY0FnTDFOOS1mcFB3Nmphb1E1UkpkR2VPV2ZCR1JyXzlYa1ZlQU5oSkV6dXdKYWw5dFkzOVFEcVljcy1Ca1dHUDY4OWpVbU1MWXNTY1pBVFdZMmw4OVJ5VzBTamcxeV9ZYVQ5XzNMNW1EaFV0LXl2Mnhtc0dCVW1Lc20tRUJuNW1tQTNuMzctNWNZS1VmMk15bGdNSW1SVkhja002ZmNYMVJ6UFJIZ1RyNXE4Q1lUYklzZEJja1JyNEFHaFoxRTdiNG1lb0lWZnE3LVZfYnlyUUJB?oc=5"
+        },
+        {
+          "title": "Jack Draper in tears on return from injury at the Canadian Open.",
+          "source": "Sky Sports",
+          "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNdm1rRFJLQUdsaWZ2cnpsc2RWM2wwQVpWTC1Ic0tMdnhHYl9LdlBoc3lxa0w3S3JtUVV4STVRVHgxamFKdHdJZDEwREtNNE5nalBtQ2pWWF9RT1F4V3k1Uk5zV25zYTA0dlJyTjA3R3hIV0k3Y29aTk94TzRiMEJ6c01ETm5vRFJKQUo0M3doVjRMM0k3WGwtTnBUcXYtbjhGeDdHOTN3X3VVQkw5MGo4TXJFbw?oc=5"
+        },
+        {
+          "title": "Sunday action in Montreal cancelled due to rain",
+          "source": "ATP Tour",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE50QmwyUTlKbUJsaWlCaDJXX0RtRFhELS12Y3Jic0VzY1BEV1lsOHp5b1ltS0M4dER3MGNJQ3dTczl4OUw1ejllbFg1alZxMWw2SXpNcndVc0FZdnVxM2tzeGY2R05ZcVJj?oc=5"
+        },
+        {
+          "title": "Tearful Jack Draper loses on comeback from injury at Canadian Open",
+          "source": "The Guardian",
+          "url": "https://www.theguardian.com/sport/2026/aug/04/tennis-tearful-jack-draper-loses-canadian-open-terence-atmane"
+        },
+        {
+          "title": "Draper in tears amid injury concern during defeat in Montreal",
+          "source": "Sky Sports",
+          "url": "https://www.skysports.com/tennis/news/12040/13569819/jack-draper-in-tears-amid-injury-concern-during-defeat-to-terence-atmane-on-return-to-action-in-montreal"
+        },
+        {
+          "title": "Tearful Draper struggles during comeback defeat",
+          "source": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cgljg3g7y2eo?at_medium=RSS&at_campaign=rss"
+        },
+        {
+          "title": "Draper in tears as Atmane ends latest comeback in Montreal",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/atp/draper-in-tears-as-atmane-ends-latest-comeback-in-montreal-857803.html"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.theguardian.com/sport/2026/aug/04/tennis-tearful-jack-draper-loses-canadian-open-terence-atmane",
+          "source": "The Guardian",
+          "ok": true,
+          "note": "读到 10 段"
+        },
+        {
+          "url": "https://www.skysports.com/tennis/news/12040/13569819/jack-draper-in-tears-amid-injury-concern-during-defeat-to-terence-atmane-on-return-to-action-in-montreal",
+          "source": "Sky Sports",
+          "ok": true,
+          "note": "读到 32 段"
+        },
+        {
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cgljg3g7y2eo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Sport",
+          "ok": true,
+          "note": "读到 16 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "威廉姆斯姐妹获辛辛那提站双打外卡",
+      "deep": true,
+      "points": [
+        "小威廉姆斯和大威廉姆斯获辛辛那提公开赛女双外卡。",
+        "这是姐妹俩自2022年美国网球公开赛后首次搭档双打。",
+        "两人联手赢得14座大满贯双打冠军和3枚奥运金牌。",
+        "小威廉姆斯44岁，大威廉姆斯46岁，后者还获得单打外卡。",
+        "小威今年温网单打首轮告负后因膝伤退出双打。"
+      ],
+      "why": "威廉姆斯姐妹重返赛场，可能为美网热身，小威有望再追第24座大满贯单打纪录。",
+      "angle": "传奇姐妹花职业生涯末期回归，能否再创奇迹或为退役画上句号。",
+      "note": "读了 2 篇原文",
+      "known_angle": {
+        "slug": "mixed-doubles-revamp",
+        "label": "混双改制",
+        "evergreen": "美网把混双挪到正赛前、改成短赛制并向单打球星开放，老牌双打选手因此进不去——赛事想要星光，代价是谁来付。",
+        "source": "US Open 官方公告；ITF/大满贯规则书混双构成表",
+        "question": "混双改成明星表演赛，双打球员怎么办？",
+        "done_on": ""
+      },
+      "sources": [
+        "BBC Sport",
+        "The Guardian",
+        "WTA Tennis"
+      ],
+      "heat": {
+        "outlets": 3,
+        "trend_hits": 1,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 39
+      },
+      "headlines": [
+        {
+          "title": "Serena, Venus Williams accept Cincinnati doubles wild card",
+          "source": "WTA Tennis",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQbl95MU9WOFhaNy1tOEFDczV3M0hERmhxZ2VkU1JKM3BqLTdWTEZJdmk5aUV3NllrS1pYU1R1TVFwQlVtMDlzTmtUQmlFQ2JtUEo0bDU5ZExoRTFUekw5X0NxQ0hYUUpqblhSbkVFOTVVaUxtOGFxaEtOaFZJdjgzRm50UUpIbE4wVGthWm5BTG9HdHhaVlE3R0hhaHM?oc=5"
+        },
+        {
+          "title": "Williams sisters set to play Cincinnati Open doubles",
+          "source": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/ce97d0ygzkmo?at_medium=RSS&at_campaign=rss"
+        },
+        {
+          "title": "Serena and Venus Williams set to play doubles in Cincinnati as US Open nears",
+          "source": "The Guardian",
+          "url": "https://www.theguardian.com/sport/2026/aug/03/serena-williams-venus-williams-cincinnati-open-doubles"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/ce97d0ygzkmo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Sport",
+          "ok": true,
+          "note": "读到 10 段"
+        },
+        {
+          "url": "https://www.theguardian.com/sport/2026/aug/03/serena-williams-venus-williams-cincinnati-open-doubles",
+          "source": "The Guardian",
+          "ok": true,
+          "note": "读到 8 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "伊埃拉华盛顿站夺WTA首冠",
+      "deep": true,
+      "points": [
+        "伊埃拉击败头号种子佩古拉，成为菲律宾首位WTA单打冠军",
+        "决赛因雨推迟至周一，比分为4-6 6-4 6-0，第三盘送蛋",
+        "伊埃拉世界排名预计从第28位升至生涯最高第20位",
+        "近一个月八成购票者询问伊埃拉赛程，菲律宾掀网球热",
+        "她在马尼拉获总统接待，拳王帕奎奥称其为“我们的新冠军”"
+      ],
+      "why": "菲律宾诞生首位WTA冠军，排名冲进前20，引爆新兴网球市场关注",
+      "angle": "非网球强国如何靠一个明星球员催生全民狂热并挑战基础设施短板",
+      "note": "读了 3 篇原文",
+      "known_angle": null,
+      "sources": [
+        "BBC Sport",
+        "Tennis Majors",
+        "The Guardian"
+      ],
+      "heat": {
+        "outlets": 3,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 36
+      },
+      "headlines": [
+        {
+          "title": "‘Our new champion’: Philippines swept up in tennis fever after Alex Eala’s historic win",
+          "source": "The Guardian",
+          "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOYkdrOUNtSHE1Y1h6MjNDYlY5d2dJeXhiQm9RSkRQWTNxbmx4T2lUZFNRWkNZeFFpcmNpRTRwX0dUZW5pWlFHS0tTdE1kZU5hX2lOeDkwdE1UY0R0dDBtc0JqNmhOVGtCQXI2RGtxZ2IzaUl2RFFSUTZBNjlsTy1oelIzRDlfNEU?oc=5"
+        },
+        {
+          "title": "‘Our new champion’: Philippines swept up in tennis fever after Alex Eala’s historic win",
+          "source": "The Guardian",
+          "url": "https://www.theguardian.com/world/2026/aug/05/alex-eala-philippines-tennis-fever"
+        },
+        {
+          "title": "Eala becomes first Filipino to win WTA singles title",
+          "source": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cvglr1pr1gxo?at_medium=RSS&at_campaign=rss"
+        },
+        {
+          "title": "“Oh my god”: Eala stuns Pegula to become first Filipina WTA champion in Washington",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/wta-tour-news/eala-stuns-pegula-to-become-first-filipina-wta-champion-in-washington-857636.html"
+        },
+        {
+          "title": "BREAKING: Eala makes history as first Filipina to win the Mubadala DC Open",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/wta-tour-news/breaking-newe-eala-lifts-the-trophy-at-washington-857633.html"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.theguardian.com/world/2026/aug/05/alex-eala-philippines-tennis-fever",
+          "source": "The Guardian",
+          "ok": true,
+          "note": "读到 19 段"
+        },
+        {
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cvglr1pr1gxo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Sport",
+          "ok": true,
+          "note": "读到 18 段"
+        },
+        {
+          "url": "https://www.tennismajors.com/wta-tour-news/eala-stuns-pegula-to-become-first-filipina-wta-champion-in-washington-857636.html",
+          "source": "Tennis Majors",
+          "ok": true,
+          "note": "读到 10 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "阿尔卡拉斯因腕伤退出辛辛那提站",
+      "deep": true,
+      "points": [
+        "阿尔卡拉斯因持续腕伤退出辛辛那提公开赛，该赛事8月11日开打。",
+        "他自4月巴塞罗那站退赛后未参赛，错过法网卫冕和温网。",
+        "阿尔卡拉斯是2025年辛辛那提站冠军，赛事总监祝愿其康复。",
+        "他可能参加8月23日开始的温斯顿-塞勒姆公开赛为美网热身。",
+        "美网将于8月30日开赛，阿尔卡拉斯是卫冕冠军，目前仍排名世界第二。"
+      ],
+      "why": "世界第二因伤长期缺阵，美网卫冕前景成疑，牵动球迷关注。",
+      "angle": "腕伤对顶尖网球选手职业生涯的长期影响与复出挑战。",
+      "note": "读了 2 篇原文",
+      "known_angle": {
+        "slug": "withdrawal-deadline",
+        "label": "退赛与截止日",
+        "evergreen": "赛前退赛有截止日和罚则，过了线才退、和赛前一周退，处理完全不同；大满贯还有「打完首轮才算出场」那条拿钱的规矩。",
+        "source": "ATP/WTA 官方规则手册的 Withdrawal 一章；大满贯规则书 Z 节",
+        "question": "顶尖球员临时退赛，赛事能拿他们怎么办？",
+        "done_on": ""
+      },
+      "sources": [
+        "BBC Sport",
+        "Sky Sports"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "Carlos Alcaraz withdraws from Cincinnati Open due to ongoing wrist injury with worries over US Open defence",
+          "source": "Sky Sports",
+          "url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxPbkpGdzVTOUdUa2tMNWhKZjZDTGc5NWFVdklYUk9vdXZPVk9rWlU0Skt5dDZ4WXZqc19mZWJtM25UUTg4S185b0gwRmNiS3J4TkNSMjNyNkFGOC1sd19lczFQM1g4bVA3OERNeENJR19WemJoeHI5YU1sZzZBNVdIUGRhYWlreFdtXzFFMFZFbGZKSWozTWQ0ZDBramNhQ3Y1Z1ljYjQzM1pLX0ZSV3A0dXlXdXNfTS01XzVRTnVUMTJqWnN4NF9NWXF3LVp4Q1R3VG1vNHRCRDBzZmQtbThHeHhJMkJMWGJ6TmdNSmhlZVVaUQ?oc=5"
+        },
+        {
+          "title": "Alcaraz withdraws from Cincinnati Open",
+          "source": "Sky Sports",
+          "url": "https://www.skysports.com/tennis/news/12040/13569917/carlos-alcaraz-withdraws-from-cincinnati-open-due-to-ongoing-wrist-injury-with-worries-over-us-open-defence"
+        },
+        {
+          "title": "Alcaraz out of Cincinnati Open with lingering injury",
+          "source": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/c20e1723pdno?at_medium=RSS&at_campaign=rss"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.skysports.com/tennis/news/12040/13569917/carlos-alcaraz-withdraws-from-cincinnati-open-due-to-ongoing-wrist-injury-with-worries-over-us-open-defence",
+          "source": "Sky Sports",
+          "ok": true,
+          "note": "读到 12 段"
+        },
+        {
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/c20e1723pdno?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Sport",
+          "ok": true,
+          "note": "读到 8 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "孟菲尔斯蒙特利尔站创最年长纪录",
+      "deep": true,
+      "points": [
+        "39岁335天的孟菲尔斯6-4,6-4击败迈赫扎克，闯入蒙特利尔站第二轮。",
+        "成为1970年冈萨雷斯之后，加拿大公开赛最年长的正赛赢球男子选手。",
+        "轰出8记Ace，一发得分率84%（26/31），并把握9个破发点中的4个。",
+        "目前赛季战绩3胜7负，这是他第15次、也是退役前最后一次出战蒙特利尔站。",
+        "下轮将对阵12号种子、美国小将田亮纳。"
+      ],
+      "why": "年近40的孟菲尔斯在退役赛季刷新古老纪录，延续不老传奇。",
+      "angle": "高龄球员在ATP巡回赛的竞争力：从孟菲尔斯38岁夺冠到39岁再创纪录的常青现象。",
+      "note": "读了 1 篇原文",
+      "known_angle": null,
+      "sources": [
+        "ATP Tour",
+        "Tennis Majors"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "Monfils turns back the clock with late-night Montreal magic",
+          "source": "ATP Tour",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBNMFRmbDlYLURMTGlfUG92RmQtT1JENnUwU3VQNVR4eHdMNEFIU0NhRmY0R3FOLWFmZTM1SzNsczZWbkNSWGd2Y1g3eExYTlRGZlBueWphMFhfd0dNc2Y4Y29ZNFBEb2JmYm8ycXZGWVR1dGFqeDRCSGdB?oc=5"
+        },
+        {
+          "title": "Ageless Monfils rewrites Montreal history at 39",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/atp/national-bank-open-presented-by-rogers-monfils-into-64-857735.html"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.tennismajors.com/atp/national-bank-open-presented-by-rogers-monfils-into-64-857735.html",
+          "source": "Tennis Majors",
+          "ok": true,
+          "note": "读到 7 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "弗里茨华盛顿站夺首冠",
+      "deep": true,
+      "points": [
+        "弗里茨以7-6(2)、6-4击败19岁新星霍达尔，赢下华盛顿站冠军。",
+        "弗里茨结束2026年三连亚（达拉斯、哈雷、东京），获赛季首冠及生涯第11冠。",
+        "霍达尔挽救四个冠军点，且在手部受伤情况下将比赛拖入紧张局面。",
+        "弗里茨成为2008年以来第二位赢得华盛顿站的美国男子球员。"
+      ],
+      "why": "弗里茨破赛季冠军荒，19岁西班牙新星霍达尔险些爆冷。",
+      "angle": "弗里茨反复在决赛中失利后的心理突破与生涯关键时刻。",
+      "note": "读了 1 篇原文",
+      "known_angle": null,
+      "sources": [
+        "Tennis Majors",
+        "WTA Tennis"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "Eala's breakthrough is complete with Washington title",
+          "source": "WTA Tennis",
+          "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPN1hqQ3lpYk1LM0ptVHRPeVJQX0loZ09KT1k4U2drVGwtaTA2R3MxVTdHY1hUZjhQWFg1ZzF3ZFRLVjZ1bU8xb0pWWThsd0FkSzdwVnp3UU5RWDgzMEl6UUl1MWFoR21uNk5tQ1VmZ2JUUGlnc2N5aDg2RV9EenAtLWZGSXp4dXAzOW5waEt6cEJPMEdfd2YyUjdDcklTbVRORDg2RXE1Q2NTYzF4dzRndUJpeWxHSWFsRkJJaTFxSHQ?oc=5"
+        },
+        {
+          "title": "Fritz survives Jodar scare to end his title drought in Washington",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/atp/washington-citi-open-atp-500-atp/fritz-survives-jodar-scare-to-end-his-title-drought-in-washington-857665.html"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.tennismajors.com/atp/washington-citi-open-atp-500-atp/fritz-survives-jodar-scare-to-end-his-title-drought-in-washington-857665.html",
+          "source": "Tennis Majors",
+          "ok": true,
+          "note": "读到 8 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "伊埃拉与佩古拉的华盛顿站决赛推迟至周一",
+      "deep": false,
+      "points": [],
+      "why": "",
+      "angle": "",
+      "note": "这一簇只有 Google News 的包装链接，读不到正文（ATP/WTA 官网没有能用的 RSS，见 research/newsfeeds.py）",
+      "known_angle": null,
+      "sources": [
+        "ATP Tour",
+        "WTA Tennis"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "Eala, Pegula Washington DC championship suspended to Monday",
+          "source": "WTA Tennis",
+          "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQcUJJS0hia181UWI3NTZLODhRNU9fMHA2bDBwRTY5NndPTDFqMEo2Skt6WEp5dmlhalpqd2RjMlVwZWl4V0VQRFNseUFvWnBiX3hOMThla09KYW1qcnpGb2pzdklQclNFSTgzNHdWMGpVRDlYQzlCeUFMN0pocW05SEEtNzNDSmxBM0VOLVRnaXhnWGVXOU5fRWtQYnNZWHRXaWNQeFBTTHpkZ1Q1S0d0ZE45dmo5UQ?oc=5"
+        },
+        {
+          "title": "Washington final delayed until Monday due to rain",
+          "source": "ATP Tour",
+          "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE1nRVFnbzB5V2FMUENIV3RDSEtTR0V3MmhPZjZDVkFLWG9GYnhPdUx3bDU0TjJEQ2MtQjVTTVBXaVZBaFUzOXNyME83UUxmSkxTdjRGXzF3R1ZrNVNJcUJyb2tRRF96Z3lsbEE4WFJjb0JsUQ?oc=5"
+        }
+      ],
+      "reads": []
+    },
+    {
+      "title_zh": "16岁柳托娃夺孟菲斯WTA冠军",
+      "deep": true,
+      "points": [
+        "16岁俄罗斯资格赛选手柳托娃WTA首秀夺冠，决赛1-6、6-1、6-3胜维多曼诺娃",
+        "她成为自2019年高芙以来最年轻的WTA冠军，也是第三位00后青少年冠军",
+        "排名将从第714位升至约第126位，首秀夺冠是2023年布达佩斯站后首次",
+        "晋级之路击败亚历山德罗娃、麦克纳利等种子选手，决赛连赢九局逆转"
+      ],
+      "why": "16岁资格赛选手WTA首秀夺冠刷新历史，是中国读者关注的新生代黑马故事",
+      "angle": "WTA近年“天才少女”频出，青少年球员的成长路径发生了哪些变化？",
+      "note": "读了 1 篇原文",
+      "known_angle": {
+        "slug": "age-eligibility",
+        "label": "年龄资格规则",
+        "evergreen": "WTA 有一条年龄资格规则，限制未成年球员一年能打多少站——为的是躲开上世纪那批十几岁就打废的先例。ATP 没有同样的限制。",
+        "source": "WTA 规则手册 Age Eligibility Rule 一章",
+        "question": "十六岁的球员，一年最多能打几站？",
+        "done_on": ""
+      },
+      "sources": [
+        "Tennis Majors",
+        "WTA Tennis"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "How 16-year-old qualifier Kristina Liutova became the youngest active WTA champion",
+          "source": "WTA Tennis",
+          "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOTUpyR1d3R0t0WFVHbFJTXzA2bEk2WUpGX2x0NUMwb21MOUpWQ2J4R0lJZWJNOGVfTkNUcDJGVTdGcHpVQWFCdzROVUVmOTRncUU4dVljU2dLTVI4NFc1cTFWd1M2elVqaW9ya3AzVWtwRXc1Q2w2S0Z5SzZtRmdDbmdEVXRiUFhCQVlEWFlYQU0xSkF2YWpWaF9jTjZGaFNrLVAxVVJTeWJjQmhmXzNycGVBeVZ0emFqOVppUmJ3?oc=5"
+        },
+        {
+          "title": "Liutova, 16, becomes youngest WTA champion since Gauff with Memphis title",
+          "source": "Tennis Majors",
+          "url": "https://www.tennismajors.com/wta-tour-news/liutova-16-becomes-youngest-wta-champion-since-gauff-with-memphis-title-857593.html"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.tennismajors.com/wta-tour-news/liutova-16-becomes-youngest-wta-champion-since-gauff-with-memphis-title-857593.html",
+          "source": "Tennis Majors",
+          "ok": true,
+          "note": "读到 6 段"
+        }
+      ]
+    },
+    {
+      "title_zh": "拉杜卡努因腿伤退出美网",
+      "deep": true,
+      "points": [
+        "拉杜卡努因右小腿应力性骨折退出2025年美网，赛事将于8月23日开始",
+        "她在草地赛季受伤，被迫退出温网，近期才穿保护靴恢复训练",
+        "过去12个月她伤病不断：脚伤影响冬训，病毒感染休战两个半月",
+        "复出后重聘冠军教练安德鲁·理查森，但在女王杯决赛后未再参赛"
+      ],
+      "why": "拉杜卡努是2021年美网冠军，连续伤病令其排名与前景备受关注",
+      "angle": "拉杜卡努频频伤退，新生代球员如何应对高强度职业巡回赛的身体负担？",
+      "note": "读了 2 篇原文",
+      "known_angle": null,
+      "sources": [
+        "BBC Sport",
+        "The Guardian"
+      ],
+      "heat": {
+        "outlets": 2,
+        "trend_hits": 0,
+        "trend_traffic": 0,
+        "days_running": 1,
+        "zh_hits": 0,
+        "zh_words": [],
+        "score": 26
+      },
+      "headlines": [
+        {
+          "title": "Raducanu to miss US Open to continue recovery",
+          "source": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cn4njxg33l7o?at_medium=RSS&at_campaign=rss"
+        },
+        {
+          "title": "Emma Raducanu to miss US Open with leg injury in latest fitness setback",
+          "source": "The Guardian",
+          "url": "https://www.theguardian.com/sport/2026/aug/03/emma-raducanu-leg-injury-us-open-tennis"
+        }
+      ],
+      "reads": [
+        {
+          "url": "https://www.bbc.co.uk/sport/tennis/articles/cn4njxg33l7o?at_medium=RSS&at_campaign=rss",
+          "source": "BBC Sport",
+          "ok": true,
+          "note": "读到 10 段"
+        },
+        {
+          "url": "https://www.theguardian.com/sport/2026/aug/03/emma-raducanu-leg-injury-us-open-tennis",
+          "source": "The Guardian",
+          "ok": true,
+          "note": "读到 10 段"
+        }
+      ]
+    }
+  ],
+  "zh_hot": []
+}
