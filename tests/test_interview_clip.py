@@ -1599,8 +1599,17 @@ def test_ci能看到赛后开麦的转写产物():
     没有它就永远 skip——而常年不变的 skip 和常年不变的 fail 是同一个毛病。
     """
     block = _ci_sparse_block()
-    assert not block or "output/interviews" in [ln.strip() for ln in block], \
+    lines = [ln.strip() for ln in block]
+    assert not block or any("output/interviews" in ln and not ln.startswith("!")
+                            for ln in lines), \
         "ci.yml 用了 sparse-checkout 却没带上 output/interviews，spec 测试会永远 skip"
+    # **而 mp4 要挡在外面。** 这个目录已经 331 MB，其中 5 个 mp4 占 328 MB，
+    # 测试要读的 md / json / ass / jpg 加起来约 3 MB——每一趟 CI 都在拉 328 MB
+    # 它从不打开的视频。cone 模式挑不掉后缀，所以这儿必须是非 cone 模式。
+    if block:
+        assert any(ln.startswith("!") and ln.endswith(".mp4") for ln in lines), (
+            "成片 mp4 没被挡在 sparse 范围外——CI 每趟白拉 328 MB。"
+            "（这正是本文件当年那句「等条数多起来要改成非 cone 模式按后缀挑」）")
 
 
 def test_ci的sparse块里不许有注释():
@@ -1614,9 +1623,34 @@ def test_ci的sparse块里不许有注释():
     而且它**在 checkout 那一步就炸**，一条测试都跑不到——报错信息里也完全
     看不出是注释惹的祸。说明只能写在块外面。
     """
-    for ln in _ci_sparse_block():
+    import yaml  # noqa: PLC0415
+
+    ci = yaml.safe_load((ROOT / ".github" / "workflows"
+                         / "ci.yml").read_text(encoding="utf-8"))
+    cone = True
+    for step in ci["jobs"]["test"]["steps"]:
+        with_ = step.get("with") or {}
+        if "sparse-checkout" in with_:
+            cone = with_.get("sparse-checkout-cone-mode", True) is not False
+    block = _ci_sparse_block()
+    for ln in block:
         assert "#" not in ln, f"sparse-checkout 块里有注释，会被当成路径：{ln.strip()}"
-        assert not set("*?[]\\") & set(ln), f"sparse-checkout 只吃目录名：{ln.strip()}"
+        if cone:
+            assert not set("*?[]\\") & set(ln), (
+                f"cone 模式的 sparse-checkout 只吃目录名：{ln.strip()}")
+
+    # ⚠️ **非 cone 模式下根文件不会自动带上。** 这是从 cone 换过来时最容易
+    # 踩的一脚：patterns 是 gitignore 语义，`/src/` 这类只匹配目录，
+    # `pyproject.toml` 一个都不沾——于是 `pip install -e .` 当场炸在
+    # 「没有 pyproject.toml」，而报错完全看不出是稀疏检出干的。
+    # 所以非 cone 模式必须有一行 `/*` 把根上的东西先收进来。
+    if block and not cone:
+        assert any(ln.strip() == "/*" for ln in block), (
+            "非 cone 模式却没有 `/*` 那一行——根文件（pyproject.toml / CLAUDE.md）"
+            "不会被检出，pip install -e . 会炸")
+        assert any(ln.strip() == "!/output/" for ln in block), (
+            "非 cone 模式下 `/*` 把 output/ 也收进来了，1.36 GB 又要下一遍——"
+            "必须显式排除，再单独把要的那一格加回去")
 
 
 def _cited_english(text: str) -> list[str]:

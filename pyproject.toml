@@ -31,7 +31,9 @@ dependencies = [
 # 装着，于是本地全绿、CI 红——**本地装着不等于 CI 装着**，这条在竖版剪辑线上
 # 已经栽过三次（playwright、Chromium、cv2），这次栽在测试依赖上。
 # 判据落在 `test_测试用到的第三方包都在dev依赖里`。
-dev = ["pytest>=7.0", "ruff>=0.6", "pyyaml>=6.0"]
+# `pytest-xdist` 是 CI 那行 `-n auto` 要的。缺了它 pytest 报
+# `unrecognized arguments: -n`——**红得很响，不会假绿**，所以这一条不用另设判据。
+dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
