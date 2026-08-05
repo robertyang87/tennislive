@@ -380,6 +380,47 @@ def test_一天只发一条推送():
     )
 
 
+def test_不发微信那一趟也要出声():
+    """`push=false` 只跳过发消息，而**跳过这件事必须留一行日志**。
+
+    2026-08-05 加这个开关，是因为「⚠️ 判据只在发布路径上才走得到，它就永远
+    验不了」：改了 prompt 想看一眼 `angle` 长什么样，原来只能真发一条微信，
+    而那条消息发出去收不回来。同一天为此发了三条几乎一样的推送。
+
+    ⚠️ **判据的重点是「装在哪」，不是「有没有」**。写成步骤级的
+    `if: inputs.push == 'true'` 行为完全一样，可**被跳过的步骤根本不进日志**
+    ——那正是 `mode=push` 那次栽的坑（27 秒、绿的、什么都没发，日志里
+    一个字都没说）。所以判断必须在 `run:` 里面，而且要 echo 一句。
+    """
+    text = _yaml_only(_workflow("news-brief.yml"))
+
+    # ① 开关在，而且**默认是发**——默认改成 false 等于把这条线静默停产
+    assert "\n      push:\n" in text, "没有 push 这个开关"
+    # ⚠️ 按**缩进**收这一块，别按 `split("\n      ")` 切——`inputs` 底下的字段
+    # 是 8 格，第一刀就会切在 `description` 上，于是永远看不到 `default`。
+    block: list[str] = []
+    for line in text.split("\n      push:\n", 1)[1].splitlines():
+        if line.strip() and not line.startswith("        "):
+            break
+        block.append(line)
+    switch = "\n".join(block)
+    assert 'default: "true"' in switch, f"push 的默认值必须是 true，实际是：{switch}"
+
+    # ② 不许写在步骤的 `if:` 上——那样跳过就不留痕迹
+    on_if = [
+        line for line in text.splitlines()
+        if line.lstrip().startswith("if:") and "inputs.push" in line
+    ]
+    assert not on_if, f"push 判断写在了 if: 上，跳过时不留日志：{on_if}"
+
+    # ③ 那一支要 echo 出来
+    step = [s for s in text.split("\n      - name: ") if "pushplus.plus/send" in s
+            and "failure()" not in s][0]
+    assert "inputs.push" in step, "推送步骤里没有这个开关"
+    branch = step.split("inputs.push", 1)[1].split("fi", 1)[0]
+    assert "echo" in branch and "不发微信" in branch, "跳过发送时没有留下任何一行说明"
+
+
 def test_老那两条推送不许回来():
     """判据钉在**产物名**上，不是步骤名：改个步骤名就绕过去的判据等于没装。"""
     body = _yaml_only(_workflow("news-brief.yml"))

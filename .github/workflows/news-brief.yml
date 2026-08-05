@@ -27,6 +27,25 @@ on:
         description: "深挖几条（抓正文出中文要点）。0 = 全部（默认）"
         required: false
         default: "0"
+      push:
+        # ⚠️ **默认 true，改口径要连这个默认值一起想清楚。**
+        #
+        # 2026-08-05 加的，理由是「⚠️ 判据只在发布路径上才走得到，它就永远
+        # 验不了」那条（CLAUDE.md）：改了 prompt / 角度表想看一眼产物长什么
+        # 样，原来只能真发一条微信——而微信那条消息**发出去收不回来**，
+        # 于是「验一下」和「发出去」被绑在了一起。同一天为了核 `angle` 那一栏
+        # 已经发了三条几乎一样的推送给账号所有者。
+        #
+        # 关掉它**只跳过发微信那一步**：照常抓、照常出简报、照常提交进仓库，
+        # 所以产物（brief.json / brief_push.html）一样能打开逐条看。
+        #
+        # ⚠️ 这不是 `mode=push` 那个坑的重演。那个坑坏在**关掉之后整趟什么都
+        # 不产**，绿得和发出去一模一样；这里关掉之后产物照旧落库，而且下面
+        # 那一步会**明写一行**说本次没发——「被跳过的步骤根本不进日志」，
+        # 不出声的话「没发」和「发了」在日志上分不出来。
+        description: "推微信（默认 true）。false = 只出简报并提交，不发消息"
+        required: false
+        default: "true"
 
 permissions:
   contents: write
@@ -115,6 +134,14 @@ jobs:
         if: env.PUSHPLUS_TOKEN != ''
         continue-on-error: true
         run: |
+          # ⚠️ 这个分支要**出声**。被 `if:` 跳过的步骤根本不进日志，于是
+          # 「本次没发」和「发了」长得一模一样（`mode=push` 那次栽过：
+          # 27 秒、绿的、什么都没发，日志里一个字都没说）。所以判断写在
+          # 步骤**里面**，不写在 `if:` 上——不发也要留一行。
+          if [ "${{ inputs.push || 'true' }}" != "true" ]; then
+            echo "本次不发微信（push=false）：简报已落库，去 output/${{ steps.brief.outputs.date }}/brief/ 里看"
+            exit 0
+          fi
           FILE="output/${{ steps.brief.outputs.date }}/brief/brief_push.html"
           if [ ! -s "$FILE" ]; then
             echo "::error::简报正文没写出来，本次不推送"
