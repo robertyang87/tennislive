@@ -3354,6 +3354,31 @@ def main() -> int:
         print(f"[dry-run] spec 形状没问题：{len(segments)} 段，画面共 {total:.1f}s")
         print("  ⚠️ 只校验了形状。裁切越界、frame_at 超出片长这类要等源片，"
               "这里查不了。")
+        # **文案也在这儿校一遍。** 它的两道闸（正文 ≤1000 字、tag ≤5 个）原来
+        # 只活在 `push_reel.py --stage page` 里，而那一步排在 **render 之后**
+        # ——2026-08-05 `chwalinska-gibson` 那趟 6 个 tag，**渲完两分半才报**
+        # （run 30974892914：render success 2:36，第 23 步 0 秒红）。
+        # 文案是一个纯文本文件，判它一个源片像素都不用碰，没有理由让它等在
+        # 编码后面。这就是「返工比慢更贵」那条：让失败发生在第 0.2 秒。
+        # ⚠️ **闸本身不在这儿重写**，直接调 push_reel 的那两个——写两遍必分叉。
+        copy_path = Path(args.spec).with_suffix(".xhs.txt")
+        if copy_path.is_file():
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import push_reel  # noqa: PLC0415
+
+            text = push_reel.cut_at_tags(copy_path.read_text(encoding="utf-8"))
+            tags = push_reel.hashtag_count(text)
+            _title, body = push_reel.split_copy(text)
+            print(f"[dry-run] 文案 {copy_path.name}："
+                  f"正文 {len(body)} 字（上限 1000）、tag {tags} 个"
+                  f"（上限 {push_reel.MAX_HASHTAGS}）")
+            if tags > push_reel.MAX_HASHTAGS:
+                print(f"  ← **tag 超了**，删到 {push_reel.MAX_HASHTAGS} 个以内"
+                      "再渲：留最能被搜到的那几个（人名、赛事、账号）")
+                return 1
+        else:
+            print(f"[dry-run] ⚠️ 没有 {copy_path.name}——render 走到写复制页"
+                  "那一步会直接报「找不到」。**现在补，别等渲完。**")
         # **旁白写长了不用等 render，也不用等 TTS。** 这一条离线估，误差
         # ±1.5s（见 `speech_seconds` 的推导），所以只判「估得再乐观也装不下」；
         # 剩下的交给 `--check-narration` 拿真语音量。

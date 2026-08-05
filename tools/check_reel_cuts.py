@@ -68,8 +68,21 @@ def main() -> int:
         # 段里根本没有这个键——原来按 `seg['source']` 硬取，于是这个检查器
         # **对整条赛场之上从来没跑起来过**（KeyError 在第一段就炸）。
         # 判据落在 `test_跨切点检查器对单源的赛场之上也要跑得起来`。
+        #
+        # ⚠️ **`narration` 是同一个坑的第二半，而它躲过了那次修。** 冷开场和
+        # 现场声那几段**故意不配旁白**（`shang-rublev` 第 1 段、
+        # `zhang-ostapenko` 第 1 段、`chwalinska-gibson` 第 1 段都是），
+        # 段里就没有这个键。2026-08-05 才炸出来——因为那条测试取的是
+        # **排序第一条**单源 spec，`chwalinska-gibson` 一加进来就排到了最前面，
+        # 而它的第 1 段正好是无旁白的冷开场。**在那之前它一直碰巧取到有旁白的。**
+        # 「碰巧对」和「真的接上了」长得一模一样，而且前者会一直绿。
+        said = seg.get("narration") or seg.get("quote") or ""
+        if isinstance(said, list):          # `quote` 可以是逐条的列表
+            first = said[0]
+            said = first.get("text", "") if isinstance(first, dict) else str(first)
+        said = said.replace("\n", " ")[:22] or "（无旁白）"
         print(f"  {mark} 第 {index:>2} 段 [{seg.get('source') or '单源'}] "
-              f"{seg['start']}–{seg['end']}  {seg['narration'][:22]}{tail}")
+              f"{seg['start']}–{seg['end']}  {said}{tail}")
 
     print()
     if tail_cuts:

@@ -6481,3 +6481,53 @@ def test_中立身份的球员可以显式声明没有国旗():
     body = src[src.index("def _name_html("):src.index("_SET_RE")]
     assert "country: null" in body and "print(" in body, (
         "走中立那条路要在日志里出声")
+
+
+def test_文案的闸要在dry_run里就报不许等渲完():
+    """⚠️ **文案的两道闸原来只活在 render 之后。**
+
+    `push_reel.py --stage page` 校「正文 ≤1000 字」和「tag ≤5 个」，而那一步
+    在工作流里排在 **render 之后**。2026-08-05 `chwalinska-gibson` 的文案写了
+    6 个 tag，**渲完两分半才报**（run 30974892914：render success 2:36，
+    第 23 步 0 秒红）。
+
+    **文案是一个纯文本文件，判它一个源片像素都不用碰**——没有理由让它等在
+    编码后面。这就是「返工比慢更贵」：让失败发生在第 0.2 秒。
+
+    判据钉三头：
+    1. `--dry-run` 真的读文案并把两个数打出来
+    2. tag 超标时**退出码是 1**（只打一行字等于没拦）
+    3. ⚠️ **闸本身不许在 dry-run 里重写**——直接调 `push_reel` 那两个函数。
+       写两遍必分叉，而分叉的那天没人会知道
+    """
+    import subprocess  # noqa: PLC0415
+
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    head = body.index("if args.dry_run:")
+    tail = body.index("est = narration_estimates(segments)", head)
+    block = body[head:tail]
+    assert "push_reel" in block, "dry-run 没有校文案"
+    assert "MAX_HASHTAGS" in block and "hashtag_count" in block, (
+        "tag 那道闸在 dry-run 里被重写了一遍——要调 push_reel 的，别自己写")
+    assert re.search(r"return 1", block), "tag 超标只打字不返回 1，等于没拦"
+
+    # 行为：真跑一次，两个方向
+    spec = next(p for p in sorted(Path("specs/reels").glob("*.json"))
+                if p.with_suffix(".xhs.txt").is_file())
+    copy = spec.with_suffix(".xhs.txt")
+    original = copy.read_text(encoding="utf-8")
+    env = {**os.environ, "PYTHONPATH": "src:tools"}
+    cmd = ["python3", "tools/build_match_reel.py", "render", "--spec", str(spec),
+           "--outdir", "/tmp/_dryrun_probe", "--dry-run"]
+    try:
+        ok = subprocess.run(cmd, capture_output=True, text=True, env=env)
+        assert ok.returncode == 0, f"干净的文案不该红：{ok.stdout[-400:]}"
+        assert "文案" in ok.stdout and "tag" in ok.stdout, (
+            f"dry-run 没把文案那两个数打出来：{ok.stdout[-300:]}")
+        # 反向：塞进第六个 tag
+        copy.write_text(original.rstrip("\n") + " #多加一个\n", encoding="utf-8")
+        bad = subprocess.run(cmd, capture_output=True, text=True, env=env)
+        assert bad.returncode == 1, (
+            f"tag 超标了却没红（退出码 {bad.returncode}）：{bad.stdout[-300:]}")
+    finally:
+        copy.write_text(original, encoding="utf-8")
