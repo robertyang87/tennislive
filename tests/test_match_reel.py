@@ -232,9 +232,9 @@ def test_中间物一个都不许进仓库():
         # yt-dlp 落的字幕原文件。名字由它自己拼（`_subs.en.vtt` / `_subs.en-orig.json3`
         # / 猜不到的第三种），所以**按前缀删**——这正是 `.part` 那次的教训。
         "_subs.en.vtt", "_subs.en-orig.json3",
-        "_versus_bg.jpg",             # 背景抓帧
-        "_versus_cut_top.png",        # 抽帧抠图，**后缀和上一个不一样**
-        "_versus_raw_bottom.png",     # 抠之前那张原帧，报错时会留下
+        # 抠之前那张原帧：几 MB、只在报错时有用。**抠好的那张不在这儿**，
+        # 它是产物，落在 `cover_src/`——见下面 test_封面素材要留在仓库里。
+        "_versus_raw_bottom.png",
     ]
     for name in must_die:
         assert any(fnmatch(name, p) for p in pats), (
@@ -248,6 +248,104 @@ def test_中间物一个都不许进仓库():
     for keep in ("poster.jpg", "potapova-venus.mp4", "contact_00.jpg", "probe.json",
                  "captions.txt", "captions_debug.txt", "render.json"):
         assert not any(fnmatch(keep, p) for p in pats), f"{keep} 被误删了"
+
+
+def test_封面素材要留在仓库里():
+    """`cover_src/` 是**产物**，不是中间物——它买的是「封面返工不用上 runner」。
+
+    量出来的账（shang-rublev，2026-08-05）：一条片子 98 分钟里 **31 分钟全花在
+    封面上**（两趟 `mode=cover` ＋ 一趟因为封面变了而重跑的 render），而那三趟
+    里帧一次都没变，改的只有钩子文案和暗角。封面之所以非上 runner 不可，
+    只因为 `frame_at` 要从源片抓——把那一帧留住，链就断了，本地渲一张 6.9 秒。
+
+    所以这条钉两头：
+
+    1. **清理那一步不许把它删掉**（它长得很像中间物，下一个人顺手就加进 rm 了）
+    2. **代码真的往那儿写**——只钉工作流的话，改成写别处它照样绿
+    """
+    cleanup = _step_block("丢掉不进仓库的中间物", WORKFLOW.read_text(encoding="utf-8"))
+    pats = [p.rstrip("\\").strip()
+            for p in re.findall(r'"\$OUTDIR"/(\S+)', cleanup) if p.strip()]
+    assert pats, "清理这一步没抽到任何 rm 模式"
+    reel = _reel()
+    for name in (f"{reel.COVER_SRC_DIR}/portrait.jpg", f"{reel.COVER_SRC_DIR}/top.png",
+                 f"{reel.COVER_SRC_DIR}/manifest.json"):
+        assert not any(fnmatch(name, p) for p in pats), (
+            f"{name} 被清理掉了——封面素材没了，本地就渲不出海报，"
+            "封面返工又得每次上 runner。")
+    # 递归的那道体积兜底仍然要盖住它：留素材不等于放开「往里塞大文件」
+    assert 'find "$OUTDIR" -type f -size +8M' in cleanup, (
+        "8 MB 兜底不在了——cover_src 是个新目录，正需要它管着")
+
+
+def test_封面素材复用两种情况都要出声(tmp_path):
+    """**命中和没命中都要说**，而且改了 `frame_at` 必须重抓。
+
+    只在一头出声的检查证明不了它看过——「复用了旧帧」和「重新抓了一帧」在
+    日志上一样的话，`frame_at` 改了却没生效就没人能发现，而海报上那一帧错了
+    是**不报错**的：它看起来完全正常，只是不是你要的那一帧。
+
+    ⚠️ 键按内容算（源 / frame_at / box / 抠图模型），不按「文件在不在」算。
+    源片缓存那次栽过同一个坑：按 slug 判，改了 URL 还会命中旧文件。
+    """
+    reel = _reel()
+    src = tmp_path / "source.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-f", "lavfi", "-i", "testsrc2=size=320x180:rate=25", "-t", "8",
+         "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(src)],
+        check=True)
+    cover = {"eyebrow": "赛场之上", "layout": "solo", "subject": "张帅",
+             "hook": "一行\n两行", "portrait": {"frame_at": 2.0}}
+
+    def _run(cov, **kw):
+        import io  # noqa: PLC0415
+        from contextlib import redirect_stdout  # noqa: PLC0415
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            reel.resolve_cover_payload(cov, tmp_path, sources={"": src},
+                                       primary="", **kw)
+        return buf.getvalue()
+
+    first = _run(cover)
+    assert "新抓" in first, f"第一趟没说它抓了一帧：{first!r}"
+    grabbed = tmp_path / reel.COVER_SRC_DIR / "portrait.jpg"
+    assert grabbed.is_file(), "抓下来的帧没落进 cover_src/"
+
+    again = _run(cover)
+    assert "复用" in again, f"第二趟没说它复用了：{again!r}"
+    assert "新抓" not in again, "同一份 spec 还在重抓，缓存等于没有"
+
+    moved = {**cover, "portrait": {"frame_at": 5.0}}
+    assert "新抓" in _run(moved), (
+        "改了 frame_at 还在复用旧帧——海报上会是上一版那一帧，而且不报错")
+
+
+def test_本地渲封面那条路一个源片字节都不碰():
+    """`render_cover_local.py` 是这轮优化的产物本身，它的价值全在「不碰源片」。
+
+    源片在沙箱里下不动（IP 被 YouTube 挡）。这条路一旦沾上下载/抽帧，
+    它在**唯一能用它的那台机器上**就跑不起来——和 `--cover-only` 那次
+    「能力写出来了，能用的那台机器上没有开关」是同一个形状。
+
+    两头都钉：**这条路真的短**，而且**海报出口和成片那条共用一个**——
+    分叉的样子是「本地看着对了，成片里是另一版」，没有任何东西会报错。
+    """
+    body = Path("tools/render_cover_local.py").read_text(encoding="utf-8")
+    code = "\n".join(line for line in body.splitlines()
+                     if not line.lstrip().startswith("#"))
+    code = code.split('"""', 2)[-1]        # 去掉模块 docstring：里面正引着这些词
+    for banned in ("download(", "yt_dlp", "yt-dlp", "ffmpeg", "_cut_person",
+                   "synthesize", "rembg"):
+        assert banned not in code, (
+            f"本地渲封面那条路上出现了 {banned}——它就跑不起来了，"
+            "而失败的样子会是一句看不懂的报错，不是「你要的是一帧新的」")
+    assert "sources=None" in code, "没走「只认缓存」那条路，缺素材会退回抓帧"
+    assert "render_poster" in code, (
+        "没和成片那条路共用海报出口——写两处必分叉，"
+        "而封面分叉的样子是「本地看着对了，成片里是另一版」")
+    reel = _reel()
+    assert hasattr(reel, "render_poster") and hasattr(reel, "resolve_cover_payload")
 
 
 def test_清理之后还有大文件要报错退出():
@@ -3199,8 +3297,13 @@ def test_不碰产物的工作流不许把output拉下来():
             # 把产物那一格弄进 cone 有两种写法，都算数：
             # - 目录要按日期／slug 算 → `git sparse-checkout add "$OUT_DIR"`
             # - 目录是固定的（`output/voice-samples`）→ 直接列进 sparse-checkout
+            # `/?` 是给**非 cone 模式**留的：那儿写的是 gitignore 语义的
+            # pattern（`/output/interviews/`），带前导斜杠。ci.yml 2026-08-05
+            # 换了过去——`output/interviews` 331 MB 里 328 MB 是从不打开的 mp4，
+            # 而 cone 模式挑不掉后缀。少了这个 `/?`，那条工作流会被判成
+            # 「没把自己那一格弄进 cone」，而它其实弄进去了。
             listed_statically = re.search(
-                r"\n\s+output/\S+", block[block.index("sparse-checkout:"):])
+                r"\n\s+/?output/\S+", block[block.index("sparse-checkout:"):])
             assert "git sparse-checkout add" in body or listed_statically, (
                 f"{path.name} 做了稀疏检出却没把自己那一格弄进 cone——"
                 "`git add` 只会警告并退出 0，产物静默丢掉，而那是跑完之后才发现。")
@@ -3839,6 +3942,300 @@ def test_cover_only排在分段和TTS之前():
             f"cover_only 的早退排在了{why}后面——那些活白干了")
     assert "cover_only: bool = False" in src, "render 没有 cover_only 参数"
     assert '"--cover-only"' in src, "命令行没有 --cover-only"
+
+
+def test_同一个提交不许跑两趟CI():
+    """`push`（不限分支）＋ `pull_request` ＝ 开着 PR 的分支每推一次起**两趟**。
+
+    量出来的（2026-08-05 那半小时）：run 2338/2339、2335/2336、2333/2334…
+    成对出现，创建时刻只差 3 秒，每趟 4 分 10 秒，跑的是同一个 commit。
+
+    两趟并行，所以它吃的不是墙钟而是**并发位**——而并发位被自己占满时，
+    排在后面的 `match-reel` 就要排队，那才吃墙钟。
+
+    ⚠️ **main 上的 CI 不许被掐**：那儿每个提交都要有自己的一趟绿，
+    掐掉等于让一个从没跑过测试的提交留在主干上，而且不吭声。
+    """
+    ci = (WORKFLOW.parent / "ci.yml").read_text(encoding="utf-8")
+    head = ci[:ci.index("jobs:")]
+    push = head[head.index("push:"):head.index("pull_request:")]
+    assert "branches:" in push and "main" in push, (
+        "`push` 没收在 main 上——分支上每推一次仍然会跑两趟一样的 CI")
+    assert "concurrency:" in head, "没有 concurrency，旧的那趟不会被掐掉"
+    group = head[head.index("concurrency:"):]
+    assert "cancel-in-progress" in group
+    assert "main" in group.split("cancel-in-progress", 1)[1], (
+        "main 上的 CI 也会被掐——一个没跑过测试的提交会留在主干上")
+
+
+def _excluded_modes(step: str) -> set[str]:
+    """这一步的 `if:` 把哪几个 mode 排除在外。"""
+    head = step.split("run:", 1)[0]
+    return set(re.findall(r"inputs\.mode\s*!=\s*'([a-z-]+)'", head))
+
+
+def test_装Chromium不许没有超时和重试():
+    """`playwright install --with-deps` 里的 `--with-deps` **会跑 apt**。
+
+    而这个仓库的 apt 会抽风——CLAUDE.md 里记着「一次静静烧了 13 分 42 秒」。
+    那条教训当时只套在显式的 `apt-get` 步骤上，**漏了这一处**：八条工作流都调
+    它，没有一条设超时或重试，于是任何一条都能一路烧到 job 的预算用完。
+    run 30973785219 就是这么死的——卡在这一步 13 分钟，其余步骤全在 1 分钟内
+    跑完，而日志上一个字都没说。
+
+    两头都要：**超时**（不然它能烧到 job 预算见底），**加一次重试**
+    （CLAUDE.md：「硬超时只把『静静烧半小时』换成『红掉、要人重跑』——
+    方向对了但停在一半」）。
+
+    ⚠️ 超时的数**别调小**：正常 5~60 秒，但第一版 apt 重试写 3×100 秒当场把
+    CI 弄红了，因为 apt 一直在推进、只是慢。**把「慢」误判成「挂死」，
+    重试就从救场变成三倍的浪费。**
+    """
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        for i, ln in enumerate(lines):
+            if "playwright install" not in ln:
+                continue
+            timed = re.search(r"timeout\s+(\d+)\s+python -m playwright install", ln)
+            assert timed, (
+                f"{path.name} 第 {i + 1} 行装 Chromium 没有超时——"
+                f"apt 一抽风它就烧到 job 预算见底：{ln.strip()}")
+            assert int(timed.group(1)) >= 180, (
+                f"{path.name} 的超时只有 {timed.group(1)} 秒，太紧。"
+                "正常 5~60 秒，但 apt 慢起来会被误判成挂死——"
+                "重试于是从救场变成三倍的浪费")
+            back = "\n".join(lines[max(0, i - 12):i])
+            assert re.search(r"for\s+i\s+in\s+1\s+2", back), (
+                f"{path.name} 装 Chromium 有超时但没有重试——"
+                "卡住的正确处置是换一次重试，不是整趟失败")
+            checked[path.name] = True
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
+
+
+def test_Chromium缓存都要有restore_keys():
+    """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
+
+    决定装哪个 Chromium 的只有 playwright 的版本，可那个键是整份文件的哈希——
+    加一个依赖、改一行注释，六条工作流的 150 MB Chromium 缓存同时失效，
+    下一趟每条都要重下一遍。2026-08-05 往 pyproject 里加 certifi 和 pytest-xdist
+    时当场撞上（run 30973785219 卡在「安装 Chromium」）。
+
+    `restore-keys` 就够：主键没中就退到上一份，Chromium 已经在盘上，
+    `playwright install` 是个空操作；真换了 playwright 版本它会自己去下对的那
+    一版，所以退旧缓存也不会拿错。比另起一步算版本号便宜，也不用动步骤顺序。
+
+    **判据自己推导，不维护名单**：凡是缓存 Chromium 的工作流都要有。
+    以后多一条出海报／渲卡片的线，它会替人记得。
+    """
+    hits = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        text = path.read_text(encoding="utf-8")
+        body = "\n".join(ln for ln in text.splitlines()
+                         if not ln.lstrip().startswith("#"))
+        if "playwright-chromium-" not in body:
+            continue
+        hits[path.name] = "restore-keys: playwright-chromium-" in body
+    assert hits, "一条缓存 Chromium 的工作流都没扫到，判据的主语没了"
+    missing = sorted(n for n, ok in hits.items() if not ok)
+    assert not missing, (
+        f"这几条缓存了 Chromium 却没有 restore-keys：{missing}。"
+        "改一次 pyproject 就要重下一遍 150 MB，而它只表现为「今天怎么慢了点」。")
+
+
+def test_源片缓存的键要按URL算():
+    """两层缓存的口径必须一致，否则外层每趟都白传一份 50~70 MB。
+
+    代码里那层（`_cached_source`）的注释白纸黑字写着「键取 URL 的哈希：换了
+    URL 自然是另一个键」。而 Actions 那层原来用的是
+    `hashFiles(specs/reels/<slug>.json)`——**改一个字的旁白，spec 哈希就变**，
+    主键必然未命中，这一趟结束时又把同一个源片重新上传一份。
+    shang-rublev 那条光 spec 就改了六次。
+
+    仓库缓存上限 10 GB、LRU 淘汰，所以这些重复条目会把 Chromium（150 MB）
+    和抠图模型（176 MB）挤出去——而那表现为「今天 CI 怎么慢了点」，
+    **没有任何东西会说是缓存被挤掉了**。
+
+    判据钉两头：键不许再从整份 spec 来，而且算键那一步要**复用
+    `spec_sources()`**——单源写 `source_url`、多源写 `sources`，
+    在这儿再解析一遍必分叉。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    cache = _step_block("缓存源片（同一条片子只下一次）", text)
+    key = next(ln for ln in cache.splitlines() if ln.strip().startswith("key:"))
+    assert "hashFiles" not in key, (
+        "源片缓存的键还在按整份 spec 算——改一个字的旁白就会让主键失效，"
+        f"于是每趟都重传一份源片：{key.strip()}")
+    assert "srckey" in key, f"键没接上按 URL 算的那一步：{key.strip()}"
+
+    keystep = _step_block("算出源片缓存的键", text)
+    assert "spec_sources" in keystep, (
+        "算键那一步自己解析了一遍 spec——单源 `source_url` 和多源 `sources` "
+        "两种写法，写两处必分叉。复用 `spec_sources()`。")
+    # **两种情况都要出声**：算出来了和没算出来，日志上必须分得开，
+    # 否则「缓存没生效」和「生效了」长得一模一样。
+    assert keystep.count("print(") >= 1 and "源片缓存键" in keystep, (
+        "算键那一步不打印它算出了什么——缓存没生效时看不出来")
+    # 算不出键不许把整趟带崩：spec 真有问题的话，后面几步会报说人话的错
+    assert "except Exception" in keystep, (
+        "spec 读不出来会让这一步炸，而它排在 render 前面——"
+        "报错会变成一句和 spec 无关的缓存错误")
+
+
+def test_不下源片的模式不许等PO_token():
+    """`起 PO token provider` 是给**下载**用的（docker pull ＋ 探活，实测 11 秒）。
+
+    不碰源片的模式等它就是纯浪费。`narration` 正是这样一档——它比的是
+    「TTS 时长 vs spec 里的段长」，`--check-narration` 的注释白纸黑字写着
+    「一个源片字节都不碰」，可它一直在这儿站着等。整趟 narration 只有 1 分 37 秒，
+    这 11 秒是 11%。**又一次「加新能力时新入口没继承前提」**：narration 这一档
+    是后加的，这行 `if` 没跟着改。
+
+    **判据自己推导，不维护名单**：拿「缓存源片」那一步当基准——连源片缓存都
+    不恢复的模式，必然不下源片。以后再加一档模式，它会替人记得。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    no_source = _excluded_modes(_step_block("缓存源片（同一条片子只下一次）", text))
+    assert no_source, "「缓存源片」那一步没抽到 mode 条件，基准没了"
+    pot = _excluded_modes(_step_block("起 PO token provider", text))
+    assert no_source <= pot, (
+        f"这些模式不下源片却还在等 PO token provider：{sorted(no_source - pot)}")
+
+
+def test_查旁白那条路装的依赖要真的够():
+    """narration 只装它用得上的那点（实测 31s → 约 10s），**但不许装少**。
+
+    ⚠️ **numpy 缺了不报错**：`voice_prosody` 抓 ImportError 之后逐段打
+    「量不了」，于是这条 run 的产物——那张音高表——静静地退成十一行空白。
+    是在**干净 venv** 里照工作流那一行原样装一遍才看见的，沙箱里 numpy 一直
+    装着（「本地装着不等于 CI 装着」的第 N 次，只是这次它不红、只是变哑）。
+
+    判据两头：**预检 import 的每一样都要真的装**（少一样就是第 5 秒炸 vs
+    一分半后炸），而且**这条路上会用到的第三方包都要在预检里**。
+    """
+    install = _step_block("装依赖", WORKFLOW.read_text(encoding="utf-8"))
+    branch = install[install.index('= "narration" ]'):]
+    branch = branch[:branch.index("exit 0")]
+    installed = set(re.findall(r"pip install -q (?:-e )?(.+)", branch))
+    installed = {w for line in installed for w in line.split()} | {"tennislive"}
+    checked = set(re.findall(r"python -c \"import ([^\"]+)\"", branch))
+    checked = {m.strip().split(".")[0] for line in checked for m in line.split(",")}
+    assert checked, "narration 那一支没有预检 import，装少了要到一分半后才炸"
+    for mod in checked:
+        assert any(mod.replace("_", "-") in pkg or mod in pkg for pkg in installed), (
+            f"预检要 import {mod}，而这一支没装它：{sorted(installed)}")
+    # **量音高那一段用的包必须在预检里。** 它是这条 run 的产物，
+    # 而缺了它只会变哑不会变红——只测「装了什么」拦不住这一种。
+    reel = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    prosody = reel[reel.index("def voice_prosody("):]
+    prosody = prosody[:prosody.index("\ndef ", 1)]
+    for mod in set(re.findall(r"^\s+import (\w+)", prosody, re.M)):
+        assert mod in checked or mod in sys.stdlib_module_names, (
+            f"voice_prosody 要 {mod}，而 narration 那一支的预检没查它——"
+            "缺了它音高表会静静退成一片「量不了」")
+
+
+def test_挂代理CA要排在导入edge_tts之前(tmp_path, monkeypatch, capsys):
+    """`--check-narration` 那道闸**一个源片字节都不碰**，本来就能在本地跑。
+
+    挡着它的不是「被 YouTube 挡」——CLAUDE.md 里「edge-tts 同理」那半句是
+    推出来的，不是量出来的。实测报的是 `CERTIFICATE_VERIFY_FAILED`：
+    这台机器的出网走一个做 TLS 拦截的代理，而 edge-tts 认的是 certifi 自带的
+    根证书。挂上代理的 CA 当场就通了（实测本地跑完一条 11 段的 spec 29 秒，
+    对比 runner 上 1 分 37 秒的 run 外加一次完整往返）。
+
+    ⚠️ **顺序是这条的全部。** edge-tts 在**模块导入那一刻**就
+    `ssl.create_default_context(cafile=certifi.where())` 建好了 context，
+    之后再挂 CA 一点用都没有——而那种失败长得和「没挂」一模一样。
+    所以两件事一起钉：调用排在最前面，且没有任何模块级的 `import edge_tts`。
+    """
+    from tennislive import localca  # noqa: PLC0415
+
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    body = src[src.index("def main() -> int:"):]
+    call = body.index("trust_local_proxy_ca()")
+    assert call < body.index("ArgumentParser"), "挂 CA 没排在 main 的最前面"
+    # **模块级 import 会让上面那个顺序失效**——import 在 main 跑起来之前就发生了
+    for path in ("tools/build_match_reel.py", "src/tennislive/video/explainer.py"):
+        for line in Path(path).read_text(encoding="utf-8").splitlines():
+            assert not line.startswith("import edge_tts"), (
+                f"{path} 里 edge_tts 是模块级 import，挂 CA 再早也来不及了")
+
+    # ① 这台机器没有代理 CA（＝runner）：no-op，而且**一个字都不打**。
+    #    恒真的告警会把真正该看见的那次淹掉。
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_WELL_KNOWN", (str(tmp_path / "nope.crt"),))
+    monkeypatch.delenv("TENNISLIVE_EXTRA_CA", raising=False)
+    capsys.readouterr()
+    assert localca.trust_local_proxy_ca() is None
+    assert capsys.readouterr().out == "", "runner 上不该出声"
+
+    # ② 有 CA：三处都要设——requests / 标准库 / edge-tts 各认各的，
+    #    只设一处的样子是「有的能通有的不通」，比全都不通更难查。
+    ca = tmp_path / "proxy.crt"
+    ca.write_text("-----BEGIN CERTIFICATE-----\nZmFrZQ==\n-----END CERTIFICATE-----\n")
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
+    monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
+    got = localca.trust_local_proxy_ca()
+    import certifi  # noqa: PLC0415
+    assert got == os.environ["SSL_CERT_FILE"] == os.environ["REQUESTS_CA_BUNDLE"]
+    assert certifi.where() == got, "edge-tts 认的是 certifi.where()，它没被指过来"
+    merged = Path(got).read_text(encoding="utf-8")
+    assert "ZmFrZQ==" in merged and "BEGIN CERTIFICATE" in merged
+    assert len(merged) > len(ca.read_text(encoding="utf-8")), (
+        "只写了代理那张，原来的根证书全丢了——那会把别的站点全部弄不通")
+
+    # ③ 显式指了却不存在＝**配错了**，不是「这台机器没有」。悄悄 no-op 的话，
+    #    「配了没生效」和「本来就没配」长得一模一样。
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(tmp_path / "missing.crt"))
+    try:
+        localca.trust_local_proxy_ca()
+    except FileNotFoundError:
+        pass
+    else:
+        raise AssertionError("配错了路径却不吭声")
+
+
+def test_探代理CA不许把CLI带崩(monkeypatch):
+    """⚠️ **`Path.is_file()` 会抛，不是只返回 False。**
+
+    它只吞 ENOENT / ENOTDIR / EBADF / ELOOP 那几类，**不吞 EACCES**——而 runner
+    上跑测试的用户根本进不去 `/root`，于是 `os.stat('/root/.ccr/ca-bundle.crt')`
+    抛的是 `PermissionError`。
+
+    而这个探测排在 `main()` 的**第一行**，所以它一抛就是**每一次 CLI 调用都崩**：
+    整条 match-reel 会死在还没解析参数的时候。CI 当场逮到（run 30971701644，
+    两条 dry-run 测试红在 `PermissionError: '/root/.ccr/ca-bundle.crt'`）——
+    也就是说这个「本地跑得好好的」改动，会在 runner 上打爆所有出片。
+
+    **探一个「众所周知的位置」失败就等于这台机器没有它**，任何 OSError 都一样：
+    这条路只是猜，猜不中是常态。显式配的那条不同，那儿配错了要报（见上一条）。
+
+    ⚠️ 判据不能靠 `chmod 000` 造场景——沙箱里跑测试的是 root，而 **root 绕过
+    权限检查**，那样造出来的「不可读」在这儿是可读的，测试会因为错误的原因变绿。
+    所以直接让 `is_file` 抛，那才是 runner 上真实发生的事。
+    """
+    from tennislive import localca  # noqa: PLC0415
+
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_WELL_KNOWN", ("/root/.ccr/ca-bundle.crt",))
+    monkeypatch.delenv("TENNISLIVE_EXTRA_CA", raising=False)
+
+    real = Path.is_file
+
+    def boom(self):
+        if str(self).startswith("/root/"):
+            raise PermissionError(13, "Permission denied")
+        return real(self)
+
+    monkeypatch.setattr(Path, "is_file", boom)
+    assert localca.trust_local_proxy_ca() is None, (
+        "探不到就该当成「这台机器没有」，不许把异常抛给调用方——"
+        "它排在 main() 第一行，抛一次就是所有 CLI 调用全崩")
 
 
 def test_旁白超长的闸排在分段编码之前():

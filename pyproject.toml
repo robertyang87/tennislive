@@ -14,6 +14,11 @@ dependencies = [
     "rich>=13.0",
     "Pillow>=10.0",
     "pypdf>=5.0",
+    # `tennislive.localca` **直接** import 它（要合并根证书，好让本地也能合语音）。
+    # 它一直靠 requests 传递地装进来——而传递依赖是别人的实现细节，
+    # requests 哪天换掉它，我们这条路就静默炸在一句 ImportError 上。
+    # 自己 import 的就自己声明，判据在 `test_测试里不许import没声明的包`。
+    "certifi>=2024.2.2",
 ]
 
 [project.optional-dependencies]
@@ -26,7 +31,9 @@ dependencies = [
 # 装着，于是本地全绿、CI 红——**本地装着不等于 CI 装着**，这条在竖版剪辑线上
 # 已经栽过三次（playwright、Chromium、cv2），这次栽在测试依赖上。
 # 判据落在 `test_测试用到的第三方包都在dev依赖里`。
-dev = ["pytest>=7.0", "ruff>=0.6", "pyyaml>=6.0"]
+# `pytest-xdist` 是 CI 那行 `-n auto` 要的。缺了它 pytest 报
+# `unrecognized arguments: -n`——**红得很响，不会假绿**，所以这一条不用另设判据。
+dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
 visualqa = ["opencv-python-headless>=4.10,<5"]
