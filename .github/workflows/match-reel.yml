@@ -14,7 +14,12 @@ name: match-reel
 #
 # **为什么不在本地跑**：沙箱那台机器的 IP 被 YouTube 挡了——yt-dlp 拿得到格式表，
 # 一取媒体就 403；真 Chromium 打开播放页直接是「detected unusual traffic」。
-# edge-tts 同理。所以下载和合成都只能在 runner 上做。
+# ⚠️ **「edge-tts 同理」这半句 2026-08-05 证伪了。** 它报的是
+# `CERTIFICATE_VERIFY_FAILED`，不是被挡——沙箱出网走一个做 TLS 拦截的代理，
+# 而 edge-tts 认 certifi 自带的根证书。挂上代理的 CA 当场就通
+# （`tennislive.localca`，CLI 入口自动调，runner 上是 no-op）。
+# 所以**只有下载**非 runner 不可；合语音在本地就能做，`--check-narration`
+# 实测 29 秒。同理封面：本地渲海报走 `tools/render_cover_local.py`，7 秒。
 on:
   workflow_dispatch:
     inputs:
@@ -300,6 +305,23 @@ jobs:
             echo "push 模式：只装主依赖，推送那条路的 import 已验过"
             exit 0
           fi
+          # **narration 也只装它用得上的那点。** 它不下片、不渲染、不抠图——
+          # rembg（176 MB 模型的那个包）、opencv、playwright、yt-dlp 一个都用不上。
+          # 装全套是 31 秒，而整趟 narration 才 1 分 37 秒；而且和 push 模式同理，
+          # 那几个包里任何一个装不上，都会让一条**只是查旁白长度**的 run 挂掉。
+          if [ "${{ github.event.inputs.mode }}" = "narration" ]; then
+            pip install -q -e .
+            # ⚠️ **numpy 不能省**，虽然缺了它不报错。`voice_prosody` 用它量音高，
+            # 没有就整张表退成十一行「量不了」——而这条 run 的产物**就是那张表**
+            # （「风格做出来没有、有没有做过头，报在这儿」）。在干净 venv 里照这
+            # 一行原样装一遍才看见的，沙箱里它一直装着。
+            pip install -q edge-tts azure-cognitiveservices-speech numpy
+            # 真验一次这条路要的东西，**不许 `|| true`**：装少了要在第 5 秒炸，
+            # 而不是一分半之后死在合语音那一步。
+            python -c "import edge_tts, numpy, tennislive.video.azure_tts"
+            echo "narration 模式：只装合语音要的，查旁白那条路的 import 已验过"
+            exit 0
+          fi
           # `cutout` 那份是 rembg：封面人物走「本场抽帧抠图」，抠背景要它。
           # **同一个坑第四次**——playwright、Chromium、cv2 三次都是本地装着、
           # runner 上没有，而且都死在下完 64MB 源片之后。这次连预检一起加了
@@ -324,10 +346,41 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
+          # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
+          # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，
+          # 下一趟每条都要重下一遍。2026-08-05 往 pyproject 里加 certifi 和
+          # pytest-xdist 时当场撞上（run 30973785219 卡在「安装 Chromium」）。
+          #
+          # `restore-keys` 就够：主键没中就退到上一份，Chromium 已经在盘上，
+          # `playwright install` 是个空操作；真换了 playwright 版本它会自己去下
+          # 对的那一版，所以退旧缓存也不会拿错。这比另起一步去算版本号便宜，
+          # 而且不用动步骤顺序。判据在 `test_Chromium缓存都要有restore_keys`。
+          restore-keys: playwright-chromium-${{ runner.os }}-
 
       - name: 装 Chromium
         if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
-        run: python -m playwright install --with-deps chromium
+        timeout-minutes: 9
+        run: |
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
+          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
+          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
+          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
+          #
+          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
+          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
+          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
+          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              sleep 15
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
 
       # **同一条源片会被下两到三次**：probe 一次、cover 一次、render 一次——
       # 中间「丢掉不进仓库的中间物」把它删了，而它本来就不进仓库。实测一个
@@ -335,12 +388,67 @@ jobs:
       # 整步才 198 秒——**一半时间花在重下同一个文件上**。
       # 键按 slug 走：一条片子的源片 URL 写死在 spec 里，不会变。
       # ⚠️ 缓存目录在 `~` 底下，清理那一步只碰 outdir，碰不到它。
+      # **键要按源片的 URL 算，不按整份 spec 算。**
+      #
+      # 代码里那层缓存（`_cached_source`）的注释白纸黑字写着「键取 URL 的哈希：
+      # 换了 URL 自然是另一个键」——而这儿的 Actions 缓存原来用的是
+      # `hashFiles(specs/reels/<slug>.json)`，**两层的口径对不上**。
+      #
+      # 后果：改一个字的旁白 → spec 哈希变 → 主键必然未命中 → 这一趟结束时
+      # 又把同一个 50~70 MB 的源片**重新上传一份**。shang-rublev 那条片子
+      # 光 spec 就改了六次。仓库缓存上限 10 GB、LRU 淘汰，于是这些重复条目会
+      # 把 Chromium（150 MB）和抠图模型（176 MB）挤出去——而那表现为
+      # 「今天 CI 怎么慢了点」，没有任何东西会说是缓存被挤掉了。
+      #
+      # 按 URL 算之后，同一条源片的主键在整条片子的生命周期里**一直命中**，
+      # 一次都不用重传。判据在 `test_源片缓存的键要按URL算`。
+      - name: 算出源片缓存的键
+        id: srckey
+        if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
+        env:
+          URL_INPUT: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          # **复用 `spec_sources()`，别在这儿再解析一遍 spec**——单源写
+          # `source_url`、多源写 `sources`，两种写法各写一遍必分叉。
+          # 它是纯函数、不打印，所以可以直接用（`load_spec` 会打印，不能用）。
+          python - <<'PY'
+          import hashlib, json, os, pathlib, sys
+          sys.path.insert(0, "tools")
+          url = os.environ.get("URL_INPUT", "").strip()
+          urls: list[str] = []
+          why = ""
+          if url:
+              urls, why = [url], "来自 url 输入"
+          else:
+              spec = pathlib.Path(f"specs/reels/{os.environ['SLUG']}.json")
+              if spec.is_file():
+                  try:
+                      from build_match_reel import spec_sources
+                      urls = sorted(spec_sources(
+                          json.loads(spec.read_text(encoding="utf-8"))).values())
+                      why = f"来自 {spec}"
+                  except Exception as exc:            # noqa: BLE001
+                      # **算不出键不该把整趟带崩**：spec 真有问题的话，下面
+                      # 那几步会报一个说人话的错。这儿只退化成「不缓存」。
+                      why = f"读不出源片地址（{type(exc).__name__}: {exc}）"
+              else:
+                  why = f"{spec} 还不存在"
+          key = (hashlib.sha256("\n".join(urls).encode()).hexdigest()[:16]
+                 if urls else "nourl")
+          pathlib.Path(os.environ["RUNNER_TEMP"], "srckey").write_text(key)
+          # **两种情况都要出声**：算出来了和没算出来，日志上必须分得开，
+          # 否则「缓存没生效」和「生效了」长得一模一样。
+          print(f"源片缓存键 {key}：{len(urls)} 条源片，{why}")
+          PY
+          echo "hash=$(cat "$RUNNER_TEMP/srckey")" >> "$GITHUB_OUTPUT"
+
       - name: 缓存源片（同一条片子只下一次）
         if: github.event.inputs.mode != 'push' && github.event.inputs.mode != 'narration'
         uses: actions/cache@v4
         with:
           path: ~/.cache/tennislive-sources
-          key: reel-src-${{ github.event.inputs.slug }}-${{ hashFiles(format('specs/reels/{0}.json', github.event.inputs.slug)) }}
+          key: reel-src-${{ github.event.inputs.slug }}-${{ steps.srckey.outputs.hash }}
           restore-keys: reel-src-${{ github.event.inputs.slug }}-
 
       - name: 算出目录
@@ -399,8 +507,16 @@ jobs:
       # 梯子，让下载那一步去报真正的原因，别在这儿把整个 run 弄挂。
       - name: 起 PO token provider
         id: pot
-        # push 模式不下任何东西——docker pull 那一分钟白等
-        if: github.event.inputs.mode != 'push'
+        # push 模式不下任何东西——docker pull 那一分钟白等。
+        # **narration 同理，而且更明显**：那道闸比的是「TTS 时长 vs spec 里的
+        # 段长」，两样都不需要源片（`--check-narration` 的注释里写着「一个源片
+        # 字节都不碰」）。它却一直在这儿等 PO token provider 起来——实测 11 秒，
+        # 而整趟 narration 只有 1 分 37 秒。又一次「加新能力时新入口没继承前提」：
+        # narration 这一档是后加的，这行 `if` 没跟着改。
+        # 判据在 `test_不下源片的模式不许等PO_token`。
+        if: >-
+          github.event.inputs.mode != 'push'
+          && github.event.inputs.mode != 'narration'
         continue-on-error: true
         run: |
           pip install -q bgutil-ytdlp-pot-provider
@@ -690,7 +806,18 @@ jobs:
           #      改了下载的落盘名，没改这里（run 30603686748，三条源片 250 MB
           #      全被兜底拦下）。又一次「加新能力就要同时改三处」。
           # 同理 `_versus_*` **不带后缀**：原来写死 `.jpg`，而抽帧抠图落的是
-          # `_versus_cut_top.png`。
+          # `_versus_cut_top.png`。现在它只剩抠之前那张原帧（`_versus_raw_*`）。
+          #
+          # ⚠️ **`cover_src/` 是产物，不是中间物——别顺手加进这串 rm。**
+          # 抓下来的帧和抠好的人存在那儿并**跟着提交**，为的是让封面返工能在
+          # 沙箱里本地渲（`tools/render_cover_local.py`，实测 6.9 秒），
+          # 不必为一行 CSS 上一趟 runner。量出来的账：shang-rublev 那 98 分钟里
+          # 有 31 分钟全花在封面上，而三趟里帧一次都没变。
+          # 代价是每条片子多 0.1~3 MB（同目录下的成片是 40~95 MB）。
+          # 这是**认领过的取舍**，判据在 `test_封面素材要留在仓库里`。
+          # 下面 `rm -f "$OUTDIR"/...` 都不带 `-r` 且只作用在根上，碰不到它；
+          # 而末尾那个「超过 8 MB 就报错」的兜底是**递归**的，所以它仍然管得住
+          # 「有人往 cover_src 里塞了个大文件」。
           # 封面候选帧只留候选墙和 json，12 张整帧不进仓库：q92 的 JPEG 单张
           # 132 KB、12 张 1.6 MB（存 PNG 是 9 MB），**两种都过得了「单个 8 MB」
           # 那道兜底**，却每探一次就加一份。

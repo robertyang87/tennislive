@@ -1,11 +1,32 @@
 name: ci
 
 on:
+  # ⚠️ **`push` 收在 main 上。** 原来它不限分支，于是一条开着 PR 的特性分支
+  # 每推一次会起**两趟一模一样的 CI**（`push` 一趟、`pull_request` 一趟）——
+  # 2026-08-05 那半小时里成对出现，run 2338/2339、2335/2336、2333/2334…
+  # 每趟 4 分 10 秒。分支上的把关由 `pull_request` 那趟做，一趟就够。
+  #
+  # 它省的**不是墙钟**（两趟本来就并行），是 Actions 分钟数和并发位——
+  # 而并发位被占满时，排在后面的 `match-reel` 就要排队等，那才吃墙钟。
   push:
+    branches: [main]
     paths-ignore:
       - "output/**"
       - "*.md"
   pull_request:
+
+# **同一个 PR 上，新的一推就把旧的那趟掐掉。**
+#
+# 之前一趟都不掐：那半小时里推了十来次，于是十来趟 CI 同时在跑，而**只有最新
+# 那趟算数**。代价有两头——并发位被自己占着，以及「现在到底该看哪一趟」
+# 变成一个要人去猜的问题（CLAUDE.md 里「查 PR 的 CI 别用 get_status」那一节，
+# 记的就是这个判断被搞错的时候什么样）。
+#
+# ⚠️ **main 上不许掐。** 那儿每个提交都要有自己的一趟绿——掐掉等于让一个
+# 从没跑过测试的提交留在主干上，而且不吭声。
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
 
 jobs:
   test:
@@ -25,20 +46,32 @@ jobs:
           # ⚠️ 成片 mp4 也落在这个目录下，等条数多起来要改成非 cone 模式按
           # 后缀挑，别让 CI 每次拉几十兆。
           #
+          # `.claude` 是会话启动钩子（几 KB）。**判据的主语要在 CI 的检出里
+          # 真的存在**——漏掉它，`test_session_start_hook.py` 五条全部
+          # `FileNotFoundError`（run 30971701644）。这和「测试不许拿 `output/`
+          # 当判据的主语——CI 上它不在」是同一条，只是换了个目录：那次的样子是
+          # **假绿**（`glob` 返回空列表，看起来像「没有成片」），这次是**真红**，
+          # 所以这次便宜得多。
+          #
           # ⚠️⚠️ **这个块是纯路径列表，不是 YAML**——里面写 `#` 不会被当注释，
           # 会原样传给 `git sparse-checkout set`，报
           # `fatal: specify directories rather than patterns`。说明只能写在
           # 块外面（就是这儿）。判据落在 `test_ci的sparse块里不许有注释`。
+          #
+          # **非 cone 模式**：上面那句「等条数多起来要改成非 cone 模式按后缀挑」
+          # 到期了——`output/interviews` 已经 **331 MB，其中 5 个 mp4 占 328 MB**，
+          # 而测试真正要读的 md / json / ass / jpg 加起来**约 3 MB**。cone 模式
+          # 只能按目录选，挑不掉后缀，所以每一趟 CI 都在拉 328 MB 它从不打开的
+          # 视频。模式集在合成仓库上验过（根文件和常规目录全在、interviews 的
+          # 文本产物在、mp4 和其余 output 都不在）。
+          # ⚠️ 非 cone 模式下**根文件不会自动带上**，所以第一行的 `/*` 不能少——
+          # 少了它 `pyproject.toml` 都不在，`pip install -e .` 当场炸。
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .github
-            assets
-            data
-            docs
-            specs
-            src
-            tests
-            tools
-            output/interviews
+            /*
+            !/output/
+            /output/interviews/
+            !/output/interviews/**/*.mp4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -88,7 +121,49 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
+          # ⚠️ **键钉在整份 `pyproject.toml` 上太宽。** 决定装哪个 Chromium 的
+          # 只有 playwright 的版本，可这个键是**整份文件的哈希**——加一个依赖、
+          # 改一行注释，六条工作流的 150 MB Chromium 缓存**同时失效**，
+          # 下一趟每条都要重下一遍。2026-08-05 往 pyproject 里加 certifi 和
+          # pytest-xdist 时当场撞上（run 30973785219 卡在「安装 Chromium」）。
+          #
+          # `restore-keys` 就够：主键没中就退到上一份，Chromium 已经在盘上，
+          # `playwright install` 是个空操作；真换了 playwright 版本它会自己去下
+          # 对的那一版，所以退旧缓存也不会拿错。这比另起一步去算版本号便宜，
+          # 而且不用动步骤顺序。判据在 `test_Chromium缓存都要有restore_keys`。
+          restore-keys: playwright-chromium-${{ runner.os }}-
       - name: 安装 Chromium
-        run: python -m playwright install --with-deps chromium
+        timeout-minutes: 9
+        run: |
+          # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
+          # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
+          # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
+          # 用完（run 30973785219：卡在这一步 13 分钟，其余步骤全在 1 分钟内跑完）。
+          #
+          # 正常 5~60 秒（命中缓存时是空操作）。240 秒是 4~48 倍的余量，
+          # 只有真挂死才会两次都吃满。⚠️ **别把这个数调小**：第一版 apt 重试
+          # 写 3×100 秒当场把 CI 弄红了，因为 apt 一直在推进、只是慢——
+          # **把「慢」误判成「挂死」，重试就从救场变成三倍的浪费**。
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              sleep 15
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
+      # **并行跑。** 实测（同为 4 核）：单线程 161.7s → `-n auto` 78.9s，**2.05×**，
+      # 而 CI 排在每次合并前面，所以这 80 秒是实打实压在发片周期上的。
+      #
+      # ⚠️ 用 `--dist loadfile`（同一个文件的测试落在同一个 worker），不用默认的
+      # 按条分发。只贵 1.5 秒（82.0s vs 78.9s），换掉的是「同一文件里的模块级
+      # 状态被拆到两个 worker」这一整类互相踩——**判据宁可窄，不可宽**。
+      # 跨进程本来就隔离，所以 `monkeypatch.chdir` 这类不受影响。
+      #
+      # 证据是四趟结果完全一致（1299 passed / 8 skipped）：78.9 / 80.5 / 80.5，
+      # loadfile 82.0。**不是「跑通一次」**——并行的毛病是偶发的，一次不算数。
+      # 真出现偶发红要先怀疑测试之间有共享状态，别顺手把 `-n` 拿掉了事。
       - name: 运行测试
-        run: pytest -v -rs
+        run: pytest -rs -n auto --dist loadfile
