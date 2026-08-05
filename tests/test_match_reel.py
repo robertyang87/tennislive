@@ -3297,8 +3297,13 @@ def test_不碰产物的工作流不许把output拉下来():
             # 把产物那一格弄进 cone 有两种写法，都算数：
             # - 目录要按日期／slug 算 → `git sparse-checkout add "$OUT_DIR"`
             # - 目录是固定的（`output/voice-samples`）→ 直接列进 sparse-checkout
+            # `/?` 是给**非 cone 模式**留的：那儿写的是 gitignore 语义的
+            # pattern（`/output/interviews/`），带前导斜杠。ci.yml 2026-08-05
+            # 换了过去——`output/interviews` 331 MB 里 328 MB 是从不打开的 mp4，
+            # 而 cone 模式挑不掉后缀。少了这个 `/?`，那条工作流会被判成
+            # 「没把自己那一格弄进 cone」，而它其实弄进去了。
             listed_statically = re.search(
-                r"\n\s+output/\S+", block[block.index("sparse-checkout:"):])
+                r"\n\s+/?output/\S+", block[block.index("sparse-checkout:"):])
             assert "git sparse-checkout add" in body or listed_statically, (
                 f"{path.name} 做了稀疏检出却没把自己那一格弄进 cone——"
                 "`git add` 只会警告并退出 0，产物静默丢掉，而那是跑完之后才发现。")
@@ -3967,6 +3972,45 @@ def _excluded_modes(step: str) -> set[str]:
     """这一步的 `if:` 把哪几个 mode 排除在外。"""
     head = step.split("run:", 1)[0]
     return set(re.findall(r"inputs\.mode\s*!=\s*'([a-z-]+)'", head))
+
+
+def test_源片缓存的键要按URL算():
+    """两层缓存的口径必须一致，否则外层每趟都白传一份 50~70 MB。
+
+    代码里那层（`_cached_source`）的注释白纸黑字写着「键取 URL 的哈希：换了
+    URL 自然是另一个键」。而 Actions 那层原来用的是
+    `hashFiles(specs/reels/<slug>.json)`——**改一个字的旁白，spec 哈希就变**，
+    主键必然未命中，这一趟结束时又把同一个源片重新上传一份。
+    shang-rublev 那条光 spec 就改了六次。
+
+    仓库缓存上限 10 GB、LRU 淘汰，所以这些重复条目会把 Chromium（150 MB）
+    和抠图模型（176 MB）挤出去——而那表现为「今天 CI 怎么慢了点」，
+    **没有任何东西会说是缓存被挤掉了**。
+
+    判据钉两头：键不许再从整份 spec 来，而且算键那一步要**复用
+    `spec_sources()`**——单源写 `source_url`、多源写 `sources`，
+    在这儿再解析一遍必分叉。
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    cache = _step_block("缓存源片（同一条片子只下一次）", text)
+    key = next(ln for ln in cache.splitlines() if ln.strip().startswith("key:"))
+    assert "hashFiles" not in key, (
+        "源片缓存的键还在按整份 spec 算——改一个字的旁白就会让主键失效，"
+        f"于是每趟都重传一份源片：{key.strip()}")
+    assert "srckey" in key, f"键没接上按 URL 算的那一步：{key.strip()}"
+
+    keystep = _step_block("算出源片缓存的键", text)
+    assert "spec_sources" in keystep, (
+        "算键那一步自己解析了一遍 spec——单源 `source_url` 和多源 `sources` "
+        "两种写法，写两处必分叉。复用 `spec_sources()`。")
+    # **两种情况都要出声**：算出来了和没算出来，日志上必须分得开，
+    # 否则「缓存没生效」和「生效了」长得一模一样。
+    assert keystep.count("print(") >= 1 and "源片缓存键" in keystep, (
+        "算键那一步不打印它算出了什么——缓存没生效时看不出来")
+    # 算不出键不许把整趟带崩：spec 真有问题的话，后面几步会报说人话的错
+    assert "except Exception" in keystep, (
+        "spec 读不出来会让这一步炸，而它排在 render 前面——"
+        "报错会变成一句和 spec 无关的缓存错误")
 
 
 def test_不下源片的模式不许等PO_token():

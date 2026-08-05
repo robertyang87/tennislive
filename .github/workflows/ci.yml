@@ -57,17 +57,21 @@ jobs:
           # 会原样传给 `git sparse-checkout set`，报
           # `fatal: specify directories rather than patterns`。说明只能写在
           # 块外面（就是这儿）。判据落在 `test_ci的sparse块里不许有注释`。
+          #
+          # **非 cone 模式**：上面那句「等条数多起来要改成非 cone 模式按后缀挑」
+          # 到期了——`output/interviews` 已经 **331 MB，其中 5 个 mp4 占 328 MB**，
+          # 而测试真正要读的 md / json / ass / jpg 加起来**约 3 MB**。cone 模式
+          # 只能按目录选，挑不掉后缀，所以每一趟 CI 都在拉 328 MB 它从不打开的
+          # 视频。模式集在合成仓库上验过（根文件和常规目录全在、interviews 的
+          # 文本产物在、mp4 和其余 output 都不在）。
+          # ⚠️ 非 cone 模式下**根文件不会自动带上**，所以第一行的 `/*` 不能少——
+          # 少了它 `pyproject.toml` 都不在，`pip install -e .` 当场炸。
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            .claude
-            .github
-            assets
-            data
-            docs
-            specs
-            src
-            tests
-            tools
-            output/interviews
+            /*
+            !/output/
+            /output/interviews/
+            !/output/interviews/**/*.mp4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -119,5 +123,16 @@ jobs:
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('pyproject.toml') }}
       - name: 安装 Chromium
         run: python -m playwright install --with-deps chromium
+      # **并行跑。** 实测（同为 4 核）：单线程 161.7s → `-n auto` 78.9s，**2.05×**，
+      # 而 CI 排在每次合并前面，所以这 80 秒是实打实压在发片周期上的。
+      #
+      # ⚠️ 用 `--dist loadfile`（同一个文件的测试落在同一个 worker），不用默认的
+      # 按条分发。只贵 1.5 秒（82.0s vs 78.9s），换掉的是「同一文件里的模块级
+      # 状态被拆到两个 worker」这一整类互相踩——**判据宁可窄，不可宽**。
+      # 跨进程本来就隔离，所以 `monkeypatch.chdir` 这类不受影响。
+      #
+      # 证据是四趟结果完全一致（1299 passed / 8 skipped）：78.9 / 80.5 / 80.5，
+      # loadfile 82.0。**不是「跑通一次」**——并行的毛病是偶发的，一次不算数。
+      # 真出现偶发红要先怀疑测试之间有共享状态，别顺手把 `-n` 拿掉了事。
       - name: 运行测试
-        run: pytest -v -rs
+        run: pytest -rs -n auto --dist loadfile
