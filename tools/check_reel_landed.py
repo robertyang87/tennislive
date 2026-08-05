@@ -100,6 +100,28 @@ def cover_seconds(film: Path) -> float | None:
     return None
 
 
+def outro_seconds(film: Path) -> float:
+    """片尾品牌页停了多久。**没有这一项就是 0**，而 0 正是老片子的真实情况。
+
+    片尾页是 2026-08-05 才加的（账号所有者：「每个视频最后都加一页并配上关注的
+    口播」）。在那之前渲的片子 `render.json` 里没有这个键，它们的成片里也确实
+    没有片尾——所以**退回 0 是对的，不是兜底**，两种情况的产物长得就不一样。
+
+    ⚠️ 反过来说，**不能像封面那样「读不到就跳过片长判定」**：那会让每一条老
+    片子的片长这一项白白不判，而它们的片长本来是判得了的。
+    """
+    meta = film.parent / "render.json"
+    if not meta.is_file():
+        return 0.0
+    data = json.loads(meta.read_text(encoding="utf-8"))
+    secs = float(data.get("outro_seconds") or 0.0)
+    if secs:
+        print(f"片尾 {secs:.2f}s（render.json，跟着口播）")
+    else:
+        print("片尾 0s（这条片子渲于加片尾页之前）")
+    return secs
+
+
 def voiced_by(film: Path, spec: dict) -> int:
     """这条片子是**哪条路**配的音——读产物，不从工作流参数推。
 
@@ -192,20 +214,25 @@ def main() -> int:
                      "-of", "csv=p=0", str(film)).strip())
     segs = sum(round(float(s["end"]) - float(s["start"]), 3)
                for s in spec["segments"])
+    outro = outro_seconds(film)
     if cover is None:
         # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子
-        # 没记。**从产物自己量**：画面总长减去段落总长就是封面停的那一截——
-        # 比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
+        # 没记。**从产物自己量**：画面总长减去段落总长、再减去片尾就是封面停的
+        # 那一截——比拿一个改过三次的常量猜准得多，也正是「查产物，不查信号」。
         # 片长那一项当然不能再判了（拿它去验它自己，恒真）。
-        cover = max(0.0, v_dur - segs)
-        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s——"
-              f"封面按两者之差 {cover:.2f}s 算，片长这一项不判")
+        cover = max(0.0, v_dur - segs - outro)
+        print(f"[跳过] 画面 {v_dur:.2f}s，段落共 {segs:.2f}s、片尾 {outro:.2f}s——"
+              f"封面按三者之差 {cover:.2f}s 算，片长这一项不判")
     else:
-        want = segs + cover
+        # ⚠️ **片尾这一项漏掉的话，这条恒等式会在每一条新片子上恒假**——
+        # 差出来的正好是片尾那三四秒，看起来像「片长不对」，而一条常年红的
+        # 检查和没有检查是同一个毛病。
+        want = segs + cover + outro
         ok = abs(v_dur - want) < 0.5
         bad += 0 if ok else 1
         print(f"[{'ok' if ok else '不合格'}] 画面 {v_dur:.2f}s"
-              f"（spec 算出来 {want:.2f}s）")
+              f"（spec 算出来 {want:.2f}s ＝ 段落 {segs:.2f} ＋ 封面 {cover:.2f}"
+              f" ＋ 片尾 {outro:.2f}）")
 
     # 音轨比画面短 = 结尾那几秒无声。分段拼接（concat + copy）会把每段 AAC 的
     # 编码器延迟一路累出来，累到几秒就听得出来了。
