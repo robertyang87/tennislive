@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.5 赛后开麦 | 商竣程掀翻卢布列夫</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>救下五个赛点，掀翻 10 号种子卢布列夫。可主持人把话筒递过来，他先说的不是这场胜利——是&quot;我健康了&quot;。
+
+📍2026 蒙特利尔 ATP1000 第二轮
+🎾 商竣程 7-5 4-6 7-6(5) 卢布列夫
+🎤 赛后场上采访全程 74 秒，中英双语字幕
+
+主持人先问他：回到座位那会儿低着头盯着球场看了好一阵子，打完这两小时 45 分钟，脑子里在想什么。他先谈的是对手：
+
+Andrey is a great friend. He&#x27;s a great competitor, a good champion on the courts.
+（安德烈是很好的朋友，他是很强的对手，也是位好冠军）
+
+然后话锋一转落回自己身上——这才是这段采访真正的落点：
+
+But more happily, I&#x27;m healthy. I&#x27;m 100% playing my best tennis.
+（但更让我高兴的是，我健康了。我百分百打出了最好的网球）
+
+再问他这一战说明他现在处在什么水平，他没顺着往上夸：
+
+I know the tennis is there, but I just have to get it out of me and stay healthy.
+（我知道自己的网球还在，只是得把它打出来，还要保持健康）
+
+That&#x27;s the number one priority. And if I can win some matches, that&#x27;ll be amazing too.
+（这是第一位的事。如果还能赢下几场球，那就再好不过了）
+
+这段里值得抄下来的几句：
+
+get it out of me 把它打出来
+that&#x27;s the biggest part about being a top player 这是当顶尖球员最关键的一点
+learn from the top players 向顶尖球员学
+that&#x27;ll be amazing too 那就再好不过了
+
+#网球 #商竣程 #ATP #蒙特利尔大师赛 #网球英语</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
