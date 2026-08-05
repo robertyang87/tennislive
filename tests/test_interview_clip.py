@@ -2376,12 +2376,37 @@ def test_第二份ASR必须换个模型否则那道闸是空的(monkeypatch, tmp
         m.verify_transcript(spec, [], tmp_path)
     assert "同一个模型跑两遍" in str(e.value)
 
-    # 反过来：换了模型就不该被这道闸拦住（拦在后面下载那一步是另一回事）
+    # 反过来：换了模型就不该被这道闸拦住。**用哨兵，别靠「反正会抛点什么」**——
+    # 那样这半条断言在装了 faster-whisper 的机器和没装的机器上走的是两条路
+    # （一条死在下载、一条死在 import），而这个仓库栽过「同一条测试在两个地方
+    # 跑的是两条不同的路」。
     spec["whisper_model"] = "medium.en"
+    monkeypatch.setattr(m, "yt_download",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("到下载了")))
     with pytest.raises(Exception) as e2:
         m.verify_transcript(spec, [], tmp_path)
     assert "同一个模型跑两遍" not in str(e2.value), \
         "换了模型还被拦，这道闸拦宽了"
+
+
+def test_换模型那道闸要排在导入whisper之前():
+    """⚠️ **只测行为拦不住位置错，而这一处的位置错只在 CI 上现形。**
+
+    那道闸查的是 spec 的形状，一个模型都不用加载。第一版把它写在
+    `from faster_whisper import WhisperModel` **后面**——于是在任何没装
+    faster-whisper 的机器上它根本走不到，而那正是 CI 那台：本地全绿，
+    CI 报 `No module named 'faster_whisper'`（PR #198，run 30980157757）。
+
+    这是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验
+    前面**，否则失败发生在第 90 秒而不是第 5 秒，而且挡住的是判据本身。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = src.split("def verify_transcript(")[1].split("\ndef ")[0]
+    gate = body.index("同一个模型跑两遍")
+    imp = body.index("from faster_whisper import")
+    assert gate < imp, (
+        "换模型那道闸排在 `from faster_whisper import` 后面——"
+        "没装这个包的机器（CI 就是）永远走不到它")
 
 
 def test_交叉校验报告里第一份是谁要照实写():
