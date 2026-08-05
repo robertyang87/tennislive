@@ -1683,7 +1683,297 @@ _ACADEMY_SPAN_DIAGRAM = _academy_span_diagram()
 AUTO_PUSH_SLUGS: frozenset[str] = frozenset()
 
 
+#: 同工同酬这条的四张图。**这条选题的画面天生是数字，照片给不了**——
+#: 奖金、营收、路线图，没有任何一张实拍能表达，正是 CLAUDE.md 那条
+#: 「示意图的触发条件是照片讲不清，不是照片找不到」。
+#:
+#: 数据出处逐条记在 `docs/equal-pay-research.md` 第六之三节的核验状态表里，
+#: 这四张图用到的**全部是 🟢 主源或 🟡 两处独立互印**，没有一条单一来源。
+
+#: 封面。**这条选题没有诚实的封面照片**——它讲的是一张奖金表，
+#: 而任何一张球员实拍都只会把「第一轮出局的那些人」缩回到某一张脸上。
+#: 所以封面就是那两个数本身：两根长度成 2.11 倍的条，不写百分比。
+#: （CLAUDE.md 那条「封面用真实照片」防的是拿视频抽帧凑数，
+#: 不是要求一个没有实拍可言的话题去硬找一张脸。）
+_PAY_COVER_DIAGRAM = """
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="52" text-anchor="middle" fill="#9fb4aa"
+        font-size="30" font-weight="700">同一站比赛，第一轮就输</text>
+
+  <text x="120" y="150" fill="#9fb4aa" font-size="32" font-weight="700">男选手</text>
+  <rect x="120" y="176" width="660" height="86" rx="14" fill="rgba(231,243,236,.62)"/>
+  <text x="150" y="238" fill="#0f2a1c" font-size="52" font-weight="800">23760</text>
+
+  <text x="120" y="340" fill="#c6f65a" font-size="32" font-weight="700">女选手</text>
+  <rect x="120" y="366" width="313" height="86" rx="14" fill="#c6f65a"/>
+  <text x="150" y="428" fill="#0f2a1c" font-size="52" font-weight="800">11270</text>
+
+  <text x="450" y="516" text-anchor="middle" fill="#e7f3ec"
+        font-size="34" font-weight="800">单位：美元</text>
+</svg>
+"""
+
+#: 第 ① 屏。辛辛那提 2025 男女逐轮奖金之比，从冠军那一格一路走到首轮。
+#: **横轴故意反着排**（左＝冠军，右＝首轮）：这一屏说的是「越往签表下方
+#: 走差得越多」，让线**往下掉**才和那句话同向。八格单调下降，脚本验过。
+#: WTA 那一列出自赛事官方页，ATP 那一列两处独立来源互印。
+#: 几何：y = 150 + (70 − 百分比) × 10，即纵轴一格 1% ＝ 10px。
+_PAY_ROUND_DIAGRAM = """
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">女子拿到男子的百分之多少</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">同一站比赛，从冠军数到第一轮</text>
+
+  <line x1="100" y1="181" x2="830" y2="181"
+        stroke="rgba(231,243,236,.18)" stroke-width="2"/>
+  <line x1="100" y1="376" x2="830" y2="376"
+        stroke="rgba(231,243,236,.18)" stroke-width="2"/>
+
+  <polyline points="120,181 218,195 316,230 414,285 512,301 610,306 708,334 806,376"
+            fill="none" stroke="#c6f65a" stroke-width="7"
+            stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="120" cy="181" r="12" fill="#c6f65a"/>
+  <circle cx="218" cy="195" r="9" fill="#c6f65a"/>
+  <circle cx="316" cy="230" r="9" fill="#c6f65a"/>
+  <circle cx="414" cy="285" r="9" fill="#c6f65a"/>
+  <circle cx="512" cy="301" r="9" fill="#c6f65a"/>
+  <circle cx="610" cy="306" r="9" fill="#c6f65a"/>
+  <circle cx="708" cy="334" r="9" fill="#c6f65a"/>
+  <circle cx="806" cy="376" r="14" fill="#c6f65a"/>
+
+  <text x="120" y="152" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">66.9%</text>
+  <text x="806" y="422" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">47.4%</text>
+
+  <text x="120" y="470" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">冠军</text>
+  <text x="463" y="470" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">中间六轮，一路往下</text>
+  <text x="806" y="470" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">第一轮</text>
+
+  <text x="450" y="516" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">第一轮那一格，人最多</text>
+</svg>
+"""
+
+#: 第 ② 屏。把反方的账本和实际奖金摆在一起。**这一屏是替对方说话的**——
+#: 不摆它，整条片子就只是一句「应该同酬」的表态。
+#: 一屏一个强调色：给「奖金份额」那根，因为反常的是它（它高于收入份额）。
+#: 几何：0–100% 映射到 x 260–820，即 1% ＝ 5.6px。
+_PAY_SHARE_DIAGRAM = """
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">女子这边占男子的几成</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">左边是一整年的账，右边是一站比赛</text>
+
+  <text x="260" y="164" fill="#9fb4aa" font-size="27" font-weight="700">全年进账</text>
+  <rect x="260" y="180" width="560" height="52" rx="10"
+        fill="rgba(231,243,236,.12)"/>
+  <rect x="260" y="180" width="272" height="52" rx="10"
+        fill="rgba(231,243,236,.62)"/>
+  <text x="556" y="220" fill="#e7f3ec" font-size="32" font-weight="800">48.6%</text>
+
+  <text x="260" y="300" fill="#c6f65a" font-size="27" font-weight="700">这一站的奖金</text>
+  <rect x="260" y="316" width="560" height="52" rx="10"
+        fill="rgba(231,243,236,.12)"/>
+  <rect x="260" y="316" width="314" height="52" rx="10" fill="#c6f65a"/>
+  <text x="598" y="356" fill="#e7f3ec" font-size="32" font-weight="800">56.0%</text>
+
+  <text x="450" y="440" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">按「谁挣得多谁拿得多」算</text>
+  <text x="450" y="478" text-anchor="middle" fill="#c6f65a"
+        font-size="31" font-weight="800">女子现在拿的，反而偏多</text>
+</svg>
+"""
+
+#: 第 ③ 屏。这条选题的思想内核：合并赛事没法按性别拆收入。
+#: 画的是**结构不是数据**——一块场地、一张票、一路转播信号，进来的钱是一笔。
+#: 没有任何照片能表达「这笔钱分不开」，而这正是全片的落点。
+_PAY_ONE_GATE_DIAGRAM = """
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">这笔钱，是谁挣的</text>
+
+  <rect x="150" y="86" width="600" height="196" rx="18"
+        fill="rgba(231,243,236,.08)" stroke="rgba(231,243,236,.28)" stroke-width="2"/>
+  <text x="450" y="128" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">同一周，同一块场地</text>
+  <rect x="196" y="156" width="234" height="88" rx="12"
+        fill="rgba(231,243,236,.14)"/>
+  <text x="313" y="210" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">男子比赛</text>
+  <rect x="470" y="156" width="234" height="88" rx="12"
+        fill="rgba(231,243,236,.14)"/>
+  <text x="587" y="210" text-anchor="middle" fill="#e7f3ec"
+        font-size="30" font-weight="800">女子比赛</text>
+
+  <path d="M450 282 L450 330" stroke="#c6f65a" stroke-width="6"
+        stroke-linecap="round"/>
+  <path d="M436 316 L450 332 L464 316" fill="none" stroke="#c6f65a"
+        stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <rect x="228" y="342" width="444" height="66" rx="14" fill="#c6f65a"/>
+  <text x="450" y="386" text-anchor="middle" fill="#0f2a1c"
+        font-size="31" font-weight="800">一张票　一路转播信号</text>
+
+  <text x="450" y="456" text-anchor="middle" fill="#e7f3ec"
+        font-size="32" font-weight="800">进来的钱是一笔</text>
+  <text x="450" y="498" text-anchor="middle" fill="#9fb4aa"
+        font-size="28" font-weight="700">两个巡回赛自己也没分明白</text>
+</svg>
+"""
+
+#: 第 ④ 屏。路线图只有两个终点，中间什么都没有。
+#: **空白本身就是这一屏的内容**，所以中段刻意留空并写明「没有刻度」——
+#: 一份到 2033 年才验收、中途无从对表的承诺，是这条片子的收尾。
+_PAY_ROADMAP_DIAGRAM = """
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg">
+  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
+        font-size="36" font-weight="800">这张时间表上只有两个点</text>
+  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">女子巡回赛 2023 年定下的路线图</text>
+
+  <line x1="110" y1="212" x2="820" y2="212"
+        stroke="rgba(231,243,236,.28)" stroke-width="6" stroke-linecap="round"/>
+
+  <circle cx="150" cy="212" r="10" fill="rgba(231,243,236,.55)"/>
+  <text x="150" y="176" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">2023</text>
+  <text x="150" y="262" text-anchor="middle" fill="#9fb4aa"
+        font-size="25" font-weight="700">定下</text>
+
+  <circle cx="520" cy="212" r="14" fill="#c6f65a"/>
+  <text x="520" y="176" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">2027</text>
+  <text x="520" y="266" text-anchor="middle" fill="#e7f3ec"
+        font-size="27" font-weight="700">男女同场的站</text>
+
+  <circle cx="800" cy="212" r="14" fill="#c6f65a"/>
+  <text x="800" y="176" text-anchor="middle" fill="#c6f65a"
+        font-size="30" font-weight="800">2033</text>
+  <text x="800" y="266" text-anchor="middle" fill="#e7f3ec"
+        font-size="27" font-weight="700">女子单独办的站</text>
+
+  <text x="335" y="336" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">中间没有任何刻度</text>
+  <text x="335" y="374" text-anchor="middle" fill="#9fb4aa"
+        font-size="27" font-weight="700">没有分年目标</text>
+
+  <text x="450" y="432" text-anchor="middle" fill="#e7f3ec"
+        font-size="31" font-weight="800">到点没到点，只能等 2033 年才知道</text>
+</svg>
+"""
+
+
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
+    # 账号所有者 2026-08-05：「**要精确且深入浅出让人易懂**」。
+    #
+    # 「精确」落在 `docs/equal-pay-research.md` 第六之三节那张核验状态表上：
+    # 这四屏用到的每一个数**都是 🟢 主源或 🟡 两处独立互印**，四条只有单一
+    # 来源的事实（迪拜 2005、2029 女王杯、「80-20 起步」、大满贯时间表）
+    # **一条都没用**——不必为了一句漂亮话去用一个补不硬的事实。
+    #
+    # 「深入浅出」落在三件事上：
+    #   1. **不说行话**。不写「合并赛事」「非合并」「营收份额」，
+    #      写「男女在同一块场地、同一周打」「全年进账」。
+    #   2. **用能感觉到的钱**。开场不是百分比，是「两万三千七百六十」对
+    #      「一万一千二百七十」——百分比放到图上，让眼睛看趋势。
+    #   3. **先替对方说话再回应**（第 ② 屏）。这条选题最容易写成一句表态，
+    #      而反方的账本是真的：女子那边拿的奖金份额已经高于它的收入份额。
+    #      藏掉它，第 ③ 屏就没有靶子。
+    #
+    # ⚠️ **第 ② 屏不许删**。它对我方不利，但它正是全片可信度的来源；
+    # 删了它，第 ③ 屏那句「这笔钱分不开」就变成了没有对手的自说自话。
+    "equal-pay": (
+        (
+            "cause",
+            "前因后果",
+            "两倍",
+            "二零二五年的辛辛那提，男子和女子在同一块场地打，同一周。"
+            "第一轮就输的人，男选手拿两万三千七百六十美元。"
+            "女选手拿一万一千二百七十美元。"
+            "男的是女的两倍多一点。"
+            "往签表上方走，差距在缩小。"
+            "到冠军那一格，女子拿到男子的六成七。"
+            "所以差得最多的不是冠军，是第一轮就回家的人。"
+            "而第一轮，人最多。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "同一站 同一周 同一块场地",
+                "第一轮 男 23760 女 11270",
+                "越往下 差得越多",
+            ),
+            _PAY_ROUND_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "技术原理",
+            "凭什么",
+            "赛事方给的理由不是性别，是收入。"
+            "这个理由有账本撑着。"
+            "报税申报上，二零二四年，男子巡回赛进账两亿九千三百七十万美元。"
+            "女子巡回赛一亿四千两百六十万。"
+            "女子这边不到男子的一半，那一年还亏了钱。"
+            "可是把奖金比例放到旁边，事情就反过来了。"
+            "辛辛那提女子拿走了奖金的五成六，进账却只占四成九。"
+            "按这个理由自己的算法，女子现在拿的已经偏多了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "理由是收入 不是性别",
+                "全年进账 女子占 48.6%",
+                "这一站奖金 女子占 56.0%",
+            ),
+            _PAY_SHARE_DIAGRAM,
+        ),
+        (
+            "mechanism",
+            "技术原理",
+            "谁挣的",
+            "可是这笔钱，本来就分不开。"
+            "辛辛那提是男女合办的。"
+            "观众买一张票进场，两边的比赛都能看。"
+            "转播是一路信号。"
+            "所以这笔收入到底是男选手挣的，还是女选手挣的，这个问题没有答案。"
+            "两个巡回赛自己也没算清楚。"
+            "二零二五年年底，他们谈过把商业权益合到一起。"
+            "谈判停住了，卡的正是收入怎么分。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "一张票 两边的比赛都能看",
+                "转播 是一路信号",
+                "两家自己谈 也没分明白",
+            ),
+            _PAY_ONE_GATE_DIAGRAM,
+        ),
+        (
+            "today",
+            "当今现状",
+            "等到 2033",
+            "女子巡回赛定过一张时间表。"
+            "男女同场的那些站，二零二七年补齐。"
+            "女子单独办的那些站，二零三三年。"
+            "这份公告里没有任何一个中间刻度。"
+            "没有分年目标，也没有百分比。"
+            "原话只有一句，说它会随着时间慢慢发生。"
+            "所以在二零三三年之前，外面的人没办法判断它到底走到哪儿了。",
+            "",
+            "示意图 · 网球时差绘制",
+            (
+                "男女同场的站 2027",
+                "女子单独办的站 2033",
+                "中间 没有任何刻度",
+            ),
+            _PAY_ROADMAP_DIAGRAM,
+            "同酬是冠军拿一样多，还是第一轮输球的人拿一样多？",
+        ),
+    ),
     # ⚠️ 这条和 `shang-nishikori` 讲的是同一个人，**不许重讲那条已经讲过的**：
     # 五个月的空白、生涯最高第 47、成都夺冠那一周，那条片子都铺开讲过了。
     # 这条的新东西是 **8 月 2 日那场胜利本身**，以及它换来的对手。伤停只留一句
@@ -4599,6 +4889,13 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
 # 这个洞。判据落在 test_每条片子的标签都放满五个。
 _DEFAULT_TAGS = ("网球", "网球时差", "网球冷知识", "网球科普", "网球运动")
 _CAPTIONS: dict[str, dict] = {
+    "equal-pay": {
+        "hook": (
+            "同一站比赛、同一块场地，第一轮就输：男选手 23760 美元，女选手 11270。\n"
+            "而差得最多的不是冠军那一格——是人最多的第一轮。"
+        ),
+        "tags": ("网球", "网球时差", "奖金", "同工同酬", "WTA"),
+    },
     "nadal-academy": {
         "hook": (
             "纳达尔学院宣布「史上第一次六人同时进前 100」，八周之后这个数字就不对了——\n"
@@ -4868,6 +5165,20 @@ def column_of(slug: str) -> Column:
 # beat one makes the viewer work out the subject for themselves. Every deck
 # now opens on the question it answers, said out loud and set large.
 _OPENINGS: dict[str, dict] = {
+    "equal-pay": {
+        # 台头先亮硬事实，不描述格式（`nadal-academy` 那条踩过：
+        # 「七个人，七条来时路」是在讲片子长什么样，读者一个字信息都没拿到）。
+        # 「两倍」是不用换算就能感觉到的量，百分比留给图。
+        "topic": "同一站比赛，男的拿两倍",
+        # ⚠️ 封面这一问不许和末屏那一问重合（末屏问的是「冠军还是第一轮」）。
+        # 这一问指向**差距的形状**，末屏那一问指向**同酬的定义**，两件事。
+        "question": "差得最多的，是冠军吗？",
+        "narration": "差得最多的，是冠军吗？二零二五年的辛辛那提，"
+                     "男子和女子在同一块场地打。第一轮就输的人，"
+                     "男选手拿两万三千七百六十美元，女选手拿一万一千二百七十。",
+        "diagram": _PAY_COVER_DIAGRAM,
+        "credit": "示意图 · 网球时差绘制",
+    },
     "shang-rublev": {
         "column": "开球之前",
         "topic": "商竣程 VS 卢布列夫：蒙特利尔第二轮前瞻",
@@ -5250,12 +5561,22 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     spec = _OPENINGS.get(story.slug) or {}
     question = spec.get("question") or f"{story.title}？"
     image = spec.get("image") or (beats[0].image if beats else "")
+    # ⚠️ **有的选题一张诚实的封面照片都没有。** 这里原来把 `diagram` 写死成
+    # 空串，也就是默认「每条片子至少有一张照片」——而 `equal-pay` 讲的是一张
+    # 奖金表，任何一张球员实拍都会把「第一轮出局的那些人」缩回到某一张脸上。
+    # 这类片子的封面只能是自己画的图，否则那道「缺图就停下来」的闸会把它整个
+    # 挡在门外（它拦得对：缺图确实该停，只是这里不缺图，缺的是照片）。
+    #
+    # **只有在没有照片时才走这条路**：有照片还叠一张示意图，等于一屏两个主体。
+    diagram = "" if image else (
+        spec.get("diagram") or (beats[0].diagram if beats else "")
+    )
     # Usually the cover reuses a beat's photo and can borrow its credit line.
     # When it has one of its own, the opening has to carry the provenance
     # itself — an uncredited frame is one nobody can check later.
     credit = spec.get("credit", "")
     for beat in beats:
-        if beat.image == image:
+        if image and beat.image == image:
             credit = beat.credit
             break
     return ExplainerSegment(
@@ -5266,7 +5587,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
         image=image,
         credit=credit,
         points=(),
-        diagram="",
+        diagram=diagram,
         question="",
         fixture=_fixture_lines(spec),
         gloss=spec.get("gloss", ""),

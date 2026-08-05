@@ -1,6 +1,7 @@
 import html
 import json
 import re
+import types
 from pathlib import Path
 from unittest import mock
 
@@ -516,6 +517,50 @@ def test_栏目是登记过的并且赛前片子写清了日期():
         assert re.search(r"\d{1,2}\s*月\s*\d{1,2}\s*日", blob), (
             f"{slug} 在易逝栏目「{name}」里，却没写出比赛日期"
         )
+
+
+def test_一张照片都没有的选题也要有封面():
+    """有的选题**没有一张诚实的封面照片**，封面只能是自己画的图。
+
+    `equal-pay` 讲的是一张奖金表：任何一张球员实拍都会把「第一轮出局的那些人」
+    缩回到某一张脸上，而那正是这条选题要反对的看法。
+
+    在此之前 `_opening_segment` 把 `diagram` 写死成空串，也就是默认
+    **每条片子至少有一张照片**——于是全示意图的片子会被那道「缺图就停下来」
+    的闸整个挡在门外。那道闸拦得对（缺图确实该停），只是这里不缺图，缺的是照片。
+
+    ⚠️ 另一头同样要钉：**有照片的时候不许再叠一张示意图**，
+    否则封面上会同时压着两个主体。
+    """
+    from tennislive.video.explainer import _opening_segment
+
+    story = find_story_by_slug("equal-pay")
+    beats = explainer_script(story)
+    cover = beats[0]
+    assert cover.kind == "cover"
+    assert not cover.image, "这条选题没有照片，封面不该凭空冒出一张"
+    assert cover.diagram, "全示意图的片子拿不到封面——那道缺图闸会把它挡住"
+    assert "23760" in cover.diagram and "11270" in cover.diagram, (
+        "封面画的应该是这条片子最硬的那两个数"
+    )
+
+    # 反面：有照片的选题，封面走照片，`diagram` 必须是空的。
+    photo_story = find_story_by_slug("nadal-academy")
+    photo_cover = explainer_script(photo_story)[0]
+    assert photo_cover.image, "这条选题是有照片的"
+    assert not photo_cover.diagram, (
+        "有照片还叠示意图，封面上会同时压着两个主体"
+    )
+
+    # 第三头：**opening 自己没给图时，从第一屏借**。
+    # 用一个不在 `_OPENINGS` 里的 slug，才走得到这条路——
+    # `equal-pay` 自己有封面图，spec 那一份优先，借不借得到它测不出来。
+    borrowed = _opening_segment(
+        types.SimpleNamespace(slug="__not-registered__", title="x"),
+        [ExplainerSegment(kind="cause", label="前因后果", title="x",
+                          narration="y", diagram="<svg/>")],
+    )
+    assert borrowed.diagram == "<svg/>", "封面没能从第一屏借到那张图"
 
 
 def test_赛前片的封面要写清是哪一场():

@@ -34,7 +34,27 @@ def _load(name):
 
 chk = _load("check_cover_resolution")
 
-from tennislive.video.explainer import _SCRIPTS  # noqa: E402
+from tennislive.video.explainer import _SCRIPTS, explainer_script  # noqa: E402
+from tennislive.render.tournament_story import find_story_by_slug  # noqa: E402
+
+#: 封面是**自己画的示意图**、没有照片的那些。
+#:
+#: 这一整个文件量的是「照片铺满卡片要放大多少倍」——而 SVG 是分辨率无关的，
+#: 这个问题对它根本不存在。所以下面所有断言的主语是**有照片封面的片子**，
+#: 不是全部片子。
+#:
+#: ⚠️ **只许减不许加。** 「这条本来就没有照片」和「这条的照片配漏了」
+#: 在代码里长得一模一样，而后者是必须红的。加一条要么带着照片来，
+#: 要么显式把这张表加长——让「又退回示意图封面」变成一次看得见的决定
+#: （和场馆库那条 `LANDMARK_BUDGET` 一个形状）。
+_DRAWN_COVERS = {
+    # 讲的是一张奖金表：任何一张球员实拍都会把「第一轮出局的那些人」
+    # 缩回到某一张脸上，而那正是这条选题要反对的看法。
+    "equal-pay",
+}
+
+#: 有照片封面的片子。**推导出来的，不是另维护一张名单。**
+_PHOTO_COVERS = sorted(set(_SCRIPTS) - _DRAWN_COVERS)
 
 # 现在就在放大的三张，只许变大不许变小。换了更大的原图就从这里删掉。
 # 值是当前的铺满倍数，留 0.02 的容差给不同 Pillow 版本的读取差异。
@@ -69,12 +89,12 @@ def _fill(slug: str) -> float:
 
 def _two_x_slugs() -> list[str]:
     """铺满 ≥2.0x 的片子——「按 2 倍图当基准也仍然合格」的那些。"""
-    return sorted(s for s in _SCRIPTS if _fill(s) / 2 >= chk.FLOOR)
+    return sorted(s for s in _PHOTO_COVERS if _fill(s) / 2 >= chk.FLOOR)
 
 
 def _two_x_budget() -> tuple[int, int]:
-    """(已用, 上限)。上限由 `doubled * 5 <= len(_SCRIPTS)` 反解。"""
-    return len(_two_x_slugs()), len(_SCRIPTS) // 5
+    """(已用, 上限)。上限由 `doubled * 5 <= len(_PHOTO_COVERS)` 反解。"""
+    return len(_two_x_slugs()), len(_PHOTO_COVERS) // 5
 
 
 def _envelope() -> str:
@@ -101,7 +121,7 @@ def _envelope() -> str:
     )
 
 
-@pytest.mark.parametrize("slug", sorted(_SCRIPTS))
+@pytest.mark.parametrize("slug", _PHOTO_COVERS)
 def test_封面图不许被放大(slug):
     """原图比显示区域小，等于一上来就在插值。这和推不推近无关，是底线。"""
     got = _fill(slug)
@@ -116,16 +136,47 @@ def test_封面图不许被放大(slug):
         f"或者把它加进 _UNDERSIZED 并说明为什么只能用这张。")
 
 
+def test_画封面那张表自己也要有判据():
+    """⚠️ **这条不在，`_DRAWN_COVERS` 就是一张能蒙混过关的白名单。**
+
+    上面所有断言的主语被它减掉了一部分。要是有人只是**忘了配封面照片**，
+    往这张表里一加，整组分辨率检查就对那条片子彻底闭嘴——而「本来就没有照片」
+    和「照片配漏了」在代码里长得一模一样。
+
+    所以两头都钉：表里的每一条**必须真的有示意图封面**（不是空着），
+    而且**不许有幽灵**（片子删了表还留着，那就成了一条永远为真的豁免）。
+    """
+    ghosts = _DRAWN_COVERS - set(_SCRIPTS)
+    assert not ghosts, f"_DRAWN_COVERS 里这些片子不存在了：{'、'.join(sorted(ghosts))}"
+
+    for slug in sorted(_DRAWN_COVERS):
+        cover = explainer_script(find_story_by_slug(slug))[0]
+        assert not cover.image, (
+            f"{slug} 其实有封面照片，从 _DRAWN_COVERS 里删掉——这张表只许变短")
+        assert cover.diagram, (
+            f"{slug} 的封面既没有照片也没有示意图。"
+            "它不该待在 _DRAWN_COVERS 里躲开分辨率检查，它该被修好。")
+
+    # 反过来：**没进这张表的，一张不许缺照片**。
+    # 少了这一句，漏配封面的片子会在 `_fill()` 里报「找不到封面图」——
+    # 那句话读起来像素材问题，而真正的毛病是它压根没登记。
+    missing = [s for s in _PHOTO_COVERS
+               if not explainer_script(find_story_by_slug(s))[0].image]
+    assert not missing, (
+        f"{'、'.join(missing)} 没有封面照片，却也不在 _DRAWN_COVERS 里——"
+        "要么补一张照片，要么显式认领它用示意图封面。")
+
+
 def test_不合格名单只能变短():
     """换了大图就要把它从名单里删掉，否则名单会留着一个假的下限。"""
     fixed = {s: v for s, v in _UNDERSIZED.items()
-             if s in _SCRIPTS and _fill(s) >= chk.FLOOR}
+             if s in _PHOTO_COVERS and _fill(s) >= chk.FLOOR}
     assert not fixed, (
         f"{'、'.join(fixed)} 已经够铺满了，从 _UNDERSIZED 里删掉——名单只该变短。")
 
 
 def test_不合格名单里不许有不存在的片子():
-    ghosts = set(_UNDERSIZED) - set(_SCRIPTS)
+    ghosts = set(_UNDERSIZED) - set(_PHOTO_COVERS)
     assert not ghosts, f"_UNDERSIZED 里这些片子不存在了：{'、'.join(sorted(ghosts))}"
 
 
@@ -146,8 +197,8 @@ def test_基准是成片里的卡片不是二倍截图():
     # 「有人换了张特别大的图」。硬编码的计数会把「素材变好」误报成回归，
     # 于是下一个人要么去改判据、要么去换一张更小的图，两条路都错。
     # 两成这条线仍然把反例撑得住：多数不合格才说明基准选错会全红。
-    assert doubled * 5 <= len(_SCRIPTS), (
-        f"按 2 倍图当基准时仍有 {doubled}/{len(_SCRIPTS)} 条合格，超过两成——"
+    assert doubled * 5 <= len(_PHOTO_COVERS), (
+        f"按 2 倍图当基准时仍有 {doubled}/{len(_PHOTO_COVERS)} 条合格，超过两成——"
         "这个反例撑不住了，回去确认基准是不是真的该用 1080x1440。\n"
         f"越过 {2 * chk.FLOOR:.2f}x 的是：{'、'.join(over)}。\n"
         "刚换过封面的话多半就是新加的那张。**它不是错**，只是把这条反例挤爆了；"
@@ -159,10 +210,10 @@ def test_能推近的片子是算出来的不是手写的():
     """哪几条能用推近，由分辨率决定，不该另维护一张名单——两处一旦不同步，
     就会给一张经不起推的图加上动效，而且没人会发现。
     """
-    eligible = [s for s in sorted(_SCRIPTS) if _fill(s) / chk.PUSH >= chk.FLOOR]
+    eligible = [s for s in _PHOTO_COVERS if _fill(s) / chk.PUSH >= chk.FLOOR]
     # 当前这批：不够推的有 9 条（3 张本来就在放大 + 6 张够铺满推不动）。
     # 加选题会动这个数——它跟着实际分辨率走，不是另维护的名单。
-    assert len(eligible) == len(_SCRIPTS) - 9
+    assert len(eligible) == len(_PHOTO_COVERS) - 9
     for slug in _UNDERSIZED:
         assert slug not in eligible, f"{slug} 本来就在放大，不该被判成能推近"
 
@@ -172,8 +223,8 @@ def test_够铺满但推不动的要能被单独认出来():
 
     和「在放大」混为一谈会让人去换根本不用换的图。
     """
-    floor_ok = {s for s in _SCRIPTS if _fill(s) >= chk.FLOOR}
-    push_ok = {s for s in _SCRIPTS if _fill(s) / chk.PUSH >= chk.FLOOR}
+    floor_ok = {s for s in _PHOTO_COVERS if _fill(s) >= chk.FLOOR}
+    push_ok = {s for s in _PHOTO_COVERS if _fill(s) / chk.PUSH >= chk.FLOOR}
     static_only = floor_ok - push_ok
     # wildcard 的封面是澳网签表的屏摄，官方原图上限就是 1080×810（见
     # assets/explainer/wildcard/credits.json 里的取舍说明）；它是唯一一张
