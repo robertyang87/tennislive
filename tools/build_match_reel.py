@@ -7,13 +7,29 @@
             人（或我）看着这张图挑出要哪几段、每段横向裁在哪儿
     render  按 spec.json 剪 → 裁 3:4 → 合成中文解说 → 烧字幕 → 加封面 → 成片
 
-## 为什么必须在 GitHub Actions 上跑
+## 哪几步必须在 GitHub Actions 上跑——**只有下载**
 
 **沙箱的 IP 被 YouTube 挡了**：yt-dlp 拿得到清单和格式表（走 android_vr 的
 player API），一取媒体就 403；用真 Chromium 打开播放页，页面直接是
 「Our systems have detected unusual traffic from your computer network」，
 `playabilityStatus` = `UNPLAYABLE`。这不是「视频不存在」，是**这台机器不让下**
-——又一次「空结果先自证是真空」。edge-tts 同理，本地取不到。
+——又一次「空结果先自证是真空」。
+
+⚠️ **这儿原来还跟着一句「edge-tts 同理，本地取不到」，2026-08-05 证伪了。**
+真跑一次报的是 `CERTIFICATE_VERIFY_FAILED: self-signed certificate`——不是被挡，
+是沙箱出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 自带的根证书。
+挂上代理那张 CA 当场就通（`tennislive.localca`，`main()` 自动调，
+runner 上没有那个文件、是 no-op 且不出声）。
+
+**那句话是推出来的，不是量出来的**——「排除了 A 和 B 不等于就是 C」的又一次，
+而它躺在这儿被当了很久的判据。代价：`--check-narration` 本来就一个源片字节都
+不碰，却一直为了合语音上 runner 跑一趟。现在本地 29 秒。
+
+所以现在只有三件事非 runner 不可：**下源片、抓新帧、出成片**。
+
+- 查旁白：本地 `render --check-narration`，**29 秒**
+- 封面（钩子/字号/版式/暗角/focus）：本地 `tools/render_cover_local.py`，**7 秒**
+  ——素材落在 `output/<date>/reel/<slug>/cover_src/` 并进仓库，见 `COVER_SRC_DIR`
 
 ## 裁剪：横向裁到 3:4，不是加模糊边
 
@@ -79,6 +95,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from tennislive import localca  # noqa: E402
 from tennislive.video import azure_tts  # noqa: E402
 from tennislive.video.explainer import (  # noqa: E402
     CARD_H,
@@ -161,6 +178,22 @@ COVER_TAIL = 0.25
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
 POSTER_NAME = "poster.jpg"
+#: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
+#
+# **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
+# 一条片子从 probe 到成片 98 分钟，其中 01:34→02:05 那 31 分钟**全花在封面上**
+# ——两趟 `mode=cover` 加一趟因为封面变了而重跑的 `render`。而那三趟里真正
+# 改动的只有钩子文案、暗角开关和一次换帧，**渲出来的 HTML 变了，帧没变**。
+#
+# 之所以非上 runner 不可，只有一个原因：`frame_at` 要从 `source.mp4` 抓，
+# 而源片下不动（沙箱 IP 被 YouTube 挡）且渲完就删。把抓下来的那一帧留住，
+# 这条链就断了——`tools/render_cover_local.py` 在沙箱里渲同一张海报，
+# **实测 6.9 秒**，对比一趟 `mode=cover` 的 2 分 03 秒 run 加上大约 8 分钟往返。
+#
+# 代价是仓库每条片子多 0.3~3 MB（一张 JPEG 帧，cutout 版式另加两张带 alpha 的
+# PNG）——相对同目录下 40~95 MB 的成片是 1~5%。这是个**认领过的取舍**，
+# 不是漏删的中间物：判据在 `test_封面素材要留在仓库里`。
+COVER_SRC_DIR = "cover_src"
 # 2026-08-04 之前发出去的「赛场之上」封面，走的是 VS 版式（cutout / diagonal）。
 # 那天账号所有者把这个栏目的封面改成一律 solo，**这些不重渲**：微信那条消息
 # 发出去收不回来，为版式重跑一遍六分钟的 render 换不到任何东西。
@@ -1936,14 +1969,110 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
     `frame_at + shot: "wide_court"`，从**本场比赛视频**截取底线全场机位；
     场馆资料图、别场比赛和通用球场图都不能代替。
     """
+    payload, layout = resolve_cover_payload(cover, dest.parent,
+                                            sources=sources, primary=primary)
+    poster = dest.parent / POSTER_NAME
+    with stage("封面海报"):
+        render_poster(payload, poster, layout)
+    column = str(cover.get("eyebrow", "")).strip() or "赛场之上"
+    print(f"    [封面] {column}海报 {layout} → {poster.name}")
+    return _still_to_clip(poster, dest, seconds + tail)
+
+
+def render_poster(payload: dict, poster: Path, layout: str) -> Path:
+    """渲一张海报。**出片那条路和本地预览共用这一个出口。**
+
+    写两处必分叉——而封面这一屏分叉的样子是「本地看着对了，成片里是另一版」，
+    没有任何东西会报错。
+    """
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from versus_poster import build_poster  # noqa: PLC0415
 
+    build_poster(payload, poster, layout=layout)
+    poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
+    return poster
+
+
+def _cover_asset_key(spot: dict, primary: str, kind: str) -> dict:
+    """这一格的素材由哪几个值决定——**这几个变了就要重抓，没变就复用**。
+
+    ⚠️ **键按内容算，不按「有没有缓存」算。** 同一个坑源片缓存那次栽过：
+    按 slug 或按「文件在不在」判，改了 `frame_at` 还会命中旧文件，
+    而这种错**不报错**——海报上是上一版那一帧，看起来一切正常。
+    """
+    box = spot.get("box")
+    return {
+        "kind": kind,
+        "source": str(spot.get("source", primary)),
+        "frame_at": round(float(spot["frame_at"]), 3),
+        "box": [round(float(v), 5) for v in box] if box else None,
+        # 抠图模型换了，抠出来就是另一张边——它也是这张素材的一部分
+        "model": CUT_MODEL if kind == "cutout" else None,
+    }
+
+
+def resolve_cover_payload(cover: dict, workdir: Path, *,
+                          sources: dict[str, Path] | None = None,
+                          primary: str = "") -> tuple[dict, str]:
+    """把 `cover` 里的 `frame_at` / `cutout` 解成本地图片路径，返回 (payload, layout)。
+
+    **抓下来的帧和抠好的人存进 `cover_src/` 并进仓库**（见 `COVER_SRC_DIR`
+    那段的账）。同一格的 (源, frame_at, box, 抠图模型) 没变就直接复用，
+    省掉一次抽帧和一次 rembg（实测抠图 8.4 秒一张）。
+
+    `sources=None` 是**只认缓存**的模式：一个源片字节都不碰，
+    `tools/render_cover_local.py` 走这条路，所以封面版式、钩子、字号、暗角
+    这些改动能在沙箱里几秒钟渲出来看，不必为一行 CSS 上一趟 runner。
+
+    ⚠️ **命中和没命中都要出声。** 只在一头出声的检查证明不了它看过——
+    「复用了旧帧」和「重新抓了一帧」在日志上长得一样的话，`frame_at` 改了
+    却没生效就没人能发现。判据在 `test_封面素材复用两种情况都要出声`。
+    """
     layout = str(cover.get("layout", "cutout"))
     versus = dict(cover.get("versus") or {})
+    cache_dir = workdir / COVER_SRC_DIR
+    manifest_path = cache_dir / "manifest.json"
+    manifest: dict = {}
+    if manifest_path.is_file():
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            # 存不进/读不出不算失败（它只是个加速），**但要出声**
+            print(f"    [封面素材] manifest 读不出（{exc}），这一趟全部重抓")
+            manifest = {}
+    fresh: dict = {}
+
+    def _cached(spot: dict, tag: str, kind: str, suffix: str) -> Path | None:
+        """缓存里有没有**这一版**的这一格。有就返回它，并记进新 manifest。"""
+        key = _cover_asset_key(spot, primary, kind)
+        want = cache_dir / f"{tag}{suffix}"
+        if manifest.get(tag) == key and want.is_file():
+            fresh[tag] = key
+            print(f"    [封面素材] {tag} 复用 {want.name}"
+                  f"（{key['frame_at']}s，和上一版一致，不重抓）")
+            return want
+        if sources is None:
+            raise ReelError(
+                f"封面的 {tag} 要 {key['frame_at']}s 那一帧，而 "
+                f"{cache_dir}/ 里没有这一版——本地渲海报不下源片，抓不了帧。\n"
+                "先在 runner 上跑一趟 `match-reel mode=cover` 把素材抓下来"
+                "（它会把 cover_src/ 一起提交），之后改版式/钩子/字号/暗角"
+                "就都能本地渲了。")
+        fresh[tag] = key
+        return None
+
+    def _remember() -> None:
+        """**写 manifest 排在素材真的落盘之后。** 反过来的话，抓帧失败会留下一个
+        「已经有了」的假标记，下一趟直接复用一个不存在或者半截的文件。
+        同一个顺序问题在「记已推送要排在发微信之后」那条上栽过。"""
+        if not fresh:
+            return
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        manifest_path.write_text(
+            json.dumps(fresh, ensure_ascii=False, indent=2), encoding="utf-8")
 
     def _grab(spot: dict, tag: str) -> str:
-        """`image` 直接用，`frame_at` 从源片抓一帧。抓出来的不进仓库。
+        """`image` 直接用，`frame_at` 从源片抓一帧（抓完存进 `cover_src/`）。
 
         多源之后 `frame_at` 要说清楚**抓哪条源**（`"source": "键"`，默认主源）。
         不说清楚就会从主源的同一时刻抓——那是另一场比赛的画面，而且**不报错**。
@@ -1952,15 +2081,22 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
             if not Path(spot["image"]).is_file():
                 raise ReelError(f"VS 拼接的 {tag} 找不到图：{spot['image']}")
             return str(spot["image"])
+        hit = _cached(spot, tag, "frame", ".jpg")
+        if hit is not None:
+            return str(hit)
         key = str(spot.get("source", primary))
-        if key not in sources:
+        if key not in (sources or {}):
             raise ReelError(
-                f"VS 的 {tag} 要从源 {key!r} 抓帧，但 spec 里声明的是 {sorted(sources)}")
-        grab = dest.parent / f"_versus_{tag}.jpg"
+                f"VS 的 {tag} 要从源 {key!r} 抓帧，"
+                f"但 spec 里声明的是 {sorted(sources or {})}")
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        grab = cache_dir / f"{tag}.jpg"
         with stage(f"VS 抓帧 {tag}（源 {key or '主'}）"):
             run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                 "-ss", f"{float(spot['frame_at']):.2f}", "-i", str(sources[key]),
                 "-frames:v", "1", "-q:v", "2", str(grab))
+        print(f"    [封面素材] {tag} 新抓 {grab.name}"
+              f"（{float(spot['frame_at']):.2f}s）")
         return str(grab)
 
     if layout == "solo":
@@ -1990,12 +2126,16 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
                 # `ruff --select F821` 一秒就能指出来，判据落在
                 # test_没有名字是凭空来的。
                 skey = str(panel.get("source", primary))
-                if skey not in sources:
-                    raise ReelError(
-                        f"VS 的 {key} 要从源 {skey!r} 抽帧抠图，"
-                        f"但 spec 里声明的是 {sorted(sources)}")
-                panel["cutout"] = _cut_person(sources[skey], panel, key,
-                                              dest.parent)
+                hit = _cached(panel, key, "cutout", ".png")
+                if hit is not None:
+                    panel["cutout"] = str(hit)
+                else:
+                    if skey not in (sources or {}):
+                        raise ReelError(
+                            f"VS 的 {key} 要从源 {skey!r} 抽帧抠图，"
+                            f"但 spec 里声明的是 {sorted(sources or {})}")
+                    panel["cutout"] = _cut_person(sources[skey], panel, key,
+                                                  cache_dir)
                 panel.pop("crop", None)   # box 已经在抠之前裁过了，别再裁一次
                 versus[key] = panel
                 continue
@@ -2015,14 +2155,9 @@ def build_versus_poster(sources: dict[str, Path], primary: str,
             side = dict(versus[key])
             side["image"] = _grab(side, key)
             versus[key] = side
-    poster = dest.parent / POSTER_NAME
+    _remember()
     payload = dict(cover) if layout == "solo" else {**cover, "versus": versus}
-    with stage("封面海报"):
-        build_poster(payload, poster, layout=layout)
-    poster.with_suffix(".html").unlink(missing_ok=True)   # 内嵌 data URI，十几 MB
-    column = str(cover.get("eyebrow", "")).strip() or "赛场之上"
-    print(f"    [封面] {column}海报 {layout} → {poster.name}")
-    return _still_to_clip(poster, dest, seconds + tail)
+    return payload, layout
 
 
 #: 抠图模型。三个都试过并把 alpha 摊在棋盘格上看边：u2net 和 u2net_human_seg
@@ -2034,7 +2169,8 @@ CUT_MODEL = "isnet-general-use"
 CUT_MIN_SHARE = 0.06
 
 
-def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
+def _cut_person(source: Path, panel: dict, tag: str, workdir: Path,
+                scratch: Path | None = None) -> str:
     """从本场源片抓一帧、裁出人、抠掉背景 —— 封面人物的首选来源。
 
     **为什么不用官方棚拍图**：棚拍的衣服、光、背景都跟这场球没关系，压在本场
@@ -2057,8 +2193,12 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
     """
     from PIL import Image  # noqa: PLC0415
 
-    raw = workdir / f"_versus_raw_{tag}.png"
-    out = workdir / f"_versus_cut_{tag}.png"
+    # **抠好的那张进仓库（`workdir` = `cover_src/`），抠之前那张原帧不进。**
+    # 原帧是纯中间物：几 MB、只在报错时有用，而抠好的那张是本地渲海报的输入。
+    # 它落在 outdir 根上，让「丢掉不进仓库的中间物」那条 `_versus_*` 照旧接住它。
+    workdir.mkdir(parents=True, exist_ok=True)
+    raw = (scratch or workdir.parent) / f"_versus_raw_{tag}.png"
+    out = workdir / f"{tag}.png"
     with stage(f"VS 抠帧 {tag}"):
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
             "-ss", f"{float(panel['frame_at']):.2f}", "-i", str(source),
@@ -2103,8 +2243,8 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path) -> str:
                 'top/bottom 写 {"cutout": "assets/players/<...>.png"}。')
         cut = cut.crop(bbox)
         cut.save(out)
-    print(f"    [封面] {tag} 抽帧抠图 {panel['frame_at']}s → {cut.size[0]}×{cut.size[1]}"
-          f"，占裁切框 {share:.1%}")
+    print(f"    [封面素材] {tag} 新抠 {out.name}（抽帧抠图 {panel['frame_at']}s"
+          f" → {cut.size[0]}×{cut.size[1]}，占裁切框 {share:.1%}）")
     raw.unlink(missing_ok=True)
     return str(out)
 
@@ -3191,6 +3331,10 @@ def _escape(path: Path) -> str:
 
 
 def main() -> int:
+    # **排在所有 `import edge_tts` 之前。** edge-tts 在模块导入那一刻就把
+    # SSL context 建好了，之后再挂 CA 一点用都没有。在 runner 上这一句是
+    # no-op 且不出声——那儿没有代理，也不需要。见 `tennislive.localca`。
+    localca.trust_local_proxy_ca()
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="mode", required=True)
 
