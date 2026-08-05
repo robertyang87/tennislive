@@ -1215,7 +1215,8 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
     if not isinstance(voice, dict):
         raise ReelError(f"第 {index + 1} 段的 `voice` 要写成对象，"
                         '例如 {"rate": "-8%", "pitch": "-6Hz", "_why": "..."}')
-    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause", "_why"}
+    allowed = {"rate", "pitch", "style", "styledegree", "lead_pause",
+               "_why", "_heard"}
     extra = sorted(set(voice) - allowed)
     if extra:
         raise ReelError(f"第 {index + 1} 段的 `voice` 只认 "
@@ -1249,6 +1250,27 @@ def _seg_voice(raw: dict, index: int) -> tuple[str, str, str, str, float]:
             "这一步要认领：语速改一个数就能让一段「刚好装得下」，而那是剪窗口\n"
             "该干的事。写一句为什么（「这一段是崩盘，降速降调」），下一个人才\n"
             "分得出这是编辑决定还是凑数。")
+    # ⚠️ **情绪风格要写「谁听过」，而不只是「为什么想用」。**
+    #
+    # 2026-08-04：王欣瑜那条的第 7/9/10 段上了 excited / sad / depressed，理由
+    # 写得很足，还配了三维实测（基频 219.2 Hz、响度 −24.2 dB、语速 5.38 字每秒），
+    # 我据此判断「不吵、不快、只是高」并建议发。账号所有者听完的原话是
+    # **「配音真的是太粗细了，还是不要改成那种情绪化的」**。
+    #
+    # **那三个数都量对了，只是没有一个在量「糙不糙」**——音色自不自然是耳朵的
+    # 事，韵律表答不了。所以这道闸要的不是更多推理（`_why` 已经管那个了），
+    # 是一句**有人真的听过**。和 `mixed_fps` / `silent_source` / `rank: null`
+    # 一个形状：认领这一步把「听下来行」和「量下来应该行」分开。
+    if style and not str(voice.get("_heard", "") or "").strip():
+        raise ReelError(
+            f"第 {index + 1} 段用了 `voice.style={style}`，却没写 `voice._heard`。\n"
+            "⚠️ **情绪风格只能靠耳朵验收，量不出来。** 2026-08-04 栽过一次：\n"
+            "三段风格配着基频/响度/语速三维实测发了出去，账号所有者听完说\n"
+            "「太粗细了……不要改成那种情绪化的」——那三个数都对，只是没有一个\n"
+            "在量「糙不糙」。\n"
+            "`_heard` 写谁听的、听下来怎么样（「账号所有者 8/4 听过，可以」）。\n"
+            "没听过就别写 `style`：情绪要么交给**断句**（标点，见 CLAUDE.md），\n"
+            "要么交给**气口**（`lead_pause`，真 `<break>`）——这两样不改音色。")
     return rate, pitch, style, degree, lead
 
 
@@ -2559,21 +2581,68 @@ def speech_seconds(text: str) -> float:
 
 
 def narration_estimates(segments) -> list[tuple[int, float, float]]:
-    """`[(段序号, 估出来的旁白秒数, 余量)]`，只给有旁白的段。"""
+    """`[(段序号, 估出来的旁白秒数, 余量)]`，只给有旁白的段。
+
+    ⚠️ **`lead_pause` 要算进去。** 它是段首那个真 `<break>`，占的是**同一个窗口**
+    的时间，而 `speech_seconds()` 只看文本——不加的话这条离线估会**正好乐观
+    `lead_pause` 秒**，然后在六分钟之后的真 render 里才炸。又是「兜底出事的时候
+    不吭声」，只不过这次不吭声的是估算本身。
+
+    加在这一层而不是 `speech_seconds()` 里：那个函数的系数是拿**已发成片**拟合
+    并钉住的（`test_离线估旁白长度要对得上真产物`），它必须保持「纯文本进、秒数
+    出」，掺进段级参数就没法再和那批产物对账了。
+    """
     out: list[tuple[int, float, float]] = []
     for index, seg in enumerate(segments):
         if seg.narration.strip():
-            secs = speech_seconds(seg.narration)
+            secs = speech_seconds(seg.narration) + seg.voice_lead_pause
             out.append((index, secs, seg.length - secs))
     return out
 
 
-def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
+def column_base_style(spec: dict) -> tuple[str, str]:
+    """这条片子的**基调**风格，按栏目来；顺带把判断依据打进日志。
+
+    账号所有者 2026-08-04 问「以后所有配音都能自适应情绪么？」——**按文本自动
+    判情绪不做**（判错了不吭声，还会把「机器猜的」伪装成「你想清楚了」），
+    **按栏目定基调可以做，因为栏目是已知的、情绪不是**。
+
+    ⚠️ **没有 Azure 就没有基调**，而且必须说出来。硬套的话，`tts_one` 会对
+    **每一段**抛「这一段要 voice.style，而它只有 Azure 那条路有」——一个本来
+    只是「音色朴素一点」的降级会变成整条片子渲不出来。
+    """
+    column = str(spec.get("column")
+                 or (spec.get("cover") or {}).get("eyebrow") or "").strip()
+    if not azure_tts.available():
+        print(f"[配音] 没有 Azure，栏目「{column or '—'}」不套基调"
+              f"（{azure_tts.why_unavailable()}）")
+        return "", ""
+    style, degree = azure_tts.base_style_for(column)
+    if not style:
+        # ⚠️ **两种空的处置一样，说法必须不一样**：一种是想清楚了，
+        # 一种是还没想过。混成一句就等于把「实测之后决定不设」抹成了「漏了」。
+        why = ("实测之后决定不设（见 azure_tts.COLUMN_BASE_STYLE 上面那张表）"
+               if azure_tts.is_registered(column)
+               else f"没登记（已登记：{'、'.join(azure_tts.COLUMN_BASE_STYLE)}）")
+        print(f"[配音] 栏目「{column or '—'}」{why}，逐段按 spec 走")
+    return style, degree
+
+
+def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str,
+               base_style: str = "", base_degree: str = ""
                ) -> list[tuple[Path, list[dict]]]:
     # 一段解说都没有就别碰 edge-tts——沙箱里根本装不上，而"没有解说的片子"
     # 是个合法的形态（先看画面剪得对不对，再配音）
     if not any(seg.narration.strip() for seg in segments):
         return [(outdir / f"voice_{i:02d}.mp3", []) for i in range(len(segments))]
+
+    if base_style:
+        # **两个数一起报**：只说基调是什么，看不出它到底盖住了几段；
+        # 只说覆盖了几段，又不知道其余那些是什么调。
+        overridden = sum(1 for s in segments if s.narration.strip() and s.voice_style)
+        plain = sum(1 for s in segments if s.narration.strip()) - overridden
+        print(f"[配音] 基调 {base_style}（styledegree {base_degree or '1.0'}）："
+              f"{plain} 段用它，{overridden} 段在 spec 里各自覆盖")
 
     out: list[tuple[Path, list[dict]]] = []
     for index, seg in enumerate(segments):
@@ -2581,10 +2650,17 @@ def synthesize(segments: list[Segment], outdir: Path, voice: str, rate: str
         if not seg.narration.strip():
             out.append((path, []))
             continue
+        # **段级永远赢。** 基调只填空位——「王欣瑜那条的第 7 段要 excited」
+        # 是编辑判断，不能被一个按栏目算出来的默认值盖掉。
         out.append((path, tts_one(seg.narration, path, voice,
                                   seg.voice_rate or rate,
                                   seg.voice_pitch or "+0Hz",
-                                  seg.voice_style, seg.voice_styledegree,
+                                  seg.voice_style or base_style,
+                                  # ⚠️ **degree 要跟着 style 一起走。** 段级风格
+                                  # 配基调的 degree 是张冠李戴——「excited 但只用
+                                  # 五成力」不是任何人想清楚过的东西。
+                                  seg.voice_styledegree if seg.voice_style
+                                  else base_degree,
                                   seg.voice_lead_pause)))
     return out
 
@@ -2874,7 +2950,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     # 挪到前面之后，同样这条错在**开跑后一分半**就报出来，而且一次把所有
     # 超出的段都列出来（原来就是这么设计的，见下面的注释）。
     with stage("TTS 合成"):
-        voices = synthesize(segments, outdir, voice, rate)
+        voices = synthesize(segments, outdir, voice, rate,
+                            *column_base_style(spec))
 
     # **旁白比画面长，就不是「注意」，是错的。**
     #
@@ -3225,7 +3302,8 @@ def main() -> int:
 
         segments = validate_spec(spec)
         with tempfile.TemporaryDirectory() as tmp:
-            voices = synthesize(segments, Path(tmp), args.voice, args.rate)
+            voices = synthesize(segments, Path(tmp), args.voice, args.rate,
+                                *column_base_style(spec))
             spoken, over = narration_overruns(segments, voices)
             splits = _word_splits(spec, segments, voices)
             # ⚠️ **必须在这个 `with` 里量。** 语音只在临时目录里活着，出了这个
