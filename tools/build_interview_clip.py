@@ -1090,6 +1090,55 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
 
 COVER_SECONDS = 1.8      # 和「赛场之上」一致：够读完两行钩子，又不至于让人等
 
+# ── 解读卡（落点卡 / 收尾卡）────────────────────────────────────────────
+#
+# 账号所有者 2026-08-05：「以后赛后开麦，要找总结提炼下。」
+#
+# 来路是视频号那条判定：「你的作品疑似对他人/网络素材简易加工，二次创作部分
+# **信息增量不足**，如素材简单增加标题、字幕或简易配音」。量一下就知道它没冤枉
+# 我们——被判的那条（伊埃拉捧杯致辞）217.2 秒里，**我们自己的画面只有封面那
+# 1.8 秒，占 0.8%**；商竣程那条 70.3 秒里占 2.6%。
+#
+# ⚠️ **提炼我们一直在做，只是做在了平台看不见的地方**：`xhs.txt` 里那句
+# 「话锋一转落回自己身上——这才是这段采访真正的落点」就是解读，可它只活在
+# 小红书正文里。所以这不是「要不要开始做提炼」，是**把已经在写的那份搬进画面**。
+#
+# 账号所有者定的体裁（2026-08-05）：**保留原声主体，前后加解读卡**——
+# 「让当事人自己说」这个栏目承诺不动，我们的判断加在两头。
+#
+# **卡是静音的**，和封面那一路一样（`anullsrc`）。给它配 TTS 的话，一是平台
+# 明写着「简易配音」不算增量，二是这条线的声音就是采访现场声，中间插一段我们
+# 的合成音会把它割断。**静音刷本来就是默认状态**，这几屏是拿来读的。
+TAKEAWAY_MIN_SECONDS = 3.0
+TAKEAWAY_MAX_SECONDS = 9.0
+# 一张卡最多多少字。账号所有者 2026-08-05：「提炼下卡片内容快速过」。
+#
+# **34 是从口播倒推的，不是拍的**：这条线的合成语速约 5.5 字/秒，34 字念完
+# 约 6.2 秒，加那口气 6.5 秒上下——两张卡合起来 13 秒，接在 1.8 秒封面后面，
+# 观众第 15 秒进原声。再长就不是「一屏」了。
+TAKEAWAY_MAX_CHARS = 34
+# 每个字给多少秒。中文默读约 6~8 字/秒，这儿按 5.5 字/秒留一档余量——
+# 卡上的字是**要在手机上一眼扫完**的，读不完等于没写。
+TAKEAWAY_SECONDS_PER_CHAR = 1 / 5.5
+
+
+def takeaway_seconds(card: dict) -> float:
+    """这张卡停多久：**按它自己的字数算**，不在 spec 里另写一个数。
+
+    写两处必分叉——而分叉的表现是「改了文案卡还是老时长，最后一行没读完就切」，
+    渲一次六分钟才看得见。
+    """
+    chars = len(_takeaway_text(card))
+    return round(min(TAKEAWAY_MAX_SECONDS,
+                     max(TAKEAWAY_MIN_SECONDS,
+                         chars * TAKEAWAY_SECONDS_PER_CHAR)), 2)
+
+
+def _takeaway_text(card: dict) -> str:
+    """卡上所有会被读到的字，拼成一条。算时长和量字数都用它。"""
+    return "".join([card.get("lead", ""), card.get("point", ""),
+                    *(card.get("facts") or []), card.get("ask", "")])
+
 # 两份转写允许有多少词对不上。**超了就不许出片**——不是警告，是闸。
 # 0.12 是留给标点、口吃、大小写这类无害差异的；语义级的分歧远达不到这个量。
 TRANSCRIPT_MAX_DISAGREE = 0.12
@@ -1590,6 +1639,18 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
 <div class=band><div class=title>{title}</div>
 <div class=sub>{cov.get('sub', '')}</div>
 <div class=tag><i></i><span>{tag}</span></div></div>"""
+    return _shoot(html, dest)
+
+
+def _shoot(html: str, dest: Path) -> Path:
+    """HTML → 整幅画布的 PNG。**封面和解读卡共用这一份。**
+
+    抽出来不是为了少写几行：这个仓库为「同一件事写两处」栽过好几次，而这儿
+    分叉的表现最阴——两种卡的 `device_scale_factor` 或视口差一点，**两张图
+    分开看都正常**，拼进同一条片子才看得出字号不一样。
+    """
+    from playwright.sync_api import sync_playwright   # noqa: PLC0415
+
     page = dest.with_suffix(".html")
     page.write_text(html, encoding="utf-8")
     with sync_playwright() as pw:
@@ -1601,6 +1662,155 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
         pg.screenshot(path=str(dest))
         b.close()
     return dest
+
+
+def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
+    """解读卡：**这是整条片子里唯一完全属于我们的画面。**
+
+    两张，形状不同因为职责不同：
+
+    | | 落点卡（`open`） | 收尾卡（`close`） |
+    |---|---|---|
+    | 位置 | 封面之后、原声之前 | 原声之后、片尾之前 |
+    | 说什么 | 这段话的落点是**哪一句**，以及**凭什么** | 这句话**意味着什么** + 一问 |
+    | 字段 | `lead` / `point` / `facts` | `point` / `ask` |
+
+    ⚠️ **`point` 引的是原话，必须真的在这段采访里**——闸在 `check_takeaway`。
+    「这才是真正的落点」后面跟一句他没说过的话，是这张卡唯一致命的错法，
+    而它渲出来一点异常都没有。
+
+    版式抄封面那一套（同一支字体、同一个深底），但**没有照片**：它必须一眼
+    看得出不是转播画面，否则「我们的解读」和「他们的素材」在观感上糊成一片，
+    等于白加。
+    """
+    import base64  # noqa: PLC0415
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.render.webcards import _font_css  # noqa: PLC0415
+
+    card = (spec.get("takeaway") or {})[which]
+    icon = ROOT / "assets/logo/brand/icon-512.png"
+    mark = (f'<img class=mk src="data:image/png;base64,'
+            f'{base64.b64encode(icon.read_bytes()).decode()}">'
+            if icon.exists() else "")
+    facts = "".join(f"<li>{f}</li>" for f in (card.get("facts") or []))
+    body = "".join([
+        f'<div class=lead>{card["lead"]}</div>' if card.get("lead") else "",
+        f'<div class=point>{card["point"]}</div>' if card.get("point") else "",
+        f"<ul class=facts>{facts}</ul>" if facts else "",
+        f'<div class=ask>{card["ask"]}</div>' if card.get("ask") else "",
+    ])
+    html = f"""<!doctype html><meta charset=utf-8><style>{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
+ background:radial-gradient(120% 90% at 50% 12%,#0d2b21 0%,#06140f 62%);
+ font-family:'TL Sans SC',sans-serif;color:#f4fbf7;
+ padding:206px 150px 150px 92px;display:flex;flex-direction:column;
+ justify-content:center}}
+.mk{{position:absolute;top:96px;left:92px;width:64px;height:64px;opacity:.9}}
+.eyebrow{{position:absolute;top:112px;left:180px;font-size:32px;color:#74dcc3;
+ font-family:'TL Display SC','TL Sans SC',sans-serif;letter-spacing:2px}}
+.lead{{font-size:42px;line-height:1.5;color:#a9bcb2;margin-bottom:34px}}
+.point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
+ font-size:64px;line-height:1.36;letter-spacing:.5px}}
+.facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
+.facts li{{font-size:40px;line-height:1.42;color:#cfe3d9;padding-left:30px;
+ position:relative}}
+.facts li:before{{content:'';position:absolute;left:0;top:.52em;width:14px;
+ height:14px;border-radius:3px;background:#c6f65a}}
+.ask{{margin-top:64px;font-size:46px;line-height:1.45;color:#c6f65a;
+ font-family:'TL Display SC','TL Sans SC',sans-serif}}
+</style>{mark}<div class=eyebrow>{spec.get("column", "赛后开麦")}</div>{body}"""
+    return _shoot(html, dest)
+
+
+def _still_segment(png: Path, secs: float, dest: Path,
+                   audio: Path | None = None) -> Path:
+    """一张静图 → 一段 mp4。**封面和两张解读卡共用这一份。**
+
+    `audio` 给了就用它当音轨（解读卡的口播），没给就补数字静音（封面）。
+
+    ⚠️ **参数逐项和正片一致**：这条线走 `concat` demuxer + `-c copy`，帧率、
+    采样率、**声道数**差一项就静默丢流，成片从某一秒起没声音，而 ffmpeg
+    不报错。这句话在这个文件里已经写过两遍了——所以现在只剩一处能写错。
+
+    音轨不是可选的：只有画面的段拼进来，`concat` 会把整条音轨丢掉。
+    """
+    a_in = (["-i", str(audio)] if audio
+            else ["-f", "lavfi", "-t", str(secs), "-i", "anullsrc=r=48000:cl=stereo"])
+    subprocess.run(
+        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+         "-loop", "1", "-t", str(secs), "-i", str(png), *a_in,
+         # 口播比画面短（末尾留了一口气），**补静音到画面那么长**——
+         # 不补的话 `-shortest` 会按音轨截掉画面，卡就少了那口气。
+         "-af", f"apad=whole_dur={secs}",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-r", "25", "-pix_fmt", "yuv420p",
+         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
+         "-shortest", str(dest)], check=True, timeout=600)
+    return dest
+
+
+# 口播说完之后留的那口气。和封面那一路同一个理由：贴着最后一个字切，
+# 末尾辅音会被 concat 的边界削掉，听着像卡了一下。
+TAKEAWAY_TAIL = 0.35
+
+
+def _takeaway_voice(spec: dict, which: str, outdir: Path) -> Path | None:
+    """把这张卡上的字合成口播。**念的就是屏上印的那句，不另写一份。**
+
+    账号所有者 2026-08-05：「前后卡页是否要加上配音简单说下」。
+
+    加它的理由**不是「信息增量」**（平台明写着「简易配音」不算），是**开头
+    有一段死寂**：量过没配音那版，前 10.8 秒（封面 1.8 ＋ 落点卡 9.0）
+    峰值 **−91 dB**，也就是数字静音——而抖音 5 秒内走掉 62%，
+    那段死寂正好压在决定去留的地方。对照组：原声 −10.4 dB、片尾口播 −12.2 dB。
+
+    ⚠️ 我原来把这几屏做成静音，写的理由是「插一段合成音会把现场声割断」。
+    **那句话站不住**：卡本来就是独立的一段，它前后都不是现场声。
+
+    ⚠️ **合到单独的子目录**：`synthesize_narration` 按索引命名
+    （`voice_00.mp3`），和别人同一个目录会互相盖掉——盖掉之后片子照样出得来，
+    只是某一段说了别人的话（`outro_page` 那头为同一件事栽过）。
+
+    合不出来（沙箱没网、证书链不通）就返回 None，退回静音卡——
+    **但两条路都要出声**，不然「没配上」和「本来就没有」长得一模一样。
+    """
+    sys.path.insert(0, str(ROOT / "src"))
+    try:
+        from tennislive.video.explainer import (  # noqa: PLC0415
+            DEFAULT_PITCH, DEFAULT_RATE, DEFAULT_VOICE, ExplainerSegment,
+            synthesize_narration,
+        )
+        vdir = outdir / f"_tkvoice_{which}"
+        vdir.mkdir(exist_ok=True)
+        # ⚠️ `ExplainerSegment` 的前三个字段是必填的（解说片那条线拿它们排版），
+        # 这儿只用它当一个「有 narration 的容器」，所以填占位值。第一版只传
+        # `narration=`，**报的是 TypeError，而退路把它吞成了「口播合不出来」**
+        # ——退路出声救了这一次（日志里写着真因），但闸和退路都对不代表调用对。
+        seg = ExplainerSegment(kind="takeaway", label=which, title="",
+                               narration=_takeaway_speech(spec["takeaway"][which]))
+        mp3s = synthesize_narration(
+            [seg], vdir,
+            voice=spec.get("takeaway_voice", DEFAULT_VOICE),
+            rate=spec.get("takeaway_rate", DEFAULT_RATE), pitch=DEFAULT_PITCH)
+        return Path(mp3s[0])
+    except Exception as exc:  # noqa: BLE001 - 配音不该拖垮整条片子
+        print(f"[解读卡] {which} 口播合不出来，退回静音卡：{exc}")
+        return None
+
+
+def _takeaway_speech(card: dict) -> str:
+    """念出来的那一段。**和屏上印的是同一份内容**，只是按句读接起来。
+
+    引号在语音里不发音，去掉它们只是让 TTS 别在那儿停顿。
+    """
+    parts = [card.get("lead", ""), card.get("point", ""),
+             *(card.get("facts") or []), card.get("ask", "")]
+    # ⚠️ **末尾那个句号要看它需不需要**。第一版无条件加，于是收尾卡念成
+    # 「他其实在说什么？。」——多一个句号在 TTS 里是一次真的停顿。
+    text = "。".join(p.strip().rstrip("。") for p in parts if p and p.strip())
+    text = text.replace("「", "").replace("」", "")
+    return text if text.endswith(("。", "？", "！")) else text + "。"
 
 
 # yt-dlp 认的合流容器（`--merge-output-format` 的取值）。别往里加 `m4a`——
@@ -1752,7 +1962,159 @@ def cover_poster(spec: dict, src: Path, outdir: Path, logo: str = "") -> Path:
     return poster
 
 
+# 规矩之前发出去的六条，**只许减不许加**，而且有自检（见
+# `test_没有解读卡的老片子只许减不许加`）：表里每个 slug 必须真的存在、
+# 而且真的还没有 `takeaway`——写错一个名字，豁免就成了一盏恒真的绿灯。
+#
+# 已发的片子不为这条规矩重渲：微信那条消息发出去收不回来，小红书的视频要换
+# 得重新上传，而它换来的只是一条旧片子的推荐量。账号所有者 2026-08-05 定的：
+# 「不动，只管以后」。
+_NO_TAKEAWAY_LEGACY = frozenset({
+    "eala-osaka-dc2026-sf", "eala-osaka-dc2026-sf-studio",
+    "eala-pegula-dc2026-final", "eala-pegula-dc2026-final-presser",
+    "eala-svitolina-dc2026-qf", "pegula-eala-dc2026-final",
+    # 商竣程那条 2026-08-05 已经推过微信（流水号 589e108c…），同上不重渲
+    "shang-rublev-mtl2026-r2",
+})
+
+# 我们自己的画面至少要占这么多。**这个数是倒推的，不是拍的**，而且它
+# **跟着版式改过一次**——记下来是因为改的过程本身就是它该有的用法。
+#
+# | | 自有画面 | 占比 |
+# |---|---|---|
+# | 被判的那条（217s 整段致辞 + 封面） | 1.8s | **0.8%** |
+# | 商竣程 68.5s + 封面 + 片尾 + **两张**卡 | 21.9s | 24.3% |
+# | 同上，只留**收尾**卡（账号所有者定的版式） | 12.7s | **15.6%** |
+#
+# 门槛原来是 15%，那是按两张卡定的；砍掉落点卡之后它**恰好压线**——
+# 一条 80 秒的采访就会红，而那不是它想拦的东西。重定在 **10%**：
+#
+# - 仍是被判那条的 **12 倍**，「整段搬运 + 一张封面」照样过不去
+#   （217s 那个形状按新版式算只有 5.5%）
+# - 一条 60~100 秒的正常场上采访，只靠收尾卡就过得去
+# - 而两分钟以上的仍然会红——**那正是该按落点剪的信号**，也正是当初
+#   被判的那条的形状
+MIN_OURS_RATIO = 0.10
+
+
+def _bare(s: str) -> str:
+    """剥掉标点和空白，只留下字。比对原话时两边都要过它一遍。
+
+    卡上的引文按正常中文写（带逗号），而 `zh` 里的字幕**按规矩不写标点**
+    （见 CLAUDE.md「屏幕上不写标点」），逐字比会永远对不上。
+    """
+    return re.sub(r"[\s\W_]+", "", s, flags=re.UNICODE)
+
+
+def check_takeaway(spec: dict) -> None:
+    """解读卡那道闸。**排在下载之前**——形状错不该先付一次几百 MB 的下载。
+
+    三件事，每件都只拦一种真错法：
+
+    1. **有没有**。没写就报错，并说清怎么写——漏掉的样子是「片子照常出，
+       只是又变回一条纯搬运」，而它**不报错**。
+    2. **引的那句是不是他说的**。`open.point` 里「」括起来的内容必须在
+       `zh` 里找得到。「这才是真正的落点」后面跟一句他没说过的话，是这张卡
+       唯一致命的错法，而它渲出来一点异常都没有。
+    3. **我们自己的画面够不够**。平台判的就是这个数，所以把它变成一个我们
+       自己量得出来的数——`MIN_OURS_RATIO`。
+
+    ⚠️ 这三条**只吃 spec 和常量，不读产物**：CI 的稀疏检出把 `output/` 挡在
+    外面，拿产物当主语的判据在 CI 上会静静地变成一盏恒真的绿灯。
+    """
+    slug = spec.get("slug", "")
+    tk = spec.get("takeaway")
+    if not tk:
+        if slug in _NO_TAKEAWAY_LEGACY:
+            print(f"[解读卡] {slug} 在豁免名单里（规矩之前发的），这条没有解读卡")
+            return
+        raise SystemExit(
+            "这条 spec 没有 `takeaway`——那样出来的片子又是一条「别人的画面 + "
+            "我们的字幕」，视频号 2026-08-04 判过一次「二次创作信息增量不足」。\n"
+            "写两张卡：\n"
+            '  "takeaway": {\n'
+            '    "open":  {"lead": "…（他先说了什么）", "point": "「…原话…」",\n'
+            '              "facts": ["…能核的那个数…"]},\n'
+            '    "close": {"point": "…这句话意味着什么…", "ask": "…一问…"}\n'
+            "  }")
+
+    # ⚠️ **只有收尾卡是必须的。** 账号所有者 2026-08-05：「我建议还是不要前面
+    # 卡，后面卡片可以留着」——落点卡挡在原声前面是在跟封面抢开头那 5 秒
+    # （抖音 5 秒内走掉 62%，而封面已经是钩子了）。判断放在看完之后。
+    #
+    # `open` 留着不删：真遇到「不先说一句就看不懂」的采访还用得上，
+    # 但**默认不写**。
+    for which, need in (("open", ("point",)), ("close", ("point", "ask"))):
+        card = tk.get(which)
+        if card is None and which == "open":
+            continue
+        if not isinstance(card, dict):
+            raise SystemExit(f"`takeaway.{which}` 没写或者不是一个对象")
+        for key in need:
+            if not str(card.get(key, "")).strip():
+                raise SystemExit(f"`takeaway.{which}.{key}` 是空的")
+        # 账号所有者 2026-08-05：「**提炼下卡片内容快速过**」。
+        #
+        # 卡不是文章，是**一屏**。字一多，一是读不完（人会划走），二是口播
+        # 跟着变长，本来用来填开头那段死寂的一屏就变成了一段演讲。
+        # 上限按 `TAKEAWAY_MAX_CHARS` 卡——**做成闸不做成建议**，因为
+        # 「写短一点」这种话拦不住下一次写长。
+        n = len(_takeaway_text(card))
+        if n > TAKEAWAY_MAX_CHARS:
+            raise SystemExit(
+                f"`takeaway.{which}` 一共 {n} 字，超过 {TAKEAWAY_MAX_CHARS}。\n"
+                "这一屏是要人扫一眼就过的，不是拿来读的——**提炼**：\n"
+                "  · 落点卡＝一句他的原话 ＋ 一个能核的数，别铺陈过程\n"
+                "  · 收尾卡＝一句判断 ＋ 一问\n"
+                "铺陈留给小红书正文，那儿有几百字的地方。")
+
+    # ② 引的那句必须是他说的。
+    #
+    # ⚠️ **两张卡都要查，别写死 `tk["open"]`。** 第一版就是那样，而落点卡后来
+    # 变成可选的，于是这道闸 `KeyError` ——更要紧的是，收尾卡引一句他没说过的
+    # 话，坏处一模一样。判据要跟着结构走，不是跟着当初那一版的字段名走。
+    said = _bare("".join(spec.get("zh") or []))
+    for which, card in tk.items():
+        if not isinstance(card, dict):
+            continue
+        for quoted in re.findall(r"[「“\"]([^」”\"]+)[」”\"]",
+                                 str(card.get("point", ""))):
+            if _bare(quoted) not in said:
+                raise SystemExit(
+                    f"`takeaway.{which}` 引的这句在采访里找不到：「{quoted}」\n"
+                    "卡上把它当成他的原话，那就必须是他真说过的——"
+                    "引一句他没说过的话，渲出来一点异常都没有。\n"
+                    "对一下 spec 的 `zh`（比对时两边的标点都会被剥掉，不用逐字一样）。")
+
+    # ③ 我们自己的画面够不够
+    ours, total = ours_ratio(spec)
+    pct = ours / total
+    print(f"[解读卡] 自有画面 {ours:.1f}s / 全片 {total:.1f}s ＝ {pct:.1%}")
+    if pct < MIN_OURS_RATIO:
+        raise SystemExit(
+            f"自有画面只占 {pct:.1%}，低于 {MIN_OURS_RATIO:.0%}。\n"
+            "这正是视频号判「简易加工」时量的那个东西。要么把解读卡写厚一点，"
+            "要么**原声别整段搬**——按落点剪成两三段，长的尤其。")
+
+
+def ours_ratio(spec: dict) -> tuple[float, float]:
+    """(我们自己的画面秒数, 全片秒数)。**封面、两张解读卡、片尾算我们的。**
+
+    片尾那 3 秒也算：它是我们自己渲的画面。但它是**固定的**，所以指望它撑起
+    占比是不行的——片子越长它越不顶用，这也正是这个比例该有的行为。
+    """
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive.video import outro_page  # noqa: PLC0415
+
+    tk = spec.get("takeaway") or {}
+    ours = (COVER_SECONDS * bool(spec.get("cover"))
+            + sum(takeaway_seconds(tk[k]) for k in ("open", "close") if tk.get(k))
+            + outro_page.min_length())
+    return ours, ours + (spec["end"] - spec["start"])
+
+
 def render(spec: dict, ass: Path, outdir: Path) -> Path:
+    check_takeaway(spec)
     src = yt_download(spec["url"], outdir / "source.mp4",
                       "bv*[height<=720]+ba/b[height<=720]", spec)
     out = outdir / f"{spec['slug']}.mp4"
@@ -1802,43 +2164,60 @@ def render(spec: dict, ass: Path, outdir: Path) -> Path:
     # ⚠️ **参数要和正片逐项一致**：这条线走 `concat` demuxer + `-c copy`，
     # 那是最挑的一条路——帧率、采样率、**声道数**差一项就静默丢流，成片从某一
     # 秒起没声音，而 ffmpeg 不报错（封面那一路的注释里已经为同一件事记过一次）。
-    outro = _build_outro(outdir)
+    # 拼接清单。**一条路，不是两条。**
+    #
+    # 这儿原来按「有没有封面」分了两支，各自 concat 一遍——于是加片尾的时候
+    # 只改了一支，没有封面的片子悄悄少一页（判据
+    # `test_采访片两条路都要接片尾` 就是为这个写的）。加解读卡是同一件事
+    # 第三次，所以这次把清单收成一份：**每一段只有一处决定它进不进去。**
+    parts: list[Path] = []
+    if spec.get("cover"):
+        parts.append(_still_segment(cover_poster(spec, src, outdir, logo),
+                                    COVER_SECONDS, outdir / "_cover.mp4"))
+    parts += _takeaway_segments(spec, outdir, "open")
+    parts.append(body)
+    parts += _takeaway_segments(spec, outdir, "close")
+    if (outro := _build_outro(outdir)) is not None:
+        parts.append(outro)
 
-    if not spec.get("cover"):
-        if outro is None:
-            body.replace(out)
-            return out
-        lst = outdir / "_concat.txt"
-        lst.write_text(f"file '{body.name}'\nfile '{outro.name}'\n", encoding="utf-8")
-        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-                        "-f", "concat", "-safe", "0", "-i", str(lst),
-                        "-c", "copy", str(out)], check=True, timeout=600)
-        for tmp in (body, outro, lst):
-            tmp.unlink(missing_ok=True)
+    if len(parts) == 1:
+        body.replace(out)
         return out
-
-    cover_png = cover_poster(spec, src, outdir, logo)
-    cover_mp4 = outdir / "_cover.mp4"
-    # **封面这一路也要有音轨**，而且参数要和正片一致——否则 concat 会丢掉
-    # 其中一条流，而它**不报错**，只是成片从某一秒起没声音了。
-    subprocess.run(
-        ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-         "-loop", "1", "-t", str(COVER_SECONDS), "-i", str(cover_png),
-         "-f", "lavfi", "-t", str(COVER_SECONDS), "-i", "anullsrc=r=48000:cl=stereo",
-         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-r", "25", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-ac", "2",
-         "-shortest", str(cover_mp4)], check=True, timeout=600)
     lst = outdir / "_concat.txt"
-    names = [cover_mp4.name, body.name] + ([outro.name] if outro else [])
-    lst.write_text("".join(f"file '{n}'\n" for n in names), encoding="utf-8")
+    lst.write_text("".join(f"file '{p.name}'\n" for p in parts), encoding="utf-8")
     subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
                     "-f", "concat", "-safe", "0", "-i", str(lst),
                     "-c", "copy", str(out)], check=True, timeout=600)
-    for tmp in (body, cover_mp4, lst, outro):
-        if tmp is not None:
-            tmp.unlink(missing_ok=True)
+    for tmp in (*parts, lst):
+        tmp.unlink(missing_ok=True)
     return out
+
+
+def _takeaway_segments(spec: dict, outdir: Path, which: str) -> list[Path]:
+    """解读卡那一段（没写就是空的——豁免名单里的老片子走这条）。
+
+    **卡停多久跟着口播走**，和「赛场之上」的封面同一条规矩：长度由语音算，
+    不在 spec 里另写一个数。写两处必分叉，而分叉的样子是「最后一句还没念完
+    就切走了」——渲一次几分钟才看得见。
+
+    合不出语音时退回字数估（`takeaway_seconds`），并且**说一声**。
+    """
+    if not (spec.get("takeaway") or {}).get(which):
+        return []
+    png = build_takeaway_card(spec, which, outdir / f"_takeaway_{which}.png")
+    voice = _takeaway_voice(spec, which, outdir)
+    if voice is None:
+        secs, how = takeaway_seconds(spec["takeaway"][which]), "按字数估"
+    else:
+        sys.path.insert(0, str(ROOT / "src"))
+        from tennislive.video.explainer import _audio_seconds  # noqa: PLC0415
+        # ⚠️ `_audio_seconds` 要显式给 ffprobe 和 runner（解说片那条线注进来的），
+        # 少传两个参数报的是 TypeError，而它排在 `try` 外面——**会把整条片子
+        # 带崩**，不是退回静音卡。
+        spoken = _audio_seconds(voice, "ffprobe", subprocess.run)
+        secs, how = round(spoken + TAKEAWAY_TAIL, 2), "跟着口播"
+    print(f"[解读卡] {which} {secs:.2f}s（{how}）")
+    return [_still_segment(png, secs, outdir / f"_takeaway_{which}.mp4", voice)]
 
 
 def _build_outro(outdir: Path) -> Path | None:
@@ -1877,6 +2256,18 @@ def main() -> int:
                     choices=["subs", "sheet", "verify", "cover", "render"],
                     default="subs")
     args = ap.parse_args()
+
+    # 这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认的是 certifi 自带
+    # 的根证书——挂上代理那张 CA 当场就通。**runner 上是 no-op 且不出声**，
+    # 那儿没有代理，也不需要。见 `tennislive.localca`。
+    #
+    # ⚠️ 这条线在解读卡之前**不合语音**（片尾走的是母版转码，不跑 TTS），
+    # 所以一直没挂。加解读卡的口播时它是第三处要改的地方——报出来的样子是
+    # `CERTIFICATE_VERIFY_FAILED`，被退路吞成一句「口播合不出来」，
+    # **看起来像 edge-tts 挂了**。
+    sys.path.insert(0, str(ROOT / "src"))
+    from tennislive import localca  # noqa: PLC0415
+    localca.trust_local_proxy_ca()
 
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
     outdir = OUTDIR / spec["slug"]
