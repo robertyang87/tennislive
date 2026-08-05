@@ -188,6 +188,38 @@ def test_喂给模型的是正文不是标题():
     assert "perfect storm" in deep_calls[0], "喂过去的不是抓到的正文"
 
 
+def test_撞上的常青线要真的喂给模型():
+    """人工角度表算出来了，得让写 `angle` 的那次调用看得见它。
+
+    2026-08-05 栽过：`match_angle` 在 `build_brief` 第一轮循环里就把
+    「保护排名」匹配上了，可 `deepen()` 没把它传下去，模型自己联想到外卡，
+    还给德雷珀编了个「持外卡参赛」——四条 points、四条原标题里一个「外卡」
+    都没有。产物里两栏并排印着，看起来像「模型有别的想法」，其实是**它根本
+    没收到**。
+
+    ⚠️ 判据钉两头。只验「有角度时喂了」的话，一个恒真的
+    `known_angle_hint` 也能过；反过来只验「没角度时不喂」同理。
+    """
+    chat = _Stub(_deep_reply)
+    build_brief("2026-08-05", news=_DRAPER, chat=chat, fetch=_ok_fetch, deep=1)
+    deep_systems = [s for s, _ in chat.prompts if "title_zh" in s]
+    assert deep_systems, "根本没走深挖那一步"
+    fed = deep_systems[0]
+    assert "退赛与截止日" in fed, "撞上的常青线没喂给模型"
+    assert "打完首轮才算出场" in fed, "喂的只有标签，规则正文没跟过去"
+
+    # 另一头：没撞上角度表的簇，不许凭空多出这一段
+    plain = _news(
+        ("A", "Someone hit a nice forehand today", "https://a/2"),
+        ("B", "Someone hit a nice forehand again", "https://b/2"),
+    )
+    chat2 = _Stub(_deep_reply)
+    build_brief("2026-08-05", news=plain, chat=chat2, fetch=_ok_fetch, deep=1)
+    plain_systems = [s for s, _ in chat2.prompts if "title_zh" in s]
+    assert plain_systems, "根本没走深挖那一步"
+    assert "常青线" not in plain_systems[0], "没撞上角度表却喂了一段常青线"
+
+
 def test_读不到正文就不深挖而且要说清卡在哪():
     """抓不到和「这条本来就没内容」不许长得一样。
 
