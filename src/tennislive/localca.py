@@ -53,8 +53,23 @@ def _extra_ca() -> Path | None:
         return p
     for cand in _WELL_KNOWN:
         p = Path(cand)
-        if p.is_file():
-            return p
+        # ⚠️ **`Path.is_file()` 会抛，不是只返回 False。** 它只吞
+        # ENOENT / ENOTDIR / EBADF / ELOOP 那几类，**不吞 EACCES**——而 runner 上
+        # 跑测试的用户根本进不去 `/root`，于是 `os.stat` 抛 PermissionError。
+        #
+        # 这个探测排在 `main()` 的**第一行**，所以它一抛就是**每一次 CLI 调用
+        # 都崩**：整条 match-reel 会死在还没解析参数的时候。CI 当场逮到
+        # （run 30971701644，两条 dry-run 测试红在
+        # `PermissionError: '/root/.ccr/ca-bundle.crt'`）。
+        #
+        # 探一个「众所周知的位置」**失败就等于这台机器没有它**，任何 OSError
+        # 都一样——这条路只是猜，猜不中是常态。显式配的那条不同：那儿配错了
+        # 要报，见上面。
+        try:
+            if p.is_file():
+                return p
+        except OSError:
+            continue
     return None
 
 
