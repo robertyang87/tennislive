@@ -2485,22 +2485,41 @@ def test_采访片的片尾要和正片拼得起来(tmp_path):
 
 
 def test_采访片两条路都要接片尾():
-    """有封面和没封面是两条不同的出片路径，**片尾两条都要接上**。
+    """有封面和没封面**不许是两条不同的出片路径**。
 
-    没封面那条原来直接 `body.replace(out)` 就返回了，一次 concat 都不做——
-    只改有封面那条的话，没有封面的片子会悄悄少一页片尾，
-    而它和「本来就没有片尾」长得一模一样。
+    ⚠️ **这条判据换过一次主语，换的理由本身就是它要防的东西。**
+
+    第一版盯的是「没有封面那一支里有没有 outro」——因为当时 `render()` 真的
+    按 `if not spec.get("cover")` 分了两支、各 concat 一次，而加片尾时只改了
+    一支，没有封面的片子悄悄少一页。
+
+    加解读卡时同一件事要第三次发生，所以把清单收成了**一份**：谁进谁不进各
+    只有一处决定。原来那句 `body.split('if not spec.get("cover"):')` 于是
+    `IndexError`——**主语没了就得换判据**，留着它就是一条常年红。
+
+    现在钉的是那个结构本身：片尾只有一处 append，而且**不在任何 cover 分支
+    里面**。
     """
     src = Path("tools/build_interview_clip.py").read_text(encoding="utf-8")
     body = src.split("def render(")[1].split("\ndef ")[0]
+    code = [ln for ln in body.splitlines() if not ln.lstrip().startswith("#")]
 
-    assert "_build_outro(" in body, "render() 里没有调片尾"
-    nocover = body.split('if not spec.get("cover"):')[1].split("cover_png =")[0]
-    assert "outro" in nocover, (
-        "没有封面那条路没接片尾——那条路直接 replace 返回，"
-        "少一页和本来就没有长得一模一样")
-    # 片尾渲不出来时两条路都要能退回去，不能把整条片子带崩
-    assert "outro is None" in nocover, "没封面那条路没处理片尾渲不出来的情况"
+    outro = [i for i, ln in enumerate(code) if "_build_outro(" in ln]
+    assert len(outro) == 1, f"片尾不是只有一处：{outro}"
+
+    # **不许嵌在任何分支里面**，判据是缩进——它就是嵌套本身。
+    #
+    # ⚠️ 第一版判的是「前面最近的那个 `if` 是不是 cover」，当场误伤：
+    # `if spec.get("cover"):` 确实排在前面，但那是**往清单里加封面**的单行块，
+    # 片尾并不在它里面。又一次「判据宁可窄，不可宽」——只不过这次糊的不是
+    # 范围，是层级。
+    line = code[outro[0]]
+    assert len(line) - len(line.lstrip()) == 4, (
+        f"片尾那行缩进了 {len(line) - len(line.lstrip())} 格，说明它嵌在某个分支里。"
+        "没走到那个分支的片子会悄悄少一页，而它和「本来就没有片尾」长得一模一样")
+
+    # 而且要真的进清单
+    assert "parts.append(outro)" in "".join(code), "片尾没进拼接清单"
 
 
 def test_顶栏次行要在虚化背景上读得出来():
@@ -2548,3 +2567,198 @@ def test_顶栏次行要在虚化背景上读得出来():
 
     # ④ 比分仍然要比基准大一档——不然强调就没了
     assert clip._SCORE_PX > clip._HEAD_SIZE["b"], "比分不再比基准大，强调被压平了"
+
+
+# ── 解读卡（提炼）────────────────────────────────────────────────────────
+#
+# 来路：视频号 2026-08-04 判了伊埃拉捧杯致辞那条「二次创作部分信息增量不足，
+# 如素材简单增加标题、字幕或简易配音」。账号所有者 2026-08-05：「以后赛后开麦，
+# 要找总结提炼下」，体裁定的是**保留原声主体、前后加解读卡**。
+
+
+def _iv_specs():
+    return sorted(Path("specs/interviews").glob("*.json"))
+
+
+def test_没有解读卡的老片子只许减不许加():
+    """豁免名单的**自检**：表里每个 slug 必须真的存在、而且真的还没有解读卡。
+
+    ⚠️ 一个会过期的名单和一条常年红的检查是同一个毛病，而这条更阴——
+    **写错一个名字，豁免就成了一盏恒真的绿灯**：那条 spec 既不在名单里
+    （名字对不上），也没人发现名单里那个名字指向空气。
+    """
+    import tools.build_interview_clip as clip
+
+    have = {p.stem for p in _iv_specs()}
+    ghosts = clip._NO_TAKEAWAY_LEGACY - have
+    assert not ghosts, f"豁免名单里这几个 slug 不存在，等于没豁免任何东西：{ghosts}"
+
+    for slug in clip._NO_TAKEAWAY_LEGACY:
+        d = json.loads((Path("specs/interviews") / f"{slug}.json").read_text("utf-8"))
+        assert not d.get("takeaway"), (
+            f"{slug} 已经写了解读卡，就该从豁免名单里划掉——"
+            "名单只许减不许加")
+
+
+def test_新的采访片必须有解读卡而且引的是他真说过的话():
+    """两头都钉。**这条只吃 `specs/`**，不读 `output/`——CI 的稀疏检出把产物
+    挡在外面，拿产物当主语的判据在 CI 上会静静地变成一盏恒真的绿灯。
+    """
+    import tools.build_interview_clip as clip
+
+    checked = 0
+    for p in _iv_specs():
+        d = json.loads(p.read_text("utf-8"))
+        if p.stem in clip._NO_TAKEAWAY_LEGACY:
+            continue
+        checked += 1
+        clip.check_takeaway(d)          # 缺字段 / 引错话 / 占比不够都会抛
+    # 目前七条全在豁免名单里（都是规矩之前发的），所以 checked 可能是 0。
+    # **但这条测试不许因此变成空转**——下面那两条用假 spec 证明闸真的咬得动。
+    assert checked >= 0
+
+
+def test_落点卡引一句他没说过的话要当场报错():
+    """这张卡唯一致命的错法：「这才是真正的落点」后面跟一句他没说过的话。
+
+    **渲出来一点异常都没有**——版式正常、时长正常、闸全绿。所以只能在 spec
+    这一层拦。⚠️ 比对时两边的标点都剥掉：卡上按正常中文写（带逗号），而
+    `zh` 里的字幕**按规矩不写标点**，逐字比会永远对不上。
+    """
+    import tools.build_interview_clip as clip
+
+    base = {
+        "slug": "fake-x", "start": 0.0, "end": 60.0, "cover": {"frame_at": 1},
+        "zh": ["但更让我高兴的是 我健康了", "我百分百打出了最好的网球"],
+        "takeaway": {
+            "open": {"point": "「但更让我高兴的是，我健康了」",
+                     "facts": ["他说了 4 次「健康」"]},
+            "close": {"point": "他谈的不是赢球。", "ask": "他其实在说什么？"}},
+    }
+    clip.check_takeaway(base)           # 引的是真话，且标点不同也认——不许报
+
+    bad = json.loads(json.dumps(base))
+    bad["takeaway"]["open"]["point"] = "「我为整个中国网球感到骄傲」"
+    with pytest.raises(SystemExit, match="找不到"):
+        clip.check_takeaway(bad)
+
+
+def test_自有画面占比不够要当场报错():
+    """把平台判的那个东西变成一个我们自己量得出来的数。
+
+    被判的那条（伊埃拉捧杯致辞）217.2 秒里我们自己的画面只有封面 1.8 秒
+    ＝ **0.8%**。所以这条闸拿一段同样长的原声试：光靠封面 + 片尾 + 两张小卡
+    托不起 15%，**必须把原声剪短或者把卡写厚**——而那正是要它逼出来的动作。
+    """
+    import tools.build_interview_clip as clip
+
+    spec = {
+        "slug": "fake-long", "start": 0.0, "end": 217.0, "cover": {"frame_at": 1},
+        "zh": ["我健康了"],
+        "takeaway": {"open": {"point": "「我健康了」"},
+                     "close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+    }
+    with pytest.raises(SystemExit, match="简易加工"):
+        clip.check_takeaway(spec)
+
+    # 反过来：同一张卡，原声剪到 60 秒就过得去——证明这条闸拦的是**占比**，
+    # 不是「凡是长片子都拦」
+    spec["end"] = 60.0
+    clip.check_takeaway(spec)
+
+
+def test_解读卡那道闸要排在下载之前():
+    """形状错不该先付一次几百 MB 的下载。
+
+    ⚠️ **只测行为拦不住位置错**：闸排在 `yt_download` 后面时，上面那几条
+    行为判据照样全绿，而真实的代价是每次写错 spec 都要等一趟下载。
+    """
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    body = src.split("def render(")[1].split("\ndef ")[0]
+    body = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert body.index("check_takeaway(") < body.index("yt_download("), (
+        "解读卡那道闸排在下载后面了——写错一个字段要等几百 MB 下完才知道")
+
+
+def test_拼接清单只有一条路():
+    """封面、解读卡、正片、片尾**在同一份清单里**，不许按条件分两支各拼一次。
+
+    这儿原来按「有没有封面」分了两支，于是加片尾时只改了一支，没有封面的
+    片子悄悄少一页。加解读卡是同一件事第三次——所以清单收成一份，
+    **每一段只有一处决定它进不进去**。
+    """
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    body = src.split("def render(")[1].split("\ndef ")[0]
+    code = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert code.count('"-f", "concat"') == 1, (
+        "render() 里 concat 了不止一次——分支一多，下次加东西又会只改一支")
+    for piece in ("_takeaway_segments(spec, outdir, \"open\")",
+                  "_takeaway_segments(spec, outdir, \"close\")"):
+        assert piece in code, f"拼接清单里没有 {piece}"
+    assert code.index('"open"') < code.index("parts.append(body)") \
+        < code.index('"close"'), "解读卡的位置不对：落点卡在正片前，收尾卡在正片后"
+
+
+def test_静图转段只有一处写ffmpeg参数():
+    """封面和两张解读卡共用 `_still_segment`。
+
+    这条线走 `concat` demuxer + `-c copy`，帧率/采样率/**声道数**差一项就
+    静默丢流、成片从某一秒起没声音，**而 ffmpeg 不报错**。参数抄第二遍就是
+    在等它分叉。
+    """
+    src = Path("tools/build_interview_clip.py").read_text("utf-8")
+    code = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert code.count('"anullsrc=r=48000:cl=stereo"') == 1, (
+        "静音音轨的参数写了不止一处——两处必分叉，而分叉的表现是成片某一秒起没声音")
+
+
+def test_解读卡的时长跟着它自己的字数走():
+    """写两处必分叉，而分叉的表现是「改了文案卡还是老时长，最后一行没读完就切」。"""
+    import tools.build_interview_clip as clip
+
+    short = {"point": "他谈的不是赢球。"}
+    long_ = {"point": "他谈的不是赢球。", "lead": "主持人问他脑子里在想什么，"
+             "他先夸了对手，然后自己把话头转开——", "facts": ["说了 4 次健康", "赢只说了 1 次"]}
+    assert clip.takeaway_seconds(short) == clip.TAKEAWAY_MIN_SECONDS
+    assert clip.takeaway_seconds(long_) > clip.takeaway_seconds(short), \
+        "字多了卡却没变长——那最后一行读不完就切走了"
+    assert clip.takeaway_seconds(long_) <= clip.TAKEAWAY_MAX_SECONDS
+
+
+def test_提炼工具要把没说的词也打出来():
+    """频次榜只列**出现过**的词，「一次都没提」在榜上是看不见的。
+
+    这正是这个仓库反复栽的「空结果 ≠ 不存在」：**缺席是信息，
+    但缺席不会自己跳出来**。所以观察表是固定打印的，说 0 次也要有一行。
+    """
+    import tools.interview_takeaway as tk
+
+    assert tk._WATCH, "观察表是空的"
+    lines = [
+        {"a": 0.0, "en": ">> What's going through your mind?"},
+        {"a": 2.0, "en": ">> I'm healthy. I'm happy. Really happy to be healthy."},
+    ]
+    tt = tk.turns(lines)
+    assert [t["who"] for t in tt] == ["主持人", "球员"]
+
+    text = tk.report.__doc__ or ""
+    assert text is not None
+    # 真跑一次报告：他一个字没提「团队/家人」，报告里必须有那一行
+    import json as _json
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        out = Path(d)
+        (out / "lines.json").write_text(_json.dumps(lines), encoding="utf-8")
+        rep = tk.report({"slug": "t", "start": 0.0, "end": 10.0}, out)
+    # ⚠️ **别写成 `"一次都没提" in rep`。** 第一版就是那样，而 `report` 自己的
+    # 说明文字里正写着「**「一次都没提」在榜上是看不见的**」——断言被自己的解说
+    # 满足了，把标记整个拆掉照样绿。反向验证时才发现（拆了，1 passed）。
+    # 这个仓库为「判据被注释误伤」栽过四次，这次是它的镜像：**制造假绿**。
+    # 所以要钉在**那一行**上：标签开头、同一行带标记。
+    flagged = [ln.strip() for ln in rep.splitlines()
+               if ln.strip().startswith("团队/家人") and "一次都没提" in ln]
+    assert flagged, ("他一个字没提团队/家人，报告里却没有那一行——"
+                     f"没说的词没被打出来，而那一节是这个工具的全部价值\n{rep}")
