@@ -1113,10 +1113,6 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     ⚠️ **这一步只能在 runner 上跑**：沙箱的 IP 被 YouTube 挡了，连音频也下不到
     （`-f ba` 同样报 `Sign in to confirm you're not a bot`）。
     """
-    import difflib
-
-    from faster_whisper import WhisperModel  # noqa: PLC0415
-
     # ⚠️ **第二份 ASR 必须换个模型，否则这道闸是空的。**
     # 原来的前提是「第一份来自 YouTube 的 ASR，第二份是 faster-whisper」，
     # 两边天然不同。而非 YouTube 的源没有自动字幕轨，第一份**也是 whisper 跑的**
@@ -1129,6 +1125,15 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
         raise SystemExit(
             f"`whisper_model` 和 `asr_model` 都是 {second}——同一个模型跑两遍不是"
             "交叉验证，分歧率会恒为 0。第二份换一个（比如 `medium.en`）再跑。")
+
+    # ⚠️ **上面那道闸只查 spec 的形状，所以必须排在这两个 import 前面。**
+    # 第一版写在后面，于是在**任何没装 faster-whisper 的机器上它根本走不到**
+    # ——而那正是 CI 那台（PR #198 的 run 30980157757：本地绿、CI 报
+    # `No module named 'faster_whisper'`）。又一次「本地装着不等于 CI 装着」，
+    # 也是「形状校验里不许混进环境检查」的镜像：**环境依赖不许挡在形状校验前面。**
+    import difflib
+
+    from faster_whisper import WhisperModel  # noqa: PLC0415
 
     # 走同一个下载口：`-o` 是模板不是保证，落到别的后缀要认出来。
     # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这层保险的路**。
