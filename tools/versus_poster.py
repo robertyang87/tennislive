@@ -58,6 +58,7 @@ import math
 import os
 import re
 import sys
+import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -74,6 +75,7 @@ BRAND = "#c6f65a"          # 品牌绿
 INK = "#04120d"            # 深底
 TEXT = "#f4fbf7"
 DIM = "#9fb4aa"
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 SEAM_ANGLE = 7.4           # 中缝那条绿线的倾角（度）
@@ -199,6 +201,168 @@ def _flag(code: str) -> str:
     return country_flag(code)
 
 
+_PLAYER_NAMES_CACHE: list[dict] | None = None
+_DURATION_CACHE: dict[str, str] = {}
+
+
+def _english_display(name: str, meta: dict, where: str) -> str:
+    """返回比分板第二行的英文名；没有显式值时只从受控译名表反查。"""
+    value = str(meta.get("name_en") or "").strip()
+    if not value:
+        global _PLAYER_NAMES_CACHE
+        if _PLAYER_NAMES_CACHE is None:
+            path = REPO_ROOT / "src" / "tennislive" / "zh" / "player_names_top500.json"
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except FileNotFoundError as exc:
+                raise SystemExit(f"{where} 缺 `name_en`，且找不到受控译名表：{path}") from exc
+            _PLAYER_NAMES_CACHE = [
+                row
+                for tour in (data.get("tours") or {}).values()
+                for row in tour
+                if isinstance(row, dict)
+            ]
+        matches = [row for row in _PLAYER_NAMES_CACHE
+                   if str(row.get("name_zh") or "").strip() == name]
+        if len(matches) == 1:
+            value = str(matches[0].get("name_en") or "").strip()
+        elif len(matches) > 1:
+            raise SystemExit(
+                f"{where} 的中文名 {name!r} 在译名表里对应多个英文名；"
+                "请在 matchup 里显式写 `name_en`。")
+    if not value:
+        raise SystemExit(
+            f"{where} 缺 `name_en`：比分板必须显示中文名＋排名和英文名，"
+            "不能猜英文拼法。")
+    # 规范表里通常是全名；比分板采用首字母＋姓氏的短名形式。
+    parts = value.replace("-", " - ").split()
+    if len(parts) > 1 and "." not in parts[0]:
+        value = " ".join([f"{part[0]}." for part in parts[:-1]] + [parts[-1].upper()])
+    return value.upper()
+
+
+def _score_flag(meta: dict, where: str) -> str:
+    """矩形国旗，不使用 emoji；空国旗仍保留固定宽度的占位。"""
+    if "country" not in meta:
+        raise SystemExit(f"{where} 缺 `country`：比分板每位球员都要有矩形国旗资料。")
+    if meta["country"] is None:
+        print(f"[比分板] {where} 声明没有国旗（country: null），保留空旗位")
+        return '<span class="score-flag-slot" aria-hidden="true"></span>'
+    from tennislive.zh.countries import country_iso2  # noqa: PLC0415
+
+    iso2 = country_iso2(str(meta["country"]))
+    if not iso2:
+        raise SystemExit(
+            f"{where} 的 country={meta['country']!r} 无法换算 ISO2，"
+            "不能生成矩形国旗。")
+    flag_path = REPO_ROOT / "assets" / "flags" / f"{iso2.lower()}.png"
+    if not flag_path.is_file():
+        raise SystemExit(f"{where} 缺少矩形国旗资源：{flag_path}")
+    return (
+        f'<span class="score-flag-slot"><img class="score-flag" '
+        f'src="{_data_uri(flag_path)}" alt=""></span>')
+
+
+def _duration_seconds(value: object) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        number = float(value)
+        if number > 100_000:  # 接口偶尔返回毫秒
+            number /= 1000
+        return int(round(number)) if number >= 0 else None
+    text = str(value).strip()
+    if not text:
+        return None
+    if re.fullmatch(r"\d+(?::\d{2}){1,2}", text):
+        parts = [int(part) for part in text.split(":")]
+        if len(parts) == 3:
+            return parts[0] * 3600 + parts[1] * 60 + parts[2]
+        return parts[0] * 60 + parts[1]
+    try:
+        number = float(text)
+    except ValueError:
+        return None
+    if number > 100_000:
+        number /= 1000
+    return int(round(number)) if number >= 0 else None
+
+
+def _lookup_path(payload: object, path: str) -> object | None:
+    current = payload
+    for part in path.split("."):
+        if isinstance(current, dict):
+            current = current.get(part)
+        else:
+            return None
+    return current
+
+
+def _find_duration(payload: object, field: str | None = None) -> object | None:
+    if field:
+        value = _lookup_path(payload, field)
+        if value is not None:
+            return value
+    wanted = {"matchtimetotal", "matchtime", "duration", "durationseconds"}
+    if isinstance(payload, dict):
+        for key, value in payload.items():
+            if str(key).replace("_", "").lower() in wanted:
+                if _duration_seconds(value) is not None:
+                    return value
+            found = _find_duration(value)
+            if found is not None:
+                return found
+    elif isinstance(payload, list):
+        for value in payload:
+            found = _find_duration(value)
+            if found is not None:
+                return found
+    return None
+
+
+def _fetch_match_duration(source: dict, where: str) -> str:
+    """从 spec 指定的官方比赛接口取真实用时，显示时隐藏秒数。"""
+    url = str(source.get("url") or "").strip()
+    if not url:
+        raise SystemExit(f"{where} 缺 `duration_source.url`：比赛时长不能手填。")
+    if url in _DURATION_CACHE:
+        return _DURATION_CACHE[url]
+    request = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "application/json",
+            "Origin": "https://www.wtatennis.com",
+            "Referer": "https://www.wtatennis.com/",
+            "User-Agent": "tennislive-scoreboard/1.0",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except Exception as exc:  # noqa: BLE001 - source failure must stop the poster
+        raise SystemExit(f"{where} 官方比赛时长接口不可用：{url}\n{exc}") from exc
+    match_id = str(source.get("match_id") or "").strip()
+    if match_id and isinstance(payload, dict):
+        rows = payload.get("matches")
+        if isinstance(rows, list):
+            payload = next(
+                (row for row in rows
+                 if str(row.get("MatchID") or row.get("matchId") or "") == match_id),
+                {},
+            )
+    raw = _find_duration(payload, str(source.get("field") or "").strip() or None)
+    seconds = _duration_seconds(raw)
+    if seconds is None:
+        raise SystemExit(
+            f"{where} 在官方接口里找不到有效比赛用时（field={source.get('field')!r}，"
+            f"match_id={match_id or '未指定'}）：{url}")
+    hours, minutes = divmod(seconds // 60, 60)
+    display = f"{hours}:{minutes:02d}"
+    _DURATION_CACHE[url] = display
+    print(f"[比分板] 比赛时长 {display}（官方接口：{url}）")
+    return display
+
+
 def _name_html(name: str, meta: dict, where: str) -> str:
     """封面上的一个人：**国旗 + 中文名 +（即时世界排名）**。
 
@@ -304,7 +468,101 @@ def _sets_html(result: str) -> str:
     return "".join(out)
 
 
+def _scoreboard_sets(result: str, where: str) -> list[tuple[int, int, str | None]]:
+    scores = []
+    for token in result.split():
+        match = _SET_RE.match(token)
+        if not match:
+            raise SystemExit(
+                f"{where} 的 result={result!r} 含无法拆分的盘分 {token!r}；"
+                "比分板需要用 `6-1 4-6 6-2` 或带抢七小分的格式。")
+        scores.append((int(match.group(1)), int(match.group(2)), match.group(3)))
+    if not scores:
+        raise SystemExit(f"{where} 的 result 为空，无法生成比分板。")
+    return scores
+
+
+def _scoreboard_person(meta: dict, where: str) -> str:
+    name = str(meta.get("name") or "").strip()
+    if not name:
+        raise SystemExit(f"{where} 缺 `name`。")
+    if "rank" not in meta:
+        raise SystemExit(
+            f"{where} 缺 `rank`：比分板每一位球员的中文名后都必须有世界排名；"
+            '查过没有排名也要显式写 "rank": null。')
+    rank = meta["rank"]
+    rank_html = "" if rank is None else f'<span class="score-rank">（{int(rank)}）</span>'
+    return (
+        f'<div class="score-person">{_score_flag(meta, where)}'
+        '<span class="score-names">'
+        f'<span class="score-cn">{html.escape(name)}{rank_html}</span>'
+        f'<span class="score-en">{html.escape(_english_display(name, meta, where))}</span>'
+        '</span></div>')
+
+
+def _scoreboard_html(cover: dict) -> str:
+    """「赛场之上」统一首页比分板：直角、全透明、双语姓名、逐盘着色。"""
+    result = str(cover.get("result") or "").strip()
+    if not result:
+        return ""
+    pair = cover.get("matchup") or []
+    if len(pair) != 2:
+        raise SystemExit(
+            "赛场之上 solo 封面写了 result，就要 cover.matchup 给出两位球员，"
+            "每位都包含 country、rank、name_en。")
+    winner = str(cover.get("winner") or "").strip()
+    win = next((p for p in pair if str(p.get("name") or "").strip() == winner), None)
+    if win is None:
+        raise SystemExit(
+            f"cover.winner={winner!r} 不在 cover.matchup 的两个名字里："
+            f"{[p.get('name') for p in pair]}")
+    lose = next(p for p in pair if p is not win)
+    scoreboard = cover.get("scoreboard") or {}
+    court = str(scoreboard.get("court") or "").strip()
+    if not court:
+        raise SystemExit("赛场之上比分板缺 `scoreboard.court`，不能猜场地名称。")
+    source = scoreboard.get("duration_source") or {}
+    duration = _fetch_match_duration(source, "cover.scoreboard")
+    scores = _scoreboard_sets(result, "cover")
+    columns = ",".join(["minmax(0,1fr)"] + ["minmax(86px,1fr)"] * len(scores))
+
+    cells = []
+    for left, right, tiebreak in scores:
+        left_class = "setwin" if left > right else "setlose"
+        right_class = "setwin" if right > left else "setlose"
+        tb = f"<sup>({tiebreak})</sup>" if tiebreak else ""
+        cells.append(
+            '<div class="score-set">'
+            f'<span class="score-number {left_class}">{left}{tb}</span>'
+            f'<span class="score-number {right_class}">{right}</span>'
+            '</div>')
+    return (
+        '<div class="scoreboard">'
+        '<div class="scoreboard-head">'
+        f'<span class="scoreboard-court">{html.escape(court)}</span>'
+        f'<span class="scoreboard-duration">{html.escape(duration)}</span>'
+        '</div>'
+        f'<div class="scoreboard-grid" style="grid-template-columns:{columns}">'
+        f'<div class="scoreboard-players">{_scoreboard_person(win, "cover.matchup[赢家]")}'
+        f'{_scoreboard_person(lose, "cover.matchup[输家]")}</div>'
+        + "".join(cells)
+        + '</div></div>')
+
+
 def _solo_score_html(cover: dict) -> str:
+    """solo 版只给「赛场之上」挂统一比分板；「网球有故事」仍不印赛果。"""
+    if not str(cover.get("result") or "").strip():
+        return ""
+    # 已发布的旧 spec 没有 scoreboard 块，不能因为一次模板升级让历史海报无法
+    # 重建；所有新 spec（包括 eala-parks）必须显式写 scoreboard，走下面的新模板。
+    if not cover.get("scoreboard"):
+        return _legacy_solo_score_html(cover)
+    return _scoreboard_html(cover)
+
+
+def _legacy_solo_score_html(cover: dict) -> str:
+    """旧版一行赛果，仅保留给历史 VS 代码回溯，不再用于 solo 首页。"""
+
     """solo 封面里，标题底下那一行赛果：**国旗 + 名字 + 比分 + 国旗 + 名字**。
 
     账号所有者 2026-08-04：「以后都用 solo 版做『赛场之上』封面」「**中间标题
@@ -600,6 +858,35 @@ __SCRIM__
  text-shadow:0 2px 6px rgba(0,0,0,.9),0 4px 22px rgba(0,0,0,.85)}
 .storyscore .sets{font-family:'TL Numeral','TL Sans SC',sans-serif;
  font-weight:700;color:#c6f65a;letter-spacing:1px}
+/* 「赛场之上」首页统一比分板：直角边框、全透明底，比分按盘单独着色。
+   国旗固定占位，确保它与中文名/英文名两行整体垂直居中。 */
+.scoreboard{width:100%;box-sizing:border-box;border:2px solid rgba(244,251,247,.95);
+ color:#f4fbf7;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
+.scoreboard-head{height:76px;box-sizing:border-box;padding:0 28px;display:flex;
+ align-items:center;justify-content:space-between;border-bottom:1px solid rgba(244,251,247,.82);
+ font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
+.scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
+ letter-spacing:0;color:#f4fbf7}
+.scoreboard-grid{display:grid;min-height:214px}
+.scoreboard-players{min-width:0}
+.score-person{height:107px;box-sizing:border-box;display:flex;align-items:center;
+ padding:0 16px 0 22px;min-width:0}
+.score-person+.score-person{border-top:1px solid rgba(244,251,247,.55)}
+.score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
+ justify-content:center;margin-right:14px}
+.score-flag{display:block;width:58px;height:38px;object-fit:cover}
+.score-names{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.score-cn{font-family:'TL Display SC','TL Sans SC',sans-serif;font-size:33px;
+ line-height:1.08;white-space:nowrap}
+.score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
+.score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
+ letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
+.score-set{display:flex;flex-direction:column;border-left:1px solid rgba(244,251,247,.55)}
+.score-number{flex:1;display:flex;align-items:center;justify-content:center;
+ font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:48px;font-weight:700}
+.score-number+.score-number{border-top:1px solid rgba(244,251,247,.55)}
+.score-number sup{font-size:.45em;line-height:1;align-self:flex-start;margin-top:24px;
+ color:#93a79c}
 /* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给灰**（账号所有者 2026-08-04）。
    颜色只有这一个强调色——`#c6f65a` 就是台标球身那个黄绿，不引入第二种。
    `.setdash` 和 `.tb` 都压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
