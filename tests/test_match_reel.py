@@ -4244,6 +4244,53 @@ def test_装Chromium重试之前要等dpkg锁():
         f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
 
 
+def test_等dpkg锁的预算够长又不许撑爆步骤预算():
+    """⚠️ **等 60 秒不够。** 2026-08-06 run 31058902174：
+
+        00:15:55  装 Chromium 开跑（--with-deps 去下 21 MB 字体包）
+        00:17:39  fonts-freefont-ttf 5.6 MB —— 一个包花了 74 秒，镜像在爬
+        00:19:55  第 1 次没跑完          ← 240 秒被杀，派生的 apt-get 活着
+        00:20:19  fonts-wqy-zenhei 7.5 MB 还在下   ← **孤儿进程仍在推进**
+        00:20:55  等了 60 秒还没松开，硬着头皮再试
+        00:20:57  E: Could not get lock ... held by process 4342 (apt-get)
+        00:21:57  装 Chromium 两次都没成功
+
+    上一条判据（重试之前要等锁）当时**是绿的**——等是等了，只是**等得不够长**。
+    而孤儿不是挂死，是在慢慢下载：多等一会儿它自己就松手了，
+    「硬着头皮再试」等于把仅剩的那次尝试扔进一个必然失败的口。
+
+    ⚠️ **上界同样要钉**：步骤 `timeout-minutes: 10`，两次安装各 240 秒，
+    留给等待的只有 120 秒。等待写过头，第 2 次会在**眼看要成的时候**被步骤
+    预算掐掉——那和「装不上」长得一模一样（工作流注释里记着这条）。
+
+    所以这条钉的是 **110 ≤ 等待预算 ≤ 120**，两头都不许被人单方面改动。
+    """
+    import re as _re  # noqa: PLC0415
+
+    INSTALL_TIMEOUT, ATTEMPTS, STEP_BUDGET = 240, 2, 10 * 60
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        body = "\n".join(lines)
+        if "pw_wait_apt" not in body:
+            continue
+        loop = _re.search(r"pw_wait_apt\(\)\s*\{.*?for _ in \$\(seq 1 (\d+)\).*?"
+                          r"sleep (\d+)", body, _re.S)
+        assert loop, f"{path.name} 的 pw_wait_apt 形状变了，判据的主语没了"
+        budget = int(loop.group(1)) * int(loop.group(2))
+        checked[path.name] = budget
+        assert budget >= 110, (
+            f"{path.name} 等 dpkg 锁只等 {budget} 秒——60 秒那一版实测不够："
+            "被超时杀掉的 apt-get 还在慢慢下包，重试会在两秒内撞锁（run 31058902174）")
+        assert INSTALL_TIMEOUT * ATTEMPTS + budget <= STEP_BUDGET, (
+            f"{path.name} 等 {budget} 秒 + {ATTEMPTS}×{INSTALL_TIMEOUT} 秒安装 "
+            f"＞ 步骤预算 {STEP_BUDGET} 秒——第 2 次会在眼看要成的时候被掐掉，"
+            "而那和「装不上」长得一模一样")
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流有 pw_wait_apt，判据的主语像是没了")
+
+
 def test_Chromium缓存都要有restore_keys():
     """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
 

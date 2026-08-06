@@ -170,6 +170,59 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
 改对之后一眼看到 `Zheng Qinwen vs Alexandra Eala / STATUS_SCHEDULED`。所以：
 **自己写的探测脚本报空时，先拿一个已知非空的口径对一下**，别急着下结论。
 
+### ⭐ 源有三类，查空一类不等于查空全部
+
+2026-08-06，账号所有者点名要做「莱巴金娜的 UE 和 Winner 齐飞」。我查了三个地方——
+
+    flashscore  df_st_1/2/3     Ace、双误、一二发、破发点、总分      ❌ 没有 UE/Winner
+    WTA API     /matches        比分、种子、用时、轮次              ❌
+    WTA API     /matches/<id>/stats（官方统计端点）                 ❌ 字段表里根本没这两项
+
+——然后回复「这两个数三个源都没有」，还自作主张拿另一个口径（Ace 15 / 双误 16）
+**把账号所有者定的主题换掉了**。他顶了回来：「你不找你总都肯定找不到呀……
+不然这个亮点就没了，这个主题就要用这个去切入啊」。
+
+再找，**第一下就中**：WTA 官网这场的比赛页里挂着一篇赛后稿，标题原文就是
+
+> **58 winners, 58 errors: Rybakina delivers mixed bag to beat Kasatkina in Toronto**
+
+而且正文把每个细节都写了：开场连中六个制胜分、58 里含 15 个 Ace、58 个非受迫
+失误里含 16 个双误、**连续两个双误丢掉第二盘**、决胜盘发球胜赛局里三个双误、
+第二个赛点才拿下。**比我准备用来替代它的那套数据好得多。**
+
+**根子是我把「源」等同于「数据接口」了。** 一场球的数字至少有三类出处，
+形状完全不同，查空一类完全不代表另外两类也空：
+
+| 类别 | 例子 | 什么时候它才有 |
+|---|---|---|
+| **数据接口** | flashscore feed、WTA `/stats`、ESPN | 结构化、全覆盖，但**字段是固定的**——没有这一栏就是永远没有 |
+| **编辑稿** | 赛事官网的 Match Reaction、赛事方新闻、通讯社赛报 | **只有值得写的那几场才有**，但记者手上是全套转播统计，UE/Winner/连续几个双误这类「接口里没有的」全在这儿 |
+| **画面自证** | 烧死的记分条、转播的赛后统计图、场地上刷的字 | 集锦里本来就有，只是要用眼睛读 |
+
+⚠️ **接口没有某一栏，恰恰说明该去翻编辑稿**——不是说明这个数不存在。
+数据商按自己的字段表供数，赛事方按故事写稿，两边覆盖的东西根本不是一套。
+
+⚠️ **更坏的不是查不到，是「查不到之后自己把主题改了」。** 账号所有者给的是
+**切入角度**，不是一条可选的素材。角度拿不到料，正确动作是**继续找**并如实说
+卡在哪儿，不是换一个我找得到的角度交差——那等于替他改了选题。
+
+**WTA 这条路以后直接用**（这次挖出来的，省得重找）：
+
+    赛事 id     GET api.wtatennis.com/tennis/tournaments/?from=&to=      → tournamentGroup.id
+    这一场      GET api.wtatennis.com/tennis/tournaments/<id>/<年>/matches?states=C
+                ↑ 里面有 MatchID、SeedA/SeedB、ResultString、MatchTimeTotal
+    官方统计    GET api.wtatennis.com/tennis/tournaments/<id>/<年>/matches/<MatchID>/stats
+                ↑ setnum 0=全场 1/2/3=分盘；有 Ace/双误/一二发/破发点，**没有 UE/Winner**
+    编辑稿      GET www.wtatennis.com/tournament/<id>/<城市>/<年>/scores/<MatchID>
+                ↑ **这一页的 HTML 里挂着这场的赛后稿链接**，UE/Winner 在那儿
+
+⚠️ **`tournamentGroup.name` 和 `city` 会打架**：多伦多这站 name 写着 `MONTREAL`、
+city 写着 `TORONTO`（flashscore 也是 Toronto，tennisabstract 标 Montreal）。
+**印城市以 `city` 为准。**
+
+⚠️ **SofaScore 在这台沙箱恒 403**（`api.` 和 `www.` 两个入口都试过，带 Referer
+也一样），别再把它排进候选。
+
 ### 「排除了 A 和 B」不等于「就是 C」
 
 上一条的近亲，而且更能骗过自己。2026-08-03 抽帧连着两趟全红，八档 client 一律
@@ -507,6 +560,26 @@ spec 才没丢——但它后来过时了，所以**写进去还要记得改**�
 - `tools/check_explainer_voice.py` —— 这条片子到底是谁配的音。读成片旁边的
   `narration.json`（`generate_explainer_video` 落的），不靠「工作流传了什么参数」推。
 - `tools/render_explainer_local.py` —— 本地渲六屏出来**亲眼看**，`--jpeg` 顺手压小图。
+
+#### 三个当场骗过我的变种（2026-08-06 同一条片子上）
+
+**① 「三个变体的文件大小完全相同」＝ 根本没重渲。** 本地比封面 `focus` 三档时，
+我循环里渲完就 `cp poster.jpg`——而 `render_cover_local.py` 写的是
+**`poster_local.jpg`**，`poster.jpg` 是 runner 那趟留下的旧文件。三次复制到的
+是同一个文件，字节数一模一样（273921）。**判据不是「命令跑完了」，是「产物变了没有」**
+——三个数一样就该立刻停下来查，而不是打开图去比「哪版好看」。
+
+**② `list_workflow_runs` 按 `status` 过滤会撞 queued→in_progress 的空档。**
+刚 dispatch 完查 `status=queued` 和 `status=in_progress` **都返回 0**，看起来像
+「没跑起来」。不带过滤查才看见它在 `in_progress`。⚠️ 这跟「204 是信号，运行记录
+才是产物」是一家的，但**处置相反**：「查不到」不许当成「没跑起来」去重发——
+`concurrency` 按 slug 分组且 `cancel-in-progress`，重发会把正在跑的那趟掐掉。
+
+**③ 一条命令报了错，后面两条却都「成功」了。** 同步分支时
+`git rebase origin/main` 报 `Could not apply ...`，而紧跟着的 `git log` 和
+`git push` 都返回 0——看起来像已经对齐了。真查：`.git/rebase-merge` 还在，
+两个 spec 文件挂着 `AA` 冲突。**同一轮里两个信号打架时，一律去查状态本身**
+（`git status` / `test -d .git/rebase-merge`），别拿后一条命令的退出码去追认前一条。
 
 **「已推送」要等第 12 步返回，不是触发的时候说。** 触发只是把 run 排进队列——合成旁白、
 渲卡、ffmpeg 拼片要跑六分钟，PushPlus 是**最后一步**。有一次我在触发的同时说「推送已发出」，
@@ -1765,6 +1838,32 @@ CLAUDE.md，之后每个人都拿它当判据。
 
 **只有三件事非 runner 不可：下源片、抓新帧、出成片。** 其余全在本地，
 而这三件事在一条顺利的片子上各只发生一次。
+
+##### ⭐ 全量测试要排在 `mode=render` **之前**，不是和它并行
+
+2026-08-06 兹维列夫那条渲了**三趟**，前两趟全是白烧：
+
+| | 为什么废 | 本可以怎么发现 |
+|---|---|---|
+| render ① | 旁白里「最后十分」会被读成「最后十分钟」 | `test_旁白里的分不许读成分钟` **只吃 `specs/`，0.2 秒出结果** |
+| render ② | 装 Chromium 撞 dpkg 锁 | 环境问题，躲不掉 |
+| render ③ | ✅ | |
+
+**①那趟的账是实的**：5 分钟 runner ＋ 一个 65 MB 的死 blob 永久留在 git 历史里。
+而抓到它的那条测试跟 render **同时**发出去的——我图快并行，结果测试红的时候
+render 已经在编码了。
+
+⚠️ `--dry-run` 查的是**这一条 spec 的形状**，全量测试查的是**这一条 spec 有没有
+违反攒下来的规矩**（措辞、译名、轮次叫法、「分」的歧义……）。**两者不能互相替代**，
+而后者同样是秒级、同样只读 `specs/`。所以顺序是：
+
+    写完 spec → --dry-run（0.2s）→ **全量测试（3 分钟，可后台）** → 本地看画面
+              → 本地看封面 → **绿了才发 mode=render**
+
+⚠️ **改一个字也要重来一遍。** 同一天封面文案改主题（账号所有者的要求）时
+render ② 正在跑——**改的内容会进成片，那趟就必然作废**。看到「要改」的第一反应
+应该是**先掐掉在跑的 run**，而不是等它跑完再说：`cancel_workflow_run` 一秒钟，
+一趟 render 五分钟。
 
 ### ⚠️ 渲之前**仍然看不见**的，就这几样——别拿本地那几条当渲完了
 
