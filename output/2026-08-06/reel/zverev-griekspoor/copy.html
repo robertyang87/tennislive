@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.6 赛场之上 | 兹维列夫救下盘点还是出局</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>第一盘他救下了那个盘点。然后再没赢下一盘。
+
+⸻
+
+北京时间 8 月 6 日凌晨三点半，蒙特利尔大师赛男单第二轮。世界第三、这一站的头号种子兹维列夫，对世界第 69 的格里克斯普尔。
+
+第一盘打了 58 分钟，一次破发都没有。
+
+五比六，轮到兹维列夫发球。三十比四十——**这一分既是破发点，也是盘点**，输了这一分，这一盘就没了。
+
+他救了下来。平分，占先，保住发球局。抢七七比三，第一盘归他。
+
+⸻
+
+**第二盘只用了 32 分钟。**
+
+开局那一局，格里克斯普尔一口气要到三个破发点，破了。下一个发球局，再破。零比四。
+
+那一盘兹维列夫拿到 14 分，对面 26 分。
+
+⸻
+
+第三盘他一度二比四落后，保发追到三比四。
+
+**然后四比四——他把发球局破回来了。** 这是他全场唯一一次兑现破发点，九个破发点里的那一个。
+
+下一局，他自己的发球局，丢了。四比五。格里克斯普尔上来发球胜赛局，一个赛点，结束。
+
+⸻
+
+数字都指向同一个地方：
+
+二发得分率 41% 对 60%，第三盘更低——**十三个二发，他只赢下三分**。双误四个。
+全场九个破发点他救下五个，可对面只被逼出过**一个**破发点。
+最后十分，他拿到三分。
+
+⸻
+
+另一边，格里克斯普尔今年 30 岁，此前对兹维列夫**四连败**，交手记录 3 胜 9 负。这是他生涯第 8 个前十胜，但只是**第 4 次赢下头号种子**。
+
+⸻
+
+还有一件事发生在同一天：**这一站的 2 号种子阿利亚西姆，在自己首场比赛开赛前两小时因背伤退赛**——蒙特利尔本地人，公开赛年代加拿大人在这站拿到过的最高种子。他说来得很突然，练了两周一点毛病没有，上场试了试，「基本发不了球」。
+
+一天之内，签表最上面那两个人都不在了。一个输掉了球，一个一球没打。
+
+⸻
+
+救下盘点的那一刻，和最后十分只拿三分的那一刻，中间隔了两个半小时。你觉得是哪一分把他打垮的？
+
+#兹维列夫 #格里克斯普尔 #蒙特利尔大师赛 #ATP #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
