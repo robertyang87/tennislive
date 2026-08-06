@@ -39,7 +39,7 @@
   ],
   "transcript_disagree_ok": {
     "rate": 0.18,
-    "why": "原字幕和人工校正内容不变；交叉复核改用 medium.en，避免 small.en 在体育场噪声、菲律宾语互动和现场欢呼中出现整段漏听或频道口播幻觉。正式字幕仍以人工核对后的 en_fixed 与 YouTube 原字幕为准。"
+    "why": "这条场上采访前半段音量低，默认 VAD 会把 53–72 秒的英文问答误判成无语音；关闭 VAD 后再用 medium.en 完整复核全段。正式字幕仍以人工确认后的 en_fixed 与 YouTube 原字幕为准。"
   },
   "caption_gaps_ok": {
     "50.0-53.3": "采访第一句前的现场过渡和无对白停顿，不是漏掉的英文对白，保留原声不加字幕。",
@@ -54,5 +54,6 @@
     "summary": "伊埃拉六连胜",
     "lead": "2026 多伦多 WTA1000 第二轮，伊埃拉 6-1 4-6 6-2 战胜帕克斯。赛后场上采访，中英双语字幕。"
   },
-  "whisper_model": "medium.en"
+  "whisper_model": "medium.en",
+  "whisper_vad_filter": false
 }
