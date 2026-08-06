@@ -46,14 +46,26 @@
       {
         "name": "伊埃拉",
         "country": "PHI",
-        "rank": 25
+        "rank": 25,
+        "name_en": "A. EALA"
       },
       {
         "name": "帕克斯",
         "country": "USA",
-        "rank": 71
+        "rank": 71,
+        "name_en": "A. PARKS"
       }
     ],
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches",
+        "match_id": "LS049",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/806/montreal/2026/scores/LS049"
+      }
+    },
     "portrait": {
       "frame_at": 280.4,
       "focus": 0.5,

@@ -153,7 +153,6 @@ _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
 # 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
 # 则恢复原来的完整画面，不把「关注网球时差」和比赛信息混在一起。
 TOPBAR_H = 150
-TOPBAR_BODY_H = VIDEO_H - TOPBAR_H
 TOPBAR_HEAD_FONT = "得意黑"          # 和封面 storytitle 同一支标题字体
 TOPBAR_BODY_FONT = "Noto Sans CJK SC"  # 第二行只负责清楚读信息
 TOPBAR_HEAD_SIZE = 54
@@ -3850,8 +3849,9 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
     """给比赛画面加画外顶栏，保留封面和品牌片尾的原始版式。
 
     `silent` 的时间轴是：封面 → 比赛段落 → 片尾。只变换中间这一段：
-    3:4 比赛画面缩进一个 1290px 高的内容区，两侧用同帧模糊垫底；顶部 150px
-    是独立信息带。片尾单独原样拼回去，所以「关注网球时差」不会有顶栏。
+    比赛画面先裁切成满屏 1080×1440，顶栏作为半透明覆盖层压在最上方；
+    不能把比赛画面缩进 1290px 内容区，否则四周会露出空边。片尾单独原样拼回去，
+    所以「关注网球时差」不会有顶栏。
     """
     match_end = cover_secs + segments_secs
     fontsdir = _escape(Path(__file__).resolve().parents[1] / "assets" / "fonts")
@@ -3862,12 +3862,9 @@ def topbar_filtergraph(cover_secs: float, segments_secs: float,
         f"[cover_src]trim=start=0:end={cover_secs:.3f},"
         "setpts=PTS-STARTPTS[cover];"
         f"[match_src]trim=start={cover_secs:.3f}:end={match_end:.3f},"
-        "setpts=PTS-STARTPTS,split=2[match_bg_src][match_fg_src];"
-        f"[match_bg_src]scale={VIDEO_W}:{VIDEO_H}:"
-        "force_original_aspect_ratio=increase,crop="
-        f"{VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.18[match_bg];"
-        f"[match_fg_src]scale=-2:{TOPBAR_BODY_H}:flags=lanczos,setsar=1[match_fg];"
-        f"[match_bg][match_fg]overlay=(W-w)/2:{TOPBAR_H}:shortest=1,"
+        "setpts=PTS-STARTPTS,"
+        f"scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+        f"crop={VIDEO_W}:{VIDEO_H},"
         f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
         "setsar=1[match_canvas];"
         f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
