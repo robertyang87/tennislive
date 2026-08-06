@@ -4514,6 +4514,55 @@ def test_探代理CA不许把CLI带崩(monkeypatch):
         "它排在 main() 第一行，抛一次就是所有 CLI 调用全崩")
 
 
+def test_挂CA那句话不许替合语音打包票(monkeypatch, capsys, tmp_path):
+    """**它挂的是证书链，不是「本地能合语音」。这两件事会分叉。**
+
+    原来那句是 `挂上代理 CA…；本地也能合语音了`。2026-08-06 实测它是假的：
+
+        can_verify()      → (True, '握手通过')          ← 证书链这一关过了
+        --check-narration → WSServerHandshakeError: 403 ← 应用层把 WSS 端点挡了
+
+    也就是**代理放行 TLS、拦住那个 WebSocket**，跟证书一点关系没有。而那句话
+    印在每一次 CLI 调用的第一行，下一个人看见它就不会再去跑 `mode=narration`
+    ——CLAUDE.md 里「没量过的推断写进文档，之后每个人都拿它当判据」栽过一次，
+    这是同一个形状搬进了 stdout。
+
+    所以判据只有一条、而且很窄：**这句话只许说它自己做完的那一步**。
+    它一个 `edge_tts` 都没 import，凭什么替 TTS 打包票。
+    """
+    import certifi  # noqa: PLC0415
+
+    from tennislive import localca  # noqa: PLC0415
+
+    ca = tmp_path / "proxy.crt"
+    ca.write_text("-----BEGIN CERTIFICATE-----\nZmFrZQ==\n-----END CERTIFICATE-----\n")
+    # ⚠️ `trust_local_proxy_ca` 把 `certifi.where` **永久**指到自己的缓存上，
+    #    而上一条测试指的是它那个 tmp_path——那个目录跑完就没了。同进程里的下一条
+    #    于是死在 `FileNotFoundError`，看起来像本条测试写错了。喂一份自己的根证书。
+    root = tmp_path / "roots.pem"
+    root.write_text("-----BEGIN CERTIFICATE-----\ncm9vdA==\n-----END CERTIFICATE-----\n")
+    monkeypatch.setattr(certifi, "where", lambda: str(root))
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
+    monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
+    capsys.readouterr()
+    localca.trust_local_proxy_ca()
+    banner = capsys.readouterr().out
+
+    assert str(ca) in banner and str(tmp_path / "bundle.pem") in banner, (
+        "得说清楚挂的是哪张、写到哪儿了——不然出问题时无从查起")
+    # ⚠️ **先把两个路径抠掉再扫。** `tmp_path` 里带着这条测试自己的名字，
+    #    而名字里就有「合语音」三个字——直接扫整句话，判据会被自己的名字误伤。
+    #    CLAUDE.md 里「判据扫得太宽，被自己的注释误伤」的又一个实例，只不过
+    #    这次伤它的是 pytest 拿函数名拼出来的目录。
+    said = banner.replace(str(ca), "").replace(str(localca._CACHE), "")
+    # 这个模块碰不到 TTS，就不许在这一行里提它。
+    for claim in ("合语音", "语音", "旁白", "TTS", "narration"):
+        assert claim not in said, (
+            f"这句话替「{claim}」打了包票，而这个模块只动证书链——"
+            "证书链通了、WSS 端点被 403 挡住的情况实测存在（2026-08-06）")
+
+
 def test_旁白超长的闸排在分段编码之前():
     """**撞一次这道闸，白编 50–60 秒。**
 
