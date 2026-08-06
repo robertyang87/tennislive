@@ -1190,7 +1190,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
 
     model = WhisperModel(spec.get("whisper_model", "small.en"), compute_type="int8")
     segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
-                               vad_filter=True)
+                               vad_filter=spec.get("whisper_vad_filter", True))
     mine = [(w.start, w.word.strip()) for s in segs for w in (s.words or [])
             if spec["start"] <= w.start <= spec["end"]]
     (outdir / "whisper.json").write_text(
