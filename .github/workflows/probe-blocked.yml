@@ -104,13 +104,13 @@ jobs:
           # `-f` 扫整条命令行；这个循环跑在 bash 里，名字对不上 apt-get/dpkg，
           # 不会把自己数进去。也不用 fuser/lsof——runner 上不保证装着。
           pw_wait_apt() {
-            for _ in $(seq 1 12); do
+            for _ in $(seq 1 22); do
               if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
                 return 0
               fi
               sleep 5
             done
-            echo "::warning::等了 60 秒 dpkg 锁还没松开，硬着头皮再试一次"
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
           }
           pw_retry() {
             for i in 1 2; do

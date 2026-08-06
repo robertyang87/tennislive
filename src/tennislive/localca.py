@@ -26,6 +26,12 @@ CLAUDE.md 里「为什么不在本地跑」一直写着两条：YouTube 挡机�
   而消失的样子是「今天怎么又不通了」
 - **在 runner 上是个 no-op，而且不出声。** 那儿没有这个 CA 文件，也不需要。
   恒真的告警会把真正该看见的那次淹掉
+- ⚠️ **它不保证合得了语音。** 2026-08-06 实测：证书链通了（`can_verify()` 报
+  「握手通过」），`--check-narration` 仍然报
+  `WSServerHandshakeError: 403, 'Invalid response status'`——**代理在应用层把
+  那个 WSS 端点挡了**，和证书没关系。上面那段「挂上去当场就通了」是
+  2026-08-05 那天的实测，**它过期了**；这一节留着是因为病因和判据还成立。
+  跑不了就退回 runner 的 `mode=narration`（1 分半，不碰源片也不写产物）
 """
 
 from __future__ import annotations
@@ -108,7 +114,10 @@ def trust_local_proxy_ca(*, verbose: bool = True) -> str | None:
     certifi.where = lambda: str(_CACHE)   # type: ignore[assignment]
 
     if verbose:
-        print(f"[出网] 挂上代理 CA（{ca}）→ {_CACHE}；本地也能合语音了")
+        # ⚠️ **只说这一步真做完的事：证书链。** 原来这里写的是「本地也能合语音了」
+        # ——那是一个这个模块**验证不了**的承诺，而 2026-08-06 它就是假的：
+        # 证书链通了，edge-tts 的 WSS 端点照样 403（见 `can_verify` 的告示）。
+        print(f"[出网] 挂上代理 CA（{ca}）→ {_CACHE}；证书链这一关过了")
     _done = str(_CACHE)
     return _done
 
@@ -118,6 +127,16 @@ def can_verify(host: str = "speech.platform.bing.com") -> tuple[bool, str]:
 
     「设了环境变量」是信号，「TLS 握得上」才是产物——而这两件事分叉的时候
     （CA 过期、代理换了证书）没有任何东西会报错，只有下一次合语音会炸。
+
+    ⚠️ **它量的是证书链，不是「合得了语音」。这两件事 2026-08-06 就分叉了**：
+
+        can_verify()  → (True, '握手通过')
+        --check-narration → WSServerHandshakeError: 403, 'Invalid response status'
+                            wss://speech.platform.bing.com/.../edge/v1?...
+
+    也就是 TLS 这一层通了，**代理在应用层把这个 WSS 端点挡了**。所以这个模块
+    只负责证书链那一关；`--check-narration` 在这台沙箱上能不能跑，**要跑一次
+    才知道**，跑不了就退回 runner 的 `mode=narration`（1 分半）。
     """
     import socket  # noqa: PLC0415
 

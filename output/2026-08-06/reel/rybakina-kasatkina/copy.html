@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.6 赛场之上 | 莱巴金娜58制胜分58失误</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>五十八个制胜分，五十八个非受迫失误。出自同一双手。
+
+⸻
+
+北京时间 8 月 6 日凌晨零点四十，多伦多 WTA1000 女单第二轮。二号种子、世界第 2 的莱巴金娜，对世界第 61 的卡萨金娜。
+
+**开局，她连中六个制胜分。**
+
+第一盘六比三，干净利落。
+
+⸻
+
+然后这场球开始朝两个方向同时跑。
+
+**全场 58 个制胜分，其中 15 个是 Ace。**
+**同一场球，58 个非受迫失误，其中 16 个是双误。**
+
+这两个数一模一样。WTA 官方赛后稿的标题就是这么写的：「58 winners, 58 errors」。
+
+⸻
+
+**第二盘一路咬到四比四。五比六轮到她发球保盘，她连续两个双误，把这一盘送了出去。** 五比七。这一盘她一共双误七次，是三盘里最多的一盘。
+
+决胜盘两个人谁也没能拉开。
+
+**五比四，轮到她发球胜赛局——这一局她又双误三次，被追到破发点。**
+
+第一个赛点没拿下。第二个，她才把这场球收住。
+
+两小时三十三分。
+
+⸻
+
+她自己在发布会上说的是发球：
+
+&gt; 「我想看到更好的发球，那个成功率。今天在关键分上它管用了，但成功率还是偏低。发球本来是我的优势，它运作起来的时候，人会更有底气。」
+
+她把原因归给了动作、腿、还有场地条件：「有点什么都沾一点。就是动作本身，找到那个正确的轨迹。还有抛球——刮风的时候你要去适应，太阳晃眼也一样。」
+
+⸻
+
+另一边的卡萨金娜也值得说一句。
+
+她现在世界第 61，而生涯最高是 2022 年的第 8，中间因为髋伤缺席过两个月。这一站首轮，她从 6-1、4-1 落后的坑里爬出来，1-6 7-6(5) 7-5 逆转了王欣瑜。
+
+对莱巴金娜她六次交手赢过两次。真正接近的那一次是 2023 年蒙特利尔 1/4 决赛——那场莱巴金娜救了赛点才 5-7 7-5 7-6(8) 过关。
+
+赢下这一场，会是卡萨金娜自 2025 年法网胜巴多萨之后的第一个前十胜。她差了一点。
+
+⸻
+
+莱巴金娜下一轮对 28 号种子李吉妮。
+
+五十八个制胜分和五十八个失误，出自同一双手。你会怎么形容这场球？
+
+#莱巴金娜 #卡萨金娜 #WTA #多伦多 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>

@@ -4244,6 +4244,53 @@ def test_装Chromium重试之前要等dpkg锁():
         f"只扫到 {len(checked)} 条工作流装 Chromium，判据的主语像是没了")
 
 
+def test_等dpkg锁的预算够长又不许撑爆步骤预算():
+    """⚠️ **等 60 秒不够。** 2026-08-06 run 31058902174：
+
+        00:15:55  装 Chromium 开跑（--with-deps 去下 21 MB 字体包）
+        00:17:39  fonts-freefont-ttf 5.6 MB —— 一个包花了 74 秒，镜像在爬
+        00:19:55  第 1 次没跑完          ← 240 秒被杀，派生的 apt-get 活着
+        00:20:19  fonts-wqy-zenhei 7.5 MB 还在下   ← **孤儿进程仍在推进**
+        00:20:55  等了 60 秒还没松开，硬着头皮再试
+        00:20:57  E: Could not get lock ... held by process 4342 (apt-get)
+        00:21:57  装 Chromium 两次都没成功
+
+    上一条判据（重试之前要等锁）当时**是绿的**——等是等了，只是**等得不够长**。
+    而孤儿不是挂死，是在慢慢下载：多等一会儿它自己就松手了，
+    「硬着头皮再试」等于把仅剩的那次尝试扔进一个必然失败的口。
+
+    ⚠️ **上界同样要钉**：步骤 `timeout-minutes: 10`，两次安装各 240 秒，
+    留给等待的只有 120 秒。等待写过头，第 2 次会在**眼看要成的时候**被步骤
+    预算掐掉——那和「装不上」长得一模一样（工作流注释里记着这条）。
+
+    所以这条钉的是 **110 ≤ 等待预算 ≤ 120**，两头都不许被人单方面改动。
+    """
+    import re as _re  # noqa: PLC0415
+
+    INSTALL_TIMEOUT, ATTEMPTS, STEP_BUDGET = 240, 2, 10 * 60
+    checked = {}
+    for path in sorted(WORKFLOW.parent.glob("*.yml")):
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines()
+                 if not ln.lstrip().startswith("#")]
+        body = "\n".join(lines)
+        if "pw_wait_apt" not in body:
+            continue
+        loop = _re.search(r"pw_wait_apt\(\)\s*\{.*?for _ in \$\(seq 1 (\d+)\).*?"
+                          r"sleep (\d+)", body, _re.S)
+        assert loop, f"{path.name} 的 pw_wait_apt 形状变了，判据的主语没了"
+        budget = int(loop.group(1)) * int(loop.group(2))
+        checked[path.name] = budget
+        assert budget >= 110, (
+            f"{path.name} 等 dpkg 锁只等 {budget} 秒——60 秒那一版实测不够："
+            "被超时杀掉的 apt-get 还在慢慢下包，重试会在两秒内撞锁（run 31058902174）")
+        assert INSTALL_TIMEOUT * ATTEMPTS + budget <= STEP_BUDGET, (
+            f"{path.name} 等 {budget} 秒 + {ATTEMPTS}×{INSTALL_TIMEOUT} 秒安装 "
+            f"＞ 步骤预算 {STEP_BUDGET} 秒——第 2 次会在眼看要成的时候被掐掉，"
+            "而那和「装不上」长得一模一样")
+    assert len(checked) >= 6, (
+        f"只扫到 {len(checked)} 条工作流有 pw_wait_apt，判据的主语像是没了")
+
+
 def test_Chromium缓存都要有restore_keys():
     """键钉在整份 `pyproject.toml` 上太宽，**加一个依赖就把六条线的缓存全废掉**。
 
@@ -4465,6 +4512,55 @@ def test_探代理CA不许把CLI带崩(monkeypatch):
     assert localca.trust_local_proxy_ca() is None, (
         "探不到就该当成「这台机器没有」，不许把异常抛给调用方——"
         "它排在 main() 第一行，抛一次就是所有 CLI 调用全崩")
+
+
+def test_挂CA那句话不许替合语音打包票(monkeypatch, capsys, tmp_path):
+    """**它挂的是证书链，不是「本地能合语音」。这两件事会分叉。**
+
+    原来那句是 `挂上代理 CA…；本地也能合语音了`。2026-08-06 实测它是假的：
+
+        can_verify()      → (True, '握手通过')          ← 证书链这一关过了
+        --check-narration → WSServerHandshakeError: 403 ← 应用层把 WSS 端点挡了
+
+    也就是**代理放行 TLS、拦住那个 WebSocket**，跟证书一点关系没有。而那句话
+    印在每一次 CLI 调用的第一行，下一个人看见它就不会再去跑 `mode=narration`
+    ——CLAUDE.md 里「没量过的推断写进文档，之后每个人都拿它当判据」栽过一次，
+    这是同一个形状搬进了 stdout。
+
+    所以判据只有一条、而且很窄：**这句话只许说它自己做完的那一步**。
+    它一个 `edge_tts` 都没 import，凭什么替 TTS 打包票。
+    """
+    import certifi  # noqa: PLC0415
+
+    from tennislive import localca  # noqa: PLC0415
+
+    ca = tmp_path / "proxy.crt"
+    ca.write_text("-----BEGIN CERTIFICATE-----\nZmFrZQ==\n-----END CERTIFICATE-----\n")
+    # ⚠️ `trust_local_proxy_ca` 把 `certifi.where` **永久**指到自己的缓存上，
+    #    而上一条测试指的是它那个 tmp_path——那个目录跑完就没了。同进程里的下一条
+    #    于是死在 `FileNotFoundError`，看起来像本条测试写错了。喂一份自己的根证书。
+    root = tmp_path / "roots.pem"
+    root.write_text("-----BEGIN CERTIFICATE-----\ncm9vdA==\n-----END CERTIFICATE-----\n")
+    monkeypatch.setattr(certifi, "where", lambda: str(root))
+    monkeypatch.setattr(localca, "_done", None)
+    monkeypatch.setattr(localca, "_CACHE", tmp_path / "bundle.pem")
+    monkeypatch.setenv("TENNISLIVE_EXTRA_CA", str(ca))
+    capsys.readouterr()
+    localca.trust_local_proxy_ca()
+    banner = capsys.readouterr().out
+
+    assert str(ca) in banner and str(tmp_path / "bundle.pem") in banner, (
+        "得说清楚挂的是哪张、写到哪儿了——不然出问题时无从查起")
+    # ⚠️ **先把两个路径抠掉再扫。** `tmp_path` 里带着这条测试自己的名字，
+    #    而名字里就有「合语音」三个字——直接扫整句话，判据会被自己的名字误伤。
+    #    CLAUDE.md 里「判据扫得太宽，被自己的注释误伤」的又一个实例，只不过
+    #    这次伤它的是 pytest 拿函数名拼出来的目录。
+    said = banner.replace(str(ca), "").replace(str(localca._CACHE), "")
+    # 这个模块碰不到 TTS，就不许在这一行里提它。
+    for claim in ("合语音", "语音", "旁白", "TTS", "narration"):
+        assert claim not in said, (
+            f"这句话替「{claim}」打了包票，而这个模块只动证书链——"
+            "证书链通了、WSS 端点被 403 挡住的情况实测存在（2026-08-06）")
 
 
 def test_旁白超长的闸排在分段编码之前():
@@ -4993,6 +5089,66 @@ def test_轮次要写半决赛不写四强():
         "改成 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」。")
     # **清单只许减不许加**：修好一个就从上面删掉一个，别让它变成一张许可证
     assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
+
+
+#: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」
+#: 「**保证以后正常就行**」——微信那条消息收不回来，不为一个动词重渲。
+#: **只许减不许加**，而且下面有自检：写错一个名字，豁免就成了一盏恒真的绿灯。
+_LEGACY_YAODAO = {"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"}
+
+
+def test_破发点盘点赛点一律写拿到不写要到():
+    """账号所有者 2026-08-06：「**以后不要用「要到」，都用「拿到」**」。
+
+    这是同一条规矩的第二次。第一次是 shang-rublev 那条被读者当众吐槽
+    （「什么叫 三个盘点都没救下来」），当时账号所有者的原话就是「改成卢布列夫
+    **拿到**三个盘点」——我改了那一条，**没把它变成规矩**，于是 zverev-griekspoor
+    又写了一次「一口气要到三个破发点」。CLAUDE.md 里「规矩要落成测试，别只写在
+    文档里」说的正是这个。
+
+    ⚠️ **判据只认「点」那个语义，不禁「要到」这个词。** 中文里
+    「巡回赛这条线**要到** 2033 年才走完」「**要到** 9-7 必经 7-7」都是对的，
+    那是「直到／需要达到」，跟破发点没关系。扫得宽一点就会把这些一起判红——
+    「判据宁可窄，不可宽」这个仓库犯过五次。
+
+    ⚠️ 和上面那条一样**只查会发出去的字段**：`_why` / `_facts` 里正引着账号
+    所有者这句原话和当年那个错写法，连注解一起扫就是把「记下来」判成「又犯了」。
+    """
+    import re  # noqa: PLC0415
+
+    # 「要到」和「点」之间最多隔一个数量词（「三个」「一口气三个」），再远就
+    # 多半不是同一件事了。
+    bad = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
+
+    def outward(spec: dict):
+        for seg in spec.get("segments") or []:
+            yield seg.get("narration", "")
+        for key, value in (spec.get("cover") or {}).items():
+            if key.startswith("_") or not isinstance(value, str):
+                continue
+            yield value
+        for key, value in (spec.get("push") or {}).items():
+            if not key.startswith("_") and isinstance(value, str):
+                yield value
+
+    offenders = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_YAODAO}
+    assert not fresh, (
+        f"这几处还在写「要到」：{fresh}。破发点／盘点／赛点一律写「拿到」。")
+    # **豁免表要自证它豁免的是真的**：名字写错的话它什么也没拦，而测试照样绿。
+    assert set(_LEGACY_YAODAO) <= set(offenders), (
+        f"豁免表里这几条已经不含「要到…点」了，删掉：{set(_LEGACY_YAODAO) - set(offenders)}")
 
 
 def test_重放不许把已经删掉的成片救活():
