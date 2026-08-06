@@ -148,6 +148,20 @@ VIDEO_H = CARD_H                    # 1080 宽下 3:4 的高 = 1440
 # 卡底（1680）往上 156px。这里整幅画布就是那张卡，所以同样是「卡底往上 156」，
 # 换算过来是 1440-156=1284。**保的是同一个物理位置**——量出来的那组数没变。
 _REEL_MARGIN_V = VIDEO_H - (CARD_TOP + CARD_H - _ASS_MARGIN_V)
+
+# 可选的比赛信息顶栏。它只给「赛场之上」需要持续交代比赛背景的片子启用：
+# 封面仍然完整铺满，比赛画面从封面之后开始放进这个独立的信息带，片尾品牌页
+# 则恢复原来的完整画面，不把「关注网球时差」和比赛信息混在一起。
+TOPBAR_H = 150
+TOPBAR_BODY_H = VIDEO_H - TOPBAR_H
+TOPBAR_HEAD_FONT = "得意黑"          # 和封面 storytitle 同一支标题字体
+TOPBAR_BODY_FONT = "Noto Sans CJK SC"  # 第二行只负责清楚读信息
+TOPBAR_HEAD_SIZE = 54
+TOPBAR_BODY_SIZE = 38
+TOPBAR_HEAD_TOP = 24
+TOPBAR_BODY_TOP = 92
+TOPBAR_MARGIN_H = 48
+
 # **源片自己烧了记分条时，字幕要让开它。**
 #
 # 以前没撞过是因为运气：16:9 的转播源片把记分条放在左下，而 3:4 的窗口只取中间
@@ -1420,7 +1434,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
-             "subtitle_top"),
+             "subtitle_top", "topbar", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scrim", "split", "sub", "subject", "tier", "topic",
@@ -3211,6 +3225,10 @@ def validate_spec(spec: dict) -> list[Segment]:
     - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
       别塞进来假装也提前了。
     """
+    # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
+    # 不要等到六分钟渲染完才发现两行文字没读到。
+    topbar = _topbar_lines(spec)
+    _validate_editorial_contract(spec, required=topbar is not None)
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
@@ -3610,13 +3628,25 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                 "-ar", AUDIO_RATE, str(mixed))
 
     final = outdir / f"{spec.get('slug', 'reel')}.mp4"
+    topbar = _topbar_lines(spec)
+    topbar_ass = None
+    if topbar:
+        match_end = cover_secs + sum(s.length for s in segments)
+        topbar_ass = write_topbar_ass(
+            topbar, cover_secs, match_end, outdir / "topbar.ass")
+        print(f"顶栏 {topbar_ass.name}：封面后 {cover_secs:.2f}s 起，"
+              f"比赛画面结束 {match_end:.2f}s 止；片尾不挂顶栏")
     # 成片这一步的画质**不降**：preset slow / crf 18 原样保留。省时间要从
     # 中间产物和重复解码上省，不能从最后交出去的这一份上省。
     with stage("烧字幕+成片"):
+        video_args = (["-filter_complex", topbar_filtergraph(
+            cover_secs, sum(s.length for s in segments), topbar_ass, ass),
+                       "-map", "[out]"] if topbar_ass else
+                      ["-vf", f"subtitles={_escape(ass)}",
+                       "-map", "0:v:0"])
         run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
-            "-i", str(silent), "-i", str(mixed),
-            "-vf", f"subtitles={_escape(ass)}",
-            "-map", "0:v:0", "-map", "1:a:0",
+            "-i", str(silent), "-i", str(mixed), *video_args,
+            "-map", "1:a:0",
             "-c:v", "libx264", "-preset", FINAL_PRESET, "-crf", FINAL_CRF,
             "-pix_fmt", "yuv420p",
             "-c:a", "copy", "-movflags", "+faststart", str(final))
@@ -3645,6 +3675,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
         # 检查和没有检查是同一个毛病。
         "outro_seconds": round(outro_secs, 3),
         "segments_seconds": round(sum(s.length for s in segments), 3),
+        "topbar": ({"line1": topbar[0], "line2": topbar[1],
+                    "start": round(cover_secs, 3),
+                    "end": round(cover_secs + sum(s.length for s in segments), 3)}
+                   if topbar else None),
         "film_seconds": round(probe_duration(final), 3),
         "narration_voice": voice,
         "narration_rate": rate,
@@ -3666,6 +3700,181 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
 
 def _escape(path: Path) -> str:
     return str(path).replace("\\", "/").replace(":", r"\:").replace("'", r"\'")
+
+
+def _ass_timestamp(seconds: float) -> str:
+    """ASS 的 H:MM:SS.cc 时间格式。"""
+    seconds = max(0.0, float(seconds))
+    hours = int(seconds // 3600)
+    minutes = int(seconds % 3600 // 60)
+    return f"{hours}:{minutes:02d}:{seconds % 60:05.2f}"
+
+
+def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
+    """校验整改期新片是否认领了「原创复盘」的内容合同。
+
+    这不是用字段证明一条片子一定原创，也不承诺平台流量；它只把最容易被
+    忘掉的编辑前置工作变成渲染前就会失败的结构：一个复盘问题、一条中心
+    论点，以及至少三个按比赛走势排列的证据节点。带比赛顶栏的新 spec
+    必须填写这份合同，避免顶栏和纯比分流水账重新绑在一起。
+    """
+    raw = spec.get("editorial")
+    if raw is None:
+        if required:
+            raise ReelError(
+                "整改期带顶栏的赛场之上 spec 必须填写 editorial："
+                "mode、question、thesis、beats")
+        return
+    if not isinstance(raw, dict):
+        raise ReelError("spec.editorial 必须是对象")
+    mode = str(raw.get("mode", "")).strip()
+    question = str(raw.get("question", "")).strip()
+    thesis = str(raw.get("thesis", "")).strip()
+    beats = raw.get("beats")
+    if mode != "match_review":
+        raise ReelError("spec.editorial.mode 必须是 match_review")
+    if not question or ("?" not in question and "？" not in question):
+        raise ReelError("spec.editorial.question 必须是一个明确的问题")
+    if not thesis:
+        raise ReelError("spec.editorial.thesis 不能为空")
+    if not isinstance(beats, list) or len(beats) < 3:
+        raise ReelError("spec.editorial.beats 至少要有三个走势/转折节点")
+    if any(not isinstance(item, str) or not item.strip() for item in beats):
+        raise ReelError("spec.editorial.beats 必须是非空文字列表")
+    context = raw.get("human_context")
+    if required and context is None:
+        raise ReelError(
+            "整改期带顶栏的赛场之上 spec 必须填写 editorial.human_context："
+            "本场切口、事实和来源")
+    if context is None:
+        return
+    if not isinstance(context, dict):
+        raise ReelError("spec.editorial.human_context 必须是对象")
+    angle = str(context.get("angle", "")).strip()
+    facts = context.get("facts")
+    sources = context.get("sources")
+    if not angle:
+        raise ReelError("spec.editorial.human_context.angle 不能为空")
+    if not isinstance(facts, list) or not facts:
+        raise ReelError(
+            "spec.editorial.human_context.facts 至少要有一条本场事实")
+    if any(not isinstance(item, str) or not item.strip() for item in facts):
+        raise ReelError(
+            "spec.editorial.human_context.facts 必须是非空文字列表")
+    if not isinstance(sources, list) or not sources:
+        raise ReelError(
+            "spec.editorial.human_context.sources 至少要有一个来源")
+    if any(not isinstance(item, str) or not item.strip()
+           for item in sources):
+        raise ReelError(
+            "spec.editorial.human_context.sources 必须是非空文字列表")
+    if any(not item.strip().startswith(("http://", "https://"))
+           for item in sources):
+        raise ReelError(
+            "spec.editorial.human_context.sources 必须是 HTTP(S) 链接")
+
+
+def _expected_topbar_score_line(spec: dict) -> str | None:
+    """从封面结构推导顶栏比分行，防止手写第二份赛果后漂移。"""
+    cover = spec.get("cover")
+    if not isinstance(cover, dict):
+        return None
+    winner = str(cover.get("winner", "")).strip()
+    result = str(cover.get("result", "")).strip()
+    matchup = cover.get("matchup")
+    if not winner or not result or not isinstance(matchup, list):
+        return None
+    names = [
+        str(item.get("name", "")).strip()
+        for item in matchup
+        if isinstance(item, dict) and str(item.get("name", "")).strip()
+    ]
+    if len(names) != 2:
+        return None
+    if winner not in names:
+        raise ReelError("cover.winner 不在 cover.matchup 的两位球员中")
+    losers = [name for name in names if name != winner]
+    if len(losers) != 1:
+        raise ReelError("cover.matchup 必须包含两位不同球员，才能生成顶栏比分行")
+    loser = losers[0]
+    return f"{winner} {result} {loser}"
+
+
+def _topbar_lines(spec: dict) -> tuple[str, str] | None:
+    """取可选顶栏的两行，并把空行/隐式折行在渲染前拦住。"""
+    raw = spec.get("topbar")
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        raise ReelError("spec.topbar 必须是对象，包含 line1 和 line2")
+    lines = tuple(str(raw.get(key, "")).strip() for key in ("line1", "line2"))
+    if not all(lines):
+        raise ReelError("spec.topbar 的 line1 / line2 都不能为空")
+    if any("\n" in line or "\r" in line for line in lines):
+        raise ReelError("spec.topbar 每个字段只能是一行；换行由 line1 / line2 表达")
+    expected = _expected_topbar_score_line(spec)
+    if expected and lines[1] != expected:
+        raise ReelError(
+            f"spec.topbar.line2 必须与 cover 的 winner/result/matchup 一致：{expected}")
+    return lines  # type: ignore[return-value]
+
+
+def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
+                     path: Path) -> Path:
+    """写比赛画面专用顶栏：第一行标题体，第二行正常中文体。"""
+    if end <= start:
+        raise ReelError(f"顶栏结束时间 {end:.2f}s 不晚于开始时间 {start:.2f}s")
+    body = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {VIDEO_W}
+PlayResY: {VIDEO_H}
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},HEAD,,0,0,0,,{lines[0]}
+Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{lines[1]}
+"""
+    path.write_text(body, encoding="utf-8")
+    return path
+
+
+def topbar_filtergraph(cover_secs: float, segments_secs: float,
+                       topbar_ass: Path, subtitles_ass: Path) -> str:
+    """给比赛画面加画外顶栏，保留封面和品牌片尾的原始版式。
+
+    `silent` 的时间轴是：封面 → 比赛段落 → 片尾。只变换中间这一段：
+    3:4 比赛画面缩进一个 1290px 高的内容区，两侧用同帧模糊垫底；顶部 150px
+    是独立信息带。片尾单独原样拼回去，所以「关注网球时差」不会有顶栏。
+    """
+    match_end = cover_secs + segments_secs
+    fontsdir = _escape(Path(__file__).resolve().parents[1] / "assets" / "fonts")
+    topbar_path = _escape(topbar_ass)
+    subtitles_path = _escape(subtitles_ass)
+    return (
+        f"[0:v]split=3[cover_src][match_src][outro_src];"
+        f"[cover_src]trim=start=0:end={cover_secs:.3f},"
+        "setpts=PTS-STARTPTS[cover];"
+        f"[match_src]trim=start={cover_secs:.3f}:end={match_end:.3f},"
+        "setpts=PTS-STARTPTS,split=2[match_bg_src][match_fg_src];"
+        f"[match_bg_src]scale={VIDEO_W}:{VIDEO_H}:"
+        "force_original_aspect_ratio=increase,crop="
+        f"{VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.18[match_bg];"
+        f"[match_fg_src]scale=-2:{TOPBAR_BODY_H}:flags=lanczos,setsar=1[match_fg];"
+        f"[match_bg][match_fg]overlay=(W-w)/2:{TOPBAR_H}:shortest=1,"
+        f"drawbox=x=0:y=0:w=iw:h={TOPBAR_H}:color=black@0.45:t=fill,"
+        "setsar=1[match_canvas];"
+        f"[outro_src]trim=start={match_end:.3f},setpts=PTS-STARTPTS[outro];"
+        "[cover][match_canvas][outro]concat=n=3:v=1:a=0,setpts=PTS-STARTPTS[base];"
+        f"[base]subtitles={topbar_path}:fontsdir={fontsdir},"
+        f"subtitles={subtitles_path}:fontsdir={fontsdir}[out]"
+    )
 
 
 def main() -> int:

@@ -6767,6 +6767,52 @@ def test_真字段表要盖住每条spec里出现过的字段():
         assert real, f"{level} 一个字段都没扫到，判据失效了"
 
 
+def test_整改期顶栏要有复盘契约且比分不许漂移():
+    """顶栏继续保留，但不能让它把纯比分流水账包装成复盘。"""
+    import pytest  # noqa: PLC0415
+
+    reel = _reel()
+    spec = _reel_specs()["eala-parks"]
+    reel._validate_editorial_contract(spec, required=True)
+    assert spec["editorial"]["human_context"]["facts"]
+    assert spec["editorial"]["human_context"]["sources"]
+    assert reel._topbar_lines(spec) == (
+        "WTA 1000 加拿大站 第二轮", "伊埃拉 6-1 4-6 6-2 帕克斯")
+
+    bad_score = json.loads(json.dumps(spec))
+    bad_score["topbar"]["line2"] = "帕克斯 6-1 4-6 6-2 伊埃拉"
+    with pytest.raises(reel.ReelError, match="line2"):
+        reel._topbar_lines(bad_score)
+
+    missing_contract = json.loads(json.dumps(spec))
+    del missing_contract["editorial"]
+    with pytest.raises(reel.ReelError, match="editorial"):
+        reel._validate_editorial_contract(missing_contract, required=True)
+
+    missing_context = json.loads(json.dumps(spec))
+    del missing_context["editorial"]["human_context"]
+    with pytest.raises(reel.ReelError, match="human_context"):
+        reel._validate_editorial_contract(missing_context, required=True)
+
+
+def test_顶栏版式用两种字体且只覆盖比赛区(tmp_path):
+    reel = _reel()
+    ass = reel.write_topbar_ass(
+        ("WTA 1000 加拿大站 第二轮", "伊埃拉 6-1 4-6 6-2 帕克斯"),
+        1.2, 51.2, tmp_path / "topbar.ass")
+    text = ass.read_text(encoding="utf-8")
+    assert "Style: HEAD,得意黑,54" in text
+    assert "Style: BODY,Noto Sans CJK SC,38" in text
+    assert "Dialogue: 0,0:00:01.20,0:00:51.20,HEAD" in text
+    assert "Dialogue: 0,0:00:01.20,0:00:51.20,BODY" in text
+
+    graph = reel.topbar_filtergraph(1.2, 50.0, ass, tmp_path / "subtitles.ass")
+    assert "trim=start=0:end=1.200" in graph
+    assert "trim=start=1.200:end=51.200" in graph
+    assert "trim=start=51.200" in graph
+    assert "[cover][match_canvas][outro]concat=n=3" in graph
+
+
 def test_下划线开头的字段名等于没写(tmp_path):
     """`_push` 这种键**整整对了一个月**，因为退路刚好给出了对的答案。
 
