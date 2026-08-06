@@ -5097,6 +5097,50 @@ def test_轮次要写半决赛不写四强():
 _LEGACY_YAODAO = {"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"}
 
 
+def test_小红书正文不许用markdown():
+    """账号所有者 2026-08-06：「**正文里复制的内容，不要用 markdown 格式，复制过去
+    显示会有问题**」。
+
+    `.xhs.txt` 是**给人复制走的纯文本**——复制页那个 `<textarea>` 和微信正文都不过
+    markdown 渲染器。所以 `**加粗**` 粘到小红书里就是**原样的四个星号**，
+    表格那几行竖线更是一堆乱码。
+
+    ⚠️ **这条和「画面上不写标点」是一家的**：都不是排版洁癖，都是「出口不渲染这个
+    记号」。当天扫下来八个文件里有 `**` 共 80 处，还有一处 `>` 引用块。
+
+    ⚠️ **判据只认出口不渲染、粘过去会露出来的那几种记号**：星号、反引号、下划线
+    强调、表格竖线、`# ` 标题、`> ` 引用、`[]()` 链接。**不管 `-` 开头的行**——
+    那粘过去就是一个横杠，读起来正常。判据宁可窄，不可宽。
+
+    ⚠️ tag 行 `#网球时差` 不许误伤：`#` 后面没有空格，和 markdown 的 ATX 标题
+    （`# ` 必须带空格）分得开。反向验证里专门有这一条。
+    """
+    import re  # noqa: PLC0415
+
+    marks = (
+        ("星号（**加粗** / *斜体*）", re.compile(r"\*")),
+        ("反引号", re.compile(r"`")),
+        ("下划线强调 __", re.compile(r"__")),
+        ("表格竖线", re.compile(r"^\s*\|", re.M)),
+        ("# 标题", re.compile(r"^#{1,6}\s", re.M)),
+        ("> 引用", re.compile(r"^>\s", re.M)),
+        ("[]() 链接", re.compile(r"\[[^\]]*\]\([^)]*\)")),
+    )
+
+    offenders, checked = {}, 0
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        checked += 1
+        text = path.read_text(encoding="utf-8")
+        hits = [f"{name}×{len(pat.findall(text))}"
+                for name, pat in marks if pat.search(text)]
+        if hits:
+            offenders[path.name] = hits
+    assert checked >= 15, f"只扫到 {checked} 份文案——目录写错了？"
+    assert not offenders, (
+        f"这几份文案里还有 markdown 记号：{offenders}。"
+        "`.xhs.txt` 是给人复制走的纯文本，出口不渲染 markdown，粘过去会原样露出来。")
+
+
 def test_破发点盘点赛点一律写拿到不写要到():
     """账号所有者 2026-08-06：「**以后不要用「要到」，都用「拿到」**」。
 
