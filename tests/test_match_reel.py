@@ -5091,6 +5091,66 @@ def test_轮次要写半决赛不写四强():
     assert set(offenders) <= _LEGACY_QUALIFIER_NAMES, "清单里有已经修好的条目？"
 
 
+#: 规矩之前就发出去的片子。账号所有者 2026-08-06：「**历史视频就不要那个管了**」
+#: 「**保证以后正常就行**」——微信那条消息收不回来，不为一个动词重渲。
+#: **只许减不许加**，而且下面有自检：写错一个名字，豁免就成了一盏恒真的绿灯。
+_LEGACY_YAODAO = {"zverev-griekspoor.json", "zverev-griekspoor.xhs.txt"}
+
+
+def test_破发点盘点赛点一律写拿到不写要到():
+    """账号所有者 2026-08-06：「**以后不要用「要到」，都用「拿到」**」。
+
+    这是同一条规矩的第二次。第一次是 shang-rublev 那条被读者当众吐槽
+    （「什么叫 三个盘点都没救下来」），当时账号所有者的原话就是「改成卢布列夫
+    **拿到**三个盘点」——我改了那一条，**没把它变成规矩**，于是 zverev-griekspoor
+    又写了一次「一口气要到三个破发点」。CLAUDE.md 里「规矩要落成测试，别只写在
+    文档里」说的正是这个。
+
+    ⚠️ **判据只认「点」那个语义，不禁「要到」这个词。** 中文里
+    「巡回赛这条线**要到** 2033 年才走完」「**要到** 9-7 必经 7-7」都是对的，
+    那是「直到／需要达到」，跟破发点没关系。扫得宽一点就会把这些一起判红——
+    「判据宁可窄，不可宽」这个仓库犯过五次。
+
+    ⚠️ 和上面那条一样**只查会发出去的字段**：`_why` / `_facts` 里正引着账号
+    所有者这句原话和当年那个错写法，连注解一起扫就是把「记下来」判成「又犯了」。
+    """
+    import re  # noqa: PLC0415
+
+    # 「要到」和「点」之间最多隔一个数量词（「三个」「一口气三个」），再远就
+    # 多半不是同一件事了。
+    bad = re.compile(r"要到[^。！？\n]{0,8}?(破发点|盘点|赛点|局点)")
+
+    def outward(spec: dict):
+        for seg in spec.get("segments") or []:
+            yield seg.get("narration", "")
+        for key, value in (spec.get("cover") or {}).items():
+            if key.startswith("_") or not isinstance(value, str):
+                continue
+            yield value
+        for key, value in (spec.get("push") or {}).items():
+            if not key.startswith("_") and isinstance(value, str):
+                yield value
+
+    offenders = {}
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(Path("specs/reels").glob("*.xhs.txt")):
+        hits = sorted({m.group(0)
+                       for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_YAODAO}
+    assert not fresh, (
+        f"这几处还在写「要到」：{fresh}。破发点／盘点／赛点一律写「拿到」。")
+    # **豁免表要自证它豁免的是真的**：名字写错的话它什么也没拦，而测试照样绿。
+    assert set(_LEGACY_YAODAO) <= set(offenders), (
+        f"豁免表里这几条已经不含「要到…点」了，删掉：{set(_LEGACY_YAODAO) - set(offenders)}")
+
+
 def test_重放不许把已经删掉的成片救活():
     """push 撞车之后的重放路径**只加不减**，于是走了 Release、已经 `rm` 掉的
     成片会被 `reset --hard` 从 origin 上放回来，再也删不掉。
