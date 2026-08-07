@@ -1175,6 +1175,83 @@ def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
         assert px[0] > 120, f"这个角 {px} 看着像还留着黑边，画布没有真的变成 3:4"
 
 
+def test_intro_cx显式给定的比例决定哪一段源片落在画面中心(tmp_path):
+    """账号所有者 2026-08-07：「居中啊，和后面视频一样啊」——`crop` 不给
+    `x` 就是缺省居中源片的几何中心，不是画面里那个人。`intro_cx` 是显式
+    给的水平中心（源片宽度的比例，0.5＝几何居中，行为跟改之前一样）。
+
+    造一段源片：蓝色背景配一条窄的洋红竖条，竖条中心精确落在源片 1280 宽
+    的 30%（x=384）处。给 `intro_cx=0.3`，这条竖条应该被钉到输出画面正
+    中心；不给（缺省 0.5，纯几何居中）时，它应该落在输出左侧、明显偏离
+    中心——两者一起验证：给了会真的移动裁切窗口，不给还是老样子。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    s = tmp_path / "s0.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          f"color=c=green:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+    a = tmp_path / "a0.mp3"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          "sine=frequency=440:sample_rate=24000", "-t", "1.0", "-ac", "1", str(a)])
+
+    # 蓝底 + 一条窄的洋红竖条，竖条中心精确落在源片 30% 宽度处（x=384）。
+    intro = tmp_path / "_intro.mp4"
+    _run(["ffmpeg", "-v", "error", "-y",
+          "-f", "lavfi", "-i", "color=c=blue:s=1280x720:r=25",
+          "-f", "lavfi", "-i", "color=c=magenta:s=20x720:r=25",
+          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+          "-filter_complex", "[0:v][1:v]overlay=374:0[v]",
+          "-map", "[v]", "-map", "2:a",
+          "-t", "1.0", "-c:v", "libx264", "-preset", "ultrafast",
+          "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+          str(intro)])
+
+    def _bar_x(out):
+        frame = tmp_path / f"{out.stem}_frame.png"
+        _run(["ffmpeg", "-v", "error", "-y", "-ss", "0.3", "-i", str(out),
+              "-frames:v", "1", str(frame)])
+        im = Image.open(frame).convert("RGB")
+        row = im.size[1] // 2
+        # 沿中间那一行找洋红那道竖条（R、B 都高，G 低）。
+        xs = [x for x in range(im.size[0])
+              if (im.getpixel((x, row))[0] > 150
+                  and im.getpixel((x, row))[2] > 150
+                  and im.getpixel((x, row))[1] < 100)]
+        assert xs, "洋红竖条在这一帧里一个像素都没找到"
+        return sum(xs) / len(xs)
+
+    default_out = E.assemble_explainer_video(
+        [s], [a], tmp_path / "default.mp4", intro=intro, canvas_h=E.CARD_H,
+    )
+    centered_out = E.assemble_explainer_video(
+        [s], [a], tmp_path / "centered.mp4", intro=intro, canvas_h=E.CARD_H,
+        intro_cx=0.3,
+    )
+
+    default_x = _bar_x(default_out)
+    centered_x = _bar_x(centered_out)
+    ow = E.VIDEO_W
+
+    assert abs(centered_x - ow / 2) < 20, (
+        f"intro_cx=0.3 应该把 30% 处的竖条钉到输出中心 {ow / 2}，实测在 {centered_x:.1f}"
+    )
+    assert abs(default_x - ow / 2) > 200, (
+        "默认 cx=0.5 应该是纯几何居中，30% 处的竖条不该落在输出中心附近，"
+        f"实测在 {default_x:.1f}——是不是默认值被意外改动了？"
+    )
+
+
 def test_同一天可以并存多条片子():
     """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 
