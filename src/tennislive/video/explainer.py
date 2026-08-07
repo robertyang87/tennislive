@@ -4317,6 +4317,72 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "你第一次记住郑钦文，是哪一场？",
         ),
     ),
+    "eala-mcnally": (
+        (
+            "opponent",
+            "对手",
+            "麦克纳莉跌出前一千位，一点点爬回来了",
+            "先看对面站的是谁。凯蒂·麦克纳莉，二零零一年十一月生，美国人。"
+            "二零二三年五月，她生涯排名升到世界第五十四。可肘伤很快找上门，"
+            "那年温网之后，她缺席了美网。二零二四年三月，她做了肘部手术，"
+            "缺赛九个月，复出时排名跌到一千开外。她从最低级别的赛事一点点打回来。"
+            "六月二十二日，她升到生涯新高世界第五十——比伤前那个数字还高。"
+            "这一站，她二轮就淘汰了卫冕温网冠军诺斯科娃，首盘一度一比五落后，"
+            "最后拿下抢七。",
+            "assets/explainer/eala-mcnally/mcnally_toronto_2026.jpg",
+            "WTA 官方图库 · 2026 年 8 月 5 日多伦多女单第二轮，"
+            "麦克纳莉逆转诺斯科娃赛后",
+            (
+                "生涯最高第 54，随后因肘伤长期缺赛",
+                "手术缺赛 9 个月，一度跌出前 1000",
+                "本站淘汰卫冕温网冠军诺斯科娃",
+            ),
+        ),
+        (
+            "champion",
+            "华盛顿",
+            "菲律宾公开赛年代第一个单打冠军",
+            "另一边，伊埃拉。八月三日，她在华盛顿站决赛四比六、六比四、六比零"
+            "逆转佩古拉，拿到自己巡回赛生涯第一个单打冠军。那是公开赛年代"
+            "第一位夺得 WTA 单打冠军的菲律宾球员。冠军直接把她的排名从"
+            "第二十八拉到第二十，她也因此成为菲律宾历史上排名最高的球员。"
+            "这不是她第一次让人记住——上个月温网第三轮，她刚淘汰过斯瓦泰克。",
+            "assets/explainer/nadal-academy/eala_washington_2026_trophy.jpg",
+            "Rafa Nadal Academy 官网转载（图注自署 Foto: WTA）· "
+            "2026 年 8 月 3 日华盛顿女单决赛，伊埃拉夺冠后举杯",
+            (
+                "8 月 3 日逆转佩古拉，生涯首个巡回赛冠军",
+                "公开赛年代首位 WTA 夺冠的菲律宾球员",
+                "排名从 28 跃升到 20，历史最高",
+            ),
+        ),
+        (
+            "stake",
+            "这一场",
+            "两人都赢在了刀刃上",
+            "到了多伦多，两人都不是轻松过关的。第二轮，麦克纳莉在首盘一度"
+            "一比五落后。她靠抢七逆转，七比六，六比一拿下卫冕温网冠军诺斯科娃。"
+            "那是她本赛季第二十二场胜利，生涯新高。伊埃拉这边，第二轮对阵帕克斯，"
+            "先赢一盘又被扳平。决胜盘她六比二晋级——这是菲律宾选手在这项赛事的"
+            "第一场正赛胜利。这也是她本人的六连胜。两人此前从没交过手，"
+            "这是巡回赛生涯第一次正面交锋。",
+            # 封面已经用掉伊埃拉这张站内高清图（见 _OPENINGS 那边的注释：
+            # 场馆全景铺 3:4 卡会放大到 0.89x，被 check_cover_resolution.py
+            # 判红，换成这张后场馆图挪到这儿）。这一屏讲的是「整届赛事打到
+            # 这一刻的样子」，不是某一个人的脸，场馆全景恰好合适；这道分辨率
+            # 闸只管封面，内页 beat 不受它管。
+            "assets/venues/canada-sobeys-centre-court.jpg",
+            "View the VIBE 转载 · Sobeys Stadium 中心球场，单打决赛满场"
+            "（credits 见 assets/venues/credits.json）",
+            (
+                "麦克纳莉抢七逆转，本赛季第 22 胜",
+                "伊埃拉六比二胜帕克斯，六连胜",
+                "生涯首次交手，赢家闯进第四轮",
+            ),
+            "",
+            "下一轮的门票，你更看好谁？",
+        ),
+    ),
     "shang-nishikori": (
         (
             "peak",
@@ -5043,6 +5109,14 @@ _CAPTIONS: dict[str, dict] = {
         ),
         "tags": ("网球", "网球时差", "郑钦文", "伊埃拉", "WTA"),
     },
+    "eala-mcnally": {
+        "hook": (
+            "一个刚拿下自己第一个巡回赛冠军，从世界第 28 跳到第 20。\n"
+            "一个刚从跌出前一千位的肘伤里爬回来，本站又淘汰了卫冕温网冠军。\n"
+            "两人从来没交过手——第三轮，第一次见面就是对方。"
+        ),
+        "tags": ("网球", "网球时差", "伊埃拉", "麦克纳莉", "WTA"),
+    },
     "shang-nishikori": {
         "hook": (
             "锦织圭宣布了：2026 年打完就退役。\n"
@@ -5420,6 +5494,61 @@ _OPENINGS: dict[str, dict] = {
         },
         "image": "assets/explainer/zheng-eala/zheng_fistpump.jpg",
         "credit": "账号所有者提供 · 摄影师与出处未标注（unknown / unverified）· 郑钦文",
+    },
+    "eala-mcnally": {
+        "column": "开球之前",
+        "topic": "伊埃拉 VS 麦克纳莉：多伦多站第三轮前瞻",
+        # ⚠️ **原来的问句「从来没交过手，轮到谁先破局？」排一行只有 82px，
+        # 差 84px 那道线 2 个像素**（`test_封面那一问要能排进一行`），会在词中间
+        # 断成两行。去掉「从来」两个字，96px，过。
+        "question": "没交过手，轮到谁先破局？",
+        # ⚠️ **时间先说，按用户要求「先预报比赛的时间」放在 narration 第一句。**
+        # 但**第一句**要单独扛住 `HOOK_BUDGET`（决定窗口 5 秒、扣掉 0.6 秒片头
+        # 静音，≤26 字——抖音 5 秒内走掉 62%）。原来第一句把时间、跟在谁之后、
+        # 赛事、轮次、对阵全挤在一句里，33 字，`test_封面第一句要在决定窗口里
+        # 说完` 当场判红。`_HOOK_TOO_LONG` 那份是**祖父名单**（立预算之前就有的
+        # 片子才免检，注释写得很明白），新写的片子不能往里加，只能真的把第一句
+        # 砍进预算——所以拆成两句：第一句只留「几号、谁对谁」（19 字），
+        # 更细的「几点、跟在谁之后」挪到第二句，仍然排在任何背景故事之前。
+        #
+        # WTA 官方接口（tournaments/806/2026/matches）给这场的是
+        # `NotBefore: "Followed By"`、`Unscheduled: true`——没有官方时刻，
+        # 只知道排在萨卡里对高芙之后（那场官方给的是「不早于 19:00」北京时间）。
+        # `08:10*` 来自 philstar.com 2026-08-07 当天预告
+        # （"scheduled for 8:10 a.m. Manila time on Saturday"——马尼拉时间
+        # 和北京时间同为 UTC+8，不用换算），属于三档口径里的
+        # `official-order-estimate` / single-source，星号标出是估的，
+        # 不是官方钉死的时刻。narration 里额外把「跟在萨卡里/高芙之后」
+        # 也说一遍，双保险：星号读不到的人（只听不看）也能知道这是个估计。
+        "narration": "北京时间八月八号，伊埃拉对阵麦克纳莉。"
+        "预计上午八点十分，跟在萨卡里对高芙之后登场。"
+        "多伦多网球公开赛女子第三轮。"
+        "一个刚拿下自己第一个巡回赛冠军，一个刚把排名从一千开外拉回前七十。"
+        "没交过手，轮到谁先破局？",
+        "fixture": {
+            "date": "8.8",
+            "time": "08:10*",
+            "level": "WTA1000",
+            "site": "多伦多",
+            "round": "第三轮",
+            "players": ("伊埃拉", "麦克纳莉"),
+        },
+        # 封面不用任何一个内页 beat 已经用过的照片（避免「同一条片子里封面和
+        # 内页撞同一张图，等于白占一屏」）。
+        # ⚠️ 原来想用场馆全景（assets/venues/canada-sobeys-centre-court.jpg）
+        # 当封面，`tools/check_cover_resolution.py` 当场判红：1920×1281 铺满
+        # 1080×1440 的卡只有 0.89x，已经在放大。换成伊埃拉这张站内高清图
+        # （2880×1888，fill=1.31x，还留 31% 余量），场馆图挪去给「这一场」
+        # 那个 beat 当背景——那儿不受这道分辨率闸管，是氛围镜头不是脸。
+        "image": "assets/explainer/eala-mcnally/eala_toronto_2026.jpg",
+        "credit": "Getty Images / WTA 官方图库 · 2026 年 8 月 6 日多伦多女单第二轮，"
+        "伊埃拉胜帕克斯赛后庆祝",
+        # 账号所有者原话：「可以用前几轮的视频做拼接」。这是本条线第一次接
+        # 真实视频当冷开场——`assemble_explainer_video` 新增的 `intro` 参数，
+        # 对称于早已有的 `outro`。片段截自本账号自己的 eala-parks.mp4
+        # （她本站上一轮，六比二胜帕克斯那场的赛点+庆祝），credits 见
+        # assets/explainer/eala-mcnally/credits.json 的 `intro_win_over_parks.mp4` 条目。
+        "intro": "assets/explainer/eala-mcnally/intro_win_over_parks.mp4",
     },
     "shang-nishikori": {
         "column": "开球之前",
@@ -6861,6 +6990,7 @@ def assemble_explainer_video(
     ffprobe_bin: str = "ffprobe",
     lead_silence: float = LEAD_SILENCE,
     tail_silence: float = TAIL_SILENCE,
+    intro: Path | None = None,
     outro: Path | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
@@ -6873,6 +7003,12 @@ def assemble_explainer_video(
     ⚠️ **片尾不排字幕**：那一页上印着「网球时差」和那句解释，口播说的每个字
     画面上都有（唯一的例外是「关注」二字，它是动作号召不是信息）。判据在
     `test_片尾口播说的话画面上要印得全`。
+
+    `intro` 对称于 `outro`，只是接在最前面：一段**真视频**（自带画面和现场
+    声，不是 `-loop 1` 的静图），走和 `outro` 完全一样的 scale+pad+fps 链和
+    音轨重采样。「开球之前」这条线用它接previous-round 的实拍片段（比如上一轮
+    的制胜分和庆祝）——冷开场先给观众看得见的东西，再进正题。和幻灯片一样，
+    它自己多长就播多长，不额外裁剪或补静音。
     """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
@@ -6889,6 +7025,12 @@ def assemble_explainer_video(
     tail = [tail_silence if i == n - 1 else 0.0 for i in range(n)]
 
     command = [ffmpeg_bin, "-hide_banner", "-loglevel", "error", "-y"]
+    # `intro` 抢在最前面占掉输入 0，后面每个 slide/audio 的下标要整体后移——
+    # 这是唯一比 outro（只在末尾追加、不影响前面下标）多出来的复杂度。
+    offset = 0
+    if intro is not None:
+        command.extend(["-i", str(Path(intro).resolve())])
+        offset = 1
     for i, (slide, audio) in enumerate(zip(slides, audios)):
         seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
         command.extend(
@@ -6901,9 +7043,16 @@ def assemble_explainer_video(
         command.extend(["-i", str(Path(outro).resolve())])
 
     filters = []
+    if intro is not None:
+        filters.append(
+            f"[0:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
+            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"setsar=1,fps=30,format=yuv420p[vintro]"
+        )
+        filters.append("[0:a]aresample=async=1[aintro]")
     for i in range(n):
         chain = (
-            f"[{2 * i}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
+            f"[{2 * i + offset}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
             f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
         )
@@ -6935,15 +7084,15 @@ def assemble_explainer_video(
         if tail[i]:
             steps.append(f"apad=pad_dur={tail[i]:.3f}")
         filters.append(
-            f"[{2 * i + 1}:a]{','.join(steps)}[a{i}]" if steps
-            else f"[{2 * i + 1}:a]anull[a{i}]"
+            f"[{2 * i + 1 + offset}:a]{','.join(steps)}[a{i}]" if steps
+            else f"[{2 * i + 1 + offset}:a]anull[a{i}]"
         )
     beats = n
     if outro is not None:
         # 片尾走**和幻灯片一模一样**的 scale+pad+fps 链——片尾卡是 3:4，
         # 和每一屏的卡同一个尺寸，所以 pad 出来的黑边宽度也一样。链子写成
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
-        vi = 2 * n
+        vi = 2 * n + offset
         filters.append(
             f"[{vi}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
             f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
@@ -6953,7 +7102,10 @@ def assemble_explainer_video(
         # 对不上时 ffmpeg 不报错，只会拼出一段爆音或者干脆没声。
         filters.append(f"[{vi}:a]aresample=async=1[a{n}]")
         beats = n + 1
-    concat_inputs = "".join(f"[v{i}][a{i}]" for i in range(beats))
+    concat_inputs = ("[vintro][aintro]" if intro is not None else "") + "".join(
+        f"[v{i}][a{i}]" for i in range(beats)
+    )
+    beats += 1 if intro is not None else 0
     filters.append(f"{concat_inputs}concat=n={beats}:v=1:a=1[outv][outa]")
 
     command.extend(
@@ -7011,6 +7163,13 @@ def generate_explainer_video(
         column=explainer_column(story.slug)
     )
     audios = synthesize_narration(segments, outdir, voice=voice, rate=rate, pitch=pitch)
+    # 冷开场实拍片段是可选的：`_OPENINGS[slug]["intro"]` 给一个仓库相对路径，
+    # 就在片头前接一段真视频（比如上一轮的制胜分+庆祝）。绝大多数「开球之前」
+    # 仍是纯幻灯片，这里不写就是 None，行为和以前完全一样。
+    intro_rel = (_OPENINGS.get(story.slug) or {}).get("intro")
+    intro = (_REPO / intro_rel) if intro_rel else None
+    if intro is not None and not intro.is_file():
+        raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
     # Which voice actually spoke is otherwise unrecoverable from the output:
     # the per-beat mp3s are deleted to keep the repo small, and nobody can
     # read a voice name off an mp4. That gap already cost three decks — the
@@ -7031,6 +7190,7 @@ def generate_explainer_video(
     return assemble_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
+        intro=intro,
         outro=outro,
     )
 
