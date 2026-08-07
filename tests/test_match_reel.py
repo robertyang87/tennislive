@@ -723,6 +723,18 @@ def test_挂账的冷开场清单只许减不许加():
 _NO_SLATE_YET = {
     "eala-fernandez", "eala-zheng", "nishikori-shang", "potapova-venus",
     "wang-pareja", "wang-samsonova", "wong-lehecka",
+    # ⚠️ `eala-parks` 不是「规矩之前发的」，是**带着这个毛病发出去的**：
+    # 它 2026-08-06 10:12Z 就推过微信（run 31092251991 第 30 步 success），
+    # 而开场那段旁白给了北京时间和赛事、**唯独没给轮次**。
+    # 挂进来不是原谅，是记账——已发的片子不为措辞重渲（音轨和字幕都烧进去了），
+    # 而一条常年红的检查和没有检查是同一个毛病。
+    "eala-parks",
+}
+
+# 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
+_ENDING_LEGACY = {
+    # 同上：`eala-parks` 收在「六比二，晋级第三轮。」这句数据上。
+    "eala-parks",
 }
 
 
@@ -883,7 +895,7 @@ def test_收尾要落在一问上不能停在数据上():
 
     ⚠️ 判据只看**最后一段**的末尾，不数问号个数——中间抛几问是写稿的选择。
     """
-    bad = []
+    bad, offenders = [], set()
     for slug, spec in _reel_specs().items():
         # `.get`：原声段（`quote`）根本没有 narration 这个键
         nars = [s.get("narration", "") for s in spec["segments"]]
@@ -891,9 +903,18 @@ def test_收尾要落在一问上不能停在数据上():
         if not nars:
             continue
         if "？" not in nars[-1][-30:]:
-            bad.append(f"{slug}: …{nars[-1][-26:]}")
+            offenders.add(slug)
+            if slug not in _ENDING_LEGACY:
+                bad.append(f"{slug}: …{nars[-1][-26:]}")
     assert not bad, (
         "这些片子的收尾停在数据上，没有落在一问上：\n  " + "\n  ".join(bad))
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 一个写错的名字就是一盏
+    # 永远亮着的绿灯——这个仓库为它栽过（`_LEGACY_AMBIGUOUS_POINT` 那次）。
+    stale = _ENDING_LEGACY - offenders
+    assert not stale, (
+        f"{sorted(stale)} 已经不违规了（或者名字写错了），从豁免表里删掉——"
+        "这张表只许减不许加")
 
 
 def test_旁白不许用指示语指画面():
