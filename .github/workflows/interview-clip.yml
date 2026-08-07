@@ -139,7 +139,13 @@ jobs:
         # 12 分钟 = 2×240 秒 + 60 秒等锁 + pip 那几行的余量。
         timeout-minutes: 12
         run: |
-          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper
+          # ⚠️ **`edge-tts` 是解读卡的口播要的**，别再漏。这条线在解读卡之前
+          # 一个字都不合语音（片尾走的是母版转码），所以这一行原来没有它——
+          # 又一次「加新能力就要同时改三处」。而漏了它**不报错**：
+          # `_takeaway_voice` 的退路把它吞成一句「口播合不出来，退回静音卡」，
+          # 于是成片里那张卡是**数字静音（−91 dB）**，run 照样绿。
+          # 判据 `test_会合语音的工作流都要装edge_tts` 自己推导，不维护白名单。
+          pip install -q -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper edge-tts
           # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风。** CLAUDE.md 里那条
           # 「一次静静烧了 13 分 42 秒」的教训当时只套在显式的 `apt-get` 步骤上，
           # **漏了这一处**——而它既没超时也没重试，能一路烧到 job 的 15 分钟预算
@@ -249,6 +255,11 @@ jobs:
           sys.path.insert(0, "tools")
           from build_interview_clip import _chromium
           import faster_whisper  # noqa: F401
+          # 解读卡的口播。⚠️ 缺了它**不会让 render 失败**——`_takeaway_voice`
+          # 的退路会把它吞成「口播合不出来，退回静音卡」，成片里那张卡是数字
+          # 静音，而账号所有者对这张卡的要求原话就是「但要有配音」。
+          # 所以在这儿 import 一次：让它死在第 5 秒，而不是在第 3 分钟静静降级。
+          import edge_tts  # noqa: F401
           # 去水印的掩膜要 cv2（`logo_mask`）。装 extra 别装裸包名——
           # opencv 5.x 里 `CascadeClassifier` 没了，pyproject 钉着 <5
           import cv2; assert hasattr(cv2, "inpaint")

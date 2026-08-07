@@ -136,15 +136,25 @@ def report(spec: dict, outdir: Path) -> str:
             "（这个工具只读已经有的产物，不联网、不下源片。）")
     lines = json.loads(lines_p.read_text(encoding="utf-8"))
 
+    # ⚠️ **按 spec 的 `start`/`end` 掐头去尾。** `cap_*.json3` 是**整条源片**的
+    # 转写，而这个报告说的是**这条片子**——两者只在 spec 没剪的时候才一样。
+    # 萨巴伦卡那条把主持人那句听不清的收场白剪掉了（`end: 63.7`，那一轮
+    # 从 63.80 起），不掐的话主持人算出来是 143 词、实际片子里只有 119——
+    # **而表头就印着「采访 63.7 秒」**，读的人没有第二个地方可以对。
+    # 又一次「查产物，不查信号」：产物是这条片子，不是那份转写。
+    lo, hi = spec["start"], spec["end"]
     marks = None
     for cap in sorted(outdir.glob("cap_*.json3")):
         ev = json.loads(cap.read_text(encoding="utf-8")).get("events") or []
-        words = [s.get("utf8", "") for e in ev for s in (e.get("segs") or [])]
+        words = [s.get("utf8", "") for e in ev
+                 if lo <= e.get("tStartMs", 0) / 1000 <= hi
+                 for s in (e.get("segs") or [])]
         joined = " ".join(w.strip() for w in words if w.strip())
         if ">>" in joined:
             marks = re.split(r"(?=>>)", joined)
             marks = [m.strip() for m in marks if m.strip()]
-            print(f"[原料] 说话轮次按 {cap.name} 的 `>>` 切")
+            print(f"[原料] 说话轮次按 {cap.name} 的 `>>` 切"
+                  f"（只取片内 {lo:.1f}–{hi:.1f} 秒）")
             break
 
     tt = _spoken_turns(lines, marks)

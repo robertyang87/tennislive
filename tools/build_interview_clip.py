@@ -1143,6 +1143,32 @@ def _takeaway_text(card: dict) -> str:
 # 0.12 是留给标点、口吃、大小写这类无害差异的；语义级的分歧远达不到这个量。
 TRANSCRIPT_MAX_DISAGREE = 0.12
 
+# 第二份 ASR 的默认模型。**只有这一处出处**——写两处必分叉，而分叉的样子是
+# 报告上印着一个模型、真正跑的是另一个，谁也看不出来。
+DEFAULT_WHISPER = "small.en"
+
+
+def _first_source_label(spec: dict) -> str:
+    """第一份转写是谁。**照实写。**
+
+    这条线原来只有一个源，所以到处写死「YouTube 自动字幕」；接进 Tennis TV /
+    Brightcove 之后第一份其实是**本地跑的 ASR**（spec 的 `asr_model`），标签再写
+    YouTube 就是主动给出一个错答案——回头查这份报告的人会以为它比的是两个不同
+    来源，而那正是这道闸唯一要证明的事。
+    """
+    return (f"ASR（{spec['asr_model']}）" if spec.get("asr_model")
+            else "YouTube 自动字幕")
+
+
+def _second_model(spec: dict) -> str:
+    """第二份 ASR 用的是哪个模型。同上——报告里不许把它写死。
+
+    ⚠️ 栽过一次：`probe_gap_speech` 的表头写死 `small.en`，而萨巴伦卡那条 spec
+    写的是 `medium.en`。**闸跑的是对的，报告印的是错的**，而报告正是给人看
+    「这两份到底是谁跟谁比」的地方。
+    """
+    return spec.get("whisper_model", DEFAULT_WHISPER)
+
 
 def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """拿**独立的第二份 ASR** 校 YouTube 那份，把分歧摊出来。
@@ -1169,7 +1195,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 分歧率 0%，报告一片绿，而它什么都没验证。
     # 仓库里 `en` / `en-orig` 那次记的就是这个形状：**同一份 ASR 换个名字，
     # 拿它当交叉验证是自欺。**
-    second = spec.get("whisper_model", "small.en")
+    second = _second_model(spec)
     if spec.get("asr_model") and second == spec["asr_model"]:
         raise SystemExit(
             f"`whisper_model` 和 `asr_model` 都是 {second}——同一个模型跑两遍不是"
@@ -1188,7 +1214,7 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 这一步实测是通的（最佳音轨就是 m4a），但**别留一条没有这层保险的路**。
     audio = yt_download(spec["url"], outdir / "_audio.m4a", "ba", spec)
 
-    model = WhisperModel(spec.get("whisper_model", "small.en"), compute_type="int8")
+    model = WhisperModel(_second_model(spec), compute_type="int8")
     segs, _ = model.transcribe(str(audio), language="en", word_timestamps=True,
                                vad_filter=spec.get("whisper_vad_filter", True))
     mine = [(w.start, w.word.strip()) for s in segs for w in (s.words or [])
@@ -1209,11 +1235,10 @@ def verify_transcript(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 自动字幕」；接进 Tennis TV 之后第一份其实是本地跑的 ASR（spec 的 `asr_model`），
     # 标签再写 YouTube 就是**主动给出一个错答案**——将来有人回头查这份报告，
     # 会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
-    first = (f"ASR（{spec['asr_model']}）" if spec.get("asr_model")
-             else "YouTube 自动字幕")
+    first = _first_source_label(spec)
     report = [f"# 转写交叉校验：{spec['slug']}", "",
               f"- 第一份：{first} **{len(theirs)}** 词",
-              f"- 第二份：faster-whisper（{spec.get('whisper_model', 'small.en')}）"
+              f"- 第二份：faster-whisper（{_second_model(spec)}）"
               f"**{len(ours)}** 词",
               f"- **对不上 {rate:.1%}**（闸门 {TRANSCRIPT_MAX_DISAGREE:.0%}）", "",
               f"## 分歧逐处（左＝{first}，右＝第二份）", ""]
@@ -1289,13 +1314,14 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
                      en_words: list[tuple[float, str]], outdir: Path) -> Path | None:
     """把每个空档摊开：**第二份 ASR 在这几秒里听到了什么。**
 
-    用的是 `verify_transcript` **已经跑完的那一份**（`small.en`，带词时间戳），
-    不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在那份结果里。
+    用的是 `verify_transcript` **已经跑完的那一份**（spec 的 `whisper_model`，
+    带词时间戳），不下第二个模型、不切音频、不多跑一遍——这几秒的答案本来就在
+    那份结果里。
 
     两种结果的含义**不一样，报告里必须分开写**：
 
-    - **有词** → YouTube 漏了，而且漏的是英语。补进 `en_fixed` 就行
-    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 是英语专用模型，
+    - **有词** → 第一份漏了，而且漏的是英语。补进 `en_fixed` 就行
+    - **没有词** → ⚠️ **这不等于「没人说话」**。`small.en` 这一档是英语专用模型，
       对着非英语同样给空白；而空档最可能的成因恰恰是球员换了母语
       （伊埃拉那 3.2 秒面对的就是菲律宾球迷）。两种情况在这份输出里
       **长得一模一样**，机器分不出来——所以这一档一律交给人听，
@@ -1303,6 +1329,12 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
 
     ⚠️ 报告要**两种情况都出声**。只在「发现漏词」时出声的检查，没法证明
     它真的看过——而这条线上「什么都没听出来」才是需要人接手的那一档。
+
+    ⚠️ **两份转写各是谁，一律从 spec 读，不许写死。** 表头原来印着
+    `small.en`、发现漏词那一支原来写着「YouTube 漏了英语」——而萨巴伦卡那条
+    第二份是 `medium.en`、第一份根本不是 YouTube（Brightcove 源没有自动字幕轨，
+    第一份也是我们自己跑的）。**闸跑的是对的，报告印的是错的**，
+    而这份报告存在的全部理由就是告诉人「这几秒是拿谁跟谁比出来的」。
     """
     if not gaps:
         print("自动字幕没有空档。")
@@ -1310,7 +1342,8 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
     clip0 = spec["start"]
     report = [f"# 自动字幕的空档：{spec['slug']}", "",
               f"阈值 {CAPTION_GAP_SECS:.0f} 秒；空档 **{len(gaps)}** 处。", "",
-              "第二份 ASR 是 `small.en`（英语专用）。**它什么都没听出来，"
+              f"第一份是 {_first_source_label(spec)}，第二份 ASR 是 "
+              f"`{_second_model(spec)}`（英语专用）。**它什么都没听出来，"
               "不等于这几秒没人说话**——非英语在它这儿同样是空白，两种情况"
               "分不出来，得人去听。", ""]
     for a, b in gaps:
@@ -1319,8 +1352,9 @@ def probe_gap_speech(spec: dict, gaps: list[tuple[float, float]],
             f"## {a - clip0:.1f}–{b - clip0:.1f} 秒（片内，{b - a:.1f} 秒；"
             f"源片 {_yt_at(spec['url'], a)}）", "",
             f"- 键：`{gap_key(a, b)}`",
-            f"- 第二份 ASR（small.en）："
-            + (f"`{' '.join(en_here)}`　→ **YouTube 漏了英语，补进 `en_fixed`**"
+            f"- 第二份 ASR（{_second_model(spec)}）："
+            + (f"`{' '.join(en_here)}`　→ **第一份（{_first_source_label(spec)}）"
+               "漏了英语，补进 `en_fixed`**"
                if en_here else "**什么都没有** → 人去听：没人说话，还是不是英语？"),
             f"- 已销账：{(spec.get('caption_gaps_ok') or {}).get(gap_key(a, b), '**否**')}",
             ""]
@@ -1439,6 +1473,27 @@ def _yt_at(url: str, seconds: float) -> str:
     return f"https://youtu.be/{vid}?t={int(seconds)}"
 
 
+def _jump_md(url: str, seconds: float, label: str) -> str:
+    """核对表里那颗「跳到这一秒」的按钮，**markdown 现成的一格**。
+
+    ⚠️ **不能拿 `_yt_at` 的返回值直接往 `[]()` 里塞。** 上面那个函数对非 YouTube
+    的源**故意**回一句带汉字的说明（`<url>（片内 18.7 秒）`）——它做对了自己那一半，
+    可调用方无条件包上 markdown 链接语法，把那句说明连同括号一起塞进了 href：
+
+        [▶](https://players.brightcove.net/…?videoId=6402850037112（片内 0.0 秒）)
+
+    渲出来是一颗**点不动的按钮**，而它和一颗点得动的长得一模一样。正是 `_yt_at`
+    的 docstring 要防的那件事，只是躲到了外面一层——「链接指错地方比没有链接坏得多」。
+
+    所以：钉得住时刻的（YouTube）才给链接，钉不住的**就写成明文**，让人自己拖
+    进度条。判据 `test_非YouTube的源不许在核对表里编一颗点不动的按钮`。
+    """
+    at = _yt_at(url, seconds)
+    if not at.startswith("http") or "（" in at:
+        return f"片内 {seconds:.1f} 秒"
+    return f"[{label}]({at})"
+
+
 def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
     """把这段采访的**所有源摊成一张表**，给人对着听。
 
@@ -1483,14 +1538,14 @@ def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
             mark.append(f"⚠️ {suspect[i]}")
         cell = lambda s: str(s).replace("|", "\\|")  # noqa: E731
         rows.append(f"| {i} | {int(t // 60)}:{t % 60:04.1f} | "
-                    f"[▶]({_yt_at(spec['url'], seg['a'])}) | {cell(seg['en'])} | "
+                    f"{_jump_md(spec['url'], seg['a'], '▶')} | {cell(seg['en'])} | "
                     f"{cell(zh[i - 1]) if i <= len(zh) else '—'} | {'；'.join(mark)} |")
 
     todo = sorted(set(suspect) - fixed - cleared)
     tail = ["", "## 还欠着的", ""]
     tail += [f"- **#{i}**（{int((lines[i - 1]['a'] - clip0) // 60)}:"
              f"{(lines[i - 1]['a'] - clip0) % 60:04.1f}，"
-             f"[跳过去]({_yt_at(spec['url'], lines[i - 1]['a'])})）{suspect[i]}"
+             f"{_jump_md(spec['url'], lines[i - 1]['a'], '跳过去')}）{suspect[i]}"
              for i in todo if i <= len(lines)] or ["（无）"]
     tail += ["", "听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 "
              "`suspect_ok`（值写一句为什么），别默默留着——"
@@ -1504,7 +1559,7 @@ def review_sheet(spec: dict, lines: list[dict], outdir: Path) -> Path:
     # 销账那段常常写成好几行（判据要写全），而这里是一条列表项——
     # 换行会把它折断成一堆游离的段落。压成一行。
     tail += [f"- **{a - clip0:.1f}–{b - clip0:.1f} 秒**（片内，{b - a:.1f} 秒空白，"
-             f"[跳过去]({_yt_at(spec['url'], a)})）　"
+             f"{_jump_md(spec['url'], a, '跳过去')}）　"
              + (ok[gap_key(a, b)].replace("\n", "　") if gap_key(a, b) in ok
                 else "**还没销账**")
              for a, b in gaps] or ["（无）"]
