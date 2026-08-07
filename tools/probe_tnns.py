@@ -86,6 +86,33 @@ def _dump_objects(body: str, word: str, limit: int = 3) -> None:
         print("  " + json.dumps(obj, ensure_ascii=False, indent=1)[:2500])
 
 
+def _print_top_keys(body: str) -> None:
+    """先看这坨 JSON 顶层分几块，别一上来就按某个字段的值去挖树.
+
+    `season_id` 那次探测就是教训：`all_matches[].season_id` 里到处都是
+    这个值，minimal-node 逻辑于是每次都停在某一场比赛身上，永远走不到
+    「有没有另一块专门存赛事名」这个问题——顶层键都没数过，就已经在
+    树的深处找答案了。
+    """
+    try:
+        data = json.loads(body)
+    except Exception:  # noqa: BLE001
+        print("  （不是 JSON 对象，--top-keys 用不上）")
+        return
+    if not isinstance(data, dict):
+        print(f"  顶层是 {type(data).__name__}，不是对象")
+        return
+    print(f"  顶层 {len(data)} 个键：")
+    for k, v in data.items():
+        if isinstance(v, dict):
+            shape = f"dict[{len(v)}]" + (f" 键样例={list(v.keys())[:5]}" if v else "")
+        elif isinstance(v, list):
+            shape = f"list[{len(v)}]"
+        else:
+            shape = f"{type(v).__name__}={v!r}"[:80]
+        print(f"    {k!r}: {shape}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--want", action="append", default=[],
@@ -106,6 +133,10 @@ def main() -> int:
                          "唯一拿得到数据的路，之前只有 --fetch 能 --dump 等于白扫")
     ap.add_argument("--dump-limit", type=int, default=3,
                     help="--dump 每个响应最多打印几个匹配对象")
+    ap.add_argument("--top-keys", action="store_true",
+                    help="响应是 JSON 对象时，把顶层的键和每个值的形状打出来"
+                         "（dict 打大小，list 打长度，标量打值）——先看清楚"
+                         "这坨 JSON 一共分几块，再决定往哪块底下挖")
     args = ap.parse_args()
 
     try:
@@ -198,6 +229,8 @@ def main() -> int:
             print("     " + j[max(0, k - 400):k + 900].replace("\n", " ")[:1200])
         if args.dump and r["body"] and args.dump in r["body"]:
             _dump_objects(r["body"], args.dump, limit=args.dump_limit)
+        if args.top_keys and r["body"]:
+            _print_top_keys(r["body"])
     if not seen:
         # 空结果先自证是真空：一个接口都没抓到，多半是挑战没过，不是没有接口
         print("一个都没抓到。挑战过了吗？看上面那行——没过就是被挡，不是没有数据")

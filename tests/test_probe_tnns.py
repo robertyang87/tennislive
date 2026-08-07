@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 
-from tools.probe_tnns import _dump_objects
+from tools.probe_tnns import _dump_objects, _print_top_keys
 
 
 def test_dump_finds_object_by_compact_key_colon_bracket_pattern(capsys):
@@ -35,3 +35,22 @@ def test_dump_still_finds_plain_word(capsys):
     _dump_objects(body, "Wong", limit=3)
     out = capsys.readouterr().out
     assert "Coleman Wong" in out
+
+
+def test_top_keys_reports_every_root_key_and_its_shape(capsys):
+    """`--top-keys` 要把根对象的每个键都列出来，别只挑看着重要的那几个."""
+    body = json.dumps(
+        {"panels": {"72": {"t": "UTR"}}, "all_matches": [1, 2, 3], "ver": "1.0"},
+        separators=(",", ":"),
+    )
+    _print_top_keys(body)
+    out = capsys.readouterr().out
+    assert "'panels': dict[1]" in out
+    assert "'all_matches': list[3]" in out
+    assert "'ver': str='1.0'" in out
+
+
+def test_top_keys_on_non_json_says_so_instead_of_crashing(capsys):
+    _print_top_keys("<!doctype html>not json")
+    out = capsys.readouterr().out
+    assert "不是 JSON 对象" in out
