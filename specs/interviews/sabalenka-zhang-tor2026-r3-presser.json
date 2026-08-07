@@ -1,0 +1,20 @@
+{
+ "slug": "sabalenka-zhang-tor2026-r3-presser",
+ "url": "https://www.youtube.com/watch?v=tftuAusQTuQ",
+ "source_title": "POST-MATCH PRESS CONFERENCE | 3rd ROUND | ARYNA SABALENKA | #NBO26（Tennis Canada 官方频道，2026-08-07 上传，390 秒 1920×1080）",
+ "_source": "**这一轮她没有场上采访，只有发布会。** 查了两处：\n\n1. **WTA 站内**——`sitemap/videos.xml`（1000 条，最新到 2026-08-07T02:55Z，够新：张帅那场的集锦 02:32 就在里面）。多伦多这一站 **76 条视频里采访类只有两条**：`toronto-post-match-interview-r64-aryna-sabalenka`（就是我做过的 R2 那条）和斯瓦泰克的赛前。**没有 R32/第三轮的场上采访。**\n2. **Tennis Canada 官方频道**（`UCUlLC70-n2ykJjN1uhcsisg`）最近 45 条上传里，`<球员> | POST MATCH INTERVIEW | …` 那个**场上采访系列一条都没有**了，全换成了 `POST-MATCH PRESS CONFERENCE | <N>th ROUND | <球员>`。第三轮这一批：萨巴伦卡 390s、科斯秋克 409s、佩古拉 662s、斯瓦泰克 292s——**格式存在，而且轮到她了**，只是形态是发布会。\n\n⚠️ 张帅那场的集锦是 **277.9 秒 < 310**，纯集锦，尾巴上没有采访（「310 秒」那条判据成立）。\n\n⚠️ 这台沙箱**搜得到、下不动**：`ytsearch` 和 `--print` 走得通，`--list-subs` 吃 `Sign in to confirm you're not a bot`。所以转写和切行都得在 runner 上跑（`mode=subs`，cookie 只在 Actions secret 里）。",
+ "start": 0.0,
+ "end": 390.0,
+ "_span_why": "⚠️ **占位，等 `mode=subs` 的转写出来再按落点收。** 390 秒整段不能用：`MIN_OURS_RATIO` 那道闸按整片算，而且 CLAUDE.md 明写着「两分钟以上的仍然会红，**那正是该按落点剪的信号**」。收到哪儿取决于她在哪儿说了值得留的话。",
+ "column": "赛后开麦",
+ "event": "2026 多伦多 WTA1000 第三轮",
+ "interview_kind": "赛后新闻发布会",
+ "_kind_why": "和 `eala-pegula-dc2026-final-presser` 同一档：发布厅里坐着说，不是场上拿着话筒。台头和文案都要说清楚是发布会——**观众分得出这两种场合**，混着写等于把「刚赢完球在场上」的情绪安到一段坐着的问答上。",
+ "winner": "萨巴伦卡",
+ "_match": "萨巴伦卡 6-3 6-4 张帅，2026 多伦多 WTA1000 女单第三轮（`MatchID LS016`、`RoundID='3'`），1 小时 16 分 38 秒，2026-08-06T22:45Z。\n出处：WTA 接口 `tournaments/806/2026/matches`，`ResultString` 原文 `[1]A. Sabalenka d S. Zhang 6-3,6-4`。",
+ "asr_model": "youtube-auto",
+ "whisper_model": "medium.en",
+ "_asr_why": "这条是 YouTube，**有自动字幕轨**，所以第一份用它（`asr_model` 记成 `youtube-auto`），第二份换 `medium.en` 交叉校验。⚠️ 两份必须不同模型，否则那道闸是空的。",
+ "zh": [],
+ "_zh_todo": "等 runner 上 `mode=subs` 把英文切行打进日志，再照着写中文。"
+}
