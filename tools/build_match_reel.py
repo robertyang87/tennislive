@@ -593,6 +593,35 @@ def point_end_candidates(source: Path, scorebox: str) -> list[float]:
     return [round(t, 2) for t in ends]
 
 
+def suggest_scorebox(source: Path) -> None:
+    """给空着的 `--scorebox` 打一个可以直接抄的建议——**猜的，不是判据**。
+
+    `tools/detect_scorebox.py` 按「频繁暗 + 高填充率」猜记分条大概在哪
+    （只在一条真实源片上验证过，见工具自己的 docstring）。这里**只印出来**，
+    不会拿它去算 `point_ends`——和 `scene_cuts`／`point_ends` 本身一样，
+    是候选不是判据，人确认过再手动把 `--scorebox` 填进下一轮 probe。
+
+    猜不出来、或者这台环境缺依赖，都只打一句原因，**不让 probe 这一步失败**：
+    这只是个锦上添花的提示，`point_end_candidates` 那道真正要人给值的闸
+    不受它影响。
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        import detect_scorebox as dsb  # noqa: PLC0415
+        cands = dsb.detect(source)
+    except Exception as exc:  # noqa: BLE001 - 只是个提示，不能把 probe 带崩
+        print(f"[记分条] 猜不出来（{exc}），--scorebox 还是要自己量")
+        return
+    if not cands:
+        print(f"[记分条] 猜了一遍，没有够格的候选（门槛 dark_freq>{dsb.DARK_FREQ} "
+              f"fill>{dsb.MIN_FILL}）——这条源片可能没有常驻记分条，或者门槛卡严了")
+        return
+    x0, y0, x1, y1 = cands[0]["box"]
+    print(f"[记分条] 猜的候选：--scorebox {x0},{y0},{x1},{y1}"
+          f"（填充率 {cands[0]['fill']:.2f}，只是猜的，"
+          "拿缩略图墙对一眼再填进下一轮 probe）")
+
+
 def require_live_sound(source: Path, spec: dict) -> float | None:
     """源片是哑的就报错并给出路，认领过的放行——**两种情况都打印**。
 
@@ -4082,6 +4111,12 @@ def main() -> int:
         #
         # 记分条的位置**没法自动认**（每家转播不一样），所以要人给 `--scorebox`；
         # 不给就跳过，**而且要说为什么**——「没量」和「量出来是空的」长得一样。
+        #
+        # **没给的时候顺手猜一个候选打出来**——省得每次都要开缩略图墙自己数
+        # 像素。只是打印，不参与这一趟 `point_ends` 的计算：猜错了不影响本轮
+        # 结果，猜对了下一轮 probe 抄一下就行。
+        if not str(args.scorebox).strip():
+            suggest_scorebox(source)
         ends = point_end_candidates(source, args.scorebox)
         (outdir / "probe.json").write_text(json.dumps({
             "url": args.url, "width": w, "height": h, "duration": duration,
