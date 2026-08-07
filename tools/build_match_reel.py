@@ -3799,10 +3799,44 @@ def _expected_topbar_score_line(spec: dict) -> str | None:
     return f"{winner} {result} {loser}"
 
 
+# 「赛场之上」里**发在顶栏成为硬要求之前**的那些片子。只许减不许加，
+# 底下 `test_赛场之上的比赛画面必须带比赛信息顶栏` 会自检：名字必须真的存在、
+# 而且真的还没有 topbar——写错一个名字，豁免就成了一盏恒真的绿灯。
+# ⚠️ **已发的片子不为版式重渲**（微信那条消息收不回来），所以它们留在这儿。
+_LEGACY_NO_TOPBAR = frozenset({
+    "chwalinska-gibson", "eala-fernandez", "eala-osaka", "eala-pegula-final",
+    "eala-svitolina", "eala-zheng", "fritz-jodar-final", "gea-shapovalov",
+    "medvedev-zandschulp", "nishikori-shang", "noskova-mcnally",
+    "potapova-venus", "rybakina-kasatkina", "shang-rublev", "shang-vallejo",
+    "tirante-fritz", "wang-kasatkina", "wang-pareja", "wang-samsonova",
+    "wong-brooksby", "wong-gea", "wong-lehecka", "zhang-ostapenko",
+    "zhang-putintseva", "zhang-sabalenka", "zverev-griekspoor",
+})
+
+
 def _topbar_lines(spec: dict) -> tuple[str, str] | None:
-    """取可选顶栏的两行，并把空行/隐式折行在渲染前拦住。"""
+    """取顶栏的两行，并把空行/隐式折行在渲染前拦住。
+
+    ⚠️ **「赛场之上」必须有顶栏。** 账号所有者 2026-08-07：「比赛视频里顶部
+    要加上比赛信息啊」。在这之前 `topbar` 是**可选**的——忘了写就静静地渲出
+    一条没有顶栏的片子，没有任何东西出声（32 条 spec 里只有 2 条带顶栏，
+    而机器早就建好了）。又一次「兜底出事的时候不吭声」，所以改成缺了就报错。
+
+    豁免只给 `_LEGACY_NO_TOPBAR` 里那些**已经发出去的**片子：已发的不为版式
+    重渲，而那张表有自检，写错名字会红。
+    """
     raw = spec.get("topbar")
     if raw is None:
+        column = str((spec.get("cover") or {}).get("eyebrow", "")).strip()
+        slug = str(spec.get("slug", "")).strip()
+        if column == "赛场之上" and slug not in _LEGACY_NO_TOPBAR:
+            raise ReelError(
+                "「赛场之上」的比赛画面必须带比赛信息顶栏，spec.topbar 不能省：\n"
+                '  "topbar": {"line1": "<赛事> <轮次>", "line2": "<赢家> <比分> <对手>"}\n'
+                f'  例：{{"line1": "WTA 1000 加拿大站 第三轮", '
+                f'"line2": "{_expected_topbar_score_line(spec) or "萨巴伦卡 6-3 6-4 张帅"}"}}\n'
+                "line2 必须和 cover 的 winner/result/matchup 一致（不许在顶栏另写一份），"
+                "而且带顶栏的新 spec 还要填 editorial 合同。")
         return None
     if not isinstance(raw, dict):
         raise ReelError("spec.topbar 必须是对象，包含 line1 和 line2")

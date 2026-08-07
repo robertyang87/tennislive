@@ -8013,3 +8013,60 @@ def test_台头药丸的位置不跟着比分板漂(monkeypatch: pytest.MonkeyPa
     worst = 64 + 34 + round(3 * 96 * 1.24) + 34 + (76 + 214)
     assert vp.STORYCOPY_TOP + worst <= 1440, (
         f"最坏情况排到 {vp.STORYCOPY_TOP + worst}px，超出 1440 的画布")
+
+
+def test_赛场之上的比赛画面必须带比赛信息顶栏():
+    """账号所有者 2026-08-07：「比赛视频里顶部要加上比赛信息啊」。
+
+    ⚠️ 顶栏的机器**早就建好了**——`spec.topbar` 两行、`line2` 还必须和
+    `cover.winner/result/matchup` 机械一致、`write_topbar_ass` 只盖比赛画面
+    不盖封面和片尾。问题是这个字段是**可选**的：忘了写就静静地渲出一条没有
+    顶栏的片子，没有任何东西出声。量下来 32 条 spec 里**只有 2 条带顶栏**
+    （eala-parks / shang-darderi），而它们是整改期那两条。
+    又一次「兜底出事的时候不吭声」，所以改成缺了就报错。
+
+    豁免表只给**已经发出去的**片子（已发的不为版式重渲，微信那条消息收不回来），
+    而且这条判据**自己查那张表**：名字必须真的存在、真的还没有 topbar——
+    写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    reel = _reel()
+
+    def spec_of(slug: str) -> dict:
+        return json.loads(
+            Path(f"specs/reels/{slug}.json").read_text(encoding="utf-8"))
+
+    # ---- 豁免表的自检：每个名字都要真的存在、且真的还没有顶栏 ----
+    for slug in sorted(reel._LEGACY_NO_TOPBAR):
+        path = Path(f"specs/reels/{slug}.json")
+        assert path.is_file(), f"豁免表里的 {slug} 已经不存在了——名字过期就是恒真的绿灯"
+        spec = spec_of(slug)
+        assert spec.get("topbar") is None, (
+            f"{slug} 已经补上顶栏了，把它从 _LEGACY_NO_TOPBAR 里删掉（只许减不许加）")
+        assert str((spec.get("cover") or {}).get("eyebrow", "")).strip() == "赛场之上", (
+            f"{slug} 不是「赛场之上」，本来就不受这条闸管，不该出现在豁免表里")
+
+    # ---- 新写的「赛场之上」缺顶栏必须当场报错 ----
+    fresh = {"slug": "全新的一条", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
+                                       "result": "6-3 6-4",
+                                       "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]}}
+    with pytest.raises(reel.ReelError, match="顶栏"):
+        reel._topbar_lines(fresh)
+    # 报错要说出路：给出字段形状和一句能照抄的例子。
+    try:
+        reel._topbar_lines(fresh)
+    except reel.ReelError as exc:
+        text = str(exc)
+    assert "line1" in text and "line2" in text and "萨巴伦卡 6-3 6-4 张帅" in text, text
+
+    # ---- 别的栏目不受这条管（「网球有故事」讲人，「开球之前」还没打完）----
+    for column in ("网球有故事", "开球之前"):
+        assert reel._topbar_lines({"slug": "x", "cover": {"eyebrow": column}}) is None
+
+    # ---- 写了就要过原来那几关：两行、非空、line2 和 cover 一致 ----
+    good = {"slug": "x", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
+                                   "result": "6-3 6-4",
+                                   "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]},
+            "topbar": {"line1": "WTA 1000 加拿大站 第三轮", "line2": "萨巴伦卡 6-3 6-4 张帅"}}
+    assert reel._topbar_lines(good) == ("WTA 1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
+    with pytest.raises(reel.ReelError, match="一致"):
+        reel._topbar_lines({**good, "topbar": {**good["topbar"], "line2": "张帅 6-3 6-4 萨巴伦卡"}})
