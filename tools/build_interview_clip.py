@@ -1048,6 +1048,52 @@ def _ts(x: float) -> str:
     return f"{int(x // 3600)}:{int(x % 3600 // 60):02d}:{x % 60:05.2f}"
 
 
+def highlight_en(text: str, phrases: list[str]) -> tuple[str, set[str]]:
+    """把 `phrases` 里每一个字面短语，在 `text` 里原样出现的地方包上品牌绿。
+
+    **只上色，不放大。** 放大要改 `\\fs`，会动这一行的实际占宽——而这一行的
+    宽度是按固定字号卡死量出来的（见 `_LINE_PX` / `_en_width`），改宽度就要
+    重新过一遍那道闸。上色用 `\\c`，字符前进量一个像素都不变，`_en_width`
+    在这一步**之前**量过的数照样作数。
+
+    **重用 `_MARK_COLOUR`，不新开一个强调色。** 顶栏那条竖杠已经在用它——
+    一屏（这条片子从头到尾算一屏）只留一个强调色，见 CLAUDE.md。
+
+    ⚠️ **先找完所有短语的匹配区间，再一次性拼出结果**，不是挨个 `str.replace`。
+    短语之间可能有包含关系（比如 `stay focused` 和某个恰好取了 `focused` 的
+    短语），顺序执行 replace 的话，先替换的那个会把 ASS 标签字符也编排进
+    文本里，后一个短语的匹配可能命中标签本身而不是原文——静默地拼出一份
+    看着正常、实际错位的字幕。这里改成先在**未标记的原文**上找所有区间，
+    校验不重叠，再按位置一次性拼接。
+
+    **按词边界匹配，不是裸子串。** 裸子串会把 `for` 这种短语命中到 `before`
+    中间——那不是「英文固定搭配」被强调了，是一个词被腰斩了一半染色。
+
+    返回标记后的文本，和这段文本里**真的**匹配上的短语集合（调用方用来判断
+    整个 spec 里有没有短语一次都没匹配上——那种短语要么打错了字，要么这次
+    改了 `en_fixed`／`word_fix` 之后原文变了，两种情况都不该悄悄放过）。
+    """
+    spans: list[tuple[int, int, str]] = []
+    for phrase in phrases:
+        for m in re.finditer(rf"\b{re.escape(phrase)}\b", text):
+            spans.append((m.start(), m.end(), phrase))
+    spans.sort()
+    for (s0, e0, p0), (s1, e1, p1) in zip(spans, spans[1:]):
+        if s1 < e0:
+            raise SystemExit(
+                f"高亮短语「{p0}」和「{p1}」在同一处文本里重叠"
+                f"（{text!r}）——两个短语选得太挤，改窄一个。")
+    out, cursor = [], 0
+    matched: set[str] = set()
+    for s, e, phrase in spans:
+        out.append(text[cursor:s])
+        out.append(rf"{{{_MARK_COLOUR}}}{text[s:e]}{{\r}}")
+        matched.add(phrase)
+        cursor = e
+    out.append(text[cursor:])
+    return "".join(out), matched
+
+
 def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
               spec: dict | None = None) -> None:
     if len(zh) != len(lines):
@@ -1079,12 +1125,25 @@ def write_ass(lines: list[dict], zh: list[str], clip_start: float, path: Path,
         head_a, head_b = header_ass(spec)
         ev.append(f"Dialogue: 0,{a},{b},HEADA,,0,0,0,,{head_a}")
         ev.append(f"Dialogue: 0,{a},{b},HEADB,,0,0,0,,{head_b}")
+    # **只在写了才管，没写就是零行为改动。** 没有这个字段的存量 spec
+    # 一个字都不受影响——已发的片子不为了措辞重渲，见 CLAUDE.md。
+    phrases = (spec or {}).get("highlight_en") or []
+    unmatched = set(phrases)
     for seg, cn in zip(lines, zh):
         en = seg["en"].replace("&gt;&gt;", "").replace(">>", "").strip()
         a, b = _ts(seg["a"] - clip_start), _ts(seg["b"] - clip_start)
+        if phrases:
+            en, hit = highlight_en(en, phrases)
+            unmatched -= hit
         # 英文在上、中文在下，两行同起同落
         ev.append(f"Dialogue: 0,{a},{b},EN,,0,0,0,,{en}")
         ev.append(f"Dialogue: 0,{a},{b},ZH,,0,0,0,,{cn}")
+    if unmatched:
+        raise SystemExit(
+            "`highlight_en` 里这几个短语，字幕里一处都没找到：\n  "
+            + "\n  ".join(sorted(unmatched))
+            + "\n多半是打错字，或者 `en_fixed`／`word_fix` 后来改了原文。"
+            "按词边界找的，短语必须逐字（含大小写）出现在某一行英文字幕里。")
     path.write_text(_ASS_HEAD + "\n".join(ev) + "\n", encoding="utf-8")
 
 
