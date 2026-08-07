@@ -7950,3 +7950,123 @@ def test_母版要按上界存():
     # 三条线各自要的那一档（改这儿就要重跑 build_outro_master.py）
     assert fps >= 60, f"母版只有 {fps}fps，而剪辑片有 60fps 的源片——插帧会顿"
     assert rate >= 48000, f"母版只有 {rate}Hz，而采访片要 48000——升采样补不出信息"
+
+
+def test_台头药丸的位置不跟着比分板漂(monkeypatch: pytest.MonkeyPatch):
+    """`.storycopy` **按台头药丸锚定**，不再整块垂直居中。
+
+    居中的时候药丸的 y 是「(画布 − 整块高) ÷ 2」，也就是**内容一变它就动**。
+    量已发的三张海报（药丸顶边）：
+
+        eala-parks    502   老版一行赛果（≈56px）
+        shang-rublev  536   同上，钩子字号不同
+        zhang-sabalenka 410 换上新版比分板（≈295px）—— 被顶上去 92~126px
+
+    账号所有者 2026-08-07：「比分板和标题都往下移动一点，『赛场之上』的标签
+    还是按原来模板的位置，然后再跟标题文案和比分板」。
+
+    ⚠️ **判据不是「CSS 里写了个数」，是「换掉比分板药丸不动」**——所以这儿
+    拿同一条 cover 生成三份 CSS（两盘 / 三盘 / 根本没有比分板），
+    `.storycopy` 那条规则必须**逐字节相同**。渲染要 Chromium，CI 上没有，
+    但这一条不用渲：药丸的 y 完全由这条规则决定。
+    （本地真渲过三张验证：三种情况药丸顶边都是 y=521。）
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster as vp  # noqa: PLC0415
+
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:16")
+    base = {
+        "eyebrow": "赛场之上", "layout": "solo", "subject": "张帅",
+        "hook": "三十七岁，一个非受迫失误\n世界第一双误四个，却赢了",
+        "winner": "萨巴伦卡", "result": "6-3 6-4",
+        "scoreboard": {"court": "Centre Court", "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": "萨巴伦卡", "country": "BLR", "rank": 1},
+                    {"name": "张帅", "country": "CHN", "rank": 62}],
+        "portrait": {"image": "assets/logo/brand/icon.png"},
+    }
+
+    def storycopy(cover: dict) -> str:
+        _, css = vp._solo_body(cover)
+        hit = re.search(r"\.storycopy\{[^}]*\}", css)
+        assert hit, f"生成的 CSS 里找不到 .storycopy：{css[:300]}"
+        return hit.group(0)
+
+    two = storycopy(base)
+    three = storycopy({**base, "result": "6-3 4-6 6-4"})
+    none = storycopy({k: v for k, v in base.items()
+                      if k not in ("result", "scoreboard")})
+    assert two == three == none, (
+        "比分板变了 `.storycopy` 也跟着变——药丸会重新跟着内容漂：\n"
+        f"  两盘 {two}\n  三盘 {three}\n  无板 {none}")
+
+    assert f"top:{vp.STORYCOPY_TOP}px" in two, f"药丸没有钉在常量上：{two}"
+    assert "transform:none" in two, f"还留着位移，药丸位置就不是这个数：{two}"
+    assert "top:50%" not in two and "translateY(-50%)" not in two, (
+        f"退回整块居中了——比分板一变高就会把药丸顶上去：{two}")
+
+    # 老版一行赛果时药丸落在 502~536，520 取在中间。**别悄悄漂走**。
+    assert 490 <= vp.STORYCOPY_TOP <= 545, (
+        f"STORYCOPY_TOP={vp.STORYCOPY_TOP} 离「原来模板的位置」（502~536）太远")
+
+    # 最坏情况要装得下：药丸 64 ＋ 间距 34 ＋ 三行 96px 的钩子 ＋ 间距 34
+    # ＋ 比分板（板头 76 ＋ 网格 214）。溢出的话下面那截会被切在画布外。
+    worst = 64 + 34 + round(3 * 96 * 1.24) + 34 + (76 + 214)
+    assert vp.STORYCOPY_TOP + worst <= 1440, (
+        f"最坏情况排到 {vp.STORYCOPY_TOP + worst}px，超出 1440 的画布")
+
+
+def test_赛场之上的比赛画面必须带比赛信息顶栏():
+    """账号所有者 2026-08-07：「比赛视频里顶部要加上比赛信息啊」。
+
+    ⚠️ 顶栏的机器**早就建好了**——`spec.topbar` 两行、`line2` 还必须和
+    `cover.winner/result/matchup` 机械一致、`write_topbar_ass` 只盖比赛画面
+    不盖封面和片尾。问题是这个字段是**可选**的：忘了写就静静地渲出一条没有
+    顶栏的片子，没有任何东西出声。量下来 32 条 spec 里**只有 2 条带顶栏**
+    （eala-parks / shang-darderi），而它们是整改期那两条。
+    又一次「兜底出事的时候不吭声」，所以改成缺了就报错。
+
+    豁免表只给**已经发出去的**片子（已发的不为版式重渲，微信那条消息收不回来），
+    而且这条判据**自己查那张表**：名字必须真的存在、真的还没有 topbar——
+    写错一个名字，豁免就成了一盏恒真的绿灯。
+    """
+    reel = _reel()
+
+    def spec_of(slug: str) -> dict:
+        return json.loads(
+            Path(f"specs/reels/{slug}.json").read_text(encoding="utf-8"))
+
+    # ---- 豁免表的自检：每个名字都要真的存在、且真的还没有顶栏 ----
+    for slug in sorted(reel._LEGACY_NO_TOPBAR):
+        path = Path(f"specs/reels/{slug}.json")
+        assert path.is_file(), f"豁免表里的 {slug} 已经不存在了——名字过期就是恒真的绿灯"
+        spec = spec_of(slug)
+        assert spec.get("topbar") is None, (
+            f"{slug} 已经补上顶栏了，把它从 _LEGACY_NO_TOPBAR 里删掉（只许减不许加）")
+        assert str((spec.get("cover") or {}).get("eyebrow", "")).strip() == "赛场之上", (
+            f"{slug} 不是「赛场之上」，本来就不受这条闸管，不该出现在豁免表里")
+
+    # ---- 新写的「赛场之上」缺顶栏必须当场报错 ----
+    fresh = {"slug": "全新的一条", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
+                                       "result": "6-3 6-4",
+                                       "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]}}
+    with pytest.raises(reel.ReelError, match="顶栏"):
+        reel._topbar_lines(fresh)
+    # 报错要说出路：给出字段形状和一句能照抄的例子。
+    try:
+        reel._topbar_lines(fresh)
+    except reel.ReelError as exc:
+        text = str(exc)
+    assert "line1" in text and "line2" in text and "萨巴伦卡 6-3 6-4 张帅" in text, text
+
+    # ---- 别的栏目不受这条管（「网球有故事」讲人，「开球之前」还没打完）----
+    for column in ("网球有故事", "开球之前"):
+        assert reel._topbar_lines({"slug": "x", "cover": {"eyebrow": column}}) is None
+
+    # ---- 写了就要过原来那几关：两行、非空、line2 和 cover 一致 ----
+    good = {"slug": "x", "cover": {"eyebrow": "赛场之上", "winner": "萨巴伦卡",
+                                   "result": "6-3 6-4",
+                                   "matchup": [{"name": "萨巴伦卡"}, {"name": "张帅"}]},
+            "topbar": {"line1": "WTA 1000 加拿大站 第三轮", "line2": "萨巴伦卡 6-3 6-4 张帅"}}
+    assert reel._topbar_lines(good) == ("WTA 1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
+    with pytest.raises(reel.ReelError, match="一致"):
+        reel._topbar_lines({**good, "topbar": {**good["topbar"], "line2": "张帅 6-3 6-4 萨巴伦卡"}})
