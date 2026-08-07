@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.7 赛场之上 | 麦克纳莉掀翻温网冠军</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>三个星期前刚捧起温网奖杯的那个人，回来的第一场球就走了。
+
+⸻
+
+北京时间 8 月 6 日早上六点半，多伦多 WTA1000 女单第二轮，Grandstand 球场。世界第 7、六号种子的诺斯科娃，对世界第 70 的麦克纳莉。
+
+诺斯科娃 21 岁，三个星期前的温网决赛赢了穆霍娃，是十五年来最年轻的温网冠军。这一场，是她夺冠之后的第一场比赛。
+
+⸻
+
+第一盘她开局连下三局，很快五比一。
+
+然后这一盘用了六十二分钟才结束，而且不是她的。
+
+五比一，她自己发球胜盘：先拿下一分，接着连丢三分，十五比四十，破发点，没保住。五比二。
+
+五比二，换她接发，这一局她拿到两个盘点——再赢一分，第一盘就是她的。两个都没兑现。
+
+五比三，她第二次上来发球胜盘，打到平分，又被破。五比四。
+
+五比五，六比六，抢七。抢七里她五比六落后，第二个盘点。七比五，第一盘丢了。
+
+⸻
+
+第二盘只用了三十七分钟。
+
+她的一发成功率只剩三成二，对面是八成六。全场十一个双误，第二盘就占了四个；麦克纳莉第二盘一个双误都没有。
+
+从五比一那一局起，接下来的十四局，麦克纳莉赢下了十二局。
+
+⸻
+
+数字摆完（诺斯科娃 / 麦克纳莉）：
+
+Ace 2 / 5
+双误 11 / 5
+一发成功率 48% / 68%
+二发得分率 36% / 55%
+破发点兑现 2 个（共 5 个）/ 4 个（共 7 个）
+发球局保住 5 局（共 9 局）/ 8 局（共 10 局）
+总得分 58 / 74
+最后十个小分 3 / 7
+
+一小时三十八分。
+
+⸻
+
+麦克纳莉 24 岁，辛辛那提人，世界第 70。这是她生涯最好的一场胜利。
+
+她在场边说：「我一直在提醒自己去拥抱那份不适。开局她打得真的很好，而我在这块场地上还有点不自在——影子，什么都有。我就试着接受它，只盯住自己这半边。」
+
+两个人此前只交手过一次，2022 年斯洛伐克特尔纳瓦的一站 ITF 红土赛，也是麦克纳莉赢的。
+
+五比一领先的那一盘，诺斯科娃输在哪儿？
+
+#诺斯科娃 #麦克纳莉 #WTA #多伦多 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
