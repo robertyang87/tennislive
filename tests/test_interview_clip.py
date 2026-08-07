@@ -2611,6 +2611,17 @@ def test_新的采访片必须有解读卡而且引的是他真说过的话():
         d = json.loads(p.read_text("utf-8"))
         if p.stem in clip._NO_TAKEAWAY_LEGACY:
             continue
+        # ⚠️ **没有 `zh` 的 spec 还渲不动**，别拿这条闸拦它。
+        #
+        # 这是闸的第一版留下的一个死结：`mode=subs`（取字幕切行）正是产出
+        # 「写解读卡所需材料」的那一步，而**它要求 spec 先进仓库**——于是
+        # 「要写解读卡」和「还没有内容可写」互相挡着，新选题一条都开不了头。
+        #
+        # 判据跟着**这份 spec 渲不渲得动**走：`segment` 之后没有 `zh` 时
+        # `--stage subs` 打印完就 `return 0`，根本走不到 `render()`。
+        # 所以有 `zh` 才要求有解读卡——`render()` 那道闸一个字没松。
+        if not d.get("zh"):
+            continue
         checked += 1
         clip.check_takeaway(d)          # 缺字段 / 引错话 / 占比不够都会抛
     # 目前七条全在豁免名单里（都是规矩之前发的），所以 checked 可能是 0。
