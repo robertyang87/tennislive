@@ -1513,34 +1513,122 @@ def test_工作流装的依赖覆盖工具import的每一个():
             f"`{_PROVIDES[mod]}`。跑到预检才会报 ModuleNotFoundError。")
 
 
-def test_每个要下载的步骤都带着cookie():
+def _cookie_hungry(tree: ast.Module) -> set[str]:
+    """模块里哪些函数——**含间接调用**——最终会读 cookie。
+
+    从 `cookie_args` 反着推到不动点。**不写名单**：谁要 cookie 由代码自己说，
+    以后加一个下源片的函数，它会自动进这个集合。
+
+    用 AST 不用正则：`cookie_args` 这个名字在注释和 docstring 里到处都是
+    （这一条底下就写着好几次），而**注释根本不进 AST**。
+    """
+    calls: dict[str, set[str]] = {}
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            calls[node.name] = {c.func.id for c in ast.walk(node)
+                                if isinstance(c, ast.Call)
+                                and isinstance(c.func, ast.Name)}
+    hungry = {"cookie_args"}
+    while grown := {n for n, callees in calls.items() if callees & hungry} - hungry:
+        hungry |= grown
+    return hungry
+
+
+def _stage_guard(stmt: ast.stmt) -> str | None:
+    """`if args.stage == "X":` → `"X"`，别的语句 → None。"""
+    if not isinstance(stmt, ast.If):
+        return None
+    t = stmt.test
+    if (isinstance(t, ast.Compare) and len(t.ops) == 1
+            and isinstance(t.ops[0], ast.Eq)
+            and isinstance(t.left, ast.Attribute) and t.left.attr == "stage"
+            and isinstance(t.comparators[0], ast.Constant)):
+        return t.comparators[0].value
+    return None
+
+
+def _stages_needing_cookie() -> tuple[list[str], set[str]]:
+    """跑哪几档 `--stage` 会下东西——顺着 `main()` 的控制流推出来。
+
+    全集取 argparse 的 `choices`（那就是登记在案的全部档位），然后按源码顺序
+    走一遍 `main()`：无条件语句一旦碰到「要 cookie 的函数」，**所有还没
+    `return` 的档位**都记账；`if args.stage == "X"` 那种分支只记它自己那一档，
+    并在它 `return` 之后把 X 从「还在跑」里去掉。
+    """
+    tree = ast.parse((ROOT / "tools" / "build_interview_clip.py")
+                     .read_text(encoding="utf-8"))
+    hungry = _cookie_hungry(tree)
+    main = next(n for n in tree.body
+                if isinstance(n, ast.FunctionDef) and n.name == "main")
+    stages = next(
+        ast.literal_eval(kw.value)
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and getattr(node.func, "attr", "") == "add_argument"
+        and node.args and getattr(node.args[0], "value", None) == "--stage"
+        for kw in node.keywords if kw.arg == "choices")
+
+    def hits(node: ast.AST) -> bool:
+        return any(isinstance(c, ast.Call) and isinstance(c.func, ast.Name)
+                   and c.func.id in hungry for c in ast.walk(node))
+
+    running, needs = set(stages), set()
+    for stmt in main.body:
+        stage = _stage_guard(stmt)
+        if stage is None:                       # 每一档都会走到这句
+            if hits(stmt):
+                needs |= running
+            continue
+        if stage in running and hits(stmt):
+            needs.add(stage)
+        if stage in running and any(isinstance(n, ast.Return) for n in stmt.body):
+            running.discard(stage)              # 这一档到此为止，后面的不算它
+    return stages, needs
+
+
+def test_会下源片的每一步都要拿到cookie():
     """**cookie 从环境变量走，而且每个下载的步骤都得有。**
 
-    踩到的：`verify` 和 `render` 都要 yt-dlp 下东西，但工作流只在 `render`
-    那一步把 cookie 路径注进 spec（跑完还得 `git checkout --` 撤掉）。于是
-    verify 裸下，yt-dlp 立刻吃 `Sign in to confirm you're not a bot`——
-    **而 cookie 文件明明就在那儿，路径还打在日志的 env 里**。
+    来路两次，同一个形状：
 
-    判据：凡是 `run:` 里跑 `--stage verify` 或 `--stage render` 的步骤，
-    `env` 里必须有 `COOKIES`。顺带钉住「别再把 secret 写进 spec」。
+    1. `verify` 和 `render` 都要 yt-dlp 下东西，工作流却只在 `render` 那步把
+       cookie 注进 spec。verify 裸下，立刻吃 `Sign in to confirm you're not
+       a bot`——**而 cookie 文件明明就在那儿，路径还打在日志的 env 里**。
+    2. 2026-08-07：`cover`（#174 加的）**从来没注过 cookie**。它躺了三天没
+       出声，因为在此之前走这条线的都是 Brightcove 源（不要 cookie）；换成
+       YouTube 的第一条连撞三趟，日志上一行「已写入 cookies（25 行）」、
+       下一行「COOKIES=未设置」。
+
+    ⚠️ **而第一版判据正是「伪装成推导的白名单」**：它写死
+    `for s in ("verify", "render")`，于是 `cover` 和 `subs` 这两档后加的
+    **根本不在它的扫描范围里**——`cover` 漏配它一声不吭。收尾那句
+    `assert seen >= 2` 也拦不住：verify + render **正好就是 2**。
+
+    现在从 `cookie_args` 反推谁要 cookie、再顺 `main()` 的控制流推哪几档会
+    走到，**一个 stage 名都不写死**。以后再加一档，它自己会进来。
     """
-    import yaml  # noqa: PLC0415
+    stages, needs = _stages_needing_cookie()
+    assert needs, (
+        "从 cookie_args 推不出任何一档要下载——`main()` 的形状变了，"
+        "这条判据的主语没了，得跟着改")
 
-    wf = yaml.safe_load((ROOT / ".github" / "workflows"
-                         / "interview-clip.yml").read_text(encoding="utf-8"))
-    seen = 0
-    for job in (wf.get("jobs") or {}).values():
-        for step in job.get("steps") or []:
-            run = str(step.get("run") or "")
-            if not any(f"--stage {s}" in run for s in ("verify", "render")):
-                continue
-            seen += 1
+    ran: dict[str, list[dict]] = {}
+    for step in _steps():
+        run = _step_run(step)
+        for s in stages:
+            if f"--stage {s}" in run:
+                ran.setdefault(s, []).append(step)
+    assert needs & set(ran), (
+        f"工作流一档要 cookie 的 stage 都没跑（推出来要 cookie 的是 {sorted(needs)}，"
+        f"工作流跑的是 {sorted(ran)}）——判据的主语没了")
+
+    for stage in sorted(needs & set(ran)):
+        for step in ran[stage]:
             assert "COOKIES" in (step.get("env") or {}), (
-                f"步骤「{step.get('name')}」要下载却没有 COOKIES 环境变量")
-            assert '"cookies"' not in run and "d[\"cookies\"]" not in run, (
+                f"步骤「{step.get('name')}」跑 --stage {stage}，"
+                f"而这一档会下源片，却没有 COOKIES 环境变量")
+            assert '"cookies"' not in _step_run(step), (
                 f"步骤「{step.get('name')}」还在把 cookie 路径写进 spec。"
                 "secret 不该经过仓库里的文件——`cookie_args()` 读环境变量就够了。")
-    assert seen >= 2, f"只找到 {seen} 个下载步骤，verify 和 render 都该算上"
 
 
 def test_没有cookie时要出声不能悄悄裸下(capsys, monkeypatch, tmp_path):
