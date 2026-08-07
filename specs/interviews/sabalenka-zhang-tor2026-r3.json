@@ -1,0 +1,18 @@
+{
+ "slug": "sabalenka-zhang-tor2026-r3",
+ "url": "https://www.youtube.com/watch?v=z6yoIVGsbLo",
+ "source_title": "Aryna Sabalenka vs. Shuai Zhang | 2026 Toronto Round 3 | WTA Match Highlights（WTA 官方频道，401 秒 1920×1080，2026-08-07 上传）",
+ "_source": "**场上采访接在这条集锦的尾巴上**，账号所有者指的路。\n\n⚠️ **同一场集锦，WTA 官网和 WTA 官方 YouTube 是两个不同的剪辑**——这是这一轮最贵的教训：\n\n    WTA 官网 Brightcove `6402962587112`   277.9 秒   纯集锦，没有采访\n    WTA 官方 YouTube  `z6yoIVGsbLo`       **401 秒**   集锦 + 尾巴上约 123 秒场上采访\n\n我做 R2 那条时按「WTA 逐场集锦超过 310 秒才带采访」判过一次，**拿的是官网那份 277.9 秒**，于是得出「第三轮没有场上采访」——判据没错，**主语错了**。这条判据的主语是 **YouTube 那一份**，别再拿官网的时长去套。\n\n⚠️ 顺带核过的两条（留着，省得下次重查）：\n- WTA `sitemap/videos.xml`（1000 条，最新到 2026-08-07T02:55Z）里，多伦多 76 条视频的采访类只有 R64 那条和斯瓦泰克赛前——**站内确实没有**独立的 R3 场上采访条目，它只存在于 YouTube 集锦的尾巴上\n- Tennis Canada 官方频道另有 `POST-MATCH PRESS CONFERENCE | 3rd ROUND | ARYNA SABALENKA`（`tftuAusQTuQ`，390 秒）——**那是发布会，不是场上采访**，这条线要的是后者",
+ "start": 278.0,
+ "end": 401.0,
+ "_span_why": "⚠️ **占位，等 `mode=subs` 的转写出来按真实开口时刻收。** 278 是从「官网那份纯集锦 277.9 秒」推的分界，不是从画面或转写读的——两个平台的剪辑不保证前 277.9 秒逐帧相同。转写出来第一件事就是核这个数。",
+ "column": "赛后开麦",
+ "event": "2026 多伦多 WTA1000 第三轮",
+ "winner": "萨巴伦卡",
+ "_match": "萨巴伦卡 6-3 6-4 张帅，2026 多伦多 WTA1000 女单第三轮（`MatchID LS016`、`RoundID='3'`），1 小时 16 分 38 秒，2026-08-06T22:45Z。\n出处：WTA 接口 `tournaments/806/2026/matches`，`ResultString` 原文 `[1]A. Sabalenka d S. Zhang 6-3,6-4`。",
+ "asr_model": "youtube-auto",
+ "whisper_model": "medium.en",
+ "_asr_why": "这条是 YouTube，**有自动字幕轨**，第一份就用它（`asr_model` 记成 `youtube-auto`），第二份换 `medium.en` 交叉校验。⚠️ 两份必须不同模型，否则那道闸是空的。\n\n⚠️ 这台沙箱**搜得到、下不动**：`ytsearch` 和 `--print` 走得通，`--list-subs` 吃 `Sign in to confirm you're not a bot`。转写和切行都得在 runner 上跑（cookie 只在 Actions secret 里）。",
+ "zh": [],
+ "_zh_todo": "等 runner 上 `mode=subs` 把英文切行打进日志，再照着写中文。"
+}
