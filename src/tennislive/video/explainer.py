@@ -7157,9 +7157,8 @@ def assemble_explainer_video(
         command.extend(["-i", str(Path(intro).resolve())])
         offset = 1
         if intro_badge is not None and Path(intro_badge).is_file():
-            # 静态图当叠加层：给个够长的 `-t`（片头从没超过一分钟），别让它
-            # 在 filter graph 里变成一条没有终点的流。真正决定输出多长的是
-            # 下面 overlay 的主输入（intro 本身），这条只是垫在上面的图层。
+            # 静态图当叠加层：给个够长的 `-t`（片头从没超过一分钟），让它
+            # 在整个片头期间都盖得住。
             command.extend(
                 ["-loop", "1", "-t", "60", "-i", str(Path(intro_badge).resolve())]
             )
@@ -7192,8 +7191,17 @@ def assemble_explainer_video(
         if badge_idx is not None:
             filters.append(f"{intro_chain}[introbg]")
             filters.append(f"[{badge_idx}:v]format=rgba[introbadge]")
+            # ⚠️ **`shortest=1` 不能省。** 台头那路是 `-loop 1 -t 60` 的静态图，
+            # 比 intro 本身（十几秒）长得多；`overlay` 默认不会在主输入结束时
+            # 收口，而是把主输入的最后一帧冻住、跟着叠加层一路播到 60 秒——
+            # 第一版就是这么栽的：intro 本该 16.0s，实测成片却多出 43.97s
+            # （≈ 60 − 16），冻结画面 + 台头，观众会盯着一张静止的看台照片
+            # 看四十多秒。用两个纯色 clip 量过：不给 `shortest=1` 输出跟着
+            # 60 秒的那路走，给了就跟着 4 秒的主输入收口——`test_冷开场台头
+            # 不许把片头拖到台头图那么长` 钉住这一条，反向验证过。
             filters.append(
-                "[introbg][introbadge]overlay=0:0:format=auto,format=yuv420p[vintro]"
+                "[introbg][introbadge]overlay=0:0:shortest=1:format=auto,"
+                "format=yuv420p[vintro]"
             )
         else:
             filters.append(f"{intro_chain},format=yuv420p[vintro]")

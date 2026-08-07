@@ -1059,6 +1059,66 @@ def test_冷开场台头要和幻灯片台头同一份样式(tmp_path):
         "没给 intro_badge，画面里却出现了台头——两次调用互相污染了？")
 
 
+def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
+    """2026-08-07 真实渲染栽的坑：eala-mcnally 那条片子接上台头之后，
+    片头从 16.0s 变成了 60.0s——多出的 43.97s 正好是台头图 `-t 60` 减去
+    intro 本身的 16s。`overlay` 默认不会在**主输入**（intro）结束时收口，
+    而是把它的最后一帧冻住，跟着叠加层（台头图）一路播到 60 秒；本地那条
+    抽一帧看台头有没有叠上去的测试完全没抓到——它只在 t=0.3s 采样，
+    那一刻两个版本都还没跑到问题发生的地方。
+
+    这条测试直接比总时长：intro 4 秒、台头 `-t 60`，接了台头之后的成片
+    不许比没接台头长超过一点点（片头本身的长度不该被台头的 `-t` 参数
+    牵着走）。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    s = tmp_path / "s0.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          f"color=c=green:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+    a = tmp_path / "a0.mp3"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          "sine=frequency=440:sample_rate=24000", "-t", "1.0", "-ac", "1", str(a)])
+    intro = tmp_path / "_intro.mp4"
+    _run(["ffmpeg", "-v", "error", "-y",
+          "-f", "lavfi", "-i", "color=c=magenta:s=1280x720:r=25",
+          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+          "-t", "4.0", "-c:v", "libx264", "-preset", "ultrafast",
+          "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+          str(intro)])
+
+    badge = E._render_intro_badge("测试标题", "开球之前", tmp_path)
+    assert badge is not None and badge.is_file()
+
+    def _dur(path):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+
+    without_badge = E.assemble_explainer_video(
+        [s], [a], tmp_path / "without_badge.mp4", intro=intro,
+    )
+    with_badge = E.assemble_explainer_video(
+        [s], [a], tmp_path / "with_badge.mp4", intro=intro, intro_badge=badge,
+    )
+
+    grew = _dur(with_badge) - _dur(without_badge)
+    assert abs(grew) < 0.3, (
+        f"接上台头之后成片长了 {grew:.2f}s——台头图的 `-t 60` 把片头本身的"
+        "长度拖长了，overlay 那句里是不是漏了 shortest=1？"
+    )
+
+
 def test_同一天可以并存多条片子():
     """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 
