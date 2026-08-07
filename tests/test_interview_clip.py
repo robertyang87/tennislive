@@ -65,6 +65,21 @@ def _specs() -> list[Path]:
     return sorted(SPECS.glob("*.json")) if SPECS.exists() else []
 
 
+def _code_only(src: str) -> str:
+    """只留可执行的那部分：整行注释和三引号块都去掉。
+
+    ⚠️ **注释和 docstring 正是这个仓库记教训的地方**，正文里必然写着当年那些错值
+    （「表头写死 `small.en`」「拼出 `[▶](…（片内 0.0 秒）)`」）。连它们一起扫，
+    「把坑记下来」会被判成「又踩了这个坑」——同一个错这个仓库犯过五次。
+
+    ⚠️ **别用 `ast.get_docstring()` 去 replace**：它回的是**去过缩进**的那一份，
+    和源码里的原文对不上，`str.replace` 一个字都删不掉，而**它不报错**——
+    于是判据看起来装上了，其实什么都没剥掉。踩过一次。
+    """
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    return re.sub(r'"""[\s\S]*?"""', "", body)
+
+
 def _steps() -> list[dict]:
     import yaml  # noqa: PLC0415
 
@@ -2337,6 +2352,38 @@ def test_非YouTube的源不许编一条带时刻的YouTube链接():
     assert "17.4" in out and out.startswith("https://www.tennistv.com/"), out
 
 
+def test_非YouTube的源不许在核对表里编一颗点不动的按钮():
+    """上一条只管住了 `_yt_at` 自己，**调用方把它又破了一次**。
+
+    `_yt_at` 对非 YouTube 的源**故意**回一句带汉字的说明
+    （`<url>（片内 18.7 秒）`），而核对表无条件包上 markdown 链接语法，
+    于是那句说明连同括号一起进了 href：
+
+        [▶](https://players.brightcove.net/…?videoId=6402850037112（片内 0.0 秒）)
+
+    渲出来是一颗**点不动的按钮**，而它和一颗点得动的长得一模一样——正是
+    `_yt_at` 的 docstring 要防的那件事，只是躲到了外面一层。
+
+    判据钉两头：`_jump_md` 的行为，**以及没有别的地方再去包 `_yt_at`**。
+    只验行为拦不住这个错——`_yt_at` 单测一直是绿的，坏的一直是调用方。
+    """
+    from tools.build_interview_clip import _jump_md
+
+    yt = _jump_md("https://www.youtube.com/watch?v=abc", 17.4, "▶")
+    assert yt == "[▶](https://youtu.be/abc?t=17)", yt
+
+    other = _jump_md("https://players.brightcove.net/1/x_default/"
+                     "index.html?videoId=640285", 18.74, "跳过去")
+    assert "](" not in other, f"给钉不住时刻的源编了一颗点不动的按钮：{other}"
+    assert "18.7" in other, other
+
+    # 位置这一头：源码里不许再出现 `[…]({_yt_at(…)})`。
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    bad = re.findall(r"\]\(\{_yt_at\(", _code_only(src))
+    assert not bad, ("又把 `_yt_at` 包进 markdown 链接了——"
+                     f"非 YouTube 的源会渲出一颗点不动的按钮（{len(bad)} 处）")
+
+
 def test_非YouTube的源没有自动字幕轨要说清楚而不是去拉(monkeypatch, tmp_path):
     """只有 YouTube 有自动字幕轨。对别的源调 yt-dlp 只会拿到一句方向完全错误的
     报错（Tennis TV 报的是「只对注册用户开放」，读起来像 cookie 过期）。
@@ -2409,18 +2456,35 @@ def test_换模型那道闸要排在导入whisper之前():
         "没装这个包的机器（CI 就是）永远走不到它")
 
 
-def test_交叉校验报告里第一份是谁要照实写():
-    """报告的标签原来写死是「YouTube 自动字幕」。接进 Tennis TV 之后第一份其实
-    是本地跑的 ASR——标签再写 YouTube 就是**主动给出一个错答案**：将来有人回头
-    查这份报告，会以为它比的是两个不同来源，而那正是这道闸唯一要证明的事。
+def test_两份转写各是谁两张报告都要照实写():
+    """标签原来写死是「YouTube 自动字幕」和「small.en」。
+
+    第一份那一半接 Tennis TV 时修过；**第二份那一半漏了**——`probe_gap_speech`
+    的表头一直印着 `small.en`，而萨巴伦卡那条 spec 写的是 `medium.en`，
+    Brightcove 源也根本没有 YouTube 自动字幕（第一份也是我们自己跑的）。
+    **闸跑的是对的，报告印的是错的**，而报告存在的全部理由就是告诉人
+    「这几秒是拿谁跟谁比出来的」。
+
+    ⚠️ 上一版的判据只扫 `verify_transcript` 的函数体——抽成公共函数之后
+    **主语就没了**（`split()` 拿到的那段里再也没有 `asr_model`）。
+    换成钉行为 + 钉「两张报告都调它」，两处出处合并成一处。
     """
+    from tools.build_interview_clip import DEFAULT_WHISPER, _first_source_label, _second_model
+
+    assert _first_source_label({}) == "YouTube 自动字幕", "退路（真是 YouTube 那条）没了"
+    assert _first_source_label({"asr_model": "small.en"}) == "ASR（small.en）"
+    assert _second_model({}) == DEFAULT_WHISPER
+    assert _second_model({"whisper_model": "medium.en"}) == "medium.en"
+
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
-    body = src.split("def verify_transcript(")[1].split("\ndef ")[0]
-    body = "\n".join(ln for ln in body.splitlines()
-                     if not ln.lstrip().startswith("#"))
-    assert 'spec["asr_model"]' in body or "spec['asr_model']" in body, \
-        "报告没有按 spec 的 asr_model 决定第一份叫什么"
-    assert '"YouTube 自动字幕"' in body, "退路（真是 YouTube 那条）没了"
+    for fn in ("verify_transcript", "probe_gap_speech"):
+        body = _code_only(src.split(f"def {fn}(")[1].split("\ndef ")[0])
+        assert "_first_source_label(spec)" in body, f"{fn} 没按 spec 决定第一份叫什么"
+        assert "_second_model(spec)" in body, f"{fn} 把第二份的模型名写死了"
+        # 裸的子串，不是 `"small.en"`——写死的那次是嵌在一句中文里的
+        # （`第二份 ASR 是 \\`small.en\\`（英语专用）`），带引号的判据抓不到它。
+        assert "small.en" not in body, f"{fn} 里还留着写死的 small.en"
+        assert "YouTube" not in body, f"{fn} 里还留着写死的「YouTube」"
 
 
 def test_采访片的片尾要和正片拼得起来(tmp_path):
@@ -2775,6 +2839,46 @@ def test_提炼工具要把没说的词也打出来():
                      f"没说的词没被打出来，而那一节是这个工具的全部价值\n{rep}")
 
 
+def test_提炼原料只算片内那一段():
+    """`cap_*.json3` 是**整条源片**的转写，报告说的是**这条片子**——
+    spec 剪过 `start`/`end` 的时候这两者不是一回事。
+
+    萨巴伦卡那条把主持人那句两个模型都听不清的收场白剪掉了（`end: 63.7`，
+    那一轮从 63.80 起）。不掐窗口的话主持人算出来是 **143** 词，而片子里
+    只有 **119**——**表头还印着「采访 63.7 秒」**，读的人没有第二个地方能对。
+    而这个数是要印上封面的：`主持人问了 119 个词 / 她答了 77 个`。
+    多算的那 24 个词观众一个都听不到，印出去就是一句假话。
+
+    ⚠️ 判据要**同时钉两头**：窗外的不许进来、窗内的一个都不许少。
+    只钉前一头的话，把窗口收成空的也能过。
+    """
+    import json as _json
+    import tempfile
+
+    import tools.interview_takeaway as tk
+
+    cap = {"events": [
+        {"tStartMs": 0, "segs": [{"utf8": ">> How was it out there tonight?"}]},
+        {"tStartMs": 3000, "segs": [{"utf8": ">> Not easy but I am happy."}]},
+        {"tStartMs": 6000, "segs": [{"utf8": ">> Thanks and enjoy the rest of it."}]},
+    ]}
+    lines = [{"a": 0.0, "en": ">> How was it out there tonight?"},
+             {"a": 3.0, "en": ">> Not easy but I am happy."}]
+
+    with tempfile.TemporaryDirectory() as d:
+        out = Path(d)
+        (out / "lines.json").write_text(_json.dumps(lines), encoding="utf-8")
+        (out / "cap_asr.json3").write_text(_json.dumps(cap), encoding="utf-8")
+        rep = tk.report({"slug": "t", "start": 0.0, "end": 5.0}, out)
+
+    # 窗外那一轮（6.0 秒，`Thanks and enjoy…`）不许进来
+    assert "enjoy the rest" not in rep, \
+        f"把 `end` 之后的那一轮算进来了——这个数要印上封面\n{rep}"
+    # 主持人只剩第一问：How was it out there tonight = 6 词
+    assert "主持人问了 6 个" in rep, f"窗内的词被掐掉了\n{rep}"
+    assert "他说了 6 个词" in rep, f"球员那一轮被掐掉了\n{rep}"
+
+
 def test_落点卡是可选的收尾卡是必须的():
     """账号所有者 2026-08-05：「我建议还是不要前面卡，后面卡片可以留着」。
 
@@ -2881,3 +2985,54 @@ def test_会合语音的工具入口都要挂本地CA():
         f"这几个工具会合语音，却没挂代理 CA：{guilty}\n"
         "沙箱里它们会吃 CERTIFICATE_VERIFY_FAILED，而退路会把它吞成"
         "「合不出来」——看起来像 edge-tts 挂了")
+
+
+def test_会合语音的工作流都要装edge_tts():
+    """上一条管的是**沙箱**那一头（证书链），这一条管 **runner** 那一头（依赖）。
+    同一个 bug 的两半，而 runner 这半真的漏了。
+
+    `interview-clip.yml` 的装依赖那行原来是
+    `pip install -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper`
+    ——**没有 edge-tts**。这条线在解读卡之前一个字都不合语音（片尾走的是母版
+    转码），所以历史上不需要它；加口播时它是「同时要改的第三处」。
+
+    ⚠️ **漏了它不报错。** `_takeaway_voice` 的退路把 ImportError 吞成一句
+    「口播合不出来，退回静音卡」，run 照样绿、成片照样出——只是那张卡是
+    **数字静音（实测 −91 dB）**，而账号所有者对这张卡的原话是「但要有配音」。
+    量出来才看得见（run 31151599208）。
+
+    判据**自己推导，不维护白名单**：run 里跑了哪个 `tools/*.py`，那个工具
+    （连同它 import 的本仓库模块）会不会走到 `synthesize_narration`。
+    """
+    import ast
+
+    def _calls_tts(mod: str) -> bool:
+        """这个工具自己会不会合语音。
+
+        ⚠️ **不递归。** 第一版顺着 import 往下扒，当场把 `frame-grab.yml`
+        （抽帧）和 `auto-push-explainer.yml`（只推送）也判成了「要装」——
+        它们导入的某个模块里有 TTS，可它们自己那条路走不到。
+        **判据宁可窄不可宽**：扩大化的判据会让下一个人要么白装一个包、
+        要么干脆把这条检查删掉。和上一条一样，只看这个模块自己提没提。
+        """
+        src = ROOT / "tools" / f"{mod}.py"
+        if not src.is_file():
+            return False
+        tree = ast.parse(src.read_text("utf-8"))
+        names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)} | {
+            n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+        imported = {a.name for n in ast.walk(tree)
+                    if isinstance(n, ast.ImportFrom) for a in n.names}
+        return "synthesize_narration" in (names | imported)
+
+    guilty = []
+    for wf in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        body = "\n".join(ln for ln in wf.read_text("utf-8").splitlines()
+                         if not ln.lstrip().startswith("#"))
+        if not any(_calls_tts(t) for t in set(re.findall(r"tools/(\w+)\.py", body))):
+            continue
+        if "edge-tts" not in body:
+            guilty.append(wf.name)
+    assert not guilty, (
+        f"这几条工作流会跑到合语音，却没装 edge-tts：{guilty}\n"
+        "缺了它 run 照样绿，只是那一段变成数字静音——量出来才看得见")
