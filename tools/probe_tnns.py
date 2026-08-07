@@ -44,18 +44,28 @@ def _dump_objects(body: str, word: str, limit: int = 3) -> None:
     整份 145 KB 打出来没人看得完，只截命中前后几百字又会把对象拦腰砍断——
     id 和它的比分常常分在两头。所以从命中位置向外找配平的花括号，
     打出完整的一个对象。
+
+    ⚠️ **匹配要用压缩分隔符，不能用 `json.dumps` 的默认值。** 真实接口
+    吐的是压缩 JSON（`"p":[` 一个空格都没有），而 `json.dumps(node, …)`
+    不传 `separators` 会在冒号和逗号后面**加一个空格**（`"p": [`）——
+    拿它去找 `"p":[` 永远找不到，2026-08-07 那次实测「命中附近」明明打印出
+    `"p":[{"k":972327,…` 这一整段，`_dump_objects` 却报「0 个」。
+    这跟本仓库反复栽过的「查的东西和跑的东西不是一回事」是同一个形状，
+    只是这次错的是**匹配用的文本**，不是产物本身。
     """
     try:
         data = json.loads(body)
     except Exception:  # noqa: BLE001
         data = None
 
+    def _compact(node) -> str:
+        return json.dumps(node, ensure_ascii=False, separators=(",", ":"))
+
     def walk(node, path=""):
         if isinstance(node, dict):
-            if word in json.dumps(node, ensure_ascii=False):
+            if word in _compact(node):
                 kids = [v for v in node.values()
-                        if isinstance(v, (dict, list))
-                        and word in json.dumps(v, ensure_ascii=False)]
+                        if isinstance(v, (dict, list)) and word in _compact(v)]
                 if not kids:            # 最小的那个含它的对象才有信息量
                     yield path, node
                 for k, v in node.items():

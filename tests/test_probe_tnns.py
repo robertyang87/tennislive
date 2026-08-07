@@ -1,0 +1,37 @@
+"""probe_tnns.py 的 `_dump_objects`：真实响应是压缩 JSON，匹配也必须按压缩比.
+
+2026-08-07 栽过一次：真响应里明明打印着 `"p":[{"k":972327,…`，`_dump_objects`
+却报「命中 0 个」——因为它拿 `json.dumps(node, ...)` 默认分隔符（冒号后加空格）
+重新序列化再去找 `"p":[`，而重序列化出来的是 `"p": [`，永远对不上压缩 JSON
+里的写法。判据钉住这条路径不再回归。
+"""
+
+from __future__ import annotations
+
+import json
+
+from tools.probe_tnns import _dump_objects
+
+
+def test_dump_finds_object_by_compact_key_colon_bracket_pattern(capsys):
+    """`"p":[` 这种紧贴冒号的结构化查询词，必须能命中压缩 JSON 里的真实写法."""
+    payload = {
+        "all_matches": [
+            {"k": "1", "p": [{"n": "Jodar R."}, {"n": "Musetti L."}]},
+        ]
+    }
+    body = json.dumps(payload, separators=(",", ":"))  # 真实接口就是这样压缩的
+    assert '"p":[' in body  # 先确认 fixture 本身没写错
+
+    _dump_objects(body, '"p":[', limit=3)
+    out = capsys.readouterr().out
+    assert "含 '\"p\":[' 的最小对象 1 个" in out
+    assert "Jodar R." in out
+
+
+def test_dump_still_finds_plain_word(capsys):
+    """普通词（没有冒号/逗号边界）不受这次改动影响，仍然找得到."""
+    body = json.dumps({"all_matches": [{"n": "Coleman Wong"}]}, separators=(",", ":"))
+    _dump_objects(body, "Wong", limit=3)
+    out = capsys.readouterr().out
+    assert "Coleman Wong" in out
