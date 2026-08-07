@@ -1,6 +1,6 @@
 # 转写核对表：sabalenka-zhang-tor2026-r3
 
-源片 https://www.youtube.com/watch?v=z6yoIVGsbLo　采访段 331.2–388.5 秒（共 38 行）
+源片 https://www.youtube.com/watch?v=z6yoIVGsbLo　采访段 331.2–363.2 秒（共 22 行）
 
 | # | 片内 | 跳到源片 | 英文 | 中文 | 判据 |
 |--:|:--|:--|:--|:--|:--|
@@ -26,22 +26,6 @@
 | 20 | 0:25.8 | [▶](https://youtu.be/z6yoIVGsbLo?t=356) | that I managed to, you know, | 自己撑住了 |  |
 | 21 | 0:27.4 | [▶](https://youtu.be/z6yoIVGsbLo?t=358) | stay stay focused and uh and managed | 保持住专注 也 |  |
 | 22 | 0:29.7 | [▶](https://youtu.be/z6yoIVGsbLo?t=360) | to close this match in straight sets | 直落两盘收下了这场球 |  |
-| 23 | 0:32.1 | [▶](https://youtu.be/z6yoIVGsbLo?t=363) | and just finally absolutely packed | 最后一个问题 今晚这里 |  |
-| 24 | 0:33.9 | [▶](https://youtu.be/z6yoIVGsbLo?t=365) | in here tonight. | 坐得满满当当 |  |
-| 25 | 0:34.6 | [▶](https://youtu.be/z6yoIVGsbLo?t=365) | Your second night match. | 你的第二场夜场 |  |
-| 26 | 0:35.8 | [▶](https://youtu.be/z6yoIVGsbLo?t=366) | Just a word on the atmosphere here. | 说说这里的气氛吧 |  |
-| 27 | 0:37.5 | [▶](https://youtu.be/z6yoIVGsbLo?t=368) | It's electric, isn't it? | 简直点着了 是不是 |  |
-| 28 | 0:38.7 | [▶](https://youtu.be/z6yoIVGsbLo?t=369) | Oh my god, | 天啊 |  |
-| 29 | 0:39.2 | [▶](https://youtu.be/z6yoIVGsbLo?t=370) | it's a really amazing atmosphere. | 这气氛真的太棒了 |  |
-| 30 | 0:41.1 | [▶](https://youtu.be/z6yoIVGsbLo?t=372) | I'm I'm I'm glad | 我很高兴 |  |
-| 31 | 0:42.2 | [▶](https://youtu.be/z6yoIVGsbLo?t=373) | that I'm playing the night night matches. | 自己打的是夜场 |  |
-| 32 | 0:44.4 | [▶](https://youtu.be/z6yoIVGsbLo?t=375) | It's uh I hope they they'll continue | 我希望他们能继续 |  |
-| 33 | 0:48.4 | [▶](https://youtu.be/z6yoIVGsbLo?t=379) | scheduling me for the night matches | 把我排在夜场 |  |
-| 34 | 0:50.1 | [▶](https://youtu.be/z6yoIVGsbLo?t=381) | because it's uh it's the best to play in front | 因为在你们面前打球 |  |
-| 35 | 0:52.8 | [▶](https://youtu.be/z6yoIVGsbLo?t=384) | of you all to enjoy the atmosphere, | 最棒了 享受这气氛 |  |
-| 36 | 0:54.8 | [▶](https://youtu.be/z6yoIVGsbLo?t=386) | enjoy the support. | 享受这份支持 |  |
-| 37 | 0:56.0 | [▶](https://youtu.be/z6yoIVGsbLo?t=387) | You guys are the best. | 你们是最棒的 |  |
-| 38 | 0:56.9 | [▶](https://youtu.be/z6yoIVGsbLo?t=388) | Thank you. | 谢谢 |  |
 
 ## 还欠着的
 
