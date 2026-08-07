@@ -1432,6 +1432,34 @@ def test_每个mode都各干各的活():
     assert stage["push"] == [], stage["push"]
 
 
+def test_碰最终成片的步骤只在render跑():
+    """**`cover` 从来不产出 `$SLUG.mp4`。** `--stage cover` 的 docstring
+    说得明明白白：「**没有出片**：确认好看再跑 `--stage render`，这样一条
+    片子只往仓库里塞一个 mp4」——它下源片、渲海报、删源片，从头到尾
+    没有 `$SLUG.mp4` 这个文件。
+
+    「成片太大就发到 Release」那一步原来跟 render 共用一个 `if:`
+    （`mode == 'render' || mode == 'cover'`），而它开头就 `stat` 这个文件——
+    cover 那一档跑到这儿必然 `cannot statx ... No such file or directory`。
+    `sabalenka-zhang-tor2026-r3` 就是这么栽的：cookie 和 client 梯子两个
+    修复都生效了，`只出海报` 那一步真的成功了，下一步却把整个 run 拖红，
+    这条 spec 一次都没能验证到那两个修复。
+
+    判据自动推导，不写死步骤名：凡是 `run:` 里出现 `$SLUG.mp4` 或
+    `${{ slug }}.mp4` 这个模式的步骤，`if:` 都不许在 `mode == 'cover'`
+    时成立。
+    """
+    pat = re.compile(r"(\$SLUG\.mp4|slug\s*\}\}\.mp4)")
+    hit = [s.get("name") for s in _steps() if pat.search(_step_run(s))]
+    assert hit, "一个碰最终成片的步骤都没扫到——判据的主语没了"
+    for s in _steps():
+        if not pat.search(_step_run(s)):
+            continue
+        assert not _if_holds(s.get("if"), mode="cover"), (
+            f"步骤「{s.get('name')}」碰 $SLUG.mp4，但在 mode=cover 时也会跑——"
+            "cover 从不产出这个文件，会 stat 失败把整趟 run 拖红")
+
+
 def test_封面文件名是push_reel认的那个():
     """`push_reel.py` 只认 `poster.jpg`。改名等于推送里少一整屏海报，
     而它**只打印一行提示，不报错**——又一个不吭声的兜底。"""

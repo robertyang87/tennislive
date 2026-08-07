@@ -392,8 +392,14 @@ jobs:
       # 为什么是 Release 而不是 LFS：LFS 免费额度只有 1 GB/月流量，而且
       # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
       # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
+      # ⚠️ **只在 `render` 才跑，`cover` 一律不跑。** `--stage cover` 的
+      # docstring 白纸黑字写着「**没有出片**：确认好看再跑 `--stage render`，
+      # 这样一条片子只往仓库里塞一个 mp4」——它删源片、渲海报，从不落
+      # `$SLUG.mp4`。这一步原来两档都跑，`stat` 一个不存在的文件直接
+      # `cannot statx ... No such file or directory`，整条 `mode=cover`
+      # 的 run 在这儿栽倒，从来没能验证过 cookie／client 梯子那两个修复。
       - name: 成片太大就发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        if: github.event.inputs.mode == 'render'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
