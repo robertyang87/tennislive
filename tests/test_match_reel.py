@@ -106,6 +106,92 @@ def test_只给mode等于push不给push等于true要当场报错():
         "排在后面的话那一趟照样先干一遍活")
 
 
+def test_push模式按slug反查目录不按今天的日期(tmp_path):
+    """`mode=push` 推的是**已经渲好、可能是好几天前的成片**，不是今天新出的。
+
+    2026-08-07 想把 `eala-pegula-final`（8 月 4 日渲的，账号所有者说
+    「推微信后再确认审核」之后一直没推）补推出去，才发现「算出目录」那一步
+    一直写死 `OUT_DATE=$(TZ=Asia/Shanghai date +%F)`——render/cover/probe/
+    narration 四种模式确实该按今天算（当场生成新内容），但 push 模式套用
+    同一行，会拼出一个**当天根本没写过东西**的路径。下游「push 模式先确认
+    成片真的落地了」那道闸会报「既不在这个 commit 里」，而真实原因是
+    **问错日子了**，不是片子没渲、也不是仓库出了别的问题。
+
+    这条判据**真跑一遍抽出来的 bash 脚本**（不是读源码字符串猜它对不对）：
+    造一个临时 git 仓库，在两个不同日期的目录下放同一个 slug 的
+    `render.json`（模拟 `wong-brooksby` 那种重渲过的片子），跑 `mode=push`
+    要选中**较晚**那个日期——和「查产物按最新那一份，别拿被顶替掉的当基准」
+    是同一条判据搬到这儿。
+    """
+    assert __import__("shutil").which("git"), "没有 git，这条判据跑不了"
+
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.email", "t@t"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.name", "t"], cwd=repo, check=True)
+
+    for date in ("2026-08-04", "2026-08-06"):
+        d = repo / "output" / date / "reel" / "wong-brooksby"
+        d.mkdir(parents=True)
+        (d / "render.json").write_text("{}", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "x"], cwd=repo, check=True)
+
+    block = _step_block("算出目录")
+    script = block.split("run: |", 1)[1]
+    # 工作流里引用的是 GitHub Actions 的输入插值语法，这儿换成真实变量喂给脚本
+    script = script.replace(
+        '"${{ github.event.inputs.slug }}"', '"$SLUG"'
+    ).replace(
+        "${{ github.event.inputs.mode }}", "$MODE"
+    )
+    # `git sparse-checkout add` 在没有先 `init --sparse` 的仓库上会报错，
+    # 这条判据只关心 OUT_DIR/OUT_DATE 怎么算出来的，不测稀疏检出本身
+    # （那半条已经有别的判据在管），所以把这一行摘掉再跑。
+    script = "\n".join(
+        line for line in script.splitlines()
+        if "sparse-checkout" not in line
+    )
+
+    def run_paths(mode: str) -> dict[str, str]:
+        subprocess.run(
+            ["bash", "-c", script], cwd=repo, check=True,
+            capture_output=True, text=True,
+            env={**os.environ, "SLUG": "wong-brooksby", "MODE": mode,
+                 "GITHUB_OUTPUT": str(tmp_path / f"gh_output_{mode}")},
+        )
+        out = (tmp_path / f"gh_output_{mode}").read_text(encoding="utf-8")
+        return dict(line.split("=", 1) for line in out.strip().splitlines())
+
+    pushed = run_paths("push")
+    assert pushed["outdir"] == "output/2026-08-06/reel/wong-brooksby", (
+        f"push 模式该反查到最晚那个日期，实际算出 {pushed}")
+    assert pushed["date"] == "2026-08-06"
+
+    # 反向验证：render 模式不受这次改动影响，仍然按今天算——不能因为修好了
+    # push 就把 render 也改成「查最晚的历史目录」，那会让**新渲**的片子
+    # 覆盖不到今天的路径。工作流里用的是 Asia/Shanghai，这儿只需要确认它走的
+    # 不是「反查历史目录」那条路，不用较真时区精确到哪一天。
+    rendered = run_paths("render")
+    assert rendered["outdir"] == f"output/{rendered['date']}/reel/wong-brooksby"
+    assert rendered["outdir"] != pushed["outdir"], (
+        "render 模式不该复用 push 模式反查出来的历史目录")
+
+    # 没渲过的 slug，push 模式要报错交代清楚，不能悄悄退回今天的日期
+    # （那样会指向一个空目录，下游那道闸的报错就变成一句误导）。
+    missing = subprocess.run(
+        ["bash", "-c", script], cwd=repo, capture_output=True, text=True,
+        env={**os.environ, "SLUG": "nobody-rendered-this", "MODE": "push",
+             "GITHUB_OUTPUT": str(tmp_path / "gh_output_missing")},
+    )
+    assert missing.returncode != 0, "没渲过的 slug，push 模式不该假装成功"
+    # `echo "::error::..."` 只是往 stdout 写一行 GitHub Actions 认得的魔法字符串
+    # ——在真实 Actions runner 上会被拎出来标红，但普通 bash 子进程里它就是
+    # 平平无奇的 stdout，不会自动跑到 stderr 去。
+    assert "先跑一次 mode=render" in missing.stdout
+
+
 def test_复制页写在提交之前():
     text = WORKFLOW.read_text(encoding="utf-8")
     names = _steps(text)
