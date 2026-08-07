@@ -1873,6 +1873,42 @@ def _takeaway_speech(card: dict) -> str:
 _MERGE_CONTAINERS = frozenset("mp4 mkv webm mov avi flv".split())
 
 
+def _ytdlp_ladder() -> list[tuple[str, list[str]]]:
+    """复用 match-reel 那套 client 梯子，别另写一份会分叉的。
+
+    `grab_frames.py` 已经这么做过一次——**这是第二次跨工具复用同一个梯子**，
+    不是新发明。match-reel 的 `_ladder()` 是被 YouTube 对机房 IP 的封锁
+    （`Sign in to confirm you're not a bot`）逼出来的，按 player client
+    一档档试、每档失败都出声；这条线原来只有一档（默认 client），撞上的是
+    同一族但报法不同的错——`sabalenka-zhang-tor2026-r3` 连撞两趟
+    `The page needs to be reloaded`，`web`/`tv downgraded`/`web safari`
+    各试各的都在同一步栽了，而 `_PLAIN` 梯子里的 `android_vr` / `tv_simply`
+    走的是不同接口，正是这套梯子存在的理由。
+
+    **只取梯子，不取 `YTDLP_BASE`**：那两个值（`--js-runtimes node`）从不变，
+    直接写死在 `yt_download` 的调用里更简单，也不会被
+    `test_每一次调yt_dlp都带上cookie和JS` 那条 AST 判据误判成「没带」——
+    它扫的是列表字面量里的常量，扫不到一层变量转手。
+
+    ⚠️ **`tools/` 要自己确保在 `sys.path` 上，不能指望调用方顺手插过。**
+    直接 `python tools/build_interview_clip.py` 跑时 Python 自动把脚本所在
+    目录放进 `sys.path[0]`，这条 import 从不出错；但测试里这个模块是按
+    `tools.build_interview_clip` 这个包名导入的，`tools/` 本身不在
+    `sys.path` 上——除非**另一个**测试文件恰好先 `sys.path.insert` 过它
+    （`test_preview_segments.py` 就这么做）。单独跑这个文件的测试时踩过：
+    那个恰好没被收集，退回单档梯子，行为没错但是巧合，不是必然。
+    """
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    try:
+        from build_match_reel import _ladder  # noqa: PLC0415
+        return _ladder()
+    except Exception as exc:  # 导入失败要出声，别悄悄退回一个更弱的梯子
+        print(f"[警告] 取不到 match-reel 的 client 梯子（{exc}），退回单档默认")
+        return [("默认", [])]
+
+
 def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
     """下到 `dest`，**下完必须确认它真的在那儿**。返回实际落地的路径。
 
@@ -1884,34 +1920,56 @@ def yt_download(url: str, dest: Path, fmt: str, spec: dict) -> Path:
 
     两道保险：`--merge-output-format mp4` 让它一律 remux 成 mp4；
     真落到别的后缀时**把目录里有什么列出来**，别只说「文件不存在」。
+
+    ⚠️ **单档失败要换 client 重试，不能只报一次错就认栽。** 原来只用默认
+    client 试一次，`sabalenka-zhang-tor2026-r3`（YouTube 源）连撞两趟
+    `The page needs to be reloaded`——和 cookie 无关，是这台机器和某些
+    player client 之间的接口问题。改成沿用 `_ytdlp_ladder()` 逐档重试，
+    每档都把失败原因打出来，全灭了才报错。
     """
     if dest.exists():
         return dest
-    # `yt-dlp[default]` 带 yt-dlp-ejs 才解得开 n challenge；少了它不会报
-    # 「装少了」，而是任何格式选择器都匹配不上。见 match-reel.yml。
-    cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-           "-f", fmt, "-o", str(dest), *cookie_args(spec)]
+    media = media_url(url)  # **页面地址不一定就是下载地址**，Tennis TV 要先解一次
     # ⚠️ **`--merge-output-format` 只在真的要合流、且容器它认识时才加。**
     # 加在纯音轨那条路上（`-f ba` → `.m4a`）会直接吃
     # `error: invalid merge output format "m4a" given`，yt-dlp **一秒退出**，
     # 看起来像网络问题。踩过：为了「别留一条没有保险的路」把音频也接进这个
     # 函数，结果**把本来通的那条弄坏了**——加保险也要验它对每条路都成立。
-    if "+" in fmt and (ext := dest.suffix.lstrip(".")) in _MERGE_CONTAINERS:
-        cmd += ["--merge-output-format", ext]
-    # **页面地址不一定就是下载地址。** Tennis TV 那条要先解一次，见 `media_url`。
-    cmd.append(media_url(url))
-    subprocess.run(cmd, check=True, timeout=1800)
-    if dest.exists():
-        return dest
-    # **空结果先自证是真空**：文件没在预期的位置，不等于没下下来。
-    sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
-    if len(sibs) == 1:
-        print(f"⚠️ yt-dlp 落到了 {sibs[0].name}（不是 {dest.name}）——按实际的用")
-        return sibs[0]
+    merge = (["--merge-output-format", ext]
+             if "+" in fmt and (ext := dest.suffix.lstrip(".")) in _MERGE_CONTAINERS
+             else [])
+    ladder = _ytdlp_ladder()
+    tried: list[str] = []
+    for label, extra in ladder:
+        cmd = ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+               "-f", fmt, "-o", str(dest), *cookie_args(spec), *extra, *merge, media]
+        # 240 秒：够一次正常下载（YouTube 限速约 0.7 MB/s，几分钟片子的
+        # 720p 源片量得到），又不至于一档卡死拖垮整个梯子——`render` 那条路
+        # 和这个函数共享 45 分钟的 job 预算，装依赖已经先花掉一截。
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+        if proc.returncode == 0 and dest.exists():
+            if tried:
+                print(f"[下载] {label} 成功（前面 {len(tried)} 档没成）")
+            return dest
+        # **空结果先自证是真空**：文件没在预期的位置，不等于没下下来——
+        # 某些 player client 会把最佳编码合到 `.mkv` 而不是 `dest` 本身。
+        sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
+        if len(sibs) == 1 and sibs[0].stat().st_size > 0:
+            print(f"⚠️ yt-dlp 落到了 {sibs[0].name}（不是 {dest.name}）——按实际的用")
+            return sibs[0]
+        # 这一档确认失败了才清，不能在下一档开始前清——那样会把这一档刚刚
+        # 产出的、还没来得及被上面那两条判定接住的文件冲掉。
+        for stray in sibs:
+            stray.unlink(missing_ok=True)
+        tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
+        print(f"[下载] {label} 没成：{tail[0][:150]}")
+        tried.append(f"  {label}: {tail[0][:150]}")
+    final_sibs = sorted(p for p in dest.parent.glob(f"{dest.stem}.*") if p.is_file())
     raise SystemExit(
-        f"下完了但 {dest} 不在。目录里有："
-        + (", ".join(f"{p.name}({p.stat().st_size / 1e6:.1f}MB)" for p in sibs)
-           or "（空）"))
+        f"{len(ladder)} 档 client 全下不动 {url}。目录里有："
+        + (", ".join(f"{p.name}({p.stat().st_size / 1e6:.1f}MB)" for p in final_sibs)
+           or "（空）")
+        + "\n" + "\n".join(tried))
 
 
 def logo_mask(src: Path, box: list[float], dest: Path, mirrored: bool = False,

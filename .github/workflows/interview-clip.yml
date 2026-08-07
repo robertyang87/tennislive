@@ -343,8 +343,19 @@ jobs:
       # **只出海报，不出片。** 2026-08-04 一晚渲了五趟，四趟是为了换封面——
       # 每趟六分钟、往仓库里永久塞一个 50~70 MB 的 blob，而真正变的只有第一帧。
       # 走这一档：下源片 → 抽帧 → 渲海报 → 删源片，**一个 mp4 都不产生**。
+      #
+      # ⚠️ **这一步也要 `COOKIES`，它一样要下源片。** 上面那句「两步都只靠环境
+      # 变量」是 `verify` / `render` 两步时代写的，而 `cover` 是后来加的
+      # （#174），**加的时候没跟着注入**——又一次「加新能力就要同时改三处」。
+      # 它躺了三天没出声，因为在此之前走这条线的都是 Brightcove 源（不要
+      # cookie）；换成 YouTube 的第一条（`sabalenka-zhang-tor2026-r3`）连撞三趟
+      # `Sign in to confirm you're not a bot`，而日志上一行写着「已写入
+      # cookies（25 行）」、下一行写着「COOKIES=未设置」。
+      # 判据 `test_会下源片的每一步都要拿到cookie` 自己推导，不维护白名单。
       - name: 只出海报（不出片）
         if: github.event.inputs.mode == 'cover'
+        env:
+          COOKIES: ${{ steps.cookies.outputs.path }}
         run: |
           set -o pipefail
           SPEC="specs/interviews/${{ github.event.inputs.slug }}.json"
@@ -381,8 +392,14 @@ jobs:
       # 为什么是 Release 而不是 LFS：LFS 免费额度只有 1 GB/月流量，而且
       # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
       # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
+      # ⚠️ **只在 `render` 才跑，`cover` 一律不跑。** `--stage cover` 的
+      # docstring 白纸黑字写着「**没有出片**：确认好看再跑 `--stage render`，
+      # 这样一条片子只往仓库里塞一个 mp4」——它删源片、渲海报，从不落
+      # `$SLUG.mp4`。这一步原来两档都跑，`stat` 一个不存在的文件直接
+      # `cannot statx ... No such file or directory`，整条 `mode=cover`
+      # 的 run 在这儿栽倒，从来没能验证过 cookie／client 梯子那两个修复。
       - name: 成片太大就发到 Release（不进 git）
-        if: github.event.inputs.mode == 'render' || github.event.inputs.mode == 'cover'
+        if: github.event.inputs.mode == 'render'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
