@@ -1,0 +1,127 @@
+{
+  "sids": {"1": {"t": "UTR PTT Sample", "r": 1, "su": "UTR Women · Hardcourt"}},
+  "all_matches": [
+    {
+      "k": "73252916",
+      "ka": "dc",
+      "p": [
+        {"k": 972327, "n": "Rafael Jodar", "s": 20, "f": ["ES"], "w": true},
+        {"k": 359602, "n": "Lorenzo Musetti", "s": 11, "f": ["IT"], "l": true}
+      ],
+      "ids": [972327, 359602],
+      "sc": [[6, 4, 1], [6, 3, 1]],
+      "r": 97,
+      "season_id": "sr:season:134979",
+      "start_time_timestamp": 1786057200000,
+      "finishedAt": 1786063515688,
+      "sid": 1
+    },
+    {
+      "k": "73252910",
+      "ka": "dc",
+      "p": [
+        {"k": 63606, "n": "Arthur Rinderknech", "s": 23, "f": ["FR"], "w": true},
+        {"k": 101101, "n": "Frances Tiafoe", "s": 15, "f": ["US"], "l": true}
+      ],
+      "ids": [101101, 63606],
+      "sc": [[6, 2, 1], [2, 0, 1]],
+      "r": 106,
+      "season_id": "sr:season:134979",
+      "start_time_timestamp": 1786064700000,
+      "finishedAt": 1786068439000,
+      "sid": 1
+    },
+    {
+      "k": "73255996",
+      "ka": "dc",
+      "p": [
+        {"k": 157754, "n": "Aryna Sabalenka", "s": 1, "w": true},
+        {"k": 19607, "n": "Shuai Zhang", "f": ["CN"], "l": true}
+      ],
+      "ids": [157754, 19607],
+      "sc": [[6, 3, 1], [6, 4, 1]],
+      "r": 97,
+      "season_id": "sr:season:136164",
+      "start_time_timestamp": 1786057200000,
+      "finishedAt": 1786063273000,
+      "sid": 2
+    },
+    {
+      "_note": "以下三条是为测覆盖率手写构造的，不是抓到的真实响应——真实样本里从来没见过 SCHEDULED/LIVE/WALKOVER 的比赛，见模块 docstring 里「ka 没有反例」那条",
+      "k": "90000001",
+      "ka": "dc",
+      "p": [
+        {"k": 11, "n": "Walkover Winner", "f": ["DE"], "w": true},
+        {"k": 12, "n": "Walkover Loser", "f": ["AT"], "l": true}
+      ],
+      "ids": [11, 12],
+      "sc": [],
+      "r": 1,
+      "season_id": "sr:season:999001",
+      "start_time_timestamp": 1786057200000,
+      "sid": 1
+    },
+    {
+      "k": "90000002",
+      "ka": "dc",
+      "p": [
+        {"k": 21, "n": "Live Player A", "f": ["FR"]},
+        {"k": 22, "n": "Live Player B", "f": ["ES"]}
+      ],
+      "ids": [21, 22],
+      "sc": [[3, 2, 1]],
+      "r": 1,
+      "season_id": "sr:season:999002",
+      "start_time_timestamp": 1786057200000,
+      "sid": 2
+    },
+    {
+      "k": "90000003",
+      "ka": "dc",
+      "p": [
+        {"k": 31, "n": "Scheduled Player A", "s": "Q", "f": ["IT"]},
+        {"k": 32, "n": "Scheduled Player B", "f": ["US"]}
+      ],
+      "ids": [31, 32],
+      "sc": [],
+      "r": 1,
+      "season_id": "sr:season:999003",
+      "start_time_timestamp": 1786143600000,
+      "sid": 1
+    },
+    {
+      "k": "90000004",
+      "ka": "dc",
+      "p": [
+        {"k": 41, "n": "Doubles A1", "f": ["GB"]},
+        {"k": 42, "n": "Doubles A2", "f": ["GB"]},
+        {"k": 43, "n": "Doubles B1", "f": ["CA"]},
+        {"k": 44, "n": "Doubles B2", "f": ["CA"]}
+      ],
+      "ids": [41, 42, 43, 44],
+      "sc": [[6, 4, 1]],
+      "r": 1,
+      "season_id": "sr:season:999004",
+      "start_time_timestamp": 1786057200000,
+      "sid": 1
+    },
+    {
+      "k": "90000005",
+      "ka": "dc",
+      "p": [
+        {"k": 51, "n": "Unknown Tour A", "f": ["JP"], "w": true},
+        {"k": 52, "n": "Unknown Tour B", "f": ["KR"], "l": true}
+      ],
+      "ids": [51, 52],
+      "sc": [[6, 2, 1], [6, 3, 1]],
+      "r": 1,
+      "season_id": "sr:season:999005",
+      "start_time_timestamp": 1786057200000,
+      "sid": 9
+    }
+  ],
+  "refresh_time": 8000,
+  "tours_following": [],
+  "matches_following": [],
+  "generated_at": "2026-08-07T17:29:10.066Z"
+}
