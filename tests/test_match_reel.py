@@ -729,12 +729,18 @@ _NO_SLATE_YET = {
     # 挂进来不是原谅，是记账——已发的片子不为措辞重渲（音轨和字幕都烧进去了），
     # 而一条常年红的检查和没有检查是同一个毛病。
     "eala-parks",
+    # 同上：`shang-darderi-montreal-2026` 2026-08-07 01:36:54Z 已经推过微信
+    # （run 31138555626 第 30 步 success），开场那段旁白给了赛事和轮次、
+    # **一个时刻都没给**（既没有「北京时间」也没有几点几分）。
+    "shang-darderi-montreal-2026",
 }
 
 # 收尾没落在一问上、而且**已经发出去了**的。只许减不许加，底下有自检。
 _ENDING_LEGACY = {
     # 同上：`eala-parks` 收在「六比二，晋级第三轮。」这句数据上。
     "eala-parks",
+    # `shang-darderi-montreal-2026` 收在「四比五，他救下两个赛点。」这句数据上。
+    "shang-darderi-montreal-2026",
 }
 
 

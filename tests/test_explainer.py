@@ -1594,6 +1594,21 @@ _ON_PURPOSE = {
     "亚历山德拉",
 }
 
+#: **已经推过微信、名字却写错了的**。改不回来的那一半挂在这儿：视频里的旁白、
+#: 封面和顶栏都把字烧进去了，改文本救不回来，而重渲＝同一场球发第二条片子。
+#:
+#: ⚠️ **还救得回来的那一半必须真的改掉**——`.xhs.txt` 是小红书正文，账号所有者
+#: 复制的就是它，那是唯一还能编辑的出口（CLAUDE.md「已发的片子改文本不重渲…
+#: 但正文是可以编辑的」）。所以这张表里**只许出现 `.json`**，出现 `.xhs.txt`
+#: 就说明有人偷懒了。
+#:
+#: 只许减不许加，底下有自检。
+_SHIPPED_TYPOS = {
+    # 商竣程—达尔德里蒙特利尔 R3（e22a6e1）：两张译名表都是**达尔代里**。
+    # 2026-08-07 01:36:54Z 已经推过微信（run 31138555626 第 30 步 success）。
+    ("shang-darderi-montreal-2026.json", "达尔德里"),
+}
+
 #: **近似串那条查不到两三个字的名字**——三个字的窗口会撞上普通词，所以下面那条
 #: 测试只查四个字以上。可表里有 210 个两三字的名字，「凯斯」就在里面：我把
 #: Madison Keys 写成「基斯」，写进了王欣瑜那条的旁白和文案，**全绿照过、推到了
@@ -1646,6 +1661,10 @@ def test_人名要以译名表为准():
         return text
 
     bad = []
+
+    def keep(msg: str) -> bool:
+        return not any(f"{where}：「{wrong}」" in msg
+                       for where, wrong in _SHIPPED_TYPOS)
 
     def scan(where: str, text: str) -> None:
         safe = text
@@ -1719,7 +1738,17 @@ def test_人名要以译名表为准():
                       seg.diagram or "", *seg.points]
         for text in filter(None, texts):
             scan(slug, text)
-    assert not bad, "人名和译名表对不上：\n  " + "\n  ".join(sorted(set(bad)))
+    fresh = sorted({m for m in set(bad) if keep(m)})
+    assert not fresh, "人名和译名表对不上：\n  " + "\n  ".join(fresh)
+
+    # ⚠️ **豁免表要自证它豁免的是真的还在违规。** 一个写错的名字就是一盏永远
+    # 亮着的绿灯——这个仓库为它栽过。
+    seen = set(bad)
+    stale = [(w, n) for w, n in _SHIPPED_TYPOS
+             if not any(f"{w}：「{n}」" in m for m in seen)]
+    assert not stale, (
+        f"{stale} 已经不违规了（或者名字写错了），从 _SHIPPED_TYPOS 里删掉——"
+        "这张表只许减不许加")
 
 
 def test_旁白不解说画面():
