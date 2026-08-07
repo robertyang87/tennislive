@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 
-from tools.probe_tnns import _dump_objects, _print_top_keys
+from tools.probe_tnns import _dump_objects, _print_top_keys, _text_context
 
 
 def test_dump_finds_object_by_compact_key_colon_bracket_pattern(capsys):
@@ -54,3 +54,20 @@ def test_top_keys_on_non_json_says_so_instead_of_crashing(capsys):
     _print_top_keys("<!doctype html>not json")
     out = capsys.readouterr().out
     assert "不是 JSON 对象" in out
+
+
+def test_text_context_strips_tags_and_keeps_nearby_words():
+    """标签压成 `|`，附近的可读文字（比如赛事名）要留下来."""
+    html = (
+        "<div>filler</div>"
+        "<h2>ATP Montreal</h2>"
+        "<span>Rafael Jodar</span> <span>Lorenzo Musetti</span>"
+    )
+    ctx = _text_context(html, "Rafael Jodar", radius=100)
+    assert "ATP Montreal" in ctx
+    assert "Lorenzo Musetti" in ctx
+    assert "<" not in ctx and ">" not in ctx
+
+
+def test_text_context_missing_word_returns_empty():
+    assert _text_context("<div>hi</div>", "not there") == ""

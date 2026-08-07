@@ -113,6 +113,26 @@ def _print_top_keys(body: str) -> None:
         print(f"    {k!r}: {shape}")
 
 
+def _text_context(html: str, word: str, radius: int = 3000) -> str:
+    """把某个词附近的 HTML 转成大致的可读文字.
+
+    接口的 JSON 里没有赛事名（`--top-keys` 已经把顶层六个键数清楚了，
+    没有一块是通用的"赛事名查找表"），但页面上明摆着能看见"ATP Montreal"
+    这类字样——那多半是前端拿本地的一张静态表渲出来的，不在这次接口响应
+    里。这个函数负责把某个已知词（比如一个球员名）附近的 DOM 转成人读得懂
+    的文字，标签压成 `|` 分隔，看看旁边写着的赛事名是什么。
+    """
+    i = html.find(word)
+    if i < 0:
+        return ""
+    window = html[max(0, i - radius) : i + radius]
+    window = re.sub(r"<script[\s\S]*?</script>", " ", window)
+    window = re.sub(r"<style[\s\S]*?</style>", " ", window)
+    window = re.sub(r"<[^>]+>", " | ", window)
+    window = re.sub(r"\s+", " ", window).strip()
+    return window
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--want", action="append", default=[],
@@ -137,6 +157,11 @@ def main() -> int:
                     help="响应是 JSON 对象时，把顶层的键和每个值的形状打出来"
                          "（dict 打大小，list 打长度，标量打值）——先看清楚"
                          "这坨 JSON 一共分几块，再决定往哪块底下挖")
+    ap.add_argument("--html-context", action="store_true",
+                    help="`--want` 命中的词在**页面 HTML**（不是接口响应）里出现时，"
+                         "把它附近的文字（标签压成 | 分隔）打出来——接口的 JSON 里"
+                         "没有赛事名，赛事名很可能只在渲染出来的页面文字里，"
+                         "这个开关就是去页面上找它")
     args = ap.parse_args()
 
     try:
@@ -183,6 +208,9 @@ def main() -> int:
         print(f"  Cloudflare 挑战{'**没过**' if challenged else '过了'}")
         for w in args.want:
             print(f"  页面正文里有 {w!r}：{w in html}")
+            if args.html_context and w in html:
+                print(f"  ---- 附近文字（{w!r}，标签压成 | ）----")
+                print("  " + _text_context(html, w)[:2500])
 
         if args.link:
             # 详情接口的路径猜不出来，但页面里一定有通往这场的链接。
