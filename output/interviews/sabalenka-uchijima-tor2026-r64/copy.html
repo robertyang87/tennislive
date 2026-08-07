@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.7 赛后开麦 | 萨巴伦卡答得比问的短</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>世界第一赢了球，主持人问她今年硬地 24 胜 1 负是不是最好的自己——她只回了一句，11 个词。
+
+📍2026 多伦多 WTA1000 第二轮
+🎾 萨巴伦卡 6-3 6-3 内岛萌夏
+🎤 赛后场上采访 64 秒，中英双语字幕
+
+把这 64 秒数了一遍：主持人问了 119 个词，她答了 77 个。三问的答长分别是 35 词、31 词、11 词——问得最「大」的那一问，她答得最短。
+
+而「赢球」「冠军」「自我要求」这些词，她一次都没提。说得最多的是 happy，三次。
+
+她谈的是状态，不是成绩。第一问，问这场硬仗：
+
+Yeah, not an easy match, after a little break, super happy to be through and happy to be back in Toronto.
+（不轻松。休息了一阵之后，能过关我非常高兴，也很高兴回到多伦多）
+
+第二问，问假期。她答得最具体——温网前去维也纳，温网后去米克诺斯，带着狗和未婚夫：
+
+There was so much needed. I feel refreshed, recharged and ready to go.
+（那是太需要了。我觉得恢复了，充满电，准备好了）
+
+第三问，问 24 胜 1 负。全场最短的一句：
+
+I feel definitely happy to be back on hard court this season.
+（我确实很高兴这个赛季能回到硬地）
+
+这段里值得抄下来的几句：
+
+great to have you back 很高兴你回来
+super happy to be through 很高兴能过关
+refreshed, recharged and ready to go 恢复了，充满电，准备好了
+your hard court record has been phenomenal 你的硬地战绩好得惊人
+24 victories out of 25 25 场赢了 24 场
+
+#网球 #萨巴伦卡 #WTA #多伦多 #网球英语</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
