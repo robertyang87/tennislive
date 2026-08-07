@@ -1090,11 +1090,23 @@ def test_销掉的空档得真的是空档(path):
 
 # ---------------------------------------------------------------- 下载
 
-def _fake_run(monkeypatch, sink: list):
+def _proc(returncode: int = 0, stderr: str = ""):
+    """`subprocess.run` 桩要回的那个对象——`yt_download` 现在读
+    `.returncode`（判断这一档成没成）和失败时的 `.stderr`/`.stdout`
+    （报给下一档看的失败摘要）。
+
+    真的 `subprocess.CompletedProcess` 三个字段都有；桩函数原来回 `None`，
+    `yt_download` 加梯子重试之后第一行就是 `proc.returncode`，
+    `None.returncode` 直接 `AttributeError`。
+    """
+    return type("P", (), {"returncode": returncode, "stderr": stderr, "stdout": ""})()
+
+
+def _fake_run(monkeypatch, sink: list, returncode: int = 0):
     import tools.build_interview_clip as clip
 
     monkeypatch.setattr(clip.subprocess, "run",
-                        lambda cmd, **kw: sink.append(cmd) or None)
+                        lambda cmd, **kw: sink.append(cmd) or _proc(returncode))
 
 
 def test_下载落到别的后缀要认出来(tmp_path, monkeypatch, capsys):
@@ -1129,8 +1141,13 @@ def _capture(monkeypatch, dest: Path) -> list:
     import tools.build_interview_clip as clip
 
     cmds: list = []
-    monkeypatch.setattr(clip.subprocess, "run",
-                        lambda cmd, **kw: cmds.append(cmd) or dest.write_bytes(b"x"))
+
+    def fake(cmd, **kw):
+        cmds.append(cmd)
+        dest.write_bytes(b"x")
+        return _proc(0)
+
+    monkeypatch.setattr(clip.subprocess, "run", fake)
     return cmds
 
 
@@ -1501,6 +1518,11 @@ def test_工作流装的依赖覆盖工具import的每一个():
     wf = _run_scripts("interview-clip.yml")
     mods = set(re.findall(r"^\s*(?:from|import)\s+([A-Za-z_]\w*)", src, re.M))
     mods -= set(sys.stdlib_module_names) | {"__future__", "build_interview_clip"}
+    # **本地兄弟工具不算第三方。** `_ytdlp_ladder()` 直接 import
+    # `build_match_reel`（复用它的 client 梯子，`grab_frames.py` 也这么干）——
+    # 那是仓库里另一个脚本，同一次 checkout 就在手边，不用 pip 装。
+    # 同一条判据在 `test_oncourt_collect.py` 里已经踩过一次，这里跟着排掉。
+    mods = {m for m in mods if not (ROOT / "tools" / f"{m}.py").exists()}
 
     unknown = mods - set(_PROVIDES)
     assert not unknown, (
