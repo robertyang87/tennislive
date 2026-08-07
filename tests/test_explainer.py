@@ -939,6 +939,126 @@ def test_解说片接上片头之后成片真的变长(tmp_path):
         "后面的 slide/audio 输入下标上")
 
 
+def test_冷开场实拍片段要铺满不留黑边(tmp_path):
+    """账号所有者 2026-08-07：「前面的视频有点突兀」。一部分根子是横版源片
+    原来按 `pad` 信箱式塞进 9:16 画布，上下各留出约三分之一屏幕高的纯色带
+    ——看着像放错了比例，不是这条片子自己的画面。
+
+    改成 `force_original_aspect_ratio=increase` + `crop`：铺满整个画布，
+    代价是裁掉源片左右一部分。这条测试造一段纯色的 16:9 clip 当 intro，
+    抽一帧看四个角——旧的 `pad` 写法会让四角落在 `_BAND_COLOR` 那道深绿
+    纯色带里，新的 `crop` 写法应该四个角都是源片自己的颜色。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    s = tmp_path / "s0.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          f"color=c=green:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+    a = tmp_path / "a0.mp3"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          "sine=frequency=440:sample_rate=24000", "-t", "1.0", "-ac", "1", str(a)])
+
+    # 16:9，跟真实源片同一形状的横版纯色 clip——纯洋红，好认。
+    intro = tmp_path / "_intro.mp4"
+    _run(["ffmpeg", "-v", "error", "-y",
+          "-f", "lavfi", "-i", "color=c=magenta:s=1280x720:r=25",
+          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+          "-t", "2.0", "-c:v", "libx264", "-preset", "ultrafast",
+          "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+          str(intro)])
+
+    out = E.assemble_explainer_video([s], [a], tmp_path / "out.mp4", intro=intro)
+
+    frame = tmp_path / "frame.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-ss", "1.0", "-i", str(out),
+          "-frames:v", "1", str(frame)])
+    im = Image.open(frame).convert("RGB")
+    w, h = im.size
+    corners = [im.getpixel((2, 2)), im.getpixel((w - 3, 2)),
+               im.getpixel((2, h - 3)), im.getpixel((w - 3, h - 3))]
+    # 洋红大约是 (255, 0, 255)；band color 是 (6, 28, 20)。只要四个角都
+    # 明显偏红/偏亮，就证明没有信箱黑边——旧写法这四个角会是深绿。
+    for px in corners:
+        assert px[0] > 120, f"这个角 {px} 看着像信箱黑边，不是源片自己的颜色"
+
+
+def test_冷开场台头要和幻灯片台头同一份样式(tmp_path):
+    """`_render_intro_badge` 渲的是和 `_slide_html` 里 `.head` 像素级一致的
+    台头——图标、品牌字、topic 行，透明背景叠上去。这条测试钉住两头：
+    给了 `intro_badge` 就真的叠上去了（画面里能看到台头，不是原样的纯色）；
+    没给就还是老样子（不强求，锦上添花，见 `generate_explainer_video` 里
+    渲不出来就退回 None 那段）。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    s = tmp_path / "s0.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          f"color=c=green:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+    a = tmp_path / "a0.mp3"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          "sine=frequency=440:sample_rate=24000", "-t", "1.0", "-ac", "1", str(a)])
+    intro = tmp_path / "_intro.mp4"
+    _run(["ffmpeg", "-v", "error", "-y",
+          "-f", "lavfi", "-i", "color=c=magenta:s=1280x720:r=25",
+          "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+          "-t", "2.0", "-c:v", "libx264", "-preset", "ultrafast",
+          "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+          str(intro)])
+
+    badge = E._render_intro_badge("测试标题", "开球之前", tmp_path)
+    assert badge is not None and badge.is_file(), "Chromium 装着的话台头必须渲得出来"
+    im = Image.open(badge)
+    assert im.mode == "RGBA", "台头必须是带透明通道的 PNG，不然叠上去会是一块实心矩形"
+    assert im.split()[-1].getextrema()[1] > 0, "整张图全透明——文字和图标都没画上去"
+
+    with_badge = E.assemble_explainer_video(
+        [s], [a], tmp_path / "with_badge.mp4", intro=intro, intro_badge=badge,
+    )
+    without_badge = E.assemble_explainer_video(
+        [s], [a], tmp_path / "without_badge.mp4", intro=intro,
+    )
+
+    def _sample(path):
+        frame = tmp_path / f"{path.stem}_frame.png"
+        _run(["ffmpeg", "-v", "error", "-y", "-ss", "0.3", "-i", str(path),
+              "-frames:v", "1", str(frame)])
+        # 台头压在左上角 top:44/left:70 那一带（1080 宽的画布上）。
+        return Image.open(frame).convert("RGB").crop((70, 44, 500, 140))
+
+    def _has_badge_pixels(im):
+        # 背景故意选纯洋红 (255,0,255)：G 通道恒为 0。台头的文字（近白）和
+        # 图标（浅绿的网球）两者 G 通道都很高，用它分辨"这个像素来自台头"
+        # 还是"背景本身"——不能直接比亮度，纯洋红本身就够亮（255+0+255=510），
+        # 第一版就是拿"总亮度 > 400"判的，被这个背景色自己骗过了假阳性。
+        return any(px[1] > 150 for px in im.getdata())
+
+    assert _has_badge_pixels(_sample(with_badge)), "给了 intro_badge，画面里却看不出台头"
+    assert not _has_badge_pixels(_sample(without_badge)), (
+        "没给 intro_badge，画面里却出现了台头——两次调用互相污染了？")
+
+
 def test_同一天可以并存多条片子():
     """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 
