@@ -3228,6 +3228,7 @@ def validate_spec(spec: dict) -> list[Segment]:
     # 不要等到六分钟渲染完才发现两行文字没读到。
     topbar = _topbar_lines(spec)
     _validate_editorial_contract(spec, required=topbar is not None)
+    _absolute_claims_need_a_source(spec)
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
@@ -3707,6 +3708,88 @@ def _ass_timestamp(seconds: float) -> str:
     hours = int(seconds // 3600)
     minutes = int(seconds % 3600 // 60)
     return f"{hours}:{minutes:02d}:{seconds % 60:05.2f}"
+
+
+# 「全称断言」：一个反例就能推翻的那种话。**它不能从「我查到的那几场」推**，
+# 只能从一份**能穷举的表**里读，而且要按断言本身的粒度逐行核。
+#
+# ⚠️ 这条闸是 2026-08-07 一次真实事故换来的：`chwalinska-gibson` 说她
+# 「硬地巡回赛正赛零胜」，读者在小红书评论区当场指出来，账号所有者公开更正并道歉。
+# 真实记录是**至少三胜**（2026-02 克鲁日那波卡正赛连胜博格丹和 7 号种子达尼洛维奇、
+# 2024-10 梅里达正赛胜马里诺），其中两场还落在片子自己划的「2025-01 至今」窗口里。
+# 错法很具体：拿「场地＋级别」的**合计数**（6 胜 4 负）去支撑一个**轮次**层面的断言
+# （「那 6 场全部是资格赛」）——合计数天生分不出 Q1/Q2 和 R32/R16，
+# **而轮次那一列就在同一张逐场表里**。不是查不到，是没往下看一层。
+#
+# ⚠️ **判据宁可窄，不可宽**：只认「零/没有/唯一/史上第一」这一族，
+# 不认「他这一场打得最好」这类主观话——那种机械挡不住（CLAUDE.md 记过几次）。
+_ABSOLUTE_CLAIM_RE = re.compile(
+    r"零胜|一场没赢过|一场都没赢|一次都没赢|没赢过一场|从没赢过|从未赢过"
+    r"|唯一一个|唯一一位|史上第一|历史上第一|从来没有")
+
+# 出事之前就发出去的那些。**只许减不许加**，底下的判据会自检：名字要真的存在、
+# 而且真的还带着那种断言——写错一个名字，豁免就成了一盏恒真的绿灯。
+# ⚠️ **豁免的是「不用补出处」，不是「那句话是对的」。**
+_LEGACY_UNSOURCED_CLAIMS = frozenset({
+    "chwalinska-gibson",   # ⚠️ 就是出事的那条；成片改不掉，xhs 已更正
+    "eala-pegula", "eala-pegula-final", "wang-samsonova",
+    "zhang-putintseva", "zheng-lanlana",
+})
+
+
+def spec_outward_text(spec: dict) -> list[str]:
+    """会发到读者眼前的那些字段。注解（`_` 开头）不算——它们是写给下一个人的。"""
+    cover = spec.get("cover") or {}
+    push = spec.get("push") or {}
+    out = [str(cover.get("hook", "")), str(cover.get("narration", "")),
+           str(push.get("summary", "")), str(push.get("lead", ""))]
+    for seg in spec.get("segments", []) or []:
+        out += [str(seg.get("narration", "")), str(seg.get("quote", ""))]
+    return [t for t in out if t]
+
+
+def _claim_sources(value: object) -> set[str]:
+    """一条认领里引了几个**不同**的源——按主机名去重，同一个站点算一个。"""
+    return {m.group(1).lower()
+            for m in re.finditer(r"https?://([^/\s)）]+)", str(value))}
+
+
+def _absolute_claims_need_a_source(spec: dict) -> None:
+    """写了全称断言，就必须在 `_claims` 里认领**两个独立源**的穷举出处。
+
+    认领这一步把「查过整张表」和「看了几场就下结论」分开——和 `mixed_fps` /
+    `silent_source` / `rank: null` 是同一个形状。
+
+    ⚠️ **要两个源，不是一个。** 账号所有者 2026-08-07：「你的信息要准确无误，
+    最好经过多个信息源交叉验证过」。赫瓦林斯卡那次单看 tennisabstract 的
+    「场地＋级别」汇总就下了结论；而**维基那一页直接引着 WTA 官方标题
+    「Polish qualifier Chwalinska beats Marino for first hard-court win」**——
+    第二个源一句话就能推翻「零胜」，只是当时没去看。
+    """
+    slug = str(spec.get("slug", "")).strip()
+    if slug in _LEGACY_UNSOURCED_CLAIMS:
+        return
+    claims = spec.get("_claims") or {}
+    found = sorted({m.group(0) for text in spec_outward_text(spec)
+                    for m in _ABSOLUTE_CLAIM_RE.finditer(text)})
+    missing = []
+    for phrase in found:
+        hosts: set[str] = set()
+        for key, value in claims.items():
+            if phrase in str(key):
+                hosts |= _claim_sources(value)
+        if len(hosts) < 2:
+            missing.append((phrase, len(hosts)))
+    if missing:
+        raise ReelError(
+            "这几句是**全称断言**，一个反例就能推翻——必须在 spec 的 `_claims` 里\n"
+            "认领**两个独立源**的穷举出处（各带 URL），而且要按断言本身的粒度逐行核：\n"
+            + "".join(f"  · {p}（现在只有 {n} 个源）\n" for p, n in missing)
+            + '  "_claims": {"<把那句话抄进来>": "…核过的记录… https://A/… ；https://B/…"}\n'
+            "⚠️ **断言的粒度 ≤ 查询的粒度**：说「轮次」就要查到轮次那一列。\n"
+            "  `chwalinska-gibson` 就是这么错的——「场地＋级别」的 6 胜 4 负分不出\n"
+            "  Q1/Q2 和 R32/R16，而轮次就在同一张表里；而第二个源（维基引 WTA 官方标题\n"
+            "  「…beats Marino for first hard-court win」）一句话就能推翻它。")
 
 
 def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
