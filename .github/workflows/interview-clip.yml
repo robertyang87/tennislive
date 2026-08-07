@@ -475,7 +475,13 @@ jobs:
           # 而这一行还写着 `cover.html`——于是它跟着进了仓库。所以按后缀清，
           # 别按名字：`.html` 里只有 `copy.html` 是产物（Pages 要服务它）。
           find "$D" -maxdepth 1 -name "*.html" ! -name "copy.html" -delete
-          rm -f "$D"/source.* "$D"/_audio.* "$D"/_logo_mask.png "$D"/whisper.json
+          rm -f "$D"/source.* "$D"/whisper.json
+          # ⚠️ **`_` 开头的按前缀清，别按名字列。** 这一行原来写的是
+          # `"$D"/_audio.* "$D"/_logo_mask.png`——两个具体名字。解读卡加了
+          # `_takeaway_close.png` 之后，它就跟着进了仓库（367 KB/条），而
+          # `test_中间物不许进仓库` 拦的本来就是**所有 `_` 开头**的文件。
+          # 上面那句注释自己写着「清理清单里的名字会过时」，这一行正是它说的那种。
+          find "$D" -maxdepth 1 -name "_*" -delete
           # 缩略图墙是**写 spec 时的工作台**，不是产物：挑完 `cover.frame_at`
           # 就没用了，而它一张 1.8 MB——这个仓库的 `output/` 已经 1.3 GB，
           # 每条片子再塞一张，代价会加在此后每一条工作流的 checkout 上。

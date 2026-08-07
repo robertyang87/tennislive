@@ -48,7 +48,7 @@ def test_scoreboard_requires_rank(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(versus_poster, "_fetch_match_duration", lambda source, where: "1:51")
     cover = _cover()
     del cover["matchup"][1]["rank"]
-    with pytest.raises(SystemExit, match="缺 rank"):
+    with pytest.raises(SystemExit, match="缺 `rank`"):
         versus_poster._scoreboard_html(cover)
 
 
