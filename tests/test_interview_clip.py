@@ -2985,3 +2985,54 @@ def test_会合语音的工具入口都要挂本地CA():
         f"这几个工具会合语音，却没挂代理 CA：{guilty}\n"
         "沙箱里它们会吃 CERTIFICATE_VERIFY_FAILED，而退路会把它吞成"
         "「合不出来」——看起来像 edge-tts 挂了")
+
+
+def test_会合语音的工作流都要装edge_tts():
+    """上一条管的是**沙箱**那一头（证书链），这一条管 **runner** 那一头（依赖）。
+    同一个 bug 的两半，而 runner 这半真的漏了。
+
+    `interview-clip.yml` 的装依赖那行原来是
+    `pip install -e ".[visualqa]" "yt-dlp[default]" playwright faster-whisper`
+    ——**没有 edge-tts**。这条线在解读卡之前一个字都不合语音（片尾走的是母版
+    转码），所以历史上不需要它；加口播时它是「同时要改的第三处」。
+
+    ⚠️ **漏了它不报错。** `_takeaway_voice` 的退路把 ImportError 吞成一句
+    「口播合不出来，退回静音卡」，run 照样绿、成片照样出——只是那张卡是
+    **数字静音（实测 −91 dB）**，而账号所有者对这张卡的原话是「但要有配音」。
+    量出来才看得见（run 31151599208）。
+
+    判据**自己推导，不维护白名单**：run 里跑了哪个 `tools/*.py`，那个工具
+    （连同它 import 的本仓库模块）会不会走到 `synthesize_narration`。
+    """
+    import ast
+
+    def _calls_tts(mod: str) -> bool:
+        """这个工具自己会不会合语音。
+
+        ⚠️ **不递归。** 第一版顺着 import 往下扒，当场把 `frame-grab.yml`
+        （抽帧）和 `auto-push-explainer.yml`（只推送）也判成了「要装」——
+        它们导入的某个模块里有 TTS，可它们自己那条路走不到。
+        **判据宁可窄不可宽**：扩大化的判据会让下一个人要么白装一个包、
+        要么干脆把这条检查删掉。和上一条一样，只看这个模块自己提没提。
+        """
+        src = ROOT / "tools" / f"{mod}.py"
+        if not src.is_file():
+            return False
+        tree = ast.parse(src.read_text("utf-8"))
+        names = {n.id for n in ast.walk(tree) if isinstance(n, ast.Name)} | {
+            n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+        imported = {a.name for n in ast.walk(tree)
+                    if isinstance(n, ast.ImportFrom) for a in n.names}
+        return "synthesize_narration" in (names | imported)
+
+    guilty = []
+    for wf in sorted((ROOT / ".github" / "workflows").glob("*.yml")):
+        body = "\n".join(ln for ln in wf.read_text("utf-8").splitlines()
+                         if not ln.lstrip().startswith("#"))
+        if not any(_calls_tts(t) for t in set(re.findall(r"tools/(\w+)\.py", body))):
+            continue
+        if "edge-tts" not in body:
+            guilty.append(wf.name)
+    assert not guilty, (
+        f"这几条工作流会跑到合语音，却没装 edge-tts：{guilty}\n"
+        "缺了它 run 照样绿，只是那一段变成数字静音——量出来才看得见")
