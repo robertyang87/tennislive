@@ -8115,9 +8115,21 @@ def test_全称断言必须认领一份能穷举的出处():
     with pytest.raises(reel.ReelError, match="全称断言"):
         reel._absolute_claims_need_a_source({**bad, "_claims": {"零胜": "查过了"}})
 
-    # 认领了、也给了穷举源 → 放行
+    # ⚠️ 只给一个源不够——账号所有者 2026-08-07：「最好经过多个信息源交叉验证」。
+    # 赫瓦林斯卡那次单看 tennisabstract 一个源就下了结论，第二个源（维基引 WTA
+    # 官方标题）一句话就能推翻它。同一个主机名重复给两次也不算两个源。
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source({
+            **bad, "_claims": {"零胜": "逐场核过 https://www.tennisabstract.com/x"}})
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source({
+            **bad, "_claims": {"零胜": "https://www.tennisabstract.com/x 和 "
+                                      "https://www.tennisabstract.com/y"}})
+
+    # 认领了、给了**两个不同主机**的穷举源 → 放行
     reel._absolute_claims_need_a_source({
-        **bad, "_claims": {"零胜": "逐场核过 https://www.tennisabstract.com/x"}})
+        **bad, "_claims": {"零胜": "逐场核过 https://www.tennisabstract.com/x ；"
+                                  "维基百科生涯正文 https://en.wikipedia.org/wiki/x"}})
 
     # ---- 注解不算「发出去的」：`_` 开头的字段里出现这种词不该被拦 ----
     reel._absolute_claims_need_a_source({

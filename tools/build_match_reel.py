@@ -3748,12 +3748,23 @@ def spec_outward_text(spec: dict) -> list[str]:
     return [t for t in out if t]
 
 
+def _claim_sources(value: object) -> set[str]:
+    """一条认领里引了几个**不同**的源——按主机名去重，同一个站点算一个。"""
+    return {m.group(1).lower()
+            for m in re.finditer(r"https?://([^/\s)）]+)", str(value))}
+
+
 def _absolute_claims_need_a_source(spec: dict) -> None:
-    """写了全称断言，就必须在 `_claims` 里认领一份能穷举的出处。
+    """写了全称断言，就必须在 `_claims` 里认领**两个独立源**的穷举出处。
 
     认领这一步把「查过整张表」和「看了几场就下结论」分开——和 `mixed_fps` /
-    `silent_source` / `rank: null` 是同一个形状。出处要给 URL：这个仓库里
-    能穷举的源（tennisabstract 逐场表、WTA 官方战绩页）都是链接。
+    `silent_source` / `rank: null` 是同一个形状。
+
+    ⚠️ **要两个源，不是一个。** 账号所有者 2026-08-07：「你的信息要准确无误，
+    最好经过多个信息源交叉验证过」。赫瓦林斯卡那次单看 tennisabstract 的
+    「场地＋级别」汇总就下了结论；而**维基那一页直接引着 WTA 官方标题
+    「Polish qualifier Chwalinska beats Marino for first hard-court win」**——
+    第二个源一句话就能推翻「零胜」，只是当时没去看。
     """
     slug = str(spec.get("slug", "")).strip()
     if slug in _LEGACY_UNSOURCED_CLAIMS:
@@ -3763,17 +3774,22 @@ def _absolute_claims_need_a_source(spec: dict) -> None:
                     for m in _ABSOLUTE_CLAIM_RE.finditer(text)})
     missing = []
     for phrase in found:
-        keys = [k for k in claims if phrase in str(k)]
-        if not keys or not any("http" in str(claims[k]) for k in keys):
-            missing.append(phrase)
+        hosts: set[str] = set()
+        for key, value in claims.items():
+            if phrase in str(key):
+                hosts |= _claim_sources(value)
+        if len(hosts) < 2:
+            missing.append((phrase, len(hosts)))
     if missing:
         raise ReelError(
             "这几句是**全称断言**，一个反例就能推翻——必须在 spec 的 `_claims` 里\n"
-            "认领一份**能穷举**的出处（带 URL），而且要按断言本身的粒度逐行核：\n"
-            + "".join(f"  · {p}\n" for p in missing)
-            + '  "_claims": {"<把那句话抄进来>": "…核过的记录… https://…"}\n'
-            "⚠️ 别拿合计数去支撑更细一层的断言——`chwalinska-gibson` 就是这么错的：\n"
-            "  「场地＋级别」的 6 胜 4 负分不出 Q1/Q2 和 R32/R16，而轮次就在同一张表里。")
+            "认领**两个独立源**的穷举出处（各带 URL），而且要按断言本身的粒度逐行核：\n"
+            + "".join(f"  · {p}（现在只有 {n} 个源）\n" for p, n in missing)
+            + '  "_claims": {"<把那句话抄进来>": "…核过的记录… https://A/… ；https://B/…"}\n'
+            "⚠️ **断言的粒度 ≤ 查询的粒度**：说「轮次」就要查到轮次那一列。\n"
+            "  `chwalinska-gibson` 就是这么错的——「场地＋级别」的 6 胜 4 负分不出\n"
+            "  Q1/Q2 和 R32/R16，而轮次就在同一张表里；而第二个源（维基引 WTA 官方标题\n"
+            "  「…beats Marino for first hard-court win」）一句话就能推翻它。")
 
 
 def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
