@@ -710,6 +710,14 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+# 台头药丸的顶边（px，画布 1080×1440）。**老版一行赛果时药丸落在 502~536**
+# （量的是已发的 eala-parks / shang-rublev 两张海报），520 取在中间。
+# 钩子和比分板从这儿往下排，所以比分板变高只会往下长，不会把药丸顶上去。
+# ⚠️ 最坏情况核过：三行 96px 的钩子（357）＋ 五盘比分板（295）＋两道 34 的间距
+# ＋药丸 64 ＝ 784，从 520 排到 1304，离画布底 136px，不溢出。
+STORYCOPY_TOP = 520
+
+
 def _scrim_css(clear: bool) -> str:
     """盖在照片上的那层暗。
 
@@ -855,8 +863,17 @@ __SCRIM__
 .topic{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
  color:#dcefe4;letter-spacing:1px;
  text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8)}
-.storycopy{position:absolute;left:70px;right:70px;top:50%;
- transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;
+/* **按台头药丸锚定，不再整块居中。** 居中的时候药丸的位置跟着内容浮动：
+   同样两行钩子，`eala-parks`（老版一行赛果）药丸顶边在 y=502、`shang-rublev`
+   在 536，而换上新版比分板之后 `zhang-sabalenka` 被顶到 **410**——比分板一变高
+   （一行赛果 ≈56px → 比分板 ≈295px），整块就往上跑，药丸跟着离开原位。
+   账号所有者 2026-08-07：「比分板和标题都往下移动一点，『赛场之上』的标签还是
+   按原来模板的位置，然后再跟标题文案和比分板」。
+   所以药丸钉死在 `STORYCOPY_TOP`，钩子和比分板从它下面往下排。
+   ⚠️ **这个数不许再改回 `top:50%`**——那等于让药丸重新跟着比分板高度漂。
+   判据 `test_台头药丸的位置不跟着比分板漂`。 */
+.storycopy{position:absolute;left:70px;right:70px;top:__STORYCOPY_TOP__px;
+ transform:none;z-index:5;display:flex;flex-direction:column;
  gap:34px;align-items:flex-start}
 .hseam{position:absolute;left:0;right:0;height:6px;background:#c6f65a;z-index:4;
  transform:translateY(-50%);box-shadow:0 0 26px rgba(0,0,0,.55)}
@@ -915,6 +932,7 @@ __SCRIM__
 .setplain{color:#c6f65a;margin-right:.42em}
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
+        .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
         + f".storytitle{{font-size:{title_px}px}}"
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
