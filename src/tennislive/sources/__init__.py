@@ -11,6 +11,7 @@ from ..timeutil import now_utc
 from ..zh.tournaments import tournament_level
 from .base import SourceError, TennisSource
 from .espn import EspnSource
+from .flashscore import FlashscoreSource
 from .sofascore import SofaScoreSource
 from .wta_live import WtaLiveSource
 
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 __all__ = [
     "EspnSource",
+    "FlashscoreSource",
     "SofaScoreSource",
     "SourceError",
     "TennisSource",
@@ -30,11 +32,18 @@ __all__ = [
 def make_source_chain(prefer: str | None = None) -> list[TennisSource]:
     """Aggregate the configured discovery feeds; licensed stats are separate.
 
-    `WtaLiveSource` 排最后：它只覆盖 WTA（ATP 那半边没有免费可达的源，
-    见 wta_live.py 模块 docstring），是 ESPN 和 SofaScore 同时失效时的
-    末级备用，不是常态下的主源。
+    ESPN/SofaScore 是主源；`FlashscoreSource` 是 ATP+WTA 都覆盖的备用
+    （见 flashscore.py 模块 docstring），`WtaLiveSource` 是再往后、只补
+    WTA 的最后一道（ATP 那半边没有免费可达的源，见 wta_live.py 模块
+    docstring）。三个源都失效才会真正拿不到数据——`fetch_day` 的聚合
+    逻辑本来就是把每个成功的源都合并进来，不是用到成功为止。
     """
-    chain: list[TennisSource] = [EspnSource(), SofaScoreSource(), WtaLiveSource()]
+    chain: list[TennisSource] = [
+        EspnSource(),
+        SofaScoreSource(),
+        FlashscoreSource(),
+        WtaLiveSource(),
+    ]
     if prefer:
         chain.sort(key=lambda s: 0 if s.name == prefer else 1)
     return chain

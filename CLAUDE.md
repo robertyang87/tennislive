@@ -1483,6 +1483,53 @@ WtaLiveSource()]`，第三个只在前两个都失败时才用得上（`fetch_da
 聚合逻辑本来就是"用到成功为止"）。`source-health` 一个字都不用改——它
 只是原样打印 `data.source_status`，新源自动出现在报告里。
 
+### ⭐ 上面那条"ATP 没有免费可达的候选"是查早了——flashscore 一次请求管两个巡回赛
+
+同一轮排查里，账号所有者一句"还有好多网球数据的网站啊"把我推回去继续找。
+上面那条结论查的是 ATP **官方**三条路（atptour.com、protennislive、
+Hawkeye），没查第三方聚合站——而仓库里`tools/match_feed.py`早就在用
+flashscore 查单场逐分/统计，只是没人往上翻过它的"今天全部比赛"接口：
+
+    GET https://global.flashscore.ninja/2/x/feed/f_2_{offset}_0_en_1
+    Header: x-fsign: SW9D1eZo, Referer: https://www.flashscore.com/
+
+`offset` 是相对"今天"的天数偏移（实测：-1=昨天 349 场、0=今天 237 场、
+1=明天 44 场），**一次请求拿到 ATP+WTA+Challenger+ITF 全档次、64 个赛事
+分组**，纯 HTTP 不用浏览器，GitHub Actions 真实出口上 200、无 Cloudflare
+挑战——比 ESPN/SofaScore 都稳，而且同时补上了 ATP 那半边。
+
+三个字段踩过的坑，别在这基础上接着猜：
+
+- **`CA`/`CB`（以为是世界排名）不是排名**。同一天的数据里 `200` 出现
+  59 次、`8` 出现 40 次——世界不可能有 59 个人并列第 200，统计分布直接
+  戳穿了这个假设。`Player.rank` 这条线上一律留空
+- **`AC`/`CR`（一度怀疑是轮次）不是轮次**。拿带真实轮次名（`ER÷Final`/
+  `ER÷Semi-finals`，来自单赛事 `results/` 页）的数据对照，决赛和半决赛
+  的 `AC`/`CR` **都是 `3`**——一个值对应两个轮次，证明无关。这条线上
+  round_name 一律留空，和 WTA 那次 RoundID 的处理是同一个理由
+- **退赛/不战而胜没有专门字段**，`WL` 那个疑似的位置在几百场样本里全是
+  空的。改用网球规则本身反推：**一盘局数都没有**＝不战而胜，
+  **最后一盘打完却不满足"6 局净胜 2"或"7-6/6-7"**＝退赛。这是判据
+  本身给的规则，不是又猜一个不透明的编码
+
+顺带一条反过来的教训：**"排除了官方三条路"不等于"排除了这条数据"**——
+这次和"排除了 A 和 B 不等于就是 C"是同一个形状，只是这次排除的范围本身
+（"ATP 官方"）从一开始就没扣紧"ATP 覆盖"这件事——第三方聚合站从来没被
+排除过，只是没人往那个方向查。
+
+同一轮还顺手查了 `tnnslive.com`：仓库里原来的"够不着"结论是用 Playwright
+的 `context.request`（页面加载完之后另发一次请求）测的，而**用真实浏览器
+正常打开页面、被动抓它自己发出的请求**，Cloudflare Turnstile 直接过了，
+拿到的 JSON 比 flashscore 更丰富（连夺冠集锦的 YouTube 链接都嵌在里面）。
+**没有接入**：这条路必须真跑一个 Chromium 才能过挑战，不能像 flashscore/
+WTA 那样纯 HTTP 直连——要接的话得在每条调 `fetch_day()` 的工作流里都装
+Playwright+Chromium，成本比拿到的增量数据大得多，先记录做法，不接入。
+
+现在 `make_source_chain()` 是 `[EspnSource(), SofaScoreSource(),
+FlashscoreSource(), WtaLiveSource()]`——ESPN/SofaScore 是主源，
+`FlashscoreSource()` 是 ATP+WTA 都覆盖的备用，`WtaLiveSource()` 是再往后
+只补 WTA 的最后一道。三个都失效才会真正拿不到数据。
+
 ### 查询留着，卡片图和推送不留
 
 账号所有者：「**可以用命令查赛果，但没必要做卡片图然后推送微信了**」。
