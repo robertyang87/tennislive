@@ -41,6 +41,11 @@ on:
         required: false
         type: boolean
         default: false
+      html_context:
+        description: "browser 模式：--want 命中的词若出现在页面 HTML 里，把附近的文字打出来"
+        required: false
+        type: boolean
+        default: false
       audio_url:
         description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
         required: false
@@ -177,6 +182,7 @@ jobs:
           P_FETCH: ${{ github.event.inputs.fetch }}
           P_URLS: ${{ github.event.inputs.urls }}
           P_TOP_KEYS: ${{ github.event.inputs.top_keys }}
+          P_HTML_CONTEXT: ${{ github.event.inputs.html_context }}
         run: |
           WANT_ARGS=()
           IFS=',' read -ra WORDS <<< "$P_WANT"
@@ -187,6 +193,7 @@ jobs:
             [ -n "$P_DUMP" ] && EXTRA_ARGS+=(--dump "$P_DUMP")
             [ -n "$P_LINK" ] && EXTRA_ARGS+=(--link "$P_LINK")
             [ "$P_TOP_KEYS" = "true" ] && EXTRA_ARGS+=(--top-keys)
+            [ "$P_HTML_CONTEXT" = "true" ] && EXTRA_ARGS+=(--html-context)
             IFS=',' read -ra FS <<< "$P_FETCH"
             for f in "${FS[@]}"; do [ -n "$f" ] && EXTRA_ARGS+=(--fetch "$f"); done
             python tools/probe_tnns.py "${WANT_ARGS[@]}" "${EXTRA_ARGS[@]}"
