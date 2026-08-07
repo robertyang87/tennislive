@@ -4319,6 +4319,25 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     ),
     "eala-mcnally": (
         (
+            "crowd",
+            "满场",
+            "位置不够，官方把伊埃拉挪去了中心球场",
+            "这场之所以又排在中心球场晚场，不是巧合。上一轮她对阵帕克斯，"
+            "官方原定的是能坐两千八百人的挑战者球场。赛事总监卡尔·黑尔后来解释，"
+            "她大概卖出去了五千张票，那块场地放不下。比赛整个搬去能坐一万人的"
+            "中心球场，同样售罄——多伦多过去二十年，只有小威做到过周三晚场售罄。"
+            "一万零七十七名观众坐满看台，现场几度吵到主裁要请观众安静。"
+            "麦克纳莉这一场，官方还是把她们排进了周五晚场的中心球场。",
+            "assets/explainer/eala-mcnally/eala_crowd_afp.jpg",
+            "AFP via Inquirer.net · 2026 年 8 月 6 日多伦多女单第二轮，"
+            "伊埃拉胜帕克斯赛后向满场看台致意",
+            (
+                "官方：她卖出约 5000 张票，看台放不下",
+                "改到万人中心球场，同样售罄",
+                "10077 名观众，现场几度需要安静",
+            ),
+        ),
+        (
             "opponent",
             "对手",
             "麦克纳莉跌出前一千位，一点点爬回来了",
@@ -5512,22 +5531,23 @@ _OPENINGS: dict[str, dict] = {
         # 更细的「几点、跟在谁之后」挪到第二句，仍然排在任何背景故事之前。
         #
         # WTA 官方接口（tournaments/806/2026/matches）给这场的是
-        # `NotBefore: "Followed By"`、`Unscheduled: true`——没有官方时刻，
+        # `NotBefore: "Followed By"`、`Unscheduled: true`——没有官方钟点，
         # 只知道排在萨卡里对高芙之后（那场官方给的是「不早于 19:00」北京时间）。
-        # `08:10*` 来自 philstar.com 2026-08-07 当天预告
-        # （"scheduled for 8:10 a.m. Manila time on Saturday"——马尼拉时间
-        # 和北京时间同为 UTC+8，不用换算），属于三档口径里的
-        # `official-order-estimate` / single-source，星号标出是估的，
-        # 不是官方钉死的时刻。narration 里额外把「跟在萨卡里/高芙之后」
-        # 也说一遍，双保险：星号读不到的人（只听不看）也能知道这是个估计。
+        # ⚠️ **账号所有者 2026-08-07 定的口径：这是「不早于」，不是「预计」。**
+        # 第一版我把 philstar.com 当天预告的 "scheduled for 8:10 a.m. Manila
+        # time"（马尼拉时间同为 UTC+8，不用换算）当成了单源估计，写成
+        # `08:10*`——但这场比赛结构上就是「跟在另一场之后」，没有它自己的开赛
+        # 时刻，`不早于` 才是诚实的读法（三档口径里的 `official-not-before`，
+        # 不是 `official-order-estimate`）：它一定不会比这个时刻更早开始，
+        # 但具体几点开都可能。
         "narration": "北京时间八月八号，伊埃拉对阵麦克纳莉。"
-        "预计上午八点十分，跟在萨卡里对高芙之后登场。"
+        "不早于上午八点十分，跟在萨卡里对高芙之后登场。"
         "多伦多网球公开赛女子第三轮。"
         "一个刚拿下自己第一个巡回赛冠军，一个刚把排名从一千开外拉回前七十。"
         "没交过手，轮到谁先破局？",
         "fixture": {
             "date": "8.8",
-            "time": "08:10*",
+            "time": "不早于08:10",
             "level": "WTA1000",
             "site": "多伦多",
             "round": "第三轮",
@@ -5545,10 +5565,18 @@ _OPENINGS: dict[str, dict] = {
         "伊埃拉胜帕克斯赛后庆祝",
         # 账号所有者原话：「可以用前几轮的视频做拼接」。这是本条线第一次接
         # 真实视频当冷开场——`assemble_explainer_video` 新增的 `intro` 参数，
-        # 对称于早已有的 `outro`。片段截自本账号自己的 eala-parks.mp4
-        # （她本站上一轮，六比二胜帕克斯那场的赛点+庆祝），credits 见
-        # assets/explainer/eala-mcnally/credits.json 的 `intro_win_over_parks.mp4` 条目。
-        "intro": "assets/explainer/eala-mcnally/intro_win_over_parks.mp4",
+        # 对称于早已有的 `outro`。
+        # ⚠️ **第一版剪自本账号自己已发的 eala-parks.mp4，被账号所有者纠正**：
+        # 「不要从我之前视频取啊，要从网上公开视频做，比如 wta 官方视频」——
+        # 换成直接从 WTA 官方在 wtatennis.com/videos 发布的原始视频下载并剪，
+        # 不再经过我们自己的二次剪辑。选的是专门讲这个话题的那条
+        # 《Eala channels a raucous Toronto crowd to beat Parks》（WTA 官方
+        # Brightcove，account 6041795521001 / mediaId 6402916743112），
+        # 不是随便一条集锦——账号所有者同时要求「现场观众的呐喊声也可以作为
+        # 一个因素放进来」，这条视频本身就是围绕人群反应剪的。
+        # credits 见 assets/explainer/eala-mcnally/credits.json 的
+        # `intro_toronto_crowd.mp4` 条目。
+        "intro": "assets/explainer/eala-mcnally/intro_toronto_crowd.mp4",
     },
     "shang-nishikori": {
         "column": "开球之前",
