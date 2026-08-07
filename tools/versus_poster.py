@@ -524,7 +524,15 @@ def _scoreboard_html(cover: dict) -> str:
     source = scoreboard.get("duration_source") or {}
     duration = _fetch_match_duration(source, "cover.scoreboard")
     scores = _scoreboard_sets(result, "cover")
-    columns = ",".join(["minmax(0,1fr)"] + ["minmax(86px,1fr)"] * len(scores))
+    # ⚠️ **轨道列表用空格分隔，不是逗号。** 第一版写的是 `",".join(...)`，
+    # 渲出来 `grid-template-columns:minmax(0,1fr),minmax(86px,1fr)` 是**非法 CSS**，
+    # 整条声明被丢掉、grid 退回单列——两位球员在上、四个盘分竖着排在下面。
+    # 而它**一次都没被人看见过**：`_scoreboard_html` 的测试全在比 HTML 字符串，
+    # 字符串里有没有逗号看不出对错；已发的 `eala-parks` 那张海报又是模板落地
+    # **之前**渲的，仓库里那份走的还是老的一行赛果。又一次「断言全绿不等于
+    # 页面对」。判据 `test_比分板的盘分要真的排在名字右边` 直接渲一张出来量。
+    # 名字那列给 1.55fr：`A. SABALENKA` 比盘分宽得多，等分会把它挤到换行。
+    columns = " ".join(["minmax(0,1.55fr)"] + ["minmax(86px,1fr)"] * len(scores))
 
     cells = []
     for left, right, tiebreak in scores:

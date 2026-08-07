@@ -1731,11 +1731,17 @@ def test_赛场之上的封面一律用solo():
 
 
 def test_赛场之上的比分行要带双方国旗():
-    """标题底下那一行：**国旗 + 名字（排名） 比分 国旗 + 名字（排名）**。
+    """比分板上：**矩形国旗 + 中文名（排名） + 英文名**，赢家那一行在上。
 
     账号所有者 2026-08-04：「中间标题下面写上比分（带双方国旗）」。
 
-    **真渲一次 HTML**，不查源码文本——查源码只能防「有人把它删了」，
+    ⚠️ **这条判据的主语换过一次。** 原来「赛场之上」印的是一行式赛果，国旗是
+    emoji（🇨🇳🇰🇿）；`fix(reel): unify 赛场之上 scoreboard covers` 之后这个栏目
+    **必须**走新版比分板，而新版的国旗是 `assets/flags/*.png` 的矩形图——
+    于是老断言 `"🇨🇳" in html` 的主语没了，整条测试报 SystemExit。
+    **主语没了就得换判据**，留着它就是一条常年红。
+
+    仍然**真渲一次 HTML**，不查源码文本——查源码只能防「有人把它删了」，
     防不住「它从来没工作过」（这个仓库栽过：`_cut_person` 引了一个不存在的
     名字，测试断言 `"def _cut_person(" in reel` 照样绿，功能整天是坏的）。
     """
@@ -1743,22 +1749,33 @@ def test_赛场之上的比分行要带双方国旗():
 
     sys.path.insert(0, str(Path("tools").resolve()))
     import versus_poster as vp  # noqa: PLC0415
+
+    # 用时走官方接口，单元测试不联网——打桩，别让判据依赖外网。
+    vp._fetch_match_duration = lambda source, where: "1:12"  # type: ignore[assignment]
     base = {"eyebrow": "赛场之上", "hook": "钩子", "winner": "张帅",
             "result": "6-4 6-1",
+            "scoreboard": {"court": "Centre Court",
+                           "duration_source": {"url": "fixture"}},
             "matchup": [{"name": "张帅", "country": "CHN", "rank": 57},
                         {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]}
     html = vp._solo_score_html(base)
-    assert "🇨🇳" in html and "🇰🇿" in html, f"国旗没渲出来：{html}"
+
+    # 两面矩形国旗，而且真的是这两个国家那两张图（比数据 URI，不比数量）。
+    assert vp._score_flag({"country": "CHN"}, "t") in html, f"没渲中国国旗：{html[:400]}"
+    assert vp._score_flag({"country": "KAZ"}, "t") in html, f"没渲哈萨克国旗：{html[:400]}"
+    assert "🇨🇳" not in html and "🇰🇿" not in html, "新版比分板不用 emoji 国旗"
     text = re.sub(r"<[^>]+>", "", html)
-    assert "6-4" in text and "6-1" in text, f"盘分没渲出来：{html}"
-    # **赢家在前**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
+    assert "6" in text and "4" in text and "1" in text, f"盘分没渲出来：{html}"
+    # **赢家在上**：`matchup` 是版式顺序，`winner` 才是赛果顺序。
     # wang-samsonova 那次海报印「萨姆索诺娃 6-2 6-2 王欣瑜」而标题算成
     # 「王欣瑜 vs 萨姆索诺娃」——比分夹在中间，等于声称输的那个人赢了。
-    assert text.index("张帅") < text.index("6-4") < text.index("普汀塞娃")
-    flipped = {**base, "winner": "普汀塞娃"}
-    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html(flipped))
-    assert h2.index("普汀塞娃") < h2.index("6-4") < h2.index("张帅"), \
-        "换了赢家，赛果行的顺序没跟着换"
+    assert text.index("张帅") < text.index("普汀塞娃")
+    h2 = re.sub(r"<[^>]+>", "", vp._solo_score_html({**base, "winner": "普汀塞娃"}))
+    assert h2.index("普汀塞娃") < h2.index("张帅"), "换了赢家，比分板的上下没跟着换"
+    # 中文名底下那一行英文名从受控译名表反查，不手打。
+    assert "S. ZHANG" in text and "Y. PUTINTSEVA" in text, f"英文名没渲出来：{text}"
+    # 场地和用时印在板头上。
+    assert "Centre Court" in text and "1:12" in text
 
     # ---- 每盘赢的那个数字给品牌黄、输的给灰（账号所有者 2026-08-04）----
     # ⚠️ **判据是那一盘里谁的局数大，不是谁在前**。整场的赢家排在左边，
@@ -1779,7 +1796,8 @@ def test_赛场之上的比分行要带双方国旗():
     assert "57" in html and "81" in html
     # 没有 result 就整行不要——网球有故事照旧一个像素都不变
     assert vp._solo_score_html({**base, "result": ""}) == ""
-    # 缺国别 / 缺排名 / winner 对不上，三样都要当场报错，不许悄悄少印
+    # 缺国别 / 缺排名 / winner 对不上 / 缺 scoreboard，四样都要当场报错，
+    # 不许悄悄少印，也不许静默退回老版一行式赛果。
     with pytest.raises(SystemExit, match="country"):
         vp._solo_score_html({**base, "matchup": [
             {"name": "张帅", "rank": 57},
@@ -1790,14 +1808,14 @@ def test_赛场之上的比分行要带双方国旗():
             {"name": "普汀塞娃", "country": "KAZ", "rank": 81}]})
     with pytest.raises(SystemExit, match="winner"):
         vp._solo_score_html({**base, "winner": "别人"})
+    with pytest.raises(SystemExit, match="scoreboard"):
+        vp._solo_score_html({k: v for k, v in base.items() if k != "scoreboard"})
     # **而且它真的接在 solo 的正文里**——上面那些只证明函数好用，
-    # 证明不了有人调它。`_solo_body` 里少写一处，海报就悄悄没有比分行。
+    # 证明不了有人调它。`_solo_body` 里少写一处，海报就悄悄没有比分板。
     body, _ = vp._solo_body({**base, "subject": "张帅",
                              "portrait": {"image": "assets/logo/brand/icon.png"}})
-    assert "storyscore" in body and "🇨🇳" in body, \
-        "比分行没接进 solo 的正文——查函数好用防不住「没人调它」"
-
-
+    assert 'class="scoreboard"' in body and vp._score_flag({"country": "CHN"}, "t") in body, \
+        "比分板没接进 solo 的正文——查函数好用防不住「没人调它」"
 def test_商竣程那格是本场真实照片不是抽帧():
     """**上一版写过「没有任何一张商竣程的照片」——那句话是错的。**
 
