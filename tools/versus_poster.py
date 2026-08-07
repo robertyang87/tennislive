@@ -553,11 +553,19 @@ def _solo_score_html(cover: dict) -> str:
     """solo 版只给「赛场之上」挂统一比分板；「网球有故事」仍不印赛果。"""
     if not str(cover.get("result") or "").strip():
         return ""
-    # 已发布的旧 spec 没有 scoreboard 块，不能因为一次模板升级让历史海报无法
-    # 重建；所有新 spec（包括 eala-parks）必须显式写 scoreboard，走下面的新模板。
-    if not cover.get("scoreboard"):
-        return _legacy_solo_score_html(cover)
-    return _scoreboard_html(cover)
+    # 「赛场之上」的封面只有一个比分板出口。此前这里给缺少 scoreboard 的
+    # spec 留了旧的一行式退路，结果新稿只要漏一个字段，就会静默生成老封面，
+    # 而不是暴露模板契约没有满足。以后这个栏目缺 scoreboard 必须直接失败；
+    # 这样新稿不会再出现两套封面，历史已经发布的旧海报也不会被悄悄改写。
+    if str(cover.get("eyebrow") or "").strip() == "赛场之上":
+        if not isinstance(cover.get("scoreboard"), dict):
+            raise SystemExit(
+                "「赛场之上」solo 封面必须使用新版比分板："
+                "cover.scoreboard 不能省略（需包含 court 和 duration_source）。")
+        return _scoreboard_html(cover)
+    # 「网球有故事」不是比赛封面；保留它原有的兼容路径，避免把比分误当成
+    # 这类内容的标题。它不会影响「赛场之上」的统一出口。
+    return _legacy_solo_score_html(cover)
 
 
 def _legacy_solo_score_html(cover: dict) -> str:
