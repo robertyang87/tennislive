@@ -1119,6 +1119,62 @@ def test_冷开场台头不许把片头拖到台头图那么长(tmp_path):
     )
 
 
+def test_canvas_h传CARD_H画布真的变成三比四不留黑边(tmp_path):
+    """账号所有者看完铺满版：「画面还不是 3:4 的啊」。铺满只是把内容裁进
+    9:16 画布，画布本身没变——`canvas_h` 才是真正换画布的开关。
+
+    卡片本来就是 1080×1440（`CARD_H`）渲的，`canvas_h=CARD_H` 时 pad 那步
+    对卡片是个空操作。这条测试拿一张纯色卡片直接验证：给了 `canvas_h=CARD_H`，
+    输出画面必须真的是 1080×1440，而且四个角必须是卡片自己的颜色（不是
+    `_BAND_COLOR`——那道颜色就是"还留着黑边"的证据）。默认不传的那条路
+    （9:16）留给别的既有测试守着，这条只钉新加的这一半。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from PIL import Image  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    s = tmp_path / "s0.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          f"color=c=orange:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+    a = tmp_path / "a0.mp3"
+    _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+          "sine=frequency=440:sample_rate=24000", "-t", "1.0", "-ac", "1", str(a)])
+
+    out = E.assemble_explainer_video(
+        [s], [a], tmp_path / "out.mp4", canvas_h=E.CARD_H,
+    )
+
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0",
+         "-show_entries", "stream=width,height", "-of", "csv=p=0", str(out)],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    w, h = (int(x) for x in probe.split(","))
+    assert (w, h) == (E.VIDEO_W, E.CARD_H), (
+        f"传了 canvas_h=CARD_H，成片却是 {w}x{h}，不是 3:4 的 {E.VIDEO_W}x{E.CARD_H}")
+
+    frame = tmp_path / "frame.png"
+    _run(["ffmpeg", "-v", "error", "-y", "-ss", "0.5", "-i", str(out),
+          "-frames:v", "1", str(frame)])
+    im = Image.open(frame).convert("RGB")
+    fw, fh = im.size
+    corners = [im.getpixel((2, 2)), im.getpixel((fw - 3, 2)),
+               im.getpixel((2, fh - 3)), im.getpixel((fw - 3, fh - 3))]
+    # 橙色大约是 (255, 165, 0)；band color 是 (6, 28, 20)。四个角的 R 通道
+    # 明显偏亮就说明没有黑边——旧写法（画布还是 9:16）这四个角会是深绿。
+    for px in corners:
+        assert px[0] > 120, f"这个角 {px} 看着像还留着黑边，画布没有真的变成 3:4"
+
+
 def test_同一天可以并存多条片子():
     """一天不止一条「开球之前」——两条前瞻不能互相覆盖。
 
