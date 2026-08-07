@@ -1521,14 +1521,71 @@ flashscore 查单场逐分/统计，只是没人往上翻过它的"今天全部�
 的 `context.request`（页面加载完之后另发一次请求）测的，而**用真实浏览器
 正常打开页面、被动抓它自己发出的请求**，Cloudflare Turnstile 直接过了，
 拿到的 JSON 比 flashscore 更丰富（连夺冠集锦的 YouTube 链接都嵌在里面）。
-**没有接入**：这条路必须真跑一个 Chromium 才能过挑战，不能像 flashscore/
-WTA 那样纯 HTTP 直连——要接的话得在每条调 `fetch_day()` 的工作流里都装
-Playwright+Chromium，成本比拿到的增量数据大得多，先记录做法，不接入。
+**当时没有接入**：这条路必须真跑一个 Chromium 才能过挑战，不能像
+flashscore/WTA 那样纯 HTTP 直连——要接的话得在每条调 `fetch_day()` 的
+工作流里都装 Playwright+Chromium，成本比拿到的增量数据大得多，先记录
+做法，不接入。⚠️ **这条结论后来翻了面**，见下面「TNNS 接进来了」那节——
+账号所有者要求它必须接，只是接的方式要绕开"每次都要装 Chromium"这个
+成本，不是简单粗暴地塞进常规链。
 
 现在 `make_source_chain()` 是 `[EspnSource(), SofaScoreSource(),
 FlashscoreSource(), WtaLiveSource()]`——ESPN/SofaScore 是主源，
 `FlashscoreSource()` 是 ATP+WTA 都覆盖的备用，`WtaLiveSource()` 是再往后
-只补 WTA 的最后一道。三个都失效才会真正拿不到数据。
+只补 WTA 的最后一道。这四个都失效才会去试 `make_fallback_chain()`
+（`TnnsSource`），见下一节。
+
+### ⭐ TNNS 接进来了——但是单独一档，不是塞进常规链
+
+账号所有者 2026-08-07：「我觉得要把 tnns 做备选，不能把鸡蛋都放在一个
+篮子，还是有必要的，如果前面都失败」。上面那条"成本比收益大，不接入"
+的结论**没有错，但漏了一种接法**：成本大是因为把它当成跟另外四个源
+平权的一员，让"每一次 `fetch_day()`"都背上开 Chromium 的三十秒；而
+账号所有者要的场景只有"前面都失败"这一种，不是"每次都查一遍"。
+
+所以现在是两层：`make_source_chain()`（常规四个源，纯 HTTP，全部尝试）
+全灭之后，`fetch_day()` 才会去试 `make_fallback_chain()`（目前只有
+`TnnsSource`）。绝大多数时候这一层根本不会被调用，成本只在真正的全灭
+场景才会付出。实现在 `src/tennislive/sources/tnns.py`，字段怎么验证的
+全写在那个模块的 docstring 里，这里只记**探测过程中的方法论**，别重复
+抄一遍字段表。
+
+#### `probe_tnns.py` 迭代出的三个通用发现，比 TNNS 本身更值钱
+
+- **`_dump_objects` 拿 `json.dumps(node, ...)` 默认分隔符去匹配压缩
+  JSON，永远匹配不上。** 真实接口是压缩格式（`"p":[`，冒号后没有空格），
+  `json.dumps` 不传 `separators` 会在冒号后加一个空格（`"p": [`）——
+  拿它去找 `"p":[` 报「0 个」，而「命中附近」那段明明打印着它存在。
+  改成 `separators=(",", ":")` 才对得上。**查的东西和跑的东西不是
+  同一份文本**，又是这个仓库反复栽过的那个形状，只是这次错的是"匹配
+  用的副本"，不是产物本身
+- **工作流把 `${{ inputs.x }}` 直接拼进 run 脚本正文，值里带引号就会
+  和模板的引号相撞。** 想探 `"p":[`，GitHub Actions 在 bash 解析之前
+  就把表达式换成裸文本，拼出来的脚本源码里两层引号打架，`eval` 照样
+  把错的那串跑出去，**不报语法错误**。实测：真正传给 `--dump` 的值
+  变成了 `p:[`（少一个引号），一次探测全空跑，和"这个词不存在"一模
+  一样。改法是走 `env:` + bash 数组接参数，让 bash 自己的引号解析
+  接管值的内容，不再让 GitHub Actions 的文本替换和 bash 的语法解析
+  互相踩踏
+- **顶层键没数清楚，就已经在树的深处找答案了。** 搜 `season_id` 时，
+  因为这个值到处都是（每场比赛都有），minimal-node 逻辑每次都停在
+  某一场比赛身上，永远走不到"有没有另一块专门存赛事名"这个问题。
+  加了 `--top-keys` 先把根对象的 6 个键点清楚（`sids`/`all_matches`/
+  `refresh_time`/`tours_following`/`matches_following`/`generated_at`），
+  才看清楚"没有一块是赛事名查找表"这件事——**先看形状，再决定往哪挖**
+
+#### `sid` 是巡回赛，不是常量——靠交叉女子球员姓名验出来的
+
+第一版探测只碰到 ATP 蒙特利尔的比赛（Jodar/Musetti/Nakashima/Droguet/
+Rinderknech/Tiafoe，全部男子），`sid` 全是 `1`，一度以为它是个跟巡回赛
+无关的常量（比如"运动项目=网球"）。**如果真造了 `Match.tour` 却猜错了
+这个字段，整条 TnnsSource 出来的数据会把 WTA 的比赛全部打成 ATP**——
+`Match.tour` 是必填字段，猜错不会报错，只会安静地把性别判反。
+
+补一轮专门搜女子球员名字（Sabalenka/Svitolina/Zhang/Potapova）的探测，
+拿到的比赛全是 `sid=2`，跟男子比赛的 `sid=1` 泾渭分明——这才敢把
+`sid → Tour` 的映射写进代码。**跟"排除了 A 和 B 不等于就是 C"同一个
+教训**：只看到一种性别的样本时，"这个字段恒为某个值"和"这个字段就是
+那个巡回赛的常量"长得一模一样，只有交叉另一种性别的真实数据才能证伪。
 
 ### 查询留着，卡片图和推送不留
 
