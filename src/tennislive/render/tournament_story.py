@@ -2331,6 +2331,54 @@ STORIES = STORIES + (
         source_url="https://en.wikipedia.org/wiki/Shang_Juncheng",
     ),
     _trivia_story(
+        slug="eala-mcnally",
+        title="伊埃拉第三轮VS麦克纳莉",
+        subtitle="赛事前瞻 · WTA 1000",
+        identity="两条都在往上冲的曲线，首次交手",
+        chips=("WTA 1000", "第三轮", "首次交手"),
+        hero=(
+            "伊埃拉八月三日拿下华盛顿站冠军、生涯首个巡回赛单打冠军，排名从第 28 跳到第 20；"
+            "第三轮对手麦克纳莉本站二轮逆转淘汰了卫冕温网冠军诺斯科娃。两人巡回赛生涯从未交手。"
+        ),
+        facts=(
+            "伊埃拉 2005 年 5 月生，2026 年 8 月 3 日华盛顿站决赛 4-6、6-4、6-0 逆转佩古拉夺冠，"
+            "是公开赛年代第一位夺得 WTA 单打冠军的菲律宾球员；排名随即从第 28 升到第 20，"
+            "为菲律宾历史最高。本站第二轮 6-1、4-6、6-2 胜帕克斯，六连胜，是队史第一次"
+            "在本项赛事赢下正赛比赛。",
+            "麦克纳莉 2001 年 11 月生，美国人，2023 年 5 月生涯排名升至第 54；随后因肘伤"
+            "在 2024 年 3 月接受手术，缺赛九个月，复出时排名跌到一千开外，靠低级别赛事"
+            "一点点爬回来。2026 年 6 月 22 日升至生涯新高世界第 50，超过伤前的最高排名。",
+            "2026 年 8 月 5 日多伦多第二轮，麦克纳莉首盘一度 1-5 落后，抢七逆转，"
+            "7-6(5)、6-1 淘汰卫冕温网冠军诺斯科娃，是她本赛季第 22 场胜利、生涯新高。"
+            "两人此前从无交手记录，第三轮是巡回赛生涯第一次正面交锋。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-03",
+                player="伊埃拉",
+                age="21 岁",
+                headline="华盛顿决赛逆转佩古拉，生涯首冠",
+                detail="4-6、6-4、6-0 逆转夺冠，公开赛年代首位夺得 WTA 单打冠军的菲律宾球员，"
+                "排名随即从第 28 升到第 20。",
+                source_url="https://www.wtatennis.com/news/4555054/"
+                "fresh-off-washington-title-eala-powers-into-toronto-third-round",
+            ),
+            ChampionMoment(
+                date="2026-08-05",
+                player="麦克纳莉",
+                age="24 岁",
+                headline="首盘 1-5 落后，抢七逆转诺斯科娃",
+                detail="7-6(5)、6-1 淘汰卫冕温网冠军诺斯科娃，本赛季第 22 胜、生涯新高。",
+                source_url="https://www.wtatennis.com/players/325725/caty-mcnally",
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方新闻稿 / WTA 官方球员资料",
+        image_credit="WTA 官方图库",
+        source_url="https://www.wtatennis.com/news/4555054/"
+        "fresh-off-washington-title-eala-powers-into-toronto-third-round",
+    ),
+    _trivia_story(
         slug="venus-potapova",
         title="维纳斯首轮VS波塔波娃",
         subtitle="赛事前瞻 · WTA 500",
