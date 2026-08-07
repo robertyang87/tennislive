@@ -12,6 +12,7 @@ from ..zh.tournaments import tournament_level
 from .base import SourceError, TennisSource
 from .espn import EspnSource
 from .sofascore import SofaScoreSource
+from .wta_live import WtaLiveSource
 
 logger = logging.getLogger(__name__)
 
@@ -20,14 +21,20 @@ __all__ = [
     "SofaScoreSource",
     "SourceError",
     "TennisSource",
+    "WtaLiveSource",
     "fetch_day",
     "make_source_chain",
 ]
 
 
 def make_source_chain(prefer: str | None = None) -> list[TennisSource]:
-    """Aggregate the configured discovery feeds; licensed stats are separate."""
-    chain: list[TennisSource] = [EspnSource(), SofaScoreSource()]
+    """Aggregate the configured discovery feeds; licensed stats are separate.
+
+    `WtaLiveSource` 排最后：它只覆盖 WTA（ATP 那半边没有免费可达的源，
+    见 wta_live.py 模块 docstring），是 ESPN 和 SofaScore 同时失效时的
+    末级备用，不是常态下的主源。
+    """
+    chain: list[TennisSource] = [EspnSource(), SofaScoreSource(), WtaLiveSource()]
     if prefer:
         chain.sort(key=lambda s: 0 if s.name == prefer else 1)
     return chain

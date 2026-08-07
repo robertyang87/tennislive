@@ -1447,6 +1447,42 @@ skip 诊断（`output/<date>/yesterday-point/*/skip.json`）写得很清楚：
 凡是验「产物长什么样」的测试，**输入必须是真渲染器的输出**，不能手搓。
 手搓的 fixture 只能验函数的局部行为，验不了它和真模板对不对得上。
 
+### ⭐ ESPN 也会倒——`fetch_day` 只挂了两个源，两个同时被拉黑就彻底没数据
+
+2026-08-07：`source-health` 连续多次全红，`espn.py` 的模块 docstring 里
+明明白白写着"对数据中心 IP 友好（已实测）"，这句话从这天起不成立了——
+ESPN 和 SofaScore**同时**对 GitHub Actions 的机房 IP 返回 403，从
+08-04 19:59 UTC 起连续 100% 失败了 3 天，`sources/__init__.py` 的
+`make_source_chain()` 当时只挂着这两个源，两个一起倒，`fetch_day` 直接
+抛 `SourceError`，日报、内容雷达手动触发时会撞上同一堵墙。
+
+三层教训，都是当场量出来的，别再重新踩一遍：
+
+- **ATP 那半边现在还是死路**，不用再去试。`atptour.com` 全站 403（含
+  GitHub Actions 出口，`probe_blocked_sources.py` 早验过）、
+  `api.protennislive.com` 要 token（这次又实测了一次，401）、Hawkeye 在
+  Cloudflare 人机校验后面——`docs/match-momentum-sources.md` 反复确认过
+  没有免费可达的候选。**两个主源同时倒时，ATP 覆盖没有救**
+- **WTA 那半边接得上，但接口是抓包挖出来的，不是查文档拼的。** 直接猜
+  `?from=&to=` 这类参数会被服务端**整个忽略**，静默回退成从 1960 年开始
+  的全量列表（18738 条，看着像"查到了"其实什么都没过滤）。真正的做法是
+  `tools/probe_tnns.py --url https://www.wtatennis.com/scores`（这个脚本
+  本来是给 TNNS 写的，通用的 Chromium 抓包，指哪打哪）——一次就抓到了
+  WTA 官网自己在用的两个接口，细节和三个真会咬人的坑（`Winner` 字段不是
+  1/2 而是 2/3/4/7 这种没有文档的枚举、`RoundID` 数字段在 96 签联合赛事
+  上和公开轮次名对不上、`MatchState=W` 的不战而胜连 `ResultString` 都是
+  空的）全记在 `src/tennislive/sources/wta_live.py` 的模块 docstring 和
+  各函数注释里，别在这儿抄第二遍
+- **接口能通不等于能猜着用。** `Winner` 字段第一版我按"1/2"猜过，
+  拿真实数据反查（`ResultString` 里"` d `前面是谁" vs 数字码）才发现是
+  2/3/4/7——猜的那版会把"对手退赛"那几场的赢家全部判反。**没有文档的
+  枚举码，宁可从别的字段（这里是赛果文字）交叉验证，也别信数字表面顺序**
+
+现在 `make_source_chain()` 是 `[EspnSource(), SofaScoreSource(),
+WtaLiveSource()]`，第三个只在前两个都失败时才用得上（`fetch_day` 的
+聚合逻辑本来就是"用到成功为止"）。`source-health` 一个字都不用改——它
+只是原样打印 `data.source_status`，新源自动出现在报告里。
+
 ### 查询留着，卡片图和推送不留
 
 账号所有者：「**可以用命令查赛果，但没必要做卡片图然后推送微信了**」。
