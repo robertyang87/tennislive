@@ -479,9 +479,36 @@ jobs:
       - name: 算出目录
         id: paths
         run: |
-          OUT_DATE=$(TZ=Asia/Shanghai date +%F)
           SLUG="${{ github.event.inputs.slug }}"
-          OUT_DIR="output/$OUT_DATE/reel/$SLUG"
+          # **push 模式不能按「今天」算目录。** render/cover/probe/narration 都是
+          # 当场生成新内容，目录理应是今天；但 push 推的是**已经渲好、可能是
+          # 好几天前的成片**——账号所有者现在允许「渲完先审、审完再推」，
+          # 中间隔的天数不确定。按今天拼目录会拼出一个根本不存在的路径
+          # （eala-pegula-final 是 8/4 渲的，8/7 才推——`output/2026-08-07/...`
+          # 那天什么都没写过），下游那道「push 模式先确认成片真的落地了」的闸
+          # 会报「既不在这个 commit 里」，而真实原因是**问错日子了**。
+          #
+          # `git ls-tree` 不受稀疏检出影响（读的是 git 对象库，不是工作区），
+          # 可以在还没 `sparse-checkout add` 之前就按 slug 把日期反查出来。
+          # 同一个 slug 可能有多个日期目录（重渲过，比如 wong-brooksby 两次）
+          # ——排序取最新的那个，和「查产物按最新那一份，别拿被顶替掉的当基准」
+          # 一个道理。
+          if [ "${{ github.event.inputs.mode }}" = "push" ]; then
+            MATCH=$(git ls-tree -r HEAD --name-only \
+              | grep -E "^output/[0-9]{4}-[0-9]{2}-[0-9]{2}/reel/${SLUG}/render\.json$" \
+              | sort | tail -1)
+            if [ -z "$MATCH" ]; then
+              echo "::error::output/*/reel/$SLUG/render.json 在这个 commit 里一条都没有"
+              echo "::error::——先跑一次 mode=render（push=false）出片，验完再用 mode=push 发。"
+              exit 1
+            fi
+            OUT_DIR=$(dirname "$MATCH")
+            OUT_DATE=$(echo "$OUT_DIR" | sed -E 's#^output/([0-9-]+)/.*#\1#')
+            echo "[push] 按 slug 反查到 $OUT_DIR（这条片子渲的那天，不是今天）"
+          else
+            OUT_DATE=$(TZ=Asia/Shanghai date +%F)
+            OUT_DIR="output/$OUT_DATE/reel/$SLUG"
+          fi
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
           echo "date=$OUT_DATE" >> "$GITHUB_OUTPUT"
           # checkout 把整个 output/ 挡在稀疏范围外了，这儿再把**自己那一格**
