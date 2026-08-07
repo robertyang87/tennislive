@@ -8070,3 +8070,74 @@ def test_赛场之上的比赛画面必须带比赛信息顶栏():
     assert reel._topbar_lines(good) == ("WTA 1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
     with pytest.raises(reel.ReelError, match="一致"):
         reel._topbar_lines({**good, "topbar": {**good["topbar"], "line2": "张帅 6-3 6-4 萨巴伦卡"}})
+
+
+def test_全称断言必须认领一份能穷举的出处():
+    """「零胜」「一场没赢过」「史上第一」这类话，**一个反例就倒**。
+
+    ⚠️ 这条判据是 2026-08-07 一次真实事故换来的。`chwalinska-gibson` 说赫瓦林斯卡
+    「硬地巡回赛正赛零胜」，读者在小红书评论区当场指出来，账号所有者公开更正并道歉。
+    真实记录是**至少三胜**：2026-02 克鲁日那波卡正赛 6-3 6-2 胜博格丹、
+    6-1 1-6 6-2 胜 7 号种子达尼洛维奇（打进八强），2024-10 梅里达正赛胜马里诺——
+    其中前两场还落在片子自己划的「2025-01 至今」窗口里。
+
+    **错法很具体**：拿「场地＋级别」的**合计数**（6 胜 4 负）去支撑一个**轮次**
+    层面的断言（「那 6 场全部是资格赛」）。合计数天生分不出 Q1/Q2 和 R32/R16，
+    **而轮次那一列就在同一张逐场表里**——不是查不到，是没往下看一层。
+
+    所以闸不是「不许说」，是**说了就要认领一份能穷举的出处**（带 URL）——
+    和 `mixed_fps` / `silent_source` / `rank: null` 一个形状：把「查过整张表」
+    和「看了几场就下结论」分开。
+    """
+    reel = _reel()
+
+    # ---- 豁免表自检：名字要真的存在，而且真的还带着那种断言 ----
+    for slug in sorted(reel._LEGACY_UNSOURCED_CLAIMS):
+        path = Path(f"specs/reels/{slug}.json")
+        assert path.is_file(), f"豁免表里的 {slug} 不存在了——过期的名字就是恒真的绿灯"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        texts = reel.spec_outward_text(spec)
+        assert any(reel._ABSOLUTE_CLAIM_RE.search(t) for t in texts), (
+            f"{slug} 已经没有全称断言了，把它从 _LEGACY_UNSOURCED_CLAIMS 删掉（只许减不许加）")
+
+    # ---- 存量里没被豁免的，一条都不许漏 ----
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        reel._absolute_claims_need_a_source(spec)   # 漏了就抛
+
+    # ---- 新写的：说了不认领 → 当场报错 ----
+    bad = {"slug": "全新的一条",
+           "cover": {"hook": "硬地的巡回赛正赛，她零胜"}, "segments": []}
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source(bad)
+
+    # 认领了但没给 URL —— 「查过了」三个字不算出处
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source({**bad, "_claims": {"零胜": "查过了"}})
+
+    # ⚠️ 只给一个源不够——账号所有者 2026-08-07：「最好经过多个信息源交叉验证」。
+    # 赫瓦林斯卡那次单看 tennisabstract 一个源就下了结论，第二个源（维基引 WTA
+    # 官方标题）一句话就能推翻它。同一个主机名重复给两次也不算两个源。
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source({
+            **bad, "_claims": {"零胜": "逐场核过 https://www.tennisabstract.com/x"}})
+    with pytest.raises(reel.ReelError, match="全称断言"):
+        reel._absolute_claims_need_a_source({
+            **bad, "_claims": {"零胜": "https://www.tennisabstract.com/x 和 "
+                                      "https://www.tennisabstract.com/y"}})
+
+    # 认领了、给了**两个不同主机**的穷举源 → 放行
+    reel._absolute_claims_need_a_source({
+        **bad, "_claims": {"零胜": "逐场核过 https://www.tennisabstract.com/x ；"
+                                  "维基百科生涯正文 https://en.wikipedia.org/wiki/x"}})
+
+    # ---- 注解不算「发出去的」：`_` 开头的字段里出现这种词不该被拦 ----
+    reel._absolute_claims_need_a_source({
+        "slug": "只在注解里提", "segments": [],
+        "cover": {"hook": "正常的一句钩子"},
+        "_why": "上一版写了「零胜」，是错的，这儿记一笔"})
+
+    # ---- 判据宁可窄：主观话不拦（机械挡不住，硬凑会被绕过）----
+    reel._absolute_claims_need_a_source({
+        "slug": "主观话", "segments": [],
+        "cover": {"hook": "这是他今年打得最好的一场"}})
