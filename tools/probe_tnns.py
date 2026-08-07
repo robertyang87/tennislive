@@ -90,7 +90,12 @@ def main() -> int:
     ap.add_argument("--link", default="",
                     help="把页面里含这个串的 href 全列出来（找详情页的路由）")
     ap.add_argument("--dump", default="",
-                    help="在 fetch 回来的 JSON 里找含这个词的对象并整个打出来")
+                    help="在响应里找含这个词的对象并整个打出来；"
+                         "被动抓到的响应和 --fetch 结果都会扫，不止后者——"
+                         "TNNS 这类站 context.request 会被 403，被动抓包往往是"
+                         "唯一拿得到数据的路，之前只有 --fetch 能 --dump 等于白扫")
+    ap.add_argument("--dump-limit", type=int, default=3,
+                    help="--dump 每个响应最多打印几个匹配对象")
     args = ap.parse_args()
 
     try:
@@ -167,7 +172,7 @@ def main() -> int:
             for w in args.want:
                 print(f"  里面有 {w!r}：{w in body}")
             if args.dump:
-                _dump_objects(body, args.dump)
+                _dump_objects(body, args.dump, limit=args.dump_limit)
         browser.close()
 
     print(f"\n=== 前端打了 {len(seen)} 个像接口的请求 ===")
@@ -181,6 +186,8 @@ def main() -> int:
             k = min((j.find(w) for w in hit if j.find(w) >= 0), default=0)
             print("     ---- 命中附近 ----")
             print("     " + j[max(0, k - 400):k + 900].replace("\n", " ")[:1200])
+        if args.dump and r["body"] and args.dump in r["body"]:
+            _dump_objects(r["body"], args.dump, limit=args.dump_limit)
     if not seen:
         # 空结果先自证是真空：一个接口都没抓到，多半是挑战没过，不是没有接口
         print("一个都没抓到。挑战过了吗？看上面那行——没过就是被挡，不是没有数据")
