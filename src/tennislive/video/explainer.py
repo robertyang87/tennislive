@@ -5587,6 +5587,11 @@ _OPENINGS: dict[str, dict] = {
         # credits 见 assets/explainer/eala-mcnally/credits.json 的
         # `intro_toronto_crowd.mp4` 条目。
         "intro": "assets/explainer/eala-mcnally/intro_toronto_crowd.mp4",
+        # ⚠️ 账号所有者 2026-08-07：「画面还不是 3:4 的啊」——铺满只是把
+        # intro 的内容裁进 9:16 画布，画布本身没变。这是本条线第一次真的
+        # 换画布：卡片本来就是 1080×1440 渲的，画布也变成 1080×1440 之后
+        # 就没有黑边可留了。见 assemble_explainer_video 的 canvas_h 参数。
+        "canvas": "3:4",
     },
     "shang-nishikori": {
         "column": "开球之前",
@@ -7111,6 +7116,7 @@ def assemble_explainer_video(
     intro: Path | None = None,
     intro_badge: Path | None = None,
     outro: Path | None = None,
+    canvas_h: int = VIDEO_H,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
     """Mux each 3:4 slide over its narration, centre on a 9:16 canvas, concat.
@@ -7142,6 +7148,18 @@ def assemble_explainer_video(
       「网球时差 · {栏目}」台头之后，片头和后面的幻灯片才读得出是**同一条
       片子的开头**，不是临时接进来的一段不相干视频。`intro_badge` 为 `None`
       时退回没有台头的样子——不强求，锦上添花
+
+    ⚠️ 2026-08-07 又加了一处：账号所有者看完铺满版还是说「画面还不是 3:4 的
+    啊」——铺满只是把内容裁进 9:16 画布，画布本身没有变。`canvas_h` 就是
+    干这个的：传 `CARD_H`（1440）画布就变成 1080×1440（3:4），传默认的
+    `VIDEO_H`（1920）还是原来的 9:16。默认值不改，是因为「网球有故事」
+    「知识解说」这些纯卡片片子还在用 9:16，改了默认值会把它们也一起改掉。
+
+    卡片本来就是 1080×1440 渲的（`W, H`），画布一旦也是 1080×1440，
+    pad 那段的 `scale...decrease,pad...` 会变成没有效果的空操作——卡片
+    本来就填满画布，一个像素的黑边都不会有。字幕的 `margin_v` 跟着
+    `canvas_h` 重算（`_ass_header` 的 docstring 早写着这个参数「要能换」，
+    是为赛场之上的 3:4 字幕留的，这次直接复用）。
     """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
@@ -7195,8 +7213,8 @@ def assemble_explainer_video(
         # 转播剪辑的构图本来就大致居中，九条抽样帧看过，center crop 不会把
         # 人物切出画面。
         intro_chain = (
-            f"[0:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
-            f"crop={VIDEO_W}:{VIDEO_H},setsar=1,fps=30"
+            f"[0:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{canvas_h},setsar=1,fps=30"
         )
         if badge_idx is not None:
             filters.append(f"{intro_chain}[introbg]")
@@ -7216,15 +7234,21 @@ def assemble_explainer_video(
         else:
             filters.append(f"{intro_chain},format=yuv420p[vintro]")
         filters.append("[0:a]aresample=async=1[aintro]")
+    # 卡片本来就是 1080×1440（`CARD_H`）渲的。`canvas_h` 等于 `CARD_H` 时，
+    # 下面的 scale+pad 对卡片是个空操作（卡片已经等于目标画布），字幕的
+    # `margin_v` 也要跟着新的画布高度重算——`card_top` 会变成 0，字幕锚点
+    # 直接贴着画布底部，而不是 9:16 画布里那圈 240px 的留白之上。
+    card_top = (canvas_h - CARD_H) // 2
+    margin_v = card_top + CARD_H - 156
     for i in range(n):
         chain = (
-            f"[{2 * i + offset}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
-            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"[{2 * i + offset}:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease,"
+            f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30"
         )
         # 字幕。静音刷是默认状态——旁白里的引语、数字、来龙去脉，静音的人一个字
-        # 都拿不到，而卡上只放得下两三条短句。字幕烧进下边条（3:4 的卡居中在 9:16
-        # 上，上下各空 240px），补的是耳朵那一份，不跟画面抢地方。
+        # 都拿不到，而卡上只放得下两三条短句。字幕烧进下边条，补的是耳朵那一份，
+        # 不跟画面抢地方。
         if captions and i < len(captions) and captions[i].strip():
             words = Path(audios[i]).with_suffix(".words.json")
             try:
@@ -7238,7 +7262,10 @@ def assemble_explainer_video(
                 offset=head[i],
             )
             if cues:
-                ass = write_subtitles(cues, output.parent / f"sub_{i:02d}.ass")
+                ass = write_subtitles(
+                    cues, output.parent / f"sub_{i:02d}.ass",
+                    height=canvas_h, margin_v=margin_v,
+                )
                 chain += f",subtitles='{_filter_path(ass)}'"
         filters.append(f"{chain},format=yuv420p[v{i}]")
         # Silence the audio rather than the picture: adelay pushes the speech
@@ -7260,8 +7287,8 @@ def assemble_explainer_video(
         # 两份必分叉，所以这儿是照抄上面那一段的形状，改动只有「不加字幕」。
         vi = 2 * n + offset
         filters.append(
-            f"[{vi}:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
-            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
+            f"[{vi}:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=decrease,"
+            f"pad={VIDEO_W}:{canvas_h}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
             f"setsar=1,fps=30,format=yuv420p[v{n}]"
         )
         # 音轨要**重采样到和旁白同一个规格**：concat 要求各路参数一致，
@@ -7366,12 +7393,20 @@ def generate_explainer_video(
         encoding="utf-8",
     )
     outro = _build_outro_clip(outdir, voice=voice, rate=rate, pitch=pitch)
+    # 画布默认还是 9:16——「网球有故事」「知识解说」这些纯卡片片子在用，改
+    # 默认值会把它们一起改掉。`_OPENINGS[slug]["canvas"] = "3:4"` 是显式认领
+    # （和 `mixed_fps` / `silent_source` 一个形状）：写了才换，不写就是老样子。
+    canvas = (_OPENINGS.get(story.slug) or {}).get("canvas")
+    if canvas not in (None, "3:4", "9:16"):
+        raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
+    canvas_h = CARD_H if canvas == "3:4" else VIDEO_H
     return assemble_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
         intro=intro,
         intro_badge=intro_badge,
         outro=outro,
+        canvas_h=canvas_h,
     )
 
 
