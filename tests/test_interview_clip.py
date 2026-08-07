@@ -830,6 +830,81 @@ def test_英文也要过宽度闸(tmp_path):
         write_ass(_lines([long_en, "short one."]), ["一", "二"], 0.0, tmp_path / "t.ass")
 
 
+# ---------------------------------------------------------------- 固定搭配高亮
+
+def test_高亮短语上色不放大且不改变周边文字():
+    """**只上色，不放大**——放大会改这一行的实际占宽，得重新过宽度闸；
+    上色用 `\\c`，字符前进量一个像素不变。"""
+    from tools.build_interview_clip import _MARK_COLOUR, highlight_en
+
+    out, hit = highlight_en("It was tough to face when you want to finish.",
+                            ["tough to face"])
+    assert hit == {"tough to face"}
+    assert out == ("It was " + f"{{{_MARK_COLOUR}}}tough to face{{\\r}}"
+                   + " when you want to finish.")
+    # 把标签一律去掉之后必须还原成原文，一个字都不能多或少
+    assert re.sub(r"\{[^}]*\}", "", out) == \
+        "It was tough to face when you want to finish."
+
+
+def test_高亮按词边界不按裸子串():
+    """裸子串会把 `for` 命中到 `before` 中间（`before` 本身就含着 `for` 四个
+    字母）——那不是强调固定搭配，是把一个词腰斩了一半染色。"""
+    from tools.build_interview_clip import highlight_en
+
+    out, hit = highlight_en("I waited for hours before the match.", ["for"])
+    assert hit == {"for"}
+    # 独立的 for 被包起来了
+    assert re.search(r"\{[^}]*\}for\{\\r\}", out)
+    # before 四个字母连续原样留着，没被从中间插进一个标签
+    assert "before" in out
+
+
+def test_高亮短语一处都没匹配上要报错(tmp_path):
+    """**空结果先自证是真空。** 短语打错字或者 `en_fixed` 后来改了原文，
+    这个短语就哪儿都找不到——不能悄悄放过，得指名是哪个短语。"""
+    lines = _lines(["it was tough to face."])
+    spec = {"highlight_en": ["stay focused"],
+            "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+    with pytest.raises(SystemExit, match="stay focused"):
+        write_ass(lines, ["一"], 0.0, tmp_path / "never-written.ass", spec)
+
+
+def test_高亮短语重叠要报错():
+    from tools.build_interview_clip import highlight_en
+
+    with pytest.raises(SystemExit, match="重叠"):
+        highlight_en("stay focused and calm", ["stay focused", "focused and"])
+
+
+def test_没写highlight_en字段行为不变(tmp_path):
+    """**只在写了才管，没写就是零行为改动。** 存量 spec 一个字都不该受影响——
+    已发的片子不为了措辞重渲。"""
+    lines = _lines(["stay focused and calm"])
+    spec_no_field = {"slug": "t", "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+    p1 = tmp_path / "a.ass"
+    write_ass(lines, ["一"], 0.0, p1, spec_no_field)
+    assert "{\\c" not in p1.read_text(encoding="utf-8")
+    # spec 本身是 None（老调用点一直这么传）同样不该崩、不该染色
+    p2 = tmp_path / "b.ass"
+    write_ass(lines, ["一"], 0.0, p2, None)
+    assert "{\\c" not in p2.read_text(encoding="utf-8")
+
+
+def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
+    """两个短语分别落在不同行——不能因为「这一行没找到」就报错，
+    要等**所有行**都扫完，真的一次都没中的才算数。"""
+    from tools.build_interview_clip import _MARK_COLOUR
+
+    lines = _lines(["stay focused please.", "tough to face today."])
+    spec = {"highlight_en": ["stay focused", "tough to face"],
+            "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+    path = tmp_path / "t.ass"
+    write_ass(lines, ["一", "二"], 0.0, path, spec)  # 不许抛
+    body = path.read_text(encoding="utf-8")
+    assert body.count(f"{{{_MARK_COLOUR}}}") == 2
+
+
 def test_翻转和裁角标要作用到封面帧上():
     """**封面帧不走那条滤镜链**——它是单独一条 `ffmpeg -ss … -frames:v 1`。
 
