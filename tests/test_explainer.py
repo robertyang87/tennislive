@@ -584,11 +584,18 @@ def test_赛前片的封面要写清是哪一场():
         _slide_html,
         explainer_column,
     )
+    from tennislive.zh import _ranked_player_names
     from tennislive.zh.players import PLAYER_ZH
 
     # 判据和 test_人名要以译名表为准 用的是同一份表，外加那份「同一个人的
     # 另一种叫法」白名单——封面上的名字没有上下文消歧，更不该是手打的。
-    known = set(PLAYER_ZH.values()) | _ON_PURPOSE
+    #
+    # ⚠️ 只并 `PLAYER_ZH` 是漏的一半：`player_zh()` 自己查名字时
+    # **top500.json 优先，players.py 兜底**（CLAUDE.md 那条「两张表，
+    # `player_names_top500.json` 优先」），只查旧表会把只登记在新表里的名字
+    # （比如「麦克纳莉」）判成「没查过」。两处判据都要跟 `player_zh()`
+    # 真正查的范围对齐，不能各查各的一半。
+    known = set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE
 
     for slug in _SCRIPTED:
         cover = explainer_script(find_story_by_slug(slug))[0]
@@ -860,6 +867,76 @@ def test_解说片接上片尾之后成片真的变长(tmp_path):
     assert abs(_dur(withx, "a:0") - _dur(withx, "v:0")) < 0.35, (
         f"音轨 {_dur(withx, 'a:0'):.2f}s 和画面 {_dur(withx, 'v:0'):.2f}s 对不上"
         "——片尾那一段没有声音")
+
+
+def test_解说片接上片头之后成片真的变长(tmp_path):
+    """`intro` 对称于上一条测试的 `outro`——冷开场实拍片段接在最前面，不是
+    接在末尾。它多加了一层复杂度上一条测试没有：`intro` 抢占输入 0，后面
+    每个 slide/audio 在 ffmpeg 命令行里的下标都要跟着整体后移一位。这条测试
+    专挑这一层：`intro` 和 `outro` **同时给**，前后各接一段，缺一处下标算错
+    就会把中间的幻灯片对到错的输入上，或者直接被 concat 报错到底。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    from tennislive.video import explainer as E
+
+    if not (shutil.which("ffmpeg") and shutil.which("ffprobe")):
+        raise AssertionError("没有 ffmpeg/ffprobe，这条判据跑不了：apt install ffmpeg")
+
+    def _run(args):
+        subprocess.run(args, check=True, capture_output=True)
+
+    slides, audios = [], []
+    for i, colour in enumerate(("red", "green")):
+        s = tmp_path / f"s{i}.png"
+        _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+              f"color=c={colour}:s={E.VIDEO_W}x{E.CARD_H}", "-frames:v", "1", str(s)])
+        a = tmp_path / f"a{i}.mp3"
+        _run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i",
+              "sine=frequency=440:sample_rate=24000", "-t", "2.0",
+              "-ac", "1", str(a)])
+        slides.append(s)
+        audios.append(a)
+
+    def _clip(path, colour, seconds):
+        _run(["ffmpeg", "-v", "error", "-y",
+              "-f", "lavfi", "-i", f"color=c={colour}:s={E.VIDEO_W}x{E.CARD_H}:r=25",
+              "-f", "lavfi", "-i", "sine=frequency=300:sample_rate=24000",
+              "-t", f"{seconds}", "-c:v", "libx264", "-preset", "ultrafast",
+              "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "24000", "-ac", "1",
+              str(path)])
+
+    intro = tmp_path / "_intro.mp4"
+    outro = tmp_path / "_outro.mp4"
+    _clip(intro, "yellow", 4.0)
+    _clip(outro, "blue", 3.0)
+
+    def _dur(path, stream):
+        return float(subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            check=True, capture_output=True, text=True).stdout.strip().rstrip(","))
+
+    plain = E.assemble_explainer_video(slides, audios, tmp_path / "plain2.mp4")
+    both = E.assemble_explainer_video(slides, audios, tmp_path / "both.mp4",
+                                       intro=intro, outro=outro)
+
+    grew = _dur(both, "v:0") - _dur(plain, "v:0")
+    assert abs(grew - 7.0) < 0.3, (
+        f"接上 4 秒片头 + 3 秒片尾之后成片只长了 {grew:.2f}s（该长 7s）——"
+        "片头或片尾没有真的拼进去，或者下标算错把中间的幻灯片吃掉了")
+    assert abs(_dur(both, "a:0") - _dur(both, "v:0")) < 0.35, (
+        f"音轨 {_dur(both, 'a:0'):.2f}s 和画面 {_dur(both, 'v:0'):.2f}s 对不上")
+
+    # 只接片头（不接片尾）单独验一遍下标偏移，防止「两个一起给才对，
+    # 单独给片头时 offset 算错」这类只在一种组合下现形的 bug。
+    only_intro = E.assemble_explainer_video(slides, audios, tmp_path / "only_intro.mp4",
+                                             intro=intro)
+    grew_i = _dur(only_intro, "v:0") - _dur(plain, "v:0")
+    assert abs(grew_i - 4.0) < 0.3, (
+        f"只接 4 秒片头，成片只长了 {grew_i:.2f}s——offset 没有正确应用到"
+        "后面的 slide/audio 输入下标上")
 
 
 def test_同一天可以并存多条片子():
@@ -1632,7 +1709,10 @@ _KNOWN_TYPOS = {
 
 #: 正当地含着某个错字串的词，查之前先遮掉。「巴基斯坦」里就有「基斯」——
 #: 短名做子串匹配必然会撞上这种，遮掉比放宽判据好。
-_TYPO_SAFE = ("巴基斯坦",)
+#: 「斯图加特」（德国城市，Stuttgart）四个字里三个和「斯图尔特」（球员
+#: Hamish Stewart，登记在 player_names_top500.json）重叠——`known` 并进
+#: 排名快照之后才现形的假阳性，判据变准了、`_TYPO_SAFE` 跟着补一条。
+_TYPO_SAFE = ("巴基斯坦", "斯图加特")
 
 
 def test_人名要以译名表为准():
@@ -1650,9 +1730,16 @@ def test_人名要以译名表为准():
     这意味着两三个字的名字写错了它挡不住——**表里没有的名字，仍然要自己补进表里**。
     """
     from tennislive.video import explainer as E
+    from tennislive.zh import _ranked_player_names
     from tennislive.zh.players import PLAYER_ZH
 
-    known = sorted(set(PLAYER_ZH.values()) | _ON_PURPOSE, key=len, reverse=True)
+    # 同一处漏洞的另一半（见 test_赛前片的封面要写清是哪一场 的注释）：
+    # 只并旧表会漏掉只登记在 player_names_top500.json 里的名字，遮罩阶段
+    # 遮不掉它们，也就防不住"表里明明有、却被判成手打错"的假阳性。
+    known = sorted(
+        set(PLAYER_ZH.values()) | set(_ranked_player_names().values()) | _ON_PURPOSE,
+        key=len, reverse=True,
+    )
     canon = [n for n in known if len(n) >= 4]
 
     def strip_known(text: str) -> str:
@@ -1673,7 +1760,13 @@ def test_人名要以译名表为准():
         for wrong, right in _KNOWN_TYPOS.items():
             if wrong in safe:
                 bad.append(f"{where}：「{wrong}」写错了，表里是「{right}」")
-        masked = strip_known(text)
+        # ⚠️ 这里原来写的是 `strip_known(text)`——`_TYPO_SAFE` 遮的是 `safe`，
+        # 而下面①②两条模糊匹配吃的却是没遮过 `_TYPO_SAFE` 的 `text`，等于
+        # `_TYPO_SAFE` 只护住了 `_KNOWN_TYPOS` 那一半，模糊匹配这一半从没被
+        # 遮过。「巴基斯坦」当年凑巧没撞上任何一个 canon 近似串，所以这个
+        # 缺口一直没现形；`known` 并进 top500 表之后「斯图加特」撞上新收进来的
+        # 「斯图尔特」才炸出来（见 `_TYPO_SAFE` 那条注释）。改成遮过的 `safe`。
+        masked = strip_known(safe)
         for name in canon:
             # ① 等长、恰好差一个字：「里巴金娜」之于「莱巴金娜」
             width = len(name)
