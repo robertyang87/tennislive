@@ -6194,6 +6194,86 @@ def render_explainer_slides(
     return paths
 
 
+def _render_intro_badge(topic: str, column: str, outdir: Path) -> Path | None:
+    """给冷开场实拍片段叠一条和幻灯片一样的顶部台头。
+
+    账号所有者 2026-08-07 看完伊埃拉 VS 麦克纳莉那条片子：「前面的视频有点
+    突兀」。根子是每一屏都顶着「网球时差 · 开球之前」这条头部条，唯独片头
+    实拍那段什么都没有——看着像临时接了一段不相干的视频，不是这条片子自己
+    的开头。
+
+    只渲 `.bar`（顶部渐变条）和 `.head`（台头文字），透明背景，位置和
+    `_slide_html` 里的 `.head` **像素级一致**（top:44px, left/right:70px）
+    ——直接照抄那份 CSS，不是另起一套；改了台头样式，两处都要跟着改，见
+    `test_冷开场台头要和幻灯片台头同一份样式`。
+
+    `device_scale_factor` 用 1，不用幻灯片那份的 2：这里渲出来的像素要直接
+    叠到 1080 宽的视频画布上，多一次缩放只会让文字边缘发虚。
+
+    渲不出来（缺 Chromium）就返回 None，让片头退回没有台头的样子——这是
+    锦上添花，不该拖垮整条片子（和 `_build_outro_clip` 同一个态度）。
+    """
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+    from ..render.webcards import _chromium_executable, _font_css  # noqa: PLC0415
+
+    icon_path = _REPO / "assets" / "logo" / "brand" / "icon.png"
+    brand_icon = (
+        f'<img class="brand-icon" src="{_data_uri(icon_path)}" alt="">'
+        if icon_path.is_file() else ""
+    )
+    badge_h = 200
+    doc = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><style>{_font_css()}
+*{{margin:0;padding:0;box-sizing:border-box;}}
+html,body{{width:{VIDEO_W}px;height:{badge_h}px;background:transparent;}}
+body{{font-family:'TL Sans SC','Noto Sans CJK SC','Noto Sans SC',sans-serif;color:#f4fbf7;}}
+.bar{{position:absolute;top:0;left:0;right:0;height:12px;
+ background:linear-gradient(90deg,#c6f65a 0%,#37e29a 34%,#ff5a6a 67%,#4bb8ff 100%);}}
+.head{{position:absolute;top:44px;left:70px;right:70px;display:flex;align-items:center;
+ text-shadow:0 2px 12px rgba(0,0,0,.6);}}
+.brandwrap{{display:flex;align-items:center;gap:14px;}}
+.brandlines{{display:flex;flex-direction:column;gap:2px;}}
+.topic{{font-family:'TL Sans SC',sans-serif;font-size:27px;font-weight:700;
+ color:#dcefe4;letter-spacing:1px;
+ text-shadow:0 2px 10px rgba(0,0,0,.9),0 0 24px rgba(6,28,20,.8);}}
+.brand-icon{{width:52px;height:52px;object-fit:contain;
+ filter:drop-shadow(0 2px 8px rgba(0,0,0,.55));}}
+.brand{{font-family:'TL Display SC','TL Sans SC',sans-serif;
+ font-size:38px;font-weight:400;letter-spacing:1px;}}
+</style></head><body>
+<div class="bar"></div>
+<div class="head"><div class="brandwrap">{brand_icon}<div class="brandlines">
+<span class="brand">网球时差 · {html.escape(column)}</span>
+<span class="topic">{html.escape(topic)}</span></div></div></div>
+</body></html>"""
+
+    outdir.mkdir(parents=True, exist_ok=True)
+    out = outdir / "_intro_badge.png"
+    with sync_playwright() as p:
+        try:
+            browser = p.chromium.launch()
+        except Exception:
+            exe = _chromium_executable()
+            if not exe:
+                return None
+            browser = p.chromium.launch(executable_path=exe)
+        try:
+            page = browser.new_page(
+                viewport={"width": VIDEO_W, "height": badge_h}, device_scale_factor=1
+            )
+            try:
+                page.set_content(doc)
+                page.wait_for_function(
+                    "document.fonts.status === 'loaded'", timeout=15000
+                )
+                page.screenshot(path=str(out), type="png", omit_background=True)
+            finally:
+                page.close()
+        finally:
+            browser.close()
+    return out
+
+
 def speakable(text: str) -> str:
     """Rewrite a narration so the TTS voice says scores the way people do.
 
@@ -7019,6 +7099,7 @@ def assemble_explainer_video(
     lead_silence: float = LEAD_SILENCE,
     tail_silence: float = TAIL_SILENCE,
     intro: Path | None = None,
+    intro_badge: Path | None = None,
     outro: Path | None = None,
     runner: Callable[..., object] = subprocess.run,
 ) -> Path:
@@ -7033,10 +7114,24 @@ def assemble_explainer_video(
     `test_片尾口播说的话画面上要印得全`。
 
     `intro` 对称于 `outro`，只是接在最前面：一段**真视频**（自带画面和现场
-    声，不是 `-loop 1` 的静图），走和 `outro` 完全一样的 scale+pad+fps 链和
-    音轨重采样。「开球之前」这条线用它接previous-round 的实拍片段（比如上一轮
-    的制胜分和庆祝）——冷开场先给观众看得见的东西，再进正题。和幻灯片一样，
-    它自己多长就播多长，不额外裁剪或补静音。
+    声，不是 `-loop 1` 的静图）。「开球之前」这条线用它接 previous-round 的
+    实拍片段（比如上一轮的制胜分和庆祝）——冷开场先给观众看得见的东西，再
+    进正题。和幻灯片一样，它自己多长就播多长，不额外裁剪或补静音。
+
+    ⚠️ 2026-08-07 改了两处，都是账号所有者反馈「前面的视频有点突兀」之后的
+    修法，两条都在 `test_冷开场实拍片段要铺满不留黑边` /
+    `test_冷开场台头要和幻灯片台头同一份样式` 里钉住：
+
+    - **不再 pad 成信箱**（原来 `scale...decrease,pad...` 会在 16:9 的源片
+      上下各留出约 656px 的纯色带）。改成 `scale...increase,crop`——铺满整个
+      9:16 画布，代价是裁掉源片左右两侧一部分画面，换来的是「这条视频占满
+      屏幕」而不是「两条黑边夹着一小条视频」。九条抽样帧看过，转播剪辑的
+      构图本来就大致居中，center crop 不会把人物切出画面
+    - **叠一条和幻灯片一样的台头**（`intro_badge`，`_render_intro_badge`
+      渲的）。原来片头空空荡荡，从第一帧起看不出这是哪条片子；叠上同一条
+      「网球时差 · {栏目}」台头之后，片头和后面的幻灯片才读得出是**同一条
+      片子的开头**，不是临时接进来的一段不相干视频。`intro_badge` 为 `None`
+      时退回没有台头的样子——不强求，锦上添花
     """
     if not slides or len(slides) != len(audios):
         raise ExplainerVideoError("幻灯片与音频数量不匹配")
@@ -7053,12 +7148,23 @@ def assemble_explainer_video(
     tail = [tail_silence if i == n - 1 else 0.0 for i in range(n)]
 
     command = [ffmpeg_bin, "-hide_banner", "-loglevel", "error", "-y"]
-    # `intro` 抢在最前面占掉输入 0，后面每个 slide/audio 的下标要整体后移——
-    # 这是唯一比 outro（只在末尾追加、不影响前面下标）多出来的复杂度。
+    # `intro` 抢在最前面占掉输入 0（`intro_badge` 有的话再占一个），后面每个
+    # slide/audio 的下标要整体后移——这是唯一比 outro（只在末尾追加、不影响
+    # 前面下标）多出来的复杂度。
     offset = 0
+    badge_idx = None
     if intro is not None:
         command.extend(["-i", str(Path(intro).resolve())])
         offset = 1
+        if intro_badge is not None and Path(intro_badge).is_file():
+            # 静态图当叠加层：给个够长的 `-t`（片头从没超过一分钟），别让它
+            # 在 filter graph 里变成一条没有终点的流。真正决定输出多长的是
+            # 下面 overlay 的主输入（intro 本身），这条只是垫在上面的图层。
+            command.extend(
+                ["-loop", "1", "-t", "60", "-i", str(Path(intro_badge).resolve())]
+            )
+            badge_idx = offset
+            offset += 1
     for i, (slide, audio) in enumerate(zip(slides, audios)):
         seconds = _audio_seconds(Path(audio), ffprobe_bin, runner) + head[i] + tail[i]
         command.extend(
@@ -7072,11 +7178,25 @@ def assemble_explainer_video(
 
     filters = []
     if intro is not None:
-        filters.append(
-            f"[0:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=decrease,"
-            f"pad={VIDEO_W}:{VIDEO_H}:(ow-iw)/2:(oh-ih)/2:color={_BAND_COLOR},"
-            f"setsar=1,fps=30,format=yuv420p[vintro]"
+        # **铺满，不留信箱黑边**：`force_original_aspect_ratio=increase` 先把
+        # 16:9 的源片放大到两边都盖过 9:16 画布，`crop` 再从正中间切一块
+        # 1080×1920 出来。代价是裁掉源片左右一部分画面（16:9 进 9:16 大约只
+        # 留中间 31.6% 的宽度）；换来的是这段实拍片段占满整个屏幕，不是两条
+        # 黑边夹着一小条视频——这正是账号所有者说的「有点突兀」的一部分根源。
+        # 转播剪辑的构图本来就大致居中，九条抽样帧看过，center crop 不会把
+        # 人物切出画面。
+        intro_chain = (
+            f"[0:v]scale={VIDEO_W}:{VIDEO_H}:force_original_aspect_ratio=increase,"
+            f"crop={VIDEO_W}:{VIDEO_H},setsar=1,fps=30"
         )
+        if badge_idx is not None:
+            filters.append(f"{intro_chain}[introbg]")
+            filters.append(f"[{badge_idx}:v]format=rgba[introbadge]")
+            filters.append(
+                "[introbg][introbadge]overlay=0:0:format=auto,format=yuv420p[vintro]"
+            )
+        else:
+            filters.append(f"{intro_chain},format=yuv420p[vintro]")
         filters.append("[0:a]aresample=async=1[aintro]")
     for i in range(n):
         chain = (
@@ -7198,6 +7318,19 @@ def generate_explainer_video(
     intro = (_REPO / intro_rel) if intro_rel else None
     if intro is not None and not intro.is_file():
         raise ExplainerVideoError(f"开场实拍片段找不到：{intro}")
+    # 冷开场叠一条和幻灯片一样的台头——见 `_render_intro_badge` 的 docstring。
+    # 渲不出来（缺 Chromium）不拖垮整条片子，退回没有台头的样子。
+    intro_badge = None
+    if intro is not None:
+        try:
+            intro_badge = _render_intro_badge(
+                (_OPENINGS.get(story.slug) or {}).get("topic", ""),
+                explainer_column(story.slug),
+                outdir,
+            )
+        except Exception as exc:  # noqa: BLE001 - 台头是锦上添花
+            print(f"[冷开场台头] 渲不出来，这段片头没有台头：{exc}")
+            intro_badge = None
     # Which voice actually spoke is otherwise unrecoverable from the output:
     # the per-beat mp3s are deleted to keep the repo small, and nobody can
     # read a voice name off an mp4. That gap already cost three decks — the
@@ -7219,6 +7352,7 @@ def generate_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
         intro=intro,
+        intro_badge=intro_badge,
         outro=outro,
     )
 
