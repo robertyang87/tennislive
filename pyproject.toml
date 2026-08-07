@@ -36,7 +36,11 @@ dependencies = [
 dev = ["pytest>=7.0", "pytest-xdist>=3.5", "ruff>=0.6", "pyyaml>=6.0"]
 # HTML/Chromium 精细卡片渲染（缺失时自动回退 Pillow 版）
 webrender = ["playwright>=1.40"]
-visualqa = ["opencv-python-headless>=4.10,<5"]
+# numpy 一直是 opencv-python-headless 的传递依赖，装 visualqa 就有——但
+# `test_detect_scorebox.py` 直接 `import numpy` 构造合成帧数组（不经 cv2），
+# 而「测试用到的第三方包都在 dev 依赖里」那道闸只认 pyproject 里字面出现的包名，
+# 不认「反正传递依赖会带上它」。显式声明，别指望隐式带上的包永远够用。
+visualqa = ["opencv-python-headless>=4.10,<5", "numpy>=1.24"]
 # 热点简报的中译 + 要点提炼（`tennislive brief`）。
 # ⚠️ **走 DeepSeek 那条通道不需要装这个 extra**：它是 OpenAI 格式的 HTTP 调用，
 # `requests` 本来就是主依赖。这里只有 Anthropic 那条路要的官方 SDK。
