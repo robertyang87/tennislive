@@ -1,4 +1,5 @@
 from tennislive.zh import country_flag, country_zh, player_zh
+from tennislive.zh.countries import country_ioc
 from tennislive.zh.terms import discipline_zh, round_zh
 from tennislive.zh.tournaments import (
     tournament_level,
@@ -87,6 +88,17 @@ def test_country():
     assert country_flag("GER") == "🇩🇪"
     assert country_flag("RS") == "🇷🇸"
     assert country_flag("TPE") == ""  # 中华台北不显示旗帜
+
+
+def test_country_ioc():
+    """TNNS 给的是 ISO2（如 "ES"），Player.country 要的是 IOC 三字码."""
+    assert country_ioc("ES") == "ESP"
+    assert country_ioc("IT") == "ITA"
+    assert country_ioc("US") == "USA"
+    assert country_ioc("FR") == "FRA"
+    assert country_ioc("ITA") == "ITA"  # 已经是 IOC 的直接原样确认
+    assert country_ioc(None) is None
+    assert country_ioc("ZZ") is None  # 不认识的码，别瞎编一个
 
 
 def test_冠名商在前的赛事名也要认得出级别():

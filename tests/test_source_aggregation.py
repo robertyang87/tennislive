@@ -1,6 +1,7 @@
 from datetime import date
 
 from conftest import make_match
+from tennislive.sources.base import SourceError
 
 
 class _Source:
@@ -10,6 +11,15 @@ class _Source:
 
     def fetch_day(self, _date):
         return self.matches
+
+
+class _FailingSource:
+    def __init__(self, name, message="failed"):
+        self.name = name
+        self.message = message
+
+    def fetch_day(self, _date):
+        raise SourceError(self.message)
 
 
 def test_fetch_day_aggregates_and_dedupes(monkeypatch):
@@ -156,3 +166,88 @@ def test_fetch_day_merges_optional_middle_name(monkeypatch):
     assert len(day.matches) == 1
     assert day.matches[0].tournament.name == "Vanda Pharmaceuticals Athens Open"
     assert day.matches[0].tournament.level == "WTA250"
+
+
+def test_fetch_day_falls_back_to_tnns_tier_only_when_regular_chain_is_wiped_out(
+    monkeypatch,
+):
+    """常规链（ESPN/SofaScore/Flashscore/WtaLive）全灭，才轮到 TNNS 那一档.
+
+    这正是账号所有者要的场景（"不能把鸡蛋都放一个篮子，如果前面都失败"）：
+    `make_fallback_chain` 只有在 `used_sources` 空的时候才会被调用——
+    `TnnsSource` 要真开浏览器过 Cloudflare 挑战，一次 25~30 秒，不能让
+    每一次 `fetch_day()` 都背上这个代价。
+    """
+    import tennislive.sources as sources
+
+    fallback_match = make_match(match_id="tnns-1")
+    monkeypatch.setattr(
+        sources,
+        "make_source_chain",
+        lambda _prefer=None: [
+            _FailingSource("espn"),
+            _FailingSource("sofascore"),
+            _FailingSource("flashscore"),
+            _FailingSource("wta-live"),
+        ],
+    )
+    monkeypatch.setattr(
+        sources,
+        "make_fallback_chain",
+        lambda: [_Source("tnns", [fallback_match])],
+    )
+
+    day = sources.fetch_day(date(2026, 7, 16))
+
+    assert day.source == "tnns"
+    assert len(day.matches) == 1
+    assert day.matches[0].match_id == "tnns-1"
+
+
+def test_fetch_day_never_calls_fallback_tier_when_a_regular_source_succeeds(
+    monkeypatch,
+):
+    """常规链只要有一个成功，就不该付 TNNS 那三十秒的代价."""
+    import tennislive.sources as sources
+
+    espn_match = make_match(match_id="espn-1")
+    monkeypatch.setattr(
+        sources,
+        "make_source_chain",
+        lambda _prefer=None: [
+            _Source("espn", [espn_match]),
+            _FailingSource("sofascore"),
+        ],
+    )
+
+    def _boom():
+        raise AssertionError("常规链有源成功时不该调用 make_fallback_chain")
+
+    monkeypatch.setattr(sources, "make_fallback_chain", _boom)
+
+    day = sources.fetch_day(date(2026, 7, 16))
+
+    assert day.source == "espn"
+    assert len(day.matches) == 1
+
+
+def test_fetch_day_raises_when_both_tiers_are_wiped_out(monkeypatch):
+    import tennislive.sources as sources
+
+    monkeypatch.setattr(
+        sources,
+        "make_source_chain",
+        lambda _prefer=None: [_FailingSource("espn", "网络超时")],
+    )
+    monkeypatch.setattr(
+        sources,
+        "make_fallback_chain",
+        lambda: [_FailingSource("tnns", "Cloudflare 挑战没过")],
+    )
+
+    try:
+        sources.fetch_day(date(2026, 7, 16))
+        raise AssertionError("两档都失败时应该抛 SourceError")
+    except SourceError as exc:
+        assert "espn" in str(exc)
+        assert "tnns" in str(exc)

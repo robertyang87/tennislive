@@ -17,7 +17,13 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 常规四个源（ESPN/SofaScore/Flashscore/WtaLive）全灭时，fetch_day 会
+    # 去试最后一道 TNNS——那一档要真开 Chromium 过 Cloudflare 挑战，
+    # 一次 25~30 秒，Chromium 本身的安装还可能撞上 apt/dpkg 锁重试（见
+    # 下面「装 Chromium」那步的注释）。10 分钟在最坏情况下不够，这条线
+    # 每 6 小时才跑一次，多留点余量换来的是真的能兜住全灭场景，不是
+    # 在最该顶用的那一刻先自己超时。
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,8 +35,39 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 安装 tennislive
-        run: pip install -q -e .
+      # `[webrender]` 带 playwright——**只装这个包不够**，playwright 自己
+      # 还要再下一份 Chromium 二进制，见下一步。两步都不装的话，常规源
+      # 全灭时 TnnsSource 会在第一行就报 SourceError（"这台机器没装
+      # playwright"），这个健康检查因此测不到它本该兜住的那个场景。
+      - name: 安装 tennislive（含 TNNS 备用要的 playwright）
+        run: pip install -q -e ".[webrender]"
+
+      # ⚠️ **`--with-deps` 会跑 apt，而这个仓库的 apt 会抽风**（CLAUDE.md
+      # 里「一次静静烧了 13 分 42 秒」那条）。这段重试+等锁逻辑和
+      # probe-blocked.yml 里「装 Chromium」那步完全一致，别改动这条别的
+      # 工作流也在用的形状——改一处要三处一起改。
+      - name: 装 Chromium（TNNS 备用要用真浏览器过 Cloudflare 挑战）
+        timeout-minutes: 12
+        run: |
+          pw_wait_apt() {
+            for _ in $(seq 1 22); do
+              if ! pgrep -x apt-get >/dev/null && ! pgrep -x dpkg >/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            echo "::warning::等了 110 秒 dpkg 锁还没松开——下一次尝试八成会在两秒内死在 Could not get lock，不是 apt 装不上"
+          }
+          pw_retry() {
+            for i in 1 2; do
+              timeout 240 python -m playwright install --with-deps chromium && return 0
+              echo "::warning::装 Chromium 第 $i 次没跑完（多半卡在 --with-deps 的 apt）"
+              pw_wait_apt
+            done
+            echo "::error::装 Chromium 两次都没成功"
+            return 1
+          }
+          pw_retry
 
       - name: 严格检查比分数据源
         id: source_probe
@@ -93,7 +130,7 @@ jobs:
               --arg url "$RUN_URL" \
               '{token:$token,
                 title:"⚠️ 网球比分数据源全部失效",
-                content:("ESPN 与备用比分源均不可用，请查看：<a href=\"" + $url + "\">Actions 日志</a>"),
+                content:("ESPN/SofaScore/Flashscore/WtaLive 连同最后备用 TNNS 全部不可用，请查看：<a href=\"" + $url + "\">Actions 日志</a>"),
                 template:"html"}')"
             curl -sS --fail -m 20 -X POST https://www.pushplus.plus/send \
               -H "Content-Type: application/json" \

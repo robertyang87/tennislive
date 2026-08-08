@@ -231,6 +231,15 @@ def _resolve_ioc(code_or_name: str | None) -> str | None:
     return _EN_TO_IOC.get(s.lower())
 
 
+def country_ioc(code_or_name: str | None) -> str | None:
+    """IOC/ISO2/英文名 → IOC 三字码；未识别返回 None.
+
+    ESPN/SofaScore/WTA 那几个源给的本来就已经是 IOC 形状的码，不需要
+    转换；TNNS 给的是 ISO2（`"f":["ES"]`），这个函数才第一次真正被用上。
+    """
+    return _resolve_ioc(code_or_name)
+
+
 def country_zh(code_or_name: str | None) -> str | None:
     """IOC/ISO2/英文名 → 中文国名；未识别返回原值."""
     ioc = _resolve_ioc(code_or_name)
