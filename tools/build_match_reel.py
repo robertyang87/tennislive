@@ -4228,7 +4228,26 @@ def main() -> int:
 
             text = push_reel.cut_at_tags(copy_path.read_text(encoding="utf-8"))
             tags = push_reel.hashtag_count(text)
-            _title, body = push_reel.split_copy(text)
+            # **真推送时正文前面会先粘一句自动算出来的标题**（`push_reel.main`
+            # 里 `copy_text = f"{title}\n\n{copy_text}"`，标题在推送里另算，不算
+            # 进 1000 字上限），文件自己的第一段这时候不再是「标题」，是正文的
+            # 第一段——`split_copy` 会把它整段算进正文。这儿原来直接
+            # `split_copy(text)`，等于拿文件自己的第一段当标题免费甩掉，量出来
+            # 的字数比真推送少了一整段。bencic-townsend 就是这么骗过 dry-run 的：
+            # 这儿报「959 字」，真推送报「1086 字，超过 1000 字上限」
+            # （run 31249674110）。两处必须算同一件事，缺一步就分叉。
+            try:
+                column = push_reel.column_of(copy_path)
+                meta = push_reel.push_meta(copy_path)
+                title = push_reel.headline(
+                    Path(args.outdir), column, meta["matchup"], meta["score"],
+                    meta["event"], meta["summary"])
+                text_with_title = f"{title}\n\n{text}"
+            except SystemExit as exc:
+                print(f"[dry-run] ⚠️ 算不出真推送会拼的标题（{exc}）——"
+                      "正文字数只能按文件本身估，可能比真推送宽松")
+                text_with_title = text
+            _title, body = push_reel.split_copy(text_with_title)
             print(f"[dry-run] 文案 {copy_path.name}："
                   f"正文 {len(body)} 字（上限 1000）、tag {tags} 个"
                   f"（上限 {push_reel.MAX_HASHTAGS}）")
