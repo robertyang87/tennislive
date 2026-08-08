@@ -1,0 +1,113 @@
+# 转写交叉校验：eala-mcnally-toronto-2026-r3-presser-full
+
+- 第一份：YouTube 自动字幕 **1294** 词
+- 第二份：faster-whisper（small.en）**1148** 词
+- **对不上 12.7%**（闸门 12%）
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `it was` → `—`
+- `um` → `—`
+- `caty` → `katie`
+- `some` → `—`
+- `and and` → `—`
+- `was a tight` → `—`
+- `yeah` → `—`
+- `and` → `—`
+- `yeah um` → `—`
+- `was` → `—`
+- `um` → `—`
+- `like i'm` → `—`
+- `you know` → `—`
+- `um you know to` → `—`
+- `everything of course like` → `—`
+- `the` → `—`
+- `which is` → `—`
+- `you know i love i'm` → `—`
+- `um` → `—`
+- `so i think um` → `—`
+- `and and` → `—`
+- `yeah` → `hey`
+- `there were` → `are`
+- `during` → `there in`
+- `you know` → `—`
+- `uh` → `—`
+- `and` → `in`
+- `need i try` → `tried`
+- `um` → `—`
+- `i'm` → `—`
+- `um` → `—`
+- `yeah` → `—`
+- `the` → `—`
+- `oh my god how` → `—`
+- `you know` → `—`
+- `—` → `match`
+- `knew he i` → `—`
+- `um` → `—`
+- `like` → `—`
+- `just it` → `—`
+- `like` → `—`
+- `how` → `—`
+- `to` → `—`
+- `you` → `—`
+- `—` → `dragging`
+- `you know` → `—`
+- `than` → `—`
+- `um` → `—`
+- `um` → `—`
+- `i` → `—`
+- `um` → `—`
+- `um` → `—`
+- `i` → `—`
+- `uh` → `i`
+- `um` → `—`
+- `um` → `—`
+- `yeah` → `—`
+- `oh` → `—`
+- `um caty` → `katie`
+- `uh` → `—`
+- `um` → `—`
+- `um` → `—`
+- `which is` → `—`
+- `um` → `—`
+- `and` → `—`
+- `caty` → `katie`
+- `um` → `—`
+- `i'm` → `—`
+- `i` → `—`
+- `gonna` → `going to`
+- `and you know` → `—`
+- `you know` → `—`
+- `to` → `—`
+- `um` → `—`
+- `um it's` → `—`
+- `other` → `—`
+- `yeah` → `—`
+- `are you` → `you're`
+- `how are you` → `yeah`
+- `um` → `—`
+- `in the` → `—`
+- `um` → `—`
+- `the phys uh` → `—`
+- `um cuz` → `because`
+- `there's` → `—`
+- `um` → `—`
+- `no no serious` → `—`
+- `uh` → `—`
+- `in` → `—`
+- `that's` → `that`
+- `there um` → `—`
+- `is` → `—`
+- `um` → `—`
+- `and i have` → `—`
+- `for` → `—`
+- `playing bencic next what are your thoughts on bencic yeah` → `—`
+- `i` → `—`
+- `is` → `—`
+- `is` → `—`
+- `um` → `—`
+- `um` → `—`
+- `yeah` → `—`
