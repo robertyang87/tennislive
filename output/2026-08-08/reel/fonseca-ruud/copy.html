@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.8 赛场之上 | 丰塞卡逆转再胜鲁德</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>抢七一度3比5落后，丰塞卡还是把鲁德拿下了。
+
+⸻
+
+北京时间8月8日早上7点前后，蒙特利尔大师赛男单第三轮，世界第27的丰塞卡，对世界第14的鲁德。
+
+首盘他一共面对7个破发点，两次死死守住，直到第三次没能扛住，一度2比4落后。下一局，他立刻把发球局破了回来。
+
+此后双方一路缠斗到抢七，他一度3比5落后，鲁德只差两分就能拿下这一盘——他一分一分追回来，最终7比6拿下第一盘。
+
+第二盘他更早建立起优势，全场破发点兑现率2/3，远高于鲁德的1/7；鲁德送出7个双误，丰塞卡只有2个。最终6比3，丰塞卡拿下比赛。
+
+⸻
+
+这是他本赛季第二次击败鲁德——今年法网1/8决赛，丰塞卡就是靠淘汰鲁德打进了个人首个大满贯1/4决赛。19岁的他，这个赛季一路在往上走。
+
+⸻
+
+这已经是他今年第二次赢下鲁德了，丰塞卡的上升期，还能走多远？
+
+📍 蒙特利尔 National Bank Open（ATP1000）男单第三轮
+🎾 丰塞卡 7-6 6-3 鲁德
+📊 全场数据（丰塞卡 / 鲁德）
+　　Ace 5 / 3　　双误 2 / 7
+　　一发成功率 64% / 57%
+　　制胜分 35 / 24　　非受迫失误 25 / 29
+　　破发点兑现 2/3 / 1/7
+
+#丰塞卡 #鲁德 #ATP #蒙特利尔大师赛 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
