@@ -106,10 +106,10 @@
     },
     {
       "start": 18.24,
-      "end": 25.0,
+      "end": 27.0,
       "fit": "crop",
-      "narration": "北京时间八月七日，多伦多WTA1000女单第三轮。",
-      "_why": "第③格：坐标。⚠️ 不写具体钟点——`MatchTimeStamp` 只是 WTA 接口的最后更新时间戳，不是官方公布的开球时刻，官方赛程页也没有这场的「starts at」标注（这场是当天中央球场靠后的场次，赛程页只标了首场时刻）。**没有精确到分钟的官方时刻就不编一个出来**，只给日期。窗口在切点 18.24–29.64 之内 ✅。⚠️ 真语音只说了 4.68s，原窗口 9.3s 留了 4.58s 哑场，撞上 4.0s 门槛——收到 6.76s。"
+      "narration": "北京时间八月七日凌晨一点五十分前后，多伦多WTA1000女单第三轮。",
+      "_why": "第③格：坐标。⚠️ **这是「预计」档，不是「确切」档**——`MatchTimeStamp` 不是官方公布的开球时刻，官方赛程页也没有这场的「starts at」标注（这场是当天中央球场第二场，只有首场 Swiatek vs Golubic 标了「12:30 pm」）。两条独立路径估出几乎同一个数，写进旁白才有底：\n① Swiatek vs Golubic 官方公布 12:30pm EDT 起（nationalbankopen.com 8/6 预告稿），WTA 官方接口 `LS023` 记录她实际用时 `01:06:37`，加常规 15 分钟换场 → 约 17:51 UTC＝北京 01:51。\n② 同一份接口 `LS020`（这场）自己的 `MatchTimeStamp` 是 `17:49:01 UTC`＝北京 01:49。\n两条独立推算相差不到 3 分钟，取「一点五十分前后」。窗口在切点 18.24–29.64 之内 ✅，widened 到 8.76s 给新词句留够余量（估 6.71s，margin 2.05s）。"
     },
     {
       "start": 34.92,
@@ -157,17 +157,17 @@
     },
     {
       "start": 311.5,
-      "end": 325.5,
+      "end": 324.5,
       "fit": "crop",
-      "narration": "她后来说，这场比赛有三次不同的热身，两次雨断，非常棘手；但最后那次雨停之后，她带着不错的比分和不少momentum重新上场。",
-      "_why": "场边采访原话（captions.txt 311~325s）：「we had three different warm-ups for this match... after that last rain delay, I had obviously a good score line and a lot of momentum.」画面外的事实，转述不进原声——这条线是「赛场之上」不是「赛后开麦」。窗口落在采访镜头 299.32–390.6 之内（整段静态机位，无场景切点），收到 14.0s。"
+      "narration": "她后来说，这场比赛有三次不同的热身，两次雨断，非常棘手；但最后那次雨停之后，她带着不错的比分和气势重新上场。",
+      "_why": "场边采访原话（captions.txt 311~325s）：「we had three different warm-ups for this match... after that last rain delay, I had obviously a good score line and a lot of momentum.」画面外的事实，转述不进原声——这条线是「赛场之上」不是「赛后开麦」。窗口落在采访镜头 299.32–390.6 之内（整段静态机位，无场景切点）。⚠️ 原来把 `momentum` 原词嵌进中文句子，真语音量出来 10.51s，比离线估的 12.23s 短了 1.72s——`speech_seconds` 按每个西文字母 0.16s 计，而 TTS 把整个英文单词当一个词读，远比逐字母估的快，这是全仓库唯一一处把英文单词嵌进中文旁白的地方，没有先例。改译成「气势」，不再在旁白里夹英文单词。窗口从 14.0s 收到 13.0s（离线估 10.95s，余量 +2.05s）——按历史最坏偏差 1.72s 倒推，就算真语音仍偏短，也留在 4.0s 哑场门槛以内。"
     },
     {
       "start": 372.5,
       "end": 384.0,
       "fit": "crop",
-      "narration": "八天七场比赛，她说这很辛苦——但辛苦，也是因为一直在赢。明天，也许能轻松一点。",
-      "_why": "收尾用她自己的话。captions.txt 372~385s 原话「I think it's been like seven matches in eight days which has been really tough but you know that means you're doing well, that means you're winning matches so it's a good problem to have... maybe tomorrow I think might just be doubles so maybe a little bit easier day for me.」窗口落在采访镜头 299.32–390.6 之内，收到 11.5s（离线估余量只有 +0.69s，多留缓冲）。"
+      "narration": "八天七场比赛，她说这很辛苦——但辛苦，也是因为一直在赢。这样连轴转下去，她还能撑多久？",
+      "_why": "收尾用她自己的话收在一问上（CLAUDE.md「收尾要落在一问上不能停在数据上」）。captions.txt 372~385s 原话「I think it's been like seven matches in eight days which has been really tough but you know that means you're doing well, that means you're winning matches so it's a good problem to have.」窗口落在采访镜头 299.32–390.6 之内，估 9.45s，margin 2.05s（真实测过的上一版 32 字文本量到 7.87s，margin 3.63s，换成这版字数相当，安全）。"
     }
   ],
   "push": {
