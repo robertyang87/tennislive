@@ -2964,12 +2964,16 @@ def test_落点卡引一句他没说过的话要当场报错():
         clip.check_takeaway(bad)
 
 
-def test_自有画面占比不够要当场报错():
-    """把平台判的那个东西变成一个我们自己量得出来的数。
+def test_自有画面占比低不再拒渲只报数(capsys):
+    """2026-08-08 账号所有者撤销了「占比不够就拒渲」那道硬闸：
+    「就不该有限制时长的这个闸」「要保证原始内容的完整性啊」。
 
-    被判的那条（伊埃拉捧杯致辞）217.2 秒里我们自己的画面只有封面 1.8 秒
-    ＝ **0.8%**。所以这条闸拿一段同样长的原声试：光靠封面 + 片尾 + 两张小卡
-    托不起 15%，**必须把原声剪短或者把卡写厚**——而那正是要它逼出来的动作。
+    老版本这条闸曾经拿 217 秒的原声试过，逼着要么剪短要么把卡写厚——
+    而那正是这次被撤销的行为：`eala-mcnally-toronto-2026-r3-presser`
+    （462 秒的完整发布会）为了顶过占比，硬把一段完整问答挖成了 150.5 秒，
+    账号所有者要的是完整内容，不是被这道比例倒逼出来的节选。
+
+    现在同样的 217 秒占比很低（0.8%）也不许再拒渲，只在日志里报个数。
     """
     import tools.build_interview_clip as clip
 
@@ -2978,14 +2982,16 @@ def test_自有画面占比不够要当场报错():
         "zh": ["我健康了"],
         "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
     }
-    with pytest.raises(SystemExit, match="简易加工"):
-        clip.check_takeaway(spec)
+    clip.check_takeaway(spec)               # 不许再抛 SystemExit
+    out = capsys.readouterr().out
+    assert "自有画面" in out and "仅供参考，不拒渲" in out
 
-    # 反过来：同一张卡，原声剪到 60 秒就过得去——证明这条闸拦的是**占比**，
-    # 不是「凡是长片子都拦」。⚠️ 这两头都要验：只验前一头的话，一个
-    # 恒真的闸（比如门槛写成 99%）也能过
-    spec["end"] = 60.0
-    clip.check_takeaway(spec)
+    # 反过来：卡片本身该有的两道闸（有没有、引文对不对）一个字没松，
+    # 撤销的只是「占比够不够」这一条
+    bad = json.loads(json.dumps(spec))
+    del bad["takeaway"]["close"]["ask"]
+    with pytest.raises(SystemExit, match="是空的"):
+        clip.check_takeaway(bad)
 
 
 def test_解读卡那道闸要排在下载之前():
