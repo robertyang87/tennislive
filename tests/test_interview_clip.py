@@ -2027,6 +2027,39 @@ def test_每一次调yt_dlp都带上cookie和JS():
             "you're not a bot」，看着像 cookie 过期，其实是压根没传")
 
 
+def test_取字幕单档失败要换client重试(monkeypatch, tmp_path):
+    """**`fetch_words` 原来只用默认 client 试一次，一失败就直接报错退出。**
+
+    `eala-tbd` 那趟撞的是 `The page needs to be reloaded`——跟 cookie 无关，
+    是这台机器和某个 player client 之间的接口问题。`yt_download` 早就换成
+    逐档重试的梯子了（`sabalenka-zhang-tor2026-r3` 那次修的），这边漏了
+    同一个坑：**两个函数都在调 yt-dlp、都会撞上同一种提取失败，只有一个
+    打了补丁**。
+
+    这条直接验证梯子真的会重试：前几档模拟失败（不写文件），某一档模拟
+    成功（写出 `cap_<id>.json3`），`fetch_words` 必须拿到那一档的结果，
+    不能在第一档失败就放弃。
+    """
+    from tools import build_interview_clip as m
+
+    calls = []
+
+    def fake_run(cmd, **kw):
+        calls.append(cmd)
+        if len(calls) < 3:
+            return type("P", (), {"returncode": 1, "stdout": "",
+                                   "stderr": "ERROR: The page needs to be reloaded."})()
+        (tmp_path / "cap_xyz.json3").write_text(
+            json.dumps({"events": [{"tStartMs": 0,
+                                    "segs": [{"utf8": "hi"}]}]}), encoding="utf-8")
+        return type("P", (), {"returncode": 0, "stdout": "", "stderr": ""})()
+
+    monkeypatch.setattr(m.subprocess, "run", fake_run)
+    words = m.fetch_words("https://www.youtube.com/watch?v=xyz", tmp_path, {})
+    assert len(calls) == 3, f"该在第 3 档才成功，实际试了 {len(calls)} 档"
+    assert words == [(0.0, "hi")]
+
+
 def test_订正要看穿说话人标记():
     """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
 

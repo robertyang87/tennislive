@@ -416,6 +416,14 @@ def fetch_words(url: str, workdir: Path,
     同一份 cookie 七十分钟前刚下完 189 MB 的源片。**两处各配一遍必分叉**——
     `yt_download` 那边接上了环境变量，这边漏了，而漏的表现是一句
     指向完全错误方向的报错。
+
+    ⚠️ **单档失败也要换 client 重试，和 `yt_download` 一模一样**。原来这儿
+    只用默认 client 试一次，一失败就直接报错退出——`eala-tbd` 那趟撞的是
+    `The page needs to be reloaded`，跟 cookie 无关，是这台机器和某个
+    player client 之间的接口问题，`yt_download` 那边早就换成逐档重试的
+    梯子了，这边漏了同一个坑。**两个函数都在调 yt-dlp、都会撞上同一种
+    提取失败，只有一个打了补丁**——又一次「两处各配一遍必分叉」，这次分叉
+    在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
     # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
@@ -432,19 +440,31 @@ def fetch_words(url: str, workdir: Path,
                 f"换说话人的第一个词前面加 `>> `），再跑一次。\n"
                 f"⚠️ 这么做的 spec 必须写 `asr_model`：`verify_transcript` 那道闸"
                 f"要靠它保证第二份 ASR 换了个模型——同一个模型跑两遍是自欺。")
-        proc = subprocess.run(
-            ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
-             "--skip-download", "--write-auto-subs",
-             "--sub-langs", "en", "--sub-format", "json3",
-             *cookie_args(spec or {}),
-             "-o", str(workdir / "cap_%(id)s"), url],
-            capture_output=True, text=True, timeout=300)
-        files = sorted(workdir.glob("cap_*.json3"))
+        tried: list[str] = []
+        proc = None
+        for label, extra in _ytdlp_ladder():
+            proc = subprocess.run(
+                ["yt-dlp", "--no-warnings", "--js-runtimes", "node",
+                 "--skip-download", "--write-auto-subs",
+                 "--sub-langs", "en", "--sub-format", "json3",
+                 *cookie_args(spec or {}), *extra,
+                 "-o", str(workdir / "cap_%(id)s"), url],
+                capture_output=True, text=True, timeout=300)
+            files = sorted(workdir.glob("cap_*.json3"))
+            if files:
+                if tried:
+                    print(f"[字幕] {label} 成功（前面 {len(tried)} 档没成）")
+                break
+            tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
+            print(f"[字幕] {label} 没成：{tail[0][:150]}")
+            tried.append(f"  {label}: {tail[0][:150]}")
         if not files:
-            # **空结果先自证是真空**：这条片子可能真没自动字幕，也可能是被限流。
+            # **空结果先自证是真空**：这条片子可能真没自动字幕，也可能是被限流，
+            # 也可能是全部 client 都撞上了同一种提取失败——三种要分得清。
             raise SystemExit(
-                f"拿不到自动字幕：{(proc.stderr or '').strip().splitlines()[-1:] or '(无 stderr)'}\n"
-                "先用 `yt-dlp --list-subs` 确认这条片子有没有，再判断是「没有」还是「被挡了」。")
+                f"{len(tried)} 档 client 都拿不到自动字幕：\n" + "\n".join(tried)
+                + "\n先用 `yt-dlp --list-subs` 确认这条片子有没有，"
+                "再判断是「没有」还是「被挡了」。")
     data = json.loads(files[-1].read_text())
     out = []
     for ev in data.get("events", []):
