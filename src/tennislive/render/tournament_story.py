@@ -3033,6 +3033,66 @@ STORIES = STORIES + (
         image_credit="Création CARAVEO / Wikimedia Commons · CC BY 2.0",
         source_url="https://en.wikipedia.org/wiki/Li_Na",
     ),
+    _trivia_story(
+        slug="svitolina-handshake",
+        title="她的握手线，怎么划的",
+        subtitle="网球观察 · 人物篇",
+        identity="斯维托丽娜的握手界限",
+        chips=("网球礼仪", "斯维托丽娜", "2026"),
+        hero=(
+            "都是俄罗斯出身，为什么握手的只有一个？八月七号，多伦多，"
+            "斯维托丽娜六比一、六比一横扫波塔波娃后转身离场——没有握手。"
+            "这不是 WTA 的规定，是她四年没变过的一条线，而这条线**不是按国籍画的**。"
+        ),
+        facts=(
+            "斯维托丽娜从 2022 年俄罗斯全面入侵乌克兰起，不与俄罗斯、白俄罗斯出身的"
+            "选手握手，四年未变；WTA 没有把这写成规则，也没有因此处罚过任何一方，"
+            "官方的说法是尊重选手的选择。",
+            "她的界限按时间点和表态画：2018 年就改籍哈萨克斯坦的莱巴金娜、"
+            "公开反对战争的卡萨金娜，她都握手；2025 年底才改籍奥地利、"
+            "没有公开表过态的波塔波娃，不握。她自己说过，莱巴金娜改籍是"
+            "很多年前的事，早在战争和入侵开始之前。",
+            "2026 年 1 月 29 日澳网半决赛，她同样没有和萨巴伦卡握手——"
+            "这不是这次才有的事，赛事方后来专门在大屏幕上提前告知观众。",
+            "同一届澳网第四轮，米拉·安德烈耶娃因为遵守斯维托丽娜的意愿没有上前"
+            "握手，反而被不知情的观众当场狂嘘，误以为她耍大牌——这条不成文的"
+            "规矩，看台常常猜不透。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-07", player="斯维托丽娜", age="—",
+                headline="多伦多第三轮 6-1 6-1 胜波塔波娃后无握手",
+                detail=(
+                    "全场用时一小时，赛后她朝观众挥手离场，"
+                    "波塔波娃留在网前收拾装备。"
+                ),
+                source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
+            ),
+            ChampionMoment(
+                date="2026-01-29", player="斯维托丽娜", age="—",
+                headline="澳网半决赛负于萨巴伦卡，同样无握手",
+                detail="赛事方提前在大屏幕上告知观众，本场赛后不会有握手环节。",
+                source_url=(
+                    "https://www.foxnews.com/sports/aryna-sabalenka-addresses-"
+                    "ukrainian-opponents-decision-skip-handshake-after-australian-"
+                    "open-semifinal"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-01", player="米拉·安德烈耶娃", age="—",
+                headline="澳网第四轮不敌斯维托丽娜后未握手，被观众嘘下场",
+                detail="她遵守对方的意愿转身离场，现场观众误以为她失礼。",
+                source_url=(
+                    "https://www.gbnews.com/sport/tennis/australian-open-mirra-"
+                    "andreeva-elina-svitolina-2675023544"
+                ),
+            ),
+        ),
+        image_keys=(),
+        source_label="WTA 官方 / 澳网官方 / tennis.com 综合整理",
+        image_credit="WTA 官方集锦画面",
+        source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
+    ),
 )
 
 
