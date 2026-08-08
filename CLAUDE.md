@@ -2912,6 +2912,25 @@ run 是 success，成片时长对、体积对、`验成片` 那一步过了、�
 ffmpeg 进度中间，而 run 是绿的——**没有人会去读一条绿 run 的日志**。
 所以「片子做完要抽帧看」这条得加一句：**也要量音量**，尤其是没有现场声的那几段。
 
+#### ⚠️ dispatch 之前先跑一遍这条 spec 自己的测试——两条本该拦住的红都在本地过了
+
+`eala-mcnally-toronto-2026-r3-presser`（PR #250）CI 红了两条，**两条都有现成的测试
+在等着**，只是我没在推之前跑：
+
+| 红的是什么 | 拦它的测试 | 我当时干了什么 |
+|---|---|---|
+| `transcript_verified: true` 却没有 `en_fixed`/`_verified_clean` | `test_没验过转写的spec不许标verified` | 写了个自己起的字段名 `_transcript_verified_why`，没意识到这个仓库已经有约定字段 |
+| `push.summary` 15 字，超 `SUMMARY_MAX=13` | `test_spec里的推送字段拼得出合格标题` | 手数了字数，没有真的调 `headline()` |
+
+**这条和上面「全量测试要排在 `mode=render` 之前」是同一个道理，只是那条写给
+match-reel、这条是 interview-clip 一直没补的那一半。** 两条测试都只吃 `specs/`，
+本地跑 `pytest tests/test_interview_clip.py -k <slug>` 零点几秒就出结果——而我
+是靠手写脚本模拟 `headline()`、凭记忆核对字段名，**自己核对的东西和测试真正查的
+东西不是一回事**，又是这个仓库反复栽过的那个形状。
+
+**顺序钉死**：改完 spec → **本地跑 `pytest tests/test_interview_clip.py -k <slug> -q`**
+→ 绿了才 commit/push/dispatch。不是「我觉得改对了」，是这条命令回一句 `passed`。
+
 ## ⚠️ 一条能读的推送，和两条只有链接的推送
 
 账号所有者 2026-08-05：「目前推送的内容还有两块，英文媒体一份中文一份，
