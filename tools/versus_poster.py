@@ -723,7 +723,11 @@ STORYCOPY_TOP = 520
 # `.storycopy` 是 column flex 且 gap:34px，这段额外量加在 `.storytitle` 的
 # margin-top 上——只加宽药丸→标题这一段间距，标题→比分板之间仍是原来的 34px，
 # 两者跟着标题一起往下移。
-STORYCOPY_TITLE_GAP_EXTRA = 60
+# ⚠️ 2026-08-09：账号所有者第三次提这条（「文案和比分板要往下再移动一截，
+# 不要太遮挡背景主体」）。60→100，再往下 40px。最坏情况（三行钩子 + 比分板）
+# 排到 1440-36=1404，还剩 36px 余量，不溢出——见
+# `test_标题上移的量只加在标题不挪药丸` 里那条算总高度的断言。
+STORYCOPY_TITLE_GAP_EXTRA = 100
 
 
 def _scrim_css(clear: bool) -> str:
