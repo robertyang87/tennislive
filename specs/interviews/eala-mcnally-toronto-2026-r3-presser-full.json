@@ -263,6 +263,8 @@
   },
   "transcript_disagree_ok": {
     "rate": 0.17,
-    "why": "这条源片（同一场发布会，完整版）在收窄的短版上已经验证过：faster-whisper（small.en）对满是 um/uh/you know/like/yeah 这类虚词的发布会素材，同一份音频跑两次给出过 7.9%/14.4% 两个不同的分歧率，两次逐条看过都只是虚词/口吃噪音，没有一处涉及实际内容（详见`eala-mcnally-toronto-2026-r3-presser` 那条 spec 的同名字段）。这次范围是同一份源片的完整版，源头的虚词密度不变，预先认领到 17%（天花板 18%），等真跑一次 verify 出来再核对是否需要调整。"
-  }
+    "why": "这条源片（同一场发布会，完整版）在收窄的短版上已经验证过：faster-whisper（small.en）对满是 um/uh/you know/like/yeah 这类虚词的发布会素材，同一份音频跑两次给出过 7.9%/14.4% 两个不同的分歧率，两次逐条看过都只是虚词/口吃噪音，没有一处涉及实际内容（详见`eala-mcnally-toronto-2026-r3-presser` 那条 spec 的同名字段）。这次范围是同一份源片的完整版，源头的虚词密度不变，预先认领到 17%（天花板 18%）；真跑一次 verify 出来是 10.0%，在 12% 闸门以内，这条字段没被用到，留着不动。"
+  },
+  "transcript_verified": true,
+  "_verified_clean": "run 31261367008 的 `--stage verify`：\n① **转写分歧 10.0%（YouTube 自动字幕 1294 词 / whisper small.en 1192 词），在 12% 闸门以内**；\n② **自动字幕只有 1 处空档**（423.6–426.1 秒，问答之间的正常停顿，已在 `caption_gaps_ok` 销账）；\n③ 逐处看过全部分歧，没有一处改变意思：\n  - 绝大多数是 whisper 丢掉了填充词（um/uh/the/i'm/and/which is/how/there's/that's/other/for），包括几处口吃自我修正（『and and』→『—』、『there um』→『they're』），whisper 去重或整理是对的；\n  - `caty`→`katie`（3 处）：`en_fixed` 的 11/117/130 已经把这三处校正成 Caty（对手姓名），这里只是两份 ASR 各自的同音误听，不影响我用的是哪个词；\n  - `super fan`→`superfan`：分词方式不同，同一个词；\n  - `playing bencic next what are your thoughts on bencic yeah`→`—`：whisper 整句漏听，对应 `en_fixed` 196/197 已经把这句从误听的 `vintage` 校正为 `Bencic`；\n  - 『louder you』→『a lot or』、『—』→『dragging』、『there were』→『are』、『during』→『there in』、『need i try』→『tried』：全部落在记者那句关于观众喊声的绕口问题上（『there were times where the crowd was uh dragging or louder you know...』这类现场即兴提问），两份 ASR 对同一段口语重复各自理解不同，我译的 `zh`（『有球员说过观众能把球员一路喊向胜利』）取的是整句大意，不逐词对应这几个虚词；\n  - `yeah`→`hey`、`—`→`match`/`was`：同类，落在记者提问的口语重复里，不影响译文。\n\n⚠️ **我听不到音轨**（沙箱下不了媒体，403），以上判断基于两份 ASR 的交叉比对 + 上下文，和短版 `eala-mcnally-toronto-2026-r3-presser` 走的是同一套判据。"
 }
