@@ -717,6 +717,14 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
 # ＋药丸 64 ＝ 784，从 520 排到 1304，离画布底 136px，不溢出。
 STORYCOPY_TOP = 520
 
+# 药丸和标题之间**额外**加的间距（px）。账号所有者 2026-08-08：「标题和比分板
+# 都往下移动一下」——这次没提标签，所以钉法和 2026-08-07 那次一样：**药丸不动**
+# （仍然锚在 STORYCOPY_TOP），只把标题和跟在它后面的比分板一起往下推。
+# `.storycopy` 是 column flex 且 gap:34px，这段额外量加在 `.storytitle` 的
+# margin-top 上——只加宽药丸→标题这一段间距，标题→比分板之间仍是原来的 34px，
+# 两者跟着标题一起往下移。
+STORYCOPY_TITLE_GAP_EXTRA = 60
+
 
 def _scrim_css(clear: bool) -> str:
     """盖在照片上的那层暗。
@@ -933,7 +941,12 @@ __SCRIM__
 """
         .replace("__SCRIM__", _scrim_css(clear_scrim))
         .replace("__STORYCOPY_TOP__", str(STORYCOPY_TOP))
-        + f".storytitle{{font-size:{title_px}px}}"
+        # `above`（父子同框那种上下叠版式）不加这段额外间距：那条路已经把
+        # `.storycopy` 改成从底部锚定、gap 收到 26px，为的是不让文案撞上中间
+        # 那道分界线；额外撑开标题只会把整块顶得更高，和它的目的相反。
+        + (f".storytitle{{font-size:{title_px}px}}" if above else
+           f".storytitle{{font-size:{title_px}px;"
+           f"margin-top:{STORYCOPY_TITLE_GAP_EXTRA}px}}")
         # 上下叠一张时文案压到底部——**居中会正好骑在分界线上**，把上格的下半
         # 和下格的上半（那只搭在眉骨上的手，正是这条片子的落点）一起盖住。
         # 追加在最后，同特异性下后写的赢。
