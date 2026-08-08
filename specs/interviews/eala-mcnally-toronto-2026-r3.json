@@ -1,0 +1,17 @@
+{
+ "slug": "eala-mcnally-toronto-2026-r3",
+ "url": "https://youtu.be/oOcipL6xkAs",
+ "source_title": "Alex Eala vs. Caty McNally｜2026 Toronto Round 3｜WTA Match Highlights + On-court Interview（WTA 官方频道，456.7 秒 1920×1080，2026-08-08 上传；片名字面没能取到，靠画面里的 WTA Tour 台标、记分条、`ADVANCES TO ROUND 4` 下三分之一图形和赛事数据对上）",
+ "_match": "伊埃拉（25 号种子）6-3 5-7 6-4 胜麦克纳莉，2026 多伦多 WTA1000 女单第三轮（`MatchID LS024`、`RoundID='3'`），2 小时 39 分 22 秒，2026-08-08T00:26:27Z 开赛（北京时间 08:26）。\n出处：WTA 接口 `tournaments/806/2026/matches?states=C`，`ResultString` 原文 `[25]A. Eala d C. McNally 6-3,5-7,6-4`。\n种子 25 轮空首轮（和 `eala-parks-toronto-2026` 那条一样的签表结构），所以 `RoundID='2'` 是第二轮（对手 Parks）、`RoundID='3'` 是第三轮——和画面里烧的下三分之一图形『ALEXANDRA EALA ADVANCES TO ROUND 4』（第 320.5–324.5 秒）对得上：赢下**这一场**（第三轮）才**进到**第四轮，不是这一场本身叫第四轮。\n排名：伊埃拉 WTA 单打第 20（`wtatennis.com/players/330332` 现查，`\"singles\":{\"rank\":\"20\"`），麦克纳莉 WTA 单打第 70（`wtatennis.com/players/325725`）。译名两个都在 `player_names_top500.json`：伊埃拉 / 麦克纳莉，`player_zh()` 核过。",
+ "_source": "先用 match-reel 的 `mode=probe` 探了这条 URL（不用整份 spec，只要 url/outdir），456.7 秒、25fps，拿到缩略图墙和粗切点，确认这不是纯采访素材，是一条**集锦 + 场上采访**的完整播出带（和 `sabalenka-zhang-tor2026-r3` 同一个形状：WTA 官方频道把两者剪在一条视频里）。\n\n结构（缩略图墙逐格看的）：\n  0–~40s     暖场：主持人喊名字、观众庆祝、看台上有人举牌『ALEX EALA · PRIDE OF THE PHILIPPINES』\n  ~40–~253s  比赛集锦（记分条、正反手、破发点标记）\n  ~253–~300s 赛点、庆祝、握手、走向场边\n  ~300–~446s 场上采访（WTA Tour 话筒，男主持人）\n  ~448s+     WTA 官方订阅卡（绿底白字 `WTA` 台标 + `SUBSCRIBE`/`WATCH MORE`），**不是内容**\n\n采访本身分两问：① ~312–349s 问脚踝伤情（她说『我想我扛过去了，太不容易了』，谢麦克纳莉打得好）；② ~351–446s 问『七连胜』，她整段回答两周来的情绪起伏，中间接到一位球迷『今晚想当一次菲律宾人』——她拿自己去看 Bad Bunny 演唱会那晚『感觉自己是波多黎各人』作类比，谢加拿大观众的款待。第 398.5–400.5 秒画面里那张举牌『ALEX EALA PRIDE OF THE PHILIPPINES』正好和这段话对上，是这条片子少有的『画面自己讲话』的时刻。",
+ "_span_why": "两问只选了第②问（七连胜／菲律宾球迷／Bad Bunny）那一段，**没有把第①问（脚踝）接进来**——算过账：\n\n    只收第②问   95.2s，`close` 卡估 ~7s，ours ≈ 1.8(封面)+7+2.95(片尾) = 11.75s\n                ratio = 11.75 / (11.75+95.2) = 11.0% > 10% ✅\n    两问都收    从 312 到 446 共 134s，同样只挂 close 卡\n                ratio = 11.75 / (11.75+134) = 8.1% < 10% ❌（`MIN_OURS_RATIO` 会红）\n\n账号所有者 2026-08-05 定过『默认不写 `open` 卡』（挡在原声前面等于跟封面抢开头 5 秒），所以不靠加一张卡去凑比例，改按落点剪——这正是 `check_takeaway` 报错时给的出路。第②问本身就是这条采访最有『剧情跌宕』的部分：一个具体、独家、能核实的故事（举牌观众→Bad Bunny 类比），不是通用的『谢谢大家』。\n\n起点 **350.8**：卡在主持人开口前一点点（`351.60 >> Clearly a tough win for that one`），留 0.8 秒接住上一句问答收尾的掌声，不从句子中间硬切。\n终点 **446.0**：**缩略图墙救回来的边界**，和 `sabalenka-zhang-tor2026-r3` 那条同一个坑——转写的最后一句『445.40 [cheering]』不是画面真正的结尾。444.5 秒她还双手合十在场上，446.5 秒画面切到她转身走向场边，448.5 秒整屏已经是 WTA 的绿底订阅卡（`SUBSCRIBE`/`WATCH MORE`）。`probe.json` 的 `scene_cuts` 在 446.6 和 448.6 各标了一刀，说明切换就发生在这两点之间。收在 446.0，稳稳留在真实画面里，不赌那 0.6 秒的余量。",
+ "column": "赛后开麦",
+ "event": "2026 多伦多 WTA1000 第三轮",
+ "interview_kind": "赛后场上采访",
+ "winner": "伊埃拉",
+ "start": 350.8,
+ "end": 446.0,
+ "whisper_model": "small.en",
+ "_asr_why": "这条是 YouTube，第一份是它自己的自动字幕轨（`_first_source_label` 会照实印『YouTube 自动字幕』），第二份 `small.en` 交叉校验——和 `sabalenka-zhang-tor2026-r3` 同一个选法。",
+ "zh": []
+}
