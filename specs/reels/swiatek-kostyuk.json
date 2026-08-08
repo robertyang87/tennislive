@@ -1,0 +1,173 @@
+{
+  "slug": "swiatek-kostyuk",
+  "source_url": "https://www.youtube.com/watch?v=dFFU9hkTyfk",
+  "_source": "WTA 官方单场集锦《Marta Kostyuk vs. Iga Swiatek | 2026 Toronto Round of 16》，1920×1080 @ 25fps，452.32 秒。比赛画面到约298秒，298.48~442.2秒是同一个未切镜头的场边采访（静止机位）。\n\n画面自证：记分条常驻双方姓名与种子（M. KOSTYUK [10] / I. SWIATEK [7]）；258~264秒记分条烧出『MATCH POINT #6』标记；292.5~298.5秒终场记分板显示『MARTA KOSTYUK 6 1 2 / IGA SWIATEK 3 6 6 · ROUND 4』；324.5秒场边采访下三分之一字幕『IGA SWIATEK / ADVANCED TO QUARTER-FINAL』确认身份与下一轮。\n\n人物识别：斯瓦泰克全场浅灰蓝色无袖上衣＋白色鸭舌帽；科斯秋克全场深蓝色连衣裙＋白色遮阳帽。两人服装颜色深浅是主要区分依据（科斯秋克的蓝色更深、更纯，且是连衣裙而非分体上衣）。",
+  "_column": "赛场之上。7号种子斯瓦泰克整个首盘一次发球局都没能保住（四次尝试全部丢掉，九局里七局被科斯秋克的接发拿走），次盘她拿到当天第一个保发局后连破两局扳平，决胜盘一路顶到5比1，最终3-6 6-1 6-2逆转晋级1/4决赛——这也是两个月前法网十六强不敌科斯秋克之后的复仇。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 1/8决赛",
+    "line2": "斯瓦泰克 3-6 6-1 6-2 科斯秋克"
+  },
+  "_topbar_why": "line2 与 cover.winner/result/matchup 一致，赢家在前。WTA API ResultString 原文：`[7]I. Swiatek d [10]M. Kostyuk 3-6,6-1,6-2`——赢家 Swiatek 写在前面，逐字抄写，不用倒转视角。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "整个首盘一次发球局都没保住，斯瓦泰克是怎么把这场对科斯秋克的比赛翻过来的？",
+    "thesis": "首盘她一次发球局都没能保住——四次尝试全部丢掉，九局里七局被科斯秋克的接发拿走，0比1落后。次盘她拿到当天第一个保发局，随即连破两局6比1扳平；决胜盘她再度率先破发，一路顶到5比1，最终靠第6个赛点3-6 6-1 6-2逆转过关，历时2小时10分钟。这场胜利同时是复仇：两个月前的法网十六强，她们交过手，那一次她输了，赛后说自己整场都很紧绷。",
+    "beats": [
+      "首盘她一次发球局都没能保住，四次尝试全部丢掉，0比1落后。",
+      "次盘她拿到当天第一个保发局，随即连破两局6比1扳平。",
+      "决胜盘她再度率先破发，一路顶到5比1，靠第6个赛点收下比赛。",
+      "这也是两个月前法网十六强不敌科斯秋克之后的复仇。"
+    ],
+    "human_context": {
+      "angle": "赛后采访她说，这次和法网那次完全不一样——法网她整场紧绷、放不开手脚；这一次她说自己找回了状态，能打出自己的球。首盘丢掉之后她走到场边，团队递话提醒战术，她把这份提醒用了整个后两盘。",
+      "facts": [
+        "官方nationalbankopen.com赛后报道原文：『The serve was not working for Swiatek at all in set one. The Pole failed to hold serve in four attempts and while she did break Kostyuk three times, with seven of nine total games in the first set going to the returner, it was not enough.』",
+        "同一篇报道：『Swiatek then broke again to start the third and added another to go up 5-1...she failed to close it out from 40-love up and had to save a pair of break points before finally closing out the win on match point No. 6.』",
+        "同一篇报道明确这是『leading off with a Roland-Garros rematch』——法网重演。",
+        "场边采访原声（画面自证）她本人的话：『Well, I'm in a different place for sure...I feel like I can play my game. And I couldn't really do that on French.』"
+      ],
+      "sources": [
+        "https://nationalbankopen.com/news/read/2026/nbo-toronto-results-day-8-swiatek-kostyuk-pegula-sabalenka-svitolina-anisimova",
+        "https://www.wtatennis.com/players/326408/iga-swiatek"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "斯瓦泰克[7] 3-6 6-1 6-2 胜科斯秋克[10]。WTA API ResultString 原文：`[7]I. Swiatek d [10]M. Kostyuk 3-6,6-1,6-2`。WTA API `tournaments/806/2026/matches`（MatchID LS011）确认。",
+    "赛事": "多伦多 National Bank Open presented by Rogers（WTA1000）女单1/8决赛（Round of 16），Centre Court（CourtID 1，与已发的 swiatek-golubic 同为 CourtID 1）。官方报道确认：『All of the singles matches will be on Centre Court on Saturday, leading off with a Roland-Garros rematch.』",
+    "用时": "2小时10分42秒。WTA API `MatchTimeTotal: \"02:10:42\"`。",
+    "排名与种子": "斯瓦泰克：7号种子、世界第8（WTA官方球员主页 Current Singles Rank 字段，2026-08-08快照；与SeedB=7交叉核实）。科斯秋克：10号种子、世界第11（同上快照；与SeedA=10交叉核实）。年龄：斯瓦泰克2001-05-31生，25岁；科斯秋克2002-06-28生，24岁（WTA官方球员主页 `birthDate` 字段）。",
+    "首盘走势": "官方赛后报道原文：『The serve was not working for Swiatek at all in set one. The Pole failed to hold serve in four attempts and while she did break Kostyuk three times, with seven of nine total games in the first set going to the returner, it was not enough.』——她一次发球局都没保住（0/4），科斯秋克6-3先下一盘。",
+    "次盘走势": "官方赛后报道原文：『However, the six-time major champion turned things around in set two. She got her first hold of the day in the opening game and then broke for a quick 2-0 lead. Iga's Bakery was in business as she added a second break, taking the set 6-1.』——她拿到当天第一个保发局，随即连破两局，6-1扳平。",
+    "决胜盘走势": "官方赛后报道原文：『Swiatek then broke again to start the third and added another to go up 5-1. Serving out sets was a problem for the Pole...Set three was even tougher, as she failed to close it out from 40-love up and had to save a pair of break points before finally closing out the win on match point No. 6.』——决胜盘她再度率先破发，一路5-1领先，但发球出局不顺，40-0被逼救两个破发点，最终靠第6个赛点拿下比赛。画面自证：258~264秒记分条烧出『MATCH POINT #6』。",
+    "法网旧账": "官方赛后报道确认这场是『Roland-Garros rematch』。场边采访主持人原话（画面自证）：『The last time you and Marta played was at the French Open. You were on the losing end of that match and you said you felt really tense and stressed during that one.』斯瓦泰克回应（画面自证）：『Well, I'm in a different place for sure...I feel like I can play my game. And I couldn't really do that on French.』",
+    "赛后自述": "场边采访原声（画面自证）：『A lot, obviously. You know, Marta is playing great now...so I needed to step up and I did that. Um yeah, and probably one of the best matches of the season for me, so I'm happy about that.』主持人确认下一轮：『You're off to the quarterfinals here at Toronto.』",
+    "赛点画面": "257.92~263.8秒：记分条烧出『MATCH POINT #6』，科斯秋克发球被逼至0-40/40-Ad；263.8~270.04秒：制胜分落地，反应特写，随后网前致意；270.04~298.48秒：庆祝、向观众致意、收拾装备（同一未切换镜头）。",
+    "开球时间": "两个数据源一度冲突，现已按证据取舍：WTA API `MatchTimeStamp(16:15:06Z)-MatchTimeTotal(2:10:42)`反推开球≈14:04 UTC（多伦多当地10:04 AM EDT）；但官方nationalbankopen.com两篇稿子（赛前 nbo-toronto-preview-day-8-august-8 与赛后 nbo-toronto-results-day-8-swiatek-kostyuk）都明确写着这场是当天Centre Court场次的第一场（『leading off』），场次『Starting at 12:30 PM』——两处独立检索都确认这个表述。第一场不可能打在场次开始（12:30 PM）之前，所以WTA API反推的10:04 AM必然不对（大概率是`MatchTimeTotal`把某段非比赛用时也计入了总时长，导致反推的起点偏早）；采用官方场次开始时间12:30 PM EDT=16:30 UTC=北京时间8月9日00:30。"
+  },
+  "_editing_why": "**开场两格按定死的顺序**：①②全片最强的一段——科斯秋克发球被逼至第6个赛点、制胜分落地的连续镜头，不配旁白，交给现场声，257.92~263.8与263.8~270.04两段，都在同一个未切镜头270.04之前，不跨切点。③紧接一句本场最硬的落点（首盘0保发到逆转的数字反差）；④坐标；⑤种子与排名。\n\n**中段按官方赛后报道逐句核实的三盘走势排列**：首盘0保发落后 → 次盘保发+连破扳平 → 决胜盘5-1后惊险收官。\n\n**背景一段交代法网旧账**：官方报道明确『Roland-Garros rematch』，配合场边采访主持人的问题作为画面自证的背景。\n\n**她自己的原声段**：不配旁白，出双语字幕，用她本人对『这次和法网不一样』的回应，比转述更有说服力。\n\n**结尾**收在她自己评价这场比赛分量的话之后，接一句悬念收尾，不停在数据上。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯瓦泰克",
+    "hook": "首盘四次发球局全部丢掉，法网旧账还没算清\n她还是把科斯秋克这场翻了过来，晋级1/4决赛",
+    "_hook_why": "上一句是过程（首盘0保发＋法网旧账两重压力），下一句是落点（结果）。排名种子已印在赛果行，钩子不重复，也不出现裸的『世界第N』。",
+    "topic": "多伦多WTA1000 · 女单1/8决赛",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "斯瓦泰克",
+    "result": "3-6 6-1 6-2",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS011",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS011"
+      },
+      "_court_why": "CourtID 1（Centre Court），与已发的 swiatek-golubic（同一位球员，同一站）同为 CourtID 1；官方赛后报道『All of the singles matches will be on Centre Court on Saturday』确认。",
+      "_duration_why": "`MatchTimeTotal: \"02:10:42\"` → 板上印 `2:10`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口。"
+    },
+    "portrait": {
+      "frame_at": 226.4,
+      "focus": 0.5,
+      "focus_y": 0.38,
+      "zoom": 1.0
+    },
+    "_portrait_why": "226.4秒：决胜盘悬念未解阶段，记分条同期烧着『MATCH POINT #2』（比226.4秒稍晚的258秒起才是真正拿下比赛的第6个赛点，226.4秒这一格是更早的一次赛点，她当时还没能兑现），斯瓦泰克正脸特写，帽檐压得低、神情紧绷。⚠️ **人工覆盖自动候选**：`cover_candidates/candidates.json` 在226.4秒判定为『没有正面人脸』（帽檐阴影挡住双眼，检测器误判），整场比赛里能通过自动检测且清晰度靠前的候选（80.0/80.4/43.6/96.4/79.6/43.2/79.2/94.0秒）经比对全部是科斯秋克（深蓝色连衣裙，而非斯瓦泰克的浅灰蓝上衣）；采访段（298~442秒）她全程侧对镜头与主持人对话，自动检测同样判定为侧脸或无正面人脸。226.4秒是人工从缩略图墙里核实过身份（浅灰蓝上衣、白帽）、情绪对题（这场球最终靠悬崖边扛过来）的最佳可用画面。⚠️ 认人靠服装颜色深浅——科斯秋克蓝色更深且是连衣裙，斯瓦泰克是浅灰蓝分体上衣。",
+    "matchup": [
+      {
+        "name": "科斯秋克",
+        "name_en": "Marta Kostyuk",
+        "country": "UKR",
+        "rank": 11
+      },
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 8
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 257.92,
+      "end": 263.8,
+      "fit": "crop",
+      "crosses_cut": "跨 260.24s 那一刀是同一个赛点球（MATCH POINT #6）里的机位切换：斯瓦泰克发球前特写 → 发球方远景 → 接发方远景，三档都是这一分，不是换人。",
+      "_why": "①全片最强的一段：记分条烧出『MATCH POINT #6』，科斯秋克发球被逼至0-40/40-Ad，赛点建立。不配旁白，交给现场声。"
+    },
+    {
+      "start": 263.8,
+      "end": 270.04,
+      "fit": "crop",
+      "crosses_cut": "跨 267.96s 那一刀是同一次庆祝的机位切换：斯瓦泰克正手挥拍特写 → 转身握拳特写 → 看台观众欢呼，三档连着同一个赛点落地后的反应，不是换人。",
+      "_why": "①延续（仍不配旁白）：制胜分落地、反应特写、网前致意。"
+    },
+    {
+      "start": 270.04,
+      "end": 278.4,
+      "fit": "crop",
+      "narration": "两小时十分钟，三比六六比一六比二——首盘一度找不到发球的感觉，她还是把这场彻底翻了过来。",
+      "_why": "③落点：接续庆祝画面，配上这场胜利最硬的数字反差。窗口正好落在一整个镜头 270.04~278.4 之内，不跨切点。"
+    },
+    {
+      "start": 4.5,
+      "end": 12.5,
+      "fit": "crop",
+      "narration": "北京时间八月九日凌晨零点半，多伦多国家银行公开赛女单1/8决赛。",
+      "_why": "④坐标。开球时刻见 `_facts.开球时间`：官方场次『Starting at 12:30 PM』且这场leading off，两处独立检索确认，比WTA API反推的10:04 AM更可信（第一场不可能打在场次开始之前）。12:30 PM EDT=北京时间8月9日00:30。画面是双方候场/热身的通用镜头，窗口在 2.68~16.6 这一段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 18.5,
+      "end": 26.5,
+      "fit": "crop",
+      "narration": "七号种子斯瓦泰克，世界第八；对面的科斯秋克，十号种子，世界第十一。",
+      "_why": "⑤种子与排名。窗口在镜头 16.6~31.0 之内，不跨切点。"
+    },
+    {
+      "start": 62.5,
+      "end": 70.5,
+      "fit": "crop",
+      "narration": "整个首盘，她保发四次全部失败，九局里七局被接发拿走。",
+      "_why": "官方赛后报道：『The Pole failed to hold serve in four attempts...with seven of nine total games in the first set going to the returner』。画面是首盘中段的通用回合。窗口在镜头 60.6~74.16 之内，不跨切点。"
+    },
+    {
+      "start": 153.28,
+      "end": 161.84,
+      "fit": "crop",
+      "narration": "次盘她拿到当天第一个保发局，随后连破两局六比一扳平；决胜盘她又率先破发，一路顶到五比一。",
+      "_why": "官方赛后报道：『She got her first hold of the day in the opening game and then broke for a quick 2-0 lead...taking the set 6-1』『Swiatek then broke again to start the third and added another to go up 5-1』。窗口正好落在一整个镜头 153.28~161.84 之内，不跨切点。"
+    },
+    {
+      "start": 176.8,
+      "end": 183.96,
+      "fit": "crop",
+      "narration": "两个月前法网1/8决赛，她们交手过一次，那一次她输了，赛后说自己整场都很紧绷。",
+      "_why": "官方赛后报道确认『Roland-Garros rematch』；场边采访主持人原话（画面自证）：『The last time you and Marta played was at the French Open. You were on the losing end of that match and you said you felt really tense and stressed during that one.』窗口正好落在一整个镜头 176.8~183.96 之内，不跨切点。"
+    },
+    {
+      "start": 315.5,
+      "end": 323.0,
+      "fit": "crop",
+      "quote": [
+        "Well, I'm in a different place for sure. I feel like I can play my game. And I couldn't really do that on French.\n我现在的状态完全不一样了。我觉得我能打出自己的球——法网那次我没能做到。"
+      ],
+      "_why": "让当事人自己说：场边采访原声，她回应『这次和法网不一样』。原文与时间戳取自 `captions.txt` 315.52~322.00 秒区间。不配旁白，出中英双语字幕。窗口在 298.48~442.2 这一整段未切换的连续镜头之内，不跨切点。"
+    },
+    {
+      "start": 424.0,
+      "end": 432.0,
+      "fit": "crop",
+      "narration": "她说，这可能是她这个赛季打得最好的几场比赛之一。晋级1/4决赛的这份状态，她还能带多远？",
+      "_why": "收尾落在一问上，不停在数据上。场边采访原声（画面自证）：『probably one of the best matches of the season for me』，主持人确认『You're off to the quarterfinals here at Toronto』。窗口在 298.48~442.2 这一整段未切换的连续镜头之内，不跨切点。"
+    }
+  ],
+  "push": {
+    "summary": "斯瓦泰克逆转科斯秋克晋级",
+    "lead": "7号种子斯瓦泰克首盘四次发球局全部丢掉，一度被科斯秋克逼入绝境；次盘她拿到当天第一个保发局，连破两局扳平，决胜盘一路顶到5比1，最终3-6 6-1 6-2逆转晋级多伦多站1/4决赛，历时2小时10分钟。这场也是两个月前法网1/8决赛负于科斯秋克之后的复仇——那次她说自己整场都很紧绷，这一次，她说『我现在的状态完全不一样了』。",
+    "auto": true
+  }
+}

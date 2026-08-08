@@ -1583,10 +1583,15 @@ def segments_straddling_cuts(
         # 那条真检查一起关掉。
         inside = [c for c in by_url[url] if seg["start"] < c < seg["end"]]
         if inside:
+            # 无旁白的冷开场段、只有 `quote` 的原声段都没有 `narration` 键——
+            # 诊断报告要能报出这两类段，不能因为缺一个键就整个崩掉。
+            label = seg.get("narration") \
+                or "／".join(seg.get("quote") or []) \
+                or "（无旁白）"
             straddling.append({
                 "index": index, "source": name,
                 "start": seg["start"], "end": seg["end"],
-                "cuts": inside, "narration": seg["narration"],
+                "cuts": inside, "narration": label,
             })
         elif index != last:
             ghost = [c for c in by_url[url]
