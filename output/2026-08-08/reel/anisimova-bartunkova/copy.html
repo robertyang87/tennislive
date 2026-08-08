@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.8 赛场之上 | 安尼西莫娃两度雨断中逆转</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>8号种子安尼西莫娃首盘一度1比4落后，39分钟被巴图什科娃拿下抢先的第一盘；次盘她只用30分钟6比0扳平；决胜盘一度2比4落后，第八局又在15-40悬崖边保发，最终6比4逆转拿下，历时1小时59分钟，期间两度被雨断打断，挺进多伦多站1/8决赛。
+
+两年前，她还是世界第132位、刚结束心理健康休战期的资格赛球员，却在这里一路杀进了决赛（那届决赛不敌佩古拉，是1984年以来该项赛事历史上排名最低的决赛选手）。今年春天一场手腕伤病搅了她的状态，这场胜利是她自温网次轮出局以来的第一场正赛胜利。
+
+原文要点：
+WTA官方赛后报道这样写首盘和决胜盘：
+&quot;Anisimova found her hitting groove after falling behind 4-1 early on. Though she couldn&#x27;t play catchup in the first set, she surged in the middle frame in just 30 minutes -- and later came from 4-2 down in the decider to punctuate the comeback. That included an eighth-game hold from 15-40 down.&quot;
+（首盘一度1比4落后后，安尼西莫娃找到了手感，但没能在首盘追回来；次盘她只用30分钟就完成反扑；决胜盘她又从2比4落后中完成逆转，其中包括在第八局15-40悬崖边保住了发球局。）
+
+关于这场雨断和她的近况，官方报道也提了一句：
+&quot;...before overcoming both Bartunkova&#x27;s variety and multiple weather delays in a 3-6, 6-0, 6-4 victory in 1 hour and 59 minutes.&quot;
+（她花了些时间才适应过来，随后既要应付巴图什科娃多变的打法，还要挺过多次天气延误，最终以3-6 6-0 6-4、耗时1小时59分钟拿下这场胜利。）
+
+#网球时差 #安尼西莫娃 #巴图什科娃 #国家银行公开赛 #WTA1000</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
