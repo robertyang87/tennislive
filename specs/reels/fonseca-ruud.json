@@ -73,6 +73,16 @@
         "rank": 14
       }
     ],
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%2201%3A56%3A00%22%2C%20%22source_page%22%3A%20%22https%3A//www.flashscore.com/match/tennis/fonseca-joao-tv073LUc/ruud-casper-zN9UpRqp/%22%7D",
+        "field": "duration",
+        "source_page": "https://www.flashscore.com/match/tennis/fonseca-joao-tv073LUc/ruud-casper-zN9UpRqp/"
+      },
+      "_court_why": "nationalbankopen.com 赛果页明写 Court: Centre Court。",
+      "_duration_why": "flashscore 分盘用时 1:06 + 0:50 = 1:56（秒数它不给，写 00）。nationalbankopen 赛果页没有给出比赛用时字段，所以用 data: URI 把 flashscore 这个数嵌进去，走同一条取时长的代码路径（和 shang-darderi-montreal-2026 那条同一个手法）。"
+    },
     "portrait": {
       "frame_at": 221.5,
       "focus": 0.5,
