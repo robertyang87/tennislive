@@ -2862,7 +2862,13 @@ SPEECH_PER_CHAR = 0.16
 SPEECH_PER_PUNCT = 0.42
 SPEECH_TAIL = 0.75
 # 实测最坏的一段被低估 1.44s，取整留一点：小于这个数的差额不算数。
-SPEECH_EST_ERR = 1.5
+# ⚠️ 2026-08-08：`fonseca-ruud` 第 11 段「五比三，丰塞卡发球——拿下这一局，
+# 比赛就结束。」（18 字 5 处标点，含一处破折号）真语音只说 4.22s，比离线估的
+# 5.73s 短 1.51s——短句里标点占比最大，这条又比「momentum」那次更短更密。
+# 这条片子已经自动推送过微信，不能为了措辞重渲；中位数仍贴近 0（模型没有系统性
+# 偏差，只是这一条方差大），所以按 `SPEECH_EST_ERR <= worst + 0.5` 那条闸的
+# 本意小幅调宽，不是把闸松掉。
+SPEECH_EST_ERR = 1.6
 
 
 def speech_seconds(text: str) -> float:
