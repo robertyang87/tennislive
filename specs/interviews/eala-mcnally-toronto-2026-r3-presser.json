@@ -119,5 +119,7 @@
     ],
     "sub": "笑着聊起蓝色恐龙粉丝之前 她刚聊完这两周有多难扛",
     "tag": "2026 多伦多 WTA1000 第三轮 · 伊埃拉"
-  }
+  },
+  "transcript_verified": true,
+  "_transcript_verified_why": "run 31258144477 的 `--stage verify`：\n① **转写分歧 7.9%（YouTube 自动字幕 445 词 / whisper small.en 419 词），在 12% 闸门以内**；\n② **自动字幕没有空档**——这条是发布厅，从头到尾她或记者一直在说话；\n③ 28 处分歧逐条看过，**没有一处改变意思**：\n  - 21 处是 whisper 丢掉了填充词（um/uh/the/i'm/and/was/which is/how），包括一处真实的口吃重复（`and and`→`—`，她原话就是重复了一遍，whisper 去重是对的）；\n  - `super fan`→`superfan` 只是分词方式不同，同一个词；\n  - `yeah`→`hey`、`there were`→`are`、`during`→`there in`、`and`→`in`、`need i try`→`tried`、`oh my god how`→`—`、`—`→`match`/`was`：都落在两处结结巴巴的自我修正句上（『I think I need I try to focus...』『Oh my god. How just talk about...』），本来就是记者/她自己重新组织语言时的重复和停顿，两份 ASR 对同一段口吃各自理解不同很正常——这些词都不在我写的 `zh` 译文里承载实际意思（我译的是整句的意思，不是逐词对应这几个虚词）。\n\n⚠️ **我听不到音轨**（沙箱下不了媒体，403），以上判断基于两份 ASR 的交叉比对 + 上下文，和之前 `eala-mcnally-toronto-2026-r3`（同一场球的场上采访）走的是同一套判据。"
 }
