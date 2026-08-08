@@ -1,0 +1,201 @@
+{
+  "slug": "fernandez-andreeva",
+  "source_url": "https://www.youtube.com/watch?v=FpAjUXOtO9s",
+  "_source": "WTA 官方单场集锦《Mirra Andreeva vs. Leylah Fernandez | 2026 Toronto Round 3 | WTA Match Highlights》，2026-08-07 20:31 UTC 上传（RSS `<published>` 字段），1920×1080 @ 25 fps，409.25s。\n\n⚠️ **这条链接一度被我自己的验证脚本判成「给错了」**：第一遍用正则 `<title>.*?<yt:videoId>.*?<published>` 跨 `<entry>` 边界非贪婪匹配，把这条视频的 videoId 错配到了下一条无关视频（一段赛前练习花絮）的标题上。改成先按 `<entry>...</entry>` 切块再在块内解析，`FpAjUXOtO9s` 的 `<media:description>` 原文写着「Watch the Match Highlights from Mirra Andreeva vs. Leylah Fernandez from Round 3 in Toronto」——链接本身没有问题，是我的核对方法有问题。\n\n画面自证：记分条常驻 `M. ANDREEVA [5]` / `L. FERNANDEZ [30]`，299.88 秒有终场比分图形 `MIRRA ANDREEVA 1 4 / L FERNANDEZ 6 6`（对应两盘各自的局数）。299.88~399.16 是场边采访，399.16 起是片尾卡。",
+  "_column": "赛场之上。主队作战的费尔南德斯掀翻世界第五、法网冠军安德烈耶娃，是这一天全场最大的冷门，封面 solo 版式印赛果，赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 第三轮",
+    "line2": "费尔南德斯 6-1 6-4 安德烈耶娃"
+  },
+  "_topbar_why": "line2 由 `_expected_topbar_score_line` 从 cover.winner/result/matchup 反推校验，不能另写一份——这里手写的这句和封面赛果行必须逐字一致，闸会在渲染前拦住任何漂移。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "主场压力和法网冠军的名气压在对面，费尔南德斯凭什么能一口气拿下七局里的六局？",
+    "thesis": "她全场稳定地把握住了自己的发球局和关键分，把安德烈耶娃逼进了这场巡回赛里少见的被动局面，也补上了自己对上位球员久违的一场胜利。",
+    "beats": [
+      "先破发确立主动，一比零",
+      "一比一之后连下四局，锁定首盘六比一",
+      "次盘一度五比二领先被追回一局，但很快重新发球",
+      "赛点落地，自二〇二三年香港网球公开赛后首次赢下安德烈耶娃"
+    ],
+    "human_context": {
+      "angle": "本届签表女单正赛里最后一名留下的加拿大球员，主场作战对上法网冠军",
+      "facts": [
+        "费尔南德斯是本届国家银行公开赛女单正赛里最后一名留下的加拿大球员，captions.txt 里主持人原话问她「You are the lone Canadian in singles action here」",
+        "两人上一次交手是 2026 年 4 月马德里站（红土），安德烈耶娃 7-6(5) 6-3 获胜；再往前一次是 2023 年香港网球公开赛，费尔南德斯获胜——这场是她自那之后首次赢下安德烈耶娃"
+      ],
+      "sources": [
+        "https://www.tsn.ca/tennis/video/2026/08/07/canadas-fernandez-upsets-andreeva-at-national-bank-open-to-advance-to-round-of-16/",
+        "https://www.cbc.ca/sports/tennis/leylah-fernandez-national-bank-open-recap-third-round-andreeva-toronto-9.7300404"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "费尔南德斯 6-1 6-4 胜安德烈耶娃。多个独立信源交叉核实一致：TSN、CTV News、CBC Sports、Tennis Majors、National Bank Open 官网均报 6-1, 6-4。",
+    "赛事": "多伦多 WTA1000 女单第三轮（Round of 32），中央球场。国家银行公开赛（National Bank Open presented by Rogers）2026。",
+    "开球时间": "**不早于**北京时间 8 月 8 日凌晨 1:30（当地 8 月 7 日 13:30 EDT）——多家赛事预告一致写着「not before 1:30pm」，跟在瑞巴基娜战安・李（12:30pm）之后，中央球场当天第二场。**不写成确切时刻**，官方给的就是下界。",
+    "用时": "1 小时 20 分（多家报道一致：TSN／CTV／官网赛后稿）。",
+    "排名与种子": "安德烈耶娃：世界第 5、5 号种子，法网（Roland-Garros）现任冠军。费尔南德斯：世界第 34、30 号种子，加拿大本土作战。排名与仓库译名表 `player_names_top500.json`（2026-07-27 快照）交叉核实一致：Andreeva rank 5、Fernandez rank 34——与外部 WebSearch 结果完全对上。",
+    "交手记录": "费尔南德斯此前上一次赢安德烈耶娃是 **2023 年香港网球公开赛**；中间 2026 年 4 月马德里站两人交手，安德烈耶娃 7-6(5) 6-3 获胜（红土）。这场之后费尔南德斯**自 2023 年以来首次**在两人交手中取胜——两个独立日期节点（2023 香港、2026 马德里）都有报道佐证，不是单一信源的孤证。",
+    "身份注脚": "费尔南德斯是本届签表女单正赛里**最后一名留下的加拿大球员**（多家报道称「the lone Canadian in singles action」，captions.txt 里主持人原话也问她「everyone in Montreal is probably watching you... You are the lone Canadian in singles action here」）；2021 年美网亚军。",
+    "⭐第一盘走势": "费尔南德斯先破发拿下首局（1-0）。中段战成 1-1 后，她一口气连下四局，源片记分条从 96.5s 的 `1-1` 直接跳到 98.5s 的 `5-1`（对应 probe.json 里 94.88~97.52 的场景切点——**集锦本身在这里做了压缩剪辑**，中间几局没有镜头）。120.5~126.5s 记分条挂着 `SET POINT`，`ANDREEVA 1 / FERNANDEZ 5 40`，随后拿下整盘 6-1（captions.txt 138.0s 解说原话「has given Andreeva nothing in the opening seven games. 6-1 the Canadian」）。",
+    "⭐第二盘走势": "费尔南德斯一度 5-2 领先，安德烈耶娃在此时拿到自己本场**第一个破发点并兑现**（多个独立报道一致：「Down 2-5 in the second set, Andreeva picked up her first break」），但费尔南德斯很快重新发球取胜，256.5~262.5s 记分条挂着 `MATCH POINT`，`ANDREEVA 1 4 15 / FERNANDEZ 6 5 40`，最终 6-4 拿下比赛。",
+    "记分条自证": "逐格读过 score_*.jpg（每 2 秒一格）：\n- 42.5~58.5s `ANDREEVA 0 30 / FERNANDEZ 1 30`——费尔南德斯已破发领先 1-0\n- 96.5s `1-1`（30-30）→ 98.5s 直接跳到 `ANDREEVA 1 / FERNANDEZ 5`——中间四局无镜头，源片本身的压缩剪辑\n- 120.5~126.5s `SET POINT`，`ANDREEVA[5] 1 40 / FERNANDEZ[30] 5 40`\n- 142.5~158.5s 第二盘开局，`ANDREEVA 1 0 0 / FERNANDEZ 6 0 15`（左列是刚结束的第一盘局数 1-6，冻结显示）\n- 256.5~262.5s `MATCH POINT`，`ANDREEVA[5] 1 4 15 / FERNANDEZ[30] 6 5 40`\n- 268.5s 板消，262.08s captions「Fantastic Fernandez」——赢下赛点\n- 270.5~274.5s 网前握手（安德烈耶娃粉色球衣，费尔南德斯酒红色球衣）\n- 276.5~286.5s 费尔南德斯庆祝，举拍、挥手谢场\n- 299.88s 终场图形 `MIRRA ANDREEVA 1 4 / L FERNANDEZ 6 6`",
+    "⭐她的话": "场边采访原话（captions.txt 330~355s）：主持人问她九连局时更衣间在想什么，她答「I just thought about like staying in the present moment, calming my nerves down and of course using the crowd as energy.」（我就是想着活在当下，让自己冷静下来，当然还有借助现场观众的能量。）"
+  },
+  "_不能说的": {
+    "5-1 到 6-1 中间的局": "第一盘从 1-1 直接跳到 5-1，中间四局集锦里没有画面，旁白只陈述结果，不描述过程。",
+    "第二盘 5-2 之后到 5-4 之间": "集锦没有完整呈现安德烈耶娃破回一局之后的拉锯，旁白只说「一度」被追近，不编造具体分数细节。",
+    "开球时间": "官方给的是「不早于 1:30pm」，不是确切时刻——旁白按 CLAUDE.md「不早于」那条规矩原样保留，不简化成一个确切钟点。"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格画面（她赢下赛点之后举拍庆祝、现场声抬起来的那一下，不配旁白）→ ② 一句话把落点说出来（掀翻世界第五、法网冠军，自 2023 年以来首次赢她）→ ③ 坐标（时间、赛事、轮次）。\n\n⚠️ **冷开场取 277.5~284.3 秒，不是源片开头。** 源片开头是球员入场、硬币猜正反面（0~40s），戏剧性最低；277.5~284.3 秒是她赢球后举拍挥手、笑容最灿烂的一段，窗口落在切点 277.24~284.72 之内 ✅。\n\n**中段按记分条走**（见 `_facts.记分条自证`）：先破发领先 → 连下四局（集锦压缩剪辑，如实陈述不编造中间过程）→ 抢下第一盘 → 第二盘一度扩大优势又被追近 → 发球胜赛。**每一段窗口都对齐 probe.json 的 scene_cuts**，跨切点的地方（比如 1-1 跳到 5-1 那一刀）如实写成「随后连下四局」而不假装看到了中间过程。\n\n**收尾落在一问上**：主场作战、状态正盛的她，接下来还能走多远。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "费尔南德斯",
+    "hook": "主场作战，她只让安德烈耶娃拿到七局里的一局\n自二〇二三年以来，首次赢下法网冠军",
+    "_hook_why": "**上一句是过程，下一句是落点**——CLAUDE.md「钩子要有剧情的跌宕，不是把两个身份摆在一起」。「七局里的一局」是第一盘 6-1 的另一种说法，比直接念比分更有画面感；第二句把这场胜利放进两人交手的时间线里，读者不需要知道 2023／2026 两个具体年份就能感受到「久违」。\n\n⚠️ 钩子不写排名——排名印在钩子正下方的赛果行（5 和 34），再写一遍是重复。",
+    "topic": "多伦多WTA1000 · 女单第三轮",
+    "portrait": {
+      "frame_at": 282.5,
+      "focus": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "282.5 秒：她单手举拍过头，笑容全开，National Bank 蓝色广告板在背景。**情绪对题**——这一屏讲的是主场作战掀翻冷门之后的释放，要的就是这个纯粹的庆祝瞬间，不是击球中的专注表情。\n\n⚠️ 认人靠球衣颜色：费尔南德斯全场穿酒红色 Lululemon 背心，安德烈耶娃穿粉色——网前握手那一格（270.5~274.5s）两人同框，颜色对照过，不会认错。\n\n⚠️ 这是抽帧（1920×1080，3:4 取景窗），焦点 0.5 让人物居中，头顶和肩部两侧都留出呼吸空间。"
+    ,
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "费尔南德斯",
+    "result": "6-1 6-4",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS028",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS028"
+      },
+      "_court_why": "同一份 `tournaments/806/2026/matches` 里，这场（`LS028`）和已发的 `eala-parks`（`LS049`）、`zhang-sabalenka`（`LS016`）**同为 `CourtID: 1`**——这一站的中心球场。场地名不猜。",
+      "_duration_why": "`MatchTimeTotal: \"01:20:49\"` → 板上印 `1:20`，和 `_facts.用时` 里 TSN/CTV/官网三家独立信源一致。不手填，`_fetch_match_duration()` 每次渲海报现拉接口。"
+    },
+    "matchup": [
+      {
+        "name": "安德烈耶娃",
+        "name_en": "Mirra Andreeva",
+        "country": "RUS",
+        "rank": 5
+      },
+      {
+        "name": "费尔南德斯",
+        "country": "CAN",
+        "rank": 34
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 277.5,
+      "end": 284.3,
+      "fit": "crop",
+      "_why": "冷开场：赢下赛点之后举拍庆祝、笑容最灿烂的一段，不配旁白，交给现场声。窗口在切点 277.24–284.72 之内 ✅"
+    },
+    {
+      "start": 43.5,
+      "end": 50.0,
+      "fit": "crop",
+      "narration": "费尔南德斯掀翻了世界第五、法网冠军安德烈耶娃。",
+      "_why": "第②格：一句话落点。窗口在切点 43.04–58.64 之内 ✅"
+    },
+    {
+      "start": 63.2,
+      "end": 71.0,
+      "fit": "crop",
+      "narration": "北京时间八月八号凌晨不早于一点半，多伦多WTA1000女单第三轮。",
+      "_why": "第③格：坐标。官方给的是「不早于 1:30pm」当地时间的下界，不简化成确切钟点。窗口在切点 62.92–73.12 之内 ✅"
+    },
+    {
+      "start": 98.0,
+      "end": 108.5,
+      "fit": "crop",
+      "narration": "法网冠军安德烈耶娃，世界第五，五号种子。对面是主场作战的费尔南德斯，三十号种子，世界第三十四。",
+      "_why": "两人坐标。窗口在切点 97.52–115.24 之内 ✅。排名与仓库译名表 2026-07-27 快照一致（Andreeva 5 / Fernandez 34）。"
+    },
+    {
+      "start": 44.5,
+      "end": 50.0,
+      "fit": "crop",
+      "narration": "开局她先破发拿下一局，一比零。",
+      "_why": "42.5~58.5s 记分条印着 `ANDREEVA 0 30 / FERNANDEZ 1 30`，费尔南德斯已经领先一局。窗口在切点 43.04–58.64 之内 ✅。窗口收到 5.5s，贴合旁白估长，不留哑场。"
+    },
+    {
+      "start": 77.0,
+      "end": 82.5,
+      "fit": "crop",
+      "narration": "一比一之后，她连下四局。",
+      "_why": "76.64~94.88s 这段之后记分条从 1-1 跳到 5-1（96.5s→98.5s），集锦本身在这里压缩剪辑，中间四局没有画面——旁白只陈述结果。窗口在切点 76.64–94.88 之内 ✅。窗口收到 5.5s，「拿到五比一」留给下一段讲，不重复。"
+    },
+    {
+      "start": 121.0,
+      "end": 125.0,
+      "fit": "crop",
+      "narration": "五比一，盘点。",
+      "_why": "120.68~126.08s 记分条挂着 `SET POINT`，`ANDREEVA 1 40 / FERNANDEZ 5 40`。窗口在切点 120.68–126.08 之内 ✅。窗口收到 4.0s。"
+    },
+    {
+      "start": 143.0,
+      "end": 149.0,
+      "fit": "crop",
+      "narration": "第一盘她只让安德烈耶娃拿到一局，六比一。",
+      "_why": "captions.txt 138.0s 解说原话「has given Andreeva nothing in the opening seven games. 6-1 the Canadian」；142.5s 记分条左列冻结显示第一盘 1-6。窗口在切点 142.96–155.8 之内 ✅。窗口收到 6.0s。"
+    },
+    {
+      "start": 209.0,
+      "end": 218.0,
+      "fit": "crop",
+      "narration": "第二盘她一度五比二领先，安德烈耶娃这场比赛第一次拿到破发点，也第一次兑现。",
+      "_why": "多个独立报道一致：「Down 2-5 in the second set, Andreeva picked up her first break」。⚠️ 「拿到破发点」的主语是安德烈耶娃，「兑现」也是她——不写「救下」（那是防守方的动词）。窗口在切点 208.6–228.84 之内 ✅。窗口收到 9.0s。"
+    },
+    {
+      "start": 242.0,
+      "end": 248.0,
+      "fit": "crop",
+      "narration": "费尔南德斯很快重新发球，追到五比四。",
+      "_why": "241.8~253.84s 窗口，紧接在被追近之后、赛点之前。窗口在切点 241.8–253.84 之内 ✅。窗口收到 6.0s。"
+    },
+    {
+      "start": 255.6,
+      "end": 260.0,
+      "fit": "crop",
+      "narration": "赛点，她只差最后一分。",
+      "_why": "255.36~261.72s 记分条挂着 `MATCH POINT`，`ANDREEVA 1 4 15 / FERNANDEZ 6 5 40`。窗口在切点 255.36–261.72 之内 ✅。旁白补长一句而不是压得更短，好留住 MATCH POINT 那块图形的可见时间。"
+    },
+    {
+      "start": 262.0,
+      "end": 269.0,
+      "fit": "crop",
+      "narration": "六比四。一小时二十分，主场的欢呼声压过了对手的名气。",
+      "_why": "captions.txt 262.08s「Fantastic Fernandez」；用时 1h20m 多家独立信源一致（TSN／CTV／官网）。窗口在切点 261.72–269.2 之内 ✅",
+      "crosses_cut": "266.60s 那一刀是费尔南德斯转身正面镜头切到看台欢呼的宽景——同一个人、同一个庆祝时刻的两个机位，不是换人，旁白说的正是「主场的欢呼声」，画面刚好接得上。"
+    },
+    {
+      "start": 330.5,
+      "end": 342.0,
+      "fit": "crop",
+      "narration": "她后来说，那几局自己一直在想同一件事：活在当下，让自己冷静下来，借助现场观众的能量。",
+      "_why": "场边采访原话（captions.txt 330~355s）：「I just thought about like staying in the present moment, calming my nerves down and of course using the crowd as energy.」画面外的事实，转述不进原声——这条线是「赛场之上」不是「赛后开麦」。窗口落在采访镜头 299.88–399.16 之内（整段静态机位，无场景切点）。窗口收到 11.5s，贴合旁白估长。"
+    },
+    {
+      "start": 376.0,
+      "end": 383.0,
+      "fit": "crop",
+      "narration": "签表里最后一个加拿大人，接下来她还能走多远？",
+      "_why": "收尾落在一问上。captions.txt 376~380s 主持人原话「everyone in Montreal is probably watching you... You are the lone Canadian in singles action here」——「最后一个加拿大人」不是我编的形容，是转播原词。画面是她带着笑意回答的镜头。窗口落在采访镜头 299.88–399.16 之内。"
+    }
+  ],
+  "push": {
+    "summary": "费尔南德斯掀翻法网冠军",
+    "lead": "主场作战的费尔南德斯 6-1 6-4 击败世界第五、法网冠军安德烈耶娃，挺进多伦多站 1/4 决赛——这是她自 2023 年以来第一次赢下安德烈耶娃。第一盘她开局先破发，一比一之后连下四局，只让对手拿到一局。第二盘一度五比二领先时被追回一局，但很快重新发球胜赛，一小时二十分拿下这场本届赛事最大的冷门之一。",
+    "_why": "标题突出「掀翻法网冠军」——这是全场热度最高的落点。`summary` 量字位：「费尔南德斯掀翻法网冠军」＝ 10 字位，加日期和栏目名在闸内。`matchup`／`score`／`event` 由封面 `cover` 块算，这里只写 `summary`／`lead`。"
+  }
+}
