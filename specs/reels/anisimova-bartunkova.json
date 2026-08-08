@@ -5,9 +5,9 @@
   "_column": "赛场之上。8 号种子安尼西莫娃（世界第 10）首盘一度 1-4 落后，被巴图什科娃拿下抢先的第一盘（3-6）；次盘她只用 30 分钟找回状态 6-0 扳平；决胜盘一度 2-4 落后，第八局又在 15-40 悬崖边保发，最终 6-4 逆转拿下，历时 1 小时 59 分，期间两度被雨断打断。",
   "topbar": {
     "line1": "WTA1000 多伦多 第三轮",
-    "line2": "安尼西莫娃 6-3 6-0 6-4 巴图什科娃"
+    "line2": "安尼西莫娃 3-6 6-0 6-4 巴图什科娃"
   },
-  "_topbar_why": "line2 与 cover.winner/result/matchup 一致，赢家在前——安尼西莫娃（WTA API ResultString: `[8]A. Anisimova d N. Bartunkova 3-6,6-0,6-4`，注意原始比分是从『输的那一方』视角写的：安尼西莫娃自己是 3-6 6-0 6-4，也就是赢家在前时写成 6-3 6-0 6-4）。",
+  "_topbar_why": "line2 与 cover.winner/result/matchup 一致，赢家在前——安尼西莫娃。WTA API ResultString 原文就是 `[8]A. Anisimova d N. Bartunkova 3-6,6-0,6-4`，写法本来就是『赢家 d 输家，赢家自己的比分在前』，所以赢家在前的正确写法就是逐字照抄这串数字：3-6 6-0 6-4（她丢了第一盘）。⚠️ 早先一版把这串数字反过来写成了『6-3 6-0 6-4』（误当成需要倒转视角），和转播原声『Barty takes the opener』（Bartunkova 拿下首盘）、WTA 赛后稿『couldn't play catchup in the first set』（首盘没能追回来）两处证据都对不上，是 poster 渲出来之后才发现，已改回按 ResultString 原文抄。",
   "editorial": {
     "mode": "match_review",
     "question": "首盘一度1比4落后，两度被雨断打断——8号种子安尼西莫娃是怎么把这场硬仗从巴图什科娃手里拿回来的？",
@@ -33,7 +33,7 @@
     }
   },
   "_facts": {
-    "赛果": "安尼西莫娃[8] 6-3 6-0 6-4 胜巴图什科娃（原始 ResultString 是巴图什科娃视角『N. Bartunkova d B...』的反向写法需注意：WTA API ScoreSet1A=6(Bartunkova)/ScoreSet1B=3(Anisimova)，ScoreSet2A=0/ScoreSet2B=6，ScoreSet3A=4/ScoreSet3B=6——安尼西莫娃赢家在前写成 6-3 6-0 6-4）。WTA API `tournaments/806/2026/matches`（MatchID LS019）与 WTA 官方 Match Reaction 报道（wtatennis.com/news/4555652）交叉核实一致。",
+    "赛果": "安尼西莫娃[8] 3-6 6-0 6-4 胜巴图什科娃（丢了第一盘）。WTA API ResultString 原文：`[8]A. Anisimova d N. Bartunkova 3-6,6-0,6-4`——赢家 Anisimova 写在前面，逐字就是她自己的比分，不用倒转视角。WTA API `tournaments/806/2026/matches`（MatchID LS019）与 WTA 官方 Match Reaction 报道（wtatennis.com/news/4555652：『couldn't play catchup in the first set』）、转播解说原声（『Barty takes the opener in 39 minutes』）三处交叉核实一致：首盘负于巴图什科娃。⚠️ 早先一版把这串数字反过来写成『6-3 6-0 6-4』（当成了赢家赢下首盘），poster 渲出来之后靠画面自证的记分条比对才发现，已改回。",
     "赛事": "多伦多 National Bank Open presented by Rogers（WTA1000）女单第三轮，Grandstand 球场（CourtID 2，同一份接口里与已发的 bencic-townsend 同为 CourtID 2）。",
     "用时": "1 小时 59 分（09 秒）。WTA API `MatchTimeTotal: \"01:59:09\"`；WTA 官方 Match Reaction 报道原文『1 hour and 59 minutes』一致。⚠️ 这个数字大概率只计算实际比赛用时，不含两次雨断的等待时间，真实的场上停留时间会更长。",
     "排名与种子": "安尼西莫娃：世界第 10、8 号种子（WTA 官方赛后稿明确提及『世界第10』，与 SeedB=8 交叉核实）。巴图什科娃：世界第 42，非种子（独立检索 2026-08-08 快照）。年龄：安尼西莫娃 2001-08-31 生，24 岁；巴图什科娃 2006-02-25 生，20 岁（WTA API `dateOfBirth` 字段）。",
@@ -55,7 +55,7 @@
     "scrim": "clear",
     "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
     "winner": "安尼西莫娃",
-    "result": "6-3 6-0 6-4",
+    "result": "3-6 6-0 6-4",
     "scoreboard": {
       "court": "Grandstand",
       "duration_source": {
