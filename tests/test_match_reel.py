@@ -8094,9 +8094,11 @@ def test_台头药丸的位置不跟着比分板漂(monkeypatch: pytest.MonkeyPa
     assert 490 <= vp.STORYCOPY_TOP <= 545, (
         f"STORYCOPY_TOP={vp.STORYCOPY_TOP} 离「原来模板的位置」（502~536）太远")
 
-    # 最坏情况要装得下：药丸 64 ＋ 间距 34 ＋ 三行 96px 的钩子 ＋ 间距 34
+    # 最坏情况要装得下：药丸 64 ＋（间距 34 ＋ 额外间距 STORYCOPY_TITLE_GAP_EXTRA，
+    # 2026-08-08「标题和比分板都往下移动一下」加的）＋ 三行 96px 的钩子 ＋ 间距 34
     # ＋ 比分板（板头 76 ＋ 网格 214）。溢出的话下面那截会被切在画布外。
-    worst = 64 + 34 + round(3 * 96 * 1.24) + 34 + (76 + 214)
+    worst = (64 + 34 + vp.STORYCOPY_TITLE_GAP_EXTRA + round(3 * 96 * 1.24) + 34
+             + (76 + 214))
     assert vp.STORYCOPY_TOP + worst <= 1440, (
         f"最坏情况排到 {vp.STORYCOPY_TOP + worst}px，超出 1440 的画布")
 
