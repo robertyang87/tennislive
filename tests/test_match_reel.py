@@ -4208,6 +4208,44 @@ def test_窗口对齐源片镜头边界不算中途换镜头():
     assert "换了镜头" in _run([15.0]), "真的中途换镜头没报出来"
 
 
+def test_溶解底料跨切点不会被错报成源片没查成():
+    """`segments_straddling_cuts` 返回 `(straddling, unchecked, tail_cuts)`，
+    而 `probe_dry_run` 里调它的那行一度写成
+    `straddling, tail_cuts, unchecked = segments_straddling_cuts(...)`——
+    第二、三个返回值被换了位置。probe 认领成功时真正的 `unchecked` 恒为
+    `[]`，所以这个调换不会崩，只会把 `tail_cuts`（一堆「溶解底料跨了切点」
+    的 dict）错扣上「⚠️ 这几条源片的切点没查成」的帽子，吓人但不假死——
+    正是「判据自己也要有判据」防的那类：调用方的解包顺序，函数自己的
+    返回值签名管不住。
+
+    造一个只在**溶解底料**（`SEG_FADE=0.18s`）里蹭到切点、段体本身没跨
+    的段：`end=20.0`，切点在 `20.05`。
+    """
+    reel = _reel()
+    spec = {"slug": "t", "source_url": "u",
+            "segments": [{"start": 10.0, "end": 20.0, "narration": "一句话"},
+                         {"start": 25.0, "end": 30.0, "narration": "另一句"}]}
+    segs = reel.parse_segments(spec, {"": Path("x")}, "")
+    import io  # noqa: PLC0415
+    from contextlib import redirect_stdout  # noqa: PLC0415
+
+    monkey = pytest.MonkeyPatch()
+    try:
+        monkey.setattr(reel, "probes_for_spec", lambda _s: (
+            {"u": {"url": "u", "duration": 99.0, "scene_cuts": [20.05],
+                   "point_ends": []}}, []))
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            hard = reel.probe_dry_run(spec, segs)
+        out = buf.getvalue()
+    finally:
+        monkey.undo()
+
+    assert hard is False
+    assert "溶解底料跨了切点" in out, f"该报的没报：{out}"
+    assert "没查成" not in out, f"probe 明明认领上了，不许报成没查成：{out}"
+
+
 def test_dry_run秒级返回且一个字节都不下载(tmp_path):
     """**真跑一遍**，喂一个绝对下不动的 URL——它必须照样成功返回。
 

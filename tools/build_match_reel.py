@@ -2993,7 +2993,7 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ② 跨镜头切点。复用 render 那条路用的同一个函数——写两处必分叉。
     #    **按「离最近那条边界多远」排序**：越靠段落中间越可疑，靠边的那些
     #    是窗口对齐了源片自己的镜头边界（`CUT_EDGE_TOL`），根本不该提。
-    straddling, tail_cuts, unchecked = segments_straddling_cuts(
+    straddling, unchecked, tail_cuts = segments_straddling_cuts(
         spec, list(probes.values()))
     mid: list[tuple[float, str]] = []
     for hit in straddling:
