@@ -904,7 +904,7 @@ __SCRIM__
 .scoreboard{width:100%;box-sizing:border-box;border:2px solid rgba(244,251,247,.95);
  color:#f4fbf7;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
 .scoreboard-head{height:76px;box-sizing:border-box;padding:0 28px;display:flex;
- align-items:center;justify-content:space-between;border-bottom:1px solid rgba(244,251,247,.82);
+ align-items:center;justify-content:space-between;border-bottom:2px solid rgba(244,251,247,.9);
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
@@ -912,7 +912,7 @@ __SCRIM__
 .scoreboard-players{min-width:0}
 .score-person{height:107px;box-sizing:border-box;display:flex;align-items:center;
  padding:0 16px 0 22px;min-width:0}
-.score-person+.score-person{border-top:1px solid rgba(244,251,247,.55)}
+.score-person+.score-person{border-top:2px solid rgba(244,251,247,.9)}
 .score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
  justify-content:center;margin-right:14px}
 .score-flag{display:block;width:58px;height:38px;object-fit:cover}
@@ -922,19 +922,26 @@ __SCRIM__
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
  letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
-.score-set{display:flex;flex-direction:column;border-left:1px solid rgba(244,251,247,.55)}
+.score-set{display:flex;flex-direction:column;border-left:2px solid rgba(244,251,247,.9)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:48px;font-weight:700}
-.score-number+.score-number{border-top:1px solid rgba(244,251,247,.55)}
+.score-number+.score-number{border-top:2px solid rgba(244,251,247,.9)}
 .score-number sup{font-size:.45em;line-height:1;align-self:flex-start;margin-top:24px;
  color:#93a79c}
-/* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给灰**（账号所有者 2026-08-04）。
-   颜色只有这一个强调色——`#c6f65a` 就是台标球身那个黄绿，不引入第二种。
-   `.setdash` 和 `.tb` 都压暗一档：连字符是分隔符不是内容，抢七小分是注脚。 */
+/* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给白**（账号所有者
+   2026-08-04 定的是灰，2026-08-09 改成白——灰在压缩后的视频里太接近底色，
+   读不出「谁输了这一盘」）。颜色只有一个强调色——`#c6f65a` 就是台标球身
+   那个黄绿，不引入第二种；输的那个数字换成正文同款的 `#f4fbf7`，
+   和赢的那个数字仍然靠色相（黄绿 vs 近白）分得开，不是靠明暗。
+   `.setdash` 和 `.tb` 仍然压暗一档：连字符是分隔符不是内容，抢七小分是
+   注脚，这条没有改——账号所有者这次只说了「比分」，不是这两个。
+   网格线（`.scoreboard-head` 的下沿、`.score-person`/`.score-number` 之间
+   那几道分隔线）同一天从 1px 粗到 2px、透明度从 .55/.82 提到 .9——原来的
+   细线在压缩后的视频里几乎看不见。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
 .setwin{color:#c6f65a}
-.setlose{color:#93a79c}
+.setlose{color:#f4fbf7}
 .setdash{color:#93a79c;margin:0 .04em}
 .tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
 .setplain{color:#c6f65a;margin-right:.42em}
@@ -1281,13 +1288,14 @@ body{{width:{VIDEO_W}px;height:{VIDEO_H}px;overflow:hidden;background:{INK};
 .sets{{font-family:'TL Numeral','TL Sans SC',sans-serif;font-weight:700;
   font-size:62px;color:{BRAND};letter-spacing:1px}}
 /* 盘分上色，和 solo 那张共用同一套类名（账号所有者 2026-08-04：
-   「每盘的比分里，赢的一方是黄色，输的一方是灰色」「抢七的比分里加上小分」）。
+   「每盘的比分里，赢的一方是黄色，输的一方是灰色」「抢七的比分里加上小分」；
+   2026-08-09 把输的一方从灰改成白——灰在压缩后的视频里太接近底色）。
    ⚠️ **两张海报的样式表是两份**，只改一份的话另一份会把 span 原样渲成一个色，
    看起来「没生效」而不是报错。 */
 .set{{display:inline-block;margin-right:.42em}}
 .set:last-child{{margin-right:0}}
 .setwin{{color:{BRAND}}}
-.setlose{{color:#93a79c}}
+.setlose{{color:{TEXT}}}
 .setdash{{color:#93a79c;margin:0 .04em}}
 .tb{{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}}
 .setplain{{color:{BRAND};margin-right:.42em}}
