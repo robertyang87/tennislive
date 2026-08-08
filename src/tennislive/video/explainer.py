@@ -5592,6 +5592,14 @@ _OPENINGS: dict[str, dict] = {
         # 换画布：卡片本来就是 1080×1440 渲的，画布也变成 1080×1440 之后
         # 就没有黑边可留了。见 assemble_explainer_video 的 canvas_h 参数。
         "canvas": "3:4",
+        # ⚠️ 账号所有者 2026-08-07：「居中啊，和后面视频一样啊」——默认的
+        # 几何居中把伊埃拉推到了画面最左侧一小条（源片 1280 宽里她的身体
+        # 中心在 x≈460，明显偏左）。0.42 是拿开场庆祝（t=0.4s）、观众举牌
+        # （t=6s）、近景鼓掌（t=8s）、恐龙服观众（t=14s）四个取样点比出来的
+        # 折中值：0.36 在近景那处会切到脸，0.5（缺省）在开场那处偏得最远，
+        # 0.42 是四处里没有哪一处明显更差的那个。见 assemble_explainer_video
+        # 的 intro_cx 参数。
+        "intro_cx": 0.42,
     },
     "shang-nishikori": {
         "column": "开球之前",
@@ -7115,6 +7123,7 @@ def assemble_explainer_video(
     tail_silence: float = TAIL_SILENCE,
     intro: Path | None = None,
     intro_badge: Path | None = None,
+    intro_cx: float = 0.5,
     outro: Path | None = None,
     canvas_h: int = VIDEO_H,
     runner: Callable[..., object] = subprocess.run,
@@ -7206,15 +7215,27 @@ def assemble_explainer_video(
     filters = []
     if intro is not None:
         # **铺满，不留信箱黑边**：`force_original_aspect_ratio=increase` 先把
-        # 16:9 的源片放大到两边都盖过 9:16 画布，`crop` 再从正中间切一块
-        # 1080×1920 出来。代价是裁掉源片左右一部分画面（16:9 进 9:16 大约只
-        # 留中间 31.6% 的宽度）；换来的是这段实拍片段占满整个屏幕，不是两条
-        # 黑边夹着一小条视频——这正是账号所有者说的「有点突兀」的一部分根源。
-        # 转播剪辑的构图本来就大致居中，九条抽样帧看过，center crop 不会把
-        # 人物切出画面。
+        # 源片放大到两边都盖过目标画布，`crop` 再切一块出来。代价是裁掉源片
+        # 左右一部分画面；换来的是这段实拍片段占满整个屏幕，不是两条黑边
+        # 夹着一小条视频——这正是账号所有者说的「有点突兀」的一部分根源。
+        #
+        # ⚠️ **`crop` 不给 x 就是缺省居中，缺省居中居的是源片画幅的几何中心，
+        # 不是画面里那个人。** 这条注释原来写着「转播剪辑的构图本来就大致
+        # 居中」——那句话是错的：eala-mcnally 的开场那个庆祝镜头，实测她的
+        # 身体中心在源片 1280 宽里落在 x≈460，明显偏左，缺省居中会把她推到
+        # 输出画面的最左侧一小条。账号所有者一句「居中啊，和后面视频一样啊」
+        # 就是在说这个。
+        #
+        # `intro_cx` 是显式给的水平中心（源片宽度的比例，0.5＝几何居中，
+        # 和 build_match_reel.py 里逐段的 `cx` 一个形状）——单条实拍片头
+        # 里往往不止一个镜头（庆祝 / 观众特写 / 采访特写各占几秒），没法
+        # 每一帧都精确跟踪，所以取的是「让最重要的那个镜头（通常是开场）
+        # 落在画面里」的一个折中值，不是数学最优解。默认 0.5 保持缺省居中，
+        # 行为对没有专门测过的新片头不变。
         intro_chain = (
             f"[0:v]scale={VIDEO_W}:{canvas_h}:force_original_aspect_ratio=increase,"
-            f"crop={VIDEO_W}:{canvas_h},setsar=1,fps=30"
+            f"crop={VIDEO_W}:{canvas_h}:"
+            f"x='clip(iw*{intro_cx}-ow/2\\,0\\,iw-ow)':y=0,setsar=1,fps=30"
         )
         if badge_idx is not None:
             filters.append(f"{intro_chain}[introbg]")
@@ -7400,11 +7421,16 @@ def generate_explainer_video(
     if canvas not in (None, "3:4", "9:16"):
         raise ExplainerVideoError(f"认不出来的 canvas「{canvas}」，只认 3:4 / 9:16")
     canvas_h = CARD_H if canvas == "3:4" else VIDEO_H
+    # `intro_cx` 同理显式认领：默认 0.5（几何居中，老行为不变），写了才换。
+    # 见 `assemble_explainer_video` 里那条注释——单条实拍片头常常不止一个
+    # 镜头，这个数是折中值，不是每一帧都精确跟踪的结果。
+    intro_cx = (_OPENINGS.get(story.slug) or {}).get("intro_cx", 0.5)
     return assemble_explainer_video(
         slides, audios, outdir / "explainer.mp4",
         captions=[seg.narration for seg in segments],
         intro=intro,
         intro_badge=intro_badge,
+        intro_cx=intro_cx,
         outro=outro,
         canvas_h=canvas_h,
     )
