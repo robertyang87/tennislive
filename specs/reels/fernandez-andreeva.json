@@ -67,6 +67,18 @@
     "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
     "winner": "费尔南德斯",
     "result": "6-1 6-4",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS028",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS028"
+      },
+      "_court_why": "同一份 `tournaments/806/2026/matches` 里，这场（`LS028`）和已发的 `eala-parks`（`LS049`）、`zhang-sabalenka`（`LS016`）**同为 `CourtID: 1`**——这一站的中心球场。场地名不猜。",
+      "_duration_why": "`MatchTimeTotal: \"01:20:49\"` → 板上印 `1:20`，和 `_facts.用时` 里 TSN/CTV/官网三家独立信源一致。不手填，`_fetch_match_duration()` 每次渲海报现拉接口。"
+    },
     "matchup": [
       {
         "name": "安德列娃",
