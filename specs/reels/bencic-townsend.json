@@ -1,0 +1,182 @@
+{
+  "slug": "bencic-townsend",
+  "source_url": "https://www.youtube.com/watch?v=cDe6hTwSAY8",
+  "_source": "WTA 官方单场集锦《Belinda Bencic vs. Taylor Townsend | 2026 Toronto Round 3 | WTA Match Highlights》，1920×1080 @ 25fps，403.68 秒。可用内容到约 298 秒（此后转入场边采访，本条不用采访内容）。\n\n画面自证：记分条常驻双方姓名与比分；120~142s 一段连续的 SET POINT 图形与庆祝画面对应首盘抢七汤森德拿下；213~238s 一段 SET POINT 图形＋教练席紧张反应对应次盘抢七本西奇两度救局点后扳平；258~262s MATCH POINT 图形＋双方头像牌；268~275s 本西奇握拳特写、汤森德掩面反应，紧接 Rolex 计时牌显示 3:24；276~289s 网前拥抱、致意观众的连续庆祝段落。日与夜的画面差异是同一场超过 3 小时的比赛跨越白天到夜场灯光，不是拼接错误——0~178s 天光明亮（TORONTO 字样记分条），240s 起已是夜场灯光。",
+  "_column": "赛场之上。12 号种子本西奇两个抢七都被拖到最后一分——首盘她在自己发球局连救三个盘点仍被汤森德拿下抢七，次盘抢七她自己两度面对局点、救下后扳平，决胜盘先破发又被追平，最终又破发锁定 6-7(5) 7-6(4) 6-4，耗时 3 小时 24 分钟。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 第三轮",
+    "line2": "本西奇 6-7 7-6 6-4 汤森德"
+  },
+  "_topbar_why": "line2 与 cover.winner/result/matchup 一致，赢家在前——本西奇（WTA API ResultString: `[12]B. Bencic d T. Townsend 6-7(5),7-6(4),6-4`）。分盘小分（(5)/(4)）按同栏惯例（fonseca-ruud 等）不放进 topbar/cover.result，只留在 `_match`/`_facts` 里的完整记录。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "两个抢七，一次决胜盘还被追平——本西奇是怎么把汤森德这场硬仗啃下来的？",
+    "thesis": "首盘她在自己发球局连救三个盘点，仍没能逃过抢七——汤森德把这一盘拿到了自己手里，七比五。次盘双方一局未破，又进抢七，这一次轮到本西奇两度面对局点：一旦丢掉，比赛直接结束。她把两个都救了下来，抢七拿下，扳平总比分。决胜盘她先破发建立三比一，被汤森德追平到四比四，又一次把发球局破了回来，六比四锁定这场耗时三小时二十四分钟的胜利。",
+    "beats": [
+      "首盘她在自己发球局连救三个盘点，抢七仍被汤森德七比五拿下。",
+      "次盘一局未破进入抢七，她两度面对局点——丢掉就直接输掉比赛。",
+      "两个局点都被她救了下来，抢七拿下，扳平总比分。",
+      "决胜盘她先破发建立领先，被追平后又一次破发，锁定这场三小时二十四分钟的胜利。"
+    ],
+    "human_context": {
+      "angle": "十一年前，18 岁的本西奇在这里（当年还叫罗杰斯杯）逆转拿下生涯第一座巡回赛冠军；十一年后，她又一次在这里拿到晋级 1/4 决赛的入场券，下一轮等着她的是从未交手过的伊埃拉。",
+      "facts": [
+        "2015 年罗杰斯杯（今天的 National Bank Open 前身，同一站赛事）男女单打决赛，18 岁的本西奇淘汰小威、逆转哈勒普夺冠——这是她生涯第一座巡回赛单打冠军，也让她成为该项赛事史上最年轻冠军。",
+        "WTA 官方赛后稿：本西奇的下一个对手是伊埃拉，这将是两人在巡回赛层面的首次交手；她正在争夺个人在 National Bank Open 的第四个 1/4 决赛席位。"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4556274/eala-extends-win-streak-to-seven-earns-first-career-meeting-with-bencic",
+        "https://en.wikipedia.org/wiki/2015_Rogers_Cup_%E2%80%93_Women%27s_singles"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "本西奇[12] 6-7(5) 7-6(4) 6-4 胜汤森德。WTA API `tournaments/806/2026/matches`（MatchID LS025）与 WTA 官方 Match Reaction 报道（wtatennis.com/news/4556274）交叉核实一致。",
+    "赛事": "多伦多 National Bank Open presented by Rogers（WTA1000）女单第三轮，Grandstand 球场。",
+    "用时": "3 小时 24 分（29 秒）。WTA API `MatchTimeTotal: \"03:24:29\"`；WTA 官方 Match Reaction 报道原文两次写明「three hours and 24 minutes」，与 API 精确到秒的数字一致（另一篇 NBO 官网 Day 7 综述稿写的「three hours and 26 minutes」是约数，以精确的 API 字段与更新的官方 Match Reaction 稿为准）。",
+    "排名与种子": "本西奇：世界第 14、12 号种子（WTA 官方当期快照，2026-08-08 取数交叉核实）。汤森德：世界第 110，非种子（WTA 官网 stats 页 + 独立检索交叉核实，2026-08-05/08 快照）。年龄：本西奇 1997-03-10 生，29 岁；汤森德 1996-04-16 生，30 岁（WTA API `dateOfBirth` 字段）。",
+    "场地": "Grandstand（CourtID 2）。判据：NBO 官网 Day 7 综述稿把这场排在『GRANDSTAND - starts at 11:00 AM』这个小节标题之后、下一个 COURT 标题之前，同一小节里还有 Korneeva d. Jovic、Samsonova d. Joint、Osaka d. Mertens 等场——WTA API 里这几场同为 CourtID 2，交叉印证。⚠️ 不是中心球场：本站中心球场（CourtID 1）是 zhang-sabalenka / gauff-sakkari 等已发几条片子用的那一块。",
+    "首盘走势": "WTA 官方 Match Reaction 报道：本西奇一度让出早期的 5-2 领先（原文 `After surrendering an early 5-2 lead...`，注意主语是「被让出的领先」属于汤森德一方视角，即本西奇曾落后），随后她在自己发球局连救三个盘点（NBO Day7 综述稿：`rallying from a break down and saving three set points on her own serve`），仍未能逃过抢七——汤森德在她的第六个盘点（含抢七局内的局点）上兑现，七比五拿下抢七，首盘用时 73 分钟（转播解说原话：『a 73 minutes set goes the way of the underdog』）。",
+    "次盘走势": "WTA 官方 Match Reaction 报道：次盘双方缠斗，没有一次破发（原文 `neither able to secure a service break`），进入抢七。转播解说（画面自证，非采访）：本西奇一度『go close to being eliminated』——次盘若她输掉这个抢七，就直接 0-2 输掉整场比赛；画面里连续出现『SET POINT』图形与教练席紧绷反应，她把这些局点救了下来（『stuck to her guns』），抢七拿下，『leveled the match』，扳平总比分 1-1。",
+    "决胜盘走势": "WTA 官方 Match Reaction 报道：本西奇率先破发建立 3-1 领先（原文 `Bencic struck first in the third, breaking for a 3-1 lead`），汤森德追平到 4-4（`Townsend leveled at 4-4`），本西奇随即在第九局再次破发并保发拿下比赛（`the Swiss broke again in the ninth game and served out the win`）。",
+    "赛点画面": "258~262s：MATCH POINT 图形与双方头像牌出现，本西奇发球；264~268s：宽景来回，268s 记分条切近本西奇握拳特写；270s：汤森德用毛巾掩面；272~274s：场边 Rolex 计时牌显示 3:24（与 API MatchTimeTotal 一致）；276s 起：本西奇走向网前，278s 与汤森德在网前拥抱，284~289s 向观众致意、场边挥手。",
+    "开球时间": "反推估算：WTA API `MatchTimeStamp: 2026-08-07T23:35:26Z` 减去 `MatchTimeTotal: 03:24:29`，约合 2026-08-07T20:11Z（多伦多当地约 16:11 EDT），折合北京时间 2026-08-08 约 04:11。⚠️ 未见官方逐场排期给出精确开球时刻，`MatchTimeStamp` 是否严格等于终场时刻也未经官方明文确认，按反推处理，旁白只说到『凌晨四点前后』，不给出分钟精度（official-order-estimate/预计档）。"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：①②全片最强的一段——赛点落地的连续镜头（握拳特写→对手掩面→3:24 计时牌揭晓→网前拥抱），全部不配旁白，交给现场声，横跨两段（267.52~275.84、275.84~281.0）中间没有硬切；③紧接一句本场最硬的落点（十一年前她在这里拿到生涯第一冠）；④一句话把这场球的过程与代价说出来（两个抢七、三小时二十四分钟）；⑤坐标（时间、赛事、轮次）；⑥种子与排名差距（12 号种/第 14 对非种子/第 110）。\n\n**中段按官方赛后稿逐句核实的三盘走势排列**（见 `_facts`）：首盘她连救三个盘点仍被抢七拿走 → 次盘她自己两度面对局点、救下后扳平 → 决胜盘破发/被追平/再破发锁定胜利。\n\n**结尾接下一轮的悬念**：她与伊埃拉从未在巡回赛层面交手过，收在一问上，不停在数据上。\n\n⚠️ **全程不使用采访内容**——本条片子的场外背景（十一年前的罗杰斯杯冠军、下一轮对手伊埃拉）全部来自 WTA 官方 Match Reaction 书面报道与独立检索交叉核实的历史记录，不引用赛后场边采访里她本人的原话，也不使用采访片段作为素材（画面只用到 298 秒之前，采访从约 299 秒才开始）。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "本西奇",
+    "hook": "两个抢七，一次决胜盘被追平\n本西奇熬了三小时二十四分钟才拿下",
+    "_hook_why": "上一句是过程（两个抢七＋决胜盘被追平），下一句是落点（耗时与结果）——不是简单报比分。排名与种子已经印在赛果行，钩子不重复。",
+    "topic": "多伦多WTA1000 · 女单第三轮",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的 radial 暗角，上下两头照留。",
+    "winner": "本西奇",
+    "result": "6-7 7-6 6-4",
+    "scoreboard": {
+      "court": "Grandstand",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS025",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS025"
+      },
+      "_court_why": "CourtID 2（Grandstand），不是本站中心球场（CourtID 1，zhang-sabalenka/gauff-sakkari 等已发片子用的那块）。判据见 `_facts.场地`：NBO 官网 Day 7 综述稿把这场排在『GRANDSTAND』小节标题之下。场地名不猜。",
+      "_duration_why": "`MatchTimeTotal: \"03:24:29\"` → 板上印 `3:24`。不手填，`_fetch_match_duration()` 每次渲海报现拉接口。"
+    },
+    "portrait": {
+      "frame_at": 272.4,
+      "focus": 0.5,
+      "focus_y": 0.45,
+      "zoom": 1.0
+    },
+    "_portrait_why": "272.4 秒：赛点刚落地，本西奇正脸، 双眼检出，自动候选工具评分 sharp=243.5、motion=16.66、无丢弃理由（`cover_candidates/candidates.json` t=272.4，`why: ''`）。情绪对题——这一屏讲的正是她刚熬过这场三小时二十四分钟的鏖战，赛点落地那一刻的神情比赛后大笑更贴近『鏖战』这个主题。⚠️ 自动候选墙（`cover_candidates/sheet.jpg`）里评分最高的十张全部落在 316~380 秒的场边采访区间（画面里持续举着 WTA Tour 话筒）——按本条不使用采访素材的原则全部排除，这一帧是手动从候选列表里过滤 `t <= 290`（采访开始前）后选出的最佳候选。⚠️ 这一秒场边同时挂着 Rolex 计时牌（3:24），若渲染裁切框恰好带到部分计时牌画面，与钩子『三小时二十四分钟』互相印证，不视为瑕疵；mode=cover 本地预览后如遮挡脸部再调整 focus。",
+    "matchup": [
+      {
+        "name": "汤森德",
+        "name_en": "Taylor Townsend",
+        "country": "USA",
+        "rank": 110
+      },
+      {
+        "name": "本西奇",
+        "name_en": "Belinda Bencic",
+        "country": "SUI",
+        "rank": 14
+      }
+    ]
+  },
+  "segments": [
+    {
+      "start": 267.52,
+      "end": 275.84,
+      "fit": "crop",
+      "_why": "①全片最强的一段：赛点落地，本西奇握拳特写，随即记分条切给汤森德掩面反应，紧接场边 Rolex 计时牌揭晓『3:24』——三小时二十四分钟的鏖战在这一刻被画面自己证实。不配旁白，交给现场声。窗口正好落在一整个镜头 267.52~275.84 之内，不跨切点。"
+    },
+    {
+      "start": 275.84,
+      "end": 281.0,
+      "fit": "crop",
+      "_why": "①延续（仍不配旁白）：本西奇走向网前，与汤森德拥抱。这段庆祝画面本身就是这场硬仗打完之后最直接的情绪——本文件『赢球后多给情绪一点篇幅』的要求，这里给足篇幅、不压缩成一闪而过的一格。窗口在同一个 275.84~288.88 长镜头前段，截止在 281.0 秒，不跨切点。"
+    },
+    {
+      "start": 281.0,
+      "end": 288.88,
+      "fit": "crop",
+      "narration": "十一年前，18岁的本西奇，就是在这里拿下生涯第一座冠军。",
+      "_why": "③落点：接上一段庆祝画面继续（同一个 275.84~288.88 长镜头后段，网前拥抱延续到向观众致意），配上这场胜利背后最重的一条背景——她是这项赛事的老熟人。窗口不跨切点。"
+    },
+    {
+      "start": 0.6,
+      "end": 8.0,
+      "fit": "crop",
+      "narration": "两个抢七，一次决胜盘被追平——本西奇熬了三小时二十四分钟才拿下汤森德。",
+      "_why": "④一句话把这场球的过程和代价说出来。画面是双方入场前的候场，中性 B-roll。窗口在镜头 0~17.56 之内，不跨切点。"
+    },
+    {
+      "start": 8.5,
+      "end": 16.5,
+      "fit": "crop",
+      "narration": "北京时间八月八号凌晨四点前后，多伦多国家银行公开赛女单第三轮。",
+      "_why": "⑤坐标。开球时刻是反推估算（见 `_facts.开球时间`），只说到点、不给分钟精度。窗口仍在镜头 0~17.56 之内，不跨切点。"
+    },
+    {
+      "start": 18.5,
+      "end": 26.5,
+      "fit": "crop",
+      "narration": "十二号种子本西奇，世界第十四；对面的汤森德，非种子，世界第一百一十。",
+      "_why": "⑥种子与排名差距，交代这是一场种子对非种子的较量，为下面『非种子把她拖进两个抢七』铺垫。画面是双方入场、候场，窗口在镜头 17.56~28.16 之内，不跨切点。"
+    },
+    {
+      "start": 118.5,
+      "end": 130.5,
+      "fit": "crop",
+      "narration": "首盘她一度让汤森德打出五比二的领先，又在自己发球局连救三个盘点，还是没能躲过抢七——这一局，被汤森德拿到了。",
+      "_why": "官方赛后稿：`After surrendering an early 5-2 lead...saving three set points on her own serve`，随后仍进入抢七。画面是本西奇/汤森德面对『SET POINT』图形时的紧张对峙与来回。",
+      "crosses_cut": "122.36s、125.2s 是这段紧张对峙过程里的机位切换（正面特写↔宽景来回↔反应镜头），画面内容始终是这一局盘点的推进，没有跳到别的内容。"
+    },
+    {
+      "start": 130.92,
+      "end": 142.5,
+      "fit": "crop",
+      "narration": "非种子的汤森德，抢七七比五拿下首盘——面对世界第十四的种子选手，她没有露怯。",
+      "_why": "官方转播解说原话（画面自证）：『a 73 minutes set goes the way of the underdog』。画面是汤森德抢七拿下后转身庆祝、面向看台的连续反应。",
+      "crosses_cut": "137.6s、140.72s 是汤森德庆祝这段连续画面里的机位切换（正面反应↔背对看台↔转身面向看台），同一个人、同一段情绪，没有换成别的内容。"
+    },
+    {
+      "start": 213.12,
+      "end": 221.28,
+      "fit": "crop",
+      "narration": "次盘一局没破，又进抢七——这一次，本西奇两度面对局点，一旦丢掉比赛就结束。",
+      "_why": "官方赛后稿：次盘 `neither able to secure a service break`，进入抢七；转播画面里『SET POINT』图形与教练席紧绷反应连续出现，这一次局点在本西奇一侧。窗口正好落在一整个镜头 213.12~221.28 之内，不跨切点。"
+    },
+    {
+      "start": 221.28,
+      "end": 236.0,
+      "fit": "crop",
+      "narration": "两个局点，她都扛了下来——本西奇把这个抢七拿了下来，一比一，硬把这场已经打了近两个半小时的比赛，拖进了决胜盘。",
+      "_why": "转播解说原话（画面自证）：『has gone close to being eliminated...but she's stuck to her guns and she has leveled the match』。紧接着解说报出的用时『not far off two and a quarter hours...2 and 1/2 hours nearly already』——即这个抢七结束时，比赛已经打了近两个半小时。窗口在同一个 221.28~238.04 长镜头之内，截止在 236.0 秒，不跨切点。"
+    },
+    {
+      "start": 246.5,
+      "end": 256.5,
+      "fit": "crop",
+      "narration": "决胜盘，她先破发建立三比一，被汤森德追平到四比四，又一次把发球局破了回来。",
+      "_why": "官方赛后稿逐句核实的决胜盘走势：`broke for a 3-1 lead...Townsend leveled at 4-4...broke again in the ninth game`。画面是两盘之间的换边休息——本西奇擦汗、喝水、神情专注，是这场决胜盘真实发生的那个时段的画面，不是替代镜头。窗口在同一个 243.88~258.2 长镜头之内，不跨切点。"
+    },
+    {
+      "start": 289.2,
+      "end": 295.3,
+      "fit": "crop",
+      "narration": "下一轮是从未交手过的伊埃拉——这场硬仗之后，她还剩多少？",
+      "_why": "收尾落在一问上，不停在数据上。官方赛后稿：『The fourth-round clash will be the first meeting between Eala and Bencic at tour level.』画面是本西奇向观众挥手致意、收拾装备准备离场。窗口在镜头 288.88~295.4 之内，不跨切点，且不进入约 299 秒开始的场边采访画面。"
+    }
+  ],
+  "push": {
+    "summary": "本西奇两个抢七熬赢汤森德",
+    "lead": "12号种子本西奇两个抢七都被拖到最后一分：首盘她在自己发球局连救三个盘点仍被汤森德拿下抢七，次盘抢七她自己两度面对局点、救下后扳平，决胜盘先破发又被追平，最终又破发锁定6-7(5) 7-6(4) 6-4，耗时3小时24分钟，挺进多伦多站1/8决赛。十一年前，18岁的本西奇正是在这里拿下生涯第一座冠军；下一轮，等着她的是从未交手过的伊埃拉。",
+    "auto": true
+  }
+}
