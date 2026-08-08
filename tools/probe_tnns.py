@@ -44,18 +44,28 @@ def _dump_objects(body: str, word: str, limit: int = 3) -> None:
     整份 145 KB 打出来没人看得完，只截命中前后几百字又会把对象拦腰砍断——
     id 和它的比分常常分在两头。所以从命中位置向外找配平的花括号，
     打出完整的一个对象。
+
+    ⚠️ **匹配要用压缩分隔符，不能用 `json.dumps` 的默认值。** 真实接口
+    吐的是压缩 JSON（`"p":[` 一个空格都没有），而 `json.dumps(node, …)`
+    不传 `separators` 会在冒号和逗号后面**加一个空格**（`"p": [`）——
+    拿它去找 `"p":[` 永远找不到，2026-08-07 那次实测「命中附近」明明打印出
+    `"p":[{"k":972327,…` 这一整段，`_dump_objects` 却报「0 个」。
+    这跟本仓库反复栽过的「查的东西和跑的东西不是一回事」是同一个形状，
+    只是这次错的是**匹配用的文本**，不是产物本身。
     """
     try:
         data = json.loads(body)
     except Exception:  # noqa: BLE001
         data = None
 
+    def _compact(node) -> str:
+        return json.dumps(node, ensure_ascii=False, separators=(",", ":"))
+
     def walk(node, path=""):
         if isinstance(node, dict):
-            if word in json.dumps(node, ensure_ascii=False):
+            if word in _compact(node):
                 kids = [v for v in node.values()
-                        if isinstance(v, (dict, list))
-                        and word in json.dumps(v, ensure_ascii=False)]
+                        if isinstance(v, (dict, list)) and word in _compact(v)]
                 if not kids:            # 最小的那个含它的对象才有信息量
                     yield path, node
                 for k, v in node.items():
@@ -76,6 +86,53 @@ def _dump_objects(body: str, word: str, limit: int = 3) -> None:
         print("  " + json.dumps(obj, ensure_ascii=False, indent=1)[:2500])
 
 
+def _print_top_keys(body: str) -> None:
+    """先看这坨 JSON 顶层分几块，别一上来就按某个字段的值去挖树.
+
+    `season_id` 那次探测就是教训：`all_matches[].season_id` 里到处都是
+    这个值，minimal-node 逻辑于是每次都停在某一场比赛身上，永远走不到
+    「有没有另一块专门存赛事名」这个问题——顶层键都没数过，就已经在
+    树的深处找答案了。
+    """
+    try:
+        data = json.loads(body)
+    except Exception:  # noqa: BLE001
+        print("  （不是 JSON 对象，--top-keys 用不上）")
+        return
+    if not isinstance(data, dict):
+        print(f"  顶层是 {type(data).__name__}，不是对象")
+        return
+    print(f"  顶层 {len(data)} 个键：")
+    for k, v in data.items():
+        if isinstance(v, dict):
+            shape = f"dict[{len(v)}]" + (f" 键样例={list(v.keys())[:5]}" if v else "")
+        elif isinstance(v, list):
+            shape = f"list[{len(v)}]"
+        else:
+            shape = f"{type(v).__name__}={v!r}"[:80]
+        print(f"    {k!r}: {shape}")
+
+
+def _text_context(html: str, word: str, radius: int = 3000) -> str:
+    """把某个词附近的 HTML 转成大致的可读文字.
+
+    接口的 JSON 里没有赛事名（`--top-keys` 已经把顶层六个键数清楚了，
+    没有一块是通用的"赛事名查找表"），但页面上明摆着能看见"ATP Montreal"
+    这类字样——那多半是前端拿本地的一张静态表渲出来的，不在这次接口响应
+    里。这个函数负责把某个已知词（比如一个球员名）附近的 DOM 转成人读得懂
+    的文字，标签压成 `|` 分隔，看看旁边写着的赛事名是什么。
+    """
+    i = html.find(word)
+    if i < 0:
+        return ""
+    window = html[max(0, i - radius) : i + radius]
+    window = re.sub(r"<script[\s\S]*?</script>", " ", window)
+    window = re.sub(r"<style[\s\S]*?</style>", " ", window)
+    window = re.sub(r"<[^>]+>", " | ", window)
+    window = re.sub(r"\s+", " ", window).strip()
+    return window
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--want", action="append", default=[],
@@ -90,7 +147,21 @@ def main() -> int:
     ap.add_argument("--link", default="",
                     help="把页面里含这个串的 href 全列出来（找详情页的路由）")
     ap.add_argument("--dump", default="",
-                    help="在 fetch 回来的 JSON 里找含这个词的对象并整个打出来")
+                    help="在响应里找含这个词的对象并整个打出来；"
+                         "被动抓到的响应和 --fetch 结果都会扫，不止后者——"
+                         "TNNS 这类站 context.request 会被 403，被动抓包往往是"
+                         "唯一拿得到数据的路，之前只有 --fetch 能 --dump 等于白扫")
+    ap.add_argument("--dump-limit", type=int, default=3,
+                    help="--dump 每个响应最多打印几个匹配对象")
+    ap.add_argument("--top-keys", action="store_true",
+                    help="响应是 JSON 对象时，把顶层的键和每个值的形状打出来"
+                         "（dict 打大小，list 打长度，标量打值）——先看清楚"
+                         "这坨 JSON 一共分几块，再决定往哪块底下挖")
+    ap.add_argument("--html-context", action="store_true",
+                    help="`--want` 命中的词在**页面 HTML**（不是接口响应）里出现时，"
+                         "把它附近的文字（标签压成 | 分隔）打出来——接口的 JSON 里"
+                         "没有赛事名，赛事名很可能只在渲染出来的页面文字里，"
+                         "这个开关就是去页面上找它")
     args = ap.parse_args()
 
     try:
@@ -137,6 +208,9 @@ def main() -> int:
         print(f"  Cloudflare 挑战{'**没过**' if challenged else '过了'}")
         for w in args.want:
             print(f"  页面正文里有 {w!r}：{w in html}")
+            if args.html_context and w in html:
+                print(f"  ---- 附近文字（{w!r}，标签压成 | ）----")
+                print("  " + _text_context(html, w)[:2500])
 
         if args.link:
             # 详情接口的路径猜不出来，但页面里一定有通往这场的链接。
@@ -167,7 +241,7 @@ def main() -> int:
             for w in args.want:
                 print(f"  里面有 {w!r}：{w in body}")
             if args.dump:
-                _dump_objects(body, args.dump)
+                _dump_objects(body, args.dump, limit=args.dump_limit)
         browser.close()
 
     print(f"\n=== 前端打了 {len(seen)} 个像接口的请求 ===")
@@ -181,6 +255,10 @@ def main() -> int:
             k = min((j.find(w) for w in hit if j.find(w) >= 0), default=0)
             print("     ---- 命中附近 ----")
             print("     " + j[max(0, k - 400):k + 900].replace("\n", " ")[:1200])
+        if args.dump and r["body"] and args.dump in r["body"]:
+            _dump_objects(r["body"], args.dump, limit=args.dump_limit)
+        if args.top_keys and r["body"]:
+            _print_top_keys(r["body"])
     if not seen:
         # 空结果先自证是真空：一个接口都没抓到，多半是挑战没过，不是没有接口
         print("一个都没抓到。挑战过了吗？看上面那行——没过就是被挡，不是没有数据")

@@ -36,6 +36,16 @@ on:
         description: "browser 模式：把页面里含这个串的 href 列出来"
         required: false
         default: ""
+      top_keys:
+        description: "browser 模式：先把响应顶层的键和形状打出来，再决定往哪挖"
+        required: false
+        type: boolean
+        default: false
+      html_context:
+        description: "browser 模式：--want 命中的词若出现在页面 HTML 里，把附近的文字打出来"
+        required: false
+        type: boolean
+        default: false
       audio_url:
         description: "audio 模式：验「观众声抬起来能不能标出死球」的片子链接"
         required: false
@@ -154,21 +164,44 @@ jobs:
 
       - name: 探
         if: github.event.inputs.audio_url == ''
+        # ⚠️ **不许再用 `${{ inputs.x }}` 拼进 run 脚本正文。** GitHub Actions
+        # 在 bash 解析之前就把表达式换成裸文本——`dump: '"p":['` 这种带引号的
+        # 值，换出来的脚本源码里引号会和模板本身的引号相撞，拼出一段完全不同
+        # 的 shell 语法（这次实测拼出的 `--dump` 实际值是 `p:[`，比对象里
+        # 真正的 `"p":[` 少了一个引号，于是一次探测全空跑）。而它**不报语法
+        # 错误**——`eval` 把错的那串照样跑了出去，日志看着一切正常。
+        # 正解是走 `env:`：变量的值由 GitHub Actions 安全地设进环境，
+        # bash 用 `"$VAR"` 取值时不会重新解释里面的引号，跟 `YT_COOKIES_TXT`
+        # 那条路是同一个道理。
+        env:
+          P_WANT: ${{ github.event.inputs.want }}
+          P_MODE: ${{ github.event.inputs.mode }}
+          P_URL: ${{ github.event.inputs.url }}
+          P_DUMP: ${{ github.event.inputs.dump }}
+          P_LINK: ${{ github.event.inputs.link }}
+          P_FETCH: ${{ github.event.inputs.fetch }}
+          P_URLS: ${{ github.event.inputs.urls }}
+          P_TOP_KEYS: ${{ github.event.inputs.top_keys }}
+          P_HTML_CONTEXT: ${{ github.event.inputs.html_context }}
         run: |
-          ARGS=""
-          IFS=',' read -ra WORDS <<< "${{ github.event.inputs.want }}"
-          for w in "${WORDS[@]}"; do [ -n "$w" ] && ARGS="$ARGS --want \"$w\""; done
-          if [ "${{ github.event.inputs.mode }}" = "browser" ]; then
-            [ -n "${{ github.event.inputs.url }}" ] && ARGS="$ARGS --url '${{ github.event.inputs.url }}'"
-            [ -n "${{ github.event.inputs.dump }}" ] && ARGS="$ARGS --dump '${{ github.event.inputs.dump }}'"
-            [ -n "${{ github.event.inputs.link }}" ] && ARGS="$ARGS --link '${{ github.event.inputs.link }}'"
-            IFS=',' read -ra FS <<< "${{ github.event.inputs.fetch }}"
-            for f in "${FS[@]}"; do [ -n "$f" ] && ARGS="$ARGS --fetch '$f'"; done
-            eval python tools/probe_tnns.py $ARGS
+          WANT_ARGS=()
+          IFS=',' read -ra WORDS <<< "$P_WANT"
+          for w in "${WORDS[@]}"; do [ -n "$w" ] && WANT_ARGS+=(--want "$w"); done
+          if [ "$P_MODE" = "browser" ]; then
+            EXTRA_ARGS=()
+            [ -n "$P_URL" ] && EXTRA_ARGS+=(--url "$P_URL")
+            [ -n "$P_DUMP" ] && EXTRA_ARGS+=(--dump "$P_DUMP")
+            [ -n "$P_LINK" ] && EXTRA_ARGS+=(--link "$P_LINK")
+            [ "$P_TOP_KEYS" = "true" ] && EXTRA_ARGS+=(--top-keys)
+            [ "$P_HTML_CONTEXT" = "true" ] && EXTRA_ARGS+=(--html-context)
+            IFS=',' read -ra FS <<< "$P_FETCH"
+            for f in "${FS[@]}"; do [ -n "$f" ] && EXTRA_ARGS+=(--fetch "$f"); done
+            python tools/probe_tnns.py "${WANT_ARGS[@]}" "${EXTRA_ARGS[@]}"
           else
-            IFS=',' read -ra URLS <<< "${{ github.event.inputs.urls }}"
-            for u in "${URLS[@]}"; do [ -n "$u" ] && ARGS="$ARGS --url \"$u\""; done
-            eval python tools/probe_blocked_sources.py --save probe_out $ARGS
+            URL_ARGS=()
+            IFS=',' read -ra URLS <<< "$P_URLS"
+            for u in "${URLS[@]}"; do [ -n "$u" ] && URL_ARGS+=(--url "$u"); done
+            python tools/probe_blocked_sources.py --save probe_out "${WANT_ARGS[@]}" "${URL_ARGS[@]}"
           fi
       # 取到的图要能拿回来看——**光有日志里的尺寸没法过那四道闸门**，
       # 精准/在比赛中/冲击力/清晰度全都得打开看。

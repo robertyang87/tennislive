@@ -1466,6 +1466,146 @@ skip 诊断（`output/<date>/yesterday-point/*/skip.json`）写得很清楚：
 凡是验「产物长什么样」的测试，**输入必须是真渲染器的输出**，不能手搓。
 手搓的 fixture 只能验函数的局部行为，验不了它和真模板对不对得上。
 
+### ⭐ ESPN 也会倒——`fetch_day` 只挂了两个源，两个同时被拉黑就彻底没数据
+
+2026-08-07：`source-health` 连续多次全红，`espn.py` 的模块 docstring 里
+明明白白写着"对数据中心 IP 友好（已实测）"，这句话从这天起不成立了——
+ESPN 和 SofaScore**同时**对 GitHub Actions 的机房 IP 返回 403，从
+08-04 19:59 UTC 起连续 100% 失败了 3 天，`sources/__init__.py` 的
+`make_source_chain()` 当时只挂着这两个源，两个一起倒，`fetch_day` 直接
+抛 `SourceError`，日报、内容雷达手动触发时会撞上同一堵墙。
+
+三层教训，都是当场量出来的，别再重新踩一遍：
+
+- **ATP 那半边现在还是死路**，不用再去试。`atptour.com` 全站 403（含
+  GitHub Actions 出口，`probe_blocked_sources.py` 早验过）、
+  `api.protennislive.com` 要 token（这次又实测了一次，401）、Hawkeye 在
+  Cloudflare 人机校验后面——`docs/match-momentum-sources.md` 反复确认过
+  没有免费可达的候选。**两个主源同时倒时，ATP 覆盖没有救**
+- **WTA 那半边接得上，但接口是抓包挖出来的，不是查文档拼的。** 直接猜
+  `?from=&to=` 这类参数会被服务端**整个忽略**，静默回退成从 1960 年开始
+  的全量列表（18738 条，看着像"查到了"其实什么都没过滤）。真正的做法是
+  `tools/probe_tnns.py --url https://www.wtatennis.com/scores`（这个脚本
+  本来是给 TNNS 写的，通用的 Chromium 抓包，指哪打哪）——一次就抓到了
+  WTA 官网自己在用的两个接口，细节和三个真会咬人的坑（`Winner` 字段不是
+  1/2 而是 2/3/4/7 这种没有文档的枚举、`RoundID` 数字段在 96 签联合赛事
+  上和公开轮次名对不上、`MatchState=W` 的不战而胜连 `ResultString` 都是
+  空的）全记在 `src/tennislive/sources/wta_live.py` 的模块 docstring 和
+  各函数注释里，别在这儿抄第二遍
+- **接口能通不等于能猜着用。** `Winner` 字段第一版我按"1/2"猜过，
+  拿真实数据反查（`ResultString` 里"` d `前面是谁" vs 数字码）才发现是
+  2/3/4/7——猜的那版会把"对手退赛"那几场的赢家全部判反。**没有文档的
+  枚举码，宁可从别的字段（这里是赛果文字）交叉验证，也别信数字表面顺序**
+
+现在 `make_source_chain()` 是 `[EspnSource(), SofaScoreSource(),
+WtaLiveSource()]`，第三个只在前两个都失败时才用得上（`fetch_day` 的
+聚合逻辑本来就是"用到成功为止"）。`source-health` 一个字都不用改——它
+只是原样打印 `data.source_status`，新源自动出现在报告里。
+
+### ⭐ 上面那条"ATP 没有免费可达的候选"是查早了——flashscore 一次请求管两个巡回赛
+
+同一轮排查里，账号所有者一句"还有好多网球数据的网站啊"把我推回去继续找。
+上面那条结论查的是 ATP **官方**三条路（atptour.com、protennislive、
+Hawkeye），没查第三方聚合站——而仓库里`tools/match_feed.py`早就在用
+flashscore 查单场逐分/统计，只是没人往上翻过它的"今天全部比赛"接口：
+
+    GET https://global.flashscore.ninja/2/x/feed/f_2_{offset}_0_en_1
+    Header: x-fsign: SW9D1eZo, Referer: https://www.flashscore.com/
+
+`offset` 是相对"今天"的天数偏移（实测：-1=昨天 349 场、0=今天 237 场、
+1=明天 44 场），**一次请求拿到 ATP+WTA+Challenger+ITF 全档次、64 个赛事
+分组**，纯 HTTP 不用浏览器，GitHub Actions 真实出口上 200、无 Cloudflare
+挑战——比 ESPN/SofaScore 都稳，而且同时补上了 ATP 那半边。
+
+三个字段踩过的坑，别在这基础上接着猜：
+
+- **`CA`/`CB`（以为是世界排名）不是排名**。同一天的数据里 `200` 出现
+  59 次、`8` 出现 40 次——世界不可能有 59 个人并列第 200，统计分布直接
+  戳穿了这个假设。`Player.rank` 这条线上一律留空
+- **`AC`/`CR`（一度怀疑是轮次）不是轮次**。拿带真实轮次名（`ER÷Final`/
+  `ER÷Semi-finals`，来自单赛事 `results/` 页）的数据对照，决赛和半决赛
+  的 `AC`/`CR` **都是 `3`**——一个值对应两个轮次，证明无关。这条线上
+  round_name 一律留空，和 WTA 那次 RoundID 的处理是同一个理由
+- **退赛/不战而胜没有专门字段**，`WL` 那个疑似的位置在几百场样本里全是
+  空的。改用网球规则本身反推：**一盘局数都没有**＝不战而胜，
+  **最后一盘打完却不满足"6 局净胜 2"或"7-6/6-7"**＝退赛。这是判据
+  本身给的规则，不是又猜一个不透明的编码
+
+顺带一条反过来的教训：**"排除了官方三条路"不等于"排除了这条数据"**——
+这次和"排除了 A 和 B 不等于就是 C"是同一个形状，只是这次排除的范围本身
+（"ATP 官方"）从一开始就没扣紧"ATP 覆盖"这件事——第三方聚合站从来没被
+排除过，只是没人往那个方向查。
+
+同一轮还顺手查了 `tnnslive.com`：仓库里原来的"够不着"结论是用 Playwright
+的 `context.request`（页面加载完之后另发一次请求）测的，而**用真实浏览器
+正常打开页面、被动抓它自己发出的请求**，Cloudflare Turnstile 直接过了，
+拿到的 JSON 比 flashscore 更丰富（连夺冠集锦的 YouTube 链接都嵌在里面）。
+**当时没有接入**：这条路必须真跑一个 Chromium 才能过挑战，不能像
+flashscore/WTA 那样纯 HTTP 直连——要接的话得在每条调 `fetch_day()` 的
+工作流里都装 Playwright+Chromium，成本比拿到的增量数据大得多，先记录
+做法，不接入。⚠️ **这条结论后来翻了面**，见下面「TNNS 接进来了」那节——
+账号所有者要求它必须接，只是接的方式要绕开"每次都要装 Chromium"这个
+成本，不是简单粗暴地塞进常规链。
+
+现在 `make_source_chain()` 是 `[EspnSource(), SofaScoreSource(),
+FlashscoreSource(), WtaLiveSource()]`——ESPN/SofaScore 是主源，
+`FlashscoreSource()` 是 ATP+WTA 都覆盖的备用，`WtaLiveSource()` 是再往后
+只补 WTA 的最后一道。这四个都失效才会去试 `make_fallback_chain()`
+（`TnnsSource`），见下一节。
+
+### ⭐ TNNS 接进来了——但是单独一档，不是塞进常规链
+
+账号所有者 2026-08-07：「我觉得要把 tnns 做备选，不能把鸡蛋都放在一个
+篮子，还是有必要的，如果前面都失败」。上面那条"成本比收益大，不接入"
+的结论**没有错，但漏了一种接法**：成本大是因为把它当成跟另外四个源
+平权的一员，让"每一次 `fetch_day()`"都背上开 Chromium 的三十秒；而
+账号所有者要的场景只有"前面都失败"这一种，不是"每次都查一遍"。
+
+所以现在是两层：`make_source_chain()`（常规四个源，纯 HTTP，全部尝试）
+全灭之后，`fetch_day()` 才会去试 `make_fallback_chain()`（目前只有
+`TnnsSource`）。绝大多数时候这一层根本不会被调用，成本只在真正的全灭
+场景才会付出。实现在 `src/tennislive/sources/tnns.py`，字段怎么验证的
+全写在那个模块的 docstring 里，这里只记**探测过程中的方法论**，别重复
+抄一遍字段表。
+
+#### `probe_tnns.py` 迭代出的三个通用发现，比 TNNS 本身更值钱
+
+- **`_dump_objects` 拿 `json.dumps(node, ...)` 默认分隔符去匹配压缩
+  JSON，永远匹配不上。** 真实接口是压缩格式（`"p":[`，冒号后没有空格），
+  `json.dumps` 不传 `separators` 会在冒号后加一个空格（`"p": [`）——
+  拿它去找 `"p":[` 报「0 个」，而「命中附近」那段明明打印着它存在。
+  改成 `separators=(",", ":")` 才对得上。**查的东西和跑的东西不是
+  同一份文本**，又是这个仓库反复栽过的那个形状，只是这次错的是"匹配
+  用的副本"，不是产物本身
+- **工作流把 `${{ inputs.x }}` 直接拼进 run 脚本正文，值里带引号就会
+  和模板的引号相撞。** 想探 `"p":[`，GitHub Actions 在 bash 解析之前
+  就把表达式换成裸文本，拼出来的脚本源码里两层引号打架，`eval` 照样
+  把错的那串跑出去，**不报语法错误**。实测：真正传给 `--dump` 的值
+  变成了 `p:[`（少一个引号），一次探测全空跑，和"这个词不存在"一模
+  一样。改法是走 `env:` + bash 数组接参数，让 bash 自己的引号解析
+  接管值的内容，不再让 GitHub Actions 的文本替换和 bash 的语法解析
+  互相踩踏
+- **顶层键没数清楚，就已经在树的深处找答案了。** 搜 `season_id` 时，
+  因为这个值到处都是（每场比赛都有），minimal-node 逻辑每次都停在
+  某一场比赛身上，永远走不到"有没有另一块专门存赛事名"这个问题。
+  加了 `--top-keys` 先把根对象的 6 个键点清楚（`sids`/`all_matches`/
+  `refresh_time`/`tours_following`/`matches_following`/`generated_at`），
+  才看清楚"没有一块是赛事名查找表"这件事——**先看形状，再决定往哪挖**
+
+#### `sid` 是巡回赛，不是常量——靠交叉女子球员姓名验出来的
+
+第一版探测只碰到 ATP 蒙特利尔的比赛（Jodar/Musetti/Nakashima/Droguet/
+Rinderknech/Tiafoe，全部男子），`sid` 全是 `1`，一度以为它是个跟巡回赛
+无关的常量（比如"运动项目=网球"）。**如果真造了 `Match.tour` 却猜错了
+这个字段，整条 TnnsSource 出来的数据会把 WTA 的比赛全部打成 ATP**——
+`Match.tour` 是必填字段，猜错不会报错，只会安静地把性别判反。
+
+补一轮专门搜女子球员名字（Sabalenka/Svitolina/Zhang/Potapova）的探测，
+拿到的比赛全是 `sid=2`，跟男子比赛的 `sid=1` 泾渭分明——这才敢把
+`sid → Tour` 的映射写进代码。**跟"排除了 A 和 B 不等于就是 C"同一个
+教训**：只看到一种性别的样本时，"这个字段恒为某个值"和"这个字段就是
+那个巡回赛的常量"长得一模一样，只有交叉另一种性别的真实数据才能证伪。
+
 ### 查询留着，卡片图和推送不留
 
 账号所有者：「**可以用命令查赛果，但没必要做卡片图然后推送微信了**」。
