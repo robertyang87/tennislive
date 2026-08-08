@@ -1,0 +1,25 @@
+{
+  "slug": "eala-mcnally-toronto-2026-r3-presser",
+  "_note": "⚠️ 半成品：`zh` 等本地 `--stage subs` 切完行再填。\n账号所有者点的题：查 YouTube 直接搜（`ytsearch`，通用网页搜索还没收录，这条发得晚）中的，\n和已经做完推送的场上采访（`eala-mcnally-toronto-2026-r3`）是同一场球的另一面——\n场上那条讲的是「扛过来了 / 菲律宾球迷 / Bad Bunny 演唱会」；这场发布会记者追问的是\n场上没问的：脚踝伤情细节、整个两周的情绪过载、疲惫感、对阵本西奇的展望。\n和 DC Open 决赛那对「捧杯致辞 + 发布会」是同一个形状，姊妹篇不是重复。",
+  "url": "https://www.youtube.com/watch?v=cY9l18tP5Dg",
+  "source_title": "POST-MATCH PRESS CONFERENCE | 3rd ROUND | ALEXANDRA EALA | #NBO26（Tennis Canada and National Bank Open 官方频道）",
+  "_match": "伊埃拉（25 号种子）6-3 5-7 6-4 胜麦克纳莉，2026 多伦多 WTA1000 女单第三轮，耗时 2 小时 39 分，七连胜。\n和已发的场上采访是同一场——round/score/winner 已经用 WTA API（tournamentGroup id 806）核过，见 `eala-mcnally-toronto-2026-r3.json` 的 `_match`，这里不重查。",
+  "start": 4.0,
+  "end": 458.0,
+  "_span_why": "视频总长 462 秒（yt-dlp 报的 duration）。参照 DC Open 决赛发布会那条（同一形状，`start=4.0` 留 1.8 秒余量免得贴着第一个词切），这条先按 4.0–458.0 起草，取真实字幕之后按第一个词/最后一个词的时刻收紧——`--stage subs` 印出来再核。",
+  "column": "赛后开麦",
+  "event": "2026 多伦多 WTA1000 第三轮",
+  "interview_kind": "赛后新闻发布会",
+  "_kind_why": "照实写「新闻发布会」，不写「场上采访」。画面是发布厅、记者轮流提问，和已发的场上采访版式要分得开——这条规矩在演播室、DC Open 决赛发布会那两条上都立过。",
+  "winner": "伊埃拉",
+  "whisper_model": "small.en",
+  "zh": [],
+  "push": {
+    "_why": "占位，等 zh 填完、封面选完再回来写。",
+    "matchup": "伊埃拉 vs 麦克纳莉",
+    "score": "6-3 5-7 6-4",
+    "event": "",
+    "summary": "",
+    "lead": ""
+  }
+}
