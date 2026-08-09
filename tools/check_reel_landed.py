@@ -40,6 +40,18 @@ COVER_SECONDS = 1.2
 SILENCE_FLOOR_DB = -60.0
 
 
+def spec_segments_seconds(spec: dict) -> float:
+    """段落总长按**成片口径**：慢放段（`speed` < 1）按速度换算。
+
+    和 `build_match_reel.seg_seconds` 是同一笔账——这儿抄一份而不 import，
+    是为了让这个检查工具保持纯标准库（它要在只装了 ffprobe 的环境里也能跑）。
+    两边对不上会被 `tests/test_slow_motion.py` 的一致性判据抓住。
+    """
+    return sum(round((float(s["end"]) - float(s["start"]))
+                     / float(s.get("speed") or 1.0), 3)
+               for s in spec["segments"])
+
+
 def sh(*args: str) -> str:
     proc = subprocess.run(list(args), capture_output=True, text=True)
     if proc.returncode:
@@ -212,8 +224,7 @@ def main() -> int:
     v_dur = float(sh("ffprobe", "-v", "error", "-select_streams", "v:0",
                      "-show_entries", "stream=duration",
                      "-of", "csv=p=0", str(film)).strip())
-    segs = sum(round(float(s["end"]) - float(s["start"]), 3)
-               for s in spec["segments"])
+    segs = spec_segments_seconds(spec)
     outro = outro_seconds(film)
     if cover is None:
         # 下面几项（数字静音、纯现场声窗口）要按封面长度往后偏移，而这条片子

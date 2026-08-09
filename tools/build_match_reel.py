@@ -1243,10 +1243,66 @@ class Segment:
     # 这样就不用切画面了」。
     # 格式：`inset: {"image": 路径, "corner": "tl|tr|bl|br", "width": 0.34}`
     inset: dict | None = None
+    # **慢放**：0.5 就是半速。`start`/`end` 仍然是**源片窗口**（挑段、切点、
+    # 死球那套判据一个字不变），这一段在成片里占 `(end-start)/speed` 秒——
+    # 旁白预算、字幕偏移、溶解长度账全按成片时长走（`length` 属性自动换算）。
+    # 现场声跟着 atempo 放慢（保音高），赛点慢放里球声和欢呼是拖长的，不是变调。
+    # ⚠️ 慢放段里 `quote` 的 `at` 是**成片段内秒数**：从 captions.txt 的源片
+    # 时间戳换算时要除以 speed。只认 0.4 ≤ speed < 1，快放的账没算（见
+    # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
+    # 头部账号的赛点/冲击瞬间几乎都上慢放。
+    speed: float = 1.0
 
     @property
     def length(self) -> float:
-        return round(self.end - self.start, 3)
+        return seg_seconds({"start": self.start, "end": self.end,
+                            "speed": self.speed})
+
+
+def seg_seconds(s: dict) -> float:
+    """这一段在**成片里**占几秒——全仓库只有这一个口径。
+
+    `start`/`end` 是源片窗口；写了 `speed`（慢放）的段按速度换算：0.5 倍速的
+    4 秒窗口在成片里占 8 秒。`render.json` 的 `segments_seconds`、离线估的
+    窗口预算、`check_reel_landed` 的段落总长，认的都是这笔账——
+    `tools/check_reel_landed.py` 为了保持零依赖抄了一份同样的公式，
+    两边对不上会被 `test_slow_motion.py` 的一致性判据抓住。
+    """
+    speed = float(s.get("speed") or 1.0)
+    return round((float(s["end"]) - float(s["start"])) / speed, 3)
+
+
+def _seg_speed(s: dict, index: int) -> float:
+    """`speed` 只认慢放（0.4 ≤ speed < 1），默认 1。
+
+    为什么不放开快放：溶解底料和 ghost 检查按「段尾之后 `SEG_FADE` 秒」的
+    **源片**窗口算账，慢放时真实的源片消耗是 `SEG_FADE×speed`，比账面小，
+    检查只会偏保守；**快放时真实消耗比账面大**，`--dry-run` 的 ghost 检查会
+    漏报「溶解底料跨切点」。要开快放，先把那两笔账改成按速度算，别只删这道闸。
+    """
+    raw = s.get("speed")
+    if raw is None:
+        return 1.0
+    try:
+        v = float(raw)
+    except (TypeError, ValueError):
+        raise ReelError(f"第 {index + 1} 段的 speed 不是数字：{raw!r}") from None
+    if v == 1.0:
+        return 1.0
+    if not 0.4 <= v < 1.0:
+        raise ReelError(
+            f"第 {index + 1} 段 speed={v:g}：只认 0.4 ≤ speed < 1（慢放）。\n"
+            "  快放的账还没算（ghost 检查按 SEG_FADE 源片秒算消耗，快放会被"
+            "低估、漏报跨切点）；不变速就删掉这个键。")
+    return v
+
+
+def _atempo(speed: float) -> str:
+    """atempo 只认 [0.5, 100]，0.5 以下拆成两级（各 √speed）。"""
+    if speed >= 0.5:
+        return f"atempo={speed:g}"
+    root = math.sqrt(speed)
+    return f"atempo={root:.6f},atempo={root:.6f}"
 
 
 def _quote_cues(raw: object) -> tuple[str, ...]:
@@ -1426,7 +1482,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         _quote_text(s.get("quote", "")),
                         _quote_cues(s.get("quote", "")),
                         *_seg_voice(s, i),
-                        s.get("inset") or None)
+                        s.get("inset") or None,
+                        _seg_speed(s, i))
                 for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
@@ -1468,7 +1525,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "narration", "quote", "source", "start", "track", "voice"),
+                "narration", "quote", "source", "speed", "start", "track",
+                "voice"),
 }
 
 
@@ -1746,7 +1804,10 @@ def sample_track(coarse: list[tuple[float, float]],
     half = CROP_W / 2
     ct = np.array([t for t, _ in coarse])
     cx_arr = np.array([x for _, x in coarse])
-    frames = np.arange(0.0, seg.length, 1.0 / FPS)
+    # ⚠️ 采样窗口是**源片**的 `end - start`，不是 `seg.length`：sendcmd 排在
+    # setpts 之前，命令时刻走的是源片时间。慢放段拿 `length`（成片时长）来采
+    # 会采过窗口末尾、还发一堆永远不会命中的命令。speed=1 时两者相等。
+    frames = np.arange(0.0, seg.end - seg.start, 1.0 / FPS)
     smooth = np.interp(seg.start + frames, ct, cx_arr)   # 按绝对秒取值
     return [(round(float(t), 3), int(round(float(x) - half)))
             for t, x in zip(frames, smooth)]
@@ -1869,6 +1930,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     #   contain 整幅 16:9 缩到卡宽放中间，上下模糊垫底。**现在不用**——
     #           留着是给「一屏里必须同时看见两个人且他们分得很开」那种画面的
     #           后路（比如颁奖合影），要用就在 spec 里单独写 `"fit": "contain"`。
+    # **慢放在 fps 归一之前**：`setpts=PTS/speed` 把时间轴拉长，`fps` 再按
+    # 目标帧率补帧。放在 fps 之后的话补出来的帧又被拉开，节奏就不是整数倍了。
+    # sendcmd/crop@c 排在它前面，所以跟踪命令的时刻仍然是**源片时间**。
+    sp = "" if seg.speed == 1 else f"setpts=PTS/{seg.speed:g},"
     if seg.fit == "contain":
         # 整幅铺进来会只占屏高的三成（1080 宽的 16:9 才 608 高），上下两条死黑，
         # 「冲击力先折一半」。所以两件事一起做：
@@ -1884,7 +1949,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             f"crop={VIDEO_W}:{VIDEO_H},boxblur=42:2,eq=brightness=-0.20[bgb];"
             f"[fg]crop={keep}:{CROP_H}:{x}:0,"
             f"scale={VIDEO_W}:-2:flags=lanczos[fgs];"
-            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,fps={FPS_EXPR},setsar=1"
+            f"[bgb][fgs]overlay=(W-w)/2:(H-h)/2,{sp}fps={FPS_EXPR},setsar=1"
         )
     else:
         x = int(round(seg.cx * source_w - CROP_W / 2))
@@ -1898,7 +1963,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             chain = (f"sendcmd=f={_escape(cmds)},"
                      f"crop@c={CROP_W}:{CROP_H}:{path[0][1]}:0,"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
-                     f"fps={FPS_EXPR},setsar=1")
+                     f"{sp}fps={FPS_EXPR},setsar=1")
         else:
             # **声明了要摇却没拿到路径**，是退回固定中心——但要出声。
             # 不吭声的话，「跟踪抽帧失败」和「本来就不摇」在日志上一模一样，
@@ -1909,7 +1974,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                       "主体如果在横向移动，这一段的构图要自己看一眼")
             chain = (f"crop={CROP_W}:{CROP_H}:{x}:{CROP_Y},"
                      f"scale={VIDEO_W}:{VIDEO_H}:flags=lanczos,"
-                     f"fps={FPS_EXPR},setsar=1")
+                     f"{sp}fps={FPS_EXPR},setsar=1")
     # 所有 -i 必须排在滤镜/输出选项前面，否则 ffmpeg 会把 -vf 当成下一个输入的
     # 选项直接报错。源片是纯视频轨（人从网盘传来的那份就是），所以补一条静音轨
     # 进去——后面混音那步要求每段都有音频流。
@@ -1950,15 +2015,23 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             "-ss", f"{seg.start:.3f}", "-i", str(source), *inset_in, *extra_in,
             # 时长而不是 `-to`：`-ss` 变成输入选项之后输出时间轴从 0 起算，
             # 再写 `-to seg.end` 会把整段截没。
+            # ⚠️ `-t` 是**输出**时长，而 `seg.length` 是成片时长——慢放段这一行
+            # 一个字不用改：0.5 倍速的 4 秒窗口，`length` 是 8，源片自然只被
+            # 消耗 4+tail×speed 秒。溶解底料（tail）也是输出侧的秒数。
             "-t", f"{seg.length + tail:.3f}",
             # 输出必须打标签并显式 map：`-map 0:v:0` 取的是**原始流**，
             # 会把整个滤镜图绕过去——裁切、缩放、跟踪全不生效，成片直接是 16:9。
+            # 慢放段的音轨同理：裸 map 的原声还是原速，**画面慢了声音没慢**，
+            # 而且不报错——只有按时间片量响度才看得出错位。所以走 atempo。
             "-filter_complex",
             _overlay_chain(
                 (chain + "[base]") if seg.fit == "contain"
-                else f"[0:v]{chain}[base]", ins),
+                else f"[0:v]{chain}[base]", ins)
+            + (f";[0:a:0]{_atempo(seg.speed)}[aout]"
+               if seg.speed != 1 and has_audio else ""),
             "-shortest", "-map", "[vout]",
-            "-map", "0:a:0" if has_audio else f"{null_idx}:a:0",
+            "-map", ("[aout]" if seg.speed != 1 and has_audio
+                     else "0:a:0" if has_audio else f"{null_idx}:a:0"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
             # medium/crf 20 在同一段上 6.2s → 4.0s，重编后的成片肉眼无差。
