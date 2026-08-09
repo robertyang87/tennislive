@@ -1912,45 +1912,6 @@ _CRAMP_RULE_DIAGRAM = """
 </svg>
 """
 
-#: 抽筋还是急性伤分不清的时候，规则把最终判断权交给现场理疗师——这条示意图
-#: 只在没有一张真实、精准、够清晰的阿尔卡拉斯照片时才会被用到（beat③ 的兜底，
-#: 见「封面用真实照片，不要从视频里抽帧」那条：找不到就画，不是省事的默认）。
-_CRAMP_BOUNDARY_DIAGRAM = """
-<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
-  <text x="450" y="46" text-anchor="middle" fill="#e7f3ec"
-        font-size="36" font-weight="800">同一条线，澳网也吵过一次</text>
-  <text x="450" y="90" text-anchor="middle" fill="#9fb4aa"
-        font-size="27" font-weight="700">2026 年 1 月，男单半决赛，第三盘四比四</text>
-
-  <rect x="70" y="130" width="340" height="120" rx="16" fill="rgba(231,243,236,.10)"
-        stroke="rgba(231,243,236,.34)" stroke-width="2"/>
-  <text x="240" y="176" text-anchor="middle" fill="#e7f3ec"
-        font-size="27" font-weight="800">兹维列夫</text>
-  <text x="240" y="216" text-anchor="middle" fill="#e7f3ec"
-        font-size="25" font-weight="700">「那就是抽筋」</text>
-
-  <rect x="490" y="130" width="340" height="120" rx="16" fill="rgba(198,246,90,.14)"
-        stroke="#c6f65a" stroke-width="2"/>
-  <text x="660" y="176" text-anchor="middle" fill="#c6f65a"
-        font-size="27" font-weight="800">阿尔卡拉斯</text>
-  <text x="660" y="216" text-anchor="middle" fill="#c6f65a"
-        font-size="25" font-weight="700">「局部急性痛」</text>
-
-  <line x1="240" y1="250" x2="450" y2="330" stroke="#9fb4aa" stroke-width="3"/>
-  <line x1="660" y1="250" x2="450" y2="330" stroke="#9fb4aa" stroke-width="3"/>
-
-  <rect x="270" y="330" width="360" height="90" rx="14" fill="#c6f65a"/>
-  <text x="450" y="378" text-anchor="middle" fill="#0d2a1c"
-        font-size="27" font-weight="800">现场理疗师认定，最终结果</text>
-
-  <text x="450" y="480" text-anchor="middle" fill="#e7f3ec"
-        font-size="27" font-weight="700">医疗暂停照给，阿尔卡拉斯拿下这场球</text>
-  <text x="450" y="520" text-anchor="middle" fill="#9fb4aa"
-        font-size="25" font-weight="700">兹维列夫赛后仍然对判罚不满</text>
-</svg>
-"""
-
-
 _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     # 账号所有者 2026-08-05：「**要精确且深入浅出让人易懂**」。
     #
@@ -5159,17 +5120,18 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
     "cramp-timeout": (
         (
             "now",
-            "今天",
+            "赛场",
             "五比一、四十比零，腿先抽筋了",
-            "先看今天。蒙特利尔第三轮，勒纳·钱对阵队友保罗。"
+            "先看这一场。蒙特利尔第三轮，勒纳·钱对阵队友保罗。"
             "第二盘五比一，他发球，四十比零——三个赛点，只差一分就能锁定比赛。"
             "就是这一分，他的右腿开始抽筋。"
             "三个赛点，一个都没保住，比分被追到五比二。"
             "缓过来之后，他把保罗的发球局破掉，第四个赛点，六比二拿下比赛。"
             "网前碰面，保罗说，你现在才告诉我这个？"
             "他把裤腿一撩：我是真的，你看这个。",
-            "assets/explainer/cramp-timeout/tien_montreal_2026.jpg",
-            "ATP Tour 官方集锦画面 · 2026 蒙特利尔第三轮，勒纳·钱对阵保罗",
+            "assets/explainer/cramp-timeout/tien_montreal_backhand.jpg",
+            "Minas Panagiotakis/Getty Images · 2026 年 8 月 7 日蒙特利尔第三轮，"
+            "勒纳·钱反手对阵保罗",
             (
                 "5-1 40-0 三个赛点",
                 "三个赛点 一个没保住",
@@ -5199,7 +5161,7 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
         (
             "boundary",
             "谁说了算",
-            "谁说了算？规则交给理疗师",
+            "现场理疗师，一锤定音",
             "这条线不是自己会分的。规则里还有一句——"
             "分不清是急性伤还是抽筋的时候，由现场理疗师认定，理疗师的判断是最终结果。"
             "今年一月的澳网男单半决赛，阿尔卡拉斯对阵兹维列夫。"
@@ -5207,25 +5169,26 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "兹维列夫当场向主裁抗议，认定那就是抽筋，不该给暂停。"
             "阿尔卡拉斯的说法是，那是一处很局部的急性疼痛。"
             "这场球阿尔卡拉斯最终拿下，兹维列夫赛后仍然对这次判罚不满。",
-            "",
-            "示意图 · 网球时差绘制",
+            "assets/explainer/cramp-timeout/alcaraz_ao2026_treatment.jpg",
+            "James D. Morgan/Getty Images · 2026 年 1 月 30 日澳网男单半决赛，"
+            "阿尔卡拉斯接受场边医疗处理",
             (
                 "现场理疗师 一锤定音",
                 "阿尔卡拉斯 vs 兹维列夫",
                 "2026 澳网男单半决赛",
             ),
-            _CRAMP_BOUNDARY_DIAGRAM,
         ),
         (
             "today",
-            "回到今天",
-            "他没等规则给答案",
-            "回到今天这场比赛。勒纳·钱没有申请医疗暂停，也没有换边治疗的记录——"
+            "回到这场",
+            "勒纳·钱没等规则给答案",
+            "回到这场比赛。勒纳·钱没有申请医疗暂停，也没有换边治疗的记录——"
             "网前那句玩笑，是这次抽筋唯一留下的痕迹。"
             "三个赛点丢在抽筋刚开始的那一局，他没有靠规则找补，"
             "靠的是下一局，把保罗的发球局破掉，自己把机会赢了回来。",
-            "assets/explainer/cramp-timeout/tien_montreal_2026.jpg",
-            "ATP Tour 官方集锦画面 · 2026 蒙特利尔第三轮，勒纳·钱对阵保罗",
+            "assets/explainer/cramp-timeout/tien_montreal_forehand.jpg",
+            "Minas Panagiotakis/Getty Images · 2026 年 8 月 7 日蒙特利尔第三轮，"
+            "勒纳·钱正手对阵保罗",
             (
                 "没申请暂停 没有治疗记录",
                 "丢掉的赛点 靠破发赢回来",
@@ -6019,8 +5982,14 @@ _OPENINGS: dict[str, dict] = {
         "narration": "抽筋，为什么叫不来暂停？"
         "三个赛点，勒纳·钱替这条规则做了一次现场示范。",
         "gloss": "MTO = Medical Time-Out",
-        "image": "assets/explainer/cramp-timeout/tien_montreal_2026.jpg",
-        "credit": "ATP Tour 官方集锦画面 · 2026 蒙特利尔第三轮，勒纳·钱对阵保罗",
+        # 这场球真实、精准的实拍（Getty）只有 612×408 的免费预览，铺满
+        # 1080×1440 的封面要放大 2.65 倍以上，撞上 `test_封面图不许被放大`
+        # 的 1.00x 底线——理由和取舍写在 assets/explainer/cramp-timeout/
+        # credits.json 的 `_cover_why` 里。封面改用示意图，正好是它自己
+        # 提的那个问题的答案（beat②「医疗暂停认哪几种情况」）；三张实拍
+        # 全部放进正文屏，那儿没有铺满整卡的分辨率门槛。
+        "diagram": _CRAMP_RULE_DIAGRAM,
+        "credit": "示意图 · 网球时差绘制",
     },
 }
 
@@ -6059,7 +6028,15 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     """The cover card: the question, said out loud, before any explaining."""
     spec = _OPENINGS.get(story.slug) or {}
     question = spec.get("question") or f"{story.title}？"
-    image = spec.get("image") or (beats[0].image if beats else "")
+    # spec 显式给了 diagram，就是封面故意不用照片——即便 beat①自己有真实照片
+    # （比如那张照片够精准但分辨率撑不满整张封面卡，正文屏用它、封面另画一张）。
+    # `cramp-timeout` 就是这样：beat①有 Getty 实拍，但只有 612×408 的免费预览，
+    # 铺满 1080×1440 的封面会放大 2.65 倍以上，撞上 `test_封面图不许被放大`
+    # 的底线；封面改画示意图，正文屏继续用那张实拍。
+    forced_diagram = spec.get("diagram")
+    image = "" if forced_diagram else (
+        spec.get("image") or (beats[0].image if beats else "")
+    )
     # ⚠️ **有的选题一张诚实的封面照片都没有。** 这里原来把 `diagram` 写死成
     # 空串，也就是默认「每条片子至少有一张照片」——而 `equal-pay` 讲的是一张
     # 奖金表，任何一张球员实拍都会把「第一轮出局的那些人」缩回到某一张脸上。
@@ -6068,7 +6045,7 @@ def _opening_segment(story, beats: list[ExplainerSegment]) -> ExplainerSegment:
     #
     # **只有在没有照片时才走这条路**：有照片还叠一张示意图，等于一屏两个主体。
     diagram = "" if image else (
-        spec.get("diagram") or (beats[0].diagram if beats else "")
+        forced_diagram or (beats[0].diagram if beats else "")
     )
     # Usually the cover reuses a beat's photo and can borrow its credit line.
     # When it has one of its own, the opening has to carry the provenance
