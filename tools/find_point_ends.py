@@ -77,6 +77,25 @@ def point_ends(rows: list[dict], change: float, dark: float,
     return merged
 
 
+def suggest_cut(want: float, ends: list[float], tail: float, climax_tail: float,
+                climax_wants: set[float]) -> dict | None:
+    """给一个想要的段尾秒数，吸附到它之后最近的死球时刻，加上对应的尾巴。
+
+    返回 None 表示这个秒数之后没找到死球——保持原样，不给一个凑出来的数。
+    `climax_wants` 里的 `want`（浮点数按原始输入的字符串精确匹配，不做容差
+    比较——转折点是人显式挑出来的那几个 `--ends` 值，不该靠"差不多"去猜）
+    用 `climax_tail`，其余用 `tail`。
+    """
+    after = [t for t in ends if t >= want - 0.4]
+    if not after:
+        return None
+    is_climax = want in climax_wants
+    tail_used = climax_tail if is_climax else tail
+    dead = after[0]
+    return {"want": want, "dead": dead, "tail": tail_used,
+            "cut_to": round(dead + tail_used, 2), "climax": is_climax}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--video", required=True, type=Path)
@@ -88,7 +107,15 @@ def main() -> int:
     ap.add_argument("--merge", type=float, default=MERGE)
     ap.add_argument("--ends", default="", help="逗号分隔的段尾秒数，逐个吸附到死球后")
     ap.add_argument("--tail", type=float, default=1.2,
-                    help="死球之后再留多久（看得到结果和反应）")
+                    help="死球之后再留多久（看得到结果和反应）——普通换段用这个")
+    ap.add_argument("--climax-tail", type=float, default=2.2,
+                    help="转折点/beat 收尾专用尾巴，默认 2.2s（2.0~2.5s 区间取中）。"
+                         "账号所有者 2026-08-08：「赢球后多给情绪一点篇幅」——这条"
+                         "规矩当时只给了方向、没有数字，2.2s 是它第一次变成可执行"
+                         "参数。比 --tail 多留近一倍，给赢球/破发保住那一刻多留一口气")
+    ap.add_argument("--climax", default="",
+                    help="--ends 里哪几个是转折点/beat 收尾，逗号分隔的秒数子集，"
+                         "这几个用 --climax-tail 不用 --tail；不传就全部按 --tail 算")
     args = ap.parse_args()
 
     try:
@@ -108,14 +135,16 @@ def main() -> int:
     gone = [r["t"] for r in rows if r["moved"] >= args.change and r["dark"] < args.dark]
     print(f"  丢弃 {len(gone)} 次「变了但记分条不在」（镜头切走，不是死球）")
 
+    climax_wants = {float(s) for s in args.climax.split(",") if s.strip()}
     for raw in [s for s in args.ends.split(",") if s.strip()]:
         want = float(raw)
-        after = [t for t in ends if t >= want - 0.4]
-        if not after:
+        got = suggest_cut(want, ends, args.tail, args.climax_tail, climax_wants)
+        if got is None:
             print(f"  段尾 {want:>6.1f}s → 之后没有死球，保持原样")
             continue
-        print(f"  段尾 {want:>6.1f}s → 死球 {after[0]:.1f}s，建议切到 "
-              f"{after[0] + args.tail:.1f}s（+{after[0] + args.tail - want:.1f}s）")
+        tag = "（转折点，用 --climax-tail）" if got["climax"] else ""
+        print(f"  段尾 {want:>6.1f}s → 死球 {got['dead']:.1f}s，建议切到 "
+              f"{got['cut_to']:.1f}s（+{got['cut_to'] - want:.1f}s）{tag}")
     return 0
 
 
