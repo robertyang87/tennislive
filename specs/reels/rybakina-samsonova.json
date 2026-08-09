@@ -1,0 +1,169 @@
+{
+  "slug": "rybakina-samsonova",
+  "source_url": "https://www.youtube.com/watch?v=qknLJBKlcd8",
+  "_source": "WTA官方单场集锦《Elena Rybakina vs. Liudmila Samsonova | 2026 Toronto Round of 16 | WTA Match Highlights》，1920×1080 @ 25fps，432.4秒。集锦不是纯比赛画面——432.4秒远超『纯集锦定长310秒』的判据，多出的部分是完整的场边采访（captions.txt显示从298.24秒起接上采访对话，一直到420秒左右，contact_05/contact_06两张缩略图墙直接确认这一区间画面持续是她本人对着WTA Tour话筒说话）。\n\n画面自证：记分条常驻双方姓名（L. SAMSONOVA / E. RYBAKINA [2]）；160.5~176.5秒换边图形显示第一盘终场比分『LUDMILA SAMSONOVA 4 / ELENA RYBAKINA 6』；218.5~224.5秒换边图形显示『LUDMILA SAMSONOVA 4 6 / ELENA RYBAKINA 6 4』（确认次盘萨姆索诺娃6-4扳平）；258.5~266.5秒记分条持续显示『MATCH POINT』；采访画面里她胸前『IZI』赞助商标志、白色遮阳帽、Yonex球拍全场一致，与庆祝镜头服装一致，交叉确认庆祝/握手/采访三段画面是同一人。\n\n人物识别：莱巴金娜全场白色/浅绿『IZI』连衣裙+白色遮阳帽+红白Yonex球拍；萨姆索诺娃全场湖蓝色连衣裙。⚠️两人服装颜色区分度较高，识别风险低于上一条（斯维托丽娜/阿尼西莫娃两人都穿浅色）；仍逐帧核对记分条高亮姓名与服装一致性，封面portrait只用整数.5秒的直接采样帧（268.5秒），不使用candidates.json插值坐标——这是alexandrova-sabalenka那次教训之后定的规矩。",
+  "_column": "赛场之上。2号种子莱巴金娜苦战三盘、耗时2小时49分钟淘汰萨姆索诺娃，晋级1/4决赛——三盘比分惊人地一致，全部6-4（6-4 4-6 6-4）。她先胜一盘，被对手在次盘扳平拖入决胜盘，决胜盘重新掌控发球局锁定胜利。她赛后在场边采访里说，比赛中途换了球拍，是因为握把出了问题，风也搅乱了发球节奏；虽然很累，但很高兴能挺进下一轮。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 1/8决赛",
+    "line2": "莱巴金娜 6-4 4-6 6-4 萨姆索诺娃"
+  },
+  "_topbar_why": "line2 与 cover.winner/result/matchup 一致，赢家在前。WTA API ResultString 原文：`[2]E. Rybakina d L. Samsonova 6-4,4-6,6-4`——赢家 Rybakina 写在前面，逐字抄写。换边图形（160.5~176.5秒、218.5~224.5秒）与终场记分板均独立确认同一比分序列，两重来源一致。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "先赢一盘又被扳平，她凭什么又把决胜盘拿了回来？",
+    "thesis": "2号种子莱巴金娜先胜一盘，被萨姆索诺娃在次盘扳平，决胜盘她重新掌控发球局锁定胜利——三盘比分惊人地一致，全部6-4，耗时2小时49分钟。她赛后在场边采访里坦言，比赛中途换了球拍，是因为握把出了问题，风也搅乱了发球节奏；虽然很累，但很高兴能挺进下一轮。",
+    "beats": [
+      "首盘她拿下六比四，开局阶段一度错过好几个破发机会，最终还是稳住拿下了这一盘。",
+      "次盘萨姆索诺娃顶住压力，把比分追到四比六，将比赛拖进了决胜盘。",
+      "决胜盘她重新把握发球权，同样六比四锁定胜利——三盘比分完全一致。",
+      "赛后她说，中途换了球拍，是因为握把出了问题，风也搅乱了发球节奏。",
+      "她说自己很累，但很高兴能挺进下一轮。"
+    ],
+    "human_context": {
+      "angle": "数据接口只给出比分和技术统计，真正解释『这场仗为什么这么难打』的，是她自己在场边采访里说的话——中途换拍不是常规调整，是握把真的出了问题；风也让她找不到发球节奏。这类过程细节，只有原声采访才有，本条的官方集锦本身就带着完整的场边采访，不用另找编辑稿。",
+      "facts": [
+        "她在场边采访原声（源片310.00~317.52秒）：『I knew it's going to be a very tough match. It's always a battle against Luda.』（我知道这会是一场非常艰难的比赛，跟柳德米拉交手永远是一场恶战——Luda是萨姆索诺娃名字Liudmila的昵称，采访者此前称呼她本人也用了这个昵称）。",
+        "她在场边采访原声（源片348.32~363.04秒）：『I just had some issue with the grip actually...it became a little bit windy with these balls, it affects a lot.』（其实是握把出了点问题……风也变大了，这对我影响很大）。",
+        "采访者在场边直接对她说『Third straight meeting with Ludma. You needed three sets to get through.』（这已经是你们连续第三次交手，又打满了三盘），她没有否认，回答『yeah...it's always a battle against Luda』——这是原声视频里的直接对话，⚠️未找到独立文字稿佐证『连续第三次』这个具体次数，本条片子最终没有采用这句话作为叙事内容，只作为背景记录。",
+        "采访者还提到『you're into your fifth WTA 1000 level quarterfinal here...of the season』（这是你本赛季第5次打进WTA1000级别八强），她的回应是『I won't say that I was really consistent...but I think we are doing a good job with the team』——同样未找到独立文字稿佐证这个具体次数，同样没有采用进叙事。"
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=qknLJBKlcd8"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "莱巴金娜[2] 6-4 4-6 6-4 胜萨姆索诺娃。WTA API `tournaments/806/2026/matches`（MatchID LS015）ResultString 原文：`[2]E. Rybakina d L. Samsonova 6-4,4-6,6-4`，直接查询确认；换边图形（160.5~176.5秒、218.5~224.5秒）画面独立确认同一比分序列，两重来源一致。",
+    "赛事": "多伦多 National Bank Open presented by Rogers（WTA1000）女单1/8决赛（Round of 16），CourtID 1（Centre Court），WTA API直接查询确认。",
+    "用时": "2小时49分19秒。WTA API `MatchTimeTotal: \"02:49:19\"`（MatchID LS015）。",
+    "开球时间": "WTA API `MatchTimeStamp`（MatchID LS015）= 2026-08-09T16:16:55.137Z。北京时间＝UTC+8：16:16:55+8h=次日00:16:55，即北京时间8月10日凌晨0点16分。",
+    "种子与排名": "莱巴金娜：2号种子（哈萨克斯坦KAZ，WTA球员API确认球员ID 324166，出生日期1999-06-17，本场比赛时27岁）。萨姆索诺娃：无种子（俄罗斯RUS，WTA球员API确认球员ID 322222，出生日期1998-11-11，本场比赛时27岁，11月11日满28岁）。⚠️精确的实时世界排名未采用：WTA官网`rankings`相关接口在本环境反复404，无法直接核实『比赛当天』的精确名次；2026-08-01 WTA官网文章《What's at stake: How Rybakina can overtake Sabalenka for No. 1》提到她与萨巴伦卡的积分差是7月底/8月初的快照，不代表8月9日当天的精确名次，且该文讨论的是积分差不是名次本身。cover.matchup的rank字段显式写null（查过、但没有两个独立且够新的信源，不是没查）。种子号（2号）不等同世界排名，未拿种子号顶替rank字段。",
+    "比赛走势": "第一盘：莱巴金娜6-4拿下。画面证据：40.5~78.5秒区间萨姆索诺娃发球1-0领先时连续面对『BREAK POINT』『BREAK POINT #3』（莱巴金娜多次破发机会但被救掉），随后比分持续推进；160.5~176.5秒换边图形确认终场『SAMSONOVA 4 / RYBAKINA 6』。第二盘：萨姆索诺娃4-6扳回一盘。画面证据：200.0~209.88秒区间记分条显示『SET POINT #2』（萨姆索诺娃发球拿到盘点），218.5~224.5秒换边图形确认『SAMSONOVA 4 6 / RYBAKINA 6 4』。第三盘：莱巴金娜6-4锁定胜利。258.5~266.5秒记分条持续显示『MATCH POINT』；268.5~274.5秒庆祝反应；276.5~286.5秒网前握手。",
+    "官方技术统计": "WTA API `tournaments/806/2026/matches/LS015/stats?setnum=0`（全场汇总）：ACE 莱巴金娜11、萨姆索诺娃1；双误 莱巴金娜6、萨姆索诺娃9；全场总得分 莱巴金娜112、萨姆索诺娃105（217分里只差7分，全场比分紧咬，与三盘均为6-4的表面『稳定』形成反差——分差很小但盘分整齐）。",
+    "采访要点": "见 editorial.human_context.facts，两条原声引语（握把出问题、风力影响）直接取自集锦自带的场边采访（310.00~317.52秒、348.32~363.04秒），逐句核对英文听写与画面口型一致。",
+    "未采用的背景（交手历史/本赛季八强次数）": "采访者在场边两次提到具体次数——『连续第三次交手』『本赛季第5次WTA1000八强』——她均未否认，但仓库规矩要求全称/计数类断言有两个独立信源，这两条只有『她在采访里没反驳』这一个来源，未找到WTA官网H2H页面（`api.wtatennis.com`相关H2H接口反复404、WTA官网H2H页面为客户端JS渲染无法直接抓取文字）或其他独立信源核实具体次数，因此narration和beats均未采用这两个具体数字，只在human_context.facts里如实记录『采访者说了什么、她没有否认』，不代表这两个数字已经过独立核实。"
+  },
+  "_editing_why": "**开场两格按定死的顺序**（爆点→落点→坐标）：①全片最强的一段——记分条烧出『MATCH POINT』，赛点悬念不配旁白，交给现场声（窗口257.6~262.56跨过scene_cuts的259.08，两侧都是赛点瞬间的连续庆祝反应，只是转播切换机位，不是换人也不是换分）；②延续（仍不配旁白）：反应特写，单一镜头不跨切点；③落点：紧接一句这场胜利的反差——先赢一盘又被扳平，决胜盘才拿下来。\n\n**中段按坐标→首盘→次盘转折→两段真实采访引语排列**：④坐标（开球时刻+赛事+轮次）→⑤过程·首盘（六比四但开局并不轻松）→⑥过程·次盘转折（萨姆索诺娃扳平，窗口200.0~209.88跨过scene_cuts的203.2，两侧都是萨姆索诺娃拿下盘点这同一个过程的发球/回合机位切换，不是换人也不是换分）→⑦quote原声『这总是一场恶战』→⑧quote原声『握把出了问题，风也影响很大』。\n\n**收尾**落在她自己『很累但很高兴』这句话之后的一个前瞻问题上，不停在数据上。\n\n⚠️ **人物识别核对过**：两人服装颜色区分明显（莱巴金娜白/浅绿，萨姆索诺娃湖蓝），风险低于上一条斯维托丽娜/阿尼西莫娃那次，但仍逐帧核对了记分条高亮姓名与庆祝/握手/采访三段画面服装一致性。封面portrait只用整数.5秒的contact sheet直接采样帧（268.5秒），不使用candidates.json插值坐标——这是alexandrova-sabalenka那次教训之后定的规矩。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "莱巴金娜",
+    "hook": "先赢一盘又被扳平\n她还是把决胜盘拿了下来",
+    "_hook_why": "process not identity：不复述排名种子（已在赛果行/matchup），讲的是这场胜利的情绪起伏——先赢、被扳平、再赢回来，而不是单纯罗列『三盘都是6比4』这个静态统计。两行8字/11字，在近期几条同一预算内。",
+    "topic": "多伦多WTA1000 · 女单1/8决赛",
+    "scrim": "clear",
+    "_scrim_why": "按账号所有者2026-08-09『封面一定要吸引人，同时最好不要要全透明出现背景图，前景不要遮盖背景图』的要求：只关掉画面正中的radial暗角，让实拍背景保持鲜明，不被洗淡。",
+    "winner": "莱巴金娜",
+    "result": "6-4 4-6 6-4",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS015",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/806/montreal/2026/scores/LS015"
+      },
+      "_court_why": "CourtID 1（Centre Court），WTA API直接查询确认。",
+      "_duration_why": "`MatchTimeTotal: \"02:49:19\"` → 板上印 `2:49`（四舍五入）。不手填，`_fetch_match_duration()` 每次渲海报现拉接口。"
+    },
+    "portrait": {
+      "frame_at": 268.5,
+      "focus": 0.582,
+      "focus_y": 0.376,
+      "zoom": 1.0
+    },
+    "_portrait_why": "⚠️ **只用contact sheet直接采样、肉眼核对过的整数.5秒时间点，不使用candidates.json插值出的坐标**（alexandrova-sabalenka那次插值取到287.6秒实际是另一个人）。268.5秒是庆祝反应的清晰站姿帧：contact_04.jpg该格记分条仍显示『MATCH POINT / SAMSONOVA / RYBAKINA』确认人物身份，画面里白色遮阳帽、『IZI』胸前标志、Yonex球拍与全场庆祝镜头服装一致，正脸朝向画面右侧、表情舒展。\n\n用简易肤色检测（RGB阈值，限定在cell上55%高度避开手臂/肩膀）在该帧cell（365×206缩略格）里量出脸部区域：x=177~248，y=43~112，中心(212.5, 77.5)。cell本身是整帧1920×1080等比缩放（cell宽高比365:206≈1.772，与16:9的1.778一致，确认无裁切），所以cell内的分数坐标直接等于原始帧的分数坐标：focus=212.5/365≈0.582，focus_y=77.5/206≈0.376。脸部宽度约71px（cell坐标）→原始帧约373px，占solo版式裁切窗口811px（42.2%画面宽度）的约46%，头肩之外仍留有球场背景，构图与svitolina-anisimova那次成功案例（46.7%）接近。`zoom`维持1.0（不做超出cover-fit的裁切）。",
+    "matchup": [
+      {
+        "name": "莱巴金娜",
+        "name_en": "Elena Rybakina",
+        "country": "KAZ",
+        "rank": null
+      },
+      {
+        "name": "萨姆索诺娃",
+        "name_en": "Liudmila Samsonova",
+        "country": "RUS",
+        "rank": null
+      }
+    ],
+    "_matchup_rank_why": "两人的rank都显式写null——查过，但没有两个独立且够新（贴近8月9日比赛当天）的信源：WTA官网`rankings`相关API接口在本环境反复404；2026-08-01的WTA官网文章讨论的是莱巴金娜与萨巴伦卡的积分差（494分），是7月底的快照且谈的是积分差不是名次数字本身。种子号（2号/无种子）已经在topbar/赛果行等处使用，种子号和世界排名是两个不同的数，不能混用，因此没有拿种子号顶替rank字段。"
+  },
+  "segments": [
+    {
+      "start": 257.6,
+      "end": 262.56,
+      "fit": "crop",
+      "crosses_cut": "跨 259.08s 那一刀是赛点瞬间的转播镜头切换（记分条从『MATCH POINT』到反应特写），两侧都是同一时刻的连续庆祝画面，不是换人也不是换分。",
+      "_why": "①全片最强的一段：记分条烧出『MATCH POINT』。不配旁白，交给现场声。"
+    },
+    {
+      "start": 262.56,
+      "end": 268.12,
+      "fit": "crop",
+      "_why": "②延续（仍不配旁白）：反应特写。窗口被scene_cuts的262.56与268.12夹住，单一镜头不跨切点。"
+    },
+    {
+      "start": 268.12,
+      "end": 274.44,
+      "fit": "crop",
+      "narration": "先赢一盘又被扳平，她还是把决胜盘拿了下来。",
+      "_why": "③落点：这场胜利最硬的反差。窗口被scene_cuts的268.12与274.44夹住，不跨切点，也是封面portrait取的268.5秒所在的窗口。"
+    },
+    {
+      "start": 4.8,
+      "end": 12.36,
+      "fit": "crop",
+      "narration": "北京时间八月十日凌晨零点十六分，多伦多国家银行公开赛女单1/8决赛。",
+      "_why": "④坐标。开球时刻见 `_facts.开球时间`：WTA API MatchTimeStamp（16:16:55 UTC）换算北京时间8月10日凌晨0:16。窗口被scene_cuts的4.8与12.36夹住，不跨切点。"
+    },
+    {
+      "start": 134.5,
+      "end": 144.5,
+      "fit": "crop",
+      "narration": "首盘她拿下六比四，开局阶段一度错过好几个破发机会，最终还是稳住拿下了这一盘。",
+      "_why": "⑤过程·首盘。画面证据见`_facts.比赛走势`：开局莱巴金娜连续面对萨姆索诺娃救掉的破发点（『BREAK POINT #3』），最终仍6-4拿下首盘。窗口在scene_cuts的118.28与146.8夹住的这一整段连续画面之内（含134.5~144.5秒的『SET POINT』镜头），不跨切点。"
+    },
+    {
+      "start": 200.0,
+      "end": 209.88,
+      "fit": "crop",
+      "crosses_cut": "跨 203.2s 那一刀是萨姆索诺娃拿下第二盘盘点这一分的发球/回合机位切换，两侧都是同一分的连续画面，不是换人也不是换分。",
+      "narration": "次盘萨姆索诺娃顶住压力，把比分追到四比六，将比赛拖进了决胜盘。",
+      "_why": "⑥过程·次盘转折。画面证据：200.5~208.5秒记分条持续显示『SET POINT #2』，随后218.5~224.5秒换边图形确认『SAMSONOVA 4 6 / RYBAKINA 6 4』。"
+    },
+    {
+      "start": 310.0,
+      "end": 317.52,
+      "fit": "crop",
+      "quote": [
+        {"at": 0.0, "text": "I knew it's going to be a very tough match.\n我知道这会是一场非常艰难的比赛"},
+        {"at": 4.16, "text": "It's always a battle against Luda.\n跟柳德米拉交手，永远是一场恶战"}
+      ],
+      "_why": "⑦场边采访原声，逐字取自captions.txt（310.00~317.52秒），画面来自集锦自带的场边采访环节（单一连续镜头，298.24~422.32秒之间scene_cuts无切点）。"
+    },
+    {
+      "start": 348.32,
+      "end": 363.04,
+      "fit": "crop",
+      "quote": [
+        {"at": 0.0, "text": "I just had some issue with the grip actually.\n其实是握把出了点问题"},
+        {"at": 10.0, "text": "It became a little bit windy — it affects a lot.\n风也变大了，这对我影响很大"}
+      ],
+      "_why": "⑧场边采访原声，逐字取自captions.txt（348.32~363.04秒），解释了她中途换拍的真实原因——这类过程细节只有原声采访才有。同一段连续镜头，不跨切点。"
+    },
+    {
+      "start": 412.16,
+      "end": 418.32,
+      "fit": "crop",
+      "narration": "她说自己很累，但很高兴能挺进下一轮。1/4决赛，她还剩多少力气？",
+      "_why": "⑨收尾落在她自己『很累但很高兴』这句话之后的一个前瞻问题上，不停在数据上。窗口在298.24~422.32这一整段场边采访连续镜头之内，不跨切点。"
+    }
+  ],
+  "push": {
+    "summary": "莱巴金娜苦战三盘晋级",
+    "lead": "2号种子莱巴金娜苦战三盘、耗时2小时49分钟淘汰萨姆索诺娃，晋级多伦多1/4决赛——三盘比分惊人地一致，全部6比4。她先胜一盘，被对手在次盘扳平拖入决胜盘，决胜盘重新掌控发球局锁定胜利。她赛后在场边采访里说，比赛中途换了球拍，是因为握把出了问题，风也搅乱了发球节奏；虽然很累，但很高兴能挺进下一轮。",
+    "auto": true
+  }
+}
