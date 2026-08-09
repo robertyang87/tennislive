@@ -132,31 +132,30 @@ def break_point_conversion(idx: dict, home: str, away: str) -> list[dict]:
 
 def longest_streaks(games: list[dict], home: str, away: str,
                      threshold: int = STREAK_THRESHOLD) -> list[dict]:
-    """从逐局 server/winner 序列数最长连续保发/被破段。"""
-    best: dict[tuple[str, str], int] = {}
-    cur_key, cur_len = None, 0
+    """最长连续保发 / 连续被破。
 
-    def _flush():
-        if cur_key is not None and cur_len > best.get(cur_key, 0):
-            best[cur_key] = cur_len
+    ⚠️ **要先筛出「这个人的发球局」再数连续，不能直接数逐局列表里的相邻项。**
+    网球轮流发球，同一个人的发球局在列表里天然隔一局出现一次——直接数相邻项，
+    「连续三局保发」这个形状在真实数据里**根本不可能出现**，函数会恒返回空。
 
-    for g in games:
-        held = g.get("server") == g.get("winner")
-        key = (g.get("winner"), "hold" if held else "break")
-        if key == cur_key:
-            cur_len += 1
-        else:
-            _flush()
-            cur_key, cur_len = key, 1
-    _flush()
-
+    第一版就是那么写的：拿真实比赛（QsT5YnEa，31 局）跑出来 **0 条候选**，
+    而 0 条和「这场确实没有连续保发」长得一模一样。更糟的是配套那条测试
+    **手搓了一个同一人连发三局的场景**，于是它绿着证明了一个不可能的世界——
+    「判据喂的是假产物」。现在的测试拿真实逐局数据的交替形状喂。
+    """
     out = []
-    for (who, kind), n in best.items():
-        if who is None or n < threshold:
+    for who, name in (("home", home), ("away", away)):
+        serves = [g for g in games if g.get("server") == who]
+        if not serves:
             continue
-        name = home if who == "home" else away
-        label = "连续保发" if kind == "hold" else "连续破发"
-        out.append({"label": f"{name} {label}", "detail": f"{n} 局"})
+        for label, want_hold in (("连续保发", True), ("连续被破", False)):
+            best = run = 0
+            for g in serves:
+                held = g.get("winner") == who
+                run = run + 1 if held == want_hold else 0
+                best = max(best, run)
+            if best >= threshold:
+                out.append({"label": f"{name} {label}", "detail": f"{best} 个发球局"})
     return out
 
 

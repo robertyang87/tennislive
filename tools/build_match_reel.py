@@ -4086,13 +4086,41 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     return lines  # type: ignore[return-value]
 
 
+#: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
+#: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
+#: 肉眼几乎看不出来。
+TOPBAR_BODY_COLOUR = "&H00DBE2D5"
+
 #: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。跟比分板
-#: 同一套"赢盘绿/输盘灰"配色（`versus_poster.py` 的 `.setwin`/`.setlose`，
-#: `#c6f65a`/`#93a79c`），HTML/CSS 和 ASS 是两套不共享代码的渲染引擎，数值
-#: 抄一份过来——换配色时两处都要改，见 `test_顶栏配色和比分板同一套数值`。
+#: 同一套"赢盘绿/输盘灰/连字符压暗"配色（`versus_poster.py` 的 `.setwin`/
+#: `.setlose`/`.setdash`，`#c6f65a`/`#93a79c`/`#93a79c`），HTML/CSS 和 ASS 是
+#: 两套不共享代码的渲染引擎，数值抄一份过来——换配色时两处都要改，
+#: 见 `test_顶栏配色和比分板同一套数值`。
 TOPBAR_SETWIN_ASS = r"{\c&H005AF6C6&}"
 TOPBAR_SETLOSE_ASS = r"{\c&H009CA793&}"
-TOPBAR_RESET_ASS = r"{\r}"
+TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
+
+#: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
+#:
+#: 那条规矩（「同一行里换字体／颜色，每一段都要先 `\r`」）的前提是这一行
+#: **没有动画**。`\r` 复位的是整个样式，**连同还在跑的 `\t()` 一起清掉**——
+#: 而 `pulse_at` 正是往同一行上挂 `\t()`。
+#:
+#: 真渲出来量过（1080×1440 黑底，`萨巴伦卡 6-3 4-6 6-4 张帅`，脉冲 115%）：
+#:
+#:     不上色（没有任何复位标签）   292px → 336px   +15.1%  ← 满量程，对
+#:     上色 + 用 `{\r}` 复位        292px → 311px   +6.5%   ← 只有名字在动
+#:
+#: 也就是说 `\r` 之后的整段比分**一动不动**，还在脉冲的恰好是前面那个名字——
+#: 而脉冲存在的全部理由就是让**比分**那一下被多看一眼，方向正好反了。
+#: 而且它**不报错**：ASS 文本里 `\fscx115` 明明白白写着，只有量渲染出来的
+#: 宽度才看得见。又一次「断言全绿不等于页面对」。
+#:
+#: 所以这一行只复位**它自己改过的那一项**（颜色）。CLAUDE.md 那条规矩担心的
+#: 是「逐项写回去，以后加一项忘一项」——这里的护栏是
+#: `test_顶栏复位不许用r否则脉冲被清掉`：它真渲两版量宽度，谁把复位换回 `\r`、
+#: 或者往这一行加了第二种属性覆盖而没跟着复位，都会当场红。
+TOPBAR_RESET_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
 
 
 def colorize_topbar_score(line: str) -> str:
@@ -4118,7 +4146,9 @@ def colorize_topbar_score(line: str) -> str:
         left, right, tb = m.group(1), m.group(2), m.group(3)
         lcolor = TOPBAR_SETWIN_ASS if int(left) > int(right) else TOPBAR_SETLOSE_ASS
         rcolor = TOPBAR_SETWIN_ASS if int(right) > int(left) else TOPBAR_SETLOSE_ASS
-        piece = f"{lcolor}{left}{TOPBAR_RESET_ASS}-{rcolor}{right}{TOPBAR_RESET_ASS}"
+        # 连字符压暗一档，和比分板的 `.setdash` 同一个理由：它是分隔符不是内容。
+        piece = (f"{lcolor}{left}{TOPBAR_SETDASH_ASS}-"
+                 f"{rcolor}{right}{TOPBAR_RESET_ASS}")
         if tb:
             piece += f"({tb})"
         parts.append(piece)
@@ -4180,7 +4210,7 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
