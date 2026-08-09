@@ -40,7 +40,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from match_feed import durations, points, stats  # noqa: E402
+from match_feed import durations, fs_feed, points, stats  # noqa: E402
 
 _VAL_PATTERNS = [
     re.compile(r"^(\d+)%\s*\((\d+)/(\d+)\)$"),   # "53% (36/68)"
@@ -159,6 +159,88 @@ def longest_streaks(games: list[dict], home: str, away: str,
     return out
 
 
+def parse_h2h(text: str) -> list[dict]:
+    """`df_hh_1` → `[{"surface": ..., "rows": [...]}]`，只解析 Head-to-head 分区。
+
+    **来路**：抖音参考样本（Sports World，2026-08-09）的正文第②条硬事实
+    「交手记录改写为 5 胜 5 负」——H2H 是被我们漏掉的一类狠数据，而它就躺在
+    flashscore 的 `df_hh_1` 里，一次请求全给（含分场地拆分）。
+
+    ⚠️ **字段含义是拿真实比赛交叉验证过的（AFGhOCE8，萨巴伦卡 vs
+    亚历山德罗娃），不是猜的**：`*` 标在**赢家**名字上——十行历史交手里
+    `*` 一律落在盘数（KL）多的那一侧（内部一致），数出来的总战绩 5-5 和
+    WTA 口径一致（外部对照）。KA 是场地分区（All surfaces / Clay / Grass /
+    Hard），每个分区各有一节 Head-to-head；**总战绩只认 All surfaces 那节**，
+    别把四节加在一起（同一场会被数两遍）。没有 `*` 的行不猜赢家，跳过并计数。
+    """
+    surfaces = re.findall(r"KA÷([^¬]*)", text)
+    blocks = re.split(r"KA÷[^¬]*", text)[1:]
+    out = []
+    for surface, block in zip(surfaces, blocks):
+        for sec in block.split("KB÷"):
+            if not sec.startswith("Head-to-head"):
+                continue
+            rows, unmarked = [], 0
+            for chunk in sec.split("~"):
+                f = dict(re.findall(r"(K[A-Z])÷([^¬]*)", chunk))
+                if "KP" not in f or "KJ" not in f or "KK" not in f:
+                    continue
+                p1, p2 = f["KJ"], f["KK"]
+                if p1.startswith("*"):
+                    winner = p1.lstrip("*")
+                elif p2.startswith("*"):
+                    winner = p2.lstrip("*")
+                else:
+                    unmarked += 1
+                    continue
+                rows.append({"mid": f["KP"], "city": f.get("KF", ""),
+                             "p1": p1.lstrip("*"), "p2": p2.lstrip("*"),
+                             "sets": f.get("KL", ""), "winner": winner})
+            out.append({"surface": surface, "rows": rows,
+                        "unmarked": unmarked})
+    return out
+
+
+def h2h_candidate(match_id: str) -> dict | None:
+    """交手记录候选：`Sabalenka A. 5 : 5 Alexandrova E. · 硬地 3:4 · 草地 2:1`。
+
+    名字用 feed 里的英文原名——写进文案时照旧查译名表，这儿不代翻。
+    找不到 H2H 分区或一场都没有就返回 None（新秀首次交手是常态，不算错）。
+    """
+    sections = parse_h2h(fs_feed("df_hh_1", match_id))
+    total = next((s for s in sections
+                  if s["surface"] == "All surfaces" and s["rows"]), None)
+    if not total:
+        return None
+    names: list[str] = []
+    for r in total["rows"]:
+        for n in (r["p1"], r["p2"]):
+            if n not in names:
+                names.append(n)
+    if len(names) != 2:
+        return None
+    a, b = names
+    wins = {a: 0, b: 0}
+    for r in total["rows"]:
+        if r["winner"] in wins:
+            wins[r["winner"]] += 1
+    surface_zh = {"Clay": "红土", "Grass": "草地", "Hard": "硬地"}
+    parts = [f"{a} {wins[a]} : {wins[b]} {b}"
+             + ("（含本场）" if any(r["mid"] == match_id for r in total["rows"])
+                else "")]
+    for s in sections:
+        if s["surface"] in surface_zh and s["rows"]:
+            sw = {a: 0, b: 0}
+            for r in s["rows"]:
+                if r["winner"] in sw:
+                    sw[r["winner"]] += 1
+            parts.append(f"{surface_zh[s['surface']]} {sw[a]}:{sw[b]}")
+    detail = " · ".join(parts)
+    if total["unmarked"]:
+        detail += f"（另有 {total['unmarked']} 场赢家标记缺失，没算进去）"
+    return {"label": "交手记录", "detail": detail}
+
+
 def collect(match_id: str, home: str, away: str) -> dict:
     idx = index_stats(stats(match_id))
     games = points(match_id)
@@ -169,6 +251,9 @@ def collect(match_id: str, home: str, away: str) -> dict:
     candidates += first_serve_swing(idx, home, away)
     candidates += break_point_conversion(idx, home, away)
     candidates += longest_streaks(games, home, away)
+    hh = h2h_candidate(match_id)
+    if hh:
+        candidates.append(hh)
     return {"candidates": candidates, "durations": durations(match_id)}
 
 
