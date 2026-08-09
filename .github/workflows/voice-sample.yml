@@ -137,10 +137,12 @@ jobs:
           echo "== 装 CPU torch =="
           pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
           echo "== 装 CosyVoice 依赖（CPU 最小集）=="
+          # ⚠️ rich 是第一趟踩出来的（cosyvoice.flow.flow_matching 要它，
+          # 死在模型加载那一步）；pandas/protobuf/pydantic 是同一批常见连坐
           pip install -q hyperpyyaml omegaconf conformer "transformers>=4.40,<5" \
             onnxruntime librosa soundfile inflect diffusers hydra-core \
             lightning gdown modelscope wget openai-whisper WeTextProcessing \
-            huggingface_hub
+            huggingface_hub rich pandas protobuf pydantic
           echo "== 拉代码（含 Matcha-TTS 子模块）=="
           git clone -q --depth 1 --recursive \
             https://github.com/FunAudioLLM/CosyVoice.git "$COSYVOICE_DIR"
