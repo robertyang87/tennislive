@@ -3095,7 +3095,7 @@ STORIES = STORIES + (
     ),
     _trivia_story(
         slug="cramp-timeout",
-        title="抽筋，为什么叫不来暂停",
+        title="抽筋，为何叫不来暂停",
         subtitle="网球冷知识 · 规则篇",
         identity="从勒纳·钱的三个赛点说起",
         chips=("冷知识", "医疗暂停", "理疗师说了算"),
