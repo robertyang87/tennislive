@@ -263,6 +263,9 @@ BED_LOUD = 0.72   # 没人说话时的现场声
 # 看得出是转场而不是变慢。旁白**不参与**——它是拼接之后另混上去的，每句话自己
 # 有起止，淡它等于把开头几个字吞掉。
 SEG_FADE = 0.18
+# 字卡/角标的入场动效：淡入时长（秒）和上浮距离（px）。见 _overlay_chain。
+INSET_IN_SECS = 0.45
+INSET_RISE_PX = 36
 # **每一段的音轨都要压到同一个采样率**。`concat` + `-c copy` 只认第一个文件的
 # 流参数：封面那段的 anullsrc 是 48k，而各分段跟着源片走 44.1k，于是 44.1k 的
 # AAC 帧被当成 48k 播——整条现场声快 8.8%，音轨在画面还剩 5.7 秒时就播完了
@@ -1905,8 +1908,19 @@ def _overlay_chain(base: str, ins: dict) -> str:
     corner = str(ins.get("corner", "tl"))
     x = f"{pad}" if corner in ("tl", "bl") else f"W-w-{pad}"
     y = f"{pad}" if corner in ("tl", "tr") else f"H-h-{pad}"
-    return (f"{base};[1:v]scale={width}:-2[ins];"
-            f"[base][ins]overlay={x}:{y}[vout]")
+    # **入场动效默认开**（`"animate": false` 关）：0.45s 淡入 + 36px 上浮。
+    # 来路：抖音七批诊断里六批点名「动态文字/卡片要有动感」，这是其中唯一
+    # 纯机械可加的一档。克制版——不做「跳出来」，和一屏一个强调色同一个审美。
+    # 静态图要先 loop 成连续流 fade 才有帧可淡；scale 放 loop 前面，
+    # 缩一次再复制帧比每帧都缩便宜。
+    if ins.get("animate", True) is False:
+        return (f"{base};[1:v]scale={width}:-2[ins];"
+                f"[base][ins]overlay={x}:{y}[vout]")
+    d, rise = INSET_IN_SECS, INSET_RISE_PX
+    y_expr = f"'if(lt(t,{d}),{y}+{rise}*pow(1-t/{d},2),{y})'"
+    return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba,"
+            f"fade=t=in:st=0:d={d}:alpha=1[ins];"
+            f"[base][ins]overlay={x}:{y_expr}[vout]")
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
