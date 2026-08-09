@@ -225,3 +225,77 @@ def test_和真实比赛手工核对过的那两个数对得上():
     labels = {c["label"]: c["detail"] for c in sh.longest_streaks(games, "麦克纳莉", "伊埃拉")}
     assert labels.get("伊埃拉 连续保发") == "5 个发球局"
     assert labels.get("麦克纳莉 连续保发") == "4 个发球局"
+
+
+# ─── H2H 交手记录（df_hh_1）───
+# 罐头数据按真实 feed 的格式造（AFGhOCE8，萨巴伦卡 vs 亚历山德罗娃）：
+# `*` 标在赢家名下、KA 是场地分区、每个分区各有一节 Head-to-head。
+# 字段含义的交叉验证记录在 parse_h2h 的 docstring 里。
+
+def _h2h_feed() -> str:
+    row = ("~KC÷{ts}¬KP÷{mid}¬KD÷hard¬KF÷{city}¬AC÷3¬"
+           "KJ÷{p1}¬UE÷x¬KK÷{p2}¬UG÷y¬KL÷{sets}¬")
+    all_rows = (row.format(ts=3, mid="CUR00001", city="Toronto",
+                           p1="Saba A.", p2="*Alex E.", sets="1:2")
+                + row.format(ts=2, mid="OLD00001", city="Berlin",
+                             p1="*Saba A.", p2="Alex E.", sets="2:0")
+                + row.format(ts=1, mid="OLD00002", city="Doha",
+                             p1="Alex E.", p2="*Saba A.", sets="0:2"))
+    hard_rows = (row.format(ts=3, mid="CUR00001", city="Toronto",
+                            p1="Saba A.", p2="*Alex E.", sets="1:2")
+                 + row.format(ts=1, mid="OLD00002", city="Doha",
+                              p1="Alex E.", p2="*Saba A.", sets="0:2"))
+    return ("SA÷2¬~KA÷All surfaces¬IS÷¬"
+            "~KB÷Last matches: Saba A.¬" + row.format(
+                ts=9, mid="ZZZ00001", city="Rome", p1="*Saba A.",
+                p2="Other P.", sets="2:0")
+            + "~KB÷Head-to-head matches¬" + all_rows
+            + "~KA÷Clay¬~KB÷Head-to-head matches¬"
+            + "~KA÷Hard¬~KB÷Head-to-head matches¬" + hard_rows)
+
+
+def test_h2h星号在谁名下谁就是赢家():
+    sh = _stat_hooks()
+    sections = sh.parse_h2h(_h2h_feed())
+    total = sections[0]
+    assert total["surface"] == "All surfaces"
+    winners = [r["winner"] for r in total["rows"]]
+    assert winners == ["Alex E.", "Saba A.", "Saba A."]
+    # `*` 只是标记，名字本身要剥干净
+    assert all("*" not in r["p1"] + r["p2"] + r["winner"]
+               for r in total["rows"])
+    # 「Last matches」分区不是交手记录，不许混进来（Rome 那行）
+    assert all(r["city"] != "Rome" for r in total["rows"])
+
+
+def test_h2h总战绩只认AllSurfaces分场地只作拆分(monkeypatch):
+    """四个场地分区各有一节 H2H，同一场会在总表和分场地表各出现一次——
+    加在一起就是把每场数两遍。总战绩只认 All surfaces，分场地只进拆分。"""
+    sh = _stat_hooks()
+    monkeypatch.setattr(sh, "fs_feed", lambda name, mid: _h2h_feed())
+    got = sh.h2h_candidate("CUR00001")
+    assert got["label"] == "交手记录"
+    assert "Saba A. 2 : 1 Alex E." in got["detail"]
+    assert "（含本场）" in got["detail"]
+    assert "硬地 1:1" in got["detail"]
+    assert "红土" not in got["detail"], "空场地不该出现在拆分里"
+
+
+def test_h2h没有星号的行不猜赢家而且要出声(monkeypatch):
+    """没有文档的标记缺失时宁可少算，但少算了要说——「没算进去」和
+    「本来就没有」长得一样。"""
+    sh = _stat_hooks()
+    broken = _h2h_feed().replace("KJ÷*Saba A.", "KJ÷Saba A.")
+    monkeypatch.setattr(sh, "fs_feed", lambda name, mid: broken)
+    got = sh.h2h_candidate("CUR00001")
+    assert "Saba A. 1 : 1 Alex E." in got["detail"]
+    assert "1 场赢家标记缺失" in got["detail"]
+
+
+def test_h2h一场都没有返回None不是抛错(monkeypatch):
+    """新秀首次交手是常态。查空 ≠ 报错。"""
+    sh = _stat_hooks()
+    monkeypatch.setattr(sh, "fs_feed",
+                        lambda name, mid: "SA÷2¬~KA÷All surfaces¬"
+                        "~KB÷Head-to-head matches¬")
+    assert sh.h2h_candidate("CUR00001") is None
