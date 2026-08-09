@@ -32,6 +32,11 @@ SAMPLE = (
 CANDIDATES = [
     # ⚠️ 档位标签以 explainer.py 的 DEFAULT_RATE 为准（2026-08-09 对过一次：
     # 这里曾把 +28% 标成「现用」，而解说片早定在 +22%——过期标签害人猜错现状）
+    # 剪辑片（match-reel）的现用档是 +6%——账号所有者 2026-08-09 问「剪辑片里
+    # 6% 可以么」，加 +6/+10 两档进采样表让耳朵裁决；真要换档，段长排布和
+    # speech_seconds 的回归系数都按 +6% 标定，要跟着重量
+    ("zh-CN-YunjianNeural", "+6%", "云健 · 剪辑片现用档"),
+    ("zh-CN-YunjianNeural", "+10%", "云健 · 剪辑片提速候选"),
     ("zh-CN-YunjianNeural", "+14%", "云健 · Passion（体育解说向）"),
     ("zh-CN-YunjianNeural", "+22%", "云健 · 解说片现用档"),
     ("zh-CN-YunjianNeural", "+28%", "云健 · 上一档（已退役）"),
