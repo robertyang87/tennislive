@@ -5474,15 +5474,17 @@ _OPENINGS: dict[str, dict] = {
         "question": "握谁的手，不握谁的手？",
         "narration": "握谁的手，不握谁的手？八月七号，多伦多，"
                      "斯维托丽娜赢下波塔波娃之后转身离场，没有握手。",
-        # 封面借第 ④ 屏那张（安德烈耶娃转身、斯维托丽娜留在网前），credit 自动
-        # 跟着第 ④ 屏走。⚠️ 不能用第 ① 屏那张多伦多记分牌照——1920×1080 的
-        # 抽帧铺 1080×1440 只有 0.75x，会被 test_封面图不许被放大 拦下；
-        # 这张和林茨那张（3-4 屏各自的原图）是仅有的两张过 1.00x 门槛的。
+        # ⚠️ 不能用第 ① 屏那张多伦多记分牌照——1920×1080 的抽帧铺 1080×1440
+        # 只有 0.75x，会被 test_封面图不许被放大 拦下；这张（裁过）和林茨那张
+        # （3 屏原图）是仅有的两张过 1.00x 门槛的。
         # 封面走单独裁切的版本，不直接用 beat④ 那张原图——background-size:cover
         # 会按几何中心走，原图的中心只落得住安德烈耶娃一个人，斯维托丽娜被
-        # 挤到只剩一条边（渲出来验证过：run 31287628102 的 slide_00）。
-        # 见 credits.json 里 ao2026_r4_andreeva_cover.jpg 的说明。
+        # 挤到只剩一条边（渲出来验证过：run 31287628102 的 slide_00）。图路径
+        # 和 beat④ 不同，_opening_segment 的 credit 自动借用就借不到了，
+        # 必须显式写一份——见 credits.json 里 ao2026_r4_andreeva_cover.jpg。
         "image": "assets/explainer/svitolina-handshake/ao2026_r4_andreeva_cover.jpg",
+        "credit": "Getty Images，经 GB News 转载 · 2026 年 1 月澳网第四轮，"
+                  "安德烈耶娃转身离场，斯维托丽娜留在网前，未握手（封面裁切版）",
     },
     "challenger-climb": {
         "topic": "挑战赛：难的不是对手，是兑换率",
