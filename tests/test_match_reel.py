@@ -8526,13 +8526,30 @@ def test_长句本来就撑不到新上限不受影响():
 
 
 def test_短钩子新上限不会打破三行96px的最坏情况上界():
-    """`SHORT_HOOK_TITLE_PX` 只放开给 ≤2 行——2 行在这个字号下的总高，
-    必须仍然矮于 3 行 96px 的总高（`STORYCOPY_TOP` 的最坏情况就是按后者算的），
-    否则放开 1~2 行本身就会制造一个新的、没被那笔账覆盖的溢出场景。"""
+    """`SHORT_HOOK_TITLE_PX` 只放开给 ≤2 行，两头都要钉住。
+
+    **相对**：2 行在这个字号下的总高必须仍然矮于 3 行 96px
+    （`STORYCOPY_TOP` 那笔最坏情况的账就是按后者算的），否则放开 1~2 行
+    本身就制造了一个没被那笔账覆盖的新溢出场景。
+
+    **绝对**：2 行这一档也要真的排得进 1440 的画布。只比相对量是不够的——
+    版式一直在往下挪（`STORYCOPY_TOP` 520→580、余量 136px→41px），
+    只做相对比较的话，等哪天布局再收紧，这条判据对短钩子这一档是哑的。
+    """
     vp = _vp()
     two_line_worst = round(2 * vp.SHORT_HOOK_TITLE_PX * 1.24)
     three_line_worst = round(3 * 96 * 1.24)
-    assert two_line_worst < three_line_worst
+    assert two_line_worst < three_line_worst, (
+        f"2 行 {vp.SHORT_HOOK_TITLE_PX}px（{two_line_worst}）已经超过 "
+        f"3 行 96px（{three_line_worst}）——短钩子这一档变成了新的最坏情况，"
+        "得回去重核 STORYCOPY_TOP 那笔账")
+
+    # 绝对：和 `test_台头药丸的位置不跟着比分板漂` 用同一套加法
+    board = 76 + 214
+    stacked = (64 + 34 + vp.STORYCOPY_TITLE_GAP_EXTRA + two_line_worst + 34 + board)
+    assert vp.STORYCOPY_TOP + stacked <= 1440, (
+        f"2 行 {vp.SHORT_HOOK_TITLE_PX}px 排到 {vp.STORYCOPY_TOP + stacked}px，"
+        "超出 1440 的画布")
 
 
 def test_scoreboard_html里决胜盘的格子真的带着那个类(monkeypatch):
