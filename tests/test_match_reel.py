@@ -8581,19 +8581,52 @@ def test_顶栏上色不会把人名当成比分():
     reel = _reel()
     # 人名里没有 "数字-数字" 这个形状，_SET_RE 匹配不上，原样穿过
     line = reel.colorize_topbar_score("萨巴伦卡 6-3 张帅")
-    assert "萨巴伦卡" in line and "张帅" in line
-    # 一盘 = 一次复位（在这一盘末尾）。名字两头不该被当成比分各上一次色。
-    assert line.count(reel.TOPBAR_RESET_ASS) == 1, "只有一盘，只该在盘末复位一次"
+    # 名字必须**一个标签都不沾**地穿过去
     assert line.startswith("萨巴伦卡 ") and line.endswith(" 张帅"), \
-        "名字被套上颜色标签了——_SET_RE 不该匹配人名"
+        f"名字被套上颜色标签了——_SET_RE 不该匹配人名：{line}"
+    # 只有一盘 → 只上一次赢盘色。⚠️ 这儿不数 `TOPBAR_RESET_ASS`：输盘色现在
+    # 就等于正文色（2026-08-09 起「输盘不压暗」），两个常量是同一个字符串，
+    # 数它等于把「盘末复位」和「输盘上色」混在一起数。
+    assert line.count(reel.TOPBAR_SETWIN_ASS) == 1, f"只有一盘，赢盘色只该上一次：{line}"
 
 
-def test_顶栏配色和比分板同一套数值():
-    """两套渲染引擎（HTML/CSS 和 ASS）不共享代码，颜色是手抄过来的一份——
-    这条锁死数值本身，换配色时一眼看出两处都要改。"""
+def test_顶栏配色跟着比分板走():
+    """两套渲染引擎（HTML/CSS 和 ASS）不共享代码，颜色只能抄一份过来。
+
+    ⚠️ **这条必须从 `versus_poster` 的 CSS 里现抠现折算，不能写死 hex。**
+    第一版就是写死的：`assert TOPBAR_SETWIN_ASS == r"{\\c&H005AF6C6&}"`。
+    2026-08-09 比分板把 `.setlose` 从灰 `#93a79c` 改成正文近白（「灰在压缩
+    后的视频里太接近底色」），顶栏还挂着改之前的灰——**而那条写死的断言
+    照样绿**，「同一套数值」这个声明变成了假的，是 rebase 到 main 时才发现。
+    写死的判据只能防「有人把它删了」，防不住「上游改了它没跟着」。
+    """
     reel = _reel()
-    assert reel.TOPBAR_SETWIN_ASS == r"{\c&H005AF6C6&}"    # #c6f65a 的 BGR
-    assert reel.TOPBAR_SETLOSE_ASS == r"{\c&H009CA793&}"   # #93a79c 的 BGR
+    css = Path("tools/versus_poster.py").read_text(encoding="utf-8")
+
+    def poster_hex(cls: str) -> str:
+        hit = re.search(rf"^\.{cls}\{{{{?color:(#[0-9a-fA-F]{{6}})", css, re.M)
+        assert hit, f"比分板 CSS 里找不到 .{cls} 的颜色——选择器改名了？"
+        return hit.group(1).lower()
+
+    def to_ass(hexcolor: str) -> str:
+        h = hexcolor.lstrip("#")
+        return "{\\c&H00" + (h[4:6] + h[2:4] + h[0:2]).upper() + "&}"
+
+    # 赢盘：和比分板 `.setwin` 逐字节对得上
+    assert reel.TOPBAR_SETWIN_ASS == to_ass(poster_hex("setwin"))
+    # 连字符：比分板那次没改它，仍然压暗一档
+    assert reel.TOPBAR_SETDASH_ASS == to_ass(poster_hex("setdash"))
+
+    # 输盘：比分板的口径是「用**那个表面自己的正文色**，靠色相和赢盘分开，
+    # 不靠压暗」。两个表面正文色本来就不同（海报 #f4fbf7 / 顶栏 #d5e2db），
+    # 所以这一条比的是**口径**不是字节：顶栏的输盘色必须等于顶栏自己的正文色。
+    assert reel.TOPBAR_SETLOSE_ASS == "{\\c" + reel.TOPBAR_BODY_COLOUR + "&}"
+    # 而且不许退回「压暗」那一档——`.setdash` 那个灰就是压暗档的代表
+    assert reel.TOPBAR_SETLOSE_ASS != reel.TOPBAR_SETDASH_ASS, (
+        "输盘又被压暗了：2026-08-09 比分板专门改掉这个（压缩视频里读不出来），"
+        "顶栏是直接烧进 H.264 的，更吃这个问题")
+    # 反过来也要成立：赢盘和输盘必须真的不同色，不然上色等于没上
+    assert reel.TOPBAR_SETWIN_ASS != reel.TOPBAR_SETLOSE_ASS
 
 
 def test_关键分脉冲相对事件起点转毫秒():

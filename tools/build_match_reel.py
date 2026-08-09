@@ -4092,12 +4092,21 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
 TOPBAR_BODY_COLOUR = "&H00DBE2D5"
 
 #: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。跟比分板
-#: 同一套"赢盘绿/输盘灰/连字符压暗"配色（`versus_poster.py` 的 `.setwin`/
-#: `.setlose`/`.setdash`，`#c6f65a`/`#93a79c`/`#93a79c`），HTML/CSS 和 ASS 是
-#: 两套不共享代码的渲染引擎，数值抄一份过来——换配色时两处都要改，
-#: 见 `test_顶栏配色和比分板同一套数值`。
+#: 同一套配色（`versus_poster.py` 的 `.setwin`/`.setlose`/`.setdash`）——
+#: HTML/CSS 和 ASS 是两套不共享代码的渲染引擎，数值只能抄一份过来，靠
+#: `test_顶栏配色跟着比分板走` 盯着别漂（那条**从 versus_poster 的 CSS 里
+#: 现抠现折算**，不写死 hex，所以比分板改色它会当场红）。
+#:
+#: ⚠️ **输盘不压暗，靠色相区分。** 2026-08-09 比分板把 `.setlose` 从灰
+#: `#93a79c` 改成正文同款近白，理由是「灰在压缩后的视频里太接近底色，读不出
+#: 谁输了这一盘」——而顶栏是**直接烧进 H.264 的**，比那张静态海报更吃这个
+#: 问题。所以这里跟着走：输的那个数字就用这一行正文本来的颜色
+#: （`TOPBAR_BODY_COLOUR`），赢的给品牌绿，两者靠**色相**分开，不靠明暗。
+#: 第一版照抄了改之前的灰，是在 rebase 到 main 时才发现口径已经变了。
 TOPBAR_SETWIN_ASS = r"{\c&H005AF6C6&}"
-TOPBAR_SETLOSE_ASS = r"{\c&H009CA793&}"
+TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
+#: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
+#: （「连字符是分隔符不是内容」）。
 TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
 
 #: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
