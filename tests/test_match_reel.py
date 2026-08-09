@@ -8128,13 +8128,16 @@ def test_台头药丸的位置不跟着比分板漂(monkeypatch: pytest.MonkeyPa
     assert "top:50%" not in two and "translateY(-50%)" not in two, (
         f"退回整块居中了——比分板一变高就会把药丸顶上去：{two}")
 
-    # 老版一行赛果时药丸落在 502~536，520 取在中间。**别悄悄漂走**。
-    assert 490 <= vp.STORYCOPY_TOP <= 545, (
-        f"STORYCOPY_TOP={vp.STORYCOPY_TOP} 离「原来模板的位置」（502~536）太远")
+    # 老版一行赛果时药丸落在 502~536；2026-08-09 账号所有者要求药丸也跟着
+    # 标题/比分板一起往下移，STORYCOPY_TOP 从 520 改成 580——**这条上限本身
+    # 就是那次改动要推翻的旧前提**，别拿旧区间去卡新值。改成宽一点的安全带，
+    # 拦的是「写错了一个数量级」这类事故，不是「不许再往下移」。
+    assert 490 <= vp.STORYCOPY_TOP <= 650, (
+        f"STORYCOPY_TOP={vp.STORYCOPY_TOP} 超出合理范围（490~650）")
 
-    # 最坏情况要装得下：药丸 64 ＋（间距 34 ＋ 额外间距 STORYCOPY_TITLE_GAP_EXTRA，
-    # 2026-08-08「标题和比分板都往下移动一下」加的）＋ 三行 96px 的钩子 ＋ 间距 34
-    # ＋ 比分板（板头 76 ＋ 网格 214）。溢出的话下面那截会被切在画布外。
+    # 最坏情况要装得下：药丸 64 ＋（间距 34 ＋ 额外间距 STORYCOPY_TITLE_GAP_EXTRA）
+    # ＋ 三行 96px 的钩子 ＋ 间距 34 ＋ 比分板（板头 76 ＋ 网格 214）。
+    # 溢出的话下面那截会被切在画布外。
     worst = (64 + 34 + vp.STORYCOPY_TITLE_GAP_EXTRA + round(3 * 96 * 1.24) + 34
              + (76 + 214))
     assert vp.STORYCOPY_TOP + worst <= 1440, (
