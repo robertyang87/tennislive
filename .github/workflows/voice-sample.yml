@@ -11,7 +11,7 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure, compare, phoneme, hd, oss]
+        options: [sample, ssml, azure, compare, phoneme, hd, oss, minimax]
         default: sample
 
 permissions:
@@ -164,12 +164,20 @@ jobs:
           echo "== 合成样品 =="
           python tools/probe_oss_tts.py output/voice-samples/oss
 
+      # MiniMax 托管 TTS 试音（key 见 tools/probe_minimax_tts.py 的 docstring；
+      # 沙箱 2026-08-09 已直连跑通过，这条是给 runner 复跑用的入口）
+      - name: 试 MiniMax 托管 TTS
+        if: github.event.inputs.mode == 'minimax'
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: python tools/probe_minimax_tts.py output/voice-samples/minimax
+
       - name: 合成语音样本
         if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
-        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd' || github.event.inputs.mode == 'oss'
+        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd' || github.event.inputs.mode == 'oss' || github.event.inputs.mode == 'minimax'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
