@@ -11,7 +11,7 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure, compare, phoneme, hd]
+        options: [sample, ssml, azure, compare, phoneme, hd, oss]
         default: sample
 
 permissions:
@@ -24,7 +24,9 @@ concurrency:
 jobs:
   sample:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    # oss 模式要装 CPU torch + 拉 2GB 模型 + CPU 合成，30 分钟起步；
+    # 其余模式仍在 12 分钟内跑完，超时只是上限不是目标
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,12 +122,40 @@ jobs:
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: python tools/probe_azure_hd.py output/voice-samples/hd
 
+      # 开源拟真 TTS（CosyVoice2-0.5B，Apache-2.0 可商用）试音——账号所有者
+      # 2026-08-09 拍板的方向。装依赖和拉模型都在这一步，选型和判据见
+      # tools/probe_oss_tts.py 的 docstring。⚠️ 依赖是从官方 requirements
+      # 挑的 CPU 最小集，第一趟跑红了按报错补，别整包照抄（GPU 依赖装不上）。
+      - name: 试开源拟真 TTS（CosyVoice2）
+        if: github.event.inputs.mode == 'oss'
+        timeout-minutes: 35
+        env:
+          COSYVOICE_DIR: /tmp/CosyVoice
+          COSY_MODEL_DIR: /tmp/cosy-model
+        run: |
+          set -e
+          echo "== 装 CPU torch =="
+          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          echo "== 装 CosyVoice 依赖（CPU 最小集）=="
+          pip install -q hyperpyyaml omegaconf conformer "transformers>=4.40,<5" \
+            onnxruntime librosa soundfile inflect diffusers hydra-core \
+            lightning gdown modelscope wget openai-whisper WeTextProcessing \
+            huggingface_hub
+          echo "== 拉代码（含 Matcha-TTS 子模块）=="
+          git clone -q --depth 1 --recursive \
+            https://github.com/FunAudioLLM/CosyVoice.git "$COSYVOICE_DIR"
+          echo "== 拉模型（约 2GB）=="
+          python -c "from huggingface_hub import snapshot_download; \
+            snapshot_download('FunAudioLLM/CosyVoice2-0.5B', local_dir='$COSY_MODEL_DIR')"
+          echo "== 合成样品 =="
+          python tools/probe_oss_tts.py output/voice-samples/oss
+
       - name: 合成语音样本
         if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
-        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd'
+        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd' || github.event.inputs.mode == 'oss'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
