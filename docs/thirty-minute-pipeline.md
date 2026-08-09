@@ -35,8 +35,9 @@
 | xhs 正文（三条硬事实块）+ push 元数据 | 人/agent | ❌ |
 | 字卡渲好 | `render_beat_card.py` | ❌ |
 | spec 骨架（segments 留 TODO 窗口） | — | ❌ |
+| **封面实拍（WTA 场次首选）** | `fetch_wta_cover_photo.py`——赛后稿头图，实测 4045×2685 真实相机拍摄，完胜 1080p 抽帧放大；退 2＝稿子还没挂，轮询时再试 | ❌ |
 | 段落窗口 start/end/cx | 缩略图墙+记分条 | ✅ |
-| 封面帧 frame_at | probe 产物 | ✅ |
+| 封面帧 frame_at（实拍抓不到才用） | probe 产物 | ✅ |
 
 预制完成的判据：spec 除窗口外 `--dry-run` 形状全过、旁白每段按估算
 有 ≥1s 余量、正文过千字闸。**预制没做完就别怪集锦快**——空窗期是白给的，
