@@ -166,35 +166,62 @@ def test_破发点兑现率():
     assert {"label": "伊埃拉 破发点兑现", "detail": "7/13（54%）"} in out
 
 
+def _alternating(pattern_home: str, pattern_away: str) -> list[dict]:
+    """按真实网球的**轮流发球**造逐局数据。
+
+    ⚠️ 这个 helper 存在的理由本身就是一条判据：第一版测试手搓了「同一个人
+    连发三局」，那在网球里不可能发生——于是它绿着证明了一个不可能的世界，
+    而真实数据（31 局）上函数返回 0 条候选。**手搓 fixture 要先问一句：
+    真实数据长这样吗。**
+
+    `pattern_*` 用 H（保发）/ X（被破）描述各自发球局的结果，交替编织。
+    """
+    games = []
+    for i in range(max(len(pattern_home), len(pattern_away))):
+        if i < len(pattern_home):
+            games.append(_game(server="home",
+                               winner="home" if pattern_home[i] == "H" else "away"))
+        if i < len(pattern_away):
+            games.append(_game(server="away",
+                               winner="away" if pattern_away[i] == "H" else "home"))
+    return games
+
+
 def test_保发和破发交替不会被误判成长连续段():
     sh = _stat_hooks()
-    games = [
-        _game(server="home", winner="home"),   # hold, home
-        _game(server="away", winner="away"),   # hold, away
-        _game(server="home", winner="home"),   # hold, home
-        _game(server="away", winner="home"),   # break, home
-        _game(server="home", winner="home"),   # hold, home
-        _game(server="away", winner="home"),   # break, home
-        _game(server="home", winner="home"),   # hold, home
-    ]
-    # 每一段（连续同一人+同一种kind）最长只有 1 局——hold/break 交替，
-    # 不该因为"整体上 home 大部分时间在赢"就被数成一条长连续段
-    out = sh.longest_streaks(games, "home队", "away队", threshold=3)
-    assert out == []
+    # 两边发球局都在 H/X 交替，谁都没有 3 连
+    games = _alternating("HXHXHX", "XHXHXH")
+    assert sh.longest_streaks(games, "home队", "away队", threshold=3) == []
 
 
 def test_短于阈值的连续段不进候选():
     sh = _stat_hooks()
-    games = [_game(server="home", winner="home"), _game(server="away", winner="away")]
+    games = _alternating("HH", "HH")
     assert sh.longest_streaks(games, "A", "B", threshold=3) == []
 
 
-def test_真的连续三局保发能被数出来():
+def test_连续保发按这个人自己的发球局数不按逐局列表相邻项():
+    """网球轮流发球，同一个人的发球局在列表里隔一局出现一次——按相邻项数
+    永远数不出连续保发。这条锁死"先筛发球方再数连续"这个口径。"""
     sh = _stat_hooks()
-    games = [
-        _game(server="home", winner="home"),
-        _game(server="home", winner="home"),
-        _game(server="home", winner="home"),
-    ]
+    games = _alternating("HHH", "XXX")     # 甲连保三个发球局，乙连丢三个
     out = sh.longest_streaks(games, "甲", "乙", threshold=3)
-    assert out == [{"label": "甲 连续保发", "detail": "3 局"}]
+    labels = {c["label"]: c["detail"] for c in out}
+    assert labels.get("甲 连续保发") == "3 个发球局"
+    assert labels.get("乙 连续被破") == "3 个发球局"
+
+
+def test_和真实比赛手工核对过的那两个数对得上():
+    """QsT5YnEa（麦克纳莉 vs 伊埃拉，2026 多伦多）真实逐局，人工数过：
+
+        伊埃拉的发球局    XXHHHHXXHXXHHHHH   最长连保 5
+        麦克纳莉的发球局  XHXXHXXHXHXHHHH    最长连保 4
+
+    冻结这两个数，免得口径又漂回"数逐局列表相邻项"那一版（那一版在这份
+    真实数据上返回 0 条）。
+    """
+    sh = _stat_hooks()
+    games = _alternating("XHXXHXXHXHXHHHH", "XXHHHHXXHXXHHHHH")
+    labels = {c["label"]: c["detail"] for c in sh.longest_streaks(games, "麦克纳莉", "伊埃拉")}
+    assert labels.get("伊埃拉 连续保发") == "5 个发球局"
+    assert labels.get("麦克纳莉 连续保发") == "4 个发球局"

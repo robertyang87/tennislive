@@ -8562,11 +8562,12 @@ def test_顶栏比分逐盘上色赢盘绿输盘灰():
     line = reel.colorize_topbar_score("萨巴伦卡 6-3 4-6 6-4 张帅")
     assert line.startswith("萨巴伦卡 ")
     assert line.endswith(" 张帅")
-    # 第一盘 6-3：赢家那一盘也赢了，左边（6）应该是 setwin 色
-    assert f"{reel.TOPBAR_SETWIN_ASS}6{reel.TOPBAR_RESET_ASS}-" \
+    # 第一盘 6-3：赢家那一盘也赢了，左边（6）应该是 setwin 色；
+    # 连字符压暗（和比分板 `.setdash` 同一个理由），整盘结束才复位。
+    assert f"{reel.TOPBAR_SETWIN_ASS}6{reel.TOPBAR_SETDASH_ASS}-" \
            f"{reel.TOPBAR_SETLOSE_ASS}3{reel.TOPBAR_RESET_ASS}" in line
     # 第二盘 4-6：赢家那一盘输了，左边（4）应该是 setlose 色
-    assert f"{reel.TOPBAR_SETLOSE_ASS}4{reel.TOPBAR_RESET_ASS}-" \
+    assert f"{reel.TOPBAR_SETLOSE_ASS}4{reel.TOPBAR_SETDASH_ASS}-" \
            f"{reel.TOPBAR_SETWIN_ASS}6{reel.TOPBAR_RESET_ASS}" in line
 
 
@@ -8581,7 +8582,10 @@ def test_顶栏上色不会把人名当成比分():
     # 人名里没有 "数字-数字" 这个形状，_SET_RE 匹配不上，原样穿过
     line = reel.colorize_topbar_score("萨巴伦卡 6-3 张帅")
     assert "萨巴伦卡" in line and "张帅" in line
-    assert line.count(reel.TOPBAR_RESET_ASS) == 2, "只有一盘，只该出现两次颜色重置"
+    # 一盘 = 一次复位（在这一盘末尾）。名字两头不该被当成比分各上一次色。
+    assert line.count(reel.TOPBAR_RESET_ASS) == 1, "只有一盘，只该在盘末复位一次"
+    assert line.startswith("萨巴伦卡 ") and line.endswith(" 张帅"), \
+        "名字被套上颜色标签了——_SET_RE 不该匹配人名"
 
 
 def test_顶栏配色和比分板同一套数值():
@@ -8632,3 +8636,77 @@ def test_write_topbar_ass给了pulse_at会写进body那一行(tmp_path):
     body_line = next(ln for ln in text.splitlines() if ",BODY,," in ln)
     assert "\\fscx115" not in head_line
     assert "\\fscx115" in body_line
+
+
+def test_顶栏的body底色只有一个出处():
+    """样式行的 PrimaryColour 和"复位"标签必须来自同一个常量。
+
+    写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」
+    ——肉眼几乎看不出来，只有把两个 hex 摆在一起才发现。
+    """
+    reel = _reel()
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert reel.TOPBAR_RESET_ASS == "{\\c" + reel.TOPBAR_BODY_COLOUR + "&}"
+    assert "{TOPBAR_BODY_COLOUR}" in src, "样式行没有从常量取底色"
+    bare = [ln for ln in src.splitlines()
+            if "&H00DBE2D5" in ln and "TOPBAR_BODY_COLOUR =" not in ln]
+    assert not bare, f"底色 hex 又被写死了第二处：{bare}"
+
+
+def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
+    """**`{\\r}` 会把同一行上还在跑的 `\\t()` 动画一起清掉。**
+
+    CLAUDE.md 那条「同一行里换字体／颜色，每一段都要先 `\\r`」的前提是这一行
+    **没有动画**；`pulse_at` 正是往同一行挂 `\\t()`。两者撞在一起时 `\\r` 赢，
+    而且**不报错**——ASS 文本里 `\\fscx115` 明明白白写着。
+
+    第一版就是这么写的，真渲出来量宽度才发现（1080×1440 黑底，
+    `萨巴伦卡 6-3 4-6 6-4 张帅`，脉冲 115%）：
+
+        不上色（没有任何复位标签）   292px → 336px   +15.1%  ← 满量程
+        上色 + `{\\r}` 复位          292px → 311px   +6.5%   ← 只有名字在动
+        上色 + 只复位颜色（现在）    292px → 336px   +15.1%  ← 修好了
+
+    也就是说 `\\r` 那一版里，还在脉冲的恰好是前面那个球员名字，而**比分一动
+    不动**——脉冲存在的全部理由就是让比分那一下被多看一眼，方向正好反了。
+
+    所以这条判据**真渲两帧量宽度**，不查 ASS 文本：查文本的断言（`\\fscx115`
+    在不在）对这个 bug 完全是哑的，它两版都成立。
+    """
+    import shutil  # noqa: PLC0415
+    import subprocess  # noqa: PLC0415
+
+    reel = _reel()
+    # 缺 ffmpeg 要红，不许 skip——一条常年跳过的检查和常年红是同一个毛病。
+    assert shutil.which("ffmpeg"), "没有 ffmpeg，这条判据跑不了：apt install ffmpeg"
+    np = pytest.importorskip("numpy")
+    pil = pytest.importorskip("PIL.Image")
+
+    line2 = "萨巴伦卡 6-3 4-6 6-4 张帅"
+    ass = reel.write_topbar_ass(("WTA 1000 加拿大站 第三轮", line2),
+                                 0.0, 20.0, tmp_path / "tb.ass", pulse_at=[10.0])
+
+    def width_at(second: float) -> int:
+        """渲一帧，量 BODY 那一行文字的横向跨度。"""
+        png = tmp_path / f"f_{second}.png"
+        subprocess.run(
+            ["ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+             "-i", "color=c=black:s=1080x1440:d=20:r=25",
+             "-vf", f"subtitles={ass}",
+             "-ss", str(second), "-frames:v", "1", str(png)], check=True)
+        band = np.asarray(pil.open(png).convert("RGB"))[80:150, :, :]
+        cols = np.where(band.sum(axis=2) > 60)[1]
+        assert cols.size, f"{second}s 这一帧 BODY 行没渲出任何字"
+        return int(cols.max() - cols.min())
+
+    base, peak = width_at(5.0), width_at(10.0)
+    grew = peak / base
+    want = reel.TOPBAR_PULSE_SCALE / 100
+    assert grew == pytest.approx(want, abs=0.02), (
+        f"脉冲峰值只放大到 {grew:.4f}，而 TOPBAR_PULSE_SCALE 要的是 {want:.2f}——"
+        "多半是复位标签换回了 `{\\r}`，它会把同一行的 `\\t()` 一起清掉，"
+        "于是只有比分前面那个名字在动")
+
+    # 另一头：上色本身没被这个修法弄丢
+    text = ass.read_text(encoding="utf-8")
+    assert reel.TOPBAR_SETWIN_ASS in text and reel.TOPBAR_SETLOSE_ASS in text
