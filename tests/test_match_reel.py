@@ -8270,3 +8270,365 @@ def test_全称断言必须认领一份能穷举的出处():
     reel._absolute_claims_need_a_source({
         "slug": "主观话", "segments": [],
         "cover": {"hook": "这是他今年打得最好的一场"}})
+
+
+def _synthetic_cut(bg_rgb, hair_rgb, size=(100, 150), person_top=40, person_cols=(20, 80)):
+    """造一张"抠图之前"（RGB，还留着背景色）和"抠图之后"（RGBA，alpha 标出人）
+    的合成图，专给 `_hair_background_contrast` 用——不碰 ffmpeg/rembg。"""
+    from PIL import Image  # noqa: PLC0415
+
+    im = Image.new("RGB", size, bg_rgb)
+    px = im.load()
+    for y in range(person_top, size[1]):
+        for x in range(person_cols[0], person_cols[1]):
+            px[x, y] = hair_rgb if y < person_top + 12 else (80, 80, 80)
+    cut = Image.new("RGBA", size, (0, 0, 0, 0))
+    cpx = cut.load()
+    for y in range(person_top, size[1]):
+        for x in range(person_cols[0], person_cols[1]):
+            cpx[x, y] = (255, 255, 255, 255)
+    return im, cut
+
+
+def test_头顶和背景撞色会报出低对比度():
+    """对应黄泽林那次真实事故：白发带压白背景，发丝被 post_process_mask 一起
+    切掉，人变成了光头——`pick_cover_frames.py` 的四条闸门查不到这个。
+
+    这条判据**真造两张合成图调用函数**，不是查源码里有没有这个名字——
+    「`assert "def _cut_person(" in reel` 照样绿，功能整天是坏的」是这个仓库
+    自己记过的教训。
+    """
+    reel = _reel()
+    im, cut = _synthetic_cut(bg_rgb=(250, 250, 250), hair_rgb=(245, 245, 245))
+    contrast = reel._hair_background_contrast(im, cut)
+    assert contrast is not None
+    assert contrast < reel.HAIR_BG_CONTRAST_WARN
+
+
+def test_头顶和背景反差大不报警():
+    reel = _reel()
+    im, cut = _synthetic_cut(bg_rgb=(250, 250, 250), hair_rgb=(15, 15, 15))
+    contrast = reel._hair_background_contrast(im, cut)
+    assert contrast is not None
+    assert contrast >= reel.HAIR_BG_CONTRAST_WARN
+
+
+def test_完全没有不透明像素返回None不抛错():
+    from PIL import Image  # noqa: PLC0415
+
+    reel = _reel()
+    im = Image.new("RGB", (50, 50), (255, 255, 255))
+    cut = Image.new("RGBA", (50, 50), (0, 0, 0, 0))
+    assert reel._hair_background_contrast(im, cut) is None
+
+
+def test_预警只印警告不阻断渲染():
+    """这条只是预警，不是硬闸——`_cut_person` 里必须只 `print`，不 `raise`。
+
+    仍然要求渲出来人眼终审（CLAUDE.md「最后一步是人打开看」），机械检查
+    只是把线索提前到抠图这一步，不是替代终审。
+    """
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    block = src[src.index("def _cut_person("):]
+    block = block[:block.index("def ", 10)]
+    assert "_hair_background_contrast(im, cut)" in block, "闸没接在抠图那一步"
+    assert "HAIR_BG_CONTRAST_WARN" in block
+    warn_line = block[block.index("if contrast is not None"):]
+    warn_line = warn_line[:warn_line.index("\n\n")]
+    assert "raise" not in warn_line, "撞色预警不许挡渲染，只能 print"
+    assert "黄泽林" in warn_line, "警告文案要指出这是哪次真实事故的同类问题"
+
+
+def _narrated(reel, start, end, narration):
+    import dataclasses  # noqa: PLC0415
+
+    return dataclasses.replace(_seg(reel, start, end), narration=narration)
+
+
+def test_中文数字常用词不会被误判成数据句():
+    """「一直」「一样」这类日常词含中文数字字符，按"有没有数字字符"判会让
+    几乎每句话都命中——`_STAT_PATTERN` 只认比分/破发点/百分比这几种具体写法。"""
+    reel = _reel()
+    for word in ("他一直没有放弃", "两个人打法很不一样", "现场气氛热闹得不像话",
+                 "第一次站上这个舞台"):
+        assert not reel._STAT_PATTERN.search(word), f"「{word}」不该被判成数据句"
+
+
+def test_比分和破发点等具体写法会被识别成数据句():
+    reel = _reel()
+    for text in ("六比四拿下首盘", "3:6", "第二个破发点", "一个盘点都没给",
+                 "一发得分率百分之六十", "世界第十六"):
+        assert reel._STAT_PATTERN.search(text), f"「{text}」应该被判成数据句"
+
+
+def test_中段全在报数据时提示中段缺情绪停顿():
+    reel = _reel()
+    segs = [
+        _narrated(reel, 0, 5, "开场钩子，没有数据。"),
+        _narrated(reel, 5, 10, "六比三拿下首盘。"),
+        _narrated(reel, 10, 15, "第二盘破发点没能兑现。"),
+        _narrated(reel, 15, 20, "一发得分率只有百分之四十。"),
+        _narrated(reel, 20, 25, "收尾一问，同样没有数据。"),
+    ]
+    hint = reel.narration_density_hint(segs)
+    assert hint is not None
+    assert "节奏" in hint and "不是判定" in hint
+
+
+def test_中段有情绪句就不提示():
+    reel = _reel()
+    segs = [
+        _narrated(reel, 0, 5, "开场钩子。"),
+        _narrated(reel, 5, 10, "六比三拿下首盘。"),
+        _narrated(reel, 10, 15, "他放下球拍，双手掩面。"),
+        _narrated(reel, 15, 20, "一发得分率只有百分之四十。"),
+        _narrated(reel, 20, 25, "收尾一问。"),
+    ]
+    assert reel.narration_density_hint(segs) is None
+
+
+def test_首尾两段不算进中段密度():
+    """首尾都写成数据句、中段大半不是——首尾若被误算进比例会把中段的
+    "没有情绪句"这件事盖住。"""
+    reel = _reel()
+    segs = [
+        _narrated(reel, 0, 5, "六比四。"),
+        _narrated(reel, 5, 10, "他松了一口气。"),
+        _narrated(reel, 10, 15, "教练席传来欢呼。"),
+        _narrated(reel, 15, 20, "破发点没能兑现。"),
+        _narrated(reel, 20, 25, "七比五拿下。"),
+    ]
+    # 中段（索引 1~3）三段里只有一段是数据句，33% < 75% 门槛——不该提示；
+    # 把首尾也算进去会变成 3/5=60%，仍然不够，所以换一组更极端的边界数据
+    assert reel.narration_density_hint(segs) is None
+
+    segs_boundary = [
+        _narrated(reel, 0, 5, "六比四。"),          # 首，数据句
+        _narrated(reel, 5, 10, "破发点没能兑现。"),   # 中，数据句
+        _narrated(reel, 10, 15, "教练席传来欢呼。"),   # 中，非数据句
+        _narrated(reel, 15, 20, "又一个盘点。"),       # 中，数据句
+        _narrated(reel, 20, 25, "七比五拿下。"),       # 尾，数据句
+    ]
+    # 只看中段（索引 1~3）：2/3 ≈ 67% < 75%，不提示；
+    # 若错把首尾也算进 5 段：4/5 = 80% ≥ 75%，会误报——这条测试锁死"只看中段"
+    assert reel.narration_density_hint(segs_boundary) is None
+
+
+def test_段落太少不判断():
+    reel = _reel()
+    segs = [_narrated(reel, 0, 5, "六比三。"), _narrated(reel, 5, 10, "七比五。")]
+    assert reel.narration_density_hint(segs) is None
+
+
+def test_没有旁白的段不计入分母():
+    reel = _reel()
+    segs = [
+        _narrated(reel, 0, 5, "开场钩子。"),
+        _seg(reel, 5, 10),                          # 没有旁白（原声段之类）
+        _narrated(reel, 10, 15, "六比三。"),
+        _narrated(reel, 15, 20, "破发点没能兑现。"),
+        _narrated(reel, 20, 25, "收尾一问。"),
+    ]
+    # 有旁白的只有 4 段，掐头去尾中段只剩「六比三」「破发点没能兑现」两段，
+    # 全是数据句——应该提示
+    hint = reel.narration_density_hint(segs)
+    assert hint is not None
+
+
+def test_中段情绪停顿提示只print不阻断dry_run():
+    src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    start = src.index("density_hint = narration_density_hint(segments)")
+    block = src[start:src.index("[看画面]", start)]
+    assert "return" not in block, "中段情绪停顿提示不许阻断 dry-run"
+
+
+def _find_point_ends():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import find_point_ends  # noqa: PLC0415
+
+    return find_point_ends
+
+
+def test_转折点收尾用climax_tail普通段用tail():
+    """账号所有者 2026-08-08：「赢球后多给情绪一点篇幅」——`suggest_cut` 是这条
+    规矩第一次变成可执行参数：`--climax` 里点名的那几个用更长的尾巴。"""
+    fpe = _find_point_ends()
+    ends = [10.0, 50.0]
+    普通 = fpe.suggest_cut(9.8, ends, tail=1.2, climax_tail=2.2, climax_wants=set())
+    转折点 = fpe.suggest_cut(49.8, ends, tail=1.2, climax_tail=2.2, climax_wants={49.8})
+    assert 普通["tail"] == 1.2
+    assert 普通["cut_to"] == 10.0 + 1.2
+    assert 普通["climax"] is False
+    assert 转折点["tail"] == 2.2
+    assert 转折点["cut_to"] == 50.0 + 2.2
+    assert 转折点["climax"] is True
+
+
+def test_climax_tail比tail长():
+    """默认值本身要体现「多给情绪一点篇幅」，不能改完还是一样长。"""
+    import inspect  # noqa: PLC0415
+
+    fpe = _find_point_ends()
+    src = inspect.getsource(fpe.main)
+    assert '"--climax-tail", type=float, default=2.2' in src
+    assert '"--tail", type=float, default=1.2' in src
+    assert 2.2 > 1.2, "climax-tail 的默认值必须比普通 tail 长"
+
+
+def test_之后没有死球时返回None不是抛错():
+    fpe = _find_point_ends()
+    got = fpe.suggest_cut(999.0, [10.0, 20.0], tail=1.2, climax_tail=2.2, climax_wants=set())
+    assert got is None
+
+
+def test_climax_wants按精确值匹配不做容差():
+    """转折点是人显式挑出来的 --ends 值，不该靠"差不多"去猜——传的是 49.8
+    就必须精确等于 49.8，写成 49.7 不该被当成同一个点。"""
+    fpe = _find_point_ends()
+    got = fpe.suggest_cut(49.8, [50.0], tail=1.2, climax_tail=2.2, climax_wants={49.7})
+    assert got["climax"] is False
+
+
+def _vp():
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import versus_poster  # noqa: PLC0415
+
+    return versus_poster
+
+
+def _title_px(vp, hook: str) -> int:
+    _, css = vp._solo_body({"eyebrow": "网球有故事", "layout": "solo", "hook": hook,
+                            "portrait": {"image": "assets/logo/brand/icon.png"}})
+    hit = re.search(r"\.storytitle\{font-size:(\d+)px", css)
+    assert hit, f"CSS 里没有 storytitle 字号：{css[:200]}"
+    return int(hit.group(1))
+
+
+def test_一两行的短钩子拿到更高的字号上限():
+    """现在唯一的"视觉锤"候选（钩子本身）字号原来是死的 96px 封顶，
+    一个四字爆点和一个九字长句渲出来几乎一样大。"""
+    vp = _vp()
+    assert _title_px(vp, "赢了") == vp.SHORT_HOOK_TITLE_PX
+    assert _title_px(vp, "赢了\n真赢了") == vp.SHORT_HOOK_TITLE_PX
+
+
+def test_三行钩子仍然封顶96不许跟着涨():
+    """`STORYCOPY_TOP` 那段最坏情况的账是按三行 96px 算的——3 行钩子涨了
+    上限就要重新核那笔账，所以短句加成只放开给 1~2 行。"""
+    vp = _vp()
+    assert _title_px(vp, "赢\n了\n啊") == 96
+
+
+def test_长句本来就撑不到新上限不受影响():
+    vp = _vp()
+    long_line = "这是一句写得很长很长根本用不上抬高上限的钩子文案"
+    assert _title_px(vp, long_line) < 96
+
+
+def test_短钩子新上限不会打破三行96px的最坏情况上界():
+    """`SHORT_HOOK_TITLE_PX` 只放开给 ≤2 行——2 行在这个字号下的总高，
+    必须仍然矮于 3 行 96px 的总高（`STORYCOPY_TOP` 的最坏情况就是按后者算的），
+    否则放开 1~2 行本身就会制造一个新的、没被那笔账覆盖的溢出场景。"""
+    vp = _vp()
+    two_line_worst = round(2 * vp.SHORT_HOOK_TITLE_PX * 1.24)
+    three_line_worst = round(3 * 96 * 1.24)
+    assert two_line_worst < three_line_worst
+
+
+def test_scoreboard_html里决胜盘的格子真的带着那个类(monkeypatch):
+    vp = _vp()
+    monkeypatch.setattr(vp, "_fetch_match_duration", lambda source, where: "1:16")
+    cover = {
+        "winner": "萨巴伦卡", "result": "6-3 4-6 6-4",
+        "scoreboard": {"court": "Centre Court", "duration_source": {"url": "fixture"}},
+        "matchup": [{"name": "萨巴伦卡", "country": "BLR", "rank": 1},
+                    {"name": "张帅", "country": "CHN", "rank": 62}],
+    }
+    html_out = vp._scoreboard_html(cover)
+    assert html_out.count("score-set--deciding") == 1, (
+        "三盘只该有一处决胜盘描边：\n" + html_out)
+    # 决胜盘一定是最后一个 score-set 格子，不是随便哪一个
+    last_set = html_out.rfind('<div class="score-set')
+    assert "score-set--deciding" in html_out[last_set:last_set + 60]
+
+    straight = vp._scoreboard_html({**cover, "result": "6-3 6-4"})
+    assert "score-set--deciding" not in straight, "直落两盘不该出现决胜盘描边"
+
+
+def test_顶栏比分逐盘上色赢盘绿输盘灰():
+    """和比分板同一套判据——那一盘里谁的局数大，不是谁赢了整场。"""
+    reel = _reel()
+    # 萨巴伦卡赢下整场；result "6-3 4-6 6-4" 是赢家视角：第二盘她输了（4<6）
+    line = reel.colorize_topbar_score("萨巴伦卡 6-3 4-6 6-4 张帅")
+    assert line.startswith("萨巴伦卡 ")
+    assert line.endswith(" 张帅")
+    # 第一盘 6-3：赢家那一盘也赢了，左边（6）应该是 setwin 色
+    assert f"{reel.TOPBAR_SETWIN_ASS}6{reel.TOPBAR_RESET_ASS}-" \
+           f"{reel.TOPBAR_SETLOSE_ASS}3{reel.TOPBAR_RESET_ASS}" in line
+    # 第二盘 4-6：赢家那一盘输了，左边（4）应该是 setlose 色
+    assert f"{reel.TOPBAR_SETLOSE_ASS}4{reel.TOPBAR_RESET_ASS}-" \
+           f"{reel.TOPBAR_SETWIN_ASS}6{reel.TOPBAR_RESET_ASS}" in line
+
+
+def test_顶栏上色带抢七小分():
+    reel = _reel()
+    line = reel.colorize_topbar_score("甲 7-6(5) 甲 乙")
+    assert "(5)" in line
+
+
+def test_顶栏上色不会把人名当成比分():
+    reel = _reel()
+    # 人名里没有 "数字-数字" 这个形状，_SET_RE 匹配不上，原样穿过
+    line = reel.colorize_topbar_score("萨巴伦卡 6-3 张帅")
+    assert "萨巴伦卡" in line and "张帅" in line
+    assert line.count(reel.TOPBAR_RESET_ASS) == 2, "只有一盘，只该出现两次颜色重置"
+
+
+def test_顶栏配色和比分板同一套数值():
+    """两套渲染引擎（HTML/CSS 和 ASS）不共享代码，颜色是手抄过来的一份——
+    这条锁死数值本身，换配色时一眼看出两处都要改。"""
+    reel = _reel()
+    assert reel.TOPBAR_SETWIN_ASS == r"{\c&H005AF6C6&}"    # #c6f65a 的 BGR
+    assert reel.TOPBAR_SETLOSE_ASS == r"{\c&H009CA793&}"   # #93a79c 的 BGR
+
+
+def test_关键分脉冲相对事件起点转毫秒():
+    reel = _reel()
+    tags = reel._topbar_pulse_tags([50.0], start=10.0, end=200.0)
+    # 50s 相对 10s 起点是 40000ms
+    assert "\\t(39800,40000,\\fscx115\\fscy115)" in tags
+    assert "\\t(40000,40200,\\fscx100\\fscy100)" in tags
+
+
+def test_关键分脉冲落在窗口外时丢弃并出声(capsys):
+    reel = _reel()
+    tags = reel._topbar_pulse_tags([5.0, 999.0], start=10.0, end=200.0)
+    assert tags == ""
+    assert "落在比赛画面窗口" in capsys.readouterr().out
+
+
+def test_没有pulse_at时脉冲标签是空字符串():
+    reel = _reel()
+    assert reel._topbar_pulse_tags([], start=10.0, end=200.0) == ""
+
+
+def test_write_topbar_ass不传pulse_at行为不变(tmp_path):
+    reel = _reel()
+    path = reel.write_topbar_ass(("赛事 轮次", "萨巴伦卡 6-3 6-4 张帅"),
+                                  10.0, 200.0, tmp_path / "t.ass")
+    text = path.read_text(encoding="utf-8")
+    assert "\\t(" not in text, "不给 pulse_at 就不该出现任何缩放动画标签"
+    assert reel.TOPBAR_SETWIN_ASS.strip("{}") in text, "比分逐盘上色是默认行为，不是可选项"
+
+
+def test_write_topbar_ass给了pulse_at会写进body那一行(tmp_path):
+    reel = _reel()
+    path = reel.write_topbar_ass(("赛事 轮次", "萨巴伦卡 6-3 6-4 张帅"),
+                                  10.0, 200.0, tmp_path / "t.ass", pulse_at=[50.0])
+    text = path.read_text(encoding="utf-8")
+    assert "\\fscx115\\fscy115" in text
+    # 脉冲标签必须出现在 BODY 那一行的 Dialogue 里，不能串到 HEAD 那一行
+    head_line = next(ln for ln in text.splitlines() if ",HEAD,," in ln)
+    body_line = next(ln for ln in text.splitlines() if ",BODY,," in ln)
+    assert "\\fscx115" not in head_line
+    assert "\\fscx115" in body_line
