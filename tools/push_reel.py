@@ -268,6 +268,49 @@ def spec_of(copy_path: Path) -> dict:
     return json.loads(spec.read_text(encoding="utf-8"))
 
 
+def pin_comment(spec: dict) -> str:
+    """末屏那一问 → 发布后的置顶评论候选。
+
+    **来路。** `docs/short-video-benchmark-strategy.md` 行动清单 B-2：末屏一问
+    是这类短片换评论区的唯一抓手，而问出去之后没人接第一句，评论区就是冷的。
+    发布 SOP 里本来就有「回复前 10 条有效评论」，这里把「第 0 条」也备好——
+    复制页多一格「置顶评论」，发完顺手粘上去。
+
+    抽取是机械的：**最后一个带旁白的段里，收尾处的连续问句串**。
+
+    - 连抛两问整串都要（鹰眼那条本来就连抛两问，那是写稿的选择不是重复）；
+    - 问句后面跟着的「评论区聊聊。」是邀请不是问题，不带——图文线的规矩
+      本来就禁这类空话进正文，评论里同样多余；
+    - **问句不在收尾就不算**（只认落在最后两句里的问句串）：中段的设问是
+      行文，不是留给读者的那一问。「收尾要落在一问上」那条测试保证合规
+      spec 都抽得到；抽不到的（老片、interview 线）返回空串，调用方要出声。
+    """
+    segs = [s for s in (spec.get("segments") or [])
+            if str(s.get("narration") or "").strip()]
+    if not segs:
+        return ""
+    text = str(segs[-1]["narration"]).strip()
+    sents = [m.strip() for m in re.findall(r"[^。！？]+[。！？]?", text) if m.strip()]
+    runs: list[list[str]] = []
+    cur: list[str] = []
+    for s in sents:
+        if s.endswith("？"):
+            cur.append(s)
+        else:
+            if cur:
+                runs.append(cur)
+            cur = []
+    if cur:
+        runs.append(cur)
+    if not runs:
+        return ""
+    last = runs[-1]
+    # 问句串的最后一问必须落在全文最后两句里（自己收尾，或后面只跟一句邀请）
+    if last[-1] not in sents[-2:]:
+        return ""
+    return "".join(last)
+
+
 # 推送元数据里能从 spec 自己算出来的那几项，命令行只作覆盖。
 _META_FIELDS = ("matchup", "score", "event", "summary", "lead")
 
@@ -693,8 +736,17 @@ def main() -> int:
         # 应该）排在渲染**之前**跑并当场提交：Pages 的发布就和七分钟的渲染
         # 并行了。原来它排在渲染之后，提交完 Pages 才开始发布，推送那一步于是
         # 原地探 404 探掉四分钟（run 30624808733：连续 12 次 404，第 13 次才中）。
+        #
+        # 置顶评论两种情况都要出声：默默空着的话，「这条没有末屏一问」和
+        # 「抽取坏了」长得一模一样。
+        pin = pin_comment(spec_of(Path(args.copy)))
+        if pin:
+            print(f"[置顶评论] 已抽出末屏一问：{pin}")
+        else:
+            print("[置顶评论] spec 里没抽到收尾问句，复制页不带置顶评论")
         page.parent.mkdir(parents=True, exist_ok=True)
-        page.write_text(to_copy_page(copy_text), encoding="utf-8")
+        page.write_text(to_copy_page(copy_text, pinned_comment=pin or None),
+                        encoding="utf-8")
         print(f"已写复制页：{page}（{len(copy_text)} 字）\n  发布后是 {copy_url}\n"
               "  这一步必须排在 git commit 之前，否则它进不了仓库。")
         return 0
