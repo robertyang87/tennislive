@@ -21,6 +21,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -105,6 +106,8 @@ def main() -> int:
     ap.add_argument("--rise", type=float, default=2.2, help="抬到基线的几倍")
     ap.add_argument("--hold", type=float, default=0.30, help="要维持多久")
     ap.add_argument("--gap", type=float, default=3.0, help="两次之间至少隔多久")
+    ap.add_argument("--json", action="store_true",
+                     help="只吐 {hits: [...]} 供 tools/find_hot_moments.py 之类的下游工具消费，不打印人看的报告")
     args = ap.parse_args()
 
     preflight()
@@ -153,6 +156,12 @@ def main() -> int:
           f"  ← 门槛 {args.rise}x 要落在这个量级里才有意义")
 
     hits = rises(env, hop, args.rise, args.hold, args.gap)
+    if args.json:
+        # 只给下游拼时间轴的工具，不重复人看报告里的判断——那份判断（门槛对不
+        # 对、要不要怀疑片子）仍然要看上面已经打出来的分布，--json 不省这一步。
+        print(json.dumps({"hits": hits, "duration_s": round(dur, 2),
+                          "rise": args.rise, "hold": args.hold, "gap": args.gap}))
+        return 0
     print(f"\n检出 {len(hits)} 个「声音抬起来」的时刻"
           f"（{args.rise}x 维持 {args.hold}s，间隔≥{args.gap}s）")
     if not hits:

@@ -534,13 +534,18 @@ def _scoreboard_html(cover: dict) -> str:
     # 名字那列给 1.55fr：`A. SABALENKA` 比盘分宽得多，等分会把它挤到换行。
     columns = " ".join(["minmax(0,1.55fr)"] + ["minmax(86px,1fr)"] * len(scores))
 
+    # **决胜盘（打满了才有的最后一盘）单独加一道描边**——账号所有者反复提到的
+    # 跌宕（「二比五落后」「三个赛点没给」）常常就发生在这一盘，但比分板此刻对
+    # 「这盘不一样」完全没有反应：文案在讲跌宕，图表却装若无其事。
+    # 只有真的打满（>2 盘）才有决胜盘，直落两盘赢下的比赛没有这一档。
     cells = []
-    for left, right, tiebreak in scores:
+    for idx, (left, right, tiebreak) in enumerate(scores):
         left_class = "setwin" if left > right else "setlose"
         right_class = "setwin" if right > left else "setlose"
         tb = f"<sup>({tiebreak})</sup>" if tiebreak else ""
+        deciding = " score-set--deciding" if len(scores) > 2 and idx == len(scores) - 1 else ""
         cells.append(
-            '<div class="score-set">'
+            f'<div class="score-set{deciding}">'
             f'<span class="score-number {left_class}">{left}{tb}</span>'
             f'<span class="score-number {right_class}">{right}</span>'
             '</div>')
@@ -710,6 +715,11 @@ def _cutout_body(cover: dict, versus: dict, names: list) -> tuple[str, str]:
     return body, extra
 
 
+# 短钩子（≤2 行）的标题字号上限。见 `_solo_body` 里的注释：2 行 124px 的总高
+# （2×124×1.24≈308px）比 3 行 96px 的总高（357px，`STORYCOPY_TOP` 那笔"最坏
+# 情况"的账基于这个数）矮，所以只放开 1~2 行不会打破已经验证过的上界。
+SHORT_HOOK_TITLE_PX = 124
+
 # 台头药丸的顶边（px，画布 1080×1440）。**老版一行赛果时药丸落在 502~536**
 # （量的是已发的 eala-parks / shang-rublev 两张海报），520 取在中间。
 # 2026-08-07/08 两次「往下移」都只挪标题和比分板、药丸钉死不动——直到
@@ -825,7 +835,17 @@ def _solo_body(cover: dict) -> tuple[str, str]:
     # 标题字号按**最长那一行**算，别写死。左右各留 70px，可用 940px；一个汉字
     # 约占一个字号的宽，写死 96px 时 10 个字就是 960px——**顶出去自动折行**，
     # 而钩子本来已经手写好了断行，再折一次就多出一个孤行。
-    title_px = min(96, int(940 / max((len(ln) for ln in lines), default=1)))
+    #
+    # **短句的上限比长句高一档，但只放开给 1~2 行的钩子。** 原来无论几行都封顶
+    # 96px，一个四字爆点和一个九字长句渲出来几乎一样大（940/4=235 和 940/9=104，
+    # 两者都在 96 附近封顶或接近封顶）——现在唯一的"视觉锤"字号是死的。
+    # ⚠️ **3 行钩子不许跟着涨**：`STORYCOPY_TOP` 那段"最坏情况"是按三行 96px 算的
+    # （557 行注释 + `test_台头药丸的位置不跟着比分板漂` 那条测试），涨了 3 行的
+    # 上限就要重新核那笔账。而 2 行 124px 的总高（2×124×1.24≈308px）本来就比
+    # 3 行 96px 的总高（3×96×1.24≈357px）矮，所以只放开 1~2 行不会打破那个
+    # 已经验证过的上界——不用碰 `STORYCOPY_TOP` 或那条测试。
+    cap = SHORT_HOOK_TITLE_PX if len(lines) <= 2 else 96
+    title_px = min(cap, int(940 / max((len(ln) for ln in lines), default=1)))
     column = html.escape(str(cover.get("eyebrow", "网球有故事")))
     if above:
         if not above.get("image"):
@@ -936,6 +956,15 @@ __SCRIM__
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
  letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
 .score-set{display:flex;flex-direction:column;border-left:2px solid rgba(244,251,247,.9)}
+/* **决胜盘单独描边**：这一盘打满了才存在，往往正是钩子讲的那段跌宕
+   （「二比五落后」「三个赛点没给」）。左边框换成品牌绿并再粗一档，加一层
+   14% 不透明度的品牌绿垫底——那是「一屏只留一个强调色」允许的中间态：
+   够醒目，但不跟真正的强调色（赢盘数字）抢。不引入第二种颜色，
+   只是同一种绿分了层级。
+   ⚠️ **3px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
+   2px（同一天那次「细线在压缩后的视频里几乎看不见」），所以这一档要跟着
+   走到 3px——写 2px 的话「加粗」这半句就不成立了，只剩色相在区分。 */
+.score-set--deciding{border-left:3px solid #c6f65a;background:rgba(198,246,90,.14)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:48px;font-weight:700}
 .score-number+.score-number{border-top:2px solid rgba(244,251,247,.9)}

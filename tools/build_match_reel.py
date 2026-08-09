@@ -2270,6 +2270,59 @@ CUT_MODEL = "isnet-general-use"
 CUT_MIN_SHARE = 0.06
 
 
+#: 发丝/背景对比度预警门槛（RGB 欧氏距离，0~441）。**未经真实事故帧验证过的
+#: 起始值**，不是从黄泽林那次实测反推的——那张帧没有留存。低于这个数打一句
+#: 警告，高多少算「安全」还需要下次真撞上这类帧时用真数据校一遍。
+HAIR_BG_CONTRAST_WARN = 40.0
+
+
+def _hair_background_contrast(im, cut, sample_width_frac: float = 0.3) -> float | None:
+    """沿头顶 alpha 边界采样，比较发丝区域和紧邻背景的 RGB 距离。
+
+    对应黄泽林那次真实事故：白色发带压在白色背景大字上，`post_process_mask`
+    把头顶一起切掉，人变成了光头——`pick_cover_frames.py` 的四条闸门里没有
+    一条查"头和背景撞不撞色"，是渲出来才发现的。
+
+    **这只是预警，不是硬闸**：`share < CUT_MIN_SHARE` 那道闸已经卡住"抠空了"，
+    这条卡的是"抠是抠到了，但头顶那圈可能被吃掉"——仍然要求渲出来人眼终审，
+    只是把这条线索从"渲染完才发现"提前到抠图这一步就打出来。
+
+    `im` 是抠图**之前**的原始裁切帧（RGB，还留着真实背景色）；`cut` 是抠图
+    **之后**的结果（RGBA，alpha 标出哪里是人）。两者尺寸必须一致。
+    """
+    import numpy as np  # noqa: PLC0415
+
+    alpha = np.array(cut.getchannel("A"))
+    rgb = np.array(im.convert("RGB"))
+    h, w = alpha.shape
+    opaque = alpha > 16
+    cols_any = np.where(opaque.any(axis=0))[0]
+    if cols_any.size == 0:
+        return None
+    # 头顶附近取不透明区域横向中段那一截，别用最左/最右——容易碰到手或球拍，
+    # 那不是"头顶"，采出来的对比度和这次要查的事情无关。
+    lo, hi = int(cols_any.min()), int(cols_any.max())
+    span = hi - lo
+    c0 = lo + int(span * (0.5 - sample_width_frac / 2))
+    c1 = lo + int(span * (0.5 + sample_width_frac / 2))
+    if c1 <= c0:
+        c0, c1 = lo, hi + 1
+    band_cols = slice(max(c0, 0), min(c1, w))
+
+    rows_any = np.where(opaque[:, band_cols].any(axis=1))[0]
+    if rows_any.size == 0:
+        return None
+    top = int(rows_any.min())
+
+    bg_rows = slice(max(0, top - 12), max(0, top - 2))
+    hair_rows = slice(top + 2, min(h, top + 12))
+    bg_px = rgb[bg_rows, band_cols].reshape(-1, 3)
+    hair_px = rgb[hair_rows, band_cols].reshape(-1, 3)
+    if bg_px.size == 0 or hair_px.size == 0:
+        return None
+    return float(np.linalg.norm(bg_px.mean(axis=0) - hair_px.mean(axis=0)))
+
+
 def _cut_person(source: Path, panel: dict, tag: str, workdir: Path,
                 scratch: Path | None = None) -> str:
     """从本场源片抓一帧、裁出人、抠掉背景 —— 封面人物的首选来源。
@@ -2342,10 +2395,15 @@ def _cut_person(source: Path, panel: dict, tag: str, workdir: Path,
                 f"——{panel['frame_at']}s 那一帧多半抠到了球拍或边线，不是人。\n"
                 "换一帧（挑**头部和背后背景对比强**的那种），或者退回官方抠图："
                 'top/bottom 写 {"cutout": "assets/players/<...>.png"}。')
+        contrast = _hair_background_contrast(im, cut)
         cut = cut.crop(bbox)
         cut.save(out)
     print(f"    [封面素材] {tag} 新抠 {out.name}（抽帧抠图 {panel['frame_at']}s"
           f" → {cut.size[0]}×{cut.size[1]}，占裁切框 {share:.1%}）")
+    if contrast is not None and contrast < HAIR_BG_CONTRAST_WARN:
+        print(f"    [封面素材] ⚠️ {tag} 头顶和背景颜色接近（RGB 距离 {contrast:.0f}，"
+              f"门槛 {HAIR_BG_CONTRAST_WARN:.0f}）——像黄泽林那次白发带压白背景，"
+              "发丝可能被抠掉了一圈，渲出来务必看一眼头顶轮廓")
     raw.unlink(missing_ok=True)
     return str(out)
 
@@ -3090,6 +3148,49 @@ def narration_estimates(segments) -> list[tuple[int, float, float]]:
     return out
 
 
+#: 判一句旁白是不是"数据播报"：比分（"六比四"/"6:4"）、破发点/盘点/赛点/局点、
+#: 百分比、排名/种子。**只认这些具体模式，不认"有没有数字"**——中文数字
+#: （一二三…）在"一直""一样""一起"这类日常词里到处都是，按"有没有数字字符"
+#: 判会让几乎每句话都命中，这条软提示就成了噪音。见 `narration_density_hint`。
+_STAT_PATTERN = re.compile(
+    r"[一二三四五六七八九十百千0-9]+\s*[比:：]\s*[一二三四五六七八九十百千0-9]+"
+    r"|破发点|盘点|赛点|局点"
+    r"|[0-9]+\s*%|百分之[一二三四五六七八九十百千0-9]+"
+    r"|排名|世界第|种子")
+
+#: 中段"全在报数据"的比例超过这个数才提示。**不设阈值硬闸**——这条是判断题
+#: （「不要平白叙事」管的是文风，机械挡不住），阈值定得宽一点，宁可漏报也别
+#: 变成每条 spec 都要应付的噪音。
+STAT_HEAVY_RATIO = 0.75
+
+
+def narration_density_hint(segments) -> str | None:
+    """全片中段旁白有没有可能通篇都在报数据、一次情绪停顿都没有。
+
+    **这只是一条粗代理，不是判定。** `_STAT_PATTERN` 只认比分/破发点/盘点/
+    赛点/百分比/排名这几种具体写法，判不出"这句话有没有情绪"——它回答的是
+    更窄的一个问题：这条片子除了开头钩子和收尾一问，中段是不是每一句都在
+    报数。真要判"讲没讲清楚走向、有没有情绪停顿"，仍然要把稿子通读一遍——
+    「不要平白叙事」那条本来就是判断题，机械挡不住。
+
+    首尾各留一段不算进中段：开场钩子按设计就该有落点/坐标这类信息句，
+    收尾一问也常常带着数据收尾，两头都不是这条要拦的对象。
+    """
+    with_narration = [s.narration for s in segments if s.narration.strip()]
+    if len(with_narration) < 4:
+        return None      # 段落太少，"中段"这个概念本身就不成立
+    middle = with_narration[1:-1]
+    stat_heavy = [bool(_STAT_PATTERN.search(t)) for t in middle]
+    ratio = sum(stat_heavy) / len(stat_heavy)
+    if ratio < STAT_HEAVY_RATIO:
+        return None
+    return (f"[节奏] 中段 {len(middle)} 段旁白里 {sum(stat_heavy)} 段在报数据"
+            f"（比分/破发点/百分比这类，占 {ratio:.0%}）——这条只是粗代理，"
+            "不是判定，但比例这么高时通读一遍稿子自查：除了末屏那一问，"
+            "中段有没有至少一次停顿、转折或纯情绪的句子？"
+            "「不要平白叙事」「每一拍留一个问题」管的正是这件事。")
+
+
 def column_base_style(spec: dict) -> tuple[str, str]:
     """这条片子的**基调**风格，按栏目来；顺带把判断依据打进日志。
 
@@ -3676,10 +3777,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     topbar_ass = None
     if topbar:
         match_end = cover_secs + sum(s.length for s in segments)
+        # `pulse_at` 是可选的、不校验形状的旁路字段（不像 line1/line2 那样
+        # 进 `_topbar_lines` 的合同）——给错了/给的时刻落在窗口外，
+        # `_topbar_pulse_tags` 会自己出声，不会拖垮整条渲染。
+        raw_pulse = (spec.get("topbar") or {}).get("pulse_at") or []
+        pulse_at = [float(t) for t in raw_pulse] if isinstance(raw_pulse, list) else []
         topbar_ass = write_topbar_ass(
-            topbar, cover_secs, match_end, outdir / "topbar.ass")
+            topbar, cover_secs, match_end, outdir / "topbar.ass", pulse_at=pulse_at)
         print(f"顶栏 {topbar_ass.name}：封面后 {cover_secs:.2f}s 起，"
-              f"比赛画面结束 {match_end:.2f}s 止；片尾不挂顶栏")
+              f"比赛画面结束 {match_end:.2f}s 止；片尾不挂顶栏"
+              + (f"，{len(pulse_at)} 处关键分脉冲" if pulse_at else ""))
     # 成片这一步的画质**不降**：preset slow / crf 18 原样保留。省时间要从
     # 中间产物和重复解码上省，不能从最后交出去的这一份上省。
     with stage("烧字幕+成片"):
@@ -3979,11 +4086,129 @@ def _topbar_lines(spec: dict) -> tuple[str, str] | None:
     return lines  # type: ignore[return-value]
 
 
+#: BODY 样式的 PrimaryColour。**一个出处**：样式行和"复位"标签都从它来——
+#: 写两处必分叉，而分叉的样子是「复位之后颜色和这一行本来的颜色差一点点」，
+#: 肉眼几乎看不出来。
+TOPBAR_BODY_COLOUR = "&H00DBE2D5"
+
+#: ASS 内联颜色标签（`&HBBGGRR&`，字节序和 CSS 的 `#RRGGBB` 相反）。跟比分板
+#: 同一套配色（`versus_poster.py` 的 `.setwin`/`.setlose`/`.setdash`）——
+#: HTML/CSS 和 ASS 是两套不共享代码的渲染引擎，数值只能抄一份过来，靠
+#: `test_顶栏配色跟着比分板走` 盯着别漂（那条**从 versus_poster 的 CSS 里
+#: 现抠现折算**，不写死 hex，所以比分板改色它会当场红）。
+#:
+#: ⚠️ **输盘不压暗，靠色相区分。** 2026-08-09 比分板把 `.setlose` 从灰
+#: `#93a79c` 改成正文同款近白，理由是「灰在压缩后的视频里太接近底色，读不出
+#: 谁输了这一盘」——而顶栏是**直接烧进 H.264 的**，比那张静态海报更吃这个
+#: 问题。所以这里跟着走：输的那个数字就用这一行正文本来的颜色
+#: （`TOPBAR_BODY_COLOUR`），赢的给品牌绿，两者靠**色相**分开，不靠明暗。
+#: 第一版照抄了改之前的灰，是在 rebase 到 main 时才发现口径已经变了。
+TOPBAR_SETWIN_ASS = r"{\c&H005AF6C6&}"
+TOPBAR_SETLOSE_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
+#: 连字符仍然压暗一档——比分板那次**只改了比分本身**，`.setdash` 没动
+#: （「连字符是分隔符不是内容」）。
+TOPBAR_SETDASH_ASS = r"{\c&H009CA793&}"
+
+#: ⚠️ **复位不能用 `{\r}`，尽管 CLAUDE.md 那条规矩是这么写的。**
+#:
+#: 那条规矩（「同一行里换字体／颜色，每一段都要先 `\r`」）的前提是这一行
+#: **没有动画**。`\r` 复位的是整个样式，**连同还在跑的 `\t()` 一起清掉**——
+#: 而 `pulse_at` 正是往同一行上挂 `\t()`。
+#:
+#: 真渲出来量过（1080×1440 黑底，`萨巴伦卡 6-3 4-6 6-4 张帅`，脉冲 115%）：
+#:
+#:     不上色（没有任何复位标签）   292px → 336px   +15.1%  ← 满量程，对
+#:     上色 + 用 `{\r}` 复位        292px → 311px   +6.5%   ← 只有名字在动
+#:
+#: 也就是说 `\r` 之后的整段比分**一动不动**，还在脉冲的恰好是前面那个名字——
+#: 而脉冲存在的全部理由就是让**比分**那一下被多看一眼，方向正好反了。
+#: 而且它**不报错**：ASS 文本里 `\fscx115` 明明白白写着，只有量渲染出来的
+#: 宽度才看得见。又一次「断言全绿不等于页面对」。
+#:
+#: 所以这一行只复位**它自己改过的那一项**（颜色）。CLAUDE.md 那条规矩担心的
+#: 是「逐项写回去，以后加一项忘一项」——这里的护栏是
+#: `test_顶栏复位不许用r否则脉冲被清掉`：它真渲两版量宽度，谁把复位换回 `\r`、
+#: 或者往这一行加了第二种属性覆盖而没跟着复位，都会当场红。
+TOPBAR_RESET_ASS = "{\\c" + TOPBAR_BODY_COLOUR + "&}"
+
+
+def colorize_topbar_score(line: str) -> str:
+    """顶栏第二行里每一盘比分按"赢盘绿输盘灰"上色，其余原样保留。
+
+    ⚠️ **判据和 `versus_poster._sets_html` 一样：那一盘里谁的局数大，不是
+    谁赢了整场。** `line` 是 `_expected_topbar_score_line` 拼出来的
+    `"{赢家} {result} {输家}"`——`result` 每一盘左边那个数永远是"赢家在
+    那一盘拿到的局数"，可能小于右边（赢家那一盘输了）。按"左边是不是更大"
+    上色，不是按"左边是谁"。
+
+    只有匹配得上 `_SET_RE` 的 token（"6-3"、"7-6(5)"）才上色，姓名 token
+    原样穿过——两个正则用的是同一个 `_SET_RE`，不会把人名误判成比分。
+    """
+    from versus_poster import _SET_RE  # noqa: PLC0415
+
+    parts = []
+    for token in line.split(" "):
+        m = _SET_RE.match(token)
+        if not m:
+            parts.append(token)
+            continue
+        left, right, tb = m.group(1), m.group(2), m.group(3)
+        lcolor = TOPBAR_SETWIN_ASS if int(left) > int(right) else TOPBAR_SETLOSE_ASS
+        rcolor = TOPBAR_SETWIN_ASS if int(right) > int(left) else TOPBAR_SETLOSE_ASS
+        # 连字符压暗一档，和比分板的 `.setdash` 同一个理由：它是分隔符不是内容。
+        piece = (f"{lcolor}{left}{TOPBAR_SETDASH_ASS}-"
+                 f"{rcolor}{right}{TOPBAR_RESET_ASS}")
+        if tb:
+            piece += f"({tb})"
+        parts.append(piece)
+    return " ".join(parts)
+
+
+#: 关键分脉冲：放大到多少、维持多久（毫秒）。**只放大不变色**——颜色已经被
+#: `colorize_topbar_score` 用掉了，脉冲这一层只负责"这一刻多看一眼"。
+TOPBAR_PULSE_SCALE = 115
+TOPBAR_PULSE_MS = 200
+
+
+def _topbar_pulse_tags(pulse_at: list[float], start: float, end: float) -> str:
+    """把一串"关键分发生在第几秒"（视频绝对时间）换成贴在 BODY 行开头的
+    `\\t()` 缩放动画标签。
+
+    ASS 的 `\\t(t1,t2,tags)` 里 t1/t2 是**相对这条 Dialogue 事件自己开始时刻**
+    的毫秒数，不是视频绝对时间——所以每个 `pulse_at` 先减去 `start` 再转毫秒。
+    落在 `[start, end]` 之外的时刻会被跳过并不报错（转折点时间是人工标注的，
+    掐得不准没必要让整条顶栏渲不出来），但**一个都没落进窗口时要出声**，
+    不然「时间标错了」和「这条片子没有转折点」长得一模一样。
+    """
+    tags = []
+    dropped = 0
+    for t in pulse_at:
+        rel_ms = round((t - start) * 1000)
+        if rel_ms < TOPBAR_PULSE_MS or rel_ms > round((end - start) * 1000) - TOPBAR_PULSE_MS:
+            dropped += 1
+            continue
+        up = f"\\t({rel_ms - TOPBAR_PULSE_MS},{rel_ms},\\fscx{TOPBAR_PULSE_SCALE}\\fscy{TOPBAR_PULSE_SCALE})"
+        down = f"\\t({rel_ms},{rel_ms + TOPBAR_PULSE_MS},\\fscx100\\fscy100)"
+        tags.append(up + down)
+    if pulse_at and dropped == len(pulse_at):
+        print(f"[顶栏] ⚠️ topbar.pulse_at 给了 {len(pulse_at)} 个时刻，"
+              f"全部落在比赛画面窗口 [{start:.1f}s, {end:.1f}s] 之外——"
+              "多半是标错了时刻，不是这条片子没有转折点")
+    return "{" + "".join(tags) + "}" if tags else ""
+
+
 def write_topbar_ass(lines: tuple[str, str], start: float, end: float,
-                     path: Path) -> Path:
-    """写比赛画面专用顶栏：第一行标题体，第二行正常中文体。"""
+                     path: Path, pulse_at: list[float] | None = None) -> Path:
+    """写比赛画面专用顶栏：第一行标题体，第二行正常中文体（比分逐盘上色）。
+
+    `pulse_at`：关键分时刻（视频绝对秒数），比分行会在这几个时刻短暂放大再
+    弹回——账号所有者要"持续引爆的爆点"，topbar 是全片曝光最长却最哑的元素，
+    这是成本最低的一种"让它动起来"。**可选**，不给就是原来的样子。
+    """
     if end <= start:
         raise ReelError(f"顶栏结束时间 {end:.2f}s 不晚于开始时间 {start:.2f}s")
+    pulse_tags = _topbar_pulse_tags(pulse_at, start, end) if pulse_at else ""
+    body_text = pulse_tags + colorize_topbar_score(lines[1])
     body = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {VIDEO_W}
@@ -3994,12 +4219,12 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: HEAD,{TOPBAR_HEAD_FONT},{TOPBAR_HEAD_SIZE},&H00F4FBF7,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,0,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_HEAD_TOP},1
-Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},&H00DBE2D5,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
+Style: BODY,{TOPBAR_BODY_FONT},{TOPBAR_BODY_SIZE},{TOPBAR_BODY_COLOUR},&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,1.5,0,8,{TOPBAR_MARGIN_H},{TOPBAR_MARGIN_H},{TOPBAR_BODY_TOP},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},HEAD,,0,0,0,,{lines[0]}
-Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{lines[1]}
+Dialogue: 0,{_ass_timestamp(start)},{_ass_timestamp(end)},BODY,,0,0,0,,{body_text}
 """
     path.write_text(body, encoding="utf-8")
     return path
@@ -4324,6 +4549,9 @@ def main() -> int:
                       "（或本地 `render --check-narration`，要能联网）")
             else:
                 print("\n[估旁白] 每段都留着一个误差以上的余量，估得再保守也装得下。")
+        density_hint = narration_density_hint(segments)
+        if density_hint:
+            print(f"\n{density_hint}")
         # **这条命令查的是数，查不了画面。** 「这一段配的话和画面搭不搭」
         # 「近端是谁」——只有眼睛判得了，而判它要的东西（缩略图墙）**也已经
         # 提交进仓库了**。不在这儿指一句的话，下一个人仍然会去渲一趟四分钟的
