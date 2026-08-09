@@ -145,8 +145,13 @@ jobs:
           # CPU 上装不动/不需要的：deepspeed（要编译）、tensorrt、
           # onnxruntime-gpu（用 CPU 版顶上）、torch 系（上面已装 CPU 版，
           # 别让它重装 GPU 版）、triton、以及 --extra-index-url 那些行
-          grep -vE "^(--|#)|deepspeed|tensorrt|onnxruntime|torch|triton" \
+          # openai-whisper 的老 setup.py 要 pkg_resources，而构建隔离环境装的
+          # 新 setuptools（>=82）把它删了——降级 setuptools 后关掉隔离单独装，
+          # 并从批量清单里滤掉
+          grep -vE "^(--|#)|deepspeed|tensorrt|onnxruntime|torch|triton|openai-whisper" \
             "$COSYVOICE_DIR/requirements.txt" > /tmp/cosy-req.txt
+          pip install -q "setuptools<81" wheel
+          pip install -q --no-build-isolation openai-whisper
           pip install -q onnxruntime
           pip install -q -r /tmp/cosy-req.txt
           echo "== 拉模型（约 2GB）=="
