@@ -5478,7 +5478,11 @@ _OPENINGS: dict[str, dict] = {
         # 跟着第 ④ 屏走。⚠️ 不能用第 ① 屏那张多伦多记分牌照——1920×1080 的
         # 抽帧铺 1080×1440 只有 0.75x，会被 test_封面图不许被放大 拦下；
         # 这张和林茨那张（3-4 屏各自的原图）是仅有的两张过 1.00x 门槛的。
-        "image": "assets/explainer/svitolina-handshake/ao2026_r4_andreeva_walkoff.jpg",
+        # 封面走单独裁切的版本，不直接用 beat④ 那张原图——background-size:cover
+        # 会按几何中心走，原图的中心只落得住安德烈耶娃一个人，斯维托丽娜被
+        # 挤到只剩一条边（渲出来验证过：run 31287628102 的 slide_00）。
+        # 见 credits.json 里 ao2026_r4_andreeva_cover.jpg 的说明。
+        "image": "assets/explainer/svitolina-handshake/ao2026_r4_andreeva_cover.jpg",
     },
     "challenger-climb": {
         "topic": "挑战赛：难的不是对手，是兑换率",
