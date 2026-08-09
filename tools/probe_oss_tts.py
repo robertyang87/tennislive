@@ -48,15 +48,22 @@ def main() -> int:
 
     print("== 加载模型 ==", flush=True)
     t0 = time.perf_counter()
+    import soundfile as sf  # noqa: PLC0415
     import torch  # noqa: PLC0415
     import torchaudio  # noqa: PLC0415
     from cosyvoice.cli.cosyvoice import CosyVoice2  # noqa: PLC0415
-    from cosyvoice.utils.file_utils import load_wav  # noqa: PLC0415
 
     cv = CosyVoice2(MODEL, load_jit=False, load_trt=False, fp16=False)
     print(f"模型加载 {time.perf_counter() - t0:.0f}s", flush=True)
 
-    prompt = load_wav(str(COSY / "asset" / "zero_shot_prompt.wav"), 16000)
+    # ⚠️ 不用 CosyVoice 的 load_wav / torchaudio 的文件 I/O：torchaudio 2.9
+    # 把内置后端删了（要 torchcodec，而它又要系统 ffmpeg 库）。soundfile
+    # 读写 + torchaudio.functional.resample（纯张量运算，不碰后端）就够。
+    data, sr = sf.read(str(COSY / "asset" / "zero_shot_prompt.wav"),
+                       dtype="float32")
+    prompt = torch.from_numpy(data).unsqueeze(0)
+    if sr != 16000:
+        prompt = torchaudio.functional.resample(prompt, sr, 16000)
     prompt_text = "希望你以后能够做的比我还好呦。"
 
     jobs = [
@@ -75,7 +82,7 @@ def main() -> int:
             spent = time.perf_counter() - t1
             secs = audio.shape[1] / cv.sample_rate
             wav = outdir / f"{stem}.wav"
-            torchaudio.save(str(wav), audio, cv.sample_rate)
+            sf.write(str(wav), audio.squeeze(0).numpy(), cv.sample_rate)
             mp3 = wav.with_suffix(".mp3")
             subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(wav),
                             "-b:a", "48k", str(mp3)], check=True)
