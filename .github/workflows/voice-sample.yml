@@ -134,18 +134,21 @@ jobs:
           COSY_MODEL_DIR: /tmp/cosy-model
         run: |
           set -e
-          echo "== 装 CPU torch =="
-          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-          echo "== 装 CosyVoice 依赖（CPU 最小集）=="
-          # ⚠️ rich 是第一趟踩出来的（cosyvoice.flow.flow_matching 要它，
-          # 死在模型加载那一步）；pandas/protobuf/pydantic 是同一批常见连坐
-          pip install -q hyperpyyaml omegaconf conformer "transformers>=4.40,<5" \
-            onnxruntime librosa soundfile inflect diffusers hydra-core \
-            lightning gdown modelscope wget openai-whisper WeTextProcessing \
-            huggingface_hub rich pandas protobuf pydantic
           echo "== 拉代码（含 Matcha-TTS 子模块）=="
           git clone -q --depth 1 --recursive \
             https://github.com/FunAudioLLM/CosyVoice.git "$COSYVOICE_DIR"
+          echo "== 装 CPU torch =="
+          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          echo "== 按官方 requirements 装（滤掉 GPU 行）=="
+          # ⚠️ 手挑依赖集是打地鼠（第一趟缺 rich、第二趟缺 matplotlib，
+          # 都死在 flow_matching 的 import）。正解是抄官方清单、只滤掉
+          # CPU 上装不动/不需要的：deepspeed（要编译）、tensorrt、
+          # onnxruntime-gpu（用 CPU 版顶上）、torch 系（上面已装 CPU 版，
+          # 别让它重装 GPU 版）、triton、以及 --extra-index-url 那些行
+          grep -vE "^(--|#)|deepspeed|tensorrt|onnxruntime|torch|triton" \
+            "$COSYVOICE_DIR/requirements.txt" > /tmp/cosy-req.txt
+          pip install -q onnxruntime
+          pip install -q -r /tmp/cosy-req.txt
           echo "== 拉模型（约 2GB）=="
           python -c "from huggingface_hub import snapshot_download; \
             snapshot_download('FunAudioLLM/CosyVoice2-0.5B', local_dir='$COSY_MODEL_DIR')"
