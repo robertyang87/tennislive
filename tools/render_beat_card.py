@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+"""渲一张透明底的「字卡」PNG：数据卡（大数字+小标签）或转折卡（一句短语）。
+
+## 来路
+
+抖音官方创作建议（2026-08-09，账号所有者转来）两条正中我们的候选清单：
+「关键数据用简洁的动态文字或图表展示」「讲述转折点时加入文字卡片，比如
+『第一盘决胜时刻』」。`docs/short-video-benchmark-strategy.md` 画面设计那节
+本来就把「狠数据渲成小卡贴角上」列为候选，这个工具把它落地。
+
+## 用法
+
+    # 数据卡：大数字 + 小标签（狠数据从 tools/match_stat_hooks.py 拿）
+    python3 tools/render_beat_card.py --value "0/3" --label "第一盘 破发点" \
+        --out assets/beatcards/demo-bp.png
+
+    # 转折卡：一句短语
+    python3 tools/render_beat_card.py --title "第一盘 决胜时刻" \
+        --out assets/beatcards/demo-set1.png
+
+    # 然后在 spec 的段里用现成的 inset 机制贴角，画面不中断：
+    #   "inset": {"image": "assets/beatcards/demo-bp.png",
+    #             "corner": "tr", "width": 0.40}
+
+## 设计约定（都是仓库里已有的规矩，别在这儿另起一套）
+
+- **透明底**：卡是贴在比赛画面上的贴纸，方形底就是「深色球衣压深色背景留
+  一块方底」那个坑的字卡版。判据：四角 alpha 必须是 0
+- **一屏一个强调色**：数字用品牌浅绿，其余近白/灰绿两级，不搞红绿对撞
+- **底色要压得住虚化的比赛画面**：顶栏次行那课——给实色卡定的灰绿压在
+  变化的背景上就糊了。所以底是 0.92 的深绿加细描边
+- **数字字体走得意黑**（和顶栏首行一家），标签走 Noto Sans CJK
+- 卡渲出来是**提交进仓库的静态 PNG**，渲染环境的字体不影响成片——
+  但生成这一步要在装了 Noto 的机器上跑（沙箱和 runner 都装了）
+"""
+
+from __future__ import annotations
+
+import argparse
+import html as html_mod
+import os
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+SMILEY = REPO / "assets" / "fonts" / "SmileySans-Oblique.woff2"
+
+# 渲染宽度。inset 贴上去按 `width`（画布占比）缩，这里 2× 出图保字的锐度——
+# 0.40×1080=432px 的槽位，864px 出图正好 2×。
+CARD_W = 864
+
+
+def build_html(value: str = "", label: str = "", title: str = "") -> str:
+    """纯函数，测试只咬它。value+label 是数据卡，title 是转折卡，二选一。"""
+    if bool(value) == bool(title):
+        raise SystemExit("数据卡给 --value（可配 --label），转折卡给 --title，"
+                         "两种二选一——都给或都不给没有意义")
+    if value:
+        body = (f'<div class="value">{html_mod.escape(value)}</div>'
+                + (f'<div class="label">{html_mod.escape(label)}</div>'
+                   if label else ""))
+    else:
+        body = f'<div class="title">{html_mod.escape(title)}</div>'
+    return f"""<!doctype html>
+<meta charset="utf-8">
+<style>
+  @font-face {{ font-family: "Smiley Sans"; src: url("{SMILEY.as_uri()}"); }}
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ background: transparent; width: {CARD_W}px; }}
+  #card {{
+    display: inline-block; max-width: {CARD_W}px;
+    background: rgba(13, 26, 21, 0.92);
+    border: 2px solid rgba(184, 233, 134, 0.30);
+    border-radius: 34px; padding: 44px 58px;
+    font-family: "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+    text-align: center;
+  }}
+  .value {{
+    font-family: "Smiley Sans", "Noto Sans CJK SC", sans-serif;
+    font-size: 150px; line-height: 1.04; color: #b8e986;
+    letter-spacing: 0.01em; white-space: nowrap;
+  }}
+  .label {{ margin-top: 18px; font-size: 44px; font-weight: 700;
+            color: #e7f3ec; white-space: nowrap; }}
+  .title {{ font-size: 62px; font-weight: 700; color: #e7f3ec;
+            line-height: 1.3; white-space: nowrap; }}
+</style>
+<div id="card">{body}</div>
+"""
+
+
+def render(html: str, out: Path) -> Path:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    page = out.with_suffix(".html")
+    page.write_text(html, encoding="utf-8")
+    from playwright.sync_api import sync_playwright  # noqa: PLC0415
+
+    with sync_playwright() as pw:
+        try:
+            browser = pw.chromium.launch(args=["--no-sandbox"])
+        except Exception as default_error:  # noqa: BLE001
+            # 和 versus_poster._render_html 同一串兜底：沙箱的
+            # PLAYWRIGHT_BROWSERS_PATH 指的版本号和装的对不上时要显式给路径
+            candidates = [
+                os.environ.get("CHROMIUM_PATH"),
+                "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+            ]
+            browser = None
+            for exe in candidates:
+                if exe and Path(exe).is_file():
+                    browser = pw.chromium.launch(
+                        executable_path=exe, args=["--no-sandbox"])
+                    break
+            if browser is None:
+                raise default_error
+        # 2× 物理像素出图：卡是按内容收缩的，贴进 inset 槽位时可能被放大——
+        # 密度翻倍之后 0.40 画布宽的槽位也仍然是缩小着贴，字不发软
+        tab = browser.new_page(viewport={"width": CARD_W, "height": 640},
+                               device_scale_factor=2)
+        tab.goto(page.resolve().as_uri())
+        tab.wait_for_timeout(400)
+        # 只截卡片元素本身、底透明——出来的是一张能贴在任何画面上的贴纸
+        tab.locator("#card").screenshot(path=str(out), omit_background=True)
+        browser.close()
+    page.unlink(missing_ok=True)
+    return out
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--value", default="", help="数据卡的大数字，如 0/3")
+    ap.add_argument("--label", default="", help="数据卡的小标签，如 第一盘 破发点")
+    ap.add_argument("--title", default="", help="转折卡的短语，如 第一盘 决胜时刻")
+    ap.add_argument("--out", required=True)
+    args = ap.parse_args()
+    out = render(build_html(args.value, args.label, args.title), Path(args.out))
+    from PIL import Image  # noqa: PLC0415
+
+    with Image.open(out) as im:
+        print(f"已渲 {out}（{im.width}×{im.height}，{im.mode}）——"
+              f"用 Read 打开亲眼看一眼再进 spec")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
