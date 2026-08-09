@@ -134,11 +134,20 @@ def cmd_knowledge_adhoc(args) -> int:
             return 2
 
     d = parse_date_arg(args.date)
-    try:
-        digest: Digest = build_digest(d, prefer=args.source)
-    except SourceError as e:
-        console.print(f"[red]抓取失败：{e}[/red]")
-        return 1
+    if story is not None:
+        # 指定 slug 时选题已经定死，下游只会用 digest.today 取日期（拼标题、
+        # 校验"截至<年份>"这类时效claims）——不会碰 results/live/schedule/rankings。
+        # build_digest 要 ESPN 和 SofaScore 两个外部源都通；任一被限流/403，
+        # 就会把一篇跟当日赛程毫无关系的选题一起拖死（真实事故：两边同一天都
+        # 403，run 31263560107）。指定 slug 就不必付这个代价，直接用一个只带
+        # 日期的 digest。
+        digest = Digest(today=d)
+    else:
+        try:
+            digest = build_digest(d, prefer=args.source)
+        except SourceError as e:
+            console.print(f"[red]抓取失败：{e}[/red]")
+            return 1
 
     outdir = Path(args.outdir)
     try:

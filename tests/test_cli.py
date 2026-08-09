@@ -355,6 +355,36 @@ def test_knowledge_adhoc_generates_into_its_own_directory(tmp_path, monkeypatch)
     assert (outdir / "cards").is_dir()
 
 
+def test_knowledge_adhoc_with_slug_does_not_need_live_match_data(tmp_path, monkeypatch):
+    """指定 slug 时选题已经定死，下游只用 digest.today 取日期，不碰
+    results/live/schedule/rankings——所以不该要求 build_digest（ESPN +
+    SofaScore）都通才能发。真实事故：两个源同一天都 403，把一篇跟当日
+    赛程毫无关系的 trivia 选题一起拖死（run 31263560107）。"""
+    from tennislive.sources.base import SourceError
+
+    def _boom(*args, **kwargs):
+        raise SourceError("抓取失败：所有数据源均失败")
+
+    monkeypatch.setattr(cli, "build_digest", _boom)
+    marked: list[str] = []
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_story_used",
+        lambda slug, when: marked.append(slug),
+    )
+    monkeypatch.setattr(
+        "tennislive.render.tournament_story.mark_adhoc_knowledge_published",
+        lambda when: None,
+    )
+
+    outdir = tmp_path / "knowledge_adhoc"
+    result = cli.main(
+        ["knowledge-adhoc", "--slug", "hawkeye", "--outdir", str(outdir)]
+    )
+    assert result == 0
+    assert marked == ["hawkeye"]
+    assert (outdir / "story.json").exists()
+
+
 def test_knowledge_adhoc_auto_selects_when_slug_omitted(tmp_path, monkeypatch):
     """留空 --slug 时必须复用常规每日流程的自动选题逻辑：不做 slug 校验，
     直接把 story=None 交给 generate_knowledge_package，由它内部调用
