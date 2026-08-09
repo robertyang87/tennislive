@@ -30,9 +30,11 @@ SAMPLE = (
 # Microsoft's own personality tags for the zh-CN voices, which is the only
 # published signal about how each one reads before you hear it.
 CANDIDATES = [
+    # ⚠️ 档位标签以 explainer.py 的 DEFAULT_RATE 为准（2026-08-09 对过一次：
+    # 这里曾把 +28% 标成「现用」，而解说片早定在 +22%——过期标签害人猜错现状）
     ("zh-CN-YunjianNeural", "+14%", "云健 · Passion（体育解说向）"),
-    ("zh-CN-YunjianNeural", "+22%", "云健 · 更快（上一档）"),
-    ("zh-CN-YunjianNeural", "+28%", "云健 · 现用"),
+    ("zh-CN-YunjianNeural", "+22%", "云健 · 解说片现用档"),
+    ("zh-CN-YunjianNeural", "+28%", "云健 · 上一档（已退役）"),
     ("zh-CN-YunjianNeural", "+35%", "云健 · 再快一档（对照上限）"),
     ("zh-CN-YunxiNeural", "+14%", "云希 · Lively/Sunshine（现用嗓，提速）"),
     ("zh-CN-XiaoxiaoNeural", "+14%", "晓晓 · Warm（女声）"),

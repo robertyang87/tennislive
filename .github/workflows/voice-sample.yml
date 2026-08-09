@@ -11,7 +11,7 @@ on:
       mode:
         description: "sample=合成各音色样本；ssml=只探这条免费通道认哪些 SSML（不写产物）"
         type: choice
-        options: [sample, ssml, azure, compare, phoneme, hd]
+        options: [sample, ssml, azure, compare, phoneme, hd, oss, minimax]
         default: sample
 
 permissions:
@@ -24,7 +24,9 @@ concurrency:
 jobs:
   sample:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    # oss 模式要装 CPU torch + 拉 2GB 模型 + CPU 合成，30 分钟起步；
+    # 其余模式仍在 12 分钟内跑完，超时只是上限不是目标
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,12 +122,62 @@ jobs:
           AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
         run: python tools/probe_azure_hd.py output/voice-samples/hd
 
+      # 开源拟真 TTS（CosyVoice2-0.5B，Apache-2.0 可商用）试音——账号所有者
+      # 2026-08-09 拍板的方向。装依赖和拉模型都在这一步，选型和判据见
+      # tools/probe_oss_tts.py 的 docstring。⚠️ 依赖是从官方 requirements
+      # 挑的 CPU 最小集，第一趟跑红了按报错补，别整包照抄（GPU 依赖装不上）。
+      - name: 试开源拟真 TTS（CosyVoice2）
+        if: github.event.inputs.mode == 'oss'
+        timeout-minutes: 35
+        env:
+          COSYVOICE_DIR: /tmp/CosyVoice
+          COSY_MODEL_DIR: /tmp/cosy-model
+        run: |
+          set -e
+          echo "== 拉代码（含 Matcha-TTS 子模块）=="
+          git clone -q --depth 1 --recursive \
+            https://github.com/FunAudioLLM/CosyVoice.git "$COSYVOICE_DIR"
+          echo "== 装 CPU torch（钉 <2.9）=="
+          # ⚠️ torchaudio 2.9 把内置文件 I/O 后端删了（torchaudio.load 一律
+          # 转发 torchcodec，连 backend='soundfile' 都无视）——而 CosyVoice 的
+          # load_wav 正是这么写的。钉在 2.8 系，upstream 代码原样能跑，
+          # 不用引入 torchcodec 这个新依赖（第 4、5 趟都是死在这一类上）
+          pip install -q "torch<2.9" "torchaudio<2.9" --index-url https://download.pytorch.org/whl/cpu
+          echo "== 按官方 requirements 装（滤掉 GPU 行）=="
+          # ⚠️ 手挑依赖集是打地鼠（第一趟缺 rich、第二趟缺 matplotlib，
+          # 都死在 flow_matching 的 import）。正解是抄官方清单、只滤掉
+          # CPU 上装不动/不需要的：deepspeed（要编译）、tensorrt、
+          # onnxruntime-gpu（用 CPU 版顶上）、torch 系（上面已装 CPU 版，
+          # 别让它重装 GPU 版）、triton、以及 --extra-index-url 那些行
+          # openai-whisper 的老 setup.py 要 pkg_resources，而构建隔离环境装的
+          # 新 setuptools（>=82）把它删了——降级 setuptools 后关掉隔离单独装，
+          # 并从批量清单里滤掉
+          grep -vE "^(--|#)|deepspeed|tensorrt|onnxruntime|torch|triton|openai-whisper" \
+            "$COSYVOICE_DIR/requirements.txt" > /tmp/cosy-req.txt
+          pip install -q "setuptools<81" wheel
+          pip install -q --no-build-isolation openai-whisper
+          pip install -q onnxruntime
+          pip install -q -r /tmp/cosy-req.txt
+          echo "== 拉模型（约 2GB）=="
+          python -c "from huggingface_hub import snapshot_download; \
+            snapshot_download('FunAudioLLM/CosyVoice2-0.5B', local_dir='$COSY_MODEL_DIR')"
+          echo "== 合成样品 =="
+          python tools/probe_oss_tts.py output/voice-samples/oss
+
+      # MiniMax 托管 TTS 试音（key 见 tools/probe_minimax_tts.py 的 docstring；
+      # 沙箱 2026-08-09 已直连跑通过，这条是给 runner 复跑用的入口）
+      - name: 试 MiniMax 托管 TTS
+        if: github.event.inputs.mode == 'minimax'
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
+        run: python tools/probe_minimax_tts.py output/voice-samples/minimax
+
       - name: 合成语音样本
         if: github.event.inputs.mode == 'sample'
         run: python tools/voice_sample.py output/voice-samples
 
       - name: 提交样本到仓库
-        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd'
+        if: github.event.inputs.mode == 'sample' || github.event.inputs.mode == 'compare' || github.event.inputs.mode == 'hd' || github.event.inputs.mode == 'oss' || github.event.inputs.mode == 'minimax'
         run: |
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
