@@ -616,7 +616,8 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "7.28 赛场之上 | 锦织圭 2:1 商竣程" in page   # 这一跑没传 --event
     assert "小红书那句标题" in page and "正文第二行" in page
     assert "navigator.clipboard" in page or "execCommand" in page
-    # 这条线没有置顶评论，那一格就不该留个空框加一个复制不出东西的按钮
+    # 这份 spec 没有旁白段、抽不出末屏一问，那一格就不该留个空框加一个
+    # 复制不出东西的按钮（有末屏一问时才带，见 test_pin_comment.py）
     assert "复制评论" not in page
 
 
@@ -6741,8 +6742,8 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
             # `render.json` 自己记着渲的时候那份 spec 的画面总长，拿它对一下就
             # 能自证是不是同一版。对不上就**整个 outdir 跳过并出声**——这一段
             # 本来就是加餐，核心判据是下面那张冻结的样本表。
-            spec_secs = round(sum(float(s["end"]) - float(s["start"])
-                                  for s in segs), 2)
+            # 段长走 `seg_seconds`（成片口径）：慢放段按速度换算，speed=1 不变
+            spec_secs = round(sum(reel.seg_seconds(s) for s in segs), 2)
             was = round(float(render_json.get("segments_seconds", -1)), 2)
             if abs(was - spec_secs) > 0.05:
                 print(f"  [跳过] {outdir.name} 的产物是上一版的："
@@ -6760,7 +6761,7 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
             starts, acc = {}, float(offset)
             for index, seg in enumerate(segs):
                 starts[index] = acc
-                acc += float(seg["end"]) - float(seg["start"])
+                acc += reel.seg_seconds(seg)
             for key, secs in recorded.items():
                 index = int(key)
                 seg = segs[index]
