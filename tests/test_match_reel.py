@@ -616,7 +616,8 @@ def test_page阶段不发推送也不需要成片(tmp_path):
     assert "7.28 赛场之上 | 锦织圭 2:1 商竣程" in page   # 这一跑没传 --event
     assert "小红书那句标题" in page and "正文第二行" in page
     assert "navigator.clipboard" in page or "execCommand" in page
-    # 这条线没有置顶评论，那一格就不该留个空框加一个复制不出东西的按钮
+    # 这份 spec 没有旁白段、抽不出末屏一问，那一格就不该留个空框加一个
+    # 复制不出东西的按钮（有末屏一问时才带，见 test_pin_comment.py）
     assert "复制评论" not in page
 
 
