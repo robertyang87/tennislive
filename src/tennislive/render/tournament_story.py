@@ -3093,6 +3093,69 @@ STORIES = STORIES + (
         image_credit="WTA 官方集锦画面",
         source_url="https://www.youtube.com/watch?v=NryVymv9AMY",
     ),
+    _trivia_story(
+        slug="cramp-timeout",
+        title="抽筋，为什么叫不来暂停",
+        subtitle="网球冷知识 · 规则篇",
+        identity="从勒纳·钱的三个赛点说起",
+        chips=("冷知识", "医疗暂停", "理疗师说了算"),
+        hero=(
+            "蒙特利尔第三轮，勒纳·钱在三个赛点上抽筋，一个没保住，最终还是赢下了比赛——"
+            "网球规则里，抽筋从来换不来一次医疗暂停，能给的只有换边和盘间那几十秒。"
+        ),
+        facts=(
+            "ATP 2026 规则书原话：球员只能在换边和盘间的时间里接受抽筋治疗，"
+            "不能为抽筋申请医疗暂停；一般性体能疲劳同样不算需要治疗的情况。",
+            "这条规则始于 2010 年 1 月——此前的旧规则允许抽筋申请完整的医疗暂停，"
+            "2009 年美网阿尔马格罗曾据此在比赛中叫停治疗，此后规则被收紧到今天这版。",
+            "遇到分不清是急性伤还是抽筋的情况，规则明文交给现场理疗师认定，"
+            "理疗师的判断是最终结果——2026 年澳网男单半决赛，"
+            "阿尔卡拉斯与兹维列夫就在这条线上当场起过争执。",
+        ),
+        moments=(
+            ChampionMoment(
+                date="2026-08-08", player="勒纳·钱 vs 保罗", age="2026 蒙特利尔 R3",
+                headline="三个赛点丢在抽筋那一局",
+                detail=(
+                    "第二盘五比一、四十比零，他的右腿开始抽筋，连丢三个赛点被追至五比二；"
+                    "缓过来后破发保罗，第四个赛点六比二锁定比赛。"
+                ),
+                source_url=(
+                    "https://tennisuptodate.com/atp/dont-tell-me-that-why-are-you-"
+                    "telling-me-that-now-learner-tien-shares-funny-moment-with-tommy-"
+                    "paul-after-ruthless-win"
+                ),
+            ),
+            ChampionMoment(
+                date="2026-01", player="阿尔卡拉斯 vs 兹维列夫", age="2026 澳网男单半决赛",
+                headline="医疗暂停给没给，现场就吵了起来",
+                detail=(
+                    "第三盘四比四，阿尔卡拉斯叫了医疗暂停，兹维列夫当场向主裁抗议，"
+                    "认定那是不该给暂停的抽筋；阿尔卡拉斯的说法是局部急性痛。"
+                ),
+                source_url=(
+                    "https://www.tennis.com/news/articles/this-is-bulls-alexander-"
+                    "zverev-fumes-about-then-accepts-carlos-alcaraz-cramp-drama-at-"
+                    "australian-open"
+                ),
+            ),
+        ),
+        image_keys=(),
+        image_credit="ATP Tour 官方集锦画面",
+        source_label="ATP 2026 官方规则书 / Tennis.com",
+        source_url="https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",
+        evidence_urls=(
+            "https://www.itftennis.com/media/15604/atp-2026-rulebook.pdf",
+            "https://tennisuptodate.com/atp/dont-tell-me-that-why-are-you-telling-"
+            "me-that-now-learner-tien-shares-funny-moment-with-tommy-paul-after-"
+            "ruthless-win",
+            "https://www.tennis.com/news/articles/this-is-bulls-alexander-zverev-"
+            "fumes-about-then-accepts-carlos-alcaraz-cramp-drama-at-australian-open",
+            "https://www.tennis.com/news/articles/new-cramping-rule-in-effect-in-"
+            "melbourne",
+        ),
+        fact_roles=("rule", "history", "today"),
+    ),
 )
 
 
