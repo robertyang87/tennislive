@@ -208,9 +208,18 @@
 | 30 分钟 SLA 兼容 | ❌ 纯 CPU 撑不住（+11 分钟在关键路径上）；要 GPU 或换推理方案 | ✅ 几秒，不占关键路径 |
 | 探针 | `tools/probe_oss_tts.py`（mode=oss，6 趟迭代跑通，坑都记在 docstring 和工作流注释） | `tools/probe_minimax_tts.py`（mode=minimax，runner 用要配 `MINIMAX_API_KEY` secret） |
 
-**下一步只有一个判据：账号所有者的耳朵。** 哪边过耳选哪边；若 MiniMax
-过耳，速度和 SLA 全顺；若 CosyVoice 过耳，接入前要先解决 RTF（GPU 推理
-或接受渲染变慢）。选定后录 10 秒本人声换掉 demo prompt。
+**耳朵裁决（2026-08-09 深夜，终审）**：13 版 MiniMax + 2 版 CosyVoice2
+全部听完，账号所有者：「**听下来还是 yunjian 更好啊**」。这是云健第三次
+过堂留任（vs DragonHD、vs MiniMax 系统声线、vs CosyVoice2）——**配音引擎
+探索到此关闭，云健 +6% 继续当默认声，别再拿「XX 引擎更先进」翻案**。
+管线一个字不用改。还开着的唯一一扇门：他哪天录 10 秒自己的声音，走
+克隆（MiniMax key 在他手里、CosyVoice 探针在仓库里，两条路都是现成的）
+——那换的是「谁的声音」，不是「哪家引擎的音色」，和这次比的不是一件事。
+
+⚠️ 顺带记一个会误导下一个人的现象：CosyVoice 两版样品**都是女声**——
+它是克隆引擎，样品用的 demo prompt（`asset/zero_shot_prompt.wav`）本身
+是女声，输出跟着 prompt 走。真要再试它，换男声 prompt 再听，别拿这两版
+下「它只有女声」的结论。
 
 ⚠️ IndexTTS-2 / F5-TTS 为什么排除（账号所有者问过「个人学习为啥不行」）：
 NC 许可看的是**用途**不是主体身份——下载试听是学习，合成声一旦出现在
