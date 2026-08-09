@@ -137,8 +137,12 @@ jobs:
           echo "== 拉代码（含 Matcha-TTS 子模块）=="
           git clone -q --depth 1 --recursive \
             https://github.com/FunAudioLLM/CosyVoice.git "$COSYVOICE_DIR"
-          echo "== 装 CPU torch =="
-          pip install -q torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          echo "== 装 CPU torch（钉 <2.9）=="
+          # ⚠️ torchaudio 2.9 把内置文件 I/O 后端删了（torchaudio.load 一律
+          # 转发 torchcodec，连 backend='soundfile' 都无视）——而 CosyVoice 的
+          # load_wav 正是这么写的。钉在 2.8 系，upstream 代码原样能跑，
+          # 不用引入 torchcodec 这个新依赖（第 4、5 趟都是死在这一类上）
+          pip install -q "torch<2.9" "torchaudio<2.9" --index-url https://download.pytorch.org/whl/cpu
           echo "== 按官方 requirements 装（滤掉 GPU 行）=="
           # ⚠️ 手挑依赖集是打地鼠（第一趟缺 rich、第二趟缺 matplotlib，
           # 都死在 flow_matching 的 import）。正解是抄官方清单、只滤掉

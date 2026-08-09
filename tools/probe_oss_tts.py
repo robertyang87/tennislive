@@ -29,6 +29,7 @@ import os
 import subprocess
 import sys
 import time
+import traceback
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -50,28 +51,28 @@ def main() -> int:
     t0 = time.perf_counter()
     import soundfile as sf  # noqa: PLC0415
     import torch  # noqa: PLC0415
-    import torchaudio  # noqa: PLC0415
     from cosyvoice.cli.cosyvoice import CosyVoice2  # noqa: PLC0415
 
     cv = CosyVoice2(MODEL, load_jit=False, load_trt=False, fp16=False)
     print(f"模型加载 {time.perf_counter() - t0:.0f}s", flush=True)
 
-    # ⚠️ 不用 CosyVoice 的 load_wav / torchaudio 的文件 I/O：torchaudio 2.9
-    # 把内置后端删了（要 torchcodec，而它又要系统 ffmpeg 库）。soundfile
-    # 读写 + torchaudio.functional.resample（纯张量运算，不碰后端）就够。
-    data, sr = sf.read(str(COSY / "asset" / "zero_shot_prompt.wav"),
-                       dtype="float32")
-    prompt = torch.from_numpy(data).unsqueeze(0)
-    if sr != 16000:
-        prompt = torchaudio.functional.resample(prompt, sr, 16000)
+    # ⚠️ prompt 传**路径**，不传张量——现在 main 分支的接口（example.py）
+    # 就是这么用的：frontend_zero_shot 自己对 prompt_wav 调 load_wav，
+    # 传张量进去在任何 torchaudio 版本下都炸。而 load_wav 写的
+    # `torchaudio.load(wav, backend='soundfile')` 在 torchaudio 2.9 上
+    # 无视 backend、一律转发 torchcodec（2.9 删了内置后端）——所以
+    # 工作流把 torchaudio 钉在 <2.9，upstream 的代码原样就能跑。
+    prompt_wav = str(COSY / "asset" / "zero_shot_prompt.wav")
     prompt_text = "希望你以后能够做的比我还好呦。"
 
     jobs = [
         ("oss-cosy2-底色", lambda: cv.inference_zero_shot(
-            SAMPLE, prompt_text, prompt, stream=False)),
+            SAMPLE, prompt_text, prompt_wav, stream=False)),
+        # instruct 文本要自带 <|endofprompt|>（example.py 的用法；
+        # frontend_instruct2 不会替你补）
         ("oss-cosy2-解说腔", lambda: cv.inference_instruct2(
-            SAMPLE, "用充满激情的男性体育解说员的语气朗读", prompt,
-            stream=False)),
+            SAMPLE, "用充满激情的男性体育解说员的语气朗读<|endofprompt|>",
+            prompt_wav, stream=False)),
     ]
     ok = 0
     for stem, gen in jobs:
@@ -94,6 +95,9 @@ def main() -> int:
                   f"RTF {rtf:.1f} —— {verdict}", flush=True)
             ok += 1
         except Exception as exc:  # noqa: BLE001
+            # 完整 traceback 打进日志：只报 message 的话，错在 CosyVoice
+            # 内部哪一层根本看不出来（第 5 趟就是这么多跑了一趟才定位的）
+            traceback.print_exc()
             print(f"❌ {stem}: {type(exc).__name__}: {exc}", flush=True)
     print(f"{ok}/{len(jobs)} 版样品合成成功。最终判据是账号所有者打开听。")
     return 0 if ok else 1
