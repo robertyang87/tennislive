@@ -8761,3 +8761,48 @@ def test_顶栏复位不许用r否则脉冲被清掉(tmp_path):
     # 另一头：上色本身没被这个修法弄丢
     text = ass.read_text(encoding="utf-8")
     assert reel.TOPBAR_SETWIN_ASS in text and reel.TOPBAR_SETLOSE_ASS in text
+
+
+def test_赛场之上的quote段不许是赛后采访():
+    """栏目是承诺：复盘回答「这场球怎么赢的」，赛后采访归赛后开麦。
+
+    账号所有者 2026-08-10 review 当天的片子：「比赛信息很少，很难把比赛
+    过程讲述清楚，却把采访放上了，采访要放到赛后开麦里啊」。中招的四条
+    （rybakina-samsonova 两段、alexandrova-sabalenka / osaka-mertens /
+    swiatek-kostyuk 各一段）有个共同点：quote 窗口全部落在源片 310 秒
+    之后——正是 WTA 纯集锦的定长边界，尾巴上的采访被当情绪素材剪了进来，
+    还挤掉了比赛过程的篇幅（rybakina 那条决胜盘一句都没讲）。
+
+    闸：赛场之上的 quote 段必须认领 `_quote_kind`，只认两种——
+    broadcast（转播解说原声，弗里茨决赛那种冠军宣告）/ ceremony
+    （颁奖、夺冠时刻现场声）。赛后采访没有合法值：那是赛后开麦的素材，
+    发现集锦尾巴带采访的正确动作是记成赛后开麦候选另出一条。
+    已发的四条不重渲，挂 legacy 表，只许减不许加。
+    """
+    legacy = {"rybakina-samsonova", "alexandrova-sabalenka",
+              "osaka-mertens", "swiatek-kostyuk"}
+    allowed = {"broadcast", "ceremony"}
+    checked = 0
+    legacy_seen = set()
+    for p in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(p.read_text(encoding="utf-8"))
+        if (spec.get("cover") or {}).get("eyebrow") != "赛场之上":
+            continue
+        for i, seg in enumerate(spec.get("segments") or [], 1):
+            if not seg.get("quote"):
+                continue
+            checked += 1
+            if p.stem in legacy:
+                legacy_seen.add(p.stem)
+                continue
+            kind = seg.get("_quote_kind")
+            assert kind in allowed, (
+                f"{p.name} 段{i} 的 quote 没认领 _quote_kind（broadcast/"
+                f"ceremony）。赛后采访不进复盘——那是赛后开麦的素材，"
+                f"另出一条；转播原声/颁奖现场声才许留，写上认领")
+    # 判据自己的判据：主语没了要出声，别变成恒真的绿灯
+    assert checked >= 7, f"只扫到 {checked} 个 quote 段，spec 目录是不是不对"
+    # legacy 表自检：写错一个名字，豁免就成了一盏恒真的绿灯
+    assert legacy_seen == legacy, (
+        f"legacy 表和现实对不上：表里有而没扫到 {legacy - legacy_seen}。"
+        f"哪条 spec 改掉了 quote 段就把它从表里删掉——只许减不许加")
