@@ -78,7 +78,17 @@
         "rank": 10
       }
     ],
-    "_matchup_rank_why": "谢尔顿世界第10、丰塞卡世界第25，WebSearch多源交叉（见 editorial.human_context.sources），和封面钩子、topbar 不会分叉（同一份 _facts.排名与种子 出处）。"
+    "_matchup_rank_why": "谢尔顿世界第10、丰塞卡世界第25，WebSearch多源交叉（见 editorial.human_context.sources），和封面钩子、topbar 不会分叉（同一份 _facts.排名与种子 出处）。",
+    "scoreboard": {
+      "court": "Rogers Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A51%3A13%22%2C%20%22source_page%22%3A%20%22https%3A//www.flashscore.com/match/tennis/fonseca-joao-tv073LUc/shelton-ben-QNuG0Gzb/%22%7D",
+        "field": "duration",
+        "source_page": "https://www.flashscore.com/match/tennis/fonseca-joao-tv073LUc/shelton-ben-QNuG0Gzb/"
+      },
+      "_court_why": "同一届蒙特利尔ATP1000，shang-darderi-montreal-2026那条已经从atptour.com赛程页确认这站主赛场叫「Rogers Court」——这场是1/8决赛（比shang-darderi的R2更靠后），marquee对阵（卫冕冠军+当红新星）按惯例都排在主赛场。⚠️ atptour.com这次直接403拿不到，WebSearch综合到的另一个说法是『Center Court』/『Court Central』（像是Sofascore式的通用译名，不是ATP自己的赞助商冠名），和『Rogers Court』不是同一份来源、字面也不一致——两边都没能在本轮直接核实到这一场specifically。用『Rogers Court』是按同赛事惯例，不是这场比赛单独核实过。",
+      "_duration_why": "flashscore（KWAEU167）AD=1786313400（开赛）、AO=1786320073（终场），差6673秒=1小时51分13秒。分盘用时0:46+1:03=1:49，和这个总时长的差是赛前热身/换边等非纯打球时间，量级吻合。接口拿不到就用 data: URI 把这个数嵌进去，走和 shang-darderi-montreal-2026 同一条取时长的代码路径（`_fetch_match_duration` 真的会去 urlopen 这个 data: URI 并解析 JSON，本地验证过能正常工作）。"
+    }
   },
   "segments": [
     {
