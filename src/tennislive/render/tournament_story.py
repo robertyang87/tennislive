@@ -1717,7 +1717,8 @@ STORIES = STORIES + (
             "**今年这个 0 顶掉去年那个 0——排名上一分不差。**",
             "唯一的出口在 9.03 Note 3：**连着缺两个或以上的强制赛**，大师赛、大满贯、"
             "年终总决赛都算，可向医疗委员会申请抹掉最多 3 个零分。"
-            "阿尔卡拉斯手腕伤缺了法网、温网，够得着；辛纳只缺这一站，且已报名辛辛那提。",
+            "阿尔卡拉斯手腕伤缺了法网、温网，够得着；**8 月 9 日辛纳也退出了辛辛那提**——"
+            "蒙特利尔、辛辛那提连着两站，他现在同样够得着这扇门。",
         ),
         moments=(
             ChampionMoment(
@@ -1738,6 +1739,17 @@ STORIES = STORIES + (
                 ),
                 source_url="https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
             ),
+            ChampionMoment(
+                date="2026-08-09", player="辛纳", age="24 岁",
+                headline="接着退出辛辛那提",
+                detail=(
+                    "「右膝的问题一直困扰着我，尽管医疗团队一直在努力，"
+                    "我必须接受自己还没准备好回到赛场。」阿尔卡拉斯 8 月 4 日"
+                    "因手腕伤先一步退赛——蒙特利尔、辛辛那提连着两站，"
+                    "他也够上了 9.03 Note 3 那扇门。"
+                ),
+                source_url="https://www.aljazeera.com/sports/2026/8/9/jannik-sinner-withdraws-from-cincinnati-open-with-knee-injury",
+            ),
         ),
         image_keys=(),
         image_credit="AELTC / Joel Marklund · wimbledon.com 官方图",
@@ -1746,6 +1758,7 @@ STORIES = STORIES + (
         evidence_urls=(
             "https://www.cbc.ca/lite/story/9.7282909",
             "https://en.wikipedia.org/wiki/2026_National_Bank_Open_%E2%80%93_Men%27s_singles",
+            "https://www.aljazeera.com/sports/2026/8/9/jannik-sinner-withdraws-from-cincinnati-open-with-knee-injury",
         ),
     ),
     _trivia_story(
