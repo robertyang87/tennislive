@@ -64,15 +64,21 @@ def _get(url: str) -> bytes:
 
 def pick_article(links: list[str], surnames: list[str]) -> str | None:
     """按 slug 里含几个姓氏挑文章。零命中返回 None——比赛页上挂着别场的
-    稿子（实测同页有 Gauff/Eala 的），不挑就会把别人的头图当封面。"""
+    稿子（实测同页有 Gauff/Eala 的），不挑就会把别人的头图当封面。
+
+    ⚠️ 给了两个姓氏就必须**两个都命中**（2026-08-10 踩的：LS012 赛后稿
+    还没挂，单命中把 8/4 的双打预告旧稿挑了回来，头图是 Bad Homburg
+    资料图——只靠日期预警兜底太险）。单命中宁可返回 None 走 exit 2
+    重试，别拿别的稿子顶。"""
     wants = [s.lower() for s in surnames if s]
+    need = min(2, len(wants)) or 1
     best, best_hits = None, 0
     for link in links:
         slug = link.lower()
         hits = sum(1 for s in wants if s in slug)
         if hits > best_hits:
             best, best_hits = link, hits
-    return best
+    return best if best_hits >= need else None
 
 
 def og_image(html: str) -> str | None:
