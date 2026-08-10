@@ -4147,14 +4147,72 @@ ESPN 那份是**上一周的快照**，维基那条明写着 `(3 August 2026)`�
 
 配套两条边界，不因为这条授权而松动：
 
-- **ATP 源片仍然卡在人工供片。** Tennis TV 订阅制，`--check-narration`
-  之外的下载步骤仍然拿不到男单源片，这条线目前还是**只能做 WTA**——
-  自己查、自己排的范围是「WTA 女单」，不包括蒙特利尔男单
+- ~~ATP 源片仍然卡在人工供片，这条线目前还是只能做 WTA~~ **2026-08-10 已撤销**，
+  见下一节「ATP 也能查了——YouTube 优先」
 - **闸拦住了、口径选择这两种，仍然要停。** `check_reel_landed` 报不合格、
   成片链接探不到、质检 FATAL——照旧当场修；改法有几个方向都说得通、
   选哪个取决于账号所有者想要什么（换封面版式、要不要倒叙这类）——
   照旧要问。这条授权免掉的是「找不找热点」「推不推微信」这类**只有一个
   说得通答案**的确认，不是免掉判断力
+
+### ⭐ ATP 也能查了——YouTube 优先，WTA 同理要挑 1080p 那版
+
+账号所有者 2026-08-10：先纠正了我的一句话——我说「ATP 源片卡在 Tennis TV，
+拿不到」，他直接顶回来「**atp 在 youtube 也有啊**」。查仓库才发现自己说错了：
+`medvedev-zandschulp.json` / `tirante-fritz.json` 用的是 **ATP 官方 YouTube 频道**，
+`fonseca-ruud.json` / `fritz-jodar-final.json` 用的是 **Tennis TV 的 YouTube 频道**
+——四条 ATP 片子早就这么做过，上一节那句「只能做 WTA」是一句没查仓库就说出口的
+过期结论，而不是真实限制。账号所有者随后定了两条：「**那把这条路打通，后续都
+优先 YouTube**」（ATP）、「**wta 也要优先用 YouTube 1080p 的视频**」（WTA）。
+
+#### ATP：YouTube 优先，Tennis TV 订阅制那条路降级为兜底
+
+**判据不是「猜是官方的」，是画面自己证明的。** `shelton-fonseca` 这条片子
+（蒙特利尔 ATP1000 1/8决赛，谢尔顿胜丰塞卡）走完整条流程验证过，四处自证叠在一起：
+
+- **候选帧墙上烧着「Tennis TV」台标**——`pick_cover_frames.py` 出的 11 张候选，
+  张张右上角都有
+- **场地印着 `MONTREAL`**，场边广告板 `Banque Nationale`/`Rogers`/`IGA`/`CGI`——
+  National Bank Open 的赞助商阵容，和赛事对得上
+- **记分条逐格读过、和 flashscore 逐分记录一分不差**：`FONSECA`/`SHELTON`
+  的比分从 0-40（0.5s）一路到抢七 6-3（224.5s，丰塞卡救下赛点），每一个节点
+  都能在 flashscore（KWAEU167）的逐分数据里找到同一个比分
+- **自动字幕结尾『Ben Shelton wins the battle of the big hitters. He's into
+  the quarterfinals in Montreal.』和真实赛果吻合；脚踝事件那段字幕『Is the
+  ankle okay though? / No.』和 ATP 官方赛后稿『second set at 3-1, Fonseca
+  appeared to tweak his ankle while jumping to chase down an overhead』
+  对得上同一时刻**
+
+四条线全对得上，**这条路走得通**。所以 ATP 现在的顺序是：
+
+1. **ATP 官方 YouTube 频道**（`Highlights | <赛事> <轮次>` 这类标题）
+2. **Tennis TV 官方 YouTube 频道**（`EPIC ... Battle` / `Extended Highlights`
+   这类标题）
+3. Tennis TV 订阅制那条路（网盘转存）退成**两条 YouTube 都没有时**的兜底，
+   不再是唯一路径
+
+⚠️ **`_source` 字段仍然要把自证的四处都写出来**，不能因为「ATP 现在能查了」
+就退回「看着像官方的就当官方的」——这条仓库反复栽过的坑（大威那条转载图被
+调过色、洛斯卡沃斯那次官网图是效果图）说的都是同一件事：**授权和来源不是
+靠感觉判的，是靠画面自己证明的**。
+
+#### WTA：同样要挑 1080p，别退而求其次
+
+`eala-championship` 那条早就踩过一次：wtatennis.com 站内嵌入播放器
+（Brightcove）只给到 **720p**，同一场夺冠集锦的 **YouTube 版是 1080p**、
+还多出颁奖和捧杯致辞的画面（站内版剪得短，晚一小时才发的 YouTube 版更完整）。
+`crop_zoom` 那条规矩算过账：1080p 取 3:4 竖版窗口只需放大 1.33 倍，720p 要
+放大 2.0 倍——同一个镜头，分辨率差一档，最终画质差一大截。
+
+所以 WTA 这条线的顺序现在明确写成：
+
+1. **WTA 官方 YouTube 频道的单场集锦**，选源片时**先看 `%(height)s`**，
+   同一场比赛如果站内页和 YouTube 都有，**挑分辨率更高的那个**，不要因为
+   「先搜到的是站内版」就将就
+2. 站内嵌入播放器（Brightcove 等）退成 YouTube 拿不到时的兜底
+
+⚠️ **两条规矩合起来的判据是同一句话：源片的清晰度和完整度不能将就，
+分辨率越高、剪辑越完整的那个版本优先**——不分 ATP 还是 WTA。
 
 ### 这是一个评论号：要有情感，要有立场
 
