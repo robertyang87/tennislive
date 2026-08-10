@@ -58,3 +58,16 @@ def test_资料图预警按路径日期和比赛日差():
     assert photo_date_off(url, date(2026, 8, 3)) == 6, "差 6 天该触发资料图预警"
     assert photo_date_off("https://x/p.jpg", date(2026, 8, 9)) is None, \
         "解析不出日期就不判，别硬猜"
+
+
+def test_给了两个姓氏就必须两个都命中_单命中不许顶():
+    """2026-08-10 踩的：LS012 赛后稿未挂，单命中把 8/4 双打预告旧稿挑回来，
+    头图是 Bad Homburg 资料图。单命中要返回 None 走重试，别拿别的稿子顶。"""
+    links = [
+        "/news/1/alex-eala-venus-williams-to-team-up-for-toronto-doubles",
+        "/news/2/gauff-withstands-late-push",
+    ]
+    assert pick_article(links, ["eala", "bencic"]) is None, \
+        "只命中 eala 的双打旧稿不许当这场球的赛后稿"
+    # 单姓氏调用（1 个就是全命中）不受影响
+    assert pick_article(links, ["gauff"]) == "/news/2/gauff-withstands-late-push"
