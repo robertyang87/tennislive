@@ -1,0 +1,164 @@
+{
+  "slug": "bencic-eala",
+  "_slug_why": "赢家在前（本西奇胜）。栏目规矩 slug 按赢家-输家。",
+  "source_url": "https://www.youtube.com/watch?v=foXKxvOBnwo",
+  "_source": "WTA官方单场集锦，1920×1080 @ 23.976fps，407.88秒。画面自证：全片左上角常驻WTA台标；记分条常驻双方姓名与种子『A. EALA [25]』/『B. BENCIC [12]』；256.5~262.5秒记分条持续烧出『MATCH POINT #3』『MATCH POINT #4』标记，比分显示EALA 4-0 / BENCIC 6-5-Ad；270.5秒起接网前握手（未切换镜头，单一连续镜头至280.15秒）；294.5秒记分条切换为赛后成绩卡『ROUND 4 ALEXANDRA EALA 4-0 / BELINDA BENCIC 6-6』，确认终场6-4 6-0。⚠️ 300.5秒起转入WTA Tour话筒采访本西奇（captions.txt确认，主持人首问在301.28秒），本条严格不取300秒之后的画面——赛后开麦栏目才用采访内容。",
+  "_column": "赛场之上。12号种子本西奇6-4 6-0淘汰25号种子伊埃拉，晋级多伦多1/4决赛，用时1小时13分47秒。伊埃拉的七连胜（华盛顿夺冠五场：郑钦文/费尔南德斯/斯维托丽娜/大坂直美/佩古拉，多伦多两场：Parks/McNally）就此终结，这也是两人生涯首次交手。首盘伊埃拉两度落后两度破回（2-2、4-4），4-4后自己的发球局被撬开成4-5，随后本西奇两个盘点兑现6-4；第二盘33分里伊埃拉只拿8分，0-6——但最后一局她0-40落后救回三个赛点拖到平分，第四个赛点才交出比赛。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 1/8决赛",
+    "line2": "本西奇 6-4 6-0 伊埃拉"
+  },
+  "_topbar_why": "赢家在前，与cover.winner/result/matchup机械一致。WTA API `tournaments/806/2026/matches`（MatchID LS012）ResultString原文：`[12]B. Bencic d [25]A. Eala 6-4,6-0`，直接查询确认；flashscore（match_feed.py find --tour wta --event toronto --who bencic，match id l6BLpEd5）比分`4-6 0-6`（伊埃拉视角，与WTA数据完全一致），两重独立来源交叉核实。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "七连胜的伊埃拉，这场是从哪一局开始滑下去的？",
+    "thesis": "转折不在第二盘的6-0，在首盘4-4之后：伊埃拉两度落后两度破回，可刚追平就在自己的发球局丢掉第三个破发点，本西奇顺势拿下首盘并在第二盘彻底跑开（33分里伊埃拉只拿8分）。七连胜到此为止——但最后一局她还救了三个赛点，第四个才交出比赛。",
+    "beats": [
+      "首盘伊埃拉两度被破两度破回：2-2、4-4，两次都追平。",
+      "4-4刚追上，下一局她的发球局第三个破发点被撬开——4-5，随后本西奇6-4拿下首盘。这是全场的转折。",
+      "第二盘28分钟本西奇6-0跑开（33分里伊埃拉只拿8分）；最后一局伊埃拉0-40救回三个赛点，第四个才交出比赛。"
+    ],
+    "human_context": {
+      "angle": "七连胜怎么开始的就怎么被记住：华盛顿一周连过郑钦文、费尔南德斯、斯维托丽娜、大坂直美、佩古拉夺冠，多伦多又赢两场——这份对手名单质量极高，输给状态正佳、生涯首次交手的本西奇不丢人。一个月前她还在打资格赛，现在是世界第二十。",
+      "facts": [
+        "七连胜逐场：07-28郑钦文、07-29费尔南德斯、07-31斯维托丽娜、08-01大坂直美、08-03佩古拉（华盛顿夺冠）、08-06 Parks（LS049 WTA API直接查询）、08-08 McNally（LS024 WTA API直接查询）",
+        "生涯首次交手：WTA官方报道标题《Eala extends win streak to seven, earns first career meeting with Bencic》明确写出『first career meeting』；flashscore df_hh_1 H2H分区为空、同feed的Last matches分区数据正常——真空自证",
+        "排名：伊埃拉20（PHI）、本西奇14（SUI），WebSearch多源交叉（Manila Times/GMA News/Rappler 均报道伊埃拉8月4日升至世界第20；多家体育媒体确认本西奇8月9日世界第14）"
+      ],
+      "sources": [
+        "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "https://www.wtatennis.com/news/4556274/eala-extends-win-streak-to-seven-earns-first-career-meeting-with-bencic",
+        "https://www.espn.com/tennis/story/_/id/49572152/alex-eala-toronto-run-ends-round-16-belinda-bencic-snaps-seven-match-win-streak"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "本西奇[12] 6-4 6-0 胜伊埃拉[25]。WTA API `tournaments/806/2026/matches`（MatchID LS012）ResultString原文：`[12]B. Bencic d [25]A. Eala 6-4,6-0`，直接查询确认；flashscore（match_feed.py find --tour wta --event toronto --who bencic，match id l6BLpEd5）比分`4-6 0-6`（伊埃拉视角，与WTA数据完全一致），两重独立来源交叉核实。",
+    "赛事": "多伦多National Bank Open presented by Rogers（WTA1000）女单1/8决赛（Round of 16），CourtID 1（Centre Court），RoundID 4，WTA API直接查询确认。",
+    "用时": "1小时13分47秒。WTA API `MatchTimeTotal: \"01:13:47\"`（MatchID LS012）；ESPN报道原文『settled the hard-court contest in 1 hour 13 minutes』独立确认；match_feed.py分盘用时Set1 0:46、Set2 0:28，合计1:14，与WTA API四舍五入后一致。",
+    "开球时间": "WTA API `MatchTimeStamp`（MatchID LS012）= 2026-08-10T00:34:12.937Z。北京时间＝UTC+8：00:34:12+8h=08:34:12，即北京时间8月10日上午8点34分。",
+    "排名": "伊埃拉：世界第20（菲律宾PHI，WTA球员API确认球员ID 330332，出生日期2005-05-23，本场比赛时21岁）。WebSearch交叉：Manila Times（2026-08-04）《Alex Eala now world No. 20》、GMA News、Rappler三家独立报道均确认8月4日榜单升至第20。\n本西奇：世界第14（瑞士SUI，WTA球员API确认球员ID 319001，出生日期1997-03-10，本场比赛时29岁）。WebSearch交叉：多家体育媒体（含National Bank Open官方球员页引用链路）确认8月9日更新榜单排名第14。种子号（12号/25号）不等同世界排名，未拿种子号顶替rank字段。",
+    "生涯交手记录": "生涯首次交手。WTA官方报道标题《Eala extends win streak to seven, earns first career meeting with Bencic》（wtatennis.com/news/4556274）明确写出『first career meeting』；flashscore（match_feed.py find --tour wta --event toronto --who bencic）返回的df_hh_1（H2H历史交手）分区为空，而同一feed的Last matches（近期战绩）分区数据正常——证明这是真空（生涯首次交手）而非查询错误。",
+    "七连胜逐场战绩": "ESPN报道（2026-08-10）原文『The result ended a seven-match hard-court winning streak for Eala, who had defeated Caty McNally, Alycia Parks, Jessica Pegula, Naomi Osaka, Elina Svitolina, Leylah Fernandez and Qinwen Zheng before facing Bencic.』——独立确认七连胜逐场对手名单，与WTA API直接查询到的多伦多两场（LS049：`[25]A. Eala d A. Parks 6-1,4-6,6-2`；LS024：`[25]A. Eala d C. McNally 6-3,5-7,6-4`）完全吻合。华盛顿五场（郑钦文/费尔南德斯/斯维托丽娜/大坂直美/佩古拉）为本仓库此前已各自独立核实并发布的赛场之上系列（eala-pegula-final等）沿用同一批数据。",
+    "比赛走势": "首盘：双方前几局交替破发（1-2、2-2、2-3、2-4），第七局伊埃拉发球保发追至3-4，第八局本西奇发球被破（3个破发点）追平4-4，第九局伊埃拉发球随即被破（3个破发点）成4-5，本西奇发球局兑现2个盘点6-4收官首盘——flashscore l6BLpEd5逐分数据确认，广播记分条『BREAK POINT #2』（162.5~176.5秒，4-4扭至平分）与『SET POINT #2』（178.5~198.5秒）两段标记与这一走势吻合。次盘：本西奇连保带破跑到5-0，末局伊埃拉0-40落后连救三个赛点（记分条『MATCH POINT #3』256.5~262.5秒、『MATCH POINT #4』258.5~262.5秒持续烧出），拖入平分/占先，第四个赛点上本西奇兑现，6-0锁定比赛。",
+    "官方技术统计": "WTA API `tournaments/806/2026/matches/LS012/stats?setnum=0`（全场汇总）：ACE 伊埃拉1、本西奇1；双误 伊埃拉3、本西奇2；破发点 伊埃拉4次机会兑现2次，本西奇10次机会兑现6次；总得分 伊埃拉36、本西奇57（合计93分）；第二盘 伊埃拉总得分仅8（本西奇25，合计33分）；全场救赛点：伊埃拉3、本西奇0——与flashscore同一场比赛的[Match/Points] Match points saved字段（Eala 3, Bencic 0）完全一致，双源印证；且广播记分条本身在末局烧出『MATCH POINT #3』『MATCH POINT #4』，画面自证与数据吻合。",
+    "本条不用赛后采访": "`docs/column-differentiation-design.md`（2026-08-09账号所有者定）明确『赛场之上』做数据叙事复盘，赛后采访归『赛后开麦』栏目；账号所有者2026-08-10直接指出『赛场之上不要弄赛后采访』。本条全部取材于比赛画面本身与官方数据接口，不使用300.5秒之后本西奇接受WTA Tour话筒采访的任何画面或引语（captions.txt已确认采访边界）。本西奇的采访内容（提及三位新妈妈晋级、女儿Bella、10-0左手将战绩等）留作赛后开麦栏目的候选素材，本条不取用。"
+  },
+  "_editing_why": "**开场三格按定死的顺序**（爆点→落点→坐标），但爆点不取『本西奇独自庆祝』的画面——账号所有者定的情绪口径是这条讲伊埃拉七连胜的终结与最后的抵抗，不是本西奇的胜利。①网前握手（270.5~275.0秒）：两人在场上唯一的同框收尾镜头，避开单方庆祝，不配旁白，交给现场声；②延续同一段赛后场景（276.5~284.5秒，跨一次机位切换，仍是这一刻的余波）配落点旁白——七连胜停在这儿，但最后一局她救了三个赛点。\n\n**中段按坐标→排名/背景→首盘过程→转折→次盘/技术统计排列**：③坐标（开球时刻+赛事+轮次）→④排名+连胜背景（世界第20对第14，生涯首次交手）→⑤首盘过程（两度被破两度追平，剧情有跌宕）→⑥全场真正的转折（4-4刚追平却被撬开4-5，首盘丢了）→⑦次盘彻底跑开（33分只拿8分）→⑧末局她的抵抗（0-40救回三个赛点，第四个才交出比赛）。\n\n**⑨收尾**落在一个开放问题上：一个月从资格赛打到世界第二十，这场6-0是警报还是七连胜之后正常的账单——呼应④铺垫的『一个月前还在打资格赛』，不是封面钩子（七连胜停在这里/救了三个赛点）的回声，两问指向不同的门。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "伊埃拉",
+    "hook": "七连胜停在了这里\n最后一局她还救了三个赛点",
+    "_hook_why": "process not identity：讲的是这场比赛里发生的事（连胜终结+末局的抵抗），不是排名种子这类已经印在footer的身份信息。情绪口径按账号所有者2026-08-10要求：讲伊埃拉的连胜终结与最后的抵抗，不用本西奇庆祝的画面/说法。两行9字/13字，在≤27字预算内。『三个赛点』见`_facts.比赛走势`与`_facts.官方技术统计`（flashscore+WTA API双源印证）。",
+    "topic": "多伦多WTA1000 · 女单1/8决赛",
+    "scrim": "clear",
+    "_scrim_why": "按账号所有者2026-08-09『封面一定要吸引人，同时最好不要要全透明出现背景图，前景不要遮盖背景图』的要求：只关掉画面正中的radial暗角，让实拍背景保持鲜明。",
+    "winner": "本西奇",
+    "result": "6-4 6-0",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS012",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournaments/806/montreal/2026/scores/LS012"
+      },
+      "_court_why": "CourtID 1（Centre Court），WTA API直接查询确认。",
+      "_duration_why": "`MatchTimeTotal: \"01:13:47\"` → 板上印`1:14`（四舍五入）。不手填，`_fetch_match_duration()`每次渲海报现拉接口。"
+    },
+    "portrait": {
+      "frame_at": 161.83,
+      "focus": 0.5,
+      "focus_y": 0.3,
+      "zoom": 1.0
+    },
+    "_portrait_why": "161.83秒选自probe自动生成的cover_candidates（脸部检出477px，全片候选里最大最清晰）：伊埃拉正面近景，专注凝视，双眼检出，正是首盘她两度落后两度追回过程中的一格——情绪对题（拼搏而非庆祝或沮丧）。这一时刻属于150.23~163.62秒这一整段连续镜头，不跨切点，画面中没有本西奇。`mode=cover`渲出实际海报后需用`render_cover_local.py`肉眼核对表情与构图，必要时微调focus/focus_y。",
+    "matchup": [
+      {
+        "name": "本西奇",
+        "name_en": "Belinda Bencic",
+        "country": "SUI",
+        "rank": 14
+      },
+      {
+        "name": "伊埃拉",
+        "name_en": "Alexandra Eala",
+        "country": "PHI",
+        "rank": 20
+      }
+    ],
+    "_matchup_rank_why": "本西奇rank=14、伊埃拉rank=20：均见`_facts.排名`（WebSearch多源交叉，无法直接访问WTA官方排名API时的替代验证路径）。种子号（12号/25号）已在topbar/赛果行使用，种子号和世界排名是两个不同的数，不能混用。"
+  },
+  "segments": [
+    {
+      "start": 270.5,
+      "end": 275.0,
+      "fit": "crop",
+      "_why": "①爆点（不配旁白）：网前握手，两人在场上唯一的同框收尾镜头。窗口在270.39~280.15这一整段连续画面之内，不跨切点。情绪口径：避开单方庆祝画面，选两人同框、互相致意的中性时刻。"
+    },
+    {
+      "start": 276.5,
+      "end": 284.5,
+      "fit": "crop",
+      "crosses_cut": "跨280.15s那一刀是本西奇赢下比赛后场面的机位切换（网前致意→转向看台致意），两侧都是这一刻赛后场景的连续余波，不是换分也不是换人。",
+      "narration": "七连胜停在了这里。但最后一局，她还救了三个赛点。",
+      "_why": "②落点：全场最硬的事实——七连胜终结，但末局她救回三个赛点。见`_facts.官方技术统计`（flashscore+WTA API双源：Match points saved Eala 3, Bencic 0）。"
+    },
+    {
+      "start": 36.5,
+      "end": 44.5,
+      "fit": "crop",
+      "narration": "北京时间八月十日上午八点三十四分，多伦多国家银行公开赛，女单1/8决赛。",
+      "_why": "③坐标。开球时刻见`_facts.开球时间`（WTA API MatchTimeStamp换算北京时间8月10日8:34）。窗口在7.67~49.8这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 52.0,
+      "end": 62.0,
+      "fit": "crop",
+      "narration": "世界第二十的伊埃拉，生涯第一次碰上世界第十四的本西奇——华盛顿夺冠以来，她已经连赢七场。",
+      "_why": "④排名与背景。排名、生涯首次交手、七连胜均见`_facts.排名`、`_facts.生涯交手记录`、`_facts.七连胜逐场战绩`（三重独立信源：WTA官方标题+ESPN报道+WTA API直接查询）。窗口在51.63~63.81这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 97.5,
+      "end": 105.0,
+      "fit": "crop",
+      "narration": "首盘她两度被破，又两度破了回来——二比二，四比四，两次都追平。",
+      "_why": "⑤过程·首盘两度追平。98.5秒记分条清楚显示『EALA 2 / BENCIC 2』，与`_facts.比赛走势`一致。窗口在97.22~108.53这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 191.5,
+      "end": 199.0,
+      "fit": "crop",
+      "narration": "四比四刚追平，下一局又被撬开——四比五，随后六比四，全场就转在这儿。",
+      "_why": "⑥全场真正的转折。记分条『BREAK POINT #2』（162.5~176.5秒，4-4扭平）之后紧接『SET POINT #2』（178.5~198.5秒），本西奇随后6-4收官首盘，与`_facts.比赛走势`一致。窗口在191.07~199.28这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 222.0,
+      "end": 230.0,
+      "fit": "crop",
+      "narration": "第二盘二十八分钟，三十三分里她只拿到八分，本西奇一路拿到六比零。",
+      "_why": "⑦过程·次盘跑开。WTA API官方统计`_facts.官方技术统计`：第二盘伊埃拉总得分仅8（合计33分）；分盘用时28分（`_facts.比赛走势`）。窗口在221.68~232.44这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 257.0,
+      "end": 266.0,
+      "fit": "crop",
+      "narration": "最后一局零比四十，三个赛点——她救回三个，拖到平分，第四个才交出比赛。",
+      "_why": "⑧末局的抵抗。记分条『MATCH POINT #3』『MATCH POINT #4』256.5~262.5秒持续烧出，与`_facts.官方技术统计`（Match points saved Eala 3, Bencic 0）双源一致。窗口在256.55~270.39这一整段连续画面之内，不跨切点。"
+    },
+    {
+      "start": 288.0,
+      "end": 298.0,
+      "fit": "crop",
+      "narration": "一个月前还在打资格赛，现在是世界第二十。这场六比零，是警报，还是七连胜后正常的账单？评论区站队。",
+      "_why": "⑨收尾落在一个开放问题上，呼应④铺垫的『一个月前还在打资格赛，现在世界第二十』，不是封面钩子（七连胜停在这里/救三个赛点）的回声——两问指向不同的门。窗口在287.58~298.67这一整段连续画面之内，不跨切点，画面为赛后成绩卡与伊埃拉在场边收拾装备，严格不越过300秒的采访边界。"
+    }
+  ],
+  "push": {
+    "summary": "伊埃拉七连胜终结",
+    "lead": "12号种子本西奇6-4 6-0淘汰25号种子伊埃拉，晋级多伦多1/4决赛，两人生涯首次交手。伊埃拉的七连胜（华盛顿夺冠五场：郑钦文/费尔南德斯/斯维托丽娜/大坂直美/佩古拉，多伦多两场：Parks/McNally）就此终结。首盘她两度落后两度破回，可4-4刚追平就被撬开4-5，本西奇6-4拿下首盘；次盘33分只拿8分，0-6——但最后一局她0-40落后救回三个赛点，第四个才交出比赛。",
+    "auto": true
+  }
+}
