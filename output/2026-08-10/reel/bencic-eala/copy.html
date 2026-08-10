@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.10 赛场之上 | 伊埃拉七连胜终结</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>12号种子本西奇6-4 6-0淘汰25号种子伊埃拉，晋级多伦多1/4决赛，用时1小时13分47秒——这也是两人生涯首次交手。伊埃拉的七连胜就此终结：华盛顿一周连过郑钦文、费尔南德斯、斯维托丽娜、大坂直美、佩古拉夺冠，多伦多又赢下Parks、McNally两场，一共七场，全是她生涯最长的连胜。
+
+首盘她两度落后又两度追回——2-2、4-4，两次都追平了。可4-4刚追上，下一局自己的发球局第三个破发点又被撬开，4-5，随后本西奇兑现两个盘点6-4拿下首盘。全场的转折就在这儿：不是被彻底压制，是刚追平就被立刻打回去。
+
+次盘28分钟，33分里伊埃拉只拿到8分，本西奇一路6-0。但最后一局，0-40落后的她连救三个赛点，拖进平分，第四个赛点才交出比赛——WTA官方技术统计和现场记分条都写着同一个数字：全场救赛点，伊埃拉3个，本西奇0个。
+
+一个月前她还在打资格赛，现在是世界第二十。这场6-0，是警报，还是七连胜之后正常的账单？评论区聊聊——我们先站&quot;账单&quot;：身体不是无限的。
+
+#网球时差 #伊埃拉 #本西奇 #国家银行公开赛 #WTA1000</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这场六比零，是警报，还是七连胜后正常的账单？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
