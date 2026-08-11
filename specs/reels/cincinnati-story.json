@@ -54,8 +54,8 @@
       "end": 404.8,
       "fit": "crop",
       "source": "final",
-      "narration": "这一盘，又被他一分一分追了回来——两盘一平，比赛进了决胜盘，两个人都没有退路了。",
-      "_why": "captions.txt 393.9s『Djokovic levels the match』——画面是他反复挥拳庆祝。",
+      "narration": "这一盘，他一分一分，把落后的比分又追了回来——两盘战成一比一，比赛进了决胜盘，两个人都已经没有退路了。",
+      "_why": "captions.txt 393.9s『Djokovic levels the match』——画面是他反复挥拳庆祝。⚠️ 本地 --check-narration 第一版用了 zh-CN-YunxiNeural（估余量2.69s，看着够），runner 真渲用的是 match-reel.yml 默认的 zh-CN-YunjianNeural——实际只说7.27s，11.4s窗口里空出4.13s，撞上真闸（run 31474183255）。两个音色语速不一样，本地校验必须显式传 `--voice zh-CN-YunjianNeural`，别漏这一步（工作流自己的注释也在提醒这件事：默认值曾经写错成云希）。现在这版加长过，本地用正确音色复核过：7段落 ~9s，余量约2.4s。",
       "crosses_cut": "跨404.15——preview核过，画面从德约科维奇近景挥拳切到看台全景，他自己的庆祝动作贯穿整段，不是切给对手。"
     },
     {
