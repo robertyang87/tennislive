@@ -1,0 +1,1209 @@
+{
+  "schema_version": 2,
+  "status": "pass",
+  "story_slug": "cincinnati",
+  "fetch_enabled": true,
+  "strict": true,
+  "policy": "事实先交叉核验；图片失败时排除失败来源并同题重试，仍失败则按新闻价值切换主题；候选耗尽后交给后续班次。",
+  "selected_count": 0,
+  "required_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "missing_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "degraded_pages": [
+    "explainer",
+    "story",
+    "today"
+  ],
+  "failed_curated_source_urls": [],
+  "input_domains": [
+    "atptour.com",
+    "cincinnatiopen.com",
+    "wtatennis.com"
+  ],
+  "providers_queried": [
+    "bing-web-image",
+    "curated-editorial",
+    "duckduckgo-web-image",
+    "flickr-public",
+    "official-story-pages",
+    "official-tennis-archive",
+    "openverse",
+    "wikimedia-commons"
+  ],
+  "provider_runs": [
+    {
+      "page": "story",
+      "provider": "curated-editorial",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-story-pages",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 2
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "openverse",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "bing-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "story",
+      "provider": "flickr-public",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "story",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "curated-editorial",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-story-pages",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 2
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "openverse",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "bing-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "explainer",
+      "provider": "flickr-public",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "explainer",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "curated-editorial",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-story-pages",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 1
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 2
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "cincinnati 2023 tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati 2023 tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "wikimedia-commons",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "openverse",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "bing-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "official-tennis-archive",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    },
+    {
+      "page": "today",
+      "provider": "flickr-public",
+      "query": "cincinnati tennis",
+      "status": "ok",
+      "candidate_count": 12
+    },
+    {
+      "page": "today",
+      "provider": "duckduckgo-web-image",
+      "query": "cincinnati tennis",
+      "status": "empty",
+      "candidate_count": 0
+    }
+  ],
+  "selected_providers": [],
+  "excluded_source_urls": [],
+  "errors": [],
+  "attempts": [
+    {
+      "provider": "official-page",
+      "page_url": "https://www.cincinnatiopen.com/history/",
+      "status": "error",
+      "reason": "404 Client Error: Not Found for url: https://cincinnatiopen.com/history/"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.atptour.com/en/news/djokovic-alcaraz-cincinnati-2023-final",
+      "status": "error",
+      "reason": "403 Client Error: Forbidden for url: https://www.atptour.com/en/news/djokovic-alcaraz-cincinnati-2023-final"
+    },
+    {
+      "provider": "official-page",
+      "page_url": "https://www.wtatennis.com/news/3676176/gauff-beats-muchova-cincinnati-title",
+      "status": "error",
+      "reason": "404 Client Error: Not Found for url: https://www.wtatennis.com/news/3676176/gauff-beats-muchova-cincinnati-title"
+    },
+    {
+      "page": "cover",
+      "status": "selected",
+      "cached_file": "cincinnati-centre-court-full.jpg",
+      "title": "Center Court · Lindner Family Tennis Center 满场（2025 赛事官方图 AW5_0234）",
+      "subject": "cincinnati",
+      "required_years": [
+        "2023"
+      ],
+      "required_event_terms": [],
+      "person_required": false,
+      "subject_match": false,
+      "year_match": false,
+      "event_match": true,
+      "person_match": true,
+      "visual_impact_match": false,
+      "reason": ""
+    },
+    {
+      "page": "story",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "cincinnati 2023 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 63,
+      "exact_candidate_count": 1,
+      "archive_candidate_count": 3,
+      "rejection_counts": {
+        "low-visual-impact-metadata": 36,
+        "source-already-used": 1,
+        "subject-or-person-mismatch": 13,
+        "duplicate-candidate": 7,
+        "metadata-relevance-below-3": 2,
+        "subject-archive-rejected-in-strict-mode": 3,
+        "download-or-resolution-failed": 1
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "story",
+          "provider": "curated-editorial",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-story-pages",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 2
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "openverse",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "bing-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "story",
+          "provider": "flickr-public",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "story",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "page": "explainer",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "cincinnati 2023 室外硬地 梅森 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 75,
+      "exact_candidate_count": 2,
+      "archive_candidate_count": 3,
+      "rejection_counts": {
+        "low-visual-impact-metadata": 37,
+        "source-already-used": 1,
+        "subject-or-person-mismatch": 13,
+        "duplicate-candidate": 17,
+        "metadata-relevance-below-3": 2,
+        "subject-archive-rejected-in-strict-mode": 3,
+        "download-or-resolution-failed": 2
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "explainer",
+          "provider": "curated-editorial",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-story-pages",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati 2023 室外硬地 梅森 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 2
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "openverse",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "bing-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "explainer",
+          "provider": "flickr-public",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "explainer",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    },
+    {
+      "page": "today",
+      "status": "generated-visual",
+      "reason": "多源检索后无相关性和分辨率同时达标的照片",
+      "query": "cincinnati 2023 tennis",
+      "required_event_terms": [],
+      "providers": [
+        "curated-editorial",
+        "official-media",
+        "wikimedia-commons",
+        "openverse",
+        "bing-web-image",
+        "official-tennis-archive",
+        "flickr-public",
+        "duckduckgo-web-image"
+      ],
+      "candidate_count": 63,
+      "exact_candidate_count": 1,
+      "archive_candidate_count": 1,
+      "rejection_counts": {
+        "low-visual-impact-metadata": 38,
+        "source-already-used": 1,
+        "subject-or-person-mismatch": 13,
+        "duplicate-candidate": 8,
+        "metadata-relevance-below-3": 1,
+        "subject-archive-rejected-in-strict-mode": 1,
+        "download-or-resolution-failed": 1
+      },
+      "failed_curated_source_urls": [],
+      "source_runs": [
+        {
+          "page": "today",
+          "provider": "curated-editorial",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-story-pages",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 1
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 2
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "cincinnati 2023 tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati 2023 tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "wikimedia-commons",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "openverse",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "bing-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "official-tennis-archive",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        },
+        {
+          "page": "today",
+          "provider": "flickr-public",
+          "query": "cincinnati tennis",
+          "status": "ok",
+          "candidate_count": 12
+        },
+        {
+          "page": "today",
+          "provider": "duckduckgo-web-image",
+          "query": "cincinnati tennis",
+          "status": "empty",
+          "candidate_count": 0
+        }
+      ]
+    }
+  ],
+  "selection_evidence": {
+    "kind": "tournament",
+    "candidate_slug": "cincinnati",
+    "result_count": 18,
+    "live_count": 0,
+    "schedule_count": 10,
+    "selection_basis": "current player or tournament relevance, match news value, and recency",
+    "candidate_rank": 3,
+    "candidate_count": 18,
+    "visual_preflight_rejections": 2,
+    "visual_preflight_status": "pass",
+    "same_topic_attempt": 1,
+    "same_topic_attempt_limit": 4
+  },
+  "rejected_candidates": [
+    {
+      "story_slug": "swiatek",
+      "title": "伊加·斯瓦泰克",
+      "stage": "visual-preflight",
+      "errors": [
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
+      ],
+      "excluded_source_urls": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "cover",
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "rejected",
+              "cached_file": "iga-swiatek.jpg",
+              "title": "File:Swiatek 2026 United Cup SF.jpg",
+              "subject": "iga swiatek",
+              "required_years": [
+                "2020"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": false,
+              "year_match": false,
+              "event_match": true,
+              "person_match": false,
+              "visual_impact_match": false,
+              "reason": "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求"
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "cover",
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "rejected",
+              "cached_file": "iga-swiatek.jpg",
+              "title": "File:Swiatek 2026 United Cup SF.jpg",
+              "subject": "iga swiatek",
+              "required_years": [
+                "2020"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": false,
+              "year_match": false,
+              "event_match": true,
+              "person_match": false,
+              "visual_impact_match": false,
+              "reason": "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求"
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 3,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "cover",
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "rejected",
+              "cached_file": "iga-swiatek.jpg",
+              "title": "File:Swiatek 2026 United Cup SF.jpg",
+              "subject": "iga swiatek",
+              "required_years": [
+                "2020"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": false,
+              "year_match": false,
+              "event_match": true,
+              "person_match": false,
+              "visual_impact_match": false,
+              "reason": "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求"
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 4,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "cover",
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "rejected",
+              "cached_file": "iga-swiatek.jpg",
+              "title": "File:Swiatek 2026 United Cup SF.jpg",
+              "subject": "iga swiatek",
+              "required_years": [
+                "2020"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": false,
+              "year_match": false,
+              "event_match": true,
+              "person_match": false,
+              "visual_impact_match": false,
+              "reason": "封面未同时满足人物、年份、事件/地点与可溯源（HTTPS 来源页）要求"
+            }
+          ],
+          "visual_qa": {}
+        }
+      ]
+    },
+    {
+      "story_slug": "gauff",
+      "title": "科科·高芙",
+      "stage": "visual-preflight",
+      "errors": [
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+        "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包"
+      ],
+      "excluded_source_urls": [],
+      "attempts": [
+        {
+          "attempt": 1,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "coco-gauff.jpg",
+              "title": "File:Coco Gauff (2023 DC Open) 01.jpg",
+              "subject": "coco gauff",
+              "required_years": [
+                "2023"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": true,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 2,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "coco-gauff.jpg",
+              "title": "File:Coco Gauff (2023 DC Open) 01.jpg",
+              "subject": "coco gauff",
+              "required_years": [
+                "2023"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": true,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 3,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "coco-gauff.jpg",
+              "title": "File:Coco Gauff (2023 DC Open) 01.jpg",
+              "subject": "coco gauff",
+              "required_years": [
+                "2023"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": true,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        },
+        {
+          "attempt": 4,
+          "stage": "visual-preflight",
+          "error": "ValueError: 知识帖素材预检失败：候选故事均没有完整高质量图片包",
+          "excluded_after_attempt": [],
+          "newly_excluded": [],
+          "input_domains": [
+            "en.wikipedia.org"
+          ],
+          "providers_queried": [],
+          "provider_runs": [],
+          "missing_pages": [
+            "explainer",
+            "story",
+            "today"
+          ],
+          "attempts": [
+            {
+              "page": "cover",
+              "status": "selected",
+              "cached_file": "coco-gauff.jpg",
+              "title": "File:Coco Gauff (2023 DC Open) 01.jpg",
+              "subject": "coco gauff",
+              "required_years": [
+                "2023"
+              ],
+              "required_event_terms": [],
+              "person_required": true,
+              "subject_match": true,
+              "year_match": true,
+              "event_match": true,
+              "person_match": true,
+              "visual_impact_match": false,
+              "reason": ""
+            }
+          ],
+          "visual_qa": {}
+        }
+      ]
+    }
+  ],
+  "recovery": {
+    "status": "recovered",
+    "same_topic_attempt": 1,
+    "excluded_source_urls": [],
+    "failed_attempts": []
+  }
+}
