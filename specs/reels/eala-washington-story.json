@@ -1,0 +1,123 @@
+{
+  "slug": "eala-washington-story",
+  "sources": {
+    "zheng": "https://www.youtube.com/watch?v=_z06v_b8bIM",
+    "fernandez": "https://www.youtube.com/watch?v=zrLRktfS-q4",
+    "svitolina": "https://www.youtube.com/watch?v=AiBTDJd_ekQ",
+    "osaka": "https://www.youtube.com/watch?v=h-ICrhuXE18",
+    "final": "https://www.youtube.com/watch?v=OvjNXy1mQjY"
+  },
+  "_source": "五条源全部沿用已发的五条「赛场之上」match reel（eala-zheng/eala-fernandez/eala-svitolina/eala-osaka/eala-pegula-final）已经验证过的官方集锦链接，一个字节都没有重新下载/重新验证——每条源的画面自证（记分条、场地字样、赛后稿交叉核实）已经写在各自的 `assets/reel/*.credits.json` 和已发 spec 的 `_facts`/`_source` 里，不在这里重复。\n\n✅ **`zheng` 这一条的分辨率阻塞已解决。** 2026-07-29 那次下载 probe 记录是 640×360（早于『分辨率越高越优先』那条规矩，2026-08-10 才定），和另外四条的 1920×1080 不一致，`check_sources_match` 会拦。2026-08-11 在 runner 上对同一个 URL 重新跑 `mode=probe`（临时 slug `eala-zheng-1080p-check`，run 31469522111，output/2026-08-11/reel/eala-zheng-1080p-check/probe.json）确认：**同一条 URL 现在拿到的是 1920×1080**，和另外四条一致，不用另找链接。真正渲染这条 spec 时，`zheng` 这个键仍然指向原始 URL——`download()` 按 URL 哈希缓存，会重新走一次下载并拿到 1080p 的版本。",
+  "_column": "**这条是「网球有故事」，不是「赛场之上」**——账号所有者 2026-08-11：「都要用新的卡片视频模板生成后续的网球有故事视频啊」，`docs/story-asset-topics.md`（2026-08-10 拍板）第 1 号选题就是这条：「伊埃拉：马尼拉到 WTA 冠军 | 菲律宾第一人的全程，我们从资格赛就在拍 | 已验」。五条已发的「赛场之上」逐场 reel 已经把这一周从首轮到夺冠的每一分都讲过一遍；这条不是重讲同一件事——**同一件事在两个栏目里回答的是两个问题**（本文件 CLAUDE.md 早有这条通则）：「赛场之上」逐场讲「这一场怎么打的」，这条讲「这一周意味着什么」——五场压缩成一条不到九十秒的旅程，落点是「菲律宾网球史上第一个 WTA 巡回赛冠军」这件事本身，不是任何一场球的技术细节。所以封面走 `layout: \"solo\"`：没有 VS、没有对手、**没有任何一场的比分**（比分是最后一拍，五个都印在标题下面等于把结局提前说了五遍）。",
+  "_facts": "全部照抄自五条已发 reel 的 `_facts`/`push.lead`，逐条对过，未新增任何一个没有出处的数字：\n· 首轮 vs 郑钦文：4-6 6-4 6-1（eala-zheng.push.summary 交叉：「郑钦文赢首盘仍出局」）\n· 第二轮 vs 费尔南德斯（本站卫冕冠军）：6-2 7-6(1)，抢七只丢一分（eala-fernandez seg6）\n· 八强 vs 斯维托丽娜（2 号种子）：6-3 6-4，两个月内第二次赢她、比分和柏林那次一样（eala-svitolina.push.lead）\n· 半决赛 vs 大坂直美（3 号种子、四届大满贯冠军）：6-4 6-2，1 小时 18 分（eala-osaka.push.lead）\n· 决赛 vs 佩古拉（世界第 3、1 号种子）：4-6 6-4 6-0，被雨切成两天，菲律宾历史上第一个 WTA 巡回赛冠军（eala-pegula-final.push.lead）\n年龄：21 岁（五条已发 reel 一致注明）。事件：Mubadala DC Open，华盛顿 WTA500，2026-07-29~08-04。",
+  "_claims": {
+    "菲律宾历史上第一个 WTA 巡回赛冠军": "两个独立源交叉确认：WTA 官方新闻标题原文『Eala completes Pegula comeback to win Washington, first WTA title for the Philippines』（https://www.wtatennis.com/news/4553195/eala-completes-pegula-comeback-to-win-washington-first-wta-title-for-the-philippines）；CNN 标题原文『Alexandra Eala becomes the first player from the Philippines to win a WTA Tour title』（https://www.cnn.com/2026/08/03/sport/alexandra-eala-first-filipina-wta-tour-title）。WebSearch 2026-08-11 核实。"
+  },
+  "_beats": "六拍，每一拍留一个问题、下一拍回答它：\n1 菲律宾网球史上没人拿过 WTA 巡回赛冠军；首轮她先丢一盘 → 她能挺过去吗？\n2 一盘一破落后，她把它拿了回来，涉险闯过首轮 → 第二轮呢？\n3 对手是卫冕冠军，抢七只丢一分 → 八强呢？\n4 送走了两个人，看台上菲律宾国旗举了起来，对手换成两号种子斯维托丽娜 → 她赢了吗？（同一段落用她夺得那一分收束，见 segments 顺序）\n5 半决赛，四届大满贯冠军大坂直美——六比四六比二，她赢了，双手捂住了脸 → 决赛呢？\n6 决赛对手是世界第三，雨把比赛切成两天，她落后一盘——零比四十三个冠军点，她自己拿下最后一个 → 收在「菲律宾历史上第一个 WTA 冠军」这一句，**片尾问句由 `_ask_it_out_loud()` 自动补**（本片没有另留人工问句，见 CLAUDE.md「末屏那个问题，旁白必须问出来」——那套机制本来就是为这种情况写的）。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "伊埃拉",
+    "hook": "一盘一破落后到卫冕冠军，四届大满贯冠军全被她挡下\n菲律宾网球史上，第一个 WTA 巡回赛冠军",
+    "_hook_why": "上一句是过程（她闯过的那几关），下一句是落点（历史意义）——和 shang-rublev/zverev-griekspoor 那两条『过程+落点』的两行钩子同一个形状。字数：第一行 24 字、第二行 19 字，都在 27 字的 HOOK_BUDGET 以内。",
+    "topic": "华盛顿 WTA500 · 从首轮到冠军",
+    "portrait": {
+      "image": "assets/reel/eala-washington-2026-crop.jpg",
+      "focus": 0.62,
+      "focus_y": 0.42,
+      "zoom": 1.0,
+      "_why": "已经在仓库里、已经核实过四要素的一张实拍（见 assets/reel/eala-zheng.credits.json）：WTA 官方图库 Eala-R1-EC.jpg，2026-07-28 本站首轮，反手随挥、球场背景写着 WASHINGTON，本人正在这条故事的第一场里。**这不是新找的图**，是复用同一批已经过闸的素材——精准、在比赛中、有冲击力（正是这一周开始的那一刻）、够清晰（3430×2287 原图裁出的 2200×1647，无放大）四道闸门在 eala-zheng 那条片子里已经验过一次。\nfocus/zoom 待 `render_cover_local.py` 本地渲一版核实——这条不需要下源片，Chromium 渲 HTML 本地就能跑，7 秒出结果。"
+    },
+    "scrim": "clear"
+  },
+  "push": {
+    "summary": "伊埃拉五连胜夺生涯首冠",
+    "lead": "华盛顿 WTA500，21 岁的伊埃拉从首轮打到夺冠：先是一盘一破落后逆转郑钦文，再送走卫冕冠军费尔南德斯（抢七只丢一分）、两号种子斯维托丽娜、四届大满贯冠军大坂直美，决赛落后一盘、被雨切成两天，最终 4-6 6-4 6-0 掀翻世界第三佩古拉——菲律宾网球史上第一个 WTA 巡回赛冠军。",
+    "auto": true,
+    "_why": "summary 8 字，在 SUMMARY_MAX=13 以内。matchup/score/event 这一条片子算不出来（没有 versus，也没有单一比分——五场都不一样），所以只写 summary 和 lead，走 solo 版式该有的那条路（同 hewitt-washington.push._why）。"
+  },
+  "segments": [
+    {
+      "start": 60.0,
+      "end": 69.5,
+      "fit": "crop",
+      "source": "zheng",
+      "narration": "菲律宾网球史上，从没人拿过一个WTA冠军。八月华盛顿，首轮她先丢一盘。",
+      "_why": "沿用 eala-zheng seg0 的原窗口（首轮，郑钦文拿下第一盘），窗口本身已经过闸（不跨切点、在死球之后再切）。narration 换成整条故事的开场立意。"
+    },
+    {
+      "start": 267.5,
+      "end": 279.1,
+      "fit": "crop",
+      "source": "zheng",
+      "narration": "一盘一破在手，她只再赢一局——还是被她拿了回来。四比六、六比四、六比一，涉险闯过首轮。",
+      "_why": "沿用 eala-zheng seg7 的原窗口（首轮夺冠点）。",
+      "crosses_cut": "dry-run 报跨 275.20s：`preview_segments_local.py` 核过，两侧都是伊埃拉本人（绿色球衣）——前半是回合与宽景比分（EALA 领先），后半是她赛后走向场边的近景，同一个人、同一场比赛的自然转场，不是切给对手。"
+    },
+    {
+      "start": 194.5,
+      "end": 204.5,
+      "fit": "crop",
+      "source": "fernandez",
+      "narration": "第二轮，对手是卫冕冠军费尔南德斯。抢七拖到七比一，她只丢了一分。",
+      "_why": "沿用 eala-fernandez seg6 的原窗口（抢七 7-1 拿下）。"
+    },
+    {
+      "start": 233.5,
+      "end": 243.0,
+      "fit": "crop",
+      "source": "svitolina",
+      "narration": "看台上，菲律宾国旗举了起来。这一周，她已经送走了郑钦文和费尔南德斯。",
+      "_why": "沿用 eala-svitolina seg10 的原窗口（八强赛后，看台国旗）——这一格同时收住第三拍（她赢了斯维托丽娜，因为窗口本身在她夺冠之后）。"
+    },
+    {
+      "start": 271.0,
+      "end": 278.6,
+      "fit": "crop",
+      "source": "osaka",
+      "narration": "对手是四届大满贯冠军大坂直美。六比四、六比二，她赢了。",
+      "_why": "沿用 eala-osaka seg0 的原窗口（半决赛夺冠点）。",
+      "crosses_cut": "dry-run 报跨 276.32s：`preview_segments_local.py` 核过，前半是伊埃拉（绿色球衣）回合中，后半是转播插的 `MATCH POINT #3` 比分图形＋看台反应——图形上印的就是这一分的比分，不是切给对手，也不是换了人。"
+    },
+    {
+      "start": 294.6,
+      "end": 299.0,
+      "fit": "crop",
+      "source": "osaka",
+      "narration": "二十一岁，她双手捂住了脸。",
+      "_why": "沿用 eala-osaka seg1 的原窗口。情绪拍，短句留白，见 CLAUDE.md『动作句只挑能渲染情绪的那几个』。"
+    },
+    {
+      "start": 141.8,
+      "end": 155.3,
+      "fit": "crop",
+      "source": "final",
+      "narration": "决赛，对手是世界第三佩古拉。第二盘一比二，雨下了下来，比赛停了——那一刻她落后一盘，这场决赛，停了一整夜。",
+      "_why": "沿用 eala-pegula-final seg3 的原窗口（雨断）。"
+    },
+    {
+      "start": 234.84,
+      "end": 244.6,
+      "fit": "crop",
+      "source": "final",
+      "narration": "零比四十，三个冠军点，佩古拉救掉第一个。第二个，伊埃拉没再给她机会。",
+      "_why": "沿用 eala-pegula-final seg6 的原窗口（冠军点）。"
+    },
+    {
+      "start": 170.9,
+      "end": 176.8,
+      "fit": "crop",
+      "source": "final",
+      "narration": "二十一岁，菲律宾历史上第一个 WTA 冠军。",
+      "_why": "沿用 eala-pegula-final seg1 的原窗口。⚠️ 这一格里近端是伊埃拉本人（已经在原 spec 里核对过『替她说话的那句压在对手身上』这条），落点句必须压在她身上，这条片子直接继承这一验证。"
+    },
+    {
+      "start": 183.2,
+      "end": 190.0,
+      "fit": "crop",
+      "source": "final",
+      "narration": "这场胜利之后，菲律宾网球的下一步，会是什么？",
+      "_why": "`test_收尾要落在一问上不能停在数据上` 拦下了原来的写法（上一段『二十一岁，菲律宾历史上第一个 WTA 冠军。』停在数据上）——**这条测试查的是 spec 文件本身持久化的文本，不是渲染期会不会自动补**，之前那句『收尾问句交给 `_ask_it_out_loud() 自动补』的推断是错的，改回手写。\n窗口沿用 eala-pegula-final `_facts`/probe 里 183.2–190.0 的镜头边界（不跨切点，`preview_segments_local.py` 核过：伊埃拉走向场边，画面里带着 `FINAL / JESSICA PEGULA 6 4 4 6 / ALEXANDRA EALA 4 6 6 4` 官方赛果图形）。问句不重复上一段『第一个冠军』这个说法，转而问菲律宾网球这条更大的线——呼应封面钩子和开场『菲律宾网球史上没人拿过冠军』那句的立意。"
+    }
+  ]
+}
