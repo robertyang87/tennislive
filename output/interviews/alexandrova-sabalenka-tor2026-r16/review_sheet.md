@@ -13,7 +13,7 @@
 | 7 | 0:09.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=341) | Um, I just tried to play every single point | 我只是尽量把每一分 | ✅ 人工引语 |
 | 8 | 0:12.3 | [▶](https://youtu.be/Ydiz_GpM8_A?t=343) | as it was the last one | 都当成最后一分打 | ✅ 人工引语 |
 | 9 | 0:13.7 | [▶](https://youtu.be/Ydiz_GpM8_A?t=345) | because with her like you you didn't get | 因为对她 你不会有 | ✅ 人工引语 |
-| 10 | 0:17.5 | [▶](https://youtu.be/Ydiz_GpM8_A?t=348) | a lot of uh chances during the match | 太多机会 | ✏️ 已订正；✅ 人工引语 |
+| 10 | 0:17.5 | [▶](https://youtu.be/Ydiz_GpM8_A?t=348) | a lot of uh chances during the matches | 太多机会 | ✅ 人工引语 |
 | 11 | 0:20.3 | [▶](https://youtu.be/Ydiz_GpM8_A?t=351) | but I had a lot today but I couldn't realize all | 今天我拿到不少 但没能 | ✅ 人工引语 |
 | 12 | 0:23.2 | [▶](https://youtu.be/Ydiz_GpM8_A?t=354) | of them but honestly I was like I | 全部把握住 但说实话 我 | ✅ 人工引语 |
 | 13 | 0:26.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=358) | was trying not to think | 尽量不去想 | ✅ 人工引语 |
@@ -23,12 +23,12 @@
 | 17 | 0:33.3 | [▶](https://youtu.be/Ydiz_GpM8_A?t=364) | But I'm super happy that I could win | 我特别开心能赢下这场 | ✅ 人工引语 |
 | 18 | 0:35.0 | [▶](https://youtu.be/Ydiz_GpM8_A?t=366) | because after I don't know | 因为打完 | ✅ 人工引语 |
 | 19 | 0:36.6 | [▶](https://youtu.be/Ydiz_GpM8_A?t=368) | after second set I thought I | 第二盘打完的时候 | ✅ 人工引语 |
-| 20 | 0:38.0 | [▶](https://youtu.be/Ydiz_GpM8_A?t=369) | so it's already past me. | 我以为机会已经溜走了 | ✏️ 已订正；✅ 人工引语 |
+| 20 | 0:38.0 | [▶](https://youtu.be/Ydiz_GpM8_A?t=369) | so it's already passed me. | 我以为机会已经溜走了 | ✅ 人工引语 |
 | 21 | 0:40.3 | [▶](https://youtu.be/Ydiz_GpM8_A?t=371) | Well you this was your 10th career meeting | 这是你们生涯第十次交手 |  |
 | 22 | 0:42.3 | [▶](https://youtu.be/Ydiz_GpM8_A?t=373) | with Aryna. | 和萨巴伦卡 | ✏️ 已订正 |
 | 23 | 0:42.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=374) | You're familiar. You're now dead even five | 你很了解她了 现在战绩追平 |  |
 | 24 | 0:45.1 | [▶](https://youtu.be/Ydiz_GpM8_A?t=376) | wins each. | 五比五 |  |
-| 25 | 0:45.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=377) | How much did that steal your confidence | 这给了你多少信心 | ⚠️ `How much did that steal your confidence` 语义不顺——上下文是「你们战绩追平5-5」之后问信心，`steal` 在这里等于说信心被削弱，和后面正面的回答对不上。疑似应为 `instill`（灌注信心），但没把握硬改，等 --stage verify 的第二份 ASR 交叉核对再定。 |
+| 25 | 0:45.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=377) | How much did that steal your confidence | 这给了你多少信心 | 👂 跑完 --stage verify：whisper 独立听到的也是 `steal`（run 31465655866 的 whisper.json 原始转写核对过），两份 ASR 一致，之前疑心的 `instill` 没有证据支持。语义上仍然有点别扭，但这是场边即兴采访，主持人临场措辞不够精准是常有的事——两份独立转写都一致就不再改动，保留原话。 |
 | 26 | 0:47.5 | [▶](https://youtu.be/Ydiz_GpM8_A?t=378) | to know that you could kind | 让你觉得能 |  |
 | 27 | 0:48.6 | [▶](https://youtu.be/Ydiz_GpM8_A?t=380) | of get her off her rhythm? | 打乱她的节奏 |  |
 | 28 | 0:50.9 | [▶](https://youtu.be/Ydiz_GpM8_A?t=382) | Oh, well, I mean, I don't know if I | 这个嘛 我说不好是不是 |  |
@@ -66,7 +66,7 @@
 
 ## 还欠着的
 
-- **#25**（0:45.9，[跳过去](https://youtu.be/Ydiz_GpM8_A?t=377)）`How much did that steal your confidence` 语义不顺——上下文是「你们战绩追平5-5」之后问信心，`steal` 在这里等于说信心被削弱，和后面正面的回答对不上。疑似应为 `instill`（灌注信心），但没把握硬改，等 --stage verify 的第二份 ASR 交叉核对再定。
+（无）
 
 听完之后：改对的写进 `en_fixed`；听下来本来就对的写进 `suspect_ok`（值写一句为什么），别默默留着——**一个常年挂着的待办和没有待办长得一模一样**。
 

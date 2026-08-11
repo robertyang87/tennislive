@@ -7,17 +7,18 @@
 
 - `—` → `if`　✅ 已声明
 - `you did` → `do`　✅ 已声明
+- `matches but` → `match`　✅ 已声明
 - `all` → `some`　✅ 已声明
 - `about like` → `or`　✅ 已声明
 - `i do not know after` → `the`　✅ 已声明
 - `i so it is` → `the chance was`　✅ 已声明
+- `passed` → `past`　✅ 已声明
 
 ## 记者删掉的（正常编辑，不算分歧）
 
 - 删 `like`（实词）
 - 删 `get`（实词）
 - 删 `uh`（口头语）
-- 删 `but`（实词）
 - 删 `i was like`（实词）
 - 删 `you know about`（实词）
 - 删 `you know`（实词）
