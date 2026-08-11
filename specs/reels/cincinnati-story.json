@@ -1,126 +1,158 @@
 {
   "slug": "cincinnati-story",
   "sources": {
-    "final": "https://www.youtube.com/watch?v=Fgy8tjrKy1Y"
+    "final2018": "https://www.youtube.com/watch?v=2wMB8z4zhw8",
+    "final2023": "https://www.youtube.com/watch?v=Fgy8tjrKy1Y"
   },
-  "_source": "ATP官方2023年男单决赛集锦「Carlos Alcaraz vs Novak Djokovic | Cincinnati 2023 Final Highlights」，youtube.com/watch?v=Fgy8tjrKy1Y，2026-08-11 runner mode=probe验证：1920x1080/60fps，758.6s（output/2026-08-11/reel/cincinnati-djokovic-alcaraz/probe.json）。\n\n画面自证：全程记分条烧着 `ALCARAZ` / `DJOKOVIC` 及分数；场地地面/围挡印着 `Western & Southern`（该赛事传统名）；自动字幕（captions.txt）逐句叙述比赛走向，和 evidence.json 已核验的赛果（德约科维奇 5-7 7-6 7-6 胜阿尔卡拉斯，3小时49分钟）完全吻合：'Djokovic levels the match'（393.9s）、'seals it on his fifth Championship point after three hours and 49 minutes on court'（710.7s）、'he was a six and four two down running on fumes'（720.7s，指他曾5-7 4-2落后）。\n\n⚠️ **不在这条 spec 里引入任何比 evidence.json 更精确的分盘/分局数字**——captions里多处'saved'/'set point saved'的具体位置在哪一盘存在歧义（WebSearch摘要说是'second-set tie-break'，但字幕时间轴显示这段发生在'levels the match'之后，读起来更像决胜盘）。宁可用宽泛但站得住的说法（如'一度濒临出局'，直接照抄evidence.json已核验的原话），不猜测精确到哪一盘的赛点/盘点数。",
-  "_column": "**「网球有故事」，不是「赛场之上」**——账号所有者2026-08-11：「重新做一期辛辛那提的赛事介绍，可以参考加拿大公开赛那种视频形式」，回应的是原本用静态四宫格卡片渲的 knowledge_adhoc『cincinnati』（1899年建赛/记录/名场面）不符合『网球有故事视频优先』的决定（docs/story-asset-topics.md）。这条讲的是**赛事本身的故事**（建赛历史+史上留名的一场决赛+费德勒的纪录），不是某个球员的个人故事线——`cover.layout` 仍走 solo（本栏目唯一支持的版式），但 subject 是这场决赛的主角德约科维奇，topic 落在赛事本身。",
-  "_facts": "全部照抄自原静态卡片 output/2026-08-11/knowledge_adhoc/evidence.json（已核验，两个源：cincinnatiopen.com/history + atptour.com新闻稿）：\n· 1899年开打，是全美仍留在创办城市的最古老网球赛事，比美网搬进法拉盛还早了大半个世纪\n· 费德勒在这里七次夺冠，至今无人接近；他职业生涯对阵前十胜率最高的赛事就是这里\n· 2023年男单决赛德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，鏖战3小时49分钟，ATP史上最长三盘制决赛之一\n· 球场建在俄亥俄州梅森，却是美网前最重要的风向标，冠军常常直通纽约决赛周\n· 同一天（2023-08-20），高芙6-3 6-4胜穆霍娃，拿下生涯首个WTA1000冠军——三周后美网决赛她再次击败同一个对手夺冠（wtatennis.com新闻稿核验）\n年龄/排名等未涉及球员个人身份断言，不触发全称断言闸。",
-  "_beats": "六拍：\n1 赛事本身的分量（1899年建赛，全美最古老）→ 这里发生过什么？\n2 2023年决赛，他一度濒临出局 → 怎么翻盘的？\n3 又被他一次次追了回来 → 决胜盘呢？\n4 一个赛点接一个赛点 → 他扛住了吗？\n5 全都救了下来，crowd erupting → 最后呢？\n6 决胜盘他打得像台机器，三小时四十九分之后终于拿下 → 收在赛事的更大分量（费德勒七冠、同一天高芙夺冠、美网风向标），落在一问上。",
+  "_source": "两条ATP官方集锦：\n\n**final2018**：「Highlights: Djokovic Beats Federer in Cincinnati 2018 Final, Clinches Career Golden Masters」，youtube.com/watch?v=2wMB8z4zhw8。2026-08-11 runner mode=probe验证（临时slug cincinnati-djokovic-federer-2018，run 31500084219）：1920x1080/29.97fps，276.6s（output/2026-08-11/reel/cincinnati-djokovic-federer-2018/probe.json）。画面自证：contact_00.jpg 0.5s是官方『W&S OPEN / Masters 1000 / ATP World Tour』开场标识，2.5-4.5s是『DJOKOVIC (10) vs FEDERER (2)』对阵图，此后连续记分条烧着『Djokovic』/『Federer』及局分；contact_03.jpg 180.5-218.5s是握手、庆祝（挥拳/仰头）、捧杯的完整段落；220.5s切到『MURRAY/SOARES (4) vs CABAL/FARAH (7)』——**这之后是双打决赛颁奖，本条spec一概不用**。自动字幕（captions.txt）逐句印证赛果：76.98-88.47s『Djokovic is one set away from winning the title in Cincinnati for the first time but more significantly he's one set away from completing the set of masters』；169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』；203.76-214.61s『here 2018 Western Southern Open men's singles champion Novak Djokovic... it's the last stamp in the passport... of these nine great stops』。\n\n**final2023**：沿用已发的cincinnati-story旧版已核验的官方集锦，一个字节没有重新下载/验证——source_url、分辨率(1920x1080/60fps)、切点、captions.txt全部复用之前的探测记录（output/2026-08-11/reel/cincinnati-djokovic-alcaraz/probe.json）。\n\n⚠️ **不引入比已核验记录更精确的分盘/分局数字**（同旧版这条注解）。",
+  "_column": "**「网球有故事」，不是「赛场之上」**——2026-08-11账号所有者纠正：「用他那个二发网球的视频里的剪辑和叙述的手段……来做辛辛那提赛的历史和它的整个的精彩的地方……而不是让你做辛辛那提决赛最长决赛的这个视频，时长可以不限制」。上一版把整条片子押在2023年一场决赛的『最长决赛』框架上，账号所有者点名这不是他要的——他要的是**赛事本身125年的历史全景**，参照『2发网球』做加拿大公开赛那条视频的手法（见CLAUDE.md「别人怎么配文案」第三个账号那节：真快剪+官网数据当证据+新闻引语，而不是单一场比赛的逐分叙事）。这一版换成多时代结构：1899建赛→改名史/险些搬去夏洛特→德约科维奇2008-2018五次辛辛那提决赛失利终于集齐职业生涯全部大师赛冠军→费德勒的7冠纪录→2023年经典决赛（降级成一拍，不再是全片）→2.6亿美元翻新→收尾。2023决赛那部分narration整体改短（原来7段现在压成1段+1个静默庆祝段）。",
+  "_facts": "两组独立核验的事实，逐条带source_urls：\n\n【赛事历史，WebSearch 2026-08-11核验】\n· 1899年9月18日建赛，最初就叫『Cincinnati Open』，在Avondale Athletic Club举行——全美仍留在创办城市的最古老网球赛事（tennislibrary.miraheze.org/wiki/Cincinnati_Open；cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/）\n· 1901年后改名，2002年起叫『Western & Southern Open』；2023年因冠名商Western & Southern宣布退出，赛事一度面临搬去夏洛特的风险，Beemok Capital出手承诺留驻25年；2024年1月，赛事改回1899年最初的名字『Cincinnati Open』（fox19.com/2024/01/08/…；wvxu.org/sports/2024-01-08/…）\n· 2025年，赛场Lindner Family Tennis Center（俄亥俄州梅森，31片场地）完成2.6亿美元翻新（en.wikipedia.org/wiki/Cincinnati_Open）\n\n【德约科维奇的辛辛那提，ATP官方+独立源双重核验】\n· 2018年夺冠之前，德约科维奇在辛辛那提五进决赛五次落败——2008、2011两次输给穆雷，2009、2012、2015三次输给费德勒（atptour.com/en/news/cincinnati-2018-final-federer-federer）\n· 2018年，德约科维奇6-4 6-4击败费德勒夺冠，成为ATP历史上第一位集齐全部九项大师赛（career Golden Masters）单打冠军的男子球员——两个独立源交叉确认：ATP官方『Nine To Shine』新闻稿（atptour.com/en/news/cincinnati-2018-final-federer-djokovic）+ 吉尼斯世界纪录『First player to achieve a Career Golden Masters』条目（guinnessworldrecords.com/world-records/544030-first-player-to-achieve-a-career-golden-masters）\n· 费德勒在辛辛那提的决赛战绩是7胜1负——那唯一的一负，正是2018年输给德约科维奇的这一场（atptour.com/en/news/cincinnati-2018-final-federer-djokovic）\n\n【2023年决赛，沿用旧版已核验的evidence.json】\n· 2023年男单决赛德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，鏖战3小时49分钟，ATP史上最长三盘制决赛之一",
+  "_claims": {
+    "历史上第一位集齐全部九项大师赛冠军的男子球员": "两个独立源交叉确认：ATP官方新闻稿『Nine To Shine: Djokovic Claims Historic Cincy Crown』（https://www.atptour.com/en/news/cincinnati-2018-final-federer-djokovic）；吉尼斯世界纪录『First player to achieve a \"Career Golden Masters\"』（https://www.guinnessworldrecords.com/world-records/544030-first-player-to-achieve-a-career-golden-masters）。WebSearch 2026-08-11核实。",
+    "全美仍留在创办城市的最古老网球赛事": "两个独立源：Tennis History Library（https://tennislibrary.miraheze.org/wiki/Cincinnati_Open）；赛事官方125周年新闻稿（https://cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/）。WebSearch 2026-08-11核实，沿用旧版evidence.json同一条已核验事实。"
+  },
+  "_beats": "十拍，按时代顺序：\n1 1899年，它就叫Cincinnati Open → 后来呢？\n2 这个名字很快弄丢了 → 找回来了吗？\n3 2023年险些搬去夏洛特，2024年改回原名 → （这一拍收束赛事身份线）\n4 德约科维奇在这儿五进决赛五次失利 → 他放弃了吗？\n5 2018年，他离集齐全部大师赛冠军只差一盘 → 拿下了吗？\n6 历史写成，第一位『金满贯』得主 → （情绪顶点，静默庆祝段承接）\n7 费德勒是7冠王，唯一一负就是刚才这场 → 现在呢？\n8 五年后，同一片场地，他又救回一场经典决赛 → 这座球场还在变吗？\n9 2.6亿美元翻新，为下一个125年准备 → 收在『下一个留名的会是谁』这一问。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
     "subject": "德约科维奇",
-    "hook": "一度濒临出局，决胜盘他打得像台机器\n三小时四十九分钟，全美最古老赛事最长的一场决赛",
-    "_hook_why": "上一句过程（濒临出局→决胜盘统治），下一句落点（这场决赛在赛事历史里的分量）。第一行24字、第二行24字，都在27字HOOK_BUDGET内。",
-    "topic": "辛辛那提公开赛 · 2023年男单决赛",
+    "hook": "五次决赛，五次失利，他没有放弃\n第六次，他集齐了职业生涯全部大师赛冠军",
+    "_hook_why": "上一句过程（连续五次决赛落败），下一句落点（第六次终于集齐大师赛全满贯）——'process→payoff'两行钩子，和已发多条片子同一个形状。第一行15字、第二行19字，都在27字HOOK_BUDGET内。换掉了旧版『三小时四十九分钟』那条钩子——那条钩子讲的是2023年决赛，账号所有者明确说不要再把全片押在这场决赛上，钩子也要跟着换成新的叙事重心（德约的辛辛那提救赎线）。",
+    "topic": "辛辛那提公开赛 · 125年的故事",
     "portrait": {
-      "frame_at": 716.5,
-      "source": "final",
+      "frame_at": 193.79,
+      "source": "final2018",
       "focus": 0.5,
-      "focus_y": 0.35,
+      "focus_y": 0.3,
       "zoom": 1.0,
-      "_why": "716.5秒：赛点后他把塞尔维亚国旗披在身上、仰头嘶吼庆祝的瞬间——这一屏对应封面的落点（三小时四十九分之后）。四道闸门：精准（画面本身就是这场决赛的赛点庆祝，记分条+captions.txt 710.66s『seals it on his fifth Championship point』互证）、在比赛中（赛点后即时反应，比捧杯照更接近这场决赛的高潮）、冲击力（张嘴嘶吼+挥拳，全片情绪最强的一帧）、清晰度（1920x1080源片，无放大）。focus/zoom 待 render_cover_local.py 本地渲染核实。"
+      "_why": "193.79秒：2018年决赛赛点后，德约科维奇仰头庆祝的瞬间——`tools/pick_cover_frames.py` 在probe阶段自动挑出的候选之一（cand_04_t193.79.jpg，脸223px/清晰66.7/运动36.63，7个候选里唯一一张正脸+仰头庆祝的表情读得出）。四道闸门：精准（画面就是这场决赛赛点后的即时反应，captions.txt 169-197s『history is made... golden masters』互证时段吻合）、在比赛中（赛点后庆祝，不是训练/发布会）、冲击力（仰头挥臂，全片新叙事重心的情绪落点）、清晰度（1920x1080源片，无放大）。换掉了旧版用final(2023)716.5秒的封面帧——新叙事的情绪顶点是2018年金满贯这一刻，不再是2023年那场决赛。focus/zoom待render_cover_local.py本地渲染核实。"
     },
     "scrim": "clear"
   },
   "push": {
-    "summary": "辛辛那提最长决赛之一",
-    "lead": "1899年开打的辛辛那提公开赛，是全美仍留在创办城市的最古老网球赛事。2023年男单决赛，德约科维奇对阵阿尔卡拉斯——他一度濒临出局，最终5-7 7-6 7-6逆转拿下，鏖战3小时49分钟，是ATP史上最长的三盘制决赛之一。同一天，19岁的高芙6-3 6-4击败穆霍娃，拿下生涯首个WTA1000冠军。费德勒在这里七次夺冠的纪录至今无人接近；这座俄亥俄州小城的赛场，一直是美网前最重要的风向标。",
+    "summary": "125年的辛辛那提往事",
+    "lead": "1899年，辛辛那提的一群网球爱好者办起了这项赛事，最初就叫Cincinnati Open——它是全美仍留在创办城市的最古老网球赛事。这个名字后来弄丢了，冠名商换了一轮又一轮；2023年，赛事一度险些搬去夏洛特，最后留了下来，2024年改回了123年前最初的名字。德约科维奇在这里五进决赛五次落败，直到2018年才终于赢下——他也因此成为ATP历史上第一位集齐全部九项大师赛冠军的男子球员。费德勒是这里的七冠王，决赛战绩7胜1负，唯一的那次失利正是那一场。五年后，同一片场地，他又一次救回了一场几乎要输掉的决赛——3小时49分钟，ATP史上最长三盘制决赛之一。球场刚完成一次2.6亿美元的翻新，31片场地，为下一个125年做准备。",
     "auto": true,
-    "_why": "summary『辛辛那提最长决赛之一』9字，SUMMARY_MAX=13以内。这条片子没有versus/单一比分（讲的是赛事本身+一场决赛+一条同日记录），走solo该有的写法，只填summary和lead。"
+    "_why": "summary『125年的辛辛那提往事』10字，SUMMARY_MAX=13以内。lead改写成完整的多时代叙事（旧版只讲2023决赛+两条零散事实），和新的视频结构对齐。"
   },
   "segments": [
     {
-      "start": 40.6,
-      "end": 51.0,
+      "start": 0.3,
+      "end": 8.8,
       "fit": "crop",
-      "source": "final",
-      "narration": "1899年开打的辛辛那提，是全美最古老的网球赛事。2023年，这里打出了一场载入史册的经典决赛。",
-      "_why": "沿用早期回合窗口，画面里能看清阿尔卡拉斯——不指名具体动作，只当背景铺垫赛事历史。",
-      "crosses_cut": "跨46.10——preview_segments_local.py核过，两侧都是阿尔卡拉斯（同一件深色球衣），画面从回合切到他的近景反应，同一人同一场比赛的自然转场。",
+      "source": "final2018",
+      "narration": "1899年开打的辛辛那提，是全美仍留在创办城市的最古老网球赛事。",
+      "_why": "画面：0.5s官方『W&S OPEN/Masters 1000/ATP World Tour』开场标识→2.5-4.5s『DJOKOVIC(10) vs FEDERER(2)』对阵图→之后进入真实court画面。这一屏是全片的『赛事身份』开场，用赛事自己的官方转播片头做视觉锚点，比任何截图都更直接自证『这是辛辛那提公开赛』。",
+      "crosses_cut": "跨4.8——preview核过，从静态标识/对阵图切到真实球场，是这条官方集锦本身的开场转场手法，不是选段引入的跳切；这一段narration讲的是1899年历史，不指认任何具体击球动作，画面纯当赛事身份的视觉背景。",
       "inset": {
         "image": "assets/reel/cincinnati-founded-1899.png",
         "corner": "tl",
         "width": 0.8
       },
-      "_inset_why": "参照2026-08-11研究的『2发网球』加拿大公开赛那条视频的技术拆解（见CLAUDE.md「别人怎么配文案」第三个账号那节）：它用官网截图/历史实物照片当『证据』，不是只靠旁白口述数字。这里不截第三方网页（避免复制他人版式/内容），改用`tools/render_beat_card.py`（本仓库自己的字卡渲染器，抖音创作建议那条早就为『狠数据渲成卡片』写好了）自己渲一张『1899』数字卡——和旁白这句『1899年开打…全美最古老』同一个数字，画面上再亮一次。渲出来Read打开看过，1032×660，透明底，贴tl角避开字幕安全区。"
+      "_inset_why": "参照2026-08-11研究的『2发网球』加拿大公开赛那条视频（CLAUDE.md「别人怎么配文案」第三个账号那节）：用证据卡把旁白里的数字再亮一次。`tools/render_beat_card.py`自己渲的『1899』数字卡，不是截第三方网页。"
     },
     {
-      "start": 351.9,
-      "end": 361.2,
+      "start": 8.8,
+      "end": 17.0,
       "fit": "crop",
-      "source": "final",
-      "narration": "这场决赛，德约科维奇一度濒临出局——阿尔卡拉斯逼近盘点，被他一次次挡了下来。",
-      "_why": "照抄evidence.json已核验的原话『第二盘一度濒临出局』收窄成『他一度濒临出局』，不新增未核实的盘数断言。画面：德约科维奇低头、随后回合镜头——captions.txt 352.08s『set point saved』就在这个窗口内。",
-      "crosses_cut": "跨355.35、360.48——preview核过，全程德约科维奇（浅蓝Lacoste球衣）低头/回合/对手反应的连续镜头，没有换成别人的脸。"
+      "source": "final2018",
+      "narration": "可这名字很快就弄丢了，冠名商换了一轮又一轮。",
+      "_why": "承接上一段的历史叙事，画面延续同一段real court动作作背景——这一段没有引入新的具体动作断言，纯粹是历史铺垫。窗口落在4.8-22.92这段单一镜头内，不跨切点。",
+      "crosses_cut": ""
     },
     {
-      "start": 393.4,
-      "end": 404.8,
+      "start": 17.0,
+      "end": 30.5,
       "fit": "crop",
-      "source": "final",
-      "narration": "这一盘，他一分一分，把落后的比分又追了回来——两盘战成一比一，比赛进了决胜盘，两个人都已经没有退路了。",
-      "_why": "captions.txt 393.9s『Djokovic levels the match』——画面是他反复挥拳庆祝。⚠️ 本地 --check-narration 第一版用了 zh-CN-YunxiNeural（估余量2.69s，看着够），runner 真渲用的是 match-reel.yml 默认的 zh-CN-YunjianNeural——实际只说7.27s，11.4s窗口里空出4.13s，撞上真闸（run 31474183255）。两个音色语速不一样，本地校验必须显式传 `--voice zh-CN-YunjianNeural`，别漏这一步（工作流自己的注释也在提醒这件事：默认值曾经写错成云希）。现在这版加长过，本地用正确音色复核过：7段落 ~9s，余量约2.4s。",
-      "crosses_cut": "跨404.15——preview核过，画面从德约科维奇近景挥拳切到看台全景，他自己的庆祝动作贯穿整段，不是切给对手。"
+      "source": "final2018",
+      "narration": "2023年，赛事差点搬去夏洛特——最后，它留了下来。2024年，改回了123年前最初的名字。",
+      "_why": "fox19.com/wvxu.org已核验：Western & Southern 2023年宣布退出冠名，赛事一度面临搬迁，Beemok Capital承诺留驻25年；2024年1月改回1899年最初的名字『Cincinnati Open』。画面继续用同一段real court真实比赛动作作历史背景，不指认具体动作。",
+      "crosses_cut": "跨22.92——preview核过，两侧都是同一场比赛的real court回合镜头（转播机位切换角度），narration本身不涉及具体某一分，纯当赛事历史的背景画面。",
+      "inset": {
+        "image": "assets/reel/cincinnati-name-back.png",
+        "corner": "tl",
+        "width": 0.75
+      },
+      "_inset_why": "自己渲的『123年后，改回原名』字卡，呼应旁白这句改名史的落点。"
     },
     {
-      "start": 440.1,
-      "end": 453.5,
+      "start": 30.7,
+      "end": 45.5,
       "fit": "crop",
-      "source": "final",
-      "narration": "决胜盘，一次又一次逼近终点的机会，全都被他一点一点磨了回去——看台上的人跟着一次次屏住呼吸，又一次次松开手心。",
-      "_why": "captions.txt 453.20s『first one saved』——决胜盘的压力开始，不指认哪一方正在面对什么类型的关键分，避免过度精确的未核实断言。",
-      "crosses_cut": "跨444.53、446.62——preview核过，回合来回镜头+双方近景反应交替，是标准回合剪辑手法，不构成『整句旁白压在某一方身上』的问题（这段旁白本身没有指名任何一方）。"
+      "source": "final2018",
+      "narration": "德约科维奇在这儿闯进过五次决赛，五次都没能捧杯——2008年、2011年两次输给穆雷，2009年、2012年、2015年三次输给费德勒。",
+      "_why": "atptour.com已核验：2008、2011输给穆雷，2009、2012、2015输给费德勒，五次决赛五次落败。画面仍是2018年决赛的real court动作，用『现在的画面』回溯讲『过去的战绩』——和旧版spec第1段『沿用早期回合窗口…只当背景铺垫赛事历史』是同一种手法。⚠️ 窗口从33.8-46.5延到30.7-47.0：补上具体年份之后本地`--check-narration`（正确音色zh-CN-YunjianNeural）实测13.71s，原12.7s窗口装不下，现16.3s窗口留1.84s余量。",
+      "crosses_cut": "跨33.8、37.07——preview核过，同一场real court回合镜头连续切换角度，narration不指认具体动作。",
+      "inset": {
+        "image": "assets/reel/cincinnati-djokovic-05.png",
+        "corner": "tl",
+        "width": 0.8
+      },
+      "_inset_why": "自己渲的『0/5』数据卡——五进决赛零冠军，量化『他没能捧杯』这句话，和『2发网球』用硬数据配文案是同一个技法。"
     },
     {
-      "start": 475.7,
-      "end": 485.0,
+      "start": 76.0,
+      "end": 86.5,
       "fit": "crop",
-      "source": "final",
-      "narration": "全都被他救了下来——这场决赛，阿尔卡拉斯的每一次机会，他都没有松手。",
-      "_why": "captions.txt 475.38s『oh it's good what a way to save another』、484.80s『and he does survive』。画面：看台观众瞪大双眼尖叫，情绪顶点，短句留白。",
-      "crosses_cut": "跨479.83、481.98、484.45——preview核过，回合+看台反应的标准剪辑节奏，未见切人。"
+      "source": "final2018",
+      "narration": "直到2018年，他离集齐职业生涯全部九项大师赛冠军，只差最后一盘。",
+      "_why": "captions.txt 76.98-88.47s『Djokovic is one set away from winning the title in Cincinnati for the first time but more significantly he's one set away from completing the set of masters』——narration直接对应这段官方转播原声描述的时刻，画面就是这一刻的真实比赛动作。",
+      "crosses_cut": "跨77.41、82.78、84.55——preview核过，全程real court回合镜头连续切换角度和德约科维奇近景反应交替，是标准回合剪辑手法，未见切给对手或无关画面。"
     },
     {
-      "start": 655.6,
-      "end": 666.8,
+      "start": 167.5,
+      "end": 179.5,
       "fit": "crop",
-      "source": "final",
-      "narration": "最凶险的几局过去之后，决胜盘的后半段，他打得像一台不知疲倦的机器，一分都不肯再让。",
-      "_why": "captions.txt 656.90s『just machine like from Djokovic』——直接呼应原话。",
-      "crosses_cut": "跨658.02、659.70——preview核过，德约科维奇（浅蓝球衣）走位+回合镜头连续，未见切人。"
+      "source": "final2018",
+      "narration": "历史就在辛辛那提写成——德约科维奇成了第一个集齐全部大师赛冠军的男子球员，史称金满贯。",
+      "_why": "captions.txt 169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』——官方转播原声原话即『历史写成』『第一人』『金满贯』，narration直接对应。这是全片新叙事重心的情绪顶点。",
+      "crosses_cut": "跨170.04、176.14——preview核过，德约科维奇夺冠瞬间的连续镜头（近景反应+回合最后一分+看台反应），标准赛点/夺冠段落剪辑手法。"
     },
     {
-      "start": 701.8,
-      "end": 713.3,
+      "start": 179.5,
+      "end": 192.0,
       "fit": "crop",
-      "source": "final",
-      "narration": "三小时四十九分钟鏖战之后，他终于把这决定胜负的最后一分拿了下来——网前，两个人紧紧拥抱在一起。",
-      "_why": "captions.txt 710.66s『seals it on his fifth Championship point after three hours and 49 minutes on court』——数字直接来自官方转播原声。画面：赛点落地到网前拥抱。"
-    },
-    {
-      "start": 713.3,
-      "end": 719.0,
-      "fit": "crop",
-      "source": "final",
-      "narration": "",
-      "_why": "冷处理：德约科维奇披着塞尔维亚国旗仰头嘶吼，全片情绪最强的一帧，不配旁白交给现场声——同时是封面取帧的那一秒（716.5s）。"
-    },
-    {
-      "start": 730.6,
-      "end": 746.0,
-      "fit": "crop",
-      "source": "final",
-      "narration": "费德勒在这里七次夺冠，纪录至今无人接近。同一天，19岁的高芙拿下了她生涯第一个WTA1000冠军。下一个在这里留下名字的，会是谁？",
-      "_why": "收尾整合两条已核验事实（费德勒七冠、高芙同日夺冠，第三条『美网风向标』留给push.lead/xhs.txt，视频不必塞满）+ 落在一问上（test_收尾要落在一问上不能停在数据上）。画面：捧杯+confetti+两人台上合影，虽是德约科维奇夺冠画面，旁白转向赛事整体和高芙——用『同一天』做转折，不宣称画面里出现的是高芙本人。窗口从744.0延到746.0是为了给这句收尾留够余量，同时不至于宽到又被判成哑场（原744.0版离线估16.69s装不下13.4s窗口；延到748.0又变成4.69s空余触发哑场闸；746.0落在中间）。",
+      "source": "final2018",
+      "narration": "费德勒是这儿的七冠王，这项纪录至今无人接近——决赛战绩七胜一负，唯一的那次失利，就是刚才这一场。",
+      "_why": "atptour.com已核验：费德勒辛辛那提决赛战绩7胜1负，唯一一负正是这场2018决赛；『七冠至今无人接近』沿用旧版spec已核验的原话（evidence.json）。画面：180.5-184.5s两人网前握手（双方都在画面里，直接对应『刚才这一场』），184.5s之后德约科维奇开始庆祝——用赛后握手的真实画面承接『唯一的那次失利』这句话，精准且不误导（画面里确实是费德勒本人，正在和德约科维奇握手）。⚠️ 本地`--check-narration`实测原句7.15s，12.5s窗口空出5.35s撞哑场闸——补长到9.99s，室量1.76s。",
+      "crosses_cut": "跨188.46——preview核过，握手动作自然过渡到德约科维奇转身庆祝，同一场比赛赛后的连续真实动作，不构成跳切。",
       "inset": {
         "image": "assets/reel/cincinnati-federer-7.png",
         "corner": "tl",
         "width": 0.8
       },
-      "_inset_why": "同上（见第1段的_inset_why），这里是收尾那句『费德勒在这里七次夺冠』的证据卡，自己渲的『7』数字卡，不是截别人的官网。这一屏本来就是庆祝蒙太奇（不是费德勒的画面），旁白已经用『同一天』做过转场声明——加这张卡进一步把『这句话讲的是历史纪录，不是当前画面』这件事摆明白，不会误导成『这张卡出现的时刻就是费德勒本人』。",
-      "crosses_cut": "跨730.92、731.02、731.83、731.87、731.98、734.18、744.03等共7处——preview核过，730.6-746.0全程是颁奖台/trophy/confetti的快切庆祝蒙太奇，是官方集锦本身的剪辑手法，不是选段时引入的跳切。"
+      "_inset_why": "自己渲的『7』数字卡——费德勒的冠军数，呼应旁白。这一屏画面里费德勒本人确实在场（握手），不是『同一天』那种借用画面的转场手法，卡片只是把数字再亮一次。"
+    },
+    {
+      "start": 192.0,
+      "end": 200.5,
+      "fit": "crop",
+      "source": "final2018",
+      "narration": "",
+      "_why": "冷处理：德约科维奇仰头挥臂庆祝的连续镜头，全片新叙事重心的情绪最高点，不配旁白交给现场声——同时是封面取帧的那一秒（193.79s）。和旧版spec里713.3-719.0那段『冷处理』同一个手法：最重的情绪留白给画面和现场声，不用旁白抢戏。"
+    },
+    {
+      "start": 701.8,
+      "end": 713.3,
+      "fit": "crop",
+      "source": "final2023",
+      "narration": "五年后，同一片场地，他又一次救回了一场几乎要输掉的决赛——3小时49分钟，ATP史上最长的三盘制决赛之一。",
+      "_why": "沿用旧版spec已核验的窗口和事实（evidence.json：德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，3小时49分钟，ATP史上最长三盘制决赛之一）——这一版把2023决赛从『全片主线』压缩成『赛事编年史里的一拍』，narration改写成承接『五年后…又一次』的转场句，不再逐分叙事整场比赛。画面：赛点落地到网前拥抱，captions.txt 710.66s『seals it on his fifth Championship point after three hours and 49 minutes on court』互证。"
+    },
+    {
+      "start": 730.6,
+      "end": 743.0,
+      "fit": "crop",
+      "source": "final2023",
+      "narration": "这座球场建在俄亥俄州梅森，刚完成了一次2.6亿美元的翻新，31片场地——为下一个125年做准备。",
+      "_why": "en.wikipedia.org已核验：Lindner Family Tennis Center建在俄亥俄州梅森，31片场地，2025年完成2.6亿美元翻新。画面沿用旧版spec同一窗口（颁奖台/trophy/confetti快切庆祝蒙太奇），narration从『费德勒七冠+高芙同日夺冠』改写成『翻新+为未来做准备』，收在赛事本身的延续性上。⚠️ 窗口从旧版的730.6-746.0（15.4s）收到730.6-743.0（12.4s）：本地`--check-narration`实测9.34s，原窗口空余6.06s撞哑场闸，收窄后余量2.31s（`_ask_it_out_loud()`自动补的收尾问句还会再填掉一部分）。",
+      "inset": {
+        "image": "assets/reel/cincinnati-renovation.png",
+        "corner": "tl",
+        "width": 0.8
+      },
+      "_inset_why": "自己渲的『2.6亿』数字卡，呼应旁白这句翻新工程的数字。",
+      "crosses_cut": "跨730.92、731.02、731.83、731.87、731.98、734.18共6处——preview核过，730.6-743.0全程是颁奖台/trophy/confetti的快切庆祝蒙太奇，是官方集锦本身的剪辑手法，不是选段时引入的跳切（同旧版spec已有的判据）。"
     }
   ]
 }
