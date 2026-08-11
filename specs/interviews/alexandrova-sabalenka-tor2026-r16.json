@@ -14,6 +14,11 @@
   "column": "赛后开麦",
   "event": "2026 国家银行公开赛（多伦多）1/8 决赛",
   "winner": "亚历山德罗娃",
+  "transcript_verified": true,
+  "transcript_disagree_ok": {
+    "rate": 0.145,
+    "why": "run 31465655866 的 --stage verify（whisper small.en）：YouTube 366 词 / whisper 327 词，撤销 matches/passed 那两处 en_fixed 之后本地按同一算法重算是 14.2%，为给一点余量按 14.5% 认领。逐处看过 30 处分歧：\n① **24 处是 whisper 把虚词/口头语丢了**（um / uh / like / you know / I mean / oh / well / with / it 这类），YouTube 全留着——采访越口语，这类偏差越大，不影响发出去的英文；\n② `10th`→`tenth`、`quarterfinal`→`quarterfinals` 是数字写法/单复数的记法差异，不改变意思；\n③ `aryna`→`irina`、`and ekaterina`→`hey katarina`、`ekaterina`→`to katarina` 是两份机器对人名的不同误听，真名靠外部信源核实（Aryna Sabalenka / Ekaterina Alexandrova），已经在 en_fixed 里按正确拼法写死，两份 ASR 谁听对听错都不影响最终文本；\n④ `is`→`are`（there is/are some difficult moments）是口语里常见的数的一致性松动，不改变意思；\n⑤ `lucky and`→`like him` 是 whisper 明显的误听（上下文在说自己的球，不是某个「him」），采信 YouTube 原文 `lucky`；\n⑥ `you're in`→`your` 是断句差异，不改变意思。\n没有一处改变了发出去的中文译文或 en_fixed 的取舍。"
+  },
   "zh": [
     "这一路起起伏伏",
     "波折不断",
@@ -76,17 +81,17 @@
     "非常感谢"
   ],
   "en_fixed": {
-    "10": "a lot of uh chances during the match",
-    "20": "so it's already past me.",
     "22": "with Aryna.",
     "38": "And Ekaterina,",
     "39": "this is your first 1,000-level quarterfinal",
     "55": "Well, you're in newfound territory",
     "58": "Good luck, Ekaterina."
   },
-  "suspect": {
-    "25": "`How much did that steal your confidence` 语义不顺——上下文是「你们战绩追平5-5」之后问信心，`steal` 在这里等于说信心被削弱，和后面正面的回答对不上。疑似应为 `instill`（灌注信心），但没把握硬改，等 --stage verify 的第二份 ASR 交叉核对再定。"
+  "_en_fixed_why": "⚠️ **第 10、20 行原来改过，跑完 --stage verify 又撤销了。** 第一版我按语法自信心把 `matches`→`match`（「一场比赛」该用单数）、`passed`→`past`（`it's already past me` 读起来更顺），当时没有第二个源，是我一个人的判断。跑 whisper 交叉核对后发现：**两份独立 ASR（YouTube 原始字幕 + faster-whisper）在这两处完全一致**，都是 `matches`（复数）、`passed`（动词过去分词）——我那两处「语法本身能定」的判断反而是错的那一个。两份机器都听到的，压过我一个人的语感；已经改回原始 ASR。这两处现在归进 `human_quote_ok`（WTA 战报的人工转述用了 `match`/`past`，是记者润色，不是转写更准）。",
+  "suspect_ok": {
+    "25": "跑完 --stage verify：whisper 独立听到的也是 `steal`（run 31465655866 的 whisper.json 原始转写核对过），两份 ASR 一致，之前疑心的 `instill` 没有证据支持。语义上仍然有点别扭，但这是场边即兴采访，主持人临场措辞不够精准是常有的事——两份独立转写都一致就不再改动，保留原话。"
   },
+  "_verified_clean": "run 31465655866 的 --stage verify 跑通了完整流程：\n① 转写分歧 14.2%（whisper small.en 独立第二份），逐处看过，认领进 `transcript_disagree_ok`（写 14.5% 留余量），全是虚词/单复数/人名误听这类不改变意思的差异；\n② 唯一一处原来挂着的 `suspect`（第 25 行 `steal your confidence`）被 whisper 独立确认，销进 `suspect_ok`；\n③ 两处原来的 `en_fixed`（`matches`→`match`、`passed`→`past`）被 whisper 反证——两份机器 ASR 一致地给出复数/过去分词形式，我自己的语法判断反而错了，已撤销并回归原文，改记进 `human_quote_ok`（WTA 战报的人工转述是编辑润色，不是转写更准）；\n④ 自动字幕没有空档（review_sheet 和 verify 两处都报 0 处）。\n⚠️ 我听不到音轨，以上判断全部基于两份独立 ASR 的交叉比对 + 外部信源核实人名拼法，和这条线上其它 spec 走的是同一套判据。",
   "human_quote": {
     "url": "https://www.wtatennis.com/news/4556610/alexandrova-cracks-the-sabalenka-code-again-to-make-toronto-quarterfinals",
     "_why": "WTA 官网这篇战报整段抄了这次场上采访的第一问第一答（原文明写是 on-court interview 的话），可以本地核对不用联网。⚠️ **有一处和 ASR 不一样**：战报写 `I couldn't realize some of them`，ASR 两个词都是 `all`（`I couldn't realize all of them`）——`all` 语法更顺（「拿到很多机会但没能全部把握住」），`some` 也不是说不通（「把握住了其中一些」，但前面已经说 I had a lot today，语气上更像是在说没能兑现全部）。这处不改 zh，留给 verify 阶段第二份 ASR 交叉核对；如果 whisper 也听到 all，就按战报是转述、ASR 是原声来处理。",
@@ -97,9 +102,11 @@
       ["all", "some"],
       ["about like", "or"],
       ["i do not know after", "the"],
-      ["i so it is", "the chance was"]
+      ["i so it is", "the chance was"],
+      ["matches but", "match"],
+      ["passed", "past"]
     ],
-    "_human_quote_ok_why": "跑 `test_spec里的人工引语和en_fixed是自洽的` 报出来的 8 处，2 处是真的 ASR 小错已经改进 en_fixed（`matches`→`match`、`passed`→`past`），剩下这 6 处是战报记者转述时的编辑习惯（拿掉停顿词、合并断句、把她的自我更正`I don't know after`简化成`the`），不改动 ASR。`all`/`some` 那处仍然是本条最大的不确定——两次本地 subs 用的是同一份 YouTube 字幕、不是独立验证，真正的第二个源要等 `--stage verify` 的 whisper 结果，这里先按 ASR 的 `all` 定稿（`I had a lot today but couldn't realize all of them`语法更顺），whisper 若给出不同答案再回来改。"
+    "_human_quote_ok_why": "跑 `test_spec里的人工引语和en_fixed是自洽的` 报出来的 8 处分歧：6 处是战报记者转述时的编辑习惯（拿掉停顿词、合并断句、把她的自我更正`I don't know after`简化成`the`），不改动 ASR。`matches`/`passed` 这两处**原来是当成 ASR 小错改进了 en_fixed**（`matches`→`match`、`passed`→`past`），但跑完 `--stage verify` 之后撤销了——whisper 独立听到的也是 `matches`/`passed`，两份机器 ASR 一致，只有 WTA 战报的人工转述用了 `match`/`past`，判定是记者润色不是转写更准，回归到 ASR 原文并挪进这份豁免表。`all`/`some` 那处两份 ASR 都是 `all`（whisper 的分歧列表里没有这一条），按 `all` 定稿。"
   },
   "cover": {
     "frame_at": 397.5,
