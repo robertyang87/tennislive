@@ -1,0 +1,172 @@
+{
+  "slug": "swiatek-shnaider",
+  "_slug_why": "赢家在前（斯瓦泰克胜）。栏目规矩 slug 按赢家-输家，和 shnaider-pegula、swiatek-kostyuk 同一惯例。",
+  "source_url": "https://www.youtube.com/watch?v=kNs_G7Q-CvI",
+  "_source": "WTA 官方 YouTube 频道单场集锦，2026-08-11 probe run 31456551432 验证：1920×1080、25fps、309.243356s。\n\n**画面自证**：\n- `cover_candidates/sheet.jpg` 全部候选帧右上角烧着「WTA」台标——官方频道内容\n- 场地上印着 `TORONTO`（contact_00.jpg 12.5~20.5s），场边广告板 `National Bank` `Betway` `Ontario` `IRIS` `beneva`——National Bank Open presented by Rogers 的赞助商阵容（多伦多，非蒙特利尔）\n- 记分条烧着 `D. SHNAIDER [15]` / `I. SWIATEK [7]`——种子号和 WTA API（下同）里 SeedA/SeedB 一致；逐格读过 score_00~07.jpg：0-40（0.5~16.5s，第一局施奈德发球即遭破发点）→ 首盘2-5局`BREAK POINT #2`（92.5~98.5s）→ 首盘`SET POINT #2`收6-2（100.5~106.5s）→ 次盘1-1局长盘平分战（170.5~192.5s，`Ad`反复出现）→ 次盘6-1收官前`MATCH POINT #2`（256.5~264.5s，6-5(40)）→ 赛后颁奖区终局比分板`DIANA SHNAIDER[15] 2 1 / IGA SWIATEK[7] 6 6`（290.5~298.5s），与 flashscore（match id KfRN8eoe）逐分记录**一分不差地对得上**\n- 自动字幕（captions.txt）：『6-2 to the seven seed』『totally outplayed Diana Schneider(=Shnaider), fresh from a big win against Pigula(=Pegula)』『the former world number one』『Brilliant. 6-2 6-1』——与真实赛果、施奈德上一轮爆冷淘汰佩古拉、斯瓦泰克曾为世界第一，三处均对得上"
+  ,
+  "_column": "赛场之上。讲一场对决，所以封面 solo 版式要印赛果（带国旗和排名），赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 1/4决赛",
+    "line2": "斯瓦泰克 6-2 6-1 施奈德"
+  },
+  "_topbar_why": "WTA API（api.wtatennis.com/tennis/tournaments/806/2026/matches，MatchID LS005）：`RoundID: \"Q\"`（Quarterfinal，对应 CLAUDE.md『半决赛/1/4决赛/1/8决赛』写法的 1/4决赛）、`ResultString: \"[7]I. Swiatek d [15]D. Shnaider 6-2,6-1\"`——赢家在前，逐字抄写。事件名沿用 swiatek-kostyuk/shnaider-pegula 同站惯例『WTA1000 多伦多』。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "全年颗粒无收的斯瓦泰克，这场球打得有多干净？",
+    "thesis": "施奈德刚在上一轮爆冷淘汰世界第三佩古拉，气势正盛；斯瓦泰克开局就把她的发球破了，此后再没给她任何机会——首盘2-5那一局她连拿三个破发点才把它破下，顺势6-2拿下首盘；次盘1-1那一局两人反复战至占先，她还是把它拿了下来，随后横扫到6-1，中间两个赛点施奈德只救下第一个。全场64分钟，她一次都没有把自己的发球局交出去——64分钟里对手一个破发点都没拿到。",
+    "beats": [
+      "开局：斯瓦泰克第一局就破发施奈德，此后首盘2-5那一局施奈德三次挽救破发点未果，被斯瓦泰克拿下、顺势6-2收官。",
+      "次盘1-1那一局两人反复战至占先（Ad来回多次），斯瓦泰克才把它破下，一比二；此后她再未松手。",
+      "结局：次盘她横扫最后六局，两个赛点施奈德只救下第一个，64分钟结束战斗——全场她的发球局一局未失，对手0破发点。"
+    ],
+    "human_context": {
+      "angle": "从『全年没有冠军』这个反差切入：这不是一场普通的晋级，是她本赛季状态最干净的一次证明。",
+      "facts": [
+        "斯瓦泰克本赛季至今没有拿到冠军，2026年最好战绩是澳网八强——WebSearch综合多源交叉（Lukas Weese 2026赛季夺冠记录追踪、Cincinnati Open官方回顾『Swiatek finally has her Cincy crown』标注上一冠为2025年8月辛辛那提）",
+        "这场球她全场未被施奈德拿到一个破发点（`Break Points Saved: Shnaider 4/9, Swiatek 0/0`）——WTA官方赛后『By the numbers』一文独立确认『faced zero break points』，与flashscore技术统计（0/0）两个独立信源吻合",
+        "施奈德这一轮之前刚爆冷淘汰世界第3佩古拉6-3 6-3，是两人五次交手她的第一次获胜，也是上周华盛顿输给佩古拉之后的复仇——WebSearch综合Tennis Tonic赛后稿",
+        "两人历史交手斯瓦泰克2-0，首次交手是2025年马德里（红土），这是两人第一次在硬地交手——WebSearch综合Steve G Tennis头对头页面"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4557390/by-the-numbers-swiatek-overwhelms-shnaider-to-book-toronto-semifinal-spot",
+        "https://tennistonic.com/tennis-news/1039067/diana-shnaider-beats-pegula-in-the-4th-round-at-the-national-bank-open-toronto-results-highlights/",
+        "https://www.stevegtennis.com/head-to-head/women/Diana_Shnaider/Iga_Swiatek/",
+        "https://cincinnatiopen.com/news/swiatek-finally-has-her-cincy-crown/"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "斯瓦泰克 6-2 6-1 胜施奈德（WTA API MatchID LS005；flashscore match id KfRN8eoe，BA/BC 2-1、BB/BD 6-6）",
+    "赛事": "多伦多National Bank Open presented by Rogers（WTA1000）女单1/4决赛（WTA API RoundID=Q）",
+    "北京时间开赛": "2026-08-11 07:10（flashscore AD=1786403400，UTC 2026-08-10 23:10；WTA API MatchTimeStamp晚于此为完赛后更新时间戳）",
+    "用时": "1小时4分（WTA API MatchTimeTotal=01:04:03；flashscore AO-AD=1786407138-1786403400=3738秒≈1:02，两者量级吻合，小差异是赛前热身/换边等非纯打球时间）",
+    "球场": "Centre Court（WTA API CourtID=1，与同站同为1号场的swiatek-golubic/swiatek-kostyuk/shnaider-pegula一致）",
+    "排名与种子": "斯瓦泰克世界第8、7号种子；施奈德世界第17、15号种子——WebSearch多源交叉（Las Vegas Sun WTA排名榜、TennisTemple/TennisTonic选手页），与本站同一轮已发的swiatek-kostyuk/shnaider-pegula两条spec里登记的排名一致",
+    "年龄": "斯瓦泰克25岁（2001-05-31生，api.wtatennis.com/tennis/players/326408核实）；施奈德22岁（2004-04-02生，api.wtatennis.com/tennis/players/330482核实）",
+    "国籍": "斯瓦泰克POL，施奈德RUS",
+    "技术统计（全场）": "Ace：施奈德2，斯瓦泰克0｜双误：施奈德3，斯瓦泰克2｜一发得分率：施奈德51%(20/39)，斯瓦泰克88%(23/26)｜破发点：施奈德拿到9兑现5、面对0救下0（全场未面对）；斯瓦泰克拿到9兑现5、面对9救下4｜总得分35:58（斯瓦泰克）｜救下的赛点：施奈德1（第一个），斯瓦泰克0（未被施奈德拿到过赛点）——flashscore（KfRN8eoe）",
+    "第一盘逐分自证": "0-1施奈德发球被破（2个破发点）；0-2斯瓦泰克保发；1-2施奈德保发；1-3斯瓦泰克保发；2-3施奈德保发；2-4斯瓦泰克保发；2-5施奈德发球被破（斯瓦泰克拿到3个破发点，第3个兑现）；2-6斯瓦泰克保发收盘（2个盘点，第2个兑现）",
+    "第二盘逐分自证": "1-0施奈德保发；1-1斯瓦泰克保发；1-2施奈德发球被破（1个破发点）；1-3斯瓦泰克保发；1-4施奈德发球被破（1个破发点）；1-5斯瓦泰克保发；1-6施奈德发球被破，收盘（斯瓦泰克拿到2个破发点/赛点，第1个15:40被施奈德救下，第2个30:40兑现）",
+    "记分条自证（每2秒一格，probe的score_*.jpg）": "0.5~16.5s `SHNAIDER 0/SWIATEK 15`→`SWIATEK 30`→`SWIATEK 40`——第一局施奈德发球，斯瓦泰克逼近love-40；80.5~86.5s `SHNAIDER 1/SWIATEK 2 3`→`2 3`；92.5~98.5s `BREAK POINT #2 SHNAIDER 2/SWIATEK 4 Ad`——首盘2-5局的第2个破发点；100.5~106.5s `SET POINT #2 SHNAIDER 2 30/SWIATEK 5 40`——首盘盘点；160.5~192.5s `SHNAIDER 2 1/SWIATEK 6 1`（多次`Ad`）→194.5s`SWIATEK 6 2`——次盘1-1局长盘平分战、斯瓦泰克破发；240.5~254.5s `SHNAIDER 2 1/SWIATEK 6 4`→`2 1/6 5`——次盘一路横扫；256.5~264.5s `MATCH POINT #2 SHNAIDER[15] 2 1 30/SWIATEK[7] 6 5 40`——次盘6-5局的两个赛点；290.5~298.5s 终局比分板`DIANA SHNAIDER[15] 2 1/IGA SWIATEK[7] 6 6`",
+    "施奈德上一轮自证": "字幕『totally outplayed Diana Schneider, fresh from a big win against Pigula』——ASR把Shnaider/Pegula听成了Schneider/Pigula，人名以WTA API/译名表为准，事实（刚淘汰佩古拉）与WebSearch交叉的Tennis Tonic赛后稿一致"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格画面（次盘6-5(40)第二个赛点兑现之后的庆祝近景，不配旁白）→ ② 一句话把最大的反差说出来（全年颗粒无收 vs 这场零破发点）→ ③ 坐标。\n\n**中段按逐分自证走**：施奈德上一轮刚淘汰佩古拉、气势正盛（对比铺垫）→ 斯瓦泰克开局即破发 → 首盘2-5那一局三破发点才破下、收6-2 → 次盘1-1那一局多次占先的拉锯战、斯瓦泰克再破发 → 两个赛点、施奈德只救下第一个、64分钟结束。**每一段的窗口都落在记分条能自证的那个镜头里**（见 `_facts.记分条自证`）。\n\n**封面主体选斯瓦泰克**：这条片子讲的是她本赛季状态最干净的一次证明（全年无冠、这场零破发点），冲击力最强的画面材料也是她的——contact_04.jpg 264.5~266.5s 她庆祝夺胜的近景，正面、清晰、笑容克制，和钩子『没让对手碰到一个破发点』的复盘语气相符。施奈德的故事线（刚淘汰佩古拉）放进 human_context 和开场铺垫，不喧宾夺主。\n\n**收尾不重复封面的问题**：封面问『这场球打得有多干净』（零破发点），收尾换成多伦多这个冠军她还差几步——接的是『她至今没夺过这站冠军、这是她第23个巡回赛1000赛半决赛』这条封面没提过的线。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯瓦泰克",
+    "hook": "这一年，她一个冠军都还没拿到\n这一场，她一个破发点都没让对手碰到",
+    "_hook_why": "上一句是过程/铺垫（全年冠军荒），下一句是这场球的落点（0破发点，两个独立信源确认：WTA官方『By the numbers』+ flashscore技术统计0/0）。不写成『全年冠军荒』和『0破发点』两个孤立事实的罗列，而是用『这一年/这一场』的对仗把反差说出来。种子排名已印在赛果行，钩子不重复。",
+    "topic": "WTA1000多伦多 · 女单1/4决赛",
+    "portrait": {
+      "frame_at": 265.5,
+      "focus": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "265.5秒（次盘6-5(40)第二个赛点兑现之后，contact_04.jpg 264.5~266.5s 那两格之间）：正面近景，帽檐角度正常、双眼清晰可见，庆祝的笑容克制而不夸张，背景是深蓝色`TENNIS CANADA`标识板（干净，无干扰）。⚠️ 自动候选墙（`pick_cover_frames.py`）在这条片子上偏向施奈德（她在网前/接发位置的近景天然更多），斯瓦泰克的这个庆祝近景是人工从 contact_04.jpg 里挑出来的，不在自动候选清单里——和 swiatek-kostyuk 那条『人工覆盖自动候选』同一个理由。focus/zoom 待 `mode=cover` 本地预览后再核（这台沙箱下不动源片，没法本地渲）。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的radial暗角，上下两头照留。",
+    "winner": "斯瓦泰克",
+    "result": "6-2 6-1",
+    "matchup": [
+      {
+        "name": "施奈德",
+        "name_en": "Diana Shnaider",
+        "country": "RUS",
+        "rank": 17
+      },
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 8
+      }
+    ],
+    "_matchup_rank_why": "斯瓦泰克世界第8、施奈德世界第17，WebSearch多源交叉（见editorial.human_context.sources），与本站同一轮已发的swiatek-kostyuk（登记斯瓦泰克rank 8）、shnaider-pegula（登记施奈德rank 17）两条spec一致，不会分叉。",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS005",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS005"
+      },
+      "_court_why": "CourtID 1（Centre Court），与同站同一轮已发的swiatek-kostyuk/shnaider-pegula/swiatek-golubic/alexandrova-sabalenka一致，均为1号场。",
+      "_duration_why": "`MatchTimeTotal: \"01:04:03\"` → 板上印 `1:04`，与WTA官方赛后稿『64分钟』吻合。不手填，`_fetch_match_duration()` 每次渲海报现拉接口（url+match_id同swiatek-kostyuk那条，已验证过这条路能正常工作）。"
+    }
+  },
+  "segments": [
+    {
+      "start": 264.08,
+      "end": 271.72,
+      "fit": "crop",
+      "_why": "冷开场：次盘6-5(40)第二个赛点兑现之后的庆祝近景，不配旁白——交给现场声。256.5~264.5s记分条印着`MATCH POINT #2`，紧接着这一格是她拿下最后一分之后的正面反应镜头。窗口卡在scene_cuts的264.08–271.72之内 ✅"
+    },
+    {
+      "start": 3.0,
+      "end": 11.5,
+      "fit": "crop",
+      "narration": "这一年，她一个冠军都还没拿到——可这场球，对手一个破发点都没拿到。",
+      "_why": "第②格：把最大的反差说出来。窗口在scene_cuts的2.88–22.2这个长镜头之内 ✅"
+    },
+    {
+      "start": 11.5,
+      "end": 22.2,
+      "fit": "crop",
+      "narration": "北京时间八月十一号七点十分，多伦多国家银行公开赛女单1/4决赛，斯瓦泰克对阵施奈德。",
+      "_why": "第③格：坐标。窗口仍在同一段2.88–22.2的长镜头之内 ✅"
+    },
+    {
+      "start": 25.88,
+      "end": 31.76,
+      "fit": "crop",
+      "narration": "施奈德刚在上一轮，爆冷淘汰了世界第三佩古拉，气势正盛。",
+      "_why": "铺垫施奈德这一边的故事线（human_context）。窗口在scene_cuts的25.88–31.76之内 ✅"
+    },
+    {
+      "start": 33.92,
+      "end": 38.72,
+      "fit": "crop",
+      "narration": "斯瓦泰克，开局就把她的发球破了。",
+      "_why": "对应逐分自证`0-1施奈德发球被破`。0.5~16.5s记分条印着施奈德love到40的下滑轨迹，这一局随后即被破发。窗口跨了35.76那一刀，两侧都是同一局回合内的机位切换（发球方/接发方镜头交替），不是切到另一场景。",
+      "crosses_cut": "跨过35.76这一刀，两侧都是这一局回合内的机位交替，不是场景突变。"
+    },
+    {
+      "start": 96.5,
+      "end": 106.5,
+      "fit": "crop",
+      "narration": "首盘二比五那一局，她连拿三个破发点，才把它破下——顺势六比二，拿下首盘。",
+      "_why": "逐分自证：`2-5 施奈德发球被破（斯瓦泰克拿到3个破发点，第3个兑现）`；92.5~98.5s记分条印着`BREAK POINT #2`，100.5~106.5s`SET POINT #2`收6-2。窗口跨了98.88、102.44两刀，均为同一局回合内的机位交替。",
+      "crosses_cut": "跨过98.88、102.44两刀，都在这一局连续的回合/换边镜头内，不是切到另一个人或另一场景。"
+    },
+    {
+      "start": 182.0,
+      "end": 190.76,
+      "fit": "crop",
+      "narration": "次盘一比一那一局，两人反复战至占先，斯瓦泰克才把它拿下——一比二。",
+      "_why": "逐分自证：`1-2 施奈德发球被破（1个破发点）`点序里`A:40`/`40:A`交替出现，是典型的多次占先拉锯。172.5~190.5s记分条`Ad`反复出现正是这个画面。窗口在scene_cuts的173.96–190.76之内 ✅"
+    },
+    {
+      "start": 255.0,
+      "end": 264.08,
+      "fit": "crop",
+      "narration": "她连下两个赛点，施奈德救下第一个，第二个，没能挡住。",
+      "_why": "逐分自证：`1-6 施奈德发球被破，收盘`点序`15:40`（第1个赛点，施奈德救下）、`30:40`（第2个赛点，斯瓦泰克兑现）。256.5~264.5s记分条印着`MATCH POINT #2`。窗口跨了255.0、257.92两刀，均为这一局连续机位交替，紧接第①段冷开场的画面。",
+      "crosses_cut": "跨过255.0、257.92两刀，都在这一局连续的赛点回合内，衔接到第①段冷开场的同一时刻。"
+    },
+    {
+      "start": 276.0,
+      "end": 283.0,
+      "fit": "crop",
+      "narration": "这次，她能把多伦多这座奖杯留下吗？",
+      "_why": "收尾落在一问上，接的是封面没提过的线——她至今没拿过这站冠军（human_context未直接写但WebSearch确认过：2022年1号种子出局，这是她第23个巡回赛1000赛半决赛）。画面是网前握手/走向看台的庆祝镜头。窗口在scene_cuts的271.72–286.56之内 ✅"
+    }
+  ],
+  "push": {
+    "summary": "斯瓦泰克零封施奈德",
+    "lead": "7号种子、世界第8斯瓦泰克6-2 6-1击败15号种子、世界第17施奈德，晋级多伦多WTA1000女单半决赛，用时1小时4分——全场施奈德一个破发点都没拿到。施奈德这一轮之前刚爆冷淘汰世界第3佩古拉，气势正盛，但斯瓦泰克开局就把她的发球破了；首盘2-5那一局她连拿三个破发点才把它破下，顺势6-2拿下首盘；次盘1-1那一局两人反复战至占先，她还是把它拿了下来，随后横扫到6-1，两个赛点施奈德只救下第一个。斯瓦泰克本赛季至今没有拿到冠军，这是她第23个巡回赛1000赛半决赛。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，量`len()`原始字符数。「斯瓦泰克零封施奈德」= 10字，在闸内（吸取shelton-fonseca那次的教训，第一版就按这个口径写，不再混淆TITLE_MAX那道闸）。只写`summary`和`lead`，`matchup`/`score`/`event`由封面算——一个数写两处必分叉。"
+  }
+}
