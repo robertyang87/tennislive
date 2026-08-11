@@ -1982,6 +1982,12 @@ _ON_PURPOSE = {
     # 「亚历山德罗娃」——**两个都是真人，判据分不出来**，只能显式声明。
     # 它是全部 1106 段存量里唯一一条误报，所以那条判据是收得住的。
     "亚历山德拉",
+    # `pegula-eala-dc2026-final.json`：赛事工作人员的名字（Christina/Kristina，
+    # 两份 ASR 拼法不同，`_zh_why` 里已经写明「不是球员，译名表里没有」）。
+    # 表里的「克里斯蒂安」是另一个真人（WTA 球员 Jaqueline Cristian），只差
+    # 一个字——同一个「两个都是真人，判据分不出来」的形状，把 `specs/interviews/`
+    # 接进这条测试时才第一次扫到（那批 spec 之前没被这条测试碰过）。
+    "克里斯蒂娜",
 }
 
 #: **已经推过微信、名字却写错了的**。改不回来的那一半挂在这儿：视频里的旁白、
@@ -2130,6 +2136,44 @@ def test_人名要以译名表为准():
         # 和写在旁白里一样会发出去。`_` 开头的是注解，不扫。
         texts += [v for k, v in (spec.get("push") or {}).items()
                   if not k.startswith("_") and isinstance(v, str)]
+        for text in filter(None, texts):
+            scan(path.name, text)
+
+    # **「赛后开麦」（`specs/interviews/`）也是一条会发出去的线，之前一直没被
+    # 这条测试碰过。** 结构和 reels 不一样——台词在 `zh` 数组里，不在
+    # `segments[].narration` 里——所以另开一段，不能直接并进上面那个循环。
+    #
+    # ⚠️ **起因是 `swiatek-shnaider-tor2026-qf.json` 把 Shnaider 写成「申拜德」
+    # （表里是施奈德），但这条测试其实拦不住那一次。** 「施奈德」只有三个字，
+    # 而上面那句 docstring 早写着「只查四个字以上：三个字的窗口会撞上大量普通词」——
+    # 反向验证过（把「申拜德」注回一个**会被扫到**的字段，不是 `_note`），
+    # 这条测试对它就是哑的，跟字段是不是 `_`开头没关系。三个字的名字写错了，
+    # 还是只能靠写的时候自己 `player_zh()` 查一遍，测试防不住。
+    # 这一段真正值回票价的是**四个字以上**的名字（下面反向验证抓到的
+    # 「克里斯蒂娜」就是一个）。
+    for path in sorted(Path("specs/interviews").glob("*.xhs.txt")):
+        scan(path.name, path.read_text(encoding="utf-8"))
+    for path in sorted(Path("specs/interviews").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        cover = spec.get("cover") or {}
+        texts = [spec.get("event", ""), spec.get("winner", "")]
+        texts += list(spec.get("zh") or [])
+        texts += [v for k, v in cover.items()
+                  if not k.startswith("_") and isinstance(v, str)]
+        texts += [v for k, v in (spec.get("push") or {}).items()
+                  if not k.startswith("_") and isinstance(v, str)]
+        # `takeaway` 是 `{"close": {"point": ..., "ask": ..., "facts": [...]}}`
+        # 这一层嵌套——不逐个键名硬编，免得以后加一张新卡（比如 `open`）又漏了。
+        for card in (spec.get("takeaway") or {}).values():
+            if not isinstance(card, dict):
+                continue
+            for k, v in card.items():
+                if k.startswith("_"):
+                    continue
+                if isinstance(v, str):
+                    texts.append(v)
+                elif isinstance(v, list):
+                    texts += [s for s in v if isinstance(s, str)]
         for text in filter(None, texts):
             scan(path.name, text)
 
