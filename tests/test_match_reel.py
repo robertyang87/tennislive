@@ -3804,22 +3804,27 @@ def test_每日网球知识分出来单独跑():
     **要拿掉的是昨日赛果和今日赛程，不是 daily 干的每一件事。**
 
     分出来几乎不用改代码——`knowledge-adhoc.yml` 跑的就是同一个
-    `generate_knowledge_package`，而且本来就支持 slug 留空自动选题。缺的只是
-    一个定时。
+    `generate_knowledge_package`，而且本来就支持 slug 留空自动选题。
+
+    ⚠️ **2026-08-11 起不再断言这条线有定时。** 当年缺的只是一个定时，
+    但那个定时天天自动选题、渲成静态卡片，撞上了 `docs/story-asset-topics.md`
+    （8/10 拍板）定的「网球有故事视频优先」——`test_知识帖每日定时停了_
+    渲的是网球有故事栏目已经淘汰的老模板` 接管了这一半，断言反过来（cron
+    不许在）。**这条只留「独立工作流、用同一套生成逻辑」这一半没变的事实**，
+    别把「主语没了」的老断言留在这儿——cron 一删，`re.search(...).group(1)`
+    会 `AttributeError`，是这个仓库反复栽过的那个坑。
     """
     text = Path(".github/workflows/knowledge-adhoc.yml").read_text(encoding="utf-8")
     body = _yaml_only(text)
-    assert "schedule:" in body and "cron:" in body, (
-        "knowledge-adhoc 没有定时——每日网球知识就断了")
-    cron = re.search(r'cron:\s*"([^"]+)"', body).group(1)
-    minute, hour = cron.split()[0], cron.split()[1]
-    assert minute not in ("0", "30"), (
-        f"定时落在 :{minute}——GitHub 在整点半点最容易延迟或丢弃，"
-        "这是 daily 当年留下的经验")
-    # 推送那一步不能被定时触发挡住（schedule 事件下 inputs.push 是空的）
+    assert "tennislive knowledge-adhoc" in body, (
+        "knowledge-adhoc 工作流不该改去跑别的命令——独立跑这条线的前提还在")
+    assert "workflow_dispatch:" in body, "手动入口必须留着，随时能补一条"
+    # 推送那一步不能被定时触发挡住（schedule 事件下 inputs.push 是空的）——
+    # 现在虽然没有定时了，但这个条件本身仍是对的写法，别退回 == 'true'。
     push_block = text[text.index("- name: PushPlus 推送到微信"):]
     assert "inputs.push != 'false'" in push_block, (
-        "推送条件改了——定时触发时 inputs.push 是空的，别写成 == 'true'")
+        "推送条件改了——workflow_dispatch 手动触发时 inputs.push 可能是空的，"
+        "别写成 == 'true'")
 
 
 def test_查赛果的命令留着卡片和推送不留():
@@ -3981,6 +3986,31 @@ def test_停掉的定时不许自己回来():
             f"{name} 的定时又回来了——2026-08-02 账号所有者停掉的")
         assert "workflow_dispatch:" in head, (
             f"{name} 停的是定时，手动入口不能一起摘掉")
+
+
+def test_知识帖每日定时停了_渲的是网球有故事栏目已经淘汰的老模板():
+    """**2026-08-11：`docs/story-asset-topics.md`（8/10 账号所有者拍板）定了
+    「网球有故事」形态按全栏目口径视频优先，静卡只留天然图表题材。**
+
+    `knowledge_column()` 把这条线的产物（`slug` 不以 `otd-` 开头的）一律印成
+    「网球有故事」，而它天天从近 60 个选题池里自动挑一个渲成静态四宫格卡片。
+    8/11 08:37 那趟（run 31452944689）自动选中 `cincinnati`——纯叙事的赛事
+    历史，不是天然图表题材——账号所有者当场反馈「还是用的老模板啊」。
+
+    停的是**定时**，不是这条线的代码：`workflow_dispatch` 留着，真遇到天然
+    图表题材（如 `scoring-history`）仍能手动指定 slug 单独渲。要恢复定时，
+    得先给 STORIES 选题池分出「天然图表 / 叙事」两类，或者把这条线接上
+    视频优先的资产线管线（`docs/story-asset-topics.md`）——不能照抄这行
+    cron 直接开回去。
+    """
+    body = _yaml_only(
+        Path(".github/workflows/knowledge-adhoc.yml").read_text(encoding="utf-8"))
+    head = body.split("\njobs:")[0]
+    assert "schedule:" not in head, (
+        "knowledge-adhoc 的定时又回来了——2026-08-11 账号所有者反馈"
+        "「还是用的老模板啊」之后停掉的，见 docs/story-asset-topics.md")
+    assert "workflow_dispatch:" in head, (
+        "knowledge-adhoc 停的是定时，手动入口不能一起摘掉")
 
 
 def test_没有下游在读的定时任务不许一直跑():
