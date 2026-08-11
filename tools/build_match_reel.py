@@ -427,7 +427,11 @@ FINAL_CRF = "18"
 #   wong-gea          80.2 MiB / 155.8s = 4318 kb/s   源片 25 fps
 #   eala-osaka 3 分版 104.0 MiB / 185.2s = 4712 kb/s   源片 25 fps
 #   eala-osaka 2 分半版 94.5 MiB / 158.8s = 4990 kb/s   源片 25 fps
-#   gea-shapovalov   168.4 MiB / 247.9s = **5698 kb/s** 源片 **59.94 fps**
+#   gea-shapovalov   168.4 MiB / 247.9s = 5698 kb/s   源片 59.94 fps
+#   cincinnati-story 113.6 MiB / 103.3s = **9221 kb/s** 源片 60 fps，
+#     且末段是颁奖台+confetti+镜头快切的高动量蒙太奇（730.6–746.0s，
+#     7 处 crosses_cut）——同样是 60 fps，比 gea-shapovalov 高出 62%，
+#     内容的运动量差得动这么多，不是编码参数变了
 #
 # ⚠️ **剪短之后码率反而更高**：砍掉的是全片最静的那一段，留下的全是高动量的
 # 关键分。所以「按当前码率线性外推」会低估——常量取**实测最高**的那一条。
@@ -442,7 +446,7 @@ FINAL_CRF = "18"
 # 这个估算现在只用来**报走哪条路**，不再拦人。它仍然有用：知道要走 Release
 # 就知道这一版的链接不是 raw 而是 releases/download。
 GITHUB_FILE_LIMIT_MIB = 100
-MEASURED_REEL_KBPS = 5700
+MEASURED_REEL_KBPS = 9230
 # 超过这个就走 Release。95 而不是 100，留 5 MiB 给「估得不准」。
 REPO_INLINE_MIB = 95
 
@@ -3022,7 +3026,14 @@ SPEECH_TAIL = 0.75
 # 比离线估的 9.09s 短 1.63s——同一个「短句/标点密集就被高估」的方向，只是这次
 # 幅度更大。这条片子也已经自动推送过微信，不能为了措辞重渲。394 段实测的中位数
 # 仍在 −0.28（远在 ±0.4 内，不是模型系统性偏差），所以同样按闸的本意小幅调宽。
-SPEECH_EST_ERR = 1.65
+# ⚠️ 2026-08-11：`cincinnati-story` 第 3 段（44 字 7 处标点，「这一盘，他一分
+# 一分，把落后的比分又追了回来……」）真语音只说 8.98s，比离线估的 10.73s 短
+# 1.75s——同一个方向，幅度又比 swiatek-kostyuk 那次大一点。这条片子当天就要
+# 重渲（加证据卡），本可以顺手改短这句话让估算落回带子里，但**这句话本身没有
+# 问题**——真渲已经验过装得下（YunjianNeural 实测 8.98s < 11.4s 窗口），为了
+# 迁就一个离线估算去改一句没毛病的旁白，方向反了。479 段实测中位数仍贴近 0，
+# 所以同样按闸的本意小幅调宽。
+SPEECH_EST_ERR = 1.75
 
 
 def speech_seconds(text: str) -> float:
