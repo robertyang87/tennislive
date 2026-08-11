@@ -299,6 +299,15 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
     if meta is None:
         print(f"⚠️ 缩略图墙：{len(tried)} 档 client 都取不到视频信息，跳过——挑封面还得靠猜")
         return None
+    # **拿到 `meta` 就立刻把真实片长打出来，别等 storyboard 也成功才印。**
+    # 这两件事失败的原因经常不同——`swiatek-shnaider-tor2026-qf` 那趟就是
+    # 元数据换到第 4 档 client 才成功，storyboard 的 mhtml 下载又在下一步
+    # 单独失败（`Requested format is not available` 之外的另一种错）。
+    # 原来 `dur` 只在两步都成功之后的末尾那句里才出现，于是这种「元数据到手、
+    # 缩略图没到手」的情况下，唯一有价值的那个数（真实 duration，用来判断
+    # 字幕停的地方是不是真的等于片子结束的地方）跟着一起丢了。
+    print(f"[缩略图墙] 视频元数据：真实片长 {meta.get('duration')} 秒"
+          f"（{meta.get('title', '')!r}）")
     # storyboard 的格式 id 以 sb 开头，`rows`/`columns` 是每张大图里的格子数
     sbs = [f for f in meta.get("formats") or []
            if str(f.get("format_id", "")).startswith("sb") and f.get("fragments")]
