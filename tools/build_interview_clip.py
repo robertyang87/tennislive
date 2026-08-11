@@ -258,6 +258,15 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
 
     **这是加速不是闸**：拿不到就打印原因往下走，不许因为它失败挡住切行。
     但**要出声**——「没拿到」和「拿到了」在日志上必须长得不一样。
+
+    ⚠️ **单档失败也要换 client 重试，和 `fetch_words`/`yt_download` 一模一样。**
+    原来这儿只用默认 client 试一次，一失败就直接放弃——`swiatek-shnaider-tor2026-qf`
+    那趟撞的正是这个：字幕那步换了三档 client 才成功（默认三档全撞
+    `Sign in to confirm you're not a bot`），而这儿只试了默认那档就认栽，
+    于是**唯一能报出真实片长的地方没跑起来**，只留下字幕停在哪儿这一个信号——
+    而「字幕在哪儿停」和「视频在哪儿完」是两件事，前者答不了「后半段有没有
+    没被字幕覆盖的内容（比如采访）」这个问题。三个函数都在调 yt-dlp、
+    都会撞上同一种提取失败，只有两个打了补丁——又一次「两处各配一遍必分叉」。
     """
     if not is_youtube(url):
         # storyboard 是 YouTube 独有的。对别的源试一遍要白等一次网络往返，
@@ -266,13 +275,29 @@ def storyboard_sheet(url: str, workdir: Path, spec: dict | None = None,
         print("⚠️ 缩略图墙：这条源不是 YouTube，没有 storyboard 这回事，跳过"
               "——挑封面用 `--stage cover` 渲一张出来看")
         return None
-    try:
-        meta = json.loads(subprocess.run(
+    meta = None
+    tried: list[str] = []
+    for label, extra in _ytdlp_ladder():
+        proc = subprocess.run(
             ["yt-dlp", "-J", "--no-warnings", "--js-runtimes", "node",
-             *cookie_args(spec or {}), url],
-            capture_output=True, text=True, timeout=180, check=True).stdout)
-    except Exception as exc:                      # noqa: BLE001
-        print(f"⚠️ 缩略图墙：取不到视频信息（{type(exc).__name__}），跳过——挑封面还得靠猜")
+             *cookie_args(spec or {}), *extra, url],
+            capture_output=True, text=True, timeout=180)
+        if proc.returncode == 0 and proc.stdout.strip():
+            if tried:
+                print(f"[缩略图墙] {label} 成功（前面 {len(tried)} 档没成）")
+            try:
+                meta = json.loads(proc.stdout)
+                break
+            except Exception as exc:                  # noqa: BLE001
+                tail = f"返回的不是合法 JSON（{type(exc).__name__}）"
+                print(f"[缩略图墙] {label} 没成：{tail}")
+                tried.append(f"  {label}: {tail}")
+                continue
+        tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-1:] or ["(无输出)"]
+        print(f"[缩略图墙] {label} 没成：{tail[0][:150]}")
+        tried.append(f"  {label}: {tail[0][:150]}")
+    if meta is None:
+        print(f"⚠️ 缩略图墙：{len(tried)} 档 client 都取不到视频信息，跳过——挑封面还得靠猜")
         return None
     # storyboard 的格式 id 以 sb 开头，`rows`/`columns` 是每张大图里的格子数
     sbs = [f for f in meta.get("formats") or []
