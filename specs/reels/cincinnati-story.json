@@ -147,8 +147,8 @@
       "end": 743.0,
       "fit": "crop",
       "source": "final2023",
-      "narration": "这座球场建在俄亥俄州梅森，刚完成了一次2.6亿美元的翻新，31片场地——为下一个125年做准备。",
-      "_why": "en.wikipedia.org已核验：Lindner Family Tennis Center建在俄亥俄州梅森，31片场地，2025年完成2.6亿美元翻新。画面沿用旧版spec同一窗口（颁奖台/trophy/confetti快切庆祝蒙太奇），narration从『费德勒七冠+高芙同日夺冠』改写成『翻新+为未来做准备』，收在赛事本身的延续性上。⚠️ 窗口从旧版的730.6-746.0（15.4s）收到730.6-743.0（12.4s）：本地`--check-narration`实测9.34s，原窗口空余6.06s撞哑场闸，收窄后余量2.31s（`_ask_it_out_loud()`自动补的收尾问句还会再填掉一部分）。",
+      "narration": "这座球场建在俄亥俄州梅森，刚完成了一次2.6亿美元的翻新，31片场地。下一个在辛辛那提留下名字的，会是谁？",
+      "_why": "en.wikipedia.org已核验：Lindner Family Tennis Center建在俄亥俄州梅森，31片场地，2025年完成2.6亿美元翻新。画面沿用旧版spec同一窗口（颁奖台/trophy/confetti快切庆祝蒙太奇），narration从『费德勒七冠+高芙同日夺冠』改写成『翻新+收尾问句』。⚠️ `test_收尾要落在一问上不能停在数据上` 要求最后一段narration本身以问号收尾（不能只靠`_ask_it_out_loud()`在渲染时自动补，那道闸查的是spec原文）——沿用旧版spec本来就有的『下一个在辛辛那提留下名字的，会是谁？』这句，和push.lead/xhs.txt的收尾问句保持一致。窗口从旧版730.6-746.0（15.4s）收到730.6-743.0（12.4s）：本地`--check-narration`实测本句10.1s左右，余量约2s。",
       "inset": {
         "image": "assets/reel/cincinnati-renovation.png",
         "corner": "tl",
