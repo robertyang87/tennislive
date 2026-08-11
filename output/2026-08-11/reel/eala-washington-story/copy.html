@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.11 网球有故事 | 伊埃拉五连胜夺生涯首冠</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>21 岁的伊埃拉在华盛顿五场全胜，拿下菲律宾网球史上第一个 WTA 巡回赛冠军：首轮一盘一破落后逆转郑钦文，一路送走卫冕冠军费尔南德斯、二号种子斯维托丽娜、四届大满贯冠军大坂直美，决赛落后一盘、被雨切成两天，最终掀翻世界第三佩古拉。
+
+📍华盛顿 WTA500 · Mubadala DC Open
+🎾 首轮 伊埃拉 4-6 6-4 6-1 郑钦文
+🎾 次轮 伊埃拉 6-2 7-6(1) 费尔南德斯（卫冕冠军）
+🎾 1/4决赛 伊埃拉 6-3 6-4 斯维托丽娜（2号种子）
+🎾 半决赛 伊埃拉 6-4 6-2 大坂直美（3号种子）
+🎾 决赛 伊埃拉 4-6 6-4 6-0 佩古拉（1号种子）
+
+首轮最险：郑钦文拿下第一盘，第二盘还一度一盘一破在手，只要再赢一局就能把伊埃拉挡在门外。伊埃拉把那盘拿了回来，第三盘 6-1 收场。
+
+次轮的费尔南德斯是这站的卫冕冠军，去年决赛 6-1 6-2 拿下过冠军。这次抢七拖到 7-1，伊埃拉只丢一分。
+
+1/4决赛、半决赛连过两号种子斯维托丽娜（两个月里第二次赢她）、三号种子四届大满贯冠军大坂直美——半决赛赢下那一刻，21 岁的她双手捂住了脸。
+
+决赛对手是世界第三佩古拉。第二盘打到 1-2，雨下了下来，比赛整整停了一夜。第二天中午续赛，伊埃拉从落后一盘、决胜盘一路碾过，零比四十、三个冠军点，佩古拉救掉第一个，第二个再没机会。4-6 6-4 6-0。
+
+菲律宾网球史上，从来没有人拿过一个 WTA 巡回赛冠军。这一周，她把这件事做成了。
+
+#网球 #伊埃拉 #华盛顿公开赛 #WTA500 #网球时差</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>这场胜利之后，菲律宾网球的下一步，会是什么？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
