@@ -102,8 +102,8 @@
     "_human_quote_ok_why": "跑 `test_spec里的人工引语和en_fixed是自洽的` 报出来的 8 处，2 处是真的 ASR 小错已经改进 en_fixed（`matches`→`match`、`passed`→`past`），剩下这 6 处是战报记者转述时的编辑习惯（拿掉停顿词、合并断句、把她的自我更正`I don't know after`简化成`the`），不改动 ASR。`all`/`some` 那处仍然是本条最大的不确定——两次本地 subs 用的是同一份 YouTube 字幕、不是独立验证，真正的第二个源要等 `--stage verify` 的 whisper 结果，这里先按 ASR 的 `all` 定稿（`I had a lot today but couldn't realize all of them`语法更顺），whisper 若给出不同答案再回来改。"
   },
   "cover": {
-    "frame_at": 312.0,
-    "_why": "⚠️ **按转写时间线挑的，还没渲出来看过**——沙箱下不了这条源片，只能先按 commentary 时间码定一个候选，跑一趟 `mode=cover` 看清楚了再定。候选落在 311.1–315.7 秒那一格，commentary 原话是「we see her smiling for the first time in this match... a tremendous reaction there」——赛点刚落地的原始反应，比之后场边采访时那张更克制的「回答问题」表情更对题：这一屏要的是「刚从谷底爬出来那一刻」的情绪，不是「正在接受采访」的情绪。",
+    "frame_at": 397.5,
+    "_why": "⚠️ 第一版按 commentary 时间码猜了 312.0（「we see her smiling for the first time... a tremendous reaction there」那句配的时间），`mode=cover` 渲出来一看——**整帧全是观众席**，转播这几秒切的是人群反应镜头，画面里根本没有她。\n改成从采访本体（331.5–444.5）里挑：397.5 秒落在她说「it always feels nice」（beating number one, it always feels nice / and I will just enjoy tonight）附近——这是一句无保留的正面表态，采访机位这段全程对着她本人，比赛点那几秒的人群镜头更可能拍到她自己的表情。仍然是猜的，还没看过这一帧，可能还要再试。",
     "title": [
       "十二天前她被轮椅推离球场",
       "十二天后她掀翻世界第一"
