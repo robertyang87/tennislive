@@ -1,0 +1,136 @@
+{
+  "slug": "alexandrova-sabalenka-tor2026-r16",
+  "_note": "选题来路：账号所有者问「最近有什么比较出彩的赛后采访」，查证过程见下。\n\n**事实（已用两个独立源交叉核过，见 _source）**：亚历山德罗娃 7-6(3) 4-6 6-4 逆转世界第一萨巴伦卡，2026-08-08，国家银行公开赛（多伦多站，WTA1000）1/8 决赛，两小时二十九分钟。这是她生涯第三次赢下世界第一（此前迈阿密2024赢斯瓦泰克、多哈2025赢萨巴伦卡），两人正赛交锋战绩追平5-5。**关键背景**：她 7 月 28 日在孟菲斯 WTA250 首轮对阵16岁资格赛小将时因34度高温中暑，在决胜盘5-4落后时倒在场上被轮椅推离，赛季至此多轮首轮出局、还因腰伤退出马德里——距那次轮椅离场只有11-12天。⚠️ **孟菲斯这段是外部报道给的背景，不是她本人在这段采访里说的话**——采访本身没提Memphis，只说「这一年对我来说很难」「有过艰难的时刻，场上完全谈不上开心，但现在感觉很棒」，两件事在 push/cover 文案里可以并置陈述事实，不能让她的原话替背景背书。\n\n⚠️ **两个源冲突过一次，已用证据裁定**：WTA 官网比分页 WebFetch 摘要一度说反了赢家（写成萨巴伦卡赢），但 Al Jazeera 原文 + WTA 官网自己的战报文章（`alexandrova-cracks-the-sabalenka-code-again`）两个独立源都明确写亚历山德罗娃赢、7-6(3) 4-6 6-4——按证据走，那次 WebFetch 摘要是转述出错，不是数据本身错。\n\n⚠️ **城市**：ESPN/CLI 里这一站同时印过「多伦多」和「蒙特利尔」两个名字（那是去年女子办在蒙特利尔、今年轮换到多伦多，聚合脚本没跟上轮换）——WTA 官网比分页、Al Jazeera、EssentiallySports、WTA 战报标题（`to make Toronto quarterfinals`）四个源全部写 Toronto，统一按多伦多。",
+  "_source": [
+    "https://www.aljazeera.com/sports/2026/8/9/world-number-one-sabalenka-upset-by-alexandrova-at-canadian-open",
+    "https://www.wtatennis.com/news/4556610/alexandrova-cracks-the-sabalenka-code-again-to-make-toronto-quarterfinals",
+    "https://www.essentiallysports.com/tennis-news-world-no-nineteen-stuns-aryna-sabalenka-in-toronto-eleven-days-after-being-wheeled-off-court/"
+  ],
+  "url": "https://www.youtube.com/watch?v=Ydiz_GpM8_A",
+  "source_title": "Aryna Sabalenka vs. Ekaterina Alexandrova | 2026 Toronto Round of 16 | WTA Match Highlights（@WTA 官方频道）",
+  "start": 331.5,
+  "end": 444.5,
+  "_window_why": "跑过一趟 --stage subs（start=0/end=999）确认了：这条 @WTA 集锦总长 444.1 秒，采访接在尾巴上，从 331.5 秒起（评论员旁白刚说完「今晚一场了不起的表现」，场边记者第一句「一路上有很多起伏」开始）到片尾 444.1 秒（她说完 thank you so much）——三问三答，没有中途切掉任何一组问答，覆盖了「决胜盘怎么翻过来的」「和萨巴伦卡交手拉平5-5」「这是她自 2025年2月以来首次打进1000级八强」三个层次。",
+  "column": "赛后开麦",
+  "event": "2026 国家银行公开赛（多伦多）1/8 决赛",
+  "winner": "亚历山德罗娃",
+  "transcript_verified": true,
+  "transcript_disagree_ok": {
+    "rate": 0.145,
+    "why": "run 31465655866 的 --stage verify（whisper small.en）：YouTube 366 词 / whisper 327 词，撤销 matches/passed 那两处 en_fixed 之后本地按同一算法重算是 14.2%，为给一点余量按 14.5% 认领。逐处看过 30 处分歧：\n① **24 处是 whisper 把虚词/口头语丢了**（um / uh / like / you know / I mean / oh / well / with / it 这类），YouTube 全留着——采访越口语，这类偏差越大，不影响发出去的英文；\n② `10th`→`tenth`、`quarterfinal`→`quarterfinals` 是数字写法/单复数的记法差异，不改变意思；\n③ `aryna`→`irina`、`and ekaterina`→`hey katarina`、`ekaterina`→`to katarina` 是两份机器对人名的不同误听，真名靠外部信源核实（Aryna Sabalenka / Ekaterina Alexandrova），已经在 en_fixed 里按正确拼法写死，两份 ASR 谁听对听错都不影响最终文本；\n④ `is`→`are`（there is/are some difficult moments）是口语里常见的数的一致性松动，不改变意思；\n⑤ `lucky and`→`like him` 是 whisper 明显的误听（上下文在说自己的球，不是某个「him」），采信 YouTube 原文 `lucky`；\n⑥ `you're in`→`your` 是断句差异，不改变意思。\n没有一处改变了发出去的中文译文或 en_fixed 的取舍。"
+  },
+  "zh": [
+    "这一路起起伏伏",
+    "波折不断",
+    "最终是什么帮你翻了盘",
+    "让你拿下第三盘",
+    "关键的不同在哪儿",
+    "说实话 我也不知道",
+    "我只是尽量把每一分",
+    "都当成最后一分打",
+    "因为对她 你不会有",
+    "太多机会",
+    "今天我拿到不少 但没能",
+    "全部把握住 但说实话 我",
+    "尽量不去想",
+    "关于比分",
+    "什么都不想 就是打球",
+    "仅此而已",
+    "我特别开心能赢下这场",
+    "因为打完",
+    "第二盘打完的时候",
+    "我以为机会已经溜走了",
+    "这是你们生涯第十次交手",
+    "和萨巴伦卡",
+    "你很了解她了 现在战绩追平",
+    "五比五",
+    "这给了你多少信心",
+    "让你觉得能",
+    "打乱她的节奏",
+    "这个嘛 我说不好是不是",
+    "真打乱了她的节奏",
+    "因为她打得很好 我也说不好",
+    "可能有几个球",
+    "我运气不错吧 说实话",
+    "但我对这个结果特别满意",
+    "因为赢下世界第一",
+    "感觉总是很好",
+    "今晚我就好好享受",
+    "没错 你应该好好享受",
+    "叶卡捷琳娜",
+    "这是你首次打进千分级八强",
+    "自2025年2月以来",
+    "这一路你是怎么熬过来",
+    "这场胜利对你来说",
+    "为什么这么特别",
+    "这对我意义重大",
+    "因为经历了很多挣扎",
+    "在场上 我现在特别高兴",
+    "能重新享受网球",
+    "能享受在场上的时光",
+    "因为之前有过一些艰难时刻",
+    "那时候在场上完全没有开心",
+    "可言 但现在我感觉很棒",
+    "谢谢大家",
+    "今晚的氛围太棒了",
+    "我就是在享受这一切",
+    "你打进了从没到过的领域",
+    "八强",
+    "国家银行公开赛",
+    "祝你好运 叶卡捷琳娜",
+    "非常感谢"
+  ],
+  "en_fixed": {
+    "22": "with Aryna.",
+    "38": "And Ekaterina,",
+    "39": "this is your first 1,000-level quarterfinal",
+    "55": "Well, you're in newfound territory",
+    "58": "Good luck, Ekaterina."
+  },
+  "_en_fixed_why": "⚠️ **第 10、20 行原来改过，跑完 --stage verify 又撤销了。** 第一版我按语法自信心把 `matches`→`match`（「一场比赛」该用单数）、`passed`→`past`（`it's already past me` 读起来更顺），当时没有第二个源，是我一个人的判断。跑 whisper 交叉核对后发现：**两份独立 ASR（YouTube 原始字幕 + faster-whisper）在这两处完全一致**，都是 `matches`（复数）、`passed`（动词过去分词）——我那两处「语法本身能定」的判断反而是错的那一个。两份机器都听到的，压过我一个人的语感；已经改回原始 ASR。这两处现在归进 `human_quote_ok`（WTA 战报的人工转述用了 `match`/`past`，是记者润色，不是转写更准）。",
+  "suspect_ok": {
+    "25": "跑完 --stage verify：whisper 独立听到的也是 `steal`（run 31465655866 的 whisper.json 原始转写核对过），两份 ASR 一致，之前疑心的 `instill` 没有证据支持。语义上仍然有点别扭，但这是场边即兴采访，主持人临场措辞不够精准是常有的事——两份独立转写都一致就不再改动，保留原话。"
+  },
+  "_verified_clean": "run 31465655866 的 --stage verify 跑通了完整流程：\n① 转写分歧 14.2%（whisper small.en 独立第二份），逐处看过，认领进 `transcript_disagree_ok`（写 14.5% 留余量），全是虚词/单复数/人名误听这类不改变意思的差异；\n② 唯一一处原来挂着的 `suspect`（第 25 行 `steal your confidence`）被 whisper 独立确认，销进 `suspect_ok`；\n③ 两处原来的 `en_fixed`（`matches`→`match`、`passed`→`past`）被 whisper 反证——两份机器 ASR 一致地给出复数/过去分词形式，我自己的语法判断反而错了，已撤销并回归原文，改记进 `human_quote_ok`（WTA 战报的人工转述是编辑润色，不是转写更准）；\n④ 自动字幕没有空档（review_sheet 和 verify 两处都报 0 处）。\n⚠️ 我听不到音轨，以上判断全部基于两份独立 ASR 的交叉比对 + 外部信源核实人名拼法，和这条线上其它 spec 走的是同一套判据。",
+  "human_quote": {
+    "url": "https://www.wtatennis.com/news/4556610/alexandrova-cracks-the-sabalenka-code-again-to-make-toronto-quarterfinals",
+    "_why": "WTA 官网这篇战报整段抄了这次场上采访的第一问第一答（原文明写是 on-court interview 的话），可以本地核对不用联网。⚠️ **有一处和 ASR 不一样**：战报写 `I couldn't realize some of them`，ASR 两个词都是 `all`（`I couldn't realize all of them`）——`all` 语法更顺（「拿到很多机会但没能全部把握住」），`some` 也不是说不通（「把握住了其中一些」，但前面已经说 I had a lot today，语气上更像是在说没能兑现全部）。这处不改 zh，留给 verify 阶段第二份 ASR 交叉核对；如果 whisper 也听到 all，就按战报是转述、ASR 是原声来处理。",
+    "text": "I just tried to play every single point as if it was the last one because with her, you don't a lot of chances during the match. I had a lot today, but I couldn't realize some of them. But honestly, I was trying not to think about the score or anything. Just hit the ball, and that's it. I'm super happy that I could win because after the second set, I thought (the chance) was already past me.",
+    "human_quote_ok": [
+      ["—", "if"],
+      ["you did", "do"],
+      ["all", "some"],
+      ["about like", "or"],
+      ["i do not know after", "the"],
+      ["i so it is", "the chance was"],
+      ["matches but", "match"],
+      ["passed", "past"]
+    ],
+    "_human_quote_ok_why": "跑 `test_spec里的人工引语和en_fixed是自洽的` 报出来的 8 处分歧：6 处是战报记者转述时的编辑习惯（拿掉停顿词、合并断句、把她的自我更正`I don't know after`简化成`the`），不改动 ASR。`matches`/`passed` 这两处**原来是当成 ASR 小错改进了 en_fixed**（`matches`→`match`、`passed`→`past`），但跑完 `--stage verify` 之后撤销了——whisper 独立听到的也是 `matches`/`passed`，两份机器 ASR 一致，只有 WTA 战报的人工转述用了 `match`/`past`，判定是记者润色不是转写更准，回归到 ASR 原文并挪进这份豁免表。`all`/`some` 那处两份 ASR 都是 `all`（whisper 的分歧列表里没有这一条），按 `all` 定稿。"
+  },
+  "cover": {
+    "frame_at": 397.5,
+    "_why": "⚠️ 第一版按 commentary 时间码猜了 312.0（「we see her smiling for the first time... a tremendous reaction there」那句配的时间），`mode=cover` 渲出来一看——**整帧全是观众席**，转播这几秒切的是人群反应镜头，画面里根本没有她。\n改成从采访本体（331.5–444.5）里挑：397.5 秒落在她说「it always feels nice」（beating number one, it always feels nice / and I will just enjoy tonight）附近——这是一句无保留的正面表态，采访机位这段全程对着她本人，比赛点那几秒的人群镜头更可能拍到她自己的表情。仍然是猜的，还没看过这一帧，可能还要再试。",
+    "title": [
+      "十二天前她被轮椅推离球场",
+      "十二天后她掀翻世界第一"
+    ],
+    "sub": "十次交手　总比分追平五比五",
+    "_copy_why": "钩子讲的是过程的反差（轮椅→掀翻第一），不是身份罗列——两条事实都能被查证顶住（孟菲斯轮椅见 _note 的三个独立源；掀翻第一见比分本身）。sub 补一个钩子里没有的硬数据（H2H 5-5），不重复钩子已经说过的内容。",
+    "tag": "2026 多伦多 1/8 决赛 · 亚历山德罗娃"
+  },
+  "takeaway": {
+    "close": {
+      "point": "赛场曾经没有一点开心 她说现在感觉很棒",
+      "ask": "什么样的低谷 才逼出这种拼法？"
+    }
+  },
+  "push": {
+    "_why": "matchup/score/event 和上面顶栏一致；summary 卡在 13 字裸长度，lead 里把孟菲斯轮椅这条外部背景和她本人在采访里说的「谈不上开心/现在感觉很棒」分开陈述，不混成一句她的话。",
+    "matchup": "亚历山德罗娃 vs 萨巴伦卡",
+    "score": "7-6(3) 4-6 6-4",
+    "event": "",
+    "summary": "轮椅到掀翻第一",
+    "lead": "2026 国家银行公开赛（多伦多）1/8 决赛，亚历山德罗娃 7-6(3) 4-6 6-4 逆转世界第一萨巴伦卡，两小时二十九分钟，生涯第三次赢下世界第一。十二天前，她还在孟菲斯 34 度高温里中暑倒下，被轮椅推离球场。场上采访里，她说这一年对自己很难，也说曾经在场上完全谈不上开心——但今晚，她说「现在我感觉很棒」。中英双语字幕全程。"
+  }
+}
