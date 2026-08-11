@@ -1,0 +1,163 @@
+{
+  "slug": "svitolina-alexandrova",
+  "_slug_why": "赢家在前（斯维托丽娜胜）。栏目规矩 slug 按赢家-输家，和 shnaider-pegula、swiatek-kostyuk 同一惯例。",
+  "source_url": "https://www.youtube.com/watch?v=6Ciu_txpxDM",
+  "_source": "WTA 官方 YouTube 频道单场集锦，2026-08-11 probe run 31470835862 验证：1920×1080、25fps、429.685261s（含赛后场边采访，超过310秒纯集锦阈值——本片仅取比赛/庆祝画面，不使用采访内容，见_editing_why）。\n\n**画面自证**：\n- `contact_00~04.jpg` 全部烧着WTA台标\n- 场地印着`TORONTO`，场边广告板`National Bank`/`Betway`/`Ozempic`/`Sobeys`/`Rogers`——National Bank Open presented by Rogers的赞助商阵容\n- 记分条烧着`E. ALEXANDROVA [16]`/`E. SVITOLINA [9]`——种子号和WTA API（match id LS004）里SeedA/SeedB一致；逐格读过score_00~10.jpg：首盘亚历山德罗娃6-3收官（108.5~120.5s changeover图形`EKATERINA ALEXANDROVA 6/ELINA SVITOLINA 3`）→ 次盘0-6斯维托丽娜零封（180.5~198.5s changeover图形`6 0/3 6`）→ 决胜盘开局即破发（`BREAK POINT #2`，200.5~216.5s）→ `MATCH POINT`（256.5~264.5s，`3 0/5 40`）→ 终局比分板`EKATERINA ALEXANDROVA[16] 6 0 3/ELINA SVITOLINA[9] 3 6 6`（294.5~298.5s），与flashscore（match id AJjzr9P6）逐分记录**一分不差地对得上**\n- 300s起画面转为赛后场边采访（WTA TOUR话筒、乌克兰国旗观众席），未用于本片narration/quote"
+  ,
+  "_column": "赛场之上。讲一场对决，所以封面 solo 版式要印赛果（带国旗和排名），赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 1/4决赛",
+    "line2": "斯维托丽娜 3-6 6-0 6-3 亚历山德罗娃"
+  },
+  "_topbar_why": "WTA API（api.wtatennis.com/tennis/tournaments/806/2026/matches，MatchID LS004）：`RoundID: \"Q\"`（Quarterfinal，对应CLAUDE.md『半决赛/1/4决赛/1/8决赛』写法的1/4决赛）、`ResultString: \"[9]E. Svitolina d [16]E. Alexandrova 3-6,6-0,6-3\"`——赢家在前，逐字抄写。事件名沿用swiatek-kostyuk/shnaider-pegula同站惯例『WTA1000 多伦多』。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘告负、次盘被零封的亚历山德罗娃，最后是怎么被斯维托丽娜逆转的？",
+    "thesis": "亚历山德罗娃上一轮刚爆冷淘汰世界第一萨巴伦卡，这一场她延续着更凶的打法，首盘6-3拿下；可次盘斯维托丽娜彻底把比赛拧了过来，六局全部拿下，一局没让对手碰到；决胜盘她开局就先声夺人，此后稳步扩大优势，6-3锁定胜利、晋级半决赛——这是她WTA1000赛事的第十场连胜（罗马六场、多伦多四场），本赛季第4个1000赛半决赛。半决赛对手，又是这个赛季两次都输给她的斯瓦泰克。",
+    "beats": [
+      "首盘：刚淘汰世界第一萨巴伦卡的亚历山德罗娃延续凶猛打法，6-3拿下首盘。",
+      "次盘：斯维托丽娜彻底反过来，6-0零封——全盘六局一局未失。",
+      "决胜盘：她开局即破发，此后稳步扩大优势，6-3锁定胜利，晋级半决赛。"
+    ],
+    "human_context": {
+      "angle": "从『十连胜』这个数字切入：这不是一场孤立的逆转，是她本赛季状态最连贯的一段——罗马夺冠之后，她在WTA1000赛事上还没输过一场。",
+      "facts": [
+        "这是她WTA1000赛事的第十场连胜（罗马六场、多伦多四场）——WTA官方『Ten in a row』一文 + 乌克兰媒体Mezha独立报道『her tenth consecutive win at WTA 1000 tournaments』两个独立信源确认",
+        "本赛季第4个WTA1000赛半决赛——WTA官方 + Tennis Majors独立报道『her fourth WTA 1000 semi-final of the season』两个独立信源确认（Tennis Majors未提及『本赛季最多』这一层，故本片不采用这一超级信息）",
+        "亚历山德罗娃上一轮爆冷淘汰世界第一萨巴伦卡7-6(3) 4-6 6-4——已有spec `alexandrova-sabalenka.json` 记录",
+        "半决赛对手斯瓦泰克：两人生涯交手斯瓦泰克领先4-3，但本赛季两次交手（印第安维尔斯、罗马）全部斯维托丽娜获胜——WTA官方『Ten in a row』一文"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4557456/ten-in-a-row-svitolina-powers-into-toronto-semifinals",
+        "https://mezha.net/eng/bukvy/25dc7c31_elina_svitolina_rallies/",
+        "https://www.tennismajors.com/wta-tour-news/svitolina-completes-stunning-turnaround-to-set-up-swiatek-semi-final-rematch-in-toronto-858202.html"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "斯维托丽娜 3-6 6-0 6-3 胜亚历山德罗娃（WTA API MatchID LS004；flashscore match id AJjzr9P6）",
+    "赛事": "多伦多National Bank Open presented by Rogers（WTA1000）女单1/4决赛（WTA API RoundID=Q）",
+    "北京时间开赛": "2026-08-11 08:30（flashscore AD=1786408200，UTC 2026-08-11 00:30）",
+    "用时": "1小时33分30秒（WTA API MatchTimeTotal=01:33:30；flashscore AO-AD=1786413954-1786408200=5754秒=95.9分钟，量级吻合，差值为赛前热身/换边等非纯打球时间）",
+    "球场": "Centre Court（WTA API CourtID=1，与同站同为1号场的swiatek-kostyuk/shnaider-pegula/swiatek-golubic/alexandrova-sabalenka一致）",
+    "排名与种子": "斯维托丽娜世界第9（同为9号种子）；亚历山德罗娃世界第19、16号种子——WebSearch核实wtatennis.com/rankings/singles（2026-08-10榜单），与api.wtatennis.com球员页生日交叉核实身份",
+    "年龄": "斯维托丽娜31岁（1994-09-12生，api.wtatennis.com/tennis/players/316738核实）；亚历山德罗娃31岁（1994-11-15生，api.wtatennis.com/tennis/players/319007核实）",
+    "国籍": "斯维托丽娜UKR，亚历山德罗娃RUS",
+    "技术统计（全场）": "Ace：亚历山德罗娃4，斯维托丽娜3｜双误：亚历山德罗娃2，斯维托丽娜5｜一发得分率：亚历山德罗娃48%(24/50)，斯维托丽娜74%(25/34)｜破发点：亚历山德罗娃拿到8兑现3、面对8救下5；斯维托丽娜拿到8兑现6、面对8救下2｜总得分64:79（斯维托丽娜）｜发球局保发率：亚历山德罗娃50%(6/12)，斯维托丽娜75%(9/12)——flashscore（AJjzr9P6）",
+    "第一盘逐分自证": "0-1斯维托丽娜保发；1-1亚历山德罗娃保发；1-2斯维托丽娜保发；2-2亚历山德罗娃保发；3-2亚历山德罗娃破发（3个破发点，拿下）；4-2亚历山德罗娃保发（1个破发点救下）；4-3斯维托丽娜保发；5-3亚历山德罗娃保发；6-3亚历山德罗娃破发收盘（1个破发点、1个盘点）",
+    "第二盘逐分自证": "0-1斯维托丽娜破发（1个破发点）；0-2斯维托丽娜保发；0-3斯维托丽娜破发（1个破发点）；0-4斯维托丽娜保发；0-5斯维托丽娜破发（1个破发点）；0-6斯维托丽娜保发收盘（1个破发点、1个盘点）——六局全部斯维托丽娜拿下，亚历山德罗娃0/3保发局",
+    "第三盘逐分自证": "0-1斯维托丽娜破发（2个破发点）；0-2斯维托丽娜保发；1-2亚历山德罗娃保发；1-3斯维托丽娜保发；1-4斯维托丽娜破发（1个破发点）；1-5斯维托丽娜保发；2-5亚历山德罗娃保发；3-5亚历山德罗娃破发（斯维托丽娜发球胜赛局被破，3个破发点）；3-6斯维托丽娜破发收盘（1个破发点、1个赛点）——她在5-2手握赛点的发球局被破回3-5，随即立刻把亚历山德罗娃的发球再破下来锁定胜利",
+    "记分条自证（每2秒一格，probe的score_*.jpg/contact_*.jpg）": "108.5~120.5s changeover图形`EKATERINA ALEXANDROVA 6/ELINA SVITOLINA 3`——首盘6-3收官；160.5~178.5s `SET POINT`反复出现，`6 0 3 5 Ad`——次盘0-5局的多次占先；180.5~198.5s changeover图形`6 0/3 6`——次盘0-6收官；200.5~216.5s `BREAK POINT #2`——决胜盘0-0局，斯维托丽娜的开局破发；222.5~250.5s `BREAK POINT`反复出现——决胜盘1-3到1-4一带的拉锯；256.5~264.5s `MATCH POINT`，`3 0/5 40`——决胜盘3-5局，亚历山德罗娃发球，斯维托丽娜的赛点；294.5~298.5s终局比分板`EKATERINA ALEXANDROVA[16] 6 0 3/ELINA SVITOLINA[9] 3 6 6`",
+    "亚历山德罗娃上一轮自证": "已有spec `alexandrova-sabalenka.json` 记录她7-6(3) 4-6 6-4爆冷淘汰世界第一萨巴伦卡，这条片子human_context直接引用该事实，不重复取材过程"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格画面（决胜盘3-5局赛点兑现之后的反应，不配旁白）→ ② 一句话把最大的反差说出来（首盘告负 vs 次盘零封）→ ③ 坐标。\n\n**中段按逐分自证走**：亚历山德罗娃刚淘汰萨巴伦卡、延续凶猛打法首盘6-3拿下 → 次盘斯维托丽娜零封反超 → 决胜盘开局即破发 → 十连胜/本赛季第4个1000赛半决赛的数字收尾 → 半决赛再战斯瓦泰克的问句。**每一段的窗口都落在记分条能自证的那个镜头里**（见`_facts.记分条自证`）。⚠️ 决胜盘中段（1-4到3-5之间，含『5-2手握赛点被破回3-5』这一细节）在集锦里被剪辑压缩得很快，画面上没能清楚定位到那个具体的破发局——这条细节写进了`_facts.第三盘逐分自证`供查证，但**没有写进narration**，因为找不到能对应上的确切窗口，宁可少讲一层转折，也不编一个和画面对不上的窗口。\n\n**封面主体选斯维托丽娜**：这条片子讲的是她的逆转与连胜，冲击力最强的画面材料也是她的。人物肖像取自赛后场边采访片段（382.0秒，contact_07.jpg自动候选墙里clarity最高的一批，正面、清晰、真情流露，背景是乌克兰国旗观众席，无话筒入镜）——和swiatek-kostyuk『226.4秒渲出来是失败的，换成330.5秒的赛后场边采访』同一个先例：**封面肖像取自赛后采访是这条线established的做法**，不同于『quote段不许是赛后采访』（那条规矩管的是narration/原声quote，不是静态肖像取材）。\n\n**收尾不重复封面的问题**：封面问『首盘告负后是怎么逆转的』，收尾换成半决赛再战斯瓦泰克——接的是封面没提过的下一场对决。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯维托丽娜",
+    "hook": "首盘，她先丢了一盘\n这是她WTA1000赛事的第十场连胜",
+    "_hook_why": "上一句是过程（首盘失利，为逆转铺垫），下一句是落点（十连胜，两个独立信源确认：WTA官方『Ten in a row』+ 乌克兰媒体Mezha『her tenth consecutive win』）。种子排名已印在赛果行，钩子不重复。",
+    "topic": "WTA1000多伦多 · 女单1/4决赛",
+    "portrait": {
+      "frame_at": 382.0,
+      "focus": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "382.0秒：`cover_candidates/sheet.jpg` 自动候选中清晰度最高的一批之一（#02，552px），取自赛后场边采访片段——这一帧没有话筒入镜，正面、光线正常、双眼清晰可见，背景是虚化的乌克兰国旗观众席（和她的国籍呼应）。⚠️ 这条片子的自动候选墙全部落在382~417秒这个采访区间——比赛画面里的近景大多被亚历山德罗娃占据或运动模糊。取赛后采访帧当封面肖像沿用swiatek-kostyuk的先例（该条226.4秒的比赛画面帽檐阴影盖住双眼渲出来失败，换成330.5秒的赛后采访帧），和『narration/quote不许用赛后采访』是两件不同的事——这条规矩管的是画面配音的原声取材，不管静态肖像。focus/zoom待`mode=cover`本地预览后再核（这台沙箱下不动源片，没法本地渲）。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的radial暗角，上下两头照留。",
+    "winner": "斯维托丽娜",
+    "result": "3-6 6-0 6-3",
+    "matchup": [
+      {
+        "name": "亚历山德罗娃",
+        "name_en": "Ekaterina Alexandrova",
+        "country": "RUS",
+        "rank": 19
+      },
+      {
+        "name": "斯维托丽娜",
+        "name_en": "Elina Svitolina",
+        "country": "UKR",
+        "rank": 9
+      }
+    ],
+    "_matchup_rank_why": "斯维托丽娜世界第9、亚历山德罗娃世界第19，WebSearch核实wtatennis.com/rankings/singles（2026-08-10榜单，见editorial.human_context.sources外的独立核实——排名表本身即为WTA官方一手数据）。",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS004",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS004"
+      },
+      "_court_why": "CourtID 1（Centre Court），与同站同一轮已发的swiatek-kostyuk/shnaider-pegula/swiatek-golubic/alexandrova-sabalenka一致，均为1号场。",
+      "_duration_why": "`MatchTimeTotal: \"01:33:30\"` → 板上印 `1:33`，与flashscore量出的95.9分钟吻合。不手填，`_fetch_match_duration()` 每次渲海报现拉接口（url+match_id同swiatek-kostyuk那条，已验证过这条路能正常工作）。"
+    }
+  },
+  "segments": [
+    {
+      "start": 256.5,
+      "end": 267.4,
+      "fit": "crop",
+      "_why": "冷开场：决胜盘3-5局（亚历山德罗娃发球）赛点兑现之后的反应，不配旁白——交给现场声。256.5~264.5s记分条印着`MATCH POINT`，紧接着这一格是她拿下最后一分之后的正面反应镜头。窗口跨了258.8这一刀，两侧都是同一分回合内的机位交替，不是切到另一场景。",
+      "crosses_cut": "跨过258.8这一刀，属这一分连续的赛点回合内，不是切到另一个人或另一场景。"
+    },
+    {
+      "start": 2.24,
+      "end": 9.2,
+      "fit": "crop",
+      "narration": "首盘，她先丢了一盘。次盘，她把对手零封。",
+      "_why": "第②格：把最大的反差说出来。窗口在scene_cuts的2.24–14.24这个长镜头之内 ✅（离线估margin只有1.27s，±1.65s误差下有装不下的风险，从8.5挪到9.2留够余量）"
+    },
+    {
+      "start": 18.72,
+      "end": 29.0,
+      "fit": "crop",
+      "narration": "北京时间八月十一号八点三十分，多伦多国家银行公开赛女单1/4决赛，斯维托丽娜对阵亚历山德罗娃。",
+      "_why": "第③格：坐标。窗口在scene_cuts的18.72–30.24之内 ✅（收到29.0，离线估margin 2.47s加上±1.65s误差最坏情况会摸到4.0s哑场门槛，收短留安全余量）"
+    },
+    {
+      "start": 100.0,
+      "end": 110.0,
+      "fit": "crop",
+      "narration": "首盘，刚淘汰世界第一的亚历山德罗娃打得更凶，六比三拿下这一盘。",
+      "_why": "铺垫亚历山德罗娃这一边的故事线（human_context：她上一轮爆冷淘汰萨巴伦卡）+ 逐分自证首盘6-3收官。窗口在scene_cuts的98.84–110.56之内 ✅"
+    },
+    {
+      "start": 164.5,
+      "end": 175.0,
+      "fit": "crop",
+      "narration": "次盘，斯维托丽娜彻底反过来了——六局全部拿下，一局没让对手碰到。",
+      "_why": "逐分自证：次盘0-6，六局全部斯维托丽娜拿下（亚历山德罗娃0/3保发局）。160.5~178.5s记分条反复出现`SET POINT`。窗口在scene_cuts的163.4–179.28之内 ✅"
+    },
+    {
+      "start": 201.0,
+      "end": 209.0,
+      "fit": "crop",
+      "narration": "决胜盘，她开局就先声夺人，一上来就是一个破发。",
+      "_why": "逐分自证：`0-1 斯维托丽娜破发（2个破发点）`。200.5~216.5s记分条印着`BREAK POINT #2`。窗口在scene_cuts的200.84–215.84之内 ✅"
+    },
+    {
+      "start": 267.4,
+      "end": 275.5,
+      "fit": "crop",
+      "narration": "这已经是她WTA1000赛事的第十场连胜——罗马六场，多伦多四场。",
+      "_why": "human_context数字收尾，两个独立信源确认（WTA官方+Mezha）。窗口在scene_cuts的267.4–278.36这个镜头之内（收窄到275.5，离线估margin 3.89s太贴近4.0s哑场门槛，估算误差±1.65s时最坏情况会超——收短留够安全余量）✅"
+    },
+    {
+      "start": 280.0,
+      "end": 289.0,
+      "fit": "crop",
+      "narration": "半决赛又是斯瓦泰克——这个赛季，她还没输过。这次呢？",
+      "_why": "收尾落在一问上，接的是封面没提过的线（下一场对决）。这个赛季两次交手全部斯维托丽娜获胜（WTA官方『Ten in a row』一文）。窗口在scene_cuts的278.36–291.88之内 ✅"
+    }
+  ],
+  "push": {
+    "summary": "斯维托丽娜逆转晋级",
+    "lead": "9号种子、世界第9斯维托丽娜3-6 6-0 6-3逆转15号种子（世界第19）亚历山德罗娃，晋级多伦多WTA1000女单半决赛，用时1小时33分。亚历山德罗娃上一轮刚爆冷淘汰世界第一萨巴伦卡，这场延续凶猛打法6-3拿下首盘；但次盘斯维托丽娜彻底反过来，六局全部拿下、一局没让对手碰到；决胜盘她开局即破发，此后稳步扩大优势，6-3锁定胜利。这是她WTA1000赛事的第十场连胜（罗马六场、多伦多四场），本赛季第4个1000赛半决赛。半决赛对手是斯瓦泰克——本赛季两人交手两次，全部斯维托丽娜获胜。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，量`len()`原始字符数。「斯维托丽娜逆转晋级」= 10字，在闸内。只写`summary`和`lead`，`matchup`/`score`/`event`由封面算——一个数写两处必分叉。"
+  }
+}
