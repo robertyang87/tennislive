@@ -1,0 +1,114 @@
+{
+  "slug": "cincinnati-story",
+  "sources": {
+    "final": "https://www.youtube.com/watch?v=Fgy8tjrKy1Y"
+  },
+  "_source": "ATP官方2023年男单决赛集锦「Carlos Alcaraz vs Novak Djokovic | Cincinnati 2023 Final Highlights」，youtube.com/watch?v=Fgy8tjrKy1Y，2026-08-11 runner mode=probe验证：1920x1080/60fps，758.6s（output/2026-08-11/reel/cincinnati-djokovic-alcaraz/probe.json）。\n\n画面自证：全程记分条烧着 `ALCARAZ` / `DJOKOVIC` 及分数；场地地面/围挡印着 `Western & Southern`（该赛事传统名）；自动字幕（captions.txt）逐句叙述比赛走向，和 evidence.json 已核验的赛果（德约科维奇 5-7 7-6 7-6 胜阿尔卡拉斯，3小时49分钟）完全吻合：'Djokovic levels the match'（393.9s）、'seals it on his fifth Championship point after three hours and 49 minutes on court'（710.7s）、'he was a six and four two down running on fumes'（720.7s，指他曾5-7 4-2落后）。\n\n⚠️ **不在这条 spec 里引入任何比 evidence.json 更精确的分盘/分局数字**——captions里多处'saved'/'set point saved'的具体位置在哪一盘存在歧义（WebSearch摘要说是'second-set tie-break'，但字幕时间轴显示这段发生在'levels the match'之后，读起来更像决胜盘）。宁可用宽泛但站得住的说法（如'一度濒临出局'，直接照抄evidence.json已核验的原话），不猜测精确到哪一盘的赛点/盘点数。",
+  "_column": "**「网球有故事」，不是「赛场之上」**——账号所有者2026-08-11：「重新做一期辛辛那提的赛事介绍，可以参考加拿大公开赛那种视频形式」，回应的是原本用静态四宫格卡片渲的 knowledge_adhoc『cincinnati』（1899年建赛/记录/名场面）不符合『网球有故事视频优先』的决定（docs/story-asset-topics.md）。这条讲的是**赛事本身的故事**（建赛历史+史上留名的一场决赛+费德勒的纪录），不是某个球员的个人故事线——`cover.layout` 仍走 solo（本栏目唯一支持的版式），但 subject 是这场决赛的主角德约科维奇，topic 落在赛事本身。",
+  "_facts": "全部照抄自原静态卡片 output/2026-08-11/knowledge_adhoc/evidence.json（已核验，两个源：cincinnatiopen.com/history + atptour.com新闻稿）：\n· 1899年开打，是全美仍留在创办城市的最古老网球赛事，比美网搬进法拉盛还早了大半个世纪\n· 费德勒在这里七次夺冠，至今无人接近；他职业生涯对阵前十胜率最高的赛事就是这里\n· 2023年男单决赛德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，鏖战3小时49分钟，ATP史上最长三盘制决赛之一\n· 球场建在俄亥俄州梅森，却是美网前最重要的风向标，冠军常常直通纽约决赛周\n· 同一天（2023-08-20），高芙6-3 6-4胜穆霍娃，拿下生涯首个WTA1000冠军——三周后美网决赛她再次击败同一个对手夺冠（wtatennis.com新闻稿核验）\n年龄/排名等未涉及球员个人身份断言，不触发全称断言闸。",
+  "_beats": "六拍：\n1 赛事本身的分量（1899年建赛，全美最古老）→ 这里发生过什么？\n2 2023年决赛，他一度濒临出局 → 怎么翻盘的？\n3 又被他一次次追了回来 → 决胜盘呢？\n4 一个赛点接一个赛点 → 他扛住了吗？\n5 全都救了下来，crowd erupting → 最后呢？\n6 决胜盘他打得像台机器，三小时四十九分之后终于拿下 → 收在赛事的更大分量（费德勒七冠、同一天高芙夺冠、美网风向标），落在一问上。",
+  "cover": {
+    "eyebrow": "网球有故事",
+    "layout": "solo",
+    "subject": "德约科维奇",
+    "hook": "一度濒临出局，决胜盘他打得像台机器\n三小时四十九分，全美最古老赛事最长的一场决赛",
+    "_hook_why": "上一句过程（濒临出局→决胜盘统治），下一句落点（这场决赛在赛事历史里的分量）。第一行24字、第二行24字，都在27字HOOK_BUDGET内。",
+    "topic": "辛辛那提公开赛 · 2023年男单决赛",
+    "portrait": {
+      "frame_at": 716.5,
+      "source": "final",
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0,
+      "_why": "716.5秒：赛点后他把塞尔维亚国旗披在身上、仰头嘶吼庆祝的瞬间——这一屏对应封面的落点（三小时四十九分之后）。四道闸门：精准（画面本身就是这场决赛的赛点庆祝，记分条+captions.txt 710.66s『seals it on his fifth Championship point』互证）、在比赛中（赛点后即时反应，比捧杯照更接近这场决赛的高潮）、冲击力（张嘴嘶吼+挥拳，全片情绪最强的一帧）、清晰度（1920x1080源片，无放大）。focus/zoom 待 render_cover_local.py 本地渲染核实。"
+    },
+    "scrim": "clear"
+  },
+  "push": {
+    "summary": "辛辛那提最长决赛之一",
+    "lead": "1899年开打的辛辛那提公开赛，是全美仍留在创办城市的最古老网球赛事。2023年男单决赛，德约科维奇对阵阿尔卡拉斯——他一度濒临出局，最终5-7 7-6 7-6逆转拿下，鏖战3小时49分钟，是ATP史上最长的三盘制决赛之一。同一天，19岁的高芙6-3 6-4击败穆霍娃，拿下生涯首个WTA1000冠军。费德勒在这里七次夺冠的纪录至今无人接近；这座俄亥俄州小城的赛场，一直是美网前最重要的风向标。",
+    "auto": true,
+    "_why": "summary『辛辛那提最长决赛之一』9字，SUMMARY_MAX=13以内。这条片子没有versus/单一比分（讲的是赛事本身+一场决赛+一条同日记录），走solo该有的写法，只填summary和lead。"
+  },
+  "segments": [
+    {
+      "start": 40.6,
+      "end": 51.0,
+      "fit": "crop",
+      "source": "final",
+      "narration": "1899年开打的辛辛那提，是全美最古老的网球赛事。2023年，这里打出了一场载入史册的经典决赛。",
+      "_why": "沿用早期回合窗口，画面里能看清阿尔卡拉斯——不指名具体动作，只当背景铺垫赛事历史。",
+      "crosses_cut": "跨46.10——preview_segments_local.py核过，两侧都是阿尔卡拉斯（同一件深色球衣），画面从回合切到他的近景反应，同一人同一场比赛的自然转场。"
+    },
+    {
+      "start": 351.9,
+      "end": 361.2,
+      "fit": "crop",
+      "source": "final",
+      "narration": "这场决赛，德约科维奇一度濒临出局——阿尔卡拉斯逼近盘点，被他一次次挡了下来。",
+      "_why": "照抄evidence.json已核验的原话『第二盘一度濒临出局』收窄成『他一度濒临出局』，不新增未核实的盘数断言。画面：德约科维奇低头、随后回合镜头——captions.txt 352.08s『set point saved』就在这个窗口内。",
+      "crosses_cut": "跨355.35、360.48——preview核过，全程德约科维奇（浅蓝Lacoste球衣）低头/回合/对手反应的连续镜头，没有换成别人的脸。"
+    },
+    {
+      "start": 393.4,
+      "end": 404.8,
+      "fit": "crop",
+      "source": "final",
+      "narration": "这一盘，又被他一分一分追了回来——两盘一平，比赛进了决胜盘，两个人都没有退路了。",
+      "_why": "captions.txt 393.9s『Djokovic levels the match』——画面是他反复挥拳庆祝。",
+      "crosses_cut": "跨404.15——preview核过，画面从德约科维奇近景挥拳切到看台全景，他自己的庆祝动作贯穿整段，不是切给对手。"
+    },
+    {
+      "start": 440.1,
+      "end": 453.5,
+      "fit": "crop",
+      "source": "final",
+      "narration": "决胜盘，一次又一次逼近终点的机会，全都被他一点一点磨了回去——看台上的人跟着一次次屏住呼吸，又一次次松开手心。",
+      "_why": "captions.txt 453.20s『first one saved』——决胜盘的压力开始，不指认哪一方正在面对什么类型的关键分，避免过度精确的未核实断言。",
+      "crosses_cut": "跨444.53、446.62——preview核过，回合来回镜头+双方近景反应交替，是标准回合剪辑手法，不构成『整句旁白压在某一方身上』的问题（这段旁白本身没有指名任何一方）。"
+    },
+    {
+      "start": 475.7,
+      "end": 485.0,
+      "fit": "crop",
+      "source": "final",
+      "narration": "全都被他救了下来——这场决赛，阿尔卡拉斯的每一次机会，他都没有松手。",
+      "_why": "captions.txt 475.38s『oh it's good what a way to save another』、484.80s『and he does survive』。画面：看台观众瞪大双眼尖叫，情绪顶点，短句留白。",
+      "crosses_cut": "跨479.83、481.98、484.45——preview核过，回合+看台反应的标准剪辑节奏，未见切人。"
+    },
+    {
+      "start": 655.6,
+      "end": 666.8,
+      "fit": "crop",
+      "source": "final",
+      "narration": "最凶险的几局过去之后，决胜盘的后半段，他打得像一台不知疲倦的机器，一分都不肯再让。",
+      "_why": "captions.txt 656.90s『just machine like from Djokovic』——直接呼应原话。",
+      "crosses_cut": "跨658.02、659.70——preview核过，德约科维奇（浅蓝球衣）走位+回合镜头连续，未见切人。"
+    },
+    {
+      "start": 701.8,
+      "end": 713.3,
+      "fit": "crop",
+      "source": "final",
+      "narration": "三小时四十九分鏖战之后，他终于把这决定胜负的最后一分拿了下来——网前，两个人紧紧拥抱在一起。",
+      "_why": "captions.txt 710.66s『seals it on his fifth Championship point after three hours and 49 minutes on court』——数字直接来自官方转播原声。画面：赛点落地到网前拥抱。"
+    },
+    {
+      "start": 713.3,
+      "end": 719.0,
+      "fit": "crop",
+      "source": "final",
+      "narration": "",
+      "_why": "冷处理：德约科维奇披着塞尔维亚国旗仰头嘶吼，全片情绪最强的一帧，不配旁白交给现场声——同时是封面取帧的那一秒（716.5s）。"
+    },
+    {
+      "start": 730.6,
+      "end": 746.0,
+      "fit": "crop",
+      "source": "final",
+      "narration": "费德勒在这里七次夺冠，纪录至今无人接近。同一天，19岁的高芙拿下了她生涯第一个WTA1000冠军。下一个在这里留下名字的，会是谁？",
+      "_why": "收尾整合两条已核验事实（费德勒七冠、高芙同日夺冠，第三条『美网风向标』留给push.lead/xhs.txt，视频不必塞满）+ 落在一问上（test_收尾要落在一问上不能停在数据上）。画面：捧杯+confetti+两人台上合影，虽是德约科维奇夺冠画面，旁白转向赛事整体和高芙——用『同一天』做转折，不宣称画面里出现的是高芙本人。窗口从744.0延到746.0是为了给这句收尾留够余量，同时不至于宽到又被判成哑场（原744.0版离线估16.69s装不下13.4s窗口；延到748.0又变成4.69s空余触发哑场闸；746.0落在中间）。",
+      "crosses_cut": "跨730.92、731.02、731.83、731.87、731.98、734.18、744.03等共7处——preview核过，730.6-746.0全程是颁奖台/trophy/confetti的快切庆祝蒙太奇，是官方集锦本身的剪辑手法，不是选段时引入的跳切。"
+    }
+  ]
+}
