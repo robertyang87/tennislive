@@ -1,6 +1,6 @@
 {
   "slug": "alexandrova-sabalenka-tor2026-r16",
-  "_note": "⚠️ 半成品，`--stage subs` 还没跑。选题来路：账号所有者问「最近有什么比较出彩的赛后采访」，查证过程见下。\n\n**事实（已用两个独立源交叉核过，见 _source）**：亚历山德罗娃 7-6(3) 4-6 6-4 爆冷淘汰世界第一萨巴伦卡，2026-08-08，国家银行公开赛（多伦多/蒙特利尔站，WTA1000）1/8 决赛。这是她生涯第三次赢下世界第一（此前迈阿密2024赢斯瓦泰克、多哈2025赢萨巴伦卡），两人正赛交锋战绩追平5-5。**关键背景**：她 7 月 28 日在孟菲斯 WTA250 因 34 度高温中暑，在决胜盘 5-4 落后时倒在场上被轮椅推离，赛季至此多轮首轮出局、还因腰伤退出马德里——距那次轮椅离场只有 11-12 天。她自己的原话：「这一年对我来说很难」「我只是努力把每一分都当成最后一分打，因为对她你没有太多机会」「赢下第一总是感觉很好」。\n\n⚠️ **两个源冲突过一次，已用证据裁定**：WTA 官网比分页 WebFetch 摘要一度说反了赢家（写成萨巴伦卡赢），但 Al Jazeera 原文 + WTA 官网自己的战报文章（`alexandrova-cracks-the-sabalenka-code-again`）两个独立源都明确写亚历山德罗娃赢、7-6(3) 4-6 6-4——按证据走，那次 WebFetch 摘要是转述出错，不是数据本身错。\n\n**还没做的**：`--stage subs` 没跑过，不知道源片是纯集锦还是带采访尾巴，也没有确认过官方采访视频的频道/时长。第一步是探源片。",
+  "_note": "选题来路：账号所有者问「最近有什么比较出彩的赛后采访」，查证过程见下。\n\n**事实（已用两个独立源交叉核过，见 _source）**：亚历山德罗娃 7-6(3) 4-6 6-4 逆转世界第一萨巴伦卡，2026-08-08，国家银行公开赛（多伦多站，WTA1000）1/8 决赛，两小时二十九分钟。这是她生涯第三次赢下世界第一（此前迈阿密2024赢斯瓦泰克、多哈2025赢萨巴伦卡），两人正赛交锋战绩追平5-5。**关键背景**：她 7 月 28 日在孟菲斯 WTA250 首轮对阵16岁资格赛小将时因34度高温中暑，在决胜盘5-4落后时倒在场上被轮椅推离，赛季至此多轮首轮出局、还因腰伤退出马德里——距那次轮椅离场只有11-12天。⚠️ **孟菲斯这段是外部报道给的背景，不是她本人在这段采访里说的话**——采访本身没提Memphis，只说「这一年对我来说很难」「有过艰难的时刻，场上完全谈不上开心，但现在感觉很棒」，两件事在 push/cover 文案里可以并置陈述事实，不能让她的原话替背景背书。\n\n⚠️ **两个源冲突过一次，已用证据裁定**：WTA 官网比分页 WebFetch 摘要一度说反了赢家（写成萨巴伦卡赢），但 Al Jazeera 原文 + WTA 官网自己的战报文章（`alexandrova-cracks-the-sabalenka-code-again`）两个独立源都明确写亚历山德罗娃赢、7-6(3) 4-6 6-4——按证据走，那次 WebFetch 摘要是转述出错，不是数据本身错。\n\n⚠️ **城市**：ESPN/CLI 里这一站同时印过「多伦多」和「蒙特利尔」两个名字（那是去年女子办在蒙特利尔、今年轮换到多伦多，聚合脚本没跟上轮换）——WTA 官网比分页、Al Jazeera、EssentiallySports、WTA 战报标题（`to make Toronto quarterfinals`）四个源全部写 Toronto，统一按多伦多。",
   "_source": [
     "https://www.aljazeera.com/sports/2026/8/9/world-number-one-sabalenka-upset-by-alexandrova-at-canadian-open",
     "https://www.wtatennis.com/news/4556610/alexandrova-cracks-the-sabalenka-code-again-to-make-toronto-quarterfinals",
@@ -12,6 +12,118 @@
   "end": 444.5,
   "_window_why": "跑过一趟 --stage subs（start=0/end=999）确认了：这条 @WTA 集锦总长 444.1 秒，采访接在尾巴上，从 331.5 秒起（评论员旁白刚说完「今晚一场了不起的表现」，场边记者第一句「一路上有很多起伏」开始）到片尾 444.1 秒（她说完 thank you so much）——三问三答，没有中途切掉任何一组问答，覆盖了「决胜盘怎么翻过来的」「和萨巴伦卡交手拉平5-5」「这是她自 2025年2月以来首次打进1000级八强」三个层次。",
   "column": "赛后开麦",
-  "event": "2026 国家银行公开赛（多伦多/蒙特利尔）1/8 决赛",
-  "winner": "亚历山德罗娃"
+  "event": "2026 国家银行公开赛（多伦多）1/8 决赛",
+  "winner": "亚历山德罗娃",
+  "zh": [
+    "这一路起起伏伏",
+    "波折不断",
+    "最终是什么帮你翻了盘",
+    "让你拿下第三盘",
+    "关键的不同在哪儿",
+    "说实话 我也不知道",
+    "我只是尽量把每一分",
+    "都当成最后一分打",
+    "因为对她 你不会有",
+    "太多机会",
+    "今天我拿到不少 但没能",
+    "全部把握住 但说实话 我",
+    "尽量不去想",
+    "关于比分",
+    "什么都不想 就是打球",
+    "仅此而已",
+    "我特别开心能赢下这场",
+    "因为打完",
+    "第二盘打完的时候",
+    "我以为机会已经溜走了",
+    "这是你们生涯第十次交手",
+    "和萨巴伦卡",
+    "你很了解她了 现在战绩追平",
+    "五比五",
+    "这给了你多少信心",
+    "让你觉得能",
+    "打乱她的节奏",
+    "这个嘛 我说不好是不是",
+    "真打乱了她的节奏",
+    "因为她打得很好 我也说不好",
+    "可能有几个球",
+    "我运气不错吧 说实话",
+    "但我对这个结果特别满意",
+    "因为赢下世界第一",
+    "感觉总是很好",
+    "今晚我就好好享受",
+    "没错 你应该好好享受",
+    "叶卡捷琳娜",
+    "这是你首次打进千分级八强",
+    "自2025年2月以来",
+    "这一路你是怎么熬过来",
+    "这场胜利对你来说",
+    "为什么这么特别",
+    "这对我意义重大",
+    "因为经历了很多挣扎",
+    "在场上 我现在特别高兴",
+    "能重新享受网球",
+    "能享受在场上的时光",
+    "因为之前有过一些艰难时刻",
+    "那时候在场上完全没有开心",
+    "可言 但现在我感觉很棒",
+    "谢谢大家",
+    "今晚的氛围太棒了",
+    "我就是在享受这一切",
+    "你打进了从没到过的领域",
+    "八强",
+    "国家银行公开赛",
+    "祝你好运 叶卡捷琳娜",
+    "非常感谢"
+  ],
+  "en_fixed": {
+    "10": "a lot of uh chances during the match",
+    "20": "so it's already past me.",
+    "22": "with Aryna.",
+    "38": "And Ekaterina,",
+    "39": "this is your first 1,000-level quarterfinal",
+    "55": "Well, you're in newfound territory",
+    "58": "Good luck, Ekaterina."
+  },
+  "suspect": {
+    "25": "`How much did that steal your confidence` 语义不顺——上下文是「你们战绩追平5-5」之后问信心，`steal` 在这里等于说信心被削弱，和后面正面的回答对不上。疑似应为 `instill`（灌注信心），但没把握硬改，等 --stage verify 的第二份 ASR 交叉核对再定。"
+  },
+  "human_quote": {
+    "url": "https://www.wtatennis.com/news/4556610/alexandrova-cracks-the-sabalenka-code-again-to-make-toronto-quarterfinals",
+    "_why": "WTA 官网这篇战报整段抄了这次场上采访的第一问第一答（原文明写是 on-court interview 的话），可以本地核对不用联网。⚠️ **有一处和 ASR 不一样**：战报写 `I couldn't realize some of them`，ASR 两个词都是 `all`（`I couldn't realize all of them`）——`all` 语法更顺（「拿到很多机会但没能全部把握住」），`some` 也不是说不通（「把握住了其中一些」，但前面已经说 I had a lot today，语气上更像是在说没能兑现全部）。这处不改 zh，留给 verify 阶段第二份 ASR 交叉核对；如果 whisper 也听到 all，就按战报是转述、ASR 是原声来处理。",
+    "text": "I just tried to play every single point as if it was the last one because with her, you don't a lot of chances during the match. I had a lot today, but I couldn't realize some of them. But honestly, I was trying not to think about the score or anything. Just hit the ball, and that's it. I'm super happy that I could win because after the second set, I thought (the chance) was already past me.",
+    "human_quote_ok": [
+      ["—", "if"],
+      ["you did", "do"],
+      ["all", "some"],
+      ["about like", "or"],
+      ["i do not know after", "the"],
+      ["i so it is", "the chance was"]
+    ],
+    "_human_quote_ok_why": "跑 `test_spec里的人工引语和en_fixed是自洽的` 报出来的 8 处，2 处是真的 ASR 小错已经改进 en_fixed（`matches`→`match`、`passed`→`past`），剩下这 6 处是战报记者转述时的编辑习惯（拿掉停顿词、合并断句、把她的自我更正`I don't know after`简化成`the`），不改动 ASR。`all`/`some` 那处仍然是本条最大的不确定——两次本地 subs 用的是同一份 YouTube 字幕、不是独立验证，真正的第二个源要等 `--stage verify` 的 whisper 结果，这里先按 ASR 的 `all` 定稿（`I had a lot today but couldn't realize all of them`语法更顺），whisper 若给出不同答案再回来改。"
+  },
+  "cover": {
+    "frame_at": 312.0,
+    "_why": "⚠️ **按转写时间线挑的，还没渲出来看过**——沙箱下不了这条源片，只能先按 commentary 时间码定一个候选，跑一趟 `mode=cover` 看清楚了再定。候选落在 311.1–315.7 秒那一格，commentary 原话是「we see her smiling for the first time in this match... a tremendous reaction there」——赛点刚落地的原始反应，比之后场边采访时那张更克制的「回答问题」表情更对题：这一屏要的是「刚从谷底爬出来那一刻」的情绪，不是「正在接受采访」的情绪。",
+    "title": [
+      "十二天前她被轮椅推离球场",
+      "十二天后她掀翻世界第一"
+    ],
+    "sub": "十次交手　总比分追平五比五",
+    "_copy_why": "钩子讲的是过程的反差（轮椅→掀翻第一），不是身份罗列——两条事实都能被查证顶住（孟菲斯轮椅见 _note 的三个独立源；掀翻第一见比分本身）。sub 补一个钩子里没有的硬数据（H2H 5-5），不重复钩子已经说过的内容。",
+    "tag": "2026 多伦多 1/8 决赛 · 亚历山德罗娃"
+  },
+  "takeaway": {
+    "close": {
+      "point": "赛场曾经没有一点开心 她说现在感觉很棒",
+      "ask": "什么样的低谷 才逼出这种拼法？"
+    }
+  },
+  "push": {
+    "_why": "matchup/score/event 和上面顶栏一致；summary 卡在 13 字裸长度，lead 里把孟菲斯轮椅这条外部背景和她本人在采访里说的「谈不上开心/现在感觉很棒」分开陈述，不混成一句她的话。",
+    "matchup": "亚历山德罗娃 vs 萨巴伦卡",
+    "score": "7-6(3) 4-6 6-4",
+    "event": "",
+    "summary": "轮椅到掀翻第一",
+    "lead": "2026 国家银行公开赛（多伦多）1/8 决赛，亚历山德罗娃 7-6(3) 4-6 6-4 逆转世界第一萨巴伦卡，两小时二十九分钟，生涯第三次赢下世界第一。十二天前，她还在孟菲斯 34 度高温里中暑倒下，被轮椅推离球场。场上采访里，她说这一年对自己很难，也说曾经在场上完全谈不上开心——但今晚，她说「现在我感觉很棒」。中英双语字幕全程。"
+  }
 }
