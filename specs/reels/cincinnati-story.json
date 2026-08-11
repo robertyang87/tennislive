@@ -68,8 +68,8 @@
       "end": 30.5,
       "fit": "crop",
       "source": "final2018",
-      "narration": "2023年，赛事差点搬去夏洛特——最后，它留了下来。2024年，改回了123年前最初的名字。",
-      "_why": "fox19.com/wvxu.org已核验：Western & Southern 2023年宣布退出冠名，赛事一度面临搬迁，Beemok Capital承诺留驻25年；2024年1月改回1899年最初的名字『Cincinnati Open』。画面继续用同一段real court真实比赛动作作历史背景，不指认具体动作。",
+      "narration": "2023年，赛事差点搬去夏洛特——最后，新的赞助方承诺留驻25年，它留了下来。2024年，改回了123年前最初的名字。",
+      "_why": "fox19.com/wvxu.org已核验：Western & Southern 2023年宣布退出冠名，赛事一度面临搬迁，Beemok Capital承诺留驻25年；2024年1月改回1899年最初的名字『Cincinnati Open』。画面继续用同一段real court真实比赛动作作历史背景，不指认具体动作。⚠️ 2026-08-11真实render（run 31506846896）在这一段撞哑场闸：本地`--check-narration`走的是edge-tts（沙箱没有Azure密钥），而生产渲染实际走**Azure**（job日志`[TTS] Azure（风格 无）`）——同一音色zh-CN-YunjianNeural、同一语速+6%，Azure真实合成比edge-tts本地估算快约3%（这段实测9.46s，edge-tts估的是9.77s），把原本edge-tts量出来还有3.73s余量的窗口，在Azure上推到了4.04s，超过4.0s哑场门槛。补上『新的赞助方承诺留驻25年』这半句（Beemok Capital那条已核验事实，原来省略了）把窗口撑长，edge-tts本地实测到12.27s，即使Azure再快5%仍有余量。这是本仓库第一次记录到的Azure/edge-tts合成时长系统性差异，不是『音色名写错』那类旧坑——已发的其它片子边际都够宽没暴露过，这条片子窗口卡得太紧才第一次现形。",
       "crosses_cut": "跨22.92——preview核过，两侧都是同一场比赛的real court回合镜头（转播机位切换角度），narration本身不涉及具体某一分，纯当赛事历史的背景画面。",
       "inset": {
         "image": "assets/reel/cincinnati-name-back.png",
@@ -107,8 +107,8 @@
       "end": 179.5,
       "fit": "crop",
       "source": "final2018",
-      "narration": "历史就在辛辛那提写成——德约科维奇成了第一个集齐全部大师赛冠军的男子球员，史称金满贯。",
-      "_why": "captions.txt 169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』——官方转播原声原话即『历史写成』『第一人』『金满贯』，narration直接对应。这是全片新叙事重心的情绪顶点。",
+      "narration": "历史就在辛辛那提写成——德约科维奇成了ATP历史上第一个集齐全部九项大师赛冠军的男子球员，史称金满贯。",
+      "_why": "captions.txt 169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』——官方转播原声原话即『历史写成』『第一人』『金满贯』，narration直接对应。这是全片新叙事重心的情绪顶点。⚠️ 2026-08-11真实render（run 31506846896）在这一段同样撞哑场闸（同上一段那条Azure/edge-tts系统性差异：这段实测7.99s，edge-tts本地估的是8.57s，Azure快约7%，把edge-tts量出来3.43s的余量推到Azure实测的4.01s，压线超过4.0s门槛）。补上『ATP历史上』『九项』两个限定词把句子撑长，edge-tts本地重新实测到9.95s——没有引入新事实，只是把_claims里已经核验过的『历史上第一位集齐全部九项大师赛冠军的男子球员』这句话原样搬进旁白，不额外添加『十一年』这类还没在_facts里核验过时间跨度的说法。",
       "crosses_cut": "跨170.04、176.14——preview核过，德约科维奇夺冠瞬间的连续镜头（近景反应+回合最后一分+看台反应），标准赛点/夺冠段落剪辑手法。"
     },
     {
