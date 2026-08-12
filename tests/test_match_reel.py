@@ -6780,7 +6780,10 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
                 plain = "".join(c for c in text if c not in
                                 reel._SPEECH_PUNCT + reel._SPEECH_QUIET)
                 head = starts[index]
-                span = float(seg["end"]) - float(seg["start"])
+                # 段窗长度走 seg_seconds（成片口径）——整屏证据段没有
+                # start/end，读 seg["end"] 会 KeyError（cincinnati 落库当天
+                # 这条就是这么红的），而 starts 那头本来就用的它
+                span = reel.seg_seconds(seg)
                 said = "".join(c[2] for c in cues
                                if head - 0.01 <= c[0] < head + span - 0.01)
                 said = "".join(c for c in said if c not in
