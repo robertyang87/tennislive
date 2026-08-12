@@ -1,0 +1,57 @@
+{
+  "slug": "merida-tien-montreal-qf",
+  "_slug_why": "赢家在前（勒纳·钱胜）。这条只出数据统计对照图，不做视频——没有 segments/sources，故意不放进 specs/reels/。",
+  "_match": "勒纳·钱 6-3 6-2 胜梅里达，2026-08-11 蒙特利尔ATP1000加拿大公开赛男单1/4决赛，用时1小时13分。\n\n出处：flashscore match_id=v32rmNkR，find 命令原文『Merida Aguilar D. vs Tien L. 3-6 2-6 Quarter-finals』（梅里达视角，他输掉两盘）；fetch_day 交叉核实同一场比分与开赛时刻（2026-08-11 23:45 UTC）。",
+  "cover": {
+    "topic": "ATP1000加拿大公开赛 · 男单1/4决赛",
+    "winner": "勒纳·钱",
+    "result": "6-3 6-2",
+    "matchup": [
+      {
+        "name": "梅里达",
+        "name_en": "Daniel Merida",
+        "country": "ESP",
+        "rank": 63
+      },
+      {
+        "name": "勒纳·钱",
+        "name_en": "Learner Tien",
+        "country": "USA",
+        "rank": 19
+      }
+    ],
+    "_matchup_rank_why": "两人的排名均取自 2026-08-12 WebSearch——梅里达 63（tennisstats.com 标注『as of August 2026』，925分）；勒纳·钱 19（National Bank Open 官网 2026-08-11 更新，比赛当周的即时排名，来源比 player_names_top500.json 里的快照 16/61 更新，采信这版）。\n⚠️ 中文名第一版写成了『添恩』——那是凭空造的音译，不是查表查出来的（当时手上已经有 player_names_top500.json 的排名数据，却没有回去核对同一条记录里的 name_zh）。表里登记的是『勒纳·钱』（来源『中国网球公开赛』官网），账号所有者指出来才改对，和 darderi-nakashima-montreal-qf 那条『纳卡什马→中岛布兰登』是同一次错、同一次改。",
+    "scoreboard": {
+      "court": "Rogers Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%204380%2C%20%22source_page%22%3A%20%22https%3A//local-global.flashscore.ninja/2/x/feed/df_sui_1_v32rmNkR%22%7D",
+        "field": "duration",
+        "source_page": "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_v32rmNkR"
+      },
+      "_court_why": "同一届蒙特利尔ATP1000，shelton-mensik/shelton-fonseca 两条已确认主赛场叫『Rogers Court』——这场1/4决赛按惯例同样排在主赛场，未单独核实到这一场specifically，和那两条同样的处置。",
+      "_duration_why": "`tools/match_feed.py show v32rmNkR` 的『分盘用时』一节：Set1 0:41 + Set2 0:32 = 全场 1:13（即 4380 秒）。同 darderi-nakashima 那条，data URI 直接写秒数，不写『1:13』这个会被解析成『1分13秒』的歧义字符串。"
+    }
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-M0N7.png",
+      "aces": 0, "df": 1, "winners": 12, "ue": 32,
+      "first_in": 34, "first_total": 55, "first_won": 18,
+      "second_won": 9, "second_total": 21,
+      "bp_conv": 1, "bp_chances": 3,
+      "pts_won": 43, "pts_total": 107
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-T0HA.png",
+      "aces": 0, "df": 0, "winners": 13, "ue": 17,
+      "first_in": 38, "first_total": 52, "first_won": 27,
+      "second_won": 9, "second_total": 14,
+      "bp_conv": 4, "bp_chances": 8,
+      "pts_won": 64, "pts_total": 107
+    },
+    "footer_venue": "蒙特利尔",
+    "footer_date": "2026-08-11",
+    "_source": "全部技术统计取自 `tools/match_feed.py show v32rmNkR` 的『分盘技术统计』一节（flashscore `df_st_1`，Match 范围），和 darderi-nakashima-montreal-qf 那条同一条数据线、同一套换算规则（first_total = first_in + second_total，用 Service Points Won 的分母核对过；bp_conv/bp_chances 取『Break Points Converted』不是『Break Points Saved』）。\n\n头像：`tools/fetch_official_headshot.py atp \"Daniel Merida\" --id M0N7 --via https://www.mubadaladcopen.com` / 同法取勒纳·钱（--id T0HA）。"
+  }
+}

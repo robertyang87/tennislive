@@ -1526,7 +1526,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
-             "subtitle_top", "topbar", "editorial"),
+             "stats", "subtitle_top", "topbar", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -3953,6 +3953,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
+    # **有 `stats` 就必须渲出数据统计对照图，渲不出来要出声，不能悄悄跳过。**
+    # `stats` 是显式认领（和 `mixed_fps`/`silent_source` 同一个形状）——
+    # 写了这个字段就是在说「这条片子要配一张数据图」，渲失败了应该让整趟
+    # render 红，而不是把它当成一个可有可无的附加品悄悄吞掉。没写 `stats`
+    # 的旧 spec（发布规矩定下来之前的那些）完全不受影响，一行代码都不跑。
+    if spec.get("stats"):
+        with stage("数据统计对照图"):
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import render_stat_card  # noqa: PLC0415
+            render_stat_card.render(spec, outdir / "stat_card.jpg")
     report_timings()
     return final
 
