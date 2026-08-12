@@ -168,3 +168,57 @@ def test_真实spec渲染出的html比分顺序方向都对():
 
     # 双误 6:6 平手，两边都不该有 lead class
     assert "lead" not in srow_containing("双误")
+
+
+def test_数据图文件名两处要同源():
+    """`build_match_reel.py` 渲出 `stat_card.jpg`，`push_reel.py` 找同名文件
+    决定推不推这一屏——两处各写一份字符串必分叉（`POSTER_NAME` 那次已经
+    栽过，这次照那条判据抄）。"""
+    import build_match_reel as reel  # noqa: PLC0415
+    import push_reel  # noqa: PLC0415
+
+    assert reel.STAT_CARD_NAME == push_reel.STAT_CARD_NAME == "stat_card.jpg"
+
+
+def test_推送正文里数据图排在正文之后按钮之前且默认不出现():
+    """账号所有者 2026-08-12：「以后出视频的同时输出这个图，推微信时候也带上」。
+
+    位置钉死：正文之后（先讲故事）、按钮之前（不是压轴的 CTA）；第一屏仍然
+    留给海报，不许把数据图顶到最前面去抢镜。"""
+    import push_reel  # noqa: PLC0415
+
+    body = push_reel.build_html(
+        "https://x/v.mp4", "https://x/c.html", "导语",
+        "标题一行\n\n正文一段", "https://x/poster.jpg", "赛场之上",
+        stat_card="https://x/stat_card.jpg")
+    assert body.count("<div") == body.count("</div>"), "div 标签数量对不上，闭合有误"
+    assert "stat_card.jpg" in body
+    body_pos = body.index("正文一段")
+    stat_pos = body.index("stat_card.jpg")
+    btn_pos = body.index("打开竖版成片")
+    assert body_pos < stat_pos < btn_pos, "数据图要排在正文之后、按钮之前"
+    poster_pos = body.index("poster.jpg")
+    assert poster_pos < body_pos, "海报仍然是第一屏，不能被数据图顶掉"
+
+    # 没写 stat_card 时——大多数存量片子——这一屏原样不出现，不留死链接
+    no_stat = push_reel.build_html(
+        "https://x/v.mp4", "https://x/c.html", "导语",
+        "标题一行\n\n正文一段", "https://x/poster.jpg", "赛场之上")
+    assert "stat_card" not in no_stat and "数据统计对照" not in no_stat
+    assert no_stat.count("<div") == no_stat.count("</div>")
+
+
+def test_有stat_card文件才带上这一屏(tmp_path):
+    """`main()` 里那道判断：文件不在就安静地不带这一屏，不报错——和海报同一个
+    处置（`[封面] … 不在，这次推送没有海报那一屏`）。真跑一遍 `--outdir` 的
+    探测逻辑，不只测字符串常量。"""
+    import push_reel  # noqa: PLC0415
+
+    outdir = tmp_path / "reel"
+    outdir.mkdir()
+    assert not (outdir / push_reel.STAT_CARD_NAME).is_file()
+
+    (outdir / push_reel.STAT_CARD_NAME).write_bytes(b"\xff\xd8\xff")  # 假 jpg 头
+    assert (outdir / push_reel.STAT_CARD_NAME).is_file()
+    url = push_reel.stat_card_url(outdir)
+    assert url.endswith(f"{outdir.as_posix()}/{push_reel.STAT_CARD_NAME}")
