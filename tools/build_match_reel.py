@@ -1262,6 +1262,13 @@ class Segment:
     # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
     # 头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
+    # **这一段不要源片的声音**（`"mute": true`）。给**配乐宣传片**这类源准备：
+    # 它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，音乐会在
+    # 每个接缝上跳一下（比画面跳切显耳得多）；而且「默认保留现场球声、不加
+    # 背景音乐」那条编辑规矩管的就是这种音轨。静掉之后这一段走 anullsrc，
+    # 和「源片本来就没有音轨」同一条路。⚠️ 别拿它去静真实比赛的现场声——
+    # 那是这条线的内容本身，静掉等于出哑片。
+    mute: bool = False
 
     @property
     def length(self) -> float:
@@ -1280,6 +1287,19 @@ def seg_seconds(s: dict) -> float:
     """
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)
+
+
+def _seg_mute(s: dict, index: int) -> bool:
+    """`mute` 只认布尔的 true/false。字符串 `"true"` 要报错——Python 里它是
+    真值，但和 `"auto": "true"` 那次同一个理由：两种处理都说得通的写法，
+    「悄悄当真」和「悄悄当假」都会让 spec 和成片对不上，当场报出来最便宜。"""
+    raw = s.get("mute")
+    if raw is None:
+        return False
+    if isinstance(raw, bool):
+        return raw
+    raise ReelError(f"第 {index + 1} 段的 mute 要写布尔 true/false，"
+                    f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
 def _seg_speed(s: dict, index: int) -> float:
@@ -1493,7 +1513,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         _quote_cues(s.get("quote", "")),
                         *_seg_voice(s, i),
                         s.get("inset") or None,
-                        _seg_speed(s, i))
+                        _seg_speed(s, i),
+                        _seg_mute(s, i))
                 for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
@@ -1535,8 +1556,8 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "narration", "quote", "source", "speed", "start", "track",
-                "voice"),
+                "mute", "narration", "quote", "source", "speed", "start",
+                "track", "voice"),
 }
 
 
@@ -2003,7 +2024,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # `-map 1:a:0`，把补位的静音当成音轨——原声合进来之后照样取静音，成片里
     # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
     # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
-    has_audio = _has_audio(source)
+    # `seg.mute` 走的就是「没有音轨」那条路：配乐宣传片的音乐既不是现场声，
+    # 切碎再拼还会在每个接缝上跳，静掉换 anullsrc（见 Segment.mute 的注释）。
+    has_audio = _has_audio(source) and not seg.mute
     # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
     # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
     # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
