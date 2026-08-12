@@ -91,6 +91,28 @@
       "_duration_why": "flashscore（f5B0ykNt）AD=1786486200（开赛）、AO=1786490578（终场），差4378秒=1小时12分58秒。走和shelton-fonseca / shang-darderi-montreal-2026同一条取时长的代码路径（`_fetch_match_duration`会去urlopen这个data: URI并解析JSON）。"
     }
   },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-M0NI.png",
+      "aces": 1, "df": 3, "winners": 11, "ue": 18,
+      "first_in": 33, "first_total": 53, "first_won": 21,
+      "second_won": 5, "second_total": 20,
+      "bp_conv": 0, "bp_chances": 0,
+      "pts_won": 37, "pts_total": 97
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-S0S1.png",
+      "aces": 1, "df": 1, "winners": 18, "ue": 3,
+      "first_in": 28, "first_total": 44, "first_won": 25,
+      "second_won": 8, "second_total": 16,
+      "bp_conv": 4, "bp_chances": 6,
+      "pts_won": 60, "pts_total": 97
+    },
+    "footer_venue": "蒙特利尔",
+    "footer_date": "2026-08-11",
+    "_source": "全部技术统计取自 `tools/match_feed.py show f5B0ykNt` 的『分盘技术统计』一节（flashscore `df_st_1`，Match 范围），和 `_facts.技术统计（全场）` 里已经核过的那份数字同一个出处、逐项对得上（门西克一发64%(21/33)、谢尔顿89%(25/28)；制胜分11:18；非受迫失误18:3；破发点门西克0/0、谢尔顿4/6；总分37:60）。first_total = first_in + second_total，用『Service Points Won』的分母核对过：门西克26/53（26=21+5 ✓、53=33+20 ✓）、谢尔顿33/44（33=25+8 ✓、44=28+16 ✓），两边都对得上。bp_conv/bp_chances 取『[Match/Return] Break Points Converted』（己方回球时的破发转化），不是『Break Points Saved』（己方发球时的挽救）。\n\n主队(home)=门西克=matchup[0]=a；客队(away)=谢尔顿(赢家)=matchup[1]=b，和 find 命令原文『Mensik J. vs Shelton B. 3-6 1-6』的视角一致。\n\n头像：`tools/fetch_official_headshot.py atp \"Jakub Mensik\" --id M0NI --via https://www.mubadaladcopen.com` / 同法取谢尔顿（--id S0S1）——ID 从 WebSearch 到的 atptour.com 球员主页 URL 里取（`/players/<slug>/<ID>/`）。"
+  },
   "segments": [
     {
       "start": 0.0,

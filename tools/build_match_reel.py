@@ -207,6 +207,9 @@ OUTRO_TAIL = outro_page.TAIL
 # 微信里要能直接看到这是谁打谁、几比几。以前它叫 `_cover.jpg`、下划线开头，
 # 被"丢掉中间物"那步删掉了——于是推送里一张图都没有，只有两个按钮。
 POSTER_NAME = "poster.jpg"
+#: 数据统计对照图的文件名——`push_reel.py` 里有一份同名同值的常量，
+#: `test_数据图文件名两处要同源` 钉住两边不会各写各的。
+STAT_CARD_NAME = "stat_card.jpg"
 #: 封面素材（抓下来的帧、抠好的人）落在这儿，**跟着产物一起进仓库**。
 #
 # **它买的是「封面返工不用上 runner」。** 量出来的账（shang-rublev，2026-08-05）：
@@ -1526,7 +1529,7 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
     "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
              "silent_source", "slug", "source_audio", "source_url", "sources",
-             "subtitle_top", "topbar", "editorial"),
+             "stats", "subtitle_top", "topbar", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -3953,6 +3956,16 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"成片 {final}（{probe_duration(final):.1f}s，"
           f"{final.stat().st_size / 1e6:.1f} MB）")
+    # **有 `stats` 就必须渲出数据统计对照图，渲不出来要出声，不能悄悄跳过。**
+    # `stats` 是显式认领（和 `mixed_fps`/`silent_source` 同一个形状）——
+    # 写了这个字段就是在说「这条片子要配一张数据图」，渲失败了应该让整趟
+    # render 红，而不是把它当成一个可有可无的附加品悄悄吞掉。没写 `stats`
+    # 的旧 spec（发布规矩定下来之前的那些）完全不受影响，一行代码都不跑。
+    if spec.get("stats"):
+        with stage("数据统计对照图"):
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import render_stat_card  # noqa: PLC0415
+            render_stat_card.render(spec, outdir / STAT_CARD_NAME)
     report_timings()
     return final
 

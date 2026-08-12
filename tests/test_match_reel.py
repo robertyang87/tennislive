@@ -5501,7 +5501,10 @@ def test_推送卡的台头跟着栏目走():
     # 标题和药丸要取同一个值，别一个走 column_of、一个另取默认
     src = Path("tools/push_reel.py").read_text(encoding="utf-8")
     assert "column = args.column or column_of(Path(args.copy))" in src
-    assert "column=column)" in src, "药丸没和标题共用那一个栏目名"
+    # ⚠️ 不锚在紧跟的 `)` 上——那道闸只在 `build_html(...)` 调用没有别的
+    # 关键字参数（如后来加的 `stat_card=`）时才成立，加一个新参数就会把这条
+    # 判据带崩，而它想拦的错（药丸另取默认值）跟这件事无关。
+    assert re.search(r"\bcolumn=column\b", src), "药丸没和标题共用那一个栏目名"
 
 
 def test_推送的文案输入不许留上一条片子的默认值():

@@ -153,6 +153,28 @@
       "_why": "收尾落在一问上，不重复封面那个问题（封面问的是『决胜盘怎么翻过来的』，这里问的是『能不能延续到下一场』）。半决赛对手高芙由赛后广播图形直接确认（不是悬念）。画面是握手/庆祝的收尾镜头。窗口在镜头271.08–286.56之内 ✅"
     }
   ],
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-319998.jpg",
+      "aces": 3, "df": 6, "winners": 18, "ue": 51,
+      "first_in": 68, "first_total": 109, "first_won": 44,
+      "second_won": 22, "second_total": 41,
+      "bp_conv": 3, "bp_chances": 7,
+      "pts_won": 107, "pts_total": 218
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-324166.jpg",
+      "aces": 15, "df": 6, "winners": 43, "ue": 72,
+      "first_in": 61, "first_total": 109, "first_won": 45,
+      "second_won": 23, "second_total": 48,
+      "bp_conv": 3, "bp_chances": 6,
+      "pts_won": 111, "pts_total": 218
+    },
+    "footer_venue": "多伦多",
+    "footer_date": "2026-08-11",
+    "_source": "ACE/双误/一发得分率/总分四项和上面 `_facts.技术统计（全场）` 是同一份数据（flashscore + WTA 官方统计接口），两处不会分叉。一发成功率（first_in/first_total）、二发得分率（second_won/second_total）来自 WTA 官方统计接口 `api.wtatennis.com/tennis/tournaments/806/2026/matches/<MatchID>/stats?setnum=0` 的 `ptswon1stserva/b`/`ptsplayed1stserva/b`/`ptstotwonserva/b`/`totservplayeda/b` 字段。\n\n破发点这一行（bp_conv/bp_chances）显示的是**己方回球时的破发点转化**，和 `_facts` 里那句『破发点：大坂直美救3/6，莱巴金娜救4/7』（各自发球时的挽救）是同一份数字的两种读法，互相校验一致：大坂直美救回己方发球局6个破发点里的3个 = 莱巴金娜在对方发球时转化了3/6；同理莱巴金娜救回7个里的4个 = 大坂直美转化3/7。两个角度对得上，说明数字没有内部矛盾。\n\n⚠️ **制胜分（winners）和非受迫失误（ue）这两项，flashscore/WTA官方统计接口都没有**——是这条片子研究过程里唯一踩过坑的两项：先从二手统计站 rallyher.com 抄了一版（Osaka 19:47、Rybakina 53:73），账号所有者随后给了一张这场球官方转播统计大屏的截图（NATIONAL BANK OPEN PRESENTED BY ROGERS），上面明确写着 WINNERS 18:43、UNFORCED ERRORS 51:72——rallyher.com 那版是错的，已改用官方大屏这份，并且 72 这个数字与 WTA 官方赛后稿『58 winners, 58 errors』式的赛后陈述里对莱巴金娜『本赛季单场最多非受迫失误』的说法吻合，属于双源交叉验证过的数字。以后如果再遇到 Winners/UE 这两项，优先找官方转播统计大屏截图或 WTA 官网赛后稿，不要只信二手统计站。\n\n头像：`tools/fetch_official_headshot.py wta \"Naomi Osaka\"` / `\"Elena Rybakina\"`，抓自各自 wtatennis.com 官方球员主页挂的头像（`wtafiles.blob.core.windows.net/images/headshots/<WTA球员ID>.jpg`）。"
+  },
   "push": {
     "summary": "莱巴金娜逆转大坂直美",
     "lead": "2号种子莱巴金娜4-6 7-6(5) 6-4逆转11号种子大坂直美，晋级多伦多WTA1000女单半决赛，用时2小时32分53秒。大坂直美先声夺人首盘破发，稳稳保发拿下首盘6-4；次盘两人各破发两次战成6平，莱巴金娜在抢七里连追带赶7-5扳回一盘。决胜盘她一度2比3落后，轮到自己发球的这一局面对4个破发点全部化解，随即立刻回破反超4比3，再保发到5比3。大坂直美顶住一局追回4比5，但莱巴金娜发球拿到的两个赛点，大坂直美只救回第一个——第二个她一记ACE收官，6-4锁定这场鏖战。两位大满贯冠军此前从未在WTA正赛交手过，这是她们生涯首次交锋。半决赛，莱巴金娜将迎战高芙，这是她第二次打进国家银行公开赛半决赛。",
