@@ -562,23 +562,27 @@ def test_两行之间的空白要跟着字号重新量():
 def test_中文字号不许大到让行放不下():
     """中文那侧的天花板是 952px 可用宽。
 
-    ⚠️ **这条原来写死 ≤64，而那个数已经过期了。** 它当时的理由是「68 号就有
-    行超出」——确实如此，但超的只有 2 行；2026-08-02 把那 2 行改短之后
-    68 就装得下了，于是这个常量从「实测上限」变成了「一个记着旧观测的数」。
-    一个会过期的名单和一条常年红的检查是同一个毛病。
+    ⚠️ **这条数字改过两次，两次都是「过期了才发现」。** 最早写死 ≤64，理由是
+    「68 号就有行超出」——2026-08-02 把那两行改短之后 68 就装得下了；
+    ≤68 那版又在 2026-08-12 过期（账号所有者：「字幕的字体大小再大一点」，
+    见 `_FONT_SIZE` 那段注释的完整账）。**一个会过期的常量和一条常年红的
+    检查是同一个毛病**——上限跟着「已经改宽过几次」的字号走，不是钉死的。
 
-    重量之后（每一档的最宽一行都是同一句，`今年才是你真正完整的巡回赛年`）：
+    重量之后：
 
-        zh=64  最宽 896px   超宽 0 行
-        zh=68  最宽 952px   超宽 0 行   ← 正好顶到可用宽，一点余量都没有
-        zh=70  最宽 980px   超宽 6 行
+        zh=68  最宽 952px   超宽 0 行
+        zh=70  最宽 980px   超宽 6 行（全是已发出去、不重渲的老片子，见
+                                       `_LEGACY_WIDE_AT_70`）
+        zh=72  最宽 1008px  超宽 35 行 ← 代价失控，见 `_FONT_SIZE` 那段注释
 
-    **68 是上限而不是舒服的选择**：最宽那行正好等于预算，再长一个字就破。
-    真正逐行去量的判据是 `test_字号涨了不许撑破已有的行`；这条只拦「往上飘」。
+    **70 是「代价可控」和「代价失控」的分界，不是「一点余量都没有」的那种
+    上限**——新发的片子（改宽度撑不下的行）该重新措辞，已发的片子挂进豁免表。
+    真正逐行去量、还认豁免表的判据是 `test_字号涨了不许撑破已有的行`；
+    这条只拦「涨过头，涨到 72 这类代价失控的档位」。
     """
-    assert _FONT_SIZE["zh"] <= 68, (
-        f"中文字号 {_FONT_SIZE['zh']} 超过 68——952px 的行宽装不下（70 号会破 6 行），"
-        "写稿的人会被逼着把句子切碎。")
+    assert _FONT_SIZE["zh"] <= 70, (
+        f"中文字号 {_FONT_SIZE['zh']} 超过 70——72 号会破 35 行，代价失控。"
+        "写稿的人会被逼着把句子切碎，或者要往豁免表里塞一大堆已发的老片子。")
 
 
 def test_字号只有一处出处():
@@ -796,6 +800,36 @@ def test_顶栏量宽度要按每段自己的字号():
     sizes = {size for _, kind, _, size in runs if kind == "num"}
     assert sizes == {clip._SCORE_PX}, "比分那段要带着它自己的字号，不是顶栏那档"
     assert clip._SCORE_PX > _HEAD_SIZE["b"], "比分放大了，量的时候就不能按小的量"
+
+
+def test_顶栏赢家的名字要高亮不是输家():
+    """账号所有者：「谢尔顿要高亮吧，赢球的人」——顶栏印着「谁 比分 谁」，
+    两个名字原来一个颜色，谁赢谁输全靠看比分自己算，赢家没有任何视觉上的
+    突出。
+
+    **重用 `_MARK_COLOUR`，不新开一支颜色**：那正是顶栏竖条 `▍` 和
+    `highlight_en()` 高亮关键短语用的同一支品牌绿——「一屏（这条片子从头
+    到尾算一屏）只留一个强调色」，见 `highlight_en` 的 docstring。
+    """
+    from tools.build_interview_clip import _MARK_COLOUR
+
+    runs = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                        "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
+    by_text = {text.strip(): tags for text, _, tags, _ in runs}
+    assert by_text["甲"] == _MARK_COLOUR, "赢家「甲」的这一段该带 _MARK_COLOUR"
+    assert _MARK_COLOUR not in by_text["乙 · 赛后场上采访"], (
+        "输家「乙」不该也被高亮——一屏只留一个强调色，两个都染色等于都没染")
+
+    # 落到真正渲染的 ASS 文本里也要能看见：赢家那一段（比分之前）挂着
+    # `_MARK_COLOUR`，比分和输家那两段（比分之后）不该再带它——`\r` 复位
+    # 干净，颜色没有粘连过去。
+    _, line_b = header_ass({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                            "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})
+    score_idx = line_b.index("6-3")
+    assert _MARK_COLOUR in line_b[:score_idx], (
+        f"赢家那一段（比分之前）应该带 {_MARK_COLOUR}：{line_b[:score_idx]}")
+    assert _MARK_COLOUR not in line_b[score_idx:], (
+        f"比分之后（比分本身、输家那一段）不该再出现 {_MARK_COLOUR}：{line_b[score_idx:]}")
 
 
 def test_并成一个词的ASR错要在切行之前修(tmp_path):
@@ -1949,40 +1983,92 @@ def test_封面这道闸真的查到了东西():
     assert checked >= 2, f"封面注里一共只抠出 {checked} 句英文引语，这道闸等于没装"
 
 
-def test_背景要先去色再压暗():
-    """垫底那层只压暗不去色，会把背景**变得比画面还艳**。
+def test_字幕带背景色和封面解读卡是同一支品牌绿():
+    """垫底那层现在是纯色，要和 `build_cover` / `build_takeaway_card`
+    用**同一支**品牌深绿（`#06140f`），不是另起一支。
 
-    账号所有者：「伊埃拉的球衣是绿色的，背景虚化之后感觉背景全是绿的，
-    视觉上不太舒服。」量已发的那条成片：边条饱和度 0.68~0.92，而画面本身
-    只有 0.16~0.23——背景比画面艳三到五倍。
-
-    机理是 `brightness` 走**减法**，而饱和度是 `(max-min)/max`：整体减下去
-    分母跟着变小，于是越压越艳。模糊本来就只剩色相，再一压等于把颜色浓缩了
-    铺满全屏；而且它跟着画面变色，12 秒那帧上边条是深蓝、下边条是绿，
-    一屏两个饱和色打架，正撞上「一屏只留一个强调色」。
-
-    两头都要卡：
-    - **去色不够** → 回到「背景全是绿的」
-    - **压得太狠** → 边条接近纯黑，看着像「没铺满的视频」而不是设计过的版面
-      （`sat=.12 bri=-.40` 那档，12 秒上边条量出来是 `[1 1 1]`）
+    这条经过两轮调色都没解决"糊"的问题（先只压暗、后来先去色再压暗，
+    见 `_BG_COLOUR` 那段注释记的完整history），账号所有者 2026-08-12：
+    「字幕的背景区域，怎么感觉糊糊的，不好看呀」——病根是垫底层一直在
+    **从这一帧画面模糊出来**，画面越花它越花。改成纯色之后要跟产品别处
+    已经在用的深绿对上，不能另挑一支颜色，否则字幕带、封面、解读卡三处
+    看着像三个不同的产品。
     """
-    from tools.build_interview_clip import BG_GRADE
+    from tools.build_interview_clip import _BG_COLOUR
 
-    kv = dict(p.split("=") for p in BG_GRADE.removeprefix("eq=").split(":"))
-    assert float(kv["saturation"]) <= 0.35, (
-        f"背景只压暗不去色（{BG_GRADE}）——压暗是减法，会把饱和度顶上去")
-    assert -0.35 <= float(kv["brightness"]) < 0, (
-        f"背景压暗的量越界（{BG_GRADE}）：不压则背景抢戏，压过头边条变成硬黑条")
-
-
-def test_背景调色只有一处出处():
-    """**一个数写两处必分叉。** 滤镜链里再写一个字面量，改常量就没反应了——
-    而它不报错，只是下一个人改错地方。同 `test_字号只有一处出处`。"""
+    hexval = _BG_COLOUR.removeprefix("0x").lower()
+    assert hexval == "06140f", (
+        f"`_BG_COLOUR` 现在是 {_BG_COLOUR!r}，和封面/解读卡用的品牌深绿 "
+        "#06140f 不一样了——三处理应是同一支颜色，改了一处要么是笔误，"
+        "要么另外两处（`build_cover` / `build_takeaway_card`）也要跟着改。")
     src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
     body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
-    assert body.count("BG_GRADE") == 2, "BG_GRADE 该只有一处定义、一处引用"
-    assert "{BG_GRADE}[bg]" in body, "滤镜链没有引用 BG_GRADE"
-    assert "eq=brightness" not in body, "链子里还留着写死的 eq=brightness"
+    assert body.count("#06140f") >= 2, (
+        "`build_cover` 和 `build_takeaway_card` 至少各该出现一次 #06140f——"
+        "如果这两支颜色换了，`_BG_COLOUR` 要跟着一起改，不能只改字幕带这一处。")
+
+
+def test_字幕带的背景不再从模糊视频派生():
+    """垫底那层是纯色，不许再退回"从这一帧画面模糊出来"——那正是
+    账号所有者说"糊糊的"那两轮（`eq=brightness` 只压暗、
+    `eq=saturation:brightness` 先去色再压暗）的病根，改法都只是调参数，
+    没有换掉"垫底层跟着源片内容摆"这个结构本身。见 `_BG_COLOUR` 那段注释。
+    """
+    src = (ROOT / "tools" / "build_interview_clip.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    assert "gblur" not in body, (
+        "滤镜链里又出现了 gblur——垫底层不许再从视频模糊出来，"
+        "见 `_BG_COLOUR` 那段注释记的两轮教训。")
+    assert "eq=brightness" not in body and "eq=saturation" not in body, (
+        "滤镜链里又出现了 eq= 调色——同上，垫底层现在是纯色，不需要再调色。")
+    assert body.count("_BG_COLOUR") == 2, "`_BG_COLOUR` 该只有一处定义、一处引用"
+    assert "c={_BG_COLOUR}" in body, "滤镜链没有引用 `_BG_COLOUR`"
+    # ⚠️ 这条不能只测「d= 有没有起作用」（那是下一条测试干的事），必须真查
+    # **这条链自己**有没有写 `d=`——`test_垫底纯色层要卡时长否则overlay会
+    # 空跑到超时` 那条本地另起了一段一模一样的滤镜串来验证 ffmpeg 的行为，
+    # 那证明的是「`d=` 这个机制管用」，证明不了「渲染真用到的那条 `chain`
+    # 真的写了它」。两者是两回事，反向验证过：只删掉真实 chain 里的
+    # `:d={dur}`，上面那条本地滤镜串测试照样绿——因为它压根没读这条 chain。
+    assert ":d={dur}:" in body, (
+        "`color=` 那句垫底纯色源没有卡 `d={dur}`——`color` 是无限长的合成源，"
+        "不卡时长的话，短的前景流耗尽之后它还在无限产帧，整条链要跑到"
+        "`timeout=1800` 才会被杀掉，见 `test_垫底纯色层要卡时长否则overlay"
+        "会空跑到超时` 里那段本地实测。")
+
+
+def test_垫底纯色层要卡时长否则overlay会空跑到超时():
+    """`color` 是**无限长**的合成源，`overlay` 的 `eof_action` 默认
+    `repeat`——不给它卡一个 `d=`，短前景流耗尽之后垫底层还在无限产帧，
+    这条链**不会自然收尾**，会一直空跑到 `subprocess.run(..., timeout=1800)`
+    才被杀掉，一次耗尽 30 分钟还什么都产不出来。
+
+    这不是猜的：本地拿 2 秒的合成前景真跑过一遍——不给 `color` 设 `d=`，
+    加一道 `-t 30` 硬顶都能跑满 30 秒（本该 2 秒收尾）；给了 `d=2` 之后
+    准确停在 2.0 秒。渲染那条真实的 `chain` 现在把 `_BG_COLOUR` 的
+    `color=` 源钉上 `d={dur}`，这里真跑一遍同样的滤镜图确认这道钉子还在。
+    """
+    import subprocess as sp
+
+    out = ROOT / "tests" / "_tmp_bgcolour_dur_check.mp4"
+    try:
+        sp.run(
+            ["ffmpeg", "-y", "-f", "lavfi", "-i",
+             "testsrc2=size=320x240:rate=25:duration=2",
+             "-filter_complex",
+             "color=c=0x06140f:s=320x240:d=2:r=25[bg];"
+             "[0:v]scale=160:120[fg];[bg][fg]overlay=80:60[out]",
+             "-map", "[out]", str(out)],
+            check=True, timeout=15, capture_output=True)
+        probe = sp.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", str(out)],
+            check=True, timeout=10, capture_output=True, text=True)
+        dur = float(probe.stdout.strip())
+        assert abs(dur - 2.0) < 0.2, (
+            f"垫底纯色层配了 d= 应该在 2 秒收尾，实测 {dur:.2f} 秒——"
+            "`overlay` 没有按短的那路（前景）收尾，`d=` 没起作用。")
+    finally:
+        out.unlink(missing_ok=True)
 
 
 def _ytdlp_calls() -> list[ast.List]:
@@ -2289,15 +2375,105 @@ def test_分歧率认领要钉在当时那次观测上():
         0.124, path)
 
 
+# 规矩定下来**之前**已经发出去的两个文件。已发的片子不为了措辞重渲——
+# `eala-svitolina-dc2026-qf.json` 的 `_event_why` 里账号所有者原话就是
+# 「不补了」，这条规矩同理不补。**只许减不许加**：修好一个就从下面删掉一个，
+# 别让它变成一张许可证。
+_LEGACY_QUALIFIER_NAMES = {
+    "alexandrova-sabalenka-tor2026-r16.json",
+    "alexandrova-sabalenka-tor2026-r16.xhs.txt",
+    "eala-svitolina-dc2026-qf.json",
+    "eala-svitolina-dc2026-qf.xhs.txt",
+}
+
+
+def test_轮次要写半决赛不写四强():
+    """账号所有者 2026-08-02：「以后不要用四强八强之类的，国内通常用半决赛
+    1／4 决赛 1/8 决赛之类的。再往前就第几轮好了」。
+
+    这条规矩早就在「赛场之上」那条线（`build_match_reel`）落了闸
+    （`test_轮次要写半决赛不写四强`，`tests/test_match_reel.py`），
+    「赛后开麦」这条线一直没跟上——谢尔顿那条 spec 翻译时写进去了三处
+    「四强」（`你现在又进四强了` / `四强里可能会有` / `四强赛都打到了`），
+    一次都没被拦住，直到重新审这条片子时才发现。补上同一道闸，别的
+    interview spec 重蹈覆辙。
+
+    **只查会发出去的字段**：`zh`（对话字幕，读者读到的正是这个）、
+    `push.*`、`cover.*`、`takeaway.*`，以及 `.xhs.txt` 小红书正文。
+    `_` 开头的是写给下一个人的注解（`_note` / `_why` / `_event_why` 这类，
+    里面正引着账号所有者那句原话，或者是在解释这场球本身打到了第几轮）——
+    连它一起扫会把「把规矩记下来」判成「又违反了规矩」，同一个错这个仓库
+    已经犯过好几次。
+    """
+    import re as _re
+
+    bad = _re.compile(r"[四八]强|十六强|三十二强|(?<!\d)(?:16|32|64)\s*强")
+
+    def outward(obj):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if isinstance(k, str) and k.startswith("_"):
+                    continue
+                yield from outward(v)
+        elif isinstance(obj, list):
+            for v in obj:
+                yield from outward(v)
+        elif isinstance(obj, str):
+            yield obj
+
+    offenders = {}
+    for path in _specs():
+        hits = sorted({m.group(0) for text in outward(
+            json.loads(path.read_text(encoding="utf-8"))) for m in bad.finditer(text)})
+        if hits:
+            offenders[path.name] = hits
+    for path in sorted(SPECS.glob("*.xhs.txt")):
+        hits = sorted({m.group(0) for m in bad.finditer(path.read_text(encoding="utf-8"))})
+        if hits:
+            offenders[path.name] = hits
+
+    fresh = {k: v for k, v in offenders.items() if k not in _LEGACY_QUALIFIER_NAMES}
+    assert not fresh, (
+        f"这些地方还在写强字轮次：{fresh}。"
+        "改成 半决赛 / 1/4 决赛 / 1/8 决赛，再往前写「第几轮」。")
+    # ⚠️ `set(offenders) <= _LEGACY_QUALIFIER_NAMES`（上面那条断言）只挡得住
+    # 「有真违规却没被豁免」，挡不住反过来那种：豁免表里混进一个根本不违规
+    # （或者压根不存在）的名字——那种名字会一直静静地绿着，是一盏恒真的灯。
+    # 这条 match-reel 那份原版没有，是反向验证时才发现的漏洞，这里补上。
+    missing = _LEGACY_QUALIFIER_NAMES - set(offenders)
+    assert not missing, (
+        f"豁免表里这些条目已经不违规了（或者文件名写错了）：{sorted(missing)}。"
+        "清单只许减不许加——修好了就把它删掉，别留着变成一张许可证。")
+
+
+# 中文 68→70（2026-08-12）之前就已经发出去、行超宽了的文件。已发的片子
+# 不为了字号重渲——这几条不会再被渲染，涨字号对它们没有意义，改宽度预算
+# 也换不回一次已经发出去的推送。**只许减不许加**：修好一个（或者它被删除）
+# 就从下面拿掉一个。
+_LEGACY_WIDE_AT_70 = {
+    "eala-osaka-dc2026-sf-studio.json",
+    "eala-osaka-dc2026-sf.json",
+    "eala-parks-toronto-2026.json",
+    "eala-pegula-dc2026-final.json",
+    "eala-svitolina-dc2026-qf.json",
+    "rybakina-osaka-tor2026-qf.json",
+}
+
+
 def test_字号涨了不许撑破已有的行():
     """**字号不是想涨就能涨的**，它由可用宽和已有的行共同决定。
 
     2026-08-02 把中文从 62 提到 68（中文是主读行，英文是原文参照，
     62/46 = 1.35 两行几乎一样重，68/46 = 1.48 层级才立住）。
+    2026-08-12 又从 68 提到 70——账号所有者：「字幕的字体大小再大一点」。
 
     能涨多少是量出来的：中文 62→68 只有 2 行超宽（手写的，普遍偏短，有余量），
-    **而英文 46→50 就有 22 行超**——英文行是切行算法按 `_LINE_PX` 排满的，
-    一放大必然大面积溢出。所以英文钉死在 46，要动它得先动切行的宽度预算。
+    68→70 时**新发出去的**（谢尔顿那条，写这次的过程中重新对齐过）0 行超宽，
+    但全库里另有 6 个**已经推送过**的老文件超了——它们不重渲，进
+    `_LEGACY_WIDE_AT_70`。**而英文 46→50 就有 22 行超**——英文行是切行算法
+    按 `_LINE_PX` 排满的，一放大必然大面积溢出，所以这次只动了中文，
+    `_LINE_PX`／英文字号原样不动（动 `_LINE_PX` 就是在动折行本身，
+    `segment()` 每次 render 都会用它重新切一遍，不是读缓存）。
 
     这条测试就是那个算式：谁再想调字号，它会当场把代价报出来。
     """
@@ -2306,15 +2482,28 @@ def test_字号涨了不许撑破已有的行():
     from tools.build_interview_clip import _FONT_CACHE, _LINE_PX, _zh_width
 
     _FONT_CACHE.clear()
-    over, checked = [], 0
+    over, checked = {}, 0
     for path in _specs():
         spec = _json.loads(path.read_text(encoding="utf-8"))
+        hits = []
         for i, line in enumerate(spec.get("zh") or [], 1):
             checked += 1
             if (w := _zh_width(line)) > _LINE_PX:
-                over.append(f"{path.stem} #{i} {w:.0f}px（可用 {_LINE_PX}）：{line}")
+                hits.append(f"#{i} {w:.0f}px（可用 {_LINE_PX}）：{line}")
+        if hits:
+            over[path.name] = hits
     assert checked >= 100, f"只量到 {checked} 行中文，判据大概没找对目录"
-    assert not over, "字号撑破了这些行，要么把字号调回去，要么把这些行改短：\n" + "\n".join(over)
+
+    fresh = {k: v for k, v in over.items() if k not in _LEGACY_WIDE_AT_70}
+    assert not fresh, (
+        "字号撑破了这些行（且不在豁免表里），要么把字号调回去，"
+        "要么把这些行改短：\n" + "\n".join(f"{k}: {v}" for k, v in fresh.items()))
+    # 反过来也要卡：豁免表里混进一个其实没超宽（或者压根不存在）的名字，
+    # 会一直静静地绿着，是一盏恒真的灯。
+    missing = _LEGACY_WIDE_AT_70 - set(over)
+    assert not missing, (
+        f"豁免表里这些条目其实没有超宽（或者文件名写错了）：{sorted(missing)}。"
+        "清单只许减不许加——没有真的超宽就把它删掉。")
 
 
 def test_缩略图墙每一格都要标出秒数():
