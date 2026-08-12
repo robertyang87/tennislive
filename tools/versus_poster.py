@@ -726,8 +726,13 @@ SHORT_HOOK_TITLE_PX = 124
 # 2026-08-09 账号所有者第三次反馈：「药丸标题也要跟着往下移动」。之前那两次
 # 的钉法（药丸不动）本身就是这次要推翻的前提，所以这次改的是 `STORYCOPY_TOP`
 # 本身，不再是只加在标题上的额外间距。520→580，往下 60px。
+# 2026-08-12 账号所有者第四次反馈：「文案+赛场之上（药丸）都要往下再移动一点，
+# 不要过多遮挡主体背景图」——580→610，再往下 30px。**这次已经贴着安全上限**：
+# 3 行 96px 钩子的最坏情况要占 819px（见下面 `STORYCOPY_TITLE_GAP_EXTRA` 那段
+# 的账），610+819=1429，离画布底只剩 11px——再往下移之前得先看这条片子的钩子
+# 是不是真的到了三行，两行以内还有余量（308 而不是 357），但硬上限已经不宽裕了。
 # 钩子和比分板从这儿往下排，所以比分板变高只会往下长，不会把药丸顶上去。
-STORYCOPY_TOP = 580
+STORYCOPY_TOP = 610
 
 # 药丸和标题之间**额外**加的间距（px）。2026-08-07/08 两次「移动」都只动这个数，
 # 药丸钉在 STORYCOPY_TOP 不动；2026-08-09 药丸也跟着 STORYCOPY_TOP 下移了 60px
@@ -738,7 +743,8 @@ STORYCOPY_TOP = 580
 # margin-top 上——只加宽药丸→标题这一段间距，标题→比分板之间仍是原来的 34px，
 # 两者跟着标题一起往下移。
 # ⚠️ 最坏情况核过：药丸64＋间距34＋额外间距40＋三行96px的钩子(357)＋间距34＋
-# 比分板(290) = 819，从 580 排到 1399，离画布底 41px，不溢出——见
+# 比分板(290) = 819。2026-08-12 STORYCOPY_TOP 580→610 之后，从 610 排到 1429，
+# 离画布底只剩 11px，不溢出——但余量比上一版（41px）薄了很多，见
 # `test_台头药丸的位置不跟着比分板漂` 里那条算总高度的断言。
 STORYCOPY_TITLE_GAP_EXTRA = 40
 
@@ -934,18 +940,24 @@ __SCRIM__
  font-weight:700;color:#c6f65a;letter-spacing:1px}
 /* 「赛场之上」首页统一比分板：直角边框、全透明底，比分按盘单独着色。
    国旗固定占位，确保它与中文名/英文名两行整体垂直居中。 */
-.scoreboard{width:100%;box-sizing:border-box;border:2px solid rgba(244,251,247,.95);
+.scoreboard{width:100%;box-sizing:border-box;border:3px solid rgba(244,251,247,.95);
  color:#f4fbf7;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
 .scoreboard-head{height:76px;box-sizing:border-box;padding:0 28px;display:flex;
- align-items:center;justify-content:space-between;border-bottom:2px solid rgba(244,251,247,.9);
+ align-items:center;justify-content:space-between;border-bottom:3px solid rgba(244,251,247,.9);
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
 .scoreboard-grid{display:grid;min-height:214px}
-.scoreboard-players{min-width:0}
-.score-person{height:107px;box-sizing:border-box;display:flex;align-items:center;
+/* ⚠️ 名字这两行的分隔线要和右边比分格子的分隔线对齐，两边必须用同一种
+   算法分高度。这儿一直写死 107px（正好是 214÷2，眼下对得上），右边
+   `.score-number` 用的是 `flex:1`——两种算法背后各压着一个数，214 只要
+   哪天单独改一次就会分道扬镳。真的在一个只改了 min-height、没跟着改
+   107px 的旁支脚本上炸过（名字那条线和比分那条线错开了 18px）。改成
+   两边都 `flex:1`，永远各占整行高度的一半，不用再手动记两个数同步。 */
+.scoreboard-players{display:flex;flex-direction:column;min-width:0}
+.score-person{flex:1;box-sizing:border-box;display:flex;align-items:center;
  padding:0 16px 0 22px;min-width:0}
-.score-person+.score-person{border-top:2px solid rgba(244,251,247,.9)}
+.score-person+.score-person{border-top:3px solid rgba(244,251,247,.9)}
 .score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
  justify-content:center;margin-right:14px}
 .score-flag{display:block;width:58px;height:38px;object-fit:cover}
@@ -955,19 +967,21 @@ __SCRIM__
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
  letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
-.score-set{display:flex;flex-direction:column;border-left:2px solid rgba(244,251,247,.9)}
+.score-set{display:flex;flex-direction:column;border-left:3px solid rgba(244,251,247,.9)}
 /* **决胜盘单独描边**：这一盘打满了才存在，往往正是钩子讲的那段跌宕
    （「二比五落后」「三个赛点没给」）。左边框换成品牌绿并再粗一档，加一层
    14% 不透明度的品牌绿垫底——那是「一屏只留一个强调色」允许的中间态：
    够醒目，但不跟真正的强调色（赢盘数字）抢。不引入第二种颜色，
    只是同一种绿分了层级。
-   ⚠️ **3px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
-   2px（同一天那次「细线在压缩后的视频里几乎看不见」），所以这一档要跟着
-   走到 3px——写 2px 的话「加粗」这半句就不成立了，只剩色相在区分。 */
-.score-set--deciding{border-left:3px solid #c6f65a;background:rgba(198,246,90,.14)}
+   ⚠️ **4px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
+   2px，2026-08-12 账号所有者反馈「白线还是太细」又加粗到 3px（这版海报
+   device_scale_factor=1，1080px 原生分辨率压到手机屏幕上会再打一次折，
+   之前那档粗细在屏幕上仍然读不出来）——这一档要跟着走到 4px，
+   写 3px 的话「加粗」这半句就不成立了，只剩色相在区分。 */
+.score-set--deciding{border-left:4px solid #c6f65a;background:rgba(198,246,90,.14)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
  font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:48px;font-weight:700}
-.score-number+.score-number{border-top:2px solid rgba(244,251,247,.9)}
+.score-number+.score-number{border-top:3px solid rgba(244,251,247,.9)}
 .score-number sup{font-size:.45em;line-height:1;align-self:flex-start;margin-top:24px;
  color:#93a79c}
 /* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给白**（账号所有者
