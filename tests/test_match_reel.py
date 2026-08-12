@@ -9041,3 +9041,54 @@ def test_整屏证据段要整屏切走而不是贴在画面上(tmp_path):
     assert (v["width"], v["height"]) == (reel.VIDEO_W, reel.VIDEO_H), (
         "整屏证据段的画幅必须和成片一致，不然 concat 那步会拼不上")
     assert abs(float(v["duration"]) - 2.18) < 0.1, f"时长 {v['duration']}"
+
+
+def test_证据段的地板静音要豁免但口播必须响过():
+    """run 31626149097 的两层红，一次钉住：
+
+    ① `quiet_windows` 读 `seg["end"]` 在整屏证据段上 KeyError——长度一律走
+      `seg_film_seconds`，证据段不进「无解说窗口」表（它必有旁白，也没有
+      源片起点可报）。
+    ② 证据段的底轨是 anullsrc，旁白说完后的余量秒是**设计出来的静音**
+      （同封面），当天 [25, 32, 39, 85, 91] 五秒全落在五张证据卡的口播
+      间隙里，却被「数字静音」判成不合格。豁免只给证据段窗口**里面**的
+      整秒；窗口外的数字静音照报——两头都在这条测试里钉住。
+
+    反向验证（都做过）：`dead_seconds` 不传 evidence 时两个静音秒全进
+    dead（豁免那支真的在起作用）；把 in_ev 恒真则窗口外那秒也被豁免、
+    第二段断言红（豁免没有扩大化）。
+    """
+    import check_reel_landed as landed
+
+    spec = {"segments": [
+        {"start": 0.0, "end": 4.0, "narration": "有旁白"},
+        {"image": "assets/x.png", "seconds": 6.0, "narration": "证据段旁白"},
+        {"start": 10.0, "end": 14.0},              # 无解说的窗口段
+    ]}
+    cover = 2.0
+
+    # ① 不再 KeyError，而且证据段不混进无解说窗口表
+    quiet = landed.quiet_windows(spec, cover)
+    assert quiet == [(12.0, 4.0, 10.0)], quiet
+
+    ev = landed.evidence_windows(spec, cover)
+    assert ev == [(6.0, 12.0)], ev
+
+    # ② 窗口里的静音豁免、窗口外的照报
+    levels = [-20.0] * 20
+    levels[11] = -99.0     # 证据段口播间隙（6.0–12.0 里面）
+    levels[15] = -99.0     # 窗口段里的数字静音——真缺陷
+    dead, exempt = landed.dead_seconds(levels, after=3, evidence=ev)
+    assert exempt == [11], exempt
+    assert dead == [15], "窗口外的数字静音必须照报，豁免不许扩大化"
+
+    # 不给 evidence 时一个都不豁免——证明豁免那支真的在起作用
+    dead0, exempt0 = landed.dead_seconds(levels, after=3, evidence=[])
+    assert dead0 == [11, 15] and exempt0 == []
+
+    # ③ 口播那道闸的账：整段全静音的证据窗口必须还能被 main 里那道
+    #    逐窗口 max 检出（这里验切窗口的算术和它用的门槛是同一个）
+    silent = [-99.0] * 20
+    lo, hi = int(ev[0][0] + 0.5), int(ev[0][1])
+    assert max(silent[lo:hi]) <= landed.SILENCE_FLOOR_DB, (
+        "全静音的证据窗口在这个门槛下必须判得出来")

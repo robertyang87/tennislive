@@ -40,21 +40,23 @@ COVER_SECONDS = 1.2
 SILENCE_FLOOR_DB = -60.0
 
 
-def spec_segments_seconds(spec: dict) -> float:
-    """段落总长按**成片口径**：慢放段（`speed` < 1）按速度换算。
+def seg_film_seconds(s: dict) -> float:
+    """一段在**成片时间轴**上占多长：整屏证据段写的是 `seconds`，
+    窗口段是 `end - start`（慢放按速度换算）。
 
     和 `build_match_reel.seg_seconds` 是同一笔账——这儿抄一份而不 import，
     是为了让这个检查工具保持纯标准库（它要在只装了 ffprobe 的环境里也能跑）。
     两边对不上会被 `tests/test_slow_motion.py` 的一致性判据抓住。
     """
-    def one(s: dict) -> float:
-        if s.get("image"):
-            # 整屏证据段：长度就是 seconds（和 build_match_reel.seg_seconds 同账）
-            return round(float(s["seconds"]), 3)
-        return round((float(s["end"]) - float(s["start"]))
-                     / float(s.get("speed") or 1.0), 3)
+    if s.get("image"):
+        return round(float(s["seconds"]), 3)
+    return round((float(s["end"]) - float(s["start"]))
+                 / float(s.get("speed") or 1.0), 3)
 
-    return sum(one(s) for s in spec["segments"])
+
+def spec_segments_seconds(spec: dict) -> float:
+    """段落总长按**成片口径**，账在 `seg_film_seconds`。"""
+    return sum(seg_film_seconds(s) for s in spec["segments"])
 
 
 def sh(*args: str) -> str:
@@ -182,15 +184,57 @@ def voiced_by(film: Path, spec: dict) -> int:
 
 
 def quiet_windows(spec: dict, cover: float) -> list[tuple[float, float, float]]:
-    """没有解说的段落在成片时间轴上的 [(起, 长, 源片起点)]。"""
+    """没有解说的段落在成片时间轴上的 [(起, 长, 源片起点)]。
+
+    整屏证据段不进这张表：它必有旁白（parse_segments 要求），而且它没有
+    `start` 可报——长度一律走 `seg_film_seconds`，别再读 `end - start`
+    （run 31626149097 就是在这儿 KeyError: 'end' 死掉的）。
+    """
     out: list[tuple[float, float, float]] = []
     t = cover
     for seg in spec["segments"]:
-        length = round(float(seg["end"]) - float(seg["start"]), 3)
-        if not str(seg.get("narration", "")).strip():
+        length = seg_film_seconds(seg)
+        if not seg.get("image") and not str(seg.get("narration", "")).strip():
             out.append((t, length, float(seg["start"])))
         t += length
     return out
+
+
+def evidence_windows(spec: dict, cover: float) -> list[tuple[float, float]]:
+    """整屏证据段在成片时间轴上的 [(起, 止)]。
+
+    这些段的底轨是 anullsrc——**静音是设计的一部分**（同封面），旁白说完
+    之后的余量秒必然是数字静音，不许拿去报「数字静音」的不合格。
+    但反过来那道闸不能松：每个窗口里**口播必须响过**——卡上没有声音
+    正是解读卡当年 −91 dB 那个形状（main 里逐窗口验）。
+    """
+    out: list[tuple[float, float]] = []
+    t = cover
+    for seg in spec["segments"]:
+        length = seg_film_seconds(seg)
+        if seg.get("image"):
+            out.append((t, t + length))
+        t += length
+    return out
+
+
+def dead_seconds(levels: list[float], after: int,
+                 evidence: list[tuple[float, float]],
+                 ) -> tuple[list[int], list[int]]:
+    """封面之后的数字静音秒，按「在不在证据段窗口里」分两摞。
+
+    整秒窗 [i, i+1) 完全落在某个证据段窗口里（两端各留 0.3s 给接缝的
+    溶解）才算豁免——只报不豁免的那摞，豁免的那摞调用方要**出声**打印，
+    否则「豁免了」和「没查」在日志上一模一样。
+    """
+    def in_ev(i: int) -> bool:
+        return any(lo - 0.3 <= i and i + 1 <= hi + 0.3 for lo, hi in evidence)
+
+    dead = [i for i, db in enumerate(levels)
+            if db <= SILENCE_FLOOR_DB and i >= after and not in_ev(i)]
+    exempt = [i for i, db in enumerate(levels)
+              if db <= SILENCE_FLOOR_DB and i >= after and in_ev(i)]
+    return dead, exempt
 
 
 def main() -> int:
@@ -270,13 +314,31 @@ def main() -> int:
     # 静音，算进来是必然误报。**这个起点只能有一个**：原来上面按常量算、下面
     # 写死 `levels[3:]`，封面一改长度两处就分叉。
     after = math.ceil(cover) + 1
-    dead = [i for i, db in enumerate(levels)
-            if db <= SILENCE_FLOOR_DB and i >= after]
+    evidence = evidence_windows(spec, cover)
+    dead, exempt = dead_seconds(levels, after, evidence)
     if dead:
         bad += 1
         print(f"\n[不合格] 封面之后还有 {len(dead)} 秒是数字静音：{dead}")
     else:
         print(f"\n[ok] 封面之后没有数字静音（最低 {min(levels[after:]):.1f} dB）")
+    if exempt:
+        print(f"[ok] 另有 {len(exempt)} 秒静音落在整屏证据段的口播间隙里"
+              f"（底轨是 anullsrc，静音是设计的一部分，同封面）：{exempt}")
+
+    # 证据段窗口里**口播必须响过**——豁免了地板静音，这一头就必须钉住，
+    # 否则一张没有声音的卡（解读卡当年 −91 dB 那个形状）会静静滑过去。
+    for lo_s, hi_s in evidence:
+        lo, hi = int(lo_s + 0.5), int(hi_s)
+        window = levels[lo:min(hi, len(levels))]
+        if not window:
+            print(f"[跳过] 证据段 {lo_s:.1f}s 太短，落不到整秒上")
+            continue
+        worst = max(window)
+        ok = worst > SILENCE_FLOOR_DB
+        bad += 0 if ok else 1
+        print(f"[{'ok' if ok else '不合格'}] 整屏证据段 {lo_s:.1f}s"
+              f" 口播最响 {worst:.1f} dB"
+              + ("" if ok else "——卡上没有声音"))
 
     windows = quiet_windows(spec, cover)
     if not windows:
