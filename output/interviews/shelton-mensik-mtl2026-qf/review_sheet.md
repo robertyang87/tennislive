@@ -91,7 +91,7 @@
 | 85 | 3:00.6 | [▶](https://youtu.be/ZycljTf6s0E?t=180) | Um, Jess Pegula's had a lot | 嗯 佩古拉在这儿 | ✏️ 已订正 |
 | 86 | 3:02.0 | [▶](https://youtu.be/ZycljTf6s0E?t=182) | of success here. | 拿了很多成绩 |  |
 | 87 | 3:02.8 | [▶](https://youtu.be/ZycljTf6s0E?t=182) | You won last year. | 你去年夺冠了 |  |
-| 88 | 3:04.2 | [▶](https://youtu.be/ZycljTf6s0E?t=184) | You're in the semis. Are you guys taking | 你现在又进四强了 你们是不是 |  |
+| 88 | 3:04.2 | [▶](https://youtu.be/ZycljTf6s0E?t=184) | You're in the semis. Are you guys taking | 你又进了半决赛 你们是不是 |  |
 | 89 | 3:05.6 | [▶](https://youtu.be/ZycljTf6s0E?t=185) | over the country? | 要包揽整个国家了 |  |
 | 90 | 3:06.9 | [▶](https://youtu.be/ZycljTf6s0E?t=186) | Excuse me. | 你说什么 |  |
 | 91 | 3:08.2 | [▶](https://youtu.be/ZycljTf6s0E?t=188) | Jess Pegula had a lot of success here. | 佩古拉在这儿拿了很多成绩 | ✏️ 已订正 |
@@ -127,7 +127,7 @@
 | 121 | 4:07.0 | [▶](https://youtu.be/ZycljTf6s0E?t=247) | but I wonder if you've watched him | 但不知道你有没有看过他打球 |  |
 | 122 | 4:08.4 | [▶](https://youtu.be/ZycljTf6s0E?t=248) | and what stands out to you there. | 有什么地方让你印象深刻 |  |
 | 123 | 4:10.4 | [▶](https://youtu.be/ZycljTf6s0E?t=250) | Uh yeah, first of all, I think | 嗯 首先 |  |
-| 124 | 4:13.8 | [▶](https://youtu.be/ZycljTf6s0E?t=253) | that um I'm definitely a big match player. | 我觉得自己肯定是大场面型选手 |  |
+| 124 | 4:13.8 | [▶](https://youtu.be/ZycljTf6s0E?t=253) | that um I'm definitely a big match player. | 我觉得自己是大场面型选手 |  |
 | 125 | 4:17.4 | [▶](https://youtu.be/ZycljTf6s0E?t=257) | I love uh playing big matches, big stadiums, | 我喜欢打大赛 大球场 |  |
 | 126 | 4:21.1 | [▶](https://youtu.be/ZycljTf6s0E?t=261) | big crowds. | 大场面的观众 |  |
 | 127 | 4:21.8 | [▶](https://youtu.be/ZycljTf6s0E?t=261) | I like playing against the best guys | 我喜欢对阵世界上 |  |
@@ -169,7 +169,7 @@
 | 163 | 5:47.4 | [▶](https://youtu.be/ZycljTf6s0E?t=347) | and what he does in the next 18 months. | 还有他未来一年半会怎么样 |  |
 | 164 | 5:52.6 | [▶](https://youtu.be/ZycljTf6s0E?t=352) | Hi, Ben. Congrats on the win. | 嗨 本 祝贺你赢下这场 |  |
 | 165 | 5:54.1 | [▶](https://youtu.be/ZycljTf6s0E?t=354) | Uh, if Learner wins tonight, | 如果勒纳今晚也赢了 |  |
-| 166 | 5:55.6 | [▶](https://youtu.be/ZycljTf6s0E?t=355) | there might be three Americans | 四强里可能会有 |  |
+| 166 | 5:55.6 | [▶](https://youtu.be/ZycljTf6s0E?t=355) | there might be three Americans | 半决赛里可能会有 |  |
 | 167 | 5:57.0 | [▶](https://youtu.be/ZycljTf6s0E?t=356) | in the in the semi-finals. | 三个美国人 |  |
 | 168 | 5:58.4 | [▶](https://youtu.be/ZycljTf6s0E?t=358) | Is that something that uh you care | 这件事你在意吗 |  |
 | 169 | 6:00.5 | [▶](https://youtu.be/ZycljTf6s0E?t=360) | about that you you find cool? | 你觉得这很酷吗 |  |
@@ -201,7 +201,7 @@
 | 195 | 7:10.1 | [▶](https://youtu.be/ZycljTf6s0E?t=430) | But, um I'll be super excited | 但我会特别期待 |  |
 | 196 | 7:12.6 | [▶](https://youtu.be/ZycljTf6s0E?t=432) | to play either one of these guys. | 跟他们俩当中的任何一个交手 |  |
 | 197 | 7:14.0 | [▶](https://youtu.be/ZycljTf6s0E?t=434) | Young guys playing great tennis. | 年轻人打得很棒 |  |
-| 198 | 7:16.1 | [▶](https://youtu.be/ZycljTf6s0E?t=436) | Uh Merida just got his first title I think | 梅里达好像刚拿到他第一个冠军 | ✏️ 已订正 |
+| 198 | 7:16.1 | [▶](https://youtu.be/ZycljTf6s0E?t=436) | Uh Merida just got his first title I think | 梅里达好像刚拿到首个冠军 | ✏️ 已订正 |
 | 199 | 7:19.4 | [▶](https://youtu.be/ZycljTf6s0E?t=439) | and yeah learn learner over the last year | 勒纳过去这一年 |  |
 | 200 | 7:22.6 | [▶](https://youtu.be/ZycljTf6s0E?t=442) | and a half has established himself | 半里已经证明了自己 |  |
 | 201 | 7:24.2 | [▶](https://youtu.be/ZycljTf6s0E?t=444) | as you know one of one of the best players | 是最厉害的球员之一 |  |
@@ -216,7 +216,7 @@
 | 210 | 7:42.5 | [▶](https://youtu.be/ZycljTf6s0E?t=462) | Uh but you wrote on the lens not done yet. | 但你在镜头上写了 还没结束 | ✏️ 已订正 |
 | 211 | 7:45.0 | [▶](https://youtu.be/ZycljTf6s0E?t=464) | What's the What's the goal in Montreal? | 你在蒙特利尔的目标是什么 |  |
 | 212 | 7:46.6 | [▶](https://youtu.be/ZycljTf6s0E?t=466) | And do you feel at this point | 到了这个阶段 |  |
-| 213 | 7:47.4 | [▶](https://youtu.be/ZycljTf6s0E?t=467) | where the semi-finals come | 四强赛都打到了 |  |
+| 213 | 7:47.4 | [▶](https://youtu.be/ZycljTf6s0E?t=467) | where the semi-finals come | 半决赛都打到了 |  |
 | 214 | 7:48.5 | [▶](https://youtu.be/ZycljTf6s0E?t=468) | in that you've got the target on your back? | 你还觉得自己背着靶子吗 |  |
 | 215 | 7:50.8 | [▶](https://youtu.be/ZycljTf6s0E?t=470) | Uh I I don't think I'm really looking at it | 我其实不这么看 |  |
 | 216 | 7:54.5 | [▶](https://youtu.be/ZycljTf6s0E?t=474) | at all from that perspective. | 自己是从这个角度去想的 |  |
