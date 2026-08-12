@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.12 赛场之上 | 莱巴金娜逆转大坂直美</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>2号种子莱巴金娜4-6 7-6(5) 6-4逆转11号种子大坂直美，晋级多伦多WTA1000女单半决赛，用时2小时32分53秒。
+
+大坂直美先声夺人，第一局就完成破发，此后一路稳稳保发，六比四拿下首盘。
+
+次盘两人各破发两次战成六平，抢七局莱巴金娜连追带赶，七比五扳回一盘，把比赛拖进决胜盘。
+
+决胜盘她一度二比三落后——轮到自己发球的这一局，面对四个破发点，她一个不落全部救回，随即立刻回破大坂直美的下一个发球局，反超四比三，再保发到五比三。大坂直美顶住一局追回四比五，但莱巴金娜发球拿到的两个赛点，大坂直美只救回第一个，第二个她用一记ACE收官，六比四锁定这场鏖战。
+
+技术统计：全场大坂直美3个ACE，莱巴金娜15个（其中决胜盘就有8个）；总分大坂直美107分、莱巴金娜111分，几乎势均力敌，胜负全在几个关键分上。
+
+两位大满贯冠军——四届大满贯得主大坂直美、2022年温网冠军莱巴金娜——赛后场上采访，主持人的原话是&quot;很难相信你们俩在今晚之前从没在WTA正赛交过手&quot;。这是她们职业生涯的第一次交锋，莱巴金娜用一场决胜盘大逆转赢下了它。
+
+半决赛，莱巴金娜将迎战高芙，这是她第二次打进国家银行公开赛四强。
+
+#网球时差 #莱巴金娜 #大坂直美 #国家银行公开赛 #多伦多WTA1000</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
