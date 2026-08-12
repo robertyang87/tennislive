@@ -6963,8 +6963,12 @@ def test_整改期顶栏要有复盘契约且比分不许漂移():
     reel._validate_editorial_contract(spec, required=True)
     assert spec["editorial"]["human_context"]["facts"]
     assert spec["editorial"]["human_context"]["sources"]
+    # ⚠️ line1 只是原样读出真实 spec 再传一遍，这条测试真正要护的是
+    # line2 的机械一致性（下面 bad_score 那段）——line1 的具体文字不是它的
+    # 判据，那是 `test_同一届赛事顶栏的中文名要统一` 的地盘。写死这个字符串
+    # 曾经在赛事名统一那次改动时把这条测试带崩，改成从 spec 自己读。
     assert reel._topbar_lines(spec) == (
-        "WTA 1000 加拿大站 第二轮", "伊埃拉 6-1 4-6 6-2 帕克斯")
+        spec["topbar"]["line1"], "伊埃拉 6-1 4-6 6-2 帕克斯")
 
     bad_score = json.loads(json.dumps(spec))
     bad_score["topbar"]["line2"] = "帕克斯 6-1 4-6 6-2 伊埃拉"
@@ -8217,6 +8221,53 @@ def test_赛场之上的比赛画面必须带比赛信息顶栏():
     assert reel._topbar_lines(good) == ("WTA 1000 加拿大站 第三轮", "萨巴伦卡 6-3 6-4 张帅")
     with pytest.raises(reel.ReelError, match="一致"):
         reel._topbar_lines({**good, "topbar": {**good["topbar"], "line2": "张帅 6-3 6-4 萨巴伦卡"}})
+
+
+def test_同一届赛事顶栏的中文名要统一():
+    """账号所有者 2026-08-12：「视频顶部一直显示的赛事中文名字要统一啊」。
+
+    量了一遍——同一届赛事（National Bank Open，男单在蒙特利尔、女单在
+    多伦多）的 `topbar.line1`，26 条里有 7 条各写各的：`WTA 1000 加拿大站`、
+    `WTA1000国家银行公开赛`、`ATP1000加拿大公开赛`、`ATP 1000 加拿大站`——
+    连"WTA1000"和"WTA 1000"这种空格都没对齐，同一场赛事在不同视频里顶栏
+    印着四五种不同的名字。
+
+    根子是每条 spec 的 `topbar.line1` 都是手打的，没有一个共用的出处——
+    和"排名/比分一个数写两处必分叉"是同一个毛病，只是这次分叉的是赛事名。
+
+    **判据不是硬编码 26 个文件名**，是自动识别"属于这一届赛事的 spec"
+    （spec 全文出现 National Bank Open 相关关键词，或"多伦多"/"蒙特利尔"
+    分别配上"WTA1000"/"ATP1000"），再要求同一巡回赛的 `topbar.line1`
+    统一成同一个前缀——这样以后加新的这一届赛事的 spec，判据自动接管，
+    不用回来给这个测试加名字；换到别的赛事（比如辛辛那提）不会被误伤，
+    因为它们的正文里不会出现这些关键词。
+    """
+    reel = _reel()
+    canonical = {"WTA": "WTA1000 多伦多", "ATP": "ATP1000 蒙特利尔"}
+    keywords = ("National Bank Open", "国家银行公开赛", "加拿大公开赛", "Rogers Cup")
+
+    def belongs_to_this_event(blob: str) -> bool:
+        if any(k in blob for k in keywords):
+            return True
+        return ("多伦多" in blob and "WTA1000" in blob) or \
+               ("蒙特利尔" in blob and "ATP1000" in blob)
+
+    checked = 0
+    for path in sorted(Path("specs/reels").glob("*.json")):
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        line1 = (spec.get("topbar") or {}).get("line1", "")
+        if not line1:
+            continue
+        blob = json.dumps(spec, ensure_ascii=False)
+        if not belongs_to_this_event(blob):
+            continue
+        checked += 1
+        tour = "WTA" if "WTA1000" in line1 else ("ATP" if "ATP1000" in line1 else None)
+        assert tour, f"{path.name} 的顶栏 {line1!r} 认不出是哪个巡回赛"
+        assert line1.startswith(canonical[tour]), (
+            f"{path.name} 的顶栏写着 {line1!r}，"
+            f"这一届赛事的{tour}赛事名要统一成 {canonical[tour]!r} 开头")
+    assert checked >= 20, "一条属于这一届赛事的 spec 都没扫到，是不是关键词或路径写错了"
 
 
 def test_全称断言必须认领一份能穷举的出处():

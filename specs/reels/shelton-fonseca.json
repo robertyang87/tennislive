@@ -5,7 +5,7 @@
   "_source": "YouTube 单场集锦，2026-08-10 probe run 31357251041 验证：1920×1080、25fps、247.013878s，下载走 `web_embedded` client（[ok] web_embedded 下到了 1920×1080，109.1 MB）。⚠️ **这是账号所有者 2026-08-10 明确要求打通的第一条 ATP·YouTube 源**（『那把这条路打通，后续都优先 YouTube』）——之前 CLAUDE.md 记的『ATP 源片仍然卡在人工供片』已经过期，仓库里 medvedev-zandschulp / tirante-fritz（ATP 官方频道）、fonseca-ruud / fritz-jodar-final（Tennis TV 频道）四条早就证明这条路走得通，只是没人重新确认过。\n\n**画面自证**（本地拿不到 YouTube，验证全部走 runner 产物）：\n- `cover_candidates/sheet.jpg` 11 张候选帧，**每一张右上角都烧着「Tennis TV」台标**——官方频道内容\n- 场地上印着 `MONTREAL`（contact_00.jpg 0.5~8.5s），场边广告板 `Banque Nationale` `Rogers` `IGA` `CGI`——蒙特利尔 National Bank Open 的赞助商阵容\n- 记分条烧着 `FONSECA` / `SHELTON`，逐格读过 score_00~06.jpg：比分从 0-40（0.5s）→ 1-1（16.5s）→ 3-3（48.5s）→ 5-3（80.5s）→ 首盘 6-3（88.5~90.5s）→ 次盘 3-0（108.5s）→ 6-6（200.5~204.5s）→ 抢七 6-2（220.5s）→ 6-3（224.5s，丰塞卡救下赛点），和 flashscore 的逐分记录（KWAEU167）**一分不差地对得上**\n- 自动字幕（captions.txt）末尾『Ben Shelton wins the battle of the big hitters. He's into the quarterfinals in Montreal.』和真实赛果吻合；`128.72~138.40s` 一段『Is the ankle okay though? / No. What's happened here?』和 ATP 官方赛后稿『second set at 3-1, Fonseca appeared to tweak his ankle while jumping to chase down an overhead』的描述、以及 contact_02.jpg 132~138.5s 那段起跳动态模糊，三处对得上同一件事",
   "_column": "赛场之上。讲一场对决，所以封面 solo 版式要印赛果（带国旗和排名），赢家在前。",
   "topbar": {
-    "line1": "ATP1000加拿大公开赛 · 1/8决赛",
+    "line1": "ATP1000 蒙特利尔 1/8决赛",
     "line2": "谢尔顿 6-3 7-6(3) 丰塞卡"
   },
   "_topbar_why": "flashscore（KWAEU167）：`ER÷1/8-finals`——flashscore 自己的轮次标签就是 1/8-finals（十六强），不用换算，直接对应 CLAUDE.md『半决赛/1/4决赛/1/8决赛』的写法。`BA÷3 BC÷6`（丰塞卡两盘 3、6）`BB÷6 BD÷7`（谢尔顿两盘 6、7）`DC÷3`（抢七丢分方的分数）——6-3 7-6(3)，和 WebSearch 交叉到的『Ben Shelton...defeated...Joao Fonseca 6-3, 7-6(3)』（tennis.com 赛程页同一场比赛条目）一致。",
