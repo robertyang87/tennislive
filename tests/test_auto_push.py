@@ -50,6 +50,12 @@ def repo(tmp_path: Path) -> Path:
     outdir.mkdir(parents=True)
     (outdir / "render.json").write_text("{}", encoding="utf-8")
     _git(tmp_path, "init", "-q")
+    # render.json 提交进仓库——现实里它就是先由 render 工作流提交、随 PR
+    # 进 main 的；「已删除的产物不算候选」那道闸查的是 git ls-files，
+    # 不提交的话所有用这个 fixture 的测试都会被那道闸拦下。
+    _git(tmp_path, "add", "-A")
+    _git(tmp_path, "-c", "user.email=a@b", "-c", "user.name=c",
+         "commit", "-qm", "base")
     return tmp_path
 
 
@@ -164,9 +170,57 @@ def test_一趟带进来两条就一条都不发(repo: Path):
     second = repo / "output/2026-08-03/reel/demo2"
     second.mkdir(parents=True)
     (second / "render.json").write_text("{}", encoding="utf-8")
+    _commit_all(repo)
 
     with pytest.raises(SystemExit):
         gate.pick(CHANGED + ["output/2026-08-03/reel/demo2/render.json"], repo)
+
+
+def test_删除的render_json不算候选(repo: Path, capsys):
+    """清理旧版产物的合并会把**删除**的 render.json 也带进 changed 列表
+    （workflow 那头 `git diff --name-only` 含 D 条目；已补 --diff-filter=AM，
+    这儿是第二层）。被删的产物不是新渲完的片子——它的 spec 往往还写着
+    auto:true、目录里又没有 pushed.json，不拦的话会凑成「一次 N 条」把
+    真该发的一起拦死。2026-08-12 zheng-lanlana 的合并差点踩到：同一批
+    改动里带着三份被顶替旧版的删除。"""
+    _spec(repo, {"auto": True})
+    _git(repo, "rm", "-rq", "output/2026-08-03/reel/demo")
+    _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
+         "commit", "-qm", "清理旧产物")
+    assert gate.pick(CHANGED, repo) is None
+    assert "已不在仓库里" in capsys.readouterr().out, "跳过要说出为什么"
+
+
+def test_同一批里删一条活一条要发活的那条(repo: Path):
+    """zheng-lanlana 那次合并的真实形状：删掉被顶替的旧版 + 新渲的一条。
+    删除项被滤掉后，活的那条必须照常发——别把防批量的闸误触发。"""
+    _spec(repo, {"auto": True})
+    _spec(repo, {"auto": True}, slug="demo2")
+    (repo / "specs/reels/demo2.xhs.txt").write_text("文案", encoding="utf-8")
+    second = repo / "output/2026-08-03/reel/demo2"
+    second.mkdir(parents=True)
+    (second / "render.json").write_text("{}", encoding="utf-8")
+    _commit_all(repo)
+    _git(repo, "rm", "-rq", "output/2026-08-03/reel/demo")
+    _git(repo, "-c", "user.email=a@b", "-c", "user.name=c",
+         "commit", "-qm", "清理旧产物")
+
+    picked = gate.pick(
+        CHANGED + ["output/2026-08-03/reel/demo2/render.json"], repo)
+    assert picked is not None and picked[0] == "demo2", (
+        "删除项混进来把活的那条也拦死了——防批量的闸不该被幽灵候选触发")
+
+
+def test_工作流的diff要滤掉删除项():
+    """第一层在 workflow：`--diff-filter=AM`。没有它，删除的 render.json
+    一样进 changed 列表——闸挡得住，但一趟 run 会红着结束，真该发的那条
+    要等人来查。"""
+    body = Path(".github/workflows/auto-push-reel.yml").read_text(
+        encoding="utf-8")
+    line = next(l for l in body.splitlines()
+                if "git diff" in l and "render.json" in l and "#" not in l.split("git diff")[0])
+    assert "--diff-filter=AM" in line, (
+        "auto-push 的 diff 少了 --diff-filter=AM：删除的 render.json 会被当成候选")
 
 
 # ---------------------------------------------------------------- 闸 1：路径

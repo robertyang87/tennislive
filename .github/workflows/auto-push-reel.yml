@@ -79,7 +79,10 @@ jobs:
           # 会失败，而失败在这儿的表现是「这次没有该发的片子」，**和真的没有
           # 长得一模一样**，一条该发的推送就这么静默消失了。
           # 这个仓库是 squash 合并，`HEAD^` 就是合并前的 main，深度 2 保证有。
-          CHANGED=$(git diff --name-only HEAD^ HEAD -- 'output/*/reel/*/render.json')
+          # `--diff-filter=AM`：**删掉的 render.json 不是新渲完的片子**。清理旧版
+          # 产物的合并会带进 D 条目，而它的 spec 往往还写着 auto:true、又没有
+          # pushed.json——不滤掉就会凑成「一次 N 条」把真该发的那条一起拦死。
+          CHANGED=$(git diff --diff-filter=AM --name-only HEAD^ HEAD -- 'output/*/reel/*/render.json')
           if [ -z "$CHANGED" ]; then
             echo "[自动推送] 这次没有动到任何 render.json。"
             exit 0
