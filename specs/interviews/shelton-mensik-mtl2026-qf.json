@@ -299,5 +299,7 @@
       "point": "他在镜头上写下 还没结束",
       "ask": "你有没有也在追一个还没结束的目标"
     }
-  }
+  },
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-12 在 run 31579517124 上跑的 --stage verify：转写分歧 10.3%（YouTube 自动字幕/en_fixed 后 1474 词，whisper small.en 1360 词），在 12% 闸门以内；人工引语校验 1 处分歧已判成记者编辑习惯性删词销账（human_quote_ok）；自动字幕 1 处空档（222.8–225.4s）已按上下文销账（caption_gaps_ok）。逐条看过 90 余处分歧：绝大多数是 whisper 漏听口头语（um/uh）造成的正常差异。三处值得记：① `sebi uh nakashima learner nicholson` whisper 听成 `seve nagashima lerner mikkelsen`——『nicholson』和『mikkelsen』两份机器都没对上，**这一处没有订正**，维持 YouTube 原文，是因为没有第三个信源能确证是哪一个（J. Nicholson 是真实 ATP 球员姓氏，Michelsen 也是同期活跃的美国新星，两份 ASR 各执一词，谁都不比谁更可信，这跟『两份机器都不支持某个订正就不订正』是同一个道理，只是这次连『不订正』的默认选项本身也没法证实——留白比硬编一个更诚实）；② `um rafael jodar's` whisper 独立听成 `rafa hodar's`——两份机器都把姓氏听错了同一个方向，但这条订正的依据是外部信源（ATP 官网人物特稿），不是靠 ASR 互相印证，两份机器同错恰好说明这是姓氏本身生僻、容易被听岔，不影响订正的可信度；③ `um jess pegula's`/`jess pegula`/`jessica pegula oh pegula yeah yeah uh` whisper 全部听成 `jaspi gula`——这条订正的依据是对话本身（记者被追问后拼读出名字、谢尔顿确认），是这条采访里最硬的自证，两份机器都听岔反而印证了这个姓氏确实难听清。"
 }
