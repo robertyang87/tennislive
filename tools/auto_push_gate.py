@@ -87,7 +87,15 @@ def _spec_paths(repo: Path, slug: str) -> tuple[Path, Path]:
 
 
 def wants_auto_push(repo: Path, slug: str, outdir: Path) -> None:
-    """三道闸，过不了就 `Skip`（带理由）。"""
+    """四道闸，过不了就 `Skip`（带理由）。"""
+    # **render.json 必须还在仓库里。** 工作流那头已经用 --diff-filter=AM 滤掉了
+    # 删除项，这儿再兜一层：被删的旧产物（清理被顶替的版本）不是新渲完的片子，
+    # 它的 spec 往往还写着 auto:true、目录里又没有 pushed.json——不拦的话会
+    # 凑成「一次 N 条」把真该发的一起拦死（2026-08-12 差点在 zheng-lanlana
+    # 的合并上踩到）。用 tracked() 不用 is_file()：稀疏检出下两者分家。
+    if not tracked(repo, outdir / "render.json"):
+        raise Skip(f"{slug}：{outdir}/render.json 已不在仓库里"
+                   "（这次合并删掉的旧产物），不是新渲的片子")
     spec, copy_path = _spec_paths(repo, slug)
     if not spec.is_file():
         raise Skip(f"{slug}：没有 {spec}，不知道该发什么")

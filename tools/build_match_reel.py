@@ -1262,6 +1262,13 @@ class Segment:
     # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
     # 头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
+    # **这一段不要源片的声音**（`"mute": true`）。给**配乐宣传片**这类源准备：
+    # 它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，音乐会在
+    # 每个接缝上跳一下（比画面跳切显耳得多）；而且「默认保留现场球声、不加
+    # 背景音乐」那条编辑规矩管的就是这种音轨。静掉之后这一段走 anullsrc，
+    # 和「源片本来就没有音轨」同一条路。⚠️ 别拿它去静真实比赛的现场声——
+    # 那是这条线的内容本身，静掉等于出哑片。
+    mute: bool = False
 
     @property
     def length(self) -> float:
@@ -1280,6 +1287,19 @@ def seg_seconds(s: dict) -> float:
     """
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)
+
+
+def _seg_mute(s: dict, index: int) -> bool:
+    """`mute` 只认布尔的 true/false。字符串 `"true"` 要报错——Python 里它是
+    真值，但和 `"auto": "true"` 那次同一个理由：两种处理都说得通的写法，
+    「悄悄当真」和「悄悄当假」都会让 spec 和成片对不上，当场报出来最便宜。"""
+    raw = s.get("mute")
+    if raw is None:
+        return False
+    if isinstance(raw, bool):
+        return raw
+    raise ReelError(f"第 {index + 1} 段的 mute 要写布尔 true/false，"
+                    f"不是 {raw!r}——字符串在这儿两种读法都说得通，所以一律报错")
 
 
 def _seg_speed(s: dict, index: int) -> float:
@@ -1493,7 +1513,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
                         _quote_cues(s.get("quote", "")),
                         *_seg_voice(s, i),
                         s.get("inset") or None,
-                        _seg_speed(s, i))
+                        _seg_speed(s, i),
+                        _seg_mute(s, i))
                 for i, s in enumerate(spec["segments"])]
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
@@ -1527,16 +1548,16 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
-             "silent_source", "slug", "source_audio", "source_url", "sources",
-             "stats", "subtitle_top", "topbar", "editorial"),
+    "spec": ("conform", "cover", "crop_y", "crop_zoom", "mixed_fps", "push",
+             "segments", "silent_source", "slug", "source_audio", "source_url",
+             "sources", "stats", "subtitle_top", "topbar", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
     "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "narration", "quote", "source", "speed", "start", "track",
-                "voice"),
+                "mute", "narration", "quote", "source", "speed", "start",
+                "track", "voice"),
 }
 
 
@@ -2003,7 +2024,9 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # `-map 1:a:0`，把补位的静音当成音轨——原声合进来之后照样取静音，成片里
     # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
     # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
-    has_audio = _has_audio(source)
+    # `seg.mute` 走的就是「没有音轨」那条路：配乐宣传片的音乐既不是现场声，
+    # 切碎再拼还会在每个接缝上跳，静掉换 anullsrc（见 Segment.mute 的注释）。
+    has_audio = _has_audio(source) and not seg.mute
     # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
     # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
     # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
@@ -3394,6 +3417,53 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return {"": spec["source_url"]}
 
 
+def conform_sources(paths: dict[str, Path], spec: dict | None,
+                    outdir: Path) -> None:
+    """把声明过的源**等比放大铺满再中央裁**到基准尺寸——尺寸闸的唯一出路。
+
+    来路：cincinnati-story 的场馆官方宣传片是 1920×1012（电影画幅），和两条
+    1080 高的决赛集锦混用被 `check_sources_match` 拦下（run 31619358302）。
+    那道闸说「尺寸没有出路」，对**随手混**成立；但 1012→1080 是 1.067× 的
+    等比放大加两侧各 3% 的裁边，对 b-roll 素材完全可用——所以给它一条
+    **显式认领**的出路（`conform: {源键: 为什么可以}`），和 `mixed_fps`
+    同一个形状：认领这一步让取舍留下判据，而不是让它悄悄发生。
+
+    - 基准 = 第一个**没被声明**的源的尺寸；全声明了要报错（总得有基准）
+    - 已经同尺寸的跳过并出声（幂等：缓存恢复后每趟都会走到这儿）
+    - `crf 16 / preset fast`：中间产物花比特不花时间，成片还会再编一次
+    """
+    declared = (spec or {}).get("conform") or {}
+    if not declared:
+        return
+    if not isinstance(declared, dict) or not all(
+            isinstance(v, str) and v.strip() for v in declared.values()):
+        raise ReelError('conform 要写成 {"源键": "为什么可以放大裁边"}——'
+                        "认领要留下判据，光列名字不算")
+    missing = sorted(set(declared) - set(paths))
+    if missing:
+        raise ReelError(f"conform 里的 {missing} 不在 sources 里")
+    ref = next((k for k in paths if k not in declared), None)
+    if ref is None:
+        raise ReelError("conform 不能把所有源都声明进去——总得留一个当尺寸基准")
+    tw, th = probe_size(paths[ref])
+    for key, why in declared.items():
+        w, h = probe_size(paths[key])
+        if (w, h) == (tw, th):
+            print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
+            continue
+        dst = paths[key].with_name(paths[key].stem + "_conform.mp4")
+        with stage(f"统一尺寸 {key}"):
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(paths[key]),
+                "-vf", (f"scale={tw}:{th}:force_original_aspect_ratio="
+                        f"increase:flags=lanczos,crop={tw}:{th}"),
+                "-c:v", "libx264", "-preset", "fast", "-crf", "16",
+                "-c:a", "copy", str(dst))
+        paths[key] = dst
+        print(f"[conform] {key} {w}×{h} → {tw}×{th}"
+              f"（等比放大铺满再中央裁）——{why}")
+
+
 def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> None:
     """多源要对得上，不一致就在这儿报，别渲到一半。**两样的严重程度不同：**
 
@@ -3553,6 +3623,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             with stage(f"下载源片 {key or '(主源)'}"):
                 path = download(url, path)
         sources[key] = path
+    conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
@@ -4005,7 +4076,7 @@ _ABSOLUTE_CLAIM_RE = re.compile(
 _LEGACY_UNSOURCED_CLAIMS = frozenset({
     "chwalinska-gibson",   # ⚠️ 就是出事的那条；成片改不掉，xhs 已更正
     "eala-pegula", "eala-pegula-final", "wang-samsonova",
-    "zhang-putintseva", "zheng-lanlana",
+    "zhang-putintseva",
 })
 
 
