@@ -6841,6 +6841,12 @@ _SPEECH_FIXTURE = [
     # 121 段里最偏的就这两条（−1.27 / +1.42）。
     ("gea-shapovalov", 5, 67, 10, 14.40),
     ("wong-gea", 3, 42, 9, 12.67),
+    # 2026-08-11：cincinnati-story 第 3 段（Azure 比 edge-tts 快，见
+    # build_match_reel.py 的 SPEECH_EST_ERR 注释），当前样本表里最偏的一条
+    # （−2.07s）。不把它收进来的话，SPEECH_EST_ERR 调到能盖住它，就会撞上
+    # 「不许比冻结样本最坏还宽出半秒」那道自检——两条闸互相打架，闸本身就
+    # 失效了。
+    ("cincinnati-story", 3, 60, 8, 11.64),
 ]
 
 
