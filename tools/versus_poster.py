@@ -948,8 +948,14 @@ __SCRIM__
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
 .scoreboard-grid{display:grid;min-height:214px}
-.scoreboard-players{min-width:0}
-.score-person{height:107px;box-sizing:border-box;display:flex;align-items:center;
+/* ⚠️ 名字这两行的分隔线要和右边比分格子的分隔线对齐，两边必须用同一种
+   算法分高度。这儿一直写死 107px（正好是 214÷2，眼下对得上），右边
+   `.score-number` 用的是 `flex:1`——两种算法背后各压着一个数，214 只要
+   哪天单独改一次就会分道扬镳。真的在一个只改了 min-height、没跟着改
+   107px 的旁支脚本上炸过（名字那条线和比分那条线错开了 18px）。改成
+   两边都 `flex:1`，永远各占整行高度的一半，不用再手动记两个数同步。 */
+.scoreboard-players{display:flex;flex-direction:column;min-width:0}
+.score-person{flex:1;box-sizing:border-box;display:flex;align-items:center;
  padding:0 16px 0 22px;min-width:0}
 .score-person+.score-person{border-top:3px solid rgba(244,251,247,.9)}
 .score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
