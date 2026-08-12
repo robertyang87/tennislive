@@ -1,13 +1,14 @@
 {
   "slug": "rybakina-osaka-tor2026-qf",
-  "_note": "账号所有者点名要做莱巴金娜今天（2026-08-12 北京时间）这条。事实（两个独立源交叉核过，见 _source）：莱巴金娜 4-6 7-6(5) 6-4 逆转大坂直美，2小时33分钟，2026 国家银行公开赛（多伦多）女单1/4决赛，生涯首次交手。第一盘开局即被破发，丢掉首盘；第二盘一度两次被破发落后，抢七里在两分之遥就要输掉整盘时逆转拿下（WTA 官网原文只写「距离告负两分」，没有用「盘点/赛点」这个词，不替它加码）；决胜盘 3-2 时从 0-40 救下四个破发点，随后逆转晋级半决赛，对手是高芙（两人生涯第二次交手）。莱巴金娜赛后场上采访原话：「I was just trying to fight. The first game of the match was really tough because it cost me the set, and then in the second I was just trying to stay closer to the score, even if I'm losing. And yeah, just fight, and I'm super happy that I won this match.」\n\n**这条片子的落点**：整场球她一路在追分，没有一刻是轻松的——首盘开局就丢掉主动权，第二盘两次落后又差两分就要两盘落后，决胜盘还要从0-40救回发球局。她自己的话『just trying to fight』『even if I'm losing』正是这种一路咬着不放的状态，比单纯的『逆转』更准确。",
+  "_note": "账号所有者点名要做莱巴金娜今天（2026-08-12 北京时间）这条。事实（两个独立源交叉核过，见 _source，外加视频自动字幕本身就是第三个来源）：莱巴金娜 4-6 7-6(5) 6-4 逆转大坂直美，2小时33分钟，2026 国家银行公开赛（多伦多）女单1/4决赛，生涯首次交手。第一盘开局即被破发，丢掉首盘；第二盘一度两次被破发落后，抢七里距离告负只差两分时逆转拿下（WTA 官网原文只写「两分之遥」，没有用「盘点/赛点」这个词，不替它加码）；决胜盘 3-2 时从 0-40 救下四个破发点，随后逆转晋级半决赛，对手是高芙（她本人说「第二次」打进这站四强）。\n\n⚠️ **视频真实片长 435 秒（--stage subs 实测，@WTA 官方频道），不是「310 秒定长纯集锦」那一类**——过了 299 秒之后就是完整的场上采访，三问三答，`start`/`end` 已经收窄到只包这一段（300.4–423.6），前面的比赛集锦解说不进片子（这条线是「赛后开麦」，讲的是她说了什么，不是比赛怎么打的，那是「赛场之上」的活）。\n\n**采访里三个问题**：①决胜盘怎么翻过来的——「I was just trying to fight...even if I'm losing」，和 WTA 官方战报引的原话一字不差，互相印证；②生涯首次交手却已经练过两次球，大坂的球给她什么感觉；③**记者提到「你上次对萨姆索诺娃说过，只要肯拼就能翻盘，今晚你又做到了一次」**——这是采访原话里记者自己问出来的，不是我推的：这场翻盘不是孤立的，是她这一周第二次从落后里拼回来（上一轮对萨姆索诺娃也是决胜盘落后逆转，`_source` 第二条），也是她本人所说的「第二次」打进这站半决赛。**这条片子的落点就是这个「又一次」**：她自己说得很直白——不是走运，是每一场都在拼。\n\n⚠️ **自动字幕把两个人的名字全听岔了**（`Rebecca`/`Rebachina` = Rybakina，`Naomi Asaka`/`Saka` = Osaka），采访部分（300.4s 之后）没有再出现姓名混淆，`en_fixed` 只需要处理片头的比分播报那几句——已经被裁在 `start` 之外，不进这条片子。",
   "_source": [
-    "https://www.wtatennis.com/news/4557966/rybakina-shows-champions-grit-in-comeback-win-over-osaka-to-reach-toronto-semis"
+    "https://www.wtatennis.com/news/4557966/rybakina-shows-champions-grit-in-comeback-win-over-osaka-to-reach-toronto-semis",
+    "https://motorcyclesports.net/elena-rybakina-wins-marathon-match-to-reach-toronto-quarters-against-naomi-osaka/"
   ],
   "url": "https://www.youtube.com/watch?v=5uI6gpVjHdw",
-  "source_title": "Naomi Osaka vs. Elena Rybakina | 2026 Toronto Quarterfinal | WTA Match Highlights（@WTA 官方频道，标题待 --stage subs 跑过之后核实）",
-  "start": 0.0,
-  "end": 999.0,
+  "source_title": "Naomi Osaka vs. Elena Rybakina | 2026 Toronto Quarterfinal | WTA Match Highlights（@WTA 官方频道，--stage subs 实测确认，435 秒）",
+  "start": 300.4,
+  "end": 423.6,
   "column": "赛后开麦",
   "event": "2026 国家银行公开赛（多伦多）1/4 决赛",
   "winner": "莱巴金娜"
