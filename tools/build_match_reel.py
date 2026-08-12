@@ -4005,7 +4005,7 @@ _ABSOLUTE_CLAIM_RE = re.compile(
 _LEGACY_UNSOURCED_CLAIMS = frozenset({
     "chwalinska-gibson",   # ⚠️ 就是出事的那条；成片改不掉，xhs 已更正
     "eala-pegula", "eala-pegula-final", "wang-samsonova",
-    "zhang-putintseva", "zheng-lanlana",
+    "zhang-putintseva",
 })
 
 
