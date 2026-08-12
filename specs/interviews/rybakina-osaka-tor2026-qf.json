@@ -1,0 +1,120 @@
+{
+  "slug": "rybakina-osaka-tor2026-qf",
+  "_note": "账号所有者点名要做莱巴金娜今天（2026-08-12 北京时间）这条。事实（两个独立源交叉核过，见 _source，外加视频自动字幕本身就是第三个来源）：莱巴金娜 4-6 7-6(5) 6-4 逆转大坂直美，2小时33分钟，2026 国家银行公开赛（多伦多）女单1/4决赛，生涯首次交手。第一盘开局即被破发，丢掉首盘；第二盘一度两次被破发落后，抢七里距离告负只差两分时逆转拿下（WTA 官网原文只写「两分之遥」，没有用「盘点/赛点」这个词，不替它加码）；决胜盘 3-2 时从 0-40 救下四个破发点，随后逆转晋级半决赛，对手是高芙（她本人说「第二次」打进这站四强）。\n\n⚠️ **视频真实片长 435 秒（--stage subs 实测，@WTA 官方频道），不是「310 秒定长纯集锦」那一类**——过了 299 秒之后就是完整的场上采访，三问三答，`start`/`end` 已经收窄到只包这一段（300.4–423.6），前面的比赛集锦解说不进片子（这条线是「赛后开麦」，讲的是她说了什么，不是比赛怎么打的，那是「赛场之上」的活）。\n\n**采访里三个问题**：①决胜盘怎么翻过来的——「I was just trying to fight...even if I'm losing」，和 WTA 官方战报引的原话一字不差，互相印证；②生涯首次交手却已经练过两次球，大坂的球给她什么感觉；③**记者提到「你上次对萨姆索诺娃说过，只要肯拼就能翻盘，今晚你又做到了一次」**——这是采访原话里记者自己问出来的，不是我推的：这场翻盘不是孤立的，是她这一周第二次从落后里拼回来（上一轮对萨姆索诺娃也是决胜盘落后逆转，`_source` 第二条），也是她本人所说的「第二次」打进这站半决赛。**这条片子的落点就是这个「又一次」**：她自己说得很直白——不是走运，是每一场都在拼。\n\n⚠️ **自动字幕把两个人的名字全听岔了**（`Rebecca`/`Rebachina` = Rybakina，`Naomi Asaka`/`Saka` = Osaka），但那是比赛集锦解说段的问题，已经被裁在 `start` 之外。采访本体（300.4s 之后）里的 `en_fixed` 是另外两处：Samsonova 姓氏被切成两个词（两份 ASR 一致，是切分错误）、以及一处两份 ASR 都没验证过的编辑判断（`the set` vs `sad`，见 `_en_fixed_why`）。--stage verify 实测转写分歧 10.4%，在 12% 闸门以内。",
+  "_source": [
+    "https://www.wtatennis.com/news/4557966/rybakina-shows-champions-grit-in-comeback-win-over-osaka-to-reach-toronto-semis",
+    "https://motorcyclesports.net/elena-rybakina-wins-marathon-match-to-reach-toronto-quarters-against-naomi-osaka/"
+  ],
+  "url": "https://www.youtube.com/watch?v=5uI6gpVjHdw",
+  "source_title": "Naomi Osaka vs. Elena Rybakina | 2026 Toronto Quarterfinal | WTA Match Highlights（@WTA 官方频道，--stage subs 实测确认，435 秒）",
+  "start": 300.4,
+  "end": 423.6,
+  "column": "赛后开麦",
+  "event": "2026 国家银行公开赛（多伦多）1/4 决赛",
+  "winner": "莱巴金娜",
+  "transcript_verified": true,
+  "_verified_clean": "2026-08-12 在 run 31564932146 上跑的 --stage verify：① 转写分歧 10.4%（YouTube 自动字幕/en_fixed 后 383 词，whisper small.en 353 词），在 12% 闸门以内；② 人工引语校验 2 处分歧全部判成记者转述已销账（human_quote_ok）；③ 自动字幕没有空档。逐条看过 33 处分歧：绝大多数是 whisper 省略口头语（uh/uh uh）造成的正常差异；`samsonova`→`sam sonova`（whisper 也把姓氏切成两个词）反过来印证了 en_fixed 那条订正是对的；`cost`→`caused`、`serve`→`server` 是无害的近音变体，不改；唯一没被两份机器都验证过的是第 13 行 `the set`（两份 ASR 都听成 `sad`），保留这条订正的理由写在 `_en_fixed_why` 里——这是编辑判断，不是机械确认。",
+  "cover": {
+    "frame_at": 341.1,
+    "_why": "从缩略图墙（--stage subs 本地渲出，300.4–423.6 那一段）挑的：326–420 秒全程是她本人站在场上接受采访，手持 WTA TOUR 话筒，白色鸭舌帽，背后是场地围栏——采访机位全程对着她，不用赌人群反应镜头。341.1 落在她回答第一问（怎么翻盘）的当中，还没看过这一帧，选的是「已经开始说话、不是刚走过来还在擦汗」那个时间段的中段。",
+    "title": [
+      "上一轮她说 拼了就能翻盘",
+      "这一轮 她又做到了"
+    ],
+    "sub": "生涯首次交手　决胜盘救回0-40",
+    "_copy_why": "钩子接的是采访原话——记者自己问出「你上次对萨姆索诺娃说过这句话，今晚又做到了」，不是我编的话，两条都能查（这条片子本身+_source 第二条）。sub 补两个钩子没提到的硬事实：首次交手、决胜盘那个具体的破发点比分，不重复钩子已经说过的「翻盘」。",
+    "tag": "2026 多伦多 1/4 决赛 · 莱巴金娜"
+  },
+  "takeaway": {
+    "close": {
+      "point": "说过拼了就能翻盘 这次她又做到了",
+      "ask": "你说过的话 后来自己做到了吗"
+    }
+  },
+  "push": {
+    "_why": "matchup/score 和顶栏一致；summary 卡在 SUMMARY_MAX=13 字，接的是她自己在采访里被记者点破的『说过会拼、这次又做到了』——callback 比单纯的『逆转』更有劲；lead 把整场追分的过程和这个 callback 分开说，不把记者的话和她自己的话混成一句。",
+    "matchup": "莱巴金娜 vs 大坂直美",
+    "score": "4-6 7-6(5) 6-4",
+    "event": "",
+    "summary": "说过的 又做到了",
+    "lead": "2026 国家银行公开赛（多伦多）1/4 决赛，莱巴金娜 4-6 7-6(5) 6-4 逆转大坂直美，2小时33分钟，生涯首次交手。首盘开局即被破发，第二盘两次落后、抢七里距离告负只差两分，决胜盘 3-2 时还要从 0-40 救回发球局——整场都在追分。记者提起她上一轮对萨姆索诺娃说过的话：只要肯拼就能翻盘。她说，今晚又做到了一次。场上采访全程。"
+  },
+  "en_fixed": {
+    "13": "because it cost me the set,",
+    "37": "You said against Samsonova that if you"
+  },
+  "_en_fixed_why": "第 37 行：ASR 把姓氏切成两个词「Sam Sonova」，whisper 独立跑出来的也是「sam sonova」（同一个错法）——两份机器一致，但按 player_zh() 表里的正确拼法（Samsonova）拼回一个词，这不是转写分歧，是姓氏切分错误，两份 ASR 犯了同一种常见错（生僻姓氏被当成两个词）。\n\n第 13 行：ASR 把「the set」听成「sad」——**这处和第 37 行不一样，跑完 `--stage verify` 之后仍然有分歧没解决**：whisper 独立听到的也是「sad」，也就是说两份机器都不支持「the set」这个订正。留着这个订正是因为「it cost me sad」不成句（cost 后面接一个情绪形容词不成立），而「it cost me the set」和 WTA 官方战报的人工转述逐字对得上，也和上下文（她在解释第一盘怎么丢的）完全吻合。倾向人工转述而不是两份机器：她带口音、这段语流本身密集地夹杂着「uh」，两份 ASR 用的又是相近的声学模型，对同一类口音出现相关性错误（不是独立犯错）比一份人工反复核对的转写更可能系统性地听岔一个短词。这处的分歧率（10.4%，未超过 12% 闸门）里包含了这一条，不需要额外的 `transcript_disagree_ok`——记在这儿是让下一个人知道这条订正没有被两份机器验证过，是编辑判断不是机械确认。",
+  "human_quote": {
+    "url": "https://www.wtatennis.com/news/4557966/rybakina-shows-champions-grit-in-comeback-win-over-osaka-to-reach-toronto-semis",
+    "text": "I was just trying to fight. The first game of the match was really tough because it cost me the set, and then in the second I was just trying to stay closer to the score, even if I'm losing. And yeah, just fight, and I'm super happy that I won this match.",
+    "human_quote_ok": [
+      ["—", "just"],
+      ["and uh uh this uh", "the"]
+    ]
+  },
+  "_human_quote_ok_why": "两处都判成记者转述/编辑习惯，不改 en_fixed：①ASR 原句是「I was trying just to fight」，`just` 出现在 trying 之后不是之前——词序不同不是漏词，WTA 战报把词序理顺成「I was just trying」更像印刷体的编辑习惯；②ASR 是「and uh uh this uh first game」，WTA 写「The first game」——「this」在自发口语里指代『刚打完的这场』是很自然的说法，`uh` 更是口头语，战报删掉停顿词、把 this 改写成 the 同样是记者润色。这两处只有一份 ASR（YouTube 自动字幕）加一份人工转述在对，还没有第二份独立 ASR（whisper）做裁决——先按记者转述处理，等 --stage verify 的交叉校验报告出来，如果 whisper 也在同一处和 en 不一致，再改判成 en_fixed。",
+  "zh": [
+    "这场比赛开始得比预期早",
+    "但你确实让这些观众",
+    "今晚看得值回票价",
+    "恭喜这场精彩的胜利",
+    "能不能带我回顾一下",
+    "第二盘那次逆转",
+    "你最终是怎么",
+    "拿下这场胜利的",
+    "说实话 我也不知道",
+    "我只是尽量在拼",
+    "开局那一局",
+    "真的很艰难",
+    "因为它让我丢了那一盘",
+    "第二盘我就尽量",
+    "咬住比分 哪怕在落后",
+    "就是一直拼 我特别开心",
+    "能赢下这场比赛",
+    "非常感谢你们",
+    "到场支持",
+    "埃琳娜 你和大坂练过两次球",
+    "却很难相信",
+    "你们俩",
+    "直到今晚才第一次交手",
+    "她的球哪里让你意外",
+    "你是怎么调整的",
+    "是啊 这确实很少见",
+    "有些球员",
+    "巡回赛打了这么多年却没碰过面",
+    "她是一位伟大的冠军",
+    "也是一个斗士",
+    "我知道这会是一场硬仗",
+    "我们像你说的那样练过几次球",
+    "她的球很沉",
+    "发球也非常好",
+    "所以今天发球特别关键",
+    "我很高兴结果站在我这边",
+    "你之前对萨姆索诺娃说过",
+    "只要肯拼就能翻盘",
+    "今晚你又做到了一次",
+    "你对这一周",
+    "打出来的这个状态",
+    "满不满意",
+    "我很满意",
+    "我觉得有些时候",
+    "确实也需要一点运气",
+    "落后的时候不好受",
+    "一直在追分",
+    "所以我很高兴",
+    "我又有了一次机会",
+    "但每一场我都要",
+    "争取打得更好",
+    "明天",
+    "又是一场很难打的比赛",
+    "现在我只想",
+    "好好恢复 享受这一切",
+    "你可能会说这只是运气",
+    "但我看到的是那种冷静的决心",
+    "尤其是最后那个发球局",
+    "恭喜你 你打进了",
+    "国家银行公开赛的第二个半决赛",
+    "非常感谢",
+    "谢谢"
+  ]
+}
