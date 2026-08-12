@@ -2060,6 +2060,85 @@ def test_取字幕单档失败要换client重试(monkeypatch, tmp_path):
     assert words == [(0.0, "hi")]
 
 
+def test_换了候选视频不许复用上一条的字幕缓存(monkeypatch, tmp_path):
+    """真实事故（谢尔顿那条 spec）：先探了一个候选视频 `SOUMru-EDI8`，写下
+    `cap_SOUMru-EDI8.en.json3`，判定不合适之后把 spec 的 `url` 换成账号
+    所有者给的新链接 `ZycljTf6s0E`——但 outdir 没清空，旧文件还在。
+
+    原来的缓存检查只问「outdir 里有没有任何一份 `cap_*.json3`」，不问
+    「是不是这条 URL 的」，于是新的一次 `--stage subs` 会静静吃下旧候选
+    的字幕：日志上一个字不提，而且 `storyboard_sheet()` 那一头（不缓存，
+    每次真下）汇报的片长和标题是对的，两个函数一个说真话一个说假话，
+    只看日志根本发现不了。
+
+    这条直接验证：outdir 里躺着旧视频的缓存时，`fetch_words` 对一条
+    **不同 ID** 的新 URL 必须走网络重新抓，不能命中旧文件；旧文件本身
+    也不能被误删——它是别的候选留下的记录。
+    """
+    from tools import build_interview_clip as m
+
+    (tmp_path / "cap_SOUMru-EDI8.en.json3").write_text(
+        json.dumps({"events": [{"tStartMs": 0,
+                                "segs": [{"utf8": "old candidate junk"}]}]}),
+        encoding="utf-8")
+
+    calls = []
+
+    def fake_run(cmd, **kw):
+        calls.append(cmd)
+        (tmp_path / "cap_ZycljTf6s0E.en.json3").write_text(
+            json.dumps({"events": [{"tStartMs": 0,
+                                    "segs": [{"utf8": "real new content"}]}]}),
+            encoding="utf-8")
+        return type("P", (), {"returncode": 0, "stdout": "", "stderr": ""})()
+
+    monkeypatch.setattr(m.subprocess, "run", fake_run)
+    words = m.fetch_words(
+        "https://www.youtube.com/watch?v=ZycljTf6s0E", tmp_path, {})
+
+    assert len(calls) == 1, (
+        f"没有真的发起网络请求，而是命中了旧候选的缓存文件（0 次调用应为 1 次）")
+    assert words == [(0.0, "real new content")], (
+        f"读到了错的内容：{words}——旧候选 SOUMru-EDI8 的缓存没有被绕开")
+    assert (tmp_path / "cap_SOUMru-EDI8.en.json3").exists(), (
+        "旧候选的缓存文件不该被删掉，它是别的候选探过的记录")
+
+
+def test_同一条视频再跑一次仍然用缓存不重新下载(monkeypatch, tmp_path):
+    """上一条测试拦的是「误用别的视频的缓存」；这条测试反向验证同一个修复
+    没有连带杀死原来的缓存收益——同一个视频 ID 重跑 `--stage subs`（比如
+    改了 spec 别的字段，字幕本身没变）不该再发一次网络请求。
+    """
+    from tools import build_interview_clip as m
+
+    (tmp_path / "cap_ZycljTf6s0E.en.json3").write_text(
+        json.dumps({"events": [{"tStartMs": 0,
+                                "segs": [{"utf8": "cached content"}]}]}),
+        encoding="utf-8")
+
+    calls = []
+    monkeypatch.setattr(m.subprocess, "run",
+                        lambda cmd, **kw: calls.append(cmd))
+    words = m.fetch_words(
+        "https://www.youtube.com/watch?v=ZycljTf6s0E", tmp_path, {})
+
+    assert calls == [], f"同一条视频的缓存本该命中，却又发起了网络请求：{calls}"
+    assert words == [(0.0, "cached content")]
+
+
+def test_video_id从两种YouTube链接形式都抠得出来():
+    """`_video_id()` 要同时认得 `youtube.com/watch?v=` 和 `youtu.be/` 两种
+    形式——`match-reel` 那条线两种都在用，采访这条线的 spec 里也混着两种。
+    """
+    from tools.build_interview_clip import _video_id
+
+    assert _video_id("https://www.youtube.com/watch?v=ZycljTf6s0E") == "ZycljTf6s0E"
+    assert _video_id("https://youtu.be/ZycljTf6s0E") == "ZycljTf6s0E"
+    assert _video_id("https://youtu.be/ZycljTf6s0E?si=abc123") == "ZycljTf6s0E"
+    assert _video_id(
+        "https://www.youtube.com/watch?v=5uI6gpVjHdw&list=xyz") == "5uI6gpVjHdw"
+
+
 def test_订正要看穿说话人标记():
     """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
 

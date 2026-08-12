@@ -83,6 +83,24 @@ def is_youtube(url: str) -> bool:
         (".youtube.com", ".youtu.be"))
 
 
+def _video_id(url: str) -> str:
+    """从 YouTube 链接抠出视频 ID。`fetch_words()` 靠它把字幕缓存和这条 URL
+    绑死——不绑的话，同一条 spec 探过几个候选视频时，outdir 里会同时躺着
+    `cap_<候选A>.en.json3` 和换源之后新下的那份，而**旧文件同样满足
+    `cap_*.json3` 这个宽泛的 glob**，缓存检查会把它当成「已经抓过」直接复用。
+
+    不用 `_yt_at()` 那个切法：那个函数是给**已经不带查询串**的裸 URL 钉时刻
+    用的，对 `?t=` 这类参数没做剥离；这里要处理的是原始 `watch?v=` 链接。"""
+    from urllib.parse import parse_qs  # noqa: PLC0415
+    parsed = urlparse(url)
+    if parsed.netloc.lower().removeprefix("www.") == "youtu.be":
+        return parsed.path.strip("/").split("/")[0]
+    qs = parse_qs(parsed.query)
+    if qs.get("v"):
+        return qs["v"][0]
+    return parsed.path.rstrip("/").rsplit("/", 1)[-1]
+
+
 def media_url(url: str) -> str:
     """把 spec 里的**页面地址**换成 yt-dlp 真下得动的那个地址。
 
@@ -460,9 +478,22 @@ def fetch_words(url: str, workdir: Path,
     在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
-    # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
-    # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
-    if not (files := sorted(workdir.glob("cap_*.json3"))):
+    # **抓过就别再抓，但只认这条 URL 抓的那份。** YouTube 会限流，而限流时的
+    # 报错和「这条片子没字幕」长得不一样但同样让人停手；字幕又是不会变的，
+    # 缓存下来重跑不花代价——**这句话的前提是 outdir 里只对应一条视频**。
+    #
+    # ⚠️ **前提在这条线上不成立**：同一个 slug 常常先探一个候选视频（比如
+    # 谢尔顿那条先试的纯集锦 `SOUMru-EDI8`），写下 `cap_SOUMru-EDI8.en.json3`
+    # 之后判定不合适，spec 的 `url` 换成账号所有者给的新链接
+    # （`ZycljTf6s0E`），可 outdir 没有清空——旧文件还在。原来这儿只问
+    # 「有没有任何一份 `cap_*.json3`」，不问「是不是这条 URL 的」，于是
+    # 新的一次 `--stage subs` 会静静吃下旧候选的字幕，日志上一个字不提，
+    # 长得和真的抓到了新内容一模一样。`storyboard_sheet()` 是独立的、
+    # 不缓存的调用，所以它汇报的片长和标题是对的——这条重现过的分裂，
+    # 一次运行里两个函数一个说真话一个说假话。
+    vid = _video_id(url) if is_youtube(url) else ""
+    pattern = f"cap_{vid}*.json3" if vid else "cap_*.json3"
+    if not (files := sorted(workdir.glob(pattern))):
         if not is_youtube(url):
             # **只有 YouTube 有自动字幕轨。** 对着别的源调 yt-dlp 只会拿到一句
             # 指向完全错误方向的报错（Tennis TV 报的是「只对注册用户开放」，
@@ -484,7 +515,11 @@ def fetch_words(url: str, workdir: Path,
                  *cookie_args(spec or {}), *extra,
                  "-o", str(workdir / "cap_%(id)s"), url],
                 capture_output=True, text=True, timeout=300)
-            files = sorted(workdir.glob("cap_*.json3"))
+            # **这里也要用窄 pattern，不能退回 `cap_*.json3`。** 宽 glob 会在
+            # yt-dlp 还没写出新文件之前，就先命中 outdir 里躺着的旧候选缓存，
+            # 于是循环第一档就「成功」退出——连重试梯子都不会走，日志上却
+            # 一句没提，和真的一次就成了长得一模一样。
+            files = sorted(workdir.glob(pattern))
             if files:
                 if tried:
                     print(f"[字幕] {label} 成功（前面 {len(tried)} 档没成）")
