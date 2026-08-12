@@ -1885,6 +1885,12 @@ def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
     版式抄封面那一套（同一支字体、同一个深底），但**没有照片**：它必须一眼
     看得出不是转播画面，否则「我们的解读」和「他们的素材」在观感上糊成一片，
     等于白加。
+
+    ⚠️ **`point`/`ask` 字号 2026-08-12 从 64/46 调到 76/54**——账号所有者看
+    谢尔顿那条的收尾卡截图，原话「这里的字体可以再大一些？」。本地渲了三档
+    （64/46 现状、76/54、82/58）加一份 34 字满档压力测试，选 76/54：比现状
+    明显更大，满档（point 17 字＋ask 34 字，两行都会自动换行）仍然留在画布
+    内不溢出，82/58 那档满档时逼近安全边距，留的余量更薄。
     """
     import base64  # noqa: PLC0415
     sys.path.insert(0, str(ROOT / "src"))
@@ -1914,13 +1920,13 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  font-family:'TL Display SC','TL Sans SC',sans-serif;letter-spacing:2px}}
 .lead{{font-size:42px;line-height:1.5;color:#a9bcb2;margin-bottom:34px}}
 .point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:64px;line-height:1.36;letter-spacing:.5px}}
+ font-size:76px;line-height:1.36;letter-spacing:.5px}}
 .facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
 .facts li{{font-size:40px;line-height:1.42;color:#cfe3d9;padding-left:30px;
  position:relative}}
 .facts li:before{{content:'';position:absolute;left:0;top:.52em;width:14px;
  height:14px;border-radius:3px;background:#c6f65a}}
-.ask{{margin-top:64px;font-size:46px;line-height:1.45;color:#c6f65a;
+.ask{{margin-top:64px;font-size:54px;line-height:1.45;color:#c6f65a;
  font-family:'TL Display SC','TL Sans SC',sans-serif}}
 </style>{mark}<div class=eyebrow>{spec.get("column", "赛后开麦")}</div>{body}"""
     return _shoot(html, dest)

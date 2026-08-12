@@ -3287,7 +3287,22 @@ def test_卡上的字有上限():
         clip.check_takeaway(spec)
 
 
-def test_会合语音的工具入口都要挂本地CA():
+def test_解读卡字号不许退回2026年8月之前的更小档位():
+    """账号所有者看谢尔顿那条收尾卡的截图：「这里的字体可以再大一些？」
+
+    本地渲了三档（64/46 现状、76/54、82/58）加一份 34 字满档压力测试，
+    选定 76/54——比现状明显更大，满档时仍留在画布内不溢出（82/58 那档
+    满档逼近边距，余量更薄）。判据钉的是**不许退回更小的旧档位**，不是
+    钉死这两个数永远不能再调大：往后如果还要调，改这两个数字，同时把
+    这条测试的数字一起改，而且要重新拿满档文本渲一遍确认没溢出。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+
+    src = inspect.getsource(clip.build_takeaway_card)
+    assert "font-size:76px" in src, "解读卡 .point 字号不许退回 64px 那档"
+    assert "font-size:54px" in src, "解读卡 .ask 字号不许退回 46px 那档"
     """这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 的根证书。
 
     **判据自己推导，不维护白名单**：凡是会走到 `synthesize_narration` 的工具，
