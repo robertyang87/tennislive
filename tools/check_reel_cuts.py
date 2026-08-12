@@ -48,6 +48,10 @@ def main() -> int:
     straddling, unchecked, tail_cuts = segments_straddling_cuts(spec, probes)
     print()
     for index, seg in enumerate(spec["segments"]):
+        if seg.get("image"):
+            print(f"  · 第 {index + 1:>2} 段 [整屏证据] {seg.get('image')}"
+                  "  没有源片窗口，跳过")
+            continue
         hit = next((b for b in straddling if b["index"] == index), None)
         why = seg.get("crosses_cut")
         if hit:

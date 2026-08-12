@@ -365,8 +365,13 @@ def build(slug: str, only: set[int] | None, out_prefix: Path) -> list[Path]:
                   f"{note}")
 
     head_f, body_f = _fonts()
+    skipped_ev = [i + 1 for i, r in enumerate(raw) if r.get("image")]
+    if skipped_ev:
+        print(f"[预览] 第 {skipped_ev} 段是整屏证据段（image），"
+              "没有源片窗口——用 Read 直接看那张卡即可，这里跳过")
     picked = [(i, s, raw[i]) for i, s in enumerate(segments)
-              if only is None or (i + 1) in only]
+              if (only is None or (i + 1) in only)
+              and not raw[i].get("image")]
     if not picked:
         raise SystemExit(f"--seg 挑出来是空的（这条 spec 只有 {len(segments)} 段）")
 

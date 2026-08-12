@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.13 网球有故事 | 小镇如何留住百年大赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>全美第三大网球赛事，为什么在一个3万人的小镇？
+
+排在它前面的只有美网和印第安维尔斯。可它不在纽约，不在迈阿密——在俄亥俄州梅森，一个3万多人的小镇。今晚，第127个年头的正赛开打。
+
+它凭什么在这儿？答案是一个字：熬。
+
+1899年它就开打了，是全美还留在创办城市的最老网球赛事。开赛第一天，当地报纸就断言：这会是辛辛那提办过最成功的比赛。可这条路一点都不顺——70年代它五次搬家，一度流浪到游乐园旧址办赛，俄亥俄河一涨水球场就淹；1979年搬到梅森时，穷得连看台座椅都是从游乐园拆下来、沿着州际公路拉过去的。
+
+后来它长成了巨星的后院。费德勒在这儿7次夺冠，纪录至今没人接近；2018年德约科维奇在这儿集齐全部9个大师赛冠军，史上第一人；2023年那场3小时49分钟的决赛，是史上最长的三盘大师赛决赛之一。
+
+可就在2022年，它差点没了。赛事被卖给新老板，对方把辛辛那提和夏洛特摆上桌比价：夏洛特开出4亿美元的全新场馆方案；梅森这边，州里、市里、县里一起凑了4800万公共资金。本地电视台后来算过账——夏洛特的报价，差了1700万。
+
+2023年10月，答案落地：留下，一签就是25年。然后是一场2.6亿美元的改造，31片场地，一座全新的园区。
+
+一个3万人的小镇，用127年证明了一件事：大赛不一定属于大城市，它属于最舍不得它走的地方。
+
+下一个把名字刻进这127年的，会是谁？
+
+#网球 #辛辛那提 #网球有故事 #ATP #WTA</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>下一个把名字刻进这里的，会是谁？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
