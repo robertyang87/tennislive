@@ -244,6 +244,10 @@ _LEGACY_VS_COVERS = frozenset({
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# mute 段的地板音量（-26 dB）。量出来的账：宣传片配乐 mean 约 -15~-20 dB，
+# 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
+# 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
+MUTE_FLOOR = 0.05
 # **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
 # 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
@@ -1262,12 +1266,15 @@ class Segment:
     # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
     # 头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
-    # **这一段不要源片的声音**（`"mute": true`）。给**配乐宣传片**这类源准备：
-    # 它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，音乐会在
-    # 每个接缝上跳一下（比画面跳切显耳得多）；而且「默认保留现场球声、不加
-    # 背景音乐」那条编辑规矩管的就是这种音轨。静掉之后这一段走 anullsrc，
-    # 和「源片本来就没有音轨」同一条路。⚠️ 别拿它去静真实比赛的现场声——
-    # 那是这条线的内容本身，静掉等于出哑片。
+    # **这一段把源片的声音压到地板**（`"mute": true`）。给**配乐宣传片**这类
+    # 源准备：它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，
+    # 音乐会在每个接缝上跳一下；「不加背景音乐」那条编辑规矩管的也是它。
+    # ⚠️ **压到地板，不是换成纯静音**：第一版走 anullsrc，成片里旁白说完到
+    # 段尾的空隙成了 -99 dB 的数字死寂，被 check_reel_landed 当场拦下
+    # （run 31622119788，SILENCE_FLOOR_DB=-60）——和「两张静音卡 -91 dB」
+    # 是同一个病。现在乘 MUTE_FLOOR（-26 dB）：还是源片自己的声音，听感是
+    # 「安静的空气」，配乐的切缝在这个电平下不可闻，而死寂检测过得去。
+    # ⚠️ 别拿它去压真实比赛的现场声——那是这条线的内容本身。
     mute: bool = False
 
     @property
@@ -1325,6 +1332,16 @@ def _seg_speed(s: dict, index: int) -> float:
             "  快放的账还没算（ghost 检查按 SEG_FADE 源片秒算消耗，快放会被"
             "低估、漏报跨切点）；不变速就删掉这个键。")
     return v
+
+
+def _seg_audio_chain(seg: "Segment") -> str:
+    """这一段的音频滤镜：慢放走 atempo，mute 段乘地板音量，两样可叠加。"""
+    parts = []
+    if seg.speed != 1:
+        parts.append(_atempo(seg.speed))
+    if seg.mute:
+        parts.append(f"volume={MUTE_FLOOR}")
+    return ",".join(parts)
 
 
 def _atempo(speed: float) -> str:
@@ -2024,9 +2041,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # `-map 1:a:0`，把补位的静音当成音轨——原声合进来之后照样取静音，成片里
     # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
     # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
-    # `seg.mute` 走的就是「没有音轨」那条路：配乐宣传片的音乐既不是现场声，
-    # 切碎再拼还会在每个接缝上跳，静掉换 anullsrc（见 Segment.mute 的注释）。
-    has_audio = _has_audio(source) and not seg.mute
+    has_audio = _has_audio(source)
     # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
     # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
     # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
@@ -2071,10 +2086,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             _overlay_chain(
                 (chain + "[base]") if seg.fit == "contain"
                 else f"[0:v]{chain}[base]", ins)
-            + (f";[0:a:0]{_atempo(seg.speed)}[aout]"
-               if seg.speed != 1 and has_audio else ""),
+            + (f";[0:a:0]{_seg_audio_chain(seg)}[aout]"
+               if has_audio and (seg.speed != 1 or seg.mute) else ""),
             "-shortest", "-map", "[vout]",
-            "-map", ("[aout]" if seg.speed != 1 and has_audio
+            "-map", ("[aout]" if has_audio and (seg.speed != 1 or seg.mute)
                      else "0:a:0" if has_audio else f"{null_idx}:a:0"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。

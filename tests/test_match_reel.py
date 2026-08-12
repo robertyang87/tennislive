@@ -8876,15 +8876,18 @@ def test_赛场之上的quote段不许是赛后采访():
         f"哪条 spec 改掉了 quote 段就把它从表里删掉——只许减不许加")
 
 
-def test_mute段的源声要真的静掉(tmp_path):
-    """`"mute": true` 的段走 anullsrc——配乐宣传片的音乐不是现场声，切碎再拼
-    还会在每个接缝上跳。真切两段量响度：查源码里有没有 `not seg.mute` 只能防
-    「有人把它删了」，防不住「它从来没工作过」。
+def test_mute段的源声要压到地板但不许死寂(tmp_path):
+    """`"mute": true` 的段把源声乘 MUTE_FLOOR——配乐宣传片的音乐不是现场声，
+    切碎再拼会在接缝上跳，所以要压下去；**但不许压成数字静音**：第一版走
+    anullsrc，旁白说完到段尾的空隙成了 -99 dB 死寂，被 check_reel_landed
+    拦下（run 31622119788，门槛 SILENCE_FLOOR_DB=-60）。真切两段量响度：
 
-    - 对照组（不写 mute）必须是响的——先证明量的东西正常情况下真的存在，
-      不然「静了」和「源本来就没声」长得一模一样（判据自己也要有判据）
+    - 对照组（不写 mute）必须是响的——先证明量的东西正常情况下真的存在
+    - mute 段要比对照组低至少 18 dB（真的压了）
+    - 但要高于 -80 dB（不是数字死寂——那正是这次改语义要防的）
     - 字符串 `"true"` 要报错，和 `"auto": "true"` 那次同一个理由
-    反向验证过：拆掉 cut_segment 里的 `and not seg.mute`，muted 那半当场红。
+    反向验证过：把 volume 那支拆掉 mute 段和对照组一样响（第②条红）；
+    换回 anullsrc 则第③条红。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import build_match_reel as reel  # noqa: PLC0415
@@ -8917,8 +8920,11 @@ def test_mute段的源声要真的静掉(tmp_path):
     assert db_loud > -40, (
         f"对照组只有 {db_loud} dB——源片的声音本来就没进来，"
         "这个测试量不到它想量的东西")
-    assert db_quiet < -80, (
-        f"mute 段量到 {db_quiet} dB——源片的配乐还在，mute 没生效")
+    assert db_quiet < db_loud - 18, (
+        f"mute 段 {db_quiet} dB，对照组 {db_loud} dB——地板音量没生效")
+    assert db_quiet > -80, (
+        f"mute 段量到 {db_quiet} dB——那是数字死寂，check_reel_landed 会拦"
+        "（mute 的语义是压到地板，不是换成 anullsrc）")
 
     with pytest.raises(reel.ReelError, match="mute"):
         reel._seg_mute({"mute": "true"}, 0)
