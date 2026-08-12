@@ -27,8 +27,13 @@
 - **透明底**：卡是贴在比赛画面上的贴纸，方形底就是「深色球衣压深色背景留
   一块方底」那个坑的字卡版。判据：四角 alpha 必须是 0
 - **一屏一个强调色**：数字用品牌浅绿，其余近白/灰绿两级，不搞红绿对撞
-- **底色要压得住虚化的比赛画面**：顶栏次行那课——给实色卡定的灰绿压在
-  变化的背景上就糊了。所以底是 0.92 的深绿加细描边
+- **不要文字背景板，直接贴文字**（账号所有者 2026-08-11）：原来是「实色深绿
+  卡片压在画面上」，改成「文字本身直接贴在画面上，没有卡片底」。没有底板
+  之后，压得住虚化画面这件事改由**文字自身的描边+投影**负责——和 ASS
+  字幕在原始画面上直接烧字是同一个技法（`-webkit-text-stroke` 当描边，
+  `text-shadow` 当投影），不再靠一块 0.92 的深绿底色去挡。描边宽度按各自
+  字号的比例给（数字大字号描边更粗），不能三档字号共用一个描边宽度——
+  按 150px 那档配出来的描边糊在 44px 的标签上会把笔画糊成一团
 - **数字字体走得意黑**（和顶栏首行一家），标签走 Noto Sans CJK
 - 卡渲出来是**提交进仓库的静态 PNG**，渲染环境的字体不影响成片——
   但生成这一步要在装了 Noto 的机器上跑（沙箱和 runner 都装了）
@@ -69,9 +74,9 @@ def build_html(value: str = "", label: str = "", title: str = "") -> str:
   body {{ background: transparent; width: {CARD_W}px; }}
   #card {{
     display: inline-block; max-width: {CARD_W}px;
-    background: rgba(13, 26, 21, 0.92);
-    border: 2px solid rgba(184, 233, 134, 0.30);
-    border-radius: 34px; padding: 44px 58px;
+    /* 没有底板了——padding 只是给描边/投影留出屏截图不裁掉的余量，
+       不再是卡片的视觉边界 */
+    padding: 34px 40px;
     font-family: "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
     text-align: center;
   }}
@@ -79,11 +84,20 @@ def build_html(value: str = "", label: str = "", title: str = "") -> str:
     font-family: "Smiley Sans", "Noto Sans CJK SC", sans-serif;
     font-size: 150px; line-height: 1.04; color: #b8e986;
     letter-spacing: 0.01em; white-space: nowrap;
+    -webkit-text-stroke: 7px rgba(6, 14, 11, 0.92);
+    paint-order: stroke fill;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.55);
   }}
-  .label {{ margin-top: 18px; font-size: 44px; font-weight: 700;
-            color: #e7f3ec; white-space: nowrap; }}
+  .label {{ margin-top: 14px; font-size: 44px; font-weight: 700;
+            color: #e7f3ec; white-space: nowrap;
+            -webkit-text-stroke: 3px rgba(6, 14, 11, 0.92);
+            paint-order: stroke fill;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55); }}
   .title {{ font-size: 62px; font-weight: 700; color: #e7f3ec;
-            line-height: 1.3; white-space: nowrap; }}
+            line-height: 1.3; white-space: nowrap;
+            -webkit-text-stroke: 4px rgba(6, 14, 11, 0.92);
+            paint-order: stroke fill;
+            text-shadow: 0 3px 14px rgba(0, 0, 0, 0.55); }}
 </style>
 <div id="card">{body}</div>
 """
