@@ -1548,9 +1548,9 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("cover", "crop_y", "crop_zoom", "mixed_fps", "push", "segments",
-             "silent_source", "slug", "source_audio", "source_url", "sources",
-             "stats", "subtitle_top", "topbar", "editorial"),
+    "spec": ("conform", "cover", "crop_y", "crop_zoom", "mixed_fps", "push",
+             "segments", "silent_source", "slug", "source_audio", "source_url",
+             "sources", "stats", "subtitle_top", "topbar", "editorial"),
     "cover": ("event_badge", "eyebrow", "hook", "layout", "matchup", "meta",
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
@@ -3417,6 +3417,53 @@ def spec_sources(spec: dict) -> dict[str, str]:
     return {"": spec["source_url"]}
 
 
+def conform_sources(paths: dict[str, Path], spec: dict | None,
+                    outdir: Path) -> None:
+    """把声明过的源**等比放大铺满再中央裁**到基准尺寸——尺寸闸的唯一出路。
+
+    来路：cincinnati-story 的场馆官方宣传片是 1920×1012（电影画幅），和两条
+    1080 高的决赛集锦混用被 `check_sources_match` 拦下（run 31619358302）。
+    那道闸说「尺寸没有出路」，对**随手混**成立；但 1012→1080 是 1.067× 的
+    等比放大加两侧各 3% 的裁边，对 b-roll 素材完全可用——所以给它一条
+    **显式认领**的出路（`conform: {源键: 为什么可以}`），和 `mixed_fps`
+    同一个形状：认领这一步让取舍留下判据，而不是让它悄悄发生。
+
+    - 基准 = 第一个**没被声明**的源的尺寸；全声明了要报错（总得有基准）
+    - 已经同尺寸的跳过并出声（幂等：缓存恢复后每趟都会走到这儿）
+    - `crf 16 / preset fast`：中间产物花比特不花时间，成片还会再编一次
+    """
+    declared = (spec or {}).get("conform") or {}
+    if not declared:
+        return
+    if not isinstance(declared, dict) or not all(
+            isinstance(v, str) and v.strip() for v in declared.values()):
+        raise ReelError('conform 要写成 {"源键": "为什么可以放大裁边"}——'
+                        "认领要留下判据，光列名字不算")
+    missing = sorted(set(declared) - set(paths))
+    if missing:
+        raise ReelError(f"conform 里的 {missing} 不在 sources 里")
+    ref = next((k for k in paths if k not in declared), None)
+    if ref is None:
+        raise ReelError("conform 不能把所有源都声明进去——总得留一个当尺寸基准")
+    tw, th = probe_size(paths[ref])
+    for key, why in declared.items():
+        w, h = probe_size(paths[key])
+        if (w, h) == (tw, th):
+            print(f"[conform] {key} 已经是 {tw}×{th}，跳过")
+            continue
+        dst = paths[key].with_name(paths[key].stem + "_conform.mp4")
+        with stage(f"统一尺寸 {key}"):
+            run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                "-i", str(paths[key]),
+                "-vf", (f"scale={tw}:{th}:force_original_aspect_ratio="
+                        f"increase:flags=lanczos,crop={tw}:{th}"),
+                "-c:v", "libx264", "-preset", "fast", "-crf", "16",
+                "-c:a", "copy", str(dst))
+        paths[key] = dst
+        print(f"[conform] {key} {w}×{h} → {tw}×{th}"
+              f"（等比放大铺满再中央裁）——{why}")
+
+
 def check_sources_match(paths: dict[str, Path], spec: dict | None = None) -> None:
     """多源要对得上，不一致就在这儿报，别渲到一半。**两样的严重程度不同：**
 
@@ -3576,6 +3623,7 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
             with stage(f"下载源片 {key or '(主源)'}"):
                 path = download(url, path)
         sources[key] = path
+    conform_sources(sources, spec, outdir)
     check_sources_match(sources, spec)
     primary = next(iter(sources))
     source = sources[primary]
