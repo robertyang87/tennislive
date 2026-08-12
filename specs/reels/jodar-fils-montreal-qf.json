@@ -90,6 +90,28 @@
       "_duration_why": "flashscore（lUyU3jnQ）AD=1786472400（开赛）、AO=1786482245（终场），差9845秒=2小时44分05秒。走`_fetch_match_duration`会去urlopen这个data: URI并解析JSON的同一条代码路径。"
     }
   },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-F0F1.png",
+      "aces": 7, "df": 1, "winners": 18, "ue": 28,
+      "first_in": 44, "first_total": 76, "first_won": 29,
+      "second_won": 16, "second_total": 32,
+      "bp_conv": 2, "bp_chances": 4,
+      "pts_won": 73, "pts_total": 152
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-J0DZ.png",
+      "aces": 3, "df": 1, "winners": 20, "ue": 34,
+      "first_in": 51, "first_total": 76, "first_won": 37,
+      "second_won": 11, "second_total": 25,
+      "bp_conv": 4, "bp_chances": 12,
+      "pts_won": 79, "pts_total": 152
+    },
+    "footer_venue": "蒙特利尔",
+    "footer_date": "2026-08-11",
+    "_source": "全部技术统计取自 `tools/match_feed.py show lUyU3jnQ` 的『分盘技术统计』一节（flashscore `df_st_1`，Match 范围），和 `_facts.技术统计（全场）` 里已经核过的那份数字同一个出处、逐项对得上（Ace霍达尔3、菲斯7；双误各1；一发得分率霍达尔73%(37/51)、菲斯66%(29/44)；破发点霍达尔救2/4、菲斯救8/12；总分霍达尔52%(79/152)、菲斯48%(73/152)；Match points saved霍达尔0、菲斯3）。first_total = first_in + second_total，用『Service Points Won』的分母核对过：菲斯45/76（45=29+16 ✓、76=44+32 ✓）、霍达尔48/76（48=37+11 ✓、76=51+25 ✓），两边都对得上。bp_conv/bp_chances 取『[Match/Return] Break Points Converted』（己方回球时的破发转化），不是『Break Points Saved』（己方发球时的挽救）——注意这是这场球里两人角色和 `_facts` 那句『霍达尔救2/4，菲斯救8/12』（Saved，己方发球时的挽救）**方向相反**的另一半数据，两句话说的是两件事，不要混着读。\n\n主队(home)=霍达尔(赢家)=matchup[1]=b；客队(away)=菲斯=matchup[0]=a，和 find 命令原文『Jodar R. vs Fils A. 7-6 6-3』的视角一致——这条和 shelton-mensik 的 a/b↔home/away 对应方向正好相反（那条主队是输家），两条各自核对过 matchup 顺序，不能照抄。\n\n头像：`tools/fetch_official_headshot.py atp \"Arthur Fils\" --id F0F1 --via https://www.mubadaladcopen.com` / 同法取霍达尔（--id J0DZ）——ID 从 WebSearch 到的 atptour.com 球员主页 URL 里取（`/players/<slug>/<ID>/`）。"
+  },
   "segments": [
     {
       "start": 218.0,

@@ -1,0 +1,57 @@
+{
+  "slug": "darderi-nakashima-montreal-qf",
+  "_slug_why": "赢家在前（中岛布兰登胜）。这条只出数据统计对照图，不做视频——没有 segments/sources，故意不放进 specs/reels/（那边的管线要求视频素材）。",
+  "_match": "中岛布兰登 6-2 6-3 胜达尔代里，2026-08-11 蒙特利尔ATP1000加拿大公开赛男单1/4决赛，用时1小时19分。\n\n出处：flashscore match_id=EV3nS5Ti，find 命令原文『Darderi L. vs Nakashima B. 2-6 3-6 Quarter-finals』（达尔代里视角，他输掉两盘）；fetch_day 交叉核实同一场比分与开赛时刻（2026-08-11 16:40 UTC）。",
+  "cover": {
+    "topic": "ATP1000加拿大公开赛 · 男单1/4决赛",
+    "winner": "中岛布兰登",
+    "result": "6-2 6-3",
+    "matchup": [
+      {
+        "name": "达尔代里",
+        "name_en": "Luciano Darderi",
+        "country": "ITA",
+        "rank": 22
+      },
+      {
+        "name": "中岛布兰登",
+        "name_en": "Brandon Nakashima",
+        "country": "USA",
+        "rank": 31
+      }
+    ],
+    "_matchup_rank_why": "两人的排名均取自 2026-08-12 WebSearch（ATP 官网/Wikipedia 综合，标注为『August 2026』的当期排名，不是生涯最高）——这台沙箱 atptour.com/ESPN 排名接口均 403，仓库 player_names_top500.json 里达尔代里=23/中岛布兰登=33 是更早的快照，与本次搜到的 22/31 相差不大（属正常周度波动），采信更晚搜到的这版。\n⚠️ 中文名踩过一次坑：第一版把 Nakashima 写成了『纳卡什马』——查表时用过 player_names_top500.json（确认了排名），但落笔写名字那一刻凭记忆现造了一个音译，没有再回去看表里 name_zh 那一列。表里登记的是『中岛布兰登』（来源新华社），账号所有者指出来才改对。这是『人名不要手打，先查仓库里的译名表』这条规矩要防的那个坑，栽了一次。",
+    "scoreboard": {
+      "court": "Rogers Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%204740%2C%20%22source_page%22%3A%20%22https%3A//local-global.flashscore.ninja/2/x/feed/df_sui_1_EV3nS5Ti%22%7D",
+        "field": "duration",
+        "source_page": "https://local-global.flashscore.ninja/2/x/feed/df_sui_1_EV3nS5Ti"
+      },
+      "_court_why": "同一届蒙特利尔ATP1000，shelton-mensik/shelton-fonseca 两条已确认主赛场叫『Rogers Court』——这场1/4决赛按惯例同样排在主赛场，未单独核实到这一场specifically，和那两条同样的处置。",
+      "_duration_why": "`tools/match_feed.py show EV3nS5Ti` 的『分盘用时』一节：Set1 0:27 + Set2 0:52 = 全场 1:19（即 4740 秒）。data URI 直接写秒数（不写『1:19』这个字符串）——`_duration_seconds()` 的正则对『H:MM』和『H:MM:SS』两种都收，但两位数字的那支是按『M:SS』解析的，『1:19』会被误读成 1分19秒；写成整数秒数没有这个歧义。"
+    }
+  },
+  "stats": {
+    "tour": "atp",
+    "a": {
+      "headshot": "assets/players/headshots/atp-D0FJ.png",
+      "aces": 2, "df": 6, "winners": 11, "ue": 28,
+      "first_in": 36, "first_total": 54, "first_won": 25,
+      "second_won": 5, "second_total": 18,
+      "bp_conv": 0, "bp_chances": 4,
+      "pts_won": 48, "pts_total": 114
+    },
+    "b": {
+      "headshot": "assets/players/headshots/atp-N0AE.png",
+      "aces": 11, "df": 1, "winners": 26, "ue": 16,
+      "first_in": 36, "first_total": 60, "first_won": 30,
+      "second_won": 12, "second_total": 24,
+      "bp_conv": 3, "bp_chances": 8,
+      "pts_won": 66, "pts_total": 114
+    },
+    "footer_venue": "蒙特利尔",
+    "footer_date": "2026-08-11",
+    "_source": "全部技术统计一次性取自 `tools/match_feed.py show EV3nS5Ti` 的『分盘技术统计』一节（flashscore `df_st_1` feed，Match 范围那一档），和 WTA 那条不一样——**ATP 这个 feed 本身就带 Winners/Unforced errors**，不用像 WTA 那样另找官方转播大屏或赛后稿交叉验证。\n\n各字段的换算：\n- first_in/first_total/first_won：flashscore 给的是『1st serve points won N/M』，M 就是 first_in；first_total = first_in + second_total（用『Service Points Won』那行的分母核对过，两边一致）。\n- second_won/second_total：『2nd serve points won N/M』直接对应。\n- bp_conv/bp_chances：用的是『[Match/Return] Break Points Converted』这一行——**己方回球时**的破发点转化，不是『Break Points Saved』（那是己方发球时的挽救，是另一个数）。\n- pts_won/pts_total：『Total Points Won N/M』直接对应。\n\n头像：`tools/fetch_official_headshot.py atp \"Luciano Darderi\" --id D0FJ --via https://www.mubadaladcopen.com` / 同法取中岛布兰登（--id N0AE）——ID 从 WebSearch 到的 atptour.com 球员主页 URL 里取（`/players/<slug>/<ID>/`），atptour.com 总站对这台沙箱 403，借蒙特利尔以外的另一个 ATP 赛事域名镜像同一批资源。"
+  }
+}

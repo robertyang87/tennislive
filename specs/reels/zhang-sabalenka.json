@@ -3,7 +3,7 @@
   "source_url": "https://players.brightcove.net/6041795521001/te01Hqw71_default/index.html?videoId=6402962587112",
   "_source": "WTA 官网这场的官方集锦（Brightcove 资产 `6402962587112`；`source_url` 写的是**播放器地址**，不是文章页——yt-dlp 对 `wtatennis.com/videos/…` 报 `Unsupported URL`），**1280×720、25 fps、277.92 秒**。\n\n文章页 `wtatennis.com/videos/4555563/sabalenka-locks-in-late-to-put-away-zhang-in-tight-toronto-third-round-clash`，account/player 那一对（`6041795521001` / `te01Hqw71`）从页面里抠 `players\\.brightcove\\.net/(\\d+)/([\\w-]+)`，资产号是页面里出现 6 次的那个 13 位数。\n\n⚠️ **这条源片沙箱够得着**（Brightcove 不是 YouTube），所以 probe / 选段 / 封面 / 旁白全在本地跑完了，一趟 runner 都没花。",
   "_match": "萨巴伦卡（1）6-3 6-4 张帅，2026-08-06 多伦多 WTA1000 女单第三轮（WTA 记为 Round of 32），中心球场，1 小时 16 分。\n\n出处：WTA 赛果页 `tournaments/canadian-open/scores/LS016` 那一行原文 `Sabalenka (1) 6 6 . S. Zhang 3 4 . Finished: 1:16`。",
-  "_stats": {
+  "_stat_notes": {
     "Ace": "萨巴伦卡 5 ｜ 张帅 1",
     "双误": "萨巴伦卡 4 ｜ 张帅 **0**",
     "破发点": "萨巴伦卡 2/3 ｜ 张帅 **0/2**",

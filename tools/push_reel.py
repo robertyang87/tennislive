@@ -73,6 +73,7 @@ BODY_MAX = 1000
 # 封面海报的文件名，和 `build_match_reel.POSTER_NAME` 是同一个。推送正文的
 # 第一屏就是它——**没有它的推送只有两个按钮，看不出这是谁打谁**。
 POSTER_NAME = "poster.jpg"
+STAT_CARD_NAME = "stat_card.jpg"
 
 
 def released_video_url(outdir: Path) -> str:
@@ -588,8 +589,13 @@ def poster_url(outdir: Path, name: str = POSTER_NAME) -> str:
     return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
 
 
+def stat_card_url(outdir: Path, name: str = STAT_CARD_NAME) -> str:
+    """数据统计对照图的图片链接，和海报同一条 CDN 路径规则（同样只有几百 KB）。"""
+    return f"https://cdn.jsdelivr.net/gh/{REPO}@{BRANCH}/{outdir.as_posix()}/{name}"
+
+
 def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
-               poster: str, column: str) -> str:
+               poster: str, column: str, *, stat_card: str = "") -> str:
     """推送正文，**版式照着知识解说那条推送**（账号所有者指定的参照）：
 
         白卡（顶上一条 #ff2442 红边）
@@ -623,6 +629,14 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
     而这个工作流现在也发「开球之前」「网球有故事」——卡片会顶着别的栏目名，
     标题里写的却是对的，同一条推送两个栏目名。给个默认值等于把这个错留在原地
     不吭声，所以 `column` 是必传的，和 `column_of` 算出来的那一个值共用。
+
+    **`stat_card` 是可选的一屏**（账号所有者 2026-08-12：「以后出视频的同时
+    输出这个图，推微信时候也带上」）——`spec.stats` 显式认领字段才会渲出
+    `stat_card.jpg`，没有这个字段的 spec（大多数存量片子）这一屏就不出现，
+    退回原来的正文。放在正文之后、按钮之前：先讲故事，再给数据，不占开头
+    第一屏（那是海报的位置）。`<img>` 走的是和海报一模一样的 jsDelivr URL
+    规则，`prepare_image_delivery`/`wait_for_images` 通用扫描 `<img>` 标签，
+    不用另外注册。
     """
     title, body = split_copy(copy_text)
     pad = "padding:0 16px"
@@ -640,6 +654,20 @@ def build_html(video_url: str, copy_url: str, lead: str, copy_text: str,
                f'<div style="text-align:center;margin:0 0 16px;{pad}">'
                f'<a href="{poster}" style="color:#087747;font-size:13px;'
                f'text-decoration:none">封面没显示？点此打开原图</a></div>')
+
+    # 和海报一样铺满整卡宽（不留左右白边），但排在正文之后——先讲故事，
+    # 再给数据，第一屏仍然留给海报。
+    stat_card_el = ""
+    if stat_card:
+        stat_card_el = (
+            f'<div style="{pad};margin:4px 0 8px">'
+            f'<div style="color:#7a8580;font-size:12px">📊 数据统计对照</div></div>'
+            f'<img src="{stat_card}" width="100%" alt="数据统计对照图"'
+            f' referrerpolicy="no-referrer"'
+            f' style="width:100%;display:block;margin:0 0 10px">'
+            f'<div style="text-align:center;margin:0 0 16px;{pad}">'
+            f'<a href="{stat_card}" style="color:#087747;font-size:13px;'
+            f'text-decoration:none">数据图没显示？点此打开原图</a></div>')
 
     def btn(url: str, text: str, bg: str, fg: str = "#ffffff") -> str:
         return (f'<a href="{url}" style="display:block;background-color:{bg};'
@@ -665,6 +693,9 @@ margin:10px 0 4px">{html.escape(title)}</div>
 👇 正文全文如下，长按整段即可复制</div>
 <div style="font-size:15px;line-height:1.85;white-space:pre-wrap;\
 word-break:break-word;margin:0 0 4px">{html.escape(body)}</div>
+</div>
+{stat_card_el}
+<div style="{pad}">
 <div style="border-top:1px solid #e6ebe8;margin:18px 0 12px"></div>
 {btn(video_url, "▶ 打开竖版成片", "#102d23")}
 {btn(copy_url, "分别复制标题 / 正文", "#ff2442")}
@@ -777,8 +808,15 @@ def main() -> int:
         poster = poster_url(outdir)
     else:
         print(f"[封面] {outdir / POSTER_NAME} 不在，这次推送没有海报那一屏")
+    # 数据统计对照图是可选的一屏——只有 spec 里写了 `stats` 字段才会渲出
+    # `stat_card.jpg`（render() 末尾那道显式认领的逻辑）。大多数存量片子没有
+    # 这个文件，那就安静地不出现这一屏，不报错也不当成缺陷。
+    stat_card = ""
+    if (outdir / STAT_CARD_NAME).is_file():
+        stat_card = stat_card_url(outdir)
+        print(f"[数据图] 带上这一屏：{stat_card}")
     body = build_html(url, copy_url, args.lead, copy_text, poster,
-                      column=column)
+                      column=column, stat_card=stat_card)
     push(title, body, asset_dir=outdir)
     print(f"已推送：{title}\n  成片 {url}\n  复制页 {copy_url}\n"
           f"  文案 {len(copy_text)} 字")
