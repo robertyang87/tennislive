@@ -2989,6 +2989,25 @@ def test_没有解读卡的老片子只许减不许加():
             "名单只许减不许加")
 
 
+def test_ask漏问号的豁免名单只许减不许加():
+    """`_LEGACY_ASK_NO_QUESTION_MARK` 的自检，跟上一条同一个理由：表里每个
+    slug 必须真的存在、而且真的还漏着问号——写错一个名字，或者哪天有人把
+    那条 spec 的问号补上了，豁免就该跟着划掉，不然它会挡住一条真正的错。
+    """
+    import tools.build_interview_clip as clip
+
+    have = {p.stem for p in _iv_specs()}
+    ghosts = clip._LEGACY_ASK_NO_QUESTION_MARK - have
+    assert not ghosts, f"豁免名单里这几个 slug 不存在，等于没豁免任何东西：{ghosts}"
+
+    for slug in clip._LEGACY_ASK_NO_QUESTION_MARK:
+        d = json.loads((Path("specs/interviews") / f"{slug}.json").read_text("utf-8"))
+        ask = str((d.get("takeaway") or {}).get("close", {}).get("ask", ""))
+        assert not ask.rstrip().endswith(("？", "?")), (
+            f"{slug} 的 ask 已经带问号了，就该从豁免名单里划掉——"
+            "名单只许减不许加")
+
+
 def test_新的采访片必须有解读卡而且引的是他真说过的话():
     """两头都钉。**这条只吃 `specs/`**，不读 `output/`——CI 的稀疏检出把产物
     挡在外面，拿产物当主语的判据在 CI 上会静静地变成一盏恒真的绿灯。
@@ -3285,6 +3304,35 @@ def test_卡上的字有上限():
     spec["takeaway"]["close"]["point"] = "他" * (clip.TAKEAWAY_MAX_CHARS + 1)
     with pytest.raises(SystemExit, match="提炼"):
         clip.check_takeaway(spec)
+
+
+def test_收尾卡的ask必须以问号收尾():
+    """账号所有者看谢尔顿那条收尾卡截图：「还有引号问号等等标点符号也要有啊」。
+
+    来路：谢尔顿这条第一版 `ask` 写的是「你有没有也在追一个还没结束的目标」
+    ——没有问号。8 条已发的解读卡里 7 条都以问号收尾（只有
+    `rybakina-osaka-tor2026-qf` 那条也漏了，同一个坑踩了两次没人发现）。
+
+    `point` 不在这条闸里：它有时候是引语（带「」）、有时候是陈述句
+    （带句号），两种都对，机械判不出该用哪种标点——这跟"最硬的那个事实
+    放第 ① 屏"那类判断题是同一个理由，硬凑一条会被绕过的判据比没有更糟。
+    `ask` 不一样：它**定义上就是一句问句**，缺问号没有例外，判据钉得住。
+    """
+    import tools.build_interview_clip as clip
+
+    spec = {
+        "slug": "fake-q", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
+        "zh": ["我健康了"],
+        "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+    }
+    clip.check_takeaway(spec)  # 带问号，过
+
+    spec["takeaway"]["close"]["ask"] = "为什么"  # 去掉问号
+    with pytest.raises(SystemExit, match="问号"):
+        clip.check_takeaway(spec)
+
+    spec["takeaway"]["close"]["ask"] = "为什么?"  # 半角问号也认
+    clip.check_takeaway(spec)
 
 
 def test_解读卡字号不许退回2026年8月之前的更小档位():
