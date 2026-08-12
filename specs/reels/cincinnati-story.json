@@ -1,161 +1,241 @@
 {
   "slug": "cincinnati-story",
+  "_source": "**2026-08-12 整个重做**。账号所有者：「重新参考『加拿大公开赛』介绍视频的方式重新生成」「不要再参考你之前做的辛辛那提的视频了，简直太low了」「去参考下业界怎么做类似赛事介绍的视频的，然后再结合我们的调性输出」。旧版（编年史+两条决赛集锦当背景+自渲数字贴纸）作废，从未推送过微信，同 slug 干净替换。\n\n业界调研落点（详见 assets/reel/cincinnati-story.credits.json 的 _note）：①一个问题贯穿（2发网球「为什么分属两座城市」的形状，这条是「全美第三大的赛事为什么在三万人的小镇」）②真实证据素材上屏——1899 官方史料照片、1899 报纸原话、WCPO 新闻标题、两城对比卡，全部带来源署名 ③快剪（场馆官方宣传片本身 1.7s/切）④辛辛那提官方自己的纪录片也把「本地人留住赛事」当第一集主题（cincinnatiopen.com docuseries 稿），印证这个角度是这项赛事自己认领的故事。\n\n**三条源片**：\nvenue：「Welcome to the All-New Cincinnati Open」，赛事官方频道 @CincyProTennis（youtube.com/watch?v=dPyX9hDzz4w）。2026-08-12 runner mode=probe（output/2026-08-12/reel/cincinnati-venue-2025/）：1920×1012/24fps/89s/51 个硬切点。画面自证：18.5s 与 76.5s 两处 CINCINNATI OPEN 门牌（白天/夜景）、36.5s 冠军墙带 2023/2024 年份铭牌、60.5s 看台 Cincy Sinner 灯牌。⚠️ 音轨是制作方配乐——凡取自它的段一律 mute: true（段级字段 2026-08-12 为此而加）。\nfinal2018：ATP 官方 2018 决赛集锦（youtube.com/watch?v=2wMB8z4zhw8，1920×1080/29.97fps，276.6s），自证与切点记录沿用 2026-08-11 版（output/2026-08-11/reel/cincinnati-djokovic-federer-2018/probe.json）：0.5s 官方 W&S OPEN 开场标识、记分条烧着 Djokovic/Federer、captions 169-197s『history is made in Cincinnati…golden masters』。\nfinal2023：ATP 官方 2023 决赛集锦（youtube.com/watch?v=Fgy8tjrKy1Y，1920×1080/60fps，758.6s），probe 沿用 output/2026-08-11/reel/cincinnati-djokovic-alcaraz/。开场 0-68s 是宽景长镜头，背景板印着 Western & Southern——危机那几拍的底就用它，冠名商时代的画面配「冠名商撤了」的叙事。captions 710.66s『seals it on his fifth Championship point after three hours and 49 minutes on court』。",
+  "_column": "网球有故事。回答一个问题：**全美第三大的网球赛事，为什么在俄亥俄州一个三万多人的小镇——以及它差点搬走的那一年，小镇怎么把它留下来的。** 结构四幕：反差（第三大 vs 小镇）→ 来路（1899 史料照片/报纸原话/游乐园流浪/搬座椅）→ 星光（费德勒七冠、德约金满贯、2023 最长决赛，说明『被抢』的分量）→ 危机与留下（2022 易主、两城竞标、差 1700 万、留驻 25 年、2.6 亿改造）→ 明天（8/13 正赛开打收尾一问）。",
+  "_facts": "全部核验于 2026-08-12（WebSearch/WebFetch/官方史料集 PDF），关键数字 verbatim：\n· 全美第三大网球赛事（仅次于美网和印第安维尔斯）——en.wikipedia.org/wiki/Cincinnati_Open + cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/\n· 1899-09-18 首届，Avondale Athletic Club（今泽维尔大学校园）；首届单打冠军 Myrtle McAteer / Nat Emerson——官方 125 周年稿 + 官方史料集 p12-14\n· 场地变迁：Avondale 1899-1902 → Cincinnati Tennis Club 1903-1972 → 70 年代五次搬家（史料集 p70『five venue changes are made』）→ Old Coney 游乐园旧址 1975-1978（俄亥俄河畔、易涝，p76-77『flood-prone Old Coney facility』）→ 1979 梅森，看台座椅从 Old Coney 拆运（p70-71『seats…from Old Coney and transported up Interstate 71』）——官方史料集 + en.wikipedia\n· 梅森人口 34,792（2020 普查）——en.wikipedia.org/wiki/Mason,_Ohio\n· 2022 年 USTA 把赛事卖给 Beemok（Ben Navarro，南卡查尔斯顿）——en.wikipedia + 官方史料集 p103\n· 2023 竞标：夏洛特 4 亿美元新场馆方案 vs 梅森 1.5 亿扩建方案；俄亥俄州 2250 万 + 梅森市 1500 万 + 沃伦县 1050 万 = 4800 万公共资金；夏洛特公共补贴承诺 1.15 亿 = 总成本 29%，比 Beemok 要求少 1700 万——wcpo.com I-Team『Charlotte's bid…is $17M short』+ wcnc.com\n· 2023-10 宣布留驻梅森 25 年，2025 年起扩成 12 天赛制——wsoctv.com + en.wikipedia\n· 2.6 亿美元园区改造 2025 年完成，Lindner Family Tennis Center 31 片场地——en.wikipedia + fox19.com『$260M campus transformation for 126th year』\n· 2026 正赛 8 月 13-23 日（资格赛 8/11-12）；13 日白天场 11:00 EDT = 北京时间 23:00——atptour.com 2026 赛事指南 + cincinnatiopen.com/tournament/tournament-schedule/\n· 费德勒七冠、决赛 7 胜 1 负——atptour.com + tennis365.com\n· 2018 德约科维奇金满贯——atptour.com + 吉尼斯世界纪录\n· 2023 决赛 5-7 7-6 7-6，3 小时 49 分钟——转播原声 captions 710.66s + en.wikipedia 2023 赛事页",
+  "_claims": {
+    "全美第三大的网球赛事": "两个独立源：en.wikipedia.org/wiki/Cincinnati_Open（『third largest tennis event in the United States, after the U.S. Open and the Indian Wells Open』）；官方 125 周年稿 https://cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/（『ranks as the third largest tennis event in the United States』）。",
+    "全美还留在创办城市的赛事里它最老": "两个独立源：https://tennislibrary.miraheze.org/wiki/Cincinnati_Open；https://cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/（『the oldest tournament in the United States still played in its original city』）。",
+    "集齐全部九个大师赛冠军史上第一人": "两个独立源：ATP 官方 https://www.atptour.com/en/news/cincinnati-2018-final-federer-djokovic；吉尼斯 https://www.guinnessworldrecords.com/world-records/544030-first-player-to-achieve-a-career-golden-masters。",
+    "费德勒七冠纪录至今没人接近": "两个独立源：https://www.atptour.com/en/news/federer-cincinnati-2025-20-year-flashback（『a tournament record seven crowns』）；https://www.tennis365.com/facts-stats/roger-federer-cincinnati-open-legacy-6-stats-highlighting-incredible-success。",
+    "史上最长的三盘大师赛决赛之一": "3 小时 49 分钟由转播原声自证（probe captions.txt 710.66s『after three hours and 49 minutes on court』）；『ATP 史上最长三盘制决赛之一』沿用旧版已核验措辞，另见 https://en.wikipedia.org/wiki/2023_Cincinnati_Masters_%E2%80%93_Men%27s_singles_final。"
+  },
   "sources": {
+    "venue": "https://www.youtube.com/watch?v=dPyX9hDzz4w",
     "final2018": "https://www.youtube.com/watch?v=2wMB8z4zhw8",
     "final2023": "https://www.youtube.com/watch?v=Fgy8tjrKy1Y"
   },
   "mixed_fps": {
-    "final2023": "final2018（主源，30000/1001≈29.97fps）用了7段，final2023（60fps）只用2段——赛点+网前拥抱(701.8-713.3s)和颁奖台/confetti庆祝蒙太奇(730.6-743.0s)，都不是需要看清逐帧走位的快速回合镜头。60→29.97fps接近干净的2倍降采样（类似CLAUDE.md记过的『50→25 整数倍，隔帧丢得整整齐齐』，不是『30→25 六帧丢一帧』那种更容易看出顿挫的比例），肉眼几乎无感。"
+    "final2018": "主源 venue 是 24fps，final2018（29.97fps）降到 24 是 5:4 丢帧。用它的八段全是历史叙事的背景 b-roll（多数还压着大证据卡）或人群/庆祝镜头，不是需要盯着走位看的关键回合；快剪节奏下 5:4 的顿挫远不如 30→25 那档显眼。",
+    "final2023": "60→24 是 2.5:1 的不均匀丢帧，理论上最糟的一档——但它的四段里两段是宽景长镜头当证据卡的底（观众在读卡不在读帧）、一段是彩带颁奖蒙太奇（画面本身乱）、一段赛点回合 7.7s；权衡过把主源换成 final2018（29.97）：那样 venue 十段流畅的航拍/滑轨镜头全要 1:4 补帧，顿挫出现在最平滑、最显眼的画面上，更糟。"
   },
-  "_source": "两条ATP官方集锦：\n\n**final2018**：「Highlights: Djokovic Beats Federer in Cincinnati 2018 Final, Clinches Career Golden Masters」，youtube.com/watch?v=2wMB8z4zhw8。2026-08-11 runner mode=probe验证（临时slug cincinnati-djokovic-federer-2018，run 31500084219）：1920x1080/29.97fps，276.6s（output/2026-08-11/reel/cincinnati-djokovic-federer-2018/probe.json）。画面自证：contact_00.jpg 0.5s是官方『W&S OPEN / Masters 1000 / ATP World Tour』开场标识，2.5-4.5s是『DJOKOVIC (10) vs FEDERER (2)』对阵图，此后连续记分条烧着『Djokovic』/『Federer』及局分；contact_03.jpg 180.5-218.5s是握手、庆祝（挥拳/仰头）、捧杯的完整段落；220.5s切到『MURRAY/SOARES (4) vs CABAL/FARAH (7)』——**这之后是双打决赛颁奖，本条spec一概不用**。自动字幕（captions.txt）逐句印证赛果：76.98-88.47s『Djokovic is one set away from winning the title in Cincinnati for the first time but more significantly he's one set away from completing the set of masters』；169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』；203.76-214.61s『here 2018 Western Southern Open men's singles champion Novak Djokovic... it's the last stamp in the passport... of these nine great stops』。\n\n**final2023**：沿用已发的cincinnati-story旧版已核验的官方集锦，一个字节没有重新下载/验证——source_url、分辨率(1920x1080/60fps)、切点、captions.txt全部复用之前的探测记录（output/2026-08-11/reel/cincinnati-djokovic-alcaraz/probe.json）。\n\n⚠️ **不引入比已核验记录更精确的分盘/分局数字**（同旧版这条注解）。",
-  "_column": "**「网球有故事」，不是「赛场之上」**——2026-08-11账号所有者纠正：「用他那个二发网球的视频里的剪辑和叙述的手段……来做辛辛那提赛的历史和它的整个的精彩的地方……而不是让你做辛辛那提决赛最长决赛的这个视频，时长可以不限制」。上一版把整条片子押在2023年一场决赛的『最长决赛』框架上，账号所有者点名这不是他要的——他要的是**赛事本身125年的历史全景**，参照『2发网球』做加拿大公开赛那条视频的手法（见CLAUDE.md「别人怎么配文案」第三个账号那节：真快剪+官网数据当证据+新闻引语，而不是单一场比赛的逐分叙事）。这一版换成多时代结构：1899建赛→改名史/险些搬去夏洛特→德约科维奇2008-2018五次辛辛那提决赛失利终于集齐职业生涯全部大师赛冠军→费德勒的7冠纪录→2023年经典决赛（降级成一拍，不再是全片）→2.6亿美元翻新→收尾。2023决赛那部分narration整体改短（原来7段现在压成1段+1个静默庆祝段）。",
-  "_facts": "两组独立核验的事实，逐条带source_urls：\n\n【赛事历史，WebSearch 2026-08-11核验】\n· 1899年9月18日建赛，最初就叫『Cincinnati Open』，在Avondale Athletic Club举行——全美仍留在创办城市的最古老网球赛事（tennislibrary.miraheze.org/wiki/Cincinnati_Open；cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/）\n· 1901年后改名，2002年起叫『Western & Southern Open』；2023年因冠名商Western & Southern宣布退出，赛事一度面临搬去夏洛特的风险，Beemok Capital出手承诺留驻25年；2024年1月，赛事改回1899年最初的名字『Cincinnati Open』（fox19.com/2024/01/08/…；wvxu.org/sports/2024-01-08/…）\n· 2025年，赛场Lindner Family Tennis Center（俄亥俄州梅森，31片场地）完成2.6亿美元翻新（en.wikipedia.org/wiki/Cincinnati_Open）\n\n【德约科维奇的辛辛那提，ATP官方+独立源双重核验】\n· 2018年夺冠之前，德约科维奇在辛辛那提五进决赛五次落败——2008、2011两次输给穆雷，2009、2012、2015三次输给费德勒（atptour.com/en/news/cincinnati-2018-final-federer-federer）\n· 2018年，德约科维奇6-4 6-4击败费德勒夺冠，成为ATP历史上第一位集齐全部九项大师赛（career Golden Masters）单打冠军的男子球员——两个独立源交叉确认：ATP官方『Nine To Shine』新闻稿（atptour.com/en/news/cincinnati-2018-final-federer-djokovic）+ 吉尼斯世界纪录『First player to achieve a Career Golden Masters』条目（guinnessworldrecords.com/world-records/544030-first-player-to-achieve-a-career-golden-masters）\n· 费德勒在辛辛那提的决赛战绩是7胜1负——那唯一的一负，正是2018年输给德约科维奇的这一场（atptour.com/en/news/cincinnati-2018-final-federer-djokovic）\n\n【2023年决赛，沿用旧版已核验的evidence.json】\n· 2023年男单决赛德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，鏖战3小时49分钟，ATP史上最长三盘制决赛之一",
-  "_claims": {
-    "历史上第一位集齐全部九项大师赛冠军的男子球员": "两个独立源交叉确认：ATP官方新闻稿『Nine To Shine: Djokovic Claims Historic Cincy Crown』（https://www.atptour.com/en/news/cincinnati-2018-final-federer-djokovic）；吉尼斯世界纪录『First player to achieve a \"Career Golden Masters\"』（https://www.guinnessworldrecords.com/world-records/544030-first-player-to-achieve-a-career-golden-masters）。WebSearch 2026-08-11核实。",
-    "全美仍留在创办城市的最古老网球赛事": "两个独立源：Tennis History Library（https://tennislibrary.miraheze.org/wiki/Cincinnati_Open）；赛事官方125周年新闻稿（https://cincinnatiopen.com/news/cincinnati-open-celebrates-125-years/）。WebSearch 2026-08-11核实，沿用旧版evidence.json同一条已核验事实。"
+  "conform": {
+    "venue": "电影画幅 1920×1012，等比放大 1.067× 铺满 1080 高再两侧各裁 64px——b-roll 素材完全可用；尺寸闸 run 31619358302 拦下后加的 conform 出路（认领+写原因，和 mixed_fps 同形状）"
   },
-  "_beats": "十拍，按时代顺序：\n1 1899年，它就叫Cincinnati Open → 后来呢？\n2 这个名字很快弄丢了 → 找回来了吗？\n3 2023年险些搬去夏洛特，2024年改回原名 → （这一拍收束赛事身份线）\n4 德约科维奇在这儿五进决赛五次失利 → 他放弃了吗？\n5 2018年，他离集齐全部大师赛冠军只差一盘 → 拿下了吗？\n6 历史写成，第一位『金满贯』得主 → （情绪顶点，静默庆祝段承接）\n7 费德勒是7冠王，唯一一负就是刚才这场 → 现在呢？\n8 五年后，同一片场地，他又救回一场经典决赛 → 这座球场还在变吗？\n9 2.6亿美元翻新，为下一个125年准备 → 收在『下一个留名的会是谁』这一问。",
   "cover": {
     "eyebrow": "网球有故事",
     "layout": "solo",
-    "subject": "德约科维奇",
-    "hook": "五次决赛，五次失利，他没有放弃\n第六次，他集齐了职业生涯全部大师赛冠军",
-    "_hook_why": "上一句过程（连续五次决赛落败），下一句落点（第六次终于集齐大师赛全满贯）——'process→payoff'两行钩子，和已发多条片子同一个形状。第一行15字、第二行19字，都在27字HOOK_BUDGET内。换掉了旧版『三小时四十九分钟』那条钩子——那条钩子讲的是2023年决赛，账号所有者明确说不要再把全片押在这场决赛上，钩子也要跟着换成新的叙事重心（德约的辛辛那提救赎线）。",
-    "topic": "辛辛那提公开赛 · 125年的故事",
+    "subject": "辛辛那提公开赛",
+    "hook": "全美第三大网球赛事\n办在一个三万多人的小镇",
+    "narration": "全美第三大的网球赛事，办在一个三万多人的小镇。",
+    "_narration_why": "念的就是海报上那句钩子，不另排字幕。",
+    "topic": "辛辛那提公开赛 · 小镇如何留住127年大赛",
     "portrait": {
-      "frame_at": 193.79,
-      "source": "final2018",
+      "frame_at": 82.8,
+      "source": "venue",
       "focus": 0.5,
-      "focus_y": 0.3,
+      "focus_y": 0.45,
       "zoom": 1.0,
-      "_why": "193.79秒：2018年决赛赛点后，德约科维奇仰头庆祝的瞬间——`tools/pick_cover_frames.py` 在probe阶段自动挑出的候选之一（cand_04_t193.79.jpg，脸223px/清晰66.7/运动36.63，7个候选里唯一一张正脸+仰头庆祝的表情读得出）。四道闸门：精准（画面就是这场决赛赛点后的即时反应，captions.txt 169-197s『history is made... golden masters』互证时段吻合）、在比赛中（赛点后庆祝，不是训练/发布会）、冲击力（仰头挥臂，全片新叙事重心的情绪落点）、清晰度（1920x1080源片，无放大）。换掉了旧版用final(2023)716.5秒的封面帧——新叙事的情绪顶点是2018年金满贯这一刻，不再是2023年那场决赛。focus/zoom待render_cover_local.py本地渲染核实。"
+      "_why": "黄昏航拍：整个新园区亮着灯的全景（缩略图墙 82.5s 那格）——钩子讲的是『赛事之大 vs 小镇之小』，能一眼画出『大』的就是这张全园夜景。四道闸门：精准（官方宣传片、CINCINNATI OPEN 门牌在同一条片里自证）、比赛场景（赛事园区本体，讲赛事的片子封面就是赛事）、冲击力（暮色+满场灯光）、清晰度（1920×1012 原生，无放大）。focus/zoom 待 mode=cover 之后 render_cover_local 本地核。"
     },
     "scrim": "clear"
   },
   "push": {
-    "summary": "125年的辛辛那提往事",
-    "lead": "1899年，辛辛那提的一群网球爱好者办起了这项赛事，最初就叫Cincinnati Open——它是全美仍留在创办城市的最古老网球赛事。这个名字后来弄丢了，冠名商换了一轮又一轮；2023年，赛事一度险些搬去夏洛特，最后留了下来，2024年改回了123年前最初的名字。德约科维奇在这里五进决赛五次落败，直到2018年才终于赢下——他也因此成为ATP历史上第一位集齐全部九项大师赛冠军的男子球员。费德勒是这里的七冠王，决赛战绩7胜1负，唯一的那次失利正是那一场。五年后，同一片场地，他又一次救回了一场几乎要输掉的决赛——3小时49分钟，ATP史上最长三盘制决赛之一。球场刚完成一次2.6亿美元的翻新，31片场地，为下一个125年做准备。",
+    "summary": "小镇如何留住百年大赛",
+    "lead": "全美第三大的网球赛事，不在纽约，也不在迈阿密——在俄亥俄州梅森，一个三万多人的小镇。它 1899 年开打，是全美还留在创办城市的最老网球赛事；七十年代一度流浪到游乐园旧址办赛，1979 年搬到梅森时穷得连看台座椅都是拆了运过去的。费德勒在这儿七次夺冠，德约科维奇在这儿集齐九个大师赛冠军。可 2022 年它被卖给新老板，差点搬去夏洛特：对方开出 4 亿美元的新场馆方案，俄亥俄的州、市、县凑了 4800 万公共资金——最后夏洛特的报价差了 1700 万，赛事留下，一签 25 年，随后完成 2.6 亿美元改造。北京时间明晚，第 127 个年头的正赛开打。",
     "auto": true,
-    "_why": "summary『125年的辛辛那提往事』10字，SUMMARY_MAX=13以内。lead改写成完整的多时代叙事（旧版只讲2023决赛+两条零散事实），和新的视频结构对齐。"
+    "_why": "summary 10 字（SUMMARY_MAX=13 以内）。lead 与视频同一条事实链，全部出自 _facts 已核验条目。"
   },
   "segments": [
     {
-      "start": 0.3,
-      "end": 8.8,
+      "start": 21.5,
+      "end": 28.3,
+      "source": "venue",
       "fit": "crop",
-      "source": "final2018",
-      "narration": "1899年开打的辛辛那提，是全美仍留在创办城市的最古老网球赛事。",
-      "_why": "画面：0.5s官方『W&S OPEN/Masters 1000/ATP World Tour』开场标识→2.5-4.5s『DJOKOVIC(10) vs FEDERER(2)』对阵图→之后进入真实court画面。这一屏是全片的『赛事身份』开场，用赛事自己的官方转播片头做视觉锚点，比任何截图都更直接自证『这是辛辛那提公开赛』。",
-      "crosses_cut": "跨4.8——preview核过，从静态标识/对阵图切到真实球场，是这条官方集锦本身的开场转场手法，不是选段引入的跳切；这一段narration讲的是1899年历史，不指认任何具体击球动作，画面纯当赛事身份的视觉背景。",
-      "inset": {
-        "image": "assets/reel/cincinnati-founded-1899.png",
-        "corner": "tl",
-        "width": 0.8
-      },
-      "_inset_why": "参照2026-08-11研究的『2发网球』加拿大公开赛那条视频（CLAUDE.md「别人怎么配文案」第三个账号那节）：用证据卡把旁白里的数字再亮一次。`tools/render_beat_card.py`自己渲的『1899』数字卡，不是截第三方网页。"
+      "mute": true,
+      "narration": "全美第三大的网球赛事——排它前面的，只有美网，和印第安维尔斯。",
+      "_why": "新中央球场看台的连续横扫镜头（21.5-28.71 单一镜头，硬切点在 29.92）。开场第一拍直接给最硬的事实+最大的画面。"
+    },
+    {
+      "start": 31.04,
+      "end": 34.2,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "它不在纽约，不在迈阿密。",
+      "_why": "园区步道航拍（31.04-34.21 单一镜头）。"
+    },
+    {
+      "start": 35.42,
+      "end": 39.6,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "俄亥俄州梅森，一个三万多人的小镇。",
+      "_why": "冠军墙走拍（35.42-39.62，墙上钉着历年冠军铭牌，2023/2024 年份可读）——『小镇』这句落在它 127 年冠军名册上，反差就是这一拍。人口 34,792（2020 普查），写『三万多人』。",
+      "crosses_cut": "跨37.75——冠军墙的连续走拍换了个角度，同一面墙、同一主体，宣传片自己的蒙太奇。"
     },
     {
       "start": 8.8,
-      "end": 17.0,
-      "fit": "crop",
+      "end": 16.0,
       "source": "final2018",
-      "narration": "可这名字很快就弄丢了，冠名商换了一轮又一轮。",
-      "_why": "承接上一段的历史叙事，画面延续同一段real court动作作背景——这一段没有引入新的具体动作断言，纯粹是历史铺垫。窗口落在4.8-22.92这段单一镜头内，不跨切点。",
-      "crosses_cut": ""
+      "fit": "crop",
+      "narration": "一八九九年，它就在这儿开打——全美还留在创办城市的赛事里，它最老。",
+      "_why": "底是 2018 决赛的 real court 回合（4.8-22.92 单一镜头内，沿用旧版已核验窗口），上面压 1899 官方史料照片卡。现代比赛画面下亮出 127 年前的照片，时空对照就是这一拍的内容。",
+      "inset": {
+        "image": "assets/reel/cincy-photo-1899.png",
+        "corner": "tl",
+        "width": 0.8
+      },
+      "_inset_why": "官方史料集第 4 页翻印，图注原文『A scene from the Cincinnati tournament's first year, 1899』——图注自己把时刻写死了。白边贴纸+年份角标，见 credits。"
     },
     {
       "start": 17.0,
-      "end": 30.5,
-      "fit": "crop",
+      "end": 22.9,
       "source": "final2018",
-      "narration": "2023年，赛事差点搬去夏洛特——最后，新的赞助方承诺留驻25年，它留了下来。2024年，改回了123年前最初的名字。",
-      "_why": "fox19.com/wvxu.org已核验：Western & Southern 2023年宣布退出冠名，赛事一度面临搬迁，Beemok Capital承诺留驻25年；2024年1月改回1899年最初的名字『Cincinnati Open』。画面继续用同一段real court真实比赛动作作历史背景，不指认具体动作。⚠️ 2026-08-11真实render（run 31506846896）在这一段撞哑场闸：本地`--check-narration`走的是edge-tts（沙箱没有Azure密钥），而生产渲染实际走**Azure**（job日志`[TTS] Azure（风格 无）`）——同一音色zh-CN-YunjianNeural、同一语速+6%，Azure真实合成比edge-tts本地估算快约3%（这段实测9.46s，edge-tts估的是9.77s），把原本edge-tts量出来还有3.73s余量的窗口，在Azure上推到了4.04s，超过4.0s哑场门槛。补上『新的赞助方承诺留驻25年』这半句（Beemok Capital那条已核验事实，原来省略了）把窗口撑长，edge-tts本地实测到12.27s，即使Azure再快5%仍有余量。这是本仓库第一次记录到的Azure/edge-tts合成时长系统性差异，不是『音色名写错』那类旧坑——已发的其它片子边际都够宽没暴露过，这条片子窗口卡得太紧才第一次现形。",
-      "crosses_cut": "跨22.92——preview核过，两侧都是同一场比赛的real court回合镜头（转播机位切换角度），narration本身不涉及具体某一分，纯当赛事历史的背景画面。",
+      "fit": "crop",
+      "narration": "第一天打完，当地报纸写道：这会是辛辛那提最成功的比赛。",
+      "_why": "同一镜头内的延续窗口（到 22.92 切点为止）。报纸原话卡压在上面：《Cincinnati Times Star》1899-09-19，转引自官方史料集 p4。",
       "inset": {
-        "image": "assets/reel/cincinnati-name-back.png",
+        "image": "assets/reel/cincy-quote-1899.png",
         "corner": "tl",
-        "width": 0.75
+        "width": 0.86
       },
-      "_inset_why": "自己渲的『123年后，改回原名』字卡，呼应旁白这句改名史的落点。"
+      "_inset_why": "参照『2发网球』的新闻引语手法：原文+译文+来源署名（Voice of…/CBC News 同款），自排文字卡，不伪造报纸截图。"
     },
     {
       "start": 30.7,
-      "end": 45.5,
-      "fit": "crop",
+      "end": 37.7,
       "source": "final2018",
-      "narration": "德约科维奇在这儿闯进过五次决赛，五次都没能捧杯——2008年、2011年两次输给穆雷，2009年、2012年、2015年三次输给费德勒。",
-      "_why": "atptour.com已核验：2008、2011输给穆雷，2009、2012、2015输给费德勒，五次决赛五次落败。画面仍是2018年决赛的real court动作，用『现在的画面』回溯讲『过去的战绩』——和旧版spec第1段『沿用早期回合窗口…只当背景铺垫赛事历史』是同一种手法。⚠️ 窗口从33.8-46.5延到30.7-47.0：补上具体年份之后本地`--check-narration`（正确音色zh-CN-YunjianNeural）实测13.71s，原12.7s窗口装不下，现16.3s窗口留1.84s余量。",
-      "crosses_cut": "跨33.8、37.07——preview核过，同一场real court回合镜头连续切换角度，narration不指认具体动作。",
+      "fit": "crop",
+      "narration": "七十年代它一度没了家，流浪到一个游乐园旧址——河一涨水，球场就淹。",
+      "crosses_cut": "跨33.8、37.07——旧版同窗口已核过：同一场回合镜头连续切机位，narration 讲历史不指认具体动作，纯当背景。",
+      "_why": "官方史料集 p70『five venue changes』+ p76-77『flood-prone Old Coney facility』：70 年代五次搬家，1975-78 落脚 Old Coney（俄亥俄河畔游乐园旧址）。上面压 1977 年官方史料照片。",
       "inset": {
-        "image": "assets/reel/cincinnati-djokovic-05.png",
+        "image": "assets/reel/cincy-photo-1977.png",
         "corner": "tl",
         "width": 0.8
       },
-      "_inset_why": "自己渲的『0/5』数据卡——五进决赛零冠军，量化『他没能捧杯』这句话，和『2发网球』用硬数据配文案是同一个技法。"
+      "_inset_why": "官方史料集 p76 翻印：1977 年半决赛 Solomon vs Alexander，Old Coney 球场——照片里的记分牌自己写着 ALEXANDER | SOLOMON，画面自证。"
+    },
+    {
+      "start": 38.0,
+      "end": 45.5,
+      "source": "final2018",
+      "fit": "crop",
+      "narration": "一九七九年搬到梅森时，看台的座椅，都是从游乐园拆下来拉过去的。",
+      "_why": "窗口在旧版核过的 30.7-47.0 镜头段内（切点只有 33.8/37.07，都在本窗之前）。事实出自官方史料集 p70-71 原文『seats…from Old Coney and transported up Interstate 71 to the new venue』——穷到搬座椅这个细节是『小镇与赛事互相成就』这条线的起点。"
     },
     {
       "start": 76.0,
-      "end": 86.5,
-      "fit": "crop",
+      "end": 83.6,
       "source": "final2018",
-      "narration": "直到2018年，他离集齐职业生涯全部九项大师赛冠军，只差最后一盘。",
-      "_why": "captions.txt 76.98-88.47s『Djokovic is one set away from winning the title in Cincinnati for the first time but more significantly he's one set away from completing the set of masters』——narration直接对应这段官方转播原声描述的时刻，画面就是这一刻的真实比赛动作。",
-      "crosses_cut": "跨77.41、82.78、84.55——preview核过，全程real court回合镜头连续切换角度和德约科维奇近景反应交替，是标准回合剪辑手法，未见切给对手或无关画面。"
+      "fit": "crop",
+      "narration": "后来，它长成了巨星的后院。费德勒在这儿七次夺冠——纪录至今没人接近。",
+      "crosses_cut": "跨77.41、82.78——旧版同窗口已核过：real court 回合镜头与近景反应交替，标准回合剪辑。",
+      "_why": "captions 76.98-88.47s 正是转播讲德约『one set away…set of masters』的时段，画面是 2018 决赛真实回合——费德勒本人就在画面里打球，『巨星的后院』这句落在两位巨星的真实对决上。七冠纪录 atptour+tennis365 双源。"
     },
     {
       "start": 167.5,
-      "end": 179.5,
-      "fit": "crop",
+      "end": 175.5,
       "source": "final2018",
-      "narration": "历史就在辛辛那提写成——德约科维奇成了ATP历史上第一个集齐全部九项大师赛冠军的男子球员，史称金满贯。",
-      "_why": "captions.txt 169.31-197.47s『history is made in Cincinnati / Novak Djokovic becomes the first man in singles to capture all Masters 1000 cycles / it's the golden masters』——官方转播原声原话即『历史写成』『第一人』『金满贯』，narration直接对应。这是全片新叙事重心的情绪顶点。⚠️ 2026-08-11真实render（run 31506846896）在这一段同样撞哑场闸（同上一段那条Azure/edge-tts系统性差异：这段实测7.99s，edge-tts本地估的是8.57s，Azure快约7%，把edge-tts量出来3.43s的余量推到Azure实测的4.01s，压线超过4.0s门槛）。补上『ATP历史上』『九项』两个限定词把句子撑长，edge-tts本地重新实测到9.95s——没有引入新事实，只是把_claims里已经核验过的『历史上第一位集齐全部九项大师赛冠军的男子球员』这句话原样搬进旁白，不额外添加『十一年』这类还没在_facts里核验过时间跨度的说法。",
-      "crosses_cut": "跨170.04、176.14——preview核过，德约科维奇夺冠瞬间的连续镜头（近景反应+回合最后一分+看台反应），标准赛点/夺冠段落剪辑手法。"
+      "fit": "crop",
+      "narration": "二〇一八年，德约科维奇在这儿凑齐了全部九个大师赛冠军——史上第一人。",
+      "crosses_cut": "跨170.04——旧版同窗口已核过：夺冠瞬间连续镜头（回合最后一分+近景反应）。",
+      "_why": "captions 169.31-197.47s『history is made in Cincinnati / first man in singles to capture all Masters 1000 cycles / golden masters』，narration 与转播原声同一时刻同一事。双源（ATP+吉尼斯）见 _claims。"
     },
     {
-      "start": 179.5,
-      "end": 192.0,
-      "fit": "crop",
-      "source": "final2018",
-      "narration": "费德勒是这儿的七冠王，这项纪录至今无人接近——决赛战绩七胜一负，唯一的那次失利，就是刚才这一场。",
-      "_why": "atptour.com已核验：费德勒辛辛那提决赛战绩7胜1负，唯一一负正是这场2018决赛；『七冠至今无人接近』沿用旧版spec已核验的原话（evidence.json）。画面：180.5-184.5s两人网前握手（双方都在画面里，直接对应『刚才这一场』），184.5s之后德约科维奇开始庆祝——用赛后握手的真实画面承接『唯一的那次失利』这句话，精准且不误导（画面里确实是费德勒本人，正在和德约科维奇握手）。⚠️ 本地`--check-narration`实测原句7.15s，12.5s窗口空出5.35s撞哑场闸——补长到9.99s，室量1.76s。",
-      "crosses_cut": "跨188.46——preview核过，握手动作自然过渡到德约科维奇转身庆祝，同一场比赛赛后的连续真实动作，不构成跳切。",
-      "inset": {
-        "image": "assets/reel/cincinnati-federer-7.png",
-        "corner": "tl",
-        "width": 0.8
-      },
-      "_inset_why": "自己渲的『7』数字卡——费德勒的冠军数，呼应旁白。这一屏画面里费德勒本人确实在场（握手），不是『同一天』那种借用画面的转场手法，卡片只是把数字再亮一次。"
-    },
-    {
-      "start": 192.0,
-      "end": 200.5,
-      "fit": "crop",
-      "source": "final2018",
-      "narration": "",
-      "_why": "冷处理：德约科维奇仰头挥臂庆祝的连续镜头，全片新叙事重心的情绪最高点，不配旁白交给现场声——同时是封面取帧的那一秒（193.79s）。和旧版spec里713.3-719.0那段『冷处理』同一个手法：最重的情绪留白给画面和现场声，不用旁白抢戏。"
-    },
-    {
-      "start": 701.8,
-      "end": 713.3,
-      "fit": "crop",
+      "start": 701.85,
+      "end": 709.5,
       "source": "final2023",
-      "narration": "五年后，同一片场地，他又一次救回了一场几乎要输掉的决赛——3小时49分钟，ATP史上最长的三盘制决赛之一。",
-      "_why": "沿用旧版spec已核验的窗口和事实（evidence.json：德约科维奇5-7 7-6 7-6胜阿尔卡拉斯，3小时49分钟，ATP史上最长三盘制决赛之一）——这一版把2023决赛从『全片主线』压缩成『赛事编年史里的一拍』，narration改写成承接『五年后…又一次』的转场句，不再逐分叙事整场比赛。画面：赛点落地到网前拥抱，captions.txt 710.66s『seals it on his fifth Championship point after three hours and 49 minutes on court』互证。"
+      "fit": "crop",
+      "narration": "二〇二三年，史上最长的三盘大师赛决赛之一，也在这儿——三小时四十九分钟。",
+      "_why": "2023 决赛赛点段（旧版已核验窗口 701.8-713.3 的前半，切点 701.82 与窗口起点边界对齐）。captions 710.66s『seals it on his fifth Championship point after three hours and 49 minutes』就在窗口紧后，时长由转播原声自证。"
+    },
+    {
+      "start": 0.3,
+      "end": 8.8,
+      "source": "final2018",
+      "fit": "crop",
+      "narration": "可三年前，它差点就没了——被卖给了新老板，对方第一件事，是考虑搬去夏洛特。",
+      "crosses_cut": "跨4.8——旧版同窗口已核过：官方『W&S OPEN』开场标识→对阵图→真实球场，是集锦自己的开场转场。",
+      "_why": "画面正是 Western & Southern 冠名时代的官方片头——『被卖』这句压在旧冠名的官方标识上，视觉和叙事同一件事。2022 年 USTA 售予 Beemok：en.wikipedia + 官方史料集 p103；考虑夏洛特：史料集 p105『Cincinnati or move it to Charlotte, North Carolina』+ wcpo。"
+    },
+    {
+      "start": 22.3,
+      "end": 29.5,
+      "source": "final2023",
+      "fit": "crop",
+      "narration": "夏洛特开出四亿美元；梅森的州、市、县，凑了四千八百万。",
+      "_why": "2023 决赛开场宽景长镜头（22.28-29.62 单一镜头），背景板印着 Western & Southern——冠名商时代最后一届的画面当竞标叙事的底。数字 verbatim 出自 wcpo I-Team（州 2250 万+市 1500 万+县 1050 万）与 wcnc（4 亿方案）。上面压两城对比卡。 旁白只报两个总数——方案细节（全新场馆/续约25年）卡上印着，不重复。",
+      "inset": {
+        "image": "assets/reel/cincy-bidwar.png",
+        "corner": "tl",
+        "width": 0.86
+      },
+      "_inset_why": "对比卡不画条形图——两个数不是同一口径（新场馆总造价 vs 公共资金），比长短会误导。赢家行品牌绿，一屏一个强调色。"
+    },
+    {
+      "start": 53.0,
+      "end": 59.5,
+      "source": "final2023",
+      "fit": "crop",
+      "narration": "本地电视台后来算过账——夏洛特的报价，差了一千七百万。",
+      "_why": "52.78-67.8 单一长镜头内的宽景回合。上面压 WCPO 标题卡（标题 verbatim：『Charlotte's bid to move the Western & Southern Open from Mason to North Carolina is $17M short』）。",
+      "inset": {
+        "image": "assets/reel/cincy-news-wcpo.png",
+        "corner": "tl",
+        "width": 0.86
+      },
+      "_inset_why": "新闻标题当证据，带来源署名（WCPO 辛辛那提9频道·2023）——参照手法第三类。"
     },
     {
       "start": 730.6,
-      "end": 743.0,
-      "fit": "crop",
+      "end": 737.8,
       "source": "final2023",
-      "narration": "这座球场建在俄亥俄州梅森，刚完成了一次2.6亿美元的翻新，31片场地。下一个在辛辛那提留下名字的，会是谁？",
-      "_why": "en.wikipedia.org已核验：Lindner Family Tennis Center建在俄亥俄州梅森，31片场地，2025年完成2.6亿美元翻新。画面沿用旧版spec同一窗口（颁奖台/trophy/confetti快切庆祝蒙太奇），narration从『费德勒七冠+高芙同日夺冠』改写成『翻新+收尾问句』。⚠️ `test_收尾要落在一问上不能停在数据上` 要求最后一段narration本身以问号收尾（不能只靠`_ask_it_out_loud()`在渲染时自动补，那道闸查的是spec原文）——沿用旧版spec本来就有的『下一个在辛辛那提留下名字的，会是谁？』这句，和push.lead/xhs.txt的收尾问句保持一致。窗口从旧版730.6-746.0（15.4s）收到730.6-743.0（12.4s）：本地`--check-narration`实测本句10.1s左右，余量约2s。",
-      "inset": {
-        "image": "assets/reel/cincinnati-renovation.png",
-        "corner": "tl",
-        "width": 0.8
-      },
-      "_inset_why": "自己渲的『2.6亿』数字卡，呼应旁白这句翻新工程的数字。",
-      "crosses_cut": "跨730.92、731.02、731.83、731.87、731.98、734.18共6处——preview核过，730.6-743.0全程是颁奖台/trophy/confetti的快切庆祝蒙太奇，是官方集锦本身的剪辑手法，不是选段时引入的跳切（同旧版spec已有的判据）。"
+      "fit": "crop",
+      "narration": "二〇二三年十月，答案落地：留下。一签，就是二十五年。",
+      "crosses_cut": "跨730.92、731.02、731.83、731.87、731.98、734.18——旧版同窗口已核过：颁奖台/彩带快切蒙太奇，是官方集锦自己的剪辑手法。",
+      "_why": "彩带+捧杯的庆祝蒙太奇配『留下』——情绪对题。25 年：wsoctv+wcnc 双源；2023 年 10 月宣布：en.wikipedia+spectrumlocalnews。"
+    },
+    {
+      "start": 41.75,
+      "end": 49.2,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "留下之后，是一场两点六亿美元的改造——三十一片场地，一座全新的园区。",
+      "_why": "41.75-49.25 硬切点之间的园区漫游段（内部有几处软转场：黄昏步道→室内→灯串→黄椅子，都是园区面貌的连续展示，宣传片自己的蒙太奇）。2.6 亿+31 片场地：en.wikipedia+fox19；『全新的园区』就是这条官方宣传片的标题（All-New Cincinnati Open）。"
+    },
+    {
+      "start": 55.75,
+      "end": 59.9,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "第一百二十七个年头。",
+      "crosses_cut": "跨56.83、56.88、57.88、58.42、59.04——看台球迷的连续快切蒙太奇，宣传片自己的剪辑；这一拍讲的就是『人』，narration 只报年头数。",
+      "_why": "看台球迷欢呼的快切段——127 个年头属于一直来看球的这些人，数字落在人脸上。127=2026-1899，与 fox19『126th year』(2025) 同一口径。"
+    },
+    {
+      "start": 74.12,
+      "end": 77.5,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "北京时间明晚，正赛开打。",
+      "crosses_cut": "跨75.71——黄昏球场→夜景 CINCINNATI OPEN 门牌，宣传片自己的转场；两格都是园区空镜，narration 只报时间。",
+      "_why": "夜景门牌收『开打』这句。2026 正赛 8/13 起，白天场 11:00 EDT=北京 23:00（atptour 2026 指南+官方赛程页）——今天 8/12 写『明晚』成立；这条片子按当天推送设计，时效句只此一处。"
+    },
+    {
+      "start": 81.5,
+      "end": 85.5,
+      "source": "venue",
+      "fit": "crop",
+      "mute": true,
+      "narration": "下一个把名字刻进这里的，会是谁？",
+      "_why": "黄昏全园航拍收尾（81.46 之后无硬切点；85.5 之后画面明显转暗，preview 核过截在这儿）。收尾落在一问上；这一问接的是 1899→留下 的整条线。"
     }
-  ]
+  ],
+  "_crop_zoom_why": "三条源片全是宽景（venue 是航拍/滑轨，两条决赛集锦是底线后方高机位），不写 crop_zoom（默认 1.0）——旧版验过 1.5 会切人切字幕。"
 }

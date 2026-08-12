@@ -8874,3 +8874,105 @@ def test_赛场之上的quote段不许是赛后采访():
     assert legacy_seen == legacy, (
         f"legacy 表和现实对不上：表里有而没扫到 {legacy - legacy_seen}。"
         f"哪条 spec 改掉了 quote 段就把它从表里删掉——只许减不许加")
+
+
+def test_mute段的源声要真的静掉(tmp_path):
+    """`"mute": true` 的段走 anullsrc——配乐宣传片的音乐不是现场声，切碎再拼
+    还会在每个接缝上跳。真切两段量响度：查源码里有没有 `not seg.mute` 只能防
+    「有人把它删了」，防不住「它从来没工作过」。
+
+    - 对照组（不写 mute）必须是响的——先证明量的东西正常情况下真的存在，
+      不然「静了」和「源本来就没声」长得一模一样（判据自己也要有判据）
+    - 字符串 `"true"` 要报错，和 `"auto": "true"` 那次同一个理由
+    反向验证过：拆掉 cut_segment 里的 `and not seg.mute`，muted 那半当场红。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    def _mean_db(path):
+        out = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(path), "-af", "volumedetect",
+             "-f", "null", os.devnull], capture_output=True, text=True).stderr
+        m = re.search(r"mean_volume:\s*(-?[\d.]+) dB", out)
+        assert m, f"量不出响度：{out[-300:]}"
+        return float(m.group(1))
+
+    src = tmp_path / "source.mp4"
+    _ff("-f", "lavfi", "-i", "testsrc2=size=1920x1080:rate=25:duration=5",
+        "-f", "lavfi", "-i", "sine=frequency=440:duration=5",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "35",
+        "-c:a", "aac", "-shortest", str(src))
+
+    loud = reel.Segment(0.5, 2.5, 0.5, "", track=False)
+    quiet = reel.Segment(0.5, 2.5, 0.5, "", track=False, mute=True)
+    out_loud, out_quiet = tmp_path / "loud.mp4", tmp_path / "quiet.mp4"
+    reel.cut_segment(src, loud, out_loud, 1920)
+    reel.cut_segment(src, quiet, out_quiet, 1920)
+
+    db_loud, db_quiet = _mean_db(out_loud), _mean_db(out_quiet)
+    assert db_loud > -40, (
+        f"对照组只有 {db_loud} dB——源片的声音本来就没进来，"
+        "这个测试量不到它想量的东西")
+    assert db_quiet < -80, (
+        f"mute 段量到 {db_quiet} dB——源片的配乐还在，mute 没生效")
+
+    with pytest.raises(reel.ReelError, match="mute"):
+        reel._seg_mute({"mute": "true"}, 0)
+
+
+def test_conform声明的源要真的被统一到基准尺寸(tmp_path):
+    """`conform: {源键: 为什么}` 是尺寸闸的唯一出路——等比放大铺满再中央裁。
+
+    真造两条不同高度的源片跑一遍：查源码只能防「有人删了它」，防不住
+    「它从来没工作过」。四头都钉：
+    ① 声明过的源变成基准尺寸，之后 check_sources_match 放行
+    ② 没声明的尺寸不一致照样红（闸没有被顺手放松）
+    ③ 全部声明进去要报错（没有基准）
+    ④ 光列名字不写原因要报错（认领要留下判据）
+    ⑤ render() 里 conform 必须排在尺寸闸**前面**——①~④都是直接调函数，
+      拆掉 render() 里的调用它们照样绿（反向验证时抓到的），所以位置单独钉。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    def _ff(*args):
+        subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                        *args], check=True)
+
+    wide, tall = tmp_path / "src_a.mp4", tmp_path / "src_b.mp4"
+    _ff("-f", "lavfi", "-i", "testsrc2=size=960x506:rate=24:duration=2",
+        "-c:v", "libx264", "-preset", "ultrafast", str(wide))       # 电影画幅
+    _ff("-f", "lavfi", "-i", "testsrc2=size=960x540:rate=24:duration=2",
+        "-c:v", "libx264", "-preset", "ultrafast", str(tall))       # 基准
+
+    # ② 不声明：照样红
+    with pytest.raises(reel.ReelError, match="尺寸"):
+        reel.check_sources_match({"a": wide, "b": tall}, {})
+
+    # ① 声明了：统一到基准，闸放行
+    paths = {"a": wide, "b": tall}
+    spec = {"conform": {"a": "电影画幅的宣传片，1.07×放大加两侧裁边对b-roll可用"}}
+    reel.conform_sources(paths, spec, tmp_path)
+    assert reel.probe_size(paths["a"]) == (960, 540), "conform 没把尺寸统一到基准"
+    assert paths["a"] != wide, "conform 应该产出新文件，不许原地改写缓存过的源片"
+    reel.check_sources_match(paths, spec)  # 不抛 = 放行
+
+    # ③ 全声明进去：没有基准
+    with pytest.raises(reel.ReelError, match="基准"):
+        reel.conform_sources({"a": wide, "b": tall},
+                             {"conform": {"a": "x", "b": "y"}}, tmp_path)
+
+    # ④ 不写原因：认领不算数
+    with pytest.raises(reel.ReelError, match="判据"):
+        reel.conform_sources({"a": wide, "b": tall},
+                             {"conform": {"a": ""}}, tmp_path)
+
+    # ⑤ 位置：conform 排在尺寸闸前面，且真的在 render() 里被调用
+    body = inspect.getsource(reel.render)
+    assert "conform_sources(" in body, "render() 里没有 conform 调用——写了不等于接上了"
+    assert body.index("conform_sources(") < body.index("check_sources_match("), (
+        "conform 排在尺寸闸后面等于没有——闸先红，永远走不到它")
