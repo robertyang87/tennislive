@@ -1,8 +1,8 @@
 # 转写交叉校验：shelton-mensik-mtl2026-qf
 
 - 第一份：YouTube 自动字幕 **1474** 词
-- 第二份：faster-whisper（small.en）**1360** 词
-- **对不上 10.3%**（闸门 12%）
+- 第二份：faster-whisper（small.en）**1321** 词
+- **对不上 12.7%**（闸门 12%）
 
 ## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
 
@@ -14,6 +14,7 @@
 - `um` → `—`
 - `um` → `—`
 - `uh` → `—`
+- `and` → `—`
 - `and` → `—`
 - `um` → `—`
 - `um` → `—`
@@ -41,60 +42,61 @@
 - `working` → `—`
 - `in` → `—`
 - `there's` → `—`
-- `court and the` → `—`
 - `uh` → `—`
-- `—` → `it`
 - `and` → `—`
 - `um` → `—`
-- `you know` → `—`
 - `um` → `—`
-- `guys` → `guy's`
+- `guys` → `guys'`
 - `um` → `—`
 - `uh` → `—`
 - `um jess pegula's` → `jaspi gula`
-- `you're in` → `me and`
 - `jess pegula` → `jaspi gula`
-- `now` → `—`
-- `jessica pegula oh pegula yeah yeah uh` → `jaspi gula`
-- `um` → `—`
+- `you` → `you're`
+- `first name you said jessica pegula oh pegula yeah yeah uh i wouldn't say that at all um that's a` → `—`
 - `um` → `—`
 - `her` → `—`
-- `um` → `—`
+- `and um` → `—`
 - `hardcore` → `hard court`
 - `um` → `—`
 - `um` → `—`
 - `um` → `—`
 - `how` → `—`
 - `or` → `—`
+- `like` → `—`
 - `um rafael jodar's` → `rafa hodar's`
 - `uh` → `—`
 - `um` → `—`
 - `uh` → `—`
-- `i` → `—`
 - `uh` → `—`
 - `um` → `—`
+- `you know` → `—`
+- `you know` → `—`
+- `you know` → `—`
 - `uh` → `—`
 - `is` → `it's`
 - `um` → `—`
 - `um` → `—`
+- `is` → `—`
 - `uh` → `—`
 - `i` → `—`
 - `and` → `—`
 - `uh or` → `—`
 - `um` → `—`
 - `um` → `—`
-- `uh` → `—`
+- `uh they're` → `—`
 - `um` → `—`
 - `i'm` → `—`
-- `and` → `—`
+- `and yeah` → `—`
+- `you know` → `—`
 - `uh` → `—`
 - `learner` → `lerner`
-- `semi finals` → `semifinals`
+- `in the semi finals` → `semifinals`
 - `uh` → `—`
 - `you` → `—`
 - `uh` → `—`
+- `you` → `—`
 - `uh` → `—`
-- `i` → `i've`
+- `i played` → `—`
 - `of` → `—`
 - `um` → `—`
 - `learner` → `lerner`
@@ -103,21 +105,32 @@
 - `uh` → `—`
 - `um` → `—`
 - `um` → `—`
-- `sebi uh nakashima learner nicholson` → `seve nagashima lerner mikkelsen`
+- `uh` → `—`
+- `learner nicholson` → `lerner mikkelsen`
+- `that` → `—`
 - `um` → `—`
+- `we` → `we've`
 - `um i'll` → `i'd`
 - `uh merida` → `marita`
 - `learn learner` → `lerner`
-- `—` → `the`
+- `one of` → `—`
 - `—` → `i'd`
 - `last question` → `—`
-- `um` → `—`
-- `underdog uh` → `yonder dog`
+- `you prefer` → `preferred`
+- `um` → `well`
+- `underdog uh` → `yonder duck`
 - `lens` → `line it's`
+- `what's the` → `—`
 - `where` → `with`
+- `semi finals` → `semifinals`
 - `uh i` → `—`
 - `uh` → `—`
 - `um` → `—`
 - `to` → `—`
 - `uh` → `—`
+- `to` → `—`
+- `is` → `—`
+- `for` → `—`
 - `um` → `—`
+- `and` → `—`
+- `to` → `—`
