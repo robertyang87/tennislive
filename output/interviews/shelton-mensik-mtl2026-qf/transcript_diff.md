@@ -1,0 +1,123 @@
+# 转写交叉校验：shelton-mensik-mtl2026-qf
+
+- 第一份：YouTube 自动字幕 **1474** 词
+- 第二份：faster-whisper（small.en）**1360** 词
+- **对不上 10.3%**（闸门 12%）
+
+## 分歧逐处（左＝YouTube 自动字幕，右＝第二份）
+
+- `for` → `—`
+- `uh` → `—`
+- `it was a` → `—`
+- `um` → `—`
+- `is` → `—`
+- `um` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `and` → `—`
+- `um` → `—`
+- `um` → `—`
+- `that you're` → `that's your`
+- `uh yeah` → `—`
+- `um` → `—`
+- `the uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `i'd say` → `—`
+- `the` → `—`
+- `did` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `um` → `—`
+- `and um` → `—`
+- `i` → `—`
+- `um` → `—`
+- `and and felt u` → `—`
+- `i was seeing` → `i've seen`
+- `from uh` → `—`
+- `uh` → `—`
+- `is` → `—`
+- `working` → `—`
+- `in` → `—`
+- `there's` → `—`
+- `court and the` → `—`
+- `uh` → `—`
+- `—` → `it`
+- `and` → `—`
+- `um` → `—`
+- `you know` → `—`
+- `um` → `—`
+- `guys` → `guy's`
+- `um` → `—`
+- `uh` → `—`
+- `um jess pegula's` → `jaspi gula`
+- `you're in` → `me and`
+- `jess pegula` → `jaspi gula`
+- `now` → `—`
+- `jessica pegula oh pegula yeah yeah uh` → `jaspi gula`
+- `um` → `—`
+- `um` → `—`
+- `her` → `—`
+- `um` → `—`
+- `hardcore` → `hard court`
+- `um` → `—`
+- `um` → `—`
+- `um` → `—`
+- `how` → `—`
+- `or` → `—`
+- `um rafael jodar's` → `rafa hodar's`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `i` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `is` → `it's`
+- `um` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `i` → `—`
+- `and` → `—`
+- `uh or` → `—`
+- `um` → `—`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `i'm` → `—`
+- `and` → `—`
+- `uh` → `—`
+- `learner` → `lerner`
+- `semi finals` → `semifinals`
+- `uh` → `—`
+- `you` → `—`
+- `uh` → `—`
+- `uh` → `—`
+- `i` → `i've`
+- `of` → `—`
+- `um` → `—`
+- `learner` → `lerner`
+- `merida` → `marita`
+- `um` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `um` → `—`
+- `sebi uh nakashima learner nicholson` → `seve nagashima lerner mikkelsen`
+- `um` → `—`
+- `um i'll` → `i'd`
+- `uh merida` → `marita`
+- `learn learner` → `lerner`
+- `—` → `the`
+- `—` → `i'd`
+- `last question` → `—`
+- `um` → `—`
+- `underdog uh` → `yonder dog`
+- `lens` → `line it's`
+- `where` → `with`
+- `uh i` → `—`
+- `uh` → `—`
+- `um` → `—`
+- `to` → `—`
+- `uh` → `—`
+- `um` → `—`

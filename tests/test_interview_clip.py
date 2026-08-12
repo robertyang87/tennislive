@@ -2060,6 +2060,85 @@ def test_取字幕单档失败要换client重试(monkeypatch, tmp_path):
     assert words == [(0.0, "hi")]
 
 
+def test_换了候选视频不许复用上一条的字幕缓存(monkeypatch, tmp_path):
+    """真实事故（谢尔顿那条 spec）：先探了一个候选视频 `SOUMru-EDI8`，写下
+    `cap_SOUMru-EDI8.en.json3`，判定不合适之后把 spec 的 `url` 换成账号
+    所有者给的新链接 `ZycljTf6s0E`——但 outdir 没清空，旧文件还在。
+
+    原来的缓存检查只问「outdir 里有没有任何一份 `cap_*.json3`」，不问
+    「是不是这条 URL 的」，于是新的一次 `--stage subs` 会静静吃下旧候选
+    的字幕：日志上一个字不提，而且 `storyboard_sheet()` 那一头（不缓存，
+    每次真下）汇报的片长和标题是对的，两个函数一个说真话一个说假话，
+    只看日志根本发现不了。
+
+    这条直接验证：outdir 里躺着旧视频的缓存时，`fetch_words` 对一条
+    **不同 ID** 的新 URL 必须走网络重新抓，不能命中旧文件；旧文件本身
+    也不能被误删——它是别的候选留下的记录。
+    """
+    from tools import build_interview_clip as m
+
+    (tmp_path / "cap_SOUMru-EDI8.en.json3").write_text(
+        json.dumps({"events": [{"tStartMs": 0,
+                                "segs": [{"utf8": "old candidate junk"}]}]}),
+        encoding="utf-8")
+
+    calls = []
+
+    def fake_run(cmd, **kw):
+        calls.append(cmd)
+        (tmp_path / "cap_ZycljTf6s0E.en.json3").write_text(
+            json.dumps({"events": [{"tStartMs": 0,
+                                    "segs": [{"utf8": "real new content"}]}]}),
+            encoding="utf-8")
+        return type("P", (), {"returncode": 0, "stdout": "", "stderr": ""})()
+
+    monkeypatch.setattr(m.subprocess, "run", fake_run)
+    words = m.fetch_words(
+        "https://www.youtube.com/watch?v=ZycljTf6s0E", tmp_path, {})
+
+    assert len(calls) == 1, (
+        f"没有真的发起网络请求，而是命中了旧候选的缓存文件（0 次调用应为 1 次）")
+    assert words == [(0.0, "real new content")], (
+        f"读到了错的内容：{words}——旧候选 SOUMru-EDI8 的缓存没有被绕开")
+    assert (tmp_path / "cap_SOUMru-EDI8.en.json3").exists(), (
+        "旧候选的缓存文件不该被删掉，它是别的候选探过的记录")
+
+
+def test_同一条视频再跑一次仍然用缓存不重新下载(monkeypatch, tmp_path):
+    """上一条测试拦的是「误用别的视频的缓存」；这条测试反向验证同一个修复
+    没有连带杀死原来的缓存收益——同一个视频 ID 重跑 `--stage subs`（比如
+    改了 spec 别的字段，字幕本身没变）不该再发一次网络请求。
+    """
+    from tools import build_interview_clip as m
+
+    (tmp_path / "cap_ZycljTf6s0E.en.json3").write_text(
+        json.dumps({"events": [{"tStartMs": 0,
+                                "segs": [{"utf8": "cached content"}]}]}),
+        encoding="utf-8")
+
+    calls = []
+    monkeypatch.setattr(m.subprocess, "run",
+                        lambda cmd, **kw: calls.append(cmd))
+    words = m.fetch_words(
+        "https://www.youtube.com/watch?v=ZycljTf6s0E", tmp_path, {})
+
+    assert calls == [], f"同一条视频的缓存本该命中，却又发起了网络请求：{calls}"
+    assert words == [(0.0, "cached content")]
+
+
+def test_video_id从两种YouTube链接形式都抠得出来():
+    """`_video_id()` 要同时认得 `youtube.com/watch?v=` 和 `youtu.be/` 两种
+    形式——`match-reel` 那条线两种都在用，采访这条线的 spec 里也混着两种。
+    """
+    from tools.build_interview_clip import _video_id
+
+    assert _video_id("https://www.youtube.com/watch?v=ZycljTf6s0E") == "ZycljTf6s0E"
+    assert _video_id("https://youtu.be/ZycljTf6s0E") == "ZycljTf6s0E"
+    assert _video_id("https://youtu.be/ZycljTf6s0E?si=abc123") == "ZycljTf6s0E"
+    assert _video_id(
+        "https://www.youtube.com/watch?v=5uI6gpVjHdw&list=xyz") == "5uI6gpVjHdw"
+
+
 def test_订正要看穿说话人标记():
     """自动字幕给每个说话人的第一个词加 `>>`，而 `word_fix` 原来查不穿它。
 
@@ -2910,6 +2989,25 @@ def test_没有解读卡的老片子只许减不许加():
             "名单只许减不许加")
 
 
+def test_ask漏问号的豁免名单只许减不许加():
+    """`_LEGACY_ASK_NO_QUESTION_MARK` 的自检，跟上一条同一个理由：表里每个
+    slug 必须真的存在、而且真的还漏着问号——写错一个名字，或者哪天有人把
+    那条 spec 的问号补上了，豁免就该跟着划掉，不然它会挡住一条真正的错。
+    """
+    import tools.build_interview_clip as clip
+
+    have = {p.stem for p in _iv_specs()}
+    ghosts = clip._LEGACY_ASK_NO_QUESTION_MARK - have
+    assert not ghosts, f"豁免名单里这几个 slug 不存在，等于没豁免任何东西：{ghosts}"
+
+    for slug in clip._LEGACY_ASK_NO_QUESTION_MARK:
+        d = json.loads((Path("specs/interviews") / f"{slug}.json").read_text("utf-8"))
+        ask = str((d.get("takeaway") or {}).get("close", {}).get("ask", ""))
+        assert not ask.rstrip().endswith(("？", "?")), (
+            f"{slug} 的 ask 已经带问号了，就该从豁免名单里划掉——"
+            "名单只许减不许加")
+
+
 def test_新的采访片必须有解读卡而且引的是他真说过的话():
     """两头都钉。**这条只吃 `specs/`**，不读 `output/`——CI 的稀疏检出把产物
     挡在外面，拿产物当主语的判据在 CI 上会静静地变成一盏恒真的绿灯。
@@ -3208,7 +3306,51 @@ def test_卡上的字有上限():
         clip.check_takeaway(spec)
 
 
-def test_会合语音的工具入口都要挂本地CA():
+def test_收尾卡的ask必须以问号收尾():
+    """账号所有者看谢尔顿那条收尾卡截图：「还有引号问号等等标点符号也要有啊」。
+
+    来路：谢尔顿这条第一版 `ask` 写的是「你有没有也在追一个还没结束的目标」
+    ——没有问号。8 条已发的解读卡里 7 条都以问号收尾（只有
+    `rybakina-osaka-tor2026-qf` 那条也漏了，同一个坑踩了两次没人发现）。
+
+    `point` 不在这条闸里：它有时候是引语（带「」）、有时候是陈述句
+    （带句号），两种都对，机械判不出该用哪种标点——这跟"最硬的那个事实
+    放第 ① 屏"那类判断题是同一个理由，硬凑一条会被绕过的判据比没有更糟。
+    `ask` 不一样：它**定义上就是一句问句**，缺问号没有例外，判据钉得住。
+    """
+    import tools.build_interview_clip as clip
+
+    spec = {
+        "slug": "fake-q", "start": 0.0, "end": 50.0, "cover": {"frame_at": 1},
+        "zh": ["我健康了"],
+        "takeaway": {"close": {"point": "他谈的不是赢球。", "ask": "为什么？"}},
+    }
+    clip.check_takeaway(spec)  # 带问号，过
+
+    spec["takeaway"]["close"]["ask"] = "为什么"  # 去掉问号
+    with pytest.raises(SystemExit, match="问号"):
+        clip.check_takeaway(spec)
+
+    spec["takeaway"]["close"]["ask"] = "为什么?"  # 半角问号也认
+    clip.check_takeaway(spec)
+
+
+def test_解读卡字号不许退回2026年8月之前的更小档位():
+    """账号所有者看谢尔顿那条收尾卡的截图：「这里的字体可以再大一些？」
+
+    本地渲了三档（64/46 现状、76/54、82/58）加一份 34 字满档压力测试，
+    选定 76/54——比现状明显更大，满档时仍留在画布内不溢出（82/58 那档
+    满档逼近边距，余量更薄）。判据钉的是**不许退回更小的旧档位**，不是
+    钉死这两个数永远不能再调大：往后如果还要调，改这两个数字，同时把
+    这条测试的数字一起改，而且要重新拿满档文本渲一遍确认没溢出。
+    """
+    import inspect
+
+    import tools.build_interview_clip as clip
+
+    src = inspect.getsource(clip.build_takeaway_card)
+    assert "font-size:76px" in src, "解读卡 .point 字号不许退回 64px 那档"
+    assert "font-size:54px" in src, "解读卡 .ask 字号不许退回 46px 那档"
     """这台沙箱的出网走一个做 TLS 拦截的代理，而 edge-tts 认 certifi 的根证书。
 
     **判据自己推导，不维护白名单**：凡是会走到 `synthesize_narration` 的工具，

@@ -83,6 +83,24 @@ def is_youtube(url: str) -> bool:
         (".youtube.com", ".youtu.be"))
 
 
+def _video_id(url: str) -> str:
+    """从 YouTube 链接抠出视频 ID。`fetch_words()` 靠它把字幕缓存和这条 URL
+    绑死——不绑的话，同一条 spec 探过几个候选视频时，outdir 里会同时躺着
+    `cap_<候选A>.en.json3` 和换源之后新下的那份，而**旧文件同样满足
+    `cap_*.json3` 这个宽泛的 glob**，缓存检查会把它当成「已经抓过」直接复用。
+
+    不用 `_yt_at()` 那个切法：那个函数是给**已经不带查询串**的裸 URL 钉时刻
+    用的，对 `?t=` 这类参数没做剥离；这里要处理的是原始 `watch?v=` 链接。"""
+    from urllib.parse import parse_qs  # noqa: PLC0415
+    parsed = urlparse(url)
+    if parsed.netloc.lower().removeprefix("www.") == "youtu.be":
+        return parsed.path.strip("/").split("/")[0]
+    qs = parse_qs(parsed.query)
+    if qs.get("v"):
+        return qs["v"][0]
+    return parsed.path.rstrip("/").rsplit("/", 1)[-1]
+
+
 def media_url(url: str) -> str:
     """把 spec 里的**页面地址**换成 yt-dlp 真下得动的那个地址。
 
@@ -460,9 +478,22 @@ def fetch_words(url: str, workdir: Path,
     在「要不要重试」而不是「要不要带 cookie」。
     """
     workdir.mkdir(parents=True, exist_ok=True)
-    # **抓过就别再抓。** YouTube 会限流，而限流时的报错和「这条片子没字幕」
-    # 长得不一样但同样让人停手；字幕又是不会变的，缓存下来重跑不花代价。
-    if not (files := sorted(workdir.glob("cap_*.json3"))):
+    # **抓过就别再抓，但只认这条 URL 抓的那份。** YouTube 会限流，而限流时的
+    # 报错和「这条片子没字幕」长得不一样但同样让人停手；字幕又是不会变的，
+    # 缓存下来重跑不花代价——**这句话的前提是 outdir 里只对应一条视频**。
+    #
+    # ⚠️ **前提在这条线上不成立**：同一个 slug 常常先探一个候选视频（比如
+    # 谢尔顿那条先试的纯集锦 `SOUMru-EDI8`），写下 `cap_SOUMru-EDI8.en.json3`
+    # 之后判定不合适，spec 的 `url` 换成账号所有者给的新链接
+    # （`ZycljTf6s0E`），可 outdir 没有清空——旧文件还在。原来这儿只问
+    # 「有没有任何一份 `cap_*.json3`」，不问「是不是这条 URL 的」，于是
+    # 新的一次 `--stage subs` 会静静吃下旧候选的字幕，日志上一个字不提，
+    # 长得和真的抓到了新内容一模一样。`storyboard_sheet()` 是独立的、
+    # 不缓存的调用，所以它汇报的片长和标题是对的——这条重现过的分裂，
+    # 一次运行里两个函数一个说真话一个说假话。
+    vid = _video_id(url) if is_youtube(url) else ""
+    pattern = f"cap_{vid}*.json3" if vid else "cap_*.json3"
+    if not (files := sorted(workdir.glob(pattern))):
         if not is_youtube(url):
             # **只有 YouTube 有自动字幕轨。** 对着别的源调 yt-dlp 只会拿到一句
             # 指向完全错误方向的报错（Tennis TV 报的是「只对注册用户开放」，
@@ -484,7 +515,11 @@ def fetch_words(url: str, workdir: Path,
                  *cookie_args(spec or {}), *extra,
                  "-o", str(workdir / "cap_%(id)s"), url],
                 capture_output=True, text=True, timeout=300)
-            files = sorted(workdir.glob("cap_*.json3"))
+            # **这里也要用窄 pattern，不能退回 `cap_*.json3`。** 宽 glob 会在
+            # yt-dlp 还没写出新文件之前，就先命中 outdir 里躺着的旧候选缓存，
+            # 于是循环第一档就「成功」退出——连重试梯子都不会走，日志上却
+            # 一句没提，和真的一次就成了长得一模一样。
+            files = sorted(workdir.glob(pattern))
             if files:
                 if tried:
                     print(f"[字幕] {label} 成功（前面 {len(tried)} 档没成）")
@@ -1850,6 +1885,12 @@ def build_takeaway_card(spec: dict, which: str, dest: Path) -> Path:
     版式抄封面那一套（同一支字体、同一个深底），但**没有照片**：它必须一眼
     看得出不是转播画面，否则「我们的解读」和「他们的素材」在观感上糊成一片，
     等于白加。
+
+    ⚠️ **`point`/`ask` 字号 2026-08-12 从 64/46 调到 76/54**——账号所有者看
+    谢尔顿那条的收尾卡截图，原话「这里的字体可以再大一些？」。本地渲了三档
+    （64/46 现状、76/54、82/58）加一份 34 字满档压力测试，选 76/54：比现状
+    明显更大，满档（point 17 字＋ask 34 字，两行都会自动换行）仍然留在画布
+    内不溢出，82/58 那档满档时逼近安全边距，留的余量更薄。
     """
     import base64  # noqa: PLC0415
     sys.path.insert(0, str(ROOT / "src"))
@@ -1879,13 +1920,13 @@ body{{width:{CANVAS_W}px;height:{CANVAS_H}px;position:relative;overflow:hidden;
  font-family:'TL Display SC','TL Sans SC',sans-serif;letter-spacing:2px}}
 .lead{{font-size:42px;line-height:1.5;color:#a9bcb2;margin-bottom:34px}}
 .point{{font-family:'TL Display SC','TL Sans SC',sans-serif;font-weight:400;
- font-size:64px;line-height:1.36;letter-spacing:.5px}}
+ font-size:76px;line-height:1.36;letter-spacing:.5px}}
 .facts{{list-style:none;margin-top:56px;display:flex;flex-direction:column;gap:22px}}
 .facts li{{font-size:40px;line-height:1.42;color:#cfe3d9;padding-left:30px;
  position:relative}}
 .facts li:before{{content:'';position:absolute;left:0;top:.52em;width:14px;
  height:14px;border-radius:3px;background:#c6f65a}}
-.ask{{margin-top:64px;font-size:46px;line-height:1.45;color:#c6f65a;
+.ask{{margin-top:64px;font-size:54px;line-height:1.45;color:#c6f65a;
  font-family:'TL Display SC','TL Sans SC',sans-serif}}
 </style>{mark}<div class=eyebrow>{spec.get("column", "赛后开麦")}</div>{body}"""
     return _shoot(html, dest)
@@ -2203,6 +2244,13 @@ _NO_TAKEAWAY_LEGACY = frozenset({
     "shang-rublev-mtl2026-r2",
 })
 
+# 同一族豁免，理由一样：已经推过微信，不为措辞重渲。谢尔顿这条被账号所有者
+# 指出「解读卡的标点没写」之后，才把「`ask` 必须以问号收尾」做成闸——而
+# 这条 2026-08-12 早发出去的采访片，`ask` 恰好也漏了问号，同一个坑踩了
+# 两次没人发现。闸装上之后不能让它把已经推送过的片子判红，所以豁免；
+# 只许减不许加，自检见 `test_没有解读卡的老片子只许减不许加` 那条的姊妹版。
+_LEGACY_ASK_NO_QUESTION_MARK = frozenset({"rybakina-osaka-tor2026-qf"})
+
 # ⚠️ 2026-08-08 账号所有者撤销了「占比不够就拒渲」这道硬闸：
 # 「就不该有限制时长的这个闸」「要保证原始内容的完整性啊」。
 #
@@ -2289,6 +2337,22 @@ def check_takeaway(spec: dict) -> None:
                 "  · 落点卡＝一句他的原话 ＋ 一个能核的数，别铺陈过程\n"
                 "  · 收尾卡＝一句判断 ＋ 一问\n"
                 "铺陈留给小红书正文，那儿有几百字的地方。")
+
+    # ⚠️ **收尾卡的 `ask` 必须以问号收尾。** 8 条已发的解读卡里 7 条都是这么
+    # 写的（「什么样的低谷 才逼出这种拼法？」「她与维纳斯下一轮能走多远？」
+    # ……）——卡上的文字按正常中文写标点（见 `_bare` 那条注释，「屏幕上不写
+    # 标点」那条字幕规矩管的是 `zh` 数组，不管这儿）。这条闸原来没装：
+    # 谢尔顿这条第一版没写问号，账号所有者看截图直接说「还有引号问号等等
+    # 标点符号也要有啊」；同一个漏洞在 rybakina-osaka-tor2026-qf 那条已经
+    # 发出去过一次，没人发现——一条没有判据的规矩，靠人记着不会永远管用。
+    close = tk.get("close")
+    if slug not in _LEGACY_ASK_NO_QUESTION_MARK \
+            and isinstance(close, dict) and close.get("ask") \
+            and not str(close["ask"]).rstrip().endswith(("？", "?")):
+        raise SystemExit(
+            f"`takeaway.close.ask` 没有以问号收尾：「{close['ask']}」\n"
+            "这一屏是个问句，就要看得出是在问——"
+            "缺了问号，读起来是个陈述句，不是在问。")
 
     # ② 引的那句必须是他说的。
     #
