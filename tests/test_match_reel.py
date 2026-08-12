@@ -6780,7 +6780,10 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
                 plain = "".join(c for c in text if c not in
                                 reel._SPEECH_PUNCT + reel._SPEECH_QUIET)
                 head = starts[index]
-                span = float(seg["end"]) - float(seg["start"])
+                # 段窗长度走 seg_seconds（成片口径）——整屏证据段没有
+                # start/end，读 seg["end"] 会 KeyError（cincinnati 落库当天
+                # 这条就是这么红的），而 starts 那头本来就用的它
+                span = reel.seg_seconds(seg)
                 said = "".join(c[2] for c in cues
                                if head - 0.01 <= c[0] < head + span - 0.01)
                 said = "".join(c for c in said if c not in
@@ -8876,15 +8879,18 @@ def test_赛场之上的quote段不许是赛后采访():
         f"哪条 spec 改掉了 quote 段就把它从表里删掉——只许减不许加")
 
 
-def test_mute段的源声要真的静掉(tmp_path):
-    """`"mute": true` 的段走 anullsrc——配乐宣传片的音乐不是现场声，切碎再拼
-    还会在每个接缝上跳。真切两段量响度：查源码里有没有 `not seg.mute` 只能防
-    「有人把它删了」，防不住「它从来没工作过」。
+def test_mute段的源声要压到地板但不许死寂(tmp_path):
+    """`"mute": true` 的段把源声乘 MUTE_FLOOR——配乐宣传片的音乐不是现场声，
+    切碎再拼会在接缝上跳，所以要压下去；**但不许压成数字静音**：第一版走
+    anullsrc，旁白说完到段尾的空隙成了 -99 dB 死寂，被 check_reel_landed
+    拦下（run 31622119788，门槛 SILENCE_FLOOR_DB=-60）。真切两段量响度：
 
-    - 对照组（不写 mute）必须是响的——先证明量的东西正常情况下真的存在，
-      不然「静了」和「源本来就没声」长得一模一样（判据自己也要有判据）
+    - 对照组（不写 mute）必须是响的——先证明量的东西正常情况下真的存在
+    - mute 段要比对照组低至少 18 dB（真的压了）
+    - 但要高于 -80 dB（不是数字死寂——那正是这次改语义要防的）
     - 字符串 `"true"` 要报错，和 `"auto": "true"` 那次同一个理由
-    反向验证过：拆掉 cut_segment 里的 `and not seg.mute`，muted 那半当场红。
+    反向验证过：把 volume 那支拆掉 mute 段和对照组一样响（第②条红）；
+    换回 anullsrc 则第③条红。
     """
     sys.path.insert(0, str(Path("tools").resolve()))
     import build_match_reel as reel  # noqa: PLC0415
@@ -8917,8 +8923,11 @@ def test_mute段的源声要真的静掉(tmp_path):
     assert db_loud > -40, (
         f"对照组只有 {db_loud} dB——源片的声音本来就没进来，"
         "这个测试量不到它想量的东西")
-    assert db_quiet < -80, (
-        f"mute 段量到 {db_quiet} dB——源片的配乐还在，mute 没生效")
+    assert db_quiet < db_loud - 18, (
+        f"mute 段 {db_quiet} dB，对照组 {db_loud} dB——地板音量没生效")
+    assert db_quiet > -80, (
+        f"mute 段量到 {db_quiet} dB——那是数字死寂，check_reel_landed 会拦"
+        "（mute 的语义是压到地板，不是换成 anullsrc）")
 
     with pytest.raises(reel.ReelError, match="mute"):
         reel._seg_mute({"mute": "true"}, 0)
@@ -8976,3 +8985,113 @@ def test_conform声明的源要真的被统一到基准尺寸(tmp_path):
     assert "conform_sources(" in body, "render() 里没有 conform 调用——写了不等于接上了"
     assert body.index("conform_sources(") < body.index("check_sources_match("), (
         "conform 排在尺寸闸后面等于没有——闸先红，永远走不到它")
+
+
+def test_整屏证据段要整屏切走而不是贴在画面上(tmp_path):
+    """账号所有者 2026-08-12：「为啥要把图片贴在比赛上啊」——参照的『2发网球』
+    原版证据是**整屏切走看**的，贴图（inset）只是当时管线没有这个能力的替代。
+    `{"image": 路径, "seconds": N}` 段：深色底+卡片居中，整屏一段静片。
+
+    真渲一段量出来：尺寸必须是成片画幅、时长=seconds+tail、带音轨（占位
+    anullsrc，旁白在混音那步叠上去）。形状闸四头：
+    ① 窗口类字段（start/source/inset…）一概报错——它没有源片窗口
+    ② 没写 seconds 报错 ③ 没有 narration 报错（静图没有现场声，没旁白=死寂）
+    ④ seg_seconds 对 image 段认 seconds（口径只有一个）
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    card = tmp_path / "card.png"
+    im = Image.new("RGBA", (400, 260), (0, 0, 0, 0))
+    for x in range(60, 340):
+        for y in range(40, 220):
+            im.putpixel((x, y), (200, 230, 200, 255))
+    im.save(card)
+
+    base = {"slug": "t", "sources": {"a": "http://x/v"},
+            "cover": {"eyebrow": "网球有故事"}}
+
+    def seg(**kw):
+        return reel.parse_segments(
+            {**base, "segments": [kw]}, {"a": tmp_path / "a.mp4"}, "a")
+
+    # ① 窗口类字段一概不认
+    with pytest.raises(reel.ReelError, match="窗口类"):
+        seg(image=str(card), seconds=3.0, narration="x", start=1.0)
+    # ② 没写 seconds
+    with pytest.raises(reel.ReelError, match="seconds"):
+        seg(image=str(card), narration="x")
+    # ③ 没有旁白
+    with pytest.raises(reel.ReelError, match="narration"):
+        seg(image=str(card), seconds=3.0)
+    # ④ 口径
+    assert reel.seg_seconds({"image": str(card), "seconds": 3.25}) == 3.25
+
+    parsed = seg(image=str(card), seconds=2.0, narration="一句旁白")[0]
+    assert parsed.image and parsed.length == 2.0
+
+    dest = tmp_path / "part.mp4"
+    reel.cut_still_segment(parsed, dest, tail=0.18)
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=width,height,codec_type,duration", "-of", "json", str(dest)],
+        check=True, capture_output=True, text=True).stdout
+    info = json.loads(out)
+    kinds = {st["codec_type"] for st in info["streams"]}
+    assert kinds == {"video", "audio"}, f"流不齐：{kinds}"
+    v = next(st for st in info["streams"] if st["codec_type"] == "video")
+    assert (v["width"], v["height"]) == (reel.VIDEO_W, reel.VIDEO_H), (
+        "整屏证据段的画幅必须和成片一致，不然 concat 那步会拼不上")
+    assert abs(float(v["duration"]) - 2.18) < 0.1, f"时长 {v['duration']}"
+
+
+def test_证据段的地板静音要豁免但口播必须响过():
+    """run 31626149097 的两层红，一次钉住：
+
+    ① `quiet_windows` 读 `seg["end"]` 在整屏证据段上 KeyError——长度一律走
+      `seg_film_seconds`，证据段不进「无解说窗口」表（它必有旁白，也没有
+      源片起点可报）。
+    ② 证据段的底轨是 anullsrc，旁白说完后的余量秒是**设计出来的静音**
+      （同封面），当天 [25, 32, 39, 85, 91] 五秒全落在五张证据卡的口播
+      间隙里，却被「数字静音」判成不合格。豁免只给证据段窗口**里面**的
+      整秒；窗口外的数字静音照报——两头都在这条测试里钉住。
+
+    反向验证（都做过）：`dead_seconds` 不传 evidence 时两个静音秒全进
+    dead（豁免那支真的在起作用）；把 in_ev 恒真则窗口外那秒也被豁免、
+    第二段断言红（豁免没有扩大化）。
+    """
+    import check_reel_landed as landed
+
+    spec = {"segments": [
+        {"start": 0.0, "end": 4.0, "narration": "有旁白"},
+        {"image": "assets/x.png", "seconds": 6.0, "narration": "证据段旁白"},
+        {"start": 10.0, "end": 14.0},              # 无解说的窗口段
+    ]}
+    cover = 2.0
+
+    # ① 不再 KeyError，而且证据段不混进无解说窗口表
+    quiet = landed.quiet_windows(spec, cover)
+    assert quiet == [(12.0, 4.0, 10.0)], quiet
+
+    ev = landed.evidence_windows(spec, cover)
+    assert ev == [(6.0, 12.0)], ev
+
+    # ② 窗口里的静音豁免、窗口外的照报
+    levels = [-20.0] * 20
+    levels[11] = -99.0     # 证据段口播间隙（6.0–12.0 里面）
+    levels[15] = -99.0     # 窗口段里的数字静音——真缺陷
+    dead, exempt = landed.dead_seconds(levels, after=3, evidence=ev)
+    assert exempt == [11], exempt
+    assert dead == [15], "窗口外的数字静音必须照报，豁免不许扩大化"
+
+    # 不给 evidence 时一个都不豁免——证明豁免那支真的在起作用
+    dead0, exempt0 = landed.dead_seconds(levels, after=3, evidence=[])
+    assert dead0 == [11, 15] and exempt0 == []
+
+    # ③ 口播那道闸的账：整段全静音的证据窗口必须还能被 main 里那道
+    #    逐窗口 max 检出（这里验切窗口的算术和它用的门槛是同一个）
+    silent = [-99.0] * 20
+    lo, hi = int(ev[0][0] + 0.5), int(ev[0][1])
+    assert max(silent[lo:hi]) <= landed.SILENCE_FLOOR_DB, (
+        "全静音的证据窗口在这个门槛下必须判得出来")

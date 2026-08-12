@@ -244,6 +244,10 @@ _LEGACY_VS_COVERS = frozenset({
 CONTAIN_KEEP = 0.62
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
+# mute 段的地板音量（-26 dB）。量出来的账：宣传片配乐 mean 约 -15~-20 dB，
+# 乘 0.05 落在 -41~-46 dB——比旁白（约 -22 dB）低约 20 dB（听感是底噪级的
+# 「空气」），又稳稳高于 check_reel_landed 的 SILENCE_FLOOR_DB（-60）。
+MUTE_FLOOR = 0.05
 # **段与段之间要淡入淡出，不能硬切。** 账号所有者：「音频和视频切换或转场的时候，
 # 要有淡入淡出，而不是要突然一下从这里切过来，就是感觉给人的观感不好，或者听感
 # 不好。」画面和**现场声**都要——现场声硬切时球场的底噪会「啪」地换一个，
@@ -456,8 +460,9 @@ REPO_INLINE_MIB = 95
 
 def reel_length_verdict(spec: dict) -> tuple[float, float]:
     """(这条 spec 的成片时长, 估出来的 MiB)。不判断，只算——调用方决定怎么办。"""
-    seconds = sum(float(s["end"]) - float(s["start"])
-                  for s in spec.get("segments") or ())
+    # 用 seg_seconds——「全仓库只有这一个口径」：慢放按速度换算、
+    # 整屏证据段按 seconds（第一版在这儿自己抄了一遍公式，image 段一来就炸）
+    seconds = sum(seg_seconds(s) for s in spec.get("segments") or ())
     seconds += COVER_SECONDS
     return seconds, seconds * MEASURED_REEL_KBPS * 1000 / 8 / 1024 / 1024
 
@@ -1262,13 +1267,24 @@ class Segment:
     # `_seg_speed`）。来路：账号所有者点名「画面剪辑和速度快慢放等等」，
     # 头部账号的赛点/冲击瞬间几乎都上慢放。
     speed: float = 1.0
-    # **这一段不要源片的声音**（`"mute": true`）。给**配乐宣传片**这类源准备：
-    # 它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，音乐会在
-    # 每个接缝上跳一下（比画面跳切显耳得多）；而且「默认保留现场球声、不加
-    # 背景音乐」那条编辑规矩管的就是这种音轨。静掉之后这一段走 anullsrc，
-    # 和「源片本来就没有音轨」同一条路。⚠️ 别拿它去静真实比赛的现场声——
-    # 那是这条线的内容本身，静掉等于出哑片。
+    # **这一段把源片的声音压到地板**（`"mute": true`）。给**配乐宣传片**这类
+    # 源准备：它的音轨是制作方铺的音乐，不是现场声——切成 2~3 秒的段再拼，
+    # 音乐会在每个接缝上跳一下；「不加背景音乐」那条编辑规矩管的也是它。
+    # ⚠️ **压到地板，不是换成纯静音**：第一版走 anullsrc，成片里旁白说完到
+    # 段尾的空隙成了 -99 dB 的数字死寂，被 check_reel_landed 当场拦下
+    # （run 31622119788，SILENCE_FLOOR_DB=-60）——和「两张静音卡 -91 dB」
+    # 是同一个病。现在乘 MUTE_FLOOR（-26 dB）：还是源片自己的声音，听感是
+    # 「安静的空气」，配乐的切缝在这个电平下不可闻，而死寂检测过得去。
+    # ⚠️ 别拿它去压真实比赛的现场声——那是这条线的内容本身。
     mute: bool = False
+    # **整屏证据段**（`"image": 路径, "seconds": 秒数`）：整屏切走看一件
+    # 证据素材（历史照片/报纸引语/对比卡），看完切回。来路：账号所有者
+    # 2026-08-12 对「把图片贴在比赛上」的否——参照的『2发网球』原版就是
+    # 整屏切走看证据，贴图（inset）只是当时管线没有这个能力的替代。
+    # 深色底+卡片居中，画面由 cut_still_segment 合成；start/end 由
+    # seconds 合成（0..seconds），窗口类检查（切点/越界/死球）一律跳过——
+    # 它没有源片窗口可查。
+    image: str = ""
 
     @property
     def length(self) -> float:
@@ -1285,6 +1301,9 @@ def seg_seconds(s: dict) -> float:
     `tools/check_reel_landed.py` 为了保持零依赖抄了一份同样的公式，
     两边对不上会被 `test_slow_motion.py` 的一致性判据抓住。
     """
+    if s.get("image"):
+        # 整屏证据段：长度就是 seconds，没有源片窗口，speed 不适用
+        return round(float(s["seconds"]), 3)
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)
 
@@ -1325,6 +1344,16 @@ def _seg_speed(s: dict, index: int) -> float:
             "  快放的账还没算（ghost 检查按 SEG_FADE 源片秒算消耗，快放会被"
             "低估、漏报跨切点）；不变速就删掉这个键。")
     return v
+
+
+def _seg_audio_chain(seg: "Segment") -> str:
+    """这一段的音频滤镜：慢放走 atempo，mute 段乘地板音量，两样可叠加。"""
+    parts = []
+    if seg.speed != 1:
+        parts.append(_atempo(seg.speed))
+    if seg.mute:
+        parts.append(f"volume={MUTE_FLOOR}")
+    return ",".join(parts)
 
 
 def _atempo(speed: float) -> str:
@@ -1504,18 +1533,44 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
     （`"track": true`），只留给主机位的宽景回合。
     """
-    segments = [Segment(float(s["start"]), float(s["end"]),
-                        None if s.get("cx") is None else float(s["cx"]),
-                        s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", False)),
-                        str(s.get("source", primary)),
-                        _quote_text(s.get("quote", "")),
-                        _quote_cues(s.get("quote", "")),
-                        *_seg_voice(s, i),
-                        s.get("inset") or None,
-                        _seg_speed(s, i),
-                        _seg_mute(s, i))
-                for i, s in enumerate(spec["segments"])]
+    def _one(s: dict, i: int) -> Segment:
+        if s.get("image"):
+            # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
+            # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
+            stray = sorted(set(s) & {"start", "end", "source", "track",
+                                     "quote", "inset", "speed", "mute",
+                                     "cx", "crop_zoom", "fit", "crosses_cut"})
+            if stray:
+                raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
+                                f"不认这些窗口类字段：{stray}")
+            secs = float(s.get("seconds") or 0)
+            if secs <= 0:
+                raise ReelError(f"第 {i + 1} 段（image）要写 seconds（>0 秒数）")
+            if not str(s.get("narration", "")).strip():
+                raise ReelError(f"第 {i + 1} 段（image）必须有 narration——"
+                                "整屏静图没有现场声，没旁白就是一段死寂")
+            return Segment(0.0, secs, 0.5, s["narration"].strip(),
+                           "contain", False, primary, "", (),
+                           *_seg_voice(s, i), None, 1.0, False,
+                           str(s["image"]))
+        return Segment(float(s["start"]), float(s["end"]),
+                       None if s.get("cx") is None else float(s["cx"]),
+                       s.get("narration", "").strip(),
+                       str(s.get("fit", "crop")), bool(s.get("track", False)),
+                       str(s.get("source", primary)),
+                       _quote_text(s.get("quote", "")),
+                       _quote_cues(s.get("quote", "")),
+                       *_seg_voice(s, i),
+                       s.get("inset") or None,
+                       _seg_speed(s, i),
+                       _seg_mute(s, i))
+
+    segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
+    gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
+               if s.image and not Path(s.image).is_file()]
+    if gone_ev:
+        raise ReelError("这些整屏证据段的图片找不到：\n  "
+                        + "\n  ".join(f"第 {i} 段：{f}" for i, f in gone_ev))
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
     gone = [(i, f) for i, f in gone if not f or not Path(f).is_file()]
@@ -1555,9 +1610,9 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "mute", "narration", "quote", "source", "speed", "start",
-                "track", "voice"),
+    "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
+                "inset", "mute", "narration", "quote", "seconds", "source",
+                "speed", "start", "track", "voice"),
 }
 
 
@@ -1609,6 +1664,8 @@ def load_spec(path: Path) -> dict:
     names = set(spec.get("sources") or {})
     if names:
         for index, seg in enumerate(spec["segments"]):
+            if seg.get("image"):
+                continue                  # 整屏证据段不剪源片，没有 source 可声明
             got = seg.get("source")
             if got not in names:
                 raise ReelError(
@@ -1655,6 +1712,8 @@ def segments_straddling_cuts(
         name for name, url in urls.items() if url not in by_url)
     last = len(spec["segments"]) - 1
     for index, seg in enumerate(spec["segments"]):
+        if seg.get("image"):
+            continue                      # 整屏证据段没有源片窗口
         name = seg.get("source", "")
         url = urls.get(name)
         if url not in by_url or seg.get("crosses_cut"):
@@ -1951,6 +2010,45 @@ def _overlay_chain(base: str, ins: dict) -> str:
             f"[base][ins]overlay={x}:{y_expr}[vout]")
 
 
+EVIDENCE_BG = (13, 23, 18)   # 整屏证据段的深绿底，和字卡描边同一族
+
+
+def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
+    """整屏证据段：深色底 + 卡片居中 → 一段静片。
+
+    合成用 PIL（卡是透明底贴纸，缩到画幅内居中），编码参数和其他分段一致
+    （concat 前每段都要同一组参数）。音轨是 anullsrc 占位——旁白在混音那步
+    按 adelay 叠上去；`parse_segments` 要求这种段必须有 narration，
+    所以「占位静音变成成片死寂」那条路在形状层就被堵住了（窗口自己写，
+    seconds 只比旁白长零点几秒）。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    card = Image.open(seg.image).convert("RGBA")
+    canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*EVIDENCE_BG, 255))
+    max_w, max_h = int(VIDEO_W * 0.94), int(VIDEO_H * 0.88)
+    scale = min(max_w / card.width, max_h / card.height)
+    fitted = card.resize((max(2, int(card.width * scale)),
+                          max(2, int(card.height * scale))),
+                         Image.LANCZOS)
+    canvas.paste(fitted, ((VIDEO_W - fitted.width) // 2,
+                          (VIDEO_H - fitted.height) // 2), fitted)
+    still = dest.with_suffix(".evidence.png")
+    canvas.convert("RGB").save(still)
+    with stage("分段编码"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-loop", "1", "-i", str(still), "-f", "lavfi",
+            "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+            "-t", f"{seg.length + tail:.3f}",
+            "-vf", f"fps={FPS_EXPR},setsar=1",
+            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            "-shortest", str(dest))
+    still.unlink(missing_ok=True)
+    return dest
+
+
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
                 path: list[tuple[float, int]] | None = None,
                 tail: float = 0.0) -> Path:
@@ -2024,9 +2122,7 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
     # `-map 1:a:0`，把补位的静音当成音轨——原声合进来之后照样取静音，成片里
     # 没有解说的段落量出来是 -91 dB，纯数字静音。补位的东西一旦无条件生效，
     # 就会盖住真货，而且从波形上看不出来（有音轨、有码率、就是没声音）。
-    # `seg.mute` 走的就是「没有音轨」那条路：配乐宣传片的音乐既不是现场声，
-    # 切碎再拼还会在每个接缝上跳，静掉换 anullsrc（见 Segment.mute 的注释）。
-    has_audio = _has_audio(source) and not seg.mute
+    has_audio = _has_audio(source)
     # **角标那张 PNG 排在源片后面当第 1 路输入**，补位静音顺延到第 2 路。
     # 顺序写死是为了让下面 `-map` 的音轨索引可算——原来 `1:a:0` 指的是静音，
     # 插进一路图之后它就变成第 2 路了；这种索引错**不报错**，只是取错流。
@@ -2071,10 +2167,10 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
             _overlay_chain(
                 (chain + "[base]") if seg.fit == "contain"
                 else f"[0:v]{chain}[base]", ins)
-            + (f";[0:a:0]{_atempo(seg.speed)}[aout]"
-               if seg.speed != 1 and has_audio else ""),
+            + (f";[0:a:0]{_seg_audio_chain(seg)}[aout]"
+               if has_audio and (seg.speed != 1 or seg.mute) else ""),
             "-shortest", "-map", "[vout]",
-            "-map", ("[aout]" if seg.speed != 1 and has_audio
+            "-map", ("[aout]" if has_audio and (seg.speed != 1 or seg.mute)
                      else "0:a:0" if has_audio else f"{null_idx}:a:0"),
             # 分段是**中间产物**：最后整片还要以 crf 18 重编一次，这里编到
             # crf 17/preset slow 是把画质编进一个马上被重编的文件里，白花时间。
@@ -3177,6 +3273,8 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
     #    短的，而后面每一句旁白和字幕都跟着整体错位。
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue                      # 整屏证据段没有源片窗口，无从越界
         probe = probes.get(urls.get(seg.source, ""))
         if not probe or not probe.get("duration"):
             continue
@@ -3212,6 +3310,8 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
 
     # ③ 段尾切在一分打完之前——**只报不拦**，理由见 docstring。
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue
         probe = probes.get(urls.get(seg.source, ""))
         ends = [float(t) for t in (probe or {}).get("point_ends") or []]
         cut_mid = [t for t in ends if seg.end < t <= seg.end + POINT_TAIL * 2.5]
@@ -3589,6 +3689,8 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
     durations = {key: probe_duration(path) for key, path in sources.items()}
     over = []
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
         need = seg.end + SEG_FADE
         if limit is None or need <= limit + 0.05:
@@ -3797,6 +3899,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
     for index, seg in enumerate(segments):
+        if seg.image:
+            parts.append(cut_still_segment(
+                seg, outdir / f"part_{index:02d}.mp4", tail=SEG_FADE))
+            continue
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index),
