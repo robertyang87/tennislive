@@ -691,6 +691,7 @@ def test_顶栏那个绿方块不许赌字体回退():
     from PIL import ImageFont
 
     line_a = header_ass({"slug": "t", "event": "某站 1/4 决赛",
+                         "interview_kind": "赛后场上采访",
                          "push": {"matchup": "甲 vs 乙"}})[0]
     assert "▍" in line_a
     assert line_a.startswith(r"{\r\fnNoto Sans CJK SC"), "画方块那一段要显式指定字体"
@@ -710,6 +711,7 @@ def test_顶栏太长要报错不许悄悄折行():
     实测 1003px，超过可用的 984px。
     """
     spec = {"slug": "t", "push": {"matchup": "甲 vs 乙"},
+            "interview_kind": "赛后场上采访",
             "event": "2026 加拿大公开赛 WTA1000 女单 1/4 决赛 蒙特利尔"}
     with pytest.raises(SystemExit, match="顶栏"):
         header_lines(spec)
@@ -729,6 +731,7 @@ def test_顶栏说清这是哪一场():
     刷到中段的人没看过封面（而封面只有 1.8 秒），画面上只有一个人在说话。
     """
     spec = {"slug": "t", "event": "2026 华盛顿 WTA500 女单八强",
+            "interview_kind": "赛后场上采访",
             "push": {"matchup": "伊埃拉 vs 斯维托丽娜"}}
     a, b = header_lines(spec)
     assert a == "2026 华盛顿 WTA500 女单八强"
@@ -747,6 +750,7 @@ def test_顶栏的比分靠winner摆不靠词序():
     照词序摆，这条立刻红。
     """
     spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "斯维托丽娜",
+            "interview_kind": "赛后场上采访",
             "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
     b = header_lines(spec)[1]
     assert b.startswith("斯维托丽娜 6-3 6-4 伊埃拉"), b
@@ -755,6 +759,7 @@ def test_顶栏的比分靠winner摆不靠词序():
 def test_写了比分没写winner不许出片():
     """空着比错着更难发现：顶栏照词序摆，看着完全正常，只是赢家写反了。"""
     spec = {"slug": "t", "event": "某站 1/4 决赛",
+            "interview_kind": "赛后场上采访",
             "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
     with pytest.raises(SystemExit, match="winner"):
         header_lines(spec)
@@ -767,6 +772,7 @@ def test_winner必须是matchup里的那两个之一():
     「埃亚拉」（那正是这个名字改过的旧译）。
     """
     spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "埃亚拉",
+            "interview_kind": "赛后场上采访",
             "push": {"matchup": "伊埃拉 vs 斯维托丽娜", "score": "6-3 6-4"}}
     with pytest.raises(SystemExit, match="不在"):
         header_lines(spec)
@@ -781,6 +787,7 @@ def test_顶栏每一段都要先复位():
     列举（颜色、字重、间距、字号…），漏一项就又回到这儿。
     """
     spec = {"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+            "interview_kind": "赛后场上采访",
             "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}}
     for line in header_ass(spec):
         segs = [s for s in line.split("{") if s]
@@ -796,6 +803,7 @@ def test_顶栏量宽度要按每段自己的字号():
     import tools.build_interview_clip as clip
 
     runs = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                        "interview_kind": "赛后场上采访",
                         "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
     sizes = {size for _, kind, _, size in runs if kind == "num"}
     assert sizes == {clip._SCORE_PX}, "比分那段要带着它自己的字号，不是顶栏那档"
@@ -814,6 +822,7 @@ def test_顶栏赢家的名字要高亮不是输家():
     from tools.build_interview_clip import _MARK_COLOUR
 
     runs = header_runs({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                        "interview_kind": "赛后场上采访",
                         "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})[1]
     by_text = {text.strip(): tags for text, _, tags, _ in runs}
     assert by_text["甲"] == _MARK_COLOUR, "赢家「甲」的这一段该带 _MARK_COLOUR"
@@ -824,6 +833,7 @@ def test_顶栏赢家的名字要高亮不是输家():
     # `_MARK_COLOUR`，比分和输家那两段（比分之后）不该再带它——`\r` 复位
     # 干净，颜色没有粘连过去。
     _, line_b = header_ass({"slug": "t", "event": "某站 1/4 决赛", "winner": "甲",
+                            "interview_kind": "赛后场上采访",
                             "push": {"matchup": "甲 vs 乙", "score": "6-3 6-4"}})
     score_idx = line_b.index("6-3")
     assert _MARK_COLOUR in line_b[:score_idx], (
@@ -899,7 +909,8 @@ def test_高亮短语一处都没匹配上要报错(tmp_path):
     这个短语就哪儿都找不到——不能悄悄放过，得指名是哪个短语。"""
     lines = _lines(["it was tough to face."])
     spec = {"highlight_en": ["stay focused"],
-            "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+            "event": "某站某轮", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}}
     with pytest.raises(SystemExit, match="stay focused"):
         write_ass(lines, ["一"], 0.0, tmp_path / "never-written.ass", spec)
 
@@ -915,7 +926,8 @@ def test_没写highlight_en字段行为不变(tmp_path):
     """**只在写了才管，没写就是零行为改动。** 存量 spec 一个字都不该受影响——
     已发的片子不为了措辞重渲。"""
     lines = _lines(["stay focused and calm"])
-    spec_no_field = {"slug": "t", "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+    spec_no_field = {"slug": "t", "event": "某站某轮", "interview_kind": "赛后场上采访",
+                     "push": {"matchup": "甲 vs 乙"}}
     p1 = tmp_path / "a.ass"
     write_ass(lines, ["一"], 0.0, p1, spec_no_field)
     assert "{\\c" not in p1.read_text(encoding="utf-8")
@@ -932,7 +944,8 @@ def test_高亮短语跨多行各自匹配不误报未命中(tmp_path):
 
     lines = _lines(["stay focused please.", "tough to face today."])
     spec = {"highlight_en": ["stay focused", "tough to face"],
-            "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+            "event": "某站某轮", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}}
     path = tmp_path / "t.ass"
     write_ass(lines, ["一", "二"], 0.0, path, spec)  # 不许抛
     body = path.read_text(encoding="utf-8")
@@ -1048,16 +1061,27 @@ def test_采访是不是在场上跟着源走():
 
     伊埃拉 6-4 6-2 赢大坂直美那场，四个源都自证过：WTA 官方集锦没接采访、
     Tennis Channel 那条在转播区、另两条是发布会和博主口播。账号所有者定了
-    用转播区那条，顶栏就得照实说。
+    用转播区那条，顶栏就得照实说——这条片子的 `interview_kind` 因此写的是
+    「赛后演播室专访」，不是这条线大多数片子默认会有的「场上」。
+
+    这条规矩本身就说明了 `interview_kind` **不该有默认值**：谢尔顿×门西克
+    那条是完整的赛后新闻发布会，`interview_kind` 当时没写，顶栏悄悄印上了
+    「赛后场上采访」——画面是发布会背板，字幕却在说「场上」，和这条测试
+    标题描述的错法一模一样，只是撞上的是另一个源。见
+    `test_顶栏缺字段要报错而不是印半句` 里补的那个 case。
     """
-    base = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
-    assert header_lines(base)[1].endswith("赛后场上采访"), "默认仍是场上"
-    assert header_lines({**base, "interview_kind": "赛后采访"})[1].endswith("赛后采访")
+    assert header_lines({"slug": "t", "event": "某站 1/4 决赛",
+                         "interview_kind": "赛后演播室专访",
+                         "push": {"matchup": "甲 vs 乙"}})[1].endswith("赛后演播室专访")
+    assert header_lines({"slug": "t", "event": "某站 1/4 决赛",
+                         "interview_kind": "赛后采访",
+                         "push": {"matchup": "甲 vs 乙"}})[1].endswith("赛后采访")
 
 
 def test_没有比分时顶栏退回只写对阵():
     """比分不是必填——没有它，顶栏仍然要能回答「这是哪一场」。"""
-    spec = {"slug": "t", "event": "某站 1/4 决赛", "push": {"matchup": "甲 vs 乙"}}
+    spec = {"slug": "t", "event": "某站 1/4 决赛", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}}
     assert header_lines(spec)[1] == "甲 vs 乙 · 赛后场上采访"
 
 
@@ -1088,16 +1112,31 @@ def test_ASS里的字体名都是字体自己声明的():
 def test_顶栏缺字段要报错而不是印半句():
     """空着比错着更难发现：顶栏印出「 · 赛后场上采访」，看着像设计如此。"""
     for spec in ({"slug": "t", "push": {"matchup": "甲 vs 乙"}},
-                 {"slug": "t", "event": "某站某轮"}):
+                 {"slug": "t", "event": "某站某轮"},
+                 {"slug": "t", "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}):
         with pytest.raises(SystemExit):
             header_lines(spec)
+
+
+def test_不写interview_kind不许悄悄退回场上():
+    """**这才是谢尔顿×门西克那条真出的错**：`interview_kind` 没写，会印出
+    「赛后场上采访」——而那场其实是完整的新闻发布会。画面是发布会背板，
+    字幕却说「场上」，观众看不出破绽，账号所有者一眼看出来了。
+
+    这条钉的是**报错的原因**，不只是「有没有报错」：缺 `event` 或缺
+    `push.matchup` 时报错原因不一样（见上一条），字符串里必须点名
+    `interview_kind`，否则改错原因了这条测试也会一直绿。
+    """
+    spec = {"slug": "t", "event": "某站某轮", "push": {"matchup": "甲 vs 乙"}}
+    with pytest.raises(SystemExit, match="interview_kind"):
+        header_lines(spec)
 
 
 def test_顶栏从头挂到尾(tmp_path):
     """顶栏不是开场卡：**整条片子任何一帧都要能回答「这是哪一场」。**"""
     lines = _lines(["one two", "three four"])
-    spec = {"slug": "t", "event": "某站八强", "push": {"matchup": "甲 vs 乙"},
-            "zh": ["一", "二"]}
+    spec = {"slug": "t", "event": "某站八强", "interview_kind": "赛后场上采访",
+            "push": {"matchup": "甲 vs 乙"}, "zh": ["一", "二"]}
     path = tmp_path / "t.ass"
     write_ass(lines, spec["zh"], 0.0, path, spec)
     body = path.read_text(encoding="utf-8")
