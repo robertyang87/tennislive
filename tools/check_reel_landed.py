@@ -47,9 +47,14 @@ def spec_segments_seconds(spec: dict) -> float:
     是为了让这个检查工具保持纯标准库（它要在只装了 ffprobe 的环境里也能跑）。
     两边对不上会被 `tests/test_slow_motion.py` 的一致性判据抓住。
     """
-    return sum(round((float(s["end"]) - float(s["start"]))
+    def one(s: dict) -> float:
+        if s.get("image"):
+            # 整屏证据段：长度就是 seconds（和 build_match_reel.seg_seconds 同账）
+            return round(float(s["seconds"]), 3)
+        return round((float(s["end"]) - float(s["start"]))
                      / float(s.get("speed") or 1.0), 3)
-               for s in spec["segments"])
+
+    return sum(one(s) for s in spec["segments"])
 
 
 def sh(*args: str) -> str:

@@ -8982,3 +8982,62 @@ def test_conform声明的源要真的被统一到基准尺寸(tmp_path):
     assert "conform_sources(" in body, "render() 里没有 conform 调用——写了不等于接上了"
     assert body.index("conform_sources(") < body.index("check_sources_match("), (
         "conform 排在尺寸闸后面等于没有——闸先红，永远走不到它")
+
+
+def test_整屏证据段要整屏切走而不是贴在画面上(tmp_path):
+    """账号所有者 2026-08-12：「为啥要把图片贴在比赛上啊」——参照的『2发网球』
+    原版证据是**整屏切走看**的，贴图（inset）只是当时管线没有这个能力的替代。
+    `{"image": 路径, "seconds": N}` 段：深色底+卡片居中，整屏一段静片。
+
+    真渲一段量出来：尺寸必须是成片画幅、时长=seconds+tail、带音轨（占位
+    anullsrc，旁白在混音那步叠上去）。形状闸四头：
+    ① 窗口类字段（start/source/inset…）一概报错——它没有源片窗口
+    ② 没写 seconds 报错 ③ 没有 narration 报错（静图没有现场声，没旁白=死寂）
+    ④ seg_seconds 对 image 段认 seconds（口径只有一个）
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    card = tmp_path / "card.png"
+    im = Image.new("RGBA", (400, 260), (0, 0, 0, 0))
+    for x in range(60, 340):
+        for y in range(40, 220):
+            im.putpixel((x, y), (200, 230, 200, 255))
+    im.save(card)
+
+    base = {"slug": "t", "sources": {"a": "http://x/v"},
+            "cover": {"eyebrow": "网球有故事"}}
+
+    def seg(**kw):
+        return reel.parse_segments(
+            {**base, "segments": [kw]}, {"a": tmp_path / "a.mp4"}, "a")
+
+    # ① 窗口类字段一概不认
+    with pytest.raises(reel.ReelError, match="窗口类"):
+        seg(image=str(card), seconds=3.0, narration="x", start=1.0)
+    # ② 没写 seconds
+    with pytest.raises(reel.ReelError, match="seconds"):
+        seg(image=str(card), narration="x")
+    # ③ 没有旁白
+    with pytest.raises(reel.ReelError, match="narration"):
+        seg(image=str(card), seconds=3.0)
+    # ④ 口径
+    assert reel.seg_seconds({"image": str(card), "seconds": 3.25}) == 3.25
+
+    parsed = seg(image=str(card), seconds=2.0, narration="一句旁白")[0]
+    assert parsed.image and parsed.length == 2.0
+
+    dest = tmp_path / "part.mp4"
+    reel.cut_still_segment(parsed, dest, tail=0.18)
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=width,height,codec_type,duration", "-of", "json", str(dest)],
+        check=True, capture_output=True, text=True).stdout
+    info = json.loads(out)
+    kinds = {st["codec_type"] for st in info["streams"]}
+    assert kinds == {"video", "audio"}, f"流不齐：{kinds}"
+    v = next(st for st in info["streams"] if st["codec_type"] == "video")
+    assert (v["width"], v["height"]) == (reel.VIDEO_W, reel.VIDEO_H), (
+        "整屏证据段的画幅必须和成片一致，不然 concat 那步会拼不上")
+    assert abs(float(v["duration"]) - 2.18) < 0.1, f"时长 {v['duration']}"

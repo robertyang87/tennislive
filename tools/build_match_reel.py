@@ -460,8 +460,9 @@ REPO_INLINE_MIB = 95
 
 def reel_length_verdict(spec: dict) -> tuple[float, float]:
     """(这条 spec 的成片时长, 估出来的 MiB)。不判断，只算——调用方决定怎么办。"""
-    seconds = sum(float(s["end"]) - float(s["start"])
-                  for s in spec.get("segments") or ())
+    # 用 seg_seconds——「全仓库只有这一个口径」：慢放按速度换算、
+    # 整屏证据段按 seconds（第一版在这儿自己抄了一遍公式，image 段一来就炸）
+    seconds = sum(seg_seconds(s) for s in spec.get("segments") or ())
     seconds += COVER_SECONDS
     return seconds, seconds * MEASURED_REEL_KBPS * 1000 / 8 / 1024 / 1024
 
@@ -1276,6 +1277,14 @@ class Segment:
     # 「安静的空气」，配乐的切缝在这个电平下不可闻，而死寂检测过得去。
     # ⚠️ 别拿它去压真实比赛的现场声——那是这条线的内容本身。
     mute: bool = False
+    # **整屏证据段**（`"image": 路径, "seconds": 秒数`）：整屏切走看一件
+    # 证据素材（历史照片/报纸引语/对比卡），看完切回。来路：账号所有者
+    # 2026-08-12 对「把图片贴在比赛上」的否——参照的『2发网球』原版就是
+    # 整屏切走看证据，贴图（inset）只是当时管线没有这个能力的替代。
+    # 深色底+卡片居中，画面由 cut_still_segment 合成；start/end 由
+    # seconds 合成（0..seconds），窗口类检查（切点/越界/死球）一律跳过——
+    # 它没有源片窗口可查。
+    image: str = ""
 
     @property
     def length(self) -> float:
@@ -1292,6 +1301,9 @@ def seg_seconds(s: dict) -> float:
     `tools/check_reel_landed.py` 为了保持零依赖抄了一份同样的公式，
     两边对不上会被 `test_slow_motion.py` 的一致性判据抓住。
     """
+    if s.get("image"):
+        # 整屏证据段：长度就是 seconds，没有源片窗口，speed 不适用
+        return round(float(s["seconds"]), 3)
     speed = float(s.get("speed") or 1.0)
     return round((float(s["end"]) - float(s["start"])) / speed, 3)
 
@@ -1521,18 +1533,44 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
     真人看下来的结论就是「固定中心的感觉更好」，所以横摇改成**按段显式打开**
     （`"track": true`），只留给主机位的宽景回合。
     """
-    segments = [Segment(float(s["start"]), float(s["end"]),
-                        None if s.get("cx") is None else float(s["cx"]),
-                        s.get("narration", "").strip(),
-                        str(s.get("fit", "crop")), bool(s.get("track", False)),
-                        str(s.get("source", primary)),
-                        _quote_text(s.get("quote", "")),
-                        _quote_cues(s.get("quote", "")),
-                        *_seg_voice(s, i),
-                        s.get("inset") or None,
-                        _seg_speed(s, i),
-                        _seg_mute(s, i))
-                for i, s in enumerate(spec["segments"])]
+    def _one(s: dict, i: int) -> Segment:
+        if s.get("image"):
+            # 整屏证据段：只认 image/seconds/narration/voice（外加 `_` 注解）。
+            # 窗口类字段一概不许——它没有源片窗口，写了就是没被读的死键。
+            stray = sorted(set(s) & {"start", "end", "source", "track",
+                                     "quote", "inset", "speed", "mute",
+                                     "cx", "crop_zoom", "fit", "crosses_cut"})
+            if stray:
+                raise ReelError(f"第 {i + 1} 段是整屏证据段（image），"
+                                f"不认这些窗口类字段：{stray}")
+            secs = float(s.get("seconds") or 0)
+            if secs <= 0:
+                raise ReelError(f"第 {i + 1} 段（image）要写 seconds（>0 秒数）")
+            if not str(s.get("narration", "")).strip():
+                raise ReelError(f"第 {i + 1} 段（image）必须有 narration——"
+                                "整屏静图没有现场声，没旁白就是一段死寂")
+            return Segment(0.0, secs, 0.5, s["narration"].strip(),
+                           "contain", False, primary, "", (),
+                           *_seg_voice(s, i), None, 1.0, False,
+                           str(s["image"]))
+        return Segment(float(s["start"]), float(s["end"]),
+                       None if s.get("cx") is None else float(s["cx"]),
+                       s.get("narration", "").strip(),
+                       str(s.get("fit", "crop")), bool(s.get("track", False)),
+                       str(s.get("source", primary)),
+                       _quote_text(s.get("quote", "")),
+                       _quote_cues(s.get("quote", "")),
+                       *_seg_voice(s, i),
+                       s.get("inset") or None,
+                       _seg_speed(s, i),
+                       _seg_mute(s, i))
+
+    segments = [_one(s, i) for i, s in enumerate(spec["segments"])]
+    gone_ev = [(i + 1, s.image) for i, s in enumerate(segments)
+               if s.image and not Path(s.image).is_file()]
+    if gone_ev:
+        raise ReelError("这些整屏证据段的图片找不到：\n  "
+                        + "\n  ".join(f"第 {i} 段：{f}" for i, f in gone_ev))
     gone = [(i + 1, str((s.inset or {}).get("image", "")))
             for i, s in enumerate(segments) if s.inset]
     gone = [(i, f) for i, f in gone if not f or not Path(f).is_file()]
@@ -1572,9 +1610,9 @@ _REAL_FIELDS: dict[str, tuple[str, ...]] = {
               "narration", "portrait", "portrait_above", "result", "round",
               "score", "scoreboard", "scrim", "split", "sub", "subject",
               "tier", "topic", "versus", "winner"),
-    "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "inset",
-                "mute", "narration", "quote", "source", "speed", "start",
-                "track", "voice"),
+    "segment": ("crosses_cut", "crop_zoom", "cx", "end", "fit", "image",
+                "inset", "mute", "narration", "quote", "seconds", "source",
+                "speed", "start", "track", "voice"),
 }
 
 
@@ -1626,6 +1664,8 @@ def load_spec(path: Path) -> dict:
     names = set(spec.get("sources") or {})
     if names:
         for index, seg in enumerate(spec["segments"]):
+            if seg.get("image"):
+                continue                  # 整屏证据段不剪源片，没有 source 可声明
             got = seg.get("source")
             if got not in names:
                 raise ReelError(
@@ -1672,6 +1712,8 @@ def segments_straddling_cuts(
         name for name, url in urls.items() if url not in by_url)
     last = len(spec["segments"]) - 1
     for index, seg in enumerate(spec["segments"]):
+        if seg.get("image"):
+            continue                      # 整屏证据段没有源片窗口
         name = seg.get("source", "")
         url = urls.get(name)
         if url not in by_url or seg.get("crosses_cut"):
@@ -1966,6 +2008,45 @@ def _overlay_chain(base: str, ins: dict) -> str:
     return (f"{base};[1:v]scale={width}:-2,loop=loop=-1:size=1,format=rgba,"
             f"fade=t=in:st=0:d={d}:alpha=1[ins];"
             f"[base][ins]overlay={x}:{y_expr}[vout]")
+
+
+EVIDENCE_BG = (13, 23, 18)   # 整屏证据段的深绿底，和字卡描边同一族
+
+
+def cut_still_segment(seg: Segment, dest: Path, tail: float = 0.0) -> Path:
+    """整屏证据段：深色底 + 卡片居中 → 一段静片。
+
+    合成用 PIL（卡是透明底贴纸，缩到画幅内居中），编码参数和其他分段一致
+    （concat 前每段都要同一组参数）。音轨是 anullsrc 占位——旁白在混音那步
+    按 adelay 叠上去；`parse_segments` 要求这种段必须有 narration，
+    所以「占位静音变成成片死寂」那条路在形状层就被堵住了（窗口自己写，
+    seconds 只比旁白长零点几秒）。
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    card = Image.open(seg.image).convert("RGBA")
+    canvas = Image.new("RGBA", (VIDEO_W, VIDEO_H), (*EVIDENCE_BG, 255))
+    max_w, max_h = int(VIDEO_W * 0.94), int(VIDEO_H * 0.88)
+    scale = min(max_w / card.width, max_h / card.height)
+    fitted = card.resize((max(2, int(card.width * scale)),
+                          max(2, int(card.height * scale))),
+                         Image.LANCZOS)
+    canvas.paste(fitted, ((VIDEO_W - fitted.width) // 2,
+                          (VIDEO_H - fitted.height) // 2), fitted)
+    still = dest.with_suffix(".evidence.png")
+    canvas.convert("RGB").save(still)
+    with stage("分段编码"):
+        run("ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+            "-loop", "1", "-i", str(still), "-f", "lavfi",
+            "-i", f"anullsrc=channel_layout=stereo:sample_rate={AUDIO_RATE}",
+            "-t", f"{seg.length + tail:.3f}",
+            "-vf", f"fps={FPS_EXPR},setsar=1",
+            "-c:v", "libx264", "-preset", PART_PRESET, "-crf", PART_CRF,
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "160k", "-ar", AUDIO_RATE,
+            "-shortest", str(dest))
+    still.unlink(missing_ok=True)
+    return dest
 
 
 def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
@@ -3192,6 +3273,8 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
     # ① 写过源片末尾。ffmpeg 的 `-ss`/`-t` 越界**不报错**，只安安静静出一段
     #    短的，而后面每一句旁白和字幕都跟着整体错位。
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue                      # 整屏证据段没有源片窗口，无从越界
         probe = probes.get(urls.get(seg.source, ""))
         if not probe or not probe.get("duration"):
             continue
@@ -3227,6 +3310,8 @@ def probe_dry_run(spec: dict, segments: list["Segment"]) -> bool:
 
     # ③ 段尾切在一分打完之前——**只报不拦**，理由见 docstring。
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue
         probe = probes.get(urls.get(seg.source, ""))
         ends = [float(t) for t in (probe or {}).get("point_ends") or []]
         cut_mid = [t for t in ends if seg.end < t <= seg.end + POINT_TAIL * 2.5]
@@ -3604,6 +3689,8 @@ def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> No
     durations = {key: probe_duration(path) for key, path in sources.items()}
     over = []
     for index, seg in enumerate(segments):
+        if seg.image:
+            continue                      # 整屏证据段不消耗源片
         limit = durations.get(seg.source)
         need = seg.end + SEG_FADE
         if limit is None or need <= limit + 0.05:
@@ -3812,6 +3899,10 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
                                  outdir / "part_cover.mp4", source_w,
                                  cover_secs, tail=SEG_FADE)]
     for index, seg in enumerate(segments):
+        if seg.image:
+            parts.append(cut_still_segment(
+                seg, outdir / f"part_{index:02d}.mp4", tail=SEG_FADE))
+            continue
         parts.append(cut_segment(sources[seg.source], seg,
                                  outdir / f"part_{index:02d}.mp4",
                                  source_w, tracks.get(index),
