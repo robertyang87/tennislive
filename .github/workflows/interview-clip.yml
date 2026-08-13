@@ -378,27 +378,34 @@ jobs:
           test -s "$OUT" || { echo "成片不存在或是空的：$OUT"; exit 1; }
           ffprobe -v error -show_entries format=duration,size -of default=nw=1 "$OUT"
 
-      # **超过 95 MiB 的成片不进 git，走 Release 附件。**
+      # **采访成片一律发到 Release，不进 git。**（2026-08-13 起）
       #
-      # 这条线原来没有这一半，而它迟早会咬人：git 单文件硬上限 100 MiB，
-      # 上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s），**演播室这条 409 秒
-      # 按同码率算 174 MiB**——渲十分钟，然后死在提交那一步。
+      # 来路：账号所有者 2026-08-13「当前代码库太大了，好多资源是不是不用
+      # 放在这里代码库里」。量出来 .git 已经 6.0 GB，其中 mp4 blob 4.93 GB，
+      # 这条线的成片 20~67 MiB 一条条全在里面。原来这一步只在成片超过
+      # 95 MiB 时才走 Release——而采访成片**从来没超过 95 MiB**，所以
+      # Release 分支上线以来**一次都没走到过**，每条成片照旧进 git。
+      # 一个从来没被走到的兜底，正是「兜底出事的时候不吭声」的形状：
+      # 它每趟都绿着，同时把每条 mp4 静静放进 git 历史。
       #
-      # 门槛 95 而不是 100，留 5 MiB 给「估得不准」。95 以下照旧进仓库，
-      # jsDelivr / raw 那条链路一个字没动。走了 Release 就**把本地那份删掉**，
-      # 让清理和提交步骤根本看不见它；链接写进 `render.json`，
-      # `push_reel.video_url()` 本来就优先读它（那一半早就是通用的）。
+      # 存量已进 git 的采访成片**留着不动**——链接钉在 main 的文件路径上，
+      # 已发的微信消息收不回来，删文件就是把老消息变成死链。只改增量：
+      # 从这天起一律传 Release、把链接写进 `render.json` 的 `video_url`、
+      # **删掉本地那份**（让清理和提交步骤根本看不见它）。
+      # `push_reel.released_video_url()` 本来就优先读 `video_url`，下游不用改。
       #
       # 为什么是 Release 而不是 LFS：LFS 免费额度只有 1 GB/月流量，而且
       # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
-      # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 同名步骤的注释。
+      # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 的 Release 那一步的注释。
+      # ⚠️ **这一步必须排在「验成片」之后**：验的就是这份本地文件，
+      # 这儿 `rm` 之后就没得验了。
       # ⚠️ **只在 `render` 才跑，`cover` 一律不跑。** `--stage cover` 的
       # docstring 白纸黑字写着「**没有出片**：确认好看再跑 `--stage render`，
       # 这样一条片子只往仓库里塞一个 mp4」——它删源片、渲海报，从不落
       # `$SLUG.mp4`。这一步原来两档都跑，`stat` 一个不存在的文件直接
       # `cannot statx ... No such file or directory`，整条 `mode=cover`
       # 的 run 在这儿栽倒，从来没能验证过 cookie／client 梯子那两个修复。
-      - name: 成片太大就发到 Release（不进 git）
+      - name: 成片发到 Release（不进 git）
         if: github.event.inputs.mode == 'render'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -406,18 +413,32 @@ jobs:
           SLUG="${{ github.event.inputs.slug }}"
           OUTDIR="output/interviews/$SLUG"
           CLIP="$OUTDIR/$SLUG.mp4"
-          LIMIT=$((95 * 1024 * 1024))
+          # SZ 留着：render.json 的 video_bytes 从它来
           SZ=$(stat -c%s "$CLIP")
-          if [ "$SZ" -le "$LIMIT" ]; then
-            echo "成片 $((SZ/1048576)) MiB，不到 95 MiB —— 照旧进仓库"
-            exit 0
-          fi
           TAG="interview-$SLUG"
-          echo "成片 $((SZ/1048576)) MiB 超过 95 MiB —— 发到 Release $TAG"
+          echo "成片 $((SZ/1048576)) MiB —— 发到 Release $TAG"
           gh release view "$TAG" >/dev/null 2>&1 \
             || gh release create "$TAG" --title "赛后开麦 · $SLUG" \
-                 --notes "双语字幕成片。超过 git 的 100 MiB 单文件上限，改走 Release 附件。"
-          gh release upload "$TAG" "$CLIP" --clobber
+                 --notes "双语字幕成片。采访成片一律走 Release 附件，不进 git。"
+          # **传附件要重试**（照 match-reel.yml 同一步骤抄的，注释也抄）。
+          # 来路是 2026-08-13 李娜那条（run 31709569579）：render 跑了
+          # 14 分 27 秒、质检也过了，死在 `--clobber` 撞上 GitHub 自己的
+          # HTTP 500。这条线原来裸调一次无所谓——体积闸在前面，一年走不到
+          # 几次；改成**每趟 render 都走**之后，一次瞬时 5xx 报销的就是
+          # 整趟 render。重发是安全的：`--clobber` 幂等，删到一半再传一遍就好。
+          # ⚠️ 循环里不许写 `[ A ] && break`——`bash -e` 下 AND 列表整条为假
+          # 会直接把这一步杀掉（下面探活那段的注释记的是同一个坑）。一律用 if。
+          UPLOADED=0
+          for i in 1 2 3 4; do
+            if gh release upload "$TAG" "$CLIP" --clobber; then UPLOADED=1; break; fi
+            if [ "$i" != 4 ]; then
+              WAIT=$((5 * i * i))
+              echo "第 $i 次传 Release 附件没成，${WAIT}s 后重试"
+              sleep "$WAIT"
+            fi
+          done
+          [ "$UPLOADED" = 1 ] || {
+            echo "::error::Release 附件传了 4 次都没上去"; exit 1; }
           URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4"
           # **传完自己探一次**：Release 的 CDN 有几秒传播延迟，探不到就别写链接
           # ——写了等于把一个 404 发到微信，而消息发出去收不回来。
@@ -568,6 +589,10 @@ jobs:
             --lead "${{ github.event.inputs.push_lead || steps.push_meta.outputs.lead }}" \
             --copy "$COPY"
 
+      # ⚠️ artifact 里**没有成片 mp4 是正常的**：2026-08-13 起成片一律传
+      # Release 后 `rm` 掉（见「成片发到 Release」那一步），要看成片去
+      # `render.json` 的 `video_url`。别把这个读成「render 没出片」——
+      # 真没出片的话「验成片」那一步早就红了。
       - uses: actions/upload-artifact@v4
         if: always()
         with:

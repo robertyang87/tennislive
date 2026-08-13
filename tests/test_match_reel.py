@@ -4953,9 +4953,10 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
     """账号所有者：「我的基础要求是保证内容和画面质量，文件多大都没关系」
     「不要砍片长」。
 
-    而 git 有个 **100 MiB 的服务端硬拒**，绕不过去。所以超过 95 MiB 的成片改传
-    GitHub Release 附件（单个 2 GB，公开仓库下载不计流量额度），链接写进
-    `render.json`，推送那一步优先读它。
+    而 git 有个 **100 MiB 的服务端硬拒**，绕不过去。所以成片改传 GitHub
+    Release 附件（单个 2 GB，公开仓库下载不计流量额度），链接写进
+    `render.json`，推送那一步优先读它。原来只有超过 95 MiB 的才走这条路，
+    2026-08-13 起不分体积一律走（来路见 test_成片一律走Release不进git）。
 
     这条盯三件事，每一件都出过同类的错：
 
@@ -4991,7 +4992,7 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
 
     text = WORKFLOW.read_text(encoding="utf-8")
     names = _steps(text)
-    release = next(i for i, n in enumerate(names) if n.startswith("成片太大"))
+    release = next(i for i, n in enumerate(names) if n.startswith("成片发到 Release"))
     clean = next(i for i, n in enumerate(names) if n.startswith("丢掉不进仓库"))
     commit = next(i for i, n in enumerate(names) if n.startswith("提交产物"))
     assert release < clean < commit, \
@@ -4999,7 +5000,7 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
 
     spec = yaml.safe_load(text)
     steps = {s.get("name", ""): s for s in spec["jobs"]["reel"]["steps"]}
-    step = next(s for n, s in steps.items() if n.startswith("成片太大"))
+    step = next(s for n, s in steps.items() if n.startswith("成片发到 Release"))
     assert "gh release upload" in step["run"]
     assert 'rm -f "$REEL"' in step["run"], \
         "传完没把本地那份删掉，它还会被 git add 吃进去"
@@ -5008,6 +5009,57 @@ def test_成片超过git的上限要走Release而不是砍片长(tmp_path):
     pre = next(s for n, s in steps.items() if n.startswith("push 模式先确认"))
     assert "video_url" in pre["run"], \
         "预检只认仓库那条，走 Release 的片子会被判成没渲"
+
+
+def test_成片一律走Release不进git():
+    """账号所有者 2026-08-13：「当前代码库太大了，好多资源是不是不用放在这里
+    代码库里」。
+
+    量出来 .git 已 6.0 GB，其中 **4.93 GB 是 mp4 blob（130 个）**。根因是
+    Release 那一步原来只在成片超过 95 MiB 时才走：成片普遍 30~80 MiB，
+    **从来够不着门槛**，于是「太大才走 Release」在真实数据上几乎一次都没
+    走到，每条成片都进了 git，仓库每月胖一两个 GB——一个几乎从来走不到的
+    兜底，正是「兜底出事的时候不吭声」的形状。存量动不了（▶ 链接钉在 main
+    的文件路径上，已发的微信消息收不回来），只改增量：**以后一律走 Release，
+    不再进 git**。
+
+    判据钉四头，少一头就会退回老样子：
+
+    1. Release 那一步**没有体积早退**——去注释后不许出现 `LIMIT=`、不许出现
+       「不到 95」那类放行分支。体积闸一回来，95 MiB 以下（也就是几乎全部
+       成片）又开始进 git。`SZ=$(stat …)` 要留着：`render.json` 的
+       `video_bytes` 从它来
+    2. `gh release upload` 还在——别把闸拆成「谁都不传」
+    3. `rm -f "$REEL"` 还在——不删，下面的 `git add` 照样把它吃进去，白传一趟
+    4. 「丢掉不进仓库的中间物」不再给 `$SLUG.mp4` 留白名单 continue——
+       成片在上一步就该被发走并删掉，仍然出现在清理这一步就是漏网
+       （Release 步骤被跳过或拆掉），8 MB 兜底要当场拦红，而那行白名单
+       正是让它静默溜进提交的口子
+
+    ⚠️ 判据宁可窄：`_step_block` 已经先去掉整行注释——两步的注释里都如实
+    记着旧门槛那段来路（95、LIMIT 这些词都在），连注释一起扫会被自己的
+    注释误伤，这个仓库同一个形状犯过五次。
+    """
+    release = _step_block("成片发到 Release（不进 git）")
+    # ① 没有体积早退
+    assert "LIMIT=" not in release, \
+        "体积闸回来了——成片普遍 30~80 MiB 够不着门槛，会重新进 git"
+    assert "不到 95" not in release and "照旧进仓库" not in release, \
+        "「不够大就放行」的早退分支回来了"
+    assert 'SZ=$(stat -c%s "$REEL")' in release, \
+        "SZ 没了——render.json 的 video_bytes 从它来，别连它一起删"
+    # ② 还在传
+    assert "gh release upload" in release, \
+        "这一步不传 Release 附件了？成片就没有落脚点了"
+    # ③ 传完删本地那份
+    assert 'rm -f "$REEL"' in release, \
+        "传完没把本地那份删掉，它还会被 git add 吃进去"
+    # ④ 清理兜底不再给成片开白名单
+    cleanup = _step_block("丢掉不进仓库的中间物")
+    assert "$SLUG.mp4" not in cleanup, (
+        "清理兜底又提到成片了——它该在上一步就被发走并删掉；留白名单等于"
+        "给「Release 步骤被跳过、成片静默进仓库」开口子，漏网就该被 8 MB "
+        "兜底拦红")
 
 
 # 规矩定下来**之前**已经发出去的九个文件。已发的片子不为了措辞重渲
@@ -5395,7 +5447,7 @@ def test_重放不许把已经删掉的成片救活():
         "清空要排在 checkout 之前，否则等于什么都没做"
 
 
-def test_片长不设上限但要说清这一版走哪条路(tmp_path):
+def test_片长不设上限而且每条spec都要报走Release(tmp_path, capsys):
     """账号所有者 2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
     没关系」「不要砍片长」「我怕故事讲解不完整」。
 
@@ -5405,8 +5457,12 @@ def test_片长不设上限但要说清这一版走哪条路(tmp_path):
     「判据宁可窄，不可宽」在这儿的极端形式是：**这个判据根本不该存在**，
     100 MiB 是 git 的限制，不是内容的限制，换一条路（Release 附件）就没了。
 
-    留下来的只有「出声」：两条落脚点的链接长得完全不一样（raw vs
-    releases/download），日志里不写就只能靠猜。
+    出声那一半 2026-08-13 也跟着变了：原来按 95 MiB 分「进仓库 / 走 Release」
+    两条路，而成片普遍 30~80 MiB 从来够不着门槛，几乎每条都进了 git
+    （.git 6.0 GB 里 4.93 GB 是 mp4 blob，来路见
+    test_成片一律走Release不进git）。现在**路只有一条**：不管估出来多大，
+    load_spec 对任何 spec 都要说「走 Release 附件」——体积只是提前报出来
+    给人看量级，不再决定去向。
     """
     reel = _reel()
 
@@ -5419,17 +5475,36 @@ def test_片长不设上限但要说清这一版走哪条路(tmp_path):
     tmp.write_text(json.dumps(long_spec, ensure_ascii=False), encoding="utf-8")
     # **不许抛**——四百秒是编辑的决定，不是错误
     spec = reel.load_spec(tmp)
-    seconds, mib = reel.reel_length_verdict(spec)
-    assert seconds > 400 and mib > reel.REPO_INLINE_MIB
+    seconds, _ = reel.reel_length_verdict(spec)
+    assert seconds > 400
+    assert "走 Release 附件" in capsys.readouterr().out, \
+        "很长的 spec 没报走 Release"
 
-    # 每条 spec 都要算得出来，而且要报清楚走哪条路
+    # 随便一条正常长度的 spec 也一样报 Release——不再有「不到 95 就进仓库」那一支
+    short_spec = {
+        "source_url": "u://x",
+        "cover": {},
+        "segments": [{"start": 0.0, "end": 60.0, "narration": "正常长度"}],
+    }
+    tmp2 = tmp_path / "short.json"
+    tmp2.write_text(json.dumps(short_spec, ensure_ascii=False), encoding="utf-8")
+    reel.load_spec(tmp2)
+    out = capsys.readouterr().out
+    assert "走 Release 附件" in out, f"正常长度的 spec 没报走 Release：{out!r}"
+    assert "进仓库" not in out, f"「进仓库」那一支又回来了：{out!r}"
+
+    # 每条 spec 都要算得出来（估体积仍然有用：提前看见量级）
     for path in sorted(Path("specs/reels").glob("*.json")):
         s, m = reel.reel_length_verdict(json.loads(path.read_text(encoding="utf-8")))
         assert s > 0 and m > 0, path.name
 
     src = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     body = src[src.index("def load_spec("):src.index("def segments_straddling_cuts(")]
-    assert "REPO_INLINE_MIB" in body, "load_spec 没报这一版走哪条路"
+    # 去掉整行注释再扫：load_spec 里那段注释正写着「一律走 Release 附件」，
+    # 连注释一起扫的话，把 print 删掉它照样绿——被自己的注释满足的假绿
+    code = "\n".join(ln for ln in body.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "走 Release 附件" in code, "load_spec 没报成片走 Release"
     assert "raise ReelError" not in body.split("[片长]")[0].split("reel_length_verdict")[-1], \
         "片长又变成一道闸了——账号所有者明说过不要砍片长"
 
@@ -9557,7 +9632,7 @@ def test_传Release附件要重试而且不许用会被errexit杀掉的写法():
        为假会直接把整步杀掉，看起来像「传失败了」，其实是第一圈就被踢出去了。
        这个坑同一个步骤里已经踩过一次（探活那段的注释写着），别在它上面再踩
     """
-    block = _step_block("成片太大就发到 Release（不进 git）")
+    block = _step_block("成片发到 Release（不进 git）")
     body = _yaml_only(block)
     assert "gh release upload" in body, "这一步不传 Release 附件了？判据要跟着换"
 
