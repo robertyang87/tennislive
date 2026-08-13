@@ -770,30 +770,36 @@ jobs:
             --slug "${{ github.event.inputs.slug }}" \
             --film "${{ steps.paths.outputs.outdir }}/${{ github.event.inputs.slug }}.mp4"
 
-      # **超过 100 MiB 的成片改走 GitHub Release，不进 git。**
+      # **成片一律走 GitHub Release，不进 git。**
       #
-      # 账号所有者定的：「我的基础要求是保证内容和画面质量，文件多大都没关系」
-      # 「不要砍片长」。而 git 这条路有个**服务端硬拒**的 100 MiB 上限——
-      # 2026-08-02 那条 3 分 04 秒的片子渲出来 104 MiB，push 被拒，五分钟白跑。
+      # 账号所有者定过两层。2026-08-02：「我的基础要求是保证内容和画面质量，
+      # 文件多大都没关系」「不要砍片长」——git 那条 100 MiB 服务端硬拒
+      # （104 MiB 那条 push 被拒，五分钟白跑）的答案是换路，不是砍片长。
+      # 2026-08-13：「当前代码库太大了，好多资源是不是不用放在这里代码库里」。
       #
-      # 三条路比过：
-      #   Git LFS       免费额度 1 GB 存储 + **1 GB/月流量**，一条片子一百多 MB，
+      # 三条路比过（这段教训不过期）：
+      #   Git LFS       免费额度 1 GB 存储 + **1 GB/月流量**，一条片子几十上百 MB，
       #                 一次推送很多人同时下载就能把月流量打光（超出计费）；
       #                 而且 `raw.githubusercontent.com` 对 LFS 文件返回的是
       #                 **指针文本不是视频**，微信里那个 ▶ 按钮直接坏掉
       #   外部对象存储   要另一套密钥和账单，为一条片子不值当
       #   **Release 附件**  单个 2 GB，公开仓库下载不计流量额度，链接稳定
-      #                 （302 到 release-assets.githubusercontent.com，和现在
-      #                 >20 MB 时走的 raw 是同一个量级的链路）。顺带仓库不再
-      #                 每天胖一百多 MB
+      #                 （302 到 release-assets.githubusercontent.com，和
+      #                 >20 MB 时走的 raw 是同一个量级的链路）
       #
-      # **门槛设在 95 MiB 而不是 100**：留 5 MiB 给「估得不准」。95 MiB 以下
-      # 照旧进仓库，jsDelivr / raw 那条链路一个字没动——存量十几条片子的链接
-      # 不受影响。
+      # **原来这儿有道 95 MiB 的体积闸，2026-08-13 拆掉了。** 那道闸只把超过
+      # git 硬拒的片子送去 Release，95 以下照旧进仓库——而成片普遍 30~80 MiB，
+      # **从来够不着那道门槛**，于是几乎每条都进了 git：量出来 .git 已 6.0 GB，
+      # 其中 4.93 GB 是 mp4 blob（130 个），仓库每月胖一两个 GB。一个几乎
+      # 从来走不到的兜底，正是「兜底出事的时候不吭声」的形状。历史片子的
+      # ▶ 链接钉在 main 的文件路径上（raw.githubusercontent.com/…/main/…），
+      # 已发的消息收不回来，所以**存量 ≤95 MiB 的成片留在 git 一个不动，
+      # 只改增量**：从这天起成片不分体积一律发 Release。判据在
+      # `test_成片一律走Release不进git`。
       #
-      # 走了 Release 就**把本地那份删掉**，让下面的清理和提交步骤根本看不见它；
+      # 发完 Release 就**把本地那份删掉**，让下面的清理和提交步骤根本看不见它；
       # 链接写进 render.json，`push_reel.py` 优先读它。
-      - name: 成片太大就发到 Release（不进 git）
+      - name: 成片发到 Release（不进 git）
         if: github.event.inputs.mode == 'render'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -801,17 +807,12 @@ jobs:
           OUTDIR="${{ steps.paths.outputs.outdir }}"
           SLUG="${{ github.event.inputs.slug }}"
           REEL="$OUTDIR/$SLUG.mp4"
-          LIMIT=$((95 * 1024 * 1024))
           SZ=$(stat -c%s "$REEL")
-          if [ "$SZ" -le "$LIMIT" ]; then
-            echo "成片 $((SZ/1048576)) MiB，不到 95 MiB —— 照旧进仓库"
-            exit 0
-          fi
           TAG="reel-$SLUG"
-          echo "成片 $((SZ/1048576)) MiB 超过 95 MiB —— 发到 Release $TAG"
+          echo "成片 $((SZ/1048576)) MiB —— 发到 Release $TAG"
           gh release view "$TAG" >/dev/null 2>&1 \
             || gh release create "$TAG" --title "赛场之上 · $SLUG" \
-                 --notes "竖版成片。超过 git 的 100 MiB 单文件上限，改走 Release 附件。"
+                 --notes "竖版成片。成片一律走 Release 附件，不进 git。"
           # **传附件要重试。** 2026-08-13 李娜那条：render 跑了 14 分 27 秒、
           # 质检也过了，就死在这一行——
           #     HTTP 500 (https://api.github.com/…/releases/assets/512914137)
@@ -901,44 +902,37 @@ jobs:
           ls -la "$OUTDIR" || true
 
           # 兜底：上面那串模式挡住的是**已知**的中间物，挡不住下一个没见过的。
-          # 所以清完再量一次，超过 8 MB 而又不是成片的，一律当成漏网并报错——
-          # 宁可这一步红，也别再往仓库里塞一个没人发现的大文件（推分支吃 413
-          # 就是被 pack 体积撑爆的）。
+          # 所以清完再量一次，超过 8 MB 的一律当成漏网并报错——宁可这一步红，
+          # 也别再往仓库里塞一个没人发现的大文件（推分支吃 413 就是被 pack
+          # 体积撑爆的）。
           #
-          # **成片按名字放行，不按体积放行。** 第一版给成片卡了个 20 MB 的上限，
-          # 结果第一条片子就被自己拦下来了：那个数是从**解说片**那条线搬来的
-          # （静图幻灯，2 分 56 秒只有 7.7 MB / 365 kb/s），而这条线是真实比赛
-          # 画面、crf 18——**体积由时长决定**，写死一个字节数等于给片长设了个暗上限。
+          # **成片走不到这里。** 2026-08-13 起成片不分体积一律在上面那一步发
+          # Release 附件并当场 rm（来路见那一步的注释：.git 6.0 GB 里 4.93 GB
+          # 是 mp4 blob），所以这个兜底不再给成片留白名单——原来那行
+          # 「basename 是成片名就 continue」等于给「Release 步骤被跳过、成片
+          # 漏进提交」开了个静默的口子。仍然出现在这儿的成片就是漏网，该红。
+          # 「成片按名字放行，不按体积放行」那段教训（20 MB 上限是从解说片
+          # 搬来的、体积由时长决定，写死字节数等于给片长设暗上限）针对的是
+          # 「成片还进 git」的时代，判据在 test_成片一律走Release不进git。
           #
           # ⚠️ 这儿原来记着「实测 3315 / 3517 / 3610 kb/s」，那是 **9:16 时代**的数。
           # 换成 3:4 之后取景窗从 608px 宽变成 810px，码率高了三成，而这句注释没跟着改，
           # 于是 2026-08-02 我照着它把片子排到 3 分 04 秒（按旧数算才 78 MB），
-          # 渲出来 104 MiB，被下面提交那一步的 100 MiB 硬上限拦下，五分钟白跑。
-          # 现在的实测（都是从仓库里的成片量的）：
+          # 渲出来 104 MiB，被当年提交那一步的 100 MiB 硬上限拦下，五分钟白跑。
+          # 当年的实测（都是从仓库里的成片量的，估体积仍按这套数）：
           #   eala-svitolina 81.9 MiB / 158.0s = 4348 kb/s
           #   wong-gea       80.2 MiB / 155.8s = 4318 kb/s
           #   eala-osaka 初版 104.0 MiB / 185.2s = 4712 kb/s   ← 进不了仓库
           #   eala-osaka 剪短后 94.5 MiB / 158.8s = 4990 kb/s（剪短之后码率反而更高：
           #     砍掉的是全片最静的那一段，留下的全是高动量的关键分）
           # **片长不设上限**（账号所有者：「不要砍片长」「文件多大都没关系」）。
-          # 超过 95 MiB 的成片走上面那一步的 Release 附件，不进 git；
-          # `load_spec` 在写 spec 那一刻就把估算和走哪条路打进日志。
-          SLUG="${{ github.event.inputs.slug }}"
+          # `load_spec` 在写 spec 那一刻就把估算打进日志。
           BAD=0
           while IFS= read -r f; do
-            [ "$(basename "$f")" = "$SLUG.mp4" ] && continue
             echo "::error::清理之后仍有大文件进仓库：$f（$(stat -c%s "$f") 字节）"
             BAD=1
           done < <(find "$OUTDIR" -type f -size +8M)
           [ "$BAD" = 0 ] || exit 1
-          # 成片自己只报不拦：拦它等于拦片长，而片长是编辑决定的。但**要出声**
-          # ——2 分半上下的那几条是 80 MiB 出头，明显跳出这个量级时得有人看见。
-          REEL="$OUTDIR/$SLUG.mp4"
-          if [ -f "$REEL" ]; then
-            SZ=$(stat -c%s "$REEL")
-            echo "成片 $SLUG.mp4：$((SZ/1048576)) MB"
-            [ "$SZ" -le 83886080 ] || echo "::warning::成片 $((SZ/1048576)) MB，超过 80 MB——确认是片长所致，不是编码跑飞了"
-          fi
 
       # **`always()` 不能省。** `if:` 不含状态函数时 GitHub 隐式和上
       # `success()`，于是上一步「丢掉不进仓库的中间物」末尾那个体积兜底一

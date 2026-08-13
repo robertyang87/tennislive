@@ -1596,7 +1596,8 @@ def test_碰最终成片的步骤只在render跑():
     片子只往仓库里塞一个 mp4」——它下源片、渲海报、删源片，从头到尾
     没有 `$SLUG.mp4` 这个文件。
 
-    「成片太大就发到 Release」那一步原来跟 render 共用一个 `if:`
+    「成片发到 Release」那一步（栽的时候还叫「成片太大就发到 Release」，
+    2026-08-13 去掉体积闸后改的名）原来跟 render 共用一个 `if:`
     （`mode == 'render' || mode == 'cover'`），而它开头就 `stat` 这个文件——
     cover 那一档跑到这儿必然 `cannot statx ... No such file or directory`。
     `sabalenka-zhang-tor2026-r3` 就是这么栽的：cookie 和 client 梯子两个
@@ -2338,43 +2339,78 @@ def test_小红书正文不许超一千字():
     assert checked >= 10, f"只校到 {checked} 份文案，判据大概没找对目录"
 
 
-def test_成片太大要走Release而不是撑爆git():
-    """git 单文件硬上限 100 MiB，而这条线的成片能轻松超过。
+def test_采访成片一律走Release不进git():
+    """采访成片 20~67 MiB 一条条进 git，把 .git 撑到了 6.0 GB。
 
-    上一条采访 169.9 秒就 72.2 MiB（3.57 Mbit/s）；演播室那条 409 秒
-    按同码率算 **174 MiB**——渲十分钟，然后死在提交那一步。
-    账号所有者定过：「我的基础要求是保证内容和画面质量，文件多大都没关系」
-    「不要砍片长」，所以出路是**换落脚点**（Release 附件，单个 2 GB），
-    不是压码率也不是剪短。
+    来路（2026-08-13）：账号所有者「当前代码库太大了，好多资源是不是不用
+    放在这里代码库里」。量出来 .git 已 6.0 GB，其中 mp4 blob 4.93 GB。
+    根因：这一步原来只在成片超过 95 MiB 时才走 Release，而采访成片
+    **从来没超过 95 MiB**——Release 分支上线以来一次都没走到过，每条成片
+    照旧进 git。一个从来没被走到的兜底，正是「兜底出事的时候不吭声」的
+    形状。存量动不了（链接钉在 main 的文件路径上，已发的微信消息收不
+    回来），只改增量：**以后一律走 Release，不再进 git**。
 
-    三件事都要钉，少一件这道兜底就是摆设：
+    四件事都要钉，少一件就会退回老样子：
 
-    1. 两条线的门槛必须是**同一个数**——一个数写两处必分叉
-    2. 传完要**把本地那份删掉**，否则 `git add` 照样把它吃进去，
-       Release 白传一趟，提交照样炸
-    3. 这一步必须排在**提交之前**。排在后面的话文件已经进了 index，
-       删不删都晚了——同「复制页那道闸装在发的那一步不是渲的那一步」
+    1. **没有体积早退**——去注释后不许出现 `LIMIT=`、不许出现「不到 95」。
+       体积闸一回来，95 MiB 以下（也就是全部采访成片）又开始进 git。
+       `SZ=$(stat …)` 要留着：`render.json` 的 `video_bytes` 从它来
+    2. `gh release upload` 外面**真的套着重试循环**，退避是涨的，用尽要
+       `exit 1`。原来裸调一次无所谓——体积闸在前面，一年走不到几次；
+       每趟 render 都走之后，一次 GitHub 5xx 报销的就是整趟 render
+       （match-reel 2026-08-13 李娜那条 run 31709569579 就是这么死的，
+       写法照它同一步骤抄：4 次、`WAIT=$((5*i*i))` 二次方退避、一律用 if——
+       `bash -e` 下 `[ A ] && break` 整条为假会把这一步杀掉）
+    3. 传完要 `rm -f "$CLIP"`，否则 `git add` 照样把它吃进去，白传一趟
+    4. 顺序：「验成片」在它**之前**（验的就是这份本地文件，rm 之后没得验），
+       「提交成片」在它**之后**（文件进了 index 删不删都晚了——同
+       「复制页那道闸装在发的那一步不是渲的那一步」）
+
+    ⚠️ 判据宁可窄：只扫这一步去注释后的 `run:`（`_step_run`），不扫整份
+    yml——步骤注释里如实记着旧门槛那段来路（95、LIMIT 这些词都在），
+    连注释一起扫会被自己的注释误伤，这个仓库同一个形状犯过五次。
     """
-    import re
+    steps = _steps()
+    names = [s.get("name") for s in steps]
+    hits = [i for i, s in enumerate(steps) if "gh release upload" in _step_run(s)]
+    assert len(hits) == 1, f"该正好有一步传 Release 附件，扫到 {len(hits)} 步：{hits}"
+    i_rel = hits[0]
+    body = _step_run(steps[i_rel])
 
-    def block(name: str, wf: str) -> str:
-        text = (ROOT / ".github" / "workflows" / wf).read_text(encoding="utf-8")
-        text = "\n".join(ln for ln in text.splitlines()
-                         if not ln.lstrip().startswith("#"))
-        return text
+    # ① 没有体积早退——体积闸一回来，全部采访成片又开始进 git
+    assert "LIMIT=" not in body, "体积闸回来了——采访成片从来不超 95 MiB，会重新进 git"
+    assert "不到 95" not in body, "体积早退回来了——采访成片从来不超 95 MiB，会重新进 git"
+    assert 'SZ=$(stat -c%s "$CLIP")' in body, (
+        "SZ 没了——render.json 的 video_bytes 从它来，别连它一起删")
 
-    iv = block("", "interview-clip.yml")
-    mr = block("", "match-reel.yml")
-    limits = {w: set(re.findall(r"LIMIT=\$\(\((\d+) \* 1024 \* 1024\)\)", t))
-              for w, t in (("interview-clip", iv), ("match-reel", mr))}
-    assert limits["interview-clip"] == limits["match-reel"] != set(), (
-        f"两条线的 Release 门槛对不上：{limits}——一个数写两处必分叉")
+    # ② 上传外面套着重试循环，退避是涨的，用尽要报错
+    upload = body.index("gh release upload")
+    loop = body.rfind("for ", 0, upload)
+    assert loop != -1, "`gh release upload` 外面没有重试循环——一次 5xx 报销整趟 render"
+    tail = body[loop:]
+    assert "sleep" in tail[:tail.index("URL=")], (
+        "重试循环里没有退避——贴着重发四次，撞上的同一个 5xx 多半还在")
+    assert "WAIT=$((5 * i * i))" in body, (
+        "退避不是涨的：等长的重试对一次持续几十秒的服务端故障没有用")
+    assert 'UPLOADED" = 1 ]' in body and "exit 1" in body, (
+        "四次都没传上去却没有拦住：下游会把一个取不到的链接写进 render.json")
+    # `bash -e` 下 `[ A ] && break` 整条为假会把这一步杀掉，一律用 if
+    for line in tail.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("[") and "&&" in stripped:
+            raise AssertionError(
+                f"`bash -e` 下这一行整条为假会直接杀掉这一步，用 if：{stripped!r}")
 
-    assert "gh release upload" in iv, "采访这条线没有 Release 兜底，成片超 100 MiB 会死在提交那一步"
-    assert re.search(r'rm -f "\$CLIP"', iv), (
+    # ③ 传完删本地那份
+    assert re.search(r'rm -f "\$CLIP"', body), (
         "传完 Release 没删本地那份——git add 照样把它吃进去，白传一趟")
-    assert iv.index("gh release upload") < iv.index("git commit"), (
-        "Release 那一步排在提交后面了，文件已经进 index，删不删都晚了")
+
+    # ④ 顺序：验成片 → Release → 提交成片
+    i_verify = names.index("验成片")
+    i_commit = names.index("提交成片")
+    assert i_verify < i_rel < i_commit, (
+        f"顺序不对（验成片={i_verify}，Release={i_rel}，提交={i_commit}）——"
+        "验成片要在 rm 之前，Release 要在提交之前")
 
 
 def test_分歧率认领要钉在当时那次观测上():
