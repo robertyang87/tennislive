@@ -6819,7 +6819,20 @@ def _measured_narration() -> list[tuple[str, int, int, int, float]]:
         spec = json.loads(spec_path.read_text("utf-8"))
         cues = _ass_cues(ass)
         render_json = json.loads(rj_path.read_text("utf-8"))
-        offset = render_json["cover_seconds"]
+        # ⚠️ **`render.json` 现在有两种，别拿硬下标去索引。** 2026-08-13
+        # `archive-media` 把历史成片迁上 Release 时，会把链接写进同目录的
+        # `render.json`，**不存在就从 `{}` 建一份**——而 `render.json` 是
+        # 2026-08-02 才开始写的，07-28~07-30 那八条早期片子根本没有，于是
+        # 落下八个只有 `video_url` / `video_bytes` 的存根。那是合法数据
+        # （`push_reel.released_video_url()` 就靠它找成片），只是没有渲染
+        # 元数据。原来这儿写的是 `render_json["cover_seconds"]`，迁移完当场
+        # KeyError——**加餐把整条测试带崩了**，而它本来的契约是「产物读不了
+        # 就跳过」。
+        offset = render_json.get("cover_seconds")
+        if offset is None:
+            print(f"  [跳过] {outdir.name} 的 render.json 只有 Release 链接，"
+                  "没有渲染元数据（archive-media 建的存根）")
+            continue
         # 2026-08-02 之后渲的片子把闸自己量到的秒数直接记进了 `render.json`，
         # 不用再从字幕反解。老片子没有这一项，退回反解。
         recorded = render_json.get("narration_seconds") or {}
