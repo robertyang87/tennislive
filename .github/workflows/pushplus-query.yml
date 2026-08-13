@@ -1,0 +1,44 @@
+name: pushplus-query
+
+# 拿流水号问 PushPlus：这条消息到底送到微信没有。
+#
+# **只查不发。** 发送那条路会打一行「收下了：流水号 …」，那只保证接口收下，
+# 不保证微信推到了手机上——而查询要 token，token 只在 secret 里，于是这件事
+# 一直查不了。这条工作流把它拆出来（同 pages-selftest.yml 的形状）：跑一次
+# 十几秒，一条消息都不发。
+#
+# ⚠️ 不装 ffmpeg / Chromium / 字体，也不检出 output/——它只发一个 GET。
+
+on:
+  workflow_dispatch:
+    inputs:
+      trace_id:
+        description: "流水号（发送时日志里那行 [PushPlus] 收下了：流水号 …）"
+        required: true
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # output/ 一 GB 多，而这条路只要一个 py 文件
+          sparse-checkout: |
+            tools
+            src
+            pyproject.toml
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 装依赖
+        run: pip install -q requests
+
+      - name: 查这条消息送到没有
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: python tools/check_pushplus_delivery.py "${{ inputs.trace_id }}"
