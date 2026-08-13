@@ -260,21 +260,49 @@ jobs:
             cat "$MISSING"
             exit 1
           fi
-          # 渲了没推的片子：purge 会把它们的海报素材抹掉，推送就发不出去了
+          # 渲了还没推的片子：purge 会把海报从 HEAD 一起抹掉，之后再推就没有图。
+          #
+          # ⚠️ **判据是提交历史，不是 `pushed.json`。** 这一版原来查
+          # `<outdir>/pushed.json` 在不在，2026-08-13 拿真数据一验就露馅了：
+          # 那个标记**只有 `auto-push-reel` 那条路写**（2026-08-02 才上线），
+          # 手动 `match-reel mode=push` 发出去的一个都不写。实测全仓库 22 个
+          # 标记、36 个「没标记」的目录，而后者里 `eala-osaka`、`shang-rublev`
+          # 都是 CLAUDE.md 里白纸黑字记着已经发布的。**拿它当判据就是 36 个
+          # 假阳性，而它拦的是整趟 purge**——「一条常年红的检查和没有检查是
+          # 同一个毛病」。
+          #
+          # 真判据是推送那一刻留下的提交，两条路各一种写法（都实测过）：
+          #     reel: push <slug>            ← 手动 mode=push
+          #     reel: <slug> 已自动推送       ← auto-push-reel
+          # `pushed.json` 仍然认，它是这两者之外的第三个正信号。
+          #
+          # ⚠️ **只报不拦**，因为后果可逆：海报仍被下一步那条 `refs/keep/`
+          # 隐藏 ref 引着，真要补一句就够——
+          #     git checkout <keep ref 的 SHA> -- output/<日期>/reel/<slug>/poster.jpg
+          # 而拦下来的代价是整趟 purge 做不成。硬闸留给上面那道真正不可逆的
+          # （成片在 Release 上探不到）。
+          #
+          # ⚠️ `git log --all` 要全史才准，靠的是 checkout 那步的 `fetch-depth: 0`；
+          # 浅克隆上跑这段会把一批已推的片子误报成未推（本机沙箱就是浅克隆，
+          # 2026-08-13 在那儿验这段时正是这么被骗过一次的）。
           UNPUSHED=/tmp/purge-unpushed.txt; : > "$UNPUSHED"
+          git log --all --pretty=%s > /tmp/purge-subjects.txt
           for r in output/*/reel/*/render.json; do
             [ -e "$r" ] || continue
             d="${r%/render.json}"
-            if [ ! -f "$d/pushed.json" ]; then
-              echo "$d" >> "$UNPUSHED"
-            fi
+            slug="${d##*/}"
+            [ -f "$d/pushed.json" ] && continue
+            if grep -qF "reel: push $slug" /tmp/purge-subjects.txt; then continue; fi
+            if grep -qF "reel: $slug 已自动推送" /tmp/purge-subjects.txt; then continue; fi
+            echo "$d" >> "$UNPUSHED"
           done
           if [ -s "$UNPUSHED" ]; then
-            echo "::error::这些片子渲了还没推微信，purge 会把它们的海报素材抹掉——先推完再来："
+            echo "::warning::这些片子查不到推送记录（三种正信号都没有），purge 会把它们的海报从 HEAD 抹掉。要用的话从备份 ref 取回 poster.jpg："
             cat "$UNPUSHED"
-            exit 1
+          else
+            echo "每条 reel 都查到了推送记录"
           fi
-          echo "预检通过：HEAD 上的成片 Release 全探得到，也没有渲了没推的片子"
+          echo "预检通过：HEAD 上的成片在 Release 上全探得到"
 
       - name: 备份：老历史钉进隐藏 ref
         if: inputs.mode == 'purge'
