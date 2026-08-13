@@ -442,6 +442,11 @@ PLAYER_ZH: dict[str, str] = {
     "Chris Evert": "埃弗特",
     "Martina Hingis": "辛吉斯",
     "Justine Henin": "海宁",
+    "Agnieszka Radwanska": "拉德万斯卡",
+    "Agnieszka Radwańska": "拉德万斯卡",
+    "Johanna Larsson": "拉尔松",
+    "Daniela Hantuchova": "汉图楚娃",
+    "Daniela Hantuchová": "汉图楚娃",
     "Maria Sharapova": "莎拉波娃",
     "Ana Ivanovic": "伊万诺维奇",
     # 「纳达尔学院」那条选题要念到的三个**非球员**。他们不在任何一份前 500 快照里

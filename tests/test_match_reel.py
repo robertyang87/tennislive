@@ -9178,39 +9178,178 @@ def test_算不出标题时文案字数不许估得比真推送松():
         "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
 
 
-def test_查投递状态那条路不许发消息():
-    """`pushplus-query.yml` 只查不发——**查一次状态的代价必须是零**。
+def test_不许再印没验证过的投递查询接口():
+    """发送成功那行日志里，**不许再给出一个没验证过的查询 URL**。
 
-    来路：发送那行日志一直印着「这只代表接口收下……用流水号问 …」，可
-    **没人能真的去查**——查询要 token，token 只在 runner 的 secret 里。
-    这条路把它补上（同 `pages-selftest.yml` 的形状：把验证从发布里拆出来）。
+    来路：那儿原来印着
+    `https://www.pushplus.plus/api/send/queryMessage?token=…&id=…`，说「要查
+    微信有没有真的送达就问它」。2026-08-13 账号所有者问「还没推送么」，我
+    照着那句话建了工具和工作流、合进 main、跑到 runner 上（token 在 secret
+    里，只有那儿查得了）——实测 `code=903 用户令牌不正确`；再翻官方 API
+    文档，**根本没有这个查询接口**（只说「可以用流水号查最终发送结果」，
+    端点、参数、鉴权一概没写）。
+
+    那句提示把人引向一条不存在的路，而且印了很久——正是「没量过的推断写进
+    注释，之后每个人都拿它当判据」（同「edge-tts 同理」那条）。工具和工作流
+    都删了：一条永远失败的路留在仓库里，和一条常年红的检查是同一个毛病。
+
+    判据钉两头：① 那个 URL 不许再出现在会印进日志的地方；② 但**「收下 ≠
+    送达」这句必须还在**——删掉查询路不等于可以假装接口成功就是送到了。
+    """
+    src = Path("src/tennislive/publish/pushplus.py").read_text(encoding="utf-8")
+    body = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#"))
+    assert "queryMessage" not in body, (
+        "这个查询接口官方文档里没有、实测 903——不许再印给下一个人")
+    assert "不代表微信推到了手机上" in body, (
+        "「接口收下 ≠ 微信送达」这句不能跟着删——它是真的")
+
+
+def test_contain的横向窗口要从源片宽度算不许写死1920():
+    """`keep = int(1920 * CONTAIN_KEEP)` 隐含「源片一定是 1920 宽」。
+
+    854×480 的存档素材照这个算出 **1190px 的窗口，比源片本身还宽**，
+    ffmpeg 直接拒掉 `crop`；就算老老实实按比例算出 528px，放到 1080 宽也是
+    **放大 2.05 倍**——而整幅不裁只放大 1.26 倍。也就是说 contain 那句
+    「先横向留一点再缩，画面大一圈」的前提**在低清源片上是反的**：
+    裁完更糊，而糊掉的正是主体。
 
     判据钉三头：
-    ① 工具只 GET 查询接口，不碰发送接口——否则下次「查一下」会变成
-      「又发了一条」，而微信那条消息发出去收不回来
-    ② 工作流里不出现任何出片/推送的入口（push_reel / publish / ffmpeg /
-      Chromium）——这条路要短，短才有人愿意用
-    ③ 「请求失败」和「没送到」在日志里分开说。两者混成一句的话，一次网络
-      抖动就会被读成「消息真的没发出去」，然后有人去补发一条重复的
+      ① 1920 的源片**一格都不动**（这条改动不许悄悄改掉存量片子的构图）
+      ② 窗口永远不超过源片宽度
+      ③ 横向放大不许超过 `CONTAIN_MAX_UPSCALE`，除非源片整幅铺进来都还不够
     """
-    tool = Path("tools/check_pushplus_delivery.py").read_text(encoding="utf-8")
-    flow = Path(".github/workflows/pushplus-query.yml").read_text(encoding="utf-8")
+    reel = _reel()
+    assert reel.contain_keep_width(1920) == int(1920 * reel.CONTAIN_KEEP) // 2 * 2, (
+        "1920 的源片按老口径算出来就是 1190，改动不许碰它")
+    for w in (640, 854, 1080, 1280, 1920):
+        keep = reel.contain_keep_width(w)
+        assert 0 < keep <= w, f"{w} 宽的源片算出 {keep} 的窗口，裁不出来"
+        upscale = reel.VIDEO_W / keep
+        assert upscale <= reel.CONTAIN_MAX_UPSCALE + 1e-9 or keep == w // 2 * 2, (
+            f"{w} 宽的源片裁到 {keep}，放大 {upscale:.2f} 倍——"
+            "顶到上限就该少裁，一路少到整幅铺满为止")
+    # 源片窄到整幅铺进来都超上限时，只能整幅铺——不许因此裁得更狠
+    assert reel.contain_keep_width(640) == 640
 
-    # ① 只查询，不发送
-    assert "queryMessage" in tool
-    assert "requests.get(" in tool
-    assert "requests.post(" not in tool, "查投递状态不许 POST——那是发送接口"
-    assert "pushplus.plus/send" not in tool
 
-    # ② 这条路要短
-    body = _yaml_only(flow)
-    for forbidden in ("push_reel", "publish ", "ffmpeg", "playwright",
-                      "Chromium", "chromium"):
-        assert forbidden not in body, (
-            f"查投递状态那条路不该出现 {forbidden!r}——它只发一个 GET")
-    assert "PUSHPLUS_TOKEN" in body, "查询要 token，从 secret 取"
+def test_低清存档源要显式认领而且它的段一律整幅铺(tmp_path):
+    """`MIN_SOURCE_H` 拦的是**下载事故**（yt-dlp 悄悄退到 360p，换 client 重下
+    就好）。而 2012 年赛事官方频道上传的那批片子**本来就只有 854×480**——
+    八种 player client 全试过，两种下得下来的都是这个尺寸
+    （run 31690907495 等六趟）。
 
-    # ③ 「查不到」不许被写成「没送到」
-    assert "这不代表消息没送到" in tool, (
-        "请求失败和消息没送到是两件事，日志里不许混成一句——"
-        "混了会有人去补发一条重复的消息")
+    拿前者的闸去拦后者，等于把一整段只此一份的历史挡在门外，而这条线的规矩是
+    **精准优先于清晰**。所以低清不是自动放行，是**显式认领**，和 `mixed_fps` /
+    `silent_source` / `conform` 一个形状。
+
+    ⚠️ 认领之后还有第二道：那些段必须 `fit: "contain"`。3:4 裁切从 854×480
+    里取的是 360×480，放到 1080×1440 是**放大 3 倍**——正是 `resolve_crop`
+    那句报错说的「糊得没法看」。**只放行不管取景，等于把闸换了个地方漏。**
+    """
+    reel = _reel()
+
+    # ① 没认领：照旧拒掉，而且报错要说出路
+    with pytest.raises(reel.ReelError) as got:
+        reel.resolve_crop(854, 480)
+    assert "太小" in str(got.value) and "archival" in str(got.value), (
+        "报错要指出「真的只有这么高就认领下来」这条出路，不能只说不行")
+
+    # ② 认领了：放行，窗口按 480 高换算
+    reel.resolve_crop(854, 480, None, "2012 年赛事官方上传，八种 client 全试过")
+    assert (reel.CROP_W, reel.CROP_H) == (360, 480)
+    reel.resolve_crop(1920, 1080)                 # 还原全局，别污染同进程的别人
+
+    # ③ 认领过的源，段还在按 3:4 裁 → 当场红
+    def spec(fit):
+        return {
+            "slug": "t", "sources": {"a": "https://x/a", "b": "https://x/b"},
+            "archival": {"a": "2012 年的上传只有 480p"},
+            "segments": [{"start": 0, "end": 5, "source": "a", "fit": fit,
+                          "narration": "一句话"},
+                         {"start": 0, "end": 5, "source": "b",
+                          "narration": "另一句"}],
+        }
+    segs = reel.parse_segments(spec("crop"), {"a": 1, "b": 1}, "a")
+    with pytest.raises(reel.ReelError) as got:
+        reel.check_archival_fit(spec("crop"), segs)
+    assert "整幅铺" in str(got.value) or "contain" in str(got.value)
+
+    ok = spec("contain")
+    reel.check_archival_fit(ok, reel.parse_segments(ok, {"a": 1, "b": 1}, "a"))
+
+    # ④ 认领表本身要校形状：名字写错的认领是一盏恒真的绿灯
+    bad = spec("contain")
+    bad["archival"] = {"nosuch": "理由"}
+    with pytest.raises(reel.ReelError) as got:
+        reel.check_archival_fit(bad, reel.parse_segments(bad, {"a": 1, "b": 1}, "a"))
+    assert "不在 sources 里" in str(got.value)
+
+    empty = spec("contain")
+    empty["archival"] = {"a": "   "}
+    with pytest.raises(reel.ReelError):
+        reel.check_archival_fit(empty, reel.parse_segments(empty, {"a": 1, "b": 1}, "a"))
+
+
+def test_认领低清那道闸排在下载之前():
+    """又是「闸装在哪一步」那条老账。这是 spec 的**形状**问题——
+    「你认领了 a 是低清，却让 a 的段按 3:4 裁」，一个源片字节都不用碰就能判。
+
+    排在下载后面的话，每写错一次都要先等几百 MB 下完；而这条线上的存档素材
+    动辄六七条源。所以它必须在 `validate_spec` 里，`--dry-run` 就该红。
+    """
+    reel = _reel()
+    body = inspect.getsource(reel.validate_spec)
+    assert "check_archival_fit" in body, (
+        "这道闸要在 validate_spec 里跑，dry-run 才够得着")
+
+
+def test_八档都只有低画质时要把最好的那份收下不要全扔掉(tmp_path, monkeypatch, capsys):
+    """下载这一步**不判「够不够高」**，它只负责把能拿到的最好那份拿回来。
+
+    原来的写法是：高度不够就 `unlink` 接着试下一档，八档试完抛
+    「都下不下来」。对「yt-dlp 悄悄退到 360p」这条是对的（换个 client 就有
+    高清）；对「这条素材本来就只有这么高」是错的——2012 年赛事官方频道那批
+    片子八种 client 全试过，能下的都是 854×480（run 31690907495 等六趟），
+    于是一整段只此一份的历史被一句「太小了」挡在门外，**而报错说的是
+    「多半是 yt-dlp 退到了低画质那一档」，把人引向一个不存在的病因**。
+
+    这两件事在这一层长得一模一样，分得清的是 spec（`archival` 认领）。
+    所以判据钉两头：
+      ① 八档全低清 → 收下最高的那份，并且**说清楚收的是什么**
+      ② 但「够不够」的闸**没有松**：没认领的话 `resolve_crop` 照旧红
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import build_match_reel as reel  # noqa: PLC0415
+
+    heights = iter([360, 480, 480, 360, 240, 480, 360, 240])
+    served: list[int] = []
+
+    def _fake_ytdlp(args, **kw):
+        out = Path(args[args.index("-o") + 1])
+        out.write_bytes(b"\0" * 2048)
+        served.append(next(heights, 240))
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    import subprocess  # noqa: PLC0415
+
+    monkeypatch.delenv(reel._SOURCE_CACHE_ENV, raising=False)
+    monkeypatch.setattr(reel.shutil, "which", lambda _n: "/usr/bin/yt-dlp")
+    monkeypatch.setattr(reel.subprocess, "run", _fake_ytdlp)
+    monkeypatch.setattr(reel, "probe_size",
+                        lambda _p: (served[-1] * 16 // 9, served[-1]))
+
+    dest = tmp_path / "source.mp4"
+    got = reel.download("https://www.youtube.com/watch?v=CCCCCCCCCCC", dest)
+    assert got == dest and dest.is_file(), "八档全低清就把素材全扔了"
+    out = capsys.readouterr().out
+    assert "480" in out and "这一步不判它够不够" in out, (
+        f"收下了却没说清收的是什么：{out}")
+    # 中间那些低清副本不许留在目录里当垃圾
+    assert not list(tmp_path.glob("*_lowres*")), "临时副本没清干净"
+
+    # ② 闸没松：没认领照旧红，认领了才放行
+    with pytest.raises(reel.ReelError):
+        reel.resolve_crop(854, 480)
+    reel.resolve_crop(854, 480, None, "2012 年的赛事官方上传")
+    reel.resolve_crop(1920, 1080)                 # 还原全局

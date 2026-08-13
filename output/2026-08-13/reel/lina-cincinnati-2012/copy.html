@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.13 网球有故事 | 李娜唯一的千分赛冠军</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>奥运会第一轮就输了，教练也换了——三个星期后，李娜拿到她唯一的一座千分赛冠军
+
+两个大满贯冠军，一座 WTA1000。2012年8月19日的辛辛那提，是李娜整个生涯唯一一次拿下这个级别的冠军（当年叫超五巡回赛）。
+
+先说她当时的处境。2011年6月法网夺冠之后，她成了亚洲第一个拿到大满贯单打冠军的人。然后是14个月，一个冠军都没有。
+
+2012年前七个月：澳网第四轮，法网第四轮、卫冕失败，温网第二轮，奥运会第一轮。
+
+温网那一场淘汰她的是科斯蒂亚——记住这个名字。紧接着的奥运会女单首轮，她输给了自己的好朋友汉图楚娃。那一届奥运网球就打在温网的场地上：同一块草地，同一个夏天，她输了两次。
+
+奥运会之后她宣布请了新教练，卡洛斯·罗德里格斯——把海宁带到世界第一、带出七个大满贯的那个阿根廷人。
+
+8月13日辛辛那提开赛，李娜9号种子，首轮轮空。第二轮的对手正是六个星期前把她淘汰出温网的科斯蒂亚。6-3、4-6、6-3，她丢了一盘，打满三盘才过。
+
+而那一场，卡洛斯还不在她的教练席上。合作是宣布了，可两个人还从来没见过面。
+
+8月15日，星期三的晚上，卡洛斯到了辛辛那提。第二天第三轮，他第一次坐进她的包厢——对手是资格赛打上来的拉尔松，6-2、6-2。
+
+从这一场开始，这一周剩下的比赛她只再丢了一盘。
+
+1/4决赛，头号种子拉德万斯卡，6-1、6-1。那个人一个多月前刚打进温网决赛。
+
+半决赛，持外卡的大威廉姆斯，7-5、3-6、6-1。这是两人第三次交手，李娜第三次赢。
+
+决赛对手科贝尔，她在这一站赢过小威廉姆斯。
+
+第一盘，1-6。李娜赛后说：第一盘她打得难以置信，我想加快节奏，可她一个失误都没有，每一个球都回到我这边。
+
+第二盘3-4、科贝尔发球那一局，来回打了24个小分、9次平分。李娜连着浪费七个破发点，最后才把它拿下来。
+
+6-3扳回一盘。决胜盘她只丢了一局。
+
+1-6、6-3、6-1。距离上一个冠军，过去了一年零两个月。这是她2011年法网之后的第一个冠军，也是生涯第六个。
+
+她在颁奖台上说了一句：我觉得这是一个很好的开始。
+
+五个月后她打进澳网决赛。一年零五个月后，她拿到第二个大满贯。
+
+而这一座奖杯，到她退役都是唯一的一座。
+
+你还记得那个星期三的晚上吗？
+
+#网球 #李娜 #网球有故事 #WTA #辛辛那提</textarea>
+    </section>
+    <section>
+      <div class="label"><span>置顶评论</span><button type="button" data-copy="comment">复制评论</button></div>
+      <textarea id="comment" readonly>你还记得那个星期三的晚上吗？</textarea>
+    </section>
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
