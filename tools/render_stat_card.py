@@ -282,6 +282,12 @@ body{{color:{vp.TEXT};font-family:'TL Sans SC','Noto Sans CJK SC',sans-serif;
  font-family:'TL Numeral','TL Sans SC',sans-serif}}
 .sval-l{{justify-content:flex-start}}
 .sval-r{{justify-content:flex-end}}
+/* 左列 DOM 顺序是 smain→sfrac，flex-start 贴左边，主数字天然贴边。
+   右列同样的 DOM 顺序配 flex-end 会把 sfrac 贴到最外沿、主数字反而缩进——
+   用 order 只调右列的视觉顺序，让主数字（大号、占优时变色）也贴在外沿，
+   和左列对称。 */
+.sval-r .smain{{order:2}}
+.sval-r .sfrac{{order:1}}
 .smain{{font-size:51px;font-weight:400;color:rgba(244,251,247,.55)}}
 .sval.lead .smain{{color:#c6f65a;font-weight:700}}
 .sfrac{{font-size:23px;font-weight:400;color:rgba(244,251,247,.6)}}
