@@ -239,9 +239,19 @@ _LEGACY_VS_COVERS = frozenset({
     "wang-pareja", "wang-samsonova", "wong-brooksby", "wong-gea",
     "wong-lehecka",
 })
-# contain 模式横向保留多少。0.62 → 窗口 1190px，球员落在画面 19%~81% 之间都还在，
-# 缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的 608 高大了六成。
+# contain 模式横向保留多少。0.62 → 1920 宽的源片留 1190px，球员落在画面
+# 19%~81% 之间都还在，缩到 1080 宽后有 980 高，占屏高一半——比整幅铺进来的
+# 608 高大了六成。
 CONTAIN_KEEP = 0.62
+# 但 0.62 是**比例**，而它原来乘的是写死的 1920。854×480 的存档素材照这个
+# 算出 529px 的窗口，再放到 1080 宽是**放大 2.04 倍**——而整幅不裁直接铺
+# 只放大 1.26 倍。也就是说「裁一点让主体大些」在低清源片上会**倒过来**：
+# 裁完更糊，而糊掉的正是主体。
+#
+# 所以 keep 有下限：横向放大不许超过这个倍数，顶到了就少裁一点，
+# 一路少到整幅铺满为止。1920 的源片按 0.62 算出来是 1190 ≥ 800，
+# **一格都不动**；只有低清素材才会被这条抬回去。
+CONTAIN_MAX_UPSCALE = 1.35
 # 原声压到多少。留一点现场声（球声、观众），但不能盖过中文解说。
 BED_LOUD = 0.72   # 没人说话时的现场声
 # mute 段的地板音量（-26 dB）。量出来的账：宣传片配乐 mean 约 -15~-20 dB，
@@ -669,7 +679,84 @@ def require_live_sound(source: Path, spec: dict) -> float | None:
     return peak
 
 
-def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> None:
+def contain_keep_width(source_w: int) -> int:
+    """contain 模式横向保留多少像素。**从源片宽度算，不是写死 1920。**
+
+    原来写的是 `int(1920 * CONTAIN_KEEP)`，隐含「源片一定是 1920 宽」。
+    854 宽的存档素材照这个算出 1190px 的窗口，比源片本身还宽——ffmpeg 直接
+    拒掉 `crop`。而就算按比例算出 529px，放到 1080 宽也是放大 2.04 倍，
+    **比整幅不裁（1.26 倍）还糊**：低清源片上「裁一点让主体大些」是反的。
+
+    所以这里两层：按比例算，再用 `CONTAIN_MAX_UPSCALE` 兜住下限。
+    1920 的源片算出来 1190，远在下限之上，**一格都不动**。
+    """
+    keep = int(source_w * CONTAIN_KEEP) // 2 * 2
+    floor = min(source_w, int(math.ceil(VIDEO_W / CONTAIN_MAX_UPSCALE))) // 2 * 2
+    if keep < floor:
+        print(f"    [contain] 源片只有 {source_w} 宽，按 {CONTAIN_KEEP:g} 裁到 "
+              f"{keep} 再放到 {VIDEO_W} 是放大 {VIDEO_W / max(keep, 1):.2f} 倍；"
+              f"少裁一点，窗口抬到 {floor}（放大 {VIDEO_W / floor:.2f} 倍）")
+        keep = floor
+    return keep
+
+
+# 存档素材的清晰度下限。`MIN_SOURCE_H` 拦的是「yt-dlp 悄悄退到低画质那一档」
+# ——那是个**下载事故**，换 client 重下就好。而 2012 年赛事官方频道上传的
+# 那批片子**本来就只有 854×480**：八种 player client 全试过，两种能下下来的
+# 都是这个尺寸，换 cookie 也变不出更高的。
+#
+# 拿前者的闸去拦后者，等于把一整段只此一份的历史挡在门外——而这条线的规矩是
+# **精准优先于清晰**（锦织圭那张 682×1024 就是这么留下来的：它是唯一能自证
+# 是那场决赛、又真在比赛里的画面）。
+#
+# 所以低清不是自动放行，是**显式认领**（`archival: {源键: "为什么只有这么高"}`），
+# 和 `mixed_fps` / `silent_source` / `conform` 一个形状。
+MIN_ARCHIVAL_H = 400
+
+
+def archival_claims(spec: dict | None) -> dict[str, str]:
+    """读 `archival` 认领表并校验形状。空表也是合法的（绝大多数片子）。"""
+    declared = (spec or {}).get("archival") or {}
+    if not isinstance(declared, dict) or not all(
+            isinstance(v, str) and v.strip() for v in declared.values()):
+        raise ReelError(
+            'archival 要写成 {"源键": "为什么这条只有这么高"}——'
+            "理由是给下一个人看的：他要能分清这是「素材本来就这样」"
+            "还是「这一趟下载退到了低画质」。")
+    return {k: v.strip() for k, v in declared.items()}
+
+
+def check_archival_fit(spec: dict, segments: list["Segment"]) -> None:
+    """认领了低清的源，它的段必须 `fit: "contain"`。
+
+    3:4 裁切从 854×480 里取的是 360×480，放到 1080×1440 是**放大 3 倍**——
+    正是 `resolve_crop` 那句报错说的「糊得没法看」。contain 那条路整幅铺，
+    只放大 1.26 倍（见 `contain_keep_width`）。
+
+    **闸排在下载之前**：这是 spec 的形状问题，`--dry-run` 就该红，
+    不该等几百 MB 下完、渲到第一段切片才发现。
+    """
+    claimed = archival_claims(spec)
+    if not claimed:
+        return
+    keys = set(spec_sources(spec))
+    unknown = sorted(set(claimed) - keys)
+    if unknown:
+        raise ReelError(f"archival 里的 {unknown} 不在 sources 里")
+    bad = [i + 1 for i, s in enumerate(segments)
+           if not s.image and s.source in claimed and s.fit != "contain"]
+    if bad:
+        raise ReelError(
+            f"第 {bad} 段取自认领过的低清源（{sorted(claimed)}），"
+            '却还在按 3:4 裁切。\n'
+            "854×480 裁成 3:4 只有 360×480，放到 1080×1440 是放大 3 倍；"
+            "整幅铺进来（`\"fit\": \"contain\"`）只放大 1.26 倍。\n"
+            "存档素材一律 contain——纪录片就是这么放老画面的。")
+    print(f"[存档] 认领低清源片 {sorted(claimed)}，这些段一律整幅铺")
+
+
+def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None,
+                 archival: str = "") -> None:
     """在源片里取**最大的 3:4 窗口**，太小的源片直接拒掉。
 
     **下到 360p 也算「下载成功」**——yt-dlp 退到低画质那一档时不会报错，
@@ -688,13 +775,21 @@ def resolve_crop(source_w: int, source_h: int, crop_y: int | None = None) -> Non
     出来的：310 台标还在、记分条被切掉一行，380 白丢 35px）。
     """
     global CROP_H, CROP_W, CROP_Y
-    if source_h < MIN_SOURCE_H:
+    floor = MIN_ARCHIVAL_H if archival else MIN_SOURCE_H
+    if source_h < floor:
         raise ReelError(
-            f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {MIN_SOURCE_H}）。"
+            f"源片只有 {source_w}×{source_h}，太小了（要求高 ≥ {floor}）。"
             "裁成 3:4 再放到 1080 宽是放大好几倍，成片糊得没法看。"
             "多半是 yt-dlp 退到了低画质那一档——换 player client 重下，"
             "或者换一个能拿到 720p 以上的源。"
+            + ("" if archival else
+               "\n真的只有这么高（比如 2012 年的赛事官方上传），"
+               '就在 spec 顶层写 `"archival": {"源键": "为什么只有这么高"}` '
+               "认领下来，那些段一律 `\"fit\": \"contain\"`。")
         )
+    if archival:
+        print(f"[存档] 主源 {source_w}×{source_h} 低于常规下限 {MIN_SOURCE_H}，"
+              f"按认领放行：{archival}")
     if source_w * 4 >= source_h * 3:          # 比 3:4 宽：高度顶满
         CROP_H = source_h // 2 * 2
         CROP_W = int(round(CROP_H * 3 / 4)) // 2 * 2
@@ -1013,6 +1108,16 @@ def download(url: str, dest: Path) -> Path:
         print(f"[cookies] 用 {jar}")
 
     failures: list[str] = []
+    # **下到了但不够高**的那些，留着别删。原来这里是直接 `unlink` 接着试下一档，
+    # 八档试完抛错——对「yt-dlp 退到低画质」是对的（换个 client 就有高清），
+    # 对「这条素材本来就只有这么高」是错的：2012 年赛事官方频道那批片子
+    # 八种 client 全试过，能下的都是 854×480（run 31690907495 等六趟），
+    # 于是一整段只此一份的历史被一句「太小了」挡在门外。
+    #
+    # **判断「够不够」的地方只该有一个**，而且要在**知道这是不是存档素材**的
+    # 那一层——也就是 `resolve_crop`，它读得到 spec 的 `archival` 认领。
+    # 这里只负责「把能拿到的最好那份拿回来」，并且**大声说清楚拿到的是什么**。
+    best: tuple[int, int, Path] | None = None
     for label, extra in _ladder():
         proc = subprocess.run(
             [binary, *YTDLP_BASE, "--no-warnings", "-f", selector,
@@ -1029,6 +1134,13 @@ def download(url: str, dest: Path) -> Path:
             if height < MIN_SOURCE_H:
                 print(f"[低画质] {label} 只有 {width}×{height}，换下一档再试")
                 failures.append(f"{label}: 只拿到 {width}×{height}")
+                if best is None or height > best[1]:
+                    # ⚠️ 落脚点是**同一个路径**，所以「删掉上一份最好的」就是
+                    # 「删掉刚存进去的这一份」。判据当场抓到了这个。
+                    keep = dest.with_name(dest.stem + "_lowres" + dest.suffix)
+                    keep.unlink(missing_ok=True)
+                    dest.rename(keep)
+                    best = (width, height, keep)
                 dest.unlink(missing_ok=True)
                 continue
             print(f"[ok] {label} 下到了 {width}×{height}，"
@@ -1042,6 +1154,18 @@ def download(url: str, dest: Path) -> Path:
         print(f"[fail] {label}: {reason}")
         failures.append(f"{label}: {reason}")
         dest.unlink(missing_ok=True)
+
+    if best is not None:
+        width, height, keep = best
+        keep.rename(dest)
+        print(f"[低画质] 八档试完，最高只有 {width}×{height}（低于 {MIN_SOURCE_H}）。"
+              "先收下——**这一步不判它够不够**：\n"
+              "        「换个 client 就有高清」和「这条素材本来就这么高」"
+              "在这儿长得一模一样，\n"
+              "        分得清的是 spec（`archival` 认领）。渲的时候 resolve_crop "
+              "会拿着认领去判，没认领照旧红。")
+        _keep_source(url, dest)
+        return dest
 
     raise ReelError(
         (f"{direct_failed}；退回 yt-dlp 之后，" if direct_failed else "")
@@ -1603,7 +1727,8 @@ def parse_segments(spec: dict, sources: dict, primary: str) -> list[Segment]:
 # `test_真字段表要盖住每条spec里出现过的字段` 拿 `specs/reels/*.json` 里实际
 # 出现过的字段名去对，少一个就红。
 _REAL_FIELDS: dict[str, tuple[str, ...]] = {
-    "spec": ("conform", "cover", "crop_y", "crop_zoom", "mixed_fps", "primary",
+    "spec": ("archival", "conform", "cover", "crop_y", "crop_zoom",
+             "mixed_fps", "primary",
              "push", "rate", "segments", "silent_source", "slug",
              "source_audio", "source_url", "sources", "stats", "subtitle_top",
              "topbar", "voice", "editorial"),
@@ -2081,8 +2206,8 @@ def cut_segment(source: Path, seg: Segment, dest: Path, source_w: int,
         #   1. 先横向留 KEEP 的宽度再缩——画面大一圈，而球员仍在窗口内
         #   2. 上下不留纯色，用同一帧放大模糊垫底
         # 模糊垫底比纯色好在：屏幕是满的，眼睛跟着中间那条走，不会被两条黑边切断。
-        keep = int(1920 * CONTAIN_KEEP) // 2 * 2
-        x = (1920 - keep) // 2
+        keep = contain_keep_width(source_w)
+        x = (source_w - keep) // 2
         chain = (
             f"split=2[bg][fg];"
             f"[bg]crop={keep}:{CROP_H}:{x}:0,"
@@ -3659,7 +3784,9 @@ def validate_spec(spec: dict) -> list[Segment]:
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
-    return parse_segments(spec, urls, next(iter(urls)))
+    segments = parse_segments(spec, urls, next(iter(urls)))
+    check_archival_fit(spec, segments)
+    return segments
 
 
 def _check_segments_fit(segments: list[Segment], sources: dict[str, Path]) -> None:
@@ -3790,7 +3917,8 @@ def render(spec: dict, outdir: Path, *, voice: str, rate: str,
     global FPS, FPS_EXPR
     FPS_EXPR, FPS = resolve_fps(source)
     print(f"源片 {source_w}×{source_h}，{probe_duration(source):.1f}s")
-    resolve_crop(source_w, source_h, spec.get("crop_y"))
+    resolve_crop(source_w, source_h, spec.get("crop_y"),
+                 archival_claims(spec).get(primary, ""))
     portrait = source_w * 4 < source_h * 3
 
     segments = parse_segments(spec, sources, primary)
