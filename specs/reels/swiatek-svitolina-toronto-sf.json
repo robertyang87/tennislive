@@ -1,0 +1,153 @@
+{
+  "slug": "swiatek-svitolina-toronto-sf",
+  "_slug_why": "赢家在前（斯瓦泰克胜）。栏目规矩 slug 按赢家-输家，和 svitolina-alexandrova、swiatek-kostyuk 同一惯例。这条在 Toronto 举行，和蒙特利尔那边的 ATP 赛事分属不同城市，不带城市后缀即可与已有 spec 区分（无 svitolina/swiatek 相关重名）。",
+  "source_url": "https://www.youtube.com/watch?v=YgwYriOtnPs",
+  "_source": "WTA 官方 YouTube 频道单场集锦，2026-08-13 probe run 31664520121 验证：302.857868s。\n\n**画面自证**：\n- 场地印着`TORONTO`，场边广告板`National Bank`/`Rogers`/`Mercedes-Benz`/`beneva`/`Ontario`——National Bank Open presented by Rogers的赞助商阵容，与同站已发的 svitolina-alexandrova/swiatek-golubic 等一致\n- 记分条烧着`E. SVITOLINA [9]`/`I. SWIATEK [7]`——种子号和WTA API（tournament id=806, MatchID=LS002）里SeedA=9/SeedB=7一致\n- 逐格读过score_00~07.jpg：0.5~16.5s 开局破发点拉锯 → 22.5~38.5s `SET POINT #2`，斯瓦泰克5-3(40/Ad)拿下首盘 → 120.5s `SET POINT #3`，斯维托丽娜次盘5-0(Ad)建立大比分优势 → 128.5~144.5s 换边图形`ELINA SVITOLINA[9] 3 6/IGA SWIATEK[7] 6 1`，次盘6-1斯维托丽娜收官 → 146.5~178.5s 决胜盘开局`BREAK POINT`反复出现（长拉锯）→ 240.5~246.5s 决胜盘三平 → 250.5~258.5s `MATCH POINT #2`，斯瓦泰克5-3(40)发球，兑现拿下 → 264.5s起观众席举起波兰国旗庆祝、网前握手 → 286.5s终局比分板`SEMI-FINAL/ELINA SVITOLINA[9] 3 6 3/IGA SWIATEK[7] 6 1 6`，与WTA官方API和flashscore逐分记录完全吻合\n- captions.txt 是真实现场解说（非预测节目）：`the six time major champion, found her champions mentality and also found her forehand...It's [Swiatek] with the third 6-3`——描述的正是决胜盘她被破发一次仍守住6-3收官的过程，人名被自动字幕拼成`Spitelina`/`Sionant`/`Egos Fiontech`是常见的非英语姓氏识别误差\n\n⚠️ **这条源片是这条线第二次尝试才找对的**。第一次候选（youtube.com/watch?v=QwmwZkAcUSg，标题`Iga Swiatek vs Elina Svitolina | WTA Toronto Semi-Final...`）probe之后发现是`Talking Tennis`频道（John Silk + Vansh Vermani 两人视频连线聊天，绿色`T`台标）——和此前 nakashima-jodar-montreal-sf 那次踩过的`Tennis Talk`/`Talking Tennis`是**同一类假集锦**，联系表全程只有两人对着摄像头说话，字幕内容也是赛前预测（`I'm just going to lean Iga but it's 52-48`）。这次改用标题精确匹配WTA官方命名惯例的候选（`Elina Svitolina vs. Iga Swiatek | 2026 Toronto Semifinal`），并按同样的核实流程（captions.txt + 联系表 + 记分条逐格核对）确认为真。",
+  "_column": "赛场之上。讲一场对决，所以封面 solo 版式要印赛果（带国旗和排名），赢家在前。",
+  "topbar": {
+    "line1": "WTA1000 多伦多 半决赛",
+    "line2": "斯瓦泰克 6-3 1-6 6-3 斯维托丽娜"
+  },
+  "_topbar_why": "WTA API（api.wtatennis.com/tennis/tournaments/806/2026/matches，MatchID LS002）：`RoundID: \"S\"`（Semifinal，CLAUDE.md『半决赛/1/4决赛/1/8决赛』写法的半决赛）、`ResultString: \"[7]I. Swiatek d [9]E. Svitolina 6-3,1-6,6-3\"`——赢家在前，逐字抄写。flashscore match_id AVALv4M8（mf.find('wta','toronto','swiatek')查到，home=Svitolina/away=Swiatek）score字段完全一致。事件名沿用同站惯例『WTA1000 多伦多』。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "首盘轻松拿下、次盘却被打得只赢一局，斯瓦泰克是怎么在决胜盘把这场半决赛收进口袋的？",
+    "thesis": "首盘她六比三顺利拿下，可次盘斯维托丽娜彻底反扑，把她压到只赢一局；决胜盘她没有重演本赛季前两次交手的剧本——那两次（印第安维尔斯、罗马）全部是斯维托丽娜笑到最后。这一次，她自己找回了状态，六比三锁定这场半决赛，拿到本赛季第一个决赛的入场券。",
+    "beats": [
+      "首盘她建立起优势，顶住波动，六比三拿下。",
+      "次盘斯维托丽娜彻底反扑，把她压到只赢一局，六比一告负。",
+      "决胜盘开局就是拉锯——反复出现的破发点，双方都在找状态。",
+      "三平之后她重新找回节奏，把握住第二个赛点，六比三锁定这场半决赛。"
+    ],
+    "human_context": {
+      "angle": "这场胜利翻转的不只是这一天的比分，还有这个赛季两人交手的剧本——本赛季两次交手全部是斯维托丽娜赢下决胜盘，这次轮到斯瓦泰克把它翻过来；而且这是她本赛季的第一个决赛，之前三大满贯的卫冕都在早轮出局。",
+      "facts": [
+        "两人生涯交手第8次，此役之前斯瓦泰克领先4-3——WTA官方赛前报道确认",
+        "本赛季两人此前交手两次（印第安维尔斯1/4决赛、罗马半决赛），全部斯维托丽娜获胜，且都打满三盘、决胜盘斯维托丽娜笑到最后——多家独立体育媒体（Sofascore赛前预览、Lastwordonsports赛前预测）一致确认此前H2H细节",
+        "这是斯瓦泰克本赛季第一个巡回赛决赛——之前澳网1/4决赛负于莱巴金娜、法网卫冕止步第四轮（负科斯秋克）、温网卫冕止步第三轮（负伊埃拉），赛季一直没有进过决赛；WebSearch交叉核实（多篇独立报道，含意大利语媒体ubitennis标题直接写『prima finale stagionale』=本赛季首个决赛）与源片现场解说本身（captions.txt：『A first final of the season』）两个独立信源confirmed",
+        "半决赛对手是高芙/莱巴金娜的胜者"
+      ],
+      "sources": [
+        "https://www.wtatennis.com/news/4557872/toronto-semifinals-coco-gauff-elena-rybakina-who-prevails-in-a-match-four-years-in-the-making",
+        "https://www.sofascore.com/news/tien-vs-shelton-at-atp-montreal-semifinal-preview-with-key-numbers",
+        "https://www.ubitennis.com/blog/2026/08/11/wta-toronto-i-numeri-di-swiatek-al-microscopio-prima-finale-stagionale-o-ennesima-delusione/"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "斯瓦泰克 6-3 1-6 6-3 胜斯维托丽娜（WTA API MatchID LS002；flashscore match_id AVALv4M8）",
+    "赛事": "多伦多National Bank Open presented by Rogers（WTA1000）女单半决赛（WTA API RoundID=S）",
+    "北京时间开赛": "2026-08-13 08:00（WTA API MatchTimeStamp=2026-08-13T00:00:20.76Z，UTC+8）",
+    "用时": "2小时17分55秒（WTA API MatchTimeTotal=02:17:55）",
+    "球场": "Centre Court（WTA API CourtID=1，与同站同为1号场的swiatek-kostyuk/shnaider-pegula/swiatek-golubic/svitolina-alexandrova一致）",
+    "排名与种子": "斯瓦泰克世界第8（7号种子）；斯维托丽娜世界第9（9号种子）——两次独立WebSearch核实wtatennis.com排名榜单（均落在2026-08-11~12附近，与svitolina-alexandrova.json记录的『斯维托丽娜世界第9』一致）",
+    "年龄": "斯瓦泰克25岁（2001-05-31生，api.wtatennis.com/tennis/players/326408核实）；斯维托丽娜31岁（1994-09-12生，api.wtatennis.com/tennis/players/316738核实）",
+    "国籍": "斯瓦泰克POL，斯维托丽娜UKR",
+    "技术统计（全场，WTA官方stats接口 tournaments/806/2026/matches/LS002/stats setnum=0，与flashscore AVALv4M8逐项核对一致）": "Ace：斯瓦泰克0，斯维托丽娜1｜双误：都是4｜一发成功率：斯瓦泰克71%(73/103)，斯维托丽娜64%(49/77)｜一发得分率：斯瓦泰克56%(41/73)，斯维托丽娜59%(29/49)｜二发得分率：斯瓦泰克47%(14/30)，斯维托丽娜43%(12/28)｜破发点转化：斯瓦泰克5/13，斯维托丽娜5/19｜总得分91:89斯瓦泰克｜发球局保发率：斯瓦泰克62%(8/13)，斯维托丽娜58%(7/12)。⚠️ 无Winners/UE数据——WTA官方接口和flashscore的Points分类均未提供这两项（与CLAUDE.md已记录的『WTA源没有UE/Winner』一致），搜索未找到这场比赛的『By the numbers』类编辑稿，故本条spec不含`stats`数据统计图块，仅svitolina-alexandrova同一先例。",
+    "第一盘窗口自证": "0.5~16.5s`BREAK POINT #2`拉锯（40-30/40-40反复）；22.5~38.5s`SET POINT #2`，斯瓦泰克5-3(40→Ad)，随后拿下首盘6-3",
+    "第二盘窗口自证": "120.5s`SET POINT #3`，斯维托丽娜5-0(Ad)大比分领先；128.5~144.5s换边图形`ELINA SVITOLINA[9] 3 6/IGA SWIATEK[7] 6 1`——次盘斯维托丽娜6-1收官，斯瓦泰克仅保住1局",
+    "第三盘窗口自证": "146.5~178.5s开局`BREAK POINT`反复出现超过30秒，开局异常胶着；240.5~246.5s三平；250.5~258.5s`MATCH POINT #2`，斯瓦泰克5-3(40)发球，兑现拿下这场半决赛；264.5s观众席举起波兰国旗庆祝，268.5s网前握手；286.5s终局比分板确认6-3 1-6 6-3"
+  },
+  "_editing_why": "**开场三格按定死的顺序**：① 全片最强的一格画面（斯瓦泰克拿下赛点后振臂庆祝，不配旁白）→ ② 一句话把落点说出来（本赛季首个决赛）→ ③ 坐标。\n\n**中段按逐分自证走**：首盘她建立优势顺利拿下 → 次盘斯维托丽娜彻底反扑只让她赢一局 → 决胜盘开局胶着（超30秒的破发点拉锯）→ 三平之后她重新找回状态，拿下第二个赛点锁定比赛。**每一段的窗口都落在记分条/换边图形能自证的那个镜头里**（见`_facts`各盘窗口自证）。\n\n**human_context这次落成了真正的一段旁白，不是收尾一句带过**——这是从 nakashima-jodar-montreal-sf 等四条蒙特利尔片子里发现的系统性问题（angle 写进 spec 却从没配到成片里，导致片子既短又『信息增量』不够）修正后的第一条：H2H翻转和『本赛季首个决赛』两条线索单独占一段，配的是网前握手/观众庆祝的画面，给足8~12秒的篇幅。\n\n**收尾不重复开场的问题**：开场问『决胜盘是怎么收官的』，收尾换成下一轮的对手悬念（高芙/莱巴金娜的胜者）——接的是开场没提过的下一场对决。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "斯瓦泰克",
+    "hook": "首盘轻松拿下，次盘却只赢一局\n这是她本赛季的第一个决赛",
+    "_hook_why": "上一句是过程（比分大幅波动，为决胜盘的转折铺垫），下一句是落点（本赛季首个决赛，两个独立信源确认：源片现场解说『A first final of the season』+ WebSearch交叉核实多篇独立报道含ubitennis『prima finale stagionale』）。种子排名已印在赛果行，钩子不重复。",
+    "topic": "WTA1000多伦多 · 女单半决赛",
+    "portrait": {
+      "frame_at": 260.5,
+      "focus": 0.5,
+      "zoom": 1.0
+    },
+    "_portrait_why": "260.5秒：赛点兑现之后的庆祝瞬间，正面、清晰、双眼可见，右拳握起——`contact_04.jpg`联系表核实过这一段（258.5~262.5s）是连续的庆祝动作，光线正常、无遮挡。情绪对题：这条片子讲的是『翻盘拿下本赛季首个决赛』，封面就要是那个振臂庆祝的情绪，不用赛后采访帧顶替（这条片子的比赛画面本身就有干净的近景可用）。focus/zoom待`mode=cover`本地预览后再核（这台沙箱下不动源片，没法本地渲）。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的radial暗角，上下两头照留。",
+    "winner": "斯瓦泰克",
+    "result": "6-3 1-6 6-3",
+    "matchup": [
+      {
+        "name": "斯维托丽娜",
+        "name_en": "Elina Svitolina",
+        "country": "UKR",
+        "rank": 9
+      },
+      {
+        "name": "斯瓦泰克",
+        "name_en": "Iga Swiatek",
+        "country": "POL",
+        "rank": 8
+      }
+    ],
+    "_matchup_rank_why": "斯瓦泰克世界第8、斯维托丽娜世界第9，两次独立WebSearch核实（均落在赛前几天内，互相印证；与svitolina-alexandrova.json记录的『斯维托丽娜世界第9』一致，说明该排名在赛事期间没有变动）。种子号（7/9）另行记录，不与排名混淆。",
+    "scoreboard": {
+      "court": "Centre Court",
+      "duration_source": {
+        "provider": "wta",
+        "url": "https://api.wtatennis.com/tennis/tournaments/806/2026/matches?states=C&page=0&pageSize=200",
+        "match_id": "LS002",
+        "field": "MatchTimeTotal",
+        "source_page": "https://www.wtatennis.com/tournament/806/toronto/2026/scores/LS002"
+      },
+      "_court_why": "CourtID 1（Centre Court），与同站同一轮已发的swiatek-kostyuk/shnaider-pegula/swiatek-golubic/svitolina-alexandrova一致，均为1号场。",
+      "_duration_why": "`MatchTimeTotal: \"02:17:55\"` → 板上印 `2:17`。不手填，`_fetch_match_duration()`每次渲海报现拉接口（url+match_id同svitolina-alexandrova那条，已验证过这条路能正常工作）。"
+    }
+  },
+  "segments": [
+    {
+      "start": 258.5,
+      "end": 262.0
+    },
+    {
+      "start": 264.5,
+      "end": 270.0,
+      "narration": "首盘轻松拿下，次盘却只赢一局——这是她本赛季的第一个决赛。"
+    },
+    {
+      "start": 4.5,
+      "end": 12.0,
+      "narration": "北京时间八月十三号上午八点，WTA1000多伦多女单半决赛。"
+    },
+    {
+      "start": 22.5,
+      "end": 32.5,
+      "narration": "开局就是破发点拉锯战，斯维托丽娜一度逼到四十平；斯瓦泰克顶住了这波压力，六比三拿下首盘，先声夺人。",
+      "crosses_cut": "24.92s 从发球机位切到接发/回合机位，同一分内的镜头交替，两边都是这两位球员，不是切到别的场景。"
+    },
+    {
+      "start": 120.5,
+      "end": 132.5,
+      "narration": "次盘风向彻底变了——斯维托丽娜连续破发，一度五比零遥遥领先；斯瓦泰克只保住一局，六比一告负，两盘战成一比一。",
+      "crosses_cut": "130.44s 从球场宽景切到斯维托丽娜近景庆祝，同一局分内的镜头切换。"
+    },
+    {
+      "start": 146.5,
+      "end": 158.5,
+      "narration": "决胜盘一上来就是拉锯，开局那一局破发点反复出现，斯瓦泰克的发球局打了整整半分钟才守住，两人都在找状态。"
+    },
+    {
+      "start": 240.5,
+      "end": 258.5,
+      "narration": "三平之后，斯瓦泰克重新找回了节奏，发球局连续稳住，一路顶到五比三、拿到发球胜赛局的机会；她没有给斯维托丽娜翻盘的空间，六比三锁定这场半决赛，拿到本赛季第一个决赛的入场券。",
+      "crosses_cut": "245.44s/250.84s 在宽景回合和换边比分图形之间来回切——比分图形不是『别的场景』，是转播插入的赛况图，两侧仍是这场比赛。"
+    },
+    {
+      "start": 270.0,
+      "end": 284.5,
+      "narration": "这场胜利翻转的不只是比分——本赛季此前两次交手，全部是斯维托丽娜赢下决胜盘；这一次，轮到斯瓦泰克把剧本翻了过来，也拿到了她本赛季至今唯一的一个决赛入场券。",
+      "crosses_cut": "280.64s/282.44s 落在庆祝/握手之后的余韵蒙太奇里，观众席、球员走场依次切换，都是同一场庆祝的延续镜头。"
+    },
+    {
+      "start": 286.5,
+      "end": 292.5,
+      "narration": "决赛，等着她的是高芙和莱巴金娜的胜者。"
+    }
+  ],
+  "push": {
+    "summary": "斯瓦泰克逆转晋级",
+    "lead": "7号种子、世界第8斯瓦泰克6-3 1-6 6-3逆转9号种子（世界第9）斯维托丽娜，晋级多伦多WTA1000女单半决赛，用时2小时17分。首盘她六比三顺利拿下，次盘斯维托丽娜彻底反扑，把她压到只赢一局；决胜盘开局是超过三十秒的破发点拉锯，三平之后她重新找回节奏，六比三锁定胜利。这翻转了本赛季此前两次交手的剧本——那两次全部是斯维托丽娜赢下决胜盘。这是她本赛季的第一个决赛，之前三大满贯卫冕全部早轮出局。决赛对手是高芙和莱巴金娜的胜者。",
+    "auto": true,
+    "_why": "`push_reel.SUMMARY_MAX = 13`，量`len()`原始字符数。「斯瓦泰克逆转晋级」= 8字，在闸内。只写`summary`和`lead`，`matchup`/`score`/`event`由封面算——一个数写两处必分叉。"
+  }
+}
