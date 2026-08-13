@@ -76,6 +76,34 @@ def jsdelivr_link_sources(html_content: str) -> list[str]:
     )
 
 
+# GitHub Release 附件的下载链接（302 → release-assets.githubusercontent.com）。
+# ⚠️ 判据宁可窄：只认 `/releases/download/` 这个形状，别把正文里随手贴的
+# github.com 链接（issue、commit、run 日志）都拉进发前探活——那些不是
+# 本次 run 传上去的东西，探它们只会把无关的 404 变成「取消推送」。
+_RELEASE_DOWNLOAD_RE = re.compile(
+    r"^https://github\.com/[^/\s]+/[^/\s]+/releases/download/"
+)
+
+
+def release_link_sources(html_content: str) -> list[str]:
+    """Return unique ``<a href>`` targets pointing at GitHub Release assets.
+
+    2026-08-13 起成片一律走 Release、不进 git（账号所有者：「所有视频统一走
+    Release 路线」），推送里的 ▶ 按钮从 jsDelivr 换成了 Release 下载链接。
+    而 ``wait_for_images`` 原来只探 jsDelivr 的 ``<a>``——换链之后**这条线上
+    唯一的发前成片探活会静默消失**（CLAUDE.md：成片取不到必须整条不发；
+    jsDelivr 时代它是被 ``jsdelivr_link_sources`` 顺带盖住的）。requests
+    默认跟 302 重定向，所以探 Release 链接和探 jsDelivr 是同一段代码。
+    """
+    parser = _AssetSourceParser()
+    parser.feed(html_content)
+    return list(
+        dict.fromkeys(
+            url for url in parser.link_sources if _RELEASE_DOWNLOAD_RE.match(url)
+        )
+    )
+
+
 def _response_json(response: requests.Response, action: str) -> dict:
     try:
         payload = response.json()
@@ -393,12 +421,19 @@ def wait_for_images(
     """Wait until every remote image and freshly-pushed CDN link is fetchable.
 
     Images must additionally report an ``image/*`` content type; jsDelivr
-    links (e.g. a Hot Shots video the same CI run just committed) only need
-    to resolve, since their content type varies by asset.
+    links (e.g. a Hot Shots video the same CI run just committed) and GitHub
+    Release download links (成片 2026-08-13 起一律走 Release，不进 git) only
+    need to resolve, since their content type varies by asset.
     """
+    # Release 附件链接和 jsDelivr 链接同一档待遇：都是**本次 run 刚传上去**、
+    # 发出去之前必须确认取得到的东西（成片取不到必须整条不发）。
     pending: list[tuple[str, bool]] = [
         (url, True) for url in image_sources(html_content)
-    ] + [(url, False) for url in jsdelivr_link_sources(html_content)]
+    ] + [
+        (url, False)
+        for url in jsdelivr_link_sources(html_content)
+        + release_link_sources(html_content)
+    ]
     if not pending:
         return
 
