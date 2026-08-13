@@ -9176,3 +9176,41 @@ def test_算不出标题时文案字数不许估得比真推送松():
     body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
     assert 'text_with_title = f"（占位标题）\\n\\n{text}"' in body, (
         "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
+
+
+def test_查投递状态那条路不许发消息():
+    """`pushplus-query.yml` 只查不发——**查一次状态的代价必须是零**。
+
+    来路：发送那行日志一直印着「这只代表接口收下……用流水号问 …」，可
+    **没人能真的去查**——查询要 token，token 只在 runner 的 secret 里。
+    这条路把它补上（同 `pages-selftest.yml` 的形状：把验证从发布里拆出来）。
+
+    判据钉三头：
+    ① 工具只 GET 查询接口，不碰发送接口——否则下次「查一下」会变成
+      「又发了一条」，而微信那条消息发出去收不回来
+    ② 工作流里不出现任何出片/推送的入口（push_reel / publish / ffmpeg /
+      Chromium）——这条路要短，短才有人愿意用
+    ③ 「请求失败」和「没送到」在日志里分开说。两者混成一句的话，一次网络
+      抖动就会被读成「消息真的没发出去」，然后有人去补发一条重复的
+    """
+    tool = Path("tools/check_pushplus_delivery.py").read_text(encoding="utf-8")
+    flow = Path(".github/workflows/pushplus-query.yml").read_text(encoding="utf-8")
+
+    # ① 只查询，不发送
+    assert "queryMessage" in tool
+    assert "requests.get(" in tool
+    assert "requests.post(" not in tool, "查投递状态不许 POST——那是发送接口"
+    assert "pushplus.plus/send" not in tool
+
+    # ② 这条路要短
+    body = _yaml_only(flow)
+    for forbidden in ("push_reel", "publish ", "ffmpeg", "playwright",
+                      "Chromium", "chromium"):
+        assert forbidden not in body, (
+            f"查投递状态那条路不该出现 {forbidden!r}——它只发一个 GET")
+    assert "PUSHPLUS_TOKEN" in body, "查询要 token，从 secret 取"
+
+    # ③ 「查不到」不许被写成「没送到」
+    assert "这不代表消息没送到" in tool, (
+        "请求失败和消息没送到是两件事，日志里不许混成一句——"
+        "混了会有人去补发一条重复的消息")
