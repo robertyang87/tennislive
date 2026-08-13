@@ -270,10 +270,48 @@ jobs:
           path: ${{ steps.gen.outputs.outdir }}
 
       - name: PushPlus 推送到微信
+        id: push
         if: github.event.inputs.push != 'false' && env.PUSHPLUS_TOKEN != ''
+        # 2026-08-13 审查：这里的 `continue-on-error: true` 原来是**裸的**，
+        # 一句注释都没有，而这一步是整个文件的最后一步——推送失败之后
+        # 后面什么都没有，job 保持绿色，**这条线一次红灯都不会有**。
+        # 「已推送」和「推失败了」在运行列表上长得一模一样，又一次
+        # 「兜底出事的时候不吭声」。
+        #
+        # 抖动不是留着它的理由：网络异常和 5xx 早就在库层重试过了
+        # （`src/tennislive/publish/pushplus.py`），走到这一层的是硬失败。
+        # 留着它只是为了让失败落到下面那一步，把**具体**原因写进运行摘要
+        # （形状抄 `oncourt-interviews.yml`，本仓库唯一做对的一条推送）。
+        # 判据：tests/test_workflow_alerts.py::test_吞掉微信推送失败的步骤都要按outcome重抛
         continue-on-error: true
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish pushplus --dir "${{ steps.gen.outputs.outdir }}"
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      - name: 推送失败要出声（知识帖已落库，但没发出去）
+        # 2026-08-13 补。这一步必须是**新的最后一步**：上面那一步吞掉了
+        # 失败，没有人再把 job 打红，而这条工作流连 `if: failure()` 的告警
+        # 都没有（flash / news-brief 各自有一个，这条一直没有）。
+        #
+        # ⚠️ 重跑的口径：这条线**显式传同一个 slug 重跑会重发**
+        # （上面那个 `if:` 里只有 `inputs.push`，没有任何「已发过」标记）；
+        # 自动选题时 `data/story_state.json` 已在提交步骤落库，重跑会换一个
+        # 选题——那是发**新的一条**，不是补发这一条。所以摘要里要把
+        # 「怎么补发」写清楚，别让人凭直觉去点重跑。
+        if: steps.push.outcome == 'failure'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "::error::微信推送失败：知识帖已经落库，但没有发出去"
+          {
+            echo "## ⚠️ 每日网球知识：内容已落库，微信没发出去"
+            echo ""
+            echo "- 推送步骤失败。库层已经重试过「没送到」，走到这一步的是硬失败"
+            echo "  （重试完仍然没送到，或者被 PushPlus 明确拒绝）。"
+            echo "- 内容包已在本次提交里：\`${{ steps.gen.outputs.outdir }}\`。"
+            echo "- 补发：手动跑一趟本工作流并**显式填上同一个 slug**"
+            echo "  （留空会重新选题，那是发新的一条，不是补发这一条）。"
+            echo "- 运行日志：$RUN_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1

@@ -6,8 +6,13 @@
 
 （另一条「daily.yml 把视频开关硬编码成 'off'」随日报 2026-07-31 停产一起删了。）
 
+2026-08-13 又抓到一条同族的：flash / knowledge-adhoc / news-brief 三处推送步骤
+挂着 `continue-on-error: true`，把上面那两条告警**自己废掉了**——job 不进入
+failed 状态，`if: failure()` 恒假。见 `test_吞掉微信推送失败的步骤都要按outcome重抛`。
+
 """
 
+import ast
 import re
 from pathlib import Path
 
@@ -245,3 +250,280 @@ def test_apt一律走重试包装不许裸调():
     assert not naked, (
         "这些地方还在裸调 apt，卡住就是一次红：\n  " + "\n  ".join(naked)
         + "\n改成 `apt_retry apt-get ...`（函数定义抄同一个步骤里那份）")
+
+
+def _strip_shell_comments(run: str) -> str:
+    """去掉 run 脚本里的整行注释。
+
+    和 `_yaml_only` 同一个理由，只是这次剥的是 shell 那一层：本文件要找的
+    `continue-on-error` / `tennislive publish` 这些词，正**写在**被修好的那几个
+    步骤的注释里（那是这个仓库记教训的地方）。连注释一起扫，「把坑记下来」
+    会被判成「又踩了这个坑」——同一个错这个仓库犯过五次。
+    """
+    return "\n".join(
+        line for line in str(run or "").splitlines()
+        if not line.lstrip().startswith("#")
+    )
+
+
+def _wechat_sender_pattern() -> re.Pattern[str]:
+    """「这一步会发微信吗」——**从仓库自己推导，不维护工作流白名单**。
+
+    三种发送形态，前一种是推出来的，后两种是字面量且各自说得出为什么：
+
+    1. `tools/<script>.py` —— **AST 推导**：凡是 import 了
+       `tennislive.publish.pushplus` 的 tools 脚本都算。2026-08-13 跑出来正好
+       两个（`oncourt_feed.py` / `push_reel.py`），以后新写一个自动被盖住。
+       ⚠️ 用 AST 不用正则：这几个脚本的 docstring 和注释里都反复提到
+       pushplus，按文本扫会把「提到」判成「调用」。
+    2. `tennislive publish ` —— CLI 那条路。`cli.py` 同样 import 了 pushplus，
+       但它的命令行形态是 `tennislive`，而 `tennislive content` /
+       `tennislive brief` 这些不发微信的子命令满仓库都是，推不出来只能写死
+       子命令名。
+    3. `pushplus.plus/send` —— YAML 里裸 curl 那条（news-brief 的推送、
+       以及几条工作流的失败告警）。
+
+    ⚠️ 这个函数**只回答「发不发微信」，不回答「该不该拦」**。
+    `frame-grab.yml` / `match-reel.yml` 那两处 `continue-on-error` 挂的是
+    「起 PO token provider」——最佳努力的 docker 旁路服务，失败时自己
+    `echo ::warning::` 并 dump docker logs，是正当的。它们**天然落不进这个
+    集合**（run 脚本里一个发送形态都没有），所以不需要为它们写例外——
+    这正是「判据宁可窄」买来的东西：2026-08-13 的评审报告把六处
+    `continue-on-error` 并列，照它一刀切会把那两处也删掉，而删掉的代价是
+    一次 docker pull 抖动就打红整趟 render。
+    """
+    senders = []
+    for path in sorted(Path("tools").glob("*.py")):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ImportFrom) and "publish.pushplus" in (
+                    node.module or ""):
+                senders.append(path.name)
+                break
+    assert len(senders) >= 2, (
+        f"只从 tools/ 里推出 {len(senders)} 个发微信脚本，AST 推导可能失效了")
+    return re.compile("|".join(
+        [re.escape(name) for name in senders]
+        + [r"tennislive publish ", r"pushplus\.plus/send"]))
+
+
+def _logical_lines(text: str):
+    """把行尾反斜杠续行拼回一条**逻辑命令**。
+
+    `curl ... \\` + `-d "$BODY" \\` + `|| echo ...` 在源文件里是三行，
+    而「这次调用有没有被 `||` 兜住」只有拼回一条之后才判得出来。
+    """
+    out, buf = [], ""
+    for line in text.splitlines():
+        buf += line.rstrip()
+        if buf.endswith("\\"):
+            buf = buf[:-1] + " "
+            continue
+        out.append(buf)
+        buf = ""
+    if buf:
+        out.append(buf)
+    return out
+
+
+def _steps_with_index(spec: dict):
+    """摊平成 (job 名, 步骤序号, 步骤) —— 序号用来判先后。"""
+    for job_name, job in (spec.get("jobs") or {}).items():
+        for index, step in enumerate(job.get("steps") or []):
+            yield job_name, index, step
+
+
+def test_吞掉微信推送失败的步骤都要按outcome重抛():
+    """`continue-on-error` 吞掉发微信的失败，就必须有人把它重新抛出来。
+
+    ## 来路（2026-08-13）
+
+    审查发现三处推送步骤挂着 `continue-on-error: true`：
+    `flash.yml`「推送小红书待发布包到微信」、`knowledge-adhoc.yml`
+    「PushPlus 推送到微信」、`news-brief.yml`「推送简报到微信」。
+
+    **要害不是「没记录」**（失败步骤在 UI 上有红叉、日志里有报错），
+    是 **flash 和 news-brief 各自写了 `if: failure()` 的 PushPlus 告警步骤，
+    专为无人值守准备，而 continue-on-error 让 job 保持绿色，那两个告警
+    永远不会触发**——工作流自己装的那道闸被自己废掉了。knowledge-adhoc
+    更彻底：推送是文件最后一步，后面什么都没有，这条线一次红灯都不会有。
+
+    flash 那行原来还带着一句 `# 单次推送抖动不应让整轮内容雷达失败`，
+    **而那个前提不成立**：抖动（网络异常、5xx）早在库层重试过了
+    （`src/tennislive/publish/pushplus.py` 的重试预算，只重试「没送到」），
+    能走到步骤失败这一层的已经是硬失败——恰恰是最该出声的那一类。
+
+    ## 修法：延迟失败，不是不失败
+
+    形状抄 `oncourt-interviews.yml`（本仓库唯一做对的一条推送，
+    `tests/test_oncourt_feed.py` 已经把它钉住了）：保留 continue-on-error
+    让后面的落库/摘要步骤跑完，跑完之后按 `outcome` 重新 `exit 1`。
+
+    ## 这条判据钉四样，都是硬的
+
+    1. 吞掉失败的推送步骤必须有 `id`（没有 id，下面那个 `outcome` 检查
+       就是一盏恒真的绿灯）
+    2. 后面必须有一步 `if: steps.<id>.outcome == 'failure'`
+    3. 那一步必须真的 `exit 1`（只 echo 不退出，job 照样是绿的）
+    4. **排在推送之后的** `if: failure()` 步骤，必须排在重抛之后——
+       否则告警读不到失败状态，等于没修
+       ⚠️ 只管「排在推送之后的」：`knowledge-adhoc.yml` 的「上传失败诊断」
+       也挂 `if: failure()`，但它排在推送**之前**（管的是生成那几步的失败），
+       无论重抛放哪儿它都看不到推送的 outcome。判据宁可窄。
+
+    ## 故意不钉的
+
+    - **不要求重抛步骤写 `GITHUB_STEP_SUMMARY`。** 我改的三处都写了
+      （把诊断留在不会过期的地方），但 oncourt 那条是靠另一个 `if: always()`
+      的「摘要」步骤兜的，两种都成立。硬凑一条「必须写在重抛里」会把对的
+      写法判成错的。
+    - **不要求推送步骤必须挂 continue-on-error。** 直接删掉它、让 job 自然
+      变红，也是对的修法（flash / knowledge-adhoc 的落库步骤本来就排在推送
+      前面，删了不损失什么）。所以「没有任何一步吞失败」时这条判据**正当地
+      空过**，下面那句人口普查负责证明扫描本身还活着。
+
+    ## 软的部分，别当实测读
+
+    「continue-on-error 使 `if: failure()` 不触发」**没有真跑一次 Actions
+    验证**（这台沙箱跑不了）。依据两条：(a) Actions 的标准语义——
+    continue-on-error 让步骤 conclusion 变成 success、job 不失败，
+    而 `outcome` 保留真实结果；(b) **本仓库自己的书面理解**：
+    `oncourt-interviews.yml` 那句「提交后会再次按 outcome 让整个 run 红灯
+    告警」的注释、以及 `test_push_failure_is_reported_after_collected_data_is_committed`
+    的存在本身就是证明——如果 continue-on-error 之后 job 还会红，
+    那条重抛步骤和它的测试就没有存在的理由。
+    真要坐实，成本很低：仿 `pages-selftest.yml` 起一条只有「故意 exit 1 的
+    continue-on-error 步骤 + if: failure() 步骤」的自检工作流，十几秒自证。
+    """
+    import yaml  # noqa: PLC0415
+
+    sends = _wechat_sender_pattern()
+    outcome_of = re.compile(
+        r"steps\.\s*([A-Za-z_][\w-]*)\s*\.\s*outcome\s*==\s*['\"]failure['\"]")
+
+    population, swallowed = 0, []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        steps = list(_steps_with_index(spec))
+        for job_name, index, step in steps:
+            if not sends.search(_strip_shell_comments(step.get("run"))):
+                continue
+            population += 1
+            if not step.get("continue-on-error"):
+                continue
+            swallowed.append((path, job_name, index, step, steps))
+
+    # ⚠️ **判据自己的判据，而且只能钉在人口上、不能钉在违规数上。**
+    # 钉「至少有 N 个 continue-on-error」会把「有人把它们全删了」这个
+    # **正当的修法**判成红；钉人口才是在证明「这个扫描还找得到发微信的步骤」。
+    # 主语没了（正则写坏、工作流删光），它当场出声，而不是变成恒真的绿灯。
+    assert population >= 12, (
+        f"全仓只扫到 {population} 个发微信的步骤，判据可能失效了——"
+        "先确认 _wechat_sender_pattern() 还认得出这几种发送形态")
+
+    for path, job_name, index, step, steps in swallowed:
+        where = f"{path.name}「{step.get('name')}」"
+        step_id = step.get("id")
+        assert step_id, (
+            f"{where} 用 continue-on-error 吞掉了微信推送的失败，却没有 id——"
+            "没有 id 就没法按 outcome 重抛，这个失败会一路绿到底")
+
+        rethrow = None
+        for other_job, other_index, other in steps:
+            if other_job != job_name or other_index <= index:
+                continue
+            found = outcome_of.search(str(other.get("if") or ""))
+            if found and found.group(1) == step_id:
+                rethrow = (other_index, other)
+                break
+        assert rethrow, (
+            f"{where} 吞掉了微信推送的失败，后面却没有一步"
+            f" `if: steps.{step_id}.outcome == 'failure'` 把它重抛。\n"
+            "这条工作流自己写的 `if: failure()` 告警因此永远不会响——"
+            "闸被自己废掉了。形状抄 oncourt-interviews.yml。")
+
+        rethrow_index, rethrow_step = rethrow
+        assert "exit 1" in _strip_shell_comments(rethrow_step.get("run")), (
+            f"{where} 的重抛步骤「{rethrow_step.get('name')}」没有 `exit 1`——"
+            "只 echo 不退出的话 job 还是绿的，等于没修")
+
+        # 排在推送**之后**的 failure() 告警，必须能读到失败状态。
+        late_alerts = [
+            (other_index, other)
+            for other_job, other_index, other in steps
+            if other_job == job_name and other_index > index
+            and "failure()" in str(other.get("if") or "")
+        ]
+        for alert_index, alert in late_alerts:
+            assert rethrow_index < alert_index, (
+                f"{where} 的重抛步骤排在「{alert.get('name')}」后面了。"
+                "那一步挂着 `if: failure()`，要先有人把 job 打红它才读得到"
+                "失败状态——顺序反了等于没修")
+
+
+def test_裸curl发微信要检查返回体里的code():
+    """`code != 200` 时 HTTP 仍然是 200、curl 退出码仍然是 0。
+
+    2026-08-13 抓到的第二条，和 continue-on-error 无关、删不删它都存在：
+    `news-brief.yml` 的推送**绕开了** `src/tennislive/publish/pushplus.py`
+    的 `push()`，自己裸 curl，然后 `echo "PushPlus 返回：$RESP"` 就结束了。
+    于是 token 错、内容超限、频率限制这类**服务端明确拒绝**全都是绿的，
+    日志里只有一行没人看的返回体。**又一次「查产物，不查信号」**——
+    判据是返回体里的 `code`，不是 curl 的退出码。
+
+    ⚠️ **只判，不在 YAML 里重试。** 「只重试没送到、拒绝不重发」已经在库层
+    实现了；YAML 里再套一层循环会把 `code != 200` 也重发，
+    而微信那条消息发出去收不回来。所以这条判据要求 `code` 检查，
+    **同时禁止**在同一步里出现重试循环。
+
+    判据自己推导：凡是 run 脚本里真的 POST 了 pushplus 的步骤都要过这一关。
+    ⚠️ 扫之前先剥 shell 注释——被修好的那一步的注释里正写着
+    `code != 200` 和「不重试」，连注释一起扫会把「把坑记下来」判成假绿。
+
+    ## ⚠️ 边界：**已经被 `||` 兜住的那次调用不算**
+
+    第一版只排除了字面的 `|| true`，当场误伤 `source-health.yml`
+    「所有来源失效时通知」——它写的是 `|| echo "::warning::…"`，同一个意思
+    不同拼法。**那是告警通道，不是投递通道**：发的是纯文字、没有产物可丢，
+    而且「告警自己发不出去」不该再制造一次失败（flash / news-brief 的
+    `if: failure()` 告警是同一族，写的是 `|| true`）。
+
+    所以判据认的是**这次 curl 有没有被 `||` 兜住**——被兜住＝作者已经
+    显式声明「这一发失败了也不要紧」，那就不该反过来要求它检查 code。
+    没被兜住的那些才是在投递内容，它们的失败必须看得见。
+    ⚠️ 要先把行尾续行拼成一条逻辑命令再判，`||` 常常单独占一行。
+    又一次「判据宁可窄，不可宽」：按名字或按 `|| true` 字面去分，
+    都会把对的写法判成错的。
+    """
+    import yaml  # noqa: PLC0415
+
+    checked = []
+    for path in sorted(Path(".github/workflows").glob("*.yml")):
+        spec = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for _job, _index, step in _steps_with_index(spec):
+            run = _strip_shell_comments(step.get("run"))
+            if "pushplus.plus/send" not in run:
+                continue
+            degraded = any(
+                "pushplus.plus/send" in line and "||" in line
+                for line in _logical_lines(run)
+            )
+            if degraded:
+                continue
+            checked.append((path.name, step.get("name"), run))
+
+    assert checked, "一个投递内容的裸 curl 都没扫到，判据可能失效了"
+
+    for name, step_name, run in checked:
+        where = f"{name}「{step_name}」"
+        assert re.search(r"\.code\s*==\s*200", run), (
+            f"{where} 裸 curl 发微信却没检查返回体里的 code。"
+            "PushPlus 拒绝时 HTTP 还是 200、curl 退出码还是 0，"
+            "这一步会全绿而消息一个人都没收到")
+        assert re.search(r"exit 1", run), (
+            f"{where} 检查了 code 却没有 `exit 1`，等于没检查")
+        assert not re.search(r"for\s+\w+\s+in\b|while\s+", run), (
+            f"{where} 在工作流层加了重试循环。"
+            "「只重试没送到、拒绝不重发」已经在 publish/pushplus.py 里实现了；"
+            "这儿再套一层会把 `code != 200` 也重发，"
+            "而微信那条消息发出去收不回来")
