@@ -4777,9 +4777,20 @@ def main() -> int:
                     meta["event"], meta["summary"])
                 text_with_title = f"{title}\n\n{text}"
             except SystemExit as exc:
+                # ⚠️ **退路不许把第一段甩掉。** 原来这儿写 `text_with_title =
+                # text`，于是 `split_copy` 把文件自己的第一段当标题免费扔了，
+                # 估出来比真推送少一整段——eala-story 那次这儿报 859 字、
+                # 真闸报 1019 字（run 31658290756，合并之后才红，微信没发出去
+                # 但白跑一趟）。它确实**打了警告**，可它同时给了一个具体数字，
+                # 而一个具体数字就是会被读成结论。
+                #
+                # 拼一个占位标题就够了：`split_copy` 甩掉的是第一行加空行，
+                # 标题本身本来就不算进 1000 字上限，所以**算出来的 body 长度
+                # 和真推送一模一样**——不是「估得保守一点」，是完全对得上。
                 print(f"[dry-run] ⚠️ 算不出真推送会拼的标题（{exc}）——"
-                      "正文字数只能按文件本身估，可能比真推送宽松")
-                text_with_title = text
+                      "**用占位标题估**：标题不算进 1000 字上限，所以正文字数"
+                      "和真推送一致，不会因此变松")
+                text_with_title = f"（占位标题）\n\n{text}"
             _title, body = push_reel.split_copy(text_with_title)
             print(f"[dry-run] 文案 {copy_path.name}："
                   f"正文 {len(body)} 字（上限 1000）、tag {tags} 个"

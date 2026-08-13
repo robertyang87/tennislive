@@ -9136,3 +9136,43 @@ def test_整屏证据卡的出图宽度要跟着画布算不能各写各的():
     assert "2020" in tl and "澳网女双冠军" in tl
     with pytest.raises(SystemExit):
         card.build_html({"kind": "photo", "image": "x.png"})
+
+
+def test_算不出标题时文案字数不许估得比真推送松():
+    """dry-run 的正文字数必须和真推送量的是**同一段文字**。
+
+    真推送会在正文前面粘一句自己算出来的标题（`push_reel.main` 里
+    `copy_text = f"{title}\\n\\n{copy_text}"`），`split_copy` 甩掉第一行加空行
+    当标题——所以文件自己的第一段在真推送里**是正文的一部分**。
+
+    dry-run 算标题要读产物目录的日期，取不到就走退路。那条退路原来写的是
+    「不拼标题，直接 split_copy」，于是文件第一段被当成标题免费甩掉，
+    估出来少一整段：eala-story 这儿报 859 字、真闸报 1019 字
+    （run 31658290756）。**它打了警告，但同时给了一个具体数字，而具体数字
+    就是会被当成结论。**
+
+    现在退路拼一个占位标题，算出来的 body 和真推送**逐字相同**。判据就钉
+    这一条：同一份文案，两条路（算得出标题 / 算不出标题）量出来的正文
+    长度必须一样。
+
+    反向验证：把退路改回 `text_with_title = text`，第二个断言当场红
+    （少掉第一段的长度）。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import push_reel  # noqa: PLC0415
+
+    copy_text = "第一段是钩子，真推送里它算正文。\n\n中间一段。\n\n#网球 #网球时差\n"
+
+    # 真推送的口径：前面粘一句标题
+    _t, real = push_reel.split_copy(f"8.13 网球有故事 | 某某某\n\n{copy_text}")
+    # dry-run 算不出标题时的退路：占位标题
+    _t2, fallback = push_reel.split_copy(f"（占位标题）\n\n{copy_text}")
+    assert fallback == real, "占位标题这条退路量的必须是同一段正文"
+
+    # 而「不拼标题」那条老退路会把第一段甩掉——正是要拦的那个偏松
+    _t3, naive = push_reel.split_copy(copy_text)
+    assert len(naive) < len(real), "老退路本来就偏松，这条断言证明差距真的存在"
+
+    body = Path("tools/build_match_reel.py").read_text(encoding="utf-8")
+    assert 'text_with_title = f"（占位标题）\\n\\n{text}"' in body, (
+        "dry-run 算不出标题时必须拼占位标题，不能直接把文件第一段当标题甩掉")
