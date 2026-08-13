@@ -962,10 +962,10 @@ __SCRIM__
  font-weight:700;color:#c6f65a;letter-spacing:1px}
 /* 「赛场之上」首页统一比分板：直角边框、全透明底，比分按盘单独着色。
    国旗固定占位，确保它与中文名/英文名两行整体垂直居中。 */
-.scoreboard{width:100%;box-sizing:border-box;border:3px solid rgba(244,251,247,.95);
+.scoreboard{width:100%;box-sizing:border-box;border:6px solid rgba(244,251,247,.95);
  color:#f4fbf7;background:transparent;text-shadow:0 2px 8px rgba(0,0,0,.9)}
 .scoreboard-head{height:76px;box-sizing:border-box;padding:0 28px;display:flex;
- align-items:center;justify-content:space-between;border-bottom:3px solid rgba(244,251,247,.9);
+ align-items:center;justify-content:space-between;border-bottom:6px solid rgba(244,251,247,.9);
  font-family:'TL Sans SC',sans-serif;font-size:26px;letter-spacing:1px}
 .scoreboard-duration{font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:34px;
  letter-spacing:0;color:#f4fbf7}
@@ -979,7 +979,7 @@ __SCRIM__
 .scoreboard-players{display:flex;flex-direction:column;min-width:0}
 .score-person{flex:1;box-sizing:border-box;display:flex;align-items:center;
  padding:0 16px 0 22px;min-width:0}
-.score-person+.score-person{border-top:3px solid rgba(244,251,247,.9)}
+.score-person+.score-person{border-top:6px solid rgba(244,251,247,.9)}
 .score-flag-slot{width:66px;height:44px;flex:0 0 66px;display:flex;align-items:center;
  justify-content:center;margin-right:14px}
 .score-flag{display:block;width:58px;height:38px;object-fit:cover}
@@ -989,21 +989,23 @@ __SCRIM__
 .score-rank{font-family:'TL Sans SC',sans-serif;font-size:.62em;margin-left:4px}
 .score-en{font-family:'TL Sans SC',sans-serif;font-size:22px;line-height:1.15;
  letter-spacing:1.5px;color:#dcefe4;white-space:nowrap;margin-top:5px}
-.score-set{display:flex;flex-direction:column;border-left:3px solid rgba(244,251,247,.9)}
+.score-set{display:flex;flex-direction:column;border-left:6px solid rgba(244,251,247,.9)}
 /* **决胜盘单独描边**：这一盘打满了才存在，往往正是钩子讲的那段跌宕
    （「二比五落后」「三个赛点没给」）。左边框换成品牌绿并再粗一档，加一层
    14% 不透明度的品牌绿垫底——那是「一屏只留一个强调色」允许的中间态：
    够醒目，但不跟真正的强调色（赢盘数字）抢。不引入第二种颜色，
    只是同一种绿分了层级。
-   ⚠️ **4px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
-   2px，2026-08-12 账号所有者反馈「白线还是太细」又加粗到 3px（这版海报
-   device_scale_factor=1，1080px 原生分辨率压到手机屏幕上会再打一次折，
-   之前那档粗细在屏幕上仍然读不出来）——这一档要跟着走到 4px，
-   写 3px 的话「加粗」这半句就不成立了，只剩色相在区分。 */
-.score-set--deciding{border-left:4px solid #c6f65a;background:rgba(198,246,90,.14)}
+   ⚠️ **8px 是相对网格线定的，不是拍的**：网格线 2026-08-09 从 1px 加粗到
+   2px，2026-08-12 账号所有者反馈「白线还是太细」又加粗到 3px（决胜盘描边
+   跟着走到 4px），2026-08-13 账号所有者再反馈「还是太细，加粗一倍」——
+   网格线 3px→6px，决胜盘描边同样翻倍到 8px，保持「比网格线粗一档」的
+   既定关系（4/3 的粗细比例延续到 8/6）。写 7px 的话就是套「网格线+1」
+   那条旧公式，不是这次「加粗一倍」的要求，两条公式这次对不上，
+   听后面这条——账号所有者最近一次说的是「倍」不是「一档」。 */
+.score-set--deciding{border-left:8px solid #c6f65a;background:rgba(198,246,90,.14)}
 .score-number{flex:1;display:flex;align-items:center;justify-content:center;
- font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:48px;font-weight:700}
-.score-number+.score-number{border-top:3px solid rgba(244,251,247,.9)}
+ font-family:'TL Numeral','TL Sans SC',sans-serif;font-size:60px;font-weight:800}
+.score-number+.score-number{border-top:6px solid rgba(244,251,247,.9)}
 .score-number sup{font-size:.45em;line-height:1;align-self:flex-start;margin-top:24px;
  color:#93a79c}
 /* 盘分上色：**每一盘里赢的那个数字给品牌黄，输的给白**（账号所有者
@@ -1015,10 +1017,15 @@ __SCRIM__
    注脚，这条没有改——账号所有者这次只说了「比分」，不是这两个。
    网格线（`.scoreboard-head` 的下沿、`.score-person`/`.score-number` 之间
    那几道分隔线）同一天从 1px 粗到 2px、透明度从 .55/.82 提到 .9——原来的
-   细线在压缩后的视频里几乎看不见。 */
+   细线在压缩后的视频里几乎看不见。
+   2026-08-13 账号所有者再反馈「数字再大点、颜色再醒目点」：字号 48px→60px、
+   字重 700→800；「醒目」没有引入第二种颜色——那会破「一屏只留一个强调色」
+   这条規矩——而是给赢的那个数字加一层同色（品牌绿）的发光阴影
+   `.setwin` 专属 text-shadow，输的那个数字仍是纯白、不加发光，两者的反差
+   本身就被这层光晕拉大了。 */
 .set{display:inline-block;margin-right:.42em}
 .set:last-child{margin-right:0}
-.setwin{color:#c6f65a}
+.setwin{color:#c6f65a;text-shadow:0 2px 8px rgba(0,0,0,.9),0 0 22px rgba(198,246,90,.65)}
 .setlose{color:#f4fbf7}
 .setdash{color:#93a79c;margin:0 .04em}
 .tb{font-size:.62em;color:#93a79c;vertical-align:super;margin-left:.06em}
