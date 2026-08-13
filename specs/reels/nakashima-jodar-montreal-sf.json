@@ -1,57 +1,57 @@
 {
   "slug": "nakashima-jodar-montreal-sf",
   "source_url": "https://youtu.be/mAazXOYACxM",
-  "_source": "账号所有者 2026-08-13 直接给的链接，先用这一条出第一版；ATP 官方『Tennis TV』频道那条正式集锦当时还没被搜索引擎收录（探测两次都撞到同名的预测/评论频道——`Tennis Talk` 的赛前预测和 `Talking Tennis` 的双人吐槽直播，联系表和字幕都验出来不是真集锦，见 CLAUDE.md『Tennis TV 和 Tennis Talk/Talking Tennis』那节）。这条 probe 验证：1920×1080、50fps、119.26s。\n\n**画面自证**：右上角 `ATP` 台标常驻；记分条格式『JODAR / NAKASHIMA』逐分更新；0.5~2.5s 记分条『JODAR 6³4 / NAKASHIMA 7 5 AD』——上标 3 是首盘抢七约达尔只拿到 3 分，即首盘 7-6(3) 中岛胜；82.5~92.5s 同一个记分再次出现并推进到 AD，中岛庆祝（举臂）、约达尔白衣握手，与 match_feed（fqlRb8xp）的比分和赛点记录完全吻合。captions.txt 是官方解说英文字幕（『This time he seals it.』『What a moment for Brandon Nakushima.』『He's into his first Masters final.』），ASR 把 Nakashima 听成 Nakushima，读音不影响事实。\n\n**真实内容窗口是 0–103s**，103s 后是 Tennis TV 的『WATCH MORE / SUBSCRIBE』尾卡，不能用。\n\n**这是第一版，只用这一条源**。等 Tennis TV 官方频道正式集锦被搜到、probe 验证过是真集锦之后，两条源合并重出一版完整的（账号所有者原话：『先用，等 Tennis TV 的 YouTube 频道出了之后，把两个结合起来出一个完整视频』）。",
+  "_source": "账号所有者 2026-08-13 直接给的链接，先用这一条出第一版；ATP 官方『Tennis TV』频道那条正式集锦当时还没被搜索引擎收录（探测两次都撞到同名的预测/评论频道——`Tennis Talk` 的赛前预测和 `Talking Tennis` 的双人吐槽直播，联系表和字幕都验出来不是真集锦，见 CLAUDE.md『Tennis TV 和 Tennis Talk/Talking Tennis』那节）。这条 probe 验证：1920×1080、50fps、119.26s。\n\n**画面自证**：右上角 `ATP` 台标常驻；记分条格式『JODAR / NAKASHIMA』逐分更新；0.5~2.5s 记分条『JODAR 6³4 / NAKASHIMA 7 5 AD』——上标 3 是首盘抢七霍达尔只拿到 3 分，即首盘 7-6(3) 中岛胜；82.5~92.5s 同一个记分再次出现并推进到 AD，中岛庆祝（举臂）、霍达尔白衣握手，与 match_feed（fqlRb8xp）的比分和赛点记录完全吻合。captions.txt 是官方解说英文字幕（『This time he seals it.』『What a moment for Brandon Nakushima.』『He's into his first Masters final.』），ASR 把 Nakashima 听成 Nakushima，读音不影响事实。\n\n**真实内容窗口是 0–103s**，103s 后是 Tennis TV 的『WATCH MORE / SUBSCRIBE』尾卡，不能用。\n\n**这是第一版，只用这一条源**。等 Tennis TV 官方频道正式集锦被搜到、probe 验证过是真集锦之后，两条源合并重出一版完整的（账号所有者原话：『先用，等 Tennis TV 的 YouTube 频道出了之后，把两个结合起来出一个完整视频』）。",
   "_match": {
     "赛事": "蒙特利尔 National Bank Open（ATP1000）男单半决赛",
-    "比分": "中岛 7-6(3) 6-4 约达尔",
+    "比分": "中岛 7-6(3) 6-4 霍达尔",
     "用时": "2小时04分（flashscore 分盘用时 0:56+1:08=2:04，和 ATP 官方赛后稿『two hours and four minutes』完全一致，两个独立信源吻合）",
     "首次交手": "两人生涯首次交手，也都是第一次打进大师赛半决赛（ATP Tour 赛后稿 atptour.com/en/news/jodar-nakashima-montreal-2026-wednesday，多家媒体转载同一份通稿）",
-    "逐分关键节点": "match_feed（fqlRb8xp）：首盘战满 12 局 6-6 进抢七，中岛拿下抢七（画面记分条自证 7-6(3)）。次盘 4-4 之后，约达尔发球在 4-5 时救回 2 个赛点保住发球局（4-5）；中岛发球在 5-4 时，约达尔又救回 2 个赛点，直到中岛的第 5 个赛点（这一局的第 3 个）才把比赛收官，最终 6-4。全场『Match points saved』：约达尔 4，中岛 0（match_feed 分盘技术统计，Match 范围）——即约达尔一共救回 4 个赛点，中岛在第 5 次机会上拿下比赛。",
+    "逐分关键节点": "match_feed（fqlRb8xp）：首盘战满 12 局 6-6 进抢七，中岛拿下抢七（画面记分条自证 7-6(3)）。次盘 4-4 之后，霍达尔发球在 4-5 时救回 2 个赛点保住发球局（4-5）；中岛发球在 5-4 时，霍达尔又救回 2 个赛点，直到中岛的第 5 个赛点（这一局的第 3 个）才把比赛收官，最终 6-4。全场『Match points saved』：霍达尔 4，中岛 0（match_feed 分盘技术统计，Match 范围）——即霍达尔一共救回 4 个赛点，中岛在第 5 次机会上拿下比赛。",
     "全场技术统计": {
-      "Ace": "约达尔4 / 中岛6",
-      "双误": "约达尔5 / 中岛0",
-      "一发进球率": "约达尔59% / 中岛62%",
-      "一发得分率": "约达尔68%(39/57) / 中岛81%(39/48)",
-      "制胜分": "约达尔21 / 中岛28",
-      "非受迫失误": "约达尔29 / 中岛28",
-      "总分": "约达尔46%(79/173) / 中岛54%(94/173)",
-      "破发点挽救": "约达尔10/11 / 中岛6/6",
-      "赛点挽救": "约达尔4 / 中岛0"
+      "Ace": "霍达尔4 / 中岛6",
+      "双误": "霍达尔5 / 中岛0",
+      "一发进球率": "霍达尔59% / 中岛62%",
+      "一发得分率": "霍达尔68%(39/57) / 中岛81%(39/48)",
+      "制胜分": "霍达尔21 / 中岛28",
+      "非受迫失误": "霍达尔29 / 中岛28",
+      "总分": "霍达尔46%(79/173) / 中岛54%(94/173)",
+      "破发点挽救": "霍达尔10/11 / 中岛6/6",
+      "赛点挽救": "霍达尔4 / 中岛0"
     },
     "数据来源": [
       "https://www.atptour.com/en/news/jodar-nakashima-montreal-2026-wednesday",
-      "match_feed fqlRb8xp（flashscore 逐分+分盘技术统计，tools/match_feed.py show fqlRb8xp --home 约达尔 --away 中岛）"
+      "match_feed fqlRb8xp（flashscore 逐分+分盘技术统计，tools/match_feed.py show fqlRb8xp --home 霍达尔 --away 中岛）"
     ],
-    "_websearch_更正": "WebSearch 汇总一度把这段写成『中岛在5-4发球时救回4个破发点』——查 match_feed 原始逐分记录后发现方向和主体都错了：真实情况是**约达尔**（不是中岛）救回了**赛点**（不是破发点），中岛才是那个最终拿下比赛的人。这条更正体现『两个源对不上就查得更深一层』——flashscore 结构化逐分记录比二手聚合摘要可靠。"
+    "_websearch_更正": "WebSearch 汇总一度把这段写成『中岛在5-4发球时救回4个破发点』——查 match_feed 原始逐分记录后发现方向和主体都错了：真实情况是**霍达尔**（不是中岛）救回了**赛点**（不是破发点），中岛才是那个最终拿下比赛的人。这条更正体现『两个源对不上就查得更深一层』——flashscore 结构化逐分记录比二手聚合摘要可靠。"
   },
   "_facts_verify": {
-    "年龄": "中岛 2001-08-03 生，比赛当天（2026-08-12）已过生日，25 岁；约达尔 2006-09-17 生，当天还没过生日，19 岁（不是聚合摘要写的『20 岁』——那是只按出生年份相减、没扣生日的错误）。生日出处：en.wikipedia.org/wiki/Brandon_Nakashima、en.wikipedia.org/wiki/Rafael_Jódar。",
-    "种子_不是排名": "两个独立信源交叉确认：中岛28号种子、约达尔20号种子（一处是本条最终弃用的预测视频字幕，另一处是干净的赛事资讯聚合站文本，两者数字一致）。**种子号不当排名用**——封面 matchup 的 rank 字段本条显式留空（null），理由见下。",
-    "世界排名_留空的理由": "查到的数字互相矛盾且新旧不一：中岛『live ranking 28』（含本周决赛积分，含这场比赛本身，用来描述赛前排名会时间错乱）／『career-high 29』／维基百科『No. 33 (2026-03-30)』（比赛当天已过去4个多月，明显过期）；约达尔『live ranking 11』（同样含本周积分）／『career-high 15』／『24』（同一批搜索里出现过，已知是过期数字）。`tools/lookup_player_meta.py` 这次也查不到——ESPN 排名接口本会话返回 403。两个人的世界排名在这场比赛前后几天里波动很大、没有一个干净的『赛前快照』能稳定核实，所以 matchup.rank 显式写 null，不猜。"
+    "年龄": "中岛 2001-08-03 生，比赛当天（2026-08-12）已过生日，25 岁；霍达尔 2006-09-17 生，当天还没过生日，19 岁（不是聚合摘要写的『20 岁』——那是只按出生年份相减、没扣生日的错误）。生日出处：en.wikipedia.org/wiki/Brandon_Nakashima、en.wikipedia.org/wiki/Rafael_Jódar。",
+    "种子_不是排名": "两个独立信源交叉确认：中岛28号种子、霍达尔20号种子（一处是本条最终弃用的预测视频字幕，另一处是干净的赛事资讯聚合站文本，两者数字一致）。**种子号不当排名用**——封面 matchup 的 rank 字段本条显式留空（null），理由见下。",
+    "世界排名_留空的理由": "查到的数字互相矛盾且新旧不一：中岛『live ranking 28』（含本周决赛积分，含这场比赛本身，用来描述赛前排名会时间错乱）／『career-high 29』／维基百科『No. 33 (2026-03-30)』（比赛当天已过去4个多月，明显过期）；霍达尔『live ranking 11』（同样含本周积分）／『career-high 15』／『24』（同一批搜索里出现过，已知是过期数字）。`tools/lookup_player_meta.py` 这次也查不到——ESPN 排名接口本会话返回 403。两个人的世界排名在这场比赛前后几天里波动很大、没有一个干净的『赛前快照』能稳定核实，所以 matchup.rank 显式写 null，不猜。"
   },
   "_column": "赛场之上。讲一场对决，封面 solo 版式印赛果（带国旗），赢家在前。",
   "topbar": {
     "line1": "ATP1000 蒙特利尔 半决赛",
-    "line2": "中岛 7-6(3) 6-4 约达尔"
+    "line2": "中岛 7-6(3) 6-4 霍达尔"
   },
   "_topbar_why": "match_feed.py find --tour atp --event montreal --who jodar 标签『Semi-finals』。比分 7-6(3) 6-4 由画面记分条（0.5s 起『JODAR 6³4/NAKASHIMA 7 5 AD』）和 match_feed 逐分记录（首盘满12局6-6进抢七，次盘中岛4-6拿下）双重印证。",
   "editorial": {
     "mode": "match_review",
-    "question": "约达尔一连救回四个赛点，中岛是怎么在第五次机会上把这场半决赛收官的？",
-    "thesis": "首盘战满十二局战成六比六，中岛拿下抢七，七比六先声夺人。次盘他一路顶到五比四发球胜赛，约达尔却连续救回四个赛点，比分一次次被顶回来——直到中岛的第五次机会，他才终于把这场生涯首个大师赛半决赛收进口袋，六比四锁定，晋级个人首个大师赛决赛。",
+    "question": "霍达尔一连救回四个赛点，中岛是怎么在第五次机会上把这场半决赛收官的？",
+    "thesis": "首盘战满十二局战成六比六，中岛拿下抢七，七比六先声夺人。次盘他一路顶到五比四发球胜赛，霍达尔却连续救回四个赛点，比分一次次被顶回来——直到中岛的第五次机会，他才终于把这场生涯首个大师赛半决赛收进口袋，六比四锁定，晋级个人首个大师赛决赛。",
     "beats": [
       "首盘战满十二局，双方各自保发咬到六比六，进入抢七。",
       "抢七里中岛拉开优势，七比六（3）先下一城。",
-      "次盘中岛五比四发球胜赛，约达尔连续救回四个赛点。",
+      "次盘中岛五比四发球胜赛，霍达尔连续救回四个赛点。",
       "第五次机会，中岛终于把比赛收进口袋，六比四锁定这场半决赛。"
     ],
     "human_context": {
-      "angle": "这不只是一场普通半决赛——两人都出自弗吉尼亚大学网球队，只是没有同期在校。19岁的约达尔今年才转职业，一路杀进大师赛半决赛；25岁的中岛则用这场胜利拿到生涯第一个大师赛决赛入场券。",
+      "angle": "这不只是一场普通半决赛——两人都出自弗吉尼亚大学网球队，只是没有同期在校。19岁的霍达尔今年才转职业，一路杀进大师赛半决赛；25岁的中岛则用这场胜利拿到生涯第一个大师赛决赛入场券。",
       "facts": [
         "两人生涯首次交手，也都是第一次打进大师赛半决赛",
         "两人都曾代表弗吉尼亚大学出战，只是不同年份（Virginia Cavaliers 官方体育网站报道）",
-        "约达尔在次盘五比四中岛发球胜赛的那一局连续救回四个赛点，中岛在第五次机会上才收官",
+        "霍达尔在次盘五比四中岛发球胜赛的那一局连续救回四个赛点，中岛在第五次机会上才收官",
         "中岛此役晋级个人生涯第一个ATP大师赛决赛"
       ],
       "sources": [
@@ -64,15 +64,15 @@
     "eyebrow": "赛场之上",
     "layout": "solo",
     "subject": "中岛",
-    "hook": "约达尔连救四个赛点\n中岛在第五次机会上才把这场半决赛收官",
-    "_hook_why": "第一句是过程（match_feed『Match points saved 约达尔4』直接自证），第二句是落点（第五次机会+半决赛+收官）。两句都是可核实的硬事实。",
+    "hook": "霍达尔连救四个赛点\n中岛在第五次机会上才把这场半决赛收官",
+    "_hook_why": "第一句是过程（match_feed『Match points saved 霍达尔4』直接自证），第二句是落点（第五次机会+半决赛+收官）。两句都是可核实的硬事实。",
     "topic": "蒙特利尔ATP1000 · 男单半决赛",
     "scrim": "clear",
     "winner": "中岛",
     "result": "7-6(3) 6-4",
     "matchup": [
       {
-        "name": "约达尔",
+        "name": "霍达尔",
         "name_en": "Rafael Jodar",
         "country": "ESP",
         "rank": null
@@ -151,8 +151,8 @@
       "start": 90.4,
       "end": 98.4,
       "fit": "crop",
-      "narration": "约达尔连救四个赛点，中岛在第五次机会上，六比四拿下比赛，晋级生涯第一个大师赛决赛。",
-      "_why": "90.4~98.4s窗口跨了93.12这个镜头切换点（rally画面→中岛庆祝/走向网前），两边都是中岛，不是换人，是同一分从打完到庆祝的自然过渡。92.5s记分条『NAKASHIMA 7 5 AD』确认打到占先，match_feed逐分记录『Match points saved 约达尔4』印证这一局反复被约达尔救回；94.5s后的庆祝画面对应『晋级个人生涯第一个大师赛决赛』这句落点。",
+      "narration": "霍达尔连救四个赛点，中岛在第五次机会上，六比四拿下比赛，晋级生涯第一个大师赛决赛。",
+      "_why": "90.4~98.4s窗口跨了93.12这个镜头切换点（rally画面→中岛庆祝/走向网前），两边都是中岛，不是换人，是同一分从打完到庆祝的自然过渡。92.5s记分条『NAKASHIMA 7 5 AD』确认打到占先，match_feed逐分记录『Match points saved 霍达尔4』印证这一局反复被霍达尔救回；94.5s后的庆祝画面对应『晋级个人生涯第一个大师赛决赛』这句落点。",
       "crosses_cut": "93.12s是同一分『打完→庆祝』的自然过渡镜头切换，两边都是中岛本人，不是换人也不是跳到另一场比赛。"
     },
     {
@@ -183,12 +183,12 @@
     },
     "footer_venue": "蒙特利尔",
     "footer_date": "2026-08-12",
-    "_source": "全部取自 `tools/match_feed.py show fqlRb8xp --home 约达尔 --away 中岛` 的『分盘技术统计』（flashscore df_st_1，Match范围）：Ace约达尔4/中岛6，双误5/0，一发得分率68%(39/57)/81%(39/48)，二发得分率51%(20/39)/62%(18/29)，制胜分21/28，非受迫失误29/28，总分79/173(46%)/94/173(54%)。first_total=first_in+second_total，用Service Points Won分母核对：约达尔59/96(59=39+20✓，96=57+39，57+39=96✓)、中岛57/77(57=39+18✓，77=48+29✓)。bp_conv/bp_chances取『Break Points Converted』（己方回球时的破发转化，约达尔0/6中岛1/11——注意这和`_match.全场技术统计.破发点挽救`（己方发球时的挽救：约达尔10/11、中岛6/6）方向相反，是两件事）。\n\n⚠️ **第一版这里写错过**：`first_in`/`second_total` 把 33/63 错填成了本该是 57/39（虽然两者相加都等于96，闸看不出来），`bp_conv`/`bp_chances` 把 Jodar 和 Nakashima 的『Break Points Converted』互相填反了（还混进了一个两边都不是的『Break Points Saved』6/6）。**闸只能查内部自洽（是否等于 first_total、总分对不对），查不出『填对了字段但填错了人』或者『两个数刚好凑同一个和』这类**——是渲出成片、打开 stat_card.jpg 亲眼看见约达尔的『一发得分率』显示 118% 才发现的。数字对不上常识（超过100%）比闸更早报的警。\n\n主队(home)=约达尔=matchup[0]=a（输家）；客队(away)=中岛=matchup[1]=b（赢家），和find命令原文『Jodar R. vs Nakashima B. 7-6 4-6』的视角一致——这条和jodar-fils-montreal-qf的a/b↔home/away对应方向相同（那条也是主队输家），但和shelton-mensik相反，三条各自核对过matchup顺序。\n\n头像：约达尔沿用jodar-fils-montreal-qf已经取过的`atp-J0DZ.png`；中岛新取`tools/fetch_official_headshot.py atp \"Brandon Nakashima\" --id N0AE --via https://www.mubadaladcopen.com`（ID从atptour.com/en/players/brandon-nakashima/n0ae/取得），247色，非占位剪影。"
+    "_source": "全部取自 `tools/match_feed.py show fqlRb8xp --home 霍达尔 --away 中岛` 的『分盘技术统计』（flashscore df_st_1，Match范围）：Ace霍达尔4/中岛6，双误5/0，一发得分率68%(39/57)/81%(39/48)，二发得分率51%(20/39)/62%(18/29)，制胜分21/28，非受迫失误29/28，总分79/173(46%)/94/173(54%)。first_total=first_in+second_total，用Service Points Won分母核对：霍达尔59/96(59=39+20✓，96=57+39，57+39=96✓)、中岛57/77(57=39+18✓，77=48+29✓)。bp_conv/bp_chances取『Break Points Converted』（己方回球时的破发转化，霍达尔0/6中岛1/11——注意这和`_match.全场技术统计.破发点挽救`（己方发球时的挽救：霍达尔10/11、中岛6/6）方向相反，是两件事）。\n\n⚠️ **第一版这里写错过**：`first_in`/`second_total` 把 33/63 错填成了本该是 57/39（虽然两者相加都等于96，闸看不出来），`bp_conv`/`bp_chances` 把 Jodar 和 Nakashima 的『Break Points Converted』互相填反了（还混进了一个两边都不是的『Break Points Saved』6/6）。**闸只能查内部自洽（是否等于 first_total、总分对不对），查不出『填对了字段但填错了人』或者『两个数刚好凑同一个和』这类**——是渲出成片、打开 stat_card.jpg 亲眼看见霍达尔的『一发得分率』显示 118% 才发现的。数字对不上常识（超过100%）比闸更早报的警。\n\n主队(home)=霍达尔=matchup[0]=a（输家）；客队(away)=中岛=matchup[1]=b（赢家），和find命令原文『Jodar R. vs Nakashima B. 7-6 4-6』的视角一致——这条和jodar-fils-montreal-qf的a/b↔home/away对应方向相同（那条也是主队输家），但和shelton-mensik相反，三条各自核对过matchup顺序。\n\n头像：霍达尔沿用jodar-fils-montreal-qf已经取过的`atp-J0DZ.png`；中岛新取`tools/fetch_official_headshot.py atp \"Brandon Nakashima\" --id N0AE --via https://www.mubadaladcopen.com`（ID从atptour.com/en/players/brandon-nakashima/n0ae/取得），247色，非占位剪影。"
   },
   "push": {
-    "summary": "约达尔救四赛点，中岛收官",
-    "lead": "中岛7-6(3) 6-4击败约达尔，晋级蒙特利尔1000大师赛男单半决赛，用时2小时04分。首盘战满十二局战成六比六，中岛拿下抢七先下一城。次盘他五比四发球争胜，约达尔连续救回四个赛点，直到中岛的第五次机会才把比赛收进口袋。这是两人生涯首次交手，也是各自首个大师赛半决赛——中岛就此拿到个人生涯第一个大师赛决赛入场券。",
+    "summary": "霍达尔救四赛点，中岛收官",
+    "lead": "中岛7-6(3) 6-4击败霍达尔，晋级蒙特利尔1000大师赛男单半决赛，用时2小时04分。首盘战满十二局战成六比六，中岛拿下抢七先下一城。次盘他五比四发球争胜，霍达尔连续救回四个赛点，直到中岛的第五次机会才把比赛收进口袋。这是两人生涯首次交手，也是各自首个大师赛半决赛——中岛就此拿到个人生涯第一个大师赛决赛入场券。",
     "auto": true,
-    "_why": "『约达尔救四赛点，中岛收官』=12字，在SUMMARY_MAX=13的闸内——第一版『…中岛第五次收官』数错了字数（实际15字，CI的test_每条spec都算得出一句过得了闸的标题当场抓到）。只写summary和lead，matchup/score/event由封面算。"
+    "_why": "『霍达尔救四赛点，中岛收官』=12字，在SUMMARY_MAX=13的闸内——第一版『…中岛第五次收官』数错了字数（实际15字，CI的test_每条spec都算得出一句过得了闸的标题当场抓到）。只写summary和lead，matchup/score/event由封面算。"
   }
 }
