@@ -879,14 +879,36 @@ def _solo_body(cover: dict) -> tuple[str, str]:
         + f'</div></div></div>'
         f'<div class="storycopy"><span class="kicker">{column}</span>'
         f'<div class="storytitle">{hook}</div>{_solo_score_html(cover)}</div>')
-    solo_bg = "" if above else (
-        f"background-image:url('{uri}');background-size:cover;"
-        + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
-        + f"background-position:{focus:.1f}% {focus_y:.1f}%")
+    # **`fit: "width"` 这条路以前只有 VS 的分格有**（`_panel_style`），solo 没有——
+    # 而 CLAUDE.md 那条「横素材在 3:4 的海报里要 `fit: "width"`，不是 cover」写的是
+    # **海报**，没分版式。于是在 solo 上写这个键是个**不吭声的死键**：渲得出来、
+    # 一点异常都没有，只是照旧按 cover 铺满。
+    #
+    # 李娜那条撞上的就是它：2621×1892 的横素材按高度铺满要放到 1995 宽，
+    # 横向只留中间 54%——**球拍（穿线上是奥运五环，这张照片最硬的自证）整个被切掉**，
+    # 剩一张脸。而 `_solo_body` 自己的报错文案早就写着「半身特写铺满就是一张脸」。
+    solo_fit_width = not above and (cover.get("portrait") or {}).get("fit") == "width"
+    if solo_fit_width:
+        # 和 `_panel_style` 同一招：底下垫同图的模糊放大版（`scale(1.2)` 给
+        # blur 留溢出量，否则边缘透底），上面那层按**宽度**铺。
+        solo_bg = (f"background-image:url('{uri}');"
+                   f"background-size:{zoom:.1f}% auto;"
+                   f"background-position:{focus:.1f}% {focus_y:.1f}%")
+        solo_pad = (f".hero::before{{content:'';position:absolute;inset:0;"
+                    f"background-image:url('{uri}');background-size:cover;"
+                    f"background-position:{focus:.1f}% 50%;"
+                    f"filter:blur(44px) brightness(.42);transform:scale(1.2);"
+                    f"z-index:-1}}")
+    else:
+        solo_bg = "" if above else (
+            f"background-image:url('{uri}');background-size:cover;"
+            + (f"background-size:auto {zoom:.1f}%;" if zoom != 100 else "")
+            + f"background-position:{focus:.1f}% {focus_y:.1f}%")
+        solo_pad = ""
     extra = (
         # 照片铺满。`zoom` 留着给「人在画面里太小」的素材再推一档，默认 1.0。
         f".hero{{position:absolute;inset:0;background-repeat:no-repeat;"
-        f"{solo_bg}}}" + stack_css
+        f"{solo_bg}}}" + solo_pad + stack_css
         # 下面这几档全部照抄解说片的 cover 屏，一个数都没动——两条线出去的
         # 封面必须是同一个样子，各调各的就会慢慢漂开。
         + """
