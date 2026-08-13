@@ -3704,3 +3704,268 @@ def test_会合语音的工作流都要装edge_tts():
     assert not guilty, (
         f"这几条工作流会跑到合语音，却没装 edge-tts：{guilty}\n"
         "缺了它 run 照样绿，只是那一段变成数字静音——量出来才看得见")
+
+
+# ------------------------------------------------- 并发：同一条采访只留一趟
+#
+# 2026-08-13。这条线是全仓库唯一「两道防线都没有」而 slug 又参数化的：
+# 既没有 `concurrency`（`git log -p` 全历史零命中，不是被谁删掉的），
+# 提交那一步又用 `git pull --rebase`（三条渲染线早就换掉了）。
+# 三条判据分别钉三样东西，两条是**真跑 bash**——查源码里有没有那句
+# `exit 1` 只能防「有人把它删了」，防不住「它从来没工作过」。
+
+def _commit_step() -> dict:
+    """「提交成片」那一步。名字变了就报错，别静静地退回一个空串。"""
+    for step in _steps():
+        if step.get("name") == "提交成片":
+            return step
+    raise AssertionError("interview-clip.yml 里找不到「提交成片」这一步——"
+                         "判据的主语没了，改名了就把这几条测试一起改")
+
+
+def _outdir_input() -> str:
+    """产物目录是被哪个 dispatch 输入参数化的。**推导出来，不写死 `slug`。**
+
+    这几条判据要问的是「分组名带的，是不是同一个把产物目录岔开的那个输入」。
+    把 `slug` 硬编码进测试的话，哪天这个输入改叫别的，判据会安静地退成
+    一条恒真的绿灯——而那正是它要拦的那个错重新出现的时候。
+    """
+    names = set(re.findall(r"output/[\w/-]*\$\{\{\s*github\.event\.inputs\.(\w+)\s*\}\}",
+                           _step_run(_commit_step())))
+    assert len(names) == 1, (
+        f"产物目录被 {sorted(names)} 这些输入一起参数化——判不了该按谁分组")
+    return names.pop()
+
+
+def _workflow_yaml() -> dict:
+    import yaml  # noqa: PLC0415
+
+    return yaml.safe_load((ROOT / ".github" / "workflows"
+                           / "interview-clip.yml").read_text(encoding="utf-8"))
+
+
+def test_同一条采访不许两趟一起跑():
+    """没有 `concurrency` 时，同一个 slug 反复 dispatch 会两趟一起写同一格。
+
+    **窗口是这条线的设计工作方式，不是理论**：换封面就要重发一趟，而
+    `mode=render` 要九分钟。撞上时下面那个提交循环会在 `poster.jpg`
+    （二进制）和 `lines.json`（纯文本）上冲突——合成仓库上真跑过，
+    见 `test_推送撞车要把本条重放上去而不是rebase`。
+
+    ⚠️ **分组名必须带那个把产物目录岔开的输入。** 写死一个组名的话，一批
+    不同 slug 一起发只会活下来第一个和最后一个（GitHub 每组只留一个
+    pending，其余全取消）——`explainer.yml` 那边用血换来的。
+    """
+    conc = _workflow_yaml().get("concurrency")
+    assert conc, "interview-clip.yml 没有 concurrency——同一条采访会两趟一起跑"
+
+    group = str(conc["group"])
+    key = _outdir_input()
+    assert f"inputs.{key}" in group, (
+        f"分组名 {group!r} 里没有 `inputs.{key}`，而产物目录正是按它岔开的。"
+        f"写死一个组名 = 一批一起发只活下来第一个和最后一个")
+    assert conc.get("cancel-in-progress") is True, (
+        "cancel-in-progress 不是 true——改一版再发一版时两趟会一起跑，"
+        "谁后落库谁赢，而 commit message 一模一样，git log 上看不出来")
+
+
+# --------------------------------------------------------- 真跑 bash 的两条
+
+_SHIM_SLEEP = "#!/bin/sh\nexit 0\n"
+_SHIM_GIT_NO_PUSH = """#!/bin/sh
+# push 一律失败，其余原样转给真 git——用来把重试循环跑到耗尽。
+if [ "$1" = push ]; then echo "shim: push rejected" >&2; exit 1; fi
+exec {real} "$@"
+"""
+
+
+def _bin_shims(tmp_path: Path, *, block_push: bool) -> Path:
+    """一个只影响这次子进程的 PATH 前缀。
+
+    `sleep` 一律打成空操作：退避加起来两百多秒，而**这几条判据要验的性质
+    跟睡多久无关**——恰恰相反，「循环体最后一句是必成功的 sleep」正是那个
+    退出码恒为 0 的 bug 本身，所以这一句不能删掉，只能让它变快。
+    """
+    import shutil  # noqa: PLC0415
+
+    real = shutil.which("git")
+    assert real, "这台机器上没有 git，跑不了这条判据"
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    (bin_dir / "sleep").write_text(_SHIM_SLEEP, encoding="utf-8")
+    if block_push:
+        (bin_dir / "git").write_text(_SHIM_GIT_NO_PUSH.format(real=real),
+                                     encoding="utf-8")
+    for f in bin_dir.iterdir():
+        f.chmod(0o755)
+    return bin_dir
+
+
+def _seed_repo(tmp_path: Path, slug: str) -> tuple[Path, Path]:
+    """裸 origin + 一个工作副本，产物目录里预置一份存量成片。
+
+    那份 mp4 是**故意**放的：这条线现在还有十几个存量 slug 的 mp4 躺在 git 里，
+    而走了 Release 的那一趟提交是带着 `delete mode` 的——重放漏了
+    `rm -rf` 就会把它救活。
+    """
+    import subprocess  # noqa: PLC0415
+
+    def run(*args, cwd=None):
+        subprocess.run(args, cwd=cwd, check=True,
+                       capture_output=True)
+
+    origin, work = tmp_path / "origin.git", tmp_path / "work"
+    run("git", "init", "-q", "--bare", "--initial-branch=main", str(origin))
+    run("git", "clone", "-q", str(origin), str(work))
+    for k, v in (("user.name", "T"), ("user.email", "t@t.t")):
+        run("git", "config", k, v, cwd=work)
+    out = work / "output" / "interviews" / slug
+    out.mkdir(parents=True)
+    (out / "lines.json").write_text("base\n", encoding="utf-8")
+    (out / "poster.jpg").write_bytes(b"\x00base-poster\xff" * 40)
+    (out / f"{slug}.mp4").write_bytes(b"\x00stale-clip\xff" * 40)
+    (work / "tools").mkdir()
+    # 体积闸有它自己那条自动推导的判据，这儿只要它别把脚本打断
+    (work / "tools" / "check_staged_file_sizes.py").write_text("", encoding="utf-8")
+    run("git", "add", "-A", cwd=work)
+    run("git", "commit", "-qm", "base", cwd=work)
+    run("git", "push", "-q", "origin", "main", cwd=work)
+    return origin, work
+
+
+def _this_run_writes(work: Path, slug: str) -> None:
+    """本趟 render 的产出：文本和海报都改了，成片按 Release 那一步删掉。"""
+    out = work / "output" / "interviews" / slug
+    (out / "lines.json").write_text("this-run\n", encoding="utf-8")
+    (out / "poster.jpg").write_bytes(b"\x00this-run-poster\xff" * 40)
+    (out / f"{slug}.mp4").unlink()
+
+
+def _commit_script(slug: str) -> str:
+    """把「提交成片」那一步的 `run:` 原文取出来，只换掉 `${{ }}`。
+
+    ⚠️ **注释一个字都不删**：这一步的注释里正写着 `git pull --rebase`
+    和 `[ A ] && break` 那两个坑，删掉它们等于跑的不是仓库里那份脚本。
+    只有查「有没有又写回 rebase」的那条断言才走 `_step_run`。
+    """
+    body = str(_commit_step()["run"])
+    body = (body.replace("${{ github.event.inputs.slug }}", slug)
+                .replace("${{ github.ref_name }}", "main"))
+    left = re.findall(r"\$\{\{[^}]*\}\}", body)
+    assert not left, (
+        "这一步多了没被替换掉的 ${{ }} 表达式——跑的就不是真脚本了，"
+        f"补一条替换再说：{left}")
+    return body
+
+
+def _run_commit_step(tmp_path: Path, work: Path, slug: str, *,
+                     block_push: bool):
+    import subprocess  # noqa: PLC0415
+    import os  # noqa: PLC0415
+
+    script = tmp_path / "commit_step.sh"
+    script.write_text(_commit_script(slug), encoding="utf-8")
+    env = dict(os.environ)
+    env["PATH"] = f"{_bin_shims(tmp_path, block_push=block_push)}{os.pathsep}{env['PATH']}"
+    # GitHub Actions 跑 `run:` 用的就是 `bash -e {0}`——**那个 `-e` 是这条
+    # 判据的全部前提**：退出码恒为 0 那个 bug 只在 `set -e` 下才成立。
+    return subprocess.run(["bash", "-e", str(script)], cwd=work, env=env,
+                          capture_output=True, text=True)
+
+
+def test_推送重试耗尽必须报错不许绿着过去(tmp_path):
+    """⭐ 这条比并发本身更急：循环耗尽时**退出码是 0**，整步绿着过去。
+
+    `bash -e` 下 AND-OR 列表里非末尾命令失败不触发退出，而原来那个循环体
+    最后一句是 `sleep`（必成功），于是十次都没推上去也「正常结束」。
+    实测过：`for i in 1 2 3 4; do false && echo push && break; sleep 0; done`
+    退出码就是 0。而 `push` 输入默认 false，那一趟后面没有任何步骤会再碰
+    仓库——**整趟 run 从头绿到尾，没人会知道这一条根本没落库**。
+
+    所以真跑一遍：让 `git push` 一律失败，这一步必须非零退出。
+    """
+    slug = "zz-exhaust"
+    _, work = _seed_repo(tmp_path, slug)
+    _this_run_writes(work, slug)
+    done = _run_commit_step(tmp_path, work, slug, block_push=True)
+
+    assert done.returncode != 0, (
+        "推了十次都没上去，这一步却退出 0——产物静默丢掉，"
+        f"而整趟 run 是绿的\n--- stdout ---\n{done.stdout[-2000:]}")
+    assert "::error::" in done.stdout + done.stderr, (
+        "非零退出是对的，但没有走到循环末尾那句 ::error::——"
+        "多半是死在了前面某一句，这条判据其实什么都没验到\n"
+        f"--- stdout ---\n{done.stdout[-2000:]}\n--- stderr ---\n{done.stderr[-2000:]}")
+
+
+def test_推送撞车要把本条重放上去而不是rebase(tmp_path):
+    """同 slug 撞车时，`git pull --rebase` 过不去——两类文件都会冲突。
+
+    合成仓库上跑过原来那一版，git 的原话：
+    `Cannot merge binary files: poster.jpg` ＋
+    `CONFLICT (content): Merge conflict in lines.json`，
+    之后每次重试都是 `Pulling is not possible because you have unmerged files`。
+    **跟文件类型无关**——文本的 `lines.json` 一样冲突。
+
+    正解是重放：产物只有一个正确解（本趟渲的这一份），放到最新的分支上去。
+    三条断言合起来才算数：落库了、内容是本趟的、**而且被删掉的成片没有被
+    重放救活**（`rm -rf` 漏在 `git checkout -- <dir>` 后面就会救活它，
+    因为 checkout 只恢复不删除——这一头单独反向验过）。
+    """
+    import subprocess  # noqa: PLC0415
+
+    slug = "zz-collision"
+    origin, work = _seed_repo(tmp_path, slug)
+
+    # 另一趟同 slug 的 run 抢先落库：本趟第一次 push 必然被拒
+    rival = tmp_path / "rival"
+    subprocess.run(["git", "clone", "-q", str(origin), str(rival)], check=True)
+    for k, v in (("user.name", "R"), ("user.email", "r@r.r")):
+        subprocess.run(["git", "config", k, v], cwd=rival, check=True)
+    out = rival / "output" / "interviews" / slug
+    (out / "lines.json").write_text("rival\n", encoding="utf-8")
+    (out / "poster.jpg").write_bytes(b"\x00rival-poster\xff" * 40)
+    subprocess.run(["git", "commit", "-qam", "rival"], cwd=rival, check=True)
+    subprocess.run(["git", "push", "-q", "origin", "main"], cwd=rival, check=True)
+
+    _this_run_writes(work, slug)
+    done = _run_commit_step(tmp_path, work, slug, block_push=False)
+    assert done.returncode == 0, (
+        "撞车之后本趟一次都没落库\n"
+        f"--- stdout ---\n{done.stdout[-3000:]}\n--- stderr ---\n{done.stderr[-3000:]}")
+
+    def landed(path: str) -> str:
+        return subprocess.run(["git", "show", f"main:{path}"], cwd=origin,
+                              capture_output=True, text=True).stdout
+
+    base = f"output/interviews/{slug}"
+    assert landed(f"{base}/lines.json") == "this-run\n", (
+        "落库的不是本趟渲的那一份——重放放回来的是别人的那格")
+    tracked = subprocess.run(["git", "ls-tree", "-r", "--name-only", "main", base],
+                             cwd=origin, capture_output=True, text=True).stdout
+    assert f"{base}/poster.jpg" in tracked, "海报没落库"
+    assert f"{base}/{slug}.mp4" not in tracked, (
+        "走了 Release、已经 `rm` 掉的成片被重放救活了——"
+        "`rm -rf` 必须排在 `git checkout <ref> -- <dir>` **之前**，"
+        "因为 checkout 只恢复 ref 里有的，不删 ref 里没有的，"
+        "而上一句 reset --hard 刚把旧成片放了回来。"
+        "结果是仓库里留着旧片、真片在 Release 上，两个地址两条片子")
+
+
+def test_提交那一步不许再写回pull_rebase():
+    """⚠️ 这条**必须走 `_step_run`**（去掉整行注释）再扫。
+
+    修完之后这一步的注释里就白纸黑字写着 `git pull --rebase` 和
+    `[ A ] && break`——那正是这个仓库存教训的地方。连注释一起扫，
+    「把坑记下来」会被判成「又踩了这个坑」，同一个形状这里犯过五次。
+
+    上面两条是行为判据（真跑 bash），这一条只拦「有人又把它写回来」，
+    两者不互相顶替。
+    """
+    body = _step_run(_commit_step())
+    assert "pull --rebase" not in body, (
+        "提交那一步又写回了 `git pull --rebase`——同 slug 撞车时它在"
+        "`poster.jpg` / `lines.json` 上必冲突，之后每次重试都是 unmerged")
+    assert "&& break" not in body, (
+        "循环里又出现了 `&& break`：`bash -e` 下 AND 列表非末尾命令失败不退出，"
+        "循环耗尽会绿着过去（见 test_推送重试耗尽必须报错不许绿着过去）")
