@@ -812,7 +812,26 @@ jobs:
           gh release view "$TAG" >/dev/null 2>&1 \
             || gh release create "$TAG" --title "赛场之上 · $SLUG" \
                  --notes "竖版成片。超过 git 的 100 MiB 单文件上限，改走 Release 附件。"
-          gh release upload "$TAG" "$REEL" --clobber
+          # **传附件要重试。** 2026-08-13 李娜那条：render 跑了 14 分 27 秒、
+          # 质检也过了，就死在这一行——
+          #     HTTP 500 (https://api.github.com/…/releases/assets/512914137)
+          # `--clobber` 是「先删旧的再传」，而删那一下撞上 GitHub 自己的 5xx。
+          # 一次瞬时服务端错误报销掉的是整趟 render，和 Azure 合语音那条
+          # 「一次 429 报销掉五分钟」是同一个毛病（见 `azure_tts.synthesize`）。
+          # 重发是安全的：`--clobber` 幂等，删到一半也是再传一遍就好。
+          # ⚠️ 循环里不许写 `[ A ] && break`——`bash -e` 下 AND 列表整条为假会
+          # 直接把这一步杀掉（下面探活那段的注释记的是同一个坑）。一律用 if。
+          UPLOADED=0
+          for i in 1 2 3 4; do
+            if gh release upload "$TAG" "$REEL" --clobber; then UPLOADED=1; break; fi
+            if [ "$i" != 4 ]; then
+              WAIT=$((5 * i * i))
+              echo "第 $i 次传 Release 附件没成，${WAIT}s 后重试"
+              sleep "$WAIT"
+            fi
+          done
+          [ "$UPLOADED" = 1 ] || {
+            echo "::error::Release 附件传了 4 次都没上去"; exit 1; }
           URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$SLUG.mp4"
           # **传完要自己探一次**：Release 的 CDN 有几秒的传播延迟，探不到就别写
           # 链接——写了等于把一个 404 发到微信，而消息发出去收不回来。
