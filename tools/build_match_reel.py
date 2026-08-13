@@ -426,17 +426,21 @@ PART_CRF = "12"
 FINAL_PRESET = "slow"
 FINAL_CRF = "18"
 
-# **成片有两条落脚点，按体积自己选。**
+# **成片一律走 GitHub Release 附件，不进 git。**
 #
-# 账号所有者 2026-08-02 定的：「我的基础要求是保证内容和画面质量，文件多大都
-# 没关系」「不要砍片长」「我怕故事讲解不完整」。所以**片长不设上限**。
-#
-# git 那条路确实有个 100 MiB 的服务端硬拒（那条 3 分 04 秒的片子渲出来 104 MiB，
-# push 被拒，五分钟白跑，run 30725160625）——但答案不是砍片长，是换一条路：
-# 超过 95 MiB 的成片改传 **GitHub Release 附件**（单个 2 GB，公开仓库下载不计
-# 流量额度），链接写进 `render.json`，`push_reel` 优先读它。
+# 账号所有者定过两层。2026-08-02：「我的基础要求是保证内容和画面质量，文件多大都
+# 没关系」「不要砍片长」「我怕故事讲解不完整」——所以**片长不设上限**，git 那条
+# 100 MiB 服务端硬拒（104 MiB 那条 push 被拒五分钟白跑，run 30725160625）的答案
+# 是换路不是砍片长。2026-08-13：「当前代码库太大了，好多资源是不是不用放在这里
+# 代码库里」——量出来 .git 已 6.0 GB，其中 4.93 GB 是 mp4 blob（130 个）。根因是
+# 原来的门槛设在 95 MiB，而成片普遍 30~80 MiB **从来够不着**，于是「太大才走
+# Release」在真实数据上几乎一次都没走到，每条成片都进了 git，仓库每月胖一两个
+# GB。历史片子的 ▶ 链接钉在 main 的文件路径上（raw.githubusercontent.com/…/
+# main/…），已发的消息收不回来，所以**存量留在 git 一个不动，只改增量**：从这天
+# 起成片不分体积一律传 **GitHub Release 附件**（单个 2 GB，公开仓库下载不计流量
+# 额度），链接写进 `render.json`，`push_reel` 优先读它。
 # 比过的另外两条：Git LFS 免费额度只有 1 GB 存储 + **1 GB/月流量**，一条片子
-# 一百多 MB，一次推送就能把月流量打光，而且 `raw.githubusercontent.com` 对 LFS
+# 几十上百 MB，一次推送就能把月流量打光，而且 `raw.githubusercontent.com` 对 LFS
 # 文件返回的是**指针文本不是视频**；外部对象存储要另一套密钥和账单。
 #
 # 实测码率（3:4 画幅、crf 18、真实比赛画面，都是从成片量的）：
@@ -455,17 +459,16 @@ FINAL_CRF = "18"
 #
 # ⚠️ 而 4990 那一版是**按 25 fps 那批量的**：60 fps 的源片每秒多一倍帧要编，
 # 同样的 crf 自然多花比特。gea-shapovalov 按 4990 估出来 147 MiB，实际
-# 168 MiB——**低估 14%，而且低估的方向正是危险的那一头**：贴着 95 MiB 的片子
-# 会被估成「进仓库」，然后在 `git push` 那一刻才炸（run 30725160625 就是这么
-# 白跑五分钟的）。所以这个常量只许往上调，判据在
+# 168 MiB——**低估 14%，而且当年低估的方向正是危险的那一头**：成片还进 git 的
+# 时代，贴着 95 MiB 的片子会被估成「进仓库」，然后在 `git push` 那一刻才炸
+# （run 30725160625 就是这么白跑五分钟的）。现在成片一律走 Release、估错不再
+# 炸 push，但这个常量仍只许往上调——低估的估算比没有估算更能骗人，判据在
 # `test_估体积的码率只许按实测往上调`。
 #
-# 这个估算现在只用来**报走哪条路**，不再拦人。它仍然有用：知道要走 Release
-# 就知道这一版的链接不是 raw 而是 releases/download。
-GITHUB_FILE_LIMIT_MIB = 100
+# 这个估算现在只用来**提前报体积**，不再决定走哪条路（路只有一条：Release）。
+# 它仍然有用：写 spec 那一刻就知道这一版大概多大，明显跳出量级的能在渲之前
+# 被人看见。
 MEASURED_REEL_KBPS = 9230
-# 超过这个就走 Release。95 而不是 100，留 5 MiB 给「估得不准」。
-REPO_INLINE_MIB = 95
 
 
 def reel_length_verdict(spec: dict) -> tuple[float, float]:
@@ -1797,14 +1800,15 @@ def load_spec(path: Path) -> dict:
                 raise ReelError(
                     f"第 {index} 段的 source 是 {got!r}，不在 sources 里"
                     f"（有 {sorted(names)}）。多源 spec 的每一段都必须显式声明来源。")
-    # **只报走哪条路，不拦。** 片长是编辑决定的（账号所有者：「不要砍片长」），
-    # 而超过 git 上限的片子自有 Release 那条路接着。**但要出声**——两条路的
-    # 链接长得完全不一样，日志里不写就只能靠猜。
+    # **只报体积，不拦。** 片长是编辑决定的（账号所有者：「不要砍片长」），
+    # 而成片 2026-08-13 起不分体积一律走 Release 附件、不进 git（来路见
+    # MEASURED_REEL_KBPS 上面那段注释）——没有第二条路，也就没有分叉可判。
+    # **但要出声**：写 spec 那一刻就知道这一版大概多大，明显跳出量级的
+    # 能在渲之前被人看见。
     seconds, mib = reel_length_verdict(spec)
-    where = ("走 Release 附件（超过 git 的 100 MiB 硬上限）"
-             if mib > REPO_INLINE_MIB else "进仓库")
     print(f"[片长] {seconds:.1f}s = {int(seconds // 60)} 分 {int(seconds % 60)} 秒，"
-          f"按实测 {MEASURED_REEL_KBPS} kb/s 估 {mib:.0f} MiB —— {where}")
+          f"按实测 {MEASURED_REEL_KBPS} kb/s 估 {mib:.0f} MiB "
+          f"—— 成片一律走 Release 附件，不进 git")
     return spec
 
 
