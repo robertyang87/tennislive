@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>复制贴图文案</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f7f5; color: #1c2b26;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(100%, 680px); margin: 0 auto; padding: 20px 16px 40px; }
+    h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: 0; }
+    .sub { margin: 0 0 20px; color: #5f6f68; font-size: 14px; }
+    section { margin-top: 18px; }
+    .label { display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 8px; font-weight: 700; }
+    button { border: 0; border-radius: 8px; background: #0a7d43; color: #fff;
+      min-height: 42px; padding: 0 16px; font-size: 15px; font-weight: 700; }
+    textarea { display: block; width: 100%; resize: vertical; border: 1px solid #d8e2dc;
+      border-radius: 8px; background: #fff; color: #1c2b26; padding: 12px;
+      font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #title { min-height: 76px; }
+    .alt { min-height: 52px; }
+    #body { min-height: 55vh; }
+    #comment { min-height: 118px; }
+    #toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+      background: #10201a; color: #fff; padding: 10px 16px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    #toast.show { opacity: 1; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10201a; color: #e2e9e5; }
+      .sub { color: #93a39b; }
+      textarea { background: #0d1a15; color: #dfe7e3; border-color: #2a3a33; }
+      button { background: #b8e986; color: #10201a; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>贴图发布文案</h1>
+    <p class="sub">标题和正文已分开，可直接粘贴到发布页。</p>
+    <section>
+      <div class="label"><span>标题</span><button type="button" data-copy="title">复制标题</button></div>
+      <textarea id="title" readonly>8.13 赛后开麦 | 四场三盘 拼进决赛</textarea>
+    </section>
+    <section>
+      <div class="label"><span>正文</span><button type="button" data-copy="body">复制正文</button></div>
+      <textarea id="body" readonly>凌晨一点的采访，她说这一周已经在场上站了11个半小时
+
+📍2026 国家银行公开赛（多伦多）半决赛
+🎾 莱巴金娜 5-7 6-2 6-2 高芙
+🎤 中英双语字幕
+
+本站她已经打了4场三盘大战——卡萨金娜、萨姆索诺娃、大坂直美，这次又是先丢一盘逆转高芙，生涯首进多伦多决赛。采访在美东时间凌晨1点，看台上还有观众等着给她加油。场上采访全程。
+
+① 带着疲惫，你是怎么保持专注的
+
+Well, I feel like I stayed so many hours on the court that maybe some shots are just coming out from my racket, and at important moment I got a bit lucky with the line on the return. Just trying to fight.
+我感觉呆了这么久，有些球好像自己就从球拍里飞出去了，关键时刻我在接发球判线上也沾了点运气。就是一直在拼。
+
+② 上一次和高芙交手也是三盘大战
+
+Last time we played, it was also such a battle, and even in the practices, it&#x27;s always kind of close matches. So I was just trying to focus on my serve.
+我们上次交手也是一场恶战，就连平时训练也总是很胶着。所以我就尽量专注在发球上。
+
+十一个半小时，四场三盘，全咬下来了。
+
+决赛对手是斯瓦泰克，两人生涯12次交手6比6打平——这份拼劲，还够用吗？评论区聊聊。
+
+#莱巴金娜 #高芙 #WTA #多伦多站 #网球时差</textarea>
+    </section>
+    
+  </main>
+  <div id="toast" role="status">已复制</div>
+  <script>
+    const toast = document.getElementById('toast');
+    async function copyText(id) {
+      const field = document.getElementById(id);
+      try {
+        await navigator.clipboard.writeText(field.value);
+      } catch (_) {
+        field.focus(); field.select(); document.execCommand('copy');
+      }
+      const labels = {body: '正文已复制', comment: '评论已复制'};
+      toast.textContent = labels[id] || '标题已复制';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1400);
+    }
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+  </script>
+</body>
+</html>
