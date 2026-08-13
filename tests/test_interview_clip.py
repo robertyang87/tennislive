@@ -1174,7 +1174,17 @@ def test_spec里的人工引语和en_fixed是自洽的(path, tmp_path):
     lines_path = ROOT / "output" / "interviews" / spec["slug"] / "lines.json"
     if not lines_path.exists():
         pytest.skip(f"还没跑过 --stage subs：{lines_path}")
-    check_human_quote(spec, json.loads(lines_path.read_text(encoding="utf-8")), tmp_path)
+    lines = json.loads(lines_path.read_text(encoding="utf-8"))
+    # **和 `main()` 走同一条路：先套 `en_fixed`，再过这道闸。** 漏了这一步，
+    # 这条测试查的就不是「spec 里的订正真的消掉了分歧」，而是「没订正之前
+    # 原始 ASR 和引语差多少」——凡是订正命中的正是这道闸报出来的那个词，
+    # 就会一直红，逼着人把订正撤回 human_quote_ok 里去，等于让判据自己
+    # 教人绕开它。
+    for k, v in (spec.get("en_fixed") or {}).items():
+        idx = int(k) - 1
+        if 0 <= idx < len(lines):
+            lines[idx]["en"] = v
+    check_human_quote(spec, lines, tmp_path)
 
 
 @pytest.mark.parametrize("path", _specs(), ids=lambda p: p.stem)
