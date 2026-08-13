@@ -3485,9 +3485,16 @@ def test_不碰产物的工作流不许把output拉下来():
             continue
         sparse = "sparse-checkout:" in block
 
-        assert not re.search(r"fetch-depth:\s*0\b", block), (
-            f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
-            "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
+        # **唯一的豁免：archive-media.yml**（2026-08-13 加的媒体归档线）。
+        # 它的业务就是 `git filter-repo` 重写整个历史——浅克隆重写不了没拉
+        # 下来的那半截；而且它只有手动 dispatch 一个入口、是一次性操作，
+        # 不在任何定时/出片路径上，慢的 checkout 不压在关键路径上。
+        # 豁免按文件名点名，只这一条：下一条要拉全史的工作流，先把理由写成
+        # 自己的豁免，不许搭这趟车。
+        if path.name != "archive-media.yml":
+            assert not re.search(r"fetch-depth:\s*0\b", block), (
+                f"{path.name} 用 fetch-depth: 0，会把 1.77 GiB 的完整历史拉下来。"
+                "确认真的需要历史再加回来——`git diff -- <文件>` 和提交推送都不需要。")
 
         # 三处收窄，全是「判据宁可窄，不可宽」当场踩出来的：
         # 1. 连注释一起扫——注释里正写着「别把 output/ 拉下来」，于是被判成

@@ -102,6 +102,57 @@ def test_wait_for_images_blocks_push_when_video_link_never_resolves(monkeypatch)
         )
 
 
+def test_release_link_sources_只认releases_download那个形状():
+    """成片 2026-08-13 起走 Release，发前探活要认得它——但判据宁可窄。
+
+    正文里随手贴的 github.com 链接（issue、commit、run 日志）不是本次 run
+    传上去的东西，探它们只会把无关的 404 变成「取消推送」。
+    """
+    from tennislive.publish.pushplus import release_link_sources
+
+    release = ("https://github.com/robertyang87/tennislive/releases/download/"
+               "explainer-hawkeye/explainer.mp4")
+    html = (
+        f'<a href="{release}">▶ 打开 9:16 成片</a>'
+        '<a href="https://github.com/robertyang87/tennislive/commit/abc123">提交</a>'
+        '<a href="https://github.com/robertyang87/tennislive/releases">发布页</a>'
+        '<a href="https://robertyang87.github.io/tennislive/output/x/copy.html">复制</a>'
+        f'<a href="{release}">再来一次</a>'
+    )
+
+    assert release_link_sources(html) == [release]
+
+
+def test_wait_for_images_也探Release成片链接(monkeypatch):
+    """成片链接发之前要自己探一次，换到 Release 之后这道闸不许静默消失。
+
+    jsDelivr 时代成片的 ▶ 链接是被 `jsdelivr_link_sources` 顺带盖住的——
+    换成 Release 链接（github.com/…/releases/download/…，302 到
+    release-assets）那一刻，它就掉出了探活集合，而掉出去**不报错**：
+    推送照发，链接是不是 404 没人验过。CLAUDE.md：成片取不到必须整条不发。
+    requests 默认跟 302，所以探它和探 jsDelivr 是同一段代码。
+    """
+    release = ("https://github.com/robertyang87/tennislive/releases/download/"
+               "explainer-hawkeye/explainer.mp4")
+    html = f'<a href="{release}">▶ 打开 9:16 成片</a>'
+
+    # 取得到：要真的探过它
+    ready = Mock(ok=True, headers={"Content-Type": "application/octet-stream"})
+    get = Mock(return_value=ready)
+    monkeypatch.setattr(requests, "get", get)
+    wait_for_images(html, attempts=1, delay=0)
+    assert any(c.args[0] == release for c in get.call_args_list), (
+        "Release 成片链接没被探过——发出去的是一条没人验过的链接")
+
+    # 取不到：整条不发
+    monkeypatch.setattr(
+        requests, "get",
+        Mock(side_effect=requests.ConnectionError("not ready")))
+    monkeypatch.setattr("tennislive.publish.pushplus.time.sleep", Mock())
+    with pytest.raises(PushPlusError, match="取消本次推送"):
+        wait_for_images(html, attempts=2, delay=0)
+
+
 def test_wait_for_images_retries_until_cdn_image_is_ready(monkeypatch):
     unavailable = Mock(ok=False, headers={})
     ready = Mock(ok=True, headers={"Content-Type": "image/png"})

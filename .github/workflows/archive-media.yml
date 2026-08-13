@@ -1,0 +1,356 @@
+name: archive-media
+
+# **把历史成片迁出 git，然后（确认过再）重写历史。**
+#
+# 来路：账号所有者 2026-08-13 定的口径——「当前代码库太大了」「可以全部删掉，
+# 因为之前的视频都已经发布了」「后面新的视频全部走新的架构不要放在代码里面」。
+# 量出来的账：.git 6.0 GB，其中 mp4 blob 4.93 GB（130 个）、jpg 0.97 GB、
+# png 0.5 GB；历史里待清路径 3331 条，全在 output/ 底下。
+#
+# 两个模式，分两次手动跑：
+#
+# - **upload**：把 HEAD 上每个 output/**/*.mp4 传成 Release 附件，链接写进
+#   同目录 render.json。**幂等，可重跑**——`gh release upload --clobber`
+#   重传同名附件是覆盖，失败了修完整趟再来就行。
+# - **purge**：`git filter-repo` 重写全史，把 output/ 下的媒体从每个提交里
+#   抹掉，`--force` 推回去。**一次性操作**，跑之前必须先跑通一趟 upload，
+#   而且要在 confirm 里输入 PURGE。
+#
+# ⚠️ **已发微信消息里的 ▶ 视频链接钉在 main 的文件路径上，purge 之后必死**
+# ——这是账号所有者认领过的代价（「可以全部删掉，因为之前的视频都已经
+# 发布了」），不是漏算。图片链接不一样：它们钉在 commit SHA 上，purge 前
+# 先把老 HEAD 推成 refs/keep/ 隐藏 ref，对象就不会被 GC，raw/jsDelivr 按
+# SHA 照样取得到（GitHub 对 refs/pull/* 用的同一机制）。
+#
+# ⚠️ **assets/ 一个字节都不能清。** 历史里 assets/ 下也有 mp4
+# （assets/brand/outro_master.mp4、assets/explainer/eala-mcnally/
+# intro_toronto_crowd.mp4）——那是渲染的**输入素材**，清掉以后的片子就渲
+# 不出来了。所以清单锚死 ^output/，并且带一道「非 output 行数必须为 0」
+# 的自检。判据在 tests/test_archive_media.py。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "upload＝历史成片传上 Release（幂等，可重跑）；purge＝重写历史抹掉媒体（一次性，先跑通 upload）"
+        type: choice
+        options: [upload, purge]
+        default: upload
+      confirm:
+        description: "purge 必须在这里输入 PURGE；upload 留空即可"
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+# purge 重写历史时绝不许两趟叠着跑；也不许把跑到一半的 purge 掐掉——
+# 掐在 force push 中间比慢更糟。
+concurrency:
+  group: archive-media
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # **purge 要重写全史和 tags，浅克隆做不了**：filter-repo 改写的是
+          # 每一个提交。tags 不一起重写重推的话，老 tag 还钉在老历史上，
+          # 会把整条老历史重新拽进每一个 clone——瘦身等于白做。
+          # （这也是这条工作流独享 fetch-depth: 0 豁免的理由，见
+          # tests/test_match_reel.py 里那条判据的注释。）
+          fetch-depth: 0
+          fetch-tags: true
+
+      # **分类器只写一份，upload 和 purge 预检共用。** 写两份必分叉，而分叉
+      # 的样子是「预检探的 URL 和 upload 传的不是同一个」——预检会拿一批
+      # 探不到的 404 拦住一次其实已经传齐的 purge，或者反过来放行一次没传
+      # 齐的。这一步不分模式，两边都 source 它。
+      - name: 写出成片分类器
+        run: |
+          cat > /tmp/classify.sh <<'SH'
+          # classify <path> → 设置 TAG / TITLE / ASSET / PATCH
+          # 同 slug 跨日期重渲的（output/<日期>/reel/<slug>/…）会算出同一个
+          # TAG 和 ASSET：上传按 find | sort 的顺序 --clobber，最晚那份日期
+          # 目录排在后面、最后落盘——和仓库「同一 slug 取最晚」的惯例一致。
+          classify() {
+            local f="$1" slug
+            TAG=""; TITLE=""; ASSET=""; PATCH=""
+            if [[ "$f" =~ ^output/[^/]+/reel/([^/]+)/([^/]+)\.mp4$ ]] \
+                && [ "${BASH_REMATCH[2]}" = "${BASH_REMATCH[1]}" ]; then
+              slug="${BASH_REMATCH[1]}"
+              TAG="reel-$slug"; TITLE="赛场之上 · $slug"
+              ASSET="$slug.mp4"; PATCH="${f%/*}/render.json"
+            elif [[ "$f" =~ ^output/interviews/([^/]+)/([^/]+)\.mp4$ ]] \
+                && [ "${BASH_REMATCH[2]}" = "${BASH_REMATCH[1]}" ]; then
+              slug="${BASH_REMATCH[1]}"
+              TAG="interview-$slug"; TITLE="赛后开麦 · $slug"
+              ASSET="$slug.mp4"; PATCH="${f%/*}/render.json"
+            elif [[ "$f" =~ ^output/[^/]+/explainer/([^/]+)/[^/]+\.mp4$ ]]; then
+              slug="${BASH_REMATCH[1]}"
+              # 解说片一个目录里可能有多个 mp4（explainer.mp4、_outro.mp4），
+              # asset 用实际文件名，同一个 Release 里才不互相顶掉
+              TAG="explainer-$slug"; TITLE="知识解说 · $slug"
+              ASSET="${f##*/}"; PATCH="${f%/*}/render.json"
+            else
+              # 归不进三条线的（grand-slam-vertical 这类）收进一个兜底
+              # Release；asset 名 = 相对路径把 / 换成 __，同一 Release 里
+              # asset 名要唯一，光取 basename 会互相覆盖
+              TAG="video-archive"; TITLE="视频归档（迁出 git 的历史成片）"
+              ASSET="${f//\//__}"; PATCH=""
+            fi
+          }
+          SH
+          echo "写好 /tmp/classify.sh"
+
+      - name: 把历史成片传上 Release（幂等，可重跑）
+        if: inputs.mode == 'upload'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source /tmp/classify.sh
+          FAILED=/tmp/upload-failed.txt; : > "$FAILED"
+          TOTAL=0; BYTES=0
+          mkdir -p /tmp/renamed
+          # sort 保证同一 slug 跨日期重渲时，最晚那份排在后面、最后
+          # --clobber 落盘——「同一 slug 取最晚」是这个仓库的惯例
+          while IFS= read -r f; do
+            classify "$f"
+            SZ=$(stat -c%s "$f")
+            gh release view "$TAG" >/dev/null 2>&1 \
+              || gh release create "$TAG" --title "$TITLE" \
+                   --notes "从 git 历史迁出的成片归档（2026-08-13 起成片一律走 Release，不进 git）。"
+            # gh release upload 的 asset 名就是文件的 basename（# 后缀只是
+            # 显示 label），要改名只能先复制一份
+            SRC="$f"
+            if [ "$ASSET" != "${f##*/}" ]; then
+              cp "$f" "/tmp/renamed/$ASSET"
+              SRC="/tmp/renamed/$ASSET"
+            fi
+            # **传附件要重试**（结构连注释一起照 match-reel.yml 那一步抄）：
+            # 2026-08-13 李娜那条 render 跑了 14 分钟，死在一次 GitHub 自己的
+            # HTTP 500 上。--clobber 幂等，重发是安全的。
+            # ⚠️ 循环里不许写 `[ A ] && break`——`bash -e` 下 AND 列表整条
+            # 为假会直接把这一步杀掉。一律用 if。
+            UPLOADED=0
+            for i in 1 2 3 4; do
+              if gh release upload "$TAG" "$SRC" --clobber; then UPLOADED=1; break; fi
+              if [ "$i" != 4 ]; then
+                WAIT=$((5 * i * i))
+                echo "第 $i 次传 $ASSET 没成，${WAIT}s 后重试"
+                sleep "$WAIT"
+              fi
+            done
+            rm -f "/tmp/renamed/$ASSET"
+            if [ "$UPLOADED" != 1 ]; then
+              # 别死在第一个：收进列表，末尾一起报——一趟跑完就知道全部
+              # 缺口，不用修一个跑一趟
+              echo "$f（传了 4 次都没上去）" >> "$FAILED"
+              continue
+            fi
+            URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ASSET"
+            # 传完自己探一次：Release 的 CDN 有几秒传播延迟，206/200 才算
+            # 真的在。`-r 0-99` 只下 100 字节，不用为探活拉整条片子。
+            CODE=000
+            for i in 1 2 3 4 5 6 7 8; do
+              CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+              if [ "$CODE" = "206" ] || [ "$CODE" = "200" ]; then break; fi
+              echo "第 $i 次探活 $CODE，5s 后重试"
+              sleep 5
+            done
+            if [ "$CODE" != "206" ] && [ "$CODE" != "200" ]; then
+              echo "$f（传上去了但探不到：$URL 返回 $CODE）" >> "$FAILED"
+              continue
+            fi
+            if [ -n "$PATCH" ]; then
+              # render.json 不存在就从 {} 创建（照 interview-clip.yml 同名
+              # 步骤的写法——解说片那条线原来不写 render.json）
+              python - "$PATCH" "$URL" "$SZ" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          path, url, size = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3])
+          data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+          data["video_url"] = url
+          data["video_bytes"] = size
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+          print(f"{path} 记下 video_url")
+          PY
+            fi
+            TOTAL=$((TOTAL + 1)); BYTES=$((BYTES + SZ))
+            echo "✓ $f → $TAG/$ASSET（$((SZ / 1048576)) MiB）"
+          done < <(find output -name '*.mp4' | sort)
+          echo "传了 $TOTAL 个附件，共 $((BYTES / 1048576)) MiB"
+          if [ -s "$FAILED" ]; then
+            echo "::error::下面这些没传成。upload 幂等，修完整趟重跑就行："
+            cat "$FAILED"
+            exit 1
+          fi
+
+      - name: 提交 render.json 补丁
+        if: inputs.mode == 'upload'
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          # 只 add 这一趟改过/新建的 render.json，别整棵 output/ 扫进来
+          CHANGED=$(git status --porcelain -- output | grep 'render\.json$' | cut -c4- || true)
+          if [ -z "$CHANGED" ]; then
+            echo "没有要提交的 render.json"
+            exit 0
+          fi
+          for p in $CHANGED; do
+            git add -- "$p"
+          done
+          if git diff --cached --quiet; then
+            echo "没有要提交的 render.json"
+            exit 0
+          fi
+          python tools/check_staged_file_sizes.py
+          git commit -m "archive: 历史成片迁上 Release，链接写进 render.json"
+          # push 撞车就 fetch + rebase 重试。这里只有文本文件，
+          # 不需要 frame-grab.yml 那套二进制重放。
+          for i in 1 2 3 4 5; do
+            if git push origin "HEAD:${{ github.ref_name }}"; then
+              exit 0
+            fi
+            echo "第 $i 次 push 没成，fetch + rebase 后重试"
+            git fetch origin "${{ github.ref_name }}"
+            git rebase "origin/${{ github.ref_name }}"
+            sleep $((2 * i))
+          done
+          echo "::error::render.json 补丁推了 5 次都没上去"
+          exit 1
+
+      # ---------- 以下全是 purge。一次性操作，步步有闸。 ----------
+
+      - name: purge 确认闸
+        if: inputs.mode == 'purge'
+        env:
+          # 走 env 不走 ${{ }} 拼正文：值里带引号会和模板的引号相撞
+          # （probe_tnns 那次的教训）
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          if [ "$CONFIRM" != "PURGE" ]; then
+            echo "::error::purge 会用 git filter-repo 重写整个历史：已发微信消息里的 ▶ 视频链接（钉在 main 路径上）会全部失效（账号所有者 2026-08-13 认领过这个代价），所有 clone 都要重新拉。确认要做就在 confirm 里输入 PURGE 重跑。"
+            exit 1
+          fi
+          echo "确认闸通过"
+
+      - name: purge 预检：Release 上都齐了才许动历史
+        if: inputs.mode == 'purge'
+        run: |
+          source /tmp/classify.sh
+          # HEAD 上每个 mp4 都要在 Release 上探得到——purge 之后 git 里就
+          # 没有了，缺一个就是把那条片子永久抹掉
+          MISSING=/tmp/purge-missing.txt; : > "$MISSING"
+          while IFS= read -r f; do
+            classify "$f"
+            URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ASSET"
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" != "206" ] && [ "$CODE" != "200" ]; then
+              echo "$f → $URL（$CODE）" >> "$MISSING"
+            fi
+          done < <(find output -name '*.mp4' | sort)
+          if [ -s "$MISSING" ]; then
+            echo "::error::这些成片在 Release 上探不到，purge 会把它们永久抹掉。出路：先跑一趟 mode=upload，全绿了再来。"
+            cat "$MISSING"
+            exit 1
+          fi
+          # 渲了没推的片子：purge 会把它们的海报素材抹掉，推送就发不出去了
+          UNPUSHED=/tmp/purge-unpushed.txt; : > "$UNPUSHED"
+          for r in output/*/reel/*/render.json; do
+            [ -e "$r" ] || continue
+            d="${r%/render.json}"
+            if [ ! -f "$d/pushed.json" ]; then
+              echo "$d" >> "$UNPUSHED"
+            fi
+          done
+          if [ -s "$UNPUSHED" ]; then
+            echo "::error::这些片子渲了还没推微信，purge 会把它们的海报素材抹掉——先推完再来："
+            cat "$UNPUSHED"
+            exit 1
+          fi
+          echo "预检通过：HEAD 上的成片 Release 全探得到，也没有渲了没推的片子"
+
+      - name: 备份：老历史钉进隐藏 ref
+        if: inputs.mode == 'purge'
+        run: |
+          # refs/keep/* 是隐藏 ref：clone/fetch 默认不拉它，但对象被它引住
+          # 就不会被 GC——raw/jsDelivr 按 commit SHA 照样取得到（GitHub 对
+          # refs/pull/* 用的同一机制）。已发消息里钉 SHA 的图片链接全靠它
+          # 活着。**它也是 purge 唯一的回退杠杆**：
+          #     git push --force origin 'refs/keep/pre-purge-<当天>:refs/heads/main'
+          KEEP_REF="refs/keep/pre-purge-$(date -u +%Y%m%d)"
+          echo "KEEP_REF=$KEEP_REF" >> "$GITHUB_ENV"
+          git push origin "HEAD:$KEEP_REF"
+          echo "远端现有的 keep ref："
+          git ls-remote origin 'refs/keep/*'
+
+      - name: 重写历史：把 output 下的媒体从每个提交里抹掉
+        if: inputs.mode == 'purge'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pip install -q git-filter-repo
+          git log --all --pretty=format: --name-only | sort -u > /tmp/all-paths.txt
+          grep -E '^output/.*\.(mp4|webm|mov|jpg|jpeg|png)$' /tmp/all-paths.txt > /tmp/strip.txt || true
+          COUNT=$(wc -l < /tmp/strip.txt)
+          echo "待清路径 $COUNT 条（2026-08-13 量的是 3331 条上下）"
+          if [ "$COUNT" = 0 ]; then
+            echo "::error::清单是空的——一条待清路径都没扫到。空 ≠ 没有，先查清单那两行再动历史。"
+            exit 1
+          fi
+          # **自检：清单必须全部锚在 output/ 下。** assets/ 的历史里也有 mp4
+          # （outro_master.mp4、intro_toronto_crowd.mp4），那是渲染的输入
+          # 素材，清掉以后的片子就渲不出来了。
+          STRAY=$(grep -vc '^output/' /tmp/strip.txt || true)
+          if [ "$STRAY" != 0 ]; then
+            echo "::error::清单里混进了 $STRAY 条不在 output/ 下的路径，assets/ 的输入素材绝不能清："
+            grep -v '^output/' /tmp/strip.txt | head -20
+            exit 1
+          fi
+          git filter-repo --invert-paths --paths-from-file /tmp/strip.txt --force
+          # filter-repo 会把 origin remote 删掉，重新挂回去才能推
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin main
+          # tags 必须跟着重写后的历史一起重推：不推的话老 tag 还钉在老历史
+          # 上，会把整条老历史重新拽进每一个 clone
+          git push --force origin --tags
+
+      - name: 验收：clone 掉一个量级、老提交的图还活着
+        if: inputs.mode == 'purge'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 全新 bare clone 的体积是「瘦下来了没有」唯一算数的判据
+          # （purge 前 .git 6.0 GB，判据是掉一个量级）
+          git clone --bare "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" /tmp/verify
+          du -sh /tmp/verify
+          # 「老提交还取得到」要拿真链接验：从重写后 HEAD 的复制页里抽最多
+          # 3 条钉了 40 位 SHA 的 jsDelivr 图片 URL。⚠️ jsDelivr 有缓存，
+          # 探它可能是缓存在答话——改写成 raw.githubusercontent.com 再探一次
+          # 才是「隐藏 ref 保住了老对象」的真判据。
+          RE='https://cdn\.jsdelivr\.net/gh/[^/@]+/[^/@]+@[0-9a-f]{40}/[^") ]+\.jpg'
+          URLS=$(grep -rhoE "$RE" output --include='*.html' 2>/dev/null | sort -u | head -3 || true)
+          if [ -z "$URLS" ]; then
+            echo "⚠️ 一条钉了 40 位 SHA 的 jsDelivr 图片 URL 都没抽到——空 ≠ 验过：这层「老提交还取得到」没验上，去老推送里挑一条图片链接手动探一次"
+          fi
+          BAD=0
+          for u in $URLS; do
+            J=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$u" || echo 000)
+            RAW=$(printf '%s' "$u" | sed -E 's#^https://cdn\.jsdelivr\.net/gh/([^/@]+)/([^/@]+)@([0-9a-f]{40})/#https://raw.githubusercontent.com/\1/\2/\3/#')
+            R=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$RAW" || echo 000)
+            echo "jsDelivr $J ｜ raw $R ← $u"
+            if [ "$R" != "206" ] && [ "$R" != "200" ]; then
+              BAD=1
+            fi
+          done
+          if [ "$BAD" = 1 ]; then
+            echo "::error::老提交上的图片从 raw 已经取不到——隐藏 ref 没保住老对象。回退命令：git push --force origin '${KEEP_REF}:refs/heads/main'"
+            exit 1
+          fi
+          echo "验收通过：clone 体积见上，老提交的图片从 raw 仍取得到"

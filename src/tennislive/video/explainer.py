@@ -7841,17 +7841,51 @@ def explainer_push_html(
     rel = outdir.as_posix()
     if "output/" in rel:
         rel = rel[rel.index("output/") :]
-    # 视频和图片走同一条路。原来这里写的是 github.com/<repo>/raw/main/…，它 302
-    # 跳到 raw.githubusercontent.com——那台机器国内既没有节点也没有 CDN，点开要等很久；
-    # 而同一封推送里的图片一直是好的，因为图片走的是 jsDelivr（Cloudflare 边缘）。
-    # 一封信里两条路，慢的那条是没走 CDN 的那条。
+    # 成片链接**优先读 outdir/render.json 的 `video_url`**（2026-08-13 起）。
+    # 账号所有者当天定的：「当前代码库太大了」「后面新的视频全部走新的架构
+    # 不要放在代码里面」「包括后续所有的视频，制作的视频。都走统一的 Release
+    # 路线」——量出来 .git 已 6.0 GB，其中 mp4 blob 4.93 GB。工作流现在把成片
+    # 传到 Release（tag `explainer-<slug>`）、Range 探活 206/200 之后才把链接
+    # 写进 render.json 并重渲一遍 push.html，所以这里读到的 video_url 是
+    # 已经探活过一次的。
     #
-    # 成片 7 MB 上下，在 jsDelivr 单文件 20 MB 的限制内，Content-Type 也确实是
-    # video/mp4（试过）。写成 @main 是为了让 pin_asset_revision 顺手把它和图片
-    # 一起钉到本次 commit 上：钉住之后 jsDelivr 给的是 max-age=31536000, immutable，
-    # 边缘缓存一直命中；@main 只有短 TTL，而且成片被覆盖之后，老推送里的链接会
-    # 指向新片子。
-    video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
+    # ⚠️ **Release 比 jsDelivr 慢，这是认领过的取舍，不是漏配。** 当年选
+    # jsDelivr 的账没过期（留在下面 else 分支的注释里）：Release 链接 302 到
+    # release-assets.githubusercontent.com，和 raw 同一个量级，国内没有边缘。
+    # 账号所有者为了仓库不再膨胀选了统一 Release——看到「视频比图片慢」别
+    # 回来「优化」成 jsDelivr，那等于把 mp4 重新塞回 git。
+    #
+    # `pin_asset_revision` 不会误改它：`_JSDELIVR_MAIN_RE` 只认
+    # `*.jsdelivr.net/gh/…@main/`，github.com 的 Release 链接匹配不上
+    # （判据在 test_推送里的成片链接优先读render_json的video_url）。
+    video_url = ""
+    meta_f = outdir / "render.json"
+    if meta_f.is_file():
+        try:
+            video_url = str(
+                (json.loads(meta_f.read_text(encoding="utf-8")) or {})
+                .get("video_url") or ""
+            ).strip()
+        except (OSError, ValueError) as exc:
+            # 坏 JSON 和「没写过」是两回事。静默退回老路的样子和正常一模一样，
+            # 而新片子的 mp4 不在 git 里，老路的链接对它就是 404——要出声。
+            print(f"[成片链接] {meta_f} 读不出来（{exc}），退回 jsDelivr 老路")
+    if video_url:
+        print(f"[成片链接] Release（render.json 的 video_url）：{video_url}")
+    else:
+        # 没有 video_url 的走老路：存量已发的包（成片还在 git 里）不重推，
+        # 但它们**重推时**靠这条老路拿到当年那条链接——别删。
+        #
+        # 老路当年为什么选 jsDelivr（这段账不过期）：原来这里写的是
+        # github.com/<repo>/raw/main/…，它 302 跳到 raw.githubusercontent.com——
+        # 那台机器国内既没有节点也没有 CDN，点开要等很久；而同一封推送里的
+        # 图片一直是好的，因为图片走的是 jsDelivr（Cloudflare 边缘）。
+        # 成片 7 MB 上下，在 jsDelivr 单文件 20 MB 的限制内，Content-Type 也
+        # 确实是 video/mp4（试过）。写成 @main 是为了让 pin_asset_revision
+        # 顺手把它和图片一起钉到本次 commit 上：钉住之后 jsDelivr 给的是
+        # max-age=31536000, immutable，边缘缓存一直命中；@main 只有短 TTL，
+        # 而且成片被覆盖之后，老推送里的链接会指向新片子。
+        video_url = f"{jsdelivr_base(_REPOSITORY)}/{rel}/{video_name}"
     # 复制页的按钮只在链接确认可达时才放进推送。**GitHub Pages 只服务 main**，
     # 特性分支上生成的包它永远取不到，按钮点开就是 404——微信那条消息发出去
     # 就收不回来。赛程那条线早就这么做了（cmd_schedule 调 live_copy_page_url），

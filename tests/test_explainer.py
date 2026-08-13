@@ -1635,8 +1635,14 @@ def test_数字和汉字看起来是一家的():
     assert E._sub_width("2026") > 2.5
 
 
-def test_成片链接和图片走同一条_CDN():
-    """一封推送里两条路，慢的那条是没走 CDN 的那条。
+def test_成片链接和图片走同一条_CDN(tmp_path):
+    """⚠️ 2026-08-13 起这条钉的是**老路那一支**：没有 render.json 时退回 jsDelivr。
+
+    账号所有者当天定了「所有视频统一走 Release 路线」，新片子的成片链接从
+    render.json 的 video_url 读（判据在
+    test_推送里的成片链接优先读render_json的video_url）。老路**不许删**：
+    存量已发的包（成片还在 git 里、jsDelivr 链接已经发进微信）重推时靠它
+    拿到当年那条链接。下面这段当年的账没过期，留着：
 
     视频链接原来指向 `github.com/<repo>/raw/main/…`，它 302 跳到
     raw.githubusercontent.com——那台机器国内既没有节点也没有 CDN，点开要等很久。
@@ -1646,14 +1652,18 @@ def test_成片链接和图片走同一条_CDN():
     换过去之后视频会和图片**一起**被钉到本次 commit 上。钉住的链接 jsDelivr 给的是
     immutable + 一年 TTL；而且成片被下一次生成覆盖之后，老推送里的链接仍然指向
     当初那一版。
+
+    outdir 用 tmp_path（**不放 render.json**＝存量包的样子），不用仓库里真的
+    `output/…`——CI 的稀疏检出没有 output/，而本地那格哪天多出一份带
+    video_url 的 render.json，这条测试就会在两台机器上走两条路。
     """
     import datetime
-    from pathlib import Path as _Path
 
     from tennislive.render.pushmsg import pin_asset_revision
     from tennislive.video import explainer as E
 
-    outdir = _Path("output/2026-07-27/explainer/shang-nishikori")
+    outdir = tmp_path / "output/2026-07-27/explainer/shang-nishikori"
+    outdir.mkdir(parents=True)
     segs = E.explainer_script(find_story_by_slug("shang-nishikori"))
     html = E.explainer_push_html(
         segs, outdir, date=datetime.date(2026, 7, 27), xhs_text="测试文案")
@@ -1666,11 +1676,89 @@ def test_成片链接和图片走同一条_CDN():
     assert urls[0].startswith(
         f"https://{jsdelivr_host()}/gh/{E._REPOSITORY}@main/"), urls[0]
 
+    rel = "output/2026-07-27/explainer/shang-nishikori"
     rev = "37853825db235e7290df16fe890d00d556327d94"
     pinned = pin_asset_revision(html, rev)
-    assert f"@{rev}/{outdir.as_posix()}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
-    assert f"@{rev}/{outdir.as_posix()}/slide_00.jpg" in pinned, "图片没被钉住"
+    assert f"@{rev}/{rel}/explainer.mp4" in pinned, "视频没跟着图片一起钉版本"
+    assert f"@{rev}/{rel}/slide_00.jpg" in pinned, "图片没被钉住"
     assert "@main/" not in pinned
+
+
+def test_推送里的成片链接优先读render_json的video_url(tmp_path):
+    """成片 2026-08-13 起一律走 Release、不进 git——链接的出处是 render.json。
+
+    来路：账号所有者 2026-08-13「当前代码库太大了」「后面新的视频全部走新的
+    架构不要放在代码里面」「包括后续所有的视频，制作的视频。都走统一的
+    Release 路线」。量出来 .git 已 6.0 GB，其中 mp4 blob 4.93 GB。工作流传完
+    Release 附件、Range 探活过之后把链接写进 render.json 再重渲 push.html——
+    **优先级反过来的话**（有 video_url 仍拼 jsDelivr），新片子的 ▶ 按钮指向
+    一条不在 git 里的 mp4，点开 404，而消息发出去收不回来。
+
+    三支都要验：
+
+    1. 有 video_url → 用它，jsDelivr 的成片链接一条都不许剩
+       （图片照旧走 jsDelivr——统一 Release 管的是视频，不是图）
+    2. `pin_asset_revision` 不许误改 Release 链接（`_JSDELIVR_MAIN_RE` 只认
+       `*.jsdelivr.net/gh/…@main/`，github.com 匹配不上——这条是「确认过」，
+       不是「应该不会」）
+    3. 没有 render.json / 坏 JSON → 退回 jsDelivr 老路（存量包重推的兜底），
+       坏 JSON 那支要出声——静默退回的样子和正常一模一样，而新片子的老路
+       链接就是 404
+    """
+    import datetime
+
+    from tennislive.cdn import jsdelivr_host
+    from tennislive.render.pushmsg import pin_asset_revision
+    from tennislive.video import explainer as E
+
+    segs = E.explainer_script(find_story_by_slug("hawkeye"))
+    release_url = (
+        "https://github.com/robertyang87/tennislive/releases/download/"
+        "explainer-hawkeye/explainer.mp4"
+    )
+
+    # ① 有 video_url：用 Release 链接，成片不再走 jsDelivr
+    outdir = tmp_path / "with/output/2026-08-13/explainer/hawkeye"
+    outdir.mkdir(parents=True)
+    (outdir / "render.json").write_text(
+        json.dumps({"video_url": release_url, "video_bytes": 7_000_000}),
+        encoding="utf-8")
+    body = E.explainer_push_html(
+        segs, outdir, date=datetime.date(2026, 8, 13), xhs_text="测试文案")
+    assert release_url in body, "render.json 里的 video_url 没被用上"
+    assert "explainer.mp4" not in body.replace(release_url, ""), (
+        "有 video_url 时还在拼 jsDelivr 的成片链接——那条 mp4 不在 git 里，是 404")
+    # 图片没跟着搬家：统一 Release 管的是视频
+    assert f"https://{jsdelivr_host()}/gh/{E._REPOSITORY}@main/" in body, (
+        "幻灯图片也离开 jsDelivr 了？统一 Release 只管视频")
+
+    # ② pin_asset_revision 钉图片、不碰 Release 链接
+    rev = "37853825db235e7290df16fe890d00d556327d94"
+    pinned = pin_asset_revision(body, rev)
+    assert release_url in pinned, "pin_asset_revision 把 Release 链接改坏了"
+    assert f"@{rev}/" in pinned and "@main/" not in pinned, "图片没被钉住"
+
+    # ③ 没有 render.json → 老路兜底；坏 JSON → 老路兜底而且要出声
+    bare = tmp_path / "bare/output/2026-08-13/explainer/hawkeye"
+    bare.mkdir(parents=True)
+    body2 = E.explainer_push_html(
+        segs, bare, date=datetime.date(2026, 8, 13), xhs_text="测试文案")
+    assert f"https://{jsdelivr_host()}/gh/{E._REPOSITORY}@main/" in body2
+    assert "explainer.mp4" in body2, "没有 video_url 时把成片链接整个丢了"
+
+    import contextlib
+    import io
+
+    broken = tmp_path / "broken/output/2026-08-13/explainer/hawkeye"
+    broken.mkdir(parents=True)
+    (broken / "render.json").write_text("{oops", encoding="utf-8")
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        body3 = E.explainer_push_html(
+            segs, broken, date=datetime.date(2026, 8, 13), xhs_text="测试文案")
+    assert "explainer.mp4" in body3, "坏 JSON 时连兜底链接都没了"
+    assert "读不出来" in buf.getvalue(), (
+        "坏 JSON 静默退回了老路——它和「没写过」是两回事，要出声")
 
 
 def test_每条片子的标签都放满五个():
@@ -2716,3 +2804,124 @@ def test_验证Pages那条路要够得着而且不发微信():
     assert "expect_actor" in tool and "github-actions[bot]" in tool, (
         "没有校 actor。而 actor 正是「这段代码点的」和「有人手动补的」之间"
         "唯一的区别——2026-08-04 那两条看起来自动触发的记录就是手动补的")
+
+
+# ---------------------------------------------------------------------------
+# 成片一律走 Release（2026-08-13 账号所有者：「所有视频统一走 Release 路线」）
+
+
+def _wf_yaml_only(text: str) -> str:
+    """去掉整行注释再扫。
+
+    工作流的注释正是这个仓库记教训的地方，正文里必然写着当年那些错值
+    （Release 那一步的注释里就有「jsDelivr」「进 git」这些词）——连注释一起扫，
+    「把坑记下来」会被判成「又踩了这个坑」。同 `test_match_reel._yaml_only`。
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.lstrip().startswith("#"))
+
+
+def _explainer_step_block(name: str) -> str:
+    """取 explainer.yml 某一步自己那一段——先去注释，再锚在步骤头上。
+
+    两个坑照抄 `test_match_reel._step_block` 的教训：按裸的步骤名切会先命中
+    注释；从 `- name:` 开始切再按 `- name:` 分割会在第 0 位截断出空串，
+    要按整行头 `\\n      - name:` 切。
+    """
+    body = _wf_yaml_only(
+        (_REPO / ".github" / "workflows" / "explainer.yml")
+        .read_text(encoding="utf-8"))
+    head = f"      - name: {name}"
+    start = body.index(head)
+    return body[start:].split("\n      - name:", 1)[0]
+
+
+def test_解说成片一律走Release不进git():
+    """解说成片 7 MB 上下一条条进 git，攒成了 .git 6.0 GB 里的一份子。
+
+    来路（2026-08-13）：账号所有者「当前代码库太大了」「后面新的视频全部走
+    新的架构不要放在代码里面」「包括后续所有的视频，制作的视频。都走统一的
+    Release 路线」。存量动不了（jsDelivr 链接钉在仓库文件路径上、已发的微信
+    消息收不回来），只改增量：**从这天起成片发 Release，不再进 git**。
+
+    钉的几件事，少一件就会退回老样子：
+
+    1. Release 那一步存在，tag 是 `explainer-$SLUG`，`SZ=$(stat …)` 要留着
+       （render.json 的 video_bytes 从它来）
+    2. `gh release upload` 外面**真的套着重试循环**，退避是涨的
+       （`WAIT=$((5*i*i))` 二次方），用尽要 `exit 1`；循环里不许出现
+       `[ A ] && …`——`bash -e` 下 AND 列表整条为假会把这一步杀掉
+       （match-reel.yml 同一步骤的注释记着这个坑，抄结构也要抄注释）
+    3. 传完 Range 探活（`-r 0-99`，206/200 才算），探不到 `exit 1`——
+       写一个探不到的链接进 render.json 等于把 404 发到微信
+    4. 链接和字节数写进 render.json（`video_url` / `video_bytes`），然后
+       `rm -f "$CLIP"`——不删的话 `git add` 照样把 mp4 吃进去，白传一趟
+    5. **重渲 push.html**：它是生成那一步写的，那一刻 render.json 还没有
+       video_url，▶ 按钮拼的是 jsDelivr 老路，而这条 mp4 不进 git，
+       那个链接必然 404
+    6. 顺序：生成 → 上传 artifact（mp4 的兜底，提交步骤的报错一直承诺
+       「成片仍在 artifact 里」）→ Release/rm → 提交
+
+    ⚠️ 判据宁可窄：只扫去注释后的步骤块（`_explainer_step_block`），
+    不扫整份 yml——步骤注释里如实记着 jsDelivr 那段来路。
+    """
+    text = (_REPO / ".github" / "workflows" / "explainer.yml").read_text(
+        encoding="utf-8")
+    stripped = _wf_yaml_only(text)
+    names = [
+        line.split("- name:", 1)[1].strip()
+        for line in text.splitlines() if line.startswith("      - name:")
+    ]
+    assert stripped.count("gh release upload") == 1, (
+        "该正好有一步传 Release 附件")
+    body = _explainer_step_block("成片发到 Release（不进 git）")
+
+    # ① tag 形状 + SZ
+    assert 'TAG="explainer-$SLUG"' in body, "tag 不是 explainer-<slug>"
+    assert 'SZ=$(stat -c%s "$CLIP")' in body, (
+        "SZ 没了——render.json 的 video_bytes 从它来")
+
+    # ② 上传的重试循环：退避是涨的，用尽要报错，不许用会被 errexit 杀掉的写法
+    upload = body.index("gh release upload")
+    loop = body.rfind("for ", 0, upload)
+    assert loop != -1, "`gh release upload` 外面没有重试循环——一次 5xx 报销整趟生成"
+    tail = body[loop:]
+    assert "sleep" in tail[:tail.index("URL=")], (
+        "重试循环里没有退避——贴着重发四次，撞上的同一个 5xx 多半还在")
+    assert "WAIT=$((5 * i * i))" in body, (
+        "退避不是涨的：等长的重试对一次持续几十秒的服务端故障没有用")
+    assert 'UPLOADED" = 1 ]' in body and "exit 1" in body, (
+        "四次都没传上去却没有拦住：下游会把一个取不到的链接写进 render.json")
+    for line in tail.splitlines():
+        one = line.strip()
+        if one.startswith("[") and "&&" in one:
+            raise AssertionError(
+                f"`bash -e` 下这一行整条为假会直接杀掉这一步，用 if：{one!r}")
+
+    # ③ Range 探活，探不到不许往下走
+    assert "-r 0-99" in body, "没有 Range 探活——写进 render.json 的链接没人验证过"
+    assert '"206"' in body and '"200"' in body, "探活没认 206/200"
+    assert body.index("-r 0-99") < body.index("render.json"), (
+        "探活要排在写 render.json 之前——先写后探等于把没验证的链接落了盘")
+
+    # ④ render.json + rm
+    assert '"video_url"' in body and '"video_bytes"' in body, (
+        "Release 链接没写进 render.json——explainer_push_html 优先读的就是它")
+    assert re.search(r'rm -f "\$CLIP"', body), (
+        "传完 Release 没删本地那份——git add 照样把 mp4 吃进去，白传一趟")
+
+    # ⑤ 重渲 push.html，而且排在 render.json 写完之后
+    assert "explainer_push_html" in body, (
+        "没重渲 push.html——生成那一步写的 ▶ 按钮还指着 jsDelivr 老路，必然 404")
+    assert body.index('"video_url"') < body.index("explainer_push_html"), (
+        "重渲要排在 render.json 写完之后，不然读到的还是没有 video_url 的那份")
+
+    # ⑥ 顺序：生成 → artifact → Release → 提交
+    i_gen = names.index("生成解说视频")
+    i_art = names.index("上传成片 artifact")
+    i_rel = names.index("成片发到 Release（不进 git）")
+    i_commit = names.index("提交成片到仓库")
+    assert i_gen < i_art < i_rel < i_commit, (
+        f"顺序不对（生成={i_gen}，artifact={i_art}，Release={i_rel}，"
+        f"提交={i_commit}）——artifact 要先拿到 mp4 当兜底，Release/rm 要在"
+        "提交之前，否则 mp4 又进 git")

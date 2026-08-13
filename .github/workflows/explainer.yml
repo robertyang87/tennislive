@@ -3,7 +3,9 @@ name: explainer-video
 # 生成一条 AI 旁白知识解说视频（前因后果 / 技术原理 / 当今现状）。
 # 面向抽象、拿不到合格真实照片的知识点（如鹰眼/计分制）：解说词由该选题
 # 已核验的事实改写而成，画面是文字卡与示意图，不伪造真实赛场影像。
-# 手动触发，成片提交回仓库，不自动推送。
+# 手动触发，不自动推送。成片 2026-08-13 起发到 Release（不进 git），
+# 仓库里只提交幻灯 / 文案 / render.json 这些轻产物——账号所有者：
+# 「包括后续所有的视频，制作的视频。都走统一的 Release 路线」。
 on:
   workflow_dispatch:
     inputs:
@@ -217,6 +219,9 @@ jobs:
           if [ -z "$SLUG" ]; then SLUG="hawkeye"; fi
           OUT_DIR="output/$OUT_DATE/explainer/$SLUG"
           echo "outdir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+          # Release 那一步的 tag 从它拼（explainer-<slug>）——和这儿的默认值
+          # 必须是同一个出处，别在那一步再写一遍 `|| hawkeye`。
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           # 进 cone 排在生成之前：`sparse-checkout add` 会把 HEAD 上那一版
           # 先铺回工作区，铺完再生成才是对的顺序（反过来会拿旧内容盖掉新的）。
           # 重放循环里的 `git checkout rendered -- "$OUTDIR"` 也要它在 cone 里。
@@ -245,6 +250,113 @@ jobs:
           name: explainer-${{ github.run_number }}
           path: ${{ steps.gen.outputs.outdir }}
           retention-days: 14
+
+      # **成片一律发到 Release，不进 git。**（2026-08-13 起）
+      #
+      # 来路：账号所有者 2026-08-13「当前代码库太大了」「后面新的视频全部走
+      # 新的架构不要放在代码里面」「包括后续所有的视频，制作的视频。都走
+      # 统一的 Release 路线」。量出来 .git 已 6.0 GB，其中 mp4 blob 4.93 GB——
+      # 这条线的成片 7 MB 上下一条条全在里面，每重渲一版就多一份死 blob。
+      #
+      # 存量已进 git 的解说成片**留着不动**——已发推送里的 jsDelivr 链接钉在
+      # 仓库文件路径上，微信消息收不回来，删文件就是把老消息变成死链。只改
+      # 增量：从这天起传 Release、把链接写进 `render.json` 的 `video_url`、
+      # **删掉本地那份**（让提交步骤根本看不见它）。`explainer_push_html`
+      # 优先读 `video_url`，没有才退回拼 jsDelivr 的老路（存量包重推的兜底）。
+      #
+      # 为什么是 Release 而不是 LFS：LFS 免费额度只有 1 GB/月流量，而且
+      # `raw.githubusercontent.com` 对 LFS 文件返回的是**指针文本不是视频**，
+      # 微信里那个 ▶ 按钮直接坏掉。详见 match-reel.yml 的 Release 那一步的注释。
+      #
+      # ⚠️ **这一步排在「上传成片 artifact」之后**：mp4 先进 artifact，这一步
+      # 真失败时片子还有处可取（下面提交步骤的报错一直这么承诺）。这条线没有
+      # 单独的「验成片」步骤——生成那步自己验（ffmpeg 没出片会当场抛
+      # ExplainerVideoError），这儿再兜一道 `test -s`。
+      - name: 成片发到 Release（不进 git）
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          OUTDIR="${{ steps.gen.outputs.outdir }}"
+          SLUG="${{ steps.gen.outputs.slug }}"
+          CLIP="$OUTDIR/explainer.mp4"
+          test -s "$CLIP" || { echo "::error::成片不存在或是空的：$CLIP"; exit 1; }
+          # SZ 留着：render.json 的 video_bytes 从它来
+          SZ=$(stat -c%s "$CLIP")
+          TAG="explainer-$SLUG"
+          echo "成片 $((SZ/1048576)) MiB —— 发到 Release $TAG"
+          gh release view "$TAG" >/dev/null 2>&1 \
+            || gh release create "$TAG" --title "知识解说 · $SLUG" \
+                 --notes "解说片成片。所有视频一律走 Release 附件，不进 git。"
+          # **传附件要重试**（照 match-reel.yml 同一步骤抄的，注释也抄）。
+          # 来路是 2026-08-13 李娜那条（run 31709569579）：render 跑了
+          # 14 分 27 秒、质检也过了，死在 `--clobber` 撞上 GitHub 自己的
+          # HTTP 500。一次瞬时 5xx 报销的是整趟生成（这条线一趟十来分钟）。
+          # 重发是安全的：`--clobber` 幂等，删到一半再传一遍就好。
+          # ⚠️ 循环里不许写 `[ A ] && break`——`bash -e` 下 AND 列表整条为假
+          # 会直接把这一步杀掉（下面探活那段的注释记的是同一个坑）。一律用 if。
+          UPLOADED=0
+          for i in 1 2 3 4; do
+            if gh release upload "$TAG" "$CLIP" --clobber; then UPLOADED=1; break; fi
+            if [ "$i" != 4 ]; then
+              WAIT=$((5 * i * i))
+              echo "第 $i 次传 Release 附件没成，${WAIT}s 后重试"
+              sleep "$WAIT"
+            fi
+          done
+          [ "$UPLOADED" = 1 ] || {
+            echo "::error::Release 附件传了 4 次都没上去"; exit 1; }
+          URL="https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/explainer.mp4"
+          # **传完自己探一次**：Release 的 CDN 有几秒传播延迟，探不到就别写链接
+          # ——写了等于把一个 404 发到微信，而消息发出去收不回来。
+          # ⚠️ 循环体最后一句不许写成 `[ A ] || [ B ] && break`：整条 AND-OR
+          # 列表为假时 `bash -e` 会直接把这一步杀掉，看着像「探活失败」，
+          # 其实是第一次没中就退出了。用 if。
+          for i in 1 2 3 4 5 6 7 8; do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' -L -r 0-99 "$URL" || echo 000)
+            if [ "$CODE" = "206" ] || [ "$CODE" = "200" ]; then break; fi
+            echo "第 $i 次探活 $CODE，5s 后重试"
+            sleep 5
+          done
+          [ "$CODE" = "206" ] || [ "$CODE" = "200" ] || {
+            echo "::error::Release 附件 $URL 探不到（$CODE）"; exit 1; }
+          echo "Release 附件可取：$URL"
+          python - "$OUTDIR/render.json" "$URL" "$SZ" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          path, url, size = Path(sys.argv[1]), sys.argv[2], int(sys.argv[3])
+          # 这条线原来不写 render.json，所以要允许它还不存在
+          data = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+          data["video_url"] = url
+          data["video_bytes"] = size
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+          print("render.json 记下 video_url")
+          PY
+          rm -f "$CLIP"
+          # **重渲 push.html。** 它是「生成解说视频」那一步写的，那一刻
+          # render.json 还没有 video_url，▶ 按钮拼的是 jsDelivr 老路——而这条
+          # mp4 从这天起不进 git，那个链接**必然 404**。render.json 落定之后
+          # 再渲一遍，explainer_push_html 优先读 video_url，按钮才指向 Release。
+          # 日期传 today：和生成那步的 `TZ=Asia/Shanghai date +%F` 是同一个口径
+          # （parse_date_arg('today') = beijing_today()），同一趟 run 里必然同一天。
+          python - "$OUTDIR" "$SLUG" <<'PY'
+          import sys
+          from pathlib import Path
+          outdir, slug = Path(sys.argv[1]), sys.argv[2]
+          from tennislive.timeutil import parse_date_arg
+          from tennislive.render.tournament_story import find_story_by_slug
+          from tennislive.video.explainer import explainer_push_html, explainer_script
+          story = find_story_by_slug(slug)
+          if story is None:
+              raise SystemExit(f"找不到 slug {slug} 的选题，push.html 没法重渲")
+          segments = explainer_script(story)
+          xhs = (outdir / "xiaohongshu.txt").read_text(encoding="utf-8")
+          (outdir / "push.html").write_text(
+              explainer_push_html(segments, outdir,
+                                  date=parse_date_arg("today"), xhs_text=xhs),
+              encoding="utf-8")
+          PY
 
       - name: 提交成片到仓库
         run: |
