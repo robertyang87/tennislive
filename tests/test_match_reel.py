@@ -9353,3 +9353,185 @@ def test_八档都只有低画质时要把最好的那份收下不要全扔掉(t
         reel.resolve_crop(854, 480)
     reel.resolve_crop(854, 480, None, "2012 年的赛事官方上传")
     reel.resolve_crop(1920, 1080)                 # 还原全局
+
+
+def test_合语音被限流要重试而明确拒绝不许重试(monkeypatch, tmp_path):
+    """Azure 一次 429 不许把整趟 render 报销掉，而密钥错也不许重试四遍。
+
+    来路（2026-08-13，李娜那条）：连着四趟 run 死在同一行——
+
+        AzureTTSError: Azure 合成失败（ResultReason.Canceled）
+        CancellationReason.Error: WebSocket upgrade failed: Too many requests (429)
+
+    我一开始当成「配额用完了，等」，等了两个小时四趟全红。真去读代码才看见
+    **`azure_tts.synthesize` 一次重试都没有**，而 `build_match_reel.synthesize`
+    是贴着发的：一条片子三四十段，F0 的限是「20 次/60 秒」，所以典型的失败
+    形状就是「前二十段顺利、之后一路 429」。一次瞬时限流报销掉的是五分钟的
+    render 外加几百 MB 的下载——和 `pushplus` 那条「保护了不重要的那一步，
+    没保护唯一重要的那一步」是同一个毛病。
+
+    判据钉三头，三头都反向验证过：
+
+    1. **429 要重试，而且真的能救回来**（第二次成功 → 不抛）
+    2. **401/403 不许重试**（重发只会把同一个错误重复四遍）
+    3. **重试要出声**——不然「今天 Azure 慢」和「这条被限流重试了三次」
+       在日志上一模一样
+
+    ⚠️ 反向验证第 ② 项自己先漏了一次：我只把 `"429"` 从可重试清单里拿掉，
+    **测试照样绿**——因为同一条错误文本里还有 `Too many requests`，另一个
+    关键词把它接住了。判据没被断开，验的就不是它。两个关键词一起拿掉才真的红。
+    「拆掉一道闸还能通过，先怀疑自己拆得不干净，再怀疑判据恒真」。
+    """
+    import logging  # noqa: PLC0415
+    import sys  # noqa: PLC0415
+    import types  # noqa: PLC0415
+
+    from tennislive.video import azure_tts  # noqa: PLC0415
+
+    calls: list[str] = []
+
+    def _sdk(script: list[str]):
+        """一个刚好够 `synthesize` 用的假 SDK；`script` 是每次调用的结果。"""
+        mod = types.ModuleType("azure.cognitiveservices.speech")
+
+        class Reason:
+            SynthesizingAudioCompleted = "ok"
+            Canceled = "canceled"
+
+        class Cancel:
+            def __init__(self, detail: str) -> None:
+                self.reason = "CancellationReason.Error"
+                self.error_details = detail
+
+        class Result:
+            def __init__(self, detail: str, out: Path) -> None:
+                if detail == "":
+                    self.reason = Reason.SynthesizingAudioCompleted
+                    out.write_bytes(b"\0" * 64)
+                else:
+                    self.reason = Reason.Canceled
+                    self.cancellation_details = Cancel(detail)
+
+        class Synth:
+            def __init__(self, speech_config=None, audio_config=None):  # noqa: ANN001
+                self._out = audio_config
+
+                class _Sig:
+                    def connect(self, _fn):  # noqa: ANN001
+                        return None
+
+                self.synthesis_word_boundary = _Sig()
+
+            def speak_ssml_async(self, _ssml):  # noqa: ANN001
+                detail = script[min(len(calls), len(script) - 1)]
+                calls.append(detail)
+                res = Result(detail, self._out)
+                return types.SimpleNamespace(get=lambda: res)
+
+        mod.SpeechConfig = lambda **kw: types.SimpleNamespace(
+            set_speech_synthesis_output_format=lambda _f: None)
+        mod.SpeechSynthesisOutputFormat = types.SimpleNamespace(
+            Audio24Khz48KBitRateMonoMp3="mp3")
+        mod.ResultReason = Reason
+        mod.SpeechSynthesizer = Synth
+        mod.SpeechSynthesisBoundaryType = None
+        mod.audio = types.SimpleNamespace(
+            AudioOutputConfig=lambda filename: Path(filename))
+        return mod
+
+    def _install(script: list[str]) -> None:
+        calls.clear()
+        pkg = types.ModuleType("azure")
+        sub = types.ModuleType("azure.cognitiveservices")
+        leaf = _sdk(script)
+        monkeypatch.setitem(sys.modules, "azure", pkg)
+        monkeypatch.setitem(sys.modules, "azure.cognitiveservices", sub)
+        monkeypatch.setitem(sys.modules, "azure.cognitiveservices.speech", leaf)
+
+    monkeypatch.setenv("AZURE_SPEECH_KEY", "k")
+    monkeypatch.setenv("AZURE_SPEECH_REGION", "eastus")
+    # 退避真等下去这条测试要跑一分多钟；等多久由 `_BACKOFF` 决定，这里只关心
+    # 「重试了没有」，所以把 sleep 打桩掉并**记下每次等了多久**。
+    slept: list[float] = []
+    monkeypatch.setattr(azure_tts.time, "sleep", slept.append)
+    monkeypatch.setattr(azure_tts, "_paced_gap", 0.0)
+
+    kw = dict(voice="zh-CN-YunxiNeural", rate="+6%", pitch="+0Hz")
+    throttled = ("CancellationReason.Error: WebSocket upgrade failed: "
+                 "Too many requests (429). Please check subscription information.")
+
+    # ① 第一次 429、第二次成功 —— 必须救回来
+    _install([throttled, ""])
+    with caplog_at(logging.WARNING) as records:
+        marks = azure_tts.synthesize("测试一句", tmp_path / "a.mp3", **kw)
+    assert marks == [] and (tmp_path / "a.mp3").is_file(), "重试之后没有落盘"
+    assert len(calls) == 2, f"429 之后没有重试：只发了 {len(calls)} 次"
+    # ⚠️ `slept` 里除了退避那一档，还会多一次自适应间隔——**那是打桩造出来的**：
+    # 真跑的时候退避那 5 秒是真的过去了，`time.monotonic() - _last_call` 已经
+    # 大于 3 秒，补间隔那一句一秒都不会等。这里把 sleep 换成了记录器，
+    # 挂钟没动，所以它看得见。判据只钉退避那一档。
+    assert slept[0] == azure_tts._BACKOFF[0], f"退避没按阶梯来：{slept}"
+    assert all(x <= azure_tts._BACKOFF[0] for x in slept[1:]), (
+        f"除了退避还等了别的：{slept}")
+    said = " ".join(r.getMessage() for r in records)
+    assert "429" in said and "重试" in said, f"重试了却没出声：{said!r}"
+    # ⚠️ **这一条才是「认出 429」唯一改变行为的地方**，别漏。重试本身是
+    # 「除非确定没救，否则都重发」——所以把 429 从可重试清单里拿掉，它会落进
+    # `unknown` 照样重试，**上面那几句断言全都还是绿的**（反向验证时当场发现的）。
+    # 真正只有认出限流才会发生的是**给后面的调用留间隔**：退避只救得了这一段，
+    # 救不了这一趟——下一段照样贴着发，照样 429。
+    assert azure_tts._paced_gap >= 3.0, (
+        f"认出了限流却没给后面的调用留间隔（_paced_gap={azure_tts._paced_gap}）；"
+        f"F0 是 20 次/60 秒，一条片子三四十段，不留间隔就是退避完立刻再撞一次")
+
+    # ② 一路 429 —— 用尽阶梯之后要说清是「重试 N 次仍被挡回来」
+    slept.clear()
+    monkeypatch.setattr(azure_tts, "_paced_gap", 0.0)
+    _install([throttled])
+    with pytest.raises(azure_tts.AzureTTSError) as exc:
+        azure_tts.synthesize("测试一句", tmp_path / "b.mp3", **kw)
+    assert len(calls) == len(azure_tts._BACKOFF) + 1, (
+        f"没有把阶梯走完：发了 {len(calls)} 次")
+    assert [x for x in slept if x in azure_tts._BACKOFF] == list(azure_tts._BACKOFF), (
+        f"三档退避没有按顺序走完：{slept}")
+    assert "仍被挡回来" in str(exc.value), str(exc.value)
+
+    # ③ 密钥错 —— **一次就该停**，重发只会把同一个错误重复四遍
+    slept.clear()
+    monkeypatch.setattr(azure_tts, "_paced_gap", 0.0)
+    _install(["CancellationReason.Error: WebSocket upgrade failed: "
+              "Authentication error (401). Please check subscription key."])
+    with pytest.raises(azure_tts.AzureTTSError) as exc:
+        azure_tts.synthesize("测试一句", tmp_path / "c.mp3", **kw)
+    assert len(calls) == 1, f"明确拒绝还重试了 {len(calls)} 次"
+    assert slept == [], f"明确拒绝还等了 {slept}"
+    assert "重试没有意义" in str(exc.value), str(exc.value)
+
+
+import contextlib  # noqa: E402
+
+
+@contextlib.contextmanager
+def caplog_at(level):
+    """收这个模块的日志。
+
+    ⚠️ **档位必须和那句告警一致**：告警是 WARNING，收在 ERROR 上它根本进不来，
+    而那样坏代码也能让测试变绿（这个仓库栽过一次）。
+    """
+    import logging  # noqa: PLC0415
+
+    logger = logging.getLogger("tennislive.video.azure_tts")
+    records: list[logging.LogRecord] = []
+
+    class _Grab(logging.Handler):
+        def emit(self, record):  # noqa: ANN001
+            records.append(record)
+
+    handler = _Grab(level)
+    logger.addHandler(handler)
+    old, logger.level = logger.level, level
+    try:
+        yield records
+    finally:
+        logger.removeHandler(handler)
+        logger.level = old

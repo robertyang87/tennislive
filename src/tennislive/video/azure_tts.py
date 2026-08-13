@@ -45,9 +45,13 @@ edge-tts 那条路上唯一的出路是改写句子。⚠️ 「服务端认了�
 from __future__ import annotations
 
 import html
+import logging
 import os
+import time
 from pathlib import Path
 from typing import Sequence
+
+logger = logging.getLogger(__name__)
 
 # `zh-CN-YunjianNeural` 实测通过的十个风格（run 30892017944 逐个问过）。
 # ⚠️ **这张表是「服务端认」的表，不是「听起来对」的表**：其中五个的时长和基线
@@ -214,14 +218,53 @@ def _ticks(value: object) -> int:
     return 0
 
 
+# **被挡回来 ≠ 被拒绝，两者的处置相反。**（和 `publish/pushplus.py` 那条
+# 「只重试『没送到』」是同一条规矩，只是那儿是 HTTP、这儿是 WebSocket。）
+#
+# `WebSocket upgrade failed: Too many requests (429)` 是**握手就没握上**——
+# 一个字节的音频都没合成，重发是安全的，而且是唯一的出路。而 `401`/`403`
+# （密钥错、区域写错）和「这个 voice 不存在」是 Azure **明确拒绝**：
+# 重发只会把同一个错误重复四遍，把一次 5 秒的失败拖成 70 秒。
+_RETRYABLE = ("429", "too many requests", "throttl", "timeout", "timed out",
+              "connection", "reset", "unavailable", "503", "500")
+_FATAL = ("401", "403", "forbidden", "unauthorized", "invalid subscription")
+
+# 退避阶梯。**4 次尝试、最长等 65 秒**：Azure 免费档（F0）的神经语音是
+# 「20 次请求 / 60 秒」，一条片子有三四十段，`synthesize()` 那个循环是**贴着
+# 发的**——所以典型的失败形状是「前二十段顺利、第二十一段开始一路 429」。
+# 最后一档 45 秒足够跨过那个 60 秒的窗口。
+_BACKOFF = (5.0, 15.0, 45.0)
+
+# ⚠️ **撞过一次限流之后要给后面的调用留间隔**，否则退避完立刻又是一次爆发，
+# 下一段照样 429——退避只救得了这一段，救不了这一趟。这个值**只在真被限流
+# 之后才从 0 长起来**：配额没问题的时候一秒都不多花，是自适应不是固定节流。
+_paced_gap = 0.0
+_last_call = 0.0
+
+
+def _classify(detail: str) -> str:
+    """这次失败是「没送到」还是「被拒绝」。判据是错误文本本身，不是猜。"""
+    low = detail.lower()
+    if any(k in low for k in _FATAL):
+        return "fatal"
+    if any(k in low for k in _RETRYABLE):
+        return "retry"
+    return "unknown"
+
+
 def synthesize(text: str, path: Path, *, voice: str, rate: str, pitch: str,
                style: str = "", styledegree: str = "",
                lead_pause: float = 0.0) -> list[dict]:
     """合一条语音落到 `path`，返回**和 edge-tts 同形状**的词边界。
 
+    被限流（429）时按 `_BACKOFF` 重试，并把「第几次、等多久、为什么」打进日志
+    ——**退路要出声**，不然「今天 Azure 慢」和「这条被限流重试了三次」
+    在日志上一模一样。
+
     Returns:
         `[{"offset": <100ns>, "duration": <100ns>, "text": str}, …]`
     """
+    global _paced_gap, _last_call
     import azure.cognitiveservices.speech as speechsdk  # noqa: PLC0415
 
     key, region = credentials()
@@ -250,19 +293,48 @@ def synthesize(text: str, path: Path, *, voice: str, rate: str, pitch: str,
                       "duration": _ticks(getattr(evt, "duration", 0)),
                       "text": word})
 
-    out = speechsdk.audio.AudioOutputConfig(filename=str(path))
-    syn = speechsdk.SpeechSynthesizer(speech_config=cfg, audio_config=out)
-    syn.synthesis_word_boundary.connect(on_word)
-    result = syn.speak_ssml_async(build_ssml(
-        text, voice=voice, rate=rate, pitch=pitch, style=style,
-        styledegree=styledegree, lead_pause=lead_pause)).get()
+    ssml = build_ssml(text, voice=voice, rate=rate, pitch=pitch, style=style,
+                      styledegree=styledegree, lead_pause=lead_pause)
 
-    if result.reason != speechsdk.ResultReason.SynthesizingAudioCompleted:
+    for attempt in range(len(_BACKOFF) + 1):
+        # 上一趟撞过限流的话，这里补足间隔再发。没撞过 `_paced_gap` 是 0，
+        # 这一句等于不存在。
+        if _paced_gap:
+            wait = _paced_gap - (time.monotonic() - _last_call)
+            if wait > 0:
+                time.sleep(wait)
+        marks.clear()
+        out = speechsdk.audio.AudioOutputConfig(filename=str(path))
+        syn = speechsdk.SpeechSynthesizer(speech_config=cfg, audio_config=out)
+        syn.synthesis_word_boundary.connect(on_word)
+        result = syn.speak_ssml_async(ssml).get()
+        _last_call = time.monotonic()
+
+        if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+            break
+
         detail = ""
         if result.reason == speechsdk.ResultReason.Canceled:
             cancel = result.cancellation_details
             detail = f"{cancel.reason}: {cancel.error_details}"
-        raise AzureTTSError(f"Azure 合成失败（{result.reason}）{detail}")
+        kind = _classify(detail)
+        if kind == "fatal" or attempt == len(_BACKOFF):
+            # 用尽了也要说清是**哪一类**：限流用尽和密钥写错，下一步完全不同。
+            why = {"fatal": "Azure 明确拒绝（密钥／区域／权限），重试没有意义",
+                   "retry": f"重试 {attempt} 次仍被挡回来",
+                   "unknown": "这个错误不在已知的可重试清单里"}[kind]
+            raise AzureTTSError(
+                f"Azure 合成失败（{result.reason}）{detail}｜{why}")
+        pause = _BACKOFF[attempt]
+        # 撞上就把后续调用的最小间隔顶到 3 秒（F0 是 20 次/60 秒 ＝ 平均 3 秒
+        # 一次）。**只涨不降**：这一趟里再撞第二次说明 3 秒还不够。
+        _paced_gap = max(_paced_gap, 3.0) if kind == "retry" else _paced_gap
+        logger.warning("Azure 合成被挡回来（%s），%.0fs 后重试第 %d/%d 次；"
+                       "此后每次调用之间至少隔 %.0fs。原文：%s",
+                       detail or result.reason, pause, attempt + 1,
+                       len(_BACKOFF), _paced_gap, text[:18])
+        time.sleep(pause)
+
     if not path.is_file() or path.stat().st_size == 0:
         raise AzureTTSError(f"Azure 说合成成功，但 {path} 是空的")
     return marks
