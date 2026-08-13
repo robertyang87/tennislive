@@ -9535,3 +9535,50 @@ def caplog_at(level):
     finally:
         logger.removeHandler(handler)
         logger.level = old
+
+
+def test_传Release附件要重试而且不许用会被errexit杀掉的写法():
+    """一次 GitHub 5xx 不许把一趟 14 分钟的 render 报销掉。
+
+    来路（2026-08-13，李娜那条，run 31709569579）：render 跑完 14 分 27 秒、
+    `check_reel_landed` 也过了，死在这一行——
+
+        成片 175 MiB 超过 95 MiB —— 发到 Release reel-lina-cincinnati-2012
+        HTTP 500 (https://api.github.com/…/releases/assets/512914137)
+
+    `--clobber` 是「先删旧的再传」，删那一下撞上 GitHub 自己的 5xx。和
+    `azure_tts.synthesize` 那条「一次 429 报销掉五分钟」是同一个毛病，
+    处置也一样：**没送到就重发**（`--clobber` 幂等，删到一半再传一遍就好）。
+
+    判据钉两头：
+
+    1. 那一行外面**真的套着重试循环**，而且退避是涨的
+    2. 循环里**不许出现 `] && break` 这种写法**——`bash -e` 下 AND 列表整条
+       为假会直接把整步杀掉，看起来像「传失败了」，其实是第一圈就被踢出去了。
+       这个坑同一个步骤里已经踩过一次（探活那段的注释写着），别在它上面再踩
+    """
+    block = _step_block("成片太大就发到 Release（不进 git）")
+    body = _yaml_only(block)
+    assert "gh release upload" in body, "这一步不传 Release 附件了？判据要跟着换"
+
+    # ① 上传那一行必须在 for 循环里，而且循环里要有 sleep（退避）
+    upload = body.index("gh release upload")
+    loop = body.rfind("for ", 0, upload)
+    assert loop != -1, "`gh release upload` 外面没有重试循环"
+    tail = body[loop:]
+    assert "sleep" in tail[:tail.index("URL=")], (
+        "重试循环里没有退避——贴着重发四次，撞上的同一个 5xx 多半还在")
+    assert "WAIT=$((5 * i * i))" in body, (
+        "退避不是涨的：等长的重试对一次持续几十秒的服务端故障没有用")
+
+    # ② 不许用 `] && break`：bash -e 下这一条会把整步杀掉
+    for line in tail.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("[") and "&&" in stripped:
+            raise AssertionError(
+                f"`bash -e` 下这一行整条为假会直接杀掉这一步，用 if：{stripped!r}")
+
+    # ③ 用尽之后要报错，不许静静往下走——往下走会把一个 404 的链接写进
+    #    render.json，然后发到微信，而消息发出去收不回来
+    assert 'UPLOADED" = 1 ]' in body and "exit 1" in body, (
+        "四次都没传上去却没有拦住：下游会把一个取不到的链接写进 render.json")
