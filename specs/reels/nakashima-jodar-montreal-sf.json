@@ -168,9 +168,9 @@
     "a": {
       "headshot": "assets/players/headshots/atp-J0DZ.png",
       "aces": 4, "df": 5, "winners": 21, "ue": 29,
-      "first_in": 33, "first_total": 96, "first_won": 39,
-      "second_won": 20, "second_total": 63,
-      "bp_conv": 1, "bp_chances": 11,
+      "first_in": 57, "first_total": 96, "first_won": 39,
+      "second_won": 20, "second_total": 39,
+      "bp_conv": 0, "bp_chances": 6,
       "pts_won": 79, "pts_total": 173
     },
     "b": {
@@ -178,12 +178,12 @@
       "aces": 6, "df": 0, "winners": 28, "ue": 28,
       "first_in": 48, "first_total": 77, "first_won": 39,
       "second_won": 18, "second_total": 29,
-      "bp_conv": 6, "bp_chances": 6,
+      "bp_conv": 1, "bp_chances": 11,
       "pts_won": 94, "pts_total": 173
     },
     "footer_venue": "蒙特利尔",
     "footer_date": "2026-08-12",
-    "_source": "全部取自 `tools/match_feed.py show fqlRb8xp --home 约达尔 --away 中岛` 的『分盘技术统计』（flashscore df_st_1，Match范围）：Ace约达尔4/中岛6，双误5/0，一发得分率68%(39/57)/81%(39/48)，二发得分率51%(20/39)/62%(18/29)，制胜分21/28，非受迫失误29/28，总分79/173(46%)/94/173(54%)。first_total=first_in+second_total，用Service Points Won分母核对：约达尔59/96(59=39+20✓，96=33+63，33+63=96✓)、中岛57/77(57=39+18✓，77=48+29✓)。bp_conv/bp_chances取『Break Points Converted』（己方回球时的破发转化，约达尔0/6中岛1/11——注意这和`_match.全场技术统计.破发点挽救`（己方发球时的挽救：约达尔10/11、中岛6/6）方向相反，是两件事）。\n\n主队(home)=约达尔=matchup[0]=a（输家）；客队(away)=中岛=matchup[1]=b（赢家），和find命令原文『Jodar R. vs Nakashima B. 7-6 4-6』的视角一致——这条和jodar-fils-montreal-qf的a/b↔home/away对应方向相同（那条也是主队输家），但和shelton-mensik相反，三条各自核对过matchup顺序。\n\n头像：约达尔沿用jodar-fils-montreal-qf已经取过的`atp-J0DZ.png`；中岛新取`tools/fetch_official_headshot.py atp \"Brandon Nakashima\" --id N0AE --via https://www.mubadaladcopen.com`（ID从atptour.com/en/players/brandon-nakashima/n0ae/取得），247色，非占位剪影。"
+    "_source": "全部取自 `tools/match_feed.py show fqlRb8xp --home 约达尔 --away 中岛` 的『分盘技术统计』（flashscore df_st_1，Match范围）：Ace约达尔4/中岛6，双误5/0，一发得分率68%(39/57)/81%(39/48)，二发得分率51%(20/39)/62%(18/29)，制胜分21/28，非受迫失误29/28，总分79/173(46%)/94/173(54%)。first_total=first_in+second_total，用Service Points Won分母核对：约达尔59/96(59=39+20✓，96=57+39，57+39=96✓)、中岛57/77(57=39+18✓，77=48+29✓)。bp_conv/bp_chances取『Break Points Converted』（己方回球时的破发转化，约达尔0/6中岛1/11——注意这和`_match.全场技术统计.破发点挽救`（己方发球时的挽救：约达尔10/11、中岛6/6）方向相反，是两件事）。\n\n⚠️ **第一版这里写错过**：`first_in`/`second_total` 把 33/63 错填成了本该是 57/39（虽然两者相加都等于96，闸看不出来），`bp_conv`/`bp_chances` 把 Jodar 和 Nakashima 的『Break Points Converted』互相填反了（还混进了一个两边都不是的『Break Points Saved』6/6）。**闸只能查内部自洽（是否等于 first_total、总分对不对），查不出『填对了字段但填错了人』或者『两个数刚好凑同一个和』这类**——是渲出成片、打开 stat_card.jpg 亲眼看见约达尔的『一发得分率』显示 118% 才发现的。数字对不上常识（超过100%）比闸更早报的警。\n\n主队(home)=约达尔=matchup[0]=a（输家）；客队(away)=中岛=matchup[1]=b（赢家），和find命令原文『Jodar R. vs Nakashima B. 7-6 4-6』的视角一致——这条和jodar-fils-montreal-qf的a/b↔home/away对应方向相同（那条也是主队输家），但和shelton-mensik相反，三条各自核对过matchup顺序。\n\n头像：约达尔沿用jodar-fils-montreal-qf已经取过的`atp-J0DZ.png`；中岛新取`tools/fetch_official_headshot.py atp \"Brandon Nakashima\" --id N0AE --via https://www.mubadaladcopen.com`（ID从atptour.com/en/players/brandon-nakashima/n0ae/取得），247色，非占位剪影。"
   },
   "push": {
     "summary": "约达尔救四赛点，中岛收官",
