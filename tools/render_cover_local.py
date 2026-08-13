@@ -62,7 +62,31 @@ from build_match_reel import (  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def find_outdir(slug: str, explicit: str | None) -> Path:
+def cover_needs_frames(cover: dict) -> bool:
+    """这张封面要不要从源片抓帧。
+
+    ⚠️ **不要帧的封面不该被 `cover_src/` 挡在门外。** solo 版式的
+    `portrait.image` 和 VS 版式的 `cutout` 指的都是**仓库里的文件**——
+    素材本来就在手上，一帧源片都不用碰，可这个工具原来一律要求产物目录里
+    有 `cover_src/`，于是「本地 7 秒渲一版」这条路对这类封面是关着的，
+    人得先去跑一趟两分钟的 `mode=cover`——正是「能力写出来了，能用的那台
+    机器上没有开关」那个形状。
+
+    判据是**有没有 `frame_at`**：抓帧这件事只由它触发（`portrait.frame_at`、
+    `versus.top/bottom.frame_at`、`versus.background.frame_at`）。
+    """
+    def any_frame_at(node: object) -> bool:
+        if isinstance(node, dict):
+            return "frame_at" in node or any(any_frame_at(v) for v in node.values())
+        if isinstance(node, list):
+            return any(any_frame_at(v) for v in node)
+        return False
+
+    return any_frame_at(cover)
+
+
+def find_outdir(slug: str, explicit: str | None,
+                needs_frames: bool = True) -> Path:
     """找这条片子的产物目录。**给了就用给的，没给就挑最新的那一天。**
 
     ⚠️ 日期目录按**上海时间**分（工作流里是 `TZ=Asia/Shanghai date +%F`），
@@ -76,6 +100,10 @@ def find_outdir(slug: str, explicit: str | None) -> Path:
             raise SystemExit(f"给的 --outdir 不存在：{out}")
         return out
     hits = sorted(ROOT.glob(f"output/*/reel/{slug}"), reverse=True)
+    if not hits and needs_frames is False:
+        # 封面素材全在仓库里（`portrait.image` 之类）时，连产物目录都不需要——
+        # 见下面 `needs_frames` 那段注释
+        return ROOT
     if not hits:
         raise SystemExit(
             f"output/ 里找不到 {slug} 的产物目录。\n"
@@ -83,6 +111,8 @@ def find_outdir(slug: str, explicit: str | None) -> Path:
             "`match-reel mode=cover slug=" + slug + "`，"
             "它会把封面素材（cover_src/）连同产物一起提交。")
     with_src = [h for h in hits if (h / COVER_SRC_DIR).is_dir()]
+    if not with_src and needs_frames is False:
+        return hits[0]
     if not with_src:
         raise SystemExit(
             f"{slug} 有产物目录，但没有一个带 {COVER_SRC_DIR}/：\n  "
@@ -113,9 +143,15 @@ def main() -> int:
     if not cover:
         raise SystemExit(f"{spec_path.name} 里没有 cover 段")
 
-    outdir = find_outdir(args.slug, args.outdir or None)
+    needs_frames = cover_needs_frames(cover)
+    outdir = find_outdir(args.slug, args.outdir or None, needs_frames)
     src = outdir / COVER_SRC_DIR
-    print(f"[素材] {src.relative_to(ROOT) if src.is_relative_to(ROOT) else src}")
+    if needs_frames:
+        print(f"[素材] {src.relative_to(ROOT) if src.is_relative_to(ROOT) else src}")
+    else:
+        # 出声说走的是哪条路：「这张封面不用抓帧」和「素材没找着但它没吭声」
+        # 长得一模一样
+        print("[素材] 这张封面没有 frame_at，素材全在仓库里，不用 cover_src/")
 
     # `sources=None` ＝ **只认缓存**：一个源片字节都不碰。缺素材要报错，
     # 不许悄悄退回抓帧——那条路在沙箱里必然失败，而失败的样子会是一句

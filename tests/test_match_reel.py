@@ -9095,3 +9095,44 @@ def test_证据段的地板静音要豁免但口播必须响过():
     lo, hi = int(ev[0][0] + 0.5), int(ev[0][1])
     assert max(silent[lo:hi]) <= landed.SILENCE_FLOOR_DB, (
         "全静音的证据窗口在这个门槛下必须判得出来")
+
+
+def test_整屏证据卡的出图宽度要跟着画布算不能各写各的():
+    """`render_evidence_card.CARD_SHOW_W` 必须等于 `cut_still_segment` 里那个
+    `int(VIDEO_W * 0.94)`——**两处写死必分叉，而分叉的样子是「字比设计的小」**。
+
+    第一版把出图宽度拍成 1600，缩到 1015 就是 0.63 折：设计成 46px 的正文渲到
+    画面上只剩 29px（屏宽 2.7%，比字幕还小一半），渲出来摆在一起才看见。
+    现在 2× 出图、缩放比恒为 0.5，字号除以 2 就是画面上的真实像素。
+
+    顺带钉住引语卡那道闸：**没有 credit 不许渲**。一句没有出处的话正是这个
+    仓库反复栽过的那种，闸要在渲之前拦，不能指望写卡的人记得。
+    """
+    sys.path.insert(0, str(Path("tools").resolve()))
+    import render_evidence_card as card  # noqa: PLC0415
+
+    reel = _reel()
+    # ① 出图宽度和画布口径同源
+    assert card.CARD_SHOW_W == int(reel.VIDEO_W * 0.94), (
+        f"卡按 {card.CARD_SHOW_W} 宽出图，而 cut_still_segment 缩到 "
+        f"{int(reel.VIDEO_W * 0.94)}——字号就全算错了")
+    assert card.CARD_W % card.CARD_SHOW_W == 0, (
+        "出图宽度必须是显示宽度的整数倍，否则字号换算不成立")
+
+    # ② 引语卡没有出处 → 报错（真调 build_html，不查源码文本）
+    with pytest.raises(SystemExit) as bad:
+        card.build_html({"kind": "quote", "quote": "no source", "zh": "没有出处"})
+    assert "credit" in str(bad.value)
+
+    # ③ 三种 kind 都渲得出内容，认不出来的要报错
+    html = card.build_html({"kind": "quote", "quote": "hi", "zh": "嗨",
+                            "credit": "—— 某某 · 某年"})
+    assert "hi" in html and "嗨" in html and "某某" in html
+    facts = card.build_html({"kind": "facts",
+                             "rows": [{"value": "12 岁", "label": "夺冠"}]})
+    assert "12 岁" in facts and "夺冠" in facts
+    tl = card.build_html({"kind": "timeline",
+                          "rows": [{"when": "2020", "what": "澳网女双冠军"}]})
+    assert "2020" in tl and "澳网女双冠军" in tl
+    with pytest.raises(SystemExit):
+        card.build_html({"kind": "photo", "image": "x.png"})
