@@ -149,5 +149,43 @@
     "lead": "7号种子、世界第8斯瓦泰克6-3 1-6 6-3逆转9号种子（世界第9）斯维托丽娜，晋级多伦多WTA1000女单半决赛，用时2小时17分。首盘她六比三顺利拿下，次盘斯维托丽娜彻底反扑，把她压到只赢一局；决胜盘开局是超过三十秒的破发点拉锯，三平之后她重新找回节奏，六比三锁定胜利。这翻转了本赛季此前两次交手的剧本——那两次全部是斯维托丽娜赢下决胜盘。这是她本赛季的第一个决赛，之前三大满贯卫冕全部早轮出局。决赛对手是高芙和莱巴金娜的胜者。",
     "auto": true,
     "_why": "`push_reel.SUMMARY_MAX = 13`，量`len()`原始字符数。「斯瓦泰克逆转晋级」= 8字，在闸内。只写`summary`和`lead`，`matchup`/`score`/`event`由封面算——一个数写两处必分叉。"
+  },
+  "stats": {
+    "tour": "wta",
+    "a": {
+      "headshot": "assets/players/headshots/wta-316738.jpg",
+      "aces": 1,
+      "df": 4,
+      "winners": 24,
+      "ue": 51,
+      "first_in": 49,
+      "first_total": 77,
+      "first_won": 29,
+      "second_won": 12,
+      "second_total": 28,
+      "bp_conv": 5,
+      "bp_chances": 19,
+      "pts_won": 89,
+      "pts_total": 180
+    },
+    "b": {
+      "headshot": "assets/players/headshots/wta-326408.jpg",
+      "aces": 0,
+      "df": 4,
+      "winners": 29,
+      "ue": 53,
+      "first_in": 73,
+      "first_total": 103,
+      "first_won": 41,
+      "second_won": 14,
+      "second_total": 30,
+      "bp_conv": 5,
+      "bp_chances": 13,
+      "pts_won": 91,
+      "pts_total": 180
+    },
+    "footer_venue": "多伦多",
+    "footer_date": "2026-08-13",
+    "_source": "ACE/双误/一发/二发/破发点/总得分：WTA官方统计接口tournaments/806/2026/matches/LS002/stats setnum=0，与flashscorematch_id AVALv4M8逐项核对一致——和上面`_facts.技术统计（全场）`是同一份数据，不会两处对不上。\n\n⚠️ Winners/UE（斯维托丽娜24:51、斯瓦泰克29:53）出处是rallyher.com《Iga Swiatek Is Buzzing Again Like a Humble Bee, Beats Svitolina to Reach the Toronto Final》逐盘统计表（Set1 9:9/22:16、Set2 11:7/7:17、Set3 4:13/22:20，加总29:24制胜分、53:51非受迫失误，文中原句『Swiatek's 29 winners edged Svitolina's 24...53 for Swiatek and 51 for Svitolina』）——这正是`render_stat_card.py`docstring里点名『别拿单一二手站不加验证就用』的那个源（上次在rybakina-osaka那条上吃过亏）。这次做过部分交叉校验：把rallyher同一份表里能核对的项和WTA官方数据对比，ACE（斯维托丽娜1/斯瓦泰克0）、双误（都是4）、总得分（91:89斯瓦泰克）三项完全一致；但一发成功率对不上（rallyher算出斯维托丽娜72.7%/斯瓦泰克73.8%，官方是64%/71%，差7个百分点）。三项精确吻合、一项对不上——按`render_stat_card.py`自己写的规矩，这**不构成**『官方转播统计大屏或WTA编辑稿』级别的验证，Winners/UE这两项目前只有rallyher单一来源，账号所有者2026-08-13看过这条说明后仍要求发出这张图，按此发布。"
   }
 }
