@@ -45,6 +45,52 @@ permissions:
   # **不会**创建 workflow run，见 `trigger_pages_build`。
   actions: write
 
+# 同一条采访只留一个在跑——并行两个 run 会互相覆盖 `output/interviews/<slug>/`。
+#
+# **2026-08-13 补的，而且这条线从来就没有过**（`git log -p` 全历史里
+# `concurrency` 零命中，不是被谁删掉的）。窗口是这条线的**设计工作方式**，
+# 不是理论：同一个 slug 反复 dispatch 换封面正是常规操作（下面
+# 「只出海报（不出片）」那一步的注释就记着「2026-08-04 一晚渲了五趟，
+# 四趟是为了换封面」——⚠️ 这句原来写着指向「成片发到 Release」那一步，
+# 复查时核过，它在 `mode=cover` 那一步的注释里，指错了一步），而
+# `mode=render` 要 ~9 分钟。两趟撞上时下面那个提交循环会在
+# `poster.jpg` / `lines.json` 上冲突——**合成仓库上真跑过**，git 原话是
+# `Cannot merge binary files: poster.jpg` + `CONFLICT (content): lines.json`。
+#
+# **分组名必须带 slug。** 写死一个组名的话，一批不同 slug 一起发只会活下来
+# 第一个和最后一个——GitHub 每组只留一个 pending，其余全取消。这条是
+# `explainer.yml` 那边用血换来的（见那个文件同一位置的注释）。
+#
+# ⚠️ **group 故意不带 mode**，跟 `match-reel.yml` 对齐。代价是
+# `mode=push`/`cover`/`subs` 会掐掉同 slug 正在跑的那趟 render；收益是
+# 「同一条采访永远只有一个 run」这条不变量最干净，而**带上 mode 只能解决
+# 一半**——同一个 slug 连发两趟 `render` 仍然会并行，也就是这次要修的那个
+# 问题原样还在。
+#
+# ⚠️ 由此**换掉一个操作习惯**：`cancel-in-progress` 之后，「重发一趟看看起没起来」
+# 会把正在跑的那趟掐掉，不能再拿它当探活手段（CLAUDE.md 记过同一条）。
+# 而这条线的推送在**同一趟 run 里**（不像 match-reel 拆到了 auto-push-reel），
+# 复制页那段最长要等 `60 × 40s = 40 分钟`（下面「推送到微信」那一步的
+# `TENNISLIVE_COPYPAGE_ATTEMPTS/RETRY_SECONDS`），所以一趟
+# `mode=render push=true` 可能一直占着这个组到 job 的 `timeout-minutes: 45`
+# 为止——期间任何同 slug 的 dispatch 都会顶掉它。
+#
+# ⚠️ 45 分钟是**硬顶**，别读成「反正等得起」：render 本身约 9 分钟，
+# 加上最坏 40 分钟的复制页探活就已经越过它了（9 + 40 = 49 > 45）。
+# 这个矛盾**不是这次改出来的**（两个数都是原有的），但 concurrency 让它
+# 更容易被撞见，所以记在这儿。
+#
+# ⚠️⚠️ **由此新开了一个窗口，掐掉的时机很要命**：这条线是「提交成片」
+# 之后才「推送到微信」，中间隔着那最长 40 分钟的等待。在这段里被同 slug
+# 的 dispatch 顶掉，结果是**成片已经进了仓库、微信一个字没发，而且没有
+# 任何「已发过」标记会记下这件事**。补救是重跑一趟 `mode=push`
+# （成片已在仓库里，那条路只要 `-e .`、约 20 秒）。
+# 顶掉它的人当场就知道自己顶了，所以这不是静默失败——但别在
+# 「渲完了正在等复制页」的时候顺手再发一趟。
+concurrency:
+  group: interview-clip-${{ github.event.inputs.slug }}
+  cancel-in-progress: true
+
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -543,19 +589,66 @@ jobs:
           rm -f "$D"/storyboard.jpg
           git config user.name "Claude"
           git config user.email "noreply@anthropic.com"
-          git add "output/interviews/${{ github.event.inputs.slug }}"
+          # 用 `$D`，别把这个路径再写一遍——下面重放那几行清的、放回来的、
+          # 重新 add 的必须**和这里 add 的是同一格**，写两处必分叉，而分叉的
+          # 样子是「重放放回来的不是刚提交的那一格」，不报错。
+          git add "$D"
           git diff --cached --quiet && { echo "没有变化"; exit 0; }
           # **体积闸**：渲完一整趟才被 GitHub 拒收（推分支吃 HTTP 413）是最贵
           # 的失败方式，而这个仓库的 .git 已经 1.77 GiB。判据自动推导——凡是
           # `git commit` 的工作流都要有这一行（`test_every_workflow_that_
           # commits_generated_files_has_a_size_gate`），不维护白名单。
           python tools/check_staged_file_sizes.py
-          git commit -m "interview: ${{ github.event.inputs.slug }} 双语字幕成片"
-          for i in 1 2 3 4; do
-            git pull --rebase origin ${{ github.ref_name }} && \
-              git push origin HEAD:${{ github.ref_name }} && break
-            sleep $((2 ** i))
+          BRANCH="${{ github.ref_name }}"
+          MSG="interview: ${{ github.event.inputs.slug }} 双语字幕成片"
+          git commit -m "$MSG"
+          # ⚠️ **2026-08-13：这里原来是 `git pull --rebase` ＋ `&& break`，
+          # 两个毛病叠在一起，而合成仓库上一跑就全现形了。**
+          #
+          # ① **rebase 过不去。** 另一趟同 slug 的 run 抢先落库时，冲突的正是
+          #    `poster.jpg`（二进制，git 明说 `Cannot merge binary files`）和
+          #    `lines.json`（纯文本，一样冲突——跟文件类型无关）。第 1 次死在
+          #    冲突里，之后每一次都是 `Pulling is not possible because you have
+          #    unmerged files`，跑完 `.git/rebase-merge` 还留在那儿。
+          #    `explainer.yml` / `match-reel.yml` / `frame-grab.yml` 三条线
+          #    早就为这个把 `pull --rebase` 换掉了，这条线没跟上。
+          #
+          # ② **⭐ 更贵的是退出码 0——整步绿着过去，产物静默丢掉。**
+          #    `bash -e` 下 AND-OR 列表里非末尾命令失败不触发退出，而循环体
+          #    最后一句是 `sleep`（必成功），于是循环耗尽之后这一步正常结束。
+          #    实测：`for i in 1 2 3 4; do false && echo push && break; sleep 0; done`
+          #    退出码就是 0。而 `push` 默认是 false，那一趟后面没有任何步骤会
+          #    再碰仓库——**整趟 run 从头绿到尾，没人会知道这一条没落库**。
+          #    ⚠️ 同一个坑的注释就写在上面「成片发到 Release」那一步里
+          #    （「循环里不许写 `[ A ] && break`」），只是没管到 60 行之外。
+          #
+          # 生成出来的产物只有一个正确解——本趟渲的这一份——所以不 merge，
+          # **重放**到最新的分支上；重试是因为 main 还会再动。
+          for attempt in $(seq 1 10); do
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "push 被拒（第 $attempt 次），把本条采访重放到最新的 $BRANCH 上"
+            git fetch origin "$BRANCH"
+            git branch -f rendered HEAD
+            git reset --hard "origin/$BRANCH"
+            # ⚠️ **先清空再放回来，顺序不许反。** `git checkout <ref> -- <dir>`
+            # 只恢复 ref 里**存在**的文件，不会删掉 ref 里没有的——而上一句
+            # `reset --hard` 刚把 origin 上那份旧成片放了回来。这条线尤其要紧：
+            # 仓库里现在还躺着 16 个存量 slug 的 mp4，而上面「成片发到 Release」
+            # 那一步 `rm -f "$CLIP"` 之后本趟提交是带着 `delete mode` 的。
+            # 合成仓库上验过——**漏掉这一行，被删掉的 mp4 当场被重放救活**，
+            # 于是仓库里留着旧片、真片在 Release 上，两个地址两条片子。
+            rm -rf "$D"
+            git checkout rendered -- "$D"
+            git add -A "$D"
+            python tools/check_staged_file_sizes.py
+            git diff --cached --quiet || git commit -m "$MSG"
+            # 退避带 jitter：固定间隔会让撞车的双方下一轮继续对撞。
+            sleep $((attempt * 5 + RANDOM % 10))
           done
+          echo "::error::连续 10 次推送失败；本条采访没有落库，别把它当成已发"
+          exit 1
 
       # **「触发成功」不算推了，这一步 success 才算。** 而且它必须排在提交之后：
       # GitHub Pages 只服务 main，复制页没进 main 就取不到，按钮会被摘掉

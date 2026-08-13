@@ -184,8 +184,26 @@ jobs:
           retention-days: 14
 
       - name: 推送小红书待发布包到微信
+        id: push
         if: steps.generate.outputs.has_new == 'true' && env.PUSHPLUS_TOKEN != ''
-        continue-on-error: true  # 单次推送抖动不应让整轮内容雷达失败
+        # 2026-08-13 审查：这行原来写着 `continue-on-error: true  # 单次推送抖动
+        # 不应让整轮内容雷达失败`——**那个前提不成立**。抖动（网络异常、5xx）
+        # 早就在库层重试过了（`src/tennislive/publish/pushplus.py` 的重试预算：
+        # 只重试「没送到」，`code != 200` 是明确拒绝不重发）。能走到这一层的，
+        # 已经是重试之后仍然没送到、或者被服务端明确拒绝的**硬失败**——
+        # 恰恰是最该出声的那一类。continue-on-error 拦错了类别。
+        #
+        # 而它真正的代价是**把这条工作流自己装的那道闸废掉了**：下面
+        # 「运行失败时告警」挂的是 `if: failure()`，专为无人值守写的；
+        # continue-on-error 让 job 保持绿色，于是那个 PushPlus 告警
+        # **一次都不会响**。
+        #
+        # ⚠️ 所以 continue-on-error **留着**，形状抄 `oncourt-interviews.yml`
+        # （本仓库唯一做对的一条推送）：吞下来只是为了让失败落到一个**能写出
+        # 具体原因**的步骤里，而不是只留一句泛泛的「本次运行失败」——
+        # 这条线的失败原因很特殊，见下面那一步的注释。
+        # 判据：tests/test_workflow_alerts.py::test_吞掉微信推送失败的步骤都要按outcome重抛
+        continue-on-error: true
         run: |
           export TENNISLIVE_ASSET_REV="$(git rev-parse HEAD)"
           tennislive publish content --manifest .content-publish.json
@@ -206,6 +224,57 @@ jobs:
             fi
             echo "- 选题判定明细见『自动选题并生成完整内容包』步骤日志。"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 推送失败要出声（内容已落库，但没发出去）
+        # 2026-08-13 补。位置只有**一个**约束：排在下面「运行失败时告警」
+        # **之前**——那一步挂 `if: failure()`，要先有人把 job 打红，
+        # 它才读得到失败状态。
+        #
+        # ⚠️ **别照抄 news-brief 那条「必须排在空产摘要之后」的理由，
+        # 在这条线上它是假的。** 复查时（2026-08-13）核过两个 `if:`：
+        #     推送     `steps.generate.outputs.has_new == 'true' && …`
+        #     空产摘要 `success() && steps.generate.outputs.has_new != 'true'`
+        # ——**互斥**。推送跑过，就说明 `has_new == 'true'`，空产摘要早已被
+        # 它自己那个条件跳过，这一步 `exit 1` 跳不掉一份本来就不会写的诊断。
+        # news-brief 那边的空产摘要只挂 `if: success()`，那条约束在**那儿**
+        # 才成立；照抄过来就是给下一个人一个查不出错的假理由。
+        #
+        # 那 `continue-on-error` 在这条线上还买什么？只买**下面这段具体的
+        # 诊断**：不吞的话 job 在推送那一步就红，这一步（隐式 `success()`）
+        # 会被跳过，运行摘要里就只剩一句泛泛的「本次运行失败」，而这条线
+        # 失败之后的处置很特殊——见下。
+        #
+        # ⚠️⚠️ **这条线上「重跑」救不回来，所以必须当场喊。**
+        # `state[pick.key] = today` 是在**生成**的时候就写死的
+        # （`src/tennislive/cli.py` 的 `cmd_content`，落盘到
+        # `data/content_state.json`），而上面「提交内容包与状态」把它
+        # **在推送之前**就提交进了仓库。于是推送失败之后重跑，
+        # `select_content` 会因为 `pick.key in state` 直接 `continue` 跳过
+        # 这条内容——**它再也不会被发出去，而且原来一个字都不吭声**。
+        # 这比「重跑会重发」更坏：那个还救得回来，这个是静默永久丢失。
+        #
+        # 「选过」和「发过」本该是两个状态（`tools/auto_push_gate.py` 的
+        # `pushed.json` 就是这么做的，只是这条线从来没接上）。**没有在这里
+        # 改落盘时机**：那会动到 `prune_state` 和 RESULT/PREVIEW 日限的计数
+        # 口径，而「推送失败的那条内容是下一趟重新选出来（可能已过热点窗口），
+        # 还是就此作废」两种都说得通——**那是口径选择，不是明确的问题**，
+        # 留给账号所有者定。这一步先把静默的永久丢失变成大声的永久丢失。
+        if: steps.push.outcome == 'failure'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "::error::微信推送失败：本轮内容包已经落库，但没有发出去"
+          {
+            echo "## ⚠️ 内容雷达：内容已落库，微信没发出去"
+            echo ""
+            echo "- 推送步骤失败。库层已经重试过「没送到」，走到这一步的是硬失败"
+            echo "  （重试完仍然没送到，或者被 PushPlus 明确拒绝）。"
+            echo "- ⚠️ **重跑救不回来**：这条内容在生成时就已记进"
+            echo "  \`data/content_state.json\` 并随上一步提交，下一趟会被当成"
+            echo "  「已用过」跳过。要补发得人工处理。"
+            echo "- 内容包已在本次提交里：\`output/<日期>/queue/\` 下。"
+            echo "- 运行日志：$RUN_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 1
 
       - name: 运行失败时告警（PushPlus + 运行摘要）
         # 无人值守时，任何一步失败都主动通知，而不是只留一封 GitHub 邮件。
