@@ -34,7 +34,8 @@
     "r2": "https://www.youtube.com/watch?v=KkuuPrULBy0",
     "r3": "https://www.youtube.com/watch?v=a-C6Tdm5yJ8",
     "qf": "https://www.youtube.com/watch?v=HixhHzqvc54",
-    "sf": "https://www.youtube.com/watch?v=l-DAU9VU9zk"
+    "sf": "https://www.youtube.com/watch?v=l-DAU9VU9zk",
+    "montreal": "https://www.youtube.com/watch?v=fQLgH6NYj7E"
   },
   "primary": "final",
   "_sources_why": "六条全部来自赛事自己的 YouTube 频道 **Cincinnati Open**，标题把轮次和比分直接写出来（`Na Li def. Sorana Cirstea 6-3, 4-6, 6-3` / `Li Na def. Agnieszka Radwanska 6-1, 6-1` / `Li Na def. Venus Williams 7-5 3-6 6-1` / `Li Na defeats Angelique Kerber` / `2012 Western & Southern Open Women's Championship Trophy Ceremony`）——**四要素由赛事方自己写在标题里**，不靠看图推断；画面里的 W&S OPEN CINCINNATI 台头、Emirates／THE ENQUIRER 场边板、颁奖台的赛事 logo 又交叉印证赛事。半决赛那条更直接：10.5~15 秒烧着一张字卡，原文就是 `Li Na def. Venus Williams 7-5 3-6 6-1`。⚠️ 这批源片**没有烧死的记分条**，所以片子里不写「此刻几比几」这种要靠画面自证的话，比分一律来自签表。",
@@ -44,7 +45,8 @@
     "r2": "同上，854×480。",
     "r3": "同上，854×480。",
     "qf": "同上，854×480。",
-    "sf": "同上，720×480（这条还更小，见 conform）。"
+    "sf": "同上，720×480（这条还更小，见 conform）。",
+    "montreal": "同上，854×480。WTA 官方频道 2012 年的上传。"
   },
   "conform": {
     "sf": "720×480 → 等比放大铺满再中央裁到 854×480（1.19× 放大 + 上下各裁 44px）。这条源片本身带上下黑边（片头那张 `Li Na def. Venus Williams 7-5 3-6 6-1` 的字卡看得很清楚），裁掉的正好是黑边那一带。半决赛胜大威是这一周绕不过去的一场，而赛事频道只发了这一个版本。"
@@ -156,11 +158,44 @@
       "narration": "他带过海宁——那个七次拿到大满贯、当过世界第一的比利时人。"
     },
     {
+      "start": 118.0,
+      "end": 126.0,
+      "source": "montreal",
+      "fit": "contain",
+      "narration": "辛辛那提的前一站，是蒙特利尔的罗杰斯杯。",
+      "_why": "这一段画面里挂着 ROGERS CUP - CHAMPIONSHIP 的记分条图形，赛事和轮次由画面自证。夜场蓝场，和辛辛那提白天那几场分得开。"
+    },
+    {
+      "start": 136.0,
+      "end": 144.5,
+      "source": "montreal",
+      "fit": "contain",
+      "narration": "她一路打进决赛。半决赛六比二、六比一，赢的正是拉德万斯卡。",
+      "_why": "这条是**贯穿线**：几天后在辛辛那提 1/4 决赛她又赢了同一个人，那一段会回扣。两个比分都来自英文维基的签表。"
+    },
+    {
+      "start": 146.0,
+      "end": 153.5,
+      "source": "montreal",
+      "fit": "contain",
+      "narration": "决赛遇上科维托娃。那场球赶上下雨，一直拖到星期一的晚上。",
+      "_why": "145~152 是她的一个近景（146.5 那格），不是回合——25 fps 升采样在这种镜头上看不出来。"
+    },
+    {
+      "start": 191.5,
+      "end": 199.5,
+      "source": "montreal",
+      "fit": "contain",
+      "narration": "五比七、六比二、三比六。又是一个亚军。",
+      "_why": "192.5 她走向球网、194.5 握手、196.5 拥抱。输掉决赛那一刻的画面，正是「弥补缺憾」这条线要的那一格。"
+    },
+    {
       "start": 12.5,
       "end": 20.5,
       "source": "r2",
       "fit": "contain",
-      "narration": "八月十三号，辛辛那提开赛。她是九号种子，第一轮轮空。"
+      "narration": "而辛辛那提，八月十一号就开赛了。她是九号种子，第一轮轮空。",
+      "_why": "⚠️ 上一版写的是「八月十三号开赛」——错的。英文维基：2012 Western & Southern Open **August 11–19**，而 8 月 13 号是蒙特利尔决赛那天（罗杰斯杯女子 8/4–8/13，决赛因雨顺延到周一）。也就是说她在蒙特利尔打决赛的时候，辛辛那提已经开赛了。"
     },
     {
       "start": 21.5,
@@ -220,10 +255,10 @@
     },
     {
       "start": 90.5,
-      "end": 97.0,
+      "end": 97.5,
       "source": "qf",
       "fit": "contain",
-      "narration": "一个多月前，这个人刚刚打进温网决赛。"
+      "narration": "一个多月前的温网亚军。而几天前在蒙特利尔，李娜也赢了她。"
     },
     {
       "start": 17.0,
@@ -328,5 +363,8 @@
     "lead": "2012 年 8 月，李娜在辛辛那提拿下生涯唯一一座 WTA1000 级别冠军。在那之前她已经 14 个月没有冠军：温网第二轮出局，奥运会第一轮出局。真正的转折不在球场上——新教练卡洛斯·罗德里格斯 8 月 15 日星期三晚上才到辛辛那提，第二天第三轮第一次坐进她的包厢，而在那之前两个人从来没见过面。决赛首盘 1-6，第二盘科贝尔 3-4 发球那一局打了 24 分，李娜浪费七个破发点才拿下来，最后 1-6 6-3 6-1 逆转夺冠。",
     "auto": true,
     "_why": "summary 10 字，在 SUMMARY_MAX=13 以内。solo 版式没有 versus/result，matchup 和 score 都算不出来，所以只写 summary 和 lead。"
+  },
+  "mixed_fps": {
+    "montreal": "25 → 29.97：这条是**升采样**，每 5 帧要补 1 帧。所以这四段**故意不取回合**——取的是记分条图形、她在底线间的走动、和赛后走向球网握手拥抱那一段，动量低，补帧看不出来。赛事方只发了这一个版本的决赛集锦。"
   }
 }
