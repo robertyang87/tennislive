@@ -1,7 +1,130 @@
 {
   "slug": "rybakina-gauff-tor2026-sf",
+  "_note": "选题来路：账号所有者要求做「今天的莱巴金娜赛后采访」，随后确认视频链接就是这条（`-QwjACwTDw0`），并提示「采访在后半段」。\n\n**事实（已用多个独立源交叉核过，见 `_source`）**：莱巴金娜（2 号种子）5-7 6-2 6-2 逆转高芙（4 号种子），2026-08-13，国家银行公开赛（多伦多站，WTA1000）半决赛。首盘她被破发丢掉，第二、三盘她只丢四局，连扳两盘。这是她本站**第 4 场三盘大战**（此前 R2 战卡萨金娜、R16 战萨姆索诺娃、1/4 决赛战大坂直美都是三盘），公开赛时代第 4 位靠着四场三盘胜利打进同一站决赛的选手。她 2026 年硬地战绩来到 26 胜，巡回赛第一（萨巴伦卡和斯维托丽娜各 25 胜）；这是她生涯第 7 个 WTA1000 决赛，2026 年第 2 个（此前印第安维尔斯屈居亚军）；也是她**生涯首次打进多伦多决赛**。决赛对手是斯瓦泰克（7 号种子），两人生涯交手 12 战 6-6 战平，莱巴金娜赢下最近两次（含 2026 年澳网 1/4 决赛），第 13 次交手是这站的决赛。\n\n**采访本体**（288–412 秒，场上采访，全程双语字幕）：主持人开场先提到这是「又一次了不起的表现」，随后点出一个具体又扎心的细节——她本届已经在场上站了 11 个半小时，这场采访是美东时间凌晨 1 点做的，看台上还有观众留到这时候给她加油。她被问到「带着疲惫怎么保持专注」，回答里说到「呆了这么久，有些球好像自己就从球拍里飞出去了」，还提到接发球判线上沾了点运气，「我就是一直在拼」——这段话和 tennismajors.com 的赛后战报直接引用的原话吻合（见 `_source`），可以互相印证。后半段谈到和高芙上一次交手也是四年前在多伦多、也是三盘；再谈到去年夏天在蒙特利尔她差一点打进决赛，这次在多伦多真的打进了，「非常骄傲」；结尾主持人提醒她明天还要为冠军再拼一场。\n\n⚠️ **h2h 数字交叉核过**：WebFetch 摘要一度把「与斯瓦泰克 12 战 6-6」错误压缩成「1:1」，用 WebSearch 直接查证「6-6, 13th meeting, last two to Rybakina」拿到多个独立源（tennismajors、WTA 官网相关报道）一致确认，按证据采信 6-6。",
+  "_source": [
+    "https://www.wtatennis.com/news/4558792/by-the-numbers-rybakina-claims-tour-leading-26th-hardcourt-win-to-reach-final",
+    "https://www.tennismajors.com/wta-tour-news/rybakina-and-swiatek-both-fight-through-to-set-up-toronto-final-decider-858382.html",
+    "https://www.wtatennis.com/news/4557872/toronto-semifinals-coco-gauff-elena-rybakina-who-prevails-in-a-match-four-years-in-the-making"
+  ],
   "url": "https://www.youtube.com/watch?v=-QwjACwTDw0",
   "source_title": "Coco Gauff vs. Elena Rybakina | 2026 Toronto Semifinal | WTA Match Highlights（@WTA 官方频道，YouTube RSS 确认 channel_id=UCaBIVVpHjq6j3tSyxwTE-8Q，2026-08-13T05:20:24Z 上传，--stage subs 实测真实片长 420 秒）",
   "start": 287.1,
-  "end": 412.0
+  "end": 412.0,
+  "_window_why": "跑过 `--stage subs`（宽窗 288–418）确认集锦本体只到约 286 秒，287.1 秒起是评论员那句完整的「A superb win.」（比对 `cap_-QwjACwTDw0.en.json3` 逐条时间戳定的边界，不是从句子中间切）；412.0 秒收在「Thank you. Thank you very much.」说完（该行 end=411.88s），后面是 WTA 片尾卡，不进片。62 组问答完整覆盖：赛后开场致意、11.5 小时／凌晨1点这段、与高芙的交手史、以及「很骄傲」收尾。",
+  "column": "赛后开麦",
+  "interview_kind": "赛后场上采访",
+  "event": "2026 国家银行公开赛（多伦多）半决赛",
+  "winner": "莱巴金娜",
+  "human_quote": {
+    "url": "https://www.tennismajors.com/wta-tour-news/rybakina-and-swiatek-both-fight-through-to-set-up-toronto-final-decider-858382.html",
+    "text": "I feel like I stayed so many hours on the court that maybe some shots are just coming out from my racquet. Also at important moments I got a bit lucky with the line on the return. I was just trying to fight.",
+    "human_quote_ok": [
+      [
+        "racket and uh",
+        "racquet"
+      ],
+      [
+        "moment",
+        "moments"
+      ],
+      [
+        "and uh again",
+        "i"
+      ]
+    ]
+  },
+  "cover": {
+    "frame_at": 383.0,
+    "_why": "还没看过这一帧，是从转写内容猜的：383.0 秒落在她说「Very proud.」附近（主持人刚问完「这一周拼出来的这一切，你有多骄傲」）——采访机位这段全程对着她本人，而这一句是全篇少有的、不带口头语的干脆肯定句，猜测这里她表情会比较舒展。之后要跑一趟 `mode=cover` 确认好看，不好看再换。",
+    "title": [
+      "凌晨一点 她刚打完",
+      "本周第四场三盘大战"
+    ],
+    "sub": "生涯首进多伦多决赛　对手是6比6打平的斯瓦泰克",
+    "_copy_why": "钩子用的是采访本体里最扎实的一个细节（11.5 小时／凌晨1点），不是「拼了就翻盘」的老callback——那条 callback 上一条 QF 的片子（大坂直美那条）已经用过，同一栏目不重复。sub 补两条钩子没提到的硬事实：生涯首进决赛、对手是6-6战平的斯瓦泰克，为下一条片子（决赛）埋一个钩子。",
+    "tag": "2026 多伦多半决赛 · 莱巴金娜"
+  },
+  "takeaway": {
+    "close": {
+      "point": "十一个半小时 四场三盘全咬下来了",
+      "ask": "决赛6比6打平斯瓦泰克 还咬得动吗？"
+    }
+  },
+  "push": {
+    "_why": "matchup/score 和顶栏一致；summary 卡在 SUMMARY_MAX=13 字，接的是「四场三盘」这条本站独有的统计线索，不是「拼了就翻盘」的老callback；lead 把凌晨1点/11.5小时这个具体细节和四场三盘的统计事实分开说，最后收在决赛悬念上。",
+    "matchup": "莱巴金娜 vs 高芙",
+    "score": "5-7 6-2 6-2",
+    "event": "",
+    "summary": "四场三盘 拼进决赛",
+    "lead": "2026 国家银行公开赛（多伦多）半决赛，莱巴金娜 5-7 6-2 6-2 逆转高芙，生涯首进多伦多决赛。这是她本站第4场三盘大战——此前战卡萨金娜、萨姆索诺娃、大坂直美都是三盘，公开赛时代第4位靠四场三盘拿下同一站决赛的球员。采访是美东时间凌晨1点做的，她这一周已经在场上站了11个半小时，看台上还有观众留到这时候给她加油。决赛对手是斯瓦泰克，两人生涯12次交手6-6打平。场上采访全程，中英双语字幕。"
+  },
+  "zh": [
+    "一场精彩的胜利",
+    "她进入这种状态的时候",
+    "没人能挡得住",
+    "埃琳娜 我昨晚说过",
+    "今晚我还要再说一遍",
+    "你的血管里全是冰",
+    "又是一次了不起的表现",
+    "恭喜你",
+    "看台上还坐满了人",
+    "就是为了给你加油",
+    "这一届赛事里 你已经",
+    "在场上站了11个半小时",
+    "现在是凌晨一点",
+    "美东时间",
+    "你是怎么保持住",
+    "专注力的 我猜",
+    "你肯定很累了",
+    "我也不知道 我感觉",
+    "就像你说的 呆了这么久",
+    "在场上 可能有些球",
+    "就这样自己从球拍里飞出去了",
+    "而且关键时刻",
+    "接发球判线上也沾了点运气",
+    "我就是一直在拼",
+    "谢谢大家留到这么晚",
+    "今天真是漫长的一天",
+    "你上一次和高芙交手",
+    "也是在多伦多",
+    "那场也打了三盘",
+    "你知道对她",
+    "容错空间很小 是怎么应对的",
+    "是啊 确实是这样",
+    "我们上次交手",
+    "也是一场恶战",
+    "就连平时一起训练",
+    "打起来也总是很胶着",
+    "所以我就尽量专注",
+    "发球在最后帮了我很大的忙",
+    "我感觉",
+    "首盘我们俩都打得不错",
+    "后来我有点着急",
+    "我很高兴自己还是赢了下来",
+    "打满三盘的这场",
+    "你去年夏天在蒙特利尔",
+    "差一点就打进决赛",
+    "这次在多伦多 你真的打进了",
+    "这一周你拼出来的这一切",
+    "你有多骄傲",
+    "非常骄傲",
+    "非常骄傲 而且和团队一起",
+    "我们准备得也很充分",
+    "现在最重要的就是",
+    "不管明天结果如何都要往前走",
+    "就是尽量去享受",
+    "一直打下去",
+    "一直去拼 希望在每一站",
+    "都能走得更远一些",
+    "好了 埃琳娜 去好好休息吧",
+    "这是你应得的 明天",
+    "你还要为冠军再拼一场",
+    "恭喜你",
+    "谢谢 非常感谢你们"
+  ],
+  "en_fixed": {
+    "19": "as you said I stayed so many hours"
+  },
+  "_en_fixed_why": "第 19 行 ASR 把 `stayed` 听成了 `said so much`——`人工引语校验` 抓到的唯一一处 ASR 在语法上就说不通的地方：`as you said I said so much so many hours on the court` 读起来是「就像你说的，我说了很多，很多小时」，主谓关系不成立；换成 `as you said I stayed so many hours on the court` （「就像你说的，我在场上呆了这么多小时」）才是一句完整、通顺的话，也和 tennismajors.com 逐字引用的赛后原话吻合。⚠️ 这处目前只有人工转写这一个独立源支持，还没有第二份 ASR（whisper）交叉确认——留到 `--stage verify` 时如果 whisper 也听成别的词，再回来复核。",
+  "_human_quote_ok_why": "`人工引语校验` 报的 4 处分歧里，除了第 19 行那处（已改进 en_fixed），其余 3 处都是记者转述时的编辑习惯，不改 ASR：\n① `racket`→`racquet`——单纯的英式/美式拼法差异（racquet 是球拍的另一种拼法），不是听错，读音完全一样；\n② `moment`→`moments`——单复数的小幅松动，和 alexandrova-sabalenka 那条`is`→`are` 是同一类「口语里常见的数的一致性松动，不改变意思」；\n③ `and uh again`→`i`——记者把她带着停顿词的原话（`and, uh, again [I] was...`）改写成了一句新句子（`I was...`），删掉了停顿词和过渡词、恢复主语「I」，是记者润色不是转写更准。"
 }
