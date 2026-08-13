@@ -556,6 +556,18 @@ def push(
     # 不是 caplog——退回 `logger.info` 时它捕获到的是空字符串。
     print(f"[PushPlus] 收下了：流水号 {data.get('data') or '(返回体里没有)'}"
           f"　图片通道 {image_provider}　msg={data.get('msg') or ''}")
-    print(f"[PushPlus] ⚠️ 这只代表接口收下。要查微信有没有真的送达，用流水号问："
-          f"https://www.pushplus.plus/api/send/queryMessage?token=<TOKEN>&id="
-          f"{data.get('data') or '<流水号>'}")
+    # ⚠️ **这儿原来印着一个查询 URL，那是没验证过的。**
+    # `https://www.pushplus.plus/api/send/queryMessage?token=…&id=…`——照它
+    # 建了工具和工作流、跑到 runner 上（token 在 secret 里，只有那儿查得了），
+    # 实测 `code=903 用户令牌不正确`；再去翻官方 API 文档，**根本没有这个
+    # 查询接口**（文档只说「可以用流水号查最终发送结果」，端点、参数、鉴权
+    # 一概没写）。也就是说那句提示把人引向一条不存在的路，而且它印了很久。
+    #
+    # 又一次「没量过的推断写进注释，之后每个人都拿它当判据」（同 CLAUDE.md
+    # 里「edge-tts 同理」那条）。所以现在只说**这个模块真的知道的那一半**：
+    # 收下了不等于送达了，而送达与否我们这儿查不了。判据
+    # `test_不许再印没验证过的投递查询接口`。
+    print("[PushPlus] ⚠️ 这只代表接口收下，**不代表微信推到了手机上**。"
+          "PushPlus 没有公开的投递查询接口（官方 API 文档里没有；"
+          "照着猜的那个端点实测 903 用户令牌不正确），"
+          "所以送达与否只能看微信本身。")
