@@ -35,6 +35,38 @@ ACE/双误/一发这几项在 flashscore `df_st_1` 就有；Winners/非受迫失
 的数字不加验证就用——这个仓库已经在 rybakina-osaka 这条上吃过一次亏：
 二手站给的 Winners/UE 和官方转播图对不上。
 
+**Winners/UE 找不到时，按这个顺序多查几个源**（2026-08-13 实测，别重新试一遍）：
+
+    rallyher.com                独立赛后稿，覆盖当周大部分 Toronto 比赛，
+                                 但**不能单独采信**（上面那条教训）；
+                                 WebFetch 对这个域名会 EGRESS_BLOCKED，
+                                 改用 `curl -A "Mozilla/5.0 ..."` 走 Bash
+                                 的代理能通——WebFetch 和 Bash 走的不是
+                                 同一条出网路径，一个被挡不代表另一个也被挡
+    tennisabstract.com/charting 人工逐分记谱，质量最高（Jeff Sackmann
+                                 Match Charting Project），但**覆盖是志愿者
+                                 手工挑的，当天/当周的非大满贯比赛基本不会
+                                 有**——查 `charting/meta.html` 里的索引，
+                                 同一对球员的历史交手会先跳出来，别把旧的
+                                 那场当成这次的。大满贯和马德里/罗马/印第安
+                                 维尔斯这类大站更可能被charting，Toronto
+                                 这种规模的常规站基本查不到
+    sofascore.com / matchstat.com / ultimatetennisstatistics.com
+                                 三个在这台沙箱**恒不通**：sofascore 和
+                                 matchstat 的 API 403，UTS 直接连接被重置
+                                 （TLS 层面的阻断，不是权限问题）。别再花
+                                 时间试，浪费一次请求就够确认了
+    WTA 官方赛后稿（Match Reaction / By the Numbers）
+                                 仍然是最可信的一档，但**发布有延迟**——
+                                 半决赛打完当天常常还没有，决赛的稿子
+                                 通常更快。查不到不代表以后也查不到，
+                                 隔几小时可以再查一次
+
+**这条不是「查够了就能用」的许可**，是「查完这一轮该查的都查了，仍然
+一个都没有」时如实说清楚查过什么——参照上面『查得够深、查得够广』那条
+判据，报告里要点名每一个查过的源和它给出的结论（含"被墙""无覆盖"这类
+否定结果），不能只说「查过了，没有」。
+
 ## 头像
 
 **不在渲染时抓，抓好之后缓存成文件、spec 里写路径。** 用
