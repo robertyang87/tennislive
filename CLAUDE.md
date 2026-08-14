@@ -2053,6 +2053,44 @@ origin/main，**分支上还没推的提交就此掉出来**（我今天用它 r
 和「反向验证不许用 `git checkout` 还原」是同一族：**这两条命令都以「重置」
 为业，而被重置掉的东西不会有人通知你**。
 
+### ⭐ 两个 worktree 同时持有一个分支：在另一个里 rebase，主工作区凭空长出一大片删除
+
+2026-08-14 差点栽的，**而且是被「提交你的改动」这句好心话推着栽的**。
+
+并行开工时我在主工作区（`/home/user/tennislive`）之外另开了 worktree，其中
+`git worktree add … origin/<分支>` 落成 detached HEAD，我随手
+`git checkout -B <分支>` 把分支拽了过去——**而主工作区当时正checked out 在同一个
+分支上**。然后我在新 worktree 里 `git rebase origin/main`。
+
+分支的 ref 跟着往前走了，**主工作区的索引和工作树一个字节都没动**。于是
+`git status` 在主工作区里报出来的是：
+
+    28 files changed, 16 insertions(+), 8148 deletions(-)
+    D  output/interviews/<slug>/copy.html      ← 已经发出去的复制页
+    D  specs/interviews/<slug>.json            ← 已经发出去的片子的 spec
+    …
+
+**这不是我删的，是 HEAD 往前跑了、工作树还停在原地**——「HEAD 有而工作树没有」
+在 `git status` 里的长相，和「我把它删了」**一模一样**。
+
+⚠️ **危险的不是这个状态，是那句「有未提交的改动，请提交并推送」。** 照做就是
+把八千行已发布的产物和另一个会话的代码一起删掉推上去，而这些链接已经发在微信
+消息里了（本文件里「删文件就是把老消息变成死链，而消息发出去收不回来」）。
+
+**判据是差异的方向，不是差异的存在**：
+
+| 看什么 | 说明什么 |
+|---|---|
+| `git diff HEAD --shortstat` **几乎全是删除** | 十有八九是工作树比 HEAD 旧，不是有人删了东西 |
+| `git worktree list` 里**同一个分支出现两次** | 就是这个病，别再往下想别的 |
+| 每个 `M` 文件的内容能在历史里找到（`git hash-object` 比 `git rev-parse <commit>:<路径>`） | 那份是**旧副本**，不是新工作，丢了不心疼 |
+
+确认是这个病之后：**先把 `git diff HEAD` 存成 patch 当安全网**，再让主工作区
+回到一个没人持有的分支（`git checkout -f main && git reset --hard origin/main`）。
+
+⚠️ **顺手把规矩定死：主工作区一律留在 `main`，干活一律在 worktree 里。**
+一个分支只许被一个 worktree 持有——git 本来会拦，`checkout -B` 恰好绕过了那道拦。
+
 ### 测试自己也吃「本地装着不等于 CI 装着」
 
 上面那条测试第一版写了 `import yaml`。沙箱里装着，全量 1013 绿；CI 上没有，
