@@ -1850,12 +1850,82 @@ def _reject_underscored_fields(spec: dict) -> None:
             check(f"第 {index + 1} 段", "segment", seg)
 
 
+# 顶层写过 `voice` / `rate` 的三条 spec。**只许减不许加**，而这句话在
+# `tests/test_reel_editorial_contract.py` 里是**判据不是注释**，三头都钉：
+# 名字必须真的是一条 spec、那个死键必须真的还在、而且它必须是封口日之前的
+# **存量**（拿 `git ls-files output/*/reel/<slug>/render.json` 的日期算）。
+# 少最后一头的话，下一个人新写一条 spec、顶层照旧写 `voice`、再把名字加进
+# 这张表，就把这道闸对它整个关掉了——而前两头全绿。
+#
+# ⏰ **清掉一条只要删一行 JSON，不用重渲**（这两个键一个字节都不进成片）。
+# 删完把名字从这儿一起删掉，自检会提醒你。这次没顺手删是因为这三个 spec
+# 文件不在这次改动的范围里。
+_DEAD_TOP_VOICE_LEGACY = frozenset({
+    "eala-story",                 # 写着云希，成品 narration_voice 是**云见**
+    "lina-cincinnati-2012",       # 写着云希，成品是云希
+    "rybakina-gauff-toronto-sf",  # 写着云见，成品是云见
+})
+
+#: 顶层这两个键**没有任何代码读**——真音色/语速来自 `--voice` / `--rate`
+#: （工作流输入，默认云见 `+6%`）。
+_DEAD_TOP_VOICE_KEYS = ("voice", "rate")
+
+
+def _reject_dead_voice_keys(spec: dict) -> None:
+    """顶层 `voice` / `rate` 是死键：写了等于没写，而且不吭声。
+
+    ⚠️ **2026-08-14 量出来的证据，同一个键、同一天、两把嗓子：**
+
+        specs/reels/eala-story.json            "voice": "zh-CN-YunxiNeural"
+          → output/2026-08-13/…/render.json     narration_voice: **Yunjian**
+        specs/reels/lina-cincinnati-2012.json  "voice": "zh-CN-YunxiNeural"
+          → output/2026-08-13/…/render.json     narration_voice: **Yunxi**
+
+    `_seg_voice` 只在**段级**读 `voice`（而且要求值是 dict）；顶层这个
+    全文件零读取。真音色来自 `--voice`，谁传谁说了算。这和 `_push` vs `push`
+    是同一个形状（CLAUDE.md 里那条：键写错、退路刚好给出对的答案、整整一个月
+    没出声），所以处置也照那条来——**出声**。
+
+    **为什么选「报错」而不是「让 `load_spec` 真去读它」**（两条路都说得通，
+    这是选择的理由，别再重新论证一遍）：
+
+    1. **这个键连「记录用了什么」都做不到。** 上面两条写着同一个值，成品却是
+       两把嗓子。读它，等于把一条**错的记录**升级成一条**错的指令**。
+    2. **已发的片子不重渲**（微信那条消息收不回来）。真去读它，`eala-story`
+       的 spec 就会永久声称这条片子是云希配的，而成品是云见——**把一个不吭声
+       的死键换成一句会被人当真的假话**，比现在更坏。
+    3. **音色是这条线的属性，不是这条片子的属性。** 账号定的就是云见一把嗓子
+       （`match-reel.yml` 那句注释：「定下来的是云见——体育解说那把嗓子」）。
+       做成 per-spec 字段等于给「每条片子换个人说话」开一个入口；而真正需要的
+       逐段调整已经有 `segments[].voice`（带 `_why` 认领）了。
+    4. **出处只有一个**：`--voice` / `--rate`。要记「这条片子真用了什么」，
+       `render.json` 的 `narration_voice` / `narration_rate` 已经在记，
+       而且记的是**真跑出来的那个**——查产物，不查信号。
+    """
+    slug = str(spec.get("slug", "")).strip()
+    dead = [key for key in _DEAD_TOP_VOICE_KEYS if key in spec]
+    if not dead or slug in _DEAD_TOP_VOICE_LEGACY:
+        return
+    raise ReelError(
+        f"spec 顶层的 {dead} 没有任何代码读——写了等于没写，而且不吭声。\n"
+        "真音色/语速来自 `--voice` / `--rate`（工作流输入，默认云见 `+6%`）。\n"
+        "实测：`eala-story` 和 `lina-cincinnati-2012` 顶层都写着云希，成品一条"
+        "是云见、一条是云希——**同一个键，两把嗓子**。\n"
+        "  · 要这条片子的某一段换语速/音高 → 写 `segments[].voice`"
+        "（带 `_why` 认领）\n"
+        "  · 要换整条片子的嗓子 → 传 `--voice`；这条片子真用了什么，"
+        "`render.json` 的 `narration_voice` 会照实记\n"
+        "  · 只是想留个注解 → 改名叫 `_voice` 并把值写成一句话"
+        "（`_` 开头一律当注解，读都不读）")
+
+
 def load_spec(path: Path) -> dict:
     spec = json.loads(path.read_text(encoding="utf-8"))
     for key in ("segments", "cover"):
         if key not in spec:
             raise ReelError(f"spec 缺少 {key}")
     _reject_underscored_fields(spec)
+    _reject_dead_voice_keys(spec)
     if not spec.get("sources") and not spec.get("source_url"):
         raise ReelError("spec 既没有 `sources` 也没有 `source_url`")
     # 多源的 spec：每一段都要说清自己从哪条源片剪。**不给默认值**——猜错了
@@ -4017,14 +4087,18 @@ def validate_spec(spec: dict) -> list[Segment]:
     - **要量源片才知道的**（裁切窗口越界、`frame_at` 超出片长）——这里做不了，
       别塞进来假装也提前了。
     """
-    # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
-    # 不要等到六分钟渲染完才发现两行文字没读到。
-    topbar = _topbar_lines(spec)
-    _validate_editorial_contract(spec, required=topbar is not None)
-    _absolute_claims_need_a_source(spec)
+    # ⚠️ `spec_sources` 挪到最前面了：整改合同现在按**素材构成**判要不要填
+    # （见 `_editorial_contract_required`），得先知道这条 spec 用了谁的画面。
+    # 它只读 spec 的两个键、不碰任何文件，放最前面不花钱。
     urls = spec_sources(spec)
     if not urls:
         raise ReelError("spec 里一个源都没有")
+    # 顶栏是画布版式的一部分，先在 dry-run / check-narration 阶段校形状，
+    # 不要等到六分钟渲染完才发现两行文字没读到。
+    topbar = _topbar_lines(spec)
+    _validate_editorial_contract(
+        spec, required=_editorial_contract_required(spec, urls, topbar))
+    _absolute_claims_need_a_source(spec)
     segments = parse_segments(spec, urls, next(iter(urls)))
     check_archival_fit(spec, segments)
     return segments
@@ -4614,20 +4688,138 @@ def _absolute_claims_need_a_source(spec: dict) -> None:
             "  「…beats Marino for first hard-court win」）一句话就能推翻它。")
 
 
+def _third_party_sources(urls: dict[str, str]) -> dict[str, str]:
+    """这条 spec 里**要从别人的服务器下回来**的那几条源片。
+
+    判据是 `http(s)://`——也就是「这段画面是别人拍的、别人在托管」。今天
+    90 条源无一例外（74 条 youtube.com、9 条 youtu.be、4 条 Brightcove、
+    2 条谷歌网盘、1 条 sky.it），所以这个函数**今天对每一条 spec 都非空**，
+    那正是它存在的意义：整改合同没有一条 spec 绕得过去。
+
+    ⚠️ 留着这层过滤不是为了给谁留后门。**要绕开这份合同只有一条路——
+    真的不用别人的素材**（自拍、自制画面、有授权的本地资产），那时它自然
+    落不进这个字典。写成「反正恒真」的常量就少了这条出路，而那条出路正是
+    合同想鼓励的方向。
+
+    ⚠️ **只吃 `urls`，不收 `spec`。** 第一版多带了一个从头到尾没被读过的
+    `spec` 形参——而这次改动的另一半正是在拦「写了却没人读」的死键
+    （`_reject_dead_voice_keys`）。同一个提交里自己留一个死参数，
+    下一个人只会以为它有用途。
+    """
+    return {key: value for key, value in urls.items()
+            if str(value).strip().lower().startswith(("http://", "https://"))}
+
+
+# 「整改合同改绑素材构成」之前就已经出片的那些。**只许减不许加**，而且这句话
+# 在 `tests/test_reel_editorial_contract.py` 里是**判据不是注释**：除了「名字
+# 真的是一条 spec」「真的还没有 `editorial`」，还要求这条片子**在封口日之前
+# 就渲过了**（产物路径里的日期，`git ls-files` 读得到，稀疏检出和浅克隆都不
+# 影响它）。前两条一个新写的 spec 全都满足——只有第三条堵得住「不补合同、
+# 改挂豁免」这条捷径。写错一个名字，豁免就成了一盏恒真的绿灯。
+#
+# 为什么要分两半（仓库惯例，见 `tests/test_reel_editorial.py` 顶上那段）：
+# 这不是排版，是记账。
+#
+# 已经推过微信，收不回来了——**补一份合同也拦不住那次已经发生的发布**，
+# 事后补写只是给一条已发的片子贴一张漂亮的表格。所以这半是永久的。
+# 归到这半的凭据（2026-08-14 逐条查的，三选一）：
+#   ① 仓库里有 `output/*/reel/<slug>/pushed.json`（自动推送那条路留下的标记）
+#   ② main 上有 `reel: push <slug>` / `reel: <slug> 已自动推送` 那一笔
+#   ③ 已经躺在 `_LEGACY_NO_TOPBAR` 里（那张表的注释白纸黑字写着「已经发出去的」），
+#      或者 CLAUDE.md 点名列进过「已发的成片」（hewitt-washington 在那张音画
+#      时长表里）
+_EDITORIAL_LEGACY_已推送 = frozenset({
+    # ③ 顶栏成为硬要求之前发出去的「赛场之上」，和 `_LEGACY_NO_TOPBAR` 同一批
+    "chwalinska-gibson", "eala-fernandez", "eala-osaka", "eala-pegula-final",
+    "eala-svitolina", "eala-zheng", "fritz-jodar-final", "gea-shapovalov",
+    "medvedev-zandschulp", "nishikori-shang", "noskova-mcnally",
+    "potapova-venus", "rybakina-kasatkina", "shang-rublev", "shang-vallejo",
+    "tirante-fritz", "wang-kasatkina", "wang-pareja", "wang-samsonova",
+    "wong-brooksby", "wong-gea", "wong-lehecka", "zhang-ostapenko",
+    "zhang-putintseva", "zhang-sabalenka", "zverev-griekspoor",
+    # ③ CLAUDE.md「量九条已发的成片」那张表里点名的「网球有故事」
+    "hewitt-washington",
+    # ①② 「网球有故事」和「开球之前」——正是这次改绑要盖住的那几条
+    "cincinnati-story",       # ① pushed.json ＋ ② 已自动推送
+    "eala-pegula",            # ① pushed.json ＋ ② 已自动推送
+    "eala-story",             # ② reel: push eala-story
+    "lina-cincinnati-2012",   # ① pushed.json ＋ ② 已自动推送
+    "zheng-lanlana",          # ① pushed.json ＋ ② 已自动推送
+})
+
+# ⏰ **仓库里找不到推送凭据的那几条。** `editorial` 一个像素都不进画面
+# （全文件只有这道闸读它），所以补一份合同**连重渲都不用**，改完把名字从这儿
+# 删掉就行——自检会在你补完之后提醒你删。
+#
+# ⚠️ **「找不到凭据」不等于「一定没推过」**：`pushed.json` 是 2026-08-02
+# 自动推送上线之后才有的，更早的手动推送只在日志里留过流水号。真查出来推过了，
+# 就把名字挪到上面那半，**别去重渲一条已发的片子**。
+_EDITORIAL_LEGACY_还没推送 = frozenset({
+    "eala-washington-story",  # 08-11 渲的「网球有故事」，push.auto 开着但没有标记
+    "jodar-fritz",            # 08-02 渲的「开球之前」，四趟 render 都没有 push 那一笔
+})
+
+_EDITORIAL_LEGACY = _EDITORIAL_LEGACY_已推送 | _EDITORIAL_LEGACY_还没推送
+
+
+def _editorial_contract_required(
+    spec: dict, urls: dict[str, str], topbar: tuple[str, str] | None,
+) -> bool:
+    """这条 spec 要不要填 `editorial` 合同。
+
+    ⚠️ **2026-08-14：判据从「栏目名」改绑到「素材构成」。**
+
+    在这之前是 `required=topbar is not None`，而 `topbar` 只在
+    `cover.eyebrow == "赛场之上"` 时强制——于是**把台头改成「网球有故事」，
+    整份合同（question / thesis / beats / human_context）就整条豁免掉了**。
+    而豁免掉的恰恰是素材构成最像二次创作的那几条（2026-08-14 扫的）：
+
+        lina-cincinnati-2012    7 条第三方源片   0 条自有画面   ❌ 没合同
+        eala-story              5 条                          ❌
+        eala-washington-story   5 条                          ❌
+        cincinnati-story        3 条                          ❌
+        08-08 之后的「赛场之上」 1 条                          ✅ 33/59
+
+    **来路**：这个号 2026-08-06 被视频号判过「二次创作信息增量不足」，这份
+    合同就是为那次整改建的。**那个风险跟着素材构成走，不跟着台头上印的那
+    四个字走**——平台看的是「你用了谁的画面、加了多少自己的东西」，它不读
+    `cover.eyebrow`。栏目是对读者的承诺，不是对平台的申报。
+
+    所以现在：**`sources` 里有第三方源片就要有合同，与栏目无关。**
+    这条绕不过去——要绕只能真的不用别人的素材（见 `_third_party_sources`）。
+
+    ⚠️ **`topbar` 那一项没有撤，是 `or` 上去的**：它管的是另一件事（顶栏印
+    赛事轮次比分），而且这么写只会**加宽**、绝不会放过原来拦得住的任何一条。
+    """
+    if topbar is not None:
+        return True
+    if not _third_party_sources(urls):
+        return False
+    return str(spec.get("slug", "")).strip() not in _EDITORIAL_LEGACY
+
+
 def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
-    """校验整改期新片是否认领了「原创复盘」的内容合同。
+    """校验这条片子是否认领了「原创复盘」的内容合同。
 
     这不是用字段证明一条片子一定原创，也不承诺平台流量；它只把最容易被
     忘掉的编辑前置工作变成渲染前就会失败的结构：一个复盘问题、一条中心
-    论点，以及至少三个按比赛走势排列的证据节点。带比赛顶栏的新 spec
-    必须填写这份合同，避免顶栏和纯比分流水账重新绑在一起。
+    论点，以及至少三个按比赛走势排列的证据节点。
+
+    **谁必须填，见 `_editorial_contract_required`**——判据是「用没用别人的
+    素材」，不是「台头印的是哪个栏目」。
     """
     raw = spec.get("editorial")
     if raw is None:
         if required:
             raise ReelError(
-                "整改期带顶栏的赛场之上 spec 必须填写 editorial："
-                "mode、question、thesis、beats")
+                "这条片子的画面全部来自别人的源片，必须填 editorial 合同："
+                "mode、question、thesis、beats、human_context。\n"
+                "⚠️ **这条不看栏目**：把台头从「赛场之上」改成「网球有故事」"
+                "绕不过去——2026-08-06 那次「二次创作信息增量不足」的风险跟着"
+                "**素材构成**走，平台不读 `cover.eyebrow`。\n"
+                "真正的出路只有一条：**用自己的画面**（那时 `sources` 里就没有"
+                "第三方源片了）。\n"
+                "字段说明见 docs/columns.md「『赛场之上』的整改内容合同」那节。")
         return
     if not isinstance(raw, dict):
         raise ReelError("spec.editorial 必须是对象")
@@ -4648,8 +4840,8 @@ def _validate_editorial_contract(spec: dict, *, required: bool = False) -> None:
     context = raw.get("human_context")
     if required and context is None:
         raise ReelError(
-            "整改期带顶栏的赛场之上 spec 必须填写 editorial.human_context："
-            "本场切口、事实和来源")
+            "用了别人素材的片子还要填 editorial.human_context："
+            "本场切口、事实和来源——这一栏才是「我们自己加了什么」")
     if context is None:
         return
     if not isinstance(context, dict):
@@ -4958,7 +5150,16 @@ def main() -> int:
     r.add_argument("--spec", required=True)
     r.add_argument("--outdir", required=True)
     r.add_argument("--source", help="已经下好的源片（跳过下载）")
-    r.add_argument("--voice", default="zh-CN-YunxiNeural")
+    # ⚠️ 默认值 2026-08-14 从云希改成**云见**——这是这条线上最后一处还写着云希
+    # 的地方。`match-reel.yml` 的 `voice` 输入早就改过了（那句注释：「定下来的
+    # 是云见——体育解说那把嗓子。默认值一直写着云希，靠每次手动传参盖过去，
+    # 漏一次就换了个人在说话」），而**同一件事在两处各配一遍，只改了一处**：
+    # 工作流那半改了，代码这半留着。
+    # 改它是安全的，查过：全仓库只有 `match-reel.yml` 调这个子命令，
+    # 而它两处调用都显式传 `--voice`，没人在吃这个默认值——真正吃它的是本地
+    # 跑 `--check-narration` 的人（CLAUDE.md 那条快路），而那正是最该拿到
+    # 云见的场景。判据在 `test_默认音色是云见`（现在两处一起钉）。
+    r.add_argument("--voice", default="zh-CN-YunjianNeural")
     r.add_argument("--rate", default="+6%")
     r.add_argument("--dry-run", action="store_true",
                    help="只校验 spec 的形状，不下载不渲染，秒级返回")
