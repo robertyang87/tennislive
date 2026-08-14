@@ -5436,7 +5436,8 @@ _SCRIPTS: dict[str, tuple[tuple, ...]] = {
             "不是四筒，是四种。牌子不同，重量不同，弹起来也不同。"
             "布尔特的说法更直接——它每周都在变。",
             "assets/explainer/tour-balls/ball_change.jpg",
-            "",
+            "Steven Pisano · CC BY 2.0 · 2014 年 8 月 21 日美网资格赛，"
+            "主裁把新球分给球童",
             (
                 "美网前四周 四种不同的球",
                 "牌子 重量 弹性都不一样",
