@@ -1,0 +1,149 @@
+{
+  "slug": "landaluce-draper",
+  "_slug_why": "赢家在前（兰达卢塞胜）。栏目规矩 slug 按赢家-输家。",
+  "source_url": "https://youtu.be/gQkvUX0t1yU",
+  "_source": "ATP Tour 官方 YouTube 频道（@ATPTour，注意不是 Tennis TV 频道，两者都是官方源但不同频道）单场集锦。直接抓取该频道 /videos 页面自己的 ytInitialData 列表核实：`gQkvUX0t1yU | Martin Landaluce vs Jack Draper Highlights | Cincinnati 2026 Round 1`。YouTube oEmbed 二次核实：title=`Martin Landaluce vs Jack Draper Highlights | Cincinnati 2026 Round 1`，author_name=`ATP Tour`，author_url=`https://www.youtube.com/@ATPTour`。probe run 31762350791（2026-08-14 02:01 UTC）验证：源片 130.15s，1920×1080/50fps。\n\n**画面自证**（逐格读过 contact_00~02.jpg 和 score_00~03.jpg 的记分条裁切）：\n- 0.5~2.5s ATP官方自己的开场teaser：记分条从『LANDALUCE 6 6 AD / DRAPER 3 5』切到『LANDALUCE 6 7 / DRAPER 3 5』——就是全场最后一分\n- 7.0s起记分条显示比赛从头开始（0-0），首局兰达卢塞破发，此后记分条逐分可读到首盘6-3收官（38.5s前后）\n- 40.5s起次盘开始，记分条显示德雷珀连破带保迅速2-0领先，78.5s记分条读到『LANDALUCE 2 / DRAPER 5』（德雷珀5-2领先）\n- 80.5s记分条已跳到『LANDALUCE 6 / DRAPER 5』——ATP官方剪辑在这里做了内部跳切（源片本身没有保留2-5到6-5这三局的连续画面，只在记分条上体现结果），92.5~102.5s记分条持续显示『LANDALUCE 6 AD / DRAPER 5』（兰达卢塞正在争夺保这一盘），104.5s记分条翻到『LANDALUCE 7』——比赛结束\n- captions.txt 是真实现场解说：37.40s『who's on a bit of a losing streak himself』（评论员点名兰达卢塞自己正处于连败期）；74.52s『Draper taking real command now of this second set』；102.32s『Out it goes』（终场制胜分）；104.64~109.32s『Martin Andaluze it is a victory in straight sets over Jack Draper』（ASR把Landaluce识别成了Andaluze，是发音误判，正确拼写和译名以本仓库player库为准）——与终场比分、直落两盘完全吻合\n- ⚠️ 115.12s之后是YouTube频道自己的『WATCH MORE / SUBSCRIBE』结尾卡，**不使用**，这条片子的可用素材上限是114.5s左右",
+  "_column": "赛场之上。首轮爆冷+双线对照（新星上升、老将伤病下滑），封面 solo 版式，赢家在前。",
+  "topbar": {
+    "line1": "辛辛那提ATP1000 首轮",
+    "line2": "兰达卢塞 6-3 7-5 德雷珀"
+  },
+  "_topbar_why": "flashscore match id dbir2a5c（本仓库 tools/match_feed.py 直连）：分盘比分 6-3 / 7-5，总用时 1:57（0:38+1:19）；PSPA字段标注 WC（德雷珀外卡）。ATP官方赛后稿标题『Martin Landaluce forges second-set comeback to sink Jack Draper』与Sky Sports、Puntodebreak两条独立信源交叉核实比分一致。",
+  "editorial": {
+    "mode": "match_review",
+    "question": "辛辛那提首轮，排名64位、刚结束自己连败的兰达卢塞，怎么在决定胜负的这一盘一度2比5落后、面对德雷珀六个盘点的情况下，把这场球逆转回来的？",
+    "thesis": "这场首轮表面是一次爆冷，实际是两条方向相反的曲线在这一天相遇——兰达卢塞20岁，这个赛季已经两次从资格赛/幸运落败者身份打进大师赛1/4决赛，正在往上走；德雷珀24岁，两年前还是世界第4，一整年被手臂和膝盖的伤病反复打断，跌到143位、这次是持外卡参赛。而比分本身也不是一场轻松的爆冷：第二盘兰达卢塞一度2比5落后，德雷珀手握六个盘点，全部被他救了回来，最后自己拿到两个赛点才锁定胜局。",
+    "beats": [
+      "开局兰达卢塞就完成破发，首盘他打得干净利落，6比3拿下——这也是他两个月来在硬地正赛的第一场胜利。",
+      "次盘一上来兰达卢塞就崩了，德雷珀连破带保，一路扩大到5比2领先，眼看就要把比赛拖进决胜盘之外提前结束。",
+      "决定胜负的这一盘，德雷珀先后三次逼近终点，六个盘点在手；兰达卢塞全部救了回来，连扳三局追成5比5，再保发反超6比5。",
+      "德雷珀发球保盘，兰达卢塞拿到两个赛点：德雷珀救下第一个、自己甚至一度握有把这盘拖进抢七的机会，但没能把握——第二个赛点，一记制胜分锁定7比5、6比3。",
+      "对面这位曾经的世界第4，这是他今年第三张没有兑现的外卡；兰达卢塞则用这场胜利，续上了自己这个赛季两进大师赛1/4决赛的成绩单。"
+    ],
+    "human_context": {
+      "angle": "德雷珀从世界第4跌到143位靠的是一整年反复复发的伤病——手臂、膝盖、又是手臂，逼得他一次次退赛；兰达卢塞则是另一条曲线，从资格赛一路打到两次大师赛1/4决赛，正处在生涯上升期。两人首次交手，正好撞在这两条曲线交叉的地方。",
+      "facts": [
+        "德雷珀生涯最高世界第4（2025-06-09），本场排名跌至143位、持外卡参赛——Wikipedia infobox精确到日期，Tennis.com赛果页与flashscore数据均标注WC",
+        "德雷珀2025年8月美网因手臂伤退赛、赛季提前报销；2026年因手臂伤缺席澳网；4月退出蒙特卡洛（左臂骨挫伤）；5月巴塞罗那因膝伤弃赛，随后连续因伤退出马德里、罗马、法网；6-7月因旧手臂伤复发退出温布尔登；华盛顿赛前一天退赛；蒙特利尔外卡首轮负于Atmane——Wikipedia『Jack Draper』词条『2026: Continued injury issues』一节，逐条引用一手信源",
+        "本场是德雷珀本赛季第三张没有兑现的外卡（华盛顿退赛、蒙特利尔首轮出局、本场）——Puntodebreak原句『It marks three consecutive wild cards that haven't served their purpose』",
+        "兰达卢塞现排名64位，生涯最高第55位（2026-06-15）——Wikipedia infobox与另一条独立检索交叉确认",
+        "兰达卢塞2026赛季两次打进大师赛1/4决赛：3月迈阿密站（资格赛出身，当时排名151，淘汰17号种子Darderi、14号种子Khachanov、32号种子Korda，成为1994年以来迈阿密最低排名打进1/4决赛的球员，1/4决赛负21号种子Lehečka）、5月罗马站（幸运落败者身份，连胜Bellucci、Medjedovic再进1/4决赛）——Wikipedia『Martín Landaluce』词条『2026』节，另有ATP官方『Watch the Moment』视频页独立确认迈阿密那次",
+        "本场胜利也是兰达卢塞结束自己近两个月连败的一场——AFP通讯社与Tennis TV官方推文均称『六连败』（经Flashscore.es、Puntodebreak两条独立信源转述），另有Infobae/欧新社通稿称『五连败』；两说法唯一一致的是：这是他自3月迈阿密站以来在硬地正赛的第一场胜利（Puntodebreak原句『first victory on hard courts since his success last March in Miami』）",
+        "两人生涯首次交手——Puntodebreak原句『This was their first matchup』，且两人此前从未出现在对方Wikipedia战绩表里，逻辑自洽"
+      ],
+      "sources": [
+        "https://www.atptour.com/en/news/landaluce-draper-cincinnati-2026-r1-thursday",
+        "https://www.skysports.com/tennis/news/12110/13572651/cincinnati-open-jack-draper-beaten-by-martin-landaluce-in-first-round-after-blowing-six-set-point-chances-to-level-match",
+        "https://www.puntodebreak.com/en/2026/08/13/landaluce-gets-revenge-in-cincinnati-and-sinks-draper-little-further",
+        "https://en.wikipedia.org/wiki/Jack_Draper",
+        "https://en.wikipedia.org/wiki/Mart%C3%ADn_Landaluce"
+      ]
+    }
+  },
+  "_facts": {
+    "赛果": "兰达卢塞 6-3 7-5 胜德雷珀（flashscore match id dbir2a5c；ATP官方赛后稿标题独立确认）",
+    "赛事": "辛辛那提 Cincinnati Open（ATP1000）男单首轮，2026-08-13。⚠️ 全场只打两盘，没有第三盘/决胜盘——第二盘同时是决定胜负的一盘，脚本措辞用『决定胜负的这一盘』，不写『决胜盘/第三盘』",
+    "用时": "1小时57分钟（flashscore FS_TIMES：第一盘0:38 + 第二盘1:19 = 1:57；Puntodebreak原文『1 hour and 57 minutes』独立确认一致）",
+    "排名": "兰达卢塞现世界第64（生涯最高第55，2026-06-15，Wikipedia infobox）；德雷珀现世界第143、本场持外卡参赛（生涯最高世界第4，2025-06-09，Wikipedia infobox）——两项排名另有Tennis.com赛果页、flashscore数据独立交叉确认",
+    "开球时间": "flashscore 比赛详情页字段 AD=1786633800（match id dbir2a5c，本仓库 tools/match_feed.py 直接拉取结果页原始 block）：UTC 2026-08-13 15:10:00，北京时间＝UTC+8＝2026-08-13 23:10（夜里十一点十分）；换算成辛辛那提当地时间（EDT，UTC-4）为 2026-08-13 上午11:10，与 WebSearch 独立信源（Yahoo Sports 生活博客）『11:00 AM』的赛程排定时刻互相印证（相差10分钟，量级一致，属于『排定时刻』与『实际开球时刻』的常规误差，和本仓库其它场次的处理口径一致）。另：AD 与结束时刻 AO=1786640978 相差119.6分钟，和 flashscore FS_TIMES 记录的1:57总用时量级吻合，交叉自洽。",
+    "年龄": "兰达卢塞20岁（2006-01-08生，马德里，西班牙籍；Wikipedia infobox，Infobae/Europa Press通稿『El madrileño, de 20 años』独立确认）；德雷珀24岁（2001-12-22生，伦敦，英国籍；Wikipedia infobox，Sky Sports『The 24-year-old』独立确认）",
+    "技术统计（flashscore FS_STATS，match id dbir2a5c，AFP通讯社原文独立核对制胜分/非受迫失误两项完全一致）": "Ace：兰达卢塞4，德雷珀6｜双误：兰达卢塞6，德雷珀12｜一发成功率：兰达卢塞49%，德雷珀53%｜制胜分：兰达卢塞21，德雷珀33｜非受迫失误：兰达卢塞24，德雷珀47（AFP原句『Landaluce aprovechó a la perfección los errores no forzados de su rival (47 de Draper por 24)』）｜破发点转化：兰达卢塞5/13，德雷珀2/5（即兰达卢塞破发5次，德雷珀破发2次）｜保发局：兰达卢塞80%(8/10)｜总得分：兰达卢塞53%(86/161)，德雷珀47%(75/161)｜赛点挽救：德雷珀1个（对应第二盘决胜局，兰达卢塞两个赛点，德雷珀救下第一个）",
+    "第二盘逆转的逐局细节（flashscore FS_POINTS逐分数据直接解出，match id dbir2a5c；叙事层经Sky Sports『six set-point chances...spread across the next three games』、Puntodebreak『up to six set points』两条独立信源交叉验证）": "0-2德雷珀连破带保领先；2-4、2-5德雷珀两次破发扩大優势；第8局（比分走向3-5，德雷珀发球冲击6-2终结）：1个盘点，兰达卢塞救下并反破，3-5；第9局（比分走向4-5，兰达卢塞发球3-5落后）：2个盘点，兰达卢塞连救2个保发，4-5；第10局（比分走向5-5，德雷珀发球4-5落后冲击6-4）：3个盘点，兰达卢塞连救3个并破发，扳平5-5；第11局兰达卢塞保发6-5；第12局德雷珀发球5-6落后：兰达卢塞拿到2个赛点（此时兰达卢塞已赢首盘，这2个才是真正的赛点，不是盘点），德雷珀救下第一个、自己一度拿到保发局点（可将比分拖入抢七）但未兑现，兰达卢塞第二个赛点破发得手7-5。⚠️ 1+2+3=6个盘点，与两条独立信源『六个盘点』完全吻合；这6个盘点全部发生在决定胜负的这一盘内部（不是三盘制里的独立决胜盘），且与最后一局的『2个赛点』是两件不同的事——前者是德雷珀的盘点（若兑现只会把比赛拖入1-1盘），后者是兰达卢塞自己的赛点（兑现即直接结束比赛）"
+  },
+  "_editing_why": "**开场按定死的顺序**：① 全片最强的一格画面（终场制胜分之后兰达卢塞的反应，不配旁白）→ ② 一句话把落点说出来（2-5落后、六个盘点全部挡回）→ ③ 坐标（排名对比即是这场首轮最大的悬念点）。\n\n**中段按逐分自证走**：首盘干净利落6-3，次盘德雷珀迅速建立5-2优势看似要提前结束比赛，随后是全场真正的转折——德雷珀三次逼近终点、六个盘点、兰达卢塞全部救回连扳三局，最后自己拿到两个赛点才锁定胜局。这条时间线全部核对过flashscore逐分数据，且ATP官方剪辑本身在2-5到6-5这三局做了内部跳切（源片没有保留这三局的连续画面），所以79.5-92.5s这段窗口的旁白描述的是这段被剪辑跳过的比分变化，画面则用紧随其后、连续保留的『兰达卢塞在6-5发球保盘』段落——这是叙述过去发生的事、画面呈现紧接着的当下，不是给不存在的画面编造内容（这段比分变化本身逐分数据和两条编辑信源都核实过，只是ATP自己的集锦没留这几局的连续影像）。\n\n**人物背景（human_context）分散织入中段**，而不是单独占一段：这条片子源片只有130秒、可用素材到114.5秒，没有WTA决赛那种476秒源片的余量去单独切一段给背景故事，所以德雷珀的伤病曲线放进次盘德雷珀领先那一段（『他没赢，是因为——』的反差），兰达卢塞两进大师赛1/4决赛放进德雷珀5-2领先、比赛看似要提前结束那一段（埋下『他不会轻易服软』的伏笔）。\n\n**收尾**：末屏点出双线交叉的意味——这是德雷珀本赛季第三张没有兑现的外卡，也是兰达卢塞本赛季第二次在大师赛级别掀翻对手，不重复开场问题，往前看两人接下来的路。",
+  "cover": {
+    "eyebrow": "赛场之上",
+    "layout": "solo",
+    "subject": "兰达卢塞",
+    "hook": "决胜一盘2比5落后\n德雷珀六个盘点，一个没让他兑现",
+    "_hook_why": "上一句是过程（比分一度多不利），下一句是落点（对手六个盘点全部落空）。两行分别11字和14字，预算内。选『决胜一盘』而不是『决胜盘/第三盘』，因为后两者会让读者误以为这是三盘制的第三盘——这场只打两盘，『决胜』在这里是形容词不是名词化的赛制称谓，跟_facts里强调的措辞区别一致。",
+    "topic": "辛辛那提ATP1000 · 男单首轮",
+    "portrait": {
+      "frame_at": 2.0,
+      "focus": 0.5,
+      "focus_y": 0.35,
+      "zoom": 1.0
+    },
+    "_portrait_why": "probe自动扫描的封面候选帧里，全片只有这一帧同时满足『正脸+两只眼睛检出』（其余候选要么无正面人脸、要么侧脸/糊）。t=2.0s落在ATP官方自己剪的开场teaser内，画面是兰达卢塞终场制胜分打出后仰头的反应，背景记分条显示『6-7/3-5』——正是这场决赛性的比赛结束的那一刻，情绪对题。这是一条低知名度的1000级赛事首轮集锦（不是决赛），没有找到已发布的官方赛后摄影图集，抽帧是probe自动候选里唯一合格的真人正脸帧，四道闸门：①精准（终场那一刻，来源自证：记分条+captions.txt『Out it goes』终场解说对得上）②在比赛中的延伸——夺冠/取胜后的即时反应，属于『赛点兑现』的例外场景③冲击力——不是击球中，但情绪真实④清晰度：sharp=255.2，同批候选里最高。",
+    "scrim": "clear",
+    "_scrim_why": "和近期几条一致：只关掉画面正中的radial暗角，上下两头照留。",
+    "winner": "兰达卢塞",
+    "result": "6-3 7-5",
+    "matchup": [
+      {
+        "name": "德雷珀",
+        "name_en": "Jack Draper",
+        "country": "GBR",
+        "rank": 143
+      },
+      {
+        "name": "兰达卢塞",
+        "name_en": "Martin Landaluce",
+        "country": "ESP",
+        "rank": 64
+      }
+    ],
+    "_matchup_rank_why": "兰达卢塞世界第64、德雷珀世界第143，均来自Wikipedia两人词条infobox『Current singles ranking』字段，与Tennis.com赛果页、flashscore数据交叉一致，独立信源不止两个。",
+    "scoreboard": {
+      "court": "P&G Center Court",
+      "duration_source": {
+        "url": "data:application/json,%7B%22duration%22%3A%20%221%3A57%3A00%22%2C%20%22source_page%22%3A%20%22https%3A//www.flashscore.es/noticias/tenis-cincinnati-atp-landaluce-gana-a-draper-primera-ronda/IRVaUO4c/%22%7D",
+        "field": "duration",
+        "source_page": "https://www.flashscore.es/noticias/tenis-cincinnati-atp-landaluce-gana-a-draper-primera-ronda/IRVaUO4c/"
+      },
+      "_duration_why": "flashscore FS_TIMES（match id dbir2a5c，本仓库tools/match_feed.py直接拉取）：第一盘0:38+第二盘1:19=1:57，与Puntodebreak原文『1 hour and 57 minutes』独立确认一致。",
+      "_court_why": "render 会硬拦『赛场之上比分板缺 scoreboard.court，不能猜场地名称』（run 31764099391 实测踩过），court 是必填字段，不是可以省略不猜的可选项——上一版把它当成『查不到就不写』的可选字段是错的，这次补齐并两源核实。ATP官方赛后稿原句『Draper opened on Center Court against Spain's Martin Landaluce』给出简称；cincinnatiopen.com官网『Know Before You Go』页给出全称『P&G Center Court』（12,000座，全场地唯一的主场地，其余四片是Grandstand/Stadium 3/Champions Court/Court 10）——两者是同一片场地的简称和全称，不是两个场地的冲突。另一条检索结果（Yahoo体育AI摘要）出现过『P&G Stadium Court』的说法，但官网court清单里没有这个名字，判定为对『P&G Center Court』的松散转述，不采信。写入全称，和shang-darderi-montreal-2026.json『Rogers Court』、jodar-fils-montreal-qf.json『Court Central』一致，都是ATP赛事冠名主场地的全称写法。"
+    }
+  },
+  "segments": [
+    {
+      "start": 104.8,
+      "end": 108.0
+    },
+    {
+      "start": 108.0,
+      "end": 114.5,
+      "narration": "决定胜负的这一盘，他一度二比五落后，德雷珀六个盘点，一个没能兑现。"
+    },
+    {
+      "start": 7.0,
+      "end": 25.74,
+      "narration": "北京时间八月十三日夜里十一点十分，辛辛那提ATP1000男单首轮，两人生涯首次交手——排名64位的兰达卢塞，对阵手持外卡、排名跌到143位的德雷珀。开局第一局，兰达卢塞就完成破发。",
+      "crosses_cut": "全片只列出真实存在的转场；这一段窗口内没有内部scene_cuts，属于单一连续镜头。"
+    },
+    {
+      "start": 25.74,
+      "end": 39.5,
+      "narration": "首盘他打得干净利落，六比三拿下——这也是他自三月迈阿密站以来，第一次在硬地正赛里赢球，过去将近两个月，他一场比赛都没赢过。",
+      "crosses_cut": "26.54s/34.14s/37.88s 宽景回合和近景反应之间的多次镜头切换，仍是这一盘分内的内容。"
+    },
+    {
+      "start": 39.5,
+      "end": 60.84,
+      "narration": "次盘一上来，兰达卢塞就崩了——德雷珀连破带保，很快二比零领先。对面这位，两年前还是世界第四；这个赛季，他先后因为手臂和膝盖的伤病缺席了半个赛程，排名跌到一百四十三位，这是他今年第三张没能兑现的外卡。",
+      "crosses_cut": "60.42s 记分条切近景反应，仍是这一局分内的镜头切换。"
+    },
+    {
+      "start": 60.84,
+      "end": 79.5,
+      "narration": "德雷珀越打越顺，一路拉开到五比二，眼看比赛就要提前结束。但对面这位二十岁的西班牙新星，这个赛季已经两次从资格赛杀进大师赛1/4决赛，三月迈阿密还淘汰过三个种子——他不是一个会轻易服软的对手。"
+    },
+    {
+      "start": 79.5,
+      "end": 92.5,
+      "narration": "兰达卢塞没有放弃。德雷珀先后三次逼近这一盘的终点，六个盘点在手；兰达卢塞全部救了回来，连扳三局，把比分追成五比五，随后再保一发，六比五反超。",
+      "crosses_cut": "这段窗口内没有内部scene_cuts（ATP官方剪辑本身在2-5到6-5这三局做了跳切，源片没有保留连续画面），旁白讲述的是这段被跳过的比分变化，画面呈现紧随其后、连续保留的兰达卢塞发球保盘段落。"
+    },
+    {
+      "start": 92.5,
+      "end": 104.8,
+      "narration": "轮到德雷珀保发，兰达卢塞两个赛点，德雷珀救下一个——第二个赛点，制胜分，七比五锁定胜局。这股势头，他能带进第二轮吗？"
+    }
+  ],
+  "push": {
+    "summary": "兰达卢塞逆转",
+    "lead": "辛辛那提ATP1000男单首轮，排名64位的兰达卢塞6-3 7-5逆转淘汰持外卡参赛、曾经的世界第4德雷珀，耗时1小时57分。首盘他干净利落6-3拿下；次盘一度2-5落后，德雷珀手握六个盘点，全部被他救回，连扳三局追成5-5、6-5反超；最后一局德雷珀救下一个赛点，但兰达卢塞第二个赛点一记制胜分锁定胜局。这是20岁的兰达卢塞自3月迈阿密以来首场硬地正赛胜利，本赛季他已两次打进大师赛1/4决赛；对面的德雷珀，这是他本赛季第三张没能兑现的外卡——一年来反复的手臂和膝伤，把这位两年前的世界第4，逼到了143位。两人生涯首次交手。",
+    "auto": true,
+    "_why": "push_reel.SUMMARY_MAX=13，`兰达卢塞逆转`=6字，在闸内。只写summary和lead，matchup/score/event由封面算。"
+  }
+}
